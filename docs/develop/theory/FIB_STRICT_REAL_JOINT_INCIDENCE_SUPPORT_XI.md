@@ -1238,3 +1238,538 @@ $$
 with no cross-pair inequalities, no equation between the common terminal answers, and no requirement $m_0=m_1$. The selected pair of Theorem 6.7.2 belongs to $D_J^{\ne}$ of Section 5.6; its unequal M values impose no exclusion on any independently selected M pair among other companions. Theorem 6.6.1 likewise imposes no condition on equal-x J pairs elsewhere. The evaluated second-source opening and the strict finite pair provide J incidence only. Neither result supplies an independent equal-M pair at the same base, an inventory of an entire child, a global uniqueness assertion, or an all-domain absence theorem. In particular they do not decide either intersection in (5.6.3).
 
 ## 追加锚（本行以下为增补区）
+
+## 7. A connected finite second-J arc through the singular parent
+
+### 7.1 The selected family and its undivided equations
+
+**Definition 7.1.1 (Original worlds and selected secants).** The ambient domain is exactly (6.1.1): every source matrix is entrywise strictly positive, rank one and trace one; the gain is any nonzero real polynomial of degree at most three; and the constant drift is any real number. Signs, sampled zeros, repeated roots and degree drops have no additional ambient restriction. The acquired history is the literal history (6.1.2)–(6.1.3). In particular the initial observation counts, each action is immediately read, and the seventh J and M are alternative actions. The parameter below is a coordinate on a family of worlds, not an additional acquired observation.
+
+For a strict source $(r,b)$ and a real $e$, retain $j,n,T,U$ from (6.1.4), and set
+
+$$
+\begin{aligned}
+B_{\mathrm{coef}}&=6/T-2/U=2(2+5b)/(TU),\\
+\Lambda&=1+6/T+1/U-4/j-4/n,\\
+H(r,b,e)&=e\Lambda+\frac{24}{5}(b-1/8)B_{\mathrm{coef}},\\
+q_0&=-24-e,&q_1&=-e/j,&q_2&=(27/5-e)/T,&q_3&=-e/n,\\
+d&=24+e,&
+g_{r,b,e}(s)&=\sum_{i=0}^3q_i
+ \prod_{\substack{0\le a\le3\\a\ne i}}\frac{s-a}{i-a}.
+\end{aligned}
+\tag{7.1.1}
+$$
+
+Each endpoint uses its own polynomial in this formula. The actual response circuit is
+
+$$
+\begin{aligned}
+g_5&=-4q_0+15q_1-20q_2+10q_3,\\
+g_6&=-10q_0+36q_1-45q_2+20q_3,\\
+g_7&=-20q_0+70q_1-84q_2+35q_3,\\
+p&=24+e+(U+n)g_5,\\
+v&=24+e+(2U+n)g_6,\\
+a&=24+e+(T+2j+4r)g_7,\\
+m&=24+e+(3U+2n)g_7,\qquad x=n/U.
+\end{aligned}
+\tag{7.1.2}
+$$
+
+Use the two-coefficient algebra with elements $A+\epsilon B$ and relation $\epsilon^2=t$. Its arithmetic is
+
+$$
+\begin{aligned}
+(A,B)+(C,D)&=(A+C,B+D),\\
+(A,B)(C,D)&=(AC+tBD,AD+BC),\\
+(A,B)^{-1}&=(A,-B)/(A^2-tB^2).
+\end{aligned}
+\tag{7.1.3}
+$$
+
+For $y=(R,B,E,k,\ell)$ substitute
+
+$$
+r=(R,1),\qquad b=(B,k),\qquad e=(E,\ell)
+\tag{7.1.4}
+$$
+
+in (7.1.1)–(7.1.2). Write the two coefficients of any resulting quantity $f$ as $(f_{\mathrm{av}},f_{\mathrm{sec}})$. The five-equation system is
+
+$$
+G(y,t)=
+\bigl(H_{\mathrm{av}},H_{\mathrm{sec}},
+      p_{\mathrm{sec}},v_{\mathrm{sec}},a_{\mathrm{sec}}\bigr)=0.
+\tag{7.1.5}
+$$
+
+For $t=h^2\ge0$, evaluation at $\epsilon=\pm h$ gives the endpoints
+
+$$
+r_\pm=R\pm h,\qquad b_\pm=B\pm kh,\qquad
+ e_\pm=E\pm\ell h,\qquad
+W_\pm=(P(r_\pm,b_\pm),g_{r_\pm,b_\pm,e_\pm},24+e_\pm).
+\tag{7.1.6}
+$$
+
+The circuit divides only by fixed interpolation constants and source traces, or their products represented by (7.1.3). It has no quotient by $h$, $\Lambda$, the regular $D$ of (6.2.1), drift, a gain sample, a leading coefficient or a gain-root separation. At $t=0$ the algebra is the algebra of dual numbers: $f_{\mathrm{sec}}$ is the derivative in direction $(1,k,\ell)$. Thus (7.1.5) is defined at the coalescence point as well as at a singular-parent source.
+
+### 7.2 Rational boxes and their finite inequalities
+
+**Definition 7.2.1 (The continuation tubes).** All terminating decimals in Section 7 are exact rationals. Define componentwise rounding by
+
+$$
+Q_{45}(u)=10^{-45}\left\lfloor10^{45}u+\frac12\right\rfloor.
+\tag{7.2.1}
+$$
+
+Start with
+
+$$
+c_{-1}=(0.8995316741215983,\ 0.1285667303082648,
+6.80570463553447,\ -1.2189475090087154,\ -40.43312488361048).
+\tag{7.2.2}
+$$
+
+For $i=0,\ldots,127$ put
+
+$$
+\begin{gathered}
+T_i=[i/8000000,(i+1)/8000000],\qquad
+ t_i=(2i+1)/16000000,\qquad \Delta=1/16000000,\\
+c_i^{(0)}=c_{i-1},\qquad
+c_i^{(a+1)}=Q_{45}\!\left(c_i^{(a)}-
+ [D_yG(c_i^{(a)},t_i)]^{-1}G(c_i^{(a)},t_i)\right)
+\quad(0\le a<5),\\
+c_i=c_i^{(5)},\qquad C_i=Q_{45}\bigl([D_yG(c_i,t_i)]^{-1}\bigr),\\
+\rho=(1/4000000,\ 1/4000000,\ 1/20000,\ 1/400000,\ 3/40000),\\
+X_i=\prod_{j=1}^5[c_{i,j}-\rho_j,c_{i,j}+\rho_j],\qquad
+\|z\|_\rho=\max_j |z_j|/\rho_j.
+\end{gathered}
+\tag{7.2.3}
+$$
+
+Here $\rho_B=\rho_2$ and $\rho_k=\rho_4$. Matrix rounding is entrywise. These formulas define rational centres and preconditioners, rather than approximations used as exact roots. The 128 closed parameter cells cover exactly $[0,1/62500]$.
+
+Here is a rational enclosure prescription for every inequality used below. A scalar interval operation first uses the endpoint rules (6.4.6), then replaces its lower endpoint $a$ by $2^{-240}\lfloor2^{240}a\rfloor$ and its upper endpoint $b$ by $2^{-240}\lceil2^{240}b\rceil$. Singleton rational constants are enclosed by the same rule. Products use the four endpoint products; powers mean repeated multiplication. Inverses are formed only after excluding zero. In particular these operations are enclosures, not floating point equalities.
+
+Differentiate the displayed circuit in the six independent variables $(R,B,E,k,\ell,t)$. For an interval value $u$ with derivative vector $\dot u$, propagate
+
+$$
+\begin{aligned}
+\dot{(u+v)}&=\dot u+\dot v,\\
+\dot{(uv)}&=\dot u\,v+u\,\dot v,\\
+\dot{(u^{-1})}&=-\dot u\,u^{-1}u^{-1}.
+\end{aligned}
+\tag{7.2.4}
+$$
+
+These rules apply to the scalar operations inside (7.1.3), including the derivative of its factor $t$. They specify enclosures of $G,D_yG,G_t$ without numerical differentiation. Matrix inversion in (7.2.3) can be enclosed by Gauss–Jordan elimination: use diagonal pivots in increasing order, normalize the entire pivot row, and eliminate that column in every other row. No row interchange is required here. Each pivot interval excludes zero; for every rounded entry in (7.2.3), both enclosure endpoints give the same integer in (7.2.1). Hence this enclosure prescription determines the exact rounded rational recurrence.
+
+For a vector or matrix of intervals let $|\cdot|_{\sup}$ mean the largest absolute endpoint, entrywise. Define the rational numbers
+
+$$
+\begin{aligned}
+q_i&=\max_j\sum_{k=1}^5
+ \bigl|[I-C_iD_yG(X_i,T_i)]_{jk}\bigr|_{\sup}\frac{\rho_k}{\rho_j},\\
+\beta_i&=\max_j\frac{
+ |[C_iG(c_i,t_i)]_j|_{\sup}
+ +\Delta|[C_iG_t(c_i,T_i)]_j|_{\sup}}{\rho_j},\\
+D_i&=\frac{1}{1-q_i}\max_j
+ \frac{|[C_iG_t(X_i,T_i)]_j|_{\sup}}{\rho_j}.
+\end{aligned}
+\tag{7.2.5}
+$$
+
+In particular the derivative enclosure in $D_i$ uses the whole tube, while the one in $\beta_i$ has fixed centre $c_i$.
+
+For a common seam $\sigma_i=(i+1)/8000000$, $0\le i<127$, put
+
+$$
+\begin{gathered}
+\widetilde c_i=(c_i+c_{i+1})/2,\qquad
+\widetilde\rho_{i,j}=\rho_j+|c_{i,j}-c_{i+1,j}|/2,\\
+\widetilde X_i=\prod_j[
+\widetilde c_{i,j}-\widetilde\rho_{i,j},
+\widetilde c_{i,j}+\widetilde\rho_{i,j}],\\
+\widetilde q_i=\max_j\sum_k
+ |[I-C_iD_yG(\widetilde X_i,\sigma_i)]_{jk}|_{\sup}
+ \frac{\widetilde\rho_{i,k}}{\widetilde\rho_{i,j}}.
+\end{gathered}
+\tag{7.2.6}
+$$
+
+This is a box containing the convex hull of the two neighboring tubes; both neighboring seam roots are in that box.
+
+**Lemma 7.2.2 (Uniform rational inequalities).** The recurrence and enclosures (7.2.1)–(7.2.6) have the following bounds:
+
+| Quantity | Rational upper bound | Sufficient strict bound |
+|---|---:|---:|
+| $\max_i q_i$ | $110094427447/250000000000$ | $441/1000$ |
+| $\max_i\beta_i$ | $263610622981/1000000000000$ | $264/1000$ |
+| $\max_i\widetilde q_i$ | $47763641509/200000000000$ | $239/1000$ |
+| $\max_i\rho_BD_i$ | $247533043797/100000000000$ | $5/2$ |
+| $\max_i\rho_kD_i$ | $247533043797/10000000000$ | $25$ |
+
+In particular $q_i+\beta_i<141/200<1$. All inverses in these enclosures are defined. On all tubes, $B>0.1285$ and $k<-1.2188$. For both scalar endpoints (7.1.6), the following larger rational intervals contain the enclosures, uniformly over the cells and $0\le h\le1/250$, $h^2\in T_i$:
+
+| Quantity | Lower endpoint | Upper endpoint |
+|---|---:|---:|
+| $r_\pm$ | $447759700931/500000000000$ | $903519901863/1000000000000$ |
+| $b_\pm$ | $3092177973/25000000000$ | $8339901701/62500000000$ |
+| $e_\pm$ | $1661423734033/250000000000$ | $3484642346261/500000000000$ |
+| $d_\pm$ | $7661423734033/250000000000$ | $15484642346261/500000000000$ |
+| $p_\pm$ | $-13368909895949/1000000000000$ | $-4212208536209/500000000000$ |
+| $x_{\mathrm{sec}}$ | $1426727197703/500000000000$ | $2853937651871/1000000000000$ |
+
+Consequently the simpler strict bounds are
+
+$$
+\begin{gathered}
+0.8955<r_\pm<0.9036,\qquad
+0.1236<b_\pm<0.1335,\\
+6<e_\pm,\qquad30<d_\pm<32,\qquad
+-13.37<p_\pm<-8.42,\qquad2.85<x_{\mathrm{sec}}<2.86.
+\end{gathered}
+\tag{7.2.7}
+$$
+
+Proof. The two finite index ranges in this lemma are $0\le i<128$ and $0\le i<127$; the centres for every index are fixed by (7.2.2)–(7.2.3). Apply (7.2.4) to (7.1.1)–(7.1.5), enclose the inverse and the five successive rounded corrections at each $t_i$, and substitute the resulting $c_i,C_i$ into (7.2.5). The maximum row sums and weighted residual sums give the first two rows of the first table. The same derivative enclosure on (7.2.6), weighted now by $\widetilde\rho_i$, gives its third row. Substituting the full-tube $G_t$ and the first row in the last line of (7.2.5) gives its last two rows. Every number in these comparisons is rational, with the outward rounding specified above. The first two sufficient bounds sum to $141/200$.
+
+For the endpoint rows use scalar evaluations of (7.1.1)–(7.1.2), independently of the coefficient evaluation (7.1.3). More explicitly, set $M_0=10^{60}$ and enclose $h$ in cell $i$ by
+
+$$
+\frac{\lfloor M_0\sqrt{i/8000000}\rfloor}{M_0}
+\le h\le
+\frac{\lceil M_0\sqrt{(i+1)/8000000}\rceil}{M_0}.
+\tag{7.2.8}
+$$
+
+The integers here are characterized solely by integer square comparisons. Insert this interval and $X_i$ into (7.1.6), followed by the scalar circuit. The minimum lower and maximum upper endpoints are enclosed by the first five rows of the second table. The sixth row instead comes from the second coefficient of $x$ in (7.1.3). The centre intervals for $B,k$ give the two asserted uniform inequalities directly. The strict positive source bounds also show $j,n,T,U>0$. For a pair inverse its exact denominator is the product of its two scalar endpoint values. The outward enclosures in the prescription exclude zero for those denominators as well as for the matrix pivots. Thus no source or matrix inverse in the two tables presupposes the existence of a zero. These explicit rational recurrences, enclosure rules and scalar comparison bounds constitute the finite inequalities of the lemma. ∎
+
+The interval step is the classical preconditioned interval contraction, as in R. Krawczyk, *Newton-Algorithmen zur Bestimmung von Nullstellen mit Fehlerschranken*, Computing 4, 187–201, [doi:10.1007/BF02234767](https://doi.org/10.1007/BF02234767). Its use here concerns the particular five-equation source circuit; it is not a new general interval theorem.
+
+### 7.3 The connected finite arc theorem
+
+**Theorem 7.3.1 (Finite second-J arc, attachments and singular passage).** There is a continuous graph
+
+$$
+y(t)=(R(t),B(t),E(t),k(t),\ell(t)),\qquad
+0\le t\le1/62500,
+\tag{7.3.1}
+$$
+
+with $G(y(t),t)=0$, lying in $X_i$ whenever $t\in T_i$. At every point it has a locally real analytic extension. In each $X_i$ the zero is unique for fixed $t\in T_i$, and the two neighboring roots agree at every common seam. These are the uniqueness domains of the theorem; no maximal-component assertion is part of it.
+
+For every $0<h\le1/250$, put $t=h^2$ and use (7.1.6). The resulting complete worlds are distinct and legal, realize every original acquired row, and satisfy
+
+$$
+\begin{gathered}
+\bar p(h)=p(W_+(h))=p(W_-(h))\ne24,\\
+\bar v(h)=v(W_+(h))=v(W_-(h)),\qquad
+\bar a(h)=a(W_+(h))=a(W_-(h)),\\
+W_+(h),W_-(h)\in C(\bar p(h),\bar v(h)),\qquad
+2.85(2h)<x(W_+(h))-x(W_-(h))<2.86(2h).
+\end{gathered}
+\tag{7.3.2}
+$$
+
+The family has the exact critical/local-germ attachment of Theorems 6.3.2 and 6.6.1 at $t=0$, where the two worlds coalesce, and the exact finite-pair attachment of Theorem 6.7.2 at $h=1/1000$.
+
+There is exactly one occurrence of $\Lambda=0$ among these two selected endpoints for $0<h\le1/250$. It occurs at the plus endpoint, at a parameter $h_*$ satisfying the rational bracket
+
+$$
+0.0029244590442435<h_*<0.0029244590442437.
+\tag{7.3.3}
+$$
+
+At that parameter,
+
+$$
+b_+(h_*)=1/8,\qquad r_+(h_*)=\varrho_+,\qquad
+\bar v(h_*)=s_+(\bar p(h_*)),
+\tag{7.3.4}
+$$
+
+where $\varrho_+$ and $s_+$ are exactly the designated root and original singular response line of [Support X](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_X.md), (13.6)–(13.11). The crossing is transverse: $d\Lambda_+/dh>0$ there. The minus endpoint has $\Lambda_-<0$ throughout. The same complete-world graph continues through this event and includes the entire strict post-crossing interval $[3/1000,1/250]$.
+
+The numerical source and positive-drift bounds (7.2.7) are properties of this constructed family. The ambient domain remains Definition 7.1.1. The common base in (7.3.2) is chosen separately at each same $h$; no worlds from different $h$ are combined. At $h=0$ the coalesced world is an attachment, not a distinct-pair witness. The quantifiers in this theorem concern this selected ordered pair and the stated tubes. The independent-pair quantifiers of (6.8.5), which range over the entire child and independent terminal values, remain the definition of the broader problem.
+
+Proof of the graph and its complete-world assertions. For fixed $t\in T_i$ define
+
+$$
+\mathcal T_{i,t}(y)=y-C_iG(y,t).
+\tag{7.3.5}
+$$
+
+The line-segment mean-value formula and (7.2.5) give a Lipschitz constant $q_i<1$ on the convex box $X_i$ in the $\rho$ norm. The parameter mean-value formula at the fixed centre gives
+
+$$
+\|C_iG(c_i,t)\|_\rho\le\beta_i.
+\tag{7.3.6}
+$$
+
+Thus, for $y\in X_i$,
+
+$$
+\|\mathcal T_{i,t}(y)-c_i\|_\rho
+\le\beta_i+q_i\|y-c_i\|_\rho<1.
+\tag{7.3.7}
+$$
+
+Iteration is Cauchy in the complete closed box: successive distances are bounded by a geometric series with ratio $q_i$. Its limit is a fixed point, unique in that box. At every point of the tube, $\|I-C_iD_yG\|_\rho<1$, so the convergent Neumann series in $I-C_iD_yG$ inverts $C_iD_yG$. Since both matrices are square, both $C_i$ and $D_yG$ are invertible. Consequently the fixed points in question are exactly the zeros of $G$. This is the contraction principle of S. Banach, *Sur les opérations dans les ensembles abstraits et leur application aux équations intégrales*, Fundamenta Mathematicae 3, 133–181, [doi:10.4064/fm-3-1-133-181](https://doi.org/10.4064/fm-3-1-133-181), applied to these explicit boxes; the preceding geometric-series argument gives the needed implication in full.
+
+Comparing fixed-point equations at two parameters gives continuity: the parameter term is bounded by a constant times $|t-t'|$, and the difference in fixed points is bounded by that term divided by $1-q_i$. Taylor expansion of $G$ at a zero, with this continuity and the invertible $y$ Jacobian, gives
+
+$$
+y_t=-(D_yG)^{-1}G_t,\qquad
+\|y_t\|_\rho\le D_i,\qquad |B_t|<5/2,\quad |k_t|<25.
+\tag{7.3.8}
+$$
+
+These bounds hold up to a seam from either side. The rational circuit is analytic wherever its denominators are nonzero. For completeness, local analytic dependence can also be seen without any uniform analytic radius: complexify near an exact zero, precondition by its exact inverse $y$ Jacobian, and choose small complex balls where the derivative of the fixed-point map has norm less than one. For nearby complex $t$ the map sends the smaller closed ball into itself. Its holomorphic iterates converge locally uniformly by the same geometric bound. The Cauchy integral formula passes to the limit, making the fixed point holomorphic. Real coefficients and uniqueness make it real for real $t$. This is the usual analytic implicit-function theorem, also stated in J. Lebl, *Tasty Bits of Several Complex Variables*, Theorem 1.3.8, [author's text](https://www.jirka.org/scv/scv.pdf).
+
+At $t=\sigma_i$, both zeros belong to $\widetilde X_i$. If they were $u,v$, their zero equations and (7.2.6) would imply
+
+$$
+\|u-v\|_{\widetilde\rho_i}
+=\|(u-C_iG(u,\sigma_i))-(v-C_iG(v,\sigma_i))\|_{\widetilde\rho_i}
+\le\widetilde q_i\|u-v\|_{\widetilde\rho_i}.
+\tag{7.3.9}
+$$
+
+Since $\widetilde q_i<1$, they coincide. This is uniqueness on a common containing box, not an inference from overlap of rounded root coordinates. Local implicit uniqueness identifies their analytic extensions across the seam. All cells therefore give one continuous, locally analytic graph on the full closed interval. The graph is connected as the continuous image of that interval.
+
+When $t=h^2$, evaluation at $\epsilon=\pm h$ is an algebra homomorphism in (7.1.3). Its inverses are legitimate by the source and denominator bounds of Lemma 7.2.2. Equations $H_{\mathrm{av}}=H_{\mathrm{sec}}=0$ imply $H(r_\pm,b_\pm,e_\pm)=0$; the other three zero coefficients imply exact equality of the two p, v and a values. These are identities of the actual response functions, rather than overlap of numerical response intervals.
+
+The fixed-node polynomial in (7.1.1) has samples $q_i$ at clocks $i=0,1,2,3$ and the rows (7.1.2) at clocks $5,6,7$. Its clock-four value is $g(4)=-q_0+4q_1-6q_2+4q_3$, and direct substitution gives
+
+$$
+24+e+Ug(4)-18=U H(r,b,e).
+\tag{7.3.10}
+$$
+
+Hence each endpoint gives exactly $(0,24,147/5,24,18,p,v)$ at the original clocks zero through six. The acquired traces and the two clock-seven traces are exactly (6.1.4)–(6.1.5), with the chronological left products (6.1.2); these are the whole-world interfaces of [common-parent geometry](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md), Definitions 1.1–1.3 and Theorem 2.1. Both endpoints share the actual ancestor $H_4=(0,J,24,M,147/5,J,24,M,18)$, followed by the same fifth-M response $\bar p(h)$ and sixth-M response $\bar v(h)$ at that fixed $h$.
+
+The interpolation is the classical distinct-node formula; see J.-P. Berrut and L. N. Trefethen, *Barycentric Lagrange Interpolation*, SIAM Review 46, 501–517, Section 2, [doi:10.1137/S0036144502417715](https://doi.org/10.1137/S0036144502417715). Here it supplies one polynomial per world, at all original clocks, including the terminal alternatives. An identically zero gain would make the first two readings equal to the same drift, contradicting $0\ne24$. The bounds $0<r_\pm<1,b_\pm>0$ make $P(r_\pm,b_\pm)$ strictly positive, trace one and determinant zero, hence rank one. The two r coordinates differ by $2h$, so for $h>0$ the complete worlds are distinct. Lemma 7.2.2 gives $p\ne24$. Its $x_{\mathrm{sec}}$ row gives the last inequality in (7.3.2) because $x_+-x_-=2h x_{\mathrm{sec}}$. Finally all four gain coefficients and both drifts vary continuously by (7.1.1). Thus the passage is a connected passage in complete-world coordinates as well as in source coordinates. The attachments and singular assertions are proved in Sections 7.4–7.6. ∎
+
+### 7.4 Exact identification of the two attachments
+
+**Lemma 7.4.1 (Small-box inclusions at the two anchors).** At each named parameter in the following table, perform five rounded Newton corrections as in (7.2.3), starting from the centre $c_i$ of a containing parameter cell; use $i=0$ at $t=0$ and $i=7$ at $t=10^{-6}$. Recompute the preconditioner there. With radius
+
+$$
+\rho^{\mathrm{tight}}=10^{-38}(1,1,200,10,300),
+\tag{7.4.1}
+$$
+
+the resulting boxes lie strictly inside the corresponding $X_i$ and have a unique zero. Their rational centres are:
+
+| Coordinate | $t=0$ | $t=1/1000000$ |
+|---|---|---|
+| $R$ | $0.899531674121598268409726976420781980350411105$ | $0.899530919795779879028677658291656578654896203$ |
+| $B$ | $0.128566730308264757217243801879783944149492431$ | $0.128566482008496858677308365111163394715205371$ |
+| $E$ | $6.805704635534469639189632374509777994071045443$ | $6.805816643366348228487842227674526738692718910$ |
+| $k$ | $-1.218947509008715401675263421889754639362546698$ | $-1.218941298820345919523723807358533335069648080$ |
+| $\ell$ | $-40.433124883610480451982746582403325602528193723$ | $-40.433314353357228754415347410117133065899974444$ |
+
+Using (7.2.5) with these radii, fixed $t$ and $\Delta=0$, the respective upper bounds for $q+\beta$ are
+
+$$
+\frac{2717869591}{10^{18}}<10^{-7},\qquad
+\frac{23574135691}{10^{18}}<10^{-7}.
+\tag{7.4.2}
+$$
+
+The first $(R,B)$ box lies strictly in $X_*$ of (6.3.5); the second $(R,B,k)$ box lies strictly in $X_0$ of (6.7.1).
+
+Proof. The prescription is the same rational circuit, differentiation and outward arithmetic as Definition 7.2.1, now with a singleton parameter interval. Its weighted residual and derivative sums give (7.4.2). The strict containments in $X_i$ follow coordinatewise from $|c_j^{\mathrm{tight}}-c_{i,j}|+\rho_j^{\mathrm{tight}}<\rho_j$. The source-box containments follow by comparing the displayed rational centres with (6.3.5) and (6.7.1), with their radii $10^{-35}$ and $10^{-30}$. The contraction argument (7.3.5)–(7.3.7) then supplies the unique zero of each tight box, and uniqueness in $X_i$ identifies it with the graph root at that same $t$. No equality between rounded coordinates and an exact source has been used. ∎
+
+Proof of the attachment clauses of Theorem 7.3.1. At $t=0$ the root has $B>1/8$ and $E>6$. Thus $H=0$ implies $\Lambda<0$. The regular implicit solution of $H=0$ is
+
+$$
+e(r,b)=-\frac{(24/5)(b-1/8)B_{\mathrm{coef}}}{\Lambda}.
+\tag{7.4.3}
+$$
+
+This elimination is used only near the regular attachment. The coefficient equation $H_{\mathrm{sec}}=0$ gives $\ell=e_r+k e_b$. Consequently the remaining three equations at zero are precisely
+
+$$
+F_r(R,B)+kF_b(R,B)=0
+\tag{7.4.4}
+$$
+
+for the exact regular map $F=(p,v,a)$ of (6.2.2). Indeed $D=(5/2)TUjn\Lambda$, and substitution of (7.4.3) in (7.1.1) gives $d=-C_0/D$ and $q_i=C_i/D$ of (6.2.1)–(6.2.2). The interpolants are therefore the same entire polynomial.
+
+On $X_*$, the existing $p_b$ bound of Section 6.5 excludes zero. The p row of (7.4.4) gives $k=-p_r/p_b$. The other two rows imply $\det D(p,v)=\det D(p,a)=0$, hence $E_1=E_2=0$ by (6.3.4)–(6.3.6). Lemma 7.4.1 puts $(R,B)$ in $X_*$; uniqueness in Theorem 6.3.2 now gives $(R,B)=z_*$ exactly, and then $k=k_*$. Equation (7.4.3) fixes $E$, and $H_{\mathrm{sec}}=0$ fixes $\ell$. This identifies the complete coalesced world with the exact second critical world, not merely with its displayed approximation.
+
+For sufficiently small positive $h$, continuity keeps both endpoints regular and places $(R(h^2),B(h^2),k(h^2))$ in the uniqueness neighborhood of Theorem 6.6.1. Eliminating $e_\pm$ by (7.4.3) makes their p, v and a equations exactly its $S_F=0$. The local uniqueness (6.6.1) therefore identifies this projection with that even analytic germ. This proves the germ attachment, including its existing entire gains, without a numerical comparison of two germs.
+
+At $t=10^{-6}$, Lemma 7.4.1 gives both $b_\pm>1/8$, so $H_\pm=0$ and $e_\pm>6$ again imply $\Lambda_\pm<0$. The same exact regular elimination gives $S_F(R,B,k,1/1000)=0$. Its $(R,B,k)$ lies in $X_0$, so Theorem 6.7.2 identifies it with that unique exact finite zero. Formula (7.1.1) then identifies both entire polynomials and drifts with (6.2.2), not only their sources or responses. This is the finite bridge between the local germ and the independently isolated pair. ∎
+
+### 7.5 The selected singular crossing and its rational bracket
+
+**Lemma 7.5.1 (Two rational signs).** Set
+
+$$
+h_L=0.0029244590442435,\qquad h_U=0.0029244590442437.
+\tag{7.5.1}
+$$
+
+For each $t=h_L^2,h_U^2$, use the tight-box prescription of Lemma 7.4.1, starting at $c_i$ with $i=\lfloor8000000t\rfloor$. The boxes are strictly contained in their $X_i$. Their respective upper bounds for $q+\beta$ are
+
+$$
+\frac{11716015439}{250000000000000000}<10^{-7},\qquad
+\frac{44016049399}{10^{18}}<10^{-7}.
+\tag{7.5.2}
+$$
+
+The exact graph values satisfy
+
+$$
+\begin{aligned}
+120/10^{18}&<b_+(h_L)-1/8<121/10^{18},\\
+-124/10^{18}&<b_+(h_U)-1/8<-123/10^{18}.
+\end{aligned}
+\tag{7.5.3}
+$$
+
+Proof. The parameter values in this prescription are the exact squares of the rationals (7.5.1). With the same singleton-parameter weighted sums as (7.4.2), the enclosure prescription gives (7.5.2). Direct substitution of the resulting tight B and k intervals into $B+kh-1/8$ gives the respective enclosing intervals
+
+$$
+\begin{aligned}
+&\left[\frac{120287721883177}{10^{30}},
+        \frac{60143860941589}{5\cdot10^{29}}\right],\\
+&\left[-\frac{61880183664779}{5\cdot10^{29}},
+        -\frac{123760367329557}{10^{30}}\right].
+\end{aligned}
+\tag{7.5.4}
+$$
+
+Each is strictly within its interval in (7.5.3). The tight-box containments and contraction identify these roots with the same full-interval graph, so these are signs at exact graph points. ∎
+
+Proof of the crossing and continuation clauses of Theorem 7.3.1. By (7.3.8) and the uniform k bound,
+
+$$
+\begin{aligned}
+\frac{db_+}{dh}
+ &=k+2hB_t+2h^2k_t\\
+ &<-1.2188+2(1/250)(5/2)+2(1/250)^2(25)\\
+ &=-599/500<0.
+\end{aligned}
+\tag{7.5.5}
+$$
+
+Meanwhile $b_-=B-kh>B>0.1285>1/8$ for $h>0$. Equations (7.5.3), continuity and strict monotonicity give exactly one $h_*$ in (7.3.3) with $b_+(h_*)=1/8$. Since $e_\pm>6$ and $B_{\mathrm{coef},\pm}>0$, the two parent equations give
+
+$$
+\operatorname{sign}\Lambda_\pm
+=-\operatorname{sign}(b_\pm-1/8).
+\tag{7.5.6}
+$$
+
+Thus this is exactly the sole selected $\Lambda=0$ event. At the event, differentiation of the undivided equation gives
+
+$$
+e_+(h_*)\frac{d\Lambda_+}{dh}(h_*)
+=-\frac{24}{5}B_{\mathrm{coef},+}(h_*)
+  \frac{db_+}{dh}(h_*)>0.
+\tag{7.5.7}
+$$
+
+This proves transversality and the direction of the crossing. No division by a vanishing parent coefficient appears.
+
+At width $1/8$ the existing singular identity is
+
+$$
+960jn\Lambda=\Phi(r),\qquad
+\Phi(r)=438272r^4-931328r^3+540800r^2-50728r-853.
+\tag{7.5.8}
+$$
+
+Support X, (13.6)–(13.7), classifies exactly two strict roots. Its $\varrho_-$ lies in $(0.1348,0.1349)$, while its $\varrho_+$ lies in the rational interval
+
+$$
+\left[
+\frac{902449681772056265377872651296542856186276499}{10^{45}},
+\frac{902449681772056265377872651296542856186276500}{10^{45}}
+\right].
+\tag{7.5.9}
+$$
+
+The graph source satisfies $0.8955<r_+(h_*)<0.9036$. It is a strict root of (7.5.8), so the existing classification excludes $\varrho_-$ and identifies it exactly with $\varrho_+$. This identity uses the quartic equation and the separated root classification, not closeness of a numerical event source to a printed root.
+
+The Jacobian $D_yG$ is invertible on the same graph at this event by (7.3.7)–(7.3.8). The five-equation circuit itself has no singularity there. Consequently the local analytic graph and its own entire gains extend through the event; the finite tubes already continue it all the way to $h=1/250$. Since $h_U<3/1000$, every $h\in[3/1000,1/250]$ lies strictly after the crossing, with $\Lambda_+>0$ and $\Lambda_-<0$ and with the legal full-world bounds already proved. ∎
+
+### 7.6 The original same-base singular response and its complete lift
+
+At the event use exactly the singular functions $s_\sigma$ of Support X, (13.8). To make the algebraic response line unambiguous, its definition is
+
+$$
+\begin{aligned}
+\mathcal D&=1731744020342106665,\\
+A_s(z)&=13656112734222647296z^3-33583101098863014400z^2\\
+ &\quad+20502976421172725312z-3401342974535580372,\\
+B_s(z)&=-327746705621343535104z^3+916826043674607172160z^2\\
+ &\quad-616757003572777087368z+31411654798932835643,\\
+s_+(p)&=-3\{pA_s(\varrho_+)+B_s(\varrho_+)\}/\mathcal D.
+\end{aligned}
+\tag{7.6.1}
+$$
+
+This is a reused singular response line, not a new response classification. In particular it has the original full-world normalization and holds for negative p as well as positive p.
+
+Proof of the same-base clause (7.3.4) and the zero-safe reconstruction. Set $r=\varrho_+$, $b=1/8$, $j=1/8+8r(1-r)$, $n=j+r$. The singular source has $T=9/8$ and $U=5/4$. Use the quantities of Support X, (13.9):
+
+$$
+\begin{aligned}
+F_5&=jn+(n+5/4)\{(196/9)jn-15n-10j\},\\
+F_6&=jn+(n+5/2)\{50jn-36n-20j\},\qquad F_0=84+24n.
+\end{aligned}
+\tag{7.6.2}
+$$
+
+Substitution of the single interpolant (7.1.1) into the actual fifth and sixth rows gives
+
+$$
+(p-24)jn=eF_5,\qquad (v-F_0)jn=eF_6.
+\tag{7.6.3}
+$$
+
+At the graph point $p=\bar p(h_*)\ne24$, so $F_5\ne0$. Thus its own $e$ is exactly $(p-24)jn/F_5$, and its actual sixth response is $F_0+(p-24)F_6/F_5$. The two polynomial remainders in Support X, (13.11), are zero:
+
+$$
+\begin{aligned}
+\operatorname{rem}(\mathcal D F_6+3A_sF_5,\Phi)&=0,\\
+\operatorname{rem}(\mathcal D(F_0F_5-24F_6)+3B_sF_5,\Phi)&=0.
+\end{aligned}
+\tag{7.6.4}
+$$
+
+Evaluating these existing identities at the exact root and dividing only by the nonzero $\mathcal D F_5$ gives $\bar v(h_*)=s_+(\bar p(h_*))$. The other endpoint has exactly this same p and v by (7.3.2); the response line is therefore attained at the actual common base, rather than at a separately chosen singular source with unrelated responses.
+
+There is also a zero-safe expression for the entire lift at a fixed source and fifth response. Namely, use the already established formula of Support X, (13.4)–(13.5), equivalently common-parent geometry, Lemma 12.2 and Theorem 12.3:
+
+$$
+\begin{aligned}
+V&=U+n,\qquad A_5=1+V(4-15/j+20/T-10/n),\\
+K_5&=96(b-1/8)V/T,\qquad Z=\Lambda^2+A_5^2>0,\\
+e&=\frac{-(24/5)(b-1/8)B_{\mathrm{coef}}\Lambda
+          +A_5(p-24-K_5)}{Z}.
+\end{aligned}
+\tag{7.6.5}
+$$
+
+At this singular point $K_5=\Lambda=0$, and (7.6.3) gives $A_5=F_5/(jn)\ne0$. Thus (7.6.5) reduces to $e=(p-24)/A_5$, with a positive denominator $Z=A_5^2$ in its displayed zero-safe form. Substituting this e and the exact singular source into (7.1.1) supplies its entire gain, and $d=24+e$ supplies its fixed drift. The gain uses the original clocks at every row, by (7.3.10). This is exactly the fixed-source fifth-response world of the cited uniqueness theorem. At no step at the event is there division by $\Lambda$ or the regular $D$, and the gain is not refitted after any action. This completes the proof of Theorem 7.3.1. ∎
+
+### 7.7 Source interfaces, mathematical use and scope
+
+The source-specific content of Theorem 7.3.1 is the connected finite extension of the second-J germ over $0<h\le1/250$, the bridge to the exact finite pair, and its actual singular-parent passage. The zero-safe parent and full-world converse are those of common-parent geometry, Theorem 2.1; the regular circuit, critical isolation, local germ and finite pair are those of Sections 6.2–6.7; the singular classification and affine response line are those of Support X, Section 13.2. They are interfaces used with their existing scopes. In particular the first negative-J family already classified in Support X, Section 14, supplies no new assertion here. The old exact $p_J$ is supplied by the all-response volume, Sections 24.2–24.3.
+
+The finite arc places the original base curve $(\bar p(h),\bar v(h))$ in the unequal-ratio J incidence set throughout its stated interval. It also makes that actual base curve meet the existing singular response line while retaining two legal, distinct, equal-J worlds. These are consumers in the same-child problem: they replace the separate local and finite witnesses by one connected family with a common actual ancestor at each parameter. An equal-M witness in that same entire child would still have to satisfy the independent quantifiers (6.8.5); the selected J pair and its finite bounds impose no condition on arbitrary companions.
+
+Support VII, Theorems 25.1–25.2 and Sections 28–30, already supply singleton inventories at both exact critical bases and M-injectivity on unspecified open base neighborhoods. Those entire-child results are reused; a further local M exclusion is not part of Theorem 7.3.1. Tube uniqueness here neither inventories $C(\bar p(h),\bar v(h))$ nor transfers that local M-injectivity to the full finite base curve. The theorem does not specify an independently selected equal-M pair, a global $D_J\cap D_M$ conclusion, a maximal connected component, continuation beyond $1/250$, or an earliest event among other companions. Its only event-count quantifier ranges over the two selected endpoints. No uniform inequality for their alternative M responses is asserted over the finite interval.
+
+Fixed48, V(18.12)(i), rootQ, the common-tree obligations and the original full-domain eight/nine-read recovery question retain their original definitions. The changed common-base family is no resolution of those questions. In particular no source box, positive drift, gain-sign condition, nonvanishing sampled gain, simple-root hypothesis or full-degree hypothesis replaces the original W3 domain.
+
+The literature correspondence is bounded to the methods used above: fixed-node interpolation in Berrut–Trefethen, the contraction principle in Banach, preconditioned interval enclosures in Krawczyk, and the analytic implicit-function theorem as in Lebl's stated theorem. Their classical content is reused, with the contraction and parameter-passage implications given explicitly here. The finite rational source circuit, its inequalities and its two attachments are repo-derived ordinary mathematics. Neither these citations nor the finite continuation imply a global priority or originality claim. The proof concerns the declared original acquisition model and its exact full-world relations.
+
+## 追加锚（本行以下为增补区）

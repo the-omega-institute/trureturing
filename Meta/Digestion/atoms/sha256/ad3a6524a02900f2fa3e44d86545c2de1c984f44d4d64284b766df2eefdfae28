@@ -1,0 +1,25 @@
+**Theorem 23.2 (block four-view recovery and current-task equality).**
+Every view in Definition 23.1 recovers the other three and the unique
+block Time, with both image inverse identities and route agreement.
+Their individual equality kernels coincide with the full exact raw
+current-service kernel, equality of $(t,v)$.
+
+Proof. Time evaluates its actual order-independent block recurrence and
+(23.1). Boundary parses $t$ from terminal prefix closure and computes
+$x_h=D_nY$. Space computes $x_h=T_t^{-n}v$.
+Memory computes $v=D_nm$ and uses Space. Theorem 22.2 then gives the
+same unique block Time from each. Its replay identity and
+$D_nO_n=\operatorname{Id}$ reconstruct all original view contents;
+the explicit $E_jR_i$ equations of Theorem 5.4 give every route
+composition. This is the unchanged actual assay and forcing applied
+to a newly proved larger historical image.
+
+The complete exact raw service and its equal-state invariant are
+Theorem 7.2's A rows on all rational fields. Distinct geometry is
+guard-distinguishable and distinct field has a terminal Read witness
+after at most $n$ actual Ticks, by the same forcing proof as Theorem
+5.4. Thus current-service equality is exactly $(t,v)$.
+Invertibility of $T_t^n$ and Theorem 22.2 identify this kernel with
+block Time on this image. Within-block order and arbitrary old
+journals remain outside it. $\square$
+

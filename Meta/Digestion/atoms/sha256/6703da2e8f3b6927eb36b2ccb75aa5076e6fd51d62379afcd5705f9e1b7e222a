@@ -1,0 +1,28 @@
+**Definition 61.2 (the weighted source coordinate).** On an acquisition
+run let $P_+,S_+$ count actual successful promotions and splits before
+return. Set
+
+$$
+G=P_++S_+,\qquad \Delta=P_++2S_+.
+\tag{AAII.23}
+$$
+
+Here $G$ counts successful growth events and $\Delta$ counts fresh
+persistent source vertices. Refused requests, code allocation and random
+bits have other charges. For public rational weights $u,v\ge0$ with
+$u+v>0$, define
+
+$$
+c_P=u+v,\qquad c_S=u+2v,\qquad
+q=\frac{c_S}{c_P+c_S},\qquad
+\kappa=\frac{c_Pc_S}{c_P+c_S}.
+\tag{AAII.24}
+$$
+
+Thus $uG+v\Delta=c_PP_++c_SS_+$,
+$1/2\le q\le2/3$, and $qc_P=(1-q)c_S=\kappa$.
+These are fees for successful source changes, not for attempts. The
+weights, their arithmetic and the sampler description are paid public
+program data. The optimized coordinate excludes their costs; §65 retains
+them in the same run's resource account.
+
