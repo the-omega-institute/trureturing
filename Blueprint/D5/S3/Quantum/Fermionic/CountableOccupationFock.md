@@ -342,6 +342,30 @@ $$\operatorname{Submodule}.\operatorname{span}\left(Complex, \operatorname{Set}.
 
 Insertion induction produces each occupation basis vector as a nonzero scalar multiple of a creator word. Finite linear extension spans the entire carrier.
 
+**Theorem 1.29 (common annihilator kernel).**
+
+$$\forall v \in Fock,\; \left(\forall j \in Nat,\; \operatorname{annihilate}\left(j, v\right) = 0\right) \Leftrightarrow \left(\exists alpha \in Complex,\; v = \operatorname{smul}\left(alpha, vacuum\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/CountableOccupationFock.common_annihilator_kernel` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If a nonempty occupation S contains j, the coefficient of S with j deleted in annihilate j v is phase j S times the coefficient of S in v. Deletion is injective among occupations containing j, and the sign is nonzero. Thus every nonempty coefficient vanishes, while the empty coefficient supplies the unique scalar. Conversely all annihilators kill each scalar multiple of the actual vacuum.
+
+**Theorem 1.30 (eq scalar of creator commutation).**
+
+$$\forall A \in \operatorname{Module}.\operatorname{End}\left(Complex, Fock\right),\; \forall alpha \in Complex,\; A\left(vacuum\right) = \operatorname{smul}\left(alpha, vacuum\right) \Rightarrow \left(\left(\forall j \in Nat,\; A \cdot \operatorname{create}\left(j\right) = \operatorname{create}\left(j\right) \cdot A\right) \Rightarrow A = \operatorname{smul}\left(alpha, (1:\operatorname{Module}.\operatorname{End}\left(Complex, Fock\right))\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Fermionic/CountableOccupationFock.eq_scalar_of_creator_commutation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Commutation moves A through each finite creator word. Its scalar action on the vacuum therefore holds on every creator-word state, and creator_spanning with linear-map extensionality extends that same scalar to every Fock vector. No irreducibility hypothesis or finite cutoff is imposed.
+
 This algebraic representation asserts CAR, exact cutoff transport and parity. Statewise quadratic normal sums, the bc Virasoro anomaly, the all-state super vertex algebra, graded tensor matter, BRST charge and nilpotence, cohomology, no-ghost results and the Monster, sewing, string and AdS identifications require further constructions.
 
 ## References
@@ -350,11 +374,13 @@ This algebraic representation asserts CAR, exact cutoff transport and parity. St
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.annihilate`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.annihilate_vacuum`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.car`
+- Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.common_annihilator_kernel`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.create`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.create_vacuum`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.creator_spanning`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.cutoff_annihilate_coherence`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.cutoff_create_coherence`
+- Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.eq_scalar_of_creator_commutation`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.finiteMode`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.finiteWord`
 - Truth anchor: `D5/S3/Quantum/Fermionic/CountableOccupationFock.finite_capture`

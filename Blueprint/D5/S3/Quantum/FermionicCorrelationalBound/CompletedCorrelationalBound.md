@@ -370,43 +370,7 @@ $$\forall (d : \mathbb{N})(x : \operatorname{Fin} d \to \operatorname{Bool}), (\
 
 The displayed defining equation retains the data fields; proof fields are omitted by proof irrelevance.
 
-**Theorem 1.27 (mem_occupationSet).**
-
-$$\forall d \in Nat,\; \forall x \in \operatorname{Fin}\left(d\right) \to Bool,\; \forall i \in \operatorname{Fin}\left(d\right),\; \operatorname{val}\left(i\right) \in \operatorname{occupationSet}\left(x\right) \Leftrightarrow \operatorname{x}\left(i\right) = true$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/FermionicCorrelationalBound/CompletedCorrelationalBound.mem_occupationSet` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-A Boolean bit is occupied exactly when its natural site belongs to the encoded set.
-
-**Theorem 1.28 (occupationSet_injective).**
-
-$$\forall d \in Nat,\; \operatorname{Injective}\left(\operatorname{occupationSet}\left(d\right)\right)$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/FermionicCorrelationalBound/CompletedCorrelationalBound.occupationSet_injective` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The occupation encoding retains every bit of a finite Boolean assignment.
-
-**Theorem 1.29 (occupationSet_ofSet).**
-
-$$\forall d \in Nat,\; \forall S \in \operatorname{Finset}\left(Nat\right),\; \left(\forall n \in Nat,\; n \in S \Rightarrow n < d\right) \Rightarrow \operatorname{occupationSet}\left(\operatorname{occupationOfSet}\left(d, S\right)\right) = S$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/FermionicCorrelationalBound/CompletedCorrelationalBound.occupationSet_ofSet` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-For a set below the finite cutoff, encoding the inverse Boolean assignment recovers the original set.
-
-**Definition 1.30 (sectorOfCountable).**
+**Definition 1.27 (sectorOfCountable).**
 
 $$\forall (d : \mathbb{N})(N : \mathbb{N})(S : \{s : \operatorname{Finset} \mathbb{N} / / s. \operatorname{card} = N\})(\operatorname{hS} : \operatorname{modesBelow} d S), (\operatorname{sectorOfCountable} (d)(N)(S)(\operatorname{hS}): \{s : \operatorname{Fin} d \to \operatorname{Bool} / / \operatorname{D5}. \operatorname{S3}. \operatorname{Quantum}. \operatorname{FockSpace}. \operatorname{ForbiddenNeighbourDeterminant}. \operatorname{occupationCount} s = N\})= (\langle \operatorname{occupationOfSet} d (S : \operatorname{Finset} \mathbb{N}),...\rangle)$$
 
@@ -437,12 +401,9 @@ The displayed defining equation retains the data fields; proof fields are omitte
 - Truth anchor: `D5/S3/Quantum/FermionicCorrelationalBound/CompletedCorrelationalBound.finiteOccupation_sectorOfCountable`
 - Truth anchor: `D5/S3/Quantum/FermionicCorrelationalBound/CompletedCorrelationalBound.finiteRestrict`
 - Truth anchor: `D5/S3/Quantum/FermionicCorrelationalBound/CompletedCorrelationalBound.finite_pair_coordinate`
-- Truth anchor: `D5/S3/Quantum/FermionicCorrelationalBound/CompletedCorrelationalBound.mem_occupationSet`
 - Truth anchor: `D5/S3/Quantum/FermionicCorrelationalBound/CompletedCorrelationalBound.modesBelow`
 - Truth anchor: `D5/S3/Quantum/FermionicCorrelationalBound/CompletedCorrelationalBound.occupationOfSet`
 - Truth anchor: `D5/S3/Quantum/FermionicCorrelationalBound/CompletedCorrelationalBound.occupationSet`
-- Truth anchor: `D5/S3/Quantum/FermionicCorrelationalBound/CompletedCorrelationalBound.occupationSet_injective`
-- Truth anchor: `D5/S3/Quantum/FermionicCorrelationalBound/CompletedCorrelationalBound.occupationSet_ofSet`
 - Truth anchor: `D5/S3/Quantum/FermionicCorrelationalBound/CompletedCorrelationalBound.occupiedModes`
 - Truth anchor: `D5/S3/Quantum/FermionicCorrelationalBound/CompletedCorrelationalBound.realB`
 - Truth anchor: `D5/S3/Quantum/FermionicCorrelationalBound/CompletedCorrelationalBound.realK`
