@@ -1,0 +1,54 @@
+## 60. Fixed-width information, all-width coverage and mathematical sources
+
+Theorem 47.2 adds necessary actual-pair identities at a common width,
+the derived distinctions $d_1\ne d_2$ and $n_1\ne n_2$, their sign
+relation, and the exclusion of every common width $b\ge\rho$.
+These are consequences for distinct worlds sharing $p,v,m$, without
+a proportional-gain assumption. They neither give a sufficient
+source construction below $\rho$ nor exclude unequal-width M pairs.
+For an equal-width pair reconstructed in Section 57, all those
+necessary identities still apply, in addition to its complete
+source filters. No cutoff is imposed on an individual world or
+on the arbitrary-width reconstruction set.
+
+Theorems 57.2 and 58.2 instead give exact source-compatible
+reconstruction for every width $b>0$ and every prescribed
+$p\ne24,v,w$, with both necessity and the complete-world converse.
+They include equal and unequal widths, the full $\Lambda=0$ parent
+branch, sampled gain zeros, repeated gain roots, lower degrees and
+zero drift wherever the original rows permit them. Positivity of
+$T,U,H_2$, the rational branch guards, the exceptional quadratic
+case and the strict source tests are all part of this assertion.
+No whole gain is replaced by independently chosen samples.
+
+The remaining existence question is satisfiability of (59.2).
+Neither a new actual witness for its independent pairs nor a global
+obstruction is supplied by the reconstruction criteria. In
+particular no M crossing is asserted on the four-world J locus of
+Section 40. The J-separation and same-pair double-zero questions for
+the known two-world component are not settled by these criteria.
+The local forbidden-base intersection of Sections 42–46 remains
+confined to its stated scope and does not make $p=24$ admissible
+in (59.2).
+
+The complete-world convention, traces and zero-safe parent are those
+of *FIB common-parent geometry and two exact mixed children*,
+Definitions 1.1–1.3 and Theorem 2.1, with parent parameters
+$\beta=1/8$ and $a_{\rm parent}=24/5$. Their precise specialization
+is already given in Sections 48–49. The affine lift, $H_i$,
+positive-width rank and cofactor line are exactly Sections 49–50;
+the fixed-width information remains Theorem 47.2 and Sections 51–53.
+These results are used through (54.2)–(55.6), rather than repeated
+as separate parent or cofactor proofs.
+
+The explicit inverse, product consistency equations, positive
+polynomial remainder, exhaustive strict-source reconstruction,
+rational width equations and cubic total-response-degree cancellation
+are those of *Exact cross-width reconstruction of a terminal-M
+response triple*, Sections 3–5, under the correspondence (54.3).
+Its Section 6 gives the independent-pair formulation expressed in
+(59.2). Fixed-node interpolation and elementary matrix and polynomial
+identities suffice for the displayed reconstruction proofs. The
+criteria concern exactly the original complete worlds and literal
+clock readings; source coordinates are never acquired observations.
+

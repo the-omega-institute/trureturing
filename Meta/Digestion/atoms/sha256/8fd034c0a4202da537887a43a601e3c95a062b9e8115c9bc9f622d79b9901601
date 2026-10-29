@@ -1,0 +1,4 @@
+**定理 485.3（上侧对应）。** 若 RH 成立，则 $\limsup_{x\to\infty}\mathcal T(x)\ge1/2$；若 RH 不成立，则 $\limsup_{x\to\infty}\mathcal T(x)=+\infty$。
+
+证明。设 $\mathcal T(x)\le K$ 对 $x\ge x_0$ 成立，令 $h(y)=K-\mathcal T(e^y)\ge0$，其变换为 $Kx_0^{-s}/s-\mathcal F(s)$。它在零点对应处的留数为 $+m/2$，在 $0$ 处（RH 情形）的主部为 $K/s$。将定理 485.2 证明中的 $g,G$ 换为 $h$ 及其变换，逐字重复，得 RH 下 $K\ge m/2\ge1/2$，非 RH 下矛盾。证毕。
+
