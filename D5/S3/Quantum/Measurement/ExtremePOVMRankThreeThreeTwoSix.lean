@@ -94,7 +94,6 @@ private theorem frame_posDef : frame.PosDef := by
     rw [Matrix.mulVec_sub]
     apply sub_eq_zero.mpr
     simpa using hxy
-  funext i
   have h0 := congr_fun hz 0
   have h1 := congr_fun hz 1
   have h2 := congr_fun hz 2
@@ -102,10 +101,61 @@ private theorem frame_posDef : frame.PosDef := by
   have h4 := congr_fun hz 4
   have h5 := congr_fun hz 5
   have h6 := congr_fun hz 6
-  fin_cases i <;>
-    norm_num [Matrix.mulVec, dotProduct, Fin.sum_univ_succ, Pi.sub_apply]
-      at h0 h1 h2 h3 h4 h5 h6 ⊢
-  all_goals linear_combination h0 + h1 + h2 + h3 + h4 + h5 + h6
+  norm_num [Matrix.mulVec, dotProduct, Fin.sum_univ_succ, Pi.sub_apply]
+    at h0 h1 h2 h3 h4 h5 h6
+  have hd0 : 17 * (x 3 - y 3) + (1 + Complex.I) * (x 6 - y 6) = 0 := by
+    linear_combination (norm := (ring_nf; try simp [Complex.I_sq]))
+      5 * h3 - (2 + 2 * Complex.I) * h0
+  have hd1 : 17 * (x 4 - y 4) + (1 + Complex.I) * (x 6 - y 6) = 0 := by
+    linear_combination (norm := (ring_nf; try simp [Complex.I_sq]))
+      5 * h4 - (2 + 2 * Complex.I) * h1
+  have hd2 : 17 * (x 5 - y 5) + (1 + Complex.I) * (x 6 - y 6) = 0 := by
+    linear_combination (norm := (ring_nf; try simp [Complex.I_sq]))
+      5 * h5 - (2 + 2 * Complex.I) * h2
+  have ha0 : 85 * (x 0 - y 0) + 30 * (x 6 - y 6) = 0 := by
+    linear_combination (norm := (ring_nf; try simp [Complex.I_sq]))
+      17 * h0 - (2 - 2 * Complex.I) * hd0
+  have ha1 : 85 * (x 1 - y 1) + 30 * (x 6 - y 6) = 0 := by
+    linear_combination (norm := (ring_nf; try simp [Complex.I_sq]))
+      17 * h1 - (2 - 2 * Complex.I) * hd1
+  have ha2 : 85 * (x 2 - y 2) + 30 * (x 6 - y 6) = 0 := by
+    linear_combination (norm := (ring_nf; try simp [Complex.I_sq]))
+      17 * h2 - (2 - 2 * Complex.I) * hd2
+  have hg' : 60 * (x 6 - y 6) = 0 := by
+    linear_combination (norm := (ring_nf; try simp [Complex.I_sq]))
+      17 * h6 - (2 / 5 : ℂ) * ha0 - (2 / 5 : ℂ) * ha1 - (2 / 5 : ℂ) * ha2
+      - (1 - Complex.I) * hd0 - (1 - Complex.I) * hd1 - (1 - Complex.I) * hd2
+  have hg : x 6 - y 6 = 0 := by
+    rcases mul_eq_zero.mp hg' with h | h
+    · norm_num at h
+    · exact h
+  have hd0' : x 3 - y 3 = 0 := by
+    linear_combination (norm := (ring_nf; try simp [Complex.I_sq]))
+      (1 / 17 : ℂ) * hd0 - ((1 + Complex.I) / 17) * hg
+  have hd1' : x 4 - y 4 = 0 := by
+    linear_combination (norm := (ring_nf; try simp [Complex.I_sq]))
+      (1 / 17 : ℂ) * hd1 - ((1 + Complex.I) / 17) * hg
+  have hd2' : x 5 - y 5 = 0 := by
+    linear_combination (norm := (ring_nf; try simp [Complex.I_sq]))
+      (1 / 17 : ℂ) * hd2 - ((1 + Complex.I) / 17) * hg
+  have ha0' : x 0 - y 0 = 0 := by
+    linear_combination (norm := (ring_nf; try simp [Complex.I_sq]))
+      (1 / 85 : ℂ) * ha0 - (6 / 17 : ℂ) * hg
+  have ha1' : x 1 - y 1 = 0 := by
+    linear_combination (norm := (ring_nf; try simp [Complex.I_sq]))
+      (1 / 85 : ℂ) * ha1 - (6 / 17 : ℂ) * hg
+  have ha2' : x 2 - y 2 = 0 := by
+    linear_combination (norm := (ring_nf; try simp [Complex.I_sq]))
+      (1 / 85 : ℂ) * ha2 - (6 / 17 : ℂ) * hg
+  funext i
+  fin_cases i
+  · exact sub_eq_zero.mp ha0'
+  · exact sub_eq_zero.mp ha1'
+  · exact sub_eq_zero.mp ha2'
+  · exact sub_eq_zero.mp hd0'
+  · exact sub_eq_zero.mp hd1'
+  · exact sub_eq_zero.mp hd2'
+  · exact sub_eq_zero.mp hg
 
 private theorem normalizer_exists :
     ∃ R : Matrix (Fin 7) (Fin 7) ℂ, IsUnit R.det ∧ R * frame * Rᴴ = 1 := by
