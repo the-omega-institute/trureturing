@@ -146,13 +146,13 @@ private theorem indicator_pullback_ae (p : Address) (q : Edge) :
   exact (conditional_pullback_law.2.2.2.2.1 p (indicator q)).trans
     ((conditional_pullback_law.2.2.1 p).quasiMeasurePreserving.ae_eq_comp hc)
 
-private theorem pullback_indicator_prefix (p : Address) (q : Edge) (h : q.val.IsPrefix p) :
+theorem pullback_indicator_prefix (p : Address) (q : Edge) (h : q.val.IsPrefix p) :
     pullback p (indicator q) = constG 1 := by
   apply Lp.ext
   filter_upwards [indicator_pullback_ae p q, constG_ae 1] with ω hi hc
   rw [hi, hc, Set.indicator_of_mem (cylinder_prefix q.val p h ω)]
 
-private theorem pullback_indicator_descendant (p : Address) (u : Edge) :
+theorem pullback_indicator_descendant (p : Address) (u : Edge) :
     pullback p (indicator (descendant p u)) = indicator u := by
   apply Lp.ext
   have hu : (indicator u : Omega → ℝ) =ᵐ[M]
@@ -167,7 +167,7 @@ private theorem pullback_indicator_descendant (p : Address) (u : Edge) :
   · rw [Set.indicator_of_notMem (mt (cylinder_prepend_append p u.val ω).mp h),
       Set.indicator_of_notMem h]
 
-private theorem pullback_indicator_incomparable (p : Address) (q : Edge)
+theorem pullback_indicator_incomparable (p : Address) (q : Edge)
     (hqp : ¬ q.val.IsPrefix p) (hpq : ¬ p.IsPrefix q.val) :
     pullback p (indicator q) = 0 := by
   apply Lp.ext
@@ -186,14 +186,14 @@ private theorem prefixSum_single (p : Address) (q : Edge) (c : ℝ) :
   change (∑ u ∈ prefixes p, (lp.single 2 q c : H) u) = _
   simp [Pi.single_apply, mem_prefixes]
 
-private theorem suffix_single_descendant (p : Address) (q : Edge) (c : ℝ) :
+theorem suffix_single_descendant (p : Address) (q : Edge) (c : ℝ) :
     S p (lp.single 2 (descendant p q) c) = lp.single 2 q c := by
   ext u
   change (lp.single 2 (descendant p q) c : H) (descendant p u) =
     (lp.single 2 q c : H) u
   simp [Pi.single_apply, (descendant_injective p).eq_iff]
 
-private theorem suffix_single_of_not_prefix (p : Address) (q : Edge) (c : ℝ)
+theorem suffix_single_of_not_prefix (p : Address) (q : Edge) (c : ℝ)
     (h : ¬ p.IsPrefix q.val) : S p (lp.single 2 q c) = 0 := by
   ext u
   change (lp.single 2 q c : H) (descendant p u) = 0
@@ -205,7 +205,7 @@ private theorem suffix_single_of_not_prefix (p : Address) (q : Edge) (c : ℝ)
   rw [← he']
   exact List.prefix_append _ _
 
-private theorem suffix_single_prefix (p : Address) (q : Edge) (c : ℝ)
+theorem suffix_single_prefix (p : Address) (q : Edge) (c : ℝ)
     (h : q.val.IsPrefix p) : S p (lp.single 2 q c) = 0 := by
   ext u
   change (lp.single 2 q c : H) (descendant p u) = 0

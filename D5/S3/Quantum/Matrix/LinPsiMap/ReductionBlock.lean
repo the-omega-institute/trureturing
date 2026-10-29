@@ -23,7 +23,7 @@ set_option backward.isDefEq.respectTransparency.types false
 def psi {n : ℕ} (T : Matrix (Fin n) (Fin n) ℂ) : Matrix (Fin n) (Fin n) ℂ :=
   (2 * T.trace) • 1 - T
 
-private def skew {n : ℕ} (k l : Fin n) : Matrix (Fin n) (Fin n) ℂ :=
+def skew {n : ℕ} (k l : Fin n) : Matrix (Fin n) (Fin n) ℂ :=
   Matrix.single k l 1 - Matrix.single l k 1
 
 private theorem skew_sandwich {n : ℕ} (T : Matrix (Fin n) (Fin n) ℂ)
@@ -36,7 +36,7 @@ private theorem skew_sandwich {n : ℕ} (T : Matrix (Fin n) (Fin n) ℂ)
     Matrix.sub_mul, Matrix.mul_sub, Matrix.single_mul_mul_single, one_mul, mul_one]
   abel
 
-private theorem skew_sum {n : ℕ} (T : Matrix (Fin n) (Fin n) ℂ) :
+theorem skew_sum {n : ℕ} (T : Matrix (Fin n) (Fin n) ℂ) :
     ((1 / 2 : ℝ) : ℂ) • (∑ k, ∑ l, skew k l * T * (skew k l)ᴴ) =
       T.trace • 1 - Tᵀ := by
   classical

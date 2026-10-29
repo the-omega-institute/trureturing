@@ -394,6 +394,33 @@ theorem localization_actual_law : localizationArena.Law primeActual :=
    for localization. The confinement family supplies these obligations; its outer
    source binding is checked separately. -/
 
+def tailActual : Realization primeSignature :=
+  realize primeSignature (fun _ _ m => _root_.D5.S3.Arith.Robin.OriginalEndpointPrimeTail.tail m) (fun e => nomatch e)
+
+abbrev tailArena : Arena where
+  signature := primeSignature
+  Law R := ∀ epsilon : ℝ, 0 < epsilon → ∃ A : ℝ, 0 < A ∧
+    ∀ alpha : ℝ, alpha ∈ Set.Icc (1 / 40) 1 →
+    ∀ m : ℕ, 3 ≤ m → A ≤ Real.log (m : ℝ) →
+    (∀ n : ℕ, 0 < n → n < m →
+      goldenResourceObjective (alpha / (Real.log m * Real.log (Real.log m))) n <
+        goldenResourceObjective (alpha / (Real.log m * Real.log (Real.log m))) m) →
+    Real.sqrt (largestPrime m : ℝ) * Real.log (largestPrime m) * R.readout () () m ≤
+      2 * Real.sqrt (1 - alpha / 2) + epsilon
+
+theorem tail_source_bridge : (type_of% actual_record_tail_upper) ↔ tailArena.Law tailActual := Iff.rfl
+
+theorem tail_actual_law : tailArena.Law tailActual := actual_record_tail_upper
+
+/- The whole-family law includes the original eventual threshold and full record.
+   Variation and sensitivity require a rejected realization violating every
+   threshold at some positive epsilon. Such a violation requires unbounded actual
+   records in this exact price domain. This existence assertion is not a premise
+   or consequence of the conditional tail theorem. No complete registration is
+   claimed for this family. -/
+
+#print axioms tail_actual_law
+
 #print axioms divisorFamily
 #print axioms localization_actual_law
 
