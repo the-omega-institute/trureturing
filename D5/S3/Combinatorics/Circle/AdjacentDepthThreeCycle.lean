@@ -35,58 +35,65 @@ def cycleForward {α : Type*} [DecidableEq α] (a b c : α) (x : α) : α :=
 def cycleBackward {α : Type*} [DecidableEq α] (a b c : α) (x : α) : α :=
   if x = a then b else if x = b then c else if x = c then a else x
 
-private theorem cycleForward_backward {α : Type*} [DecidableEq α]
+theorem cycleForward_backward {α : Type*} [DecidableEq α]
     {a b c : α} (hab : a ≠ b) (hac : a ≠ c) (hbc : b ≠ c) (x : α) :
     cycleForward a b c (cycleBackward a b c x) = x := by
+  have hba : b ≠ a := Ne.symm hab
+  have hca : c ≠ a := Ne.symm hac
+  have hcb : c ≠ b := Ne.symm hbc
   by_cases hxa : x = a
   · subst x
-    simp [cycleForward, cycleBackward, hab, hac, hbc]
+    simp [cycleForward, cycleBackward, hab, hac, hbc, hba, hca, hcb]
   · by_cases hxb : x = b
     · subst x
-      simp [cycleForward, cycleBackward, hab, hac, hbc]
+      simp [cycleForward, cycleBackward, hab, hac, hbc, hba, hca, hcb]
     · by_cases hxc : x = c
       · subst x
-        simp [cycleForward, cycleBackward, hab, hac, hbc]
-      · simp [cycleForward, cycleBackward, hxa, hxb, hxc]
+        simp [cycleForward, cycleBackward, hab, hac, hbc, hba, hca, hcb]
+      · simp [cycleForward, cycleBackward, hxa, hxb, hxc, hab, hac, hbc, hba, hca, hcb]
 
-private theorem cycleBackward_forward {α : Type*} [DecidableEq α]
+theorem cycleBackward_forward {α : Type*} [DecidableEq α]
     {a b c : α} (hab : a ≠ b) (hac : a ≠ c) (hbc : b ≠ c) (x : α) :
     cycleBackward a b c (cycleForward a b c x) = x := by
+  have hba : b ≠ a := Ne.symm hab
+  have hca : c ≠ a := Ne.symm hac
+  have hcb : c ≠ b := Ne.symm hbc
   by_cases hxa : x = a
   · subst x
-    simp [cycleForward, cycleBackward, hab, hac, hbc]
+    simp [cycleForward, cycleBackward, hab, hac, hbc, hba, hca, hcb]
   · by_cases hxb : x = b
     · subst x
-      simp [cycleForward, cycleBackward, hab, hac, hbc]
+      simp [cycleForward, cycleBackward, hab, hac, hbc, hba, hca, hcb]
     · by_cases hxc : x = c
       · subst x
-        simp [cycleForward, cycleBackward, hab, hac, hbc]
-      · simp [cycleForward, cycleBackward, hxa, hxb, hxc]
+        simp [cycleForward, cycleBackward, hab, hac, hbc, hba, hca, hcb]
+      · simp [cycleForward, cycleBackward, hxa, hxb, hxc, hab, hac, hbc, hba, hca, hcb]
 
 /-- The physical three-cycle, with its actual inverse exposed in the API. -/
 def physicalThreeCycle {α : Type*} [DecidableEq α]
     (a b c : α) (hab : a ≠ b) (hac : a ≠ c) (hbc : b ≠ c) : Equiv.Perm α :=
-  Equiv.ofBijective (cycleForward a b c)
-    ⟨fun x y h => by
-      have := congrArg (cycleBackward a b c) h
-      simpa [cycleBackward_forward hab hac hbc] using this,
-      ⟨cycleBackward a b c, cycleForward_backward hab hac hbc,
-        cycleBackward_forward hab hac hbc⟩⟩
+  { toFun := cycleForward a b c
+    invFun := cycleBackward a b c
+    left_inv := cycleBackward_forward hab hac hbc
+    right_inv := cycleForward_backward hab hac hbc }
 
 theorem physicalThreeCycle_apply_root {α : Type*} [DecidableEq α]
     (a b c : α) (hab : a ≠ b) (hac : a ≠ c) (hbc : b ≠ c) :
     physicalThreeCycle a b c hab hac hbc a = c := by
-  simp [physicalThreeCycle, cycleForward, hab, hac]
+  change cycleForward a b c a = c
+  simp [cycleForward, hab, hac, Ne.symm hab, Ne.symm hac]
 
 theorem physicalThreeCycle_apply_negative {α : Type*} [DecidableEq α]
     (a b c : α) (hab : a ≠ b) (hac : a ≠ c) (hbc : b ≠ c) :
     physicalThreeCycle a b c hab hac hbc b = a := by
-  simp [physicalThreeCycle, cycleForward, hab, hbc]
+  change cycleForward a b c b = a
+  simp [cycleForward, hab, hbc, Ne.symm hab, Ne.symm hbc]
 
 theorem physicalThreeCycle_apply_seed {α : Type*} [DecidableEq α]
     (a b c : α) (hab : a ≠ b) (hac : a ≠ c) (hbc : b ≠ c) :
     physicalThreeCycle a b c hab hac hbc c = b := by
-  simp [physicalThreeCycle, cycleForward, hac, hbc]
+  change cycleForward a b c c = b
+  simp [cycleForward, hac, hbc, Ne.symm hac, Ne.symm hbc]
 
 theorem physicalThreeCycle_inverse {α : Type*} [DecidableEq α]
     (a b c : α) (hab : a ≠ b) (hac : a ≠ c) (hbc : b ≠ c) (x : α) :
@@ -95,20 +102,28 @@ theorem physicalThreeCycle_inverse {α : Type*} [DecidableEq α]
   simp only [Equiv.apply_symm_apply]
   exact (cycleForward_backward hab hac hbc x).symm
 
+private theorem phase_offset_injective {k : ℕ} (hk : 0 < k) (a : Fin k)
+    {i j : ℕ} (hi : i < k) (hj : j < k)
+    (hij : phase hk a i = phase hk a j) : i = j := by
+  have hm0 : Nat.ModEq k (a.val + i) (a.val + j) := by
+    exact congrArg Fin.val hij
+  have hc := Nat.ModEq.add_left_cancel' a.val hm0
+  simpa only [Nat.ModEq, Nat.mod_eq_of_lt hi, Nat.mod_eq_of_lt hj] using hc
+
 private theorem native_distinct {k t : ℕ} (hk : 3 ≤ k)
     {root neg next : Fin k} {p : ℤ}
     (hroot : actualSource k t root = p)
     (hneg : actualSource k t neg = 2 * p - modulus k)
     (hnext : actualSource k t next = 4 * p - modulus k)
-    (hrootpos : 0 < p) (hrootbound : 3 * p ≤ modulus k) :
+    (hrootQ : quarter k ≤ p)
+    (hrootpos : 0 < p) (hrootbound : 3 * p ≤ modulus k)
+    (hrootnext : root ≠ next) :
     root ≠ neg ∧ root ≠ next ∧ neg ≠ next := by
-  have hN : 0 < modulus k := (source_geometry hk).2.2.2
+  have hN : 0 < modulus k := (source_geometry hk).2.2.2.1
   have hnegval : 2 * p - modulus k < 0 := by omega
   have hnextval : 0 < 4 * p - modulus k := by
     have hQ := (source_geometry hk).1
-    have hpQ : quarter k ≤ p := by
-      have hNQ := (source_geometry hk).2.1
-      omega
+    have hNform := (source_geometry hk).2.1
     omega
   constructor
   · intro h
@@ -116,8 +131,7 @@ private theorem native_distinct {k t : ℕ} (hk : 3 ≤ k)
     omega
   constructor
   · intro h
-    have := congrArg (actualSource k t) h
-    omega
+    exact hrootnext h
   · intro h
     have := congrArg (actualSource k t) h
     omega
@@ -125,76 +139,106 @@ private theorem native_distinct {k t : ℕ} (hk : 3 ≤ k)
 theorem native_long_seed_three_cycle {k t : ℕ} (hk : 3 ≤ k)
     (hsmall : ∀ i : Fin k, |actualSource k t i| < quarter k →
       0 < actualSource k t i)
-    (n : Fin k) (hn : actualSource k t n < 0)
-    (h : ℕ) (hh : 1 ≤ h) :
+    (n : Fin k) (hn : actualSource k t n < 0) :
     ∃ (a root neg next : Fin k) (r : ℕ),
-      r = h + 1 ∧
-      root = phase (by omega) a r ∧
-      neg = phase (by omega) a (r + 1) ∧
-      next = phase (by omega) a (r + 2) ∧
-      0 < actualSource k t a ∧
-      actualSource k t root = (2 : ℤ) ^ r * actualSource k t a ∧
-      quarter k ≤ actualSource k t root ∧
-      3 * actualSource k t root ≤ modulus k ∧
-      actualSource k t neg = 2 * actualSource k t root - modulus k ∧
-      actualSource k t neg < 0 ∧
-      actualSource k t next = 4 * actualSource k t root - modulus k ∧
-      0 < actualSource k t next ∧
-      (physicalThreeCycle root neg next · root) = next ∧
-      (physicalThreeCycle root neg next · neg) = root ∧
-      (physicalThreeCycle root neg next · next) = neg ∧
-      (physicalThreeCycle root neg next).symm =
-        physicalThreeCycle next root neg (by omega) (by omega) (by omega) ∧
-      let N := modulus k
-      let U := fun z : ℤ => z + if z < 0 then N else 0
-      U (actualSource k t neg) - U (actualSource k t root) =
-        actualSource k t root ∧
-      U (actualSource k t next) - U (actualSource k t neg) =
-        actualSource k t neg := by
+      2 ≤ r → ∃ h : ℕ,
+      1 ≤ h ∧ r = h + 1 ∧
+        root = phase (by omega) a r ∧
+        neg = phase (by omega) a (r + 1) ∧
+        next = phase (by omega) a (r + 2) ∧
+        0 < actualSource k t a ∧
+        actualSource k t root = (2 : ℤ) ^ r * actualSource k t a ∧
+        quarter k ≤ actualSource k t root ∧
+        3 * actualSource k t root ≤ modulus k ∧
+        actualSource k t neg = 2 * actualSource k t root - modulus k ∧
+        actualSource k t neg < 0 ∧
+        actualSource k t next = 4 * actualSource k t root - modulus k ∧
+        0 < actualSource k t next ∧
+        (∃ e : Equiv.Perm (Fin k),
+          (e root = next ∧ e neg = root ∧ e next = neg ∧
+            e.symm root = neg ∧ e.symm neg = next ∧ e.symm next = root)) ∧
+        (let N := modulus k
+         let U := fun z : ℤ => z + if z < 0 then N else 0
+         U (actualSource k t neg) - U (actualSource k t root) =
+           actualSource k t root ∧
+         U (actualSource k t next) - U (actualSource k t neg) =
+           actualSource k t neg) := by
   obtain ⟨r, hr, hnodup, ha, hamod, hpre, hdyadic, hroot, hrootQ, hrootupper,
-    hneg, hneglt, hnext, hnextpos, _, _, _⟩ :=
+    hneg, hneglt, hnext, hnextpos, _, _, _, _⟩ :=
     native_chain_extraction hk hsmall n hn
-  by_cases he : r = h + 1
-  · let a := phase (by omega : 0 < k) n 1
-    let root := phase (by omega : 0 < k) a r
-    let neg := phase (by omega : 0 < k) a (r + 1)
-    let next := phase (by omega : 0 < k) a (r + 2)
-    have hrootnegnext : (root ≠ neg ∧ root ≠ next ∧ neg ≠ next) := by
-      exact native_distinct hk hroot hneg hnext (by omega) hrootupper
-    rcases hrootnegnext with ⟨hrn, hrx, hnx⟩
-    refine ⟨a, root, neg, next, r, rfl, rfl, rfl, rfl, ha, hroot, hrootQ,
-      hrootupper, hneg, hneglt, hnext, hnextpos, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  let a := phase (by omega : 0 < k) n 1
+  let root := phase (by omega : 0 < k) a r
+  let neg := phase (by omega : 0 < k) a (r + 1)
+  let next := phase (by omega : 0 < k) a (r + 2)
+  have hroot' : actualSource k t root = (2 : ℤ) ^ r * actualSource k t a := by
+    simpa [root, a] using hroot
+  have hneg' : actualSource k t neg = 2 * actualSource k t root - modulus k := by
+    simpa [root, neg, a] using hneg
+  have hnext' : actualSource k t next = 4 * actualSource k t root - modulus k := by
+    simpa [root, next, a] using hnext
+  have hrootQ' : quarter k ≤ actualSource k t root := by
+    simpa [root, a] using hrootQ
+  have hrootupper' : 3 * actualSource k t root ≤ modulus k := by
+    simpa [root, a] using hrootupper
+  have hneglt' : actualSource k t neg < 0 := by
+    simpa [neg, a] using hneglt
+  have hnextpos' : 0 < actualSource k t next := by
+    simpa [next, a] using hnextpos
+  have ha' : 0 < actualSource k t a := by
+    simpa [a] using ha
+  have hrootnext : root ≠ next := by
+    intro heq
+    by_cases hlt : r + 2 < k
+    · have hidx : r = r + 2 :=
+        phase_offset_injective (by omega : 0 < k) a (by omega) hlt
+          (by simpa [root, next] using heq)
+      omega
+    · have hrk : r + 2 = k := by omega
+      have hnexta : next = a := by
+        dsimp [next]
+        apply Fin.ext
+        rw [hrk]
+        change (a.val + k) % k = a.val
+        rw [Nat.add_mod_right, Nat.mod_eq_of_lt a.isLt]
+      have hroota : root = a := heq.trans hnexta
+      have hroota' : phase (by omega) a r = phase (by omega) a 0 := by
+        simpa [root, a, phase_zero] using hroota
+      have hr0 := phase_offset_injective (by omega : 0 < k) a
+        (by omega) (by omega) hroota'
+      omega
+  have hrootnegnext : (root ≠ neg ∧ root ≠ next ∧ neg ≠ next) := by
+    exact native_distinct (p := actualSource k t root) hk rfl hneg' hnext' hrootQ'
+      (by omega) hrootupper' hrootnext
+  rcases hrootnegnext with ⟨hrn, hrx, hnx⟩
+  have hnr : neg ≠ root := Ne.symm hrn
+  have hxr : next ≠ root := Ne.symm hrx
+  have hnx' : next ≠ neg := Ne.symm hnx
+  refine ⟨a, root, neg, next, r, ?_⟩
+  intro hlong
+  refine ⟨r - 1, by omega, by omega, rfl, rfl, rfl, ha', hroot', hrootQ',
+      hrootupper', hneg', hneglt', hnext', hnextpos', ?_, ?_⟩
+  · refine ⟨physicalThreeCycle root neg next hrn hrx hnx, ?_, ?_, ?_, ?_, ?_, ?_⟩
     · exact physicalThreeCycle_apply_root root neg next hrn hrx hnx
     · exact physicalThreeCycle_apply_negative root neg next hrn hrx hnx
     · exact physicalThreeCycle_apply_seed root neg next hrn hrx hnx
-    · apply Equiv.ext
-      intro x
-      apply congrArg (physicalThreeCycle root neg next hrn hrx hnx).symm
-      by_cases hxroot : x = root
-      · subst x
-        simp [physicalThreeCycle, cycleBackward, cycleForward, hrn, hrx, hnx]
-      · by_cases hxneg : x = neg
-        · subst x
-          simp [physicalThreeCycle, cycleBackward, cycleForward, hrn, hrx, hnx]
-        · by_cases hxnext : x = next
-          · subst x
-            simp [physicalThreeCycle, cycleBackward, cycleForward, hrn, hrx, hnx]
-          · simp [physicalThreeCycle, cycleBackward, cycleForward, hxroot, hxneg, hxnext]
+    · rw [physicalThreeCycle_inverse root neg next hrn hrx hnx]
+      simp [cycleBackward, hrn, hnr, hrx, hxr, hnx, hnx']
+    · rw [physicalThreeCycle_inverse root neg next hrn hrx hnx]
+      simp [cycleBackward, hrn, hnr, hrx, hxr, hnx, hnx']
+    · rw [physicalThreeCycle_inverse root neg next hrn hrx hnx]
+      simp [cycleBackward, hrn, hnr, hrx, hxr, hnx, hnx']
+  · constructor
     · dsimp
-      rw [hneg, hroot]
-      have hN := (source_geometry hk).2.2.2
+      rw [hneg', hroot']
       have hn : 2 * (actualSource k t root) - modulus k < 0 := by omega
       simp [if_pos hn, if_neg (by omega : ¬ actualSource k t root < 0)]
       omega
     · dsimp
-      rw [hnext, hneg]
-      have hN := (source_geometry hk).2.2.2
-      have hn : actualSource k t neg < 0 := hneglt
-      have hp : 0 < actualSource k t next := hnextpos
-      simp [if_pos hn, if_neg (by omega : ¬ actualSource k t root < 0)]
+      rw [hnext', hneg']
+      have hn : 2 * actualSource k t root - modulus k < 0 := by omega
+      have hp : 0 < 4 * actualSource k t root - modulus k := by omega
+      simp [if_pos hn, if_neg (not_lt_of_ge (le_of_lt hp))]
       omega
-  · omega
-
 end D5.S3.Combinatorics.Circle.AdjacentDepthThreeCycle
 
 #print axioms D5.S3.Combinatorics.Circle.AdjacentDepthThreeCycle.native_long_seed_three_cycle
