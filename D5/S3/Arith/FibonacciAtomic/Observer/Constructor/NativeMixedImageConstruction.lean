@@ -523,6 +523,7 @@ private theorem scalar_site_actual (t : NativeTermUnification.Term X)
 inductive RankSlot (X : Type) where
   | explicit : X → List Bool → RankSlot X
   | collapse : X → X → X → RankSlot X
+  deriving DecidableEq
 
 /-- Enumerate every named explicit leaf and each occurrence of a collapse constraint. -/
 def rankSlots (p : NativeTermUnification.Presentation X)
@@ -599,5 +600,148 @@ theorem finite_rank_extraction {d : Nat}
   exact ⟨B,hB,hb,S,hok,hs,rank_slots_actual (namePresentation E)
     (NativeGroundSolutionSpace.action (namePresentation E) S) B
     (fun x => encode (finiteExtend E v x)) hs hb⟩
+
+
+/-- A scalar slot is indexed in the finite list; absence has a total fallback,
+which is excluded at every actual explicit leaf and selected collapse. -/
+def slotScalar [DecidableEq X] (p : NativeTermUnification.Presentation X)
+    (s : X → NativeTermUnification.Term X) (B : List (BranchEquation X))
+    (a : RankSlot X) : Scalar (rankSlots p s B).length :=
+  if h : a ∈ rankSlots p s B then
+    .parameter ⟨(rankSlots p s B).idxOf a, List.idxOf_lt_length_iff.mpr h⟩ 0
+  else .constant 0
+
+private theorem slotScalar_value [DecidableEq X] (p : NativeTermUnification.Presentation X)
+    (s : X → NativeTermUnification.Term X) (B : List (BranchEquation X))
+    (u : X → Code) (a : RankSlot X) (ha : a ∈ rankSlots p s B) :
+    (slotScalar p s B a).value (rankParameters p s B u) = a.value u := by
+  simp [slotScalar, ha, Scalar.value, rankParameters, List.idxOf_get]
+
+/-- Every residual occurrence, including those in isolated unused outputs,
+is retained by the existing total-MGU occurrence enumeration. -/
+abbrev residualOccurrences (p : NativeTermUnification.Presentation X)
+    (s : X → NativeTermUnification.Term X) := NativePositiveImageCover.occurrenceVertices p s
+
+/-- Traverse the actual shape, assigning its automatic scalar coordinates.
+Only the residual sort/offset map remains an input from the block problem. -/
+def decorateAt [DecidableEq X] {m : Nat} (p : NativeTermUnification.Presentation X)
+    (s : X → NativeTermUnification.Term X) (B : List (BranchEquation X))
+    (blocks : NativePositiveImageCover.Occurrence X → Fin m × Nat)
+    (x : X) (q : List Bool) :
+    (t : NativeTermUnification.Term X) → Decoration (rankSlots p s B).length m t
+  | .of (.inl _) => slotScalar p s B (.explicit x q)
+  | .of (.inr y) => blocks (x,q,y)
+  | .mul l r => (decorateAt p s B blocks x (q ++ [false]) l,
+      decorateAt p s B blocks x (q ++ [true]) r)
+
+def automaticDecoration [DecidableEq X] {m : Nat}
+    (p : NativeTermUnification.Presentation X) (s : X → NativeTermUnification.Term X)
+    (B : List (BranchEquation X))
+    (blocks : NativePositiveImageCover.Occurrence X → Fin m × Nat) (x : X) :
+    Decoration (rankSlots p s B).length m (s x) := decorateAt p s B blocks x [] (s x)
+
+/-- Collapse coordinates are drawn from the same finite tuple as explicit ranks. -/
+def automaticCollapse [DecidableEq X] (p : NativeTermUnification.Presentation X)
+    (s : X → NativeTermUnification.Term X) (B : List (BranchEquation X)) :
+    BranchEquation X → Scalar (rankSlots p s B).length
+  | .collapse z x y => slotScalar p s B (.collapse z x y)
+  | _ => .constant 0
+
+private theorem explicit_slot_mem (p : NativeTermUnification.Presentation X)
+    (s : X → NativeTermUnification.Term X) (B : List (BranchEquation X))
+    (x : X) (q : List Bool) (hq : q ∈ scalarAddresses (s x)) :
+    RankSlot.explicit x q ∈ rankSlots p s B := by
+  apply List.mem_append_left
+  exact List.mem_flatMap.mpr ⟨x,p.complete x,List.mem_map.mpr ⟨q,hq,rfl⟩⟩
+
+private theorem collapse_slot_mem (p : NativeTermUnification.Presentation X)
+    (s : X → NativeTermUnification.Term X) (B : List (BranchEquation X))
+    (z x y : X) (hb : BranchEquation.collapse z x y ∈ B) :
+    RankSlot.collapse z x y ∈ rankSlots p s B := by
+  apply List.mem_append_right
+  exact List.mem_flatMap.mpr ⟨.collapse z x y,hb,List.mem_singleton_self _⟩
+
+/-- The code evaluation with arbitrary ambient blocks is useful before any
+minimum-base or normality reconstruction has been supplied. -/
+def Pattern.realize {k m : Nat} (n : Fin k → Nat) (w : Fin m → Code) : Pattern k m → Code
+  | .scalar a => .of (a.value n)
+  | .block i a => shiftCode a (w i)
+  | .pair l r => .mul (l.realize n w) (r.realize n w)
+
+/-- Forget ranks while retaining the scalar/residual distinction and ordered pairs. -/
+def Pattern.frame {k m : Nat} : Pattern k m → FreeMagma Bool
+  | .scalar _ => .of true
+  | .block _ _ => .of false
+  | .pair l r => .mul l.frame r.frame
+
+/-- Residual compatibility has no scalar equations. It only asks that matching
+block leaves use the same sort and fixed offset. -/
+def blockCompatible {k m : Nat} : Pattern k m → Pattern k m → Prop
+  | .block i a, .block j b => i = j ∧ a = b
+  | .pair l r, .pair u v => blockCompatible l u ∧ blockCompatible r v
+  | _, _ => True
+
+private theorem compare_complete {k m : Nat} (A C : Pattern k m)
+    (hf : A.frame = C.frame) (hb : blockCompatible A C)
+    (n : Fin k → Nat) (w : Fin m → Code)
+    (he : A.realize n w = C.realize n w) :
+    ∃ g, compare A C = some g ∧ g.Holds n := by
+  induction A generalizing C with
+  | scalar a =>
+      cases C with
+      | scalar b =>
+          refine ⟨[(a,b)],rfl,?_⟩
+          intro e he'
+          simp only [List.mem_singleton] at he'
+          subst e
+          have h : a.value n = b.value n := FreeMagma.of.inj he
+          exact congrArg Int.ofNat h
+      | block j b => cases hf
+      | pair l r => cases hf
+  | block i a =>
+      cases C with
+      | scalar b => cases hf
+      | pair l r => cases hf
+      | block j b =>
+          exact ⟨[],by simp [compare,hb],by simp [Guard.Holds]⟩
+  | pair l r hl hr =>
+      cases C with
+      | scalar b => cases hf
+      | block j b => cases hf
+      | pair u v =>
+          have hf' : l.frame = u.frame ∧ r.frame = v.frame := by
+            injection hf with h1 h2
+            exact ⟨h1,h2⟩
+          have he' : l.realize n w = u.realize n w ∧ r.realize n w = v.realize n w := by
+            injection he with h1 h2
+            exact ⟨h1,h2⟩
+          obtain ⟨a,ha,hna⟩ := hl u hf'.1 hb.1 he'.1
+          obtain ⟨b,hb',hnb⟩ := hr v hf'.2 hb.2 he'.2
+          refine ⟨a ++ b,?_,?_⟩
+          · simp [compare,ha,hb']
+          · intro e he''
+            rcases List.mem_append.mp he'' with h | h
+            · exact hna e h
+            · exact hnb e h
+
+private theorem collect_complete {k m : Nat} (L : List (Pattern k m × Pattern k m))
+    (n : Fin k → Nat) (w : Fin m → Code)
+    (hf : ∀ e ∈ L, e.1.frame = e.2.frame)
+    (hb : ∀ e ∈ L, blockCompatible e.1 e.2)
+    (he : ∀ e ∈ L, e.1.realize n w = e.2.realize n w) :
+    ∃ g, collect L = some g ∧ g.Holds n := by
+  induction L with
+  | nil => exact ⟨[],rfl,by simp [Guard.Holds]⟩
+  | cons e L ih =>
+      obtain ⟨a,ha,hna⟩ := compare_complete e.1 e.2 (hf e (by simp))
+        (hb e (by simp)) n w (he e (by simp))
+      obtain ⟨b,hb',hnb⟩ := ih (fun e h => hf e (by simp [h]))
+        (fun e h => hb e (by simp [h])) (fun e h => he e (by simp [h]))
+      refine ⟨a ++ b,?_,?_⟩
+      · simp [collect,ha,hb']
+      · intro e h
+        rcases List.mem_append.mp h with h | h
+        · exact hna e h
+        · exact hnb e h
 
 end D5.S3.Arith.FibonacciAtomic.Observer.NativeMixedImageConstruction
