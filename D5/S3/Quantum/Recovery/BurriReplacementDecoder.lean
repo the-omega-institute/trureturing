@@ -134,8 +134,9 @@ theorem source_svd :
     simpa only [Unitary.mem_iff, star_eq_conjTranspose] using source_unitary⟩
   have hd : Matrix.diagonal (RCLike.ofReal ∘ h.eigenvalues) =
       Matrix.diagonal (fun i => (h.eigenvalues i : ℂ)) := by
-    ext i j
-    simp [Matrix.diagonal_apply, Function.comp_apply, RCLike.ofReal_eq_complex_ofReal]
+    apply congrArg Matrix.diagonal
+    funext i
+    exact congrFun RCLike.ofReal_eq_complex_ofReal (h.eigenvalues i)
   have hspec : M * U = (H : Matrix P P ℂ) *
       Matrix.diagonal (fun i => (h.eigenvalues i : ℂ)) * (H : Matrix P P ℂ)ᴴ := by
     have hspectral : M * U = (H : Matrix P P ℂ) *
