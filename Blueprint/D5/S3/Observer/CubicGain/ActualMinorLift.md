@@ -12,7 +12,7 @@ The same global factorization data also imply that actualReducedA and actualRedu
 
 At b=criticalRoot and r=liftedR(b), selected_minor_nonzero supplies the nonzero original leading determinant and selected_root_common_zero supplies r a0(b)+c0(b)=0. Factoring a0=h A and c0=h C shows that both h(b) and A(b) are nonzero. Cancellation of this same evaluated common factor gives r=-C(b)/A(b). The exact quotient maps then identify this ratio with the source-normalized rational polynomials actualReducedA and actualReducedC. The nonzero rational scalar used to represent the gcd does not affect the ratio because the same factor is removed from both determinants.
 
-The ratio identification is local at the actual selected algebraic parameter; the quotient normalization and coprimality above are global. LiteralSylvesterBounds establishes the exact degrees 285 of both original resultants and 252,253 of the original minors. The full determinant factorization, the actual h,a,c degree claims in VI (4.3), the universal complex-root and three-equation assertions, and the broader parents 15.2 and 15.3 remain open. The clock-five/six/seven source equations and the complete-world distinctions retain their original scope.
+The ratio identification is local at the actual selected algebraic parameter; the quotient normalization and coprimality above are global. The full determinant factorization, the actual h,a,c degree claims in VI (4.3), the universal complex-root and three-equation assertions, and the broader parents 15.2 and 15.3 remain open. The clock-five/six/seven source equations and the complete-world distinctions retain their original scope.
 
 **Definition 1.1 (actual leading fixed determinant).**
 

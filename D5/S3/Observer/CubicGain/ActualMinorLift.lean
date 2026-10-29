@@ -29,25 +29,25 @@ open D5.S3.Observer.CubicGain.SelectedRootCommonZero
 polynomial variable is `r` and every coefficient is an actual polynomial in
 the source parameter `b`. -/
 
-def sourceE0Coeff : Polynomial (Polynomial ℤ) :=
+private def sourceE0Coeff : Polynomial (Polynomial ℤ) :=
   sourceE0 (R := Polynomial ℤ) (Polynomial.X : Polynomial ℤ)
 
-def sourceE1Coeff : Polynomial (Polynomial ℤ) :=
+private def sourceE1Coeff : Polynomial (Polynomial ℤ) :=
   sourceE1 (R := Polynomial ℤ) (Polynomial.X : Polynomial ℤ)
 
-def literalRowCoeff (i : Fin 28) : Polynomial (Polynomial ℤ) :=
+private def literalRowCoeff (i : Fin 28) : Polynomial (Polynomial ℤ) :=
   if i.val < 14 then Polynomial.X ^ (13 - i.val) * sourceE0Coeff
   else Polynomial.X ^ (27 - i.val) * sourceE1Coeff
 
-def literalMatrixCoeff : Matrix (Fin 28) (Fin 29) (Polynomial ℤ) :=
+private def literalMatrixCoeff : Matrix (Fin 28) (Fin 29) (Polynomial ℤ) :=
   fun i j => (literalRowCoeff i).coeff (28 - j.val)
 
-def fixedMinorRCoeff : Matrix (Fin 28) (Fin 28) (Polynomial ℤ) :=
+private def fixedMinorRCoeff : Matrix (Fin 28) (Fin 28) (Polynomial ℤ) :=
   fun i j =>
     if h : j.val < 27 then literalMatrixCoeff i ⟨j.val, by omega⟩
     else literalMatrixCoeff i ⟨27, by omega⟩
 
-def fixedMinorCCoeff : Matrix (Fin 28) (Fin 28) (Polynomial ℤ) :=
+private def fixedMinorCCoeff : Matrix (Fin 28) (Fin 28) (Polynomial ℤ) :=
   fun i j =>
     if h : j.val < 27 then literalMatrixCoeff i ⟨j.val, by omega⟩
     else literalMatrixCoeff i ⟨28, by omega⟩
@@ -102,14 +102,14 @@ private theorem fixedMinorCCoeff_eval (b : ℝ) :
     exact congrArg (fun M : Matrix (Fin 28) (Fin 29) ℝ => M i 28)
       (literalMatrixCoeff_eval b)
 
-theorem actualMinorA0_eval (b : ℝ) :
+private theorem actualMinorA0_eval (b : ℝ) :
     (actualMinorA0.map (Int.castRingHom ℝ)).eval b =
       Matrix.det (fixedMinorR (literalMatrix b)) := by
   simpa only [actualMinorA0, evalB, Polynomial.coe_eval₂RingHom, Polynomial.eval₂_eq_eval_map] using
     (RingHom.map_det (evalB b) fixedMinorRCoeff).trans
       (congrArg Matrix.det (fixedMinorRCoeff_eval b))
 
-theorem actualMinorC0_eval (b : ℝ) :
+private theorem actualMinorC0_eval (b : ℝ) :
     (actualMinorC0.map (Int.castRingHom ℝ)).eval b =
       Matrix.det (fixedMinorC (literalMatrix b)) := by
   simpa only [actualMinorC0, evalB, Polynomial.coe_eval₂RingHom, Polynomial.eval₂_eq_eval_map] using
