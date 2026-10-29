@@ -9,16 +9,12 @@
 import Mathlib.Basic.Complex.Basic
 import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
-import Mathlib.LinearAlgebra.Dimension.Constructions
+import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.Logic.Equiv.Fin.Rotate
 import Mathlib.RingTheory.Nullstellensatz
 import Mathlib.RingTheory.KrullDimension.Polynomial
-import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
 import Mathlib.RingTheory.KrullDimension.Field
 import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Push
 
 /-! The two-site trace Gram determinant gives a strict expected-dimension defect. -/
 
@@ -119,14 +115,10 @@ private lemma gram_det_zero (m : Fin 5 → Matrix (Fin 2) (Fin 2) ℂ) :
     Matrix.det (Matrix.of fun i j => (m i * m j).trace) = 0 := by
   classical
   let y : Matrix (Fin 2 × Fin 2) (Fin 5) ℂ := fun p j => m j p.2 p.1
-  have hk : ¬ ∀ v, Matrix.mulVecLin y v = 0 → v = 0 := by
-    intro h
-    have hi : Function.Injective (Matrix.mulVecLin y) :=
-      LinearMap.ker_eq_bot.mp (LinearMap.ker_eq_bot'.mpr h)
-    have hd := LinearMap.finrank_le_finrank_of_injective hi
-    norm_num [Module.finrank_fintype_fun_eq_card] at hd
-  push Not at hk
-  obtain ⟨v, hv, hn⟩ := hk
+  have hk : LinearMap.ker (Matrix.mulVecLin y) ≠ ⊥ :=
+    LinearMap.ker_ne_bot_of_finrank_lt (by
+      norm_num [Module.finrank_fintype_fun_eq_card])
+  obtain ⟨v, hv, hn⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hk
   apply Matrix.exists_mulVec_eq_zero_iff.mp
   refine ⟨v, hn, ?_⟩
   rw [gram_factorization, ← Matrix.mulVec_mulVec]
