@@ -33,8 +33,10 @@ theorem not_contractible_unit_sphere (n : ℕ) (hn : 0 < n) :
     ¬ ContractibleSpace (sphere (0 : EuclideanSpace ℝ (Fin n)) 1) := by
   let E := EuclideanSpace ℝ (Fin n)
   letI : FiniteDimensional ℝ E := inferInstance
-  letI : Nontrivial E := Module.nontrivial_of_finrank_pos (by
-    simpa [E] using hn)
+  letI : Nontrivial E := Module.nontrivial_of_finrank_pos (R := ℝ) (M := E) (by
+    dsimp [E]
+    rw [finrank_euclideanSpace_fin]
+    exact hn)
   exact TauCeti.not_contractibleSpace_sphere
 
 end D5.S3.Topology.SphereBrouwerObstruction
