@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/MinimalForts/CompleteRooted
    mirror-E: none(waiver:counting-bijection-proof)
-   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Clique]
+   anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.Finite]
    utility: none
    digest: The full root-containing minimal-fort choices of a complete block are its singletons. -/
 
