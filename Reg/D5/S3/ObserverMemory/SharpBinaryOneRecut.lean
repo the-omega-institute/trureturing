@@ -176,7 +176,7 @@ def injectiveSource : Registration injectiveArena (type_of% word_injective) wher
     · intro e; exact nomatch e
   dependence := dependence
 
-def lengthRegistration : LeanInformationAudit.Contract.Registration
+def lengthRegistration : LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
     (@_root_.D5.S3.ObserverMemory.SharpBinaryOneRecut.word_length)
     (type_of% (realize signature (fun _ _ i => word i) (fun e => nomatch e))) Unit Unit := {
   unitName := `Reg.D5.S3.ObserverMemory.SharpBinaryOneRecut.word_length.__information_unit
@@ -209,7 +209,7 @@ def lengthRegistration : LeanInformationAudit.Contract.Registration
   familyRecord := none
   options := #[] }
 
-def injectiveRegistration : LeanInformationAudit.Contract.Registration
+def injectiveRegistration : LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
     (@_root_.D5.S3.ObserverMemory.SharpBinaryOneRecut.word_injective)
     (type_of% (realize signature (fun _ _ i => word i) (fun e => nomatch e))) Unit Unit := {
   unitName := `Reg.D5.S3.ObserverMemory.SharpBinaryOneRecut.word_injective.__information_unit
@@ -287,9 +287,10 @@ def source : Registration arena (type_of% spare_card) where
     · intro e; exact nomatch e
   dependence := dependence
 
-def registration : LeanInformationAudit.Contract.Registration
+def registration : LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
     (@_root_.D5.S3.ObserverMemory.SharpBinaryOneRecut.spare_card)
-    (type_of% (realize signature (fun _ full N => Nat.card (Spare N full)) (fun e => nomatch e))) Unit Unit := {
+    (type_of% (realize signature (fun _ full N => Nat.card (Spare N full))
+      (fun e => nomatch e))) Unit Unit := {
   unitName := `Reg.D5.S3.ObserverMemory.SharpBinaryOneRecut.spare_card.__information_unit
   realizationName := `Reg.D5.S3.ObserverMemory.SharpBinaryOneRecut.CoordinateCardinality.source
   realizationSource := none

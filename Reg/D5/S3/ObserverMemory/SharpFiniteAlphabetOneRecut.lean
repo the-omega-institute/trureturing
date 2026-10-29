@@ -88,7 +88,7 @@ def sourceRegistration : Registration arena (type_of% sharp_finite_alphabet_one_
       exact nomatch e
   dependence := dependence
 
-def registration : LeanInformationAudit.Contract.Registration
+def registration : LeanInformationAudit.Contract.Registration.{1,0,1,0,0,0,1,0,0,0,0,0}
     (@_root_.D5.S3.ObserverMemory.SharpFiniteAlphabetOneRecut.sharp_finite_alphabet_one_recut)
     (type_of% (realize signature (fun _ p k => oneBoundary p.2 k) (fun e => nomatch e)))
     Unit Unit := {

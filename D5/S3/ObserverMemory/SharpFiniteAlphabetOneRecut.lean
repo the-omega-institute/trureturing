@@ -238,14 +238,12 @@ private theorem blocks_recover {N : Nat} (e : Bool ↪ A) (xs : List A)
     (t u : A → Option (Fin N)) (h : blocks e xs t = blocks e xs u) :
     ∀ a ∈ xs, t a = u a := by
   classical
-  induction xs with
-  | nil => simp
-  | cons a xs ih =>
-    have he := List.append_inj h ((encoded_length e (t a)).trans (encoded_length e (u a)).symm)
-    intro b hb
-    rcases List.mem_cons.mp hb with rfl | hb
-    · exact encoded_injective N e he.1
-    · exact ih he.2 b hb
+  have he : xs.map (fun a => encoded e (t a)) = xs.map (fun a => encoded e (u a)) := by
+    apply List.eq_iff_flatten_eq.mpr
+    refine ⟨h,?_⟩
+    simp [encoded_length]
+  intro a ha
+  exact encoded_injective N e ((List.map_inj_left.mp he) a ha)
 
 private def anchor [Fintype A] {N : Nat} (e : Bool ↪ A) (t : A → Option (Fin N)) : List A :=
   blocks e Finset.univ.toList t
