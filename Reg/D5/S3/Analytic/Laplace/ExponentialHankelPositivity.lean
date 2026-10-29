@@ -59,7 +59,7 @@ private theorem rejected_fails : ¬ arena.Law rejected := by
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), (fun _ : ℝ => (0 : ℝ)), (fun _ : ℝ => (1 : ℝ)), ?_⟩
+  refine ⟨(), (fun _ : ℝ => (0 : ℝ)), (fun u : ℝ => -Real.exp (-u)), ?_⟩
   intro h
   have he := congrFun h 0
   norm_num [actual, realize] at he
