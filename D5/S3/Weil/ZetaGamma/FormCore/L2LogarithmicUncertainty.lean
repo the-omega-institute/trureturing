@@ -1,12 +1,10 @@
 /- GID: D5/S3/Weil/ZetaGamma/FormCore/L2LogarithmicUncertainty
-   D5/Scribe: linked exception pending faithful Reg intake for the new bridge.
-   The source is retained as the scientific product; no acceptance wrapper is
-   promoted for the still-open downstream endpoint obligations.
-  Actual L2 Fourier concentration bridge (B02).
-  The carrier is an `Lp` class.  In particular, the source is not assumed to
-  be in L1.  The only Bochner Fourier integral below is the compactly supported
-  piece; the complementary piece is transported by the L2 Fourier isometry.
--/
+   generality: G
+   mirror-B: none(waiver:source-capacity-repair)
+   mirror-E: none(waiver:source-capacity-repair)
+   anchors: []
+   utility: none
+   digest: Actual L2 Fourier concentration bridge; downstream Reg intake and endpoint obligations remain open. -/
 import D5.S3.Weil.ZetaGamma.FormCore.LineFourier
 import Mathlib.MeasureTheory.Function.LpSeminorm.TriangleInequality
 import Mathlib.MeasureTheory.Function.LpSeminorm.LpNorm
