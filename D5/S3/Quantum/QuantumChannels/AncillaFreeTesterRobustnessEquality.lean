@@ -75,21 +75,32 @@ def claim : Prop :=
         (1 : Matrix (Fin ρ.rank) (Fin ρ.rank) ℂ))
         (fun b => Matrix.kronecker (n b) (1 : Matrix (Fin ρ.rank) (Fin ρ.rank) ℂ))
 
+private theorem kronecker_sum {y x j : Type} [Fintype j]
+    (m : j → Matrix y y ℂ) (ρ : Matrix x x ℂ) :
+    (∑ a, Matrix.kronecker (m a) ρ) = Matrix.kronecker (∑ a, m a) ρ := by
+  exact (map_sum ((Matrix.kroneckerBilinear (R := ℂ)).flip ρ) m Finset.univ).symm
+
 private theorem povm_tensor_tester {y x j : Type} [Fintype y] [DecidableEq y]
     [Fintype x] [Fintype j] (ρ : Matrix x x ℂ) (hρ : IsDensity ρ)
     (m : j → Matrix y y ℂ) (hm : IsPOVM m) :
     IsTester (fun a => Matrix.kronecker (m a) ρ) := by
-  sorry
+  refine ⟨fun a => (hm.1 a).kronecker hρ.1, ρ, hρ, ?_⟩
+  rw [kronecker_sum, hm.2]
 
 private theorem partialTraceRight_sum {y x j : Type} [Fintype x] [Fintype j]
     (t : j → Matrix (y × x) (y × x) ℂ) :
     partialTraceRight (∑ a, t a) = ∑ a, partialTraceRight (t a) := by
-  sorry
+  ext a b
+  change (∑ c, (∑ u, t u) (a, c) (b, c)) = ∑ u, ∑ c, t u (a, c) (b, c)
+  simp only [Matrix.sum_apply]
+  exact Finset.sum_comm
 
 private theorem tester_partialTrace_povm {y x j : Type} [Fintype y] [DecidableEq y]
     [Fintype x] [Fintype j] (t : j → Matrix (y × x) (y × x) ℂ)
     (ht : IsTester t) : IsPOVM (fun a => partialTraceRight (t a)) := by
-  sorry
+  refine ⟨fun a => partialTraceRight_posSemidef (ht.1 a), ?_⟩
+  obtain ⟨σ, hσ, hs⟩ := ht.2
+  rw [← partialTraceRight_sum, hs, partialTraceRight_kronecker, hσ.2, one_smul]
 
 private theorem povm_to_tester_compatible {y x j k : Type}
     [Fintype y] [DecidableEq y] [Fintype x] [Fintype j] [Fintype k]
@@ -98,7 +109,18 @@ private theorem povm_to_tester_compatible {y x j k : Type}
     (h : POVMCompatibleAt lam m n) :
     TesterCompatibleAt lam (fun a => Matrix.kronecker (m a) ρ)
       (fun b => Matrix.kronecker (n b) ρ) := by
-  sorry
+  obtain ⟨u, v, g, hu, hv, hg, hgm, hgn⟩ := h
+  refine ⟨fun a => Matrix.kronecker (u a) ρ,
+    fun b => Matrix.kronecker (v b) ρ,
+    fun ab => Matrix.kronecker (g ab) ρ,
+    povm_tensor_tester ρ hρ u hu, povm_tensor_tester ρ hρ v hv,
+    povm_tensor_tester ρ hρ g hg, ?_, ?_⟩
+  · intro a
+    rw [kronecker_sum, hgm a, Matrix.add_kronecker,
+      Matrix.smul_kronecker, Matrix.smul_kronecker]
+  · intro b
+    rw [kronecker_sum, hgn b, Matrix.add_kronecker,
+      Matrix.smul_kronecker, Matrix.smul_kronecker]
 
 private theorem tester_to_povm_compatible {y x j k : Type}
     [Fintype y] [DecidableEq y] [Fintype x] [Fintype j] [Fintype k]
@@ -106,12 +128,24 @@ private theorem tester_to_povm_compatible {y x j k : Type}
     (m : j → Matrix y y ℂ) (n : k → Matrix y y ℂ)
     (h : TesterCompatibleAt lam (fun a => Matrix.kronecker (m a) ρ)
       (fun b => Matrix.kronecker (n b) ρ)) : POVMCompatibleAt lam m n := by
-  sorry
+  obtain ⟨e, f, c, he, hf, hc, hcm, hcn⟩ := h
+  refine ⟨fun a => partialTraceRight (e a), fun b => partialTraceRight (f b),
+    fun ab => partialTraceRight (c ab), tester_partialTrace_povm e he,
+    tester_partialTrace_povm f hf, tester_partialTrace_povm c hc, ?_, ?_⟩
+  · intro a
+    rw [← partialTraceRight_sum, hcm a, partialTraceRight_add,
+      partialTraceRight_smul, partialTraceRight_smul,
+      partialTraceRight_kronecker, hρ.2, one_smul]
+  · intro b
+    rw [← partialTraceRight_sum, hcn b, partialTraceRight_add,
+      partialTraceRight_smul, partialTraceRight_smul,
+      partialTraceRight_kronecker, hρ.2, one_smul]
 
 private theorem povm_tensor_identity {y j : Type} [Fintype y] [DecidableEq y]
     [Fintype j] (r : ℕ) (m : j → Matrix y y ℂ) (hm : IsPOVM m) :
     IsPOVM (fun a => Matrix.kronecker (m a) (1 : Matrix (Fin r) (Fin r) ℂ)) := by
-  sorry
+  refine ⟨fun a => (hm.1 a).kronecker (Matrix.PosSemidef.one), ?_⟩
+  rw [kronecker_sum, hm.2, Matrix.one_kronecker_one]
 
 private theorem povm_to_ancilla_compatible {y j k : Type} [Fintype y] [DecidableEq y]
     [Fintype j] [Fintype k] (r : ℕ) (lam : ℝ)
@@ -120,14 +154,36 @@ private theorem povm_to_ancilla_compatible {y j k : Type} [Fintype y] [Decidable
     POVMCompatibleAt lam (fun a => Matrix.kronecker (m a)
       (1 : Matrix (Fin r) (Fin r) ℂ))
       (fun b => Matrix.kronecker (n b) (1 : Matrix (Fin r) (Fin r) ℂ)) := by
-  sorry
+  obtain ⟨u, v, g, hu, hv, hg, hgm, hgn⟩ := h
+  refine ⟨fun a => Matrix.kronecker (u a) (1 : Matrix (Fin r) (Fin r) ℂ),
+    fun b => Matrix.kronecker (v b) (1 : Matrix (Fin r) (Fin r) ℂ),
+    fun ab => Matrix.kronecker (g ab) (1 : Matrix (Fin r) (Fin r) ℂ),
+    povm_tensor_identity r u hu, povm_tensor_identity r v hv,
+    povm_tensor_identity r g hg, ?_, ?_⟩
+  · intro a
+    rw [kronecker_sum, hgm a, Matrix.add_kronecker,
+      Matrix.smul_kronecker, Matrix.smul_kronecker]
+  · intro b
+    rw [kronecker_sum, hgn b, Matrix.add_kronecker,
+      Matrix.smul_kronecker, Matrix.smul_kronecker]
 
 private theorem compression_povm {y j : Type} [Fintype y] [DecidableEq y]
     [Fintype j] (r : ℕ) (hr : 0 < r)
     (m : j → Matrix (y × Fin r) (y × Fin r) ℂ) (hm : IsPOVM m) :
     IsPOVM (fun a => (m a).submatrix (fun b => (b, ⟨0, hr⟩))
       (fun b => (b, ⟨0, hr⟩))) := by
-  sorry
+  refine ⟨fun a => (hm.1 a).submatrix (fun b => (b, ⟨0, hr⟩)), ?_⟩
+  have hs := congrArg (fun z : Matrix (y × Fin r) (y × Fin r) ℂ =>
+    z.submatrix (fun b => (b, ⟨0, hr⟩)) (fun b => (b, ⟨0, hr⟩))) hm.2
+  have hi : Function.Injective (fun b : y => (b, (⟨0, hr⟩ : Fin r))) :=
+    fun _ _ h => congrArg Prod.fst h
+  rw [Matrix.submatrix_one _ hi] at hs
+  calc
+    _ = (∑ a, m a).submatrix (fun b => (b, ⟨0, hr⟩))
+        (fun b => (b, ⟨0, hr⟩)) := by
+      ext a b
+      simp only [Matrix.sum_apply, Matrix.submatrix_apply]
+    _ = 1 := hs
 
 private theorem ancilla_to_povm_compatible {y j k : Type} [Fintype y] [DecidableEq y]
     [Fintype j] [Fintype k] (r : ℕ) (hr : 0 < r) (lam : ℝ)
@@ -136,11 +192,47 @@ private theorem ancilla_to_povm_compatible {y j k : Type} [Fintype y] [Decidable
       (1 : Matrix (Fin r) (Fin r) ℂ))
       (fun b => Matrix.kronecker (n b) (1 : Matrix (Fin r) (Fin r) ℂ))) :
     POVMCompatibleAt lam m n := by
-  sorry
+  obtain ⟨u, v, g, hu, hv, hg, hgm, hgn⟩ := h
+  refine ⟨fun a => (u a).submatrix (fun b => (b, ⟨0, hr⟩))
+      (fun b => (b, ⟨0, hr⟩)),
+    fun a => (v a).submatrix (fun b => (b, ⟨0, hr⟩))
+      (fun b => (b, ⟨0, hr⟩)),
+    fun a => (g a).submatrix (fun b => (b, ⟨0, hr⟩))
+      (fun b => (b, ⟨0, hr⟩)),
+    compression_povm r hr u hu, compression_povm r hr v hv,
+    compression_povm r hr g hg, ?_, ?_⟩
+  · intro a
+    ext b d
+    have he := congrArg (fun z : Matrix (y × Fin r) (y × Fin r) ℂ =>
+      z (b, ⟨0, hr⟩) (d, ⟨0, hr⟩)) (hgm a)
+    simpa only [Matrix.sum_apply, Matrix.submatrix_apply, Matrix.add_apply,
+      Matrix.smul_apply, Matrix.kronecker_apply, Matrix.one_apply_eq, mul_one] using he
+  · intro a
+    ext b d
+    have he := congrArg (fun z : Matrix (y × Fin r) (y × Fin r) ℂ =>
+      z (b, ⟨0, hr⟩) (d, ⟨0, hr⟩)) (hgn a)
+    simpa only [Matrix.sum_apply, Matrix.submatrix_apply, Matrix.add_apply,
+      Matrix.smul_apply, Matrix.kronecker_apply, Matrix.one_apply_eq, mul_one] using he
 
 private theorem density_rank_pos {x : Type} [Fintype x] [DecidableEq x]
     (ρ : Matrix x x ℂ) (hρ : IsDensity ρ) : 0 < ρ.rank := by
-  sorry
+  classical
+  have hn : ρ ≠ 0 := by
+    intro hz
+    have ht := hρ.2
+    rw [hz, Matrix.trace_zero] at ht
+    exact zero_ne_one ht
+  have he : ∃ a b, ρ a b ≠ 0 := by
+    by_contra h
+    apply hn
+    ext a b
+    exact Classical.not_not.mp (fun hn => h ⟨a, b, hn⟩)
+  obtain ⟨a, b, hab⟩ := he
+  rw [Matrix.rank_eq_finrank_span_cols]
+  apply Module.finrank_pos_iff_exists_ne_zero.mpr
+  refine ⟨⟨ρ.col b, Submodule.subset_span ⟨b, rfl⟩⟩, ?_⟩
+  intro hz
+  exact hab (congrFun (congrArg Subtype.val hz) a)
 
 private theorem tester_feasible_eq {y x j k : Type}
     [Fintype y] [DecidableEq y] [Fintype x] [Fintype j] [Fintype k]
