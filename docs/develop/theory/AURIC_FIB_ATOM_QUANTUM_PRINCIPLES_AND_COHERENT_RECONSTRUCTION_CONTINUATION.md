@@ -2437,3 +2437,406 @@ Renou 附录 E 的实量子网络排除要求其纠缠双源、三方结构、�
 未解决的问题；相对方向的可见性不等于绝对共轭方向的选择，也不等于完整量子起源。
 
 ## 追加锚（本行以下为增补区）
+
+## 57. 实际全来源的有限精度转换合同与地址分解
+
+**定义 57.1（同一输入合同上的一致误差）。** 固定 $n\ge1$，仍取
+$h=r=1/(5n)$、$a=b=1-h$。$X=\mathrm c$ 使用 (45.11)–(45.15)，
+$X=R$ 使用 (46.5)–(46.9)，后者仅按定义 47.1 复化。
+记其完整可分载体为 $H_X=F_X\oplus L_X$，其中 $L_X=\ell^2(T;\mathbb C)$，
+$F_{\mathrm c}=\ell^2(\operatorname{Fin}(\mathcal A);\mathbb C)$，
+$F_R=\ell^2(\mathsf E;\mathbb C)$；源向量的场部分分别记为
+$w_t^{\mathrm c}=V_h(t)$、$w_t^R=U_h(t)$。于是
+
+$$
+v_t^X=\sqrt a\,J_Xw_t^X+\sqrt r\,e_t,\qquad
+\pi_t^X=|v_t^X\rangle\langle v_t^X|,
+\tag{57.1}
+$$
+
+$J_X:F_X\hookrightarrow H_X$ 是场直和项的等距嵌入。
+下式的通道定义于相应载体的全部迹类算子，其对偶为正规映射；每条通道对全部
+$s,t\in T$ 共同作用，只可依赖公开的 $X,n$：
+
+$$
+\begin{aligned}
+E_{\rm con}^X(n)
+ &=\inf_{\Phi:H_X\otimes H_X\to H_X\ {\rm normal\ CPTP}}
+   \sup_{s,t\in T}D\bigl(\Phi(\pi_s^X\otimes\pi_t^X),
+                              \pi_{\langle s,t\rangle}^X\bigr),\\
+E_{\rm dec}^X(n)
+ &=\inf_{\Psi:H_X\to H_X\otimes H_X\ {\rm normal\ CPTP}}
+   \sup_{s,t\in T}D\bigl(\Psi(\pi_{\langle s,t\rangle}^X),
+                              \pi_s^X\otimes\pi_t^X\bigr),
+\qquad D(A,B)=\tfrac12\|A-B\|_1.
+\end{aligned}
+\tag{57.2}
+$$
+
+箭头标注通道的输入、输出 Hilbert 空间，不把通道作用于向量。
+构造方向的两个独立张量输入是明示的额外供应；$s=t$ 时仍供应两份输入。
+全部可访问辅助输入均固定且与未知来源无关，含时间、历史、长度、控制器和原始记录的
+完整约束严格取定义 51.1。源选择者的记录可在处理器外保留，但不给处理器读取。
+通道可以丢弃不可访问的扩张环境；若系统仍可被后续调用，它就属于输出，不能算作环境。
+(57.2) 比较的是所列输出载体上的态，尚不比较任何恢复环境或量子参考。
+
+**命题 57.2（两个实际场的共同全域分解）。** 令 $d_{\mathrm c}=2$、$d_R=3$。
+有与来源和 $n$ 无关的酉坐标重排
+
+$$
+\mathcal U_X:F_X\longrightarrow
+ \mathbb C^{d_X}\otimes F_X\otimes F_X
+\tag{57.3}
+$$
+
+使得对全部 $s,t\in T$，
+
+$$
+\mathcal U_Xw_{\langle s,t\rangle}^X
+ =\zeta_{\ell(s,t)}^X\otimes w_s^X\otimes w_t^X,
+\qquad
+\zeta_j^{\mathrm c}=z_j,\quad\zeta_j^R=u_j.
+\tag{57.4}
+$$
+
+这里 $\ell$ 恰为 (45.2)，两种模型均有
+
+$$
+\langle e_0,\zeta_j^X\rangle=
+\begin{cases}1,&j=0,\\ \sqrt b,&j=1,2.\end{cases}
+\tag{57.5}
+$$
+
+证明。对复场基向量 $e_B$，把有限地址集唯一写成根占位
+$\epsilon\in B$、左集 $B_0=\{p:0p\in B\}$、右集 $B_1=\{p:1p\in B\}$，定义
+$\mathcal U_{\mathrm c}e_B=e_{\mathbf1_{\epsilon\in B}}\otimes e_{B_0}\otimes e_{B_1}$。
+每个三元组恰有一个有限集逆像，故这是整个标准正交基的双射，延拓为酉映射。
+对实完成场，用有限支撑函数的根值 $\sigma(\epsilon)$ 和
+$\sigma_0(p)=\sigma(0p)$、$\sigma_1(p)=\sigma(1p)$ 作同一基双射。
+复化不改变这个全实矩阵的酉性。
+
+源着色满足根值 $\ell(s,t)$、左场 $\lambda_s$、右场 $\lambda_t$。
+将此分解代入 (45.11)，每个基系数恰分为根的 $z_\ell$ 系数与两个子场系数；
+代入 (46.5) 时恰分为 $u_\ell$ 与两个子场系数，得到 (57.4)。
+根颜色为 $2$ 时，复场的根激发系数是 $i\sqrt h$，实完成场则为
+$\gamma,\varphi$；没有把这两个局部向量认同。两者的真空系数均为 $\sqrt b$，
+故 (57.5) 成立。根颜色为零时根恰为 $e_0$。
+
+重复孩子不改变基双射，只会选择颜色 $1$ 或 $2$；不等孩子选择颜色零。
+空场对应真空基，左右空场亦包含在该双射中。
+不同源标签即使有相同地址场，也只在场部分相同，$L_X$ 中的 $e_t$ 仍不同。
+证明在每棵树上只作有限展开，而 (57.3) 已在整个可分空间定义，所以没有树高上限或
+随支撑大小增长的常数。这是 (45.15)、(46.12) 的实际向量层分解，
+并非由近似核乘法逆推一条通道。∎
+
+## 58. 保留全部报告旗标的共同正规转换
+
+**定理 58.1（全来源构造与分解的正面上界）。** 在定义 57.1 的数学通道类内，
+两种 $X$ 各有一条共同构造通道和一条共同分解通道，满足
+
+$$
+\begin{aligned}
+E_{\rm con}^X(n)&\le U_{\rm con}(n)
+ :=\min\{1,\,1-a^2+a^2\sqrt{1-ab}\},\\
+E_{\rm dec}^X(n)&\le U_{\rm dec}(n)
+ :=\min\{1,\,r+a\sqrt{1-a^2}\}.
+\end{aligned}
+\tag{58.1}
+$$
+
+更强地，可报告构造的四个旗标 $(i,j,\mathrm{Stop})$，$i,j\in\{F,L\}$，
+以及分解的两个旗标 $(i,\mathrm{Stop})$。对应源输入上的旗标律分别为
+
+$$
+\tau_{\rm con}=a^2[FF]+ar[FL]+ra[LF]+r^2[LL],\qquad
+\tau_{\rm dec}=a[F]+r[L],
+\tag{58.2}
+$$
+
+方括号表示含 Stop 的正交经典旗标态。它们与源无关。
+设完整报告输出为 $\widehat\Phi,\widehat\Psi$，则全来源同时有
+
+$$
+\begin{aligned}
+D\bigl(\widehat\Phi(\pi_s^X\otimes\pi_t^X),
+       \tau_{\rm con}\otimes\pi_{\langle s,t\rangle}^X\bigr)
+ &\le U_{\rm con}(n),\\
+D\bigl(\widehat\Psi(\pi_{\langle s,t\rangle}^X),
+       \tau_{\rm dec}\otimes(\pi_s^X\otimes\pi_t^X)\bigr)
+ &\le U_{\rm dec}(n).
+\end{aligned}
+\tag{58.3}
+$$
+
+右侧比较对象是逐来源指定的基准态族，未断言有物理或数学通道实现这个基准族。
+误差比较包含所有报告旗标、Stop 和保留下来的目标载体；没有成功条件化。
+$FF$ 与 $F$ 表示所走的场分支，不称为精确成功。
+
+证明。以下固定 $X$ 并略去上标。记 $P_F=JJ^*$、$P_L=I-P_F$，
+$P_{ij}=P_i\otimes P_j$。取固定真空输出 $f=Je_{\varnothing}\in H$；
+对 $R$，$e_{\varnothing}$ 指零函数基。分解方向的固定输出取 $f\otimes f$。
+这些制备只依赖已知载体，属于数学比较类允许的固定资源。
+
+构造方向，定义场上的等距
+
+$$
+W(x\otimes y)=\mathcal U^*(e_0\otimes x\otimes y),\qquad
+A=JW(J^*\otimes J^*):H\otimes H\longrightarrow H.
+\tag{58.4}
+$$
+
+它满足 $A^*A=P_{FF}$。对任意迹类 $Y$ 定义报告通道
+
+$$
+\widehat\Phi(Y)=[FF]\otimes AYA^*
+ +\sum_{ij\ne FF}[ij]\otimes\operatorname{Tr}(P_{ij}Y)|f\rangle\langle f|.
+\tag{58.5}
+$$
+
+每个非场分支都实际输出固定 fallback，而不是删去其概率。
+该定义从不测量 $e_s,e_t$ 的标签；只投影到固定直和项，再将其余输入送入不可访问环境。
+对源乘积输入，四支质量正是 (58.2)，$FF$ 条件输出为纯态
+$|JW(w_s\otimes w_t)\rangle\langle JW(w_s\otimes w_t)|$。
+由 (57.4)–(57.5)，它与 $v_{\langle s,t\rangle}$ 的内积模为
+$\sqrt a$（$s\ne t$）或 $\sqrt{ab}$（$s=t$）。
+两个纯态的半迹距离为其内积模平方的一减平方根；这可在它们张成的至多二维空间
+直接对角化密度差得到。因此场分支距离至多 $\sqrt{1-ab}$。
+其他三支的归一化态距离各至多一。相同经典块的迹范数可加，故完整距离至多
+
+$$
+a^2\sqrt{1-ab}+ar+ra+r^2
+ =a^2\sqrt{1-ab}+1-a^2.
+\tag{58.6}
+$$
+
+分解方向，对根标准基 $e_q$，$0\le q<d_X$，定义
+
+$$
+B_q=(J\otimes J)(\langle e_q|\otimes I\otimes I)\mathcal U J^*,
+\qquad \sum_{q=0}^{d_X-1}B_q^*B_q=P_F.
+\tag{58.7}
+$$
+
+令
+
+$$
+\widehat\Psi(Y)=[F]\otimes\sum_q B_qYB_q^*
+ +[L]\otimes\operatorname{Tr}(P_LY)
+       |f\otimes f\rangle\langle f\otimes f|.
+\tag{58.8}
+$$
+
+$F$ 支是根子系统的偏迹，没有测量并报告根值 $q$；$q$ 是未观测扩张环境的 Kraus 索引。
+在嫁接源上，(57.4) 使这支质量为 $a$，条件输出恰为
+$|Jw_s\otimes Jw_t\rangle\langle Jw_s\otimes Jw_t|$。
+它与 $v_s\otimes v_t$ 的内积为 $a$，所以条件距离恰为 $\sqrt{1-a^2}$。
+$L$ 支质量 $r$ 全部保留并输出固定 fallback，给完整上界
+$r+a\sqrt{1-a^2}$。两式再用归一化态距离至多一，即得 (58.3)；
+遗忘报告旗标的偏迹给 (58.1) 的实际通道。
+
+还须在全部载体上验证正规性，不能只为所列源向量配像。
+(58.5) 的场支已有有界 Kraus 算子 $A$。对每个 $ij\ne FF$，取
+$P_{ij}(H\otimes H)$ 的任一可数正交基 $g_{ij,k}$，其 fallback Kraus 算子为
+$|f\rangle\langle g_{ij,k}|$。加上对应正交报告旗标后，所有
+$K_\nu^*K_\nu$ 的和强收敛至 $\sum_{ij}P_{ij}=I$。
+(58.8) 同理由有限个 $B_q$ 和 $|f\otimes f\rangle\langle g_{L,k}|$ 完成，
+其和强收敛至 $P_F+P_L=I$。任意基选择给同一重置映射
+$Y\mapsto\operatorname{Tr}(PY)|f\rangle\langle f|$，不向外报告基索引。
+
+具体地，对正迹类 $Y$，各 Kraus 项均正，部分和的迹递增至
+$\operatorname{Tr}Y$，因为强完备关系可逐项用于 $Y$ 的正谱展开并交换非负求和。
+尾和的迹就是其迹范数，故这些算子和按迹范数收敛。
+任意迹类可写为四个正迹类的线性组合，给出全域线性映射；
+每个有限矩阵放大的和仍为正，故完全正，且完备关系保证保迹。
+对偶为 $Z\mapsto\sum_\nu K_\nu^*ZK_\nu$；对有界递增正算子网，
+逐向量二次型的非负和与上确界交换，故对偶保持该上确界，即正规。
+这直接建立可分无限维载体上的通道，而非援引有限维 Choi 矩阵完成。
+
+本证明消费通常 Kraus／等距、重置、纯态距离和正交块迹范数方法。
+其有限维表述见 [Watrous，*The Theory of Quantum Information*，第 2 章，
+定理 2.22、2.26](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)；
+无限可数和的收敛与正规性已在此单独核对。
+新增的来源特定接合是 (57.4) 与固定根真空及场投影相配，从而得到
+全 $T^2$ 的 (58.2)–(58.6)、(58.8)，不把一般 Kraus 定理作为新增成果。∎
+
+## 59. 有限误差的严格下界、渐近阶与精确成功的区别
+
+**定理 59.1（两族全来源 minimax 误差的双边尺度）。** 对每个 $n\ge1$ 和
+$X\in\{\mathrm c,R\}$，定义 57.1 的误差满足
+
+$$
+\begin{aligned}
+0<L_{\rm con}(n)
+ &:=\frac{\sqrt{1-a^2b}-\sqrt{1-a^2}}2
+ \le E_{\rm con}^X(n)\le U_{\rm con}(n),\\
+0<L_{\rm dec}(n)
+ &:=\frac{\sqrt{1-a^4}-\sqrt{1-a^2}}2
+ \le E_{\rm dec}^X(n)\le U_{\rm dec}(n).
+\end{aligned}
+\tag{59.1}
+$$
+
+因此两个误差各为 $\Theta(n^{-1/2})$。更具体地，两种 $X$ 均有
+
+$$
+\begin{aligned}
+\frac{\sqrt3-\sqrt2}{2\sqrt5}
+ &\le\liminf_{n\to\infty}\sqrt n\,E_{\rm con}^X(n)
+ \le\limsup_{n\to\infty}\sqrt n\,E_{\rm con}^X(n)
+ \le\sqrt{\frac25},\\
+\frac{2-\sqrt2}{2\sqrt5}
+ &\le\liminf_{n\to\infty}\sqrt n\,E_{\rm dec}^X(n)
+ \le\limsup_{n\to\infty}\sqrt n\,E_{\rm dec}^X(n)
+ \le\sqrt{\frac25}.
+\end{aligned}
+\tag{59.2}
+$$
+
+这些是不依赖源大小的界，不断言任一 minimax 首项常数精确，也不要求下确界达到。
+
+证明。构造取 §51 的同一完整输入合同与同一二输入：
+$(s,t)=(\alpha,\alpha),(\beta,\alpha)$。输入纯态内积为 $a$，
+目标内积为 $a\sqrt b$，两模型相同。若共同通道在这两项的误差均不超过 $e$，
+三角不等式和距离收缩给
+
+$$
+\sqrt{1-a^2b}\le 2e+\sqrt{1-a^2}.
+\tag{59.3}
+$$
+
+分解取 $(\alpha,\beta),(\beta,\alpha)$；输入内积为 $a$，目标乘积内积为 $a^2$，
+同样得到 $\sqrt{1-a^4}\le2e+\sqrt{1-a^2}$。
+对全来源上确界再对共同通道取下确界，即为两项下界。
+固定来源无关 ancilla 可并入同一通道，不改变这个论证；可读源标签则改变输入合同，
+不属于这里的比较类。$0<a,b<1$ 使两个下界均严格为正。
+
+所用距离收缩的有限维供应见 [Watrous，第 3 章，推论 3.40，及定理 3.4
+的效果判别](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf)。
+在这里的任意正规通道输出上也可直接证明所需收缩：对自伴迹类差
+$Z=Z_+-Z_-$，正性、保迹和三角不等式给
+$\|\Phi(Z)\|_1\le\operatorname{Tr}\Phi(Z_+)+\operatorname{Tr}\Phi(Z_-)=\|Z\|_1$。
+故没有把无限维输出未经说明地套进有限维定理。
+
+令 $h\downarrow0$、$a=b=1-h$。多项式恒等式给
+
+$$
+\frac{1-a^2}{h}\to2,\qquad
+\frac{1-a^2b}{h}=\frac{1-(1-h)^3}{h}\to3,\qquad
+\frac{1-a^4}{h}\to4.
+\tag{59.4}
+$$
+
+因此 $L_{\rm con}/\sqrt h\to(\sqrt3-\sqrt2)/2$、
+$L_{\rm dec}/\sqrt h\to(2-\sqrt2)/2$。
+(58.1) 中未截断的两个上界除以 $\sqrt h$ 都趋于 $\sqrt2$，
+它们本身趋零，故取 $\min\{1,\cdot\}$ 不改极限。
+代入 $h=1/(5n)$ 得 (59.2)，正的 liminf 与有限 limsup 给所称阶。
+最小参数 $n=1$ 时这些界仍有效，具体为
+
+$$
+\frac{\sqrt{305}-15}{50}\le E_{\rm con}^X(1)\le\frac{93}{125},\qquad
+\frac{\sqrt{369}-15}{50}\le E_{\rm dec}^X(1)\le\frac{17}{25}.
+\tag{59.5}
+$$
+
+下界只使用两个实际源，承担必要性；全来源达到这些上界的充分性由定理 58.1
+的同一条完整通道承担，未把二输入达到性提升为全来源达到性。∎
+
+**命题 59.2（近似确定性与精确成功概率并存）。** (59.1)–(59.2) 与
+(51.2)、(51.3) 的精确等成功极限 $2/3$、$1/2$ 同时成立。
+前者允许所有输出支带误差，后者要求成功支精确等于指定纯态；两种结算量不同。
+
+证明。(58.5)、(58.8) 的场支输出都省去了目标的忠实标签振幅，构造还用固定根真空
+代替未知根色；即使这些支的概率趋一，也没有得到精确成功支。
+§51 的纯态 Gram 约束仍对精确成功仪器成立，且其完整输入未变。
+[Chefles–Jozsa–Winter，quant-ph/0307227v1，定理 2–3](https://arxiv.org/html/quant-ph/0307227v1)
+量化有限纯态族及其多概率转换，供应该精确约束，不供应本全来源近似通道。
+[Chefles，quant-ph/9911086v3，定理 1–2](https://arxiv.org/html/quant-ph/9911086v3)
+处理有限集合的确定性转换及线性独立条件下的纯叠加保持；同样不能把源态误差
+改读为任意相干叠加误差。故两个精确极限无需改判。∎
+
+## 60. 完整记录的接续与量子起源接口的余项
+
+**命题 60.1（单一允许接续下的未归一记录界）。** 对定理 58.1 的任一方向，
+记其完整报告输出为 $\Omega_{s,t}$、同旗标律的来源索引基准为 $\Xi_{s,t}$，
+对应上界为 $U$。若同一条实际另已允许的正规 CPTP 接续 $\Lambda$ 作用于两者的
+相同旗标及输出载体，且保留所有新增报告、失败、Stop 和系统输出，则
+
+$$
+D\bigl(\Lambda(\Omega_{s,t}),\Lambda(\Xi_{s,t})\bigr)\le U.
+\tag{60.1}
+$$
+
+它的完整经典记录边缘的总变差也至多 $U$；特别，每个原始事件的概率差至多 $U$。
+若此前实际制备历史 $x$ 的进入质量为 $q_x$，在进入时供应定义 57.1 的相应迹一态，
+其余失败分支和旧记录原样保留，则两完整比较对象的距离至多
+
+$$
+\sum_x q_x U\le U,\qquad \sum_xq_x\le1.
+\tag{60.2}
+$$
+
+此处 $x$ 是处理器外的经典历史，不把携带 $s,t$ 的资料变成它的输入。
+允许的后续选择只能按两侧相同的实际可读记录作同一决策，不能根据未知来源另选通道。
+
+证明。(60.1) 是定理 59.1 证明中的自伴迹类收缩直接应用于同一接续。
+保留完整记录的有限自适应仪器连同其 Stop 可合为一条通道；若使用无共同深度界的
+随机有限策略，还须像 (47.3) 一样保证可测、逐次终止且总质量一。
+取经典边缘是另一条通道，经典对角态的半迹距离就是总变差，故得记录结论。
+此前未进入分支两侧完全相同，距离零；进入分支在相同旧历史块中各贡献至多 $q_xU$。
+正交块求和给 (60.2)，非原子经典历史用相同权的积分。
+没有把各个后选择条件态的误差当作原始质量误差，也没有丢弃 fallback。
+接续的实际权限是独立前提；源索引基准只用于数学比较，不把其输出宣布为可取得的理想实验。∎
+
+**假设 60.2（数学坐标权限、可访问输出与原生端口）。** 定理 58.1 的比较类
+明确允许直和项投影、(57.3) 的无限载体坐标重排、固定根真空／fallback 制备、
+根偏迹和独立张量输入。这些是数学许可，不是由树地址或 FIB 语法获得的原生操作。
+旗标以 (58.2) 全部报告；未报告的根 Kraus 索引不是秘密删去的测量记录，
+其操作本身定义为偏迹，并未安装根测量端口。
+若实际装置另行读出根、重置环境、基索引或保留输入副本，就必须把这些系统和记录
+加入输出并另定全输出基准，不能只引用 (58.3) 认证扩大的输出合同。
+例如分解的场支所丢根态为 $\zeta_{\ell(s,t)}^X$，可依赖未知源，
+并没有来源无关垃圾的证明；若只把该根保持为可访问系统，则该支的自然基准也必须
+带上同一个 $\zeta_{\ell(s,t)}^X$，而非固定真空。
+这只说明应怎样列出该支的输出，不建立全部扩张环境的近似恢复。
+
+(58.3) 的上界是单步、指定源输入、包含报告旗标和输出系统的态距离。
+它不等于一对理想／实际通道的 diamond 范数界，也不保证任意相干叠加、
+纠缠参考或可访问扩张环境的一致保真度，不给可逆转换。
+[Kretschmann–Schlingemann–Werner，quant-ph/0605009v1，定理 1](https://arxiv.org/html/quant-ph/0605009v1)
+从通道 cb 距离控制共同扩张的等距距离；这里没有它所需的通道范数前提，
+不能用其连续性结论补上缺失的环境或参考保证。
+
+任意次数迭代还须检验每次实际进入态、独立性与误差传播，不能把源态族上的单步界
+直接当作所有中间态上的通道界。§52 的增长上下文要求的源族与资源另有量词：
+$j=5n$ 使用 $2^{5n}$ 叶且其根到上下文下界不趋零，故不能用 (59.2) 取消该界。
+整个来源族仍有 §50 的无界秩；这里的可分载体正规通道不成为原生五模
+$\mathbb C^5$ 菜单中的操作。$n$ 改变编码参数和局部向量，未被定义为已测得的硬件、
+时间、门数或制备费用，$\Theta(n^{-1/2})$ 也不是这些资源的标度律。
+
+[同源取得桥 §§9–14](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_KERNEL_MINIMAL_PREDICTIVE_CORE_BRIDGE.md)
+要求已安装的平稳读出、对相关初始配置均成功的安全有限取得协议，以及 (MPC.42)
+的实际来源／动作／读出对应。这里没有从这些配置、动作或读出到
+$J_X,P_F,\mathcal U_X$、独立制备及偏迹的操作映射，故不运输其取得能力或符号数界。
+传感器选择的数学构造不供应相干量子端口。
+[有理时间相干条件](../../../Blueprint/D5/S3/ConceptDynamics/Coding/PrimitiveLifts/CoherentRationalTimeCriterion.md)
+与 [预测波第七卷 §§142–145 的有限解码](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_VII.md#142-an-order-three-source-and-its-literal-length-two-decoder)
+分别保留自身对象、共同实现和操作假设；此处也没有转移其控制或解码界。
+
+**命题 60.3（有限精度结果的物理适用边界）。** 在 §§45–46 的两种另供编码和
+定义 57.1 的数学权限下，精确源转换障碍不产生与 $n$ 无关的正误差地板；
+同时，这个结论不消除两种标量模型、原生相干取得、独立物理制备、Born／测量标定、
+共同相位参考与动力学接口的未决性。
+
+证明。定理 59.1 给每个有限 $n$ 的正误差及随 $n$ 趋零的全来源共同上界，
+故在这些编码与权限下不存在统一正地板。证明从头保留
+$z_j\in\mathbb C^2$ 与全实 $u_j\in\mathbb R^3$ 的两个选择，后者的通道可选全实 Kraus
+矩阵；相同误差阶没有选择其一。所用投影、偏迹和制备按假设 60.2 另供，
+概率按密度算子合同定义，未从信息守恒或预测量的直觉推导 Born 规则。
+因此新增关系是“来源特定地址分解—全来源近似取得—同一接续下的完整记录精度”，
+而完整量子起源所需的上述实际端口与原理来源仍未闭合。
+本批 (57.4)、(58.1)–(58.3)、(59.1)–(59.2) 属于本来源的条件综合推导
+（repo-derived）；一般 Gram、Kraus 与距离工具只作其中间供应，
+不主张一般已知定理的新颖性或穷尽文献优先权。∎
+
+## 追加锚（本行以下为增补区）
