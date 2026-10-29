@@ -3,6 +3,7 @@ import D5.S3.Topology.TauCeti.AlgebraicTopology.Sphere.Equator
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Sphere.Puncture
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Sphere.Zero
 import D5.S3.Topology.TauCeti.Analysis.Normed.Module.Ball.Homeomorph
+import D5.S3.Topology.TauCeti.Analysis.Normed.Group.BallSphere
 import D5.S3.Topology.TauCeti.Analysis.InnerProductSpace.OrthogonalLast
 
 /-!
