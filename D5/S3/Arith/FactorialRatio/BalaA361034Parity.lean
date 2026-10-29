@@ -7,7 +7,7 @@
    digest: Bala's A361034 factorial quotient is odd exactly at shifted powers of two. -/
 
 /-
-escape_witness: of_digits_sum_one
+escape_witness: none
 admission_basis: open-problem-resolution (#18606; Proved)
 Direct frozen dependencies: the declarations listed below belong to
 D5/S3/Arith/FactorialRatio/OeisA347854BalaHalfIndexIntegral.
@@ -18,6 +18,14 @@ No module pin is used as a declaration ID.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/21857
 The sequence and claim use the source expressions with natural division.
 The shared quotient_odd theorem is also used by BalaA361035Parity.result.
+The bind-only classification includes the upstream route for of_digits_sum_one:
+Mathlib/Algebra/BigOperators/Finsupp/Basic.Finsupp.sum_eq_one_iff identifies
+the single nonzero digit. Finsupp.equivFunOnFinite_symm_sum, List.ofFn_get,
+List.sum_ofFn, List.mapIdx_eq_ofFn and Nat.ofDigits_eq_sum_mapIdx reconstruct
+the corresponding power. This route uses only application, projection and simp.
+After helper expansion, binary_sum_one, quotient_odd and both settling results
+are also bind-only; no escape witness is claimed. The two settling results use
+open-problem-resolution admission, and the helpers are consumed by those results.
 Declarations (same-delivery helpers expanded for proof classification):
   quartic_floor: proof_shape: bind-only; escape_witness: none; consumers: rough_integrality.
     Direct frozen dependencies: OeisA347854BalaHalfIndexIntegral.mul_div_reduce.
@@ -33,17 +41,17 @@ Declarations (same-delivery helpers expanded for proof classification):
     Direct frozen dependencies: OeisA347854BalaHalfIndexIntegral.mul_div_reduce, OeisA347854BalaHalfIndexIntegral.factorial_prod_dvd_of_floor.
   of_digits_sum_zero: proof_shape: bind-only; escape_witness: none; consumers: of_digits_sum_one.
     Direct frozen dependencies: none.
-  of_digits_sum_one: proof_shape: content; escape_witness: of_digits_sum_one; consumers: binary_sum_one.
+  of_digits_sum_one: proof_shape: bind-only; escape_witness: none; consumers: binary_sum_one.
     Direct frozen dependencies: none.
-  binary_sum_one: proof_shape: content; escape_witness: of_digits_sum_one; consumers: quotient_odd.
+  binary_sum_one: proof_shape: bind-only; escape_witness: none; consumers: quotient_odd.
     Direct frozen dependencies: none.
-  quotient_odd: proof_shape: content; escape_witness: of_digits_sum_one; consumers: result, BalaA361035Parity.result.
+  quotient_odd: proof_shape: bind-only; escape_witness: none; consumers: result, BalaA361035Parity.result.
     Direct frozen dependencies: OeisA347854BalaHalfIndexIntegral.mul_div_reduce, OeisA347854BalaHalfIndexIntegral.factorial_prod_dvd_of_floor.
   a: proof_shape: bind-only; escape_witness: none; consumers: claim, result.
     Direct frozen dependencies: none.
   claim: proof_shape: bind-only; escape_witness: none; consumers: result.
     Direct frozen dependencies: none.
-  result: proof_shape: content; escape_witness: of_digits_sum_one; consumers: settling result.
+  result: proof_shape: bind-only; escape_witness: none; consumers: settling result.
     Direct frozen dependencies: OeisA347854BalaHalfIndexIntegral.mul_div_reduce, OeisA347854BalaHalfIndexIntegral.factorial_prod_dvd_of_floor.
 -/
 

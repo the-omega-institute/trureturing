@@ -1,0 +1,58 @@
+**Lemma 11.4 (Terminal degree at most 303).** The total parameter degree
+of $F$ is at most $303$.
+
+Proof. Let $P_j$ be the homogeneous total-degree-$j$ part of $P_M$ in
+$(p,v,z)$ and put
+
+$$
+\ell_M=(-30p+32v)/5,\qquad g_M=30p-32v+5z.
+\tag{11.11}
+$$
+
+The complete small homogeneous tests, by the coefficient operations of
+Lemma 10.2, are
+
+$$
+\begin{gathered}
+P_{18}=g_M^2S_{16},\qquad
+S_{16}(\ell_M)\ne0,\qquad
+\gcd(S_{16},\partial_zS_{16})=1,\\
+P_{17}(\ell_M)=0,\\
+A_M=\tfrac12(\partial_z^2P_{18})(\ell_M)\ne0,\quad
+B_M=(\partial_zP_{17})(\ell_M),\quad C_M=P_{16}(\ell_M),\\
+B_M^2=4A_MC_M.
+\end{gathered}
+\tag{11.12}
+$$
+
+$S_{16}$ has $153$ monomials and $z$-degree $16$. Its exact division by
+$g_M^2$ has zero remainder. Evaluations can all be made polynomial by
+using the common multiplier $5^{18}$, and the division by $2$ in $A_M$
+is exact over $\mathbb Q$. The gcd is over $\mathbb Q[p,v,z]$ and also
+says that no parameter-only content survives in $S_{16}$. To regenerate
+it one may perform primitive Euclidean gcd in $z$ over
+$\mathbb Q(p,v)$ and take the coefficient-content gcd separately.
+
+Set $\epsilon=t^{-1}$ and consider
+$t^{-18}P_M(tP,tV,tZ)$. At $\epsilon=0$ its roots consist of sixteen
+simple slopes and the double slope $\ell_M$, by (11.12). Hensel
+factorization separates the simple factors from the monic quadratic at
+that double slope. In its coordinate $Z=\ell_M+u$, its first terms,
+after multiplication by a unit, are
+
+$$
+A_Mu^2+\epsilon B_Mu+\epsilon^2C_M
++O(u^3,\epsilon u^2,\epsilon^2u,\epsilon^3).
+\tag{11.13}
+$$
+
+The term of order $\epsilon$ at $u=0$ vanishes because
+$P_{17}(\ell_M)=0$. The quadratic discriminant has order at least
+$\epsilon^3$, since its order-$\epsilon^2$ coefficient is
+$(B_M^2-4A_MC_M)/A_M^2=0$. The simple-root discriminant and the
+cross-resultant are units. Thus the entire discriminant in $Z$ is
+$O(\epsilon^3)$. Scaling eighteen roots from $Z$ to $z=tZ$ contributes
+$t^{18\cdot17}=t^{306}$. The terminal leading coefficient (10.3) is
+constant, so no further parameter degree is introduced. The exponent
+is at most $306-3=303$, as asserted. ∎
+

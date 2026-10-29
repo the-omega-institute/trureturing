@@ -1,0 +1,36 @@
+**引理 30.1（非中性同一矩形的尺度唯一性）。** 设 $u,v>0$ 且 $u\ne1\ne v$。则方程
+$F_k(u,v)=0$（其中 $F_k$ 如（15.1））至多有一个 $k>0$。
+
+证明。令 $A=(u+1)(v+1)$，并令
+
+$$
+D=(1+k)^2(1+ku)^2(1+kv)^2(1+kuv)^2.
+$$
+
+直接通分得到
+
+$$
+D F_k(u,v)=k(u-1)(v-1)Q_{u,v}(k),
+$$
+
+其中
+
+$$
+\begin{aligned}
+Q_{u,v}(k)={}&u^2v^2A k^5
+ +2uv\bigl(uv(u+v+3)+u+v\bigr)k^4\\
+ &+4uvA k^3+4uvk^2-Ak-2.
+\end{aligned}
+\tag{30.3}
+$$
+
+而
+
+$$
+\frac{Q_{u,v}(k)}{k^2}
+ =u^2v^2A k^3+2uv\bigl(uv(u+v+3)+u+v\bigr)k^2
+ +4uvA k+4uv-\frac Ak-\frac2{k^2}.
+$$
+
+其导数的每一项均为正，且该函数在 $k\downarrow0$ 时趋于 $-\infty$、在 $k\to\infty$ 时趋于 $+\infty$。所以 $Q_{u,v}$ 恰有一个正根。由于 $D>0$ 且前面的因子非零，$F_k(u,v)$ 的正根也恰有一个，故尤其至多一个。$\square$
+

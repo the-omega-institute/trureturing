@@ -1,0 +1,67 @@
+**定义 35.1（每个有限词上的三值行动）。** 固定精度参数 $0<\epsilon\le1/4$，所有对数均为自然对数。定义不依赖模型参数的检查点及阈值
+
+$$
+n_j=2^j,\qquad
+L_j=\log\frac{8(j+1)^2}{\epsilon},\qquad
+b_j=\sqrt{n_jL_j},\qquad j\in\mathbb Z_{\ge0}.
+\tag{35.2}
+$$
+
+对任意 $y\in\{0,1\}^{2r}$，若 $y_{-1}=1$ 或 $y_1=1$，行动为 $\mathrm{stop0}$。否则按定义 29.1 从近到远列出两侧全部占据位，记为
+
+$$
+L_0>L_1>\cdots>L_{K_--1},\qquad
+R_0<R_1<\cdots<R_{K_+-1},
+$$
+
+并保留原定义
+
+$$
+N_s(r)=\max\left\{0,\left\lfloor\frac{K_s-1}{2}\right\rfloor\right\},
+\qquad s\in\{-,+\},
+\qquad
+D_i^-=L_i-L_{i+1},\quad D_i^+=R_{i+1}-R_i.
+\tag{35.3}
+$$
+
+间隔仅在相邻条目存在时定义。对 $0\le n\le N_s(r)$，置
+
+$$
+S_n^s(y)=\sum_{k=0}^{n-1}
+\left(\mathbf1_{\{D_{2k}^s=2\}}-
+      \mathbf1_{\{D_{2k+1}^s=2\}}\right),\qquad S_0^s(y)=0.
+\tag{35.4}
+$$
+
+这正是（30.1）的前 $n$ 对统计；特别地，（29.2）的 $T_s(y)=S_{N_s(r)}^s(y)$。对每一侧，若集合
+
+$$
+\{j\ge0:n_j\le N_s(r),\ |S_{n_j}^s(y)|>b_j\}
+\tag{35.5}
+$$
+
+非空，取其最小元 $j_s(y)$，将该侧的证书定义为
+
+$$
+\xi_s(y)=\operatorname{sgn}S_{n_{j_s(y)}}^s(y)\in\{-1,1\}.
+$$
+
+若两侧均有证书，符号相反时行动为 $\mathrm{stop1}$，符号相同时行动为 $\mathrm{stop0}$；若至少一侧尚无证书，行动为 $\mathrm{continue}$。邻位为一的分支具有优先权。
+
+阈值相等不产生证书，零分数不产生证书。空列表及少于三个占据位的列表没有完整间隔对；最后一个未配对间隔舍去。上述公式也用于不可能的二值词，不访问不存在的条目，因而三种行动在每个有限词上总定义。策略在两侧各自使用首次越界的检查点符号；以后增加的分数不替换已取得的证书。
+
+定义首次停止半径及扩展输出
+
+$$
+\tau_\epsilon=\inf\{r\ge1:\text{在 }Y_r\text{ 上的行动不是 }\mathrm{continue}\},
+\qquad
+\widehat X_\epsilon=
+\begin{cases}
+a,&\tau_\epsilon<\infty\text{ 时行动为 }\mathrm{stop}a,\ a\in\{0,1\},\\
+\bot,&\tau_\epsilon=\infty,
+\end{cases}
+\tag{35.6}
+$$
+
+空集下确界为 $\infty$，$\bot$ 表示未终止，并非二值答案。模型结构和 $\epsilon$ 固定后，同一套有限词规则用于整个开参数方形。$p,q$、它们的次序、差值、分离下界、隐藏标记、中心、预先供应的锚或观察半径均不进入规则。式（35.2）给出任意实数 $\epsilon$ 下的数学阈值；这里证明的是可测规则，没有证明精确实数比较的 CPU 实现或其运行代价。
+

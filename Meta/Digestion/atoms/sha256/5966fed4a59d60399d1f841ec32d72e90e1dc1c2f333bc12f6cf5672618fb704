@@ -1,0 +1,84 @@
+**Lemma 8.5.2 (The 128 whole-tube response comparisons).** All interval
+inverses in Definition 8.5.1 are defined. For each pivot position the
+absolute values of all its interval endpoints over the $128$ final
+point matrices lie strictly between the indicated integers, with the
+whole pivot interval excluding zero:
+
+| Pivot position | Strict lower bound for its absolute value | Strict upper bound |
+|---:|---:|---:|
+| $1$ | $292$ | $293$ |
+| $2$ | $350$ | $351$ |
+| $3$ | $16$ | $17$ |
+| $4$ | $407$ | $408$ |
+| $5$ | $26$ | $27$ |
+
+For every $0\le i<128$, the intervals of (8.5.3) obey
+
+$$
+\begin{aligned}
+\bigcup_i\mathcal V_{f_p,i}
+ &\subseteq[-10892040442289,-10890360243799]/10^{12}
+ \subset(-10.892041,-10.890360),\\
+\bigcup_i\mathcal V_{f_v,i}
+ &\subseteq[-8154581108770,-8153505324970]/10^{12}
+ \subset(-8.154582,-8.153505).
+\end{aligned}
+\tag{8.5.4}
+$$
+
+Proof. The finite parameter range is the original $128$ cells of
+(7.2.3). Obtain their exact rational centres from that recurrence.
+The outward $240$-bit evaluation of each of its five corrections puts
+both endpoints of each updated coordinate in the same $Q_{45}$
+rounding cell, so it fixes exactly the stated rational centre. For the
+new bounds, use the point derivatives at those centres and $t_i$,
+perform the five ordered interval pivots just defined, and apply
+(8.5.3) on $X_i\times T_i$. The minima and maxima of the five pivot
+absolute endpoints give the integer bounds in the table. The minimum
+lower and maximum upper response endpoints, rounded outward to
+multiples of $10^{-12}$, give (8.5.4). These instructions involve only
+the displayed rational circuit, the six derivative rules and finite
+integer comparisons; in particular they evaluate all $128$ cells,
+not just their end cells.
+
+All source denominators are guarded before these evaluations.
+The source bounds (7.2.7), with the sufficient continuation bounds of
+Lemma 8.5.3, apply on every $X_i\times T_i$:
+at both scalar evaluations $\epsilon=\pm\sqrt t$, one has
+$0<r<1$, $b>0$, and $j,n,T,U>0$. In the two-coefficient algebra the
+denominator of an inverse $(A,B)^{-1}$ is $A^2-tB^2$, the product of
+those two scalar values. For $b,j,n,T,U$ these products are positive,
+and their outward intervals exclude zero. The remaining new inverse
+operations are the five point-matrix pivots; their interval bounds
+above exclude zero. Fixed interpolation constants are nonzero.
+Consequently the differentiated circuit has no unguarded inverse.
+No division by $h$, $\Lambda$, a drift, a gain sample, a leading gain
+coefficient or a gain-root difference occurs. ∎
+
+Proof of the graph assertion in Theorem 8.1.2. The sufficient bounds of
+Lemma 8.5.3 justify the contraction and seam implications of Section 7.3
+for the same tubes and graph. For $t\in T_i$ that graph satisfies
+$y(t)\in X_i$ and $G(y(t),t)=0$. Put
+$F=f-u_{f,i}G$ for either response $f$. At the centre,
+$F(c_i,t_i)=b_{f,i}$, while at that exact graph point
+$F(y(t),t)=f(y(t),t)$. Integrate the derivative of $F$ along the straight
+segment in the convex product box from $(c_i,t_i)$ to $(y(t),t)$.
+The five coordinate displacements are bounded by $\rho_j$, and the
+parameter displacement by $\Delta$. The derivative enclosures in
+(8.5.3) therefore imply
+
+$$
+|f(y(t),t)-b_{f,i}|\le\eta_{f,i},\qquad
+f(y(t),t)\in\mathcal V_{f,i}.
+\tag{8.5.5}
+$$
+
+At a zero of $G$, $p_{\mathrm{sec}}=v_{\mathrm{sec}}=0$, so its
+$p_{\mathrm{av}},v_{\mathrm{av}}$ are exactly the two endpoints'
+common actual responses. This also defines their continuous common
+base at $t=0$. Equation (8.5.4) now gives (8.1.4). Since $t=h^2$ maps
+$[0,1/250]$ onto $[0,1/62500]$, the bound covers the entire published
+parameter interval, including seams and both attachments. The scalar
+source denominators stay positive at the singular passage, so the
+argument applies there without a chart change. ∎
+
