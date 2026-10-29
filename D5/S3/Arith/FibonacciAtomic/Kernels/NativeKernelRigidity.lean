@@ -4,10 +4,11 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Exact multiplicative Hermitian kernels on all native Fibonacci source trees take only zero and one. -/
+   digest: Exact native multiplicative Hermitian kernels take only zero and one. -/
 
 import D5.S3.Arith.FibonacciAtomic.SourceTransportCentralizer
-import Mathlib.Data.Complex.Basic
+
+/-! # Exact kernel rigidity on the full native source algebra -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -63,7 +64,8 @@ theorem kernel_zero_or_one (K : Source → Source → ℂ)
         _ = K (.of false) (substitution (substitution^[n] (.of true))) *
             K (.of true) (substitution^[n] (.of true)) := hMul _ _ _ _
         _ = _ := by rw [show K (.of false) (substitution (substitution^[n] (.of true))) =
-            K (.of true) (substitution^[n] (.of true)) from hTransport _ _]
+            K (.of true) (substitution^[n] (.of true)) from
+              hTransport (.of true) (substitution^[n] (.of true))]
     exact eq_zero_or_one_of_sq_eq_self (by simpa only [pow_two] using hid.symm)
   have alpha_row (u : Source) : ∀ n : ℕ,
       K (.of true) (substitution^[n] u) = 0 ∨
@@ -75,7 +77,7 @@ theorem kernel_zero_or_one (K : Source → Source → ℂ)
       | true => exact alpha_orbit n
       | false =>
         have he : substitution^[n] (.of false) = substitution^[n + 1] (.of true) :=
-          Function.iterate_succ_apply _ _ _ |>.symm
+          (Function.iterate_succ_apply (substitution : Source → Source) n (.of true)).symm
         rw [he]
         exact alpha_orbit (n + 1)
     | mul s t hs ht =>
@@ -95,7 +97,8 @@ theorem kernel_zero_or_one (K : Source → Source → ℂ)
           _ = K (.of true) (substitution (substitution^[n] s)) *
               K (.of true) (substitution (substitution (substitution^[n] t))) := by
             rw [show K (.of false) (substitution (substitution (substitution^[n] s))) =
-              K (.of true) (substitution (substitution^[n] s)) from hTransport _ _]
+              K (.of true) (substitution (substitution^[n] s)) from
+                hTransport (.of true) (substitution (substitution^[n] s))]
           _ = _ := by simp only [Function.iterate_succ_apply']
       rw [recurrence]
       exact product (hs (n + 1)) (ht (n + 2))
@@ -129,7 +132,7 @@ theorem kernel_zero_or_one (K : Source → Source → ℂ)
               rw [show K (substitution (.of false)) (substitution (substitution s)) =
                   K (.of true) s from transport_two (.of true) s,
                 show K (.of false) (substitution (substitution t)) =
-                  K (.of true) (substitution t) from hTransport _ _]
+                  K (.of true) (substitution t) from hTransport (.of true) (substitution t)]
         rw [recurrence]
         exact product (alpha_row s 0) (alpha_row t 1)
   intro s
