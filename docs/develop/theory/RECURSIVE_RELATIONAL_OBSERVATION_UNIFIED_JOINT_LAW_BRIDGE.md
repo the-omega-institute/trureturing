@@ -239,3 +239,268 @@ menu、实际共同来源、对前后接续封闭的测试族，以及联合核�
 时间、边界和记忆只有在这些交换条件成立时，才是同一关系过程的可互相恢复表达。
 
 ## 追加锚（本行以下为增补区）
+
+## 2. 有限实际探针的联合行逆
+
+### 2.1 来源、商类与可执行探针
+
+固定有限的事件—记录字母表 $B$、终止字母表 $T$、探针字母表 $\mathcal A$，以及
+一个有限的已实现后继商
+
+$$
+C=\{1,\ldots,m\},\qquad m\ge 2.
+$$
+
+一次首动作的完整行由一个概率分布 $\rho$ 给出。它的质量分别写成
+$\rho(b,c)$ 和 $\rho(b,t)$，其中 $(b,c)\in B\times C$ 是带有首事件和整条首记录的
+成功后继，$(b,t)\in B\times T$ 是带有同一首记录的终止后继。$b$ 必须包含合法性、
+拒绝原因和权限结果等会影响后续选择或解释的字段；若这些字段不能被写入 $b$，
+下文只在所有候选来源共有的合法域上成立。终端 $t$ 不与任何 $c$ 合并。
+
+令 $q$ 把实际状态送到 $C$。一个长度为 $L$ 的宏探针 $\mathsf P$ 在类 $c$ 的
+每个实际代表元和每个已经取得的上下文 $h$ 上都必须满足同一个点态校准律
+
+$$
+\Pr(W=w\mid q(s)=c,h,\mathsf P\text{ 合法})=P_c(w),
+\qquad w\in\mathcal A^L,
+\tag{UJB.7401}
+$$
+
+其中 $P_c$ 与代表元和 $h$ 无关。宏探针的每一个支持结果都把实际后继送回
+同一个商类 $c$，权限仍允许下一次调用；完整的实际状态和完整记录仍被保留。
+更强的来源条件是，若连续调用 $r$ 次并把每次取得的上下文记为
+$h_1,\ldots,h_r$，则
+
+$$
+\Pr(W_1=w_1,\ldots,W_r=w_r\mid q(s)=c,h_1,\ldots,h_r)
+ =\prod_{j=1}^rP_c(w_j).
+\tag{UJB.7402}
+$$
+
+这是假设来源的 Markov 条件，而不是从相同的单次边缘律推出的独立性。它不允许
+克隆来源、重置到一个隐藏类端口、免费取得校准样本，或把被探针消耗的权限重新
+当作仍然存在。
+
+写
+
+$$
+\Delta=\min_{c\ne d}d_{\mathrm{TV}}(P_c,P_d)>0,
+\qquad
+d_{\mathrm{TV}}(\mu,\nu)=\frac12\sum_x|\mu(x)-\nu(x)|.
+\tag{UJB.7403}
+$$
+
+这里的总变差是有限字母表上的通常归一化距离。给定 $r=m-1$ 次宏探针，首动作
+与后续档案的联合 law 为
+
+$$
+\begin{aligned}
+\mathcal M_\rho(b,\mathsf{term},t)&=\rho(b,t),\\
+\mathcal M_\rho(b,\mathsf{succ},w_1,\ldots,w_r)
+ &=\sum_{c\in C}\rho(b,c)\prod_{j=1}^rP_c(w_j).
+\end{aligned}
+\tag{UJB.7404}
+$$
+
+它保留 $b$ 与 $c$ 的联合关系、每个终端的身份和每一个实际写入的探针词。
+
+### 2.2 有界逆与精确行恢复
+
+**引理 2.1（有限类的有界探针逆）。** 在 (UJB.7401)--(UJB.7404) 的条件下，
+$\mathcal M_\rho$ 唯一决定 $\rho$，并且对任意两个允许的首行动作行
+$\rho,\rho'$ 有
+
+$$
+d_{\mathrm{TV}}(\rho,\rho')
+ \le \min\left\{1,
+m\Delta^{-(m-1)}d_{\mathrm{TV}}(\mathcal M_\rho,\mathcal M_{\rho'})\right\}.
+\tag{UJB.7405}
+$$
+
+**证明。** 对每一对 $c\ne d$，从有限字母表的总变差定义选取
+$f_{cd}:\mathcal A^L\to[0,1]$，使
+
+$$
+\mathbb E_{P_c}f_{cd}-\mathbb E_{P_d}f_{cd}
+ =d_{\mathrm{TV}}(P_c,P_d)\ge\Delta.
+$$
+
+令 $g_{cd}=f_{cd}-\mathbb E_{P_d}f_{cd}$。于是 $|g_{cd}|\le1$，
+$\mathbb E_{P_d}g_{cd}=0$，且 $\mathbb E_{P_c}g_{cd}\ge\Delta$。把
+$C\setminus\{c\}$ 任意双射到 $\{1,\ldots,r\}$，定义
+
+$$
+h_c(w_1,\ldots,w_r)=\prod_{d\ne c}g_{cd}(w_{\iota_c(d)}).
+$$
+
+由 (UJB.7402)，对 $k\ne c$，$P_k^{\otimes r}$ 下恰有一个因子均值为零，故
+
+$$
+\mathbb E_{P_k^{\otimes r}}h_c=0\quad(k\ne c),
+\qquad
+\alpha_c:=\mathbb E_{P_c^{\otimes r}}h_c\ge\Delta^r.
+\tag{UJB.7406}
+$$
+
+这给出一个显式的有界对偶读出，而不需要写出未界的矩阵逆。任意
+$F:B\times(C\sqcup T)\to[-1,1]$ 定义一个复合记录上的函数 $G_F$：在终端
+$(b,\mathsf{term},t)$ 上取 $F(b,t)$，在成功记录上取
+
+$$
+G_F(b,\mathsf{succ},w_1,\ldots,w_r)
+ =\sum_{c\in C}F(b,c)\frac{h_c(w_1,\ldots,w_r)}{\alpha_c}.
+$$
+
+因此 $|G_F|\le m\Delta^{-r}$，并由 (UJB.7406) 得
+
+$$
+\mathbb E_{\mathcal M_\rho}G_F=\mathbb E_\rho F.
+$$
+
+取 $F$ 遍历 $[-1,1]$ 中的函数，有限集上的对偶表述给出未归一化变差范数
+的界
+$\|\rho-\rho'\|_1\le m\Delta^{-r}\|\mathcal M_\rho-\mathcal M_{\rho'}\|_1$；
+两边除以 $2$ 即得 (UJB.7405)，再用概率距离不超过 $1$ 截断。若两份复合 law
+相等，所有 $F$ 的期望都相等，故首行（包括每个终端）相等。证毕。
+
+这个证明也说明为什么必须保留首事件和首记录：若只保留后继的边缘 law，
+$F(b,c)$ 的联合测试就不再能被 $G_F$ 实现。宏的实际动作数至多为
+
+$$
+1+rL=1+(m-1)L,
+\tag{UJB.7407}
+$$
+
+首动作一次，随后每个类保持宏各执行一次。$m=1$ 时没有分离问题，首行动作 law
+本身就是行，取 $r=0$ 可得到直接读出；(UJB.7403)--(UJB.7406) 专用于 $m\ge2$。
+
+### 2.3 交替二项族：阶数和指数都是尖锐的
+
+**定理 2.2（持久 Bernoulli 反例）。** 令 $r=m-1$，取
+
+$$
+0<p<1,
+\qquad 0<\delta<\frac{\min\{p,1-p\}}{r},
+\qquad p_i=p+i\delta\quad(0\le i\le r).
+$$
+
+有 $m$ 个持久发射类 $E_i$，每次长度一的探针返回同一个 $E_i$，输出
+$\operatorname{Bernoulli}(p_i)$。两个根 $R_+$、$R_-$ 的首动作都写入同一个标记
+$b_\ast$，随后分别按
+
+$$
+\alpha_i=\begin{cases}2^{1-r}\binom ri&i\text{ 偶},\\0&i\text{ 奇},\end{cases}
+\qquad
+\beta_i=\begin{cases}0&i\text{ 偶},\\2^{1-r}\binom ri&i\text{ 奇}
+\end{cases}
+\tag{UJB.7408}
+$$
+
+选择 $E_i$。则 $d_{\mathrm{TV}}(\alpha,\beta)=1$，而根的首标记加上 $k$ 个
+探针输出的 law 在 $k<r$ 时完全相同，在 $k=r$ 时满足
+
+$$
+d_{\mathrm{TV}}(\mathsf{Law}_{R_+}(b_\ast,W_1,\ldots,W_r),
+                 \mathsf{Law}_{R_-}(b_\ast,W_1,\ldots,W_r))
+ =r!\,\delta^r.
+\tag{UJB.7409}
+$$
+
+**证明。** 偶数项和奇数项的二项式系数都为 $2^{r-1}$，所以 (UJB.7408) 是两
+个互不相交的概率分布。对一个长度为 $k$、含有 $s$ 个 $1$ 的词 $x$，其在
+$E_i$ 下的概率是
+
+$$
+Q_x(i)=(p+i\delta)^s(1-p-i\delta)^{k-s},
+$$
+
+这是 $i$ 的次数不超过 $k$ 的多项式。有限差分恒等式
+
+$$
+\sum_{i=0}^r(-1)^i\binom ri i^j=0\quad(0\le j<r),
+\qquad
+\sum_{i=0}^r(-1)^i\binom ri i^r=(-1)^r r!
+\tag{UJB.7410}
+$$
+
+说明当 $k<r$ 时两个混合 law 的每个词概率相同。令 $k=r$。$Q_x$ 的最高次
+系数是 $\delta^r(-1)^{r-s}$，故由 (UJB.7408) 和 (UJB.7410)，每一个词的
+两根概率差的绝对值都是
+
+$$
+2^{1-r}r!\delta^r.
+$$
+
+共有 $2^r$ 个词，半个 $\ell^1$ 和正好给出 (UJB.7409)。因此最先可能的
+探针数是 $r=m-1$，而差异的首项确实是 $\delta^r$。令 $\delta\downarrow0$，
+任何只依赖较低次 $\delta$ 的统一逆界都会被这个族否定；(UJB.7405) 的指数
+不能普遍降低。证毕。
+
+任意在固定上限 $k$ 内依据已见词自适应停止、并把停止标记写入档案的策略，
+都是完整长度 $k$ 词 law 的一个共同 Markov 推送（可用填充符把短词补到长度
+$k$）。数据处理不等式说明这种停止 law 的总变差不超过完整词 law 的总变差。
+故在 $k<r$ 时它仍完全相同，在 $k=r$ 时也不超过 (UJB.7409)；停止规则不能
+绕过交替二项式的消去。
+
+### 2.4 结构细化与取得 law 的错位
+
+在同一族上取 UJB.7303 的结构核链，并把一个发射类的一步 Bernoulli law 作为
+探针动作的联合记录。$K_0$ 只看根标记和“发射类”角色，所以所有 $E_i$ 先在
+同一类中，且 $R_+$、$R_-$ 也同类。由于 $p_i$ 两两不同，$E_i$ 的一步联合 law
+在 $K_1$ 已互相分开；根的首动作在 $K_0$ 商上仍只看到同一个发射类，故两个根
+在 $K_1$ 仍相等。到了 $K_2$，首动作的后继分布落在 $K_1$ 的单点发射类上，
+偶数支撑和奇数支撑互不相交，两个根分开。因此这个相关的结构链在第二层达到
+对角关系。
+
+取得 law 链却只能看到 $b_\ast$ 和持久发射输出。总动作数为 $n=1+k$ 时，
+(UJB.7410) 给出
+
+$$
+R_+\,A_n^{\mathrm{law}}\,R_-
+\quad(1\le n\le m-1),
+\qquad
+R_+\not\!A_m^{\mathrm{law}}R_-.
+\tag{UJB.7411}
+$$
+
+所以结构稳定指数为 $2$ 并不限制取得 law 的平台长度；在这组实际来源中，
+平台可一直持续到总根加探针 horizon $m$。这不是对既有 $K_n\subseteq A_n^{\mathrm{law}}$
+的改写，而是一个达到该包含方向极限的有限见证。
+
+### 2.5 接回四视图及不可恢复边界
+
+引理 2.1 只恢复一个实际首行及其终端部分。把恢复的行重新放回
+(UJB.7301) 的 typed joint law 后，只有当合法性、selector、记录更新和后继都
+沿同一商纤维下降，才可继续使用 (UJB.7310)--(UJB.7313) 的四视图运输。于是
+空间、时间、边界、记忆仍必须是同一实际共同来源上的四个因子；恢复首行并不
+推出 $K_n=A_n^{\mathrm{law}}$ 的全层恒等，也不推出物理时空的本体恢复。
+
+有三类边界必须保留。第一，若探针会破坏 $c$、改变后续权限，或只在一次运行
+后才能再次校准，则 (UJB.7402) 失效，不能把相同边缘律乘成张量 law。第二，若
+合法性或拒绝原因藏在不可见字段，(UJB.7405) 只能在声明的共同合法范围内使用，
+不能把非法分支静默合并。第三，即使行 law 已由引理唯一确定，重叠支持的一个
+有限实际记录仍不能零误差识别隐藏的 $c$；那是 law 级统计逆，不是一次运行的
+历史恢复。只有额外的互不相交支持或等价的可测分割，才会回到 UJB.7307--7309
+所讨论的零误差边界。
+
+这也说明本桥没有新增 checkpoint 原语：当前增量只用了已经允许的首动作、实际
+返回的 class-preserving 宏和完整档案。改变探针成为破坏性的操作、隐藏合法性，
+或把未取得的完整 law 当作输入，都会越过本章的假设。
+
+### 2.6 相关文献与使用范围
+
+Vandermeulen--Scott 的 [Lemma 5.3](https://arxiv.org/html/1607.00071v2) 证明
+两两不共线的 $m$ 个非零 Hilbert 向量的 $(m-1)$ 次张量幂线性无关；它给出本章
+“有限类需要有限张量阶”的已知背景。本章的有界读出直接用 (UJB.7406) 的乘积
+测试函数，因此没有把该文的未知混合分解定理冒充为本行逆。
+
+Berrut--Trefethen 的 [barycentric interpolation, §2](https://people.maths.ox.ac.uk/trefethen/barycentric.pdf)
+给出已知互异节点的 Lagrange 插值读出；(UJB.7410) 的交替二项式计算是其在
+等距 Bernoulli 节点上的显式有限差分版本，而不是新的一般插值定理。
+
+Bian--Abate 的 [Theorem 6 and Figure 1](https://arxiv.org/html/1701.04547v3)
+展示概率 Markov 链中 branching/bisimulation 与有限 trace law 之间的结构—取得
+差距及总变差界。本章的持久混合族把这个差距落实为同一 typed row 上的精确阶数
+和精确常数；它不声称解决该文的一般近似模型问题。
+
+## 2.99 追加锚
