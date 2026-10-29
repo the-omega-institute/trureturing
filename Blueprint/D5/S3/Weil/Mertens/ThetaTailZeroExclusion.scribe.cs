@@ -47,7 +47,7 @@ internal sealed class ThetaTailZeroExclusionDocument : IScribeDocumentDefinition
                         + "convergence of the signed transform on the target line, or a real-cut continuation. It is "
                         + "the analytic zero-exclusion step intended for the later Robin/5040 application; that arithmetic "
                         + "witness and its unbounded-prefix consequence are separate applications."))),
-                DescribeRole.Theorem)))),
+                DescribeRole.Theorem),
             Paragraph(Text(
                 "The actual source law, positive continuation theorem, and multiplicity-dependent forcing pole are "
                 + "the reusable ingredients for this conditional conclusion.")))));

@@ -44,7 +44,17 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨(), 0, 1, ?_⟩
-  norm_num [actual, realize]
+  intro h
+  have hsnd := congrArg Prod.snd h
+  norm_num [actual, realize] at hsnd
+
+private theorem actual_law : arena.Law actual := by
+  constructor
+  · intro u
+    rfl
+  · intro b C hb hb2 hC hbound
+    apply actual_theta_tail_exponential_zero_exclusion hb hb2 hC
+    simpa [actual, realize] using hbound
 
 def family : Registration arena
     (type_of% (@actual_theta_tail_exponential_zero_exclusion)) where
@@ -56,10 +66,12 @@ def family : Registration arena
       · intro u
         rfl
       · intro b C hb hb2 hC hbound
-        exact h hb hb2 hC hbound
-    · intro h hb hb2 hC hbound
-      exact h.2 hb hb2 hC hbound
-  variation := ⟨@actual_theta_tail_exponential_zero_exclusion, rejected, rejected_law⟩
+        apply h hb hb2 hC
+        simpa [actual, realize] using hbound
+    · intro h b C hb hb2 hC hbound
+      apply h.2 hb hb2 hC
+      simpa [actual, realize] using hbound
+  variation := ⟨actual_law, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := actual_dependence
