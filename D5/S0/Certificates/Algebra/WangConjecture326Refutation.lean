@@ -177,7 +177,7 @@ def modelE (x : Model) : Model := ⟨x.support, if x.level = 0 then 0 else 2⟩
 private theorem model_laws (x : Model) :
     x+x = modelE x ∧ x+modelE x = modelE x ∧ modelE x+modelE x = modelE x := by
   obtain ⟨A, k⟩ := x
-  fin_cases k <;> simp [modelE, modelAdd, HAdd.hAdd, Add.add]
+  fin_cases k <;> simp [modelE, modelAdd]
 
 private theorem model_cyclic (x : Model) :
     (cyclic x : Set Model) = {x, modelE x} := by
@@ -235,7 +235,7 @@ private theorem pair_vanish (x y : Model) : factor x (1 : ℚ) * factor y 1 = 0 
   have hxy : x+y = x+modelE y ∧ x+y = modelE x+y ∧
       x+y = modelE x+modelE y := by
     obtain ⟨A,k⟩ := x; obtain ⟨B,l⟩ := y
-    simp_all [modelE, modelAdd, HAdd.hAdd, Add.add]
+    simp_all [modelE, modelAdd]
   simp only [factor, model_e, sub_mul, mul_sub,
     AddMonoidAlgebra.single_mul_single, mul_one, ← hxy.1, ← hxy.2.1, ← hxy.2.2]
   abel
