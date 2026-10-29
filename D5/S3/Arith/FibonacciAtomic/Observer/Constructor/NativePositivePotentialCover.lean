@@ -91,6 +91,131 @@ private theorem zeroCycles_iff (B : List (BranchEquation X)) (s : X → Term X) 
   · rintro ⟨δ, hδ⟩ v c
     simpa using walk_exact hδ c
 
+/-- Enumerate the two signed orientations of every actual source edge.
+The list retains separate indices for repeated and parallel comparisons. -/
+def signedEdges (B : List (BranchEquation X)) (s : X → Term X) (j : X) :
+    List (Edge B s j) :=
+  (List.finRange (sortEdges B s j).length).flatMap fun i => [(i, false), (i, true)]
+
+private theorem signedEdges_complete (B : List (BranchEquation X))
+    (s : X → Term X) (j : X) (e : Edge B s j) : e ∈ signedEdges B s j := by
+  rcases e with ⟨i, b⟩
+  apply List.mem_flatMap.mpr
+  refine ⟨i, List.mem_finRange i, ?_⟩
+  cases b <;> simp
+
+/-- Finite max-plus relaxation on the original source occurrence graph.
+Zero is a lower bound at every vertex, including isolated occurrences. -/
+def sourceRelaxation (B : List (BranchEquation X)) (s : X → Term X) (j : X) :
+    Nat → Occurrence X → Int
+  | 0, _ => 0
+  | t + 1, v =>
+      ((signedEdges B s j).map fun e =>
+        if (signedGraph B s j).target e = v then
+          sourceRelaxation B s j t ((signedGraph B s j).source e) + signedWeight B s j e
+        else 0).foldr max 0
+
+/-- An executable integer potential candidate, with no solution, potential,
+path, cycle decision or classical choice supplied as input. The number of
+rounds is the number of signed indexed source edges. -/
+def computedSourcePotential (B : List (BranchEquation X)) (s : X → Term X) (j : X) :
+    Occurrence X → Int :=
+  sourceRelaxation B s j (2 * (sortEdges B s j).length)
+
+private theorem fold_max_base (l : List Int) : 0 ≤ l.foldr max 0 := by
+  induction l with
+  | nil => exact le_rfl
+  | cons a l ih => exact ih.trans (le_max_right _ _)
+
+private theorem fold_max_witness {P : Int → Prop} (l : List Int)
+    (hb : P 0) (hl : ∀ a ∈ l, P a) : P (l.foldr max 0) := by
+  induction l with
+  | nil => exact hb
+  | cons a l ih =>
+      simp only [List.foldr_cons]
+      rcases le_total a (l.foldr max 0) with h | h
+      · rw [max_eq_right h]
+        exact ih (fun x hx => hl x (List.mem_cons_of_mem a hx))
+      · rw [max_eq_left h]
+        exact hl a (List.mem_cons_self)
+
+private theorem sourceRelaxation_nonneg (B : List (BranchEquation X))
+    (s : X → Term X) (j : X) (t : Nat) (v : Occurrence X) :
+    0 ≤ sourceRelaxation B s j t v := by
+  cases t with
+  | zero => exact le_rfl
+  | succ t => exact fold_max_base _
+
+private theorem sourceRelaxation_edge (B : List (BranchEquation X))
+    (s : X → Term X) (j : X) (t : Nat) (e : Edge B s j) :
+    sourceRelaxation B s j t ((signedGraph B s j).source e) + signedWeight B s j e ≤
+      sourceRelaxation B s j (t + 1) ((signedGraph B s j).target e) := by
+  apply List.le_max_of_le' (0 : Int)
+  · exact List.mem_map.mpr ⟨e, signedEdges_complete B s j e, rfl⟩
+  · simp only [ite_true]
+    exact le_rfl
+
+private theorem source_walk_le_relaxation (B : List (BranchEquation X))
+    (s : X → Term X) (j : X) (t : Nat) {v w : Occurrence X}
+    (c : (signedGraph B s j).Walk v w) (hlen : c.length ≤ t) :
+    walkWeight (signedWeight B s j) c ≤ sourceRelaxation B s j t w := by
+  induction t generalizing v w with
+  | zero =>
+      cases c with
+      | nil => simp [walkWeight, EdgeGraph.Walk.edges, sourceRelaxation]
+      | concat c e legal => simp at hlen
+  | succ t ih =>
+      cases c with
+      | nil => simpa [walkWeight, EdgeGraph.Walk.edges] using
+          sourceRelaxation_nonneg B s j (t + 1) v
+      | concat c e legal =>
+          have hp := ih c (by simpa using Nat.le_of_succ_le_succ hlen)
+          have he := sourceRelaxation_edge B s j t e
+          rw [legal] at he
+          rw [walkWeight_concat]
+          omega
+
+private theorem sourceRelaxation_attained (B : List (BranchEquation X))
+    (s : X → Term X) (j : X) (t : Nat) (v : Occurrence X) :
+    ∃ (start : Occurrence X) (c : (signedGraph B s j).Walk start v),
+      c.length ≤ t ∧ sourceRelaxation B s j t v = walkWeight (signedWeight B s j) c := by
+  induction t generalizing v with
+  | zero => exact ⟨v, .nil, le_rfl, by simp [sourceRelaxation, walkWeight, EdgeGraph.Walk.edges]⟩
+  | succ t ih =>
+      apply fold_max_witness
+        (P := fun z => ∃ (start : Occurrence X) (c : (signedGraph B s j).Walk start v),
+          c.length ≤ t + 1 ∧ z = walkWeight (signedWeight B s j) c)
+      · exact ⟨v, .nil, Nat.zero_le _, by simp [walkWeight, EdgeGraph.Walk.edges]⟩
+      · intro z hz
+        obtain ⟨e, _, rfl⟩ := List.mem_map.mp hz
+        by_cases he : (signedGraph B s j).target e = v
+        · simp only [if_pos he]
+          obtain ⟨start, c, hlen, hvalue⟩ := ih ((signedGraph B s j).source e)
+          refine ⟨start, (c.concat e rfl).castFinish he, ?_, ?_⟩
+          · simpa using Nat.add_le_add_right hlen 1
+          · rw [walkWeight_castFinish, walkWeight_concat, hvalue]
+        · simp only [if_neg he]
+          exact ⟨v, .nil, Nat.zero_le _, by simp [walkWeight, EdgeGraph.Walk.edges]⟩
+
+private theorem computed_source_potential (B : List (BranchEquation X))
+    (s : X → Term X) (j : X) (good : ZeroCycles B s j) :
+    Potential B s j (computedSourcePotential B s j) := by
+  apply (potential_iff B s j _).mpr
+  intro e
+  obtain ⟨start, c, _, hvalue⟩ := sourceRelaxation_attained B s j
+    (2 * (sortEdges B s j).length) ((signedGraph B s j).source e)
+  obtain ⟨pruned, hnodup, hweight⟩ := exists_nodup_visited_walkWeight_le
+    (fun v c => (good v c).le) (c.concat e rfl).length (c.concat e rfl) le_rfl
+  have hcard : pruned.length ≤ 2 * (sortEdges B s j).length := by
+    simpa only [EdgeGraph.Walk.edges_length, Fintype.card_prod, Fintype.card_fin,
+      Fintype.card_bool, Nat.mul_comm] using
+      pruned.edges_nodup_of_visited_nodup hnodup |>.length_le_card
+  have hbound := source_walk_le_relaxation B s j _ pruned hcard
+  rw [walkWeight_concat] at hweight
+  change sourceRelaxation B s j _ ((signedGraph B s j).source e) + signedWeight B s j e ≤
+    sourceRelaxation B s j _ ((signedGraph B s j).target e)
+  omega
+
 private theorem edge_spec (p : Presentation X) (B : List (BranchEquation X))
     (S : SubstInfo)
     (hok : (encodeEquations p (shapeEquations B)).unify SubstInfo.empty = .ok S)
@@ -158,6 +283,7 @@ theorem source_sort_minimum_base (p : Presentation X) (B : List (BranchEquation 
         ¬ BlockSolution B (action p S) j u) ∧
     (ZeroCycles B (action p S) j →
       ∃ (δ : Occurrence X → Int) (b : Occurrence X) (a : Occurrence X → Nat),
+        δ = computedSourcePotential B (action p S) j ∧
         Potential B (action p S) j δ ∧
         b ∈ occurrenceVertices p (action p S) ∧ b.2.2 = j ∧ a b = 0 ∧
         (∀ v ∈ occurrenceVertices p (action p S), v.2.2 = j →
@@ -173,7 +299,8 @@ theorem source_sort_minimum_base (p : Presentation X) (B : List (BranchEquation 
     apply bad
     exact (zeroCycles_iff B (action p S) j).mpr ⟨fun v => (u v l : Int), fun e he => hu e he l⟩
   · intro good
-    obtain ⟨δ, hδ⟩ := (zeroCycles_iff B (action p S) j).mp good
+    let δ := computedSourcePotential B (action p S) j
+    have hδ : Potential B (action p S) j δ := computed_source_potential B (action p S) j good
     let V := (occurrenceVertices p (action p S)).toFinset.filter (fun v => v.2.2 = j)
     have hV : V.Nonempty := by
       obtain ⟨v, hv, hj⟩ := occurs
@@ -186,7 +313,7 @@ theorem source_sort_minimum_base (p : Presentation X) (B : List (BranchEquation 
       intro v hv hj
       have hm := hmin v (Finset.mem_filter.mpr ⟨List.mem_toFinset.mpr hv, hj⟩)
       exact ⟨hm, Int.toNat_of_nonneg (by omega)⟩
-    refine ⟨δ, b, a, hδ, List.mem_toFinset.mp hb'.1, hb'.2, ?_, ha, ?_⟩
+    refine ⟨δ, b, a, rfl, hδ, List.mem_toFinset.mp hb'.1, hb'.2, ?_, ha, ?_⟩
     · simp [a]
     · intro L u
       constructor
@@ -276,7 +403,7 @@ theorem source_canonical_block_recovery (p : Presentation X)
             GenealogicalFiberTransport.substitution^[a v]
               (NativeFiniteNormalInversion.expand (fill T (u b))) ∧
           (∀ l, NativeFiniteNormalInversion.rankInverse (a v) (u v l) = some (u b l)) := by
-  obtain ⟨δ, b, a, hδ, hb, hj, hab, hmin, law⟩ :=
+  obtain ⟨δ, b, a, _, hδ, hb, hj, hab, hmin, law⟩ :=
     (source_sort_minimum_base p B S hok j occurs).2 good
   refine ⟨b, a, hb, hj, hab, ?_⟩
   intro T u C hu hC actual
