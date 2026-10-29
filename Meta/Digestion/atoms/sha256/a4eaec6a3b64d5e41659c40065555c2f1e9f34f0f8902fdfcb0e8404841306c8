@@ -1,0 +1,21 @@
+#### 命题 13.2（归一化虚时间的能量下降）
+
+令 $E=\langle\psi,H\psi\rangle$，$\left\lVert \psi\right\rVert=1$，定义
+
+$$
+\partial_\tau\psi=-(H-E)\psi.
+$$
+
+则范数保持且 $\partial_\tau E=-2\operatorname{Var}_\psi(H)\le0$。
+
+**证明。**
+
+范数导数为 $-2\langle H-E\rangle=0$；能量导数为
+$2\operatorname{Re}\langle\partial_\tau\psi,H\psi\rangle =-2(\langle H^2\rangle-E^2)$。谱分解表明只有初态含非零基态分量时才收敛到初态基态投影的归一化；否则趋于初态在其支持中最低能级上的投影归一化。
+
+∎
+
+项目[《统一预测几何》](https://github.com/the-omega-institute/trureturing/blob/f22ccafb22873bb5445053498b0f64f9ea111ede/docs/develop/theory/SYMPLECTIC_PREDICTIVE_COMPLETION.md) §1.3 已有实时间与虚时间的区别；量子变分模拟的不同原理也须区分 （[7](#ref-yuan)）。复结构可以在给定 Hilbert 几何中把梯度方向转成 Hamilton 方向，但“有变分”本身没有唯一强迫复数域和 Born 平方律。
+
+<a id="sec-14"></a>
+

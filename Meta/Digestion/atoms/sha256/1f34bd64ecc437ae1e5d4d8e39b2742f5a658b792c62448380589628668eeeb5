@@ -1,0 +1,58 @@
+**v16.0 · 2026 年 10 月 30 日 · Asia/Singapore**
+
+<a id="sec-abstract"></a>
+
+## 摘要
+
+本文把“预测 = 递归 = 最优化 = 变分”发展为带前件的数学理论。在同一相容对象、边界、评分与资源条件下，有限 DAG 的 Bellman 递归等价于全局路径最优、单位流最小化与潜势对偶；正参考律下的 Gibbs 变分等价于带温度递归及完整切面的配分不变性；有限线性相干网络的全部递归约束等价于一个严格凸残差泛函的唯一零能最小元。黄金均值语言进一步把 Fibonacci 递归、Perron 根与最大熵率联系起来。对 AURIC 五模式，我们复核最大熵完成与 minimax 预测的严格区别，并给出耗散流的能量耗散变分身份。对黄金门，我们建立静态历史态、变分消元及有限阶门的无严格降势结论，并从代数分级推出有限门长的显式误差下界。核心结论是解集与表述的条件等价，而非所有物理更新都在下降同一个能量。复 Hilbert 结构、Born 读出、参考概率及实际资源均保留为各自使用处的前提。
+
+**证明身份。** 本文包含经典理论的自足证明、对项目已有结论的复述核对以及本轮进一步推论；不宣称首次发现 Bellman、Gibbs、Parry、Onsager 或历史态构造。本文不是 Lean 内核认证稿，也未以数值程序、CAS、模拟或门序列枚举代替证明。
+
+> **转换说明（编者）。** 本文完整转换用户提供的 v16.0 XeLaTeX 稿件。陈述沿用源稿各节共享编号；自动编号公式沿用全局 (1)–(9)，其余显示公式不编号。源稿对项目快照、历史审计、前稿与本轮推论的报告均归属于作者；转换不构成这些报告或数学结论的独立认证。排版宏已展开，分页、页眉及字体设置由 Markdown 排版替代。
+
+> **格式说明（编者）。** 源稿 `align` 按原行拆为显示公式；第 6 节每行的成对等式共用一个标签，第 12 节仅末行标 (9)。引用和目录改为显式锚点链接。正文、公式、证明与资源边界按原稿保留；未作实质数学修订，未运行 Lean、数值实验、CAS、门枚举或硬件认证。
+
+## 目录
+
+1. [最新项目快照与本轮问题](#sec-1)
+2. [把“等号”写成什么](#sec-2)
+3. [五模式：相容确定纤维，评分选出预测](#sec-3)
+4. [递归何时真的是下降](#sec-4)
+5. [静态 DAG 上的四重等价与最优证书](#sec-5)
+6. [概率、递归与 Gibbs 变分的精确桥梁](#sec-6)
+7. [黄金谱：Fibonacci 递归等于熵率变分](#sec-7)
+8. [内生预测：条件期望递归与信息增长](#sec-8)
+9. [量子相干 DAG：预测就是零残差全局完成](#sec-9)
+10. [黄金门的静态历史、切面与消元](#sec-10)
+11. [黄金门的周期性排除逐步严格降势](#sec-11)
+12. [五模式耗散的真正变分身份](#sec-12)
+13. [量子实时间是驻作用，虚时间才是此能量下降](#sec-13)
+14. [黄金门优化：下确界为零却没有有限最小元](#sec-14)
+15. [可以保留的统一命题与研究边界](#sec-15)
+
+[文献与项目来源](#sec-bibliography)
+
+<a id="sec-1"></a>
+
+## 1. 最新项目快照与本轮问题
+
+本轮只读核验的研究分支为 `dev`，不可变提交是
+`f22ccafb22873bb5445053498b0f64f9ea111ede`。
+提交时间为 2026-10-30 01:00:09（Asia/Singapore），标题为 *Ingest sink-incidence, six-phase energy and graph-deficit theory updates (#23767)*。相对上一稿 `52ce13dc…`，理论目录有 18 个变更路径，其中 4 个新增、14 个修改；当前理论目录含 1005 个文件。本轮针对性核验 17 份当前源码的 Git blob，并核对 4 份旧版本及差异。这是定向研究核验，不能解释为对全部项目证明的认证。
+
+与本轮最直接相关的证据如下。
+
+1. [《金字塔基础公式》](https://github.com/the-omega-institute/trureturing/blob/f22ccafb22873bb5445053498b0f64f9ea111ede/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)已有隐藏纤维、最大熵完成与最坏误差预测；两种最优通常不同。
+2. [《信息逃逸与热力学作用》](https://github.com/the-omega-institute/trureturing/blob/f22ccafb22873bb5445053498b0f64f9ea111ede/docs/develop/theory/AURIC_FIB_PYRAMID_INFORMATION_ESCAPE_DYNAMICS_THERMODYNAMIC_ACTION.md)已有质量作用流、对数平均 mobility 及指数耗散不等于同端点最小二次作用的精确比较。
+3. [《KL 作用原卷》](https://github.com/the-omega-institute/trureturing/blob/f22ccafb22873bb5445053498b0f64f9ea111ede/docs/develop/theory/AURIC_FIB_ATOM_CIRCULATION_CONTROL_KL_ACTION_AND_TORIC_RELATIONS.md)定理 21.6 及其后续论述已有同一实际相邻律的 Markov 最大熵补全、条件互信息余项及逐边 Bellman 证书。
+4. [《真实切面恢复》](https://github.com/the-omega-institute/trureturing/blob/f22ccafb22873bb5445053498b0f64f9ea111ede/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_ACTUAL_CUT_REINSTATEMENT.md)本轮新增的 §§14–17 使用条件期望递归构造共同探测列表，但保留 $4^d$ 目录工作；多项式实际 Read 数不等于多项式总计算工作。
+5. [《相干重构续卷》](https://github.com/the-omega-institute/trureturing/blob/f22ccafb22873bb5445053498b0f64f9ea111ede/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md)本轮新增的 §§64–67 给出共同有限码、三源循环比较及实际联合记录；假设 64.2 仍供应初始化、寻址、相位校准与 Born 合同，§67.3 明确量子起源尚未闭合。
+
+前稿 v14 与 v15 现已作为用户稿件转换收入项目。它们构成研究连续性，不能充当独立验证。本文引用 v15 的位置均指出具体数学前提；本轮新算术界另给自足证明。
+
+<a id="sec-2"></a>
+
+## 2. 把“等号”写成什么
+
+<a id="statement-2-1"></a>
+

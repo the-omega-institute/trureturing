@@ -1,0 +1,96 @@
+#### 定理 14.2（奇偶残留与门长下界）
+
+令 $\Gamma=\varphi^3+\sqrt{\varphi^6-1}<9$。任意由 $\ell$ 个固定 $K$ 门组成的纯酉字，从一个物理计算基输入出发，输出中*与输入相同 Hamming 奇偶性*的总概率 $q$ 满足
+
+$$
+q\ge \frac{2}{1+\Gamma^\ell}\ge \frac{2}{1+9^\ell}.
+$$
+
+因而上述固定码、固定菜单的逻辑 $X$ 优化满足
+
+$$
+\boxed{e_L\ge\sqrt{\frac{2}{1+\Gamma^L}}.}
+$$
+
+若要求 $e_L\le\epsilon<1$，必要条件为
+
+$$
+L\ge \frac{\log(2\epsilon^{-2}-1)}{\log\Gamma}.
+$$
+
+此界针对纯单位门字、固定基输入与该码；不覆盖归一化后选择、外供非基态或更换编码。
+
+**证明。**
+
+置 $\beta=\varphi^{-1/2}$、$t=\beta^2=\varphi^{-1}$、$F_0=\mathbb Q(\zeta)$、$R_0=\mathbb Z[\zeta]$。因
+
+$$
+t=-(\zeta+\zeta^{-1})\in R_0,\qquad \beta^4+\beta^2-1=0,
+$$
+
+$\beta$ 是代数整数。固定三位门的唯一非对角转移为 $000\leftrightarrow010$，其投影块为
+
+$$
+\begin{pmatrix}t&\beta^3\\\beta^3&t^2\end{pmatrix}.
+$$
+
+邻居均为一时投影为恒等，混合邻居时为零。故门的保奇偶矩阵元在 $R_0$，翻奇偶矩阵元在 $\beta R_0$。因为 $\beta^2\in R_0$，矩阵乘法保留此二分级。
+
+固定基输入 $x$，将相反奇偶输出振幅写为 $C_{yx}=\beta c_y$、$c_y\in R_0$。相反奇偶总概率
+
+$$
+p=t\sum_y c_y\overline{c_y}
+$$
+
+属于 $F_0$ 的实子域 $\mathbb Q(\sqrt5)$，且为代数整数。取自同构 $\sigma(\zeta)=\zeta^3$；它在 $F_0$ 与复共轭交换，且 $\sigma(t)=-\varphi$。因此非平凡实共轭为
+
+$$
+p'=\sigma(p)=-\varphi\sum_y|\sigma(c_y)|^2\le0.
+$$
+
+若 $p=1$ 则其共轭也为一，矛盾。物理酉性给 $0\le p<1$，所以 $q=1-p>0$，而 $q'=1-p'\ge1$。实二次数域范数 $qq'$ 是正整数，故 $qq'\ge1$；即使 $q$ 为有理数，此范数论证仍成立。
+
+把 $\sigma$ 延拓为 $F_0(\beta)$ 的复嵌入 $\widetilde\sigma$，必有
+$\widetilde\sigma(\beta)=\pm i\sqrt\varphi$。变换后的活动投影块的 Frobenius 范数为
+
+$$
+\sqrt{\varphi^2+2\varphi^3+\varphi^4}=\varphi^3.
+$$
+
+为精确估计单门，记 $u=\sigma(\zeta)$、$P'=\widetilde\sigma(P_{\rm active})$、
+$A'=u[I+(u-1)P']$。由 $\operatorname{Tr} P'=1$、
+$u+\bar u=\varphi$、$|u-1|^2=\varphi^{-2}$，
+
+$$
+\left\lVert A'\right\rVert_F^2
+=2+(u+\bar u-2)\operatorname{Tr} P'+|u-1|^2\left\lVert P'\right\rVert_F^2
+=\varphi+\varphi^4=2\varphi^3.
+$$
+
+$P'$ 仍是迹一的幂等矩阵，故 $\det A'=u^3$、$|\det A'|=1$。
+两个奇异值平方的和为 $2\varphi^3$、积为一，因此最大值为 $\Gamma$。
+其余物理块都是模一标量，所以 $\left\lVert \widetilde\sigma(K)\right\rVert^2=\Gamma$；
+并且 $\Gamma<2\varphi^3=4\varphi+2<9$。
+
+扩张不必与整个扩域的复共轭交换；这里只对 $R_0$ 中的系数使用交换性。
+同奇偶振幅在 $R_0$，故其变换后的模平方和为 $q'$；
+相反奇偶振幅的变换模平方和为 $-p'=q'-1$。因此有更强的精确身份
+
+$$
+\left\lVert \widetilde\sigma(C)|x\rangle\right\rVert^2=2q'-1\le\Gamma^\ell.
+$$
+
+于是 $q'\le(1+\Gamma^\ell)/2$，结合 $qq'\ge1$ 得所列概率下界。
+
+码字 $|10b010\rangle$ 的物理 Hamming 重量为 $2+b$，$b\in\{0,1\}$。
+逻辑 $X$ 把每个码基态送到相反奇偶，任何整体相位都不改变这一事实。
+将向量误差投影到原奇偶子空间，理想项为零而实际项范数为 $\sqrt q$；
+故算子误差至少为 $\sqrt q$。这保留完整物理输出，已包括同奇偶泄漏。
+对全部 $\ell\le L$ 取最小即得 $e_L$ 的界，再移项取对数。
+
+∎
+
+该定理不是“物理奇偶守恒”：单个 $K$ 确实混合奇偶。它说有限精确字不能把某一基输入的同奇偶残留全部消掉。代数共轭中的负号是证明工具，不能解释为负物理概率。稠密闭包仍可出现零残留极限，故与普适近似相容。
+
+<a id="sec-15"></a>
+
