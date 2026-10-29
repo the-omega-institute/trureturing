@@ -263,6 +263,94 @@ print('finished without isolation', flush=True)
         self.assertFalse(isolated.exists())
 
 
+    def unrelated_tips(self, count, tree):
+        for index in range(count):
+            commit = self.git(self.main, "commit-tree", tree, "-m", "Unrelated tip " + str(index))
+            self.git(self.main, "update-ref", "refs/heads/a-unrelated-" + str(index), commit)
+
+    def bounded_recovery_calls(self, calls):
+        run = subprocess.run
+        def observed(arguments, **kwargs):
+            if arguments[0] == "git":
+                self.assertNotIn("--objects", arguments, "[FAIL] bounded_recovery_no_object_walk")
+                self.assertNotIn("--batch-all-objects", arguments, "[FAIL] bounded_recovery_no_object_walk")
+                calls.append(arguments)
+                if "rev-list" in arguments:
+                    self.assertIn("--max-count=32", arguments, "[FAIL] bounded_recovery_history_sample")
+            return run(arguments, **kwargs)
+        return patch.object(cleanup.subprocess, "run", side_effect=observed)
+
+    def test_recovery_matching_tip_ignores_unrelated_object_history(self):
+        baseline = self.git(self.main, "rev-parse", "HEAD")
+        baseline_tree = self.git(self.main, "rev-parse", "HEAD^{tree}")
+        for count, suffix in ((0, ""), (48, "-cleanup-" + "a" * 32 + "-cleanup-" + "b" * 32)):
+            with self.subTest(unrelated_tips=count):
+                target = self.remnant("matching" + suffix)
+                retained = self.git(self.main, "rev-parse", "HEAD")
+                self.git(self.main, "update-ref", "refs/heads/lane/math/matching", retained)
+                self.git(self.main, "reset", "--hard", baseline)
+                self.unrelated_tips(count, baseline_tree)
+                calls = []
+                with self.bounded_recovery_calls(calls):
+                    result = self.clean_remnant(target, delete=False)
+                self.assertEqual("would_remove", result["action"], result)
+                trees = [call for call in calls if "ls-tree" in call]
+                self.assertEqual(1, len(trees), "[FAIL] matching_tip_tree_reads")
+                self.assertIn(retained, trees[0])
+                self.assertFalse(any("rev-list" in call for call in calls),
+                                 "[FAIL] matching_tip_needs_no_history")
+                self.assertEqual(1, sum(call[-2:] == ["cat-file", "--batch"] for call in calls))
+
+    def test_recovery_unsampled_history_keeps_bytes_with_bounded_tree_reads(self):
+        target = self.remnant()
+        retained = self.git(self.main, "rev-parse", "HEAD")
+        self.git(self.main, "rm", "Blueprint/Retained.md")
+        self.git(self.main, "commit", "-m", "Remove blueprint from tip")
+        tree = self.git(self.main, "rev-parse", "HEAD^{tree}")
+        tip = self.git(self.main, "rev-parse", "HEAD")
+        for index in range(40):
+            tip = self.git(self.main, "commit-tree", tree, "-p", tip, "-m", "Later history " + str(index))
+        self.git(self.main, "update-ref", "refs/heads/dev", tip)
+        self.assertEqual(retained, self.git(self.main, "rev-parse", "HEAD~41"))
+        calls = []
+        with self.bounded_recovery_calls(calls):
+            result = self.clean_remnant(target, delete=False)
+        self.assertEqual(("kept", "blueprint_unrecoverable"), (result["action"], result["reason"]), result)
+        self.assertLessEqual(sum("ls-tree" in call for call in calls), 48,
+                             "[FAIL] bounded_recovery_tree_reads")
+        self.assertTrue((target / "Blueprint/Retained.md").exists())
+
+    def test_recovery_sampled_parent_is_recoverable_without_a_tip_copy(self):
+        target = self.remnant()
+        self.git(self.main, "rm", "Blueprint/Retained.md")
+        self.git(self.main, "commit", "-m", "Remove tip blueprint")
+        calls = []
+        with self.bounded_recovery_calls(calls):
+            result = self.clean_remnant(target, delete=False)
+        self.assertEqual("would_remove", result["action"], result)
+        self.assertTrue(any("rev-list" in call for call in calls))
+
+    def test_recovery_matching_name_cannot_certify_unique_bytes(self):
+        target = self.remnant("matching")
+        self.git(self.main, "branch", "lane/math/matching")
+        (target / "Blueprint/Retained.md").write_bytes(b"unique bytes despite matching ref name")
+        self.age(target)
+        result = self.clean_remnant(target, delete=False)
+        self.assertEqual(("kept", "blueprint_unrecoverable"), (result["action"], result["reason"]), result)
+
+    def test_recovery_annotated_commit_tag_qualifies_but_tree_ref_does_not(self):
+        target = self.remnant("tagged")
+        baseline = self.git(self.main, "rev-parse", "HEAD~1")
+        tree = self.git(self.main, "rev-parse", "HEAD^{tree}")
+        self.git(self.main, "tag", "-a", "tagged", "-m", "Retained commit tag")
+        self.git(self.main, "reset", "--hard", baseline)
+        self.assertEqual("would_remove", self.clean_remnant(target, delete=False)["action"])
+        self.git(self.main, "tag", "-d", "tagged")
+        self.git(self.main, "update-ref", "refs/tags/tagged-tree", tree)
+        result = self.clean_remnant(target, delete=False)
+        self.assertEqual(("kept", "blueprint_unrecoverable"), (result["action"], result["reason"]), result)
+
+
 if __name__ == "__main__":
     if sys.argv[1:] == ["--list-tests"]:
         print(json.dumps(["RemnantIsolationTests." + name
