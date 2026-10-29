@@ -32,6 +32,18 @@ private def tensorEntry {n d : ℕ}
     (x : jointIndex n d) (y : jointIndex n d) (i j : jointIndex n d) : ℂ :=
   ∏ k, U k (x k) (y k) (i k) (j k)
 
+private def tensorMatrix {n d : ℕ}
+    (U : Fin n → ZMod d → ZMod d → Matrix (ZMod d) (ZMod d) ℂ)
+    (x : jointIndex n d) (y : jointIndex n d) :
+    Matrix (jointIndex n d) (jointIndex n d) ℂ :=
+  fun i j => tensorEntry U x y i j
+
+private def tensorAdjointMatrix {n d : ℕ}
+    (U : Fin n → ZMod d → ZMod d → Matrix (ZMod d) (ZMod d) ℂ)
+    (x : jointIndex n d) (y : jointIndex n d) :
+    Matrix (jointIndex n d) (jointIndex n d) ℂ :=
+  fun i j => star (tensorEntry U x y j i)
+
 /-- The average winning score for local unitary encodings and a joint measurement. -/
 def score {n d : ℕ}
     [NeZero n] [NeZero d] [Fintype (jointIndex n d)] [DecidableEq (jointIndex n d)]
@@ -41,10 +53,7 @@ def score {n d : ℕ}
   ((d : ℝ) ^ (2 * n))⁻¹ *
     ∑ x, ∑ y,
       (Matrix.trace
-        (((fun i j : jointIndex n d => tensorEntry U x y i j) :
-            Matrix (jointIndex n d) (jointIndex n d) ℂ) * ρ *
-          ((fun i j : jointIndex n d => star (tensorEntry U x y j i)) :
-            Matrix (jointIndex n d) (jointIndex n d) ℂ) *
+        (tensorMatrix U x y * ρ * tensorAdjointMatrix U x y *
           M (winningOutcome x y))).re
 
 /-- A finite sum of positive product operators is fully separable. -/
@@ -59,13 +68,22 @@ def IsProjectiveMeasurement {n d : ℕ} [NeZero n] [NeZero d]
     (M : jointIndex n d → Matrix (jointIndex n d) (jointIndex n d) ℂ) : Prop :=
   (∀ b, (M b).PosSemidef ∧ M b * M b = M b) ∧ ∑ b, M b = 1
 
+private theorem neZeroOfTwo (n : ℕ) (h : 2 ≤ n) : NeZero n :=
+  ⟨by omega⟩
+
+private def sectorBasisSpec {n d : ℕ} [NeZero n] [NeZero d]
+    [Fintype (jointIndex n d)] [DecidableEq (jointIndex n d)]
+    (e : ZMod d → jointIndex n d → jointIndex n d → ℂ)
+    (g : ZMod d → jointIndex n d → jointIndex n d → ℂ) : Prop :=
+  (∀ t r (hr : r 0 = 0) i,
+      e t r i = if i = (fun k => t + r k) then 1 else 0) ∧
+    (∀ a r (hr : r 0 = 0), ∑ i, Complex.normSq (g a r i) = 1)
+
 def claim : Prop := by
   classical
   exact ∀ n d m : ℕ, 2 ≤ n → 2 ≤ d → m ≤ d ^ (n - 1) →
-    letI : NeZero n :=
-      ⟨Nat.ne_of_gt (show 0 < n by omega)⟩
-    letI : NeZero d :=
-      ⟨Nat.ne_of_gt (show 0 < d by omega)⟩
+    letI : NeZero n := neZeroOfTwo n (by omega)
+    letI : NeZero d := neZeroOfTwo d (by omega)
     letI : Fintype (ZMod d) := Fintype.ofFinite _
     letI : DecidableEq (ZMod d) := Classical.decEq _
     letI : Fintype (jointIndex n d) := Fintype.ofFinite _
@@ -79,20 +97,17 @@ def claim : Prop := by
       ((Finset.univ.filter (fun b => IsFullySeparable (M b))).card = d * m) ∧
       score ρ U M = ((d : ℝ) ^ n - d * m + m) / (d : ℝ) ^ n
 
-private theorem sector_basis (n d : ℕ) [NeZero n] [NeZero d] (hn : 2 ≤ n) (hd : 2 ≤ d) :
+private theorem sector_basis (n d : ℕ) [NeZero n] [NeZero d]
+    [Fintype (jointIndex n d)] [DecidableEq (jointIndex n d)]
+    (hn : 2 ≤ n) (hd : 2 ≤ d) :
     ∃ (e : ZMod d → jointIndex n d → jointIndex n d → ℂ)
       (g : ZMod d → jointIndex n d → jointIndex n d → ℂ),
-      (∀ t r (hr : r 0 = 0) i,
-        e t r i = if i = (fun k => t + r k) then 1 else 0) ∧
-      (∀ a r (hr : r 0 = 0), ∑ i, Complex.normSq (g a r i) = 1) := by sorry
+      sectorBasisSpec e g := by sorry
 
 private theorem sector_measurement (n d m : ℕ) [NeZero n] [NeZero d]
     [Fintype (jointIndex n d)] [DecidableEq (jointIndex n d)]
-    (e : ZMod d → jointIndex n d → jointIndex n d → ℂ)
-    (g : ZMod d → jointIndex n d → jointIndex n d → ℂ)
-    (he : ∀ t r (hr : r 0 = 0) i,
-      e t r i = if i = (fun k => t + r k) then 1 else 0)
-    (hg : ∀ a r (hr : r 0 = 0), ∑ i, Complex.normSq (g a r i) = 1)
+    (hb : ∃ (e : ZMod d → jointIndex n d → jointIndex n d → ℂ)
+      (g : ZMod d → jointIndex n d → jointIndex n d → ℂ), sectorBasisSpec e g)
     (hn : 2 ≤ n) (hd : 2 ≤ d) (hm : m ≤ d ^ (n - 1)) :
     ∃ (R : Finset (jointIndex n d))
       (M : jointIndex n d → Matrix (jointIndex n d) (jointIndex n d) ℂ),
@@ -127,16 +142,16 @@ private theorem density_witness (n d : ℕ) [NeZero n] [NeZero d]
 theorem result : claim := by
   intro n d m hn hd hm
   letI : NeZero n :=
-    ⟨Nat.ne_of_gt (show 0 < n by omega)⟩
+    neZeroOfTwo n (by omega)
   letI : NeZero d :=
-    ⟨Nat.ne_of_gt (show 0 < d by omega)⟩
+    neZeroOfTwo d (by omega)
   letI : Fintype (ZMod d) := Fintype.ofFinite _
   letI : DecidableEq (ZMod d) := Classical.decEq _
   letI : Fintype (jointIndex n d) := Fintype.ofFinite _
   letI : DecidableEq (jointIndex n d) := Classical.decEq _
-  obtain ⟨e, g, he, hg⟩ := sector_basis n d hn hd
+  have hb := sector_basis n d hn hd
   obtain ⟨R, M, hR, hR0, hM⟩ :=
-    sector_measurement n d m e g he hg hn hd hm
+    sector_measurement n d m hb hn hd hm
   obtain ⟨ρ, U, hρ, hU⟩ := density_witness n d hn hd
   refine ⟨ρ, U, M, hρ, hU, hM, ?_, ?_⟩
   · exact sector_separability_count n d m R M hR hR0 hn hd
