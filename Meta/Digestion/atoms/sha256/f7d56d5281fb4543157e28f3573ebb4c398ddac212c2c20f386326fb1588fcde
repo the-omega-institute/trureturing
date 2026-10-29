@@ -1,0 +1,32 @@
+### 约定 11.6（数学来源与适用边界）
+
+定理 11.2 的二维必要性、命题 11.3 的固定正混合来源及其不同实际认证词、
+定理 11.4 的共同协议不可能性，是本卷在定义 9.1 上的 repo-derived 推导。
+命题 9.6、定理 9.7 的扫描判据及定理 9.10、10.6 是直接复用的仓内结果；
+[第一卷附录 K](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md) 定义 45.3、
+定理 45.4 提供秩一承诺恢复的区别。严格正外积、满秩矩阵乘积与同历史归纳
+使用通常有限维线性代数，不另立通用新原理。
+
+van den Bos--Vaandrager，*State Identification for Labeled Transition Systems
+with Inputs and Outputs*，
+[Definition 11、Figure 3、Definition 16、Theorem 6.1](https://arxiv.org/html/1907.11034v2)，
+是 literature-attested 的自适应识别背景：Figure 3 给出每个初始选择都合并
+某些待区分状态的悬挂自动机；Definition 16 定义相容性意义下的单射选择，
+Theorem 6.1 的构造等价要求不同状态两两不相容，并且只作单射分裂。
+这些自动机条件没有在本节连续矩阵环境域中实例化，不用它们替代 (11.6)–(11.12)
+的正性、秩和实际纤维证明。
+
+Petreczky--Bako，*On the notion of persistence of excitation for linear switched
+systems*，[Definition 14、Theorem 3](https://arxiv.org/html/1103.1349v1)，
+是 literature-attested 的可逆模式下有限持续激励输入存在性；Definition 14
+要求每个模式矩阵可逆。本节 $N,L_0$ 均奇异，没有可用的逆输入或复位操作，
+所以不能用该结果拼接两个认证词。
+Petreczky--Bako--van Schuppen，*Realization theory of discrete-time linear
+switched systems*，[Definition 6](https://arxiv.org/html/1103.1343v2)，
+以全部输入与切换词量化可观测性，是 literature-attested 的全词背景；
+它不把全词可区分性转换为一条实际历史上的取得协议。
+这些引文不供应本节的具体矩阵命题，本节不主张外部首创性。
+
+本节范围限于无噪声、正混合、单轨迹 $N/L_0$ 合同中的普通秩二认证。
+不增加随机选择，不处理原 $M/J$ 模型的增益或漂移，不给出矩阵恢复结论。
+

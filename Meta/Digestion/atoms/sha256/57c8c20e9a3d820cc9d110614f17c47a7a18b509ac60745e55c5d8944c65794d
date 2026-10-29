@@ -1,0 +1,50 @@
+### 引理 13.2（规范误差纤维及非负极限）
+
+固定规范词取得报告向量 $y$。它与某个严格正秩一来源相容，当且仅当存在同一组
+$x,v\in\mathbb R_{>0}^k$ 满足
+
+$$
+ \sum_{h=0}^{k-1-q}x_h=1,\qquad
+ |v_j-y_{b_j}|\le\varepsilon\quad(0\le j<k),\qquad
+ \left|\sum_{h=0}^{k-1-i}x_hv_{h+i}-y_{a_i}\right|
+ \le\varepsilon\quad(0\le i\le q).
+\tag{13.5}
+$$
+
+$q=k-1$ 时令 $y_{b_{k-1}}=y_{a_{k-1}}$，两处约束使用同一报告，且由
+$x_0=1$ 可知其预测真值也相同。对每个 $R\in\mathcal M_k$，有
+
+$$
+ T_q(R)\in\overline{\mathcal U_q}\quad\Longleftrightarrow\quad K_q(R).
+\tag{13.6}
+$$
+
+**证明。** 将秩一来源 $S=c\ell$ 按引理 12.2 归一化，置
+$x_h=c_h/\sum_{r=0}^{k-1-q}c_r$、
+$v_j=(\sum_{r=0}^{k-1-q}c_r)\ell_j$，就得到 (13.5)。反之取 $S=xv^{\mathsf T}$，
+其中把 $v$ 视为列向量，则该来源严格正、秩一，并同时实现全部区间约束。
+所以即使报告 $y_b$ 自身有误差，也没有把它当作已知精确系数：有限
+$\varepsilon$ 的完整相容性约束包含同一未知 $x_hv_{h+i}$，一般不是固定系数
+线性系统 (12.2)。
+
+为证 (13.6)，设严格正秩一来源 $S_n$ 的规范数据趋于 $T_q(R)$；补回重复坐标后
+$D_q(S_n)\to D_q(R)$。按上述归一化写 $x^{(n)}>0$、$v^{(n)}>0$。
+记 $m=\min_jb_j^{(q)}(R)>0$。充分大的 $n$ 满足 $v_j^{(n)}\ge m/2$，于是
+
+$$
+ a_0(S_n)=\sum_{h=0}^{k-1}x_h^{(n)}v_h^{(n)}
+ \ge\frac m2\sum_{h=0}^{k-1}x_h^{(n)}.
+\tag{13.7}
+$$
+
+$a_0(S_n)$ 收敛，故所有 $x_h^{(n)}$ 一致有界，包括归一化和式以外的尾坐标。
+取收敛子列 $x^{(n)}\to x\ge0$，逐式取极限即得 (13.3)。这一步没有交换未经
+证明的投影与闭包。
+
+反过来，若 $x$ 解 (13.3)，取 $z_h=1/(k-q)>0$，并令
+$x^{(\delta)}=(1-\delta)x+\delta z$，$0<\delta<1$。它严格正且前 $k-q$ 项和为
+$1$。固定 $b=b^{(q)}(R)$，令 $S_\delta=x^{(\delta)}b^{\mathsf T}$。
+则 $b^{(q)}(S_\delta)=b$，而全部 $a_i(S_\delta)\to a_i(R)$。
+故 $S_\delta$ 是实际合法的严格正秩一逼近，证明反向包含。
+此处子列紧性和有限维闭包只用通常的 Bolzano--Weierstrass 定理。∎
+
