@@ -74,7 +74,7 @@ $$\neg claim$$
 
 *Commentary.*
 
-The full tuple passes the literal square-digit test, while its dropLast tuple fails it. Both assertions are reduced by the Lean kernel. The implication at this tuple therefore contradicts claim. The carry mechanism can be seen from S, the cumulative lengths: N = 5*10^368*(1-sum(10^(-s),s in S)). Write S as {1,3,7,15,31,63,127} union (255+T), where T={0,3,10,25,88,103,110,113}. The four pairs (0,113),(3,110),(10,103),(25,88) have sum 113. In the normalized square they contribute four 5s in decimal position 624; their sum 20 carries a 2 into position 623. Deleting 113 leaves three such pairs, whose sum 15 carries a forbidden 1 instead. This refutes the entire universal implication; it makes no assertion of a least counterexample or historical priority.
+The full tuple passes the literal square-digit test, while its dropLast tuple fails it. Both assertions are reduced by the Lean kernel. The implication at this tuple therefore contradicts claim. The carry mechanism can be seen from S, the cumulative lengths: N = 5*10^368*(1-sum(10^(-s),s in S)). Write S as {1,3,7,15,31,63,127} union (255+T), where T={0,3,10,25,88,103,110,113}. The four pairs (0,113),(3,110),(10,103),(25,88) have sum 113. In the normalized square N^2/10^738, decimal positions are counted after the decimal point. They contribute four 5s in position 624; their sum 20 carries a 2 into position 623. Deleting 113 leaves three such pairs, whose sum 15 carries a forbidden 1 instead. This refutes the entire universal implication; it makes no assertion of a least counterexample or historical priority.
 
 ## References
 
