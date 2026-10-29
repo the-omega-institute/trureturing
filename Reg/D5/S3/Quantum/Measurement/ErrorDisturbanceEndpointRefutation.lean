@@ -17,10 +17,15 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 
-abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature ℕ
-    (fun d => Matrix (Fin d) (Fin d) ℂ)
-    (fun d => Matrix (Fin d) (Fin d) ℂ → Prop)
+abbrev signature : Signature where
+  Params := Σ d : ℕ, Matrix.unitaryGroup (Fin d) ℂ
+  State p := Matrix (Fin p.1) (Fin p.1) ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ p := Matrix (Fin p.1) (Fin p.1) ℂ → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
 
 def actual : Realization signature :=
   realize signature (fun _ _ X Y => X = Y) (fun e => nomatch e)
@@ -31,7 +36,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {d : ℕ} (a : Matrix.unitaryGroup (Fin d) ℂ),
-    R.readout () d (∑ i, measurementProjector a i) 1
+    R.readout () ⟨d, a⟩ (∑ i, measurementProjector a i) 1
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -39,7 +44,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨1, (0 : Matrix (Fin 1) (Fin 1) ℂ), 1, ?_⟩
+  refine ⟨⟨1, 1⟩, (0 : Matrix (Fin 1) (Fin 1) ℂ), 1, ?_⟩
   intro he
   have hbad : (1 : Matrix (Fin 1) (Fin 1) ℂ) = 0 := Eq.mp (congrFun he 0) rfl
   exact zero_ne_one hbad.symm
@@ -49,7 +54,12 @@ def source_registration : Registration arena
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@sum_projectors, rejected, rejected_law⟩
-  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
   dependence := dependence
 
 def registration :
@@ -75,9 +85,9 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation
     definition := none
-    coordinates := #[0]
+    coordinates := #[0, 1]
     readouts := #[{
-      path := #[]
+      path := #["body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
