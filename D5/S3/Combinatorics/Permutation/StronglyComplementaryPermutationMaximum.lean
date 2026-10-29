@@ -8,6 +8,7 @@
 
 import Mathlib.LinearAlgebra.Matrix.Permutation
 import Mathlib.GroupTheory.PGroup
+import Mathlib.NumberTheory.Padics.PadicVal.Basic
 
 /-! The matrix convention is `σ.permMatrix ℕ i j = 1 ↔ σ i = j`.
 The definitions are Definitions 4.1 and 4.3 of Rajchel–Gąsiorowski–Życzkowski,
@@ -34,7 +35,8 @@ def IsPermutationMatrix {α : Type*} [DecidableEq α] (p : Matrix α α ℕ) : P
 complementary sets of permutation matrices. -/
 noncomputable def maxStronglyComplementary (n : ℕ) : ℕ :=
   sSup {k | ∃ s : Finset (Matrix (Fin n) (Fin n) ℕ),
-    (∀ p ∈ s, IsPermutationMatrix p) ∧ (s : Set _).Pairwise IsStronglyComplementary ∧ s.card = k}
+    (∀ p ∈ s, IsPermutationMatrix p) ∧
+      (s : Set (Matrix (Fin n) (Fin n) ℕ)).Pairwise IsStronglyComplementary ∧ s.card = k}
 
 /-- The cardinality clause of the question in arXiv:1804.10715v2. -/
 def claim : Prop :=
@@ -155,24 +157,24 @@ private lemma lift_family {n : ℕ} (s : Finset (Matrix (Fin n) (Fin n) ℕ))
   rw [← ht, Finset.card_image_of_injective _ matrix_injective]
 
 private lemma normalize_family {n : ℕ} (s : Finset (Equiv.Perm (Fin n)))
-    (hs : (s : Set _).Pairwise (fun σ τ =>
+    (hs : (s : Set (Equiv.Perm (Fin n))).Pairwise (fun σ τ =>
       IsStronglyComplementary (σ.permMatrix ℕ) (τ.permMatrix ℕ))) (hne : s.Nonempty) :
     ∃ t : Finset (Equiv.Perm (Fin n)), t.card = s.card ∧ 1 ∈ t ∧
-      (t : Set _).Pairwise (fun σ τ =>
+      (t : Set (Equiv.Perm (Fin n))).Pairwise (fun σ τ =>
         IsStronglyComplementary (σ.permMatrix ℕ) (τ.permMatrix ℕ)) := by
   classical
   obtain ⟨ρ, hρ⟩ := hne
   refine ⟨s.image (fun σ => σ * ρ⁻¹), ?_, ?_, ?_⟩
   · exact Finset.card_image_of_injective _ (mul_left_injective _)
   · exact Finset.mem_image.mpr ⟨ρ, hρ, mul_inv_cancel ρ⟩
-  · intro σ hσ τ hτ hne
-    obtain ⟨σ, hσ, rfl⟩ := Finset.mem_image.mp hσ
-    obtain ⟨τ, hτ, rfl⟩ := Finset.mem_image.mp hτ
+  · intro p hp q hq hne
+    obtain ⟨σ, hσ, rfl⟩ := Finset.mem_image.mp hp
+    obtain ⟨τ, hτ, rfl⟩ := Finset.mem_image.mp hq
     exact (row_relabelling ρ σ τ).mpr
       (hs hσ hτ (fun h => hne (congrArg (fun σ => σ * ρ⁻¹) h)))
 
 private lemma normalized_involutions {n : ℕ} (s : Finset (Equiv.Perm (Fin n)))
-    (h1 : 1 ∈ s) (hs : (s : Set _).Pairwise (fun σ τ =>
+    (h1 : 1 ∈ s) (hs : (s : Set (Equiv.Perm (Fin n))).Pairwise (fun σ τ =>
       IsStronglyComplementary (σ.permMatrix ℕ) (τ.permMatrix ℕ))) :
     (∀ σ ∈ s, σ ^ 2 = 1) ∧ (s : Set (Equiv.Perm (Fin n))).Pairwise Commute := by
   have hi : ∀ σ ∈ s, σ ^ 2 = 1 := by
@@ -217,7 +219,7 @@ private lemma closure_exponent_two {n : ℕ} (s : Finset (Equiv.Perm (Fin n)))
   | inv x hx hxi => rw [inv_pow, hxi, inv_one]
 
 private lemma orbit_evaluation_bound {n : ℕ} (s : Finset (Equiv.Perm (Fin n)))
-    (hs : (s : Set _).Pairwise (fun σ τ =>
+    (hs : (s : Set (Equiv.Perm (Fin n))).Pairwise (fun σ τ =>
       IsStronglyComplementary (σ.permMatrix ℕ) (τ.permMatrix ℕ))) (x : Fin n) :
     s.card ≤ Nat.card (MulAction.orbit (Subgroup.closure (s : Set (Equiv.Perm (Fin n)))) x) := by
   classical
@@ -261,7 +263,7 @@ private lemma least_orbit_divisor {n : ℕ} (hn : 1 ≤ n)
   exact Finset.dvd_sum (fun ω _ => hd ω.out)
 
 private lemma permutation_family_upper {n : ℕ} (hn : 1 ≤ n)
-    (s : Finset (Equiv.Perm (Fin n))) (hs : (s : Set _).Pairwise (fun σ τ =>
+    (s : Finset (Equiv.Perm (Fin n))) (hs : (s : Set (Equiv.Perm (Fin n))).Pairwise (fun σ τ =>
       IsStronglyComplementary (σ.permMatrix ℕ) (τ.permMatrix ℕ))) :
     s.card ≤ 2 ^ padicValNat 2 n := by
   classical
@@ -285,7 +287,8 @@ private lemma permutation_family_upper {n : ℕ} (hn : 1 ≤ n)
 
 private lemma matrix_family_upper {n : ℕ} (hn : 1 ≤ n)
     (s : Finset (Matrix (Fin n) (Fin n) ℕ)) (hp : ∀ p ∈ s, IsPermutationMatrix p)
-    (hs : (s : Set _).Pairwise IsStronglyComplementary) : s.card ≤ 2 ^ padicValNat 2 n := by
+    (hs : (s : Set (Matrix (Fin n) (Fin n) ℕ)).Pairwise IsStronglyComplementary) :
+    s.card ≤ 2 ^ padicValNat 2 n := by
   classical
   obtain ⟨t, ht, hc⟩ := lift_family s hp
   rw [← hc]
@@ -311,7 +314,7 @@ private lemma two_adic_decomposition {n : ℕ} (hn : 1 ≤ n) :
 private lemma elementary_translation_family {n a m : ℕ} (hm : 0 < m)
     (e : Fin n ≃ ((Fin a → ZMod 2) × Fin m)) :
     ∃ s : Finset (Equiv.Perm (Fin n)), s.card = 2 ^ a ∧
-      (s : Set _).Pairwise (fun σ τ =>
+      (s : Set (Equiv.Perm (Fin n))).Pairwise (fun σ τ =>
         IsStronglyComplementary (σ.permMatrix ℕ) (τ.permMatrix ℕ)) := by
   classical
   let t : (Fin a → ZMod 2) → Equiv.Perm (Fin n) := fun v =>
@@ -365,7 +368,8 @@ private lemma elementary_translation_family {n a m : ℕ} (hm : 0 < m)
 
 private lemma matrix_family_lower {n : ℕ} (hn : 1 ≤ n) :
     ∃ s : Finset (Matrix (Fin n) (Fin n) ℕ),
-      (∀ p ∈ s, IsPermutationMatrix p) ∧ (s : Set _).Pairwise IsStronglyComplementary ∧
+      (∀ p ∈ s, IsPermutationMatrix p) ∧
+      (s : Set (Matrix (Fin n) (Fin n) ℕ)).Pairwise IsStronglyComplementary ∧
         s.card = 2 ^ padicValNat 2 n := by
   classical
   obtain ⟨m, hm, _, hnfac⟩ := two_adic_decomposition hn
@@ -389,10 +393,11 @@ theorem result : claim := by
   intro n hn
   change sSup {k | ∃ s : Finset (Matrix (Fin n) (Fin n) ℕ),
     (∀ p ∈ s, IsPermutationMatrix p) ∧
-      (s : Set _).Pairwise IsStronglyComplementary ∧ s.card = k} = _
+      (s : Set (Matrix (Fin n) (Fin n) ℕ)).Pairwise IsStronglyComplementary ∧ s.card = k} = _
   obtain ⟨s, hp, hs, hc⟩ := matrix_family_lower hn
   have hb : ∀ k ∈ {k | ∃ t : Finset (Matrix (Fin n) (Fin n) ℕ),
-      (∀ p ∈ t, IsPermutationMatrix p) ∧ (t : Set _).Pairwise IsStronglyComplementary ∧
+      (∀ p ∈ t, IsPermutationMatrix p) ∧
+      (t : Set (Matrix (Fin n) (Fin n) ℕ)).Pairwise IsStronglyComplementary ∧
         t.card = k}, k ≤ 2 ^ padicValNat 2 n := by
     rintro k ⟨t, ht, htcomp, rfl⟩
     exact matrix_family_upper hn t ht htcomp
