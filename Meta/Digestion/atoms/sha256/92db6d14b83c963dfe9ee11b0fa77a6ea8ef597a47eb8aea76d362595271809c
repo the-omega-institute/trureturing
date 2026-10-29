@@ -1,0 +1,52 @@
+**Theorem 22.2 (exact local two-step recognizer).** Put
+$C=\langle\bullet,\bullet\rangle$. The set of possible unlabelled
+physical shapes after two substitutions on an arbitrary labelled
+physical tree is exactly the grammar
+
+$$
+ \mathcal G_{\rm loc}::=
+ C\ \mid\ \langle C,\bullet\rangle\ \mid\
+ \langle\bullet,C\rangle\ \mid\
+ \langle g_1,g_2\rangle\quad(g_1,g_2\in\mathcal G_{\rm loc}).
+ \tag{GPO.63}
+$$
+
+There is a terminating recognizer/decoder $D_{\rm loc}$ with the
+following exact rules. A leaf rejects. At a branch, two leaf children
+decode to alpha; mixed branch/leaf children decode to beta **only if
+the branch child is exactly $C$**. A mixed case with a larger branch
+rejects. Two branch children decode to their physical ordered pair
+only if both recursive parses succeed; otherwise they reject. This
+recognizes precisely (GPO.63), and every accepted shape has one and
+only one labelled physical predecessor $U$. It accepts $X$ and returns
+$U$ if and only if $X$ is the shape of a possible two-step locally
+wired expansion of $U$. In particular
+$[u]\mapsto[\operatorname{sh}(\rho^2u)]$ is injective.
+
+Proof. After two updates an alpha leaf has shape $C$. A beta leaf
+first creates a beta/alpha pair; the beta child then creates $C$ and
+the alpha child stays a leaf, giving precisely the two mixed codes.
+An old branch retains its physical children, each of which has a
+two-step code with a branch root. Thus the four root cases are
+disjoint, and the mixed case has the stated exact cherry requirement.
+Structural induction gives acceptance and the original physical
+predecessor for every actual expansion.
+
+Conversely, for each accepted code realize its alpha or beta case by
+the two actual leaf substitutions just described, choosing the beta
+code's first birth orientation to match its displayed side. In the
+pair case, realize the two recursive expansions below the old branch,
+whose physical links are retained. This realizes every accepted shape.
+The same disjoint cases force uniqueness of its predecessor; each
+recursive call decreases tree size, proving termination. There need
+not be a unique newborn-frame assignment or a unique expanded labelled
+tree: the inverse just proved concerns the predecessor, not those
+additional hidden fields.
+
+The recognizer is equivariant under local exchanges of the two
+children: its mixed cases both return beta, and its pair case exchanges
+the two decoded children. Consequently unordered-isomorphic accepted
+shapes have unordered-isomorphic labelled decodes. Applying this to
+actual two-step images proves the last injectivity statement. Ordered
+ABT12.1 alone would not prove that unordered assertion. $\square$
+
