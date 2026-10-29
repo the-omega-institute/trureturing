@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.PrincipalSpecial
 internal sealed class BinghamCaterpillarPs3FamilyDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/bingham2026principalspecializations");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ChromaticFunctions/bingham2026principalspecializations");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "For every positive j, the source caterpillars (5,j,j,4,3) and (4,j,j,5,3) have different second and identical third ordinary chromatic symmetric principal specializations.",
