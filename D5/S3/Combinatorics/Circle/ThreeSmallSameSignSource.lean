@@ -441,21 +441,21 @@ private theorem three_blocks (A B D : ℕ) (hA : 0 < A) (hB : 0 < B) (hD : 0 < D
   have hF : 4 ≤ F := by
     simpa only [F, pow_one] using
       pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 4) hA
-  have hFd : F * d < N := by omega
-  have hGe : G * e < N := by omega
-  have hHz : H * z < N := by omega
+  have hFd : F * d < N := by nlinarith only [hXY, heN]
+  have hGe : G * e < N := by nlinarith only [hYZ, hzN]
+  have hHz : H * z < N := by nlinarith only [hZX, hdN]
   have h4d : 4 * d < N := by nlinarith only [hF, hd, hFd]
   have hex : ∃ s : ℕ, s < B ∧ d ≤ (4 : ℤ) ^ (s + 1) * e := by
     refine ⟨B - 1, by omega, ?_⟩
     rw [Nat.sub_add_cancel hB]
     change d ≤ G * e
-    omega
+    nlinarith only [h4d, hYZ, hz]
   let s := Nat.find hex
   let v : ℤ := (4 : ℤ) ^ s
   have hs : s < B := (Nat.find_spec hex).1
   have hcut : d ≤ 4 * v * e := by
     have hh := (Nat.find_spec hex).2
-    simpa only [pow_succ, v, mul_assoc, mul_comm, mul_left_comm] using hh
+    simpa only [pow_succ, v, s, mul_assoc, mul_comm, mul_left_comm] using hh
   have hbefore : v * e ≤ d := by
     by_cases hs0 : s = 0
     · simpa only [v, hs0, pow_zero, one_mul] using hde
@@ -488,12 +488,12 @@ private theorem three_blocks (A B D : ℕ) (hA : 0 < A) (hB : 0 < B) (hD : 0 < D
   obtain ⟨hsX, hmX⟩ := descending_pairs f N d (N - e) 1 0 A (by omega)
     (by simpa only [Nat.zero_add, F] using le_of_lt hFd)
     (by simp only [Nat.zero_add]; change 0 ≤ N - e + 2 * d - 2 * F * d; omega)
-    (by norm_num; omega) (fun i _ hi => hX i hi)
+    (by norm_num; omega) (fun i _ hi => hX i (by omega))
   have hSX : InStrip f (3 * N) (N - e) X := by simpa [X] using hsX
   have hMX : (X.map f).sum = -2 * d * (F - 1) := by simpa [X, F] using hmX
   obtain ⟨hsY0, hmY0⟩ := descending_pairs f N e (2 * d - 2 * e) (2 * A + 2) 0 s
     (by omega) (by simp only [Nat.zero_add]; change v * e ≤ N; omega)
-    (by simp only [Nat.zero_add]; change 0 ≤ 2 * d - 2 * e + 2 * e - 2 * v * e; omega)
+    (by simp only [Nat.zero_add]; change 0 ≤ 2 * d - 2 * e + 2 * e - 2 * v * e; nlinarith only [hbefore])
     (by norm_num; omega) (fun i _ hi => hY i (by omega))
   have hSY0 : InStrip f (3 * N) (2 * (d - e)) Y0 := by convert hsY0 using 1 <;> simp [Y0] <;> ring
   have hMY0 : (Y0.map f).sum = -2 * e * (v - 1) := by simpa [Y0, v] using hmY0
@@ -507,7 +507,7 @@ private theorem three_blocks (A B D : ℕ) (hA : 0 < A) (hB : 0 < B) (hD : 0 < D
     simpa [Y1, v, G, Nat.add_sub_of_le (Nat.le_of_lt hs)] using hmY1
   obtain ⟨hsZ0, hmZ0⟩ := descending_pairs f N z (d - z) (2 * A + 2 * B + 3) 0 (jZ - 1)
     (by omega) (by simp only [Nat.zero_add]; change u * z ≤ N; nlinarith only [hzupper, hdN, hzN])
-    (by simp only [Nat.zero_add]; change 0 ≤ d - z + 2 * z - 2 * u * z; omega)
+    (by simp only [Nat.zero_add]; change 0 ≤ d - z + 2 * z - 2 * u * z; nlinarith only [hzupper])
     (by norm_num; omega) (fun i _ hi => hZ i (by omega))
   have hSZ0 : InStrip f (3 * N) (d - z) Z0 := by simpa [Z0] using hsZ0
   have hMZ0 : (Z0.map f).sum = -2 * z * (u - 1) := by simpa [Z0, u] using hmZ0
@@ -525,7 +525,12 @@ private theorem three_blocks (A B D : ℕ) (hA : 0 < A) (hB : 0 < B) (hD : 0 < D
     have hh := inStrip_prefix hSZ1 0
     simp only [List.take_zero, List.map_nil, List.sum_nil, add_zero] at hh
     simp only [InStrip, show f gamma = N - z from hc]
-    exact ⟨by omega, by omega, by omega, by omega⟩
+    constructor
+    · nlinarith only [hzupper]
+    constructor
+    · nlinarith only [hdN, hzN,
+        mul_nonneg (show 0 ≤ u by omega) (le_of_lt hz)]
+    exact ⟨by nlinarith only [hh.1], by nlinarith only [hh.2]⟩
   have hsga := inStrip_append hsg (by simp only [List.map_singleton, List.sum_singleton]; rw [show f gamma = N - z from hc]; convert hSZ1 using 1 <;> ring)
   have hsZ := inStrip_append hSZ0 (by rw [hMZ0]; convert hsga using 1 <;> ring)
   have hsYZ := inStrip_append hSY1 (by rw [hMY1]; convert hsZ using 1 <;> nlinarith only [hYZ])
@@ -533,7 +538,12 @@ private theorem three_blocks (A B D : ℕ) (hA : 0 < A) (hB : 0 < B) (hD : 0 < D
     have hh := inStrip_prefix hSY1 0
     simp only [List.take_zero, List.map_nil, List.sum_nil, add_zero] at hh
     simp only [InStrip, ha]
-    exact ⟨by omega, by omega, by omega, by omega⟩
+    constructor
+    · nlinarith only [hbefore]
+    constructor
+    · nlinarith only [h4d,
+        mul_nonneg (show 0 ≤ v by omega) (le_of_lt he)]
+    exact ⟨by nlinarith only [hh.1], by nlinarith only [hh.2]⟩
   have hsaa := inStrip_append hsa (by simp only [List.map_singleton, List.sum_singleton, ha]; convert hsYZ using 1 <;> ring)
   have hsY := inStrip_append hSY0 (by rw [hMY0]; convert hsaa using 1 <;> ring)
   have hsXY := inStrip_append hSX (by rw [hMX]; convert hsY using 1 <;> nlinarith only [hXY])
@@ -560,7 +570,7 @@ private theorem three_blocks (A B D : ℕ) (hA : 0 < A) (hB : 0 < B) (hD : 0 < D
       rw [List.append_assoc]
       change 0 :: (List.range' 1 (2 * A) ++ [2 * A + 1]) = _
       rw [show 2 * A + 1 = 1 + 2 * A by omega, hx]
-      rw [List.range'_succ]
+      exact (List.range'_succ (s := 0) (n := 2 * A + 1) (step := 1)).symm
     rw [hp]
     have hy := List.range'_append_1 (s := 0) (m := 2 * A + 2) (n := 2 * B)
     simp only [Nat.zero_add] at hy
@@ -920,6 +930,9 @@ theorem actualSource_three_small_same_sign_full_completion {k : ℕ} (hk : 3 ≤
     nlinarith only [hXY, hEY, hF4, hd, hde, heN, hzz]
   let f := fun j => 6 * w j
   let q := fun j => decide (j ≠ 0 ∧ j ≠ p ∧ j ≠ r)
+  have hf0 : f 0 = N - d := by dsimp [f, d]; ring
+  have hfp : f p = N - e := by dsimp [f, e]; ring
+  have hfr : f r = N - z := by dsimp [f, z]; ring
   have hnormalized : ∃ word : List ℕ, word.Perm (List.range k) ∧
       InStrip f (3 * N) 0 word ∧ (word.map f).sum = 0 ∧
       word.filter q = List.range' 1 (2 * A) ++ List.range' (2 * A + 2) (2 * B) ++
@@ -927,43 +940,61 @@ theorem actualSource_three_small_same_sign_full_completion {k : ℕ} (hk : 3 ≤
     by_cases hA0 : A = 0
     · by_cases hB0 : B = 0
       · have hn : N = 8 * H - 1 := by simpa [F, G, hA0, hB0] using hNFGH
-        have hd' : d = 6 * H + 1 := by simpa [G, hB0] using hdval
-        have he' : e = 4 * H + 3 := by simpa [F, hA0] using heval
+        have hd' : d = 6 * H + 1 := by
+          have hh := hdval
+          simp only [G, hB0, pow_zero, mul_one, one_mul] at hh
+          nlinarith only [hh]
+        have he' : e = 4 * H + 3 := by
+          have hh := heval
+          simp only [F, hA0, pow_zero, mul_one, one_mul] at hh
+          nlinarith only [hh]
         have hz' : z = 7 := by simpa [F, G, hA0, hB0] using hzval
+        have hp1 : p = 1 := by omega
+        have hr2 : r = 2 := by omega
         obtain ⟨word, hperm, hstrip, hsum, hdel⟩ := one_block D hD f
-          (by dsimp [f]; change 6 * w 0 = 2 * (H - 1); dsimp [d] at hd'; nlinarith only [hd', hn])
-          (by have hp1 : p = 1 := by omega; dsimp [f]; rw [← hp1]; dsimp [e] at he'; change 6 * w p = 4 * (H - 1); nlinarith only [he', hn])
-          (by have hr2 : r = 2 := by omega; dsimp [f]; rw [← hr2]; dsimp [z] at hz'; change 6 * w r = 8 * (H - 1); nlinarith only [hz', hn])
-          (by intro j hj; have hh := hZ j hj; simpa only [f, show r = 2 by omega, hz', ← hn] using hh)
+          (by change f 0 = 2 * (H - 1); rw [hf0, hd', hn]; ring)
+          (by change f 1 = 4 * (H - 1); rw [← hp1, hfp, he', hn]; ring)
+          (by change f 2 = 8 * (H - 1); rw [← hr2, hfr, hz', hn]; ring)
+          (by
+            intro j hj
+            have hh := hZ j hj
+            change f (r + 1 + 2 * j) = 2 * N - 2 * (4 : ℤ) ^ j * z ∧
+              f (r + 1 + 2 * j + 1) = -2 * N - 4 * (4 : ℤ) ^ j * z at hh
+            rw [hr2, hz'] at hh
+            have hh' : f (3 + 2 * j) = 2 * N - 14 * (4 : ℤ) ^ j ∧
+                f (3 + 2 * j + 1) = -2 * N - 28 * (4 : ℤ) ^ j := by
+              constructor <;> nlinarith only [hh.1, hh.2]
+            simpa only [hn, H] using hh')
+        change InStrip f (3 * (8 * H - 1)) 0 word at hstrip
+        rw [← hn] at hstrip
         refine ⟨word, by simpa only [hkABD, hA0, hB0, Nat.mul_zero, Nat.zero_add] using hperm,
-          by simpa only [← hn] using hstrip, hsum, ?_⟩
+          hstrip, hsum, ?_⟩
         have hq : q = (fun j => decide (3 ≤ j)) := by
           funext j
           apply decide_eq_decide.mpr
-          dsimp only [q]
           omega
         simpa only [hq, hA0, hB0, Nat.mul_zero, Nat.zero_add, List.range'_zero,
           List.nil_append] using hdel
-      · obtain ⟨word, hperm, hstrip, hsum, hdel⟩ := two_blocks B D (by omega) hD N d e z
-          hd he hzz hdN hzN (by simpa [F, hA0] using hXY) hYZ hZX f
-          (by dsimp [f, d]; ring)
-          (by have hp1 : p = 1 := by omega; dsimp [f, e]; rw [hp1]; ring)
-          (by dsimp [f, z]; rw [hrB, hA0]; norm_num; ring)
-          (by intro j hj; have hh := hY j hj; simpa [f, hpA, hA0, Nat.add_assoc] using hh)
-          (by intro j hj; have hh := hZ j hj; simpa [f, hrB, hA0, Nat.add_assoc] using hh)
+      · have hp1 : p = 1 := by omega
+        have hr' : r = 2 * B + 2 := by omega
+        obtain ⟨word, hperm, hstrip, hsum, hdel⟩ := two_blocks B D (by omega) hD N d e z
+          hd he hzz hdN hzN (by simpa [F, hA0] using hXY) hYZ hZX f hf0
+          (by simpa only [hp1] using hfp)
+          (by simpa only [hr'] using hfr)
+          (by intro j hj; simpa [f, N, e, hpA, hA0, Nat.add_assoc] using hY j hj)
+          (by intro j hj; simpa [f, N, z, hrB, hA0, Nat.add_assoc] using hZ j hj)
         refine ⟨word, by simpa only [hkABD, hA0, Nat.mul_zero, Nat.zero_add] using hperm,
           hstrip, hsum, ?_⟩
         simpa only [q, hpA, hrB, hA0, Nat.mul_zero, Nat.zero_add, List.range'_zero,
           List.nil_append] using hdel
     · have hB : 0 < B := by by_contra hn; exact hA0 (hBzero (by omega))
       obtain ⟨word, hperm, hstrip, hsum, hdel⟩ := three_blocks A B D (by omega) hB hD N d e z
-        hd he hzz hdN heN hzN hde hdz hXY hYZ hZX hdval heval hzval f
-        (by dsimp [f, d]; ring)
-        (by dsimp [f, e]; rw [← hpA]; ring)
-        (by dsimp [f, z]; rw [← hrB]; ring)
-        (by intro j hj; simpa only [f] using hX j hj)
-        (by intro j hj; simpa [f, hpA, Nat.add_assoc] using hY j hj)
-        (by intro j hj; simpa [f, hrB, Nat.add_assoc] using hZ j hj)
+        hd he hzz hdN heN hzN hde hdz hXY hYZ hZX hdval heval hzval f hf0
+        (by simpa only [hpA] using hfp)
+        (by simpa only [hrB] using hfr)
+        (by intro j hj; simpa only [f, N, d] using hX j hj)
+        (by intro j hj; simpa [f, N, e, hpA, Nat.add_assoc] using hY j hj)
+        (by intro j hj; simpa [f, N, z, hrB, Nat.add_assoc] using hZ j hj)
       exact ⟨word, by simpa only [← hkABD] using hperm, hstrip, hsum,
         by simpa only [q, hpA, hrB] using hdel⟩
   obtain ⟨word, hpword, hsword, hmword, hdeleted⟩ := hnormalized
@@ -980,20 +1011,24 @@ theorem actualSource_three_small_same_sign_full_completion {k : ℕ} (hk : 3 ≤
     have hsplit : [0] ++ List.range' 1 (2 * A) ++ [p] ++
         List.range' (2 * A + 2) (2 * B) ++ [r] ++
         List.range' (2 * A + 2 * B + 3) (2 * D) = List.range k := by
-      have h1 := (List.range'_1_concat (s := 1) (n := 2 * A)).symm
-      have h2 := (List.range'_1_concat (s := 2 * A + 2) (n := 2 * B)).symm
-      rw [hpA, hrB, List.append_assoc]
-      rw [show 2 * A + 1 = 1 + 2 * A by omega, h1]
-      rw [← List.append_assoc, List.range'_succ]
-      have hjoin1 := List.range'_append_1 (s := 0) (m := 2 * A + 2) (n := 2 * B)
-      simp only [Nat.zero_add] at hjoin1
-      rw [hjoin1]
-      rw [show 2 * A + 2 * B + 2 = 0 + (2 * A + 2 + 2 * B) by omega,
-        (List.range'_1_concat (s := 0) (n := 2 * A + 2 + 2 * B)).symm]
-      have hjoin2 := List.range'_append_1 (s := 0) (m := 2 * A + 2 + 2 * B + 1) (n := 2 * D)
-      simp only [Nat.zero_add] at hjoin2
-      rw [show 2 * A + 2 * B + 3 = 2 * A + 2 + 2 * B + 1 by omega, hjoin2,
-        List.range_eq_range']
+      have hp : [0] ++ List.range' 1 (2 * A) ++ [p] =
+          List.range' 0 (2 * A + 2) := by
+        rw [hpA, List.append_assoc]
+        change 0 :: (List.range' 1 (2 * A) ++ [2 * A + 1]) = _
+        rw [show 2 * A + 1 = 1 + 2 * A by omega,
+          (List.range'_1_concat (s := 1) (n := 2 * A)).symm]
+        exact (List.range'_succ (s := 0) (n := 2 * A + 1) (step := 1)).symm
+      rw [hp]
+      have hy := List.range'_append_1 (s := 0) (m := 2 * A + 2) (n := 2 * B)
+      simp only [Nat.zero_add] at hy
+      rw [hy, hrB]
+      have hg := (List.range'_1_concat (s := 0) (n := 2 * A + 2 + 2 * B)).symm
+      simp only [Nat.zero_add] at hg
+      rw [show 2 * A + 2 * B + 2 = 2 * A + 2 + 2 * B by omega, hg]
+      have hzj := List.range'_append_1 (s := 0) (m := 2 * A + 2 + 2 * B + 1) (n := 2 * D)
+      simp only [Nat.zero_add] at hzj
+      rw [show 2 * A + 2 * B + 3 = 2 * A + 2 + 2 * B + 1 by omega,
+        hzj, List.range_eq_range']
       congr 1
       omega
     have hkeep (off len : ℕ) (hl : ∀ x ∈ List.range' off len, x ≠ 0 ∧ x ≠ p ∧ x ≠ r) :
