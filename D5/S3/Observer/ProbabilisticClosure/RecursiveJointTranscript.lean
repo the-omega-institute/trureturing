@@ -9,6 +9,8 @@
 import D5.S3.ConceptDynamics.RefinementFactorization.RealizedImageKernelFactorization
 import Mathlib.Probability.ProbabilityMassFunction.Constructions
 
+/-! Typed source rows and their finite adaptive acquired-history laws. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -44,6 +46,7 @@ structure Source (T : Interface) where
   refusal : {i j : T.Ty} → (a : T.Action i j) → T.State i →
     T.Event a × T.Terminal a × T.Record a
 
+open Classical in
 def Source.total {T : Interface} (S : Source T) {i j : T.Ty}
     (a : T.Action i j) (z : T.State i) : PMF (Output T a) :=
   if h : S.legal a z then S.kernel a z h else
@@ -81,7 +84,7 @@ inductive Token (T : Interface) where
 checks may use the full acquired prefix and archive; source legality is separate.
 Randomized stopping is the `none` decision. -/
 structure Policy (T : Interface) (Archive : Type u) where
-  write : Archive → Token T → Archive
+  write : Archive → List (Token T) → List (Token T) → Archive
   permitted : (i : T.Ty) → T.Observation i → Archive → List (Token T) →
     ((j : T.Ty) × T.Action i j) → Prop
   select : ℕ → (i : T.Ty) → T.Observation i → Archive → List (Token T) →
@@ -97,7 +100,7 @@ def respond {T : Interface} {Archive : Type u} (P : Policy T Archive)
     (x : Output T a) : PMF (List (Token T)) :=
   let block := [Token.event a x.1, Token.recorded a x.2.2]
   match x.2.1 with
-  | .inl z => next z (block.foldl P.write c) (h ++ block)
+  | .inl z => next z (P.write c h block) (h ++ block)
   | .inr f => PMF.pure (h ++ block ++ [Token.terminal a f])
 
 /-- Executed laws are constructed from source rows, never supplied as a law table.
@@ -108,13 +111,13 @@ def run {T : Interface} (S : Source T) {Archive : Type u} (P : Policy T Archive)
   | n + 1, i, z, c, h =>
       let o := S.observe z
       let h' := h ++ [Token.observed i o]
-      let c' := P.write c (Token.observed i o)
+      let c' := P.write c h [Token.observed i o]
       (P.select n i o c' h').bind fun decision =>
         match decision with
         | none => PMF.pure (h' ++ [Token.stopped i])
         | some ⟨j, a⟩ =>
             (S.total a z).bind (respond P (run S P n j) a
-              (P.write c' (Token.chosen a)) (h' ++ [Token.chosen a]))
+              (P.write c' h' [Token.chosen a]) (h' ++ [Token.chosen a]))
 
 private theorem residual_observe {T : Interface} (S : Source T) (n : ℕ)
     {i : T.Ty} {z w : T.State i} (h : residual S n i z w) :
@@ -151,7 +154,8 @@ theorem recursive_residual_preserves_adaptive_law {T : Interface} (S : Source T)
           | none => rfl
           | some a =>
               obtain ⟨j, a⟩ := a
-              let c' := P.write (P.write c (Token.observed i (S.observe w))) (Token.chosen a)
+              let c' := P.write (P.write c h [Token.observed i (S.observe w)])
+                (h ++ [Token.observed i (S.observe w)]) [Token.chosen a]
               let h' := (h ++ [Token.observed i (S.observe w)]) ++ [Token.chosen a]
               let f := respond P (run S P d j) a c' h'
               let q := jointView (residual S n) a
@@ -162,21 +166,21 @@ theorem recursive_residual_preserves_adaptive_law {T : Interface} (S : Source T)
                 rcases y with ⟨e', y, r'⟩
                 change (e, Sum.map (Quotient.mk (residual S n j)) id x, r) =
                   (e', Sum.map (Quotient.mk (residual S n j)) id y, r') at hxy
-                obtain ⟨he, hs⟩ := Prod.mk.inj hxy
-                obtain ⟨hs, hr⟩ := Prod.mk.inj hs
+                obtain ⟨he, hpair⟩ := Prod.mk.inj hxy
+                obtain ⟨hnext, hr⟩ := Prod.mk.inj hpair
                 subst e'
                 subst r'
                 cases x with
                 | inl x =>
                     cases y with
                     | inl y =>
-                        exact ih (Quotient.exact (Sum.inl.inj hs)) d hd' P _ _
-                    | inr y => cases hs
+                        exact ih (Quotient.exact (Sum.inl.inj hnext)) d hd' P _ _
+                    | inr y => cases hnext
                 | inr x =>
                     cases y with
-                    | inl y => cases hs
+                    | inl y => cases hnext
                     | inr y =>
-                        have ht : x = y := Sum.inr.inj hs
+                        have ht : x = y := Sum.inr.inj hnext
                         subst y
                         rfl
               obtain ⟨factor, factor_eq, _⟩ :=
@@ -186,7 +190,8 @@ theorem recursive_residual_preserves_adaptive_law {T : Interface} (S : Source T)
                 funext x
                 exact congrArg Subtype.val (congrFun factor_eq x)
               have rows := congrFun related.2 ⟨j, a⟩
-              have rows' := congrArg Prod.snd rows
+              have rows' : (S.total a z).map (Set.rangeFactorization q) =
+                  (S.total a w).map (Set.rangeFactorization q) := congrArg Prod.snd rows
               rw [hf, ← PMF.bind_map, ← PMF.bind_map, rows']
 
 #print axioms recursive_residual_preserves_adaptive_law
