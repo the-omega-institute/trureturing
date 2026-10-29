@@ -9,6 +9,8 @@
 import D5.S3.Weil.Mertens.ActualThetaTailLaplace
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 
+/-! Quantitative regularity of the actual activation-weighted theta tail. -/
+
 namespace D5.S3.Weil.Mertens.ThetaTailRegularity
 
 open Real Set MeasureTheory Filter
@@ -70,6 +72,7 @@ theorem theta_tail_peak_sq_le_mass {U a : ℝ} (hU : 1 ≤ U) (ha : U ≤ a)
   let b := a + f a / 2
   have hab : a ≤ b := by dsimp [b]; linarith
   have hi : IntegrableOn (fun u => |f u|) (Ioi U) := by
+    change Integrable (fun u => |f u|) (volume.restrict (Ioi U))
     simpa only [Real.norm_eq_abs] using
       (actual_theta_tail_laplace_ode.2.2.2.2.1.mono_set
         (Ioi_subset_Ioi (threshold_le_one.trans hU))).norm
@@ -87,10 +90,12 @@ theorem theta_tail_peak_sq_le_mass {U a : ℝ} (hU : 1 ≤ U) (ha : U ≤ a)
       have hp := le_abs_self (f u)
       linarith)
     have he : (∫ u in a..b, f a - 2 * (u - a)) = (f a) ^ 2 / 4 := by
-      rw [intervalIntegral.integral_sub intervalIntegrable_const
-        ((continuous_const.mul (continuous_id.sub continuous_const)).intervalIntegrable a b),
+      have him : IntervalIntegrable (fun u : ℝ => 2 * (u - a)) volume a b :=
+        (continuous_const.mul (continuous_id.sub continuous_const)).intervalIntegrable a b
+      rw [intervalIntegral.integral_sub intervalIntegrable_const him,
         intervalIntegral.integral_const, intervalIntegral.integral_const_mul,
-        intervalIntegral.integral_sub (continuous_id.intervalIntegrable a b) intervalIntegrable_const,
+        intervalIntegral.integral_sub (f := fun u : ℝ => u) (g := fun _ : ℝ => a)
+          (continuous_id.intervalIntegrable a b) intervalIntegrable_const,
         intervalIntegral.integral_id, intervalIntegral.integral_const]
       simp only [smul_eq_mul]
       dsimp [b]
