@@ -92,7 +92,7 @@ private lemma mon_single (j : Fin 5) (k : ℕ) :
 
 private lemma degree_single (j : Fin 5) :
     degree (Pi.single j 1) = if j.val < 2 then 1 else 2 := by
-  fin_cases j <;> norm_num [degree, Pi.single_apply]
+  fin_cases j <;> dsimp only [degree] <;> norm_num [Pi.single_apply]
 
 private lemma graded_mul {i j : ℤ} {f g : parameters → ℂ}
     (hf : f ∈ graded i) (hg : g ∈ graded j) : f * g ∈ graded (i + j) := by
@@ -152,7 +152,7 @@ private lemma polarized_cayley_hamilton (x y : Matrix (Fin 2) (Fin 2) ℂ) :
   fin_cases i <;> fin_cases j <;>
     simp only [Matrix.mul_apply, Fin.sum_univ_two, Matrix.add_apply, Matrix.sub_apply,
       Matrix.smul_apply, Matrix.one_apply, Matrix.trace_fin_two, smul_eq_mul,
-      Fin.mk_zero, Fin.mk_one, Fin.zero_ne_one, Fin.ext_iff, Fin.val_zero, Fin.val_one,
+      Fin.mk_zero, Fin.mk_one, Fin.ext_iff, Fin.val_zero, Fin.val_one,
       Nat.one_ne_zero, Nat.zero_ne_one, ↓reduceIte] <;> ring
 
 private lemma sandwich (x y : Matrix (Fin 2) (Fin 2) ℂ) :
@@ -162,7 +162,7 @@ private lemma sandwich (x y : Matrix (Fin 2) (Fin 2) ℂ) :
   fin_cases i <;> fin_cases j <;>
     simp only [Matrix.mul_apply, Fin.sum_univ_two, Matrix.add_apply, Matrix.sub_apply,
       Matrix.smul_apply, Matrix.one_apply, Matrix.trace_fin_two, Matrix.det_fin_two,
-      smul_eq_mul, Fin.mk_zero, Fin.mk_one, Fin.zero_ne_one, Fin.ext_iff,
+      smul_eq_mul, Fin.mk_zero, Fin.mk_one, Fin.ext_iff,
       Fin.val_zero, Fin.val_one, Nat.one_ne_zero, Nat.zero_ne_one, ↓reduceIte] <;> ring
 
 private lemma reduction_left_x (x y : Matrix (Fin 2) (Fin 2) ℂ) (a b c d : ℂ) :
@@ -296,11 +296,6 @@ private lemma word_append (a b : List (Fin 2)) (p : parameters) :
   change ((a ++ b).map p).prod = (a.map p).prod * (b.map p).prod
   rw [List.map_append, List.prod_append]
 
-private lemma word_cons (a : Fin 2) (l : List (Fin 2)) (p : parameters) :
-    word (a :: l) p = p a * word l p := rfl
-
-private lemma word_nil (p : parameters) : word [] p = 1 := rfl
-
 private lemma word_replicate (n : ℕ) (a : Fin 2) (p : parameters) :
     word (List.replicate n a) p = p a ^ n := by
   change ((List.replicate n a).map p).prod = p a ^ n
@@ -327,8 +322,11 @@ private lemma trace_swap (a b : List (Fin 2)) :
     (fun p => (word (b ++ a) p * commutator p).trace) := by
   funext p
   change _ = (word (b ++ a) p * (p 0 * p 1 - p 1 * p 0)).trace
-  simp only [word_append, word_cons, ← Matrix.mul_assoc]
-  exact trace_swap_identity (word a p) (word b p) (p 0) (p 1)
+  simp only [word_append]
+  change (word a p * (p 0 * (p 1 * word b p))).trace -
+    (word a p * (p 1 * (p 0 * word b p))).trace = _
+  simpa only [← Matrix.mul_assoc] using
+    trace_swap_identity (word a p) (word b p) (p 0) (p 1)
 
 private lemma trace_adjacent_mem (a b : List (Fin 2)) (x y : Fin 2) :
     (fun p => (word (a ++ x :: y :: b) p).trace -
@@ -506,8 +504,9 @@ private lemma wordOp_pure (j : Fin 5) {n : ℕ} {q : List (Fin 2) →₀ ℂ}
     (hq : pureWords n q) :
     pureWords (n + if j.val < 2 then 1 else 2) (wordOp j q) := by
   have hw (a b : List (Fin 2)) := pure_wrap hq a b
+  dsimp only [wordOp]
   fin_cases j <;>
-    simp only [wordOp, Matrix.cons_val_zero, Matrix.cons_val_succ', Matrix.cons_val_zero',
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_succ', Matrix.cons_val_zero',
       Fin.isValue, Nat.reduceLT, ↓reduceIte]
   · exact pure_add (by simpa [Nat.add_comm] using hw [0] [])
       (by simpa using hw [] [0])
@@ -559,13 +558,17 @@ private lemma wordOp_eval (j : Fin 5) (q : List (Fin 2) →₀ ℂ) (f : paramet
     (hq : ∀ p, combinationEval q p = f p • commutator p) (p : parameters) :
     combinationEval (wordOp j q) p = (invariants p j * f p) • commutator p := by
   obtain ⟨h0, h1, h2, h3, h4⟩ := commutator_operations p
-  simp only [invariants, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+  dsimp only [invariants] at h0 h1 h2 h3 h4
+  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
     Matrix.cons_val_three, Matrix.cons_val_four, Matrix.head_cons,
     Matrix.tail_cons] at h0 h1 h2 h3 h4
+  dsimp only [wordOp, invariants]
   fin_cases j <;>
-    simp only [wordOp, invariants, Matrix.cons_val_zero, Matrix.cons_val_zero',
-      Matrix.cons_val_succ', combinationEval_add, wrap_eval, word_cons, word_nil,
-      one_mul, mul_one, hq p]
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_zero',
+      Matrix.cons_val_succ', combinationEval_add, wrap_eval, hq p]
+  all_goals dsimp only [word]
+  all_goals simp only [List.map_cons, List.map_nil, List.prod_cons, List.prod_nil,
+    one_mul, mul_one]
   · simpa only [mul_smul_comm, smul_mul_assoc, ← smul_add, smul_smul, mul_comm] using
       congrArg (fun a => f p • a) h0
   · simpa only [mul_smul_comm, smul_mul_assoc, ← smul_add, smul_smul, mul_comm] using
@@ -586,8 +589,9 @@ private lemma invariant_multiple (e : Fin 5 → ℕ) :
   have hq0 : pureWords 2 q0 := pure_add (pure_single [0, 1] 1) (pure_single [1, 0] (-1))
   have hq0eval (p : parameters) : combinationEval q0 p = commutator p := by
     rw [combinationEval_add, combinationEval_single, combinationEval_single]
-    simp only [word_cons, word_nil, mul_one, one_smul, neg_one_smul]
-    rfl
+    change (1 : ℂ) • (p 0 * (p 1 * 1)) + (-1 : ℂ) • (p 1 * (p 0 * 1)) =
+      p 0 * p 1 - p 1 * p 0
+    simp only [mul_one, one_smul, neg_one_smul, sub_eq_add_neg]
   suffices ∀ m (f : Fin 5 → ℕ), (∑ j, f j) = m →
       ∃ q : List (Fin 2) →₀ ℂ, pureWords (degree f + 2) q ∧
         ∀ p, combinationEval q p = mon f p • commutator p from this _ e rfl
@@ -643,9 +647,10 @@ private lemma delta_monomial_mem (e : Fin 5 → ℕ) :
       (fun p => (word (l ++ [0, 1]) p).trace) -
       (fun p => (word (l ++ [1, 0]) p).trace) := by
     funext p
-    simp only [word_append, word_cons, word_nil, mul_one, Pi.sub_apply]
-    change (word l p * (p 0 * p 1 - p 1 * p 0)).trace = _
-    rw [mul_sub, Matrix.trace_sub]
+    simp only [word_append, Pi.sub_apply]
+    dsimp only [word, commutator]
+    simp only [List.map_cons, List.map_nil, List.prod_cons, List.prod_nil, mul_one,
+      mul_sub, Matrix.trace_sub]
   have hb (l : List (Fin 2)) (hl : l ∈ q.support) (b : List (Fin 2)) (hb : b.length = 2) :
       (fun p => (word (l ++ b) p).trace) ∈ coordinates (degree e + 4) := by
     have hd : (l ++ b).length = degree e + 4 := by
@@ -720,8 +725,8 @@ private lemma invariants_attained (z : Fin 5 → ℂ) (hz : z 0 ^ 2 ≠ 4 * z 2)
   clear_value a b
   refine ⟨![!![lam, 0; 0, mu], !![a, 1; a * b - z 3, b]], ?_⟩
   ext j
-  fin_cases j <;>
-    norm_num only [invariants, Matrix.cons_val_zero', Matrix.cons_val_succ', Matrix.of_apply,
+  fin_cases j <;> dsimp only [invariants] <;>
+    norm_num only [Matrix.cons_val_zero', Matrix.cons_val_succ', Matrix.of_apply,
       Matrix.trace_fin_two, Matrix.det_fin_two, Matrix.mul_apply, Fin.sum_univ_two,
       Matrix.cons_val_zero, Matrix.cons_val_one, Fin.mk_zero, Fin.mk_one,
       mul_zero, zero_mul, one_mul, mul_one, add_zero, zero_add, sub_zero]
@@ -758,7 +763,8 @@ private lemma invariant_polynomial_injective :
 
 private lemma scalar_delta (x : ℂ) :
     delta (![x • 1, 1] : parameters) = 0 := by
-  simp only [delta, invariants, Matrix.cons_val_zero, Matrix.cons_val_one,
+  dsimp only [delta, invariants]
+  simp only [Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.cons_val_two, Matrix.cons_val_three, Matrix.cons_val_four,
     Matrix.head_cons, Matrix.tail_cons, mul_one, Matrix.trace_smul, Matrix.trace_one,
     Matrix.det_smul, Matrix.det_one, Fintype.card_fin, smul_eq_mul, mul_one]
@@ -780,8 +786,9 @@ private lemma normal_independent (n : ℕ) : LinearIndependent ℂ (normalFamily
       ∑ e : extraIndex n, c (.inr e) * (delta p * mon (fun j => (e.val j).val) p) = 0 := by
     have h := congrFun hc p
     rw [Fintype.sum_sum_type] at h
+    dsimp only [normalFamily] at h
     simpa only [Pi.add_apply, Finset.sum_apply, Pi.smul_apply, smul_eq_mul,
-      Pi.zero_apply, normalFamily, Sum.elim_inl, Sum.elim_inr] using h
+      Pi.zero_apply, Sum.elim_inl, Sum.elim_inr] using h
   have hleft : ∀ a, c (.inl a) = 0 := by
     let q : Polynomial ℂ := ∑ a : Fin (n + 1), Polynomial.monomial a.val (c (.inl a))
     have hq : q = 0 := by
