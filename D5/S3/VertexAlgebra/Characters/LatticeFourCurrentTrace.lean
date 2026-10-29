@@ -74,14 +74,16 @@ private def min4 (n : Four → ℕ) : ℕ :=
 private def max4 (n : Four → ℕ) : ℕ :=
   max (max (n 0) (n 1)) (max (n 2) (n 3))
 
+private def matchingShift (M : PM4) (ell : edgeParam M → ℕ)
+    (ε : edgeParam M → Fin 2) (k : edgeParam M → ℕ) (j : Four) : ℕ := by
+  classical
+  exact ∑ e : edgeParam M, ell e * (k e + if sideMem (ε e) e.1 j then 1 else 0)
+
 private def gradeShift (D : LatticeData) (n : Four → ℕ) (β : Charge D) (M : PM4)
     (ell : edgeParam M → Fin (max4 n + 1))
     (ε : edgeParam M → Fin 2) (k : edgeParam M → Fin (min4 n + 1))
-    (j : Four) : ℕ := by
-  classical
-  exact ∑ e : edgeParam M,
-    (ell e).1 * ((k e).1 +
-      if sideMem (ε e) e.1 j then 1 else 0)
+    (j : Four) : ℕ :=
+  matchingShift M (fun e => (ell e).1) ε (fun e => (k e).1) j
 
 /-- The literal finite trace of the original four current blocks. -/
 def actualFourCurrentCycleTrace (D : LatticeData)
@@ -551,5 +553,136 @@ private theorem original_four_finite_sum (D : LatticeData)
   rw [original_four_word, show (n 1 : ℤ) - n 0 = ((n 1 - n 0 : ℕ) : ℤ) by omega]
   exact four_trace_finite_sum D hD (i 0) (i 1) (i 2) (i 3)
     (n 1 - n 0) (n 0) (by omega) _ _ _ (by omega)
+
+private theorem edges_ordered : ∀ (M : PM4) (e : Four × Four),
+    e ∈ M.edges → e.1.1 < e.2.1 := by decide
+
+private theorem min4_le (n : Four → ℕ) (j : Four) : min4 n ≤ n j := by
+  fin_cases j <;> dsimp [min4] <;> omega
+
+private theorem le_max4 (n : Four → ℕ) (j : Four) : n j ≤ max4 n := by
+  fin_cases j <;> dsimp [max4] <;> omega
+
+private theorem matching_parameter_bounds (n : Four → ℕ) (Q t : ℕ) (M : PM4)
+    (ell : edgeParam M → ℕ) (ε : edgeParam M → Fin 2) (k : edgeParam M → ℕ)
+    (hpos : ∀ e, 0 < ell e)
+    (heq : ∀ j, n j = Q + t + matchingShift M ell ε k j) :
+    Q ≤ min4 n ∧ t ≤ min4 n ∧
+      ∀ e, ell e ≤ max4 n ∧ k e ≤ min4 n := by
+  classical
+  have hQ (j : Four) : Q ≤ n j := by have h := heq j; omega
+  have ht (j : Four) : t ≤ n j := by have h := heq j; omega
+  refine ⟨le_min (le_min (hQ 0) (hQ 1)) (le_min (hQ 2) (hQ 3)),
+    le_min (le_min (ht 0) (ht 1)) (le_min (ht 2) (ht 3)), ?_⟩
+  intro e
+  have hterm (j : Four) :
+      ell e * (k e + if sideMem (ε e) e.1 j then 1 else 0) ≤
+        matchingShift M ell ε k j := by
+    exact Finset.single_le_sum (fun _ _ => Nat.zero_le _) (Finset.mem_univ e)
+  have hwind (j : Four) : k e ≤ n j := by
+    have hmul : k e ≤ ell e * k e := by
+      simpa using Nat.mul_le_mul_right (k e) (show 1 ≤ ell e from hpos e)
+    have hpart : ell e * k e ≤
+        ell e * (k e + if sideMem (ε e) e.1 j then 1 else 0) :=
+      Nat.mul_le_mul_left _ (Nat.le_add_right _ _)
+    have hs := hterm j
+    have hn := heq j
+    omega
+  have hside : ∃ j : Four, sideMem (ε e) e.1 j := by
+    by_cases h : (ε e).1 = 0
+    · refine ⟨e.1.2, ?_⟩
+      simp [sideMem, h, arcMem, edges_ordered M e.1 e.2]
+    · refine ⟨e.1.1, ?_⟩
+      simp [sideMem, h, arcMem]
+  obtain ⟨j, hj⟩ := hside
+  have hs := hterm j
+  rw [if_pos hj] at hs
+  have hl : ell e ≤ ell e * (k e + 1) := by
+    simpa using Nat.mul_le_mul_left (ell e) (show 1 ≤ k e + 1 by omega)
+  have hn := heq j
+  have hm := le_max4 n j
+  exact ⟨by omega,
+    le_min (le_min (hwind 0) (hwind 1)) (le_min (hwind 2) (hwind 3))⟩
+
+private theorem bounded_matching_assignment (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (n : Four → ℕ) (β : Charge D) (t : ℕ) (M : PM4)
+    (ell : edgeParam M → ℕ) (ε : edgeParam M → Fin 2) (k : edgeParam M → ℕ)
+    (hpos : ∀ e, 0 < ell e)
+    (heq : ∀ j, n j = (chargeEnergy D β).toNat + t + matchingShift M ell ε k j) :
+    β ∈ positiveChargeCutoff D hD (min4 n : ℤ) ∧
+      ∃ (ell' : edgeParam M → Fin (max4 n + 1))
+        (k' : edgeParam M → Fin (min4 n + 1)) (t' : Fin (min4 n + 1)),
+        (∀ e, (ell' e).1 = ell e) ∧ (∀ e, (k' e).1 = k e) ∧ t'.1 = t ∧
+        (∀ j, n j = (chargeEnergy D β).toNat + t'.1 +
+          gradeShift D n β M ell' ε k' j) := by
+  have hb := matching_parameter_bounds n (chargeEnergy D β).toNat t M ell ε k hpos heq
+  have hq := chargeEnergy_nonneg D hD β
+  have hcast := Int.toNat_of_nonneg hq
+  have hQ : chargeEnergy D β ≤ (min4 n : ℤ) := by omega
+  constructor
+  · simpa [positiveChargeCutoff] using hQ
+  · refine ⟨(fun e => ⟨ell e, Nat.lt_succ_of_le (hb.2.2 e).1⟩),
+      (fun e => ⟨k e, Nat.lt_succ_of_le (hb.2.2 e).2⟩),
+      ⟨t, Nat.lt_succ_of_le hb.2.1⟩, (fun _ => rfl), (fun _ => rfl), rfl, ?_⟩
+    exact heq
+
+private def signedPairCoefficient (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (i j : Fin D.rank) (N q : ℤ) : ℂ := by
+  classical
+  let a := N.toNat
+  let b := (N + q).toNat
+  exact if 0 ≤ N ∧ 0 ≤ N + q then
+    if a = b then
+      ∑ β ∈ positiveChargeCutoff D hD (a : ℤ),
+        (bilinear D (unitCharge D i) β : ℂ) * (bilinear D (unitCharge D j) β : ℂ) *
+          occupationMultiplicity D (a - (chargeEnergy D β).toNat)
+    else
+      (Nat.dist a b : ℂ) * (D.G i j : ℂ) *
+        ∑ β ∈ positiveChargeCutoff D hD ((min a b : ℕ) : ℤ),
+          ∑ k ∈ Finset.range ((min a b - (chargeEnergy D β).toNat) / Nat.dist a b + 1),
+            occupationMultiplicity D (min a b - (chargeEnergy D β).toNat - k * Nat.dist a b)
+  else 0
+
+private theorem pair_trace_coefficient (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (i j : Fin D.rank) (N q r : ℤ) (hr : q + r = 0) :
+    gradeTrace D hD N (neutralMode D i q * neutralMode D j r) =
+      signedPairCoefficient D hD i j N q := by
+  rw [pair_trace_signed D hD i j N q r hr]
+  simp only [signedPairCoefficient, actual_two_current_grade_trace]
+
+private theorem contracted_pair_coefficient (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (i j k s : Fin D.rank) (m p q r N : ℤ) (ht : m + (p + (q + r)) = 0) :
+    contraction D i j m p * gradeTrace D hD N (neutralMode D k q * neutralMode D s r) =
+      contraction D i j m p * signedPairCoefficient D hD k s N q := by
+  by_cases h : m + p = 0
+  · rw [pair_trace_coefficient D hD k s N q r (by omega)]
+  · simp [contraction, h]
+
+private theorem original_four_finite_coefficient (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (i : Four → Fin D.rank) (n : Four → ℕ) (h : n 0 < n 1) :
+    let ell := n 1 - n 0
+    let p := (n 2 : ℤ) - n 1
+    let q := (n 3 : ℤ) - n 2
+    let r := (n 0 : ℤ) - n 3
+    actualFourCurrentCycleTrace D hD i n =
+      ∑ a ∈ Finset.range (n 0 / ell + 1),
+        (contraction D (i 0) (i 1) ell p *
+            signedPairCoefficient D hD (i 2) (i 3) ((n 0 : ℤ) - (a : ℤ) * ell) q +
+          contraction D (i 0) (i 2) ell q *
+            signedPairCoefficient D hD (i 1) (i 3) ((n 0 : ℤ) - (a : ℤ) * ell) p +
+          contraction D (i 0) (i 3) ell r *
+            signedPairCoefficient D hD (i 1) (i 2) ((n 0 : ℤ) - (a : ℤ) * ell) p) := by
+  dsimp only
+  rw [original_four_finite_sum D hD i n h]
+  apply Finset.sum_congr rfl
+  intro a ha
+  rw [contracted_pair_coefficient D hD (i 0) (i 1) (i 2) (i 3) _ _ _ _ _ (by omega),
+    contracted_pair_coefficient D hD (i 0) (i 2) (i 1) (i 3) _ _ _ _ _ (by omega),
+    contracted_pair_coefficient D hD (i 0) (i 3) (i 1) (i 2) _ _ _ _ _ (by omega)]
 
 end D5.S3.VertexAlgebra.LatticeFourCurrentTrace
