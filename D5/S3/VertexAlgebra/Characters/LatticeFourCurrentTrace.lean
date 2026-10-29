@@ -1719,8 +1719,8 @@ private theorem edge_univ_single (M : PM4) (a : Four × Four) (h : M.edges = {a}
   constructor
   · intro _
     apply Finset.mem_singleton.mpr
-    apply Subtype.ext
-    simpa [h] using e.2
+    have he : e.1 = a := by simpa only [h, Finset.mem_singleton] using e.2
+    exact Subtype.ext he
   · intro _
     exact Finset.mem_univ e
 
@@ -1883,8 +1883,14 @@ private theorem single_mode_energy_weight (D : LatticeData) (i : Four → Fin D.
     rw [channel_single_unpaired]
     simp [channel_rest_distinct c]
   unfold modeEnergyWeight
-  change (if modeCompatible n M ∧ _ then _ else 0) = _
-  simp only [compatible_channel_single n h c, hd, hw, hp, hup, Nat.add_zero]
+  change (if modeCompatible n M ∧ n 0 = (chargeEnergy D β).toNat + t +
+      creationDelay n M + windingEnergy n M (fun _ => a) then
+    (Nat.card (IntegerFiber D t) : ℂ) *
+      (∏ b ∈ M.unpaired, (bilinear D (unitCharge D (i b)) β : ℂ)) *
+      (∏ e : edgeParam M, (modeFrequency n e : ℂ) *
+        (D.G (i e.1.1) (i e.1.2) : ℂ)) else 0) = _
+  rw [compatible_channel_single n h c, hd, hw, hp, hup]
+  simp only [Nat.add_zero]
   split_ifs <;> ring
 
 private theorem double_mode_energy_weight (D : LatticeData) (i : Four → Fin D.rank)
@@ -1922,9 +1928,10 @@ private theorem double_mode_energy_weight (D : LatticeData) (i : Four → Fin D.
       a * (n 1 - n 0) + b * (currentMode n (channelRest c).1).natAbs := by
     unfold windingEnergy
     rw [hu, Finset.sum_pair hne]
-    simp only [modeFrequency, edgePoint, channelEdge, ea, eb]
-    simp only [channel_edges_distinct c, (channel_edges_distinct c).symm,
-      ↓reduceIte]
+    change (currentMode n 0).natAbs * a +
+      (currentMode n (channelRest c).1).natAbs *
+        (if channelRest c = channelEdge c then a else b) = _
+    rw [if_neg (channel_edges_distinct c).symm]
     rw [leading_frequency n h, Int.natAbs_natCast]
     ring
   have hp : (∏ e : edgeParam M, (modeFrequency n e : ℂ) *
@@ -1933,14 +1940,21 @@ private theorem double_mode_energy_weight (D : LatticeData) (i : Four → Fin D.
         (((currentMode n (channelRest c).1).natAbs : ℂ) *
           (D.G (i (channelRest c).1) (i (channelRest c).2) : ℂ)) := by
     rw [hu, Finset.prod_pair hne]
-    simp only [modeFrequency, edgePoint, channelEdge]
+    change ((currentMode n 0).natAbs : ℂ) * (D.G (i 0) (i (channelMate c)) : ℂ) *
+      (((currentMode n (channelRest c).1).natAbs : ℂ) *
+        (D.G (i (channelRest c).1) (i (channelRest c).2) : ℂ)) = _
     rw [leading_frequency n h, Int.natAbs_natCast]
   have hup : (∏ d ∈ M.unpaired, (bilinear D (unitCharge D (i d)) β : ℂ)) = 1 := by
     rw [channel_double_unpaired]
     simp
   unfold modeEnergyWeight
-  change (if modeCompatible n M ∧ _ then _ else 0) = _
-  simp only [compatible_channel_double n h c, hd, hw, hp, hup, mul_one]
+  change (if modeCompatible n M ∧ n 0 = (chargeEnergy D β).toNat + t +
+      creationDelay n M + windingEnergy n M (fun e => if e.1 = channelEdge c then a else b) then
+    (Nat.card (IntegerFiber D t) : ℂ) *
+      (∏ d ∈ M.unpaired, (bilinear D (unitCharge D (i d)) β : ℂ)) *
+      (∏ e : edgeParam M, (modeFrequency n e : ℂ) *
+        (D.G (i e.1.1) (i e.1.2) : ℂ)) else 0) = _
+  rw [compatible_channel_double n h c, hd, hw, hp, hup, mul_one]
   have he : (n 0 = (chargeEnergy D β).toNat + t + (-currentMode n (channelRest c).1).toNat +
       (a * (n 1 - n 0) + b * (currentMode n (channelRest c).1).natAbs)) ↔
       n 0 = (chargeEnergy D β).toNat + t + (-currentMode n (channelRest c).1).toNat +
