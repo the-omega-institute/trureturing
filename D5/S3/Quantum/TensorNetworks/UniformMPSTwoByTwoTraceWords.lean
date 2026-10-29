@@ -7,10 +7,7 @@
    digest: Trace words and invariants of pairs of two-by-two complex matrices. -/
 
 import D5.S3.Quantum.TensorNetworks.UniformMPSExpectedDimensionRefutation
-import Mathlib.Algebra.MvPolynomial.Funext
-import Mathlib.Analysis.Complex.Polynomial.Basic
 import D5.S0.Observation.MatrixTracePowerSum
-import Mathlib.Tactic.Module
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
