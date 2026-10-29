@@ -22,7 +22,7 @@ For l>=2, beta>0 and 0<eta<=1/2, the strict scalar remainder is log(1+beta/l)-(c
 
 For the rival put Y=log(n), l=log(Y), beta=log(X)-log(Y), E=F(n)-gamma and delta=W(m)-W(n). The rival bounds delta by a*(1-exp(-beta))/L<a*beta/L. The scalar remainder and E<=c/l then make delta+E*(1-(Y/X)^eta)-log(L/l) strictly negative, even when E is negative. The exact literal height cancellation gives H(eta,m)<H(eta,n), contradicting leastness. Lowering lambda to lambda0 preserves strictness because log(n)<X.
 
-For every occupied prime p use the actual proper positive quotient m/p. The public single-layer objective identity and exact factorization arithmetic give lambda0<goldenLayerMarginal(p,v_p(m)). The existing strict_layer_iff places this exponent, and hence every smaller occupied layer, in the same canonical strictInteger(lambda0). Coordinatewise factorization comparison proves divisibility. The reciprocal-power marginal bound gives the literal strict cutoff. Positive-price records also give strict abundancy records; W(m)>log(30) permits the existing 5040 theorem to apply.
+The positive lambda0 record satisfies the hypotheses of ActualPriceRecordPrimeStructure.price_record_divides_strictInteger, so m divides the canonical strictInteger(lambda0). The existing factorization comparison places every occupied layer of m in this strict inventory. Applying strict_layer_iff gives lambda0<goldenLayerMarginal(p,j). The reciprocal-power marginal bound gives the literal strict cutoff. Positive-price records also give strict abundancy records; W(m)>log(30) permits the existing 5040 theorem to apply.
 
 This combines the repository's arithmetic and analytic results with a quantitative scalar estimate; no literature priority is claimed. No crossing existence, height unboundedness, signed upper bound, Robin inequality or RH follows here. The conclusion compares predecessors only. It supplies neither global optimality of m, conditions on absent layers nor equality with the strict inventory. The full RH goal and its signed-upper and unboundedness gaps remain open.
 
@@ -30,4 +30,4 @@ This combines the repository's arithmetic and analytic results with a quantitati
 
 - Truth anchor: `D5/S3/Arith/Robin/ActualLeastCrossingPriceRecord.uniform_actual_least_crossing_price_record`
 - Dependency: [D5/S3/Arith/Robin/ActualLeastCrossing5040](ActualLeastCrossing5040.md)
-- Dependency: [D5/S3/Arith/Robin/ActualTwoPriceDefect](ActualTwoPriceDefect.md)
+- Dependency: [D5/S3/Arith/Robin/ActualPriceRecordPrimeStructure](ActualPriceRecordPrimeStructure.md)
