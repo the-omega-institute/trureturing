@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.Laplace.NonnegativeContinuation
 import Reg.Support.DependentFamily
 
+/-! Source-bound observation of the value of the Laplace extension. -/
+
 open _root_.D5.S3.Analytic.Laplace.NonnegativeContinuation
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit MeasureTheory ProbabilityTheory Filter Set
@@ -47,7 +49,7 @@ private theorem rejected_fails : ¬ arena.{u}.Law rejected := by
   have he := h (Ω := ULift.{u} ℝ) (μ := 0) (X := fun _ => 0)
     (a := 0) (R := 1) (t := 1/2) (H := fun _ => 0)
     (by simp) (by simp [integrableExpSet])
-    differentiable_const.differentiableOn (by simp [complexMGF]) (by norm_num) (by norm_num)
+    (differentiable_const (0 : ℂ)).differentiableOn (by simp [complexMGF]) (by norm_num) (by norm_num)
   simpa [rejected, realize] using he.2
 
 def registration : Registration arena.{u} (type_of% (@integrable_exp_of_laplace_extension.{u})) where
@@ -55,6 +57,7 @@ def registration : Registration arena.{u} (type_of% (@integrable_exp_of_laplace_
   bridge := Iff.rfl
   variation := ⟨@integrable_exp_of_laplace_extension.{u}, rejected, rejected_fails⟩
   sensitivity := by
+    dsimp only [Sensitivity, arena]
     constructor
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_fails⟩
@@ -63,6 +66,7 @@ def registration : Registration arena.{u} (type_of% (@integrable_exp_of_laplace_
     · intro e
       exact nomatch e
   dependence := by
+    change ObservationalDependence signature actual
     intro i
     exact ⟨id, 0, 1, zero_ne_one⟩
 
@@ -104,4 +108,5 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+end
 end Reg.D5.S3.Analytic.Laplace.NonnegativeContinuation

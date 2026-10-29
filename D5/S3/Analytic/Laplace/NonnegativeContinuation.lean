@@ -2,11 +2,9 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/Laplace/NonnegativeContinuation
    mirror-E: none(waiver:analytic-proof-only)
-   anchors: [mathlib/module/Mathlib.Probability.Moments.ComplexMGF,
-     mathlib/module/Mathlib.Analysis.Complex.TaylorSeries]
+   anchors: [mathlib/module/Mathlib.Probability.Moments.ComplexMGF]
    utility: none
-   digest: Holomorphic extension of a nonnegative Laplace germ
-     forces new exponential integrability. -/
+   digest: Nonnegative Laplace germs extend their exponential integrability. -/
 
 import Mathlib.Probability.Moments.ComplexMGF
 import Mathlib.Analysis.Complex.TaylorSeries
