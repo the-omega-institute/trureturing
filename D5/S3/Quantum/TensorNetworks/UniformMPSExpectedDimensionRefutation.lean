@@ -6,10 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/TensorNetworks/UniformMPSExpectedDimensionRefutation.claim; result=D5/S3/Quantum/TensorNetworks/UniformMPSExpectedDimensionRefutation.result; claim=D5/S3/Quantum/TensorNetworks/UniformMPSExpectedDimensionRefutation.claim
    digest: Two-site uniform matrix product states can miss the expected dimension. -/
 
-import Mathlib.Basic.Complex.Basic
-import Mathlib.RingTheory.Nullstellensatz
-import Mathlib.RingTheory.KrullDimension.Polynomial
-import Mathlib.RingTheory.KrullDimension.Field
+import D5.S3.Arith.Lattices.Klartag.Walk.ChainWiring
 
 /-! The two-site trace Gram determinant gives a strict expected-dimension defect. -/
 
@@ -19,6 +16,9 @@ set_option linter.style.longLine false
 namespace D5.S3.Quantum.TensorNetworks.UniformMPSExpectedDimensionRefutation
 
 open scoped BigOperators Matrix nonZeroDivisors
+
+open D5.S3.Arith.Lattices.Klartag.Walk.Increments
+open D5.S3.Arith.Lattices.Klartag.Walk.ChainWiring (card_UT)
 
 noncomputable section
 
@@ -35,61 +35,39 @@ def uMPS (b d n : ℕ) : Set ((Fin n → Fin d) → ℂ) :=
 def varietyDim {σ : Type*} (s : Set (σ → ℂ)) : WithBot ℕ∞ :=
   ringKrullDim (MvPolynomial σ ℂ ⧸ MvPolynomial.vanishingIdeal ℂ s)
 
-/-- Tensors invariant under cyclic rotation of their word positions. -/
-def Cyc (n d : ℕ) : Submodule ℂ ((Fin n → Fin d) → ℂ) where
-  carrier := {t | ∀ i, t (i ∘ finRotate n) = t i}
-  zero_mem' := by intro i; rfl
-  add_mem' := by
-    intro t u ht hu i
-    exact congrArg₂ (· + ·) (ht i) (hu i)
-  smul_mem' := by
-    intro c t ht i
-    exact congrArg (c * ·) (ht i)
-
 /-- Czapliński–Michałek–Seynnaeve Conjecture 2.14: every uMPS has expected dimension. -/
 def claim : Prop :=
   ∀ b d n : ℕ, 0 < b → 0 < d → 0 < n →
     varietyDim (uMPS b d n) =
-      ((min ((d - 1) * b ^ 2 + 1) (Module.finrank ℂ (Cyc n d)) : ℕ) : WithBot ℕ∞)
+      ((min ((d - 1) * b ^ 2 + 1)
+        (Module.finrank ℂ ((LinearMap.funLeft ℂ ℂ
+          (fun i : Fin n → Fin d => i ∘ finRotate n)).fixedSubmodule)) : ℕ) : WithBot ℕ∞)
 
-private abbrev UpperPair := {p : Fin 5 × Fin 5 // p.1 ≤ p.2}
-
-private def orderedPair (i j : Fin 5) : UpperPair :=
-  ⟨(min i j, max i j), min_le_max⟩
-
-private lemma upperPair_card : Fintype.card UpperPair = 15 := by
-  decide
-
-private lemma orderedPair_comm (i j : Fin 5) : orderedPair i j = orderedPair j i := by
-  apply Subtype.ext
-  exact Prod.ext (min_comm i j) (max_comm i j)
-
-private lemma orderedPair_of_le (i j : Fin 5) (h : i ≤ j) :
-    orderedPair i j = ⟨(i, j), h⟩ := by
-  apply Subtype.ext
-  exact Prod.ext (min_eq_left h) (max_eq_right h)
-
-private lemma cyclic_finrank_lower : 15 ≤ Module.finrank ℂ (Cyc 2 5) := by
+private lemma cyclic_finrank_lower : 15 ≤ Module.finrank ℂ
+    ((LinearMap.funLeft ℂ ℂ (fun i : Fin 2 → Fin 5 => i ∘ finRotate 2)).fixedSubmodule) := by
   classical
-  let f : (UpperPair → ℂ) →ₗ[ℂ] Cyc 2 5 :=
-    { toFun := fun v => ⟨fun i => v (orderedPair (i 0) (i 1)), by
-        intro i
-        change v (orderedPair (i (finRotate 2 0)) (i (finRotate 2 1))) =
-          v (orderedPair (i 0) (i 1))
-        have h0 : finRotate 2 0 = 1 := rfl
-        have h1 : finRotate 2 1 = 0 := rfl
-        rw [h0, h1, orderedPair_comm]⟩
+  let f : (UT 5 → ℂ) →ₗ[ℂ]
+      (LinearMap.funLeft ℂ ℂ (fun i : Fin 2 → Fin 5 => i ∘ finRotate 2)).fixedSubmodule :=
+    { toFun := fun v => ⟨fun i => v (up (i 0) (i 1)), by
+        funext i
+        change v (up (i (finRotate 2 0)) (i (finRotate 2 1))) =
+          v (up (i 0) (i 1))
+        have h0 : finRotate 2 0 = 1 := finRotate_apply_zero
+        have h1 : finRotate 2 1 = 0 := finRotate_last
+        rw [h0, h1, up_comm]⟩
       map_add' := by intros; rfl
       map_smul' := by intros; rfl }
   have hf : Function.Injective f := by
     intro v w h
     funext p
-    have hp := congrArg (fun t : Cyc 2 5 => t.1 ![p.1.1, p.1.2]) h
-    change v (orderedPair p.1.1 p.1.2) = w (orderedPair p.1.1 p.1.2) at hp
-    rw [orderedPair_of_le _ _ p.2] at hp
+    have hp := congrArg (fun t :
+      (LinearMap.funLeft ℂ ℂ (fun i : Fin 2 → Fin 5 => i ∘ finRotate 2)).fixedSubmodule =>
+        t.1 ![p.1.1, p.1.2]) h
+    change v (up p.1.1 p.1.2) = w (up p.1.1 p.1.2) at hp
+    rw [up_coe] at hp
     exact hp
   have h := LinearMap.finrank_le_finrank_of_injective hf
-  rwa [Module.finrank_fintype_fun_eq_card, upperPair_card] at h
+  simpa [Module.finrank_fintype_fun_eq_card, card_UT] using h
 
 private lemma traceWord_two (m : Fin 5 → Matrix (Fin 2) (Fin 2) ℂ)
     (i : Fin 2 → Fin 5) : traceWord 2 5 2 m i = (m (i 0) * m (i 1)).trace := by
@@ -131,21 +109,21 @@ private lemma coordinate_symmetry (i j : Fin 5) :
     Matrix.cons_val_one]
   exact sub_eq_zero.mpr (Matrix.trace_mul_comm (m i) (m j))
 
-private def coordinateMap : MvPolynomial UpperPair ℂ →ₐ[ℂ]
+private def coordinateMap : MvPolynomial (UT 5) ℂ →ₐ[ℂ]
     MvPolynomial (Fin 2 → Fin 5) ℂ ⧸ MvPolynomial.vanishingIdeal ℂ (uMPS 2 5 2) :=
   MvPolynomial.aeval fun p =>
     Ideal.Quotient.mkₐ ℂ (MvPolynomial.vanishingIdeal ℂ (uMPS 2 5 2))
       (MvPolynomial.X ![p.1.1, p.1.2])
 
 private lemma coordinateMap_variable (i j : Fin 5) :
-    coordinateMap (MvPolynomial.X (orderedPair i j)) =
+    coordinateMap (MvPolynomial.X (up i j)) =
       Ideal.Quotient.mkₐ ℂ (MvPolynomial.vanishingIdeal ℂ (uMPS 2 5 2))
         (MvPolynomial.X ![i, j]) := by
-  change MvPolynomial.aeval _ (MvPolynomial.X (orderedPair i j)) = _
+  change MvPolynomial.aeval _ (MvPolynomial.X (up i j)) = _
   rw [MvPolynomial.aeval_X]
   by_cases h : i ≤ j
-  · rw [orderedPair_of_le i j h]
-  · rw [orderedPair_comm, orderedPair_of_le j i (le_of_not_ge h)]
+  · rw [up_of_le h]
+  · rw [up_comm, up_of_le (le_of_not_ge h)]
     exact (Ideal.Quotient.mk_eq_mk_iff_sub_mem _ _).mpr (coordinate_symmetry j i)
 
 private lemma coordinateMap_surjective : Function.Surjective coordinateMap := by
@@ -163,36 +141,32 @@ private lemma coordinateMap_surjective : Function.Surjective coordinateMap := by
       rw [map_add, ha, hb, map_add]
   | mul_X p i hp =>
       obtain ⟨a, ha⟩ := hp
-      refine ⟨a * MvPolynomial.X (orderedPair (i 0) (i 1)), ?_⟩
+      refine ⟨a * MvPolynomial.X (up (i 0) (i 1)), ?_⟩
       rw [map_mul, ha, coordinateMap_variable, map_mul]
       rw [Ideal.Quotient.mkₐ_eq_mk]
-      have hi : ![i 0, i 1] = i := by
-        funext k
-        fin_cases k <;> rfl
-      rw [hi]
+      rw [show ![i 0, i 1] = i from FinVec.etaExpand_eq i]
 
-private def symmetricDet : MvPolynomial UpperPair ℂ :=
-  Matrix.det (Matrix.of fun i j => MvPolynomial.X (orderedPair i j))
+private def symmetricDet : MvPolynomial (UT 5) ℂ :=
+  Matrix.det (Matrix.of fun i j => MvPolynomial.X (up i j))
 
 private lemma symmetricDet_ne_zero : symmetricDet ≠ 0 := by
   classical
-  let e : MvPolynomial UpperPair ℂ →ₐ[ℂ] ℂ :=
+  let e : MvPolynomial (UT 5) ℂ →ₐ[ℂ] ℂ :=
     MvPolynomial.aeval fun p => if p.1.1 = p.1.2 then 1 else 0
   have he : e symmetricDet = 1 := by
-    change e (Matrix.det (Matrix.of fun i j => MvPolynomial.X (orderedPair i j))) = 1
+    change e (Matrix.det (Matrix.of fun i j => MvPolynomial.X (up i j))) = 1
     rw [e.map_det]
-    have hm : Matrix.of (fun i j => e (MvPolynomial.X (orderedPair i j))) =
+    have hm : Matrix.of (fun i j => e (MvPolynomial.X (up i j))) =
         (1 : Matrix (Fin 5) (Fin 5) ℂ) := by
       ext i j
       change MvPolynomial.aeval
-        (fun p : UpperPair => if p.1.1 = p.1.2 then (1 : ℂ) else 0)
-        (MvPolynomial.X (orderedPair i j)) = _
+        (fun p : UT 5 => if p.1.1 = p.1.2 then (1 : ℂ) else 0)
+        (MvPolynomial.X (up i j)) = _
       rw [MvPolynomial.aeval_X]
       change (if min i j = max i j then (1 : ℂ) else 0) = _
       rw [Matrix.one_apply]
-      have hc : ∀ a b : Fin 5, min a b = max a b ↔ a = b := by decide
-      simp only [hc]
-    change Matrix.det (Matrix.of fun i j => e (MvPolynomial.X (orderedPair i j))) = 1
+      simp only [inf_eq_sup]
+    change Matrix.det (Matrix.of fun i j => e (MvPolynomial.X (up i j))) = 1
     rw [hm, Matrix.det_one]
   intro h
   rw [h, map_zero] at he
@@ -224,9 +198,9 @@ private lemma actual_dimension_upper : varietyDim (uMPS 2 5 2) ≤ 14 := by
   have hd := ringKrullDim_succ_le_of_surjective coordinateMap.toRingHom
     coordinateMap_surjective (mem_nonZeroDivisors_iff_ne_zero.mpr symmetricDet_ne_zero)
     coordinateMap_det_zero
-  have hp : ringKrullDim (MvPolynomial UpperPair ℂ) = 15 := by
+  have hp : ringKrullDim (MvPolynomial (UT 5) ℂ) = 15 := by
     rw [MvPolynomial.ringKrullDim_of_isNoetherianRing_of_finite,
-      Nat.card_eq_fintype_card, upperPair_card, ringKrullDim_eq_zero_of_field]
+      Nat.card_eq_fintype_card, card_UT, ringKrullDim_eq_zero_of_field]
     norm_num
   rw [hp] at hd
   change ringKrullDim
@@ -240,10 +214,14 @@ while the conjectured dimension is at least fifteen. -/
 theorem result : ¬ claim := by
   intro h
   have heq := h 2 5 2 (by decide) (by decide) (by decide)
-  have hlo : 15 ≤ min ((5 - 1) * 2 ^ 2 + 1) (Module.finrank ℂ (Cyc 2 5)) :=
+  have hlo : 15 ≤ min ((5 - 1) * 2 ^ 2 + 1)
+      (Module.finrank ℂ ((LinearMap.funLeft ℂ ℂ
+        (fun i : Fin 2 → Fin 5 => i ∘ finRotate 2)).fixedSubmodule)) :=
     le_min (by decide) cyclic_finrank_lower
   have hcast : (15 : WithBot ℕ∞) ≤
-      ((min ((5 - 1) * 2 ^ 2 + 1) (Module.finrank ℂ (Cyc 2 5)) : ℕ) : WithBot ℕ∞) := by
+      ((min ((5 - 1) * 2 ^ 2 + 1)
+        (Module.finrank ℂ ((LinearMap.funLeft ℂ ℂ
+          (fun i : Fin 2 → Fin 5 => i ∘ finRotate 2)).fixedSubmodule)) : ℕ) : WithBot ℕ∞) := by
     exact_mod_cast hlo
   have hbad : (15 : WithBot ℕ∞) ≤ 14 := by
     rw [← heq] at hcast
