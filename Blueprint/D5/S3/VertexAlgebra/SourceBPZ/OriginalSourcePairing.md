@@ -1,27 +1,146 @@
-# Original integer-source bilinear pairing
+# Original Integer-Source Bilinear Pairing
 
 ## Abstract
 
-This module constructs a complex bilinear BPZ-source form on the literal original lattice carrier.  For each oscillator frequency `k`, the scalar `integerScale k = (k+1)/(k+1/2)` retunes the existing signed polynomial Wick supplier to the integer current contraction.  The retuning is an algebra equivalence on the same `MvPolynomial (Fin D.rank × Nat) Complex` ring; no carrier replacement or Hermitian Riesz form is used.
+The literal original integer-source complex-bilinear pairing obtained by frequency retuning of the existing signed polynomial Wick supplier.
 
-The finite charge form is
-`sourcePairing D v w = sum a, integerWick D (v a) (w (-a))`, with the existing finite-support charge sum.  The construction includes arbitrary finite rank, rank zero, indefinite integral symmetric even lattices, and uses `IsUnit D.G.det` only for both-sided nondegeneracy.
+The oscillator carrier remains exactly MvPolynomial (Fin D.rank x Nat) Complex and the charge carrier remains the finite-support Finsupp carrier. integerScale k=(k+1)/(k+1/2) is nonzero and defines an algebra equivalence retune on the same polynomial ring. integerWick is the existing signed Wick form applied to retune in its first slot.
 
-## Proved declarations
+The retained bridge proves integer creation and lowering transposes, symmetry, vacuum normalization, charge isolation and both-sided nondegeneracy. The determinant-unit premise is used only by the inherited Wick nondegeneracy theorem. Rank zero and indefinite integral symmetric even Gram data remain in scope.
 
-- `integerScale`, `integerScale_ne_zero`, and `integerScale_mul_frequency` establish the exact frequency retuning.
-- `retuneMatrix`, `retuneInverseMatrix`, `retune`, `retune_X`, `retune_pderiv`, and `retune_annihilate` establish the two-sided substitution and its derivative bridge.
-- `integerWick` reuses `SignedOscillatorWick.wick` on the same oscillator ring.
-- `integerWick_creation` and `integerWick_lowering` prove the integer creation/lowering transpose with contraction `-(k+1)G`.
-- `integerWick_symmetric` and `sourcePairing_symmetric` prove complex bilinear symmetry.
-- `sourcePairing_vacuum` proves the literal vacuum normalization `B(vacuum,vacuum)=1`.
-- `integerWick_nondegenerate` and `sourcePairing_nondegenerate` prove both-sided nondegeneracy under `IsUnit D.G.det`.
-- `sourcePairing_single` and `sourcePairing_single_single` expose charge isolation and the exact opposite-charge coefficient formula.
+SourcePairingLaws proves reflection isometry, full signed energy-grade orthogonality and all integer neutral-current transposes for this form. All-source wordField BPZ induction, charged-generator transpose, fixed-grade perfection, mixed Jacobi, crossing, fusion, string consistency and AdS/CFT require further results.
 
-The construction consumes the existing signed Wick, substitution, annihilation and finite-support APIs.  It does not claim the all-source `wordField` BPZ induction, charged-generator transpose, theta isometry, energy orthogonality, mixed Jacobi/translation, crossing, fusion, string consistency, or AdS/CFT completion.  Those remain separate obligations.
+**Definition 1.1 (Integer frequency retuning).**
+
+Lean statement: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.integerScale`
+
+*Formalization.* `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.integerScale` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The scalar sends the supplier frequency k+1/2 to the required integer contraction k+1.
+
+**Definition 1.2 (Same-ring oscillator equivalence).**
+
+Lean statement: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.retune`
+
+*Formalization.* `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.retune` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The diagonal substitution equivalence fixes scalars and sends X(i,k) to integerScale k times X(i,k), with an actual inverse.
+
+**Definition 1.3 (Retuned signed Wick form).**
+
+Lean statement: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.integerWick`
+
+*Formalization.* `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.integerWick` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The complex-bilinear form is the existing SignedOscillatorWick.wick after retuning the first oscillator slot.
+
+**Theorem 1.4 (Integer creation transpose).**
+
+Lean statement: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.integerWick_creation`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.integerWick_creation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Multiplication by X(i,k) in the first slot transposes to -(k+1) times the actual Gram-weighted annihilation in the second slot.
+
+**Theorem 1.5 (Integer lowering transpose).**
+
+Lean statement: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.integerWick_lowering`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.integerWick_lowering` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The reverse identity is proved using the actual inverse retuning and the supplier lowering theorem.
+
+**Theorem 1.6 (Oscillator symmetry).**
+
+Lean statement: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.integerWick_symmetric`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.integerWick_symmetric` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The retuned oscillator form is symmetric by induction from its creation and lowering bridges.
+
+**Definition 1.7 (Finite opposite-charge lift).**
+
+Lean statement: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.sourcePairing`
+
+*Formalization.* `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.sourcePairing` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The form sums integerWick over the existing finite charge support and pairs charge a with charge -a.
+
+**Theorem 1.8 (Vacuum normalization).**
+
+Lean statement: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.sourcePairing_vacuum`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.sourcePairing_vacuum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The literal vacuum has pairing one, including the empty-rank case.
+
+**Theorem 1.9 (Carrier symmetry).**
+
+Lean statement: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.sourcePairing_symmetric`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.sourcePairing_symmetric` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Finite-support induction lifts oscillator symmetry to the literal Carrier.
+
+**Theorem 1.10 (Two-sided carrier nondegeneracy).**
+
+Lean statement: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.sourcePairing_nondegenerate`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.sourcePairing_nondegenerate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The opposite-charge single-sector witnesses and inherited Wick nondegeneracy prove both kernels vanish under IsUnit D.G.det.
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing`
-- Supplier: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick`
-- Substitution supplier: `D5/S3/VertexAlgebra/OriginalCurrentMetric`
+- Truth anchor: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.integerScale`
+- Truth anchor: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.integerWick`
+- Truth anchor: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.integerWick_creation`
+- Truth anchor: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.integerWick_lowering`
+- Truth anchor: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.integerWick_symmetric`
+- Truth anchor: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.retune`
+- Truth anchor: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.sourcePairing`
+- Truth anchor: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.sourcePairing_nondegenerate`
+- Truth anchor: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.sourcePairing_symmetric`
+- Truth anchor: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.sourcePairing_vacuum`
+- Dependency: [D5/S3/VertexAlgebra/LatticeInvolution](../LatticeInvolution.md)
+- Dependency: [D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick](../TwistedGround/SignedOscillatorWick.md)
