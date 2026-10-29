@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryMarkovSemigroup
    mirror-E: none(waiver:unbounded-symbolic-proof)
-   anchors: [mathlib/module/Mathlib.MeasureTheory.Function.LpSpace.Basic]
+   anchors: [mathlib/module/Mathlib.MeasureTheory.Function.LpSpace.Indicator]
    utility: none
    digest: Nonlinear contractions of the actual free-root tree extensions. -/
 
