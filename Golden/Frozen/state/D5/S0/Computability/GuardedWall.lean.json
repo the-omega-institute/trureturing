@@ -1,1 +1,0 @@
-{"statement_id":"sha256:1e9197e87c44f42d1aaf17d154b8f780818361412053cb59c33b0a83be416c19","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),13:Computability),11:GuardedWall),19:wall_never_positive)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),13:Computability),11:GuardedWall),28:boolean_guarded_wall_witness)","kind":"theorem"}]}

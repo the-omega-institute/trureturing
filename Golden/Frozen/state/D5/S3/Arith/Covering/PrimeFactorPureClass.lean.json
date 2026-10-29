@@ -1,1 +1,0 @@
-{"statement_id":"sha256:c58f024c8ba96323ffb0ffd50bab4b60358c1ca87625d9a458393fef03b2049b","declarations":[{"declaration_name_key":"ns(ns(ns(n0,6:Erdos7),25:OddDistinctCoveringSystem),23:exists_pure_prime_class)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(n0,6:Erdos7),25:OddDistinctCoveringSystem),28:prime_dvd_modulus_is_present)","kind":"theorem"}]}

@@ -1,1 +1,0 @@
-{"statement_id":"sha256:44e37df5662e3353b58d4e4fb6953df58c7a649c7713bfa8e9255ac7691e7d64","declarations":[{"declaration_name_key":"ns(ns(ns(n0,11:PowerSeries),10:eval\u2082Hom),10:congr_simp)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),10:Nonnesting),30:NonnestingOneThreeTwoTwoKernel),20:catalytic_recurrence)","kind":"theorem"}]}

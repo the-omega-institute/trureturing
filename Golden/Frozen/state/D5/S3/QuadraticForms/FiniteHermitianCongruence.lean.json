@@ -1,1 +1,0 @@
-{"statement_id":"sha256:ba1505027d0451f9d7ef60dfc0a43226561ff7f3bea39810ccf1441c0c9ebb5d","declarations":[{"declaration_name_key":"ns(ns(ns(ns(n0,6:Module),5:Basis),9:mkFinCons),10:congr_simp)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:QuadraticForms),25:FiniteHermitianCongruence),27:finite_hermitian_congruence)","kind":"theorem"}]}

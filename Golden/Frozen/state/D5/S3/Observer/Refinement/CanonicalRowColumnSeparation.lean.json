@@ -1,1 +1,0 @@
-{"statement_id":"sha256:c6f8ea5ea5b019034e8eb5039999f9966e8f1f4d1b2df24cc2f89941aa95eb50","declarations":[{"declaration_name_key":"ns(ns(ns(n0,8:Quotient),7:lift\u2082),10:congr_simp)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Observer),10:Refinement),28:CanonicalRowColumnSeparation),31:canonical_row_column_separation)","kind":"theorem"}]}

@@ -1,1 +1,0 @@
-{"statement_id":"sha256:be53e08571000e7aa033ec93d1a8ecd3171ffbb9a7c4c906392f5c0a2034df0e","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),11:FixedPoints),12:Reachability),29:RelationalReachStageExpansion),41:finite_step_expansion_with_initial_stages)","kind":"theorem"}]}

@@ -1,1 +1,0 @@
-{"statement_id":"sha256:a069f191bfaa42f16068f8d0517de951fcb738b8e19c4048273ee37f06fbef9b","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),14:ObserverMemory),10:Refinement),31:PredictionCompletionIdempotence),32:prediction_completion_idempotent)","kind":"theorem"}]}

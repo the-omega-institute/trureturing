@@ -1,1 +1,0 @@
-{"statement_id":"sha256:92a7988dadc0a3b8e723075585142821237a04e2b403ae63692e8ee713e845f0","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),10:Recurrence),20:NormOneTraceAddition),16:trace_recurrence)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),10:Recurrence),20:NormOneTraceAddition),17:trace_add_two_mul)","kind":"theorem"}]}

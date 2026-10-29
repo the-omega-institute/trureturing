@@ -1,1 +1,0 @@
-{"statement_id":"sha256:31258bdab6a30bdfc0412f271f134d7ce5252b17cddf8a77b528727ad973f221","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),8:Powerful),14:PowerfulNumber),21:golomb_representation)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),8:Powerful),14:PowerfulNumber),8:Powerful)","kind":"def"}]}

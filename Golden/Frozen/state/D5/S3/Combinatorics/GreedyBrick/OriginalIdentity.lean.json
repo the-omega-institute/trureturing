@@ -1,1 +1,0 @@
-{"statement_id":"sha256:9ee3e645086154c387a7047d0345921c2aef4431aa941ce7b66aa7575b5128f6","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),11:GreedyBrick),16:OriginalIdentity),1:a)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:Combinatorics),11:GreedyBrick),16:OriginalIdentity),6:result)","kind":"theorem"}]}

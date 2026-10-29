@@ -1,1 +1,0 @@
-{"statement_id":"sha256:a8e414b2d502e6e157752e9e4883a2cd4def392097c9d5ffc77525ad127b3a11","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S0),7:History),10:Accounting),13:CumulativeTax),35:terminal_balance_eq_initial_add_tax)","kind":"theorem"}]}

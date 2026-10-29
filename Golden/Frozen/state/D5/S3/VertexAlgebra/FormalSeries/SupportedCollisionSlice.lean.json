@@ -1,1 +1,0 @@
-{"statement_id":"sha256:f144f85ef61c8c45eea555593a0ac85c9bf97f15b173ddb0368e456611ad7e84","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:VertexAlgebra),23:SupportedCollisionSlice),17:mem_modeFiber_iff)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),13:VertexAlgebra),23:SupportedCollisionSlice),9:modeFiber)","kind":"def"}]}

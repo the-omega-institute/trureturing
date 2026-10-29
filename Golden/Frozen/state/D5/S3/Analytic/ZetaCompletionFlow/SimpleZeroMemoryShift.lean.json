@@ -1,1 +1,0 @@
-{"statement_id":"sha256:ef03f01bb90cfd487626eda29fe7c237a531876d1ff4644d12d9a918d508792d","declarations":[{"declaration_name_key":"ns(ns(ns(n0,10:ContDiffAt),16:implicitFunction),10:congr_simp)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),8:Analytic),18:ZetaCompletionFlow),21:SimpleZeroMemoryShift),24:simple_zero_memory_shift)","kind":"theorem"}]}

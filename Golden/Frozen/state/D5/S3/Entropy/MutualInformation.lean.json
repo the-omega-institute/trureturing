@@ -1,1 +1,0 @@
-{"statement_id":"sha256:e4f40b94b8aa512f99b49f609881dc0261233103899f9e11e86c073cd1929ae8","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Entropy),17:MutualInformation),17:mutualInformation)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Entropy),17:MutualInformation),25:mutual_information_nonneg)","kind":"theorem"}]}

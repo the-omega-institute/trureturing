@@ -1,9 +1,0 @@
-**Proof.** For every integer $K\ge1$, choose a prime $r\ge R(S,K)$ and apply Theorem 35.2 to the fixed pattern $b$. Primes are unbounded, so such an index exists. On this fibre,
-
-$$
-\omega(n)=\rho_S(n)+\sum_{p\in S}b_p.
-\tag{35.11}
-$$
-
-The second term is fixed and finite, which proves both suprema. A finite $U(b)$ would bound the corresponding unbounded fibre, a contradiction. Consequently no rule using only these bits can soundly certify $\omega(n)\le B$ at any pattern for finite $B$. Positive bits can give lower bounds; the assertion concerns upper certificates.
-

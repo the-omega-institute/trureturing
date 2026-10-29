@@ -1,1 +1,0 @@
-{"statement_id":"sha256:09b581a1a19770d3e4885668e9e3841a7bc49136cf49c44886dfac2026d0a921","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),8:Dynamics),9:Shadowing),18:powersTwoDistances)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),8:Dynamics),9:Shadowing),34:powers_two_return_distance_example)","kind":"theorem"}]}

@@ -1,1 +1,0 @@
-{"statement_id":"sha256:8abf0d549d6fa6c604ce97f1ffa4949f8466f10bdb7d6906e7cf9db278e2f109","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),17:RobinExponentSwap),17:reciprocalGeomSum)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),17:RobinExponentSwap),31:reciprocal_geom_sum_swap_strict)","kind":"theorem"}]}

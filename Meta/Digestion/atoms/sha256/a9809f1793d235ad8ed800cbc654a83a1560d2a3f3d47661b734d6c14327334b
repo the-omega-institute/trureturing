@@ -1,2 +1,0 @@
-**Definition 4.1 (complete records and boundary behavior).** A finite acquired record lists each actual command, its input and its complete reply, in order, including acknowledgements, Holds, Resets and stopping/output decisions. A common observer's accessible working memory is generated from this record, the common installed data and its common external inputs. The complete old boundary behavior at a field means the replies along every finite legal old command word. It is a semantic response profile; it is not an acquired response oracle or a retained journal.
-

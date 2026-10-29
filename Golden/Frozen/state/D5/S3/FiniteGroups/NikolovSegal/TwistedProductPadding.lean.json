@@ -1,1 +1,0 @@
-{"statement_id":"sha256:942ef7706e85486886a35775568cd092eb2da6fc182a5d099390dbba7c4b5cf8","declarations":[{"declaration_name_key":"ns(ns(ns(n0,12:NikolovSegal),19:SmallTwistedProduct),18:twisted_input_mono)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(n0,12:NikolovSegal),19:SmallTwistedProduct),18:twisted_input_succ)","kind":"theorem"}]}

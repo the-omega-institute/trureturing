@@ -1,1 +1,0 @@
-{"statement_id":"sha256:67ca9d8a6c314dd526f8203611e52957668a4d0dca3bae6da8f7fe9229a5ec12","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),9:GNSMatrix),19:gns_matrix_identity)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Quantum),9:GNSMatrix),26:frobenius_norm_sq_eq_trace)","kind":"theorem"}]}

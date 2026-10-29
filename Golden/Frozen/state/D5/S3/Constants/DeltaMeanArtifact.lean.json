@@ -1,1 +1,0 @@
-{"statement_id":"sha256:4593d8b505cdc122e6715d303cbc8e7be51d392a89b7fb38aa1f226fc19f5584","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),9:Constants),17:DeltaMeanArtifact),19:abs_delta_mean_zero)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),9:Constants),17:DeltaMeanArtifact),9:deltaMean)","kind":"def"}]}

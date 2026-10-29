@@ -1,1 +1,0 @@
-{"statement_id":"sha256:b349bf792014dcc8476737a0f7e56f2fb0194ee5c55c339fa1adb482976a7c48","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Entropy),13:EntropyNonneg),22:shannon_entropy_nonneg)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),7:Entropy),13:EntropyNonneg),26:conditional_entropy_nonneg)","kind":"theorem"}]}

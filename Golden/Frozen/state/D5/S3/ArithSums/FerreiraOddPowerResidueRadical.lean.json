@@ -1,1 +1,0 @@
-{"statement_id":"sha256:39c48213553c25c5d500d951554f40c8f3bd3a3da71405801fd16094eb2dc4c2","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),9:ArithSums),30:FerreiraOddPowerResidueRadical),1:a)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),9:ArithSums),30:FerreiraOddPowerResidueRadical),6:result)","kind":"theorem"}]}

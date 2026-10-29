@@ -1,8 +1,0 @@
-**Corollary 3.2 (actual finite-pulse meaning).** For a fixed member, every rational target field can be reached from zero using signed leaf Adds and four Ticks, with several Adds allowed between Ticks.
-
-**Proof.** By (CL.12), write the target as $\sum_{k=0}^4T^k Bu_k$ with rational vectors $u_k$. Immediately before the first Tick add $Bu_4$, after that Tick add $Bu_3$, and continue, adding $Bu_0$ after the fourth Tick. Linearity gives exactly the displayed sum. Each $Bu_k$ is realized by its $b$ legal scalar Adds. This is a fixed-law existence construction; finding these amplitudes requires the law or equivalent information. It is not an unknown-source acquisition supplied to the observer. $\square$
-
-The usual stacked-readout rank criterion is supplied by finite-dimensional linear systems theory. In the repository, [FiniteObservabilityEquivalence][FO] and its [owning Scribe][FOS] identify zero residual, full rank and positive Gram operator. The exact correspondence here is real state space $\mathbb R^V$, output space $\mathbb R^b$, update $T$, readout $H$, and horizon five, meaning exponents $0,\ldots,4$. The rational spanning calculation above verifies the family-specific premise. No new general rank criterion is asserted.
-
-There is a repeated eigenvalue: every leaf-difference vector has eigenvalue $1/2$, on a subspace of dimension $b-1$. For any chosen leaf $\ell_j$, a difference of two other leaves is orthogonal to every $T^k e_{\ell_j}$. Such two other leaves exist because $b\ge3$. Thus a single leaf is not a cyclic input. Separate access to all leaf coordinates is precisely what makes (CL.12) possible.
-

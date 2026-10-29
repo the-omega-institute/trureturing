@@ -1,1 +1,0 @@
-{"statement_id":"sha256:594ce1c7706739c390d7d361fb0a95a35274e823494b7e674fba7a0a2d3efeb9","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),9:Constants),22:MoranComplexDimensions),16:complexDimension)","kind":"def"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S3),9:Constants),22:MoranComplexDimensions),23:moran_complex_dimension)","kind":"theorem"}]}

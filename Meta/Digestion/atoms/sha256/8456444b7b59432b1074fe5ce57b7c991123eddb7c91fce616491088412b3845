@@ -1,6 +1,0 @@
-**推论 7.2（非恒定第五三目标与前一层消费者）。** An $L_3$ triple at either complementary parent whose specified fifth response is nonconstant must have a two-target child as in alternative 2 of Theorem 7.1. In particular, a triple entirely at drift $D_0$ can have $L_3$ there only if its specified fifth response is constant.
-
-At $H_J^-$ take fourth $J$, then fifth $M$; at $H_{MJ}^-$ take fourth $M$, then fifth $J$. Any known family at drift $D_0$ whose resulting entire histories through clock five each have at most two targets is recoverable by clock seven, with at most eight total readings.
-
-Proof. A nonconstant response on three targets has actual fibers of size at most two, so the losing child in Theorem 7.1 must use alternative 2. For the preceding-history assertion, the actual fourth read first selects $Y$; apply the whole-family policy of Theorem 7.1 at that parent. This produces a single strategy depending only on actual reads and the known family, for every possible $Y$ and fifth response. ∎
-

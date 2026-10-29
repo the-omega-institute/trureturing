@@ -1,9 +1,0 @@
-# 2026-09-06：真实素数作用的全尺度对数约化与偶化修正的定量保存
-
-Lean：`D5/S3/Weil/ZetaBridge/WeilMellinPrimeIntertwining.lean`。
-Scribe：`Blueprint/D5/S3/Weil/ZetaBridge/WeilMellinPrimeIntertwining.scribe.cs`。
-独立执行源：`research/weil_ground_mode/certify_prime3_mellin_parity.py`。
-精确回归：`research/weil_ground_mode/test_mellin_prime_intertwining.py`。
-
-本节不继续提高固定窗口的最低特征值精度，而是消除明确模型上的一个实际算术作用计算：带原始 Lambda(n)/sqrt(n) 系数的整个单向素数幂平移，可以精确化为对数 seed 的 Mellin 合成。随后把这一结果运输到实际偶化模型，保留其完整奇部分修正。主恒等式对任意窗口尺度成立，未使用未知最低模态、谱间隔或 RH。其算术核心是已有的经典除数恒等式，不作数学首创声明。
-

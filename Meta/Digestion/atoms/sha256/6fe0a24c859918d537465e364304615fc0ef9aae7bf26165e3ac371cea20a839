@@ -1,1 +1,0 @@
-| Bennett，*Logical Reversibility of Computation*（1973） | 可逆计算要求能够反演计算状态转移；本卷档案保留使部分输入事件仍可追索，是可比较的保存信息问题 | 留有旧事件不足以证明反演：§3 的 $X\boxtimes0_\varnothing$ 遗忘 $A_X$，不同旧选择产生相同输出。因此“留历史所以可逆”越界 | DOI [10.1147/rd.176.0525](https://doi.org/10.1147/rd.176.0525)。文献陈述 `literature-attested`；本卷失败见证与对照 `repo-derived`

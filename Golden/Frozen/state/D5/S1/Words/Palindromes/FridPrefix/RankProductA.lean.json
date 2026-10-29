@@ -1,1 +1,0 @@
-{"statement_id":"sha256:59a217fa5814ca78de2bccf87b2e9bce2a5e45f6efafc4b17ef547809e5a1902","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),10:FridPrefix),22:a_endpoint_score_bound)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S1),5:Words),10:FridPrefix),22:a_endpoint_score_bound),10:match_1_17)","kind":"def"}]}

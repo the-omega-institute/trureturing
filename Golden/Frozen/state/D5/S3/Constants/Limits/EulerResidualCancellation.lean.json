@@ -1,1 +1,0 @@
-{"statement_id":"sha256:e19d765b0db246341e45d9b54fa17beaeca4b379f3a642e1a2f41f76a84019ad","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),9:Constants),6:Limits),25:EulerResidualCancellation),40:harmonic_log_euler_residual_tendsto_zero)","kind":"theorem"}]}

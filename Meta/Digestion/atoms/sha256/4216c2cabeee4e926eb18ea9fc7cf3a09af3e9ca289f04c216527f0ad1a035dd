@@ -1,8 +1,0 @@
-进一步把 bulk 模式投影到边界，得到：
-
-* Poisson 脉冲；
-* inverse-inner factor；
-* Hankel 泄漏；
-* Bogoliubov 占据；
-* KL 信息代价。
-

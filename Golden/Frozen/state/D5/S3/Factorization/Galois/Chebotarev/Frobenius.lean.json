@@ -1,1 +1,0 @@
-{"statement_id":"sha256:80f31a66e27ffb9145d5681e1faf50733ee5d03a1dfe133a49a82a016f482605","declarations":[{"declaration_name_key":"ns(ns(n0,10:Chebotarev),12:UnramifiedIn)","kind":"def"},{"declaration_name_key":"ns(ns(n0,10:Chebotarev),14:frobeniusClass)","kind":"def"},{"declaration_name_key":"ns(ns(n0,10:Chebotarev),28:exists_prime_dvd_natCast_mem)","kind":"theorem"}]}

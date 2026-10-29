@@ -1,1 +1,0 @@
-{"statement_id":"sha256:2656ae5938a4b76754a6ec3716932bc32afcd1c06de888c32ca98da030de52ea","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),9:Rewriting),23:TranslationPrefixDomain),16:eval_eq_some_iff)","kind":"theorem"},{"declaration_name_key":"ns(ns(ns(ns(ns(n0,2:D5),2:S0),9:Rewriting),23:TranslationPrefixDomain),4:eval)","kind":"def"}]}

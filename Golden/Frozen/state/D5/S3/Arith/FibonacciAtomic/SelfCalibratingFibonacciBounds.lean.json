@@ -1,1 +1,0 @@
-{"statement_id":"sha256:619b295176e3cc2075ec3e387491992bcaaded96e3f905aeb9295e38ddd64d96","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),15:FibonacciAtomic),30:SelfCalibratingFibonacciBounds),25:raw_word_fibonacci_bounds)","kind":"theorem"}]}

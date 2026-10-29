@@ -1,7 +1,0 @@
-这条纪律同时适用于：
-
-1. 一般接口的 refinement factor；
-2. 线性读出 $C:V\to Y$ 的诱导动力学；
-3. 行为实现的 reachable part；
-4. completion-point 参数化中的 gauge-fixed carrier。
-
