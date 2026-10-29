@@ -12,6 +12,7 @@ import D5.S3.Quantum.QuantumChannels.NoisyWernerHolevoLindbladEmbedding
 import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
 import D5.S3.Quantum.Recovery.ActualChannelAlgebra
 import D5.S3.QuantumChannels.UnitaryKrausMixingInvariance
+import D5.S3.Quantum.Matrix.LinPsiMap.ReductionBlock
 
 /-! The qutrit Werner--Holevo channel separates Bayesian and Markovian feedback. -/
 
@@ -601,13 +602,33 @@ private theorem canonical_is_kraus : IsKrausDecomposition canonicalKraus := by
     simpa only [pow_two, one_div] using
       D5.S3.QuantumBounds.CHSHWitness.complex_sqrt_two_inv_mul_self
   intro X
-  ext i j
-  fin_cases i <;> fin_cases j <;>
-    simp [wernerHolevo, Matrix.trace, canonicalKraus.eq_1, crossProduct, LinearMap.toMatrix'_apply,
-        cross_apply, Pi.single_apply,
-      Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.transpose_apply,
-      Fin.sum_univ_succ] <;>
-    simp only [← mul_assoc, ← pow_two, hs] <;> ring
+  let C : Fin 3 → Matrix (Fin 3) (Fin 3) ℂ := fun a =>
+    crossProduct (Pi.single a 1)
+  have hskew (k l : Fin 3) : D5.S3.Quantum.Matrix.LinPsiMap.skew k l =
+      ![![0, -C 2, C 1], ![C 2, 0, -C 0], ![-C 1, C 0, 0]] k l := by
+    change Matrix.single k l 1 - Matrix.single l k 1 = _
+    ext i j
+    fin_cases k <;> fin_cases l <;> fin_cases i <;> fin_cases j <;>
+      norm_num [C, crossProduct.eq_1, LinearMap.toMatrix'_apply, cross_apply,
+        Matrix.single_apply, Pi.single_apply]
+  have hsum := D5.S3.Quantum.Matrix.LinPsiMap.skew_sum X
+  simp_rw [hskew] at hsum
+  norm_num [Fin.sum_univ_succ, Matrix.conjTranspose_neg, Matrix.neg_mul,
+    Matrix.mul_neg] at hsum
+  have hc (a : Fin 3) : canonicalKraus a * X * (canonicalKraus a)ᴴ =
+      (1 / 2 : ℂ) • (C a * X * (C a)ᴴ) := by
+    simp only [canonicalKraus.eq_1, Matrix.conjTranspose_smul, Matrix.smul_mul,
+      Matrix.mul_smul, smul_smul, star_inv₀, Complex.star_def, map_inv₀,
+      Complex.conj_ofReal]
+    change ((Real.sqrt 2 : ℂ)⁻¹ * (Real.sqrt 2 : ℂ)⁻¹) • _ = _
+    rw [← pow_two, hs]
+  have hw : wernerHolevo 1 X = (1 / 2 : ℂ) • (X.trace • 1 - Xᵀ) := by
+    simp [wernerHolevo]
+    module
+  simp_rw [hc]
+  rw [hw, ← hsum]
+  simp [Fin.sum_univ_succ]
+  module
 
 private theorem rotation_is_kraus : IsKrausDecomposition rotationKraus := by
   have h2 : (starRingEnd ℂ) (2 : ℂ) = 2 := by
