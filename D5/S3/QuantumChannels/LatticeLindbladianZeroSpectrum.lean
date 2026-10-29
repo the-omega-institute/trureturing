@@ -6,7 +6,7 @@
    utility: none
    digest: Finite-range translation-invariant lattice Lindbladians have zero in their spectrum. -/
 
-import Mathlib.Analysis.InnerProductSpace.l2Space
+import D5.S3.Observer.Approximation.ReadoutUpdateCommutatorFactorization
 
 /-! Matrix kernels of finite-range translation-invariant Lindblad generators. -/
 
@@ -14,10 +14,8 @@ noncomputable section
 
 namespace D5.S3.QuantumChannels.LatticeLindbladianZeroSpectrum
 
+open D5.S3.Observer.Approximation.ReadoutUpdateCommutatorFactorization
 open scoped ENNReal
-
-/-- Hilbert--Schmidt kernels in the position basis on the integer lattice. -/
-abbrev Kernel := lp (fun _ : ℤ × ℤ => ℂ) 2
 
 /-- Matrix support of the Hamiltonian and the localized jump operators. -/
 def IsFiniteRange (r : ℕ) (h : ℤ → ℤ → ℂ) (ℓ : ℤ → ℤ → ℤ → ℂ) : Prop :=
@@ -40,43 +38,16 @@ def lindbladEntry (g : ℝ) (h : ℤ → ℤ → ℂ) (ℓ : ℤ → ℤ → ℤ
 
 private lemma h_difference (h : ℤ → ℤ → ℂ) (ℓ : ℤ → ℤ → ℤ → ℂ)
     (ht : IsTranslationInvariant h ℓ) (x y : ℤ) : h x y = h 0 (y - x) := by
-  have hh : ∀ x y, h x y = h 0 (y - x) := by
-    intro x
-    refine Int.inductionOn' x 0 ?_ ?_ ?_
-    · intro y; rw [sub_zero]
-    · intro z _ ih y
-      calc
-        h (z + 1) y = h z (y - 1) := by simpa only [sub_add_cancel] using ht.1 z (y - 1)
-        _ = h 0 (y - 1 - z) := ih _
-        _ = h 0 (y - (z + 1)) := by congr 1; omega
-    · intro z _ ih y
-      calc
-        h (z - 1) y = h z (y + 1) := by
-          simpa only [sub_add_cancel] using (ht.1 (z - 1) y).symm
-        _ = h 0 (y + 1 - z) := ih _
-        _ = h 0 (y - (z - 1)) := by congr 1; omega
-  exact hh x y
+  have hp : Function.Periodic (fun z : ℤ => h z (y - x + z)) 1 := fun z => by
+    simpa only [add_assoc] using ht.1 z (y - x + z)
+  simpa only [mul_one, Int.cast_id, sub_add_cancel, add_zero] using hp.int_mul_eq x
 
 private lemma jump_difference (h : ℤ → ℤ → ℂ) (ℓ : ℤ → ℤ → ℤ → ℂ)
     (ht : IsTranslationInvariant h ℓ) (k x y : ℤ) :
     ℓ k x y = ℓ 0 (x - k) (y - k) := by
-  have hh : ∀ k x y, ℓ k x y = ℓ 0 (x - k) (y - k) := by
-    intro k
-    refine Int.inductionOn' k 0 ?_ ?_ ?_
-    · intro x y; simp only [sub_zero]
-    · intro z _ ih x y
-      calc
-        ℓ (z + 1) x y = ℓ z (x - 1) (y - 1) := by
-          simpa only [sub_add_cancel] using ht.2 z (x - 1) (y - 1)
-        _ = ℓ 0 (x - 1 - z) (y - 1 - z) := ih _ _
-        _ = ℓ 0 (x - (z + 1)) (y - (z + 1)) := by congr 1 <;> omega
-    · intro z _ ih x y
-      calc
-        ℓ (z - 1) x y = ℓ z (x + 1) (y + 1) := by
-          simpa only [sub_add_cancel] using (ht.2 (z - 1) x y).symm
-        _ = ℓ 0 (x + 1 - z) (y + 1 - z) := ih _ _
-        _ = ℓ 0 (x - (z - 1)) (y - (z - 1)) := by congr 1 <;> omega
-  exact hh k x y
+  have hp : Function.Periodic (fun z : ℤ => ℓ z (x - k + z) (y - k + z)) 1 := fun z => by
+    simpa only [add_assoc] using ht.2 z (x - k + z) (y - k + z)
+  simpa only [mul_one, Int.cast_id, sub_add_cancel, add_zero] using hp.int_mul_eq k
 
 private lemma matrix_bound (r : ℕ) (h : ℤ → ℤ → ℂ) (ℓ : ℤ → ℤ → ℤ → ℂ)
     (hf : IsFiniteRange r h ℓ) (ht : IsTranslationInvariant h ℓ) :
@@ -123,35 +94,21 @@ private lemma matrix_bound (r : ℕ) (h : ℤ → ℤ → ℂ) (ℓ : ℤ → �
 
 private lemma weighted_shift_exists (w : ℤ × ℤ) (c : ℤ × ℤ → ℂ) (m : ℝ)
     (hm : 0 ≤ m) (hc : ∀ p, ‖c p‖ ≤ m) :
-    ∃ t : Kernel →L[ℂ] Kernel,
+    ∃ t : ObserverHilbertSpace (ℤ × ℤ) →L[ℂ] ObserverHilbertSpace (ℤ × ℤ),
       (∀ ρ p, t ρ p = c p * ρ (p + w)) ∧ ‖t‖ ≤ m := by
-  have hp : 0 < (2 : ℝ≥0∞).toReal := by norm_num
-  have hs (ρ : Kernel) : Memℓp (fun p => ρ (p + w)) 2 :=
-    memℓp_gen ((Equiv.addRight w).summable_iff.mpr ((lp.memℓp ρ).summable hp))
-  let shift (ρ : Kernel) : Kernel := ⟨fun p => ρ (p + w), hs ρ⟩
-  have hn (ρ : Kernel) : ‖shift ρ‖ = ‖ρ‖ := by
-    have he := (Equiv.addRight w).tsum_eq (fun p => ‖ρ p‖ ^ (2 : ℝ≥0∞).toReal)
-    change (∑' p, ‖(shift ρ) p‖ ^ (2 : ℝ≥0∞).toReal) =
-      ∑' p, ‖ρ p‖ ^ (2 : ℝ≥0∞).toReal at he
-    rw [← lp.norm_rpow_eq_tsum hp (shift ρ), ← lp.norm_rpow_eq_tsum hp ρ] at he
-    exact (Real.rpow_left_inj (norm_nonneg _) (norm_nonneg _) (ne_of_gt hp)).mp he
-  let f : Kernel →ₗ[ℂ] Kernel :=
-    { toFun := fun ρ => ⟨fun p => c p * ρ (p + w),
-        ((hs ρ).norm.const_smul m).mono fun p => by
-          change ‖c p * ρ (p + w)‖ ≤ m * ‖ρ (p + w)‖
-          rw [norm_mul]
-          exact mul_le_mul_of_nonneg_right (hc p) (norm_nonneg _)⟩
-      map_add' := fun ρ σ => by ext p; exact mul_add _ _ _
-      map_smul' := fun z ρ => by ext p; exact mul_left_comm _ _ _ }
-  have hb (ρ : Kernel) : ‖f ρ‖ ≤ m * ‖ρ‖ := by
-    calc
-      ‖f ρ‖ ≤ ‖(m : ℂ) • shift ρ‖ := lp.norm_mono (by norm_num) fun p => by
-        change ‖c p * ρ (p + w)‖ ≤ ‖(m : ℂ) * ρ (p + w)‖
-        rw [norm_mul, norm_mul, Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg hm]
-        exact mul_le_mul_of_nonneg_right (hc p) (norm_nonneg _)
-      _ = m * ‖ρ‖ := by rw [norm_smul, Complex.norm_real, Real.norm_eq_abs,
-          abs_of_nonneg hm, hn]
-  exact ⟨f.mkContinuous m hb, fun _ _ => rfl, f.mkContinuous_norm_le hm hb⟩
+  let c' : lp (fun _ : ℤ × ℤ => ℂ) ∞ :=
+    ⟨c, memℓp_infty_iff.mpr ⟨m, by rintro _ ⟨p, rfl⟩; exact hc p⟩⟩
+  let s := updateLinearIsometryEquiv (Equiv.addRight w).symm
+  refine ⟨(diagonalOperator c').comp s.toLinearIsometry.toContinuousLinearMap, ?_, ?_⟩
+  · intro ρ p
+    rfl
+  · calc
+      _ ≤ ‖diagonalOperator c'‖ * ‖s.toLinearIsometry.toContinuousLinearMap‖ :=
+        ContinuousLinearMap.opNorm_comp_le _ _
+      _ ≤ m * 1 := mul_le_mul
+        (by rw [diagonalOperator_norm]; exact lp.norm_le_of_forall_le hm hc)
+        s.toLinearIsometry.norm_toContinuousLinearMap_le (norm_nonneg _) hm
+      _ = m := mul_one _
 
 private def coefficient (g : ℝ) (h : ℤ → ℤ → ℂ) (ℓ : ℤ → ℤ → ℤ → ℂ)
     (w p : ℤ × ℤ) : ℂ :=
@@ -341,7 +298,8 @@ private lemma entry_locality (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ)
       rw [hρ x z (by constructor <;> omega) (by constructor <;> omega)]
 
 private lemma finite_window (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ)
-    (ℓ : ℤ → ℤ → ℤ → ℂ) (hf : IsFiniteRange r h ℓ) (ρ : Kernel) (p : ℤ × ℤ) :
+    (ℓ : ℤ → ℤ → ℤ → ℂ) (hf : IsFiniteRange r h ℓ)
+    (ρ : ObserverHilbertSpace (ℤ × ℤ)) (p : ℤ × ℤ) :
     lindbladEntry g h ℓ ρ p.1 p.2 =
       ∑ w ∈ (Finset.Icc (-(2 * r : ℤ)) (2 * r) ×ˢ
         Finset.Icc (-(2 * r : ℤ)) (2 * r)), coefficient g h ℓ w p * ρ (p + w) := by
@@ -378,10 +336,7 @@ private lemma finite_window (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ)
 
 private lemma norm_sum_bound {α : Type*} (s : Finset α) (f : α → ℂ) (b : ℝ)
     (hf : ∀ a ∈ s, ‖f a‖ ≤ b) : ‖∑ a ∈ s, f a‖ ≤ s.card * b := by
-  calc
-    ‖∑ a ∈ s, f a‖ ≤ ∑ a ∈ s, ‖f a‖ := norm_sum_le _ _
-    _ ≤ ∑ _a ∈ s, b := Finset.sum_le_sum hf
-    _ = s.card * b := by rw [Finset.sum_const, nsmul_eq_mul]
+  simpa only [Finset.sum_const, nsmul_eq_mul] using norm_sum_le_of_le s hf
 
 private lemma interval_card (r : ℕ) (x : ℤ) :
     (Finset.Icc (x - r) (x + r)).card = 2 * r + 1 := by
@@ -494,7 +449,8 @@ private lemma coefficient_bound (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ)
 private lemma bounded_operator (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ)
     (ℓ : ℤ → ℤ → ℤ → ℂ) (hf : IsFiniteRange r h ℓ)
     (ht : IsTranslationInvariant h ℓ) :
-    ∃ t : Kernel →L[ℂ] Kernel, ∀ ρ : Kernel, ∀ x y,
+    ∃ t : ObserverHilbertSpace (ℤ × ℤ) →L[ℂ] ObserverHilbertSpace (ℤ × ℤ),
+      ∀ ρ : ObserverHilbertSpace (ℤ × ℤ), ∀ x y,
       t ρ (x, y) = lindbladEntry g h ℓ ρ x y := by
   classical
   obtain ⟨m, hm, hc⟩ := coefficient_bound r g h ℓ hf ht
@@ -505,10 +461,10 @@ private lemma bounded_operator (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ)
   rw [finite_window r g h ℓ hf ρ (x, y)]
   simp only [sum_apply, lp.coeFn_sum, Finset.sum_apply, he]
 
-private def projection (n : ℕ) : Kernel :=
+private def projection (n : ℕ) : ObserverHilbertSpace (ℤ × ℤ) :=
   ∑ x ∈ Finset.Icc (-(n : ℤ)) n, lp.single 2 (x, x) 1
 
-private lemma projection_trace (n : ℕ) (ρ : Kernel) :
+private lemma projection_trace (n : ℕ) (ρ : ObserverHilbertSpace (ℤ × ℤ)) :
     inner ℂ (projection n) ρ = ∑ x ∈ Finset.Icc (-(n : ℤ)) n, ρ (x, x) := by
   classical
   unfold projection
@@ -520,22 +476,20 @@ private lemma projection_trace (n : ℕ) (ρ : Kernel) :
 
 private lemma projection_norm_sq (n : ℕ) : ‖projection n‖ ^ 2 = 2 * (n : ℝ) + 1 := by
   classical
-  have hv (x : ℤ) (hx : x ∈ Finset.Icc (-(n : ℤ)) n) : projection n (x, x) = 1 := by
-    change lp.evalₗ (𝕜 := ℂ) (fun _ : ℤ × ℤ => ℂ) 2 (x, x) (projection n) = 1
-    unfold projection
-    rw [map_sum]
-    simp [lp.evalₗ_apply, lp.single_apply, Pi.single_apply, hx]
-  rw [← inner_self_eq_norm_sq (𝕜 := ℂ), projection_trace]
-  have he : (∑ x ∈ Finset.Icc (-(n : ℤ)) n, projection n (x, x)) =
-      ((Finset.Icc (-(n : ℤ)) n).card : ℂ) := by
-    simp only [Finset.sum_congr rfl hv, Finset.sum_const, nsmul_eq_mul, mul_one]
-  rw [he, RCLike.natCast_re]
-  have hc : (Finset.Icc (-(n : ℤ)) n).card = 2 * n + 1 := by
-    rw [Int.card_Icc]
+  let s := (Finset.Icc (-(n : ℤ)) n).image fun x : ℤ => (x, x)
+  have hi : Function.Injective (fun x : ℤ => (x, x)) := fun _ _ h => congrArg Prod.fst h
+  have he : projection n = ∑ q ∈ s, lp.single 2 q (1 : ℂ) := by
+    rw [Finset.sum_image]
+    · rfl
+    · exact fun _ _ _ _ h => hi h
+  have hn := lp.norm_sum_single (E := fun _ : ℤ × ℤ => ℂ) (p := 2)
+    (by norm_num) (fun _ => (1 : ℂ)) s
+  have hc : s.card = 2 * n + 1 := by
+    rw [Finset.card_image_of_injective _ hi, Int.card_Icc]
     omega
-  rw [hc]
-  push_cast
-  ring
+  rw [he]
+  simpa only [ENNReal.toReal_ofNat, Real.rpow_two, norm_one, one_pow, Finset.sum_const,
+    nsmul_eq_mul, mul_one, hc, Nat.cast_add, Nat.cast_mul, Nat.cast_ofNat, Nat.cast_one] using hn
 
 private lemma entry_single_support (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ)
     (ℓ : ℤ → ℤ → ℤ → ℂ) (hf : IsFiniteRange r h ℓ) (q : ℤ × ℤ) (x y : ℤ)
@@ -646,7 +600,7 @@ private lemma trace_single_zero (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ)
 private lemma boundary_estimate (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ)
     (ℓ : ℤ → ℤ → ℤ → ℂ) (hf : IsFiniteRange r h ℓ)
     (ht : IsTranslationInvariant h ℓ) :
-    ∃ k : ℝ, 0 ≤ k ∧ ∀ (n : ℕ) (ρ : Kernel),
+    ∃ k : ℝ, 0 ≤ k ∧ ∀ (n : ℕ) (ρ : ObserverHilbertSpace (ℤ × ℤ)),
       ‖∑ x ∈ Finset.Icc (-(n : ℤ)) n, lindbladEntry g h ℓ ρ x x‖ ≤ k * ‖ρ‖ := by
   classical
   obtain ⟨m, hm, hc⟩ := coefficient_bound r g h ℓ hf ht
@@ -793,15 +747,19 @@ private lemma boundary_estimate (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ)
       (by positivity)
     _ = (c : ℝ) * b * ‖ρ‖ := by ring
 
-private lemma nonunit_from_boundary (t : Kernel →L[ℂ] Kernel)
-    (hb : ∃ k : ℝ, 0 ≤ k ∧ ∀ (n : ℕ) (ρ : Kernel),
+private lemma nonunit_from_boundary
+    (t : ObserverHilbertSpace (ℤ × ℤ) →L[ℂ] ObserverHilbertSpace (ℤ × ℤ))
+    (hb : ∃ k : ℝ, 0 ≤ k ∧ ∀ (n : ℕ) (ρ : ObserverHilbertSpace (ℤ × ℤ)),
       ‖inner ℂ (projection n) (t ρ)‖ ≤ k * ‖ρ‖) : ¬IsUnit t := by
   rintro ⟨u, rfl⟩
   obtain ⟨k, hk, hb⟩ := hb
-  let s : Kernel →L[ℂ] Kernel := ↑(u⁻¹)
+  let s : ObserverHilbertSpace (ℤ × ℤ) →L[ℂ] ObserverHilbertSpace (ℤ × ℤ) := ↑(u⁻¹)
   obtain ⟨n, hn⟩ := exists_nat_gt ((k * ‖s‖) ^ 2)
-  have hi : (u : Kernel →L[ℂ] Kernel) (s (projection n)) = projection n := by
-    have he := congrArg (fun f : Kernel →L[ℂ] Kernel => f (projection n)) u.mul_inv
+  have hi : (u : ObserverHilbertSpace (ℤ × ℤ) →L[ℂ] ObserverHilbertSpace (ℤ × ℤ))
+      (s (projection n)) = projection n := by
+    have he := congrArg
+      (fun f : ObserverHilbertSpace (ℤ × ℤ) →L[ℂ] ObserverHilbertSpace (ℤ × ℤ) =>
+        f (projection n)) u.mul_inv
     exact he
   have hineq := hb n (s (projection n))
   rw [hi, inner_self_eq_norm_sq_to_K, norm_pow, RCLike.norm_ofReal,
@@ -819,8 +777,8 @@ private lemma nonunit_from_boundary (t : Kernel →L[ℂ] Kernel)
 /-- The finite-range translation-invariant matrix Lindbladian is bounded and has spectral zero. -/
 theorem result (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ) (ℓ : ℤ → ℤ → ℤ → ℂ)
     (hf : IsFiniteRange r h ℓ) (ht : IsTranslationInvariant h ℓ) :
-    ∃ t : Kernel →L[ℂ] Kernel,
-      (∀ ρ : Kernel, ∀ x y, t ρ (x, y) = lindbladEntry g h ℓ ρ x y) ∧
+    ∃ t : ObserverHilbertSpace (ℤ × ℤ) →L[ℂ] ObserverHilbertSpace (ℤ × ℤ),
+      (∀ ρ : ObserverHilbertSpace (ℤ × ℤ), ∀ x y, t ρ (x, y) = lindbladEntry g h ℓ ρ x y) ∧
       (0 : ℂ) ∈ spectrum ℂ t := by
   obtain ⟨t, he⟩ := bounded_operator r g h ℓ hf ht
   refine ⟨t, he, (spectrum.zero_mem_iff ℂ).mpr (nonunit_from_boundary t ?_)⟩
