@@ -96,7 +96,7 @@ theorem theta_tail_peak_sq_le_mass {U a : ℝ} (hU : 1 ≤ U) (ha : U ≤ a)
         intervalIntegral.integral_const, intervalIntegral.integral_const_mul,
         intervalIntegral.integral_sub (f := fun u : ℝ => u) (g := fun _ : ℝ => a)
           (continuous_id.intervalIntegrable a b) intervalIntegrable_const,
-        intervalIntegral.integral_id, intervalIntegral.integral_const]
+        integral_id, intervalIntegral.integral_const]
       simp only [smul_eq_mul]
       dsimp [b]
       ring
