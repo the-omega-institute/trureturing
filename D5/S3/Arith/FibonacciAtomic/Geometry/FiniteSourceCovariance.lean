@@ -61,7 +61,7 @@ private theorem normalized_count :
     generalize hy : Real.goldenConj = y
     have hx0 : x ≠ 0 := hx ▸ Real.goldenRatio_ne_zero
     have hs0 : Real.sqrt 5 ≠ 0 := by positivity
-    field_simp only [hx0, pow_ne_zero _ hx0, hs0]
+    field_simp [hx0, hs0]
     <;> ring
   simpa only [Function.comp_def, sub_zero, mul_one] using hl.congr' (Eventually.of_forall
     (fun n => (he n).symm))
@@ -126,9 +126,10 @@ private theorem mem_block (h : ℕ) (p : Edge) : p ∈ block h ↔ p.val.length 
 private theorem P_expand (h : ℕ) (z : H) : P h z = ∑ p ∈ block h, z p • e p := by
   classical
   ext q
-  change (if q.val.length ≤ h then z q else 0) = _
-  simp [e, lp.coeFn_sum, Finset.sum_apply, lp.coeFn_smul, Pi.smul_apply, smul_eq_mul,
-    lp.coeFn_single, Pi.single_apply, mul_ite, mem_block, eq_comm]
+  change (if q.val.length ≤ h then z q else 0) =
+    (lp.evalCLM ℝ (fun _ : Edge => ℝ) 2 q) (∑ p ∈ block h, z p • e p)
+  rw [map_sum]
+  simp [e, map_smul, lp.coeFn_single, Pi.single_apply, mul_ite, mem_block, eq_comm]
 
 private theorem P_norm (h : ℕ) : ‖P h‖ ≤ 1 := by
   apply LinearMap.mkContinuous_norm_le
@@ -254,7 +255,7 @@ private theorem boundary_mean_entry (p : Edge) :
   change BiasedBoundaryCentering.mean (BiasedBoundaryTrace.indicator p) = _
   rw [BiasedBoundaryCentering.centered_suffix_residual.1]
   rw [BiasedBoundaryTrace.indicator, integral_indicatorConstLp]
-  simpa using BiasedBoundaryTrace.cylinder_mass p.val
+  simpa only [measureReal_def] using BiasedBoundaryTrace.cylinder_mass p.val
 
 private theorem gram_entry (n : ℕ) (p q : Edge) :
     inner ℝ (e p) (B n (e q)) = kernel (FiniteSourceMass.mass n) p q := by
@@ -343,9 +344,16 @@ private theorem gram_expansion {G : Type*} [NormedAddCommGroup G] [InnerProductS
   apply ext_inner_left ℝ
   intro z
   rw [ContinuousLinearMap.comp_apply, ContinuousLinearMap.adjoint_inner_right]
-  simp [P_expand, map_sum, map_smul, inner_sum, sum_inner, inner_smul_left,
-    inner_smul_right, rankOne_apply, real_inner_comm, inner_e, inner_e_right, Finset.sum_comm,
-    Finset.mul_sum, Finset.sum_mul, mul_assoc, mul_left_comm, mul_comm]
+  simp only [ContinuousLinearMap.comp_apply, P_expand, map_sum, map_smul,
+    inner_sum, sum_inner, inner_smul_left, inner_smul_right, rankOne_apply,
+    inner_e, inner_e_right, Finset.mul_sum, Finset.sum_mul]
+  simp only [conj_trivial]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro p hp
+  apply Finset.sum_congr rfl
+  intro q hq
+  ring
 
 private theorem mean_cutoff_bound {G : Type*} [NormedAddCommGroup G] [InnerProductSpace ℝ G]
     [CompleteSpace G] (A : H →L[ℝ] G) (g : G) (h : ℕ) :
@@ -522,6 +530,8 @@ private theorem first_two_limits :
     rw [dist_eq_norm] at hm ⊢
     linarith
 
+set_option maxHeartbeats 1000000 in
+-- The actual lp operators and the simultaneous dependent source family share this budget.
 /-- The three actual source objects converge simultaneously on the common H.
 The node L2 codomains of the maps J(n) retain their dependence on n. -/
 theorem finite_source_covariance_convergence :
