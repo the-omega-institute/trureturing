@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Circle/SeedQueueInvariant
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/SeedQueueInvariant
    mirror-E: none(waiver:audit-open-22063)
    anchors: [D5/S3/Combinatorics/Circle/SourceWidth]
