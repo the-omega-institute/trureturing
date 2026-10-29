@@ -1,0 +1,33 @@
+**Definition 62.2 (reply-driven traversal of original nodes).** Call a
+position eligible when it is the root or its address ends in $R$.
+At an original $L$-ending scheduled position issue $P$. At each eligible
+scheduled position issue $P$ in mode one and $S$ in mode zero. There
+are two implementations:
+
+- GLOBAL obtains one $q$-draw before traversal and uses that same mode
+  at every eligible position.
+- LOCAL obtains a fresh independent $q$-draw at every eligible visit,
+  including visits which turn out to be branches.
+
+Both begin at the root and otherwise use the backed preorder traversal
+of Definition 54.1. The following table gives the complete interpretation
+of an actual returned answer at a scheduled target. Codes use that
+same supplied two-bit constructor syntax.
+
+| Request and actual answer | Entry subtree recorded | Current subtree recorded | Further visits |
+| --- | --- | --- | --- |
+| Either kind, Refusal(branch) | Branch, then acquired children | Branch, then acquired current children | Left, then right |
+| $P$, Growth$(P,p)$ | $\alpha$ | $\beta$ | None |
+| $P$, Refusal(wrong type) | $\beta$ | $\beta$ | None |
+| $S$, Refusal(wrong type) | $\alpha$ | $\alpha$ | None |
+| $S$, Growth$(S,p)$ | $\beta$ | $\langle\beta,\alpha\rangle$ | None |
+
+A successful split finishes this original-leaf visit. Its two newborn
+logical children are written into the current word and are not scheduled
+as acquisition targets. The remaining children to visit come exclusively
+from branch refusals already acquired at original nodes. The absent
+case is excluded by the invariant proved below, not decoded as a leaf.
+Every complete answer, End, acknowledgement and Return is actually
+consumed before proceeding. Draws occur in the observer and never
+replace a guard reply.
+

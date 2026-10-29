@@ -46,6 +46,12 @@ Put X=log(n) and lambda=1/(X*log(X)). The actual positive integer U from GoldenR
 
 MertensExplicitEnvelope.prime_product_upper_effective supplies W(U)<=gamma+log(log(X))+19/(10*log(X)). The uniform strict-inventory growth theorem with epsilon=1/10 gives 1-log(U)/X<=1/10. Global fixed-price comparison transfers the bound to n and adds at most 1/(10*log(X)), yielding coefficient two. All prime powers in U are retained. This deduction combines the existing arithmetic inputs without a literature priority claim. In ActualIntegerHeightJump the bound is applied at the actual divisor m/q, after proving its size.
 
+A further application gives an arbitrarily small coefficient on the same full integer domain: for every real epsilon>0 there exists a real A>=286 such that every positive natural integer n with A<=log(n) satisfies originalObjective(n)-gamma<=epsilon/log(log(n)). The threshold is chosen before n; n has no support or optimizer hypothesis, and no rate for A is asserted.
+
+Take ell from WeightedPrimeLimit.exists_E1p_limit and choose B so that |E1p(t)-ell|<epsilon/4 for every t>=B. For X>=max(B,286), MertensExplicitEnvelope.prime_product_upper_of_local_envelope with a=ell-epsilon/4 and b=ell+epsilon/4 gives the reciprocal product bound exp(gamma)*log(X)*exp((epsilon/2)/log(X)). This application uses the frozen one-sided local-envelope theorem directly.
+
+Choose the strict-inventory growth threshold T for epsilon/2 and put A=max(T,max(B,286)). For each permitted n set X=log(n) and lambda=1/(X*log(X)). The original optimizer construction and strict support bound give W(U)<=gamma+log(log(X))+(epsilon/2)/log(X). Inventory growth gives 1-log(U)/X<=epsilon/2. Global fixed-price optimality transfers this to n with the exact cost difference (1-log(U)/X)/log(X), so the two halves sum to epsilon/log(X). All original prime powers are retained. This is an application of existing results, without an additional mathematical declaration; it asserts no signed nonpositive bound.
+
 The estimate is unconditional and uses the existing unconditional MediumPNT through strict-inventory growth. It proves neither Robin's inequality nor RH, and supplies no signed upper bound or bounded-height cofinal envelope.
 
 ## References

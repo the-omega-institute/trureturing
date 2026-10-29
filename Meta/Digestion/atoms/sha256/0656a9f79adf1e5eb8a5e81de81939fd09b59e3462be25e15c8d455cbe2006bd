@@ -1,0 +1,10 @@
+*Proof.* For each eigenvalue and $s>0$,
+$e^{-s\lambda_j}=s\int_{\lambda_j}^{\infty}e^{-su}\,du$.
+Tonelli's theorem, with nonnegative integrands and counting multiplicity,
+gives the identity, initially even if the sum were infinite,
+
+$$
+Z_H^+(s)=s\int_0^\infty e^{-su}N_H^+(u)\,du.
+\tag{3.5}
+$$
+

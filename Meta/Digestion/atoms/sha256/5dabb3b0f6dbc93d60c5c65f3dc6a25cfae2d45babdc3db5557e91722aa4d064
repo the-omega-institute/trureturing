@@ -1,0 +1,28 @@
+**Definition 50.1 (material coordinates and complete charging).** On one
+actual run, let $P,S,N,D,V$ retain AA (AA.77)–(AA.78)'s meanings, including
+events chosen by Next. Set
+
+$$
+B(t)=\sum_{v\in I(t)}b_v,\qquad H(t)=a_*(t).
+\tag{AAII.6}
+$$
+
+A located reference field is one field occurrence, including a null
+field; its actual bit representation is charged separately. The selected
+persistent material comprises the physical source vertices, source-edge
+fields, their auxiliary slots, live local headers and live rank cells.
+It excludes neither source vertices nor their null auxiliary slots.
+It excludes the separately itemized installed program, endpoint/root
+registers, current grants, work arena, request/answer backing and work
+registers from this particular tally, not from the process or its cost.
+
+Complete charging on the same run retains AA Definition 22.3's actual
+input/output lengths, navigation, source allocations, authority/grant
+operations, tests, printing, ACK, Return and clearing/reuse. It adds every
+source counting tour, binary-counter update, binomial multiplication and
+exact division, width calculation, rank read/copy/rewrite, preflight
+walk, reservation and link initialization. It charges the retained input
+marks even for an arbitrarily large out-of-range $k$. Reference values
+are never unit-width integers, and a cleared reusable work buffer still
+occupies its retained capacity.
+

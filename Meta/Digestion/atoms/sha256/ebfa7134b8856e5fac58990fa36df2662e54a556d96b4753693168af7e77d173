@@ -1,0 +1,19 @@
+**Corollary 5.3 (the no-side-record and cardinality-one cases).** If
+$K_{a,b}>1$, the bare boundary specimens with only source-independent
+apparatus ($\dim E=1$) cannot implement exact complete native reading,
+regardless of the number of finite copies.  If $K_{a,b}=1$, the dimension
+bound is vacuous.  By (5.2), this occurs exactly for
+
+$$
+D_{1,0}=\{\alpha\},\quad D_{0,1}=\{\beta\},\quad
+D_{2,0}=\{\langle\alpha,\alpha\rangle\},\quad
+D_{0,2}=\{\langle\beta,\beta\rangle\}.
+$$
+
+The first two are leaf-root services.  The latter two are authentic branch
+entries with reached $L/R$ holes, so $K_{a,b}=1$ is a cardinality statement,
+not a leaf-root syntactic classification.  Thus the blanket statement that
+every fiber with $\ell\ge2$ fails at $d=1$ requires the $K_{a,b}>1$
+qualification.  In the witness family, $K_{2n+2,2}>1$, so the qualification
+is always active.
+

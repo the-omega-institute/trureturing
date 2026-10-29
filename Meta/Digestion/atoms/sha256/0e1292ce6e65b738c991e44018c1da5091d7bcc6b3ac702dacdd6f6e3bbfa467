@@ -1,0 +1,45 @@
+**Theorem 51.2 (common-source recovery and operation agreement).** On
+this actual Ready domain, $S_r,B_r,T_g,M_r$ each determine exactly the
+full $Q_g$ task state. Their mathematical recovery maps are mutually
+inverse on their actual images, agree along all routes and commute
+with every legal completed request, its entire reply and its semantic
+source/record successor. The bare $S_0,B_0,T_c$, even supplemented by
+complete split chronology, retain AA §18's full-order ambiguities.
+No recovery of complete controller chronology or arbitrary busy states
+is asserted.
+
+Proof. Source-edge support and the terminal antichain interconvert
+by AA Definition 17.3, preserving the unary beta marker; either
+recovers the same $t$. Its actual annotations are decoded using
+(AAII.1) and Theorem 47.3 into exactly AA's local routing words.
+AA Theorem 19.2 then reconstructs the single actual $w$. Conversely
+that $w$, from the known alpha, determines $t$ and all its projected
+local words; (AAII.2) gives the exact rank annotations and absence
+positions. Reading $M_r$'s owned backing obtains these same data, and
+its callable interpretation is Theorem 49.1. Reconstructing their
+mathematical descriptions is not a new allocation of rights or a
+claim that arbitrary externally supplied codes can install a service.
+
+Each round trip uses the same reconstructed word and source, so it
+returns the original view on its actual image. Every composed recovery
+route therefore agrees. Theorem 49.2 supplies full request and successor
+agreement, not only a static content bijection. A growth appends its
+actual event to $w$ and updates precisely its ancestor coordinates;
+Next first decodes its actual old event and then appends the same
+current-source event on either route. Queries and refusals leave this
+word unchanged. Finite-request induction proves the claimed commutation
+and the exact kernel for every view.
+
+None of these arguments puts ranks into bare $S_0$ or $B_0$.
+AA Theorem 18.2's exact split-erasure fibres and Theorem 18.3's
+criterion remain unchanged, as does AA (AA.75)'s actual differing
+Next-successor witness. Source plus an unrecorded serial choice still
+cannot supply the missing rank. Finally an extra completed Tag request
+changes complete input/output/controller chronology without changing
+$w,t,\mathcal R$. During Receive its partial input and during Maintain
+its pending old/new rank and ancestor cursor affect the next lawful
+primitive action. These data are neither settled word nor bare geometry.
+Compression therefore preserves the old distinction between successful
+generation time and complete controller chronology, and the Ready
+restriction is essential. $\square$
+

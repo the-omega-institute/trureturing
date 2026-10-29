@@ -1,0 +1,33 @@
+**Definition 57.1 (reachable type family and competitors).** For the
+skeleton $K$ in Proposition 56.3, let $F_K$ be its logical leaves and
+
+$$
+V_K=\begin{cases}
+\{\varepsilon\},&K\text{ has no branch},\\
+\{p\in F_K:p\text{ ends in }R\},&\text{otherwise},
+\end{cases}
+\qquad m=|V_K|.
+\tag{AAII.14}
+$$
+
+For $x\in\{0,1\}^{V_K}$, let $t_x$ have alpha at $p$ when $x_p=0$,
+beta when $x_p=1$, and beta at all leaves outside $V_K$. Internal
+constructors are those of $K$. The finite family
+$\mathcal F_K=\{t_x:x\in\{0,1\}^{V_K}\}$ is reachable from the
+known-alpha origin. The current guard-only entry and all accessible
+nonreply initial data are common over this family. Even the entire
+logical skeleton $K$ may be supplied to a competitor; its leaf types
+are not supplied.
+
+A competitor is any deterministic effective guard-only controller,
+with arbitrarily large paid finite records, which on every entry in
+$\mathcal F_K$ returns the exact entry term after finitely many local
+steps and completed calls, at a settled cut with no pending frame or edit.
+It may use arbitrary finite addressed $P/S$
+calls, refusals and unsupported frames, and may stop at a different
+changed endpoint. Its disturbance $\Delta_A(t_x)$ is the number of
+fresh source vertices actually allocated by its successful requests
+before that return. Private work and code allocation are charged
+separately and do not count as source vertices. No request permits a
+source deletion or rollback.
+
