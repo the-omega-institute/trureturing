@@ -89,8 +89,8 @@ private theorem one_block (D : ℕ) (hD : 0 < D) (f : ℕ → ℤ)
   let last := 3 + 2 * (D - 1)
   let L := [1] ++ pre ++ [0, 2, last, last + 1]
   obtain ⟨hs, hm⟩ := descending_pairs f (8 * H - 1) 7 (4 * (H - 1)) 3 0 (D - 1)
-    (by norm_num) (by change v * 7 ≤ 8 * H - 1; nlinarith)
-    (by change 0 ≤ 4 * (H - 1) + 2 * 7 - 2 * v * 7; nlinarith)
+    (by norm_num) (by simp only [Nat.zero_add]; change v * 7 ≤ 8 * H - 1; nlinarith)
+    (by simp only [Nat.zero_add]; change 0 ≤ 4 * (H - 1) + 2 * 7 - 2 * v * 7; nlinarith)
     (by norm_num; nlinarith) (by
       intro j _ hj
       obtain ⟨ha, hb⟩ := hp j (by omega)
@@ -106,10 +106,8 @@ private theorem one_block (D : ℕ) (hD : 0 < D) (f : ℕ → ℤ)
       [0, 2, last, last + 1] := by
     simp only [InStrip]
     rw [hm', h0, h2, hlp, hln, h1]
-    change _
     dsimp only [H] at hH ⊢
-    constructor <;> try omega
-    all_goals repeat' constructor <;> nlinarith
+    constructor <;> omega
   refine ⟨L, ?_, ?_, ?_, ?_⟩
   · have hinv : [0, 1, 2] ++ (pre ++ [last, last + 1]) = List.range (2 * D + 3) := by
       have he : pre ++ [last, last + 1] = List.range' 3 (2 * D) := by
@@ -122,7 +120,7 @@ private theorem one_block (D : ℕ) (hD : 0 < D) (f : ℕ → ℤ)
       rw [he, List.range_eq_range']
       have hfront : [0, 1, 2] = List.range' 0 3 := by decide
       rw [hfront, List.range'_append_1]
-      congr 1 <;> omega
+      congr 1; omega
     rw [← hinv]
     apply List.perm_iff_count.mpr
     intro x
@@ -130,8 +128,7 @@ private theorem one_block (D : ℕ) (hD : 0 < D) (f : ℕ → ℤ)
     omega
   · change InStrip f (3 * (8 * H - 1)) 0 (1 :: (pre ++ [0, 2, last, last + 1]))
     refine ⟨by omega, by nlinarith [hH], ?_⟩
-    change InStrip f (3 * (8 * H - 1)) (f 1) (pre ++ [0, 2, last, last + 1])
-    exact inStrip_append hs' ht
+    simpa only [zero_add] using inStrip_append hs' ht
   · dsimp [L]
     simp only [List.map_append, List.sum_append, List.map_cons, List.map_nil,
       List.sum_cons, List.sum_nil]
@@ -155,6 +152,7 @@ private theorem one_block (D : ℕ) (hD : 0 < D) (f : ℕ → ℤ)
     congr 1
     omega
 
+set_option maxHeartbeats 800000 in
 private theorem two_blocks (B D : ℕ) (hB : 0 < B) (hD : 0 < D)
     (N d e z : ℤ) (hd : 0 < d) (he : 0 < e) (hz : 0 < z)
     (hdN : d < N) (heN : e < N) (hzN : z < N)
@@ -176,9 +174,9 @@ private theorem two_blocks (B D : ℕ) (hB : 0 < B) (hD : 0 < D)
   let G : ℤ := (4 : ℤ) ^ B
   let H : ℤ := (4 : ℤ) ^ D
   have hG : 4 ≤ G := by
-    exact_mod_cast pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 4) hB
+    simpa only [G, pow_one] using pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 4) hB
   have hH : 4 ≤ H := by
-    exact_mod_cast pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 4) hD
+    simpa only [H, pow_one] using pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 4) hD
   change 2 * G * e = N + z at hez
   change 2 * H * z = N + d at hzd
   have h4e : 4 * e < N := by nlinarith
@@ -191,13 +189,13 @@ private theorem two_blocks (B D : ℕ) (hB : 0 < B) (hD : 0 < D)
     by_cases h : e ≤ z
     · left
       refine ⟨h, ?_⟩
-      simp only [if_pos h]
+      simp only [ite_eq_left h]
       dsimp [G]
       calc
         4 * (4 : ℤ) ^ (B - 1) = 4 ^ ((B - 1) + 1) := by rw [pow_succ]; ring
         _ = 4 ^ B := by congr 1; omega
     · right
-      exact ⟨by omega, by simp only [if_neg h]; rfl⟩
+      exact ⟨by omega, by simp only [ite_eq_right h]; rfl⟩
   have hv1 : 1 ≤ v := one_le_pow₀ (by norm_num)
   have hge : G * e < N := by nlinarith
   have hhz : H * z < N := by nlinarith
@@ -212,13 +210,13 @@ private theorem two_blocks (B D : ℕ) (hB : 0 < B) (hD : 0 < D)
   let gamma := 2 * B + 2
   let L := [1] ++ Y0 ++ [0] ++ Y1 ++ Z0 ++ [gamma, last, last + 1]
   obtain ⟨hsY0, hmY0⟩ := descending_pairs f N e (N - e) 2 0 j (by omega)
-    (by change v * e ≤ N; nlinarith)
-    (by change 0 ≤ N - e + 2 * e - 2 * v * e; omega)
+    (by simp only [Nat.zero_add]; change v * e ≤ N; nlinarith)
+    (by simp only [Nat.zero_add]; change 0 ≤ N - e + 2 * e - 2 * v * e; omega)
     (by norm_num; omega) (fun i _ hi => hY i (by omega))
   have hs0 : InStrip f (3 * N) (N - e) Y0 := by simpa [Y0] using hsY0
   have hm0 : (Y0.map f).sum = -2 * e * (v - 1) := by simpa [Y0, v] using hmY0
   obtain ⟨hsY1, hmY1⟩ := descending_pairs f N e (2 * N - e - d) 2 j (B - j)
-    (by omega) (by simpa [Nat.add_sub_of_le hj, ← G] using le_of_lt hge)
+    (by omega) (by simpa only [Nat.add_sub_of_le hj, G] using le_of_lt hge)
     (by rw [Nat.add_sub_of_le hj]; change 0 ≤ 2 * N - e - d + 2 * e - 2 * G * e; omega)
     (by change 2 * N - e - d + 2 * N + 2 * e - 4 * v * e ≤ 3 * N; omega)
     (fun i _ hi => hY i (by omega))
@@ -233,9 +231,12 @@ private theorem two_blocks (B D : ℕ) (hB : 0 < B) (hD : 0 < D)
       4 * (4 : ℤ) ^ (D - 1) = 4 ^ ((D - 1) + 1) := by rw [pow_succ]; ring
       _ = 4 ^ D := by congr 1; omega
   have hu1 : 1 ≤ u := one_le_pow₀ (by norm_num)
+  have huZ : 8 * u * z = N + d := by
+    have hh := congrArg (fun x : ℤ => x * z) hu
+    nlinarith only [hh, hzd]
   obtain ⟨hsZ0, hmZ0⟩ := descending_pairs f N z (d - z) (2 * B + 3) 0 (D - 1)
-    (by omega) (by change u * z ≤ N; nlinarith)
-    (by change 0 ≤ d - z + 2 * z - 2 * u * z; nlinarith)
+    (by omega) (by simp only [Nat.zero_add]; change u * z ≤ N; nlinarith)
+    (by simp only [Nat.zero_add]; change 0 ≤ d - z + 2 * z - 2 * u * z; nlinarith)
     (by norm_num; omega) (fun i _ hi => hZ i (by omega))
   have hsZ : InStrip f (3 * N) (d - z) Z0 := by simpa [Z0] using hsZ0
   have hmZ : (Z0.map f).sum = -2 * z * (u - 1) := by simpa [Z0, u] using hmZ0
@@ -245,7 +246,8 @@ private theorem two_blocks (B D : ℕ) (hB : 0 < B) (hD : 0 < D)
   have ht : InStrip f (3 * N) (d - z + (Z0.map f).sum) [gamma, last, last + 1] := by
     simp only [InStrip]
     rw [hmZ, show f gamma = N - z from hc, hlp, hln]
-    repeat' constructor <;> nlinarith
+    refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩ <;>
+      nlinarith only [huZ, hd, hdN, he, hz, h4z, hde]
   have hsYZ := inStrip_append hs1 (by
     rw [hm1]
     convert (inStrip_append hsZ ht) using 1 <;> nlinarith only [hde, hez])
@@ -277,13 +279,21 @@ private theorem two_blocks (B D : ℕ) (hB : 0 < B) (hD : 0 < D)
   have hinv : [0, 1] ++ (Y0 ++ Y1) ++ [gamma] ++ (Z0 ++ [last, last + 1]) =
       List.range (2 * B + 2 * D + 3) := by
     rw [hYjoin, hZjoin]
-    dsimp [gamma]
-    rw [show [0, 1] = List.range' 0 2 by decide,
-      show [2 * B + 2] = List.range' (2 + 2 * B) 1 by simp; omega]
-    rw [List.range'_append_1]
-    rw [show 0 + (2 + 2 * B) = 2 + 2 * B by omega, List.range'_append_1]
-    rw [show 0 + (2 + 2 * B + 1) = 2 * B + 3 by omega, List.range'_append_1]
-    rw [List.range_eq_range']
+    have hpref : [0, 1] ++ List.range' 2 (2 * B) = List.range' 0 (2 * B + 2) := by
+      change List.range' 0 2 ++ List.range' (0 + 2) (2 * B) = _
+      rw [List.range'_append_1]
+      congr 1
+      omega
+    have hmid : List.range' 0 (2 * B + 2) ++ [gamma] =
+        List.range' 0 (2 * B + 3) := by
+      simpa only [gamma, Nat.zero_add] using
+        (List.range'_1_concat (s := 0) (n := 2 * B + 2)).symm
+    change ([0, 1] ++ List.range' 2 (2 * B)) ++ [gamma] ++
+      List.range' (2 * B + 3) (2 * D) = _
+    rw [hpref, hmid]
+    have hjoin := List.range'_append_1 (s := 0) (m := 2 * B + 3) (n := 2 * D)
+    simp only [Nat.zero_add] at hjoin
+    rw [hjoin, List.range_eq_range']
     congr 1
     omega
   refine ⟨L, ?_, hstrip, ?_, ?_⟩
@@ -293,10 +303,9 @@ private theorem two_blocks (B D : ℕ) (hB : 0 < B) (hD : 0 < D)
     simp only [L, List.count_append, List.count_cons, List.count_nil]
     omega
   · simp only [L, List.map_append, List.sum_append, List.map_cons, List.sum_cons,
-      List.map_nil, List.sum_nil, ha, hb, hc, hm0, hm1, hmZ, hlp, hln]
-    change _ + _ + _ + _ + _ + (f gamma + _ + _ + _) = _
+      List.map_nil, List.sum_nil, ha, hb, hm0, hm1, hmZ, hlp, hln]
     rw [show f gamma = N - z from hc]
-    nlinarith only [hde, hez, hzd, hu]
+    nlinarith only [hde, hez, huZ]
   · let p := fun j => decide (j ≠ 0 ∧ j ≠ 1 ∧ j ≠ 2 * B + 2)
     have hkeepY (R : List ℕ) (hR : ∀ x ∈ R, 2 ≤ x ∧ x < 2 * B + 2) :
         R.filter p = R := by
@@ -330,7 +339,7 @@ private theorem two_blocks (B D : ℕ) (hB : 0 < B) (hD : 0 < D)
     have hpl' : p (last + 1) = true := by simp only [p, decide_eq_true_eq]; dsimp [last]; omega
     simp only [List.filter_cons, List.filter_nil, hp1, hp0, hpg, hpl, hpl',
       Bool.false_eq_true, ↓reduceIte, List.nil_append, List.append_nil]
-    rw [← List.append_assoc, hYjoin, List.append_assoc, hZjoin]
+    rw [hYjoin, List.append_assoc, hZjoin]
 
 
 end D5.S3.Combinatorics.Circle.ThreeSmallSameSignSource
