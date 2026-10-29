@@ -10,7 +10,10 @@ import D5.S3.Quantum.Entanglement.OccupancyWordSectors
 import D5.S3.Quantum.Information.SLDSpectralEnergy
 import Mathlib.Analysis.MeanInequalities
 
+/-! A count-invariant density matrix separated from pure product mixtures. -/
+
 set_option autoImplicit false
+set_option linter.style.longLine false
 set_option relaxedAutoImplicit false
 
 noncomputable section
@@ -78,40 +81,227 @@ private def witness (w : Word (Fin 3) 3) : ℝ :=
   else if counts w = ![1, 1, 1] then -1 / 2
   else 0
 
-private theorem state_cs : IsCompletelySymmetric state := by
-  sorry
+private theorem counts_sum (w : Word (Fin 3) 3) (j : Fin 3) :
+    counts w j = ∑ k : Fin 3, if w k = j then 1 else 0 := by
+  rw [Fin.sum_univ_three]
+  change (↑[w 0, w 1, w 2] : Multiset (Fin 3)).count j = _
+  rw [Multiset.coe_count]
+  simp only [List.count_cons, List.count_nil, beq_iff_eq]
+  omega
 
+private theorem counts_three (w : Word (Fin 3) 3) (j : Fin 3) :
+    counts w j = (if w 0 = j then 1 else 0) + (if w 1 = j then 1 else 0) +
+      (if w 2 = j then 1 else 0) := by
+  rw [counts_sum, Fin.sum_univ_three]
+
+private theorem sum_words (f : Word (Fin 3) 3 → ℝ) :
+    ∑ w, f w = ∑ a : Fin 3, ∑ b : Fin 3, ∑ c : Fin 3, f ![a, b, c] := by
+  rw [← (Fin.consEquiv (fun _ : Fin 3 => Fin 3)).sum_comp f, Fintype.sum_prod_type]
+  apply Finset.sum_congr rfl
+  intro a _
+  change (∑ w : Fin 2 → Fin 3, f (Fin.cons a w)) = _
+  rw [← (Fin.consEquiv (fun _ : Fin 2 => Fin 3)).sum_comp
+    (fun w => f (Fin.cons a w)), Fintype.sum_prod_type]
+  apply Finset.sum_congr rfl
+  intro b _
+  change (∑ w : Fin 1 → Fin 3, f (Fin.cons a (Fin.cons b w))) = _
+  rw [← (Fin.consEquiv (fun _ : Fin 1 => Fin 3)).sum_comp
+    (fun w => f (Fin.cons a (Fin.cons b w))), Fintype.sum_prod_type]
+  apply Finset.sum_congr rfl
+  intro c _
+  change (∑ w : Fin 0 → Fin 3, f (Fin.cons a (Fin.cons b (Fin.cons c w)))) = _
+  simp only [Fintype.sum_unique]
+  rfl
+
+private theorem counts_classes (w : Word (Fin 3) 3) :
+    counts w = ![3, 0, 0] ∨ counts w = ![1, 2, 0] ∨ counts w = ![1, 0, 2] ∨
+    counts w = ![0, 3, 0] ∨ counts w = ![2, 1, 0] ∨ counts w = ![0, 1, 2] ∨
+    counts w = ![0, 0, 3] ∨ counts w = ![2, 0, 1] ∨ counts w = ![0, 2, 1] ∨
+    counts w = ![1, 1, 1] := by
+  have he : w = ![w 0, w 1, w 2] := by ext i; fin_cases i <;> rfl
+  rw [he]
+  generalize w 0 = a, w 1 = b, w 2 = c
+  fin_cases a <;> fin_cases b <;> fin_cases c <;>
+    norm_num [funext_iff, counts_three, Fin.forall_fin_succ]
+
+private theorem state_cs : IsCompletelySymmetric state := by
+  intro π a b
+  have hc : (fun j => counts (fun k => Sum.elim a b (π (Sum.inl k))) j +
+      counts (fun k => Sum.elim a b (π (Sum.inr k))) j) =
+      (fun j => counts a j + counts b j) := by
+    funext j
+    simp only [counts_sum]
+    let f : Fin 3 ⊕ Fin 3 → ℕ := fun k => if Sum.elim a b k = j then 1 else 0
+    calc
+      _ = ∑ k : Fin 3 ⊕ Fin 3, f (π k) := by rw [Fintype.sum_sum_type]
+      _ = ∑ k : Fin 3 ⊕ Fin 3, f k := Equiv.sum_comp π f
+      _ = _ := by rw [Fintype.sum_sum_type]; rfl
+  change ((moment _ / 471 : ℝ) : ℂ) = ((moment _ / 471 : ℝ) : ℂ)
+  rw [hc]
+
+set_option maxHeartbeats 4000000 in
+-- The Gram identity checks the hundred pairs of occupation classes.
 private theorem gram_factor : state =
     ∑ k : Fin 7, (gramWeight k : ℂ) • vecMulVec (gramVector k) (star (gramVector k)) := by
-  sorry
+  ext a b
+  rcases counts_classes a with ha | ha | ha | ha | ha | ha | ha | ha | ha | ha <;>
+    rcases counts_classes b with hb | hb | hb | hb | hb | hb | hb | hb | hb | hb <;>
+    norm_num [state, moment, gramWeight, gramVector, ha, hb, Fin.sum_univ_succ,
+      funext_iff, Fin.forall_fin_succ, Matrix.sum_apply, Matrix.smul_apply,
+      Matrix.vecMulVec_apply, Pi.star_apply, smul_eq_mul, map_ofNat]
 
 private theorem state_psd : state.PosSemidef := by
   rw [gram_factor]
-  sorry
+  have hp (k : Fin 7) :
+      ((gramWeight k : ℂ) • vecMulVec (gramVector k) (star (gramVector k))).PosSemidef := by
+    apply (Matrix.posSemidef_vecMulVec_self_star (gramVector k)).smul
+    have hw : 0 ≤ gramWeight k := by fin_cases k <;> norm_num [gramWeight]
+    exact_mod_cast hw
+  exact Finset.sum_induction _ _ (fun a b ha hb => ha.add hb) .zero (fun k _ => hp k)
 
 private theorem state_trace : trace state = 1 := by
-  sorry
+  apply Complex.ext
+  · change (∑ w, state w w).re = 1
+    rw [Complex.re_sum, sum_words]
+    norm_num [Fin.sum_univ_three, state, moment, counts_three, funext_iff,
+      Fin.forall_fin_succ]
+  · change (∑ w, state w w).im = 0
+    rw [Complex.im_sum]
+    apply Finset.sum_eq_zero
+    intro w _
+    exact Complex.ofReal_im _
 
 private theorem decomposition_support (n : ℕ) (wt : Fin n → ℝ)
     (ψ : Fin n → Word (Fin 3) 3 → ℂ) (hwt : ∀ i, 0 < wt i)
     (he : state = ∑ i, (wt i : ℂ) • vecMulVec (ψ i) (star (ψ i))) :
     ∀ i a b, counts a = counts b → ψ i a = ψ i b := by
-  sorry
+  intro i a b hab
+  have hentry (x y : Word (Fin 3) 3) :
+      state x y = ∑ j, (wt j : ℂ) * (ψ j x * star (ψ j y)) := by
+    simpa only [Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
+      Matrix.vecMulVec_apply, Pi.star_apply] using
+      congrArg (fun m : Matrix (Word (Fin 3) 3) (Word (Fin 3) 3) ℂ => m x y) he
+  have hzero : state a a + state b b - state a b - state b a = 0 := by
+    change ((moment _ / 471 : ℝ) : ℂ) + ((moment _ / 471 : ℝ) : ℂ) -
+      ((moment _ / 471 : ℝ) : ℂ) - ((moment _ / 471 : ℝ) : ℂ) = 0
+    rw [hab]
+    ring
+  have hz : (∑ j, wt j * Complex.normSq (ψ j a - ψ j b)) = 0 := by
+    calc
+      _ = (state a a + state b b - state a b - state b a).re := by
+        rw [hentry a a, hentry b b, hentry a b, hentry b a]
+        rw [← Finset.sum_add_distrib, ← Finset.sum_sub_distrib,
+          ← Finset.sum_sub_distrib, Complex.re_sum]
+        apply Finset.sum_congr rfl
+        intro j _
+        simp only [Complex.normSq_apply, Complex.sub_re, Complex.sub_im,
+          Complex.add_re, Complex.mul_re, Complex.mul_im, Complex.star_def,
+          Complex.conj_re, Complex.conj_im, Complex.ofReal_re, Complex.ofReal_im]
+        ring
+      _ = 0 := by rw [hzero]; rfl
+  have hterm := (Finset.sum_eq_zero_iff_of_nonneg
+    (fun j _ => mul_nonneg (hwt j).le (Complex.normSq_nonneg _))).mp hz i (Finset.mem_univ i)
+  exact sub_eq_zero.mp (Complex.normSq_eq_zero.mp
+    ((mul_eq_zero.mp hterm).resolve_left (ne_of_gt (hwt i))))
 
 private theorem symmetric_product_power (v : Fin 3 → Fin 3 → ℂ)
     (hs : ∀ a b, counts a = counts b → productVector v a = productVector v b) :
     ∃ (c : ℂ) (x : Fin 3 → ℂ),
       ∀ w, productVector v w = c * ∏ k : Fin 3, x (w k) := by
-  sorry
+  classical
+  by_cases hz : ∀ w, productVector v w = 0
+  · refine ⟨0, fun _ => 0, ?_⟩
+    intro w
+    rw [hz w, zero_mul]
+  push Not at hz
+  obtain ⟨w, hw⟩ := hz
+  have hp : productVector v w = v 0 (w 0) * v 1 (w 1) * v 2 (w 2) :=
+    Fin.prod_univ_three _
+  rw [hp] at hw
+  have h0 : v 0 (w 0) ≠ 0 := fun h => hw (by rw [h, zero_mul, zero_mul])
+  have h1 : v 1 (w 1) ≠ 0 := fun h => hw (by rw [h, mul_zero, zero_mul])
+  have h2 : v 2 (w 2) ≠ 0 := fun h => hw (by rw [h, mul_zero])
+  have hs01 (a b c : Fin 3) :
+      v 0 a * v 1 b * v 2 c = v 0 b * v 1 a * v 2 c := by
+    have hc : counts ![a, b, c] = counts ![b, a, c] := by
+      funext j
+      rw [counts_three, counts_three]
+      change (if a = j then 1 else 0) + (if b = j then 1 else 0) +
+          (if c = j then 1 else 0) =
+        (if b = j then 1 else 0) + (if a = j then 1 else 0) +
+          (if c = j then 1 else 0)
+      omega
+    have h := hs _ _ hc
+    simp only [productVector, Fin.prod_univ_three] at h
+    exact h
+  have hs02 (a b c : Fin 3) :
+      v 0 a * v 1 b * v 2 c = v 0 c * v 1 b * v 2 a := by
+    have hc : counts ![a, b, c] = counts ![c, b, a] := by
+      funext j
+      rw [counts_three, counts_three]
+      change (if a = j then 1 else 0) + (if b = j then 1 else 0) +
+          (if c = j then 1 else 0) =
+        (if c = j then 1 else 0) + (if b = j then 1 else 0) +
+          (if a = j then 1 else 0)
+      omega
+    have h := hs _ _ hc
+    simp only [productVector, Fin.prod_univ_three] at h
+    exact h
+  have hb (z : Fin 3) : v 1 z = (v 1 (w 0) / v 0 (w 0)) * v 0 z := by
+    have h := mul_right_cancel₀ h2 (hs01 (w 0) z (w 2))
+    apply mul_left_cancel₀ h0
+    calc
+      v 0 (w 0) * v 1 z = v 0 z * v 1 (w 0) := h
+      _ = v 0 (w 0) * (v 1 (w 0) / v 0 (w 0) * v 0 z) := by
+        field_simp [h0]
+  have hc (z : Fin 3) : v 2 z = (v 2 (w 0) / v 0 (w 0)) * v 0 z := by
+    have h : v 0 (w 0) * v 2 z = v 0 z * v 2 (w 0) := by
+      apply mul_left_cancel₀ h1
+      calc
+        v 1 (w 1) * (v 0 (w 0) * v 2 z) = v 0 (w 0) * v 1 (w 1) * v 2 z := by
+          ring
+        _ = v 0 z * v 1 (w 1) * v 2 (w 0) := hs02 (w 0) (w 1) z
+        _ = v 1 (w 1) * (v 0 z * v 2 (w 0)) := by ring
+    apply mul_left_cancel₀ h0
+    calc
+      v 0 (w 0) * v 2 z = v 0 z * v 2 (w 0) := h
+      _ = v 0 (w 0) * (v 2 (w 0) / v 0 (w 0) * v 0 z) := by
+        field_simp [h0]
+  refine ⟨(v 1 (w 0) / v 0 (w 0)) * (v 2 (w 0) / v 0 (w 0)), v 0, ?_⟩
+  intro q
+  change (∏ k : Fin 3, v k (q k)) = _
+  rw [Fin.prod_univ_three, Fin.prod_univ_three, hb, hc]
+  ring
 
 private theorem motzkin_nonneg (a b c : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (hc : 0 ≤ c) :
     0 ≤ a ^ 2 * b + a * b ^ 2 + c ^ 3 - 3 * a * b * c := by
-  sorry
+  have hp : 0 ≤ a ^ 2 * b := mul_nonneg (sq_nonneg a) hb
+  have hq : 0 ≤ a * b ^ 2 := mul_nonneg ha (sq_nonneg b)
+  have hr : 0 ≤ c ^ 3 := pow_nonneg hc 3
+  have h := Real.geom_mean_le_arith_mean3_weighted
+    (w₁ := (1 / 3 : ℝ)) (w₂ := (1 / 3 : ℝ)) (w₃ := (1 / 3 : ℝ))
+    (by norm_num) (by norm_num) (by norm_num) hp hq hr (by norm_num)
+  rw [← Real.mul_rpow hp hq, ← Real.mul_rpow (mul_nonneg hp hq) hr] at h
+  rw [show (a ^ 2 * b) * (a * b ^ 2) * c ^ 3 = (a * b * c) ^ 3 by ring,
+    ← Real.rpow_natCast_mul (mul_nonneg (mul_nonneg ha hb) hc)] at h
+  norm_num at h
+  linarith
 
 private theorem power_witness_nonneg (c : ℂ) (x : Fin 3 → ℂ) :
     0 ≤ ∑ w : Word (Fin 3) 3,
       witness w * Complex.normSq (c * ∏ k : Fin 3, x (w k)) := by
-  sorry
+  have he : (∑ w : Word (Fin 3) 3,
+      witness w * Complex.normSq (c * ∏ k : Fin 3, x (w k))) =
+      Complex.normSq c * (Complex.normSq (x 0) ^ 2 * Complex.normSq (x 1) +
+        Complex.normSq (x 0) * Complex.normSq (x 1) ^ 2 + Complex.normSq (x 2) ^ 3 -
+        3 * Complex.normSq (x 0) * Complex.normSq (x 1) * Complex.normSq (x 2)) := by
+    rw [sum_words]
+    norm_num [Fin.sum_univ_three, Fin.prod_univ_three, witness, counts_three,
+      funext_iff, Fin.forall_fin_succ, Complex.normSq_mul]
+    ring
+  rw [he]
+  exact mul_nonneg (Complex.normSq_nonneg c) (motzkin_nonneg _ _ _
+    (Complex.normSq_nonneg _) (Complex.normSq_nonneg _) (Complex.normSq_nonneg _))
 
 private theorem symmetric_product_witness_nonneg (v : Fin 3 → Fin 3 → ℂ)
     (hs : ∀ a b, counts a = counts b → productVector v a = productVector v b) :
@@ -122,15 +312,35 @@ private theorem symmetric_product_witness_nonneg (v : Fin 3 → Fin 3 → ℂ)
 
 private theorem state_witness_value :
     (∑ w : Word (Fin 3) 3, witness w * (state w w).re) = -1 / 471 := by
-  sorry
+  rw [sum_words]
+  norm_num [Fin.sum_univ_three, witness, state, moment, counts_three,
+    funext_iff, Fin.forall_fin_succ]
 
 private theorem state_entangled : ¬ IsFullySeparable state := by
   intro h
   obtain ⟨n, wt, v, hwt, _, _, he⟩ := h
   have hs := decomposition_support n wt (fun i => productVector (v i)) hwt he
   have hp (i : Fin n) := symmetric_product_witness_nonneg (v i) (hs i)
+  have hd (w : Word (Fin 3) 3) :
+      (state w w).re = ∑ i, wt i * Complex.normSq (productVector (v i) w) := by
+    have hew := congrArg
+      (fun m : Matrix (Word (Fin 3) 3) (Word (Fin 3) 3) ℂ => m w w) he
+    rw [hew]
+    simp only [Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul,
+      Matrix.vecMulVec_apply, Pi.star_apply, Complex.re_sum]
+    apply Finset.sum_congr rfl
+    intro i _
+    simp only [Complex.normSq_apply, Complex.mul_re, Complex.mul_im,
+      Complex.star_def, Complex.conj_re, Complex.conj_im,
+      Complex.ofReal_re, Complex.ofReal_im]
+    ring
   have hn : 0 ≤ ∑ w : Word (Fin 3) 3, witness w * (state w w).re := by
-    sorry
+    simp_rw [hd, Finset.mul_sum]
+    rw [Finset.sum_comm]
+    apply Finset.sum_nonneg
+    intro i _
+    have h := mul_nonneg (hwt i).le (hp i)
+    simpa only [Finset.mul_sum, mul_assoc, mul_left_comm (wt i)] using h
   rw [state_witness_value] at hn
   norm_num at hn
 
