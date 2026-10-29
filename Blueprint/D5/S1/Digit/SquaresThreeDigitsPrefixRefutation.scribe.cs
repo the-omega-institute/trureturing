@@ -8,6 +8,9 @@ internal sealed class SquaresThreeDigitsPrefixRefutationDocument : IScribeDocume
 {
     private const string Prefix = "D5/S1/Digit/SquaresThreeDigitsPrefixRefutation.";
 
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Digit/geisser2021squares");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A fifteen-block decimal word has a square with digits in {0,2,5}, "
             + "but deleting its last block gives a square containing digit one.",
@@ -20,8 +23,7 @@ internal sealed class SquaresThreeDigitsPrefixRefutationDocument : IScribeDocume
                 "For each natural entry a, block(a) is the digit 4 followed by exactly "
                     + "a copies of 9. Concatenate those blocks in their listed order and "
                     + "append one final digit 5. Entries equal to zero produce a lone 4. "
-                    + "This is the shorthand on page 25 of Geisser, Korner, Kurz and Zahn, "
-                    + "Squares with three digits, arXiv:2112.00444v2.", DescribeRole.Definition),
+                    + "This is the shorthand in Section 3.3, page 25 of the source.", DescribeRole.Definition),
             Node("squares-three-digits-value", "The ordinary decimal integer", "encode",
                 Disp(AllRuns(Eq(Call("encode", F.Id("runs")), Call("ofDigits", D(1, 0),
                     Call("Reverse", Call("decimalWord", F.Id("runs"))))))),
@@ -75,13 +77,20 @@ internal sealed class SquaresThreeDigitsPrefixRefutationDocument : IScribeDocume
                     + "sum 20 carries a 2 into position 623. Deleting 113 leaves three "
                     + "such pairs, whose sum 15 carries a forbidden 1 instead. "
                     + "This refutes the entire universal implication; it makes no "
-                    + "assertion of a least counterexample or historical priority.", DescribeRole.Theorem))));
+                    + "assertion of a least counterexample or historical priority.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("geisser-2021-squares-prefix"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string title, string declaration,
-        Formula formula, string prose, DescribeRole role) => Describe.Lean(
+        Formula formula, string prose, DescribeRole role,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
-        StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
-        Blocks(Paragraph(Text(prose))), role);
+        StatementSource.FromAuthor(formula),
+        declaration is "counterexample" or "result"
+            ? AssessedProvenance.FromRepo(Source)
+            : AssessedProvenance.FromLiterature(Source),
+        Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula AllRuns(Formula body) => new Formula.BindMany(
         FormulaQuantifier.ForAll,
