@@ -11,6 +11,9 @@ import Mathlib.Analysis.Complex.TaylorSeries
 import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Mathlib.Tactic
 
+/-! Positivity transfers full-ball Taylor convergence of the original transform
+to exponential integrability at the extended real parameter. -/
+
 noncomputable section
 open MeasureTheory ProbabilityTheory Filter Set
 open scoped Topology ENNReal
@@ -43,7 +46,8 @@ private theorem mgf_extension {c R t : ℝ} {H : ℂ → ℂ}
     have hc' : (c : ℂ).re ∈ interior (integrableExpSet X μ) := by simpa using hc
     rw [iteratedDeriv_complexMGF hc' n]
     simp only [← Complex.ofReal_mul, ← Complex.ofReal_pow, ← Complex.ofReal_exp,
-      integral_ofReal]
+      integral_complex_ofReal]
+    exact integral_complex_ofReal
   have hball : ((c + t : ℝ) : ℂ) ∈ Metric.ball (c : ℂ) R := by
     simpa [Metric.mem_ball, dist_eq_norm, ← Complex.ofReal_sub, Real.norm_eq_abs,
       abs_of_pos ht] using htR
@@ -119,7 +123,8 @@ theorem integrable_exp_of_laplace_extension {a R t : ℝ} {H : ℂ → ℂ}
   have hneg : DifferentiableOn ℂ (fun z => H (-z)) (Metric.ball ((-a : ℝ) : ℂ) R) := by
     intro z hz
     have hz' : -z ∈ Metric.ball (a : ℂ) R := by
-      simpa [Metric.mem_ball, dist_eq_norm, ← neg_add, norm_neg] using hz
+      have hn : -z - (a : ℂ) = -(z - ((-a : ℝ) : ℂ)) := by push_cast; ring
+      simpa only [Metric.mem_ball, dist_eq_norm, hn, norm_neg] using hz
     exact (hH.differentiableAt (Metric.isOpen_ball.mem_nhds hz')).comp z
       (differentiableAt_id.neg) |>.differentiableWithinAt
   have heq : (fun z => H (-z)) =ᶠ[𝓝 ((-a : ℝ) : ℂ)] complexMGF X μ := by
@@ -128,6 +133,9 @@ theorem integrable_exp_of_laplace_extension {a R t : ℝ} {H : ℂ → ℂ}
     filter_upwards [hm.eventually hgerm] with z hz
     simpa using hz
   have h := mgf_extension hX ha hneg heq ht htR
-  convert h using 1 <;> push_cast <;> congr 1 <;> ring
+  have hs : -a + t = t - a := by ring
+  rw [hs] at h
+  have hz : -((t - a : ℝ) : ℂ) = ((a - t : ℝ) : ℂ) := by push_cast; ring
+  simpa only [hz] using h
 
 end D5.S3.Analytic.Laplace.NonnegativeContinuation
