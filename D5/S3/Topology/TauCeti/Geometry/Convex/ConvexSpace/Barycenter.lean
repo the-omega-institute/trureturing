@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/Geometry/Convex/ConvexSpace/Barycenter
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Barycenters of faces under vertex maps; sphere-homology support. -/
+
 import Mathlib.Geometry.Convex.ConvexSpace.Barycenter
 
 /-!

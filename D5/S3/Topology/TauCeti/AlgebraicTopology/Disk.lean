@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/Disk
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Dimension of universe-lifted Euclidean spaces; sphere-homology support. -/
+
 import Mathlib.Analysis.InnerProductSpace.PiL2
 
 /-!

@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/Algebra/Homology/Homotopy
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Cokernel, iterated and componentwise chain homotopies; sphere support. -/
+
 import Mathlib.Algebra.BigOperators.Pi
 import Mathlib.Algebra.Homology.Homotopy
 import Mathlib.CategoryTheory.Limits.Shapes.Kernels

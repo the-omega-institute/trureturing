@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/Sphere/Equator
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Sphere equator homotopy equivalences; sphere-homology support. -/
+
 import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
 import Mathlib.Topology.Homotopy.Equiv
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Sphere.Zero

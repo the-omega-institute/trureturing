@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/Analysis/Normed/Module/Ball
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Affine preimages and containment of balls and spheres; sphere support. -/
+
 import Mathlib.Analysis.Normed.Group.AddTorsor
 import Mathlib.Analysis.Normed.Group.BallSphere
 import Mathlib.Analysis.Normed.Module.Basic

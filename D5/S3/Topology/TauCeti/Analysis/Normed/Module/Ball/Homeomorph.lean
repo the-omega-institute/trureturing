@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/Analysis/Normed/Module/Ball/Homeomorph
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Ball and sphere homeomorphisms via radial rescaling; sphere support. -/
+
 import Mathlib.Analysis.Convex.GaugeRescale
 import Mathlib.Analysis.Normed.Module.Ball.Homeomorph
 import Mathlib.Analysis.Normed.Module.Convex

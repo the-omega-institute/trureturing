@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/Topology/UnitInterval
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Monotone partitions of the unit interval; sphere-homology support. -/
+
 import Mathlib.Topology.UnitInterval
 
 /-!

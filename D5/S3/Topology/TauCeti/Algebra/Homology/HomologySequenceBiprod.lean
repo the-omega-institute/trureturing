@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/Algebra/Homology/HomologySequenceBiprod
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Biproduct homology long exact sequences; sphere-homology support. -/
+
 import Mathlib.Algebra.Homology.HomologySequence
 import Mathlib.Algebra.Homology.HomologicalComplexAbelian
 import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Biproducts

@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/Analysis/Normed/Module/FiniteDimension
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Dual dimension and finite-dimensional normed-space maps; sphere support. -/
+
 import Mathlib.Analysis.Normed.Module.FiniteDimension
 import Mathlib.LinearAlgebra.Dual.Lemmas
 

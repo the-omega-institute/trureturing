@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/Singular/Subdivision/Small/Equiv
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: The small-chain homotopy equivalence; sphere-homology support. -/
+
 import Mathlib.Algebra.Homology.QuasiIso
 import D5.S3.Topology.TauCeti.Algebra.Homology.Homotopy
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Subdivision.Small.Homotopy

@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/Topology/Sets/FinTwo
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Two-set families, unions and openness; sphere-homology support. -/
+
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Set.Lattice.Indexed
 import Mathlib.Topology.Defs.Basic

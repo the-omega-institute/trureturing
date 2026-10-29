@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/Sphere/Puncture
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Contractions and path homotopies on punctured spheres; sphere support. -/
+
 import D5.S3.Topology.TauCeti.Analysis.Normed.Module.Normalize
 import D5.S3.Topology.TauCeti.Topology.Homotopy.Path
 import Mathlib.Analysis.Normed.Group.BallSphere

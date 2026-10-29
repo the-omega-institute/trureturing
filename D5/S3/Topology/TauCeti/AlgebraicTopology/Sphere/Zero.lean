@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/Sphere/Zero
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: One-dimensional spheres and their path components; sphere support. -/
+
 import Mathlib.Analysis.Normed.Group.BallSphere
 import Mathlib.Analysis.Normed.Module.Ball.Action
 import D5.S3.Topology.TauCeti.Analysis.Normed.Module.FiniteDimension

@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/Singular/Basic
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Singular chain and homology functor maps; sphere-homology support. -/
+
 import Mathlib.AlgebraicTopology.SingularHomology.Basic
 
 /-!

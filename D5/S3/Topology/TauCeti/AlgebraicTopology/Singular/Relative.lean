@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/Singular/Relative
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Relative singular chains and exact sequences; sphere-homology support. -/
+
 import Mathlib.AlgebraicTopology.SimplicialSet.Homology.Relative
 import Mathlib.Topology.Category.TopCat.EpiMono
 import Mathlib.Topology.Category.TopPair

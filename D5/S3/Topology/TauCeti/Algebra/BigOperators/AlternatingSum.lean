@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/Algebra/BigOperators/AlternatingSum
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Alternating and finite Euler sums; sphere-homology support. -/
+
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.BigOperators.GroupWithZero.Action
 import Mathlib.Algebra.BigOperators.Intervals

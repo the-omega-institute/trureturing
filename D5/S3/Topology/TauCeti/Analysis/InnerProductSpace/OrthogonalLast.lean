@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/Analysis/InnerProductSpace/OrthogonalLast
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: An orthonormal basis of the last vector's complement; sphere support. -/
+
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
 

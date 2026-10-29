@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/Singular/MayerVietoris/Basic
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Singular Mayer-Vietoris sequences; sphere-homology support. -/
+
 import Mathlib.AlgebraicTopology.SimplicialSet.SubcomplexColimits
 import D5.S3.Topology.TauCeti.AlgebraicTopology.SimplicialSet.Homology.MayerVietoris
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Subspace

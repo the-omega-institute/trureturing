@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/Topology/Category/TopPair
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Topological pairs, their maps and homotopies; sphere-homology support. -/
+
 import Mathlib.Topology.Category.TopCat.Limits.Products
 import Mathlib.Topology.Category.TopPair
 

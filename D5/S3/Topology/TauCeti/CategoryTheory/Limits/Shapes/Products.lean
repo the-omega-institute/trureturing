@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/CategoryTheory/Limits/Shapes/Products
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Split coproduct maps and their kernels and cokernels; sphere support. -/
+
 import Mathlib.CategoryTheory.Limits.Shapes.Products
 import Mathlib.CategoryTheory.Limits.Shapes.ZeroMorphisms
 import Mathlib.Algebra.Homology.ShortComplex.Exact

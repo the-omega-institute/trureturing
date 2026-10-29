@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/Singular/Subdivision/Basic
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Barycentric subdivision as a singular chain map; sphere support. -/
+
 import Mathlib.AlgebraicTopology.SingularHomology.Basic
 import Mathlib.GroupTheory.Perm.Fin
 import D5.S3.Topology.TauCeti.Geometry.Convex.ConvexSpace.Barycenter

@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/Singular/Subdivision/AffineChain
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Affine chains, boundaries, cones and subdivision; sphere support. -/
+
 import Mathlib.CategoryTheory.Endomorphism
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Subdivision.Basic

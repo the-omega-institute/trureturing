@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/Singular/Reduced
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Reduced singular homology and augmentation splittings; sphere support. -/
+
 import D5.S3.Topology.TauCeti.AlgebraicTopology.SimplicialSet.Homology.Zero
 import D5.S3.Topology.TauCeti.AlgebraicTopology.SimplicialSet.TopAdj
 import D5.S3.Topology.TauCeti.CategoryTheory.Limits.Shapes.Products

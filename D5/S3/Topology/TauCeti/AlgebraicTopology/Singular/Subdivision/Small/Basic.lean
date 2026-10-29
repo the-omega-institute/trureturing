@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/Singular/Subdivision/Small/Basic
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Smallness after iterated barycentric subdivision; sphere support. -/
+
 import Mathlib.Geometry.Convex.ConvexSpace.CompactSpaceStdSimplex
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Subdivision.AffineChain
 import D5.S3.Topology.TauCeti.Analysis.Normed.Affine.Centroid

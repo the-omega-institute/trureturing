@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/SimplicialSet/Homology/Coproduct
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Colimit preservation of simplicial chain complexes; sphere support. -/
+
 import Mathlib.Algebra.Homology.HomologicalComplexLimits
 import Mathlib.AlgebraicTopology.SimplicialSet.Homology.Basic
 import Mathlib.CategoryTheory.Limits.FunctorCategory.EpiMono

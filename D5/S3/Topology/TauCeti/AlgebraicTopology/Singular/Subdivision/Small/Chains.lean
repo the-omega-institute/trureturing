@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/Singular/Subdivision/Small/Chains
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Singular chains subordinate to a cover; sphere-homology support. -/
+
 import Mathlib.CategoryTheory.Endomorphism
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Subdivision.Small.Basic
 

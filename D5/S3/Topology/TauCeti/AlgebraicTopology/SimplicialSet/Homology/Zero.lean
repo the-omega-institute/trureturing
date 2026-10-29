@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/SimplicialSet/Homology/Zero
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Vertex classes and degree-zero augmentation; sphere-homology support. -/
+
 import Mathlib.AlgebraicTopology.SimplicialSet.Homology.HomologyZero
 
 /-!

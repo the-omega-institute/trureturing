@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/Singular/Subdivision/Small/Homotopy
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Subdivision homotopies on small chains; sphere-homology support. -/
+
 import Mathlib.CategoryTheory.Limits.MonoCoprod
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Subdivision.Small.Chains
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Subdivision.Homotopy

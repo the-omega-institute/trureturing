@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/Geometry/Convex/ConvexSpace/Dist
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Weights and distance bounds in standard simplices; sphere support. -/
+
 import Mathlib.Analysis.Normed.Module.Convex
 import Mathlib.LinearAlgebra.AffineSpace.Centroid
 import D5.S3.Topology.TauCeti.Geometry.Convex.ConvexSpace.Topology

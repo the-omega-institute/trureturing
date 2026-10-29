@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/Geometry/Convex/ConvexSpace/Topology
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Continuous affine maps and simplex homeomorphisms; sphere support. -/
+
 import Mathlib.Geometry.Convex.ConvexSpace.AffineMap
 import Mathlib.Geometry.Convex.ConvexSpace.Topology
 

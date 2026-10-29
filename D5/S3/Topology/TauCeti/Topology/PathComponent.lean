@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/Topology/PathComponent
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Path-component subspaces and their basepoints; sphere-homology support. -/
+
 import Mathlib.Topology.Connected.LocallyPathConnected
 import D5.S3.Topology.TauCeti.Topology.Homotopy.Path
 

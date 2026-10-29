@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/Singular/Sphere
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Reduced singular homology of spheres; sphere-homology support. -/
+
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.MayerVietoris.Reduced
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Disk
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Sphere.Equator

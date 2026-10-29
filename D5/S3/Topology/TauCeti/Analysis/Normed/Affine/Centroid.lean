@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/Analysis/Normed/Affine/Centroid
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Distances between finite-family centroids; sphere-homology support. -/
+
 import Mathlib.Analysis.Normed.Group.AddTorsor
 import Mathlib.Analysis.Normed.Module.Basic
 import Mathlib.LinearAlgebra.AffineSpace.Centroid

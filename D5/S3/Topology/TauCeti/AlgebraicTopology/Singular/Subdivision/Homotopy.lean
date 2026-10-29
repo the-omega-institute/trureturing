@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/Singular/Subdivision/Homotopy
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: The subdivision prism chain homotopy; sphere-homology support. -/
+
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.Subdivision.AffineChain
 import D5.S3.Topology.TauCeti.Algebra.Homology.Homotopy
 

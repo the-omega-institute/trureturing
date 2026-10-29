@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/SimplicialSet/Homology/MayerVietoris
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Simplicial Mayer-Vietoris sequences; sphere-homology support. -/
+
 import Mathlib.Algebra.Homology.HomologySequenceLemmas
 import Mathlib.Algebra.Homology.HomologicalComplexAbelian
 import Mathlib.CategoryTheory.Abelian.CommSq

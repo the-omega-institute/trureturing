@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/SimplicialSet/Homology/Relative/Basic
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Naturality and quasi-isomorphisms in relative homology; sphere support. -/
+
 import Mathlib.Algebra.Homology.HomologySequenceLemmas
 import Mathlib.AlgebraicTopology.SimplicialSet.Homology.Relative
 import D5.S3.Topology.TauCeti.CategoryTheory.Limits.Shapes.Products

@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/Topology/Homotopy/Path
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Path restrictions, partitions and homotopy identities; sphere support. -/
+
 import Mathlib.Topology.Subpath
 import Mathlib.Topology.Homotopy.Contractible
 import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected

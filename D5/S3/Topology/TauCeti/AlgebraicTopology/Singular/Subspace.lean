@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/Singular/Subspace
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Singular simplices and inclusions of subspaces; sphere-homology support. -/
+
 import Mathlib.Topology.Category.TopCat.Opens
 import D5.S3.Topology.TauCeti.AlgebraicTopology.SimplicialSet.TopAdj
 

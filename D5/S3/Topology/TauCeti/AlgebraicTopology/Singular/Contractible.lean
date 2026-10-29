@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/AlgebraicTopology/Singular/Contractible
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Vanishing homology of contractible spaces; sphere-homology support. -/
+
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.ReducedRelative
 import Mathlib.Topology.Homotopy.Contractible
 import D5.S3.Topology.TauCeti.Topology.Category.TopPair

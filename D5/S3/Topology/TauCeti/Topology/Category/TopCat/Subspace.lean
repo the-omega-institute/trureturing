@@ -1,3 +1,11 @@
+/- GID: D5/S3/Topology/TauCeti/Topology/Category/TopCat/Subspace
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Monomorphisms and commutative squares of subspaces; sphere support. -/
+
 import Mathlib.Topology.Category.TopCat.EpiMono
 import Mathlib.CategoryTheory.CommSq
 
