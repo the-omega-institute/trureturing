@@ -396,7 +396,131 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedIma
 
 For every finite original presentation E on the whole declared Fin d tuple and every actual solution v, first retain the identity finiteExtend E v (inputName E i) = v(i) at every original input, then select an actual branch of finiteEquations E and a successful total MGU of its shape equations. Every supported name factors through that MGU at the shape of its actual canonical code. The automatically constructed rankParameters tuple satisfies RankSlot.Correct at every index of rankSlots. Structural induction on the MGU term proves that each explicit leaf address lands at a primitive of the actual code. Reading that primitive recovers its rank. Actual branch soundness at each chosen collapse supplies all three equations with the rank read from its right input. The same construction includes all unused input names, repetitions, an empty declared tuple and branches with no scalar slots.
 
-Concrete lowering, finite total-name reduction, automatic scalar-coordinate extraction and arbitrary-filling soundness hold on the same original objects. Residual occurrence offsets and decorations still require construction from the signed-cycle and minimum-base data. Successful collect extraction, reconstruction of every actual named code, the finite chart list and both inclusions of the universal cover remain additional obligations. The scalar-coordinate extraction theorem assumes an original solution in order to recover its actual coordinates; it does not assume successful collect, prescribed decorations or an exact image cover.
+**Definition 1.32 (Use the actual finite scalar-coordinate index).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.slotScalar`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.slotScalar` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Look up an explicit or collapse slot in rankSlots and return its parameter with zero added offset. The total fallback is the constant zero, but membership at every actual explicit leaf and selected collapse excludes that fallback. Evaluation at rankParameters recovers the same actual slot value.
+
+**Definition 1.33 (Keep the complete total-MGU occurrence list).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.residualOccurrences`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.residualOccurrences` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Reuse occurrenceVertices on every name in the actual finite presentation. The list retains each residual name, ordered address and residual sort, including occurrences in isolated unused input outputs.
+
+**Definition 1.34 (Automatically decorate an actual shape subtree).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.decorateAt`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.decorateAt` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Recurse through the actual MGU subtree at a proved address. An explicit primitive receives slotScalar for that name and address. A residual receives its finite sort and natural offset from a map defined only at proved actual occurrences. Pairs recurse at the two appended child addresses. This dependent domain permits zero residual dimensions when no residual occurs.
+
+**Definition 1.35 (Construct each full named decoration).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.automaticDecoration`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.automaticDecoration` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Apply decorateAt at the empty address of the actual total-MGU term of the named value. No scalar decoration is supplied as a premise.
+
+**Definition 1.36 (Construct the shared collapse scalar).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.automaticCollapse`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.automaticCollapse` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Each selected collapse uses its actual collapse slot in the same finite scalar tuple. Its three branch comparisons therefore share one parameter, shifted by one, zero and two. Other branch constructors do not use this scalar.
+
+Retain scalar versus residual syntax. Erase scalar ranks and block labels, retaining different leaf tags for explicit scalars and residuals and preserving ordered pair constructors. An actual residual that happens to fill with a primitive is still a residual in this frame.
+
+**Definition 1.37 (The precise remaining residual comparison condition).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.blockCompatible`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.blockCompatible` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At two matching block leaves require the same finite sort and fixed natural offset. At matching pairs recurse on both children. Other combinations contribute no residual condition; successful MGU frame matching independently excludes mismatched constructors.
+
+Read actual scalar leaves and pair constructors. At a scalar leaf, the actual code must be the primitive with its evaluated rank. At a pair, the actual code must be the corresponding raw pair and both children must agree. A residual leaf contributes no assertion about its actual block. This predicate records scalar and constructor information and is not full code reconstruction.
+
+**Definition 1.38 (Enumerate the finite actual residual sorts).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.residualSorts`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.residualSorts` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Map the complete occurrence list to its residual labels and deduplicate. This includes every isolated sort of an unused original name; no default sort is introduced for an empty list.
+
+**Definition 1.39 (Index a proved actual residual sort).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.residualSortIndex`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.residualSortIndex` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The successful actual MGU supplies the exact occurrence-membership theorem. Use that membership to index the residual label in residualSorts. Thus the finite sort index is constructed from the actual MGU and needs no default element.
+
+**Definition 1.40 (Combine automatic sorts with occurrence offsets).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.sortedBlocks`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.sortedBlocks` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Each proved residual occurrence receives its computed residualSortIndex and the supplied natural occurrence offset. Only these offsets remain external block data; scalar indices, collapse indices and finite residual sorts have already been constructed.
+
+**Theorem 1.41 (Automatic source scalar guards with an exact residual obstruction).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.finite_guard_extraction`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.finite_guard_extraction` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original solution v on the entire Fin d tuple, retain every input identity and select an actual finite branch and successful total MGU. The returned witnesses include every actual branch equation and the same-assignment shape factorization at every supported name. For every assignment of natural offsets to its actual residual occurrences, use sortedBlocks and automaticDecoration to construct the named patterns and use automaticCollapse for their shared collapse scalars. At the rank tuple read from the same canonical codes, every named pattern agrees with its actual code in the precise scalar-and-pair sense above. Moreover there exists a successful collect result whose entire affine integer guard holds at those actual ranks if and only if blockCompatible holds throughout that same actual branchComparisons traversal. The proof derives comparison frames from the successful MGU equations. It derives scalar agreement from actual primitive constants, original fixed shifts, zero-offset ordinary pairs and equalities, and all three actual collapse equations. Recursive comparison then emits and verifies the scalar equalities. Neither successful collect nor scalar guard satisfaction is assumed. Residual offset compatibility is exposed as the exact remaining condition, rather than asserted to exist. The tuple, empty presentations and zero dimensions remain quantified.
+
+Concrete lowering, finite total-name reduction, automatic finite scalar and residual-sort decorations, the exact scalar-guard obstruction theorem and arbitrary-filling soundness hold on the original source objects. The independent signed-cycle/minimum-base supplier must still construct compatible nonnegative offsets on the actual sourceOffsetEdges, connect that edge law to blockCompatible in this traversal, and recover every actual residual block from its normal minimum block. Full actual-code reconstruction, lifting the finite-name templates to unrestricted original-expression soundness, construction of the finite chart list and both inclusions of the universal cover remain open. No corresponding supplier result or whole-cover conclusion is assumed here.
 
 ## References
 
@@ -408,15 +532,20 @@ Concrete lowering, finite total-name reduction, automatic scalar-coordinate extr
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.RankSlot`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.Scalar`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.assemble`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.automaticCollapse`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.automaticDecoration`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.blockCompatible`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.branchComparisons`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.collect`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.compare`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.decorateAt`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.definitions`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.equationNames`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.expression_branch_exact`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.extend`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.finiteEquations`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.finiteExtend`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.finite_guard_extraction`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.finite_rank_extraction`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.flatten`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.flatten_exact`
@@ -429,7 +558,12 @@ Concrete lowering, finite total-name reduction, automatic scalar-coordinate extr
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.rankAt`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.rankParameters`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.rankSlots`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.residualOccurrences`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.residualSortIndex`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.residualSorts`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.root`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.scalarAddresses`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.slotScalar`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeMixedImageConstruction.sortedBlocks`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction](NativePositiveBranchReduction.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformResidualRealization](../NativeUniformResidualRealization.md)
