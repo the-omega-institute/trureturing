@@ -1,0 +1,61 @@
+**Definition 9.1 (the joint entrance and its target).** Use exactly GPO
+Definition 27.1's actual alpha origin, persistent physical links $a<b$,
+actual lexicographic beta-birth order and autonomous all-index class
+$\mathscr R_d$. Only the authentic public integer $d\ge0$ is numerical
+source information at entry. Put
+
+$$
+ n_0=\begin{cases}N(2d),&d>0,\\2,&d=0,\end{cases}
+ \qquad N(m)=\min\{u\ge3:F_u-1\ge m\}.
+ \tag{ACR.23}
+$$
+
+The actual completed cut is an arbitrary finite $n\ge n_0$; no upper
+bound is supplied. Erase all accessible source bits, seeded law, age,
+phase, tree, support, boundary, labels, archives, receipts and histories,
+including age-bearing control, allocation, capacity and duration data.
+The actual source and its genuine same-root binding survive. Supply
+valid total paid physical-literal presence-Read and later update grants,
+common finite source-blind code, fresh growing owned readable backing,
+finite local progress and completed Reads. An exclusive completed-cut
+stationary interval covers all recovery calculations, Reads, allocations,
+intermediate and retained writes, and the actual completed handoff.
+Recovery makes zero source updates. Service apparatus, initialization,
+retention, writes and handoff retain their actual charges as in Assumption
+1.2; no source conformance, root or grant is inferred from a bit string.
+
+Write $\mathscr C_d$ for the distinct infinite output behaviors in
+$\mathscr R_d$. GPO (GPO.88), with its semi-infinite, singular and
+finite-transient convention, supplies
+
+$$
+ D_d=|\mathscr C_d|=\frac{2\,4^d+1}{3}.
+ \tag{ACR.24}
+$$
+
+For an authentic length-$2d$ prefix $P$, let $K_d(P)$ be **the same fixed
+synthesis** used in GPO Lemma 29.2 and Definition 34.1. For $d>0$ it
+selects the first passing order-$d$ coefficient row in that already fixed
+enumeration, with the first $d$ bits of $P$ as seed; for $d=0$ it is the
+zero descriptor. The enumeration is a common source-independent code
+convention. It is not replaced by a new ordering or a minimal private
+presentation. The target is to acquire and actually install
+
+$$
+ (P,K_d(P),n,B_n),\qquad P=z_1\cdots z_{2d},\qquad B_n=F_{n+1}-1.
+ \tag{ACR.25}
+$$
+
+Acquisition here means exact inference from paid current-source replies
+and real readable writeback. It does not assert that these bits were
+previously queried at their origin births.
+
+Let $e_d$ and $v_d$ be the bit work and peak working bits of generating
+all rows once by that original fixed public enumeration, counting its
+operands and intermediate writes. They are finite constants at each
+fixed $d$, independent of the actual stream and cut; take both zero at
+$d=0$. This retains the original unspecified enumeration rather than
+assuming an efficient new one. For the usual binary-counter ordering
+one has $e_d=O((d+1)2^d)$ and $v_d=O(d+1)$; the statements below
+charge the actual $e_d,v_d$ without requiring that particular ordering.
+
