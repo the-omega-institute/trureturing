@@ -58,6 +58,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/TokenGraph/NewLayerMaximaRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/reyes-dalfo-fiol-2024-new-laplacian-layer-maxima` (refuted) by `D5/S3/Combinatorics/Graph/TokenGraph/NewLayerMaximaRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"reyes-dalfo-fiol-2024-new-laplacian-layer-maxima","declaration_gid":"D5/S3/Combinatorics/Graph/TokenGraph/NewLayerMaximaRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* M. A. Reyes and C. Dalfó and M. À. Fiol (2024). *On the spectra and spectral radii of token graphs*. DOI: [10.1007/s40590-023-00583-3](https://doi.org/10.1007/s40590-023-00583-3). URL: <https://arxiv.org/html/2310.16929v1>.
@@ -66,7 +70,7 @@ $$\neg claim$$
 
 Take K₁,₃ on Fin 4 with center 0. The equivalences e0, e1, e2 enumerate all actual token subsets, with e2 in the order 01,12,02,23,03,13. Decidable integer Laplacian identities verify every degree and adjacency entry. In particular the two-token matrix is the ordinary C₆ Laplacian, with two neighbors at every vertex and no extra edges. Entrywise casting preserves these actual matrices over the reals. The displayed rational matrices P and Q in spectrum1 and spectrum2 satisfy QP=I and LP=P diag(d), so their columns form complete eigenbases, not merely lists of eigenvectors. Mathlib's characteristic-polynomial identities and Hermitian roots theorem then prove the entire spectral multisets: Sp₀={0}, Sp₁={0,1,1,4}, Sp₂={0,1,1,3,3,4}. Exact multiset subtraction gives Δ₁={1,1,4} and Δ₂={3,3}; Finset.max' gives ρ₁=4 and ρ₂=3. At n=4,k=1 the original universal claim requires 4≤3, a contradiction.
 
-The finite computations and spectral identities are bind-only proof organization. The admission basis is external open-problem resolution under preregistration #23401. Every private helper is consumed by this result or by rho. The sole new public theorem is the designated utility refutation result, exempt from the four-slot registration requirement under CLAUDE.md §3.9. The star and six-cycle spectral ingredients are literature-attested; no new spectral method is claimed. Full Laplacian maxima remain 4 at both positive levels; Conjecture 3.2 about minima and the separate full-radius equality characterization are untouched.
+The star and six-cycle spectral ingredients occur in Dongsheng Wei, arXiv:2609.26802v1 Section 4.6 and v2 Section 7, as recorded in the source note. This calculation applies those ingredients to the consecutive new-layer multisets. Full Laplacian maxima remain 4 at both positive levels, whereas the new-layer maxima decrease. Conjecture 3.2 about minima and the separate full-radius equality characterization concern different statements.
 
 ## References
 
