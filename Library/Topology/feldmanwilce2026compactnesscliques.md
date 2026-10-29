@@ -151,3 +151,25 @@ the primary finite-block proposal is the application provenance. The
 open status reported in this particular version establishes neither a
 literature exclusion nor global priority, novelty, uniqueness or
 official acceptance. No external exclusion search is claimed.
+
+## Question 3 and the rational six-axis upper bound
+
+Question 3 on printed page 11 asks for the least number of open
+orthogonality-free subsets covering the real unit two-sphere, and more
+generally for estimates of the open orthogonality covering number in
+other dimensions. Here orthogonality is the standard Euclidean inner
+product relation on the actual unit sphere.
+
+The construction in `D5/S3/Geometry/Orthogonality/RationalSixAxisCover`
+uses the six rational axes $(1,\pm2,0)$, $(0,1,\pm2)$ and
+$(\pm2,0,1)$ and the strict superlevels $2\langle x,v\rangle^2>5$.
+Its nonnegative polynomial certificate yields a squared projection of
+at least three for every unit vector. Bessel's inequality excludes an
+orthogonal pair from each superlevel. The corresponding Blueprint
+gives the full construction and identity. The cited paper is the
+source of the question; the rational construction and certificate are
+repository-derived, as specified by implementation-stage issue
+https://github.com/the-omega-institute/trureturing/issues/23716.
+This is an upper bound only. No attribution of the certificate to
+Feldman--Wilce, lower-bound conclusion, mathematical-priority claim or
+complete resolution of Question 3 is made here.

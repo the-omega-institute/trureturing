@@ -14,7 +14,8 @@ import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
 
-/-!+The construction addresses the upper-bound part of Feldman--Wilce,
+/-!
+The construction addresses the upper-bound part of Feldman--Wilce,
 arXiv:2608.13320v1, Question 3. The rational-axis certificate is the
 repository derivation stated in issue #23716; mathematical priority is unresolved.
 The lower bound and the full open covering number are outside this module.
