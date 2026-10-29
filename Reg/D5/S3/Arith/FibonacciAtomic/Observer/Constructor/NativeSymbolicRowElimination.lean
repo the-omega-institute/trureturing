@@ -80,35 +80,6 @@ def evidence : Registration arena (type_of% (@exterior_match_exact)) where
     change some [] ≠ (none : Option (List (Unit × Term Unit)))
     simp
 
-noncomputable def registration :
-    LeanInformationAudit.Contract.Registration
-      (@exterior_match_exact)
-      (type_of% (realize signature
-        (fun _ _ s => match s with | ⟨p, u, v⟩ => matchExterior p u)
-        (fun e => nomatch e))) Unit Unit := {
-  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeSymbolicRowElimination.unit_exterior_match_exact,
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeSymbolicRowElimination.evidence,
-  realizationSource := none,
-  generated := false,
-  arena := .source ⟨arena⟩,
-  objectArena := .source ⟨arena⟩,
-  catalog := Lean.Name.anonymous,
-  localNames := false,
-  realization := .source arena ⟨evidence⟩,
-  correspondence := { stage := .evidence, objectStage := .evidence },
-  bundleNonempty := .absent,
-  readout := some (realize signature
-    (fun _ _ s => match s with | ⟨p, u, v⟩ => matchExterior p u)
-    (fun e => nomatch e)),
-  variation := .absent,
-  sensitivity := .absent,
-  partialSensitivity := none,
-  escapeFrom := none,
-  sourceSelection := none,
-  continuation := .unknown,
-  familyRecord := none,
-  options := #[] }
-
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeSymbolicRowElimination
 
 
@@ -197,34 +168,5 @@ def evidence : Registration arena (type_of% (@complete_row_elimination)) where
         matchExterior]
     rw [ho, hn]
     simp
-
-noncomputable def registration :
-    LeanInformationAudit.Contract.Registration
-      (@complete_row_elimination)
-      (type_of% (realize signature
-        (fun _ _ s => eliminateRows s.1 s.2.1 s.2.2.1 s.2.2.2.1)
-        (fun e => nomatch e))) Unit Unit := {
-  unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeSymbolicRowElimination.unit_complete_row_elimination,
-  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeSymbolicRowElimination.CompleteRows.evidence,
-  realizationSource := none,
-  generated := false,
-  arena := .source ⟨arena⟩,
-  objectArena := .source ⟨arena⟩,
-  catalog := Lean.Name.anonymous,
-  localNames := false,
-  realization := .source arena ⟨evidence⟩,
-  correspondence := { stage := .evidence, objectStage := .evidence },
-  bundleNonempty := .absent,
-  readout := some (realize signature
-    (fun _ _ s => eliminateRows s.1 s.2.1 s.2.2.1 s.2.2.2.1)
-    (fun e => nomatch e)),
-  variation := .absent,
-  sensitivity := .absent,
-  partialSensitivity := none,
-  escapeFrom := none,
-  sourceSelection := none,
-  continuation := .unknown,
-  familyRecord := none,
-  options := #[] }
 
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeSymbolicRowElimination.CompleteRows
