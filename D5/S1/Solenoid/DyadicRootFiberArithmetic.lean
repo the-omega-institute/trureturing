@@ -4,10 +4,12 @@
    mirror-E: none(waiver:symbolic-structural-theorems)
    anchors: []
    utility: none
-   digest: The odd part of a degree classifies the cyclic kernel and every root fiber in the dyadic solenoid. -/
+   digest: Odd parts classify cyclic kernels and exact dyadic root fibers. -/
 
 import D5.S1.Solenoid.DyadicTimeSeparation
 import Mathlib.GroupTheory.Coset.Basic
+
+/-! Compatible circle coordinates classify odd torsion and all positive-degree root fibers. -/
 
 noncomputable section
 
@@ -39,13 +41,13 @@ private theorem torsion_coordinates (q s : ℕ) (hs : 2 * s = q + 1)
 /-- For a degree with odd part `q`, the multiplication kernel is cyclic of order `q`,
 and every root fiber has exactly `q` elements. The carrier retains its product topology. -/
 theorem dyadic_root_fiber_arithmetic (k q : ℕ) (hq : Odd q) :
-    Nonempty ((nsmulAddHom (2 ^ k * q) DyadicSolenoid).ker ≃+ ZMod q) ∧
+    Nonempty ((nsmulAddMonoidHom (α := DyadicSolenoid) (2 ^ k * q)).ker ≃+ ZMod q) ∧
     ∀ a : DyadicSolenoid,
       Finite {x : DyadicSolenoid // (2 ^ k * q) • x = a} ∧
       Nat.card {x : DyadicSolenoid // (2 ^ k * q) • x = a} = q := by
   obtain ⟨d, hd⟩ := hq
   have hpos : 0 < q := by omega
-  letI : NeZero q := ⟨by omega⟩
+  let : NeZero q := ⟨by omega⟩
   let s := d + 1
   have hs : 2 * s = q + 1 := by dsimp [s]; omega
   have ht (z : ZMod q) : q • ZMod.toAddCircle z = 0 := by
@@ -53,12 +55,16 @@ theorem dyadic_root_fiber_arithmetic (k q : ℕ) (hq : Odd q) :
   let lift : ZMod q →+ DyadicSolenoid :=
     { toFun := fun z => ⟨fun n => (s ^ n : ℕ) • ZMod.toAddCircle z, by
         intro n
-        rw [pow_succ, ← mul_smul, ← mul_assoc, mul_comm (s ^ n) s,
-          mul_assoc, hs, mul_smul, add_nsmul, ht]
-        simp⟩
+        change 2 • ((s ^ (n + 1) : ℕ) • ZMod.toAddCircle z) = _
+        calc
+          _ = (s ^ n : ℕ) • ((2 * s) • ZMod.toAddCircle z) := by
+            simp only [pow_succ, ← mul_smul]
+            congr 1
+            ring
+          _ = _ := by rw [hs, add_nsmul, ht]; simp⟩
       map_zero' := by ext n; simp
-      map_add' := by intro z w; ext n; simp [nsmul_add] }
-  let f : ZMod q →+ (nsmulAddHom (2 ^ k * q) DyadicSolenoid).ker :=
+      map_add' := by intro z w; ext n; simp }
+  let f : ZMod q →+ (nsmulAddMonoidHom (α := DyadicSolenoid) (2 ^ k * q)).ker :=
     { toFun := fun z => ⟨lift z, by
         change (2 ^ k * q) • lift z = 0
         rw [mul_smul]
@@ -71,15 +77,16 @@ theorem dyadic_root_fiber_arithmetic (k q : ℕ) (hq : Odd q) :
       map_add' := by intro z w; apply Subtype.ext; exact lift.map_add z w }
   have hinj : Function.Injective f := by
     intro z w he
-    apply ZMod.toAddCircle_injective
-    have he0 := congrArg (fun y : (nsmulAddHom (2 ^ k * q) DyadicSolenoid).ker =>
+    apply ZMod.toAddCircle_injective q
+    have he0 := congrArg (fun y : (nsmulAddMonoidHom (α := DyadicSolenoid) (2 ^ k * q)).ker =>
       y.1.1 0) he
     simpa [f, lift] using he0
   have hsurj : Function.Surjective f := by
     intro x
     have hx : q • x.1 = 0 := by
       apply strip_twos k
-      simpa only [← mul_smul] using x.2
+      rw [← mul_smul]
+      exact AddMonoidHom.mem_ker.mp x.2
     have hx0 : q • x.1.1 0 = 0 := congrArg (fun y : DyadicSolenoid => y.1 0) hx
     obtain ⟨r, _, hr⟩ := (AddCircle.nsmul_eq_zero_iff hpos).mp hx0
     refine ⟨(r : ZMod q), ?_⟩
@@ -89,16 +96,16 @@ theorem dyadic_root_fiber_arithmetic (k q : ℕ) (hq : Odd q) :
     change (s ^ n : ℕ) • ZMod.toAddCircle (r : ZMod q) = x.1.1 n
     rw [torsion_coordinates q s hs x.1 hx n]
     congr 1
-    simpa using (ZMod.toAddCircle_natCast q r).trans hr
+    simpa using (ZMod.toAddCircle_natCast (N := q) r).trans (by simpa using hr)
   let e := (AddEquiv.ofBijective f ⟨hinj, hsurj⟩).symm
   refine ⟨⟨e⟩, ?_⟩
   intro a
   have hm : 0 < 2 ^ k * q := Nat.mul_pos (by positivity) hpos
-  let t := (nsmulAddHom (2 ^ k * q) DyadicSolenoid).fiberEquivKerOfSurjective
+  let t := (nsmulAddMonoidHom (α := DyadicSolenoid) (2 ^ k * q)).fiberEquivKerOfSurjective
     (dyadic_time_separation.2.2.2.2.1 _ hm) a
   let eqv := t.trans e.toEquiv
-  haveI : Finite {x : DyadicSolenoid // (2 ^ k * q) • x = a} :=
+  have : Finite {x : DyadicSolenoid // (2 ^ k * q) • x = a} :=
     Finite.of_equiv (ZMod q) eqv.symm
-  exact ⟨inferInstance, (Nat.card_congr eqv).trans (ZMod.natCard q)⟩
+  exact ⟨inferInstance, (Nat.card_congr eqv).trans (by simp [Nat.card_eq_fintype_card])⟩
 
 end D5.S1.Solenoid.DyadicSolenoid
