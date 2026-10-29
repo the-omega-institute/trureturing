@@ -74,12 +74,6 @@ private def rootBeta : Matrix (Fin 3) (Fin 3) ℂ :=
     else (Real.sqrt 29 + (if b = d then Real.sqrt 5 else -Real.sqrt 5)) /
       (2 * Real.sqrt 68) : ℝ) : ℂ)
 
-private lemma coherence_complement {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (ρ : Matrix ι ι ℂ) :
-    1 - skewCoherence ρ = ∑ k, (CFC.sqrt ρ k k).re ^ 2 := by
-  change 1 - (1 - _) = _
-  ring
-
 private lemma root_rho_positive : rootRho.PosSemidef := by
   let r : Matrix (Fin 2 × Fin 3) (Fin 2 × Fin 3) ℂ :=
     fun p q => (((if p.2 = 2 then
@@ -318,7 +312,7 @@ private lemma value_rho :
     1 - skewCoherence rho = (25 / 34 + (1 / 2 + Real.sqrt 145 / 34)) / 2 := by
   have he := congrArg (fun a : Matrix (Fin 2 × Fin 3) (Fin 2 × Fin 3) ℂ =>
     ∑ k, (a k k).re ^ 2) sqrt_rho
-  refine (coherence_complement rho).trans (he.trans ?_)
+  refine (sub_sub_self (1 : ℝ) _).trans (he.trans ?_)
   let r : Matrix (Fin 2 × Fin 3) (Fin 2 × Fin 3) ℂ :=
     fun p q => (((if p.2 = 2 then
       if q.2 = 2 then
@@ -349,7 +343,7 @@ private lemma value_tau :
     1 - skewCoherence tau = 1 / 2 + Real.sqrt 145 / 34 := by
   have he := congrArg (fun a : Matrix (Fin 2) (Fin 2) ℂ =>
     ∑ k, (a k k).re ^ 2) sqrt_tau
-  refine (coherence_complement tau).trans (he.trans ?_)
+  refine (sub_sub_self (1 : ℝ) _).trans (he.trans ?_)
   let r : Matrix (Fin 2) (Fin 2) ℂ :=
     fun a c => (((Real.sqrt 29 +
       (if a = c then Real.sqrt 5 else -Real.sqrt 5)) /
@@ -375,7 +369,7 @@ private lemma value_beta :
     1 - skewCoherence beta = ((1 / 2 + Real.sqrt 145 / 34) + 1) / 2 := by
   have he := congrArg (fun a : Matrix (Fin 3) (Fin 3) ℂ =>
     ∑ k, (a k k).re ^ 2) sqrt_beta
-  refine (coherence_complement beta).trans (he.trans ?_)
+  refine (sub_sub_self (1 : ℝ) _).trans (he.trans ?_)
   let r : Matrix (Fin 3) (Fin 3) ℂ :=
     fun b d => ((if b = 2 then (if d = 2 then 1 / Real.sqrt 2 else 0)
       else if d = 2 then 0
