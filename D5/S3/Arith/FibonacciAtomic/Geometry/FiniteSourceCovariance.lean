@@ -279,4 +279,249 @@ private theorem kernel_limit (p q : Edge) :
   · exact mass_limit p.val
   · exact tendsto_const_nhds
 
+private def dK (h : ℕ) : ℝ := Real.sqrt (2*Real.goldenRatio*a^(h+1)/(1-a))
+private def d1 (h : ℕ) : ℝ := Real.sqrt (a^(h+1)/(1-a))
+
+private theorem finite_tail (n h : ℕ) :
+    ‖(FiniteSourceHardy.J n).comp (ContinuousLinearMap.id ℝ H-P h)‖ ≤ dK h :=
+  FiniteSourceHardy.finite_source_hardy.2.2 n h
+
+private theorem boundary_tail (h : ℕ) :
+    ‖BiasedBoundaryTrace.J.comp (ContinuousLinearMap.id ℝ H-P h)‖ ≤ d1 h := by
+  apply ContinuousLinearMap.opNorm_le_bound _ (Real.sqrt_nonneg _)
+  intro z
+  have hc : 0 ≤ a^(h+1)/(1-a) := by
+    exact div_nonneg (pow_nonneg BiasedBoundaryTrace.a_pos.le _) (sub_pos.mpr BiasedBoundaryTrace.a_lt_one).le
+  have hs := Real.sqrt_le_sqrt (BiasedBoundaryTrace.boundary_trace_hardy.2 h z)
+  simpa only [ContinuousLinearMap.comp_apply, ContinuousLinearMap.sub_apply,
+    ContinuousLinearMap.id_apply, Real.sqrt_mul hc, Real.sqrt_sq_eq_abs,
+    abs_of_nonneg (norm_nonneg _), d1] using hs
+
+private theorem finite_bound (n : ℕ) : ‖FiniteSourceHardy.J n‖ ≤ dK 0 := by
+  simpa [P_zero] using finite_tail n 0
+
+private theorem boundary_bound : ‖BiasedBoundaryTrace.J‖ ≤ d1 0 := by
+  simpa [P_zero] using boundary_tail 0
+
+private theorem one_norm (n : ℕ) : ‖one n‖ = 1 := by
+  change ‖Lp.const 2 (FiniteSourceMass.μ n) (1 : ℝ)‖ = 1
+  simpa using Lp.norm_const (μ := FiniteSourceMass.μ n) (p := 2) (c := (1 : ℝ)) (by norm_num)
+
+private theorem tail_difference {G : Type*} [NormedAddCommGroup G] [InnerProductSpace ℝ G]
+    [CompleteSpace G] (A : H →L[ℝ] G) (h : ℕ) :
+    A - A.comp (P h) = A.comp (ContinuousLinearMap.id ℝ H-P h) := by
+  ext z
+  simp
+
+private theorem mean_expansion {G : Type*} [NormedAddCommGroup G] [InnerProductSpace ℝ G]
+    [CompleteSpace G] (A : H →L[ℝ] G) (g : G) (h : ℕ) :
+    (A.comp (P h)).adjoint g = ∑ p ∈ block h, inner ℝ (A (e p)) g • e p := by
+  apply ext_inner_left ℝ
+  intro z
+  rw [ContinuousLinearMap.adjoint_inner_right]
+  simp [P_expand, map_sum, map_smul, inner_sum, sum_inner, inner_smul_left,
+    inner_smul_right, real_inner_comm, inner_e, mul_comm]
+
+private theorem gram_expansion {G : Type*} [NormedAddCommGroup G] [InnerProductSpace ℝ G]
+    [CompleteSpace G] (A : H →L[ℝ] G) (h : ℕ) :
+    (A.comp (P h)).adjoint.comp (A.comp (P h)) =
+      ∑ p ∈ block h, ∑ q ∈ block h,
+        inner ℝ (A (e p)) (A (e q)) • rankOne ℝ (e p) (e q) := by
+  classical
+  apply ContinuousLinearMap.ext
+  intro w
+  apply ext_inner_left ℝ
+  intro z
+  rw [ContinuousLinearMap.comp_apply, ContinuousLinearMap.adjoint_inner_right]
+  simp [P_expand, map_sum, map_smul, inner_sum, sum_inner, inner_smul_left,
+    inner_smul_right, rankOne_apply, real_inner_comm, inner_e,
+    Finset.mul_sum, Finset.sum_mul, mul_assoc, mul_left_comm, mul_comm]
+
+private theorem mean_cutoff_bound {G : Type*} [NormedAddCommGroup G] [InnerProductSpace ℝ G]
+    [CompleteSpace G] (A : H →L[ℝ] G) (g : G) (h : ℕ) :
+    ‖A.adjoint g-(A.comp (P h)).adjoint g‖ ≤
+      ‖A.comp (ContinuousLinearMap.id ℝ H-P h)‖*‖g‖ := by
+  calc
+    _ = ‖(A-A.comp (P h)).adjoint g‖ := by simp
+    _ ≤ ‖(A-A.comp (P h)).adjoint‖*‖g‖ := ContinuousLinearMap.le_opNorm _ _
+    _ = _ := by rw [LinearIsometryEquiv.norm_map, tail_difference]
+
+private theorem gram_cutoff_bound {G : Type*} [NormedAddCommGroup G] [InnerProductSpace ℝ G]
+    [CompleteSpace G] (A : H →L[ℝ] G) (h : ℕ) :
+    ‖A.adjoint.comp A-(A.comp (P h)).adjoint.comp (A.comp (P h))‖ ≤
+      2*‖A‖*‖A.comp (ContinuousLinearMap.id ℝ H-P h)‖ := by
+  have hid : A.adjoint.comp A-(A.comp (P h)).adjoint.comp (A.comp (P h)) =
+      A.adjoint.comp (A-A.comp (P h)) +
+      (A-A.comp (P h)).adjoint.comp (A.comp (P h)) := by
+    ext z
+    simp
+    abel
+  have hb : ‖A.comp (P h)‖ ≤ ‖A‖ :=
+    (ContinuousLinearMap.opNorm_comp_le _ _).trans
+      ((mul_le_mul_of_nonneg_left (P_norm h) (norm_nonneg A)).trans_eq (mul_one _))
+  rw [hid]
+  calc
+    _ ≤ ‖A.adjoint.comp (A-A.comp (P h))‖ +
+        ‖(A-A.comp (P h)).adjoint.comp (A.comp (P h))‖ := norm_add_le _ _
+    _ ≤ ‖A‖*‖A-A.comp (P h)‖+‖A-A.comp (P h)‖*‖A.comp (P h)‖ := by
+      simpa only [LinearIsometryEquiv.norm_map] using add_le_add
+        (ContinuousLinearMap.opNorm_comp_le A.adjoint (A-A.comp (P h)))
+        (ContinuousLinearMap.opNorm_comp_le (A-A.comp (P h)).adjoint (A.comp (P h)))
+    _ ≤ ‖A‖*‖A-A.comp (P h)‖+‖A-A.comp (P h)‖*‖A‖ := by gcongr
+    _ = _ := by rw [tail_difference]; ring
+
+private def meanBlock (m : Address → ℝ) (h : ℕ) : H := ∑ p ∈ block h, m p.val • e p
+private def gramBlock (m : Address → ℝ) (h : ℕ) : H →L[ℝ] H :=
+  ∑ p ∈ block h, ∑ q ∈ block h, kernel m p q • rankOne ℝ (e p) (e q)
+
+private theorem finite_mean_block (n h : ℕ) :
+    ((FiniteSourceHardy.J n).comp (P h)).adjoint (one n) = meanBlock (FiniteSourceMass.mass n) h := by
+  rw [mean_expansion]
+  simp only [meanBlock, ← ContinuousLinearMap.adjoint_inner_right, ← v, mean_entry]
+
+private theorem boundary_mean_block (h : ℕ) :
+    (BiasedBoundaryTrace.J.comp (P h)).adjoint (BiasedBoundaryPathSplit.constG 1) =
+      meanBlock BiasedBoundaryTrace.mass h := by
+  rw [mean_expansion]
+  simp only [meanBlock, ← ContinuousLinearMap.adjoint_inner_right,
+    ← BiasedBoundaryFreeRootForm.v, boundary_mean_entry]
+
+private theorem finite_gram_block (n h : ℕ) :
+    ((FiniteSourceHardy.J n).comp (P h)).adjoint.comp ((FiniteSourceHardy.J n).comp (P h)) =
+      gramBlock (FiniteSourceMass.mass n) h := by
+  rw [gram_expansion]
+  simp only [gramBlock, ← ContinuousLinearMap.adjoint_inner_right,
+    ← ContinuousLinearMap.comp_apply, ← B, gram_entry]
+
+private theorem boundary_gram_block (h : ℕ) :
+    (BiasedBoundaryTrace.J.comp (P h)).adjoint.comp (BiasedBoundaryTrace.J.comp (P h)) =
+      gramBlock BiasedBoundaryTrace.mass h := by
+  rw [gram_expansion]
+  simp only [gramBlock, ← ContinuousLinearMap.adjoint_inner_right,
+    ← ContinuousLinearMap.comp_apply, boundary_gram_entry]
+
+private theorem mean_block_limit (h : ℕ) :
+    Tendsto (fun n => meanBlock (FiniteSourceMass.mass n) h) atTop
+      (𝓝 (meanBlock BiasedBoundaryTrace.mass h)) := by
+  exact tendsto_finsetSum _ (fun p _ => (mass_limit p.val).smul_const (e p))
+
+private theorem gram_block_limit (h : ℕ) :
+    Tendsto (fun n => gramBlock (FiniteSourceMass.mass n) h) atTop
+      (𝓝 (gramBlock BiasedBoundaryTrace.mass h)) := by
+  exact tendsto_finsetSum _ (fun p _ => tendsto_finsetSum _
+    (fun q _ => (kernel_limit p q).smul_const (rankOne ℝ (e p) (e q))))
+
+private theorem actual_cutoff_error (n h : ℕ) :
+    ‖v n-BiasedBoundaryFreeRootForm.v‖ ≤ dK h+d1 h+
+      ‖meanBlock (FiniteSourceMass.mass n) h-meanBlock BiasedBoundaryTrace.mass h‖ ∧
+    ‖B n-BiasedBoundaryTrace.J.adjoint.comp BiasedBoundaryTrace.J‖ ≤
+      2*dK 0*dK h+2*d1 0*d1 h+
+      ‖gramBlock (FiniteSourceMass.mass n) h-gramBlock BiasedBoundaryTrace.mass h‖ := by
+  have hmn : ‖v n-meanBlock (FiniteSourceMass.mass n) h‖ ≤ dK h := by
+    rw [← finite_mean_block]
+    exact (mean_cutoff_bound (FiniteSourceHardy.J n) (one n) h).trans
+      (by rw [one_norm, mul_one]; exact finite_tail n h)
+  have hmb : ‖BiasedBoundaryFreeRootForm.v-meanBlock BiasedBoundaryTrace.mass h‖ ≤ d1 h := by
+    rw [← boundary_mean_block]
+    exact (mean_cutoff_bound BiasedBoundaryTrace.J (BiasedBoundaryPathSplit.constG 1) h).trans
+      (by rw [BiasedBoundaryCentering.constG_norm_one, mul_one]; exact boundary_tail h)
+  have hgn : ‖B n-gramBlock (FiniteSourceMass.mass n) h‖ ≤ 2*dK 0*dK h := by
+    rw [← finite_gram_block]
+    exact (gram_cutoff_bound (FiniteSourceHardy.J n) h).trans (by
+      have := finite_bound n
+      have := finite_tail n h
+      dsimp [dK] at *
+      gcongr)
+  have hgb : ‖BiasedBoundaryTrace.J.adjoint.comp BiasedBoundaryTrace.J-
+      gramBlock BiasedBoundaryTrace.mass h‖ ≤ 2*d1 0*d1 h := by
+    rw [← boundary_gram_block]
+    exact (gram_cutoff_bound BiasedBoundaryTrace.J h).trans (by
+      have := boundary_bound
+      have := boundary_tail h
+      dsimp [d1] at *
+      gcongr)
+  constructor
+  · have ht := norm_add₃_le (v n-meanBlock (FiniteSourceMass.mass n) h)
+      (meanBlock (FiniteSourceMass.mass n) h-meanBlock BiasedBoundaryTrace.mass h)
+      (meanBlock BiasedBoundaryTrace.mass h-BiasedBoundaryFreeRootForm.v)
+    rw [show v n-meanBlock (FiniteSourceMass.mass n) h+
+      (meanBlock (FiniteSourceMass.mass n) h-meanBlock BiasedBoundaryTrace.mass h)+
+      (meanBlock BiasedBoundaryTrace.mass h-BiasedBoundaryFreeRootForm.v) =
+      v n-BiasedBoundaryFreeRootForm.v by abel, norm_sub_rev] at ht
+    linarith
+  · have ht := norm_add₃_le (B n-gramBlock (FiniteSourceMass.mass n) h)
+      (gramBlock (FiniteSourceMass.mass n) h-gramBlock BiasedBoundaryTrace.mass h)
+      (gramBlock BiasedBoundaryTrace.mass h-BiasedBoundaryTrace.J.adjoint.comp BiasedBoundaryTrace.J)
+    rw [show B n-gramBlock (FiniteSourceMass.mass n) h+
+      (gramBlock (FiniteSourceMass.mass n) h-gramBlock BiasedBoundaryTrace.mass h)+
+      (gramBlock BiasedBoundaryTrace.mass h-BiasedBoundaryTrace.J.adjoint.comp BiasedBoundaryTrace.J) =
+      B n-BiasedBoundaryTrace.J.adjoint.comp BiasedBoundaryTrace.J by abel, norm_sub_rev] at ht
+    linarith
+
+private theorem tails_limit :
+    Tendsto dK atTop (𝓝 0) ∧ Tendsto d1 atTop (𝓝 0) := by
+  have hp := (tendsto_pow_atTop_nhds_zero_of_lt_one BiasedBoundaryTrace.a_pos.le
+    BiasedBoundaryTrace.a_lt_one).comp (tendsto_add_atTop_nat 1)
+  constructor
+  · simpa [dK] using ((hp.const_mul (2*Real.goldenRatio)).div_const (1-a)).sqrt
+  · simpa [d1] using (hp.div_const (1-a)).sqrt
+
+private theorem first_two_limits :
+    Tendsto v atTop (𝓝 BiasedBoundaryFreeRootForm.v) ∧
+    Tendsto B atTop (𝓝 (BiasedBoundaryTrace.J.adjoint.comp BiasedBoundaryTrace.J)) := by
+  have hvm := tails_limit.1.add tails_limit.2
+  have hbg := (tails_limit.1.const_mul (2*dK 0)).add (tails_limit.2.const_mul (2*d1 0))
+  constructor
+  · apply Metric.tendsto_atTop.mpr
+    intro ε hε
+    have hv := (Metric.tendsto_atTop.mp hvm) (ε/2) (by positivity)
+    obtain ⟨h, hh⟩ := hv
+    have hh' : dK h+d1 h < ε/2 := by
+      have := hh h le_rfl
+      simpa only [zero_add, dist_zero_right, Real.norm_eq_abs, abs_of_nonneg
+        (add_nonneg (Real.sqrt_nonneg _) (Real.sqrt_nonneg _))] using this
+    obtain ⟨N, hN⟩ := (Metric.tendsto_atTop.mp (mean_block_limit h)) (ε/2) (by positivity)
+    refine ⟨N, fun n hn => ?_⟩
+    have hc := (actual_cutoff_error n h).1
+    have hm := hN n hn
+    rw [dist_eq_norm] at hm ⊢
+    linarith
+  · apply Metric.tendsto_atTop.mpr
+    intro ε hε
+    obtain ⟨h, hh⟩ := (Metric.tendsto_atTop.mp hbg) (ε/2) (by positivity)
+    have hh' : 2*dK 0*dK h+2*d1 0*d1 h < ε/2 := by
+      have := hh h le_rfl
+      simpa only [mul_zero, zero_add, dist_zero_right, Real.norm_eq_abs, abs_of_nonneg
+        (add_nonneg (by dsimp [dK]; positivity) (by dsimp [d1]; positivity))] using this
+    obtain ⟨N, hN⟩ := (Metric.tendsto_atTop.mp (gram_block_limit h)) (ε/2) (by positivity)
+    refine ⟨N, fun n hn => ?_⟩
+    have hc := (actual_cutoff_error n h).2
+    have hm := hN n hn
+    rw [dist_eq_norm] at hm ⊢
+    linarith
+
+/-- The three actual source objects converge simultaneously on the common H.
+The node L2 codomains of the maps J(n) retain their dependence on n. -/
+theorem finite_source_covariance_convergence :
+    ∀ ε : ℝ, 0 < ε → ∃ N : ℕ, ∀ n : ℕ, N ≤ n →
+      ‖v n-BiasedBoundaryFreeRootForm.v‖ < ε ∧
+      ‖B n-BiasedBoundaryTrace.J.adjoint.comp BiasedBoundaryTrace.J‖ < ε ∧
+      ‖Sigma n-BiasedBoundaryFreeRootForm.Sigma‖ < ε := by
+  have hv := first_two_limits.1
+  have hB := first_two_limits.2
+  have hr : Tendsto (fun n => rankOne ℝ (v n) (v n)) atTop
+      (𝓝 (rankOne ℝ BiasedBoundaryFreeRootForm.v BiasedBoundaryFreeRootForm.v)) := by
+    exact (rankOne ℝ).continuous₂.tendsto.comp (hv.prodMk_nhds hv)
+  have hs : Tendsto Sigma atTop (𝓝 BiasedBoundaryFreeRootForm.Sigma) := by
+    rw [BiasedBoundaryFreeRootForm.actual_compact_covariance.2.2.2.1]
+    exact hB.sub hr
+  intro ε hε
+  obtain ⟨Nv, hNv⟩ := Metric.tendsto_atTop.mp hv ε hε
+  obtain ⟨NB, hNB⟩ := Metric.tendsto_atTop.mp hB ε hε
+  obtain ⟨NS, hNS⟩ := Metric.tendsto_atTop.mp hs ε hε
+  refine ⟨max Nv (max NB NS), fun n hn => ?_⟩
+  exact ⟨by simpa only [dist_eq_norm] using hNv n ((le_max_left _ _).trans hn),
+    by simpa only [dist_eq_norm] using hNB n ((le_max_left NB NS).trans ((le_max_right _ _).trans hn)),
+    by simpa only [dist_eq_norm] using hNS n ((le_max_right NB NS).trans ((le_max_right _ _).trans hn))⟩
+
 end D5.S3.Arith.FibonacciAtomic.Geometry.FiniteSourceCovariance
