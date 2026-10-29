@@ -61,7 +61,7 @@ def mass (n : ℕ) (p : Address) : ℝ := (descendants n p).card / (N n : ℝ)
 /-- The reciprocal golden ratio. -/
 abbrev a : ℝ := Real.goldenRatio⁻¹
 
-private theorem cardinality (n : ℕ) : N n = 2 * Nat.fib (n+1) - 1 := by
+theorem cardinality (n : ℕ) : N n = 2 * Nat.fib (n+1) - 1 := by
   rw [N, vertices, List.toFinset_card_of_nodup
     (Observer.ActualPureAcquisitionCompiler.nodes_nodup _),
     Observer.ActualCompletionHorizon.nodes_count]
@@ -71,7 +71,7 @@ private theorem cardinality (n : ℕ) : N n = 2 * Nat.fib (n+1) - 1 := by
 private theorem N_pos (n : ℕ) : 0 < N n :=
   Finset.card_pos.mpr ⟨[], root_mem n⟩
 
-private theorem node_iff (S : Source) (x : Address) :
+theorem node_iff (S : Source) (x : Address) :
     x ∈ nodes S ↔ ∃ U, subtree x S = some U := by
   induction S generalizing x with
   | of b => cases x <;> simp [nodes, subtree]

@@ -1,0 +1,49 @@
+**定理 12.1（有限因果切片的安装符号数；repo-derived）。** 设 $P$ 是有限偏序，
+$n=|P|$。取 $E=P$，$\mathcal F=\operatorname{Down}(P)$ 为包括空集在内的全部
+下闭子集。使用定义 9.1 的动作，并允许每个下闭子集作为未知初态，则
+
+$$
+\operatorname{En}(C)=\operatorname{Min}(P\setminus C),
+\qquad T=\{P\},\qquad \tau=n,\qquad m=n+1.
+\tag{MPC.39}
+$$
+
+结论包括 $n=0$：此时 $\mathcal F=\{\varnothing\}$，只需且必须有一个有效符号。
+
+**证明。** 对 $e\notin C$，$C\cup\{e\}$ 下闭恰好要求 $e$ 的每个严格前驱已在
+$C$ 中，这又等价于 $e$ 是补集的极小元。每个非空有限补集有极小元，所以唯一
+汇点是 $P$，而 $P$ 本身的启用集为空。
+
+为证击中数下界，对每个 $e\in P$ 定义
+
+$$
+C_e=P\setminus\mathord{\uparrow}e,
+\qquad
+\mathord{\uparrow}e=\{x\in P:e\le x\}.
+\tag{MPC.40}
+$$
+
+$C_e$ 下闭：若 $x\in C_e$ 且 $y\le x$，则 $e\le y$ 会推出 $e\le x$，矛盾。
+其补集 $\mathord{\uparrow}e$ 的唯一极小元是 $e$，所以
+$\operatorname{En}(C_e)=\{e\}$。每个击中集都必须含有每个 $e$，故
+$\tau\ge n$；取 $H=P$ 得反向不等式。由定理 10.3 得 $m=n+1$。
+当 $P=\varnothing$，没有 $C_e$ 的约束，$N=\varnothing$、$\tau=0$，同一公式
+给出 $m=1$。$\square$
+
+这里的因果切片参数对应为：$P$ 是有限个事件**出现**及其前驱偏序，$C$ 是已发生
+的下闭事件集，具名动作 $e$ 是一次新的出现，合法性是新鲜性加全部严格前驱已
+发生，后继是 $C\cup\{e\}$；无冲突约束、重复出现或未记录自主事件。
+事件配置和启用关系的先例见
+[Winskel，Event Structures](https://www.cl.cam.ac.uk/~gw104/Winskel1987_Chapter_EventStructures.pdf)。
+在仓内对应中，
+[EnabledPathSwapConnectivity](../../../D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity.lean)
+的 `Enabled` 与上述合法性相同，`Exec` 对应相同具名新增路径；其 `result` 已给出
+有限理想间的执行、线性扩张与合法相邻交换。
+[ConfigurationPathTransport](../../../D5/S3/ConceptDynamics/Fibers/ConfigurationPathTransport.lean)
+中把 `compatible` 取为恒真，即得这里的下闭配置；其 `configurationIdealIso`、
+`exec_exists_iff_subset` 和 `finite_history_clocks` 分别供应已有的理想完成、
+执行存在性和路径计数关系。这些配置与路径结论在此复用；(MPC.39) 计算的是在
+全部下闭初态未知时额外安装的平稳读出符号数，不是事件生成元数、路径记忆数或
+物理时钟数。任意删减理想族或加入来源动作后，须重新计算实际启用集，不能直接
+沿用 $n+1$。
+
