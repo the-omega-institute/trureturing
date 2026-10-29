@@ -173,7 +173,7 @@ def D : Submodule ℝ G where
 def energy (F : G) : ℝ := sInf {r : ℝ | ∃ (c : ℝ) (z : H),
   F = constG c + J z ∧ r = ‖z‖^2}
 
-private theorem C_project (z : H) : C (K.starProjection z) = C z := by
+theorem C_project (z : H) : C (K.starProjection z) = C z := by
   have hk : z-K.starProjection z ∈ Sigma.ker := by
     change z-(Sigma.ker)ᗮ.starProjection z ∈ Sigma.ker
     rw [Submodule.starProjection_orthogonal_val]
