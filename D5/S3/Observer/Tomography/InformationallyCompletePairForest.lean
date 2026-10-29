@@ -10,14 +10,22 @@ import Mathlib.Combinatorics.SimpleGraph.Acyclic
 import Mathlib.Basic.Real.Basic
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
 
 /-!
 # Informationally complete pairs and forests
 
 For finite real random variables, the two pushforward distributions determine every
 probability weight precisely when the joint value map is injective and its bipartite
-fiber graph is acyclic. The proof uses signed trail weights and a leaf of a finite forest.
+fiber graph is acyclic. Complementarity means injectivity of the joint value map.
+
+A signed trail weight has marginal sums supported at its endpoints. A cycle therefore
+produces a nonzero weight with zero marginals; perturbing the uniform probability by
+this bounded weight gives two distinct probabilities with the same distributions.
+Conversely, the nonzero support of a difference with zero marginals cannot have a leaf,
+whereas every nontrivial finite tree has one.
+
+The probability and completeness notions are those of Section 5 of S. Gudder,
+*Finite-Dimensional Convex Effect Algebras* (arXiv:1912.05110v1).
 -/
 
 noncomputable section
@@ -25,18 +33,22 @@ open scoped BigOperators
 
 namespace D5.S3.Observer.Tomography.InformationallyCompletePairForest
 
+/-- A nonnegative, normalized probability weight on a finite sample space. -/
 def IsProbability {α : Type*} [Fintype α] [DecidableEq α] (μ : α → ℝ) : Prop :=
   (∀ x, 0 ≤ μ x) ∧ ∑ x, μ x = 1
 
 open Classical in
+/-- The distribution of a real random variable, evaluated on an arbitrary set. -/
 def distribution {α : Type*} [Fintype α] [DecidableEq α]
-    (f : α → ℝ) (μ : α → ℝ) (Δ : Set ℝ) : ℝ :=
-  ∑ x ∈ Finset.univ.filter (fun x => f x ∈ Δ), μ x
+    (f : α → ℝ) (μ : α → ℝ) (δ : Set ℝ) : ℝ :=
+  ∑ x ∈ Finset.univ.filter (fun x => f x ∈ δ), μ x
 
+/-- The two marginal distributions determine every probability weight uniquely. -/
 def IsICPair {α : Type*} [Fintype α] [DecidableEq α] (f g : α → ℝ) : Prop :=
   ∀ μ ν, IsProbability μ → IsProbability ν →
     distribution f μ = distribution f ν → distribution g μ = distribution g ν → μ = ν
 
+/-- A point supplies an edge between its two tagged random-variable values. -/
 def fiberGraph {α : Type*} [Fintype α] [DecidableEq α] (f g : α → ℝ) : SimpleGraph (ℝ ⊕ ℝ) :=
   SimpleGraph.fromRel (fun v w =>
     Sum.elim (fun a => Sum.elim (fun _ => False)
@@ -142,8 +154,8 @@ private lemma distribution_eq_iff_fiber_sums {α : Type*} [Fintype α] [Decidabl
     rw [hμ, hν] at ha
     exact ha
   · intro h
-    funext Δ
-    let s : Finset α := Finset.univ.filter (fun x => f x ∈ Δ)
+    funext δ
+    let s : Finset α := Finset.univ.filter (fun x => f x ∈ δ)
     let t : Finset ℝ := s.image f
     have hmap : ∀ x ∈ s, f x ∈ t := by
       intro x hx
@@ -154,8 +166,8 @@ private lemma distribution_eq_iff_fiber_sums {α : Type*} [Fintype α] [Decidabl
         (∑ x ∈ s with f x = a, q x) =
           ∑ x ∈ Finset.univ.filter (fun x => f x = a), q x := by
       obtain ⟨x, hx, hxa⟩ := Finset.mem_image.mp ha
-      have hΔa : f x ∈ Δ := by simpa [s] using hx
-      have hΔa' : a ∈ Δ := by simpa [hxa] using hΔa
+      have hδa : f x ∈ δ := by simpa [s] using hx
+      have hδa' : a ∈ δ := by simpa [hxa] using hδa
       apply Finset.sum_congr
       · ext y
         simp only [Finset.mem_filter, Finset.mem_univ, true_and, s]
@@ -163,18 +175,18 @@ private lemma distribution_eq_iff_fiber_sums {α : Type*} [Fintype α] [Decidabl
         · rintro ⟨hfd, hfa⟩
           exact hfa
         · intro hfa
-          exact ⟨by simpa [hfa] using hΔa', hfa⟩
+          exact ⟨by simpa [hfa] using hδa', hfa⟩
       · intro y hy
         rfl
     calc
-      distribution f μ Δ = ∑ x ∈ s, μ x := rfl
+      distribution f μ δ = ∑ x ∈ s, μ x := rfl
       _ = ∑ a ∈ t, ∑ x ∈ s with f x = a, μ x := hμ.symm
       _ = ∑ a ∈ t, ∑ x ∈ s with f x = a, ν x := by
         apply Finset.sum_congr rfl
         intro a ha
         rw [hfiber a ha μ, hfiber a ha ν, h a]
       _ = ∑ x ∈ s, ν x := hν
-      _ = distribution f ν Δ := rfl
+      _ = distribution f ν δ := rfl
 
 private lemma not_injective_not_ic {α : Type*} [Fintype α] [DecidableEq α] {f g : α → ℝ}
     (h : ¬ Function.Injective (fun x => (f x, g x))) : ¬ IsICPair f g := by
@@ -190,12 +202,12 @@ private lemma not_injective_not_ic {α : Type*} [Fintype α] [DecidableEq α] {f
     · simp
   have hf : distribution f (Pi.single x (1 : ℝ)) =
       distribution f (Pi.single y (1 : ℝ)) := by
-    funext Δ
+    funext δ
     unfold distribution
     simp [hfx]
   have hg : distribution g (Pi.single x (1 : ℝ)) =
       distribution g (Pi.single y (1 : ℝ)) := by
-    funext Δ
+    funext δ
     unfold distribution
     simp [hgx]
   have heq := hic _ _ (hprob x) (hprob y) hf hg
@@ -235,7 +247,7 @@ private lemma walk_weights {α : Type*} [Fintype α] [DecidableEq α] {f g : α 
         simp only [Pi.add_apply, Finset.sum_add_distrib]
         rw [hwf]
         simp [hfx]
-        split_ifs <;> ring
+        split_ifs <;> ring1
       · intro c
         simp only [Pi.add_apply, Finset.sum_add_distrib]
         rw [hwg]
@@ -266,12 +278,12 @@ private lemma walk_weights {α : Type*} [Fintype α] [DecidableEq α] {f g : α 
         simp only [Pi.add_apply, Finset.sum_add_distrib]
         rw [hwf]
         simp [hfx]
-        split_ifs <;> ring
+        split_ifs <;> ring1
       · intro c
         simp only [Pi.add_apply, Finset.sum_add_distrib]
         rw [hwg]
         simp [hgx]
-        split_ifs <;> ring
+        split_ifs <;> ring1
       · intro y
         by_cases hy : y = x
         · subst y
@@ -450,8 +462,8 @@ private lemma injective_acyclic_ic {α : Type*} [Fintype α] [DecidableEq α] {f
       simp at hadj
   have hHacyc : H.IsAcyclic := hacyc.anti hHsub
   have hfinite : H.edgeSet.Finite := supportGraph_edge_finite f g w
-  letI : Finite H.edgeSet := hfinite.fintype.finite
-  letI : H.LocallyFinite := locallyFinite_of_finite_edgeSet H
+  let : Finite H.edgeSet := hfinite.fintype.finite
+  let : H.LocallyFinite := locallyFinite_of_finite_edgeSet H
   obtain ⟨x, hx⟩ : ∃ x, w x ≠ 0 := by
     by_contra hzero
     apply hwne
@@ -467,9 +479,9 @@ private lemma injective_acyclic_ic {α : Type*} [Fintype α] [DecidableEq α] {f
     SimpleGraph.ConnectedComponent.connectedComponentMk_mem
   have hright : Sum.inr (g x) ∈ C := C.mem_supp_of_adj_mem_supp hleft hxe
   have hfiniteC : Finite C.toSimpleGraph.edgeSet := finite_component_edgeSet H C
-  letI : Finite C.toSimpleGraph.edgeSet := hfiniteC
-  letI : C.toSimpleGraph.LocallyFinite := locallyFinite_of_finite_edgeSet _
-  letI : Nontrivial C := ⟨⟨⟨Sum.inl (f x), hleft⟩, ⟨Sum.inr (g x), hright⟩, by
+  let : Finite C.toSimpleGraph.edgeSet := hfiniteC
+  let : C.toSimpleGraph.LocallyFinite := locallyFinite_of_finite_edgeSet _
+  let : Nontrivial C := ⟨⟨⟨Sum.inl (f x), hleft⟩, ⟨Sum.inr (g x), hright⟩, by
     intro h
     exact Sum.inl_ne_inr (congrArg Subtype.val h)⟩⟩
   have htree : C.toSimpleGraph.IsTree := hHacyc.isTree_connectedComponent C
@@ -554,6 +566,7 @@ private lemma injective_acyclic_ic {α : Type*} [Fintype α] [DecidableEq α] {f
       simp at huqH
   exact hcontra.elim
 
+/-- Informational completeness is complementarity together with absence of fiber cycles. -/
 theorem result {α : Type*} [Fintype α] [DecidableEq α] (f g : α → ℝ) :
     IsICPair f g ↔
       Function.Injective (fun x => (f x, g x)) ∧ (fiberGraph f g).IsAcyclic := by
