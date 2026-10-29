@@ -17,7 +17,9 @@ import Mathlib.Tactic.Ring
 /-!
 The construction addresses the upper-bound part of Feldman--Wilce,
 arXiv:2608.13320v1, Question 3. The rational-axis certificate is the
-repository derivation stated in issue #23716; mathematical priority is unresolved.
+repository implementation stated in issue #23716. The six-set upper bound
+has classical antecedents in antipodal icosahedral coverings; no mathematical
+novelty or priority is claimed.
 The lower bound and the full open covering number are outside this module.
 
 The helpers are consumed by `rational_six_axis_open_cover`. Bessel's inequality

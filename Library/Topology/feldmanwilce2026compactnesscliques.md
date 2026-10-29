@@ -10,6 +10,7 @@ strata_touched:
   - D5/S3/Topology/StoneCech/SectionGoodFreshClusters
   - D5/S3/Topology/StoneCech/SectionDenseSelector
   - D5/S3/Topology/StoneCech/SectionClosedGraph
+  - D5/S3/Geometry/Orthogonality/RationalSixAxisCover
 license: citation-only
 triage: anchor
 ---
@@ -167,8 +168,12 @@ Its nonnegative polynomial certificate yields a squared projection of
 at least three for every unit vector. Bessel's inequality excludes an
 orthogonal pair from each superlevel. The corresponding Blueprint
 gives the full construction and identity. The cited paper is the
-source of the question; the rational construction and certificate are
-repository-derived, as specified by implementation-stage issue
+source of the question. The six-set upper bound has classical antecedents
+in antipodal icosahedral coverings; see P. W. Fowler, T. Tarnai and
+Zs. Gáspár, *From circle packing to covering on a sphere with antipodal
+constraints* (2002), DOI: [10.1098/rspa.2002.0990](https://doi.org/10.1098/rspa.2002.0990).
+The explicit rational coordinates and polynomial certificate above describe
+this repository's implementation, as specified by
 https://github.com/the-omega-institute/trureturing/issues/23716.
 This is an upper bound only. No attribution of the certificate to
 Feldman--Wilce, lower-bound conclusion, mathematical-priority claim or
