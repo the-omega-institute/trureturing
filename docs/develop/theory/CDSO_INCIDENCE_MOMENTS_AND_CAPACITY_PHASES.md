@@ -2585,7 +2585,7 @@ $$
 \Phi_{a,h}''(u)=\frac{2h^2}{u^3}+\frac{2a^2r^2}{(a-u)^3}
  +\frac{2(a-1)(2a+1)r^3(2a+u)}{(a-u)^4}>0
 $$
-for $0<u<a$. Here and below the displayed second derivative is $\Phi_{a,h}''$, the second derivative of $\Phi_{a,h}$; no first derivative is being denoted by the same symbol. Thus $\Phi_{a,h}'$ is strictly increasing, tends to $-\infty$ at $0$, and tends to $+\infty$ at $a$. Its zero is unique and (13.2) is the equation $\Phi_{a,h}'(u_h)=0$. At $u=1/a$, the positive last term in $\Phi_{a,h}'$ is of order $a^3$, whereas the negative term is $O_h(a^2)$, so the zero lies below $1/a$ for all sufficiently large $a$.
+for $0<u<a$. Thus $\Phi_{a,h}'$ is strictly increasing, tends to $-\infty$ at $0$, and tends to $+\infty$ at $a$. Its zero is unique and (13.2) is the equation $\Phi_{a,h}'(u_h)=0$. At $u=1/a$, the positive last term in $\Phi_{a,h}'$ is of order $a^3$, whereas the negative term is $O_h(a^2)$, so the zero lies below $1/a$ for all sufficiently large $a$.
 
 The exact rearrangement of (13.2) is
 $$
@@ -2603,7 +2603,7 @@ $$
  \delta=\max_{j\in D}t_j,
 $$
 $$
- B=|T\cap D|,\qquad L=|T\cap C|,qquad A=\{B>0\},qquad p=\mathbb P(A).
+ B=|T\cap D|,\qquad L=|T\cap C|,\qquad A=\{B>0\},\qquad p=\mathbb P(A).
 $$
 Then $\delta\le p\le u\le hp$, every core marginal is at least $\delta\ge u/h$, and
 $$
@@ -2674,9 +2674,12 @@ $$
  p=O_{h,M}(a^{-3/2}),\qquad u=O_{h,M}(a^{-3/2}),\qquad H_D=O_{h,M}(a^{3/2}).
 \tag{13.9}
 $$
-More precisely, after the first bootstrap,
+More precisely, after the first bootstrap there is a constant $C_{h,M}>0$, independent of the array and the choice of $D$, such that eventually
 $$
- d(x_a)\ge \frac{h^2}{p}+\bigl(2a^3-O_{h,M}(a^2)\bigr)p.
+\begin{aligned}
+ d(x_a)&\ge H_D+(2a^3-C_{h,M}a^2)p\\
+ &\ge\frac{h^2}{p}+(2a^3-C_{h,M}a^2)p.
+\end{aligned}
 \tag{13.10}
 $$
 
@@ -2703,9 +2706,14 @@ $$
 and
 $$
 \mathbb E V_R=\sum_{i\in R}(y_i^{-1}-y_i)
-\ge\frac{m^2}{a-v}-(a-v)\longrightarrow 2(h+1-z)\ge4,
+\ge\frac{m^2}{a-v}-(a-v),
 $$
-where $v=\sum_{i\in Z}y_i\to0$. Also (13.11) gives
+where $v=\sum_{i\in Z}y_i\to0$. Put $b=h+1-z\ge2$, so $m=a+b$. For every $a$ in this subsequence, $v\ge0$ and $a-v=\sum_{i\in R}y_i>0$, and hence
+$$
+\frac{m^2}{a-v}-(a-v)
+=2(b+v)+\frac{(b+v)^2}{a-v}\ge2b\ge4.
+$$
+Also (13.11) gives
 $$
 \mathbb E|K^2-a^2|\le(2a+h+1)\sqrt{\operatorname{Var}K}=O_{h,M}(a^{3/2}).
 $$
@@ -2746,7 +2754,7 @@ Thus $\mathbb E[L;A]=O_{h,M}(p)$, and returning to (13.5), using $\alpha=2a^3+O(
 
 **Lemma 13.6 (Necessary structure at the sharp scale).** Under the hypotheses of Lemma 13.5, suppose in addition that
 $$
-\frac{d(x_a)}{a^{3/2}}\longrightarrow2\sqrt2,h.
+\frac{d(x_a)}{a^{3/2}}\longrightarrow2\sqrt2\,h.
 \tag{13.14}
 $$
 Then, for every choice of $h$ smallest-marginal labels,
@@ -2756,8 +2764,8 @@ $$
 \tag{13.15}
 $$
 $$
-\mathbb E[K^2\mid A]\longrightarrow1,qquad
-\frac{x_{\{j\}}}{t_j}\longrightarrow1\quad(j\in D),qquad
+\mathbb E[K^2\mid A]\longrightarrow1,\qquad
+\frac{x_{\{j\}}}{t_j}\longrightarrow1\quad(j\in D),\qquad
 \min_{i\in C}y_i\longrightarrow1.
 \tag{13.16}
 $$
@@ -2769,24 +2777,31 @@ $$
 \ge\frac{h^2}{\pi_a}+(2+o(1))\pi_a,
 \qquad \pi_a=a^{3/2}p.
 $$
-Taking $u=h/(\sqrt2\,a^{3/2})$ in Definition 13.2 gives $d/a^{3/2}\to2\sqrt2h$, so the limiting constant is at most $2\sqrt2h$; hence the strict convex function on the right forces $\pi_a\to h/\sqrt2$. The same inequalities then force
+By (13.9), $\pi_a$ is bounded above, and (13.12) together with the bound on $H_D$ in (13.9) bounds it away from zero. The function $h^2/\pi+2\pi$ has minimum $2\sqrt2h$, attained only at $\pi=h/\sqrt2$. Therefore (13.14) forces $\pi_a\to h/\sqrt2$. The same inequalities then force
 $$
-\frac{H_D}{a^{3/2}}\to\sqrt2h,qquad pH_D\to h^2.
+\frac{H_D}{a^{3/2}}\to\sqrt2h,\qquad pH_D\to h^2.
 \tag{13.17}
 $$
-Let $\mathbb E_A$ denote conditional expectation on $A$. Since $\mathbb E_A V=h/p$ and $p\mathbb E_A V^2\ge h^2$, (13.17) gives
+Let $\mathbb E_A$ denote conditional expectation on $A$. Since $H_D=p\mathbb E_A W$ and $\mathbb E_A V=h/p$, conditional Cauchy--Schwarz gives $p^2\mathbb E_A V^2\ge h^2$. Thus (13.17) gives
 $$
- p\mathbb E_A(W-V^2)\longrightarrow0.
+0\le p^2\mathbb E_A(W-V^2)
+=pH_D-p^2\mathbb E_A V^2\le pH_D-h^2\longrightarrow0.
 $$
-On $A$, $V\ge1/p\ge1$ and, for $1\le B\le h$,
+On $A$, every $t_j\le p$, so $V\ge1/p$. Since $K\ge B$ and $1\le B\le h$,
 $$
 \frac{K^2}{B}-1\ge\frac{K^2-1}{h+1}.
 $$
 The within-type Cauchy inequality therefore gives
 $$
-W-V^2\ge\frac{K^2-1}{h+1},
+W-V^2\ge\left(\frac{K^2}{B}-1\right)V^2
+\ge\frac{K^2-1}{(h+1)p^2}.
 $$
-so $\mathbb E[K^2-1\mid A]\to0$. Since $K\ge B\ge1$, this implies $\mathbb P(K=1\mid A)\to1$, hence $u/p=\mathbb E_A B\to1$.
+Consequently
+$$
+0\le\mathbb E_A(K^2-1)
+\le(h+1)p^2\mathbb E_A(W-V^2)\longrightarrow0.
+$$
+Since $K\ge B\ge1$, this implies $\mathbb P(K=1\mid A)\to1$, hence $u/p=\mathbb E_A B\to1$.
 
 Put $q_j=t_j/p$. Then $\sum_jq_j=u/p\to1$, $q_j\le1$, and
 $$
@@ -2869,7 +2884,7 @@ Z\text{ has integrand at least }\frac{B(K^2-1)}{\delta^2}
 $$
 Condition (13.18) pays every positive weighted deficit, with strict surplus whenever $K\ge2$. Adding $c_0u=\mathbb E[c_0B]$ to each core coefficient in (13.20) changes $-(2a+1)u$ into $bu$, and the nonnegative $\Delta_i$ can be discarded. This proves (13.19) and its strictness assertion. ∎
 
-**Lemma 13.8 (Attainment and one threshold for all minimizers).** For each fixed $a,h$, the infimum of $H$ on $\mathcal X_{a,h}$ is attained. For every fixed $h$ there is an integer $A(h)$ such that, for every $a\ge A(h)$, every global minimizer satisfies (13.18).
+**Lemma 13.8 (Attainment and one threshold for all minimizers).** For each fixed $a,h$, the infimum of $H$ on $\mathcal X_{a,h}$ is attained. For every fixed $h$ there is an integer $A(h)$ such that, for every $a\ge A(h)$, every global minimizer and every choice of $h$ smallest-marginal labels satisfy (13.18).
 
 **Proof.** The feasible scalar family in Definition 13.2 supplies a finite positive-marginal comparison. Also
 $$
@@ -2877,9 +2892,24 @@ H\ge\sum_{i=1}^s\frac1{y_i},
 $$
 so a bounded sublevel has all marginals bounded away from zero. Its intersection with the finite probability simplex and the two affine constraints is compact, and $H$ is continuous there. Hence a minimizing sequence has a convergent subsequence whose limit remains in $\mathcal X_{a,h}$.
 
-For fixed $h$, take the scalar family at $u=h/(\sqrt2a^{3/2})$, which is feasible for all sufficiently large $a$ and has $d=O_h(a^{3/2})$. Thus every minimizer belongs to one fixed low-energy sublevel. Lemma 13.6 applies to any sequence of such minimizers, for any choice of the $h$ smallest labels: $\delta a^{3/2}\to1/\sqrt2$ and $c\to1$. If no single threshold $A(h)$ made (13.18) hold for every minimizer, a sequence of failing minimizers would contradict these two limits, since
+For fixed $h$, put $u_0=h/(\sqrt2\,a^{3/2})$, which lies in $(0,1/a]$ for all sufficiently large $a$. The actual array of Definition 13.2 has
 $$
-\frac{3}{\delta^2}\sim6a^3,qquad
+\begin{aligned}
+\Phi_{a,h}(u_0)-B_0
+&=\frac{h^2}{u_0}+\frac{ar^2u_0}{a-u_0}
+ +\frac{(a-1)(2a+1)r^3u_0}{(a-u_0)^2}\\
+&=2\sqrt2\,h\,a^{3/2}+O_h(a^{1/2}).
+\end{aligned}
+$$
+Every global minimizer therefore belongs to one fixed low-energy sublevel (13.8). For any sequence $a\to\infty$ of such minimizers, and any sequence of choices of $D$, (13.10) supplies a constant $C_h$ independent of those choices such that, eventually, $2a^3-C_ha^2>0$ and
+$$
+2h\sqrt{2a^3-C_ha^2}
+\le\frac{h^2}{p}+(2a^3-C_ha^2)p
+\le d(x_a)\le\Phi_{a,h}(u_0)-B_0.
+$$
+The first inequality is arithmetic--geometric mean. Dividing by $a^{3/2}$ proves the sharp limit $d(x_a)/a^{3/2}\to2\sqrt2h$ for every minimizer sequence. This sharp limit supplies the additional hypothesis of Lemma 13.6: for every such sequence and every choice of $D$, $\delta a^{3/2}\to1/\sqrt2$ and $c\to1$. If no single threshold $A(h)$ made (13.18) hold for every minimizer and every such $D$, one could choose integers $a\to\infty$ and failing pairs $(x_a,D_a)$. These pairs would contradict the two limits, since
+$$
+\frac{3}{\delta^2}\sim6a^3,\qquad
 \frac{\max\{\alpha,\beta\}}{c^2}\sim2a^3.
 $$
 This contradiction proves the common eventual threshold. ∎
@@ -2914,7 +2944,7 @@ Suppose equality holds. Strict convexity of $\Phi_{a,h}$ gives $u=u_h$, tail Cau
 
 For a core-only type, equality in (13.20) forces every $\rho_i$ to vanish. Summing over $i\in C$ gives $Q(L)=0$. For integer $1\le L\le r$, the only zeros are $L=a$ and $L=r$; hence the remaining positive types are exactly $C$ and the $r$ types $C\setminus\{i\}$. Write their masses as $z$ and $b_i$. Normalization and the mean constraint give
 $$
- z+\sum_i b_i=1-u_h,qquad
+ z+\sum_i b_i=1-u_h,\qquad
  rz+a\sum_i b_i=a-u_h,
 $$
 so $z=(a-1)u_h$ and $\sum_i b_i=1-au_h$. Since every core marginal equals $(a-u_h)/r$,
@@ -2926,7 +2956,7 @@ which forces $b_i=(1-au_h)/r$ for each $i$. This is (13.23). Conversely Definiti
 **Theorem 13.10 (Sharp value expansion).** For fixed $h\ge2$, as $a\to\infty$ through integers, the exact minimum in Theorem 13.9 satisfies
 $$
 \min_{x\in\mathcal X_{a,h}}J_s(x)-\frac{B_0}{2}
-=\sqrt2\,h,a^{3/2}+\frac{3h}{\sqrt2}\,a^{1/2}
+=\sqrt2\,h\,a^{3/2}+\frac{3h}{\sqrt2}\,a^{1/2}
  -\frac{h}{4\sqrt2}\,a^{-1/2}
  +\frac{h^2}{a}+O_h(a^{-3/2}).
 \tag{13.25}
