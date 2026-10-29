@@ -59,6 +59,24 @@ def reflog_oids(path):
 REMOVAL_RECORD = "worktree-removal"
 
 
+def reject_nested_git(target):
+    """Refuse repository boundaries before checkpointing or deleting payload."""
+    for entry in git(target, "ls-files", "--stage", "-z").stdout.split(b"\0"):
+        if entry.startswith(b"160000 "):
+            raise Refused("nested_git_boundary:" + os.fsdecode(entry.split(b"\t", 1)[1]))
+    def unreadable(error):
+        raise error
+    for directory, folders, files in os.walk(target, followlinks=False, onerror=unreadable):
+        path = Path(directory)
+        if path == target:
+            folders[:] = [name for name in folders if name != ".git"]
+        elif ".git" in folders or ".git" in files:
+            raise Refused("nested_git_boundary:" + str(path.relative_to(target)))
+        if "HEAD" in files and git(target, "rev-parse", "--resolve-git-dir", path,
+                                   check=False).returncode == 0:
+            raise Refused("nested_git_boundary:" + str(path.relative_to(target)))
+
+
 def record_removal(metadata, commit, recovery_branch, predecessors=None, native_locks=None):
     """Keep the verified snapshot in Git metadata until content deletion succeeds."""
     staged = metadata / (REMOVAL_RECORD + ".tmp")
@@ -69,6 +87,7 @@ def record_removal(metadata, commit, recovery_branch, predecessors=None, native_
 
 def remove_payload(target):
     """Retain the Git link and registration throughout fallible content deletion."""
+    reject_nested_git(target)
     for child in target.iterdir():
         if child.name == ".git":
             continue
@@ -131,7 +150,7 @@ LOCK_AGE_SECONDS = 24 * 60 * 60
 
 
 def qualify(source, path, stack=None, snapshot=None, deadline=None):
-    """Validate identity and Git lock age, without inspecting users or contents."""
+    """Validate identity, nested repositories and Git lock age without activity checks."""
     if Path(path).is_symlink():
         raise Refused("linked_tree")
     path = Path(path).resolve()
@@ -144,6 +163,7 @@ def qualify(source, path, stack=None, snapshot=None, deadline=None):
         raise Refused("main_worktree")
     if any(path in Path(row["worktree"]).resolve().parents for row in rows):
         raise Refused("nested_worktree")
+    reject_nested_git(path)
     if "locked" in item:
         if item["locked"].startswith("worktree-init:"):
             try:

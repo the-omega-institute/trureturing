@@ -418,6 +418,13 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("removal_payload_failure_retains_registration_and_resumes")]
     [InlineData("removal_payload_process_death_retains_registration_and_resumes")]
     [InlineData("native_unregistration_failure_leaves_only_git_link")]
+    [InlineData("removal_refuses_nested_repository_before_any_payload")]
+    [InlineData("removal_refuses_gitlink_before_any_payload")]
+    [InlineData("removal_refuses_submodule_before_any_payload")]
+    [InlineData("removal_refuses_foreign_worktree_before_any_payload")]
+    [InlineData("removal_refuses_bare_repository_before_any_payload")]
+    [InlineData("removal_resumes_after_worktree_ignore_is_deleted")]
+    [InlineData("removal_with_deleted_ignore_retains_new_ordinary_file")]
     public void RemovalKeepsRegistrationUntilPayloadIsGone(string probe)
     {
         if (OperatingSystem.IsWindows()) return;

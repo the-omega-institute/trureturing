@@ -18,6 +18,49 @@ class LockRecoveryCases:
         return argparse.Namespace(source=self.main, names="tree", path=[], force=False,
                                   preview=False, expected=[])
 
+    def assert_payload_boundary_retained(self, boundary):
+        import worktree_protocol as protocol
+        (self.tree / "owned").write_text("uncheckpointed outer bytes\n")
+        (boundary / "unique").write_text("nested local bytes\n")
+        second = self.root / "second"
+        self.g(self.main, "worktree", "add", "-b", "second", second, self.base)
+        result = self.run_protocol("remove", "--names", "second tree", expect=73)
+        self.assertIn("nested_git_boundary:", result.stderr)
+        self.assertTrue(second.is_dir(), "batch preflight must precede all deletion")
+        self.assertEqual("uncheckpointed outer bytes\n", (self.tree / "owned").read_text())
+        self.assertEqual("nested local bytes\n", (boundary / "unique").read_text())
+        self.assertEqual(self.base, self.g(self.main, "rev-parse", self.branch).strip())
+        self.assertIn(str(self.tree), [row["worktree"] for row in protocol.inventory(self.main)])
+
+    def test_removal_refuses_nested_repository_before_any_payload(self):
+        boundary = self.tree / ".lake/vendor"
+        boundary.mkdir(parents=True)
+        self.g(boundary, "init")
+        (self.tree / ".gitignore").write_text(".lake/\n")
+        self.assert_payload_boundary_retained(boundary)
+
+    def test_removal_refuses_gitlink_before_any_payload(self):
+        boundary = self.tree / "module"
+        boundary.mkdir()
+        self.g(self.tree, "update-index", "--add", "--cacheinfo", "160000," + self.base + ",module")
+        self.assert_payload_boundary_retained(boundary)
+
+    def test_removal_refuses_submodule_before_any_payload(self):
+        self.g(self.tree, "-c", "protocol.file.allow=always", "submodule", "add", self.main, "module")
+        self.assert_payload_boundary_retained(self.tree / "module")
+
+    def test_removal_refuses_foreign_worktree_before_any_payload(self):
+        foreign = self.root / "foreign"
+        self.g(self.root, "clone", self.main, foreign)
+        boundary = self.tree / "foreign-tree"
+        self.g(foreign, "worktree", "add", "-b", "nested", boundary)
+        self.assert_payload_boundary_retained(boundary)
+
+    def test_removal_refuses_bare_repository_before_any_payload(self):
+        boundary = self.tree / "inner.git"
+        self.g(self.root, "clone", "--bare", self.main, boundary)
+        self.assert_payload_boundary_retained(boundary)
+
     def assert_removal_recoverable(self, metadata):
         import worktree_preservation as preservation
         import worktree_protocol as protocol
@@ -26,6 +69,49 @@ class LockRecoveryCases:
         self.assertEqual(record["commit"], self.g(self.main, "rev-parse", self.branch).strip())
         self.assertEqual("snapshot before deletion\n", self.g(self.main, "show", self.branch + ":owned"))
         return record
+
+    def interrupt_after_ignore_deletion(self):
+        import worktree_preservation as preservation
+        (self.tree / "owned").write_text("snapshot before deletion\n")
+        (self.tree / ".gitignore").write_text(".lake/\n")
+        cache = self.tree / ".lake/build"
+        cache.mkdir(parents=True)
+        (cache / "output").write_text("ignored build output\n")
+        native_iterdir, native_unlink = Path.iterdir, Path.unlink
+        def ignore_first(path):
+            children = list(native_iterdir(path))
+            return iter(sorted(children, key=lambda child: child.name != ".gitignore"))
+        def interrupted_unlink(path, *args, **kwargs):
+            result = native_unlink(path, *args, **kwargs)
+            if path == self.tree / ".gitignore":
+                raise OSError("interrupted after ignore deletion")
+            return result
+        with patch.object(Path, "iterdir", ignore_first), patch.object(Path, "unlink", interrupted_unlink):
+            item = preservation.remove(self.removal_options())["items"][0]
+        self.assertEqual("partial_or_indeterminate", item["outcome"])
+        self.assertIn("interrupted after ignore deletion", item["error"])
+        self.assertFalse((self.tree / ".gitignore").exists())
+        self.assertTrue((cache / "output").is_file())
+        return item["checkpoint"]["commit"]
+
+    def test_removal_resumes_after_worktree_ignore_is_deleted(self):
+        snapshot = self.interrupt_after_ignore_deletion()
+        item = json.loads(self.remove().stdout)["items"][0]
+        self.assertEqual(("removed", "resumed"), (item["outcome"], item["checkpoint"]["status"]))
+        self.assertFalse(self.tree.exists())
+        self.assertEqual(snapshot, self.g(self.main, "rev-parse", self.branch).strip())
+        self.assertEqual(".lake/\n", self.g(self.main, "show", self.branch + ":.gitignore"))
+
+    def test_removal_with_deleted_ignore_retains_new_ordinary_file(self):
+        snapshot = self.interrupt_after_ignore_deletion()
+        late = self.tree / "late\nordinary"
+        late.write_text("new ordinary bytes\n")
+        item = json.loads(self.remove(expect=74).stdout)["items"][0]
+        self.assertEqual("checkpoint_failed", item["outcome"])
+        self.assertIn("interrupted_removal_tree_changed", item["error"])
+        self.assertEqual("new ordinary bytes\n", late.read_text())
+        self.assertTrue((self.tree / ".lake/build/output").is_file())
+        self.assertEqual(snapshot, self.g(self.main, "rev-parse", self.branch).strip())
 
     def test_removal_payload_failure_retains_registration_and_resumes(self):
         import worktree_preservation as preservation
