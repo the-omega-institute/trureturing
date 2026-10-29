@@ -715,6 +715,213 @@ theorem native_source_block_recovery (p : Presentation X) (E : List (Equation X)
     · simpa only [identity o ho hoj, identity b hb hj] using (recovered.2 o ho hoj).2.1
 
 #print axioms source_sort_minimum_base
+
+/-- Explicit primitive positions and residual positions have separate labels. -/
+abbrev ScalarPosition (X : Type) := X × List Bool
+
+inductive RankExpression (X : Type) where
+  | scalar : ScalarPosition X → RankExpression X
+  | constant : Nat → RankExpression X
+
+inductive DecoratedTerm (X : Type) where
+  | scalar : Bool → RankExpression X → DecoratedTerm X
+  | block : Occurrence X → DecoratedTerm X
+  | pair : DecoratedTerm X → DecoratedTerm X → DecoratedTerm X
+
+def RankExpression.value (r : ScalarPosition X → Nat) : RankExpression X → Nat
+  | .scalar q => r q
+  | .constant n => n
+
+def DecoratedTerm.erase : DecoratedTerm X → Term X
+  | .scalar b _ => .of (.inl b)
+  | .block o => .of (.inr o.2.2)
+  | .pair A B => .mul A.erase B.erase
+
+def DecoratedTerm.value (r : ScalarPosition X → Nat)
+    (u : Occurrence X → NativeFiniteNormalInversion.Code) :
+    DecoratedTerm X → NativeFiniteNormalInversion.Code
+  | .scalar _ n => .of (n.value r)
+  | .block o => u o
+  | .pair A B => .mul (A.value r u) (B.value r u)
+
+def scalarDecorateFrom (x : X) (q : List Bool) : Term X → DecoratedTerm X
+  | .of (.inl b) => .scalar b (.scalar (x,q))
+  | .of (.inr j) => .block (x,q,j)
+  | .mul A B => .pair (scalarDecorateFrom x (q ++ [false]) A)
+      (scalarDecorateFrom x (q ++ [true]) B)
+
+def scalarDecorate (s : X → Term X) (x : X) : DecoratedTerm X :=
+  scalarDecorateFrom x [] (s x)
+
+/-- A finite structural inventory. Every leaf equation is scalar or block;
+there is no mixed scalar/block equation. -/
+inductive ComparisonInventory (X : Type) where
+  | scalar : RankExpression X → RankExpression X → Nat → ComparisonInventory X
+  | block : Occurrence X → Occurrence X → Nat → ComparisonInventory X
+  | both : ComparisonInventory X → ComparisonInventory X → ComparisonInventory X
+  | incompatible : ComparisonInventory X
+
+def ComparisonInventory.Holds (r : ScalarPosition X → Nat)
+    (u : Occurrence X → NativeFiniteNormalInversion.Code) : ComparisonInventory X → Prop
+  | .scalar n m a => (n.value r : Int) = (m.value r : Int) + (a : Int)
+  | .block v w a => u v = NativeFiniteNormalInversion.shiftCode a (u w)
+  | .both I J => I.Holds r u ∧ J.Holds r u
+  | .incompatible => False
+
+def comparisonInventory (a : Nat) : DecoratedTerm X → DecoratedTerm X →
+    ComparisonInventory X
+  | .scalar _ n, .scalar _ m => .scalar n m a
+  | .block v, .block w => .block v w a
+  | .pair A B, .pair C D =>
+      .both (comparisonInventory a A C) (comparisonInventory a B D)
+  | _, _ => .incompatible
+
+private theorem scalar_decorate_erase (x : X) (q : List Bool) (t : Term X) :
+    (scalarDecorateFrom x q t).erase = t := by
+  induction t generalizing q with
+  | of b => cases b <;> rfl
+  | mul A B ihA ihB => exact congrArg₂ FreeMagma.mul (ihA _) (ihB _)
+
+/-- Equality of the erased terms is the actual shape-unifier invariant.
+The two valuations are otherwise arbitrary and independent. -/
+private theorem comparison_inventory_iff (a : Nat) (A B : DecoratedTerm X)
+    (r : ScalarPosition X → Nat) (u : Occurrence X → NativeFiniteNormalInversion.Code)
+    (same : A.erase = B.erase) :
+    (comparisonInventory a A B).Holds r u ↔
+      A.value r u = NativeFiniteNormalInversion.shiftCode a (B.value r u) := by
+  induction A generalizing B with
+  | scalar b n =>
+      cases B with
+      | scalar c m =>
+          simp only [comparisonInventory, ComparisonInventory.Holds,
+            DecoratedTerm.value, NativeFiniteNormalInversion.shiftCode,
+            FreeMagma.of.injEq]
+          omega
+      | block w => cases same
+      | pair C D => cases same
+  | block v =>
+      cases B with
+      | scalar c m => cases same
+      | block w => rfl
+      | pair C D => cases same
+  | pair A₁ A₂ ihA ihB =>
+      cases B with
+      | scalar c m => cases same
+      | block w => cases same
+      | pair C D =>
+          have parts : A₁.erase = C.erase ∧ A₂.erase = D.erase := by
+            injection same with hA hB
+            exact ⟨hA,hB⟩
+          simp only [comparisonInventory, ComparisonInventory.Holds,
+            DecoratedTerm.value, NativeFiniteNormalInversion.shiftCode,
+            FreeMagma.mul.injEq]
+          exact and_congr (ihA C parts.1) (ihB D parts.2)
+
+/-- Each collapse has one natural witness shared by all three comparisons. -/
+inductive BranchInventory (X : Type) where
+  | comparison : ComparisonInventory X → BranchInventory X
+  | collapse : (Nat → ComparisonInventory X) → BranchInventory X
+
+def BranchInventory.Holds (r : ScalarPosition X → Nat)
+    (u : Occurrence X → NativeFiniteNormalInversion.Code) : BranchInventory X → Prop
+  | .comparison I => I.Holds r u
+  | .collapse I => ∃ n : Nat, (I n).Holds r u
+
+def branchInventory (s : X → Term X) : BranchEquation X → BranchInventory X
+  | .primitive z n => .comparison
+      (comparisonInventory 0 (scalarDecorate s z) (.scalar true (.constant n)))
+  | .shift z a x => .comparison
+      (comparisonInventory a (scalarDecorate s z) (scalarDecorate s x))
+  | .ordinary z x y => .comparison
+      (comparisonInventory 0 (scalarDecorate s z)
+        (.pair (scalarDecorate s x) (scalarDecorate s y)))
+  | .same x y => .comparison
+      (comparisonInventory 0 (scalarDecorate s x) (scalarDecorate s y))
+  | .collapse z x y => .collapse fun n => .both
+      (comparisonInventory 0 (scalarDecorate s x) (.scalar true (.constant (n+1))))
+      (.both (comparisonInventory 0 (scalarDecorate s y) (.scalar true (.constant n)))
+        (comparisonInventory 0 (scalarDecorate s z) (.scalar true (.constant (n+2)))))
+
+/-- Complete normalization of one original comparison, including its natural
+collapse witness. No scalar constraint is an external hypothesis. -/
+private theorem branch_inventory_iff (s : X → Term X) (b : BranchEquation X)
+    (r : ScalarPosition X → Nat) (u : Occurrence X → NativeFiniteNormalInversion.Code)
+    (sh : ∀ e ∈ b.shapeEquations, substitute s e.1 = substitute s e.2) :
+    (branchInventory s b).Holds r u ↔
+      b.Holds (fun x => (scalarDecorate s x).value r u) := by
+  have er (x : X) : (scalarDecorate s x).erase = s x :=
+    scalar_decorate_erase x [] (s x)
+  have cmp (a : Nat) (A B : DecoratedTerm X) (h : A.erase = B.erase) :=
+    comparison_inventory_iff a A B r u h
+  cases b with
+  | primitive z n =>
+      have h := sh _ (List.mem_singleton_self _)
+      change s z = .of (.inl true) at h
+      simpa only [branchInventory, BranchInventory.Holds, BranchEquation.Holds,
+        DecoratedTerm.value, RankExpression.value, NativePositiveBranchReduction.shift_zero]
+        using cmp 0 (scalarDecorate s z) (.scalar true (.constant n)) (by simpa [er] using h)
+  | shift z a x =>
+      have h := sh _ (List.mem_singleton_self _)
+      change s z = s x at h
+      exact cmp a _ _ (by simpa only [er] using h)
+  | ordinary z x y =>
+      have h := sh _ (List.mem_singleton_self _)
+      change s z = .mul (s x) (s y) at h
+      simpa only [branchInventory, BranchInventory.Holds, BranchEquation.Holds,
+        DecoratedTerm.value, NativePositiveBranchReduction.shift_zero]
+        using cmp 0 (scalarDecorate s z) (.pair (scalarDecorate s x) (scalarDecorate s y))
+          (by simpa only [DecoratedTerm.erase, er] using h)
+  | same x y =>
+      have h := sh _ (List.mem_singleton_self _)
+      change s x = s y at h
+      simpa only [branchInventory, BranchInventory.Holds, BranchEquation.Holds,
+        NativePositiveBranchReduction.shift_zero]
+        using cmp 0 (scalarDecorate s x) (scalarDecorate s y) (by simpa only [er] using h)
+  | collapse z x y =>
+      have hx := sh _ (List.mem_cons_self ..)
+      have hy := sh _ (List.mem_cons_of_mem _ (List.mem_cons_self ..))
+      have hz := sh _ (List.mem_cons_of_mem _ (List.mem_cons_of_mem _ (List.mem_singleton_self _)))
+      change s x = .of (.inl true) at hx
+      change s y = .of (.inl true) at hy
+      change s z = .of (.inl true) at hz
+      change (∃ n, _ ∧ _ ∧ _) ↔ ∃ n, _ ∧ _ ∧ _
+      apply exists_congr
+      intro n
+      exact and_congr
+        (by simpa only [DecoratedTerm.value, RankExpression.value,
+          NativePositiveBranchReduction.shift_zero] using
+          cmp 0 (scalarDecorate s x) (.scalar true (.constant (n+1)))
+            (by simpa only [DecoratedTerm.erase, er] using hx))
+        (and_congr
+          (by simpa only [DecoratedTerm.value, RankExpression.value,
+            NativePositiveBranchReduction.shift_zero] using
+            cmp 0 (scalarDecorate s y) (.scalar true (.constant n))
+              (by simpa only [DecoratedTerm.erase, er] using hy))
+          (by simpa only [DecoratedTerm.value, RankExpression.value,
+            NativePositiveBranchReduction.shift_zero] using
+            cmp 0 (scalarDecorate s z) (.scalar true (.constant (n+2)))
+              (by simpa only [DecoratedTerm.erase, er] using hz)))
+
+/-- The complete separately decorated system is equivalent to the same
+original branch system, for every scalar and block assignment. -/
+theorem source_decorated_comparison_equivalence (p : Presentation X)
+    (B : List (BranchEquation X)) (S : SubstInfo)
+    (hok : (encodeEquations p (shapeEquations B)).unify SubstInfo.empty = .ok S)
+    (r : ScalarPosition X → Nat) (u : Occurrence X → NativeFiniteNormalInversion.Code) :
+    (∀ b ∈ B, (branchInventory (action p S) b).Holds r u) ↔
+      ∀ b ∈ B, b.Holds (fun x => (scalarDecorate (action p S) x).value r u) := by
+  have sh : ∀ e ∈ shapeEquations B,
+      substitute (action p S) e.1 = substitute (action p S) e.2 := by
+    intro e he
+    have h := Constraints.unify_sound (encodeEquations p (shapeEquations B))
+      SubstInfo.empty S hok (encode p e.1, encode p e.2)
+      (List.mem_map.mpr ⟨e,he,rfl⟩)
+    apply encode_injective p
+    simpa only [action_substitute_encode p (shapeEquations B) S hok] using h
+  exact forall_congr' fun b => forall_congr' fun hb =>
+    branch_inventory_iff (action p S) b r u
+      (fun e he => sh e (List.mem_flatMap.mpr ⟨b,hb,he⟩))
+
 #print axioms native_source_block_recovery
 #print axioms source_canonical_block_recovery
 
