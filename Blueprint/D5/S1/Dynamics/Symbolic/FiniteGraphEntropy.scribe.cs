@@ -65,12 +65,12 @@ internal sealed class FiniteGraphEntropyDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Owner + "edgeLanguage_shift_invariant"),
                 H("Dropping the first vertex preserves the language"),
                 StatementSource.FromAuthor(Call("MapsTo",
-                    Call("FullShift.shift", Num(1)),
+                    Call("shift", Num(1)),
                     Call("edgeLanguage", Id("edge")),
                     Call("edgeLanguage", Id("edge")))),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "If a path satisfies every consecutive-edge constraint, its tail does too. "
+                    "Here shift(1) is SymbolicDynamics.FullShift.shift(1). If a path satisfies every consecutive-edge constraint, its tail does too. "
                     + "The theorem proves forward invariance under the one-step shift; it does not assert surjectivity of that shift or an entropy formula."))),
                 DescribeRole.Theorem))));
 }

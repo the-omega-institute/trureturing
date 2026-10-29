@@ -97,8 +97,8 @@ theorem edgeLanguage_shift_invariant (edge : V → V → Prop) :
   · intro n
     simpa only [FullShift.shift_apply, id_eq, Nat.add_comm] using hl (n + 1)
 
-/-- Under right-totality, the empty prefix is realized and every edge path
-prefix can be extended to an infinite path. -/
+/-- Under right-totality, every nonempty finite edge path can be extended to
+an infinite path. -/
 private theorem finite_path_extend (edge : V → V → Prop)
     (ht : RightTotal edge) (n : ℕ) (p : Fin (n + 1) → V)
     (hp : ∀ i : Fin n, edge (p i.castSucc) (p i.succ)) :
