@@ -6,9 +6,9 @@ Simple original routes to a rectangular word
 
 **Theorem 1.1 (Irreducibility pays the visible word occurrence on the original law).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleRoutes.irreducible_rectangle_occurrence`
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleRoutes.irreducible_rectangle_occurrence`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleRoutes.irreducible_rectangle_occurrence` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleRoutes.irreducible_rectangle_occurrence` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ The route construction directly reuses the pinned shortestPath and shortest_path
 
 **Theorem 1.2 (The empty-prefix incoming-past seam is null).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleRoutes.first_one_incoming_past_null`
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleRoutes.first_one_incoming_past_null`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleRoutes.first_one_incoming_past_null` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleRoutes.first_one_incoming_past_null` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -34,7 +34,7 @@ For an actual positive-weight source class C, apply this result to nativeCompone
 
 ## References
 
-- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleRoutes.first_one_incoming_past_null`
-- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleRoutes.irreducible_rectangle_occurrence`
-- Dependency: [D5/S3/Combinatorics/Graph/PerronFrobenius/MCMCSupplier/Combinatorics/Quiver/Path](../../../Combinatorics/Graph/PerronFrobenius/MCMCSupplier/Combinatorics/Quiver/Path.md)
-- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence](OriginalRectangleOccurrence.md)
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleRoutes.first_one_incoming_past_null`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleRoutes.irreducible_rectangle_occurrence`
+- Dependency: [D5/S3/Combinatorics/Graph/PerronFrobenius/MCMCSupplier/Combinatorics/Quiver/Path](../../../../Combinatorics/Graph/PerronFrobenius/MCMCSupplier/Combinatorics/Quiver/Path.md)
+- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence](OriginalRectangleOccurrence.md)

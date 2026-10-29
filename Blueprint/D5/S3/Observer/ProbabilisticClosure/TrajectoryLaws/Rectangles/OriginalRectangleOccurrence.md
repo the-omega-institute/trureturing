@@ -6,9 +6,9 @@ Original rectangular-word occurrence
 
 **Definition 1.1 (Selected original labelled paths).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.LabelledRoute`
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.LabelledRoute`
 
-*Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.LabelledRoute` (`✓ std3`).
+*Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.LabelledRoute` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -18,9 +18,9 @@ For a finite hidden state type H, an original stationary binary edge presentatio
 
 **Definition 1.2 (One visible event for the whole original block).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.success`
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.success`
 
-*Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.success` (`✓ std3`).
+*Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.success` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -30,9 +30,9 @@ For a binary list w and natural block length b, success is the set of future out
 
 **Definition 1.3 (The exact selected-path minimum).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.selectedEpsilon`
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.selectedEpsilon`
 
-*Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.selectedEpsilon` (`✓ std3`).
+*Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.selectedEpsilon` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -42,9 +42,9 @@ For theta, w, a target state r, and one selected labelled route from every h to 
 
 **Theorem 1.4 (The original visible event is paid against the complete marked past).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.original_rectangle_occurrence`
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.original_rectangle_occurrence`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.original_rectangle_occurrence` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.original_rectangle_occurrence` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -54,9 +54,9 @@ Let H be any finite hidden state type with measurable singletons, theta an origi
 
 **Definition 1.5 (The prescribed original hidden path and word).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.routeWord`
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.routeWord`
 
-*Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.routeWord` (`✓ std3`).
+*Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.routeWord` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -66,9 +66,9 @@ For an original presentation theta, any integer cut t, states h and r, a given p
 
 **Theorem 1.6 (Exact prescribed-route probability against the entire marked past).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.route_word_past_factor`
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.route_word_past_factor`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.route_word_past_factor` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.route_word_past_factor` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -78,9 +78,9 @@ For every finite measurable hidden type with measurable singletons, every origin
 
 **Definition 1.7 (The actual positive closed-class restriction).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.nativeComponent`
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.nativeComponent`
 
-*Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.nativeComponent` (`✓ std3`).
+*Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.nativeComponent` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -90,9 +90,9 @@ For an actual closed communicating class C of the original sum matrix M0 plus M1
 
 **Definition 1.8 (Inclusion on the same original marked carrier).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.componentInclusion`
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.componentInclusion`
 
-*Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.componentInclusion` (`✓ std3`).
+*Formalization.* `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.componentInclusion` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -102,9 +102,9 @@ A path on the actual state subtype C is included in the original path space by t
 
 **Theorem 1.9 (A native component law equals the actual class restriction).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.component_restriction`
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.component_restriction`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.component_restriction` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.component_restriction` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -120,15 +120,15 @@ Set b to length(w) plus card(C). For each given route the remaining length is b 
 
 ## References
 
-- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.LabelledRoute`
-- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.componentInclusion`
-- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.component_restriction`
-- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.nativeComponent`
-- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.original_rectangle_occurrence`
-- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.routeWord`
-- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.route_word_past_factor`
-- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.selectedEpsilon`
-- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence.success`
-- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FiniteClosedClasses](FiniteClosedClasses.md)
-- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalFutureScreening](OriginalFutureScreening.md)
-- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleSmoothing](OriginalRectangleSmoothing.md)
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.LabelledRoute`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.componentInclusion`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.component_restriction`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.nativeComponent`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.original_rectangle_occurrence`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.routeWord`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.route_word_past_factor`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.selectedEpsilon`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.success`
+- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FiniteClosedClasses](../FiniteClosedClasses.md)
+- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalFutureScreening](../OriginalFutureScreening.md)
+- Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleSmoothing](../OriginalRectangleSmoothing.md)
