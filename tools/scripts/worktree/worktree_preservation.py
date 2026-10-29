@@ -1,6 +1,7 @@
 """User-directed worktree removal and independent non-worktree retention policies."""
 
 from contextlib import ExitStack, contextmanager
+from contextvars import ContextVar
 import hashlib
 import json
 import os
@@ -58,6 +59,7 @@ def reflog_oids(path):
 
 
 REMOVAL_RECORD = "worktree-removal"
+_PAYLOAD_PLAN = ContextVar("worktree_removal_payload_plan", default=None)
 
 
 def reject_nested_git(target):
@@ -86,8 +88,11 @@ def record_removal(metadata, commit, recovery_branch, predecessors=None, native_
     os.replace(staged, metadata / REMOVAL_RECORD)
 
 
-def remove_payload(target, payload):
+def remove_payload(target):
     """Retain the Git link and registration throughout fallible content deletion."""
+    planned = _PAYLOAD_PLAN.get()
+    payload = planned[1] if planned is not None and planned[0] == Path(target).resolve() else tuple(
+        child for child in target.iterdir() if child.name != ".git")
     for child in payload:
         if child.is_dir() and not child.is_symlink():
             shutil.rmtree(child)
@@ -431,8 +436,12 @@ def remove(options):
                                          stack if owned_initializer_scope else None)
                 qualifying = False
                 removing = True
-                with payload_removal_budget(options.force) as deadline:
-                    remove_payload(target, payload)
+                payload_token = _PAYLOAD_PLAN.set((target.resolve(), payload))
+                try:
+                    with payload_removal_budget(options.force) as deadline:
+                        remove_payload(target)
+                finally:
+                    _PAYLOAD_PLAN.reset(payload_token)
                 remaining = None if deadline is None else deadline - time.monotonic()
                 if remaining is not None and remaining <= 0:
                     raise subprocess.TimeoutExpired(["worktree", "remove"], 300)
