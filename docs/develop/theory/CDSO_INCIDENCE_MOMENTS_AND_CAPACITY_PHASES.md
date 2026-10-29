@@ -1506,3 +1506,385 @@ it has exactly the same limit. Thus the gap divided by $r^2$ tends to zero throu
 The formulas (10.1)–(10.3) do not assert that these arrays minimize $J_s$, or determine the largest positive gap for any fixed $r$. They restrict the possible scale of a uniform all-$r$ gap. The exact array family has disconnected support; it is not itself a connected finite graph construction at every prescribed budget. Theorem 7.1 can realize a fixed profile asymptotically under its stated budget hypotheses, but does not identify the finite optimum or transfer (10.2) to every integer graph budget.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Common-incidence truncation and unrestricted capacity phases
+
+**Definition 11.1 (Common size-column data).** Let $s$ be a positive integer. A common incidence datum consists of real numbers $p_k,z_{ik}$, for $1\le k\le s$ and $1\le i\le s$, satisfying
+
+$$
+p_k\ge0,\qquad \sum_{k=1}^sp_k=1,\qquad
+0\le z_{ik}\le p_k,\qquad \sum_{i=1}^sz_{ik}=kp_k.
+$$
+
+Put
+
+$$
+y_i=\sum_kz_{ik}>0,\qquad
+q=\sum_kkp_k=\sum_i y_i,\qquad
+w_i=\sum_kk^2z_{ik},\qquad
+2\mathcal J_s(p,z)=\sum_i\frac{w_i}{y_i^2}.
+$$
+
+Every profile of Definition 1.1 supplies one such datum by
+
+$$
+p_k=\sum_{|T|=k}x_T,\qquad
+z_{ik}=\sum_{\substack{|T|=k\\i\in T}}x_T.
+$$
+
+The resulting $y_i,w_i,q$ agree with Definition 1.1 and $\mathcal J_s(p,z)=J_s(x)$. In particular the column caps and all the denominators come from the same profile. No converse representation is needed below. For integers $r\ge2$, extend the notation of Definition 1.2 by
+
+$$
+a=r-1,\qquad D=3a^2+3a+1,\qquad C=ar(2a+1),
+\qquad F_r(q)=\frac{r^2(Dq-C)}{2q^2}\quad(q>0).
+$$
+
+For $r\ge5$ these are precisely the earlier quantities.
+
+**Theorem 11.2 (Common-incidence truncation and an integer-moment gap).** Let $r\ge2$ and $s\ge r+1$ be integers. Suppose the datum of Definition 11.1 has $a\le q\le r$, where $a=r-1$. Relabel its marginals so that $y_1\ge\cdots\ge y_s>0$, and put
+
+$$
+A=\{1,\ldots,r\},\qquad h=s-r,\qquad
+u=\sum_{i\in A}y_i,\qquad v=\sum_{i\notin A}y_i=q-u,
+$$
+
+Define
+
+$$
+M_2=\sum_kk^2p_k,\qquad B_{\mathrm{inc}}=M_2-a^2,\qquad
+\Delta_{\mathrm{int}}=\sum_k(k-a)(k-r)p_k.
+$$
+
+Then $u,v>0$, $B_{\mathrm{inc}}\ge0$, $\Delta_{\mathrm{int}}\ge0$, and
+
+$$
+\begin{aligned}
+2\mathcal J_s(p,z)
+&\ge\sum_{i\in A}\left(\frac{a^2}{y_i}
+                    +\frac{B_{\mathrm{inc}}}{y_i^2}\right)
+       +\sum_{i\notin A}\frac1{y_i}\\
+&\ge\frac{a^2r^2}{u}+\frac{B_{\mathrm{inc}}r^3}{u^2}
+       +\frac{h^2}{v}.\tag{11.1}
+\end{aligned}
+$$
+
+Consequently
+
+$$
+2\bigl(\mathcal J_s(p,z)-F_r(q)\bigr)
+\ge\frac{h(2ar+h)}q+\frac{r^3\Delta_{\mathrm{int}}}{q^2}>0.\tag{11.2}
+$$
+
+In particular
+
+$$
+\mathcal J_s(p,z)-F_r(q)
+\ge\frac{2ar+1}{2q}\ge a+\frac1{2r}.
+$$
+
+The assertions allow zero columns, zero entries, ties between marginals, arbitrarily small positive marginals, and all sizes $1\le k\le s$. No assertion of optimality of these gap constants is made.
+
+**Proof.** Write $t=q-a\in[0,1]$. Consecutive integrality gives $(k-a)(k-r)\ge0$ for every integer $k$, so
+
+$$
+B_{\mathrm{inc}}=(2a+1)t+\Delta_{\mathrm{int}}\ge0.\tag{11.3}
+$$
+
+Order the reciprocal weights $\omega_i=y_i^{-2}$, so that $\omega_i\le\omega_r$ on $A$ and $\omega_i\ge\omega_r$ on its complement. For every $k\ge r$, use the cap $z_{ik}\le p_k$ on $A$ and nonnegativity on its complement to obtain
+
+$$
+\begin{aligned}
+\sum_i\omega_i z_{ik}-p_k\sum_{i\in A}\omega_i
+&=\sum_{i\in A}\omega_i(z_{ik}-p_k)
+  +\sum_{i\notin A}\omega_i z_{ik}\\
+&\ge\omega_r\left(\sum_i z_{ik}-rp_k\right)
+ =\omega_r(k-r)p_k\ge0.\tag{11.4}
+\end{aligned}
+$$
+
+This calculation also covers $p_k=0$. It uses the same ordered marginals for every column.
+
+For the low and high columns set
+
+$$
+L_{\mathrm{col}}=\sum_{k<a}(a^2-k^2)p_k,\qquad
+P_{\mathrm{col}}=\sum_{k\ge r}(k^2-a^2)p_k,\qquad
+\tau_i=\sum_k\min\{k^2,a^2\}z_{ik}.
+$$
+
+Since there is no integer strictly between $a$ and $r$, one has the exact identities
+
+$$
+w_i=\tau_i+\sum_{k\ge r}(k^2-a^2)z_{ik},\qquad
+P_{\mathrm{col}}-L_{\mathrm{col}}=B_{\mathrm{inc}}.
+$$
+
+For $i\in A$, the very same column caps give
+
+$$
+\tau_i=a^2y_i-\sum_{k<a}(a^2-k^2)z_{ik}
+\ge a^2y_i-L_{\mathrm{col}}.
+$$
+
+For $i\notin A$, the inequalities $k\ge1$ and $a\ge1$ give $\tau_i\ge y_i$. Multiply these inequalities by $\omega_i$ and sum. In the high-column part use (11.4), whose coefficients $k^2-a^2$ are nonnegative. The result is
+
+$$
+\begin{aligned}
+\sum_i\frac{w_i}{y_i^2}
+&\ge a^2\sum_{i\in A}\frac1{y_i}
+  -L_{\mathrm{col}}\sum_{i\in A}\frac1{y_i^2}
+  +\sum_{i\notin A}\frac1{y_i}
+  +P_{\mathrm{col}}\sum_{i\in A}\frac1{y_i^2}\\
+&=a^2\sum_{i\in A}\frac1{y_i}
+  +B_{\mathrm{inc}}\sum_{i\in A}\frac1{y_i^2}
+  +\sum_{i\notin A}\frac1{y_i}.
+\end{aligned}
+$$
+
+Thus the high-column gain cancels the entire low-column loss on this one core. No separate choice or optimization of their marginals has occurred. The elementary Cauchy–Schwarz inequalities
+
+$$
+\sum_{i\in A}\frac1{y_i}\ge\frac{r^2}{u},\qquad
+\sum_{i\in A}\frac1{y_i^2}
+\ge\frac1r\left(\sum_{i\in A}\frac1{y_i}\right)^2
+\ge\frac{r^3}{u^2},\qquad
+\sum_{i\notin A}\frac1{y_i}\ge\frac{h^2}{v}
+$$
+
+prove (11.1), since $B_{\mathrm{inc}}\ge0$.
+
+Because $u+v=q$ and $u,v>0$,
+
+$$
+\frac{a^2r^2}{u}+\frac{h^2}{v}-\frac{(ar+h)^2}{q}
+=\frac{(arv-hu)^2}{uvq}\ge0,
+\qquad \frac{B_{\mathrm{inc}}r^3}{u^2}
+\ge\frac{B_{\mathrm{inc}}r^3}{q^2}.
+$$
+
+The target has the exact identity
+
+$$
+2F_r(q)=\frac{a^2r^2}{q}
+       +\frac{(2a+1)t r^3}{q^2},\tag{11.5}
+$$
+
+because $D=a^2+(2a+1)r$ and $C=a(2a+1)r$. Substitute (11.3) in (11.1), apply the preceding two inequalities and subtract (11.5). Expanding $(ar+h)^2-a^2r^2=h(2ar+h)$ proves (11.2). Finally $h\ge1$ and $q\le r$ imply the stated uniform positive bound. All divisions used only $u,v,q,y_i>0$, not positivity of any individual type or column mass. ∎
+
+**Theorem 11.3 (Unrestricted profile comparison at every capacity phase).** For every integer $r\ge5$, every finite $s\ge r$ and every profile of Definition 1.1 with $q\in[r-1,r]$,
+
+$$
+J_s(x)\ge F_r(q).
+$$
+
+Equality holds exactly for $s=r$ and $x=x^*(q)$, up to relabeling. If $s>r$, its common datum satisfies the stronger bound (11.2), in particular
+
+$$
+J_s(x)\ge F_r(q)+(r-1)+\frac1{2r}.\tag{11.6}
+$$
+
+For arbitrary $q\ge r$, every profile with finite $s\ge r+1$ also satisfies, for each $2\le\beta\le\kappa_r$,
+
+$$
+2J_s(x)\ge r^3+\beta(s-r)+(D-\beta)(q-r).
+\tag{11.7}
+$$
+
+Here $D-\beta>0$; in particular $\beta=2$ gives $J_s(x)\ge r^3/2+1$. The bound (11.7) does not require $q\le r$.
+
+The interval comparison includes every $r\ge11$ and every mean in Definition 8.3, without the support hypothesis of Theorem 4.1 or the upper-density restriction of Theorem 8.1. It extends the comparison and equality statement of Theorem 3.2 to all $r\ge5$. Its domain is $s\ge r$; at $q=r-1$ it does not exclude the separate class $s=r-1$.
+
+**Proof.** If $s>r$, Definition 11.1 transfers the profile to one common datum, and Theorem 11.2 applies. If $s=r$, Theorem 3.1 supplies the inequality and its complete equality class, including both endpoints. This uses the existing fixed-$r$ equality theorem without any hypothesis on low cardinalities.
+
+For (11.7), apply Theorem 2.1 on its unrestricted mean domain. Since $f_r(r)=r^3$,
+
+$$
+f_r(q)+\beta(s-q)
+=r^3+\beta(s-r)+(D-\beta)(q-r).
+$$
+
+The admissible range of $\beta$ is nonempty, since $\kappa_r\ge2$. As proved in Theorem 2.1, $\kappa_r\le2a^2<D$, so the last coefficient is positive. For $s\ge r+1$ and $q\ge r$, taking $\beta=2$ gives the asserted gap above $r^3/2$. ∎
+
+**Theorem 11.4 (Unrestricted finite minimizers on the full capacity interval).** Fix any integer $r\ge5$. Use exactly the constants $C_0,A,K_0,R,B,H$ of Theorem 6.1 and an integer $n_0(r)$ satisfying (6.1), with $\widehat\gamma=1/2$. For every integer $n\ge n_0(r)$ and every integer
+
+$$
+L_r(n)\le\ell\le U_r(n),
+$$
+
+the graph $H_r(n,\ell)$ is the unique minimizing isomorphism class among all of $\mathcal G(n,\ell)$. With the actual counts $N,c,b_i$ of Definition 5.1, put
+
+$$
+\mathfrak E_r(n,\ell)=\min_{G\in\mathcal G(n,\ell)}E(G).
+$$
+
+Then
+
+$$
+\mathfrak E_r(n,\ell)=\sum_{i=1}^rM_c(N-b_i),\tag{11.8}
+$$
+
+and the exact minimum of $\Phi$ is $m+\mathfrak E_r(n,\ell)$. Thus the unrestricted part of Theorem 6.1 extends to every fixed $r\ge5$, with the same sufficient threshold and no minimum-degree assumption.
+
+**Proof.** Theorem 5.2 supplies a simple connected candidate at every integer budget in this closed interval, with $c\ge r$, $b+c=N=n-r$, and $E(H_r)\le C_0/n$. The conditions $n>2r$ and $n>3C_0\ge3r$ ensure its capacity and strict sink orientation. A graph with $E(G)>E(H_r)$ is already worse, so it is enough to consider graphs with $E(G)\le C_0/n$.
+
+The six conditions
+
+$$
+n>\max\{1,C_0^2,3C_0,A^3,4AK_0^2,36C_0^2A\}
+$$
+
+in (6.1) are precisely the sufficient fixed-cost reduction conditions of [*CDSO sink incidences and density limits*, Theorem 3.1](CDSO_SINK_INCIDENCE_AND_DENSITY_LIMITS.md), at $C=C_0$. Hence every such actual graph is two-layer, has $s\le K_0$ actual sinks, and has $D_i\ge n/(3C_0)$ for every one of them. In particular no actual sink has been discarded. Also $n>4AK_0^2>2K_0$ ensures $N_s=n-s>0$. Capacity from Theorem 5.2, using $n>2r$, forces $s\ge r$. For its actual profile,
+
+$$
+q_s=\frac{m}{N_s}\ge q_r=\frac{m}{n-r}
+=a+\frac cN>a,\qquad q_r\le r.
+$$
+
+These conclusions require no minimum-degree restriction on the sources.
+
+The estimate (6.3) applies to precisely these actual edges: each source has degree at most $s\le K_0$, each actual sink has the stated linear degree bound, and
+
+$$
+0\le\frac{J_s(x)}{N_s}-E(G)
+\le\frac{N_ss^5}{8(\min_iD_i)^4}
+\le\frac R{n^3}.\tag{11.9}
+$$
+
+The quadratic edge sum here is exactly $J_s(x)/N_s$ for this graph. The candidate estimate (5.3), with $N\ge n/2$, gives
+
+$$
+E(H_r)\le\frac{F_r(q_r)}N+\frac{8B}{n^3}.\tag{11.10}
+$$
+
+Suppose $s\ge r+1$. If $q_s\le r$, Theorem 11.3 gives
+
+$$
+J_s(x)\ge F_r(q_s)+a+\frac1{2r}
+\ge F_r(q_r)+\frac12.
+$$
+
+The last comparison uses the monotonicity already established in Theorem 6.1: $F_r'(q)>0$ on $[a,r]$, since $2C-Dr=r(r^2-3r+1)>0$. If instead $q_s\ge r$, apply (11.7) with the legal value $\beta=2$. Since $D-2>0$,
+
+$$
+J_s(x)\ge\frac{r^3}{2}+(s-r)+\frac{D-2}{2}(q_s-r)
+\ge F_r(q_r)+1.
+$$
+
+This second case covers every actual value above $r$, including those arising at the upper capacity endpoint. Neither case substitutes $q_r$ for the graph's own $q_s$ in an interval hypothesis. They supply a common gap $1/2$ for every $r\ge5$, replacing exactly the uses of (3.5)–(3.6) or (4.1)–(4.2) in the restricted-class proof of Theorem 6.1.
+
+Since $F_r(q_r)>0$ and $N_s\le N$, (11.9)–(11.10) now imply
+
+$$
+E(G)-E(H_r)
+\ge\frac1{2n}-\frac{R+8B}{n^3}
+=\frac1{2n}-\frac H{n^3}>0.\tag{11.11}
+$$
+
+The last sign is exactly the condition $n>\sqrt{H/\widehat\gamma}=\sqrt{2H}$ in (6.1). Thus every minimizer or tying graph has $s=r$.
+
+For this $r$-sink graph let $A_{\mathrm{low}}$ count sources of degree at most $r-2$. Its mean $q_r$ belongs to $[a,r]$. Theorem 3.1 is valid for all $r\ge5$, and gives
+
+$$
+J_r(x)-F_r(q_r)\ge\frac{3aA_{\mathrm{low}}}{N}.
+$$
+
+If $A_{\mathrm{low}}\ge1$, the same actual-edge and candidate estimates give
+
+$$
+E(G)-E(H_r)\ge\frac{3a}{N^2}-\frac H{n^3}
+\ge\frac{3a}{n^2}-\frac H{n^3}>0.\tag{11.12}
+$$
+
+The last threshold in (6.1), $n>H/(3a)$, supplies this sign. Thus all sources of any minimizer have degree $a$ or $r$. The vertex and edge budgets force exactly $c$ full sources and a total of $b$ missing-one sources, with $c,b$ as in Definition 5.1. In particular the capacity interval supplies $c\ge r$ without any balance assumption.
+
+For arbitrary missing-one counts $b_i$ in this remaining class,
+
+$$
+D_i=N-b_i\ge c\ge r,\qquad
+E(G)=\sum_i M_c(D_i).
+$$
+
+The exact formula remains valid even if an endpoint degree equals $r$, since the hub degree is at least every incident source degree. The strict convexity (6.7) holds for every $r\ge5$, $c\ge0$ and $z>0$; its proof contains no source minimum-degree assumption. If $D_j\ge D_i+2$, then $b_i\ge b_j+2$, so there is an actual source missing $i$ and adjacent to $j$. Delete its edge to $j$ and add its missing edge to $i$. The resulting counts are $b_i-1,b_j+1$, and the resulting degrees are $D_i+1,D_j-1$. This preserves simplicity, the source's degree, all vertex and edge budgets, and all $c$ full sources. Those unchanged full sources preserve connectedness. Also $D_j-1\ge c$, so the same exact cost formula applies after the move. Strict convexity gives a strict decrease of the sum of the two hub costs.
+
+Iteration terminates with balanced counts: each move decreases the integer sum of the squared hub degrees, and any pair differing by at least two admits such a move. Conversely all balanced count vectors have the same multiset, hence the same cost; permuting hubs and sources identifies their graphs. Every unbalanced vector has a strictly improving legal move. This proves (11.8) and uniqueness up to graph isomorphism. All conditions of (6.1) have thus been used in their original domains: reduction and capacity, the multi-sink gap, or the low-source penalty; no larger threshold is needed. ∎
+
+**Theorem 11.5 (Unrestricted near-minimum structure at every fixed phase).** Fix any integer $r\ge5$ and a prescribed integer sequence $\ell_n$ satisfying
+
+$$
+L_r(n)\le\ell_n\le U_r(n)\ \text{eventually},\qquad
+\frac{\ell_n}{n}\longrightarrow\alpha\in[r-2,r-1].
+$$
+
+Then the unrestricted minima in Theorem 11.4 satisfy
+
+$$
+n\mathfrak E_r(n,\ell_n)\longrightarrow F_r(1+\alpha).
+\tag{11.13}
+$$
+
+For every sequence of simple connected graphs $G_n\in\mathcal G(n,\ell_n)$, the following four conditions are equivalent:
+
+1. $E(G_n)-\mathfrak E_r(n,\ell_n)=o(1/n)$;
+2. $nE(G_n)\to F_r(1+\alpha)$;
+3. eventually $G_n$ is two-layer with exactly $r$ actual degree-oriented sinks, and, for its actual counts with $N=n-r$ and $q_r=(n-1+\ell_n)/N$,
+
+$$
+p_{\mathrm{low}}^{(n)}=\frac1N\sum_{|T|\le r-2}a_T\longrightarrow0,
+\qquad
+\max_{1\le i\le r}\left|\frac{D_i}{N}-\frac{q_r}{r}\right|
+\longrightarrow0;\tag{11.14}
+$$
+
+4. eventually $G_n$ has this same $r$-sink two-layer structure and its actual profile obeys
+
+$$
+\|x^{(n)}-x^*(q_r)\|_1\longrightarrow0.\tag{11.15}
+$$
+
+Labels may be chosen separately at each order. In particular all $r$ hub degrees divided by $n$ tend to $(1+\alpha)/r$. This extends Theorem 7.2 to unrestricted graphs at every fixed $r\ge5$. It allows $o(n)$ low-degree sources and sublinear hub imbalances; it does not assert their finite disappearance or bounded imbalance. The capacity inequalities remain hypotheses at each prescribed integer budget, including both density endpoints.
+
+**Proof.** Theorem 11.4 identifies the exact minimizer at every sufficiently large order of this prescribed sequence. For that balanced candidate, (5.2), the positive linear hub degrees and the actual-edge expansion give
+
+$$
+\mathfrak E_r(n,\ell_n)=\frac{F_r(q_r)}{n-r}+O_r(n^{-3}).
+\tag{11.16}
+$$
+
+Indeed its quadratic error above $F_r(q_r)$ is $O_r(N^{-2})$, and its actual-edge error is $O_r(n^{-3})$. Now $q_r\to1+\alpha$ and $n/(n-r)\to1$, proving (11.13) and the equivalence of 1 and 2.
+
+Assume 1. Then $nE(G_n)\to F_r(1+\alpha)\le r^3/2<C_0$, so $E(G_n)\le C_0/n$ eventually. Apply the actual-graph fixed-cost reduction before making any profile comparison. It gives two-layer structure, a bounded number $s_n\le K_0$ of actual sinks, and $D_i/n\ge1/(3C_0)$ for every actual sink. Capacity gives $s_n\ge r$. These statements include every sink, rather than a selected collection of positive limiting marginals.
+
+If $s_n>r$ along an infinite subsequence, (11.11) applies on that subsequence, and Theorem 11.4 gives
+
+$$
+\liminf n\bigl(E(G_n)-\mathfrak E_r(n,\ell_n)\bigr)\ge\frac12,
+$$
+
+contradicting 1. The exclusion uses (11.6) when $q_{s_n}\le r$ and the unrestricted certificate (11.7) with $\beta=2$ when $q_{s_n}>r$. Thus it is valid also when $\alpha=r-1$ and the actual means approach $r$ from above. This replaces the only cardinality- or $r$-restricted exclusion step in the necessity proof of Theorem 7.2. Eventually $s_n=r$.
+
+For this actual $r$-sink array put $\delta_n=J_r(x^{(n)})-F_r(q_r)\ge0$. Equations (11.9) and (11.16) imply
+
+$$
+\delta_n=N\bigl(E(G_n)-\mathfrak E_r(n,\ell_n)\bigr)
++O_r(n^{-2})\longrightarrow0.
+$$
+
+The all-$r$ fixed-sink estimate (3.1) yields (11.14), and (3.2) yields (11.15). Independently of an energy assumption, condition 3 also implies condition 4 by the type identity (3.4). Thus both the low-source mass and marginal balance have their original fixed-$r$ suppliers.
+
+Finally suppose 4. The reference marginals tend to $(1+\alpha)/r>0$, and convergence in $\ell^1$ forces the same limit for every actual marginal. With $r$ fixed, source degrees are bounded by $r$ and hub degrees are bounded below by a positive multiple of $n$. Consequently the actual-edge expansion is valid for this sequence without assuming an energy bound in advance:
+
+$$
+nE(G_n)=\frac nN J_r(x^{(n)})+O_r(n^{-2}).
+$$
+
+The functional $J_r$ is continuous where every marginal is positive. Since $x^*(q_r)\to x^*(1+\alpha)$, (11.15) implies $J_r(x^{(n)})\to F_r(1+\alpha)$, and hence condition 2. This completes the equivalences in both directions.
+
+For every specified budget sequence in the theorem, Theorem 7.1 applies directly with $s=r$ and the fixed limiting profile $x=x^*(1+\alpha)$. Its marginals are $(1+\alpha)/r>0$, and its required upper bound is exactly
+
+$$
+\ell_n\le r(n-r)-n+1=U_r(n).
+$$
+
+It therefore realizes the profile with the prescribed integer order and edge budget at every sufficiently large order. Continuity of $x^*(q)$ makes convergence to that fixed limiting profile equivalent to (11.15) for these realized sequences, so they satisfy all four conditions. The exact balanced minimizers themselves already supply such sequences by Theorem 11.4. At $\alpha=r-2$ their full mass tends to zero while their exact full count remains $c\ge r$; at $\alpha=r-1$ missing-one masses may vanish, with $b=0$ giving a complete bipartite graph. Neither necessity, sufficiency nor the prescribed-budget realization requires positive limiting mass for all types. All limits hold for fixed $r$; no estimate uniform in a varying $r$ is asserted. ∎
+
+## 追加锚（本行以下为增补区）
