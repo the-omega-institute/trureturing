@@ -416,7 +416,10 @@ private theorem full_generator_iff (e : HilbertBasis ℕ ℝ G0) (k : HilbertBas
     have hlim := (generator_iff e k mu hp hk hC (Pi0 F) v).mpr
       ((graph_center e k mu hp hk hC F (-V)).mp hg)
     have hinc := (G0.subtypeL.continuous.tendsto v).comp hlim
-    simpa only [Function.comp_def,full_difference,Submodule.coe_smul_of_tower] using hinc
+    change Tendsto (fun t : ℝ≥0 =>
+      (((t : ℝ)⁻¹ • (heat e mu hp t (Pi0 F)-Pi0 F) : G0) : G))
+      (𝓝[>] 0) (𝓝 V) at hinc
+    simpa only [full_difference,Submodule.coe_smul_of_tower] using hinc
 
 private theorem full_trace (e : HilbertBasis ℕ ℝ G0) (mu : ℕ → ℝ)
     (hp : ∀ i, 0 < mu i) (t : ℝ≥0) :
@@ -438,7 +441,7 @@ private theorem full_trace (e : HilbertBasis ℕ ℝ G0) (mu : ℕ → ℝ)
         cases i with
         | none => simp at hi
         | some i => exact ⟨i,rfl⟩)
-  change (1 : ℝ≥0∞)+_ = 1+positiveTrace (heat e mu hp t)
+  rw [show ENNReal.ofReal (fullMultiplier mu t none) = 1 by norm_num [fullMultiplier]]
   congr 1
   rw [(positive_trace_diagonal e (heat e mu hp t) _
     (fun i => (Real.exp_pos _).le) (heat_coeff e mu hp t)).2]
@@ -624,13 +627,15 @@ private theorem count_laplace (e : HilbertBasis ℕ ℝ G0) (mu : ℕ → ℝ)
     exact fun u hu => (inv_pos.mpr (hp i)).trans_le hu
   have hint (i : ℕ) : MeasureTheory.Integrable (f i)
       (MeasureTheory.volume.restrict (Set.Ioi 0)) := by
-    rw [f,MeasureTheory.integrable_indicator_iff measurableSet_Ici,
+    dsimp only [f]
+    rw [MeasureTheory.integrable_indicator_iff measurableSet_Ici,
       MeasureTheory.IntegrableOn,MeasureTheory.Measure.restrict_restrict measurableSet_Ici,hinter]
-    apply MeasureTheory.integrableOn_Ici_iff_integrableOn_Ioi.mpr
+    apply (integrableOn_Ici_iff_integrableOn_Ioi (by finiteness)).mpr
     exact integrableOn_exp_mul_Ioi (neg_neg_of_pos htR) _
   have hval (i : ℕ) : (∫ u : ℝ in Set.Ioi 0, f i u) =
       Real.exp (-(t : ℝ)*(mu i)⁻¹)/(t : ℝ) := by
-    rw [f,MeasureTheory.integral_indicator measurableSet_Ici,
+    dsimp only [f]
+    rw [MeasureTheory.integral_indicator measurableSet_Ici,
       MeasureTheory.Measure.restrict_restrict measurableSet_Ici,hinter,
       MeasureTheory.integral_Ici_eq_integral_Ioi,
       integral_exp_mul_Ioi (neg_neg_of_pos htR)]
@@ -651,7 +656,7 @@ private theorem count_laplace (e : HilbertBasis ℕ ℝ G0) (mu : ℕ → ℝ)
       simp [BiasedBoundaryCounting.positiveCount,hset]
     rw [tsum_eq_sum (s := q) (fun i hi => by
       simp only [f,Set.indicator,Set.mem_Ici]
-      exact if_neg (not_congr (hq i)).mp hi),hcard]
+      exact if_neg ((not_congr (hq i)).mp hi)),hcard]
     simp only [f,Set.indicator,Set.mem_Ici]
     rw [Finset.sum_congr rfl (fun i hi => if_pos ((hq i).mp hi))]
     simp [mul_comm]
@@ -670,7 +675,7 @@ private theorem count_laplace (e : HilbertBasis ℕ ℝ G0) (mu : ℕ → ℝ)
       (MeasureTheory.volume.restrict (Set.Ioi 0)) := by
     refine ⟨(Measurable.tsum hmeas).aestronglyMeasurable,?_⟩
     exact lt_of_le_of_lt (MeasureTheory.lintegral_mono fun u => enorm_tsum_le_tsum_enorm) hlin
-  refine ⟨by simpa only [hfun] using hintsum,?_⟩
+  refine ⟨by simpa only [hfun,MeasureTheory.IntegrableOn] using hintsum,?_⟩
   have heq := MeasureTheory.integral_tsum_of_summable_integral_norm hint hsum
   rw [hfun] at heq
   have htr := (positive_trace_diagonal e (heat e mu hp t) _
@@ -679,7 +684,7 @@ private theorem count_laplace (e : HilbertBasis ℕ ℝ G0) (mu : ℕ → ℝ)
     ENNReal.toReal_ofReal (tsum_nonneg fun i => (Real.exp_pos _).le), ← heq]
   simp_rw [hval]
   rw [tsum_div_const]
-  field_simp
+  field_simp [htR.ne']
 
 /-- One actual ordered family generates the original operator on every centered vector.
 The strong generator equivalence includes the entire original domain, not only finite sums. -/
@@ -689,6 +694,9 @@ theorem actual_heat :
       Antitone mu ∧ Tendsto mu atTop (𝓝 0) ∧
       (∀ i, Sigma (k i).val = mu i • (k i).val) ∧
       (∀ i, C (k i).val = Real.sqrt (mu i) • (e i).val) ∧
+      G0.subtypeL.comp BiasedBoundaryOperator.centeredTrace = C ∧
+      BiasedBoundaryOperator.centeredTrace.adjoint.comp BiasedBoundaryOperator.centeredTrace = BiasedBoundaryFreeRootForm.Sigma ∧
+      (∀ i, BiasedBoundaryOperator.centeredTrace (k i).val = Real.sqrt (mu i) • e i) ∧
       Tendsto (fun lam : ℝ => Real.log (BiasedBoundaryCounting.positiveCount mu lam : ℝ) /
         Real.log lam) atTop (𝓝 1) ∧
       Tendsto (fun j : ℕ => Real.log (BiasedBoundaryCounting.positiveEigenvalue mu j) /
@@ -756,7 +764,24 @@ theorem actual_heat :
       BiasedBoundaryCounting.B⁻¹ BiasedBoundaryTrace.b⁻¹ (inv_pos.mpr hB) (inv_pos.mpr hb)
     filter_upwards [eventually_ge_atTop (1 : ℕ)] with j hj
     simpa only [div_eq_mul_inv,mul_comm] using heig j hj
-  refine ⟨e,k,mu,hp,hm,ht,hk,hC,hcount,heigen,S,fun _ => rfl,?_,?_,?_,hmax,?_,?_⟩
+  have hinclusion : G0.subtypeL.comp BiasedBoundaryOperator.centeredTrace = C := by
+    ext z
+    rfl
+  have hgram : BiasedBoundaryOperator.centeredTrace.adjoint.comp
+      BiasedBoundaryOperator.centeredTrace = BiasedBoundaryFreeRootForm.Sigma := by
+    apply ContinuousLinearMap.ext
+    intro x
+    apply ext_inner_left ℝ
+    intro y
+    change inner ℝ y (BiasedBoundaryOperator.centeredTrace.adjoint
+      (BiasedBoundaryOperator.centeredTrace x)) = inner ℝ y (C.adjoint (C x))
+    rw [ContinuousLinearMap.adjoint_inner_right,ContinuousLinearMap.adjoint_inner_right]
+    rfl
+  have hcentered (i : ℕ) : BiasedBoundaryOperator.centeredTrace (k i).val =
+      Real.sqrt (mu i) • e i := by
+    apply Subtype.ext
+    exact hC i
+  refine ⟨e,k,mu,hp,hm,ht,hk,hC,hinclusion,hgram,hcentered,hcount,heigen,S,fun _ => rfl,?_,?_,?_,hmax,?_,?_⟩
   · intro t
     exact positive_trace_diagonal e (heat e mu hp t) _ (fun i => (Real.exp_pos _).le)
       (heat_coeff e mu hp t)

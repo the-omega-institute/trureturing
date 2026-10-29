@@ -9,7 +9,7 @@ set_option relaxedAutoImplicit false
 noncomputable section
 namespace Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryHeat
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry
-open BiasedBoundaryHeat
+open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryHeat
 open BiasedBoundaryTrace (G)
 open BiasedBoundaryStopping (G0)
 open BiasedBoundaryFreeRootForm (K Sigma)
@@ -41,6 +41,9 @@ abbrev arena : Arena where
       Antitone mu ∧ Tendsto mu atTop (𝓝 0) ∧
       (∀ i, Sigma (k i).val = mu i • (k i).val) ∧
       (∀ i, C (k i).val = Real.sqrt (mu i) • (e i).val) ∧
+      G0.subtypeL.comp BiasedBoundaryOperator.centeredTrace = C ∧
+      BiasedBoundaryOperator.centeredTrace.adjoint.comp BiasedBoundaryOperator.centeredTrace = BiasedBoundaryFreeRootForm.Sigma ∧
+      (∀ i, BiasedBoundaryOperator.centeredTrace (k i).val = Real.sqrt (mu i) • e i) ∧
       Tendsto (fun lam : ℝ => Real.log (BiasedBoundaryCounting.positiveCount mu lam : ℝ) /
         Real.log lam) atTop (𝓝 1) ∧
       Tendsto (fun j : ℕ => Real.log (BiasedBoundaryCounting.positiveEigenvalue mu j) /
@@ -57,6 +60,12 @@ abbrev arena : Arena where
           (obs.readout () () (positiveTrace (S t))).toReal ≤ BiasedBoundaryCounting.B/(t : ℝ) ∧
           ((t : ℝ) ≤ BiasedBoundaryTrace.b →
             BiasedBoundaryTrace.b/(Real.exp 1*(t : ℝ)) ≤ (obs.readout () () (positiveTrace (S t))).toReal)) ∧
+        (∀ t : ℝ≥0, 0 < t →
+          MeasureTheory.IntegrableOn
+            (fun u : ℝ => Real.exp (-(t : ℝ)*u)*(BiasedBoundaryCounting.positiveCount mu u : ℝ))
+            (Set.Ioi 0) ∧
+          (obs.readout () () (positiveTrace (S t))).toReal = (t : ℝ)*∫ u : ℝ in Set.Ioi 0,
+            Real.exp (-(t : ℝ)*u)*(BiasedBoundaryCounting.positiveCount mu u : ℝ)) ∧
         (∀ u v : G0, Tendsto (fun t : ℝ≥0 => (t : ℝ)⁻¹ • (S t u-u))
           (𝓝[>] 0) (𝓝 v) ↔ (u.val,(-v).val) ∈ boundaryOperator.graph) ∧
         (∀ R : StronglyContinuousContractionSemigroup G0,
@@ -83,7 +92,7 @@ def rejected : Realization signature :=
   realize signature (fun _ _ _ => ⊤) (fun e => nomatch e)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
-  rintro ⟨e,k,mu,hp,hm,ht,hk,hC,hcount,heigen,S,hS,htr,hfin,hgen,huniq,hfull⟩
+  rintro ⟨e,k,mu,hp,hm,ht,hk,hC,hinclusion,hgram,hcentered,hcount,heigen,S,hS,htr,hfin,hlaplace,hgen,huniq,hfull⟩
   have ht := (hfin 1 (by norm_num)).2.1
   exact (lt_irrefl (⊤ : ℝ≥0∞)) ht
 
