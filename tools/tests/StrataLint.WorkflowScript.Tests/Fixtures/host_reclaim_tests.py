@@ -383,7 +383,8 @@ class HostReclaimTests(unittest.TestCase):
         (self.root / "tmp").mkdir()
         arguments = ["make", "--no-print-directory", "-C", str(lane / "tools"), "clean-all", "BASE=dev",
                      "CLEAN_CODEX_HOME=" + str(self.root / "codex"),
-                     "CLEAN_SSHX_HOME=" + str(self.root / "sshx"), "CLEAN_MIN_AGE_HOURS=24"]
+                     "CLEAN_SSHX_HOME=" + str(self.root / "sshx"),
+                     "CLEAN_TMP_ROOT=" + str(self.root / "tmp"), "CLEAN_MIN_AGE_HOURS=24"]
         for delete in (False, True):
             result = subprocess.run([*arguments, "FORCE=" + str(int(delete))], cwd=self.root,
                                     env=environment, capture_output=True, text=True, timeout=60)
