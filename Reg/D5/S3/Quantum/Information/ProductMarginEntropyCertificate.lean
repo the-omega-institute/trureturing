@@ -23,9 +23,9 @@ private theorem bad_law : ¬ arena.Law bad := by
   norm_num [bad, realize] at hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), 0, 2⁻¹, ?_⟩
-  simp only [actual, realize, Real.binEntropy_zero, Real.binEntropy_two_inv]
-  exact ne_of_lt (Real.log_pos (by norm_num))
+  refine ⟨(), 0, 1 / 5, ?_⟩
+  simp only [actual, realize, Real.binEntropy_zero]
+  exact ne_of_lt (Real.binEntropy_pos (by norm_num) (by norm_num))
 def family : Registration arena (type_of% (@binary_entropy_certificate)) where
   actual := actual
   bridge := Iff.rfl
@@ -83,7 +83,7 @@ private theorem bad_law : ¬ arena.Law bad := by
   intro h
   have hh := @h 0 0 0 0 0 0 (by norm_num) (by norm_num) (by norm_num)
     (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
-    (by norm_num) (by norm_num)
+    (by norm_num) (by exact sub_nonneg.mpr Real.binEntropy_le_log_two)
   have hl := Real.log_le_sub_one_of_pos (show (0 : ℝ) < 2 by norm_num)
   norm_num [bad, realize] at hh
   linarith

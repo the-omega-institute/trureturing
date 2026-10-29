@@ -24,9 +24,9 @@ private theorem bad_law : ¬ arena.Law bad := by
   norm_num [bad, realize] at hh
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), 0, 2⁻¹, ?_⟩
-  simp only [actual, realize, Real.binEntropy_zero, Real.binEntropy_two_inv]
-  exact ne_of_lt (Real.log_pos (by norm_num))
+  refine ⟨(), 2⁻¹, 1, ?_⟩
+  simp only [actual, realize, Real.binEntropy_one, Real.binEntropy_two_inv]
+  exact ne_of_gt (Real.log_pos (by norm_num))
 def family : Registration arena (type_of% (@qubit_state_entropy)) where
   actual := actual
   bridge := Iff.rfl
