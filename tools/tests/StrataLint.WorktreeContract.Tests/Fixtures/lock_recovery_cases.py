@@ -5,6 +5,7 @@ from contextlib import ExitStack
 import json
 import os
 import select
+import signal
 import shutil
 import sys
 import subprocess
@@ -13,6 +14,96 @@ from unittest.mock import patch
 
 
 class LockRecoveryCases:
+    def removal_options(self):
+        return argparse.Namespace(source=self.main, names="tree", path=[], force=False,
+                                  preview=False, expected=[])
+
+    def assert_removal_recoverable(self, metadata):
+        import worktree_preservation as preservation
+        import worktree_protocol as protocol
+        self.assertIn(str(self.tree), [row["worktree"] for row in protocol.inventory(self.main)])
+        record = json.loads((metadata / preservation.REMOVAL_RECORD).read_text())
+        self.assertEqual(record["commit"], self.g(self.main, "rev-parse", self.branch).strip())
+        self.assertEqual("snapshot before deletion\n", self.g(self.main, "show", self.branch + ":owned"))
+        return record
+
+    def test_removal_payload_failure_retains_registration_and_resumes(self):
+        import worktree_preservation as preservation
+        (self.tree / "owned").write_text("snapshot before deletion\n")
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        native_unlink = os.unlink
+        native_git = preservation.git
+        deleted = []
+        def fail_during_payload(path, *args, **kwargs):
+            result = native_unlink(path, *args, **kwargs)
+            deleted.append(os.fsdecode(path))
+            raise OSError("payload deletion interrupted")
+        def observe_git(path, *args, **kwargs):
+            self.assertNotEqual(("worktree", "remove"), args[:2], "payload remains registered")
+            return native_git(path, *args, **kwargs)
+        with patch.object(os, "unlink", side_effect=fail_during_payload), \
+                patch.object(preservation, "git", side_effect=observe_git):
+            item = preservation.remove(self.removal_options())["items"][0]
+        self.assertEqual("partial_or_indeterminate", item["outcome"])
+        self.assertIn("payload deletion interrupted", item["error"])
+        self.assertTrue(deleted)
+        record = self.assert_removal_recoverable(metadata)
+        resumed = json.loads(self.remove().stdout)["items"][0]
+        self.assertEqual(("removed", "resumed"), (resumed["outcome"], resumed["checkpoint"]["status"]))
+        self.assertFalse(self.tree.exists())
+        self.assertEqual(record["commit"], self.g(self.main, "rev-parse", self.branch).strip())
+
+    def test_removal_payload_process_death_retains_registration_and_resumes(self):
+        (self.tree / "owned").write_text("snapshot before deletion\n")
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        code = f'''import argparse,os,signal,sys
+from pathlib import Path
+sys.path.insert(0, {str(self.source_root / "tools/scripts/worktree")!r})
+import worktree_preservation as preservation
+native_unlink = os.unlink
+def die_during_payload(path, *args, **kwargs):
+    native_unlink(path, *args, **kwargs)
+    os.kill(os.getpid(), signal.SIGKILL)
+os.unlink = die_during_payload
+preservation.remove(argparse.Namespace(source=Path({str(self.main)!r}), names="tree",
+    path=[], force=False, preview=False, expected=[]))
+'''
+        result = self.run_owned_command([sys.executable, "-B", "-c", code], self.root,
+                                        phase="payload-death", timeout=30, check=False)
+        self.assertEqual(-signal.SIGKILL, result.returncode)
+        record = self.assert_removal_recoverable(metadata)
+        resumed = json.loads(self.remove().stdout)["items"][0]
+        self.assertEqual("resumed", resumed["checkpoint"]["status"])
+        self.assertFalse(self.tree.exists())
+        self.assertEqual(record["commit"], self.g(self.main, "rev-parse", self.branch).strip())
+
+    def test_native_unregistration_failure_leaves_only_git_link(self):
+        import worktree_preservation as preservation
+        (self.tree / "owned").write_text("snapshot before deletion\n")
+        cache = self.tree / ".lake/build"
+        cache.mkdir(parents=True)
+        (cache / "output").write_text("ignored build output\n")
+        (self.main / ".git/info/exclude").write_text(".lake/\n")
+        outside = self.root / "outside"
+        outside.mkdir()
+        (outside / "keep").write_text("external bytes\n")
+        (self.tree / "outside-link").symlink_to(outside, target_is_directory=True)
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        native_git = preservation.git
+        def fail_unregistration(path, *args, **kwargs):
+            if args[:2] == ("worktree", "remove"):
+                raise OSError("native unregistration interrupted")
+            return native_git(path, *args, **kwargs)
+        with patch.object(preservation, "git", side_effect=fail_unregistration):
+            item = preservation.remove(self.removal_options())["items"][0]
+        self.assertEqual("partial_or_indeterminate", item["outcome"])
+        self.assertEqual([".git"], sorted(path.name for path in self.tree.iterdir()))
+        self.assertEqual("external bytes\n", (outside / "keep").read_text())
+        record = self.assert_removal_recoverable(metadata)
+        self.remove()
+        self.assertFalse(self.tree.exists())
+        self.assertEqual(record["commit"], self.g(self.main, "rev-parse", self.branch).strip())
+
     def test_holderless_native_locks_checkpoint_once(self):
         import worktree_protocol as protocol
         metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())

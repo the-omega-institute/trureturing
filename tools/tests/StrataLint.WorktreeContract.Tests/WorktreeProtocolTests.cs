@@ -415,6 +415,24 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     }
 
     [Theory]
+    [InlineData("removal_payload_failure_retains_registration_and_resumes")]
+    [InlineData("removal_payload_process_death_retains_registration_and_resumes")]
+    [InlineData("native_unregistration_failure_leaves_only_git_link")]
+    public void RemovalKeepsRegistrationUntilPayloadIsGone(string probe)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        var root = TestRepositoryLayout.FindRoot();
+        var result = CaptureCleanupOutput((stdout, stderr) => TestProcessRunner.Run("python3",
+            ["-B", Path.Combine(root,
+                "tools/tests/StrataLint.WorktreeContract.Tests/Fixtures/worktree_protocol_tests.py"),
+                root, "ProtocolTests.test_" + probe], root, TimeSpan.FromSeconds(90), 1024 * 1024,
+            standardOutput: stdout, standardError: stderr,
+            interruptBeforeKill: TestProcessRunner.InterruptPythonFixture), output.WriteLine);
+        Assert.True(result.ExitCode == 0,
+            Encoding.UTF8.GetString(result.StandardOutput) + Encoding.UTF8.GetString(result.StandardError));
+    }
+
+    [Theory]
     [InlineData(0)]
     [InlineData(1)]
     public void CooperativeProtocolPreservesRealProcessAndGitState(int part)
