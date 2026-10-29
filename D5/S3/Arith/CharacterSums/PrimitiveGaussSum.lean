@@ -3,7 +3,8 @@
    mirror-B: D5/B/S3/Arith/CharacterSums/PrimitiveGaussSum
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: nonzero primitive Gauss sums via Fourier injectivity. -/
+   utility: none
+   digest: Nonzero primitive Gauss sums follow from Fourier injectivity. -/
 
 import Mathlib.Analysis.Fourier.ZMod
 
