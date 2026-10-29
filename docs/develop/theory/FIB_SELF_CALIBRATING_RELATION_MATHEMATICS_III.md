@@ -2165,4 +2165,145 @@ $a_i(R)-a_i(S_\delta)$，首次 $L_0$ 及以后取零误差。
 $q\le k-2$ 时为 $k+q+1$，$q=k-1$ 时共享旧坐标后为 $2k-1$。
 所有初读和中间读数均计入。∎
 
+### 命题 13.4（一般来源的一个充分误差裕量）
+
+固定 $R\in\mathcal M_k$ 及使 $K_q(R)$ 无解的 $q$，简记
+$a=(a_0,\ldots,a_q)$、$b=b^{(q)}$、$m=\min_jb_j>0$、$t=a_0>0$。
+对 $x\in\mathbb R^k$ 定义
+
+$$
+ (B_q(b)x)_i=\sum_{h=0}^{k-1-i}x_hb_{h+i},\qquad
+ H=1+\frac{2(t+1)}m,\qquad
+ X=\left\{x\ge0:\sum_{h=0}^{k-1-q}x_h=1,\quad\sum_{h=0}^{k-1}x_h\le H\right\},
+\tag{13.10}
+$$
+
+并置
+
+$$
+ r=\min_{x\in X}\|a-B_q(b)x\|_\infty,\qquad
+ \gamma_q(R)=\min\left\{\frac m4,\frac12,\frac{r}{2(1+H)}\right\}.
+\tag{13.11}
+$$
+
+则 $r,\gamma_q(R)>0$。任何 $0<\varepsilon<\gamma_q(R)$ 均使定理 13.3 的
+规范词和完整相容性排除规则对 $R$ 的全部允许报告成功。
+该裕量只作充分界，不断言为本词或所有协议的最大容限。
+
+**证明。** $H>1$，故 $X$ 非空，例如取 $x=e_0$。$X$ 闭且有界；由有限维
+Heine--Borel 和连续函数最小值定理，(13.11) 的最小值达到。若 $r=0$，其达到点
+解 (13.3)，矛盾。因此 $r>0$。
+
+假设 $R$ 的某份允许规范报告也由一个严格正秩一来源 $S$ 相容。
+归一化 $S=xv^{\mathsf T}$，两来源与同一报告各相差至多 $\varepsilon$，故
+$|v_j-b_j|\le2\varepsilon$、$|a_i(S)-a_i|\le2\varepsilon$。
+由 $2\varepsilon<m/2$ 和 $2\varepsilon<1$，
+
+$$
+ v_j>m/2,\qquad
+ \sum_hx_h\le\frac{2a_0(S)}m
+ <\frac{2(t+1)}m<H.
+\tag{13.12}
+$$
+
+所以同一个归一化 $x$ 属于 $X$，且逐行有
+
+$$
+ |a_i-(B_q(b)x)_i|
+ \le |a_i-a_i(S)|+
+       \sum_{h=0}^{k-1-i}x_h|v_{h+i}-b_{h+i}|
+ \le2\varepsilon(1+H)<r,
+\tag{13.13}
+$$
+
+与 $r$ 的定义矛盾。此估计控制了有误差的系数 $v$ 与同一组全部未知 $x$，
+不把各行的分别可行解拼成共同来源。∎
+
+### 命题 13.5（每个维数中的精确与鲁棒严格分离）
+
+对每个 $k\ge2$，令 $p=\mathbf1/k$、$e=e_{k-1}$、$w=\mathbf1-e$，并置
+
+$$
+ \alpha=\frac1{2k},\qquad\beta=\frac12,\qquad\theta=\alpha\beta=\frac1{4k},
+ \qquad R_\partial=p\mathbf1^{\mathsf T}+\theta ew^{\mathsf T}.
+\tag{13.14}
+$$
+
+则 $R_\partial\in\mathcal M_k$，普通秩为二，且
+$R_\partial\in\mathcal I_k\setminus\mathcal I_k^{\mathrm{rob}}$。
+更强地，对任意 $\varepsilon>0$，没有 $\varepsilon$-可靠的任意确定性完整历史
+协议能在 $R_\partial$ 的零误差运行上有限输出 $2$。
+但对每个同样的 $\varepsilon>0$，它都有一份允许的固定扫描报告能可靠认证秩二。
+
+**证明。** 给出运行前固定的严格正两项分解：
+
+$$
+ R_\partial=
+ \frac{p+\alpha e}{2}(\mathbf1+\beta w)^{\mathsf T}
+ +\frac{p-\alpha e}{2}(\mathbf1-\beta w)^{\mathsf T}.
+\tag{13.15}
+$$
+
+因 $p_{k-1}-\alpha=1/(2k)>0$ 以及 $1-\beta=1/2>0$，全部因子严格正。
+$p,e$ 线性无关，$\mathbf1,w$ 线性无关，故两个列因子独立、两个行因子独立，
+乘积的普通秩恰为二。其真实规范数据为
+
+$$
+ \begin{aligned}
+ t&=1,\qquad s_j=1+\theta\ (j<k-1),\qquad s_{k-1}=1,\\
+ a_i&=\frac{k-i}{k}\quad(1\le i<k),\qquad
+ b_j^{(q)}=\frac{k-q}{k}\quad(1\le q<k,\ 0\le j<k).
+ \end{aligned}
+\tag{13.16}
+$$
+
+这是因为扰动只在末行，且末个对角条目不变；$i\ge1$ 的上对角和及
+$q\ge1$ 的前 $k-q$ 行和都不含该行。
+扫描中 $t=\min_js_j$ 且列和不全相等，故命题 9.6 的严格正凸组合条件失败，
+定理 9.7 给出 $k+1$ 读的精确秩二证书。
+同时 $K_0$ 有解 $x=e$；$q\ge1$ 时甚至 $J_q$ 有正解
+$x_h=1/(k-q)$。所以 (13.8) 已给出非鲁棒性。
+
+为直接证明对所有策略的更强障碍，固定 $\varepsilon>0$ 及任意候选协议，在
+$R_\partial$ 上取零误差历史。初读即输出时，$S_0=p\mathbf1^{\mathsf T}$ 是
+同初读的严格正秩一来源。若第一原子为 $N$，则
+$\operatorname{tr}(S_0)=1$ 且 $NR_\partial=NS_0$，故以后任意共同动作下真状态
+完全相同；在两来源上都取零误差就永久重放该实际历史。
+
+若第一原子为 $L_0$，令 $s=(s_0,\ldots,s_{k-1})^{\mathsf T}$，取
+
+$$
+ x_\delta=(1-\delta)e+\delta p,\qquad
+ S_\delta=x_\delta s^{\mathsf T},\qquad 0<\delta<1.
+\tag{13.17}
+$$
+
+这是严格正秩一来源，具有完全相同的列和，故
+$L_0S_\delta=L_0R_\partial$，而
+
+$$
+ \operatorname{tr}(S_\delta)-1=\delta\theta\frac{k-1}{k}.
+\tag{13.18}
+$$
+
+在运行前选定一个 $\delta$ 使 (13.18) 小于 $\varepsilon$。
+只对 $S_\delta$ 的初读施加该差值的负误差，以后取零误差。初始报告为 $1$，
+因此协议仍选择第一原子 $L_0$；从此真状态相同，逐历史归纳就给出相同的全部
+后继报告、停止及输出。两种首动作均用一个固定来源反驳可靠认证。
+若协议在这条零误差历史上不有限输出，则本来就不满足全误差成功。
+
+最后，对 $R_\partial$ 的扫描取允许报告
+
+$$
+ y_t=1-\varepsilon,\qquad y_{s_j}=s_j+\varepsilon\quad(0\le j<k).
+\tag{13.19}
+$$
+
+若某个严格正秩一来源相容，其真迹 $T\le1$，真列和 $U_j\ge s_j\ge1$，
+且 $j<k-1$ 时 $U_j>1$。严格正凸组合恒给出 $T=\sum_jp_jU_j>1$，矛盾。
+所以这份报告确实排除所有秩一来源，与零误差报告不能认证并存。
+它不满足“每份允许报告成功”的量词。
+任何鲁棒可靠协议在零误差下也是精确可靠协议，故
+$\mathcal I_k^{\mathrm{rob}}\subseteq\mathcal I_k$；上述来源使包含严格。∎
+
 ## 追加锚（本行以下为增补区）
