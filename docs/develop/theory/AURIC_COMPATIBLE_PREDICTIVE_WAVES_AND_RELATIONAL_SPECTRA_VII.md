@@ -2699,3 +2699,593 @@ family remain unresolved by these statements. All source and $A$
 endpoints excluded in Definition 125.1 remain excluded. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 139. Exact original-image feasibility of numerical reflection averages
+
+**Definition 139.1 (The full raw residual image and its numerical reflection).**
+Fix any allowed original source of Proposition 137.1, including any
+one fixed valid choice of the nine actual prefixes of V §§91–93.
+Thus $N^2=W=I_3-2ee^\dagger$, $N^4=I_3$, $e=t/\|t\|$, and
+$\Pi=I_3-ee^\dagger$. Retain the source constants of VI (106.3):
+
+$$
+\tau=\|t\|>0,\qquad b=\frac{3+2\sqrt2}{12},\qquad
+s=\sin\theta,\quad c=\cos\theta,\quad sc\ne0.
+\tag{139.1}
+$$
+
+For arbitrary $0<A<1$, complex unit $f\perp e$, and
+$\eta>0$ with $A^2+\eta^2\le1$, set $h_0=Ae+\eta f$. On the
+entire original domain $\mathcal P$ of VI (114.1), define
+
+$$
+\begin{gathered}
+R_x=\mathcal O_{\mathfrak s}(\gamma,h)
+              -\mathcal O_{\mathfrak s}(0,h_0),\qquad x=(\gamma,h),\\
+\mathscr D_\eta=\{R_x:|\gamma|\le1,\ \|h\|\le1\},\qquad
+\mathscr D_\eta^-=\{R_x:|\gamma|\le1,\ \|h\|\le1,
+                                      \operatorname{Re}(e^\dagger h)\le0\},\\
+(Jy)_{i,w,\beta}=-y_{i,wN^2,\beta},\qquad
+P_Jy=\tfrac12(y+Jy),\qquad
+\|y\|_\infty=\sup_{i,w,\beta}|y_{i,w,\beta}|.
+\end{gathered}
+\tag{139.2}
+$$
+
+The indices include every original history and both terminal labels.
+In particular the defining raw probabilities retain the original
+subnormalised $r_i$ and the exact factor $a_w/2$ of VI (114.3).
+Each physical parameter pair is realized by one full ten-dimensional
+completion shared across emission, the single forward return and all
+histories, by VI Theorem 106.3; compared pairs may use different such
+completions. The maps $J,P_J$ are numerical comparisons of original
+rows, with no additional physical operation or identification of clocks.
+
+For the real lift space $\mathscr V$ of VI Definition 116.1 write
+
+$$
+\begin{aligned}
+\mathcal Q(L)_{i,w,\beta}&=(2\beta-1)q_{i,w}(L),\\
+L_x&=(A_h-A_{h_0},\ B_h-B_{h_0},\ \gamma K_h),\\
+\mathscr J(X,Y,Z)&=(-WXW,-WYW,-WZW).
+\end{aligned}
+\tag{139.3}
+$$
+
+Here $A_h,B_h,K_h$ are exactly VI (114.2), so $R_x=\mathcal Q(L_x)$.
+Equation (135.7) gives $J\mathcal Q(L)=\mathcal Q(\mathscr J L)$.
+On the row range $\mathcal U=\mathcal Q(\mathscr V)$, one therefore
+has $J^2=I$, $P_J^2=P_J$ and $\|Jy\|_\infty=\|y\|_\infty$.
+Indeed appending $N^2$ leaves $a_w$ unchanged and is norm
+nonincreasing by restriction of the supremum; applying this twice
+and using $N^4=I_3$ proves the reverse inequality on $\mathcal U$.
+Words and clocks remain distinct even when their numerical rows agree.
+
+For $y\in\mathcal U$, use the fixed finite linear decoders of
+VI Proposition 118.2 on its outcome-$1$ entries. Denote their
+outputs by $\mathsf D_Hy,\mathsf D_Sy,\mathsf D_Vy$, and define
+the reference-added decoded coordinates
+
+$$
+\widehat H(y)=h_0h_0^\dagger+\mathsf D_Hy,\qquad
+\widehat S(y)=\mathsf S_{h_0}+\mathsf D_Sy,\qquad
+\widehat V(y)=\mathsf D_Vy.
+\tag{139.4}
+$$
+
+These are linear decoding followed by addition of fixed matrices;
+being defined does not assert physical realizability. For $y=R_x$
+they equal $hh^\dagger,\mathsf S_h,\Pi_v(\gamma K_h)$, respectively,
+where $\mathsf S_h=\mathrm i(ht^\dagger-th^\dagger)$ and $v$ is
+the fixed decoder vector of VI (118.4).
+
+**Theorem 139.2 (Complete feasibility classification; repo-derived).**
+For every source and every parameter in Definition 139.1, every
+$x=(\gamma,h)\in\mathcal P$ and every $0<\lambda\le1$, the
+following equivalence holds on the full original domain:
+
+$$
+(1-\lambda)R_x+\lambda JR_x\in\mathscr D_\eta
+\quad\Longleftrightarrow\quad
+\gamma=0,\qquad
+h=\epsilon Ae+\eta\zeta f,
+\quad \epsilon\in\{-1,1\},\quad |\zeta|=1.
+\tag{139.5}
+$$
+
+In the feasible case $JR_x=R_x$ and the representing parameter pair
+is uniquely $x$. If $x$ is restricted to
+$\operatorname{Re}(e^\dagger h)\le0$, only $\epsilon=-1$ occurs;
+the same equivalence then holds with $\mathscr D_\eta^-$ as target.
+In particular the signed reflection ($\lambda=1$) and the midpoint
+($\lambda=1/2$) are feasible exactly in the same cases. Uniqueness
+here concerns $(\gamma,h)$, not the full completion behind a given $h$.
+
+*Proof.* Put $\kappa=1-2\lambda$, write
+$h=\alpha e+v_\perp$ with $v_\perp\perp e$, and suppose the left
+side is $R_{x'}$ for $x'=(\gamma',h')\in\mathcal P$. Write
+$h'=\alpha'e+v'_\perp$. By (139.3) its lift is equal, modulo the
+common kernel of VI Lemma 116.2, to
+$(1-\lambda)L_x+\lambda\mathscr J L_x$.
+
+The maps (118.8) on the entire lift space give
+$\mathfrak H(L)=(X+Y)/b$ and
+$\mathfrak S(L)=\Pi_v(X-s^2(X+Y))/(sc)$.
+The decoder vector $v$ is perpendicular to $t$, so $Wv=v$;
+consequently $\Pi_v(WMW)=W\Pi_v(M)W$. Both maps therefore
+intertwine $\mathscr J$ with $M\mapsto-WMW$. Since
+$W\mathsf S_{h_0}W=-\mathsf S_{h_0}$, (139.4) implies
+
+$$
+\begin{aligned}
+h'h'^\dagger
+ &=(1-\lambda)hh^\dagger-\lambda Whh^\dagger W
+                  +2\lambda(A^2ee^\dagger+\eta^2ff^\dagger),\\
+\mathsf S_{h'}
+ &=(1-\lambda)\mathsf S_h-\lambda W\mathsf S_hW.
+\end{aligned}
+\tag{139.6}
+$$
+
+In the decomposition $\mathbb Ce\oplus e^\perp$, the right side
+of the first line has diagonal blocks
+$\kappa|\alpha|^2+2\lambda A^2$ and
+$\kappa v_\perp v_\perp^\dagger+2\lambda\eta^2ff^\dagger$,
+and upper-right block $\alpha v_\perp^\dagger$.
+The second line, using
+
+$$
+\mathsf S_h=-2\tau\operatorname{Im}(\alpha)ee^\dagger
+ +\mathrm i\tau(v_\perp e^\dagger-ev_\perp^\dagger),
+\tag{139.7}
+$$
+
+first forces
+$v'_\perp=v_\perp$ and
+$\operatorname{Im}\alpha'=\kappa\operatorname{Im}\alpha$.
+The transverse block of the first line now gives
+
+$$
+v_\perp v_\perp^\dagger=\eta^2ff^\dagger.
+\tag{139.8}
+$$
+
+Since $\eta>0$, this means $v_\perp=\eta\zeta f$ for one
+$|\zeta|=1$, and $v_\perp\ne0$. The upper-right block gives
+$\alpha'v_\perp^\dagger=\alpha v_\perp^\dagger$, hence
+$\alpha'=\alpha$. As $\lambda>0$, (139.7) then makes $\alpha$
+real. The $ee^\dagger$ entry of (139.6) gives $\alpha^2=A^2$.
+Thus $h'=h=\epsilon Ae+\eta\zeta f$.
+
+It remains to exclude every nonzero complex retention. The $Z$
+component of the common-kernel relation says, for some real $y$,
+
+$$
+\gamma'K_h-\gamma\bigl((1-\lambda)K_h-\lambda WK_hW\bigr)
+                                      =\mathrm i yI_3.
+\tag{139.9}
+$$
+
+Use the actual source functional $\ell(M)=\operatorname{Tr}(FM)$
+of VI Lemma 116.3. Its $F$ is supported on $e^\perp$, so
+$WFW=F$. It annihilates scalars, and
+$\ell(K_h)=\mathrm i scq_h$ with $q_h\ge5/8-b>0$ on the whole
+completion ball. Applying $\ell$ to (139.9) yields
+$\gamma'=\kappa\gamma$, including complex $\gamma,\gamma'$.
+Let $K_h^-=(K_h-WK_hW)/2$. Taking the $W$-odd part of
+(139.9) gives $(\gamma'-\gamma)K_h^-=0$. If
+$a=\epsilon A$ and $v_\perp=\eta\zeta f$, the original formula
+for $K_h$ gives
+
+$$
+K_h^-=(\tau s^2-\mathrm i scba)ev_\perp^\dagger
+             +(\tau c^2-\mathrm i scba)v_\perp e^\dagger.
+\tag{139.10}
+$$
+
+Its first coefficient has strictly positive real part $\tau s^2$,
+and $v_\perp\ne0$, so $K_h^-\ne0$. Therefore
+$-2\lambda\gamma=0$, proving $\gamma=\gamma'=0$.
+This proves necessity and uniqueness of the representing pair.
+
+Conversely for either sign and every $|\zeta|=1$, the diagonal
+blocks of $hh^\dagger-h_0h_0^\dagger$ vanish, and
+$\mathsf S_h-\mathsf S_{h_0}$ has only off-diagonal blocks.
+Both are fixed by $M\mapsto-WMW$. With $\gamma=0$, (118.9)
+then makes $L_x$ fixed by $\mathscr J$. Hence $JR_x=R_x$, and
+all averages in (139.5) equal that original residual. Its norm
+condition is $\|h\|^2=A^2+\eta^2\le1$. Since $A>0$, exactly
+the negative sign lies in the stated half-ball. This also proves
+the signed-reflection and midpoint consequences. $\square$
+
+## 140. A disk of actual-law mixtures outside every single-completion image
+
+**Theorem 140.1 (Affine disk, decoded rank and exact physical boundary; repo-derived).**
+For every source and every $A,f$ in Definition 139.1, suppose
+
+$$
+0<\eta\le\min\{A,\sqrt{1-A^2}\}.
+\tag{140.1}
+$$
+
+For $|\zeta|\le1$ put
+$h_\zeta=-Ae+\eta\zeta f$ and $Y_\zeta=P_JR_{(0,h_\zeta)}$.
+Then $\zeta\mapsto Y_\zeta$ is an injective real-affine map of
+the closed complex unit disk into $\mathcal U$, and $JY_\zeta=Y_\zeta$.
+Its reference-added decoded coordinates are exactly
+
+$$
+\begin{aligned}
+M_\zeta:=\widehat H(Y_\zeta)
+ &=A^2ee^\dagger+\eta^2ff^\dagger
+             -A\eta(\bar\zeta ef^\dagger+\zeta fe^\dagger),\\
+\widehat S(Y_\zeta)
+ &=\mathrm i\tau\eta(\zeta fe^\dagger-\bar\zeta ef^\dagger),\\
+\widehat V(Y_\zeta)&=0.
+\end{aligned}
+\tag{140.2}
+$$
+
+The algebraic normal-form recovery (118.6), applied to these
+coordinates, gives retention $0$ and retention-weighted vector $0$.
+For $|\zeta|=1$, $Y_\zeta=R_{(0,h_\zeta)}$ is an actual
+zero-retention residual in $\mathscr D_\eta^-$. For $|\zeta|<1$,
+$Y_\zeta$ is a mathematical convex combination of two boundary
+residuals, but belongs to neither $\mathscr D_\eta$ nor
+$\mathscr D_\eta^-$. Thus no single original completion realizes
+an interior point, even with arbitrary complex retention in the
+entire disk and arbitrary completion in the entire original ball.
+
+*Proof.* In (139.6) put $\lambda=1/2$, $\gamma=0$ and
+$h=h_\zeta$. Formula (139.7) and the two diagonal blocks give
+(140.2). More explicitly the lift whose rows are $Y_\zeta$ is
+
+$$
+\left(
+ s^2b(M_\zeta-h_0h_0^\dagger)
+            +sc(\widehat S(Y_\zeta)-\mathsf S_{h_0}),\quad
+ c^2b(M_\zeta-h_0h_0^\dagger)
+            -sc(\widehat S(Y_\zeta)-\mathsf S_{h_0}),\quad0
+\right).
+\tag{140.3}
+$$
+
+Every term in this lift is real-affine in $\zeta$, proving
+real-affineness in the full original row space. The difference of
+the second decoded coordinates at $\zeta,\zeta'$ has norm
+$\sqrt2\tau\eta|\zeta-\zeta'|$, so the map is injective.
+Projection on $\mathcal U$ gives $J$-fixity. The matrix $M_\zeta$
+is positive semidefinite, with trace $A^2+\eta^2\le1$; for example
+its two-dimensional matrix in the basis $(e,f)$ is
+
+$$
+\begin{pmatrix}A^2&-A\eta\bar\zeta\\
+                -A\eta\zeta&\eta^2\end{pmatrix}.
+\tag{140.4}
+$$
+
+Consequently the denominator of the recovery formula satisfies
+$5/8-b\ell(M_\zeta)\ge5/8-b>0$, because $F\preceq I_3$.
+With $\widehat V=0$, (118.6) therefore returns $\gamma=0$ and
+$z_{\gamma,h}=0$. This calculation is a statement about decoded
+coordinates; the existence of a vector with outer product
+$M_\zeta$ is a separate condition.
+
+On the boundary (140.2) is precisely the normal form of
+$(0,h_\zeta)$, and Theorem 139.2 gives the asserted actual residual.
+For an interior point write $\zeta=r\omega$, where $0\le r<1$
+and $|\omega|=1$, choosing any $\omega$ when $r=0$.
+Real-affineness proves the literal full-vector identity
+
+$$
+Y_\zeta=\frac{1+r}{2}R_{(0,-Ae+\eta\omega f)}
+       +\frac{1-r}{2}R_{(0,-Ae-\eta\omega f)}.
+\tag{140.5}
+$$
+
+Both coefficients are strictly positive. Adding the same reference
+law to both sides expresses the corresponding mathematical mixture
+of two actual original laws, each using its own single shared full
+completion. No lottery, randomization or preparation mixture is
+installed by this vector identity.
+
+For $r<1$ the determinant of (140.4) is
+$A^2\eta^2(1-r^2)>0$, so $M_\zeta$ has rank two.
+If $Y_\zeta=R_{(\gamma,h)}$ for any $|\gamma|\le1$, $\|h\|\le1$,
+the full-domain linear decoder (139.4) would force
+$hh^\dagger=M_\zeta$, impossible for a rank-at-most-one outer
+product. This argument excludes the entire original domain,
+including parameters not in the reflected half-ball. $\square$
+
+The rank-one versus positive-semidefinite lifting used as an
+intermediary here is explicitly described by Candès–Strohmer–Voroninski,
+[*PhaseLift: Exact and Stable Signal Recovery from Magnitude
+Measurements*, arXiv:1109.4499v1, §§1.1–1.3](https://arxiv.org/pdf/1109.4499v1).
+Their §1.1 distinguishes the rank constraint from its trace-minimizing
+semidefinite relaxation; §1.2's recovery theorem uses independent
+uniform random measurement vectors, and §1.3 discusses that recovery
+geometry. No random-measurement exactness theorem supplies (140.2),
+which follows from this source's original lift and row kernel.
+
+**Theorem 140.2 (Quadratic separation from the entire original image; repo-derived).**
+Fix any of the finite outer-product decoders already supplied by
+VI Proposition 118.2. Write its outcome-$1$ input as
+$y_{\rm fin}$ and its map as $\mathsf D_H$; its defining identity
+and source constant are
+
+$$
+\begin{gathered}
+\mathsf D_H\bigl((q_{i,w}(X,Y,Z))_{i,\,|w|\le L_{\mathfrak s}}\bigr)
+                                      =(X+Y)/b
+                  \quad\text{for every }(X,Y,Z)\in\mathscr V,\\
+B_H=\|\mathsf D_H\|_{\ell^\infty\to\mathrm{HS}}\in(0,\infty).
+\end{gathered}
+\tag{140.6}
+$$
+
+The finitely many real coefficients of that decoder determine
+$B_H$; it depends only on the fixed source and the fixed decoder.
+For $|\zeta|\le1$ let
+
+$$
+\lambda_-(\zeta)=\frac{A^2+\eta^2-
+ \sqrt{(A^2-\eta^2)^2+4A^2\eta^2|\zeta|^2}}2,
+\qquad \delta_\zeta=\eta^2(1-|\zeta|^2).
+\tag{140.7}
+$$
+
+Under (140.1), in the original full raw-law supremum norm,
+
+$$
+\begin{aligned}
+\frac{\delta_\zeta}{2B_H}
+ &\le\frac{\lambda_-(\zeta)}{B_H}
+ \le\operatorname{dist}_\infty(Y_\zeta,\mathscr D_\eta)\\
+ &\le\operatorname{dist}_\infty(Y_\zeta,\mathscr D_\eta^-)
+ \le\frac b2\delta_\zeta.
+\end{aligned}
+\tag{140.8}
+$$
+
+At the center the stronger lower bound is
+$\operatorname{dist}_\infty(Y_0,\mathscr D_\eta)\ge\eta^2/B_H$.
+In particular every interior point has strictly positive distance
+from the entire original image, of quadratic order in $\eta$ with
+the displayed $1-|\zeta|^2$ factor. These are bounds, not a claim
+of equality of the constants or of the optimal distance.
+
+*Proof.* The full-space identity in (140.6) is the first map of
+VI (118.8) factored through finitely many actual rows. Every one
+of its matrix coordinates annihilates the common kernel, so the
+finite dual-span construction in VI Proposition 118.2 proves the
+identity on all of $\mathscr V$, before any restriction to physical
+pairs. A finite linear map has finite operator norm; it is nonzero
+by its value at $(I_3,0,0)$, so $B_H>0$.
+
+For every original $x=(\gamma,h)$, subtract the lift (140.3) from
+$L_x$ and apply this full-space identity. It gives
+
+$$
+\|hh^\dagger-M_\zeta\|_{\rm HS}
+ \le B_H\|(R_x-Y_\zeta)_{\rm fin}\|_\infty
+ \le B_H\|R_x-Y_\zeta\|_\infty.
+\tag{140.9}
+$$
+
+This directly justifies the decoder at the virtual lift. An
+estimate stated only for physical pairs would not justify (140.9).
+The two nonzero-block eigenvalues of $M_\zeta$ are
+$\lambda_+\ge\lambda_-\ge0$, with $\lambda_-$ given by (140.7).
+For any $h\in\mathbb C^3$ choose a unit $u$ in
+$\operatorname{span}_{\mathbb C}\{e,f\}$ perpendicular to $h$.
+There is such a vector since this span has complex dimension two.
+Then
+
+$$
+\|M_\zeta-hh^\dagger\|_{\rm HS}
+ \ge|u^\dagger(M_\zeta-hh^\dagger)u|
+ =u^\dagger M_\zeta u\ge\lambda_-.
+\tag{140.10}
+$$
+
+Thus (140.9) bounds every pair in the full complex domain, regardless
+of its retention. Taking the infimum gives the lower distance bound.
+Since
+$\lambda_+\lambda_-=A^2\eta^2(1-|\zeta|^2)$ and
+$0<\lambda_+\le A^2+\eta^2\le2A^2$, one obtains
+$\lambda_-\ge\delta_\zeta/2$. At $\zeta=0$, (140.1) instead gives
+$\lambda_-=\min(A^2,\eta^2)=\eta^2$, proving the sharper assertion.
+
+For the upper bound use the actual reflected-domain witness
+$x_\zeta=(0,-Ae+\eta\zeta f)$. Its vector is in the original ball.
+Its skew coordinate equals (140.2), and
+$M_\zeta-h_\zeta h_\zeta^\dagger=\delta_\zeta ff^\dagger$.
+The virtual-minus-physical lift is consequently
+$(s^2b\delta_\zeta ff^\dagger,c^2b\delta_\zeta ff^\dagger,0)$.
+Its outcome-$1$ row is exactly
+
+$$
+\frac{a_wb\delta_\zeta}{2}\operatorname{Tr}\!\left[
+ r_i\left(s^2Q_w^\dagger ff^\dagger Q_w
+       +c^2WQ_w^\dagger ff^\dagger Q_wW\right)\right].
+\tag{140.11}
+$$
+
+The matrix in parentheses lies between $0$ and $I_3$.
+Since $a_w\le1$ and $\operatorname{Tr}r_i\le1$ for every actual
+prefix, this row is between $0$ and $b\delta_\zeta/2$.
+The outcome-$0$ row is its negative, so the same bound holds in the
+full original supremum norm. Infimizing over the reflected domain
+and then using $\mathscr D_\eta^-\subseteq\mathscr D_\eta$ proves
+the rest of (140.8). Strict positivity in the interior follows
+from $A\eta>0$ and $|\zeta|<1$. $\square$
+
+The matrix-distance intermediary is also the lift in Balan–Zou,
+[*On Lipschitz Analysis and Lipschitz Synthesis for the Phase Retrieval
+Problem*, arXiv:1506.02092v1, §2.2, (9)–(11) and Theorems
+2.3–2.4](https://arxiv.org/pdf/1506.02092v1): (9)–(11) relate
+intensity data to a linear map on selfadjoint matrices and the
+rank-at-most-one positive cone. Theorem 2.3 characterizes a
+phase-retrievable frame by its kernel and a lower comparison;
+Theorem 2.4 gives an upper comparison under that frame assumption.
+Here the needed full-space decoder is (140.6), proved from the
+original source rows, and (140.10) is the direct two-dimensional
+rank obstruction. No phase-retrievable-frame assumption is imported.
+
+## 141. A concrete complex member and the nonlinear optimization boundary
+
+**Proposition 141.1 (An explicit original source with actual nine prefixes; repo-derived).**
+In the original matrices of V Definition 54.1 put
+
+$$
+\begin{gathered}
+\xi=(1,1,1)^{\mathsf T}/\sqrt3,\quad
+v_+=(1,1,-2)^{\mathsf T}/\sqrt6,\quad
+e=(1,-1,0)^{\mathsf T}/\sqrt2,\\
+d=\tfrac12,\qquad \theta=\tfrac\pi4,\qquad
+N=-(\xi v_+^\dagger+v_+\xi^\dagger)+\mathrm i ee^\dagger,\\
+(u_1,\ldots,u_9)
+ =(\varnothing,0,1,00,10,000,010,100,N),\\
+A=\tfrac12,\qquad f=(\xi+\mathrm i v_+)/\sqrt2,
+                    \qquad 0<\eta\le\tfrac12.
+\end{gathered}
+\tag{141.1}
+$$
+
+These data are an allowed source and parameters for Theorems
+139.2, 140.1 and 140.2 on this entire nonzero $\eta$ interval.
+The transverse vector is genuinely complex: no common scalar
+phase makes it real. Every column is its actual weighted prefix
+event, and the ninth is the chronological single call $N$ after
+the empty prefix.
+
+*Proof.* The vectors $(\xi,v_+,e)$ are a real orthonormal basis.
+This is (137.1) with $\chi=\pi/4$, $\phi=0$, $\sigma=1$.
+Thus $N\in U(3)$, $N\xi=-v_+$, $N^2=W$ and $N^4=I_3$.
+The mixing condition follows from $N\xi\perp\xi$, and
+$0<d<1$, $\sin(2\theta)=1$. Use exactly the sole preparation
+of V (91.1):
+
+$$
+\psi=2^{-1/2}Uq+\mathrm i2^{-1/2}Ue,\qquad
+\rho_0=\psi\psi^\dagger.
+\tag{141.2}
+$$
+
+V Proposition 91.3 supplies its original five-dimensional CPTP
+source and full matrix response, with no additional preparation.
+For completeness, the particular actual prefixes in (141.1) can
+be checked directly. In the ordered basis $(\xi,v_+,e)$, removing
+only the common scalar phase from $V_0,V_1$ for the purpose of
+computing their conjugations gives
+
+$$
+\psi=\begin{pmatrix}1/2\\(-1+\mathrm i\sqrt6)/4\\
+                         (\sqrt3+\mathrm i\sqrt2)/4\end{pmatrix},
+\quad V'_0=\begin{pmatrix}
+1&0&0\\0&-1/2&-\mathrm i\sqrt3/2\\
+0&\sqrt3/2&-\mathrm i/2
+\end{pmatrix},
+\quad V'_1=V'_0\operatorname{diag}(1,1,-1),
+\quad N=\begin{pmatrix}0&-1&0\\-1&0&0\\0&0&\mathrm i\end{pmatrix}.
+\tag{141.3}
+$$
+
+For a Hermitian matrix $M$ in this basis define the real column
+
+$$
+\mathbf c(M)=(M_{11},M_{22},M_{33},
+ \operatorname{Re}M_{12},\operatorname{Im}M_{12},
+ \operatorname{Re}M_{13},\operatorname{Im}M_{13},
+ \operatorname{Re}M_{23},\operatorname{Im}M_{23})^{\mathsf T}.
+\tag{141.4}
+$$
+
+For each of the first eight words let
+$\psi_{b_1\cdots b_n}=V'_{b_n}\cdots V'_{b_1}\psi$ and
+$r_i=2^{-|u_i|}\psi_{u_i}\psi_{u_i}^\dagger$; let
+$r_9=N\rho_0N^\dagger$. Multiplication of the displayed matrices
+and the real coordinates (141.4) gives
+
+$$
+\det\bigl(\mathbf c(r_1),\ldots,\mathbf c(r_9)\bigr)
+                 =\frac{11421+12960\sqrt6}{2^{41}}>0.
+\tag{141.5}
+$$
+
+Thus the nine actual columns span $\operatorname{Herm}_3$.
+Each of the first eight belongs to $\mathscr S_{1/4}$ by
+V Theorem 92.1; since (141.5) makes them independent, they form
+one of that theorem's valid native bases. The escape in
+V Theorem 92.2 is here already at $k=1$, because
+
+$$
+\operatorname{Tr}(P_\xi\rho_0)=\tfrac14,\qquad
+\operatorname{Tr}(P_\xi N\rho_0N^\dagger)=\tfrac7{16}\ne\tfrac14.
+\tag{141.6}
+$$
+
+Their raw masses are exactly $2^{-|u_i|}$ for $i\le8$ and $1$
+for $i=9$. V Definition 93.1 uses precisely these prefixes with
+its original eight suffixes, trace row and weighted tables;
+its effect-basis determinant (93.9) is nonzero at $\theta=\pi/4$.
+Consequently these are the original source suppliers of
+VI Definition 114.1, with actual prefixes, both labels and the
+original schedules. The scalar phase removed in (141.3) cancels
+inside the same conjugations; it changes no installed control,
+record basis or record phase.
+
+VI (106.3) gives $t=\tau e$, $\tau>0$, for this same source.
+The chosen $f$ is a complex unit in $e^\perp$. Its coefficients
+along the two real vectors $\xi,v_+$ have ratio $\mathrm i$;
+a common phase making both real would make that ratio real,
+a contradiction. Finally $A=1/2$ and $0<\eta\le1/2$ imply
+$\eta\le A$ and $A^2+\eta^2\le1/2<1$. Thus $h_0$ and all
+$h_\zeta$ lie in the original completion ball. VI Theorem 106.3
+realizes each by a full ten-dimensional completion with all five
+prescribed ready columns, shared within its hypothesis across
+emission, return and every history. This proves all the claimed
+admissibility conditions without substituting a normalized state
+collection for the original raw laws. $\square$
+
+**Proposition 141.2 (Scope of the separation and the remaining optimization question).**
+The source-image distances in (140.8) do not supply a lower bound
+on the nonlinear optimum difference $\nu_a-\mu_a$ of §126.
+They supply no nonlinear minimizer, equality of nonlinear minima,
+positive physical optimum gap, or endpoint type from §132.
+For the sources considered here the applicable bound on that
+optimum difference remains (138.7), on its stated interval.
+An actual source-specific global nonlinear argmin and active-row
+certificate, or a concrete positive-gap source outside this
+reflection obstruction, is a separate unresolved mathematical
+requirement.
+
+*Proof.* The infima in $\mu_a,\nu_a$ are norms of actual residuals
+in their respective physical parameter sets. In contrast, (140.8)
+is the distance of a specified interior vector $Y_\zeta$ from all
+physical residuals, and Theorem 140.1 excludes that vector from
+the feasible image. There is no minimizing or active-row identity
+in (139.5), (140.2) or (140.8) relating this external distance to
+either physical infimum. The available comparison of those two
+infima is precisely Corollary 138.2. The classification in
+Theorem 139.2 describes feasibility of numerical averages and
+does not change either optimization domain.
+
+The relevant convexity intermediary is Gatermann–Parrilo,
+[*Symmetry groups, semidefinite programs, and sums of squares*,
+arXiv:math/0211450v1, §3, Definition 3.1 and Theorem
+3.3](https://arxiv.org/pdf/math/0211450v1). Their theorem assumes
+invariance of the feasible semidefinite set and objective under
+a finite orthogonal group representation; convexity makes the
+Reynolds average feasible. The paragraph following the proof
+explicitly distinguishes the nonconvex case, where symmetric
+minimizers need not exist. Here Theorem 140.1 gives the exact
+source-specific rank-two obstruction, and Theorem 139.2 classifies
+all feasible numerical averages, beyond a general nonconvexity
+caveat. The literature supplies these intermediate ideas, not a
+global nonlinear certificate for the present original source.
+All theorems above are conditional on their stated original source
+and return premises and make no assertion of global originality
+or resolution of an external named open problem. $\square$
+
+## 追加锚（本行以下为增补区）
