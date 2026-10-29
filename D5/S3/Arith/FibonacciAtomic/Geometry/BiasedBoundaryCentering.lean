@@ -64,7 +64,7 @@ private theorem Pi_formula (F : G) : Pi F = F-constG (mean F) := by
 theorem Pi_const (c : ℝ) : Pi (constG c) = 0 := by
   rw [Pi_formula, mean_const, sub_self]
 
-private theorem pullback_const (p : Address) (c : ℝ) : pullback p (constG c) = constG c := by
+theorem pullback_const (p : Address) (c : ℝ) : pullback p (constG c) = constG c := by
   apply Lp.ext
   have hc := boundary_path_split.2.2.2.1 c
   have ht : (constG c : Omega → ℝ) =ᵐ[BiasedBoundaryConditionalLaw.conditional p]
