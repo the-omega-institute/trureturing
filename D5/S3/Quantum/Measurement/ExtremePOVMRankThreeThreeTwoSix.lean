@@ -103,11 +103,8 @@ private theorem frame_posDef : frame.PosDef := by
   have h5 := congr_fun hz 5
   have h6 := congr_fun hz 6
   fin_cases i <;>
-    simp only [Matrix.mulVec, dotProduct, Fin.sum_univ_succ, Fin.isValue,
-      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
-      Matrix.cons_val_three, Matrix.cons_val_four, Matrix.cons_val_five,
-      Matrix.cons_val_six, Pi.sub_apply, zero_apply, Finset.sum_const_zero,
-      add_zero, zero_add] at h0 h1 h2 h3 h4 h5 h6 ⊢
+    norm_num [Matrix.mulVec, dotProduct, Fin.sum_univ_succ, Pi.sub_apply]
+      at h0 h1 h2 h3 h4 h5 h6 ⊢
   all_goals linear_combination h0 + h1 + h2 + h3 + h4 + h5 + h6
 
 private theorem normalizer_exists :
