@@ -35,7 +35,10 @@ internal sealed class GuoJinMaxMarginalEntropyLOCCDocument : IScribeDocumentDefi
             DescribeId.Create("guojin-" + (name switch { "maxMarginalEntropy" => "maximum", "applyLocal" => "local", _ => name })),
             DeclarationHandle.Create(Module + "." + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("guo-jin-2025-max-marginal-entropy-locc"),
+                ResolutionKind.Refuted) : null);
 
     private static Formula Naturals => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Reals => Seq(Mathbb, Grp(F.Id("R")));

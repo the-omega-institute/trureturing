@@ -58,6 +58,10 @@ $$\neg (\forall n \in \mathbb{N},\; \forall d \in \mathbb{N},\; \forall m \in \m
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/GuoJinMaxMarginalEntropyLOCC.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/guo-jin-2025-max-marginal-entropy-locc` (refuted) by `D5/S3/Quantum/GuoJinMaxMarginalEntropyLOCC.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"guo-jin-2025-max-marginal-entropy-locc","declaration_gid":"D5/S3/Quantum/GuoJinMaxMarginalEntropyLOCC.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Y. Guo; Z.-X. Jin (2025). *Measure of entanglement and the monogamy relation: a topical review*. DOI: [10.48550/arXiv.2512.21992](https://doi.org/10.48550/arXiv.2512.21992). URL: <https://arxiv.org/abs/2512.21992v1>.
