@@ -1,0 +1,25 @@
+**Definition 271.1 (future space, reflection and quotient).** Use exactly
+$\mathbb P$ from Theorem 270.4 on
+$\mathcal W=\Omega^{\mathbb R}$. Let
+$\mathcal F_+=\sigma(X_t:t\ge0)$,
+$\mathcal F_0=\sigma(X_0)$ and
+$\mathcal F_-=\sigma(X_t:t\le0)$, completed under this law.
+On $\mathscr E=L^2(\mathcal W,\mathbb P;\mathbb R)$ put
+$\mathscr E_+=L^2(\mathcal F_+;\mathbb R)$ and
+
+$$
+(\vartheta\omega)(t)=\omega(-t),\qquad
+(\Theta G)(\omega)=G(\vartheta\omega),\qquad
+[G,K]_{\rm OS}=\langle\Theta G,K\rangle_{\mathscr E}.
+\tag{271.1}
+$$
+
+Let $rG$ be the unique $L^2(M)$ class specified by
+$\mathbb E[G\mid\mathcal F_0]=(rG)(X_0)$.
+The null quotient, once positivity is established, is the completion
+of $\mathscr E_+/\mathcal N$, where
+$\mathcal N=\{G:[G,G]_{\rm OS}=0\}$; write $qG$ for its classes.
+For a bounded real Borel $F$ on $\Omega$, time-zero multiplication on
+future functions is $G\mapsto F(X_0)G$. Positive shifts are
+$V_sG(\omega)=G(\omega(\,\cdot+s))$, $s\ge0$.
+

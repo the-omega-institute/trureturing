@@ -1,0 +1,18 @@
+**定义 44.1（保留位置的相等子树记录）。** 来源域、运输和核类严格沿用定义 43.1 的
+整个 $T$、$\rho$ 和 $\mathcal C_\varepsilon$。令 $\mathcal A=\{0,1\}^*$，空地址为
+$\epsilon$，$jB=\{jp:p\in B\}$。定义有限集
+
+$$
+\begin{aligned}
+S(\alpha)&=S(\beta)=\varnothing,\\
+S(\langle s,t\rangle)
+&=R(s,t)\sqcup0S(s)\sqcup1S(t),\\
+R(s,t)&=\begin{cases}\{\epsilon\},&s=t,\\\varnothing,&s\ne t,\end{cases}\\
+d(s,u)&=|S(s)\mathbin\triangle S(u)|.
+\end{aligned}
+\tag{44.1}
+$$
+
+地址 $0$ 指左子树，$1$ 指右子树；$S(t)$ 恰为直接左右子树相等的内部节点地址集。
+$\sqcup$ 表示地址区域不交。这里没有按 $S$ 的取值合并来源标签。
+

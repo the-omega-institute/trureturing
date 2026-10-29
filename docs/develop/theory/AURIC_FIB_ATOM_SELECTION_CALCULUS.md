@@ -3089,3 +3089,45 @@ $$
 是识别同名指标的有限布尔张量收缩。量子振幅却是 $\mathcal A=\sum_{\rm path}\prod\alpha$，概率为 $|\mathcal A|^2$。对 Hadamard 矩阵 $H_{\rm Had}=2^{-1/2}\left(\begin{smallmatrix}1&1\\1&-1\end{smallmatrix}\right)$，$H_{\rm Had}^2|0\rangle=|0\rangle$ 的通往 $|1\rangle$ 的两条非零路径各有振幅 $1/2,-1/2$，和为零；路径数二不产生正概率。这个矩阵乘法反例已排除从布尔路径数到 Born 概率的替换。本卷 §24 的占位概率、相干相位、实际门及许可读口仍分别收费；引文 27.2 是经典确定性供应。有限局部关系经收缩取得条件预测，再经 (63) 增长出可验证完整记录，是本节的离散链；物理量子实现另需振幅、相位、制备、读出和成本保持桥。∎
 
 ## 追加锚（本行以下为增补区）
+
+<a id="v9-pp"></a>
+
+## 二十八、裸五模式的 pp 合取封闭障碍
+
+本节沿用定义 19.1 的代数坐标 $(x,y,z)$ 与定义 19.3 的共享变量语义。
+物理印刷坐标仍为 $(x,z,y)$；不改变 §19 的非空 NOR 供应。
+
+**定理 28.1（裸 $\Sigma$ 加常量不能 pp 定义 NOR 或 NAND）。**
+令模板只含
+$\Sigma=\{(x,y,z):xz=yz=0\}$、常量钉住关系 $\{0\},\{1\}$ 及相等关系。
+允许变量重复／识别、有限合取与有限存在辅助变量，但不另供删行、否定或析取。
+每个这样 primitive-positive（pp）定义的关系都对逐坐标 AND 封闭。
+因此 NOR 图和 NAND 图均不能由这套裸模板 pp 定义。
+
+**证明。** 若 $s,t\in\Sigma$，它们的逐坐标积 $s\wedge t$ 不会新增一个
+同时占据 $x,z$ 或 $y,z$ 的位置对，故仍在 $\Sigma$。
+两个常量关系与相等关系也对 AND 封闭。取任意 pp 实例的两个自由解
+$u,v$，分别选择其全部辅助变量的见证 $\alpha,\beta$。
+在同一个完整变量集上逐点定义 $\gamma(w)=\alpha(w)\wedge\beta(w)$。
+每个原子关系的 AND 封闭性使 $\gamma$ 满足该原子；同名变量仍只读一个值，
+所以识别不会破坏这一论证。于是 $\gamma$ 是自由赋值 $u\wedge v$ 的共同见证。
+这同时证明有限合取、存在投影与变量重复保持封闭性；不需要限制辅助变量个数。
+
+NOR 图含代数三元组 $100,010$，却不含它们的 AND $000$。
+NAND 图 $\{(x,y,z):z=1-xy\}$ 含 $110,001$，也不含 $000$。
+二者都违背必要封闭性。∎
+
+这里的结论不说 NOR 缺少经典功能完备性。§19 的
+$N=\Sigma\setminus\{000\}$ 确实是四行 NOR 图；额外供应
+$x\lor y\lor z=1$ 后，经典电路可重复使用变量、复制已知经典位，并用
+$\neg x=\operatorname{NOR}(x,x)$、
+$x\lor y=\neg\operatorname{NOR}(x,y)$ 构造通常布尔电路。
+定理说明“非空”本身没有由裸模板加钉住的 pp 操作免费产生。
+
+关系删行亦不等于确定量子操作。若量子筛选以投影 $P$ 删除空模式，成功质量为
+$\operatorname{tr}(P\rho)$，还须保留失败分支，且只在成功质量为正时归一化；
+这不是对任意未知输入的确定信道。相反，
+[原生五模式／单参考编译供应](FIB_LEGAL_GATES_STATE_MACHINES_AND_SHOR_READOUT.md#13-a-clean-encoded-circuit-compiler-inside-the-existing-legal-pulse-model)
+保留空模式并以返回后的相对负号生成 $D_{00}$，不作非空后选择。
+[NAND 信道与完整门合同](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md#v9-nand)
+进一步区分布尔图、不可逆输出信道和干净可逆 oracle。

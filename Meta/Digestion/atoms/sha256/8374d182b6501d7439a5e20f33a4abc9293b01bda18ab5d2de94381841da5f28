@@ -1,0 +1,85 @@
+**Theorem 126.1 (Coercivity and minimisers of both tangent problems; repo-derived).**
+Let $\underline c=c_{\mathfrak s}>0$, $\overline C=C_{\mathfrak s}>0$
+be the constants fixed in Definition 122.1, and retain
+$J_1=1+5/(2\tau)$ and $\alpha_{\mathfrak s}$ from (124.3)–(124.4).
+For each $j=f,a$, $\mathcal F_j$ is finite, continuous and convex,
+and is coercive on the underlying eight-dimensional real space.
+Its restriction $\mathcal F_j(z,0)$ is coercive on the underlying
+six-dimensional real space. More explicitly, for every $z,g$,
+
+$$
+\mathcal F_j(z,g)\ge
+\max\left\{\alpha_{\mathfrak s}A,
+ \frac{A\underline c}{J_1}\|z-f\|,
+ \underline c(1+2A)|g|\right\}.
+\tag{126.1}
+$$
+
+Both infima in (125.5) are attained, with
+
+$$
+0<\alpha_{\mathfrak s}A\le m_j\le n_j\le M,
+\qquad M=2\sqrt2\,\overline C A,
+\qquad m_f\le m_a,\quad n_f\le n_a.
+\tag{126.2}
+$$
+
+Set the explicit positive bounds
+
+$$
+R=1+\frac{J_1M}{A\underline c},\qquad G=\frac M{\underline c}.
+\tag{126.3}
+$$
+
+Every minimiser of either coefficient problem satisfies $\|z\|\le R$;
+every unrestricted minimiser additionally satisfies $|g|\le G$.
+
+*Proof.* The row bound used in (125.11), now applied to the affine
+rows themselves, proves finiteness. It also gives, for either norm,
+
+$$
+\begin{aligned}
+|\mathcal F_j(z,g)-\mathcal F_j(z',g')|
+ &\le R_{\mathfrak s}(Ab+2|s_\theta c_\theta|\tau)\|z-z'\|
+             +R_{\mathfrak s}\|K_-\|_{\rm HS}|g-g'|.
+\end{aligned}
+\tag{126.4}
+$$
+
+Thus continuity holds even for the full-history supremum. Convexity
+follows because each absolute affine row is convex.
+
+For arbitrary fixed $z,g$, the strict interior condition $0<A<1$
+makes $(\eta g,-Ae+\eta z)$ a reflection-side admissible pair and
+$h_0(\eta)$ an admissible anchor for all sufficiently small positive
+$\eta$. Lemma 125.2 shows $d_j/\eta\to\mathcal F_j(z,g)$.
+On the same curve (122.3) gives the exact limit
+
+$$
+\frac{D_0(\eta g,-Ae+\eta z;h_0(\eta))}{\eta}
+ \longrightarrow T(z,g):=
+ \|H_1(z)\|_{\rm HS}+\|S_1(z)\|_{\rm HS}+(1+2A)|g|.
+\tag{126.5}
+$$
+
+Consequently (122.4) implies
+$\underline cT\le\mathcal F_j\le\overline CT$.
+In (124.11), $h-h_\#=\eta(z-f)$. Dividing that inequality by
+$\eta$ and taking the limit yields
+$\|z-f\|\le J_1T/A\le J_1\mathcal F_j/(A\underline c)$.
+This proves the second and third bounds in (126.1).
+Every point on this curve has $d_j\ge\mu_j(h_0(\eta))$;
+the lower bound (124.3), divided by $\eta$ and passed to the limit,
+proves its first bound.
+
+The second and third bounds make all sublevel sets bounded;
+continuity makes them closed. Hence the two infima are minima.
+At the common trial $(z,g)=(f,0)$ one has $S_1=0$ and
+$H_1=-2A(ef^\dagger+fe^\dagger)$ of Hilbert–Schmidt norm
+$2\sqrt2 A$. Thus $\mathcal F_j(f,0)\le M$ by (126.5).
+This proves the upper bound in (126.2), and restriction to $g=0$
+proves $m_j\le n_j$. The inclusion $\mathscr R_f\subset\mathscr R_a$
+proves both inequalities between the two norms' minima.
+Finally (126.1), at any of these minimisers with value at most $M$,
+gives (126.3) by $\|z\|\le1+\|z-f\|$. $\square$
+

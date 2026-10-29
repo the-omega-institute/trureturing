@@ -1,0 +1,17 @@
+**Definition 12.1 (independent observations at the one-update cut).**
+Fix authentic $(A,B)$ and the known preparation mode $d=1$. On the
+attained actual $x=\rho^{2k+1}u$ define:
+
+* $S_o=\{w\in\{a,b\}^*:P_x^\pi(w)=1\}$, with its rooted physical
+  $a/b$ incidence, observes discrete space without leaf labels or a
+  supplied semantic orientation.
+* $\partial_o$ is the actual antichain of terminal physical addresses in
+  $S_o$, without labels. It observes the terminal boundary.
+* $T_o=2k+1$ counts actual substitutions from the authentic original to
+  this cut, and $T_{\rm ent}=T_o-1=2k$ counts them at entrance. Neither
+  count includes shape, labels, duration, queries or a readable archive.
+* $\mathsf M_o$ is the acquired readable record $R_o=(\pi,u,k,n,1)$
+  together with its actual accessible backing, same-root binding and
+  current continuation grants. Its acquired payload, scratch, inaccessible
+  raw writer and physical source are separate resources.
+

@@ -1,0 +1,107 @@
+**Theorem 140.1 (Affine disk, decoded rank and exact physical boundary; repo-derived).**
+For every source and every $A,f$ in Definition 139.1, suppose
+
+$$
+0<\eta\le\min\{A,\sqrt{1-A^2}\}.
+\tag{140.1}
+$$
+
+For $|\zeta|\le1$ put
+$h_\zeta=-Ae+\eta\zeta f$ and $Y_\zeta=P_JR_{(0,h_\zeta)}$.
+Then $\zeta\mapsto Y_\zeta$ is an injective real-affine map of
+the closed complex unit disk into $\mathcal U$, and $JY_\zeta=Y_\zeta$.
+Its reference-added decoded coordinates are exactly
+
+$$
+\begin{aligned}
+M_\zeta:=\widehat H(Y_\zeta)
+ &=A^2ee^\dagger+\eta^2ff^\dagger
+             -A\eta(\bar\zeta ef^\dagger+\zeta fe^\dagger),\\
+\widehat S(Y_\zeta)
+ &=\mathrm i\tau\eta(\zeta fe^\dagger-\bar\zeta ef^\dagger),\\
+\widehat V(Y_\zeta)&=0.
+\end{aligned}
+\tag{140.2}
+$$
+
+The algebraic normal-form recovery (118.6), applied to these
+coordinates, gives retention $0$ and retention-weighted vector $0$.
+For $|\zeta|=1$, $Y_\zeta=R_{(0,h_\zeta)}$ is an actual
+zero-retention residual in $\mathscr D_\eta^-$. For $|\zeta|<1$,
+$Y_\zeta$ is a mathematical convex combination of two boundary
+residuals, but belongs to neither $\mathscr D_\eta$ nor
+$\mathscr D_\eta^-$. Thus no single original completion realizes
+an interior point, even with arbitrary complex retention in the
+entire disk and arbitrary completion in the entire original ball.
+
+*Proof.* In (139.6) put $\lambda=1/2$, $\gamma=0$ and
+$h=h_\zeta$. Formula (139.7) and the two diagonal blocks give
+(140.2). More explicitly the lift whose rows are $Y_\zeta$ is
+
+$$
+\left(
+ s^2b(M_\zeta-h_0h_0^\dagger)
+            +sc(\widehat S(Y_\zeta)-\mathsf S_{h_0}),\quad
+ c^2b(M_\zeta-h_0h_0^\dagger)
+            -sc(\widehat S(Y_\zeta)-\mathsf S_{h_0}),\quad0
+\right).
+\tag{140.3}
+$$
+
+Every term in this lift is real-affine in $\zeta$, proving
+real-affineness in the full original row space. The difference of
+the second decoded coordinates at $\zeta,\zeta'$ has norm
+$\sqrt2\tau\eta|\zeta-\zeta'|$, so the map is injective.
+Projection on $\mathcal U$ gives $J$-fixity. The matrix $M_\zeta$
+is positive semidefinite, with trace $A^2+\eta^2\le1$; for example
+its two-dimensional matrix in the basis $(e,f)$ is
+
+$$
+\begin{pmatrix}A^2&-A\eta\bar\zeta\\
+                -A\eta\zeta&\eta^2\end{pmatrix}.
+\tag{140.4}
+$$
+
+Consequently the denominator of the recovery formula satisfies
+$5/8-b\ell(M_\zeta)\ge5/8-b>0$, because $F\preceq I_3$.
+With $\widehat V=0$, (118.6) therefore returns $\gamma=0$ and
+$z_{\gamma,h}=0$. This calculation is a statement about decoded
+coordinates; the existence of a vector with outer product
+$M_\zeta$ is a separate condition.
+
+On the boundary (140.2) is precisely the normal form of
+$(0,h_\zeta)$, and Theorem 139.2 gives the asserted actual residual.
+For an interior point write $\zeta=r\omega$, where $0\le r<1$
+and $|\omega|=1$, choosing any $\omega$ when $r=0$.
+Real-affineness proves the literal full-vector identity
+
+$$
+Y_\zeta=\frac{1+r}{2}R_{(0,-Ae+\eta\omega f)}
+       +\frac{1-r}{2}R_{(0,-Ae-\eta\omega f)}.
+\tag{140.5}
+$$
+
+Both coefficients are strictly positive. Adding the same reference
+law to both sides expresses the corresponding mathematical mixture
+of two actual original laws, each using its own single shared full
+completion. No lottery, randomization or preparation mixture is
+installed by this vector identity.
+
+For $r<1$ the determinant of (140.4) is
+$A^2\eta^2(1-r^2)>0$, so $M_\zeta$ has rank two.
+If $Y_\zeta=R_{(\gamma,h)}$ for any $|\gamma|\le1$, $\|h\|\le1$,
+the full-domain linear decoder (139.4) would force
+$hh^\dagger=M_\zeta$, impossible for a rank-at-most-one outer
+product. This argument excludes the entire original domain,
+including parameters not in the reflected half-ball. $\square$
+
+The rank-one versus positive-semidefinite lifting used as an
+intermediary here is explicitly described by Candès–Strohmer–Voroninski,
+[*PhaseLift: Exact and Stable Signal Recovery from Magnitude
+Measurements*, arXiv:1109.4499v1, §§1.1–1.3](https://arxiv.org/pdf/1109.4499v1).
+Their §1.1 distinguishes the rank constraint from its trace-minimizing
+semidefinite relaxation; §1.2's recovery theorem uses independent
+uniform random measurement vectors, and §1.3 discusses that recovery
+geometry. No random-measurement exactness theorem supplies (140.2),
+which follows from this source's original lift and row kernel.
+

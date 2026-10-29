@@ -1,0 +1,42 @@
+**Definition 30.1 (the arithmetic observation problem and its native
+consumer).** Let $N,m\ge1$, $I\ge0$ be integers, let
+$A=A^{\mathsf T}\in\mathbb Z^{N\times N}$, and let
+$C\in\mathbb Q^{m\times N}$. Assume the known stacked matrix and a
+known rational matrix $K$ satisfy
+
+$$
+O_I=\begin{pmatrix}C\\CA\\\vdots\\CA^I\end{pmatrix},
+\qquad KO_I=\operatorname{Id}_N,
+\qquad \kappa=\|K\|_{\infty\to\infty}>0.
+\tag{30.1}
+$$
+
+For an integer $D\ge1$ let $\Lambda_D=D^{-1}\mathbb Z^N$. There is
+no bound on its coordinate magnitudes. For rational $h>0$ put
+
+$$
+R_H(x)=\left(\left\lfloor CA^k x/h\right\rfloor\right)_{k=0}^{H},
+\tag{30.2}
+$$
+
+where floor is componentwise and the finite blocks retain their epoch
+and output indices. The native consumer takes $A=A_t$, terminal inclusion
+$J$, $C=J^{\mathsf T}$ and $I=N-b$, where $b$ is the actual number of
+terminals. These are known earned matrices, not measurements supplied
+by a response oracle. NLBA's all-leaf forcing, NLBAII (58.3) and symmetry
+supply an integer $K$ satisfying (30.1): transpose the terminal
+controllability right inverse. Explicitly, start with the terminal
+vectors; when a marked vertex has one unmarked neighbor, subtract its
+already represented other neighbors from $Ae_v$. The result is that
+neighbor's coordinate vector. The existing tree forcing order finishes
+in at most $I$ steps and increases polynomial degree by at most one
+per step. Thus its integer terminal polynomials have degree at most $I$.
+No nonlinear coordinate or unknown-law acquisition is asserted here.
+
+For QN-D, preparation authentically assures $x\in\Lambda_D$ and
+supplies $D$ before acquisition, besides the known graph/law, units,
+exact deterministic QN interface and genuine access. This is an
+additional entrance premise, with the producer and its isolation paid
+as in Construction 33.1. The fixed $h$ is supplied by the installation.
+A finite record fitting a denominator does not certify this promise.
+

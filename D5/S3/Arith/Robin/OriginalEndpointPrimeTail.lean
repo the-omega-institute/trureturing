@@ -19,6 +19,7 @@ the Scribe is explanatory mathematics and is not a separate Lean result.
 import D5.S3.Arith.Robin.ActualGlobalBracketing
 import D5.S3.Arith.GoldenResource.FirstLayerMarginalAntitone
 import D5.S3.Arith.GoldenResourceObjectiveFactorization
+import D5.S3.Arith.Robin.EulerLayerInventoryGrowth
 import D5.S3.Arith.Robin.LogarithmBounds
 import D5.S3.Weil.Mertens.Third
 import D5.S3.Weil.GronwallLowerEnvelope
@@ -181,6 +182,30 @@ def upperPrice (q : ℝ) (p : ℕ) : ℝ :=
 
 /-- `0` is only the empty-support convention. -/
 def largestPrime (N : ℕ) : ℕ := N.primeFactors.sup id
+
+/-! The general finite Euler/log-sigma calculation is shared by both the
+optimizer endpoint and the support-conditioned finite correction below. -/
+private theorem log_sigma_div_eq_eulerMass_sub_tail {N : ℕ} (hN : 0 < N) :
+    Real.log ((ArithmeticFunction.sigma 1 N : ℝ) / N) = eulerMass N - tail N := by
+  have hf := golden_resource_objective_factorization 0 (show 1 ≤ N by omega)
+  rw [golden_resource_sigma_identity 0 (show 1 ≤ N by omega)] at hf
+  simp only [zero_mul, sub_zero] at hf
+  rw [hf, eulerMass, tail, ← sum_sub_distrib]
+  apply sum_congr rfl
+  intro p hp
+  have hpp := Nat.prime_of_mem_primeFactors hp
+  have hi0 : 0 < (p : ℝ)⁻¹ := inv_pos.mpr (by exact_mod_cast hpp.pos)
+  have hi1 : (p : ℝ)⁻¹ < 1 :=
+    (inv_lt_one₀ (by exact_mod_cast hpp.pos)).mpr (by exact_mod_cast hpp.one_lt)
+  have hnum : 0 < 1 - (p : ℝ)⁻¹ ^ (N.factorization p + 1) :=
+    sub_pos.mpr (pow_lt_one₀ hi0.le hi1 (by
+      have hz : 1 ≤ N.factorization p :=
+        hpp.factorization_pos_of_dvd (by omega) (Nat.dvd_of_mem_primeFactors hp)
+      omega))
+  have hden : 0 < 1 - (p : ℝ)⁻¹ := sub_pos.mpr hi1
+  simp only [goldenPrimeLocalObjective, zero_mul, sub_zero, layerTail]
+  rw [Real.log_div hnum.ne' hden.ne']
+  ring
 
 /-- Local original-source application, preserving strict/weak ties.
 This helper is consumed by endpoint_local and the cutoff-price calculation. -/
@@ -479,24 +504,7 @@ theorem original_endpoint_prime_tail_supply {q : ℝ} (hq : 0 < q) {N : ℕ}
         exact hsmall.trans ((le_div_iff₀ hr0).2 (by nlinarith))
     · have hempty : N.primeFactors = ∅ := not_nonempty_iff_eq_empty.mp hne
       simp [tail, largestPrime, hempty]
-  -- Existing exact Euler factorization, specialized locally at price zero.
-  have hf := golden_resource_objective_factorization 0 hpositive
-  rw [golden_resource_sigma_identity 0 hpositive] at hf
-  simp only [zero_mul, sub_zero] at hf
-  have hW : Real.log ((ArithmeticFunction.sigma 1 N : ℝ) / N) = eulerMass N - tail N := by
-    rw [hf, eulerMass, tail, ← sum_sub_distrib]
-    apply sum_congr rfl
-    intro p hp
-    have hpp := Nat.prime_of_mem_primeFactors hp
-    have hi0 : 0 < (p : ℝ)⁻¹ := inv_pos.mpr (by exact_mod_cast hpp.pos)
-    have hi1 : (p : ℝ)⁻¹ < 1 :=
-      (inv_lt_one₀ (by exact_mod_cast hpp.pos)).mpr (by exact_mod_cast hpp.one_lt)
-    have hnum : 0 < 1 - (p : ℝ)⁻¹ ^ (N.factorization p + 1) :=
-      sub_pos.mpr (pow_lt_one₀ hi0.le hi1 (by omega))
-    have hden : 0 < 1 - (p : ℝ)⁻¹ := sub_pos.mpr hi1
-    simp only [goldenPrimeLocalObjective, zero_mul, sub_zero, layerTail]
-    rw [Real.log_div hnum.ne' hden.ne']
-    ring
+  have hW := log_sigma_div_eq_eulerMass_sub_tail hpositive
   -- All first-layer support gaps are closed by the existing prime-antitone
   -- theorem. This connects Mertens to this SAME integer, not to an lcm.
   have hprefix : N.primeFactors = (Ioc 0 (largestPrime N)).filter Nat.Prime := by
@@ -544,6 +552,170 @@ theorem original_endpoint_prime_tail_supply {q : ℝ} (hq : 0 < q) {N : ℕ}
   refine ⟨hlow, hupp, hnonneg, htail, ?_⟩
   rw [robinLogMargin, hW, hE]
   ring
+
+private theorem layer_tail_nonneg (m : ℕ) {p : ℕ} (hp : p.Prime) :
+    0 ≤ layerTail m p := by
+  have hp0 : (0 : ℝ) < p := by exact_mod_cast hp.pos
+  have hi0 : 0 < (p : ℝ)⁻¹ := inv_pos.mpr hp0
+  have hi1 : (p : ℝ)⁻¹ < 1 :=
+    (inv_lt_one₀ hp0).mpr (by exact_mod_cast hp.one_lt)
+  have hz : (p : ℝ)⁻¹ ^ (m.factorization p + 1) < 1 :=
+    pow_lt_one₀ hi0.le hi1 (by omega)
+  unfold layerTail
+  apply neg_nonneg.mpr
+  have hlog := Real.log_le_log (sub_pos.mpr hz)
+    (show 1 - (p : ℝ)⁻¹ ^ (m.factorization p + 1) ≤ 1 by
+      linarith [pow_nonneg hi0.le (m.factorization p + 1)])
+  simpa only [Real.log_one] using hlog
+
+/-- The complete actual tail is nonnegative and gives the exact original
+Robin-margin identity on literal initial prime support. -/
+theorem tail_robin_data {m : ℕ} (hm : 0 < m)
+    (hsupport : m.primeFactors = Nat.primesLE (largestPrime m)) :
+    0 ≤ tail m ∧
+      robinLogMargin m = Mertens.E₃ (largestPrime m) + tail m +
+        Real.log (Real.log (Real.log (m : ℝ))) -
+        Real.log (Real.log (largestPrime m)) := by
+  have hnonneg : 0 ≤ tail m :=
+    sum_nonneg fun p hp => layer_tail_nonneg m (Nat.prime_of_mem_primeFactors hp)
+  have hprefix : m.primeFactors =
+      (Finset.Ioc 0 (largestPrime m)).filter Nat.Prime := by
+    simpa only [Nat.primesLE_eq_filter_Ioc_zero] using hsupport
+  have hE : Mertens.E₃ (largestPrime m : ℝ) = -eulerMass m +
+      Real.log (Real.log (largestPrime m : ℝ)) + Real.eulerMascheroniConstant := by
+    unfold Mertens.E₃ eulerMass
+    rw [Nat.floor_natCast, ← hprefix]
+    simp only [one_div, sum_neg_distrib]
+    ring
+  have hW := log_sigma_div_eq_eulerMass_sub_tail hm
+  refine ⟨hnonneg, ?_⟩
+  rw [robinLogMargin, hW, hE]
+  ring
+
+/-! A finite same-integer correction.  The support hypothesis is deliberately
+separate from the optimizer endpoint hypothesis above: it is the exact
+finite bridge used later by an actual-record consumer. -/
+theorem finite_min_tail_robin_bound {m : ℕ} (hm : 0 < m)
+    (hsupport : m.primeFactors = Nat.primesLE (largestPrime m))
+    (htheta : 1 < Chebyshev.theta (largestPrime m)) :
+    (∑ p ∈ m.primeFactors, min
+        (Real.log p / (Real.log (m : ℝ) * Real.log (Real.log (m : ℝ))))
+        (-Real.log (1 - (p : ℝ)⁻¹ ^ 2))) ≤
+      tail m + Real.log (Real.log (Real.log (m : ℝ))) -
+        Real.log (Real.log (Chebyshev.theta (largestPrime m))) ∧
+    (∑ p ∈ m.primeFactors, min
+        (Real.log p / (Real.log (m : ℝ) * Real.log (Real.log (m : ℝ))))
+        (-Real.log (1 - (p : ℝ)⁻¹ ^ 2))) +
+        Mertens.E₃ (largestPrime m) +
+        Real.log (Real.log (Chebyshev.theta (largestPrime m))) -
+        Real.log (Real.log (largestPrime m)) ≤ robinLogMargin m := by
+  classical
+  let P : ℕ := largestPrime m
+  let X : ℝ := Real.log (m : ℝ)
+  let Q : ℝ := ∑ p ∈ m.primeFactors,
+    ((m.factorization p - 1 : ℕ) : ℝ) * Real.log p
+  have hsplit : X = Chebyshev.theta (P : ℝ) + Q := by
+    dsimp [X, P, Q]
+    rw [Chebyshev.theta_eq_sum_primesLE_log, ← hsupport]
+    exact D5.S3.Arith.Robin.EulerLayerInventoryGrowth.log_factorization_split hm
+  have hQnonneg : 0 ≤ Q := by
+    dsimp [Q]
+    exact sum_nonneg (fun p hp =>
+      mul_nonneg (Nat.cast_nonneg _) (Real.log_natCast_nonneg p))
+  have hX : 1 < X := by linarith [hsplit, htheta, hQnonneg]
+  have hX0 : 0 < X := by linarith
+  have hlogX : 0 < Real.log X := Real.log_pos hX
+  have hden : 0 < X * Real.log X := mul_pos hX0 hlogX
+  have hD : Q / (X * Real.log X) ≤
+      Real.log (Real.log X) - Real.log (Real.log (Chebyshev.theta (P : ℝ))) := by
+    by_cases heq : X = Chebyshev.theta (P : ℝ)
+    · have hQzero : Q = 0 := by linarith [hsplit]
+      rw [hQzero, heq]
+      simp
+    · have ht := D5.S3.Arith.Robin.RestrictedDivisorStrictInventory.loglog_tangent
+        (x := X) (y := Chebyshev.theta (P : ℝ)) hX htheta heq
+      have ht' : Real.log (Real.log (Chebyshev.theta (P : ℝ))) -
+          Real.log (Real.log X) <
+          (Chebyshev.theta (P : ℝ) - X) / (X * Real.log X) := by
+        simpa [D5.S3.Arith.Robin.ActualRobinClockCovariance.g,
+          div_eq_mul_inv] using ht
+      have hrewrite : (Chebyshev.theta (P : ℝ) - X) / (X * Real.log X) =
+          -Q / (X * Real.log X) := by rw [hsplit]; ring
+      rw [hrewrite] at ht'
+      have ht''' : Real.log (Real.log (Chebyshev.theta (P : ℝ))) -
+          Real.log (Real.log X) < -(Q / (X * Real.log X)) := by
+        simpa only [neg_div] using ht'
+      have ht'' : Q / (X * Real.log X) <
+          Real.log (Real.log X) - Real.log (Real.log (Chebyshev.theta (P : ℝ))) := by
+        linarith only [ht''']
+      exact ht''.le
+  have hterm (p : ℕ) (hp : p ∈ m.primeFactors) :
+      min (Real.log p / (X * Real.log X))
+          (-Real.log (1 - (p : ℝ)⁻¹ ^ 2)) ≤
+        layerTail m p +
+          (((m.factorization p - 1 : ℕ) : ℝ) * Real.log p) /
+            (X * Real.log X) := by
+    have hpp : p.Prime := Nat.prime_of_mem_primeFactors hp
+    have hv : 1 ≤ m.factorization p := by
+      exact hpp.factorization_pos_of_dvd (by omega) (Nat.dvd_of_mem_primeFactors hp)
+    have htail : 0 ≤ layerTail m p := layer_tail_nonneg m hpp
+    by_cases hv1 : m.factorization p = 1
+    · have htail1 : layerTail m p = -Real.log (1 - (p : ℝ)⁻¹ ^ 2) := by
+        simp [layerTail, hv1]
+      have hqzero : (((m.factorization p - 1 : ℕ) : ℝ) * Real.log p) /
+          (X * Real.log X) = 0 := by simp [hv1]
+      rw [htail1, hqzero]
+      simpa using (min_le_right (Real.log p / (X * Real.log X))
+        (-Real.log (1 - (p : ℝ)⁻¹ ^ 2)))
+    · have hv2 : 2 ≤ m.factorization p := by omega
+      have hcoef : (1 : ℝ) ≤ ((m.factorization p - 1 : ℕ) : ℝ) := by
+        exact_mod_cast (show 1 ≤ m.factorization p - 1 by omega)
+      have hq : Real.log p / (X * Real.log X) ≤
+          (((m.factorization p - 1 : ℕ) : ℝ) * Real.log p) /
+            (X * Real.log X) := by
+        apply (div_le_div_iff₀ hden hden).2
+        have hcoeflog : Real.log p ≤
+            ((m.factorization p - 1 : ℕ) : ℝ) * Real.log p := by
+          calc
+            Real.log p = 1 * Real.log p := by ring
+            _ ≤ ((m.factorization p - 1 : ℕ) : ℝ) * Real.log p :=
+              mul_le_mul_of_nonneg_right hcoef (Real.log_natCast_nonneg p)
+        exact mul_le_mul_of_nonneg_right hcoeflog hden.le
+      exact (min_le_left _ _).trans (by linarith)
+  have hsum :
+      (∑ p ∈ m.primeFactors, min
+        (Real.log p / (X * Real.log X))
+        (-Real.log (1 - (p : ℝ)⁻¹ ^ 2))) ≤
+      tail m + Q / (X * Real.log X) := by
+    calc
+      _ ≤ ∑ p ∈ m.primeFactors,
+          (layerTail m p +
+            (((m.factorization p - 1 : ℕ) : ℝ) * Real.log p) /
+              (X * Real.log X)) :=
+        sum_le_sum (fun p hp => hterm p hp)
+      _ = tail m + Q / (X * Real.log X) := by
+        rw [sum_add_distrib, ← Finset.sum_div]
+        rfl
+  have hV :
+      (∑ p ∈ m.primeFactors, min
+        (Real.log p / (X * Real.log X))
+        (-Real.log (1 - (p : ℝ)⁻¹ ^ 2))) ≤
+      tail m + Real.log (Real.log X) -
+        Real.log (Real.log (Chebyshev.theta (P : ℝ))) := by
+    exact hsum.trans (by
+      have hadd := add_le_add_left hD (tail m)
+      convert hadd using 1 <;> ring)
+  have hmargin := (tail_robin_data hm hsupport).2
+  refine ⟨?_, ?_⟩
+  · simpa [X, P] using hV
+  · have hmargin' := hmargin
+    simpa [X, P] using (show
+      (∑ p ∈ m.primeFactors, min
+        (Real.log p / (X * Real.log X))
+        (-Real.log (1 - (p : ℝ)⁻¹ ^ 2))) +
+        Mertens.E₃ (P : ℝ) + Real.log (Real.log (Chebyshev.theta (P : ℝ))) -
+        Real.log (Real.log (P : ℝ)) ≤ robinLogMargin m by
+      linarith [hV, hmargin])
 /-!
 The first-layer exact replacement, firstLayerTail, secondOmitted,
 firstLayerLower, higherLayerRemainder, and the complete

@@ -1,0 +1,195 @@
+**Theorem 132.2 (all-positive-time local $L^2$-to-$L^\infty$ bound for the actual source).** For every original $a,\eta>0$, with all choices of Definition 132.1 fixed, and every $\tau>0$, there is a finite $C_\tau$, depending only on those original fixed data and $\tau$, such that every real signed $v\in L^2(G,m)$ satisfies
+
+$$
+\sup_{\substack{\sigma\in\mathbb R\\\sigma\ge\tau}}
+\operatorname*{ess\,sup}_{Z\in B(0,R_1)}
+\big|(T_\sigma v)(\Phi_\kappa Z)\big|
+\le C_\tau\|v\|_{L^2(G,m)},\qquad R_1=R_0/2.
+\tag{132.3}
+$$
+
+The spatial essential supremum is with respect to $\nu$, equivalently Lebesgue measure on this ball, since the actual $w$ is finite and strictly positive almost everywhere. The time supremum is over every real $\sigma\ge\tau$, in the original semigroup clock. This is a local conclusion, with no parameter-uniform constant, global bound at infinity, global density assertion, or negative-index conclusion.
+
+**Proof.** Fix an arbitrary original pair $a,\eta>0$ and the choices in Definition 132.1. For real signed $v\in L^2(G,m)$ put $u(\sigma,Z)=(T_\sigma v)(\Phi_\kappa Z)$. Theorem 131.2, its ordinary distributional gradient identification and its positive-time spectral calculus give, for every compact interval $I\subset(0,\infty)$,
+
+$$
+\begin{gathered}
+u\in C(I;H^1(\Omega,w)),\qquad
+\partial_\sigma u\in L^2(I;L^2(\Omega,\nu)),\\
+w\,\partial_\sigma u-\operatorname{div}(w\mathsf B\nabla u)=0,\\
+\int_\Omega|u(\sigma)|^2\,d\nu\le\|v\|_{L^2(G,m)}^2
+\qquad(\sigma>0).
+\end{gathered}
+\tag{132.4}
+$$
+
+The equation is the full source-inclusive identity (131.27), initially tested against smooth functions with arbitrary source value and with trace (131.23). Its coefficient is the actual $aA$. Both the heat orbit and the contraction in (132.4) belong to the original full form and semigroup.
+
+1. Obtain a spatial gain in the same measure as the time derivative. The spatial input is F. Chiarenza and R. Serapioni, “Degenerate Parabolic Equations and Harnack Inequality,” *Annali di Matematica pura ed applicata* **137** (1984), 139–162, [doi:10.1007/BF01789392](https://doi.org/10.1007/BF01789392), Lemma 3.4, (3.3), and its displayed special case $h=1+\mu$ on p. 157. Apply it in dimension four to the time-independent $A_2(\mathbb R^4)$ weight $\widetilde w$ and the ball $\Omega$. It supplies spatial constants $K_{\rm S},\mu>0$, an exponent $\beta=1+\mu>1$, and finite local integrals
+
+$$
+M_1=\int_\Omega w\,dZ>0,\qquad
+M_\beta=\int_\Omega w^\beta\,dZ>0.
+\tag{132.5}
+$$
+
+For $f\in C_c^\infty(\Omega)$ its special case, squared, reads
+
+$$
+\left(\int_\Omega|f|^{2\beta}w^\beta\,dZ\right)^{1/\beta}
+\le K_{\rm S}^2R_0^2\frac{M_\beta^{1/\beta}}{M_1}
+\int_\Omega|\nabla f|^2w\,dZ.
+\tag{132.6}
+$$
+
+The actual weight obeys $w\ge4$ on $\Omega$ by (131.5)–(131.7), so $w\le w^\beta$ almost everywhere there. Thus
+
+$$
+\left(\int_\Omega|f|^{2\beta}\,d\nu\right)^{1/\beta}
+\le S\int_\Omega|\nabla f|^2\,d\nu,\qquad
+S=K_{\rm S}^2R_0^2\frac{M_\beta^{1/\beta}}{M_1}<\infty.
+\tag{132.7}
+$$
+
+This change from $w^\beta$ to the actual $w$ is what puts the spatial inequality and the time energy in the same measure. The cited paper's parabolic equation has an unweighted time derivative; its parabolic results are not applied to the weighted-time equation (132.4).
+
+2. Justify compactly supported, source-meeting nonlinear tests. If $g\in H^1(\Omega,w)$ has compact support in $\Omega$, its zero extension and its ordinary distributional derivatives lie in $L^2(\mathbb R^4,\widetilde w)$. Convolution by a smooth approximate identity is pointwise bounded by a fixed multiple of the Hardy–Littlewood maximal operator. The weighted maximal theorem of Muckenhoupt and Coifman–Fefferman, quoted as Theorem 2.2, (2.3), on pp. 145–146 of the same paper, gives its $L^2(\widetilde w)$ boundedness because $\widetilde w\in A_2$. Approximation first for continuous compactly supported functions, followed by density and this uniform bound, gives
+
+$$
+g_\varepsilon\longrightarrow g,\qquad
+\partial_i g_\varepsilon=(\partial_i g)*\varrho_\varepsilon
+\longrightarrow\partial_i g
+\quad\hbox{in }L^2(\widetilde w),\qquad i=1,\ldots,4.
+\tag{132.8}
+$$
+
+For small $\varepsilon$, these smooth approximants are supported in $\Omega$. Consequently (132.7) extends to compactly supported $H^1(\Omega,w)$ functions, and (132.4), written with $\partial_\sigma u\in L^2(\nu)$, extends to such spatial tests. The ordinary gradients permit Lipschitz composition and its chain rule. No approximation by a punctured core is used: these smooth tests can meet $0$ and have the prescribed smooth source trace of (131.23).
+
+For clarity, for $p\ge2$ and $N>0$ define the signed test function and its time primitive by
+
+$$
+\begin{gathered}
+\psi_N(r)=r\min(|r|,N)^{p-2},\qquad
+\Psi_N(r)=\int_0^r\psi_N(q)\,dq,\qquad
+z_N(r)=|r|\min(|r|,N)^{(p-2)/2},\\
+\frac{z_N(r)^2}{p}\le\Psi_N(r)\le\frac{z_N(r)^2}{2},\qquad
+|z_N'(r)|^2\le\frac p2\psi_N'(r),\qquad
+\frac{|\psi_N(r)|^2}{\psi_N'(r)}\le z_N(r)^2.
+\end{gathered}
+\tag{132.9}
+$$
+
+The derivative comparisons hold almost everywhere, with a zero quotient assigned where both numerator and denominator vanish; for $p=2$ take $\psi_N(r)=r$ and $z_N(r)=|r|$. For fixed $N$ the compositions are admissible by (132.8). Test with $\eta^2\psi_N(u)$, where $0\le\eta\le1$ is a smooth spatial and time cutoff compactly supported in the cylinder and vanishing at its lower time boundary. Positive-time $L^2$ time regularity in (132.4) justifies the time chain rule. Ellipticity, (132.9) and Young's inequality give
+
+$$
+\frac{d}{d\sigma}\int\eta^2\Psi_N(u)\,d\nu
++\frac\lambda2\int\eta^2\psi_N'(u)|\nabla u|^2\,d\nu
+\le C(\lambda,\Lambda)\int z_N(u)^2
+\bigl(|\partial_\sigma\eta|+|\nabla\eta|^2\bigr)\,d\nu.
+\tag{132.10}
+$$
+
+Integrating from the lower boundary and using (132.9) controls the supremum of $\int\eta^2 z_N(u)^2\,d\nu$ and the space-time gradient energy of $\eta z_N(u)$ by $C(\lambda,\Lambda)p^2$ times the corresponding cutoff-weighted integral of $|u|^p$. Letting $N\uparrow\infty$, monotone convergence and weak lower semicontinuity give this bound for $\eta|u|^{p/2}$ whenever the outer $L^p$ integral is finite. This argument applies equally to signed $u$ and imposes no vanishing condition at the source.
+
+3. Perform the weighted-time iteration with fixed spatial radius. Fix $\tau>0$, set $d=\min(\tau/4,1)$, and let $s\ge\tau$ be any center time. Define
+
+$$
+\begin{gathered}
+\theta=1-\beta^{-1},\qquad \gamma=1+\theta>1,\qquad p_j=2\gamma^j,\\
+r_j=\frac{R_0}{2}+\frac{R_0}{4}2^{-j},\qquad
+d_j=\frac d2+\frac d2\,2^{-j},\qquad
+Q_j=B(0,r_j)\times(s-d_j,s+d_j)\quad(j\ge0).
+\end{gathered}
+\tag{132.11}
+$$
+
+Choose $\eta_j\in C_c^\infty(Q_j)$ with $0\le\eta_j\le1$, equal to $1$ on $Q_{j+1}$, and
+
+$$
+|\nabla\eta_j|^2+|\partial_\sigma\eta_j|
+\le C_{\rm cut}4^j(R_0^{-2}+d^{-1}).
+\tag{132.12}
+$$
+
+The cutoff constant is fixed independently of $s,d,j$. Applying (132.10) and its truncation limit with $p=p_j$, $f_j=\eta_j|u|^{p_j/2}$, gives
+
+$$
+\begin{aligned}
+\mathcal A_j&:=\operatorname*{ess\,sup}_{s-d_j<\sigma<s+d_j}
+\int_\Omega f_j^2\,d\nu
++\iint_{Q_j}|\nabla f_j|^2\,d\nu\,d\sigma\\
+&\le H_j\iint_{Q_j}|u|^{p_j}\,d\nu\,d\sigma,\qquad
+H_j=C(\lambda,\Lambda)p_j^2 4^j(1+d^{-1}+R_0^{-2}),
+\end{aligned}
+\tag{132.13}
+$$
+
+where $C(\lambda,\Lambda)$ includes the fixed cutoff factors. At each time, Hölder's inequality with $\theta+1/\beta=1$, followed by (132.7), yields
+
+$$
+\begin{aligned}
+\iint_{Q_j}|f_j|^{2\gamma}\,d\nu\,d\sigma
+&\le\int_{s-d_j}^{s+d_j}
+\left(\int_\Omega f_j^2\,d\nu\right)^\theta
+\left(\int_\Omega|f_j|^{2\beta}\,d\nu\right)^{1/\beta}d\sigma\\
+&\le S\left(\operatorname*{ess\,sup}_\sigma
+\int_\Omega f_j^2\,d\nu\right)^\theta
+\iint_{Q_j}|\nabla f_j|^2\,d\nu\,d\sigma
+\le S\mathcal A_j^\gamma.
+\end{aligned}
+\tag{132.14}
+$$
+
+Since $\eta_j=1$ on $Q_{j+1}$, this proves the explicit recurrence
+
+$$
+\|u\|_{L^{p_j\gamma}(Q_{j+1},\nu\,d\sigma)}
+\le S^{1/(p_j\gamma)}H_j^{1/p_j}
+\|u\|_{L^{p_j}(Q_j,\nu\,d\sigma)}.
+\tag{132.15}
+$$
+
+The initial $p_0=2$ integral is finite by (132.4); (132.15) supplies the next finite integral at every step, so the use of the truncation limit is justified inductively. The product converges because
+
+$$
+\sum_{j\ge0}\frac1{p_j}=\frac\gamma{2(\gamma-1)},\qquad
+\sum_{j\ge0}\frac1{p_j\gamma}=\frac1{2(\gamma-1)},\qquad
+\sum_{j\ge0}\frac{j+\log p_j}{p_j}<\infty.
+\tag{132.16}
+$$
+
+Letting $j\to\infty$ in (132.15) therefore gives
+
+$$
+\begin{gathered}
+\operatorname*{ess\,sup}_{B(0,R_0/2)\times(s-d/2,s+d/2)}|u|
+\le D_d\|u\|_{L^2(Q_0,\nu\,d\sigma)},\\
+D_d=C_0\max(1,S)^{1/[2(\gamma-1)]}
+(1+d^{-1}+R_0^{-2})^{\gamma/[2(\gamma-1)]}.
+\end{gathered}
+\tag{132.17}
+$$
+
+Here $C_0$ depends only on $\beta,\lambda,\Lambda$ and the fixed cutoff constants. In particular it does not depend on $s,v$ or $\tau$; the displayed $d$ contains the time-threshold dependence. Since $s-d\ge3\tau/4>0$, the actual semigroup contraction gives
+
+$$
+\|u\|_{L^2(Q_0,\nu\,d\sigma)}
+\le\sqrt{2d}\,\|v\|_{L^2(G,m)},\qquad
+C_\tau=\sqrt{2d}\,D_d<\infty.
+\tag{132.18}
+$$
+
+This constant is uniform over all center times $s\ge\tau$.
+
+4. Pass from almost every time to every original semigroup time. For any fixed $s\ge\tau$, (132.17)–(132.18) imply the spatial bound $|u(t)|\le C_\tau\|v\|_2$ almost everywhere on $B(0,R_1)$ for almost every $t\in(s-d/2,s+d/2)$. Choose such times $t_n\to s$. Strong $L^2(G,m)$ continuity of the original semigroup and the exact chart yield
+
+$$
+u(t_n)\longrightarrow u(s)
+\quad\hbox{in }L^2(B(0,R_1),\nu).
+\tag{132.19}
+$$
+
+For every finite $M$, the set $\{f\in L^2(B(0,R_1),\nu):|f|\le M\ \nu\text{-a.e.}\}$ is closed in $L^2$: an $L^2$ convergent sequence has an almost everywhere convergent subsequence, which retains this bound. With $M=C_\tau\|v\|_2$, (132.19) proves the spatial bound at the exact time $s$. Since $s$ was arbitrary, its ordinary supremum over every real $s\ge\tau$ is (132.3).
+
+Throughout, $\widetilde w$ supplied only the intermediate spatial estimate and smooth approximation. The heat equation, contraction, chart measure and time continuity were those of the actual $w$, $aA$ and $T_\sigma$, with the selector, complete form and source trace of §131 retained. No killing, source Dirac replacement or change of clock enters the argument, and no global $A_2$ property of the unextended actual weight is needed. $\square$
+
