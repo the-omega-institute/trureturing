@@ -233,8 +233,9 @@ $$
  \tag{ACR.11}
 $$
 
-Bisect this interval using $C_L(t)$ for its integer separating
-thresholds until it is a singleton. Compute $B_n$ by Fibonacci integer
+For each nonsingleton surviving interval $[l,u]$, set
+$t=l+\lfloor(u-l+1)/2\rfloor$ and submit $C_L(t)$. On reply one
+keep $[t,u]$; on reply zero keep $[l,t-1]$. Repeat until a singleton. Compute $B_n$ by Fibonacci integer
 arithmetic. Actually write (ACR.4), its ready control and, if requested,
 the behavioral phase to the granted retained backing; expose it only
 at the completed stationary handoff.
@@ -282,8 +283,10 @@ $$
  \tag{ACR.15}
 $$
 
-bits, besides fixed finite code and the supplied service apparatus.
-Installation includes $O(m+d+n+1)$ binary data writes for the returned
+bits for its data. In addition charge the actual fixed recovery and
+receiver code, its installation and entry initialization, the surviving
+service apparatus and the actual handoff; none of these supplied
+resources encodes the later unknown $n$. Installation includes $O(m+d+n+1)$ binary data writes for the returned
 record and phase, its finite ready-control writes, and the actual binding
 handoff; their native service and lifetime prices remain additional.
 For fixed $d$ this gives polynomial local work and backing. It does not
@@ -371,8 +374,9 @@ No exact value of $W_*$ is asserted in (ACR.17).
 
 Proof. For the fixed law, every physical word has exactly the step
 response (ACR.7), or is the constant-present empty word. Its replies
-have two values. Every terminating deterministic controller therefore
-induces a binary decision tree on the $N$ candidates. Removing all
+have two values. Every deterministic controller terminating on these finitely many
+candidates therefore induces a finite binary decision tree after
+restriction to their runs. Removing all
 constant-reply queries and local computation preserves $N$ distinct
 leaves. Some path has at least $q$ informative queries, establishing
 the Read lower bound. The constant-query contraction and same-run bill
