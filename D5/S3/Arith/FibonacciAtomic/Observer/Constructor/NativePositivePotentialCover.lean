@@ -857,10 +857,12 @@ private theorem branch_inventory_edges (s : X → Term X) (b : BranchEquation X)
         (.pair (scalarDecorate s x) (scalarDecorate s y))).blockEdges =
         offsetComparisonEdges 0 (decorate s z) (.mul (decorate s x) (decorate s y)) ++ []
       simp only [comparison_inventory_edges, comparisonProjection, proj, List.append_nil]
+      norm_num
   | same x y =>
       change (comparisonInventory 0 (scalarDecorate s x) (scalarDecorate s y)).blockEdges =
         offsetComparisonEdges 0 (decorate s x) (decorate s y) ++ []
       simp only [comparison_inventory_edges, proj, List.append_nil]
+      norm_num
 
 /-- Complete normalization of one original comparison, including its natural
 collapse witness. No scalar constraint is an external hypothesis. -/
