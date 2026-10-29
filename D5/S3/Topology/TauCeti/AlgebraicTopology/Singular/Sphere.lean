@@ -1,4 +1,5 @@
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.MayerVietoris.Reduced
+import D5.S3.Topology.TauCeti.AlgebraicTopology.Disk
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Sphere.Equator
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Sphere.Puncture
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Sphere.Zero
