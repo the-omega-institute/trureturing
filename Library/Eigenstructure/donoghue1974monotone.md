@@ -19,6 +19,8 @@ DOI: https://doi.org/10.1007/978-3-642-65755-9
 
 Source: https://doi.org/10.1007/978-3-642-65755-9
 
+The locator identifies the book and its classical analytic continuation and Pick theory background. No specific theorem numbering or direct page inspection is asserted.
+
 # Analytic Pick kernels and boundary Hankel matrices
 
 Donoghue's book treats the classical analytic continuation and matrix positivity theory. The title, author and DOI identify the book; Crossref lists its publication year as 1974. A further standard reference for positive kernels is J. Agler and J. E. McCarthy, *Pick Interpolation and Hilbert Function Spaces*, Graduate Studies in Mathematics 44, AMS, 2002, DOI [10.1090/gsm/044](https://doi.org/10.1090/gsm/044).

@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Quantum/Matrix/AnalyticPickHankel
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Quantum/Matrix/AnalyticPickKernel, mathlib/module/Mathlib.Analysis.Analytic.Order]
+   anchors: [mathlib/module/Mathlib.Analysis.Analytic.Order]
    utility: none
    digest: Real boundary Loewner blocks and normalized analytic Hankel positivity. -/
 
