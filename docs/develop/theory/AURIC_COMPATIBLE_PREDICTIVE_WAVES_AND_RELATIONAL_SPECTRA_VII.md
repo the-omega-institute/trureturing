@@ -4045,4 +4045,3 @@ nonlinear argmin or exact optimum value nor global originality or
 a resolution of an external named open problem. $\square$
 
 ## 追加锚（本行以下为增补区）
-
