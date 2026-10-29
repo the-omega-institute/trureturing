@@ -108,7 +108,10 @@ internal sealed class LatticeLindbladianZeroSpectrumDocument : IScribeDocumentDe
                         + "‖Pₙ‖² ≤ k‖sPₙ‖ ≤ k‖s‖‖Pₙ‖. The norm of Pₙ is positive, so ‖Pₙ‖ ≤ k‖s‖. "
                         + "Squaring contradicts ‖Pₙ‖²=2n+1 and the choice of n. Thus t is not a unit. "
                         + "The equivalence between noninvertibility and membership of zero in the spectrum proves the conclusion."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("klausen-2025-lattice-lindbladian-zero-spectrum"),
+                    ResolutionKind.Proved)))));
 
     private static Formula FiniteRangeFormula() => All("r", Naturals(), Matrices(
         Equal(LocalCall("IsFiniteRange", X("r"), X("h"), X("ℓ")),
