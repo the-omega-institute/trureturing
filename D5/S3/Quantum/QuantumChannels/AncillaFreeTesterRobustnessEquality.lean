@@ -6,7 +6,8 @@
    utility: none
    digest: Ancilla-free testers with a common state have canonical POVM robustness. -/
 
-import D5.S3.Quantum.Information.LiTheilHarrowChuangPurifyCloneRefutation
+import D5.S3.Quantum.Information.SLDSpectralEnergy
+import D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
 
 /-! The common-normalization ancilla-free equality of Sedlák, Reitzner, Chiribella and
 Ziman, arXiv:1511.00976v2, Section VI.C. Partial trace and compression preserve the
@@ -24,8 +25,6 @@ open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 open D5.S3.Quantum.Divergence.ConditionalHockeyStickOrthogonalReduction
   (partialTraceRight_smul)
-open D5.S3.Quantum.Information.LiTheilHarrowChuangPurifyCloneRefutation
-  (rank_pos_of_trace_one)
 
 /-- Positive tester effects sum to the output identity tensored with a density matrix. -/
 def IsTester {y x j : Type} [Fintype y] [DecidableEq y] [Fintype x] [Fintype j]
@@ -195,7 +194,9 @@ private theorem compression_povm {y j : Type} [DecidableEq y]
   refine ⟨fun a => (hm.1 a).submatrix (fun b => (b, ⟨0, hr⟩)), ?_⟩
   have hs := congrArg (fun z : Matrix (y × Fin r) (y × Fin r) ℂ =>
     z.submatrix (fun b => (b, ⟨0, hr⟩)) (fun b => (b, ⟨0, hr⟩))) hm.2
-  rw [Matrix.submatrix_one _ (Prod.mk_left_injective _)] at hs
+  have hi : Function.Injective (fun b : y => (b, (⟨0, hr⟩ : Fin r))) :=
+    fun _ _ h => congrArg Prod.fst h
+  rw [Matrix.submatrix_one _ hi] at hs
   calc
     _ = (∑ a, m a).submatrix (fun b => (b, ⟨0, hr⟩))
         (fun b => (b, ⟨0, hr⟩)) := by
@@ -237,6 +238,26 @@ private theorem ancilla_to_povm_compatible {y j k : Type} [Fintype y] [Decidable
     simpa only [Matrix.sum_apply, Matrix.submatrix_apply, Matrix.add_apply,
       Matrix.smul_apply, hk] using he
 
+private theorem density_rank_pos {x : Type} [Fintype x]
+    (ρ : Matrix x x ℂ) (hρ : IsDensity ρ) : 0 < ρ.rank := by
+  classical
+  have hn : ρ ≠ 0 := by
+    intro hz
+    have ht := hρ.2
+    rw [hz, Matrix.trace_zero] at ht
+    exact zero_ne_one ht
+  have he : ∃ a b, ρ a b ≠ 0 := by
+    by_contra h
+    apply hn
+    ext a b
+    exact Classical.not_not.mp (fun hn => h ⟨a, b, hn⟩)
+  obtain ⟨a, b, hab⟩ := he
+  rw [Matrix.rank_eq_finrank_span_cols]
+  apply Module.finrank_pos_iff_exists_ne_zero.mpr
+  refine ⟨⟨ρ.col b, Submodule.subset_span ⟨b, rfl⟩⟩, ?_⟩
+  intro hz
+  exact hab (congrFun (congrArg Subtype.val hz) a)
+
 private theorem tester_feasible_eq {y x j k : Type}
     [Fintype y] [DecidableEq y] [Fintype x] [Fintype j] [Fintype k]
     (ρ : Matrix x x ℂ) (hρ : IsDensity ρ)
@@ -264,6 +285,6 @@ theorem result : claim := by
   intro y x j k _ _ _ _ _ _ _ _ ρ m n hρ _hm _hn
   change sInf _ = sInf _
   exact congrArg sInf ((tester_feasible_eq ρ hρ m n).trans
-    (ancilla_feasible_eq ρ.rank (rank_pos_of_trace_one hρ.2) m n))
+    (ancilla_feasible_eq ρ.rank (density_rank_pos ρ hρ) m n))
 
 end D5.S3.Quantum.QuantumChannels.AncillaFreeTesterRobustnessEquality
