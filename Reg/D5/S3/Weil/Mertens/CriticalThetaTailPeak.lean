@@ -39,6 +39,13 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
   intro i
   exact ⟨id, 0, 1, zero_ne_one⟩
 
+private theorem rejected_requires_zero {Q : Realization signature} (hQ : ¬ arena.Law Q) :
+    ∃ ρ : ℂ, (1 / 2 : ℝ) < ρ.re ∧ ρ.re < 1 ∧ riemannZeta ρ = 0 := by
+  by_contra hzero
+  apply hQ
+  intro ρ hβ hβ1 hz
+  exact (hzero ⟨ρ, hβ, hβ1, hz⟩).elim
+
 /-- The proposed intervention cannot supply an unconditional rejected family
 without settling inhabitation of the original conditional zero domain. -/
 private theorem zero_tail_law_iff : arena.Law zeroTail ↔

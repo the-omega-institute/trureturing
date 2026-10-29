@@ -179,7 +179,7 @@ private theorem envelope_moment_one {U σ c : ℝ}
     field_simp
   rw [integral_congr_ae he, integral_const_mul,
     integral_exp_mul_complex_Ioi (by simp only [neg_re, sub_re, ofReal_re]; linarith)]
-  simp only [div_neg, neg_neg]
+  simp only [div_neg]
   ring
 
 private theorem envelope_first {U σ c : ℝ}
@@ -189,6 +189,19 @@ private theorem envelope_first {U σ c : ℝ}
   rw [laplace_deriv (envelope_exp_integrable hU hσ hc) hz,
     envelope_moment_one hU hσ hc hz]
   ring
+
+private theorem envelope_analytic {U σ c : ℝ}
+    (hU : 0 < U) (hσ : σ < 0) (hc : 0 ≤ c) :
+    AnalyticOnNhd ℂ (laplace (density U (envelope σ c))) {z | σ < z.re} := by
+  have hd : DifferentiableOn ℂ (laplace (density U (envelope σ c))) {z | σ < z.re} := by
+    intro z hz
+    have hh := (moment_hasDeriv (envelope_exp_integrable hU hσ hc) 0 hz).differentiableAt
+    have he : moment (density U (envelope σ c)) 0 = laplace (density U (envelope σ c)) := by
+      ext w
+      simp [moment, laplace, complexMGF]
+    rw [he] at hh
+    exact hh.differentiableWithinAt
+  exact hd.analyticOnNhd (isOpen_lt continuous_const Complex.continuous_re)
 
 private theorem envelope_second {U σ c : ℝ}
     (hU : 0 < U) (hσ : σ < 0) (hc : 0 ≤ c) {z : ℂ} (hz : σ < z.re) :
@@ -207,7 +220,8 @@ private theorem envelope_second {U σ c : ℝ}
   rw [he.deriv_eq]
   have hd := ((((hasDerivAt_id z).sub_const (σ : ℂ)).neg.mul_const (U : ℂ)).cexp.const_mul
     (-(c : ℂ))).div ((hasDerivAt_id z).sub_const (σ : ℂ)) hn
-  change HasDerivAt (fun w : ℂ => -(c : ℂ) * Complex.exp (-(w - (σ : ℂ)) * (U : ℂ)) / (w - (σ : ℂ))) _ z at hd
+  change HasDerivAt (fun w : ℂ =>
+    -(c : ℂ) * Complex.exp (-(w - (σ : ℂ)) * (U : ℂ)) / (w - (σ : ℂ))) _ z at hd
   rw [hd.deriv]
   dsimp only [id_eq, Pi.neg_apply]
   field_simp
@@ -332,7 +346,7 @@ private theorem complex_weight_integrable {U : ℝ} {w : ℝ → ℝ} {z : ℂ}
   convert hi.norm using 1
   ext u
   simp only [norm_mul, Complex.norm_exp, mul_re, neg_re, ofReal_re, neg_im, ofReal_im,
-    mul_zero, sub_zero, norm_real, Real.norm_eq_abs, abs_mul, Real.abs_exp]
+    mul_zero, sub_zero, norm_real, Real.norm_eq_abs, Real.abs_exp]
   ring
 
 private def gap (σ c : ℝ) (u : ℝ) : ℝ := envelope σ c u - ActualThetaTailLaplace.f u
@@ -367,12 +381,6 @@ private theorem gap_laplace_eq {U σ c : ℝ} (hU : ActualThetaTailLaplace.u₀ 
       (envelope_weighted_integrable hU0 hc hz))
     (complex_weight_integrable (actual_tail_integrable hU).aestronglyMeasurable hfi)
 
-private theorem laplace_analytic {μ : Measure ℝ} {a : ℝ}
-    (hi : ∀ x : ℝ, a < x → Integrable (fun u : ℝ => Real.exp (-x * u)) μ) :
-    AnalyticOnNhd ℂ (laplace μ) {z | a < z.re} := by
-  intro z hz
-  exact (analyticAt_complexMGF (interior_of_halfplane hi hz)).comp (analyticAt_id.neg)
-
 private theorem comparison_halfplane {U σ c : ℝ}
     (hU : ActualThetaTailLaplace.u₀ ≤ U) (hU0 : 0 < U)
     (hσ : σ < 0) (hσhalf : -(1 / 2 : ℝ) < σ) (hc : 0 ≤ c)
@@ -388,9 +396,9 @@ private theorem comparison_halfplane {U σ c : ℝ}
   let G := laplace μ
   have hgi := gap_integrable hU hU0 hσ hc
   have hgp := gap_nonneg hbound
-  letI : IsFiniteMeasure μ := density_finite hgi hgp
+  haveI : IsFiniteMeasure μ := density_finite hgi hgp
   have hpos := density_nonneg hU0.le (gap σ c)
-  have hK := laplace_analytic (envelope_exp_integrable hU0 hσ hc)
+  have hK := envelope_analytic hU0 hσ hc
   have hfi0 : ∀ x : ℝ, 0 < x → IntegrableOn
       (fun u => ActualThetaTailLaplace.f u * Real.exp (-x * u)) (Ioi U) := by
     intro x hx
@@ -484,7 +492,7 @@ private theorem boundary_moment_limits {μ : Measure ℝ} {U σ c δ : ℝ}
     Tendsto (fun ε : ℝ => ε ^ 2 * ∫ u, u ^ 2 * Real.exp (-(σ + ε) * u) ∂μ)
       (𝓝[Ioi 0] 0) (𝓝 c) := by
   let K := laplace (density U (envelope σ c))
-  have hK := laplace_analytic (envelope_exp_integrable hU hσ hc)
+  have hK := envelope_analytic hU hσ hc
   have hG1 : ∀ z : ℂ, σ < z.re → moment μ 1 z = -deriv K z + deriv S z := by
     intro z hz
     have he : laplace μ =ᶠ[𝓝 z] fun w => K w - S w := by
@@ -561,7 +569,6 @@ private theorem boundary_moment_limits {μ : Measure ℝ} {U σ c δ : ℝ}
       envelope_first hU hσ hc (by simp only [add_re, ofReal_re]; linarith)]
     simp only [add_sub_cancel_left]
     field_simp
-    ring
   have hK2c : Tendsto (fun ε : ℝ => (ε : ℂ) ^ 2 * deriv (deriv K) ((σ : ℂ) + (ε : ℂ)))
       (𝓝[Ioi 0] 0) (𝓝 (c : ℂ)) := by
     have hh := (tendsto_const_nhds.mul he).mul (tendsto_const_nhds.add (tendsto_const_nhds.mul hε))
@@ -686,12 +693,11 @@ theorem critical_theta_tail_peak {ρ : ℂ} (hβ : (1 / 2 : ℝ) < ρ.re)
         dsimp [envelope, σ]
         rw [show (ρ.re - 1) * u = -((1 - ρ.re) * u) by ring, Real.exp_neg]
         field_simp
-        <;> ring
   let μ := density U (gap σ c)
   let K := laplace (density U (envelope σ c))
   let G := laplace μ
   obtain ⟨hi, hfi, hL, hODE⟩ := comparison_halfplane hU hU0 hσ hσhalf hc hbound
-  have hK := laplace_analytic (envelope_exp_integrable hU0 hσ hc)
+  have hK := envelope_analytic hU0 hσ hc
   have heq : ∀ z : ℂ, σ < z.re → G z = K z - ActualThetaTailLaplace.L U z := by
     intro z hz
     exact gap_laplace_eq hU hU0 hσ hc hbound hz (hfi _ hz)
@@ -721,7 +727,7 @@ theorem critical_theta_tail_peak {ρ : ℂ} (hβ : (1 / 2 : ℝ) < ρ.re)
     apply envelopeEuler_analytic
     intro he
     have hh := congrArg Complex.im he
-    simp [a] at hh
+    simp only [a, sub_im, one_im, sub_zero, ofReal_im] at hh
     exact hnonreal hh
   let W : ℂ → ℂ := fun z => envelopeEuler U σ c z - (J z - deriv J z + boundary U z)
   have hW : AnalyticAt ℂ W a := hPa.sub ((hJ.sub hJ.deriv).add (by unfold boundary; fun_prop))
