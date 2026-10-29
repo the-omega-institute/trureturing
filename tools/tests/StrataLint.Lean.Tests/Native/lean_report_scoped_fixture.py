@@ -310,8 +310,9 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.assertEqual(work['compiled_module_names'], ['D5.A', 'D5.B'],
                          '[FAIL] scoped_entry_reuses_unchanged_staged_readers')
         self.assertNotRegex(self.reader_build_output(),
-            r' Built (?:leanInspector/)?(?:LeanInformationAudit(?:\.[^\s:]+)*|Inspector)(?::lean)?(?:\s|$)'
-            r'| Built (?:leanInspector/)?(?:inputDiscovery|reportInspector):exe(?:\s|$)',
+            r'(?m)^[^\s]+ \[\d+/\d+\](?: \(Optional\))? Built '
+            r'(?:leanInspector/)?(?:LeanInformationAudit(?:\.[^\s:()]+)*|Inspector|inputDiscovery|reportInspector)'
+            r'(?::[^\s()]+)?(?: \([^()\r\n]*\))?$',
             '[FAIL] unchanged_staged_readers_are_reused_across_all_build_windows')
         for name in ('reportInspector', 'inputDiscovery'):
             program = self.root / '.lake/build/lean-inspector/producer/bin' / name
@@ -340,7 +341,9 @@ class NativeScopedContracts(NativeDependencyTestSupport, unittest.TestCase):
         self.env['STRATALINT_LEAN_BUILD_TARGETS'] = '["reg/Reg"]'
         self.scoped('D5.A')
         self.assertRegex(self.reader_build_output(),
-            r' Built (?:leanInspector/)?LeanInformationAudit\.Contract\.InputDiscovery(?::lean)?(?:\s|$)',
+            r'(?m)^[^\s]+ \[\d+/\d+\](?: \(Optional\))? Built '
+            r'(?:leanInspector/)?LeanInformationAudit\.Contract\.InputDiscovery(?::lean)?'
+            r'(?: \([^()\r\n]*\))?$',
             '[FAIL] changed_staged_reader_is_rebuilt_across_setup_and_scope')
         self.assertEqual(set(self.rows()), {'D5.A', 'D5.B'}, '[FAIL] report_is_exact_import_closure')
         phases = [json.loads(line) for line in (self.logs / 'native-phases.jsonl').read_text().splitlines()]
