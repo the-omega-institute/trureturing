@@ -98,7 +98,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       path := #["body", "body", "body", "body", "arg", "arg", "fn", "arg",
         "body", "body", "arg", "fn"]
       stateBinder := 1
-      functionOperand := true
+      functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown

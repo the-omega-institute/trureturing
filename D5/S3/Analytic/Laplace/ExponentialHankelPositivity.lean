@@ -46,7 +46,7 @@ private theorem continuous_coordinate (U : ℝ) : Continuous (coordinate U) := b
 private theorem coordinate_mem {U u : ℝ} (hu : U < u) :
     coordinate U u ∈ Icc (0 : ℝ) 1 := by
   exact ⟨(Real.exp_pos _).le,
-    Real.exp_le_one_iff.mpr (by dsimp [coordinate]; linarith)⟩
+    Real.exp_le_one_iff.mpr (by linarith)⟩
 
 private theorem exponential_eq_pow (U u : ℝ) (k : ℕ) :
     Real.exp (-(k : ℝ) * (u - U)) = coordinate U u ^ k := by
@@ -58,15 +58,17 @@ private theorem integrable_weight {U : ℝ} {g : ℝ → ℝ}
     (hg : IntegrableOn g (Ioi U)) {w : ℝ → ℝ} (hw : Continuous w)
     {B : ℝ} (hB : ∀ t ∈ Icc (0 : ℝ) 1, ‖w t‖ ≤ B) :
     IntegrableOn (fun u => g u * w (coordinate U u)) (Ioi U) := by
-  apply hg.mul_bdd (hw.comp (continuous_coordinate U)).aestronglyMeasurable
-  filter_upwards [ae_restrict_mem measurableSet_Ioi] with u hu
-  exact hB _ (coordinate_mem hu)
+  exact hg.mul_bdd (c := B)
+    (hw.comp (continuous_coordinate U)).aestronglyMeasurable (by
+      filter_upwards [ae_restrict_mem measurableSet_Ioi] with u hu
+      exact hB _ (coordinate_mem hu))
 
 private theorem integrable_power {U : ℝ} {g : ℝ → ℝ}
     (hg : IntegrableOn g (Ioi U)) (k : ℕ) :
     IntegrableOn (fun u => g u * coordinate U u ^ k) (Ioi U) := by
   apply integrable_weight hg (continuous_id.pow k) (B := 1)
   intro t ht
+  change ‖t ^ k‖ ≤ 1
   rw [Real.norm_of_nonneg (pow_nonneg ht.1 _)]
   exact pow_le_one₀ ht.1 ht.2
 
@@ -75,7 +77,7 @@ private def coefficientPolynomial {N : ℕ} (c : Fin (N + 1) → ℝ) : Polynomi
 
 private theorem eval_coefficientPolynomial {N : ℕ} (c : Fin (N + 1) → ℝ) (t : ℝ) :
     (coefficientPolynomial c).eval t = ∑ i, c i * t ^ i.val := by
-  simp [coefficientPolynomial]
+  simp [coefficientPolynomial, Polynomial.eval_finsetSum]
 
 private theorem polynomial_bound (p : Polynomial ℝ) :
     ∃ B : ℝ, 0 ≤ B ∧ ∀ t ∈ Icc (0 : ℝ) 1, ‖p.eval t‖ ≤ B := by
@@ -94,6 +96,7 @@ private theorem integrable_polynomial_square {U : ℝ} {g : ℝ → ℝ}
   obtain ⟨B, hB, hp⟩ := polynomial_bound p
   apply integrable_weight hg (p.continuous.pow 2) (B := B ^ 2)
   intro t ht
+  change ‖p.eval t ^ 2‖ ≤ B ^ 2
   rw [norm_pow]
   exact pow_le_pow_left₀ (norm_nonneg _) (hp t ht) 2
 
@@ -108,7 +111,7 @@ private theorem quadratic_integral {U : ℝ} {g : ℝ → ℝ}
   calc
     _ = ∑ i, ∑ j, c i * c j *
         (∫ u in Ioi U, g u * coordinate U u ^ (i.val + j.val)) := by
-      simp only [dotProduct, mulVec, exponentialHankel, star_apply, star_trivial,
+      simp only [dotProduct, mulVec, exponentialHankel, star_trivial,
         exponential_eq_pow, Finset.mul_sum]
       apply Finset.sum_congr rfl
       intro i hi
@@ -171,7 +174,7 @@ private theorem continuous_square_nonneg {U : ℝ} {g : ℝ → ℝ}
       ‖(p n).eval t‖ ≤ B + 1 := by
     have he : (1 : ℝ) / ((n : ℝ) + 1) ≤ 1 := by
       apply (div_le_one (by positivity)).2
-      positivity
+      linarith [Nat.cast_nonneg (R := ℝ) n]
     calc
       ‖(p n).eval t‖ ≤ ‖(p n).eval t - φ t‖ + ‖φ t‖ := norm_le_norm_sub_add _ _
       _ ≤ 1 + B := add_le_add ((hnear n t ht).le.trans he) (hbound t ht)
@@ -215,7 +218,7 @@ private theorem nonneg_of_polynomial_squares {U : ℝ} {g : ℝ → ℝ}
     exact hinverse u₀
   have hev : ∀ᶠ t in 𝓝 t₀, g (U - Real.log t) < 0 := by
     apply hcont (isOpen_Iio.mem_nhds ?_)
-    simpa only [t₀, hinverse] using hneg
+    simpa only [t₀, hinverse, mem_Iio] using hneg
   obtain ⟨δ, hδ, hnear⟩ := Metric.eventually_nhds_iff.mp hev
   let φ : ℝ → ℝ := fun t => max 0 (δ - |t - t₀|)
   have hφ : Continuous φ := by dsimp [φ]; fun_prop
@@ -231,6 +234,7 @@ private theorem nonneg_of_polynomial_squares {U : ℝ} {g : ℝ → ℝ}
   have hwint : IntegrableOn w (Ioi U) := by
     apply integrable_weight hg (hφ.pow 2) (B := δ ^ 2)
     intro t ht
+    change ‖φ t ^ 2‖ ≤ δ ^ 2
     rw [norm_pow]
     exact pow_le_pow_left₀ (norm_nonneg _) (hφbound t) 2
   have hwnonpos (u : ℝ) : w u ≤ 0 := by
@@ -259,7 +263,7 @@ private theorem nonneg_of_polynomial_squares {U : ℝ} {g : ℝ → ℝ}
     linarith
   have hae : (fun u => -w u) =ᵐ[volume.restrict (Ioi U)] 0 :=
     (integral_eq_zero_iff_of_nonneg_ae hnae hwint.neg).mp hzero
-  have hz := eqOn_open_of_ae_eq hae isOpen_Ioi hwcont.neg continuousOn_const hu₀
+  have hz := Measure.eqOn_open_of_ae_eq hae isOpen_Ioi hwcont.neg continuousOn_const hu₀
   have hφ₀ : φ (coordinate U u₀) = δ := by simp [φ, t₀, hδ.le]
   have hneq : w u₀ ≠ 0 := by
     dsimp only [w]
