@@ -36,6 +36,10 @@ $$(\exists A \in \operatorname{PowerSeries}\left(\mathbb{Z}\right),\; \operatorn
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/LinearRows/QuadrupledLinearExponentDyadicSupport.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna397594` (proved) by `D5/S1/Recurrence/LinearRows/QuadrupledLinearExponentDyadicSupport.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna397594","declaration_gid":"D5/S1/Recurrence/LinearRows/QuadrupledLinearExponentDyadicSupport.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2026). *OEIS A397594: quadrupled linear rows and dyadic parity*. URL: <https://oeis.org/A397594>.
