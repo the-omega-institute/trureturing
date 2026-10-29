@@ -30,15 +30,10 @@ namespace D5.S3.Quantum.Fermionic.AffineDeterminantAntisymmetricForms
 
 open MvPolynomial Finset D5.S3.Arith.Lattices.CofactorKernel
 
-/-- A permutation of vector variables preserves the coordinate within each vector. -/
-def blockPerm {r d : ℕ} (σ : Equiv.Perm (Fin r)) :
-    Equiv.Perm (Fin r × Fin d) :=
-  Equiv.prodCongr σ (Equiv.refl _)
-
 /-- Alternation under permutations of the vector variables. -/
 def IsAlternating {r d : ℕ} (f : MvPolynomial (Fin r × Fin d) ℂ) : Prop :=
   ∀ σ : Equiv.Perm (Fin r),
-    rename (blockPerm σ) f = (((Equiv.Perm.sign σ : ℤ) : ℂ)) • f
+    rename (Equiv.prodCongr σ (Equiv.refl _)) f = (((Equiv.Perm.sign σ : ℤ) : ℂ)) • f
 
 /-- The determinant with columns the differences from the first point. -/
 def affineDet (d : ℕ) : MvPolynomial (Fin (d + 1) × Fin d) ℂ :=
@@ -55,9 +50,10 @@ private def canonical (d : ℕ) : (Fin (d + 1) × Fin d) →₀ ℕ :=
 
 private lemma coeff_permuted {r d : ℕ} {f : MvPolynomial (Fin r × Fin d) ℂ}
     (ha : IsAlternating f) (σ : Equiv.Perm (Fin r)) (m : (Fin r × Fin d) →₀ ℕ) :
-    f.coeff (m.mapDomain (blockPerm σ)) =
+    f.coeff (m.mapDomain (Equiv.prodCongr σ (Equiv.refl _))) =
       ((Equiv.Perm.sign σ : ℤ) : ℂ) * f.coeff m := by
-  have h := coeff_rename_mapDomain (blockPerm σ) (blockPerm σ).injective f m
+  have h := coeff_rename_mapDomain (Equiv.prodCongr σ (Equiv.refl _))
+    (Equiv.prodCongr σ (Equiv.refl _)).injective f m
   rw [ha σ, coeff_smul] at h
   rcases Int.units_eq_one_or (Equiv.Perm.sign σ) with hs | hs
   · simpa [hs] using h
@@ -70,7 +66,7 @@ private lemma equal_rows_coeff_zero {r d : ℕ}
     (m : (Fin r × Fin d) →₀ ℕ) {a b : Fin r} (hab : a ≠ b)
     (he : ∀ j, m (a, j) = m (b, j)) : f.coeff m = 0 := by
   classical
-  have hm : m.mapDomain (blockPerm (Equiv.swap a b)) = m := by
+  have hm : m.mapDomain (Equiv.prodCongr (Equiv.swap a b) (Equiv.refl _)) = m := by
     ext ⟨i, j⟩
     rw [Finsupp.mapDomain_equiv_apply]
     change m (Equiv.swap a b i, j) = m (i, j)
@@ -145,7 +141,7 @@ private lemma distinct_rows_orbit {d : ℕ}
     (hi : Function.Injective (fun i : Fin (d + 1) => fun j : Fin d => m (i, j)))
     (ht : m.sum (fun _ n => n) ≤ d) :
     ∃ σ : Equiv.Perm (Fin (d + 1)),
-      (canonical d).mapDomain (blockPerm σ) = m := by
+      (canonical d).mapDomain (Equiv.prodCongr σ (Equiv.refl _)) = m := by
   classical
   let w : Fin (d + 1) → ℕ := fun i => ∑ j : Fin d, m (i, j)
   have ht : ∑ i, w i ≤ d := by simpa only [exponent_sum] using ht
@@ -220,7 +216,7 @@ private lemma support_orbit {d : ℕ}
     (ha : IsAlternating f) (hd : f.totalDegree ≤ d)
     {m : (Fin (d + 1) × Fin d) →₀ ℕ} (hm : m ∈ f.support) :
     ∃ σ : Equiv.Perm (Fin (d + 1)),
-      (canonical d).mapDomain (blockPerm σ) = m := by
+      (canonical d).mapDomain (Equiv.prodCongr σ (Equiv.refl _)) = m := by
   exact distinct_rows_orbit m (support_rows_distinct ha hm) ((le_totalDegree hm).trans hd)
 
 private lemma too_many_rows {d r : ℕ} (hr : d + 2 ≤ r)
@@ -283,16 +279,16 @@ private lemma affineDet_alternating (d : ℕ) : IsAlternating (affineDet d) := b
   rw [← bordered_det d]
   let b := augment (Matrix.of (fun j : Fin d => fun k : Fin (d + 1) =>
     (X (k, j) : MvPolynomial (Fin (d + 1) × Fin d) ℂ)))
-  change rename (blockPerm σ) b.det = ((Equiv.Perm.sign σ : ℤ) : ℂ) • b.det
-  rw [(rename (blockPerm σ)).map_det]
-  have hm : (rename (blockPerm σ)).mapMatrix b = b.submatrix id σ := by
+  change rename (Equiv.prodCongr σ (Equiv.refl _)) b.det = ((Equiv.Perm.sign σ : ℤ) : ℂ) • b.det
+  rw [(rename (Equiv.prodCongr σ (Equiv.refl _))).map_det]
+  have hm : (rename (Equiv.prodCongr σ (Equiv.refl _))).mapMatrix b = b.submatrix id σ := by
     apply Matrix.ext
     intro i k
     refine Fin.cases ?_ (fun j => ?_) i
-    · change rename (blockPerm σ)
+    · change rename (Equiv.prodCongr σ (Equiv.refl _))
         (1 : MvPolynomial (Fin (d + 1) × Fin d) ℂ) = 1
       exact map_one _
-    · change rename (blockPerm σ) (X (k, j)) = X (σ k, j)
+    · change rename (Equiv.prodCongr σ (Equiv.refl _)) (X (k, j)) = X (σ k, j)
       rw [rename_X]
       rfl
   rw [hm, Matrix.det_permute']
