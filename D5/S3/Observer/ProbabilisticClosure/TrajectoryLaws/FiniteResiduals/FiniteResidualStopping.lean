@@ -89,7 +89,8 @@ private theorem integrate_classes (K : FiniteMarkovKernel S (Y × S))
   classical
   let setoid : Setoid S := ⟨R,hR⟩
   letI := setoid
-  rw [Finset.sum_partition setoid, Finset.sum_partition setoid]
+  conv_lhs => rw [Finset.sum_partition setoid]
+  conv_rhs => rw [Finset.sum_partition setoid]
   apply Finset.sum_congr rfl
   intro q _
   obtain ⟨c,rfl⟩ := Quotient.exists_rep q
@@ -139,7 +140,10 @@ private theorem archive_word (K : FiniteMarkovKernel S (Y × S))
 private theorem accepts_length {n : ℕ} (E : Experiment Y n) (w : List Y)
     (h : accepts E w) : w.length ≤ n := by
   induction E generalizing w with
-  | stop => simpa [accepts] using h ▸ (Nat.zero_le n)
+  | stop =>
+    have hw : w = [] := h
+    subst w
+    exact Nat.zero_le _
   | step f ih =>
     cases w with
     | nil => exact False.elim h
@@ -175,7 +179,7 @@ private theorem leaf_sum_step [DecidableEq Y] {n : ℕ} (f : Y → Experiment Y 
   rw [leaves, Finset.sum_biUnion]
   · apply Finset.sum_congr rfl
     intro y _
-    exact Finset.sum_image (fun _ _ _ _ h => List.cons.inj h |>.2)
+    exact Finset.sum_image (fun _ _ _ _ h => (List.cons.inj h).2)
   · intro y _ y' _ hne
     apply Finset.disjoint_left.mpr
     intro w hw hw'

@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FiniteResiduals/SixStateResidualSeparation
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: kind=certified-instance; basis=refutes=atom:5b81b9a84af35ac28f499ab07557947ecbc3ec9c4018d4a43a5fc75b96857f01; result=D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FiniteResiduals/SixStateResidualSeparation.result; claim=D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FiniteResiduals/SixStateResidualSeparation.claim
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FiniteResiduals/SixStateResidualSeparation.claim; result=D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FiniteResiduals/SixStateResidualSeparation.result; claim=D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/FiniteResiduals/SixStateResidualSeparation.claim
    digest: One six-state kernel separates every stopping archive from the stable residual and defeats almost-sure label updates. -/
 
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.FiniteResiduals.FiniteResidualStopping
@@ -150,13 +150,19 @@ private theorem quotient_reproduces (x : Fin 6) (y : Bool) (q : Fin 5) :
 private theorem quotient_stochastic : IsRowStochastic quotientRow := by
   constructor
   · intro q e
+    change 0 ≤ ∑ r : Fin 6, if stableClass r = e.2 then row (representative q) (e.1,r) else 0
     apply Finset.sum_nonneg
     intro r _
-    dsimp [quotientRow]
     split_ifs <;> first | exact row_stochastic.1 _ _ | exact le_rfl
   · intro q
-    have h := row_stochastic.2 (representative q)
-    simpa [quotientRow,Fintype.sum_prod_type,Finset.sum_comm] using h
+    simp only [Fintype.sum_prod_type,quotientRow]
+    have regroup (y : Bool) :
+        (∑ d : Fin 5, ∑ r : Fin 6, if stableClass r = d then row (representative q) (y,r) else 0) =
+        ∑ r : Fin 6, row (representative q) (y,r) := by
+      rw [Finset.sum_comm]
+      simp
+    simp_rw [regroup]
+    simpa only [Fintype.sum_prod_type] using row_stochastic.2 (representative q)
 
 /-- The quotient is exactly A-infinity and carries the representative-independent
 normalized joint label/successor-class kernel of this same six-state process. -/
@@ -186,6 +192,32 @@ private theorem positive_update_failure (update : Fin 5 → Bool → Fin 5) :
   norm_num [row,stableClass] at hne ⊢
   split_ifs <;> simp_all <;> norm_num
 
+/-- Complete classifications, permanent plateau, actual archive equality and the
+stochastic quotient and positive update obstruction of one and the same kernel. -/
+theorem counterkernel_facts :
+    (∀ x x', residual kernel 1 x x' ↔ firstClass x = firstClass x') ∧
+    (∀ x x', residual kernel 2 x x' ↔ stableClass x = stableClass x') ∧
+    (∀ n, residual kernel (n+2) = residual kernel 2) ∧
+    (∀ x x', (∀ n, residual kernel n x x') ↔ stableClass x = stableClass x') ∧
+    (∀ w, wordProb kernel 0 w = profile w ∧ wordProb kernel 1 w = profile w) ∧
+    (∀ n, StoppingEq kernel n 0 1) ∧
+    residual kernel 1 0 1 ∧ ¬ residual kernel 2 0 1 ∧
+    ¬ (∀ n, residual kernel n 0 1) ∧ StochasticQuotient ∧
+    (∀ update, 1/2 ≤ updateFailure update 0) := by
+  refine ⟨first_partition,second_partition,plateau,limit_partition,common_word,?_,?_,?_,?_,
+    stochastic_quotient,positive_update_failure⟩
+  · intro n
+    apply (trace_iff_stopping kernel n 0 1).mp
+    intro w _
+    exact (common_word w).1.trans (common_word w).2.symm
+  · exact (first_partition 0 1).mpr (by decide)
+  · intro h
+    have hh := (second_partition 0 1).mp h
+    norm_num [stableClass] at hh
+  · intro h
+    have hh := (second_partition 0 1).mp (h 2)
+    norm_num [stableClass] at hh
+
 /-- The two withdrawn assertions, restricted to this very process: all-depth
 stopping equality implies residual equality; and a stochastic residual quotient
 admits a label-determined update with zero actual failure probability. -/
@@ -197,18 +229,14 @@ def claim : Prop :=
 /-- Each disjunct fails for the same normalized kernel. -/
 theorem result : ¬ claim := by
   intro h
+  obtain ⟨_,_,_,_,_,hs,_,hsecond,_,hq,hfailure⟩ := counterkernel_facts
   rcases h with h | h
-  · have hs : ∀ n, StoppingEq kernel n 0 1 := by
-      intro n
-      apply (trace_iff_stopping kernel n 0 1).mp
-      intro w _
-      exact (common_word w).1.trans (common_word w).2.symm
-    have h2 := (second_partition 0 1).mp (h 0 1 hs 2)
-    norm_num [stableClass] at h2
-  · obtain ⟨update,hu⟩ := h stochastic_quotient
-    have hf := positive_update_failure update
+  · exact hsecond (h 0 1 hs 2)
+  · obtain ⟨update,hu⟩ := h hq
+    have hf := hfailure update
     rw [hu 0] at hf
     norm_num at hf
 
+#print axioms counterkernel_facts
 #print axioms result
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.FiniteResiduals.SixStateResidualSeparation
