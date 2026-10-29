@@ -42,7 +42,8 @@ open D5.S1.Recurrence.Residue.IntegralEGFComposition
 open D5.S1.Recurrence.Residue.QuarticEGFFixedPoint (encode eCoeff_encode eCoeff_ext constantCoeff_encode)
 
 open D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree
-open private egfOne egfPow_congr_at egfSeries_mul egfSeries_pow egfSeries_egfCoeffs
+open D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree (egfSeries_mul)
+open private egfOne egfPow_congr_at egfSeries_pow egfSeries_egfCoeffs
   from D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree
 
 namespace D5.S1.Recurrence.Residue.HannaEGFMachinery
