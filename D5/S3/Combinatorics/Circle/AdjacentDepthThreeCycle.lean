@@ -141,7 +141,9 @@ theorem native_long_seed_three_cycle {k t : ℕ} (hk : 3 ≤ k)
       0 < actualSource k t i)
     (n : Fin k) (hn : actualSource k t n < 0) :
     ∃ (a root neg next : Fin k) (r : ℕ),
-      2 ≤ r → ∃ h : ℕ,
+      r + 2 ≤ k ∧ root = phase (by omega) a r ∧
+        quarter k ≤ actualSource k t root ∧
+        (2 ≤ r → ∃ h : ℕ,
       1 ≤ h ∧ r = h + 1 ∧
         root = phase (by omega) a r ∧
         neg = phase (by omega) a (r + 1) ∧
@@ -162,7 +164,7 @@ theorem native_long_seed_three_cycle {k t : ℕ} (hk : 3 ≤ k)
          U (actualSource k t neg) - U (actualSource k t root) =
            actualSource k t root ∧
          U (actualSource k t next) - U (actualSource k t neg) =
-           actualSource k t neg) := by
+           actualSource k t neg)) := by
   obtain ⟨r, hr, hnodup, ha, hamod, hpre, hdyadic, hroot, hrootQ, hrootupper,
     hneg, hneglt, hnext, hnextpos, _, _, _, _⟩ :=
     native_chain_extraction hk hsmall n hn
@@ -213,7 +215,7 @@ theorem native_long_seed_three_cycle {k t : ℕ} (hk : 3 ≤ k)
   have hnr : neg ≠ root := Ne.symm hrn
   have hxr : next ≠ root := Ne.symm hrx
   have hnx' : next ≠ neg := Ne.symm hnx
-  refine ⟨a, root, neg, next, r, ?_⟩
+  refine ⟨a, root, neg, next, r, hr, rfl, hrootQ', ?_⟩
   intro hlong
   refine ⟨r - 1, by omega, by omega, rfl, rfl, rfl, ha', hroot', hrootQ',
       hrootupper', hneg', hneglt', hnext', hnextpos', ?_, ?_⟩
