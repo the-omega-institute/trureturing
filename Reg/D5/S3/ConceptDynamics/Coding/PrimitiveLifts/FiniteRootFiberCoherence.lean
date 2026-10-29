@@ -61,7 +61,7 @@ private theorem actual_positive : arena.{u}.Law actual.{u} :=
 private def rejected : Realization signature.{u} :=
   realize signature (fun _ p _ => p.1.h) (fun e => nomatch e)
 
-private def sample : Inputs.{u} := by
+private abbrev sample : Inputs.{u} := by
   letI : TopologicalSpace (ULift.{u} (Multiplicative (ZMod 2))) := ⊥
   haveI : DiscreteTopology (ULift.{u} (Multiplicative (ZMod 2))) := discreteTopology_bot _
   exact {
@@ -73,26 +73,26 @@ private def sample : Inputs.{u} := by
     h := ULift.up (Multiplicative.ofAdd 1)
     compactRoots := fun _ _ => (Set.toFinite _).isCompact }
 
-private theorem sample_square (x : sample.H) :
-    letI := sample.group
+private theorem sample_square (x : sample.{u}.H) :
+    letI := sample.{u}.group
     x ^ 2 = 1 := by
   apply ULift.ext
   apply Multiplicative.toAdd.injective
   change 2 • x.down.toAdd = (0 : ZMod 2)
-  rw [nsmul_eq_mul, show (2 : ZMod 2) = 0 from rfl, zero_mul]
+  rw [nsmul_eq_mul, ZMod.natCast_self, zero_mul]
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro all
-  letI := sample.group
-  have roots : ∀ n : ℕ, 0 < n → ∃ x : sample.H,
-      rejected.readout () (sample, n) x = sample.h :=
-    fun _ _ => ⟨sample.h, rfl⟩
-  obtain ⟨φ, hφ⟩ := (all sample).mp roots
-  obtain ⟨x, hx⟩ := (@compact_root_fibers_rational_coherence sample.H sample.group
-    sample.top sample.topGroup sample.t2 sample.h sample.compactRoots).mpr ⟨φ, hφ⟩
+  letI := sample.{u}.group
+  have roots : ∀ n : ℕ, 0 < n → ∃ x : sample.{u}.H,
+      rejected.readout () (sample.{u}, n) x = sample.{u}.h :=
+    fun _ _ => ⟨sample.{u}.h, rfl⟩
+  obtain ⟨φ, hφ⟩ := (all sample.{u}).mp roots
+  obtain ⟨x, hx⟩ := (@compact_root_fibers_rational_coherence sample.{u}.H sample.{u}.group
+    sample.{u}.top sample.{u}.topGroup sample.{u}.t2 sample.{u}.h sample.{u}.compactRoots).mpr ⟨φ, hφ⟩
       2 (by decide)
-  have heq := hx.symm.trans (sample_square x)
-  have hne : sample.h ≠ (1 : sample.H) := by decide
+  have heq := hx.symm.trans (sample_square.{u} x)
+  have hne : sample.{u}.h ≠ (1 : sample.{u}.H) := by decide
   exact hne heq
 
 private def familyRegistration : Registration arena.{u} sourceScope.{u} where
@@ -109,10 +109,10 @@ private def familyRegistration : Registration arena.{u} sourceScope.{u} where
       exact nomatch a
   dependence := by
     intro i
-    letI := sample.group
-    refine ⟨(sample, 1), 1, sample.h, ?_⟩
-    change (1 : sample.H) ^ 1 ≠ sample.h ^ 1
-    simpa only [pow_one] using (show (1 : sample.H) ≠ sample.h by decide)
+    letI := sample.{u}.group
+    refine ⟨(sample.{u}, 1), 1, sample.{u}.h, ?_⟩
+    change (1 : sample.{u}.H) ^ 1 ≠ sample.{u}.h ^ 1
+    simpa only [pow_one] using (show (1 : sample.{u}.H) ≠ sample.{u}.h by decide)
 
 noncomputable def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, _, 0, 0}
