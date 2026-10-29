@@ -19,7 +19,7 @@ $$
 
 These are the ordinary and asymptotic critical exponents, with the infinite-exponent convention of Dvořáková and Pelantová, *The limit of repetition thresholds of rich sequences*, [arXiv:2509.06104v1, Introduction](https://arxiv.org/html/2509.06104v1#S1).
 
-**Definition 1.2 (Richness and marked return morphisms).** A finite word $w$ is rich if it has exactly $|w|+1$ distinct palindromic factors, counting $\varepsilon$. An infinite word is rich if each of its finite factors is rich. A complete return to a nonempty word $p$ is a finite word having $p$ as prefix and suffix and exactly two occurrences of $p$, allowing these occurrences to overlap. An injective monoid morphism $`\eta:A^*\to B^*`$ belongs to $P_{\mathrm{ret}}$ with chosen marker $p$ if $p$ is a palindrome and, for every $i\in A$,
+**Definition 1.2 (Richness and marked return morphisms).** A finite word $w$ is rich if it has exactly $|w|+1$ distinct palindromic factors, counting $\varepsilon$. An infinite word is rich if each of its finite factors is rich. A complete return to a nonempty word $p$ is a finite word having $p$ as prefix and suffix and exactly two occurrences of $p$, allowing these occurrences to overlap. An injective monoid morphism $`\eta:A^*\to B^*`$ belongs to $P_{\mathrm{ret}}$ with chosen nonempty marker $p$ if $p$ is a palindrome and, for every $i\in A$,
 
 $$
 \eta(i)=p q_i,\qquad q_i=\overline{q_i},
@@ -129,7 +129,7 @@ The asserted strict inequality and its disjunctive consequence follow. $\square$
 
 ## 4. Strictness of the conditional marker-cost bound
 
-**Definition 4.1 (Explicit spectral and lattice conditions).** Let $r\ge3$, and let $M_r$ be the incidence matrix of $\varphi_{2r+1}$ with column $j$ equal to the letter-count vector of $\varphi_{2r+1}(j)$. Let $\beta_r\in(1,2)$ be the root of $\beta_r^r(\beta_r-2)=-1$, and put
+**Definition 4.1 (Explicit spectral and lattice conditions).** Let $r\ge3$ be an integer, and let $M_r$ be the incidence matrix of $\varphi_{2r+1}$ with column $j$ equal to the letter-count vector of $\varphi_{2r+1}(j)$. Let $\beta_r\in(1,2)$ be the root of $\beta_r^r(\beta_r-2)=-1$, and put
 
 $$
 v_{\beta_r}=
@@ -138,7 +138,7 @@ v_{\beta_r}=
       \beta_r-2,1\bigr)^T.
 $$
 
-This is the $\beta_r$ right eigenvector in [Dvořáková–Pelantová, Appendix, P2](https://arxiv.org/html/2509.06104v1). For a length row $h=(h_0,\ldots,h_{2r})$, impose explicitly both the cancellation and the lattice equations
+This is the $\beta_r$ right eigenvector in [Dvořáková–Pelantová, Appendix, P2](https://arxiv.org/html/2509.06104v1#S9). For a length row $h=(h_0,\ldots,h_{2r})$, impose explicitly both the cancellation and the lattice equations
 
 $$
 h\cdot v_{\beta_r}=0,
@@ -154,7 +154,7 @@ T=\sum_{i=0}^{2r}h_i,
 \qquad C_r(\ell)=(\ell+1)(2^{r+1}+r-1)-2^r.
 $$
 
-**Corollary 4.2 (The longer-marker cost is strict).** Let $r\ge3$ and $\ell\ge2$. Let $`\eta:A_{2r+1}^*\to B^*`$ belong to $P_{\mathrm{ret}}$ with chosen marker $p$ of length $\ell$, where $|B|=r+1$ and the letters occurring in $\eta(u_{2r+1})$ are exactly $B$. For $h_i=|\eta(i)|$, assume the explicit cancellation and lattice conditions of Definition 4.1. If $\eta(u_{2r+1})$ is rich and
+**Corollary 4.2 (The longer-marker cost is strict).** Let $r\ge3$ and $\ell\ge2$ be integers. Let $`\eta:A_{2r+1}^*\to B^*`$ belong to $P_{\mathrm{ret}}$ with chosen marker $p$ of length $\ell$, where $|B|=r+1$ and the letters occurring in $\eta(u_{2r+1})$ are exactly $B$. For $h_i=|\eta(i)|$, assume the explicit cancellation and lattice conditions of Definition 4.1. If $\eta(u_{2r+1})$ is rich and
 
 $$
 E\bigl(\eta(u_{2r+1})\bigr)\le E^*(u_{2r+1}),
