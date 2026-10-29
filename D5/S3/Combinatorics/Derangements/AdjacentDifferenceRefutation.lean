@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Derangements/AdjacentDifferenceRefutation
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Derangements/AdjacentDifferenceRefutation
    mirror-E: none(waiver:direct-refutation-of-external-conjecture)
    anchors: [mathlib/module/Mathlib.GroupTheory.Perm.Centralizer]
