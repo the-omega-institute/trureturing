@@ -8,7 +8,7 @@ A total dominating set S is an actual finite subset of the graph vertices. Every
 
 **Definition 1.1 (Total domination).**
 
-$$\forall (V:\operatorname{Type}\left(\right)), \forall (G:\operatorname{SimpleGraph}\left(V\right)), \forall (S:\operatorname{Finset}\left(V\right)), (\operatorname{IsTotal}\left(G, S\right)) \Leftrightarrow (\forall (v:V), \exists (u:V), (u \in S) \land (\operatorname{Adj}\left(G, v, u\right)))$$
+$$\forall (V:\operatorname{Type}), \forall (G:\operatorname{SimpleGraph}\left(V\right)), \forall (S:\operatorname{Finset}\left(V\right)), (\operatorname{IsTotal}\left(G, S\right)) \Leftrightarrow (\forall (v:V), \exists (u:V), (u \in S) \land (\operatorname{Adj}\left(G, v, u\right)))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.IsTotal` (`✓ std3`).
 
@@ -20,7 +20,7 @@ For every actual graph G : SimpleGraph V and S : Finset V, IsTotal G S is the di
 
 **Definition 1.2 (The actual subset polynomial).**
 
-$$\forall (V:\operatorname{Type}\left(\right)), [\operatorname{Fintype}\left(V\right)], \forall (G:\operatorname{SimpleGraph}\left(V\right)), \operatorname{totalPolynomial}\left(G\right) = \sum_{S:\operatorname{Finset}\left(V\right)} \operatorname{ite}\left(\operatorname{IsTotal}\left(G, S\right), ((X:\mathbb{R}[X]))^{\operatorname{card}\left(S\right)}, 0\right)$$
+$$\forall (V:\operatorname{Type}), [\operatorname{Fintype}\left(V\right)], \forall (G:\operatorname{SimpleGraph}\left(V\right)), \operatorname{totalPolynomial}\left(G\right) = \sum_{S:\operatorname{Finset}\left(V\right)} \operatorname{ite}\left(\operatorname{IsTotal}\left(G, S\right), ((X:\mathbb{R}[X]))^{\operatorname{card}\left(S\right)}, 0\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.totalPolynomial` (`✓ std3`).
 
@@ -32,7 +32,7 @@ For every finite V with a Fintype instance and every SimpleGraph G on V, totalPo
 
 **Definition 1.3 (Disjoint union).**
 
-$$\forall (V:\operatorname{Type}\left(\right)), \forall (W:\operatorname{Type}\left(\right)), \forall (G:\operatorname{SimpleGraph}\left(V\right)), \forall (H:\operatorname{SimpleGraph}\left(W\right)), (\forall (v:V), \forall (u:V), (\operatorname{Adj}\left(\operatorname{unionGraph}\left(G, H\right), \operatorname{inl}\left(v\right), \operatorname{inl}\left(u\right)\right)) \Leftrightarrow (\operatorname{Adj}\left(G, v, u\right))) \land ((\forall (a:W), \forall (b:W), (\operatorname{Adj}\left(\operatorname{unionGraph}\left(G, H\right), \operatorname{inr}\left(a\right), \operatorname{inr}\left(b\right)\right)) \Leftrightarrow (\operatorname{Adj}\left(H, a, b\right))) \land ((\forall (v:V), \forall (a:W), (\operatorname{Adj}\left(\operatorname{unionGraph}\left(G, H\right), \operatorname{inl}\left(v\right), \operatorname{inr}\left(a\right)\right)) \Leftrightarrow (\operatorname{False}\left(\right))) \land (\forall (a:W), \forall (v:V), (\operatorname{Adj}\left(\operatorname{unionGraph}\left(G, H\right), \operatorname{inr}\left(a\right), \operatorname{inl}\left(v\right)\right)) \Leftrightarrow (\operatorname{False}\left(\right)))))$$
+$$\forall (V:\operatorname{Type}), \forall (W:\operatorname{Type}), \forall (G:\operatorname{SimpleGraph}\left(V\right)), \forall (H:\operatorname{SimpleGraph}\left(W\right)), (\forall (v:V), \forall (u:V), (\operatorname{Adj}\left(\operatorname{unionGraph}\left(G, H\right), \operatorname{inl}\left(v\right), \operatorname{inl}\left(u\right)\right)) \Leftrightarrow (\operatorname{Adj}\left(G, v, u\right))) \land ((\forall (a:W), \forall (b:W), (\operatorname{Adj}\left(\operatorname{unionGraph}\left(G, H\right), \operatorname{inr}\left(a\right), \operatorname{inr}\left(b\right)\right)) \Leftrightarrow (\operatorname{Adj}\left(H, a, b\right))) \land ((\forall (v:V), \forall (a:W), (\operatorname{Adj}\left(\operatorname{unionGraph}\left(G, H\right), \operatorname{inl}\left(v\right), \operatorname{inr}\left(a\right)\right)) \Leftrightarrow (\operatorname{False})) \land (\forall (a:W), \forall (v:V), (\operatorname{Adj}\left(\operatorname{unionGraph}\left(G, H\right), \operatorname{inr}\left(a\right), \operatorname{inl}\left(v\right)\right)) \Leftrightarrow (\operatorname{False}))))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.unionGraph` (`✓ std3`).
 
@@ -44,7 +44,7 @@ G : SimpleGraph V and H : SimpleGraph W give a graph on V sum W. Two left vertic
 
 **Definition 1.4 (A genuine universal vertex).**
 
-$$\forall (V:\operatorname{Type}\left(\right)), \forall (G:\operatorname{SimpleGraph}\left(V\right)), (\forall (a:\operatorname{Unit}\left(\right)), \forall (b:\operatorname{Unit}\left(\right)), (\operatorname{Adj}\left(\operatorname{coneGraph}\left(G\right), \operatorname{inl}\left(a\right), \operatorname{inl}\left(b\right)\right)) \Leftrightarrow (\operatorname{False}\left(\right))) \land ((\forall (a:\operatorname{Unit}\left(\right)), \forall (v:V), (\operatorname{Adj}\left(\operatorname{coneGraph}\left(G\right), \operatorname{inl}\left(a\right), \operatorname{inr}\left(v\right)\right)) \Leftrightarrow (\operatorname{True}\left(\right))) \land ((\forall (v:V), \forall (a:\operatorname{Unit}\left(\right)), (\operatorname{Adj}\left(\operatorname{coneGraph}\left(G\right), \operatorname{inr}\left(v\right), \operatorname{inl}\left(a\right)\right)) \Leftrightarrow (\operatorname{True}\left(\right))) \land (\forall (v:V), \forall (u:V), (\operatorname{Adj}\left(\operatorname{coneGraph}\left(G\right), \operatorname{inr}\left(v\right), \operatorname{inr}\left(u\right)\right)) \Leftrightarrow (\operatorname{Adj}\left(G, v, u\right)))))$$
+$$\forall (V:\operatorname{Type}), \forall (G:\operatorname{SimpleGraph}\left(V\right)), (\forall (a:\operatorname{Unit}), \forall (b:\operatorname{Unit}), (\operatorname{Adj}\left(\operatorname{coneGraph}\left(G\right), \operatorname{inl}\left(a\right), \operatorname{inl}\left(b\right)\right)) \Leftrightarrow (\operatorname{False})) \land ((\forall (a:\operatorname{Unit}), \forall (v:V), (\operatorname{Adj}\left(\operatorname{coneGraph}\left(G\right), \operatorname{inl}\left(a\right), \operatorname{inr}\left(v\right)\right)) \Leftrightarrow (\operatorname{True})) \land ((\forall (v:V), \forall (a:\operatorname{Unit}), (\operatorname{Adj}\left(\operatorname{coneGraph}\left(G\right), \operatorname{inr}\left(v\right), \operatorname{inl}\left(a\right)\right)) \Leftrightarrow (\operatorname{True})) \land (\forall (v:V), \forall (u:V), (\operatorname{Adj}\left(\operatorname{coneGraph}\left(G\right), \operatorname{inr}\left(v\right), \operatorname{inr}\left(u\right)\right)) \Leftrightarrow (\operatorname{Adj}\left(G, v, u\right)))))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.coneGraph` (`✓ std3`).
 
@@ -56,7 +56,7 @@ The vertex type is Unit sum V. The sole left vertex is adjacent to every right v
 
 **Definition 1.5 (Decidability of actual total domination).**
 
-$$\forall (V:\operatorname{Type}\left(\right)), [\operatorname{Fintype}\left(V\right)], \forall (G:\operatorname{SimpleGraph}\left(V\right)), [\operatorname{DecidableRel}\left(\operatorname{Adj}\left(G\right)\right)], \forall (S:\operatorname{Finset}\left(V\right)), (\operatorname{totalDecidable}\left(G, S\right):\operatorname{Decidable}\left(\operatorname{IsTotal}\left(G, S\right)\right))$$
+$$\forall (V:\operatorname{Type}), [\operatorname{Fintype}\left(V\right)], \forall (G:\operatorname{SimpleGraph}\left(V\right)), [\operatorname{DecidableRel}\left(\operatorname{Adj}\left(G\right)\right)], \forall (S:\operatorname{Finset}\left(V\right)), (\operatorname{totalDecidable}\left(G, S\right):\operatorname{Decidable}\left(\operatorname{IsTotal}\left(G, S\right)\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.totalDecidable` (`✓ std3`).
 
@@ -104,7 +104,7 @@ m is any natural number. SeedBase 0 is Fin 3. SeedBase (m+1) is Fin 5 sum SeedBa
 
 **Definition 1.9 (Five-cycles and a triangle).**
 
-$$(\operatorname{seedBaseGraph}\left(0\right) = (\operatorname{top}\left(\right):\operatorname{SimpleGraph}\left(\operatorname{Fin}\left(3\right)\right))) \land (\forall (m:\mathbb{N}), \operatorname{seedBaseGraph}\left(m + 1\right) = \operatorname{unionGraph}\left(\operatorname{cycleGraph}\left(5\right), \operatorname{seedBaseGraph}\left(m\right)\right))$$
+$$(\operatorname{seedBaseGraph}\left(0\right) = (\operatorname{top}:\operatorname{SimpleGraph}\left(\operatorname{Fin}\left(3\right)\right))) \land (\forall (m:\mathbb{N}), \operatorname{seedBaseGraph}\left(m + 1\right) = \operatorname{unionGraph}\left(\operatorname{cycleGraph}\left(5\right), \operatorname{seedBaseGraph}\left(m\right)\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.seedBaseGraph` (`✓ std3`).
 
@@ -152,7 +152,7 @@ For every natural s>=3 with Odd s, there is a real r strictly between -1 and -1+
 
 **Theorem 1.13 (The same roots belong to genuine isolate-free graphs).**
 
-$$\forall (s:\mathbb{N}), (3 \le s) \Rightarrow ((\operatorname{Odd}\left(s\right)) \Rightarrow (\exists (r:\mathbb{R}), (-1 < r) \land ((r < -1 + \frac{1}{(s:\mathbb{R})}) \land ((\operatorname{IsRoot}\left(\operatorname{totalPolynomial}\left(\operatorname{seedGraph}\left((s)^{2}\right)\right), r\right)) \land ((\operatorname{totalPolynomial}\left(\operatorname{seedGraph}\left((s)^{2}\right)\right) \ne 0) \land (\forall (v:\operatorname{Sum}\left(\operatorname{Unit}\left(\right), \operatorname{SeedBase}\left((s)^{2}\right)\right)), \exists (u:\operatorname{Sum}\left(\operatorname{Unit}\left(\right), \operatorname{SeedBase}\left((s)^{2}\right)\right)), \operatorname{Adj}\left(\operatorname{seedGraph}\left((s)^{2}\right), v, u\right)))))))$$
+$$\forall (s:\mathbb{N}), (3 \le s) \Rightarrow ((\operatorname{Odd}\left(s\right)) \Rightarrow (\exists (r:\mathbb{R}), (-1 < r) \land ((r < -1 + \frac{1}{(s:\mathbb{R})}) \land ((\operatorname{IsRoot}\left(\operatorname{totalPolynomial}\left(\operatorname{seedGraph}\left((s)^{2}\right)\right), r\right)) \land ((\operatorname{totalPolynomial}\left(\operatorname{seedGraph}\left((s)^{2}\right)\right) \ne 0) \land (\forall (v:\operatorname{Sum}\left(\operatorname{Unit}, \operatorname{SeedBase}\left((s)^{2}\right)\right)), \exists (u:\operatorname{Sum}\left(\operatorname{Unit}, \operatorname{SeedBase}\left((s)^{2}\right)\right)), \operatorname{Adj}\left(\operatorname{seedGraph}\left((s)^{2}\right), v, u\right)))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.actual_seed_root_right` (`✓ std3`). ∎
 
@@ -188,7 +188,7 @@ For every positive real epsilon there exist n, G : SimpleGraph (Fin n), and r : 
 
 **Definition 1.16 (The literal complex-coefficient subset polynomial).**
 
-$$\forall (V:\operatorname{Type}\left(\right)), [\operatorname{Fintype}\left(V\right)], \forall (G:\operatorname{SimpleGraph}\left(V\right)), \operatorname{complexPolynomial}\left(G\right) = \sum_{S:\operatorname{Finset}\left(V\right)} \operatorname{ite}\left(\operatorname{IsTotal}\left(G, S\right), ((X:\mathbb{C}[X]))^{\operatorname{card}\left(S\right)}, 0\right)$$
+$$\forall (V:\operatorname{Type}), [\operatorname{Fintype}\left(V\right)], \forall (G:\operatorname{SimpleGraph}\left(V\right)), \operatorname{complexPolynomial}\left(G\right) = \sum_{S:\operatorname{Finset}\left(V\right)} \operatorname{ite}\left(\operatorname{IsTotal}\left(G, S\right), ((X:\mathbb{C}[X]))^{\operatorname{card}\left(S\right)}, 0\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.complexPolynomial` (`✓ std3`).
 
@@ -200,7 +200,7 @@ For every finite vertex type V and SimpleGraph G on V, complexPolynomial G is th
 
 **Definition 1.17 (The unchanged full target).**
 
-$$(\operatorname{WholePlaneDensity}\left(\right)) \Leftrightarrow (\forall (z:\mathbb{C}), \forall (epsilon:\mathbb{R}), (0 < epsilon) \Rightarrow (\exists (n:\mathbb{N}), \exists (G:\operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right)), \exists (w:\mathbb{C}), (2 \le n) \land ((\forall (v:\operatorname{Fin}\left(n\right)), \exists (u:\operatorname{Fin}\left(n\right)), \operatorname{Adj}\left(G, v, u\right)) \land ((\operatorname{complexPolynomial}\left(G\right) \ne 0) \land ((\operatorname{IsRoot}\left(\operatorname{complexPolynomial}\left(G\right), w\right)) \land (\Vert w - z\Vert < epsilon))))))$$
+$$(\operatorname{WholePlaneDensity}) \Leftrightarrow (\forall (z:\mathbb{C}), \forall (epsilon:\mathbb{R}), (0 < epsilon) \Rightarrow (\exists (n:\mathbb{N}), \exists (G:\operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right)), \exists (w:\mathbb{C}), (2 \le n) \land ((\forall (v:\operatorname{Fin}\left(n\right)), \exists (u:\operatorname{Fin}\left(n\right)), \operatorname{Adj}\left(G, v, u\right)) \land ((\operatorname{complexPolynomial}\left(G\right) \ne 0) \land ((\operatorname{IsRoot}\left(\operatorname{complexPolynomial}\left(G\right), w\right)) \land (\Vert w - z\Vert < epsilon))))))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.WholePlaneDensity` (`✓ std3`).
 
@@ -262,7 +262,7 @@ For every natural m, EdgeBase 0 is Fin 2 and EdgeBase (m+1) is Fin 2 sum EdgeBas
 
 **Definition 1.22 (The actual disjoint matching).**
 
-$$(\operatorname{edgeBaseGraph}\left(0\right) = (\operatorname{top}\left(\right):\operatorname{SimpleGraph}\left(\operatorname{Fin}\left(2\right)\right))) \land (\forall (m:\mathbb{N}), \operatorname{edgeBaseGraph}\left(m + 1\right) = \operatorname{unionGraph}\left((\operatorname{top}\left(\right):\operatorname{SimpleGraph}\left(\operatorname{Fin}\left(2\right)\right)), \operatorname{edgeBaseGraph}\left(m\right)\right))$$
+$$(\operatorname{edgeBaseGraph}\left(0\right) = (\operatorname{top}:\operatorname{SimpleGraph}\left(\operatorname{Fin}\left(2\right)\right))) \land (\forall (m:\mathbb{N}), \operatorname{edgeBaseGraph}\left(m + 1\right) = \operatorname{unionGraph}\left((\operatorname{top}:\operatorname{SimpleGraph}\left(\operatorname{Fin}\left(2\right)\right)), \operatorname{edgeBaseGraph}\left(m\right)\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.edgeBaseGraph` (`✓ std3`).
 
@@ -298,7 +298,7 @@ For every natural m this is X*((1+X)^(2(m+1))-1)+X^(2(m+1)) in R[X]. The private
 
 **Theorem 1.25 (Actual total-domination roots are unbounded below).**
 
-$$\forall (R:\mathbb{R}), (2 < R) \Rightarrow (\exists (m:\mathbb{N}), \exists (r:\mathbb{R}), (r < -R) \land ((\operatorname{IsRoot}\left(\operatorname{totalPolynomial}\left(\operatorname{friendshipGraph}\left(m\right)\right), r\right)) \land ((\operatorname{totalPolynomial}\left(\operatorname{friendshipGraph}\left(m\right)\right) \ne 0) \land (\forall (v:\operatorname{Sum}\left(\operatorname{Unit}\left(\right), \operatorname{EdgeBase}\left(m\right)\right)), \exists (u:\operatorname{Sum}\left(\operatorname{Unit}\left(\right), \operatorname{EdgeBase}\left(m\right)\right)), \operatorname{Adj}\left(\operatorname{friendshipGraph}\left(m\right), v, u\right)))))$$
+$$\forall (R:\mathbb{R}), (2 < R) \Rightarrow (\exists (m:\mathbb{N}), \exists (r:\mathbb{R}), (r < -R) \land ((\operatorname{IsRoot}\left(\operatorname{totalPolynomial}\left(\operatorname{friendshipGraph}\left(m\right)\right), r\right)) \land ((\operatorname{totalPolynomial}\left(\operatorname{friendshipGraph}\left(m\right)\right) \ne 0) \land (\forall (v:\operatorname{Sum}\left(\operatorname{Unit}, \operatorname{EdgeBase}\left(m\right)\right)), \exists (u:\operatorname{Sum}\left(\operatorname{Unit}, \operatorname{EdgeBase}\left(m\right)\right)), \operatorname{Adj}\left(\operatorname{friendshipGraph}\left(m\right), v, u\right)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.friendship_root_unbounded` (`✓ std3`). ∎
 

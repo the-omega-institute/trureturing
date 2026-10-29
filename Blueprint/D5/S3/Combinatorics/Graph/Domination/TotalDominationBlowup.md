@@ -8,7 +8,7 @@ V and W are actual finite vertex types, with Fintype instances. G is an arbitrar
 
 **Definition 1.1 (The actual independent-fibre graph).**
 
-$$\forall (V:\operatorname{Type}\left(\right)), \forall (G:\operatorname{SimpleGraph}\left(V\right)), \forall (W:\operatorname{Type}\left(\right)), \forall (a:V\times W), \forall (b:V\times W), (\operatorname{Adj}\left(\operatorname{blowupGraph}\left(G, W\right), a, b\right)) \Leftrightarrow (\operatorname{Adj}\left(G, \operatorname{fst}\left(a\right), \operatorname{fst}\left(b\right)\right))$$
+$$\forall (V:\operatorname{Type}), \forall (G:\operatorname{SimpleGraph}\left(V\right)), \forall (W:\operatorname{Type}), \forall (a:V\times W), \forall (b:V\times W), (\operatorname{Adj}\left(\operatorname{blowupGraph}\left(G, W\right), a, b\right)) \Leftrightarrow (\operatorname{Adj}\left(G, \operatorname{fst}\left(a\right), \operatorname{fst}\left(b\right)\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/TotalDominationBlowup.blowupGraph` (`✓ std3`).
 
@@ -20,7 +20,7 @@ The result has vertex type V times W and adjacency G.Adj(a.fst,b.fst). There are
 
 **Definition 1.2 (Actual subset-to-fibre equivalence).**
 
-$$\forall (V:\operatorname{Type}\left(\right)), \forall (W:\operatorname{Type}\left(\right)), [\operatorname{Fintype}\left(V\right)], [\operatorname{Fintype}\left(W\right)], (\forall (S:\operatorname{Finset}\left(V\times W\right)), \forall (v:V), \forall (i:W), (i \in \operatorname{subsetFamilyEquiv}\left(S, v\right)) \Leftrightarrow ((v,i) \in S)) \land (\forall (f:V\to \operatorname{Finset}\left(W\right)), \forall (v:V), \forall (i:W), ((v,i) \in \operatorname{symm}\left(\operatorname{subsetFamilyEquiv}\left(\right), f\right)) \Leftrightarrow (i \in \operatorname{f}\left(v\right)))$$
+$$\forall (V:\operatorname{Type}), \forall (W:\operatorname{Type}), [\operatorname{Fintype}\left(V\right)], [\operatorname{Fintype}\left(W\right)], (\forall (S:\operatorname{Finset}\left(V\times W\right)), \forall (v:V), \forall (i:W), (i \in \operatorname{subsetFamilyEquiv}\left(S, v\right)) \Leftrightarrow ((v,i) \in S)) \land (\forall (f:V\to \operatorname{Finset}\left(W\right)), \forall (v:V), \forall (i:W), ((v,i) \in \operatorname{symm}\left(\operatorname{subsetFamilyEquiv}, f\right)) \Leftrightarrow (i \in f\left(v\right)))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/TotalDominationBlowup.subsetFamilyEquiv` (`✓ std3`).
 
@@ -32,7 +32,7 @@ For finite V and W this is an equivalence between Finset(V times W) and V -> Fin
 
 **Definition 1.3 (Occupied fibres).**
 
-$$\forall (V:\operatorname{Type}\left(\right)), \forall (W:\operatorname{Type}\left(\right)), [\operatorname{Fintype}\left(V\right)], [\operatorname{Fintype}\left(W\right)], \forall (f:V\to \operatorname{Finset}\left(W\right)), \forall (v:V), (v \in \operatorname{support}\left(f\right)) \Leftrightarrow (\operatorname{Nonempty}\left(\operatorname{f}\left(v\right)\right))$$
+$$\forall (V:\operatorname{Type}), \forall (W:\operatorname{Type}), [\operatorname{Fintype}\left(V\right)], [\operatorname{Fintype}\left(W\right)], \forall (f:V\to \operatorname{Finset}\left(W\right)), \forall (v:V), (v \in \operatorname{support}\left(f\right)) \Leftrightarrow (\exists (i:W), i \in f\left(v\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/TotalDominationBlowup.support` (`✓ std3`).
 
@@ -44,7 +44,7 @@ support(f) is the finite subset of all v in V for which f(v) is nonempty. For no
 
 **Theorem 1.4 (The known actual-subset substitution identity).**
 
-$$\forall (V:\operatorname{Type}\left(\right)), \forall (W:\operatorname{Type}\left(\right)), [\operatorname{Fintype}\left(V\right)], [\operatorname{Fintype}\left(W\right)], [\operatorname{Nonempty}\left(W\right)], \forall (G:\operatorname{SimpleGraph}\left(V\right)), \operatorname{complexPolynomial}\left(\operatorname{blowupGraph}\left(G, W\right)\right) = \operatorname{comp}\left(\operatorname{complexPolynomial}\left(G\right), (1 + (X:\mathbb{C}[X]))^{\operatorname{card}\left(W\right)} - 1\right)$$
+$$\forall (V:\operatorname{Type}), \forall (W:\operatorname{Type}), [\operatorname{Fintype}\left(V\right)], [\operatorname{Fintype}\left(W\right)], [\operatorname{Nonempty}\left(W\right)], \forall (G:\operatorname{SimpleGraph}\left(V\right)), \operatorname{complexPolynomial}\left(\operatorname{blowupGraph}\left(G, W\right)\right) = \operatorname{comp}\left(\operatorname{complexPolynomial}\left(G\right), (1 + (X:\mathbb{C}[X]))^{\operatorname{card}\left(W\right)} - 1\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/TotalDominationBlowup.blowup_polynomial` (`✓ std3`). ∎
 
