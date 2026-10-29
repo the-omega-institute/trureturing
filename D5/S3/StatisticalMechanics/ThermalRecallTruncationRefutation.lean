@@ -57,11 +57,11 @@ def target {d : ℕ} (p : Fin d → ℝ) (w : List (Fin d × Fin d)) : Fin d →
   w.foldl (fun r z => r ∘ Equiv.swap z.1 z.2) p
 
 /-- Each swap is adjacent in current population order and increases inversion length. -/
-def IsReducedNeighbourWord {d : ℕ} (p : Fin d → ℝ) : List (Fin d × Fin d) → Prop
-  | [] => True
-  | z :: w => z.1 < z.2 ∧ p z.2 < p z.1 ∧
-      (∀ c, ¬ (p z.2 < p c ∧ p c < p z.1)) ∧
-      IsReducedNeighbourWord (p ∘ Equiv.swap z.1 z.2) w
+def IsReducedNeighbourWord {d : ℕ} (p : Fin d → ℝ) : List (Fin d × Fin d) → Prop :=
+  fun w => ∀ (n : ℕ) (hn : n < w.length),
+    let z := w[n]
+    let r := target p (w.take n)
+    z.1 < z.2 ∧ r z.2 < r z.1 ∧ ∀ c, ¬ (r z.2 < r c ∧ r c < r z.1)
 
 /-- Improved convergence of the truncated protocol for every reduced neighbour word. -/
 def claim : Prop :=
@@ -83,80 +83,112 @@ private theorem instance_hypotheses :
   · norm_num [p.eq_1, Fin.sum_univ_four]
   · intro i j hij
     fin_cases i <;> fin_cases j <;> norm_num [p.eq_1] at *
-  · norm_num [w.eq_1, p.eq_1, IsReducedNeighbourWord, Function.comp_apply,
-      Equiv.swap_apply_def, Fin.forall_fin_succ]
+  · intro k hk
+    have hk' : k < 3 := hk
+    change
+      let z := w[k]
+      let r := (w.take k).foldl (fun r z => r ∘ Equiv.swap z.1 z.2) p
+      z.1 < z.2 ∧ r z.2 < r z.1 ∧ ∀ c, ¬ (r z.2 < r c ∧ r c < r z.1)
+    interval_cases k <;>
+      norm_num [w.eq_1, p.eq_1, Function.comp_apply,
+        Equiv.swap_apply_def, Fin.forall_fin_succ]
 
 private theorem target_values : target p w = ![2/9, 1/2, 1/36, 1/4] := by
+  change w.foldl (fun r z => r ∘ Equiv.swap z.1 z.2) p = _
   funext i
   fin_cases i <;>
-    norm_num [target, p.eq_1, w.eq_1, Function.comp_apply, Equiv.swap_apply_def]
+    norm_num [p.eq_1, w.eq_1, Function.comp_apply, Equiv.swap_apply_def]
 
 private theorem joint_values :
     joint 2 p = fun x => ![![1/4, 1/4], ![1/8, 1/8], ![1/9, 1/9], ![1/72, 1/72]] x.1 x.2 := by
   funext x
   rcases x with ⟨i, m⟩
-  fin_cases i <;> fin_cases m <;> norm_num [joint, p.eq_1]
+  change p i / 2 = _
+  fin_cases i <;> fin_cases m <;> norm_num [p.eq_1]
 
 private theorem truncated_block_one :
     block 2 0 1 (fun x => ![![1/4, 1/4], ![1/8, 1/8], ![1/9, 1/9], ![1/72, 1/72]] x.1 x.2) =
       fun x => ![![5/32, 3/16], ![7/32, 3/16], ![1/9, 1/9], ![1/72, 1/72]] x.1 x.2 := by
+  change (List.finRange 2).foldl
+      (fun (u : Fin 4 × Fin 2 → ℝ) k => (List.finRange 2).foldl
+        (fun u l x => if x = (0, k) ∨ x = (1, l) then
+          (u (0, k) + u (1, l)) / 2 else u x) u) _ = _
   funext x
   rcases x with ⟨i, m⟩
   fin_cases i <;> fin_cases m <;>
-    norm_num [block, List.finRange_succ, List.finRange_zero, average]
+    norm_num [List.finRange_succ, List.finRange_zero]
 
 private theorem truncated_block_two :
     block 2 2 3 (fun x => ![![5/32, 3/16], ![7/32, 3/16], ![1/9, 1/9], ![1/72, 1/72]] x.1 x.2) =
       fun x => ![![5/32, 3/16], ![7/32, 3/16], ![11/288, 1/16], ![25/288, 1/16]] x.1 x.2 := by
+  change (List.finRange 2).foldl
+      (fun (u : Fin 4 × Fin 2 → ℝ) k => (List.finRange 2).foldl
+        (fun u l x => if x = (2, k) ∨ x = (3, l) then
+          (u (2, k) + u (3, l)) / 2 else u x) u) _ = _
   funext x
   rcases x with ⟨i, m⟩
   fin_cases i <;> fin_cases m <;>
-    norm_num [block, List.finRange_succ, List.finRange_zero, average]
+    norm_num [List.finRange_succ, List.finRange_zero]
 
 private theorem truncated_block_three :
     block 2 0 3 (fun x => ![![5/32, 3/16], ![7/32, 3/16], ![11/288, 1/16], ![25/288, 1/16]] x.1 x.2) =
       fun x => ![![53/576, 71/576], ![7/32, 3/16], ![11/288, 1/16], ![89/576, 71/576]] x.1 x.2 := by
+  change (List.finRange 2).foldl
+      (fun (u : Fin 4 × Fin 2 → ℝ) k => (List.finRange 2).foldl
+        (fun u l x => if x = (0, k) ∨ x = (3, l) then
+          (u (0, k) + u (3, l)) / 2 else u x) u) _ = _
   funext x
   rcases x with ⟨i, m⟩
   fin_cases i <;> fin_cases m <;>
-    norm_num [block, List.finRange_succ, List.finRange_zero, average]
+    norm_num [List.finRange_succ, List.finRange_zero]
 
 private theorem reset_block_one :
     reset (fun x => ![![5/32, 3/16], ![7/32, 3/16], ![1/9, 1/9], ![1/72, 1/72]] x.1 x.2) =
       fun x => ![![11/64, 11/64], ![13/64, 13/64], ![1/9, 1/9], ![1/72, 1/72]] x.1 x.2 := by
   funext x
   rcases x with ⟨i, m⟩
-  fin_cases i <;> fin_cases m <;> norm_num [reset, marginal, Fin.sum_univ_two]
+  change (∑ k : Fin 2, _) / 2 = _
+  fin_cases i <;> fin_cases m <;> norm_num [Fin.sum_univ_two]
 
 private theorem reset_block_two_raw :
     block 2 2 3 (fun x => ![![11/64, 11/64], ![13/64, 13/64], ![1/9, 1/9], ![1/72, 1/72]] x.1 x.2) =
       fun x => ![![11/64, 11/64], ![13/64, 13/64], ![11/288, 1/16], ![25/288, 1/16]] x.1 x.2 := by
+  change (List.finRange 2).foldl
+      (fun (u : Fin 4 × Fin 2 → ℝ) k => (List.finRange 2).foldl
+        (fun u l x => if x = (2, k) ∨ x = (3, l) then
+          (u (2, k) + u (3, l)) / 2 else u x) u) _ = _
   funext x
   rcases x with ⟨i, m⟩
   fin_cases i <;> fin_cases m <;>
-    norm_num [block, List.finRange_succ, List.finRange_zero, average]
+    norm_num [List.finRange_succ, List.finRange_zero]
 
 private theorem reset_block_two :
     reset (fun x => ![![11/64, 11/64], ![13/64, 13/64], ![11/288, 1/16], ![25/288, 1/16]] x.1 x.2) =
       fun x => ![![11/64, 11/64], ![13/64, 13/64], ![29/576, 29/576], ![43/576, 43/576]] x.1 x.2 := by
   funext x
   rcases x with ⟨i, m⟩
-  fin_cases i <;> fin_cases m <;> norm_num [reset, marginal, Fin.sum_univ_two]
+  change (∑ k : Fin 2, _) / 2 = _
+  fin_cases i <;> fin_cases m <;> norm_num [Fin.sum_univ_two]
 
 private theorem reset_block_three_raw :
     block 2 0 3 (fun x => ![![11/64, 11/64], ![13/64, 13/64], ![29/576, 29/576], ![43/576, 43/576]] x.1 x.2) =
       fun x => ![![19/192, 71/576], ![13/64, 13/64], ![29/576, 29/576], ![85/576, 71/576]] x.1 x.2 := by
+  change (List.finRange 2).foldl
+      (fun (u : Fin 4 × Fin 2 → ℝ) k => (List.finRange 2).foldl
+        (fun u l x => if x = (0, k) ∨ x = (3, l) then
+          (u (0, k) + u (3, l)) / 2 else u x) u) _ = _
   funext x
   rcases x with ⟨i, m⟩
   fin_cases i <;> fin_cases m <;>
-    norm_num [block, List.finRange_succ, List.finRange_zero, average]
+    norm_num [List.finRange_succ, List.finRange_zero]
 
 private theorem reset_block_three :
     reset (fun x => ![![19/192, 71/576], ![13/64, 13/64], ![29/576, 29/576], ![85/576, 71/576]] x.1 x.2) =
       fun x => ![![1/9, 1/9], ![13/64, 13/64], ![29/576, 29/576], ![13/96, 13/96]] x.1 x.2 := by
   funext x
   rcases x with ⟨i, m⟩
-  fin_cases i <;> fin_cases m <;> norm_num [reset, marginal, Fin.sum_univ_two]
+  change (∑ k : Fin 2, _) / 2 = _
+  fin_cases i <;> fin_cases m <;> norm_num [Fin.sum_univ_two]
 
 private theorem truncated_values :
     truncatedOutput 2 p w = ![31/144, 13/32, 29/288, 5/18] := by
@@ -164,7 +196,8 @@ private theorem truncated_values :
   dsimp only
   rw [joint_values, truncated_block_one, truncated_block_two, truncated_block_three]
   funext i
-  fin_cases i <;> norm_num [marginal, Fin.sum_univ_two]
+  change (∑ m : Fin 2, _) = _
+  fin_cases i <;> norm_num [Fin.sum_univ_two]
 
 private theorem reset_values :
     resetOutput 2 p w = ![2/9, 13/32, 29/288, 13/48] := by
@@ -173,7 +206,8 @@ private theorem reset_values :
   rw [joint_values, truncated_block_one, reset_block_one, reset_block_two_raw,
     reset_block_two, reset_block_three_raw, reset_block_three]
   funext i
-  fin_cases i <;> norm_num [marginal, Fin.sum_univ_two]
+  change (∑ m : Fin 2, _) = _
+  fin_cases i <;> norm_num [Fin.sum_univ_two]
 
 private theorem distance_gap :
     totalVariation (target p w) (truncatedOutput 2 p w) =
