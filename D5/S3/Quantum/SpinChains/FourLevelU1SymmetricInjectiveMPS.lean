@@ -6,13 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/SpinChains/FourLevelU1SymmetricInjectiveMPS.claim; result=D5/S3/Quantum/SpinChains/FourLevelU1SymmetricInjectiveMPS.result; claim=D5/S3/Quantum/SpinChains/FourLevelU1SymmetricInjectiveMPS.claim
    digest: Four nonzero U(1) charges admit an injective normalized bond-three MPS. -/
 
-import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.LinearAlgebra.UnitaryGroup
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
 
 set_option autoImplicit false
 set_option linter.style.longLine false
@@ -69,50 +63,116 @@ private def kraus : Fin 4 → Matrix (Fin 3) (Fin 3) ℂ :=
 private def charges : Fin 4 → ℝ := ![-1, 1, -2, 2]
 
 private def gauge (φ : ℝ) : Matrix (Fin 3) (Fin 3) ℂ :=
-  Matrix.diagonal ![1, Complex.exp (φ * Complex.I), Complex.exp (2 * φ * Complex.I)]
+  Matrix.diagonal (fun i => Complex.exp ((i.val : ℂ) * φ * Complex.I))
 
 private def ungauge (φ : ℝ) : Matrix (Fin 3) (Fin 3) ℂ :=
-  Matrix.diagonal ![1, Complex.exp (-(φ * Complex.I)), Complex.exp (-(2 * φ * Complex.I))]
+  Matrix.diagonal (fun i => Complex.exp (-((i.val : ℂ) * φ * Complex.I)))
 
 private theorem kraus_nonzero : ∀ k, kraus k ≠ 0 := by
-  sorry
+  intro k h
+  fin_cases k
+  · have he := congrArg (fun m : Matrix (Fin 3) (Fin 3) ℂ => m 0 1) h
+    norm_num [kraus] at he
+  · have he := congrArg (fun m : Matrix (Fin 3) (Fin 3) ℂ => m 1 0) h
+    norm_num [kraus] at he
+  · have he := congrArg (fun m : Matrix (Fin 3) (Fin 3) ℂ => m 0 2) h
+    norm_num [kraus] at he
+  · have he := congrArg (fun m : Matrix (Fin 3) (Fin 3) ℂ => m 2 0) h
+    norm_num [kraus] at he
 
 private theorem kraus_normalized : (∑ k, kraus k * star (kraus k)) = 1 := by
-  sorry
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    norm_num [kraus, Fin.sum_univ_succ, Matrix.mul_apply, Matrix.star_apply,
+      Matrix.one_apply]
 
 private theorem charges_nonzero : ∀ k, charges k ≠ 0 := by
-  sorry
+  intro k
+  fin_cases k <;> norm_num [charges]
 
 private theorem charges_distinct : ∃ k l, charges k ≠ charges l := by
-  sorry
+  exact ⟨0, 1, by norm_num [charges]⟩
 
 private theorem gauge_inverse (φ : ℝ) : ungauge φ * gauge φ = 1 := by
-  sorry
+  change Matrix.diagonal _ * Matrix.diagonal _ = _
+  rw [Matrix.diagonal_mul_diagonal]
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [Matrix.diagonal_apply, Matrix.one_apply, Complex.exp_neg,
+      Complex.exp_ne_zero]
 
 private theorem charge_conjugation (φ : ℝ) (k : Fin 4) :
     gauge φ * kraus k * ungauge φ =
       Complex.exp (φ * charges k * Complex.I) • kraus k := by
-  sorry
+  have he (x y z : ℂ) : Complex.exp x * z * Complex.exp y =
+      Complex.exp (x + y) * z := by
+    rw [Complex.exp_add]
+    ring
+  ext i j
+  change ((Matrix.diagonal _ * kraus k) * Matrix.diagonal _) i j = _
+  rw [Matrix.mul_diagonal, Matrix.diagonal_mul, Matrix.smul_apply, smul_eq_mul, he]
+  fin_cases k <;> fin_cases i <;> fin_cases j <;>
+    norm_num [kraus, charges] <;> congr 2 <;> ring
 
 private theorem conjugation_words (φ : ℝ) (l : List (Fin 4)) :
     gauge φ * (l.map kraus).prod * ungauge φ =
       (l.map (fun k => Complex.exp (φ * charges k * Complex.I))).prod •
         (l.map kraus).prod := by
-  sorry
+  induction l with
+  | nil =>
+      simpa only [List.map_nil, List.prod_nil, mul_one, one_smul] using
+        (mul_eq_one_comm.mp (gauge_inverse φ))
+  | cons k l ih =>
+      simp only [List.map_cons, List.prod_cons]
+      calc
+        gauge φ * (kraus k * (l.map kraus).prod) * ungauge φ =
+            (gauge φ * kraus k * ungauge φ) *
+              (gauge φ * (l.map kraus).prod * ungauge φ) := by
+          simp only [mul_assoc]
+          rw [← mul_assoc (ungauge φ) (gauge φ), gauge_inverse, one_mul]
+        _ = _ := by rw [charge_conjugation, ih, smul_mul_smul]
 
 private theorem trace_words (φ : ℝ) (l : List (Fin 4)) :
     (l.map (fun k => Complex.exp (φ * charges k * Complex.I))).prod *
       (l.map kraus).prod.trace = (l.map kraus).prod.trace := by
-  sorry
+  have hc := congrArg Matrix.trace (conjugation_words φ l)
+  rw [Matrix.trace_smul] at hc
+  have ht : (gauge φ * (l.map kraus).prod * ungauge φ).trace =
+      (l.map kraus).prod.trace := by
+    rw [Matrix.trace_mul_comm, ← mul_assoc, gauge_inverse, one_mul]
+  exact hc.symm.trans ht
 
 private theorem diagonal_tensor_action (φ : ℝ) (n : ℕ)
     (ψ : (Fin n → Fin 4) → ℂ) (w : Fin n → Fin 4) :
     tensorAct (u1Rep 1 charges φ) n ψ w =
       (∏ i, Complex.exp (φ * charges (w i) * Complex.I)) * ψ w := by
-  sorry
+  classical
+  have hu : u1Rep 1 charges φ =
+      Matrix.diagonal (fun k => Complex.exp (φ * charges k * Complex.I)) := by
+    change (1 : Matrix (Fin 4) (Fin 4) ℂ) * _ * star 1 = _
+    rw [star_one, one_mul, mul_one]
+  change (∑ v, (∏ i, u1Rep 1 charges φ (w i) (v i)) * ψ v) = _
+  rw [hu, Finset.sum_eq_single w]
+  · simp only [Matrix.diagonal_apply_eq]
+  · intro v _ hv
+    have hn : ¬ ∀ i, w i = v i := fun he => hv (funext fun i => (he i).symm)
+    have hi : ∃ i, w i ≠ v i := not_forall.mp hn
+    obtain ⟨i, hi⟩ := hi
+    have hz : (∏ j, Matrix.diagonal
+        (fun k => Complex.exp (φ * charges k * Complex.I)) (w j) (v j)) = 0 := by
+      apply Finset.prod_eq_zero (Finset.mem_univ i)
+      exact Matrix.diagonal_apply_ne _ hi
+    rw [hz, zero_mul]
+  · simp
 
 private theorem kraus_symmetric : IsSymmetric kraus 1 charges := by
-  sorry
+  intro φ n _
+  refine ⟨0, funext fun w => ?_⟩
+  rw [diagonal_tensor_action]
+  simp only [Complex.ofReal_zero, zero_mul, Complex.exp_zero, one_mul]
+  have ht := trace_words φ (List.ofFn w)
+  simp only [List.map_ofFn, List.prod_ofFn] at ht
+  exact ht
 
 private theorem two_products :
     kraus 0 * kraus 0 = (9/25 : ℂ) • Matrix.single 0 2 1 ∧
@@ -125,14 +185,44 @@ private theorem two_products :
     kraus 3 * kraus 2 = (12/25 : ℂ) • Matrix.single 2 2 1 ∧
     kraus 0 * kraus 1 - kraus 2 * kraus 3 =
       (12/25 : ℂ) • Matrix.single 1 1 1 := by
-  sorry
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩ <;>
+    ext i j <;> fin_cases i <;> fin_cases j <;>
+    norm_num [kraus, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.single_apply,
+      Matrix.smul_apply]
 
 private theorem trace_kernel (x : Matrix (Fin 3) (Fin 3) ℂ)
     (h : ∀ i j : Fin 4, (x * (kraus i * kraus j)).trace = 0) : x = 0 := by
-  sorry
+  obtain ⟨h00, h11, h03, h30, h12, h21, h23, h32, h01⟩ := two_products
+  have he (i j : Fin 3) (c : ℂ) (hc : c ≠ 0)
+      (ht : (x * (c • Matrix.single i j 1)).trace = 0) : x j i = 0 := by
+    rw [Matrix.mul_smul, Matrix.trace_smul, Matrix.trace_mul_single] at ht
+    have hm : c * x j i = 0 := by simpa using ht
+    exact (mul_eq_zero.mp hm).resolve_left hc
+  have hx20 := he 0 2 (9/25) (by norm_num) (by rw [← h00]; exact h 0 0)
+  have hx02 := he 2 0 (16/25) (by norm_num) (by rw [← h11]; exact h 1 1)
+  have hx01 := he 1 0 (9/25) (by norm_num) (by rw [← h03]; exact h 0 3)
+  have hx12 := he 2 1 (9/25) (by norm_num) (by rw [← h30]; exact h 3 0)
+  have hx21 := he 1 2 (16/25) (by norm_num) (by rw [← h12]; exact h 1 2)
+  have hx10 := he 0 1 (16/25) (by norm_num) (by rw [← h21]; exact h 2 1)
+  have hx00 := he 0 0 (12/25) (by norm_num) (by rw [← h23]; exact h 2 3)
+  have hx22 := he 2 2 (12/25) (by norm_num) (by rw [← h32]; exact h 3 2)
+  have hx11 := he 1 1 (12/25) (by norm_num) (by
+    rw [← h01, Matrix.mul_sub, Matrix.trace_sub, h 0 1, h 2 3, sub_self])
+  ext i j
+  change x i j = 0
+  fin_cases i <;> fin_cases j <;> assumption
 
 private theorem kraus_injective : IsInjective kraus := by
-  sorry
+  refine ⟨2, ?_⟩
+  intro x y h
+  apply sub_eq_zero.mp
+  apply trace_kernel
+  intro i j
+  have hw := congrFun h (![i, j] : Fin 2 → Fin 4)
+  change (x * (kraus i * (kraus j * 1))).trace =
+    (y * (kraus i * (kraus j * 1))).trace at hw
+  simp only [mul_one] at hw
+  rw [Matrix.sub_mul, Matrix.trace_sub, hw, sub_self]
 
 /-- The normalized bond-three family is symmetric and injective despite its nonzero charges. -/
 theorem result : ¬ claim := by
