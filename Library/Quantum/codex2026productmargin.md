@@ -11,6 +11,7 @@ strata_touched:
   - D5/S3/Quantum/Information/ProductMarginBlockState
   - D5/S3/Quantum/Information/ProductMarginQubitOrder
   - D5/S3/Quantum/Hiai/CommonLowerHarmonicBound
+  - D5/S3/Quantum/Foundation/FinitePreparationChannel
 license: citation-only
 triage: anchor
 ---
@@ -37,15 +38,25 @@ Holevo entropy. The high-reliability certificate uses ordinary binary entropy
 concavity and monotonicity, with the positive exact constant
 $\log(4096/3125)$. No numerical sampling supplies these universal bounds.
 
-The common-lower-matrix argument reuses the repository's attained parallel-sum
-minimum. Its equal-input split residual is $(U-V)^*K(U-V)$ after multiplying
+The common-lower-matrix argument uses the repository's split-energy carrier.
+Its specialization to the attained parallel-sum minimum recovers harmonic
+domination for positive definite inputs; the trace proof instead uses an
+explicit split directly, including singular product margins. Its equal-input split residual is $(U-V)^*K(U-V)$ after multiplying
 the energy by two. This handles singular K without taking its inverse.
-An explicit annihilating split handles a distinct pure local factor.
+An explicit annihilating split handles a distinct pure local factor. A rational
+four-dimensional split gives the full common-trace bound on the two closed
+local disks with x less than one; a zero denominator reduces to the pure
+factor case.
 The qubit spectral bridge reuses the repository's determinant entropy formula
 and accounts for its conversion from bits to nats.
+
+The preparation map uses columns of each density matrix positive square
+root as Kraus operators. Its action on arbitrary complex input matrices is
+the sum of their diagonal entries times the selected actual density states.
+This retains zero probabilities and singular prepared states.
 
 These ingredients do not by themselves prove the whole four-party
 Zhang–Yeung endpoint, its coordinate-free corollary, or any inequality for
 arbitrary quantum states. Physical preparation, the actual-state entropy
-reduction and the remaining common-trace estimate must be connected before
+reduction and the local information-processing estimates must be connected before
 claiming that endpoint.

@@ -7,13 +7,14 @@
    digest: Actual closed-disk qubit density matrices and their natural-log spectral entropy. -/
 
 import D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds
+import D5.S3.Quantum.Foundation.FinitePreparationChannel
 import Mathlib.Tactic
 
 noncomputable section
 namespace D5.S3.Quantum.Information.QubitNormalFormState
-open Matrix
+open _root_.Matrix
 open scoped MatrixOrder ComplexOrder
-open D5.S3.Quantum.Foundation.FiniteStateChannel
+open D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 
 /-- The matrix (I+xX+zZ)/2 in the computational basis. -/
@@ -92,5 +93,30 @@ def qubitHolevo (x z : ℝ) (h : x ^ 2 + z ^ 2 ≤ 1) : ℝ :=
       D5.S3.Quantum.Divergence.VonNeumannEntropyPinching.vonNeumannEntropy
         (qubitState x (-z) (by nlinarith [h]))) / 2
 
+/-- A single physical CPTP preparation channel realizes all binary mixtures of the two
+pure normal-form qubit states. The equation holds on all real diagonal input matrices;
+for t in [-1,1] those inputs and outputs are actual density states. -/
+theorem qubit_preparation_channel {x : ℝ} (hx : x ∈ Set.Icc (0 : ℝ) 1) :
+    ∃ channel : D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel (Fin 2) (Fin 2),
+      ∀ t : ℝ, CStarMatrix.ofMatrix.symm
+        (channel.toCompletelyPositiveMap (CStarMatrix.ofMatrix (qubitMatrix 0 t))) =
+          qubitMatrix x (t * Real.sqrt (1 - x ^ 2)) := by
+  have hf : 0 ≤ 1 - x ^ 2 := by nlinarith [hx.1, hx.2]
+  let b := Real.sqrt (1 - x ^ 2)
+  have hb : x ^ 2 + b ^ 2 = 1 := by dsimp [b]; rw [Real.sq_sqrt hf]; ring
+  let rho (a : Fin 2) : DensityState (Fin 2) :=
+    qubitState x (if a = 0 then b else -b) (by split_ifs <;> nlinarith [hb])
+  obtain ⟨channel, hchannel⟩ :=
+    D5.S3.Quantum.Foundation.FinitePreparationChannel.finite_preparation_quantum_channel
+      (fun a : Fin 2 =>
+        (⟨(rho a).1, (rho a).2⟩ : D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState (Fin 2)))
+  refine ⟨channel, ?_⟩
+  intro t
+  rw [hchannel]
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [Fin.sum_univ_two, rho, qubitState, qubitMatrix, b] <;> ring
+
+#print axioms qubit_preparation_channel
 #print axioms qubit_state_entropy
 end D5.S3.Quantum.Information.QubitNormalFormState

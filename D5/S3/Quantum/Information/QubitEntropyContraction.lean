@@ -108,8 +108,14 @@ private lemma radial_concave : ConcaveOn ℝ (Icc (0 : ℝ) 1) radialEntropy := 
 private lemma radial_antitone : AntitoneOn radialEntropy (Icc (0 : ℝ) 1) := by
   intro u hu v hv huv
   apply Real.binEntropy_strictAntiOn.antitoneOn
-    ⟨by linarith [Real.sqrt_nonneg u], by have h := Real.sqrt_le_sqrt hu.2; norm_num at h; linarith⟩
-    ⟨by linarith [Real.sqrt_nonneg v], by have h := Real.sqrt_le_sqrt hv.2; norm_num at h; linarith⟩
+    ⟨by linarith [Real.sqrt_nonneg u], by
+      have h : Real.sqrt u ≤ 1 := by
+        simpa only [Real.sqrt_one] using Real.sqrt_le_sqrt hu.2
+      linarith⟩
+    ⟨by linarith [Real.sqrt_nonneg v], by
+      have h : Real.sqrt v ≤ 1 := by
+        simpa only [Real.sqrt_one] using Real.sqrt_le_sqrt hv.2
+      linarith⟩
   linarith [Real.sqrt_le_sqrt huv]
 
 /-- Scalar curvature estimate used by the actual qubit spectral bridge. -/

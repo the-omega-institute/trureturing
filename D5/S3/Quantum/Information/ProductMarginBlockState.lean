@@ -11,9 +11,9 @@ import Mathlib.Tactic
 
 noncomputable section
 namespace D5.S3.Quantum.Information.ProductMarginBlockState
-open Matrix
+open _root_.Matrix
 open scoped MatrixOrder ComplexOrder Kronecker BigOperators
-open D5.S3.Quantum.Foundation.FiniteStateChannel
+open D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 variable {n : Type*} [Fintype n] [DecidableEq n]
 

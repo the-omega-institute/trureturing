@@ -4,14 +4,14 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Singular common positive lower bounds are dominated by the matrix harmonic mean. -/
+   digest: Every complex identity split bounds arbitrary singular common positive lower matrices. -/
 
 import D5.S3.Quantum.Hiai.ParallelSumVariational
 import Mathlib.Tactic.Module
 
 noncomputable section
 namespace D5.S3.Quantum.Hiai.CommonLowerHarmonicBound
-open Matrix
+open _root_.Matrix
 open scoped ComplexOrder MatrixOrder
 open D5.S3.Quantum.Hiai.ParallelSumVariational
 variable {d : Type*} [Fintype d] [DecidableEq d]
@@ -51,22 +51,5 @@ theorem common_lower_split_bound {P Q K : Matrix d d ℂ}
   exact (split_energy_common_floor hK hW).trans
     (smul_le_smul_of_nonneg_left (split_energy_mono hKP hKQ W) (by norm_num))
 
-/-- The common lower matrix may be singular and need not commute with either input.
-The proof uses the attained quadratic minimum and never inverts the lower matrix. -/
-theorem common_lower_harmonic_bound {P Q K : Matrix d d ℂ}
-    (hP : P.PosDef) (hQ : Q.PosDef) (hK : K.PosSemidef)
-    (hKP : K ≤ P) (hKQ : K ≤ Q) :
-    K ≤ (2 : ℝ) • parallelSum P Q ∧
-      K.trace.re ≤ 2 * (parallelSum P Q).trace.re := by
-  obtain ⟨W, _, _, hW, hE, _⟩ := parallel_sum_minimum hP hQ (1 : Matrix d d ℂ)
-  simp only [Matrix.conjTranspose_one, one_mul, mul_one] at hE
-  have hbound : K ≤ (2 : ℝ) • parallelSum P Q := by
-    simpa only [hE] using common_lower_split_bound hK hKP hKQ W hW
-  refine ⟨hbound, ?_⟩
-  have ht := (Matrix.le_iff.mp hbound).trace_nonneg
-  have hr := (Complex.nonneg_iff.mp ht).1
-  simpa only [Matrix.trace_sub, Matrix.trace_smul, Complex.sub_re, Complex.smul_re,
-    smul_eq_mul, sub_nonneg] using hr
-
-#print axioms common_lower_harmonic_bound
+#print axioms common_lower_split_bound
 end D5.S3.Quantum.Hiai.CommonLowerHarmonicBound

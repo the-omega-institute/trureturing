@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Common positive lower matrices vanish at distinct pure local qubit margins. -/
+   digest: Closed-disk trace bounds for arbitrary complex common positive lower matrices. -/
 
 import D5.S3.Quantum.Information.QubitNormalFormState
 import D5.S3.Quantum.Hiai.CommonLowerHarmonicBound
@@ -88,6 +88,7 @@ private def traceSplit (x z y w : ℝ) :
   ((1 / 2 : ℂ) • (1 - mixtureInverse x z y w * N),
     (1 / 2 : ℂ) • (1 + mixtureInverse x z y w * N))
 
+-- Expanding the four-dimensional quadratic energy needs a larger finite algebra budget.
 set_option maxRecDepth 10000 in
 set_option maxHeartbeats 2000000 in
 private lemma trace_split_value {x z y w : ℝ} (hd : traceDenominator x z y w ≠ 0) :
@@ -138,7 +139,9 @@ theorem common_lower_trace_bound {xC zC xD zD : ℝ}
       apply (div_eq_one_iff_eq (mul_ne_zero hfC.ne' hfD.ne')).mpr
       dsimp [traceDenominator] at hd
       nlinarith only [hd]
-    have ha1 : a = 1 := by nlinarith [mul_le_mul_of_nonneg_left hb.2 ha.1]
+    have ha1 : a = 1 := by
+      apply le_antisymm ha.2
+      nlinarith [mul_le_mul_of_nonneg_left hb.2 ha.1]
     have hpure : xC ^ 2 + zC ^ 2 = 1 := by
       have he := (div_eq_one_iff_eq hfC.ne').mp ha1
       linarith
@@ -169,7 +172,11 @@ theorem common_lower_trace_bound {xC zC xD zD : ℝ}
     dsimp [a, b, traceDenominator]
     field_simp
     <;> ring
-  have ham : 2 * s ≤ a + b := by nlinarith [sq_nonneg (a - b)]
+  have ham : 2 * s ≤ a + b := by
+    have hn : 0 ≤ (a + b) / 2 := by linarith [ha.1, hb.1]
+    have hsq : s ^ 2 ≤ ((a + b) / 2) ^ 2 := by nlinarith [sq_nonneg (a - b)]
+    have he := (sq_le_sq₀ hs0 hn).mp hsq
+    linarith
   have hscalar : (1 - a) * (1 - b) / (1 - a * b) ≤ (1 - s) / (1 + s) := by
     apply (div_le_div_iff₀ (by linarith : 0 < 1 - a * b) (by positivity : 0 < 1 + s)).mpr
     nlinarith [mul_nonneg (show 0 ≤ a + b - 2 * s by linarith) (show 0 ≤ 1 + s by positivity)]
