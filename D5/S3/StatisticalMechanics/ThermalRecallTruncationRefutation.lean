@@ -7,7 +7,6 @@
    digest: Removing intermediate memory resets can increase permutation approximation error. -/
 
 import D5.S3.TotalVariation.CycleSingleCutMinimax
-import Mathlib.Data.List.FinRange
 import Mathlib.Tactic.FinCases
 
 set_option autoImplicit false
