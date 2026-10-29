@@ -36,6 +36,10 @@ $$\forall p \in \mathbb{N},\; \operatorname{Nat.Prime}\left(p\right) \Rightarrow
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permanental/SunAbsoluteDifferenceCongruences.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/sun210842` (proved) by `D5/S3/Combinatorics/Permanental/SunAbsoluteDifferenceCongruences.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"sun210842","declaration_gid":"D5/S3/Combinatorics/Permanental/SunAbsoluteDifferenceCongruences.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Zhi-Wei Sun (2022). *Arithmetic properties of some permanents*. DOI: [10.48550/arXiv.2108.07723](https://doi.org/10.48550/arXiv.2108.07723). URL: <https://arxiv.org/abs/2108.07723v7>.
