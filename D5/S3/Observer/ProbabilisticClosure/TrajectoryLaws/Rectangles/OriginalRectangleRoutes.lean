@@ -1,12 +1,12 @@
-/- GID: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleRoutes
+/- GID: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleRoutes
    generality: I
-   mirror-B: D5/B/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleRoutes
+   mirror-B: D5/B/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleRoutes
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Irreducible original routes pay rectangular-word occurrence. -/
 
-import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleOccurrence
+import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.Rectangles.OriginalRectangleOccurrence
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 import Mathlib.LinearAlgebra.Matrix.Irreducible.Defs
 import Mathlib.Combinatorics.Quiver.Arborescence

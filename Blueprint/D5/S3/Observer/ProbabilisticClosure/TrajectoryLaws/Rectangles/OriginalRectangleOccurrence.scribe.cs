@@ -6,7 +6,7 @@ internal sealed class OriginalRectangleOccurrenceDocument : IScribeDocumentDefin
 {
     private static DocumentBlock.Describe Entry(string id, string selector, string title, string text, DescribeRole role) =>
         Describe.Lean(DescribeId.Create(id),
-            DeclarationHandle.Create("D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalRectangleOccurrence." + selector),
+            DeclarationHandle.Create("D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence." + selector),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), role);
 
