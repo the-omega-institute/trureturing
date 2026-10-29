@@ -8,9 +8,12 @@
 
 import Mathlib.Analysis.Calculus.Deriv.ZPow
 import Mathlib.Analysis.Matrix.Spectrum
+import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.LinearAlgebra.Matrix.Nonsingular
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Positivity
@@ -52,11 +55,70 @@ def claim : Prop :=
 
 private lemma curvature_formula (r : ℝ) (hr : 0 < r) :
     deriv (deriv ljPotential) r = 12 * (13 - 7 * r ^ (6 : ℕ)) / r ^ (14 : ℕ) := by
-  sorry
+  have hr0 : r ≠ 0 := ne_of_gt hr
+  have hfirst : ∀ x : ℝ, 0 < x →
+      deriv ljPotential x = -12 * x ^ (-13 : ℤ) + 12 * x ^ (-7 : ℤ) := by
+    intro x hx
+    have hx0 : x ≠ 0 := ne_of_gt hx
+    change deriv ((fun y : ℝ => y ^ (-12 : ℤ)) -
+      (fun y : ℝ => 2 * y ^ (-6 : ℤ))) x = _
+    rw [deriv_sub]
+    · rw [deriv_zpow]
+      rw [deriv_const_mul (2 : ℝ)]
+      · rw [deriv_zpow]
+        ring_nf
+      · exact DifferentiableAt.zpow differentiableAt_id (Or.inl hx0)
+    · exact DifferentiableAt.zpow differentiableAt_id (Or.inl hx0)
+    · exact (DifferentiableAt.zpow differentiableAt_id (Or.inl hx0)).const_mul 2
+  have hev : (fun x : ℝ => deriv ljPotential x) =ᶠ[nhds r]
+      (fun x : ℝ => -12 * x ^ (-13 : ℤ) + 12 * x ^ (-7 : ℤ)) := by
+    filter_upwards [eventually_gt_nhds hr] with x hx
+    exact hfirst x hx
+  rw [hev.deriv_eq]
+  change deriv ((fun x : ℝ => -12 * x ^ (-13 : ℤ)) +
+      (fun x : ℝ => 12 * x ^ (-7 : ℤ))) r = _
+  rw [deriv_add]
+  · rw [deriv_const_mul (-12 : ℝ), deriv_const_mul (12 : ℝ)]
+    · rw [deriv_zpow, deriv_zpow]
+      ring_nf
+      rw [zpow_neg, zpow_neg]
+      field_simp
+      ring
+    · exact DifferentiableAt.zpow differentiableAt_id (Or.inl hr0)
+    · exact DifferentiableAt.zpow differentiableAt_id (Or.inl hr0)
+  · exact (DifferentiableAt.zpow differentiableAt_id (Or.inl hr0)).const_mul (-12)
+  · exact (DifferentiableAt.zpow differentiableAt_id (Or.inl hr0)).const_mul 12
+
+private lemma inflection_iff (r : ℝ) (hr : 0 < r) :
+    inflectionPoint < r ↔ 13 < 7 * r ^ (6 : ℕ) := by
+  have hroot : 0 < (13 / 7 : ℝ) ^ ((1 : ℝ) / 6) :=
+    Real.rpow_pos_of_pos (by norm_num) _
+  have hpow : ((13 / 7 : ℝ) ^ ((1 : ℝ) / 6)) ^ (6 : ℝ) = 13 / 7 := by
+    rw [← Real.rpow_mul (by norm_num : 0 ≤ (13 / 7 : ℝ))]
+    norm_num
+  change (13 / 7 : ℝ) ^ ((1 : ℝ) / 6) < r ↔ _
+  rw [← Real.rpow_lt_rpow_iff hroot.le hr.le (by norm_num : (0 : ℝ) < 6)]
+  norm_num [hpow]
+  constructor <;> intro h
+  · nlinarith
+  · nlinarith
 
 private lemma curvature_sign (r : ℝ) (hr : 0 < r) :
     deriv (deriv ljPotential) r < 0 ↔ inflectionPoint < r := by
-  sorry
+  rw [curvature_formula r hr, div_neg_iff]
+  have hden : 0 < r ^ (14 : ℕ) := pow_pos hr _
+  rw [inflection_iff r hr]
+  constructor
+  · intro h
+    rcases h with h | h
+    · exfalso
+      linarith
+    · nlinarith [h.1]
+  · intro h
+    right
+    constructor
+    · nlinarith [h]
+    · exact hden
 
 private lemma jacobian_factorization {m : ℕ} (d : ℝ) (u : Fin (m + 2) → ℝ) :
     ∃ (b : Matrix (Fin (m + 1)) (Fin m) ℝ)
