@@ -145,6 +145,14 @@ private lemma summable_norm_weighted (A : Matrix (Fin r) (Fin r) ℝ) (hA : A.Po
     (fun _ => norm_nonneg _) (fun n => ?_)
   exact weighted_bound A hA b hb u v _
 
+
+private lemma compact_norm_domination (K : TopologicalSpace.Compacts (Fin r → ℝ))
+    (f g : C(Fin r → ℝ, ℂ)) (c : ℝ) (hc : 0 ≤ c)
+    (h : ∀ x, ‖f x‖ ≤ c * ‖g x‖) : ‖f.restrict K‖ ≤ c * ‖g.restrict K‖ := by
+  apply (ContinuousMap.norm_le (f.restrict K) (mul_nonneg hc (norm_nonneg _))).mpr
+  intro x
+  exact (h x).trans (mul_le_mul_of_nonneg_left ((g.restrict K).norm_coe_le_norm x) hc)
+
 private lemma locally_summable_norm_weighted (A : Matrix (Fin r) (Fin r) ℝ) (hA : A.PosDef)
     (b : ℂ) (hb : 0 < b.re) (u v : Fin r → ℝ)
     (K : TopologicalSpace.Compacts (Fin r → ℝ)) :
@@ -154,14 +162,12 @@ private lemma locally_summable_norm_weighted (A : Matrix (Fin r) (Fin r) ℝ) (h
   have hc : 0 ≤ c := div_nonneg
     (add_nonneg (quadratic_nonneg A hA u) (quadratic_nonneg A hA v))
     (mul_pos Real.pi_pos hb).le
-  refine ((locally_summable_norm_gaussian A hA (b / 2)
-    (by simpa using half_pos hb) K).mul_left c).of_nonneg_of_le
-    (fun _ => norm_nonneg _) (fun n => ?_)
-  apply (ContinuousMap.norm_le _ (mul_nonneg hc (norm_nonneg _))).mpr
+  have hbhalf : 0 < (b / 2).re := by simpa using half_pos hb
+  have hs := (locally_summable_norm_gaussian A hA (b / 2) hbhalf K).mul_left c
+  refine hs.of_nonneg_of_le (fun _ => norm_nonneg _) (fun n => ?_)
+  apply compact_norm_domination K _ _ c hc
   intro x
-  exact (weighted_bound A hA b hb u v _).trans
-    (mul_le_mul_of_nonneg_left (ContinuousMap.norm_coe_le_norm
-      (((gaussianMap A (b / 2)).comp (ContinuousMap.addRight (fun i => (n i : ℝ)))).restrict K) x) hc)
+  exact weighted_bound A hA b hb u v (x + (fun i => (n i : ℝ)))
 
 private def phase (w x : Fin r → ℝ) : ℂ :=
   Complex.exp (-2 * Real.pi * Complex.I * (w ⬝ᵥ x : ℝ))
@@ -401,14 +407,30 @@ private lemma weighted_poisson (A : Matrix (Fin r) (Fin r) ℝ) (hA : A.PosDef)
       dsimp [gaussianMap]
       simp only [div_eq_mul_inv, neg_mul, mul_sub, sub_mul]
       ring
-  have hsf := ((hs.mul_left g).sub (hw.mul_left (1 / b ^ 2))).mul_left c
+  have hsn := summable_norm_gaussian A⁻¹ hA.inv b⁻¹ hbi
+  have hwn := summable_norm_weighted A⁻¹ hA.inv b⁻¹ hbi (A *ᵥ u) (A *ᵥ v)
+  have hmajor := ((hsn.mul_left ‖g‖).add (hwn.mul_left ‖(1 : ℂ) / b ^ 2‖)).mul_left ‖c‖
+  have hsf : Summable (fun k : Fin r → ℤ =>
+      ‖c * (g * gaussianMap A⁻¹ b⁻¹ (fun i => (k i : ℝ)) -
+        (1 / b ^ 2) * weightedMap A⁻¹ b⁻¹ (A *ᵥ u) (A *ᵥ v) (fun i => (k i : ℝ)))‖) := by
+    refine hmajor.of_nonneg_of_le (fun _ => norm_nonneg _) (fun k => ?_)
+    rw [norm_mul]
+    apply mul_le_mul_of_nonneg_left _ (norm_nonneg c)
+    calc
+      _ ≤ ‖g * gaussianMap A⁻¹ b⁻¹ (fun i => (k i : ℝ))‖ +
+          ‖(1 / b ^ 2) * weightedMap A⁻¹ b⁻¹ (A *ᵥ u) (A *ᵥ v) (fun i => (k i : ℝ))‖ :=
+        norm_sub_le _ _
+      _ = _ := by rw [norm_mul, norm_mul]; rfl
+  have hfourier : Summable (fun k : Fin r → ℤ =>
+      ‖∫ x, Complex.exp (-2 * Real.pi * Complex.I *
+        (∑ i, (k i : ℝ) * x i : ℝ)) * weightedMap A b u v x‖) :=
+    hsf.congr (fun k => congrArg norm (hft k).symm)
   have hp := CoordinatePoisson.tsum_eq_tsum_integral (integrable_weighted A hA b hb u v)
-    (locally_summable_norm_weighted A hA b hb u v) (hsf.congr (fun k => (hft k).symm))
+    (locally_summable_norm_weighted A hA b hb u v) hfourier.of_norm
   rw [hp]
   simp_rw [hft]
   rw [tsum_mul_left, (hs.mul_left g).tsum_sub (hw.mul_left (1 / b ^ 2)),
     tsum_mul_left, tsum_mul_left]
-  rfl
 
 /-- Principal-branch second-moment inversion for every finite real positive
 Gram matrix. Inversion transports the polarizations by A and adds the metric
@@ -469,3 +491,4 @@ theorem second_moment_inversion (A : Matrix (Fin r) (Fin r) ℝ) (hA : A.PosDef)
 
 end
 end D5.S3.Fourier.MatrixGaussian
+
