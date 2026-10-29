@@ -8,6 +8,8 @@
 
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeSymbolicRowElimination
 
+/-! Native mask restoration and complete row elimination on original prefix patterns. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -16,7 +18,8 @@ namespace D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeMaskRowEliminat
 open GenealogicalFiberTransport (Source)
 open ActualTreeReadoutAcquisition (Address)
 open ActualCutPartitionRecovery (CutSet CutPrefixFree reachedHoles)
-open ActualCutPartitionDecoder (HoleExterior cutExterior exteriorHoles actualPartition literalRecord)
+open ActualCutPartitionDecoder
+  (HoleExterior cutExterior exteriorHoles actualPartition literalRecord)
 open NativeGroundSeparation (Term)
 open NativeSymbolicRowElimination
 open NativeTermUnification (Presentation)
@@ -90,7 +93,7 @@ def maskRowHolds (r : RawRow) (u : Source) : Prop :=
 private theorem mask_row_exact (r : RawRow) (u : Source) :
     maskRowHolds r u ↔ literalRecord r.1 u = r.2 := by
   rw [maskRowHolds, ← mask_exterior_exact]
-  exact Prod.mk.injEq.symm
+  simp only [literalRecord, Prod.mk.injEq]
 
 /-- Mask and reached-set equality characterize complete original exteriors.
 Every row of the same filled original pattern is then eliminated together,
