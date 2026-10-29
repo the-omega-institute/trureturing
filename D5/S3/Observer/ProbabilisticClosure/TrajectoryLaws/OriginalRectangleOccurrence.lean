@@ -60,12 +60,14 @@ private theorem path_entry (θ : Presentation H) (n : ℕ)
         apply mul_le_mul_of_nonneg_left _ (θ.matrix_nonneg _ _ _)
         simpa only [Fin.tail, Fin.succ_zero_eq_one, Fin.succ_last] using
           ih (Fin.tail h) (Fin.tail v)
-      _ ≤ _ := Finset.single_le_sum
-        (fun (j : H) _ => mul_nonneg (θ.matrix_nonneg _ _ _)
-          (by
-            have hh := product_nonneg θ (List.ofFn (Fin.tail v)) j (h (Fin.last (n+1)))
-            rwa [product_ofFn] at hh))
-        (Finset.mem_univ (h 1))
+      _ ≤ ∑ j : H, θ.matrix (v 0) (h 0) j *
+          wordMatrix θ.matrix n (Fin.tail v) j (h (Fin.last (n+1))) := by
+        exact Finset.single_le_sum
+          (fun (j : H) _ => mul_nonneg (θ.matrix_nonneg (v 0) (h 0) j)
+            (by
+              have hh := product_nonneg θ (List.ofFn (Fin.tail v)) j (h (Fin.last (n+1)))
+              rwa [product_ofFn] at hh))
+          (Finset.mem_univ (h 1))
 
 private theorem route_word_mass (θ : Presentation H) (w : List Bool) (r h : H)
     (a : LabelledRoute θ h r) :
