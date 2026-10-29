@@ -14,7 +14,7 @@ open LeanInformationAudit
 noncomputable section
 
 abbrev signature : Signature where
-  Params := ℕ+ × List ℕ+ × ℕ+
+  Params := Σ _ : ℕ+, Σ _ : List ℕ+, ℕ+
   State _ := ℕ
   Role := Unit
   finiteRole := inferInstance
@@ -34,7 +34,7 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (head : ℕ+) (tail : List ℕ+) (ell : ℕ+),
-    ∃ N : ℕ, 1 ≤ N ∧ ∀ n : ℕ, N ≤ n → R.readout () (head, tail, ell) n < 0
+    ∃ N : ℕ, 1 ≤ N ∧ ∀ n : ℕ, N ≤ n → R.readout () ⟨head, tail, ell⟩ n < 0
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -64,7 +64,7 @@ def sourceEvidence : Registration arena (type_of% (@CompositionEventualNegative.
   dependence := by
     intro i
     obtain ⟨N, _, hN⟩ := CompositionEventualNegative.result 1 [] 1
-    refine ⟨(1, [], 1), 0, N, ?_⟩
+    refine ⟨⟨1, [], 1⟩, 0, N, ?_⟩
     change CompositionReciprocalSeries.ordinaryCoefficient 1 [] 1 0 ≠
       CompositionReciprocalSeries.ordinaryCoefficient 1 [] 1 N
     exact ne_of_gt ((hN N le_rfl).trans (coefficient_zero_pos 1 [] 1))

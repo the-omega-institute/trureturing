@@ -13,7 +13,7 @@ open Complex Filter Set Topology LeanInformationAudit
 noncomputable section
 
 abbrev signature : Signature where
-  Params := ℕ+ × List ℕ+
+  Params := Σ _ : ℕ+, List ℕ+
   State _ := ℂ
   Role := Unit
   finiteRole := inferInstance
@@ -32,10 +32,10 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (head : ℕ+) (tail : List ℕ+),
-    (∀ z, ‖z‖ < 1 → R.readout () (head, tail) z = CompositionDisk.normalized head tail z) ∧
-    AnalyticOnNhd ℂ (R.readout () (head, tail)) CompositionContinuation.omega ∧
+    (∀ z, ‖z‖ < 1 → CompositionZeroFreeCollar.normalizedContinuation head tail z = CompositionDisk.normalized head tail z) ∧
+    AnalyticOnNhd ℂ (CompositionZeroFreeCollar.normalizedContinuation head tail) CompositionContinuation.omega ∧
     ∃ R0 : ℝ, 1 < R0 ∧ ∀ z ∈ CompositionContinuation.omega,
-      ‖z‖ < R0 → R.readout () (head, tail) z ≠ 0
+      ‖z‖ < R0 → R.readout () ⟨head, tail⟩ z ≠ 0
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -50,7 +50,7 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
       CompositionZeroFreeCollar.normalizedContinuation 1 [] x ≠
         CompositionZeroFreeCollar.normalizedContinuation 1 [] y by
     obtain ⟨x, y, hxy⟩ := hh
-    exact ⟨(1, []), x, y, hxy⟩
+    exact ⟨⟨1, []⟩, x, y, hxy⟩
   classical
   by_contra hn
   push Not at hn
@@ -115,16 +115,6 @@ def result_registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     definition := none
     coordinates := #[0, 1]
     readouts := #[{
-      path := #["body", "body", "fn", "arg", "body", "body", "fn", "arg"]
-      stateBinder := 2
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }, {
-      path := #["body", "body", "arg", "fn", "arg", "fn", "arg"]
-      stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }, {
       path := #["body", "body", "arg", "arg", "arg", "body", "arg", "body", "body",
         "body", "fn", "arg"]
       stateBinder := 3

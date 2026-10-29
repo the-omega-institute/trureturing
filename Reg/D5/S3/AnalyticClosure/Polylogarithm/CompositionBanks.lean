@@ -14,7 +14,7 @@ open scoped ComplexConjugate
 noncomputable section
 
 abbrev signature : Signature where
-  Params := ℕ+ × List ℕ+ × ℕ+
+  Params := Σ _ : ℕ+, Σ _ : List ℕ+, ℕ+
   State _ := ℂ
   Role := Unit
   finiteRole := inferInstance
@@ -33,12 +33,12 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ (head : ℕ+) (tail : List ℕ+) (ell : ℕ+),
     let A : ℂ → ℂ := fun z ↦
-      (z ^ CompositionDisk.depth tail / R.readout () (head, tail, ell) z) ^ (ell : ℕ)
+      (z ^ CompositionDisk.depth tail / CompositionContinuation.continued (head :: tail) z) ^ (ell : ℕ)
     let endpoint : ℂ := if 1 < (head : ℕ) then
       ((CompositionBoundary.zeta head tail : ℂ)⁻¹) ^ (ell : ℕ) else 0
     ∃ rho : ℝ, 0 < rho ∧ rho < 1 ∧
       (∀ z ∈ CompositionContinuation.omega, ‖z - 1‖ ≤ rho →
-        R.readout () (head, tail, ell) z ≠ 0) ∧
+        R.readout () ⟨head, tail, ell⟩ z ≠ 0) ∧
       Tendsto A (nhdsWithin 1 CompositionContinuation.omega) (nhds endpoint) ∧
       ∃ upper lower : ℂ → ℂ,
         ContinuousOn upper {z | ‖z - 1‖ ≤ rho ∧ 0 ≤ z.im} ∧
@@ -76,7 +76,7 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
     apply hne
     rw [CompositionZeroFreeCollar.normalizedContinuation,
       ite_eq_right (by norm_num : (1 / 2 : ℂ) ≠ 0), he, zero_div]
-  refine ⟨(1, [], 1), 0, (1 / 2), ?_⟩
+  refine ⟨⟨1, [], 1⟩, 0, (1 / 2), ?_⟩
   change CompositionContinuation.continued [1] 0 ≠
     CompositionContinuation.continued [1] (1 / 2)
   rw [hz]
@@ -120,11 +120,6 @@ def result_registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     definition := none
     coordinates := #[0, 1, 2]
     readouts := #[{
-      path := #["body", "body", "body", "value", "body", "fn", "arg", "arg"]
-      stateBinder := 3
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }, {
       path := #["body", "body", "body", "body", "body", "arg", "body", "arg", "arg",
         "fn", "arg", "body", "body", "body", "fn", "arg"]
       stateBinder := 6
