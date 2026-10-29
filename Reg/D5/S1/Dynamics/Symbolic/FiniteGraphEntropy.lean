@@ -7,6 +7,7 @@ open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S1.Dynamics.Shadowing
 open _root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy
+open SymbolicDynamics
 open Set Function
 open scoped Topology
 
@@ -61,6 +62,8 @@ private theorem sampleLanguage_nonempty :
 def compactArena : Arena where
   signature := signature.{u}
   Law r := ∀ (P : Parameters.{u}) (edge : P.V → P.V → Prop),
+    letI := P.topologyV
+    letI := P.discreteV
     r.readout () P edge = edgeLanguage edge ∧
       IsCompact (r.readout () P edge) ∧ IsClosed (r.readout () P edge)
 
@@ -73,10 +76,11 @@ private theorem compact_actual_law : compactArena.{u}.Law actual := by
 private theorem compact_rejected_law : ¬ compactArena.{u}.Law rejected := by
   intro h
   have hzero := (h sampleParameters sampleEdgeTrue).1
-  have hmem : (fun _ : ℕ => (ULift.up () : sampleParameters.V)) ∈
-      (∅ : Set (ℕ → sampleParameters.V)) := by
+  change (∅ : Set (ℕ → sampleParameters.V)) = edgeLanguage sampleEdgeTrue at hzero
+  obtain ⟨word, hword⟩ := sampleLanguage_nonempty
+  have hmem : word ∈ (∅ : Set (ℕ → sampleParameters.V)) := by
     rw [hzero]
-    exact sampleLanguage_nonempty.some_mem
+    exact hword
   exact hmem
 
 theorem compact_source_bridge :
@@ -114,11 +118,10 @@ def compactFamily : Registration compactArena.{u}
     cases i
     refine ⟨sampleParameters, sampleEdgeTrue, sampleEdgeFalse, ?_⟩
     intro heq
-    have hset : edgeLanguage sampleEdgeTrue = edgeLanguage sampleEdgeFalse := by
-      simpa only [actual] using heq
+    change edgeLanguage sampleEdgeTrue = edgeLanguage sampleEdgeFalse at heq
     have hmem : (fun _ : ℕ => (ULift.up () : sampleParameters.V)) ∈
         edgeLanguage sampleEdgeFalse := by
-      rw [← hset]
+      rw [← heq]
       exact sampleLanguage_nonempty.some_mem
     rcases hmem with ⟨path, hpath, _⟩
     exact hpath 0
@@ -150,6 +153,8 @@ noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,
 def shiftArena : Arena where
   signature := signature.{u}
   Law r := ∀ (P : Parameters.{u}) (edge : P.V → P.V → Prop),
+    letI := P.topologyV
+    letI := P.discreteV
     r.readout () P edge = edgeLanguage edge ∧
       MapsTo (FullShift.shift (1 : ℕ)) (r.readout () P edge) (r.readout () P edge)
 
@@ -162,10 +167,11 @@ private theorem shift_actual_law : shiftArena.{u}.Law actual := by
 private theorem shift_rejected_law : ¬ shiftArena.{u}.Law rejected := by
   intro h
   have hzero := (h sampleParameters sampleEdgeTrue).1
-  have hmem : (fun _ : ℕ => (ULift.up () : sampleParameters.V)) ∈
-      (∅ : Set (ℕ → sampleParameters.V)) := by
+  change (∅ : Set (ℕ → sampleParameters.V)) = edgeLanguage sampleEdgeTrue at hzero
+  obtain ⟨word, hword⟩ := sampleLanguage_nonempty
+  have hmem : word ∈ (∅ : Set (ℕ → sampleParameters.V)) := by
     rw [hzero]
-    exact sampleLanguage_nonempty.some_mem
+    exact hword
   exact hmem
 
 theorem shift_source_bridge :
@@ -203,11 +209,10 @@ def shiftFamily : Registration shiftArena.{u}
     cases i
     refine ⟨sampleParameters, sampleEdgeTrue, sampleEdgeFalse, ?_⟩
     intro heq
-    have hset : edgeLanguage sampleEdgeTrue = edgeLanguage sampleEdgeFalse := by
-      simpa only [actual] using heq
+    change edgeLanguage sampleEdgeTrue = edgeLanguage sampleEdgeFalse at heq
     have hmem : (fun _ : ℕ => (ULift.up () : sampleParameters.V)) ∈
         edgeLanguage sampleEdgeFalse := by
-      rw [← hset]
+      rw [← heq]
       exact sampleLanguage_nonempty.some_mem
     rcases hmem with ⟨path, hpath, _⟩
     exact hpath 0
