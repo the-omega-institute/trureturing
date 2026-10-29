@@ -106,6 +106,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Factorization/Galois/AliabadiSubspaceProductRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/aliabadi-2025-matchability-subspace-product` (refuted) by `D5/S3/Factorization/Galois/AliabadiSubspaceProductRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"aliabadi-2025-matchability-subspace-product","declaration_gid":"D5/S3/Factorization/Galois/AliabadiSubspaceProductRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Mohsen Aliabadi (2025). *Conditions for matchability in groups and field extensions II*. DOI: [10.7151/dmgaa.1461](https://doi.org/10.7151/dmgaa.1461). URL: <https://www.dmgaa.uz.zgora.pl/publish/pdf.php?doi=1461>.
