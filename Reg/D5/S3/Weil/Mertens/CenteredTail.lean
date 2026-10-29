@@ -29,7 +29,7 @@ def arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have ht : Tendsto (fun _ : ℝ => (1 : ℝ)) atTop (𝓝 0) :=
-    h.trans_tendsto (by simpa only [one_div] using Real.tendsto_log_atTop.inv_tendsto_atTop)
+    h.trans_tendsto (Real.tendsto_log_atTop.const_div_atTop 1)
   have he : (1 : ℝ) = 0 := tendsto_nhds_unique tendsto_const_nhds ht
   norm_num at he
 
