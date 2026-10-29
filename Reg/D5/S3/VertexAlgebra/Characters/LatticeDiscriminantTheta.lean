@@ -249,6 +249,7 @@ abbrev arena : Arena where
     a.readout () (Submodule ℤ (Fin D.rank → ℚ))
       ((gramRat D).toBilin'.dualSubmodule (integerLattice D)) (dualLattice D) ∧
     Nat.card (Discriminant D) = D.G.det.natAbs ∧
+    (Nat.card (Discriminant D) : ℝ) = (gramReal D).det ∧
     (∀ x : Fin D.rank → ℝ,
       (∀ n : Charge D, ∃ z : ℤ,
         x ⬝ᵥ gramReal D *ᵥ (fun i => (n i : ℝ)) = (z : ℝ)) ↔
@@ -296,7 +297,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.VertexAlgebra.Characters.LatticeDiscriminantTheta
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "fn", "arg", "fn", "fn"]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -359,7 +361,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.VertexAlgebra.Characters.LatticeDiscriminantTheta
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "fn", "arg", "body", "body", "fn", "fn"]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg", "body", "body", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -421,7 +424,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.VertexAlgebra.Characters.LatticeDiscriminantTheta
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "arg", "fn", "fn"]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none
@@ -489,7 +493,8 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.VertexAlgebra.Characters.LatticeDiscriminantTheta
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "body", "arg", "fn", "fn"]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "body", "arg", "fn", "fn"]
       stateBinder := 0
       functionOperand := true
       stateOperand := none

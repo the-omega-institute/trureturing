@@ -15,6 +15,8 @@ import Mathlib.LinearAlgebra.BilinearForm.DualLattice
 import Mathlib.LinearAlgebra.Matrix.BilinearForm
 import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
 
+/-! # Original even-lattice discriminant theta sectors -/
+
 set_option autoImplicit false
 set_option maxHeartbeats 800000
 
@@ -67,7 +69,8 @@ private lemma gramMap_injective (D : LatticeData) (hD : (gramReal D).PosDef) :
       gramReal D *ᵥ (fun i => (y i : ℝ)) := by
     funext i
     have hi := congrArg (fun v => (v i : ℝ)) h
-    simpa only [gramMap, Matrix.toLin'_apply, RingHom.map_mulVec, gramReal] using hi
+    exact ((Int.castRingHom ℝ).map_mulVec D.G x i).symm.trans
+      (hi.trans ((Int.castRingHom ℝ).map_mulVec D.G y i))
   have he := (Matrix.mulVec_injective_iff_isUnit.mpr
     ((gramReal D).isUnit_iff_isUnit_det.mpr (real_unit D hD))) hc
   ext i
@@ -92,6 +95,17 @@ private lemma discriminant_card (D : LatticeData) (hD : (gramReal D).PosDef) :
   rw [he, gramMap, LinearMap.det_toLin'] at h
   exact h.symm
 
+private lemma discriminant_card_real (D : LatticeData) (hD : (gramReal D).PosDef) :
+    (Nat.card (Discriminant D) : ℝ) = (gramReal D).det := by
+  have hp : 0 ≤ D.G.det := by
+    exact_mod_cast (show (0 : ℝ) ≤ (D.G.det : ℝ) by
+      rw [← real_det D]
+      exact hD.det_pos.le)
+  have hn : (D.G.det.natAbs : ℤ) = D.G.det := by
+    rw [Int.natCast_natAbs, abs_of_nonneg hp]
+  rw [discriminant_card D hD, real_det]
+  simpa only [Int.cast_natCast] using congrArg (fun z : ℤ => (z : ℝ)) hn
+
 /-- Inversion is performed in the rational scalar extension. -/
 def inverseRat (D : LatticeData) : Matrix (Fin D.rank) (Fin D.rank) ℚ := (gramRat D)⁻¹
 
@@ -100,6 +114,7 @@ private lemma inverse_cast (D : LatticeData) (hD : (gramReal D).PosDef) :
   have h := congrArg (fun A : Matrix (Fin D.rank) (Fin D.rank) ℚ =>
     A.map (Rat.castHom ℝ)) (Matrix.mul_nonsing_inv (gramRat D) (rat_unit D hD))
   apply (Matrix.inv_eq_right_inv ?_).symm
+  rw [Matrix.map_mul] at h
   simpa [gramReal, gramRat, inverseRat, Matrix.map_map, Function.comp_def] using h
 
 private lemma gramReal_symm (D : LatticeData) : (gramReal D)ᵀ = gramReal D := by
@@ -131,6 +146,7 @@ private lemma coset_surjective (D : LatticeData) :
     (Submodule.Quotient.eq _).mp (class_representative D (classOf D k)).symm
   obtain ⟨n, hn⟩ := hk
   refine ⟨(classOf D k, n), ?_⟩
+  change representative D (classOf D k) + gramMap D n = k
   change gramMap D n = k - representative D (classOf D k) at hn
   rw [hn]
   abel
@@ -149,6 +165,10 @@ def cosetEquiv (D : LatticeData) (hD : (gramReal D).PosDef) :
     Discriminant D × Charge D ≃ Charge D :=
   Equiv.ofBijective (fun p => representative D p.1 + gramMap D p.2)
     ⟨coset_injective D hD, coset_surjective D⟩
+
+private lemma cosetEquiv_apply (D : LatticeData) (hD : (gramReal D).PosDef)
+    (p : Discriminant D × Charge D) :
+    cosetEquiv D hD p = representative D p.1 + gramMap D p.2 := rfl
 
 def dualVector (D : LatticeData) (r : Charge D) : Fin D.rank → ℚ :=
   inverseRat D *ᵥ (fun i => (r i : ℚ))
@@ -202,7 +222,8 @@ private lemma dualMap_bijective (D : LatticeData) (hD : (gramReal D).PosDef) :
   constructor
   · intro r s h
     have hc := congrArg (fun x : dualLattice D => gramRat D *ᵥ x.1) h
-    simp only [dualMap, dualVector, inverseRat, mulVec_mulVec,
+    change gramRat D *ᵥ dualVector D r = gramRat D *ᵥ dualVector D s at hc
+    simp only [dualVector, inverseRat, mulVec_mulVec,
       mul_nonsing_inv _ (rat_unit D hD), one_mulVec] at hc
     ext i
     exact_mod_cast congrFun hc i
@@ -281,18 +302,19 @@ private lemma shift_eq (D : LatticeData) (hD : (gramReal D).PosDef) (r : Charge 
     shift D r = (gramReal D)⁻¹ *ᵥ (fun i => (r i : ℝ)) := by
   ext i
   have h := (Rat.castHom ℝ).map_mulVec (inverseRat D) (fun j => (r j : ℚ)) i
-  simpa only [shift, dualVector, inverse_cast D hD, Function.comp_apply,
-    Rat.cast_intCast] using h
+  rw [inverse_cast D hD] at h
+  simpa [shift, dualVector, Function.comp_def] using h
 
 /-- The rational construction realizes the full real dual lattice as well as its exact finite quotient. -/
 theorem dual_lattice_realization (D : LatticeData) (hD : (gramReal D).PosDef) :
     (gramRat D).toBilin'.dualSubmodule (integerLattice D) = dualLattice D ∧
     Nat.card (Discriminant D) = D.G.det.natAbs ∧
+    (Nat.card (Discriminant D) : ℝ) = (gramReal D).det ∧
     (∀ x : Fin D.rank → ℝ,
       (∀ n : Charge D, ∃ z : ℤ,
         x ⬝ᵥ gramReal D *ᵥ (fun i => (n i : ℝ)) = (z : ℝ)) ↔
       ∃ r : Charge D, shift D r = x) := by
-  refine ⟨dual_intrinsic D, discriminant_card D hD, ?_⟩
+  refine ⟨dual_intrinsic D, discriminant_card D hD, discriminant_card_real D hD, ?_⟩
   intro x
   have hs (y : Fin D.rank → ℝ) :
       x ⬝ᵥ gramReal D *ᵥ y = y ⬝ᵥ gramReal D *ᵥ x := by
@@ -303,7 +325,8 @@ theorem dual_lattice_realization (D : LatticeData) (hD : (gramReal D).PosDef) :
       obtain ⟨z, hz⟩ := hx (Pi.single i 1)
       refine ⟨z, ?_⟩
       rw [hs] at hz
-      have he : (fun j => ((Pi.single i (1 : ℤ)) j : ℝ)) = Pi.single i (1 : ℝ) := by
+      have he : (fun j : Fin D.rank => ((Pi.single i (1 : ℤ) : Charge D) j : ℝ)) =
+          (Pi.single i (1 : ℝ) : Fin D.rank → ℝ) := by
         ext j
         simp [Pi.single_apply]
       simpa only [he, single_dotProduct, one_mul] using hz.symm
@@ -358,7 +381,7 @@ private def qmodToReal : QmodZ →+ AddCircle (1 : ℝ) :=
     intro x hx
     obtain ⟨n, rfl⟩ := AddSubgroup.mem_zmultiples_iff.mp hx
     change (((n • (1 : ℚ) : ℚ) : ℝ) : AddCircle (1 : ℝ)) = 0
-    apply AddCircle.coe_eq_zero_iff.mpr
+    apply (AddCircle.coe_eq_zero_iff (1 : ℝ)).mpr
     exact ⟨n, by simp⟩)
 
 private lemma qmodToReal_injective : Function.Injective qmodToReal := by
@@ -372,11 +395,11 @@ private lemma qmodToReal_injective : Function.Injective qmodToReal := by
   | H x =>
     intro hx
     change ((x : ℝ) : AddCircle (1 : ℝ)) = 0 at hx
-    obtain ⟨n, hn⟩ := AddCircle.coe_eq_zero_iff.mp hx
-    apply AddCircle.coe_eq_zero_iff.mpr
+    obtain ⟨n, hn⟩ := (AddCircle.coe_eq_zero_iff (1 : ℝ)).mp hx
+    apply (AddCircle.coe_eq_zero_iff (1 : ℚ)).mpr
     refine ⟨n, ?_⟩
-    simpa only [zsmul_eq_mul, mul_one, Rat.cast_intCast] using
-      (show (n • (1 : ℚ)) = x by exact_mod_cast hn)
+    simp only [zsmul_eq_mul, mul_one] at hn ⊢
+    exact_mod_cast hn
 
 /-- The faithful unit complex phase on rational values modulo integers. -/
 def phase : AddChar QmodZ ℂ :=
@@ -395,12 +418,7 @@ private lemma phase_mk (x : ℚ) :
   ring
 
 private lemma qmod_integer (z : ℤ) : ((z : ℚ) : QmodZ) = 0 :=
-  AddCircle.coe_eq_zero_iff.mpr ⟨z, by simp⟩
-
-private lemma qmod_eq_iff (x y : ℚ) : (x : QmodZ) = (y : QmodZ) ↔
-    ∃ z : ℤ, (z : ℚ) = x-y := by
-  rw [← sub_eq_zero, ← AddCircle.coe_sub, AddCircle.coe_eq_zero_iff]
-  simp only [zsmul_eq_mul, mul_one]
+  (AddCircle.coe_eq_zero_iff (1 : ℚ)).mpr ⟨z, by simp⟩
 
 private def pairRaw (D : LatticeData) (r s : Charge D) : ℚ :=
   dualVector D r ⬝ᵥ (fun i => (s i : ℚ))
@@ -462,13 +480,16 @@ private lemma pairing_add (D : LatticeData) (hD : (gramReal D).PosDef)
     | H s =>
       induction c using Submodule.Quotient.induction_on with
       | H t =>
-        change pairing D (classOf D (r+s)) (classOf D t) = _
+        change pairing D (classOf D (r+s)) (classOf D t) =
+          pairing D (classOf D r) (classOf D t) + pairing D (classOf D s) (classOf D t)
         simp only [pairing_mk D hD, pairRaw_add_left, AddCircle.coe_add]
 
 private lemma pairing_zero (D : LatticeData) (hD : (gramReal D).PosDef)
     (c : Discriminant D) : pairing D 0 c = 0 := by
   have h := pairing_add D hD 0 0 c
-  simpa only [zero_add, self_eq_add_left] using h
+  simp only [zero_add] at h
+  have hh := congrArg (fun x => x - pairing D 0 c) h
+  simpa using hh.symm
 
 private lemma pairing_nondegenerate (D : LatticeData) (hD : (gramReal D).PosDef)
     (a : Discriminant D) (ha : ∀ c, pairing D a c = 0) : a = 0 := by
@@ -476,6 +497,7 @@ private lemma pairing_nondegenerate (D : LatticeData) (hD : (gramReal D).PosDef)
   | H r =>
     have hint (i : Fin D.rank) : ∃ z : ℤ, (z : ℚ) = dualVector D r i := by
       have h := ha (classOf D (Pi.single i 1))
+      change pairing D (classOf D r) (classOf D (Pi.single i 1)) = 0 at h
       rw [pairing_mk D hD] at h
       have hs : pairRaw D r (Pi.single i 1) = dualVector D r i := by
         simp [pairRaw, Pi.single_apply, dotProduct]
@@ -506,7 +528,7 @@ private lemma half_pair_add_gram (D : LatticeData) (hD : (gramReal D).PosDef)
     pairRaw D (r + gramMap D m) (r + gramMap D m) / 2 =
       pairRaw D r r / 2 + ((m ⬝ᵥ r + chargeEnergy D m : ℤ) : ℚ) := by
   simp only [pairRaw_add_left, pairRaw_add_right, pairRaw_gram_left D hD,
-    pairRaw_gram_right D hD, integral_dot_gram]
+    pairRaw_gram_right D hD, dotProduct_add, integral_dot_gram, Int.cast_add]
   have he : (bilinear D m m : ℚ) = 2 * (chargeEnergy D m : ℚ) := by
     exact_mod_cast (two_chargeEnergy D m).symm
   rw [he]
@@ -544,7 +566,8 @@ theorem discriminant_quadratic (D : LatticeData) (hD : (gramReal D).PosDef) :
     | H r =>
       induction c using Submodule.Quotient.induction_on with
       | H s =>
-        change quadraticClass D (classOf D (r+s)) = _
+        change quadraticClass D (classOf D (r+s)) = quadraticClass D (classOf D r) +
+          quadraticClass D (classOf D s) + pairing D (classOf D r) (classOf D s)
         simp only [quadraticClass_mk D hD, pairing_mk D hD]
         rw [← AddCircle.coe_add, ← AddCircle.coe_add]
         congr 1
@@ -553,7 +576,7 @@ theorem discriminant_quadratic (D : LatticeData) (hD : (gramReal D).PosDef) :
   · intro a k
     induction a using Submodule.Quotient.induction_on with
     | H r =>
-      change quadraticClass D (classOf D (k • r)) = _
+      change quadraticClass D (classOf D (k • r)) = k^2 • quadraticClass D (classOf D r)
       rw [quadraticClass_mk D hD, quadraticClass_mk D hD, ← AddCircle.coe_zsmul]
       congr 1
       have hv : dualVector D (k • r) = k • dualVector D r :=
@@ -643,7 +666,7 @@ theorem inverse_theta_dissection (D : LatticeData) (hD : (gramReal D).PosDef)
       ((cosetEquiv D hD).tsum_eq f).symm
     _ = ∑' a : Discriminant D, ∑' n : Charge D, f (cosetEquiv D hD (a,n)) := hp.tsum_prod
     _ = ∑ a : Discriminant D, sectorTheta D a τ := by
-      simp only [f, cosetEquiv, Equiv.ofBijective_apply, inverse_quadratic_coset D hD,
+      simp only [f, cosetEquiv_apply, inverse_quadratic_coset D hD,
         sectorTheta, representativeTheta, tsum_fintype]
 
 private lemma shift_add_gram (D : LatticeData) (hD : (gramReal D).PosDef)
@@ -669,10 +692,12 @@ private lemma theta_add_gram (D : LatticeData) (hD : (gramReal D).PosDef)
     funext n
     dsimp [f]
     rw [shift_add_gram D hD]
-    congr 2
-    congr 1
-    ext i
-    simp [add_assoc, add_comm, add_left_comm]
+    have hv : (fun i => (n i : ℝ)) + (shift D r + fun i => (m i : ℝ)) =
+        (fun i => ((n+m) i : ℝ)) + shift D r := by
+      ext i
+      simp [add_assoc, add_comm, add_left_comm]
+    rw [hv]
+    rfl
   change (∑' n, _) = ∑' n, f n
   rw [he]
   exact ((Equiv.addRight m).hasSum_iff.mpr hs.hasSum).tsum_eq
@@ -698,8 +723,11 @@ theorem sector_summable_representative (D : LatticeData) (hD : (gramReal D).PosD
 private lemma zero_sector (D : LatticeData) (hD : (gramReal D).PosDef)
     (τ : ℂ) (hτ : 0 < τ.im) : sectorTheta D 0 τ = theta (gramReal D) τ := by
   rw [(sector_summable_representative D hD 0 0 rfl τ hτ).2]
-  simp only [representativeTheta, shift, dualVector, Pi.zero_apply, Int.cast_zero,
-    mulVec_zero, Rat.cast_zero, Pi.add_zero, theta]
+  have hz : shift D 0 = 0 := by
+    rw [shift_eq D hD]
+    ext i
+    simp [mulVec, dotProduct]
+  simp only [representativeTheta, hz, add_zero, theta]
 
 /-- The original zero-sector S row has all discriminant sectors on its right. -/
 theorem zero_sector_S (D : LatticeData) (hD : (gramReal D).PosDef)
@@ -713,7 +741,7 @@ theorem zero_sector_S (D : LatticeData) (hD : (gramReal D).PosDef)
   have hτ0 : τ ≠ 0 := by intro h; simpa [h] using hτ
   have hi : 0 < (-1 / τ).im := by
     rw [neg_div, one_div, Complex.neg_im, Complex.inv_im]
-    exact div_pos hτ (Complex.normSq_pos.mpr hτ0)
+    simpa only [neg_div, neg_neg] using div_pos hτ (Complex.normSq_pos.mpr hτ0)
   rw [zero_sector D hD _ hi, theta_inversion (gramReal D) hD τ hτ,
     inverse_theta_dissection D hD τ hτ]
 
@@ -775,23 +803,23 @@ def characterEquiv (D : LatticeData) (hD : (gramReal D).PosDef) :
   letI : Fact (gramReal D).PosDef := ⟨hD⟩
   letI : Fintype (Discriminant D) := Fintype.ofFinite _
   exact Equiv.ofBijective (pairingCharacter D hD)
-    (Fintype.bijective_iff_injective_and_card.mpr
+    ((Fintype.bijective_iff_injective_and_card (pairingCharacter D hD)).mpr
       ⟨character_injective D hD, (AddChar.card_eq (α := Discriminant D)).symm⟩)
 
 private lemma character_orthogonality (D : LatticeData) (hD : (gramReal D).PosDef)
     (c : Discriminant D) :
     letI : Fact (gramReal D).PosDef := ⟨hD⟩
     letI : Fintype (Discriminant D) := Fintype.ofFinite _
+    letI : DecidableEq (Discriminant D) := Classical.decEq _
     ∑ a : Discriminant D, pairingCharacter D hD a c =
       if c = 0 then (D.G.det.natAbs : ℂ) else 0 := by
   classical
   letI : Fact (gramReal D).PosDef := ⟨hD⟩
   letI : Fintype (Discriminant D) := Fintype.ofFinite _
   simp_rw [character_symm D hD]
-  rw [AddChar.sum_eq_ite, character_zero_iff D hD]
-  congr 1
-  exact_mod_cast ((Nat.card_eq_fintype_card (Discriminant D)).symm.trans
-    (discriminant_card D hD))
+  rw [AddChar.sum_eq_ite]
+  simp only [character_zero_iff D hD]
+  rw [← Nat.card_eq_fintype_card, discriminant_card D hD]
 
 /-- Literal inverse-theta coefficients resolved by the negative pairing character. -/
 def inverseCoefficient (D : LatticeData) (hD : (gramReal D).PosDef)
@@ -827,7 +855,7 @@ private lemma coefficient_resolution (D : LatticeData) (hD : (gramReal D).PosDef
       ((cosetEquiv D hD).tsum_eq f).symm
     _ = ∑' c : Discriminant D, ∑' n : Charge D, f (cosetEquiv D hD (c,n)) := hp.tsum_prod
     _ = ∑ c : Discriminant D, pairingCharacter D hD a (-c) * sectorTheta D c τ := by
-      simp only [f, cosetEquiv, Equiv.ofBijective_apply, inverse_quadratic_coset D hD,
+      simp only [f, cosetEquiv_apply, inverse_quadratic_coset D hD,
         class_add, class_gram, class_representative, add_zero, tsum_mul_left,
         tsum_fintype, sectorTheta, representativeTheta]
 
@@ -856,14 +884,6 @@ theorem inverse_theta_fourier (D : LatticeData) (hD : (gramReal D).PosDef)
     character_orthogonality D hD]
   simp only [add_neg_eq_zero]
   simp
-
-#print axioms dual_lattice_realization
-#print axioms discriminant_quadratic
-#print axioms sector_summable_representative
-#print axioms inverse_theta_dissection
-#print axioms zero_sector_S
-#print axioms sector_T
-#print axioms inverse_theta_fourier
 
 end
 end D5.S3.VertexAlgebra.LatticeDiscriminantTheta
