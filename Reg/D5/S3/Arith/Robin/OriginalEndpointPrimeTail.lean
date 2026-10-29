@@ -117,4 +117,21 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 #print axioms family
 #print axioms audit
 
+/-
+Finite theorem registration attempt (unfinished by design).  The exact source
+telescope is
+
+  @finite_min_tail_robin_bound : ∀ {m : ℕ}, 0 < m →
+    m.primeFactors = Nat.primesLE (largestPrime m) →
+    1 < Chebyshev.theta (largestPrime m) →
+    (finite min-cost bound) ∧ (Mertens.E₃/robinLogMargin bound).
+
+The mathematical declaration is compiled in the owner module.  A faithful
+DependentFamily registration still needs a dependent state carrying m together
+with these three premises, an enrolled readout for the conjunction, and a
+current sourceSelection path for both consumed output components.  No
+Contract.Registration is asserted here, so this attempt is explicitly not
+declared_validated and does not claim an audit pass.
+-/
+
 end Reg.D5.S3.Arith.Robin.OriginalEndpointPrimeTail
