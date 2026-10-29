@@ -48,9 +48,9 @@ private theorem rejected_fails : ¬ arena.{u}.Law rejected := by
 
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(), (fun _ : ℂ => 0), (fun z : ℂ => z⁻¹), ?_⟩
+  refine ⟨(), (fun _ : ℂ => (0 : ℂ)), (fun z : ℂ => z⁻¹), ?_⟩
   intro he
-  have he' : AnalyticOnNhd ℂ (fun _ : ℂ => 0) univ =
+  have he' : AnalyticOnNhd ℂ (fun _ : ℂ => (0 : ℂ)) univ =
       AnalyticOnNhd ℂ (fun z : ℂ => z⁻¹) univ := congrFun he univ
   have hi : AnalyticOnNhd ℂ (fun z : ℂ => z⁻¹) univ := by
     rw [← he']
@@ -67,7 +67,8 @@ def evidence : Registration arena.{u} (type_of% @integrable_and_analytic_of_eule
 
 def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@integrable_and_analytic_of_euler.{u}) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Analytic.Laplace.PositiveEulerContinuation.integrable_and_analytic_of_euler.audit
+  unitName :=
+    `D5.S3.Analytic.Laplace.PositiveEulerContinuation.integrable_and_analytic_of_euler.audit
   realizationName := `Reg.D5.S3.Analytic.Laplace.PositiveEulerContinuation.evidence
   realizationSource := none
   generated := false
