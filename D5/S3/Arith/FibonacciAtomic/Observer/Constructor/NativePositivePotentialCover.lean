@@ -3,19 +3,15 @@
    mirror-B: none(waiver:unbounded-symbolic-proof)
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
-   utility: kind=checker; basis=consumer=D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.source_sort_minimum_base; instance=D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeSourceParallelRefutation.result
+   utility: kind=checker; basis=consumer=D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.source_sort_minimum_base; instance=D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.parallelSourceInput
    digest: Signed source occurrence cycles and minimum natural block bases. -/
-
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativePositiveBranchReduction
 import D5.S3.Combinatorics.Graph.LayeredCirculation.SupplierDual
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeComputedEpochPotential
-
 /-! Integer consistency and minimum natural ranks on the actual source graph. -/
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 namespace D5.S3.Arith.FibonacciAtomic.Observer.NativePositivePotentialCover
-
 open NativePositiveBranchReduction NativePositiveImageCover NativeTermUnification
 open NativeGroundSolutionSpace Maths Maths.MaxPlusPotential
 open Lambda Strata.Util
@@ -205,6 +201,10 @@ def effectiveSourcePotential (B : List (BranchEquation X)) (s : X → Term X) (j
     some ⟨computedSourcePotential B s j,
       (check_source_consistency_iff_potential B s j).mp h⟩
   else none
+/-- Original shifts U=V+3, U=V+3, U=V+4 on their common residual sort. -/
+def parallelSourceInput : List (BranchEquation Bool) × (Bool → Term Bool) × Bool :=
+  ([.shift true 3 false, .shift true 3 false, .shift true 4 false],
+    (fun _ => .of (.inr false)), false)
 private theorem edge_spec (p : Presentation X) (B : List (BranchEquation X))
     (S : SubstInfo)
     (hok : (encodeEquations p (shapeEquations B)).unify SubstInfo.empty = .ok S)
