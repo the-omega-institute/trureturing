@@ -1,0 +1,44 @@
+#### 定理 8.2（黄金编译的精度与成本上下界）
+
+令 $c=\log5/\log(3/2)$。对 $\Sigma$ 及任意 $R\in\operatorname{SU}(2)$，有常数 $C_0$，使充分小 $\eta>0$ 下
+
+$$
+F_\eta(R)\le C_0\eta\log^c(1/\eta).
+$$
+
+任意全局最优字均满足
+
+$$
+C_\eta\le C_0\log^c(1/\eta),\qquad
+e_\eta^2\le C_0\eta\log^c(1/\eta).
+$$
+
+对目标 $R=iX$，结合项目既有的原生奇偶界，进一步有
+
+$$
+C_\eta\ge
+\frac{\log(1/\eta)-c\log\log(1/\eta)-O(1)}{\log\Gamma},
+\quad \Gamma=\varphi^3+\sqrt{\varphi^6-1}<9.
+$$
+
+**证明。**
+
+对于两个 $\operatorname{SU}(2)$ 矩阵，其相对酉的特征值为 $e^{\pm i\theta}$，所以
+$\left\lVert U-V\right\rVert_F^2/2=\left\lVert U-V\right\rVert_{\rm op}^2$。用定理[5.3](#thm-sk)取误差 $\epsilon=\sqrt\eta$ 的字，原生成本为
+$O(\log^c(1/\eta))$，代入价值定义即得上界。最优价值的两个非负项各不超过总值，得到两个最优字界。
+
+下界明确使用[v16 的奇偶残留定理](https://github.com/the-omega-institute/trureturing/blob/837df9a7545012a9e669c61716dac078f5552d96/docs/develop/theory/AURIC_PREDICTION_RECURSION_OPTIMIZATION_AND_VARIATION_V16.md)：标准计算基码中，任意 $L$ 次原生正向字的同输入奇偶输出概率
+$q\ge2/(1+\Gamma^L)$。目标 $iX$ 只翻逻辑位，两个物理码字的 Hamming 奇偶相反；故其算子误差平方至少为这个 $q$。于是
+
+$$
+C_\eta\ge\frac{\log(2e_\eta^{-2}-1)}{\log\Gamma}.
+$$
+
+把已经证明的误差上界代入，展开对数得结果。此处常数依赖固定菜单与初始网；下界供应的适用条件是纯酉原生字、该基编码、无后选择及外供非基态。
+
+∎
+
+这把“观察者的增长”限定为一个可证现象：在指定评分与门语言中，提高精度会迫使最优程序的成本无界增长，同时每个正成本参数仍有有限最优。它没有把未知目标的精确信息、最短程序的有效发现或实际物理校准一起免费推出。
+
+<a id="sec-9"></a>
+

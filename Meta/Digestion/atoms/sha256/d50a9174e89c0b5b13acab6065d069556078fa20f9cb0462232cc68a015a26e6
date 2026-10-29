@@ -1,0 +1,50 @@
+## 文献与项目来源
+
+<a id="ref-project"></a>
+
+1. The Omega Institute. <em>trureturing</em>，研究分支 `dev`。不可变提交
+[`837df9a75450`](https://github.com/the-omega-institute/trureturing/tree/837df9a7545012a9e669c61716dac078f5552d96)，2026-10-30。本稿项目链接均固定至此提交；完整 SHA 见第 1 节。
+
+<a id="ref-v15"></a>
+
+2. AURIC research continuation.
+[<em>黄金门的 NAND 式普适性与精确实现的算术边界</em>](https://github.com/the-omega-institute/trureturing/blob/837df9a7545012a9e669c61716dac078f5552d96/docs/develop/theory/AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md), v15. Author manuscript conversion; especially §§3–10.
+
+<a id="ref-v16"></a>
+
+3. AURIC research continuation.
+[<em>预测、递归、最优化与变分</em>](https://github.com/the-omega-institute/trureturing/blob/837df9a7545012a9e669c61716dac078f5552d96/docs/develop/theory/AURIC_PREDICTION_RECURSION_OPTIMIZATION_AND_VARIATION_V16.md), v16. Author manuscript conversion; static action, finite budgets and Galois parity bound.
+
+<a id="ref-v18"></a>
+
+4. AURIC research continuation.
+[<em>三角剖分、塌缩与递归酉门</em>](https://github.com/the-omega-institute/trureturing/blob/837df9a7545012a9e669c61716dac078f5552d96/docs/develop/theory/AURIC_TRIANGULATION_COLLAPSE_AND_RECURSIVE_UNITARY_GATES_V18.md), v18. Author manuscript conversion; controlled lifts, braiding and records.
+
+<a id="ref-stopped"></a>
+
+5. The Omega Institute.
+[<em>Recursive relational observation: stopped mean cost and spatial risk on one source</em>](https://github.com/the-omega-institute/trureturing/blob/837df9a7545012a9e669c61716dac078f5552d96/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_STOPPED_MEAN_SPATIAL_RISK.md), especially Theorems 3.2, 4.2, 5.2 and Proposition 5.3.
+
+<a id="ref-barenco"></a>
+
+6. A. Barenco. <em>A universal two-bit gate for quantum computation</em>. Proceedings of the Royal Society A 449 (1995), 679–683.
+[arXiv:quant-ph/9505016](https://arxiv.org/abs/quant-ph/9505016).
+
+<a id="ref-flw"></a>
+
+7. M. H. Freedman, M. J. Larsen, Z. Wang.
+<em>The two-eigenvalue problem and density of Jones representation of braid groups</em>.
+Communications in Mathematical Physics 228 (2002), 177–199. Fibonacci representations, §6, Theorem 6.2.
+[arXiv:math/0103200](https://arxiv.org/pdf/math/0103200).
+
+<a id="ref-sk"></a>
+
+8. C. M. Dawson, M. A. Nielsen. <em>The Solovay–Kitaev algorithm</em>.
+Quantum Information and Computation 6 (2006), 81–95.
+[arXiv:quant-ph/0505030v2](https://arxiv.org/pdf/quant-ph/0505030), especially §§2–4.
+
+<a id="ref-noprogram"></a>
+
+9. M. A. Nielsen, I. L. Chuang. <em>Programmable quantum gate arrays</em>.
+Physical Review Letters 79 (1997), 321–324.
+[arXiv:quant-ph/9703032](https://arxiv.org/pdf/quant-ph/9703032).
