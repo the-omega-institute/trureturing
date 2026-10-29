@@ -33,7 +33,7 @@ internal sealed class NativeSignedObservationExtractionDocument : IScribeDocumen
         )));
 
     private static DocumentBlock Entry(string n, string title, string prose, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("signed-extraction-" + n.Replace("_", "-")),
+        Describe.Lean(DescribeId.Create("signed-extraction-" + n.Replace("_", "-").ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + n), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
 
@@ -58,6 +58,8 @@ internal sealed class NativeSignedObservationExtractionDocument : IScribeDocumen
     private static Formula And(Formula a, Formula b) => Seq(Open, a, Sp, Land, Sp, b, Close);
     private static Formula Imp(Formula a, Formula b) => Seq(Open, a, Sp, Implies, Sp, b, Close);
     private static Formula IffOf(Formula a, Formula b) => Seq(Open, a, Sp, Iff, Sp, b, Close);
-    private static Formula All(string n, Formula t, Formula b) => Seq(Forall, Sp, V(n), Colon, Sp, t, Comma, Sp, Open, b, Close);
+    private static Formula All(string n, Formula t, Formula b) => Seq(Forall, Sp,
+        Seq(n.Split(',').Select((name, i) => i == 0 ? V(name) : Seq(Comma, Sp, V(name))).ToArray()),
+        Colon, Sp, t, Comma, Sp, Open, b, Close);
     private static Formula Some(string n, Formula t, Formula b) => Seq(Exists, Sp, V(n), Colon, Sp, t, Comma, Sp, Open, b, Close);
 }

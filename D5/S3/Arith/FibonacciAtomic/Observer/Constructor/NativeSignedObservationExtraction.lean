@@ -88,8 +88,9 @@ def ConstraintHolds {X : Type} (v : X → Source) (c : Constraint X) : Prop :=
 /-- None is an impossible guarded branch; some [] is the empty conjunction. -/
 abbrev Program (X : Type) := Option (List (Constraint X))
 
-def ProgramHolds {X : Type} (v : X → Source) (program : Program X) : Prop :=
-  ∃ cs, program = some cs ∧ ∀ c ∈ cs, ConstraintHolds v c
+def ProgramHolds {X : Type} (v : X → Source) : Program X → Prop
+  | none => False
+  | some cs => ∀ c ∈ cs, ConstraintHolds v c
 
 def appendProgram {X : Type} (left right : Program X) : Program X :=
   match left, right with
@@ -100,8 +101,7 @@ private theorem append_exact {X : Type} (v : X → Source) (left right : Program
     ProgramHolds v (appendProgram left right) ↔
       ProgramHolds v left ∧ ProgramHolds v right := by
   cases left <;> cases right <;>
-    simp only [appendProgram, ProgramHolds, Option.some.injEq, reduceCtorEq,
-      false_and, exists_false, exists_eq_right, and_false, List.forall_mem_append]
+    simp only [appendProgram, ProgramHolds, false_and, and_false, List.forall_mem_append]
 
 def compileList {X Y : Type} (compile : Y → Program X) : List Y → Program X
   | [] => some []
