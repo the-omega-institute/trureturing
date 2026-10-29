@@ -15,12 +15,12 @@ noncomputable section
 
 namespace Modulus
 
-/-- The exact distance in the original modulus, with v as parameter and u as state. -/
+/-- The exact distance in the original modulus, with u as parameter and v as state. -/
 abbrev signature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature ℝ (fun _ => ℝ) (fun _ => ℝ)
 
 def actual : Realization signature :=
-  realize signature (fun _ v u => |u - v|) (fun e => nomatch e)
+  realize signature (fun _ u v => |u - v|) (fun e => nomatch e)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => -1) (fun e => nomatch e)
@@ -28,7 +28,7 @@ def rejected : Realization signature :=
 def arena : Arena where
   signature := signature
   Law R := ∀ {u v : ℝ}, 1 ≤ u → 1 ≤ v →
-    |f u - f v| ≤ 2 * R.readout () v u
+    |f u - f v| ≤ 2 * R.readout () u v
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -44,7 +44,7 @@ def family : Registration arena (type_of% @theta_tail_lipschitz) where
   dependence := by
     intro i
     refine ⟨(1 : ℝ), (1 : ℝ), (2 : ℝ), ?_⟩
-    change |(1 : ℝ) - 1| ≠ |(2 : ℝ) - 1|
+    change |(1 : ℝ) - 1| ≠ |(1 : ℝ) - 2|
     norm_num
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
@@ -60,7 +60,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ v u => |u - v|) (fun e => nomatch e))
+  readout := some (realize signature (fun _ u v => |u - v|) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -68,10 +68,10 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sourceSelection := some {
     owner := `D5.S3.Weil.Mertens.ThetaTailRegularity
     definition := none
-    coordinates := #[1]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "arg", "arg"]
-      stateBinder := 0
+      stateBinder := 1
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
