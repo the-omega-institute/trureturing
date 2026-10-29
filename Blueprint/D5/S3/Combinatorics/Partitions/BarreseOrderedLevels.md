@@ -66,13 +66,19 @@ Lean statement: `D5/S3/Combinatorics/Partitions/BarreseOrderedLevels.source2023_
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Partitions/BarreseOrderedLevels.source2023_count` (`✓ std3`). ∎
 
+*Resolves.* `Problems/barrese-prescribed-ordered-level-enumeration` (proved) by `D5/S3/Combinatorics/Partitions/BarreseOrderedLevels.source2023_count` and `D5/S3/Combinatorics/Partitions/BarreseSourceNormalization.lOperator_count`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"barrese-prescribed-ordered-level-enumeration","declaration_gid":"D5/S3/Combinatorics/Partitions/BarreseOrderedLevels.source2023_count","resolution_kind":"proved"} -->
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"barrese-prescribed-ordered-level-enumeration","declaration_gid":"D5/S3/Combinatorics/Partitions/BarreseSourceNormalization.lOperator_count","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Kenneth Barrese (2023). *Weighted File Placements on Singleton Boards*. DOI: [10.48550/arXiv.2312.10855](https://doi.org/10.48550/arXiv.2312.10855). URL: <https://arxiv.org/abs/2312.10855v1>.
 
 *Commentary.*
 
-For every positive m, every n and every top-down vector l indexed by the n ambient levels, the exact number of weakly increasing n-slot source column tuples with heights at most mn and those level numbers is F((l_n,...,l_1),n), with r=m-1. This is the fixed n-column, n-level ambient convention of Section 2.2. The formula includes empty top levels, all-zero data, m=1, width zero through n and every infeasible vector. No reordering or multiset quotient is used. It does not enumerate the larger rook equivalence class.
+For every positive m, every n and every top-down vector l indexed by the n ambient levels, the exact number of weakly increasing n-slot source column tuples with heights at most mn and those level numbers is F((l_n,...,l_1),n), with r=m-1. This is the fixed n-column, n-level ambient convention of Section 2.2. The formula includes empty top levels, all-zero data, m=1, width zero through n and every infeasible vector. No reordering or multiset quotient is used. It does not enumerate the larger rook equivalence class. Together with the normalized all-width lOperator_count formula, this gives the two source conventions of prescribed ordered level enumeration.
 
 ## References
 
