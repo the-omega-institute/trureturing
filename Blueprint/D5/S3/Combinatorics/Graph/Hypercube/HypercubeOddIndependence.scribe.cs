@@ -8,7 +8,7 @@ internal sealed class HypercubeOddIndependenceDocument : IScribeDocumentDefiniti
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/caro2025oddindependence");
+        LibraryNoteRef.Create("D5/L/Hamming/caro2025oddindependence");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The odd independence ratio of the Boolean cube converges to one half through all even dimensions.",
