@@ -82,21 +82,23 @@ private theorem one_block (D : ℕ) (hD : 0 < D) (f : ℕ → ℤ)
   have hv0 : 1 ≤ v := one_le_pow₀ (by norm_num)
   have hH : H = 4 * v := by
     dsimp [H, v]
-    rw [show D = (D - 1) + 1 by omega, pow_succ]
-    ring
+    calc
+      (4 : ℤ) ^ D = 4 ^ ((D - 1) + 1) := by congr 1; omega
+      _ = 4 * 4 ^ (D - 1) := by rw [pow_succ]; ring
   let pre := List.range' 3 (2 * (D - 1))
   let last := 3 + 2 * (D - 1)
   let L := [1] ++ pre ++ [0, 2, last, last + 1]
   obtain ⟨hs, hm⟩ := descending_pairs f (8 * H - 1) 7 (4 * (H - 1)) 3 0 (D - 1)
-    (by norm_num) (by dsimp [v] at hH; nlinarith) (by dsimp [v] at hH; nlinarith)
+    (by norm_num) (by change v * 7 ≤ 8 * H - 1; nlinarith)
+    (by change 0 ≤ 4 * (H - 1) + 2 * 7 - 2 * v * 7; nlinarith)
     (by norm_num; nlinarith) (by
       intro j _ hj
       obtain ⟨ha, hb⟩ := hp j (by omega)
       constructor <;> dsimp [H] <;> nlinarith only [ha, hb])
   have hs' : InStrip f (3 * (8 * H - 1)) (f 1) pre := by
-    simpa only [pre, h1, H, Nat.add_zero, Nat.mul_zero, pow_zero, one_mul] using hs
+    simpa [pre, h1, H] using hs
   have hm' : (pre.map f).sum = -14 * (v - 1) := by
-    simpa only [pre, v, Nat.zero_add, pow_zero] using hm
+    simpa [pre, v] using hm
   obtain ⟨hlp, hln⟩ := hp (D - 1) (by omega)
   change f last = 2 * (8 * H - 1) - 14 * v at hlp
   change f (last + 1) = -2 * (8 * H - 1) - 28 * v at hln
@@ -114,24 +116,22 @@ private theorem one_block (D : ℕ) (hD : 0 < D) (f : ℕ → ℤ)
         dsimp [pre, last]
         rw [show [3 + 2 * (D - 1), 3 + 2 * (D - 1) + 1] =
           List.range' (3 + 2 * (D - 1)) 2 by simp [List.range'_succ]]
-        rw [List.range'_append]
+        rw [List.range'_append_1]
         congr 1
         omega
       rw [he, List.range_eq_range']
       have hfront : [0, 1, 2] = List.range' 0 3 := by decide
-      rw [hfront, List.range'_append]
+      rw [hfront, List.range'_append_1]
       congr 1 <;> omega
     rw [← hinv]
-    dsimp [L]
-    have he := (List.perm_middle (a := 0) (l₁ := [1] ++ pre) (l₂ := [2, last, last + 1]))
-    simpa only [List.append_assoc, List.cons_append, List.nil_append] using he
-  · dsimp [L]
-    apply inStrip_append
-    · simp only [InStrip, zero_add, List.map_singleton, List.sum_singleton]
-      refine ⟨by nlinarith [hH], by nlinarith [hH], ?_⟩
-      exact ⟨by rw [h1]; nlinarith [hH], by rw [h1]; nlinarith [hH]⟩
-    · simp only [List.map_singleton, List.sum_singleton, zero_add]
-      exact inStrip_append hs' ht
+    apply List.perm_iff_count.mpr
+    intro x
+    simp only [L, List.count_append, List.count_cons, List.count_nil]
+    omega
+  · change InStrip f (3 * (8 * H - 1)) 0 (1 :: (pre ++ [0, 2, last, last + 1]))
+    refine ⟨by omega, by nlinarith [hH], ?_⟩
+    change InStrip f (3 * (8 * H - 1)) (f 1) (pre ++ [0, 2, last, last + 1])
+    exact inStrip_append hs' ht
   · dsimp [L]
     simp only [List.map_append, List.sum_append, List.map_cons, List.map_nil,
       List.sum_cons, List.sum_nil]
@@ -148,12 +148,189 @@ private theorem one_block (D : ℕ) (hD : 0 < D) (f : ℕ → ℤ)
     simp only [List.filter_append, List.filter_cons, List.filter_nil, hpre]
     simp only [decide_eq_false (by omega : ¬3 ≤ 1), decide_eq_false (by omega : ¬3 ≤ 0),
       decide_eq_false (by omega : ¬3 ≤ 2), decide_eq_true hlast,
-      decide_eq_true (by omega : 3 ≤ last + 1), Bool.false_eq_true, ↓reduceIte,
-      List.nil_append, List.append_nil]
+      decide_eq_true (by omega : 3 ≤ last + 1), Bool.false_eq_true, ↓reduceIte]
     dsimp [pre, last]
     rw [show [3 + 2 * (D - 1), 3 + 2 * (D - 1) + 1] =
-      List.range' (3 + 2 * (D - 1)) 2 by simp [List.range'_succ], List.range'_append]
+      List.range' (3 + 2 * (D - 1)) 2 by simp [List.range'_succ], List.range'_append_1]
     congr 1
     omega
+
+private theorem two_blocks (B D : ℕ) (hB : 0 < B) (hD : 0 < D)
+    (N d e z : ℤ) (hd : 0 < d) (he : 0 < e) (hz : 0 < z)
+    (hdN : d < N) (heN : e < N) (hzN : z < N)
+    (hde : 2 * d = N + e)
+    (hez : 2 * (4 : ℤ) ^ B * e = N + z)
+    (hzd : 2 * (4 : ℤ) ^ D * z = N + d)
+    (f : ℕ → ℤ) (ha : f 0 = N - d) (hb : f 1 = N - e)
+    (hc : f (2 * B + 2) = N - z)
+    (hY : ∀ j < B,
+      f (2 + 2 * j) = 2 * N - 2 * (4 : ℤ) ^ j * e ∧
+      f (2 + 2 * j + 1) = -2 * N - 4 * (4 : ℤ) ^ j * e)
+    (hZ : ∀ j < D,
+      f (2 * B + 3 + 2 * j) = 2 * N - 2 * (4 : ℤ) ^ j * z ∧
+      f (2 * B + 3 + 2 * j + 1) = -2 * N - 4 * (4 : ℤ) ^ j * z) :
+    ∃ L : List ℕ, L.Perm (List.range (2 * B + 2 * D + 3)) ∧
+      InStrip f (3 * N) 0 L ∧ (L.map f).sum = 0 ∧
+      L.filter (fun j => decide (j ≠ 0 ∧ j ≠ 1 ∧ j ≠ 2 * B + 2)) =
+        List.range' 2 (2 * B) ++ List.range' (2 * B + 3) (2 * D) := by
+  let G : ℤ := (4 : ℤ) ^ B
+  let H : ℤ := (4 : ℤ) ^ D
+  have hG : 4 ≤ G := by
+    exact_mod_cast pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 4) hB
+  have hH : 4 ≤ H := by
+    exact_mod_cast pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 4) hD
+  change 2 * G * e = N + z at hez
+  change 2 * H * z = N + d at hzd
+  have h4e : 4 * e < N := by nlinarith
+  have h4z : 4 * z < N := by nlinarith
+  let j := if e ≤ z then B - 1 else B
+  let v : ℤ := (4 : ℤ) ^ j
+  have hj : j ≤ B := by dsimp [j]; split_ifs <;> omega
+  have hsplit : (e ≤ z ∧ 4 * v = G) ∨ (z < e ∧ v = G) := by
+    dsimp [j, v]
+    by_cases h : e ≤ z
+    · left
+      refine ⟨h, ?_⟩
+      simp only [if_pos h]
+      dsimp [G]
+      calc
+        4 * (4 : ℤ) ^ (B - 1) = 4 ^ ((B - 1) + 1) := by rw [pow_succ]; ring
+        _ = 4 ^ B := by congr 1; omega
+    · right
+      exact ⟨by omega, by simp only [if_neg h]; rfl⟩
+  have hv1 : 1 ≤ v := one_le_pow₀ (by norm_num)
+  have hge : G * e < N := by nlinarith
+  have hhz : H * z < N := by nlinarith
+  have hpre : 0 ≤ N + e - 2 * v * e := by
+    rcases hsplit with ⟨hle, hv⟩ | ⟨hlt, hv⟩ <;> nlinarith
+  have hpostpeak : 4 * N + e - d - 4 * v * e ≤ 3 * N := by
+    rcases hsplit with ⟨hle, hv⟩ | ⟨hlt, hv⟩ <;> nlinarith
+  let Y0 := List.range' 2 (2 * j)
+  let Y1 := List.range' (2 + 2 * j) (2 * (B - j))
+  let Z0 := List.range' (2 * B + 3) (2 * (D - 1))
+  let last := 2 * B + 3 + 2 * (D - 1)
+  let gamma := 2 * B + 2
+  let L := [1] ++ Y0 ++ [0] ++ Y1 ++ Z0 ++ [gamma, last, last + 1]
+  obtain ⟨hsY0, hmY0⟩ := descending_pairs f N e (N - e) 2 0 j (by omega)
+    (by change v * e ≤ N; nlinarith)
+    (by change 0 ≤ N - e + 2 * e - 2 * v * e; omega)
+    (by norm_num; omega) (fun i _ hi => hY i (by omega))
+  have hs0 : InStrip f (3 * N) (N - e) Y0 := by simpa [Y0] using hsY0
+  have hm0 : (Y0.map f).sum = -2 * e * (v - 1) := by simpa [Y0, v] using hmY0
+  obtain ⟨hsY1, hmY1⟩ := descending_pairs f N e (2 * N - e - d) 2 j (B - j)
+    (by omega) (by simpa [Nat.add_sub_of_le hj, ← G] using le_of_lt hge)
+    (by rw [Nat.add_sub_of_le hj]; change 0 ≤ 2 * N - e - d + 2 * e - 2 * G * e; omega)
+    (by change 2 * N - e - d + 2 * N + 2 * e - 4 * v * e ≤ 3 * N; omega)
+    (fun i _ hi => hY i (by omega))
+  have hs1 : InStrip f (3 * N) (2 * N + e - d - 2 * v * e) Y1 := by
+    convert hsY1 using 1 <;> dsimp [Y1, v] <;> ring
+  have hm1 : (Y1.map f).sum = -2 * e * (G - v) := by
+    simpa [Y1, v, G, Nat.add_sub_of_le hj] using hmY1
+  let u : ℤ := (4 : ℤ) ^ (D - 1)
+  have hu : 4 * u = H := by
+    dsimp [u, H]
+    calc
+      4 * (4 : ℤ) ^ (D - 1) = 4 ^ ((D - 1) + 1) := by rw [pow_succ]; ring
+      _ = 4 ^ D := by congr 1; omega
+  have hu1 : 1 ≤ u := one_le_pow₀ (by norm_num)
+  obtain ⟨hsZ0, hmZ0⟩ := descending_pairs f N z (d - z) (2 * B + 3) 0 (D - 1)
+    (by omega) (by change u * z ≤ N; nlinarith)
+    (by change 0 ≤ d - z + 2 * z - 2 * u * z; nlinarith)
+    (by norm_num; omega) (fun i _ hi => hZ i (by omega))
+  have hsZ : InStrip f (3 * N) (d - z) Z0 := by simpa [Z0] using hsZ0
+  have hmZ : (Z0.map f).sum = -2 * z * (u - 1) := by simpa [Z0, u] using hmZ0
+  obtain ⟨hlp, hln⟩ := hZ (D - 1) (by omega)
+  change f last = 2 * N - 2 * u * z at hlp
+  change f (last + 1) = -2 * N - 4 * u * z at hln
+  have ht : InStrip f (3 * N) (d - z + (Z0.map f).sum) [gamma, last, last + 1] := by
+    simp only [InStrip]
+    rw [hmZ, show f gamma = N - z from hc, hlp, hln]
+    repeat' constructor <;> nlinarith
+  have hsYZ := inStrip_append hs1 (by
+    rw [hm1]
+    convert (inStrip_append hsZ ht) using 1 <;> nlinarith only [hde, hez])
+  have hsmall : InStrip f (3 * N) (N + e - 2 * v * e) [0] := by
+    have hh := inStrip_prefix hs1 0
+    simp only [List.take_zero, List.map_nil, List.sum_nil, add_zero] at hh
+    simp only [InStrip, ha]
+    exact ⟨hpre, by omega, by omega, by omega⟩
+  have hsinsert := inStrip_append hsmall (by
+    simp only [List.map_singleton, List.sum_singleton, ha]
+    convert hsYZ using 1 <;> ring)
+  have hsall := inStrip_append hs0 (by rw [hm0]; convert hsinsert using 1 <;> ring)
+  have hstrip : InStrip f (3 * N) 0 L := by
+    change InStrip f (3 * N) 0 (1 :: (Y0 ++ [0] ++ Y1 ++ Z0 ++ [gamma, last, last + 1]))
+    refine ⟨by omega, by omega, ?_⟩
+    simpa only [zero_add, hb, List.append_assoc] using hsall
+  have hYjoin : Y0 ++ Y1 = List.range' 2 (2 * B) := by
+    dsimp [Y0, Y1]
+    rw [List.range'_append_1]
+    congr 1
+    omega
+  have hZjoin : Z0 ++ [last, last + 1] = List.range' (2 * B + 3) (2 * D) := by
+    dsimp [Z0, last]
+    rw [show [2 * B + 3 + 2 * (D - 1), 2 * B + 3 + 2 * (D - 1) + 1] =
+      List.range' (2 * B + 3 + 2 * (D - 1)) 2 by simp [List.range'_succ],
+      List.range'_append_1]
+    congr 1
+    omega
+  have hinv : [0, 1] ++ (Y0 ++ Y1) ++ [gamma] ++ (Z0 ++ [last, last + 1]) =
+      List.range (2 * B + 2 * D + 3) := by
+    rw [hYjoin, hZjoin]
+    dsimp [gamma]
+    rw [show [0, 1] = List.range' 0 2 by decide,
+      show [2 * B + 2] = List.range' (2 + 2 * B) 1 by simp; omega]
+    rw [List.range'_append_1]
+    rw [show 0 + (2 + 2 * B) = 2 + 2 * B by omega, List.range'_append_1]
+    rw [show 0 + (2 + 2 * B + 1) = 2 * B + 3 by omega, List.range'_append_1]
+    rw [List.range_eq_range']
+    congr 1
+    omega
+  refine ⟨L, ?_, hstrip, ?_, ?_⟩
+  · rw [← hinv]
+    apply List.perm_iff_count.mpr
+    intro x
+    simp only [L, List.count_append, List.count_cons, List.count_nil]
+    omega
+  · simp only [L, List.map_append, List.sum_append, List.map_cons, List.sum_cons,
+      List.map_nil, List.sum_nil, ha, hb, hc, hm0, hm1, hmZ, hlp, hln]
+    change _ + _ + _ + _ + _ + (f gamma + _ + _ + _) = _
+    rw [show f gamma = N - z from hc]
+    nlinarith only [hde, hez, hzd, hu]
+  · let p := fun j => decide (j ≠ 0 ∧ j ≠ 1 ∧ j ≠ 2 * B + 2)
+    have hkeepY (R : List ℕ) (hR : ∀ x ∈ R, 2 ≤ x ∧ x < 2 * B + 2) :
+        R.filter p = R := by
+      apply List.filter_eq_self.mpr
+      intro x hx
+      have := hR x hx
+      simp only [p, decide_eq_true_eq]
+      omega
+    have hy0 : Y0.filter p = Y0 := hkeepY Y0 (by
+      intro x hx
+      obtain ⟨i, hi, rfl⟩ := List.mem_range'.mp hx
+      omega)
+    have hy1 : Y1.filter p = Y1 := hkeepY Y1 (by
+      intro x hx
+      obtain ⟨i, hi, rfl⟩ := List.mem_range'.mp hx
+      omega)
+    have hz0 : Z0.filter p = Z0 := by
+      apply List.filter_eq_self.mpr
+      intro x hx
+      obtain ⟨i, hi, rfl⟩ := List.mem_range'.mp hx
+      simp only [p, decide_eq_true_eq]
+      dsimp [Z0] at *
+      omega
+    change L.filter p = _
+    dsimp only [L]
+    simp only [List.filter_append, hy0, hy1, hz0]
+    have hp1 : p 1 = false := by simp [p]
+    have hp0 : p 0 = false := by simp [p]
+    have hpg : p gamma = false := by simp [p, gamma]
+    have hpl : p last = true := by simp only [p, decide_eq_true_eq]; dsimp [last]; omega
+    have hpl' : p (last + 1) = true := by simp only [p, decide_eq_true_eq]; dsimp [last]; omega
+    simp only [List.filter_cons, List.filter_nil, hp1, hp0, hpg, hpl, hpl',
+      Bool.false_eq_true, ↓reduceIte, List.nil_append, List.append_nil]
+    rw [← List.append_assoc, hYjoin, List.append_assoc, hZjoin]
+
 
 end D5.S3.Combinatorics.Circle.ThreeSmallSameSignSource
