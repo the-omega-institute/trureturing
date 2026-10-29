@@ -107,11 +107,7 @@ right side is at least two. Its exact maximum is unnecessary.
 
 ## Scope and provenance
 
-<<<<<<< HEAD
 The Conjecture 5.3 assertion quantifies over finite commutative semigroups, including those
-=======
-The D5 claim quantifies over finite commutative semigroups, including those
->>>>>>> 6221e3690de2cc0358394560d151c034aaac83f1
 without an identity, and over all fields satisfying either source branch.
 Its counterexample is an ordinary rational semigroup algebra; no contracted
 algebra or replacement for the relative constant is involved.
@@ -124,7 +120,6 @@ The source and bounded later-literature screen supplied with issue
 [23871](https://github.com/the-omega-institute/trureturing/issues/23871)
 found no exact settlement in the inspected scope. This is not an exhaustive
 absence or priority claim. The construction's novelty is not established.
-<<<<<<< HEAD
 Conjecture 5.3 and Conjecture 3.26 are separate assertions. The six-label argument above concerns only 5.3; the infinite construction below concerns 3.26.
 
 
@@ -184,6 +179,3 @@ and supply no escape witness. The `Infinite Model` instance separately
 certifies infinitude of the fixed witness. It is not consumed by `result`
 and is neither a result helper nor an escape witness. Only `result` is a
 public authored theorem and the designated refutation is audit-exempt.
-=======
-Conjecture 3.26 is a separate question and is not settled here.
->>>>>>> 6221e3690de2cc0358394560d151c034aaac83f1
