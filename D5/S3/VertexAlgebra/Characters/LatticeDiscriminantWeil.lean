@@ -11,7 +11,13 @@ import D5.S3.VertexAlgebra.Characters.LatticeDiscriminantTheta
 import Mathlib.Analysis.Fourier.FourierTransform
 import Mathlib.MeasureTheory.Group.Integral
 
-/-! # The original discriminant theta transformation and Weil operators -/
+/-! # The original discriminant theta transformation and Weil operators
+
+The Fourier identities and Milgram formula are classical. The analytic inputs
+are the coordinate-volume matrix Gaussian and coordinate Poisson theorems;
+translation uses Mathlib's bilinear Fourier integral. The quadratic data and
+literal sectors are those of `LatticeDiscriminantTheta`.
+-/
 
 set_option autoImplicit false
 
@@ -146,7 +152,9 @@ private lemma shift_phase (D : LatticeData) (hD : (gramReal D).PosDef)
       ((fun i => (k i : ℝ)) ⬝ᵥ shift D (representative D a) : ℝ)) =
       pairingCharacter D hD a (classOf D k) := by
   change _ = phase (pairing D a (classOf D k))
-  rw [← class_representative D a, pairing_mk D hD, phase_mk]
+  have hp := pairing_mk D hD (representative D a) k
+  rw [class_representative D a] at hp
+  rw [hp, phase_mk]
   congr 1
   have hc : ((pairRaw D (representative D a) k : ℚ) : ℝ) =
       (fun i => (k i : ℝ)) ⬝ᵥ shift D (representative D a) := by
@@ -276,11 +284,14 @@ private lemma orthogonality (x : Discriminant D) :
   rw [(dual_lattice_realization D hD.out).2.1]
   exact character_orthogonality D hD.out x
 
+private lemma pairing_neg_right (a b : Discriminant D) :
+    pairing D a (-b) = -pairing D a b := by
+  rw [pairing_symm D a (-b), pairing_neg D hD.out, pairing_symm D b a]
+
 private lemma negative_character_symm (a b : Discriminant D) :
     pairingCharacter D hD.out a (-b) = pairingCharacter D hD.out b (-a) := by
   change phase (pairing D a (-b)) = phase (pairing D b (-a))
-  rw [pairing_symm D a, pairing_neg D hD.out, pairing_symm D b, pairing_neg D hD.out,
-    pairing_symm D a]
+  rw [pairing_neg_right D, pairing_neg_right D, pairing_symm D a b]
 
 private lemma kernel_mul (a b c : Discriminant D) :
     pairingCharacter D hD.out a (-b) * pairingCharacter D hD.out b (-c) =
@@ -296,7 +307,7 @@ private lemma raw_square (f : Discriminant D → ℂ) (a : Discriminant D) :
   rw [Finset.sum_comm]
   simp_rw [← Finset.sum_mul, orthogonality D]
   have he (c : Discriminant D) : -(a+c) = 0 ↔ c = -a := by
-    simp only [neg_eq_zero, add_eq_zero_iff_eq_neg', eq_comm]
+    simp only [neg_eq_zero, add_eq_zero_iff_eq_neg']
   simp_rw [he]
   simp
 
@@ -320,7 +331,7 @@ private lemma Splus_eq_CS : weilSplus D =
   intro b _
   congr 1
   change phase (pairing D a b) = phase (pairing D (-a) (-b))
-  rw [pairing_neg D hD.out, pairing_symm D a, pairing_neg D hD.out, neg_neg, pairing_symm]
+  rw [pairing_neg D hD.out, pairing_neg_right D, neg_neg]
 
 private lemma S_commutes_C (f : Discriminant D → ℂ) :
     weilS D (chargeConjugation D f) = chargeConjugation D (weilS D f) := by
@@ -334,7 +345,7 @@ private lemma S_commutes_C (f : Discriminant D → ℂ) :
   simp only [Equiv.neg_apply, neg_neg]
   congr 1
   change phase (pairing D a b) = phase (pairing D (-a) (-b))
-  rw [pairing_neg D hD.out, pairing_symm D a, pairing_neg D hD.out, neg_neg, pairing_symm]
+  rw [pairing_neg D hD.out, pairing_neg_right D, neg_neg]
 
 private lemma q_neg (a : Discriminant D) : quadraticClass D (-a) = quadraticClass D a := by
   simpa using (discriminant_quadratic D hD.out).2.1 a (-1 : ℤ)
@@ -343,7 +354,7 @@ private lemma q_sub (b x : Discriminant D) :
     quadraticClass D (b-x) = quadraticClass D b + quadraticClass D x - pairing D b x := by
   rw [sub_eq_add_neg, (discriminant_quadratic D hD.out).1, q_neg D,
     pairing_symm D b, pairing_neg D hD.out, pairing_symm D x]
-  rfl
+  simp only [sub_eq_add_neg]
 
 private lemma completed_square (x : Discriminant D) :
     ∑ b : Discriminant D, phase (quadraticClass D b) * pairingCharacter D hD.out b (-x) =
@@ -370,39 +381,53 @@ private lemma quadratic_kernel (a c : Discriminant D) :
   have hk (b : Discriminant D) : pairingCharacter D hD.out a (-b) *
       phase (quadraticClass D b) * pairingCharacter D hD.out b (-c) =
       phase (quadraticClass D b) * pairingCharacter D hD.out b (-(a+c)) := by
-    rw [mul_right_comm, kernel_mul D]
+    rw [mul_right_comm, kernel_mul D, mul_comm]
   simp_rw [hk]
   rw [completed_square D]
-  change (phase (-quadraticClass D (a+c)) * _) * phase (quadraticClass D c) =
-    _ * phase (-quadraticClass D a) * phase (pairing D a (-c))
-  rw [mul_right_comm, ← phase.map_add_eq_mul,
-    pairing_symm D a (-c), pairing_neg D hD.out, pairing_symm D c,
-    mul_assoc, ← phase.map_add_eq_mul, (discriminant_quadratic D hD.out).1]
-  congr 1
-  congr 1
-  abel
+  have he : phase (-quadraticClass D (a+c)) * phase (quadraticClass D c) =
+      phase (-quadraticClass D a) * pairingCharacter D hD.out a (-c) := by
+    change _ = phase (-quadraticClass D a) * phase (pairing D a (-c))
+    rw [← phase.map_add_eq_mul, ← phase.map_add_eq_mul,
+      pairing_neg_right D, (discriminant_quadratic D hD.out).1]
+    congr 1
+    abel
+  calc
+    _ = (∑ b : Discriminant D, phase (quadraticClass D b)) *
+        (phase (-quadraticClass D (a+c)) * phase (quadraticClass D c)) := by ring
+    _ = _ := by rw [he]; ring
 
 private lemma ST_square_apply (f : Discriminant D → ℂ) (a : Discriminant D) :
     weilS D (weilT D (weilS D (weilT D f))) a =
       gaussPhase D * phase (-quadraticClass D a) * weilS D f a := by
+  have hraw : (∑ b : Discriminant D, pairingCharacter D hD.out a (-b) *
+      (phase (quadraticClass D b) * ∑ c : Discriminant D,
+        pairingCharacter D hD.out b (-c) * (phase (quadraticClass D c) * f c))) =
+      (∑ b : Discriminant D, phase (quadraticClass D b)) *
+        phase (-quadraticClass D a) * ∑ c, pairingCharacter D hD.out a (-c) * f c := by
+    calc
+      _ = ∑ c : Discriminant D,
+          ((∑ b : Discriminant D, pairingCharacter D hD.out a (-b) *
+            phase (quadraticClass D b) * pairingCharacter D hD.out b (-c)) *
+              phase (quadraticClass D c)) * f c := by
+        simp_rw [Finset.mul_sum]
+        rw [Finset.sum_comm]
+        apply Finset.sum_congr rfl
+        intro c _
+        simp_rw [Finset.sum_mul]
+        apply Finset.sum_congr rfl
+        intro b _
+        ring
+      _ = _ := by
+        simp_rw [quadratic_kernel D, mul_assoc, ← Finset.mul_sum]
   change (rho D)⁻¹ * (∑ b, pairingCharacter D hD.out a (-b) *
       (phase (quadraticClass D b) * ((rho D)⁻¹ *
-        ∑ c, pairingCharacter D hD.out b (-c) * (phase (quadraticClass D c) * f c)))) = _
-  simp_rw [mul_left_comm _ (rho D)⁻¹, ← mul_assoc, Finset.mul_sum]
-  rw [Finset.sum_comm]
-  have hk (c : Discriminant D) :
-      (∑ b : Discriminant D, (rho D)⁻¹ * pairingCharacter D hD.out a (-b) *
-        phase (quadraticClass D b) * pairingCharacter D hD.out b (-c) *
-          phase (quadraticClass D c) * f c) =
-      (rho D)⁻¹ * ((∑ b : Discriminant D, phase (quadraticClass D b)) *
-        phase (-quadraticClass D a) * pairingCharacter D hD.out a (-c)) * f c := by
-    rw [← Finset.sum_mul, ← Finset.sum_mul]
-    simp_rw [mul_assoc (rho D)⁻¹, ← Finset.mul_sum]
-    rw [← mul_assoc, quadratic_kernel D]
-    ring
-  simp_rw [hk]
-  simp only [gaussPhase, weilS, LinearMap.coe_mk, AddHom.coe_mk]
-  simp_rw [mul_assoc, ← Finset.mul_sum]
+        ∑ c, pairingCharacter D hD.out b (-c) * (phase (quadraticClass D c) * f c)))) =
+    gaussPhase D * phase (-quadraticClass D a) *
+      ((rho D)⁻¹ * ∑ c, pairingCharacter D hD.out a (-c) * f c)
+  simp_rw [mul_left_comm _ (rho D)⁻¹, ← Finset.mul_sum]
+  rw [hraw]
+  unfold gaussPhase
+  ring
 
 private lemma ST_cube_apply (f : Discriminant D → ℂ) (a : Discriminant D) :
     weilS D (weilT D (weilS D (weilT D (weilS D (weilT D f))))) a =
@@ -472,7 +497,7 @@ private lemma principal_ST_product (r : ℕ) :
   congr 1
   calc
     _ = (Complex.log a + Complex.log b) * ((r : ℂ)/2) := by ring
-    _ = _ := by rw [hs]; push_cast; ring
+    _ = _ := by rw [hs]; ring
 
 private lemma original_zero_theta_positive (D : LatticeData) (hD : (gramReal D).PosDef) :
     1 ≤ (sectorTheta D 0 Complex.I).re := by
@@ -481,15 +506,21 @@ private lemma original_zero_theta_positive (D : LatticeData) (hD : (gramReal D).
     (-Real.pi * quadratic (gramReal D) (fun i => (n i : ℝ)))
   have he (n : Charge D) : Complex.exp (Real.pi * Complex.I * Complex.I *
       (quadratic (gramReal D) (fun i => (n i : ℝ)) : ℂ)) = (f n : ℂ) := by
-    rw [mul_assoc (Real.pi : ℂ) Complex.I Complex.I, Complex.I_sq]
+    rw [mul_assoc (Real.pi : ℂ) Complex.I Complex.I, ← pow_two Complex.I, Complex.I_sq]
     simp only [mul_neg_one, ← Complex.ofReal_neg, ← Complex.ofReal_mul,
       Complex.ofReal_exp, f]
   have hs : Summable (fun n : Charge D => (f n : ℂ)) := by
     simpa only [he] using (summable_norm_theta (gramReal D) hD Complex.I (by simp)).of_norm
   have hr : Summable f := Complex.summable_ofReal.mp hs
   have ht := hr.le_tsum (0 : Charge D) (fun n _ => (Real.exp_pos _).le)
-  simpa only [theta, he, Complex.re_tsum hs, Complex.ofReal_re, f, quadratic,
-    Pi.zero_apply, Int.cast_zero, dotProduct_zero, mul_zero, Real.exp_zero] using ht
+  unfold theta
+  simp_rw [he]
+  rw [Complex.re_tsum hs]
+  simp only [Complex.ofReal_re]
+  have hf0 : f 0 = 1 := by
+    simp [f, quadratic, dotProduct]
+  rw [hf0] at ht
+  exact ht
 
 private lemma theta_ST (D : LatticeData) (hD : (gramReal D).PosDef)
     (τ : ℂ) (hτ : 0 < τ.im) :
@@ -563,7 +594,10 @@ theorem milgram (D : LatticeData) (hD : (gramReal D).PosDef) :
   let w : ℂ := Real.pi * Complex.I * (D.rank : ℂ)/4
   have hexp : Complex.exp w * Complex.exp (-w) = 1 := by
     rw [← Complex.exp_add, add_neg_cancel, Complex.exp_zero]
-  have hc' : (1 : ℂ) = Complex.exp (-w) * gaussPhase D := hc
+  have hc' : (1 : ℂ) = Complex.exp (-w) * gaussPhase D := by
+    have he : -w = -Real.pi * Complex.I * (D.rank : ℂ)/4 := by dsimp [w]; ring
+    rw [he]
+    exact hc
   calc
     gaussPhase D = (Complex.exp w * Complex.exp (-w)) * gaussPhase D := by rw [hexp, one_mul]
     _ = Complex.exp w := by rw [mul_assoc, ← hc', mul_one]
