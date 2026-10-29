@@ -10,9 +10,9 @@ Creation series commute with the explicit polynomial rename by the pinned PowerS
 
 **Theorem 1.1 (All original source products).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetModule.source_transport`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.source_transport`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetModule.source_transport` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.source_transport` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,9 +22,9 @@ For every original state a,b and integer m, J0((Y_D(a))_m b)=(Y_E(J0(a)))_m J0(b
 
 **Theorem 1.2 (The original occurrence recipe).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetModule.action_monomial`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.action_monomial`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetModule.action_monomial` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.action_monomial` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -34,9 +34,9 @@ For every integral charge a and every finite oscillator exponent e, action(singl
 
 **Theorem 1.3 (Invariant all-state Fock realization).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetModule.module_transport`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.module_transport`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetModule.module_transport` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.module_transport` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -46,9 +46,9 @@ For every original state a, every module vector v and every integer m, J1((actio
 
 **Theorem 1.4 (Vacuum action).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetModule.module_vacuum`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.module_vacuum`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetModule.module_vacuum` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.module_vacuum` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -58,9 +58,9 @@ For every D and beta, action(vacuum_D) is the identity field: its mode -1 is ide
 
 **Theorem 1.5 (Input differentiation).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetModule.module_input_derivative`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.module_input_derivative`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetModule.module_input_derivative` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.module_input_derivative` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -70,9 +70,9 @@ For every original state a and every integer m, (action(T_D(a)))_m=-m (action(a)
 
 **Theorem 1.6 (Three supports and literal module Borcherds).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetModule.module_borcherds`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.module_borcherds`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetModule.module_borcherds` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.module_borcherds` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -82,9 +82,9 @@ For every original a,b, every module vector v and all integers p,q,r, each of mo
 
 **Theorem 1.7 (Exact physical dual pairing).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetModule.physical_pairing_integral`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.physical_pairing_integral`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetModule.physical_pairing_integral` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.physical_pairing_integral` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -94,9 +94,9 @@ For every rational vector mu satisfying sum_j G_ij mu_j=beta_i for every i, and 
 
 **Theorem 1.8 (Shifted ground coefficients).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetModule.action_ground_coefficients`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.action_ground_coefficients`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetModule.action_ground_coefficients` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.action_ground_coefficients` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -106,9 +106,9 @@ For every integral a,n, every oscillator polynomial P and integer m, action(sing
 
 **Theorem 1.9 (Physical meaning of the actual ground action).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetModule.physical_ground_action`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.physical_ground_action`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetModule.physical_ground_action` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.physical_ground_action` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -118,9 +118,9 @@ For every rational mu, integral beta, exact hDual, integral a,n, polynomial P an
 
 **Theorem 1.10 (Literal shifted currents).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetModule.action_current_coefficients`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.action_current_coefficients`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetModule.action_current_coefficients` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.action_current_coefficients` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -130,9 +130,9 @@ For every current i, integral charge n, polynomial P and integer m, the source s
 
 **Theorem 1.11 (Entire all-state normal-product action).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetModule.action_expansion`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.action_expansion`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetModule.action_expansion` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.action_expansion` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -142,9 +142,9 @@ For every finite-charge input v, action(v) is the finite sum over n in its charg
 
 **Theorem 1.12 (Explicit sector retraction).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetModule.retraction_injection`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.retraction_injection`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetModule.retraction_injection` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.retraction_injection` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -154,9 +154,9 @@ For every integer t and actual module vector v, P_t(J_t(v))=v, with the concrete
 
 **Theorem 1.13 (Each actual sector injection is injective).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetModule.injection_injective`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.injection_injective`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetModule.injection_injective` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.injection_injective` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -166,9 +166,9 @@ For every integer t, the concrete map J_t is injective, including rank zero. Thi
 
 **Theorem 1.14 (A fractional charge-changing action).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetModule.fractional_dual_action`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.fractional_dual_action`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetModule.fractional_dual_action` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.fractional_dual_action` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -182,18 +182,18 @@ These are ungraded vertex-algebra module statements. The action of the original 
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetModule.action_current_coefficients`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetModule.action_expansion`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetModule.action_ground_coefficients`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetModule.action_monomial`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetModule.fractional_dual_action`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetModule.injection_injective`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetModule.module_borcherds`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetModule.module_input_derivative`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetModule.module_transport`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetModule.module_vacuum`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetModule.physical_ground_action`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetModule.physical_pairing_integral`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetModule.retraction_injection`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetModule.source_transport`
-- Dependency: [D5/S3/VertexAlgebra/LatticeActualStateDerivative](LatticeActualStateDerivative.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.action_current_coefficients`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.action_expansion`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.action_ground_coefficients`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.action_monomial`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.fractional_dual_action`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.injection_injective`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.module_borcherds`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.module_input_derivative`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.module_transport`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.module_vacuum`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.physical_ground_action`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.physical_pairing_integral`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.retraction_injection`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule.source_transport`
+- Dependency: [D5/S3/VertexAlgebra/LatticeActualStateDerivative](../LatticeActualStateDerivative.md)
