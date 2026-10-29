@@ -34,7 +34,7 @@ def innerIntegral (n : ℕ) : ℕ :=
     n.factorial / m ^ m else 0
 
 private theorem le_square (m : ℕ) : m ≤ m ^ 2 := by
-  nlinarith [Nat.mul_self_le_mul_self (show 0 ≤ m by omega)]
+  simpa [pow_two] using Nat.le_mul_self m
 
 private theorem power_dvd_square_factorial {m : ℕ} (hm : 0 < m) :
     m ^ m ∣ (m ^ 2).factorial := by
@@ -50,9 +50,8 @@ private theorem six_power_dvd_square_factorial {m : ℕ} (hm : 2 ≤ m) :
   have h6 : 6 ∣ (m - 1).factorial :=
     (by decide : 6 ∣ Nat.factorial 3).trans (Nat.factorial_dvd_factorial (by omega))
   have h6m : 6 * m ∣ m.factorial := by
-    have h := Nat.mul_dvd_mul_left m h6
-    rw [show m = (m - 1) + 1 by omega, Nat.factorial_succ]
-    simpa [Nat.mul_comm] using h
+    rw [← Nat.mul_factorial_pred (by omega : m ≠ 0)]
+    simpa [Nat.mul_comm] using Nat.mul_dvd_mul_left m h6
   have hpow : (6 * m) ^ m ∣ m.factorial ^ m := pow_dvd_pow_of_dvd h6m m
   have hp : 6 * m ^ m ∣ (6 * m) ^ m := by
     rw [mul_pow]
