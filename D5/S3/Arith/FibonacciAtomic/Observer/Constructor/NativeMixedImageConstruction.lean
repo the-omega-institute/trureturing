@@ -8,7 +8,6 @@
 
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativePositiveBranchReduction
 import D5.S3.Arith.FibonacciAtomic.Observer.NativeUniformResidualRealization
-import Mathlib.Data.List.NodupEquivFin
 
 /-! Native expression lowering and unrestricted ambient template comparison. -/
 
@@ -511,7 +510,10 @@ private theorem scalar_site_actual (t : NativeTermUnification.Term X)
             (NativePositiveBranchReduction.shape B) =
             FreeMagma.mul (NativeTermUnification.evaluate v l)
               (NativeTermUnification.evaluate v r) at h
-          have hh := FreeMagma.mul.inj h
+          have hh : NativePositiveBranchReduction.shape A = NativeTermUnification.evaluate v l ∧
+              NativePositiveBranchReduction.shape B = NativeTermUnification.evaluate v r := by
+            injection h with hleft hright
+            exact ⟨hleft,hright⟩
           simp only [scalarAddresses, List.mem_append, List.mem_map] at hq
           rcases hq with ⟨q,hq,rfl⟩ | ⟨q,hq,rfl⟩
           · exact hl A hh.1 q hq
@@ -564,7 +566,7 @@ private theorem rank_slots_actual (p : NativeTermUnification.Presentation X)
   · cases b <;> simp only [List.not_mem_nil] at ha
     rename_i z x y
     simp only [List.mem_singleton] at ha
-    subst a
+    rw [ha]
     obtain ⟨r,hx,hy,hz⟩ := hb (.collapse z x y) hb'
     simpa only [RankSlot.Correct, RankSlot.value, rankAt, hy,
       NativePositiveImageCover.subtree] using And.intro hx (And.intro hy hz)
@@ -574,6 +576,7 @@ coordinate for every explicit shape leaf and collapse constraint of that branch.
 theorem finite_rank_extraction {d : Nat}
     (E : List (MixedExpr (Fin d) × MixedExpr (Fin d))) (v : Fin d → Source)
     (hv : ∀ e ∈ E, eval v e.1 = eval v e.2) :
+    (∀ i : Fin d, finiteExtend E v (inputName E i) = v i) ∧
     ∃ B ∈ NativePositiveBranchReduction.branches (finiteEquations E),
       (∀ b ∈ B, b.Holds (fun x => encode (finiteExtend E v x))) ∧
       ∃ S : Lambda.SubstInfo,
@@ -591,6 +594,7 @@ theorem finite_rank_extraction {d : Nat}
               (rankParameters (namePresentation E)
                 (NativeGroundSolutionSpace.action (namePresentation E) S) B
                 (fun x => encode (finiteExtend E v x)) i)) := by
+  refine ⟨fun _ => rfl, ?_⟩
   obtain ⟨B,hB,_,hb,S,hok,hs⟩ := (finite_expression_reduction E v).mp hv
   exact ⟨B,hB,hb,S,hok,hs,rank_slots_actual (namePresentation E)
     (NativeGroundSolutionSpace.action (namePresentation E) S) B
