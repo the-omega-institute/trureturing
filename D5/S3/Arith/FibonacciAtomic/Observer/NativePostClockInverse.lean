@@ -161,7 +161,7 @@ private theorem tick_positive (a c : ℚ) (ha : 0 < a) (hc : 0 < c)
     refine ⟨r', Finset.mem_univ _, mul_pos ?_ ?_⟩
     · have : 0 ≤ (if q = r' then a else 0) := by split <;> positivity
       change r'.val ∈ neighbors u q.val at hqr
-      simpa only [clock, if_pos hqr] using add_pos_of_nonneg_of_pos this hc
+      simpa only [clock, ite_eq_left hqr] using add_pos_of_nonneg_of_pos this hc
     · simpa [zeroInclude, r', List.mem_toFinset.mpr hr] using hx ⟨r, List.mem_toFinset.mpr hr⟩
 
 /-- The two fields carried at a returned encoding cut are entirely current data. -/
@@ -278,9 +278,14 @@ private theorem last_event (t : Source) (g : Call)
     unfold lastEvent
     exact List.find?_isSome.mpr ⟨g, hg, hp⟩
   cases he : lastEvent (edited t g) (zeroInclude t (edited t g) x) with
-  | none => simp only [lastEvent] at he; rw [he] at hex; cases hex
+  | none => simp [he] at hex
   | some g' =>
-      have hh := of_decide_eq_true (List.find?_some he)
+      have he' := he
+      unfold lastEvent at he'
+      have hh : zeros (edited t g) (zeroInclude t (edited t g) x) =
+          (fresh (kind g') (address g')).toFinset ∧
+          subtree (address g') (edited t g) = some (replacement (kind g')) :=
+        of_decide_eq_true (List.find?_some he')
       have heq : g = g' := call_unique g g' (hz.symm.trans hh.1)
       simpa [heq] using he
 
@@ -304,12 +309,13 @@ private theorem predecessor_append (a c : ℚ) (e : Endpoint) (g : Call)
       (⟨v, zeroInclude (edited e.1 g) v
         (zeroInclude e.1 (edited e.1 g) e.2)⟩ : Endpoint) = e := by
     subst v
-    apply Sigma.ext rfl
-    apply heq_of_eq
-    funext q
-    have hq : q.val ∈ (material (edited e.1 g)).toFinset :=
-      List.mem_toFinset.mpr ((hm q.val).mpr (Or.inl (List.mem_toFinset.mp q.property)))
-    simp [zeroInclude, hq, q.property]
+    have hf : zeroInclude (edited e.1 g) e.1
+        (zeroInclude e.1 (edited e.1 g) e.2) = e.2 := by
+      funext q
+      have hq : q.val ∈ (material (edited e.1 g)).toFinset :=
+        List.mem_toFinset.mpr ((hm q.val).mpr (Or.inl (List.mem_toFinset.mp q.property)))
+      simp [zeroInclude, hq, q.property]
+    exact congrArg (fun y : Field e.1 => (⟨e.1, y⟩ : Endpoint)) hf
   unfold predecessor appendEndpoint
   dsimp only
   rw [hz, hl]
@@ -376,6 +382,8 @@ private theorem encode_of_encoded (a c : ℚ) {w : List Call} {e : Endpoint}
 
 private theorem replay_term (a c : ℚ) (e : Endpoint) (w : List Call) :
     (replay a c e w).map (fun u => u.1) = run e.1 w := by
+  have hab : (FreeMagma.of false : Source) ≠ .of true := by decide
+  have hba : (FreeMagma.of true : Source) ≠ .of false := by decide
   induction w generalizing e with
   | nil => rfl
   | cons g w ih =>
@@ -387,7 +395,7 @@ private theorem replay_term (a c : ℚ) (e : Endpoint) (w : List Call) :
               cases t with
               | of b => cases b <;>
                   simp [replay, forward, kind, address, hs, run, ih, appendEndpoint,
-                    edited, replacement]
+                    edited, replacement, hab, hba]
               | mul l r => simp [replay, forward, kind, address, hs, run]
       | split p =>
           cases hs : subtree p e.1 with
@@ -396,7 +404,7 @@ private theorem replay_term (a c : ℚ) (e : Endpoint) (w : List Call) :
               cases t with
               | of b => cases b <;>
                   simp [replay, forward, kind, address, hs, run, ih, appendEndpoint,
-                    edited, replacement]
+                    edited, replacement, hab, hba]
               | mul l r => simp [replay, forward, kind, address, hs, run]
 
 private theorem encoded_trace (a c : ℚ) {w : List Call} {e : Endpoint}
@@ -451,7 +459,7 @@ private theorem encoded_invariants (a c : ℚ) (ha : 0 < a) (hc : 0 < c)
         List.length_pos_iff.mpr (by
           intro hem
           have hm := root_mem e.1
-          simpa [hem] using hm)
+          simp [hem] at hm)
       have hne : (appendEndpoint a c e g).1 ≠ .of true := by
         intro hh
         have hm : (material (edited e.1 g)).length = 1 := by
@@ -462,7 +470,7 @@ private theorem encoded_invariants (a c : ℚ) (ha : 0 < a) (hc : 0 < c)
       cases n with
       | zero => omega
       | succ n =>
-          simp only [decodeFuel, if_neg hne]
+          simp only [decodeFuel, ite_eq_right hne]
           rw [predecessor_append a c e g he ih.2.1 hi]
           change (decodeFuel a c n e).bind (fun u => some (u ++ [g])) = some (w ++ [g])
           rw [ih.2.2 n (by omega)]
