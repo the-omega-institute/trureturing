@@ -19,7 +19,6 @@ noncomputable section
 open Set Finset Real MeasureTheory Filter
 open scoped BigOperators Interval Topology
 namespace D5.S3.Arith.Robin.ThetaTailRobinWitness
-open OriginalMovingWindowMoment (weight_continuous)
 private abbrev I (u : ℝ) : ℝ :=
   (Chebyshev.theta u - u) / (u * log u) - Mertens.E₂p u
 private abbrev w := ActualRobinClockCovariance.activationDensity
