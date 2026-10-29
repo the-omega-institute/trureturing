@@ -6,7 +6,7 @@ title: "Monochromatic k in a row"
 doi: null
 url: https://arxiv.org/html/2606.12880v1
 claim: "Definitions 2.1, 2.2, 2.4, 2.6 give ordinary boards, near-line avoidance, saturation and maximum density; Conjecture 5.6 asserts D(k,[k]^d)=1-2/k for every k>=2 and natural d."
-strata_touched: [S3]
+strata_touched: [D5/S3/Combinatorics/Geometry/KuNearLineRefutation]
 license: citation-only
 triage: anchor
 ---

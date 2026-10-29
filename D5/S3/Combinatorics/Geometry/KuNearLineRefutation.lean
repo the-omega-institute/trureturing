@@ -241,22 +241,20 @@ theorem gopt_saturated (k d : ℕ) : GSaturated (gopt k d) := by
   refine ⟨(gopt_spec k d).1, ?_⟩
   intro T hT hsub
   exact (Finset.eq_of_subset_of_card_le hsub ((gopt_spec k d).2 T hT)).symm
-noncomputable def density (k d : ℕ) : ℝ := ((gopt k d).card : ℝ) / (k : ℝ)^d
-
 theorem density_maximum_attained (k d : ℕ) : ∃ S : Finset (Board k d),
-    GSaturated S ∧ density k d = (S.card : ℝ) / (k : ℝ)^d ∧
-    ∀ T : Finset (Board k d), GSaturated T → (T.card : ℝ) / (k : ℝ)^d ≤ density k d := by
-  refine ⟨gopt k d, gopt_saturated k d, rfl, ?_⟩
-  intro T hT
-  unfold density
-  exact div_le_div_of_nonneg_right
-    (by exact_mod_cast (gopt_spec k d).2 T hT.1) (by positivity)
+    GSaturated S ∧ ∀ T : Finset (Board k d), GSaturated T → T.card ≤ S.card := by
+  exact ⟨gopt k d, gopt_saturated k d, fun T hT => (gopt_spec k d).2 T hT.1⟩
+
+/-- The chosen saturated cardinality maximum, divided by the board size. -/
+noncomputable def density (k d : ℕ) : ℝ :=
+  ((Classical.choose (density_maximum_attained k d)).card : ℝ) / (k : ℝ)^d
 
 theorem exact_real_event : density 3 3 < (1 : ℝ) / 3 := by
-  obtain ⟨S, hsat, hdensity, _⟩ := density_maximum_attained 3 3
-  have h := config_bound S ((gconfig_33_iff S).mp hsat.1)
-  have hr : (S.card : ℝ) ≤ 8 := by exact_mod_cast h
-  rw [hdensity]
+  have hsat := (Classical.choose_spec (density_maximum_attained 3 3)).1
+  have h := config_bound _ ((gconfig_33_iff _).mp hsat.1)
+  have hr : ((Classical.choose (density_maximum_attained 3 3)).card : ℝ) ≤ 8 :=
+    by exact_mod_cast h
+  unfold density
   norm_num
   linarith
 
