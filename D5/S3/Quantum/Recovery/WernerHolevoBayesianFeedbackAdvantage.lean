@@ -128,8 +128,8 @@ private theorem tp {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
       (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
   apply Original8340Global.kraus_normalization_from_actual_trace K
   intro X
-  rw [hK X]
-  simp [wernerHolevo, Matrix.trace_add, Matrix.trace_smul,
+  rw [hK X, wernerHolevo]
+  simp [Matrix.trace_add, Matrix.trace_smul,
     Matrix.trace_transpose, Matrix.trace_one]
   ring
 
@@ -623,10 +623,10 @@ private theorem rotation_is_kraus : IsKrausDecomposition rotationKraus := by
   have hm (j : Fin 3) :
       D5.S3.QuantumChannels.UnitaryKrausMixingInvariance.unitaryKrausMixing
         rotationVector canonicalKraus j = rotationKraus j := by
+    change (∑ k, rotationVector j k • canonicalKraus k) = rotationKraus j
     ext i k
     fin_cases j <;> fin_cases i <;> fin_cases k <;>
-      simp [D5.S3.QuantumChannels.UnitaryKrausMixingInvariance.unitaryKrausMixing,
-        canonicalKraus.eq_1, rotationKraus.eq_1, rotationVector.eq_1, crossProduct,
+      simp [canonicalKraus.eq_1, rotationKraus.eq_1, rotationVector.eq_1, crossProduct,
         LinearMap.toMatrix'_apply, cross_apply, Pi.single_apply, Fin.sum_univ_succ] <;> ring
   intro X
   have h := D5.S3.QuantumChannels.UnitaryKrausMixingInvariance.unitary_kraus_mixing_invariance
