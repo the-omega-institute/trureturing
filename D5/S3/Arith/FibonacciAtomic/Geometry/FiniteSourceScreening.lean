@@ -469,9 +469,8 @@ private theorem reconstruction_energy (n : ℕ) (c : ℝ) (z : H) (g : Potential
       rw [inner_gradient, inner_gradient]
       apply Finset.sum_congr rfl
       intro p hp
-      rw [gradient_apply, dif_pos hp]
-      dsimp [reconstruct]
-      rw [value_parent]
+      simp only [gradient_apply, dite_eq_left hp, reconstruct]
+      rw [value_parent n p hp z]
       ring
     _ = inner ℝ z (gradient n g) := real_inner_comm _ _
 
