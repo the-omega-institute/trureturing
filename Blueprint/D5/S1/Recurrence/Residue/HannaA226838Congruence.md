@@ -54,6 +54,10 @@ $$\forall n:\mathbb{N}, \exists k:\mathbb{Z}, \operatorname{natval}\left(n!\righ
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/HannaA226838Congruence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a226838-square-egf-mod-six` (proved) by `D5/S1/Recurrence/Residue/HannaA226838Congruence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a226838-square-egf-mod-six","declaration_gid":"D5/S1/Recurrence/Residue/HannaA226838Congruence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2013). *OEIS A226838 — E.g.f.: exp( Sum_{n>=1} x^(n^2) / n^n ).*. URL: <https://oeis.org/A226838>.

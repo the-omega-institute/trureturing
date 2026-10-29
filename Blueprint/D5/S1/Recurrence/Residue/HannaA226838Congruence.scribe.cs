@@ -87,13 +87,14 @@ internal sealed class HannaA226838CongruenceDocument : IScribeDocumentDefinition
                 + "the method, and it does not establish a global novelty or priority claim. The paper is "
                 + "prior-work context, not the identifier of the OEIS source and not an asserted proof of "
                 + "this conjecture.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem, new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a226838-square-egf-mod-six"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role) => Describe.Lean(
+        DescribeRole role, OpenProblemResolutionClaim? claim = null) => Describe.Lean(
         DescribeId.Create("hanna-a226838-" + (name == "A" ? "outer" : name == "H" ? "inner" : name.ToLowerInvariant())),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
+        AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));
