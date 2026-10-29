@@ -66,7 +66,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@diagram_mem
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -141,7 +141,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@diagram_row
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -217,7 +217,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@conjugate_i
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -227,7 +227,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@conjugate_i
     definition := none
     coordinates := #[0,1]
     readouts := #[{
-      path := #["body","body","body","fun","arg"]
+      path := #["body","body","body","fn","arg"]
       stateBinder := 2
       functionOperand := false
       stateOperand := none
@@ -292,7 +292,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@board_row_c
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

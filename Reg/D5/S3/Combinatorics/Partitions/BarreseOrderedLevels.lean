@@ -71,7 +71,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@native_coun
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -150,7 +150,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@source2023_
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none

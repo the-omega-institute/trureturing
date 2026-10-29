@@ -70,7 +70,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@flat_card) 
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some actual
+  readout := some (realize signature actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
