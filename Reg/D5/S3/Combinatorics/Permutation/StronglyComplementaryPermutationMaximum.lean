@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.Permutation.StronglyComplementaryPermutationMaximum
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound audit of the exact maximum size of strongly complementary permutation families. -/
+
 namespace Reg.D5.S3.Combinatorics.Permutation.StronglyComplementaryPermutationMaximum
 
 open _root_.StronglyComplementaryPermutationMaximum
