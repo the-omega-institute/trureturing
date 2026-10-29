@@ -69,7 +69,7 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
   simp [hn, hi]
 
 def source_registration : Registration arena.{u} (type_of% (@result.{u})) where
-  actual := actual
+  actual := realize signature.{u} actual.readout actual.anchor
   bridge := by simp [actual, realize]
   variation := ⟨by intro α _ _ f g; simpa [actual, realize] using result f g,
     rejected, rejected_law⟩
