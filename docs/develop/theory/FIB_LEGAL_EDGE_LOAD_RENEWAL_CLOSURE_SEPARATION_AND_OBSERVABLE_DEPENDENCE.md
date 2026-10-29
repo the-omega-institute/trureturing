@@ -4352,3 +4352,214 @@ $$
 （31.3）是每个参数与实际律分别成立的严格性，不给统一于参数、维数或解码器的正风险间隙。辅助 $\pi$ 不提供任何实际周期配置上的解码器，也不被认作 $J$。本节未处理一般 $m\ge8$、没有有限吸收表示的一般正有限均值核、任意有限隐藏生产者到定义 11.1 的实际表示桥、经验起源或解码资源界；亦未给形式化核验证结论。
 
 ## 追加锚（本行以下为增补区）
+
+## 32. 任意有限尾部截止下的多相位循环对称化与严格非取得
+
+**定理 32.1（全部 $m\ge8$ 的实际有限相型严格非取得）。** 对每个整数 $m\ge8$，设 $J,P,Q$ 满足定义 11.1，且每一实际行 $f_a$ 都具有定义 12.1 的有限非负吸收表示。则同一实际可见律的完整外部风险满足
+
+$$
+d(P)=\mathbb E_P\!\left[
+ \left(X_0-\mathbb E_P[X_0\mid\sigma(X_j:j\ne0)]\right)^2\right]
+<c_\star.
+\tag{32.1}
+$$
+
+各行表示的维数、零条目、可约性、周期、Jordan 块及未使用状态均保持定义 12.1 的原范围；实际行严格正、归一化、有限均值，完整历史规则和两个严格可见半线解码器保持定义 11.1 的原范围。结论逐实际律成立，不给统一风险差距或解码资源上界。
+
+证明。反设 $d(P)=c_\star$。定理 11.5 的必要方向、定理 12.2 及命题 12.4 给出 $0<\rho<1$、$\eta_a>0$、$\kappa_a\in[1/3,1]$ 和一个有限整数 $N\ge4$，使（12.18）、全部长度的（12.22）、（12.24）、（12.26）、（12.28）成立，且 $z_a(n)=1$ 于 $n\ge N$。在这里，定理 11.5 使用的单侧根和由命题 11.4 在原后验带下支付，两个解码器仍属于同一实际 $J$ 的假设。置
+
+$$
+s_a=\beta(\kappa_a),\qquad e_a=\mathcal P(\kappa_a),\qquad
+c=\frac1m\sum_{a\in E}e_a=d(P)=c_\star,
+\qquad E=\mathbb Z/m\mathbb Z.
+\tag{32.2}
+$$
+
+以下将第 31 节的循环常评分与旋转构造延拓到任意这样的 $m,N$。取
+
+$$
+L=m\left\lceil\frac{2N}{m}\right\rceil,
+\qquad m\mid L,\qquad 2N\le L\le2N+m-1.
+\tag{32.3}
+$$
+
+这个 $N$ 来自各实际标量行的精确尾结论；（32.3）不要求任何预定的瞬态深度上界，也不使用回返剪枝来缩短 $N$。
+
+令 $V=\mathbb Z/L\mathbb Z$，$\mathcal C_L$ 为 $V$ 上全部循环独立集，包括空集及全部单点集，$\mathcal G_L$ 为其全部合法单点增删图。对非空 $S$，按循环次序写整数代表 $i_1<\cdots<i_r<i_1+L$，令 $i_{r+1}=i_1+L$、$n_j=i_{j+1}-i_j\ge2$、$a_j=i_j\pmod m$，并置
+
+$$
+w(\varnothing)=1,\qquad
+w(S)=\prod_{j=1}^r\kappa_{a_j}z_{a_j}(n_j),\qquad
+\pi_S=\frac{w(S)}{\sum_{T\in\mathcal C_L}w(T)}.
+\tag{32.4}
+$$
+
+因 $m\mid L$，这些相位和权重与代表选择无关；全部 $\pi_S$ 严格正。$\pi$ 是由实际取得参数构造的辅助有限概率，不被识别为 $J$ 或其可见边缘。
+
+对 $S\in\mathcal C_L$ 和 $i\in V$，令 $S^0=S\setminus\{i\}$。当 $S^0\cup\{i\}$ 合法时，令
+
+$$
+q_i^\pi(S)=\frac{\pi_{S^0\cup\{i\}}}
+ {\pi_{S^0}+\pi_{S^0\cup\{i\}}};
+\qquad
+\mathscr L_\pi(S)=\sum_{i\in V}
+ \bigl(\mathbf1_{\{i\in S\}}-q_i^\pi(S)\bigr)^2,
+\tag{32.5}
+$$
+
+强制零的条件纤维取 $q_i^\pi(S)=0$。这是 [Dawid–Lauritzen–Parry][DLP] §4.2、例 4.4、式（14）的坐标条件 Brier 评分机制在本硬约束配置域上的使用；以下分别处理硬约束及空配置。
+
+若 $S^0\ne\varnothing$，在 $i$ 的两侧最近循环锚距为 $l,r\ge2$，左锚相位为 $a$、插入相位为 $b=a+l$，则由（32.4）直接相消得到
+
+$$
+\frac{\pi_{S^0\cup\{i\}}}{\pi_{S^0}}
+=\kappa_b\frac{z_a(l)z_b(r)}{z_a(l+r)}=R_a(l,r).
+\tag{32.6}
+$$
+
+即使 $S^0$ 只有一个锚，此式仍成立：这时 $l+r=L$，被拆开的唯一间隔因子正是 $\kappa_a z_a(L)$。若 $S^0=\varnothing$，单点权重为 $\kappa_b z_b(L)=\kappa_b$，所以空到单点的赔率为 $\kappa_b$。对占据单点的损失，$m\mid L$ 及尾部中性给
+
+$$
+R_b(L,L)=\kappa_b\frac{z_b(L)^2}{z_b(2L)}=\kappa_b,
+\qquad B_b(L,L)=s_b.
+\tag{32.7}
+$$
+
+因此，对每个非空 $S$，其全部内部零位和占据位的评分恰为
+
+$$
+\mathscr L_\pi(S)=\sum_{j=1}^r
+ \left[V_{a_j}(n_j)+B_{a_j}(n_{j-1},n_j)\right],
+\tag{32.8}
+$$
+
+其中 $n_0=n_r$、$a_0=a_r$、$a_{r+1}=a_1$；单点情形由（32.7）覆盖。邻接锚的零位被强制为零，评分为零，长度二、三的内部空和亦保留。
+
+由（12.24），每个占据项为
+
+$$
+B_{a_j}(n_{j-1},n_j)
+=\beta(\kappa_{a_j}z_{a_{j-1}}(n_{j-1}))
+ +\beta(\kappa_{a_j}z_{a_j}(n_j))-s_{a_j}.
+\tag{32.9}
+$$
+
+在循环和中将第一项与末项移到前一间隔，便由（12.26）、（12.28）得到
+
+$$
+\begin{aligned}
+\mathscr L_\pi(S)
+&=\sum_{j=1}^r\widetilde W_{a_j}(n_j)\\
+&=\sum_{j=1}^r\left[cn_j+H_{a_{j+1}}-H_{a_j}\right]
+=cL.
+\end{aligned}
+\tag{32.10}
+$$
+
+这里每个 $2\le n_j\le L\le2N+m-1$ 都属于（12.28）的原有限能量范围。两个端点贡献都在 $\widetilde W$ 内，只在完整循环上相位势差才消去。对空配置单独计算：每个位点的插入赔率为 $\kappa_{i\bmod m}$，故
+
+$$
+\mathscr L_\pi(\varnothing)
+=\sum_{i\in V}e_{i\bmod m}
+=\frac Lm\sum_ae_a=cL.
+\tag{32.11}
+$$
+
+为从常评分提取旋转对称性，在整个 $\mathcal C_L$ 概率单纯形上置
+
+$$
+\Phi_L(p)=\sum_{\{S,T\}\in E(\mathcal G_L)}h(p_S,p_T).
+\tag{32.12}
+$$
+
+这里只使用 [唯一最优卷][P5]（1.2）的标量恒等式及其连通等号机制，而不把开路径最优点定理直接用于循环图。对任意概率向量 $p$，在每条边上取该恒等式中的份额为 $\pi_T/(\pi_S+\pi_T)$。由（32.10）–（32.11），逐边求和给
+
+$$
+cL-\Phi_L(p)
+=\sum_{\substack{\{S,T\}\in E(\mathcal G_L)\\p_S+p_T>0}}
+\frac{(p_S\pi_T-p_T\pi_S)^2}
+ {(p_S+p_T)(\pi_S+\pi_T)^2}.
+\tag{32.13}
+$$
+
+左侧的线性项是 $\sum_Sp_S\mathscr L_\pi(S)=cL$；当 $p_S=p_T=0$ 时，该边的标量差为零。故（32.13）覆盖整个单纯形边界。取 $p=\pi$ 得 $\Phi_L(\pi)=cL$，所以 $\pi$ 为最大点。若等号成立，所有边均有 $p_S/\pi_S=p_T/\pi_T$；零零边的两个比值也同为零。任何独立集都可逐点删除至空集，故 $\mathcal G_L$ 连通，归一化迫使 $p=\pi$。
+
+循环旋转 $\mathsf R:S\mapsto\{i+1:i\in S\}$ 保持全部顶点、边及（32.12），由唯一性得 $\pi_{\mathsf RS}=\pi_S$。空集固定且 $w(\varnothing)=1$，所以 $w(\mathsf RS)=w(S)$。由单点权重先得到
+
+$$
+\kappa_a=\kappa>0\qquad(a\in E).
+\tag{32.14}
+$$
+
+再对任意 $2\le n<N$ 和任意 $i\pmod m=a$ 取两个循环锚 $i,i+n$。由（32.3），其另一间隔 $L-n\ge N+1$，故
+
+$$
+w(\{i,i+n\})=\kappa^2z_a(n),\qquad
+w(\mathsf R\{i,i+n\})=\kappa^2z_{a+1}(n).
+\tag{32.15}
+$$
+
+旋转不变性使全部这些 $z_a(n)$ 与相位无关。其余 $n\ge N$ 已中性，所以存在同一个正序列 $z(n)$，满足
+
+$$
+z_a(n)=z(n)\quad(a\in E,n\ge2),\qquad z(n)=1\quad(n\ge N).
+\tag{32.16}
+$$
+
+这一步对每个有限 $N$ 成立，未限制各相位最初给出的吸收表示。
+
+回到原实际行。令 $u_n=\rho^n\kappa z(n)>0$，则 $\sum_{n\ge2}u_n<\infty$。由（12.18）及原行归一化，
+
+$$
+f_a(n)=u_n\frac{\eta_{a+n}}{\eta_a},\qquad
+\eta_a=\sum_{n\ge2}u_n\eta_{a+n}.
+\tag{32.17}
+$$
+
+对全部相位求和，利用 $a\mapsto a+n$ 为置换及 $\sum_a\eta_a>0$，得到 $\sum_{n\ge2}u_n=1$。在 $\eta$ 的最大相位，（32.17）是正权凸平均；每个目标相位都有某个 $n\ge2$ 到达且 $u_n>0$。若任一相位的 $\eta$ 严格较小，这个平均便严格小于最大值。因此 $\eta$ 常值，从而
+
+$$
+f_a(n)=u_n\qquad(a\in E,n\ge2).
+\tag{32.18}
+$$
+
+现在才处理实际 Palm 行。由命题 11.2，同一实际 $\nu$ 满足 $\nu K=\nu$，而（32.18）使
+
+$$
+K(a,b)=\sum_{\substack{n\ge2\\n=b-a\pmod m}}u_n
+\tag{32.19}
+$$
+
+成为严格正的双随机循环矩阵。因此它的唯一平稳行均匀，即 $\nu_a=1/m$。
+
+令 $\tau$ 将每个实际占据锚的完整标记加一模 $m$，保留位置和可见位。原完整历史规则决定每个双侧 Palm 有限事件柱：指定最左标记 $A_r=a$ 和连续距离 $G_r=n_r,\ldots,G_s=n_s$ 后，概率为
+
+$$
+\nu_a\prod_{j=r}^su_{n_j},
+\tag{32.20}
+$$
+
+中间标记由距离唯一确定。均匀 $\nu$ 使这些概率在 $\tau$ 下不变，故由柱集唯一性，同一实际 $Q$ 在 $\tau$ 下不变。$\tau$ 不改变屋顶 $G_0$，并与原位点移位交换，所以实际占据公式（11.7）给出，对每个非负可测函数 $F$，
+
+$$
+\mathbb E_J(F\circ\tau)
+=\frac1\mu\mathbb E_Q\sum_{j=0}^{G_0-1}
+ F\circ\tau\circ\vartheta^j
+=\frac1\mu\mathbb E_Q\sum_{j=0}^{G_0-1}
+ F\circ\vartheta^j
+=\mathbb E_JF.
+\tag{32.21}
+$$
+
+因此不变的是原实际 $J$，其 $\nu,\mu$ 及强度未被另选。设其严格左半线解码器为 $D^-$。在正概率事件 $\{X_0=1\}$ 上，原解码恒等式及其 $\tau$ 逆像同时几乎处处成立，即
+
+$$
+D^-((X_{-j})_{j\ge1})=C_0,
+\qquad
+D^-((X_{-j})_{j\ge1})=C_0+1\pmod m.
+\tag{32.22}
+$$
+
+两式的左侧相同，而 $m\ge8$ 使右侧不同，矛盾。该锚事件的概率为原 $1/\mu>0$。右解码器仍在原假设内，并已用于取得后完整方程的供应。故 $d(P)=c_\star$ 不可能，结合（1.1）的普适上界即得（32.1）。$\square$
+
+## 追加锚（本行以下为增补区）
