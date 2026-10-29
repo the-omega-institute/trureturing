@@ -55,7 +55,7 @@ internal sealed class FiniteFiberEntropyDocument : IScribeDocumentDefinition
                     Call("Set.ncard", Fiber), Sp, Le, Sp, Id("M")), Sp, Rightarrow),
                 Seq(Entropy("S"), Sp, Eq, Sp, Entropy("T"))
             ]))), AssessedProvenance.FromRepo(
-                LibraryNoteRef.Create("D5/L/Dynamics/bowen1971entropy")), Blocks(
+                LibraryNoteRef.Create("D5/L/Entropy/bowen1971entropy")), Blocks(
                 Paragraph(Text("For a symmetric source entourage U and fixed block length n, the n-step balls "
                     + "centered on a fiber cover that fiber using at most M centers. Since π is a closed map, "
                     + "this cover extends to the inverse image of a neighborhood of the base point. "
