@@ -8,10 +8,10 @@
 
 import D5.S3.Arith.FibonacciAtomic.Observer.NativeWholeRowPlan
 
+/-! Exact sort-sensitive inversion of symbolic row exteriors into consumed bindings. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
-/-! Exact sort-sensitive inversion of symbolic row exteriors into consumed bindings. -/
 
 namespace D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeSymbolicRowElimination
 
@@ -209,7 +209,8 @@ open ActualTreeReadoutAcquisition (Address)
 open ActualCutPartitionRecovery (CutSet CutPrefixFree)
 open ActualCutPartitionDecoder (literalRecord)
 open NativeSymbolicRecutting
-  (termAt symbolicOrdered symbolicPartition symbolicRecord symbolicExterior DeepAt symbolic_recut_exact)
+  (termAt symbolicOrdered symbolicPartition symbolicRecord symbolicExterior DeepAt
+    symbolic_recut_exact)
 open NativeTermUnification (Presentation)
 open NativeGroundSolutionSpace (Equations Sol Diseq)
 
@@ -229,7 +230,8 @@ def rowPairList {X : Type} (Q : CutSet) (t : Term X) : List (Address × Address)
 
 private theorem row_pair_list_mem {X : Type} (Q : CutSet) (t : Term X)
     (pq : Address × Address) : pq ∈ rowPairList Q t ↔ pq ∈ reachedPairs Q t := by
-  simp [rowPairList, reachedPairs]
+  rcases pq with ⟨a, b⟩
+  simp [rowPairList, reachedPairs, List.mem_product]
 
 def positivePairs {X : Type} (Q : CutSet) (t : Term X)
     (K : Finset (Address × Address)) : Equations X :=
@@ -366,8 +368,11 @@ private theorem compile_row_exact {X : Type} (t : Term X) (r : RawRow)
         rw [ext]
         simp only [compileRow, sub, ↓reduceIte, hm, Option.map_some, Option.some.injEq,
           exists_eq_left', constraintsHold, Sol, List.mem_append, or_imp, forall_and]
-        rw [show (∀ c ∈ bindingEquations bs, evaluate v c.1 = evaluate v c.2) ↔
-          bindingHolds v bs from binding_equations_exact v bs]
+        change (bindingHolds v bs ∧ True ∧ Sol (positivePairs Q t K) v ∧
+          Diseq (negativePairs Q t K) v) ↔
+          ((Sol (bindingEquations bs) v ∧ Sol (positivePairs Q t K) v) ∧
+            Diseq (negativePairs Q t K) v)
+        rw [binding_equations_exact]
         simp only [sub, true_and]
         tauto
   · simp [compileRow, sub]
@@ -417,7 +422,7 @@ unused coordinates from the supplied finite presentation. -/
 def unboundVariables {X : Type} (p : Presentation X) (S : Lambda.SubstInfo) :
     List (NativeGroundSolutionSpace.Y p S) :=
   p.enumeration.attach.filterMap (fun x =>
-    if h : x.val ∉ NativeGroundSolutionSpace.D p S then some ⟨x.val, h⟩ else none)
+    if h : p.code x.val ∉ S.subst.keys then some ⟨x.val, h⟩ else none)
 
 private theorem unbound_complete {X : Type} (p : Presentation X) (S : Lambda.SubstInfo)
     (x : NativeGroundSolutionSpace.Y p S) : x ∈ unboundVariables p S := by
@@ -472,7 +477,8 @@ private theorem mgu_output_exact {X : Type} (p : Presentation X)
          rebind (NativeGroundSolutionSpace.sigma p c.1 S h) d.2))) z ↔
       Diseq c.2 (NativeGroundSolutionSpace.Ext p c.1 S h z) := by
     simp only [Diseq, List.mem_map, forall_exists_index, and_imp, forall_apply_eq_imp_iff₂,
-      rebind_evaluate, NativeGroundSolutionSpace.Ext]
+      rebind_evaluate]
+    rfl
   constructor
   · rintro ⟨sol, neg⟩
     refine ⟨NativeGroundSolutionSpace.restriction p S v, ?_, ?_⟩
@@ -527,7 +533,7 @@ theorem complete_row_elimination {X : Type} (p : Presentation X) (t : Term X)
         ∃ o, eliminateRows p t rs = some o ∧ outputHolds o v) := by
   have hs := symbolic_rows_elimination p t rs v
   refine ⟨hs, ?_⟩
-  intro d pat name ht prefix bound
+  intro d pat name ht freecuts bound
   have deep : DeepAt d [] t := by
     rw [ht]
     exact NativeHistoryCells.pattern_deep d d pat name [] (by simp)
@@ -538,10 +544,10 @@ theorem complete_row_elimination {X : Type} (p : Presentation X) (t : Term X)
       (∀ r ∈ rs, literalRecord r.1 (NativeDepthPatterns.fill pat (v ∘ name)) = r.2) ↔
       (∀ r ∈ rs, symbolicRecord r.1 t v = r.2) := by
     constructor <;> intro h r hr
-    · have he := (symbolic_recut_exact d r.1 (prefix r hr) (bound r hr) t deep v).2.2.2
+    · have he := (symbolic_recut_exact d r.1 (freecuts r hr) (bound r hr) t deep v).2.2.2
       rw [filled] at he
       exact he.symm.trans (h r hr)
-    · have he := (symbolic_recut_exact d r.1 (prefix r hr) (bound r hr) t deep v).2.2.2
+    · have he := (symbolic_recut_exact d r.1 (freecuts r hr) (bound r hr) t deep v).2.2.2
       rw [filled] at he
       exact he.trans (h r hr)
   exact rows.trans hs
