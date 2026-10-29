@@ -80,7 +80,10 @@ internal sealed class UniformMPSTwoByTwoLinearSpanDocument : IScribeDocumentDefi
                                 + "dimension in the equality of tensor and coordinate dimensions. Finally cast "
                                 + "the natural-number sum to the rational numbers and add n + 1 to the two "
                                 + "counts, obtaining the asserted even and odd formulas."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("de-lazzari-motwani-seynnaeve-2022-umps-two-by-two-linear-span"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ClaimBody()
     {
