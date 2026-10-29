@@ -686,193 +686,628 @@ $\square$
 
 ## 追加锚（本行以下为增补区）
 
-## 9. 无保留律与切口的联合分隔边界
+## 9. Joint erasure and an acquired physical spine
 
-**定义 9.1（擦除入口的联合服务）。** 固定 GPO 定义 27.1 的真实
-alpha-origin、真实物理字典序出生和同根服务。公开整数为 $d$，真实流
-$s$ 属于 $\mathscr R_d$，当前已完成切口为 $n$。本节的承诺域为
+**Definition 9.1 (the joint entrance and its target).** Use exactly GPO
+Definition 27.1's actual alpha origin, persistent physical links $a<b$,
+actual lexicographic beta-birth order and autonomous all-index class
+$\mathscr R_d$. Only the authentic public integer $d\ge0$ is numerical
+source information at entry. Put
 
 $$
- {\cal A}_d=
- \begin{cases}
- \{n:n\ge N(2d)\},&d>0,\\
- \{n:n\ge2\},&d=0,
- \end{cases}
- \qquad
- N(m)=\min\{u\ge3:F_u-1\ge m\}.
+ n_0=\begin{cases}N(2d),&d>0,\\2,&d=0,\end{cases}
+ \qquad N(m)=\min\{u\ge3:F_u-1\ge m\}.
  \tag{ACR.23}
 $$
 
-入口擦除了源比特、种子、递推律、年龄、相位、树、支持、边界、标签、
-历史、收据、分配器和持续时间；等价行为的不同私有表示也被视为同一
-候选行为。入口仅保留公开 $d$，真实同根绑定，真实的 total presence-Read
-和后续 update 授权，共同的有限 source-blind 代码，以及新增长且可读的
-自有 backing。恢复期间不作 source update。每一条物理 Read、局部位运算、
-中间写、最终写和 handoff 都是有偿操作，并且排他且已完成的切口静止区
-覆盖这些操作。
+The actual completed cut is an arbitrary finite $n\ge n_0$; no upper
+bound is supplied. Erase all accessible source bits, seeded law, age,
+phase, tree, support, boundary, labels, archives, receipts and histories,
+including age-bearing control, allocation, capacity and duration data.
+The actual source and its genuine same-root binding survive. Supply
+valid total paid physical-literal presence-Read and later update grants,
+common finite source-blind code, fresh growing owned readable backing,
+finite local progress and completed Reads. An exclusive completed-cut
+stationary interval covers all recovery calculations, Reads, allocations,
+intermediate and retained writes, and the actual completed handoff.
+Recovery makes zero source updates. Service apparatus, initialization,
+retention, writes and handoff retain their actual charges as in Assumption
+1.2; no source conformance, root or grant is inferred from a bit string.
 
-**定义 9.2（成熟候选数据与行为数）。** 令 $\mathscr C_d$ 是
-$\mathscr R_d$ 中不同无限输出行为的集合，记
+Write $\mathscr C_d$ for the distinct infinite output behaviors in
+$\mathscr R_d$. GPO (GPO.88), with its semi-infinite, singular and
+finite-transient convention, supplies
 
 $$
- D_d=|\mathscr C_d|=1+\sum_{r=1}^{d}2^{2r-1}
-     =\frac{2\,4^d+1}{3}.
+ D_d=|\mathscr C_d|=\frac{2\,4^d+1}{3}.
  \tag{ACR.24}
 $$
 
-成熟候选数据是对 $(s,u)$，其中 $s\inmathscr C_d$ 且
-$u\in{\cal A}_d$。不同的私有 recurrence presentation 不产生不同的
-候选数据。对一个有限窗口 $[A,H]$，令
-$A'=\max\{A,n_0\}$，其中 $n_0=N(2d)$（$d>0$）或 $n_0=2$（$d=0$）；
-有效窗口是 $[A',H]$。
-
-**命题 9.3（固定成熟候选的物理分隔字）。** 对两个不同的成熟候选
-$x=(s,u)$ 和 $y=(t,v)$，存在一个有限物理字 $\omega_{x,y}$，使得
+For an authentic length-$2d$ prefix $P$, let $K_d(P)$ be **the same fixed
+synthesis** used in GPO Lemma 29.2 and Definition 34.1. For $d>0$ it
+selects the first passing order-$d$ coefficient row in that already fixed
+enumeration, with the first $d$ bits of $P$ as seed; for $d=0$ it is the
+zero descriptor. The enumeration is a common source-independent code
+convention. It is not replaced by a new ordering or a minimal private
+presentation. The target is to acquire and actually install
 
 $$
- \operatorname{Read}^{s}_{u}(\omega_{x,y})
- \ne
- \operatorname{Read}^{t}_{v}(\omega_{x,y}).
+ (P,K_d(P),n,B_n),\qquad P=z_1\cdots z_{2d},\qquad B_n=F_{n+1}-1.
  \tag{ACR.25}
 $$
 
-可以取
+Acquisition here means exact inference from paid current-source replies
+and real readable writeback. It does not assert that these bits were
+previously queried at their origin births.
+
+Let $e_d$ and $v_d$ be the bit work and peak working bits of generating
+all rows once by that original fixed public enumeration, counting its
+operands and intermediate writes. They are finite constants at each
+fixed $d$, independent of the actual stream and cut; take both zero at
+$d=0$. This retains the original unspecified enumeration rather than
+assuming an efficient new one. For the usual binary-counter ordering
+one has $e_d=O((d+1)2^d)$ and $v_d=O(d+1)$; the statements below
+charge the actual $e_d,v_d$ without requiring that particular ordering.
+
+**Proposition 9.2 (a physical spine gives two ages per behavior).** Define
 
 $$
- \omega_{x,y}=\min\bigl(S_u(s)\mathbin{\triangle}S_v(t)\bigr),
+ h=\max\{\ell\ge1:a^\ell\in S_n\},\qquad
+ k=\lceil\log_2(h+1)\rceil.
  \tag{ACR.26}
 $$
 
-其中最小值按物理字典序排列。这个字由 GPO 定理 28.2 的有限
-incidence-prefix 映射和 GPO 命题 39.2 的 rank 描述构造；构造只沿候选
-前缀作 rank-guided descent，不读取或展开实际未知的 $S_n$ 全树。
-
-**证明。** 若 $u\ne v$，两个支持的叶数分别为 $F_{u+1}$ 和 $F_{v+1}$，
-因而支持不相等。若 $u=v$ 而 $s\ne t$，成熟条件给出
-$F_u-1\ge2d$（零阶时只有一个行为），GPO 定理 28.2 说明 incidence
-相等当且仅当前 $F_u-1$ 个出生位相等；GPO 引理 29.2 说明不同的
-$s,t$ 必在这些位中分开。因此支持仍不相等，(ACR.26) 有定义，且成员
-关系正好给出 (ACR.25)。
-
-GPO 定理 28.2 的证明按分支 rank 比较子树的 Fibonacci 叶数；在第一个
-不相等的 rank 处沿对应物理边继续即可得到一个对称差字。该过程至多
-访问候选字的最大深度个前缀描述，并没有访问实际成熟树的所有节点。
-这是依赖 alpha-origin、物理出生顺序和持久端口的 source-specific
-分隔结论；$D_d$ 的目录计数本身不能推出它。$\square$
-
-**推论 9.4（同一律的年龄分隔）。** 若 $s=t$ 且 $u<v$，则 ACR
-命题 2.2 的物理编译器给出
+There is a source-blind paid procedure acquiring $h$: query
+$a,a^2,a^4,\ldots,a^{2^k}$ through the first absence, then bisect the
+remaining integer interval of possible maximum lengths. On this actual
+input it uses exactly $2k$ Reads, peak literal $2^k\le2h$ and traffic
+at most $2k\,2^k$. No law, semantic-port choice or age is used to form
+these words. Moreover
 
 $$
- \operatorname{Read}^{s}_{u}(C_s(u+1))=0,qquad
- \operatorname{Read}^{s}_{v}(C_s(u+1))=1.
+ 1\le h\le n-1,\qquad h+1\le n\le2h+1.
  \tag{ACR.27}
 $$
 
-该字长为 $\lceil (u+1)/2\rceil$，不使用递推逆可性；奇异、非最小、
-零流和有限 transient 都在 GPO 定义 29.1 的正向域内。
-
-**证明。** $C_s(u+1)$ 的首次出现时刻恰为 $u+1$，而物理支持持久，
-故 (ACR.27) 成立。$\square$
-
-**命题 9.5（有限窗口的联合信息与 literal 下界）。** 设有效窗口非空，
-$N_w=H-A'+1$。对同一入口资源、无 source update 的任何零误差程序，
-若它在窗口上同时确定行为和切口，则一条最坏运行的 Read 数满足
+For any proposed behavior $s\in\mathscr C_d$, compute its origin-orbit
+birth times by (ACR.5)--(ACR.6). Its cuts compatible with this acquired
+spine are precisely
 
 $$
- Q_w\ge\left\lceil\log_2(D_dN_w)\right\rceil.
+ I_s(h)=[b_s(a^h),\ b_s(a^{h+1})-1]\cap[n_0,\infty).
  \tag{ACR.28}
 $$
 
-若 $N_w\ge2$，同一程序的某一条运行还满足 ACR 固定律窗口的既有
-literal 限制
+This interval has at most two integers, all at most $2h+1$. Thus the
+unbounded entrance has been reduced by actual Reads to at most $2D_d$
+distinct mature law/cut data, including its actual $(s,n)$.
+
+Proof. The root has branched by every allowed cut, so $a$ is present.
+By (ACR.7), a length-$\ell$ nonempty word is born in $[\ell+1,2\ell]$.
+Hence the spine is finite, and presence along it is a prefix predicate.
+The first absent power has exponent $k\ge1$, with
+$2^{k-1}\le h<2^k$. Its preceding present power and the absent power
+leave $2^{k-1}$ possible maxima; balanced bisection takes $k-1$ further
+calls. Including the $k+1$ power calls gives $2k$, and every submitted
+length is at most $2^k\le2h$.
+
+Presence of $a^h$ gives $n\ge h+1$. Absence of $a^{h+1}$ gives
+$n<b_s(a^{h+1})\le2h+2$, proving (ACR.27). For each hypothetical law,
+those two same replies say exactly (ACR.28). Consecutive nonempty spine
+births obey
 
 $$
- M_w\ge\left\lceil\frac H2\right\rceil,qquad
- W_w\ge
- \left\lceil\frac{A'+1}{2}\right\rceil
- \left\lceil\log_2N_w\right\rceil.
+ b_s(a^{h+1})-b_s(a^h)=\delta(\sigma_{a^h})\in\{1,2\}.
  \tag{ACR.29}
 $$
 
-若 $N_w=1$，年龄部分没有 Read 或 literal 下界，行为部分仍有
-$\lceil\log_2D_d\rceil$ 的下界。特别地，$d=0$ 且
-$A'=H=2$ 时，联合下界为零。
+They leave at most two cuts, before the maturity intersection. The actual
+law obeys both acquired replies and maturity, so its actual cut remains.
+Computing these hypothetical birth times uses forward descriptors, not
+an observation of the hypothetical or actual whole tree. Doubling and
+bisection are the classical unbounded-search supplier [BY]; the additional
+source correspondence is the bounded age fiber (ACR.28)--(ACR.29) for a
+single actually acquired physical spine. $\square$
 
-**证明。** 命题 9.3 和推论 9.4 使 $D_dN_w$ 个成熟候选数据具有
-两两不同的正确输出要求。长度至多 $q$ 的二叉回复树至多有 $2^q$
-个叶，故 (ACR.28) 成立。固定任一合法行为并限制程序到该行为，
-ACR 定理 4.2 的同一运行峰值和 traffic 下界给出 (ACR.29)；ACR
-命题 4.3 的 interior 和下端点逐点账单在此只作既有结果引用，不重述。
-窗口 singleton 没有年龄邻居，所以不把下界错误施加到 $N_w=1$。
-[Cicalese--Laber--Saettler][CLS] 的同一路径 function-evaluation 树说明
-traffic 下界是单次运行的路径账，而非两个不同输入的最坏数相加。$\square$
+## 10. Executable physical separators with polynomial backing
 
-**定理 9.6（有限窗口上的付费终止取得）。** 在一个给定有限有效窗口
-$[A',H]$ 内，存在一个不作 source update 的自适应程序，终止于每个
-允许的 $(s,n)$，并返回该行为的前 $2d$ 位、GPO 引理 29.2 的 fixed
-canonical seeded descriptor、准确的 $n$ 和 $B_n=F_{n+1}-1$。一种直接
-实现至多使用 $D_dN_w-1$ 次实际 Reads，峰值 submitted literal 不超过
-$H$，literal traffic 不超过 $H(D_dN_w-1)$；$d=0$ 的 singleton 使用
-零次 Read。
-
-**证明。** 将窗口内的 $D_dN_w$ 个候选数据固定编号。每次从尚未
-分开的两个候选中选取一对，提交命题 9.3 的 $\omega_{x,y}$，并删除
-预测回复与实际回复不相容的候选。每次至少删除一个候选，故至多
-$D_dN_w-1$ 次后只剩一个。对剩余候选用 GPO 引理 29.2 的固定有限
-synthesis 取得前缀和 canonical descriptor，再写入
-$(P,L,n,F_{n+1}-1)$ 并在静止区 handoff。每个 separator 是有限物理字，
-且候选切口不超过 $H$，故给出所列峰值和 traffic。候选 rank descent、
-Fibonacci 算术、operand、中间结果、最终写和 handoff 都是有限本地工作，
-并可复用工作区。
-
-该上界只是在有限窗口内的终止性结果；其 pair-elimination 控制壳是
-[Angluin][ANG] membership-query 框架的有限实例，不能被记作一般有限学习的
-新定理。新内容是命题 9.3 将每一对真实 GPO 候选落实为物理 separator。
-它不声称未知无界切口上的 $O(\log(n+2)+4^d)$ 读取上界。$\square$
-
-**定理 9.7（无界擦除入口没有固定律分隔族）。** 对任意有限的物理字族
-$\mathcal W$，存在 $N_{\mathcal W}$，使得对所有 $s\in\mathscr C_d$ 和
-所有 $n\ge N_{\mathcal W}$，
+**Definition 10.1 (implicit subtree ranks).** For a present descriptor
+$(b_p,\sigma_p)$ at a hypothetical cut $u$, define
 
 $$
- \operatorname{Read}^{s}_{n}(w)=1qquad(w\inmathcal W).
+ \kappa_u(p)=u-b_p+\mathbf1_{\sigma_p=\beta},\qquad
+ f(q)=F_{q+1}\quad(q\ge0).
  \tag{ACR.30}
 $$
 
-因此不存在一个与当前未知年龄无关、大小仅依赖 $d$ 的固定 Read 字族，
-能够在所有 $n\in{\cal A}_d$ 上分隔 $\mathscr C_d$ 的行为。任何无界
-联合取得程序都必须让其 separating literal 随当前年龄证据移动，或者
-保留一个额外的年龄/律输入。
+The subtree has $f(\kappa_u(p))$ terminal leaves. It is a singleton
+exactly at ranks zero and one, and a branch at every rank at least two.
+A branch of rank $q$ has child ranks $q-1,q-2$, with rank $q-1$ at
+$a$ iff its actual orientation bit is one. These are ranks of the
+orientation-independent leaf counts, not names of fixed physical
+semantic children. Their meaning follows by the two label transitions
+and the recurrence $f(q)=f(q-1)+f(q-2)$ for $q\ge2$, as in GPO
+Theorem 24.2. In particular $f(0)=f(1)=1$: tests below compare leaf
+counts, and do not treat ranks zero and one as unequal supports.
 
-**证明。** 对任意固定 $s$ 和有限字 $w$，ACR 命题 2.2 给出有限首次
-出现时刻 $b_s(w)\le2|w|$（空字从初始切口存在）。对有限集合
-$\mathscr C_d\times\mathcal W$ 取这些时刻的最大值即为
-$N_{\mathcal W}$；持久性给出 (ACR.30)。若固定字族在所有成熟切口上
-分隔行为，则任意两个行为必须在某个字上有不同回复，但 (ACR.30) 使
-所有回复同时为一，矛盾。故无界输入不能把有限窗口的 separator 直接
-冻结为 $O(4^d)$ 个年龄独立查询。
+**Proposition 10.2 (constructive separator for mature candidate data).**
+Given distinct mature data $x=(s,u)$ and $y=(t,v)$, with each behavior
+specified by any order-at-most-$d$ seeded presentation, there is a uniform
+procedure constructing a physical word $w$ and its two opposite predicted
+presence replies such that, for $H=\max(u,v)$,
 
-这也是为何 GPO 的完整扫描和 ACR 的律已知阈值逆不能直接合并为本节
-的无保留律结论。[Nowak][NOW] 的对数 generalized-binary-search 界需要额外的
-splitting geometry；本物理 membership 接口并未提供该假设。$\square$
+$$
+ \operatorname{Read}^{s}_{u}(w)\ne\operatorname{Read}^{t}_{v}(w),
+ \qquad |w|\le H-1.
+ \tag{ACR.31}
+$$
 
-**推论 9.8（当前未闭合的精确桥）。** 在定义 9.1 的无界承诺域上，命题
-9.3、推论 9.4 和定理 9.7 共同确定了真实 source-specific separator
-的存在、有限窗口的付费终止和固定分隔族的失效。它们没有证明在不保留
-律、年龄或 archive 且不作 update 时，Read 上界
-$O(\log(n+2)+4^d)$、peak $O(n)$ 和 traffic
-$O(n(\log(n+2)+4^d))$ 的联合取得。若以后得到该桥，写入的
-$(P,L,n,B_n)$ 才能应用 GPO 定理 34.2、34.3 和命题 39.5；推断出的
-$P$ 仍不产生过去的 origin-acquisition journal，也不恢复根/授权真实性、
-私有机器身份或 physical duration。
+The procedure uses no Read, complete-tree expansion, stored tree, scan
+or backward recurrence. One binary implementation, including construction
+of both first-$2d$ prefixes when needed, has work at most
 
-**证明。** 前三项分别是命题 9.3、推论 9.4、定理 9.6 和定理 9.7 的
-直接合取。GPO 定理 34.2 和 39.4 的消费者要求已经获得的 law-ready
-record 及同步切口；定义 9.1 恰好擦除了这些输入，所以只能作条件应用。
-最后，journal、私有身份和 duration 不出现在任何 presence 回复或
-(ACR.23)--(ACR.30) 的目标坐标中，故它们不由这些数学数据逆推出。
+$$
+ C\bigl((d+1)^3(H+2)^2+(H+2)^3+(d+1)^2\bigr)
+ \tag{ACR.32}
+$$
+
+and reusable scratch
+$O((d+1)^2+(d+1)(H+2)+(H+2)^2)$ bits. The generated literal, operands,
+Fibonacci and rank integers, intermediate writes and predicted replies
+are included. Presentations of equal behaviors are distinguished only
+when their cuts differ.
+
+Proof. First specify an unequal-count descent. At a common physical
+prefix $p$, maintain its present descriptors in both candidates and the
+invariant that their subtree leaf counts differ. If one is terminal and
+the other a branch, return $pa$: it is absent in the former and present
+in the latter. If both are branches, compute each parent orientation
+from its own actual chronological index (ACR.6), then its two child
+ranks by Definition 10.1. Choose $a$ if the two $a$-child leaf counts
+differ; otherwise choose $b$. At least one side differs, since the sums
+of the two child counts differ. Descend that side, update both physical
+prefix descriptors and repeat. Both children of a branch are present,
+so the invariant is maintained. Both candidates cannot be terminal
+under unequal counts. The maximum rank decreases by at least one at
+each descent. Induction on that maximum shows that the returned suffix
+from this starting prefix has length at most
+$\max(\kappa_u(p),\kappa_v(p))-1$. This specifies every choice and
+termination step; an unknown lexicographic symmetric difference is not
+an input to the procedure.
+
+If $u\ne v$, start at the root, with ranks $u,v\ge2$. The counts
+$F_{u+1},F_{v+1}$ differ, since Fibonacci leaf counts strictly increase
+on ranks at least one. The preceding descent gives (ACR.31).
+
+If $u=v$ and $s\ne t$, compute their first differing birth bit $j$.
+GPO Lemma 29.2 gives $1\le j\le2d$; this case is absent at $d=0$.
+Let
+
+$$
+ \tau=\min\{e\ge2:j\le F_{e+1}-1\},\qquad
+ R=j-(F_\tau-1).
+ \tag{ACR.33}
+$$
+
+Maturity gives $j\le F_u-1=B_{u-1}$, hence $\tau\le u-1$.
+The two histories before birth $j$ coincide. We now construct its
+common parent $p_j$, rather than enumerate earlier parents.
+
+At the fixed old cut $\tau-1$, start at the root with remaining rank
+$R$ among beta leaves. Maintain a present prefix descriptor $(b,\sigma)$
+and a remaining rank between one and its number of beta leaves,
+$\lambda_\sigma(\tau-1-b)$. If that prefix is a beta terminal,
+return it; its remaining rank must be one. An alpha terminal has beta
+mass zero and is never selected. Otherwise it is a branch: compute
+its branch time, chronological index by (ACR.6), orientation bit and
+the two child descriptors. For its $a$-child, born at that branch time
+$\tau_p$, compute the mass
+
+$$
+ A_p=\lambda_{\sigma_{pa}}(\tau-1-\tau_p).
+ \tag{ACR.34}
+$$
+
+If the remaining rank is at most $A_p$, descend to $pa$ with that
+rank; otherwise descend to $pb$ and subtract $A_p$. This includes
+$A_p=0$. All these branches were born by $\tau-1$, so their event
+indices are at most $B_{\tau-1}<j$. Their bits and child descriptors
+therefore agree in the two candidates. The disjoint physical $a$- then
+$b$-subtree beta-leaf lists have exactly the masses used in (ACR.34),
+by GPO (GPO.94). Induction proves that this unranking selects the
+$R$th beta leaf of the actual old physical lexicographic list. GPO
+Proposition 39.2 then identifies it with the actual parent $p_j$.
+No rank oracle or semantic traversal is supplied. At each branch the
+chosen child's branch time is later, so the descent is finite; a parent
+branching at $\tau$ has $|p_j|\le\tau-2$ by (ACR.7).
+
+At $p_j$ the two candidate orientations are opposite. At their common
+cut $u\ge\tau+1$, their physical $a$-child ranks are $u-\tau+1$
+and $u-\tau$ in one order. Their leaf counts differ, including the
+endpoint pair of ranks two and one. Begin the unequal-count descent
+at $p_ja$. Its returned word has length at most
+
+$$
+ |p_j|+1+(u-\tau+1)-1\le u-1.
+ \tag{ACR.35}
+$$
+
+The opposite predicted replies in either case are obtained from which
+candidate is terminal at the final step. This proves correctness,
+including the first mature cut and different equivalent presentations.
+
+For the bounds, first generate two prefixes of length $2d$ by forward
+recurrence in $O((d+1)^2)$ bit operations. Both unranking and the
+unequal-count descent visit $O(H+1)$ prefixes in total. Retain their
+birth descriptors along each current path. At each prefix compute the
+chronological rank by the sibling sum (ACR.6), with the already determined
+sibling labels. The relevant branch indices are at most $B_H$ and have
+$O(H+1)$ bits; intermediate sums have the same bound. A table of
+$F_0,\ldots,F_{2H+4}$ takes $O((H+2)^2)$ bits and bit operations.
+Each prefix rank sum has $O(H+1)$ terms of $O(H+1)$ bits, so all
+rank calculations use $O((H+2)^3)$ bit work. A forward companion power
+at each required index costs $O((d+1)^3(H+2))$, and there are $O(H+1)$
+such evaluations for each of the two candidates. This is the GPO
+Proposition 39.5 evaluator applied to the paths explicitly selected
+above. The local ranks, beta masses and comparisons have smaller bounds.
+There is no iteration through $B_H$ births. The stated table, two paths,
+companion scratch, presentations and literal buffers fit the displayed
+workspace. Counting each binary read, write and initialized workspace bit
+as work gives (ACR.32), including the constructed word and replies.
+No inverse matrix is used, so zero taps, singular transitions, nonminimal
+rows, the zero stream and finite transients are included. $\square$
+
+## 11. Unbounded paid acquisition and the same-source consumers
+
+**Definition 11.1 (streamed joint acquisition).** First acquire $h$ by
+Proposition 9.2. For $d>0$ enumerate the $4^d$ order-$d$ row/seed
+presentations, using ordinary $d$-bit row and seed counters; for $d=0$
+enumerate just the zero presentation. For each presentation $s$, compute
+its first $2d$ bits and (ACR.28), and emit its at most two mature cuts.
+No table of all presentations, transcript of all tests or expanded tree
+is retained. Padding an order-$r$ annihilator by $E^{d-r}$, as in GPO
+Lemma 29.2, ensures that every behavior occurs; repeated presentations
+are allowed. The emitted list has some finite length $K$, with
+
+$$
+ 1\le K\le2\,4^d,\qquad \max\{u:(s,u)\text{ is emitted}\}\le2h+1.
+ \tag{ACR.36}
+$$
+
+Maintain a single current candidate. Initialize it to the first emitted
+datum. Compare each further datum with the current one. If their
+length-$2d$ prefixes and cuts coincide, keep the current one without a
+Read. Otherwise construct the separator of Proposition 10.2, really
+submit that physical word on the genuine stationary root, and keep the
+one of the two candidates whose predicted reply equals the actual
+binary reply. Release the other candidate's scratch. After exhausting
+the counters, generate the surviving prefix $P$, run exactly $K_d(P)$,
+compute $B_n$ by Fibonacci addition, and really write (ACR.25), its
+ready control and any requested behavioral phase. Make the actual
+handoff only after all writes finish, while the same completed cut is
+still stationary. A candidate's computed prediction never stands in
+for the paid call.
+
+**Theorem 11.2 (joint acquisition on every unbounded mature input).**
+Under Definition 9.1, Definition 11.1 terminates on every admitted
+actual $(s,n)$ with the correct installed data (ACR.25). On **that
+same run**, for its actually acquired $h,k$ and actual emitted count
+$K$, let $J$ be the number of candidate comparisons that really make
+a Read. Then
+
+$$
+ \begin{aligned}
+ U_{\rm source}&=0,& Q&=2k+J\le2k+K-1\le2k+2\,4^d-1,\\
+ M&\le\max(2^k,2h)\le2h\le2n-2,&
+ W&=W_{\rm spine}+\sum_{i=1}^{J}|w_i|\le2h\,Q.
+ \end{aligned}
+ \tag{ACR.37}
+$$
+
+In particular the required same-input orders are
+
+$$
+ Q=O(\log(n+2)+4^d),\qquad M=O(n),\qquad
+ W=O\bigl(n(\log(n+2)+4^d)\bigr).
+ \tag{ACR.38}
+$$
+
+For an absolute binary-operation-model constant $C$, one implementation
+has local bit work, including all literal and data writes, at most
+
+$$
+ e_d+C\left[(4^d+1)\bigl((d+1)^3(n+2)^2+(n+2)^3\bigr)
+       +(n+2)^2(1+\log_2(n+2))\right],
+ \tag{ACR.39}
+$$
+
+and reusable owned data backing
+
+$$
+ v_d+O\bigl((d+1)^2+(d+1)(n+2)+(n+2)^2\bigr)\text{ bits}.
+ \tag{ACR.40}
+$$
+
+The returned record and optional phase require $O(d+n+1)$ binary data
+writes, including an explicit $\Theta(n)$-bit $B_n$ field. The actual
+fixed code, installation, call service, binding/grants, backing lifetime
+and handoff apparatus have their separate actual charges. Neither their
+physical tariffs nor Read, allocation or handoff durations are bounded
+by (ACR.39). Thus this is polynomial local work for each fixed $d$,
+and polynomial reusable data backing for each fixed $d$, without a total
+physical-time or weighted-resource optimum. The explicit $e_d,v_d$
+charge the exact public canonical enumeration; no complexity bound in
+$d$ is inferred from an unspecified ordering.
+
+Proof. The actual behavior has an order-$d$ presentation when $d>0$,
+including a padded presentation of a lower order. By Proposition 9.2,
+its actual cut occurs in the emitted list. At $d=0$ the same assertion
+uses the one known zero behavior, whose age remains to be acquired.
+The list is finite and nonempty regardless of which duplicate
+presentations are enumerated.
+
+The comparison invariant is that the actual behavioral datum is either
+the current candidate or still occurs among the unprocessed candidates.
+It holds initially. If the actual datum is current, every comparison
+retains it because its predicted reply is correct. If it arrives as the
+next candidate, the separator's opposite replies select it. If neither
+candidate is actual, the actual datum still lies later in the list.
+Equality of the first $2d$ bits and the cut means equality of the datum
+by GPO Lemma 29.2, so skipping duplicates preserves the invariant.
+This is the usual finite comparison/elimination argument, used here as
+an intermediate step. It needs no stored reply history or generally
+balanced splitting hypothesis. At exhaustion the invariant makes the
+survivor actual. Its generated prefix is therefore the authentic $P$,
+earned from this run's replies rather than retained source advice.
+
+For canonical equality, the survivor's raw row is only a computational
+presentation. Applying the **original fixed** synthesis to its authentic
+$P$ gives exactly the $K_d(P)$ field selected in GPO §§29 and 34.
+Equal output behavior alone is not used to equate distinct coefficient
+rows. In particular a zero behavior at $d>0$ does not authorize
+replacing that field by a newly selected minimal order-zero row.
+
+There are $2k$ actual spine calls and at most $K-1$ comparison calls.
+By (ACR.36), Proposition 10.2 constructs every comparison word with
+length at most $(2h+1)-1=2h$. Proposition 9.2 bounds the spine's
+peak by the same $2h$. Summing the actual lengths of these very calls
+gives (ACR.37); no maxima from different inputs are combined. Since
+$h\le n-1$, $k\le\lceil\log_2 n\rceil$, proving (ACR.38).
+The supplied interval was unbounded; $2h+1$ is a bound obtained during
+this run, and is never supplied as entry age information.
+
+For work, materializing and submitting spine literals, updating their
+binary length brackets, copying replies and initializing their buffers
+uses $O((n+2)^2(1+\log(n+2)))$ bit operations as a conservative bound.
+Computing $n_0$ by Fibonacci addition also fits, since $n_0\le n$.
+For each of $4^d$ presentations, generating the first $2d$ bits costs
+$O((d+1)^2)$. Computing the two spine thresholds uses $O(h+1)$
+forward path descriptors and the (ACR.32) arithmetic bound, with
+hypothetical times at most $2h+2$. There are at most twice as many
+comparison constructions, each bounded by (ACR.32) with $H\le2h+1$.
+The row/seed counters and every emitted age are explicitly generated
+and written. Final canonical synthesis generates its rows by the
+original fixed enumerator, charging $e_d$, and tests at most $2^d$
+rows with the fixed seed in $O(2^d(d+1)^2)$ further bit operations.
+All remaining costs fit the polynomial terms of (ACR.39), since $h<n$.
+
+Forward Fibonacci addition computes $B_n$ in $O((n+2)^2)$ bit work
+and $O(n+1)$ bits. If requested, the forward companion power
+$C^{B_n}$ applied to the selected seed gives the behavioral phase whose
+next output is $z_{B_n+1}$, in $O((d+1)^3(n+1))$ bit work. No private
+state is recovered or inverted. The prefix, descriptor and phase take
+$O(d+1)$ bits, the cut takes $O(\log(n+2))$, and the binary integer
+$B_n=F_{n+1}-1$ takes $\Theta(n)$ bits. Actual copying, readable
+installation and receiver data writes of these fields, along with ready
+control, fit (ACR.39) and the stated data-write bill. Only two candidate
+records, their prefixes, enumeration counters, two descriptor paths,
+Fibonacci tables and companion scratch coexist; final canonical row
+generation additionally uses at most $v_d$ working bits. Reuse their
+storage between comparisons. This proves (ACR.40), without a retained
+exponential candidate catalogue, an age-dependent preinstalled table or
+a retained test transcript.
+All intermediate operand reads and bit writes are in this bit-operation
+bill; each real Read and physical service/handoff operation additionally
+keeps its actual tariff. Finite progress and completed service/handoff
+give finite return. The stationary premise covers those real operations
+through return, so the installed $n,B_n$ still name the actual cut.
 $\square$
+
+**Theorem 11.3 (the acquired record enters the existing view inverses).**
+At Theorem 11.2's completed handoff, under its surviving same-source
+binding and grants, the installed (ACR.25) has the mathematical fields
+and synchronization required by GPO Definition 34.1. Consequently GPO
+Theorem 34.2 recovers this actual source's incidence $S_n$, terminal
+boundary, marked birth chronology, current labelled $X_n$ and complete
+finite-request behavior, with its commuting round trips on their data
+images. Without whole-tree expansion, GPO Theorem 39.4 and Proposition
+39.5 apply to each supplied finite physical literal. Under GPO Theorem
+34.3's continued rights, retention, backing, completed-call synchronization
+and exclusive serial path, the consumers remain correct through every
+finite actual serial continuation.
+
+Proof. Theorem 11.2 supplies the exact prefix and the identical fixed
+canonical generator, rather than only an equivalent private presentation.
+Its stationary completed writeback supplies the exact current counters.
+The genuine binding, grants and available code/backing are separately
+Definition 9.1's actual relations. These are precisely the inputs used
+by GPO Theorems 34.2--34.3 and 39.4. For the zero behavior one may use
+the evaluator's constant-zero shortcut; that does not change $K_d(P)$
+in the retained record. Its forward row also evaluates that same stream
+by the proof of GPO Proposition 39.5. At $d=0$, $P$ is empty and the
+separate $n\ge2$ zero-order domain of GPO Theorem 34.2 applies.
+Thus the original parameter correspondence holds on every admitted cut.
+
+This use requires no past origin-acquisition receipts: GPO Definition
+34.1 explicitly separates optional literal receipts from the predictor's
+mathematical fields. The acquired record has the same data, while a claim
+that an earlier particular acquisition event happened would require its
+actual journal. Expansion of the entire views still pays its output,
+backing and computation; the actual source already has $2F_{n+1}-1$
+material nodes. As in Theorem 6.1, inserting stationary observer actions
+can change an arbitrary journal without changing any recovered birth
+view. A hidden equivalent register can also differ while giving every
+same reply. Root/grant authenticity is a premise, and physical durations
+are excluded channels. Hence these consumers recover none of those
+additional objects. $\square$
+
+## 12. Joint lower restrictions and the fixed-family boundary
+
+**Proposition 12.1 (finite-window capacity and correctly indexed bills).**
+Fix common entry resources as in Definition 9.1 and a public window
+$[A,H]$. Its effective window is $[A',H]$, where $A'=\max(A,n_0)$.
+If this window is nonempty, put $N_w=H-A'+1$. Any exact terminating
+zero-update controller on all its $D_dN_w$ mature behavioral data has
+
+$$
+ \max_{s,n}Q(s,n)\ge\lceil\log_2(D_dN_w)\rceil.
+ \tag{ACR.41}
+$$
+
+If $N_w\ge2$, it also has the **separate worst-case-coordinate** bounds
+
+$$
+ \begin{aligned}
+ \max_{s,n}M(s,n)&\ge\lceil H/2\rceil,\\
+ \max_{s,n}W(s,n)&\ge
+ \lceil(A'+1)/2\rceil\,\lceil\log_2N_w\rceil.
+ \end{aligned}
+ \tag{ACR.42}
+$$
+
+For each fixed behavior, the traffic inequality is witnessed on one
+actual path containing at least $\lceil\log_2N_w\rceil$ informative
+age queries, each with length at least $\lceil(A'+1)/2\rceil$.
+The peak is forced on the runs at $H-1,H$. These witnesses need not
+be the same input as each other or the capacity witness in (ACR.41).
+Every fixed-behavior restriction also obeys Proposition 4.3's existing
+pointwise interior and lower-endpoint conditions, on exactly its stated
+age domain. For $N_w=1$ there is no age-query or age-literal lower
+bound; (ACR.41) reduces to the behavioral capacity. At $d=0,N_w=1$
+it is zero, attained by returning the known cut and zero behavior
+without a Read. An empty effective window supplies no instance.
+
+Proof. Distinct behaviors have distinct length-$2d$ prefixes by GPO
+Lemma 29.2; differing cuts also require different returned records.
+Thus the finite common-entry reply tree needs $D_dN_w$ distinct return
+leaves. A binary tree of depth at most $q$ has at most $2^q$ leaves,
+giving (ACR.41), using the classical decision-tree capacity argument
+already used by GPO Theorem 37.2.
+
+Fix one behavior and restrict the same controller to its $N_w$ ages.
+Each physical word is its first-presence threshold (ACR.7). Contract
+constant-reply queries in that restricted reply tree. Some remaining
+path has at least $\lceil\log_2N_w\rceil$ queries; every such query
+has threshold in $[A'+1,H]$ and hence the stated minimum length.
+Multiplication of these lengths and their count is therefore a traffic
+bill on that one input. Separately, the adjacent ages $H-1,H$ have a
+first different reply on their common prefix, and its threshold is
+exactly $H$, forcing the peak on both runs. These are the arguments
+and costs of Theorem 4.2, applied with the correct effective endpoints;
+Proposition 4.3 supplies its sharper pointwise restrictions without a
+new all-input optimality claim. The path-cost convention agrees with
+[Cicalese--Laber--Saettler][CLS], §1, which defines cost of one object
+as the sum on its root-to-leaf path, then maximizes over objects. It
+does not combine separately attained maxima into a joint witness.
+For independent zero-error randomness with almost-sure finite return,
+intersect the finitely many probability-one correctness/termination
+events; each tape in their intersection satisfies the deterministic
+argument. This gives the same worst-case uniform-budget restrictions,
+not an expected-cost optimum. $\square$
+
+**Proposition 12.2 (saturation and its nontrivial-law qualification).**
+For every finite physical-word family $\mathcal W$, every $d\ge0$
+and every $s\in\mathscr C_d$, all words in the family are present at
+all sufficiently old mature cuts. More explicitly, with
+$L=\max(\{0\}\cup\{|w|:w\in\mathcal W\})$,
+
+$$
+ n\ge\max(n_0,2L)\quad\Longrightarrow\quad
+ \operatorname{Read}^{s}_n(w)=1\quad(w\in\mathcal W).
+ \tag{ACR.43}
+$$
+
+For $d\ge1$ this rules out a fixed age-independent finite word family
+separating the behaviors on all mature cuts. For $d=0$ there is only
+one behavior, and the empty family already separates behaviors
+vacuously. Saturation holds in both cases. It does not obstruct the
+adaptive age-dependent words in Definition 11.1.
+
+Proof. Every nonempty $w$ is born by $2|w|$ by (ACR.7), uniformly
+over the law, and the empty word is always present. Persistence proves
+(ACR.43). When $d\ge1$, the constant-zero and constant-one behaviors
+are distinct allowed streams, yet all the displayed replies coincide
+at a common sufficiently large cut. They cannot be separated by that
+family. The singleton case has no distinct pair. In Definition 11.1,
+the acquired $h$ grows with the actual cut by (ACR.27), and neither
+the spine family used on that run nor its later separators is fixed
+independently of those acquired replies. Thus the impossibility
+consequence has no application to Theorem 11.2. $\square$
+
+**Proposition 12.3 (source subtraction and the scope of the bridge).**
+The new joint entrance conclusion uses only the actual source and service
+of Definition 9.1 and the paid constructions above. The classical finite
+learning, unbounded search, recurrence synthesis and mature-view inverses
+remain intermediate suppliers; the additional source-grounded content
+is the acquired two-age-per-behavior spine fiber, the implicit physical
+separator with its work/backing bound, and their same-run zero-update
+acquisition and actual writeback. These statements give neither an
+exponential-in-$d$ necessity nor a polynomial-in-$d$ acquisition result,
+and do not claim all-parameter scan dominance or a weighted optimum.
+
+Proof. The sole sensor throughout is a paid membership bit. [Angluin][ANG],
+§§1--2, distinguishes membership from equivalence queries returning a
+counterexample; no equivalence service is used here. A locally constructed
+separator compares two explicit hypothetical data and obtains only one
+actual binary reply. [Nowak][NOW], Lemma 1 and Theorem 1, derives fast
+finite-class splitting under neighborliness and coherence hypotheses;
+none is supplied by this service or assumed in the proof. The finite
+comparison argument in Theorem 11.2 is an existing elementary supplier,
+not the source-specific bridge itself. [Bille et al.][BIL], §1, starts
+with a compressed grammar for random access. Here hypothetical rows are
+enumerated from $d$, while the actual row, prefix and cut must be
+acquired; compressed-representation access alone cannot discharge that
+obligation. GPO §§29,37 supply finite behavior separation and counting;
+GPO §39 supplies forward term evaluation and the actual physical
+chronological index. Proposition 9.2 and the unranking/descent proof of
+Proposition 10.2 provide the extra paid-source correspondence needed
+before GPO §§34,39 can consume an authentic synchronized record.
+
+The native declarations and their owning Blueprint Scribes under
+`D5/S3/Arith/FibonacciAtomic/Observer/` give related but distinct suppliers:
+`NativeRankedNavigationCompiler.atomic_navigation` concerns the fixed
+native semantic orientation; its private realization lemmas do not
+supply a locally wired chronological rank. `NativeBirthVectorDecoder`
+proves decomposition and decoding on its recursive-code images, and
+explicitly does not identify every such code with an actual least
+presence epoch. `ActualFibonacciSupportChain` gives strict native support
+inclusions and bounded-address agreement. `NativeFullSourceProducer`,
+including its private traversal proof, returns the complete tree with
+one richer native reply per node; `NativeFibonacciStaticScan`, including
+its private execution/cost helpers, uses a supplied native list and
+retains its routing costs. None is the erased-law, binary-physical,
+no-tree entrance of Definition 9.1. The retrospective and general-cut
+acquisition volumes instead assume an acquired seed, retained request
+material or an installed capture/selector interface. Their premises do
+not supply the erased inputs here. The original Fibonacci atomic volume
+§§1--5 separately assumes two atoms, an ordered constructor, a replacement
+law and observation quotients; none follows from two unrelated symbols.
+
+At this erased entrance the existing physical complete scan also
+suffices: acquire $S_n$, apply GPO Theorem 28.2 to decode $n$ and
+its mature first $2d$ bits, and run the same $K_d$. Its scan segment
+keeps exactly Proposition 8.1's Read and literal bills; decoding,
+canonical synthesis and installed writes remain additional paid work.
+For fixed $d$, Theorem 11.2's polynomial local work and logarithmic
+plus constant-in-$n$ Reads may be compared on the identical actual
+$(s,n)$ with the full-scan supplier and Proposition 8.1's material-size
+bill; full expansion still costs exponential output. The explicit
+$4^d$ enumeration and literal/installation bills remain, so no stronger
+uniform resource comparison follows. The lower restrictions in
+Proposition 12.1 only have logarithmic behavioral capacity in $D_d$;
+they do not prove exponential-$d$ necessity. All statements are ordinary
+conditional mathematical derivations from the cited suppliers, with no
+additional Lean certification or worldwide novelty assertion. $\square$
 
 [ANG]: https://link.springer.com/article/10.1023/A:1022821128753
 [NOW]: https://arxiv.org/pdf/0910.4397v5
