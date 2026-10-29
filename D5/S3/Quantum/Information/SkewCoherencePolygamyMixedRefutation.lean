@@ -116,32 +116,37 @@ private lemma root_rho_positive : rootRho.PosSemidef := by
   exact hp.smul (by positivity)
 
 private lemma root_rho_square : rootRho * rootRho = rho := by
-  let r : Matrix (Fin 2 × Fin 3) (Fin 2 × Fin 3) ℂ :=
-    fun p q => (((if p.2 = 2 then
-      if q.2 = 2 then
-        Real.sqrt 29 + (if p.1 = q.1 then Real.sqrt 5 else -Real.sqrt 5)
-      else 0
-      else if q.2 = 2 then 0
-      else if p = q then 5
-      else if p.1 = q.1 ∨ p.2 = q.2 then 2 else 1) /
-        (2 * Real.sqrt 68) : ℝ) : ℂ)
-  let state : Matrix (Fin 2 × Fin 3) (Fin 2 × Fin 3) ℂ :=
-    fun p q =>
-      if p.2 = 2 then
+  have root_rho_apply (p q : Fin 2 × Fin 3) :
+      rootRho p q = (((if p.2 = 2 then
+        if q.2 = 2 then
+          Real.sqrt 29 + (if p.1 = q.1 then Real.sqrt 5 else -Real.sqrt 5)
+        else 0
+        else if q.2 = 2 then 0 else if p = q then 5
+        else if p.1 = q.1 ∨ p.2 = q.2 then 2 else 1) /
+          (2 * Real.sqrt 68) : ℝ) : ℂ) := rfl
+  have rho_apply (p q : Fin 2 × Fin 3) :
+      rho p q = if p.2 = 2 then
         if q.2 = 2 then (if p.1 = q.1 then 1 / 4 else 3 / 17) else 0
-      else if q.2 = 2 then 0
-      else if p = q then 1 / 8
-      else if p.1 = q.1 ∨ p.2 = q.2 then 3 / 34 else 9 / 136
+      else if q.2 = 2 then 0 else if p = q then 1 / 8
+      else if p.1 = q.1 ∨ p.2 = q.2 then 3 / 34 else 9 / 136 := rfl
+  have cast_one := Complex.ofReal_one.symm
+  have cast_nat (n : ℕ) [n.AtLeastTwo] := (Complex.ofReal_ofNat n).symm
+  have cast_mul := fun x y : ℝ => (Complex.ofReal_mul x y).symm
+  have cast_div := fun x y : ℝ => (Complex.ofReal_div x y).symm
+  have cast_add := fun x y : ℝ => (Complex.ofReal_add x y).symm
+  have cast_inv := fun x : ℝ => (Complex.ofReal_inv x).symm
+  have cast_neg := fun x : ℝ => (Complex.ofReal_neg x).symm
+  have cast_sub := fun x y : ℝ => (Complex.ofReal_sub x y).symm
   have h68 : Real.sqrt 68 ≠ 0 := by positivity
   have hs68 := Real.sq_sqrt (show (0 : ℝ) ≤ 68 by norm_num)
   have hs29 := Real.sq_sqrt (show (0 : ℝ) ≤ 29 by norm_num)
   have hs5 := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
-  change r * r = state
   ext ⟨a, b⟩ ⟨c, d⟩
-  simp only [Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_succ]
   fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
-    norm_num [r, state] <;>
-    norm_cast <;> field_simp <;> nlinarith
+    norm_num [Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_succ,
+      root_rho_apply, rho_apply] <;>
+    simp only [cast_one, cast_nat, cast_mul, cast_div, cast_add, cast_inv,
+      cast_neg, cast_sub, Complex.ofReal_inj] <;> field_simp <;> nlinarith
 
 private lemma rho_density : IsDensity rho := by
   constructor
@@ -215,22 +220,29 @@ private lemma root_tau_positive : rootTau.PosSemidef := by
   exact hp.smul (by positivity)
 
 private lemma root_tau_square : rootTau * rootTau = tau := by
-  let r : Matrix (Fin 2) (Fin 2) ℂ :=
-    fun a c => (((Real.sqrt 29 +
-      (if a = c then Real.sqrt 5 else -Real.sqrt 5)) /
-        (2 * Real.sqrt 34) : ℝ) : ℂ)
-  let state : Matrix (Fin 2) (Fin 2) ℂ :=
-    fun a c => if a = c then 1 / 2 else 6 / 17
+  have root_tau_apply (a c : Fin 2) :
+      rootTau a c = (((Real.sqrt 29 +
+        (if a = c then Real.sqrt 5 else -Real.sqrt 5)) /
+          (2 * Real.sqrt 34) : ℝ) : ℂ) := rfl
+  have tau_apply (a c : Fin 2) :
+      tau a c = if a = c then 1 / 2 else 6 / 17 := rfl
+  have cast_one := Complex.ofReal_one.symm
+  have cast_nat (n : ℕ) [n.AtLeastTwo] := (Complex.ofReal_ofNat n).symm
+  have cast_mul := fun x y : ℝ => (Complex.ofReal_mul x y).symm
+  have cast_div := fun x y : ℝ => (Complex.ofReal_div x y).symm
+  have cast_add := fun x y : ℝ => (Complex.ofReal_add x y).symm
+  have cast_inv := fun x : ℝ => (Complex.ofReal_inv x).symm
+  have cast_neg := fun x : ℝ => (Complex.ofReal_neg x).symm
+  have cast_sub := fun x y : ℝ => (Complex.ofReal_sub x y).symm
   have h34 : Real.sqrt 34 ≠ 0 := by positivity
   have hs34 := Real.sq_sqrt (show (0 : ℝ) ≤ 34 by norm_num)
   have hs29 := Real.sq_sqrt (show (0 : ℝ) ≤ 29 by norm_num)
   have hs5 := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
-  change r * r = state
   ext a c
-  simp only [Matrix.mul_apply, Fin.sum_univ_succ]
   fin_cases a <;> fin_cases c <;>
-    norm_num [r, state] <;>
-    norm_cast <;> field_simp <;> nlinarith
+    norm_num [Matrix.mul_apply, Fin.sum_univ_succ, root_tau_apply, tau_apply] <;>
+    simp only [cast_one, cast_nat, cast_mul, cast_div, cast_add, cast_inv,
+      cast_neg, cast_sub, Complex.ofReal_inj] <;> field_simp <;> nlinarith
 
 private lemma root_beta_positive : rootBeta.PosSemidef := by
   let r : Matrix (Fin 3) (Fin 3) ℂ :=
@@ -260,27 +272,33 @@ private lemma root_beta_positive : rootBeta.PosSemidef := by
     ((Matrix.posSemidef_vecMulVec_self_star z).smul (by positivity))
 
 private lemma root_beta_square : rootBeta * rootBeta = beta := by
-  let r : Matrix (Fin 3) (Fin 3) ℂ :=
-    fun b d => ((if b = 2 then (if d = 2 then 1 / Real.sqrt 2 else 0)
-      else if d = 2 then 0
-      else (Real.sqrt 29 + (if b = d then Real.sqrt 5 else -Real.sqrt 5)) /
-        (2 * Real.sqrt 68) : ℝ) : ℂ)
-  let state : Matrix (Fin 3) (Fin 3) ℂ :=
-    fun b d =>
-      if b = 2 then (if d = 2 then 1 / 2 else 0)
-      else if d = 2 then 0 else if b = d then 1 / 4 else 3 / 17
+  have root_beta_apply (b d : Fin 3) :
+      rootBeta b d = ((if b = 2 then (if d = 2 then 1 / Real.sqrt 2 else 0)
+        else if d = 2 then 0
+        else (Real.sqrt 29 + (if b = d then Real.sqrt 5 else -Real.sqrt 5)) /
+          (2 * Real.sqrt 68) : ℝ) : ℂ) := rfl
+  have beta_apply (b d : Fin 3) :
+      beta b d = if b = 2 then (if d = 2 then 1 / 2 else 0)
+      else if d = 2 then 0 else if b = d then 1 / 4 else 3 / 17 := rfl
+  have cast_one := Complex.ofReal_one.symm
+  have cast_nat (n : ℕ) [n.AtLeastTwo] := (Complex.ofReal_ofNat n).symm
+  have cast_mul := fun x y : ℝ => (Complex.ofReal_mul x y).symm
+  have cast_div := fun x y : ℝ => (Complex.ofReal_div x y).symm
+  have cast_add := fun x y : ℝ => (Complex.ofReal_add x y).symm
+  have cast_inv := fun x : ℝ => (Complex.ofReal_inv x).symm
+  have cast_neg := fun x : ℝ => (Complex.ofReal_neg x).symm
+  have cast_sub := fun x y : ℝ => (Complex.ofReal_sub x y).symm
   have h68 : Real.sqrt 68 ≠ 0 := by positivity
   have h2 : Real.sqrt 2 ≠ 0 := by positivity
   have hs68 := Real.sq_sqrt (show (0 : ℝ) ≤ 68 by norm_num)
   have hs2 := Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
   have hs29 := Real.sq_sqrt (show (0 : ℝ) ≤ 29 by norm_num)
   have hs5 := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
-  change r * r = state
   ext b d
-  simp only [Matrix.mul_apply, Fin.sum_univ_succ]
   fin_cases b <;> fin_cases d <;>
-    norm_num [r, state] <;>
-    norm_cast <;> field_simp <;> nlinarith
+    norm_num [Matrix.mul_apply, Fin.sum_univ_succ, root_beta_apply, beta_apply] <;>
+    simp only [cast_one, cast_nat, cast_mul, cast_div, cast_add, cast_inv,
+      cast_neg, cast_sub, Complex.ofReal_inj] <;> field_simp <;> nlinarith
 
 private lemma sqrt_rho : CFC.sqrt rho = rootRho := by
   exact (CFC.sqrt_eq_iff rho rootRho rho_density.1.nonneg
