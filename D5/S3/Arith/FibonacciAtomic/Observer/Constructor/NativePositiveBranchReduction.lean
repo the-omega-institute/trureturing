@@ -100,7 +100,7 @@ private theorem shift_smart (a : Nat) (A B : Code) :
       | of m =>
           have eq : n + a = m + a + 1 ↔ n = m + 1 := by omega
           simp only [shiftCode, smart, eq]
-          split_ifs <;> (congr 1; omega)
+          split_ifs <;> congr 1 <;> omega
       | mul l r => rfl
   | mul l r => cases B <;> rfl
 
