@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.Kernels.NativeKernelRigidity
 import Reg.Support.DependentFamily
 
+/-! # Source-bound audit of exact native kernel rigidity -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -58,13 +60,14 @@ def family : Registration arena (type_of% (@kernel_zero_or_one)) where
     let K : Source → Source → ℂ := fun _ t => if t = .of true then 0 else 1
     refine ⟨(K, .of true), .of true, .of false, ?_⟩
     change K (.of true) (.of true) ≠ K (.of true) (.of false)
-    simp [K]
+    simp [K, show (FreeMagma.of false : Source) ≠ .of true by decide]
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@kernel_zero_or_one)
     (type_of% (realize signature (fun _ p t => p.1 p.2 t) (fun e => nomatch e)))
     Unit Unit where
-  unitName := `D5.S3.Arith.FibonacciAtomic.Kernels.NativeKernelRigidity.kernel_zero_or_one.__information_unit
+  unitName :=
+    `D5.S3.Arith.FibonacciAtomic.Kernels.NativeKernelRigidity.kernel_zero_or_one.__information_unit
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Kernels.NativeKernelRigidity.family
   realizationSource := none
   generated := false
