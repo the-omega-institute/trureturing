@@ -29,7 +29,7 @@ def claim : Prop :=
           (Polynomial.X - Polynomial.C (μ₃ : ℂ))) ↔
       (0 ≤ μ₂ ∧ -Real.sqrt (μ₁ * μ₂) ≤ μ₃))
 
-private def qform {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (x : Fin n → ℂ) : ℂ :=
+def qform {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (x : Fin n → ℂ) : ℂ :=
   x ⬝ᵥ (A *ᵥ x)
 
 private def energy (p q : ℝ) (x : Fin 2 → ℂ) : ℝ :=

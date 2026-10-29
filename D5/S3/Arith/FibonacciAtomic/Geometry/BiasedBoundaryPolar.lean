@@ -31,7 +31,7 @@ open BiasedBoundarySpectralForm (actual_spectral_form_energy)
 open InnerProductSpace Filter
 open scoped Topology ENNReal
 
-private def polar (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ ℝ K) :
+def polar (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ ℝ K) :
     K ≃ₗᵢ[ℝ] G0 := k.repr.trans b.repr.symm
 
 private def traceK : K →L[ℝ] G0 :=
@@ -40,7 +40,7 @@ private def traceK : K →L[ℝ] G0 :=
 private def root (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ ℝ K) : K →L[ℝ] K :=
   (polar b k).symm.toLinearIsometry.toContinuousLinearMap.comp traceK
 
-private def covarianceK : K →L[ℝ] K :=
+def covarianceK : K →L[ℝ] K :=
   (Sigma.codRestrict K (fun z => adjoint_mem_K (C z))).comp K.subtypeL
 
 private def inverseOneAdd (k : HilbertBasis ℕ ℝ K) (mu : ℕ → ℝ)
@@ -58,7 +58,7 @@ private theorem inverseOneAdd_coeff (k : HilbertBasis ℕ ℝ K) (mu : ℕ → �
     k.repr (inverseOneAdd k mu hp x) i = (1 + mu i)⁻¹ * k.repr x i := by
   simp [inverseOneAdd]
 
-private theorem polar_coeff (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ ℝ K)
+theorem polar_coeff (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ ℝ K)
     (x : K) (i : ℕ) : b.repr (polar b k x) i = k.repr x i := by
   simp [polar]
 
@@ -105,7 +105,7 @@ private theorem root_coeff (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ �
   change k.repr ((polar b k).symm (traceK x)) i = _
   simpa [polar] using trace_coeff b k mu hp hk hC x i
 
-private theorem covariance_coeff (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ ℝ K)
+theorem covariance_coeff (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ ℝ K)
     (mu : ℕ → ℝ) (hp : ∀ i, 0 < mu i)
     (hk : ∀ i, Sigma (k i).val = mu i • (k i).val)
     (hC : ∀ i, C (k i).val = Real.sqrt (mu i) • (b i).val) (x : K) (i : ℕ) :
@@ -193,7 +193,7 @@ private theorem form_domain (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ 
     rw [centered_suffix_residual.2.2.1, show mean u.val = 0 from u.property,
       map_zero, sub_zero]
 
-private theorem graph_polar (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ ℝ K)
+theorem graph_polar (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ ℝ K)
     (mu : ℕ → ℝ) (hp : ∀ i, 0 < mu i)
     (hk : ∀ i, Sigma (k i).val = mu i • (k i).val)
     (hC : ∀ i, C (k i).val = Real.sqrt (mu i) • (b i).val) (u h : G) :
