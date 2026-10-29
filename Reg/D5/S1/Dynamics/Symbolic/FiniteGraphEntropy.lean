@@ -1,14 +1,13 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S1.Dynamics.Shadowing.FiniteObservationSofic
 import D5.S1.Dynamics.Symbolic.FiniteGraphEntropy
 import Reg.Support.DependentFamily
 
+/-! Observe graph languages in the original carrier and instance telescope. -/
+
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open _root_.D5.S1.Dynamics.Shadowing
 open _root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy
-open SymbolicDynamics
-open Set Function
+open SymbolicDynamics Set Function Filter
 open scoped Topology
 
 namespace Reg.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy
@@ -16,116 +15,83 @@ namespace Reg.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy
 noncomputable section
 universe u
 
-abbrev Parameters := _root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.Parameters
-
 abbrev signature : Signature where
-  Params := Parameters.{u}
-  State P := P.V → P.V → Prop
+  Params := Type u
+  State V := V → V → Prop
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ P := Set (ℕ → P.V)
+  Output _ V := Set (ℕ → V)
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature.{u} :=
   realize signature (fun _ _ edge => edgeLanguage edge) (fun e => nomatch e)
 
-def rejected : Realization signature.{u} :=
-  realize signature (fun _ P _ => (∅ : Set (ℕ → P.V))) (fun e => nomatch e)
+def compactRejected : Realization signature.{u} :=
+  realize signature (fun _ _ _ => {w | ∃ i j, w i ≠ w j}) (fun e => nomatch e)
 
-private def sampleParameters : Parameters.{u} where
-  V := ULift.{u} Unit
-  fintypeV := inferInstance
-  topologyV := inferInstance
-  discreteV := inferInstance
+def shiftRejected : Realization signature.{u} :=
+  realize signature (fun _ _ _ => Set.univ) (fun e => nomatch e)
 
-private def sampleEdgeTrue : sampleParameters.V → sampleParameters.V → Prop :=
-  fun _ _ => True
-
-private def sampleEdgeFalse : sampleParameters.V → sampleParameters.V → Prop :=
-  fun _ _ => False
-
-private theorem sampleLanguage_nonempty :
-    (edgeLanguage sampleEdgeTrue).Nonempty := by
-  refine ⟨fun _ => ULift.up (), ?_⟩
-  refine ⟨fun _ => ULift.up (), ?_, ?_⟩
-  · intro n
-    trivial
-  · intro n
-    rfl
-
+/-- Only the first source occurrence varies; every original binder and the
+    entire compactness-and-closedness conclusion remain in the law. -/
 def compactArena : Arena where
   signature := signature.{u}
-  Law r := ∀ (P : Parameters.{u}) (edge : P.V → P.V → Prop),
-    letI := P.topologyV
-    letI := P.discreteV
-    r.readout () P edge = edgeLanguage edge ∧
-      IsCompact (r.readout () P edge) ∧ IsClosed (r.readout () P edge)
+  Law r := ∀ {V : Type u} [Fintype V] [TopologicalSpace V] [DiscreteTopology V]
+    (edge : V → V → Prop),
+    IsCompact (r.readout () V edge) ∧ IsClosed (edgeLanguage edge)
 
-private theorem compact_actual_law : compactArena.{u}.Law actual := by
-  intro P edge
-  refine ⟨rfl, ?_⟩
-  exact @_root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_isCompact_isClosed
-    P.V P.fintypeV P.topologyV P.discreteV edge
-
-private theorem compact_rejected_law : ¬ compactArena.{u}.Law rejected := by
+private theorem compact_rejected_law : ¬ compactArena.{u}.Law compactRejected := by
   intro h
-  have hzero := (h sampleParameters sampleEdgeTrue).1
-  change (∅ : Set (ℕ → sampleParameters.V)) = edgeLanguage sampleEdgeTrue at hzero
-  obtain ⟨word, hword⟩ := sampleLanguage_nonempty
-  have hmem : word ∈ (∅ : Set (ℕ → sampleParameters.V)) := by
-    rw [hzero]
-    exact hword
-  exact hmem
+  let point : ℕ → ULift.{u} Bool := fun _ => ULift.up false
+  let pulse : ℕ → ℕ → ULift.{u} Bool := fun n k => ULift.up (decide (k = n))
+  have ht : Tendsto pulse atTop (𝓝 point) := by
+    apply tendsto_pi_nhds.mpr
+    intro k
+    apply tendsto_const_nhds.congr'
+    filter_upwards [eventually_gt_atTop k] with n hn
+    simp [pulse, point, ne_of_lt hn]
+  have hp : ∀ n, pulse n ∈ {w : ℕ → ULift.{u} Bool | ∃ i j, w i ≠ w j} := by
+    intro n
+    refine ⟨n, n + 1, ?_⟩
+    simp [pulse]
+  have hc : IsClosed {w : ℕ → ULift.{u} Bool | ∃ i j, w i ≠ w j} :=
+    (@h (ULift.{u} Bool) inferInstance inferInstance inferInstance (fun _ _ => True)).1.isClosed
+  obtain ⟨i, j, hij⟩ := hc.mem_of_tendsto ht (Eventually.of_forall hp)
+  exact hij rfl
 
-theorem compact_source_bridge :
-    (type_of% (@_root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_isCompact_isClosed.{u})) ↔
-      compactArena.{u}.Law actual := by
-  constructor
-  · intro h P edge
-    refine ⟨rfl, ?_⟩
-    exact @h P.V P.fintypeV P.topologyV P.discreteV edge
-  · intro h V fintypeV topologyV discreteV edge
-    let P : Parameters.{u} := {
-      V := V
-      fintypeV := fintypeV
-      topologyV := topologyV
-      discreteV := discreteV }
-    exact (h P edge).2
+private theorem actual_dependence : ObservationalDependence signature.{u} actual := by
+  intro i
+  refine ⟨ULift.{u} Unit, (fun _ _ => True), (fun _ _ => False), ?_⟩
+  intro heq
+  have hmem : (fun _ : ℕ => (ULift.up () : ULift.{u} Unit)) ∈
+      edgeLanguage (fun _ _ : ULift.{u} Unit => False) := by
+    rw [← show edgeLanguage (fun _ _ : ULift.{u} Unit => True) =
+      edgeLanguage (fun _ _ : ULift.{u} Unit => False) from heq]
+    exact ⟨fun _ => ULift.up (), (fun _ => trivial), (fun _ => rfl)⟩
+  obtain ⟨path, hpath, _⟩ := hmem
+  exact hpath 0
 
 def compactFamily : Registration compactArena.{u}
     (type_of% (@_root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_isCompact_isClosed.{u})) where
   actual := actual
-  bridge := compact_source_bridge
-  variation := ⟨compact_actual_law, rejected, compact_rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_isCompact_isClosed,
+    compactRejected, compact_rejected_law⟩
   sensitivity := by
     constructor
     · intro i
-      cases i
-      refine ⟨rejected, ?_, rfl, compact_rejected_law⟩
+      refine ⟨compactRejected, ?_, rfl, compact_rejected_law⟩
       intro j hj
-      cases j
-      exact (hj rfl).elim
-    · intro i
-      exact nomatch i
-  dependence := by
-    intro i
-    cases i
-    refine ⟨sampleParameters, sampleEdgeTrue, sampleEdgeFalse, ?_⟩
-    intro heq
-    have hset : edgeLanguage sampleEdgeTrue = edgeLanguage sampleEdgeFalse := by
-      simpa only [actual] using heq
-    have hmem : (fun _ : ℕ => (ULift.up () : sampleParameters.V)) ∈
-        edgeLanguage sampleEdgeFalse := by
-      rw [← hset]
-      exact sampleLanguage_nonempty.some_mem
-    rcases hmem with ⟨path, hpath, _⟩
-    exact hpath 0
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
 
 noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_isCompact_isClosed.{u})
-    (Realization signature.{u}) Type Unit where
+    (Realization signature.{u}) Unit Unit where
   unitName := `Reg.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_isCompact_isClosed.__information_unit
   realizationName := `Reg.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.compactFamily
   realizationSource := none
@@ -138,7 +104,7 @@ noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature.{u}
-    (fun _ P edge => edgeLanguage edge) (fun e => nomatch e))
+    (fun _ _ edge => edgeLanguage edge) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -148,8 +114,8 @@ noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "fn", "arg", "fn", "arg"]
-      stateBinder := 1
+      path := #["body", "body", "body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 4
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
@@ -159,75 +125,36 @@ noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,
 
 def shiftArena : Arena where
   signature := signature.{u}
-  Law r := ∀ (P : Parameters.{u}) (edge : P.V → P.V → Prop),
-    letI := P.topologyV
-    letI := P.discreteV
-    r.readout () P edge = edgeLanguage edge ∧
-      MapsTo (FullShift.shift (1 : ℕ)) (r.readout () P edge) (r.readout () P edge)
+  Law r := ∀ {V : Type u} [Fintype V] [TopologicalSpace V] [DiscreteTopology V]
+    (edge : V → V → Prop),
+    MapsTo (FullShift.shift (1 : ℕ)) (r.readout () V edge) (edgeLanguage edge)
 
-private theorem shift_actual_law : shiftArena.{u}.Law actual := by
-  intro P edge
-  refine ⟨rfl, ?_⟩
-  exact @_root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_shift_invariant
-    P.V P.fintypeV P.topologyV P.discreteV edge
-
-private theorem shift_rejected_law : ¬ shiftArena.{u}.Law rejected := by
+private theorem shift_rejected_law : ¬ shiftArena.{u}.Law shiftRejected := by
   intro h
-  have hzero := (h sampleParameters sampleEdgeTrue).1
-  change (∅ : Set (ℕ → sampleParameters.V)) = edgeLanguage sampleEdgeTrue at hzero
-  obtain ⟨word, hword⟩ := sampleLanguage_nonempty
-  have hmem : word ∈ (∅ : Set (ℕ → sampleParameters.V)) := by
-    rw [hzero]
-    exact hword
-  exact hmem
-
-theorem shift_source_bridge :
-    (type_of% (@_root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_shift_invariant.{u})) ↔
-      shiftArena.{u}.Law actual := by
-  constructor
-  · intro h P edge
-    refine ⟨rfl, ?_⟩
-    exact @h P.V P.fintypeV P.topologyV P.discreteV edge
-  · intro h V fintypeV topologyV discreteV edge
-    let P : Parameters.{u} := {
-      V := V
-      fintypeV := fintypeV
-      topologyV := topologyV
-      discreteV := discreteV }
-    exact (h P edge).2
+  have hmem := @h (ULift.{u} Unit) inferInstance inferInstance inferInstance
+    (fun _ _ => False) (fun _ => ULift.up ()) (Set.mem_univ _)
+  obtain ⟨path, hpath, _⟩ := hmem
+  exact hpath 0
 
 def shiftFamily : Registration shiftArena.{u}
     (type_of% (@_root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_shift_invariant.{u})) where
   actual := actual
-  bridge := shift_source_bridge
-  variation := ⟨shift_actual_law, rejected, shift_rejected_law⟩
+  bridge := Iff.rfl
+  variation := ⟨@_root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_shift_invariant,
+    shiftRejected, shift_rejected_law⟩
   sensitivity := by
     constructor
     · intro i
-      cases i
-      refine ⟨rejected, ?_, rfl, shift_rejected_law⟩
+      refine ⟨shiftRejected, ?_, rfl, shift_rejected_law⟩
       intro j hj
-      cases j
-      exact (hj rfl).elim
-    · intro i
-      exact nomatch i
-  dependence := by
-    intro i
-    cases i
-    refine ⟨sampleParameters, sampleEdgeTrue, sampleEdgeFalse, ?_⟩
-    intro heq
-    have hset : edgeLanguage sampleEdgeTrue = edgeLanguage sampleEdgeFalse := by
-      simpa only [actual] using heq
-    have hmem : (fun _ : ℕ => (ULift.up () : sampleParameters.V)) ∈
-        edgeLanguage sampleEdgeFalse := by
-      rw [← hset]
-      exact sampleLanguage_nonempty.some_mem
-    rcases hmem with ⟨path, hpath, _⟩
-    exact hpath 0
+      exact (hj (Subsingleton.elim _ _)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
 
 noncomputable def registration_2 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_shift_invariant.{u})
-    (Realization signature.{u}) Type Unit where
+    (Realization signature.{u}) Unit Unit where
   unitName := `Reg.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_shift_invariant.__information_unit
   realizationName := `Reg.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.shiftFamily
   realizationSource := none
@@ -240,7 +167,7 @@ noncomputable def registration_2 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature.{u}
-    (fun _ P edge => edgeLanguage edge) (fun e => nomatch e))
+    (fun _ _ edge => edgeLanguage edge) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -250,8 +177,8 @@ noncomputable def registration_2 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "arg", "arg"]
-      stateBinder := 1
+      path := #["body", "body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 4
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
