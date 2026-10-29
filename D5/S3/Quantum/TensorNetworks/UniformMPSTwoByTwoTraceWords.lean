@@ -9,7 +9,7 @@
 import D5.S3.Quantum.TensorNetworks.UniformMPSExpectedDimensionRefutation
 import Mathlib.Algebra.MvPolynomial.Funext
 import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+import D5.S0.Observation.MatrixTracePowerSum
 import Mathlib.Tactic.Module
 
 set_option autoImplicit false
@@ -142,12 +142,8 @@ private lemma invariant_mem (j : Fin 5) :
 
 private lemma cayley_hamilton (x : Matrix (Fin 2) (Fin 2) ℂ) :
     x * x = x.trace • x - x.det • (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
-  have h := Matrix.aeval_self_charpoly x
-  rw [Matrix.charpoly_fin_two] at h
-  simp only [map_add, map_sub, map_mul, Polynomial.aeval_X,
-    Polynomial.aeval_C, Algebra.algebraMap_eq_smul_one, smul_mul_assoc, one_mul, sq] at h
-  rw [eq_sub_iff_add_eq, ← sub_eq_zero]
-  convert h using 1; abel
+  simpa only [Nat.zero_add, pow_zero, pow_one, pow_two] using
+    D5.S0.Observation.MatrixTracePowerSum.pow_add_two x 0
 
 private lemma polarized_cayley_hamilton (x y : Matrix (Fin 2) (Fin 2) ℂ) :
     y * x = x.trace • y + y.trace • x +
