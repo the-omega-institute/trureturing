@@ -7,9 +7,6 @@
    digest: An extreme eight-outcome POVM on complex seven-space has ranks (3,3,2,2,2,2,2,2). -/
 
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
-import Mathlib.Analysis.Matrix.Order
-import Mathlib.LinearAlgebra.Matrix.Bilinear
-import Mathlib.LinearAlgebra.Matrix.Rank
 
 /-! An extreme POVM on complex seven-space with two rank-three and six rank-two effects. -/
 
@@ -105,7 +102,7 @@ private theorem frame_posDef : frame.PosDef := by
   have h4 := congr_fun hz 4
   have h5 := congr_fun hz 5
   have h6 := congr_fun hz 6
-  norm_num [Matrix.mulVec, dotProduct, Fin.sum_univ_succ, Pi.sub_apply]
+  norm_num [Matrix.mulVec_apply_eq_sum, Fin.sum_univ_succ, Pi.sub_apply]
     at h0 h1 h2 h3 h4 h5 h6
   have hd0 : 17 * (x 3 - y 3) + (1 + Complex.I) * (x 6 - y 6) = 0 := by
     linear_combination (norm := (ring_nf; try simp [Complex.I_sq]))
@@ -551,16 +548,15 @@ private theorem normalizeMap_ker : LinearMap.ker normalizeMap = ⊥ := by
       (Matrix.nonsing_inv_mul normalizer normalizer_unit)
     apply hleft
     apply hright
-    simpa [normalizeMap, mulLeftLinearMap, mulRightLinearMap] using hX
+    change normalizer * X * normalizerᴴ = 0 at hX
+    simpa only [Matrix.mul_zero, Matrix.zero_mul] using hX
   · exact bot_le
 
 private theorem normalized_product_independent :
     LinearIndependent ℂ
       (fun p : Σ j : Fin 8, (blocks j × blocks j) =>
         normalizer * Matrix.vecMulVec p.2.1.1 (star p.2.2.1) * normalizerᴴ) := by
-  simpa [normalizeMap, mulLeftLinearMap, mulRightLinearMap,
-    Function.comp_def] using
-    within_block_product_independent.map' normalizeMap normalizeMap_ker
+  exact within_block_product_independent.map' normalizeMap normalizeMap_ker
 
 private theorem supported_decomposition {ι : Type} [Fintype ι] [DecidableEq ι]
     (u : Matrix (Fin 7) ι ℂ) (w : Matrix ι (Fin 7) ℂ) (hwu : w * u = 1)
