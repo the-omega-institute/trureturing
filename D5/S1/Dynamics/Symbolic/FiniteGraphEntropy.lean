@@ -4,12 +4,11 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Finite right-total graph languages are closed shift systems whose prefix growth is counted by adjacency powers.
+   digest: Finite right-total graph languages are closed shift systems whose prefix growth is counted by adjacency powers. -/
 
-This module records the finite graph to symbolic-dynamics bridge.  The
+/- This module records the finite graph to symbolic-dynamics bridge.  The
 right-total hypothesis is explicit: without it, a finite vertex path can end
-at a dead vertex and need not be the prefix of an infinite graph path.
--/
+at a dead vertex and need not be the prefix of an infinite graph path. -/
 
 import D5.S1.Dynamics.Shadowing.FiniteObservationSofic
 import D5.S1.Dynamics.Symbolic.PrefixGrowthEntropy
