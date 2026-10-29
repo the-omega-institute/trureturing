@@ -5,9 +5,10 @@ year: 2026
 title: Principal specializations of the t-chromatic symmetric function
 doi: 10.48550/arXiv.2610.31785
 url: https://arxiv.org/abs/2610.31785v1
-claim: "Remark 3.11, first question: Do (5,j,j,4,3) and (4,j,j,5,3) exhibit unequal second and equal third ordinary chromatic symmetric principal specializations for all positive j?"
+claim: "Remark 3.11 asks whether every positive-j listed pair has unequal second and equal third ordinary principal specializations, and whether the base and these pairs exhaust the phenomenon."
 strata_touched:
   - D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family
+  - D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarUniquenessRefutation
 license: citation-only
 triage: anchor
 ---
@@ -20,7 +21,7 @@ DOI: https://doi.org/10.48550/arXiv.2610.31785
 
 Source: https://arxiv.org/abs/2610.31785v1
 
-Version 1, submitted 22 October 2026. Definition 2.1 defines the caterpillar. Definition 2.4 allows every proper coloring into the available color set, without requiring every color to occur. Definition 2.7 defines the ordinary chromatic symmetric function. Definition 2.9 and equation (2.1) identify its finite principal specialization with the proper-coloring weight sum. Remark 3.11 asks the family question.
+Version 1, submitted 22 October 2026. Definition 2.1 defines the caterpillar. Definition 2.4 allows every proper coloring into the available color set, without requiring every color to occur. Definition 2.7 defines the ordinary chromatic symmetric function. Definition 2.9 and equation (2.1) identify its finite principal specialization with the proper-coloring weight sum. Remark 3.11 asks both the family question and the exhaustive-pairs question.
 
 ## Source statement
 
@@ -32,6 +33,6 @@ Here “this phenomenon” means that the ordinary third principal specializatio
 
 ## Scope
 
-The formal target is only the first question, for all positive integers j. It uses the actual graph-coloring sum over Z[X], whose injective coefficient extension to C[X] preserves equality and inequality. It does not concern surjective colorings, a t refinement, numerical values of X, the classification question, or the four-color conjectures.
+The first formal target is the family question for every positive integer j. The distinct second target is the unrestricted exhaustive-pairs assertion, including the base pair and the whole positive-j family up to unordered graph isomorphism. BinghamCaterpillarUniquenessRefutation uses the eighteen-vertex compositions (2,2,2,2,2,1,4,3) and (2,2,3,2,3,4,2) to refute it. Their second polynomials are X^8+X^10 and 2X^9; their third polynomials agree. Eight vertices with two distinct neighbors in the first graph exclude isomorphism to any listed member, whose spine length is three or five. Both results use actual graph-coloring sums. The second module proves the injective coefficient-extension bridge from Z[X] to the source's C[X]. Neither target concerns surjective colorings, a t refinement, numerical values of X, or the four-color conjectures. A classification of every other pair and counterexample minimality remain unresolved.
 
 The source is literature-attested. The family proof is a repository derivation. The preregistration's bounded literature screen located no earlier settlement; citation and third-party code searches were incomplete, so no exhaustive absence or originality claim follows.

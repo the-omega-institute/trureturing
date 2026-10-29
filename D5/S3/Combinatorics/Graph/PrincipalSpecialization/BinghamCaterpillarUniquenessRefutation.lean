@@ -20,7 +20,7 @@ open BinghamCaterpillarPs3Family
 /-- Definition 2.1's positive compositions, including the exceptional singleton (1). -/
 def admissible {l : ℕ} (a : Parts l) : Prop :=
   (l = 1 ∧ ∀ i, a i = 1) ∨
-    (2 ≤ l ∧ ∀ i : Fin l, i.val = 0 ∨ i.val + 1 = l → 2 ≤ (a i).val)
+    (1 ≤ l ∧ ∀ i : Fin l, i.val = 0 ∨ i.val + 1 = l → 2 ≤ (a i).val)
 
 /-- The source's ordinary polynomial over its coefficient ring C. -/
 noncomputable def ordinary {V : Type*} [Fintype V] (G : SimpleGraph V) (k : ℕ) :
@@ -137,4 +137,96 @@ private lemma ps2_B : ps (caterpillar witnessB) 2 = 2 * Polynomial.X ^ 9 := by
   norm_num [sevenSum, Fin.sum_univ_succ, witnessB, blockWeight, leafSum_eq, Fin.cons]
   ring
 
+
+private def twoNeighbors {V : Type*} (G : SimpleGraph V) (x : V) : Prop :=
+  ∃ u v : V, u ≠ v ∧ G.Adj x u ∧ G.Adj x v
+
+private lemma leaf_neighbor {l : ℕ} {a : Parts l} {x y : Vertex a}
+    (hx : x.2.val ≠ 0) (h : (caterpillar a).Adj x y) :
+    y.1 = x.1 ∧ y.2.val = 0 := by
+  rcases h with ⟨_, h | h⟩
+  · rcases h with ⟨_, h, _⟩ | ⟨h, _, _⟩ <;> exact (hx h).elim
+  · rcases h with ⟨hi, hy, _⟩ | ⟨hy, h, _⟩
+    · exact ⟨hi, hy⟩
+    · exact (hx h).elim
+
+private lemma root_ext {l : ℕ} {a : Parts l} {x y : Vertex a}
+    (h : x.1 = y.1) (hx : x.2.val = 0) (hy : y.2.val = 0) : x = y := by
+  rcases x with ⟨i,r⟩
+  rcases y with ⟨j,s⟩
+  dsimp at h hx hy
+  subst j
+  congr 1
+  exact Fin.ext (hx.trans hy.symm)
+
+private lemma nonleaf_root {l : ℕ} {a : Parts l} {x : Vertex a}
+    (h : twoNeighbors (caterpillar a) x) : x.2.val = 0 := by
+  by_contra hx
+  rcases h with ⟨u,v,huv,hu,hv⟩
+  have h1 := leaf_neighbor hx hu
+  have h2 := leaf_neighbor hx hv
+  exact huv (root_ext (h1.1.trans h2.1.symm) h1.2 h2.2)
+
+private lemma iso_twoNeighbors {V W : Type*} {G : SimpleGraph V} {H : SimpleGraph W}
+    (e : G ≃g H) {x : V} (h : twoNeighbors G x) : twoNeighbors H (e x) := by
+  rcases h with ⟨u,v,huv,hu,hv⟩
+  exact ⟨e u,e v,fun h => huv (e.injective h),e.map_adj hu,e.map_adj hv⟩
+
+private instance {l : ℕ} (a : Parts l) : DecidableRel (edgeRel a) :=
+  fun u v => inferInstanceAs (Decidable
+    ((u.1 = v.1 ∧ u.2.val = 0 ∧ v.2.val ≠ 0) ∨
+      (u.2.val = 0 ∧ v.2.val = 0 ∧ u.1.val + 1 = v.1.val)))
+
+private instance {l : ℕ} (a : Parts l) : DecidableRel (caterpillar a).Adj :=
+  inferInstanceAs (DecidableRel (SimpleGraph.fromRel (edgeRel a)).Adj)
+
+private lemma witness_roots : ∀ i : Fin 8,
+    twoNeighbors (caterpillar witnessA) ⟨i,⟨0,(witnessA i).pos⟩⟩ := by
+  decide
+
+private lemma no_iso_short {l : ℕ} (a : Parts l) (hl : l < 8) :
+    ¬ Nonempty (caterpillar witnessA ≃g caterpillar a) := by
+  rintro ⟨e⟩
+  let f : Fin 8 → Fin l := fun i => (e ⟨i,⟨0,(witnessA i).pos⟩⟩).1
+  have hf : Function.Injective f := by
+    intro i j hij
+    have hi := nonleaf_root (iso_twoNeighbors e (witness_roots i))
+    have hj := nonleaf_root (iso_twoNeighbors e (witness_roots j))
+    have he := e.injective (root_ext hij hi hj)
+    exact congrArg Sigma.fst he
+  have hc := Fintype.card_le_of_injective f hf
+  simp only [Fintype.card_fin] at hc
+  omega
+
+private lemma outside_list : ¬ listed witnessA witnessB := by
+  rintro (⟨h,_⟩ | ⟨h,_⟩ | ⟨j,⟨h,_⟩ | ⟨h,_⟩⟩)
+  · exact no_iso_short baseA (by decide) h
+  · exact no_iso_short baseB (by decide) h
+  · exact no_iso_short (alpha j) (by decide) h
+  · exact no_iso_short (beta j) (by decide) h
+
+/-- The second, exhaustive-pairs assertion in Remark 3.11 is false. -/
+theorem result : ¬ claim := by
+  intro h
+  apply outside_list
+  apply h 18 (by decide) 8 7 witnessA witnessB
+  · right
+    constructor
+    · decide
+    · intro i hi
+      fin_cases i <;> norm_num [witnessA, Fin.cons] at *
+  · right
+    constructor
+    · decide
+    · intro i hi
+      fin_cases i <;> norm_num [witnessB, Fin.cons] at *
+  · norm_num [witnessA, Fin.sum_univ_succ, Fin.cons]
+  · norm_num [witnessB, Fin.sum_univ_succ, Fin.cons]
+  · rw [ne_eq, ordinary_eq_iff, ps2_A, ps2_B]
+    intro he
+    have hc := congrArg (fun p : Polynomial ℤ => p.coeff 8) he
+    norm_num [Polynomial.coeff_X_pow] at hc
+  · exact (ordinary_eq_iff _ _ 3).2 ps3_equal
+
 end Trureturing.OpenProblems.BinghamCaterpillarUniquenessRefutation
+
