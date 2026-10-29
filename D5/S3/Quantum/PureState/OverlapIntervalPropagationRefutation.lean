@@ -121,7 +121,7 @@ private lemma witness_realizes : realizes 2 3 givenOverlaps witness := by
           (star (witness i 1) * witness j 1 + star (witness i 2) * witness j 2) := by
       rw [PiLp.inner_apply]
       simp only [Fin.sum_univ_succ, Fin.sum_univ_zero, add_zero, RCLike.inner_apply',
-        starRingEnd_apply]
+        starRingEnd_apply, Fin.succ_zero_eq_one, Fin.succ_one_eq_two]
     change ‖inner ℂ (witness i) (witness j)‖ ^ 2 = givenOverlaps i j
     rw [hinner]
     fin_cases i <;> fin_cases j
