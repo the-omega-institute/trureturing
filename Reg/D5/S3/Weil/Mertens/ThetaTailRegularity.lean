@@ -115,6 +115,13 @@ private theorem rejected_law_iff : arena.Law rejected ↔
   · intro hn U a hU ha hp
     exact (hn ⟨a, hU.trans ha, hp⟩).elim
 
+private theorem rejected_requires_positive_peak {Q : Realization signature}
+    (hQ : ¬ arena.Law Q) : ∃ a : ℝ, 1 ≤ a ∧ 0 < f a := by
+  by_contra hn
+  apply hQ
+  intro U a hU ha hp
+  exact (hn ⟨a, hU.trans ha, hp⟩).elim
+
 end Mass
 
 #print axioms Modulus.family

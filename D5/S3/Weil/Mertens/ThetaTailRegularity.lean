@@ -51,10 +51,10 @@ theorem theta_tail_lipschitz {u v : ℝ} (hu : 1 ≤ u) (hv : 1 ≤ v) :
   have hi := intervalIntegral.integral_Ioi_sub_Ioi'
     (hk.mono_set (Ioi_subset_Ioi (threshold_le_one.trans hu)))
     (hk.mono_set (Ioi_subset_Ioi (threshold_le_one.trans hv)))
-  have he : f u - f v = ∫ t in u..v, k t := by
+  have he : f u - f v = -(∫ t in u..v, k t) := by
     dsimp [f]
     linarith
-  rw [he, ← Real.norm_eq_abs]
+  rw [he, abs_neg, ← Real.norm_eq_abs]
   have h := intervalIntegral.norm_integral_le_of_norm_le_const
     (a := u) (b := v) (C := 2) (f := k) (fun t ht =>
       kernel_bound ((le_min hu hv).trans ht.1.le))
@@ -86,9 +86,9 @@ theorem theta_tail_peak_sq_le_mass {U a : ℝ} (hU : 1 ≤ U) (ha : U ≤ a)
       linarith)
     have he : (∫ u in a..b, f a - 2 * (u - a)) = (f a) ^ 2 / 4 := by
       rw [intervalIntegral.integral_sub intervalIntegrable_const
-        (continuous_const.mul (continuous_id.sub continuous_const)).intervalIntegrable,
+        ((continuous_const.mul (continuous_id.sub continuous_const)).intervalIntegrable a b),
         intervalIntegral.integral_const, intervalIntegral.integral_const_mul,
-        intervalIntegral.integral_sub continuous_id.intervalIntegrable intervalIntegrable_const,
+        intervalIntegral.integral_sub (continuous_id.intervalIntegrable a b) intervalIntegrable_const,
         intervalIntegral.integral_id, intervalIntegral.integral_const]
       simp only [smul_eq_mul]
       dsimp [b]
