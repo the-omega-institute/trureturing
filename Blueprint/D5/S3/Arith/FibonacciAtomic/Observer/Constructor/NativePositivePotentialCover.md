@@ -100,7 +100,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 *Commentary.*
 
-At round zero every occurrence has value zero. Each successive round takes the maximum of zero and every previous-round source value plus the actual signed edge weight whose target is this occurrence. The recurrence uses finite lists, decidable equality and integer arithmetic. A round is attained by a real walk, and bounds every real walk of that length. The existing SupplierDual cycle-pruning theorem reduces an arbitrary candidate to a walk with no repeated visited vertex, hence no repeated signed edge.
+At round zero every occurrence has value zero. Each successive round takes the maximum of zero and every previous-round source value plus the actual signed edge weight whose target is this occurrence. The recurrence uses finite lists, decidable equality and integer arithmetic. A round is attained by a real walk, and bounds every real walk of that length. The original NativeComputedEpochPotential.base_le_fold_max and fold_max_property supply the two max-fold facts directly at their relaxation consumers, with base zero. The existing SupplierDual cycle-pruning theorem reduces an arbitrary candidate to a walk with no repeated visited vertex, hence no repeated signed edge.
 
 **Definition 1.9 (An executable source potential candidate).**
 
@@ -124,7 +124,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 *Commentary.*
 
-The Boolean checker computes the 2k-round candidate and tests delta(U)=delta(V)+d on every entry of sortEdges. It uses only finite list traversal, the supplied decidable equality on names, and exact integer arithmetic. Repeated and parallel edges are tested separately. No bound on offsets, vertex names, ordered addresses or residual sorts is imposed. The empty edge list is accepted; isolated vertices retain candidate value zero.
+The certified potential returned by this check is used by minimum-base normalization and hence by canonical and native reconstruction. The Boolean checker computes the 2k-round candidate and tests delta(U)=delta(V)+d on every entry of sortEdges. It uses only finite list traversal, the supplied decidable equality on names, and exact integer arithmetic. Repeated and parallel edges are tested separately. No bound on offsets, vertex names, ordered addresses or residual sorts is imposed. The empty edge list is accepted; isolated vertices retain candidate value zero.
 
 **Theorem 1.11 (The executable checker is equivalent to the original closed-walk criterion).**
 
@@ -138,7 +138,31 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 For every finite branch list B, every substituted term family s, and every residual sort j, checkSourceConsistency(B,s,j)=true if and only if ZeroCycles(B,s,j). Acceptance verifies every exact source edge equation for computedSourcePotential. The resulting potential telescopes on every original signed closed walk, proving soundness. Conversely, zero sums on all closed walks make the finite relaxation candidate a potential by cycle pruning, so every checked edge equation holds. This proves completeness for the original labelled graph, including arbitrary repeated or parallel signed edges, zero offsets, empty lists and isolated occurrences. No successful unifier or native solution is required for this equivalence.
 
-**Definition 1.12 (An effective decision returns a certified potential).**
+**Theorem 1.12 (All original closed walks and integer feasibility).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.zeroCycles_iff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.zeroCycles_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every B,s,j, ZeroCycles(B,s,j) holds exactly when there exists an integer Potential(B,s,j). The existing max-plus closed-walk theorem supplies existence, and the original edge equations telescope on every signed walk. This equivalence converts any natural block valuation at one leaf into the original consistency condition.
+
+**Definition 1.13 (An original source comparison obstruction).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.parallelSourceInput`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.parallelSourceInput` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+This concrete input is the literal BranchEquation list U=shift(3,V), U=shift(3,V), U=shift(4,V), with U=true and V=false, substituted term family s(x)=variable(false), and selected sort false. Both named terms have the common free shape forced by these original shift equations. All three indexed parallel edges remain present; their signed orientations have weights 3,-3,3,-3,4,-4. Six exact relaxation rounds yield delta(U)=6 and delta(V)=3, and checkSourceConsistency returns false: the two offset-three equations pass and the offset-four equation fails. If any natural BlockSolution on any nonempty leaf carrier existed, selecting a leaf would give an integer Potential. zeroCycles_iff would imply ZeroCycles, and source_consistency_iff would force this same checker to return true, contradicting its actual computation. Hence these original block comparisons have no natural solution on any nonempty finite shape.
+
+**Definition 1.14 (An effective decision returns a certified potential).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.effectiveSourcePotential`
 
@@ -150,7 +174,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 The effective function runs checkSourceConsistency and returns some computedSourcePotential together with its exact Potential proof when accepted, or none when rejected. Proofs are erased during execution. The checker equivalence makes rejection equivalent to failure of the original ZeroCycles condition. Minimum normalization below obtains its potential and edge proof from this returned value; the same potential therefore supplies canonical and native block recovery.
 
-**Theorem 1.13 (Minimum-potential normalization classifies every natural block solution).**
+**Theorem 1.15 (Minimum-potential normalization classifies every natural block solution).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.source_sort_minimum_base`
 
@@ -166,7 +190,7 @@ A nonempty leaf valuation at any fixed leaf gives an integer potential, which te
 
 This theorem establishes the signed-cycle and natural-rank classification using a terminating potential computation on the original source graph. The canonical recovery theorem below first presents the rank-to-code step with its precise inputs. The native source theorem then derives those inputs from an original native solution and its actual branch, without assuming a BlockSolution or desired subtree identities. The finite positive image cover and signed pullback are separate results.
 
-**Definition 1.14 (Nonempty finite leaves of an ordered shape).**
+**Definition 1.16 (Nonempty finite leaves of an ordered shape).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.Leaves`
 
@@ -178,7 +202,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 The leaves of a primitive shape form Unit; leaves of a pair form the disjoint sum of the two child leaf sets. These types are finite and nonempty. Distinct positions remain distinct even when their ranks are equal.
 
-**Definition 1.15 (Fill the same ground shape with natural ranks).**
+**Definition 1.17 (Fill the same ground shape with natural ranks).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.fill`
 
@@ -190,7 +214,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 fill(T,r) puts rank r(l) at each ordered leaf l of T. Adding a natural number a to every rank gives exactly shiftCode(a,fill(T,r)). This is a structural property of finite ordered codes, with no normality assumption.
 
-**Theorem 1.16 (Recover normal occurrence blocks by the actual native shifts).**
+**Theorem 1.18 (Recover normal occurrence blocks by the actual native shifts).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.source_canonical_block_recovery`
 
@@ -204,7 +228,7 @@ For every actual successful source unifier and occurring sort with zero signed c
 
 The rank classification supplies the same minimum vertex for all fillings. Normality descends along the actual ordered subtree address in the normal named code. Structural filling converts the pointwise rank equation to literal code translation. NativeFiniteNormalInversion.shift_expand gives the native equality, and exact_natural_rank_inverse gives every exact inverse rank without truncated subtraction. No desired normal base, integer potential or reconstruction equality is assumed. The concrete subtree identities and BlockSolution are hypotheses of this intermediate theorem. They are derived automatically on the live proof path of native_source_block_recovery.
 
-**Definition 1.17 (Separate scalar positions).**
+**Definition 1.19 (Separate scalar positions).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.ScalarPosition`
 
@@ -216,7 +240,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 A scalar label consists of a declared name and its ordered address. Every explicit primitive occurrence gets its own label, while repeated uses of one name reuse the same decorated term. Residual blocks retain the existing name, address and sort labels.
 
-**Definition 1.18 (Natural scalar variables and constants).**
+**Definition 1.20 (Natural scalar variables and constants).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.RankExpression`
 
@@ -228,7 +252,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 A rank expression is either a separately addressed natural scalar or a supplied natural constant. Its value is evaluated independently of the residual block valuation.
 
-**Definition 1.19 (A complete decoration of each named term).**
+**Definition 1.21 (A complete decoration of each named term).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.DecoratedTerm`
 
@@ -240,7 +264,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 The decorated syntax distinguishes explicit scalar leaves, residual block leaves and ordered pairs. Erasure retains the original primitive Boolean or residual sort. Evaluation substitutes a natural rank at each scalar leaf and an ambient finite code at each residual occurrence.
 
-**Definition 1.20 (Decorate every explicit and residual position).**
+**Definition 1.22 (Decorate every explicit and residual position).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.scalarDecorateFrom`
 
@@ -252,7 +276,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 Structural descent extends the address by false on the left and true on the right. It labels every primitive occurrence and every residual occurrence without identifying positions.
 
-**Definition 1.21 (One shared decoration per original name).**
+**Definition 1.23 (One shared decoration per original name).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.scalarDecorate`
 
@@ -264,7 +288,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 scalarDecorate(s,x) starts at the empty address in the entire substituted term s(x). It includes unused names and has no depth bound.
 
-**Definition 1.22 (Scalar and block equations in one finite inventory).**
+**Definition 1.24 (Scalar and block equations in one finite inventory).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.ComparisonInventory`
 
@@ -276,7 +300,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 A scalar comparison states an exact integer equation r=r'+a for natural ranks and the original natural shift a. A supplied constant gives r=d. A block comparison states literal code translation by the same shift. Pair comparisons retain both child inventories; mismatched scalar, block or pair constructors are incompatible. Under the successful shape unifier the compared erased terms agree, so no mixed scalar/block equation is generated.
 
-**Definition 1.23 (Recursive comparison with both directions proved).**
+**Definition 1.25 (Recursive comparison with both directions proved).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.comparisonInventory`
 
@@ -288,7 +312,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 Matching scalar leaves emit their scalar offset equation; matching residual leaves emit the original block offset equation; matching pairs recursively compare both ordered children. For equal erased terms, the inventory holds exactly when the evaluated left code is the supplied shift of the evaluated right code. This equivalence is proved for arbitrary independent natural scalar and code-block assignments.
 
-**Definition 1.24 (The actual natural collapse witness).**
+**Definition 1.26 (The actual natural collapse witness).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.BranchInventory`
 
@@ -300,7 +324,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 A branch inventory is a comparison or a collapse family quantified existentially over one natural number. A collapse uses the same witness n in its three equations at ranks n+1,n,n+2. Separate collapse equations retain their own witnesses.
 
-**Definition 1.25 (All original comparison constructors).**
+**Definition 1.27 (All original comparison constructors).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.branchInventory`
 
@@ -312,7 +336,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 Primitive equations compare with their supplied rank. Shifts retain their original offset. Ordinary constructor and equality comparisons use zero offset. Collapse compares all three named terms against the three scalar constants determined by its single natural witness. The original branch list retains repeated equations.
 
-**Theorem 1.26 (The complete decorated system is equivalent to the original branch system).**
+**Theorem 1.28 (The complete decorated system is equivalent to the original branch system).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.source_decorated_comparison_equivalence`
 
@@ -326,7 +350,7 @@ For the actual successful shape unifier S of the entire finite branch list B, an
 
 The theorem also identifies the concatenation of every inventory's block edges with exactly sourceOffsetEdges(B,action(p,S)), including repeated and parallel edges. The recursive projection erases only scalar equations. Collapse has no residual edge. Thus the same block equations feed the computed source potentials and minimum normalization above; no replacement graph is introduced. Successful unification supplies the erased comparison equalities; a structural equivalence handles each comparison, and then each original constructor and the entire branch list. Empty lists and empty declared families remain in scope.
 
-**Definition 1.27 (Read actual scalar ranks at their original addresses).**
+**Definition 1.29 (Read actual scalar ranks at their original addresses).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.sourceScalarRanks`
 
@@ -338,7 +362,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 At a valid primitive address sourceScalarRanks reads its exact natural rank. A default zero is used only elsewhere. Structural reconstruction proves that evaluating every separately decorated named term with these scalar ranks and occurrenceCode gives the entire original named code, so no default affects an explicit primitive position.
 
-**Definition 1.28 (Read the actual occurrence subtree).**
+**Definition 1.30 (Read the actual occurrence subtree).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.occurrenceCode`
 
@@ -350,7 +374,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 occurrenceCode(C,o) reads the code subtree of the original named code C(o.name) at o.address, using a fixed default only at invalid addresses. The native source theorem proves every MGU occurrence address is valid before using its code; the default contributes no valid block.
 
-**Theorem 1.29 (Original native solutions supply their own canonical blocks).**
+**Theorem 1.31 (Original native solutions supply their own canonical blocks).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.native_source_block_recovery`
 
@@ -383,6 +407,7 @@ The shape factorization is supplied by native_branch_reduction. A structural fit
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.fill`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.native_source_block_recovery`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.occurrenceCode`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.parallelSourceInput`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.scalarDecorate`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.scalarDecorateFrom`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.signedEdges`
@@ -395,5 +420,7 @@ The shape factorization is supplied by native_branch_reduction. A structural fit
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.source_consistency_iff`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.source_decorated_comparison_equivalence`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.source_sort_minimum_base`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.zeroCycles_iff`
+- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeComputedEpochPotential](NativeComputedEpochPotential.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction](NativePositiveBranchReduction.md)
 - Dependency: [D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual](../../../../Combinatorics/Graph/LayeredCirculation/SupplierDual.md)
