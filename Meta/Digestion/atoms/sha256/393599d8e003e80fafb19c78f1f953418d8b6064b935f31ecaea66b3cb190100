@@ -1,0 +1,29 @@
+**定义 3.1（线性预测表示）。** 设实线性载体 $V$ 有初态 $x_0$、终端泛函 $\ell$ 和动作 $T_a$。对字 $w=a_1\cdots a_n$，定义
+
+<a id="eq-3-u01"></a>
+
+$$
+T_w=T_{a_n}\cdots T_{a_1},\qquad
+p(w)=\ell T_wx_0,\qquad T_\epsilon=I.
+$$
+
+取 $r$ 个校准列 $C:\mathbb R^r\to V$ 和 $r$ 个观察行 $O:V\to\mathbb R^r$，置
+
+<a id="eq-3-u02"></a>
+
+$$
+H=OC,\quad H^{(a)}=OT_aC,\quad b=Ox_0,\quad c=\ell C,
+$$
+
+并假设 $H$ 可逆。观察坐标与列系数坐标的更新分别为
+
+<a id="eq-3-u03"></a>
+
+$$
+B_a=H^{(a)}H^{-1},\qquad
+A_a=H^{-1}H^{(a)},\qquad
+B_a=HA_aH^{-1},\qquad d=cH^{-1}.
+$$
+
+<a id="sec-3-2"></a>
+

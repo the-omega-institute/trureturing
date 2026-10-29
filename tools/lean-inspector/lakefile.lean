@@ -48,13 +48,16 @@ private def nativeCommand (pkg : Package) (args : Array String) : IO IO.Process.
     cwd := some root }
 -- Direct observations survive buffered process output. They never participate
 -- in traces, reuse or admission decisions, and cannot replace a build outcome.
-private def observePhase (phase boundary : String) : IO Unit := do
+private def observePhase (phase boundary : String)
+    (moduleName : String := "") (operation : String := "") : IO Unit := do
   if let some path ← IO.getEnv "STRATALINT_INSPECTOR_PHASES" then
     try
       let now ← IO.monoMsNow
-      IO.FS.withFile path .append fun out => out.putStrLn <| (Lean.Json.mkObj [
+      let context := (if moduleName.isEmpty then [] else [("module", Lean.toJson moduleName)]) ++
+        (if operation.isEmpty then [] else [("operation", Lean.toJson operation)])
+      IO.FS.withFile path .append fun out => out.putStrLn <| (Lean.Json.mkObj ([
         ("phase", Lean.toJson phase), ("boundary", Lean.toJson boundary),
-        ("monotonic_ms", Lean.toJson now)]).compress
+        ("monotonic_ms", Lean.toJson now)] ++ context)).compress
     catch error =>
       try IO.eprintln s!"LEAN_INSPECTOR_DIAGNOSTIC_UNAVAILABLE lake phase: {error}" catch _ => pure ()
 
@@ -179,12 +182,16 @@ module_facet judgeInputs (mod : Module) : FilePath := withCurrPackage mod.pkg do
   discard <| (← fetch <| pkg.facet `reportInputs).await
   let root ← repositoryDir pkg
   let deps ← fetch <| pkg.facet `reportProducer
-  observePhase "lake-compiler-inputs" "start"
+  observePhase "lake-compiler-inputs" "start" mod.name.toString "compiler-inputs"
+  observePhase "lake-export-fetch" "start" mod.name.toString "export-info-fetch"
   let exportJob ← mod.exportInfo.fetch
+  observePhase "lake-export-fetch" "finish" mod.name.toString "export-info-fetch"
   let discovery ← inputDiscovery.fetch
+  observePhase "lake-compiler-continuation" "start" mod.name.toString "compiler-continuation"
   (deps.add exportJob |>.add discovery).mapM fun _ => do
     let info ← exportJob.await
-    observePhase "lake-compiler-inputs" "finish"
+    observePhase "lake-compiler-continuation" "finish" mod.name.toString "compiler-continuation"
+    observePhase "lake-compiler-inputs" "finish" mod.name.toString "compiler-inputs"
     addTrace (info.allArtsTrace.mix info.legacyTransTrace)
     let file := root / ".lake/build/lean-inspector" / "judge-inputs" / s!"{mod.name}.json"
     buildFileUnlessUpToDate' file do
@@ -478,13 +485,17 @@ private def collectNativeReports (pkg : Package) (names : Array String) :
       let some mod := (← getWorkspace).findModule? name.toName
         | error s!"registered report module is not in the Lake workspace: {name}"
       unless alreadyStarted.contains mod.name do
+        observePhase "lake-prepare-module" "start" name "judge-inputs-fetch"
         discard <| fetch <| mod.facet `judgeInputs
+        observePhase "lake-prepare-module" "finish" name "judge-inputs-fetch"
   for name in names do
     let some mod := (← getWorkspace).findModule? name.toName
       | error s!"registered report module is not in the Lake workspace: {name}"
     unless alreadyStarted.contains mod.name do
       members := members.insert mod.name
+      observePhase "lake-prepare-module" "start" name "prepared-report-fetch"
       prepared := prepared.push (← preparedModuleReport mod)
+      observePhase "lake-prepare-module" "finish" name "prepared-report-fetch"
   try observePhase "lake-prepare-register" "finish" catch _ => pure ()
   let batch ← (collectModuleJobs prepared).mapM fun artifacts => do
     observePhase "lake-prepare" "finish"

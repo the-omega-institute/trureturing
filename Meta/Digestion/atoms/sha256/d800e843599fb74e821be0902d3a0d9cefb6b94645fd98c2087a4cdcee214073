@@ -1,0 +1,18 @@
+**Definition 11.1 (The unchanged independent-pair target).** The target
+is the predicate in Definition 1.2: there exist $p\ne24,v$ and
+independently selected distinct pairs of complete worlds in the
+entire $C(p,v)$, one pair with equal $a$ and one pair with equal $m$.
+Overlap between the pairs is allowed. Their two common terminal
+values need not agree. Every world's own drift is fixed, and every
+world has one nonzero whole real polynomial gain of degree at most
+three. Acquired clocks are $0,\ldots,6$ and both terminal alternatives
+use clock $7$. Gain zeros, lower degrees, repeated roots, zero drift
+and singular companions remain in this domain.
+
+For the arc of Theorem 10.1, the additional sufficient requirement is
+
+$$
+\exists\lambda\in I\ \exists W_0,W_1\in C(\beta(\lambda)):
+\quad W_0\ne W_1,\quad a(W_0)=a(W_1).
+$$
+

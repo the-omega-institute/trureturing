@@ -1,0 +1,15 @@
+### Theorem 60.3 (the least finite acquisition fixed point)
+
+For every \(n\), \(B\in\mathcal W_n\) if and only if there is a deterministic
+protocol that is correct on \(B\) and uses at most \(n\) actions in the worst
+case. Consequently \(\mathcal W_{\mathrm{fin}}\) is the least set containing
+\(\mathcal W_0\) and closed under the displayed action/all-response rule.
+
+**Proof.** Induct on \(n\). At \(n=0\), a protocol can stop correctly exactly
+when all candidates have the same target. Suppose the statement holds at \(n\).
+For a newly admitted \(B\), choose the action in the definition. Every possible
+nonempty response leaves a member of \(\mathcal W_n\), so attach the induction
+protocol for that response. The converse follows by inspecting the first
+action of any protocol of depth at most \(n+1\). The least-fixed-point claim is
+the same induction expressed as closure. \(\square\)
+

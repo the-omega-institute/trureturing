@@ -1,0 +1,48 @@
+**Theorem 151.2 (A single fixed pair witnesses the same raw-error jump).**
+Choose any attained tangent minimizer $(z_0,g_0)$ of
+$\mathcal F_{a,0}$. For $0<\eta\le\eta_\Delta$, define one actual
+alternative pair, independent of $t$, by
+
+$$
+\gamma_\eta=\eta g_0,\qquad h_\eta=-Ae+\eta z_0,\qquad
+h_0(\eta)=Ae+\eta f.
+\tag{151.5}
+$$
+
+The localization and (148.1) make this pair admissible for every
+$|t|\le\rho_\Delta$. Choose the two full completions from VI Theorem
+106.3 once for $h_\eta$ and $h_0(\eta)$; those completions and the
+retention parameters in (151.5) are held fixed across all phases and
+all histories. Then, for every nonzero $|t|\le\rho_\Delta$,
+
+$$
+d_{a,t}(\gamma_\eta,h_\eta;h_0(\eta))
+-d_{a,0}(\gamma_\eta,h_\eta;h_0(\eta))
+\ge {\Delta\over2}\eta>0.
+\tag{151.6}
+$$
+
+To prove this, (136.3) applied to $(z_0,g_0)$, the definition of
+$n_{a,t}$, and (151.4) give
+
+$$
+\mathcal F_{a,t}(z_0,g_0)
+\ge n_{a,t}-C_{\rm ref,*}\epsilon_{N_t}
+\ge m_{a,0}+\Delta.
+\tag{151.7}
+$$
+
+The uniform nonlinear expansion gives the lower bound
+$d_{a,t}\ge\eta(m_{a,0}+\Delta)-E_*\eta^2$, while
+$\mathcal F_{a,0}(z_0,g_0)=m_{a,0}$ gives
+$d_{a,0}\le\eta m_{a,0}+E_*\eta^2$. Since
+$2E_*\eta\le\Delta/2$, (151.6) follows. This is an actual
+full-history raw-error comparison with the original labels, weights,
+clocks, menus, preparation and one-return schedule. It does not require
+the coordinates of the tangent minimizer to be known, and it does not
+turn a tangent tie into a nonlinear equality or an endpoint
+classification. The only literature inputs are the fixed-completion
+construction of VI Theorem 106.3 and the finite decoder/comparison
+interfaces already identified in (148.2); all phase and jump estimates
+are source-specific deductions above.
+

@@ -1,0 +1,42 @@
+**Definition 1.1 (the retained data and admissible cuts).** Use the actual
+alpha-origin source of [GPO, Definition 27.1][GPO], with persistent physical
+links $a<b$, actual lexicographic beta births, and the autonomous binary
+class $\mathscr R_d$ of GPO Definition 29.1. Write $X_n$ for its labelled
+physical tree after $n$ completed updates, $S_n$ for its physical support,
+and $\partial S_n$ for its terminal antichain. Let
+
+$$
+ F_0=0,\quad F_1=1,\quad F_{i+2}=F_{i+1}+F_i,\qquad
+ B_n=F_{n+1}-1\quad(n\ge2).
+ \tag{ACR.1}
+$$
+
+Retain the actually acquired first $m=2d$ bits $P=z_1\cdots z_m$ and
+its authentic complete behavioral descriptor
+
+$$
+ L=(r,c_0,\ldots,c_{r-1},s_0,\ldots,s_{r-1}),\qquad
+ r\le d,\quad z_j=s_{j-1},\quad
+ s_{i+r}=\sum_{v<r}c_vs_{i+v}\text{ in }\mathbb F_2.
+ \tag{ACR.2}
+$$
+
+The descriptor includes its seed and alignment to the actual first birth;
+$r=0$ denotes the zero stream. It is the descriptor previously earned by
+GPO §33 and retained in GPO Definition 34.1, rather than a newly assumed
+source-independent coefficient row. A nonminimal or singular descriptor
+is allowed. Set
+
+$$
+ n_0=\begin{cases}
+ \min\{u\ge3:F_u-1\ge m\},&m>0,\\
+ 2,&m=0.
+ \end{cases}
+ \tag{ACR.3}
+$$
+
+The current cut is some unknown finite $n\ge n_0$ on this same source.
+The fixed earlier acquisition prefix, its public parameters, and any
+fixed earlier acquisition information retained here are identical across
+the allowed later cuts; they encode no later age.
+

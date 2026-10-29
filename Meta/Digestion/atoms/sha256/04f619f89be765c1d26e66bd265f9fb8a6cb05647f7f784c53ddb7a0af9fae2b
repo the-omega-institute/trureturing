@@ -1,0 +1,42 @@
+**Definition 27.1 (the alternative law-bearing source).** Retain the
+actual alpha initialization and the local service of Definitions 22.1
+and 24.1. In particular there is one actual mutable root, persistent
+physical child links named $a,b$, total paid literal presence
+$\operatorname{Read}(w)=\mathbf1_{w\in\operatorname{Pos}(X)}$ on
+all finite physical words, and only the legal serial localStep,
+applyRho and stop operations. Updates have their original common
+acknowledgement. Labels, writer, allocator, generator state, work and
+physical durations supply no additional observation. Actual root
+binding, grants, exclusive serialization, reliable completion and
+sufficient growing backing are premises of this service, with their
+own acquisition, installation and lifetime charges. No reset, cloned
+root, semantic-port sensor or read of a private generator is added.
+
+The additional source premise is the following actual actuator rule.
+Before update $t$, enumerate the beta leaves of the old physical tree
+by lexicographic order of their addresses, with $a<b$. These addresses
+are pairwise prefix-incomparable. The actuator really commits their
+births in that order; it updates each old leaf once and does not visit
+a newborn leaf during that update. At its $j$th birth since the alpha
+initialization it consumes the next bit $z_j$. If $z_j=1$, the new
+beta child is at $a$ and alpha at $b$; if $z_j=0$, their positions
+are reversed. Old branches and their links remain in place.
+Alpha-to-beta changes create no birth and consume no bit.
+
+The stream $z=(z_1,z_2,\ldots)$ is produced by an autonomous
+source-owned generator. Its initial state and parameters are fixed
+before the first birth. It advances exactly once per birth, with no
+other input, reset or change of source; presence queries, local
+computation, waiting and stopping do not advance it. The public
+chronological ordering is a condition on actual births, not merely a
+chosen sorting of semantic occurrences. Serial update remains the
+observer's action; no interrupt or observation inside it is provided.
+
+Two alternative authentic public promises will be considered
+separately in Definitions 29.1 and 30.1. Their respective bounds, this
+autonomy rule, the chronological rule and alignment to the first birth
+are supplied authentic premises. Coefficients, seed and private machine
+data remain initially unknown. None of those premises is certified by
+a finite observed prefix. This is a named alternative to arbitrary
+birth wiring, rather than an inference about the source of §§22–26.
+

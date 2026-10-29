@@ -1,0 +1,53 @@
+## 参考文献
+
+<a id="ref-reposelection"></a>
+
+**[1]** trureturing. [AURIC FIB Atom Selection Calculus](https://github.com/the-omega-institute/trureturing/blob/6936d5e4328efb1051abd0dc6b3eda328359a3ed/docs/develop/theory/AURIC_FIB_ATOM_SELECTION_CALCULUS.md)，固定提交 `6936d5e`，尤其 §§10、16、27。
+
+<a id="ref-repocsa"></a>
+
+**[2]** trureturing. [Contextual Spacetime Arithmetic](https://github.com/the-omega-institute/trureturing/blob/6936d5e4328efb1051abd0dc6b3eda328359a3ed/docs/develop/theory/CONTEXTUAL_SPACETIME_ARITHMETIC.md)，固定提交 `6936d5e`，§§8–10。
+
+<a id="ref-repop10"></a>
+
+**[3]** trureturing. [直接像补集与纤维饱和的 Lean 源文件](https://github.com/the-omega-institute/trureturing/blob/6936d5e4328efb1051abd0dc6b3eda328359a3ed/D5/S3/ConceptDynamics/Negation/DirectImageComplementSaturation.lean)，固定提交 `6936d5e`。
+
+<a id="ref-repocontinuation"></a>
+
+**[4]** trureturing. [AURIC 相干重构续卷](https://github.com/the-omega-institute/trureturing/blob/6936d5e4328efb1051abd0dc6b3eda328359a3ed/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md)，固定提交 `6936d5e`，尤其新增 §§57–63。
+
+<a id="ref-repogate"></a>
+
+**[5]** trureturing. [固定黄金门与编织相容理论](https://github.com/the-omega-institute/trureturing/blob/6936d5e4328efb1051abd0dc6b3eda328359a3ed/docs/develop/theory/AURIC_FIXED_GOLDEN_GATE_AND_BRAID_COMPATIBILITY_ZH.md)，用户提供正式稿的 Markdown 转换版，固定提交 `6936d5e`。
+
+<a id="ref-repotoric"></a>
+
+**[6]** trureturing. [循环控制、KL 作用与 Toric 关系](https://github.com/the-omega-institute/trureturing/blob/6936d5e4328efb1051abd0dc6b3eda328359a3ed/docs/develop/theory/AURIC_FIB_ATOM_CIRCULATION_CONTROL_KL_ACTION_AND_TORIC_RELATIONS.md)，§§3、12；来源状态为开放供文。
+
+<a id="ref-goodman"></a>
+
+**[7]** J. Goodman. Semiring Parsing. Computational Linguistics 25(4), 573–606 (1999). <https://aclanthology.org/J99-4004/>.
+
+<a id="ref-amc"></a>
+
+**[8]** A. Kimmig, G. Van den Broeck, L. De Raedt. Algebraic Model Counting. <https://arxiv.org/abs/1211.4475>.
+
+<a id="ref-darwiche"></a>
+
+**[9]** A. Darwiche. On the Tractable Counting of Theory Models and its Application to Truth Maintenance and Belief Revision. <https://arxiv.org/abs/cs/0003044>.
+
+<a id="ref-watrous"></a>
+
+**[10]** J. Watrous. The Theory of Quantum Information (2018), Chapter 2. [作者公开预出版稿](https://cs.uwaterloo.ca/~watrous/TQI/TQI.pdf)。
+
+<a id="ref-diosi"></a>
+
+**[11]** L. Diósi. Anomalies of weakened decoherence criteria for quantum histories. Phys. Rev. Lett. 92, 170401 (2004). <https://arxiv.org/abs/quant-ph/0310181>.
+
+<a id="ref-sorkin"></a>
+
+**[12]** R. D. Sorkin. Quantum Mechanics as Quantum Measure Theory (1994). <https://arxiv.org/abs/gr-qc/9401003>.
+
+<a id="ref-busch"></a>
+
+**[13]** P. Busch. Quantum states and generalized observables: a simple proof of Gleason's theorem. Phys. Rev. Lett. 91, 120403 (2003). <https://arxiv.org/abs/quant-ph/9909073>.

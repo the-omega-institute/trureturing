@@ -109,7 +109,7 @@ private theorem covariance_formula :
     inner ℝ (J w) (J z) - inner ℝ (constG 1) (J z)*inner ℝ (J w) (constG 1)
   rfl
 
-private theorem mean_indicator (p : Edge) : mean (indicator p) = M.real (cylinder p.val) := by
+theorem mean_indicator (p : Edge) : mean (indicator p) = M.real (cylinder p.val) := by
   rw [centered_suffix_residual.1]
   change (∫ ω, indicatorConstLp 2 _ _ (1 : ℝ) ω ∂M) = _
   rw [integral_indicatorConstLp]
@@ -173,7 +173,7 @@ def D : Submodule ℝ G where
 def energy (F : G) : ℝ := sInf {r : ℝ | ∃ (c : ℝ) (z : H),
   F = constG c + J z ∧ r = ‖z‖^2}
 
-private theorem C_project (z : H) : C (K.starProjection z) = C z := by
+theorem C_project (z : H) : C (K.starProjection z) = C z := by
   have hk : z-K.starProjection z ∈ Sigma.ker := by
     change z-(Sigma.ker)ᗮ.starProjection z ∈ Sigma.ker
     rw [Submodule.starProjection_orthogonal_val]

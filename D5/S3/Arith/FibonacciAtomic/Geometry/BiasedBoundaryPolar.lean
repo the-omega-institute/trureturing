@@ -34,7 +34,7 @@ open scoped Topology ENNReal
 def polar (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ ℝ K) :
     K ≃ₗᵢ[ℝ] G0 := k.repr.trans b.repr.symm
 
-private def traceK : K →L[ℝ] G0 :=
+def traceK : K →L[ℝ] G0 :=
   (C.codRestrict G0 (fun z => mean_Pi (J z))).comp K.subtypeL
 
 private def root (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ ℝ K) : K →L[ℝ] K :=
@@ -77,7 +77,7 @@ private theorem adjoint_basis (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis �
     _ = Real.sqrt (mu i) • (Real.sqrt (mu i) • (k i).val) := by
       rw [smul_smul, ← pow_two, Real.sq_sqrt (hp i).le]
 
-private theorem trace_coeff (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ ℝ K)
+theorem trace_coeff (b : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ ℝ K)
     (mu : ℕ → ℝ) (hp : ∀ i, 0 < mu i)
     (hk : ∀ i, Sigma (k i).val = mu i • (k i).val)
     (hC : ∀ i, C (k i).val = Real.sqrt (mu i) • (b i).val) (x : K) (i : ℕ) :

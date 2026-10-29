@@ -1,0 +1,12 @@
+### 定义 3.3（横截的外部交叉见证）
+
+交叉边族 $\mathcal Y\subseteq\mathscr E_{n+1}$ 是外部交叉见证，如果：
+
+1. $|\mathcal Y|=\lambda_n$，且 $\mathcal Y$ 内部两两顶点不交；
+2. 每条 $y\in\mathcal Y$ 的顶点都不在两个子层像中：
+   $$
+   y\cap\bigl(\iota_0[V_n]\cup\iota_1[V_n]\bigr)=\varnothing.
+   $$
+
+条件 2 比匹配见证更强，因为横截可以选择未被某个特定匹配使用的子层顶点；要得到统一的横截加法，必须把交叉边支撑移出整个子层。
+
