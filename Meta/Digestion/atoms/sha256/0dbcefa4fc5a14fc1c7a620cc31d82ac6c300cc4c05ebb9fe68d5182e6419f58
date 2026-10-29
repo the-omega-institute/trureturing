@@ -1,0 +1,49 @@
+## 6. 虚拟线程与形式更新
+
+一个具体边界来自[运输、任务记忆与完成化](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)
+§5.3 的整数脉冲读数。对 $n\in\mathbb Z$ 和 $N\ge0$，令
+
+$$
+q_N(n)=\bigl(\mathbf 1_{\{n+k=0\}}\bigr)_{|k|\le N},
+\qquad
+B_N=q_N(\mathbb Z),
+$$
+
+令 $r_N:B_{N+1}\to B_N$ 为窗口限制，置
+
+$$
+Z:=\mathbb Z,\qquad Q_N:=B_N,\qquad p_N:=r_N,\qquad
+\eta(n):=(q_N(n))_N,\qquad B:=\eta[Z],\qquad
+L:=\varprojlim Q_N.
+$$
+
+全零坐标组成相容线程
+
+$$
+\omega=(0,0,0,\ldots)\in L.
+$$
+
+对每个有限 $N$ 都存在 $n$ 使 $q_N(n)=0$，但不存在一个整数满足所有窗口同时
+为零：
+
+$$
+\forall N\ \exists n\;q_N(n)=0,
+\qquad
+\neg\exists n\ \forall N\;q_N(n)=0.
+\tag{JKT.6}
+$$
+
+因此 $\omega\in L\setminus B$。沿用该节的识别
+$L\cong\mathbb Z\sqcup\{\omega\}$，完成上可以定义
+
+$$
+\widetilde T(n)=n+1,
+\qquad
+\widetilde T(\omega)=\omega,
+$$
+
+并得到一个形式上相容的全局更新；然而任何实际整数经有限次正反平移仍是整数，
+不能到达 $\omega$。这正是“虚拟线程可以承载扩展更新，而没有实际来源实现它”的
+最小实例；这些数学结论不赋予 $\omega$ 物理边界、物理静止态或观察者可写入
+状态的解释。
+

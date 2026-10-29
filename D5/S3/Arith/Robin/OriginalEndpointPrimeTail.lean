@@ -553,6 +553,45 @@ theorem original_endpoint_prime_tail_supply {q : ℝ} (hq : 0 < q) {N : ℕ}
   rw [robinLogMargin, hW, hE]
   ring
 
+private theorem layer_tail_nonneg (m : ℕ) {p : ℕ} (hp : p.Prime) :
+    0 ≤ layerTail m p := by
+  have hp0 : (0 : ℝ) < p := by exact_mod_cast hp.pos
+  have hi0 : 0 < (p : ℝ)⁻¹ := inv_pos.mpr hp0
+  have hi1 : (p : ℝ)⁻¹ < 1 :=
+    (inv_lt_one₀ hp0).mpr (by exact_mod_cast hp.one_lt)
+  have hz : (p : ℝ)⁻¹ ^ (m.factorization p + 1) < 1 :=
+    pow_lt_one₀ hi0.le hi1 (by omega)
+  unfold layerTail
+  apply neg_nonneg.mpr
+  have hlog := Real.log_le_log (sub_pos.mpr hz)
+    (show 1 - (p : ℝ)⁻¹ ^ (m.factorization p + 1) ≤ 1 by
+      linarith [pow_nonneg hi0.le (m.factorization p + 1)])
+  simpa only [Real.log_one] using hlog
+
+/-- The complete actual tail is nonnegative and gives the exact original
+Robin-margin identity on literal initial prime support. -/
+theorem tail_robin_data {m : ℕ} (hm : 0 < m)
+    (hsupport : m.primeFactors = Nat.primesLE (largestPrime m)) :
+    0 ≤ tail m ∧
+      robinLogMargin m = Mertens.E₃ (largestPrime m) + tail m +
+        Real.log (Real.log (Real.log (m : ℝ))) -
+        Real.log (Real.log (largestPrime m)) := by
+  have hnonneg : 0 ≤ tail m :=
+    sum_nonneg fun p hp => layer_tail_nonneg m (Nat.prime_of_mem_primeFactors hp)
+  have hprefix : m.primeFactors =
+      (Finset.Ioc 0 (largestPrime m)).filter Nat.Prime := by
+    simpa only [Nat.primesLE_eq_filter_Ioc_zero] using hsupport
+  have hE : Mertens.E₃ (largestPrime m : ℝ) = -eulerMass m +
+      Real.log (Real.log (largestPrime m : ℝ)) + Real.eulerMascheroniConstant := by
+    unfold Mertens.E₃ eulerMass
+    rw [Nat.floor_natCast, ← hprefix]
+    simp only [one_div, sum_neg_distrib]
+    ring
+  have hW := log_sigma_div_eq_eulerMass_sub_tail hm
+  refine ⟨hnonneg, ?_⟩
+  rw [robinLogMargin, hW, hE]
+  ring
+
 /-! A finite same-integer correction.  The support hypothesis is deliberately
 separate from the optimizer endpoint hypothesis above: it is the exact
 finite bridge used later by an actual-record consumer. -/
@@ -619,20 +658,7 @@ theorem finite_min_tail_robin_bound {m : ℕ} (hm : 0 < m)
     have hpp : p.Prime := Nat.prime_of_mem_primeFactors hp
     have hv : 1 ≤ m.factorization p := by
       exact hpp.factorization_pos_of_dvd (by omega) (Nat.dvd_of_mem_primeFactors hp)
-    have hp0 : 0 < (p : ℝ) := by exact_mod_cast hpp.pos
-    have hi0 : 0 < (p : ℝ)⁻¹ := inv_pos.mpr hp0
-    have hi1 : (p : ℝ)⁻¹ < 1 := (inv_lt_one₀ hp0).mpr (by exact_mod_cast hpp.one_lt)
-    have hz : (p : ℝ)⁻¹ ^ (m.factorization p + 1) < 1 :=
-      pow_lt_one₀ hi0.le hi1 (by omega)
-    have hz0 : 0 ≤ (p : ℝ)⁻¹ ^ (m.factorization p + 1) :=
-      (pow_pos hi0 _).le
-    have htail : 0 ≤ layerTail m p := by
-      unfold layerTail
-      apply neg_nonneg.mpr
-      have hlog := Real.log_le_log (show 0 < 1 - (p : ℝ)⁻¹ ^
-        (m.factorization p + 1) by linarith) (show 1 - (p : ℝ)⁻¹ ^
-        (m.factorization p + 1) ≤ 1 by linarith)
-      simpa only [Real.log_one] using hlog
+    have htail : 0 ≤ layerTail m p := layer_tail_nonneg m hpp
     by_cases hv1 : m.factorization p = 1
     · have htail1 : layerTail m p = -Real.log (1 - (p : ℝ)⁻¹ ^ 2) := by
         simp [layerTail, hv1]
@@ -679,20 +705,7 @@ theorem finite_min_tail_robin_bound {m : ℕ} (hm : 0 < m)
     exact hsum.trans (by
       have hadd := add_le_add_left hD (tail m)
       convert hadd using 1 <;> ring)
-  have hprefix : m.primeFactors = (Finset.Ioc 0 P).filter Nat.Prime := by
-    simpa only [Nat.primesLE_eq_filter_Ioc_zero] using hsupport
-  have hE : Mertens.E₃ (P : ℝ) = -eulerMass m +
-      Real.log (Real.log (P : ℝ)) + Real.eulerMascheroniConstant := by
-    unfold Mertens.E₃ eulerMass
-    rw [Nat.floor_natCast, ← hprefix]
-    simp only [one_div, sum_neg_distrib]
-    ring
-  have hW := log_sigma_div_eq_eulerMass_sub_tail hm
-  have hmargin : robinLogMargin m = Mertens.E₃ (P : ℝ) + tail m +
-      Real.log (Real.log X) - Real.log (Real.log (P : ℝ)) := by
-    rw [robinLogMargin, hW, hE]
-    simp [X, P]
-    ring
+  have hmargin := (tail_robin_data hm hsupport).2
   refine ⟨?_, ?_⟩
   · simpa [X, P] using hV
   · have hmargin' := hmargin
