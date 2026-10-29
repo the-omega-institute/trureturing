@@ -8,6 +8,7 @@
 import D5.S3.Combinatorics.Circle.SmallStepOrdering
 import D5.S3.Combinatorics.Circle.TwoSmallSource
 import Mathlib.Data.Finset.Max
+import Mathlib.Data.List.Chain
 
 /-! # Full inventory ordering for isolated SMALL labels of one sign -/
 
@@ -668,5 +669,339 @@ private theorem isolated_potential_geometry
         have he := hp i hr
         simp only [isolatedPotential, if_neg hi, if_neg hn', add_zero]
         constructor <;> omega
+
+
+/-- Along a physical successor chain, each moved pair has one label of each
+size. Removing successive pairs proves the two filtered orders separately. -/
+private theorem isolated_swap_chain {α : Type*}
+    (σ : Equiv.Perm α) (w : α → ℤ) (Q : ℤ)
+    (hsmallpos : ∀ i, |w i| < Q → 0 < w i)
+    (hsmallnext : ∀ i, |w i| < Q → ¬|w (σ i)| < Q)
+    (hsmallpred : ∀ i, |w i| < Q → w (σ.symm i) < 0)
+    (fuel : ℕ) (L : List α) (o : α)
+    (hlen : L.length ≤ fuel)
+    (hchain : (L ++ [o]).IsChain (fun i j => σ i = j))
+    (hstart : ∀ a, L.head? = some a → ¬|w a| < Q)
+    (hend : ¬|w o| < Q) :
+    (L.map (isolatedSwap σ w Q)).Perm L ∧
+      (L.map (isolatedSwap σ w Q)).filter (fun i => decide (Q ≤ |w i|)) =
+        L.filter (fun i => decide (Q ≤ |w i|)) ∧
+      (L.map (isolatedSwap σ w Q)).filter (fun i => decide (|w i| < Q)) =
+        L.filter (fun i => decide (|w i| < Q)) := by
+  classical
+  induction fuel generalizing L with
+  | zero =>
+    have : L = [] := List.length_eq_zero_iff.mp (by omega)
+    subst L
+    simp
+  | succ fuel ih =>
+    cases L with
+    | nil => simp
+    | cons a tail =>
+      have ha := hstart a rfl
+      by_cases ht : w a < 0 ∧ |w (σ a)| < Q
+      · cases tail with
+        | nil =>
+          have he : σ a = o := (List.isChain_cons_cons.mp hchain).1
+          exact False.elim (hend (he ▸ ht.2))
+        | cons b rest =>
+          have hab : σ a = b := (List.isChain_cons_cons.mp hchain).1
+          have htail := (List.isChain_cons_cons.mp hchain).2
+          have hb : |w b| < Q := hab ▸ ht.2
+          have hbpos := hsmallpos b hb
+          have hta : isolatedSwap σ w Q a = b := by simp [isolatedSwap, ht, hab]
+          have htb : isolatedSwap σ w Q b = a := by
+            simp [isolatedSwap, show ¬w b < 0 by omega, hb, ← hab]
+          have hrchain : (rest ++ [o]).IsChain (fun i j => σ i = j) := by
+            cases rest with
+            | nil => simp
+            | cons c xs => exact (List.isChain_cons_cons.mp htail).2
+          have hrstart : ∀ c, rest.head? = some c → ¬|w c| < Q := by
+            intro c hc
+            cases rest with
+            | nil => simp at hc
+            | cons d xs =>
+              have hdc : d = c := Option.some.inj hc
+              subst c
+              have hbd : σ b = d := (List.isChain_cons_cons.mp htail).1
+              exact hbd ▸ hsmallnext b hb
+          obtain ⟨hrperm, hrlarge, hrsmall⟩ := ih rest (by simp only [List.length_cons] at hlen; omega)
+            hrchain hrstart
+          refine ⟨?_, ?_, ?_⟩
+          · simpa only [List.map_cons, hta, htb] using
+              ((hrperm.cons a).cons b).trans (List.Perm.swap a b rest)
+          · simp only [List.map_cons, hta, htb, List.filter_cons]
+            simp only [show Q ≤ |w a| by omega, show ¬Q ≤ |w b| by omega,
+              decide_true, decide_false, Bool.false_eq_true, ite_false, ite_true]
+            rw [hrlarge]
+          · simp only [List.map_cons, hta, htb, List.filter_cons]
+            simp only [ha, hb, decide_true, decide_false, Bool.false_eq_true, ite_false, ite_true]
+            rw [hrsmall]
+      · have hta : isolatedSwap σ w Q a = a := by simp [isolatedSwap, ht, ha]
+        have hrchain : (tail ++ [o]).IsChain (fun i j => σ i = j) := by
+          cases tail with
+          | nil => simp
+          | cons b rest => exact (List.isChain_cons_cons.mp hchain).2
+        have hrstart : ∀ b, tail.head? = some b → ¬|w b| < Q := by
+          intro b hb
+          cases tail with
+          | nil => simp at hb
+          | cons c rest =>
+            have hcb : c = b := Option.some.inj hb
+            subst b
+            have hac : σ a = c := (List.isChain_cons_cons.mp hchain).1
+            intro hc
+            have hn := hsmallpred c hc
+            rw [← hac, σ.symm_apply_apply] at hn
+            exact ht ⟨hn, hac.symm ▸ hc⟩
+        obtain ⟨hrperm, hrlarge, hrsmall⟩ := ih tail (by simp only [List.length_cons] at hlen; omega)
+          hrchain hrstart
+        refine ⟨by simpa only [List.map_cons, hta] using hrperm.cons a, ?_, ?_⟩
+        · simp only [List.map_cons, hta, List.filter_cons]
+          rw [hrlarge]
+        · simp only [List.map_cons, hta, List.filter_cons]
+          rw [hrsmall]
+
+
+private theorem isolated_positive_cycle {k : ℕ} (hk : 0 < k)
+    (w : Fin k → ℤ) (Q N C : ℤ)
+    (hQ : 2 ≤ Q) (hN : N = 4 * Q - 1) (hC : C = 2 * Q - 1)
+    (hbound : ∀ i, -C ≤ w i ∧ w i ≤ C)
+    (hstep : ∀ i, w (finRotate k i) = doubleStep N (w i))
+    (hsmall : ∀ i, |w i| < Q → 0 ≤ w i)
+    (hisolated : ∀ i, |w i| < Q → Q ≤ |w (finRotate k i)|) :
+    ∃ L : List (Fin k), L.Perm (List.ofFn (fun i : Fin k => i)) ∧
+      (∀ n : ℕ, 0 ≤ ((L.take n).map w).sum ∧
+        ((L.take n).map w).sum ≤ C ∧ 28 * ((L.take n).map w).sum < 13 * N) ∧
+      (L.map w).sum = 0 ∧
+      (L.filter (fun i => decide (Q ≤ |w i|))).IsRotated
+        ((List.finRange k).filter (fun i => decide (Q ≤ |w i|))) ∧
+      (L.filter (fun i => decide (|w i| < Q))).IsRotated
+        ((List.finRange k).filter (fun i => decide (|w i| < Q))) := by
+  classical
+  letI : NeZero k := ⟨by omega⟩
+  let σ := finRotate k
+  obtain ⟨o, ho, hinvol, hcob, hb⟩ := isolated_potential_geometry σ w Q N C
+    hQ hN hC hbound hstep hsmall hisolated
+  let φ := phase hk o
+  let τ := isolatedSwap σ w Q
+  let P := isolatedPotential σ w Q N
+  let base := (List.range k).map φ
+  let L := base.map τ
+  have hφ (j : ℕ) : σ (φ j) = φ (j + 1) := by
+    apply Fin.ext
+    simp [σ, φ, phase, finRotate_apply, Fin.val_add, Nat.add_mod, Nat.add_assoc]
+  have hφk : φ k = o := by simp [φ, phase, Nat.mod_eq_of_lt o.isLt]
+  have hφ0 : φ 0 = o := phase_zero hk o
+  have hP0 : P o = w o := by
+    have hpos : 0 < w o := by omega
+    have hlarge : ¬|w o| < Q := by rw [abs_of_pos hpos]; omega
+    simp [P, isolatedPotential, hlarge, show ¬w o < 0 by omega]
+  have htel (n : ℕ) : ((List.range n).map (fun j => w (τ (φ j)))).sum = P (φ n) - w o := by
+    induction n with
+    | zero => simp [hφ0, hP0]
+    | succ n ih =>
+      have he := hcob (φ n)
+      change P (σ (φ n)) - P (φ n) = w (τ (φ n)) at he
+      rw [hφ] at he
+      simp only [List.range_succ, List.map_append, List.map_cons, List.map_nil,
+        List.sum_append, List.sum_cons, List.sum_nil, add_zero, ih]
+      omega
+  have hprefix (n : ℕ) : ((L.take n).map w).sum = P (φ (min n k)) - w o := by
+    simpa only [L, base, ← List.map_take, List.take_range, List.map_map,
+      Function.comp_def] using htel (min n k)
+  have htotal : (L.map w).sum = 0 := by
+    have hh := htel k
+    simpa only [hφk, hP0, sub_self, L, base, List.map_map, Function.comp_def] using hh
+  let e : Equiv.Perm (Fin k) := Equiv.addLeft o
+  have hbase : base = List.ofFn e := by
+    rw [List.ofFn_eq_map, ← List.map_coe_finRange_eq_range]
+    simp only [base, List.map_map]
+    apply List.map_congr_left
+    intro i _
+    apply Fin.ext
+    rfl
+  have hbaserot : base = (List.finRange k).rotate o.val := by
+    rw [hbase]
+    apply List.ext_getElem
+    · simp
+    · intro i hi₁ hi₂
+      simp only [List.getElem_ofFn, List.getElem_rotate, List.getElem_finRange,
+        List.length_ofFn, List.length_rotate, List.length_finRange]
+      apply Fin.ext
+      simp [e, Fin.val_add, Nat.add_mod, Nat.add_comm]
+  let swapEquiv : Equiv.Perm (Fin k) :=
+    { toFun := τ, invFun := τ, left_inv := hinvol, right_inv := hinvol }
+  have hperm : L.Perm (List.ofFn (fun i : Fin k => i)) := by
+    change (base.map swapEquiv).Perm _
+    rw [hbase, List.map_ofFn]
+    exact (e.ofFn_comp_perm swapEquiv).trans
+      (by simpa only [Function.comp_def, id_eq] using
+        swapEquiv.ofFn_comp_perm (fun i : Fin k => i))
+  obtain ⟨hnz, hs, hn, hp⟩ := isolated_geometry σ w Q N C hQ hN hC
+    hbound hstep hsmall hisolated
+  have hsnext (i : Fin k) (hi : |w i| < Q) : Q ≤ w (σ i) := by
+    have he := (hs i hi).2.1
+    have hz := (hs i hi).1
+    have hh := hisolated i hi
+    rwa [abs_of_pos (by omega : 0 < w (σ i))] at hh
+  have hpred := (isolated_predecessors σ w Q (by omega) hnz
+    (fun i hi => ⟨(hs i hi).1, hsnext i hi⟩)
+    (fun i hi => (hn i hi).2.2) (fun i hi => (hp i hi).2.1)).2
+  have holarge : ¬|w o| < Q := by rw [abs_of_pos (by omega : 0 < w o)]; omega
+  have hchain : (base ++ [o]).IsChain (fun i j => σ i = j) := by
+    have he : base ++ [o] = (List.range (k + 1)).map φ := by
+      simp only [List.range_succ, List.map_append, List.map_cons, List.map_nil,
+        hφk, base]
+    rw [he, List.isChain_iff_getElem]
+    intro i hi
+    simpa only [List.getElem_map, List.getElem_range] using hφ i
+  have hhead : base.head? = some o := by
+    simp [base, List.head?_map, List.head?_range, ne_of_gt hk, hφ0]
+  obtain ⟨_, hlarge, hsmallorder⟩ := isolated_swap_chain σ w Q
+    (fun i hi => (hs i hi).1)
+    (fun i hi => by
+      have hh := hsnext i hi
+      rw [abs_of_pos (by omega : 0 < w (σ i))]
+      omega)
+    hpred k base o (by simp [base]) hchain
+    (fun a ha => by have he := hhead.symm.trans ha; exact Option.some.inj he ▸ holarge)
+    holarge
+  refine ⟨L, hperm, ?_, htotal, ?_, ?_⟩
+  · intro n
+    rw [hprefix]
+    obtain ⟨hlo, hhi⟩ := hb (φ (min n k))
+    change 0 ≤ P (φ (min n k)) - w o ∧
+      P (φ (min n k)) - w o ≤ C ∧
+      28 * (P (φ (min n k)) - w o) < 13 * N
+    exact ⟨hlo, by omega, hhi⟩
+  · change (base.map τ).filter _ ~r _
+    rw [hlarge, hbaserot]
+    exact TwoSmallSource.filter_rotate _ _ _
+  · change (base.map τ).filter _ ~r _
+    rw [hsmallorder, hbaserot]
+    exact TwoSmallSource.filter_rotate _ _ _
+
+/-- Negating a zero-sum path and cutting at a minimum preserves every strict
+upper bound on its original nonnegative prefix heights. -/
+private theorem isolated_negate_rotation {α : Type*}
+    (w : α → ℤ) (C N : ℤ) (L : List α)
+    (hs : InStrip w C 0 L) (hz : (L.map w).sum = 0)
+    (hm : ∀ n, 28 * ((L.take n).map w).sum < 13 * N) :
+    ∃ j ≤ L.length, ∀ n : ℕ,
+      0 ≤ (((L.rotate j).take n).map (fun i => -w i)).sum ∧
+      (((L.rotate j).take n).map (fun i => -w i)).sum ≤ C ∧
+      28 * (((L.rotate j).take n).map (fun i => -w i)).sum < 13 * N := by
+  obtain ⟨j, hj, hrot⟩ := TwoSmallSource.negate_rotation w C L hs hz
+  let v := L.map (fun i => -w i)
+  have hv : v.sum = 0 := by dsimp [v]; rw [sum_neg_map, hz]; omega
+  have hb (n : ℕ) : (v.take n).sum ≤ 0 := by
+    have hh := (inStrip_prefix hs n).1
+    have he : (v.take n).sum = -((L.take n).map w).sum := by
+      dsimp [v]; rw [← List.map_take, sum_neg_map]
+    omega
+  have hj' : j ≤ v.length := by simpa [v] using hj
+  refine ⟨j, hj, ?_⟩
+  intro n
+  have hupper : ((v.rotate j).take n).sum ≤ -(v.take j).sum := by
+    have hsplit := congrArg List.sum (List.take_append_drop j v)
+    simp only [List.sum_append] at hsplit
+    rw [List.rotate_eq_drop_append_take hj', List.take_append, List.sum_append]
+    by_cases hn : n ≤ v.length - j
+    · have he : n - (v.drop j).length = 0 := by simp only [List.length_drop]; omega
+      rw [he, List.take_zero, List.sum_nil, add_zero]
+      have hseg := D5.S1.Words.Compositions.ZeroSumWordCount.prefix_segment_sum v j n
+      have hnonpos := hb (j + n)
+      omega
+    · have hd : (v.drop j).length ≤ n := by simp only [List.length_drop]; omega
+      rw [List.take_of_length_le hd, List.take_take]
+      have hnonpos := hb (min (n - (v.drop j).length) j)
+      omega
+  have hneg : (v.take j).sum = -((L.take j).map w).sum := by
+    dsimp [v]; rw [← List.map_take, sum_neg_map]
+  have hwide := hm j
+  have hstrict : 28 * ((v.rotate j).take n).sum < 13 * N := by omega
+  refine ⟨(hrot n).1, (hrot n).2, ?_⟩
+  simpa only [v, List.map_rotate, List.map_take] using hstrict
+
+
+/-- Isolated native SMALL labels of one weak sign admit a full physical
+half-strip word with strict 13/28 margin and both forward cyclic filters.
+No assumption on the source's numerical period or SMALL cardinality is used. -/
+theorem actualSource_isolated_same_sign_cyclic_completion
+    {k : ℕ} (hk : 3 ≤ k) (t : ℕ)
+    (hsmall : (∀ i : Fin k, |actualSource k t i| < quarter k → 0 ≤ actualSource k t i) ∨
+      (∀ i : Fin k, |actualSource k t i| < quarter k → actualSource k t i ≤ 0))
+    (hisolated : ∀ i : Fin k, |actualSource k t i| < quarter k →
+      quarter k ≤ |actualSource k t (finRotate k i)|) :
+    ∃ L : List (Fin k),
+      L.Perm (List.ofFn (fun i : Fin k => i)) ∧
+      L.Nodup ∧ L.toFinset = Finset.univ ∧
+      InStrip (actualSource k t) (half k) 0 L ∧
+      (∀ n : ℕ, 0 ≤ ((L.take n).map (actualSource k t)).sum ∧
+        ((L.take n).map (actualSource k t)).sum ≤ half k ∧
+        28 * ((L.take n).map (actualSource k t)).sum < 13 * modulus k) ∧
+      (L.map (actualSource k t)).sum = 0 ∧
+      TwoOppositeLargeExchange.Legal k t L ∧
+      (L.filter (fun i => decide (quarter k ≤ |actualSource k t i|))).IsRotated
+        ((List.finRange k).filter (fun i => decide (quarter k ≤ |actualSource k t i|))) ∧
+      (L.filter (fun i => decide (|actualSource k t i| < quarter k))).IsRotated
+        ((List.finRange k).filter (fun i => decide (|actualSource k t i| < quarter k))) := by
+  classical
+  letI : NeZero k := ⟨by omega⟩
+  obtain ⟨hQ, hN, hC, hNpos, hodd⟩ := source_geometry hk
+  have hbound (i : Fin k) : -half k ≤ actualSource k t i ∧ actualSource k t i ≤ half k :=
+    centered_bounds hNpos hodd _
+  have hcycle := (ZeroSumSubsets.source_cycle (by omega : 0 < k) t).2.2
+  have hstep (i : Fin k) : actualSource k t (finRotate k i) =
+      doubleStep (modulus k) (actualSource k t i) := by
+    have he := hcycle i
+    unfold doubleStep
+    split_ifs at he ⊢ <;> omega
+  have hcompletion : ∃ L : List (Fin k),
+      L.Perm (List.ofFn (fun i : Fin k => i)) ∧
+      (∀ n : ℕ, 0 ≤ ((L.take n).map (actualSource k t)).sum ∧
+        ((L.take n).map (actualSource k t)).sum ≤ half k ∧
+        28 * ((L.take n).map (actualSource k t)).sum < 13 * modulus k) ∧
+      (L.map (actualSource k t)).sum = 0 ∧
+      (L.filter (fun i => decide (quarter k ≤ |actualSource k t i|))).IsRotated
+        ((List.finRange k).filter (fun i => decide (quarter k ≤ |actualSource k t i|))) ∧
+      (L.filter (fun i => decide (|actualSource k t i| < quarter k))).IsRotated
+        ((List.finRange k).filter (fun i => decide (|actualSource k t i| < quarter k))) := by
+    rcases hsmall with hsmall | hsmall
+    · exact isolated_positive_cycle (by omega) (actualSource k t)
+        (quarter k) (modulus k) (half k) hQ hN hC hbound hstep hsmall hisolated
+    · obtain ⟨L, hp, hb, hz, hlarge, hsmallorder⟩ := isolated_positive_cycle (by omega : 0 < k)
+        (fun i => -actualSource k t i) (quarter k) (modulus k) (half k) hQ hN hC
+        (fun i => by have := hbound i; constructor <;> omega)
+        (fun i => by rw [doubleStep_neg (le_of_lt hNpos), ← hstep i])
+        (fun i hi => by have := hsmall i (by simpa only [abs_neg] using hi); omega)
+        (fun i hi => by simpa only [abs_neg] using hisolated i (by simpa only [abs_neg] using hi))
+      have hs : InStrip (fun i => -actualSource k t i) (half k) 0 L :=
+        MixedSuffixEnergy.strip_of_all_prefixes L (fun n => by
+          simpa only [MixedSuffixEnergy.mass, zero_add] using ⟨(hb n).1, (hb n).2.1⟩)
+      obtain ⟨j, _, hj⟩ := isolated_negate_rotation (fun i => -actualSource k t i)
+        (half k) (modulus k) L hs hz (fun n => (hb n).2.2)
+      have htotal : (L.map (actualSource k t)).sum = 0 := by
+        rw [sum_neg_map] at hz
+        omega
+      refine ⟨L.rotate j, (List.rotate_perm L j).trans hp, ?_, ?_, ?_, ?_⟩
+      · intro n
+        simpa only [neg_neg] using hj n
+      · exact ((List.rotate_perm L j).map (actualSource k t)).sum_eq.trans htotal
+      · exact (TwoSmallSource.filter_rotate _ L j).trans (by simpa only [abs_neg] using hlarge)
+      · exact (TwoSmallSource.filter_rotate _ L j).trans (by simpa only [abs_neg] using hsmallorder)
+  obtain ⟨L, hp, hb, hz, hlarge, hsmallorder⟩ := hcompletion
+  have hn : L.Nodup := hp.nodup_iff.mpr
+    (List.nodup_ofFn_ofInjective (f := fun i : Fin k => i) (fun _ _ h => h))
+  have hu : L.toFinset = Finset.univ := by
+    apply Finset.eq_univ_of_forall
+    intro i
+    exact List.mem_toFinset.mpr (hp.mem_iff.mpr (List.mem_ofFn.mpr ⟨i, rfl⟩))
+  have hs : InStrip (actualSource k t) (half k) 0 L :=
+    MixedSuffixEnergy.strip_of_all_prefixes L (fun n => by
+      simpa only [MixedSuffixEnergy.mass, zero_add] using ⟨(hb n).1, (hb n).2.1⟩)
+  exact ⟨L, hp, hn, hu, hs, hb, hz, TwoOppositeLargeExchange.legal_of_strip hn hs,
+    hlarge, hsmallorder⟩
 
 end D5.S3.Combinatorics.Circle.IsolatedSmallSource

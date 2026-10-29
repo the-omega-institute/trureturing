@@ -24,7 +24,7 @@ private theorem phase_add {k : ℕ} (hk : 0 < k) (o : Fin k) (j : ℕ) :
   apply Fin.ext
   simp [phase, Fin.val_add, Nat.add_mod]
 
-private theorem filter_rotate {α : Type*} (p : α → Bool) (l : List α) (n : ℕ) :
+theorem filter_rotate {α : Type*} (p : α → Bool) (l : List α) (n : ℕ) :
     (l.rotate n).filter p ~r l.filter p := by
   let r := n % l.length
   have hright : l.filter p = (l.take r).filter p ++ (l.drop r).filter p := by

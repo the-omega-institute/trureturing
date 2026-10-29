@@ -138,6 +138,124 @@ def audit.{u_1} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+/-- The source family keeps every physical Fin k label, including empty fibers. -/
+abbrev nativeSignature : Signature where
+  Params := ℕ × ℕ
+  State p := Fin p.1
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℤ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def nativeActual : Realization nativeSignature :=
+  realize nativeSignature (fun _ p i => actualSource p.1 p.2 i) (fun e => nomatch e)
+
+def nativeRejected : Realization nativeSignature :=
+  realize nativeSignature (fun _ _ _ => -1) (fun e => nomatch e)
+
+open _root_.D5.S3.Combinatorics.Circle.ExpandingSourcePath
+
+/-- Only the returned strip's weight operand is varied. All native hypotheses,
+prefix bounds, margin, total, legality and both filters retain the actual source. -/
+abbrev nativeArena : Arena where
+  signature := nativeSignature
+  Law R := ∀ {k : ℕ} (hk : 3 ≤ k) (t : ℕ)
+    (hsmall : (∀ i : Fin k, |actualSource k t i| < quarter k → 0 ≤ actualSource k t i) ∨
+      (∀ i : Fin k, |actualSource k t i| < quarter k → actualSource k t i ≤ 0))
+    (hisolated : ∀ i : Fin k, |actualSource k t i| < quarter k →
+      quarter k ≤ |actualSource k t (finRotate k i)|),
+    ∃ L : List (Fin k),
+      L.Perm (List.ofFn (fun i : Fin k => i)) ∧
+      L.Nodup ∧ L.toFinset = Finset.univ ∧
+      InStrip (R.readout () (k,t)) (half k) 0 L ∧
+      (∀ n : ℕ, 0 ≤ ((L.take n).map (actualSource k t)).sum ∧
+        ((L.take n).map (actualSource k t)).sum ≤ half k ∧
+        28 * ((L.take n).map (actualSource k t)).sum < 13 * modulus k) ∧
+      (L.map (actualSource k t)).sum = 0 ∧
+      _root_.D5.S3.Combinatorics.Circle.TwoOppositeLargeExchange.Legal k t L ∧
+      (L.filter (fun i => decide (quarter k ≤ |actualSource k t i|))).IsRotated
+        ((List.finRange k).filter (fun i => decide (quarter k ≤ |actualSource k t i|))) ∧
+      (L.filter (fun i => decide (|actualSource k t i| < quarter k))).IsRotated
+        ((List.finRange k).filter (fun i => decide (|actualSource k t i| < quarter k)))
+
+private theorem native_rejected_law : ¬ nativeArena.Law nativeRejected := by
+  classical
+  intro h
+  have hsmall : ∀ i : Fin 3, |actualSource 3 1 i| < quarter 3 → 0 ≤ actualSource 3 1 i := by
+    intro i
+    fin_cases i <;> norm_num [actualSource, centered, modulus, quarter]
+  have hisolated : ∀ i : Fin 3, |actualSource 3 1 i| < quarter 3 →
+      quarter 3 ≤ |actualSource 3 1 (finRotate 3 i)| := by
+    intro i
+    fin_cases i <;> norm_num [actualSource, centered, modulus, quarter, finRotate_apply]
+  obtain ⟨L, hp, _, _, hs, _⟩ := h (k := 3) (by norm_num) 1 (Or.inl hsmall) hisolated
+  have hmem : (0 : Fin 3) ∈ L := hp.mem_iff.mpr (List.mem_ofFn.mpr ⟨0, rfl⟩)
+  change InStrip (fun _ : Fin 3 => (-1 : ℤ)) (half 3) 0 L at hs
+  cases L with
+  | nil => simpa using hmem
+  | cons a tail =>
+    have hh := (inStrip_prefix hs 1).1
+    norm_num at hh
+
+private theorem native_actual_dependence : ObservationalDependence nativeSignature nativeActual := by
+  intro i
+  refine ⟨(3,1), (0 : Fin 3), (1 : Fin 3), ?_⟩
+  norm_num [nativeActual, realize, actualSource, centered, modulus]
+
+def native_source_registration : Registration nativeArena
+    (type_of% (@actualSource_isolated_same_sign_cyclic_completion)) where
+  actual := nativeActual
+  bridge := Iff.rfl
+  variation := ⟨@actualSource_isolated_same_sign_cyclic_completion, nativeRejected, native_rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨nativeRejected, ?_, rfl, native_rejected_law⟩
+      intro j hji
+      exact False.elim (hji (Subsingleton.elim _ _))
+    · intro e
+      exact nomatch e
+  dependence := native_actual_dependence
+
+def native_audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Combinatorics.Circle.IsolatedSmallSource.actualSource_isolated_same_sign_cyclic_completion)
+    (type_of% (realize nativeSignature (fun _ p i => actualSource p.1 p.2 i) (fun e => nomatch e)))
+    Nat Unit where
+  unitName := `D5.S3.Combinatorics.Circle.IsolatedSmallSource.actualSource_isolated_same_sign_cyclic_completion.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Circle.IsolatedSmallSource.native_source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨nativeArena⟩
+  objectArena := .source ⟨nativeArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source nativeArena ⟨native_source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize nativeSignature (fun _ p i => actualSource p.1 p.2 i) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Circle.IsolatedSmallSource
+    definition := none
+    coordinates := #[0, 2]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "arg", "body",
+        "arg", "arg", "arg", "fn", "arg", "fn", "fn", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms native_source_registration
+
 #print axioms source_registration
 
 end
