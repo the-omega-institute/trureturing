@@ -3,9 +3,8 @@
    mirror-B: none(waiver:formal-unit-only)
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   digest: A discrete lift group meets every physical bounded ball times a compact
-   internal window in finitely many points; consequently bounded displacement sets
-   and pointed local patches of subsets of the model set are finite. -/
+   utility: none
+   digest: A discrete lift group meets every physical bounded ball times a compact internal window in finitely many points; consequently bounded displacement sets and pointed local patches of subsets of the model set are finite. -/
 
 import Mathlib
 
