@@ -708,9 +708,12 @@ private theorem isolated_swap_chain {α : Type*}
           have htail := (List.isChain_cons_cons.mp hchain).2
           have hb : |w b| < Q := hab ▸ ht.2
           have hbpos := hsmallpos b hb
-          have hta : isolatedSwap σ w Q a = b := by simp [isolatedSwap, ht, hab]
+          have hta : isolatedSwap σ w Q a = b := by
+            rw [isolatedSwap, if_pos ht, hab]
           have htb : isolatedSwap σ w Q b = a := by
-            simp [isolatedSwap, show ¬w b < 0 by omega, hb, ← hab]
+            rw [isolatedSwap,
+              if_neg (show ¬(w b < 0 ∧ |w (σ b)| < Q) by omega), if_pos hb,
+              ← hab, σ.symm_apply_apply]
           have hrchain : (rest ++ [o]).IsChain (fun i j => σ i = j) := by
             cases rest with
             | nil => simp
@@ -789,7 +792,7 @@ private theorem isolated_positive_cycle {k : ℕ} (hk : 0 < k)
   let L := base.map τ
   have hφ (j : ℕ) : σ (φ j) = φ (j + 1) := by
     apply Fin.ext
-    simp [σ, φ, phase, finRotate_apply, Fin.val_add, Nat.add_mod, Nat.add_assoc]
+    simp [σ, φ, phase, finRotate_apply, Fin.val_add, Nat.add_assoc]
   have hφk : φ k = o := by simp [φ, phase, Nat.mod_eq_of_lt o.isLt]
   have hφ0 : φ 0 = o := phase_zero hk o
   have hP0 : P o = w o := by
@@ -871,6 +874,8 @@ private theorem isolated_positive_cycle {k : ℕ} (hk : 0 < k)
   · intro n
     rw [hprefix]
     obtain ⟨hlo, hhi⟩ := hb (φ (min n k))
+    change 0 ≤ P (φ (min n k)) - w o at hlo
+    change 28 * (P (φ (min n k)) - w o) < 13 * N at hhi
     change 0 ≤ P (φ (min n k)) - w o ∧
       P (φ (min n k)) - w o ≤ C ∧
       28 * (P (φ (min n k)) - w o) < 13 * N
