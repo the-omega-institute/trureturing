@@ -6,9 +6,9 @@ Finite four-current traces on the original complete energy grades.
 
 **Definition 1.1 (Ten labeled partial matchings).**
 
-Lean statement: `D5/S3/VertexAlgebra/Characters/LatticeFourCurrentTrace.PM4`
+Lean statement: `D5/S3/VertexAlgebra/Characters/FourCurrent/TraceRecurrence.PM4`
 
-*Formalization.* `D5/S3/VertexAlgebra/Characters/LatticeFourCurrentTrace.PM4` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Characters/FourCurrent/TraceRecurrence.PM4` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -18,9 +18,9 @@ The slots are Fin 4. There is one empty matching, six single-edge matchings, and
 
 **Definition 1.2 (Labeled edge sets).**
 
-Lean statement: `D5/S3/VertexAlgebra/Characters/LatticeFourCurrentTrace.edges`
+Lean statement: `D5/S3/VertexAlgebra/Characters/FourCurrent/TraceRecurrence.edges`
 
-*Formalization.* `D5/S3/VertexAlgebra/Characters/LatticeFourCurrentTrace.edges` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Characters/FourCurrent/TraceRecurrence.edges` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -30,9 +30,9 @@ Each partial matching has its literal finite set of ordered pairs of distinct sl
 
 **Definition 1.3 (Original finite four-current cycle trace).**
 
-Lean statement: `D5/S3/VertexAlgebra/Characters/LatticeFourCurrentTrace.actualFourCurrentCycleTrace`
+Lean statement: `D5/S3/VertexAlgebra/Characters/FourCurrent/TraceRecurrence.actualFourCurrentCycleTrace`
 
-*Formalization.* `D5/S3/VertexAlgebra/Characters/LatticeFourCurrentTrace.actualFourCurrentCycleTrace` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Characters/FourCurrent/TraceRecurrence.actualFourCurrentCycleTrace` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -42,9 +42,9 @@ For every original LatticeData D with positive-definite real Gram matrix, every 
 
 **Definition 1.4 (Bounded ten-matching coefficient).**
 
-Lean statement: `D5/S3/VertexAlgebra/Characters/LatticeFourCurrentTrace.boundedFourCurrentCoefficient`
+Lean statement: `D5/S3/VertexAlgebra/Characters/FourCurrent/TraceRecurrence.boundedFourCurrentCoefficient`
 
-*Formalization.* `D5/S3/VertexAlgebra/Characters/LatticeFourCurrentTrace.boundedFourCurrentCoefficient` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Characters/FourCurrent/TraceRecurrence.boundedFourCurrentCoefficient` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -74,10 +74,9 @@ This structural identity is uniform in arbitrary natural grades and original lat
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/Characters/LatticeFourCurrentTrace.PM4`
-- Truth anchor: `D5/S3/VertexAlgebra/Characters/LatticeFourCurrentTrace.actualFourCurrentCycleTrace`
+- Truth anchor: `D5/S3/VertexAlgebra/Characters/FourCurrent/TraceRecurrence.PM4`
+- Truth anchor: `D5/S3/VertexAlgebra/Characters/FourCurrent/TraceRecurrence.actualFourCurrentCycleTrace`
+- Truth anchor: `D5/S3/VertexAlgebra/Characters/FourCurrent/TraceRecurrence.boundedFourCurrentCoefficient`
+- Truth anchor: `D5/S3/VertexAlgebra/Characters/FourCurrent/TraceRecurrence.edges`
 - Truth anchor: `D5/S3/VertexAlgebra/Characters/LatticeFourCurrentTrace.actual_four_current_grade_trace`
-- Truth anchor: `D5/S3/VertexAlgebra/Characters/LatticeFourCurrentTrace.boundedFourCurrentCoefficient`
-- Truth anchor: `D5/S3/VertexAlgebra/Characters/LatticeFourCurrentTrace.edges`
-- Dependency: [D5/S3/VertexAlgebra/Characters/LatticeTwoCurrentTrace](LatticeTwoCurrentTrace.md)
-- Dependency: [D5/S3/VertexAlgebra/Energy/LatticeCoefficientEnergy](../Energy/LatticeCoefficientEnergy.md)
+- Dependency: [D5/S3/VertexAlgebra/Characters/FourCurrent/MatchingRotation](FourCurrent/MatchingRotation.md)
