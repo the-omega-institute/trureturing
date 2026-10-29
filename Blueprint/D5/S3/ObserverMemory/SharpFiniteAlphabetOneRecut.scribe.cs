@@ -98,7 +98,7 @@ internal sealed class SharpFiniteAlphabetOneRecutDocument : IScribeDocumentDefin
                     Imp(Call("FullBranching", c, k), Bounds(c, k, width, true))))))))));
         var sharp = All("N", V("Nat"), Imp(Le(Num(1), prescribed),
             And(Attains(prescribed, false), Attains(prescribed, true))));
-        return All("A", V("Type"), Imp(Fin(V("A")),
+        return All("A", V("Type"), Seq(OpenBracket, Fin(V("A")), CloseBracket, Sp,
             Imp(Le(Num(2), Qcard), And(universal, sharp))));
     }
 
