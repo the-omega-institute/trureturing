@@ -42,7 +42,7 @@ $$\forall (V:\operatorname{Type}), \forall (W:\operatorname{Type}), [\operatorna
 
 support(f) is the finite subset of all v in V for which f(v) is nonempty. For nonempty W, the private total_family theorem proves that the actual inverse subset totally dominates blowupGraph G W if and only if this support totally dominates G. The forward direction tests any vertex in each fibre; the reverse direction uses a selected neighbour in an occupied adjacent fibre. Selected vertices obey exactly the same condition.
 
-**Theorem 1.4 (The known actual-subset substitution identity).**
+**Theorem 1.4 (The actual-subset substitution identity).**
 
 $$\forall (V:\operatorname{Type}), \forall (W:\operatorname{Type}), [\operatorname{Fintype}\left(V\right)], [\operatorname{Fintype}\left(W\right)], [\operatorname{Nonempty}\left(W\right)], \forall (G:\operatorname{SimpleGraph}\left(V\right)), \operatorname{complexPolynomial}\left(\operatorname{blowupGraph}\left(G, W\right)\right) = \operatorname{comp}\left(\operatorname{complexPolynomial}\left(G\right), (1 + (X:\mathbb{C}[X]))^{\operatorname{card}\left(W\right)} - 1\right)$$
 
@@ -52,7 +52,7 @@ $$\forall (V:\operatorname{Type}), \forall (W:\operatorname{Type}), [\operatorna
 
 *Commentary.*
 
-For every finite V,W, nonempty W, and SimpleGraph G on V, T_blowup(x)=T_G((1+x)^card(W)-1) in C[X]. Both polynomials are the literal subset sums defined in TotalDominationSeeds.complexPolynomial. The fibre equivalence, cardinal sum and occupied-support equivalence reduce the left side to a sum over families. For a fixed support A, product-of-sums and the sum of all nonempty fibre subsets give ((1+x)^card(W)-1)^card(A). Summing the supports gives polynomial composition. The displayed independent-fibre formula is proved here from actual subsets. It is retained as a mathematical ingredient, with no assertion of original discovery. No attribution to an unread H-join theorem is used.
+For every finite V,W, nonempty W, and SimpleGraph G on V, T_blowup(x)=T_G((1+x)^card(W)-1) in C[X]. Both polynomials are the literal subset sums defined in TotalDominationSeeds.complexPolynomial. The fibre equivalence, cardinal sum and occupied-support equivalence reduce the left side to a sum over families. For a fixed support A, product-of-sums and the sum of all nonempty fibre subsets give ((1+x)^card(W)-1)^card(A). Summing the supports gives polynomial composition. The displayed independent-fibre formula is a local actual-subset derivation. No exact external H-join theorem is attested as its source; the full H-join text remains unverified. The repository-derived tag describes this local derivation and makes no claim of novelty or first discovery.
 
 **Theorem 1.5 (A common labelled pullback for every actual root).**
 

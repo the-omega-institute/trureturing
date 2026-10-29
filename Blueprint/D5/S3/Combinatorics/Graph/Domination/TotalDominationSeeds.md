@@ -68,7 +68,7 @@ The public instance has exactly the displayed dependent type. Unfolding IsTotal 
 
 **Definition 1.6 (SeedBase finite enumeration).**
 
-$$\forall (m:\mathbb{N}), (\operatorname{seedBaseFintype}\left(m\right):\operatorname{Fintype}\left(\operatorname{SeedBase}\left(m\right)\right))$$
+$$((\operatorname{seedBaseFintype}\left(0\right):\operatorname{Fintype}\left(\operatorname{SeedBase}\left(0\right)\right)) = \operatorname{inferInstanceAs}\left(\operatorname{Fintype}\left(\operatorname{Fin}\left(3\right)\right)\right)) \land (\forall (m:\mathbb{N}), (\operatorname{seedBaseFintype}\left(m + 1\right):\operatorname{Fintype}\left(\operatorname{SeedBase}\left(m + 1\right)\right)) = \operatorname{instFintypeSum}\left(\operatorname{Fin}\left(5\right), \operatorname{SeedBase}\left(m\right), \operatorname{inferInstanceAs}\left(\operatorname{Fintype}\left(\operatorname{Fin}\left(5\right)\right)\right), \operatorname{seedBaseFintype}\left(m\right)\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.seedBaseFintype` (`✓ std3`).
 
@@ -226,7 +226,7 @@ For every positive real epsilon there exist n, G : SimpleGraph (Fin n), and r : 
 
 **Definition 1.19 (EdgeBase finite enumeration).**
 
-$$\forall (m:\mathbb{N}), (\operatorname{edgeBaseFintype}\left(m\right):\operatorname{Fintype}\left(\operatorname{EdgeBase}\left(m\right)\right))$$
+$$((\operatorname{edgeBaseFintype}\left(0\right):\operatorname{Fintype}\left(\operatorname{EdgeBase}\left(0\right)\right)) = \operatorname{inferInstanceAs}\left(\operatorname{Fintype}\left(\operatorname{Fin}\left(2\right)\right)\right)) \land (\forall (m:\mathbb{N}), (\operatorname{edgeBaseFintype}\left(m + 1\right):\operatorname{Fintype}\left(\operatorname{EdgeBase}\left(m + 1\right)\right)) = \operatorname{instFintypeSum}\left(\operatorname{Fin}\left(2\right), \operatorname{EdgeBase}\left(m\right), \operatorname{inferInstanceAs}\left(\operatorname{Fintype}\left(\operatorname{Fin}\left(2\right)\right)\right), \operatorname{edgeBaseFintype}\left(m\right)\right))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.edgeBaseFintype` (`✓ std3`).
 
@@ -302,11 +302,11 @@ $$\forall (R:\mathbb{R}), (2 < R) \Rightarrow (\exists (m:\mathbb{N}), \exists (
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds.friendship_root_unbounded` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Saeid Alikhani; Nasrin Jafari (2016). *On the roots of total domination polynomial of graphs*. DOI: [10.48550/arXiv.1605.02222](https://doi.org/10.48550/arXiv.1605.02222). URL: <https://arxiv.org/html/1605.02222v1>.
 
 *Commentary.*
 
-For every real R>2 there exist a natural m and a real r<-R such that r is a root of totalPolynomial(friendshipGraph m), that same actual polynomial is nonzero, and every vertex has a neighbour. Put a=(1-1/R)^2 in [0,1), and choose m with a^(m+1)<1/R using the pinned Archimedean power theorem. At -R the polynomial equals R^(2(m+1))*(1-R*a^(m+1))+R>0. At -Q, Q=2(m+1)+2, Bernoulli gives Q*(1-1/Q)^(2(m+1))>=2, making its value negative. The same Bernoulli inequality implies R<=Q. Strict IVT on [-Q,-R] supplies r. The positive endpoint value proves nonzeroness. This supplies an unbounded real seed family for the unchanged whole target; it asserts no arbitrary complex approximation.
+Alikhani and Jafari, arXiv:1605.02222v1 Theorem 3.6, give a real root of F_n in (-n,-ln n) for all sufficiently large n. Since friendshipGraph m is F_(m+1), that theorem already implies the qualitative unboundedness below stated here. The local endpoint proof adds explicit actual-polynomial nonzeroness and absence of isolated vertices; it asserts no separate new unboundedness result. For every real R>2 there exist a natural m and a real r<-R such that r is a root of totalPolynomial(friendshipGraph m), that same actual polynomial is nonzero, and every vertex has a neighbour. Put a=(1-1/R)^2 in [0,1), and choose m with a^(m+1)<1/R using the pinned Archimedean power theorem. At -R the polynomial equals R^(2(m+1))*(1-R*a^(m+1))+R>0. At -Q, Q=2(m+1)+2, Bernoulli gives Q*(1-1/Q)^(2(m+1))>=2, making its value negative. The same Bernoulli inequality implies R<=Q. Strict IVT on [-Q,-R] supplies r. The positive endpoint value proves nonzeroness. This supplies an unbounded real seed family for the unchanged whole target; it asserts no arbitrary complex approximation.
 
 **Theorem 1.26 (Unbounded roots with exact finite labels).**
 
@@ -316,9 +316,11 @@ $$\forall (R:\mathbb{R}), (2 < R) \Rightarrow (\exists (n:\mathbb{N}), \exists (
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Saeid Alikhani; Nasrin Jafari (2016). *On the roots of total domination polynomial of graphs*. DOI: [10.48550/arXiv.1605.02222](https://doi.org/10.48550/arXiv.1605.02222). URL: <https://arxiv.org/html/1605.02222v1>.
+
 *Commentary.*
 
-For every real R>2 there exist n, G : SimpleGraph (Fin n), and r : R with n>=2, r<-R, every vertex having a neighbour, complexPolynomial G nonzero, and the complex cast of r a root of that same actual polynomial. The inverse Fintype.equivFin transports the friendship graph, its actual subsets, adjacency and cardinalities. The injective real-to-complex coefficient map preserves nonzeroness and roots. The graph has 2(m+1)+1 vertices for the m selected by friendship_root_unbounded.
+This is the finite-label and complex-coefficient transport of the qualitative friendship-root conclusion attested in Alikhani and Jafari, arXiv:1605.02222v1 Theorem 3.6, with friendshipGraph m corresponding to F_(m+1). It asserts no separate new unboundedness result. For every real R>2 there exist n, G : SimpleGraph (Fin n), and r : R with n>=2, r<-R, every vertex having a neighbour, complexPolynomial G nonzero, and the complex cast of r a root of that same actual polynomial. The inverse Fintype.equivFin transports the friendship graph, its actual subsets, adjacency and cardinalities. The injective real-to-complex coefficient map preserves nonzeroness and roots. The graph has 2(m+1)+1 vertices for the m selected by friendship_root_unbounded.
 
 The friendship expression and total-domination definition are attested in Alikhani and Jafari. The cycle, triangle, cone and disjoint-union formulas are proved here from actual subsets and used as ingredients; these local proofs assert no original discovery of those identities. The complex target is the question of Shao and Zhao, section 5.2 Open Problem 2.
 
