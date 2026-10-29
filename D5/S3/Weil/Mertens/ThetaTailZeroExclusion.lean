@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Analysis.Meromorphic.Order]
    utility: none
-   digest: Actual theta-tail exponential domination contradicts every zeta zero in the corresponding right half-plane.
--/
+   digest: Actual theta-tail exponential domination contradicts every zeta zero in the corresponding right half-plane. -/
 
 import D5.S3.Weil.Mertens.ActualThetaTailLaplace
 import D5.S3.Analytic.Laplace.PositiveEulerContinuation
