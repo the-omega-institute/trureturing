@@ -137,31 +137,49 @@ declared_validated and does not claim an audit pass.
 
 abbrev tailDataScope := type_of% (@tail_robin_data)
 
+abbrev tailDataSignature : Signature where
+  Params := Unit
+  State _ := ℝ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℝ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def tailDataActual : Realization tailDataSignature :=
+  realize tailDataSignature (fun _ _ x => x) (fun e => nomatch e)
+
+def tailDataRejected : Realization tailDataSignature :=
+  realize tailDataSignature (fun _ _ _ => -1) (fun e => nomatch e)
+
 abbrev tailDataArena : Arena where
-  signature := signature
+  signature := tailDataSignature
   Law R := ∀ {m : ℕ}, 0 < m →
     m.primeFactors = Nat.primesLE (largestPrime m) →
-    0 ≤ R.readout () 0 m ∧
+    0 ≤ R.readout () () (tail m) ∧
       robinLogMargin m = _root_.Mertens.E₃ (largestPrime m) + tail m +
         Real.log (Real.log (Real.log (m : ℝ))) -
         Real.log (Real.log (largestPrime m))
 
-private theorem tail_data_rejected_law : ¬ tailDataArena.Law rejected := by
+private theorem tail_data_rejected_law : ¬ tailDataArena.Law tailDataRejected := by
   intro h
   have hbad := (h (m := 1) (by norm_num) (by simp [largestPrime])).1
-  norm_num [rejected, realize] at hbad
+  norm_num [tailDataRejected, realize] at hbad
 
 def tailDataFamily : Registration tailDataArena tailDataScope where
-  actual := actual
+  actual := tailDataActual
   bridge := Iff.rfl
-  variation := ⟨@tail_robin_data, rejected, tail_data_rejected_law⟩
-  sensitivity := ⟨fun i => ⟨rejected,
+  variation := ⟨@tail_robin_data, tailDataRejected, tail_data_rejected_law⟩
+  sensitivity := ⟨fun i => ⟨tailDataRejected,
     fun j h => (h (Subsingleton.elim j i)).elim, rfl, tail_data_rejected_law⟩,
     fun e => nomatch e⟩
-  dependence := actual_dependence
+  dependence := by
+    intro i
+    exact ⟨(), 0, 1, by norm_num [tailDataActual, realize]⟩
 
 def tailDataAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@tail_robin_data) (Realization signature) Type Unit where
+    (@tail_robin_data) (Realization tailDataSignature) Type Unit where
   unitName := `D5.S3.Arith.Robin.OriginalEndpointPrimeTail.tail_robin_data.audit
   realizationName := `Reg.D5.S3.Arith.Robin.OriginalEndpointPrimeTail.tailDataFamily
   realizationSource := none
@@ -173,11 +191,11 @@ def tailDataAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source tailDataArena ⟨tailDataFamily⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature actual.readout actual.anchor)
+  readout := some (realize tailDataSignature (fun _ _ x => x) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℕ
+  escapeFrom := some ℝ
   sourceSelection := some {
     owner := `D5.S3.Arith.Robin.OriginalEndpointPrimeTail
     definition := none
@@ -186,7 +204,7 @@ def tailDataAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       path := #["body", "body", "body", "fn", "arg", "arg"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := none
+      stateOperand := some #[]
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
