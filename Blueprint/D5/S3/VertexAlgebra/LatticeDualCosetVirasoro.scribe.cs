@@ -50,7 +50,7 @@ internal sealed class LatticeDualCosetVirasoroDocument : IScribeDocumentDefiniti
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeDualCosetVirasoro.moduleL_minus_one"),
                 H("moduleL minus one"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("Under the original inverse identities, actual L_-1=T_D+B_-1. The ambient translation is not restricted to the module sector."))),
+                Blocks(Paragraph(Text("Under the original inverse identities, actual L_-1=T_D+B_-1. The sector operator is obtained from original omega by the proved shift formula."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticedualcosetvirasoro-moduleL-minus-one-single"),

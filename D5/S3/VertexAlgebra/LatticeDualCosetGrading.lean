@@ -20,17 +20,17 @@ noncomputable section
 
 variable (D : LatticeData)
 
-private def coefficientGrade {Q : Type*} (w : Label D → Q) (q : Q) :
+private def coefficientGrade {Q : Type*} [DecidableEq Q] (w : Label D → Q) (q : Q) :
     Submodule ℂ (Carrier D) :=
   (Finsupp.supported ℂ ℂ {a : Label D | w a=q}).comap (carrierCoeffEquiv D).toLinearMap
 
-private theorem coefficient_mem {Q : Type*} (w : Label D → Q) (q : Q) (v : Carrier D) :
+private theorem coefficient_mem {Q : Type*} [DecidableEq Q] (w : Label D → Q) (q : Q) (v : Carrier D) :
     v ∈ coefficientGrade D w q ↔
       ∀ a : Label D, w a ≠ q → carrierCoeffEquiv D v a=0 := by
   change carrierCoeffEquiv D v ∈ Finsupp.supported ℂ ℂ _ ↔ _
   exact Finsupp.mem_supported' ℂ _
 
-private def coefficientProjection {Q : Type*} (w : Label D → Q) (q : Q) :
+private def coefficientProjection {Q : Type*} [DecidableEq Q] (w : Label D → Q) (q : Q) :
     Module.End ℂ (Carrier D) := by
   classical
   exact (carrierCoeffEquiv D).symm.toLinearMap.comp
@@ -38,20 +38,20 @@ private def coefficientProjection {Q : Type*} (w : Label D → Q) (q : Q) :
       ((Finsupp.restrictDom ℂ ℂ {a : Label D | w a=q}).comp
         (carrierCoeffEquiv D).toLinearMap))
 
-private theorem projection_coeff {Q : Type*} (w : Label D → Q) (q : Q)
+private theorem projection_coeff {Q : Type*} [DecidableEq Q] (w : Label D → Q) (q : Q)
     (v : Carrier D) (a : Label D) :
     carrierCoeffEquiv D (coefficientProjection D w q v) a =
       if w a=q then carrierCoeffEquiv D v a else 0 := by
   classical
   simp [coefficientProjection,Finsupp.filter_apply]
 
-private theorem projection_mem {Q : Type*} (w : Label D → Q) (q : Q) (v : Carrier D) :
+private theorem projection_mem {Q : Type*} [DecidableEq Q] (w : Label D → Q) (q : Q) (v : Carrier D) :
     coefficientProjection D w q v ∈ coefficientGrade D w q := by
   rw [coefficient_mem]
   intro a ha
   simp [projection_coeff,ha]
 
-private theorem projection_sum {Q : Type*} (w : Label D → Q) (v : Carrier D) :
+private theorem projection_sum {Q : Type*} [DecidableEq Q] (w : Label D → Q) (v : Carrier D) :
     ∑ q ∈ (carrierCoeffEquiv D v).support.image w, coefficientProjection D w q v = v := by
   classical
   apply (carrierCoeffEquiv D).injective
@@ -67,7 +67,7 @@ private theorem projection_sum {Q : Type*} (w : Label D → Q) (v : Carrier D) :
     simp [Finset.sum_ite_eq',he]
   · simp [Finsupp.notMem_support_iff.mp ha]
 
-private theorem coefficient_internal {Q : Type*} (w : Label D → Q) :
+private theorem coefficient_internal {Q : Type*} [DecidableEq Q] (w : Label D → Q) :
     DirectSum.IsInternal (coefficientGrade D w) := by
   classical
   apply DirectSum.isInternal_submodule_of_iSupIndep_of_iSup_eq_top
@@ -92,7 +92,7 @@ private theorem coefficient_internal {Q : Type*} (w : Label D → Q) :
     intro q _
     exact (le_iSup (coefficientGrade D w) q) (projection_mem D w q v)
 
-private def coefficientDecomposition {Q : Type*} (w : Label D → Q) :
+private def coefficientDecomposition {Q : Type*} [DecidableEq Q] (w : Label D → Q) :
     Carrier D ≃ₗ[ℂ] (⨁ q : Q, coefficientGrade D w q) :=
   (LinearEquiv.ofBijective (DirectSum.coeLinearMap (coefficientGrade D w))
     (coefficient_internal D w)).symm
@@ -135,7 +135,7 @@ theorem actual_mode_grade (β : Charge D)
   have hev := (moduleL_eigen_iff D β H hHG hGH μ hDual e v).mpr hv
   have h := LinearMap.congr_fun (energy_covariance D β H hHG hGH a q) v
   simp only [LinearMap.sub_apply,Module.End.mul_apply,hea,hev,map_smul,
-    LinearMap.smul_apply] at h
+    LinearMap.smul_apply,Pi.smul_apply] at h
   push_cast
   linear_combination (norm := module) h
 
@@ -156,20 +156,22 @@ theorem positive_energy (β : Charge D)
   refine ⟨γ₀,(minimum_spec D μ hD).1,(minimum_spec D μ hD).2,
     weight_levels D β μ hDual γ₀ (minimum_spec D μ hD).2,
     eigenspace_finiteDimensional D β H hHG hGH μ hDual hD,?_⟩
-  have he : coefficientGrade D (naturalLevel D β μ hDual hD) =
-      (fun n : ℕ => (moduleL D β H 0).eigenspace
-        ((chargeWeight D μ γ₀+(n : ℚ)) : ℂ)) := by
-    funext n
+  have he (n : ℕ) : coefficientGrade D (naturalLevel D β μ hDual hD) n =
+      (moduleL D β H 0).eigenspace ((chargeWeight D μ γ₀+(n : ℚ)) : ℂ) := by
     ext v
-    rw [Module.End.mem_eigenspace_iff,moduleL_eigen_iff D β H hHG hGH μ hDual]
+    rw [Module.End.mem_eigenspace_iff]
+    have hi := moduleL_eigen_iff D β H hHG hGH μ hDual
+      (chargeWeight D μ γ₀+(n : ℚ)) v
+    simp only [Rat.cast_add] at hi
+    rw [hi]
     have hs : {a : Label D | naturalLevel D β μ hDual hD a=n} =
         {a : Label D | weight D μ a=chargeWeight D μ γ₀+(n : ℚ)} := by
       ext a
       rw [naturalLevel_spec D β μ hDual hD]
       simp only [add_left_cancel_iff,Nat.cast_inj]
     simp only [coefficientGrade,rationalGrade,hs]
-  rw [← he]
-  exact ⟨coefficientDecomposition D (naturalLevel D β μ hDual hD)⟩
+  exact ⟨(coefficientDecomposition D (naturalLevel D β μ hDual hD)).trans
+    (DirectSum.congrLinearEquiv (fun n => LinearEquiv.ofEq _ _ (he n)))⟩
 
 end
 end D5.S3.VertexAlgebra.LatticeDualCosetEnergy

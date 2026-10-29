@@ -178,8 +178,13 @@ theorem moduleL_eigen_iff (β : Charge D)
       {a : Label D | weight D μ a=e} := by
     ext a
     exact Rat.cast_inj
-  simpa [D5.S1.Eigenstructure.DiagonalTensorEigenspace.coeffEquiv,
-    TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply,carrierBasis,hs,rationalGrade,Finsupp.mapRange_id] using h
+  have hu : D5.S1.Eigenstructure.DiagonalTensorEigenspace.coeffEquiv
+      (carrierBasis D) (v ⊗ₜ[ℂ] (1 : ℂ)) = carrierCoeffEquiv D v := by
+    ext a
+    simp [D5.S1.Eigenstructure.DiagonalTensorEigenspace.coeffEquiv,
+      TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply,carrierBasis]
+  rw [hu,hs] at h
+  simpa [rationalGrade] using h
 
 def gradeCoeffEquiv (μ : Fin D.rank → ℚ) (e : ℚ) :
     rationalGrade D μ e ≃ₗ[ℂ] ({a : Label D // weight D μ a=e} →₀ ℂ) :=

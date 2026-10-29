@@ -44,7 +44,13 @@ private theorem shift_shift_commutator (u : Fin D.rank → ℂ) (m n : ℤ) :
   have product (m n : ℤ) : shiftCurrent D u m * shiftCurrent D u n =
       ∑ i,∑ j,(u i*u j) • (neutralMode D i m * neutralMode D j n) := by
     simp only [shiftCurrent,Finset.sum_mul,Finset.mul_sum,
-      smul_mul_assoc,mul_smul_comm,smul_smul]
+      smul_mul_assoc,mul_smul_comm,Finset.smul_sum,smul_smul]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro j _
+    rw [mul_comm (u j) (u i)]
   have reverse : shiftCurrent D u n * shiftCurrent D u m =
       ∑ i,∑ j,(u i*u j) • (neutralMode D j n * neutralMode D i m) := by
     rw [product,Finset.sum_comm]
