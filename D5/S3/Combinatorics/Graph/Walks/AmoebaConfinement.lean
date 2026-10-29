@@ -17,9 +17,12 @@
    characterization; consumers: dead_of_hasExtension, total_confinement.
    TotallyConfined: proof_shape: content; escape_witness: the arbitrary-initial-
    host and all-copy confining-host predicate; consumers: total_confinement.
-   dead_of_hasExtension: proof_shape: content; escape_witness: edge-count
-   equality forces surjectivity and adjacency reflection for the same containing
-   map; consumers: total_confinement.
+   coincides_of_edge_count: proof_shape: bind-only; escape_witness: bind-only;
+   consumed helper: dead_of_hasExtension -> coincides_of_edge_count on its live
+   proof path, using upstream tree cardinality and injectivity facts.
+   dead_of_hasExtension: proof_shape: bind-only; escape_witness: bind-only;
+   consumed helper: total_confinement -> dead_of_hasExtension on its live
+   proof path (AmoebaHost), instantiating MinimumGrowth at the current host.
    exists_safe_degree: proof_shape: bind-only; escape_witness: bind-only;
    consumed helper: exists_buffered_host -> exists_safe_degree on its live
    proof path (AmoebaHost).
