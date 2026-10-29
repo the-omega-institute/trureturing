@@ -7,15 +7,9 @@
    digest: A six-time Leggett-Garg family satisfies all polygon inequalities but has no joint law. -/
 
 import Mathlib.Basic.Real.Basic
-import Mathlib.Data.Fin.Basic
-import Mathlib.Data.Fin.Tuple.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Data.Nat.EvenOddRec
 import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Order
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.Linarith
 
@@ -39,7 +33,7 @@ def IsPairFamily {n : ℕ} (p : PairTables n) : Prop :=
       (∀ a, ∑ b, p i j a b = m i a) ∧
       (∀ b, ∑ a, p i j a b = m j b)
 
-def sgn (a : Bool) : ℝ := if a then 1 else -1
+private def sgn (a : Bool) : ℝ := if a then 1 else -1
 
 def corr {n : ℕ} (p : PairTables n) (i j : Fin n) : ℝ :=
   ∑ a, ∑ b, sgn a * sgn b * p i j a b
