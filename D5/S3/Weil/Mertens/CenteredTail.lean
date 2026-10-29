@@ -21,7 +21,7 @@ noncomputable section
 
 /-- The finite weighted-prime limit cancels exactly from the original Mertens tail. -/
 theorem E2p_isLittleO_inv_log :
-    E₂p =o[atTop] (fun x : ℝ => 1 / log x) := by
+    (fun x : ℝ => E₂p x) =o[atTop] (fun x : ℝ => 1 / log x) := by
   obtain ⟨ell, hell⟩ := WeightedPrimeLimit.exists_E1p_limit
   refine isLittleO_iff.mpr ?_
   intro c hc
