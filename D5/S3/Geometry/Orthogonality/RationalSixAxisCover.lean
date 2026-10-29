@@ -9,7 +9,7 @@
 import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.InnerProductSpace.Orthonormal
 import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Nlinarith
+import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.Ring
@@ -96,7 +96,7 @@ private theorem large_projection (x : Space) :
   let c := |x 2|
   let M := max (a+2*b) (max (b+2*c) (c+2*a))
   have hQ : a^2+b^2+c^2 = ‖x‖^2 := by
-    simp [a, b, c, EuclideanSpace.real_norm_sq_eq, Fin.sum_univ_succ, sq_abs]
+    simp [a, b, c, EuclideanSpace.real_norm_sq_eq, Fin.sum_univ_succ, sq_abs, add_assoc]
   have hM : 3 * ‖x‖^2 ≤ M^2 := by
     rw [← hQ]
     exact cyclic_max_square a b c (abs_nonneg _) (abs_nonneg _) (abs_nonneg _)
