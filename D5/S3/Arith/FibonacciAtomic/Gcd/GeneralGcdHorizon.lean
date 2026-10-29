@@ -1,4 +1,4 @@
-/- GID: D5/S3/Arith/FibonacciAtomic/GeneralGcdHorizon
+/- GID: D5/S3/Arith/FibonacciAtomic/Gcd/GeneralGcdHorizon
    generality: I
    mirror-B: D5/B/S3/Arith/FibonacciAtomic/GeneralGcdHorizon
    mirror-E: none(waiver:unbounded-symbolic-proof)
@@ -22,7 +22,7 @@ modulus, so no residue-value recovery assumption is introduced.
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace D5.S3.Arith.FibonacciAtomic.GeneralGcdHorizon
+namespace D5.S3.Arith.FibonacciAtomic.Gcd.GeneralGcdHorizon
 
 open D5.S3.Arith.FibonacciAtomic.GlobalGcdSampling
 open D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon
@@ -199,4 +199,4 @@ theorem actual_gcd_global_prefix (H T : ℕ) (hH : 0 < H)
     (Nat.mem_primeFactors).2 ⟨hp, hpdvd, hH.ne'⟩
   exact (Finset.le_sup hmem).trans hT
 
-end D5.S3.Arith.FibonacciAtomic.GeneralGcdHorizon
+end D5.S3.Arith.FibonacciAtomic.Gcd.GeneralGcdHorizon

@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.Gcd;
 
 internal sealed class GeneralGcdHorizonDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Arith/FibonacciAtomic/GeneralGcdHorizon.";
+    private const string Prefix = "D5/S3/Arith/FibonacciAtomic/Gcd/GeneralGcdHorizon.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Prime-power Fibonacci gcd horizons combine into an arbitrary-modulus consecutive-prefix theorem.",
