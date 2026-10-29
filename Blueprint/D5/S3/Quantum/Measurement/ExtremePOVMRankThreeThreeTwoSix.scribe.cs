@@ -81,7 +81,10 @@ internal sealed class ExtremePOVMRankThreeThreeTwoSixDocument : IScribeDocumentD
                             + "combination of the independent 42 conjugated within-block products. Summing over j gives zero because "
                             + "both families sum to the identity, so every coefficient vanishes. Thus A = witness, and the midpoint equation "
                             + "then gives B = witness. Hence witness is extreme and its target big-rank multiset contradicts claim at n = 8."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("haapasalo-pellonpaa-2020-extreme-povm-rank-vector-three-three-two-six"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula IsExtremeFormula()
     {
