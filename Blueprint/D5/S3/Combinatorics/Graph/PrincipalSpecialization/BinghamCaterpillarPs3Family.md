@@ -112,6 +112,10 @@ $$\forall (j : \mathbb{N}^{+}), (\operatorname{ps}\left(\operatorname{caterpilla
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bingham-2026-caterpillar-principal-specialization-family` (proved) by `D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bingham-2026-caterpillar-principal-specialization-family","declaration_gid":"D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarPs3Family.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Aram Bingham, Kyle Celano, Patricia Commins, Rosa Orellana, Jianping Pan, and Mary Claire Simone (2026). *Principal specializations of the t-chromatic symmetric function*. DOI: [10.48550/arXiv.2610.31785](https://doi.org/10.48550/arXiv.2610.31785). URL: <https://arxiv.org/abs/2610.31785v1>.
