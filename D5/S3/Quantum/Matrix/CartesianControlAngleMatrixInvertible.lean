@@ -73,7 +73,11 @@ private theorem Linv_mul_A (m : ℕ) : Linv m * A m = (1 : Matrix (Fin m) (Fin m
             norm_num [A, Matrix.one_apply]
           · have ht1 : 1 ≤ (t : ℕ) := by omega
             simp [A, Matrix.one_apply, ht0]
-            omega
+            have htn : t ≠ (0 : Fin (n + 1 + 1)) := by
+              intro h
+              apply ht0
+              simpa using congrArg Fin.val h
+            simp [Matrix.one_apply, htn]
         · by_cases hrlast : (r : ℕ) + 1 = n + 1 + 1
           · have hr : r = ⟨n + 1, by omega⟩ := by
               apply Fin.ext
@@ -87,24 +91,22 @@ private theorem Linv_mul_A (m : ℕ) : Linv m * A m = (1 : Matrix (Fin m) (Fin m
             simp only [ite_mul, zero_mul]
             simp [Finset.sum_ite_eq']
             rw [sum_val_indicator (n + 1 + 1) (n + 1) (by omega)]
-            have hlast : n + 1 < n + 1 + 1 := by omega
-            have hsumlast :
-                (∑ s : Fin (n + 1 + 1), (if (s : ℕ) = n + 1 then
-                  (-1 / 2 : ℝ) * A (n + 1 + 1) s t else 0)) =
-                (-1 / 2 : ℝ) * A (n + 1 + 1) ⟨n + 1, hlast⟩ t := by
-              simpa using (sum_val_indicator (n + 1 + 1) (n + 1) hlast
-                (fun s => (-1 / 2 : ℝ) * A (n + 1 + 1) s t))
-            rw [hsumlast]
             by_cases htlast : (t : ℕ) = n + 1
             · have ht : t = ⟨n + 1, by omega⟩ := Fin.ext (by omega)
               rw [ht]
               norm_num [A, Matrix.one_apply]
-            · have hAt : A (n + 1 + 1) ⟨0, by omega⟩ t = 1 := by simp [A]
+            · have hAt : A (n + 1 + 1) ⟨0, by omega⟩ t = 1 := by
+                change (if 0 < 0 ∧ 0 ≤ (t : ℕ) then (-1 : ℝ) else 1) = 1
+                simp
               have hAlast : A (n + 1 + 1) ⟨n + 1, by omega⟩ t = 1 := by
-                simp [A]
-                omega
+                change (if 0 < n + 1 ∧ n + 1 ≤ (t : ℕ) then (-1 : ℝ) else 1) = 1
+                simp [htlast]
               rw [hAt, hAlast]
-              simp [Matrix.one_apply, htlast]
+              have htn : t ≠ (⟨n + 1, by omega⟩ : Fin (n + 1 + 1)) := by
+                intro h
+                apply htlast
+                simpa using congrArg Fin.val h
+              simp [Matrix.one_apply, htn]
           · have hrpos : 0 < (r : ℕ) := by omega
             have hrsucc : (r : ℕ) + 1 < n + 1 + 1 := by omega
             have hrnotlast : (r : ℕ) ≠ n + 1 := by omega
@@ -119,10 +121,11 @@ private theorem Linv_mul_A (m : ℕ) : Linv m * A m = (1 : Matrix (Fin m) (Fin m
                 (1 / 2 : ℝ) * A (n + 1 + 1) ⟨(r : ℕ) + 1, hrsucc⟩ t := by
               simpa using (sum_val_indicator (n + 1 + 1) ((r : ℕ) + 1) hrsucc
                 (fun s => (1 / 2 : ℝ) * A (n + 1 + 1) s t))
-            rw [show (∑ x : Fin (n + 1 + 1),
+            have hsumrs' : (∑ x : Fin (n + 1 + 1),
                 if (x : ℕ) = (r : ℕ) + 1 then (2⁻¹ : ℝ) * A (n + 1 + 1) x t else 0) =
-                (1 / 2 : ℝ) * A (n + 1 + 1) ⟨(r : ℕ) + 1, hrsucc⟩ t by
-              simpa only [one_div] using hsumrs]
+                (1 / 2 : ℝ) * A (n + 1 + 1) ⟨(r : ℕ) + 1, hrsucc⟩ t := by
+              simpa only [one_div] using hsumrs
+            rw [hsumrs']
             have hreq : (⟨(r : ℕ) + 1, hrsucc⟩ : Fin (n + 1 + 1)) = r := by omega
             by_cases htr : (t : ℕ) < (r : ℕ)
             · have htr' : (t : ℕ) < (r : ℕ) + 1 := by omega
@@ -133,7 +136,11 @@ private theorem Linv_mul_A (m : ℕ) : Linv m * A m = (1 : Matrix (Fin m) (Fin m
                 change (if 0 < (r : ℕ) + 1 ∧ (r : ℕ) + 1 ≤ (t : ℕ) then (-1 : ℝ) else 1) = 1
                 simp [htr']
               rw [har, has]
-              simp [Matrix.one_apply, htr, hteq]
+              have hrt : r ≠ t := by
+                intro h
+                have hv := congrArg Fin.val h
+                omega
+              simp [Matrix.one_apply, hrt]
             · by_cases hteq : (t : ℕ) = (r : ℕ)
               · have ht : t = r := Fin.ext hteq
                 rw [ht]
@@ -151,7 +158,8 @@ private theorem Linv_mul_A (m : ℕ) : Linv m * A m = (1 : Matrix (Fin m) (Fin m
                   simp [hrpos, htr']
                 have has : A (n + 1 + 1) ⟨(r : ℕ) + 1, hrsucc⟩ t =
                     if (r : ℕ) + 1 ≤ (t : ℕ) then -1 else 1 := by
-                  simp [A]
+                  change (if 0 < (r : ℕ) + 1 ∧ (r : ℕ) + 1 ≤ (t : ℕ) then (-1 : ℝ) else 1) = _
+                  by_cases hnext : (r : ℕ) + 1 ≤ (t : ℕ) <;> simp [hnext, hrpos]
                 rw [har, has]
                 by_cases hnext : (r : ℕ) + 1 ≤ (t : ℕ)
                 · norm_num [hnext, Matrix.one_apply, hteq]
