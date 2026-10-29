@@ -1,0 +1,59 @@
+**Theorem 21.2 (the exact all-index affine fibre).** Let $P$ be the
+authentic first $2d$ values of a stream in $\mathscr R_d$, let $m_P$ be
+its monic least all-index annihilator, and put $r=\deg m_P\le d$; for
+the zero stream take $m_P=1$ and $r=0$. Then
+
+$$
+ \{c\in\mathbb F_2^d:H(P)c=y(P)\}
+ =\{c\in\mathbb F_2^d:m_P\mid p_c\},
+ \tag{ACR.79}
+$$
+
+and
+
+$$
+ \operatorname{rank}H(P)=r,\quad
+ \left|\{c:H(P)c=y(P)\}\right|=2^{d-r}.
+ \tag{ACR.80}
+$$
+
+The assertion includes singular companion recurrences, nonminimal
+presentations, finite transients, and the zero stream; it does not
+assume a nonzero constant coefficient or an invertible transition.
+
+Proof. The equation $H(P)c=y(P)$ is exactly the order-$d$ recurrence
+with seed $s_d(P)$ evaluated at the next $d$ positions. A passing row
+therefore generates a member of $\mathscr R_d$ agreeing with the
+authentic stream in its first $2d$ values. GPO Lemma 29.2 makes the two
+all-index streams equal, so $p_c$ annihilates the authentic stream.
+Conversely, an all-index annihilator of degree $d$ gives the displayed
+Hankel equations. If an annihilator $p$ is divided by the monic $m_P$,
+the remainder also annihilates the stream; minimality forces the
+remainder to vanish. This proves (ACR.79), including the cases in which
+$m_P$ has zero constant coefficient.
+
+For the rank, every row of $H(P)$ after the first $r$ rows is an
+$\mathbb F_2$-linear combination of those rows by the order-$r$
+recurrence, so the rank is at most $r$. If the leading $r\times r$
+Hankel block had a nonzero column relation, the associated nonzero
+polynomial $q$ of degree $<r$ would produce a sequence $q(E)s$ whose
+first $r$ values vanish. The sequence $q(E)s$ satisfies the same
+order-$r$ recurrence, so forward induction makes it identically zero,
+contradicting minimality. Hence the leading block has rank $r$, and so
+does $H(P)$. The consistent binary system then has affine dimension
+$d-r$, proving (ACR.80). For $r=0$, $H(P)=0$ and $y(P)=0$, so the same
+statement gives $2^d$ passing rows. Consequently, on this entire
+zero-stream fibre, for every original enumeration,
+$\kappa_d(0^{2d})=\rho_d(0)$ and
+$\operatorname{EN}_d(0^{2d})=(\rho_d(0),0^d)$; the row need not be
+zero. The empty descriptor belongs to the separate $d=0$ case. $\square$
+
+The finite-prefix minimal-synthesis supplier used below is Massey,
+*Shift-Register Synthesis and BCH Decoding*: its §II LFSR length setup
+and its §III Theorem 3 with corollary ([MAS]). That result supplies the
+shortest shift-register synthesis and the $2r$-symbol uniqueness
+threshold. It is used here as
+an intermediate supplier for this source-specific fibre theorem; it is
+not evidence for a count of nonsingular Hankel blocks, and no such
+incidental count is claimed.
+

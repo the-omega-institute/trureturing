@@ -17,6 +17,8 @@ internal sealed class MandalMehatariDasSeidelMinimumDocument : IScribeDocumentDe
                 "For a real symmetric matrix, the real roots of the characteristic polynomial are precisely its eigenvalues with multiplicity."),
             Node("absolute-square-root", "Trace of the positive square root", "Spectral.sum_abs_eq_trace_sqrt", EigenvalueIdentity(true), DescribeRole.Theorem,
                 "The positive square root of the transpose product has absolute eigenvalues. Its trace is their sum."),
+            Node("count-of-fn", "Occurrences in an indexed list", "MMDCounts.count_ofFn", CountOfFnIdentity(), DescribeRole.Theorem,
+                "Counting a letter in a finite indexed list equals summing its equality indicators."),
             Node("binary", "The alternating binary string", "binaryString", BinaryDefinition(), DescribeRole.Definition, BinaryProse, true),
             Node("graph", "The chain graph of a binary string", "chainGraph", GraphDefinition(), DescribeRole.Definition, GraphProse, true),
             Node("seidel", "The Seidel matrix", "seidel", SeidelDefinition(), DescribeRole.Definition,
@@ -175,6 +177,14 @@ internal sealed class MandalMehatariDasSeidelMinimumDocument : IScribeDocumentDe
             : Eqn(Call("energy", x), sum))));
     }
     private static Formula Matrix(Formula v) => Call("Matrix", v, v, Real());
+    private static Formula CountOfFnIdentity()
+    {
+        var alpha = Id("alpha"); var n = Id("n"); var f = Id("f"); var p = Id("p");
+        var indicator = Call("ite", Eqn(App(f, Id("i")), p), D(1), D(0));
+        return All("alpha", Id("Type"), Seq(OpenBracket, Call("DecidableEq", alpha), CloseBracket, Sp,
+            All("n", Nat(), All("f", Arr(Fin(n), alpha), All("p", alpha,
+                Eqn(Call("List.count", p, Call("List.ofFn", f)), SumOver("i", Fin(n), indicator)))))));
+    }
     private static Formula Abs(Formula x) => Seq(Lvert, Sp, x, Rvert);
     private static Formula SumOver(string s, Formula t, Formula b) => Call("Finset.sum", Call("Finset.univ"), Lam(s, t, b));
     private static Formula Carrier(Formula b) => All("V", Id("Type"),

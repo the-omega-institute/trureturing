@@ -1,0 +1,29 @@
+**定理 82.2（全称复三维实现的过滤分类）。** 定义 82.1 的全部实现恰为以下族。存在唯一参数 $p\in[c,1/2]$，一个固定酉 $R\in U(3)$ 和一个共同选择 $\varepsilon\in\{0,1\}$，令 $\mathcal C_0(X)=X$、$\mathcal C_1(X)=\bar X$，其中共轭取固定源基，及
+
+$$
+\begin{gathered}
+G_p=\sqrt{p/c}\,P_\xi+
+\sqrt{(1-p)/(1-c)}\,(I_3-P_\xi),\\
+\sigma_p(\rho)=G_p\rho G_p,\qquad
+F_p=G_p^{-1}EG_p^{-1},\qquad
+\Phi_{p,j}=\tfrac12\operatorname{Ad}_{V_j}.
+\end{gathered}
+\tag{82.4}
+$$
+
+则对全部实际初始态和全部复输入矩阵，
+
+$$
+\begin{gathered}
+\sigma(\rho)=R\mathcal C_\varepsilon(\sigma_p(\rho))R^\dagger,
+\qquad F=R\mathcal C_\varepsilon(F_p)R^\dagger,\\
+\Phi_j(X)=\tfrac12 U_jXU_j^\dagger,
+\qquad U_j=R\mathcal C_\varepsilon(V_j)R^\dagger.
+\end{gathered}
+\tag{82.5}
+$$
+
+反之，每个这样的 $p,R,\varepsilon$ 都满足原合同。分类的对象是分支 CP 映射；给两个 $U_j$ 分别乘任意标量相位不改变它。每个分支的任意 Kraus 表只是 $\alpha_{j\alpha}U_j$ 的共线表，$\sum_\alpha|\alpha_{j\alpha}|^2=1/2$。共同复共轭比较全部表示资料，不是一个取得的 CP 转置操作。
+
+这里分类 $\sigma$ 在实际 $\mathcal K_d$ 上的值、$F$ 在整个三维空间上的值以及 $\Phi_j$ 在整个 $M_3(\mathbb C)$ 上的值；不把离开制备域后任意延伸且在原域恒为零的仿射项算作另一个实现。复最小维数三的既有下界由六维仿射单射及 $m^2-1\ge6$ 给出，标准 qutrit 实现给上界；这一最小值是供应，分类不重复计作新的维数发现。必要性由 §§83–86 给出，充分性及参数唯一性见定理 86.2。
+

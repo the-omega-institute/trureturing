@@ -1,0 +1,141 @@
+**Theorem 13.1 (Sixth-scale competition and eventual phases).** Fix $\eta\in\mathbb R$ and put
+
+$$
+\delta_a=\frac1{2a}-\frac1{a^2}+\frac5{4a^3}
+ -\frac5{4a^4}+\frac\eta{a^5}.
+\tag{13.1}
+$$
+
+These parameters are positive and admissible for all sufficiently large $a$, and
+
+$$
+\boxed{\quad
+\lim_{a\to\infty}a^2
+ \left[D_a(\delta_a)-2a^2-5a-2-\frac7{2a}\right]
+=\min\left\{-\frac{17}{2},-1-4\eta\right\}.
+\quad}\tag{13.2}
+$$
+
+If $\eta<15/8$, every globally minimizing law is eventually dense, and
+
+$$
+D_a(\delta_a)=2a^2+5a+2+\frac7{2a}
+ -\frac{17}{2a^2}+\frac{41}{2a^3}+O_\eta(a^{-4}).
+\tag{13.3}
+$$
+
+If $\eta\ge15/8$, including the fixed value $\eta=15/8$, the global minimum of $H$ is eventually exactly $H_r$. All globally minimizing laws are, up to relabeling,
+
+$$
+x_{\{e\}}=\frac{\delta_a}{a},\qquad
+x_{[s]\setminus\{e\}}=1-\frac{\delta_a}{a},\qquad
+x_T=0\text{ otherwise},
+\tag{13.4}
+$$
+
+and on this side
+
+$$
+D_a(\delta_a)=2a^2+5a+2+\frac7{2a}
+ +\frac{-1-4\eta}{a^2}
+ +\frac{24-14\eta}{a^3}+O_\eta(a^{-4}).
+\tag{13.5}
+$$
+
+The parameter $\eta$ in these assertions is fixed. Neither an exact finite-$a$ dense optimizer nor an exact crossing curve for parameters moving beyond the specified sequence is determined by this theorem. The conclusions concern precisely the subset-law domain of Definition 1.1 and do not assert realization or optimality at a prescribed finite graph budget.
+
+**Proof.** The parameters (13.1) eventually satisfy $0<\delta_a\le(3/4)/a$, so both Theorem 11.4 and Theorem 9.1 apply. The latter gives the exact rare minimum $H_r$, attained only by (13.4). Dense and rare are an exhaustive partition of the original domain. Thus
+
+$$
+\inf_xH(x)=\min\{\mathscr D_a(\delta_a),H_r\}.
+\tag{13.6}
+$$
+
+Attainment is also provided by Theorem 10.1.
+
+For the required expansions put $h=1/a$, substitute
+$\delta=h/2-h^2+5h^3/4-5h^4/4+\eta h^5$, and define
+
+$$
+\begin{aligned}
+Q_0&=1+h-h\delta,\\
+P_0&=(1+h)^3-\delta(3h+3h^2+h^3),\\
+F&=P_0/Q_0^2,\\
+R&=\frac{(1+h)^3}{1-h\delta}-(1+h)^2F.
+\end{aligned}
+$$
+
+The exact rational identities (10.7) read
+
+$$
+H_d-B=h^{-2}(2+3h)F,\qquad
+H_r-B=\frac1{h\delta}+h^{-3}R.
+\tag{13.7}
+$$
+
+Multiplying the numerator polynomials and the inverse denominator series gives
+
+$$
+\begin{aligned}
+F&=1+h-\frac12h^2+\frac52h^3-7h^4
+ +\frac{67}{4}h^5+O_\eta(h^6),\\
+\frac1{h\delta}
+ &=2h^{-2}+4h^{-1}+3+h
+ +\left(\frac92-4\eta\right)h^2
+ +(14-16\eta)h^3+O_\eta(h^4),\\
+R&=h^2-h^3+\frac52h^4-\frac{11}{2}h^5
+ +(10+2\eta)h^6+O_\eta(h^7).
+\end{aligned}\tag{13.8}
+$$
+
+For example the first series is characterized to the displayed order by
+$Q_0^2F=P_0$; the second by $(h\delta)(h\delta)^{-1}=1$ after factoring $h^2$; and the third follows by substitution of the first into its defining difference. All inverse factors after these powers of $h$ are removed are analytic near zero: $Q_0\to1$, $1-h\delta\to1$, and $\delta/h\to1/2$. Thus the remainders in (13.8) are bounded Taylor remainders for each fixed $\eta$.
+
+Equations (13.7)–(13.8) yield
+
+$$
+\begin{aligned}
+H_d-B&=2a^2+5a+2+\frac7{2a}
+ -\frac{13}{2a^2}+\frac{25}{2a^3}+O_\eta(a^{-4}),\\
+H_r-B&=2a^2+5a+2+\frac7{2a}
+ +\frac{-1-4\eta}{a^2}
+ +\frac{24-14\eta}{a^3}+O_\eta(a^{-4}).
+\end{aligned}\tag{13.9}
+$$
+
+In (11.15) the moving parameter is
+$\lambda_a=a\delta_a=1/2-h+5h^2/4-5h^3/4+\eta h^4$. It stays in a fixed compact interval in $(0,1)$, so
+
+$$
+Q_*=8\lambda_a^2h^2+O_\eta(h^4)
+=2h^2-8h^3+O_\eta(h^4),\qquad
+\frac{\delta_a^3}{r}=O_\eta(h^4).
+$$
+
+Theorem 11.4 therefore sharpens the dense branch to
+
+$$
+\mathscr D_a(\delta_a)-B
+=2a^2+5a+2+\frac7{2a}
+ -\frac{17}{2a^2}+\frac{41}{2a^3}+O_\eta(a^{-4}).
+\tag{13.10}
+$$
+
+Taking the smaller of (13.9) and (13.10) in (13.6) proves (13.2). More precisely,
+
+$$
+H_r-\mathscr D_a(\delta_a)
+=\frac{15/2-4\eta}{a^2}
+ +\frac{7/2-14\eta}{a^3}+O_\eta(a^{-4}).
+\tag{13.11}
+$$
+
+For fixed $\eta<15/8$ the first coefficient is positive, so every rare law has energy strictly greater than the attained dense infimum. This proves (13.3) and the dense assertion. For fixed $\eta>15/8$ it is negative, so the dense region is strictly above $H_r$; Theorem 9.1 then proves (13.4)–(13.5). At the fixed value $\eta=15/8$, the first coefficient vanishes but the second equals $-91/4$. Hence
+
+$$
+H_r-\mathscr D_a(\delta_a)
+=-\frac{91}{4a^3}+O(a^{-4})<0
+$$
+
+for all sufficiently large $a$, giving the same exact rare minimum and equality class. In this case the $a^{-3}$ coefficients of the rare and dense branches are $-9/4$ and $41/2$, respectively. This decides the stated fixed critical sequence without determining a general finite-$a$ transition curve. ∎
+

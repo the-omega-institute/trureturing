@@ -1,0 +1,160 @@
+**Theorem 9.1 (Rare lower bound and all its equality laws).** Fix $L>0$ and suppose
+
+$$
+a\ge N(L):=\left\lceil10^4\max(1,L^2)\right\rceil,
+\qquad 0<\delta\le\frac La.
+\tag{9.1}
+$$
+
+Every law of Definition 1.1 with $t=\min_i y_i<\tau$ satisfies $H(x)\ge H_r$. Equality holds if and only if, for some label $e$,
+
+$$
+x_{\{e\}}=T_0,\qquad
+x_{[s]\setminus\{e\}}=1-T_0,
+\qquad x_T=0\text{ otherwise}.
+\tag{9.2}
+$$
+
+In particular, the equality class consists of these laws under arbitrary relabeling.
+
+**Proof.** First (9.1) gives $a\ge10000$, $L^2/a\le10^{-4}$ and $\delta\le10^{-4}$. The latter follows separately from $L\le1$ and $L\ge1$. Direct calculation gives
+
+$$
+1<\frac\tau{T_0}
+=\frac{3a(2r+1)}{r^2}<6,
+\qquad \delta+\tau<1.
+\tag{9.3}
+$$
+
+The left strict inequality follows from $5a^2+7a-1>0$, the right from $3a(2a+3)<6(a+1)^2$, and $\delta+\tau<1$ from $\tau<6\delta/a$.
+
+Choose a least-marginal label $e$ and define, from the original law,
+
+$$
+\begin{aligned}
+t&=y_e,\qquad z=x_{\{e\}},\qquad \eta=t-z,\\
+\xi&=\mathbb E[(K-1)I_e],\qquad m=q-t.
+\end{aligned}
+$$
+
+On each nonsingleton atom containing $e$ there is at least one further label; hence $0\le\eta\le\xi$. Since an atom avoiding $e$ contains at most $r$ labels, its actual capacity gives
+
+$$
+q\le r(1-t)+t+\xi=r-at+\xi,
+\qquad \xi\ge at-\delta.
+\tag{9.4}
+$$
+
+For integer $k\ge1$, $k^2-1-3(k-1)=(k-1)(k-2)\ge0$. Thus the contribution at $e$ satisfies
+
+$$
+\frac{w_e}{t^2}\ge\frac1t+\frac{3\xi}{t^2}.
+\tag{9.5}
+$$
+
+Delete $e$ from this same random set, obtaining $T'=T\setminus\{e\}$. The probability of $T'=\varnothing$ is exactly $z$ and $\mathbb E|T'|=m$. For each $j\ne e$ its marginal is still $y_j>0$, and $K^2\ge|T'|^2$. Since $t<\tau$ and $\delta+\tau<1$, one has $r-1<m=q-t\le r$. Conditional on $T'\ne\varnothing$, the actual core law therefore has mean
+
+$$
+r-1\le u:=\frac{m}{1-z}\le r.
+\tag{9.6}
+$$
+
+The upper bound in (9.6) is its capacity $|T'|\le r$, not an independent constraint on moments. All its conditional marginals are positive. Apply [*CDSO incidence moments and capacity phases*, Theorem 3.1](CDSO_INCIDENCE_MOMENTS_AND_CAPACITY_PHASES.md) directly to this conditional law: in the normalization $H=2J$, that existing result is $H_{\rm core}\ge r^2(\mathcal A u-\mathcal C)/u^2$. The probability scaling is
+
+$$
+\sum_{j\ne e}\frac{\mathbb E[|T'|^2I_j]}{y_j^2}
+=\frac{H_{\rm core}}{1-z}.
+$$
+
+It follows that
+
+$$
+\begin{aligned}
+\sum_{j\ne e}\frac{w_j}{y_j^2}
+&\ge\frac{r^2[\mathcal A(q-t)-\mathcal C(1-z)]}{(q-t)^2}\\
+&=G(t)-A(t)\eta,
+\end{aligned}\tag{9.7}
+$$
+
+where
+
+$$
+G(t)=\frac{r^2[\mathcal A(q-t)-\mathcal C(1-t)]}{(q-t)^2},
+\qquad A(t)=\frac{r^2\mathcal C}{(q-t)^2}.
+$$
+
+Combining (9.5), (9.7), $A(t)>0$ and $\eta\le\xi$ yields
+
+$$
+H\ge F(t)+C(t)\xi,
+\qquad F(t)=\frac1t+G(t),\qquad
+C(t)=\frac3{t^2}-A(t).
+\tag{9.8}
+$$
+
+We next bound this scalar expression on the whole interval $0<t<\tau$. There $q-t\ge r-2\ge3r/4$, and
+
+$$
+A(t)\le4r^3,\qquad |G'(t)|\le10r^3.
+\tag{9.9}
+$$
+
+For completeness put $N_t=\mathcal A(q-t)-\mathcal C(1-t)$. Since $q-t>r-1$ and $0<t<1$, $0<N_t\le3r^3$, in particular $|N_t|\le5r^3$. Moreover $0\le\mathcal C-\mathcal A\le2r^3$ for $r\ge8$. Differentiation gives
+
+$$
+G'(t)=r^2\left[
+\frac{\mathcal C-\mathcal A}{(q-t)^2}
+ +\frac{2N_t}{(q-t)^3}\right].
+$$
+
+The two terms are bounded in absolute value by $(32/9)r^3$ and $(640/27)r^2$. Their sum is less than $7r^3$ for $r\ge8$, proving the second inequality of (9.9). The first follows from
+$A(t)\le(16/9)\mathcal C<4r^3$.
+
+Using $r\le2a$, $T_0\le L/a^2$ and (9.3), the explicit threshold (9.1) also gives
+
+$$
+\begin{aligned}
+4r^3\tau^2&\le\frac{1152L^2}{a}<1,\\
+10r^3T_0^2&\le\frac{80L^2}{a}<1,\\
+\frac a{18}&>1+10r^3T_0^2.
+\end{aligned}\tag{9.10}
+$$
+
+Indeed the first two upper bounds are at most $0.1152$ and $0.008$, whereas $a/18\ge10000/18>1.008$. Equations (9.9)–(9.10) imply $C(t)\ge2/t^2>0$, so the capacity (9.4) makes (9.8) into
+
+$$
+H\ge F(t)+C(t)\max\{0,a(t-T_0)\}.
+\tag{9.11}
+$$
+
+For $0<t\le T_0$,
+
+$$
+F'(t)\le-T_0^{-2}+10r^3<0.
+$$
+
+Thus $F(t)\ge F(T_0)$, strictly unless $t=T_0$. For $T_0\le t<\tau$, integrate the bound on $G'$ and use $1/t-1/T_0\ge-(t-T_0)/T_0^2$ to obtain
+
+$$
+F(t)-F(T_0)\ge-(T_0^{-2}+10r^3)(t-T_0).
+$$
+
+On the other hand,
+
+$$
+C(t)a(t-T_0)
+\ge\frac{2a}{\tau^2}(t-T_0)
+\ge\frac{a}{18T_0^2}(t-T_0).
+$$
+
+By the third inequality of (9.10), their sum is strictly positive when $t>T_0$. Finally $q-T_0=r(1-T_0)$ and $\mathcal A r-\mathcal C=r^3$, whence
+
+$$
+G(T_0)=\frac{r^3}{1-T_0},\qquad F(T_0)=H_r.
+$$
+
+This proves the lower bound for every law in the rare region, without an energy sublevel assumption.
+
+If $H=H_r$, the strict scalar comparisons force $t=T_0$. Returning to (9.8), where $C(t)>0$, then forces $\xi=0$. Thus every occurrence of $e$ is its singleton, so $z=t=T_0$. On the complementary event the conditional core mean is
+$(q-T_0)/(1-T_0)=r$, its maximal capacity. Therefore the core is the full set of the $r$ remaining labels with probability one. This proves the necessity of (9.2) from the same realized law. Conversely (9.2) has the prescribed mean, marginals $T_0$ and $1-T_0$, and energy $H_r$. Here $T_0<\tau$ and $T_0<1/2$, so its least marginal is indeed in the asserted rare region. ∎
+

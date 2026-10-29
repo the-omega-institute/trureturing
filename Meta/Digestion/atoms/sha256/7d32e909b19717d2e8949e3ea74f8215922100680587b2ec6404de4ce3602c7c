@@ -1,0 +1,139 @@
+**Theorem 4.1 (Sharp attainment and complete equality necessity).** For
+every integer pair $4\le a\le b$,
+
+$$
+\max_{c\in(0,\infty)^{ab}}\lambda_2(L(c))R(c)=M_{a,b}.
+\tag{4.1}
+$$
+
+If $a<b$, equality holds exactly as follows: choose a labelled vertex
+$u_{i_*}\in A$ and a real number $\tau>0$, and assign
+
+$$
+c_{i_*j}=\frac{\tau(d+1)}b\quad(1\le j\le b),\qquad
+c_{ij}=\frac\tau b\quad(i\ne i_*,\ 1\le j\le b).
+\tag{4.2}
+$$
+
+These are precisely $a$ distinct rays in labelled edge-conductance space.
+Each has $\lambda_2=\tau$ and $R=M_{a,b}/\tau$.
+If $a=b=k$, the equality class is the unique uniform ray
+$c_{ij}=\tau/k$, $\tau>0$, and
+
+$$
+M_{k,k}=k(4k-3),\qquad \lambda_2=\tau,\qquad R=k(4k-3)/\tau.
+\tag{4.3}
+$$
+
+*Proof.* The upper bound is Theorem 3.1. Suppose equality holds for any
+of the independent positive assignments, and set $t=\lambda_2(L)$.
+That theorem forces $w=b$ and equality in Lemma 2.1. By the degree
+condition there, the $A$-degrees are $t$ except possibly one degree
+$(b-a+1)t=(d+1)t$. For $d=0$ they are all $t$.
+
+Equality $w=b$ in (2.3) makes
+$\sum_{\ell=1}^{b-1}f_\ell^{\mathsf T}Hf_\ell=0$.
+Each summand is nonnegative. For a positive semidefinite symmetric
+matrix, zero quadratic form implies a kernel vector by orthogonal
+spectral decomposition. Consequently $H$ annihilates $U_B$, and
+$Lx=tx$ for all $x\in U_B$. In particular, for any $j\ne\ell$, apply
+this to $e_{v_j}-e_{v_\ell}$. Its $A$ coordinates and its two nonzero
+$B$ coordinates give respectively
+
+$$
+c_{ij}=c_{i\ell}\quad\text{for every }i,\qquad s_j=s_\ell=t.
+\tag{4.4}
+$$
+
+Thus every one of the $a$ rows is constant over all $b$ original leaves.
+Dividing the already determined row degrees by $b$ proves (4.2) with
+$\tau=t$. This derives the required symmetry from the unrestricted
+equality conditions. For $d>0$ the degree $(d+1)t$ occurs in exactly
+one row, so it also determines the actual label $i_*$.
+For $d=0$ every row has degree $t$, hence every edge is $t/k$.
+
+To prove sufficiency and the claimed spectral scale, use (1.5) to set
+$\tau=1$ and put $q=d+1\ge1$. Choose $u_{i_*}$ as the first basis
+vector only for the calculation. The $B$-difference space has eigenvalue
+$1$ and dimension $b-1$, since each column sum in (4.2) is
+$(q+a-1)/b=1$. Differences of the remaining $a-1$ hub coordinates,
+supported on those hubs and with sum zero, have eigenvalue $1$ and
+dimension $a-2$. These two spaces are orthogonal, invariant subspaces
+of the original counting-measure Laplacian.
+
+Their orthogonal complement has the orthonormal basis
+
+$$
+e_{u_{i_*}},\qquad
+\frac1{\sqrt{a-1}}\sum_{i\ne i_*}e_{u_i},\qquad
+\frac1{\sqrt b}\sum_{j=1}^b e_{v_j}.
+$$
+
+In this basis the restriction of the same $n\times n$ matrix is
+
+$$
+T_{a,b}=\begin{pmatrix}
+q&0&-q/\sqrt b\\
+0&1&-\sqrt{(a-1)/b}\\
+-q/\sqrt b&-\sqrt{(a-1)/b}&1
+\end{pmatrix}.
+\tag{4.5}
+$$
+
+The square-root factors come from the counting inner product. No vertices
+or pair terms in $R$ have been removed. The constant vector is represented
+by $(1,\sqrt{a-1},\sqrt b)^{\mathsf T}$ and is in its kernel.
+Its two other eigenvalues $\alpha\le\beta$ are strictly positive by
+(1.4), and their sum and product are
+
+$$
+\begin{gathered}
+\alpha+\beta=q+2=d+3,\\
+\alpha\beta=q+\left(q-\frac{q^2}b\right)
+ +\left(1-\frac{a-1}b\right)
+ =\frac{n(d+1)}b.
+\end{gathered}
+\tag{4.6}
+$$
+
+The product is the sum of the three second-order principal minors of
+(4.5); the final equality follows from $q=b-a+1$. The quadratic with
+roots $\alpha,\beta$ satisfies
+
+$$
+(1-\alpha)(1-\beta)
+=1-(d+3)+\frac{n(d+1)}b=\frac{(a-1)d}{b}\ge0.
+\tag{4.7}
+$$
+
+Both roots are real since (4.5) is symmetric. They cannot both be at
+most $1$, since their sum is $d+3\ge3$. Hence (4.7) implies
+$1\le\alpha\le\beta$, strictly $1<\alpha$ if $d>0$.
+When $d=0$, (4.6) gives precisely $\alpha=1$, $\beta=2$.
+The full spectrum, with multiplicities retained, is therefore
+
+$$
+0,\qquad 1\ \text{($n-3$ times)},\qquad\alpha,\beta.
+\tag{4.8}
+$$
+
+In particular $\lambda_2=1$ and (1.3), (4.6) give
+
+$$
+R=n\left(n-3+\frac1\alpha+\frac1\beta\right)
+=n(n-3)+\frac{b(d+3)}{d+1}=M_{a,b}.
+$$
+
+All conductances in (4.2) are finite and strictly positive. Scaling back
+by $\tau$ proves their asserted values and attainment. It also shows
+that equality has $\operatorname{rank}H=2$ if $d>0$, and rank $1$ if
+$d=0$, as a consequence of the computed spectrum.
+
+For $d>0$, two choices of $i_*$ give different assignments at
+$\lambda_2=1$, because the unique row of degree $d+1>1$ changes its
+label. Scalar-proportional assignments must have the same normalization
+$\lambda_2=1$, so these are distinct rays, exactly $a$ in number.
+For $d=0$ the choice of row has no effect and gives one uniform ray.
+Finally substitution $n=2k,d=0$ into (4.1) gives
+$2k(2k-3)+3k=k(4k-3)$, proving (4.3). ∎
+

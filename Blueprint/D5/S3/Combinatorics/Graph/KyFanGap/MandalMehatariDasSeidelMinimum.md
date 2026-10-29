@@ -44,7 +44,21 @@ $$\forall (V : Type), [\operatorname{Fintype}\left(V\right)] [\operatorname{Deci
 
 The positive square root of the transpose product has absolute eigenvalues. Its trace is their sum.
 
-**Definition 1.4 (The alternating binary string).**
+**Theorem 1.4 (Occurrences in an indexed list).**
+
+$$\forall (alpha : Type), [\operatorname{DecidableEq}\left(alpha\right)] \forall (n : \mathbb{N}), \forall (f : \operatorname{Fin}\left(n\right) \to alpha), \forall (p : alpha), \operatorname{List.count}\left(p, \operatorname{List.ofFn}\left(f\right)\right) = \operatorname{Finset.sum}\left(\operatorname{Finset.univ}, \operatorname{fun} (i : \operatorname{Fin}\left(n\right)) \mapsto \operatorname{ite}\left(f\left(i\right) = p, 1, 0\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/KyFanGap/MandalMehatariDasSeidelMinimum.count_ofFn` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Santanu Mandal, Ranjit Mehatari, and Kinkar Chandra Das (2022). *On the spectrum and energy of Seidel matrix for chain graphs*. DOI: [10.48550/arXiv.2205.00310](https://doi.org/10.48550/arXiv.2205.00310). URL: <https://arxiv.org/abs/2205.00310v1>.
+
+*Commentary.*
+
+Counting a letter in a finite indexed list equals summing its equality indicators.
+
+**Definition 1.5 (The alternating binary string).**
 
 $$\forall (k : \mathbb{N}), \forall (s : \operatorname{Fin}\left(k\right) \to \mathbb{N}), \forall (t : \operatorname{Fin}\left(k\right) \to \mathbb{N}), \operatorname{binaryString}\left(s, t\right) = \operatorname{List.flatten}\left(\operatorname{List.ofFn}\left(\operatorname{fun} (i : \operatorname{Fin}\left(k\right)) \mapsto \operatorname{List.append}\left(\operatorname{List.replicate}\left(s\left(i\right), \operatorname{Bool.false}\right), \operatorname{List.replicate}\left(t\left(i\right), \operatorname{Bool.true}\right)\right)\right)\right)$$
 
@@ -58,7 +72,7 @@ Page 2, verbatim: We represent a chain graph $G$ on $n$ vertices using a binary 
 
 The indices are Fin k; false is 0 and true is 1. List.ofFn orders the runs and List.flatten concatenates them.
 
-**Definition 1.5 (The chain graph of a binary string).**
+**Definition 1.6 (The chain graph of a binary string).**
 
 $$\forall (b : \operatorname{List}\left(\operatorname{Bool}\right)), \forall (i : \operatorname{Fin}\left(\operatorname{List.length}\left(b\right)\right)), \forall (j : \operatorname{Fin}\left(\operatorname{List.length}\left(b\right)\right)), (\operatorname{SimpleGraph.Adj}\left(\operatorname{chainGraph}\left(b\right), i, j\right)) \Leftrightarrow (((i < j) \land ((\operatorname{List.get}\left(b, i\right) = \operatorname{Bool.false}) \land (\operatorname{List.get}\left(b, j\right) = \operatorname{Bool.true}))) \lor ((j < i) \land ((\operatorname{List.get}\left(b, j\right) = \operatorname{Bool.false}) \land (\operatorname{List.get}\left(b, i\right) = \operatorname{Bool.true}))))$$
 
@@ -70,7 +84,7 @@ $$\forall (b : \operatorname{List}\left(\operatorname{Bool}\right)), \forall (i 
 
 Page 2, verbatim: "adding an isolated vertex." "adding a vertex dominating to all previously added isolated vertices only." An earlier false position and a later true position are adjacent. The formula gives the entire adjacency relation, including its symmetric case and the absence of loops.
 
-**Definition 1.6 (The Seidel matrix).**
+**Definition 1.7 (The Seidel matrix).**
 
 $$\forall (n : \mathbb{N}), \forall (G : \operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right)), \operatorname{seidel}\left(G\right) = \operatorname{Matrix.of}\left(\operatorname{Function.const}\left(\operatorname{Fin}\left(n\right), \operatorname{Function.const}\left(\operatorname{Fin}\left(n\right), 1 : \mathbb{R}\right)\right)\right) - 1 - \operatorname{HSMul.hSMul}\left(2 : \mathbb{R}, \operatorname{SimpleGraph.adjMatrix}\left(G, \mathbb{R}\right)\right)$$
 
@@ -84,7 +98,7 @@ Page 2, verbatim: Let $G$ be a simple, connected, finite graph with vertex set $
 
 Here A is SimpleGraph.adjMatrix over the real numbers. The expression retains the all-ones matrix, identity matrix, and scalar multiple separately.
 
-**Definition 1.7 (The comparison family).**
+**Definition 1.8 (The comparison family).**
 
 $$\forall (n : \mathbb{N}), \forall (k : \mathbb{N}), \forall (b : \operatorname{List}\left(\operatorname{Bool}\right)), \operatorname{Gamma}\left(n, k, b\right) = (\exists (s : \mathbb{N}), \exists (t : \mathbb{N}), (1 \le s) \land ((s \le n - 2 \cdot k + 1) \land ((1 \le t) \land ((t \le n - 2 \cdot k + 1) \land ((s + t = n - 2 \cdot k + 2) \land (b = \operatorname{List.append}\left(\operatorname{List.append}\left(\operatorname{List.replicate}\left(s, \operatorname{Bool.false}\right), \operatorname{List.flatten}\left(\operatorname{List.replicate}\left(k - 1, [\operatorname{Bool.true}, \operatorname{Bool.false}]\right)\right)\right), \operatorname{List.replicate}\left(t, \operatorname{Bool.true}\right)\right)))))))$$
 
@@ -98,7 +112,7 @@ Page 21: Let $\Gamma_{n,k}$ be a class of chain graphs of order $n$ with the bin
 
 The middle word is k-1 copies of [true,false], representing the 2k-2 singleton runs under the source's underbrace. Natural subtraction is truncated; every parameter is a natural number.
 
-**Definition 1.8 (Conjecture 4.14).**
+**Definition 1.9 (Conjecture 4.14).**
 
 $$\operatorname{claim} = (\forall (n : \mathbb{N}), \forall (k : \mathbb{N}), (1 \le k) \Rightarrow ((2 \cdot k \le n) \Rightarrow (\forall (s : \operatorname{Fin}\left(k\right) \to \mathbb{N}), \forall (t : \operatorname{Fin}\left(k\right) \to \mathbb{N}), (\forall (i : \operatorname{Fin}\left(k\right)), 1 \le s\left(i\right)) \Rightarrow ((\forall (i : \operatorname{Fin}\left(k\right)), 1 \le t\left(i\right)) \Rightarrow ((\operatorname{Finset.sum}\left(\operatorname{Finset.univ}, \operatorname{fun} (i : \operatorname{Fin}\left(k\right)) \mapsto s\left(i\right) + t\left(i\right)\right) = n) \Rightarrow (\forall (h : \operatorname{List}\left(\operatorname{Bool}\right)), (\operatorname{Gamma}\left(n, k, h\right)) \Rightarrow ((\operatorname{energy}\left(\operatorname{seidel}\left(\operatorname{chainGraph}\left(h\right)\right)\right) \le \operatorname{energy}\left(\operatorname{seidel}\left(\operatorname{chainGraph}\left(\operatorname{binaryString}\left(s, t\right)\right)\right)\right)) \land ((\operatorname{energy}\left(\operatorname{seidel}\left(\operatorname{chainGraph}\left(\operatorname{binaryString}\left(s, t\right)\right)\right)\right) = \operatorname{energy}\left(\operatorname{seidel}\left(\operatorname{chainGraph}\left(h\right)\right)\right)) \Leftrightarrow (\operatorname{Gamma}\left(n, k, \operatorname{binaryString}\left(s, t\right)\right))))))))))$$
 
@@ -112,7 +126,7 @@ Conjecture 4.14, page 25, verbatim: Let $G$ be a chain graph of order $n$ with t
 
 The functions s,t have domain Fin k and positive natural values; n is their total. Every comparison binary string h in Gamma n k is quantified separately. The energy is the shared characteristic-root energy of the real Seidel matrix.
 
-**Theorem 1.9 (Minimum energy and every equality case).**
+**Theorem 1.10 (Minimum energy and every equality case).**
 
 $$\forall (n : \mathbb{N}), \forall (k : \mathbb{N}), (1 \le k) \Rightarrow ((2 \cdot k \le n) \Rightarrow (\forall (s : \operatorname{Fin}\left(k\right) \to \mathbb{N}), \forall (t : \operatorname{Fin}\left(k\right) \to \mathbb{N}), (\forall (i : \operatorname{Fin}\left(k\right)), 1 \le s\left(i\right)) \Rightarrow ((\forall (i : \operatorname{Fin}\left(k\right)), 1 \le t\left(i\right)) \Rightarrow ((\operatorname{Finset.sum}\left(\operatorname{Finset.univ}, \operatorname{fun} (i : \operatorname{Fin}\left(k\right)) \mapsto s\left(i\right) + t\left(i\right)\right) = n) \Rightarrow (\forall (h : \operatorname{List}\left(\operatorname{Bool}\right)), (\operatorname{Gamma}\left(n, k, h\right)) \Rightarrow ((\operatorname{energy}\left(\operatorname{seidel}\left(\operatorname{chainGraph}\left(h\right)\right)\right) \le \operatorname{energy}\left(\operatorname{seidel}\left(\operatorname{chainGraph}\left(\operatorname{binaryString}\left(s, t\right)\right)\right)\right)) \land ((\operatorname{energy}\left(\operatorname{seidel}\left(\operatorname{chainGraph}\left(\operatorname{binaryString}\left(s, t\right)\right)\right)\right) = \operatorname{energy}\left(\operatorname{seidel}\left(\operatorname{chainGraph}\left(h\right)\right)\right)) \Leftrightarrow (\operatorname{Gamma}\left(n, k, \operatorname{binaryString}\left(s, t\right)\right)))))))))$$
 
@@ -136,6 +150,7 @@ Sign switching merges the first 0-run with the final 1-run. Compression gives a 
 - Truth anchor: `D5/S3/Combinatorics/Graph/KyFanGap/MandalMehatariDasSeidelMinimum.binaryString`
 - Truth anchor: `D5/S3/Combinatorics/Graph/KyFanGap/MandalMehatariDasSeidelMinimum.chainGraph`
 - Truth anchor: `D5/S3/Combinatorics/Graph/KyFanGap/MandalMehatariDasSeidelMinimum.claim`
+- Truth anchor: `D5/S3/Combinatorics/Graph/KyFanGap/MandalMehatariDasSeidelMinimum.count_ofFn`
 - Truth anchor: `D5/S3/Combinatorics/Graph/KyFanGap/MandalMehatariDasSeidelMinimum.energy`
 - Truth anchor: `D5/S3/Combinatorics/Graph/KyFanGap/MandalMehatariDasSeidelMinimum.energy_eigenvalues`
 - Truth anchor: `D5/S3/Combinatorics/Graph/KyFanGap/MandalMehatariDasSeidelMinimum.result`

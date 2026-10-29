@@ -1,0 +1,82 @@
+#### 定义 2.1（单门类型的编码近似普适性）
+
+给定一个固定局部门 $K$、允许地址、初始化规则和等距编码
+$J_n:(\mathbb{C}^2)^{\otimes n}\to\mathcal H_n$。若对任意 $V\in\operatorname{U}(2^n)$ 和 $\varepsilon>0$，存在只由允许地址上的 $K$ 组成的有限正向字 $W$，满足
+
+$$
+\inf_{\gamma\in\mathbb{R}}\left\lVert WJ_n-e^{i\gamma}J_nV\right\rVert_{\rm op}<\varepsilon,
+$$
+
+则称该资源模型具有单门类型的编码近似普适性。若不允许最小化整体相位，则称为指定相位的近似实现。
+
+“同一种门可布在不同位置”和“一个固定算符只取幂”是不同命题。后者生成交换循环群，不能在维数至少二时覆盖全部射影酉群。普通 NAND 也需要接线、输入和可重复调用；量子版本还必须保留信息和相干性。二输入二输出的单一通用量子门早已有经典构造[[6](#ref-barenco)]，本文研究的是黄金数据下的具体实现与接口。
+
+令
+
+$$
+\varphi=\frac{1+\sqrt5}{2},\qquad \omega=e^{3\pi i/5},\qquad
+n=\lvert 1\rangle\langle 1\rvert,\quad X=\lvert 0\rangle\langle 1\rvert+\lvert 1\rangle\langle 0\rvert.
+$$
+
+原生三位置门采用项目既定矩阵：
+
+<a id="eq-1"></a>
+
+$$
+Q_C=\varphi^{-1}(I-n_C)+\varphi^{-2}n_C+\varphi^{-3/2}X_C,
+\tag{1}
+$$
+
+<a id="eq-2"></a>
+
+$$
+\mathcal P=n_Ln_R+(I-n_L)(I-n_R)Q_C,
+\tag{2}
+$$
+
+<a id="eq-native"></a>
+
+$$
+K=\boxed{\omega\,[I+(\omega-1)\mathcal P].}
+\tag{3}
+$$
+
+未写出的张量单位均理解为存在。$Q_C=vv^T$，其中
+$v=(\varphi^{-1/2},\varphi^{-1})^T$、$v^Tv=1$；按左右位分块即得 $\mathcal P$ 为正交投影。因此
+
+$$
+K^r=\omega^r(I-\mathcal P)+\omega^{2r}\mathcal P,
+\qquad K^{10}=I,\quad K^{-1}=K^9,\quad K^5=2\mathcal P-I.
+$$
+
+唯一非对角耦合是 $000\leftrightarrow010$。五种合法模式及标签为
+
+$$
+(000,100,010,001,101)\longleftrightarrow(0,1,2,3,13).
+$$
+
+五个标签是配置基底，不单凭其数量断定空间维数或推导 Born 规则。
+
+在六位置编码 $J\lvert q\rangle=\lvert 10q010\rangle$ 上，从左起以第 2、3 位为中心调用 $K$，其三位窗口分别为 $(1,0,q)$ 与 $(0,q,0)$。两地址均精确保码，限制后的投影和门为
+
+$$
+P=\lvert 1\rangle\langle 1\rvert,\quad
+Q=\begin{pmatrix}\varphi^{-1}&\varphi^{-3/2}\\
+\varphi^{-3/2}&\varphi^{-2}\end{pmatrix},\qquad
+A=\omega[I+(\omega-1)P],\quad B=\omega[I+(\omega-1)Q].
+$$
+
+故 $\operatorname{Tr}(PQ)=\lambda_0:=\varphi^{-2}$，$A^{10}=B^{10}=I$，且
+$\det A=\det B=\omega^3$。这里 $A,B$ 是同一种原生门的两个地址，不是外加两种任意旋转。
+
+黄金数来自已给定的 Fibonacci 融合/邻接关系 $d^2=d+1$ 的正根。合法路径上的相邻投影满足 $P_iP_{i+1}P_i=\lambda_0P_i$；展开
+$[I+(z-1)P][I+(z-1)Q][I+(z-1)P]$ 与交换后的式子，其差为
+
+$$
+(z-1)[z+\lambda_0(z-1)^2](P-Q).
+$$
+
+非标量编织要求 $z=\omega$ 或 $\bar\omega$。这些是给定融合与表示下的相容结果；不是“所有通用门必须黄金化”的唯一性定理。
+
+<a id="sec-3"></a>
+
