@@ -1344,3 +1344,417 @@ $D_{4,b}\ge\Delta(C_b;\phi)>0$。结合（一）的 $D_{4,4}=0$，完成 (6.1) �
 $Z_a\subseteq\{b\in\mathbb Z:a\le b\le B_a\}$ 的全部成员，其中 $B_a$ 沿用定义 5.2、有限上界沿用定理 3.1。对 $a=4$、$b\ge5$，(6.15) 只给出严格阻塞联盟；正最大值 $D_{4,b}$ 的精确值及其全部最大联盟未由本定理确定，亦不推出 $D_{4,b}$ 关于 $b$ 的单调性。
 
 ## 追加锚（本行以下为增补区）
+
+## 7. 两侧规模同时变化时的平衡核分类
+
+**定义 7.1（归一化侧份额与二项式多项式）。** 对整数 $b\ge a\ge5$，取不交的有限标号集 $A,B$，满足 $|A|=a$、$|B|=b$，令 $G=K_{a,b}$ 恰含全部 $A$–$B$ 边。沿用定义 1.1–1.3 与定义 4.1：若 $C\subseteq A\sqcup B$、$i=|C\cap A|$、$j=|C\cap B|$，则
+
+$$
+\begin{aligned}
+w(C)&=\mathcal E(G[C])=2\sqrt{ij},\qquad n=a+b,\\
+\phi_v&=\sum_{S\subseteq(A\sqcup B)\setminus\{v\}}
+\frac{|S|!(n-|S|-1)!}{n!}\bigl(w(S\cup\{v\})-w(S)\bigr),\\
+\Delta(C;\phi)&=w(C)-\sum_{v\in C}\phi_v,\qquad
+D_{a,b}=\max_{C\subseteq A\sqcup B}\Delta(C;\phi).
+\end{aligned}
+\tag{7.1}
+$$
+
+其中能量是邻接特征值绝对值之和。最大值取遍所有实际联盟，保留赤字的符号。由 (2.1)–(2.3)，同侧玩家分别取得 $x_{a,b}$、$y_{a,b}$，且
+
+$$
+ax_{a,b}+by_{a,b}=2\sqrt{ab},\qquad
+U_{a,b}=\frac{ax_{a,b}}{2\sqrt{ab}},\qquad
+H(a,b)=U_{a,b}-\frac12.
+\tag{7.2}
+$$
+
+对任意正整数 $m$ 与 $0\le t\le1$，记
+
+$$
+\begin{aligned}
+\mu_m(t)&=\sum_{k=0}^m\binom mk t^k(1-t)^{m-k}\sqrt{k/m},\\
+d_r&=\sqrt{r+1}-\sqrt r\quad(r\ge0).
+\end{aligned}
+\tag{7.3}
+$$
+
+式 (7.1) 的普通能量、阶乘分配和核约定对应 Arizmendi–Arizmendi，[*The graph energy game*, arXiv:2012.14114v2](https://arxiv.org/pdf/2012.14114v2)，§2.2、§2.4、Definition 3.1。此处的参数对应为该文的玩家集 $V=A\sqcup B$、总人数 $n=a+b$、诱导联盟 $G[C]$ 及其普通能量；同一文献 Theorem 3.6 的 vertex-energy 分配与 Proposition 4.13 的 $2$-energy 博弈不用于定义 $\phi$。式 (7.3) 是 (3.3)、(3.6) 中 $f_m/\sqrt m$ 的同一个有限多项式。
+
+**引理 7.2（一个有理多项式的积分界）。** 置
+
+$$
+\begin{aligned}
+P(z)&=1+\frac{82}{125}z+\frac{279}{625}z^2
++\frac{624}{3125}z^3+\frac{138}{3125}z^4,\\
+F(u)&=\frac{u^{-1/2}}{(1+u)^2}P\!\left(\frac1{1+u}\right)
+\quad(u\ge1).
+\end{aligned}
+\tag{7.4}
+$$
+
+则对每个实数 $T>1$，
+
+$$
+\int_1^T F(u)\,du>
+\frac{75}{208}\left(1-\frac1T\right).
+\tag{7.5}
+$$
+
+**证明。** 令 $c=75/208$、$R(u)=u^2F(u)$、$z=(1+u)^{-1}$。因 $u\ge1$，有 $0<z\le1/2$。直接求导表明 $R'(u)$ 与下列多项式同号：
+
+$$
+\begin{aligned}
+Q(z)&=(4z-1)P(z)-2z(1-z)P'(z)\\
+&=-1+\frac{254}{125}z+\frac{213}{125}z^2
++\frac{6792}{3125}z^3+\frac{4998}{3125}z^4
++\frac{1656}{3125}z^5.
+\end{aligned}
+\tag{7.6}
+$$
+
+$Q$ 在 $[0,1/2]$ 上严格递增，$Q(0)=-1$ 而 $Q(1/2)=4151/5000>0$。因此 $R$ 在 $[1,\infty)$ 上先严格递增、再严格递减，且趋于零。又有
+
+$$
+R(1)=\frac{36683}{100000},\qquad
+R(1)-c=\frac{8129}{1300000}>0.
+\tag{7.7}
+$$
+
+所以 $R-c$ 在 $[1,\infty)$ 上恰有一个零点，在此点前为正、之后为负。
+
+现计算总积分。对整数 $m\ge2$，令
+
+$$
+I_m=\int_1^\infty\frac{dy}{(1+y^2)^m}.
+$$
+
+分部积分给出
+
+$$
+I_m=\frac{2m-3}{2m-2}I_{m-1}
+-\frac1{(2m-2)2^{m-1}},\qquad I_1=\frac\pi4.
+$$
+
+代换 $u=y^2$，再逐项使用此递推，得到
+
+$$
+\begin{aligned}
+\int_1^\infty\frac{u^{-1/2}}{(1+u)^2}\,du
+&=\frac\pi4-\frac12,\\
+\int_1^\infty\frac{u^{-1/2}}{(1+u)^3}\,du
+&=\frac{3\pi}{16}-\frac12,\\
+\int_1^\infty\frac{u^{-1/2}}{(1+u)^4}\,du
+&=\frac{5\pi}{32}-\frac{11}{24},\\
+\int_1^\infty\frac{u^{-1/2}}{(1+u)^5}\,du
+&=\frac{35\pi}{256}-\frac5{12},\\
+\int_1^\infty\frac{u^{-1/2}}{(1+u)^6}\,du
+&=\frac{63\pi}{512}-\frac{61}{160}.
+\end{aligned}
+$$
+
+故
+
+$$
+\int_1^\infty F(u)\,du
+=\frac{380387}{800000}\pi-\frac{283159}{250000}.
+\tag{7.8}
+$$
+
+为完全给出所需的严格常数比较，对 $x>0$，恒等式
+
+$$
+\frac1{1+x^2}=1-x^2+x^4-x^6+\frac{x^8}{1+x^2}
+$$
+
+积分后给出
+$\arctan x>x-x^3/3+x^5/5-x^7/7$。由于
+$\arctan(1/2)+\arctan(1/3)=\pi/4$，有
+
+$$
+\pi>4\sum_{k=0}^3\frac{(-1)^k}{2k+1}
+\left(2^{-(2k+1)}+3^{-(2k+1)}\right)
+=\frac{1538665}{489888}
+=\frac{223}{71}+\frac{191}{34782048}
+>\frac{223}{71}.
+$$
+
+式 (7.8) 因而满足
+
+$$
+\int_1^\infty F(u)\,du-c
+>\frac{380387}{800000}\frac{223}{71}
+-\frac{283159}{250000}-\frac{75}{208}
+=\frac{767453}{3692000000}>0.
+\tag{7.9}
+$$
+
+最后令
+
+$$
+J(T)=\int_1^T\frac{R(u)-c}{u^2}\,du.
+$$
+
+由 (7.7) 及 $R-c$ 的唯一变号，$J$ 从零开始先严格增加、再严格减少；由 (7.9)，其无穷远极限仍严格为正。因此对每个 $T>1$ 都有 $J(T)>0$，这正是 (7.5)。∎
+
+**引理 7.3（二项式积分的联合定量差）。** 对所有整数 $b>a\ge5$，式 (7.3) 满足
+
+$$
+\int_0^1\mu_a'(t)\bigl(\mu_b(t)-\mu_a(t)\bigr)\,dt
+>\frac5{32}\left(\frac1a-\frac1b\right).
+\tag{7.10}
+$$
+
+**证明。** 对任意正整数 $n$ 和 $t\in[0,1]$，取 $n+1$ 个独立 $\operatorname{Bernoulli}(t)$ 变量 $X_1,\ldots,X_{n+1}$，记
+
+$$
+K=\sum_{\ell=1}^{n+1}X_\ell,\qquad
+Y_\ell=\frac{K-X_\ell}{n}.
+$$
+
+同一实现中 $\frac1{n+1}\sum_\ell Y_\ell=K/(n+1)$。这与定理 5.1 证明（二）的删去一个样本恒等式相同；经典中间步骤的出处为 Lamkin–Tkocz，[*Log-concavity and log-convexity of moments of averages of i.i.d. random variables*, arXiv:2001.06439v3](https://arxiv.org/pdf/2001.06439v3)，§1，第 1 页，式 (1) 后的平均恒等式。此处以非负 Bernoulli 样本和平方根的有限 Jensen 不等式使用该恒等式。
+
+条件于 $K=k$，在 $n+1$ 个删去一个变量的均值中，有 $n+1-k$ 个等于 $k/n$，有 $k$ 个等于 $(k-1)/n$。因此相应的 Jensen 差
+
+$$
+q_{n,k}=\sqrt{\frac{k}{n+1}}
+-\frac{n+1-k}{n+1}\sqrt{\frac{k}{n}}
+-\frac{k}{n+1}\sqrt{\frac{k-1}{n}}
+\quad(1\le k\le n+1)
+$$
+
+非负，且 $k=0$ 时差为零。取期望便是
+$\mu_{n+1}(t)-\mu_n(t)$。特别在 $k=1$ 时，
+
+$$
+q_{n,1}=\frac{\sqrt{n+1}-\sqrt n}{n+1}.
+$$
+
+只保留这一非负项及其概率 $(n+1)t(1-t)^n$，即得
+
+$$
+\mu_{n+1}(t)-\mu_n(t)
+\ge(\sqrt{n+1}-\sqrt n)t(1-t)^n.
+\tag{7.11}
+$$
+
+这里其余条件差均非负，不要求删去样本之间独立；$t=0,1$ 也包含在式中。式 (7.11) 是从上述 Jensen 分解取得的定量项，而非仅用样本量单调性。
+
+由 (3.6) 的有限和导数恒等式，
+
+$$
+\mu_a'(t)=\sqrt a\sum_{r=0}^{a-1}
+\binom{a-1}{r}d_r t^r(1-t)^{a-1-r}.
+\tag{7.12}
+$$
+
+每一项非负。对 $n\ge a\ge5$，将 (7.11) 乘以 (7.12)，保留 $r=0,1,2,3,4$ 的项并积分。有限次分部积分给出
+
+$$
+\int_0^1t^{r+1}(1-t)^{a+n-r-1}\,dt
+=\frac{(r+1)!(a+n-r-1)!}{(a+n+1)!}.
+$$
+
+记 $(a-1)_{\underline r}=\prod_{j=1}^r(a-j)$，空乘积为 $1$，得到
+
+$$
+\begin{aligned}
+L_{a,n}&:=\int_0^1\mu_a'(t)
+\bigl(\mu_{n+1}(t)-\mu_n(t)\bigr)\,dt\\
+&\ge\frac{\sqrt a}{\sqrt{n+1}+\sqrt n}
+\sum_{r=0}^4
+\frac{(r+1)d_r(a-1)_{\underline r}}
+{(a+n+1)(a+n)\prod_{j=1}^r(a+n-j)}.
+\end{aligned}
+\tag{7.13}
+$$
+
+下面所有比较都在 $n\ge a\ge5$ 的同一范围内。令 $s=a+n$、$z=a/s$。因为 $s\ge2a$，
+
+$$
+\begin{aligned}
+\sqrt{n+1}+\sqrt n
+&\le\sqrt n\bigl(1+\sqrt{1+1/a}\bigr),\\
+(s+1)s\prod_{j=1}^r(s-j)
+&\le\left(1+\frac1{2a}\right)s^{r+2},\\
+\frac{(a-1)_{\underline r}}{a^r}
+&=\prod_{j=1}^r\left(1-\frac ja\right)
+\ge\prod_{j=1}^r\left(1-\frac j5\right).
+\end{aligned}
+\tag{7.14}
+$$
+
+此外
+
+$$
+\frac1{(1+\sqrt{1+1/a})(1+1/(2a))}
+\ge\frac{10}{11(1+\sqrt{6/5})}>
+\frac{13}{30}.
+\tag{7.15}
+$$
+
+最后一个严格比较等价于 $\sqrt{6/5}<157/143$，由正数平方比较
+$6\cdot143^2=122694<123245=5\cdot157^2$ 得到。
+
+对所保留的四个正指标，使用
+$\sqrt2<10/7$、$\sqrt3<7/4$、$\sqrt5<9/4$，以及
+$d_r=(\sqrt{r+1}+\sqrt r)^{-1}$，可得
+
+$$
+\begin{aligned}
+d_1&>\frac7{17}>\frac{41}{100},&
+d_2&>\frac{28}{89}>\frac{31}{100},\\
+d_3&>\frac4{15}>\frac{26}{100},&
+d_4&>\frac4{17}>\frac{23}{100}.
+\end{aligned}
+\tag{7.16}
+$$
+
+三个根式上界的平方比较分别为 $98<100$、$48<49$、$80<81$。将 (7.14)–(7.16) 代入 (7.13)，$r=0$ 的系数为 $1$，其余四个系数的有理下界依次为
+
+$$
+\begin{aligned}
+2\frac{41}{100}\frac45&=\frac{82}{125},&
+3\frac{31}{100}\frac{4\cdot3}{5^2}&=\frac{279}{625},\\
+4\frac{26}{100}\frac{4\cdot3\cdot2}{5^3}&=\frac{624}{3125},&
+5\frac{23}{100}\frac{4\cdot3\cdot2\cdot1}{5^4}&=\frac{138}{3125}.
+\end{aligned}
+$$
+
+它们正是引理 7.2 的 $P$。于是
+
+$$
+L_{a,n}>\frac{13}{30}
+\frac{\sqrt a}{\sqrt n(a+n)^2}
+P\!\left(\frac a{a+n}\right).
+\tag{7.17}
+$$
+
+对固定 $a$，函数
+
+$$
+x\longmapsto\frac{\sqrt a}{\sqrt x(a+x)^2}
+P\!\left(\frac a{a+x}\right)
+$$
+
+在 $x\ge a$ 上为正且严格递减，因为每个单项式都是正常数乘以
+$x^{-1/2}(a+x)^{-r-2}$。有限求和望远镜及左端点积分比较给出
+
+$$
+\begin{aligned}
+\int_0^1\mu_a'(t)(\mu_b(t)-\mu_a(t))\,dt
+&=\sum_{n=a}^{b-1}L_{a,n}\\
+&>\frac{13}{30}\int_a^b
+\frac{\sqrt a}{\sqrt x(a+x)^2}
+P\!\left(\frac a{a+x}\right)\,dx\\
+&=\frac{13}{30a}\int_1^{b/a}F(u)\,du\\
+&>\frac{13}{30a}\frac{75}{208}
+\left(1-\frac ab\right)
+=\frac5{32}\left(\frac1a-\frac1b\right).
+\end{aligned}
+$$
+
+其中最后一步用引理 7.2，且 $b/a>1$。全部求和有限；没有对 $a$ 或 $b$ 取极限，也没有更换两者的量词。∎
+
+**定理 7.4（所有 $b\ge a\ge5$ 的唯一零赤字情形）。** 对定义 7.1 的每个整数对 $b\ge a\ge5$ 及每对相应的不交有限标号集 $A,B$，有
+
+$$
+D_{a,b}=0\quad\Longleftrightarrow\quad a=b.
+\tag{7.18}
+$$
+
+更具体地，当 $b>a\ge5$ 时，实际稀缺侧总 Shapley 份额的偏移满足
+
+$$
+H(a,b)>\frac{5(b-a)}{32ab},
+\tag{7.19}
+$$
+
+且对每一对玩家 $v\in A$、$w\in B$，实际联盟
+$C=(A\sqcup B)\setminus\{v,w\}$ 都严格阻塞 $\phi$。当 $a=b$ 时，每个联盟都满足
+
+$$
+\Delta(C;\phi)=-(\sqrt i-\sqrt j)^2,
+\qquad 0\le i,j\le a,
+\tag{7.20}
+$$
+
+其中包含空联盟、纯侧联盟和全体联盟。
+
+**证明。** 首先把引理 7.3 与 (7.1) 的字面阶乘和连接。任意保持两侧的标号双射，将每个前驱集合双射地运输到同样大小的前驱集合，保留边际价值与阶乘权重。因此以下计算适用于所有所述标号集。
+
+复用 (2.1)–(2.3) 的谱计算、排列平均、同侧对称性与效率。给全部玩家赋独立均匀优先级，条件于目标 $A$ 侧玩家的优先级为 $t$，其余同侧前驱数 $R$ 与异侧前驱数 $K$ 条件独立，分别为
+
+$$
+R\sim\operatorname{Bin}(a-1,t),\qquad
+K\sim\operatorname{Bin}(b,t).
+$$
+
+边际价值是 $2\sqrt K\,d_R$。这里 $R$ 的范围为 $0,\ldots,a-1$，$K$ 的范围为 $0,\ldots,b$，均包括零端点。固定一个大小为 $k$ 的前驱集合，其优先级概率为
+
+$$
+\int_0^1t^k(1-t)^{a+b-1-k}\,dt
+=\frac{k!(a+b-1-k)!}{(a+b)!}.
+$$
+
+因此优先级积分就是 (7.1) 的全部阶乘和，与 (3.3)、(3.6) 的参数对应为样本量 $a-1$ 与 $b$。用 (7.12) 得
+
+$$
+x_{a,b}=2\sqrt{\frac ba}\int_0^1\mu_a'(t)\mu_b(t)\,dt,
+\qquad
+U_{a,b}=\int_0^1\mu_a'(t)\mu_b(t)\,dt.
+\tag{7.21}
+$$
+
+因 $\mu_a(0)=0$、$\mu_a(1)=1$，
+
+$$
+\int_0^1\mu_a'(t)\mu_a(t)\,dt=\frac12,
+\qquad
+H(a,b)=\int_0^1\mu_a'(t)(\mu_b(t)-\mu_a(t))\,dt.
+\tag{7.22}
+$$
+
+当 $b>a\ge5$ 时，引理 7.3 直接给出 (7.19)。这一步将前述谱与阶乘公式、经典删去一个样本的 Jensen 恒等式，同引理 7.2–7.3 的定量推导组合起来；所需的联合下界不是固定 $a$ 的极限结论。
+
+现令
+
+$$
+z=1-\frac1a,\qquad s=1-\frac1b,\qquad
+\delta=s-z=\frac{b-a}{ab}>0.
+$$
+
+任取 $v\in A$、$w\in B$，其补联盟的计数为 $(a-1,b-1)$。由 (4.9) 的同一联盟恒等式和 $U_{a,b}=1/2+H(a,b)$，
+
+$$
+\begin{aligned}
+\frac{\Delta(C;\phi)}{2\sqrt{ab}}
+&=\sqrt{zs}-\left(\frac12+H(a,b)\right)z
+-\left(\frac12-H(a,b)\right)s\\
+&=\delta H(a,b)-\frac12(\sqrt s-\sqrt z)^2\\
+&=\delta\left(H(a,b)
+-\frac{\delta}{2(\sqrt s+\sqrt z)^2}\right).
+\end{aligned}
+\tag{7.23}
+$$
+
+因为 $s>z\ge4/5$，有 $(\sqrt s+\sqrt z)^2>16/5$，所以
+
+$$
+\frac{\delta}{2(\sqrt s+\sqrt z)^2}
+<\frac5{32}\delta<H(a,b).
+$$
+
+式 (7.23) 严格为正。计数 $(a-1,b-1)$ 对所有指定标签都合法；故每个这样的联盟严格阻塞，并有 $D_{a,b}>0$。
+
+当 $b=a$ 时，(7.21) 给出 $U_{a,a}=1/2$，由 (7.2) 及效率得到 $x_{a,a}=y_{a,a}=1$。对任一联盟，(7.1) 遂给出
+
+$$
+\Delta(C;\phi)=2\sqrt{ij}-i-j=-(\sqrt i-\sqrt j)^2\le0.
+$$
+
+这在 $i=0$ 或 $j=0$ 时仍成立；空联盟与全体联盟均取得零。因此所有联盟上的有符号最大值恰为 $D_{a,a}=0$。结合非平衡情形完成 (7.18)。
+
+本定理确定定义 5.2 的全部 $Z_a=\{a\}$（$a\ge5$）。其量词不改变定理 2.1 中 $a=2$ 的额外零赤字情形，也不改变定理 3.1 的星图边界；定理 5.1 与定理 6.1 分别处理 $a=3,4$。式 (7.23) 仅断言所述联盟严格阻塞，未确定 $b>a$ 时 $D_{a,b}$ 的精确值或全部最大联盟。∎
+
+## 追加锚（本行以下为增补区）
