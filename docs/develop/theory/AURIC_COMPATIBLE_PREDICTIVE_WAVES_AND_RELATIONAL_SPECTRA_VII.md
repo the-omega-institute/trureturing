@@ -830,3 +830,1269 @@ with the two different horizontal error rescalings in (123.2).
 $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 125. The literal reflected tangent rows
+
+**Definition 125.1 (Source-specific eight-real-variable coefficients; repo-derived).**
+Fix one allowed source of Definition 114.1, once and for all, and fix
+$0<A<1$ and a complex unit vector $f\perp e=t/\tau$, where
+$\tau=\|t\|>0$. The anchor, limiting reflected point and reflected
+comparison curve are
+
+$$
+h_0(\eta)=Ae+\eta f,\qquad h_-=-Ae,\qquad
+h_\#(\eta)=-Ae+\eta f.
+\tag{125.1}
+$$
+
+Write $c_\theta=\cos\theta$, $s_\theta=\sin\theta$, and retain the
+source's $b,D,W,r_i,Q_w,a_w$ without changing their meanings. In
+particular $r_i$ is subnormalised and $a_w=2^{-k(w)}$ is the
+original mass. Let $q_\rho=q_{i,w}$, $\rho=(i,w)$, be exactly the
+real functional (116.2), with (116.1). Keep the particular finite
+length $L_{\mathfrak s}$ chosen in Proposition 118.2 and set
+
+$$
+\mathscr R_f=\{(i,w):1\le i\le9,\ |w|\le L_{\mathfrak s}\},
+\qquad
+\mathscr R_a=\{(i,w):1\le i\le9,\ w\text{ any finite actual history}\}.
+\tag{125.2}
+$$
+
+For $z\in\mathbb C^3$ and $g\in\mathbb C$ define
+
+$$
+\begin{aligned}
+H(z)&=-A(ez^\dagger+ze^\dagger),\\
+S(z)&=\mathrm i\tau(ze^\dagger-ez^\dagger),\\
+H_1(z)&=H(z)+H(f),\qquad S_1(z)=S(z)-S(f),\\
+K_-&=K_{h_-}=-A\tau ee^\dagger
+       +\mathrm i s_\theta c_\theta(D-bA^2ee^\dagger),\\
+X_1(z)&=s_\theta^2bH_1(z)+s_\theta c_\theta S_1(z),\\
+Y_1(z)&=c_\theta^2bH_1(z)-s_\theta c_\theta S_1(z),\\
+\ell_\rho(z,g)&=q_\rho(X_1(z),Y_1(z),gK_-),\\
+\mathcal F_j(z,g)&=\sup_{\rho\in\mathscr R_j}|\ell_\rho(z,g)|,
+                  \qquad j=f,a.
+\end{aligned}
+\tag{125.3}
+$$
+
+The supremum for $j=f$ is a maximum. To specify all eight real
+columns explicitly, choose a unit $k$ making $(e,f,k)$ a complex
+orthonormal basis, put
+$(v_1,\ldots,v_6)=(e,\mathrm i e,f,\mathrm i f,k,\mathrm i k)$,
+and write $z=\sum_{r=1}^6x_rv_r$, $g=y_1+\mathrm i y_2$.
+Then
+
+$$
+\begin{aligned}
+\beta_\rho&=q_\rho\bigl(
+ s_\theta^2bH(f)-s_\theta c_\theta S(f),
+ c_\theta^2bH(f)+s_\theta c_\theta S(f),0\bigr),\\
+U_{\rho r}&=q_\rho\bigl(
+ s_\theta^2bH(v_r)+s_\theta c_\theta S(v_r),
+ c_\theta^2bH(v_r)-s_\theta c_\theta S(v_r),0\bigr),\\
+(V_{\rho1},V_{\rho2})
+ &=\bigl(q_\rho(0,0,K_-),q_\rho(0,0,\mathrm iK_-)\bigr),\\
+\ell_\rho(z,g)&=\beta_\rho+U_\rho\cdot x+V_\rho\cdot y.
+\end{aligned}
+\tag{125.4}
+$$
+
+Thus every coefficient contains the literal factor $a_w/2$ and
+trace pairing with the literal $r_i$. The outcome-$0$ difference is
+the negative of the outcome-$1$ difference, so (125.2) retains both
+original error norms exactly. Define, initially as infima,
+
+$$
+m_j=\inf_{z\in\mathbb C^3,\ g\in\mathbb C}\mathcal F_j(z,g),
+\qquad
+n_j=\inf_{z\in\mathbb C^3}\mathcal F_j(z,0),
+\qquad \delta_j=n_j-m_j.
+\tag{125.5}
+$$
+
+The zero-retention coefficient is the restriction of the same affine
+rows, not a separately chosen approximation. The complex variable $g$
+has both real coordinates free. These definitions use the completion
+vector only as in Theorem 106.3: each admissible vector is realised by
+one full ten-dimensional completion shared by emission, the single
+forward return and every history of its hypothesis. Compared hypotheses
+may have different completions. The rows add no preparation, repetition,
+selection, record phase, menu entry, clock or schedule.
+
+**Lemma 125.2 (Uniform expansion of the actual rows).**
+For radii $R>0$, $G\ge0$, put
+
+$$
+\begin{aligned}
+R_{\mathfrak s}&=\max_i\|r_i\|_{\rm HS},\qquad
+k_A=\tau+2|s_\theta c_\theta|bA,\\
+\mathcal E(R,G)&=\frac{R_{\mathfrak s}}2
+ \left[b(R^2+1)+2G\left(k_AR+|s_\theta c_\theta|bR^2\right)\right].
+\end{aligned}
+\tag{125.6}
+$$
+
+If $0<\eta\le1$, $\|z\|\le R$, $|g|\le G$, and
+$(\eta g,-Ae+\eta z),(0,h_0(\eta))$ belong to $\mathcal P$, then,
+for each $j=f,a$,
+
+$$
+\left|d_j(\eta g,-Ae+\eta z;h_0(\eta))
+                         -\eta\mathcal F_j(z,g)\right|
+ \le\mathcal E(R,G)\eta^2.
+\tag{125.7}
+$$
+
+*Proof.* Use the exact blocks (114.2) and paired lift (118.9).
+The unscaled outer-product and skew differences are exactly
+
+$$
+\begin{aligned}
+\mathsf H_{-Ae+\eta z}-\mathsf H_{Ae+\eta f}
+ &=\eta H_1(z)+\eta^2(zz^\dagger-ff^\dagger),\\
+\mathsf S_{-Ae+\eta z}-\mathsf S_{Ae+\eta f}
+ &=\eta S_1(z).
+\end{aligned}
+\tag{125.8}
+$$
+
+Also the exact quadratic expansion of the cross block is
+
+$$
+\begin{aligned}
+K_{-Ae+\eta z}&=K_-+\eta K_1(z)+\eta^2K_2(z),\\
+K_1(z)&=\tau(s_\theta^2ez^\dagger+c_\theta^2ze^\dagger)
+           +\mathrm i s_\theta c_\theta bA(ez^\dagger+ze^\dagger),\\
+K_2(z)&=-\mathrm i s_\theta c_\theta bzz^\dagger,\\
+\|K_1(z)\|_{\rm HS}&\le k_A\|z\|,\qquad
+\|K_2(z)\|_{\rm HS}\le|s_\theta c_\theta|b\|z\|^2.
+\end{aligned}
+\tag{125.9}
+$$
+
+If $(X,Y,Z)$ is the exact paired lift against $(0,h_0(\eta))$,
+then $Z=\eta gK_{-Ae+\eta z}$ and (125.8) gives
+
+$$
+\begin{aligned}
+\|X-\eta X_1\|_{\rm HS}+\|Y-\eta Y_1\|_{\rm HS}
+ &\le b\eta^2(R^2+1),\\
+\|Z-\eta gK_-\|_{\rm HS}
+ &\le\eta^2G(k_AR+|s_\theta c_\theta|bR^2).
+\end{aligned}
+\tag{125.10}
+$$
+
+For every actual row separately, unitary invariance and the trace
+Cauchy–Schwarz inequality give
+
+$$
+\begin{aligned}
+&|q_{i,w}(X,Y,Z)-\eta\ell_{i,w}(z,g)|\\
+&\quad\le\frac{a_w}{2}\|r_i\|_{\rm HS}
+ \bigl(\|X-\eta X_1\|_{\rm HS}+\|Y-\eta Y_1\|_{\rm HS}
+                  +2\|Z-\eta gK_-\|_{\rm HS}\bigr)\\
+&\quad\le\mathcal E(R,G)\eta^2.
+\end{aligned}
+\tag{125.11}
+$$
+
+The last inequality uses $a_w\le1$ only to obtain one common bound;
+the row on its left still has its original weight. The outcome-$0$
+identity following (114.3) gives the same bound for that label.
+The difference of two suprema of absolute values is at most the
+supremum of the absolute coordinate differences. Applying this fact
+to the finite set and, separately, to all actual histories proves
+(125.7). No history need attain the latter supremum. $\square$
+
+## 126. Positive coefficients and quadratic threshold remainders
+
+**Theorem 126.1 (Coercivity and minimisers of both tangent problems; repo-derived).**
+Let $\underline c=c_{\mathfrak s}>0$, $\overline C=C_{\mathfrak s}>0$
+be the constants fixed in Definition 122.1, and retain
+$J_1=1+5/(2\tau)$ and $\alpha_{\mathfrak s}$ from (124.3)–(124.4).
+For each $j=f,a$, $\mathcal F_j$ is finite, continuous and convex,
+and is coercive on the underlying eight-dimensional real space.
+Its restriction $\mathcal F_j(z,0)$ is coercive on the underlying
+six-dimensional real space. More explicitly, for every $z,g$,
+
+$$
+\mathcal F_j(z,g)\ge
+\max\left\{\alpha_{\mathfrak s}A,
+ \frac{A\underline c}{J_1}\|z-f\|,
+ \underline c(1+2A)|g|\right\}.
+\tag{126.1}
+$$
+
+Both infima in (125.5) are attained, with
+
+$$
+0<\alpha_{\mathfrak s}A\le m_j\le n_j\le M,
+\qquad M=2\sqrt2\,\overline C A,
+\qquad m_f\le m_a,\quad n_f\le n_a.
+\tag{126.2}
+$$
+
+Set the explicit positive bounds
+
+$$
+R=1+\frac{J_1M}{A\underline c},\qquad G=\frac M{\underline c}.
+\tag{126.3}
+$$
+
+Every minimiser of either coefficient problem satisfies $\|z\|\le R$;
+every unrestricted minimiser additionally satisfies $|g|\le G$.
+
+*Proof.* The row bound used in (125.11), now applied to the affine
+rows themselves, proves finiteness. It also gives, for either norm,
+
+$$
+\begin{aligned}
+|\mathcal F_j(z,g)-\mathcal F_j(z',g')|
+ &\le R_{\mathfrak s}(Ab+2|s_\theta c_\theta|\tau)\|z-z'\|
+             +R_{\mathfrak s}\|K_-\|_{\rm HS}|g-g'|.
+\end{aligned}
+\tag{126.4}
+$$
+
+Thus continuity holds even for the full-history supremum. Convexity
+follows because each absolute affine row is convex.
+
+For arbitrary fixed $z,g$, the strict interior condition $0<A<1$
+makes $(\eta g,-Ae+\eta z)$ a reflection-side admissible pair and
+$h_0(\eta)$ an admissible anchor for all sufficiently small positive
+$\eta$. Lemma 125.2 shows $d_j/\eta\to\mathcal F_j(z,g)$.
+On the same curve (122.3) gives the exact limit
+
+$$
+\frac{D_0(\eta g,-Ae+\eta z;h_0(\eta))}{\eta}
+ \longrightarrow T(z,g):=
+ \|H_1(z)\|_{\rm HS}+\|S_1(z)\|_{\rm HS}+(1+2A)|g|.
+\tag{126.5}
+$$
+
+Consequently (122.4) implies
+$\underline cT\le\mathcal F_j\le\overline CT$.
+In (124.11), $h-h_\#=\eta(z-f)$. Dividing that inequality by
+$\eta$ and taking the limit yields
+$\|z-f\|\le J_1T/A\le J_1\mathcal F_j/(A\underline c)$.
+This proves the second and third bounds in (126.1).
+Every point on this curve has $d_j\ge\mu_j(h_0(\eta))$;
+the lower bound (124.3), divided by $\eta$ and passed to the limit,
+proves its first bound.
+
+The second and third bounds make all sublevel sets bounded;
+continuity makes them closed. Hence the two infima are minima.
+At the common trial $(z,g)=(f,0)$ one has $S_1=0$ and
+$H_1=-2A(ef^\dagger+fe^\dagger)$ of Hilbert–Schmidt norm
+$2\sqrt2 A$. Thus $\mathcal F_j(f,0)\le M$ by (126.5).
+This proves the upper bound in (126.2), and restriction to $g=0$
+proves $m_j\le n_j$. The inclusion $\mathscr R_f\subset\mathscr R_a$
+proves both inequalities between the two norms' minima.
+Finally (126.1), at any of these minimisers with value at most $M$,
+gives (126.3) by $\|z\|\le1+\|z-f\|$. $\square$
+
+**Definition 126.2 (Zero-retention minimum on the same reflection side).**
+Keep $\mu_j$ exactly as in (124.1)–(124.2), and only abbreviate
+$\mu_j(\eta)=\mu_j(h_0(\eta))$. Define its zero-retention restriction
+by
+
+$$
+\nu_j(\eta)=\min_{h\in\mathcal B_{h_0(\eta)}}
+                        d_j(0,h;h_0(\eta)),\qquad j=f,a.
+\tag{126.6}
+$$
+
+In particular the compact threshold $\mu_j$ still minimises the
+original nonlinear raw-law error over the full complex retention disk;
+it has not been replaced by $D_0$, $T$, or a tangent norm.
+
+**Theorem 126.3 (The original finite and full thresholds to first order; repo-derived).**
+With $R,G$ from (126.3), let
+
+$$
+E=\mathcal E(R,G)>0,\qquad
+\eta_* =\min\left\{1,\frac A{2R},\frac{1-A}{2R},\frac1{2G}\right\}>0.
+\tag{126.7}
+$$
+
+For every $0<\eta\le\eta_*$, both minima in (126.6) exist and are
+positive, and the four explicit error bounds are
+
+$$
+\begin{aligned}
+|\mu_f(\eta)-\eta m_f|&\le E\eta^2,&
+|\nu_f(\eta)-\eta n_f|&\le E\eta^2,\\
+|\mu_a(\eta)-\eta m_a|&\le E\eta^2,&
+|\nu_a(\eta)-\eta n_a|&\le E\eta^2.
+\end{aligned}
+\tag{126.8}
+$$
+
+Every compact $\mu_j$ minimiser, and every $\nu_j$ minimiser with
+retention set to zero, has the form
+
+$$
+h=-Ae+\eta z,\qquad \gamma=\eta g,\qquad
+\|z\|\le R,\quad |g|\le G.
+\tag{126.9}
+$$
+
+All these statements hold for each fixed source, $A$ and $f$ as
+quantified in Definition 125.1; no uniform assertion as $A\to0$ or
+$A\to1$ is made.
+
+*Proof.* The anchor and $h_\#(\eta)$ are in the unit ball on the
+stated interval. Continuity of $d_j$ and compactness, already established
+in Theorem 124.2, prove existence for $\nu_j$ as well as $\mu_j$.
+The same reflected trial as in (124.8) gives
+
+$$
+\alpha_{\mathfrak s}A\eta\le\mu_j(\eta)
+ \le\nu_j(\eta)\le d_j(0,h_\#(\eta);h_0(\eta))\le M\eta.
+\tag{126.10}
+$$
+
+In particular both minima are positive. For any minimiser of either
+problem, (122.4) gives $D_0\le M\eta/\underline c$.
+The actual branch localisation (124.11) then gives
+
+$$
+\|h-h_\#(\eta)\|
+ \le\frac{J_1M\eta}{A\underline c},\qquad
+|\gamma|\le\frac{M\eta}{\underline c}.
+\tag{126.11}
+$$
+
+Writing $h=-Ae+\eta z$ proves (126.9) for every minimiser.
+This step does not select a favourable subsequence or a favourable
+minimiser.
+
+Conversely, every coefficient minimiser in Theorem 126.1 lifts to
+an admissible reflection-side point on the entire interval (126.7):
+
+$$
+\|-Ae+\eta z\|\le A+\eta R\le\frac{1+A}2<1,\qquad
+\operatorname{Re}(e^\dagger(-Ae+\eta z))\le-A+\eta R\le-A/2,
+\qquad |\eta g|\le1/2.
+\tag{126.12}
+$$
+
+The anchor obeys $\|h_0(\eta)\|\le A+\eta\le(1+A)/2<1$ as well.
+For an unrestricted coefficient minimiser, (125.7) and (126.12)
+therefore give $\mu_j\le\eta m_j+E\eta^2$.
+For a nonlinear compact minimiser, (126.9) and (125.7) instead give
+$\mu_j\ge\eta\mathcal F_j(z,g)-E\eta^2\ge\eta m_j-E\eta^2$.
+These prove the two $\mu_j$ bounds. Applying the same two arguments
+with $g=0$ throughout proves the two $\nu_j$ bounds.
+The uniform estimate (125.11) applies to every actual history, so
+this proof of the full-law bounds uses its own supremum and does not
+assert that the finite decoder is an exact norming set for it.
+Every lift is realised by the one-completion construction of Theorem
+106.3, with its original emission and single forward return. $\square$
+
+## 127. A strict coefficient gap forces every compact minimiser into the puncture
+
+**Theorem 127.1 (Quantitative entry at the actual threshold; repo-derived).**
+Fix $j=f$ or $j=a$, with that norm's coefficients in (125.5).
+Suppose a number $\Delta>0$ satisfies $\delta_j\ge\Delta$.
+Keep $M,E,\eta_*$ from §126 and put
+
+$$
+\begin{aligned}
+K_*&=\tau+|s_\theta c_\theta|(\|D\|_{\rm HS}+b),\qquad
+L=R_{\mathfrak s}K_*>0,\\
+\eta_\Delta&=\min\{\eta_*,\Delta/(4E)\}>0.
+\end{aligned}
+\tag{127.1}
+$$
+
+For every $0<\eta\le\eta_\Delta$ and every compact minimiser
+$(\gamma,h)$ of the unchanged $\mu_j(\eta)$,
+
+$$
+\begin{gathered}
+\nu_j(\eta)-\mu_j(\eta)\ge\tfrac12\Delta\eta>0,\\
+\boxed{\quad
+\frac{\Delta}{2L}\eta\le|\gamma|
+ \le\frac{M-3\Delta/4}{\underline c}\eta\le G\eta.
+\quad}
+\end{gathered}
+\tag{127.2}
+$$
+
+The two linear bounds have strictly positive coefficients.
+In particular, every compact minimiser belongs to the original
+punctured reflection side, and entry there occurs at exactly
+$\varepsilon=\mu_j(\eta)$, including that endpoint. One may take
+$\Delta=\delta_j$ whenever that strict gap is known. The hypothesis
+belongs separately to each norm.
+
+*Proof.* By (126.8),
+
+$$
+\nu_j-\mu_j\ge\eta(n_j-m_j)-2E\eta^2
+ \ge\eta(\Delta-2E\eta)\ge\tfrac12\Delta\eta.
+\tag{127.3}
+$$
+
+For every fixed $\|h\|\le1$, the exact difference between the laws
+at $(\gamma,h)$ and $(0,h)$ has paired lift $(0,0,\gamma K_h)$.
+The bound $\|K_h\|_{\rm HS}\le K_*$ in (118.19) gives, in each
+actual coordinate, magnitude at most $a_w\|r_i\|_{\rm HS}K_*|\gamma|$.
+Thus for either original norm the triangle inequality yields
+
+$$
+d_j(0,h;h_0)\le d_j(\gamma,h;h_0)+L|\gamma|.
+\tag{127.4}
+$$
+
+At any compact minimiser $h$ is on the same reflection side used
+in (126.6), so $\nu_j\le\mu_j+L|\gamma|$.
+Combine this with (127.3) to prove the lower retention bound for
+every minimiser. For the upper bound use
+$|\gamma|\le D_0\le\mu_j/\underline c$ and
+
+$$
+\mu_j\le\eta(m_j+E\eta)
+ \le\eta(n_j-\Delta+\Delta/4)
+ \le\eta(M-3\Delta/4).
+\tag{127.5}
+$$
+
+Since $0<\Delta\le\delta_j=n_j-m_j<M$, the upper coefficient is
+positive. The lower one is positive since $L>0$.
+The nonzero minimiser, with its one fixed full completion, is an
+actual admissible alternative at error $\mu_j$. Below $\mu_j$
+no reflection-side alternative exists by Theorem 124.2. Its equality
+characterisation now proves the stated exact endpoint entry. $\square$
+
+Theorems 126.1 and 126.3 do not assume a strict gap. If
+$\delta_j=0$, they still give both original nonlinear thresholds to
+first order, but finite-$\eta$ nonzero-retention attainment at
+$\varepsilon=\mu_j(\eta)$ remains unresolved by these results.
+Indeed $0\le\nu_j-\mu_j\le2E\eta^2$ in that case, and (127.4)
+provides no positive linear retention lower bound. Retention of size
+$o(\eta)$ is not excluded, nor is a zero-retention compact minimiser.
+
+## 128. Signed actual-row lower witnesses paired with trial upper witnesses
+
+**Proposition 128.1 (A sufficient checkable gap certificate; repo-derived).**
+Fix one of the two row families $\mathscr R_j$ in (125.2). Choose
+finitely many actual rows $\rho_1,\ldots,\rho_q\in\mathscr R_j$,
+signs $\sigma_l\in\{-1,1\}$ and weights $\lambda_l\ge0$ such that
+
+$$
+\sum_{l=1}^q\lambda_l=1,\qquad
+\sum_{l=1}^q\lambda_l\sigma_lU_{\rho_l r}=0
+                    \quad(1\le r\le6).
+\tag{128.1}
+$$
+
+Let $B=\sum_l\lambda_l\sigma_l\beta_{\rho_l}$. Pair this signed
+lower witness with an unrestricted trial $(\bar z,\bar g)$ and a
+number $U\ge0$ satisfying
+
+$$
+|\beta_\rho+U_\rho\cdot\bar x+V_\rho\cdot\bar y|\le U
+                 \quad\text{for every }\rho\in\mathscr R_j.
+\tag{128.2}
+$$
+
+If $B>U$, then
+
+$$
+n_j\ge B>U\ge m_j,\qquad
+\delta_j\ge\Delta:=B-U>0.
+\tag{128.3}
+$$
+
+Consequently Theorem 127.1 applies with this explicit certified
+$\Delta$, including all of its retention bounds and its positive
+$\eta$ range. For $j=f$, (128.2) is a finite list of inequalities.
+For $j=a$, it must cover every actual history. One sufficient
+all-history upper witness, using only the displayed trial matrices,
+is
+
+$$
+U=\frac{R_{\mathfrak s}}2
+ \left(\|X_1(\bar z)\|_{\rm HS}+\|Y_1(\bar z)\|_{\rm HS}
+                      +2|\bar g|\|K_-\|_{\rm HS}\right),
+\tag{128.4}
+$$
+
+or any larger number. A sharper $U$ is allowed only with the
+corresponding all-actual-row inequality (128.2).
+
+*Proof.* For every $z$, the six cancellation equalities give
+
+$$
+\begin{aligned}
+\mathcal F_j(z,0)
+ &\ge\sum_l\lambda_l\sigma_l\ell_{\rho_l}(z,0)\\
+ &=\sum_l\lambda_l\sigma_l\beta_{\rho_l}=B.
+\end{aligned}
+\tag{128.5}
+$$
+
+Minimising proves $n_j\ge B$. The unrestricted trial gives
+$m_j\le\mathcal F_j(\bar z,\bar g)\le U$, proving (128.3).
+The trace bound with the original row is
+
+$$
+|\ell_{i,w}(\bar z,\bar g)|
+ \le\frac{a_w}{2}\|r_i\|_{\rm HS}
+ \left(\|X_1(\bar z)\|_{\rm HS}+\|Y_1(\bar z)\|_{\rm HS}
+                         +2|\bar g|\|K_-\|_{\rm HS}\right).
+\tag{128.6}
+$$
+
+Since $a_w\le1$ for every actual $w$, this proves (128.4) for the
+entire family, with no restriction on history length.
+
+The classical intermediate is Chebyshev approximation and weak LP
+duality, not an additional source-specific theorem. In the finite
+case the epigraph problem has the inequalities
+$-t\le\beta_\rho+U_\rho\cdot x+V_\rho\cdot y\le t$;
+setting $y=0$ gives its zero-retention restriction. This is the
+minimax LP of Boyd–Vandenberghe,
+[*Convex Optimization*, §6.1.1, printed pp. 291–293](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf).
+Its signed annihilating lower bound is the dual-norm certificate in
+Example 5.6 and Exercise 5.6, equation (5.104), of the same book.
+The existing [Library entry](../../../Library/QuadraticForms/boydvandenberghe2004convex.md)
+records the book; the approximation result cited here is distinct
+from that entry's S-procedure application. Sukhorukova–Ugon–Yost,
+[*Chebyshev approximation for multivariate functions*,
+arXiv:1510.06076v1, §2, equations (2.3)–(2.5) and Theorem 2.1](https://arxiv.org/pdf/1510.06076v1),
+give the convex supremum formulation and signed active-gradient
+criterion for their finite-set or continuous-hyperbox approximation
+problems. Here (128.5) uses only their elementary convex-combination
+intermediate, with the literal source rows and six completion
+columns specified in (125.4). It does not require maximal deviations
+to be attained by an actual history.
+
+The all-history conclusion uses its own lower witness and its own
+valid upper bound. The finite decoder supplies neither (128.2) for
+all histories nor an exact norming set for $\mathcal F_a$.
+Only actual rows enter (128.1); no coefficient-closure point is
+asserted to be a history or an installed operation. The result is a
+sufficient certificate. It certifies no particular allowed source
+with $B>U$, and asserts neither universal endpoint entry nor a
+resolution of an external open problem. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 129. Exact truncation by the number of native instrument labels
+
+**Definition 129.1 (The fixed paired laws and their instrument layers).**
+Fix any allowed source $\mathfrak s$ of VI Definition 114.1. In this
+section $L_{\mathfrak s}$ always denotes the integer decoder length
+of VI Proposition 118.2, not the real comparison constant in (124.4).
+Use precisely the constants $c_{\mathfrak s},C_{\mathfrak s}$ of
+(118.18), (118.20). For $x=(\gamma,h),x'=(\gamma',h')\in\mathcal P$
+write $D_{\rm pair}(x,x')=\mathcal D(x,x')$ from (118.1), and put
+
+$$
+\begin{aligned}
+\Delta^{[k]}(x,x')
+ &=\sup_{1\le i\le9,\ k(w)=k,\ \beta\in\{0,1\}}
+       |p_{\gamma,h}(u_i,w,\beta)-p_{\gamma',h'}(u_i,w,\beta)|,\\
+\Delta^{[\le K]}(x,x')&=\max_{0\le k\le K}\Delta^{[k]}(x,x'),\\
+K_{\mathfrak s}
+ &=\max\left\{L_{\mathfrak s},0,
+       \left\lceil\log_2(C_{\mathfrak s}/c_{\mathfrak s})\right\rceil\right\}.
+\end{aligned}
+\tag{129.1}
+$$
+
+The integer $k(w)$ counts the actual $0,1$ labels in V (91.2).
+Every occurrence of the same installed deterministic $N$ contributes
+zero to that count. All histories and their clocks are still those
+of the original externally fixed schedules. The prefix $u_i$, its
+subnormalised $r_i$, both terminal outcomes, and the factor
+$a_w/2=2^{-k(w)}/2$ remain part of each coordinate. The finite vector
+$P_{\mathfrak s}$ remains exactly (118.3). Every point of $\mathcal P$
+is realised by one full ten-dimensional completion used for emission,
+the single forward return and every history within that hypothesis,
+as in VI Theorem 106.3; different hypotheses may differ. This notation
+does not change the sole original preparation, the complex retention
+disk, the installed menu, the record bases or any schedule.
+
+**Theorem 129.2 (Exact full-domain instrument cutoff; repo-derived).**
+For every fixed allowed source and every $x,x'\in\mathcal P$, the
+integer in (129.1) satisfies
+
+$$
+2^{-(K_{\mathfrak s}+1)}C_{\mathfrak s}<c_{\mathfrak s},\qquad
+\boxed{\ \Delta_{\rm all}(x,x')
+                   =\Delta^{[\le K_{\mathfrak s}]}(x,x').\ }
+\tag{129.2}
+$$
+
+Any integer $K\ge L_{\mathfrak s}$ satisfying the displayed strict
+inequality can replace $K_{\mathfrak s}$. This is equality for the
+original raw-law error on the full paired closed domain, including
+both retention boundaries and both completion-ball boundaries. If
+$D_{\rm pair}=0$, every probability difference and both sides of
+(129.2) are zero. If $D_{\rm pair}>0$, all discarded layers together
+have supremum strictly smaller than $\Delta_{L_{\mathfrak s}}$.
+No maximum over a finite set of actual histories is asserted here.
+
+*Proof.* Retain the factor $a_w$ in the first line of (118.21).
+The bounds (118.19) and the choice (118.20) give, for every actual
+coordinate separately,
+
+$$
+|\Delta p_{i,w,\beta}|
+ \le 2^{-k(w)}C_{\mathfrak s}D_{\rm pair},
+                   \qquad \beta=0,1.
+\tag{129.3}
+$$
+
+For outcome $0$ use the unchanged total mass
+$a_w\operatorname{Tr}r_i$, so its difference is the negative of the
+outcome-$1$ difference. If $D_{\rm pair}=0$, (129.3) proves all
+zero assertions without division. Otherwise the decoder rows, whose
+ordinary lengths are at most $L_{\mathfrak s}$, are included among
+$k(w)\le K$, since $k(w)\le|w|$. Thus (118.12) gives
+
+$$
+\begin{aligned}
+\sup_{k(w)>K,\ i,\beta}|\Delta p_{i,w,\beta}|
+ &\le2^{-(K+1)}C_{\mathfrak s}D_{\rm pair}\\
+ &<c_{\mathfrak s}D_{\rm pair}
+ \le\Delta_{L_{\mathfrak s}}
+ \le\Delta^{[\le K]}.
+\end{aligned}
+\tag{129.4}
+$$
+
+The full supremum is the larger of the retained and discarded
+suprema, proving equality. The explicit $K_{\mathfrak s}$ obeys
+$2^{-K_{\mathfrak s}}C_{\mathfrak s}\le c_{\mathfrak s}$, so it
+has the required strict inequality after the extra factor $1/2$.
+This deduction uses the source-specific decoder and row estimates
+of VI §118; it does not replace their finite vector. $\square$
+
+**Lemma 129.3 (Ordinary length does not provide the suppression).**
+For every allowed source there are two hypotheses in $\mathcal P$
+and a constant $b_0>0$ such that, for every integer $n\ge0$,
+
+$$
+\max_{1\le i\le9,\ \beta\in\{0,1\}}
+ |p_{0,h}(u_i,N^n,\beta)-p_{0,0}(u_i,N^n,\beta)|\ge b_0.
+\tag{129.5}
+$$
+
+Consequently the instrument cutoff in Theorem 129.2 supplies no
+ordinary-length decay estimate: the retained layer $k=0$ contains
+undamped runs of arbitrarily large ordinary length.
+
+*Proof.* Choose any $0<\|h\|\le1$. Since the literal $r_i$ span
+$\operatorname{Herm}_3$, choose real $d_i$ with
+$I_3=\sum_i d_i r_i$. At zero retention the paired lift against
+$(0,0)$ has $Z=0$ and, by (118.9), $X+Y=bhh^\dagger$.
+For every unitary $Q$, cyclicity of trace and $W^2=I_3$ give
+$\operatorname{Tr}\Phi_Q(X,Y,0)=b\|h\|^2$. For $w=N^n$,
+$a_w=1$, so (116.2) yields
+
+$$
+\sum_i d_i q_{i,N^n}(X,Y,0)=\tfrac12 b\|h\|^2.
+$$
+
+Taking absolute values proves (129.5) with
+$b_0=b\|h\|^2/(2\sum_i|d_i|)>0$. These are admissible
+zero-retention hypotheses with the completions supplied by VI
+Theorem 106.3. This nondecay statement alone asserts neither a
+particular maximizing history nor impossibility of additional
+source-specific coincidences between row values. $\square$
+
+**Corollary 129.4 (Exact truncation of the literal reflected tangent rows).**
+Under Definition 125.1, for every $z\in\mathbb C^3,g\in\mathbb C$,
+
+$$
+\mathcal F_a(z,g)
+ =\sup_{1\le i\le9,\ k(w)\le K_{\mathfrak s}}
+               |\ell_{i,w}(z,g)|.
+\tag{129.6}
+$$
+
+The finite tangent problem remains the maximum over
+$|w|\le L_{\mathfrak s}$ in (125.2), with exactly the same
+$\beta_\rho,U_\rho,V_\rho$ as (125.4). Formula (129.6) does
+not assert norming of arbitrary elements of the entire lift
+$\mathscr V$ by these layers.
+
+*Proof.* For fixed $z,g$ the hypotheses
+$(\eta g,-Ae+\eta z),(0,Ae+\eta f)$ lie in $\mathcal P$ for
+all sufficiently small positive $\eta$, because $0<A<1$.
+Apply (129.2), divide by $\eta$, and use the uniform per-row
+remainder (125.11). That estimate bounds the difference between
+the scaled retained-layer supremum and the right side of (129.6)
+by $\mathcal E(R,G)\eta$ for fixed sufficiently large $R,G$.
+Lemma 125.2 gives the full-side limit $\mathcal F_a(z,g)$.
+This proves (129.6) without altering any row or requiring an
+actual history to attain either supremum. $\square$
+
+## 130. The same installed control and compact polynomial maximizations
+
+**Definition 130.1 (Projective powers and labelled layer patterns).**
+Fix the same source and a spectral decomposition of its installed
+control,
+
+$$
+\begin{gathered}
+N=S\operatorname{diag}(\lambda_1,\lambda_2,\lambda_3)S^\dagger,
+\qquad |\lambda_j|=1,\qquad S\in U(3),\\
+\alpha=(\lambda_2/\lambda_1,\lambda_3/\lambda_1),\qquad
+\Lambda_N=\{a\in\mathbb Z^2:\alpha_1^{a_1}\alpha_2^{a_2}=1\},\\
+T_N=\{z\in(S^1)^2:z_1^{a_1}z_2^{a_2}=1
+                              \text{ for every }a\in\Lambda_N\},\\
+M(z)=S\operatorname{diag}(1,z_1,z_2)S^\dagger.
+\end{gathered}
+\tag{130.1}
+$$
+
+For $k\ge0$, a native label pattern
+$\epsilon=(\epsilon_1,\ldots,\epsilon_k)\in\{0,1\}^k$ and
+$\mathbf z=(z^{(0)},\ldots,z^{(k)})\in T_N^{k+1}$, put
+
+$$
+\begin{aligned}
+Q_{\epsilon}(\mathbf z)
+ &=M(z^{(k)})V_{\epsilon_k}M(z^{(k-1)})\cdots
+                     V_{\epsilon_1}M(z^{(0)})V_0,\\
+\bar q_{i,k,\epsilon}(\mathbf z;X,Y,Z)
+ &=\frac{2^{-k}}2\operatorname{Tr}
+                   [r_i\Phi_{Q_\epsilon(\mathbf z)}(X,Y,Z)].
+\end{aligned}
+\tag{130.2}
+$$
+
+For $k=0$ the first formula means $M(z^{(0)})V_0$. For a paired
+hypothesis let $X,Y$ be exactly (118.9) and
+$Z=\gamma K_h-\gamma'K_{h'}$. Define two outcome differences
+$F_{i,k,\epsilon,1}=\bar q_{i,k,\epsilon}$ and
+$F_{i,k,\epsilon,0}=-\bar q_{i,k,\epsilon}$, evaluated on that
+paired lift. The associated unpaired probabilities are exactly
+
+$$
+\begin{aligned}
+\bar p_{\gamma,h}(i,k,\epsilon,\mathbf z,1)
+ &=\frac{2^{-k}}2\operatorname{Tr}
+                 [r_iE_{\gamma,h}(Q_\epsilon(\mathbf z))],\\
+\bar p_{\gamma,h}(i,k,\epsilon,\mathbf z,0)
+ &=2^{-k}\operatorname{Tr}r_i
+                -\bar p_{\gamma,h}(i,k,\epsilon,\mathbf z,1).
+\end{aligned}
+\tag{130.3}
+$$
+
+These definitions extend the actual rows continuously for a
+mathematical supremum; they do not install $M(z)$ as an operation.
+
+**Theorem 130.2 (Exact compact representation and semialgebraicity; repo-derived).**
+For every fixed allowed source, the unchanged full paired-law error
+on $\mathcal P^2$ is the following finite collection of compact
+polynomial maximizations:
+
+$$
+\boxed{\quad
+\Delta_{\rm all}(x,x')
+ =\max_{\substack{0\le k\le K_{\mathfrak s},\
+          \epsilon\in\{0,1\}^k,\ 1\le i\le9,\\
+          \beta\in\{0,1\},\ \sigma\in\{-1,1\}}}
+       \ \max_{\mathbf z\in T_N^{k+1}}
+               \sigma F_{i,k,\epsilon,\beta}(\mathbf z;x,x').
+\quad}
+\tag{130.4}
+$$
+
+Here $T_N$ is compact and real algebraic, and the objectives are real
+polynomials in the real and imaginary coordinates of $\mathbf z$
+and both hypotheses. Thus $\Delta_{\rm all}$ is semialgebraic in
+all sixteen real hypothesis coordinates, on the entire $\mathcal P^2$.
+The original finite error has its own semialgebraic representation
+
+$$
+\Delta_{\rm finite}(x,x')
+ =\max_{\substack{1\le i\le9,\ |w|\le L_{\mathfrak s},\\
+                    \beta\in\{0,1\},\ \sigma\in\{-1,1\}}}
+       \sigma\bigl(p_{\gamma,h}(u_i,w,\beta)
+                     -p_{\gamma',h'}(u_i,w,\beta)\bigr),
+\tag{130.5}
+$$
+
+a maximum of finitely many real polynomials in those coordinates.
+Moreover, (129.6) has the identical compact representation (130.4)
+with $\bar q$ applied to $(X_1(z),Y_1(z),gK_-)$ and absolute
+values, so $\mathcal F_a$ is semialgebraic in its eight real
+variables. These are the literal extensions of the rows of §125.
+
+A maximizing closure point in (130.4) represents a supremum of
+actual raw-law coordinates. It need not be an actual history,
+an attainable terminal event, or a physical control. Neither an
+ordinary-length cutoff for general $N$, nor a finite actual-history
+norming set for general $N$, nor a source-uniform length is part of
+these conclusions. No effective integer-relation computation or
+complexity bound for arbitrary real source data is asserted.
+
+*Proof.* The nonnegative-power torus criterion already stated by
+$\texttt{D5.S3.Fourier.TorusOrbitClosure.result}$, applied to the two
+coordinates of $\alpha$, gives
+
+$$
+\overline{\{\alpha^n:n\in\mathbb N_0\}}=T_N.
+\tag{130.6}
+$$
+
+This is the scope recorded in the existing
+[Onishchik Library note](../../../Library/Fourier/onishchik2020kronecker.md):
+no rational independence or algebraicity is required, and torsion is
+included. The same arbitrary-unit-circle-tuple statement is
+Ouaknine–Worrell, [*Ultimate Positivity is Decidable for Simple Linear
+Recurrence Sequences*, arXiv:1309.1914v4, Proposition 2 and Theorem
+3.2 (Kronecker)](https://arxiv.org/html/1309.1914v4).
+Their algebraic-input basis bounds and effective computation are
+Theorem 3.1 and Corollary 1, and are not applied to arbitrary real
+entries of the present $N$.
+
+For completeness, the finite algebraic description needed here
+requires only existence of a finite basis of $\Lambda_N\le\mathbb Z^2$.
+Indeed its first-coordinate image is $d\mathbb Z$. If $d>0$,
+choose a vector with first coordinate $d$; subtraction of its
+integer multiples leaves the first coordinate zero. That kernel
+is generated by at most one vector $(0,e)$. If $d=0$, the whole
+subgroup is such a kernel. Thus at most two vectors generate
+$\Lambda_N$. For each chosen generator $a$, write
+$a=a^+-a^-$ with nonnegative integer coordinates. On $(S^1)^2$
+its relation is equivalent to
+
+$$
+\prod_{j=1}^2 z_j^{a_j^+}
+       =\prod_{j=1}^2 z_j^{a_j^-}.
+\tag{130.7}
+$$
+
+The real and imaginary parts of these finitely many equations,
+together with $(\operatorname{Re}z_j)^2+(\operatorname{Im}z_j)^2=1$,
+define $T_N$. Relations for the generating vectors imply those for
+their integer combinations since all $z_j$ are nonzero. This proves
+that $T_N$ is real algebraic and compact, without computing the basis.
+
+Every actual word with exactly $k$ native labels has the unique
+chronological form
+
+$$
+w=N^{n_0}\epsilon_1N^{n_1}\cdots\epsilon_kN^{n_k},
+       \qquad n_0,\ldots,n_k\in\mathbb N_0.
+\tag{130.8}
+$$
+
+For each such tuple there is an original fixed schedule with those
+instrument positions and those deterministic runs; $\epsilon$ names
+its actual retained label event. These statements do not select a
+label during execution. Since
+$N^n=\lambda_1^nM(\alpha^n)$, its $Q_w$ equals the first line of
+(130.2) at $z^{(l)}=\alpha^{n_l}$ up to a scalar phase.
+Every term of $\Phi_Q$ is unchanged by that phase. Consequently
+(130.2)–(130.3) agree exactly with both original coordinates, including
+their raw masses, on this dense set of tuples. The $k+1$ exponents
+in (130.8) are independently arbitrary integers; hence (130.6)
+makes these tuples dense in $T_N^{k+1}$. Continuity shows that the
+supremum over actual tuples equals the maximum over this compact
+product, for each fixed $k,\epsilon,i,\beta,\sigma$. Taking the
+finite outer maximum and using Theorem 129.2 proves (130.4).
+This closure is only that of powers of the same $N$. In particular,
+the positive-word $PU(3)$ density used for exact identification in
+VI §114 does not replace $T_N$ by $U(3)$ at a fixed instrument count.
+Lemma 129.3 explains why large ordinary lengths cannot be removed
+by probability suppression: the undamped $N$ runs remain in (130.8).
+
+In real coordinates conjugation, matrix multiplication and trace
+are polynomial operations; $S,V_0,V_1,W,r_i,D,t,b$ are fixed
+coefficients. The expressions (114.2)–(114.3), including the full
+complex $\gamma$, are also polynomial. Thus all signed objectives
+in (130.4) are real polynomials. If they are indexed by a finite
+set $\mathcal J$ and written $F_\lambda(y;x,x')$, their maximum
+has the exact graph description
+
+$$
+\begin{gathered}
+v\ge0,\quad
+\forall\lambda\in\mathcal J\ \forall y\in T_N^{k(\lambda)+1},
+                 \quad F_\lambda(y;x,x')\le v,\\
+\exists\lambda\in\mathcal J\ \exists y\in T_N^{k(\lambda)+1},
+                 \quad F_\lambda(y;x,x')=v.
+\end{gathered}
+\tag{130.9}
+$$
+
+Finite indexing means finite conjunctions and disjunctions. All
+quantifiers over $y$ can be written over real coordinates with
+polynomial membership tests. Real quantifier elimination therefore
+makes this graph semialgebraic; it is used only as an existence
+statement with the fixed real coefficients. The intermediate is
+Basu, [*Algorithms in Real Algebraic Geometry: A Survey*,
+arXiv:1409.1534v1, Theorem 2.1](https://arxiv.org/pdf/1409.1534v1),
+or Guo–Kim–Jiao–Pham, [*On types of KKT points in polynomial
+optimization*, arXiv:2004.12315v1, §2.1, Theorem 2.1](https://arxiv.org/html/2004.12315v1).
+Formula (130.5) follows directly from the original finite set and
+the same polynomial calculation, independently of any equality
+between its norm and the full norm. Finally apply (129.6) and
+(130.8) to the affine matrices of (125.3). This gives the claimed
+tangent representation and semialgebraicity using those same rows.
+All closure operations in this proof concern numerical suprema;
+none merges physically distinct clocks or records. $\square$
+
+## 131. Semialgebraic minima for the unchanged reflection-side problems
+
+**Definition 131.1 (Compact argmin fibers and extremal retention radii).**
+Fix the source, $0<A<1$ and the unit $f\perp e$ of Definition
+125.1. Choose any $0<\bar\eta<\sqrt{1-A^2}$. For
+$0\le\eta\le\bar\eta$ retain $h_0(\eta)=Ae+\eta f$, and put
+
+$$
+\begin{aligned}
+\mathcal C
+ &=\{(\gamma,h):|\gamma|\le1,\ \|h\|\le1,
+                         \operatorname{Re}(e^\dagger h)\le0\},\\
+\Gamma_j(\eta)
+ &=\{(\gamma,h)\in\mathcal C:
+                 d_j(\gamma,h;h_0(\eta))=\mu_j(\eta)\},\\
+r_j^-(\eta)&=\min_{(\gamma,h)\in\Gamma_j(\eta)}|\gamma|,
+\qquad
+r_j^+(\eta)=\max_{(\gamma,h)\in\Gamma_j(\eta)}|\gamma|,
+                         \qquad j=f,a.
+\end{aligned}
+\tag{131.1}
+$$
+
+For positive $\eta$, $\mu_j,\nu_j$ are exactly (124.2), (126.6);
+at $\eta=0$ use those same compact minimizations to extend them.
+The set $\mathcal C$ is the original reflection side with the
+auxiliary zero-retention slice included, not a tangent feasible set.
+
+**Theorem 131.2 (Semialgebraic values and compact argmin relation; repo-derived).**
+For each $j=f,a$ separately, $\mu_j,\nu_j,r_j^-,r_j^+$ are
+semialgebraic functions on $[0,\bar\eta]$. The relation
+
+$$
+\Gamma_j=\{(\eta,\gamma,h):0\le\eta\le\bar\eta,
+                                  (\gamma,h)\in\Gamma_j(\eta)\}
+\tag{131.2}
+$$
+
+is a compact semialgebraic set with nonempty compact fibers.
+The two value functions $\mu_j,\nu_j$ are continuous there, and
+$0\le r_j^-\le r_j^+\le1$. For $0<\eta\le\eta_*$ in
+Theorem 126.3 all compact minimizers, and hence both extremal radii,
+satisfy $|\gamma|\le G\eta$.
+
+*Proof.* The source-fixed polynomial description of $\mathcal P$
+and Theorem 130.2 show that each $d_j(\gamma,h;h_0(\eta))$ is
+semialgebraic on the indicated domain. This is the original finite
+error for $j=f$ and the original full error for $j=a$. Continuity
+of both is already proved in Theorem 124.2. The feasible set
+$\mathcal C$ is a fixed nonempty compact semialgebraic set,
+independent of $\eta$. In particular minima exist. An exact
+value-graph formula for $\mu_j$ is
+
+$$
+\begin{aligned}
+v=\mu_j(\eta)\quad\Longleftrightarrow\quad
+ &\exists x\in\mathcal C:\ d_j(x;h_0(\eta))=v,\\
+ &\forall x'\in\mathcal C:\ d_j(x';h_0(\eta))\ge v.
+\end{aligned}
+\tag{131.3}
+$$
+
+When $d_j$ is represented by its semialgebraic graph, these are
+real polynomial quantifiers after introducing its value variables.
+The same formula with $\gamma=0$ throughout gives $\nu_j$.
+The real projection/complement theorem cited in Theorem 130.2
+therefore proves both value graphs semialgebraic. Equality to the
+value gives a semialgebraic graph for $\Gamma_j$.
+
+Uniform continuity of $d_j$ on $[0,\bar\eta]\times\mathcal C$
+shows that the change in each minimum is bounded by the supremum
+of the corresponding change of the objective. This proves
+continuity of both values, using the zero-retention compact slice
+for $\nu_j$. The equality defining $\Gamma_j$ is thus closed
+in a compact product, so (131.2) is compact as well as semialgebraic.
+Each fiber is nonempty and compact.
+
+The retention function has the polynomial graph
+$r\ge0$, $r^2=(\operatorname{Re}\gamma)^2+
+(\operatorname{Im}\gamma)^2$. Existential attainment and universal
+lower, respectively upper, bounds for $r$ over the nonempty fiber
+$\Gamma_j(\eta)$ give value-graph formulas just as in (131.3).
+They prove semialgebraicity and existence of both radii. This
+argument requires no choice of a minimizer. Their order and unit
+bound follow from $\mathcal C$. Finally, (126.9) bounds retention
+for every compact minimizer by $G\eta$, so it bounds both extrema.
+The source-specific content is the application to the unchanged
+raw-law objectives and their entire minimizer fibers; the real
+projection intermediate is the classical one already cited. $\square$
+
+## 132. Eventual endpoint trichotomy, including tangent ties
+
+**Theorem 132.1 (A stable endpoint type for each original error; repo-derived).**
+Fix the source, $A,f$ as in Definition 131.1, and fix either $j=f$
+or $j=a$. There is $\varepsilon_j>0$, depending on these fixed
+choices, such that exactly one of the following patterns holds
+for every $0<\eta<\varepsilon_j$:
+
+(I) $r_j^+(\eta)=0$. Every compact minimizer has zero retention,
+$\nu_j(\eta)=\mu_j(\eta)$, and the original punctured
+reflection-side endpoint at error $\mu_j(\eta)$ is absent.
+
+(II) $r_j^-(\eta)=0<r_j^+(\eta)$. Zero and nonzero retention
+minimizers coexist, $\nu_j(\eta)=\mu_j(\eta)$, and the
+original punctured endpoint is present.
+
+(III) $r_j^-(\eta)>0$. Every compact minimizer is punctured,
+$\nu_j(\eta)>\mu_j(\eta)$, and the original punctured endpoint
+is present.
+
+In particular there is no infinite switching of endpoint types
+accumulating at $\eta=0$, also when $\delta_j=n_j-m_j=0$.
+The result classifies possible eventual behavior; it selects no
+one pattern for an unspecified allowed source. Equality of the
+two values alone does not distinguish (I) from (II).
+
+*Proof.* At any fixed positive $\eta$, nonempty compact fibers
+make exactly one of
+
+$$
+r_j^+=0,\qquad r_j^-=0<r_j^+,\qquad r_j^->0
+\tag{132.1}
+$$
+
+hold. Since a radius is nonnegative, $r_j^+=0$ means that every
+minimizer has zero retention. If $r_j^-=0<r_j^+$, attainment of
+both extrema supplies the two kinds of minimizers. If $r_j^->0$,
+no zero-retention minimizer exists. Moreover,
+
+$$
+\nu_j(\eta)=\mu_j(\eta)
+       \quad\Longleftrightarrow\quad r_j^-(\eta)=0.
+\tag{132.2}
+$$
+
+For the forward direction take an attained zero-retention minimum
+in (126.6); equality makes it a compact unrestricted minimizer.
+For the reverse direction take the attained radius-zero minimizer
+and compare with the restricted minimum. If $r_j^->0$, the
+restricted minimum still exists, so absence of equality and
+$\nu_j\ge\mu_j$ imply strict inequality.
+
+The endpoint equality criterion of Theorem 124.2 says exactly
+that the original punctured endpoint is present if and only if
+there is a compact minimizer with nonzero retention, equivalently
+$r_j^+>0$. This proves all pointwise pattern assertions, with the
+same raw probabilities and feasible set as that theorem.
+
+By Theorem 131.2, each of the three subsets of
+$(0,\bar\eta)$ defined in (132.1) is semialgebraic. A
+semialgebraic subset of the real line is a finite union of points
+and intervals: partition the line at the finitely many real roots
+of the nonzero polynomials in a Boolean description and observe
+that every sign is constant on each remaining interval. Choose
+$\varepsilon_j>0$ below every positive boundary point of these
+three sets and below $\bar\eta$. Their membership is then
+constant on $(0,\varepsilon_j)$; since they partition it, precisely
+one contains the whole interval. This uses no assumption on the
+tangent gap. If both $j$ are considered, shrinking to the smaller
+of their two intervals stabilizes both, without requiring their
+types to agree. This is the source-specific consequence of the
+real semialgebraic finiteness in Guo–Kim–Jiao–Pham, §2.1 cited
+above, not a conclusion that a particular source has a strict gap.
+$\square$
+
+## 133. Rational leading orders for extremal retention and tied gaps
+
+**Theorem 133.1 (Scalar growth restrictions at the original thresholds; repo-derived).**
+For each fixed source, $0<A<1$, unit $f\perp e$ and $j=f,a$,
+shrink the positive interval of Theorem 132.1 if necessary.
+Each of its two extremal scalar radii is either identically zero
+there or is positive there and satisfies
+
+$$
+r_j^\pm(\eta)=c_j^\pm\eta^{q_j^\pm}
+                         +o(\eta^{q_j^\pm}),
+\qquad c_j^\pm>0,\quad q_j^\pm\in\mathbb Q,\quad q_j^\pm\ge1.
+\tag{133.1}
+$$
+
+Only radii that are positive have coefficients in (133.1).
+If $\delta_j=n_j-m_j=0$, the original nonnegative nonlinear gap
+either vanishes identically on a final positive interval or obeys
+
+$$
+\nu_j(\eta)-\mu_j(\eta)
+       =d_j^{\rm gap}\eta^{q_j^{\rm gap}}
+                         +o(\eta^{q_j^{\rm gap}}),
+\qquad d_j^{\rm gap}>0,\quad q_j^{\rm gap}\in\mathbb Q,
+\quad q_j^{\rm gap}\ge2.
+\tag{133.2}
+$$
+
+Thus a positive gap cannot be flatter than every power of $\eta$.
+These statements concern the extremal scalar functions themselves,
+not arbitrary selections from the minimizer relation. They allow
+positive retention of order $o(\eta)$, and do not select an endpoint
+type in a tangent tie. All intervals and coefficients are for the
+fixed source and fixed interior $A$; no uniformity at $A=0,1$ or
+over sources is asserted.
+
+*Proof.* The zero sets of the nonnegative semialgebraic functions
+$r_j^-,r_j^+$ and $\nu_j-\mu_j$ have finitely many boundary
+points. On a sufficiently small positive interval each function
+is therefore either zero everywhere or positive everywhere.
+For a nonzero scalar semialgebraic function $u$ on $(0,\epsilon)$,
+the classical growth dichotomy gives
+$u(\eta)=c\eta^q+o(\eta^q)$ with $c\ne0$ and $q\in\mathbb Q$.
+The intermediate is Duan–Jiao–Wu–Zhou,
+[*Existence of Pareto solutions for vector polynomial optimization
+problems with constraints*, arXiv:2109.07304v1, §2, Lemma 2.2](https://arxiv.org/pdf/2109.07304v1).
+Its hypotheses here hold for the scalar functions by Theorem 131.2,
+without any analyticity assumption on a chosen minimizer. Positivity
+forces $c>0$.
+
+For either positive radius, Theorem 126.3 gives $u(\eta)\le G\eta$.
+If its growth exponent were $q<1$, then
+$u(\eta)/\eta\sim c\eta^{q-1}\to+\infty$, contradicting this
+bound. Hence $q\ge1$. When $\delta_j=0$, the two remainder
+bounds in (126.8), with the same original minima, give
+
+$$
+0\le\nu_j(\eta)-\mu_j(\eta)\le2E\eta^2.
+\tag{133.3}
+$$
+
+For a positive gap the same argument after division by $\eta^2$
+forces its rational exponent to be at least two, proving (133.2).
+A positive function with the asymptotic (133.2) is not
+$o(\eta^{q_j^{\rm gap}})$ and hence is not smaller than every
+power. Identically zero gaps occur in both patterns (I) and (II)
+of Theorem 132.1, whereas a positive gap occurs in (III).
+Consequently a zero tangent gap and even equality of the nonlinear
+values do not decide punctured attainment. No regularity of an
+arbitrarily varying choice of minimizers has been inferred. $\square$
+
+## 134. Finite projective order and actual finite norming families
+
+**Corollary 134.1 (An exact actual-history family and its full tangent LP; repo-derived).**
+Suppose the same installed $N$ of an allowed source satisfies
+$N^p=\lambda I_3$ for an integer $p\ge1$ and $|\lambda|=1$.
+Let $K=K_{\mathfrak s}$ and define the finite set of actual words
+
+$$
+\begin{gathered}
+\mathscr W_{K,p}
+ =\{N^{n_0}\epsilon_1N^{n_1}\cdots\epsilon_kN^{n_k}:
+       0\le k\le K,\ \epsilon\in\{0,1\}^k,
+                     \ 0\le n_l\le p-1\},\\
+B_{\mathfrak s,p}=K+(K+1)(p-1).
+\end{gathered}
+\tag{134.1}
+$$
+
+For every paired hypothesis in the full closed domain,
+
+$$
+\begin{aligned}
+\Delta_{\rm all}(x,x')
+ &=\max_{\substack{1\le i\le9,\ w\in\mathscr W_{K,p},\\
+                                      \beta\in\{0,1\}}}
+          |p_{\gamma,h}(u_i,w,\beta)-p_{\gamma',h'}(u_i,w,\beta)|\\
+ &=\Delta_{B_{\mathfrak s,p}}(x,x').
+\end{aligned}
+\tag{134.2}
+$$
+
+This is a finite norming family of actual existing rows for the
+full paired-law error; it is distinct in definition from the
+original decoder $P_{\mathfrak s}$. No equality of those two
+vectors or their error norms is presumed. With the literal
+coefficients of (125.4) and
+$\mathscr H=\{(i,w):1\le i\le9,w\in\mathscr W_{K,p}\}$,
+the full tangent coefficients are exactly the finite linear programs
+
+$$
+\begin{aligned}
+m_a&=\min_{x\in\mathbb R^6,\ y\in\mathbb R^2,\ v\in\mathbb R}v
+ &&\text{subject to }-v\le\beta_\rho+U_\rho\cdot x+V_\rho\cdot y
+                                 \le v\quad(\rho\in\mathscr H),\\
+n_a&=\min_{x\in\mathbb R^6,\ v\in\mathbb R}v
+ &&\text{subject to }-v\le\beta_\rho+U_\rho\cdot x
+                                 \le v\quad(\rho\in\mathscr H).
+\end{aligned}
+\tag{134.3}
+$$
+
+Both optima are attained. No periodicity of $V_0$ or $V_1$ is required.
+
+*Proof.* For each exponent in (130.8), write $n_l=pq_l+r_l$ with
+$0\le r_l<p$. Replacing $N^{n_l}$ by $N^{r_l}$ multiplies the
+unitary product only by the scalar $\lambda^{q_l}$, even with
+arbitrary intervening native labels. Their product phase cancels
+from $\Phi_Q$ and $E_{\gamma,h}(Q)$. The number $k$ and therefore
+the actual weight $2^{-k}/2$ are unchanged. Thus both raw
+probability values of the original word equal those of the reduced
+actual word, at the same prefix, for every hypothesis. The reduced
+word has length at most $k+(k+1)(p-1)\le B_{\mathfrak s,p}$.
+Theorem 129.2 now proves the first equality of (134.2).
+The reduced family is contained in all words of length at most
+$B_{\mathfrak s,p}$, which are contained in all histories; the two
+inclusions prove its second equality.
+
+The identical phase cancellation holds for the literal affine
+rows in (125.3). Corollary 129.4 therefore gives
+$\mathcal F_a(z,g)=\max_{\rho\in\mathscr H}|\ell_\rho(z,g)|$.
+Substitute the eight real columns (125.4) and take its epigraph;
+restriction to $g=0$ is exactly $y=0$. This proves (134.3), and
+Theorem 126.1 supplies attained minima. This uses only the
+finite epigraph identity already credited to Boyd–Vandenberghe
+in §128. Physically different original and reduced clocks or
+records remain different events; equality of their row functionals
+here is a mathematical equality, not a merger or a new control.
+$\square$
+
+**Proposition 134.2 (A nonempty allowed subclass of projective order two).**
+For every $0<d<1$ and every $\theta$ with $\sin(2\theta)\ne0$,
+choose any complex unit $v\perp\xi$ and put
+
+$$
+u=\frac{\xi+v}{\sqrt2},\qquad N=I_3-2uu^\dagger.
+\tag{134.4}
+$$
+
+This gives a legitimate allowed control with $N^2=I_3$ and
+$[N,P_\xi]\ne0$. The actual eight-plus-one prefix construction
+of V §§92–93 supplies an allowed source for it, so the subclass
+in Corollary 134.1 is nonempty. This statement evaluates neither
+$\delta_j$ nor any of the three endpoint types for that source.
+
+*Proof.* Since $u^\dagger u=1$, the matrix $uu^\dagger$ is an
+orthogonal projection, so $N=N^\dagger$ and $N^2=I_3$.
+Moreover $N\xi=-v$, hence $NP_\xi N^\dagger=vv^\dagger\ne P_\xi$.
+A unitary commuting with $P_\xi$ would preserve that projection
+under conjugation, proving the mixing condition. For these original
+$d,\theta$, V Theorem 92.1 supplies eight actual native prefix
+columns with their original masses. V Theorem 92.2 supplies a ninth
+column by applying this same mixing $N$ to one of them, with no
+new preparation or normalization. They span $\operatorname{Herm}_3$,
+so all clauses of VI Definition 114.1 hold. In this subclass $p=2$
+in (134.1) gives the valid source-dependent bound $2K+1$.
+Neither mixing nor finite projective order compares the two tangent
+optima, so this construction is not a positive-gap example. The
+strict-gap existence question, and the choice between the eventual
+endpoint types for a specified but unevaluated source, remain
+unresolved by these conclusions. No sampling, entire-unitary
+recovery, or external named-problem conclusion follows. $\square$
+
+## 追加锚（本行以下为增补区）
