@@ -58,11 +58,12 @@ internal sealed class PositiveNewtonSumsDocument : IScribeDocumentDefinition
         return All("n", Pos(), Eqn(An(14), rhs));
     }
     private static DocumentBlock Node(string name, string title, Formula body, string prose,
-        bool literature = false, bool theorem = false) => Describe.Lean(
+        bool literature = false, bool theorem = false,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("posnewton-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(Disp(body)),
         literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-        Blocks(Paragraph(Text(prose))), theorem ? DescribeRole.Theorem : DescribeRole.Definition);
+        Blocks(Paragraph(Text(prose))), theorem ? DescribeRole.Theorem : DescribeRole.Definition, resolution);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Strict positive monomial coefficients give the rational shifted generating function and the positive-index recurrence for A301420.",
@@ -122,5 +123,6 @@ internal sealed class PositiveNewtonSumsDocument : IScribeDocumentDefinition
                 + "The printed recurrence polynomial is the denominator times 1-X+X^3-X^4+X^5+X^8. "
                 + "Multiplication leaves a polynomial of degree at most thirteen; extracting degree n+13 proves the recurrence for all positive n. "
                 + "A302764 also asserts the same generating-function family. The coefficient proof here is derived from the literal sum; global proof novelty is unverified.",
-                theorem: true))));
+                theorem: true, resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a301420-positive-newton-sums"), ResolutionKind.Proved)))));
 }

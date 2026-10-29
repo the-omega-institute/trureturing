@@ -6,6 +6,18 @@
    utility: none
    digest: Strict positive monomial coefficients of the five-data Newton sums. -/
 
+/-
+result:
+  proof_shape: content
+  escape_witness: the all-degree multinomial logarithm bridges and
+    positive_series_bridge derive the strict-positive coefficient series.
+  admission_basis: open-problem-resolution (#23723; Proved)
+  Direct frozen dependencies: none (Mathlib imports only).
+  Unfinished four-slot registration: https://github.com/the-omega-institute/trureturing/issues/23747
+  Reg binding: declared_unresolved; IE-C050 ClosedTruthReadout,
+    source.residual_requires_open. No declared_validated claim.
+-/
+
 import Mathlib.RingTheory.PowerSeries.Log
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.Data.Nat.Choose.Multinomial

@@ -174,6 +174,10 @@ $$positiveSeries = \frac{1 - X \cdot (1 + X)^{4}}{\left(1 - X\right) \cdot \left
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PowerSeries/PositiveNewtonSums.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a301420-positive-newton-sums` (proved) by `D5/S3/Combinatorics/PowerSeries/PositiveNewtonSums.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a301420-positive-newton-sums","declaration_gid":"D5/S3/Combinatorics/PowerSeries/PositiveNewtonSums.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Gregory Gerard Wojnar (2018). *OEIS A301420: positive coefficients of five-data generalized Chebyshev polynomials*. URL: <https://oeis.org/A301420>.
