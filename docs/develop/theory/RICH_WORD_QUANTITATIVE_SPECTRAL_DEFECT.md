@@ -332,3 +332,302 @@ $$
 The unrestricted target is $`RT(\mathcal C_d)=E^*(u_{2d-1})`$ for every $d\ge2$, as in source Conjecture 3. With $d=r+1$, Corollary 3.1 constrains candidate morphic families for its upper inequality. It supplies a necessary restriction: it neither constructs such a family nor proves the lower inequality for all of $\mathcal C_d$. Corollary 3.2 gives no sufficiency statement for spectral cancellation, richness or an ordinary exponent bound.
 
 ## 追加锚（本行以下为增补区）
+
+## 4. Positive cancellation rows and the exact minimum total length
+
+**Definition 4.1 (Cancellation rows and the supplied polynomial).** Fix an integer $r\ge3$ and retain exactly $A_r$, $\varphi$, $u=u_{2r+1}$, $\Lambda$, $\beta$ and $e_r$ from Definitions 1.2–1.3. In particular,
+
+$$
+\varphi(i)=0(i+1)\ (0\le i<2r),\qquad
+\varphi(2r)=0(2r)(2r),\qquad
+\Lambda^r(\Lambda-2)=1,
+$$
+
+and the polynomial and descending eigenvector coordinates used here are
+
+$$
+g_r(X)=X^r-\sum_{k=0}^{r-1}X^k,\qquad
+v_\beta=\bigl(\beta^{2r-1}(\beta-2),
+ \beta^{2r-2}(\beta-2),\ldots,\beta-2,1\bigr)^T.
+$$
+
+Let
+
+$$
+\mathcal K_r=\{h\in\mathbb Z_{>0}^{2r+1}:hv_\beta=0\},\qquad
+H(h)=\sum_{i=0}^{2r}h_i,
+$$
+
+and write
+
+$$
+h^*=\bigl(\underbrace{1,\ldots,1}_{r\text{ entries}},
+ 2^0,2^1,\ldots,2^r\bigr).
+$$
+
+The root $\beta$ is the existing $r$-bonacci root: the interval-and-equation characterization `eq_dbonacciPerronRoot_iff` and the characteristic/nontrivial-equation equivalence in [the Perron-root source](../../../D5/S0/Tower/DBonacci/PerronRoot.lean) identify it with `dbonacciPerronRoot r`. The rational irreducibility conjunct of `dbonacci_irreducible` in [the irreducibility source](../../../D5/S0/Tower/DBonacci/Irreducibility.lean), with $q=r$, applies to the literal polynomial $g_r$. We use these existing results as supplied. Thus $g_r$ is the monic minimal polynomial of $\beta$ over $\mathbb Q$, of degree $r$, and
+
+$$
+(X-1)g_r(X)=X^r(X-2)+1,\qquad
+\beta^r(\beta-2)=-1.
+\tag{18}
+$$
+
+The vector $h^*$ is the published weighted length row in Dvořáková–Pelantová, [*The limit of repetition thresholds of rich sequences*, Definition 12 and Appendix Lemma 22, EJC 33(2), P2.15](https://www.combinatorics.org/ojs/index.php/eljc/article/download/v33i2p15/pdf/), [doi:10.37236/14600](https://doi.org/10.37236/14600). Those are Definition 11 and Lemma 21 in [arXiv:2509.06104v1](https://arxiv.org/html/2509.06104v1); their parameter $d$ equals $r$. That lemma already supplies cancellation for this particular row. In this section, external result numbers refer to the journal version unless the arXiv version is named explicitly.
+
+**Theorem 4.2 (Complete positive integer cancellation family).** For every integer $r\ge3$ and every $h=(h_0,\ldots,h_{2r})\in\mathbb Z_{>0}^{2r+1}$, writing $t=h_r$, one has
+
+$$
+hv_\beta=0
+\quad\Longleftrightarrow\quad
+h_{r+j}=t+\sum_{i=0}^{j-1}2^{j-1-i}h_i
+\quad\text{for every }j=1,\ldots,r.
+\tag{19}
+$$
+
+Consequently the $r+1$ independent parameters $h_0,\ldots,h_{r-1},t$ range freely over the positive integers and uniquely parameterize $\mathcal K_r$.
+
+*Proof.* Fix $r$ and a positive integer row $h$. Form polynomials in $\mathbb Q[X]$ by
+
+$$
+\begin{aligned}
+a(X)&=\sum_{i=0}^{r-1}h_iX^{r-1-i},\\
+b(X)&=\sum_{j=0}^{r-1}h_{r+j}X^{r-1-j},\\
+F(X)&=(X-2)\bigl(X^ra(X)+b(X)\bigr)+h_{2r},\\
+R(X)&=(X-2)b(X)-a(X)+h_{2r}.
+\end{aligned}
+$$
+
+The descending order in $v_\beta$ gives $F(\beta)=hv_\beta$. By (18),
+
+$$
+F(X)=(X-1)g_r(X)a(X)+R(X).
+\tag{20}
+$$
+
+Since the supplied $g_r$ is the minimal polynomial of $\beta$, a rational polynomial vanishes at $\beta$ exactly when it is divisible by $g_r$. Hence (20) implies
+
+$$
+hv_\beta=0\quad\Longleftrightarrow\quad g_r\mid R.
+$$
+
+The degree of $R$ is $r$ and its leading coefficient is $h_r=t>0$: the leading term comes from $Xb(X)$, while all other terms have degree at most $r-1$. As $g_r$ is monic of degree $r$, divisibility is therefore equivalent to the exact identity
+
+$$
+R(X)=t g_r(X).
+\tag{21}
+$$
+
+For $1\le j<r$, comparing coefficients of $X^{r-j}$ in (21) gives
+
+$$
+h_{r+j}-2h_{r+j-1}-h_{j-1}=-t.
+$$
+
+The constant coefficient gives $h_{2r}-2h_{2r-1}-h_{r-1}=-t$, the same formula for $j=r$. Thus the coefficient equations, including the already equal leading coefficients, are exactly
+
+$$
+h_r=t,\qquad
+h_{r+j}=2h_{r+j-1}+h_{j-1}-t
+\quad(1\le j\le r).
+\tag{22}
+$$
+
+Subtracting $t$ from both sides shows that $s_j=h_{r+j}-t$ satisfies $s_0=0$ and $s_j=2s_{j-1}+h_{j-1}$. Induction yields
+
+$$
+s_j=\sum_{i=0}^{j-1}2^{j-1-i}h_i,
+$$
+
+which proves the forward implication in (19). Conversely, the displayed sums satisfy this recurrence, hence every coefficient equation (22), hence (21), (20) and $F(\beta)=0$. This proves the reverse implication without additional conditions on $h$.
+
+Finally choose any positive integers $h_0,\ldots,h_{r-1},t$. Formula (19) assigns a positive integer to each remaining coordinate, so the resulting row belongs to $\mathcal K_r$. Every member is recovered from its first $r$ coordinates and its coordinate $h_r=t$; no two parameter choices give the same row. $\square$
+
+**Corollary 4.3 (Componentwise minimum and sharp total size).** For every integer $r\ge3$ and every $h\in\mathcal K_r$, with $t=h_r$,
+
+$$
+H(h)=(r+1)t+\sum_{i=0}^{r-1}2^{r-i}h_i
+ \ \ge\ r+2^{r+1}-1.
+\tag{23}
+$$
+
+Moreover $h\ge h^*$ coordinatewise, $h_{2r}\ge2^r$, and equality in the total-length bound holds exactly when $h=h^*$. Thus $h^*$ is the unique row minimizing $H$ on $\mathcal K_r$.
+
+*Proof.* The first $r$ coordinates and $t$ are at least one. For $1\le j\le r$, Theorem 4.2 gives
+
+$$
+h_{r+j}\ge1+\sum_{i=0}^{j-1}2^{j-1-i}=2^j.
+$$
+
+Together with $h_r\ge1=2^0$, this proves componentwise domination and the last-coordinate bound. Summing the full parameterization and reversing the finite sums gives
+
+$$
+\begin{aligned}
+H(h)
+ &=\sum_{i=0}^{r-1}h_i+(r+1)t
+   +\sum_{j=1}^{r}\sum_{i=0}^{j-1}2^{j-1-i}h_i\\
+ &=(r+1)t+
+   \sum_{i=0}^{r-1}\left(1+\sum_{j=i+1}^{r}2^{j-1-i}\right)h_i\\
+ &=(r+1)t+\sum_{i=0}^{r-1}2^{r-i}h_i.
+\end{aligned}
+$$
+
+The minimum of this expression over positive integer parameters is
+
+$$
+(r+1)+\sum_{i=0}^{r-1}2^{r-i}
+ =(r+1)+(2^{r+1}-2)=r+2^{r+1}-1.
+$$
+
+All coefficients of the independent parameters are strictly positive. Equality therefore forces, and is forced by, $t=h_0=\cdots=h_{r-1}=1$. Formula (19) then gives exactly $h^*$. $\square$
+
+**Theorem 4.4 (Exact minimum over actual morphic images).** Fix an integer $r\ge3$. For every finite nonempty alphabet $B$ and every nonerasing monoid morphism $`\eta:A_r^*\to B^*`$ satisfying the ordinary critical-exponent equality
+
+$$
+E(\eta(u))=e_r=1+\frac{1}{3-\Lambda},
+$$
+
+its length row $h_i=|\eta(i)|$ has the full parameterization (19), dominates $h^*$ coordinatewise and satisfies (23), in particular $|\eta(2r)|\ge2^r$.
+
+Let $\mathcal M_r$ consist of all such pairs $(B,\eta)$, allowing $B$ to range over finite nonempty alphabets, and let $\mathcal R_r\subseteq\mathcal M_r$ consist of the pairs whose image $\eta(u)$ is rich. Then both classes are nonempty and
+
+$$
+\min_{(B,\eta)\in\mathcal M_r}\sum_{i=0}^{2r}|\eta(i)|
+ =\min_{(B,\eta)\in\mathcal R_r}\sum_{i=0}^{2r}|\eta(i)|
+ =r+2^{r+1}-1.
+\tag{24}
+$$
+
+A pair in either class attains the minimum exactly when its length row is $h^*$. This is uniqueness of the minimizing row, with no assertion of uniqueness of the morphism.
+
+*Proof.* Nonerasure makes $h$ a positive integer row. Corollary 3.2 applies to every such morphism into every finite nonempty $B$ and gives $hv_\beta=0$. Theorem 4.2 and Corollary 4.3 prove all the necessary row conditions and the lower bound in (24). This step uses Corollary 3.2 in full; it does not impose the finite-boundary premise of source Proposition 18 (arXiv Proposition 17), injectivity, richness or any restriction on the output alphabet size.
+
+For attainment, reuse the weighted morphism of Dvořáková–Pelantová with their parameter $d=r$, as specified by journal Definition 12 and proved in Proposition 14 and Theorem 2, with equation (4) for the asymptotic exponent of the source. These complete supplied results give a finite alphabet $B_r$ of size $r+2^r$ and a nonerasing morphism $`\pi_r:A_r^*\to B_r^*`$ for which
+
+$$
+\bigl(|\pi_r(0)|,\ldots,|\pi_r(2r)|\bigr)=h^*,\qquad
+\pi_r(u)\text{ is rich},\qquad
+E(\pi_r(u))=E^*(u)=e_r.
+$$
+
+The corresponding arXiv numbers are Definition 11, Proposition 13 and Theorem 2; the supplied spectral computation for this row is journal Appendix Lemma 22, arXiv Lemma 21. The [journal proof in §§5–6 and Appendix](https://www.combinatorics.org/ojs/index.php/eljc/article/download/v33i2p15/pdf/) supplies the word construction, richness and exact ordinary exponent together. Thus this is an actual member of $\mathcal R_r$, and hence of $\mathcal M_r$, with total length $r+2^{r+1}-1$. This proves both equalities in (24). The equality characterization follows from Corollary 4.3 for members of these classes. $\square$
+
+**Proposition 4.5 (Cancellation, richness and exact-attainment scope).** For every integer $r\ge3$ and every $h\in\mathcal K_r$, there is a nonerasing morphism with length row $h$ and rich image whose ordinary critical exponent is $+\infty$. Therefore cancellation, even together with richness, does not imply $E(\eta(u))=e_r$. There is also a nonerasing morphism with the same length row whose image is not rich.
+
+The minimum in (24) is over varying finite output alphabets. It gives no attainment assertion for each fixed $B$, or for an alphabet with exactly $r+1$ letters as in Definition 3.3. It also gives no positive separation from $e_r$ for families that only approach $e_r$ without attaining it, and no lower bound $RT(\mathcal C_{r+1})\ge e_r$ for all rich words.
+
+*Proof.* Take $B=\{a\}$ and define $\eta(i)=a^{h_i}$. Every coordinate is positive, so the infinite image is $a^\omega$. The word $a^n$ has precisely the palindromic factors $\varepsilon,a,\ldots,a^n$, so this image is rich. Its factors $a^n$ have least positive period one, giving unbounded exponents $n$ and hence $E(a^\omega)=+\infty$. Since $\Lambda<3$, the number $e_r$ is finite. This proves the failure of sufficiency, including when $h=h^*$.
+
+For the non-rich image, take $B=\{a,b,c\}$, put $\eta(2r)=abca\,a^{h_{2r}-4}$ and put $\eta(i)=a^{h_i}$ for $i<2r$. Corollary 4.3 gives $h_{2r}\ge2^r\ge8$, so these words have the prescribed positive lengths. The source contains the letter $2r$ (it occurs in $\varphi^{2r}(0)$), so the output contains $abca$. This length-four factor has exactly four distinct palindromic factors, $\varepsilon,a,b,c$, and is not rich. Thus a cancellation row alone also gives no richness conclusion.
+
+For (24), the supplied attaining alphabet has size $r+2^r$, and the proof takes its minimum over the union of the classes indexed by all finite nonempty alphabets. No inference to a prescribed alphabet is part of that minimization. The cancellation step uses the exact equality $E(\eta(u))=e_r$; a family having only exponents tending to $e_r$ is instead subject to Corollary 3.1, which bounds the normalized defect and need not make it zero at any member. Finally the lower bound in (23) concerns lengths of morphisms with that exact exponent, not the ordinary exponents of every word in $\mathcal C_{r+1}$. Thus the smaller-alphabet upper route and the unrestricted lower inequality of Definition 3.3 retain their stated scope. $\square$
+
+## 追加锚（本行以下为增补区）
+## 5. Exact $r=3$ source-image boundary
+
+Proposition 4.5 gives a constructive non-rich image for every $r\ge3$ and $h\in\mathcal K_r$: it locates the factor $abca$ through the occurrence of $2r$ in $\varphi^{2r}(0)$ and gives its complete palindrome set $\{\varepsilon,a,b,c\}$. The following $r=3$ instance records the prescribed four-letter dictionary $\eta_3$ and its specific certificate in the actual image of $u_7$: the factor at $[60,72)$ has the exhaustive palindrome count below and defect $2$.
+
+**Proposition 5.1 (The normalized cancellation boundary).** Specialize Definition 1.2 to $r=3$, write the substitution as $\varphi_3$, and let $u_7=\varphi_3^\omega(0)$. Define the nonerasing morphism $\eta_3:\{0,1,2,3,4,5,6\}^*\to\{0,1,2,3\}^*$ by
+
+$$
+\eta_3(0)=0,\quad \eta_3(1)=1,\quad \eta_3(2)=2,\quad \eta_3(3)=3,\quad
+\eta_3(4)=11,\quad \eta_3(5)=1221,\quad \eta_3(6)=12133121.
+$$
+
+For its length row $h=(1,1,1,1,2,4,8)$ and the normalized eigenvector $v_\beta$ of Definition 1.3, one has $h v_\beta=0$. Nevertheless, for the infinite image $w_3=\eta_3(u_7)$ the factor
+
+$$
+z=w_3[60,72)=301020101213
+$$
+
+has exactly $11$ distinct palindromic factors, including the empty word. Since $|z|=12$, it is not rich and its palindromic defect is $2$.
+
+**Proof.** For the cancellation, the chosen row and the normalization in Definition 1.3 give
+
+$$
+h v_\beta=(\beta-2)(\beta^5+\beta^4+\beta^3+\beta^2+2\beta+4)+8.
+$$
+
+The polynomial identity
+
+$$
+(x-2)(x^2+x^3+x^4+x^5+2x+4)+8
+=x^3(x^3-x^2-x-1)
+$$
+
+holds identically. The number $\beta$ is the positive root of $x^3-x^2-x-1$, so the displayed scalar is zero. This is the normalized relation $h v_\beta=0$, rather than a statement about an unnormalized eigenvector.
+
+It remains to locate the stated factor in the actual infinite word. Put $T_n=\varphi_3^n(0)$ and let $\nu_2(q)$ denote the exponent of $2$ in a positive integer $q$. For $0\le n\le6$,
+
+$$
+|T_n|=2^n,\qquad T_n[j]=\nu_2(j+1)\quad(0\le j<2^n).
+$$
+
+The assertion is immediate for $n=0$. If $n<6$, every letter occurring in $T_n$ is at most $n$, so only the length-two rules $\varphi_3(i)=0(i+1)$ are used. Thus
+
+$$
+T_{n+1}[2j]=0=\nu_2(2j+1),\qquad
+T_{n+1}[2j+1]=T_n[j]+1=\nu_2(2j+2),
+$$
+
+which proves the induction through $T_6$. The letter $6$ first occurs at $T_6[63]$; the exceptional rule $\varphi_3(6)=066$ is therefore not used in constructing $T_6$.
+
+The positions $55$ through $63$ of $T_6$ correspond to the integers $56$ through $64$, hence
+
+$$
+T_6[55,64)=(3,0,1,0,2,0,1,0,6).
+$$
+
+Before position $55$, a letter greater than $3$ occurs exactly when $j+1$ is a multiple of $16$. The only such positions are $15,31,47$, with letters $4,5,4$. Since the images of $4,5,4$ have lengths $2,4,2$ and every other image in $T_6[0,55)$ has length one,
+
+$$
+|\eta_3(T_6[0,55))|=55+(2-1)+(4-1)+(2-1)=60.
+$$
+
+The next eight source letters have single-letter images, so
+
+$$
+\eta_3(T_6[55,63))=30102010,
+$$
+
+while $\eta_3(6)$ begins with $1213$. Consequently
+
+$$
+\eta_3(T_6)[60,72)=301020101213.
+$$
+
+The whole prefix has length
+
+$$
+|\eta_3(T_6)|=64+(2-1)+(4-1)+(2-1)+(8-1)=76,
+$$
+
+so both endpoints of this interval lie inside $\eta_3(T_6)$. Since $T_{n+1}=T_n\varphi_3^n(1)$ is a proper prefix extension and $\eta_3$ is nonerasing, these prefixes embed compatibly in $w_3=\eta_3(u_7)$; the displayed finite word is therefore the actual factor $w_3[60,72)$.
+
+For the palindrome count, the adjacent letters of $z$ are all different, so no nonempty even-length palindrome occurs. The largest odd radii at centers $0,1,\ldots,11$ are
+
+$$
+(0,0,1,0,3,0,1,1,0,1,0,0).
+$$
+
+Every odd palindrome is obtained by choosing a center and a radius no larger than the corresponding entry. Centers $2$ and $6$ give $010$; center $4$ gives $020$, $10201$, and $0102010$; center $7$ gives $101$; and center $9$ gives $121$. Radius zero gives the four single letters. Thus the complete set of distinct palindromic factors is
+
+$$
+\{\varepsilon,0,1,2,3,010,020,101,121,10201,0102010\}.
+$$
+
+It has $1+4+4+1+1=11$ elements, whereas richness of a length-$12$ word requires $12+1=13$. Hence $z$ has defect $2$ and is not rich. \qed
+
+## 6. Scope of the cancellation boundary
+
+The example satisfies the exact necessary cancellation condition from Corollary 3.2 and is an actual nonerasing source image, but its finite factor $z$ fails the defining richness condition. Therefore $h v_\beta=0$ is not sufficient for richness, and it is not a richness-preserving construction principle. Theorem 2.1 still supplies the ordinary bound $E(w_3)\ge e_3$ through its zero-defect case; this example supplies no matching upper bound and no assertion about attainment.
+
+This conclusion is restricted to the displayed $r=3$ morphic image and its explicit factor. It does not impose a condition on every rich word, does not prove or refute the unrestricted equality
+
+$$
+RT(\mathcal C_d)=E^*(u_{2d-1})\qquad(d\ge2),
+$$
+
+and does not provide the upper construction required for that equality. In particular, cancellation, richness, and control of the ordinary exponent remain separate requirements for any proposed source-image route.
+
+## 追加锚（本行以下为增补区）

@@ -44,10 +44,11 @@ in preregistrations #18626 and #18627, both tier 1 external OEIS problems.
 
 The natural polynomial `BourasPolynomials.U` is $U(n)=n^2-2$, with truncated
 natural subtraction. At $n\ge3$ it agrees with the integer polynomial.
-The source's rational fold definitions are retained as expressly authorized
-binding definitions. The equal `nested` and `K` definitions in
-`BourasA372763OnceRefutation` concern the same continued fraction; no dependency
-on that module is claimed.
+The source's rational fold expressions are represented by the existing frozen
+`BourasA356360.nested` and `K` declarations in this module. The public
+`BourasA372763OnceRefutation.nested` and `K` owners are textually equal; reusing
+them here would require changing or removing those frozen declarations, so
+both copies remain. No duplicate-retention authorization is claimed.
 
 ## Motivation
 

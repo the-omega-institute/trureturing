@@ -499,3 +499,258 @@ $$
 Taking the limit proves the first inequality. Theorem 6.1 permits subtraction of the convergent minimum, and $F(\alpha)\le49/12$ gives $9/2-F(\alpha)\ge5/12$. ∎
 
 ## 追加锚（本行以下为增补区）
+
+## 7. The first supercritical density window
+
+**Definition 7.1 (The three-hub family).** Let
+
+$$
+n-2\le \ell\le 2n-8,\qquad N=n-3,\qquad c=\ell-n+5,\qquad b=2n-\ell-8.
+$$
+
+Then $c\ge3$, $b\ge0$ and $b+c=N$. Define $\mathcal C(n,\ell)$ to be the family of simple graphs with three pairwise nonadjacent hubs and $N$ source vertices: $c$ sources are adjacent to all three hubs, and the remaining $b$ sources are adjacent to exactly two hubs. If $b_i$ is the number of pair sources missing hub $i$, then
+
+$$
+\sum_{i=1}^3b_i=b,\qquad D_i=N-b_i,\qquad |b_i-b_j|\le1.
+$$
+
+The last condition defines the balanced subfamily. For $c\ge0$ and $D>0$ with $D\ge c$, put
+
+$$
+H_c(D)=(D-c)g(2/D)+cg(3/D)\qquad(D\ge c).
+$$
+
+Every graph in $\mathcal C(n,\ell)$ has excess $\sum_{i=1}^3H_c(D_i)$. The edge count is
+
+$$
+3c+2b=n-1+\ell,
+$$
+
+so the family lies in $\mathcal G(n,\ell)$; its triple sources make it connected.
+
+**Theorem 7.2 (Uniform three-hub minimum).** There is an absolute sufficient threshold $N_0=10^6$ such that, for every integer $n\ge N_0$ and every
+
+$$
+n-2\le\ell\le2n-8,
+$$
+
+the unique minimizing isomorphism class in $\mathcal G(n,\ell)$ is the balanced member of $\mathcal C(n,\ell)$. Write $b=3q+r$ with $0\le r\le2$. Its exact minimum excess is
+
+$$
+E^\ast(n,\ell)=(3-r)H_c(N-q)+rH_c(N-q-1),
+$$
+
+and $\Phi^\ast(n,\ell)=n-1+\ell+E^\ast(n,\ell)$. The threshold is sufficient and is not asserted to be least.
+
+**Proof.** We first record the uniform finite estimate used to compare actual graphs with profiles. Let a two-layer graph have $s$ sinks, $M=n-s$ sources, and let $N_T$ count sources whose neighborhood is the nonempty set $T\subseteq[s]$. Put
+
+$$
+x_T=N_T/M,\qquad y_i=\sum_{T\ni i}x_T,\qquad
+\beta=\sum_T(|T|-1)x_T=\frac{\ell+s-1}{n-s}.
+$$
+
+The displayed expression $J_s$ of Definition 5.1 is used with this $\beta$; its formula is valid for every $0\le\beta\le s-1$. Exact counting gives $\sum_TN_T=M$ and $D_i=M y_i$ for every $i\in[s]$. If $E(G)\le14/n$, Theorem 3.1 gives $s\le6$ and $D_i\ge n/42$. Its proof also gives the sharper $s^2\le14(2+14/n)<36$, hence $s\le5$ for $n\ge10^6$. Since every source degree is at most $s$, rationalization yields
+
+$$
+0\le\frac{r^2}{2}-g(r)\le\frac{r^4}{8}.
+$$
+
+Summing this inequality over the actual source--sink edges gives the uniform bound
+
+$$
+0\le \frac{J_s(x)}{M}-E(G)\le\frac{B}{n^3},\qquad
+B=\frac{5^5\,42^4}{8}=1215506250.
+\tag{7.1}
+$$
+
+Indeed, a source of degree $k\le5$ contributes at most $k^5 42^4/(8n^4)$ to the remainder, and there are at most $n$ sources. This estimate uses actual degrees and does not replace the graph by a relaxed profile.
+
+For every profile, Cauchy--Schwarz on the incidences $(T,i)$ gives
+
+$$
+s^2\le 2J_s(x)L_s(x),\qquad
+L_s(x)=\sum_T\frac{x_T}{|T|}.
+$$
+
+Since
+
+$$
+\frac1{|T|}\le1-\frac{|T|-1}{s},
+$$
+
+we have $L_s(x)\le1-\beta/s$ and therefore
+
+$$
+J_s(x)\ge L_s^{\rm low}(\beta):=\frac{s^3}{2(s-\beta)}.
+\tag{7.2}
+$$
+
+For real $s\ge4$ and $1\le\beta\le2$, this lower bound is increasing in $s$, and
+
+$$
+\frac{32}{4-\beta}-F_3(\beta)
+=\frac{5(47\beta^2-131\beta+92)}
+ {2(4-\beta)(1+\beta)^2}\ge\delta,\qquad
+\delta=\frac{75}{752},
+\tag{7.3}
+$$
+
+where $F_3(\beta)=9(19\beta-11)/(2(1+\beta)^2)$. The last displayed constant is a conservative bound on the interval $[1,2]$: complete the square in the numerator and use $2(4-\beta)(1+\beta)^2\le36$.
+
+We next optimize the three-hub profile without imposing symmetry. Let $u_i=x_{\{i\}}$, $b_i=x_{[3]\setminus\{i\}}$, $c'=x_{[3]}$, and $t=\sum_i u_i$. The constraints imply
+
+$$
+c'=\beta-1+t,\qquad \sum_i b_i=2-\beta-2t,\qquad
+\sum_i y_i=1+\beta.
+$$
+
+For hub $i$, its weighted incidence numerator in $2J_3$ is
+
+$$
+w_i=u_i+4\!\sum_{j\ne i}b_j+9c'
+=4y_i+5(\beta-1)+5t-3u_i
+\ge4y_i+5(\beta-1)+2t.
+$$
+
+Put $f_\beta(y)=4/y+5(\beta-1)/y^2$ and $\mu=(1+\beta)/3$. Every feasible $y_i\le1$, and $f_\beta''(y)=8/y^3+30(\beta-1)/y^4\ge8$. Strong convexity, $\sum_i(y_i-\mu)=0$, and Cauchy--Schwarz give
+
+$$
+J_3(x)\ge F_3(\beta)+\frac{27t}{(1+\beta)^2}
+ +2\sum_{i=1}^3(y_i-\mu)^2.
+\tag{7.4}
+$$
+
+Thus the unique minimizing profile (up to hub labels) has
+
+$$
+t=0,\qquad y_1=y_2=y_3=\frac{1+\beta}{3},\qquad
+c'=\beta-1,\qquad b_1=b_2=b_3=\frac{2-\beta}{3}.
+\tag{7.5}
+$$
+
+This includes both endpoints: at $\beta=1$ the triple mass is zero, and at $\beta=2$ the pair masses are zero. In particular every profile with $s\ge4$ has, by (7.2)--(7.3), a gap at least $\delta$ above $F_3(\beta)$ whenever $1\le\beta\le2$; no symmetry or positive-mass assumption was used.
+
+Now fix $n\ge10^6$ and the stated $\ell$. The balanced graph in Definition 7.1 has $t=0$ and $|y_i-(1+\beta_3)/3|\le1/N$, where $\beta_3=(\ell+2)/N$. On the interval $y\ge1/3$, $1\le\beta_3\le2$, one has $f_{\beta_3}''(y)\le2646$. Taylor's theorem and cancellation of the three first-order deviations give
+
+$$
+J_3(x_{\rm bal})\le F_3(\beta_3)+\frac{2000}{N^2},\qquad
+E_{\rm bal}\le\frac{F_3(\beta_3)}N+\frac{2000}{N^3}.
+\tag{7.6}
+$$
+
+Since $F_3(\beta_3)\le27/2$, this implies
+
+$$
+nE_{\rm bal}<\frac{27}{2}+\frac{81}{n}+\frac{16000}{n^2}<14.
+\tag{7.7}
+$$
+
+Every minimizer consequently satisfies $E(G)\le14/n$, so the preceding two-layer and error estimates apply. A two-layer graph with at most two sinks has at most $2(n-2)=2n-4$ edges, whereas here $m\ge2n-3$; hence its sink number is at least three.
+
+Suppose first that $s\in\{4,5\}$. Put $\beta_s=(\ell+s-1)/(n-s)$. Direct subtraction gives
+
+$$
+\beta_s-\beta_3=\frac{(s-3)(n+\ell-1)}{(n-s)(n-3)}\ge0.
+$$
+
+The function $L_s^{\rm low}(\beta)$ is increasing in $\beta$, so (7.2) and (7.3), even when $\beta_s>2$, give
+
+$$
+J_s(x)\ge L_s^{\rm low}(\beta_s)\ge L_s^{\rm low}(\beta_3)\ge F_3(\beta_3)+\delta.
+$$
+
+Using (7.1), $M=n-s<N$, and (7.6),
+
+$$
+E(G)-E_{\rm bal}\ge\frac{\delta}{n}-\frac{B+16000}{n^3}>0.
+$$
+
+The last inequality follows from the stronger checked inequality $\delta n^2>8(B+2000)$ at $n=10^6$ and hence for all larger $n$. Thus every minimizer has exactly three sinks.
+
+It remains to pass from the three-hub profile to the actual graph. Let $a$ be the number of singleton sources. If $a>0$, choose one singleton adjacent to hub $i$ and one triple source adjacent to all three hubs. Replace the triple source's edge to hub $j\ne i$ by the singleton's edge to $j$. The two source neighborhoods become $\{i,j\}$ and $\{i,k\}$, where $k$ is the third hub. The graph remains simple and connected, all vertex and edge counts are unchanged, and all three hub degrees are unchanged; at least two triple sources remain because $c\ge3$. The excess change is
+
+$$
+[2g(2/D_i)-g(1/D_i)-g(3/D_i)]
+ +[g(2/D_j)-g(3/D_j)]
+ +[g(2/D_k)-g(3/D_k)]<0.
+$$
+
+Here $g$ is strictly increasing and strictly convex on $(0,\infty)$, so each bracket is strictly negative. This contradiction proves $a=0$. Exact counting then forces precisely $c$ triple sources and $b$ pair sources.
+
+For the remaining pair sources, let $b_i$ be the number missing hub $i$, so $D_i=N-b_i$. The contribution at hub $i$ is $H_c(D_i)$. The identity
+
+$$
+H_c(D)=\sqrt{D^2+4}-D+\frac c2\int_4^9\frac{dz}{D\sqrt{D^2+z}}
+$$
+
+shows strict convexity: the first term has second derivative $4/(D^2+4)^{3/2}$, and the second derivative of the integrand is
+
+$$
+\frac{6D^4+5zD^2+2z^2}{D^3(D^2+z)^{5/2}}>0.
+$$
+
+If $b_i\ge b_j+2$, choose a pair source missing $i$ and change its neighbor $j$ to $i$. This changes $(D_i,D_j)$ to $(D_i+1,D_j-1)$, preserves simplicity, connectedness and both integer budgets, and strictly decreases the sum of the two strictly convex hub contributions. Hence every minimizer has $|b_i-b_j|\le1$. Conversely every unbalanced triple admits this strict improvement until balanced. Writing $b=3q+r$ gives the displayed exact formula, and all balanced assignments are related by a hub permutation. The minimizing isomorphism class is therefore unique. ∎
+
+**Theorem 7.3 (Density limit and complete near-minimum structure).** Let $\ell_n\ge n-2$, $\ell_n/n\to\alpha\in[1,2)$. Then eventually $\ell_n\le2n-8$, and
+
+$$
+\lim_{n\to\infty}nE^\ast(n,\ell_n)=F_3(\alpha)
+=\frac{9(19\alpha-11)}{2(1+\alpha)^2}.
+$$
+
+For any $G_n\in\mathcal G(n,\ell_n)$,
+
+$$
+n\bigl(E(G_n)-E^\ast(n,\ell_n)\bigr)\longrightarrow0
+$$
+
+if and only if, eventually, $G_n$ is a three-hub two-layer graph for which, writing $a_n$ for the singleton count, $b_{i,n}$ for the count of pair sources missing hub $i$, and $c_n$ for the triple count,
+
+$$
+a_n=o(n),\qquad
+b_{i,n}=\frac{2n-\ell_n-8}{3}+o(n)\quad(i=1,2,3),\qquad
+\frac{c_n}{n}\longrightarrow\alpha-1.
+\tag{7.8}
+$$
+
+The condition permits an unbounded $o(n)$ singleton count. It is equivalent to the three hub degrees divided by $n$ tending to $(1+\alpha)/3$, together with singleton proportion tending to zero. The exact minimizers of Theorem 7.2 have $a_n=0$ and pair counts differing by at most one.
+
+**Proof.** For the balanced graph, $\beta_3=(\ell_n+2)/(n-3)\to\alpha$, and (7.6) together with (7.1) gives the stated limit. For a near-minimizing sequence, this same upper bound makes $E(G_n)=O(1/n)$. Theorem 3.1 and the capacity count give three sinks eventually; the $s\ge4$ comparison in the proof of Theorem 7.2 excludes infinitely many such terms. With three sinks, (7.1) and (7.4) imply
+
+$$
+J_3(x_n)-F_3(\beta_{3,n})\longrightarrow0,\qquad
+\beta_{3,n}=\frac{\ell_n+2}{n-3}\longrightarrow\alpha.
+$$
+
+The quantitative terms in (7.4) give $a_n/(n-3)\to0$ and $D_{i,n}/(n-3)\to(1+\alpha)/3$. The exact identities
+
+$$
+c_n=\ell_n-n+5+a_n,\qquad
+\sum_i b_{i,n}=2n-\ell_n-8-2a_n,\qquad
+b_{i,n}/(n-3)=1-a_n/(n-3)+u_{i,n}-D_{i,n}/(n-3)
+$$
+
+then give (7.8). Conversely, (7.8) makes the seven-type profile converge to the unique equality profile in (7.5); (7.1) gives $nE(G_n)\to F_3(\alpha)$, while the balanced graphs have the same limit. Thus the scaled excess difference tends to zero.
+
+To see why $a_n=o(n)$ cannot be strengthened to eventual vanishing, start with a balanced graph and choose $r_n=\lfloor\sqrt n\rfloor$ pair sources of types $\{1,2\}$ and $\{1,3\}$. Replace each pair of sources by a singleton of type $\{1\}$ and a triple source. For fixed $\alpha<2$ there are linearly many sources of both selected pair types, so this is possible eventually. It preserves all three hub degrees, $n$, $m$ and connectedness. Each replacement changes the excess by $O(n^{-2})$, hence $n(E-E^\ast)=O(r_n/n)\to0$, while $r_n\to\infty$. ∎
+
+**Theorem 7.4 (The capacity jump at the two-hub boundary).** At the two adjacent budgets,
+
+$$
+\lim_{n\to\infty}nE^\ast(n,n-3)=4,\qquad
+\lim_{n\to\infty}nE^\ast(n,n-2)=9.
+$$
+
+For all sufficiently large $n$, the unique minimizer at $\ell=n-3$ is $K_{2,n-2}$, while the unique minimizer at $\ell=n-2$ is the balanced member of $\mathcal C(n,n-2)$, with three triple sources and $n-6$ pair sources. Thus the one-edge increase crosses a genuine finite-capacity jump; the common ratio limit $\ell/n\to1$ does not identify the two values.
+
+**Proof.** For $\ell=n-3$, $K_{2,n-2}$ is admissible and
+
+$$
+E(K_{2,n-2})=2(n-2)g(2/(n-2)),\qquad nE(K_{2,n-2})\to4.
+$$
+
+Every minimizer has excess $O(1/n)$, so Theorem 3.1 applies with a fixed constant. If a subsequence had at least three sinks, pass to a fixed bounded sink number and use (7.2) with $\beta\to1$; its normalized excess has liminf at least $L_3^{\rm low}(1)=27/4>4$. Hence eventually there are two sinks. Their two-layer simple graph has at most $2(n-2)=2n-4$ edges, exactly the required number, so every source is adjacent to both hubs and the graph is $K_{2,n-2}$. For $\ell=n-2$, Theorem 7.2 applies and gives the second limit as $F_3(1)=9$, with $c=3$ and $b=n-6$. ∎
+
+The new statements in this section are repo-derived. The CDSO definition and the earlier conjectural universal-vertex scope are supplied by Albalahi--Das--Ali--Barman--Hamza, DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176). The single-cycle comparison and the two-hub construction cited in the preceding volume remain intermediate references from Ali--Das--Attiya, DOI [10.47443/dml.2025.192](https://doi.org/10.47443/dml.2025.192), and Albalahi, DOI [10.47443/dml.2026.217](https://doi.org/10.47443/dml.2026.217); neither is used as a theorem about this three-hub interval. The coordinate-increasing hypotheses in Liu--Du--Huang--Chen--Elumalai, MATCH 91 (2024), 255--266, DOI [10.46793/match.91-1.255L](https://doi.org/10.46793/match.91-1.255L), and the separable-form and density hypotheses in Ali--Gutman--Saber--Alanazi, MATCH 87 (2022), 89--96, DOI [10.46793/match.87-1.089A](https://doi.org/10.46793/match.87-1.089A), do not apply to the CDSO kernel, so their extremal theorems are not invoked here. The threshold, gap, actual exchanges, exact integer formula, near-minimum characterization and capacity jump are proved above for the stated finite simple connected graph class. The preceding citations are the sources checked for the statements above. The full text of the Zhao--Zhao source was not obtained, so its overlap with these results remains unassessed and no priority claim is made for that source.
+
+## 追加锚（本行以下为增补区）

@@ -12,6 +12,16 @@ internal sealed class NativeComputedEpochPotentialDocument : IScribeDocumentDefi
         "Computed occurrence potentials for native epoch transport",
         H("Finite occurrence cycles yield a natural epoch potential"), Blocks(
             Paragraph(Text("Finite occurrence positions are enumerated directly from every original equation. The resulting graph keeps loops, parallel edges, repeated occurrences, disconnected states, empty systems, signed exponent differences and equations with undefined heads.")),
+            Describe.Lean(DescribeId.Create("max-fold-base"),
+                DeclarationHandle.Create(Prefix + "base_le_fold_max"),
+                H("The initial base is below the folded maximum"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every list l of integers and every integer b, b is at most l.foldr max b. This original supplier is applied with base zero by NativePositivePotentialCover.sourceRelaxation_nonneg."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("max-fold-property"),
+                DeclarationHandle.Create(Prefix + "fold_max_property"),
+                H("A maximum retains a property of every candidate"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every predicate P on integers, list l and integer b, if P(b) and P(a) for every a in l, then P(l.foldr max b). This original supplier is applied with base zero to construct an attaining original walk in NativePositivePotentialCover.sourceRelaxation_attained."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("finite-tuple-program"),
                 DeclarationHandle.Create(Prefix + "computedPotential"),
                 H("An input-only terminating natural tuple program"),

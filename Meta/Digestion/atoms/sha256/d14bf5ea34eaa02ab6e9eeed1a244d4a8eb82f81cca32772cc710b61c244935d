@@ -1,0 +1,14 @@
+**Definition 1.3 (The full two-hub family).** For $\ell\ge1$ and $n\ge\ell+3$, put $b=\ell+1$ and $p=n-\ell-3$. Let $\mathcal B(n,\ell)$ consist of $K_{2,b}$ with all $p$ remaining vertices attached as leaves to its two vertices in the part of size two, called hubs. The two hubs are nonadjacent. Their degrees $D_1,D_2$ satisfy
+
+$$
+D_1,D_2\ge b,\qquad D_1+D_2=m=n-1+\ell.
+$$
+
+Let $H_{n,\ell}$ be the graph with leaf counts $\lfloor p/2\rfloor$ and $\lceil p/2\rceil$, exactly as in Definition 4.1 of the preceding volume. Use its Definition 8.1:
+
+$$
+f_k(x)=g(k/x),\qquad M_b(x)=(x-b)f_1(x)+bf_2(x)\quad(x>0).
+$$
+
+For every member of $\mathcal B(n,\ell)$, its actual excess is $M_b(D_1)+M_b(D_2)$.
+

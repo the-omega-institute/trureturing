@@ -1,0 +1,127 @@
+**Proposition 10.2 (constructive separator for mature candidate data).**
+Given distinct mature data $x=(s,u)$ and $y=(t,v)$, with each behavior
+specified by any order-at-most-$d$ seeded presentation, there is a uniform
+procedure constructing a physical word $w$ and its two opposite predicted
+presence replies such that, for $H=\max(u,v)$,
+
+$$
+ \operatorname{Read}^{s}_{u}(w)\ne\operatorname{Read}^{t}_{v}(w),
+ \qquad |w|\le H-1.
+ \tag{ACR.31}
+$$
+
+The procedure uses no Read, complete-tree expansion, stored tree, scan
+or backward recurrence. One binary implementation, including construction
+of both first-$2d$ prefixes when needed, has work at most
+
+$$
+ C\bigl((d+1)^3(H+2)^2+(H+2)^3+(d+1)^2\bigr)
+ \tag{ACR.32}
+$$
+
+and reusable scratch
+$O((d+1)^2+(d+1)(H+2)+(H+2)^2)$ bits. The generated literal, operands,
+Fibonacci and rank integers, intermediate writes and predicted replies
+are included. Presentations of equal behaviors are distinguished only
+when their cuts differ.
+
+Proof. First specify an unequal-count descent. At a common physical
+prefix $p$, maintain its present descriptors in both candidates and the
+invariant that their subtree leaf counts differ. If one is terminal and
+the other a branch, return $pa$: it is absent in the former and present
+in the latter. If both are branches, compute each parent orientation
+from its own actual chronological index (ACR.6), then its two child
+ranks by Definition 10.1. Choose $a$ if the two $a$-child leaf counts
+differ; otherwise choose $b$. At least one side differs, since the sums
+of the two child counts differ. Descend that side, update both physical
+prefix descriptors and repeat. Both children of a branch are present,
+so the invariant is maintained. Both candidates cannot be terminal
+under unequal counts. The maximum rank decreases by at least one at
+each descent. Induction on that maximum shows that the returned suffix
+from this starting prefix has length at most
+$\max(\kappa_u(p),\kappa_v(p))-1$. This specifies every choice and
+termination step; an unknown lexicographic symmetric difference is not
+an input to the procedure.
+
+If $u\ne v$, start at the root, with ranks $u,v\ge2$. The counts
+$F_{u+1},F_{v+1}$ differ, since Fibonacci leaf counts strictly increase
+on ranks at least one. The preceding descent gives (ACR.31).
+
+If $u=v$ and $s\ne t$, compute their first differing birth bit $j$.
+GPO Lemma 29.2 gives $1\le j\le2d$; this case is absent at $d=0$.
+Let
+
+$$
+ \tau=\min\{e\ge2:j\le F_{e+1}-1\},\qquad
+ R=j-(F_\tau-1).
+ \tag{ACR.33}
+$$
+
+Maturity gives $j\le F_u-1=B_{u-1}$, hence $\tau\le u-1$.
+The two histories before birth $j$ coincide. We now construct its
+common parent $p_j$, rather than enumerate earlier parents.
+
+At the fixed old cut $\tau-1$, start at the root with remaining rank
+$R$ among beta leaves. Maintain a present prefix descriptor $(b,\sigma)$
+and a remaining rank between one and its number of beta leaves,
+$\lambda_\sigma(\tau-1-b)$. If that prefix is a beta terminal,
+return it; its remaining rank must be one. An alpha terminal has beta
+mass zero and is never selected. Otherwise it is a branch: compute
+its branch time, chronological index by (ACR.6), orientation bit and
+the two child descriptors. For its $a$-child, born at that branch time
+$\tau_p$, compute the mass
+
+$$
+ A_p=\lambda_{\sigma_{pa}}(\tau-1-\tau_p).
+ \tag{ACR.34}
+$$
+
+If the remaining rank is at most $A_p$, descend to $pa$ with that
+rank; otherwise descend to $pb$ and subtract $A_p$. This includes
+$A_p=0$. All these branches were born by $\tau-1$, so their event
+indices are at most $B_{\tau-1}<j$. Their bits and child descriptors
+therefore agree in the two candidates. The disjoint physical $a$- then
+$b$-subtree beta-leaf lists have exactly the masses used in (ACR.34),
+by GPO (GPO.94). Induction proves that this unranking selects the
+$R$th beta leaf of the actual old physical lexicographic list. GPO
+Proposition 39.2 then identifies it with the actual parent $p_j$.
+No rank oracle or semantic traversal is supplied. At each branch the
+chosen child's branch time is later, so the descent is finite; a parent
+branching at $\tau$ has $|p_j|\le\tau-2$ by (ACR.7).
+
+At $p_j$ the two candidate orientations are opposite. At their common
+cut $u\ge\tau+1$, their physical $a$-child ranks are $u-\tau+1$
+and $u-\tau$ in one order. Their leaf counts differ, including the
+endpoint pair of ranks two and one. Begin the unequal-count descent
+at $p_ja$. Its returned word has length at most
+
+$$
+ |p_j|+1+(u-\tau+1)-1\le u-1.
+ \tag{ACR.35}
+$$
+
+The opposite predicted replies in either case are obtained from which
+candidate is terminal at the final step. This proves correctness,
+including the first mature cut and different equivalent presentations.
+
+For the bounds, first generate two prefixes of length $2d$ by forward
+recurrence in $O((d+1)^2)$ bit operations. Both unranking and the
+unequal-count descent visit $O(H+1)$ prefixes in total. Retain their
+birth descriptors along each current path. At each prefix compute the
+chronological rank by the sibling sum (ACR.6), with the already determined
+sibling labels. The relevant branch indices are at most $B_H$ and have
+$O(H+1)$ bits; intermediate sums have the same bound. A table of
+$F_0,\ldots,F_{2H+4}$ takes $O((H+2)^2)$ bits and bit operations.
+Each prefix rank sum has $O(H+1)$ terms of $O(H+1)$ bits, so all
+rank calculations use $O((H+2)^3)$ bit work. A forward companion power
+at each required index costs $O((d+1)^3(H+2))$, and there are $O(H+1)$
+such evaluations for each of the two candidates. This is the GPO
+Proposition 39.5 evaluator applied to the paths explicitly selected
+above. The local ranks, beta masses and comparisons have smaller bounds.
+There is no iteration through $B_H$ births. The stated table, two paths,
+companion scratch, presentations and literal buffers fit the displayed
+workspace. Counting each binary read, write and initialized workspace bit
+as work gives (ACR.32), including the constructed word and replies.
+No inverse matrix is used, so zero taps, singular transitions, nonminimal
+rows, the zero stream and finite transients are included. $\square$
+

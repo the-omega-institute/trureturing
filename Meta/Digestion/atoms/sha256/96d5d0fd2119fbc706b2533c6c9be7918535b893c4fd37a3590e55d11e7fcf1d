@@ -1,0 +1,6 @@
+For any $G_n\in\mathcal G(n,\ell_n)$ the following conditions are equivalent:
+
+1. $E(G_n)-E^\ast(n,\ell_n)=o(1/n)$.
+2. $nE(G_n)\to F(\alpha)$.
+3. Eventually $G_n\in\mathcal B(n,\ell_n)$ up to relabelling, and its hub degrees satisfy $|D_{1,n}-D_{2,n}|/n\to0$.
+
