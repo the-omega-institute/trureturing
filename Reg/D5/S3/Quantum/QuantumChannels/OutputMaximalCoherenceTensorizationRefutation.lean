@@ -19,7 +19,7 @@ universe u v w
 
 abbrev signature : Signature where
   Params := Σ a : Type u, Σ b : Type v, Σ κ : Type w,
-    (κ → Matrix b a ℂ) × Matrix a a ℂ
+    Σ K : κ → Matrix b a ℂ, Matrix a a ℂ
   State p := Matrix p.2.1 p.2.1 ℂ
   Role := Unit
   finiteRole := inferInstance
@@ -39,7 +39,7 @@ abbrev arena : Arena where
   Law R := ∀ {a : Type u} {b : Type v} {κ : Type w}
     [Fintype a] [DecidableEq a] [Finite b] [Fintype κ]
     (K : κ → Matrix b a ℂ) (ρ : Matrix a a ℂ) (_hρ : ρ.PosSemidef),
-    R.readout () ⟨a, ⟨b, ⟨κ, (K, ρ)⟩⟩⟩ (krausApply K ρ)
+    R.readout () ⟨a, ⟨b, ⟨κ, ⟨K, ρ⟩⟩⟩⟩ (krausApply K ρ)
 
 theorem rejected_law : ¬ arena.{u,v,w}.Law rejected.{u,v,w} := by
   intro h
@@ -59,7 +59,7 @@ private theorem dependence :
   let κ := ULift.{w} Unit
   let K : κ → Matrix b a ℂ := fun _ => 0
   let ρ : Matrix a a ℂ := 0
-  let p : signature.{u,v,w}.Params := ⟨a, ⟨b, ⟨κ, (K, ρ)⟩⟩⟩
+  let p : signature.{u,v,w}.Params := ⟨a, ⟨b, ⟨κ, ⟨K, ρ⟩⟩⟩⟩
   refine ⟨p, 0, -(1 : Matrix b b ℂ), ?_⟩
   intro he
   have hnot : ¬ (-(1 : Matrix b b ℂ)).PosSemidef := by
@@ -104,13 +104,14 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Quantum.QuantumChannels.OutputMaximalCoherenceTensorizationRefutation
     definition := none
-    coordinates := #[0, 1, 2, 3, 4]
+    coordinates := #[0, 1, 2, 7, 8]
     readouts := #[{
-      path := #[]
+      path := #["body", "body", "body", "body", "body", "body", "body", "body",
+        "body", "body", "fn"]
       stateBinder := 0
       functionOperand := false
-      stateOperand := none
-      booleanPredicate := true }] }
+      stateOperand := some #["arg"]
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
