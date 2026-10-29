@@ -6,7 +6,7 @@
    utility: none
    digest: Exact sort-sensitive inversion of symbolic row exteriors into consumed bindings. -/
 
-import D5.S3.Arith.FibonacciAtomic.Observer.NativeSymbolicRecutting
+import D5.S3.Arith.FibonacciAtomic.Observer.NativeWholeRowPlan
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -51,16 +51,11 @@ def matchExterior {X : Type} : SymbolicExterior X → HoleExterior →
       | _, _ => none
   | .mul _ _, _ => none
 
-theorem evaluate_sourceTerm {X : Type} (v : X → Source) (u : Source) :
-    evaluate v (sourceTerm u) = u := by
-  induction u with
-  | of b => rfl
-  | mul l r ihl ihr =>
-      change evaluate v (sourceTerm l) * evaluate v (sourceTerm r) = _
-      rw [ihl, ihr]
-      rfl
+private theorem evaluate_sourceTerm {X : Type} (v : X → Source) (u : Source) :
+    evaluate v (sourceTerm u) = u :=
+  NativeWholeRowService.evaluate_embedded v u
 
-theorem decodeHoleFree_sound (u : HoleExterior) (s : Source)
+private theorem decodeHoleFree_sound (u : HoleExterior) (s : Source)
     (h : decodeHoleFree u = some s) : FreeMagma.map Sum.inl s = u := by
   induction u generalizing s with
   | of a =>
@@ -84,7 +79,7 @@ theorem decodeHoleFree_sound (u : HoleExterior) (s : Source)
                   cases h
                   exact congrArg₂ FreeMagma.mul (ihl sl hs) (ihr sr hr)
 
-theorem decodeHoleFree_map (s : Source) :
+private theorem decodeHoleFree_map (s : Source) :
     decodeHoleFree (FreeMagma.map Sum.inl s) = some s := by
   induction s with
   | of b => rfl
@@ -93,7 +88,7 @@ theorem decodeHoleFree_map (s : Source) :
         (FreeMagma.mul (FreeMagma.map Sum.inl l) (FreeMagma.map Sum.inl r)) = _
       simp [decodeHoleFree, ihl, ihr]
 
-theorem bindingHolds_append {X : Type} (v : X → Source)
+private theorem bindingHolds_append {X : Type} (v : X → Source)
     (a b : List (X × Term X)) :
     bindingHolds v (a ++ b) ↔ bindingHolds v a ∧ bindingHolds v b := by
   induction a with
@@ -102,7 +97,7 @@ theorem bindingHolds_append {X : Type} (v : X → Source)
       cases h with
       | mk x t => simp only [List.cons_append, bindingHolds, ih, and_assoc]
 
-theorem matchExterior_sound {X : Type} (p : SymbolicExterior X)
+private theorem matchExterior_sound {X : Type} (p : SymbolicExterior X)
     (u : HoleExterior) (v : X → Source) (bs : List (X × Term X))
     (hm : matchExterior p u = some bs) (hb : bindingHolds v bs) :
     exteriorFill v p = u := by
@@ -153,7 +148,7 @@ theorem matchExterior_sound {X : Type} (p : SymbolicExterior X)
                   change exteriorFill v p * exteriorFill v q = u * w
                   rw [ihp u bp hpm hsplit.1, ihq w bq hqm hsplit.2]
 
-theorem matchExterior_complete {X : Type} (p : SymbolicExterior X)
+private theorem matchExterior_complete {X : Type} (p : SymbolicExterior X)
     (u : HoleExterior) (v : X → Source) (he : exteriorFill v p = u) :
     ∃ bs, matchExterior p u = some bs ∧ bindingHolds v bs := by
   induction p generalizing u with
@@ -207,5 +202,281 @@ theorem exterior_match_exact {X : Type} (p : SymbolicExterior X)
   · exact matchExterior_complete p u v
   · rintro ⟨bs, hm, hb⟩
     exact matchExterior_sound p u v bs hm hb
+
+
+
+open ActualTreeReadoutAcquisition (Address)
+open ActualCutPartitionRecovery (CutSet CutPrefixFree)
+open ActualCutPartitionDecoder (literalRecord)
+open NativeSymbolicRecutting
+  (termAt symbolicOrdered symbolicPartition symbolicRecord symbolicExterior DeepAt symbolic_recut_exact)
+open NativeTermUnification (Presentation)
+open NativeGroundSolutionSpace (Equations Sol Diseq)
+
+abbrev RawRow := CutSet × HoleExterior × Finset (Address × Address)
+abbrev SignedConstraints (X : Type) := Equations X × Equations X
+
+/-- Every ordered reached pair is retained, including diagonals and both orders. -/
+def reachedPairs {X : Type} (Q : CutSet) (t : Term X) : Finset (Address × Address) :=
+  (symbolicOrdered Q t).toFinset.product (symbolicOrdered Q t).toFinset
+
+def pairTerms {X : Type} (t : Term X) (pq : Address × Address) : Term X × Term X :=
+  ((termAt pq.1 t).getD (.of (.inl false)),
+   (termAt pq.2 t).getD (.of (.inl false)))
+
+def positivePairs {X : Type} (Q : CutSet) (t : Term X)
+    (K : Finset (Address × Address)) : Equations X :=
+  ((reachedPairs Q t).filter (fun pq => pq ∈ K)).toList.map (pairTerms t)
+
+def negativePairs {X : Type} (Q : CutSet) (t : Term X)
+    (K : Finset (Address × Address)) : Equations X :=
+  ((reachedPairs Q t).filter (fun pq => pq ∉ K)).toList.map (pairTerms t)
+
+def bindingEquations {X : Type} (bs : List (X × Term X)) : Equations X :=
+  bs.map (fun b => (.of (.inr b.1), b.2))
+
+def constraintsHold {X : Type} (c : SignedConstraints X) (v : X → Source) : Prop :=
+  Sol c.1 v ∧ Diseq c.2 v
+
+def mergeConstraints {X : Type} (a b : SignedConstraints X) : SignedConstraints X :=
+  (a.1 ++ b.1, a.2 ++ b.2)
+
+/-- Raw labels are checked against the actual symbolic reached set. No
+partition validity or attained-label certificate is supplied. -/
+def compileRow {X : Type} (t : Term X) (r : RawRow) : Option (SignedConstraints X) :=
+  if r.2.2 ⊆ reachedPairs r.1 t then
+    (matchExterior (symbolicExterior r.1 [] t) r.2.1).map
+      (fun bs => (bindingEquations bs ++ positivePairs r.1 t r.2.2,
+        negativePairs r.1 t r.2.2))
+  else none
+
+def compileRows {X : Type} (t : Term X) : List RawRow → Option (SignedConstraints X)
+  | [] => some ([], [])
+  | r :: rs => do
+      let a ← compileRow t r
+      let b ← compileRows t rs
+      pure (mergeConstraints a b)
+
+private theorem binding_equations_exact {X : Type} (v : X → Source)
+    (bs : List (X × Term X)) : Sol (bindingEquations bs) v ↔ bindingHolds v bs := by
+  induction bs with
+  | nil => simp [Sol, bindingEquations, bindingHolds]
+  | cons b bs ih =>
+      simp only [bindingEquations, List.map_cons, Sol, List.mem_cons, forall_eq_or_imp]
+      change (v b.1 = evaluate v b.2 ∧ Sol (bindingEquations bs) v) ↔ _
+      rw [ih]
+      rfl
+
+private theorem constraints_merge_exact {X : Type} (a b : SignedConstraints X)
+    (v : X → Source) :
+    constraintsHold (mergeConstraints a b) v ↔ constraintsHold a v ∧ constraintsHold b v := by
+  simp only [constraintsHold, mergeConstraints, Sol, Diseq, List.mem_append,
+    forall_mem_or]
+  tauto
+
+private theorem pair_terms_exact {X : Type} (Q : CutSet) (t : Term X)
+    (v : X → Source) (pq : Address × Address) (hp : pq ∈ reachedPairs Q t) :
+    (termAt pq.1 t).map (evaluate v) = (termAt pq.2 t).map (evaluate v) ↔
+      evaluate v (pairTerms t pq).1 = evaluate v (pairTerms t pq).2 := by
+  have hp' := Finset.mem_product.mp hp
+  have h₁ : (termAt pq.1 t).isSome := by
+    have h := (Finset.mem_filter.mp ((Finset.mem_sort _).mp
+      (List.mem_toFinset.mp hp'.1))).2
+    exact h
+  have h₂ : (termAt pq.2 t).isSome := by
+    have h := (Finset.mem_filter.mp ((Finset.mem_sort _).mp
+      (List.mem_toFinset.mp hp'.2))).2
+    exact h
+  cases ha : termAt pq.1 t <;> cases hb : termAt pq.2 t <;>
+    simp_all [pairTerms]
+
+private theorem partition_constraints_exact {X : Type} (Q : CutSet) (t : Term X)
+    (K : Finset (Address × Address)) (v : X → Source) :
+    symbolicPartition Q t v = K ↔ K ⊆ reachedPairs Q t ∧
+      Sol (positivePairs Q t K) v ∧ Diseq (negativePairs Q t K) v := by
+  constructor
+  · intro h
+    refine ⟨?_, ?_, ?_⟩
+    · intro pq hp
+      rw [← h] at hp
+      exact (Finset.mem_filter.mp hp).1
+    · intro c hc
+      obtain ⟨pq, hpq, rfl⟩ := List.mem_map.mp hc
+      obtain ⟨hp, hk⟩ := Finset.mem_filter.mp (Finset.mem_toList.mp hpq)
+      have hs : pq ∈ symbolicPartition Q t v := h.symm ▸ hk
+      exact (pair_terms_exact Q t v pq hp).mp (Finset.mem_filter.mp hs).2
+    · intro c hc he
+      obtain ⟨pq, hpq, rfl⟩ := List.mem_map.mp hc
+      obtain ⟨hp, hk⟩ := Finset.mem_filter.mp (Finset.mem_toList.mp hpq)
+      apply hk
+      rw [← h]
+      exact Finset.mem_filter.mpr ⟨hp, (pair_terms_exact Q t v pq hp).mpr he⟩
+  · rintro ⟨sub, pos, neg⟩
+    ext pq
+    constructor
+    · intro hpq
+      obtain ⟨hp, he⟩ := Finset.mem_filter.mp hpq
+      by_contra hk
+      apply neg (pairTerms t pq) (List.mem_map.mpr ⟨pq,
+        Finset.mem_toList.mpr (Finset.mem_filter.mpr ⟨hp, hk⟩), rfl⟩)
+      exact (pair_terms_exact Q t v pq hp).mp he
+    · intro hk
+      have hp := sub hk
+      apply Finset.mem_filter.mpr
+      refine ⟨hp, (pair_terms_exact Q t v pq hp).mpr ?_⟩
+      exact pos (pairTerms t pq) (List.mem_map.mpr ⟨pq,
+        Finset.mem_toList.mpr (Finset.mem_filter.mpr ⟨hp, hk⟩), rfl⟩)
+
+private theorem compile_row_exact {X : Type} (t : Term X) (r : RawRow)
+    (v : X → Source) :
+    symbolicRecord r.1 t v = r.2 ↔
+      ∃ c, compileRow t r = some c ∧ constraintsHold c v := by
+  rcases r with ⟨Q, u, K⟩
+  change (exteriorFill v (symbolicExterior Q [] t), symbolicPartition Q t v) = (u, K) ↔ _
+  rw [Prod.mk.injEq, partition_constraints_exact]
+  by_cases sub : K ⊆ reachedPairs Q t
+  · cases hm : matchExterior (symbolicExterior Q [] t) u with
+    | none =>
+        have no : exteriorFill v (symbolicExterior Q [] t) ≠ u := by
+          intro he
+          obtain ⟨bs, hb, _⟩ := (exterior_match_exact _ _ v).mp he
+          rw [hm] at hb
+          cases hb
+        simp [compileRow, sub, hm, no]
+    | some bs =>
+        have ext : exteriorFill v (symbolicExterior Q [] t) = u ↔ bindingHolds v bs := by
+          constructor
+          · intro he
+            obtain ⟨cs, hc, hh⟩ := (exterior_match_exact _ _ v).mp he
+            rw [hm] at hc
+            cases hc
+            exact hh
+          · exact fun hb => (exterior_match_exact _ _ v).mpr ⟨bs, hm, hb⟩
+        rw [ext]
+        simp only [compileRow, sub, ↓reduceIte, hm, Option.map_some, Option.some.injEq,
+          exists_eq_left, constraintsHold, Sol, List.mem_append, forall_mem_or]
+        rw [show (∀ c ∈ bindingEquations bs, evaluate v c.1 = evaluate v c.2) ↔
+          bindingHolds v bs from binding_equations_exact v bs]
+        simp only [sub, true_and]
+        tauto
+  · simp [compileRow, sub]
+
+private theorem compile_rows_exact {X : Type} (t : Term X) (rs : List RawRow)
+    (v : X → Source) :
+    (∀ r ∈ rs, symbolicRecord r.1 t v = r.2) ↔
+      ∃ c, compileRows t rs = some c ∧ constraintsHold c v := by
+  induction rs with
+  | nil => simp [compileRows, constraintsHold, Sol, Diseq]
+  | cons r rs ih =>
+      simp only [List.mem_cons, forall_eq_or_imp]
+      rw [compile_row_exact, ih]
+      constructor
+      · rintro ⟨⟨a, ha, hsa⟩, ⟨b, hb, hsb⟩⟩
+        exact ⟨mergeConstraints a b, by simp [compileRows, ha, hb],
+          (constraints_merge_exact a b v).mpr ⟨hsa, hsb⟩⟩
+      · rintro ⟨c, hc, hs⟩
+        cases ha : compileRow t r with
+        | none => simp [compileRows, ha] at hc
+        | some a =>
+            cases hb : compileRows t rs with
+            | none => simp [compileRows, ha, hb] at hc
+            | some b =>
+                have he : mergeConstraints a b = c := by simpa [compileRows, ha, hb] using hc
+                subst c
+                obtain ⟨hsa, hsb⟩ := (constraints_merge_exact a b v).mp hs
+                exact ⟨⟨a, ha, hsa⟩, ⟨b, hb, hsb⟩⟩
+
+/-- A simultaneous substitution may change the finite variable carrier. -/
+def rebind {X Y : Type} (theta : X → Term Y) : Term X →ₙ* Term Y :=
+  FreeMagma.lift (Sum.elim (fun b => .of (.inl b)) theta)
+
+private theorem rebind_evaluate {X Y : Type} (theta : X → Term Y)
+    (z : Y → Source) (t : Term X) :
+    evaluate z (rebind theta t) = evaluate (fun x => evaluate z (theta x)) t := by
+  have h : (evaluate z).comp (rebind theta) =
+      evaluate (fun x => evaluate z (theta x)) := by
+    apply FreeMagma.hom_ext
+    funext a
+    cases a <;> rfl
+  exact congrArg (fun f : Term X →ₙ* Source => f t) h
+
+/-- The free carrier is a subset of the original finite presentation.
+There are no positive equations or shape restrictions on its valuations. -/
+structure RowOutput (X : Type) where
+  free : Set X
+  theta : X → Term free
+  delta : Equations free
+
+def outputHolds {X : Type} (o : RowOutput X) (v : X → Source) : Prop :=
+  ∃ z : o.free → Source, (∀ x, evaluate z (o.theta x) = v x) ∧ Diseq o.delta z
+
+def eliminateRows {X : Type} (p : Presentation X) (t : Term X)
+    (rs : List RawRow) : Option (RowOutput X) :=
+  match compileRows t rs with
+  | none => none
+  | some c =>
+      match h : (NativeGroundSolutionSpace.encodeEquations p c.1).unify Lambda.SubstInfo.empty with
+      | .error _ => none
+      | .ok S => some {
+          free := fun x => x ∉ NativeGroundSolutionSpace.D p S
+          theta := NativeGroundSolutionSpace.sigma p c.1 S h
+          delta := c.2.map (fun d =>
+            (rebind (NativeGroundSolutionSpace.sigma p c.1 S h) d.1,
+             rebind (NativeGroundSolutionSpace.sigma p c.1 S h) d.2)) }
+
+private theorem mgu_output_exact {X : Type} (p : Presentation X)
+    (c : SignedConstraints X) (S : Lambda.SubstInfo)
+    (h : (NativeGroundSolutionSpace.encodeEquations p c.1).unify Lambda.SubstInfo.empty = .ok S)
+    (v : X → Source) :
+    constraintsHold c v ↔ outputHolds {
+      free := fun x => x ∉ NativeGroundSolutionSpace.D p S
+      theta := NativeGroundSolutionSpace.sigma p c.1 S h
+      delta := c.2.map (fun d =>
+        (rebind (NativeGroundSolutionSpace.sigma p c.1 S h) d.1,
+         rebind (NativeGroundSolutionSpace.sigma p c.1 S h) d.2)) } v := by
+  have transport (z : NativeGroundSolutionSpace.Y p S → Source) :
+      Diseq (c.2.map (fun d =>
+        (rebind (NativeGroundSolutionSpace.sigma p c.1 S h) d.1,
+         rebind (NativeGroundSolutionSpace.sigma p c.1 S h) d.2))) z ↔
+      Diseq c.2 (NativeGroundSolutionSpace.Ext p c.1 S h z) := by
+    simp only [Diseq, List.mem_map, forall_exists_index, and_imp, forall_apply_eq_imp_iff₂,
+      rebind_evaluate, NativeGroundSolutionSpace.Ext]
+  constructor
+  · rintro ⟨sol, neg⟩
+    refine ⟨NativeGroundSolutionSpace.restriction p S v, ?_, ?_⟩
+    · exact congrFun (NativeGroundSolutionSpace.Ext_restriction p c.1 S h v sol)
+    · apply (transport _).mpr
+      rw [NativeGroundSolutionSpace.Ext_restriction p c.1 S h v sol]
+      exact neg
+  · rintro ⟨z, hz, neg⟩
+    have same : NativeGroundSolutionSpace.Ext p c.1 S h z = v := funext hz
+    refine ⟨?_, ?_⟩
+    · rw [← same]
+      exact NativeGroundSolutionSpace.Ext_sol p c.1 S h z
+    · rw [← same]
+      exact (transport z).mp neg
+
+/-- All raw rows are eliminated on one total original variable family.
+A successful output may have an empty disequality domain. -/
+theorem complete_row_elimination {X : Type} (p : Presentation X) (t : Term X)
+    (rs : List RawRow) (v : X → Source) :
+    (∀ r ∈ rs, symbolicRecord r.1 t v = r.2) ↔
+      ∃ o, eliminateRows p t rs = some o ∧ outputHolds o v := by
+  rw [compile_rows_exact]
+  cases hc : compileRows t rs with
+  | none => simp [hc, eliminateRows]
+  | some c =>
+      simp only [hc, Option.some.injEq, exists_eq_left]
+      cases hu : (NativeGroundSolutionSpace.encodeEquations p c.1).unify Lambda.SubstInfo.empty with
+      | error e =>
+          have no : ¬ constraintsHold c v := by
+            intro h
+            obtain ⟨S, hs⟩ := NativeGroundSolutionSpace.native_complete p c.1 v h.1
+            rw [hu] at hs
+            cases hs
+          simp [eliminateRows, hc, hu, no]
+      | ok S =>
+          simpa only [eliminateRows, hc, hu, Option.some.injEq, exists_eq_left] using
+            mgu_output_exact p c S hu v
 
 end D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeSymbolicRowElimination
