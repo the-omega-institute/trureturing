@@ -14,6 +14,11 @@ triage: anchor
 
 # Entropy for group endomorphisms and homogeneous spaces
 
+## Verified locator
+
+- DOI: https://doi.org/10.1090/S0002-9947-1971-0274707-X (Crossref identifies *Transactions of the American Mathematical Society*, volume 153, pages 401–414, published 1971).
+- The DOI and bibliographic fields were checked against the Crossref work record. No theorem, equation, or page-specific claim is attributed to Bowen beyond the general factor-entropy context stated below.
+
 Bowen's article appeared in Transactions of the American Mathematical Society,
 volume 153 (1971), pp. 401–414. This reference acknowledges the classical
 factor-entropy framework; no novelty is claimed for entropy preservation by
