@@ -549,7 +549,7 @@ x_T=N_T/M,\qquad y_i=\sum_{T\ni i}x_T,\qquad
 \beta=\sum_T(|T|-1)x_T=\frac{\ell+s-1}{n-s}.
 $$
 
-The displayed expression $J_s$ of Definition 5.1 is used with this $\beta$; its formula is valid for every $0\le\beta\le s-1$. Exact counting gives $\sum_TN_T=M$ and $\sum_iD_i=M y_i$. If $E(G)\le14/n$, Theorem 3.1 gives $s\le6$ and $D_i\ge n/42$. Its proof also gives the sharper $s^2\le14(2+14/n)<36$, hence $s\le5$ for $n\ge10^6$. Since every source degree is at most $s$, rationalization yields
+The displayed expression $J_s$ of Definition 5.1 is used with this $\beta$; its formula is valid for every $0\le\beta\le s-1$. Exact counting gives $\sum_TN_T=M$ and $D_i=M y_i$ for every $i\in[s]$. If $E(G)\le14/n$, Theorem 3.1 gives $s\le6$ and $D_i\ge n/42$. Its proof also gives the sharper $s^2\le14(2+14/n)<36$, hence $s\le5$ for $n\ge10^6$. Since every source degree is at most $s$, rationalization yields
 
 $$
 0\le\frac{r^2}{2}-g(r)\le\frac{r^4}{8}.
