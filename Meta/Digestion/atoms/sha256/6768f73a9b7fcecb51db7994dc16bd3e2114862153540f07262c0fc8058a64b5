@@ -1,0 +1,50 @@
+**Proposition 3.2 (A continuous core mean on a finite core).** Fix a positive integer $j$ and a real number $v$ with $0<v\le j$. For every integer $a\ge2$ and $h\ge j$, use the partition of Theorem 3.1 and put
+
+$$
+p=\frac v{a+v-1},\qquad \ell=\lfloor v\rfloor,\qquad
+\theta=v-\ell\in[0,1).
+$$
+
+Give each singleton $\{d\}$, $d\in D$, mass $p/n$. Conditional on the remaining mass $1-p$, choose uniformly a subset of $C$ of size $a+\ell$ with probability $1-\theta$, and uniformly a subset of size $a+\ell+1$ with probability $\theta$. A branch of probability zero is omitted: in particular, when $v=j$ the second branch is absent and no subset of size $a+j+1$ is requested. All unspecified type masses are zero.
+
+This is one mean-$a$ law with positive marginals. With
+
+$$
+M_3=(1-\theta)(a+\ell)^3+\theta(a+\ell+1)^3,
+$$
+
+its exact energy is
+
+$$
+H_{j,v}(a,h)
+=\frac{(a+j)^2 M_3}{(1-p)(a+v)^2}
+ +\frac{(h+1-j)^2}{p}.
+\tag{3.4}
+$$
+
+For every sequence (1.2),
+
+$$
+\frac{H_{j,v}(a_n,h_n)-B_0(a_n)}{a_n^2}
+\longrightarrow \frac{\kappa^2}{v}+2v+2(j-1).
+\tag{3.5}
+$$
+
+**Proof.** If $\theta>0$, then $\ell+1\le j$, so both requested subset sizes are at most $|C|$. If $\theta=0$, only size $a+\ell\le|C|$ is used. These sizes are positive. The conditional core mean is $a+v$ and its inclusion probability for each label in $C$ is $(a+v)/(a+j)$. Thus
+
+$$
+y_i=\frac{(1-p)(a+v)}{a+j}>0\quad(i\in C),\qquad
+y_d=\frac pn>0\quad(d\in D),
+$$
+
+and $(1-p)(a+v)+p=a$. Conditional uniformity and the common core marginal give core contribution $(1-p)M_3/y_i^2$, which is the first term of (3.4). The singleton contribution is again $n^2/p$.
+
+Since $j,v$ are fixed,
+
+$$
+M_3=a^3+3va^2+O_{j,v}(a),\qquad
+(1-p)(a+v)^2=a^2+va+O_{j,v}(1).
+$$
+
+Consequently the first term in (3.4) equals $a^3+(2j+2v)a^2+O_{j,v}(a)$. Since $n/\sqrt a\to\kappa$ and $p=v/(a+v-1)$, the second term divided by $a^2$ tends to $\kappa^2/v$. This proves (3.5). At $v=j$, the conditional core is the full set $C$, so the law is exactly (3.1). ∎
+

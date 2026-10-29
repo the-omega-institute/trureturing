@@ -1,0 +1,4 @@
+**Proposition 5.4 (Two explicit ratio sequences).** Along $a=b^2$, $h=3b$, with integers $b\to\infty$, the law (5.6) has normalized gap tending to $21/2$, whereas the minimum in $\mathcal S(a,h)$ has normalized gap tending to $11$. Along $a=b^2$, $h=4b$, the unrestricted infimum has normalized gap tending to $14$, whereas the minimum in $\mathcal S(a,h)$ has normalized gap tending to $18$.
+
+**Proof.** In the first sequence $\kappa=3$; apply Theorem 3.1 at $j=2$ and Proposition 5.2. In the second sequence $\kappa=4$; apply Theorem 4.4 at $j=2$ and Proposition 5.2. All laws in these comparisons are in the original positive-marginal domain. ∎
+
