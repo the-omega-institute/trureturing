@@ -7,6 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Walks;
 internal sealed class AmoebaHostDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Walks/AmoebaHost.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Combinatorics/gurvichkrncvyalyi2025amoebas");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A finite layered supertree preserves every initial tree, realizes all arm paths simultaneously for every copy, and is confining under total-edge minimization.",
@@ -64,7 +66,7 @@ internal sealed class AmoebaHostDocument : IScribeDocumentDefinition
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose) => Describe.Lean(
         DescribeId.Create("amoeba-host-" + name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
-        H(title), StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(),
+        H(title), StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(Source),
         Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
     private static Formula Id(string s) => F.Id(s);
     private static Formula Call(string s, params Formula[] a) => a.Length == 0

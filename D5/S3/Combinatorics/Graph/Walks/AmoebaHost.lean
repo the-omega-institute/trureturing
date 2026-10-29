@@ -6,6 +6,27 @@
    utility: none
    digest: Finite layered trees with a preserved core and controlled branching degrees. -/
 
+/-
+   copy_level_bound: proof_shape: content; escape_witness: the unique-path level
+   bound placing every copy vertex within the finite core radius; consumers:
+   exists_buffered_host.
+   exists_buffered_host: proof_shape: content; escape_witness: the explicit
+   finite layered host construction with core budgets, safe degree and depth;
+   consumers: hasExtension_of_buffer, total_confinement.
+   sprout_copy: proof_shape: content; escape_witness: the jointly injective
+   fresh-leaf selection over all parent fibers; consumers: hasExtension_one.
+   hasExtension_one: proof_shape: content; escape_witness: the explicit
+   simultaneous length-one extension embedding; consumers: hasExtension_of_buffer.
+   hasExtension_of_buffer: proof_shape: content; escape_witness: the finite
+   nonbacktracking continuation of every arm with joint injectivity; consumers:
+   total_confinement.
+   total_confinement: proof_shape: content; escape_witness: the all-copy,
+   arbitrary-initial-host composition of buffered extension and deadness;
+   consumers: none.
+   admission_basis: open-problem-resolution (#23364; Proved)
+   Direct frozen dependencies: none (same-delivery AmoebaConfinement and pinned Mathlib).
+-/
+
 import D5.S3.Combinatorics.Graph.Walks.AmoebaConfinement
 
 namespace D5.S3.Combinatorics.Graph.Walks.AmoebaConfinement

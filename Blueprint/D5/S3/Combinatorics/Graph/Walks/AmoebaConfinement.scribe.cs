@@ -7,6 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Walks;
 internal sealed class AmoebaConfinementDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Walks/AmoebaConfinement.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/Combinatorics/gurvichkrncvyalyi2025amoebas");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Simultaneous extensions inside finite tree hosts imply deadness for every minimum-total-edge growth. A finite interval argument supplies a safe branching degree.",
@@ -30,34 +32,34 @@ internal sealed class AmoebaConfinementDocument : IScribeDocumentDefinition
                 + "Original edges are preserved, v is adjacent to (v,a,0), and consecutive j values on each arm are adjacent. "
                 + "An injective homomorphism of this entire graph, agreeing with the prescribed copy on H, realizes every arm together. "
                 + "It forces all new vertices outside the copy and mutually distinct. Each arm has l edges; for l=0 it has no new vertices.",
-                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("MinimumGrowth", "The objective counts total edges", GrowthFormula(),
                 "For a specified copy c in G and containing map i into S, the extension must be realized in S over i composed with c. "
                 + "Every competing finite tree R and every containing map j are compared using the total number of edges. "
                 + "No choice of a preferred minimizer or number of newly added edges is substituted.",
-                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("Dead", "Every minimizing growth coincides", DeadFormula(),
                 "Coincides(i) says that i is surjective on vertices and reflects adjacency as well as preserving it. "
                 + "Thus it identifies the entire containing tree with the original host. Deadness quantifies all minimizing hosts and containing maps.",
-                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("TotallyConfined", "Every initial tree has a confining supertree", TotalFormula(),
                 "A confining host admits a copy and every copy in it is dead, with multiplicities transported by that copy map. "
                 + "Total confinement starts with any finite tree admitting a copy, preserves that initial tree by an injective graph map, "
                 + "and requires a confining finite host. All lengths and zero multiplicities are retained. "
                 + "This definition states the target property; the two lemmas below do not establish its universal existence assertion.",
-                DescribeRole.Definition, AssessedProvenance.FromRepo()),
+                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("dead_of_hasExtension", "An existing extension kills every minimum growth", DeadBridgeFormula(),
                 "The current host itself competes in the total-edge minimum. A minimizing containing tree therefore has at most as many edges. "
                 + "A finite tree has one fewer edge than vertices, so the containing map must be surjective. "
                 + "Its injective map on undirected edge sets is also surjective, which supplies adjacency reflection. "
                 + "This proves the assertion for every minimizer, including the zero-length and zero-multiplicity cases.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("exists_safe_degree", "A degree outside every demand interval", SafeDegreeFormula(),
                 "The union of the integer intervals from d(v) inclusive to d(v)+m(v) exclusive has size at most the sum k of m. "
                 + "There are k+1 integers from 2 through k+2. One avoids the union. Whenever d(v) is at most that integer q, "
                 + "avoiding the interval implies d(v)+m(v) is at most q. This supplies a branching capacity, "
                 + "and asserts neither the construction of a host nor disjoint path existence.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo())),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,

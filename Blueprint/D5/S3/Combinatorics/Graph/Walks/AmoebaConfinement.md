@@ -12,7 +12,7 @@ $$\forall V \in \mathrm{Type},\; \forall H \in \mathrm{SimpleGraph}\left(V\right
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Walks/AmoebaConfinement.HasExtension` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Vladimir Gurvich; Matjaž Krnc; Mikhail Vyalyi (2025). *Growing Trees and Amoebas’ Replications*. DOI: [10.1007/s00025-025-02421-6](https://doi.org/10.1007/s00025-025-02421-6). URL: <https://arxiv.org/abs/2401.07484>.
 
 *Commentary.*
 
@@ -24,7 +24,7 @@ $$\forall V \in \mathrm{Type},\; \forall H \in \mathrm{SimpleGraph}\left(V\right
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Walks/AmoebaConfinement.MinimumGrowth` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Vladimir Gurvich; Matjaž Krnc; Mikhail Vyalyi (2025). *Growing Trees and Amoebas’ Replications*. DOI: [10.1007/s00025-025-02421-6](https://doi.org/10.1007/s00025-025-02421-6). URL: <https://arxiv.org/abs/2401.07484>.
 
 *Commentary.*
 
@@ -36,7 +36,7 @@ $$\forall V \in \mathrm{Type},\; \forall H \in \mathrm{SimpleGraph}\left(V\right
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Walks/AmoebaConfinement.Dead` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Vladimir Gurvich; Matjaž Krnc; Mikhail Vyalyi (2025). *Growing Trees and Amoebas’ Replications*. DOI: [10.1007/s00025-025-02421-6](https://doi.org/10.1007/s00025-025-02421-6). URL: <https://arxiv.org/abs/2401.07484>.
 
 *Commentary.*
 
@@ -48,7 +48,7 @@ $$\forall V \in \mathrm{Type},\; \forall H \in \mathrm{SimpleGraph}\left(V\right
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Walks/AmoebaConfinement.TotallyConfined` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Vladimir Gurvich; Matjaž Krnc; Mikhail Vyalyi (2025). *Growing Trees and Amoebas’ Replications*. DOI: [10.1007/s00025-025-02421-6](https://doi.org/10.1007/s00025-025-02421-6). URL: <https://arxiv.org/abs/2401.07484>.
 
 *Commentary.*
 
@@ -62,6 +62,8 @@ $$\forall V \in \mathrm{Type},\; \forall H \in \mathrm{SimpleGraph}\left(V\right
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Vladimir Gurvich; Matjaž Krnc; Mikhail Vyalyi (2025). *Growing Trees and Amoebas’ Replications*. DOI: [10.1007/s00025-025-02421-6](https://doi.org/10.1007/s00025-025-02421-6). URL: <https://arxiv.org/abs/2401.07484>.
+
 *Commentary.*
 
 The current host itself competes in the total-edge minimum. A minimizing containing tree therefore has at most as many edges. A finite tree has one fewer edge than vertices, so the containing map must be surjective. Its injective map on undirected edge sets is also surjective, which supplies adjacency reflection. This proves the assertion for every minimizer, including the zero-length and zero-multiplicity cases.
@@ -73,6 +75,8 @@ $$\forall V \in \mathrm{Type},\; [\mathrm{Fintype}\left(V\right)] \forall d \in 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/AmoebaConfinement.exists_safe_degree` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Vladimir Gurvich; Matjaž Krnc; Mikhail Vyalyi (2025). *Growing Trees and Amoebas’ Replications*. DOI: [10.1007/s00025-025-02421-6](https://doi.org/10.1007/s00025-025-02421-6). URL: <https://arxiv.org/abs/2401.07484>.
 
 *Commentary.*
 

@@ -16,6 +16,8 @@ $$\forall V \in \mathrm{Type},\; [\mathrm{Fintype}\left(V\right)] \forall H \in 
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Vladimir Gurvich; Matjaž Krnc; Mikhail Vyalyi (2025). *Growing Trees and Amoebas’ Replications*. DOI: [10.1007/s00025-025-02421-6](https://doi.org/10.1007/s00025-025-02421-6). URL: <https://arxiv.org/abs/2401.07484>.
+
 *Commentary.*
 
 Choose a maximum-degree vertex in H. Its image cannot lie outside the core because every outside degree is at most q. For each other vertex, the unique H-path from that vertex maps to an actual host path. Its length is less than the order of H. The level changes by at most one per edge, so the stated bound holds for every vertex of every copy.
@@ -27,6 +29,8 @@ $$\forall V \in \mathrm{Type},\; [\mathrm{Fintype}\left(V\right)] \forall H \in 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/AmoebaHost.exists_buffered_host` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Vladimir Gurvich; Matjaž Krnc; Mikhail Vyalyi (2025). *Growing Trees and Amoebas’ Replications*. DOI: [10.1007/s00025-025-02421-6](https://doi.org/10.1007/s00025-025-02421-6). URL: <https://arxiv.org/abs/2401.07484>.
 
 *Commentary.*
 
@@ -40,6 +44,8 @@ $$\forall V \in \mathrm{Type},\; [\mathrm{Fintype}\left(V\right)] \forall W \in 
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Vladimir Gurvich; Matjaž Krnc; Mikhail Vyalyi (2025). *Growing Trees and Amoebas’ Replications*. DOI: [10.1007/s00025-025-02421-6](https://doi.org/10.1007/s00025-025-02421-6). URL: <https://arxiv.org/abs/2401.07484>.
+
 *Commentary.*
 
 The image of a connected tree inside a tree is induced: its paths are unique, so an extra image edge would form a cycle. A vertex outside that image cannot be adjacent to two distinct image vertices for the same reason. At each parent, removing its image neighbors leaves enough neighbors for the prescribed new leaves. Choose an injection on each parent fiber. Distinct fibers cannot collide by the unique-attachment property, so all chosen leaves are fresh and jointly distinct.
@@ -51,6 +57,8 @@ $$\forall V \in \mathrm{Type},\; [\mathrm{Fintype}\left(V\right)] \forall H \in 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/AmoebaHost.hasExtension_one` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Vladimir Gurvich; Matjaž Krnc; Mikhail Vyalyi (2025). *Growing Trees and Amoebas’ Replications*. DOI: [10.1007/s00025-025-02421-6](https://doi.org/10.1007/s00025-025-02421-6). URL: <https://arxiv.org/abs/2401.07484>.
 
 *Commentary.*
 
@@ -64,6 +72,8 @@ $$\forall V \in \mathrm{Type},\; [\mathrm{Fintype}\left(V\right)] \forall H \in 
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Vladimir Gurvich; Matjaž Krnc; Mikhail Vyalyi (2025). *Growing Trees and Amoebas’ Replications*. DOI: [10.1007/s00025-025-02421-6](https://doi.org/10.1007/s00025-025-02421-6). URL: <https://arxiv.org/abs/2401.07484>.
+
 *Commentary.*
 
 For zero length the extension is the existing copy. For positive length, start with the jointly fresh first edges. Continue each arm by choosing a neighbor other than its predecessor. The level buffer keeps every endpoint below the outer leaves. Acyclicity makes every such continuation a path. A path whose first edge leaves the connected copy cannot return to it: a return would give two distinct paths between copy vertices. Likewise, two off-copy arm tails can meet only if their roots and first edges agree. The first-edge injection then identifies their root occurrences. Path simplicity identifies their position indices. The resulting injective homomorphism realizes the entire explicit extension graph.
@@ -75,6 +85,8 @@ $$\forall V \in \mathrm{Type},\; [\mathrm{Fintype}\left(V\right)] \forall H \in 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/AmoebaHost.total_confinement` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Vladimir Gurvich; Matjaž Krnc; Mikhail Vyalyi (2025). *Growing Trees and Amoebas’ Replications*. DOI: [10.1007/s00025-025-02421-6](https://doi.org/10.1007/s00025-025-02421-6). URL: <https://arxiv.org/abs/2401.07484>.
 
 *Commentary.*
 

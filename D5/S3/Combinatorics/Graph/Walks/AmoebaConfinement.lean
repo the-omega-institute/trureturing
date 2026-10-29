@@ -6,6 +6,27 @@
    utility: none
    digest: Ordinary amoeba extensions and minimum total-edge growth in finite trees. -/
 
+/-
+   HasExtension: proof_shape: content; escape_witness: the explicit injective
+   extensionGraph witness with all arm occurrences and positions simultaneously
+   distinct; consumers: dead_of_hasExtension, hasExtension_one.
+   MinimumGrowth: proof_shape: content; escape_witness: the universal comparison
+   over every finite containing host and total edge count; consumers: Dead,
+   dead_of_hasExtension.
+   Dead: proof_shape: content; escape_witness: the all-minimizers Coincides
+   characterization; consumers: dead_of_hasExtension, total_confinement.
+   TotallyConfined: proof_shape: content; escape_witness: the arbitrary-initial-
+   host and all-copy confining-host predicate; consumers: total_confinement.
+   dead_of_hasExtension: proof_shape: content; escape_witness: edge-count
+   equality forces surjectivity and adjacency reflection for the same containing
+   map; consumers: total_confinement.
+   exists_safe_degree: proof_shape: content; escape_witness: the finite interval
+   union bound produces a degree outside every demand interval; consumers:
+   exists_buffered_host.
+   admission_basis: open-problem-resolution (#23364; Proved)
+   Direct frozen dependencies: none (pinned Mathlib and same-delivery modules).
+-/
+
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
 import Mathlib.Combinatorics.SimpleGraph.Copy
 import Mathlib.Order.Interval.Finset.Nat
