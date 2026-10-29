@@ -12,10 +12,13 @@ import Mathlib.MeasureTheory.Integral.Bochner.Basic
 import Mathlib.Tactic
 
 /-!
-Source-only preparation, not compiled. Extracted from the sealed Gaussian
-moment proof, with arbitrary mean and variance; no cubic or LowH branch.
-The probability-to-Lebesgue transport and the derivatives of the entire MGF
-are proved here. Pinned Mathlib: 56a005855ea17e0b0958f73ec801ae140b0a1679.
+The Gaussian moment identities use arbitrary real mean and positive variance,
+with no cubic or LowH branch. The probability-to-Lebesgue transport and the
+derivatives of the entire MGF are proved here. Pinned Mathlib:
+56a005855ea17e0b0958f73ec801ae140b0a1679.
+
+Escape registration remains unfinished under issue #23906; no `declared_validated`
+status is asserted for the four public moment theorems.
 -/
 
 noncomputable section
