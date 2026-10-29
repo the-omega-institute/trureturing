@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FiniteField.DyadicTraceCirculant
 import Reg.Support.DependentFamily
 
+/-! The full dyadic matrix is the observation of the natural translation parameter. -/
+
 namespace Reg.D5.S3.Arith.FiniteField.DyadicTraceCirculant
 
 open _root_.D5.S3.Arith.FiniteField.DyadicTraceCirculant
@@ -33,7 +35,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hbad := h (k := 2) (t := 1) (by decide) (by decide)
   change Matrix.det (0 : Matrix (Fin 2) (Fin 2) (ZMod 2)) = 1 at hbad
-  simpa using hbad
+  simp at hbad
 
 def registration : Registration arena
     (∀ {k t : ℕ}, 2 ≤ k → Nat.Coprime t (2 ^ k - 1) →
@@ -81,8 +83,11 @@ noncomputable def registration_1 : Contract.Registration
     owner := `D5.S3.Arith.FiniteField.DyadicTraceCirculant,
     definition := none,
     coordinates := #[0],
-    readouts := #[{ path := #["body", "body", "body", "body", "fn", "arg", "arg"],
-      stateBinder := 1, functionOperand := false, stateOperand := none,
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "arg"],
+      stateBinder := 1,
+      functionOperand := false,
+      stateOperand := none,
       booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
