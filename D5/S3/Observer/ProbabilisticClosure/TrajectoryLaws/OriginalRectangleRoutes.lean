@@ -8,6 +8,7 @@
 
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleOccurrence
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+import Mathlib.LinearAlgebra.Matrix.Irreducible.Defs
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -58,44 +59,40 @@ private theorem bounded_positive_power (A : Matrix H H ℝ) (hA : ∀ i j, 0 ≤
     exact Finset.sum_eq_zero fun k hk => by rw [hz k (Finset.mem_range.mp hk), mul_zero]
   exact (ne_of_gt hn) he
 
+private def append_label (θ : Presentation H) (h s r : H) (a : LabelledRoute θ h s)
+    (x : Bool) (he : 0 < θ.matrix x s r) : LabelledRoute θ h r where
+  length := a.length+1
+  states := Fin.snoc a.states r
+  labels := Fin.snoc a.labels x
+  first := by simpa only [← Fin.castSucc_zero, Fin.snoc_castSucc] using a.first
+  last := Fin.snoc_last _ _
+  positive i := by
+    refine Fin.lastCases ?_ (fun j => ?_) i
+    · simpa only [Fin.snoc_last, Fin.snoc_castSucc, Fin.succ_last, a.last] using he
+    · simpa only [Fin.snoc_castSucc, Fin.succ_castSucc] using a.positive j
+
+private theorem route_of_positive_path (θ : Presentation H) {h r : H}
+    (p : @Quiver.Path H (Matrix.toQuiver (θ.matrix false+θ.matrix true)) h r) :
+    ∃ a : LabelledRoute θ h r, a.length = p.length := by
+  induction p with
+  | nil => exact ⟨emptyRoute θ h,rfl⟩
+  | cons p e ih =>
+    obtain ⟨a,ha⟩ := ih
+    have hs : 0 < θ.matrix false _ _ + θ.matrix true _ _ := e.down
+    obtain ⟨x,hx⟩ : ∃ x : Bool, 0 < θ.matrix x _ _ := by
+      by_cases hf : 0 < θ.matrix false _ _
+      · exact ⟨false,hf⟩
+      · exact ⟨true,by linarith [le_of_not_gt hf]⟩
+    exact ⟨append_label θ _ _ _ a x hx, congrArg Nat.succ ha⟩
+
 private theorem route_of_positive_power (θ : Presentation H) (n : ℕ) (h r : H)
     (hp : 0 < ((θ.matrix false+θ.matrix true)^n) h r) :
     ∃ a : LabelledRoute θ h r, a.length = n := by
-  induction n generalizing h with
-  | zero =>
-    have he : h = r := by
-      by_contra hne
-      simpa [Matrix.one_apply, hne] using hp
-    subst h
-    exact ⟨emptyRoute θ r,rfl⟩
-  | succ n ih =>
-    have hn (i j : H) : 0 ≤ (θ.matrix false+θ.matrix true) i j :=
-      add_nonneg (θ.matrix_nonneg _ _ _) (θ.matrix_nonneg _ _ _)
-    rw [pow_succ', Matrix.mul_apply] at hp
-    obtain ⟨k,_,hk⟩ := (Finset.sum_pos_iff_of_nonneg (fun k _ => mul_nonneg (hn h k)
-      (Matrix.pow_apply_nonneg hn n k r))).mp hp
-    have hkn : 0 < ((θ.matrix false+θ.matrix true)^n) k r :=
-      pos_of_mul_pos_left hk (hn h k)
-    have hkh : 0 < θ.matrix false h k + θ.matrix true h k :=
-      pos_of_mul_pos_right hk (Matrix.pow_apply_nonneg hn n k r)
-    obtain ⟨x,hx⟩ : ∃ x : Bool, 0 < θ.matrix x h k := by
-      by_cases hf : 0 < θ.matrix false h k
-      · exact ⟨false,hf⟩
-      · exact ⟨true,by linarith [le_of_not_gt hf]⟩
-    obtain ⟨a,ha⟩ := ih k hkn
-    subst n
-    refine ⟨{
-      length := a.length+1
-      states := Fin.cons h a.states
-      labels := Fin.cons x a.labels
-      first := rfl
-      last := by simp [a.last]
-      positive := ?_ },rfl⟩
-    intro i
-    refine Fin.cases ?_ (fun j => ?_) i
-    · simpa only [Fin.castSucc_zero, Fin.cons_zero, Fin.succ_zero_eq_one, Fin.cons_one,
-        a.first] using hx
-    · simpa only [Fin.succ_castSucc, Fin.cons_succ] using a.positive j
+  obtain ⟨⟨p,he⟩⟩ := (Matrix.pow_apply_pos_iff_nonempty_path
+    (fun i j => add_nonneg (θ.matrix_nonneg false i j) (θ.matrix_nonneg true i j))
+      n h r).mp hp
+  obtain ⟨a,ha⟩ := route_of_positive_path θ p
+  exact ⟨a,ha.trans he⟩
 
 private theorem short_route (θ : Presentation H)
     (hirr : ∀ i j : H, ∃ n : ℕ, 0 < ((θ.matrix false+θ.matrix true)^n) i j)
@@ -106,16 +103,8 @@ private theorem short_route (θ : Presentation H)
   exact ⟨a,ha ▸ hn⟩
 
 private def append_zero (θ : Presentation H) (h s r : H) (a : LabelledRoute θ h s)
-    (he : 0 < θ.matrix false s r) : LabelledRoute θ h r where
-  length := a.length+1
-  states := Fin.snoc a.states r
-  labels := Fin.snoc a.labels false
-  first := by simpa only [← Fin.castSucc_zero, Fin.snoc_castSucc] using a.first
-  last := Fin.snoc_last _ _
-  positive i := by
-    refine Fin.lastCases ?_ (fun j => ?_) i
-    · simpa only [Fin.snoc_last, Fin.snoc_castSucc, Fin.castSucc_last, a.last] using he
-    · simpa only [Fin.snoc_castSucc, Fin.succ_castSucc] using a.positive j
+    (he : 0 < θ.matrix false s r) : LabelledRoute θ h r :=
+  append_label θ h s r a false he
 
 private theorem zero_predecessor (θ : Presentation H) (hpos : ∀ h, 0 < θ.initial h)
     (r : H) (hout : ∃ k, 0 < θ.matrix true r k) : ∃ s, 0 < θ.matrix false s r := by
@@ -126,8 +115,8 @@ private theorem zero_predecessor (θ : Presentation H) (hpos : ∀ h, 0 < θ.ini
     change (∑ l : Positive θ, θ.matrix true s l.val * θ.matrix true l.val k) = 0 at hz
     have hle : θ.matrix true s r * θ.matrix true r k ≤ 0 := by
       rw [← hz]
-      exact Finset.single_le_sum (fun l _ => mul_nonneg (θ.matrix_nonneg _ _ _)
-        (θ.matrix_nonneg _ _ _)) (Finset.mem_univ (⟨r,hpos r⟩ : Positive θ))
+      exact Finset.single_le_sum (fun (l : Positive θ) _ => mul_nonneg (θ.matrix_nonneg true s l.val)
+        (θ.matrix_nonneg true l.val k)) (Finset.mem_univ (⟨r,hpos r⟩ : Positive θ))
     nlinarith [θ.matrix_nonneg true s r]
   have hs : 0 < ∑ s, θ.initial s * (θ.matrix false s r+θ.matrix true s r) := by
     rw [θ.stationary]
@@ -135,12 +124,12 @@ private theorem zero_predecessor (θ : Presentation H) (hpos : ∀ h, 0 < θ.ini
   obtain ⟨s,_,hs⟩ := (Finset.sum_pos_iff_of_nonneg (fun s _ => mul_nonneg
     (θ.initial_nonneg s) (add_nonneg (θ.matrix_nonneg _ _ _) (θ.matrix_nonneg _ _ _)))).mp hs
   rw [hnr s,add_zero] at hs
-  exact ⟨s,pos_of_mul_pos_left hs (θ.initial_nonneg s)⟩
+  exact ⟨s,pos_of_mul_pos_right hs (θ.initial_nonneg s)⟩
 
 private theorem first_one_outgoing (θ : Presentation H) (w : List Bool)
     (R : Rectangle (product θ w)) (r : H) (hr : r ∈ R.rows)
     (hw : w.head? = some true) : ∃ k, 0 < θ.matrix true r k := by
-  obtain ⟨x,xs,rfl⟩ := List.exists_cons_of_ne_nil (fun he => by simp [he] at hw)
+  obtain ⟨x,xs,rfl⟩ := List.exists_cons_of_ne_nil (show w ≠ [] from fun he => by simp [he] at hw)
   have hx : x = true := by simpa only [List.head?_cons, Option.some.injEq] using hw
   subst x
   obtain ⟨j,hj⟩ := R.cols_nonempty
@@ -189,8 +178,8 @@ theorem irreducible_rectangle_occurrence (θ : Presentation H)
           rw [ht] at hf
           cases hf
         · intro _ _
-          simp only [append_zero, List.ofFn_succ', Fin.snoc_castSucc, Fin.snoc_last,
-            List.getLast?_append, List.getLast?_singleton]
+          simp only [append_zero, append_label, List.ofFn_succ', Fin.snoc_castSucc, Fin.snoc_last,
+            List.getLast?_concat]
       · obtain ⟨a,ha⟩ := short_route θ hirr h r
         exact ⟨a,ha.le,fun hh => (he hh).elim,fun _ => ha,fun _ hh => (ht hh).elim⟩
   choose a ha using routes
