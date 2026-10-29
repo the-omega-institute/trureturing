@@ -31,8 +31,8 @@ internal sealed class TebniA350759PrimeCongruencesDocument : IScribeDocumentDefi
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The two COMMENTS assertions", Equal(V("claim"), Parenthesized(ClaimBody())),
                 "OEIS A350759, revision 17, COMMENTS (unpaginated): "
-                + "\"Conjectures: For all p prime, (a(p) + a(p+1) - 2) == 0 (mod p),\" "
-                + "\"a(p+1) == 1 (mod ((p+1)*p)).\" "
+                + "\"Conjectures: For all p prime, (a(p) + a(p+1) - 2) is congruent to 0 (mod p),\" "
+                + "\"a(p+1) is congruent to 1 (mod ((p+1)*p)).\" "
                 + "The second line inherits the prime quantifier. The formula also asserts existence "
                 + "of an integer sequence with the source EGF and covers every sequence with that EGF. "
                 + "Subtraction takes place in Z; the product (p+1)*p is formed in N and then cast to Z.",
@@ -44,13 +44,14 @@ internal sealed class TebniA350759PrimeCongruencesDocument : IScribeDocumentDefi
                 + "Interior prime binomial coefficients vanish modulo p, and Wilson's theorem settles "
                 + "the endpoint, including a separate p=2 case. Combining the residues modulo p and "
                 + "p+1 proves the product congruence. Hanna's expansion in OEIS A176118 is prior art.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("tebni350759"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("tebni350759-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Named(string name) => Seq(Operatorname, Grp(V(name)));

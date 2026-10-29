@@ -119,6 +119,7 @@ the second modulus in both prime congruences.
 
 import Mathlib.Algebra.Algebra.Hom.Rat
 import D5.S1.Recurrence.Algebraic.DoldExponentialIntegrality
+import D5.S1.Recurrence.Algebraic.HannaLogarithmicPowerClosure
 import D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree
 import Mathlib.NumberTheory.Wilson
 import Mathlib.Data.Nat.Choose.Dvd

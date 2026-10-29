@@ -40,13 +40,17 @@ $$claim = ((\exists a: (\mathbb{N} \to \mathbb{Z}), \operatorname{IsSourceSequen
 
 *Commentary.*
 
-OEIS A350759, revision 17, COMMENTS (unpaginated): "Conjectures: For all p prime, (a(p) + a(p+1) - 2) == 0 (mod p)," "a(p+1) == 1 (mod ((p+1)*p))." The second line inherits the prime quantifier. The formula also asserts existence of an integer sequence with the source EGF and covers every sequence with that EGF. Subtraction takes place in Z; the product (p+1)*p is formed in N and then cast to Z.
+OEIS A350759, revision 17, COMMENTS (unpaginated): "Conjectures: For all p prime, (a(p) + a(p+1) - 2) is congruent to 0 (mod p)," "a(p+1) is congruent to 1 (mod ((p+1)*p))." The second line inherits the prime quantifier. The formula also asserts existence of an integer sequence with the source EGF and covers every sequence with that EGF. Subtraction takes place in Z; the product (p+1)*p is formed in N and then cast to Z.
 
 **Theorem 1.4 (Both prime congruences hold).**
 
 $$(\exists a: (\mathbb{N} \to \mathbb{Z}), \operatorname{IsSourceSequence}\left(a\right)) \land (\forall a: (\mathbb{N} \to \mathbb{Z}), (\operatorname{IsSourceSequence}\left(a\right)) \Rightarrow (\forall p: \mathbb{N}, (\operatorname{Nat.Prime}\left(p\right)) \Rightarrow ((\operatorname{Int.ModEq}\left((p: \mathbb{Z}), a\left(p\right) + a\left(p + 1\right) - 2, 0\right)) \land (\operatorname{Int.ModEq}\left(((p + 1) \cdot p: \mathbb{Z}), a\left(p + 1\right), 1\right)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/Congruence/TebniA350759PrimeCongruences.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/tebni350759` (proved) by `D5/S3/Arith/Congruence/TebniA350759PrimeCongruences.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"tebni350759","declaration_gid":"D5/S3/Arith/Congruence/TebniA350759PrimeCongruences.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
@@ -63,4 +67,5 @@ The rising-factorial expansion gives an integer factorial-scaled coefficient of 
 - Truth anchor: `D5/S3/Arith/Congruence/TebniA350759PrimeCongruences.result`
 - Truth anchor: `D5/S3/Arith/Congruence/TebniA350759PrimeCongruences.sourceSeries`
 - Dependency: [D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality](../../../S1/Recurrence/Algebraic/DoldExponentialIntegrality.md)
+- Dependency: [D5/S1/Recurrence/Algebraic/HannaLogarithmicPowerClosure](../../../S1/Recurrence/Algebraic/HannaLogarithmicPowerClosure.md)
 - Dependency: [D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree](../../../S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.md)
