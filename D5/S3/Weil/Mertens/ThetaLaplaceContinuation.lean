@@ -324,7 +324,6 @@ private lemma normalized_logDeriv {z : ℂ} (hz : z ≠ 1) (hn : riemannZeta₁ 
   rw [logDeriv_apply, logDeriv_apply, riemannZeta_eq_inv_sub_mul hz,
     deriv_riemannZeta_eq_neg_inv_sub_sq_mul_add hz]
   field_simp [sub_ne_zero.mpr hz, hn]
-  <;> ring
 
 private lemma Q_eq_M (u₀ : ℝ) {s : ℂ} (hs : 0 < s.re) : Q u₀ s = M u₀ s := by
   have hs0 : s ≠ 0 := Complex.ne_zero_of_re_pos hs
@@ -338,7 +337,7 @@ private lemma Q_eq_M (u₀ : ℝ) {s : ℂ} (hs : 0 < s.re) : Q u₀ s = M u₀ 
   rw [Q_cutoff u₀ hs, Q_zero_raw hs, normalized_logDeriv hz1 hn]
   unfold M
   field_simp [hs0, hz0]
-  <;> ring
+  ring
 
 private lemma M_meromorphic (u₀ : ℝ) : MeromorphicOn (M u₀) D := by
   intro s hs
@@ -449,9 +448,9 @@ private lemma pole_orders {f H : ℂ → ℂ} {a α : ℂ}
     have hder : deriv (fun z => α / (z - a) + H z) z =
         -α / (z - a) ^ 2 + deriv H z := by
       rw [deriv_fun_add (by fun_prop) hHz.differentiableAt,
-        deriv_fun_div (by fun_prop) (by fun_prop) hza]
+        deriv_fun_div (c := fun _ : ℂ => α) (d := fun w : ℂ => w - a)
+          (x := z) (by fun_prop) (by fun_prop) hza]
       simp
-
     rw [hd, hder, hf]
     ring
   refine ⟨heq', ?_, ?_⟩
@@ -540,18 +539,22 @@ private lemma actual_poles (u₀ : ℝ) {ρ : ℂ}
       dsimp [a]
       linear_combination h
     have hld : logDeriv riemannZeta₁ (1 + s) = (m : ℂ) / (s - a) + R (1 + s) := by
-      convert hlogs hsρ using 1 <;> dsimp [a, R] <;> congr 2 <;> ring
+      convert hlogs hsρ using 1
+      dsimp [a, R]
+      congr 2
+      ring
     dsimp [M, H, α]
     rw [hld]
     field_simp [hρ0, hds, hsa]
-    <;> ring
+    ring
   have hp := pole_orders hH hα heq
   refine ⟨?_, sub_ne_zero.mpr hρ1, hmpos, hfin, hα, H, hH, heq, hp.1, hp.2.1, hp.2.2⟩
   change -(1 / 2 : ℝ) < (ρ - 1).re
   simp only [Complex.sub_re, Complex.one_re]
   linarith
 
-/-- The actual cutoff theta transform, its analytic continuation and arbitrary-multiplicity poles. -/
+/-- The actual cutoff theta transform, its analytic continuation and poles
+with their full zeta-zero multiplicities. -/
 theorem theta_laplace_continuation (u₀ : ℝ) (hu₀ : 0 ≤ u₀) :
     AnalyticOnNhd ℂ C {z | (1 / 2 : ℝ) < z.re} ∧
     Differentiable ℂ (A u₀) ∧

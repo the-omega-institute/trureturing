@@ -54,7 +54,7 @@ internal sealed class ThetaLaplaceContinuationDocument : IScribeDocumentDefiniti
                     Paragraph(Text(
                         "At every actual zeta zero rho with Re(rho)>1/2, the analytic order is "
                         + "finite and its natural multiplicity m is positive. Set a=rho-1 and "
-                        + "alpha=-m/rho, which is nonzero. Finite-order factorization of the "
+                        + "alpha=-m/rho, which is nonzero; a lies in Re(s)>-1/2 and a is not zero. Finite-order factorization of the "
                         + "actual zeta function gives a nonvanishing analytic factor and an "
                         + "analytic logarithmic-derivative remainder R for zeta1. The identity "
                         + "-m/((1+s)*(s-a))=alpha/(s-a)+m/(rho*(1+s)) produces an analytic "
@@ -68,6 +68,9 @@ internal sealed class ThetaLaplaceContinuationDocument : IScribeDocumentDefiniti
                         "This supplies the actual theta transform for a signed-tail Laplace "
                         + "argument. It does not construct the separate signed-tail clock, "
                         + "prove its moment convergence or continuation, establish an oscillation "
-                        + "or abscissa theorem, or imply the Riemann hypothesis or Robin's criterion."))),
+                        + "or abscissa theorem, or imply the Riemann hypothesis or Robin's criterion. "
+                        + "For the separate actual clock f, the intended integration-by-parts equation is "
+                        + "s*L''(s)+2*L'(s)=-Q'(s)+Q(s)+u0^2*f(u0)*exp(-s*u0). Its positive "
+                        + "cutoff term is entire and must be retained unless its coefficient is separately proved zero."))),
                 DescribeRole.Theorem))));
 }
