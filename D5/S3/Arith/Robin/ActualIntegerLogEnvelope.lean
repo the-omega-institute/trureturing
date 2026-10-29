@@ -9,6 +9,7 @@
 import D5.S3.Arith.Robin.OriginalFirstClockTransport
 import D5.S3.Arith.Robin.EulerLayerInventoryGrowth
 import D5.S3.Arith.Robin.MertensExplicitEnvelope
+import D5.S3.Weil.Mertens.CenteredTail
 import D5.S3.Weil.GronwallUpperEnvelope
 
 /-! The comparator alone has smooth support; global fixed-price optimality transfers its bound
@@ -79,17 +80,19 @@ private theorem strict_support {x : ℝ} (hx : 1 < x) {U : ℕ} (hU : 0 < U)
       (Nat.cast_nonneg p)
   linarith
 
-/-- The strict inventory transfers its arbitrary positive size error to every actual
-positive integer. Only the comparator has smooth support. -/
-theorem eventual_actual_integer_envelope_epsilon (epsilon : ℝ) (hepsilon : 0 < epsilon) :
+private theorem eventual_envelope_of_prime_product {B c : ℝ} (hB : 286 ≤ B)
+    (hproduct : ∀ x : ℝ, B ≤ x →
+      (∏ p ∈ Ioc 0 ⌊x⌋₊ with p.Prime, (1 - (1 : ℝ) / p))⁻¹ ≤
+        Real.exp Real.eulerMascheroniConstant * Real.log x * Real.exp (c / Real.log x))
+    (epsilon : ℝ) (hepsilon : 0 < epsilon) :
     ∃ A : ℝ, 286 ≤ A ∧ ∀ n : ℕ, 0 < n → A ≤ Real.log (n : ℝ) →
       originalObjective n - Real.eulerMascheroniConstant ≤
-        ((19 / 10 : ℝ) + epsilon) / Real.log (Real.log (n : ℝ)) := by
+        (c + epsilon) / Real.log (Real.log (n : ℝ)) := by
   obtain ⟨T, hT, hgrowth⟩ := strict_inventory_uniform_growth epsilon hepsilon
-  refine ⟨max T 286, le_max_right _ _, ?_⟩
+  refine ⟨max T B, hB.trans (le_max_right _ _), ?_⟩
   intro n hn hlarge
   let X := Real.log (n : ℝ)
-  have hX : 286 ≤ X := (le_max_right T 286).trans hlarge
+  have hX : 286 ≤ X := hB.trans ((le_max_right T B).trans hlarge)
   have hX1 : 1 < X := by linarith
   have hX0 : 0 < X := by linarith
   have hL : 0 < Real.log X := Real.log_pos hX1
@@ -99,12 +102,12 @@ theorem eventual_actual_integer_envelope_epsilon (epsilon : ℝ) (hepsilon : 0 <
   have hstrict : ∀ p : ℕ, p.Prime →
       U.factorization p = optimalLayerCount (1 / (X * Real.log X)) p :=
     fun p _ => hcount p
-  have hnear := hgrowth X ((le_max_left T 286).trans hlarge) U (by omega) hstrict
+  have hnear := hgrowth X ((le_max_left T B).trans hlarge) U (by omega) hstrict
   have hratio : 1 - Real.log (U : ℝ) / X ≤ epsilon := by
     linarith [abs_lt.mp hnear |>.1]
   have hs := supported_sigma_bound (by omega : 0 < U)
     (strict_support hX1 (by omega) hstrict)
-  have hm := MertensExplicitEnvelope.prime_product_upper_effective hX
+  have hm := hproduct X ((le_max_right T B).trans hlarge)
   rw [← prod_inv_distrib] at hm
   have hpos : 0 < (ArithmeticFunction.sigma 1 U : ℝ) / U :=
     div_pos (by exact_mod_cast ArithmeticFunction.sigma_pos 1 U (by omega))
@@ -124,10 +127,54 @@ theorem eventual_actual_integer_envelope_epsilon (epsilon : ℝ) (hepsilon : 0 <
   have hcostle := div_le_div_of_nonneg_right hratio hL.le
   change Real.log ((ArithmeticFunction.sigma 1 n : ℝ) / n) -
     Real.log (Real.log X) - Real.eulerMascheroniConstant ≤
-      ((19 / 10 : ℝ) + epsilon) / Real.log X
-  have hid : (19 / 10 : ℝ) / Real.log X + epsilon / Real.log X =
-      ((19 / 10 : ℝ) + epsilon) / Real.log X := by ring
+      ((c) + epsilon) / Real.log X
+  have hid : (c) / Real.log X + epsilon / Real.log X =
+      ((c) + epsilon) / Real.log X := by ring
   linarith
+
+/-- The strict inventory transfers its arbitrary positive size error to every actual
+positive integer. Only the comparator has smooth support. -/
+theorem eventual_actual_integer_envelope_epsilon (epsilon : ℝ) (hepsilon : 0 < epsilon) :
+    ∃ A : ℝ, 286 ≤ A ∧ ∀ n : ℕ, 0 < n → A ≤ Real.log (n : ℝ) →
+      originalObjective n - Real.eulerMascheroniConstant ≤
+        ((19 / 10 : ℝ) + epsilon) / Real.log (Real.log (n : ℝ)) := by
+  exact eventual_envelope_of_prime_product (B := 286) le_rfl
+    (fun _ hx => MertensExplicitEnvelope.prime_product_upper_effective hx)
+    epsilon hepsilon
+
+/-- Every positive error coefficient eventually bounds the original objective on all
+positive integers, with the cutoff chosen before the integer. -/
+theorem eventual_actual_integer_envelope_small_error (epsilon : ℝ) (hepsilon : 0 < epsilon) :
+    ∃ A : ℝ, 286 ≤ A ∧ ∀ n : ℕ, 0 < n → A ≤ Real.log (n : ℝ) →
+      originalObjective n - Real.eulerMascheroniConstant ≤
+        epsilon / Real.log (Real.log (n : ℝ)) := by
+  have htail := D5.S3.Weil.Mertens.CenteredTail.E2p_isLittleO_inv_log.bound
+    (half_pos hepsilon)
+  obtain ⟨B, hB⟩ := Filter.eventually_atTop.mp htail
+  have hproduct (x : ℝ) (hx : max B 286 ≤ x) :
+      (∏ p ∈ Ioc 0 ⌊x⌋₊ with p.Prime, (1 - (1 : ℝ) / p))⁻¹ ≤
+        Real.exp Real.eulerMascheroniConstant * Real.log x *
+          Real.exp ((epsilon / 2) / Real.log x) := by
+    have hx286 : 286 ≤ x := (le_max_right B 286).trans hx
+    have hlog : 0 < Real.log x := Real.log_pos (by linarith)
+    have hbound : _root_.Mertens.E₂p x ≤ (epsilon / 2) / Real.log x := by
+      have hb := hB x ((le_max_left B 286).trans hx)
+      rw [Real.norm_eq_abs, Real.norm_eq_abs,
+        abs_of_pos (one_div_pos.mpr hlog)] at hb
+      exact (le_abs_self _).trans (by simpa only [div_eq_mul_inv, one_mul] using hb)
+    have hsign := MertensExplicitEnvelope.mertens_E3_ge_neg_E2p x
+    rw [_root_.Mertens.prod_one_minus_div_prime_eq (by linarith : 1 < x)]
+    calc
+      _ = Real.exp Real.eulerMascheroniConstant * Real.log x *
+          Real.exp (-_root_.Mertens.E₃ x) := by
+        simp only [div_eq_mul_inv, mul_inv_rev, inv_inv, ← Real.exp_neg, neg_neg]
+        ring
+      _ ≤ _ := by
+        gcongr
+        linarith
+  have h := eventual_envelope_of_prime_product (le_max_right B 286)
+    hproduct (epsilon / 2) (half_pos hepsilon)
+  simpa only [add_halves] using h
 
 /-- Every sufficiently large actual integer satisfies the coefficient-two logarithmic
 envelope. Smooth support is used only for a separate strict fixed-price optimizer. -/
@@ -137,6 +184,8 @@ theorem eventual_actual_integer_envelope :
         2 / Real.log (Real.log (n : ℝ)) := by
   simpa only [show (19 / 10 : ℝ) + 1 / 10 = 2 by norm_num] using
     eventual_actual_integer_envelope_epsilon (1 / 10) (by norm_num)
+
+#print axioms eventual_actual_integer_envelope_small_error
 
 #print axioms eventual_actual_integer_envelope_epsilon
 
