@@ -7,6 +7,9 @@
    digest: Four nonzero U(1) charges admit an injective normalized bond-three MPS. -/
 
 import Mathlib.LinearAlgebra.UnitaryGroup
+import Mathlib.Analysis.Complex.Exponential
+
+/-! A four-level charge-graded matrix-product family with an injective two-site map. -/
 
 set_option autoImplicit false
 set_option linter.style.longLine false
@@ -83,7 +86,8 @@ private theorem kraus_nonzero : ∀ k, kraus k ≠ 0 := by
 private theorem kraus_normalized : (∑ k, kraus k * star (kraus k)) = 1 := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [kraus, Fin.sum_univ_succ, Matrix.mul_apply, Matrix.star_apply,
+    norm_num [kraus, Fin.sum_univ_succ, Matrix.mul_apply, Matrix.vecMul_apply_eq_sum,
+      Matrix.star_apply,
       Matrix.one_apply]
 
 private theorem charges_nonzero : ∀ k, charges k ≠ 0 := by
@@ -98,8 +102,7 @@ private theorem gauge_inverse (φ : ℝ) : ungauge φ * gauge φ = 1 := by
   rw [Matrix.diagonal_mul_diagonal]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [Matrix.diagonal_apply, Matrix.one_apply, Complex.exp_neg,
-      Complex.exp_ne_zero]
+    simp [Complex.exp_neg, Complex.exp_ne_zero]
 
 private theorem charge_conjugation (φ : ℝ) (k : Fin 4) :
     gauge φ * kraus k * ungauge φ =
@@ -109,7 +112,10 @@ private theorem charge_conjugation (φ : ℝ) (k : Fin 4) :
     rw [Complex.exp_add]
     ring
   ext i j
-  change ((Matrix.diagonal _ * kraus k) * Matrix.diagonal _) i j = _
+  change ((Matrix.diagonal
+      (fun r : Fin 3 => Complex.exp ((r.val : ℂ) * φ * Complex.I)) * kraus k) *
+    Matrix.diagonal
+      (fun r : Fin 3 => Complex.exp (-((r.val : ℂ) * φ * Complex.I)))) i j = _
   rw [Matrix.mul_diagonal, Matrix.diagonal_mul, Matrix.smul_apply, smul_eq_mul, he]
   fin_cases k <;> fin_cases i <;> fin_cases j <;>
     norm_num [kraus, charges] <;> congr 2 <;> ring
@@ -229,5 +235,7 @@ theorem result : ¬ claim := by
   intro h
   exact h 3 kraus 1 charges kraus_nonzero kraus_normalized charges_nonzero
     charges_distinct kraus_symmetric kraus_injective
+
+end
 
 end D5.S3.Quantum.SpinChains.FourLevelU1SymmetricInjectiveMPS
