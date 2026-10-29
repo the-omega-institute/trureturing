@@ -1,6 +1,8 @@
 import Reg.D5.S3.Fourier.MatrixGaussian
 import D5.S3.Fourier.MatrixGaussianSecondMoment
 
+/-! Source-bound exponential-family audits for the quadratic Fourier and inversion laws. -/
+
 open MeasureTheory Matrix LeanInformationAudit
 open scoped BigOperators
 open D5.S3.Fourier.MatrixGaussian
@@ -57,10 +59,10 @@ theorem fourier_rejected : ¬ fourierArena.Law negative := by
     Matrix.PosDef.one 1 (by norm_num) (fun _ => 1) (fun _ => 1) 0
   norm_num [negative, realize, quadratic, dotProduct, Matrix.mulVec] at hb hg
   have hp : (Real.pi : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr Real.pi_ne_zero
-  have hz : (2 * (Real.pi : ℂ))⁻¹ = -(2 * (Real.pi : ℂ))⁻¹ := hg.symm.trans hb
-  have hn : (2 * (Real.pi : ℂ))⁻¹ ≠ 0 := inv_ne_zero (mul_ne_zero (by norm_num) hp)
+  have hz : (Real.pi : ℂ)⁻¹ * (1 / 2) = -((Real.pi : ℂ)⁻¹ * (1 / 2)) := hg.symm.trans hb
+  have hn : (Real.pi : ℂ)⁻¹ * (1 / 2) ≠ 0 := mul_ne_zero (inv_ne_zero hp) (by norm_num)
   apply hn
-  linear_combination hz
+  linear_combination (1 / 2 : ℂ) * hz
 
 theorem inversion_rejected : ¬ inversionArena.Law rejected := by
   intro h
