@@ -39,15 +39,17 @@ private theorem labelled_mesh {α : Type*} [DecidableEq α]
       fun x hx => hf x (Finset.mem_insert_of_mem hx)
     have hsum : 0 ≤ Y.sum f :=
       Finset.sum_nonneg (fun x hx => le_of_lt (hYf x hx).1)
-    rw [Finset.sum_insert hj] at hUT
+    have hsumInsert : (insert j Y).sum f = f j + Y.sum f := Finset.sum_insert hj
+    rw [hsumInsert] at hUT
     by_cases hlow : U < δ + Y.sum f
     · obtain ⟨A, hA, e, hz, hgap⟩ := ih hYf U hU hlow
       exact ⟨A, hA.trans (Finset.subset_insert j Y), e, hz, hgap⟩
     · by_cases hw : f j ≤ U
       · obtain ⟨A, hA, e, hz, hgap⟩ := ih hYf (U - f j) (by omega) (by omega)
         have hjA : j ∉ A := fun ha => hj (hA ha)
+        have hsumA : (insert j A).sum f = f j + A.sum f := Finset.sum_insert hjA
         refine ⟨insert j A, Finset.insert_subset_insert j hA, e, ?_, ?_⟩ <;>
-          rw [Finset.sum_insert hjA] <;> omega
+          rw [hsumA] <;> omega
       · refine ⟨Y, Finset.subset_insert j Y, true, ?_, ?_⟩ <;> simp only [Bool.true_eq, ↓reduceIte]
         · omega
         · omega
@@ -156,15 +158,14 @@ private theorem physical_repair {α : Type*} [DecidableEq α]
     Finset.sum_map_toList] at hmass
   have hword : ((P ++ [n]) ++ (Q ++ [m])).Perm ((r :: s :: Y.toList) ++ [n, m]) := by
     have hmove : ((P ++ [n]) ++ (Q ++ [m])).Perm ((P ++ Q) ++ [n, m]) := by
-      simpa only [List.append_assoc, List.singleton_append] using
+      simpa only [List.append_assoc, List.singleton_append, List.cons_append, List.nil_append] using
         (((List.perm_append_comm : ([n] ++ Q).Perm (Q ++ [n])).append_left P).append_right [m])
     exact hmove.trans (hp.append_right [n, m])
   refine ⟨P, Q, hp, hnodup, hdisjoint, hunion, ?_, hpositive, hstrip, hland,
     (by simpa only [add_assoc] using hmass), hword, ?_⟩
   · cases e <;> simp [P, Q, a, d]
-  · have he := (hword.map f).sum_eq
-    simp only [List.map_append, List.sum_append, List.map_cons, List.sum_cons,
-      List.map_nil, List.sum_nil, Finset.sum_map_toList] at he
+  · simp only [List.map_append, List.sum_append, List.map_cons, List.sum_cons,
+      List.map_nil, List.sum_nil]
     omega
 
 /-- Source-local root geometry supplies the mesh gaps, without a subset or
@@ -197,7 +198,9 @@ theorem source_cut_root_repair {α : Type*} [DecidableEq α]
   have hhalf : C = 2 * Q - 1 := by omega
   have hδ : 0 < f r - f s := by omega
   have hδc : f r - f s ≤ C - B := by omega
-  have hgap : M ≤ f r - f s + (C - B) := by omega
+  have hMhalf : M ≤ (B - 1) / 2 := by omega
+  have hhalfGap : (B - 1) / 2 ≤ f r - f s + (C - B) := by omega
+  have hgap : M ≤ f r - f s + (C - B) := hMhalf.trans hhalfGap
   exact physical_repair f Y r s n m C B h (f s) (f r - f s) M hlabels
     (by omega) rfl hn (by omega) (by omega) hh hδ hδc hgap hf (by omega) (by omega)
 
