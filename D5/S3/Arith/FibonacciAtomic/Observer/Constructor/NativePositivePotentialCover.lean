@@ -234,7 +234,7 @@ def fill : (T : FreeMagma Unit) → (Leaves T → Nat) → NativeFiniteNormalInv
 
 private theorem fill_shift (T : FreeMagma Unit) (r : Leaves T → Nat) (a : Nat) :
     fill T (fun l => r l + a) = NativeFiniteNormalInversion.shiftCode a (fill T r) := by
-  induction T with
+  induction T using FreeMagma.rec with
   | of => rfl
   | mul A B ihA ihB =>
       exact congrArg₂ FreeMagma.mul (ihA _) (ihB _)
