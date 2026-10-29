@@ -10,6 +10,7 @@ import Mathlib.Algebra.MvPolynomial.Rename
 import Mathlib.Algebra.MvPolynomial.CommRing
 import Mathlib.Basic.Complex.Basic
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
 import Mathlib.Tactic
 
@@ -227,8 +228,64 @@ private lemma too_many_rows {d r : ℕ} (hr : d + 2 ≤ r)
   · change f.coeff m = 0
     exact notMem_support_iff.mp hm
 
+private def bordered (d : ℕ) :
+    Matrix (Fin (d + 1)) (Fin (d + 1)) (MvPolynomial (Fin (d + 1) × Fin d) ℂ) :=
+  Matrix.of (fun i k => Fin.cases 1 (fun j => X (k, j)) i)
+
+private lemma bordered_det (d : ℕ) : (bordered d).det = affineDet d := by
+  classical
+  let a : Matrix (Fin (d + 1)) (Fin (d + 1))
+      (MvPolynomial (Fin (d + 1) × Fin d) ℂ) :=
+    Matrix.of (fun i j => if i = 0 then bordered d j 0
+      else bordered d j i - bordered d j 0)
+  have hdet : a.det = (bordered d).transpose.det := by
+    apply Matrix.det_eq_of_forall_row_eq_smul_add_const
+      (fun i => if i = 0 then 0 else -1) 0 (by simp)
+    intro i j
+    change (if i = 0 then bordered d j 0 else bordered d j i - bordered d j 0) =
+      bordered d j i + (if i = 0 then 0 else -1) * bordered d j 0
+    split_ifs with hi
+    · subst i
+      ring
+    · ring
+  have hcol (i : Fin (d + 1)) : a i 0 = if i = 0 then 1 else 0 := by
+    change (if i = 0 then bordered d 0 0 else bordered d 0 i - bordered d 0 0) = _
+    simp only [bordered, Matrix.of_apply, Fin.cases_zero, sub_self]
+  have hminor : a.submatrix Fin.succ Fin.succ =
+      (Matrix.of (fun j k : Fin d =>
+        (X (k.succ, j) - X (0, j) : MvPolynomial (Fin (d + 1) × Fin d) ℂ))).transpose := by
+    apply Matrix.ext
+    intro i j
+    change (if i.succ = 0 then bordered d j.succ 0
+      else bordered d j.succ i.succ - bordered d j.succ 0) = _
+    simp only [Fin.succ_ne_zero, ite_false, bordered, Matrix.of_apply, Fin.cases_succ,
+      Matrix.transpose_apply]
+  calc
+    (bordered d).det = a.det := by rw [hdet, Matrix.det_transpose]
+    _ = (a.submatrix Fin.succ Fin.succ).det := by
+      rw [Matrix.det_succ_column_zero, Fin.sum_univ_succ]
+      simp only [hcol, Fin.succ_ne_zero, ite_false, ite_true, mul_zero, zero_mul,
+        Finset.sum_const_zero, add_zero, Fin.val_zero, pow_zero, one_mul, Fin.succAbove_zero]
+    _ = affineDet d := by rw [hminor, Matrix.det_transpose]; rfl
+
 private lemma affineDet_alternating (d : ℕ) : IsAlternating (affineDet d) := by
-  sorry
+  classical
+  intro σ
+  rw [← bordered_det d, (rename (blockPerm σ)).map_det]
+  have hm : (rename (blockPerm σ)).mapMatrix (bordered d) =
+      (bordered d).submatrix id σ := by
+    apply Matrix.ext
+    intro i k
+    refine Fin.cases ?_ (fun j => ?_) i
+    · change rename (blockPerm σ)
+        (1 : MvPolynomial (Fin (d + 1) × Fin d) ℂ) = 1
+      exact map_one _
+    · change rename (blockPerm σ) (X (k, j)) = X (σ k, j)
+      rw [rename_X]
+      rfl
+  rw [hm, Matrix.det_permute']
+  rw [MvPolynomial.smul_eq_C_mul]
+  congr 1
 
 private lemma affineDet_degree (d : ℕ) : (affineDet d).totalDegree ≤ d := by
   classical
@@ -245,7 +302,53 @@ private lemma affineDet_degree (d : ℕ) : (affineDet d).totalDegree ≤ d := by
     _ = d := by simp
 
 private lemma affineDet_coeff (d : ℕ) : (affineDet d).coeff (canonical d) = 1 := by
-  sorry
+  classical
+  let e : Fin d → Fin (d + 1) × Fin d := fun k => (k.succ, k)
+  have he : Function.Injective e := fun a b h => congrArg Prod.snd h
+  let n : Fin d →₀ ℕ := ∑ k : Fin d, Finsupp.single k 1
+  have hn : n.mapDomain e = canonical d := by
+    rw [Finsupp.mapDomain_finsetSum]
+    simp only [Finsupp.mapDomain_single]
+    rfl
+  have hx0 (j : Fin d) :
+      (killCompl he) (X (0, j) : MvPolynomial (Fin (d + 1) × Fin d) ℂ) = 0 := by
+    rw [killCompl, aeval_X]
+    have hnot : (0, j) ∉ Set.range e := by
+      rintro ⟨k, hk⟩
+      exact Fin.succ_ne_zero k (congrArg Prod.fst hk)
+    rw [dite_eq_right hnot]
+  have hx (j k : Fin d) :
+      (killCompl he) (X (k.succ, j) : MvPolynomial (Fin (d + 1) × Fin d) ℂ) =
+        if j = k then X j else 0 := by
+    by_cases hjk : j = k
+    · subst j
+      rw [ite_eq_left rfl]
+      have h := killCompl_rename_app (R := ℂ) he (X k)
+      rw [rename_X] at h
+      exact h
+    · rw [ite_eq_right hjk, killCompl, aeval_X]
+      have hnot : (k.succ, j) ∉ Set.range e := by
+        rintro ⟨a, ha⟩
+        have h₁ : a = k := Fin.succ_injective d (congrArg Prod.fst ha)
+        have h₂ : a = j := congrArg Prod.snd ha
+        exact hjk (h₂.symm.trans h₁)
+      rw [dite_eq_right hnot]
+  have hkill : (killCompl he) (affineDet d) =
+      Matrix.det (Matrix.diagonal (fun j : Fin d => (X j : MvPolynomial (Fin d) ℂ))) := by
+    let a : Matrix (Fin d) (Fin d) (MvPolynomial (Fin (d + 1) × Fin d) ℂ) :=
+      Matrix.of (fun j k => X (k.succ, j) - X (0, j))
+    have ha : affineDet d = a.det := rfl
+    rw [ha, (killCompl he).map_det]
+    apply congrArg Matrix.det
+    apply Matrix.ext
+    intro j k
+    simp only [AlgHom.mapMatrix_apply, Matrix.map_apply, a, Matrix.of_apply,
+      map_sub, hx, hx0, sub_zero, Matrix.diagonal_apply]
+  rw [← hn, ← coeff_killCompl he, hkill, Matrix.det_diagonal]
+  have hp : (∏ k : Fin d, (X k : MvPolynomial (Fin d) ℂ)) = monomial n 1 := by
+    rw [show n = ∑ k : Fin d, Finsupp.single k 1 from rfl, monomial_sum_one]
+    rfl
+  rw [hp, coeff_monomial, ite_eq_left rfl]
 
 private lemma zero_of_canonical_zero {d : ℕ}
     (f : MvPolynomial (Fin (d + 1) × Fin d) ℂ)
@@ -274,7 +377,61 @@ private lemma coefficient_determines {d : ℕ}
 
 private lemma affineDet_nondegenerate (d : ℕ) (hd : 2 ≤ d) :
     IsNondegenerate d (fun y => eval (fun p => y p.1 p.2) (affineDet d)) := by
-  sorry
+  classical
+  intro x hzero
+  rw [direction_affineSpan]
+  apply (finrank_vectorSpan_le_iff_not_affineIndependent ℂ x
+    (show Fintype.card (Fin d) = (d - 2) + 2 by simp only [Fintype.card_fin]; omega)).mpr
+  intro hx
+  have hproper : affineSpan ℂ (Set.range x) ≠ ⊤ :=
+    affineSpan_range_ne_top_of_card_le_finrank ℂ (by simp) x
+  have hout : ∃ x₀ : Fin d → ℂ, x₀ ∉ affineSpan ℂ (Set.range x) := by
+    by_contra h
+    push Not at h
+    apply hproper
+    apply top_unique
+    intro y _
+    exact h y
+  obtain ⟨x₀, hx₀⟩ := hout
+  let y : Fin (d + 1) → Fin d → ℂ := Fin.cons x₀ x
+  have htail : AffineIndepOn ℂ y (Set.range (Fin.succ : Fin d → Fin (d + 1))) :=
+    (affineIndepOn_range_iff (Fin.succ_injective d) y).mpr hx
+  have hall : AffineIndepOn ℂ y (insert 0 (Set.range (Fin.succ : Fin d → Fin (d + 1)))) :=
+    htail.insert (by
+      change x₀ ∉ affineSpan ℂ (y '' Set.range Fin.succ)
+      rw [← Set.range_comp]
+      exact hx₀)
+  have huniv : insert (0 : Fin (d + 1)) (Set.range (Fin.succ : Fin d → Fin (d + 1))) =
+      Set.univ := by
+    ext i
+    simp only [Fin.range_succ, Set.mem_insert_iff, Set.mem_compl_iff,
+      Set.mem_singleton_iff, Set.mem_univ, or_not]
+  rw [huniv, affineIndepOn_univ_iff] at hall
+  have hlin := (affineIndependent_iff_linearIndependent_vsub ℂ y 0).mp hall
+  let a : Matrix (Fin d) (Fin d) ℂ := Matrix.of (fun j k => x k j - x₀ j)
+  have hcols : LinearIndependent ℂ a.col := by
+    have h := hlin.comp (finSuccAboveEquiv (0 : Fin (d + 1)))
+      (finSuccAboveEquiv (0 : Fin (d + 1))).injective
+    change LinearIndependent ℂ (fun k => x k - x₀)
+    dsimp only [Function.comp_def, finSuccAboveEquiv_apply, Fin.succAbove_zero, y,
+      vsub_eq_sub, Fin.cons_succ, Fin.cons_zero] at h
+    exact h
+  have hdet : a.det ≠ 0 :=
+    ((Matrix.isUnit_iff_isUnit_det a).mp
+      (Matrix.linearIndependent_col_iff_isUnit.mp hcols)).ne_zero
+  apply hdet
+  have heval : eval (fun p => y p.1 p.2) (affineDet d) = a.det := by
+    let b : Matrix (Fin d) (Fin d) (MvPolynomial (Fin (d + 1) × Fin d) ℂ) :=
+      Matrix.of (fun j k => X (k.succ, j) - X (0, j))
+    have hb : affineDet d = b.det := rfl
+    rw [hb, (eval (fun p : Fin (d + 1) × Fin d => y p.1 p.2)).map_det]
+    apply congrArg Matrix.det
+    apply Matrix.ext
+    intro j k
+    simp only [RingHom.mapMatrix_apply, Matrix.map_apply, b, a, Matrix.of_apply,
+      map_sub, eval_X]
+    rfl
+  exact heval.symm.trans (hzero x₀)
 
 /-- Low-degree alternation vanishes with too many vectors, and is otherwise the affine determinant. -/
 theorem result :
