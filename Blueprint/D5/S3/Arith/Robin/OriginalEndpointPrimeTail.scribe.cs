@@ -94,6 +94,6 @@ internal sealed class OriginalEndpointPrimeTailDocument : IScribeDocumentDefinit
                         + "V+E3(P)+log(log(theta(P)))-log(log(P))<=robinLogMargin(m). "
                         + "The support and theta hypotheses are finite theorem premises only; "
                         + "they do not assert actual-record structure, 5040 divisibility, RH, "
-                        + "or the unresolved analytic 2*sqrt(2)-epsilon continuation."))),
+                        + "or control of the remaining signed pure-prime quantity."))),
                 DescribeRole.Theorem))));
 }

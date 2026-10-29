@@ -564,7 +564,8 @@ private theorem layer_tail_nonneg (m : ℕ) {p : ℕ} (hp : p.Prime) :
   unfold layerTail
   apply neg_nonneg.mpr
   have hlog := Real.log_le_log (sub_pos.mpr hz)
-    (show 1 - (p : ℝ)⁻¹ ^ (m.factorization p + 1) ≤ 1 by positivity)
+    (show 1 - (p : ℝ)⁻¹ ^ (m.factorization p + 1) ≤ 1 by
+      linarith [pow_nonneg hi0.le (m.factorization p + 1)])
   simpa only [Real.log_one] using hlog
 
 /-- The complete actual tail is nonnegative and gives the exact original
@@ -657,13 +658,6 @@ theorem finite_min_tail_robin_bound {m : ℕ} (hm : 0 < m)
     have hpp : p.Prime := Nat.prime_of_mem_primeFactors hp
     have hv : 1 ≤ m.factorization p := by
       exact hpp.factorization_pos_of_dvd (by omega) (Nat.dvd_of_mem_primeFactors hp)
-    have hp0 : 0 < (p : ℝ) := by exact_mod_cast hpp.pos
-    have hi0 : 0 < (p : ℝ)⁻¹ := inv_pos.mpr hp0
-    have hi1 : (p : ℝ)⁻¹ < 1 := (inv_lt_one₀ hp0).mpr (by exact_mod_cast hpp.one_lt)
-    have hz : (p : ℝ)⁻¹ ^ (m.factorization p + 1) < 1 :=
-      pow_lt_one₀ hi0.le hi1 (by omega)
-    have hz0 : 0 ≤ (p : ℝ)⁻¹ ^ (m.factorization p + 1) :=
-      (pow_pos hi0 _).le
     have htail : 0 ≤ layerTail m p := layer_tail_nonneg m hpp
     by_cases hv1 : m.factorization p = 1
     · have htail1 : layerTail m p = -Real.log (1 - (p : ℝ)⁻¹ ^ 2) := by
