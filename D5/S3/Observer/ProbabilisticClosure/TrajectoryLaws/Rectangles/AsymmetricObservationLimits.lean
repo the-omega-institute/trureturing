@@ -198,6 +198,7 @@ private theorem record_fiber (l r : ℕ) (z : Visible) :
       observation l r ⁻¹' {observation l r z} := by
   ext y
   simp [record,block,observation,leftWord,rightWord,funext_iff]
+  simp only [List.length_ofFn,add_comm]
 
 private theorem finite_ratio (μ : Measure Visible) [IsProbabilityMeasure μ] (l r : ℕ) :
     ∀ᵐ z ∂μ,
@@ -212,7 +213,9 @@ private theorem finite_ratio (μ : Measure Visible) [IsProbabilityMeasure μ] (l
     by_cases he : μ (o ⁻¹' {e}) = 0
     · have hn : ∀ᵐ z ∂μ, z ∉ o ⁻¹' {e} := by
         rw [ae_iff]
-        simpa using he
+        convert he using 1
+        ext a
+        simp
       exact hn.mono fun z hz _ => hz
     · exact Filter.Eventually.of_forall fun z hz => (he hz).elim
   filter_upwards [hnull] with z hz
@@ -251,12 +254,88 @@ private theorem right_append (j k : ℕ) (z : Visible) :
       List.ofFn (rightWord j z) ++ List.ofFn (fun i : Fin k => z (j+i+1)) := by
   rw [List.ofFn_add]
   congr 1
-  apply congrArg List.ofFn
-  funext i
-  dsimp [rightWord]
-  apply congrArg z
-  push_cast
-  omega
+
+/-- Original full blocks ending at -1; the uncounted prefix is the remainder modulo b. -/
+def leftCount (w : List Bool) (b j : ℕ) (z : Visible) : ℕ :=
+  originalSuccessCount w b (j/b) ((List.ofFn (leftWord j z)).drop (j%b))
+
+/-- Original full blocks starting at 1. -/
+def rightCount (w : List Bool) (b j : ℕ) (z : Visible) : ℕ :=
+  originalSuccessCount w b (j/b) (List.ofFn (rightWord j z))
+
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkedPredictiveQuotient
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalMarkedLaw
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.PositiveRectangleMessages
+
+/-- The actual original-cylinder finite comparisons pass through both ordered half-line
+limits, on one common null-set convention for all retained lengths. -/
+theorem same_law_counted_half_line_smoothing
+    {H : Type*} [Fintype H] [MeasurableSpace H] [MeasurableSingletonClass H]
+    (θ : Presentation H) (J : Measure (PathSpace H)) [IsProbabilityMeasure J]
+    (hc : HasOriginalCylinders J θ) (w : List Bool) (hw : w ≠ [])
+    (R : Rectangle (product θ w)) :
+    let μ := J.map Prod.snd
+    let b := w.length + Fintype.card H
+    let ρ := 1-rectangleMinimum (product θ w) R / rectangleMaximum (product θ w) R
+    ∀ᵐ z ∂μ, ∀ j : ℕ,
+      |mean μ exterior z-mean μ (leftObservation j) z| ≤ ρ ^ leftCount w b j z ∧
+      |mean μ exterior z-mean μ (rightObservation j) z| ≤ ρ ^ rightCount w b j z := by
+  dsimp only
+  let μ := J.map Prod.snd
+  let b := w.length + Fintype.card H
+  let ρ := 1-rectangleMinimum (product θ w) R / rectangleMaximum (product θ w) R
+  have hfinite := finite_record_smoothing_by_original_success_count θ J hc w hw R
+  have hLF (k j n : ℕ) : ∀ᵐ z ∂μ,
+      |mean μ (observation (k+j) n) z-mean μ (observation j n) z| ≤
+        ρ ^ leftCount w b j z := by
+    filter_upwards [finite_ratio μ (k+j) n,finite_ratio μ j n] with z hz1 hz2
+    have h := hfinite.1
+      (List.ofFn (fun i : Fin k => z (-((k+j : ℕ) : ℤ)+i)))
+      (List.ofFn (leftWord j z)) (List.ofFn (rightWord n z))
+      (by rw [← left_append k j z]; exact hz1.1) hz2.1
+    rw [← left_append k j z] at h
+    simpa only [← hz1.2,← hz2.2,List.length_ofFn] using h
+  have hRF (k j n : ℕ) : ∀ᵐ z ∂μ,
+      |mean μ (observation n (j+k)) z-mean μ (observation n j) z| ≤
+        ρ ^ rightCount w b j z := by
+    filter_upwards [finite_ratio μ n (j+k),finite_ratio μ n j] with z hz1 hz2
+    have h := hfinite.2 (List.ofFn (leftWord n z)) (List.ofFn (rightWord j z))
+      (List.ofFn (fun i : Fin k => z (j+i+1)))
+      (by rw [← right_append j k z]; exact hz1.1) hz2.1
+    rw [← right_append j k z] at h
+    simpa only [← hz1.2,← hz2.2,List.length_ofFn] using h
+  have hshift (j : ℕ) : Tendsto (fun k : ℕ => k+j) atTop atTop := by
+    apply tendsto_atTop.mpr
+    intro a
+    exact eventually_atTop.mpr ⟨a,fun k hk => by omega⟩
+  have hL1 (j n : ℕ) : ∀ᵐ z ∂μ,
+      |mean μ (rightObservation n) z-mean μ (observation j n) z| ≤
+        ρ ^ leftCount w b j z := by
+    have hlim := ((ordered_half_line_limits μ j).1 n).1
+    filter_upwards [hlim,ae_all_iff.mpr (fun k => hLF k j n)] with z hz hb
+    apply le_of_tendsto (((hz.comp (hshift j)).sub
+      (tendsto_const_nhds (x := mean μ (observation j n) z))).abs)
+    exact Filter.Eventually.of_forall hb
+  have hR1 (j n : ℕ) : ∀ᵐ z ∂μ,
+      |mean μ (leftObservation n) z-mean μ (observation n j) z| ≤
+        ρ ^ rightCount w b j z := by
+    have hlim := ((ordered_half_line_limits μ j).2.1 n).1
+    filter_upwards [hlim,ae_all_iff.mpr (fun k => hRF k j n)] with z hz hb
+    have hlim' : Tendsto (fun k => mean μ (observation n (j+k)) z)
+        atTop (𝓝 (mean μ (leftObservation n) z)) := by
+      simpa only [Nat.add_comm] using hz.comp (hshift j)
+    exact le_of_tendsto ((hlim'.sub
+      (tendsto_const_nhds (x := mean μ (observation n j) z))).abs)
+      (Filter.Eventually.of_forall hb)
+  apply ae_all_iff.mpr
+  intro j
+  obtain ⟨_,_,hfullR,hfullL,hcutL,hcutR⟩ := ordered_half_line_limits μ j
+  filter_upwards [hfullR.1,hfullL.1,hcutL.1,hcutR.1,
+    ae_all_iff.mpr (hL1 j),ae_all_iff.mpr (hR1 j)] with z hfR hfL hcL hcR hbL hbR
+  exact ⟨le_of_tendsto ((hfR.sub hcL).abs) (Filter.Eventually.of_forall hbL),
+    le_of_tendsto ((hfL.sub hcR).abs) (Filter.Eventually.of_forall hbR)⟩
+
+#print axioms same_law_counted_half_line_smoothing
 
 #print axioms ordered_half_line_limits
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.Rectangles.AsymmetricObservationLimits
