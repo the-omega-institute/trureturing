@@ -4,6 +4,8 @@
 
 The literal shifted theta series of every positive even integral lattice transforms by its actual discriminant pairing. Negative Fourier operators on all functions satisfy the phased Weil relations, and the original positive Gaussian fixes the Milgram phase. All natural ranks are included. No fusion, Monster, sewing, CFT, string or AdS realization is asserted.
 
+The three theorem statements are classical: Borcherds, Section 4, Theorem 4.1 and Corollary 4.2. The cited Library note maps the original Gram cokernel to the lattice discriminant and checks the signs and principal branch. His finite S operator is exp(-pi i rank/4) times the unphased S defined here, while his T has the same positive quadratic sign. The repository authors the Lean derivations, including the theta-orbit proof of Milgram; it does not claim authorship of these statements.
+
 **Definition 1.1 (Positive cardinal normalization).**
 
 Lean statement: `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantWeil.rho`
@@ -82,7 +84,7 @@ Lean statement: `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantWeil.sector_S
 
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantWeil.sector_S` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Richard E. Borcherds (1998). *Automorphic forms with singularities on Grassmannians*. DOI: [10.1007/s002220050232](https://doi.org/10.1007/s002220050232).
 
 *Commentary.*
 
@@ -94,7 +96,7 @@ Lean statement: `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantWeil.finite_w
 
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantWeil.finite_weil_relations` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Richard E. Borcherds (1998). *Automorphic forms with singularities on Grassmannians*. DOI: [10.1007/s002220050232](https://doi.org/10.1007/s002220050232).
 
 *Commentary.*
 
@@ -106,7 +108,7 @@ Lean statement: `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantWeil.milgram`
 
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Characters/LatticeDiscriminantWeil.milgram` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Citation.* Richard E. Borcherds (1998). *Automorphic forms with singularities on Grassmannians*. DOI: [10.1007/s002220050232](https://doi.org/10.1007/s002220050232).
 
 *Commentary.*
 
