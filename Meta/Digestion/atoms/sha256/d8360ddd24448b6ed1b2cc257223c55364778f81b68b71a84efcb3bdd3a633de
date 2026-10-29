@@ -1,0 +1,23 @@
+**Lemma 29.3 (sharp uniform prefix separation).** For $d\ge1$ and
+every $0\le v<2d$, there are two members of $\mathscr R_d$
+which agree at indices $0,\ldots,v-1$ and differ at index $v$.
+
+Proof. If $v<d$, compare the zero stream with the single impulse
+$s_i=\mathbf1_{i=v}$. That impulse satisfies the all-zero-coefficient
+recurrence of order $v+1\le d$.
+
+If $d\le v<2d$, write $r=v-d$, so $0\le r<d$.
+Compare the periodic stream $s_i=\mathbf1_{i\equiv r\pmod d}$
+with the single impulse at $r$. The first satisfies
+$s_{i+d}=s_i$; the second has order $r+1\le d$. Before index
+$v=r+d$ their sole one is at $r$, and at $v$ only the periodic
+stream is one. Thus they have exactly the required common prefix.
+The transient witness is deliberately included: excluding it would
+silently change the class. $\square$
+
+An order bound $d$ is not a state-count bound $d$. The usual binary
+order-$d$ register can have $2^d$ states. Conversely a unary finite
+output machine need not have the same minimal linear order as its
+number of states. Lemma 29.2 identifies an output law; different
+private presentations of that law remain indistinguishable here.
+

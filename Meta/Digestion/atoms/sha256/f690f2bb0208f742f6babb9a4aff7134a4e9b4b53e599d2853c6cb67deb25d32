@@ -1,0 +1,71 @@
+**Theorem 19.2 (unconstrained literal optimum in a stated regime).** For
+every finite nonempty scaffold $S$, every $K\ge2$, and
+$n\ge\delta+2K-2$,
+
+$$
+ W_*(S,K)=L+2Kn+\delta+2K-1.
+ \tag{GPO.57}
+$$
+
+The condition on $n$ is sufficient for this formula; no maximal validity
+domain or formula for smaller $n$ is asserted.
+
+Proof. Fix any competitor and the single authentic input
+$(x,k)=(0^n,b)$. For every $i$, compare this run with the allowed input
+obtained by flipping only $x_i$. Correctness requires a first different
+paid reply. At their common reached prefix, Lemma 14.1 supplies the same
+extra-update count $e_i$ and word $p_iq$. The two ranks are
+$2b+e_i$ and $2b+e_i+1$. Equation (GPO.56) forces
+$\vartheta(q)=2b+e_i+1$, hence the selected word has length at least
+$d_i+\lceil(2b+e_i+1)/2\rceil\ge d_i+b+1$.
+The $n$ selected occurrences are distinct because a word enters only
+one original cone.
+
+Compare the same high input with the allowed input $(1^n,b-1)$.
+Here $b-1\ge K$ uses precisely $K\ge2$. Their first different reply
+has common extra-update count $e$, cone ranks $2b+e$ and $2b-1+e$,
+and threshold $\vartheta(q)=2b+e$. Its literal length is at least
+$\delta+b$. This occurrence is different from every selected label
+occurrence: at this occurrence the high rank and its one-label-flipped
+rank are both at least that threshold, so it cannot separate that label
+flip. All charges occur on the same fixed high-input run. Thus
+
+$$
+ W_A(0^n,b)\ge L+n(b+1)+\delta+b.
+ \tag{GPO.58}
+$$
+
+This argument permits every adaptive finite update schedule; it equates
+only actually shared prefixes, not the later schedules of distinct runs.
+
+For attainment choose a shortest public leaf $p_*$. On the stationary
+entrance register submit $\tau_\pi(p_*R^s)$ for
+$s=b,b-1,\ldots,K+1$, stopping at the first one. By (GPO.45) each
+bit is exactly $[k\ge s]$. The first one identifies $k=s$; if all
+bits are zero, set $k=K$. Then submit the $n$ actual words
+$\tau_\pi(p_iR^{k-1}LL)$, acquire their label bits, assemble $u_x$
+and retain $(u_x,k)$. Every operand is public or already acquired.
+The exact costs on this one run are
+
+$$
+\begin{aligned}
+ Q(k)&=\begin{cases}n+b-k+1,&k>K,\\n+K-1,&k=K,\end{cases}\\
+ C(k):=W(k)&=\begin{cases}
+ L+n(k+1)+\displaystyle\sum_{s=k}^{b}(\delta+s),&k>K,\\
+ L+n(K+1)+\displaystyle\sum_{s=K+1}^{b}(\delta+s),&k=K.
+ \end{cases}
+\end{aligned}
+\tag{GPO.59}
+$$
+
+For $K+2\le k\le b$,
+$C(k-1)-C(k)=\delta+k-1-n\le0$ under the stated hypothesis;
+also $C(K)-C(K+1)=-n$. Consequently
+$\max_k C(k)=C(b)=L+n(b+1)+\delta+b$. Together with (GPO.58)
+this proves (GPO.57). The displayed finite loops, binary comparisons,
+literal construction, translation, acquired writes and assembly have
+finite effective implementations exactly as in Theorem 16.2. They pay
+their actual local work and use growing owned backing. They terminate
+under the same progress premise, without any unknown stopping operand.
+$\square$
+

@@ -1181,3 +1181,87 @@ $$
 使用有限和平方范数界，得到 (484.18)。完整补空间仍是同一个未被上述估计控制的 $\|(I-P_L)Ab\|_2^2$；其他长度、高度、原 growing-height allowance、F4 transfer 和 signed Robin restoration 也未由本推论供应。RH 与全部 $n>5040$ 的严格 Robin 不等式仍未由此推出。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 485. 原前向价格核的无条件双侧振荡下界
+
+沿用 §481 的 $E,H_x,\lambda,w,\rho_x$ 与 (481.1) 的 $\mathcal T$。本节把命题 481.1 的误差输入由 von Koch 界放宽为任意幂界，从而去掉命题 481.2 对 RH 的依赖，并对全实中心的 $\mathcal T$ 给出无条件的单侧振荡常数 $1/2$。推论 481.3 中的常数 $c_Q=(\sqrt2-1)/4$ 由此提高为 $1/2$，且证明不经 S5 来源、GA1/GA2 来源或完整 $Q$ 供应。
+
+记
+$$
+\Theta=\sup\{\Re\rho:\ \zeta(\rho)=0,\ 0<\Re\rho<1\}.
+$$
+经典输入如下：零点上确界的误差估计
+$$
+\forall\varepsilon>0\ \exists C_\varepsilon:\quad |E(t)|\le C_\varepsilon t^{\Theta+\varepsilon}\qquad(t\ge2),
+\tag{485.1}
+$$
+非平凡零点的存在性，$\zeta$ 在实区间 $(0,1)$ 与 $(1,\infty)$ 无零点，以及 [Widder, The Laplace Transform, Ch. II, Thm 5b](../../../Library/Fourier/widder1941laplace.md)：若 $g\ge0$ 在 $[y_0,\infty)$ 上局部可积，其 Laplace 变换的收敛横坐标 $c_g$ 有限，则 $c_g$ 是该变换的奇点。
+
+**命题 485.1（幂误差下的 Mellin 留数）。** 设 $\alpha\ge0$，且存在 $C,t_0$ 使 $|E(t)|\le Ct^\alpha$ 对 $t\ge t_0$ 成立。对固定 $x_0\ge3$，令 $\mathcal F(s)=\int_{x_0}^\infty\mathcal T(x)x^{-s-1}\,dx$，它在 $\Re s>\max(1/2,\alpha-3/10)$ 绝对收敛。则存在在
+$$
+D_\alpha=\{s:\Re s>\alpha-7/10\}
+$$
+上全纯的 $R_{x_0,\alpha}$，使在上述收敛半平面内
+$$
+\mathcal F(s)=-\frac12\frac{\zeta'}{\zeta}(s+1/2)-\frac1{2(s-1/2)}+R_{x_0,\alpha}(s),
+\tag{485.2}
+$$
+并且 $|\mathcal T(x)|\ll x^{\alpha-3/10}$。
+
+证明。$\mathcal T$ 由 (481.2) 的有限有符号价格式给出，故为 Borel 可测且局部有界。积分区间长为 $x^{4/5}$，前因子为 $x^{1/2}/x^{8/5}$，得点值界 $|\mathcal T(x)|\ll x^{\alpha-3/10}$；因此 $\mathcal F$ 在 $\Re s>\alpha-3/10$ 绝对收敛。在 $\Re s>\max(1/2,\alpha-3/10)$ 作 (481.4) 的绝对 Fubini 交换，伴随核满足 (481.6)，其中余项对每个紧集 $K\subset\mathbb C$ 一致地有
+$$
+|r_s(t)|\le C_Kt^{-\Re s-7/10},\qquad |\partial_tr_s(t)|\le C_Kt^{-\Re s-17/10}.
+$$
+在 $(A,B]$ 上作 Stieltjes 分部积分：
+$$
+\int_{(A,B]}r_s\,dE=r_s(B)E(B)-r_s(A)E(A)-\int_A^BE(t)\,\partial_tr_s(t)\,dt.
+$$
+边界项为 $O(B^{\alpha-\Re s-7/10})$，导数积分的被积函数为 $O(t^{\alpha-\Re s-17/10})$；二者在 $\Re s>\alpha-7/10$ 的每个紧集上一致地分别趋于零与绝对收敛，故余项部分在 $D_\alpha$ 全纯。主项与有限区间修正同命题 481.1 的证明，给出 (485.2)。证毕。
+
+**定理 485.2（无条件下侧振荡）。** 无条件地，
+$$
+\liminf_{x\to\infty}\mathcal T(x)\le-\frac12.
+\tag{485.3}
+$$
+若 RH 不成立，则 $\liminf_{x\to\infty}\mathcal T(x)=-\infty$。
+
+证明。设有限常数 $\kappa$ 与 $x_0$ 使 $\mathcal T(x)\ge-\kappa$ 对 $x\ge x_0$ 成立。令 $g(y)=\mathcal T(e^y)+\kappa\ge0$，$y_0=\log x_0$，
+$$
+G(s)=\int_{y_0}^\infty g(y)e^{-sy}\,dy=\mathcal F(s)+\frac{\kappa x_0^{-s}}s,
+$$
+后一等式在两边均绝对收敛处成立。$g$ 局部有界可测，且由命题 485.1 的点值界，$c_g<+\infty$（可能为 $-\infty$）。
+
+先设 RH 不成立，于是 $\Theta>1/2$。由上确界的定义，取零点 $\rho=\beta+i\gamma$，重数为 $m\ge1$，使 $\beta>\max(1/2,\Theta-1/5)$；再取 $0<\varepsilon<\beta-\Theta+1/5$，令 $\alpha=\Theta+\varepsilon$，由 (485.1) 适用命题 485.1。记 $b=\max(0,\alpha-7/10)$ 与 $\sigma_\rho=\beta-1/2$，则 $\sigma_\rho>b$。
+
+$G$ 沿实射线 $(b,\infty)$ 全纯：对实数 $s>b\ge0$，$s+1/2\in(1/2,\infty)$，其中 $\zeta$ 无零点；$s=1/2$ 处 $\zeta$ 在 $1$ 的极点与 $-1/(2(s-1/2))$ 相消；$\kappa x_0^{-s}/s$ 在 $s>0$ 全纯。若 $c_g>b$，则 $c_g$ 有限且为 $G$ 的正则点，与 Landau–Widder 定理矛盾；故 $c_g\le b$。于是对每个 $\sigma>b$，原积分收敛，且由恒等定理它与 (485.2) 给出的延拓在 $\Re s>b$ 上一致。由 $g\ge0$，
+$$
+|G(\sigma+i\tau)|\le G(\sigma)\qquad(\sigma>b,\ \tau\in\mathbb R).
+\tag{485.4}
+$$
+在 $\sigma_\rho+i\gamma$，$-\frac12\zeta'/\zeta(s+1/2)$ 有留数 $-m/2$，其余项正则；在实点 $\sigma_\rho$，$G$ 正则。于是
+$$
+\lim_{\sigma\downarrow\sigma_\rho}(\sigma-\sigma_\rho)G(\sigma+i\gamma)=-\frac m2,\qquad
+\lim_{\sigma\downarrow\sigma_\rho}(\sigma-\sigma_\rho)G(\sigma)=0,
+$$
+与 (485.4) 矛盾。故对任何有限 $\kappa$ 都不存在最终下界，即 $\liminf\mathcal T=-\infty$。
+
+再设 RH 成立。取 $\alpha=1/2+\varepsilon$，$0<\varepsilon<1/5$，则 $b=0$，同上得 $c_g\le0$ 与 (485.4) 对 $\sigma>0$ 成立。取任一非平凡零点 $1/2+i\gamma$，重数 $m\ge1$，$\gamma\ne0$。$\mathcal F$ 在 $0$ 正则，故
+$$
+\lim_{\sigma\downarrow0}\sigma G(\sigma)=\kappa,\qquad
+\lim_{\sigma\downarrow0}\sigma G(\sigma+i\gamma)=-\frac m2,
+$$
+由 (485.4) 得 $m/2\le\kappa$，从而 $\kappa\ge1/2$。合并两种情形得 (485.3)。证毕。
+
+**定理 485.3（上侧对应）。** 若 RH 成立，则 $\limsup_{x\to\infty}\mathcal T(x)\ge1/2$；若 RH 不成立，则 $\limsup_{x\to\infty}\mathcal T(x)=+\infty$。
+
+证明。设 $\mathcal T(x)\le K$ 对 $x\ge x_0$ 成立，令 $h(y)=K-\mathcal T(e^y)\ge0$，其变换为 $Kx_0^{-s}/s-\mathcal F(s)$。它在零点对应处的留数为 $+m/2$，在 $0$ 处（RH 情形）的主部为 $K/s$。将定理 485.2 证明中的 $g,G$ 换为 $h$ 及其变换，逐字重复，得 RH 下 $K\ge m/2\ge1/2$，非 RH 下矛盾。证毕。
+
+**推论 485.4（推论 481.3 的加强）。** 对每个固定 $\kappa<1/2$ 与每个有限 $T$，存在实数 $x\ge T$ 使
+$$
+T_\psi(x,x^{4/5})<-\kappa x^{11/10}.
+$$
+证明。由 (481.1) 的归一化与定理 485.2 直接得出。证毕。
+
+**范围与文献归属。** (485.1)、$\zeta$ 的实轴无零点、非平凡零点存在与 Landau–Widder 定理是经典输入；单个极点迫使 $m/2$ 的机制是标准的 Landau 型论证。本节的 `repo-derived` 内容是命题 485.1 对同一移动价格核的幂误差推广，以及定理 485.2–485.3 对全实中心函数 $\mathcal T$ 的无条件常数 $1/2$。单极点方法所能给出的普适常数即为 $1/2$；更强的结论需要聚合无穷多个零点的贡献。在 RH 下 $\liminf\mathcal T=-\infty$ 是否成立，以及有限双侧预算 $|\mathcal T|\le K$ 在 RH 下是否被排除，仍未决：它们需要该核的逐点零点和公式、带重数的零点计数、正 Fejér 核局部化、联立逼近与一致尾部估计。本节结论只关于全实中心函数，不推出 §481 所述被选整数来源上的下界，也不推出 RH 或每个 $n>5040$ 的严格 Robin 不等式。
+
+## 追加锚（本行以下为增补区）
