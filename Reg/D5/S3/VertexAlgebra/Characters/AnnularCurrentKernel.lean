@@ -3,6 +3,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import Reg.Support.SingleDependentReadout
 
+/-! Faithful infinite-family audits of the annular scalar identity and convergence law. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
@@ -39,7 +41,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   have h₁ := h sampleTau (I / 2) (by norm_num) (by norm_num [sampleTau, UpperHalfPlane.im])
   change annularKernel _ _ + 1 = _ at h₁
   rw [h₀] at h₁
-  exact one_ne_zero (add_right_eq_self.mp h₁)
+  have hz : (1 : ℂ) = 0 := by linear_combination h₁
+  exact one_ne_zero hz
 
 private theorem kernel_zero {z : ℂ} (hz : ‖z‖ < 1) :
     annularKernel 0 z = z / (1 - z) ^ 2 := by
@@ -55,7 +58,7 @@ private theorem kernel_zero {z : ℂ} (hz : ‖z‖ < 1) :
 
 private theorem kernel_one (z : ℂ) (hz : z ≠ 0) : annularKernel 1 z = 0 := by
   unfold annularKernel splitKernel
-  simp [div_mul_cancel₀ _ hz]
+  simp [hz]
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -97,9 +100,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     owner := `D5.S3.VertexAlgebra.Characters.AnnularCurrentKernel
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "fn", "arg", "fn", "fn"],
-      stateBinder := 0, functionOperand := true,
-      stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
@@ -133,8 +139,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   refine ⟨(), (fun _ => 0), (fun _ => 1), ?_⟩
   intro h
   have hs : Summable (fun _ : ℕ+ => (1 : ℂ)) :=
-    Eq.mp h (by simp)
-  simpa only [summable_const_iff] using hs
+    Eq.mp h (show Summable (fun _ : ℕ+ => (0 : ℂ)) from summable_zero)
+  simpa [summable_const_iff] using hs
 
 def family : Registration arena (type_of% (@annular_summable)) where
   actual := actual
@@ -165,9 +171,12 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     owner := `D5.S3.VertexAlgebra.Characters.AnnularCurrentKernel
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "fn"],
-      stateBinder := 0, functionOperand := true,
-      stateOperand := none, booleanPredicate := false }] }
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]
