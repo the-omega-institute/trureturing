@@ -97,9 +97,10 @@ private theorem shiftCurrent_zero_basis (μ : Fin D.rank → ℚ) (a : Label D) 
   simp only [shiftCurrent,LinearMap.sum_apply,LinearMap.smul_apply,neutralMode_zero_single,
     smul_smul,← Finset.sum_smul]
   congr 1
-  simp only [chargeScalar,bilinear,unitCharge,Int.cast_sum,Int.cast_mul,Int.cast_ite,
-    Int.cast_one,Int.cast_zero,ite_mul,one_mul,zero_mul,Finset.sum_ite_eq',
-    Finset.mem_univ,if_true,pairing,Rat.cast_sum,Rat.cast_mul,Rat.cast_intCast]
+  have hc (i : Fin D.rank) : chargeScalar D a.1 i =
+      ∑ j : Fin D.rank,(D.G i j : ℂ)*(a.1 j : ℂ) := by
+    simp [chargeScalar,bilinear,unitCharge,Int.cast_sum]
+  simp only [hc,pairing,Rat.cast_sum,Rat.cast_mul,Rat.cast_intCast,Finset.mul_sum]
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro i _
@@ -178,7 +179,7 @@ theorem moduleL_eigen_iff (β : Charge D)
     ext a
     exact Rat.cast_inj
   simpa [D5.S1.Eigenstructure.DiagonalTensorEigenspace.coeffEquiv,
-    TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply,carrierBasis,hs,rationalGrade] using h
+    TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply,carrierBasis,hs,rationalGrade,Finsupp.mapRange_id] using h
 
 def gradeCoeffEquiv (μ : Fin D.rank → ℚ) (e : ℚ) :
     rationalGrade D μ e ≃ₗ[ℂ] ({a : Label D // weight D μ a=e} →₀ ℂ) :=

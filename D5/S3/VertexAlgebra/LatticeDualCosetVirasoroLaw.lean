@@ -7,7 +7,6 @@
    digest: The actual original conformal vector has rank-central-charge Virasoro modes on every dual-coset module. -/
 
 import D5.S3.VertexAlgebra.LatticeDualCosetVirasoro
-import Mathlib.Algebra.Lie.OfAssociative
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -26,10 +25,12 @@ private theorem base_shift_commutator
     (u : Fin D.rank → ℂ) (m n : ℤ) :
     ⁅sugawaraMode D H m,shiftCurrent D u n⁆ = -(n : ℂ) • shiftCurrent D u (m+n) := by
   classical
-  have h (i : Fin D.rank) : ⁅sugawaraMode D H m,neutralMode D i n⁆ =
-      -(n : ℂ) • neutralMode D i (m+n) :=
-    sugawaraMode_current_commutator D H hHG hGH i m n
-  simp only [shiftCurrent,lie_sum,lie_smul,h,Finset.smul_sum,smul_smul]
+  change sugawaraMode D H m * shiftCurrent D u n -
+    shiftCurrent D u n * sugawaraMode D H m = _
+  simp only [shiftCurrent,Finset.mul_sum,Finset.sum_mul,mul_smul_comm,
+    smul_mul_assoc,← Finset.sum_sub_distrib,← smul_sub]
+  simp_rw [sugawaraMode_current_commutator D H hHG hGH,smul_smul]
+  simp only [Finset.smul_sum,smul_smul]
   apply Finset.sum_congr rfl
   intro i _
   congr 1
@@ -40,10 +41,23 @@ private theorem shift_shift_commutator (u : Fin D.rank → ℂ) (m n : ℤ) :
       (if m+n=0 then (m : ℂ) * (∑ i,∑ j,u i * (D.G i j : ℂ) * u j) else 0) •
         (1 : Module.End ℂ (Carrier D)) := by
   classical
-  have h (i j : Fin D.rank) : ⁅neutralMode D i m,neutralMode D j n⁆ =
-      (if m+n=0 then (m : ℂ)*(D.G i j : ℂ) else 0) •
-        (1 : Module.End ℂ (Carrier D)) := neutralMode_heisenberg D i j m n
-  simp only [shiftCurrent,sum_lie_sum,smul_lie,lie_smul,h,smul_smul]
+  have product (m n : ℤ) : shiftCurrent D u m * shiftCurrent D u n =
+      ∑ i,∑ j,(u i*u j) • (neutralMode D i m * neutralMode D j n) := by
+    simp only [shiftCurrent,Finset.sum_mul,Finset.mul_sum,
+      smul_mul_assoc,mul_smul_comm,smul_smul]
+  have reverse : shiftCurrent D u n * shiftCurrent D u m =
+      ∑ i,∑ j,(u i*u j) • (neutralMode D j n * neutralMode D i m) := by
+    rw [product,Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro i _
+    apply Finset.sum_congr rfl
+    intro j _
+    rw [mul_comm (u j) (u i)]
+  change shiftCurrent D u m * shiftCurrent D u n -
+    shiftCurrent D u n * shiftCurrent D u m = _
+  rw [product,reverse]
+  simp only [← Finset.sum_sub_distrib,← smul_sub]
+  simp_rw [neutralMode_heisenberg D,smul_smul]
   by_cases hmn : m+n=0
   · simp only [hmn,ite_true,← Finset.sum_smul]
     congr 1
@@ -73,15 +87,25 @@ theorem moduleL_virasoro (β : Charge D)
           (1 : Module.End ℂ (Carrier D)) := sugawaraMode_virasoro D H hHG hGH m n
   have ho : ⁅shiftCurrent D u m,sugawaraMode D H n⁆ =
       (m : ℂ) • shiftCurrent D u (m+n) := by
-    rw [lie_skew,base_shift_commutator D H hHG hGH u n m]
-    simp [add_comm]
-  have h1 (A : Module.End ℂ (Carrier D)) : ⁅(1 : Module.End ℂ (Carrier D)),A⁆=0 := by
-    simp [Ring.lie_def]
-  have h2 (A : Module.End ℂ (Carrier D)) : ⁅A,(1 : Module.End ℂ (Carrier D))⁆=0 := by
-    simp [Ring.lie_def]
+    have h := base_shift_commutator D H hHG hGH u n m
+    simp only [Ring.lie_def] at h ⊢
+    rw [add_comm n m] at h
+    linear_combination (norm := module) -h
   change ⁅moduleL D β H m,moduleL D β H n⁆ = _
-  simp_rw [hl,add_lie,lie_add,smul_lie,lie_smul,h1,h2,smul_zero,zero_add,add_zero]
-  rw [hb,base_shift_commutator D H hHG hGH,ho,shift_shift_commutator]
+  rw [hl m,hl n,hl (m+n)]
+  have expansion :
+      ⁅sugawaraMode D H m + shiftCurrent D u m +
+          (if m=0 then halfNorm D u else 0) • (1 : Module.End ℂ (Carrier D)),
+        sugawaraMode D H n + shiftCurrent D u n +
+          (if n=0 then halfNorm D u else 0) • (1 : Module.End ℂ (Carrier D))⁆ =
+      ⁅sugawaraMode D H m,sugawaraMode D H n⁆ +
+        ⁅sugawaraMode D H m,shiftCurrent D u n⁆ +
+        ⁅shiftCurrent D u m,sugawaraMode D H n⁆ +
+        ⁅shiftCurrent D u m,shiftCurrent D u n⁆ := by
+    simp only [Ring.lie_def,add_mul,mul_add,smul_mul_assoc,mul_smul_comm,
+      mul_one,one_mul,smul_smul]
+    module
+  rw [expansion,hb,base_shift_commutator D H hHG hGH,ho,shift_shift_commutator]
   have hk : (∑ i,∑ j,u i*(D.G i j : ℂ)*u j) = 2*halfNorm D u := by
     unfold halfNorm
     ring
