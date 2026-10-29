@@ -3,6 +3,8 @@ import D5.S3.Arith.FibonacciAtomic.Observer.NativePostClockInverse
 import Mathlib.Data.ZMod.Basic
 import Reg.Support.DependentFamily
 
+/-! Source-faithful family registration of the complete native post-clock inverse. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -11,7 +13,8 @@ namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativePostClockInverse
 open _root_.D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport (Source)
 open _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition (Address readout)
 open _root_.D5.S3.Arith.FibonacciAtomic.ActualLeafHistoryRigidity (subtree)
-open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.NativeMaterialRootRecognition (D material neighbors children)
+open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.NativeMaterialRootRecognition
+  (D material neighbors children)
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.NativeGuardedLeafRepair (Call run)
 open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativePostClockInverse
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -25,11 +28,14 @@ theorem example_invertible (t : Source) : (clock 1 2 t).det ≠ 0 := by
     (if i = j then 1 else 0) + (if j.val ∈ neighbors t i.val then 2 else 0)
   have hrat : M.map (fun n => (n : ℚ)) = clock 1 2 t := by
     ext i j
-    simp [M, clock, Matrix.map_apply]
+    change ((M i j : ℤ) : ℚ) = _
+    by_cases hi : i = j <;> by_cases hn : j.val ∈ neighbors t i.val <;>
+      norm_num [M, clock, hi, hn]
   have htwo : M.map (fun n => (n : ZMod 2)) = 1 := by
     ext i j
+    change ((M i j : ℤ) : ZMod 2) = _
     by_cases hi : i = j <;> by_cases hn : j.val ∈ neighbors t i.val <;>
-      simp [M, Matrix.map_apply, Matrix.one_apply, hi, hn]
+      norm_num [M, Matrix.one_apply, hi, hn]
   intro h
   have hz : (M.det : ℚ) = 0 := by rw [Int.cast_det, hrat, h]
   have hz' : M.det = 0 := by exact_mod_cast hz
@@ -54,8 +60,8 @@ def bad : Realization signature :=
   realize signature (fun _ _ _ _ => none) (fun e => nomatch e)
 
 def inverseLaw (E : ℚ → ℚ → List Call → Option Endpoint) : Prop :=
-  ∀ (a c : ℚ) (ha : 0 < a) (hc : 0 < c)
-    (hinv : ∀ (v : List Call) (t : Source), run (.of true) v = some t →
+  ∀ (a c : ℚ) (_ha : 0 < a) (_hc : 0 < c)
+    (_hinv : ∀ (v : List Call) (t : Source), run (.of true) v = some t →
       (clock a c t).det ≠ 0),
     (∀ (w : List Call) (t : Source), run (.of true) w = some t →
       ∃ x : Field t, E a c w = some ⟨t, x⟩ ∧
@@ -89,8 +95,12 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro he
   have hh := congrArg (fun f => (f [.promote []]).map
     (fun e => zeroInclude e.1 (.of false) e.2 ⟨[false], by simp [material]⟩)) he
-  change some (2 : ℚ) = some 4 at hh
-  contradiction
+  have hn : (encode 1 2 [.promote []]).map
+      (fun e => zeroInclude e.1 (.of false) e.2 ⟨[false], by simp [material]⟩) ≠
+      (encode 1 4 [.promote []]).map
+      (fun e => zeroInclude e.1 (.of false) e.2 ⟨[false], by simp [material]⟩) := by
+    decide
+  exact hn hh
 
 def familyRegistration : Registration arena (type_of% (@postclock_inverse)) := {
   actual := actual
@@ -105,7 +115,8 @@ noncomputable def postclockInverseRegistration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@postclock_inverse) (type_of% (realize signature actual.readout actual.anchor)) Unit Unit := {
   unitName := Lean.Name.str
-    `D5.S3.Arith.FibonacciAtomic.Observer.NativePostClockInverse.postclock_inverse "__information_unit"
+    `D5.S3.Arith.FibonacciAtomic.Observer.NativePostClockInverse.postclock_inverse
+    "__information_unit"
   realizationName :=
     `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativePostClockInverse.familyRegistration
   realizationSource := none
@@ -134,5 +145,7 @@ noncomputable def postclockInverseRegistration :
   continuation := .unknown
   familyRecord := none
   options := #[] }
+
+end
 
 end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativePostClockInverse
