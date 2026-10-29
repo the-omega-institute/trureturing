@@ -1093,7 +1093,8 @@ private theorem charge_weight_ordered (D : LatticeData)
   split_ifs with h h'
   · rfl
   · exact False.elim (h' (hi.mp h))
-  · exact False.elim (h (hi.mpr h'))
+  · rename_i h'
+    exact False.elim (h (hi.mpr h'))
   · rfl
 
 private theorem bounded_coefficient_ordered (D : LatticeData)
@@ -1418,7 +1419,8 @@ private theorem unrestricted_weight_rotation (D : LatticeData) (i : Four → Fin
   split_ifs with h h'
   · rw [← unpaired_weight_rotation, ← paired_weight_rotation]
   · exact False.elim (h' ⟨heq.mp h.1, hpos.mp h.2⟩)
-  · exact False.elim (h ⟨heq.mpr h'.1, hpos.mpr h'.2⟩)
+  · rename_i h'
+    exact False.elim (h ⟨heq.mpr h'.1, hpos.mpr h'.2⟩)
   · rfl
 
 private theorem bounded_coefficient_rotation (D : LatticeData)
@@ -1484,7 +1486,7 @@ private theorem bounded_division_sum (f : ℕ → ℂ) (N ell B : ℕ)
     (∑ k : Fin (B + 1), if k.1 * ell ≤ N then f k.1 else 0) =
       ∑ k ∈ Finset.range (N / ell + 1), f k := by
   classical
-  rw [Fin.sum_univ_eq_sum_range]
+  rw [Fin.sum_univ_eq_sum_range (fun k : ℕ => if k * ell ≤ N then f k else 0) (B + 1)]
   have hb : N / ell + 1 ≤ B + 1 := by
     have hd := Nat.div_le_self N ell
     omega
@@ -1529,5 +1531,208 @@ private theorem bounded_geometric_delta (f : ℕ → ℂ) (N x ell B : ℕ)
     intro k _
     have hn : ¬ x + k.1 * ell ≤ N := by omega
     simp [hn]
+
+
+private theorem charge_cutoff_nat (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (N : ℕ) (β : Charge D) :
+    β ∈ positiveChargeCutoff D hD (N : ℤ) ↔ (chargeEnergy D β).toNat ≤ N := by
+  have hq := chargeEnergy_nonneg D hD β
+  have hcast := Int.toNat_of_nonneg hq
+  simp only [positiveChargeCutoff, Set.Finite.mem_toFinset, Set.mem_setOf_eq]
+  omega
+
+private theorem charge_cutoff_sum (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (B R : ℕ) (hR : R ≤ B)
+    (f : Charge D → ℂ) :
+    (∑ β ∈ positiveChargeCutoff D hD (B : ℤ),
+      if (chargeEnergy D β).toNat ≤ R then f β else 0) =
+        ∑ β ∈ positiveChargeCutoff D hD (R : ℤ), f β := by
+  classical
+  have hsub : positiveChargeCutoff D hD (R : ℤ) ⊆ positiveChargeCutoff D hD (B : ℤ) := by
+    intro β hβ
+    rw [charge_cutoff_nat] at hβ ⊢
+    omega
+  calc
+    _ = ∑ β ∈ positiveChargeCutoff D hD (R : ℤ),
+        if (chargeEnergy D β).toNat ≤ R then f β else 0 := by
+      apply (Finset.sum_subset hsub ?_).symm
+      intro β _ hβ
+      have hn : ¬ (chargeEnergy D β).toNat ≤ R := by
+        rwa [← charge_cutoff_nat D hD R β]
+      simp [hn]
+    _ = _ := by
+      apply Finset.sum_congr rfl
+      intro β hβ
+      rw [if_pos ((charge_cutoff_nat D hD R β).mp hβ)]
+
+private theorem pair_natural_parameters (N : ℕ) (q : ℤ) (h : 0 ≤ (N : ℤ) + q) :
+    min N ((N : ℤ) + q).toNat = N - (-q).toNat ∧
+      Nat.dist N ((N : ℤ) + q).toNat = q.natAbs := by
+  by_cases hq : 0 ≤ q
+  · have hδ : (-q).toNat = 0 := by omega
+    have hq' : q = (q.toNat : ℤ) := by omega
+    have hb : ((N : ℤ) + q).toNat = N + q.toNat := by omega
+    rw [hδ, hb, Nat.sub_zero, Nat.min_eq_left (by omega),
+      Nat.dist_eq_sub_of_le (by omega), hq', Int.natAbs_natCast]
+    omega
+  · have hδ : q = -((-q).toNat : ℤ) := by omega
+    have hL : (-q).toNat ≤ N := by omega
+    have hb : ((N : ℤ) + q).toNat = N - (-q).toNat := by omega
+    rw [hb, Nat.min_eq_right (by omega), Nat.dist_eq_sub_of_le_right (by omega),
+      hδ, Int.natAbs_neg, Int.natAbs_natCast]
+    omega
+
+private def pairEnergyCoefficient (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (i j : Fin D.rank) (B N : ℕ) (q : ℤ) : ℂ := by
+  classical
+  exact if q = 0 then
+    ∑ β ∈ positiveChargeCutoff D hD (B : ℤ), ∑ t : Fin (B + 1),
+      if N = (chargeEnergy D β).toNat + t.1 then
+        (Nat.card (IntegerFiber D t.1) : ℂ) *
+          (bilinear D (unitCharge D i) β : ℂ) * (bilinear D (unitCharge D j) β : ℂ)
+      else 0
+  else (q.natAbs : ℂ) * (D.G i j : ℂ) *
+    ∑ β ∈ positiveChargeCutoff D hD (B : ℤ),
+      ∑ k : Fin (B + 1), ∑ t : Fin (B + 1),
+        if N = (chargeEnergy D β).toNat + t.1 + (-q).toNat + k.1 * q.natAbs then
+          (Nat.card (IntegerFiber D t.1) : ℂ)
+        else 0
+
+private theorem pair_energy_zero (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (i j : Fin D.rank) (B N : ℕ) (hN : N ≤ B) :
+    signedPairCoefficient D hD i j (N : ℤ) 0 = pairEnergyCoefficient D hD i j B N 0 := by
+  classical
+  simp only [signedPairCoefficient, add_zero, Nat.cast_nonneg, and_self, ↓reduceIte,
+    Int.toNat_natCast, pairEnergyCoefficient]
+  simp_rw [finite_residual_delta _ N _ B hN]
+  rw [charge_cutoff_sum D hD B N hN]
+  apply Finset.sum_congr rfl
+  intro β _
+  unfold occupationMultiplicity
+  ring
+
+private theorem pair_energy_nonzero (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (i j : Fin D.rank) (B N : ℕ) (hN : N ≤ B) (q : ℤ) (hq : q ≠ 0) :
+    signedPairCoefficient D hD i j (N : ℤ) q = pairEnergyCoefficient D hD i j B N q := by
+  classical
+  have hL : 0 < q.natAbs := Int.natAbs_pos.mpr hq
+  have hcollapse (β : Charge D) :
+      (∑ k : Fin (B + 1), ∑ t : Fin (B + 1),
+        if N = (chargeEnergy D β).toNat + t.1 + (-q).toNat + k.1 * q.natAbs then
+          (Nat.card (IntegerFiber D t.1) : ℂ) else 0) =
+      if (chargeEnergy D β).toNat + (-q).toNat ≤ N then
+        ∑ k ∈ Finset.range ((N - ((chargeEnergy D β).toNat + (-q).toNat)) / q.natAbs + 1),
+          (Nat.card (IntegerFiber D (N - ((chargeEnergy D β).toNat + (-q).toNat) -
+            k * q.natAbs)) : ℂ)
+      else 0 := by
+    have he (t k : ℕ) : (chargeEnergy D β).toNat + t + (-q).toNat + k * q.natAbs =
+        ((chargeEnergy D β).toNat + (-q).toNat) + t + k * q.natAbs := by omega
+    simp_rw [he]
+    exact bounded_geometric_delta _ N _ q.natAbs B hL hN
+  unfold pairEnergyCoefficient
+  rw [if_neg hq]
+  simp_rw [hcollapse]
+  by_cases h : 0 ≤ (N : ℤ) + q
+  · have hδ : (-q).toNat ≤ N := by omega
+    have hp := pair_natural_parameters N q h
+    have hne : N ≠ ((N : ℤ) + q).toNat := by omega
+    simp only [signedPairCoefficient, Nat.cast_nonneg, h, and_self, ↓reduceIte,
+      Int.toNat_natCast, hne, hp.1, hp.2]
+    have hguard (β : Charge D) : (chargeEnergy D β).toNat + (-q).toNat ≤ N ↔
+        (chargeEnergy D β).toNat ≤ N - (-q).toNat := by omega
+    have hres (β : Charge D) : N - ((chargeEnergy D β).toNat + (-q).toNat) =
+        N - (-q).toNat - (chargeEnergy D β).toNat := by omega
+    simp_rw [hguard, hres]
+    rw [charge_cutoff_sum D hD B (N - (-q).toNat) (by omega)]
+    rfl
+  · have hδ : N < (-q).toNat := by omega
+    simp only [signedPairCoefficient, Nat.cast_nonneg, h, and_false, ↓reduceIte,
+      Int.toNat_natCast]
+    have hz : ∀ β : Charge D, ¬ (chargeEnergy D β).toNat + (-q).toNat ≤ N := by
+      intro β
+      omega
+    simp [hz]
+
+private theorem pair_energy_coefficient (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (i j : Fin D.rank) (B N : ℕ) (hN : N ≤ B) (q : ℤ) :
+    signedPairCoefficient D hD i j (N : ℤ) q = pairEnergyCoefficient D hD i j B N q := by
+  by_cases hq : q = 0
+  · subst q
+    exact pair_energy_zero D hD i j B N hN
+  · exact pair_energy_nonzero D hD i j B N hN q hq
+
+private def edgePoint (M : PM4) (a : Four × Four) (ha : a ∈ M.edges) : edgeParam M := ⟨a, ha⟩
+
+private def singleEdgeValueEquiv (M : PM4) (a : Four × Four) (h : M.edges = {a})
+    (α : Type*) : (edgeParam M → α) ≃ α where
+  toFun f := f (edgePoint M a (by rw [h]; simp))
+  invFun x := fun _ => x
+  left_inv f := by
+    funext e
+    have he : e.1 = a := by simpa [h] using e.2
+    have hs : e = edgePoint M a (by rw [h]; simp) := Subtype.ext he
+    rw [hs]
+  right_inv _ := rfl
+
+private def doubleEdgeValueEquiv (M : PM4) (a b : Four × Four)
+    (h : M.edges = {a, b}) (hab : a ≠ b) (α : Type*) :
+    (edgeParam M → α) ≃ α × α where
+  toFun f := (f (edgePoint M a (by rw [h]; simp)), f (edgePoint M b (by rw [h]; simp)))
+  invFun x e := if e.1 = a then x.1 else x.2
+  left_inv f := by
+    funext e
+    have he : e.1 = a ∨ e.1 = b := by simpa [h] using e.2
+    rcases he with he | he
+    · have hs : e = edgePoint M a (by rw [h]; simp) := Subtype.ext he
+      simp only [he, ↓reduceIte]
+      rw [hs]
+    · have hs : e = edgePoint M b (by rw [h]; simp) := Subtype.ext he
+      have hne : e.1 ≠ a := by rw [he]; exact hab.symm
+      simp only [hne, ↓reduceIte]
+      rw [hs]
+  right_inv x := by
+    apply Prod.ext <;> simp [edgePoint, hab, hab.symm]
+
+private theorem edge_univ_single (M : PM4) (a : Four × Four) (h : M.edges = {a}) :
+    (Finset.univ : Finset (edgeParam M)) = {edgePoint M a (by rw [h]; simp)} := by
+  classical
+  ext e
+  simp only [Finset.mem_univ, Finset.mem_singleton, true_iff]
+  apply Subtype.ext
+  exact (by simpa [h] using e.2)
+
+private theorem edge_univ_double (M : PM4) (a b : Four × Four) (h : M.edges = {a, b}) :
+    (Finset.univ : Finset (edgeParam M)) =
+      {edgePoint M a (by rw [h]; simp), edgePoint M b (by rw [h]; simp)} := by
+  classical
+  ext e
+  simp only [Finset.mem_univ, Finset.mem_insert, Finset.mem_singleton, true_iff]
+  have he : e.1 = a ∨ e.1 = b := by simpa [h] using e.2
+  exact he.elim (fun ha => Or.inl (Subtype.ext ha)) (fun hb => Or.inr (Subtype.ext hb))
+
+private theorem pm4_sum (f : PM4 → ℂ) :
+    (∑ M : PM4, f M) = f .empty + f .p12 + f .p13 + f .p14 + f .p23 + f .p24 + f .p34 +
+      f .p12_34 + f .p13_24 + f .p14_23 := by
+  classical
+  have hu : (Finset.univ : Finset PM4) =
+      {.empty, .p12, .p13, .p14, .p23, .p24, .p34, .p12_34, .p13_24, .p14_23} := by decide
+  rw [hu]
+  simp <;> ring
+
+private def unpairedTable : PM4 → Finset Four
+  | .empty => Finset.univ
+  | .p12 => {2, 3}
+  | .p13 => {1, 3}
+  | .p14 => {1, 2}
+  | .p23 => {0, 3}
+  | .p24 => {0, 2}
+  | .p34 => {0, 1}
+  | .p12_34 | .p13_24 | .p14_23 => ∅
+
+private theorem unpaired_table : ∀ M : PM4, M.unpaired = unpairedTable M := by decide
 
 end D5.S3.VertexAlgebra.LatticeFourCurrentTrace
