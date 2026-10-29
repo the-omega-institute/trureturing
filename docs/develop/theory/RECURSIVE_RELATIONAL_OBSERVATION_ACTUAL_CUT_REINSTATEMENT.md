@@ -2265,3 +2265,543 @@ unresolved; no universal acquisition impossibility follows.
 [ACR-AFK]: https://arxiv.org/pdf/1704.03176v1
 
 ## 追加锚（本行以下为增补区）
+
+## 21. Source-faithful Hankel fibres, typed normalization, and conditional ordinal access
+
+**Definition 21.1 (row, seed, and canonical descriptor).** For $d\ge1$, let
+$P=(\zeta _0,\ldots,\zeta _{2d-1})$ be the actually acquired prefix,
+with $\zeta_i=z_{i+1}$ in Definition 9.1. Put
+
+$$
+ H(P)_{ij}=\zeta_{i+j},\qquad y(P)_i=\zeta_{i+d}
+ \quad(0\le i,j<d).
+ \tag{ACR.75}
+$$
+
+Let $s_d(P)=(\zeta _0,\ldots,\zeta _{d-1})\in\mathbb F_2^d$ be the
+original first-$d$ seed, and let $\rho_d$ be the same fixed bijective
+coefficient-row enumeration used by Definition 9.1. Define the row
+projection
+
+$$
+ \kappa_d(P)=\rho_d(i_P),\qquad
+ i_P=\min\{i<2^d:H(P)\rho_d(i)=y(P)\},
+ \tag{ACR.76}
+$$
+
+and define the full descriptor
+
+$$
+ \operatorname{EN}_d(P)=\bigl(\kappa_d(P),s_d(P)\bigr)\in
+ \mathbb F_2^d\times\mathbb F_2^d.
+ \tag{ACR.77}
+$$
+
+Thus $K_d(P)$ in the original target is this full descriptor:
+$K_d(P)=\operatorname{EN}_d(P)$. Its first component is the original
+first passing row; its second component is copied from the authentic
+prefix and is never fabricated from that row. For $d=0$, set
+$\operatorname{EN}_0(\varnothing)=(\varnothing,\varnothing)$, the
+original zero descriptor.
+
+For $c\in\mathbb F_2^d$, write
+
+$$
+ p_c(E)=E^d-\sum_{j<d}c_jE^j.
+ \tag{ACR.78}
+$$
+
+**Theorem 21.2 (the exact all-index affine fibre).** Let $P$ be the
+authentic first $2d$ values of a stream in $\mathscr R_d$, let $m_P$ be
+its monic least all-index annihilator, and put $r=\deg m_P\le d$; for
+the zero stream take $m_P=1$ and $r=0$. Then
+
+$$
+ \{c\in\mathbb F_2^d:H(P)c=y(P)\}
+ =\{c\in\mathbb F_2^d:m_P\mid p_c\},
+ \tag{ACR.79}
+$$
+
+and
+
+$$
+ \operatorname{rank}H(P)=r,\quad
+ \left|\{c:H(P)c=y(P)\}\right|=2^{d-r}.
+ \tag{ACR.80}
+$$
+
+The assertion includes singular companion recurrences, nonminimal
+presentations, finite transients, and the zero stream; it does not
+assume a nonzero constant coefficient or an invertible transition.
+
+Proof. The equation $H(P)c=y(P)$ is exactly the order-$d$ recurrence
+with seed $s_d(P)$ evaluated at the next $d$ positions. A passing row
+therefore generates a member of $\mathscr R_d$ agreeing with the
+authentic stream in its first $2d$ values. GPO Lemma 29.2 makes the two
+all-index streams equal, so $p_c$ annihilates the authentic stream.
+Conversely, an all-index annihilator of degree $d$ gives the displayed
+Hankel equations. If an annihilator $p$ is divided by the monic $m_P$,
+the remainder also annihilates the stream; minimality forces the
+remainder to vanish. This proves (ACR.79), including the cases in which
+$m_P$ has zero constant coefficient.
+
+For the rank, every row of $H(P)$ after the first $r$ rows is an
+$\mathbb F_2$-linear combination of those rows by the order-$r$
+recurrence, so the rank is at most $r$. If the leading $r\times r$
+Hankel block had a nonzero column relation, the associated nonzero
+polynomial $q$ of degree $<r$ would produce a sequence $q(E)s$ whose
+first $r$ values vanish. The sequence $q(E)s$ satisfies the same
+order-$r$ recurrence, so forward induction makes it identically zero,
+contradicting minimality. Hence the leading block has rank $r$, and so
+does $H(P)$. The consistent binary system then has affine dimension
+$d-r$, proving (ACR.80). For $r=0$, $H(P)=0$ and $y(P)=0$, so the same
+statement gives $2^d$ passing rows. Consequently, on this entire
+zero-stream fibre, for every original enumeration,
+$\kappa_d(0^{2d})=\rho_d(0)$ and
+$\operatorname{EN}_d(0^{2d})=(\rho_d(0),0^d)$; the row need not be
+zero. The empty descriptor belongs to the separate $d=0$ case. $\square$
+
+The finite-prefix minimal-synthesis supplier used below is Massey,
+*Shift-Register Synthesis and BCH Decoding*: its §II LFSR length setup
+and its §III Theorem 3 with corollary ([MAS]). That result supplies the
+shortest shift-register synthesis and the $2r$-symbol uniqueness
+threshold. It is used here as
+an intermediate supplier for this source-specific fibre theorem; it is
+not evidence for a count of nonsingular Hankel blocks, and no such
+incidental count is claimed.
+
+**Corollary 21.3 (the full-domain hybrid normalizer).** Once the
+authentic prefix has been earned, compute the exact rank of $H(P)$. If
+$r=d$, solve the single system $H(P)c=y(P)$ and return
+
+$$
+ (c,s_d(P))=\operatorname{EN}_d(P).
+ \tag{ACR.81}
+$$
+
+The solution is unique, so this row is the same first row selected by
+$\rho_d$, whatever that enumeration is. If $r<d$, run the original
+$\rho_d$ first-passing enumeration and return
+$(\kappa_d(P),s_d(P))$. Keep the $d=0$ zero descriptor. Thus every
+branch returns the original order-$d$ row together with the original
+first-$d$ seed, including deficient-rank and finite-transient fibres.
+No entrance assumption or physical source action is added.
+
+**Theorem 21.4 (typed local interreductions under the original
+enumeration).** Fix $d\ge1$. Let
+
+$$
+ \mathcal M_d=\{m\in\mathbb F_2[E]:m\text{ monic},\ \deg m\le d\},
+$$
+
+and for $m\in\mathcal M_d$ define the row-valued task
+
+$$
+ \operatorname{FM}_d(m)=\rho_d(i_m),\qquad
+ i_m=\min\{i<2^d:m\mid p_{\rho_d(i)}\}\in\{0,\ldots,2^d-1\}.
+ \tag{ACR.82}
+$$
+
+For $r=\deg m>0$, let $\iota_r=0^{r-1}1\in\mathbb F_2^r$; set
+$\iota_0=\varnothing$ for $m=1$. Let $s^{m}$ be the all-index
+stream generated by $m$ from the initial $r$ values $\iota_r$ (and the
+zero stream when $r=0$), let
+
+$$
+ P_m=(s^m_0,\ldots,s^m_{2d-1}),\qquad
+ \sigma_{m,d}=(s^m_0,\ldots,s^m_{d-1}),
+ \tag{ACR.83}
+$$
+
+and regard $\operatorname{EN}_d(P_m)$ as a value in
+$\mathbb F_2^d\times\mathbb F_2^d$. The two exact reductions are
+
+$$
+ \begin{aligned}
+ R_{P\to m}(P)&=\bigl(\operatorname{FM}_d(m_P),s_d(P)\bigr),\\
+ R_{m\to P}(m)&=\operatorname{EN}_d(P_m)
+   =\bigl(\operatorname{FM}_d(m),\sigma_{m,d}\bigr).
+ \end{aligned}
+ \tag{ACR.84}
+$$
+
+The first map has row output in its first component and the authentic
+seed in its second; the second has the same row type and the explicitly
+generated order-$d$ seed in its second. In particular,
+$\pi_1R_{P\to m}(P)=\kappa_d(P)$ and
+$\pi_1R_{m\to P}(m)=\operatorname{FM}_d(m)$. The reverse input
+$P_m$ is a constructed input to this local normalization reduction
+only; it is never substituted for the physical source prefix.
+
+Proof. Run the Berlekamp--Massey LFSR synthesis on the $2d$ bits of
+an authentic $P$. In Massey's connection-polynomial convention, retain
+the shortest register length $r$ and reverse the coefficient convention
+to the forward-shift polynomial $m_P(E)=E^rC(E^{-1})$, padding the
+trailing zero coefficients when the recurrence is singular. The output
+is then a shortest recurrence for the finite prefix; since
+$\deg m_P\le d$, the $2r\le2d$-symbol uniqueness supplier cited above
+and GPO Lemma 29.2 force it to be the least all-index annihilator.
+Equation (ACR.79) then gives the first component of $R_{P\to m}$,
+while the second is copied verbatim from $P$.
+
+For the reverse map, the recurrence with initial values $\iota_r$ is
+annihilated by $m$. If a nonzero polynomial $q$ of degree $t<r$ were an
+annihilator, evaluate $q(E)s^m$ at index $r-1-t$: its leading term sees
+the unique one at index $r-1$, while every lower term sees a zero in the
+initial prefix. This is impossible. Thus $m$ is the least annihilator,
+even when its constant coefficient is zero and the stream has a finite
+transient. Theorem 21.2 identifies the passing rows with the monic
+degree-$d$ multiples of $m$ in the very same order $\rho_d$, proving the
+first component of $R_{m\to P}$; its second component is exactly the
+constructed $\sigma_{m,d}$. For $m=1$ and every $d\ge1$, the
+constructed stream is zero, every degree-$d$ monic polynomial is a
+multiple of $1$, and therefore
+$\operatorname{FM}_d(1)=\rho_d(0)$ and
+$\operatorname{EN}_d(P_1)=(\rho_d(0),0^d)$. This is the same identity
+on every authentic zero-stream input, not a choice of a new first row.
+For example, $d=1$, $\rho_1=(1,0)$ gives descriptor $(1,0)$.
+Only $d=0$ has the empty descriptor; the synthetic seed in the reverse
+map is still distinct in provenance from the acquired seed. $\square$
+
+The reductions have polynomial local overhead in $d$ besides their one
+call to the other row/descriptor task; that call retains its own costs,
+including the original enumeration when used. The following local model
+makes the overhead executable without a fixed address-width assumption.
+Use a fixed finite number of sequential binary tapes, with explicit end
+markers and finitely many tracks. One symbol read/write or one-cell head
+move costs one unit of bit work. Every written bit, including scratch,
+indices, counters, markers and control, counts cumulatively; reusable
+backing counts every visited tape cell, including blank cells traversed.
+Each symbol has a fixed-size binary encoding. There is no random access,
+head teleportation, implicit integer register, or free relocation.
+Integers are binary strings on tapes, and copying or returning a head
+across a string costs its actual scans. Allocation and actual physical
+writes retain their separate tariffs.
+
+For the $d$-local reductions put
+$\ell_d=\lceil\log_2(64(d+2)^4)\rceil$. This suffices to represent
+all local array positions, lengths and polynomial-loop counters; it is
+not an address width imposed on other routines. A requested access to
+an $M$-bit local array can be implemented by scanning from its left
+marker with a binary position counter, then returning the head. With
+$\ell$ bits sufficient for its positions and loop indices, this costs
+$O((M+1)\ell^2)$ work and cumulative writes and $O(\ell)$ counter
+backing. Counter increments, comparisons, address arithmetic in the
+index description, initialization and return scans are included. This
+loose bound follows by at most $M+1$ cell visits, with $O(\ell^2)$
+bit work and writes for each counter operation; it does not grant a
+unit-cost array access.
+
+A Berlekamp--Massey pass uses three $O(d+1)$-bit work arrays and
+$O(d^2)$ binary updates. Its complete local costs, including scan and
+counter writes, consequently satisfy
+
+$$
+ C_{\rm BM}(d)=O((d+1)^3\ell_d^2),\qquad
+ W_{\rm BM}(d)=O((d+1)^3\ell_d^2),\qquad
+ V_{\rm BM}(d)=O(d+1+\ell_d).
+ \tag{ACR.85}
+$$
+
+Writing its polynomial output and copying the authentic seed are
+included in these conservative bounds. Generating $P_m$ by the
+recurrence, retaining its first $d$ bits, and copying the typed task
+input/output obey the same work/write bound and $O(d+1+\ell_d)$
+backing bound: there are $O(d^2)$ binary updates on $O(d+1)$ data.
+All $O(d)$ generated data bits are really written; the larger cumulative
+write bound also pays their intermediate accumulators, scans and
+counters. A called task receives and returns explicit bit strings; its
+own computation is not replaced by a unit-cost answer. In particular,
+no supplied original-enumeration cost is declared polynomial here.
+
+**Definition 21.5 (uniform affine ordinal-prefix access).** Interpret a
+binary word $u\in\{0,1\}^t$ as its integer value $[u]_2$. The original
+enumeration has the affine prefix-image property if a single uniform
+procedure $\operatorname{Img}(d,t,u)$, for every $0\le t\le d$,
+constructs an exact record
+
+$$
+ \operatorname{Img}(d,t,u)=(a_{d,t,u},B_{d,t,u},\mathsf{idx}_{d,t,u}),
+ \quad
+ A_{d,t,u}=a_{d,t,u}+\operatorname{im}B_{d,t,u},
+ \tag{ACR.86}
+$$
+
+where
+
+$$
+ A_{d,t,u}=\left\{\rho_d(i):0\le i<2^d,
+ \left\lfloor i/2^{d-t}\right\rfloor=[u]_2\right\}.
+ \tag{ACR.87}
+$$
+
+The base $a$, an explicit basis matrix $B$ over $\mathbb F_2$, and the
+ordinal index record $\mathsf{idx}$ are all returned, with exact
+feasibility and no free feasibility bit. Let $C_{\rm img}(d)$,
+$W_{\rm img}(d)$, and $V_{\rm img}(d)$ be uniform upper bounds over
+$t,u$ for bit work including address generation, cumulative bits written
+including retained output, and peak reusable backing, respectively.
+These are costs of a uniform implementation in the serial local model
+just specified, including every working and output tape, explicit record
+encoding, index data, counter write and head return. The property
+requires all three bounds to be fixed polynomials in $d$; all
+source-independent index preparation is included in them. In particular,
+$V_{\rm img}$ includes the returned record, whose length is no greater
+than its visited backing. The record is delimited and explicitly parsed;
+a large index record cannot be treated as a free constant-size object.
+
+**Theorem 21.6 (constructive conditional canonical normalization).**
+Assume Definition 21.5. For $d=0$ use the original zero descriptor. For
+$d\ge1$, from an authentic $P$, first represent the fibre
+in (ACR.79) by an affine base and kernel basis using exact Gaussian
+elimination. At depth $t$, test the child prefix $u0$ by constructing
+$\operatorname{Img}(d,t+1,u0)$ and intersecting its affine image with
+the earned fibre. Retain $u0$ when the intersection is nonempty; if it
+is empty, construct and retain $u1$. At depth $d$, the retained cell is
+a singleton, and its row is exactly $\kappa_d(P)$. Append the unchanged
+seed $s_d(P)$ to obtain $\operatorname{EN}_d(P)$.
+
+At most two child images are constructed at each depth. Put
+
+$$
+ \ell_{\rm aff}=\left\lceil\log_2
+ \bigl(64(d+2)^4+2V_{\rm img}(d)+2\bigr)\right\rceil.
+$$
+
+The image routine runs on its own counted tapes; the caller keeps only
+one image at a time. Parsing its full record and copying its base and
+basis into $O(d^2)$ caller data costs
+$O((V_{\rm img}+(d+1)^2)\ell_{\rm aff}^2)$ work and cumulative
+writes. All movements through its index record are paid even though
+firstness uses the ordinal prefix, rather than an inverse-index oracle.
+The prefix $u$ itself is an explicit at-most-$d$-bit word, not a
+unit-cost ordinal register. Forming the intersection equations, including
+the product $H B$, and Gaussian elimination require $O((d+1)^3)$
+binary updates on $O((d+1)^2)$ data. The scan implementation above
+therefore costs $O((d+1)^5\ell_{\rm aff}^2)$ work and cumulative
+writes, with $O((d+1)^2+\ell_{\rm aff})$ caller backing. The bounds
+include construction of the earned fibre, every feasibility test,
+descriptor emission and the seed copy. Thus, for an absolute constant,
+
+$$
+ \begin{aligned}
+ C_{\rm aff}(d)&\le C_1\left[(d+1)\left(C_{\rm img}(d)
+    +\bigl(V_{\rm img}(d)+(d+1)^5\bigr)\ell_{\rm aff}^2\right)
+    +(d+1)^5\ell_{\rm aff}^2\right],\\
+ W_{\rm aff}(d)&\le C_1\left[(d+1)\left(W_{\rm img}(d)
+    +\bigl(V_{\rm img}(d)+(d+1)^5\bigr)\ell_{\rm aff}^2\right)
+    +(d+1)^5\ell_{\rm aff}^2\right],\\
+ V_{\rm aff}(d)&\le V_{\rm img}(d)
+    +C_1\bigl((d+1)^2+\ell_{\rm aff}\bigr).
+ \end{aligned}
+ \tag{ACR.88}
+$$
+
+These remain polynomials in $d$ under Definition 21.5; in particular the
+image's working data and its caller's counters both fit the backing.
+
+The final normalizer emits $2d$ descriptor bits and retains the original
+$2d$-bit $P$; no affine feasibility result is treated as a proof without
+its returned base and basis. The child-prefix induction proves exact
+firstness: the fibre is nonempty, its ordinal cells partition at every
+depth, and the chosen child is the first nonempty cell. This conclusion
+is conditional on the stated property; the unspecified original
+$\rho_d$ is not asserted to have it.
+
+**Theorem 21.7 (source-faithful composition, charged writeback, and the
+remaining boundary).** Run Theorem 15.1 unchanged through its authentic
+$P$, earned $n$ and $H$, including Theorem 14.2's $4^d$ catalogue
+preparation, every actual Read and literal, all grants and stationarity.
+Let $(C_{\rm sup},W_{\rm sup},V_{\rm sup})$ denote exactly the already
+charged non-normalization supplier terms of that theorem: the physical
+acquisition, source-independent catalogue and measurement work, and
+their writes and backing. This notation removes only the old final row
+search, the explicit Fibonacci construction of $B_n$, and the final
+payload write from that supplier bill; it does not remove or reprice any
+source action, literal, grant, catalogue entry, or physical tariff.
+
+The composed access model retains the original suppliers as costed
+subroutines in their supplied execution model and uses the serial
+controller above for the new local routines. It does not claim a free
+simulation of a supplier in the tape model. Their bit-work terms retain
+all their own original operand/address operations, and their backing
+terms include those operands. Transfers between the two parts are
+additional operations. Here is a conservative explicit transfer rule.
+For a supplier with $v$ backing bits returning $q$ explicit bits, each
+returned bit is copied to a local tape. Its supplied output address,
+length and running index are represented, not machine integers. At
+most $b=O(v+q+1)$ bits suffice for those operands: existing address
+operands are already part of $v$, and the additional index needs only
+$O(\log(q+2))$ bits. A variable-length bit-addressed transfer uses
+$O(b^2)$ bit work and writes per bit, including forming/copying its
+address, accessing the supplied output cell, advancing its binary
+counter and writing the destination tape. There is no parallel-word
+operation. Transfer scratch takes $O(b)$ bits; its address registers
+and backing are counted. Every referenced cell belongs to already
+charged supplier backing; the variable address can encode each supplied
+reference, independently of $d$ or $n$. No cells are accessed through an
+uncharged window. The supplier's original generation is charged once and this
+extra read/copy is charged separately. If it already emits sequential
+output, the actual transfer can be smaller. Physical access, allocation
+and write tariffs remain the actual ones in either implementation.
+
+In particular, export the earned $P,n$ (and any needed finite control)
+from the acquisition supplier, with the following loose bounds, also
+charging the retained local copies:
+
+$$
+ \begin{aligned}
+ C_X,W_X&=O\bigl((d+n+1)(V_{\rm sup}+d+n+2)^2\bigr),\\
+ V_X&=O(V_{\rm sup}+d+n+1).
+ \end{aligned}
+$$
+
+This transfer does not reread the physical source or change a literal.
+Its backing may be reused after the export. The new local routines
+then work on tapes and need no absolute address into the earlier
+catalogue. In particular, the old supplier retains its $4^d$
+preparation; these interface terms do not assert a faster preparation.
+
+Use Corollary 21.3 for the final normalization. On a full-rank fibre,
+Gaussian elimination with the charged scans gives
+
+$$
+ (C_{\rm norm},W_{\rm norm},V_{\rm norm})
+ =\bigl(O((d+1)^5\ell_d^2),O((d+1)^5\ell_d^2),
+        O((d+1)^2+\ell_d)\bigr).
+ \tag{ACR.89}
+$$
+
+On a deficient fibre, invoke the original fixed enumeration verbatim,
+with its original $e_d,v_d$ and cumulative writes $\omega_d$.
+Export each tested row to the tape controller using the transfer rule,
+at an additional cost at most
+$O((d+1)(v_d+d+2)^2)$ work and writes per row. The controller's
+Hankel row test has at most $O((d+1)^2)$ binary updates on
+$O((d+1)^2)$ data, and its rank computation was already charged.
+A conservative bound for the added terms is therefore
+
+$$
+ \begin{aligned}
+ C_{\rm norm}&\le e_d+O\left((d+1)^5\ell_d^2+
+  2^d\bigl((d+1)^4\ell_d^2+(d+1)(v_d+d+2)^2\bigr)\right),\\
+ W_{\rm norm}&\le\omega_d+O\left((d+1)^5\ell_d^2+
+  2^d\bigl((d+1)^4\ell_d^2+(d+1)(v_d+d+2)^2\bigr)\right),\\
+ V_{\rm norm}&\le v_d+O\bigl(v_d+(d+1)^2+\ell_d\bigr).
+ \end{aligned}
+ \tag{ACR.90}
+$$
+
+These terms include both the row-transfer scratch and all row-test
+counter writes. The supplied enumeration costs are separate and are
+not assumed polynomial in $d$. On full rank there is no enumeration
+or row export. Under Definition 21.5, use (ACR.88) at every rank,
+with no $e_d,\omega_d,v_d$ or enumerator-transfer term. At $d=0$
+use the empty descriptor, with constant local normalization costs.
+
+For the arbitrary earned cut, put
+$L_n=\lceil\log_2(64(n+2)^4)\rceil$. Compute the cut field by
+forward ripple-carry Fibonacci addition on serial tapes, followed by
+explicit subtraction of one. All intermediate Fibonacci numbers through
+$F_{n+2}$ fit $n+2$ bits since $F_{n+2}\le2^{n+1}$ for $n\ge0$.
+A fixed number of buffers therefore takes $O(n+1)$ bits. Store $n$,
+the iteration number, buffer lengths and scan indices as binary strings
+of at most $L_n$ bits. Each of the $O(n+2)$ rounds costs
+$O((n+2)L_n^2)$ work and writes: scan and ripple-add the buffers,
+copy the next pair, reset each head by paid moves, and update the
+counters. Growing/initializing the buffers and the final subtract-one
+and output copy obey the same bound. This gives
+
+$$
+ (C_B(n),W_B(n),V_B(n))
+ =\bigl(O((n+2)^2L_n^2),O((n+2)^2L_n^2),O(n+1+L_n)\bigr).
+ \tag{ACR.91}
+$$
+
+Every intermediate carry, overwritten buffer and counter write is in
+$W_B$. No $d$-only register represents $n$ or addresses this field:
+a tape head reaches its $j$th cell by $j$ charged moves, and all visited
+cells count as backing. This works for fixed $d=0$ or $1$ and arbitrarily
+large finite $n$; neither an upper cut bound nor an integer-valued
+unevaluated output is used.
+
+Finally write the completed original payload
+
+$$
+ \bigl(P,\operatorname{EN}_d(P),n,F_{n+1}-1\bigr)
+ =\bigl(P,K_d(P),n,F_{n+1}-1\bigr),
+ \tag{ACR.92}
+$$
+
+and its ready control into the granted readable backing. Set
+$L_{d,n}=\lceil\log_2(64(d+n+2)^4)\rceil$. The explicit record
+has $O(d+n+1)$ data bits: $2d$ for $P$, $2d$ for row/seed,
+$O(\log(n+2))$ for $n$, and $O(n+1)$ for the binary $B_n$
+(which is $\Theta(n)$ as $n$ grows). Its final sequential copy,
+field/control writes and the copy counters cost
+$O((d+n+1)L_{d,n}^2)$ work and cumulative writes and
+$O(d+n+1+L_{d,n})$ backing. The data writes alone are linear in
+the record length; the displayed larger write bill also includes its
+counter and control writes. Set ready only after all data, including any
+requested phase, are installed.
+
+If a forward phase is requested and $d>0$, compute it explicitly from
+the selected original row and seed by forward binary powering
+$C^{B_n}s_d(P)$. Scan the already computed binary exponent in a fixed
+direction; there are $O(n+2)$ squarings/multiplications, not $B_n$
+unit-cost iterations. Dense binary matrix multiplication has
+$O((d+1)^3)$ binary updates on $O((d+1)^2)$ tape data, so the
+same charged-scan construction gives additional bounds
+
+$$
+ C_\phi,W_\phi=O((n+2)(d+1)^5L_{d,n}^2),\qquad
+ V_\phi=O((d+1)^2+L_{d,n}).
+$$
+
+The exponent tape is already in $V_B$ and is read by paid moves; matrix
+buffers, copies, counters and intermediate writes belong to these phase
+terms. The final $d$ phase bits are copied in the final-write term
+above. For no requested phase or for $d=0$, take all phase terms zero.
+No private actual generator state is recovered or inverted. Exclude this
+optional computation from $C_{\rm sup},W_{\rm sup},V_{\rm sup}$
+when adding these phase terms; otherwise use its already charged
+supplier implementation and do not add them a second time.
+
+With the optional phase charged in the new local part, the disjoint
+work/write bill and conservative sum of peak backing bounds are
+
+$$
+ \begin{aligned}
+ C_{\rm total}&\le C_{\rm sup}+C_X+C_{\rm norm}+C_B+C_\phi
+                      +O((d+n+1)L_{d,n}^2),\\
+ W_{\rm total}&\le W_{\rm sup}+W_X+W_{\rm norm}+W_B+W_\phi
+                      +O((d+n+1)L_{d,n}^2),\\
+ V_{\rm total}&\le V_{\rm sup}+V_X+V_{\rm norm}+V_B+V_\phi
+                      +O(d+n+1+L_{d,n}).
+ \end{aligned}
+ \tag{ACR.93}
+$$
+
+The supplied work, every transfer, normalization, cut arithmetic, optional
+phase and final copy are different operations; scratch reuse can only
+reduce the backing sum. The old supplier retains every actual physical
+Read/literal charge, catalogue entry, grant and stationarity premise.
+The physical service, allocation, retention and handoff tariffs and
+durations remain actual; these bit-operation bounds do not infer a
+physical duration. In particular stationarity must cover the transfers,
+all intermediate and retained writes, any requested phase and handoff.
+
+The writeback is source-faithful because $P$ is the prefix earned from
+the original unknown-law, unknown-cut source, and the hybrid changes no
+source Read, source update, literal, grant, stationarity premise, or
+canonical enumeration fallback. The reverse map in Theorem 21.4 remains
+a constructed local input. A uniform polynomial total acquisition for
+the full all-index class, including the original $4^d$ preparation and
+its total resource contract, remains open. The affine-prefix property
+for the unspecified original $\rho_d$ remains unproved, so the
+conditional polynomial normalizer does not settle that general case.
+$\square$
+
+[MAS]: https://www.isiweb.ee.ethz.ch/archive/massey_pub/pdf/BI411.pdf
+
+## 追加锚（本行以下为增补区）

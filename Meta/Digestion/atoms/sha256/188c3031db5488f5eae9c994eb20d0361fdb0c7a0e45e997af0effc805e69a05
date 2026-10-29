@@ -1,0 +1,83 @@
+**Theorem 10.3 (The fifth scale and exact noncritical rare minimizers).** For fixed $\zeta\in\mathbb R$, set
+
+$$
+\delta_a=\frac1{2a}-\frac1{a^2}
+ +\frac5{4a^3}+\frac\zeta{a^4}.
+\tag{10.4}
+$$
+
+These parameters are eventually positive and admissible, and
+
+$$
+\boxed{\quad
+\lim_{a\to\infty}a\,[D_a(\delta_a)-2a^2-5a-2]
+=\min\left\{\frac72,-\frac32-4\zeta\right\}.
+\quad}\tag{10.5}
+$$
+
+The two fifth-scale coefficients meet at $\zeta=-5/4$. If $\zeta>-5/4$ is fixed, then for all sufficiently large $a$ the global minimum is exactly $H_r$, and all minimizing laws are (9.2), up to relabeling. If $\zeta<-5/4$ is fixed, every minimizing law has $\min_i y_i\ge\tau$ eventually, and $\inf H<H_d<H_r$; no exact dense minimizing law is asserted.
+
+The optimal dense improvement coefficient at order $a^{-2}$, an exact finite-$a$ crossing, and the next scale at $\zeta=-5/4$ remain unspecified. The law (7.2) is an improvement family and is not asserted to attain the global minimum. The threshold $N(L)$ is sufficient and is not asserted to be least. These statements concern the subset-law problem and assert no prescribed finite-graph realization or graph-budget optimality.
+
+**Proof.** For fixed $\zeta$, (10.4) eventually satisfies (9.1) with $L=1$. Subtracting the same parameter-dependent $B$ in (10.1) gives
+
+$$
+D_a(\delta_a)
+=\min\{H_d-B,H_r-B\}+O_\zeta(a^{-2}).
+\tag{10.6}
+$$
+
+Here is a direct expansion of the exact rational energies. Put $h=1/a$, write $\delta=\delta_a$, and set
+
+$$
+Q=1+h-h\delta,\qquad
+P=(1+h)^3-\delta(3h+3h^2+h^3),\qquad
+F=\frac P{Q^2}.
+$$
+
+Then $q=aQ$, $Z=a^3P$, and exactly
+
+$$
+\begin{aligned}
+B&=h^{-3}(1+h)^2F,\\
+H_d-B&=h^{-2}(2+3h)F,\\
+H_r-B&=\frac1{h\delta}
+ +h^{-3}\left[\frac{(1+h)^3}{1-h\delta}-(1+h)^2F\right].
+\end{aligned}\tag{10.7}
+$$
+
+Substitute $\delta=h/2-h^2+5h^3/4+\zeta h^4$. Multiplication of the Taylor series for the displayed polynomial numerators and inverse denominators yields
+
+$$
+\begin{aligned}
+F&=1+h-\frac12h^2+\frac52h^3-7h^4
+ +O_\zeta(h^5),\\
+\frac1{h\delta}
+ &=\frac2{h^2}+\frac4h+3+(-4-4\zeta)h
+ +O_\zeta(h^2),\\
+\frac{(1+h)^3}{1-h\delta}-(1+h)^2F
+ &=h^2-h^3+\frac52h^4+O_\zeta(h^5).
+\end{aligned}\tag{10.8}
+$$
+
+All remainders here are ordinary Taylor remainders of analytic rational functions near $h=0$: $Q(0)=1$, $1-h\delta=1$ there, and $\delta/h$ tends to $1/2$. Thus the inverse factors are defined with bounded derivatives in a neighborhood depending only on the fixed $\zeta$. Equations (10.7)–(10.8) give
+
+$$
+\begin{aligned}
+H_d-B&=2a^2+5a+2+\frac7{2a}+O_\zeta(a^{-2}),\\
+H_r-B&=2a^2+5a+2
+ +\frac{-3/2-4\zeta}{a}+O_\zeta(a^{-2}).
+\end{aligned}\tag{10.9}
+$$
+
+Taking the smaller expansion in (10.6), multiplying by $a$, and letting $a\to\infty$ proves (10.5). Equality of the two limiting coefficients is $7/2=-3/2-4\zeta$, namely $\zeta=-5/4$.
+
+If $\zeta>-5/4$, then (10.9) gives
+
+$$
+H_d-H_r=\frac{5+4\zeta}{a}+O_\zeta(a^{-2})
+>72\delta_a^2\mu^{-6}
+$$
+
+eventually. Theorem 8.1 then puts every law with least marginal at least $\tau$ strictly above $H_r$. Theorem 9.1 bounds the complementary region by $H_r$ and classifies all equality laws, proving the exact global rare assertion. If $\zeta<-5/4$, (10.9) instead gives $H_d<H_r$ eventually. The symmetric trial law therefore excludes every rare-region law from global minimization. Also $\delta_a<1/r$ eventually, so Theorem 7.2 supplies $\inf H<H_d$. This proves precisely the stated dense-side conclusions. ∎
+

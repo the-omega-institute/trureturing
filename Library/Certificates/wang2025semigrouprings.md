@@ -5,9 +5,10 @@ year: 2025
 title: Semigroup rings and algebraically independent sequences with respect to idempotents in commutative semigroups
 doi: null
 url: https://arxiv.org/abs/2509.18724v1
-claim: Conjecture 3.26 asserts that finite algebraic Davenport constant forces a uniform finite bound on relative constants in the Green quotient over nongroup cyclic elements; Conjecture 5.3 is a separate finite-semigroup formula.
+claim: Conjecture 3.26 asserts that finite algebraic Davenport constant forces a uniform finite bound on relative constants in the Green quotient over nongroup cyclic elements; Conjecture 5.3 asserts a separate finite-semigroup formula using relative constants and Schutzenberger translation groups.
 strata_touched:
   - D5/S0/Certificates/Algebra/WangConjecture326Refutation
+  - D5/S0/Certificates/Algebra/WangConjecture53Refutation
 license: citation-only
 triage: anchor
 ---
@@ -23,9 +24,16 @@ The source archive has SHA256
 
 ## Verified locator
 
-The declared version is https://arxiv.org/abs/2509.18724v1.
+- URL: https://arxiv.org/abs/2509.18724v1
+- Versioned source: v1, submitted 2025-09-23.
+- Source locator: Section 5, Conjecture 5.3, TeX lines 842–851 and HTML anchor
+  [S5.Thmtheorem3](https://arxiv.org/html/2509.18724v1#S5.Thmtheorem3).
+- Definition scope: Section 2, especially lines 203–213 for the ordinary
+  semigroup algebra and Definition 2.1; Section 5, lines 842–851 for the
+  complete conjecture hypotheses, equality, and epsilon definition.
+
 [Conjecture 3.26](https://arxiv.org/html/2509.18724v1#S3.Thmtheorem26)
-is the complete periodic-semigroup implication addressed by this local formal unit.
+is the complete periodic-semigroup implication addressed by the infinite construction below.
 Section 2 supplies the
 [positive cyclic and periodic conventions](https://arxiv.org/html/2509.18724v1#S2.p2),
 [principal ideals and Green relation](https://arxiv.org/html/2509.18724v1#S2.p4),
@@ -33,8 +41,8 @@ Section 2 supplies the
 [Definition 2.1 and its independently nonzero coefficients](https://arxiv.org/html/2509.18724v1#S2.Thmtheorem1),
 and [sequence conventions](https://arxiv.org/html/2509.18724v1#S2.p9)
 with [Definition D's relative Davenport constant](https://arxiv.org/html/2509.18724v1#S2.p10).
-The separate Conjecture 5.3 exposition below is retained as source context;
-this note's local formal binding is to Conjecture 3.26 only.
+The note binds the separate 3.26 and 5.3 formal modules listed above;
+each construction addresses only its own conjecture.
 
 ## Source statement
 
@@ -99,7 +107,11 @@ right side is at least two. Its exact maximum is unnecessary.
 
 ## Scope and provenance
 
+<<<<<<< HEAD
 The Conjecture 5.3 assertion quantifies over finite commutative semigroups, including those
+=======
+The D5 claim quantifies over finite commutative semigroups, including those
+>>>>>>> 6221e3690de2cc0358394560d151c034aaac83f1
 without an identity, and over all fields satisfying either source branch.
 Its counterexample is an ordinary rational semigroup algebra; no contracted
 algebra or replacement for the relative constant is involved.
@@ -112,6 +124,7 @@ The source and bounded later-literature screen supplied with issue
 [23871](https://github.com/the-omega-institute/trureturing/issues/23871)
 found no exact settlement in the inspected scope. This is not an exhaustive
 absence or priority claim. The construction's novelty is not established.
+<<<<<<< HEAD
 Conjecture 5.3 and Conjecture 3.26 are separate assertions. The six-label argument above concerns only 5.3; the infinite construction below concerns 3.26.
 
 
@@ -171,3 +184,6 @@ and supply no escape witness. The `Infinite Model` instance separately
 certifies infinitude of the fixed witness. It is not consumed by `result`
 and is neither a result helper nor an escape witness. Only `result` is a
 public authored theorem and the designated refutation is audit-exempt.
+=======
+Conjecture 3.26 is a separate question and is not settled here.
+>>>>>>> 6221e3690de2cc0358394560d151c034aaac83f1

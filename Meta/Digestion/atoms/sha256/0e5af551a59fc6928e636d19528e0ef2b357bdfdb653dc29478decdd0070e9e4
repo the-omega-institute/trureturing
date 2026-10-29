@@ -1,0 +1,58 @@
+**Lemma 3.1 (A full-label certificate for the dense branch).** Put $n=s$, $b=r$, and define, for every label,
+
+$$
+\begin{aligned}
+\widehat R_i&=\mathbb E[K^2I_i]-b^2y_i+(2b+1)\delta,\\
+\widehat\rho_i&=(1-I_i)(2b+1)(b-K)+I_i(n-K)(n-K-1),\\
+t_{\rm conv}&=\frac{3(2b+1)\delta}{b^2}.
+\end{aligned}\tag{3.1}
+$$
+
+Then $\widehat R_i=\mathbb E\widehat\rho_i\ge0$. If $t=\min_i y_i\ge t_{\rm conv}$, then
+
+$$
+H\ge H_{\rm dense}
+ -6b\delta\left(\frac{n^2}{q^2}-1\right)
+ =H_{\rm dense}-O(\delta),\tag{3.2}
+$$
+
+with an absolute constant. At $\delta=0$ the exact global minimum is $H_{\rm dense}=rs^2$, attained only by the uniform law on the $r$-subsets of $[s]$.
+
+**Proof.** Expansion of the integrand gives
+$\widehat\rho_i=K^2I_i-b^2I_i+(2b+1)(b-K)$.
+Its expectation is $\widehat R_i$ since $\mathbb E K=b-\delta$. If $i$ is absent, $K\le b$, and if it is present the two consecutive integer factors have nonnegative product. Thus each integrand is nonnegative. Their sum is
+
+$$
+\sum_i\widehat\rho_i=Q_b(K),\qquad
+Q_b(k)=(n-k)(b-k)(2b+1+k).
+$$
+
+For $z=b-k\in\{-1,0,\ldots,b-1\}$,
+
+$$
+Q_b(k)-6b(b-k)
+=z(z+1)(3b+1-z)-6bz
+=z(z-1)(3b-z-1)\ge0.\tag{3.3}
+$$
+
+Indeed at $z=-1$ the value is $6b$, at $z=0,1$ it is zero, and for $2\le z\le b-1$ all factors are positive. Hence $\sum_i\widehat R_i\ge6b\delta$.
+
+Let $f(y)=b^2/y-(2b+1)\delta/y^2$. On $y\ge t_{\rm conv}$,
+
+$$
+f''(y)=\frac{2[b^2y-3(2b+1)\delta]}{y^4}\ge0.
+$$
+
+Thus the actual identity $H=\sum_i f(y_i)+\sum_i\widehat R_i/y_i^2$, Jensen, and $y_i\le1$ give
+
+$$
+H\ge\frac{b^2n^2}{q}-\frac{(2b+1)\delta n^3}{q^2}+6b\delta.
+$$
+
+Since $a=b-1$, one has
+$Z=b^3-(3b^2-3b+1)\delta$ and
+$b^2q-(2b+1)\delta n=Z-6b\delta$.
+This proves (3.2). Moreover $n^2/q^2-1=O(1/a)$ uniformly, making the error $O(\delta)$.
+
+At $\delta=0$, $f$ is strictly convex and the error is zero. Equality forces all marginals equal $b/n$ and $\mathbb E Q_b(K)=0$. The only allowed zeros of $Q_b$ are $K=b,n$; their mean $b$ forces $K=b$ almost surely. A $b$-subset omits a single label, and its omitted-label probabilities are then $1/n$. This is precisely the stated uniform law. ∎
+

@@ -1,0 +1,23 @@
+**Definition 1.1 (One joint incidence array).** For a positive integer $s$, let $[s]=\{1,\ldots,s\}$. A profile is one array
+
+$$
+x=(x_T)_{\varnothing\ne T\subseteq[s]},\qquad
+x_T\ge0,\qquad \sum_Tx_T=1.
+$$
+
+All expectations below refer to the random nonempty subset $T$ with this law. Put
+
+$$
+K=|T|,\qquad q=\mathbb E K,\qquad
+y_i=\mathbb P(i\in T)>0,\qquad
+w_i=\mathbb E[K^2\mathbf1_{\{i\in T\}}],
+$$
+
+$$
+U_T=\sum_{i\in T}y_i^{-1},\qquad
+2J_s(x)=\sum_{i=1}^s\frac{w_i}{y_i^2}
+=\mathbb E\left[K^2\sum_{i\in T}y_i^{-2}\right].
+$$
+
+Thus $0<y_i\le1$, $\sum_i y_i=q$, $1\le q\le s$ and $U_T\ge K$. No independent choice of the marginals is permitted: the same $x$ determines $K,U,y,w$ and $J_s$.
+
