@@ -125,7 +125,8 @@ def recover_initialization(options):
         try:
             env = {"GIT_INDEX_FILE": str(alternate)}
             git(path, "read-tree", creation, env=env)
-            git(path, "add", "--ignore-removal", "--", ".", env=env, timeout=1200)
+            # Large filesystem operations are supervised by the owning host job.
+            git(path, "add", "--ignore-removal", "--", ".", env=env, timeout=None)
             tree = value_from(git(path, "write-tree", env=env))
             if tree != value(path, "rev-parse", creation + "^{tree}"):
                 commit = value_from(git(path, "commit-tree", tree, "-p", creation,
@@ -146,10 +147,10 @@ def recover_initialization(options):
                    if name and not os.path.lexists(path / os.fsdecode(name))]
         if missing:
             git(path, "checkout-index", "-z", "--stdin", input=b"\0".join(missing) + b"\0",
-                timeout=1200)
+                timeout=None)
         # read-tree leaves existing files without cached stat data. Refresh it
         # without staging preserved edits; exit 1 is normal for dirty files.
-        refreshed = git(path, "update-index", "--refresh", check=False, timeout=1200)
+        refreshed = git(path, "update-index", "--refresh", check=False, timeout=None)
         if refreshed.returncode not in (0, 1):
             raise GitFailure(refreshed.stderr.decode(errors="replace").strip()
                              or "initialization index refresh failed")
