@@ -220,12 +220,12 @@ parameter assignment, prefix depth or real-number oracle is an input. -/
 def computedPotential {n k m : Nat} (I : EpochInput n k m) (i : Fin m) : Nat :=
   (computedSignedPotential I i).toNat
 
-private theorem base_le_fold_max (l : List Int) (b : Int) : b ≤ l.foldr max b := by
+theorem base_le_fold_max (l : List Int) (b : Int) : b ≤ l.foldr max b := by
   induction l with
   | nil => exact le_rfl
   | cons a l ih => exact ih.trans (le_max_right _ _)
 
-private theorem fold_max_property {P : Int → Prop} (l : List Int) (b : Int)
+theorem fold_max_property {P : Int → Prop} (l : List Int) (b : Int)
     (hb : P b) (hl : ∀ a ∈ l, P a) : P (l.foldr max b) := by
   induction l with
   | nil => exact hb

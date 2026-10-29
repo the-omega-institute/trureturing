@@ -99,7 +99,7 @@ ordinary and equality comparisons contribute zero offset.  Primitive and
 collapse cases retain their scalar constraints in `B` but contribute no
 residual block edge. -/
 
-private def offsetComparisonEdges (d : Int) : Term (Occurrence X) → Term (Occurrence X) →
+def offsetComparisonEdges (d : Int) : Term (Occurrence X) → Term (Occurrence X) →
     List ((Occurrence X × Occurrence X) × Int)
   | .of (.inr a), .of (.inr b) => [((a, b), d)]
   | .mul l r, .mul u v => offsetComparisonEdges d l u ++ offsetComparisonEdges d r v
@@ -216,7 +216,7 @@ private theorem encode_substitution (g : Source) :
       rw [hl, hr]
       exact shift_smart 1 (encode l) (encode r)
 
-private theorem shift_zero (C : Code) : shiftCode 0 C = C := by
+theorem shift_zero (C : Code) : shiftCode 0 C = C := by
   induction C with
   | of n => rfl
   | mul l r hl hr => exact congrArg₂ FreeMagma.mul hl hr

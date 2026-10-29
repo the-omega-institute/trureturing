@@ -1248,3 +1248,356 @@ $$
 Baldwin--Deutsch--Kalev，*Strictly-complete measurements for bounded-rank quantum-state tomography*，Definitions 1--2，[arXiv:1605.02109v1](https://arxiv.org/html/1605.02109v1)，区分低秩承诺域内唯一性与相对于更大矩阵域的严格完备性；其 PSD/POVM 假设不供应本节一般非对称逐项正矩阵的每一条短历史插值。van den Bos--Vaandrager，*State Identification for Labeled Transition Systems with Inputs and Outputs*，Definition 11、Theorem 6.1，[https://arxiv.org/html/1907.11034v2](https://arxiv.org/html/1907.11034v2)，研究一个共同自适应测试对候选状态的区分；其不相容性和测试图条件不推出本节的连续正混合交点。Petreczky--Bako--van Schuppen，*Realization theory of discrete-time linear switched systems*，Definition 6，[https://arxiv.org/html/1103.1343v2](https://arxiv.org/html/1103.1343v2)，把可观测性量化在全部输入／切换词上，而本节固定一条不可重置实际词；Breiding--Gesmundo--Michalek--Vannieuwenhoven，*Algebraic compressed sensing*，Theorem 4.9，[arxiv.org/html/2108.13208v2](https://arxiv.org/html/2108.13208v2)，给出一般代数纤维的 generic 结论，但 generic 维数不保证与逐项严格正秩一轨迹相交。这些文献只承担所述背景和边界，不承担 (10.6)、(10.19) 或 (10.21)。本节不作外部优先权或全球检索穷尽断言。
 
 ## 追加锚（本行以下为增补区）
+
+## 11. 个别秩二证书能否由同一实际协议取得
+
+### 定义 11.1（环境域可靠性与个别可认证集合）
+
+沿用定义 9.1 的完整来源域 $\mathcal M_k$、普通实矩阵秩和全部实际操作合同。
+来源的正因子在运行前固定；只有一条不可复制、不可复位的轨迹，初读及每个
+原子后的读数都必须取得并计费。特别地，下面的成功集合不改变比较环境域。
+
+称一个允许的确定性协议 $\Pi$ 为可靠的部分秩二认证器，如果它每次有限停止并
+输出 $2$ 的完整历史 $h$ 都满足
+
+$$
+ \mathcal F_\Pi(h)\subseteq
+ \{S\in\mathcal M_k:\operatorname{rank}(S)=2\}.
+\tag{11.1}
+$$
+
+未输出 $2$ 的停止不算认证成功；没有成功的来源上可以永不停止。
+不要求动作、停止或输出函数可计算、连续或可测，也不要求共同的读数预算。
+令 $\mathscr P_k^{(2)}$ 为这些认证器的集合，并定义
+
+$$
+\begin{aligned}
+ \operatorname{Succ}_2(\Pi)
+ &=\{R\in\mathcal M_k:\Pi\text{ 在 }R\text{ 上有限停止并输出 }2\},\\
+ \mathcal I_k
+ &=\bigcup_{\Pi\in\mathscr P_k^{(2)}}\operatorname{Succ}_2(\Pi).
+\end{aligned}
+\tag{11.2}
+$$
+
+$\mathcal I_k$ 恰为具有某个有限实际秩二证书的来源集合。事实上，给定一个
+这样的完整历史，可以预先固定其有限动作词，只在逐项取得的读数全部等于
+该历史时于词尾输出 $2$，其他情况下继续执行 $N$ 而不输出 $2$。
+相同前缀强制原协议采取相同动作和停止决定，故这个词尾历史的环境纤维
+就是原证书的纤维；新认证器在整个 $\mathcal M_k$ 上可靠。
+反向包含由 (11.1) 直接得到。因而 $\mathcal I_k$ 中每个来源的普通秩均为二。
+这里 $\mathcal I_k$ 是集合，仍保留定义 10.5 的标量 $C_k$ 表示最小达到费用。
+
+以下使用定理 9.7 证明中已经出现的持续歧义原则：若两个固定初始来源
+$R,S$ 有相同初读，并且同一个首原子 $E$ 满足 $ER=ES$，则首动作之后
+演化矩阵相同。归纳地，任何依赖完整历史的确定性后继规则都会选择相同
+动作，取得相同读数并作出相同停止决定；这对每个有限前缀成立，也覆盖
+永不停止的运行。即使规则保留全部过去历史，等式仍不失效。
+
+### 定理 11.2（二维的扫描覆盖全部个别可认证来源）
+
+设 $k=2$，对 $R\in\mathcal M_2$ 记
+$t=\operatorname{tr}R$、$s_j=\sum_iR_{ij}$。则
+
+$$
+ \mathcal I_2
+ =\{R\in\mathcal M_2:\text{式 (9.8) 对 }(t,s_0,s_1)\text{ 不成立}\}.
+\tag{11.3}
+$$
+
+因此，一个可靠协议可在每个 $R\in\mathcal I_2$ 上以三次初始计入读数成功：
+实际依次执行 $L_0,N$，在且仅在 (9.8) 不成立时输出 $2$。
+对其余来源不要求给出秩结论或有限终止。
+
+**证明。** (11.3) 右侧包含于左侧，直接使用命题 9.6 和定理 9.7 的扫描
+判据，无须重证严格正凸组合的刻画。初读、$L_0$ 后读数、$N$ 后读数
+依次为 $t,s_0,s_1$，恰好收费三次。
+
+为证反向包含，固定一个满足 (9.8) 的任意实际来源
+
+$$
+ R=\begin{pmatrix}a&b\\c&d\end{pmatrix},\qquad a,b,c,d>0.
+$$
+
+仅在初读处不能可靠输出 $2$，因为正秩一来源
+$\frac t2\mathbf1\mathbf1^{\mathsf T}$ 具有同一初读 $t$。
+若首原子为 $N$，定义运行前固定的正秩一来源
+
+$$
+ S_N=\begin{pmatrix}a&b\\ad/b&d\end{pmatrix}
+     =\begin{pmatrix}a\\ad/b\end{pmatrix}
+       \begin{pmatrix}1&b/a\end{pmatrix}\in\mathcal M_2.
+\tag{11.4}
+$$
+
+有 $\operatorname{tr}S_N=t$，并且
+
+$$
+ NR=NS_N=\begin{pmatrix}0&0\\a&b\end{pmatrix}.
+$$
+
+故任何 $N$ 起始的后续完整历史都保留秩一相容来源，无法可靠输出 $2$。
+这一步甚至不需要 (9.8)。
+
+若首原子为 $L_0$，由 (9.8) 和命题 9.6 取正秩一来源 $S_L$，使其迹为
+$t$、两列和为 $s_0,s_1$。于是
+$L_0S_L=L_0R=e_0(s_0,s_1)$，初读亦相同。
+持续歧义原则排除了任意 $L_0$ 起始的后续秩二证书。
+初读即停和两种首动作已穷尽所有可能，所以 $R\notin\mathcal I_2$。
+在所述扫描协议的其余分支上，例如永远继续执行 $N$ 而不输出 $2$，即可
+把成功规则扩充为定义 11.1 的可靠部分认证器。∎
+
+### 命题 11.3（三维及以上同一初读纤维内的不相容认证机会）
+
+对每个 $k\ge3$，存在两个一次性固定的来源
+$R^{(L)},R^{(N)}\in\mathcal I_k$，其普通秩均恰为二且初读均为 $1$，满足：
+$R^{(L)}$ 有一个以 $L_0$ 开始的有限实际秩二证书，但任何以 $N$ 开始的
+完整历史永久保留秩一歧义；$R^{(N)}$ 有一个以 $N$ 开始的有限实际秩二
+证书，但任何以 $L_0$ 开始的完整历史永久保留秩一歧义。
+前述两个取得证书的固定词分别使用 $k+1$ 和 $k+2$ 次初始计入读数。
+
+**证明。** 下标仍为 $0,\ldots,k-1$，所有下列向量均为列向量。置
+
+$$
+\begin{gathered}
+ p=\frac1k\mathbf1,\qquad e=e_{k-1},\qquad
+ w=\mathbf1-e,\qquad f=\mathbf1+\frac18e,\\
+ u=e_0-e_1,\qquad v=e_0+e_1,\qquad
+ \delta=\frac1{2k},\qquad\varepsilon=\frac12,\\
+ \eta=\delta\varepsilon=\frac1{4k},\qquad
+ \tau=1+\frac1{8k},\qquad b=\frac{k-1}{k}.
+\end{gathered}
+\tag{11.5}
+$$
+
+定义实际来源与各自的秩一伴随来源为
+
+$$
+\begin{aligned}
+ R^{(L)}&=\tau^{-1}(pf^{\mathsf T}+\eta ew^{\mathsf T}),
+ & S^{(L)}&=\tau^{-1}pf^{\mathsf T},\\
+ R^{(N)}&=p\mathbf1^{\mathsf T}+\eta uv^{\mathsf T},
+ & S^{(N)}&=p\mathbf1^{\mathsf T}.
+\end{aligned}
+\tag{11.6}
+$$
+
+它们只依赖 $k$，不依赖协议的选择或运行数据。先验证环境域成员资格：
+
+$$
+\begin{aligned}
+ R^{(L)}
+ &=\frac1{2\tau}(p+\delta e)(f+\varepsilon w)^{\mathsf T}
+  +\frac1{2\tau}(p-\delta e)(f-\varepsilon w)^{\mathsf T},\\
+ R^{(N)}
+ &=\frac12(p+\delta u)(\mathbf1+\varepsilon v)^{\mathsf T}
+  +\frac12(p-\delta u)(\mathbf1-\varepsilon v)^{\mathsf T}.
+\end{aligned}
+\tag{11.7}
+$$
+
+括号内列向量的每个坐标至少为 $1/(2k)$；
+$f\pm\varepsilon w$ 的前 $k-1$ 个坐标为 $1\pm1/2$，末坐标为 $9/8$；
+$\mathbf1\pm\varepsilon v$ 的前两个坐标为 $1\pm1/2$，其余为 $1$。
+因而把显示的正系数吸收进列因子后，(11.7) 是定义 9.1 要求的两项
+严格正外积分解。$S^{(L)},S^{(N)}$ 则各有显示的一项严格正分解，普通秩为一。
+
+$p,e$ 线性无关，$f,w$ 线性无关；$p,u$ 线性无关，且在 $k\ge3$ 时
+$\mathbf1,v$ 线性无关。因此 (11.7) 的两列因子各自线性无关，两个行因子
+也各自线性无关。把两项写为一个满列秩 $k\times2$ 矩阵与满行秩
+$2\times k$ 矩阵之积，得到两个实际来源的普通秩均恰为二。
+这里 $k\ge3$ 保证 $v$ 有第三个坐标 $0$，所以第二对行因子确实无关。
+
+由 $f^{\mathsf T}p=\tau$、$w^{\mathsf T}e=0$、
+$\mathbf1^{\mathsf T}p=1$、$v^{\mathsf T}u=0$，四个矩阵均有迹 $1$。
+这是四个特定来源落入同一初读纤维的选择，不是把环境域归一化为迹一来源。
+
+先处理 $R^{(L)}$ 的实际认证。其列和为
+
+$$
+ s_j=\begin{cases}
+ (1+\eta)/\tau,&0\le j<k-1,\\
+ (9/8)/\tau,&j=k-1.
+ \end{cases}
+\tag{11.8}
+$$
+
+因为 $1+\eta>\tau$ 且 $9/8>\tau$，每个 $s_j>1=t$。
+实际执行命题 9.6 的 $L_0N^{k-1}$，取得且只使用该词上的初读及每一步
+读数，共 $k+1$ 次。式 (9.8) 失败，定理 9.7 就给出相对于整个
+$\mathcal M_k$ 的秩二证书。
+
+若反而先执行 $N$，则 $Ne=0$ 给出
+
+$$
+ NR^{(L)}=NS^{(L)}.
+\tag{11.9}
+$$
+
+伴随来源 $S^{(L)}$ 与实际来源的初读同为 $1$，故任何完整历史确定性
+后继规则均无法从这个分支排除该固定秩一来源。
+
+再处理 $R^{(N)}$。由于 $k\ge3$，有
+
+$$
+ Nu=e_1-e_2,\qquad
+ \mathbf1^{\mathsf T}Nu=0,\qquad v^{\mathsf T}Nu=1.
+$$
+
+所以
+
+$$
+ \operatorname{tr}(NR^{(N)})=b+\eta,\qquad
+ \mathbf1^{\mathsf T}NR^{(N)}=b\mathbf1^{\mathsf T}.
+\tag{11.10}
+$$
+
+从同一个初始 $R^{(N)}$ 实际依次执行一次 $N$、一次 $L_0$ 和 $k-1$ 次 $N$。
+包括初读在内，完整读数依次为
+
+$$
+ 1,\quad b+\eta,\quad
+ \underbrace{b,\ldots,b}_{k\text{ 个}}.
+\tag{11.11}
+$$
+
+其中第一原子后的 $b+\eta$ 必须读取；最后 $k$ 个读数分别来自
+$N^jL_0NR^{(N)}$（$0\le j<k$）。没有在两原子之间跳读，
+总收费为 $1+1+1+(k-1)=k+2$。
+
+若一个环境中的正秩一来源 $S=c\ell$ 产生这个完整历史，置
+$D=\sum_{i=0}^{k-2}c_i>0$。最后 $k$ 读给出
+
+$$
+ D\ell_j=b\quad(0\le j<k).
+$$
+
+于是全部 $\ell_j=b/D$，这强制第一原子后的读数为
+
+$$
+ \operatorname{tr}(NS)
+ =\sum_{i=0}^{k-2}c_i\ell_{i+1}
+ =D\frac bD=b,
+$$
+
+与实际取得的 $b+\eta$ 矛盾。环境中每个矩阵均逐项严格正、普通秩至多二；
+其中普通秩一矩阵总能写成严格正外积：取其一列为列因子，其余各列是该列
+的正倍数。因此上述排除覆盖了 $\mathcal M_k$ 中所有秩一来源，
+而不是只排除某一种外积表示。故 (11.11) 的整个环境纤维均为秩二。
+按定义 11.1 的固定词停止规则，它给出一个可靠的部分认证器。
+
+若反而先执行 $L_0$，则 $\mathbf1^{\mathsf T}u=0$ 给出
+
+$$
+ L_0R^{(N)}=L_0S^{(N)}.
+\tag{11.12}
+$$
+
+伴随来源 $S^{(N)}$ 也有初读 $1$。持续歧义原则再次覆盖任意确定性完整历史
+后继规则、任意后续动作数和任意停止层。两种认证机会与两种永久歧义均由
+运行前固定的 (11.6) 实现，证明完毕。∎
+
+### 定理 11.4（三维及以上没有覆盖全部个别可认证来源的可靠协议）
+
+对每个 $k\ge3$，不存在 $\Pi\in\mathscr P_k^{(2)}$ 使
+
+$$
+ \mathcal I_k\subseteq\operatorname{Succ}_2(\Pi).
+\tag{11.13}
+$$
+
+更具体地，命题 11.3 的两个固定来源已经满足
+
+$$
+ \forall\Pi\in\mathscr P_k^{(2)}\quad
+ \exists R\in\{R^{(L)},R^{(N)}\}\quad
+ R\notin\operatorname{Succ}_2(\Pi).
+\tag{11.14}
+$$
+
+不要求协议在 $\mathcal I_k$ 外停止，也没有共同预算或任何正则性假设。
+
+**证明。** 两个来源的初读均为 $1$，所以协议在此作出同一个初始决定。
+初读后立即输出 $2$ 不可靠，因为 $S^{(N)}\in\mathcal M_k$ 具有同一初读而秩一。
+若协议在此不作成功认证便停止，它已经没有覆盖这两个来源。
+否则首原子是 $N$ 或 $L_0$。若为 $N$，(11.9) 使 $R^{(L)}$ 的每个后续有限
+完整历史都同时由秩一来源 $S^{(L)}$ 实现，故可靠协议永远不能在
+$R^{(L)}$ 上输出 $2$。若为 $L_0$，(11.12) 对
+$R^{(N)},S^{(N)}$ 给出同样结论。
+每一情形都遗漏一个属于 $\mathcal I_k$ 的固定秩二来源，得到 (11.14)，
+进而得到 (11.13) 的不可能性。所有后继比较均在实际选择的同一分支上进行，
+没有把两个未共同取得的认证词拼成一次运行。∎
+
+### 命题 11.5（个别存在、共同取得与最小达到费用的量词）
+
+定义 11.1 的个别存在性与共同取得性分别具有量词形式
+
+$$
+\begin{aligned}
+ &\forall R\in\mathcal I_k\quad
+   \exists\Pi_R\in\mathscr P_k^{(2)}\quad
+   R\in\operatorname{Succ}_2(\Pi_R),\\
+ &\exists\Pi\in\mathscr P_k^{(2)}\quad
+   \forall R\in\mathcal I_k\quad
+   R\in\operatorname{Succ}_2(\Pi).
+\end{aligned}
+\tag{11.15}
+$$
+
+第一行对所有 $k\ge2$ 成立；第二行恰在 $k=2$ 成立，在每个 $k\ge3$ 失败。
+这些结论与定理 9.10 的全环境分类不可能性、定理 10.6 的 $C_k=k+1$
+以及第一卷附录 K 定理 45.4 的正秩一承诺恢复费用 $2k-1$ 相容。
+
+**证明。** 第一行由 (11.2) 得到；第二行由定理 11.2、11.4 决定。
+定理 9.10 要求同一协议在每个 $R\in\mathcal M_k$ 上有限停止并正确给出
+$\operatorname{rank}(R)$，包括秩一来源。本节只要求对 $\mathcal I_k$ 内的
+来源最终输出 $2$，不要求在其余来源上停止。二维时，这个较弱任务可由扫描
+完成，同时整个环境域仍不能分类。三维及以上的定理 11.4 则表明，
+即使仅要求覆盖那些各自确实存在证书的来源，依然没有共同实际协议。
+
+定义 10.5 的 $C_k$ 只在“某个来源、某个协议、某个实际秩二停止历史”上
+对包含初读的次数取最小值；定理 10.6 已经给出它的非空性与 $k+1$ 的精确值。
+这个存在量词下的最小值没有把 (11.15) 的第一行换成第二行。
+命题 11.3 的 $k+2$ 读只断言所给第二个来源的达到性，未断言它的最小费用，
+也不构成对 $\mathcal I_k$（$k\ge3$）的完整刻画。
+附录 K 则从一开始承诺来源秩一，并以恢复初始矩阵为目标；
+其 $2k-1$ 结果不承担在 $\mathcal M_k$ 内认证秩的义务。
+定理 9.11 的全部反事实词读数注入性也不供应这里单条实际轨迹的共同取得性。
+
+所有可靠性条件始终比较整个 $\mathcal M_k$。若把比较对象预先限制为
+$\mathcal I_k$，其中每个来源已被承诺秩二，初读即输出 $2$ 就会满足被削弱
+的条件；那是另一任务，不能用于本节的第二行。∎
+
+### 约定 11.6（数学来源与适用边界）
+
+定理 11.2 的二维必要性、命题 11.3 的固定正混合来源及其不同实际认证词、
+定理 11.4 的共同协议不可能性，是本卷在定义 9.1 上的 repo-derived 推导。
+命题 9.6、定理 9.7 的扫描判据及定理 9.10、10.6 是直接复用的仓内结果；
+[第一卷附录 K](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md) 定义 45.3、
+定理 45.4 提供秩一承诺恢复的区别。严格正外积、满秩矩阵乘积与同历史归纳
+使用通常有限维线性代数，不另立通用新原理。
+
+van den Bos--Vaandrager，*State Identification for Labeled Transition Systems
+with Inputs and Outputs*，
+[Definition 11、Figure 3、Definition 16、Theorem 6.1](https://arxiv.org/html/1907.11034v2)，
+是 literature-attested 的自适应识别背景：Figure 3 给出每个初始选择都合并
+某些待区分状态的悬挂自动机；Definition 16 定义相容性意义下的单射选择，
+Theorem 6.1 的构造等价要求不同状态两两不相容，并且只作单射分裂。
+这些自动机条件没有在本节连续矩阵环境域中实例化，不用它们替代 (11.6)–(11.12)
+的正性、秩和实际纤维证明。
+
+Petreczky--Bako，*On the notion of persistence of excitation for linear switched
+systems*，[Definition 14、Theorem 3](https://arxiv.org/html/1103.1349v1)，
+是 literature-attested 的可逆模式下有限持续激励输入存在性；Definition 14
+要求每个模式矩阵可逆。本节 $N,L_0$ 均奇异，没有可用的逆输入或复位操作，
+所以不能用该结果拼接两个认证词。
+Petreczky--Bako--van Schuppen，*Realization theory of discrete-time linear
+switched systems*，[Definition 6](https://arxiv.org/html/1103.1343v2)，
+以全部输入与切换词量化可观测性，是 literature-attested 的全词背景；
+它不把全词可区分性转换为一条实际历史上的取得协议。
+这些引文不供应本节的具体矩阵命题，本节不主张外部首创性。
+
+本节范围限于无噪声、正混合、单轨迹 $N/L_0$ 合同中的普通秩二认证。
+不增加随机选择，不处理原 $M/J$ 模型的增益或漂移，不给出矩阵恢复结论。
+
+## 追加锚（本行以下为增补区）

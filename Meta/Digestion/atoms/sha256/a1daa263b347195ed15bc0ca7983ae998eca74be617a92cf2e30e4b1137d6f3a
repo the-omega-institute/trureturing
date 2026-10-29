@@ -1,0 +1,31 @@
+**Definition 43.1 (The legal, interior and exceptional endpoint sectors).**
+For a single labelled cycle with endpoints $0,1$, define
+
+$$
+\begin{aligned}
+L_k(m,t,u)&=\#\{(m,c)\in\mathcal S_k:c_0=t,\ c_1=u\},\\
+I_k(m,t,u)&=\#\{(m,c)\in\mathcal S_k^\circ:c_0=t,\ c_1=u\},\\
+B_k(m,t,u)&=L_k(m-3,t-1,u-1),\\
+E_k(m,t,u)&=I_k(m,t,u)-B_k(m,t,u).
+\end{aligned}
+\tag{43.1}
+$$
+
+All counts are zero for negative degree or inadmissible endpoint
+parameters. For $L_k$ this includes $t<0$, $u<0$, or
+$t+u>m$; for $I_k$ it includes $t<1$, $u<1$, or
+$t+u>m-1$. In degree zero,
+$L_k(0,t,u)=\mathbf1_{(t,u)=(0,0)}$ and $I_k(0,t,u)=0$.
+The translated $B_k$ always uses the parameters displayed,
+so it is zero when its source degree or endpoints are invalid.
+The symbol $E_k(m,t,u)$ is an exceptional interior count,
+distinct from the one-argument trace error of Definition 32.1
+and the root-resolved two-argument count of Definition 36.1.
+Set
+
+$$
+\nu=(3;\mathbf1_V),\qquad
+C^e_{k,b}=\omega_{R^e_{k,b}}/X^\nu R^e_{k,b}.
+\tag{43.2}
+$$
+

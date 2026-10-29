@@ -1,0 +1,46 @@
+**定理 31.1（七相位逐成员严格非达到）。** 保持定义 1.1 的
+$X=\{x\in\{0,1\}^{\mathbb Z}:x_ix_{i+1}=0\}$、全部移位不变 Borel 概率律组成的 $\mathcal S$，以及
+
+$$
+d(P)=\mathbb E_P\!\left[
+ \left(X_0-\mathbb E_P[X_0\mid\sigma(X_j:j\ne0)]\right)^2\right],
+\qquad c_\star=\sup_{P\in\mathcal S}d(P).
+$$
+
+设 $J$ 是定义 11.1、12.1 的任一归一化两侧平稳实际联合标记律，可见边缘为 $P\in\mathcal S$，占据位在两个方向均无界，相位集为 $E=\mathbb Z/7\mathbb Z$。在其实际 Palm 律 $Q=J(\,\cdot\mid X_0=1)$ 下，以 $T_0=0$ 编号实际占据位置 $T_k$、标记 $A_k$ 和距离 $G_k=T_{k+1}-T_k\ge2$。对每个 $k\in\mathbb Z$ 要求完整历史规则
+
+$$
+Q(G_k=g,A_{k+1}=b\mid\sigma(A_j:j\le k;G_j:j<k))
+=f_{A_k}(g)\mathbf1_{\{b=A_k+g\pmod7\}}.
+\tag{31.1}
+$$
+
+每行对每个整数 $g\ge2$ 均严格正，且
+$\sum_{g\ge2}f_a(g)=1$、$\sum_{g\ge2}g f_a(g)<\infty$。存在两个固定的可测函数，分别只读严格左半线和严格右半线，并在每个实际占据锚恢复其整个相位标记，$J$-几乎处处成立。对每个 $a$ 还要求任意有限维非负吸收表示
+
+$$
+f_a(k+2)=\alpha_aT_a^kb_a\quad(k\ge0),\qquad
+\alpha_a,T_a,b_a\ge0,\quad
+\alpha_a\mathbf1=1,\quad T_a\mathbf1+b_a=\mathbf1.
+\tag{31.2}
+$$
+
+维数与矩阵可随 $a$ 不同，零条目、可约、周期、Jordan 块和未使用状态均允许；没有共同矩阵、维数上界或可逆性假设。则
+
+$$
+d(P)<c_\star.
+\tag{31.3}
+$$
+
+这里始终使用同一 $J$ 的
+
+$$
+\nu_a=Q(A_0=a),\quad
+K(a,b)=\sum_{\substack{g\ge2\\a+g=b}}f_a(g),\quad
+\nu K=\nu,\quad
+\mu=\sum_a\nu_a\sum_{g\ge2}g f_a(g).
+\tag{31.4}
+$$
+
+结论不要求共同尺度、均匀 Palm 权重、有限可见记忆或有限窗口解码。以下引理在反设 $d(P)=c_\star$ 下证明，最后完成定理。
+

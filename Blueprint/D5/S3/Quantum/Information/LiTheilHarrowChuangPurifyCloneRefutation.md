@@ -175,6 +175,7 @@ In dimension d = r = 2, clone the system with the two-dimensional Werner cloner 
 - Dependency: [D5/S3/Quantum/Information/PartialTraceMutualInformation](PartialTraceMutualInformation.md)
 - Dependency: [D5/S3/Quantum/Measurements/BroadcastingChannelExtremaRefutation](../Measurements/BroadcastingChannelExtremaRefutation.md)
 - Dependency: [D5/S3/Quantum/PureState/PureStateHandshake](../PureState/PureStateHandshake.md)
+- Dependency: [D5/S3/Quantum/QuantumChannels/AncillaFreeTesterRobustnessEquality](../QuantumChannels/AncillaFreeTesterRobustnessEquality.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/QubitWassersteinCouplings](../QuantumChannels/QubitWassersteinCouplings.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/WassersteinComplexityNonconvex](../QuantumChannels/WassersteinComplexityNonconvex.md)
 - Dependency: [D5/S3/Quantum/RandomCircuits/HaarTwoCopyTwirl](../RandomCircuits/HaarTwoCopyTwirl.md)

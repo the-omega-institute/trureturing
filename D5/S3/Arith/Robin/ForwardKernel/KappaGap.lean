@@ -4,16 +4,18 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Positive logarithmic transforms constrain the complete forward response. -/
+   digest: Positive logarithmic transforms force two-sided unboundedness of the complete forward response. -/
 
 import D5.S3.Arith.Robin.ForwardKernel.MellinResidue
 import D5.S3.Analytic.Zeta.PositiveLaplacePoleObstruction
 import D5.S3.Weil.ZeroInfinitude.ExplicitFormulaObstruction
 import D5.S3.Weil.ZetaBridge.RightHalfStripRiemannReduction
+import D5.S3.Weil.ZeroData.RiemannVonMangoldtCountGrowth
+import D5.S3.Weil.ZetaRvm.NcountWindow
 import Mathlib.Probability.Moments.ComplexMGF
 import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
 
-/-! Positive logarithmic transforms turn zeta poles into one-sided oscillation bounds. -/
+/-! Positive logarithmic transforms turn zeta residues and zero counts into unbounded excursions. -/
 
 namespace D5.S3.Arith.Robin.ForwardKernel.KappaGap
 
@@ -188,13 +190,19 @@ theorem budget_transform {α x0 e k : ℝ} (hα : 0 ≤ α)
       ring
     _ = _ := by rw [hpval]; ring
 
-private lemma power_budget_constraints {α x0 e k : ℝ} (hα : 0 ≤ α)
+private lemma power_budget_continuation {α x0 e k : ℝ} (hα : 0 ≤ α)
     (hE : ∃ C t0 : ℝ, ∀ t : ℝ, t0 ≤ t →
       |Chebyshev.psi t - t| ≤ C * t ^ α)
-    (hx0 : 3 ≤ x0) (he : |e| = 1)
+    (hx0 : 3 ≤ x0)
     (hbudget : ∀ x : ℝ, x0 ≤ x → 0 ≤ e * forwardResponse x + k) :
-    (∀ ρ : ℂ, IsNontrivialZero ρ → ρ.re - 1 / 2 ≤ max (α - 7 / 10) 0) ∧
-      (α < 7 / 10 → ∀ ρ : ℂ, IsNontrivialZero ρ → ρ.re = 1 / 2 → 1 / 2 ≤ k) := by
+    ∃ R : ℂ → ℂ,
+      DifferentiableOn ℂ R {s : ℂ | α - 7 / 10 < s.re} ∧
+      (∀ σ : ℝ, max 0 (α - 3 / 10) < σ →
+        Integrable (fun y : ℝ => Real.exp (-σ * y)) (budgetMeasure x0 e k)) ∧
+      (∀ s : ℂ, max (max 0 (α - 3 / 10)) (max (α - 7 / 10) (1 / 2)) < s.re →
+        complexMGF id (budgetMeasure x0 e k) (-s) =
+          (e : ℂ) * D5.S3.Analytic.Zeta.ZetaLogDerivativeRegularity.regularizedPrincipal s +
+            R s + (k : ℂ) * (x0 : ℂ) ^ (-s) / s) := by
   obtain ⟨R, hR, hidentity⟩ :=
     ForwardKernel.MellinResidue.forward_kernel_mellin_residue hα hE hx0
   let B : ℝ := max 0 (α - 3 / 10)
@@ -224,7 +232,20 @@ private lemma power_budget_constraints {α x0 e k : ℝ} (hα : 0 ≤ α)
       D5.S3.Analytic.Zeta.ZetaLogDerivativeRegularity.regularizedPrincipal_eq hsne hζ]
     dsimp [R']
     ring
-  refine ⟨?_, ?_⟩
+  exact ⟨R', hR', hconv, hident⟩
+
+private lemma power_budget_constraints {α x0 e k : ℝ} (hα : 0 ≤ α)
+    (hE : ∃ C t0 : ℝ, ∀ t : ℝ, t0 ≤ t →
+      |Chebyshev.psi t - t| ≤ C * t ^ α)
+    (hx0 : 3 ≤ x0) (he : |e| = 1)
+    (hbudget : ∀ x : ℝ, x0 ≤ x → 0 ≤ e * forwardResponse x + k) :
+    (∀ ρ : ℂ, IsNontrivialZero ρ → ρ.re - 1 / 2 ≤ max (α - 7 / 10) 0) ∧
+      (α < 7 / 10 → ∀ ρ : ℂ, IsNontrivialZero ρ → ρ.re = 1 / 2 → 1 / 2 ≤ k) ∧
+      (e = 1 → α < 7 / 10 → ∀ Z : Finset ℂ,
+        (∀ ρ ∈ Z, IsNontrivialZero ρ ∧ ρ.re = 1 / 2) →
+          (Z.card : ℝ) ≤ 16 * k ^ 2) := by
+  obtain ⟨R', hR', hconv, hident⟩ := power_budget_continuation hα hE hx0 hbudget
+  refine ⟨?_, ?_, ?_⟩
   · intro ρ hρ
     exact D5.S3.Analytic.Zeta.PositiveLaplacePoleObstruction.no_positive_pole
       (budgetMeasure_nonnegative (by linarith : 1 ≤ x0) e k)
@@ -233,6 +254,11 @@ private lemma power_budget_constraints {α x0 e k : ℝ} (hα : 0 ≤ α)
     exact D5.S3.Analytic.Zeta.PositiveLaplacePoleObstruction.critical_pole_budget
       (budgetMeasure_nonnegative (by linarith : 1 ≤ x0) e k)
       (by linarith : 1 < x0) he hR' hconv hident (by linarith) hρ hρre
+  · intro heq hαsmall Z hZ
+    subst e
+    exact D5.S3.Analytic.Zeta.PositiveLaplacePoleObstruction.critical_zeros_budget
+      (budgetMeasure_nonnegative (by linarith : 1 ≤ x0) 1 k)
+      (by linarith : 1 < x0) hR' hconv hident (by linarith) Z hZ
 
 private theorem no_budget_of_right_zero
     (hΘ : ∀ ε : ℝ, 0 < ε → ∃ C : ℝ, ∀ t : ℝ, 2 ≤ t →
@@ -256,22 +282,28 @@ private theorem no_budget_of_right_zero
     · linarith
   exact hright.not_ge hpole
 
+private lemma rh_power_estimate
+    (hΘ : ∀ ε : ℝ, 0 < ε → ∃ C : ℝ, ∀ t : ℝ, 2 ≤ t →
+      |Chebyshev.psi t - t| ≤ C * t ^ (zeroAbscissa + ε))
+    (hRH : RiemannHypothesis) :
+    ∃ C t0 : ℝ, ∀ t : ℝ, t0 ≤ t →
+      |Chebyshev.psi t - t| ≤ C * t ^ (3 / 5 : ℝ) := by
+  obtain ⟨C, hC⟩ := hΘ (1 / 10) (by norm_num)
+  refine ⟨C, 2, ?_⟩
+  intro t ht
+  simpa only [zeroAbscissa_eq_half hRH, show (1 / 2 : ℝ) + 1 / 10 = 3 / 5 by norm_num]
+    using hC t ht
+
 private theorem rh_budget_minimum
     (hΘ : ∀ ε : ℝ, 0 < ε → ∃ C : ℝ, ∀ t : ℝ, 2 ≤ t →
       |Chebyshev.psi t - t| ≤ C * t ^ (zeroAbscissa + ε))
     (hRH : RiemannHypothesis)
     {x0 e k : ℝ} (hx0 : 3 ≤ x0) (he : |e| = 1)
     (hbudget : ∀ x : ℝ, x0 ≤ x → 0 ≤ e * forwardResponse x + k) : 1 / 2 ≤ k := by
-  obtain ⟨C, hC⟩ := hΘ (1 / 10) (by norm_num)
-  have hE : ∃ C t0 : ℝ, ∀ t : ℝ, t0 ≤ t →
-      |Chebyshev.psi t - t| ≤ C * t ^ (3 / 5 : ℝ) := by
-    refine ⟨C, 2, ?_⟩
-    intro t ht
-    simpa only [zeroAbscissa_eq_half hRH, show (1 / 2 : ℝ) + 1 / 10 = 3 / 5 by norm_num]
-      using hC t ht
+  have hE := rh_power_estimate hΘ hRH
   obtain ⟨ρ, hρ⟩ :=
     D5.S3.Weil.ZeroInfinitude.ExplicitFormulaObstruction.isNontrivialZero_infinite.nonempty
-  exact (power_budget_constraints (by norm_num : (0 : ℝ) ≤ 3 / 5) hE hx0 he hbudget).2
+  exact (power_budget_constraints (by norm_num : (0 : ℝ) ≤ 3 / 5) hE hx0 he hbudget).2.1
     (by norm_num) ρ hρ (Zeta23.RH_implies_on_line hRH hρ)
 
 /-- A zero strictly to the right of the critical line precludes every eventual lower bound. -/
@@ -289,22 +321,37 @@ theorem forward_response_unbounded_below_of_right_zero
   simp only [one_mul]
   linarith
 
+/-- The complete forward response has arbitrarily late negative excursions of every size. -/
+theorem forward_response_unbounded_below
+    (hΘ : ∀ ε : ℝ, 0 < ε → ∃ C : ℝ, ∀ t : ℝ, 2 ≤ t →
+      |Chebyshev.psi t - t| ≤ C * t ^ (zeroAbscissa + ε)) :
+    ∀ L X : ℝ, ∃ x : ℝ, X ≤ x ∧ forwardResponse x < L := by
+  intro L X
+  by_cases hRH : RiemannHypothesis
+  · by_contra! hbound
+    obtain ⟨n, hn⟩ := exists_nat_gt (16 * (-L) ^ 2)
+    obtain ⟨Z, hZ, hcard⟩ :=
+      D5.S3.Weil.ZeroInfinitude.ExplicitFormulaObstruction.isNontrivialZero_infinite.exists_subset_card_eq n
+    have hbudget : ∀ x : ℝ, max 3 X ≤ x → 0 ≤ 1 * forwardResponse x + -L := by
+      intro x hx
+      have h := hbound x ((le_max_right _ _).trans hx)
+      linarith
+    have hmin := (power_budget_constraints (by norm_num : (0 : ℝ) ≤ 3 / 5)
+      (rh_power_estimate hΘ hRH) (le_max_left 3 X) (by norm_num : |(1 : ℝ)| = 1)
+      hbudget).2.2 rfl (by norm_num) Z (fun ρ hρ =>
+        ⟨hZ hρ, Zeta23.RH_implies_on_line hRH (hZ hρ)⟩)
+    rw [hcard] at hmin
+    linarith
+  · exact forward_response_unbounded_below_of_right_zero hΘ
+      (exists_right_zero_of_not_rh hRH) L X
+
 /-- Constants below one half are exceeded by arbitrarily late negative excursions. -/
 theorem forward_response_lower_kappa_gap
     (hΘ : ∀ ε : ℝ, 0 < ε → ∃ C : ℝ, ∀ t : ℝ, 2 ≤ t →
       |Chebyshev.psi t - t| ≤ C * t ^ (zeroAbscissa + ε)) :
     ∀ κ : ℝ, κ < 1 / 2 → ∀ X : ℝ, ∃ x : ℝ, X ≤ x ∧ forwardResponse x < -κ := by
-  intro κ hκ X
-  by_cases hRH : RiemannHypothesis
-  · by_contra! hbound
-    have hmin := rh_budget_minimum hΘ hRH (x0 := max 3 X) (e := 1) (k := κ)
-      (le_max_left _ _) (by norm_num) (by
-        intro x hx
-        have h := hbound x ((le_max_right _ _).trans hx)
-        simp only [one_mul]
-        linarith)
-    linarith
-  · exact forward_response_unbounded_below_of_right_zero hΘ (exists_right_zero_of_not_rh hRH) (-κ) X
+  intro κ _ X
+  exact forward_response_unbounded_below hΘ (-κ) X
 
 /-- Under RH, every constant below one half is exceeded by arbitrarily late positive excursions. -/
 theorem forward_response_upper_kappa_gap_of_rh
@@ -337,12 +384,112 @@ theorem forward_response_unbounded_above_of_not_rh
   simp only [neg_mul, one_mul]
   linarith
 
+private theorem no_uniform_window_budget
+    (hRH : RiemannHypothesis)
+    (hRvM : Zeta23.RiemannVonMangoldt Zeta23.zetaZeroConfig)
+    {B : ℝ} (hB : 0 ≤ B)
+    (hwindow : ∃ δ : ℝ, 0 < δ ∧ ∀ Z : Finset ℂ,
+      (∀ ρ ∈ Z, IsNontrivialZero ρ ∧ ρ.re = 1 / 2) →
+      (∀ ρ ∈ Z, ∀ τ ∈ Z, |ρ.im - τ.im| < δ) →
+      ∑ ρ ∈ Z, (Zeta23.zeroMult ρ : ℝ) ≤ B) : False := by
+  classical
+  obtain ⟨δ, hδ, hbudget⟩ := hwindow
+  let d : ℝ := δ / 2
+  have hd : 0 < d := by dsimp [d]; linarith
+  have hdδ : d < δ := by dsimp [d]; linarith
+  have hshort (t : ℝ) : (Zeta23.Ncount t (t + d) : ℝ) ≤ B := by
+    let hfin := Zeta23.zerosIn_finite t (t + d)
+    have h := hbudget hfin.toFinset (by
+      intro ρ hρ
+      have hz := hfin.mem_toFinset.mp hρ
+      exact ⟨hz.1, Zeta23.RH_implies_on_line hRH hz.1⟩) (by
+      intro ρ hρ τ hτ
+      have hzρ := hfin.mem_toFinset.mp hρ
+      have hzτ := hfin.mem_toFinset.mp hτ
+      apply abs_lt.mpr
+      constructor <;> linarith [hzρ.2.1, hzρ.2.2, hzτ.2.1, hzτ.2.2])
+    simpa only [Zeta23.Ncount,
+      finsum_mem_eq_finite_toFinset_sum _ hfin, Nat.cast_sum] using h
+  have hblocks (t : ℝ) (n : ℕ) :
+      (Zeta23.Ncount t (t + n * d) : ℝ) ≤ n * B := by
+    induction n with
+    | zero =>
+      have hzero : Zeta23.zerosIn t t = ∅ := by
+        ext ρ
+        simp only [Zeta23.zerosIn, Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false]
+        rintro ⟨_, hlt, hle⟩
+        exact hlt.not_ge hle
+      simp [Zeta23.Ncount, hzero]
+    | succ n ih =>
+      rw [Nat.cast_succ, show t + (↑n + 1) * d = (t + n * d) + d by ring]
+      rw [Zeta23.Ncount_add (le_add_of_nonneg_right (mul_nonneg (Nat.cast_nonneg n) hd.le))
+        (by linarith : t + n * d ≤ (t + n * d) + d), Nat.cast_add]
+      have hs := hshort (t + n * d)
+      nlinarith
+  have hlinear (T : ℝ) (hT : 0 < T) :
+      (Zeta23.zetaZeroConfig.N T (2 * T) : ℝ) ≤ B * (T / d + 1) := by
+    let n : ℕ := ⌈T / d⌉₊
+    have hnlow : T / d ≤ (n : ℝ) := Nat.le_ceil _
+    have hnup : (n : ℝ) < T / d + 1 := Nat.ceil_lt_add_one (by positivity)
+    have hcover : 2 * T ≤ T + n * d := by
+      have := (div_le_iff₀ hd).mp hnlow
+      linarith
+    have hm : (Zeta23.Ncount T (2 * T) : ℝ) ≤
+        (Zeta23.Ncount T (T + n * d) : ℝ) := by
+      exact_mod_cast Zeta23.Ncount_mono (le_refl T) hcover
+    rw [Zeta23.zetaZeroConfig_N]
+    exact hm.trans ((hblocks T n).trans (by nlinarith))
+  have hlower := D5.S3.Weil.ZeroData.RiemannVonMangoldtCountGrowth.dyadic_zero_count_eventually_ge
+    Zeta23.zetaZeroConfig hRvM
+  have hlog := D5.S3.Weil.ZeroData.RiemannVonMangoldtCountGrowth.tendsto_l_atTop.eventually_gt_atTop
+    (4 * Real.pi * (B / d + B + 1))
+  obtain ⟨T, hT, hlow, hlogT⟩ :=
+    ((eventually_ge_atTop (1 : ℝ)).and (hlower.and hlog)).exists
+  have hTpos : 0 < T := by linarith
+  have hup := hlinear T hTpos
+  have hmain : T * Zeta23.l T ≤
+      (B * (T / d + 1)) * (4 * Real.pi) := by
+    exact (div_le_iff₀ (by positivity)).mp (hlow.trans hup)
+  have hlogmul : T * (4 * Real.pi * (B / d + B + 1)) < T * Zeta23.l T :=
+    mul_lt_mul_of_pos_left hlogT hTpos
+  have hBT : B ≤ B * T := by nlinarith
+  have heq : B * (T / d + 1) = B / d * T + B := by ring
+  rw [heq] at hmain
+  have hpi : 0 < Real.pi := Real.pi_pos
+  have hscaled := mul_le_mul_of_nonneg_right hBT (show 0 ≤ 4 * Real.pi by positivity)
+  nlinarith [mul_pos hTpos hpi]
+
+/-- Riemann-von Mangoldt precludes every eventual upper bound on the complete forward response. -/
+theorem forward_response_unbounded_above
+    (hΘ : ∀ ε : ℝ, 0 < ε → ∃ C : ℝ, ∀ t : ℝ, 2 ≤ t →
+      |Chebyshev.psi t - t| ≤ C * t ^ (zeroAbscissa + ε))
+    (hRvM : Zeta23.RiemannVonMangoldt Zeta23.zetaZeroConfig) :
+    ∀ L X : ℝ, ∃ x : ℝ, X ≤ x ∧ L < forwardResponse x := by
+  intro L X
+  by_cases hRH : RiemannHypothesis
+  · by_contra! hbound
+    have hbudget : ∀ x : ℝ, max 3 X ≤ x → 0 ≤ -1 * forwardResponse x + L := by
+      intro x hx
+      have h := hbound x ((le_max_right _ _).trans hx)
+      linarith
+    obtain ⟨R, hR, hconv, hident⟩ :=
+      power_budget_continuation (by norm_num : (0 : ℝ) ≤ 3 / 5)
+        (rh_power_estimate hΘ hRH) (le_max_left 3 X) hbudget
+    have hwindow := D5.S3.Analytic.Zeta.PositiveLaplacePoleObstruction.critical_window_budget (k := L)
+      (budgetMeasure_nonnegative ((by norm_num : (1 : ℝ) ≤ 3).trans (le_max_left 3 X)) (-1) L)
+      (lt_of_lt_of_le (by norm_num : (1 : ℝ) < 3) (le_max_left 3 X))
+      hR hconv (by simpa only [Complex.ofReal_neg, Complex.ofReal_one] using hident) (by norm_num)
+    exact no_uniform_window_budget hRH hRvM (by positivity : 0 ≤ 4 * L ^ 2) hwindow
+  · exact forward_response_unbounded_above_of_not_rh hΘ hRH L X
+
 #print axioms budget_exponential_integrable
 #print axioms budget_transform
 #print axioms forward_response_unbounded_below_of_right_zero
+#print axioms forward_response_unbounded_below
 #print axioms forward_response_lower_kappa_gap
 #print axioms forward_response_upper_kappa_gap_of_rh
 #print axioms forward_response_unbounded_above_of_not_rh
+#print axioms forward_response_unbounded_above
 
 end
 end D5.S3.Arith.Robin.ForwardKernel.KappaGap

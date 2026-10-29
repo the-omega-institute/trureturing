@@ -20,7 +20,8 @@ internal static class LeanDependencyLayerRestorer
         LeanCacheWriterGuard writerGuard,
         IDirectoryCloner cloner,
         Action<string>? removePartial = null,
-        Action<TimeSpan>? wait = null)
+        Action<TimeSpan>? wait = null,
+        Func<string, IEnumerable<string>>? enumerateMaterialEntries = null)
     {
         var lake = Path.Combine(root, ".lake");
         writerGuard.RequireOwnershipOf(lake);
@@ -71,7 +72,8 @@ internal static class LeanDependencyLayerRestorer
                 var packageRoot = Path.Combine(target, package);
                 if (Attributes(packageRoot) is not null) RequireDirectory(packageRoot);
                 MergePackage(Path.Combine(staged, package), Path.Combine(target, package),
-                    ref added, ref retained, packageRoot);
+                    ref added, ref retained, packageRoot,
+                    enumerateMaterialEntries ?? Directory.EnumerateFileSystemEntries);
             }
             removePartial(staged);
             return new LeanDependencyRestoreResult(receipt, added, retained);
@@ -145,17 +147,17 @@ internal static class LeanDependencyLayerRestorer
     }
 
     private static void MergePackage(string staged, string target, ref int added, ref int retained,
-        string packageRoot)
+        string packageRoot, Func<string, IEnumerable<string>> enumerateMaterialEntries)
     {
         var targetLinks = new HashSet<string>(StringComparer.Ordinal);
-        AddPackageMaterial(staged, target, ref added, ref retained, targetLinks);
+        AddPackageMaterial(staged, target, ref added, ref retained, targetLinks, enumerateMaterialEntries);
         AddPackageLinks(staged, target, ref added, ref retained, packageRoot);
         foreach (var link in targetLinks)
             RequirePackageFileLink(link, packageRoot);
     }
 
     private static void AddPackageMaterial(string staged, string target, ref int added, ref int retained,
-        HashSet<string> targetLinks)
+        HashSet<string> targetLinks, Func<string, IEnumerable<string>> enumerateMaterialEntries)
     {
         var incoming = File.GetAttributes(staged);
         if (incoming.HasFlag(FileAttributes.ReparsePoint)) return;
@@ -183,9 +185,9 @@ internal static class LeanDependencyLayerRestorer
         if (existing.Value.HasFlag(FileAttributes.Directory)
             && incoming.HasFlag(FileAttributes.Directory))
         {
-            foreach (var entry in Directory.EnumerateFileSystemEntries(staged))
+            foreach (var entry in enumerateMaterialEntries(staged))
                 AddPackageMaterial(entry, Path.Combine(target, Path.GetFileName(entry)),
-                    ref added, ref retained, targetLinks);
+                    ref added, ref retained, targetLinks, enumerateMaterialEntries);
         }
         else retained++;
     }

@@ -1,0 +1,14 @@
+**Definition 1.1 (Fixed graph class and edge cost).** All graphs are finite, simple and connected. For integers $n\ge2$ and $\ell\ge0$, write $\mathcal G(n,\ell)$ for the graphs of order $n$ with exactly $m=n-1+\ell$ edges, so their cyclomatic number is $\ell$. Degrees and neighborhoods always belong to the graph being evaluated. Write
+
+$$
+\Phi(G)=\sum_{uv\in E(G)}\frac{\sqrt{d_u^2+d_v^2}}{\max(d_u,d_v)},\qquad
+E(G)=\Phi(G)-m=\sum_{uv\in E(G)}g(r_{uv}),
+$$
+
+$$
+g(r)=\sqrt{1+r^2}-1,\qquad r_{uv}=\frac{\min(d_u,d_v)}{\max(d_u,d_v)},\qquad
+E^\ast(n,\ell)=\min_{G\in\mathcal G(n,\ell)}E(G)
+$$
+
+when the class is nonempty. Each unordered edge occurs once. These are the conventions of [*CDSO minimizers without a universal vertex for every cyclomatic number*, §§1–9](CDSO_UNIVERSAL_VERTEX_ALL_CYCLOMATIC.md), hereafter the preceding volume. The CDSO definition is from A. M. Albalahi, S. Das, A. Ali, J. Barman and A. E. Hamza, *On the hyperbolic Sombor index and its counterpart*, Discrete Math. Lett. 16 (2025), 108–115, DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176), §1, p.109. All extremal comparisons below fix the same $n$, $\ell$ and $m$.
+

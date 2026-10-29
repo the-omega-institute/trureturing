@@ -1265,3 +1265,86 @@ $$
 **范围与文献归属。** (485.1)、$\zeta$ 的实轴无零点、非平凡零点存在与 Landau–Widder 定理是经典输入；单个极点迫使 $m/2$ 的机制是标准的 Landau 型论证。本节的 `repo-derived` 内容是命题 485.1 对同一移动价格核的幂误差推广，以及定理 485.2–485.3 对全实中心函数 $\mathcal T$ 的无条件常数 $1/2$。单极点方法所能给出的普适常数即为 $1/2$；更强的结论需要聚合无穷多个零点的贡献。在 RH 下 $\liminf\mathcal T=-\infty$ 是否成立，以及有限双侧预算 $|\mathcal T|\le K$ 在 RH 下是否被排除，仍未决：它们需要该核的逐点零点和公式、带重数的零点计数、正 Fejér 核局部化、联立逼近与一致尾部估计。本节结论只关于全实中心函数，不推出 §481 所述被选整数来源上的下界，也不推出 RH 或每个 $n>5040$ 的严格 Robin 不等式。
 
 ## 追加锚（本行以下为增补区）
+
+## 486. 原前向价格核的无条件双侧无界性
+
+沿用 §481 与 §485 的记号。定理 485.2–485.3 在 RH 不成立时给出 $\liminf\mathcal T=-\infty$ 与 $\limsup\mathcal T=+\infty$，在 RH 下只给出 $\liminf\mathcal T\le-1/2\le1/2\le\limsup\mathcal T$。本节在 RH 下也得到两侧无界，于是两侧无界无条件成立。工具是正测度的 Laplace 变换在虚轴上的边界极限满足的有限 Gram 正性。下侧只用到零点有无穷多个；上侧还要用到零点计数的增长与 $0$ 附近的无零点间隙。
+
+经典输入除 §485 所列各项外，还有 Riemann–von Mangoldt 公式
+$$
+N(T,2T)=\frac T{2\pi}\Bigl(\log\frac T{2\pi}+2\log2-1\Bigr)+O(\log T),
+\tag{486.1}
+$$
+其中 $N(T_1,T_2)$ 是纵坐标落在 $(T_1,T_2]$ 中的非平凡零点个数（计重数）。下文只用它推出的 $N(T,2T)/T\to\infty$。
+
+下面两个命题共用以下前提：$\mu$ 是 $\mathbb R$ 上的正 Borel 测度，对每个 $\sigma>0$ 有 $\int e^{-\sigma y}\,d\mu(y)<\infty$；记 $G(s)=\int e^{-sy}\,d\mu(y)$（$\Re s>0$），并在极限存在处记
+$$
+L(t)=\lim_{\sigma\downarrow0}\sigma\,G(\sigma+it).
+$$
+
+**命题 486.1（同号边界项的预算）。** 设 $c>0$，$t_1,\dots,t_n$ 两两不同且非零。设 $L$ 在点组 $\{0,t_1,\dots,t_n\}$ 的全部两两差处存在，在其中每个非零点有 $\Re L\le0$，并且对每个 $j$ 有 $\Re L(t_j)\le-c$。则
+$$
+n\,c^2\le4\,L(0)^2.
+\tag{486.2}
+$$
+
+证明。(a) 设 $s_0,\dots,s_n$ 为实数，$L$ 在全部差 $s_j-s_k$ 处存在，$a_0,\dots,a_n\in\mathbb C$。对 $\sigma>0$，
+$$
+0\le\int\Bigl|\sum_ja_je^{-is_jy}\Bigr|^2\sigma e^{-\sigma y}\,d\mu(y)
+=\sum_{j,k}a_j\overline{a_k}\,\sigma G\bigl(\sigma+i(s_j-s_k)\bigr).
+$$
+被积函数有界乘以可积函数，和是有限和。令 $\sigma\downarrow0$ 得
+$$
+\sum_{j,k}a_j\overline{a_k}\,L(s_j-s_k)\ \text{为非负实数}.
+\tag{486.3}
+$$
+由 $\mu$ 为实测度，$G(\sigma-it)=\overline{G(\sigma+it)}$，故 $L(-t)=\overline{L(t)}$；又 $\sigma G(\sigma)\ge0$，故 $L(0)\ge0$。
+
+(b) 在点组 $s_0=0$、$s_j=t_j$ 上取 $a_0=s\ge0$，$a_1=\dots=a_n=1$。(486.3) 的实部为
+$$
+s^2L(0)+s\sum_j\Re\bigl(L(t_j)+L(-t_j)\bigr)+nL(0)+\sum_{j\ne k}\Re L(t_j-t_k)\ge0 .
+$$
+各 $\Re L(-t_j)$ 与 $\Re L(t_j-t_k)$（$j\ne k$）都不大于零，故 $s^2L(0)-snc+nL(0)\ge0$ 对每个 $s\ge0$ 成立。若 $L(0)=0$，则 $-snc\ge0$ 对每个 $s>0$ 成立，故 $n=0$，(486.2) 成立；否则取 $s=nc/(2L(0))$ 得 (486.2)。证毕。
+
+**命题 486.2（间隙内的二次预算）。** 设 $\delta>0$，$t_1,\dots,t_n$ 两两不同且落在一个长度小于 $\delta$ 的区间内。设 $L$ 在点组 $\{0,t_1,\dots,t_n\}$ 的全部两两差处存在，并且其中满足 $0<|t|<\delta$ 的点处 $L(t)=0$。则
+$$
+\sum_{j=1}^n|L(t_j)|^2\le L(0)^2.
+\tag{486.4}
+$$
+
+证明。对 $j\ne k$ 有 $0<|t_j-t_k|<\delta$，故 $L(t_j-t_k)=0$。在点组 $0,t_1,\dots,t_n$ 上对命题 486.1 证明的 (a) 步取 $a_0=L(0)$，$a_j=-\overline{L(t_j)}$。由共轭关系，(486.3) 化为
+$$
+L(0)^3-2L(0)\sum_j|L(t_j)|^2+L(0)\sum_j|L(t_j)|^2\ge0 .
+$$
+若 $L(0)>0$ 即得 (486.4)；若 $L(0)=0$，改取 $a_0=s>0$ 与 $a_j=-\overline{L(t_j)}$，得 $-2s\sum_j|L(t_j)|^2\ge0$，(486.4) 仍成立。证毕。
+
+**定理 486.3（RH 下的双侧无界性）。** 设 RH 与 (485.1) 成立。
+
+1. 若 $\mathcal T(x)\ge-\kappa$ 对充分大的 $x$ 成立，则对非平凡零点的每个有限集 $Z$ 有 $|Z|\le16\kappa^2$。因此 $\liminf_{x\to\infty}\mathcal T(x)=-\infty$。
+2. 再设 (486.1)。若 $\mathcal T(x)\le K$ 对充分大的 $x$ 成立，则存在 $\delta>0$，使每个长度小于 $\delta$ 的区间内零点重数之和不超过 $4K^2$。这与 (486.1) 矛盾，因此 $\limsup_{x\to\infty}\mathcal T(x)=+\infty$。
+
+证明。(1) 取 $\mu$ 为 $(\mathcal T(x)+\kappa)\,dx/x$ 在 $(x_0,\infty)$ 上的测度经 $\log$ 的前推，它是正测度，且 $G(s)=\mathcal F(s)+\kappa x_0^{-s}/s$。如定理 485.2 证明的 RH 分支，取 $\alpha=1/2+\varepsilon$（$0<\varepsilon<1/5$）。命题 485.1 的余项在包含闭虚轴的半平面 $\Re s>\alpha-7/10$ 上全纯；由 Landau–Widder 定理，对每个 $\sigma>0$ 积分收敛，且 $G$ 在 $\Re s>0$ 上与延拓一致。逐点计算 $L$：$L(0)=\kappa$，因为 $\mathcal F$ 在 $0$ 正则；若 $1/2+it$ 是重数 $m$ 的零点，则 $L(t)=-m/2$；其余 $t\ne0$ 处 $\zeta(1/2+it)\ne0$，延拓在 $it$ 邻近全纯，故 $L(t)=0$。RH 下 $Z$ 中零点的纵坐标两两不同且非零（$\zeta(1/2)\ne0$）。以 $c=1/2$ 应用命题 486.1，得 $|Z|\le16\kappa^2$。非平凡零点有无穷多个，故不存在这样的 $\kappa$。
+
+(2) 对 $K-\mathcal T$ 作同样构造，$G(s)=Kx_0^{-s}/s-\mathcal F(s)$。此时 $L(0)=K$，重数 $m$ 的零点处 $L(t)=+m/2$，其余 $t\ne0$ 处 $L(t)=0$。由 $\zeta(1/2)\ne0$ 与连续性，存在 $\delta>0$ 使 $\zeta(1/2+it)\ne0$ 对 $0<|t|<\delta$ 成立；于是 $L$ 在 $0<|t|<\delta$ 上为零。对长度小于 $\delta$ 的区间内的零点应用命题 486.2，得 $\sum m^2/4\le K^2$，从而 $\sum m\le\sum m^2\le4K^2$。用 $\lceil 2T/\delta\rceil$ 个长度不超过 $\delta/2$ 的区间覆盖 $(T,2T]$，得 $N(T,2T)\le4K^2(2T/\delta+1)$，与 (486.1) 给出的 $N(T,2T)/T\to\infty$ 矛盾。证毕。
+
+**定理 486.4（无条件双侧无界性）。** 设 (485.1) 成立，则 $\liminf_{x\to\infty}\mathcal T(x)=-\infty$。再设 (486.1)，则 $\limsup_{x\to\infty}\mathcal T(x)=+\infty$。等价地，对每个实数 $\kappa$ 与每个有限 $X$，存在 $x\ge X$ 使 $T_\psi(x,x^{4/5})<-\kappa x^{11/10}$；在 (486.1) 下也存在 $x\ge X$ 使 $T_\psi(x,x^{4/5})>\kappa x^{11/10}$。
+
+证明。RH 成立时由定理 486.3 得出；RH 不成立时由定理 485.2 与 485.3 得出，此时不需要 (486.1)。等价形式由 (481.1) 的归一化给出。证毕。
+
+推论 485.4 中对每个 $\kappa<1/2$ 成立的结论，由此推广到每个实数 $\kappa$。
+
+**注 486.5（两侧所需输入的差别）。** 下侧用到的只是边界极限的符号与零点的无穷性。上侧仅凭正定性与零点的无穷性不够。假如零点纵坐标恰为 $\{\pm nc:n\ge1\}$ 且都是单零点，则 $L=(K-\tfrac12)\mathbf 1_{\{0\}}+\tfrac12\mathbf 1_{c\mathbb Z}$ 在 $K\ge1/2$ 时是 $c\mathbb Z$ 上的正定函数，与有界上界相容。因此仅凭正定性与零点的无穷性推不出上侧；本节的证明用零点计数的超线性增长 (486.1) 补足。
+
+**范围与文献归属。** 以下各项是经典输入：
+- (485.1)、(486.1) 与 Landau–Widder 定理；
+- $\zeta(1/2)\ne0$；
+- 正核配合 Landau 正性来约束边界留数，属于 Ingham 振荡方法。
+
+本节的 `repo-derived` 内容如下：
+- 命题 486.1–486.2 的两个预算不等式，其中 (a) 步把有限和的 Gram 正性带到边界极限。
+- 把上侧化归为短区间零点重数的有界性：用 $0$ 附近的无零点间隙消去交叉项。
+- 定理 486.3–486.4 对全实中心函数 $\mathcal T$ 的双侧无界性。
+
+本节结论只关于全实中心函数，不推出 §481 所述被选整数来源上的下界，也不推出 RH 或每个 $n>5040$ 的严格 Robin 不等式。
+
+## 追加锚（本行以下为增补区）

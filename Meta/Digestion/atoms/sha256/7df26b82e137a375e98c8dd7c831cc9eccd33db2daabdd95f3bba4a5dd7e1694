@@ -1,0 +1,53 @@
+**Theorem 47.3 (Exact capped boundary count for every branch length).**
+For $k\ge2$ and $j\ge1$, $A_{k,j}$ in (47.7) is exactly the
+number of private vectors satisfying (47.11). In particular, the
+subtraction in (47.7) is required whenever $j\ge k$.
+
+*Proof.* The adjacent inequalities and positivity imply
+$x_r\le2j-1=N_j$. Therefore the uncapped vectors in (47.11) are counted
+by the matrix product $u_j^{\mathsf T}H_j^{2k-2}u_j$.
+To isolate those violating the total cap, set
+
+$$
+\begin{aligned}
+s_0&=j-x_1,\\
+s_r&=2j-x_r-x_{r+1}\quad(1\le r<L_k),\\
+s_{L_k}&=j-x_{L_k}.
+\end{aligned}
+\tag{47.12}
+$$
+
+All these slacks are nonnegative. Since $L_k=2k-1$, direct
+cancellation gives
+
+$$
+\sum_{r\ {\rm even}}s_r
+ =\sum_{r\ {\rm odd}}s_r
+ =L_kj-\sum_{r=1}^{L_k}x_r=:q\ge0,
+\tag{47.13}
+$$
+
+with $k$ terms in each sum. Since
+$B_{k,j}=L_kj-(j-k+1)$, a vector violates the total cap exactly
+when $0\le q\le j-k$. If $j<k$ this range is empty.
+
+For a fixed such $q$, choose two weak compositions of $q$ into
+$k$ parts, assign them respectively to the even and odd slacks in
+(47.12), and reconstruct
+
+$$
+ x_1=j-s_0,\qquad
+ x_{r+1}=2j-s_r-x_r\quad(1\le r<L_k).
+\tag{47.14}
+$$
+
+Equality of the two sums in (47.13) is exactly the final condition
+$s_{L_k}=j-x_{L_k}$, so reconstruction is inverse to (47.12). If
+$q\le j-k$, the recurrence gives
+$j-q\le x_r\le j+q$ for every $r$. Hence $x_r\ge k\ge2$,
+all endpoint and adjacency inequalities hold, and the reconstructed
+coordinates lie in $\{1,\ldots,N_j\}$. Thus this is a genuine
+bijection, not a count in a relaxed polytope. The two compositions have
+$\binom{q+k-1}{k-1}^2$ choices. Summing over $q=0,\ldots,j-k$
+proves (47.7). $\square$
+
