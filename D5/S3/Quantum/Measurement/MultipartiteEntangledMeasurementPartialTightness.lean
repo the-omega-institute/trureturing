@@ -84,10 +84,6 @@ def claim : Prop := by
   exact ∀ n d m : ℕ, (hn : 2 ≤ n) → (hd : 2 ≤ d) → m ≤ d ^ (n - 1) →
     letI : NeZero n := neZeroOfTwo n hn
     letI : NeZero d := neZeroOfTwo d hd
-    letI : Fintype (ZMod d) := Fintype.ofFinite _
-    letI : DecidableEq (ZMod d) := Classical.decEq _
-    letI : Fintype (jointIndex n d) := Fintype.ofFinite _
-    letI : DecidableEq (jointIndex n d) := Classical.decEq _
     ∃ (ρ : Matrix (jointIndex n d) (jointIndex n d) ℂ)
       (U : Fin n → ZMod d → ZMod d → Matrix (ZMod d) (ZMod d) ℂ)
       (M : jointIndex n d → Matrix (jointIndex n d) (jointIndex n d) ℂ),
@@ -145,10 +141,6 @@ theorem result : claim := by
     neZeroOfTwo n (by omega)
   letI : NeZero d :=
     neZeroOfTwo d (by omega)
-  letI : Fintype (ZMod d) := Fintype.ofFinite _
-  letI : DecidableEq (ZMod d) := Classical.decEq _
-  letI : Fintype (jointIndex n d) := Fintype.ofFinite _
-  letI : DecidableEq (jointIndex n d) := Classical.decEq _
   have hb := sector_basis n d hn hd
   obtain ⟨R, M, hR, hR0, hM⟩ :=
     sector_measurement n d m hb hn hd hm
