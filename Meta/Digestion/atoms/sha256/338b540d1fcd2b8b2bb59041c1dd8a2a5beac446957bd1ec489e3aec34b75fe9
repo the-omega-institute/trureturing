@@ -1,0 +1,61 @@
+**Theorem 6.4 (retained orientation used on the same changing register).**
+At either successful cut, let an effective source-free logical native
+program in ABT15's menu have initial control computed from public task
+input and the retained $R$. It has a lawful presence-macro continuation
+on this same register, binding and acquired physical adapter. At each
+completed macro boundary after $e$ logical updates,
+
+$$
+ r_e=\rho^e u,\qquad
+ \widehat r_e=\rho^{N}r_e=\rho^{2j+e}u,\qquad
+ N=2j=2(k+\varepsilon),\qquad \widehat e=2j+e.
+ \tag{GPO.21}
+$$
+
+Completed logical replies, including absence, lawful continuation choices
+and entire terminal outputs agree with that logical program. The acquired
+orientation remains callable after each update. All attained finite logical
+fragments have finite compiled executions, and logical termination implies
+compiled termination. No arbitrary logical program is asserted to terminate.
+
+Proof. Compute and store $N=2(k+\varepsilon)$ by paid local arithmetic
+from $R$, and attach the consumer by a real localStep. At the cut the
+actual acquired tuple and actual source relation are exactly ABT42.3's
+initial relation with fixed offset $N$, and the current ordered Read
+service is (GPO.12). Apply its existing ABT15 presence macros, translating
+every generated semantic word by the retained $\tau_\pi$.
+
+For a logical localStep only control changes. A logical Read runs its
+finite presence macro on $\widehat r_e$ and invokes its continuation
+only when all required paid bits have been obtained. ABT13.2,15.3 and
+[DelayedOriginalReadout][DOR]'s presence guard give
+the exact original four-valued reply, including absence and odd absolute
+physical epochs. Translation preserves each bit by (GPO.2). A logical
+update invokes one actual actuator operation; its persistent global
+wiring gives the semantic successor $\rho\widehat r_e$ on this very
+register. The identity
+$\rho\rho^N r_e=\rho^N\rho r_e$ preserves (GPO.21) without recalibrating
+$N$ or changing $\pi$. A stop returns the same output. Induction on
+finite logical fragments, including ABT15's pending-macro invariant,
+proves all the claims. Cutting after a first macro bit retains its paid
+request, phase and bit; resumption does not repeat or erase that event.
+
+At a continued fragment with actual costs $Q_c,W_c,M_c,U_c,J_c$, the
+joint preparation/acquisition/continuation run pays
+
+$$
+ Q+Q_c,\quad W+W_c,\quad
+ \max(M_{\rm addr},M_c),\quad 2\varepsilon+U_c,\quad
+ J+J_p+J_c,
+ \tag{GPO.22}
+$$
+
+where $J_p=0$ in passive mode, and $J_c$ includes consumer, macro,
+translation, output and evaluator local work. ABT15.4's exact completed-
+macro call and letter formulas apply with $k$ there replaced by $j$;
+physical letter translation preserves them. Update material/internal work,
+retention and continuation storage remain separate charges. In particular
+the two preparatory updates are not two logical consumer updates, and
+the authentic entrance original and lag are never changed to make this
+application fit. $\square$
+
