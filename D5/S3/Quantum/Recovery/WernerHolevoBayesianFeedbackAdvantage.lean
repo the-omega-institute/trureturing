@@ -10,6 +10,8 @@ import D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricQubitWitnessSpec
 import D5.S3.Weil.BurnolGram.QuantitativeMultiOrbitWeilNegativeCertificate
 import D5.S3.Quantum.QuantumChannels.NoisyWernerHolevoLindbladEmbedding
 import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
+import D5.S3.Quantum.Recovery.ActualChannelAlgebra
+import D5.S3.QuantumChannels.UnitaryKrausMixingInvariance
 
 /-! The qutrit Werner--Holevo channel separates Bayesian and Markovian feedback. -/
 
@@ -60,11 +62,12 @@ private def rotationKraus (j : Fin 3) : Matrix (Fin 3) (Fin 3) ℂ :=
 private theorem quad_identity (K : Matrix (Fin 3) (Fin 3) ℂ) (x : Fin 3 → ℂ) :
     star (star x) ⬝ᵥ ((K * Matrix.vecMulVec x (star x) * Kᴴ) *ᵥ (star x)) =
       qform K x * star (qform K x) := by
-  simp only [Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, Matrix.vecMulVec_mulVec]
-  unfold qform Matrix.mulVec Matrix.vecMul dotProduct
-  simp [Matrix.vecMulVec_apply, Matrix.conjTranspose_apply, Finset.mul_sum,
-    Finset.sum_mul, star_mul, star_sum, star_star, Fin.sum_univ_succ]
-  ring
+  rw [Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, Matrix.vecMul_conjTranspose]
+  simp only [star_star]
+  have h := D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction.quadratic_projector
+    (star x) (K *ᵥ x)
+  simpa only [star_star, D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity,
+    qform, Complex.star_def, Complex.mul_conj] using h
 
 private theorem quad_sum_zero {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
     (hK : IsKrausDecomposition K) (x : Fin 3 → ℂ) : ∑ a, ‖qform (K a) x‖ ^ 2 = 0 := by
@@ -106,34 +109,29 @@ private theorem quad_zero {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
 
 private theorem diag_zero {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
     (hK : IsKrausDecomposition K) (a : Fin m) (i : Fin 3) : K a i i = 0 := by
-  have hh := quad_zero K hK ((Pi.single i (1 : ℂ) : Fin 3 → ℂ)) a
-  unfold qform Matrix.mulVec dotProduct at hh
-  simpa [Pi.single_apply, Fin.sum_univ_succ] using hh
+  rw [← Matrix.toBilin'_single (K a) i i, Matrix.toBilin'_apply']
+  exact quad_zero K hK _ a
 
 private theorem offdiag_zero {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
-    (hK : IsKrausDecomposition K) (a : Fin m) (i j : Fin 3) (hij : i ≠ j) :
+    (hK : IsKrausDecomposition K) (a : Fin m) (i j : Fin 3) :
     K a i j + K a j i = 0 := by
-  have hh := quad_zero K hK (fun k => (Pi.single i (1 : ℂ) : Fin 3 → ℂ) k + (Pi.single j (1 : ℂ) :
-      Fin 3 → ℂ) k) a
-  unfold qform Matrix.mulVec dotProduct at hh
-  fin_cases i <;> fin_cases j <;>
-    simp_all [Pi.single_apply, Fin.sum_univ_succ,
-      diag_zero K hK a] <;> simpa [add_comm] using hh
+  have hAlt : (Matrix.toBilin' (K a)).IsAlt := by
+    intro x
+    rw [Matrix.toBilin'_apply']
+    exact quad_zero K hK x a
+  have hh := hAlt.neg_eq (Pi.single i 1) (Pi.single j 1)
+  simp only [Matrix.toBilin'_single] at hh
+  rw [← hh, add_neg_cancel]
 
 private theorem tp {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
     (hK : IsKrausDecomposition K) : ∑ a, (K a)ᴴ * K a =
       (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
-  ext i j
-  have he := congrArg Matrix.trace (hK (Matrix.single j i 1))
-  rw [wernerHolevo] at he
-  unfold Matrix.trace at he
-  fin_cases i <;> fin_cases j <;>
-    simp [Matrix.sum_apply, Matrix.mul_apply,
-      Matrix.conjTranspose_apply, Matrix.single_apply, Fin.sum_univ_succ,
-      diag_zero K hK] at he ⊢ <;>
-    convert he using 1 <;>
-      try simp only [mul_comm, Finset.sum_add_distrib, add_assoc]
-  all_goals norm_num
+  apply Original8340Global.kraus_normalization_from_actual_trace K
+  intro X
+  rw [hK X]
+  simp [wernerHolevo, Matrix.trace_add, Matrix.trace_smul,
+    Matrix.trace_transpose, Matrix.trace_one]
+  ring
 
 private theorem reprK {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
     (hK : IsKrausDecomposition K) : ∃ z : Fin m → Fin 3 → ℂ,
@@ -145,9 +143,9 @@ private theorem reprK {m : ℕ} (K : Fin m → Matrix (Fin 3) (Fin 3) ℂ)
   rw [crossProduct.eq_1]
   ext i j
   have hd := diag_zero K hK a
-  have h01 := offdiag_zero K hK a (0 : Fin 3) 1 (by decide)
-  have h02 := offdiag_zero K hK a (0 : Fin 3) 2 (by decide)
-  have h12 := offdiag_zero K hK a (1 : Fin 3) 2 (by decide)
+  have h01 := offdiag_zero K hK a (0 : Fin 3) 1
+  have h02 := offdiag_zero K hK a (0 : Fin 3) 2
+  have h12 := offdiag_zero K hK a (1 : Fin 3) 2
   have h01' := eq_neg_of_add_eq_zero_left h01
   have h02' := eq_neg_of_add_eq_zero_left h02
   have h12' := eq_neg_of_add_eq_zero_left h12
@@ -312,13 +310,18 @@ private theorem abs_crossProduct (z : Fin 3 → ℂ) :
   · have hAA : (crossProduct z)ᴴ * crossProduct z =
         (finiteComplexEnergy z : ℂ) • (1 : Matrix (Fin 3) (Fin 3) ℂ) - Matrix.vecMulVec z (star z)
             := by
+      have hstar (v : Fin 3 → ℂ) : star (_root_.crossProduct z v) =
+          _root_.crossProduct (star z) (star v) := by
+        ext k
+        fin_cases k <;> simp [cross_apply, star_sub, star_mul, mul_comm]
+      have he : star z ⬝ᵥ z = (finiteComplexEnergy z : ℂ) := by
+        rw [dotProduct_comm, ← Matrix.trace_vecMulVec, vec_trace]
       ext i j
-      fin_cases i <;> fin_cases j <;>
-        simp [crossProduct, LinearMap.toMatrix'_apply, cross_apply, Pi.single_apply,
-            finiteComplexEnergy, Matrix.mul_apply, Matrix.conjTranspose_apply,
-          Matrix.vecMulVec_apply, Matrix.one_apply, Fin.sum_univ_succ,
-          Complex.normSq_eq_conj_mul_self, Complex.star_def, Complex.mul_re,
-          Complex.mul_im] <;> ring
+      change (star (_root_.crossProduct z (Pi.single i 1)) ⬝ᵥ
+        _root_.crossProduct z (Pi.single j 1)) = _
+      rw [hstar, cross_dot_cross]
+      simp [Pi.star_single, he, Matrix.vecMulVec_apply, Matrix.one_apply,
+        Pi.single_apply, mul_ite, eq_comm, mul_comm]
     have hV : Matrix.vecMulVec z (star z) * Matrix.vecMulVec z (star z) =
         (finiteComplexEnergy z : ℂ) • Matrix.vecMulVec z (star z) := by
       rw [Matrix.vecMulVec_mul_vecMulVec]
@@ -607,23 +610,28 @@ private theorem canonical_is_kraus : IsKrausDecomposition canonicalKraus := by
     simp only [← mul_assoc, ← pow_two, hs] <;> ring
 
 private theorem rotation_is_kraus : IsKrausDecomposition rotationKraus := by
-  have hs : ((Real.sqrt 2 : ℂ)⁻¹) ^ 2 = (1 / 2 : ℂ) := by
-    simpa only [pow_two, one_div] using
-      D5.S3.QuantumBounds.CHSHWitness.complex_sqrt_two_inv_mul_self
   have h2 : (starRingEnd ℂ) (2 : ℂ) = 2 := by
     rw [← Complex.star_def]
     norm_num
   have h3 : (starRingEnd ℂ) (3 : ℂ) = 3 := by
     rw [← Complex.star_def]
     norm_num
+  have hU (i j : Fin 3) : ∑ k, rotationVector k i * star (rotationVector k j) =
+      if i = j then 1 else 0 := by
+    fin_cases i <;> fin_cases j <;>
+      norm_num [rotationVector.eq_1, Fin.sum_univ_succ, Complex.star_def, h2, h3]
+  have hm (j : Fin 3) :
+      D5.S3.QuantumChannels.UnitaryKrausMixingInvariance.unitaryKrausMixing
+        rotationVector canonicalKraus j = rotationKraus j := by
+    ext i k
+    fin_cases j <;> fin_cases i <;> fin_cases k <;>
+      simp [D5.S3.QuantumChannels.UnitaryKrausMixingInvariance.unitaryKrausMixing,
+        canonicalKraus.eq_1, rotationKraus.eq_1, rotationVector.eq_1, crossProduct,
+        LinearMap.toMatrix'_apply, cross_apply, Pi.single_apply, Fin.sum_univ_succ] <;> ring
   intro X
-  ext i j
-  fin_cases i <;> fin_cases j <;>
-    simp [wernerHolevo, Matrix.trace, rotationKraus.eq_1, rotationVector.eq_1, crossProduct,
-        LinearMap.toMatrix'_apply, cross_apply, Pi.single_apply,
-      Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.transpose_apply,
-      Fin.sum_univ_succ, Complex.conj_ofReal, h2, h3] <;>
-    simp only [← mul_assoc, ← pow_two, hs] <;> ring
+  have h := D5.S3.QuantumChannels.UnitaryKrausMixingInvariance.unitary_kraus_mixing_invariance
+    rotationVector canonicalKraus X hU
+  simpa only [hm, Matrix.star_eq_conjTranspose] using h.trans (canonical_is_kraus X)
 
 private theorem abs_canonical (i : Fin 3) :
     CFC.abs (canonicalKraus i) = ((Real.sqrt 2)⁻¹ : ℂ) •
@@ -638,9 +646,8 @@ private theorem abs_canonical (i : Fin 3) :
   have hv : Matrix.vecMulVec ((Pi.single i (1 : ℂ) : Fin 3 → ℂ)) (star ((Pi.single i (1 : ℂ) : Fin 3
       → ℂ))) =
       Matrix.single i i 1 := by
-    ext a b
-    fin_cases i <;> fin_cases a <;> fin_cases b <;>
-      norm_num [Pi.single_apply, Matrix.vecMulVec_apply, Matrix.single_apply]
+    simpa only [Pi.star_single, star_one] using
+      (Matrix.single_eq_single_vecMulVec_single i i (α := ℂ)).symm
   unfold canonicalKraus
   rw [abs_crossProduct]
   simp only [if_neg hb, hn, Complex.ofReal_one, inv_one, one_smul, hv]
