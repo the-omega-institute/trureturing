@@ -80,6 +80,18 @@ internal sealed class AncillaFreeTesterRobustnessEqualityDocument : IScribeDocum
                     + "and the ancilla-free question at line 807."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("rank-pos-of-trace-one"),
+                DeclarationHandle.Create(Module + ".rank_pos_of_trace_one"),
+                H("Trace one implies positive rank"),
+                StatementSource.FromAuthor(Disp(RankPosOfTraceOneFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For any finite index type a, a complex square matrix A with trace one has positive rank. "
+                    + "If its rank were zero, the range of its multiplication map would be zero, "
+                    + "so the map and hence the matrix would vanish, contradicting the trace equation. "
+                    + "No positivity assumption on A is needed."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("result"), DeclarationHandle.Create(Module + ".result"),
                 H("Equality of tester and canonical measurement robustness"),
                 StatementSource.FromAuthor(Disp(ClaimBody())),
@@ -182,6 +194,14 @@ internal sealed class AncillaFreeTesterRobustnessEqualityDocument : IScribeDocum
         All("p", Family("j", X("z")), All("q", Family("k", X("z")),
             Equal(Typed(LocalCall("povmRobustness", X("p"), X("q")), Reals()),
                 Infimum(LocalCall("POVMCompatibleAt", X("lam"), X("p"), X("q")))))));
+
+    private static Formula RankPosOfTraceOneFormula() =>
+        All("a", Seq(Qualified("Type"), Star), Instances(
+            All("A", MatrixOf(X("a")), Arrow(
+                Equal(At(Qualified("Matrix", "trace"), X("A")), Typed(D(1), Complexes())),
+                new Formula.Relation(Typed(D(0), Qualified("Nat")), FormulaRelationOperator.LessThan,
+                    At(Qualified("Matrix", "rank"), X("A"))))),
+            At(Qualified("Fintype"), X("a")), At(Qualified("DecidableEq"), X("a"))));
 
     private static Formula ClaimBody()
     {
