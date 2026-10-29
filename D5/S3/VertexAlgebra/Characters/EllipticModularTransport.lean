@@ -4,15 +4,16 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Integral modular transport of period lattices and the continued annular current kernel. -/
+   digest: Integral modular transport of lattices and continued elliptic kernels. -/
 
 import D5.S3.VertexAlgebra.Characters.AnnularCurrentKernel
 import Mathlib.NumberTheory.ModularForms.EisensteinSeries.E2.Transform
 import Mathlib.NumberTheory.LSeries.HurwitzZetaValues
 
+/-! Integral changes of period coordinates act on regularized elliptic kernels. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
-set_option maxHeartbeats 400000
 
 noncomputable section
 open Complex
@@ -23,7 +24,7 @@ open AnnularCurrentKernel
 
 private lemma det_one (γ : SL(2, ℤ)) :
     γ 0 0 * γ 1 1 - γ 0 1 * γ 1 0 = 1 := by
-  simpa [Matrix.det_fin_two] using γ.det_coe
+  simpa only [Matrix.det_fin_two] using γ.det_coe
 
 private def coordinates (γ : SL(2, ℤ)) : (ℤ × ℤ) ≃ₗ[ℤ] (ℤ × ℤ) where
   toFun p := (γ 0 0 * p.1 - γ 0 1 * p.2, -γ 1 0 * p.1 + γ 1 1 * p.2)
@@ -39,7 +40,7 @@ private def coordinates (γ : SL(2, ℤ)) : (ℤ × ℤ) ≃ₗ[ℤ] (ℤ × ℤ
     · dsimp; linear_combination h * p.1
     · dsimp; linear_combination h * p.2
   map_add' p q := by ext <;> dsimp <;> ring
-  map_smul' k p := by ext <;> simp [smul_eq_mul] <;> ring
+  map_smul' k p := by ext <;> simp <;> ring
 
 /-- The integral change of basis inducing division by the modular denominator. -/
 def modularLatticeEquiv (γ : SL(2, ℤ)) (τ : UpperHalfPlane) :
@@ -56,16 +57,22 @@ private lemma coe_modularLatticeEquiv (γ : SL(2, ℤ)) (τ : UpperHalfPlane)
       (PeriodPair.latticeEquiv_symm_apply (periodPair τ) p)
   change ((periodPair (γ • τ)).latticeEquivProd.symm (coordinates γ p) : ℂ) = _
   rw [PeriodPair.latticeEquiv_symm_apply, hp]
-  simp only [coordinates, periodPair, mul_one, Int.cast_sub, Int.cast_mul, Int.cast_neg,
-    Int.cast_add]
-  rw [UpperHalfPlane.coe_specialLinearGroup_apply]
+  change ((γ 0 0 * p.1 - γ 0 1 * p.2 : ℤ) : ℂ) * 1 +
+    ((-γ 1 0 * p.1 + γ 1 1 * p.2 : ℤ) : ℂ) * ((γ • τ : UpperHalfPlane) : ℂ) = _
+  simp only [mul_one]
+  rw [UpperHalfPlane.coe_specialLinearGroup_apply, ModularGroup.denom_apply]
   push_cast
-  rw [ModularGroup.denom_apply]
+  change ((γ 0 0 : ℂ) * p.1 - (γ 0 1 : ℂ) * p.2) +
+    (-(γ 1 0 : ℂ) * p.1 + (γ 1 1 : ℂ) * p.2) *
+      (((γ 0 0 : ℂ) * τ + (γ 0 1 : ℂ)) /
+        ((γ 1 0 : ℂ) * τ + (γ 1 1 : ℂ))) =
+    ((p.1 : ℂ) + p.2 * (τ : ℂ)) / ((γ 1 0 : ℂ) * τ + (γ 1 1 : ℂ))
   have hd : (γ 0 0 : ℂ) * γ 1 1 - (γ 0 1 : ℂ) * γ 1 0 = 1 := by
     exact_mod_cast det_one γ
   have hj := UpperHalfPlane.denom_ne_zero (γ : Matrix.GeneralLinearGroup (Fin 2) ℝ) τ
   rw [ModularGroup.denom_apply] at hj
-  field_simp
+  apply (eq_div_iff hj).2
+  rw [add_mul, mul_assoc, div_mul_cancel₀ _ hj]
   linear_combination hd * ((p.1 : ℂ) + p.2 * (τ : ℂ))
 
 private lemma coe_modularLatticeEquiv_symm (γ : SL(2, ℤ)) (τ : UpperHalfPlane)
@@ -101,7 +108,6 @@ private lemma regularized_scale (w l j : ℂ) (hj : j ≠ 0) (hw : w / j - l / j
     simp only [zero_pow (by decide : 2 ≠ 0), zero_div, div_zero, sub_zero] at *
     field_simp
   · field_simp
-    <;> ring
 
 /-- Covariance of the original regularized lattice-defined Weierstrass function off its poles. -/
 theorem weierstrassP_modular (γ : SL(2, ℤ)) (τ : UpperHalfPlane) (w : ℂ)
@@ -113,6 +119,8 @@ theorem weierstrassP_modular (γ : SL(2, ℤ)) (τ : UpperHalfPlane) (w : ℂ)
   rw [← (modularLatticeEquiv γ τ).toEquiv.tsum_eq, ← tsum_mul_left]
   apply tsum_congr
   intro l
+  change 1 / (w / UpperHalfPlane.denom γ τ - (modularLatticeEquiv γ τ l : ℂ)) ^ 2 -
+    1 / (modularLatticeEquiv γ τ l : ℂ) ^ 2 = _
   rw [coe_modularLatticeEquiv]
   apply regularized_scale _ _ _ (UpperHalfPlane.denom_ne_zero _ τ)
   have hne : w / UpperHalfPlane.denom γ τ - (modularLatticeEquiv γ τ l : ℂ) ≠ 0 :=
@@ -136,10 +144,12 @@ private lemma E2_transform (γ : SL(2, ℤ)) (τ : UpperHalfPlane) :
   calc
     EisensteinSeries.E2 (γ • τ) =
         (EisensteinSeries.E2 (γ • τ) * (UpperHalfPlane.denom γ τ ^ 2)⁻¹) *
-          UpperHalfPlane.denom γ τ ^ 2 := by simp [mul_assoc, hj]
+          UpperHalfPlane.denom γ τ ^ 2 := by simp [hj]
     _ = _ := by
       rw [h]
-      field_simp <;> ring_nf <;> simp [I_sq] <;> ring
+      field_simp
+      ring_nf
+      simp [I_sq]
 
 /-- Full modular covariance with the normalized, generic lower-left-entry correction. -/
 theorem continuedKernel_modular (γ : SL(2, ℤ)) (τ : UpperHalfPlane) (w : ℂ)
@@ -175,7 +185,8 @@ theorem annularKernel_modular_of_strictStrips
     (hw : 0 < w.im) (hwτ : w.im < τ.im)
     (hw' : 0 < (w / UpperHalfPlane.denom γ τ).im)
     (hwτ' : (w / UpperHalfPlane.denom γ τ).im < (γ • τ).im) :
-    annularKernel (expCoord (γ • τ)) (expCoord (w / UpperHalfPlane.denom γ τ)) =
+    annularKernel (expCoord ((γ • τ : UpperHalfPlane) : ℂ))
+        (expCoord (w / UpperHalfPlane.denom γ τ)) =
       UpperHalfPlane.denom γ τ ^ 2 * annularKernel (expCoord τ) (expCoord w) -
         (γ 1 0 : ℂ) * UpperHalfPlane.denom γ τ / (2 * π * I) := by
   rw [annular_kernel_eq_periodPair_weierstrassP_sub_E2 _ _ hw' hwτ',

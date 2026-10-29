@@ -3,6 +3,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import Reg.Support.SingleDependentReadout
 
+/-! Full-source dependent-family audits of the geometric covariance laws. -/
+
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
@@ -55,7 +57,10 @@ private lemma rejected_law : ¬ arena.Law rejected := by
 private lemma dependence : ObservationalDependence signature actual := by
   intro i
   obtain ⟨u, v, h⟩ := P_dependence (periodPair sampleTau)
-  exact ⟨⟨1, sampleTau⟩, u, v, by simpa [actual] using h⟩
+  refine ⟨⟨1, sampleTau⟩, u, v, ?_⟩
+  change (periodPair ((1 : SL(2, ℤ)) • sampleTau)).weierstrassP u ≠
+    (periodPair ((1 : SL(2, ℤ)) • sampleTau)).weierstrassP v
+  simpa only [one_smul] using h
 
 def family : Registration arena (type_of% (@weierstrassP_modular)) where
   actual := actual
@@ -192,7 +197,7 @@ def arena : Arena where
     0 < w.im → w.im < τ.im →
     0 < (w / UpperHalfPlane.denom γ τ).im →
     (w / UpperHalfPlane.denom γ τ).im < (γ • τ).im →
-    R.readout () () (expCoord (γ • τ)) (expCoord (w / UpperHalfPlane.denom γ τ)) =
+    R.readout () () (expCoord ((γ • τ : UpperHalfPlane) : ℂ)) (expCoord (w / UpperHalfPlane.denom γ τ)) =
       UpperHalfPlane.denom γ τ ^ 2 * annularKernel (expCoord τ) (expCoord w) -
         (γ 1 0 : ℂ) * UpperHalfPlane.denom γ τ / (2 * π * I)
 
@@ -201,11 +206,11 @@ private lemma rejected_law : ¬ arena.Law rejected := by
   have h₀ := annularKernel_modular_of_strictStrips 1 sampleTau (I / 2)
     (by norm_num) (by norm_num [sampleTau, UpperHalfPlane.im])
     (by norm_num [ModularGroup.denom_apply])
-    (by norm_num [ModularGroup.denom_apply, sampleTau, UpperHalfPlane.im])
+    (by norm_num [UpperHalfPlane.denom, sampleTau, UpperHalfPlane.im])
   have h₁ := h 1 sampleTau (I / 2)
     (by norm_num) (by norm_num [sampleTau, UpperHalfPlane.im])
     (by norm_num [ModularGroup.denom_apply])
-    (by norm_num [ModularGroup.denom_apply, sampleTau, UpperHalfPlane.im])
+    (by norm_num [UpperHalfPlane.denom, sampleTau, UpperHalfPlane.im])
   change annularKernel _ _ + 1 = _ at h₁
   rw [h₀] at h₁
   have hz : (1 : ℂ) = 0 := by linear_combination h₁
