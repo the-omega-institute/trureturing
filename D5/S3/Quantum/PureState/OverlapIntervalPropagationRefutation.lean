@@ -7,15 +7,13 @@
    digest: Five pure-state overlaps force a sixth beyond three-state interval propagation. -/
 
 import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Data.Matrix.Notation
-import Mathlib.Order.ConditionallyCompleteLattice.Basic
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Linarith
 
 /-! The one-unknown-edge procedure can miss the exact feasible lower endpoint. -/
 
 set_option autoImplicit false
+set_option linter.style.longLine false
 
 namespace D5.S3.Quantum.PureState.OverlapIntervalPropagationRefutation
 
@@ -122,7 +120,8 @@ private lemma witness_realizes : realizes 2 3 givenOverlaps witness := by
         star (witness i 0) * witness j 0 +
           (star (witness i 1) * witness j 1 + star (witness i 2) * witness j 2) := by
       rw [PiLp.inner_apply]
-      simp only [Fin.sum_univ_succ, Fin.sum_univ_zero, add_zero, RCLike.inner_apply']
+      simp only [Fin.sum_univ_succ, Fin.sum_univ_zero, add_zero, RCLike.inner_apply',
+        starRingEnd_apply]
     change ‖inner ℂ (witness i) (witness j)‖ ^ 2 = givenOverlaps i j
     rw [hinner]
     fin_cases i <;> fin_cases j
@@ -178,15 +177,17 @@ private lemma span_saturation {n : ℕ} (a b c : EuclideanSpace ℂ (Fin n))
     simp only [map_zero, mul_zero, add_zero, norm_smul, ha, hb, mul_one]
     change ‖inner ℂ a c‖ ^ 2 = 1 / 2 at hac
     change ‖inner ℂ b c‖ ^ 2 = 1 / 2 at hbc
-    linarith
-  have hip : (inner ℂ c ((inner ℂ a c) • a + (inner ℂ b c) • b)).re = 1 := by
+    rw [hac, hbc]
+    norm_num
+  have hip : RCLike.re (inner ℂ c ((inner ℂ a c) • a + (inner ℂ b c) • b)) = 1 := by
     rw [inner_add_right, inner_smul_right, inner_smul_right,
       ← inner_conj_symm c a, ← inner_conj_symm c b,
-      Complex.mul_conj', Complex.mul_conj']
-    simp only [Complex.add_re, Complex.ofReal_re]
+      RCLike.mul_conj, RCLike.mul_conj]
+    simp only [map_add, ← RCLike.ofReal_pow, RCLike.ofReal_re]
     change ‖inner ℂ a c‖ ^ 2 = 1 / 2 at hac
     change ‖inner ℂ b c‖ ^ 2 = 1 / 2 at hbc
-    linarith
+    rw [hac, hbc]
+    norm_num
   apply sub_eq_zero.mp
   apply norm_eq_zero.mp
   apply sq_eq_zero_iff.mp
