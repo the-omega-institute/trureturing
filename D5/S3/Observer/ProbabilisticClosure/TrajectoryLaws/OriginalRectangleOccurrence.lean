@@ -215,18 +215,21 @@ private theorem closed_stationary (θ : Presentation H) (C : Finset H)
 
 private theorem weighted_no11 (θ : Presentation H) (i j : H) :
     θ.initial i * (θ.matrix true*θ.matrix true) i j = 0 := by
-  have hn (a b : H) : 0 ≤ (θ.matrix true*θ.matrix true) a b :=
-    Finset.sum_nonneg fun k _ => mul_nonneg (θ.matrix_nonneg _ _ _) (θ.matrix_nonneg _ _ _)
-  have hz : θ.initial i * (θ.matrix true*θ.matrix true) i j = 0 := by
-    apply le_antisymm _ (mul_nonneg (θ.initial_nonneg _) (hn _ _))
-    calc
-      _ ≤ ∑ b, θ.initial i * (θ.matrix true*θ.matrix true) i b :=
-        Finset.single_le_sum (fun b _ => mul_nonneg (θ.initial_nonneg _) (hn _ _)) (Finset.mem_univ j)
-      _ ≤ ∑ a, ∑ b, θ.initial a * (θ.matrix true*θ.matrix true) a b :=
-        Finset.single_le_sum (fun a _ => Finset.sum_nonneg fun b _ =>
-          mul_nonneg (θ.initial_nonneg _) (hn _ _)) (Finset.mem_univ i)
-      _ = 0 := θ.no11
-  exact hz
+  have hn (a b : H) : 0 ≤ (θ.matrix true*θ.matrix true) a b := by
+    rw [Matrix.mul_apply]
+    exact Finset.sum_nonneg fun k _ =>
+      mul_nonneg (θ.matrix_nonneg true a k) (θ.matrix_nonneg true k b)
+  have he (a b : H) : 0 ≤ θ.initial a * (θ.matrix true*θ.matrix true) a b :=
+    mul_nonneg (θ.initial_nonneg a) (hn a b)
+  have hr (a : H) : 0 ≤ ∑ b : H, θ.initial a * (θ.matrix true*θ.matrix true) a b :=
+    Finset.sum_nonneg fun b _ => he a b
+  have h1 : θ.initial i * (θ.matrix true*θ.matrix true) i j ≤
+      ∑ b : H, θ.initial i * (θ.matrix true*θ.matrix true) i b :=
+    Finset.single_le_sum (fun b _ => he i b) (Finset.mem_univ j)
+  have h2 : (∑ b : H, θ.initial i * (θ.matrix true*θ.matrix true) i b) ≤
+      ∑ a : H, ∑ b : H, θ.initial a * (θ.matrix true*θ.matrix true) a b :=
+    Finset.single_le_sum (fun a _ => hr a) (Finset.mem_univ i)
+  exact le_antisymm ((h1.trans h2).trans_eq θ.no11) (he i j)
 
 /-- The actual restriction to a positive-weight closed class, with normalized
 original stationary masses and unchanged original real matrix entries. -/
@@ -503,8 +506,6 @@ theorem component_restriction (θ : Presentation H)
       rw [←hh]
       simp_rw [state_mass θ J hJ]
       rw [←Finset.sum_coe_sort]
-      simp_rw [←hinit]
-      rw [←Finset.mul_sum,κ.initial_sum,mul_one]
     rw [← ENNReal.ofReal_toReal (measure_ne_top J _)]
     change ENNReal.ofReal (J.real _) = _
     rw [he]
