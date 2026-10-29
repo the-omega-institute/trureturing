@@ -340,7 +340,7 @@ private theorem graft_trace {x y a b : ℝ} {z w : H}
   apply pullback_ext
   intro c
   rw [pullback_graft,map_add,map_smul,map_smul,root_pullback,root_pullback]
-  cases c <;> simp only [Bool.false_eq_true, Bool.true_eq_false, 
+  cases c <;> simp only [Bool.false_eq_true, Bool.true_eq_false,
     ite_true,ite_false,smul_zero,zero_add,add_zero]
   · rw [hz,constant_smul,←map_add]
   · rw [hw,constant_smul,←map_add]
@@ -367,7 +367,7 @@ private theorem a_rep : indicator (rootEdge false) = constG (1/2)+J aLift := by
   rw [root_pullback,map_add,pullback_const]
   unfold aLift
   rw [pullback_graft]
-  cases c <;> simp only [Bool.false_eq_true, Bool.true_eq_false, 
+  cases c <;> simp only [Bool.false_eq_true, Bool.true_eq_false,
     ite_true,ite_false,q_scalar_trace]
   · rw [← map_add,← map_add]
     norm_num
