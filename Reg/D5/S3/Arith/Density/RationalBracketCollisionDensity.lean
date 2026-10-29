@@ -2,11 +2,13 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Density.RationalBracketCollisionDensity
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound audit of the rational-limit embedding, with the full bracket telescope. -/
+
 namespace Reg.D5.S3.Arith.Density.RationalBracketCollisionDensity
 
 open _root_.D5.S3.Arith.Density.RationalBracketCollisionDensity
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open LeanInformationAudit Filter Classical
+open LeanInformationAudit Filter
 open scoped Topology
 
 noncomputable section
@@ -21,6 +23,7 @@ def actual : Realization signature :=
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => (1 : ℝ)) (fun e => nomatch e)
 
+open Classical in
 /-- The full source telescope, varying only the embedding of the rational limit. -/
 abbrev arena : Arena where
   signature := signature
@@ -30,10 +33,26 @@ abbrev arena : Arena where
         (N : ℝ)) atTop (𝓝 (R.readout () () a))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
+  classical
   intro h
   obtain ⟨a, ha⟩ := h 0 (fun _ => 0) (fun _ => 1) (by simp) 1 (by norm_num)
+  have hempty (x : ℕ) : ¬ collision (t := 0) (fun _ => 0) (fun _ => 1) 1 x := by
+    intro hx
+    obtain ⟨n, hn⟩ := hx.2
+    have hh : (0 : ℤ) = ((x + 1 : ℕ) : ℤ) := by simpa [bracket] using hn
+    omega
+  have hf (N : ℕ) :
+      (Finset.range (N + 1)).filter (collision (t := 0) (fun _ => 0) (fun _ => 1) 1) =
+        ∅ := by
+    apply Finset.filter_eq_empty_iff.mpr
+    intro x _
+    exact hempty x
+  change Tendsto (fun N : ℕ =>
+    (((Finset.range (N + 1)).filter
+      (collision (t := 0) (fun _ => 0) (fun _ => 1) 1)).card : ℝ) / (N : ℝ))
+    atTop (𝓝 (1 : ℝ)) at ha
   have hz : Tendsto (fun _ : ℕ => (0 : ℝ)) atTop (𝓝 (1 : ℝ)) := by
-    simpa [rejected, realize, collision, bracket] using ha
+    simpa only [hf, Finset.card_empty, Nat.cast_zero, zero_div] using ha
   have he : (0 : ℝ) = 1 := tendsto_nhds_unique tendsto_const_nhds hz
   norm_num at he
 

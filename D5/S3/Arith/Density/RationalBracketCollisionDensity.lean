@@ -31,7 +31,7 @@ The period and image-tail constructions feed the actual collision predicate into
 supplier. No density or periodicity premise is assumed in the public claim.
 -/
 
-open Filter Finset Classical
+open Filter Finset
 open scoped Topology BigOperators
 namespace D5.S3.Arith.Density.RationalBracketCollisionDensity
 noncomputable section
@@ -113,6 +113,7 @@ private theorem affine_image_tail (w : ℕ → ℤ) (q : ℕ) (hq : 0 < q) (d : 
       push_cast
       rw [hpz]
 
+open Classical in
 private theorem eventual_periodic_density (P : ℕ → Prop)
     (M p : ℕ) (hp : 0 < p)
     (hP : ∀ x, M ≤ x → (P (x + p) ↔ P x)) :
@@ -221,6 +222,7 @@ def collision {t : ℕ} (c : Fin t → ℤ) (α : Fin t → ℚ) (k x : ℕ) : P
   (∃ n : ℕ, bracket c α n = (x : ℤ)) ∧
     (∃ n : ℕ, bracket c α n = ((x + k : ℕ) : ℤ))
 
+open Classical in
 /-- The exact rationality subquestion, with inclusive interval and denominator N. -/
 def claim : Prop :=
   ∀ (t : ℕ) (c : Fin t → ℤ) (α : Fin t → ℚ), (∀ i, 0 < α i) →
