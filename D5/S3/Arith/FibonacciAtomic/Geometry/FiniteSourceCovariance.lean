@@ -129,7 +129,9 @@ private theorem P_expand (h : ℕ) (z : H) : P h z = ∑ p ∈ block h, z p • 
   change (if q.val.length ≤ h then z q else 0) =
     (lp.evalCLM ℝ (fun _ : Edge => ℝ) 2 q) (∑ p ∈ block h, z p • e p)
   rw [map_sum]
-  simp [e, map_smul, lp.coeFn_single, Pi.single_apply, mul_ite, mem_block, eq_comm]
+  change (if q.val.length ≤ h then z q else 0) =
+    ∑ p ∈ block h, z p * (if p = q then 1 else 0)
+  simp [mul_ite, mem_block]
 
 private theorem P_norm (h : ℕ) : ‖P h‖ ≤ 1 := by
   apply LinearMap.mkContinuous_norm_le
@@ -255,7 +257,7 @@ private theorem boundary_mean_entry (p : Edge) :
   change BiasedBoundaryCentering.mean (BiasedBoundaryTrace.indicator p) = _
   rw [BiasedBoundaryCentering.centered_suffix_residual.1]
   rw [BiasedBoundaryTrace.indicator, integral_indicatorConstLp]
-  simpa only [measureReal_def] using BiasedBoundaryTrace.cylinder_mass p.val
+  simpa only [measureReal_def, smul_eq_mul, mul_one] using BiasedBoundaryTrace.cylinder_mass p.val
 
 private theorem gram_entry (n : ℕ) (p q : Edge) :
     inner ℝ (e p) (B n (e q)) = kernel (FiniteSourceMass.mass n) p q := by
@@ -346,8 +348,9 @@ private theorem gram_expansion {G : Type*} [NormedAddCommGroup G] [InnerProductS
   rw [ContinuousLinearMap.comp_apply, ContinuousLinearMap.adjoint_inner_right]
   simp only [ContinuousLinearMap.comp_apply, P_expand, map_sum, map_smul,
     inner_sum, sum_inner, inner_smul_left, inner_smul_right, rankOne_apply,
-    inner_e, inner_e_right, Finset.mul_sum, Finset.sum_mul]
-  simp only [RCLike.conj_to_real]
+    inner_e, inner_e_right, ContinuousLinearMap.sum_apply, ContinuousLinearMap.smul_apply,
+    Finset.mul_sum, Finset.sum_mul]
+  simp only [RCLike.conj_to_real, smul_eq_mul]
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro p hp
@@ -543,8 +546,22 @@ theorem finite_source_covariance_convergence :
   have hB := first_two_limits.2
   have hr : Tendsto (fun n => rankOne ℝ (v n) (v n)) atTop
       (𝓝 (rankOne ℝ BiasedBoundaryFreeRootForm.v BiasedBoundaryFreeRootForm.v)) := by
-    exact ((rankOne ℝ).continuous₂.tendsto
-      (BiasedBoundaryFreeRootForm.v, BiasedBoundaryFreeRootForm.v)).comp (hv.prodMk_nhds hv)
+    apply tendsto_iff_norm_sub_tendsto_zero.mpr
+    have hd : Tendsto (fun n => ‖v n-BiasedBoundaryFreeRootForm.v‖) atTop (𝓝 0) := by
+      simpa only [sub_self, norm_zero] using (hv.sub_const BiasedBoundaryFreeRootForm.v).norm
+    have hb := (hd.mul hv.norm).add (hd.const_mul ‖BiasedBoundaryFreeRootForm.v‖)
+    apply squeeze_zero (fun _ => norm_nonneg _) _ (by simpa using hb)
+    intro n
+    have he : rankOne ℝ (v n) (v n)-
+        rankOne ℝ BiasedBoundaryFreeRootForm.v BiasedBoundaryFreeRootForm.v =
+        rankOne ℝ (v n-BiasedBoundaryFreeRootForm.v) (v n)+
+        rankOne ℝ BiasedBoundaryFreeRootForm.v (v n-BiasedBoundaryFreeRootForm.v) := by
+      simp
+    rw [he]
+    simpa only [norm_rankOne] using norm_add_le
+      (rankOne ℝ (v n-BiasedBoundaryFreeRootForm.v) (v n))
+      (rankOne ℝ BiasedBoundaryFreeRootForm.v (v n-BiasedBoundaryFreeRootForm.v))
+
   have hs : Tendsto Sigma atTop (𝓝 BiasedBoundaryFreeRootForm.Sigma) := by
     rw [BiasedBoundaryFreeRootForm.actual_compact_covariance.2.2.2.1]
     exact hB.sub hr
