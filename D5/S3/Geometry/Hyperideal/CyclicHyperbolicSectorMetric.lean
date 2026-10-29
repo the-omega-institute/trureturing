@@ -1508,7 +1508,14 @@ private theorem short_forward_attaining {n : ℕ} (alpha : Fin (n + 1) → ℝ)
         sector (alpha ((finRotate (n + 1))^[m] p.1)))
     q.2 htag (cylindrical_reconstruct q.2.val)
   rw [htarget] at h
-  simpa only [cylindrical_reconstruct] using h
+  have hsource := hendpoint
+    (⟨cylindricalPoint (radialCoordinate p.2.val) (axialCoordinate p.2.val)
+        (angularCoordinate p.2.val),
+      cylindrical_mem_sector _ _ _ _ hp.le (hapi _)
+        (sector_angle (alpha p.1) (ha p.1) p.2)⟩ : sector (alpha p.1))
+    p.2 rfl (cylindrical_reconstruct p.2.val)
+  rw [hsource] at h
+  simpa only [Sigma.eta, cyclicDatum] using h
 
 /-- Every pair of actual numbered cyclic-sector representatives has an original
 finite chain attaining the capped angular distance, which equals the original
