@@ -1,0 +1,49 @@
+**约定 77.2（供应的 effect image 与边界值）。** Environment (27.4)–(27.7)、Proposition 27.2 已给出整个 effect optimization
+
+$$
+\eta_n(E)=\min_{0\le B\le I_3}\|(F^n)^\dagger(B)-E\|_{\rm op},
+$$
+
+及所有可达 $C=(F^n)^\dagger(B)$：
+
+$$
+C=G_s(K)=
+\begin{pmatrix}
+x&sz&0\\s\overline z&\alpha y+\beta d&0\\
+0&0&\beta y+\alpha d
+\end{pmatrix},\qquad
+K=\begin{pmatrix}x&z&0\\\overline z&y&0\\0&0&d\end{pmatrix},
+\qquad 0\le K_2\le I_2,\quad 0\le d\le1.
+$$
+
+这里 $K_2$ 为左上 $2\times2$ block。对应实际 output effect 是 $B=U_0KU_0^\dagger$；可用 $\mathcal D_B(X)=\operatorname{Tr}(BX)E+\operatorname{Tr}((I_3-B)X)(I_3-E)/2$ 实现该单任务 decoder。supplier 同时供应 matching lower certificates，且以 diagonal-unitary invariance 将 complex phases 归约，误差只依赖 $(p,r)$。
+
+具体地，Theorems 27.3–27.5 供应 $\eta_0(E)=0$、$\eta_1(E)=k$、$\eta_n(E)\ge k$，以及两个边界的 exact values。$p=0$ 时对每个有限 $n\ge1$，
+
+$$
+\eta_n(E)=\tfrac12\sqrt{4qr+(|q-r|-\tau)_+^2}.
+$$
+
+$q=0,n\ge2$ 时，令 $a_\tau=(1+\tau)/2,b_\tau=(1-\tau)/2$，并定义
+
+$$
+h_\tau(w)=
+\begin{cases}
+b_\tau w/a_\tau,&0\le w\le a_\tau,\\
+(a_\tau w-\tau)/b_\tau,&a_\tau\le w\le1.
+\end{cases}
+$$
+
+则
+
+$$
+\eta_n(E)=
+\begin{cases}
+k,&h_\tau(r)\le k,\\
+\displaystyle\frac{b_\tau(\tau-a_\tau r)+a_\tau\sqrt{\tau^2p+b_\tau^2r^2}}{\tau},
+ &h_\tau(r)>k.
+\end{cases}
+$$
+
+这些式子的优化与 attainability 引用 supplier，不另复证。$n=1$ 使用 $k$，不在 $b_\tau=0$ 时代入后一式；$n=0$ 也不代入 $s$。
+

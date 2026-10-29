@@ -1,0 +1,16 @@
+**Lemma 8.3.2 (Exhaustive positive cover and legality filter).** The
+coefficients of (8.3.3) satisfy this table: every $t_{l00}$ has the
+indicated strict sign, and the final column is exactly
+$\lceil10^6\theta_{a,b}\rceil$.
+
+| $a$ | $b$ | Sign of all $t_{l00}$ | $\lceil10^6\theta_{a,b}\rceil$ |
+|---:|---:|:---:|---:|
+| $0$ | $0.31$ | $+$ | $590$ |
+| $0.34$ | $0.48$ | $-$ | $421$ |
+| $0.52$ | $1.07$ | $+$ | $1129$ |
+| $1.11$ | $1.21$ | $-$ | $1886$ |
+| $1.24$ | $1.295$ | $+$ | $18221$ |
+| $1.32$ | $1.36$ | $-$ | $808191$ |
+| $1.395$ | $2.13$ | $-$ | $742848$ |
+| $2.18$ | $2.80$ | $+$ | $12509$ |
+| $2.86$ | $\infty$ | $-$ | $14965$ |

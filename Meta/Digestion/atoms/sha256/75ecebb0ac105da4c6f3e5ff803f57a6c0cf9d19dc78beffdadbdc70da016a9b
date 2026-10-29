@@ -1,0 +1,40 @@
+**约定 75.2（Theorem 9.3 供应的同运行向量）。** 按资源顺序 $(N_{\rm read},N_G,N_R)$，精确 endpoint 和已执行计数为
+
+$$
+H=1:\quad (0,0,0),\qquad u_*=v_0;
+$$
+
+$$
+H>1\text{ 奇}:\quad(2H,2H,1),\qquad
+u_*=Mv_0+HM\alpha+H\alpha;
+$$
+
+$$
+H\text{ 偶},\quad L=H/2:\quad
+(H+r+\chi,\ H+\chi,\ r+1+\chi),\qquad
+r\in\{0,1,2\},\quad\chi\in\{0,1\},
+$$
+
+$$
+u_*=
+\begin{cases}
+M^{r+1}v_0+L(M\alpha+\alpha),&\chi=0,\\
+M^{r+2}v_0+L(M^2\alpha+\alpha)+M\alpha,&\chi=1.
+\end{cases}
+$$
+
+$r$ 是入口 paid parity search 实际执行的 replacement 数，$\chi$ 是第一 scan 后在 $Mw$ 的 paid parity test 是否要求实际 $G,R$ correction。偶数分支始终只有**两个完成的 $L$-scans**，各含最后一次 read 之后的 closing $G$。第一次从 $M^rv_0$ 开始；第二次从 $Mw$（$\chi=0$）或 $M^2w+M\alpha$（$\chi=1$）开始，其中 $w=M^rv_0+L\alpha$。$Mw$ 的奇数回复是中间付费测试，不是已完成的另一 scan。仅在同一 binding、同一 scan start、未发生 source update 时，已付费的回复才可复用为 scan 的第零项。上述调度、两个取得寄存器及向量的证明均引用 supplier Theorem 9.3 的 (AQBRP.5)–(AQBRP.17)，不另立不同调度。
+
+实际末端数量为
+
+$$
+qu_*=
+\begin{cases}
+2a+3b,&H=1,\\
+3a+5b+5H,&H>1\text{ 奇},\\
+qM^{r+1+\chi}v_0+(5+2\chi)H/2+3\chi,&H\text{ 偶}.
+\end{cases}
+$$
+
+supplier (AQBRP.8)–(AQBRP.9) 保证每个实际 acquisition prefix 的数量不超过末端；偶数时 $qu_*\le13a+21b+7H/2+3$。这保留未知入口的依赖，并不把数量变成可读参数。偶数计数上界为 $N_{\rm read}\le H+3,N_G\le H+1,N_R\le4$。
+

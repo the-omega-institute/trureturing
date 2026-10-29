@@ -16,7 +16,31 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPolar.polar`
 
 The real isometry from K to G0 is k.repr followed by the inverse of b.repr. It preserves all coefficients of the paired Hilbert bases.
 
-**Definition 1.2 (The Original Covariance on K).**
+**Definition 1.2 (The Centered Trace on Its Complete Input Support).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPolar.traceK`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPolar.traceK` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+traceK is the original centered trace restricted to K and regarded in its specified mean-zero codomain G0.
+
+**Theorem 1.3 (Paired Singular Coordinates of the Original Trace).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPolar.trace_coeff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPolar.trace_coeff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the same complete paired bases b,k and strictly positive mu satisfying Sigma(k(i))=mu(i)k(i) and C(k(i))=sqrt(mu(i))b(i), the b coefficient of traceK(x) equals sqrt(mu(i)) times the k coefficient of x, for every x in K and every i. The identity follows from the actual adjoint and Gram relation, so the paired coefficients belong to the original real operator.
+
+**Definition 1.4 (The Original Covariance on K).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPolar.covarianceK`
 
@@ -28,7 +52,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPolar.covari
 
 covarianceK is Sigma restricted to K and codomain-restricted to K using the adjoint range inclusion. Its coefficient formula relates the original covariance to the boundary graph.
 
-**Theorem 1.3 (Paired Isometry Coefficients).**
+**Theorem 1.5 (Paired Isometry Coefficients).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPolar.polar_coeff`
 
@@ -40,7 +64,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPolar.polar_
 
 For every x in K and every index i, the b coefficient of polar(b,k)(x) equals the k coefficient of x.
 
-**Theorem 1.4 (Covariance Coefficients on the Same Family).**
+**Theorem 1.6 (Covariance Coefficients on the Same Family).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPolar.covariance_coeff`
 
@@ -52,7 +76,13 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPolar.covari
 
 For paired bases b,k and positive mu with the original Sigma and C basis actions, every x in K has covarianceK coefficient mu(i) times its k coefficient. The heat uses this formula on the same ordered spectral family as its eigenvalue bounds.
 
-**Theorem 1.5 (The Parameterized Original Graph).**
+For the original global counting family, retain the same e,k,mu with K equal to the orthogonal complement of ker(Sigma), mu positive and antitone tending to zero, and b=phi to the power minus two and B=2 phi cubed. The counting bounds give b/(i+1) at most mu(i) at most B/(i+1). To apply SupportedSingular.approximationNumber_eq_supported to Sigma on the full edge carrier H, take A to be Sigma with codomain restricted to K, the output basis to be k, and the output isometry to be the actual inclusion K into H. The C_project identity and covariance_coeff give its required all-vector coefficients.
+
+For centeredTrace:H to G0, take A=centeredTrace, input support K, input basis k, output basis e and the identity output isometry. The same C_project identity and trace_coeff give the coefficient sqrt(mu(i)) times the k coefficient of the projection onto K. For the ambient C:H to G, retain exactly this A,e,k,mu and use the actual isometric inclusion of G0 into G. The complete support basis and the paired original operator equations give the singular system; both centeredTrace* centeredTrace and C* C equal the same original Sigma. Thus all zero-based approximation numbers of Sigma equal mu(i), and those of centeredTrace and ambient C both equal sqrt(mu(i)), with the full edge kernel retained and all bounded finite rank competitors allowed.
+
+The original operators are compact. For every real r greater than zero, the two-sided mu bounds and the real p-series criterion give summability of the actual Sigma singular values to the power r exactly when r is greater than one. The paired trace singular values give the threshold r greater than two, in either the centered or ambient codomain. At the endpoints, Sigma has summable squares but not summable first powers, while neither trace has summable squares. These are the Hilbert-Schmidt and trace class consequences for the original supported singular system. They require the complete support and actual Gram identities above; the scalar comparison alone supplies no operator ideal statement.
+
+**Theorem 1.7 (The Parameterized Original Graph).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPolar.graph_polar`
 
@@ -64,7 +94,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPolar.graph_
 
 For the same paired bases and covariance actions, an arbitrary pair (u,h) of ambient boundary vectors belongs to boundaryOperator.graph exactly when some x in K has h=polar(x) and Pi(u)=polar(covarianceK(x)), with the original inclusions into G. This identity describes the entire graph and its domain.
 
-**Theorem 1.6 (The Actual Real Polar Realization).**
+**Theorem 1.8 (The Actual Real Polar Realization).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPolar.actual_polar_domains_resolvent`
 
@@ -94,4 +124,6 @@ For every F in G, the original resolvent equals constG(mean(F)) plus W(T(R(W inv
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPolar.graph_polar`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPolar.polar`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPolar.polar_coeff`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPolar.traceK`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPolar.trace_coeff`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundarySpectralForm](BiasedBoundarySpectralForm.md)

@@ -1,0 +1,13 @@
+**Theorem 147.3 (One completion per hypothesis, shared by every history).**
+Fix $|t|\le\rho$, an anchor or alternative completion vector $h$ in the
+closed unit ball, and the original retention parameter $\gamma$. VI
+Theorem 106.3 supplies one full ten-dimensional completion
+$\mathsf J_h$ with the prescribed five ready columns. The same
+$\mathsf J_h$ is used for emission, the single forward return, and every
+finite history of that hypothesis. It is independent of the phase label
+once $h$ is fixed: changing $N_0$ to $N_t$ changes only the installed
+control in the chronological word. Thus a comparison at two phases uses
+the same retention parameters and the same two full completions whenever
+the two vectors are held fixed. This is the fixed-installation statement
+of VI (106.3), not a row-wise choice of operations or completions.
+

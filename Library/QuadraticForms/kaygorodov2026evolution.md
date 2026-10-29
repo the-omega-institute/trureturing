@@ -5,8 +5,9 @@ year: 2026
 title: "Evolution algebras: a survey of results and a list of open problems"
 doi: 10.48550/arXiv.2610.22248
 url: https://arxiv.org/abs/2610.22248v1
-claim: "Theorem 4 and Conjecture 3 concern perfect algebra automorphisms; Question 46 asks whether dense square forces uniqueness of a Hilbert natural orthonormal basis; Question 14 asks whether an infinite natural-basis quotient can coexist with finite full automorphisms."
+claim: "Conjecture 4 asks for the simple complex evolution-algebra automorphism maximum max{n!, n(2^n-1)}; Theorem 4 and Conjecture 3 concern perfect algebra automorphisms; Question 46 asks whether dense square forces uniqueness of a Hilbert natural orthonormal basis; Question 14 asks whether an infinite natural-basis quotient can coexist with finite full automorphisms."
 strata_touched:
+  - D5/S3/QuadraticForms/EvolutionAlgebras/SimpleEvolutionAutomorphismMaximum
   - D5/S3/QuadraticForms/EvolutionAlgebras/FiniteAutomorphismsInfiniteNaturalBases
   - D5/S3/QuadraticForms/EvolutionAlgebras/HilbertNaturalBasisNonuniqueness
   - D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionAutomorphismControl
@@ -84,3 +85,25 @@ The fifteen-dimensional rational algebra in
 has ordinary index 256. At k=255, the logarithm and binary digit count
 are 7 and 8, whose sum exceeds 15-1. The construction and its proof
 are project results, while the question and definitions are from this survey.
+
+## Simple-algebra automorphism maximum
+
+Conjecture 4, section 2.3, page 28 states: “Over ℂ, the maximal order of the
+automorphism group of a simple n-dimensional evolution algebra is
+max{n!, n(2ⁿ−1)}.” The dimension is positive. The same paragraph identifies the
+cyclic product and generic complete-support products as attaining families.
+
+The source's Theorem 6 uses simplicity in the usual ideal sense. Its cited
+Cabrera Casado, Siles Molina and Velasco source, arXiv:1601.01832v2, section 4, page 18,
+states: “We recall that an algebra A is simple if A² ≠ 0 and 0 is the only
+proper ideal.” The formal predicate quantifies over every complex vector
+subspace absorbing multiplication on both sides. The full group consists of
+all complex linear multiplication automorphisms, without an associativity
+or multiplicative-unit assumption.
+
+The uniform maximum proof and the explicit I+J attaining family are
+repository results. Strong connectivity makes the successor quotient one
+cycle. A supported permutation gives equal positive quotient fibers. The
+joint group bound reduces to h(2ʰ−1)(k!)ʰ with n=hk; the factorial comparison
+and its boundary cases give the asserted maximum. Classification of all
+extremizers and attainment over other fields remain open here.

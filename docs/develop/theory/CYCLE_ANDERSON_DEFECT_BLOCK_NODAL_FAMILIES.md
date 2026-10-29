@@ -643,46 +643,188 @@ print("ALL_FINITE_CHECKS_PASSED")
 <!-- 追加区自下一行的「追加锚」开始。每批增补写在锚之后,并以一行新的、逐字相同的追加锚结尾。 -->
 
 ## 追加锚（本行以下为增补区）
+## 11. 缺陷站点节点因子的全参数恒等式
 
-## 11. 指定缺陷站点的精确节点因子与不可约分解
-
-**定义 11.1（缺陷站点与消元多项式）。** 设 $r,m\ge3$ 为整数，$L=rm$，站点按 $0,\ldots,L-1$ 编号。沿用定义 6.1，令
-
-$$
-u_r=-+^{r-1},\qquad U=u_r^{m-1}(--+^{r-2}),\qquad q=(m-1)r+1,
-$$
-
-并记
+**定理 11.1（指定缺陷站点的精确节点因子）。** 对任意整数 $r,m\ge3$，令 $L=rm$、$q=(m-1)r+1$，在 $\mathbb Z/L\mathbb Z$ 上取定义 6.1 的势
 
 $$
-\begin{aligned}
-H_U&=2I-A_{C_L}+t\operatorname{diag}(U),&
-p(\lambda,t)&=\det(\lambda I-H_U),\\
-Q(\lambda,t)&=\det(\lambda I-H_U^{(q)}),&
-K&=\mathbb R(t),
-\end{aligned}
+U_i=\begin{cases}-1,&i\equiv0\pmod r\ \text{或}\ i=q,\\1,&\text{其余情形}。\end{cases}
 $$
 
-其中 $t$ 为不定元，$H_U^{(q)}$ 是删去第 $q$ 行与第 $q$ 列的主子矩阵；$g_q$ 为 $p,Q$ 在 $K[\lambda]$ 中的首一最大公因式。$S_n$ 与 $\Psi_m$ 仍按约定 2.4 定义。置
+令 $t$ 为不定元，$K=\mathbb R(t)$，并记
 
 $$
-\begin{aligned}
-a&=2-\lambda+t,& b&=2-\lambda-t,\\
-X&=S_{r-1}(a),&Y&=S_{r-2}(a),&Z&=S_{r-3}(a),\\
-\sigma&=bX-2Y=\sigma_r,&D&=bY-Z,&h&=\left\lfloor\frac{m-1}{2}\right\rfloor,
-\end{aligned}
+H=\Delta_L+t\operatorname{diag}(U),\qquad
+p=\det(\lambda I_L-H),\qquad
+Q=\det(\lambda I_{L-1}-H^{(q)}),\qquad
+g=\operatorname{monic\_gcd}_{K[\lambda]}(p,Q).
 $$
 
-其中 $\sigma=\sigma_r$ 使用命题 6.9。另定义一元多项式
+这里 $H^{(q)}$ 是同时删除第 $q$ 行与第 $q$ 列所得的实际主子矩阵，其余对角元保持 $2+tU_i$。沿用约定 2.2、2.4，置
 
 $$
-s_m(x)=S_{m-1}(x),\qquad \tau_m(x)=S_{m-2}(x)+1,\qquad
-F_m(x)=x s_m(x)-2\tau_m(x).
+a=2-\lambda+t,\qquad b=2-\lambda-t,\qquad
+\sigma_r=bS_{r-1}(a)-2S_{r-2}(a),\qquad
+N=r\left\lfloor\frac{m-1}{2}\right\rfloor.
 $$
 
-**引理 11.2（所有带内迹因子的函数域不可约性）。** 对每个整数 $r\ge3$ 与每个实数 $c$，若 $|c|<2$，则 $\sigma-c$ 在 $\mathbb R(t)[\lambda]$ 中不可约，其 $\lambda$-次数为 $r$、首项系数为 $(-1)^r$。
+则在 $K[\lambda]$ 中有精确的首一恒等式
 
-**证明。** 先把 $a,b$ 当作代数独立变量。由事实 3.2 的矩阵积公式，
+$$
+\boxed{\quad g=(-1)^N\Psi_m(\sigma_r).\quad}
+$$
+
+因而 $\deg_\lambda g=N$，且 $g$ 无平方因子。
+
+**证明。** 令 $\widetilde U_i=-1$ 当且仅当 $i\equiv0\pmod r$，其余站点取 $1$，并令
+
+$$
+H_0=\Delta_L+t\operatorname{diag}(\widetilde U),\qquad
+p_0=\det(\lambda I_L-H_0).
+$$
+
+由 $\widetilde U_q=1$，有 $H=H_0-2tE_{qq}$。删除第 $q$ 行列后，两矩阵完全相同。行列式对第 $(q,q)$ 元的线性给出
+
+$$
+Q=\det(\lambda I_{L-1}-H_0^{(q)}),\qquad
+p=p_0+2tQ,\qquad
+\operatorname{monic\_gcd}(p,Q)=\operatorname{monic\_gcd}(p_0,Q).
+\tag{11.1}
+$$
+
+这里保留的是圈的主子矩阵，而非把删点后端点的对角元改成 $1$ 的路 Laplace 矩阵。零振幅不受在位秩一扰动影响，是此恒等式的本征向量表述；均匀圈上的对应见 S. Roy，[*A spectral viewpoint on the single defect tight-binding chain*](https://arxiv.org/html/2607.29467v1)，§2.1–2.2、式 (1)–(4)、(10)：其跃迁系数取 $\gamma=1$，背景常数对角元 $c$ 对应能量平移 $E=\lambda-c$，其缺陷强度对应 $2t$。此处 $H_0$ 的对角元具有周期 $r$，式 (11.1) 直接来自上述行列式线性。
+
+在周期背景 $\widetilde U$ 上，从状态 $Z_{q+1}=(z_{q+1},z_q)^{\mathsf T}$ 向前传递一个周期。因为 $q\equiv1\pmod r$，依次经过的站点 $q+1,\ldots,q+r$ 的系数是 $r-2$ 个 $a$、一个 $b$、一个 $a$。故该周期的传递矩阵为
+
+$$
+C=T(a)T(b)T(a)^{r-2},\qquad
+\det C=1,\qquad
+\operatorname{tr}C=\operatorname{tr}\bigl(T(a)^{r-1}T(b)\bigr)=\sigma_r,
+\tag{11.2}
+$$
+
+最后一个等式使用命题 6.9。从 $q+1$ 到 $q+L+1$ 恰经过 $m$ 个相同周期，所以背景的整圈单值矩阵是 $C^m$。由事实 3.2，实际周期边界与实际主子式满足
+
+$$
+(-1)^Lp_0=\operatorname{tr}(C^m)-2,\qquad
+(-1)^{L-1}Q=(C^m)_{21}.
+\tag{11.3}
+$$
+
+周期单值的标准对应见 G. Teschl，[*Jacobi Operators and Completely Integrable Nonlinear Lattices*](https://www.mat.univie.ac.at/~gerald/ftp/book-jac/jacop.pdf)，式 (1.28)–(1.30)、§7.1 式 (7.3)–(7.10)：取该书 Jacobi 系数 $a_{\mathrm T}(n)=-1$、$b_{\mathrm T}(n)=2+t\widetilde U_n$、谱参数 $z=\lambda$；交换该书状态 $(z_n,z_{n+1})^{\mathsf T}$ 的两个坐标，即得到本卷的 $(z_{n+1},z_n)^{\mathsf T}$ 与 $T(2+t\widetilde U_{n+1}-\lambda)$。该书判别式是单值迹的一半，因而单周期判别式为 $\sigma_r/2$，整圈的周期条件对应式 (11.3) 中的迹 $2$。
+
+取 $K$ 的代数闭包 $F$，令 $\lambda_*\in F$ 为 $p,Q$ 的任一公共根。下文把 $a,b,C,\sigma_r$ 均在 $\lambda=\lambda_*$ 处取值，仍用同一字母表示。由式 (11.1)、(11.3)，矩阵 $M=C^m$ 满足
+
+$$
+M_{21}=0,\qquad \operatorname{tr}M=2,\qquad \det M=1.
+$$
+
+若 $M_{11}=\alpha$、$M_{22}=\delta$，则 $\alpha+\delta=2$、$\alpha\delta=1$，从而 $(\alpha-1)^2=0$。域中没有非零幂零元，故 $\alpha=\delta=1$，于是
+
+$$
+C^me_1=e_1,\qquad e_1=(1,0)^{\mathsf T}.
+\tag{11.4}
+$$
+
+设
+
+$$
+s=S_{r-2}(a),\qquad v=S_{r-3}(a),\qquad h=bs-v.
+$$
+
+事实 3.2 的常系数情形给出 $T(a)^{r-2}$ 的第一列为 $(s,v)^{\mathsf T}$；也可由事实 4.1 与 $S_n$ 的递推直接读出。因此
+
+$$
+Ce_1=\begin{pmatrix}ah-s\\h\end{pmatrix}.
+\tag{11.5}
+$$
+
+现证明在这个公共根处 $h\ne0$。若 $h=0$，则 $Ce_1=-s e_1$，由式 (11.4) 得 $(-s)^m=1$，特别地 $s\ne0$。由于 $r\ge3$，多项式
+
+$$
+\bigl(-S_{r-2}(X)\bigr)^m-1\in\mathbb R[X]
+$$
+
+次数为 $m(r-2)>0$，且以 $a$ 为根。因此 $a$ 在 $\mathbb R$ 上代数，$s,v$ 也在 $\mathbb R$ 上代数。又 $h=0$ 与 $s\ne0$ 给出 $b=v/s$，故 $b$ 在 $\mathbb R$ 上代数。这迫使
+
+$$
+t=\frac{a-b}{2}
+$$
+
+在 $\mathbb R$ 上代数，与 $t$ 是不定元矛盾。于是式 (11.5) 的第二个坐标确实非零。
+
+以事实 4.1 计算式 (11.4)，有
+
+$$
+0=(C^m-I)e_1
+ =S_{m-1}(\sigma_r)Ce_1-
+   \bigl(S_{m-2}(\sigma_r)+1\bigr)e_1.
+\tag{11.6}
+$$
+
+取第二个坐标，因 $h\ne0$，得 $S_{m-1}(\sigma_r)=0$；再取第一个坐标，得 $S_{m-2}(\sigma_r)+1=0$。命题 4.2 (1) 给出这两个一元多项式的首一最大公因式为 $\Psi_m$。将其 Bézout 恒等式代入 $\sigma_r$，得到
+
+$$
+\Psi_m\bigl(\sigma_r(\lambda_*,t)\bigr)=0.
+\tag{11.7}
+$$
+
+这一步同时排除带边：$S_{m-1}(2)=m$、$S_{m-1}(-2)=(-1)^{m-1}m$ 均不为零，故任何公共根均不满足 $\sigma_r=\pm2$；标量单周期矩阵 $C=\pm I$ 已包含在被排除的 $h=0$ 情形中。
+
+还须控制最大公因式的重数。主子式 $Q\in\mathbb R[t][\lambda]$ 关于 $\lambda$ 首一且次数为 $L-1$。在 $t=0$ 处，它是对角元为 $2$、相邻非对角元为 $-1$ 的 $L-1$ 阶路矩阵的特征多项式。因此
+
+$$
+Q(\lambda,0)=\prod_{j=1}^{L-1}
+ \left(\lambda-2+2\cos\frac{\pi j}{L}\right).
+\tag{11.8}
+$$
+
+这些根两两不同：对 $1\le j\le L-1$，正弦向量 $y_i=\sin(\pi ji/L)$，$1\le i\le L-1$，在边界 $y_0=y_L=0$ 下给出本征值 $2-2\cos(\pi j/L)$，而余弦在 $(0,\pi)$ 上严格单调。故 $\operatorname{Res}_\lambda(Q,\partial_\lambda Q)$ 在 $t=0$ 的取值不为零；首一性使次数在这个取值下保持，结式的取值与系数取值可交换。于是 $Q$ 在 $K[\lambda]$ 中无重根，$g\mid Q$ 也无重根。
+
+对 $g$ 的任一首一不可约因子 $\pi$，在 $F$ 中取其一个根。它是 $p,Q$ 的公共根，式 (11.7) 表明 $\pi\mid\Psi_m(\sigma_r)$。因为 $g$ 无重根，合并全部不可约因子便得到反向整除
+
+$$
+g\mid\Psi_m(\sigma_r)\qquad\text{于 }K[\lambda].
+\tag{11.9}
+$$
+
+另一方面，命题 4.9 已给出无平方因子的首一多项式 $(-1)^N\Psi_m(\sigma_r)$ 整除 $g$；此处直接使用该结论。由 $S_{r-1}$ 首一且次数为 $r-1$，$bS_{r-1}(a)-2S_{r-2}(a)$ 关于 $\lambda$ 的首项为 $(-1)^r\lambda^r$，而 $\Psi_m$ 首一且次数为 $\lfloor(m-1)/2\rfloor$，故 $\Psi_m(\sigma_r)$ 的首项为 $(-1)^N\lambda^N$。两向整除与首一性遂给出所述恒等式；次数与无平方因子性随即成立。∎
+
+**推论 11.2（指定站点的代数节点分支与次数上界）。** 在定理 11.1 的条件下，令 $F=\overline{\mathbb R(t)}$。使实际圈矩阵 $H$ 存在非零本征向量 $z\in F^L$ 且 $z_q=0$ 的谱值，恰为
+
+$$
+\bigcup_{\substack{k\in\mathbb Z\\0<2k<m}}
+\left\{\lambda_*\in F:
+ bS_{r-1}(a)-2S_{r-2}(a)=2\cos\frac{2\pi k}{m}\right\},
+$$
+
+其中方程中的 $a,b$ 均在 $\lambda=\lambda_*$ 处取值。该集合共有 $r\lfloor(m-1)/2\rfloor$ 个不同元素；每个谱值的节点本征向量空间恰为一维，且可唯一归一化为 $z_{q+1}=1$。特别地，开放问题 8.6 第一子句所需的一般上界为
+
+$$
+\deg_\lambda g\le r\left\lfloor\frac{m-1}{2}\right\rfloor,
+$$
+
+并由命题 4.9 的下界取等号。
+
+**证明。** 引理 3.4 把节点本征向量的存在等价为 $p,Q$ 有公共根，定理 11.1 给出这些公共根的全部首一因子与重数。命题 4.9 的无平方因子性和次数给出不同根的数目。对固定谱值，若 $z_q=z_{q+1}=0$，由每一步可逆的本征递推得到 $z=0$；因此在节点本征向量空间上，线性映射 $z\mapsto z_{q+1}$ 是单射，存在性使其为到 $F$ 的同构。这也就是定理 3.6 (1) 的归一化结论。∎
+
+## 追加锚（本行以下为增补区）
+
+## 12. 带内迹因子的不可约性与特化异常
+
+**约定 12.1（系数域与辅助多项式）。** 沿用定理 11.1 的整数 $r,m\ge3$、$L=rm$、指定站点 $q=(m-1)r+1$、实际圈矩阵 $H$、主子矩阵 $H^{(q)}$、特征多项式 $p,Q$ 与 $K=\mathbb R(t)$。$a,b,\sigma_r$ 及 $S_n,\Psi_m$ 沿用该定理与约定 2.4。记
+
+$$
+X=S_{r-1}(a),\qquad Y=S_{r-2}(a),\qquad Z=S_{r-3}(a),\qquad
+h=\left\lfloor\frac{m-1}{2}\right\rfloor,\qquad
+G=(-1)^{rh}\Psi_m(\sigma_r)\in\mathbb R[t][\lambda].
+$$
+
+因而 $\sigma_r=bX-2Y$；定理 11.1 给出 $G=g$ 于 $K[\lambda]$。
+
+**引理 12.2（所有带内迹因子的函数域不可约性）。** 对每个整数 $r\ge3$ 和每个实数 $c$，若 $|c|<2$，则 $\sigma_r-c$ 在 $\mathbb R(t)[\lambda]$ 中不可约，其 $\lambda$-次数为 $r$，首项系数为 $(-1)^r$。
+
+**证明。** 先把 $a,b$ 当作代数独立变量。由事实 3.2 的常系数矩阵积公式，
 
 $$
 T(a)^{r-1}=\begin{pmatrix}X&-Y\\Y&-Z\end{pmatrix},
@@ -700,172 +842,105 @@ $$
 坐标变换有多项式逆
 
 $$
-a=2-\lambda+t,\quad b=2-\lambda-t,
-\qquad t=\frac{a-b}{2},\quad \lambda=2-\frac{a+b}{2},
+a=2-\lambda+t,\qquad b=2-\lambda-t,
+\qquad t=\frac{a-b}{2},\qquad \lambda=2-\frac{a+b}{2},
 $$
 
-所以给出环同构 $\mathbb R[a,b]\simeq\mathbb R[t,\lambda]$。在该同构下，$E_c$ 变为 $\sigma-c$，仍不可约。$S_{r-1}$ 首一、次数 $r-1$，故 $bX$ 的 $\lambda$-首项为 $(-1)^r\lambda^r$，而 $2Y+c$ 的 $\lambda$-次数至多 $r-2$。于是 $\sigma-c$ 在 $\mathbb R[t][\lambda]$ 中首项系数为单位 $(-1)^r$，从而本原。再次应用 Gauss 引理，得到它在 $\mathbb R(t)[\lambda]$ 中不可约。两次使用 Gauss 引理分别对应系数环 $\mathbb R[a]$ 与 $\mathbb R[t]$。∎
+所以给出环同构 $\mathbb R[a,b]\simeq\mathbb R[t,\lambda]$。在该同构下，$E_c$ 变为 $\sigma_r-c$，仍不可约。$S_{r-1}$ 首一、次数为 $r-1$，故 $bX$ 的 $\lambda$-首项为 $(-1)^r\lambda^r$，而 $2Y+c$ 的 $\lambda$-次数至多为 $r-2$。于是 $\sigma_r-c$ 在 $\mathbb R[t][\lambda]$ 中的首项系数为单位 $(-1)^r$，从而本原。再次应用 Gauss 引理，得到它在 $\mathbb R(t)[\lambda]$ 中不可约。
 
-**定理 11.3（一般缺陷块族的精确最大公因式）。** 对定义 11.1 的全部整数 $r,m\ge3$，有
+两次 Gauss 引理分别用于系数环 $\mathbb R[a]$ 与 $\mathbb R[t]$；所用标准工具见 S. Lang，*Algebra*，修订第三版，第 IV 章 §2。本引理将定理 6.5 的 $r=3$ 结论扩展到全部 $r\ge3$ 和全部实数 $|c|<2$。∎
 
-$$
-\boxed{\displaystyle
- g_q=(-1)^{rh}\Psi_m(\sigma)
-     =\prod_{k=1}^{h}f_k,\qquad
- f_k=(-1)^r\left(\sigma-2\cos\frac{2\pi k}{m}\right).}
-$$
-
-这是 $\mathbb R(t)[\lambda]$ 中的完整首一不可约分解：每个 $f_k$ 的次数为 $r$，不同 $k$ 的因子两两不相伴，每个因子的重数恰为 $1$，且 $\deg_\lambda g_q=rh$。等式右端属于 $\mathbb R[t][\lambda]$，并在该环中整除 $p$ 与 $Q$。结论针对指定站点 $q$ 的函数域最大公因式；不包含其他站点的完整节点因子、长度 $2p$ 的势分类或任意缺陷模式的分类。
-
-**证明。** 令 $H^0=2I-A_{C_L}+t\operatorname{diag}(u_r^m)$，$p_0=\det(\lambda I-H^0)$。$U$ 仅在 $q$ 处把周期势的 $+1$ 改成 $-1$，故
+**定理 12.3（节点因子的完整首一不可约分解）。** 在约定 12.1 的条件下，置
 
 $$
-H_U=H^0-2tE_{qq},\qquad p=p_0+2tQ.
+c_k=2\cos\frac{2\pi k}{m},\qquad
+f_k=(-1)^r(\sigma_r-c_k),\qquad 1\le k\le h.
 $$
 
-后一式由行列式对第 $q$ 个对角元的一次性得到，因为删去 $q$ 后两矩阵相同。于是 $K[\lambda]$ 中有理想等式 $(p,Q)=(p_0,Q)$，其中已保留全部因子重数。这是单点对角扰动的余子式恒等式；均匀周期链的节点态机制见 S. Roy，*A spectral viewpoint on the single defect tight-binding chain*，arXiv:2607.29467v1，§2 式 (1)–(10)。
-
-下面确定实际删点路径。记 $A=T(a)$、$B=T(b)$。在周期势中，从 $q+1$ 到 $q+r$ 的站点模 $r$ 的余数依次为
+定理 11.1 的节点因子有完整分解
 
 $$
-2,3,\ldots,r-1,0,1.
+\boxed{\displaystyle g=G=\prod_{k=1}^{h}f_k\quad\text{于 }\mathbb R(t)[\lambda].}
 $$
 
-因此这 $r$ 步的对角元是 $a^{r-2},b,a$，按约定 2.3 的乘积次序，其转移矩阵为
+每个 $f_k$ 都首一、不可约且次数为 $r$；不同 $k$ 的因子两两不相伴，每个因子的重数恰为 $1$。此外 $G$ 在 $\mathbb R[t][\lambda]$ 中同时整除 $p,Q$。对每个实数 $t_0$，每个 $f_k(\lambda,t_0)$ 在 $\mathbb R[\lambda]$ 中分解为 $r$ 个不同的一次因子。
+
+**证明。** 由约定 2.4，各 $c_k$ 在 $(-2,2)$ 内两两不同。引理 12.2 给出各 $f_k$ 首一、不可约且次数为 $r$。若 $f_k$ 与 $f_\ell$ 相伴，首一性使二者相等，比较二者的常数差便得 $c_k=c_\ell$，从而 $k=\ell$。依约定 2.4 展开 $\Psi_m$，再直接应用定理 11.1 的精确 gcd 恒等式，即得所示分解和全部重数。
+
+用首一多项式 $G$ 除 $p,Q$，带余除法在 $\mathbb R[t][\lambda]$ 中进行；余式在 $K[\lambda]$ 中由 $G=g$ 为零，所以本来就为零。这给出原系数环中的整除。最后，对块 $u_r=-+^{r-1}$ 与带内值 $c_k$ 应用事实 4.8，各实特化都有 $r$ 个实单根，故得到所述一次因子分解。函数域的不可约性与实特化的一次分解分别属于不同的系数域。∎
+
+**命题 12.4（公共因子的全实特化与有限升阶集合）。** 固定整数 $r,m\ge3$。对每个实数 $t_0$，$G(\lambda,t_0)$ 都是 $p(\lambda,t_0),Q(\lambda,t_0)$ 的次数为 $rh$ 的首一公共因子。令 $P_1,Q_1\in\mathbb R[t][\lambda]$ 为首一商
 
 $$
-C=ABA^{r-2},\qquad \det C=1,\qquad
-\operatorname{tr}C=\operatorname{tr}(A^{r-1}B)=\sigma.
+p=GP_1,\qquad Q=GQ_1,
 $$
 
-事实 3.2 给出 $A^{r-2}$ 的第一列为 $(Y,Z)^{\mathsf T}$，故 $C_{21}=bY-Z=D$。从 $q+1$ 到 $q+L$ 是同一段重复 $m$ 次，总转移为 $C^m$。最后一个站点 $q+L\equiv q$ 在周期势中对应 $a$。令
+并定义
 
 $$
-N=T(d^0_{q+L-1})\cdots T(d^0_{q+1}),\qquad
-d^0_i=\begin{cases}b,&i\equiv0\pmod r,\\a,&i\not\equiv0\pmod r.\end{cases}
+\mathcal R_{r,m}(t)=\operatorname{Res}_\lambda(P_1,Q_1).
 $$
 
-则 $C^m=AN$，而 $A$ 的第二行是 $(1,0)$，所以 $(C^m)_{21}=N_{11}$。按 $q+1,\ldots,q+L-1$ 排列删点后的顶点，事实 3.2 表明 $N_{11}$ 正是 $H_U^{(q)}-\lambda I$ 的路行列式。再由事实 4.1，
+则 $\mathcal R_{r,m}\in\mathbb R[t]\setminus\{0\}$，且对每个实数 $t_0$ 有
 
 $$
-C^m=s_m(\sigma)C-S_{m-2}(\sigma)I,
-\qquad
-Q=(-1)^{L-1}s_m(\sigma)D.
+\operatorname{monic\_gcd}_{\mathbb R[\lambda]}
+ \bigl(p(\lambda,t_0),Q(\lambda,t_0)\bigr)=G(\lambda,t_0)
+\quad\Longleftrightarrow\quad \mathcal R_{r,m}(t_0)\ne0.
 $$
 
-同一幂公式取迹，并用事实 3.2 的循环行列式公式，得到
+因此，重新求得的特化 gcd 次数超过 $rh$ 的实耦合集合，恰为 $\mathcal R_{r,m}$ 的实零点集，且为有限集。
+
+**证明。** 定理 12.3 给出原系数环中的首一整除；由于 $p,Q,G$ 都关于 $\lambda$ 首一，商 $P_1,Q_1$ 也首一。定理 11.1 的 $G=g$ 说明 $P_1,Q_1$ 在 $K[\lambda]$ 中互素，故其结式非零。首一性使 $G,P_1,Q_1$ 在每个实特化下保持次数，并使结式与特化交换。于是于 $\mathbb R[\lambda]$ 有
 
 $$
-p_0=(-1)^L\bigl(\operatorname{tr}C^m-2\bigr)
-    =(-1)^L F_m(\sigma).
+\operatorname{monic\_gcd}\bigl(p(\lambda,t_0),Q(\lambda,t_0)\bigr)
+ =G(\lambda,t_0)\,
+  \operatorname{monic\_gcd}\bigl(P_1(\lambda,t_0),Q_1(\lambda,t_0)\bigr).
 $$
 
-这些 continuant、幂与迹公式直接使用事实 3.2、4.1；周期 Jacobi 的相应归一化见 G. Teschl，*Jacobi Operators and Completely Integrable Nonlinear Lattices*，第 7 章 §7.1 式 (7.9)、§7.2 式 (7.40)–(7.41)。以 $r$ 为周期时，书中的半迹判别式为 $\Delta=\sigma/2$。
+最后一个 gcd 为 $1$，当且仅当 $\mathcal R_{r,m}(t_0)\ne0$；若不为 $1$，其次数为正。非零一元多项式只有有限个实零点，遂得全部结论。这里的结式与特化性质是标准工具，见 Lang 同书第 IV 章 §8，亦即母卷定理 3.2 与本卷引理 7.1 所用的性质。∎
 
-现在排除 $D$ 对整个 $p_0$ 的贡献。仍先在 $\mathbb R[a,b]$ 中工作。由引理 11.2 证明中的 $Y^2-XZ=1$，有 $\gcd(Y,Z)=1$；又 $r\ge3$ 给出 $\deg_aY=r-2\ge1$。所以 $D=Yb-Z$ 关于 $b$ 本原，在 $\mathbb R(a)[b]$ 中一次且不可约，由 Gauss 引理在 $\mathbb R[a,b]$ 中不可约。
+**命题 12.5（非零耦合的额外节点根）。** 对实际缺陷圈 $r=5,m=3$，有 $L=15$、$q=11$。取 $t_0=1/2$，则 $\lambda-3/2$ 同时整除 $p(\lambda,t_0)$ 与 $Q(\lambda,t_0)$，却不整除 $G(\lambda,t_0)$。特别地 $\mathcal R_{5,3}(1/2)=0$，且这个特化后的首一 gcd 次数严格大于 $5$。
 
-若 $D\mid F_m(\sigma)$ 于 $\mathbb R[a,b]$，代入 $b=Z/Y\in\mathbb R(a)$ 应得到零。但在此代入下，
-
-$$
-\sigma=\frac{XZ}{Y}-2Y=-\left(Y+Y^{-1}\right).
-$$
-
-对 Laurent 不定元 $z$，把事实 4.1 应用于 $\operatorname{diag}(z,z^{-1})$ 并取迹，得到
+**证明。** 令 $H_0,p_0,C$ 如定理 11.1 证明中式 (11.1)–(11.3)，并记 $A=T(a)$、$B=T(b)$、$D=bY-Z$。由事实 3.2，$A^{r-2}$ 的第一列为 $(Y,Z)^{\mathsf T}$，故
 
 $$
-F_m(z+z^{-1})=z^m+z^{-m}-2.
+Ce_1=ABA^{r-2}e_1
+ =A\begin{pmatrix}bY-Z\\Y\end{pmatrix}
+ =\begin{pmatrix}aD-Y\\D\end{pmatrix},
+\qquad C_{21}=D.
 $$
 
-取 $z=-Y$，即得
+记
 
 $$
-\left.F_m(\sigma)\right|_{b=Z/Y}
- =(-1)^m\frac{\bigl(Y^m-(-1)^m\bigr)^2}{Y^m}\ne0,
+s_m(x)=S_{m-1}(x),\qquad
+F_m(x)=xS_{m-1}(x)-2\bigl(S_{m-2}(x)+1\bigr).
 $$
 
-因为 $Y$ 非常数。故 $D\nmid F_m(\sigma)$。
-
-还须把这一排除传到 $K[\lambda]$。经引理 11.2 的坐标同构，$D$ 在 $\mathbb R[t,\lambda]$ 中不可约；其 $\lambda$-次数为 $r-1$、首项系数为 $(-1)^{r-1}$，所以关于 $\lambda$ 本原。Gauss 引理保证它在 $K[\lambda]$ 中仍不可约。若它在 $K[\lambda]$ 中整除 $F_m(\sigma)$，用首一多项式 $(-1)^{r-1}D$ 在 $\mathbb R[t][\lambda]$ 中作带余除法，余式在 $K[\lambda]$ 中为零，因而本来就为零。逆坐标同构遂给出 $\mathbb R[a,b]$ 中的整除，与上段矛盾。因此
+直接对式 (11.3) 使用事实 4.1 的幂公式并取相应矩阵元与迹，得到
 
 $$
-\gcd_{K[\lambda]}\bigl(D,F_m(\sigma)\bigr)=1.
+Q=(-1)^{L-1}s_m(\sigma_r)D,\qquad
+p_0=(-1)^L F_m(\sigma_r),\qquad p=p_0+2tQ.
 $$
 
-这里排除的是整个 $F_m(\sigma)$，也包括 $\sigma=2$ 以及 $m$ 为偶数时的 $\sigma=-2$。局部化没有引入新的公因子。
+这些公式使用实际圈的周期边界和实际删点主子矩阵，后者的剩余对角元仍是 $2+tU_i$。周期 Jacobi 的相应单值约定见 G. Teschl，*Jacobi Operators and Completely Integrable Nonlinear Lattices*，§7.1；其半迹判别式在此为 $\sigma_r/2$。S. Roy，[*A spectral viewpoint on the single defect tight-binding chain*](https://arxiv.org/html/2607.29467v1)，§2 式 (1)–(4)、(10)，讨论的是均匀周期背景上的单点缺陷及零振幅态；这里的周期背景是块 $u_5$ 的重复，上式由本卷的矩阵公式给出。
 
-最后使用命题 4.2(1)，不重新计算其一元 Chebyshev 最大公因式。该命题给出 $\Psi_m\mid s_m$、$\Psi_m\mid\tau_m$，并存在 $A_m,B_m\in\mathbb R[x]$ 使
-
-$$
-A_m s_m+B_m\tau_m=\Psi_m.
-$$
-
-由 $\tau_m=(xs_m-F_m)/2$，可改写为
-
-$$
-\left(A_m+\frac{xB_m}{2}\right)s_m-\frac{B_m}{2}F_m=\Psi_m.
-$$
-
-代入 $x=\sigma$ 后，$\Psi_m(\sigma)$ 同时整除 $s_m(\sigma)$ 与 $F_m(\sigma)$，并且是后两者的多项式线性组合，故有完整理想等式
-
-$$
-\bigl(F_m(\sigma),s_m(\sigma)\bigr)=\bigl(\Psi_m(\sigma)\bigr)
-\quad\text{于 }K[\lambda].
-$$
-
-又因 $D$ 与 $F_m(\sigma)$ 互素，在这个 Euclid 环中存在 $R,S$ 使 $RF_m(\sigma)+SD=1$。乘以 $s_m(\sigma)$，得到
-
-$$
-\bigl(F_m(\sigma),s_m(\sigma)D\bigr)
- =\bigl(F_m(\sigma),s_m(\sigma)\bigr).
-$$
-
-结合 $p=p_0+2tQ$ 及上述行列式公式，得
-
-$$
-(p,Q)=\bigl(\Psi_m(\sigma)\bigr).
-$$
-
-这些等式比较的是多项式生成的理想，因而同时决定最大公因式的全部重数。另有 $s_m(2)=m$、$s_m(-2)=(-1)^{m-1}m$，端点也不会经 $s_m$ 产生公共因子。
-
-$\Psi_m$ 首一、次数 $h$，$\sigma$ 的首项系数为 $(-1)^r$，所以其首一化是 $(-1)^{rh}\Psi_m(\sigma)$。各 $c_k=2\cos(2\pi k/m)$（$1\le k\le h$）在 $(-2,2)$ 内两两不同，引理 11.2 给出各 $f_k$ 不可约、首一且次数 $r$。若 $f_k$ 与 $f_\ell$ 相伴，首一性使二者相等，比较常数差得 $c_k=c_\ell$，从而 $k=\ell$。因此所示乘积是完整不可约分解，每个因子只出现一次。用该首一乘积除 $p$ 与 $Q$，带余除法不离开 $\mathbb R[t][\lambda]$，其余式在 $K[\lambda]$ 中为零，故也在原环中为零。这证明全部断言。∎
-
-**命题 11.4（特化后的公共因子与有限异常）。** 固定定义 11.1 的整数 $r,m\ge3$，令 $G=(-1)^{rh}\Psi_m(\sigma)$。对每个实数 $t_0$，$G(\lambda,t_0)$ 都是 $p(\lambda,t_0),Q(\lambda,t_0)$ 的同次数 $rh$ 的首一公共因子。存在非零多项式 $\mathcal R_{r,m}\in\mathbb R[t]$，使得
-
-$$
-\gcd_{\mathbb R[\lambda]}\bigl(p(\lambda,t_0),Q(\lambda,t_0)\bigr)=G(\lambda,t_0)
-\quad\Longleftrightarrow\quad \mathcal R_{r,m}(t_0)\ne0,
-$$
-
-其中最大公因式取首一。因此只有有限个实耦合可使特化后的最大公因式次数超过 $rh$；非零耦合也能发生这种增加。具体地，$r=5,m=3,t_0=1/2$ 时，$\lambda-3/2$ 同时整除两个特化多项式，却不整除 $G(\lambda,1/2)$。
-
-**证明。** 由定理 11.3，可写 $p=GP_1$、$Q=GQ_1$，其中 $P_1,Q_1\in\mathbb R[t][\lambda]$ 都关于 $\lambda$ 首一，并在 $K[\lambda]$ 中互素。定义
-
-$$
-\mathcal R_{r,m}(t)=\operatorname{Res}_\lambda(P_1,Q_1)\in\mathbb R[t]\setminus\{0\}.
-$$
-
-首一性保证 $G,P_1,Q_1$ 在每个实特化下都保持次数，并保证结式与特化交换。在 $\mathbb R[\lambda]$ 中，
-
-$$
-\gcd(p(\lambda,t_0),Q(\lambda,t_0))
- =G(\lambda,t_0)\gcd(P_1(\lambda,t_0),Q_1(\lambda,t_0)).
-$$
-
-最后一个首一最大公因式为 $1$，当且仅当 $\mathcal R_{r,m}(t_0)\ne0$。非零一元多项式的实零点有限，故有有限异常结论。这使用的是首一多项式的标准结式性质，与母卷定理 3.2、本卷引理 7.1 的特化步骤相同；均匀周期链的 Chebyshev 公因子消去见 Roy 同文 §2 式 (11)–(14)、附录 A 式 (31)–(36)。
-
-对所给非零特化，再取 $\lambda=3/2$。此时 $a=1,b=0$，且
+在 $\lambda=3/2,t=1/2$ 处，$a=1,b=0$，而约定 2.4 的递推给出
 
 $$
 X=S_4(1)=-1,\qquad Y=S_3(1)=-1,\qquad Z=S_2(1)=0,
-\qquad D=0,\qquad\sigma=2.
+\qquad D=0,\qquad \sigma_5=2.
 $$
 
-定理 11.3 证明中的公式给出 $Q=0$，而 $F_3(2)=0$，故 $p_0=p=0$。另一方面 $h=1$、$\Psi_3(x)=x+1$，于是
+所以 $Q=0$；又 $F_3(2)=2S_2(2)-2(S_1(2)+1)=6-6=0$，故 $p_0=p=0$。另一方面 $h=1$、$\Psi_3(x)=x+1$，从而
 
 $$
 G(3/2,1/2)=(-1)^5\Psi_3(2)=-3\ne0.
 $$
 
-因而 $\lambda-3/2$ 是特化后额外出现的公共因子。这不改变函数域中的最大公因式。引理 11.2 的不可约性也属于 $\mathbb R(t)[\lambda]$：固定实数 $t_0$ 后，事实 4.8 已给出每个 $f_k(\lambda,t_0)$ 的 $r$ 个根都是实单根，故它在 $\mathbb R[\lambda]$ 中分解成 $r$ 个不同的一次因子。∎
+由因式定理，$\lambda-3/2$ 是特化后额外出现的公共因子；结合命题 12.4 得到结式取零与次数严格增加。∎
 
 ## 追加锚（本行以下为增补区）

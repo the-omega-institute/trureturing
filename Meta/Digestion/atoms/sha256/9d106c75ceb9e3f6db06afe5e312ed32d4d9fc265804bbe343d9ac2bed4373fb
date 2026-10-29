@@ -1,0 +1,28 @@
+**定理 5.1（共同自适应续接的误差预算）。** 对每个深度 $k-1$ 的实际经典历史 $h$，两模型仪器满足
+
+<a id="eq-5-u01"></a>
+
+$$
+\tfrac12\|\operatorname{Inst}_{\Phi_{k,h}}-\operatorname{Inst}_{\Psi_{k,h}}\|_\diamond
+\le\varepsilon_{k,h},
+\qquad\varepsilon_k=\sup_h\varepsilon_{k,h}.
+$$
+
+将会再次参与的记忆与环境纳入共同载体，使用同一因果控制程序，协议至多调用 $N$ 次，停止节点用共同吸收填充。若初始联合状态距离为 $d_0$，则
+
+<a id="eq-5-1"></a>
+
+$$
+D(\Omega_N^\Phi,\Omega_N^\Psi)
+\le\min\left\{1,d_0+\sum_{k=1}^N\varepsilon_k\right\}.
+\tag{5.1}
+$$
+
+共同初态时，最终通道的 half-diamond 距离也受同一和控制。
+
+**证明。** 将每轮共同预处理、历史控制、仪器调用、记录追加和共同后处理合为 $F_k^\Phi,F_k^\Psi$。轮前联合态写成经典历史直和 $\omega=\bigoplus_h\omega_h$，块范数相加给出每轮差不超过 $\varepsilon_k$；插入 $F_k^\Phi(\Omega_{k-1}^\Psi)$，用共同 CPTP 收缩并归纳即可。任意未操作参考可贯穿全过程。
+
+这个证明没有假设独立重复样本。核心条件是每轮误差界对实际可能出现的参考、记忆和控制上下文成立。若黑箱含隐藏的可复用记忆，单轮约化通道未必满足该条件；此时应比较完整多轮策略，或把相应记忆显式纳入共同载体。
+
+<a id="cor-5-2"></a>
+

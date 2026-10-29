@@ -35,7 +35,7 @@ def Pi : G →L[ℝ] G := (ℝ ∙ constG 1)ᗮ.starProjection
 /-- The actual centered trace, included in the original ambient G. -/
 def C : H →L[ℝ] G := Pi.comp J
 
-private theorem constG_norm_one : ‖constG 1‖ = 1 := by
+theorem constG_norm_one : ‖constG 1‖ = 1 := by
   change ‖(1:ℝ) • Lp.const 2 M (1:ℝ)‖ = 1
   rw [one_smul, Lp.norm_const (μ := M) (p := 2) (c := (1:ℝ)) (by norm_num)]
   simp

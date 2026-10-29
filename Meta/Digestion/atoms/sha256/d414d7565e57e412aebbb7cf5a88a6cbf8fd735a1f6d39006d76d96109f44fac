@@ -1,0 +1,6 @@
+**Definition 66.1 (A full-base rectangle).** Retain the exact worlds $W_2,W_3$ and base $(p_*,v_*)$ of Theorem 1.3. The following terminating decimals are exact rationals:
+
+$$
+\begin{aligned} p_c&=1.8057126623901333037270156505198680057908,\\ v_c&=172.2471680963226343182328451692107608678058,\\ \delta&=10^{-24},\qquad \mathcal B_*=[p_c-\delta,p_c+\delta]\times[v_c-\delta,v_c+\delta]. \end{aligned} \tag{66.1}
+$$
+
