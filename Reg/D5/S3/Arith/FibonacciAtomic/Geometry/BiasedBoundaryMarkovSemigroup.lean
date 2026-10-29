@@ -8,7 +8,8 @@ set_option relaxedAutoImplicit false
 noncomputable section
 namespace Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryMarkovSemigroup
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry
-open BiasedBoundaryMarkovSemigroup (contractLp actual_trace_contraction)
+open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryMarkovSemigroup
+  (contractLp actual_trace_contraction)
 open BiasedBoundaryTrace (G M)
 open BiasedBoundaryPathSplit (constG boundary_path_split)
 open BiasedBoundaryFreeRootForm (D energy)
@@ -27,13 +28,13 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun χ _ F => contractLp χ.val χ.property F.val) (fun e => nomatch e)
+  realize signature (fun _ χ F => contractLp χ.val χ.property F.val) (fun e => nomatch e)
 
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ (χ : ℝ → ℝ) (hχ : LipschitzWith 1 χ) (F : D),
-    (R.readout ⟨χ,hχ⟩ () F =ᵐ[M] (fun ω => χ (F.val ω))) ∧
-    R.readout ⟨χ,hχ⟩ () F ∈ D ∧ energy (R.readout ⟨χ,hχ⟩ () F) ≤ energy F.val
+    (R.readout () ⟨χ,hχ⟩ F =ᵐ[M] (fun ω => χ (F.val ω))) ∧
+    R.readout () ⟨χ,hχ⟩ F ∈ D ∧ energy (R.readout () ⟨χ,hχ⟩ F) ≤ energy F.val
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => constG 1) (fun e => nomatch e)
@@ -80,7 +81,7 @@ def familyRegistration : Registration arena (type_of% actual_trace_contraction) 
 def registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@actual_trace_contraction)
-    (type_of% (realize signature (fun χ _ F => contractLp χ.val χ.property F.val) (fun e => nomatch e)))
+    (type_of% (realize signature (fun _ χ F => contractLp χ.val χ.property F.val) (fun e => nomatch e)))
     Unit Unit := {
   unitName := `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryMarkovSemigroup.unit,
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryMarkovSemigroup.familyRegistration,
@@ -93,7 +94,7 @@ def registration :
   realization := .source arena ⟨familyRegistration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize signature (fun χ _ F => contractLp χ.val χ.property F.val) (fun e => nomatch e)),
+  readout := some (realize signature (fun _ χ F => contractLp χ.val χ.property F.val) (fun e => nomatch e)),
   variation := .absent,
   sensitivity := .absent,
   partialSensitivity := none,
