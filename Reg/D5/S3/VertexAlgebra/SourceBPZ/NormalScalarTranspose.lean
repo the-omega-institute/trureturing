@@ -36,7 +36,7 @@ def arena : Arena where
     {σ : Type u} (S : Finset σ) (G : σ → VertexOperator ℂ (Carrier D))
     (weight : σ → ℂ) (K : σ → ℤ) (κ : ℂ)
     (htail : ∀ t x y, B ((F[[t]]) x) y =
-      ∑ a ∈ S, weight a * B x (((G a)[[K a-t]]) y))
+      ∑ a ∈ S, weight a * B x (((G a)[[K a - t]]) y))
     (hzero : ∀ a ∈ S, ∀ t x, neutralMode D i 0 (((G a)[[t]]) x) =
       ((G a)[[t]]) (neutralMode D i 0 x) + κ • ((G a)[[t]]) x)
     (m : ℤ) (u v : Carrier D),

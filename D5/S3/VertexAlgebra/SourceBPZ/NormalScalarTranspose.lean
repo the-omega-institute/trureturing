@@ -158,7 +158,7 @@ private theorem scalar_offsets (D : LatticeData) (B : LinearMap.BilinForm ℂ (C
     have hz : neutralMode D i ((t : ℤ)-p) u = 0 := by
       apply cutoff_vanish
       omega
-    exact ht (by dsimp only; rw [hz, map_zero, map_zero, mul_zero])
+    exact ht (by dsimp only; simp [hz])
 
 /- Both scalar intervals are independent of the tail field and the derivative
 order. The omitted derivative bands vanish by integer binomial coefficients. -/
@@ -347,7 +347,7 @@ theorem consumed_normal_product_form (D : LatticeData)
     {σ : Type*} (S : Finset σ) (G : σ → VertexOperator ℂ (Carrier D))
     (weight : σ → ℂ) (K : σ → ℤ) (κ : ℂ)
     (htail : ∀ t x y, B ((F[[t]]) x) y =
-      ∑ a ∈ S, weight a * B x (((G a)[[K a-t]]) y))
+      ∑ a ∈ S, weight a * B x (((G a)[[K a - t]]) y))
     (hzero : ∀ a ∈ S, ∀ t x, neutralMode D i 0 (((G a)[[t]]) x) =
       ((G a)[[t]]) (neutralMode D i 0 x) + κ • ((G a)[[t]]) x)
     (m : ℤ) (u v : Carrier D) :
