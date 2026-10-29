@@ -580,7 +580,7 @@ private theorem universal_bounds [Finite A] [Nonempty A] (hq : 2 ≤ Nat.card A)
 private theorem attainment [Fintype A] (hq : 2 ≤ Nat.card A) (N : Nat) (hN : 1 ≤ N)
     (full : Bool) : Attains (A := A) N full := by
   obtain ⟨e⟩ : Nonempty (Bool ↪ A) :=
-    Function.Embedding.nonempty_of_card_le (by simpa [← Nat.card_eq_fintype_card] using hq)
+    Function.Embedding.nonempty_of_card_le (by simpa only [Fintype.card_bool,Nat.card_eq_fintype_card] using hq)
   let s : Fin N := ⟨0,by omega⟩
   let t : A → Option (Fin N) := fun _ => some s
   have ht : Admissible full t := ⟨⟨e false,s,rfl⟩,by simp [t]⟩
@@ -592,11 +592,12 @@ private theorem attainment [Fintype A] (hq : 2 ≤ Nat.card A) (N : Nat) (hN : 1
     simp [anchor_length,encoded_length]
     omega
   · intro hf; subst full; exact full_branching N e
-  · simpa only [Bool.cond_eq_ite] using counts.2.1
+  · cases full <;> simpa using counts.2.1
   · have hp : N ^ Nat.card A = N * N ^ (Nat.card A - 1) := by
       conv_lhs => rw [show Nat.card A = (Nat.card A - 1)+1 by omega]
       rw [pow_succ]; ring
-    cases full <;> simpa [hp,Nat.mul_assoc] using counts.2.2
+    cases full <;> simpa only [Bool.false_eq_true,ite_false,ite_true,
+      Nat.add_zero,hp,Nat.mul_assoc] using counts.2.2
 
 /-- Actual one-credit fibers have sharp finite-alphabet bounds, attained simultaneously
 over the same alphabet at every prescribed positive current width. -/
