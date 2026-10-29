@@ -71,13 +71,22 @@ private theorem normalizer_identity : normalizer * frame * normalizerᴴ = 1 := 
 private def witness (j : Fin 8) : Matrix (Fin 7) (Fin 7) ℂ :=
   normalizer * effect j * normalizerᴴ
 
-private theorem effect_posSemidef (j : Fin 8) : (effect j).PosSemidef := by sorry
+private theorem effect_posSemidef (j : Fin 8) : (effect j).PosSemidef := by
+  apply Matrix.posSemidef_sum Finset.univ
+  intro b hb
+  exact Matrix.posSemidef_vecMulVec_self_star b.1
 
-private theorem witness_posSemidef (j : Fin 8) : (witness j).PosSemidef := by sorry
+private theorem witness_posSemidef (j : Fin 8) : (witness j).PosSemidef := by
+  exact (effect_posSemidef j).mul_mul_conjTranspose_same normalizer
 
-private theorem witness_sum : ∑ j, witness j = 1 := by sorry
+private theorem witness_sum : ∑ j, witness j = 1 := by
+  simp only [witness]
+  simp_rw [Matrix.mul_assoc]
+  rw [← Matrix.mul_sum, ← Matrix.sum_mul, show (∑ j, effect j) = frame from rfl,
+    normalizer_identity]
 
-private theorem witness_povm : IsPOVM witness := by sorry
+private theorem witness_povm : IsPOVM witness := by
+  exact ⟨witness_posSemidef, witness_sum⟩
 
 private theorem effect_rank (j : Fin 8) : (effect j).rank = (blocks j).card := by sorry
 
