@@ -47,9 +47,8 @@ natural subtraction. At $n\ge3$ it agrees with the integer polynomial.
 The source's rational fold expressions are represented by the existing frozen
 `BourasA356360.nested` and `K` declarations in this module. The public
 `BourasA372763OnceRefutation.nested` and `K` owners are textually equal; reusing
-them here would require changing or removing those frozen declarations, which
-this fix-forward is prohibited from doing. The duplicate-definition findings
-are therefore deferred here; no duplicate-retention authorization is claimed.
+them here would require changing or removing those frozen declarations, so
+both copies remain. No duplicate-retention authorization is claimed.
 
 ## Motivation
 
