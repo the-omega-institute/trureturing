@@ -8,6 +8,7 @@
 import D5.S3.Combinatorics.Circle.GeometricSourceRelocation
 import D5.S3.Combinatorics.Circle.TwoRunSource
 import D5.S3.Combinatorics.Circle.ZeroSumSubsets
+import Mathlib.Logic.Equiv.Fin.Rotate
 
 /-! # Actual cross-modulus periodic charges -/
 
@@ -312,6 +313,90 @@ theorem periodic_source_equations
   dsimp [f, G, a, e, q] at *
   linear_combination (geom d (m - 1) : ℤ) * ha -
     ((2 : ℤ) ^ d) ^ (m - 1) * hy + 2 * actualSource d w i * hg - charge d w i * hr
+
+set_option maxHeartbeats 2000000 in
+/-- Exact native old-value and charge alignment across a dyadic phase shift. -/
+theorem native_charge_alignment (d a h : ℕ) (hd : 2 ≤ d) (ha : 1 ≤ a)
+    (hb : 2 ^ h * a < 2 ^ (d - 1)) (i : Fin d) :
+    let tau := (finRotate d : Equiv.Perm (Fin d)) ^ h
+    actualSource d (2 ^ h * a) i = actualSource d a (tau i) ∧
+    charge d (2 ^ h * a) i = charge d a (tau i) +
+      (if (tau i).val < h then (2 : ℤ) ^ (tau i).val * a else 0) := by
+  let tau := (finRotate d : Equiv.Perm (Fin d)) ^ h
+  let j := tau i
+  have hab : a ≤ 2 ^ h * a := by
+    have := Nat.one_le_two_pow (n := h)
+    nlinarith
+  have hp : 2 ^ h < 2 ^ (d - 1) := by nlinarith
+  have hh : h < d - 1 := (Nat.pow_lt_pow_iff_right (by omega : 1 < 2)).mp hp
+  have hr : j.val = (i.val + h) % d := by
+    have he := congrFun (finCycle_eq_finRotate_iterate (k := (⟨h, by omega⟩ : Fin d))) i
+    have hv := congrArg Fin.val he
+    simpa [j, tau, Equiv.Perm.coe_pow, finCycle, Fin.val_add] using hv.symm
+  have da := digit_data d a hd (by omega) j
+  have db := digit_data d (2 ^ h * a) hd (by omega) i
+  obtain ⟨hM, ho⟩ := TwoRunSource.modulus_positive_odd d (by omega)
+  have hM' : 0 < (2 : ℤ) ^ d - 1 := hM
+  change actualSource d (2 ^ h * a) i = actualSource d a j ∧
+    charge d (2 ^ h * a) i =
+      charge d a j + (if j.val < h then (2 : ℤ) ^ j.val * a else 0)
+  by_cases hw : i.val + h < d
+  · have hj : j.val = i.val + h := by rw [hr, Nat.mod_eq_of_lt hw]
+    have hjh : ¬ j.val < h := by omega
+    have he : (2 : ℤ) ^ i.val * (2 ^ h * a : ℕ) = (2 : ℤ) ^ j.val * a := by
+      rw [hj, pow_add, Nat.cast_mul, Nat.cast_pow, Nat.cast_ofNat]
+      ring
+    have hv : actualSource d (2 ^ h * a) i = actualSource d a j := by
+      unfold actualSource
+      rw [he]
+    refine ⟨hv, ?_⟩
+    rw [if_neg hjh, add_zero]
+    have ea := da.2.1
+    have eb := db.2.1
+    rw [he, hv] at eb
+    nlinarith
+  · have hij : i.val + h < d + d := by omega
+    have hj : j.val = i.val + h - d := by
+      rw [hr, Nat.mod_eq_sub_mod (by omega), Nat.mod_eq_of_lt (by omega)]
+    have hjh : j.val < h := by omega
+    have huN : 2 ^ j.val * a ≤ 2 ^ h * a :=
+      Nat.mul_le_mul_right a (Nat.pow_le_pow_right (by omega) (by omega))
+    have hu : 0 ≤ (2 : ℤ) ^ j.val * a := by positivity
+    have hhalf : modulus d / 2 = (2 : ℤ) ^ (d - 1) - 1 := by
+      unfold modulus
+      rw [show d = (d - 1) + 1 by omega, pow_succ]
+      omega
+    have huB : (2 : ℤ) ^ j.val * a ≤ modulus d / 2 := by
+      rw [hhalf]
+      exact_mod_cast (show 2 ^ j.val * a + 1 ≤ 2 ^ (d - 1) by omega)
+    have hva : actualSource d a j = (2 : ℤ) ^ j.val * a := by
+      exact centered_unique hM ho (centered_bounds hM ho _) ⟨by omega, huB⟩
+        (centered_mod _ _)
+    have he : (2 : ℤ) ^ i.val * (2 ^ h * a : ℕ) =
+        (2 : ℤ) ^ d * ((2 : ℤ) ^ j.val * a) := by
+      rw [Nat.cast_mul, Nat.cast_pow, Nat.cast_ofNat, ← mul_assoc, ← pow_add,
+        show i.val + h = d + j.val by omega, pow_add]
+      ring
+    have hvb : actualSource d (2 ^ h * a) i = (2 : ℤ) ^ j.val * a := by
+      unfold actualSource
+      rw [he]
+      have he' : (2 : ℤ) ^ d * ((2 : ℤ) ^ j.val * a) =
+          (2 : ℤ) ^ j.val * a + ((2 : ℤ) ^ j.val * a) * modulus d := by
+        unfold modulus
+        ring
+      apply (centered_congr (by rw [he', Int.add_mul_emod_self_right])).trans
+      exact centered_unique hM ho (centered_bounds hM ho _) ⟨by omega, huB⟩
+        (centered_mod _ _)
+    have hqa : charge d a j = 0 := by
+      have ea := da.2.1
+      rw [hva] at ea
+      nlinarith
+    have hqb : charge d (2 ^ h * a) i = (2 : ℤ) ^ j.val * a := by
+      have eb := db.2.1
+      rw [he, hvb] at eb
+      nlinarith
+    exact ⟨hvb.trans hva.symm, by rw [if_pos hjh, hqa, hqb, zero_add]⟩
+
 
 #check @periodic_source_equations
 #print axioms periodic_source_equations
