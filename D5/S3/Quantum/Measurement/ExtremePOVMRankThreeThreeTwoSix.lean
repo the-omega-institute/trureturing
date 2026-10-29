@@ -126,9 +126,9 @@ private theorem within_block_product_independent :
         Matrix.vecMulVec p.2.1.1 (star p.2.2.1)) := by sorry
 
 private def normalizeMap :
-    Matrix (Fin 7) (Fin 7) ℂ →ₗ[ℂ] Matrix (Fin 7) (Fin 7) ℂ :=
-  (Matrix.mulRightLinearMap (Fin 7) ℂ normalizerᴴ).comp
-    (Matrix.mulLeftLinearMap (Fin 7) ℂ normalizer)
+  Matrix (Fin 7) (Fin 7) ℂ →ₗ[ℂ] Matrix (Fin 7) (Fin 7) ℂ :=
+  (mulRightLinearMap (Fin 7) ℂ normalizerᴴ).comp
+    (mulLeftLinearMap (Fin 7) ℂ normalizer)
 
 private theorem normalizeMap_ker : LinearMap.ker normalizeMap = ⊥ := by
   apply le_antisymm
@@ -137,20 +137,19 @@ private theorem normalizeMap_ker : LinearMap.ker normalizeMap = ⊥ := by
       rw [Matrix.det_conjTranspose]
       exact normalizer_unit.star
     have hright := Matrix.mul_left_injective_of_inv normalizerᴴ (normalizerᴴ)⁻¹
-      (Matrix.mul_nonsing_inv normalizerᴴ
-        ((Matrix.isUnit_iff_isUnit_det normalizerᴴ).mpr hstar))
+      (Matrix.mul_nonsing_inv normalizerᴴ hstar)
     have hleft := Matrix.mul_right_injective_of_inv normalizer⁻¹ normalizer
       (Matrix.nonsing_inv_mul normalizer normalizer_unit)
     apply hleft
     apply hright
-    simpa [normalizeMap, Matrix.mulLeftLinearMap, Matrix.mulRightLinearMap] using hX
+    simpa [normalizeMap, mulLeftLinearMap, mulRightLinearMap] using hX
   · exact bot_le
 
 private theorem normalized_product_independent :
     LinearIndependent ℂ
       (fun p : Σ j : Fin 8, (blocks j × blocks j) =>
         normalizer * Matrix.vecMulVec p.2.1.1 (star p.2.2.1) * normalizerᴴ) := by
-  simpa [normalizeMap, Matrix.mulLeftLinearMap, Matrix.mulRightLinearMap,
+  simpa [normalizeMap, mulLeftLinearMap, mulRightLinearMap,
     Function.comp_def] using
     within_block_product_independent.map' normalizeMap normalizeMap_ker
 
