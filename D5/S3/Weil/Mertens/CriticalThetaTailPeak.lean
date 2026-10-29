@@ -138,7 +138,7 @@ private theorem envelope_weighted_integrable {U σ c x : ℝ}
     calc
       c * Real.exp (σ * u) / u * Real.exp (-x * u) =
           c * Real.exp ((σ - x) * u) * (1 / u) := by
-        rw [sub_mul, Real.exp_sub, Real.exp_neg]
+        rw [sub_mul, Real.exp_sub, neg_mul, Real.exp_neg]
         ring
       _ ≤ c * Real.exp ((σ - x) * u) * (1 / U) :=
         mul_le_mul_of_nonneg_left hi (mul_nonneg hc (Real.exp_pos _).le)
@@ -399,7 +399,7 @@ private theorem comparison_halfplane {U σ c : ℝ}
     · filter_upwards [ae_restrict_mem measurableSet_Ioi] with u hu
       rw [Real.norm_eq_abs, abs_mul, Real.abs_exp]
       apply mul_le_of_le_one_right (abs_nonneg _)
-      exact Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg hx.le.neg
+      exact Real.exp_le_one_iff.mpr (mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr hx.le)
         (hU0.le.trans hu.le))
   have hG0 : ∀ z : ℂ, 0 < z.re → euler G z =
       envelopeEuler U σ c z - forcing U z := by
@@ -416,7 +416,7 @@ private theorem comparison_halfplane {U σ c : ℝ}
     apply envelopeEuler_analytic
     intro he
     change σ < z.re at hz
-    simpa only [he, ofReal_re] using hz
+    exact (lt_irrefl σ) (by simpa only [he, ofReal_re] using hz)
   have hRm : MeromorphicOn (fun z => envelopeEuler U σ c z - forcing U z)
       {z | σ < z.re} := hP.meromorphicOn.sub
     (fun z hz => forcing_meromorphic U hU0.le z (lt_trans hσhalf hz))
@@ -491,7 +491,10 @@ private theorem boundary_moment_limits {μ : Measure ℝ} {U σ c δ : ℝ}
       filter_upwards [(isOpen_lt continuous_const Complex.continuous_re).mem_nhds hz]
         with w hw using heq w hw
     have hd := he.deriv_eq
-    rw [laplace_deriv hi hz, deriv_sub (hK z hz).differentiableAt (hS z hz).differentiableAt] at hd
+    change deriv (laplace μ) z = deriv (K - S) z at hd
+    have hs1 : deriv (K - S) z = deriv K z - deriv S z :=
+      deriv_sub (hK z hz).differentiableAt (hS z hz).differentiableAt
+    rw [laplace_deriv hi hz, hs1] at hd
     linear_combination -hd
   have hG2 : ∀ z : ℂ, σ < z.re → moment μ 2 z = deriv (deriv K) z - deriv (deriv S) z := by
     intro z hz
@@ -500,8 +503,10 @@ private theorem boundary_moment_limits {μ : Measure ℝ} {U σ c δ : ℝ}
       rw [laplace_deriv hi hw, hG1 w hw]
       ring
     have hd := he.deriv_eq
-    rw [laplace_second hi hz,
-      deriv_sub (hK z hz).deriv.differentiableAt (hS z hz).deriv.differentiableAt] at hd
+    change deriv (deriv (laplace μ)) z = deriv (deriv K - deriv S) z at hd
+    have hs2 : deriv (deriv K - deriv S) z = deriv (deriv K) z - deriv (deriv S) z :=
+      deriv_sub (hK z hz).deriv.differentiableAt (hS z hz).deriv.differentiableAt
+    rw [laplace_second hi hz, hs2] at hd
     exact hd
   have hε : Tendsto (fun ε : ℝ => (ε : ℂ)) (𝓝[Ioi 0] 0) (𝓝 (0 : ℂ)) :=
     Complex.continuous_ofReal.continuousAt.tendsto.mono_left nhdsWithin_le_nhds
@@ -518,7 +523,8 @@ private theorem boundary_moment_limits {μ : Measure ℝ} {U σ c δ : ℝ}
         D5.S3.Analytic.Laplace.EulerLocalContinuation.rightHalfDisk σ δ := by
       constructor
       · simpa [Metric.mem_ball, dist_eq_norm, Real.norm_eq_abs, abs_of_pos hεp] using hεδ
-      · simp only [add_re, ofReal_re]
+      · change σ < ((σ : ℂ) + (ε : ℂ)).re
+        simp only [add_re, ofReal_re]
         linarith
     have ho : IsOpen (D5.S3.Analytic.Laplace.EulerLocalContinuation.rightHalfDisk σ δ) :=
       Metric.isOpen_ball.inter (isOpen_lt continuous_const Complex.continuous_re)
@@ -537,13 +543,17 @@ private theorem boundary_moment_limits {μ : Measure ℝ} {U σ c δ : ℝ}
       (𝓝[Ioi 0] 0) (𝓝 (0 : ℂ)) := by simpa using (hε.pow 2).mul hS2
   have he : Tendsto (fun ε : ℝ => Complex.exp (-(ε : ℂ) * (U : ℂ)))
       (𝓝[Ioi 0] 0) (𝓝 (1 : ℂ)) := by
-    simpa using (Complex.continuous_exp.tendsto (-(0 : ℂ) * (U : ℂ))).comp (hε.neg.mul_const (U : ℂ))
+    simpa [Function.comp_def] using
+      (Complex.continuous_exp.tendsto (-(0 : ℂ) * (U : ℂ))).comp (hε.neg.mul_const (U : ℂ))
   have hK1zero : Tendsto (fun ε : ℝ => (ε : ℂ) ^ 2 * deriv K ((σ : ℂ) + (ε : ℂ)))
       (𝓝[Ioi 0] 0) (𝓝 (0 : ℂ)) := by
     have hh := ((tendsto_const_nhds.mul he).mul hε :
       Tendsto (fun ε : ℝ => -(c : ℂ) * Complex.exp (-(ε : ℂ) * (U : ℂ)) * (ε : ℂ))
         (𝓝[Ioi 0] 0) (𝓝 (-(c : ℂ) * 1 * 0)))
-    apply (by simpa using hh).congr'
+    have hh0 : Tendsto (fun ε : ℝ => -(c : ℂ) *
+        Complex.exp (-(ε : ℂ) * (U : ℂ)) * (ε : ℂ))
+        (𝓝[Ioi 0] 0) (𝓝 (0 : ℂ)) := by simpa using hh
+    apply hh0.congr'
     filter_upwards [self_mem_nhdsWithin] with ε hε0
     have hεp : 0 < ε := hε0
     have hn : (ε : ℂ) ≠ 0 := Complex.ofReal_ne_zero.mpr hεp.ne'
@@ -569,13 +579,19 @@ private theorem boundary_moment_limits {μ : Measure ℝ} {U σ c δ : ℝ}
     ring
   have hm1 : Tendsto (fun ε : ℝ => (ε : ℂ) ^ 2 * moment μ 1 ((σ : ℂ) + (ε : ℂ)))
       (𝓝[Ioi 0] 0) (𝓝 (0 : ℂ)) := by
-    apply (by simpa using hK1zero.neg.add hS1zero).congr'
+    have hh0 : Tendsto (fun ε : ℝ => -((ε : ℂ) ^ 2 * deriv K ((σ : ℂ) + (ε : ℂ))) +
+        (ε : ℂ) ^ 2 * deriv S ((σ : ℂ) + (ε : ℂ)))
+        (𝓝[Ioi 0] 0) (𝓝 (0 : ℂ)) := by simpa using hK1zero.neg.add hS1zero
+    apply hh0.congr'
     filter_upwards [self_mem_nhdsWithin] with ε hε0
     rw [hG1 _ (by simp only [add_re, ofReal_re]; change 0 < ε at hε0; linarith)]
     ring
   have hm2 : Tendsto (fun ε : ℝ => (ε : ℂ) ^ 2 * moment μ 2 ((σ : ℂ) + (ε : ℂ)))
       (𝓝[Ioi 0] 0) (𝓝 (c : ℂ)) := by
-    apply (by simpa using hK2c.sub hS2zero).congr'
+    have hh0 : Tendsto (fun ε : ℝ => (ε : ℂ) ^ 2 * deriv (deriv K) ((σ : ℂ) + (ε : ℂ)) -
+        (ε : ℂ) ^ 2 * deriv (deriv S) ((σ : ℂ) + (ε : ℂ)))
+        (𝓝[Ioi 0] 0) (𝓝 (c : ℂ)) := by simpa using hK2c.sub hS2zero
+    apply hh0.congr'
     filter_upwards [self_mem_nhdsWithin] with ε hε0
     rw [hG2 _ (by simp only [add_re, ofReal_re]; change 0 < ε at hε0; linarith)]
     ring
@@ -754,6 +770,10 @@ theorem critical_theta_tail_peak {ρ : ℂ} (hβ : (1 / 2 : ℝ) < ρ.re)
       (envelopeEuler U σ c (a + (ε : ℂ)) -
         ((-deriv (ThetaLaplaceContinuation.M U) (a + (ε : ℂ)) +
           ThetaLaplaceContinuation.M U (a + (ε : ℂ))) + boundary U (a + (ε : ℂ))))
+    change -deriv (ThetaLaplaceContinuation.M U) (a + (ε : ℂ)) +
+        ThetaLaplaceContinuation.M U (a + (ε : ℂ)) =
+        α / (a + (ε : ℂ) - a) ^ 2 + α / (a + (ε : ℂ) - a) +
+          J (a + (ε : ℂ)) - deriv J (a + (ε : ℂ)) at hTz
     rw [hTz]
     dsimp only [W]
     simp only [add_sub_cancel_left]
@@ -764,7 +784,7 @@ theorem critical_theta_tail_peak {ρ : ℂ} (hβ : (1 / 2 : ℝ) < ρ.re)
   have hρnorm : 0 < ‖ρ‖ := norm_pos_iff.mpr hρ0
   have hanorm : 0 < ‖a‖ := norm_pos_iff.mpr ha0
   have hcoef : (m : ℝ) / ‖ρ‖ ≤ ‖a‖ * c := by
-    simpa only [α, norm_neg, norm_div, norm_natCast] using hnorm
+    simpa only [α, norm_neg, norm_div, Complex.norm_natCast] using hnorm
   have hA : (m : ℝ) / (‖ρ‖ * ‖a‖) ≤ c := by
     apply (div_le_iff₀ (mul_pos hρnorm hanorm)).mpr
     have hh := (div_le_iff₀ hρnorm).mp hcoef
