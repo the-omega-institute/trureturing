@@ -1,0 +1,13 @@
+**Definition 32.2 (independent meanings on the assay image).** Fix
+$n,D,h,H$, the earned graph, output order, units, parser, real bindings,
+rights and the held serial-completion convention as common context.
+The designated phase is the end of precisely one Construction 32.1
+window; any preceding control chronology is excluded from Time. For
+each actual endpoint $s=A_n^Hx$, define the numerical contents:
+
+| Expression | Independently specified observation or retained content |
+| --- | --- |
+| Space | The actual rooted ordered material graph and its entire current field $s$. |
+| Time | The numerical, epoch-labelled replies of the actually performed consecutive window, $R_H(x)$, with its prescribed Hold/Read/Tick schedule. |
+| Boundary | The present finite response word $R_H(s)$ of that same held source to Construction 32.1 begun now. |
+| Memory | The retained integer block $Ds$, with the earned model/update code and genuine callable context. |

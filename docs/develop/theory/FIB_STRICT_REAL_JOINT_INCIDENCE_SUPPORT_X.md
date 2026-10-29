@@ -3348,3 +3348,729 @@ eight-read recovery and the nine-read question remain outside these
 conclusions. The lower bound $n_{\rm det}(3,0)\ge8$ is unchanged.
 
 ## 追加锚（本行以下为增补区）
+
+## 15. Uniform source-factor separation and the constrained two-source inverse
+
+### 15.1. Literal sources, coefficient rows and owning interfaces
+
+**Definition 15.1.1 (The source quadric and the literal lifted map).**
+Retain the entire original domain of Definition 1.1 and the history
+(1.2). In particular
+
+$$
+\begin{gathered}
+P=P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+\quad b>0,\quad0<r<1,\\
+g(t)=\sum_{k=0}^3\gamma_kt^k\ne0,\quad d\in\mathbb R,\qquad
+(y_0,\ldots,y_6)=(0,24,147/5,24,18,p,v),\quad p\ne24.
+\end{gathered}
+\tag{15.1}
+$$
+
+Coefficients are padded with zeros; no exact degree, coefficient sign,
+nonzero sampled gain, root simplicity or nonzero offset is required.
+Each world has its own whole polynomial and constant offset. Put
+
+$$
+\begin{gathered}
+j=b+r(1-r)/b,\quad s=(1,b,j,r)^{\mathsf T},\quad
+\gamma=(\gamma_0,\gamma_1,\gamma_2,\gamma_3)^{\mathsf T},\quad
+X=s\gamma^{\mathsf T},\\
+q(w)=w_1w_2-w_1^2-w_0w_3+w_3^2,\qquad
+\mathscr P(w)=\begin{pmatrix}w_3&w_1\\w_2-w_1&w_0-w_3\end{pmatrix}.
+\end{gathered}
+\tag{15.2}
+$$
+
+Thus $\det\mathscr P(w)=-q(w)$. A real direction $[w]$ is a
+**legal source direction** exactly when $w_0\ne0$ and its normalization
+$s=w/w_0$ satisfies $q(s)=0$, $s_1>0$, $0<s_3<1$.
+Indeed $s_2-s_1=s_3(1-s_3)/s_1>0$, so $\mathscr P(s)$ is precisely
+an original strictly positive rank-one trace-one source.
+
+For $v_i=(1,i,i^2,i^3)^{\mathsf T}$ define
+
+$$
+L_i(X)=\ell_i^{\mathsf T}Xv_i-X_{00},
+\tag{15.3}
+$$
+
+using the following literal rows; $7J$ and $7M$ are alternative rows.
+
+| $i$ | $\ell_i^{\mathsf T}$ |
+| --- | --- |
+| $1$ | $(0,0,1,0)$ |
+| $2$ | $(1,1,0,0)$ |
+| $3$ | $(0,0,1,1)$ |
+| $4$ | $(1,2,0,0)$ |
+| $5$ | $(1,2,1,1)$ |
+| $6$ | $(2,4,1,1)$ |
+| $7M$ | $(3,6,2,2)$ |
+| $7J$ | $(1,1,2,4)$ |
+
+Clock zero gives $d=-\gamma_0$. Consequently (15.3) is exactly the
+original read, with the same gain at every clock, and $y_0=0$ is
+satisfied identically. Write
+
+$$
+\mathcal L_M=(L_1,\ldots,L_6,L_{7M}),\qquad
+\mathcal K_M=\ker\mathcal L_M\subset\mathbb R^{4\times4}.
+\tag{15.4}
+$$
+
+In row-major coefficient order $(a,k)$, $0\le a,k\le3$, the matrix
+of $\mathcal L_M$ has entries $\ell_{i,a}i^k-\mathbf1_{a=k=0}$.
+Its minor on columns
+$(0,0),(0,1),(0,2),(0,3),(1,0),(1,1),(2,1)$ is
+
+$$
+\det\begin{pmatrix}
+-1&0&0&0&0&0&1\\
+0&2&4&8&1&2&0\\
+-1&0&0&0&0&0&3\\
+0&4&16&64&2&8&0\\
+0&5&25&125&2&10&5\\
+1&12&72&432&4&24&6\\
+2&21&147&1029&6&42&14
+\end{pmatrix}=-576.
+\tag{15.5}
+$$
+
+Expansion using the first and third rows reduces this determinant to
+an integer five-by-five determinant. Hence the seven rows are
+independent and $\dim\mathcal K_M=9$.
+
+The owning interfaces are O, Definitions 1.1–1.3 and Theorems 2.2,
+3.2, 12.3, for the literal complete worlds, saturation, gain-direction
+injectivity and fixed-source/fixed-$p$ uniqueness. Their strict-source
+statements include $\Lambda=0$. The entire golden layer is this volume's
+Theorem 10.1. Its conclusion is separation by $p$ on the whole layer,
+not merely separation on a selected source interval. The independent
+J consumers are Definitions 6.3 and Proposition 6.4 above, and
+[XI, Theorems 5.3.1 and 5.6.1–5.6.2](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_XI.md).
+None of these interfaces is restricted to a common offset.
+
+### 15.2. Two finite positive-parameter certificates
+
+**Definition 15.2.1 (The factor families and their exact matrices).**
+For each $z>0$ use either of the following families. Arrays below are
+indexed by the original clocks $0,\ldots,7$, with terminal action $M$.
+
+$$
+\begin{array}{c|c|c|c}
+\text{family}&(b,r)&\text{legal parameter}&\kappa\\ \hline
+\mathrm a&(t,1-zt)&0<t<1/z&1\\
+\mathrm b&(zt,t)&0<t<1&z
+\end{array}
+\tag{15.6}
+$$
+
+Their traces are $(A_i+B_it)/\kappa$, where
+
+$$
+\begin{aligned}
+A^{\mathrm a}&=(1,z,1,z+1,1,z+2,z+3,2z+5),\\
+B^{\mathrm a}&=(0,1-z^2,1,1-z-z^2,2,3-z-z^2,5-z-z^2,
+                    8-2z-2z^2),\\
+A^{\mathrm b}&=(z,1,z,1,z,z+1,2z+1,3z+2),\\
+B^{\mathrm b}&=(0,z^2-1,z^2,z^2+z-1,2z^2,3z^2+z-1,
+                    5z^2+z-1,8z^2+2z-2).
+\end{aligned}
+\tag{15.7}
+$$
+
+For either family define the seven-by-eight polynomial matrix
+
+$$
+F(z)_{i,\cdot}=
+\bigl((A_i i^k-\kappa\mathbf1_{k=0})_{k=0}^3,
+      (B_i i^k)_{k=0}^3\bigr),\qquad 1\le i\le7.
+\tag{15.8}
+$$
+
+All column indices in the next definition start at zero. Set
+
+$$
+\begin{gathered}
+\nu_{\mathrm a}=48,\quad\nu_{\mathrm b}=48z^3,\qquad
+V_j(z)=\frac{(-1)^{j+1}\det F_{\widehat j}(z)}{\nu},\quad0\le j\le7,\\
+H_*(t)=\sum_{k=0}^3V_kt^k,\qquad
+K_*(t)=\sum_{k=0}^3V_{k+4}t^k,\\
+C_{i,\cdot}=
+(A_iK_*(i)-\kappa K_*(0),\ B_iK_*(i),\ -B_iH_*(i)),
+\quad1\le i\le4,\\
+Y=\kappa(24,147/5,24,18)^{\mathsf T},\qquad
+D=\det C_{\{1,2,3\},\{0,1,2\}}.
+\end{gathered}
+\tag{15.9}
+$$
+
+Here $F_{\widehat j}$ deletes column $j$. Define $Q_{\mathrm a}$ and
+$Q_{\mathrm b}$ by the exact divisions
+
+$$
+\begin{aligned}
+\det[C\mid Y]&=-\frac{1296}{5}(z^2+3z+1)^2Q_{\mathrm a}(z),\\
+\det[C\mid Y]&=-\frac{1296}{5}z^4(z^2-z-1)^2Q_{\mathrm b}(z),
+\end{aligned}
+\tag{15.10}
+$$
+
+respectively. Finally let $N_k$ be the remainder modulo the appropriate
+$Q$ of the determinant obtained from $C$'s first three rows by replacing
+column $k$ with $Y$'s first three entries, for $k=0,1,2$.
+Every remainder is the ordinary polynomial remainder over $\mathbb Q$.
+
+**Theorem 15.2.2 (Exact rank, compatibility roots and strict failures).**
+All quotients in (15.9)–(15.10) are polynomials over $\mathbb Q$.
+For each family,
+
+$$
+FV=0,\quad\gcd(V_0,V_1)=1,\quad
+\operatorname{rank}F(z)=7\quad(z>0),\qquad
+\gcd(Q,D)=\gcd(Q,N_0)=1.
+\tag{15.11}
+$$
+
+Both $Q$ have degree twenty and are squarefree. All their positive real
+roots and the indicated ratio bounds are exhausted by (15.16) below.
+In particular, at a positive $Q_{\mathrm a}$ root the necessary ratios
+$S=N_1/N_0$, $T=N_2/N_0$ fail $0<S<2/z$, $T>0$; at a positive
+$Q_{\mathrm b}$ root they fail $0<S<2$, $T>0$.
+
+Proof. The following coefficient vectors specify a finite rational
+verification of all assertions. For this first table only, a vector
+$[c_0,\ldots,c_d]$ denotes $\sum_{k=0}^dc_kz^k$ in **ascending**
+order. They are the eight $V_j$ of (15.9).
+
+$$
+\begin{array}{c|l}
+\mathrm a,0&[-18384,-74640,64788,510864,372414,-234978,-353586,-134016,-16752]\\
+\mathrm a,1&[31868,146578,99126,-235775,-152253,48549,56186,15992,1792]\\
+\mathrm a,2&[-15192,-67908,-54474,70053,56166,10266,-5457,-5712,-1344]\\
+\mathrm a,3&[1900,8138,6048,-8092,-6549,-1791,709,952,224]\\
+\mathrm a,4&[-2232,29724,247428,397230,-125910,-332562,-135396,-16752]\\
+\mathrm a,5&[-27200,-165800,-309296,-82270,279104,204426,42790,1792]\\
+\mathrm a,6&[12480,68676,106602,5322,-92172,-62121,-15252,-1344]\\
+\mathrm a,7&[-1432,-7432,-10498,262,8578,6045,1826,224]\\
+\mathrm b,0&[-16848,-33504,72132,152376,-86226,-183846,67716,73650,-31650]\\
+\mathrm b,1&[2048,4648,-10144,-39252,3934,70633,-6714,-38494,13007]\\
+\mathrm b,2&[-1536,2832,10116,-9027,-12978,15405,2187,-10554,4131]\\
+\mathrm b,3&[256,-472,-1628,2073,2192,-4192,-231,2848,-1088]\\
+\mathrm b,4&[-16848,-17472,67416,19596,-126162,15420,68700,-25950]\\
+\mathrm b,5&[2048,11288,25426,6390,-40874,-10260,27212,-7174]\\
+\mathrm b,6&[-1536,-3864,-4824,-1725,9324,4005,-6648,1332]\\
+\mathrm b,7&[256,400,-118,129,158,-549,-14,142]
+\end{array}
+\tag{15.12}
+$$
+
+For completeness, the coefficient vectors of the two $Q$ in
+**descending** order, from $z^{20}$ to $1$, are
+
+$$
+\begin{aligned}
+Q_{\mathrm a}:\quad[&8282903552,147117850880,1046123840160,3781797964784,\\
+&6804697209160,2376327669978,-15286238544580,-34132010728053,\\
+&-28009573334739,15424358467681,63822813623484,58128277943136,\\
+&-3817930130278,-53867345188568,-41704747973648,3272455310072,\\
+&18771481383656,5798685790240,-1832477208320,-1152683206144,
+ -148971378816],\\[2mm]
+Q_{\mathrm b}:\quad[&3048213835820,-25792101561215,74691937670917,
+ -38796690810182,\\
+&-227763268775886,400809602167211,134351464164455,-828866753144076,\\
+&296783976577872,850375399715950,-612773254519222,-501191479757676,\\
+&523615716111252,174418361487828,-253121839901464,-34607277044688,\\
+&71852012172800,3502342089856,-11152679223936,-133428292352,
+ 728342811648].
+\end{aligned}
+\tag{15.13}
+$$
+
+Here is an explicit arithmetic rule for reproducing the polynomial
+identities and gcds without choosing any roots. A determinant of size
+$n$ means $\sum_{\pi\in S_n}\operatorname{sgn}(\pi)
+\prod_{i=1}^n a_{i,\pi(i)}$. Expand (15.8), delete each of its eight
+columns, and compare its determinant coefficient by coefficient with
+$(-1)^{j+1}\nu V_j$ in (15.12). All coefficient differences vanish.
+Substitution of the same vectors in (15.9), and the four-by-four
+expansion, gives exactly (15.10) with (15.13). The identity $FV=0$
+also follows by the repeated-row cofactor identity.
+
+For nonzero $A,B\in\mathbb Q[z]$, ordinary long division removes the
+current leading term $a_mz^m$ of $A$ by subtracting
+$(a_m/b_n)z^{m-n}B$, until its degree is below $n=\deg B$.
+Iterate $(A,B)\mapsto(B,\operatorname{rem}(A,B))$ until the second
+entry is zero, and make the last nonzero entry monic. These operations
+on (15.8)–(15.13) have the following degree lists, including both
+initial inputs and every subsequent nonzero remainder. In all six
+gcd computations the final monic entry is $1$.
+
+| Inputs | Family $\mathrm a$ degrees | Family $\mathrm b$ degrees |
+| --- | --- | --- |
+| $V_0,V_1$ | $8,8,7,6,5,4,3,2,1,0$ | $8,8,7,6,5,4,3,2,1,0$ |
+| $Q,D$ | $20,24,20,19,18,\ldots,1,0$ | $20,27,20,19,18,\ldots,1,0$ |
+| $Q,N_0$ | $20,18,17,\ldots,1,0$ | $20,19,18,\ldots,1,0$ |
+
+The ellipses in these degree lists mean every consecutive integer in
+descending order. Since coprime univariate polynomials have no common
+complex zero, at least one of $V_0,V_1$ is nonzero at every real $z$.
+Also $\nu\ne0$ for $z>0$. Thus at least one maximal minor of $F$ is
+nonzero there, proving rank seven uniformly, including all zeros of
+individual entries or other minors. This argument does not use a
+sampled rank calculation.
+
+To verify the root and sign assertions, form the signed Sturm sequence
+
+$$
+R_0=Q,\quad R_1=Q',\qquad
+R_{k+1}=-\operatorname{rem}(R_{k-1},R_k),
+\tag{15.14}
+$$
+
+stopping at its last nonzero entry. In each family its degrees are
+$20,19,18,\ldots,1,0$, so $Q$ is squarefree. At a real argument let
+$\operatorname{var}$ count sign changes after zero entries are deleted;
+at $+\infty$ use leading-coefficient signs. Exact evaluation gives
+
+$$
+\begin{array}{c|cc}
+ &\operatorname{var}(0)&\operatorname{var}(+\infty)\\ \hline
+\mathrm a&7&4\\
+\mathrm b&11&3
+\end{array}
+\tag{15.15}
+$$
+
+For every row of the next table put
+
+$$
+I_n=[n/10^{12},(n+1)/10^{12}].
+\tag{15.16}
+$$
+
+Neither endpoint is a zero of the
+respective $Q$. The two variation entries refer to the left and right
+endpoints. An entry $[a,b]$ in the last column encloses the indicated
+**thousand times** ratio on the entire closed interval $I_n$, not only
+at its algebraic root.
+
+| Family | $n$ | Variations | Sign of $N_0$ on $I_n$ | Ratio | Enclosure of $1000$ times ratio |
+| --- | --- | --- | --- | --- | --- |
+| $\mathrm a$ | $1063208818552$ | $7,6$ | $-$ | $N_1/N_0$ | $[5003,5004]$ |
+| $\mathrm a$ | $1064700680689$ | $6,5$ | $+$ | $N_1/N_0$ | $[4632,4633]$ |
+| $\mathrm a$ | $1244315019115$ | $5,4$ | $-$ | $N_2/N_0$ | $[-12,-11]$ |
+| $\mathrm b$ | $494812194094$ | $11,10$ | $+$ | $N_2/N_0$ | $[-58,-57]$ |
+| $\mathrm b$ | $595231123153$ | $10,9$ | $+$ | $N_1/N_0$ | $[2838,2839]$ |
+| $\mathrm b$ | $626933545430$ | $9,8$ | $-$ | $N_1/N_0$ | $[3550,3551]$ |
+| $\mathrm b$ | $1207999593070$ | $8,7$ | $+$ | $N_1/N_0$ | $[-2266,-2265]$ |
+| $\mathrm b$ | $1523742217801$ | $7,6$ | $+$ | $N_1/N_0$ | $[-5610,-5609]$ |
+| $\mathrm b$ | $1635486581057$ | $6,5$ | $+$ | $N_2/N_0$ | $[-1074,-1073]$ |
+| $\mathrm b$ | $1746481497259$ | $5,4$ | $+$ | $N_2/N_0$ | $[-152,-151]$ |
+| $\mathrm b$ | $1778429160158$ | $4,3$ | $+$ | $N_1/N_0$ | $[-2225,-2224]$ |
+
+The following rational interval operations completely specify the last
+two sign columns and give a direct way to reproduce them. For intervals,
+addition adds endpoints and multiplication takes the minimum and maximum
+of the four endpoint products. For a polynomial $f$, set
+$c=(2n+1)/(2\cdot10^{12})$, $h=1/(2\cdot10^{12})$, and expand exactly
+$f(c+u)=\sum_{k=0}^da_ku^k$. Start with $J_d=[a_d,a_d]$ and use
+
+$$
+J_k=[a_k,a_k]+[-h,h]J_{k+1}\quad(k=d-1,\ldots,0),
+\qquad\mathfrak I(f)=J_0.
+\tag{15.17}
+$$
+
+For each row, $\mathfrak I(N_0)=[A,B]$ excludes zero and has the
+printed sign. Multiply $\mathfrak I(N_1)$ or $\mathfrak I(N_2)$, as
+indicated, by $[1/B,1/A]$. Multiplying the resulting endpoints by
+$1000$ and rounding the lower down and upper up to integers gives the
+last column of (15.16). All coefficients, centers, radii, additions,
+products, divisions and endpoint comparisons in this prescription are
+rational. In particular it specifies denominator checks before division.
+
+Sturm's theorem applied to (15.14) shows that each open interior of
+$I_n$ contains exactly one positive root. The sums of these drops are
+$3$ and $8$, exactly (15.15)'s total drops. There are no other positive
+roots. At the first two $\mathrm a$ intervals $z>1$ but $S>4$, whereas
+$0<S<2/z<2$ is necessary. At its third interval $T<0$. The eight
+$\mathrm b$ intervals respectively give
+$T<0,S>2,S>2,S<0,S<0,T<0,T<0,S<0$.
+These contradict the stated necessary strict guards. This proves all
+claims of the theorem by the displayed finite arithmetic. ∎
+
+### 15.3. All off-24 equal-M pairs have both source factors different
+
+**Theorem 15.3.1 (Uniform source-factor exclusion).** For every real
+$p\ne24,v$ and every two distinct complete worlds $W,W'\in C(p,v)$
+with $m(W)=m(W')$, define
+
+$$
+\alpha_W=\frac{1-r}{b}=\frac cr,\qquad
+\beta_W=\frac br.
+\tag{15.18}
+$$
+
+Then $\alpha_W\ne\alpha_{W'}$ and $\beta_W\ne\beta_{W'}$.
+Equivalently, the source difference has nonzero determinant:
+
+$$
+\det(P-P')=-rr'(\alpha_W-\alpha_{W'})(\beta_W-\beta_{W'})\ne0.
+\tag{15.19}
+$$
+
+This is a statement about the entire $C(p,v)$ for every such base;
+no source box, gain stratum or condition $\Lambda\ne0$ is imposed.
+
+Proof. The fixed-source/fixed-$p$ uniqueness in O, Theorem 12.3,
+first implies that the sources are different. If the two positive
+$\alpha$ values coincide, write their common value as $z>0$.
+Their sources are exactly family $\mathrm a$ in (15.6), with distinct
+$t,t'$. If the positive $\beta$ values coincide, they are exactly
+family $\mathrm b$, again with distinct $t,t'$. Thus it suffices to
+exclude these two cases without dividing by a gain sample or offset.
+
+Use $g,g'$ for the two whole polynomials, and set
+
+$$
+H=g-g',\qquad K=tg-t'g',\qquad S=t+t',\quad T=tt'.
+\tag{15.20}
+$$
+
+The offsets are $-g(0)$ and $-g'(0)$, with no equality assumption.
+Equality of all six acquired noninitial reads and of terminal $M$
+becomes exactly
+
+$$
+A_iH(i)+B_iK(i)-\kappa H(0)=0\quad(1\le i\le7).
+\tag{15.21}
+$$
+
+Thus the padded coefficient vector of $(H,K)$ belongs to $\ker F(z)$.
+It is nonzero: if $H=K=0$, then $g=g'$ and
+$(t-t')g=0$, contradicting $t\ne t'$ and $g\ne0$.
+Theorem 15.2.2 now gives
+$(H,K)=\lambda(H_*,K_*)$ for a nonzero real $\lambda$.
+This statement includes all degree drops of $H$ or $K$.
+
+Let $y_i$ denote the common actual read. The polynomial identity
+$g=(K-t'H)/(t-t')$, followed by (15.21), gives
+
+$$
+\begin{aligned}
+\kappa y_i
+ &=\frac{A_iK(i)-\kappa K(0)+S B_iK(i)-T B_iH(i)}{t-t'}\\
+ &=\sigma\{A_iK_*(i)-\kappa K_*(0)
+                +S B_iK_*(i)-T B_iH_*(i)\},\qquad
+\sigma=\frac\lambda{t-t'}\ne0.
+\end{aligned}
+\tag{15.22}
+$$
+
+In particular the four absolute parent reads impose
+
+$$
+C(z)(\sigma,\sigma S,\sigma T)^{\mathsf T}=Y(z).
+\tag{15.23}
+$$
+
+They are all used, with their original numerical values.
+
+For family $\mathrm a$, $z^2+3z+1>0$, so the necessary compatibility
+$\det[C\mid Y]=0$ forces $Q_{\mathrm a}(z)=0$.
+For family $\mathrm b$ it forces either $Q_{\mathrm b}(z)=0$ or
+$z^2-z-1=0$, because $z>0$.
+At a $Q$ root, (15.11) gives $D\ne0$, and Cramer's rule on the first
+three rows of (15.23) gives
+
+$$
+\sigma=\frac{N_0}{D},\qquad
+\sigma S=\frac{N_1}{D},\qquad
+\sigma T=\frac{N_2}{D};\qquad
+S=\frac{N_1}{N_0},\quad T=\frac{N_2}{N_0}.
+\tag{15.24}
+$$
+
+The replacement determinants and $N_k$ agree at the root by their
+remainder definition. The denominator $N_0$ is nonzero there by
+(15.11), and its sign on each entire isolating interval is (15.16).
+Two legal parameters in family $\mathrm a$ require $0<S<2/z$, $T>0$;
+in family $\mathrm b$ they require $0<S<2$, $T>0$.
+Theorem 15.2.2 contradicts these requirements at every positive $Q$
+root, not just at some numerical choices of $z$.
+
+The only remaining value is the unique positive root
+$z=(1+\sqrt5)/2$ of $z^2-z-1=0$ in family $\mathrm b$.
+With $b=zt$, $r=t$, its source has
+
+$$
+j=1/z+t,\qquad n=1/z+2t,\qquad U=1+2zt,\qquad n/U=1/z.
+\tag{15.25}
+$$
+
+This is precisely the entire golden layer of Theorem 10.1, with its
+coordinate $\alpha=1/z=(\sqrt5-1)/2$ and its full legal interval
+$0<b<z$. That theorem makes the fifth response injective on the
+whole layer. Our two worlds have the same $p$, so they coincide,
+a contradiction. No local monotonicity assertion is substituted for
+that entire-layer result.
+
+Finally $P=r(1,\alpha_W)^{\mathsf T}(1,\beta_W)$, so the mixed
+determinant identity gives (15.19). This is the same two-factor
+rank-one-line algebra used in O, Theorem 3.1; the new exclusion is
+(15.21)–(15.25) for this literal history. The only divisions above are
+by $b,r,z,t-t'$, the displayed nonzero cofactor normalization and
+Cramer denominators. No gain value, leading coefficient, offset,
+root difference of a gain or singular-source coefficient is divided
+out. Thus all original gain and strict-source strata are retained. ∎
+
+### 15.4. A faithful inverse on the constrained rank-two kernel section
+
+**Definition 15.4.1 (The admissible signed difference section).**
+For a rank-two real $Z\in\mathcal K_M$, put $U_Z=\operatorname{col}Z$.
+Require that the zero directions of $q|_{U_Z}$ are exactly two distinct
+real lines, both legal source directions in Definition 15.1.1.
+Normalize them to $s_0=s'_0=1$. For either order $(s,s')$, the unique
+coefficient decomposition is
+
+$$
+Z=s a^{\mathsf T}+s'e^{\mathsf T},\qquad
+X=s a^{\mathsf T},\quad X'=-s'e^{\mathsf T}.
+\tag{15.26}
+$$
+
+This uses actual signed rows, without projective normalization of a gain.
+For an explicit formula choose any indices $h,k$ for which
+$\Delta=s_hs'_k-s_ks'_h\ne0$. Then for $j=0,1,2,3$,
+
+$$
+a_j=\frac{s'_kZ_{hj}-s'_hZ_{kj}}\Delta,\qquad
+e_j=\frac{-s_kZ_{hj}+s_hZ_{kj}}\Delta.
+\tag{15.27}
+$$
+
+The formula is independent of this choice of minor because every column
+of $Z$ lies in $\operatorname{span}(s,s')$.
+Retain $Z$ in $\mathfrak A_M$ precisely when one order satisfies
+
+$$
+\begin{gathered}
+(L_1(X),L_2(X),L_3(X),L_4(X))=(24,147/5,24,18),\\
+p_Z=L_5(X)\ne24,\qquad v_Z=L_6(X),\qquad \mu_Z=L_{7M}(X).
+\end{gathered}
+\tag{15.28}
+$$
+
+Thus the section imposes all four absolute H4 reads. It does not merely
+impose their differences or just the first read. No value of $p_Z,v_Z$
+or $\mu_Z$ is supplied externally. For fixed $p\ne24,v$ write
+$\mathfrak A_M(p,v)=\{Z\in\mathfrak A_M:(p_Z,v_Z)=(p,v)\}$.
+
+**Theorem 15.4.2 (Both-directions original-domain correspondence).**
+There is a bijection
+
+$$
+\begin{aligned}
+\mathfrak A_M&\longleftrightarrow
+\{(W,W'): \exists p\ne24,v,\ W,W'\in C(p,v),\quad
+                   W\ne W',\ m(W)=m(W')\},\\
+Z&\longmapsto
+\left((\mathscr P(s),\sum_{j=0}^3a_jt^j,-a_0),
+      (\mathscr P(s'),-\sum_{j=0}^3e_jt^j,e_0)\right),\\
+(W,W')&\longmapsto X(W)-X(W').
+\end{aligned}
+\tag{15.29}
+$$
+
+The recovered base is exactly $(p_Z,v_Z)$ and the common terminal $M$
+read is $\mu_Z$. The order passing (15.28) is unique. Negating $Z$
+exchanges the two worlds, so quotienting by $Z\sim-Z$ gives unordered
+actual pairs. There is no quotient by arbitrary nonzero scaling of $Z$.
+
+Proof. Start with an actual ordered pair. By O, Theorem 12.3, its
+sources differ, so their normalized vectors $s,s'$ are linearly
+independent. By O, Theorem 3.2, their whole gain rows are linearly
+independent: its only nonsingleton direction is the saturated family
+$K_{1/8}$, which has $p=24$ by O, Theorem 2.2 and $h(5)=0$.
+Consequently
+
+$$
+Z=X-X'=[s\ s']\begin{bmatrix}\gamma^{\mathsf T}\\-\gamma'^{\mathsf T}\end{bmatrix}
+\quad\text{has rank }2,\qquad U_Z=\operatorname{span}(s,s').
+\tag{15.30}
+$$
+
+Equal reads put $Z\in\mathcal K_M$. Theorem 15.3.1 and the mixed
+determinant polarization, with $q(s)=q(s')=0$, give
+
+$$
+q(\lambda s+\eta s')=\lambda\eta\det(P-P'),\qquad
+\det(P-P')\ne0.
+\tag{15.31}
+$$
+
+Thus the restriction is a nondegenerate split binary quadratic, with
+exactly the two actual source directions as its real zeros. In
+particular it is not an identically zero restriction or a repeated
+root. This necessary fact, rather than an additional exclusion
+assumption, supplies Definition 15.4.1's root condition. The actual
+pair gives (15.26) with $a=\gamma$, $e=-\gamma'$, so it passes every
+absolute equation in (15.28).
+
+Conversely take $Z\in\mathfrak A_M$. Its two normalized source roots
+are strictly legal by definition. Since $Z$ has rank two and $[s\ s']$
+has rank two, its coefficient matrix with rows $a^{\mathsf T}$ and
+$e^{\mathsf T}$ has rank two. Thus both recovered polynomials are
+nonzero, including when their leading coefficients vanish. The offsets
+in (15.29) enforce their acquired zero reads exactly. The sources are
+different, so the complete worlds are different. The equality
+$\mathcal L_M(Z)=0$ gives
+
+$$
+L_i(X)=L_i(X')\quad(i=1,\ldots,6,7M).
+\tag{15.32}
+$$
+
+In conjunction with all of (15.28), both worlds therefore realize the
+whole original history, the same off-24 $(p_Z,v_Z)$, and the same actual
+$M$ read $\mu_Z$. In particular neither the source roots nor the seven
+kernel equations alone would have supplied the absolute history.
+The reconstructed gains are single coefficient rows used at every
+clock; no late sample has been independently fitted.
+
+For uniqueness and orientation, interchanging $s,s'$ in (15.26) changes
+$(X,X')$ to $(-X',-X)$. By (15.32) their common read vector is the
+negative of the former common vector. The nonzero first absolute read
+$24$ allows at most one of these orders to pass (15.28).
+Definition 15.4.1 ensures that one passes. Within that order the
+coefficient rows and offsets are unique by (15.27). The actual-pair
+construction and this reconstruction are inverse. For $-Z$ the passing
+order yields $(X',X)$, so its reconstructed pair is $(W',W)$.
+Every extra root or kernel guard in Definition 15.4.1 has thus been
+proved necessary for an actual pair, and every listed guard has been
+used in the converse; no unproved additional guard remains. ∎
+
+### 15.5. Immediate consumption at the same computed base
+
+**Theorem 15.5.1 (Independent J alternatives over the reconstructed M base).**
+The original independent-pair target of Definition 6.3 and Proposition
+6.4 is equivalent to the following statement. There is a
+$Z\in\mathfrak A_M$, and, at exactly $p=p_Z$, $v=v_Z$, there are real
+$m_0,m_1$ and guarded candidates
+
+$$
+\xi_i\in\mathcal R(p_Z,v_Z,m_i)\sqcup\mathcal E(p_Z,v_Z,m_i),
+\quad i=0,1,
+\qquad W(\xi_0)\ne W(\xi_1),\quad a(\xi_0)=a(\xi_1),
+\tag{15.33}
+$$
+
+where the candidate sets retain all guards of Theorem 5.2 and $a$ is
+the actual response (6.1), using each candidate's own $m_i$.
+
+Equivalently there is a $Z\in\mathfrak A_M$ such that, at this same
+computed $(p,v)$, at least one of the following **two** alternatives
+holds. All symbols in them are the full guarded polynomials and
+functions of XI, (5.3.1)–(5.5.2), without deleting any equation.
+
+$$
+\begin{aligned}
+\text{(equal $x$)}\quad
+&\exists x>0:\quad \delta(x;p,v)>0,\quad
+\mathcal H(p,v;x,d_+),\quad\mathcal H(p,v;x,d_-),\quad
+\mathcal T(x;p,v)=0;\\
+\text{(different $x$)}\quad
+&\exists x_0,x_1,d_0,d_1:\quad x_0\ne x_1,\quad
+\mathcal H(p,v;x_0,d_0),\quad\mathcal H(p,v;x_1,d_1),\quad
+ a(x_0,d_0)=a(x_1,d_1).
+\end{aligned}
+\tag{15.34}
+$$
+
+Here $d_\pm$ are XI, (5.4.3), and $a=N_J/Q_J$ is XI, (5.5.1).
+In particular $\mathcal H$ retains both $\Phi=0$ and $\mathcal G=0$
+and every strict guard in XI, (5.3.4), not just the necessary
+response-plane filters. The two J worlds need not be the M worlds;
+there is no cross-pair inequality or equality of the two terminal
+common values.
+
+Proof. An original joint configuration gives its chosen ordered M pair,
+hence $Z\in\mathfrak A_M$ by Theorem 15.4.2. Its actual shared acquired
+reads identify $p=p_Z$, $v=v_Z$. The two independently chosen J worlds
+are represented by the full fixed-terminal inverse (5.4), using their
+individual actual M responses as $m_0,m_1$. This gives (15.33) and
+retains distinctness and actual J equality by (6.1).
+Conversely Theorem 15.4.2 supplies the M pair from $Z$, while (5.4)
+supplies the two distinct J worlds from (15.33). All four belong to the
+same entire $C(p_Z,v_Z)$, with the required within-pair equalities.
+This is exactly (6.7); their endpoints may overlap across pairs.
+
+For (15.34), use XI, Theorem 5.3.1, to express every J endpoint at the
+same base by its faithful $(x,d)$ and all of $\mathcal H$. If the two
+$x$ values agree, XI, Theorems 5.4.1 and 5.6.1, give precisely the first
+alternative, including the two distinct drift roots and the full
+secant equation. If the $x$ values differ, distinctness follows from
+that difference, and XI, (5.5.1), gives precisely the second
+alternative. Conversely each alternative reconstructs the indicated
+distinct original J pair at this very base. Thus (15.34) is the exact
+two-term decomposition in XI, Theorem 5.6.2, with its M membership now
+provided by Theorem 15.4.2. Neither J alternative is discarded or
+identified with the M endpoints. ∎
+
+**Definition 15.5.2 (Mathematical source and applicability boundaries).**
+The lifting and admissible-difference principle are classical inputs.
+Choudhary and Mitra, *Identifiability Scaling Laws in Bilinear Inverse
+Problems*, [Proposition 1 and Remark 5](https://arxiv.org/html/1402.2637),
+use the exact lifted feasible set
+$\mathcal K'=\{xy^{\mathsf T}:(x,y)\in\mathcal K\}$ and its difference
+set $\mathcal K'-\mathcal K'$. Their rank-at-most-two nullspace
+intersection criterion retains those admissible differences; Remark 5
+distinguishes original realizable observations from an unrestricted
+lifted observation. In this section their two factors correspond to
+$s,\gamma$, their linear operator to the explicit $\mathcal L_M$, and
+the exact fixed-history constraints to legal source directions and
+(15.28), together with the acquired zero read.
+
+Li, Lee and Bresler, *Identifiability in Blind Deconvolution with
+Subspace or Sparsity Constraints*,
+[Proposition 2.2](https://arxiv.org/html/1505.03399), for nonzero factor
+pairs, characterizes uniqueness of $X_0$ by
+$\ker\mathcal G\cap\{X_0-X:X\in\Omega_{\mathcal M}\}=\{0\}$.
+Its admissible-difference algebra transfers under the preceding factor
+and operator correspondence: equality of linear measurements is exactly
+membership of the difference in the linear kernel. The fixed-H4
+feasible set here need not be a Cartesian product of factor sets; its
+additional absolute constraints remain (15.28), not a consequence of
+that paper. Its circular-convolution operator,
+complex subspace or sparsity models, generic frames and sample
+thresholds are not hypotheses or conclusions here. Both factors in
+(15.29) are nonzero, and the normalization $s_0=1$ removes the factor
+scaling ambiguity. Neither paper supplies (15.10), the positive-root
+exclusions, or the absolute fixed-history guards of this FIB source.
+
+The generic source/gain projection in
+[SelfcalIV, Theorem 13.3](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md)
+is reused as the existing general lifting setting. Its Theorem 5.2
+concerns a required pair at the different $MMJM$ parent with extra
+shared-tail constraints; that result does not prove Theorem 15.3.1
+for the present $JMJM$ history. The new source-specific conclusions
+here are the two uniform exclusions and their consumed constrained
+inverse, with the finite arithmetic specified in (15.8)–(15.17).
+These are repository-derived statements; no literature-priority or
+exhaustive-search assertion is attached to them.
+
+Theorem 15.5.1 asserts an exact correspondence, not nonemptiness of its
+right side. The selected singular-M joint exclusion in S, Corollary
+18.2, the complete first negative-J child in Theorem 14.2, and XI,
+Theorem 8.1.2's entire-child M exclusion on its closed rectangle keep
+their published scopes. In particular XI's whole delivered finite J
+arc already lies in that rectangle. None is used as a global
+restriction on $\mathfrak A_M$; singular J sources and unused singular
+worlds remain allowed. The all-response volume's Theorem 24.2 and
+Corollary 24.3 continue to settle the old exact $p_J$ for all real $v$.
+No four-world witness, seven-read recovery, all-real joint
+nonexistence, fixed-48 ancestor result or original full-domain
+eight/nine-read conclusion follows from (15.29) or (15.34).
+
+## 追加锚（本行以下为增补区）

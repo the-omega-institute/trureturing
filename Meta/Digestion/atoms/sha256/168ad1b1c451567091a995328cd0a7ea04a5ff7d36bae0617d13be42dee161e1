@@ -1,0 +1,47 @@
+**Definition 70.1 (outer frames, replies and real macros).** $Q_J$ uses
+exactly Definition 53.3's framing and complete reply alphabet, evaluated
+on the represented term $v$. In particular its addressed request length
+is $2|p|+4$, a Growth reply has length $2|p|+5$, and any of the three
+Refusal reasons has length five. Logical lookup in the earned live word
+uses the original blocking rule: a strict extension through a leaf is
+absent. The complete semantic table is
+
+| Represented target at $p$ | Outer $P_p$ | Outer $S_p$ |
+| --- | --- | --- |
+| absent | Refusal(absent), identity | Refusal(absent), identity |
+| branch | Refusal(branch), identity | Refusal(branch), identity |
+| alpha | Growth$(P,p)$, replace by beta | Refusal(wrong type), identity |
+| beta | Refusal(wrong type), identity | Growth$(S,p)$, replace by pair beta-alpha |
+
+For a represented successful $P_p$, the adapter actually calls $P_p$,
+consumes its complete reply/return, then actually calls $S_p$ and consumes
+that complete reply/return. For a represented successful $S_p$, it
+actually calls $S_{pL}$ and consumes its complete reply/return. Here $pL$
+is the left logical beta of the physical sentinel pair $J(\beta)$;
+it is not the unaddressable material marker of an unsplit beta. The
+adapter checks the expected complete inner successes before committing.
+A predicted refusal requires no source edit or inner call and returns
+its exact outer reason. The other six three-bit tags are complete
+unsupported frames returning the three-bit BadFrame and identity
+successor. They do not call a missing service. A proper unfinished $P/S$
+address frame waits, retains its received input and has no completed reply.
+Exactly one frame is consumed per outer transaction. The outer client
+calls an actual owned adapter entry, whose stored reference is bound to
+the original dispatcher. Both that outer connection and the inner callable
+reference, current grants and input/output backing are retained and paid;
+the represented word does not stand in for either callable binding.
+
+Receive backs every accepted outer bit before releasing its latch. Before
+a successful macro the adapter owns the old word, parsed address, operation,
+phase, proposed successor word and sufficient finite backing/authority
+for the entire macro and reply. Only the permitted real source templates
+allocate source vertices; the adapter installs no new source opcode.
+Between the two inner calls of a represented promotion the outer service
+remains busy even though the original dispatcher has returned. After the
+last inner return, commit the new live word, seal the entire outer answer,
+Print all its bits and End, consume the local acknowledgement, then Return
+and clear finite scratch before Ready. The root, current authority and
+live word survive cleanup. No next outer frame is admitted while busy.
+The real source calls, their traffic, retained intermediate data and the
+outer traffic are all actual operations with separate costs.
+
