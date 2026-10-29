@@ -12,7 +12,8 @@ open _root_.D5.S3.Arith.FibonacciAtomic.Geometry
 open FiniteSourceCovariance (v B Sigma finite_source_covariance_convergence)
 open FiniteSourceHardy (H Edge)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open InnerProductSpace
+open InnerProductSpace MeasureTheory
+open scoped ENNReal
 
 abbrev signature : Signature where
   Params := Unit
@@ -58,7 +59,8 @@ private theorem J_zero : FiniteSourceHardy.J 0 = 0 := by
   intro z
   change FiniteSourceHardy.trace 0 0 z = 0
   unfold FiniteSourceHardy.trace
-  apply (MemLp.toLp_eq_zero_iff _).mpr
+  rw [← MemLp.toLp_zero (memLp_zero : MemLp (0 : FiniteSourceMass.Node 0 → ℝ) 2 (FiniteSourceMass.μ 0))]
+  apply MemLp.toLp_congr
   apply Filter.Eventually.of_forall
   intro x
   have he : FiniteSourceHardy.edges 0 = ∅ := by
