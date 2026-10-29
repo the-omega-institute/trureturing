@@ -571,7 +571,10 @@ private theorem boundary_moment_limits {μ : Measure ℝ} {U σ c δ : ℝ}
     field_simp
   have hK2c : Tendsto (fun ε : ℝ => (ε : ℂ) ^ 2 * deriv (deriv K) ((σ : ℂ) + (ε : ℂ)))
       (𝓝[Ioi 0] 0) (𝓝 (c : ℂ)) := by
-    have hh := (tendsto_const_nhds.mul he).mul (tendsto_const_nhds.add (tendsto_const_nhds.mul hε))
+    have hh : Tendsto (fun ε : ℝ => (c : ℂ) *
+        Complex.exp (-(ε : ℂ) * (U : ℂ)) * (1 + (U : ℂ) * (ε : ℂ)))
+        (𝓝[Ioi 0] 0) (𝓝 ((c : ℂ) * 1 * (1 + (U : ℂ) * 0))) :=
+      (tendsto_const_nhds.mul he).mul (tendsto_const_nhds.add (tendsto_const_nhds.mul hε))
     have hh' : Tendsto (fun ε : ℝ => (c : ℂ) * Complex.exp (-(ε : ℂ) * (U : ℂ)) *
         (1 + (U : ℂ) * (ε : ℂ))) (𝓝[Ioi 0] 0) (𝓝 (c : ℂ)) := by
       simpa using hh
