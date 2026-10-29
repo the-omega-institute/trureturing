@@ -1760,7 +1760,7 @@ $$
 ## 追加锚（本行以下为增补区）
 ## 8. 联合参数的定量赤字与实际联盟
 
-本节固定自然对数 $L=log a$ 及
+本节固定自然对数 $L=\log a$ 及
 
 $$
 \delta=\frac1a-\frac1b=\frac{b-a}{ab}>0,
@@ -1784,99 +1784,300 @@ $$
 \tag{8.2}
 $$
 
-**证明。** 令
+**证明。** 复用 (7.3)、(7.12)、(7.21)–(7.22)，令
 
 $$
-\mu_n(t)=\mathbb E\sqrt{\frac{X_{n,t}}n},
-\qquad X_{n,t}\sim\operatorname {Bin}(n,t).
+\alpha_a(t)=\mu_a'(t),\qquad
+g_n(t)=\mu_{n+1}(t)-\mu_n(t),\qquad
+G_n(t)=n(n+1)g_n(t).
 $$
 
-由 (3.6)、(7.21) 和积分分部，字面的阶乘和给出
+字面的全部阶乘权重已经由 (7.21) 接到优先级积分，故有限望远镜求和给出
 
 $$
-H=\int_0^1\mu_a'(t)(\mu_b(t)-\mu_a(t))\,dt
- =\sum_{n=a}^{b-1}L_{a,n},
-\qquad
-L_{a,n}=\int_0^1\mu_a'(t)(\mu_{n+1}(t)-\mu_n(t))\,dt .
+H=\sum_{n=a}^{b-1}L_{a,n},\qquad
+L_{a,n}=\int_0^1\alpha_a(t)g_n(t)\,dt .
 \tag{8.3}
 $$
 
-为得到同时适用于所有 $n\ge a$ 的常数，写
-$d_r=\sqrt{r+1}-\sqrt r$，并将删去一个 Bernoulli 样本的 Jensen 差按总和 $K$ 分类。条件于 $K=k$ 时，唯一需要的差为
+以下直接证明对每个 $n\ge a\ge5$ 的积分估计，不把固定概率的渐近式用于 $t=0$ 附近。
+
+（一）先给出所需的有限二项式矩界。若 $X\sim\operatorname{Bin}(M,t)$、$M\ge1$、$0<t\le1$，写 $\lambda=Mt$。经典移位恒等式
 
 $$
-q_{n,k}=\sqrt{\frac{k}{n+1}}
--\frac{n+1-k}{n+1}\sqrt{\frac{k}{n}}
--\frac{k}{n+1}\sqrt{\frac{k-1}{n}}\ge0.
+\mathbb E\frac1{X+1}
+=\frac{1-(1-t)^{M+1}}{(M+1)t}\le\frac1\lambda
 $$
 
-把 (7.12) 代入 (8.3)，对每一项使用
+采用仓内[保留零行的逆矩](../../../Library/Analytic/znidaric2005inversemoments.md)中的同一全分布公式。正二项式逆矩与移位逆矩的文献背景见 Žnidarič，[*Asymptotic expansion for inverse moments of binomial and Poisson distributions*, arXiv:math/0511226v1](https://arxiv.org/pdf/math/0511226v1)，(1.1)–(1.4)。这里所有不移位的逆矩均只在 $X\ge1$ 上求和，不给零值取负幂；不使用该文的固定参数渐近展开。
+
+由 $((k+1)(k+2))^{-1}=\int_0^1u^k(1-u)\,du$ 及二项式定理，
 
 $$
-\frac1{2\sqrt{r+1}}\le d_r\le\frac1{2\sqrt{r+1}}+\frac1{4(r+1)^{3/2}},
-\qquad
-0\le q_{n,k}\le\frac{k(n+1-k)}{2n(n+1)\sqrt{k-1\vee1}},
+\begin{aligned}
+\mathbb E\frac1{(X+1)(X+2)}
+&=\int_0^1(1-u)(1-t+tu)^M\,du\\
+&\le\int_0^1v e^{-\lambda v}\,dv
+\le\int_0^\infty v e^{-\lambda v}\,dv=\lambda^{-2}.
+\end{aligned}
 $$
 
-并用
+这里用 $v=1-u$ 及 $1-tv\le e^{-tv}$。对每个整数 $k\ge1$，有
+$k^{-1}\le2/(k+1)$、$k^{-2}\le6/((k+1)(k+2))$。相乘后用 Cauchy–Schwarz，得到
 
 $$
-\int_0^1t^p(1-t)^q\,dt=\frac{p!q!}{(p+q+1)!}
+\mathbb E[X^{-1};X\ge1]\le\frac2\lambda,\qquad
+\mathbb E[X^{-2};X\ge1]\le\frac6{\lambda^2},\qquad
+\mathbb E[X^{-3/2};X\ge1]\le\frac{2\sqrt3}{\lambda^{3/2}}.
 $$
 
-逐项积分。将 $r=0$ 的端点与 $1\le r\le a-1$ 的主项分别相加，得到完全有限的恒等式
+令 $W=X+1$。由于 $\mathbb EW=\lambda+1$，
 
 $$
- n(n+1)L_{a,n}=\frac1{16}\sum_{r=1}^{a-1}\frac1r+R_{a,n},
-\qquad
- |R_{a,n}|\le 26+\frac1{16a}.
+\mathbb E\frac{(W-\lambda)^2}{W}
+=\mathbb EW-2\lambda+\lambda^2\mathbb EW^{-1}\le1.
+$$
+
+平方根有理化及 Cauchy–Schwarz 因而给出
+
+$$
+\left|\mathbb EW^{-1/2}-\lambda^{-1/2}\right|
+\le\frac1\lambda\mathbb E\frac{|W-\lambda|}{\sqrt W}
+\le\frac1\lambda.
+$$
+
+另一方面，
+
+$$
+\begin{aligned}
+T&:=\mathbb E[X^{-1/2};X\ge1],\\
+T-\mathbb E(X+1)^{-1/2}
+&=\mathbb E[X^{-1/2}-(X+1)^{-1/2};X\ge1]-\mathbb P(X=0).
+\end{aligned}
+$$
+
+其中期望的被积项介于 $0$ 与 $1/(2X^{3/2})$ 之间；
+$\mathbb P(X=0)=(1-t)^M\le e^{-\lambda}\le1/\lambda$。
+因此当 $\lambda\ge1$ 时，
+
+$$
+\left|T-\lambda^{-1/2}\right|
+\le\frac2\lambda+\frac{\sqrt3}{\lambda^{3/2}}
+\le\frac4\lambda.
+$$
+
+另由 $\operatorname{Var}X=\lambda(1-t)$，
+
+$$
+\left|\mathbb E\sqrt X-\sqrt\lambda\right|
+\le\mathbb E\frac{|X-\lambda|}{\sqrt\lambda}
+\le1.
+$$
+
+这些都是有限分布的估计，并且保留了 $\mathbb P(X=0)$。
+
+（二）估计导数。令 $Z=1+\operatorname{Bin}(a-1,t)$、$\lambda=at$。
+上述移位恒等式在此给出 $\mathbb EZ^{-1}\le1/\lambda$；又
+$\mathbb EZ=\lambda+1-t$，故
+
+$$
+\mathbb E\frac{(Z-\lambda)^2}{Z}\le1-t\le1,\qquad
+\left|\mathbb EZ^{-1/2}-\lambda^{-1/2}\right|\le\lambda^{-1}.
+$$
+
+为同时处理 $Z=1$，对每个整数 $k\ge1$ 定义
+
+$$
+A(k)=\frac1{1+\sqrt{1-1/k}}.
+$$
+
+若 $s=\sqrt{1-1/k}$，直接有理化给出
+
+$$
+A(k)=\frac12+\frac1{8k}+r_k,\qquad
+r_k=\frac{3+s}{8k^2(1+s)^3},\qquad
+0\le r_k\le\frac3{8k^2},\qquad
+0\le A(k)-\frac12\le\frac1{2k}.
+$$
+
+最后两个界来自 $(3+s)/(1+s)^3\le3$ 和
+$A(k)-1/2=1/(2k(1+s)^2)$。特别地 $A(1)=1$、$r_1=3/8$，没有舍去端点。
+因为 $d_{Z-1}=A(Z)/\sqrt Z$，(7.12) 给出
+
+$$
+\begin{aligned}
+0\le\alpha_a(t)&\le\min\{\sqrt a,t^{-1/2}\},\\
+\left|\alpha_a(t)-\frac1{2\sqrt t}\right|
+&\le\frac{\sqrt a}{2}
+ \left(\lambda^{-1}+\mathbb EZ^{-3/2}\right)
+\le\frac1{\sqrt a\,t}.
+\end{aligned}
+$$
+
+第一行使用 $d_r\le1$、$d_{Z-1}\le Z^{-1/2}$ 以及
+$\mathbb EZ^{-1/2}\le(\mathbb EZ^{-1})^{1/2}$；第二行用 $Z\ge1$。
+
+（三）估计度数增量。令 $N=n+1$、$K\sim\operatorname{Bin}(N,t)$。
+复用引理 7.3 的条件 Jensen 差：$q_{n,0}=0$，对 $1\le k\le N$，
+
+$$
+\begin{aligned}
+q_{n,k}
+&=\sqrt{\frac kN}
+-\frac{N-k}{N}\sqrt{\frac kn}
+-\frac kN\sqrt{\frac{k-1}{n}}\\
+&=\frac{\sqrt k}{N\sqrt n}\bigl(A(k)-A(N)\bigr).
+\end{aligned}
+$$
+
+因为 $A$ 递减，这也逐项证明非负性；$k=N$ 时恰为零。
+于是有包含全部端点的有限和
+
+$$
+G_n(t)=\sqrt n\sum_{k=1}^N
+ \binom Nk t^k(1-t)^{N-k}\sqrt k\bigl(A(k)-A(N)\bigr).
+$$
+
+由 $A(k)-A(N)\le1/(2k)$ 及（一）的第一个逆矩界，
+
+$$
+0\le G_n(t)\le\frac{\sqrt n}{2}\mathbb E[K^{-1/2};K\ge1]
+\le\frac{\sqrt n}{2}\sqrt{\frac2{Nt}}
+\le\frac1{\sqrt{2t}}.
+$$
+
+现在设 $nt\ge1$，令 $\lambda=Nt$、
+$T=\mathbb E[K^{-1/2};K\ge1]$、$U=\mathbb E\sqrt K$。
+使用上面的 $r_k$ 精确分解，
+
+$$
+\begin{aligned}
+G_n(t)&=\frac{\sqrt n}{8}\left(T-\frac UN\right)+R_n(t),\\
+R_n(t)&=\sqrt n\,\mathbb E[\sqrt K(r_K-r_N);K\ge1],\\
+|R_n(t)|
+&\le\frac{3\sqrt n}{8}\mathbb E[K^{-3/2};K\ge1]
+ +\frac{3\sqrt n}{8N^2}\mathbb E\sqrt K\\
+&\le\frac{3\sqrt3}{4nt^{3/2}}+\frac{3\sqrt t}{8n}.
+\end{aligned}
+$$
+
+此处 $\sqrt n/N^{3/2}\le1/n$、
+$\sqrt{nN}/N^2\le1/n$，且 Jensen 给 $U\le\sqrt{Nt}$。
+把 $T$ 换成 $\lambda^{-1/2}$ 的误差至多
+$1/(2\sqrt n\,t)$，把 $U$ 换成 $\sqrt\lambda$ 的误差至多
+$1/(8\sqrt n)$。换完后的主项为
+$\sqrt{n/N}(1-t)/(8\sqrt t)$。
+再用 $1-\sqrt{n/N}\le1/(2n)$，得到完整的误差界
+
+$$
+\begin{aligned}
+\left|G_n(t)-\frac{1-t}{8\sqrt t}\right|
+&\le\frac1{2\sqrt n\,t}+\frac1{8\sqrt n}
++\frac1{16n\sqrt t}
++\frac{3\sqrt3}{4nt^{3/2}}+\frac{3\sqrt t}{8n}\\
+&\le\left(\frac{17}{16}+\frac{3\sqrt3}{4}\right)
+ \frac1{\sqrt n\,t}
+\le\frac5{2\sqrt n\,t}.
+\end{aligned}
+$$
+
+第二行只用 $nt\ge1$、$0<t\le1$、$n\ge1$；
+最后用 $\sqrt3<7/4$。没有未展开的余项。
+
+（四）将积分分成 $[0,1/a]$ 和 $[1/a,1]$。
+在第一段，由（二）和（三）的全域上界，
+
+$$
+0\le\int_0^{1/a}\alpha_a(t)G_n(t)\,dt
+\le\sqrt a\int_0^{1/a}\frac{dt}{\sqrt{2t}}=\sqrt2.
+$$
+
+在第二段，$nt\ge1$，故
+
+$$
+\begin{aligned}
+\left|\alpha_a(t)G_n(t)-\frac{1-t}{16t}\right|
+&\le\alpha_a(t)\left|G_n(t)-\frac{1-t}{8\sqrt t}\right|
++\frac{1-t}{8\sqrt t}
+ \left|\alpha_a(t)-\frac1{2\sqrt t}\right|\\
+&\le\frac{21}{8\sqrt a\,t^{3/2}}.
+\end{aligned}
+$$
+
+这个上界的积分不超过 $21/4$，而
+
+$$
+\int_{1/a}^1\frac{1-t}{16t}\,dt
+=\frac{L-1+1/a}{16}.
+$$
+
+因此，对全部整数 $n\ge a\ge5$，
+
+$$
+\left|n(n+1)L_{a,n}-\frac L{16}\right|
+\le\sqrt2+\frac{21}{4}+\frac1{16}<7<27.
 \tag{8.4}
 $$
 
-这里没有取极限：为核对余项界，把上式中含 $d_r$ 的两个差写成
-$d_r-1/(2\sqrt{r+1})$ 与
-$1/(2\sqrt{r+1})-1/(2\sqrt r)$，再用
+$t=0$ 时 $\alpha_a(0)=\sqrt a$、$g_n(0)=0$；
+$t=1$ 时 $g_n(1)=0$。两端均是原有限多项式的值；
+上述含 $t^{-1/2}$ 的界仅在 $t>0$ 使用，且在零处可积。
+最后将 (8.4) 除以 $n(n+1)$，用 (8.3) 及
+$\sum_{n=a}^{b-1}(n(n+1))^{-1}=\delta$ 得 (8.1)。
+$H>0$ 复用 (7.19)，相对误差则由除以 $\delta L/16$ 得到。∎
+
+**定理 8.2（实际 Shapley 份额的三种参数区间）。** 令 $\vartheta=432/L$。
+对全部整数 $b>a\ge5$，有以下有效的相对误差界。
+
+若 $d=b-a$，则
 
 $$
-0\le d_r-\frac1{2\sqrt{r+1}}le\frac1{4(r+1)^{3/2}},qquad
-0\le\frac1{2\sqrt r}-d_r\le\frac1{4r^{3/2}}
+\left|\frac{H}{dL/(16a^2)}-1\right|
+\le\vartheta+\frac da.
 $$
 
-求和；四个端点 $k=0,1,n,n+1$ 的总贡献小于 $8$，两次将
-$(n+r+1)^{-1}$ 换成 $n^{-1}$ 的误差小于 $6$，而剩下的两项分别小于 $6$ 和 $6+1/(16a)$。这正给出 (8.4) 的 $26+1/(16a)$。这是有限求和的三角不等式，不使用跨 $n$ 的耦合。
+若 $s=b/a$，对任意指定实数 $r>1$，则
 
-又有
-$|\sum_{r=1}^{a-1}r^{-1}-\log a|<1$。将 (8.4) 乘以
-$1/(n(n+1))$，从 $n=a$ 到 $b-1$ 求和，并使用
-$\sum_{n=a}^{b-1}1/(n(n+1))=\delta$，即得 (8.1)。正项的删样本 Jensen 差保证 $H>0$。最后除以 $\delta L/16$ 得 (8.2)。∎
+$$
+\left|\frac{H}{(1-1/r)L/(16a)}-1\right|
+\le\vartheta+(1+\vartheta)\frac{|s-r|}{s(r-1)}.
+$$
 
-**定理 8.2（实际 Shapley 份额的三种参数区间）。** 对每个整数 $b>a\ge5$，(8.1) 成立。特别地：
+同时，
 
-1. 若 $b-a=o(a)$，则
+$$
+\left|\frac{H}{L/(16a)}-1\right|
+\le\vartheta+\frac ab.
+$$
 
-   $$
-   H=\frac{(b-a)L}{16a^2}\left(1+O\!\left(\frac1L+\frac{b-a}{a}\right)\right).
-   $$
+因而，分别在 $d=o(a)$、$s\to r\in(1,\infty)$、$s\to\infty$ 时，
 
-2. 若 $b/a\to r\in(1,\infty)$，则
+$$
+\begin{aligned}
+H&=\frac{dL}{16a^2}\left(1+O(L^{-1}+d/a)\right),\\
+H&=\frac{(1-1/r)L}{16a}
+ \left(1+O_r(L^{-1}+|s-r|)\right),\\
+H&=\frac L{16a}\left(1+O(L^{-1}+a/b)\right).
+\end{aligned}
+$$
 
-   $$
-   H=\frac{1-1/r}{16a}L\left(1+O\!\left(\frac1L+\left|\frac ba-r\right|\right)\right).
-   $$
+第一式、第三式的隐常数绝对；第二式允许依赖固定的 $r$。
+对全部比率共同适用的相对误差仍为 (8.2)。
 
-3. 若 $b/a\to\infty$，则
+**证明。** 写 $H=(\delta L/16)(1+\epsilon)$，
+$|\epsilon|\le\vartheta$。第一式的比例因子为 $a/b$，
+故误差不超过 $(a/b)\vartheta+d/b\le\vartheta+d/a$。
+第三式的因子为 $1-a/b$，故误差不超过
+$(1-a/b)\vartheta+a/b\le\vartheta+a/b$。
+第二式使用精确恒等式
 
-   $$
-   H=\frac{L}{16a}\left(1+O\!\left(\frac1L+\frac ab\right)\right).
-   $$
+$$
+\frac{1-1/s}{1-1/r}-1=\frac{s-r}{s(r-1)}.
+$$
 
-In all three displays the implied constants are absolute, and the finite-domain error is the explicit bound $432/L$ in (8.2). Thus the same estimate applies to every labelled coalition and to every ratio regime; the statements do not replace the literal factorial allocation by a continuum allocation.
-
-**证明。** Insert
-$\delta=(b-a)/(ab)$ in (8.1). In the first regime
-$1/b=a^{-1}(1+O((b-a)/a))$; in the second
-$\delta=(1-1/r)/a+o(a^{-1})$; in the third
-$\delta=a^{-1}(1+O(a/b))$. In each case (8.2) supplies the remaining relative error.∎
+将这个差记为 $v$，则
+$|(1+v)(1+\epsilon)-1|\le\vartheta+(1+\vartheta)|v|$。
+在所述三个极限中相应误差趋于零；第二式不要求对 $r\downarrow1$ 一致。∎
 
 **引理 8.3（连续赤字与合法等删联盟）。** 对 $z,s\in[0,1]$，置
 
@@ -1929,7 +2130,9 @@ $$
 -\frac12(\sqrt z-\sqrt s)^2
 $$
 
-和 $z-s=-m_a\delta$ 给出 (8.6)。因为 $m_a\le a/2$ 对 $a\ge5$ 成立，两个删除集合均为合法的有限标号集合。∎
+和 $z-s=-m_a\delta$ 给出 (8.6)。由 $\log a\le a-1$，
+$m_a\le1+L/4\le(a+3)/4\le a/2$（$a\ge5$），
+所以两个删除集合均为合法的有限标号集合。∎
 
 **定理 8.4（全局有符号赤字渐近）。** 对所有整数 $b>a\ge5$，置
 
@@ -1966,6 +2169,8 @@ $$
 \tag{8.9}
 $$
 
+最后一步可由 $L>\log5>1$ 核对：
+$(1+432/L)^2-1=(864+186624/L)/L<10^6/L$。
 这是全体实际联盟的上界。对下界，若 $\mathcal E_D(a)\ge1$，只需使用 $D_{a,b}\ge0$；同时 (8.9) 已给出所需上界。设以下 $\mathcal E_D(a)<1$，于是 $L>10^6$ 且 $L/a<10^{-6}$。令 $m=m_a$，则
 
 $$
@@ -1977,21 +2182,34 @@ $$
 \tag{8.10}
 $$
 
-将 (8.10) 代入 (8.6)，并用
-$\sqrt{1-m/a}+\sqrt{1-m/b}\ge2\sqrt{1-m/a}$，完成平方后得到
+令 $t=4m/L$、$u=m/a$、$\vartheta=432/L$。
+式 (8.6) 及 $S^2\ge4(1-u)$ 直接给出
+
+$$
+\begin{aligned}
+\frac{\Delta(C_a^\#;\phi)}{D_0}
+&\ge2t(1-\vartheta)-\frac{t^2}{1-u}\\
+&=1-(t-1)^2-2t\vartheta-\frac{t^2u}{1-u}.
+\end{aligned}
+$$
+
+这里 $|t-1|\le2/L$、$t\le2$、
+$u\le(L+2)/(4a)\le L/(2a)<1/2$。因此损失至多
+
+$$
+\frac4{L^2}+\frac{1728}{L}+8u
+\le\frac{1732}{L}+\frac{4L}{a}
+\le10^5\left(\frac1L+\frac La\right).
+$$
+
+这证明了
 
 $$
 \frac{\Delta(C_a^\#;\phi)}{2\sqrt{ab}}
 \ge\frac{\delta^2L^2}{128}
-\left(1-10^5\left(\frac1L+\frac La\right)\right).
+ \left(1-10^5\left(\frac1L+\frac La\right)\right).
 \tag{8.11}
 $$
-
-为核对常数，(8.11) 只用了
-$|4m/L-1|\le2/L$、$|16H/(\delta L)-1|\le432/L$、
-$(1-x)^{-1}\le1+2x$（$0\le x\le10^{-5}$）；展开后的系数分别为
-$4/L$, $864/L$, $4\cdot10^{-5}L/a$ 和
-$2\cdot10^{-5}L/a$，均小于右侧的 $10^5(1/L+L/a)$。
 
 乘以 $2\sqrt{ab}$，(8.11) 给出
 $D_{a,b}/D_0\ge1-10^5(1/L+L/a)\ge1-\mathcal E_D(a)$。
@@ -2001,13 +2219,13 @@ $D_{a,b}/D_0\ge1-10^5(1/L+L/a)\ge1-\mathcal E_D(a)$。
 **定理 8.5（每一个最大联盟的联合计数）。** 设 $C$ 是任意实际最大赤字联盟，记
 
 $$
- i=a-k,quad j=b-l,quad x=\frac ka,quad y=\frac lb,quad q=x-y.
+ i=a-k,\quad j=b-l,\quad x=\frac ka,\quad y=\frac lb,\quad q=x-y.
 $$
 
 令
 
 $$
-\vartheta(a)=\frac{432}{L},qquad
+\vartheta(a)=\frac{432}{L},\qquad
 \sigma(a)=\mathcal E_D(a)+2\vartheta(a)+\vartheta(a)^2.
 $$
 
@@ -2017,11 +2235,11 @@ $$
 \begin{aligned}
 \frac ia&\ge1-\frac{4\sigma(a)}{(1-\sqrt{\sigma(a)})^2},
 &\frac jb&\ge1-\frac{4\sigma(a)}{(1-\sqrt{\sigma(a)})^2},
-\tag{8.12}\n\\
+\tag{8.12}\\
 \left|q-4H\right|&\le4H\sqrt{\sigma(a)},
-\tag{8.13}\n\\
+\tag{8.13}\\
 \left|\frac{q}{\delta L/4}-1\right|&\le
-Q(a):=\frac{108}{L}+(1+\vartheta(a))\sqrt{\sigma(a)}.
+Q(a):=\frac{432}{L}+(1+\vartheta(a))\sqrt{\sigma(a)}.
 \tag{8.14}
 \end{aligned}
 $$
@@ -2035,6 +2253,14 @@ $$
 \tag{8.15}
 $$
 
+等价的联合缺失计数关系保留比率因子：
+
+$$
+\left|
+ \frac{k-(a/b)l}{(1-a/b)L/4}-1
+\right|\le Q(a).
+$$
+
 这些式子对所有并列最大联盟同时成立；它们没有分别给出 $k$ 和 $l$ 的无约束比率律。
 
 **证明。** 由 (8.6) 的同一平方根恒等式，对任意 $x,y$ 有
@@ -2045,7 +2271,8 @@ $$
 \tag{8.16}
 $$
 
-写 $S=\sqrt{1-x}+\sqrt{1-y}$，则第二项为 $q^2/(2S^2)$，且 $S^2\le4$。所以
+由 (7.19)、(7.23)，最大赤字严格为正，故 (8.16) 蕴含 $q>0$。
+因此 $S=\sqrt{1-x}+\sqrt{1-y}>0$，则第二项为 $q^2/(2S^2)$，且 $S^2\le4$。所以
 
 $$
 2H^2-\mathfrak d_H(1-x,1-y)
@@ -2063,13 +2290,13 @@ $$
 
 由 (8.7)、(8.2)，最大联盟的归一化赤字至少为
 $2H^2(1-\sigma(a))$；这里使用
-$(1-\mathcal E_D)/(1+\vartheta)^2\ge1-sigma$。于是 (8.17) 给出 (8.13)，并给出
+$(1-\mathcal E_D)/(1+\vartheta)^2\ge1-\sigma$。于是 (8.17) 给出 (8.13)，并给出
 $q\ge4H(1-\sqrt\sigma)$。再代入 (8.18)，得到
 $x+y\le4\sigma/(1-\sqrt\sigma)^2$，即 (8.12)。最后
 
 $$
 |q-\delta L/4|\le|q-4H|+4|H-\delta L/16|
-\le4H\sqrt\sigma+27\delta,
+\le4H\sqrt\sigma+108\delta,
 $$
 
 再用 $16H/(\delta L)\le1+\vartheta$，即得 (8.14)。因为 $\mathcal E_D(a),\vartheta(a)\to0$，(8.15) 随即成立。∎
@@ -2077,9 +2304,9 @@ $$
 **推论 8.6（固定差值的等删计数）。** 固定正整数 $d$，令 $b=a+d$。若 $a$ 满足
 
 $$
-L\ge8,quad a\ge10^6L^3,quad
-\sigma(a)<\frac1{16},quad
-d\,\frac{L/2+216}{a+d}<\frac1a,quad
+L\ge8,\quad a\ge10^6L^3,\quad
+\sigma(a)<\frac1{16},\quad
+d\,\frac{L/2+216}{a+d}<1,\quad
  d\,\frac{4\sigma(a)}{(1-\sqrt{\sigma(a)})^2}<1,
 \tag{8.19}
 $$
@@ -2087,7 +2314,7 @@ $$
 则每一个实际最大赤字联盟都有
 
 $$
- k=l=m,qquad
+ k=l=m,\qquad
 \left|m-\frac L4\right|\le300.
 \tag{8.20}
 $$
@@ -2105,29 +2332,45 @@ $$
 若 $k-l\ge1$，则
 $q=(k-l)/a+ld/(ab)\ge1/a$，与 (8.19)、(8.21) 矛盾。若 $l-k\ge1$，则 $q>0$ 要求 $ld/b>1$；而 (8.12) 和 (8.19) 给出 $l/b\le x+y<1/d$，也矛盾。故 $k=l=m$。
 
-在等删情形，$q=m\delta$。令 $m_0$ 为最接近 $L/4$ 的正整数。由 (8.16) 及
-$S^2\le4$、$S^2\ge4(1-m/a)$，对任意 $r$ 有
+在等删情形，$q=m\delta$。记
+$h=H/\delta=L/16+e$、$|e|\le27$，并令
+$M=4h=L/4+4e$、$P(r)=rh-r^2/8$。
+对实际最大联盟 $C_m$，由 $S^2\le4$ 得
 
 $$
-\frac{\Delta(C_r;\phi)}{2\sqrt{ab}\,\delta^2}
-\le m\left(\frac L{16}+e\right)-\frac{m^2}{8},
-\qquad e=\frac H\delta-\frac L{16},quad |e|\le27,
+\frac{\Delta(C_m;\phi)}{2\sqrt{ab}\,\delta^2}\le P(m).
 \tag{8.22}
 $$
 
-而
+取 $m_0$ 为最接近 $L/4$ 的正整数；$L\ge8$ 保证
+$|m_0-L/4|\le1/2$，且 $m_0$ 合法。由
+$S^2\ge4(1-m_0/a)$ 得
 
 $$
 \frac{\Delta(C_{m_0};\phi)}{2\sqrt{ab}\,\delta^2}
-\ge m_0\left(\frac L{16}+e\right)-\frac{m_0^2}{8(1-m_0/a)}.
+\ge P(m_0)-\frac{m_0^3}{8a(1-m_0/a)}.
 \tag{8.23}
 $$
 
-将两式相减并完成平方，使用 $m_0\le L/4+1/2$、
-$a\ge10^6L^3$，可得当 $|m-L/4|>300$ 时右端严格为负；确切地，平方项的负贡献至少为
-$((300-108-1/2)^2-(108+1/2)^2)/8>3000$，而 (8.23) 的分母修正小于 $1$。这与 $C$ 的最大性矛盾，故 (8.20) 成立。∎
+由 $m_0\le L/4+1/2\le5L/16$、
+$a\ge10^6L^3$，有 $m_0/a<1/2$，且最后的修正项至多
+$125L^3/(16384a)<1$。
+配方 $P(r)=2h^2-(r-M)^2/8$，
+以及 $|M-L/4|\le108$，给出
+$|m_0-M|\le108+1/2$。
+若 $|m-L/4|>300$，则 $|m-M|>192$，于是
 
-**命题 8.7（等删剖面及其二阶项）。** 对每个 $b>a\ge5$ 和整数 $0\le k\le a/2$，令 $C_k$ 为删除恰好 $k$ 个 $A$ 顶点和 $k$ 个 $B$ 顶点后的联盟。则
+$$
+P(m)-P(m_0)
+<-\frac{192^2-(108+1/2)^2}{8}<-3000.
+$$
+
+这与最大性及 (8.22)–(8.23) 矛盾，所以 (8.20) 成立。
+最后，固定 $d$ 时，$L/a\to0$、$L^3/a\to0$、
+$\sigma(a)\to0$，故 (8.19) 的五个条件同时最终成立；
+它给出非空且显式可检验的充分域。∎
+
+**命题 8.7（等删剖面的统一误差）。** 对每个 $b>a\ge5$ 和整数 $0\le k\le a/2$，令 $C_k$ 为删除恰好 $k$ 个 $A$ 顶点和 $k$ 个 $B$ 顶点后的联盟。则
 
 $$
 D_0(a,b)>0,
@@ -2192,6 +2435,8 @@ $$
 代入 (8.26) 即得第二项 $16k^3/[aL^2(1-k/a)]$，证明 (8.24)。若 $k\le ML$、$k/a\le1/2$，两项分别不超过
 $3456M/L$ 与 $32M^3L/a$，得到 (8.25)。∎
 
-本节保留了 $O(L^{-1})$ 的一阶误差和等删剖面的二阶项。有限参数下的精确最大联盟、整数取整与并列结构，以及不受 $k=l$ 约束的分开删除律，均不由上述估计决定。
+第 3–4 节提供固定 $a$ 的极限，第 7 节提供联合正下界；(8.4) 的统一积分估计把这些中间结构接到 $a$、$b$ 同变的相对误差、实际整数见证及全体最大联盟的稳定性上。谱值、阶乘分配、优先级积分、删样本 Jensen 比较和移位逆矩分别采用上述仓内结果与原始文献；本节的定量联合推导不把这些经典中间步骤另算为新结果。
+
+二阶渐近修正、有限参数下的精确最大联盟、整数取整与并列结构，以及不受 $k=l$ 约束的分开删除律，仍未由上述估计决定。固定 $d$ 的 (8.19) 也未给出 $1\le d\le c(\log a)^2$ 的统一等删窗口。
 
 ## 追加锚（本行以下为增补区）
