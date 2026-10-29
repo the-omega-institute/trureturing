@@ -9,6 +9,7 @@
 import Mathlib.NumberTheory.Chebyshev
 import Mathlib.NumberTheory.LSeries.Dirichlet
 import Mathlib.NumberTheory.LSeries.SumCoeff
+import Mathlib.NumberTheory.LSeries.Linearity
 import Mathlib.NumberTheory.LSeries.Deriv
 import Mathlib.NumberTheory.Harmonic.ZetaAsymp
 import Mathlib.NumberTheory.EulerProduct.Basic
@@ -16,6 +17,7 @@ import Mathlib.Data.Nat.Factorization.PrimePow
 import Mathlib.Analysis.Calculus.ParametricIntegral
 import Mathlib.Analysis.Calculus.ParametricIntervalIntegral
 import Mathlib.MeasureTheory.Integral.IntegralEqImproper
+import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral
 import Mathlib.Analysis.Meromorphic.Order
 import D5.S3.Weil.ZetaSeam.StatementSeam
 
@@ -90,42 +92,6 @@ private lemma c_analytic : AnalyticOnNhd ℂ C {z | (1 / 2 : ℝ) < z.re} := by
       (fun y hy => c_summable (by simpa using hy))
   intro z hz
   exact LSeries_analyticOnNhd _ z (hab.trans_lt (by exact_mod_cast hz))
-
-private lemma c_mellin {z : ℂ} (hz : (1 / 2 : ℝ) < z.re) :
-    C z = z * ∫ x in Ioi (1 : ℝ),
-      ((Chebyshev.psi x - Chebyshev.theta x : ℝ) : ℂ) * (x : ℂ) ^ (-(z + 1)) := by
-  have h := LSeries_eq_mul_integral_of_nonneg b (by norm_num : (0 : ℝ) ≤ 1 / 2)
-    hz b_prefix_bigO b_nonneg
-  simpa only [C, ← Complex.ofReal_sum, b_prefix] using h
-
-private lemma mangoldt_prefix_bigO :
-    (fun n : ℕ => ∑ k ∈ Finset.Icc 1 n, ArithmeticFunction.vonMangoldt k)
-      =O[atTop] (fun n : ℕ => (n : ℝ) ^ (1 : ℝ)) := by
-  refine IsBigO.of_bound (Real.log 4 + 4) (Eventually.of_forall fun n => ?_)
-  have hsum : (∑ k ∈ Finset.Icc 1 n, ArithmeticFunction.vonMangoldt k) =
-      Chebyshev.psi (n : ℝ) := by
-    change (∑ k ∈ Finset.Ioc 0 n, ArithmeticFunction.vonMangoldt k) = _
-    simp only [Chebyshev.psi, Nat.floor_natCast]
-  rw [hsum, Real.norm_eq_abs, abs_of_nonneg (Chebyshev.psi_nonneg _),
-    Real.rpow_one, Real.norm_eq_abs, abs_of_nonneg (Nat.cast_nonneg n)]
-  exact Chebyshev.psi_le_const_mul_self (Nat.cast_nonneg n)
-
-private lemma psi_mellin {z : ℂ} (hz : 1 < z.re) :
-    -logDeriv riemannZeta z = z * ∫ x in Ioi (1 : ℝ),
-      (Chebyshev.psi x : ℂ) * (x : ℂ) ^ (-(z + 1)) := by
-  have h := LSeries_eq_mul_integral_of_nonneg
-    (fun n : ℕ => ArithmeticFunction.vonMangoldt n) (by norm_num : (0 : ℝ) ≤ 1)
-    hz mangoldt_prefix_bigO (fun _ => ArithmeticFunction.vonMangoldt_nonneg)
-  have hL := ArithmeticFunction.LSeries_vonMangoldt_eq_deriv_riemannZeta_div hz
-  rw [show -logDeriv riemannZeta z =
-      LSeries (fun n : ℕ => (ArithmeticFunction.vonMangoldt n : ℂ)) z by
-    simpa only [logDeriv_apply, neg_div, ArithmeticFunction.natCoe_apply] using hL.symm]
-  convert h using 2
-  congr 1
-  ext x
-  congr 1
-  rw [← Complex.ofReal_sum]
-  rfl
 
 private lemma prime_power_term (z : ℂ) (p : Nat.Primes) (j : ℕ) :
     LSeries.term (fun n => (b n : ℂ)) z ((p : ℕ) ^ (j + 2)) =
@@ -293,13 +259,17 @@ private lemma theta_mellin {z : ℂ} (hz : 1 < z.re) :
       (fun n : ℕ => (ArithmeticFunction.vonMangoldt n : ℂ)) - (fun n => (b n : ℂ)) := by
     ext n
     simp [primeCoeff]
-  rw [hcoeff, LSeries_sub
-    (by simpa only [ArithmeticFunction.natCoe_apply] using
-      ArithmeticFunction.LSeriesSummable_vonMangoldt hz)
-    (c_summable (by linarith))] at h
-  have hL := ArithmeticFunction.LSeries_vonMangoldt_eq_deriv_riemannZeta_div hz
-  simpa only [← Complex.ofReal_sum, primeCoeff_prefix, C, logDeriv_apply,
-    neg_div, ArithmeticFunction.natCoe_apply, hL] using h
+  have he : LSeries (fun n => (primeCoeff n : ℂ)) z =
+      -logDeriv riemannZeta z - C z := by
+    rw [hcoeff, LSeries_sub
+      (by simpa only [ArithmeticFunction.natCoe_apply] using
+        ArithmeticFunction.LSeriesSummable_vonMangoldt hz)
+      (c_summable (by linarith))]
+    have hL := ArithmeticFunction.LSeries_vonMangoldt_eq_deriv_riemannZeta_div hz
+    simpa only [C, logDeriv_apply, neg_div, ArithmeticFunction.natCoe_apply] using
+      congrArg (fun w => w - C z) hL
+  rw [he] at h
+  simpa only [← Complex.ofReal_sum, primeCoeff_prefix] using h
 
 private lemma cpow_exp (u : ℝ) (z : ℂ) :
     (Real.exp u : ℂ) ^ z = Complex.exp ((u : ℂ) * z) := by
@@ -310,7 +280,7 @@ private lemma theta_exp_point (s : ℂ) (u : ℝ) :
     Real.exp u • ((Chebyshev.theta (Real.exp u) : ℂ) *
       (Real.exp u : ℂ) ^ (-((1 + s) + 1))) =
       F s u + Complex.exp (-s * (u : ℂ)) := by
-  rw [cpow_exp, F_eq, Real.smul_def, Complex.ofReal_sub, Complex.ofReal_exp]
+  rw [cpow_exp, F_eq, Complex.real_smul, Complex.ofReal_sub, Complex.ofReal_exp]
   have he : Complex.exp (-(s + 1) * (u : ℂ)) * Complex.exp (u : ℂ) =
       Complex.exp (-s * (u : ℂ)) := by
     rw [← Complex.exp_add]
@@ -343,8 +313,11 @@ private lemma Q_zero_raw {s : ℂ} (hs : 0 < s.re) :
   rw [hem] at he
   change Q 0 s + 1 / s = _ at he
   rw [← he] at hm
-  apply (eq_div_iff hz0).mpr at hm
-  linear_combination -hm
+  have hd : (-logDeriv riemannZeta (1 + s) - C (1 + s)) / (1 + s) =
+      Q 0 s + 1 / s := by
+    rw [hm]
+    field_simp
+  linear_combination -hd
 
 private lemma normalized_logDeriv {z : ℂ} (hz : z ≠ 1) (hn : riemannZeta₁ z ≠ 0) :
     logDeriv riemannZeta z = -(z - 1)⁻¹ + logDeriv riemannZeta₁ z := by
@@ -390,8 +363,237 @@ private lemma M_analytic_zero (u₀ : ℝ) : AnalyticAt ℂ (M u₀) 0 := by
   apply AnalyticAt.neg
   apply AnalyticAt.add
   · apply AnalyticAt.add analyticAt_const
-    exact hz.comp (by fun_prop : AnalyticAt ℂ (fun s : ℂ => 1 + s) 0)
-  · exact hc.comp (by fun_prop : AnalyticAt ℂ (fun s : ℂ => 1 + s) 0)
+    exact hz.comp_of_eq (by fun_prop : AnalyticAt ℂ (fun s : ℂ => 1 + s) 0) (by simp)
+  · exact hc.comp_of_eq (by fun_prop : AnalyticAt ℂ (fun s : ℂ => 1 + s) 0) (by simp)
+
+private lemma Q_hasDeriv (u₀ : ℝ) (hu₀ : 0 ≤ u₀) {s : ℂ} (hs : 0 < s.re) :
+    IntegrableOn (fun u : ℝ => (u : ℂ) * Complex.exp (-s * (u : ℂ)) * (q u : ℂ))
+      (Ioi u₀) ∧
+    HasDerivAt (Q u₀)
+      (-(∫ u in Ioi u₀, (u : ℂ) * Complex.exp (-s * (u : ℂ)) * (q u : ℂ))) s := by
+  have heps : 0 < s.re / 2 := by linarith
+  have hb : IntegrableOn (fun u : ℝ =>
+      u * Real.exp (-(s.re / 2) * u) * (Real.log 4 + 1)) (Ioi u₀) := by
+    have h := integrableOn_rpow_mul_exp_neg_mul_rpow
+      (p := (1 : ℝ)) (s := (1 : ℝ)) (by norm_num) (by norm_num) heps
+    simpa only [IntegrableOn, Real.rpow_one] using
+      (h.mono_set (Ioi_subset_Ioi hu₀)).mul_const (Real.log 4 + 1)
+  have hdmeas : Measurable (fun u : ℝ => -(u : ℂ) * F s u) :=
+    (by fun_prop : Measurable (fun u : ℝ => -(u : ℂ))).mul (F_measurable s)
+  have h := hasDerivAt_integral_of_dominated_loc_of_deriv_le
+    (F := F) (F' := fun z u => -(u : ℂ) * F z u)
+    (μ := volume.restrict (Ioi u₀))
+    (s := {z : ℂ | s.re / 2 < z.re})
+    (bound := fun u : ℝ => u * Real.exp (-(s.re / 2) * u) * (Real.log 4 + 1))
+    ((isOpen_lt continuous_const Complex.continuous_re).mem_nhds (by dsimp; linarith))
+    (Eventually.of_forall fun z => (F_measurable z).aestronglyMeasurable.restrict)
+    (F_integrable u₀ hs) hdmeas.aestronglyMeasurable.restrict ?_ hb
+    (Eventually.of_forall fun u z _ => F_hasDeriv u z)
+  · constructor
+    · change Integrable _ (volume.restrict (Ioi u₀))
+      convert h.1.neg using 1
+      ext u
+      simp [F, mul_assoc]
+    · change HasDerivAt (fun z => ∫ u in Ioi u₀, F z u) _ s
+      simpa only [F, neg_mul, integral_neg, mul_assoc] using h.2
+  · filter_upwards [ae_restrict_mem measurableSet_Ioi] with u hu
+    intro z hz
+    have hu0 : 0 ≤ u := hu₀.trans hu.le
+    dsimp [F]
+    simp only [norm_mul, norm_neg, Complex.norm_real, Real.norm_eq_abs,
+      abs_of_nonneg hu0, Complex.norm_exp, Complex.mul_re, Complex.neg_re,
+      Complex.ofReal_re, Complex.ofReal_im, mul_zero, sub_zero]
+    rw [← mul_assoc]
+    exact mul_le_mul
+      (mul_le_mul_of_nonneg_left (Real.exp_le_exp.mpr
+        (mul_le_mul_of_nonneg_right (neg_le_neg hz.le) hu0)) hu0)
+      (by simpa using q_bound u) (abs_nonneg _)
+      (by positivity)
+
+private lemma factor_logDeriv {f g : ℂ → ℂ} {a : ℂ} {m : ℕ}
+    (hg : AnalyticAt ℂ g a) (hg0 : g a ≠ 0)
+    (heq : f =ᶠ[𝓝 a] fun z => (z - a) ^ m * g z) :
+    AnalyticAt ℂ (logDeriv g) a ∧
+    logDeriv f =ᶠ[𝓝[≠] a] fun z => (m : ℂ) / (z - a) + logDeriv g z := by
+  refine ⟨hg.deriv.div hg hg0, ?_⟩
+  have hne := hg.continuousAt.eventually_ne hg0
+  filter_upwards [self_mem_nhdsWithin,
+    mem_nhdsWithin_of_mem_nhds heq.eventually_nhds,
+    mem_nhdsWithin_of_mem_nhds hne,
+    mem_nhdsWithin_of_mem_nhds hg.eventually_analyticAt] with z hz hfz hgz hgan
+  have hza : z - a ≠ 0 := sub_ne_zero.mpr (by simpa using hz)
+  have hfz' : f =ᶠ[𝓝 z] (fun z => (z - a) ^ m * g z) := hfz
+  have hld : logDeriv f z = logDeriv (fun z => (z - a) ^ m * g z) z := by
+    simp only [logDeriv_apply, hfz'.deriv_eq, hfz'.self_of_nhds]
+  rw [hld, logDeriv_fun_mul (f := fun z : ℂ => (z - a) ^ m) (g := g) z
+    (pow_ne_zero _ hza) hgz (by fun_prop) hgan.differentiableAt]
+  congr 1
+  rw [show (fun z : ℂ => (z - a) ^ m) = (fun w : ℂ => w ^ m) ∘ (fun z => z - a) from rfl,
+    logDeriv_comp (by fun_prop) (by fun_prop), logDeriv_pow]
+  simp
+
+private lemma pole_orders {f H : ℂ → ℂ} {a α : ℂ}
+    (hH : AnalyticAt ℂ H a) (hα : α ≠ 0)
+    (heq : f =ᶠ[𝓝[≠] a] fun z => α / (z - a) + H z) :
+    (fun z => -deriv f z + f z) =ᶠ[𝓝[≠] a]
+      (fun z => α / (z - a) ^ 2 + α / (z - a) + H z - deriv H z) ∧
+    meromorphicOrderAt f a = (-1 : ℤ) ∧
+    meromorphicOrderAt (fun z => -deriv f z + f z) a = (-2 : ℤ) := by
+  have hm : MeromorphicAt f a :=
+    (((MeromorphicAt.const α a).div (by fun_prop)).add hH.meromorphicAt).congr heq.symm
+  have heq' : (fun z => -deriv f z + f z) =ᶠ[𝓝[≠] a]
+      (fun z => α / (z - a) ^ 2 + α / (z - a) + H z - deriv H z) := by
+    filter_upwards [heq, heq.nhdsNE_deriv, self_mem_nhdsWithin,
+      mem_nhdsWithin_of_mem_nhds hH.eventually_analyticAt] with z hf hd hz hHz
+    have hza : z - a ≠ 0 := sub_ne_zero.mpr (by simpa using hz)
+    have hder : deriv (fun z => α / (z - a) + H z) z =
+        -α / (z - a) ^ 2 + deriv H z := by
+      rw [deriv_fun_add (by fun_prop) hHz.differentiableAt,
+        deriv_fun_div (by fun_prop) (by fun_prop) hza]
+      simp
+
+    rw [hd, hder, hf]
+    ring
+  refine ⟨heq', ?_, ?_⟩
+  · apply (meromorphicOrderAt_eq_int_iff hm).mpr
+    refine ⟨fun z => α + (z - a) * H z, by fun_prop, by simpa using hα, ?_⟩
+    filter_upwards [heq, self_mem_nhdsWithin] with z hz hza
+    have hne : z - a ≠ 0 := sub_ne_zero.mpr (by simpa using hza)
+    rw [hz]
+    simp only [zpow_neg_one, smul_eq_mul]
+    field_simp
+    <;> ring
+  · apply (meromorphicOrderAt_eq_int_iff (hm.deriv.neg.add hm)).mpr
+    refine ⟨fun z => α + α * (z - a) + (z - a) ^ 2 * (H z - deriv H z),
+      (by have hd := hH.deriv; fun_prop), by simpa using hα, ?_⟩
+    filter_upwards [heq', self_mem_nhdsWithin] with z hz hza
+    have hne : z - a ≠ 0 := sub_ne_zero.mpr (by simpa using hza)
+    change -deriv f z + f z = _
+    rw [hz]
+    simp only [zpow_neg, zpow_ofNat, smul_eq_mul]
+    field_simp
+    <;> ring
+
+private lemma actual_poles (u₀ : ℝ) {ρ : ℂ}
+    (hρ : (1 / 2 : ℝ) < ρ.re) (hzero : riemannZeta ρ = 0) :
+    let a := ρ - 1
+    let m := analyticOrderNatAt riemannZeta ρ
+    let α := -(m : ℂ) / ρ
+    a ∈ D ∧ a ≠ 0 ∧ 0 < m ∧ analyticOrderAt riemannZeta ρ ≠ ⊤ ∧ α ≠ 0 ∧
+    ∃ H : ℂ → ℂ, AnalyticAt ℂ H a ∧
+      M u₀ =ᶠ[𝓝[≠] a] (fun s => α / (s - a) + H s) ∧
+      (fun s => -deriv (M u₀) s + M u₀ s) =ᶠ[𝓝[≠] a]
+        (fun s => α / (s - a) ^ 2 + α / (s - a) + H s - deriv H s) ∧
+      meromorphicOrderAt (M u₀) a = (-1 : ℤ) ∧
+      meromorphicOrderAt (fun s => -deriv (M u₀) s + M u₀ s) a = (-2 : ℤ) := by
+  let a := ρ - 1
+  let m := analyticOrderNatAt riemannZeta ρ
+  let α := -(m : ℂ) / ρ
+  change a ∈ D ∧ a ≠ 0 ∧ 0 < m ∧ _ ∧ α ≠ 0 ∧ _
+  have hρ0 : ρ ≠ 0 := Complex.ne_zero_of_re_pos (by linarith)
+  have hρ1 : ρ ≠ 1 := by
+    intro h
+    exact riemannZeta_one_ne_zero (h ▸ hzero)
+  have hf : AnalyticAt ℂ riemannZeta ρ := Zeta23.riemannZeta_analyticOnNhd_compl_one ρ hρ1
+  have hfin := Zeta23.analyticOrderAt_riemannZeta_ne_top hρ1
+  have hmpos : 0 < m := ENat.toNat_pos (hf.analyticOrderAt_ne_zero.mpr hzero) hfin
+  have hα : α ≠ 0 := div_ne_zero (neg_ne_zero.mpr (Nat.cast_ne_zero.mpr hmpos.ne')) hρ0
+  obtain ⟨g, hg, hg0, hfg⟩ := hf.analyticOrderAt_ne_top.mp hfin
+  let g₁ : ℂ → ℂ := fun z => (z - 1) * g z
+  have hg₁ : AnalyticAt ℂ g₁ ρ := (analyticAt_id.sub analyticAt_const).mul hg
+  have hg₁0 : g₁ ρ ≠ 0 := mul_ne_zero (sub_ne_zero.mpr hρ1) hg0
+  have hf₁ : riemannZeta₁ =ᶠ[𝓝 ρ] fun z => (z - ρ) ^ m * g₁ z := by
+    filter_upwards [hfg, compl_singleton_mem_nhds hρ1] with z hz hz1
+    have hn : z ≠ 1 := by simpa using hz1
+    have he : riemannZeta₁ z = (z - 1) * riemannZeta z := by
+      rw [riemannZeta_eq_inv_sub_mul hn]
+      field_simp
+    rw [he, hz]
+    simp only [smul_eq_mul]
+    dsimp [g₁]
+    ring
+  obtain ⟨hR, hlog⟩ := factor_logDeriv hg₁ hg₁0 hf₁
+  let R := logDeriv g₁
+  let H : ℂ → ℂ := fun s =>
+    (m : ℂ) / (ρ * (1 + s)) - (1 + R (1 + s) + C (1 + s)) / (1 + s) - A u₀ s
+  have hlin : AnalyticAt ℂ (fun s : ℂ => 1 + s) a := by fun_prop
+  have hpoint : 1 + a = ρ := by dsimp [a]; ring
+  have hden : 1 + a ≠ 0 := hpoint ▸ hρ0
+  have hRc : AnalyticAt ℂ (fun s => R (1 + s)) a := hR.comp_of_eq hlin hpoint
+  have hCc : AnalyticAt ℂ (fun s => C (1 + s)) a :=
+    (c_analytic ρ hρ).comp_of_eq hlin hpoint
+  have hH : AnalyticAt ℂ H a :=
+    ((analyticAt_const.div (analyticAt_const.mul hlin) (mul_ne_zero hρ0 hden)).sub
+      (((analyticAt_const.add hRc).add hCc).div hlin hden)).sub
+      (A_differentiable u₀ |>.analyticAt a)
+  have ht : Tendsto (fun s : ℂ => 1 + s) (𝓝 a) (𝓝 ρ) := by
+    rw [← hpoint]
+    exact (continuous_const.add continuous_id).continuousAt.tendsto
+  have hlogpull := ht.eventually (eventually_nhdsWithin_iff.mp hlog)
+  have heq : M u₀ =ᶠ[𝓝[≠] a] (fun s => α / (s - a) + H s) := by
+    filter_upwards [self_mem_nhdsWithin, mem_nhdsWithin_of_mem_nhds hlogpull,
+      mem_nhdsWithin_of_mem_nhds (hlin.continuousAt.eventually_ne hden)] with s hs hlogs hds
+    have hsa : s - a ≠ 0 := sub_ne_zero.mpr (by simpa using hs)
+    have hsρ : 1 + s ≠ ρ := by
+      intro h
+      apply hsa
+      dsimp [a]
+      linear_combination h
+    have hld : logDeriv riemannZeta₁ (1 + s) = (m : ℂ) / (s - a) + R (1 + s) := by
+      convert hlogs hsρ using 1 <;> dsimp [a, R] <;> congr 2 <;> ring
+    dsimp [M, H, α]
+    rw [hld]
+    field_simp [hρ0, hds, hsa]
+    <;> ring
+  have hp := pole_orders hH hα heq
+  refine ⟨?_, sub_ne_zero.mpr hρ1, hmpos, hfin, hα, H, hH, heq, hp.1, hp.2.1, hp.2.2⟩
+  change -(1 / 2 : ℝ) < (ρ - 1).re
+  simp only [Complex.sub_re, Complex.one_re]
+  linarith
+
+/-- The actual cutoff theta transform, its analytic continuation and arbitrary-multiplicity poles. -/
+theorem theta_laplace_continuation (u₀ : ℝ) (hu₀ : 0 ≤ u₀) :
+    AnalyticOnNhd ℂ C {z | (1 / 2 : ℝ) < z.re} ∧
+    Differentiable ℂ (A u₀) ∧
+    (∀ z : ℂ, (1 / 2 : ℝ) < z.re →
+      LSeriesSummable (fun n => (b n : ℂ)) z ∧
+      Summable (fun pj : Nat.Primes × ℕ =>
+        ‖(Real.log (pj.1 : ℝ) : ℂ) * (pj.1 : ℂ) ^ (-((pj.2 + 2 : ℕ) : ℂ) * z)‖) ∧
+      C z = ∑' p : Nat.Primes, ∑' j : ℕ,
+        (Real.log (p : ℝ) : ℂ) * (p : ℂ) ^ (-((j + 2 : ℕ) : ℂ) * z)) ∧
+    (∀ s : ℂ, 0 < s.re →
+      IntegrableOn (fun u : ℝ => Complex.exp (-s * (u : ℂ)) * (q u : ℂ)) (Ioi u₀) ∧
+      Q u₀ s = M u₀ s ∧
+      IntegrableOn (fun u : ℝ => (u : ℂ) * Complex.exp (-s * (u : ℂ)) * (q u : ℂ))
+        (Ioi u₀) ∧
+      HasDerivAt (Q u₀)
+        (-(∫ u in Ioi u₀, (u : ℂ) * Complex.exp (-s * (u : ℂ)) * (q u : ℂ))) s) ∧
+    MeromorphicOn (M u₀) D ∧
+    AnalyticAt ℂ (M u₀) 0 ∧
+    M u₀ 0 = -1 - (Real.eulerMascheroniConstant : ℂ) - C 1 - A u₀ 0 ∧
+    (∀ ρ : ℂ, (1 / 2 : ℝ) < ρ.re → riemannZeta ρ = 0 →
+      let a := ρ - 1
+      let m := analyticOrderNatAt riemannZeta ρ
+      let α := -(m : ℂ) / ρ
+      a ∈ D ∧ a ≠ 0 ∧ 0 < m ∧ analyticOrderAt riemannZeta ρ ≠ ⊤ ∧ α ≠ 0 ∧
+      ∃ H : ℂ → ℂ, AnalyticAt ℂ H a ∧
+        M u₀ =ᶠ[𝓝[≠] a] (fun s => α / (s - a) + H s) ∧
+        (fun s => -deriv (M u₀) s + M u₀ s) =ᶠ[𝓝[≠] a]
+          (fun s => α / (s - a) ^ 2 + α / (s - a) + H s - deriv H s) ∧
+        meromorphicOrderAt (M u₀) a = (-1 : ℤ) ∧
+        meromorphicOrderAt (fun s => -deriv (M u₀) s + M u₀ s) a = (-2 : ℤ)) := by
+  refine ⟨c_analytic, A_differentiable u₀, ?_, ?_, M_meromorphic u₀,
+    M_analytic_zero u₀, ?_, fun ρ hρ hz => actual_poles u₀ hρ hz⟩
+  · intro z hz
+    exact ⟨c_summable hz, (c_prime_powers hz).1.norm, (c_prime_powers hz).2⟩
+  · intro s hs
+    exact ⟨F_integrable u₀ hs, Q_eq_M u₀ hs, (Q_hasDeriv u₀ hu₀ hs).1,
+      (Q_hasDeriv u₀ hu₀ hs).2⟩
+  · simp only [M, logDeriv_apply, add_zero, riemannZeta₁_one,
+      deriv_riemannZeta₁_one, div_one]
+    ring
+
+#print axioms theta_laplace_continuation
 
 end
 end D5.S3.Weil.Mertens.ThetaLaplaceContinuation
