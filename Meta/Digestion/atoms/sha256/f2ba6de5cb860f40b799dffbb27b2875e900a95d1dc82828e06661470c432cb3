@@ -1,0 +1,27 @@
+**Corollary 129.4 (Exact truncation of the literal reflected tangent rows).**
+Under Definition 125.1, for every $z\in\mathbb C^3,g\in\mathbb C$,
+
+$$
+\mathcal F_a(z,g)
+ =\sup_{1\le i\le9,\ k(w)\le K_{\mathfrak s}}
+               |\ell_{i,w}(z,g)|.
+\tag{129.6}
+$$
+
+The finite tangent problem remains the maximum over
+$|w|\le L_{\mathfrak s}$ in (125.2), with exactly the same
+$\beta_\rho,U_\rho,V_\rho$ as (125.4). Formula (129.6) does
+not assert norming of arbitrary elements of the entire lift
+$\mathscr V$ by these layers.
+
+*Proof.* For fixed $z,g$ the hypotheses
+$(\eta g,-Ae+\eta z),(0,Ae+\eta f)$ lie in $\mathcal P$ for
+all sufficiently small positive $\eta$, because $0<A<1$.
+Apply (129.2), divide by $\eta$, and use the uniform per-row
+remainder (125.11). That estimate bounds the difference between
+the scaled retained-layer supremum and the right side of (129.6)
+by $\mathcal E(R,G)\eta$ for fixed sufficiently large $R,G$.
+Lemma 125.2 gives the full-side limit $\mathcal F_a(z,g)$.
+This proves (129.6) without altering any row or requiring an
+actual history to attain either supremum. $\square$
+

@@ -1,0 +1,81 @@
+**定理 59.1（两族全来源 minimax 误差的双边尺度）。** 对每个 $n\ge1$ 和
+$X\in\{\mathrm c,R\}$，定义 57.1 的误差满足
+
+$$
+\begin{aligned}
+0<L_{\rm con}(n)
+ &:=\frac{\sqrt{1-a^2b}-\sqrt{1-a^2}}2
+ \le E_{\rm con}^X(n)\le U_{\rm con}(n),\\
+0<L_{\rm dec}(n)
+ &:=\frac{\sqrt{1-a^4}-\sqrt{1-a^2}}2
+ \le E_{\rm dec}^X(n)\le U_{\rm dec}(n).
+\end{aligned}
+\tag{59.1}
+$$
+
+因此两个误差各为 $\Theta(n^{-1/2})$。更具体地，两种 $X$ 均有
+
+$$
+\begin{aligned}
+\frac{\sqrt3-\sqrt2}{2\sqrt5}
+ &\le\liminf_{n\to\infty}\sqrt n\,E_{\rm con}^X(n)
+ \le\limsup_{n\to\infty}\sqrt n\,E_{\rm con}^X(n)
+ \le\sqrt{\frac25},\\
+\frac{2-\sqrt2}{2\sqrt5}
+ &\le\liminf_{n\to\infty}\sqrt n\,E_{\rm dec}^X(n)
+ \le\limsup_{n\to\infty}\sqrt n\,E_{\rm dec}^X(n)
+ \le\sqrt{\frac25}.
+\end{aligned}
+\tag{59.2}
+$$
+
+这些是不依赖源大小的界，不断言任一 minimax 首项常数精确，也不要求下确界达到。
+
+证明。构造取 §51 的同一完整输入合同与同一二输入：
+$(s,t)=(\alpha,\alpha),(\beta,\alpha)$。输入纯态内积为 $a$，
+目标内积为 $a\sqrt b$，两模型相同。若共同通道在这两项的误差均不超过 $e$，
+三角不等式和距离收缩给
+
+$$
+\sqrt{1-a^2b}\le 2e+\sqrt{1-a^2}.
+\tag{59.3}
+$$
+
+分解取 $(\alpha,\beta),(\beta,\alpha)$；输入内积为 $a$，目标乘积内积为 $a^2$，
+同样得到 $\sqrt{1-a^4}\le2e+\sqrt{1-a^2}$。
+对全来源上确界再对共同通道取下确界，即为两项下界。
+固定来源无关 ancilla 可并入同一通道，不改变这个论证；可读源标签则改变输入合同，
+不属于这里的比较类。$0<a,b<1$ 使两个下界均严格为正。
+
+所用距离收缩的有限维供应见 [Watrous，第 3 章，推论 3.40，及定理 3.4
+的效果判别](https://cs.uwaterloo.ca/~watrous/TQI/TQI.3.pdf)。
+在这里的任意正规通道输出上也可直接证明所需收缩：对自伴迹类差
+$Z=Z_+-Z_-$，正性、保迹和三角不等式给
+$\|\Phi(Z)\|_1\le\operatorname{Tr}\Phi(Z_+)+\operatorname{Tr}\Phi(Z_-)=\|Z\|_1$。
+故没有把无限维输出未经说明地套进有限维定理。
+
+令 $h\downarrow0$、$a=b=1-h$。多项式恒等式给
+
+$$
+\frac{1-a^2}{h}\to2,\qquad
+\frac{1-a^2b}{h}=\frac{1-(1-h)^3}{h}\to3,\qquad
+\frac{1-a^4}{h}\to4.
+\tag{59.4}
+$$
+
+因此 $L_{\rm con}/\sqrt h\to(\sqrt3-\sqrt2)/2$、
+$L_{\rm dec}/\sqrt h\to(2-\sqrt2)/2$。
+(58.1) 中未截断的两个上界除以 $\sqrt h$ 都趋于 $\sqrt2$，
+它们本身趋零，故取 $\min\{1,\cdot\}$ 不改极限。
+代入 $h=1/(5n)$ 得 (59.2)，正的 liminf 与有限 limsup 给所称阶。
+最小参数 $n=1$ 时这些界仍有效，具体为
+
+$$
+\frac{\sqrt{305}-15}{50}\le E_{\rm con}^X(1)\le\frac{93}{125},\qquad
+\frac{\sqrt{369}-15}{50}\le E_{\rm dec}^X(1)\le\frac{17}{25}.
+\tag{59.5}
+$$
+
+下界只使用两个实际源，承担必要性；全来源达到这些上界的充分性由定理 58.1
+的同一条完整通道承担，未把二输入达到性提升为全来源达到性。∎
+

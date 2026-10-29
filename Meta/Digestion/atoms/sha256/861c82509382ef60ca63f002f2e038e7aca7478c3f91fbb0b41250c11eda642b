@@ -1,0 +1,43 @@
+## 67. Joint recovery is not the sum of local fibre optima
+
+The latest finite quantum application gives a complementary composition
+result. For its fixed six-record horizon-three partition, arbitrary
+system-only terminal channels have exact error
+
+$$
+\varepsilon_{\mathcal P}
+ =\frac{793-88\sqrt{13}}{1508},
+$$
+
+which is strictly below the mass-weighted sum \(11/32\) of the two separate
+binary optima. A common input and projector certify the lower bound while a
+single balanced family of channels attains it. The improvement comes from a
+joint witness, not from adding independently optimal recordwise decoders.
+
+The same fixed partition has a legal peak-six online realization at horizon
+three. The latest finite recovery continuation now extends this comparison to
+all complete six-cell partitions and independent seed mixtures: under its
+declared encoded-qutrit, system-only, horizon-three contract, the global
+peak-six optimum is the exact value \(E^*\) stated in Section 70. Thus the
+finite horizon-three threshold is global over the allowed partitions and
+controllers, although it does not determine the unbounded joint memory law,
+physical register cost or arbitrary horizons. In particular, six terminal
+cells and eight raw histories both still require three bits under a
+fixed-length binary register, but that bit count does not determine the
+diamond-error threshold.
+
+These results sharpen the promotion rule of Section 65:
+
+$$
+\text{response collision}
+\;\to\;
+\text{acquired continuation collision}
+\;\to\;
+\text{finite-controller obstruction}
+$$
+
+are three different claims. The first is now witnessed off \(24\); the second
+requires typed acquisition and successor data; the third additionally needs a
+finite-history or trap argument. None follows from the preceding one by
+relabeling the response.
+

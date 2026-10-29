@@ -40,7 +40,7 @@ abbrev Node (n : ℕ) := ↥(vertices n)
 instance (n : ℕ) : MeasurableSpace (Node n) := ⊤
 instance (n : ℕ) : DiscreteMeasurableSpace (Node n) := ⟨fun _ => trivial⟩
 
-private theorem root_mem (n : ℕ) : [] ∈ vertices n := by
+theorem root_mem (n : ℕ) : [] ∈ vertices n := by
   unfold vertices
   cases T n <;> simp [nodes]
 
@@ -61,17 +61,17 @@ def mass (n : ℕ) (p : Address) : ℝ := (descendants n p).card / (N n : ℝ)
 /-- The reciprocal golden ratio. -/
 abbrev a : ℝ := Real.goldenRatio⁻¹
 
-private theorem cardinality (n : ℕ) : N n = 2 * Nat.fib (n+1) - 1 := by
+theorem cardinality (n : ℕ) : N n = 2 * Nat.fib (n+1) - 1 := by
   rw [N, vertices, List.toFinset_card_of_nodup
     (Observer.ActualPureAcquisitionCompiler.nodes_nodup _),
     Observer.ActualCompletionHorizon.nodes_count]
   have h := SourceCoordinates.NativeRotationDepthGap.iterate_length (.of true) n
   simpa [T, GenealogicalFiberTransport.composition] using congrArg (fun k => 2*k-1) h
 
-private theorem N_pos (n : ℕ) : 0 < N n :=
+theorem N_pos (n : ℕ) : 0 < N n :=
   Finset.card_pos.mpr ⟨[], root_mem n⟩
 
-private theorem node_iff (S : Source) (x : Address) :
+theorem node_iff (S : Source) (x : Address) :
     x ∈ nodes S ↔ ∃ U, subtree x S = some U := by
   induction S generalizing x with
   | of b => cases x <;> simp [nodes, subtree]

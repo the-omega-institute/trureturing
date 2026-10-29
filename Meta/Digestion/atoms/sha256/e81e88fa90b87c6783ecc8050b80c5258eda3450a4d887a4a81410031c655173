@@ -1,0 +1,15 @@
+**引理 1.4（同一律上的投影极限）。** 对每个上述 $P$，$\eta_r\to\eta$ 在 $L^2(P)$ 中成立，并且
+
+$$
+E_r(P)=\mathbb E_P[(X_0-\eta)^2]+\mathbb E_P[(\eta-\eta_r)^2].
+\tag{1.5}
+$$
+
+**证明。** 条件期望为 $L^2$ 正交投影。对 $s\ge r$，塔性质给出
+
+$$
+\|\eta_s-\eta_r\|_2^2=\|\eta_s\|_2^2-\|\eta_r\|_2^2.
+$$
+
+右侧的范数平方递增且至多为一，所以 $\eta_r$ 有 $L^2$ 极限 $\eta'$。它可取 $\mathcal E_0$ 可测版本。对任意 $A\in\bigcup_r\mathcal F_r$，极限保持 $\int_A\eta'\,dP=\int_A X_0\,dP$。该并集是生成 $\mathcal E_0$ 的代数；有限测度的唯一性把等式扩到 $\mathcal E_0$，故 $\eta'=\eta$。再由 $\eta_r=\mathbb E_P[\eta\mid\mathcal F_r]$ 及正交性得到（1.5）。这是一项经典条件期望结论，亦见 [Universal 卷][U] 引理 1.4 及 [Gray][Gray] §5.9。$\square$
+

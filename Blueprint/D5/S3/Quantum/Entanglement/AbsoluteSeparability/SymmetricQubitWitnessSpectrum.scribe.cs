@@ -16,6 +16,16 @@ internal sealed class SymmetricQubitWitnessSpectrumDocument : IScribeDocumentDef
         H("Spectra of symmetric two-qubit witnesses"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("symmetric-qubit-witness-quadratic-form"),
+                DeclarationHandle.Create(Prefix + "qform"),
+                H("The matrix quadratic form"),
+                StatementSource.FromAuthor(Disp(QformFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The matrix quadratic form evaluates a complex bilinear form twice "
+                        + "on the same vector, without complex conjugation."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("symmetric-qubit-witness-coherent"),
                 DeclarationHandle.Create(Prefix + "coherent"),
                 H("Coherent vectors in Dicke coordinates"),
@@ -145,6 +155,18 @@ internal sealed class SymmetricQubitWitnessSpectrumDocument : IScribeDocumentDef
         new Formula.Binary(left, FormulaBinaryOperator.Subtract, right);
     private static Formula MuAt(byte index) => new Formula.Subscript(Mu, D(index));
     private static Formula SqrtOf(Formula value) => At(Qualified("Real", "sqrt"), value);
+
+    private static Formula QformFormula()
+    {
+        var index = At(Qualified("Fin"), X("n"));
+        var vector = new Formula.TypeArrow(index, ComplexType());
+        var matrix = At(Qualified("Matrix"), index, index, ComplexType());
+        return All(X("n"), Seq(Mathbb, Grp(X("N"))),
+            All(X("A"), matrix, All(X("x"), vector,
+                Equal(LocalCall("qform", X("A"), X("x")),
+                    At(Qualified("dotProduct"), X("x"),
+                        At(Qualified("Matrix", "mulVec"), X("A"), X("x")))))));
+    }
 
     private static Formula CoherentFormula()
     {

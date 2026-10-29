@@ -1,0 +1,35 @@
+#### 命题 4.3（同一整数上的完整对数缺口）
+
+令 $P$ 是 $n\ge3$ 的最大素因子，定义
+
+$$
+\mathcal M(P)=\prod_{p\le P}(1-p^{-1})^{-1},\qquad
+\varepsilon(P)=\log\frac{\mathcal M(P)}{e^{\gamma_E}\log P},
+$$
+
+$$
+D_{\rm miss}=-\sum_{\substack{p\le P\\p\nmid n}}\log(1-p^{-1}),\qquad
+D_{\rm cap}=-\sum_{p\mid n}\log(1-p^{-(a_p+1)}).
+$$
+
+则
+
+<a id="eq-robindefect"></a>
+
+$$
+-\log\frac{Z_{\rm div}(n)}{e^{\gamma_E}\log\log n}
+=D_{\rm miss}+D_{\rm cap}
++\log\frac{\log\log n}{\log P}-\varepsilon(P). \tag{8}
+$$
+
+**证明。**
+
+每个局部等比和为
+$(1-p^{-(a_p+1)})/(1-p^{-1})$。把实际素数支持嵌入完整前缀 $p\le P$，缺失素数用因子 $(1-p^{-1})$ 删除。取对数，再减去 Robin 分母的对数，即得恒等式。
+
+∎
+
+这是项目 §9 的精确共同来源账。前两个损失非负，第三项可为负，不能把它们统称为三个非负量。Mertens 渐近式使 $\varepsilon(P)\to0$，却没有给出每个整数的式 [(8)](#eq-robindefect) 严格为正。项目已引用针对 $\{2,3,5,7\}$ 支撑的完整 Robin 安全结果；本轮没有重新编译其 Lean 来源。尚待建立的是任意增长素数支持上的统一结论。三维模板不能把独立算术方向数固定为三。
+
+<a id="section-5"></a>
+

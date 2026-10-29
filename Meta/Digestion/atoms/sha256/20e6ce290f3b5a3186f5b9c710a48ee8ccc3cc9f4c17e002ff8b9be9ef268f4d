@@ -1,0 +1,16 @@
+**定义 1.1（底数与幂集）。** 令 $\rho$ 为满足 $\rho>1$、$\rho^3=\rho+1$ 的实数，令 $\varphi=(1+\sqrt5)/2$。多项式 $x^3-x-1$ 在 $1$ 与 $2$ 处异号，且在 $[1,\infty)$ 严格递增，故 $\rho$ 存在且唯一。对有限集 $E\subset\mathbb Z$，记
+
+$$
+A_E=\rho^E=\{\rho^e:e\in E\},\qquad
+M_n=\frac{n(n+1)}2,\qquad x_+=\max\{x,0\}.
+$$
+
+对有限实数集 $A$，记 $A+A=\{a+b:a,b\in A\}$、$AA=\{ab:a,b\in A\}$；对整数集也采用同样的和集记号。整数区间记为 $[a,b]_{\mathbb Z}=\{a,a+1,\ldots,b\}$，当 $b<a$ 时为空集。令
+
+$$
+P_n=\rho^{[0,n-1]_{\mathbb Z}},\qquad
+G_n=\varphi^{[0,n-1]_{\mathbb Z}}.
+$$
+
+映射 $e\mapsto\rho^e$ 在 $\mathbb Z$ 上严格递增，因此 $|A_E|=|E|$、$|A_EA_E|=|E+E|$。将 $A$ 乘以正实数不改变 $|A+A|$ 与 $|AA|$；特别地，$G_n$ 与 $\{\varphi^i:1\le i\le n\}$ 的这两个基数相同。
+

@@ -1,0 +1,2 @@
+**Open Question 11.3 (band-preserving obstructions and averaged criteria).** For a legal producer whose visible law satisfies $\mathsf B(P)$, must every positive stationary component admit a forward-labeled quotient whose canonical reverse and forward matrices satisfy (3.7), or can a band-preserving component make every such deterministic quotient fail? If the latter obstruction exists, can a stationary-word-weighted (averaged) diameter condition still imply the bounds (6.1)--(6.3)? This is the next exact question; no answer is asserted here.
+

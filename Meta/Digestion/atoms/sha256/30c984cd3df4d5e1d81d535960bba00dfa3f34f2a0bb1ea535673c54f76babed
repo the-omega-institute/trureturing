@@ -1,0 +1,33 @@
+## 63. Relation to current FIB boundaries
+
+There are two distinct uses of a retained summary. A **full-behavior
+predictive quotient** requires, for every permitted action (including silent,
+illegal, and undefined outcomes), summary-factorized legality, response,
+successor, status, resource labels, stop behavior, and source-independent
+memory update. This is the all-action factorization contract of
+[Continuation IV](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_IV.md), not a
+controller synthesis result. A **task-specific controller certificate** is
+relative to one chosen action at each reachable support: it requires only
+joint legality there, response-indexed successor closure, the target equality
+at halt, and a decreasing rank. Unchosen actions need not descend through the
+summary, and a task certificate does not establish a universal behavioral
+quotient.
+
+The dynamic summary conditions in [Continuation V](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_V.md)
+remain necessary for the first contract. The present results add the task
+condition for the second contract: one retained memory value must support a
+common protocol for the union of all histories in that memory fiber.
+
+The actual-word results on dev show the same boundary in another form. A
+tree endpoint may have two parity lifts, so a vertex-only summary is adequate
+only for vertex-valued targets. Adding parity uses two static supplement labels
+when the endpoint is already available, but does not provide acquisition,
+noise robustness, or a finite live controller. The affine calibration results
+give the continuous analogue: two nonparallel normals can remain in one
+control-stable complete-record fiber and force infinite risk.
+
+These comparisons do not identify the actual-word source with the legal FIB
+word language, nor do they turn metric or set-theoretic estimates into finite
+acquisition. A typed source map preserving domains, responses, updates,
+permissions, targets, and costs is still required.
+

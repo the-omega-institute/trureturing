@@ -1,0 +1,46 @@
+**Theorem 8.5 (The supercritical label-square value).** For every integer sequence with $a\to\infty$ and $h/a^{3/2}\to\infty$,
+
+$$
+\frac{M(a,h)}{(a+1+h)^2}\longrightarrow1.
+\tag{8.18}
+$$
+
+**Proof.** For every actual law, the identities (2.3), $K\ge1$ and Cauchy–Schwarz give the elementary lower bound
+
+$$
+H(x)\ge\mathbb E(KU^2)\ge\mathbb E U^2
+       \ge(\mathbb E U)^2=s^2.
+\tag{8.19}
+$$
+
+This uses the same actual marginals and puts no restriction on their positive values or on the cardinality layers. Thus $M(a,h)/s^2\ge1$.
+
+For the matching upper bound put $\rho=h/a^{3/2}$ and choose
+
+$$
+j=\lceil a\rho^{2/5}\rceil.
+$$
+
+Then $j/(a\rho^{2/5})\to1$, $j/a\to\infty$, and
+
+$$
+\frac jh=O\!\left(a^{-1/2}\rho^{-3/5}+h^{-1}\right)\longrightarrow0.
+$$
+
+Consequently $1\le j\le h$ eventually, so (8.3) again is the energy of an actual admissible law. With $m=a+j$ and $n=h+1-j$, one has $m=O(a\rho^{2/5})$, and its core contribution satisfies
+
+$$
+\frac{m^3(m-1)}{(a-1)h^2}
+=O(\rho^{-2/5})\longrightarrow0.
+$$
+
+Its singleton contribution satisfies
+
+$$
+\frac{n^2(m-1)}{jh^2}
+=\left(\frac nh\right)^2\left(1+\frac{a-1}{j}\right)
+\longrightarrow1.
+$$
+
+Here $n/h\to1$, while $s/h=1+(a+1)/h\to1$. Therefore $H_j(a,h)/s^2\to1$, supplying the matching upper bound for the unrestricted infimum. Combining it with (8.19) proves (8.18). ∎
+

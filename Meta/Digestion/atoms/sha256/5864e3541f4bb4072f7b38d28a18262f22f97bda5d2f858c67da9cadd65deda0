@@ -1,0 +1,48 @@
+**Definition 36.1 (exact reuse and the native delta).** Repository
+sources in this comparison are their published originals at
+`03e4663c7a64fb62d1407d102d75685e5981d28c`. The additional content of
+§§27–35 is the correspondence between the actual public chronological
+birth law and its mature physical incidence, the consequent exact native
+readiness/deadline criteria, the source-blind $m$-Read acquisition,
+and its earned, synchronized retained use. Classical finite-prefix
+identification, finite-map periodicity, generic fiber factorization,
+prefix closure, replay and controller synthesis are not new results
+of this addition. This is conditional, source-relative `repo-derived`
+theory synthesis, without a worldwide priority or new Lean claim.
+
+| Published supplier | Parameter/source correspondence and subtraction |
+| --- | --- |
+| GPO §§22–26, especially Theorems 24.2–24.3 and 25.1 | The same alpha seed, physical persistent $a,b$ links, literal presence interface, terminal bits, (GPO.69) and one-update historical calibration. Those full fibers and arbitrary-wiring impossibility theorems are reused unchanged. Definition 27.1 adds a genuine autonomous law and actual chronological order; Theorem 28.2 determines its ordered mature prefix and §33 obtains its parents without a full shape scan. |
+| `GenealogicalFiberTransport.lean` and its [owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.scribe.cs) | `Source` is the free ordered magma on Bool, with true alpha and false beta; substitution, assembly/decomposition and `sourceEquiv`, including the internal `no_alpha` injectivity argument, concern that semantic ordered source. They supply neither the physical local frames nor a birth-bit acquisition. They are not applied as an identity between semantic and hidden locally wired addresses. |
+| `ActualFibonacciSupportChain.lean` and its [owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/ActualFibonacciSupportChain.scribe.cs) | Its internal `recurrence`, `root`, `presence`, `monotone`, `short` and `spine` arguments supply actual ordered semantic Fibonacci support facts. The leaf/rank correspondence used in §28 is the local physical argument of GPO24.2, with chronological parents added here. Ordered support declarations alone do not expose a newest physical bit. |
+| `NativeSerialMachine.lean` and its [owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.scribe.cs); `NativeFullSourceProducer.lean` and its [owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.scribe.cs) | `Op`, `nativeStep`, `Run`, `Replay`, `replay_deterministic`, `reached_prefix_replay` and `actual_register_execution` supply the source-free-control/reached-reply architecture. The producer's `sourceControl` and private `traverse`, `production_reads`, `stationary` use full alpha/beta/branch replies on an unchanged source and acquired stack data; they already charge local assembly. Our different source returns presence only and has local actuator wiring. Theorems 33.2 and 34.3 give its own operational induction, without claiming an existing compiled specialization or borrowing the producer's full replies. |
+| NCR §§2,5,8; PVC §§1–2,5–6,10; Native Callable Storage Atlas Definitions 2.1–2.4, §§5–8 and Theorem 11.1 | Their fixed initialized controllers, actual code/input/activation data, primitive clocks, serializers, acquired backing, grants and return paths remain exact premises. They already distinguish a mathematical inverse from installed paid use, and complete joint records from source-only views. None supplies an unknown birth-law acquisition or an inverse of arbitrary local observer journals from this source incidence. The selected birth chronology and earned data in §34 have their own narrower domain. |
+| Published STR13.1, 13.3, 14.2–15.1 and newest STR17.1 in [Sharp task retained environment memory](RECURSIVE_RELATIONAL_OBSERVATION_SHARP_TASK_RETAINED_ENVIRONMENT_MEMORY.md) | STR's actual all-qutrit input, five-dimensional embedding $B$, fixed known angle, arbitrary rectangular CPTP correction and immediate plus labelled full-$H$ effects supply exact channel rigidity, reference preservation and the finite consumed-flag port consequence. STR13.3 supplies the uniform square-root stability upper, and STR17.1 supplies the matching first-order-invisible family at angle zero, hence optimal worst-case uniform local Hölder exponent $1/2$. These are published results, not unresolved optimization targets. They do not install an atomic birth law or its presence sensor; no constant, menu, exponent or quantum-atomic identification result is proposed here. |
+| [Paid point observation tracking](FIB_NATIVE_PAID_POINT_OBSERVATION_TRACKING.md), §§60–65, especially Theorems 61.1–64.1 | Its fixed signed nonzero central-noise Brownian source, positive-gap paid wrapped-point service and finite Borel report map have live-volume/face-surface certificate criteria. It already proves the actual no-premature-own-death and bounded-occupation obstruction for boundary-merged reports, including the distinction between null and empty fibers. Those are different stochastic and observation domains from deterministic birth bits; no Gaussian support, death certificate or finite-point tariff is transferred here. |
+| Published AQBR10–12, SGPM17–21 and FSPM19–23 | [Arithmetic acquisition return](RECURSIVE_RELATIONAL_OBSERVATION_ARITHMETIC_ACQUISITION_RETURN.md) supplies sharp continuous gcd acquisition with positive modular closing and same-handle arithmetic-behavior return, using its actual natural pair, public modulus and $R/G$ operations. [Self-generated predictive memory](RECURSIVE_RELATIONAL_OBSERVATION_SELF_GENERATED_PREDICTIVE_MEMORY.md) supplies normalized multi-phase feasibility and the unrestricted initialized minimum for its fixed known five-mode stochastic source; arbitrary real synthesis remains separate from rational witness checking. [Finite-start predictive memory](RECURSIVE_RELATIONAL_OBSERVATION_FINITE_START_PREDICTIVE_MEMORY.md) supplies observable-return categorical acquisition, risky exact catalogue selection and approximate capped-horizon empirical prediction on its original five-mode stream. Their paid retained-use distinctions are suppliers; none authenticates our autonomous law from a prefix, identifies our private presentation, or supplies a universal deterministic exact acquisition theorem. Their original minima and residual risks are not changed. |
+
+The named Lean files are under
+`D5/S3/Arith/FibonacciAtomic/`, with the observer files in its
+`Observer/` subdirectory. Owning Scribes and internal proofs matter
+for reuse: a private proof or supplied definition is not missing merely
+because an API name is unavailable. Source inspection is documentary
+evidence of those hypotheses, not a fresh compilation or an exhaustive
+semantic-coverage claim.
+
+The classical suppliers are James L. Massey,
+[*Shift-Register Synthesis and BCH Decoding*](https://www.isiweb.ee.ethz.ch/archive/massey_pub/pdf/BI411.pdf),
+IEEE Transactions on Information Theory IT-15, pp. 122–127, §§II–IV;
+J. A. Reeds and N. J. A. Sloane,
+[*Shift-Register Synthesis (Modulo m)*](https://neilsloane.com/doc/Me111.pdf),
+SIAM Journal on Computing 14(3), pp. 505–513, §2; and Edward F. Moore,
+[*Gedanken-Experiments on Sequential Machines*](https://www.cs.cmu.edu/~cdm/resources/Moore1956-gedanken-experiments.pdf),
+*Automata Studies*, pp. 129–153, Theorems 2,6,7
+([stable source](https://www.jstor.org/stable/j.ctt1bgzb3s.8)).
+Their complete-source hypotheses distinguish initial output count,
+nonminimality, singular registers, transient numerator terms and missing
+machine bounds. The classical separation arguments are included only to
+establish this exact parameter match; the new mathematical consumer is
+the chronological local-port correspondence and actual native acquisition.
+No broader ring, multi-input machine or private-state recovery theorem is
+inferred.
+

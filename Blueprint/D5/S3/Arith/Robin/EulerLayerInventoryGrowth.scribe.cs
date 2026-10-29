@@ -19,6 +19,32 @@ internal sealed class EulerLayerInventoryGrowthDocument : IScribeDocumentDefinit
                 + "U=1 and empty exponent prefixes remain in the domain. The simultaneous "
                 + "positive integer specification supplies this law for every t>1.")),
             Describe.Lean(
+                DescribeId.Create("positive-integer-log-factorization-split"),
+                DeclarationHandle.Create(Prefix + "log_factorization_split"),
+                H("First prime layer and truncated higher mass"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every positive natural U, log(U) is the sum of log(p) over "
+                    + "its prime factors plus Q(U), the sum of Nat(factorization(p)-1)*log(p) "
+                    + "over the same finite support. Each occupied valuation is at least "
+                    + "one, so natural subtraction agrees there with subtraction after casting."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("positive-divisibility-higher-layer-mass"),
+                DeclarationHandle.Create(Prefix + "higher_layer_mass_mono"),
+                H("Positive divisibility increases higher mass"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "If positive natural A divides positive natural B, then Q(A)<=Q(B). "
+                    + "Divisibility increases each valuation and includes the prime support "
+                    + "of A in that of B. Natural truncated subtraction is monotone, log(p) "
+                    + "is nonnegative, and the additional finite summands are nonnegative. "
+                    + "A prime absent from A has Nat(0-1)=0; no negative first-layer term "
+                    + "is introduced on extending the support."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("literal-euler-inventory-chebyshev-bounds"),
                 DeclarationHandle.Create(Prefix + "strict_inventory_chebyshev_bounds"),
                 H("The finite first-prime and higher-valuation comparison"),

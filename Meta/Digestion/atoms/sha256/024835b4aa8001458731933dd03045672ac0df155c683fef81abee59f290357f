@@ -1,0 +1,11 @@
+### Definition 62.1 (controller support and rank)
+
+A deterministic controller has a finite state set \(K\), initialization
+\(c:I\to K\), action/output map \(u\), and response update \(v\). A support
+\(C_k\subseteq Z\times S\) records the candidates compatible with controller
+state \(k\). A rank is a map
+
+$$
+\rho:\{(z,s,k):(z,s)\in C_k\}\longrightarrow\mathbb N.
+$$
+

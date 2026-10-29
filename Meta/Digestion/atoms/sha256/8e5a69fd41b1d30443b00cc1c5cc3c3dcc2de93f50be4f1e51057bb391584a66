@@ -1,0 +1,33 @@
+#### 命题 8.3（有效复系数的勾股分解）
+
+对 $m=\operatorname{Tr}(\sigma W)$，有
+
+$$
+
+\boxed{1=|m|^2+\operatorname{Tr}\!\left[\sigma(W-mI)^\dagger(W-mI)\right].}
+
+$$
+
+因而 $|m|=1$ 当且仅当 $\operatorname{supp}\sigma$ 完全位于 $W$ 的同一个本征值 $m$ 的谱空间中。每个 $|m|\le1$ 都能成为某个内部酉门的这种有效系数；当 $|m|<1$ 时，最小一般子空间维数为 $2$。
+
+**证明。** 
+展开迹，利用 $W^\dagger W=I$、$\operatorname{Tr}\sigma W=m$，得到右侧第二项为 $1-|m|^2$。该项也是 $\left\lVert (W-mI)\sqrt\sigma\right\rVert_{\mathrm{HS}}^2$，故等号饱和等价于 $(W-mI)\sqrt\sigma=0$。任意单位盘内的 $m$ 可取
+
+$$
+
+W_m=\begin{pmatrix}
+m&\sqrt{1-|m|^2}\\
+\sqrt{1-|m|^2}&-\bar m
+\end{pmatrix},\qquad\sigma=\lvert 0\rangle\langle 0\rvert.
+
+$$
+
+这是上一节收缩块的酉完成，且 $\langle0,W_m0\rangle=m$。一维酉算符的期望模恒为 $1$，故严格内部点至少要求二维，以上构造达到界。
+ ∎
+
+所以，一个复系数确实可以压缩一段内部酉过程。若要求这个系数<em>恰好</em>仍是模一的黄金相位，则在所给准备上，子过程不能同时留下区分父控制扇区的记录；这种记录需要非零的内部变差。一般的 $W_m$ 也不自动满足黄金编织谱条件，下面必须再检验其谱。
+
+<a id="statement-8-4"></a>
+
+<a id="thm-hull"></a>
+

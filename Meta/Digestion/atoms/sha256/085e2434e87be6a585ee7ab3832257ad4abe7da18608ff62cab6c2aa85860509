@@ -1,0 +1,69 @@
+**Lemma 13.6 (Necessary structure at the sharp scale).** Under the hypotheses of Lemma 13.5, suppose in addition that
+$$
+\frac{d(x_a)}{a^{3/2}}\longrightarrow2\sqrt2\,h.
+\tag{13.14}
+$$
+Then, for every choice of $h$ smallest-marginal labels,
+$$
+ a^{3/2}p\longrightarrow\frac h{\sqrt2},\qquad
+ a^{3/2}t_j\longrightarrow\frac1{\sqrt2}\quad(j\in D),
+\tag{13.15}
+$$
+$$
+\mathbb E[K^2\mid A]\longrightarrow1,\qquad
+\frac{x_{\{j\}}}{t_j}\longrightarrow1\quad(j\in D),\qquad
+\min_{i\in C}y_i\longrightarrow1.
+\tag{13.16}
+$$
+In particular $u/p\to1$, and conditioned on $A$ the tail count is one with probability tending to one.
+
+**Proof.** The refined lower bound (13.10), followed by (13.12), gives
+$$
+\frac{d(x_a)}{a^{3/2}}
+\ge\frac{h^2}{\pi_a}+(2+o(1))\pi_a,
+\qquad \pi_a=a^{3/2}p.
+$$
+By (13.9), $\pi_a$ is bounded above, and (13.12) together with the bound on $H_D$ in (13.9) bounds it away from zero. The function $h^2/\pi+2\pi$ has minimum $2\sqrt2h$, attained only at $\pi=h/\sqrt2$. Therefore (13.14) forces $\pi_a\to h/\sqrt2$. The same inequalities then force
+$$
+\frac{H_D}{a^{3/2}}\to\sqrt2h,\qquad pH_D\to h^2.
+\tag{13.17}
+$$
+Let $\mathbb E_A$ denote conditional expectation on $A$. Since $H_D=p\mathbb E_A W$ and $\mathbb E_A V=h/p$, conditional Cauchy--Schwarz gives $p^2\mathbb E_A V^2\ge h^2$. Thus (13.17) gives
+$$
+0\le p^2\mathbb E_A(W-V^2)
+=pH_D-p^2\mathbb E_A V^2\le pH_D-h^2\longrightarrow0.
+$$
+On $A$, every $t_j\le p$, so $V\ge1/p$. Since $K\ge B$ and $1\le B\le h$,
+$$
+\frac{K^2}{B}-1\ge\frac{K^2-1}{h+1}.
+$$
+The within-type Cauchy inequality therefore gives
+$$
+W-V^2\ge\left(\frac{K^2}{B}-1\right)V^2
+\ge\frac{K^2-1}{(h+1)p^2}.
+$$
+Consequently
+$$
+0\le\mathbb E_A(K^2-1)
+\le(h+1)p^2\mathbb E_A(W-V^2)\longrightarrow0.
+$$
+Since $K\ge B\ge1$, this implies $\mathbb P(K=1\mid A)\to1$, hence $u/p=\mathbb E_A B\to1$.
+
+Put $q_j=t_j/p$. Then $\sum_jq_j=u/p\to1$, $q_j\le1$, and
+$$
+\sum_{j\in D}\frac1{q_j}=p\sum_{j\in D}\frac1{t_j}
+\le pH_D\longrightarrow h^2.
+$$
+Cauchy--Schwarz gives the reverse limiting inequality $\sum_j1/q_j\ge h^2/(\sum_jq_j)\to h^2$. Its equality case, or compactness after excluding $q_j\downarrow0$, yields $q_j\to1/h$, proving (13.15). Also
+$$
+\mathbb E[(K^2-1)\mathbf1_{\{j\in T\}}]
+\le\mathbb E[(K^2-1);A]=o(p).
+$$
+Every nonsingleton type containing $j$ contributes at least $3$ to $K^2-1$, while $t_j\asymp p$; consequently $x_{\{j\}}/t_j\to1$.
+
+For the core, use the stronger eventual condition $a^2\ge6h(2a+1)$. On the actual interval $y_i\ge u/h$, $f_u''(y)\ge a^2$. Strong Jensen gives
+$$
+\mathcal S_f\ge\frac{a^2}{2}\sum_{i\in C}\left(y_i-\frac{a-u}{r}\right)^2.
+$$
+Equation (13.5), (13.9), and nonnegativity of the other terms give $\mathcal S_f=O_{h,M}(a^{3/2})$. Hence the displayed square sum is $O_{h,M}(a^{-1/2})$, and the minimum core marginal tends to $1$ because $(a-u)/r\to1$. ∎
+

@@ -7,6 +7,7 @@ internal sealed class OriginalFutureCylindersDocument : IScribeDocumentDefinitio
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Original cylinders at a future-output cut", H("Original cylinders at a future-output cut"),
         Blocks(
+            Paragraph(Text("The joinHidden, join_left, join_right and path_concat declarations expose the existing concatenation construction and its unchanged proofs. OriginalRectangleOccurrence consumes them to retain a prescribed hidden route before summing the later visible word.")),
             Paragraph(Text("PathSpace H carries the original integer hidden and output coordinates. future(t,z)(k) is X(t+k), for every natural k. past(t,z)(k) is the pair (H(t-k-1),X(t-k-1)). These are the complete future-output and strictly earlier marked half-lines. state(t,z) is H(t), so X(t) belongs to the future and H(t) is the conditioning boundary. All maps use the original emitted-bit clock.")),
             Describe.Lean(DescribeId.Create("past-future-mass"),
                 DeclarationHandle.Create("D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalFutureCylinders.past_future_mass"),

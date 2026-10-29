@@ -1,0 +1,36 @@
+**Theorem 3.3 (original-native signed pullback).** For any additional
+finite disequality list $\Delta$, with the same positive cover as in
+Theorem 3.2, put
+
+$$
+C_b(\mathbf n,\mathbf z)
+\Longleftrightarrow
+P_b(\mathbf n)\ \land\ \Delta(F_b(\mathbf n,\mathbf z)).
+\tag{NIC.13}
+$$
+
+Each negative in (NIC.13) is evaluated in the native algebra after
+expansion. Then
+
+$$
+\operatorname{Sol}(\mathscr E\land\Delta)
+=
+\bigcup_b\{F_b(\mathbf n,\mathbf z):C_b(\mathbf n,\mathbf z)\}.
+\tag{NIC.14}
+$$
+
+Every finite Boolean combination of native equalities has such a finite
+signed mixed-image cover, retaining all declared variables.
+
+Proof. An image point with $C_b$ satisfies the positive presentation by
+Theorem 3.2 and satisfies each original negative by its literal native
+test in (NIC.13). Conversely take an original signed solution. The
+completeness construction in Theorem 3.2 returns its *same* original
+tuple. Consequently every one of its original negative tests still
+holds on that tuple. These are both inclusions in (NIC.14). For a
+Boolean formula take finite disjunctive normal form, retaining the
+whole original declared tuple and repeated atom occurrences in every
+conjunction, and apply the
+argument to each conjunction. A false disjunct contributes nothing;
+an empty signed conjunction has its usual truth value. $\square$
+

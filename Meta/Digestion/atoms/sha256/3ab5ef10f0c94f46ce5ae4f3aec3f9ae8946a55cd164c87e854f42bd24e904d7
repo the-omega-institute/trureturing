@@ -1,0 +1,30 @@
+**Definition 14.1 (physical model and projective word evaluation).** Let $K$ be a finite field of cardinality $q$, let $k\ge3$, and put
+
+$$
+V=K^k,\qquad P=\mathbb P(K,V),\qquad N=|P|=\frac{q^k-1}{q-1},\qquad I=\operatorname{Fin}(N).
+$$
+
+Let $G\in K^{k\times N}$ have rank $k$, and let $S\in K^{k\times N}$ have exactly one nonzero representative of each ray in $P$. Each draw $X_j$ is uniform on the physical positions $I$, independently and with replacement. For $C=G,S$, set
+
+$$
+T_C=\min\bigl\{t\in\mathbb N:\operatorname{span}_K\{C_{X_j}:0\le j<t\}=V\bigr\},
+\qquad R_C(t)=\Pr(T_C\le t),
+$$
+
+with minimum $+\infty$ if the set is empty. The empty prefix has span zero. Zero columns, repeated columns and scalar-parallel columns remain separate physical positions.
+
+Choose representatives $a_p\in p\setminus\{0\}$ for all $p\in P$, write $u_p=1/N$, and let
+
+$$
+\Delta=\bigl\{x\in\mathbb R^P:x_p\ge0\text{ for all }p,\ \sum_{p\in P}x_p=1\bigr\},
+\qquad Q_t(x)=W_{0,t}(x)=t!F_{0,t}(x),
+$$
+
+where $W$ and $F$ are the actual represented polynomials of Definitions 11.1 and 5.1 for the columns $a_p$. Thus $Q_t$ denotes their real evaluation, and is a polynomial on all of $\mathbb R^P$. If $C$ has no zero column, its physical ray weights are
+
+$$
+x_p(C)=\frac{|\{i\in I:[C_i]=p\}|}{N}.
+$$
+
+The exact word normalization and physical fiber transport in Sections 11–13 identify $R_C(t)=Q_t(x(C))$ and $R_S(t)=Q_t(u)$. These identities concern the specified physical sampling law.
+

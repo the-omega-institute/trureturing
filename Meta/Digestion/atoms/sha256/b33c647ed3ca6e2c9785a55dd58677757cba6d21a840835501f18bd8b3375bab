@@ -1,0 +1,44 @@
+#### 定理 6.4（核相容的递归与完整分支）
+
+若共同续接满足 $K(gv,gw)=K(v,w)$，则 $L_g\xi_w=\xi_{gw}$ 在零范数商上良定义并延拓为等距；逆续接也合法时为酉。
+
+更一般地，给有限分支集 $O$、允许次归一化及零对角的后继正核 $K_+$ 和标签更新 $r_o$，假设对*全部*标签对成立
+
+<a id="equation-7"></a>
+
+<a id="eq-crossconservation"></a>
+
+$$
+K(v,w)=\sum_{o\in O}K_+(r_ov,r_ow).
+\tag{7}
+$$
+
+则 $M_o\xi_w=\xi^+_{r_ow}$ 定义收缩算子，满足
+
+$$
+\sum_oM_o^\dagger M_o=I,\qquad
+T\xi=\sum_oM_o\xi\otimes\lvert o\rangle
+$$
+
+为等距嵌入。
+
+**证明。**
+
+核不变使任意有限线性组合续接前后的范数相等，所以零范数空间被保持，等距延拓存在，有合法逆时满射。
+对分支情形，将式 [(7)](#eq-crossconservation) 乘 $\bar c_vc_w$ 并求和，得到
+
+$$
+\left\lVert \sum_wc_w\xi_w\right\rVert ^2
+=\sum_o\left\lVert \sum_wc_w\xi^+_{r_ow}\right\rVert ^2.
+$$
+
+左边为零时右边每项为零，故每个分支映射都下降到商；每项又不超过左边，给统一收缩界并允许完备化。恒等式延拓并极化后得到 $\sum M_o^\dagger M_o=I$，正交记录给 $T^\dagger T=I$。
+
+∎
+
+这正是项目相干重构卷第 6.1–6.2 节所强调的交叉项条件 [[4](#ref-reconstruction)]。仅有每个单独标签的总概率守恒，不能保证线性零关系在递归后仍为零。例如当前两个标签给同一单位向量，后继却指定两个正交单位向量；各标签范数都未变，但原来的零关系 $\xi_a-\xi_b=0$ 被送到非零，映射不能下降。归一化的条件态更新也不能直接代替这里的线性 $M_o$。
+
+<a id="statement-6-5"></a>
+
+<a id="prop-leftideal"></a>
+

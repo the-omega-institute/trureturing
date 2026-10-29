@@ -1,0 +1,59 @@
+**引理 68.2（秩一效果的完整排除）。** (68.2) 对 $0<c<1/2$ 不可能由任意实密度矩阵 $\Sigma$ 与合法秩一效果 $F$ 实现。因此在假定的实五维模型中，$F$ 恰为秩二，每个合法源纯态的编码均为秩一密度矩阵。
+
+证明。若 $F=ww^{\mathsf T}$，合法性给 $\|w\|^2\le1$。标量或下块任一为零都会消去 (68.2) 的中心奇一次项，故两者非零。以不影响 $F$ 的整体符号、标量轴的符号及交换的右四元数变换，写
+
+$$
+w=(a,b,0),\qquad a,b>0,\qquad a^2+b^2\le1,
+\qquad
+\Sigma=\begin{pmatrix}p&h^{\mathsf T}\\h&M\end{pmatrix}.
+\tag{68.7}
+$$
+
+令 $u_1=\lambda_0+\mathrm i\lambda_1$、$u_2=\lambda_2+\mathrm i\lambda_3$，$\lambda\in S^3$。此时 $w^{\mathsf T}O(u)=(a,b\lambda_0,-b\lambda_1,-b\lambda_2,-b\lambda_3)$；目标多项式是 $c/2+(1-c)(\lambda_0^2+\lambda_1^2)/2+\sqrt{c(1-c)}\lambda_0$。匹配一次、二次及常数系数，得到
+
+$$
+\begin{gathered}
+h=\left(\frac{\sqrt{c(1-c)}}{2ab},0,0,0\right)^{\mathsf T},\qquad
+t_c=\frac{1-c}{2b^2},\\
+M=\operatorname{diag}(t_c+\beta,t_c+\beta,\beta,\beta),\qquad
+a^2p+b^2\beta=c/2.
+\end{gathered}
+\tag{68.8}
+$$
+
+这里不能将 $\beta$ 擅自置零：两个次数至多二的实多项式在单位球面相等，其二次差允许是 $\beta b^2(\|u\|^2-1)$。具体地，先在 $u$ 与 $-u$ 比较确定一次项；在各坐标单位向量上比较得到所有对角差相同；在 $(e_i\pm e_j)/\sqrt2$ 上比较则所有非对角项为零。这正好留下 (68.8) 的一个标量球面歧义，并把相应常数吸收到最后一式。
+
+正性给 $p\ge0$、$\beta\ge0$。迹一则要求
+
+$$
+1=p+\frac{1-c}{b^2}+4\beta.
+\tag{68.9}
+$$
+
+置 $x=a^2>0$、$y=b^2>0$，$x+y\le1$。由 $xp+y\beta=c/2$，
+
+$$
+p+4\beta\ge\frac{c/2}{\max\{x,y/4\}}.
+\tag{68.10}
+$$
+
+若最大值为 $x$，Cauchy–Schwarz 给
+
+$$
+\begin{aligned}
+1&\ge\frac{1-c}{y}+\frac{c}{2x}\\
+&\ge\frac{(\sqrt{1-c}+\sqrt{c/2})^2}{x+y}
+\ge(\sqrt{1-c}+\sqrt{c/2})^2>1.
+\end{aligned}
+\tag{68.11}
+$$
+
+最后严格不等式等价于 $\sqrt{2c(1-c)}>c/2$，平方后的差为 $c(8-9c)/4>0$。若最大值为 $y/4$，则
+
+$$
+1\ge\frac{1-c}{y}+\frac{2c}{y}=\frac{1+c}{y}>1.
+\tag{68.12}
+$$
+
+并列最大值同时落入上述两种论证。$x=0$ 或 $y=0$ 已由非零奇响应排除；$p=0$ 或 $\beta=0$ 并未被除掉，仍包含于 (68.10)；秩零效果因目标不恒零也不可能。于是 $F$ 必秩二，再由引理 68.1 对每个合法纯态得到编码秩一。∎
+

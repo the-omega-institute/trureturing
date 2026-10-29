@@ -9,7 +9,15 @@ internal sealed class BaezDuarteNewtonDocument : IScribeDocumentDefinition
         "The actual Baez-Duarte Newton series converges to reciprocal zeta for every complex "
         + "argument with real part greater than one, with absolute interchange derived on that domain.",
         H("Baez-Duarte Newton Reciprocal Zeta"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Describe.Lean(DescribeId.Create("signed-choose"),
+                DeclarationHandle.Create("D5/S3/Weil/Analytic/BaezDuarteNewton.signed_choose"),
+                H("Normalized Pochhammer and generalized binomial coefficients"),
+                StatementSource.FromAuthor(SignedChooseStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The normalized descending product is the signed generalized binomial coefficient. This identity relates the Newton-series coefficients to Euler's Gamma sequence."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("newton-has-sum"),
             DeclarationHandle.Create("D5/S3/Weil/Analytic/BaezDuarteNewton.baez_duarte_newton_hasSum"),
             H("The original Newton series on the initial half-plane"),
@@ -45,6 +53,20 @@ internal sealed class BaezDuarteNewtonDocument : IScribeDocumentDefinition
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
+    private static Formula SignedChooseStatement()
+    {
+        var k = FormulaDsl.Id("k");
+        var z = FormulaDsl.Id("z");
+        var complex = Seq(Mathbb, Grp(FormulaDsl.Id("C")));
+        var nat = Seq(Mathbb, Grp(FormulaDsl.Id("N")));
+        var choose = new Formula.Apply(Seq(Operatorname, Grp(FormulaDsl.Id("Ring"), Dot, FormulaDsl.Id("choose"))),
+            [new Formula.Binary(z, FormulaBinaryOperator.Subtract, D(1)), k]);
+        var signed = new Formula.Binary(new Formula.Power(Parenthesized(Seq(Minus, D(1), Colon, complex)), k), FormulaBinaryOperator.Multiply, choose);
+        return Disp(new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("k"), nat,
+            new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create("z"), complex,
+                new Formula.Relation(Call("normalizedPochhammer", k, z), FormulaRelationOperator.Equal, signed))));
+    }
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Statement()
     {
         Formula s = FormulaDsl.Id("s"), k = FormulaDsl.Id("k");

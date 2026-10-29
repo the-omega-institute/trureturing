@@ -1,0 +1,68 @@
+**Definition 8.3.1 (Coefficient and interval enclosures).** For any of
+the polynomials $P(x,p,v)$ above, define its translated coefficients by
+
+$$
+\begin{aligned}
+P(c+X,p_c+P_0,v_c+V_0)
+ &=\sum_{i,j,k}q_{ijk}^{(c)}X^iP_0^jV_0^k,\\
+q_{ijk}^{(c)}
+ &=\sum_{a\ge i,\,b\ge j,\,e\ge k}
+ [x^ap^bv^e]P\binom ai\binom bj\binom ek
+ c^{a-i}p_c^{b-j}v_c^{e-k},\\
+s_c(P;\delta)
+ &=\sum_{i+j+k>0}|q_{ijk}^{(c)}|\delta^ip_H^jv_H^k.
+\end{aligned}
+\tag{8.3.1}
+$$
+
+Zero powers, including $0^0$ in this finite coefficient formula, mean
+one. For $\delta\ge0$, let
+
+$$
+\mathcal E_c(P;\delta)
+=\mathcal O_{160}\bigl([q_{000}^{(c)}-s_c(P;\delta),
+                       q_{000}^{(c)}+s_c(P;\delta)]\bigr),\qquad
+\mathcal O_q([l,u])=
+[2^{-q}\lfloor2^ql\rfloor,2^{-q}\lceil2^qu\rceil].
+\tag{8.3.2}
+$$
+
+The coefficient sums in (8.3.1) are exact rational sums before this
+last rounding. They enclose $P$ on
+$[c-\delta,c+\delta]\times\mathcal B$, even for $\delta=0$.
+
+For subsequent interval expressions use the ordinary endpoint rules,
+then apply $\mathcal O_{160}$ after every scalar addition,
+subtraction, multiplication and reciprocal; rational inputs are first
+enclosed by this same rule. A product uses all four endpoint products.
+A reciprocal is formed only for $0\notin[l,u]$, and is $[1/u,1/l]$
+before outward rounding. Negation reverses endpoints. Powers mean
+successive multiplication starting from one. Displayed sums and
+products are left associated in their displayed order, and finite sums
+start from zero in increasing index order. Thus all interval operations
+are enclosing rational operations.
+
+For a gap $[a,b]$ define $T_l(P_0,V_0)$ by the exact expansion
+
+$$
+(1+w)^{18}\mathscr R\!\left(\frac{a+bw}{1+w},
+                   p_c+P_0,v_c+V_0\right)
+ =\sum_{l=0}^{18}T_l(P_0,V_0)w^l,\qquad
+T_l=\sum_{j,k}t_{ljk}P_0^jV_0^k.
+\tag{8.3.3}
+$$
+
+For the final half-line $[a,\infty)$ instead expand
+$\mathscr R(a+w,p_c+P_0,v_c+V_0)$ in $w$ to define these coefficients.
+No rational function remains in (8.3.3). In either case set
+
+$$
+\theta_{a,b}=
+\max_{0\le l\le18}
+\frac{\sum_{j+k>0}|t_{ljk}|p_H^jv_H^k}{|t_{l00}|}.
+\tag{8.3.4}
+$$
+
+The nonzero denominators in this definition are part of the following
+coefficient comparisons.
+

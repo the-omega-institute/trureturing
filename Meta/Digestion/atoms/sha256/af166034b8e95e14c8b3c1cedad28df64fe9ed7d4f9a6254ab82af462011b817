@@ -1,0 +1,12 @@
+**Theorem 22.1.** The full-world response map
+$\mathscr A:\mathcal S_O\to O$ is proper.
+
+**Proof.** Take a sequence over a compact subset of $O$ and a
+subsequence whose labels converge in that compact subset. Its fifth
+responses are bounded. If there were no strict parent convergent
+subsequence, Theorem 21.1 would put its limiting label in $\mathcal E_{\rm esc}=0$,
+a contradiction. A strict limit satisfies all rows and still has
+$P_5\ne24,\mathcal E_{\rm esc}\ne0$. It belongs to $\mathcal S_O$. Sequential
+compactness proves compactness of the inverse image. This is
+properness relative to $O$, not properness over the whole plane. ∎
+

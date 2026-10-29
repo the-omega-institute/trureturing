@@ -1,0 +1,11 @@
+**Lemma 15.1 (All exceptional projected roots).** The following
+centers, with radius $e=10^{-22}$, isolate all the roots of the
+indicated factors in $(0,1)$. At any actual common root their forced
+$b$ values are as listed.
+
+| Factor | Center | Forced $b$ |
+| --- | --- | --- |
+| $\Psi_2$ | $0.8090169943749474241022934171828190588602$ | $-1/2$ |
+| $\Psi_4$ | $0.8685711315796832210935933386297551290576$ | $-2/5$ |
+| $\Phi$ | $0.1348158750676386533670177160610812651109$ | $1/8$ |
+| $\Phi$ | $0.9024496817720562653778726512965428561863$ | $1/8$ |

@@ -1,0 +1,49 @@
+**Theorem 5.2 (finite-pair exactness at every depth and at all depths).**
+Under Assumption 4.4, for every $h\ge0$,
+
+$$
+\neg\operatorname{PrefDet}(D,Q,h)
+\Longleftrightarrow
+\bigvee_{i\ne j,b,c}J_{ib,jc}(h).
+\tag{NIC.23}
+$$
+
+Moreover,
+
+$$
+\begin{aligned}
+\forall h\ \neg\operatorname{PrefDet}(D,Q,h)
+&\Longleftrightarrow
+\exists(i,b,j,c),\ i\ne j,\ \forall h\ J_{ib,jc}(h),\\
+\exists h\ \operatorname{PrefDet}(D,Q,h)
+&\Longleftrightarrow
+\forall(i,b,j,c),\ i\ne j,\ \exists H\ \neg J_{ib,jc}(H).
+\end{aligned}
+\tag{NIC.24}
+$$
+
+The persistent-pair statement on the first line requires actual finite
+original witnesses with their exact different complete row labels at
+each $h$. It does not require one fixed witness pair for all $h$.
+
+Proof. If prefix determination fails, take its original finite witnesses
+$u,v\in D$ and their different exact labels $r_i,r_j$. The two
+completeness directions of Theorem 4.3 reconstruct those sources in
+some pieces $b,c$. Their original prefix agreement gives (NIC.22).
+Conversely a satisfying parameter tuple in (NIC.22) expands by the two
+soundness directions to finite $u,v\in D$ with exactly $r_i,r_j$.
+These labels differ, and (NIC.21) is their actual original prefix
+agreement. This proves (NIC.23) on the entire domain in both directions.
+
+There are finitely many row-piece pairs. Each $J$ is downward closed
+in $h$: witnesses at a larger depth also witness every smaller depth.
+If no pair persists at every depth, choose a failed depth $H$ for each
+pair and take their finite maximum. Downward closure means that each
+pair still fails at this maximum and at every larger depth. Equation
+(NIC.23) then gives a determining depth. Conversely a persistent pair
+gives failure at every $h$ by the same equation. Negating this alternative
+gives the second line of (NIC.24). With no row-piece pairs take maximum
+zero; then prefix determination is vacuous at every depth. This includes
+empty $D$ and one-label images. At no step is a finite equality partition
+recomputed on a common infinite limit. $\square$
+

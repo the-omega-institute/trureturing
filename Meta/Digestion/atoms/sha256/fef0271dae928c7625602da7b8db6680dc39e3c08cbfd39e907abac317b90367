@@ -1,0 +1,29 @@
+**Definition 58.4 (coexisting resources and parsimonious scope).** If
+the entry height is $h$, the acquisition can use $O(h+1)$ address and
+continuation symbols in addition to the two result words: retain a
+single path, push a pending-right flag on entering a branch, switch
+that path's last letter when entering its right child, and pop finished
+ancestors. This does not retain a separate copied address for every
+pending subtree. Each actual source address/reply buffer has its full
+width, up to $2h+5$ bits during acquisition. Counters, parser state,
+pending latches, allocator and program backing, actual source links,
+references and grants coexist with these payloads. The local controller
+does not receive the bound $h$ in advance.
+
+After attachment, a finite current-code scan suffices to navigate each
+request, and a finite word replacement suffices to prepare its exact
+successor. A straightforward implementation may temporarily retain both
+old and proposed words and the complete predicted and actual reply;
+their simultaneous backing and cleanup are charged. The actual source
+also exists throughout: none of the code counts replaces its material.
+Exporting either result word adds its literal transmitted payload and
+framing beyond (AAII.17). A finite instruction description implies
+neither a fixed lifetime store nor a source-size-independent work bound.
+
+For the current task the code and callable binding suffice; the immutable
+entry archive is needed for the separate entry-report requirement and
+may be dropped if that requirement is dropped. The exact task kernel of
+Theorem 56.2 justifies retention of current syntax, but supplies no
+whole-resource optimum for a particular code layout. The only claimed
+optimal coordinate is (AAII.15).
+

@@ -1,0 +1,20 @@
+**Proposition 5.4 (mathematical attainment by an orthogonal label).**
+Conditionally let $E=\mathbb C^{K_{a,b}}$ and choose an orthonormal basis
+$\{|u\rangle:u\in D_{a,b}\}$.  Supplying
+
+$$
+\eta_u=|u\rangle\!\langle u|
+\tag{5.7}
+$$
+
+attains the dimension bound mathematically: measure the label, restore the
+ordered source description, and run the corresponding native
+Read/Apply/guard/Stop contract (the branch-entry contract for every
+$\ell\ge2$ fiber, including the pure $\ell=2$ cardinality-one fibers, and
+the leaf-root contract for the $\ell=1$ fibers).  This construction assumes
+the label's preparation, storage,
+protection and control and says nothing about their physical availability,
+runtime, energy, clock conversion or total acquisition price.  It is a
+full-history/orthogonal-source dilation, not a realization of the bare
+boundary specimen cut.
+

@@ -1,0 +1,41 @@
+**定理 2.2（从严格源级数到形式倒数的对应）。** 对定义 1.1–1.2 的全部参数，$A$ 在 $|z|<1$ 全纯。定义
+
+$$
+u_m=\sum_{m_1+\cdots+m_\ell=m}\prod_{i=1}^\ell f_{m_i}.
+$$
+
+则 $a_n$ 正是下列形式逆级数的唯一系数：
+
+$$
+a_0=u_0^{-1}=f_0^{-\ell},\qquad
+ a_n=-u_0^{-1}\sum_{m=1}^nu_ma_{n-m}\quad(n\ge1).
+$$
+
+对每个整数 $j\ge1$，精确地有
+
+$$
+C_n^{j;\boldsymbol{k};\ell}
+ =\sum_{m=0}^n\binom{n-m+j-1}{j-1}a_m,\qquad
+C_n^{j+1;\boldsymbol{k};\ell}=\sum_{m=0}^n C_m^{j;\boldsymbol{k};\ell}.
+$$
+
+证明。`CompositionDisk.source_coefficient_control` 对所有正整数列表 $s$ 与 $N\ge0$ 给出
+
+$$
+0\le H_s(N)\le N^{|s|},\quad
+N<|s|\Rightarrow H_s(N)=0,\quad
+N\ge|s|\Rightarrow H_s(N)>0,
+$$
+
+以及 $H_s(|s|)=\mathrm{leading}(s)$；这里 $|s|$ 表示列表长度。`source_series head tail` 同时给出每个 $f_m>0$、归一化函数零点值 $\mathrm{leading}([k_1,\ldots,k_d])=f_0$、每个 $|z|<1$ 的绝对收敛、圆盘全纯性、$z^dF_{\boldsymbol{k}}=\mathrm{source}([k_1,\ldots,k_d])=\mathrm{strictNestedSeries}$，以及源函数零点阶数恰为 $d$。因此这里的 $f_m$、$F$ 与源级数逐一相同，不涉及指标反转或深度幂的改变。
+
+`CompositionZeroFreeCollar.result head tail` 对同一归一化函数给出圆盘内与 `CompositionDisk.normalized` 的相等性、在整个 $\Omega$ 上全纯性，以及某个 $R_0>1$ 满足
+
+$$
+ z\in\Omega,\quad |z|<R_0\quad\Longrightarrow\quad\mathcal F(z)\ne0.
+$$
+
+其 `normalizedContinuation` 正是定义 2.1 的 $\mathcal F$。故 $\mathcal A$ 在 $\Omega\cap\{|z|<R_0\}$ 全纯，并在单位圆盘等于 $A$。这只使用该组合的局部外延半径，不要求全割平面无零。
+
+有限次乘法给出 $F^\ell$ 的系数 $u_m$，且 $u_0=f_0^\ell\ne0$。全纯恒等式 $F^\ell A=1$ 比较系数即为递推；反之该递推逐项唯一决定形式逆级数。再乘以绝对收敛的二项级数 $(1-z)^{-j}$ 得到卷积式；乘一次 $(1-z)^{-1}$ 得到重复求和式。所有这些系数都在普通幂级数环中计算。
+

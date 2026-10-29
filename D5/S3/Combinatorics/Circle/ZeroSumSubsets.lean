@@ -352,6 +352,487 @@ private theorem carry_charge {k : ℕ} (n m : Fin k → ℕ) (A : Finset (Fin k)
       intro i _
       ring
 
+private theorem neutral_carry_selector {k : ℕ} (c : Fin k → Bool) (u : Fin k → ℕ)
+    (eps : Fin k → ℤ)
+    (heps : ∀ a, eps a = ((c a).toNat : ℤ) - ((c (finRotate k a)).toNat : ℤ))
+    (hQ : (∑ a, (u a : ℤ) * eps a) = 0) (hu : u ≠ 0) :
+    (∃ i, eps i = 0 ∧ 0 < u i ∧
+      2 ≤ 1 + 2 * (u i : ℤ) - (u ((finRotate k).symm i) : ℤ)) ∨
+    (∃ i j, eps i = 1 ∧ eps j = -1 ∧ i ≠ j ∧ 0 < u i ∧ 0 < u j ∧
+      2 ≤ 1 + 2 * (u i : ℤ) - (u ((finRotate k).symm i) : ℤ) ∧
+      2 ≤ 1 + 2 * (u j : ℤ) - (u ((finRotate k).symm j) : ℤ)) := by
+  classical
+  let tau := finRotate k
+  let pred := tau.symm
+  let T : Finset (Fin k) := Finset.univ.filter (fun a => c a = true)
+  have hbool (b : Bool) : (b.toNat : ℤ) = if b = true then 1 else 0 := by
+    cases b <;> simp
+  have hsum_true (f : Fin k → ℤ) :
+      (∑ a, f a * (c a).toNat) = (∑ a ∈ T, f a) := by
+    rw [Finset.sum_filter]
+    apply Finset.sum_congr rfl
+    intro a ha
+    by_cases hca : c a = true <;> simp [T, hca, hbool]
+  have hsum_rot (f : Fin k → ℤ) :
+      (∑ a, f a * (c (tau a)).toNat) =
+        (∑ a ∈ T, f (pred a)) := by
+    have hrot := (Equiv.sum_comp tau (fun a => f (pred a) * (c a).toNat))
+    have hrot' :
+        (∑ a, f a * (c (tau a)).toNat) =
+          ∑ a, f (pred a) * (c a).toNat := by
+      simpa only [tau, pred, Equiv.symm_apply_apply] using hrot
+    rw [hrot', hsum_true]
+  have hbalance : (∑ a ∈ T, (u a : ℤ)) = (∑ a ∈ T, (u (pred a) : ℤ)) := by
+    have h := hQ
+    simp_rw [heps, mul_sub] at h
+    rw [Finset.sum_sub_distrib] at h
+    have h' := hsum_true (fun a => (u a : ℤ))
+    have h'' := hsum_rot (fun a => (u a : ℤ))
+    rw [h', h''] at h
+    omega
+  have bad : ∀ (d : Fin k → Bool) (ed : Fin k → ℤ),
+      (∀ a, ed a = ((d a).toNat : ℤ) - ((d (tau a)).toNat : ℤ)) →
+      (∑ a, (u a : ℤ) * ed a = 0) →
+      (∀ i, ¬ (ed i = 0 ∧ 0 < u i ∧
+        2 ≤ 1 + 2 * (u i : ℤ) - (u (pred i) : ℤ))) →
+      (∀ i, ¬ (ed i = 1 ∧ 0 < u i ∧
+        2 ≤ 1 + 2 * (u i : ℤ) - (u (pred i) : ℤ))) → False := by
+    intro d ed hed hEd hno0 hno1
+    let S : Finset (Fin k) := Finset.univ.filter (fun a => d a = true)
+    have hsum_true_d (f : Fin k → ℤ) :
+        (∑ a, f a * (d a).toNat) = (∑ a ∈ S, f a) := by
+      rw [Finset.sum_filter]
+      apply Finset.sum_congr rfl
+      intro a ha
+      by_cases hda : d a = true <;> simp [S, hda]
+    have hsum_rot_d (f : Fin k → ℤ) :
+        (∑ a, f a * (d (tau a)).toNat) =
+          (∑ a ∈ S, f (pred a)) := by
+      have hrot := (Equiv.sum_comp tau (fun a => f (pred a) * (d a).toNat))
+      have hrot' :
+          (∑ a, f a * (d (tau a)).toNat) =
+            ∑ a, f (pred a) * (d a).toNat := by
+        have hpt : ∀ x, pred (tau x) = x := fun x => Equiv.symm_apply_apply tau x
+        simpa only [hpt] using hrot
+      rw [hrot', hsum_true_d]
+    have hbal_d : (∑ a ∈ S, (u a : ℤ)) = (∑ a ∈ S, (u (pred a) : ℤ)) := by
+      have h := hEd
+      simp_rw [hed, mul_sub] at h
+      rw [Finset.sum_sub_distrib] at h
+      have h' := hsum_true_d (fun a => (u a : ℤ))
+      have h'' := hsum_rot_d (fun a => (u a : ℤ))
+      rw [h', h''] at h
+      omega
+    have hineqS : ∀ a ∈ S, 2 * (u a : ℤ) ≤ (u (pred a) : ℤ) := by
+      intro a ha
+      have hda : d a = true := by simpa [S] using ha
+      by_cases hnext : d (tau a) = true
+      · have he : ed a = 0 := by rw [hed a, hda, hnext]; norm_num
+        by_cases hzero : u a = 0
+        · simp [hzero]
+        · have hnot : ¬ (2 ≤ 1 + 2 * (u a : ℤ) - (u (pred a) : ℤ)) := by
+            intro hq
+            exact hno0 a ⟨he, Nat.pos_of_ne_zero hzero, hq⟩
+          have hq : 1 + 2 * (u a : ℤ) - (u (pred a) : ℤ) < 2 :=
+            lt_of_not_ge hnot
+          omega
+      · have hnext' : d (tau a) = false := Bool.eq_false_iff.mpr hnext
+        have he : ed a = 1 := by rw [hed a, hda, hnext']; norm_num
+        by_cases hzero : u a = 0
+        · simp [hzero]
+        · have hnot : ¬ (2 ≤ 1 + 2 * (u a : ℤ) - (u (pred a) : ℤ)) := by
+            intro hq
+            exact hno1 a ⟨he, Nat.pos_of_ne_zero hzero, hq⟩
+          have hq : 1 + 2 * (u a : ℤ) - (u (pred a) : ℤ) < 2 :=
+            lt_of_not_ge hnot
+          omega
+    have hsumS : (∑ a ∈ S, (u a : ℤ)) = 0 := by
+      have hs := Finset.sum_le_sum hineqS
+      rw [← Finset.mul_sum, hbal_d] at hs
+      have hn : 0 ≤ ∑ a ∈ S, (u a : ℤ) := by
+        exact Finset.sum_nonneg fun a ha => by positivity
+      omega
+    have hSzero : ∀ a ∈ S, u a = 0 := by
+      intro a ha
+      have hleNat : u a ≤ ∑ b ∈ S, u b :=
+        Finset.single_le_sum (f := fun b : Fin k => u b) (fun b _ => Nat.zero_le _) ha
+      have hle : (u a : ℤ) ≤ ∑ b ∈ S, (u b : ℤ) := by
+        exact_mod_cast hleNat
+      have : (u a : ℤ) = 0 := by rw [hsumS] at hle; omega
+      exact_mod_cast this
+    have hpredsum : (∑ a ∈ S, (u (pred a) : ℤ)) = 0 := by rw [← hbal_d, hsumS]
+    have hpredzero : ∀ a ∈ S, u (pred a) = 0 := by
+      intro a ha
+      have hleNat : u (pred a) ≤ ∑ b ∈ S, u (pred b) :=
+        Finset.single_le_sum (f := fun b : Fin k => u (pred b))
+          (fun b _ => Nat.zero_le _) ha
+      have hle : (u (pred a) : ℤ) ≤ ∑ b ∈ S, (u (pred b) : ℤ) := by
+        exact_mod_cast hleNat
+      have : (u (pred a) : ℤ) = 0 := by rw [hpredsum] at hle; omega
+      exact_mod_cast this
+    have hall : ∀ a, 2 * (u a : ℤ) ≤ (u (pred a) : ℤ) := by
+      intro a
+      by_cases ha : a ∈ S
+      · rw [hSzero a ha]
+        positivity
+      by_cases hpa : tau a ∈ S
+      · have hzero : u a = 0 := by
+          have hp := hpredzero (tau a) hpa
+          simpa [pred] using hp
+        simp [hzero]
+      by_cases hda : d a = true
+      · exfalso
+        apply ha
+        exact Finset.mem_filter.mpr ⟨Finset.mem_univ _, hda⟩
+      · by_cases hnext : d (tau a) = true
+        · have hzero : u a = 0 := by
+            have hp := hpredzero (tau a)
+              (Finset.mem_filter.mpr ⟨Finset.mem_univ _, hnext⟩)
+            simpa [pred] using hp
+          simp [hzero]
+        · have hda' : d a = false := Bool.eq_false_iff.mpr hda
+          have hnext' : d (tau a) = false := Bool.eq_false_iff.mpr hnext
+          have he : ed a = 0 := by rw [hed a, hda', hnext']; norm_num
+          by_cases hzero : u a = 0
+          · simp [hzero]
+          · have hnot : ¬ (2 ≤ 1 + 2 * (u a : ℤ) - (u (pred a) : ℤ)) := by
+              intro hq
+              exact hno0 a ⟨he, Nat.pos_of_ne_zero hzero, hq⟩
+            have hq : 1 + 2 * (u a : ℤ) - (u (pred a) : ℤ) < 2 :=
+              lt_of_not_ge hnot
+            omega
+    have hs := Finset.sum_le_sum (s := (Finset.univ : Finset (Fin k))) (fun a _ => hall a)
+    have hpred_total : (∑ a, (u (pred a) : ℤ)) = ∑ a, (u a : ℤ) := by
+      simpa [pred] using (Equiv.sum_comp pred (fun a => (u a : ℤ)))
+    rw [← Finset.mul_sum, hpred_total] at hs
+    have hn : 0 ≤ ∑ a, (u a : ℤ) := by
+      exact Finset.sum_nonneg fun a ha => by positivity
+    have hz : ∑ a, (u a : ℤ) = 0 := by omega
+    apply hu
+    funext a
+    have hle : (u a : ℤ) ≤ ∑ b, (u b : ℤ) := by
+      exact_mod_cast Finset.single_le_sum (fun b _ => Nat.zero_le _) (Finset.mem_univ a)
+    have : (u a : ℤ) = 0 := by rw [hz] at hle; omega
+    exact_mod_cast this
+  by_cases h0 : ∃ i, eps i = 0 ∧ 0 < u i ∧
+      2 ≤ 1 + 2 * (u i : ℤ) - (u ((finRotate k).symm i) : ℤ)
+  · exact Or.inl h0
+  have hpos : ∃ i, eps i = 1 ∧ 0 < u i ∧
+      2 ≤ 1 + 2 * (u i : ℤ) - (u ((finRotate k).symm i) : ℤ) := by
+    by_contra hp
+    apply bad c eps (by simpa [tau] using heps) hQ
+    · intro i hi
+      exact h0 ⟨i, hi⟩
+    · intro i hi
+      exact hp ⟨i, hi⟩
+  have hneg : ∃ j, eps j = -1 ∧ 0 < u j ∧
+      2 ≤ 1 + 2 * (u j : ℤ) - (u ((finRotate k).symm j) : ℤ) := by
+    let d : Fin k → Bool := fun a => !c a
+    let ed : Fin k → ℤ := fun a => -eps a
+    have hed : ∀ a, ed a = ((d a).toNat : ℤ) - ((d (tau a)).toNat : ℤ) := by
+      intro a
+      dsimp [ed, d]
+      rw [heps a]
+      cases hca : c a <;> cases hct : c (tau a) <;> simp [hca, hct]
+    have hEd : (∑ a, (u a : ℤ) * ed a) = 0 := by
+      calc
+        (∑ a, (u a : ℤ) * ed a) = - (∑ a, (u a : ℤ) * eps a) := by
+          simp [ed, Finset.sum_neg_distrib]
+        _ = 0 := by rw [hQ]; simp
+    by_contra hn
+    exfalso
+    apply bad d ed hed hEd
+    · intro i hi
+      apply h0
+      refine ⟨i, ?_, hi.2.1, hi.2.2⟩
+      simpa [ed] using hi.1
+    · intro i hi
+      apply hn
+      refine ⟨i, ?_, hi.2.1, hi.2.2⟩
+      have hsign : eps i = -1 := by
+        have := hi.1
+        simp [ed] at this
+        omega
+      exact hsign
+  obtain ⟨i, hi0, hio, hiq⟩ := hpos
+  obtain ⟨j, hj0, hjo, hjq⟩ := hneg
+  exact Or.inr ⟨i, j, hi0, hj0, by intro hij; subst j; omega, hio, hjo, hiq, hjq⟩
+
+/-- A zero-charge natural coefficient vector admits an atomic neutral carry path.
+
+The packet at each edge is either one neutral carry or one opposite-charge pair;
+this is an algebraic coefficient path and carries no geometric ordering claim. -/
+theorem neutral_carry_path
+    (k : ℕ) (c : Fin k → Bool) (s : Fin k → ℤ) (N : ℤ)
+    (hsum : (∑ a, s a) = 0)
+    (hstep : ∀ a, 2 * s a - s (finRotate k a) =
+      N * (((c a).toNat : ℤ) - ((c (finRotate k a)).toNat : ℤ)))
+    (m : Fin k → ℕ)
+    (hphysical : ∀ a, 0 ≤ 1 + 2 * (m a : ℤ) - (m ((finRotate k).symm a) : ℤ))
+    (hcharge : (∑ a, (m a : ℤ) *
+      (((c a).toNat : ℤ) - ((c (finRotate k a)).toNat : ℤ))) = 0) :
+    ∃ P : List (Fin k → ℕ),
+      P.head? = some m ∧ P.getLast? = some 0 ∧
+      List.IsChain
+        (fun u v =>
+          (∃ i, ((c i).toNat : ℤ) - ((c (finRotate k i)).toNat : ℤ) = 0 ∧
+            0 < u i ∧
+            2 ≤ 1 + 2 * (u i : ℤ) - (u ((finRotate k).symm i) : ℤ) ∧
+            (∀ a, v a + (if a = i then 1 else 0) = u a) ∧
+            (∑ a, v a + 1 = ∑ a, u a)) ∨
+          (∃ i j,
+            ((c i).toNat : ℤ) - ((c (finRotate k i)).toNat : ℤ) = 1 ∧
+            ((c j).toNat : ℤ) - ((c (finRotate k j)).toNat : ℤ) = -1 ∧
+            i ≠ j ∧ 0 < u i ∧ 0 < u j ∧
+            2 ≤ 1 + 2 * (u i : ℤ) - (u ((finRotate k).symm i) : ℤ) ∧
+            2 ≤ 1 + 2 * (u j : ℤ) - (u ((finRotate k).symm j) : ℤ) ∧
+            (∀ a, v a + (if a = i then 1 else 0) + (if a = j then 1 else 0) = u a) ∧
+            (∑ a, v a + 2 = ∑ a, u a))) P ∧
+      (∀ u ∈ P,
+        (∀ a, 0 ≤ 1 + 2 * (u a : ℤ) - (u ((finRotate k).symm a) : ℤ)) ∧
+        (∑ a, (u a : ℤ) *
+          (((c a).toNat : ℤ) - ((c (finRotate k a)).toNat : ℤ))) = 0 ∧
+        (∑ a, (1 + 2 * (u a : ℤ) - (u ((finRotate k).symm a) : ℤ)) * s a) = 0) := by
+  classical
+  let tau := finRotate k
+  let pred := tau.symm
+  let eps : Fin k → ℤ := fun a => ((c a).toNat : ℤ) - ((c (tau a)).toNat : ℤ)
+  let q : (Fin k → ℕ) → Fin k → ℤ := fun u a =>
+    1 + 2 * (u a : ℤ) - (u (pred a) : ℤ)
+  let Q : (Fin k → ℕ) → ℤ := fun u => ∑ a, (u a : ℤ) * eps a
+  have hstep' : ∀ a, 2 * s a - s (tau a) = N * eps a := by
+    intro a
+    simpa [eps, tau] using hstep a
+  have hcharge' : Q m = 0 := by simpa [Q, eps, tau] using hcharge
+  have hphysical' : ∀ a, 0 ≤ q m a := by simpa [q, pred, tau] using hphysical
+  have source_zero : ∀ (u : Fin k → ℕ), (∀ a, 0 ≤ q u a) → Q u = 0 →
+      (∑ a, q u a * s a) = 0 := by
+    intro u huq huQ
+    have hcarry : ∀ a, ((q u a).toNat : ℤ) =
+        (if a ∈ (Finset.univ : Finset (Fin k)) then (1 : ℤ) else 0) +
+          2 * (u a : ℤ) - (u (pred a) : ℤ) := by
+      intro a
+      have hcast : ((q u a).toNat : ℤ) = q u a := Int.toNat_of_nonneg (huq a)
+      rw [hcast]
+      simp [q, pred]
+    have hc := carry_charge (fun a => (q u a).toNat) u
+      (Finset.univ : Finset (Fin k)) s eps N hcarry hstep'
+    have hcast_sum : (∑ a, ((q u a).toNat : ℤ) * s a) = ∑ a, q u a * s a := by
+      apply Finset.sum_congr rfl
+      intro a ha
+      rw [Int.toNat_of_nonneg (huq a)]
+    rw [hcast_sum] at hc
+    have hsum' : (∑ a ∈ (Finset.univ : Finset (Fin k)), s a) = 0 := by simpa using hsum
+    simpa [Q, hsum', huQ] using hc
+  have aux : ∀ L : ℕ, ∀ u : Fin k → ℕ, (∑ a, u a) = L →
+      (∀ a, 0 ≤ q u a) → Q u = 0 →
+      ∃ P : List (Fin k → ℕ),
+        P.head? = some u ∧ P.getLast? = some 0 ∧
+        List.IsChain
+          (fun x y =>
+            (∃ i, eps i = 0 ∧ 0 < x i ∧ 2 ≤ q x i ∧
+              (∀ a, y a + (if a = i then 1 else 0) = x a) ∧
+              (∑ a, y a + 1 = ∑ a, x a)) ∨
+            (∃ i j, eps i = 1 ∧ eps j = -1 ∧ i ≠ j ∧ 0 < x i ∧ 0 < x j ∧
+              2 ≤ q x i ∧ 2 ≤ q x j ∧
+              (∀ a, y a + (if a = i then 1 else 0) + (if a = j then 1 else 0) = x a) ∧
+              (∑ a, y a + 2 = ∑ a, x a))) P ∧
+        (∀ x ∈ P, (∀ a, 0 ≤ q x a) ∧ Q x = 0 ∧ (∑ a, q x a * s a) = 0) := by
+    intro L
+    induction L using Nat.strong_induction_on with
+    | h L ih =>
+      intro u hu hq hQ
+      by_cases hu0 : u = 0
+      · subst u
+        refine ⟨[0], by simp, by simp, by simp, ?_⟩
+        intro x hx
+        simp only [List.mem_singleton] at hx
+        subst x
+        exact ⟨hq, hQ, source_zero 0 hq hQ⟩
+      · obtain hsel | hpair := neutral_carry_selector c u eps
+          (by intro a; rfl) hQ hu0
+        · obtain ⟨i, hi0, hiu, hiq⟩ := hsel
+          let r : Fin k → ℕ := fun a => if a = i then 1 else 0
+          let v : Fin k → ℕ := fun a => u a - r a
+          have hrle : ∀ a, r a ≤ u a := by
+            intro a
+            by_cases ha : a = i
+            · subst a
+              have h1 : 1 ≤ u i := Nat.one_le_iff_ne_zero.mpr (Nat.ne_of_gt hiu)
+              simp [r, h1]
+            · simp [r, ha]
+          have hvadd : ∀ a, v a + r a = u a := by
+            intro a
+            exact Nat.sub_add_cancel (hrle a)
+          have hsumv : (∑ a, v a) + 1 = L := by
+            have hs := congrArg (fun f : Fin k → ℕ => ∑ a, f a) (funext hvadd)
+            have hr : (∑ a, r a) = 1 := by simp [r]
+            rw [Finset.sum_add_distrib, hr] at hs
+            omega
+          have hiq' : 2 ≤ q u i := by
+            change 2 ≤ 1 + 2 * (u i : ℤ) - (u ((finRotate k).symm i) : ℤ)
+            exact hiq
+          have hqv : ∀ a, 0 ≤ q v a := by
+            intro a
+            have hqeq : q v a = q u a - 2 * (r a : ℤ) + (r (pred a) : ℤ) := by
+              have hcast := congrArg (fun n : ℕ => (n : ℤ)) (hvadd a)
+              dsimp [q, v]
+              have hpredcast : (v (pred a) : ℤ) =
+                  (u (pred a) : ℤ) - (r (pred a) : ℤ) := by
+                have hp := congrArg (fun n : ℕ => (n : ℤ)) (hvadd (pred a))
+                omega
+              have : (v a : ℤ) = (u a : ℤ) - (r a : ℤ) := by omega
+              rw [this, hpredcast]
+              ring
+            rw [hqeq]
+            by_cases ha : a = i
+            · subst a
+              have : r i = 1 := by simp [r]
+              rw [this]
+              have hrp : 0 ≤ (r (pred i) : ℤ) := by positivity
+              omega
+            · have hra : r a = 0 := by simp [r, ha]
+              rw [hra]
+              have hqu := hq a
+              have hrp : 0 ≤ (r (pred a) : ℤ) := by positivity
+              omega
+          have hrQ : (∑ a, (r a : ℤ) * eps a) = 0 := by simp [r, hi0]
+          have hQv : Q v = 0 := by
+            have hvQ : (∑ a, (v a : ℤ) * eps a) =
+                (∑ a, (u a : ℤ) * eps a) - ∑ a, (r a : ℤ) * eps a := by
+              rw [← Finset.sum_sub_distrib]
+              apply Finset.sum_congr rfl
+              intro a ha
+              have hcast := congrArg (fun n : ℕ => (n : ℤ)) (hvadd a)
+              have : (v a : ℤ) = (u a : ℤ) - (r a : ℤ) := by omega
+              rw [this]
+              ring
+            simpa [Q, hvQ, hQ, hrQ]
+          obtain ⟨P, hhead, hlast, hchain, hinv⟩ := ih (∑ a, v a) (by omega) v rfl hqv hQv
+          refine ⟨u :: P, by simp, ?_, ?_, ?_⟩
+          · cases P with
+            | nil => simp at hhead
+            | cons p ps => simpa using hlast
+          · cases P with
+            | nil => simp
+            | cons p ps =>
+              have hp : p = v := by
+                simpa using hhead
+              subst p
+              simp only [List.isChain_cons_cons]
+              refine ⟨?_, hchain⟩
+              have hsumEdge : (∑ a, v a + 1 = ∑ a, u a) := by omega
+              exact Or.inl ⟨i, hi0, hiu, hiq, (by intro a; simpa [r] using hvadd a), hsumEdge⟩
+          · intro x hx
+            simp only [List.mem_cons] at hx
+            rcases hx with hx | hx
+            · subst x
+              exact ⟨hq, hQ, source_zero _ hq hQ⟩
+            · exact hinv x hx
+        · obtain ⟨i, j, hi1, hjm, hij, hiu, hju, hiq, hjq⟩ := hpair
+          let r : Fin k → ℕ := fun a => (if a = i then 1 else 0) + (if a = j then 1 else 0)
+          let v : Fin k → ℕ := fun a => u a - r a
+          have hrle : ∀ a, r a ≤ u a := by
+            intro a
+            by_cases hai : a = i
+            · subst a
+              have h1 : 1 ≤ u i := Nat.one_le_iff_ne_zero.mpr (Nat.ne_of_gt hiu)
+              simp [r, hij, h1]
+            · by_cases haj : a = j
+              · subst a
+                have h1 : 1 ≤ u j := Nat.one_le_iff_ne_zero.mpr (Nat.ne_of_gt hju)
+                have hji : j ≠ i := Ne.symm hij
+                simp [r, hji, h1]
+              · simp [r, hai, haj]
+          have hvadd : ∀ a, v a + r a = u a := by
+            intro a
+            exact Nat.sub_add_cancel (hrle a)
+          have hsumv : (∑ a, v a) + 2 = L := by
+            have hs := congrArg (fun f : Fin k → ℕ => ∑ a, f a) (funext hvadd)
+            have hr : (∑ a, r a) = 2 := by
+              simp [r, Finset.sum_add_distrib, hij]
+            rw [Finset.sum_add_distrib, hr] at hs
+            omega
+          have hiq' : 2 ≤ q u i := by
+            change 2 ≤ 1 + 2 * (u i : ℤ) - (u ((finRotate k).symm i) : ℤ)
+            exact hiq
+          have hjq' : 2 ≤ q u j := by
+            change 2 ≤ 1 + 2 * (u j : ℤ) - (u ((finRotate k).symm j) : ℤ)
+            exact hjq
+          have hqv : ∀ a, 0 ≤ q v a := by
+            intro a
+            have hqeq : q v a = q u a - 2 * (r a : ℤ) + (r (pred a) : ℤ) := by
+              have hcast := congrArg (fun n : ℕ => (n : ℤ)) (hvadd a)
+              dsimp [q, v]
+              have hpredcast : (v (pred a) : ℤ) =
+                  (u (pred a) : ℤ) - (r (pred a) : ℤ) := by
+                have hp := congrArg (fun n : ℕ => (n : ℤ)) (hvadd (pred a))
+                omega
+              have : (v a : ℤ) = (u a : ℤ) - (r a : ℤ) := by omega
+              rw [this, hpredcast]
+              ring
+            rw [hqeq]
+            by_cases hai : a = i
+            · subst a
+              simp [r, hij]
+              have hrp : 0 ≤ (r (pred i) : ℤ) := by positivity
+              omega
+            · by_cases haj : a = j
+              · subst a
+                simp [r, Ne.symm hij]
+                have hrp : 0 ≤ (r (pred j) : ℤ) := by positivity
+                omega
+              · simp [r, hai, haj]
+                have hqu := hq a
+                have hrp : 0 ≤ (r (pred a) : ℤ) := by positivity
+                omega
+          have hrQ : (∑ a, (r a : ℤ) * eps a) = 0 := by
+            simp only [r, Nat.cast_add, Nat.cast_ite, Nat.cast_one, Nat.cast_zero]
+            simp_rw [add_mul]
+            rw [Finset.sum_add_distrib]
+            simp [hi1, hjm, hij]
+          have hQv : Q v = 0 := by
+            have hvQ : (∑ a, (v a : ℤ) * eps a) =
+                (∑ a, (u a : ℤ) * eps a) - ∑ a, (r a : ℤ) * eps a := by
+              rw [← Finset.sum_sub_distrib]
+              apply Finset.sum_congr rfl
+              intro a ha
+              have hcast := congrArg (fun n : ℕ => (n : ℤ)) (hvadd a)
+              have : (v a : ℤ) = (u a : ℤ) - (r a : ℤ) := by omega
+              rw [this]
+              ring
+            simpa [Q, hvQ, hQ, hrQ]
+          obtain ⟨P, hhead, hlast, hchain, hinv⟩ := ih (∑ a, v a) (by omega) v rfl hqv hQv
+          refine ⟨u :: P, by simp, ?_, ?_, ?_⟩
+          · cases P with
+            | nil => simp at hhead
+            | cons p ps => simpa using hlast
+          · cases P with
+            | nil => simp
+            | cons p ps =>
+              have hp : p = v := by
+                simpa using hhead
+              subst p
+              simp only [List.isChain_cons_cons]
+              refine ⟨?_, hchain⟩
+              have hsumEdge : (∑ a, v a + 2 = ∑ a, u a) := by omega
+              exact Or.inr ⟨i, j, hi1, hjm, hij, hiu, hju, hiq, hjq,
+                (by intro a; simpa [r, Nat.add_assoc] using hvadd a), hsumEdge⟩
+          · intro x hx
+            simp only [List.mem_cons] at hx
+            rcases hx with hx | hx
+            · subst x
+              exact ⟨hq, hQ, source_zero _ hq hQ⟩
+            · exact hinv x hx
+  obtain ⟨P, hhead, hlast, hchain, hinv⟩ := aux (∑ a, m a) m rfl hphysical' hcharge'
+  refine ⟨P, hhead, hlast, ?_, ?_⟩
+  · simpa [eps, q, tau, pred] using hchain
+  · intro u hu
+    obtain ⟨huq, huQ, hus⟩ := hinv u hu
+    exact ⟨by simpa [q, pred, tau] using huq,
+      by simpa [Q, eps, tau] using huQ,
+      by simpa [q, pred, tau] using hus⟩
+
 /-- A nonzero natural coefficient vector has one nonempty binary endpoint and one
 natural carry vector. Their exact source charge controls unit relation length. -/
 theorem cyclic_binary_normal_form

@@ -16,6 +16,52 @@ internal sealed class BilateralProductModFourDocument : IScribeDocumentDefinitio
         "Hanna's bilateral product family has every positive coefficient equal to two modulo four.",
         H("The Bilateral Product Family of A381362 and A381363"),
         Blocks(
+            Supplier("positiveTerm", "The positive-index integral term",
+                "The term at a positive index k contains X to the power k and the two polynomial factors in the bilateral product.", DescribeRole.Definition),
+            Supplier("negativeTerm", "The negative-index integral term",
+                "Factoring the negative Laurent powers produces X to the power c*k squared and integral unit inverses.", DescribeRole.Definition),
+            Supplier("Agree", "Agreement below a degree",
+                "Two integer power series agree below d exactly when their coefficients at every n less than d coincide.", DescribeRole.Definition),
+            Supplier("agree_iff", "Agreement is divisibility by a power of X",
+                "Agreement below d is equivalent to divisibility of the difference by X to the power d.", DescribeRole.Theorem),
+            Supplier("agree_refl", "A series agrees with itself",
+                "Every integer power series agrees with itself below every natural degree.", DescribeRole.Theorem),
+            Supplier("agree_add", "Sums preserve agreement",
+                "Adding two pairs of series that agree below d preserves agreement below d.", DescribeRole.Theorem),
+            Supplier("agree_mul", "Products preserve agreement",
+                "Multiplying two pairs of series that agree below d preserves agreement below d.", DescribeRole.Theorem),
+            Supplier("agree_pow", "Natural powers preserve agreement",
+                "Equal coefficients below d remain equal after taking the same natural power.", DescribeRole.Theorem),
+            Supplier("agree_inverse", "Normalized unit inverses preserve agreement",
+                "For two series of constant coefficient one, agreement below d passes to their integral unit inverses.", DescribeRole.Theorem),
+            Supplier("agree_shift", "A positive shift improves agreement",
+                "Multiplication by X to any positive power improves agreement from d to d+1.", DescribeRole.Theorem),
+            Supplier("geometric", "The integral geometric series",
+                "This is invOfUnit(1+X,1), the normalized integral inverse of 1+X.", DescribeRole.Definition),
+            Supplier("geometric_spec", "The geometric inverse identity",
+                "Multiplying the geometric series by 1+X gives one.", DescribeRole.Theorem),
+            Supplier("geometric_coeff", "The alternating geometric coefficients",
+                "The coefficient at every natural n is (-1) to the power n.", DescribeRole.Theorem),
+            Supplier("step", "The integral fixed-point operator",
+                "For every natural c and integer series A, the step is 2*geometric-1+2*(1+A)*nonzeroSum(c,A).", DescribeRole.Definition),
+            Supplier("approximation", "The successive integral approximations",
+                "The initial approximation is one; each successor is obtained by applying step at the same parameter c.", DescribeRole.Definition),
+            Supplier("equation_iff", "The polynomial equation is the fixed-point equation",
+                "For every natural c and integer series A, multiplying out the polynomial equation is equivalent to A=step(c,A).", DescribeRole.Theorem),
+            Supplier("embed", "Embedding integer series into rational Laurent series",
+                "Map each integer coefficient to the rationals and then apply HahnSeries.ofPowerSeries with integer exponents.", DescribeRole.Definition),
+            Supplier("embed_coeff", "The embedding preserves nonnegative coefficients",
+                "At each natural degree N, the Laurent coefficient is the rational image of the original integer coefficient.", DescribeRole.Theorem),
+            Supplier("embed_injective", "The Laurent embedding is injective",
+                "Equality of the embedded Laurent series implies equality of the original integer power series.", DescribeRole.Theorem),
+            Supplier("embed_inverse", "The embedding preserves a normalized inverse",
+                "For an integer series with constant coefficient one, the embedding sends invOfUnit(A,1) to the inverse of embed(A).", DescribeRole.Theorem),
+            Supplier("negative_factorization", "Factoring a negative Laurent summand",
+                "Over any field, nonzero x and u satisfy the negative-index factorization for every natural c and k, including k=0.", DescribeRole.Theorem),
+            Supplier("laurent_zero", "The zero-index Laurent term",
+                "At index zero the literal summand is the product of the inverses of 1+embed(X) and 1+embed(A).", DescribeRole.Theorem),
+            Supplier("zeroTerm_series", "The zero Laurent term comes from a rational power series",
+                "For constant coefficient A(0)=1, the zero term is the Laurent embedding of (1+X) inverse times (1+map(A)) inverse over the rationals.", DescribeRole.Theorem),
             Node("ofSeries_inverse", "Laurent embedding preserves an inverse", OfSeriesInverseFormula(),
                 "For a rational power series whose constant coefficient is nonzero, "
                 + "ofPowerSeries sends its power-series inverse to its Laurent-series inverse."),
@@ -48,7 +94,7 @@ internal sealed class BilateralProductModFourDocument : IScribeDocumentDefinitio
                 + "Thus every index outside [-N,N] vanishes at degree N. Extending "
                 + "the finite sum only adds these zero coefficients."),
             Node("a", "Stabilized integral coefficients", SequenceFormula(),
-                "Here P is the private approximation sequence and G is the inverse "
+                "Here P is the approximation sequence and G is the inverse "
                 + "of 1+X. Differences of products, powers, and unit inverses preserve "
                 + "agreement below degree d. Every nonzero-index term supplies another "
                 + "factor X. The remainder has constant coefficient zero, so the "
@@ -100,12 +146,119 @@ internal sealed class BilateralProductModFourDocument : IScribeDocumentDefinitio
                     ProblemSlugRef.Create("oeis-a381363-bilateral-product-cubic-mod-four"),
                     ResolutionKind.Proved)))));
 
+    private static DocumentBlock Supplier(string name, string title, string prose, DescribeRole role) =>
+        Describe.Lean(DescribeId.Create("bilateral-product-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(SupplierFormula(name)),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role = DescribeRole.Theorem, AssessedProvenance? provenance = null,
         OpenProblemResolutionClaim? claim = null) =>
         Describe.Lean(DescribeId.Create("bilateral-product-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             provenance ?? AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role, claim);
+
+    private static Formula SupplierFormula(string name)
+    {
+        Formula d = F.Id("d"), c = C(), k = F.Id("k"), n = F.Id("n");
+        Formula a = F.Id("A"), b = F.Id("B"), f = F.Id("F"), g = F.Id("G");
+        Formula Agree(Formula degree, Formula lhs, Formula rhs) => Call("Agree", degree, lhs, rhs);
+        Formula Inv(Formula value) => Call("invOfUnit", value, D(1));
+        Formula Embed(Formula value) => Call("embed", value);
+        Formula Iff(Formula lhs, Formula rhs) => new Formula.Logic(
+            Parenthesized(lhs), FormulaLogicOperator.Iff, Parenthesized(rhs));
+        Formula Dvd(Formula lhs, Formula rhs) => Call("Dvd", lhs, rhs);
+        Formula All(Formula body, params (string Name, Formula Type)[] variables) =>
+            Seq(variables.Select(v => Bound(v.Name, v.Type)).Append(body).ToArray());
+        Formula AgreementPair(Formula lhs, Formula rhs) => All(
+            Implication(Agree(d, a, b), Implication(Agree(d, f, g), Agree(d, lhs, rhs))),
+            ("d", Naturals()), ("A", Series()), ("B", Series()), ("F", Series()), ("G", Series()));
+        Formula geometric = Named("geometric");
+        Formula inverseGeometric = Inv(Add(D(1), X()));
+        Formula ck = Mul(c, k), p = Mul(c, Power(k, D(2)));
+        Formula positive = Mul(Power(X(), k), Mul(Mul(Power(a, k),
+            Power(Add(Power(a, k), X()), Subtract(ck, D(1)))),
+            Power(Add(Power(X(), k), a), Subtract(ck, D(1)))));
+        Formula negative = Mul(Power(X(), p), Mul(Mul(Power(a, p),
+            Power(Inv(Add(D(1), Mul(X(), Power(a, k)))), Add(ck, D(1)))),
+            Power(Inv(Add(D(1), Mul(Power(X(), k), a))), Add(ck, D(1)))));
+        Formula LaurentPowerInverse(Formula value) => Power(value, Negative(D(1)));
+        Formula zeroTerm = Mul(LaurentPowerInverse(Add(D(1), Embed(X()))),
+            LaurentPowerInverse(Add(D(1), Embed(a))));
+        Formula RationalSeriesEmbed(Formula value) =>
+            Call("HahnSeries.ofPowerSeries", Integers(), Rationals(), value);
+        Formula Cast(Formula value) => Call("Int.cast", value);
+        Formula result = name switch
+        {
+            "positiveTerm" => All(Equal(Call(name, c, a, k), positive),
+                ("c", Naturals()), ("A", Series()), ("k", Naturals())),
+            "negativeTerm" => All(Equal(Call(name, c, a, k), negative),
+                ("c", Naturals()), ("A", Series()), ("k", Naturals())),
+            "Agree" => All(Iff(Agree(d, a, b), All(
+                Implication(Less(n, d), Equal(Coeff(n, a), Coeff(n, b))), ("n", Naturals()))),
+                ("d", Naturals()), ("A", Series()), ("B", Series())),
+            "agree_iff" => All(Iff(Agree(d, a, b), Dvd(Power(X(), d), Subtract(a, b))),
+                ("d", Naturals()), ("A", Series()), ("B", Series())),
+            "agree_refl" => All(Agree(d, a, a), ("d", Naturals()), ("A", Series())),
+            "agree_add" => AgreementPair(Add(a, f), Add(b, g)),
+            "agree_mul" => AgreementPair(Mul(a, f), Mul(b, g)),
+            "agree_pow" => All(Implication(Agree(d, a, b), Agree(d, Power(a, k), Power(b, k))),
+                ("d", Naturals()), ("A", Series()), ("B", Series()), ("k", Naturals())),
+            "agree_inverse" => All(Implication(Equal(Constant(a), D(1)),
+                Implication(Equal(Constant(b), D(1)),
+                    Implication(Agree(d, a, b), Agree(d, Inv(a), Inv(b))))),
+                ("d", Naturals()), ("A", Series()), ("B", Series())),
+            "agree_shift" => All(Implication(Less(D(0), k),
+                Implication(Agree(d, a, b), Agree(Add(d, D(1)),
+                    Mul(Power(X(), k), a), Mul(Power(X(), k), b)))),
+                ("d", Naturals()), ("k", Naturals()), ("A", Series()), ("B", Series())),
+            "geometric" => Equal(geometric, inverseGeometric),
+            "geometric_spec" => Equal(Mul(geometric, Add(D(1), X())), D(1)),
+            "geometric_coeff" => All(Equal(Coeff(n, geometric), Power(Negative(D(1)), n)),
+                ("n", Naturals())),
+            "step" => All(Equal(Call(name, c, a), Add(Subtract(Mul(D(2), geometric), D(1)),
+                Mul(D(2), Mul(Add(D(1), a), Rem(c, a))))), ("c", Naturals()), ("A", Series())),
+            "approximation" => All(Conjunction(Equal(Call(name, c, D(0)), D(1)),
+                All(Equal(Call(name, c, Add(d, D(1))), Call("step", c, Call(name, c, d))),
+                    ("d", Naturals()))), ("c", Naturals())),
+            "equation_iff" => All(Iff(Polynomial(a), Equal(a, Call("step", c, a))),
+                ("c", Naturals()), ("A", Series())),
+            "embed" => All(Equal(Embed(a), RationalSeriesEmbed(
+                Call("PowerSeries.map", Call("Int.castRingHom", Rationals()), a))), ("A", Series())),
+            "embed_coeff" => All(Equal(Call("HahnSeries.coeff", Embed(a), Call("Int.ofNat", n)),
+                Cast(Coeff(n, a))), ("A", Series()), ("n", Naturals())),
+            "embed_injective" => Call("Function.Injective", Named("embed")),
+            "embed_inverse" => All(Implication(Equal(Constant(a), D(1)),
+                Equal(Embed(Inv(a)), LaurentPowerInverse(Embed(a)))), ("A", Series())),
+            "negative_factorization" => NegativeFactorizationFormula(),
+            "laurent_zero" => All(Equal(LT(c, a, D(0)), zeroTerm), ("c", Naturals()), ("A", Series())),
+            "zeroTerm_series" => All(Implication(Equal(Constant(a), D(1)),
+                Equal(LT(c, a, D(0)), RationalSeriesEmbed(Mul(
+                    LaurentPowerInverse(Add(D(1), X())),
+                    LaurentPowerInverse(Add(D(1), Call("PowerSeries.map",
+                        Call("Int.castRingHom", Rationals()), a))))))),
+                ("c", Naturals()), ("A", Series())),
+            _ => throw new ArgumentOutOfRangeException(nameof(name))
+        };
+        return Disp(result);
+    }
+
+    private static Formula NegativeFactorizationFormula()
+    {
+        Formula field = F.Id("F"), x = F.Id("x"), u = F.Id("u"), c = C(), k = F.Id("k");
+        Formula ck = Mul(c, k), p = Mul(c, Power(k, D(2)));
+        Formula nk = Negative(k), exponent = Negative(Add(ck, D(1)));
+        Formula lhs = Mul(Mul(Mul(Power(x, nk), Power(u, nk)),
+            Power(Add(Power(u, nk), x), exponent)), Power(Add(Power(x, nk), u), exponent));
+        Formula Inv(Formula value) => Power(value, Negative(D(1)));
+        Formula rhs = Mul(Power(x, p), Mul(Mul(Power(u, p),
+            Power(Inv(Add(D(1), Mul(x, Power(u, k)))), Add(ck, D(1)))),
+            Power(Inv(Add(D(1), Mul(Power(x, k), u))), Add(ck, D(1)))));
+        Formula Nonzero(Formula value) => new Formula.Relation(value, FormulaRelationOperator.NotEqual, D(0));
+        return Seq(Bound("F", Named("Type")), Bound("field", Call("Field", field)),
+            Bound("x", field), Bound("u", field), Bound("c", Naturals()), Bound("k", Naturals()),
+            Implication(Nonzero(x), Implication(Nonzero(u), Equal(lhs, rhs))));
+    }
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Integers() => Seq(Mathbb, Grp(F.Id("Z")));
@@ -117,7 +270,9 @@ internal sealed class BilateralProductModFourDocument : IScribeDocumentDefinitio
     private static Formula Rem(Formula c, Formula b) => Call("nonzeroSum", c, b);
     private static Formula Term(Formula c, Formula b, Formula j) => Call("bilateralTerm", c, b, j);
     private static Formula LT(Formula c, Formula b, Formula j) => Call("laurentTerm", c, b, j);
-    private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula Named(string name) => Seq(Operatorname, Grp(Seq(
+        name.Split('.').Select((part, index) =>
+            index == 0 ? F.Id(part) : Seq(Dot, F.Id(part))).ToArray())));
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Named(name), [.. args]);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Equal(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);

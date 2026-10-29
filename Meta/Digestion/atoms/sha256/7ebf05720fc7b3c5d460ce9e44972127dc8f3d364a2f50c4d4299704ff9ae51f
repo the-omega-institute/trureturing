@@ -1,0 +1,49 @@
+**定理 10.3（安装读出范围的精确最小值；repo-derived）。** 对每个定义 9.1 的
+有限非空配置族，
+
+$$
+\boxed{m(E,\mathcal F)=|T|+\tau(E,\mathcal F).}
+\tag{MPC.32}
+$$
+
+右侧既是所有可取得读出的下界，也由一个具有已知码表的平稳读出达到。
+
+**证明。** 设 $r$ 可取得，$k=|r(\mathcal F)|$。由定理 10.1，每个汇点占据一个
+独享的符号，共 $|T|$ 个。其余 $k-|T|$ 个非空纤维全部由非汇点组成，且各有
+共同启用事件；单元非汇点纤维同样如此。从每个这样的纤维选取一个事件，并令
+$H_r$ 为所有选出事件组成的集合。每个 $C\in N$ 都位于其中一个纤维，所以
+
+$$
+H_r\cap\operatorname{En}(C)\ne\varnothing,
+\qquad
+\tau\le |H_r|\le k-|T|.
+\tag{MPC.33}
+$$
+
+从而 $k\ge |T|+\tau$，包括允许在非汇点单元纤维提前停止的读出。
+
+反过来，选一个最小击中集 $H$。对每个 $C\in N$ 选
+$f(C)\in H\cap\operatorname{En}(C)$，以两个互不相交的标签族定义
+
+$$
+r_H(C)=
+\begin{cases}
+(0,C),&C\in T,\\
+(1,f(C)),&C\in N.
+\end{cases}
+\tag{MPC.34}
+$$
+
+汇点标签独享，标记为 $(1,e)$ 的每个配置都启用 $e$，故定理 10.1 保证取得。
+其有效值域至多为 $|T|+|H|=|T|+\tau$。已证下界强制此数取等，因此该构造达到
+最小值。若 $N=\varnothing$，第二分支没有自变量，构造就是对全部汇点的直接
+编码，结论仍成立。$\square$
+
+安全观察字母表与共同动作分区的一般等价已经由
+[MinimumSafeObservationAlphabet，`supports_deterministic_safe_policy_iff_safe_compatible_partition` 和 `minimum_safe_observation_alphabet`](../../../D5/S3/ConceptDynamics/Agency/MinimumSafeObservationAlphabet.lean)
+给出。这里复用该分区原则；(MPC.32) 的额外内容是本模型的可停止取得任务、
+有限新增秩和启用超边击中数的组合计算。自动机极小性的另一已有结果是
+[Kostolanyi，定理 4.16](https://arxiv.org/html/2303.10631v3)：正半环上的 trim
+bideterministic 加权自动机是极小的。那个状态数极小性结论不承担这里对固定
+$(E,\mathcal F)$ 的安装读出范围优化；一般的终态分离也不作为本节的独立新定理。
+

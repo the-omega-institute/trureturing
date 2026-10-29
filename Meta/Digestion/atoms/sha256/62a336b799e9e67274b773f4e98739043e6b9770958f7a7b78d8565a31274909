@@ -1,0 +1,38 @@
+#### 定理 6.3（关系核的最小 Hilbert 重构）
+
+给任意集合 $\mathcal W$ 上的归一化复正半定核 $K$，在形式历史的有限复线性组合上设
+
+$$
+\left\langle\sum_va_v[v],\sum_wb_w[w]\right\rangle_K
+=\sum_{v,w}\bar a_vb_wK(v,w).
+$$
+
+令 $\mathcal N_K$ 为零范数子空间，则
+
+<a id="equation-6"></a>
+
+<a id="eq-gns"></a>
+
+$$
+\boxed{\mathcal H_K=\overline{\mathbb{C} _{\mathrm{fin}}[\mathcal W]/\mathcal N_K}}
+\tag{6}
+$$
+
+是 Hilbert 空间，标签像 $\xi_w$ 的内积正是 $K(v,w)$，且线性张成稠密。该最小实现唯一到保持每个标签向量的酉同构。
+
+**证明。**
+
+正半定二次型满足 Cauchy–Schwarz 不等式，故每个零范数向量与所有向量正交；商上内积因此良定义且正定。取完备化得到所需空间。若另有最小实现 $\eta_w$，映射
+$\sum c_w\xi_w\mapsto\sum c_w\eta_w$
+保持范数，所有零关系对应零关系，故良定义。它延拓为等距，最小性使其满射；标签的稠密张成给唯一性。
+
+∎
+
+相同构造与唯一性证明适用于非归一化正半定核；零对角标签给零向量。这个推广将在分支核中使用。
+
+这里可以严格说：**共同本体的坐标表示可由完整相干关系核替代，而该核又重构历史所生成的最小部分。** 来源信息进入核，没有变成无关量；永不参与任何声明历史的正交补不受核确定。复数域与正性是输入，实正核同样能构造实 Hilbert 空间。
+
+<a id="statement-6-4"></a>
+
+<a id="thm-kernelrec"></a>
+

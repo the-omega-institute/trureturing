@@ -1,0 +1,20 @@
+**假设 45.2（另供的复局部 Gram 选择）。** 在 $\mathbb C^2$ 中给定正交单位向量
+$e_0,e_1$，内积第一项共轭线性，且对 $0<h<1$ 取 $b=1-h$ 和
+
+$$
+z_0=e_0,\qquad z_1=\sqrt b\,e_0+\sqrt h\,e_1,
+\qquad z_2=\sqrt b\,e_0+i\sqrt h\,e_1.
+\tag{45.3}
+$$
+
+这些向量、复标量域及其中的 $i$ 都是给定的模型选择，不由树名或奇偶递推推出。
+记 $G_h(j,k)=\langle z_j,z_k\rangle$，定义全来源核
+
+$$
+P_h^{\mathrm c}(s,t)=\prod_{p\in\mathcal A}
+ G_h(\lambda_s(p),\lambda_t(p)).
+\tag{45.4}
+$$
+
+非单位因子只在有限集 $S(s)\cup S(t)$ 中出现，故乘积定义无穷序列的选择无关。
+

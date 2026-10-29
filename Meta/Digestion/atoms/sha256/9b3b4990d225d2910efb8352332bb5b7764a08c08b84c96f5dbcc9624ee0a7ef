@@ -1,0 +1,25 @@
+**Theorem 89.2 (a retained predictor for every complete current call).** At the actual endpoint in Theorem 87.3 retain the earned term, current terminal correspondence, actual binding and rights, parser/phase state, and a predicted vector $\widehat x=x_{\rm now}$. The block $m_{\rm now}$ may be retained alongside it. There is a finite installed controller preserving equality of its predicted vector and the actual field for every finite sufficiently backed common adaptive continuation of the complete menu in Definition 84.2. It predicts every declared reply and successor and consumes the corresponding actual reply. It does not require that the continuation stay in the historical encoding image.
+
+Proof. At each settled cut maintain $\widehat t=t$ and $\widehat x=x$ in the same persistent-address coordinates, with the actual current terminal/ordinal correspondence. This holds initially by Theorem 87.3. The update and response calculation covers the entire menu:
+
+| Acquired complete input | Actual and predicted successor | Complete response content |
+| --- | --- | --- |
+| Reset | same tree, field $0$ | fixed acknowledgement |
+| valid Add$(j,q)$ | same tree, $x+qe_{\ell_j}$ | fixed acknowledgement |
+| Tick | same tree, $T_tx$ | fixed acknowledgement |
+| valid Read$(j)$ | unchanged | literal $x_{\ell_j}$ |
+| Hold | unchanged, with the held interval | fixed acknowledgement |
+| enabled raw $-$ growth $g:t\to t'$ | $(t',\iota_gx)$ | Growth$(g,p)$ |
+| enabled clocked $+$ growth $g:t\to t'$ | $(t',T_{t'}\iota_gx)$ | inner Growth and Tick acknowledgement consumed, then outward Growth$(g,p)$ |
+| absent, branch or wrong-type growth | unchanged | its distinct original refusal |
+| out-of-roster integer Add/Read ordinal | unchanged | RangeRefusal |
+| malformed complete frame | unchanged | BadFrame |
+
+For successful growth the controller applies the literal material edit and the installed roster replacement, not a logical move into the old marker. It really receives the full actual Growth and, in $+$, the inner Tick acknowledgement before committing its predicted settled state or accepting the next outward frame. No outward Growth is sealed early. For a refused growth there is no attached Tick in either exposed menu. The controller's optional $-$ encoding pair is two calls from this table; a separately requested Tick has its own acknowledgement and charge.
+
+An actual frame is acquired into its finite backing before its bit latch is released. A proper incomplete prefix retains its real parser/request state and waits; it has no completed result. A malformed complete frame takes the stated unchanged BadFrame branch. Navigation, guard checking, rational arithmetic, reservation of fresh material and output construction are finite for each finite input in the domain. An enabled call that lacks authority or is attempted in a disabled phase is not a completed refusal case. The hypotheses assert the current rights and the finite backing for the calls to which completion is applied.
+
+Print emits the entire sealed response and End. The supplied local acknowledgement enables Return, which restores the root/dispatch position and clears/reuses request, navigation, rational and output scratch before the next settled cut. The $+$ adapter does this for its raw inner transaction, its field Tick and its outward transaction; those are distinct actual lifecycle costs. During busy intervals it retains the appropriate input, target, reply and pending subphase; neither an inverse at busy cuts nor crash recovery is claimed. These are the same finite acquired-input and finite material-navigation arguments as AA §20, without that section's auxiliary history tapes or seven-request service.
+
+Every row preserves the equality invariant directly. If the block representation is desired at the next cut, compute $O_{d(t')}\widehat x'$ on the new earned tree; its left inverse still recovers $\widehat x'$. These are locally computed predictions, not fresh actual observations. The matrix/program/scratch and the old/new values coexist during this update and are charged. One-step induction proves complete synchronized finite continued service, including adaptive requests, later Reset, arbitrary rational Add, extra Tick and further native growth. Once such a continuation leaves the image of §85 or §88, the predictor remains valid but the old successful word need no longer be recoverable from its current field. $\square$
+

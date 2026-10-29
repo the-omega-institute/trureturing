@@ -1,0 +1,73 @@
+**定理 13.1（任意有限位移的目标恒等式与谱松弛锥）。**
+设 $p$ 是内点局部极大值，用定义 10.1 与定理 10.4 的记号。
+对任意 $\sum_i\xi_i=0$、$p+\xi\in\Delta^\circ$，不要求 $\xi$ 小，
+置 $w=w_\xi$、$C=C_\xi$、
+
+$$
+a=\operatorname{tr}(W\Pi C\Pi),\quad
+D=\rho I_H-M,\quad
+\delta=\lambda_{\max}(M+C-ww^{\mathsf T})-\rho-a.
+$$
+
+则有精确恒等式
+
+$$
+\begin{aligned}
+M(p+\xi)&=M+C-ww^{\mathsf T},\\
+T(p+\xi)&=T+\beta a-\|w\|^2,\\
+\Phi(p+\xi)-\Phi(p)
+&=-\frac{n(\|w\|^2+\beta\delta)}{\rho+a+\delta}.
+\end{aligned} \tag{13.1}
+$$
+
+分母是实际正最大特征值。
+令标准谱松弛锥为
+
+$$
+\mathfrak S_H=\{(Y,b)\in\operatorname{Sym}(H)\times\mathbb R:
+ bI_H-Y\succeq0\}. \tag{13.2}
+$$
+
+这是闭凸锥，且对每个实数 $d$，余谱松弛具有精确判据
+
+$$
+\delta\le d
+\ \Longleftrightarrow\
+(C-ww^{\mathsf T}-D,\ a+d)\in\mathfrak S_H
+\ \Longleftrightarrow\
+D+(a+d)I_H-C+ww^{\mathsf T}\succeq0. \tag{13.3}
+$$
+
+尤其局部极大性要求
+$\delta\ge-\|w\|^2/\beta$ 对全部充分小可行位移成立。
+(13.3) 包含整个互补谱，不能只核对顶层压缩。
+
+更具体地，令 $u=\Pi w$、$v=Qw$，并置
+
+$$
+\begin{aligned}
+A_d&=(a+d)I_E-\Pi C\Pi+uu^{\mathsf T},\\
+B&=-\Pi CQ+uv^{\mathsf T},\\
+Z_d&=QDQ+(a+d)I_Q-QCQ+vv^{\mathsf T}.
+\end{aligned}
+$$
+
+则 (13.3) 等价于完整 Schur 条件
+
+$$
+Z_d\succeq0,\qquad \operatorname{ran}(B^{\mathsf T})\subseteq\operatorname{ran}Z_d,
+\qquad A_d-BZ_d^+B^{\mathsf T}\succeq0. \tag{13.4}
+$$
+
+证明。按新均值 $\bar a+w$ 展开协方差，得到第一式 (13.1)。
+(10.3) 逐项乘以 $\xi_i$ 再相加给出 $\operatorname{tr}C=\beta a$，
+从而得到迹式。令 $\rho'=\rho+a+\delta$，直接通分得最后的目标恒等式。
+最大特征值的序定义给出 (13.2)–(13.3)。
+将 (13.3) 的矩阵按 $E\oplus QH$ 分块正是
+$\begin{pmatrix}A_d&B\\B^{\mathsf T}&Z_d\end{pmatrix}$。
+其正半定性先在 $QH$ 给出 $Z_d\succeq0$；
+在 $\ker Z_d$ 上用任意倍数测试交叉项，得到 $B\ker Z_d=0$，
+等价于范围条件。
+余下在 $\operatorname{ran}Z_d$ 上配方，得到 (13.4)，反向展开也成立。
+这证明奇异余块也被包括。∎
+

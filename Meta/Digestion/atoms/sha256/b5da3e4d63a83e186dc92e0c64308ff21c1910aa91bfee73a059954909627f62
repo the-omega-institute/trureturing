@@ -1,0 +1,59 @@
+**定义 100.1（指定真实源及其有限供应）。** 本节固定定义 91.1 的同一个源。
+记 $Q=\operatorname{Herm}_3(\mathbb C)$，将它视为九维实向量空间，
+以 $\langle X,Y\rangle=\operatorname{Tr}(XY)$ 为实非退化配对，
+并记 $\mathrm{PSD}_3=\{X\in Q:X\succeq0\}$。
+在原正交基 $(\xi,e,f)$ 中，源矩阵和一个制备为
+
+$$
+\begin{gathered}
+U=\begin{pmatrix}1&0&0\\0&-1/2&\sqrt3/2\\0&\sqrt3/2&1/2\end{pmatrix},
+\qquad W=\operatorname{diag}(1,1,-1),\qquad q=(\xi+e)/\sqrt2,\\
+0<d<1,\quad c=d/2,\quad \sin(2\theta)\ne0,\quad
+P_\xi=\xi\xi^\dagger,\quad E=qq^\dagger,\\
+\psi=\sqrt d\,Uq+\mathrm i\sqrt{1-d}\,Uf,
+\qquad \rho_0=\psi\psi^\dagger,\\
+V_j=U\exp(\mathrm i\theta W)W^j,\qquad
+A_j(X)=\tfrac12V_jXV_j^\dagger\quad(j=0,1),\\
+N\in U(3),\qquad [N,P_\xi]\ne0,\qquad A_N(X)=NXN^\dagger.
+\end{gathered}
+\tag{100.1}
+$$
+
+$\rho_0$ 是所指定的纯迹一矩阵，$E$ 是所指定的秩一投影，
+且 $\operatorname{Tr}(E\rho_0)=(6-5d)/16$，见命题 91.3。
+这些是目标侧的具体性质。$N$ 仍为一个已给定、可重复的确定性控制类型。
+对时间词 $w=a_1\cdots a_n$，最左字母最早作用，置
+
+$$
+\begin{gathered}
+\mathcal W=\{0,1,N\}^{*},\qquad
+U_0=V_0,\quad U_1=V_1,\quad U_N=N,\\
+U_w=U_{a_n}\cdots U_{a_1},\qquad
+A_w=A_{a_n}\cdots A_{a_1}=\alpha_w\operatorname{Ad}_{U_w},\\
+\alpha_w=2^{-n_{\rm nat}(w)}>0,\qquad
+n_{\rm nat}(w)=\#\{t:a_t\in\{0,1\}\}.
+\end{gathered}
+\tag{100.2}
+$$
+
+空词取恒等映射和权重一。时间拼接满足 $A_{vw}=A_wA_v$。
+原二元仪器的两个标签仍为随机记录事件；所比较的量为未条件化联合权重。
+目标的两种终端权重分别为 $\operatorname{Tr}(EA_w\rho_0)$ 和
+$\operatorname{Tr}((I_3-E)A_w\rho_0)$，总质量为 $\alpha_w$。
+第二卷定理 39.3–39.4 及本卷 (91.7)–(91.10) 给它们与同一原五维源的对应。
+此处只使用这个 $\rho_0$，没有给出整个 $\mathcal K_d$ 的制备映射。
+
+本源的两个供应按其原量词使用：定理 92.1–92.2 给深度七的八个原生基列及
+一次 $N$ 后的第九列；定理 95.1 给
+
+$$
+\overline{\{\operatorname{Ad}_{U_w}:w\in\mathcal W\}}
+=\operatorname{Ad}(PU(3)).
+\tag{100.3}
+$$
+
+两项对每个允许的 $d,\theta$ 和每一个混合 $N$ 成立。
+引理 63.1 的实际原生 $1\oplus SU(2)$ 闭包是这些供应的同源前提，
+其中非例外有理角、$d=2/3$ 和 $\langle\xi,N\xi\rangle=0$ 均按原结果保留。
+(100.3) 是正向词共轭的数学闭包，不指定额外可执行的逆或连续控制。
+

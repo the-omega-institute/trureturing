@@ -1,0 +1,72 @@
+**Theorem 14.2 (Original-H transfer and the independent-pair restriction).**
+Equations (9.5)–(9.6) and the all-world assertion of Theorem 9.2 hold.
+
+Proof. Here is the degree-preservation argument which transfers the
+finite-field gcds. If a primitive positive polynomial $C\in\mathbb Z[p,v]$
+retains its total degree after reduction modulo $101$, then every
+nonconstant characteristic-zero factor retains its degree too. Indeed
+write $C=AB$ with primitive integer factors, using Gauss' lemma.
+Both reductions are nonzero, and
+
+$$
+\deg\overline C=\deg\overline A+\deg\overline B
+\le\deg A+\deg B=\deg C.
+\tag{14.7}
+$$
+
+Equality forces equality in both degree inequalities. In particular a
+nonconstant factor has nonconstant reduction.
+
+Apply this to $C=C_{121}$, whose degree is preserved by Lemma 14.1.
+A common irreducible factor of $C_{121}$ and the integer polynomial
+$\mathcal F_J$ would, by Gauss' lemma, reduce to a nonconstant common
+factor of $\mathsf C_M$ and $\overline{\mathcal F_J}$, contradicting
+(13.12). Therefore $\gcd(C_{121},\mathcal F_J)=1$. The reduced primitive
+$N_J$ divides $\mathcal F_J$ up to a rational scalar by (13.7), so
+$\gcd(C_{121},N_J)=1$.
+
+The same argument with the integer polynomial $ES_*$ and the second
+gcd in (13.12) gives $\gcd(C_{121},ES_*)=1$. The exact support identity
+(13.8) gives $\gcd(C_{121},H)=1$. This establishes (9.5) for the
+*original* $H$. It uses neither a degree-preservation premise for $N_J$
+nor a claim that its characteristic-zero primitive extraction commutes
+with reduction. The raw determinant and the full original norm inventory
+supply the transfer instead.
+
+On $H\ne0$, $\rho_0$ is a unit. Equation (9.4) therefore makes
+$N_M=0$ exactly $C_{121}=0$, proving the equality of sets in (9.6).
+Also $V_{69}$ is a unit there by its factorization in $E$ in (14.1),
+and every original coefficient or index denominator is a unit by its
+inclusion in $E_0$. Equivalently the literal index zero loci in
+$\mathbb Q[p,v,H^{-1}]$ are the same. If the raw J determinant is used,
+(13.7) changes $N_J$ only by a scalar and factors supported on $H$;
+these are units on this same open. No saturation or primitive-reduction
+commutation is invoked.
+
+For completeness, coprime nonzero polynomials in two variables have a
+finite, possibly empty complex affine intersection. One elementary proof
+uses their nonzero resultant over $\mathbb Q(p)$ after a generic rational
+linear change of coordinates. Every common zero projects to one of the
+finitely many zeros of this resultant. At any such coordinate, both
+specialized polynomials cannot vanish identically in the other variable:
+a common vertical line over an algebraic extension would, with its
+conjugates, give a common polynomial factor over $\mathbb Q$.
+Each fibre is therefore finite. Coprimality persists over $\mathbb C$ by
+the same conjugate-factor argument, or by the resultant identity.
+Applying this to $C_{121},N_J$ proves finiteness of (9.6). It does not
+assert that $1$ lies in their ideal or that the intersection is empty.
+
+Finally take any original configuration (6.8.5) with $H(p,v)\ne0$.
+S, Lemma 9.9, is an all-world statement: every one of its four complete
+worlds is represented in this same carrier, distinct worlds have distinct
+$x$, and the robust functions (9.2) give their actual clock-seven
+responses. The Vandermonde evaluation argument there forces $N_J=0$
+from the chosen distinct equal-$J$ pair and $N_M=0$ from the independently
+chosen distinct equal-$M$ pair. By (9.6) their common acquired base lies
+in $Z_H$. This reasoning is applied at one fixed $(p,v)$ to one entire
+child, not to pairs from different bases, branches, parents, or gain
+histories. There is no equation $m_0=m_1=m$, and the two common terminal
+answers need not be equal. Cross-pair overlaps of size $0,1,2$ are all
+allowed, so every overlap stratum is covered simultaneously. This proves
+the last assertion of Theorem 9.2. ∎
+

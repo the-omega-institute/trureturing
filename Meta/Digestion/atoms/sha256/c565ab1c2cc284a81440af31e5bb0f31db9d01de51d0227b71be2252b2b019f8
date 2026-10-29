@@ -1,0 +1,100 @@
+**Definition 33.3 (literal and simultaneous resource accounting).**
+Use NLBAII Assumption 17.2's native literal codec and Definition 65.1's
+rational-width convention, with binary length $\mathsf b(0)=1$.
+A nonnegative integer $m$ has unary-length/binary payload
+$2\mathsf b(m)+1$ bits; a signed integer has its additional sign bit.
+Thus the QN response integer $q$ has payload $2\mathsf b(|q|)+2$,
+besides the operation/reply tags and full framing. QN Read requests
+carry the actual label; (28.3) additionally carries the actual precision
+$p$. Installed $h$, promised $D$, known model and every rational Add
+operand have their actual finite representation and storage. This is
+a separate codec from Definition 13.2's digital C codec; their numerical
+length formulas are not exchanged. Sum actual complete requests,
+responses, ACKs, End/local acknowledgements, Return/navigation, roster
+and reference/grant updates, reports, input reception, copies, clearing
+and exports. Untruncated floor integers have no source-uniform width
+bound even when $h$ is fixed.
+
+Computing $K$ uses the earned finite graph and exact forcing/elimination.
+Computing $H$ enumerates (30.7) and iterates exact rational powers for
+each difference until its proved witness. Decoding enumerates the box
+(30.9) and tests every complete finite word. These are finite algorithms,
+not a search oracle, a polynomial-time claim or a practical-size bound.
+A sufficient implementation stores $A,C,K$, model/code/map, $D,h,H$,
+current counters, one current difference and its iterates, the current
+candidate and its iterates, bin centers and solve scratch. Enumerations
+may be sequential; the work of recomputing discarded entries is paid.
+Storing the full acquired Time adds its $b(H+1)$ actual integers.
+Exporting any four-view content adds literal output and retained copies
+where present. Precomputing or storing $A^{-H}$ and forecast words adds
+its actual work and widths; it is not free decoder advice.
+
+Plant old/new fields and observer/predictor old/new fields coexist during
+Tick, besides the producer input/pulse stores while live, parser/request/
+reply/pending frames, traversal/dispatch stacks, real source bindings and
+current/fresh grants, initialization and cleared-but-retained capacity.
+An isolated producer or external input archive is additional physical
+backing even though inaccessible to the recovering receiver. Missing
+rights or an uninstalled codec/backend are not repaired by the numerical
+inverse. The no-side-channel condition does not make preparation,
+isolation or arithmetic resources free.
+
+For the passive native window, if $z=Dx$, then
+
+$$
+\|D A_n^k x\|_\infty\le3^k\|z\|_\infty.
+\tag{33.6}
+$$
+
+It follows from maximum degree three, by induction. It bounds the
+source numerators using their actual input magnitude and elapsed
+Ticks, not a uniform bit budget in $n,D,h$. Solver and inverse scratch
+can have other denominators and must be counted independently. All
+finite promised runs terminate with adequate finite backing; a finite
+program supplies no bounded lifetime storage, traffic, precision,
+physical time, energy, noise tolerance or global resource optimum.
+
+**Supplier correspondence 33.4 (the uncovered operational delta).**
+The material/lifecycle, forcing inverse, owned-target preparation and
+complete service invariant are directly reused from AA, NLBA and
+NLBAII, specifically NLBAII (58.3), Construction 62.3 and Theorem 64.1.
+The numerical Read row is explicitly changed in (28.2)–(28.3).
+The new source-relative deductions are the deterministic all-wall
+finite-record collision with surviving endpoint, its separate branching
+autonomous-error consequence, the fixed-scale height-independent
+passive lattice construction (30.6)–(30.9), and the infinite native
+family earning its hypotheses. The assay-image routes and actual use
+consume those deductions on the same prepared specimen. They do not
+claim new generic observability, determinant, spectral or replay
+principles.
+
+Sections 19–20 already provide stopping and supplied-denominator
+acquisition for their distinct contracting post-clock C, including its
+two-legal-output interface and the stated Reset/entrance contract.
+Their denominator format and growing-precision mechanism are credited
+suppliers, not unresolved gaps. The present deterministic fixed $h$,
+original noncontracting adjacency and no-Reset complete-current tasks
+are different. Public [NLBAIII §§87–93](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION_III.md#87-repairing-an-arbitrary-inherited-observation-mask)
+already supplies mask repair, fresh-only attained-image retention and
+partial-repair split prices with literal exact sensors. Public NLBAII
+§§77–79 already supplies unknown-law WLAB-ord acquisition on its
+commissioned positive tree and the fresh-Read price of a same-material
+polynomial-law transfer. Those exact-rational source interfaces and
+retained information do not install QN-D's digitizer or its assurance.
+No duplicate mask, unknown-law or polynomial-transfer theorem is claimed.
+
+The primary neighboring quantized-control reference is
+[Dubbini–Piccoli–Bicchi, *Left invertibility of discrete-time
+output-quantized systems: the linear case with finite inputs*,
+arXiv:1103.4039v1, §§2–5](https://arxiv.org/html/1103.4039v1).
+Its uniform partition is the floor readout, and its doubled same-cell
+system is the paired-trajectory comparison. Its unknown target is an
+input string from a finite alphabet; its general real-matrix and
+left-D-invertibility conditions are not the unbounded rational-lattice
+initial-state problem, nor the complete adaptive persistent-growth
+service here. Its quantization and separation methods, the ordinary
+floor bounds in pinned mathlib, and the cited D5 observability and
+prediction declarations with their owning Scribes are reused at their
+stated hypotheses. These deductions are source-relative synthesis,
+without a claim of worldwide priority or new formal certification.
+

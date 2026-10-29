@@ -1,0 +1,34 @@
+# Canonical two-vertex occupation loop
+
+## Abstract
+
+Absolute convergence of the literal two-vertex loop in a fixed charge sector.
+
+**Theorem 1.1 (Joint summability with both occupations unrestricted).**
+
+Lean statement: `D5/S3/VertexAlgebra/Sewing/CanonicalTwoVertexLoop.canonical_two_vertex_loop_summable`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sewing/CanonicalTwoVertexLoop.canonical_two_vertex_loop_summable` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary original lattice datum D, integral charges a,b, finite oscillator polynomials u,v, signed integers r,s and complex q1,q2 with norm below one, the sum over all occupation pairs (d,e) of the norm of q1^level(d) q2^level(e) K1(d,e) K2(e,d) converges. Here K1(d,e) is the d coefficient of canonical(D,a,-a+b,u,r+level(e)-level(d),b(e)); K2(e,d) is the e coefficient of canonical(D,-a,b,v,s+level(d)-level(e),b(d)). These are the original canonical maps, including their epsilon factors and source Y projections. The order is sector b to -a+b to b.
+
+The proof consumes the existing mixed descendant invariant, uniformly in both free occupations and every signed mode. Its new contraction is a factorial Schur estimate on that same finite overlap kernel M(A,T;d,e). For a damping radius rho below one choose B positive with rho B+A at most B. Exact cancellation of binomial(e,k) against the input factorial envelope F(B,e), followed by the finite binomial convolution of F(rho B,k) and F(A,d-k), bounds rho^level(e) M(d,e) F(B,e) by C F(B,d). C is the convergent factorial occupation sum at parameter BT and radius rho. Applying this to the reverse kernel and multiplying cancels both positive factorial weights. Consequently rho^(level(d)+level(e)) M(d,e) M(e,d) is at most C squared. No convergence assumption is used in the contraction: the only infinite sum used there is the already proved single factorial-envelope sum.
+
+Choose rho strictly above both radii being estimated. The two ratios radius/rho are below one, and the original unrestricted integer-occupation majorant is summable in each variable. This proves genuine joint loop convergence without extracting an Euler product and without a condition involving T squared times the product of the radii. A further enlargement of each radius absorbs every descendant energy polynomial using radial_polynomial_bound. The actual finite wordCoeff expansions then handle arbitrary external oscillator polynomials.
+
+At q1=0 only d=0 survives and the e sum remains; at q2=0 only e=0 survives and the d sum remains. At both zero only (0,0) survives, with 0^0=1. Rank zero has a single occupation. No division by either original radius, positivity or inverse of the Gram matrix, nonzero charge, homogeneous external state or finite occupation cutoff is assumed.
+
+For fixed charges c and energy n, let E(c,n) be the finite span of the actual sector monomials of oscillator level n. The projections of the two original fields define finite blocks U(n,m): E(b-a,m) to E(b,n) and V(m,n): E(b,n) to E(b-a,m), at the displayed modes. Finite matrix multiplication identifies the sum of K1(d,e) K2(e,d) at levels n,m with the ordinary finite-dimensional trace of U(n,m) composed with V(m,n). Joint absolute summability permits regrouping this family into the corresponding double series of finite-block traces. This finite-block explanation accompanies the compiled summability endpoint; it is not a separately formalized trace theorem. The interpretation uses coefficient grades; identification with Sugawara eigenspaces additionally requires the existing two-sided complex Gram inverse hypotheses.
+
+The original Fock form has weight W(d)=product of the multiplicity factorials, without frequency powers. K1=H(b(d),U b(e))/W(d) and K2=H(b(e),V b(d))/W(e). Thus a pairing presentation requires both coordinate denominators. In the factorial orthonormal basis their square-root weight ratios cancel, giving exactly the displayed coefficient product. The proof's positive F(B,d) weights are auxiliary estimates and do not change these coordinates.
+
+The lattice-field and normal-product sources retain their attribution to Bakalov--Kac, Matsuo--Nagatomo and Carnahan; the analytic and finite-sum infrastructure is from Mathlib and the existing occupation suppliers. The new result is the cyclic factorial contraction and its literal field consumer. The finite-block exposition does not assert an infinite-dimensional LinearMap.trace, a charge-summed trace for indefinite data, an unrestricted torus correlator, modular covariance of inserted fields, all-genus CFT, Monster symmetry, string completion or AdS/CFT.
+
+## References
+
+- Truth anchor: `D5/S3/VertexAlgebra/Sewing/CanonicalTwoVertexLoop.canonical_two_vertex_loop_summable`
+- Dependency: [D5/S3/VertexAlgebra/Sewing/CanonicalTwoCutScalar](CanonicalTwoCutScalar.md)

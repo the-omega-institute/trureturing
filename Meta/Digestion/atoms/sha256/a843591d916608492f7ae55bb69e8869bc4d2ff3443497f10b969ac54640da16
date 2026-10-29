@@ -1,0 +1,38 @@
+#### 定理 4.2（乘法约数盒与勾股平方响应）
+
+在归一化乘积 Haar 测度下，
+
+<a id="eq-robinparseval"></a>
+
+$$
+Z_{\rm div}(n)
+=\prod_{p\mid n}\sum_{k=0}^{a_p}p^{-k}
+=\int_{\mathbb{T}^{\{p:p\mid n\}}}|A_n|^2 dm. \tag{6}
+$$
+
+**证明。**
+
+约数与指数盒 $0\le k_p\le a_p$ 一一对应，故倒数和因子化。
+展开 $|A_n|^2$，不同指数向量的交叉项在至少一个圆周方向上积分为零；保留项为 $\prod_p p^{-k_p}$。有限求和与积分可交换。
+
+∎
+
+这一定理是项目原文 §5 的有限 Fourier 桥。若所有素数共用一个相位，只有总指数差需要为零，额外交叉项一般不会消失。例如 $n=6$ 的独立平均为 $2$，共用相位平均则为 $2+2/\sqrt6$。因此“平方”必须说明在哪个空间、对哪些独立方向取内积。
+
+**经典 Robin 定理作为外部输入。**
+
+Robin 的等价判据为 [6](#ref-choie)
+
+<a id="eq-robin"></a>
+
+$$
+\mathrm{RH}\quad \Longleftrightarrow\quad
+\forall n>5040,\quad
+Z_{\rm div}(n)<e^{\gamma_E}\log\log n, \tag{7}
+$$
+
+其中 $\gamma_E$ 为 Euler–Mascheroni 常数。结合式
+[(6)](#eq-robinparseval)，RH 确实等价于对所有这些素数相位多项式的平方平均作一个统一上界；*Parseval 恒等式本身没有证明该上界*。
+
+<a id="prop-robindefect"></a>
+

@@ -1,0 +1,94 @@
+**定理 44.3（位置核的忠实全域实现与统一缺陷）。** 对 $h>0$ 定义
+$P_h(s,u)=e^{-hd(s,u)}$。对每个整数 $n\ge1$，令
+
+$$
+h_n=r_n=\frac1{5n},\qquad a_n=1-r_n,\qquad
+L_n(s,u)=a_nP_{h_n}(s,u)+r_n\delta_{s,u}.
+\tag{44.4}
+$$
+
+每个 $L_n$ 在整个 $T$ 上满足定义 43.1 的全部精确侧条件，并且
+
+$$
+\sup_{s,t,u,v\in T}|D_{L_n}(s,t,u,v)|
+\le a_n(1-e^{-h_n}+r_n)
+\le\frac{2a_n}{5n}<\frac1n.
+\tag{44.5}
+$$
+
+特别地 $L_n\in\mathcal C_{1/n}$，且 $s\ne u$ 时 $0<L_n(s,u)\le a_n<1$。
+
+**证明。** 记 $\operatorname{Fin}(\mathcal A)$ 为所有有限地址子集。
+在单一复 Hilbert 空间 $H_0=\ell^2(\operatorname{Fin}(\mathcal A))$ 中取标准正交基 $e_B$，
+并对每棵实际来源树定义有限支撑向量
+
+$$
+v_h(t)=e^{-h|S(t)|}
+ \sum_{B\subseteq S(t)}(e^{2h}-1)^{|B|/2}e_B.
+\tag{44.6}
+$$
+
+内积对第一项共轭线性。令 $I=S(s)\cap S(u)$，有限二项展开直接给
+
+$$
+\begin{aligned}
+\langle v_h(s),v_h(u)\rangle
+&=e^{-h(|S(s)|+|S(u)|)}\sum_{B\subseteq I}(e^{2h}-1)^{|B|}\\
+&=e^{-h(|S(s)|+|S(u)|-2|I|)}=P_h(s,u).
+\end{aligned}
+\tag{44.7}
+$$
+
+取 $s=u$ 得范数一。在与 $n$ 无关的 $H=H_0\oplus\ell^2(T)$ 中，
+
+$$
+\eta_n(t)=\sqrt{a_n}\,v_{h_n}(t)\oplus\sqrt{r_n}\,e_t
+\tag{44.8}
+$$
+
+是 $L_n$ 的归一 Gram 实现。任意 $M\ge1$、可重复的来源列 $t_1,\ldots,t_M$、
+任意复数 $c_1,\ldots,c_M$ 均满足
+
+$$
+\begin{aligned}
+\sum_{i,j=1}^M\overline{c_i}c_jL_n(t_i,t_j)
+&=a_n\left\|\sum_i c_i v_{h_n}(t_i)\right\|^2
+ +r_n\sum_{x\in\{t_1,\ldots,t_M\}}
+       \left|\sum_{i:t_i=x}c_i\right|^2\ge0.
+\end{aligned}
+\tag{44.9}
+$$
+
+所以正性包括所有重复标签的复 Gram 测试，不只是实系数或互异树测试。
+式 (44.7) 给实对称性和对角归一化；(44.2) 保持 $P_h$，运输单射性保持 delta 项，
+故 $L_n(\rho s,\rho u)=L_n(s,u)$ 精确成立。$r_n>0$ 使 (44.8) 分离所有实际来源；
+直接看核也有 $L_n(s,u)=1\Longleftrightarrow s=u$。特征 $S$ 的碰撞没有改变来源域。
+
+固定 $n$ 并简写 $a,r,h,P,L$。对任意四棵树置
+
+$$
+A=P(s,u),\quad B=P(t,v),\quad d_0=\delta_{s,u},\quad e_0=\delta_{t,v},
+\quad c=|\delta_{s,t}-\delta_{u,v}|,\quad E=e^{-hc}.
+$$
+
+式 (44.3) 给 $P(\langle s,t\rangle,\langle u,v\rangle)=ABE$，
+构造子单射性给对应 delta 为 $d_0e_0$。由 $a+r=1$，逐项展开得精确恒等式
+
+$$
+\begin{aligned}
+D_L(s,t,u,v)
+&=aABE+rd_0e_0-(aA+rd_0)(aB+re_0)\\
+&=aAB(E-1)+ra(A-d_0)(B-e_0).
+\end{aligned}
+\tag{44.10}
+$$
+
+这里 $0<A,B\le1$，$c\in\{0,1\}$；$d_0=1$ 时 $A=1$，否则
+$0<A-d_0\le1$，所以总有 $|A-d_0|\le1$，同理 $|B-e_0|\le1$。
+故 $|D_L|\le a(1-e^{-h})+ra\le a(h+r)$，证明 (44.5)。
+整个推导未限制四树的相等关系、形状、深度或叶数。
+
+指数 Hamming 核的正性与张量 Gram 正性是标准中间供应；(44.6)–(44.9) 直接完成所需计算。
+本定理使用的新接合是实际树位置不变量、忠实来源提升和无树高限制的 (44.10)，
+复用 §43 的计数及缺陷展开，不把一般正性机制另列为新结果。∎
+

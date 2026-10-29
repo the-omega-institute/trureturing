@@ -4,7 +4,19 @@
 
 A single threshold makes actual least Robin-height crossings strict abundancy records divisible by the literal integer 5040.
 
-**Theorem 1.1 (One threshold for every original eta).**
+**Theorem 1.1 (Finite exclusion uniform through the half endpoint).**
+
+Lean statement: `D5/S3/Arith/Robin/ActualLeastCrossing5040.uniform_actual_height_escape`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/ActualLeastCrossing5040.uniform_actual_height_escape` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For each fixed real R there is T0>0 before eta such that every actual m>=3 above height T>=T0 has W(m)>R and log(m)>=exp(2), uniformly for 0<eta<=1/2. Cofinality of the iterated logarithms chooses a finite cutoff M. One plus the sum over j<M of max(1,(log(j))^(1/2))*max(F(j)-gamma,0) excludes that initial segment. Positive height gives F(m)>gamma, so the triple-log bound gives W(m)>R. Leastness is not used. Both the 5040 and positive-price theorems use this same finite exclusion.
+
+**Theorem 1.2 (One threshold for every original eta).**
 
 Lean statement: `D5/S3/Arith/Robin/ActualLeastCrossing5040.uniform_actual_least_crossing_record_5040`
 
@@ -28,6 +40,7 @@ No strict record, smooth support, fixed-price optimality or originalMaximizes hy
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/ActualLeastCrossing5040.uniform_actual_height_escape`
 - Truth anchor: `D5/S3/Arith/Robin/ActualLeastCrossing5040.uniform_actual_least_crossing_record_5040`
 - Dependency: [D5/S3/Arith/ExponentExchange/AbundancyRecord5040](../ExponentExchange/AbundancyRecord5040.md)
 - Dependency: [D5/S3/Arith/Robin/ActualIntegerHeightJump](ActualIntegerHeightJump.md)

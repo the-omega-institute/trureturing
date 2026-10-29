@@ -1,0 +1,19 @@
+**Definition 3.2 (Truncated scalar profile).** For $\delta>0$ set
+
+$$
+S_a(\delta)=\min_{0<t\le\delta/a}\left(\frac1t+2a^3t\right),
+\qquad S_a(0)=+\infty,\qquad
+W_a(\delta)=\min\{2a^2,S_a(\delta)\}.
+\tag{3.4}
+$$
+
+Explicitly,
+
+$$
+S_a(\delta)=
+\begin{cases}
+a/\delta+2a^2\delta,&0<\delta\le1/\sqrt{2a},\\
+2\sqrt2\,a^{3/2},&\delta\ge1/\sqrt{2a}.
+\end{cases}\tag{3.5}
+$$
+

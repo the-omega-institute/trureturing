@@ -1,0 +1,24 @@
+**Definition 132.1 (actual local measure and fixed radius).** Retain all the original data of Definition 131.1 and all the fixed choices $b,R_0,\widetilde w,\chi$ of Theorem 131.2, for each original pair $a,\eta>0$. In particular, retain the actual coefficient-positive normalized $h$, the selector (131.1), the raw measure $\mu$, the full conservative form $V=V_0\oplus\mathbb C1$ with $\operatorname{tr}(F_0+c)=c$, and the original operators
+
+$$
+m=h^2\mu,\qquad K=U_h^{-1}H_{\rm end}U_h,\qquad
+T_\sigma=e^{-\sigma K}.
+\tag{132.1}
+$$
+
+Write $\Phi_\kappa=\Phi$ for the chart (131.3), with $\kappa=\sqrt{\eta/a}$, and set
+
+$$
+\begin{gathered}
+\Omega=B(0,R_0),\qquad R_1=R_0/2,\qquad
+d\nu=w\,dZ,\qquad w=\kappa(h\circ\Phi_\kappa)^2,\qquad
+dm=w\,dZ,\\
+\mathsf B=aA,\qquad \lambda=a/L_A,\qquad \Lambda=aL_A,\qquad
+\lambda|\xi|^2\le\mathsf B\xi\cdot\xi\le\Lambda|\xi|^2
+\quad\hbox{on }\Omega.
+\end{gathered}
+\tag{132.2}
+$$
+
+Here $A,L_A$ are exactly (131.15)–(131.16). The radius $R_1$ is fixed before any time threshold or input is chosen. The measure $\nu$ is the actual chart measure; the extension $\widetilde w=w$ on $B(0,2R_0)$ will be used only for spatial inequalities and approximation.
+

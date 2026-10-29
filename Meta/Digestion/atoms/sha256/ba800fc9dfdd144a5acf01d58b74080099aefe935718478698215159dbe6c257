@@ -1,0 +1,61 @@
+**定理 11.2（含一阶分裂的完整二次式）。** 对每个实切向量 $\xi$，
+令 $a=|x_2|$。若 $a>0$，取 $\Pi_0C_\xi\Pi_0$ 对应于
+$\pm\rho a$ 的单位向量 $e_\pm$，置
+$h_\pm=e_\pm^*H_\xi e_\pm$。
+若 $a=0$，置 $h_+=h_-=\lambda_{\max}(H_\xi)$。
+则对 $t\to0^\pm$，
+
+$$
+\begin{aligned}
+\rho(p^0+t\xi)&=\rho+\rho a|t|+h_\pm t^2+o(t^2),\\
+\Phi(p^0+t\xi)&=U_n-U_na|t|
++\frac n\rho\left[-\|w_\xi\|^2-\beta h_\pm+\beta\rho a^2\right]t^2
++o(t^2).
+\end{aligned} \tag{11.2}
+$$
+
+若 $\xi$ 切于实际双集，即 $x_2=0$，则任一实现该切向量的解析双轨迹上
+目标的二次系数为
+
+$$
+\begin{aligned}
+\mathcal Q_n(\xi)&=\frac n\rho\,\mathcal C_n(\xi),\\
+\mathcal C_n(\xi)
+&=-\sum_{k=1}^{n-1}\rho_k|x_k|^2+\beta\rho|x_1|^2\\
+&\quad-\frac{\beta\rho}{2}
+ \sum_{j=2}^{n-2}\frac{\rho_j}{\rho-\rho_j}
+ (|x_{j-1}|^2+|x_{j+1}|^2).
+\end{aligned} \tag{11.3}
+$$
+
+这里没有遗漏偶数 $n$ 的自共轭模，也不要求互补特征值单重。
+
+证明。式 (9.2) 在 $q_k=tx_k$ 时给出 (11.1)，并给出精确迹
+$T(p^0+t\xi)=\tau-t^2\|w_\xi\|^2$。
+顶层一阶压缩的对角元为零，非对角元模为 $\rho|x_2|$，
+其特征值为 $\pm\rho a$。
+对互补块作与定理 10.4 相同的 Schur 消元，
+顶层二次矩阵为 $H_\xi$，故第一式 (11.2) 成立。
+把迹除以该展开；分母一阶项的平方贡献
+$\beta\rho a^2$，得到第二式。
+
+若 $x_2=0$，在双轨迹 $p^0+t\xi+t^2\eta+O(t^3)$ 上，
+共同二次位移是
+$\frac12\operatorname{tr}(H_\xi+\Pi_0C_\eta\Pi_0)$。
+均匀点对所有 $\eta$ 都有
+$\operatorname{tr}C_\eta=0$ 和
+$\operatorname{tr}(\Pi_0C_\eta\Pi_0)=0$，
+故目标二次系数与 $\eta$ 无关，为
+$(n/\rho)(-\|w_\xi\|^2-\frac\beta2\operatorname{tr}H_\xi)$。
+在 Fourier 基中，秩一部分的顶迹为 $-2\rho|x_1|^2$，
+而互补部分的顶迹为
+
+$$
+\operatorname{tr}(\Pi_0C_\xi G_0C_\xi\Pi_0)
+=\rho\sum_{j=2}^{n-2}\frac{\rho_j}{\rho-\rho_j}
+ (|x_{j-1}|^2+|x_{j+1}|^2).
+$$
+
+这就得到 (11.3)。所有分母严格为正；该公式按每个 Fourier 下标求和，
+因而自动包括偶数中间模及互补重数。∎
+

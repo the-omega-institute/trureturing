@@ -1,0 +1,7 @@
+**Theorem 4.1 (Necessary conditions).** If $\Phi$ is Schwarz, then
+
+- (i) $0\le q\le 1/(d-1)$;
+- (ii) $\lambda^2\le 1-(d-1)q$;
+- (iii) $(d+2)\lambda^2\le(d+2-d^2q)\big(1-(d-2)q\big)$;
+- (iv) $(d-1)\lambda^2-(d-2)\lambda\le1-q$, equivalently $(1-\lambda)\big(1+(d-1)\lambda\big)\ge q$.
+

@@ -1,0 +1,65 @@
+#### 命题 3.4（原生黄金门的精确跨基底顺序差）
+
+令 $\varphi=(1+\sqrt5)/2$、$\omega=e^{3\pi i/5}$。项目原生门写为
+
+$$
+K=\omega[I+(\omega-1)\mathcal P],\qquad \mathcal P^2=\mathcal P=\mathcal P^\dagger.
+$$
+
+在活动扇区 $(000,010)$ 中，
+
+$$
+\mathcal P|_{\mathrm{act}}=
+\begin{pmatrix}\varphi^{-1}&\varphi^{-3/2}\\
+\varphi^{-3/2}&\varphi^{-2}\end{pmatrix}.
+$$
+
+其余模式 $100,001$ 上 $\mathcal P=0$，模式 $101$ 上 $\mathcal P=1$。令
+
+$$
+P=N_2=\lvert 010\rangle \langle 010\rvert ,\qquad Q=K^\dagger P K.
+$$
+
+则
+
+<a id="eq-goldoverlap"></a>
+
+$$
+\lambda:=\operatorname{Tr} (PQ)=\varphi^{-2},\qquad
+\left\lVert [P,Q]\right\rVert =\varphi^{-3/2}>0.
+\tag{4}
+$$
+
+对输入 $\lvert 010\rangle$，两次肯定的概率为
+
+$$
+p_{P\to Q}=\varphi^{-2},\qquad
+p_{Q\to P}=\varphi^{-4},\qquad
+\boxed{p_{P\to Q}-p_{Q\to P}=\varphi^{-3}}.
+$$
+
+**证明。**
+
+活动块迹为一、行列式为零且自伴正定于其像，故确为秩一投影。设 $a=\varphi^{-2}$。由 $|\omega-1|^2=\varphi^2$ 与 $1-a=\varphi^{-1}$，
+
+$$
+\lambda=|1+(\omega-1)a|^2
+=1-\varphi^2a(1-a)=1-\varphi^{-1}=\varphi^{-2}.
+$$
+
+两个秩一投影交叠 $\lambda$ 时，在其支撑平面中取合适相位，可以写为
+
+$$
+P=\begin{pmatrix}1&0\\0&0\end{pmatrix},\quad
+Q=\begin{pmatrix}\lambda&\sqrt{\lambda(1-\lambda)}\\
+\sqrt{\lambda(1-\lambda)}&1-\lambda\end{pmatrix}.
+$$
+
+直接相乘得交换子范数为 $\sqrt{\lambda(1-\lambda)}=\varphi^{-3/2}$，并有 $PQP=\lambda P,Q PQ=\lambda Q$。在 $P$ 的单位本征向量上取期望，分别给 $\lambda,\lambda^2$，其差 $\lambda(1-\lambda)=\varphi^{-3}$。
+
+∎
+
+这里计算的是 $Q$ 的指定 Lüders 仪器。其原生实现须先执行 $K$，读取 $P$ 的二值结果，再对两个结果分支都执行返回门 $K^\dagger=K^9$。肯定分支的 Kraus 算子于是为 $K^\dagger P K=Q$，否定分支为 $I-Q$。只做 $K$ 后测 $P$ 而不返回，虽有相同效果 $Q$，却是不同后态的仪器；不能套用本命题的顺序概率。原生门已提供真实的非交换关系，因此“同一原子的三读口无先后”不推出“所有不同基底读出都无先后”。
+
+<a id="sec-4"></a>
+

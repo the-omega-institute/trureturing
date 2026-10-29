@@ -1,0 +1,86 @@
+**Proposition 122.2 (Exact formula, entry value and cap).**
+For $A,\eta\ge0$ with $A^2+\eta^2\le1$, put
+
+$$
+d_b=2A\eta,\qquad d_c=2(\eta+2-2A).
+\tag{122.5}
+$$
+
+Then $d_c\ge d_b$ and, for every $\delta\ge0$,
+
+$$
+R(\delta;A,\eta)=
+\begin{cases}
+\displaystyle
+\frac{\eta+2A-\sqrt{(\eta+2A)^2-4\delta}}2,
+ &0\le\delta<d_b,\\[6pt]
+\displaystyle
+\frac{2A-\eta+\sqrt{(\eta-2A)^2+4\delta}}2,
+ &d_b\le\delta<d_c,\\[6pt]
+2,&\delta\ge d_c.
+\end{cases}
+\tag{122.6}
+$$
+
+An interval in this formula can be empty. The middle expression equals
+$2A$ at $\delta=d_b$ and equals $2$ at $\delta=d_c$ when extended
+to those endpoints. In particular, the value at $d_b$ is always $2A$,
+including $A=1,\eta=0$, when the last case applies. Moreover,
+
+$$
+R(0;A,\eta)=
+\begin{cases}2A,&\eta=0,\\0,&\eta>0,\end{cases}
+\qquad
+R(\delta;A,\eta)=2\ \Longleftrightarrow\ \delta\ge d_c.
+\tag{122.7}
+$$
+
+If $A\eta>0$, the left limit at the entry value is
+
+$$
+R(d_b-;A,\eta)=\min\{\eta,2A\}.
+\tag{122.8}
+$$
+
+Consequently there is a jump precisely when $0<\eta<2A$.
+At $\eta=2A>0$ the two branches meet continuously. If $\eta>2A$,
+they also meet continuously. If $A\eta=0$ the entry value is the
+left endpoint $0$, with no left-hand limit in this domain. For
+$A=0$, the formula reduces to
+$\min\{2,(\sqrt{\eta^2+4\delta}-\eta)/2\}$; for $A=\eta=0$
+this is $\min\{2,\sqrt\delta\}$.
+
+*Proof.* On the two sides of $2A$ the defining function is
+
+$$
+q_{A,\eta}(r)=
+\begin{cases}
+r(\eta+2A-r),&0\le r\le2A,\\
+r(r+\eta-2A),&2A\le r\le2.
+\end{cases}
+\tag{122.9}
+$$
+
+The second part is increasing, strictly beyond its left endpoint,
+and has values $d_b,d_c$ at the two endpoints. Also
+$d_c-d_b=2(1-A)(\eta+2)\ge0$. Thus when $\delta\ge d_b$,
+the largest feasible point is the positive root in the second part,
+unless it reaches $2$. This proves the last two cases of (122.6).
+
+Suppose $0\le\delta<d_b$. Necessarily $A\eta>0$, and no point
+at or beyond $2A$ is feasible. The concave first part starts below
+or at $\delta$ at $0$ and ends strictly above it at $2A$. Its
+smaller root is the largest feasible point in $[0,2A]$; its larger
+root lies beyond $2A$. Its discriminant is positive, since
+$4\delta<8A\eta\le(2A+\eta)^2$. This gives the first case.
+
+Substitution at $d_b$ gives $2A$ for the second root, while the
+first root tends to
+$(2A+\eta-|2A-\eta|)/2=\min\{2A,\eta\}$. These calculations
+prove all entry and equality assertions. Since $2$ is feasible
+exactly when $\delta\ge q_{A,\eta}(2)=d_c$, the cap assertion
+is an equivalence. At zero error, the zeros of (122.9) are $0$
+and, only when $\eta=0$, $2A$. This proves (122.7) and also
+covers the coincident zero and cap at $A=1,\eta=0$. The remaining
+specialisations follow by substitution. $\square$
+

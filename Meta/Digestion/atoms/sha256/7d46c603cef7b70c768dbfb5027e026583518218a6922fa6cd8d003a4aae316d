@@ -1,0 +1,127 @@
+**引理 126.1（原多重度的三次计数比较）。** 取
+$Z_L(\alpha)=\sum_{m_{H^c}}e^{-\alpha S_{H^c}(m)}$。
+对 $s\in\{0,\eta\}$，令
+
+$$
+J_s^{\rm count}(\alpha,y)
+ =\sum_m e^{-\alpha(A_y(m)+s\mathcal D(m)^2)},\qquad
+\mathcal C_s(\alpha,y)=B^{|H|}Z_L(\alpha)\mathcal J_s(\alpha,y).
+\tag{126.1}
+$$
+
+则对某个 $b_2>0$，
+
+$$
+\left\|\log\frac{J_s^{\rm count}}{\mathcal C_s}\right\|_{3,R}
+ \le\operatorname{poly}(Q)e^{-b_2Q^3}.
+\tag{126.2}
+$$
+
+**证明。** 先固定高组中心盒
+$|m_j-C_jp_j|/\sqrt{C_jp_j(1-p_j)}\le Q^2$。
+在格点对应的 $B^{-1}$ 边长 Gaussian 格元内，原式 (117.27)–(117.29)、(119.41)–(119.43) 给
+
+$$
+|S_H-S_G|\le\epsilon_Q\le\operatorname{poly}(Q)e^{-\chi_0Q^3/2},
+$$
+
+$$
+|T_x-T_G|\le\Delta_Q
+ \le\operatorname{poly}(Q)(B^{-1}+B^{-2}e^{2\chi_0Q^3}),\qquad
+\eta_Q:=\Delta_Q/\sigma\le\operatorname{poly}(Q)e^{-bQ^3},
+\tag{126.3}
+$$
+
+其中 $b>0$，因为 $l<c_q/2$、$2\chi_0<c_q-l$。
+低组接上任意原可行元组，且
+
+$$
+|\mathcal D-\mathcal D_G|\le d_Q
+ :=m_Q/(2B)+m_Qe^{\chi_0Q^3}/B
+ \le\operatorname{poly}(Q)e^{-b'Q^3}.
+\tag{126.4}
+$$
+
+中心格元上 $|\mathcal D_G|\le C Q^2\sum_j\sqrt{v_j}+\sum_j|e_j|
+\le\operatorname{poly}(Q)$，所以
+$|s\mathcal D^2-s\mathcal D_G^2|\le\operatorname{poly}(Q)d_Q$。
+这些是完整低组和完整高组舍入的逐元组界。
+
+令 $U=(T_G-y)/\sigma$。由 (126.3)，
+
+$$
+|\lambda_y-U^2/2|\le\eta_Q|U|+\eta_Q^2/2,
+$$
+
+$$
+|e^{-\alpha\lambda_y}-e^{-\alpha U^2/2}|
+ \le C\eta_Q(1+|U|)e^{-\alpha U^2/2+C\eta_Q|U|}.
+\tag{126.5}
+$$
+
+对每个固定 $k$，
+$|a^k-b^k|\le k|a-b|(|a|+|b|)^{k-1}$。
+因此前三次配分导数的插入势能
+$[-(S_Q+\lambda_y+s\mathcal D^2)]^k$，$0\le k\le3$，
+可逐格元与 $[-(S_G+S_L+U^2/2+s\mathcal D_G^2)]^k$ 比较。
+积分误差由 (126.3)–(126.5) 乘固定混合矩支付。
+低组始终保留原质量及其幂，不作连续近似。
+
+说明这些矩与宽度成本。原式 (117.24)、(117.26) 给所有固定阶
+$\mathcal D_G,S_G,S_L,U$ 的条件矩为 $\operatorname{poly}(Q)$；
+带 $s=\eta$ 的矩分子不超过无修正的分子，分母比由 (125.2) 下界为 $1/2$。
+Young 不等式将 $e^{C\eta_Q|U|}$ 吸收入相对变化 $O(\eta_Q)$ 的稍大噪声宽度。
+在同一 $t_\alpha$ 处，$\sigma'^2-\sigma^2$ 对 $K_H,K'_H,W_H$ 的改变分别是
+
+$$
+\frac{\delta(\sigma'^2-\sigma^2)t_\alpha^2}{2\alpha},\quad
+\frac{\delta(\sigma'^2-\sigma^2)t_\alpha}{\alpha},\quad
+\frac{\delta(\sigma'^2-\sigma^2)}{\alpha}.
+\tag{126.6}
+$$
+
+它们是多项式乘指数小量。标准化位置、正密度下界和全部固定阶插入矩的多项式界保持成立，
+附近宽度的密度比有固定上下界。式 (125.3)–(125.8) 在这些附近宽度同样成立。
+因此这一吸收仅付多项式成本；配分导数仍由原势能插入计算，不对宽度夹逼求导。
+
+还须支付全部尾部。原幂律二项与 Gaussian 乘积律在高中心盒外的概率至多
+$\operatorname{poly}(Q)e^{-cQ^4}$。二项部分可用
+$S_j\ge c z_j^2-C$、单组配分下界 $c\sqrt{C_j+1}$ 作距离壳求和，
+再对至多 $m_Q$ 个组求并；Gaussian 部分是相同标准化阈值下的正态尾。
+二项计数盒上 $S_Q\le CN_J$，$|\mathcal D|\le CB$，
+$\lambda_y\le\exp(CQ^3+2L)$。
+故三次势能插入和其比较中任何固定次插入在尾部最多付
+$\exp(C_kQ^3+2kL)$。Gaussian 的固定多项式尾插入由较高 Gaussian 矩及
+Cauchy–Schwarz 支付，仍有 $e^{-c'Q^4}$，噪声因子至多另付 $\sigma^{-2k}$。
+选择因子 $e^{-\alpha s\mathcal D^2}$、$e^{-\alpha s\mathcal D_G^2}$ 不超过一。
+
+由 (123.15)，标准化密度在紧输出上至少 $c_R$；
+$|K_H(t_\alpha)-t_\alpha V|\le C/\delta$。
+因此乘积归一化后的原 Gaussian 输出核积分至少
+
+$$
+c_R\sigma e^{-C_R/\delta}.
+\tag{126.7}
+$$
+
+带 $s=\eta$ 的核积分由 (125.2) 再保留固定比例。
+高二项与 Gaussian 无输出归一化常数之比，由相同 Stirling 格元比较及无输出尾估计为 $1+o(1)$。
+故除以实际比较分母所付对数成本只有
+$O_k(Q^3+L+\delta^{-1})$，严格小于尾指数的 $Q^4$ 阶。
+没有对总偏差使用 $Q^2$ 或其他截断。
+
+综合格元和尾部，存在 $b_2>0$ 使
+
+$$
+\frac{|\partial_\alpha^kJ_s^{\rm count}
+              -\partial_\alpha^k\mathcal C_s|}{\mathcal C_s}
+ \le\operatorname{poly}(Q)e^{-b_2Q^3},\quad 0\le k\le3.
+\tag{126.8}
+$$
+
+比较配分的各固定阶未中心化势能矩均为多项式，因而
+$|\partial_\alpha^k\mathcal C_s|/\mathcal C_s\le\operatorname{poly}(Q)$。
+对数的前三次导数公式将 (126.8) 化为 (126.2)。
+格元体积给 $B^{|H|}$；模态常数已经在 $S_j$ 中精确减去。
+上述比较既未舍弃原计数多重度，也未改变原输出条件。∎
+

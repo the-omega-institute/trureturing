@@ -1,0 +1,79 @@
+**Theorem 11.5 (Unrestricted near-minimum structure at every fixed phase).** Fix any integer $r\ge5$ and a prescribed integer sequence $\ell_n$ satisfying
+
+$$
+L_r(n)\le\ell_n\le U_r(n)\ \text{eventually},\qquad
+\frac{\ell_n}{n}\longrightarrow\alpha\in[r-2,r-1].
+$$
+
+Then the unrestricted minima in Theorem 11.4 satisfy
+
+$$
+n\mathfrak E_r(n,\ell_n)\longrightarrow F_r(1+\alpha).
+\tag{11.13}
+$$
+
+For every sequence of simple connected graphs $G_n\in\mathcal G(n,\ell_n)$, the following four conditions are equivalent:
+
+1. $E(G_n)-\mathfrak E_r(n,\ell_n)=o(1/n)$;
+2. $nE(G_n)\to F_r(1+\alpha)$;
+3. eventually $G_n$ is two-layer with exactly $r$ actual degree-oriented sinks, and, for its actual counts with $N=n-r$ and $q_r=(n-1+\ell_n)/N$,
+
+$$
+p_{\mathrm{low}}^{(n)}=\frac1N\sum_{|T|\le r-2}a_T\longrightarrow0,
+\qquad
+\max_{1\le i\le r}\left|\frac{D_i}{N}-\frac{q_r}{r}\right|
+\longrightarrow0;\tag{11.14}
+$$
+
+4. eventually $G_n$ has this same $r$-sink two-layer structure and its actual profile obeys
+
+$$
+\|x^{(n)}-x^*(q_r)\|_1\longrightarrow0.\tag{11.15}
+$$
+
+Labels may be chosen separately at each order. In particular all $r$ hub degrees divided by $n$ tend to $(1+\alpha)/r$. This extends Theorem 7.2 to unrestricted graphs at every fixed $r\ge5$. It allows $o(n)$ low-degree sources and sublinear hub imbalances; it does not assert their finite disappearance or bounded imbalance. The capacity inequalities remain hypotheses at each prescribed integer budget, including both density endpoints.
+
+**Proof.** Theorem 11.4 identifies the exact minimizer at every sufficiently large order of this prescribed sequence. For that balanced candidate, (5.2), the positive linear hub degrees and the actual-edge expansion give
+
+$$
+\mathfrak E_r(n,\ell_n)=\frac{F_r(q_r)}{n-r}+O_r(n^{-3}).
+\tag{11.16}
+$$
+
+Indeed its quadratic error above $F_r(q_r)$ is $O_r(N^{-2})$, and its actual-edge error is $O_r(n^{-3})$. Now $q_r\to1+\alpha$ and $n/(n-r)\to1$, proving (11.13) and the equivalence of 1 and 2.
+
+Assume 1. Then $nE(G_n)\to F_r(1+\alpha)\le r^3/2<C_0$, so $E(G_n)\le C_0/n$ eventually. Apply the actual-graph fixed-cost reduction before making any profile comparison. It gives two-layer structure, a bounded number $s_n\le K_0$ of actual sinks, and $D_i/n\ge1/(3C_0)$ for every actual sink. Capacity gives $s_n\ge r$. These statements include every sink, rather than a selected collection of positive limiting marginals.
+
+If $s_n>r$ along an infinite subsequence, (11.11) applies on that subsequence, and Theorem 11.4 gives
+
+$$
+\liminf n\bigl(E(G_n)-\mathfrak E_r(n,\ell_n)\bigr)\ge\frac12,
+$$
+
+contradicting 1. The exclusion uses (11.6) when $q_{s_n}\le r$ and the unrestricted certificate (11.7) with $\beta=2$ when $q_{s_n}>r$. Thus it is valid also when $\alpha=r-1$ and the actual means approach $r$ from above. This replaces the only cardinality- or $r$-restricted exclusion step in the necessity proof of Theorem 7.2. Eventually $s_n=r$.
+
+For this actual $r$-sink array put $\delta_n=J_r(x^{(n)})-F_r(q_r)\ge0$. Equations (11.9) and (11.16) imply
+
+$$
+\delta_n=N\bigl(E(G_n)-\mathfrak E_r(n,\ell_n)\bigr)
++O_r(n^{-2})\longrightarrow0.
+$$
+
+The all-$r$ fixed-sink estimate (3.1) yields (11.14), and (3.2) yields (11.15). Independently of an energy assumption, condition 3 also implies condition 4 by the type identity (3.4). Thus both the low-source mass and marginal balance have their original fixed-$r$ suppliers.
+
+Finally suppose 4. The reference marginals tend to $(1+\alpha)/r>0$, and convergence in $\ell^1$ forces the same limit for every actual marginal. With $r$ fixed, source degrees are bounded by $r$ and hub degrees are bounded below by a positive multiple of $n$. Consequently the actual-edge expansion is valid for this sequence without assuming an energy bound in advance:
+
+$$
+nE(G_n)=\frac nN J_r(x^{(n)})+O_r(n^{-2}).
+$$
+
+The functional $J_r$ is continuous where every marginal is positive. Since $x^*(q_r)\to x^*(1+\alpha)$, (11.15) implies $J_r(x^{(n)})\to F_r(1+\alpha)$, and hence condition 2. This completes the equivalences in both directions.
+
+For every specified budget sequence in the theorem, Theorem 7.1 applies directly with $s=r$ and the fixed limiting profile $x=x^*(1+\alpha)$. Its marginals are $(1+\alpha)/r>0$, and its required upper bound is exactly
+
+$$
+\ell_n\le r(n-r)-n+1=U_r(n).
+$$
+
+It therefore realizes the profile with the prescribed integer order and edge budget at every sufficiently large order. Continuity of $x^*(q)$ makes convergence to that fixed limiting profile equivalent to (11.15) for these realized sequences, so they satisfy all four conditions. The exact balanced minimizers themselves already supply such sequences by Theorem 11.4. At $\alpha=r-2$ their full mass tends to zero while their exact full count remains $c\ge r$; at $\alpha=r-1$ missing-one masses may vanish, with $b=0$ giving a complete bipartite graph. Neither necessity, sufficiency nor the prescribed-budget realization requires positive limiting mass for all types. All limits hold for fixed $r$; no estimate uniform in a varying $r$ is asserted. ∎
+

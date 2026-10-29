@@ -1,0 +1,5 @@
+source_id = "cdso-growing-surplus-hubs"
+path = "docs/develop/theory/CDSO_GROWING_SURPLUS_HUBS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

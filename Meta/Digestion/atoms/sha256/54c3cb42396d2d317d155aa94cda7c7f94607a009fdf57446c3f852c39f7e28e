@@ -1,0 +1,34 @@
+**Definition 146.1 (The reduced all-history family and its signed rows).**
+For the source of Definition 142.1, write every original history uniquely
+in the form
+
+$$
+w=N^{n_0}\epsilon_1N^{n_1}\cdots\epsilon_kN^{n_k},
+\qquad \epsilon_j\in\{0,1\},\quad n_j\ge0,
+$$
+
+where $k$ is the number of native instrument labels. Since $N^3=I_3$,
+replace each $n_j$ by its residue in $\{0,1,2\}$. Let
+$\mathscr W_{\le3}$ be the resulting finite family with $0\le k\le3$.
+The replacement changes the product $Q_w$ only by a scalar of modulus one,
+so it preserves every original row value and its original weight
+$a_w/2=2^{-k}/2$.
+
+Use the six real completion coordinates in the ordered basis
+$(\xi,\mathrm i\xi,f,\mathrm if,e,\mathrm ie)$ and the two real coordinates
+of $g$. In the notation of (125.4), choose the seven actual rows, in order,
+with the indicated signs:
+
+$$
+\begin{aligned}
+(\rho_j,\sigma_j)_{j=1}^7={}&((9,\varnothing),+1),
+ ((1,NN),-1), ((1,0),-1), ((9,0),+1),\\
+ &((1,NN0N),+1), ((1,N1N),+1), ((2,NN1N),+1).
+\end{aligned}
+\tag{146.1}
+$$
+
+Put $c_j=\sigma_j\beta_{\rho_j}$ and let $M$ have first row all ones and
+rows $2$ through $7$ equal to the signed six-coordinate vectors
+$\sigma_jU_{\rho_j}$.
+

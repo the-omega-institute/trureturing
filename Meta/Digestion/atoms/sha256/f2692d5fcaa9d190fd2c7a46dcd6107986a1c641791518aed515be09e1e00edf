@@ -1,0 +1,50 @@
+**Theorem 3.1 (An integer enlargement of the core).** For integers $a\ge2$, $j\ge1$ and $h\ge j$, put
+
+$$
+m=a+j,\qquad n=h+1-j,\qquad s=m+n=a+1+h.
+$$
+
+Partition $[s]=C\mathbin{\dot\cup}D$ with $|C|=m$ and $|D|=n$. The single law
+
+$$
+p=\frac{j}{a+j-1},\qquad
+x_C=1-p,\qquad x_{\{d\}}=\frac pn\quad(d\in D),
+\qquad x_T=0\text{ for every other }T
+\tag{3.1}
+$$
+
+has mean cardinality $a$, positive actual marginals and energy
+
+$$
+H_j(a,h)
+=\frac{(a+j)^3(a+j-1)}{a-1}
+ +\frac{(h+1-j)^2(a+j-1)}j.
+\tag{3.2}
+$$
+
+For every fixed positive integer $j$ and every sequence (1.2), this law is admissible eventually and
+
+$$
+\frac{H_j(a_n,h_n)-B_0(a_n)}{a_n^2}
+\longrightarrow F_j(\kappa):=\frac{\kappa^2}j+4j-2.
+\tag{3.3}
+$$
+
+**Proof.** The integers $m,n$ are positive and $0<p<1$. The masses sum to one, and
+
+$$
+\mathbb E K=(1-p)m+p=a.
+$$
+
+Every core marginal is $y_i=1-p=(a-1)/(a+j-1)>0$ and every tail marginal is $y_d=p/n>0$. On the core event the contribution to $H$ is $m^3/(1-p)$; the singleton events contribute $n^2/p$ in total. This proves (3.2), directly from one law.
+
+For fixed $j$,
+
+$$
+\frac{(a+j)^3(a+j-1)}{a-1}
+=(a+j)^3\left(1+\frac j{a-1}\right)
+=a^3+4ja^2+O_j(a).
+$$
+
+Also $n/\sqrt a\to\kappa$ and $(a+j-1)/a\to1$, whence the second term of (3.2), divided by $a^2$, tends to $\kappa^2/j$. Subtract $B_0(a)=a^3+2a^2+a$ to obtain (3.3). Since (1.2) implies $h_n\to\infty$, the condition $h_n\ge j$ holds eventually. The core and the tail singletons lie in separate support components, which are permitted by Definition 1.1. ∎
+

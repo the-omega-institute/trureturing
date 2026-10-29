@@ -204,7 +204,7 @@ theorem strict_inventory_third_layer_vanishing :
   have hT' := hT t ((le_max_left T 2).trans ht)
   exact hratio.trans_lt (hT'.2.trans_lt hT'.1)
 
-private theorem prime_number_limits :
+theorem prime_number_limits :
     Tendsto (fun t : ℝ => ψ t / t) atTop (𝓝 1) ∧
       Tendsto (fun t : ℝ => θ t / t) atTop (𝓝 1) := by
   obtain ⟨c, hc, hpnt⟩ := MediumPNT
@@ -240,7 +240,7 @@ private theorem prime_number_limits :
   simp only [Pi.sub_apply]
   ring
 
-private theorem theta_sqrt_scale {c : ℝ} (hc : 0 < c) :
+theorem theta_sqrt_scale {c : ℝ} (hc : 0 < c) :
     Tendsto (fun t : ℝ => θ (c * Real.sqrt t) / Real.sqrt t) atTop (𝓝 c) := by
   have h := (prime_number_limits.2.comp
     (Real.tendsto_sqrt_atTop.const_mul_atTop hc)).mul_const c
@@ -278,6 +278,18 @@ private theorem psi_theta_root_limit :
     simpa [add_div] using div_le_div_of_nonneg_right
       (Chebyshev.psi_sub_theta_le_psi_add_psi_add_psi t) (Real.sqrt_nonneg t)
 
+theorem log_sqrt_scale {c : ℝ} (hc : 0 < c) :
+    Tendsto (fun t : ℝ => Real.log (c * Real.sqrt t) / Real.log t)
+      atTop (𝓝 (1 / 2 : ℝ)) := by
+  have h := (tendsto_const_nhds (x := Real.log c)).div_atTop Real.tendsto_log_atTop
+  have h := h.add_const (1 / 2 : ℝ)
+  simp only [zero_add] at h
+  apply h.congr'
+  filter_upwards [eventually_gt_atTop (1 : ℝ)] with t ht
+  rw [Real.log_mul (ne_of_gt hc) (ne_of_gt (Real.sqrt_pos.2 (by linarith))),
+    Real.log_sqrt (by linarith)]
+  field_simp [ne_of_gt (Real.log_pos ht)]
+
 private theorem second_cutoff_scale {c : ℝ} (hc : 0 < c) :
     Tendsto (fun t : ℝ =>
       (((c * Real.sqrt t) ^ 2 + c * Real.sqrt t + 1) / t) *
@@ -295,16 +307,7 @@ private theorem second_cutoff_scale {c : ℝ} (hc : 0 < c) :
     filter_upwards [eventually_gt_atTop (0 : ℝ)] with t ht
     rw [mul_pow, Real.sq_sqrt ht.le]
     field_simp
-  have hlog : Tendsto (fun t : ℝ => Real.log (c * Real.sqrt t) / Real.log t)
-      atTop (𝓝 (1 / 2 : ℝ)) := by
-    have h := (tendsto_const_nhds (x := Real.log c)).div_atTop Real.tendsto_log_atTop
-    have h := h.add_const (1 / 2 : ℝ)
-    simp only [zero_add] at h
-    apply h.congr'
-    filter_upwards [eventually_gt_atTop (1 : ℝ)] with t ht
-    rw [Real.log_mul (ne_of_gt hc) (ne_of_gt (Real.sqrt_pos.2 (by linarith))),
-      Real.log_sqrt (by linarith)]
-    field_simp [ne_of_gt (Real.log_pos ht)]
+  have hlog := log_sqrt_scale hc
   simpa [div_eq_mul_inv] using hpoly.mul hlog
 
 def strict_inventory_second_layer_mass (U : ℕ) : ℝ :=

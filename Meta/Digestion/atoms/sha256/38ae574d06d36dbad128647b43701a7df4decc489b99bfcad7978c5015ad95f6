@@ -1,0 +1,93 @@
+## 106. 定理 102.1 的实际纯轨道使两侧相合
+
+证明（目标轨道部分）。对每个有限词单独使用 $\alpha_w>0$，先得到
+
+$$
+\operatorname{cone}\{A_w\rho_0:w\in\mathcal W\}
+=\operatorname{cone}\{U_w\rho_0U_w^\dagger:w\in\mathcal W\}.
+\tag{106.1}
+$$
+
+这是逐射线的正倍数消去：
+$U_w\rho_0U_w^\dagger=\alpha_w^{-1}A_w\rho_0$。
+必须在取轨道极限以前消掉每个词自己的权重，
+因为词长增加时 $\alpha_w$ 可以趋于零。
+(106.1) 只在锥中乘正实数，没有对观察记录作条件化。
+
+定理 95.1 的 (100.3) 与实际纯 $\rho_0$ 给
+
+$$
+\overline{\{U_w\rho_0U_w^\dagger:w\in\mathcal W\}}
+=\{vv^\dagger:v\in\mathbb C^3,\ \|v\|=1\}.
+\tag{106.2}
+$$
+
+确实，给任意单位 $v$，可取一个酉将 $\psi$ 送到 $v$，
+再取正向词的共轭趋于该酉共轭；轨道作用连续。
+故每个复秩一投影都属于 $L_{\rm in}$。
+每个 PSD 矩阵由谱分解是至多三个这样的投影的非负线性组合；
+反之，所有 $A_w\rho_0$ 都为 PSD，而 PSD 锥闭。
+作为本源夹逼中的中间步骤，得到
+
+$$
+L_{\rm in}=\mathrm{PSD}_3\subseteq C.
+\tag{106.3}
+$$
+
+效果一侧也须先消去权重。由 (105.5)，
+
+$$
+U_w^\dagger EU_w=\alpha_w^{-1}Z_w\in D\subseteq C^{*},
+\qquad
+D=\overline{\operatorname{cone}\{U_w^\dagger EU_w:w\in\mathcal W\}}.
+\tag{106.4}
+$$
+
+然后才取 $w$ 的序列极限。
+$E$ 是本源的秩一迹一投影，且 $g\mapsto g^\dagger Eg$ 在 $PU(3)$ 上连续，
+其像为全部复秩一投影。由 (100.3)，每个这样的投影都是 (106.4) 的极限。
+因此谱分解与闭性同样给
+
+$$
+D=\mathrm{PSD}_3.
+\tag{106.5}
+$$
+
+此论证只使用正向词的数学对偶作用；写 $U_w^\dagger$ 不意味着已取得逆控制。
+未经闭包的可数有限词锥不必等于 PSD 锥，不能从 (106.5) 删去横线。
+
+也可直接检验外约束的充分强度。若 $X\in O_{\rm out}$，则对每个有限词
+
+$$
+0\le\alpha_w^{-1}\operatorname{Tr}(EA_wX)
+=\operatorname{Tr}(U_w^\dagger EU_wX).
+\tag{106.6}
+$$
+
+先除正权重，再由 (100.3) 与连续性，得到
+$\operatorname{Tr}(vv^\dagger X)=v^\dagger Xv\ge0$ 对每个复单位向量 $v$ 成立。
+这正是 Hermitian 矩阵 $X\succeq0$ 的判据。
+若有负本征值，选对应的复单位本征向量立即矛盾。
+反之 PSD $X$ 与所有 PSD $Z_w$ 的配对非负。
+所以
+
+$$
+O_{\rm out}=\mathrm{PSD}_3.
+\tag{106.7}
+$$
+
+这里只测实单位向量不足以代替全部复向量。
+结合 (105.4)、(106.3)、(106.7) 得
+
+$$
+\mathrm{PSD}_3=L_{\rm in}\subseteq S(K)
+\subseteq O_{\rm out}=\mathrm{PSD}_3.
+\tag{106.8}
+$$
+
+故 $S(K)=\mathrm{PSD}_3$，同一个 $S$ 与其逆都为正。
+由 §103 已有的归一化、制备、效果及三个全域映射恒等式，
+这正给 (102.1) 的完整有序同构。
+整个推断对每个允许角度、每个 $d$ 和每一个混合 $N$ 成立，
+没有一般位置条件或对 $N\xi$ 重叠的额外限制。
+

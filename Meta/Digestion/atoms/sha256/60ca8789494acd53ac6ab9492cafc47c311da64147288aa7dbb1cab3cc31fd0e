@@ -1,0 +1,29 @@
+#### 定理 8.4（未来效果闭包给最粗可递归观察商）
+
+在有限维载体上，固定全部处处合法的酉菜单 $\mathcal U$ 以及当前效果族 $\mathcal E$。令 $U_h$ 遍历有限合法字，包含空字，定义
+
+$$
+W_\infty=\operatorname{span}_{\mathbb{R}} \{U_h^\dagger E U_h:E\in\mathcal E,\ h\text{ 合法}\}.
+$$
+
+则
+
+$$
+\rho\sim_\infty\sigma
+\iff \operatorname{Tr} [(\rho-\sigma)A]=0\quad\forall A\in W_\infty
+$$
+
+是既保持当前读出、又在所有共同合法后继下稳定的*最粗*等价关系。
+
+**证明。**
+
+空字包含当前效果。对任一 $U\in\mathcal U$，$U^\dagger W_\infty U\subseteq W_\infty$，故 $\rho\sim_\infty\sigma$ 蕴含 $U\rho U^\dagger\sim_\infty U\sigma U^\dagger$。反之，任何保持当前读出且对每个后继稳定的等价关系，按字长归纳必保持所有未来字后的每个效果期望，因而包含于 $\sim_\infty$。对实线性张成的等价式由迹线性性给出。
+
+∎
+
+如果允许带结果的仪器，可将每条记录分支的 Kraus 乘积和结束效果纳入同样的联合概率测试；若允许部分操作，则必须把非法性也作为可区别输出。只要求完成某个任务时，最粗充分边界可能更粗，不能把该任务商冒认为完整未来律商。最新联合核卷第 19–21 节正将这两种合同分开 [[2](#ref-jointkernel)]。
+
+<a id="statement-8-5"></a>
+
+<a id="prop-staticrecord"></a>
+

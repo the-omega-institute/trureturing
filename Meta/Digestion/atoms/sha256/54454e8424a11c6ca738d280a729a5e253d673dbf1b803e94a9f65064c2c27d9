@@ -1,0 +1,14 @@
+**定义 5.2（精确阈值问题）。** 对固定参数，定义
+
+$$
+\begin{aligned}
+\nu_0(\boldsymbol{k},\ell)
+ &=\min\{N\ge0:\ \forall n\ge N,\ C_n^{0;\boldsymbol{k};\ell}<0\},\\
+\nu_j(\boldsymbol{k},\ell)
+ &=\min\{N\ge0:\ \forall n\ge N,\ C_n^{j;\boldsymbol{k};\ell}
+        >\lambda\binom{n+j-1}{n}\}\quad(j\ge1).
+\end{aligned}
+$$
+
+定理 4.1 保证这些集合非空；命题 5.1 表明有限前缀仍有实质内容。确定这些最小阈值及其随组合、$\ell$、$j$ 的依赖，是与本卷存在性结论相区别的后续问题。有限割线证明使用依赖参数的 $R_0,\rho$ 和正积分区间；它不提供统一或有效阈值、全局奇点信息或系数主项。
+

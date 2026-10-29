@@ -1,0 +1,47 @@
+**Proposition 25.2 (independent views and same-source resources).** In
+the known-seed model, physical incidence $S$ and terminal antichain
+$\partial S$ determine one another by maximality and prefix closure.
+For $n\ge2$ either determines $n$ by its Fibonacci leaf count.
+They do not determine $\mathcal Q_1$ without the residual of Theorem
+24.2. Time $n$ alone does not determine physical incidence for
+$n\ge3$: exchanging the unequal root-child shapes gives distinct
+physical supports at the same count. The semantic tree $T_n$ is
+known from time and the alpha seed, and must be distinguished from
+all of these physical recovery statements.
+
+After the actual calibration, either incidence or boundary, together
+with the same acquired $\chi$ bits, reconstructs the same old
+labelled state; (GPO.69) also gives the correct current unlabelled
+state. These routes agree because they use the same old tree and
+actual paid replies. Arbitrary physical Reads and stop on that
+unlabelled state have the computed replies and outputs. A further
+update requires the new current labels and therefore the fresh
+residual; the old recovered adapter is not automatically a current
+adapter below newly created branches. No cloned historical callable
+root or closed transition of the newest labelled state is obtained.
+
+For a concrete acquired prerequisite, the scan of (GPO.66) at epoch
+$n$ has exactly $N_n=2F_{n+1}-1$ calls,
+$W_{\rm shape}=\sum_{q\in S}(|q|+1)$ and maximum $H(S)+1$.
+List its terminal forks by paid local computation and retain their
+actual addresses. This scan followed by calibration has, on one run,
+
+$$
+ Q=N_n+c,\qquad W=W_{\rm shape}+\sum_{p\in C(S)}(|p|+2),
+ \qquad M_{\rm addr}=\max\{H(S)+1,\max_{p\in C(S)}(|p|+2)\},
+ \qquad U_{\rm updates}=1.
+ \tag{GPO.72}
+$$
+
+Its initial scan is an upper bound, not an acquisition optimum. The
+source already has $F_{n+1}$ leaves and $N_n$ nodes; the update
+allocates exactly $2F_n$ new nodes and $2F_n$ child links, and makes
+$F_n$ actual wiring
+choices, in addition to tag overwrites and traversal. Internal update
+work, hidden writer, root/grants, authentication, literal construction,
+stack and address storage, fork extraction, retained bits, reconstruction,
+outputs and retention lifetime all retain their actual prices. The
+$c$-bit supplement minimum counts a data alphabet, not total memory,
+hardware, energy or physical duration. A larger backing or a finite
+program cannot read the missing latest wiring through this interface.
+

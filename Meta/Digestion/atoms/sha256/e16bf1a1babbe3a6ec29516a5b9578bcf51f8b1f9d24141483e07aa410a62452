@@ -1,0 +1,27 @@
+**Proposition 18.3 (selected growth and fresh acquisition).** Recover
+$h$, take its last growth address or the root if none, and descend
+left in earned logical code to a leaf. Its type selects its enabled
+$P/S$. Execute that actual raw call through the retained binding and
+rights, consume Growth and complete Return, and synchronize the predictor.
+Its field is $\iota_gv$. A fresh Construction 17.2 after clearing or
+isolating old historical/predictor advice represents
+
+$$
+H=hK^{n+1}g,\qquad
+v'=T_{t'}^{n+2}\iota_gT_t^{n+1}x_h.
+\tag{18.2}
+$$
+
+Any finite repetition of these selected-growth/fresh-acquisition rounds
+has this actual historical and returned-state meaning.
+
+Proof. Persistent logical positions and finite left descent make the
+selected leaf real and enabled, by Construction 6.3. The old acquisition
+has already executed $n+1$ Ticks. If a previous birth exists, this is
+a positive added internal gap; with no previous birth the first growth
+needs no internal separation. Thus $H\in\mathcal H_A$. Its final tree
+has $I'=n+1$ and its new one-Tick schedule adds $I'+1=n+2$ real
+Ticks, giving (18.2). Theorem 17.3 applies anew, and induction gives
+finite repetition. Arbitrary Add or Reset may leave this historical
+image while the complete current predictor remains valid. $\square$
+

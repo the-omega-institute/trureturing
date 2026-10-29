@@ -1,0 +1,33 @@
+#### 命题 5.3（黄金归一块可以含有下一层门）
+
+设 $a,b\in\mathbb{R}$，$a^2+b^2=1$，$W$ 为酉算符，则
+
+$$
+
+F_W=\begin{pmatrix}aI&bW\\bW^\dagger&-aI\end{pmatrix}
+
+$$
+
+满足 $F_W^\dagger=F_W$、$F_W^2=I$。特别可取 $a=\varphi^{-1},b=\varphi^{-1/2}$。
+
+**证明。** 
+两对角块的平方和均为 $(a^2+b^2)I$，非对角块分别是 $abW-abW$ 及其伴随，故为零。
+ ∎
+
+这给出一种字面上的递归替换，但两个非对角块必须彼此伴随。如果把 $a,b$ 也提升为自伴算符，块 $\bigl(\begin{smallmatrix}A&B\\B&-A\end{smallmatrix}\bigr)$ 的平方非对角元是 $[A,B]$；此形式保酉需要 $A^2+B^2=I$ 与 $[A,B]=0$。任意替换会损坏相消关系。
+
+模小于 $1$ 的标量系数本身也不是一个确定性酉门：$(cI)^\dagger(cI)=|c|^2I$。它可以是较大酉门的一块或某个测量分支。对同一有限维空间上的任意收缩算符 $A$，一个明确的完成是
+
+$$
+
+J(A)=\begin{pmatrix}
+A&(I-AA^\dagger)^{1/2}\\
+(I-A^\dagger A)^{1/2}&-A^\dagger
+\end{pmatrix}.
+
+$$
+
+此矩阵酉。证明可将 $A=L\Sigma R^\dagger$ 作奇异值分解，左右酉变换后得到逐奇异值的实二维块 $\bigl(\begin{smallmatrix}s&\sqrt{1-s^2}\\\sqrt{1-s^2}&-s\end{smallmatrix}\bigr)$。这是标准的 Halmos 酉扩张，亦见 （[5](#ref-robinson)）。被补上的通道就是保留总范数所必需的自由度。
+
+<a id="sec-6"></a>
+

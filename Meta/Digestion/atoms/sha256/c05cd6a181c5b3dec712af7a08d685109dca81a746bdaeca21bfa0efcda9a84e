@@ -1,0 +1,19 @@
+**Definition 69.1 (the split sweep).** Begin with empty logical address
+and empty ancestor-continuation stack. At a scheduled address $p$, send
+one complete original $S_p$ frame, consume its complete reply and finish
+its return. Refusal(wrong type) records alpha and finishes this visit.
+Growth$(S,p)$ records beta and finishes this visit: do not schedule either
+newborn child. Refusal(branch) records a branch, visits its left child,
+then its right child, using a backed pending-right flag. Stop when the
+root visit and every pending continuation are finished. An absent refusal
+is outside the promised executions and is not interpreted as a leaf.
+
+The output is Definition 54.1's canonical preorder word, with two-bit
+symbols $00,01,10$ for alpha, beta and branch. Retain one mutable address,
+a finite flag per active ancestor, the growing output word and the actual
+bound root/rights. Scheduling and parsing use only acquired replies, not
+a supplied subtree, fuel, height or stopping bound. The stack program is
+source independent; its actual stack and output are not bounded in size
+by finiteness of that program. This is the entry-node traversal technique
+of §§54 and 62, with a different leaf operation and endpoint.
+

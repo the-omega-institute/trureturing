@@ -1,0 +1,18 @@
+**定义 11.1（均匀谱与扰动矩阵）。** 令 $p^0_i=1/n$、
+$M_0=M(p^0)$、$v_i^0=a_i-\bar a(p^0)$、
+$\rho=\rho_n$、$\tau=\tau_n$、$\beta=\beta_n$、
+$\rho_k=\mu_k/n$。均匀点的顶空间为
+$E_0=\operatorname{span}_{\mathbb C}\{f_1,f_{n-1}\}$，按实结构理解为二维实空间。
+记 $\Pi_0$ 为其投影，$Q_0=I_H-\Pi_0$，
+$G_0=Q_0(\rho I_{Q_0H}-Q_0M_0Q_0)^{-1}Q_0$。
+对每个实切向量 $\sum_i\xi_i=0$，定义
+$x_k=\sum_i\xi_i z^{ki}$、$x_0=0$，
+$C_\xi=\sum_i\xi_i v_i^0(v_i^0)^{\mathsf T}$、
+$w_\xi=\sum_i\xi_i v_i^0$。有
+
+$$
+(C_\xi)_{km}=\frac{x_{m-k}}{n\overline d_kd_m},\qquad
+\|w_\xi\|^2=\sum_{k=1}^{n-1}\rho_k|x_k|^2,\qquad
+H_\xi=\Pi_0(-w_\xi w_\xi^{\mathsf T}+C_\xi G_0C_\xi)\Pi_0. \tag{11.1}
+$$
+

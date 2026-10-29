@@ -1,0 +1,72 @@
+## 6. 预测状态不自动恢复执行历史
+
+定理 4.1 只讨论来源配置的未来行为，不自动恢复到达该配置的有序路径。把
+完整未来行为商的类型和合法边写成一个 typed residual graph $G$，以合法具名
+操作为边，以可拼接的有序路径为态射，可得到路径范畴 $\operatorname{Path}(G)$。
+对象层的双射 $\chi_{ji}$ 只有在同时给出保持源、靶、类型、具名操作和完整
+边记录的边映射 $\widehat\chi_{ji}$ 时，才提升为路径范函子：
+
+$$
+\widehat\chi_{ji}(uv)=\widehat\chi_{ji}(u)\,\widehat\chi_{ji}(v),
+\qquad
+\widehat\chi_{ji}(\varepsilon_v)=\varepsilon_{\chi_{ji}(v)}.
+\tag{MPC.23a}
+$$
+
+空间或边界视图通常先给出对象映射，时间视图给出路径上的 cocycle，记忆视图
+给出有序转录。若缺少 $\widehat\chi_{ji}$，四视图仍可能在状态层互相恢复，却
+不能声称它们运输了同一组执行路径。
+
+设 $\mathcal P$ 是从固定根出发的合法有限路径，令
+
+$$
+F_0(w)=\bigl(\operatorname{end}(w),\tau_r(w)\bigr),
+$$
+
+其中 $\tau_r$ 是从固定根出发、下降到残余图的交换型加法 cocycle。若再有记忆视图
+$m:\mathcal P\to M$，则联合历史读出为
+
+$$
+F(w)=\bigl(\operatorname{end}(w),\tau_r(w),m(w)\bigr).
+\tag{MPC.24}
+$$
+
+约定 $\ker m$ 表示 $m$ 值相等所定义的路径关系。于是，在实际路径像上，历史能够被恢复的充要条件是
+
+$$
+\boxed{
+\ker F_0\cap\ker m=\Delta_{\mathcal P}.
+}
+\tag{MPC.25}
+$$
+
+这是状态充分性之外的另一层条件。
+
+已有的 typed residual cocycle 重构判据给出一个直接障碍：在有限强连通残余图
+中，若某个回返点 $z$ 有两个满足 $uw\ne wu$ 的有序回返块（例如它们的首个具名边
+不同），取根 $r$ 到 $z$ 的任一合法前缀 $p$，则 $puw$ 与 $pwu$ 都属于 $\mathcal P$，并且
+
+$$
+\tau_r(puw)=\tau_r(p)+\tau_z(u)+\tau_z(w)
+=\tau_r(p)+\tau_z(w)+\tau_z(u)=\tau_r(pwu).
+$$
+
+因此 $puw$ 与 $pwu$ 具有相同终点和相同累计时间；若记忆只保留终点、时间或
+它们的可交换函数，(MPC.25) 失败。在有限强连通图、每条边持续量严格为正且时间是实数加法 cocycle 的范围内，
+单一有向命名环是终点加时间能够在全部有限路径上注入的既有判据。这个结论来自
+[typed residual cocycle reconstruction](RECURSIVE_RELATIONAL_OBSERVATION_TYPED_RESIDUAL_COCYCLE_RECONSTRUCTION.md)，
+本卷只把它接到最小预测核心，不重复其完整证明。
+
+最小的历史补充不是再增加一个任意标量，而是至少切开联合读出
+$F_0$ 的碰撞类。若要恢复完整具名路径，记忆必须保留非交换的路径证书，或
+一个在每个 $F_0$ 纤维上单射的编码。于是：
+
+$$
+\boxed{
+\text{状态层四视图互相恢复}
+\;\not\Rightarrow\;
+\text{路径层四视图互相恢复}.
+}
+\tag{MPC.26}
+$$
+

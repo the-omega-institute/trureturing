@@ -1,0 +1,23 @@
+**Proposition 13.5 (one-step conditional support and finite erasure for the witness).** For (13.1), the identity quotient has
+
+$$
+c_{j,v}^L(w)=c_{j,v}^R(w)=0
+\quad\text{for every }j\ge0\text{ and every positive-probability one-letter word, a.s.}
+\tag{13.14}
+$$
+
+Furthermore,
+
+$$
+e_L^P(j)=e_R^P(j)=0\quad(j\ge1),\qquad A_P(1)=0.
+\tag{13.15}
+$$
+
+**Proof.** In the right direction, $V_j^R$ determines the phase from its infinite left half-line. At $j=0$, the posterior support of $Z=H_1$ has a fixed phase and at most the two possible previous-bit coordinates $U$. After observing $W=X_1=1$, legality forces $U=0$, leaving a singleton. After observing $W=0$, all feasible forward $M_0$ rows of that fixed phase normalize to the same endpoint $(S_2,0)$. Their diameter is zero. At $j\ge1$, $X_j$ and the phase are already known from $V_j^R$, so $H_{j+1}$ itself is known; any further posterior support is a singleton.
+
+In the left direction, $V_j^L$ determines the phase from its infinite right half-line. The one-letter reverse observation is $W=X_{-j-1}$, exactly the previous-bit coordinate of $Z_j^L=H_{-j}$. Thus conditioning on $(V_j^L,W)$ fixes both coordinates of $Z_j^L$. Its support is a singleton at every $j\ge0$, irrespective of the endpoint distribution of its reverse row. This proves (13.14) in the required marginal-over-$U$ supports, so (13.11) holds with $m_L=m_R=1$ and $\kappa_L=\kappa_R=0$.
+
+Directly at the output level, for $j\ge1$ either retained field contains both neighbors of the center, and its infinite half-line determines the phase. Hence (13.2) is measurable in both $\mathcal L_j$ and $\mathcal R_j$. The tower identity gives $p_j^L=p_j^R=q_0$, proving (13.15). This also proves $A_P(0)<\infty$, since only the two bounded errors at $j=0$ can contribute.
+
+Alternatively a finite burn-in bypasses the initial obstruction even for the global-diameter variance condition: for $j\ge1$, both cut variances $\mathcal D(U;Z_j^d\mid V_j^d)$ vanish. In the right direction the cut state is already observed as above; in the left direction the phase-conditioned one-step Markov rule separates the center from the earlier cut state once the observed neighbors and phase are given. By (5.5), all post-word residuals at those cuts also vanish. Thus the weighted condition is vacuous after $b_L=b_R=1$. There is no persistent bad-variance obstruction after this burn-in. $\square$
+

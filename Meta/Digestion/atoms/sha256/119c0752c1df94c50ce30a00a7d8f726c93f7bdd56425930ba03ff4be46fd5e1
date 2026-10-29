@@ -1,0 +1,13 @@
+在前缀穷尽、law 由完整有限转录决定、联合核细化满足
+$K_n\subseteq A_n^{\mathrm{law}}$、视图满足动态充分性和 bonding naturality 的
+条件下，可以按以下强度使用本卷：
+
+1. $A_\infty^{\mathrm{law}}$ 是声明测试族的最小未来行为关系；
+2. $C_{\mathscr T}=Z/A_\infty^{\mathrm{law}}$ 是最小预测核心；
+3. $L_A$ 是其有限 law 阶段的数学完成，$B_A$ 是实际来源像；
+4. $K_n=A_n^{\mathrm{law}}$ 时，JKT 的联合核塔就是最小预测塔；
+5. 仅有 $K_n\subseteq A_n^{\mathrm{law}}$ 时，得到自然商映射
+   $\Phi:L_K\to L_A$，但必须另证相容 lift 才能声称完成层满射；
+6. 四个状态视图只有在 (MPC.15) 下才彼此唯一恢复；
+7. 路径顺序还需 (MPC.25)，不能由状态商、累计时间或边界数值自动推出。
+

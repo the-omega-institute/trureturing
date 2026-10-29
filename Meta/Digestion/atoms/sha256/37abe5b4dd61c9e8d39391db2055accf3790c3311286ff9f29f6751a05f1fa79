@@ -1,0 +1,15 @@
+1. A. Atashpendar, D. Mestel, A. W. Roscoe, and P. Y. A. Ryan, *A Proof of
+   Entropy Minimization for Outputs in Deletion Channels via Hidden Word
+   Statistics*, arXiv:1807.11609v1, Equations (1), (3), and (11), and the
+   finite-ordering discussion.
+2. S. Singhvi, O. Sabary, D. Bar-Lev, and E. Yaakobi, *The Input and Output
+   Entropies of the $k$-Deletion/Insertion Channel*, arXiv:2202.03024v2,
+   one-deletion run-length entropy theorem.
+3. S. Singhvi, O. Sabary, D. Bar-Lev, and E. Yaakobi, *Conditional Entropies
+   of $k$-Deletion/Insertion Channels*, arXiv:2407.10026v2, the one-deletion
+   entropy formula and its run-length extremal consequences.
+4. NIST Digital Library of Mathematical Functions,
+   [Equation (26.3.1)](https://dlmf.nist.gov/26.3.E1), the factorial formula,
+   and [Equation (26.3.4)](https://dlmf.nist.gov/26.3.E4), the binomial
+   series used in the Vandermonde convolution.
+

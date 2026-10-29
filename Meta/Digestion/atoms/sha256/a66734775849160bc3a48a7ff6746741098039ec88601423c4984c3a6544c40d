@@ -1,0 +1,30 @@
+**Theorem 10.1 (Global $O(a^{-2})$ squeeze without a lower window cutoff).** Under (9.1), the infimum over exactly the full domain of Definition 1.1 satisfies
+
+$$
+\boxed{\quad
+\min\{H_d-72\delta^2\mu^{-6},H_r\}
+\le\inf_xH(x)\le\min\{H_d,H_r\}.
+\quad}\tag{10.1}
+$$
+
+In particular,
+
+$$
+0\le\min\{H_d,H_r\}-\inf_xH(x)
+\le72\delta^2\mu^{-6}=O_L(a^{-2}).
+\tag{10.2}
+$$
+
+No positive lower bound on $a\delta$ is required. The infimum is attained by an admissible law.
+
+**Proof.** The threshold implies $\mu\ge1/2$ and
+
+$$
+\frac b{r^2\mu}\le\frac{6\delta}{r}
+\le\frac{6L}{a^2}<\frac1{12}.
+$$
+
+For example $L/a\le10^{-4}$ and $a\ge10000$ already make the final strict inequality immediate. Every actual law either has $\min_i y_i\ge\tau$, when Theorem 8.1 applies, or has $\min_i y_i<\tau$, when Theorem 9.1 applies. This exhaustive partition proves the lower bound in (10.1). The upper bound consists of the actual symmetric law in Lemma 1.2 and the actual two-atom law (9.2). The difference between the two lower and upper minima is at most $72\delta^2\mu^{-6}$. Since $\mu\ge1/2$ and $\delta\le L/a$, this proves (10.2), including arbitrarily small positive $a\delta$.
+
+For attainment choose a minimizing sequence with energy bounded by some finite $M$, possible because the symmetric trial law has finite energy. Since $K\ge1$, one has $w_i\ge y_i$ and hence $H\ge1/y_i$ for every label. Thus each marginal along this sequence is at least $1/M$. The probability simplex on the finite set of nonempty subsets of $[s]$ is compact. A convergent subsequence has a limit with total mass one, mean $q$ and all marginals at least $1/M$. Energy is continuous there, so the limit attains the infimum. The lower bound $1/M$ is a consequence for this sequence, not a restriction of the original domain. ∎
+

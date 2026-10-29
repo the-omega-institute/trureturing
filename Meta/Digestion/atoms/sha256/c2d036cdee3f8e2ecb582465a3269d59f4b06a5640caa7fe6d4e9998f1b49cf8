@@ -1,0 +1,28 @@
+**Definition 147.1 (A phase on the installed control).**
+Keep the source, preparation, vectors and original schedules of
+Definition 142.1. Put
+
+$$
+P=ee^\dagger,\qquad \Pi=I_3-P,\qquad
+N_t=N_0\Pi+e^{\mathrm i t}P,\qquad t\in\mathbb R,
+\tag{147.1}
+$$
+
+where $N_0$ is the displayed order-three control in (142.1). Since
+$N_0P=P$, $N_0\Pi=\Pi N_0$, and $N_0^3\Pi=\Pi$, every $N_t$ is
+unitary and $N_tP=e^{\mathrm i t}P$. The phase $t$ labels a different
+installed source; it is not a phase selector available during one run.
+
+For $i\le8$ retain the actual prefixes $u_i$ of (142.1), and set
+
+$$
+u_9(t)=N_t,\qquad r_i(t)=r_i\ (i\le8),\qquad
+r_9(t)=N_t\rho_0N_t^\dagger .
+\tag{147.2}
+$$
+
+For $w\in\mathcal W_2$, let $U_{w,t}$ be the chronological product
+formed with $V_0,V_1,N_t$, let $Q_{w,t}=U_{w,t}V$, and let
+$q_{i,w,t}$ be the literal row (116.2), with $r_i(t)$ and the original
+factor $a_w/2$. No row is normalized and no closure element is installed.
+

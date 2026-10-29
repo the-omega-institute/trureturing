@@ -1,0 +1,14 @@
+**引理 4.1（完整记录控制各类读出）。** 对共同输入 $\rho_{AR}$，
+
+<a id="eq-4-u04"></a>
+
+$$
+D((\operatorname{Inst}_\Phi\otimes\operatorname{id})(\rho),
+  (\operatorname{Inst}_\Psi\otimes\operatorname{id})(\rho))
+=\frac12\sum_a\|((\Phi_a-\Psi_a)\otimes\operatorname{id})(\rho)\|_1.
+$$
+
+它同时上界当前结果分布 TV、忘记记录后的后态距离和任何共同后续测量的分布差。**证明。** 块对角矩阵的迹范数等于各块迹范数之和；每块用 $|\operatorname{Tr}X|\le\|X\|_1$ 得结果 TV。忘记记录或作共同后续 CPTP 后处理时，Hermitian 差的迹范数不增；写成 $X=X_+-X_-$ 后由正性、三角不等式和保迹性立即得到。
+
+<a id="ex-4-2"></a>
+

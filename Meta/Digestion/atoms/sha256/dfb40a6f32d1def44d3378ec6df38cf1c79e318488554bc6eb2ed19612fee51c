@@ -1,0 +1,69 @@
+**定义 54.1（原对象及忠实相容集合）。** 本卷沿用[第一卷](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA.md) §17.1、§35 和[第二卷](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_II.md) §§39–42 的对象。物理空间为 $H=\mathbb C^5$，正交基为 $(e_0,\ldots,e_4)$，并置
+
+$$
+\begin{gathered}
+u_H=(e_0+e_3)/\sqrt2,\quad v_H=(e_1+e_4)/\sqrt2,\quad z_H=e_2,
+\qquad B=(u_H,v_H,z_H),\\
+K_0=u_He_0^\dagger+v_He_2^\dagger/\sqrt2+z_He_4^\dagger,
+\quad K_1=u_He_1^\dagger+v_He_2^\dagger/\sqrt2+z_He_3^\dagger,\\
+U=\begin{pmatrix}1&0&0\\0&0&1\\0&1&0\end{pmatrix},\qquad
+W=\begin{pmatrix}0&1&0\\1&0&0\\0&0&1\end{pmatrix},\qquad P_+=(I_3+W)/2,\\
+\xi=(1,1,1)^{\mathsf T}/\sqrt3,\quad
+e=(1,1,-2)^{\mathsf T}/\sqrt6,\quad f=(1,-1,0)^{\mathsf T}/\sqrt2,\\
+q=(\xi+e)/\sqrt2,\quad r=(\xi-e)/\sqrt2,\quad E=qq^\dagger,\quad P=BEB^\dagger,\\
+(a,h_{\rm out},g)=(Uq,Ur,Uf),\quad
+C=(a+h_{\rm out})(a+h_{\rm out})^\dagger=2\xi\xi^\dagger,\\
+\ell=(0,1,0)^{\mathsf T},\quad N=\ell^\perp,\quad
+\tau=3-2\sqrt2,\quad c_\ell=(2+\sqrt2)/\sqrt{12},\quad
+\ell=c_\ell(h_{\rm out}-\tau a).
+\end{gathered}
+\tag{54.1}
+$$
+
+固定 $0<d<1$，记 $\beta=1-d$、$e_d=(6-5d)/16$。本卷的初始集合是全部复正矩阵组成的原集合
+
+$$
+\begin{split}
+\mathcal K_d=\{\rho=A+D:\;&A,D\succeq0,\quad D\ell=0,\quad
+\operatorname{Tr}\rho=1,\\
+&a^\dagger Aa=d,\quad\operatorname{Tr}(C\rho)=d,\quad
+\operatorname{Tr}(E\rho)=e_d\}.
+\end{split}
+\tag{54.2}
+$$
+
+这里的 $A,D$ 仅为集合定义中的存在量词；不要求它们是可取得的制备分解。引用第一卷定理 35.4、35.6，(54.2) 等价于以下六实参数表示，基为 $(a,h_{\rm out},g)$：
+
+$$
+\rho=
+\begin{pmatrix}
+d+s&-(s+y)/2+\mathrm i v&(4s-3w+\mathrm i m)/\sqrt6\\
+-(s+y)/2-\mathrm i v&y&(w+\mathrm i n)/\sqrt6\\
+(4s-3w-\mathrm i m)/\sqrt6&(w-\mathrm i n)/\sqrt6&1-d-s-y
+\end{pmatrix},
+\tag{54.3}
+$$
+
+$$
+\rho\succeq0,\qquad s\ge0,\qquad
+v^2+\frac{[y+(1+2\tau)s]^2}{4}\le d(y-\tau^2s).
+\tag{54.4}
+$$
+
+也可把最后一个条件写为
+
+$$
+B_d(\rho)=
+\begin{pmatrix}d&a^\dagger\rho\ell\\\ell^\dagger\rho a&\ell^\dagger\rho\ell\end{pmatrix}\succeq0.
+\tag{54.5}
+$$
+
+不将人口上界或实对称截面替代 (54.2)。原复通道纤维为第一卷 (35.1) 的 $\mathcal F_{\sqrt d}$；每个 $\rho\in\mathcal K_d$ 对应实际后继
+
+$$
+S_\rho(X)=B[UP_+XP_+U^\dagger+(f^\dagger Xf)\rho]B^\dagger
+\tag{54.6}
+$$
+
+及至少一个 $T\in\mathcal F_{\sqrt d}$，使 $\mathcal GT=S_\rho$，其中 $\mathcal G(Y)=\sum_jK_jYK_j^\dagger$。这一路径保留原输入域、五维输出和不受限的 Kraus 秩。
+

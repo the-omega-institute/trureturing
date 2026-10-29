@@ -1,0 +1,32 @@
+### 4.2 有限层视图和 bonding 自然性
+
+若每层有视图
+
+$$
+e_{i,n}:Q_n\longrightarrow Y_{i,n}
+$$
+
+并且满足
+
+$$
+\delta_{i,n}e_{i,n+1}=e_{i,n}p_n,
+\tag{MPC.21}
+$$
+
+同时有 $K_n\subseteq A_n^{\mathrm{law}}$，则可直接在 $Q_n$ 上定义诱导关系
+
+$$
+x\,\bar A_n\,y
+\iff
+\exists z,u\in Z:\ q_n(z)=x,\ q_n(u)=y,\ z\,A_n^{\mathrm{law}}\,u.
+$$
+
+由于 $A_n^{\mathrm{law}}$ 是等价关系且包含 $K_n$，这个定义与代表元选择无关。
+若还要让联合更新 law、selector、权限和记录在该关系上下降，则需另加联合核的
+lumpability 与 bonding 自然性；那是动力学运输条件，不是定义 $\bar A_n$ 的前提。
+于是可在每层使用 (MPC.15) 的相应 law 残余版本。若四个视图满足
+$\ker e_{i,n}=\bar A_n$ 对所有 $i$，且完整联合核、selector、档案和权限更新都沿
+$\chi_{ji,n}$ 运输，则它们给出 JKT 所要求的自然图册。逐层双射而不满足
+(MPC.21)，不能定义逆极限上的视图运输；只运输一个边缘读数，也不能保持
+自适应策略树。
+

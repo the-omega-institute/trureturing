@@ -1,0 +1,18 @@
+**Theorem 11.1 (all-address odd-offset Read macro).** Fix $k\ge1$, any
+logical current tree $t\in\mathcal T$, and actual register
+$y=\rho^{2k+1}t$. For a nonroot address $p=ad$, $d\in\{L,R\}$, set
+
+$$
+ G_k^o(p)=aR^kLL.                                  \tag{GPO.36}
+$$
+
+In addition to (GPO.26), this is a total paid presence query. Its bit
+$g$ is one exactly when $p$ was present in $t$. The complete actual table
+is
+
+| Logical reply $r_t(p)$ | $g$ for nonroot $p$ | $b$ | $c$ |
+| --- | --- | --- | --- |
+| absent | $0$ | $0$ | $0$ |
+| alpha | $1$ | $0$ | $0$ |
+| beta | $1$ | $1$ | $0$ |
+| branch | $1$ | $1$ | $1$ |

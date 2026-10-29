@@ -1,0 +1,96 @@
+**Theorem 3.1 (The global product bound).** For $4\le a\le b$, define
+
+$$
+M_{a,b}=n(n-3)+\frac{b(d+3)}{d+1},\qquad
+F(w)=\frac{S(w)+2K(w)}{1+S(w)+K(w)},\quad S(w)=2w-n+1,
+\tag{3.1}
+$$
+
+where $K$ is (2.2). Every conductance in Definition 1.1 satisfies
+
+$$
+\frac{\lambda_2(L)R(c)}n\le n-1-F(w)\le\frac{M_{a,b}}n,
+\qquad w=W/\lambda_2(L)\ge b.
+\tag{3.2}
+$$
+
+The second inequality is strict if $w>b$. If $\lambda_2R=M_{a,b}$,
+then $w=b$, $E=K(b)=(a-1)d/b$, and $\operatorname{rank}H\le2$;
+in particular the $A$-degrees have the concentration specified in Lemma 2.1.
+
+*Proof.* Put $q_k=\lambda_k/t-1\ge0$ for $2\le k\le n$.
+Together with the zero eigenvalue on constants these are the eigenvalues
+of $H$. Let $e_j$ be their elementary symmetric sums, with $e_0=1$.
+Then $e_1=S$, $e_2=E$, and every $e_j\ge0$.
+The elementary symmetric-sum identity used in the three-hub Theorem 2.2,
+proved by differentiating $\prod_k(1+xq_k)$ at $x=1$, is
+
+$$
+\sum_{k=2}^n\frac{q_k}{1+q_k}
+=\frac{\sum_{j=1}^{n-1}j e_j}{\sum_{j=0}^{n-1}e_j}
+\ge\frac{S+2E}{1+S+E}.
+\tag{3.3}
+$$
+
+For completeness the final ratio is strictly less than $2$, since
+$2(1+S+E)-(S+2E)=2+S>0$. Every omitted denominator term $e_j$,
+$j\ge3$, has numerator coefficient $j>2$, so adding them cannot decrease
+the ratio. Equality is equivalent to all $e_j=0$ for $j\ge3$, or,
+since the $q_k$ are nonnegative, to at most two positive $q_k$.
+This is an equality consequence, not a rank restriction on competitors.
+
+For fixed $S\ge0$, the derivative of $(S+2E)/(1+S+E)$ with respect to
+$E$ is $(S+2)/(1+S+E)^2>0$. Lemma 2.1 therefore gives
+
+$$
+\sum_{k=2}^n\frac{q_k}{1+q_k}\ge F(w).
+\tag{3.4}
+$$
+
+By (1.3), $tR/n=n-1-\sum_k q_k/(1+q_k)$, proving the first
+inequality in (3.2).
+
+It remains to compare every allowed $w$ on this same conductance domain.
+For $w\ge b$, both $S(w)\ge d+1$ and $K(w)\ge0$, so all displayed
+denominators are positive. Put
+
+$$
+h=\frac{a-1}{b}+\frac{b-1}{a},\qquad
+k=\frac{a(a-1)}b+\frac{b(b-1)}a,
+\qquad K(w)=hw-k.
+$$
+
+Direct differentiation gives
+
+$$
+\begin{aligned}
+F'(w)
+&=\frac{2+(3-n)h+2k}{(1+S(w)+K(w))^2}\\
+&=\frac{n(d^2+2n-3)}{ab(1+S(w)+K(w))^2}>0.
+\end{aligned}
+\tag{3.5}
+$$
+
+To verify the simplification, multiplying the numerator by $ab$ gives
+$2ab+a(a-1)(3-d)+b(b-1)(3+d)$;
+using $b-a=d$ reduces this to $n(d^2+2n-3)$.
+Thus $F(w)\ge F(b)$, strictly if $w>b$. At $w=b$,
+
+$$
+S(b)=d+1,\qquad K(b)=\frac{(a-1)d}{b},\qquad
+1+S(b)+K(b)=\frac{n(d+1)}b.
+$$
+
+Using $(S+2K)/(1+S+K)=2-(S+2)/(1+S+K)$ now gives
+
+$$
+n-1-F(b)=n-3+\frac{b(d+3)}{n(d+1)}=\frac{M_{a,b}}n.
+\tag{3.6}
+$$
+
+This proves the second inequality in (3.2) with its strictness.
+If the product equals $M_{a,b}$, equality throughout first forces $w=b$,
+then $E=K(b)$ by the strictly increasing dependence on $E$ in (3.4),
+and finally $\operatorname{rank}H\le2$ by (3.3). Lemma 2.1 then
+supplies the degree equality implications. ∎
+

@@ -1,0 +1,48 @@
+**Theorem 11.2 (strict binary cost and finite-lift exclusion).** Let $0<p<1$ and let the observed common record have $\mathbb P(X=1)=p$, $\mathbb P(X=0)=1-p$. Every individual finite realization of this diagonal output law satisfying Definition 10.1 has
+
+$$
+C_{\rm src}>\frac12 h(p),
+\qquad h(p):=-p\log p-(1-p)\log(1-p).
+\tag{11.8}
+$$
+
+Equivalently, for
+
+$$
+P_p(0,0,0)=1-p,\qquad P_p(1,1,1)=p,
+\qquad P_p(a,b,c)=0\text{ otherwise},
+\tag{11.9}
+$$
+
+there is no choice of nonempty finite source alphabets, hidden law and normalized incident kernels realizing $P_p$ with source budget at most $h(p)/2$. Such finite realizations do exist at larger budgets.
+
+*Proof.* Suppose equality held in (11.2). By Theorem 11.1, the two positive conditional source laws would be threefold products. Write their one-source probability vectors as $u_i,v_i,w_i$ for $i\in\{0,1\}$. Then
+
+$$
+\nu=(1-p)u_0\otimes v_0\otimes w_0
+       +p u_1\otimes v_1\otimes w_1.
+\tag{11.10}
+$$
+
+Unconditional independence of $\alpha,\beta$ implies, entry by entry,
+
+$$
+0=\nu_{\alpha\beta}-\nu_\alpha\otimes\nu_\beta
+=p(1-p)(u_1-u_0)\otimes(v_1-v_0).
+\tag{11.11}
+$$
+
+A tensor product of two finite real vectors is zero only if at least one vector is zero: if each had a nonzero coordinate their product at that pair of coordinates would be nonzero. Thus $u_0=u_1$ or $v_0=v_1$. The other two unconditional pair independences give the analogous alternatives for $(u,w)$ and $(v,w)$. At most one of the three source marginal vectors can change with $i$; at least two are identical across the two fibers.
+
+Choose two such sources, say $\alpha,\beta$. Their conditional joint law in each fiber is the same product $u_0\otimes v_0=u_1\otimes v_1$. They are jointly independent of $X$. This contradicts $H(X\mid\alpha,\beta)=0$ in (11.4), because joint independence would give $H(X\mid\alpha,\beta)=h(p)>0$. Equivalently, choose a positive coordinate in each of the two common marginal vectors. Their pair has positive probability under both output fibers, so it cannot have a unique deterministic incident readout. This also verifies the contradiction when other cells are structural zeros. The same argument applies whichever two source vectors are unchanged. Equality is impossible, and (11.2) gives (11.8).
+
+For nonvacuity take a Bernoulli $Y$ of parameter $p$, put $\alpha=\beta=Y$ and let $\gamma$ be constant. Use the deterministic incident responses $A=\beta$, $B=\alpha$, $C=\alpha$. They are normalized kernels of exactly the permitted form, can be defined the same way on off-support input pairs, and give $A=B=C=Y$. Here
+
+$$
+C_{\rm src}=H(\alpha)+H(\beta)+H(\gamma)-H(\alpha,\beta,\gamma)=h(p)>h(p)/2.
+$$
+
+This proves existence without assigning an optimal binary cost. ∎
+
+The quantifier in Theorem 11.2 is over each finite realization, with no cardinality bound imposed uniformly on all realizations. Pointwise strictness does not prove a uniform positive margin above $h(p)/2$, nor determine whether the infimum over unbounded finite alphabets equals that boundary or a larger value. For $p=0$ or $p=1$, the record is constant and a product-source realization has cost zero; the strict assertion requires both fibers to have positive probability. For a constant record in any finite model, Theorem 11.1 reduces equality to $C_{\rm src}=0$, as expected.
+

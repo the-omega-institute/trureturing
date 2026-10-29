@@ -1,0 +1,15 @@
+**Theorem 111.2 (the actual biased trace gives a regular conservative form).**
+For every $F\in\mathcal D$ there is a unique $z_F\in\mathscr K$ with
+
+$$
+Cz_F=\Pi F,\qquad
+c_F=\int F\,dM-\langle v,z_F\rangle,
+\qquad F=c_F\mathbf1+Jz_F.
+\tag{111.3}
+$$
+
+It attains (111.2). The polarization
+$\mathcal E(F,G)=\langle z_F,z_G\rangle$ is a densely defined closed
+Dirichlet form on $\mathscr G$. The cylinder algebra $\mathcal A$ is a
+core both for the form norm and uniformly for $C(\Omega)$, so the form
+is regular. Its zero-energy functions are precisely the constants.

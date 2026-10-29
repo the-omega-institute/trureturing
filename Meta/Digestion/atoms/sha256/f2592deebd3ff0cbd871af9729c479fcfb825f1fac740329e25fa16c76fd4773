@@ -1,0 +1,13 @@
+**定理 8.3（事件或事件乘积的秩一重置排除）。** 对任意 $N\ge1$、$\theta\in\Theta_N$，若 $\operatorname{rank}(M_1)\le1$ 或 $\operatorname{rank}(M_0M_1)\le1$，则 $P_\theta\in\mathcal R$，从而 $d(P_\theta)\le c_\star-\varepsilon_{\mathcal R}$。若这两条件之一仅在裁剪后的表示上成立，同一结论也成立。
+
+证明。非负秩一矩阵可写成非负列、行的乘积 $fg$：选一个非零列作为 $f$，其他列按非负比例取其倍数。若 $M_1=fg$，则对每个 $u$，$\lambda M_uM_1=(\lambda M_uf)g$；空词的事件行亦是同一 $g$ 的倍数。因此（8.2）的四个柱概率直接给
+
+$$
+(\lambda M_uf)(gM_v\mathbf1)(\lambda f)(g\mathbf1)
+-(\lambda M_uf)(g\mathbf1)(\lambda f)(gM_v\mathbf1)=0.
+$$
+
+若矩阵秩零，事件概率零，所有残差也零。
+
+再令 $B=M_0M_1$ 的秩至多一。由合法性与非负性，$\lambda M_1^2=0$ 为行等式；平稳性因而给 $\lambda M_1=\lambda B$。非空词 $u$ 若末位零，写 $u=s0$，则 $\lambda M_uM_1=\lambda M_sB$。若末位一，写 $u=s1$，整个词 $s11$ 非法，所以 $\lambda M_sM_1^2\mathbf1=0$；非负性使该行本身零。空词用 $\lambda B$。于是秩一 $B=fg$ 时每个事件行都是同一个 $g$ 的倍数，按上一计算残差全零；秩零时 $\lambda M_1=0$。这也覆盖内部非法词。裁剪表示保留同一律，故可对它应用相同证明。$\square$
+

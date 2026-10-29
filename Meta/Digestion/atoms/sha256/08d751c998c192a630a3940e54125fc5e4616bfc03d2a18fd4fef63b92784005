@@ -1,0 +1,18 @@
+**Definition 65.1 (actual parameters).** For the finite entry $t$ let
+$a,b,L,n,D,D_\alpha$ have exactly the meanings in Definition 58.1, so
+$L=a+b$, $n=2L-1$, and $D$ sums depths of all original logical nodes.
+Let $b_V$ count eligible original beta leaves and put
+
+$$
+D_{\beta V}=\sum_{\substack{p\in F(t)\cap V_K\\t|_p=\beta}}|p|,
+\qquad
+D_s=\sum_{\text{successful acquisition targets }p}|p|.
+\tag{AAII.31}
+$$
+
+Here $K$ is the actual original logical skeleton used only to state
+counts, not supplied to the controller. On every reachable entry
+$a+b_V=m$, while the other $L-m$ leaves are beta. All following
+traffic counts concern that same actual run, not a normalized surrogate
+or a different optimal run for each coordinate.
+

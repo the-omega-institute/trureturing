@@ -1,0 +1,24 @@
+#### 引理 7.2（黄金谱与正字逆元）
+
+$\mathcal P$ 是正交投影；$K$ 酉，$K^{10}=I$，$K^{-1}=K^9$，且对全部整数 $n$ 有
+
+$$
+K^n=\omega^n[I+(\omega^n-1)\mathcal P].
+$$
+
+另外
+
+$$
+\delta=a^2=1-a,\quad a\delta=a-\delta,\quad
+\omega^2+a\omega+1=0,\quad |1-\omega|^2=\varphi^2.
+$$
+
+**证明。**
+
+活动块自伴、迹一、行列式 $a\delta-b^2=0$，正对角元给正性，所以本征值为零与一。其余块也为投影。$K$ 在两投影扇区的本征值为 $\omega,\omega^2$，给幂公式及十次单位。
+$\varphi^2=\varphi+1$ 给前三个实代数恒等式。又 $2\cos(3\pi/5)=-a$，故 $\omega+\omega^{-1}=-a$，乘以 $\omega$ 即得二次式；$|1-\omega|^2=2+a=\varphi^2$。
+
+∎
+
+<a id="statement-7-3"></a>
+

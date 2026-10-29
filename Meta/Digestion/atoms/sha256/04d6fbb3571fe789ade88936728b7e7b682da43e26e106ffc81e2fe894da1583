@@ -1,0 +1,19 @@
+Each surviving case therefore has a finite native source term
+$W(\mathbf x)$ and a Boolean native formula $\Phi(\mathbf x)$, with
+both directions just described. Keep every frontier and definitional
+auxiliary in its declared tuple. Convert $\Phi$ to finite signed
+conjunctions and apply Theorems 3.2–3.3. Substitute their whole-tuple
+image into $W$. The result is a mixed source template: fixed native
+powers distribute through pairs, add to atomic ranks and combine with
+residual decorations. All negatives in the complete case formula are
+still native tests after this substitution.
+
+For a satisfying parameter tuple, Theorem 3.3 supplies a satisfying
+whole case assignment; filling $W$ gives a finite original source with
+the decided guards, reached sets, masks, all partition bits and records.
+For an original $u\in D_r$, choose its actual prefix and frontiers.
+Theorem 3.3 reconstructs that same assignment, including auxiliaries,
+and hence $W$ reconstructs $u$ itself with its original finite row.
+These prove both inclusions in (NIC.20). All cases and templates are
+finite. $\square$
+

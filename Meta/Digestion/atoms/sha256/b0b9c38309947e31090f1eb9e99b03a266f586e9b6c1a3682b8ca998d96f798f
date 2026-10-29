@@ -1,0 +1,53 @@
+**Proposition 44.3 (The two-seven-cycle terminal module and its full degree sum).**
+For the retained-edge graph with $k=3$, $b=2$,
+
+$$
+\begin{aligned}
+|V|&=12,&D^e_{3,2}&=13^2+2\cdot8^2=297,\\
+d^e_{3,2}&=13,&c^e_{3,2}&=297-13=284,\\
+\mathcal F_{284}
+&=S^e_{3,2}(-294)\oplus S^e_{3,2}(-292)^{89}.
+\end{aligned}
+\tag{44.6}
+$$
+
+The shared coordinates of $\Sigma^e_{3,2}$ are $64,64$;
+in private position order $2,3,4,5,6$ on either cycle,
+its coordinates are $(89,79,84,79,89)$. Together with
+ordinary coordinate $297$, these specify the vector used
+in (44.4) for every full shift.
+
+Proof. The Fibonacci values are $F_7=13$, $F_6=8$.
+Apply (44.2) and the multiplicities $1,89$ of (42.8).
+The ordinary shift subtraction gives $297-3=294$ and
+$297-5=292$, and the final rank is $1+89=90$.
+
+For clarity the variable-degree sum can also be evaluated
+without an implicit symmetry assumption. Put $A=F_{2k+1}$,
+$B=F_{2k}$. Each shared endpoint occurs in exactly $B^b$
+modes, those of its occupied shared-edge pattern. At private
+position $i\in\{2,\ldots,2k\}$ on a chosen branch,
+the contributions from $00,10,01$ respectively are
+
+$$
+\begin{aligned}
+A^{b-1}F_{i-1}F_{2k-i+1},\qquad
+B^{b-1}\begin{cases}F_{i-1}F_{2k-i},&i<2k,\\0,&i=2k,\end{cases}
+\qquad
+B^{b-1}\begin{cases}0,&i=2,\\F_{i-2}F_{2k-i+1},&i>2.\end{cases}
+\end{aligned}
+\tag{44.7}
+$$
+
+Indeed, requiring a vertex in a path forces its neighbors
+absent, leaving two independent subpaths. The Fibonacci
+factors count them, and the other $b-1$ branches contribute
+the displayed power. In the $10$ case position $2k$ is
+forbidden by the occupied endpoint $a$; in the $01$ case
+position $2$ is forbidden by $b_0$. The endpoint cases use
+$F_1=1$ for an empty remaining side. Substitution gives
+$64$ at each shared vertex and the stated five private
+coordinates. Each basic exponent in Theorem 42.2 can
+therefore be subtracted from this explicitly known $\Sigma$
+to give its full terminal degree. $\square$
+

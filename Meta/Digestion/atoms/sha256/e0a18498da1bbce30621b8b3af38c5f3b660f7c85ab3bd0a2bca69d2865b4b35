@@ -1,0 +1,58 @@
+**Lemma 4.1 (Dobrushin bound for chi-square SDPI).** Let $K$ be a stochastic matrix between finite sets, and let
+
+$$
+d_K=\max_{i,h}\operatorname{TV}(K(i,\cdot),K(h,\cdot)).
+$$
+
+For probability vectors $a\ll b$,
+
+$$
+\chi^2(aK\Vert bK)\le d_K\chi^2(a\Vert b),\qquad
+\chi^2(a\Vert b)=\sum_{i:b_i>0}\frac{a_i^2}{b_i}-1.
+\tag{4.1}
+$$
+
+This is the chi-square specialization of the classical distribution-uniform Dobrushin SDPI, with exact Raginsky correspondence specified in Section 10. The proof below fixes the half-$L^1$ convention and pays zero coordinates explicitly.
+
+**Proof.** For $t\ge0$, define
+
+$$
+h_t(a,b)=\sum_i(a_i-tb_i)_+-(1-t)_+.
+$$
+
+Write the signed vector $a-tb$ as $\alpha r-\beta s$, its positive and negative parts, where $r,s$ are probability vectors whenever the corresponding masses are nonzero. Then $\alpha-\beta=1-t$ and $h_t(a,b)=\min(\alpha,\beta)$.
+
+If $\alpha\ge\beta>0$, the negative mass after applying $K$ is bounded by
+
+$$
+\sum_y\bigl(\beta(sK)_y-\alpha(rK)_y\bigr)_+
+\le\beta\sum_y\bigl((sK)_y-(rK)_y\bigr)_+
+=\beta\operatorname{TV}(sK,rK).
+$$
+
+If $\beta\ge\alpha>0$, use the positive mass instead to get $\alpha\operatorname{TV}(rK,sK)$. For any probability vectors $r,s$,
+
+$$
+\operatorname{TV}(rK,sK)
+\le\sum_{i,h}r_i s_h\operatorname{TV}(K(i,\cdot),K(h,\cdot))
+\le d_K.
+$$
+
+The total signed mass is preserved by $K$, so the smaller output sign mass is precisely $h_t(aK,bK)$. If one input sign mass is zero, the output remains one-sided and both $h_t$ values are zero. Consequently
+
+$$
+h_t(aK,bK)\le d_K h_t(a,b).
+\tag{4.2}
+$$
+
+For $a\ll b$, discard coordinates $b_i=0$, which also have $a_i=0$. All remaining likelihood ratios are finite. Integrating the finite positive-part expressions gives
+
+$$
+2\int_0^\infty h_t(a,b)\,dt
+=\sum_i\frac{a_i^2}{b_i}-1
+=\chi^2(a\Vert b).
+\tag{4.3}
+$$
+
+Indeed, the integral of $(a_i-tb_i)_+$ is $a_i^2/(2b_i)$ and that of $(1-t)_+$ is $1/2$; each vanishes past a finite threshold. Also $aK\ll bK$, so zero output coordinates can be discarded in the same way. Integrate (4.2) and use (4.3) on both sides. If one extends the assertion to infinite input divergence, the $d_K>0$ case is vacuous and the $d_K=0$ case is handled directly by identical kernel rows, without forming $0\cdot\infty$. $\square$
+

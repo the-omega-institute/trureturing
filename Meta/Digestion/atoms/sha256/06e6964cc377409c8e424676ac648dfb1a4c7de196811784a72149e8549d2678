@@ -1,0 +1,24 @@
+### Proposition 1.1: source independence is not observed-party independence
+
+The product law implies
+
+\[
+I(\alpha:\beta:\gamma)=0,
+\]
+
+where the total correlation is
+
+\[
+I(\alpha:\beta:\gamma)
+=
+D\!\left(
+\mu_{\alpha\beta\gamma}
+\middle\|
+\mu_\alpha\otimes\mu_\beta\otimes\mu_\gamma
+\right).
+\]
+
+It does not imply \(A\), \(B\), and \(C\) are independent. Alice and Bob share \(\gamma\), Alice and Charlie share \(\beta\), and Bob and Charlie share \(\alpha\). The observed outputs can therefore be strongly correlated even though the three sources are mutually independent.
+
+**Proof.** The first assertion is the defining product condition. The second follows because, for example, \(A\) and \(B\) are both functions of \(\gamma\), in addition to their other inputs. A common edge is enough to create output correlation. No common tripartite source is required. ∎
+

@@ -1,0 +1,61 @@
+### 7.6 The original same-base singular response and its complete lift
+
+At the event use exactly the singular functions $s_\sigma$ of Support X, (13.8). To make the algebraic response line unambiguous, its definition is
+
+$$
+\begin{aligned}
+\mathcal D&=1731744020342106665,\\
+A_s(z)&=13656112734222647296z^3-33583101098863014400z^2\\
+ &\quad+20502976421172725312z-3401342974535580372,\\
+B_s(z)&=-327746705621343535104z^3+916826043674607172160z^2\\
+ &\quad-616757003572777087368z+31411654798932835643,\\
+s_+(p)&=-3\{pA_s(\varrho_+)+B_s(\varrho_+)\}/\mathcal D.
+\end{aligned}
+\tag{7.6.1}
+$$
+
+This is a reused singular response line, not a new response classification. In particular it has the original full-world normalization and holds for negative p as well as positive p.
+
+Proof of the same-base clause (7.3.4) and the zero-safe reconstruction. Set $r=\varrho_+$, $b=1/8$, $j=1/8+8r(1-r)$, $n=j+r$. The singular source has $T=9/8$ and $U=5/4$. Use the quantities of Support X, (13.9):
+
+$$
+\begin{aligned}
+F_5&=jn+(n+5/4)\{(196/9)jn-15n-10j\},\\
+F_6&=jn+(n+5/2)\{50jn-36n-20j\},\qquad F_0=84+24n.
+\end{aligned}
+\tag{7.6.2}
+$$
+
+Substitution of the single interpolant (7.1.1) into the actual fifth and sixth rows gives
+
+$$
+(p-24)jn=eF_5,\qquad (v-F_0)jn=eF_6.
+\tag{7.6.3}
+$$
+
+At the graph point $p=\bar p(h_*)\ne24$, so $F_5\ne0$. Thus its own $e$ is exactly $(p-24)jn/F_5$, and its actual sixth response is $F_0+(p-24)F_6/F_5$. The two polynomial remainders in Support X, (13.11), are zero:
+
+$$
+\begin{aligned}
+\operatorname{rem}(\mathcal D F_6+3A_sF_5,\Phi)&=0,\\
+\operatorname{rem}(\mathcal D(F_0F_5-24F_6)+3B_sF_5,\Phi)&=0.
+\end{aligned}
+\tag{7.6.4}
+$$
+
+Evaluating these existing identities at the exact root and dividing only by the nonzero $\mathcal D F_5$ gives $\bar v(h_*)=s_+(\bar p(h_*))$. The other endpoint has exactly this same p and v by (7.3.2); the response line is therefore attained at the actual common base, rather than at a separately chosen singular source with unrelated responses.
+
+There is also a zero-safe expression for the entire lift at a fixed source and fifth response. Namely, use the already established formula of Support X, (13.4)–(13.5), equivalently common-parent geometry, Lemma 12.2 and Theorem 12.3:
+
+$$
+\begin{aligned}
+V&=U+n,\qquad A_5=1+V(4-15/j+20/T-10/n),\\
+K_5&=96(b-1/8)V/T,\qquad Z=\Lambda^2+A_5^2>0,\\
+e&=\frac{-(24/5)(b-1/8)B_{\mathrm{coef}}\Lambda
+          +A_5(p-24-K_5)}{Z}.
+\end{aligned}
+\tag{7.6.5}
+$$
+
+At this singular point $K_5=\Lambda=0$, and (7.6.3) gives $A_5=F_5/(jn)\ne0$. Thus (7.6.5) reduces to $e=(p-24)/A_5$, with a positive denominator $Z=A_5^2$ in its displayed zero-safe form. Substituting this e and the exact singular source into (7.1.1) supplies its entire gain, and $d=24+e$ supplies its fixed drift. The gain uses the original clocks at every row, by (7.3.10). This is exactly the fixed-source fifth-response world of the cited uniqueness theorem. At no step at the event is there division by $\Lambda$ or the regular $D$, and the gain is not refitted after any action. This completes the proof of Theorem 7.3.1. ∎
+

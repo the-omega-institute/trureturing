@@ -1,0 +1,56 @@
+**Proposition 11.2 (A centered incidence constraint from the actual law).** Every law of Definition 1.1 satisfies
+
+$$
+\Delta=\mathbb E\Phi(z)\ge0,
+\qquad \boxed{\ \|c^\circ\|\le A+3\Delta.\ }
+\tag{11.3}
+$$
+
+Neither density nor an energy sublevel is assumed.
+
+**Proof.** The secant residual of $k^3$ at $k=a,r$ is
+
+$$
+(k-a)(k-r)(k+a+r)
+=k^3-(a^2+ar+r^2)k+ar(a+r).
+$$
+
+Its expectation is $\mathbb E K^3-Z$, because the actual mean and the reference mean both equal $q$. Substitution $k=r-z$ gives $\Phi(z)$, the deficit already used in (3.3). Its value at $z=-1$ is $6r$, its values at $z=0,1$ vanish, and it is positive for integers $2\le z\le r-1$. This proves the first assertion on every allowed cardinality $1\le K\le s$.
+
+Linearity of projection gives the same-law identity
+
+$$
+c^\circ=\mathbb E\left[(K^2-r^2)
+ \left(I-\frac Ks\mathbf1\right)\right],
+\qquad
+\left\|\mathbf1_T-\frac{|T|}{s}\mathbf1\right\|^2
+=\frac{|T|(s-|T|)}s.
+\tag{11.4}
+$$
+
+Write $p_j=\mathbb P(z=j)$. At $z=-1$ the projected incidence vector is zero, and at $z=0$ the multiplier $K^2-r^2$ is zero. At $z=1$, the norm of each integrand in (11.4) is $(2r-1)\kappa$. For $2\le z\le r-1$, the ratio of its norm to $\Phi(z)$ is
+
+$$
+\frac{(2r-z)\sqrt{(r-z)(z+1)/s}}
+ {(z-1)(3r-z-1)}
+\le\frac{\sqrt{z+1}}{z-1}\le2.
+\tag{11.5}
+$$
+
+Here $2r-z\le3r-z-1$ and $(r-z)/s\le1$; the last inequality follows from $z+1\le4(z-1)^2$ for integers $z\ge2$. The total contribution of these cardinalities therefore has norm at most $2\Delta$. Finally $\mathbb E z=\delta$ implies
+
+$$
+p_1=\delta+p_{-1}-\sum_{j\ge2}j p_j
+\le\delta+\frac{\Delta}{6r}.
+$$
+
+The triangle inequality in (11.4) now gives
+
+$$
+\|c^\circ\|\le(2r-1)\kappa p_1+2\Delta
+\le A+\left(2+\frac{\kappa(2r-1)}{6r}\right)\Delta
+\le A+3\Delta.
+$$
+
+The last coefficient bound uses $\kappa\le\sqrt2$. Thus both the vector being bounded and the deficit paying for all other cardinalities come from the original law. ∎
+

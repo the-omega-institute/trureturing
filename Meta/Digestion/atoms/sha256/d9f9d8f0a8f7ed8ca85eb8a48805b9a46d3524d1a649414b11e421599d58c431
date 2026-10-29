@@ -1,0 +1,27 @@
+**Lemma 3.1 (sound expansion without ambient normality).** For arbitrary
+ambient codes $X,Y\in\mathcal K$ and $a\ge0$,
+
+$$
+E(F(X,Y))=\langle E(X),E(Y)\rangle,\qquad
+E(\tau_a X)=\rho^a E(X).
+\tag{NIC.11}
+$$
+
+Every positive flattened definition and positive equality is sound
+under $E$, even when a filled ordinary code is nonnormal.
+
+Proof. The first identity is the definition of $E$. On a primitive,
+the second is $T_{r+a}=\rho^a T_r$. On $F(X,Y)$, use the two inductive
+identities and preservation of native pairing by $\rho^a$ to obtain it.
+This proves it by finite structural induction on $X$.
+
+An ordinary definition expands by the first identity, a shift by the
+second, and the constant definitions by $T_0=\alpha,T_1=\beta$.
+A collapse definition expands to its native pairing equation by
+(NIC.6). Thus either chosen case of a $J$ definition implies the
+required native pairing identity after expansion. Equal ambient codes
+have equal expansions, so positive comparisons are preserved too.
+No inference in this proof uses injectivity of ambient expansion or
+falsity of a native equality from ambient syntactic inequality.
+$\square$
+

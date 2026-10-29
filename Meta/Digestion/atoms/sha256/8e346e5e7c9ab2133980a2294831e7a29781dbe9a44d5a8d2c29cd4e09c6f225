@@ -1,0 +1,27 @@
+**Definition 6.1 (canonical finite padding).** Let the native ranked
+alphabet be $\Sigma=\{\alpha^{(0)},\beta^{(0)},\mathsf b^{(2)}\}$,
+where $\mathsf b$ denotes pairing. Put
+$\Lambda=\{\alpha,\beta,\mathsf b,\bot\}$, with $\bot$ an absent
+coordinate, not a native leaf. The convolution alphabet $\Gamma$ has
+one symbol $(a,b)$ for every pair in $\Lambda^2\setminus\{(\bot,\bot)\}$.
+Its arity is two if at least one coordinate is $\mathsf b$, and zero
+otherwise.
+
+For finite original $u,v$, $\operatorname{conv}(u,v)$ has domain
+$\operatorname{Pos}(u)\cup\operatorname{Pos}(v)$ and at each address
+has the pair of their native root labels, using $\bot$ when that
+coordinate is absent. Its two children are present exactly when at
+least one source branches there. Thus its labels have precisely their
+$\Gamma$ arities. There is no trailing padding below an address absent
+in both sources. Let
+
+$$
+W=\{\operatorname{conv}(u,v):u,v\in\mathcal T\}.
+\tag{NIC.25}
+$$
+
+All members of $W$ are finite trees, and both original roots are present.
+Regular means recognized by a finite bottom-up tree automaton over this
+finite ranked alphabet. A subset of $W$ is regular relative to $W$ if
+it is the intersection of $W$ with such a regular language.
+

@@ -1,0 +1,68 @@
+**引理 65.1（紧闭包内的角群和自伴观察商）。** 在引理 64.1 的紧闭包中，存在按完整实矩阵映射秩取最小值的 CP 幂等元 $P$。角半群
+
+$$
+\mathscr K=P\mathscr S P
+\tag{65.1}
+$$
+
+是以 $P$ 为单位的紧群，群逆仍由 CP 映射表示，$\pi(\mathscr K)=G$，并且 $LP=L$ 于 $\mathscr R$。其像经过忠实序单位的合同变换，成为一个有限维实 $C^*$ 代数 $\mathcal A$；$\mathscr K$ 在 $\mathcal A$ 上作用为实 $*$ 自同构。
+
+证明。这里以成熟的有限维紧半群最小秩与角群方法为中间工具；所需假设是完整矩阵映射组成乘法封闭的紧集，已由引理 64.1 给出。先在已经闭合的 $\mathscr S$ 中选一个最小秩元素 $a$，记此秩为 $r$，秩是在 $M_{\dim H_{\rm r}}(\mathbb R)$ 全空间上计算。因 $a^2\in\mathscr S$，$\operatorname{rank}(a^2)=r$，所以零本征值处没有非平凡幂零 Jordan 块。有界幂排除模大于一的本征值及单位圆上的非平凡 Jordan 块。若非零本征值有模严格小于一者，取所有单位模本征值同时回归一的幂子列；其极限的秩严格小于 $r$，矛盾。因此同一回归过程给
+
+$$
+a^{n_\nu}\longrightarrow P,\qquad P^2=P,\quad
+\operatorname{rank}P=r.
+\tag{65.2}
+$$
+
+闭性给 $P$ 为实 CP。$\pi(P)$ 是群中的幂等元，必为单位。故 $LP=L$ 于 $\mathscr R$，$L:P\mathscr R\to\mathscr S_c$ 仍满射。
+
+每个 $PsP$ 的秩至多 $r$，又因它在 $\mathscr S$ 中而至少为 $r$；限制到 $\operatorname{ran}P$ 后便是可逆线性变换。$P\mathscr S P$ 紧，且限制映射忠实：角元素由其在 $\operatorname{ran}P$ 上的值确定。紧的可逆矩阵半群是群；具体地，对任意元素，同时回归的正幂趋于单位，前一幂趋于其逆，紧性将逆留在该半群内。因此 (65.1) 是紧群，逆代表也 CP。$\pi(PsP)=\pi(s)$ 给满射性。此时 $P\mathscr R$ 对角群不变，后续的源表示正是此自伴不变子空间的商。
+
+再作支持约化。置
+
+$$
+H_1=\operatorname{supp}(P\Omega).
+\tag{65.3}
+$$
+
+因 $\Omega$ 在 $H_{\rm r}$ 上忠实，$\operatorname{supp}(P\Omega)=\operatorname{supp}(P I)$。若 $P(X)=\sum_\alpha W_\alpha XW_\alpha^{\mathsf T}$，此支持等于所有 $W_\alpha$ 像空间的张成。因此每个完整矩阵 $P(X)$ 的左右支持都在 $H_1$，包括反对称矩阵。仅用正矩阵张成对称部分不足以推出这一全矩阵结论。
+
+$P\Omega$ 是 $\operatorname{ran}P$ 的序单位：若 $Y\succeq0$ 且 $P(Y)=Y$，由 $Y\preceq b\Omega$ 得 $Y\preceq bP\Omega$。对 $k\in\mathscr K$，$k(P\Omega)$ 仍在该正锥内，且由 $k^{-1}(P\Omega)\preceq bP\Omega$ 得
+
+$$
+P\Omega\preceq b\,k(P\Omega).
+\tag{65.4}
+$$
+
+故每个 $k(P\Omega)$ 在 $H_1$ 上忠实。用紧群的归一化 Haar 测度置
+
+$$
+\Omega_1=\int_{\mathscr K}k(P\Omega)\,dk\succ0
+\quad\text{于 }H_1.
+\tag{65.5}
+$$
+
+它被角群逐点固定。将 $P$ 及角群限制到 $H_1$ 保持其全部像与群恒等式。此处只对 $P$ 和 $\mathscr K$ 使用 $H_1$；没有假设原 $T_j$ 保持这个较小支持，也没有假设 $P$ 是忠实映射。
+
+记 $D_1=\Omega_1^{1/2}$、$n_1=\dim H_1$，在 $M_{n_1}(\mathbb R)$ 上置
+
+$$
+\widetilde P(X)=D_1^{-1}P(D_1XD_1)D_1^{-1},\qquad
+\widetilde k(X)=D_1^{-1}k(D_1XD_1)D_1^{-1}.
+\tag{65.6}
+$$
+
+$\widetilde P$ 是保单位的 CP 幂等映射，$\widetilde k$ 与其角群逆在像上是互逆的保单位 CP 映射。实 Kraus 复化使 $\widetilde P_{\mathbb C}$ 成为 $M_{n_1}(\mathbb C)$ 上保单位、CP、幂等的线性映射；保单位性又给收缩性。
+
+在此准确使用 Choi–Effros 乘法定理，采用 Prunaru，[*On the Choi–Effros multiplication*](https://arxiv.org/html/1304.6664v2)，定理 1 的表述：复 $C^*$ 代数上的完全正、收缩、幂等线性映射之像，以
+
+$$
+x\star y=\widetilde P_{\mathbb C}(xy)
+\tag{65.7}
+$$
+
+为乘法、原伴随为 involution，并继承完整矩阵序，成为与该像完全序同构的 $C^*$ 代数。这里的代数是 $M_{n_1}(\mathbb C)$，映射是 (65.6) 的复化，三个假设均已给出。逐项复共轭与实 Kraus 映射交换，且保持 (65.7)，其不动实形就是所需实代数 $\mathcal A$。这不是声称像在环境通常乘法下已经封闭。
+
+在 $\mathcal A$ 上，$\widetilde k$ 和其逆都是保单位 CP。两次 Kadison–Schwarz 不等式给对每个 $a$ 的等号，从而 $\widetilde k(a^*\star a)=\widetilde k(a)^*\star\widetilde k(a)$，也给 $a\star a^*$ 的等号；成熟的乘法域判据于是给 $*$ 乘法性。故角群作用为实 $*$ 自同构。∎
+

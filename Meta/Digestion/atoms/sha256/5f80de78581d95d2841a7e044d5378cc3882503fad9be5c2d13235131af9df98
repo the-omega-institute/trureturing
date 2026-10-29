@@ -1,0 +1,52 @@
+**Theorem 10.2 (sufficiency for every finite word and every nuisance
+sequence).** For every $n\ge0$, every legal $w$ of length $n$, and every
+legal nuisance sequence during preparation and Construction 10.1,
+the extracted nominal block is exactly
+
+$$
+Y=(y_{r,j})_{r,j}=O_nx_w.
+\tag{10.3}
+$$
+
+The observer computes $x_w=D_nY$ and recovers the unique original $w$
+by the already proved AAII Theorem 85.1. The actual physically returned
+source, its retained current predictor and the peak precision are
+
+$$
+x_{\rm now}=T_t^nx_w,\qquad m_{\rm now}=O_nx_{\rm now},
+\qquad \max p=6n+1.
+\tag{10.4}
+$$
+
+This includes the empty word and the paid verifying Read of precision
+one. Together with Theorem 9.2, the necessary and sufficient-order
+peak precision for the declared robust task is linear in $n$; no sharp
+leading constant is asserted.
+
+**Proof.** Before sampling, (8.2) has exactly $n$ Ticks and no other
+field inputs except the unit seed. After another $r$ actual Ticks, every
+coordinate is an integer divided by $8^{n+r}$, by AAII Proposition 90.3.
+Write the current terminal value as $a/8^{n+r}$ with $a\in\mathbb N$;
+this common-denominator integer need not be a reduced numerator. Then
+(10.1) gives $2^{p_r}x_{\ell_j}=2a$. Every actual report is therefore
+$k=2a+\zeta$, with $\zeta=0$ or $1$. Equation (10.2) extracts exactly
+$a$ for either choice. This argument is pointwise at every Read and
+does not use independence, a noise average or a repeated sample at the
+same precision. Thus it holds for every correlated adaptive nuisance
+sequence permitted by the contract.
+
+The actual Ticks and identity Reads/Holds yield (10.3) epoch by epoch.
+The known earned rooted tree and law meet exactly AAII Proposition
+87.2's hypotheses, so $D_nY=x_w$. Its Theorem 85.1 applies directly to
+recurrence (8.2), to all legal addressed words and the actually prepared
+unit seed. It recovers $w$ with both inverse identities. We do not
+reprove or rename this fixed-clock inverse as a new result. The $n$
+sampling Ticks give the actual state in (10.4); local multiplication
+gives the current prediction block. The largest scheduled precision
+is $p_n=6n+1$. When $n=0$, the terminal is alpha, no assay Tick occurs,
+and precision one again extracts its scalar $1$ from $2$ or $3$.
+The seed verifying Read is a separate precision-one call and does not
+increase the maximum. All loops have finitely many steps for each
+finite $w$, with finite exact integer and rational arithmetic. This
+proves sufficiency and the stated termination. $\square$
+

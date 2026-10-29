@@ -1,0 +1,16 @@
+**Definition 7.1 (Secondary-window notation).** Retain the entire law domain of Definition 1.1. In §§7–10 suppose $0<\delta\le1$ and write
+
+$$
+\begin{aligned}
+w_i&=\mathbb E[K^2I_i],\qquad \mu=\frac qs,\qquad
+H_d=H_{\rm dense}=\frac Z{\mu^2},\\
+T_0&=\frac\delta a,\qquad
+H_r=\frac1{T_0}+\frac{r^3}{1-T_0},\\
+b&=(2r+1)\delta,\qquad \tau=\frac{3b}{r^2},\\
+\mathcal A&=3r^2-3r+1,\qquad
+\mathcal C=r(r-1)(2r-1).
+\end{aligned}\tag{7.1}
+$$
+
+Here $T_0$ is a real number, whereas $T$ remains the random nonempty subset. The letter $\mu$ in these sections denotes the common marginal average $q/s$. The quantities $H_d,H_r$ are the two actual trial energies already specified in Lemma 1.2 and (6.1); no assertion of exact dense optimality is part of this notation. Zero atom masses, disconnected support, every possible cardinality $1\le K\le s$, and arbitrarily small positive marginals remain admissible.
+

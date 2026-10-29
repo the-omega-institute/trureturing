@@ -1,0 +1,22 @@
+**Definition 3.2 (two labeled strong lumpability identities).** A quotient is a surjection $\pi:C\to S$ onto a finite set. Put $Q_i=\pi(H_i)$ and
+
+$$
+\bar\lambda_u=\sum_{s:\pi(s)=u}\lambda_s>0.
+$$
+
+Require nonnegative matrices $\bar M_x,\check{\bar M}_x$ on $S$ such that, for every $x\in\{0,1\}$, every $u,v\in S$, and every $s\in C$ with $\pi(s)=u$,
+
+$$
+\boxed{\ \sum_{t:\pi(t)=v} M_x(s,t)=\bar M_x(u,v)\ }
+\qquad\text{(labeled forward strong lumpability)},
+\tag{3.2}
+$$
+
+$$
+\boxed{\ \sum_{t:\pi(t)=v} \check M_x(s,t)=\check{\bar M}_x(u,v)\ }
+\qquad\text{(labeled reverse strong lumpability)}.
+\tag{3.3}
+$$
+
+These are assumptions on the actual labeled matrices. The term observable quotient refers to preservation of the joint channels proved next; it does not assert that $Q_i$ can be recovered from visible data. Equality of marginal output laws alone is not a substitute for (3.2) and (3.3).
+

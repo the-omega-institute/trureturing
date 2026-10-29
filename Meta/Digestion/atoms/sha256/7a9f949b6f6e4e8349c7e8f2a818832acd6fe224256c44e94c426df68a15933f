@@ -1,0 +1,36 @@
+#### 定理 11.4（平方根尺度的确定性抵消足以推出 RH）
+
+如果对每个 $\epsilon>0$，存在 $C_\epsilon<\infty$ 使
+
+$$
+|M(x)|\le C_\epsilon x^{1/2+\epsilon}\qquad(x\ge1),
+$$
+
+则 RH 成立。
+
+**证明。**
+
+对半平面 $\operatorname{Re} s>1/2$ 的任意紧集 $K$，选择
+$0<\epsilon<\inf_{s\in K}\operatorname{Re} s-1/2$。
+于是
+
+$$
+G(s)=s\int_1^\infty M(x)x^{-s-1} dx
+$$
+
+在 $K$ 上绝对一致收敛，尾项由常数倍
+$\int_A^\infty x^{-1-(\inf_K\operatorname{Re} s-1/2-\epsilon)}dx$
+控制。因此 $G$ 在该半平面全纯。
+分部求和在 $\operatorname{Re} s>1$ 给
+$G(s)=\sum\mu(n)n^{-s}=1/\zeta(s)$。
+由亚纯恒等定理，$\zeta(s)G(s)=1$ 在 $\operatorname{Re} s>1/2$ 恒成立，$s=1$ 的可去性包含在该恒等式中。
+若此域有 $\zeta$ 零点，则左边在该点为零，矛盾。
+函数方程将任意左侧非平凡零点映为右侧零点，故所有非平凡零点都在线上。
+
+∎
+
+本定理给出了从递归符号相消到 RH 的一条明确任务。
+难处是证明全体尺度的确定性估计；有限门取反、有限样本或“像随机游走”的解释都没有证明这一前提。本文只证明所写充分方向，不借一个未展开的逆向等价增加结论。
+
+<a id="section-12"></a>
+

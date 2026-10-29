@@ -1,0 +1,23 @@
+**Construction 10.1 (an executed precision schedule).** At the actual
+post-encoding state $(t(w),x_w)$, let $n=I(t)$ and use the earned terminals
+$J$ and the existing $O_n,D_n$ of Construction 5.1. Hold and Read every
+terminal at epoch zero; then, for $r=1,\ldots,n$, actually Tick, Hold
+and Read every terminal. At epoch $r$ use precision
+
+$$
+p_r=3(n+r)+1.
+\tag{10.1}
+$$
+
+Retain the actual integer $k_{r,j}$ and extract the nominal sample by
+
+$$
+a_{r,j}=\left\lfloor\frac{k_{r,j}}2\right\rfloor,
+\qquad y_{r,j}=\frac{a_{r,j}}{8^{n+r}}.
+\tag{10.2}
+$$
+
+All calls, provider bits, integer inputs/outputs and the two distinct
+raw/nominal records have actual backing. There is no exact numerical
+read beyond (8.1).
+

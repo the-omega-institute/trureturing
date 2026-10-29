@@ -1,0 +1,75 @@
+**Theorem 4.3 (complete original-source signed image strata).** Fix the
+input of Definition 4.1 and any complete finite row label $r$ at $Q$.
+One can construct finitely many source templates $U_{r,b}$ and predicates
+
+$$
+C_{r,b}(\mathbf n,\mathbf z)
+=P_{r,b}(\mathbf n)\land\Delta_{r,b}(\mathbf n,\mathbf z)
+\tag{NIC.19}
+$$
+
+of the form in Theorem 3.3 such that
+
+$$
+D_r:=\{u\in D:R_Q(u)=r\}
+=\bigcup_b\{U_{r,b}(\mathbf n,\mathbf z):C_{r,b}(\mathbf n,\mathbf z)\}.
+\tag{NIC.20}
+$$
+
+Every produced source satisfies all retained records with both guards,
+the entire old row and exactly the finite row label $r$. Conversely
+every original $u\in D_r$ is reconstructed as that same source.
+
+Proof. Apply the finite fixed-navigation decomposition of [NSF, Lemma
+5.1][NSF] to the entire predicate in (NIC.17) and $R_Q(u)=r$. Here are
+the concrete data preserved by that application. Choose a finite
+original prefix depth strictly beyond all finitely listed cut positions
+and record endpoint lengths. Enumerate its finite native prefix
+patterns, with independent frontier variables at its reached boundary.
+A source has its actual pattern and actual frontier subtrees; filling
+these returns that very source. Repeated references to the source use
+the same pattern and variables, not independent copies.
+
+At each fixed epoch and endpoint, navigation through the transformed
+pattern either yields a native expression in those frontiers, yields a
+subtree of the explicitly transformed early ground leaf, or is absent.
+No requested endpoint enters an unspecified frontier, because its
+address is shorter than the chosen original depth. Fixed powers preserve
+original branch nodes and expand early leaves by explicitly finite trees.
+Thus guards and literal replies are decided exactly in each case. An
+absent endpoint rejects either signed record, and a reached pair retains
+its entire native equality or disequality. Repetition retains the same
+expression wherever that endpoint is used.
+
+For either old or new row fix the actual reached set of the case and
+construct its mask expression by replacing exactly those subtrees by
+$\alpha$. Every uncut frontier remains in that expression. Equality to
+the label's concrete filled mask, together with equality of reached
+sets, gives precisely its complete exterior. For every two reached
+holes retain the equality required by the label's partition or the
+disequality required by different classes. This includes all old
+cross-class pairs, all repeated class occurrences and all off-task
+inequalities. Empty reached sets and one-hole partitions have their
+literal empty pair lists. Consequently the finite case formula retains
+both complete partitions and masks, rather than projecting to selected
+partition bits.
+
+Each surviving case therefore has a finite native source term
+$W(\mathbf x)$ and a Boolean native formula $\Phi(\mathbf x)$, with
+both directions just described. Keep every frontier and definitional
+auxiliary in its declared tuple. Convert $\Phi$ to finite signed
+conjunctions and apply Theorems 3.2–3.3. Substitute their whole-tuple
+image into $W$. The result is a mixed source template: fixed native
+powers distribute through pairs, add to atomic ranks and combine with
+residual decorations. All negatives in the complete case formula are
+still native tests after this substitution.
+
+For a satisfying parameter tuple, Theorem 3.3 supplies a satisfying
+whole case assignment; filling $W$ gives a finite original source with
+the decided guards, reached sets, masks, all partition bits and records.
+For an original $u\in D_r$, choose its actual prefix and frontiers.
+Theorem 3.3 reconstructs that same assignment, including auxiliaries,
+and hence $W$ reconstructs $u$ itself with its original finite row.
+These prove both inclusions in (NIC.20). All cases and templates are
+finite. $\square$
+

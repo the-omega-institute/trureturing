@@ -1,0 +1,43 @@
+**Theorem 147.2 (Local admissibility and the moving ninth event).**
+There is an explicit source-only radius $\rho>0$ such that, for every
+$|t|\le\rho$, (147.1) is an allowed source of VI Definition 114.1,
+the first eight columns are the original columns, and the ninth actual
+column is exactly the single chronological call $N_t$ after the empty
+prefix. The nine columns span $\operatorname{Herm}_3$, and the same
+literal $117$-row finite decoder has real rank $34$.
+
+More explicitly, let $\Delta_r(t)=\det(\mathbf c(r_1(t)),\ldots,
+\mathbf c(r_9(t)))$, $\chi(t)=\operatorname{Tr}(P_\xi r_9(t))-1/4$, and
+$\sigma(t)=\|[N_t,P_\xi]\|_{\rm op}$. Define
+
+$$
+\begin{aligned}
+L_r&=\sup_{|s|\le1/12}|\Delta_r'(s)|,&
+L_\chi&=\sup_{|s|\le1/12}|\chi'(s)|,&
+L_\sigma&=\sup_{\substack{|u|,|v|\le1/12\\u\ne v}}\frac{|\sigma(u)-\sigma(v)|}{|u-v|},\\
+\Delta_T(t)&=\det T_t,\qquad
+L_T=\sup_{|s|\le1/12}|\Delta_T'(s)|,
+\end{aligned}
+\tag{147.3}
+$$
+
+where $T_t$ is the $34\times34$ minor obtained from the rows
+$q_{i,w,t}$ exactly as in (142.7). With the convention $x/0=+\infty$, put
+
+$$
+\rho=\min\left\{\frac1{12},
+\frac{\Delta_r(0)}{2L_r},\frac{\chi(0)}{2L_\chi},
+\frac{\sigma(0)}{2L_\sigma},
+\frac{|\Delta_T(0)|}{2L_T}\right\}.
+\tag{147.4}
+$$
+
+The exact determinant calculation (142.3), (142.5), and the rank minor
+(142.8) give the four positive numerators in (147.4). The functions in
+(147.3) are finite trigonometric polynomials, so the displayed suprema
+are finite source-only numbers. The mean-value theorem gives, on this
+interval, $\Delta_r(t)>0$, $\chi(t)>0$, $\sigma(t)>0$, and
+$\Delta_T(t)\ne0$. The first three inequalities are respectively the
+column-span, escape, and mixing requirements of VI Definition 114.1;
+the last is the same decoder rank certificate, now for the phase rows.
+

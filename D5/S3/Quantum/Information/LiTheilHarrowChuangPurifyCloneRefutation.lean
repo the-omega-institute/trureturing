@@ -80,7 +80,6 @@ proof_shape: mem_densityMatrices_iff: bind-only; consumers: convex_densityMatric
 proof_shape: convex_densityMatrices: bind-only; consumers: target_density_and_marginal; escape_witness: none; Direct frozen dependencies: F6,F7,F10,F23,F24.
 proof_shape: convex_fixed_marginal: bind-only; consumers: target_density_and_marginal; escape_witness: none; Direct frozen dependencies: F6,F13,F28.
 proof_shape: target_density_and_marginal: bind-only; consumers: purifyAndClone_loss_lower; escape_witness: none; Direct frozen dependencies: F6,F7,F10,F13,F23,F24,F28.
-proof_shape: rank_pos_of_trace_one: bind-only; consumers: vecPure_rank_one; escape_witness: none; Direct frozen dependencies: none.
 proof_shape: vecPure_rank_one: bind-only; consumers: pauli_purifications; escape_witness: none; Direct frozen dependencies: none.
 proof_shape: pauliKet: bind-only; consumers: pauliKet_apply,pauli_marginal,pauli_purifications,pauli_average,randomPurify_mem_target; escape_witness: none; Direct frozen dependencies: F2,F3,F4.
 proof_shape: pauliKet_apply: bind-only; consumers: pauli_average; escape_witness: none; Direct frozen dependencies: F2,F3,F4.
@@ -115,6 +114,7 @@ proof_shape: result: bind-only; consumers: settlement; escape_witness: none; Dir
 import D5.S3.Quantum.Foundation.FiniteStateChannel
 import D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
 import D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings
+import D5.S3.Quantum.QuantumChannels.AncillaFreeTesterRobustnessEquality
 import D5.S3.Quantum.Decoherence.ProjectedUnistochasticDynamics
 import D5.S3.Quantum.PureState.PureStateHandshake
 import D5.S3.Quantum.FiniteDimensional
@@ -479,23 +479,11 @@ private theorem target_density_and_marginal {d r : ℕ} (ρ : DensityState (Fin 
   exact ⟨(mem_densityMatrices_iff A).mp hden |>.1,
     (mem_densityMatrices_iff A).mp hden |>.2, hmarg⟩
 
-private theorem rank_pos_of_trace_one {a : Type*} [Fintype a] [DecidableEq a]
-    {A : (Matrix a a ℂ)} (htr : A.trace = 1) : 0 < A.rank := by
-  by_contra hn
-  have hz : A.rank = 0 := Nat.eq_zero_of_not_pos hn
-  have hrange : LinearMap.range A.mulVecLin = ⊥ := by
-    exact Submodule.finrank_eq_zero.mp hz
-  have hlin : A.mulVecLin = 0 := LinearMap.range_eq_bot.mp hrange
-  have hA : A = 0 := by
-    apply Matrix.toLin'.injective
-    simpa only [Matrix.toLin'_apply', Matrix.mulVecLin_zero] using hlin
-  simp [hA] at htr
-
 private theorem vecPure_rank_one {a : Type*} [Fintype a] [DecidableEq a]
     (v : a → ℂ) (htr : (Matrix.vecMulVec v (star v)).trace = 1) :
     (Matrix.vecMulVec v (star v)).rank = 1 := by
   have hl := Matrix.rank_vecMulVec_le v (star v)
-  have hp := rank_pos_of_trace_one htr
+  have hp := D5.S3.Quantum.QuantumChannels.AncillaFreeTesterRobustnessEquality.rank_pos_of_trace_one htr
   omega
 
 end

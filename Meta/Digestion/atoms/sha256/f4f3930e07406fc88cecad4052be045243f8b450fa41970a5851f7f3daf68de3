@@ -1,0 +1,72 @@
+**定义 88.1（固定实际仪器与静态 dictionary 的量词）。** 本节至 §90 使用定义 81.1、86.1 的同一合同。标准坐标中 $U_0=(23)$、$W=(12)$，
+
+$$
+\Delta_W(X)=\frac{X+WXW}{2},\qquad
+F=\operatorname{Ad}_{U_0}\circ\Delta_W,\qquad \mathcal N=F^2.
+$$
+
+这是 actual words $V_{h_2}V_{h_1}$ 在 input-independent fair law $1/4$ 下的平均；先后次序不改变。使用固定 ordered basis
+
+$$
+\xi=(1,1,1)^{\mathsf T}/\sqrt3,\quad
+ e=(1,1,-2)^{\mathsf T}/\sqrt6,\quad
+ f=(1,-1,0)^{\mathsf T}/\sqrt2.
+$$
+
+对每个实数 $0<q\le1/1000$，任务是全部
+
+$$
+E_\varphi(q)=|v_\varphi\rangle\langle v_\varphi|,\quad
+v_\varphi=\sqrt{1-q}\,\xi+e^{i\varphi}\sqrt q\,e,
+\quad \varphi\in\mathbb R/(2\pi\mathbb Z),\quad
+h=\sqrt{q(1-q)}.
+$$
+
+对一个与未知输入无关的 terminal complex qutrit CPTP map $\mathcal D:M_3(\mathbb C)\to M_3(\mathbb C)$，误差仍为
+
+$$
+\begin{aligned}
+L_{\mathcal D}(\varphi)
+ &=\|\mathcal N^\dagger\mathcal D^\dagger(E_\varphi)-E_\varphi\|_{\rm op}\\
+ &=\sup_{\rho\in\mathsf D(\mathbb C^3)}
+  |\operatorname{Tr}(E_\varphi\mathcal D\mathcal N(\rho))
+                 -\operatorname{Tr}(E_\varphi\rho)|.
+\end{aligned}
+\tag{88.1}
+$$
+
+输入包括全部 complex qutrit densities。decoder 没有 history、reference access、额外 summary、较小 input code、intermediate correction 或 postselection。这里是 projection 的 absolute Born-probability error，不是 reference-sensitive whole-channel error。
+
+令 $\eta=\eta_2(q)$ 为定理 81.4、83.1 已供应的 individual optimum，$M_q(\delta)$ 严格沿用定义 86.1：$\delta\ge0$ 时，它是能够使每个 $\varphi$ 都选择一个 $\mathcal D_j$ 达到 $L_{\mathcal D_j}(\varphi)\le\eta+\delta$ 的最小正整数 dictionary size，不存在有限 dictionary 时取 $+\infty$。每个 entry 是一个 whole complex qutrit CPTP map；一个 static label 只能选 entry，不能在 label 内再按 phase 调整 map。selector fibres 不必连续、连通或可测。量词为每个 $(q,\delta)$ 可另选一个 dictionary，不要求一套 dictionary 同时服务所有参数，也没有供应取得 phase 的操作。
+
+下文直接采用定理 81.4 的唯一 admissible root $R=R(q)$、其 reduced optimum 和定理 83.1 的 phase certificate，不重复 root existence、uniqueness 或 individual optimality 的证明。具体参数为
+
+$$
+\begin{gathered}
+1<R\le21/20,\qquad
+ y=\frac{(R-1)(2-R)}{6R},\qquad
+ d=\frac{24q-R(R-1)(2-R)}{2(5R^2-8)},\qquad 0<d<y/3,\\
+\vartheta=\frac{R^2-1}{3},\qquad
+\gamma=\sqrt{\vartheta(1-\vartheta)},\qquad
+w=\frac\gamma{2R},\qquad \eta=\frac{3y+d}{4}>d,\\
+m_+=\frac{(2-R)(R+1)}{2R^2},\qquad
+\mu=\frac{(R-1)(R+2)}{2R^2}>0.
+\end{gathered}
+\tag{88.2}
+$$
+
+记 $Z_\varphi^{(2)}=\operatorname{diag}(1,e^{i\varphi})$，以及既有 rank-one projections 和 normalized dual witness
+
+$$
+\begin{gathered}
+\mathsf P_\varphi=
+ \begin{pmatrix}1-y&-we^{-i\varphi}\\-we^{i\varphi}&y\end{pmatrix},\qquad
+Q_\vartheta=\begin{pmatrix}1-\vartheta&\gamma\\\gamma&\vartheta\end{pmatrix},\qquad
+Q_\varphi=Z_\varphi^{(2)}Q_\vartheta Z_\varphi^{(2)\dagger},\\
+Y_\varphi=\frac{Q_\varphi\oplus(-3\vartheta)}{R^2},\qquad
+\|Y_\varphi\|_1=1,\qquad
+M_\varphi=m_+\mathsf P_\varphi-\mu(I_2-\mathsf P_\varphi).
+\end{gathered}
+\tag{88.3}
+$$
+

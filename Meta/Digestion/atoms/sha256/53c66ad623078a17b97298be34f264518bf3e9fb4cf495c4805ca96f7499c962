@@ -1,0 +1,18 @@
+#### 命题 4.3（显式纠缠与条件性的最小门元数）
+
+$G$ 将乘积态 $\lvert +\rangle\lvert 1\rangle$ 变成纯态，其 concurrence 为 $\varphi^{-1/2}>0$。在只允许乘积初始化、单比特酉门和导线置换的模型中，不可能有量子普适性。因此在定理[4.2](#thm-selector)的普通张量比特模型中，两比特是通用酉门所需的最小非平凡作用元数。
+
+**证明。**
+
+输出是 $(\lvert 0\rangle A\lvert 1\rangle+\lvert 1\rangle B\lvert 1\rangle)/\sqrt2$，concurrence 为
+$\sqrt{1-|\langle 1\rvert A^\dagger B\lvert 1\rangle|^2}$。
+由 $Q_{11}=\varphi^{-2}$，重叠模平方为
+$|1+(\omega-1)\varphi^{-2}|^2=\varphi^{-2}$，得到所述值。
+单比特门与置换保持每个乘积纯态为乘积态，其闭包也如此，不能逼近 Bell 态生成操作。此最小性不覆盖免费纠缠初态、联合测量或不同局部维数等额外资源模型。
+
+∎
+
+$\lvert +\rangle$ 在上述论证中只是证明纠缠能力的测试向量，并未声称它可由有限原生字精确制备。近似制备已由单比特稠密性供应。
+
+<a id="sec-4-1"></a>
+

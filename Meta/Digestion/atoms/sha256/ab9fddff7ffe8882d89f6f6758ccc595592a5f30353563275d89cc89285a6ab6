@@ -1,0 +1,17 @@
+**定义 1.1（完整词图及实际律）。** 对每个整数 $n\ge1$，令
+
+$$
+B_n=\{b\in\{0,1\}^n:b_ib_{i+1}=0\ (1\le i<n)\},\qquad
+X=\{x\in\{0,1\}^{\mathbb Z}:x_ix_{i+1}=0\ (i\in\mathbb Z)\}.
+$$
+
+$\Gamma_n$ 含全部 $B_n$ 顶点和全部合法 Hamming 一位差边，不把首尾相接。测试插入时取 $b_0=b_{n+1}=0$。对整个概率单纯形定义
+
+$$
+h(s,t)=\begin{cases}st/(s+t),&s+t>0,\\0,&s=t=0,\end{cases}\quad
+\Phi_n(\mu)=\sum_{\{b,c\}\in E(\Gamma_n)}h(\mu_b,\mu_c),\quad
+\kappa_n=\max_{\mu\in\mathcal P(B_n)}\Phi_n(\mu).
+$$
+
+记 $(Tx)_i=x_{i+1}$，$\mathcal S$ 为 $X$ 上全部 $T$ 不变 Borel 概率律，带弱拓扑；$[w]_a$ 指从坐标 $a$ 开始的词柱，$[w]=[w]_0$。平稳性使柱概率不依赖起点。$P_n$ 恒为一个 $P\in\mathcal S$ 的长度 $n$ 实际边缘。零质量不删词或边；全零、合法端点、任意分组接缝均在原域中。
+

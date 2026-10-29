@@ -1,0 +1,34 @@
+**定理 485.2（无条件下侧振荡）。** 无条件地，
+$$
+\liminf_{x\to\infty}\mathcal T(x)\le-\frac12.
+\tag{485.3}
+$$
+若 RH 不成立，则 $\liminf_{x\to\infty}\mathcal T(x)=-\infty$。
+
+证明。设有限常数 $\kappa$ 与 $x_0$ 使 $\mathcal T(x)\ge-\kappa$ 对 $x\ge x_0$ 成立。令 $g(y)=\mathcal T(e^y)+\kappa\ge0$，$y_0=\log x_0$，
+$$
+G(s)=\int_{y_0}^\infty g(y)e^{-sy}\,dy=\mathcal F(s)+\frac{\kappa x_0^{-s}}s,
+$$
+后一等式在两边均绝对收敛处成立。$g$ 局部有界可测，且由命题 485.1 的点值界，$c_g<+\infty$（可能为 $-\infty$）。
+
+先设 RH 不成立，于是 $\Theta>1/2$。由上确界的定义，取零点 $\rho=\beta+i\gamma$，重数为 $m\ge1$，使 $\beta>\max(1/2,\Theta-1/5)$；再取 $0<\varepsilon<\beta-\Theta+1/5$，令 $\alpha=\Theta+\varepsilon$，由 (485.1) 适用命题 485.1。记 $b=\max(0,\alpha-7/10)$ 与 $\sigma_\rho=\beta-1/2$，则 $\sigma_\rho>b$。
+
+$G$ 沿实射线 $(b,\infty)$ 全纯：对实数 $s>b\ge0$，$s+1/2\in(1/2,\infty)$，其中 $\zeta$ 无零点；$s=1/2$ 处 $\zeta$ 在 $1$ 的极点与 $-1/(2(s-1/2))$ 相消；$\kappa x_0^{-s}/s$ 在 $s>0$ 全纯。若 $c_g>b$，则 $c_g$ 有限且为 $G$ 的正则点，与 Landau–Widder 定理矛盾；故 $c_g\le b$。于是对每个 $\sigma>b$，原积分收敛，且由恒等定理它与 (485.2) 给出的延拓在 $\Re s>b$ 上一致。由 $g\ge0$，
+$$
+|G(\sigma+i\tau)|\le G(\sigma)\qquad(\sigma>b,\ \tau\in\mathbb R).
+\tag{485.4}
+$$
+在 $\sigma_\rho+i\gamma$，$-\frac12\zeta'/\zeta(s+1/2)$ 有留数 $-m/2$，其余项正则；在实点 $\sigma_\rho$，$G$ 正则。于是
+$$
+\lim_{\sigma\downarrow\sigma_\rho}(\sigma-\sigma_\rho)G(\sigma+i\gamma)=-\frac m2,\qquad
+\lim_{\sigma\downarrow\sigma_\rho}(\sigma-\sigma_\rho)G(\sigma)=0,
+$$
+与 (485.4) 矛盾。故对任何有限 $\kappa$ 都不存在最终下界，即 $\liminf\mathcal T=-\infty$。
+
+再设 RH 成立。取 $\alpha=1/2+\varepsilon$，$0<\varepsilon<1/5$，则 $b=0$，同上得 $c_g\le0$ 与 (485.4) 对 $\sigma>0$ 成立。取任一非平凡零点 $1/2+i\gamma$，重数 $m\ge1$，$\gamma\ne0$。$\mathcal F$ 在 $0$ 正则，故
+$$
+\lim_{\sigma\downarrow0}\sigma G(\sigma)=\kappa,\qquad
+\lim_{\sigma\downarrow0}\sigma G(\sigma+i\gamma)=-\frac m2,
+$$
+由 (485.4) 得 $m/2\le\kappa$，从而 $\kappa\ge1/2$。合并两种情形得 (485.3)。证毕。
+

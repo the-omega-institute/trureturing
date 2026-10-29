@@ -1,0 +1,27 @@
+**Definition 75.2 (one common class of consistent infinite laws).** On the
+original full infinite canonical killed-history space, including the
+cemetery record after height death, let $\mathcal C_{\mathrm{crit},r}$
+consist of probability laws $\mathsf V$ with the prescribed deterministic
+initial state such that
+
+$$
+\mathsf V\!\left(\zeta=\infty,\quad
+ |X_t|<r\sqrt{1+t}\text{ for every real }t\ge0\right)=1,
+\tag{75.3}
+$$
+
+and, for every finite $T>0$, the literal full prefix $\mathsf V_T$
+satisfies
+
+$$
+\mathsf V_T\ll\mathbb P_T,\qquad
+D(\mathsf V_T\Vert\mathbb P_T)<\infty.
+\tag{75.4}
+$$
+
+This is exactly the class quantified in Q Corollary 74.2, with the same
+native data and strict event. It imposes no additional height-marginal
+constraint and requires no global density relative to $\mathbb P$.
+One member is a law on the whole infinite space with its literal
+restrictions, rather than a separately chosen law for each horizon.
+

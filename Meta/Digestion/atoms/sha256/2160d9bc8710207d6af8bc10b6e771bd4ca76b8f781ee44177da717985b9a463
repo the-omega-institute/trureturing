@@ -1,0 +1,25 @@
+**约定 1.3（Universal 供应接口）。** [Universal 卷][U] 定义 1.1–1.2、约定 1.3 及式（1.3）、（1.5）在上述原目标上给出
+
+$$
+c_\star=\lim_{n\to\infty}\frac{\kappa_n}{n},\qquad
+n c_\star\le\kappa_n\le(n+1)c_\star,
+\tag{1.3}
+$$
+
+以及对每个平稳合法 $P$，无有限记忆或正支撑假设，
+
+$$
+\begin{aligned}
+E_r(P)=D_r(P)
+&=\sum_{\substack{u,v\in B_r\\u_r=v_1=0}}
+ h\bigl(P([u0v]_{-r}),P([u1v]_{-r})\bigr),\\
+E_r(P)&\downarrow d(P):=\lim_{n\to\infty}\frac{\Phi_n(P_n)}{n}
+=\mathbb E_P[(X_0-\eta)^2]\le c_\star.
+\end{aligned}
+\tag{1.4}
+$$
+
+这里 $E_r$ 与供应记号 $D_r$ 是同一量：中心、观察坐标、字段、概率律和平方损失逐项相同。柱集起点从供应卷的 $1$ 改为 $-r$ 只用平稳性。式（1.4）的密度按原位点计量，不按出现 $1$ 的次数计量。
+
+本卷另使用 [Universal 卷][U] 约定 1.3 所列的有限可见记忆严格非达到供应结果，且只需其如下范围：具有有限可见 Markov 阶及完整合法有限支撑的平稳合法律满足 $d(P)<c_\star$。其原出处为 [有限可见记忆非达到卷][N] 定理 1.5；此供应仅用于第 7 节的对角线非达到结论。
+

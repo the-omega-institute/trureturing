@@ -1,0 +1,44 @@
+**Definition 76.2 (preflight with actual backing).** After a complete
+enabled growth request, retain the actual target reference, its acquired
+address and kind, the root binding and a pending phase. Before changing
+any source field, do the following finite preflight on the present source.
+
+Traverse its logical branches by parent links. At each, count both child
+subtrees by Definition 48.1, and determine whether it is a proper ancestor
+of $p$ by a walk up the target's actual parent chain. Compare child
+references to determine the affected side. Compute both the old radix
+and the predicted new radix by (AAII.36), and multiply into separate
+products $F,F^+$. A prospective split contributes only the unit factor.
+The same actual source counting gives $N$ and the widths $G,G^+$.
+Retain both widths, $N^+$ and whether the old header exists in backed
+pending fields through the edit and replacement. No predicted endpoint
+is supplied as an oracle and no array of ancestral coordinates is
+required. Repeated traversals and arithmetic are paid.
+
+While the source is still unchanged, acquire and initialize the actual
+one new vertex for $P$, or two for $S$, and exactly $G^+-G$ new history
+cells. Acquire a header if and only if $F=1<F^+$. Reserved cells have
+real links and are retained by pending head/tail references, even before
+they join the root-bound list. Obtain finite backed arithmetic, traversal,
+request, answer and continuation storage sufficient for this transaction.
+The outer Growth answer needs $2|p|+5$ backed bits; for Next the already
+acquired old address and selected new address determine its exact
+$2(|p_{\rm old}|+|p_{\rm new}|)+7$ answer bits before editing. Reserve
+those bits and their Print/return cursors as well; retaining the old
+pair and constructing this output are separate paid actions.
+Preflight may itself extend its backed work arena as needed before its
+result is known. It releases no occupied input latch or work value before
+its backing exists. Its finite-allocation premise is Definition 75.1,
+not a claim that a reservation succeeds on an arbitrary fixed-capacity
+device.
+
+A sufficient numerical workspace can be selected from the acquired
+$N^+,G^+$: a fixed number of binary buffers of length at most a fixed
+constant times $G^++N^++1$, with their real links/descriptors, suffices
+for the scalar routines below. Acquired request and output words, their
+cursors and reference widths are additional. Section 80 gives the bound
+and the live coexistence account. Resource acquisition, initialization,
+linking, grant retention and later clearing all have their primitive
+charges. No source edit is enabled until the pending reservation is
+fully backed.
+

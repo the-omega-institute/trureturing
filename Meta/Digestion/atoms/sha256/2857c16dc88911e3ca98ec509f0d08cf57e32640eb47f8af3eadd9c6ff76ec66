@@ -1,0 +1,32 @@
+**Proposition 2.2 (effective paid orientation).** On Lemma 2.1's domain,
+one fixed presence-only controller acquires and retains $\pi$ without
+updating $v$. Put $m_a=1+\lfloor\log_2h_a\rfloor$. Its actual calls
+and literal costs satisfy
+
+$$
+ Q_o=2m_a+1,\qquad M_o\le2h_a,\qquad W_o\le2h_a(2m_a+1).
+ \tag{GPO.8}
+$$
+
+In particular the additional paid call count is
+$O(\log(j+\ell(u)+2))$. This is a protocol upper bound.
+The terminal-fringe distinction and its application to the unknown
+global correspondence are `repo-derived`; bracketing and binary search
+remain the cited intermediate methods.
+
+Proof. Query $a^1,a^2,a^4,\ldots$ until the first absent power, then
+binary search between the last present and first absent lengths. Presence
+on this path is exactly the initial interval $[0,h_a]$. This is the
+ordinary exponential-bracketing and binary-search intermediate method
+already used in ABT35.1,40.1; the new use is on a physically named,
+semantically unknown direction. There are $m_a+1$ power tests and
+$m_a-1$ midpoint tests, since their last bracket has gap $2^{m_a-1}$.
+Thus $2m_a$ actual Reads determine $h_a$, with longest word
+$2^{m_a}\le2h_a$. Submit the one further literal word
+$a^{h_a-2}ba$, of length $h_a$. Its paid bit chooses the two alternatives
+in (GPO.6); store that bit as the orientation encoding. The other image
+of the bijection is then fixed. Every loop and word construction is a
+finite local computation on acquired bits and binary counters. The
+supplied progress and backing permit completion. There are zero updates,
+and summing the actual word lengths gives (GPO.8). $\square$
+

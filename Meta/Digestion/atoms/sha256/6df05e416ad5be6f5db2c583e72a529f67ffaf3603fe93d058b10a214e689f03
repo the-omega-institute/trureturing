@@ -1,0 +1,77 @@
+**Definition 139.1 (The full raw residual image and its numerical reflection).**
+Fix any allowed original source of Proposition 137.1, including any
+one fixed valid choice of the nine actual prefixes of V §§91–93.
+Thus $N^2=W=I_3-2ee^\dagger$, $N^4=I_3$, $e=t/\|t\|$, and
+$\Pi=I_3-ee^\dagger$. Retain the source constants of VI (106.3):
+
+$$
+\tau=\|t\|>0,\qquad b=\frac{3+2\sqrt2}{12},\qquad
+s=\sin\theta,\quad c=\cos\theta,\quad sc\ne0.
+\tag{139.1}
+$$
+
+For arbitrary $0<A<1$, complex unit $f\perp e$, and
+$\eta>0$ with $A^2+\eta^2\le1$, set $h_0=Ae+\eta f$. On the
+entire original domain $\mathcal P$ of VI (114.1), define
+
+$$
+\begin{gathered}
+R_x=\mathcal O_{\mathfrak s}(\gamma,h)
+              -\mathcal O_{\mathfrak s}(0,h_0),\qquad x=(\gamma,h),\\
+\mathscr D_\eta=\{R_x:|\gamma|\le1,\ \|h\|\le1\},\qquad
+\mathscr D_\eta^-=\{R_x:|\gamma|\le1,\ \|h\|\le1,
+                                      \operatorname{Re}(e^\dagger h)\le0\},\\
+(Jy)_{i,w,\beta}=-y_{i,wN^2,\beta},\qquad
+P_Jy=\tfrac12(y+Jy),\qquad
+\|y\|_\infty=\sup_{i,w,\beta}|y_{i,w,\beta}|.
+\end{gathered}
+\tag{139.2}
+$$
+
+The indices include every original history and both terminal labels.
+In particular the defining raw probabilities retain the original
+subnormalised $r_i$ and the exact factor $a_w/2$ of VI (114.3).
+Each physical parameter pair is realized by one full ten-dimensional
+completion shared across emission, the single forward return and all
+histories, by VI Theorem 106.3; compared pairs may use different such
+completions. The maps $J,P_J$ are numerical comparisons of original
+rows, with no additional physical operation or identification of clocks.
+
+For the real lift space $\mathscr V$ of VI Definition 116.1 write
+
+$$
+\begin{aligned}
+\mathcal Q(L)_{i,w,\beta}&=(2\beta-1)q_{i,w}(L),\\
+L_x&=(A_h-A_{h_0},\ B_h-B_{h_0},\ \gamma K_h),\\
+\mathscr J(X,Y,Z)&=(-WXW,-WYW,-WZW).
+\end{aligned}
+\tag{139.3}
+$$
+
+Here $A_h,B_h,K_h$ are exactly VI (114.2), so $R_x=\mathcal Q(L_x)$.
+Equation (135.7) gives $J\mathcal Q(L)=\mathcal Q(\mathscr J L)$.
+On the row range $\mathcal U=\mathcal Q(\mathscr V)$, one therefore
+has $J^2=I$, $P_J^2=P_J$ and $\|Jy\|_\infty=\|y\|_\infty$.
+Indeed appending $N^2$ leaves $a_w$ unchanged and is norm
+nonincreasing by restriction of the supremum; applying this twice
+and using $N^4=I_3$ proves the reverse inequality on $\mathcal U$.
+Words and clocks remain distinct even when their numerical rows agree.
+
+For $y\in\mathcal U$, use the fixed finite linear decoders of
+VI Proposition 118.2 on its outcome-$1$ entries. Denote their
+outputs by $\mathsf D_Hy,\mathsf D_Sy,\mathsf D_Vy$, and define
+the reference-added decoded coordinates
+
+$$
+\widehat H(y)=h_0h_0^\dagger+\mathsf D_Hy,\qquad
+\widehat S(y)=\mathsf S_{h_0}+\mathsf D_Sy,\qquad
+\widehat V(y)=\mathsf D_Vy.
+\tag{139.4}
+$$
+
+These are linear decoding followed by addition of fixed matrices;
+being defined does not assert physical realizability. For $y=R_x$
+they equal $hh^\dagger,\mathsf S_h,\Pi_v(\gamma K_h)$, respectively,
+where $\mathsf S_h=\mathrm i(ht^\dagger-th^\dagger)$ and $v$ is
+the fixed decoder vector of VI (118.4).
+

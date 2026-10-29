@@ -1,0 +1,54 @@
+**Lemma 15.1 (All exceptional projected roots).** The following
+centers, with radius $e=10^{-22}$, isolate all the roots of the
+indicated factors in $(0,1)$. At any actual common root their forced
+$b$ values are as listed.
+
+| Factor | Center | Forced $b$ |
+| --- | --- | --- |
+| $\Psi_2$ | $0.8090169943749474241022934171828190588602$ | $-1/2$ |
+| $\Psi_4$ | $0.8685711315796832210935933386297551290576$ | $-2/5$ |
+| $\Phi$ | $0.1348158750676386533670177160610812651109$ | $1/8$ |
+| $\Phi$ | $0.9024496817720562653778726512965428561863$ | $1/8$ |
+
+Proof. Use the Sturm sequence $f,f',-\operatorname{rem}(f,f'),\ldots$.
+Its exact endpoint sign words are
+
+| Factor or root | At $0$ | At $1$ | At center minus $e$ | At center plus $e$ |
+| --- | --- | --- | --- | --- |
+| $\Psi_2$ | `--+` | `+++` | `-++` | `+++` |
+| $\Psi_4$ | `++--+` | `--+++` | `+--++` | `---++` |
+| lower $\Phi$ | `--+-+` | `--+++` | `-+--+` | `++--+` |
+| upper $\Phi$ | `--+-+` | `--+++` | `+--++` | `---++` |
+
+The total variation drops are respectively one, one and two, with
+one root in each displayed interval. This proves exhaustiveness.
+For the four center matrices of Definition 14.1, in the same order,
+the determinant comparisons are
+
+$$
+10^{k_i}\le-\det L_0<10^{k_i+1},\qquad
+(k_1,k_2,k_3,k_4)=(27,26,29,26).
+$$
+
+The same centered matrix bounds give $Q<2\cdot10^{-15}$ on each
+interval times $\mathcal U$. Thus $L$ is invertible on every
+exceptional projection box.
+
+In the notation of Common Parent Geometry, (20.5),
+$\det L=\Delta_1=72900r^6(r-1)^4\mathcal L_1$.
+Consequently $\mathcal L_1\ne0$ there. Its polynomial identities
+(21.4) and the necessary common-root relation (20.10) are
+
+$$
+\begin{gathered}
+\mathcal L_1b+\mathcal L_0=0,\\
+\mathcal L_0-\tfrac12\mathcal L_1\equiv0\pmod{\Psi_2},\qquad
+\mathcal L_0-\tfrac25\mathcal L_1\equiv0\pmod{\Psi_4},\\
+\mathcal L_0+\tfrac18\mathcal L_1\equiv0\pmod\Phi.
+\end{gathered}
+$$
+
+They force exactly the listed values. The first two are illegal
+because $b>0$. The last two have $b=1/8$ and $\Lambda=0$, by that
+source's (4.9), and hence contribute no regular world. ∎
+

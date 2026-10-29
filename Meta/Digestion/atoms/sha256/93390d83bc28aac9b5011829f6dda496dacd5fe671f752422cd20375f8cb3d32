@@ -1,0 +1,159 @@
+**引理 7.3（二项式积分的联合定量差）。** 对所有整数 $b>a\ge5$，式 (7.3) 满足
+
+$$
+\int_0^1\mu_a'(t)\bigl(\mu_b(t)-\mu_a(t)\bigr)\,dt
+>\frac5{32}\left(\frac1a-\frac1b\right).
+\tag{7.10}
+$$
+
+**证明。** 对任意正整数 $n$ 和 $t\in[0,1]$，取 $n+1$ 个独立 $\operatorname{Bernoulli}(t)$ 变量 $X_1,\ldots,X_{n+1}$，记
+
+$$
+K=\sum_{\ell=1}^{n+1}X_\ell,\qquad
+Y_\ell=\frac{K-X_\ell}{n}.
+$$
+
+同一实现中 $\frac1{n+1}\sum_\ell Y_\ell=K/(n+1)$。这与定理 5.1 证明（二）的删去一个样本恒等式相同；经典中间步骤的出处为 Lamkin–Tkocz，[*Log-concavity and log-convexity of moments of averages of i.i.d. random variables*, arXiv:2001.06439v3](https://arxiv.org/pdf/2001.06439v3)，§1，第 1 页，式 (1) 后的平均恒等式。此处以非负 Bernoulli 样本和平方根的有限 Jensen 不等式使用该恒等式。
+
+条件于 $K=k$，在 $n+1$ 个删去一个变量的均值中，有 $n+1-k$ 个等于 $k/n$，有 $k$ 个等于 $(k-1)/n$。因此相应的 Jensen 差
+
+$$
+q_{n,k}=\sqrt{\frac{k}{n+1}}
+-\frac{n+1-k}{n+1}\sqrt{\frac{k}{n}}
+-\frac{k}{n+1}\sqrt{\frac{k-1}{n}}
+\quad(1\le k\le n+1)
+$$
+
+非负，且 $k=0$ 时差为零。取期望便是
+$\mu_{n+1}(t)-\mu_n(t)$。特别在 $k=1$ 时，
+
+$$
+q_{n,1}=\frac{\sqrt{n+1}-\sqrt n}{n+1}.
+$$
+
+只保留这一非负项及其概率 $(n+1)t(1-t)^n$，即得
+
+$$
+\mu_{n+1}(t)-\mu_n(t)
+\ge(\sqrt{n+1}-\sqrt n)t(1-t)^n.
+\tag{7.11}
+$$
+
+这里其余条件差均非负，不要求删去样本之间独立；$t=0,1$ 也包含在式中。式 (7.11) 是从上述 Jensen 分解取得的定量项，而非仅用样本量单调性。
+
+由 (3.6) 的有限和导数恒等式，
+
+$$
+\mu_a'(t)=\sqrt a\sum_{r=0}^{a-1}
+\binom{a-1}{r}d_r t^r(1-t)^{a-1-r}.
+\tag{7.12}
+$$
+
+每一项非负。对 $n\ge a\ge5$，将 (7.11) 乘以 (7.12)，保留 $r=0,1,2,3,4$ 的项并积分。有限次分部积分给出
+
+$$
+\int_0^1t^{r+1}(1-t)^{a+n-r-1}\,dt
+=\frac{(r+1)!(a+n-r-1)!}{(a+n+1)!}.
+$$
+
+记 $(a-1)_{\underline r}=\prod_{j=1}^r(a-j)$，空乘积为 $1$，得到
+
+$$
+\begin{aligned}
+L_{a,n}&:=\int_0^1\mu_a'(t)
+\bigl(\mu_{n+1}(t)-\mu_n(t)\bigr)\,dt\\
+&\ge\frac{\sqrt a}{\sqrt{n+1}+\sqrt n}
+\sum_{r=0}^4
+\frac{(r+1)d_r(a-1)_{\underline r}}
+{(a+n+1)(a+n)\prod_{j=1}^r(a+n-j)}.
+\end{aligned}
+\tag{7.13}
+$$
+
+下面所有比较都在 $n\ge a\ge5$ 的同一范围内。令 $s=a+n$、$z=a/s$。因为 $s\ge2a$，
+
+$$
+\begin{aligned}
+\sqrt{n+1}+\sqrt n
+&\le\sqrt n\bigl(1+\sqrt{1+1/a}\bigr),\\
+(s+1)s\prod_{j=1}^r(s-j)
+&\le\left(1+\frac1{2a}\right)s^{r+2},\\
+\frac{(a-1)_{\underline r}}{a^r}
+&=\prod_{j=1}^r\left(1-\frac ja\right)
+\ge\prod_{j=1}^r\left(1-\frac j5\right).
+\end{aligned}
+\tag{7.14}
+$$
+
+此外
+
+$$
+\frac1{(1+\sqrt{1+1/a})(1+1/(2a))}
+\ge\frac{10}{11(1+\sqrt{6/5})}>
+\frac{13}{30}.
+\tag{7.15}
+$$
+
+最后一个严格比较等价于 $\sqrt{6/5}<157/143$，由正数平方比较
+$6\cdot143^2=122694<123245=5\cdot157^2$ 得到。
+
+对所保留的四个正指标，使用
+$\sqrt2<10/7$、$\sqrt3<7/4$、$\sqrt5<9/4$，以及
+$d_r=(\sqrt{r+1}+\sqrt r)^{-1}$，可得
+
+$$
+\begin{aligned}
+d_1&>\frac7{17}>\frac{41}{100},&
+d_2&>\frac{28}{89}>\frac{31}{100},\\
+d_3&>\frac4{15}>\frac{26}{100},&
+d_4&>\frac4{17}>\frac{23}{100}.
+\end{aligned}
+\tag{7.16}
+$$
+
+三个根式上界的平方比较分别为 $98<100$、$48<49$、$80<81$。将 (7.14)–(7.16) 代入 (7.13)，$r=0$ 的系数为 $1$，其余四个系数的有理下界依次为
+
+$$
+\begin{aligned}
+2\frac{41}{100}\frac45&=\frac{82}{125},&
+3\frac{31}{100}\frac{4\cdot3}{5^2}&=\frac{279}{625},\\
+4\frac{26}{100}\frac{4\cdot3\cdot2}{5^3}&=\frac{624}{3125},&
+5\frac{23}{100}\frac{4\cdot3\cdot2\cdot1}{5^4}&=\frac{138}{3125}.
+\end{aligned}
+$$
+
+它们正是引理 7.2 的 $P$。于是
+
+$$
+L_{a,n}>\frac{13}{30}
+\frac{\sqrt a}{\sqrt n(a+n)^2}
+P\!\left(\frac a{a+n}\right).
+\tag{7.17}
+$$
+
+对固定 $a$，函数
+
+$$
+x\longmapsto\frac{\sqrt a}{\sqrt x(a+x)^2}
+P\!\left(\frac a{a+x}\right)
+$$
+
+在 $x\ge a$ 上为正且严格递减，因为每个单项式都是正常数乘以
+$x^{-1/2}(a+x)^{-r-2}$。有限求和望远镜及左端点积分比较给出
+
+$$
+\begin{aligned}
+\int_0^1\mu_a'(t)(\mu_b(t)-\mu_a(t))\,dt
+&=\sum_{n=a}^{b-1}L_{a,n}\\
+&>\frac{13}{30}\int_a^b
+\frac{\sqrt a}{\sqrt x(a+x)^2}
+P\!\left(\frac a{a+x}\right)\,dx\\
+&=\frac{13}{30a}\int_1^{b/a}F(u)\,du\\
+&>\frac{13}{30a}\frac{75}{208}
+\left(1-\frac ab\right)
+=\frac5{32}\left(\frac1a-\frac1b\right).
+\end{aligned}
+$$
+
+其中最后一步用引理 7.2，且 $b/a>1$。全部求和有限；没有对 $a$ 或 $b$ 取极限，也没有更换两者的量词。∎
+

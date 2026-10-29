@@ -1,0 +1,63 @@
+**Theorem 21.2 (support radius and exact LAB one-Tick criterion).**
+Let $s\to u$ be any finite raw unticked extension, including the empty
+one, and let $z$ be strictly positive at every vertex of $V_s$.
+For every integer $r\ge0$,
+
+$$
+\operatorname{supp}(T_u^r\iota z)
+ =\{a\in V_u:\operatorname{dist}_u(a,V_s)\le r\}.
+\tag{21.1}
+$$
+
+Consequently $T_u\iota z$ is positive on all $V_u$ if and only if
+the extension edits each initial logical leaf cone at most once.
+For a nonempty extension these are exactly the serial realizations
+of Definition 21.1. Every permutation inside such a block is legal
+and has the same literal term and field endpoint.
+
+Proof. For $r=0$, support is precisely $V_s$. Multiplication by
+$T_u=(4\operatorname{Id}+A_u)/8$ makes a coordinate positive precisely
+when its old coordinate or an adjacent coordinate was positive:
+all coefficients are nonnegative and the indicated diagonal and
+edge coefficients are positive. There is no cancellation.
+Thus support grows by exactly one closed graph neighborhood each
+Tick, proving (21.1) inductively. This is the classical nonnegative
+walk/support argument, used here on the actual persistent extension.
+
+It remains to characterize distance at most one in LAB. The first
+edit in an initial alpha cone is $P_p$, adding $pL$ adjacent to the
+old $p$; the first in an initial beta cone is $S_p$, adding $pLL,pR$
+adjacent respectively to the old $pL,p$. If each initial cone is
+edited at most once, these are all the fresh cells, and all touch $V_s$.
+
+Conversely consider the second edit within any one initial cone.
+If its initial leaf was alpha, its first edit was $P_p$ and its
+second must be $S_p$. The latter creates $pLL$, whose distance to
+the old support is two. If its initial leaf was beta, its first
+edit was $S_p$; the next edit in that cone is either $S_{pL}$,
+creating $pLLL$, or $P_{pR}$, creating $pRL$. In either case the
+displayed vertex has distance two to $V_s$. Intervening edits in
+other initial cones do not change these paths. All future changes
+attach vertices and edges to the persistent tree without deleting
+old edges or adding a cycle; they cannot shorten this distance.
+Therefore positivity after one Tick fails whenever a cone is edited
+twice, proving the equivalence.
+
+Different initial logical leaves are incomparable addresses.
+A first edit in one cone changes no target constructor, old cell
+or edge in another. Their fresh sets are disjoint, even when one
+old leaf is a beta with its unary marker. Swapping adjacent edits
+in distinct cones therefore preserves enabledness, final ordered
+material and every field value: old fields are retained and only
+disjoint new zeros are written. Any two enumerations of a finite
+set are connected by such swaps. Hence every enumeration is legal
+and has the same endpoint, as claimed. $\square$
+
+AA Theorem 17.2 and
+[EnabledPathSwapConnectivity.result](../../../D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity.lean),
+with its [owning Scribe](../../../Blueprint/D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity.scribe.cs),
+already supply the finite-order exchange principle. The proof above
+checks the extra actual zero-write/material correspondence and the
+source-specific iff criterion. The criterion classifies one-Tick
+positivity, not all methods or domains of history recovery.
+

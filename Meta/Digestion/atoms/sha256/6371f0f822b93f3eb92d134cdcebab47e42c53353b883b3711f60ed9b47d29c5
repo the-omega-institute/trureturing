@@ -1,0 +1,24 @@
+**Theorem 3.2 (Reduction to the simplex).** $\Phi$ is Schwarz if and only if for every $t\in\Delta_d$ the following two conditions hold: (A) $\kappa_i(t)>-\infty$ for every $i$, that is, $P_i(t)\ge0$ and $b_i(t)$ lies in the range of $P_i(t)$; (B) either $\kappa_i(t)\ge0$ for every $i$, or there is exactly one index $k$ with $\kappa_k(t)<0$, one has $\kappa_i(t)>0$ for all $i\ne k$, and $\sum_{i=1}^{d}1/\kappa_i(t)\le0$. Stance: suspected-novel (see §7).
+
+**Proof.** Step 1 (traceless matrices). Every $X$ equals $X_0+cI$ with $\mathrm{tr}X_0=0$, so by Lemma 3.1 it suffices to test traceless $X$.
+
+Step 2 (nonnegative vectors). Let $v\in\mathbb C^d$ be nonzero and let $U$ be the diagonal unitary with $v=U|v|$, where $|v|$ is the entrywise modulus. By diagonal-unitary covariance $S(U^\ast XU)=U^\ast S(X)U$, so $v^\ast S(X)v=|v|^{T}S(U^\ast XU)|v|$, and $U^\ast XU$ is traceless when $X$ is. Since the defect is quadratic in $v$, $\Phi$ is Schwarz if and only if $s^{T}S(X)s\ge0$ for every traceless $X$ and every $s$ of the form $s_j=\sqrt{t_j}$ with $t\in\Delta_d$.
+
+Step 3 (row decomposition). Fix $t\in\Delta_d$ and $s$ as above, and write a traceless $X$ as $D+Y$ with $D=\mathrm{diag}(z_1,\dots,z_d)$, $\sum_iz_i=0$, and $Y=(y_{ij})$ with zero diagonal. Put $w_i=\sum_{j\ne i}y_{ij}s_j$. Then $s^{T}D^\ast Ds=\sum_it_i|z_i|^2$, $s^{T}(D^\ast Y+Y^\ast D)s=2\,\mathrm{Re}\sum_i\bar z_is_iw_i$, $s^{T}Y^\ast Ys=\sum_i|w_i|^2$, $s^{T}\mathrm{diag}(Y^\ast Y)s=\sum_i\sum_{j\ne i}t_j|y_{ij}|^2$ and $\|X\|^2=\sum_i|z_i|^2+\sum_i\sum_{j\ne i}|y_{ij}|^2$, while $s^{T}s=1$. By Lemma 3.1,
+
+$$
+s^{T}S(X)s=\sum_{i=1}^{d}\zeta_i^\ast M_i(t)\,\zeta_i ,\qquad \zeta_i=\big(z_i,(y_{ij})_{j\ne i}\big)\in\mathbb C^{d}.
+$$
+
+The off-diagonal variables of different rows are disjoint and unconstrained; only $z$ is constrained by $\sum_iz_i=0$.
+
+Step 4 (minimizing one row). Fix $i$, write $M=M_i(t)$, $P=P_i(t)$, $b=b_i(t)$, and let $F(z,\eta)=(z,\eta)^\ast M(z,\eta)=A_i(t)|z|^2+2\,\mathrm{Re}(\bar z\,b^{T}\eta)+\eta^\ast P\eta$ for $z\in\mathbb C$, $\eta\in\mathbb C^{d-1}$. If $P$ has a negative eigenvalue with eigenvector $\eta_0$, then $F(z,\tau\eta_0)\to-\infty$ as $\tau\to\infty$ for every $z$. If $P\ge0$ and $b$ is not in the range of $P$, choose a real $\eta_0$ in the kernel of $P$ with $b^{T}\eta_0>0$; for $z\ne0$, $F(z,-\tau z\eta_0)=A_i(t)|z|^2-2\tau|z|^2b^{T}\eta_0\to-\infty$, while $\inf_\eta F(0,\eta)=0$. If $P\ge0$ and $b=P\beta$, then $F(z,\eta)=(\eta+z\beta)^\ast P(\eta+z\beta)+|z|^2\big(A_i(t)-\beta^{T}P\beta\big)$ and $\beta^{T}P\beta=b^{T}P^{+}b$, so $\inf_\eta F(z,\eta)=\kappa_i(t)|z|^2$. In all cases with $P\ge0$, $\inf_\eta F(0,\eta)=0$, and $\inf_\eta F(z,\eta)=\kappa_i(t)|z|^2$ for $z\ne0$ with the convention $-\infty\cdot|z|^2=-\infty$.
+
+Step 5 (the diagonal form on the hyperplane). By Steps 3 and 4, $s^{T}S(X)s\ge0$ for all traceless $X$ if and only if every $P_i(t)\ge0$ and $\sum_i\kappa_i(t)|z_i|^2\ge0$ for all $z\in\mathbb C^d$ with $\sum_iz_i=0$, terms with $z_i=0$ being omitted. If some $\kappa_k(t)=-\infty$, the vector $z=e_k-e_l$ with $l\ne k$ violates this; hence (A) is necessary. Assume (A). If two values $\kappa_j(t),\kappa_k(t)$ with $j\ne k$ are negative, $z=e_j-e_k$ gives a negative value; if $\kappa_k(t)<0$ and $\kappa_j(t)=0$ for some $j\ne k$, the same vector gives $\kappa_k(t)<0$. If all $\kappa_i(t)\ge0$ the form is nonnegative. In the remaining case $\kappa_k(t)<0$ and $\kappa_i(t)>0$ for $i\ne k$; then $z_k=-\sum_{i\ne k}z_i$ and, by the Cauchy–Schwarz inequality,
+
+$$
+\Big|\sum_{i\ne k}z_i\Big|^2\le\Big(\sum_{i\ne k}\frac{1}{\kappa_i(t)}\Big)\Big(\sum_{i\ne k}\kappa_i(t)|z_i|^2\Big),
+$$
+
+with equality for $z_i=1/\kappa_i(t)$, $i\ne k$. Since $\kappa_k(t)<0$, this gives $\sum_i\kappa_i(t)|z_i|^2\ge\big(1+\kappa_k(t)\sum_{i\ne k}1/\kappa_i(t)\big)\sum_{i\ne k}\kappa_i(t)|z_i|^2$, with equality at that choice, and $\sum_{i\ne k}\kappa_i(t)|z_i|^2>0$ there. So the form is nonnegative on the hyperplane if and only if $1+\kappa_k(t)\sum_{i\ne k}1/\kappa_i(t)\ge0$; dividing by $\kappa_k(t)<0$, this is $\sum_{i=1}^{d}1/\kappa_i(t)\le0$. Combining with Step 2 proves the theorem. ∎
+

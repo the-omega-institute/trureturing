@@ -1,0 +1,107 @@
+**Proposition 27.1 (one paid preparation, acquisition and use).** Let
+$\sigma$ have $n$ successful births and let $N_s,N_u$ be the actual
+material sizes before and after the selected final birth. Through the seed,
+$\sigma$, one chosen window (25.7) and Construction 26.1, the exact
+semantic counts are
+
+$$
+\begin{array}{c|rrrrrr}
+ &\operatorname{Reset}&\operatorname{Add}&\operatorname{Read}&
+ \operatorname{Hold}&\operatorname{Tick}&\text{births}\\ \hline
+\text{through acquisition}&1&1&2&2&r&n+1\\
+\text{through selected use}&1&2&3&3&r&n+1.
+\end{array}
+\tag{27.1}
+$$
+
+There are $r+4$ field ACKs through acquisition and $r+6$ through use,
+two and three actual provider bits respectively, and $N_u-1$ fresh
+material cells beyond the original alpha. The seed Read is precision one;
+the later Reads have precision $3r+1$. The two histories have the same
+semantic call counts but different actual Tick sizes: the early-birth
+history pays all $r$ Ticks at $N_u$, and the late-birth history all
+$r$ Ticks at $N_s$. They are not financed at the other history's size.
+
+In Definition 13.3's direct two-buffer implementation a Tick at size $M$
+uses $3M-2$ rational products and $2M-2$ sums. Thus the window pays
+$r(3N_u-2)$ products and $r(2N_u-2)$ sums if $\tau=1$, versus
+$r(3N_s-2)$ and $r(2N_s-2)$ if $\tau=0$. Reset writes, seed Add,
+fresh zero initialization, structural/roster/reference work and predictor
+computation remain additional. Reconstructing the known field by (25.7)
+has an $O(rN_u)$ rational-operation implementation and $O(N_u)$ field
+slots, besides retained graph/records. In this normalized nonnegative
+family the common denominator is $8^r$, with numerators at most $7^r$,
+so source widths are $O(r+1)$. No dimension-independent scalar width is
+assumed. The acquired-bit Add adds at most one to a coordinate and keeps
+the same asymptotic width, without making it constant.
+
+Literal traffic uses **Definition 13.2's convention $\ell(0)=0$**.
+In particular a valid digital Read$(j,p)$ has request payload
+$7+2\ell(|j|)+2\ell(p)$ bits, and a signed integer reply $k$ has
+$5+2\ell(|k|)$ bits. Use the actual $j_f$, actual response integer and
+$p=3r+1$ for each performed acquisition/use Read; include the seed's
+actual ordinal and reply separately. Sum the actual growth-address
+payloads (13.2), field requests/ACKs, all End/local acknowledgements,
+Return/navigation, input/bit-provider work, dispatch, copies, clears,
+reference/right/map handoffs and any outputs or record exports. This codec
+is different from the native literal-rational codec using
+$\operatorname{bitlen}(0)=1$. The value zero is not silently assigned the
+other codec's length.
+
+Both full source buffers, observer/predictor copies, instruction and map
+storage, actual provider/parser state, request/reply buffers, retained
+records, outputs and isolated placement/scheduler/resource archives count
+where simultaneously backed. Owned-bit ingress and its isolation are paid,
+not late advice. Finite exact programs and finite per-input backing supply
+neither a uniform lifetime bound nor a total-resource optimum. A measured
+Time claim uses the Reads in (27.1); it cannot be obtained by renaming
+unperformed calculations as observations.
+
+**Supplier correspondence 27.2 (scope of the additional result).**
+Definition 17.1 already supplies this raw digital installation and its
+unknown raw-clock acquisition under a different historical promise.
+Sections 7–8 supply full digital service; Definition 13.2 supplies the
+literal codec and Proposition 13.3 the actual source-arithmetic count.
+Sections 18 and 21 preserve the raw-clock, positive-gap, zero-gap and
+placement distinctions already proved there. The new result here is the
+exact support-distance criterion for any finite unticked extension with
+nonnegative field, its actual one-birth/two-history application, and the
+sharp first-contact robust precision obstruction with acquired-bit use.
+It is not a new proof of the existing general tomography, clock inverse
+or full-current-service suppliers.
+
+The ordinary adjacency/walk positivity ingredient matches pinned mathlib's
+`SimpleGraph/AdjMatrix.lean` walk interpretation; telescoping (25.6),
+positive stays and the sup-norm comparison are proved here directly.
+No upstream theorem is asserted to authenticate the unknown physical law,
+install the digital channel or recover the provider's hidden choices.
+The source-specific combination is repository-derived, without a claim of
+literature priority or new Lean certification.
+
+NCR, PVC and PR57 retain their different actual constructor/Clifford
+readouts, acquired entrances, fixed-$H$ or installed-controller conditions,
+Ready/authorization and paid tape/record obligations. Process Geometry
+§37's exponent recovery starts from its declared acquired data and image;
+Structural/Callable Atlas conversion starts from its earned storage and
+callable/authorization context. Neither a generic inverse nor a response
+oracle from these sources is imported into (25.7). The concrete advance
+is the support-sensitive timing distinction, a paid terminal procedure
+that acquires it under the raw digital law, and its exact first-contact
+robust precision cost on that same actual process. It does not provide the
+common realization bridge of Open problem 16.3.
+
+**Boundary 27.3.** The nonnegative assumption is essential to the proof's
+absence of cancellation; no signed-field criterion is asserted. The
+sharpness concerns the first-contact placement or joint placement/current
+task, not later-contact optimal precision or current-only recovery after
+Reset. Only the restricted two histories and their specified successor
+images are inverted. Unknown seed/law/port authentication, arbitrary
+histories, general timing journals, nuisance provenance, dependent
+archives, physical installation and uniform lifetime resources remain
+outside the results. All original fixed-$G_{gc}$, original-$Q$,
+parked-consumer, unchanged-initialization, original terminal/final-no-Ready
+and other model-specific statements and settlements keep their exact
+scopes. These ordinary conditional proofs do not complete the full
+sustained search for a common space/time/boundary/memory relation structure
+or establish universal alpha/beta minimality.
+

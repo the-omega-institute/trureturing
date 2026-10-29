@@ -1,0 +1,30 @@
+**Definition 15.1.1 (The source quadric and the literal lifted map).**
+Retain the entire original domain of Definition 1.1 and the history
+(1.2). In particular
+
+$$
+\begin{gathered}
+P=P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+\quad b>0,\quad0<r<1,\\
+g(t)=\sum_{k=0}^3\gamma_kt^k\ne0,\quad d\in\mathbb R,\qquad
+(y_0,\ldots,y_6)=(0,24,147/5,24,18,p,v),\quad p\ne24.
+\end{gathered}
+\tag{15.1}
+$$
+
+Coefficients are padded with zeros; no exact degree, coefficient sign,
+nonzero sampled gain, root simplicity or nonzero offset is required.
+Each world has its own whole polynomial and constant offset. Put
+
+$$
+\begin{gathered}
+j=b+r(1-r)/b,\quad s=(1,b,j,r)^{\mathsf T},\quad
+\gamma=(\gamma_0,\gamma_1,\gamma_2,\gamma_3)^{\mathsf T},\quad
+X=s\gamma^{\mathsf T},\\
+q(w)=w_1w_2-w_1^2-w_0w_3+w_3^2,\qquad
+\mathscr P(w)=\begin{pmatrix}w_3&w_1\\w_2-w_1&w_0-w_3\end{pmatrix}.
+\end{gathered}
+\tag{15.2}
+$$
+
+Thus $\det\mathscr P(w)=-q(w)$. A real direction $[w]$ is a

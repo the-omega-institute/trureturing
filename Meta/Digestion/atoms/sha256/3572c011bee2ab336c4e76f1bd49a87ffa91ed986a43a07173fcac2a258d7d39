@@ -1,0 +1,34 @@
+**定理 13.3（固定紧顶空间协方差不能给出邻域比值证书）。**
+在内点局部极大值 $p$，不存在固定环境矩阵
+$X\succeq0$、$\operatorname{tr}_H X=1$、$\operatorname{tr}(XM(p))=\rho(p)$，
+使
+
+$$
+\operatorname{tr}(XM(q))\ge T(q)/\beta
+\quad\text{对 }p\text{ 的某个完整相对邻域内所有 }q\text{ 成立}. \tag{13.6}
+$$
+
+因此用一个固定的紧顶空间协方差下界来证明
+$\rho(q)\ge T(q)/\beta$ 的路线在完整邻域内失败；
+该结论只排除这一类证书。
+
+证明。紧性及正半定性使 $X$ 支持于 $E$：
+$\operatorname{tr}(X(\rho I-M))=0$，正半定乘积的零迹使其像落在核内。
+若 (13.6) 成立，双向一阶微分给出
+$\operatorname{tr}(XC_\xi)=\operatorname{tr}C_\xi/\beta$
+对每个 $\xi$ 成立，故由定理 10.4 的唯一性有 $X=\Pi W\Pi$。
+对任意有限位移，(13.1) 又给出精确差
+
+$$
+\operatorname{tr}(XM(p+\xi))-T(p+\xi)/\beta
+=\|w_\xi\|^2/\beta-(\Pi w_\xi)^{\mathsf T}W(\Pi w_\xi). \tag{13.7}
+$$
+
+$M$ 在 $n-1\ge4$ 维的 $H$ 上正定，顶层二重，
+所以 $\beta=T/\rho>2$。
+迹一的二阶 $W$ 有特征值 $\omega\ge1/2>1/\beta$。
+映射 $\xi\mapsto w_\xi$ 是单纯形切空间到 $H$ 的线性同构，
+故可取 $w_\xi$ 为该特征值的单位特征向量。
+对每个充分小非零 $t$，$p+t\xi$ 仍严格正，
+(13.7) 为 $t^2(1/\beta-\omega)<0$，违背 (13.6)。∎
+

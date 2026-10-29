@@ -1,0 +1,62 @@
+**定理 92.1（全角度原生跨度及有限达到深度）。** 对 (91.1) 的源，定义
+
+$$
+\mathscr S_c=\{X\in\operatorname{Herm}_3:
+ \operatorname{Tr}(P_\xi X)=c\operatorname{Tr}X\},\qquad
+\mathscr R_\ell=\operatorname{span}_{\mathbb R}
+ \{A_u\rho_0:u\in\{0,1\}^*,\ |u|\le\ell\}.
+\tag{92.1}
+$$
+
+则原生有限词列的完整实跨度恰为八维 $\mathscr S_c$，且 $\mathscr R_7=\mathscr S_c$。可以选出 $u_1,\ldots,u_8$，各长至多七，令 $u_1=\varnothing$，使 $r_i=A_{u_i}\rho_0$ 成为其基。
+
+证明。在 $(\xi,e,f)$ 中去掉每个 $V_j$ 的共同标量相位后，
+
+$$
+\begin{gathered}
+V'_0=1\oplus B_z,\qquad V'_1=V'_0(1\oplus J),\qquad
+z=e^{-2\mathrm i\theta},\\
+B_z=L D_z,\quad
+L=\begin{pmatrix}-1/2&\sqrt3/2\\\sqrt3/2&1/2\end{pmatrix},\quad
+D_z=\operatorname{diag}(1,z),\quad J=\operatorname{diag}(1,-1).
+\end{gathered}
+\tag{92.2}
+$$
+
+这与引理 63.1 的 $R,D_\theta,Z$ 分别对应为 $L,D_z,J$，而不是另一个全族分类的表示。其假设恰为 $z\notin\{1,-1\}$。引理 63.1 因而给实际 $1\oplus SU(2)$ 位于原生正词闭包内；对有理 $\theta/\pi$ 同样成立。该引理的有限投影群排除使用代数整数的域范数，(55.7)–(55.8) 给相同源矩阵的迹／行列式障碍；这里不以无理角论证替代有理角情形。
+
+每个原生酉与 $P_\xi$ 交换，故每个 $r_u$ 都在 $\mathscr S_c$。由 (91.6) 可将
+$\psi=\sqrt c\,\xi+\eta_0$，其中 $\eta_0\perp\xi$、$\|\eta_0\|^2=1-c$。$SU(2)$ 在 $\mathbb C^2$ 单位球面上传递，所以原生纯态轨道闭包包含
+
+$$
+Q(v)=|\sqrt c\,\xi+\sqrt{1-c}\,v\rangle
+       \langle\sqrt c\,\xi+\sqrt{1-c}\,v|,
+\qquad v\perp\xi,\quad \|v\|=1.
+\tag{92.3}
+$$
+
+有限词的实线性跨度在有限维中是闭的；$A_u\rho_0$ 与
+$U_u\rho_0U_u^\dagger$ 只差非零标量，故这些轨道极限也在同一跨度内。
+
+$Q(v)-Q(-v)$ 等于
+$2\sqrt{c(1-c)}(\xi v^\dagger+v\xi^\dagger)$。令 $v$ 依次取 $e,\mathrm i e,f,\mathrm i f$，得到四个独立交叉方向。又
+
+$$
+Q(v)+Q(-v)=2cP_\xi+2(1-c)vv^\dagger .
+\tag{92.4}
+$$
+
+对下块的两条正交单位向量求和，得到非零迹方向
+$H_c=\operatorname{diag}(c,(1-c)/2,(1-c)/2)$。将 (92.4) 减去 $2H_c$，下块为
+$2(1-c)(vv^\dagger-I_2/2)$；取 Pauli 三个轴的纯投影给下块全部三个无迹 Hermitian 方向。四个交叉方向、三个下块无迹方向及 $H_c$ 独立，共八维，恰张成 (92.1) 的超平面。
+
+最后，
+
+$$
+\mathscr R_{\ell+1}
+=\mathscr R_\ell+A_0\mathscr R_\ell+A_1\mathscr R_\ell.
+\tag{92.5}
+$$
+
+若某一步在维数八以前停滞，则该空间已对两个生成元不变，以后永不再增长，与刚证得的完整跨度矛盾。从 $\dim\mathscr R_0=1$ 开始，至多七次严格增长即达到八。因此可以在深度七内从空词起扩充成基。∎
+

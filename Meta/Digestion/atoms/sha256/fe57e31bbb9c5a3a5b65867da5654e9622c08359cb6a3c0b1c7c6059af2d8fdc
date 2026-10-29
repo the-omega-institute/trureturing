@@ -1,0 +1,17 @@
+**Assumption 4.4 (finite complete target image).** For the finite-pair
+consumer assume $R_Q(D)$ is finite. Use its exact distinct list
+$r_1,\ldots,r_s$, allowing $s=0$ when $D$ is empty. This list and actual
+original realizers are supplied by [NPL, Theorem 5.3][NPL], which also
+decides the finite-image premise from the input (NIC.17). The premise
+does not require that $D$ itself be finite. Each $r_i$ contains its
+concrete exterior, reached set and full finite-source partition.
+
+The finite-image premise is necessary for prefix determination and
+therefore gives an exact reduction of the general input. For any fixed
+$h$ there are only finitely many words $|p|\le h$, hence only finitely
+many four-valued prefix reply tuples. If that depth determines a row,
+there is at most one row per such tuple, so the complete row image is
+finite. Thus NPL's infinite-image outcome excludes every determining
+depth; its finite-image outcome retains the entire original $D$ for
+Theorem 5.2, rather than selecting a finite source sample.
+

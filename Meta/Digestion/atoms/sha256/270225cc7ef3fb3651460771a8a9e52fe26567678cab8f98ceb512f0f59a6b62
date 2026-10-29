@@ -1,0 +1,47 @@
+**Proposition 11.3 (Necessary analytic candidate condition).** Let
+$B,P_J,P_M\in\mathbb Q[p,v]$ be the exceptional and collision
+polynomials of [Singular Response Children Exclusion](FIB_SINGULAR_RESPONSE_CHILDREN_EXCLUSION.md),
+Definition 11.4, with the whole-child necessary cover of its
+Theorem 11.5. Put
+
+$$
+h(\lambda)=B(\beta(\lambda))P_J(\beta(\lambda)).
+$$
+
+Every actual J collision at a base on this arc satisfies $h(\lambda)=0$.
+Either $h\equiv0$ on $I$, or its zeros are isolated and there are
+finitely many in every compact subinterval contained in $I$.
+Furthermore
+
+$$
+B\circ\beta\not\equiv0\quad\Longrightarrow\quad
+P_M\circ\beta\equiv0.
+$$
+
+Proof. The cited Theorem 11.5 concerns the entire original child,
+including its exceptional strata. Its J-collision inclusion gives
+$B=0$ or $P_J=0$, which proves the first assertion. The polynomial
+compositions are real analytic. The identity theorem on the connected
+open interval $I$ says that a nonidentically-zero analytic function
+has isolated zeros. Infinitely many zeros in a compact subinterval
+would have an accumulation point inside $I$, contradicting that
+theorem.
+
+The actual M pair exists at every parameter, so the same necessary
+cover gives $(B\circ\beta)(P_M\circ\beta)\equiv0$. If the first
+factor is not identically zero, it is nonzero on some open subinterval.
+The second factor vanishes there and hence identically on $I$.
+This implication is also the exceptional-layer constraint in
+[AURIC–Langlands 语境与谱重构理论](AURIC_LANGLANDS_CONTEXT_AND_SPECTRAL_RECONSTRUCTION_THEORY.md),
+Section 7, Corollary 7.3.
+
+Nonconstancy of $\beta$ does not imply $h\not\equiv0$: the nonconstant
+arc $t\mapsto(t,0)$ lies wholly in the zero set of the nonzero
+polynomial $Y$. No value of $B\circ\beta$ or $P_J\circ\beta$ is
+established by the determinant bound. Thus this proposition does not
+assert a finite global candidate set or actual J feasibility. The
+necessary cover gives no converse realization. In particular its
+$B=0$ layer retains every exceptional or singular companion; it is
+not removed by the regular construction of the selected M pair. The
+independent same-base J requirement in Definition 11.1 remains open. ∎
+

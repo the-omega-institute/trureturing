@@ -1,0 +1,15 @@
+**Proposition 11.2 (Same-base sufficiency and its extent).** Satisfaction
+of the additional requirement in Definition 11.1 implies the unchanged
+independent-pair target. The inequality
+$a(W_2(\lambda))<a(W_3(\lambda))$ rules out just these two selected
+worlds as the J pair; it supplies no exclusion of independently
+selected J companions.
+
+Proof. At the selected parameter, Theorem 10.1 supplies the distinct
+M pair at precisely the base of $W_0,W_1$, and $p(\lambda)\ne24$.
+Thus all four complete worlds satisfy Definition 1.2. No relation
+between the two common values is needed. An inequality for the two
+selected M worlds is not a statement about any other pair. Searching
+this arc is a sufficient route; no assertion that every possible
+joint witness lies on it is required or established. ∎
+

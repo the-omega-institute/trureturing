@@ -1,0 +1,12 @@
+**Definition 270.5 (quantifiers of the comparison).** Theorems 270.2–270.4
+concern each fixed finite family of original increment fields, with
+fixed $k$ and depth. The supremum in (270.15) permits arbitrary
+nonnegative gap choices depending on $n$, but does not assert a rate
+uniform in growing $k$, growing depth, changing observables or their
+bounds. It asserts neither derivatives at zero nor convergence in a
+path topology. IV, Theorem 111.5 already distinguishes the two ordered
+zero-time derivative limits. The processes for different $n$ have not
+been coupled on one native execution; the common objects are their
+specified addressed observables and the limiting joint law
+$(\Omega,M,T,\mathbb P)$.
+

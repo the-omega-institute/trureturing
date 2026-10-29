@@ -1,0 +1,103 @@
+**Theorem 11.4 (Unrestricted finite minimizers on the full capacity interval).** Fix any integer $r\ge5$. Use exactly the constants $C_0,A,K_0,R,B,H$ of Theorem 6.1 and an integer $n_0(r)$ satisfying (6.1), with $\widehat\gamma=1/2$. For every integer $n\ge n_0(r)$ and every integer
+
+$$
+L_r(n)\le\ell\le U_r(n),
+$$
+
+the graph $H_r(n,\ell)$ is the unique minimizing isomorphism class among all of $\mathcal G(n,\ell)$. With the actual counts $N,c,b_i$ of Definition 5.1, put
+
+$$
+\mathfrak E_r(n,\ell)=\min_{G\in\mathcal G(n,\ell)}E(G).
+$$
+
+Then
+
+$$
+\mathfrak E_r(n,\ell)=\sum_{i=1}^rM_c(N-b_i),\tag{11.8}
+$$
+
+and the exact minimum of $\Phi$ is $m+\mathfrak E_r(n,\ell)$. Thus the unrestricted part of Theorem 6.1 extends to every fixed $r\ge5$, with the same sufficient threshold and no minimum-degree assumption.
+
+**Proof.** Theorem 5.2 supplies a simple connected candidate at every integer budget in this closed interval, with $c\ge r$, $b+c=N=n-r$, and $E(H_r)\le C_0/n$. The conditions $n>2r$ and $n>3C_0\ge3r$ ensure its capacity and strict sink orientation. A graph with $E(G)>E(H_r)$ is already worse, so it is enough to consider graphs with $E(G)\le C_0/n$.
+
+The six conditions
+
+$$
+n>\max\{1,C_0^2,3C_0,A^3,4AK_0^2,36C_0^2A\}
+$$
+
+in (6.1) are precisely the sufficient fixed-cost reduction conditions of [*CDSO sink incidences and density limits*, Theorem 3.1](CDSO_SINK_INCIDENCE_AND_DENSITY_LIMITS.md), at $C=C_0$. Hence every such actual graph is two-layer, has $s\le K_0$ actual sinks, and has $D_i\ge n/(3C_0)$ for every one of them. In particular no actual sink has been discarded. Also $n>4AK_0^2>2K_0$ ensures $N_s=n-s>0$. Capacity from Theorem 5.2, using $n>2r$, forces $s\ge r$. For its actual profile,
+
+$$
+q_s=\frac{m}{N_s}\ge q_r=\frac{m}{n-r}
+=a+\frac cN>a,\qquad q_r\le r.
+$$
+
+These conclusions require no minimum-degree restriction on the sources.
+
+The estimate (6.3) applies to precisely these actual edges: each source has degree at most $s\le K_0$, each actual sink has the stated linear degree bound, and
+
+$$
+0\le\frac{J_s(x)}{N_s}-E(G)
+\le\frac{N_ss^5}{8(\min_iD_i)^4}
+\le\frac R{n^3}.\tag{11.9}
+$$
+
+The quadratic edge sum here is exactly $J_s(x)/N_s$ for this graph. The candidate estimate (5.3), with $N\ge n/2$, gives
+
+$$
+E(H_r)\le\frac{F_r(q_r)}N+\frac{8B}{n^3}.\tag{11.10}
+$$
+
+Suppose $s\ge r+1$. If $q_s\le r$, Theorem 11.3 gives
+
+$$
+J_s(x)\ge F_r(q_s)+a+\frac1{2r}
+\ge F_r(q_r)+\frac12.
+$$
+
+The last comparison uses the monotonicity already established in Theorem 6.1: $F_r'(q)>0$ on $[a,r]$, since $2C-Dr=r(r^2-3r+1)>0$. If instead $q_s\ge r$, apply (11.7) with the legal value $\beta=2$. Since $D-2>0$,
+
+$$
+J_s(x)\ge\frac{r^3}{2}+(s-r)+\frac{D-2}{2}(q_s-r)
+\ge F_r(q_r)+1.
+$$
+
+This second case covers every actual value above $r$, including those arising at the upper capacity endpoint. Neither case substitutes $q_r$ for the graph's own $q_s$ in an interval hypothesis. They supply a common gap $1/2$ for every $r\ge5$, replacing exactly the uses of (3.5)–(3.6) or (4.1)–(4.2) in the restricted-class proof of Theorem 6.1.
+
+Since $F_r(q_r)>0$ and $N_s\le N$, (11.9)–(11.10) now imply
+
+$$
+E(G)-E(H_r)
+\ge\frac1{2n}-\frac{R+8B}{n^3}
+=\frac1{2n}-\frac H{n^3}>0.\tag{11.11}
+$$
+
+The last sign is exactly the condition $n>\sqrt{H/\widehat\gamma}=\sqrt{2H}$ in (6.1). Thus every minimizer or tying graph has $s=r$.
+
+For this $r$-sink graph let $A_{\mathrm{low}}$ count sources of degree at most $r-2$. Its mean $q_r$ belongs to $[a,r]$. Theorem 3.1 is valid for all $r\ge5$, and gives
+
+$$
+J_r(x)-F_r(q_r)\ge\frac{3aA_{\mathrm{low}}}{N}.
+$$
+
+If $A_{\mathrm{low}}\ge1$, the same actual-edge and candidate estimates give
+
+$$
+E(G)-E(H_r)\ge\frac{3a}{N^2}-\frac H{n^3}
+\ge\frac{3a}{n^2}-\frac H{n^3}>0.\tag{11.12}
+$$
+
+The last threshold in (6.1), $n>H/(3a)$, supplies this sign. Thus all sources of any minimizer have degree $a$ or $r$. The vertex and edge budgets force exactly $c$ full sources and a total of $b$ missing-one sources, with $c,b$ as in Definition 5.1. In particular the capacity interval supplies $c\ge r$ without any balance assumption.
+
+For arbitrary missing-one counts $b_i$ in this remaining class,
+
+$$
+D_i=N-b_i\ge c\ge r,\qquad
+E(G)=\sum_i M_c(D_i).
+$$
+
+The exact formula remains valid even if an endpoint degree equals $r$, since the hub degree is at least every incident source degree. The strict convexity (6.7) holds for every $r\ge5$, $c\ge0$ and $z>0$; its proof contains no source minimum-degree assumption. If $D_j\ge D_i+2$, then $b_i\ge b_j+2$, so there is an actual source missing $i$ and adjacent to $j$. Delete its edge to $j$ and add its missing edge to $i$. The resulting counts are $b_i-1,b_j+1$, and the resulting degrees are $D_i+1,D_j-1$. This preserves simplicity, the source's degree, all vertex and edge budgets, and all $c$ full sources. Those unchanged full sources preserve connectedness. Also $D_j-1\ge c$, so the same exact cost formula applies after the move. Strict convexity gives a strict decrease of the sum of the two hub costs.
+
+Iteration terminates with balanced counts: each move decreases the integer sum of the squared hub degrees, and any pair differing by at least two admits such a move. Conversely all balanced count vectors have the same multiset, hence the same cost; permuting hubs and sources identifies their graphs. Every unbalanced vector has a strictly improving legal move. This proves (11.8) and uniqueness up to graph isomorphism. All conditions of (6.1) have thus been used in their original domains: reduction and capacity, the multi-sink gap, or the low-source penalty; no larger threshold is needed. ∎
+

@@ -1,0 +1,11 @@
+**Definition 2.3 (posterior band).** Let $F_i=\{X_{i-1}=X_{i+1}=0\}$ and let $q_i$ be the translated full-exterior posterior. The band assertion is
+
+$$
+\mathsf B(P):\qquad q_i=0\text{ on }F_i^c,\qquad
+\frac14\le q_i\le\frac12\text{ on }F_i,
+\quad P\text{-almost surely for every }i\in\mathbb Z.
+\tag{2.5}
+$$
+
+It is not an assumption of the sufficient theorem below. Its reported necessity for original-goal attainment is supplied background, not a result proved in this volume.
+

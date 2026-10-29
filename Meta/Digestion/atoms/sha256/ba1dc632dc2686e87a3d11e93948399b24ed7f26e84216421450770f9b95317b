@@ -1,0 +1,40 @@
+**Definition 1.1 (The labelled positive domain).** Let $a,b$ be integers with
+$4\le a\le b$, and put $n=a+b$ and $d=b-a$. The vertices of the actual
+complete bipartite graph $K_{a,b}$ are
+
+$$
+A=\{u_1,\ldots,u_a\},\qquad B=\{v_1,\ldots,v_b\}.
+$$
+
+Its edges are exactly $\{u_i,v_j\}$, and their conductances vary independently
+as $c=(c_{ij})\in(0,\infty)^{ab}$. Write
+
+$$
+C=(c_{ij}),\quad r_i=\sum_{j=1}^b c_{ij},\quad
+s_j=\sum_{i=1}^a c_{ij},\quad W=\sum_{i,j}c_{ij}.
+$$
+
+The ordinary Laplacian, with counting inner product, is
+
+$$
+L(c)=\begin{pmatrix}\operatorname{diag}(r_i)&-C\\
+-C^{\mathsf T}&\operatorname{diag}(s_j)\end{pmatrix},\qquad
+\langle x,y\rangle=\sum_{z\in A\cup B}x_zy_z.
+\tag{1.1}
+$$
+
+List its eigenvalues with multiplicities as
+$0=\lambda_1<\lambda_2\le\cdots\le\lambda_n$. For distinct original
+vertices $p,q$, let $h_p=1$, $h_q=0$ and $(Lh)_z=0$ at every other
+vertex. Define effective resistance and total resistance by
+
+$$
+r(p,q)=\frac1{(Lh)_p},\qquad
+R(c)=\sum_{\{p,q\}\subseteq A\cup B,\ p\ne q}r(p,q).
+\tag{1.2}
+$$
+
+Every unordered original vertex pair occurs once, including nonedges.
+No constraint on $W$, permutation symmetry, rank or vertex identification
+is imposed on this conductance domain.
+

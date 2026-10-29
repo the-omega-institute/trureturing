@@ -1,0 +1,28 @@
+**定义 76.1（有理坐标子族与全部常数）。** 另加源数据条件
+
+$$
+\begin{gathered}
+d=u/v,\qquad 0<u<v,\quad \gcd(u,v)=1,\\
+\zeta=e^{-2\mathrm i\theta}=(a+\mathrm ib)/C,\quad
+ a,b\in\mathbb Z,\quad C\in\mathbb Z_{\ge1},\quad
+ a^2+b^2=C^2,\quad b\ne0.
+\end{gathered}
+\tag{76.1}
+$$
+
+这里 $a,b$ 是整数坐标，不是 (54.1) 的基向量或终端结果记号。条件是 $\zeta$ 的两个坐标有理，不是 $\theta/\pi$ 有理。此前的定理 74.2、75.1 没有这一有理性限制。
+
+对每个整数 $k\ge1$，定义
+
+$$
+\begin{gathered}
+N=k+3,\qquad \nu=k^2+3k,\qquad m=k^2+5k+2,\qquad D=2N+4,\\
+Q=800v^2(4C)^N,\qquad
+L=32(N+1)Q^2k^{2N+4},\qquad
+\widetilde L=\max\{L,2\nu+2m\}.
+\end{gathered}
+\tag{76.2}
+$$
+
+这些都是明确整数；$D$ 为正偶数，$\nu\ge4$。$Q$ 是共同清分母数，不要求是最小公分母。
+

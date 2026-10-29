@@ -1,0 +1,31 @@
+**定义 82.1（复三维比较合同与固定坐标）。** 固定任意 $0<d<1$ 和任意实 $\theta$ 满足 $\sin(2\theta)\ne0$，令 $c=d/2$。对象、存在分解 $\rho=A+D$、负扇区 $N=\ell^\perp$ 和完整集合 $\mathcal K_d$ 均取 (54.1)–(54.5)，不将它替换为仅有 $\rho_{\xi\xi}=c$ 的密度矩阵集合。在 $(\xi,e,f)$ 基中置
+
+$$
+P_\xi=\xi\xi^\dagger,\quad E=\frac12(\xi+e)(\xi+e)^\dagger,
+\quad V_0=Ue^{\mathrm i\theta W},\quad V_1=V_0W,
+\quad \operatorname{Ad}_Q(X)=QXQ^\dagger.
+\tag{82.1}
+$$
+
+一个复三维实现由同一个保持全部凸组合的映射 $\sigma:\mathcal K_d\to\mathcal D(\mathbb C^3)$、同一个合法效果 $0\preceq F\preceq I_3$ 和两个固定的复 Kraus CP 映射组成：
+
+$$
+\Phi_j(X)=\sum_\alpha L_{j\alpha}XL_{j\alpha}^\dagger,
+\qquad \sum_{j,\alpha}L_{j\alpha}^\dagger L_{j\alpha}=I_3.
+\tag{82.2}
+$$
+
+对每个 $\rho\in\mathcal K_d$、每个有限时间词 $h=(j_1,\ldots,j_n)$ 和两种终端结果，要求
+
+$$
+\begin{aligned}
+\operatorname{Tr}(F\Phi_h(\sigma(\rho)))
+ &=2^{-n}\operatorname{Tr}(EV_h\rho V_h^\dagger),\\
+\operatorname{Tr}((I_3-F)\Phi_h(\sigma(\rho)))
+ &=2^{-n}[1-\operatorname{Tr}(EV_h\rho V_h^\dagger)].
+\end{aligned}
+\tag{82.3}
+$$
+
+$\Phi_h=\Phi_{j_n}\cdots\Phi_{j_1}$，$V_h=V_{j_n}\cdots V_{j_1}$，最左标签最早作用，空词也包括在内。允许不可达支持、不可观察方向、任意隐藏纤维、任意 Kraus 表示和初始依赖状态的分支质量；不预设逐支公平、可逆、协变或效果信息完备。此定义是 (54.10) 的复矩阵版本，沿用 (54.8) 的原始联合概率及第二卷 (39.5) 的五维桥。
+

@@ -1,0 +1,22 @@
+#### 定理 8.4（谱凸包的记录判据）
+
+在有限维子空间上，存在某个输入 $\sigma$ 使 $\operatorname{Tr}(\sigma W)=0$，当且仅当
+
+$$
+
+0\in\operatorname{conv}\operatorname{spec}(W).
+
+$$
+
+只要此条件成立，也存在纯输入达到它。
+
+**证明。** 
+写 $W=\sum_jz_j\Pi_j$，则 $m=\sum_jq_jz_j$，其中 $q_j=\operatorname{Tr}(\sigma\Pi_j)\ge0$、$\sum_jq_j=1$，故必要。反之，若 $\sum_jq_jz_j=0$，在每个对应谱空间取单位向量 $u_j$，令 $\lvert \chi\rangle=\sum_j\sqrt{q_j}u_j$，即可得到同样谱权重及 $m=0$。
+ ∎
+
+这把复平面的几何与实际可读记录接上了：是否能形成正交记录，取决于可访问的谱点是否能够用正权围住原点。它比“参数是复数”或“矩阵酉”更强。
+
+<a id="statement-8-5"></a>
+
+<a id="thm-goldenrecord"></a>
+

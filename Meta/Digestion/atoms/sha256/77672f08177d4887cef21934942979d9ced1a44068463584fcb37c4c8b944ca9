@@ -1,0 +1,17 @@
+**Definition 5.1 (Profile space and energy).** Fix $\alpha\in[0,1)$ and any finite integer $s\ge2$. Let $\mathcal P_s(\alpha)$ be the arrays $(x_S)_{\varnothing\ne S\subseteq[s]}$ satisfying
+
+$$
+x_S\ge0,\qquad \sum_Sx_S=1,\qquad
+\sum_S(|S|-1)x_S=\alpha,\qquad
+y_i:=\sum_{S\ni i}x_S>0\quad(1\le i\le s).
+$$
+
+Set
+
+$$
+J_s(x)=\frac12\sum_Sx_S|S|^2\sum_{i\in S}\frac1{y_i^2},\qquad
+F(\alpha)=\frac{2+14\alpha}{(1+\alpha)^2}.
+$$
+
+Zero-mass types $x_S=0$ are allowed. The strict inequalities on the $y_i$ specify the finite-energy hub domain.
+

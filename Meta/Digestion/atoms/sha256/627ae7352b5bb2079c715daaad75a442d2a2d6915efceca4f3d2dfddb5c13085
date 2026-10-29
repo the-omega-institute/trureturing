@@ -1,0 +1,42 @@
+#### 定理 4.3（平衡底面上，偶奇测量恰实现两种剖分）
+
+在 $Z=0,X=Y=1/2$ 的整个纤维上，
+
+$$
+
+p_\kappa=(\kappa,\tfrac12-\kappa,0,\tfrac12-\kappa,\kappa),
+\quad0\le\kappa\le\tfrac12.
+
+$$
+
+固定投影
+
+$$
+
+E=\lvert 0\rangle\langle 0\rvert+\lvert 13\rangle\langle 13\rvert,\qquad O=I-E
+
+$$
+
+的 Lüders 测量，在其正概率分支中，给出
+
+$$
+
+\begin{aligned}
+\Pr(E)&=2\kappa,&p_{\mid E}&=(\tfrac12,0,0,0,\tfrac12)=p_{\kappa_+},\\
+\Pr(O)&=1-2\kappa,&p_{\mid O}&=(0,\tfrac12,0,\tfrac12,0)=p_{\kappa_-}.
+\end{aligned}
+
+$$
+
+因此在这个明确受限来源类上，两种剖分完成确实是一次固定测量的两个可能条件结果。
+
+**证明。** 
+偶子空间只保留 $0,13$，奇子空间在该输入支撑中只保留 $1,3$。分别求迹并归一化即得。若某概率为零，该条件分支不定义，也不会被读到。
+ ∎
+
+对相干态 $\lvert +\rangle\lvert +\rangle$ 的两个端点（中位固定 $0$），同一偶奇测量给出 Bell 态 $(\lvert 00\rangle+\lvert 11\rangle)/\sqrt2$ 或 $(\lvert 10\rangle+\lvert 01\rangle)/\sqrt2$，各以概率 $1/2$。若先分别测量两端再只公布偶奇，条件态则是对角混合。<strong>相同端点概率、相同剖分标签，可以对应不同的量子仪器与不同纠缠。</strong>
+
+<a id="statement-4-4"></a>
+
+<a id="prop-dilation"></a>
+

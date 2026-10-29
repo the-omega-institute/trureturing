@@ -1,0 +1,9 @@
+**Definition 8.1 (Scale and error conventions).** In this section $a\ge4$ and $h\ge1$ are integers, $s=a+1+h$, and $M(a,h)$ and $B_0(a)$ retain Definition 1.1. In particular, the infimum is over all laws in $\mathcal X(a,h)$, with arbitrary nonempty cardinalities, zero type masses, arbitrarily small positive actual marginals and possibly disconnected support. Put
+
+$$
+\rho_a=\frac{h}{a^{3/2}}.
+\tag{8.1}
+$$
+
+Every sequential limit below is asserted for every sequence of these integers with $a\to\infty$ and the displayed scale assumptions. For a fixed compact interval $I=[\rho_-,\rho_+]\subset(0,\infty)$, an error $O_I(a^{-1})$ has a constant and a starting value of $a$ depending only on $I$, uniformly over all integers $h$ with $\rho_a\in I$.
+

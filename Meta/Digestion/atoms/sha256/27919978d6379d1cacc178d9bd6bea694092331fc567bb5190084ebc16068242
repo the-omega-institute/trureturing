@@ -1,0 +1,6 @@
+与本轮直接相关的事实是：
+
+1. [v15 黄金门正文](https://github.com/the-omega-institute/trureturing/blob/837df9a7545012a9e669c61716dac078f5552d96/docs/develop/theory/AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md)没有改变：固定 $K$ 已在指定编码和地址条件下具有近似普适性，也已有有限精确表达的算术障碍。其入库正文是此前作者稿件转换。
+2. 新收入的[v17 加乘与对数稿](https://github.com/the-omega-institute/trureturing/blob/837df9a7545012a9e669c61716dac078f5552d96/docs/develop/theory/AURIC_SUM_PRODUCT_LOGARITHMS_AND_QUANTUM_PYTHAGOREAN_GEOMETRY_V17.md)和[v18 三角剖分与递归酉门稿](https://github.com/the-omega-institute/trureturing/blob/837df9a7545012a9e669c61716dac078f5552d96/docs/develop/theory/AURIC_TRIANGULATION_COLLAPSE_AND_RECURSIVE_UNITARY_GATES_V18.md)属于既有手稿转录，不能当作新的独立证明。v18 已明确：固定控制投影的自嵌套只给对易条件相位，不能自动推出通用性。
+3. 新的[同源停止均值与空间风险](https://github.com/the-omega-institute/trureturing/blob/837df9a7545012a9e669c61716dac078f5552d96/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_STOPPED_MEAN_SPATIAL_RISK.md)把实际递归观察的风险、已付查询成本和原独立种子放在同一模型中，给出共同达到的前沿和预算变分问题。本文完整读取该文并在第[12](#sec-12)节使用其明确结论。
+

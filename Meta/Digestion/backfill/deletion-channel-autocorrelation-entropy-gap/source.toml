@@ -1,0 +1,5 @@
+source_id = "deletion-channel-autocorrelation-entropy-gap"
+path = "docs/develop/theory/DELETION_CHANNEL_AUTOCORRELATION_ENTROPY_GAP.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

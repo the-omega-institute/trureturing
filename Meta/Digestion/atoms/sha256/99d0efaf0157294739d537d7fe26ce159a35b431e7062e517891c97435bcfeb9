@@ -1,0 +1,51 @@
+**Definition 45.1 (The mixed graph, semigroup and actual presentation).**
+Fix arbitrary integers $r,s\ge1$. Let $G=G^e_{r,s}$ consist of
+$r$ labelled five-cycles and $s$ labelled seven-cycles, all sharing
+exactly the same vertices $a,b$ and the retained edge $\{a,b\}$.
+All private vertices are distinct. The edge set is exactly the union
+of the cycle edge sets. Write $\mathscr C$ for these branches and
+$k_C=2$ or $3$ when $C$ has length $2k_C+1$. Order each cycle as
+$a,b,x_1,\ldots,x_{2k_C-1},a$. Put
+
+$$
+\begin{aligned}
+\mathcal I&=\operatorname{Ind}(G),\qquad
+\gamma_I=(1,\mathbf1_I)\quad(I\in\mathcal I),\\
+S&=\mathbb N\{\gamma_I:I\in\mathcal I\},\qquad
+R=\mathbb C[S],\qquad \deg X^{(m,c)}=m,\\
+P&=\mathbb C[z_I:I\in\mathcal I],\qquad
+\deg z_I=1,\qquad z_I\longmapsto X^{\gamma_I},\\
+\delta_C(m,c)&=k_Cm-\sum_{v\in C}c_v,\qquad
+ t=c_a,\quad u=c_b.
+\end{aligned}
+\tag{45.1}
+$$
+
+The empty independent set belongs to $\mathcal I$ and has its own
+variable and degree-one exponent. For $p=(m,c)$ let
+$p_C=(m,c|_C)$ retain the same degree and both shared coordinates.
+Let $K$ be the real cone specified by
+
+$$
+m\ge0,\qquad c_v\ge0,\qquad
+c_v+c_w\le m\quad(\{v,w\}\in E(G)),\qquad
+\delta_C(m,c)\ge0\quad(C\in\mathscr C),
+\tag{45.2}
+$$
+
+and define the integer set
+
+$$
+T=\{(m,c)\in\mathbb Z^{1+|V(G)|}:
+ c_v\ge1,\quad c_v+c_w\le m-1\ (\{v,w\}\in E(G)),\quad
+ \delta_C(m,c)\ge1\ (C\in\mathscr C)\}.
+\tag{45.3}
+$$
+
+Call $p\in T$ basic if no $q\in S$ of positive degree has
+$p-q\in T$. On one cycle use its own semigroup and strict
+inequalities for the same definition. The local vectors are
+$\nu_{C,j}=(2j+1;j\mathbf1_C)$, where $1\le j\le k_C-1$.
+All coordinates in (45.1) are coordinates of one global exponent;
+in particular $t,u$ are not separate branch parameters.
+

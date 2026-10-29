@@ -7,6 +7,43 @@ namespace StrataLint.WorkflowScript.Tests;
 [Collection("Lean cache environment")]
 public sealed class LeanCacheEnsureScriptTests
 {
+    [Theory]
+    [InlineData("0", 0, false)]
+    [InlineData("1", 0, true)]
+    [InlineData("invalid", 2, false)]
+    public void MakeRecoveryOptionIsExplicitAndValidatedBeforeProducerInvocation(
+        string option, int exitCode, bool forwarded)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new TemporaryDirectory();
+        var installed = InstallScript(fixture.Path);
+        File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"),
+            Path.Combine(installed.Repository, "Makefile"));
+        Directory.CreateDirectory(installed.Bin);
+        var dotnet = Path.Combine(installed.Bin, "dotnet");
+        File.WriteAllText(dotnet, "#!/bin/bash\nprintf '%s\\n' \"$@\" > \"$DOTNET_ARGUMENTS\"\n");
+        File.SetUnixFileMode(dotnet,
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+
+        var result = TestProcessRunner.Run("/bin/bash",
+            ["-c", "PATH=\"$1:$PATH\" DOTNET_ARGUMENTS=\"$2\" exec make lean-cache-ensure RESTORE_DEPENDENCIES=\"$3\"",
+                "restore-option-test", installed.Bin, installed.ArgumentsPath, option],
+            installed.Repository, TestBudgets.ScriptProcessHangGuard, 64 * 1024);
+
+        Assert.Equal(exitCode, result.ExitCode);
+        if (exitCode != 0)
+        {
+            Assert.False(File.Exists(installed.ArgumentsPath));
+            Assert.Contains("RESTORE_DEPENDENCIES must be 0 or 1", Encoding.UTF8.GetString(result.StandardError));
+        }
+        else
+        {
+            var arguments = installed.ArgumentsText.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+            Assert.Contains("ensure-cache", arguments);
+            Assert.Equal(forwarded, arguments.Contains("--restore-dependencies"));
+        }
+    }
+
     [Fact]
     public void MissingLakeDelegatesToCanonicalWorktreeEnsureCacheCommand()
     {

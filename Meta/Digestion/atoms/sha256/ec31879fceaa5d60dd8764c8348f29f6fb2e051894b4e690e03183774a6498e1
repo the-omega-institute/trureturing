@@ -1,0 +1,19 @@
+**定义 81.1（固定的输入、仪器与终端权限）。** 本节及 §§82–83 延续定义 77.1，令 $e=e_q,f=f_q$，使用同一 ordered basis $(\xi,e,f)$、$P=|\xi\rangle\langle\xi|$ 与 actual fair independent chronological channel $\mathcal N_n=F^n$。每个实际历史仍按 $V_{h_n}\cdots V_{h_1}$ 执行；擦除后平均为 $F^n$ 不改变历史顺序。令
+
+$$
+E(q)=|v_q\rangle\langle v_q|,\qquad
+v_q=\sqrt{1-q}\,\xi+\sqrt q\,e,\qquad 0\le q\le1,
+\qquad \eta_n(q)=\eta_n(E(q)).
+$$
+
+这里 $q$ 是任务方向，history law 始终为 $2^{-n}$。decoder 是按任务与 horizon 预先选择、与未知输入无关的一个 terminal complex qutrit CPTP map。误差在全部 $\rho\in\mathsf D(\mathbb C^3)$ 上取 supremum，等于 recovered effect 与 target 的 Hermitian operator-norm distance。没有 history/reference access、较小 input code、intermediate correction、postselection 或额外 summary。
+
+本节唯一使用的 effect interface 是 [Environment §27，Proposition 27.2 与 (27.4)–(27.7)][F81ENV27]，即约定 77.2 的整个 complex interval $C=G_s(K_2\oplus d)$，$0\le K_2\le I_2,0\le d\le1$，不是仅挑选一个 real ansatz。有限 $n\ge1$ 时记
+
+$$
+s=(-1/2)^{n-1},\quad t=|s|=2^{1-n},\quad
+\alpha=(1+s)/2,\quad\beta=(1-s)/2.
+$$
+
+每个所构造的 effect 都经 supplier 的 $B=U_0(K_2\oplus d)U_0^\dagger$ 与 (27.5) 实现一个该模型允许的 CPTP decoder；该接口的证明不再重复。一个任务的 effect right inverse 不供应多个任务的共同 decoder。
+

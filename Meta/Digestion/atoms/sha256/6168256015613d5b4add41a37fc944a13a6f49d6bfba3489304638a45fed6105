@@ -1,0 +1,19 @@
+**Corollary 4.5 (Nonzero minors need not have positive density).** For $B$ disjoint interior length-$m_0$ blocks, let $H_j^\eta$ be the minors (4.2). Then
+
+$$
+\sum_j\mathbb E_{\mu_n}|\det H_j^\eta|^2
+\le8(N!)^2B\exp(-(n-m_0)\Delta^2/64)\longrightarrow0
+\tag{4.11}
+$$
+
+under the size condition of Theorem 4.4, even though each determinant is positive on every supported complement.
+
+Proof. At that complement choose a largest-weight component $r_k$. Its cut rank is at most two, hence at most $N$, so the corresponding determinant vanishes. For matrices whose entries lie in $[0,1]$, telescoping the permutation products bounds the determinant difference by $N!$ times the sum of the entry differences; each entry appears in $N!$ products. Distinct selected entries represent distinct words. Thus
+
+$$
+|\det H_j^\eta|\le N!\|p_C^\eta-r_k\|_1
+\le2N!(1-\theta_k).
+$$
+
+Square and use $(1-\theta_k)^2\le1-\theta_k$. The Bayes error estimate from Theorem 4.4 gives (4.11). Since $B\le n/m_0$, its right side tends to zero. This is the determinant continuity estimate of [Guarded, (8.5)] applied to the actual posterior mixture. $\square$
+

@@ -1,0 +1,30 @@
+**定义 91.1（来源侧的固定相容模式）。** 使用 [Scale readout 定义 26.1、26.5 与定理 26.6][F91SCALE26] 的原全域合同：$\mathcal T$ 是全部非空有限自由有序满二叉 $\alpha/\beta$ 树，$\mathcal I_3=\rho^3(\mathcal T)$；原始查询是同一不变来源在任意有限左右地址的 leaf-label、branch 或 absent 报告，费用只数缓存后的不同付费地址。策略必须在整个 $\mathcal T$ 上正确判定 $\mathbf1_{\{T\in\mathcal I_3\}}$ 且有限终止，接受保留完整带标签叶证书；固定评价原型不提供免费 source reports 或正例承诺。
+
+在该固定确定性策略空间 $\mathfrak D_3$ 中，$\mathcal O(P)$ 是实际正来源 $P$ 上达到 individual leaf cost $n_P$ 的策略集合。随机版本 $\mathcal O_{\mathrm u}(P)$ 使用 supplier 分别固定的均匀种子空间 $([0,1],\mathcal L,\operatorname{Leb})$，策略保留 input-independent seed law、同种子重放、逐来源几乎处处正确与有限终止，以及非负扩展费用可测；其目标是每个来源分别达到期望 $n_P$。一个 joint subset 中必须共用一个全域策略，随机情形也共用同一 seed law。
+
+取 supplier 定理 26.6 的 $m=42$ 实例，得到两两不同的 $P_i=\rho^3(Q_i)$，$i\in[42]$，其共同构造组成和叶数为
+
+$$
+\begin{gathered}
+T=42\cdot41=1722,\qquad M=41^2=1681,\\
+c(Q_i)=(3403,1681)^{\mathsf T},\qquad
+c(P_i)=(6765,11849)^{\mathsf T},\qquad n_{P_i}=18614.
+\end{gathered}
+\tag{91.1}
+$$
+
+这些数值只是原构造的参数代入，不是最小规模。其已供应的完整相容结论为
+
+$$
+\begin{aligned}
+\bigcap_{i\in J}\mathcal O(P_i)\ne\varnothing
+ &\quad\Longleftrightarrow\quad J\subsetneq[42],\\
+\bigcap_{i\in J}\mathcal O_{\mathrm u}(P_i)\ne\varnothing
+ &\quad\Longleftrightarrow\quad J\subsetneq[42]
+ \qquad(J\subseteq[42]).
+\end{aligned}
+\tag{91.2}
+$$
+
+空交取各自原固定策略空间。因此两种来源侧的 hereditary compatibility family 都恰为 $K_{42}=2^{[42]}\setminus\{[42]\}$。这里直接使用原实际树构造、全域策略和固定种子证明，不重建任意 hereditary family 的 realization。
+

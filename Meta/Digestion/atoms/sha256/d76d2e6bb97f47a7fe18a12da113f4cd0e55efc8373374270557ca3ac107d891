@@ -1,0 +1,103 @@
+**Theorem 2.1 (An all-cardinality affine certificate).** Let $a\ge2$ be an integer and $s\ge a$ a finite integer. Let $x$ be any probability law on the nonempty subsets of $[s]$ with $\mathbb E K=a$ and every actual marginal positive. Define $H$ as in Definition 1.1 and put
+
+$$
+\beta_a=4(a-1)\sqrt{a+1}-2a+4.
+\tag{2.1}
+$$
+
+Then
+
+$$
+H(x)\ge a^3+\beta_a(s-a),\qquad
+\frac{\beta_a}{a^{3/2}}\longrightarrow4.
+\tag{2.2}
+$$
+
+This holds for all such laws, including zero type masses, arbitrarily small positive marginals, arbitrary cardinality layers and disconnected incidence support.
+
+**Proof.** The shared-budget inequality in [*CDSO incidence moments and capacity phases*, Theorem 2.2, (2.2)](CDSO_INCIDENCE_MOMENTS_AND_CAPACITY_PHASES.md) gives $U_T\ge K^2/a$. Its common-law calculation is
+
+$$
+\sum_i y_i=\mathbb E K=a,\qquad
+K^2\le\left(\sum_{i\in T}y_i\right)U_T\le aU_T.
+$$
+
+Moreover, summing over the actual inclusion events and using Cauchy–Schwarz within each realized $T$ gives
+
+$$
+\mathbb E U_T=\sum_i\frac{\mathbb P(i\in T)}{y_i}=s,
+\qquad
+K^2\sum_{i\in T}y_i^{-2}\ge K U_T^2.
+\tag{2.3}
+$$
+
+Thus it suffices to bound $\mathbb E(KU_T^2)$ using this same pair $(K,U_T)$.
+
+Write $\beta=\beta_a$ and set
+
+$$
+\lambda=5a^2-2\beta,\qquad \nu=4a^3-a\beta,
+\qquad k_0=(a\beta/2)^{1/3}.
+$$
+
+The inequalities $2a\le\beta\le2a^2$ follow respectively from
+
+$$
+\beta-2a=4(a-1)(\sqrt{a+1}-1)\ge0
+$$
+
+and $2\sqrt{a+1}\le a+2$, whose square is $4a+4\le a^2+4a+4$. Consequently $\lambda>0$, $\nu>0$ and $1\le k_0\le a$. We prove the pointwise inequality
+
+$$
+P(k,u):=ku^2-\lambda k-\beta u+\nu\ge0
+\qquad(k\ge1,\ u\ge k^2/a),
+\tag{2.4}
+$$
+
+where $k$ is allowed to be real.
+
+For $k\ge k_0$, the derivative $2ku-\beta$ is nonnegative on $u\ge k^2/a$, since $2k^3/a\ge\beta$. Hence the minimum on this half-line is at its boundary. With $t=k/a\ge0$, direct factorization gives
+
+$$
+P(k,k^2/a)
+=a^3(t-1)^2\left(t^3+2t^2+3t+4-\frac\beta{a^2}\right)\ge0,
+\tag{2.5}
+$$
+
+because $\beta/a^2\le2$.
+
+For $1\le k\le k_0$, the unconstrained minimizing point $u=\beta/(2k)$ is feasible. Four times $k$ times its value is
+
+$$
+Q(k)=4\nu k-4\lambda k^2-\beta^2.
+$$
+
+This is a concave quadratic. The explicit value (2.1) satisfies
+
+$$
+\beta^2+4(a-2)\beta=16a^3-20a^2,
+$$
+
+so $Q(1)=0$. At $k=k_0$, the unconstrained minimizing point equals $k_0^2/a$, and (2.5) gives $Q(k_0)\ge0$. A concave function lies above the chord joining its endpoint values; therefore $Q(k)\ge0$ throughout $[1,k_0]$. Since $k>0$, this proves (2.4) on the remaining interval.
+
+Apply (2.4) to $(k,u)=(K,U_T)$ and take expectations. By (2.3),
+
+$$
+\begin{aligned}
+H(x)&\ge\mathbb E(KU_T^2)
+\ge\lambda\mathbb E K+\beta\mathbb E U_T-\nu\\
+&=\lambda a+\beta s-\nu
+=a^3+\beta(s-a).
+\end{aligned}
+$$
+
+Finally,
+
+$$
+\frac{\beta_a}{a^{3/2}}
+=4(1-a^{-1})\sqrt{1+a^{-1}}
+ -2a^{-1/2}+4a^{-3/2}\longrightarrow4.
+$$
+
+All expectations used the original law. No support reduction or lower bound on its positive marginals was imposed. ∎
+

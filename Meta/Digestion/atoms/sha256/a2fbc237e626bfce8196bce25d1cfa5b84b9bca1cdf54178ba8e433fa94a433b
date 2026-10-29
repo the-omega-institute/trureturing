@@ -1,0 +1,35 @@
+**Lemma 56.2 (Exact consistency reduction).** The two polynomial
+identities required to turn the affine line into actual products are
+equivalent to
+
+$$
+Q_{\rm rec}(E)=0,\qquad
+\kappa_{\rm rec}E+\eta_{\rm rec}=0.
+\tag{56.2}
+$$
+
+More precisely, put $n=X+\alpha_{\rm w}E$ and $t=Z+\gamma_{\rm w}E$.
+If (56.2) holds and $n>0$, then
+
+$$
+En=Y+\beta_{\rm w}E,\qquad t=E/n.
+\tag{56.3}
+$$
+
+**Proof.** For every real $E$,
+
+$$
+\begin{aligned}
+Q_{\rm rec}(E)&=(X+\alpha_{\rm w}E)E-(Y+\beta_{\rm w}E),\\
+R_{\rm rec}(E)-\gamma_{\rm w}Q_{\rm rec}(E)
+&=\kappa_{\rm rec}E+\eta_{\rm rec}.
+\end{aligned}
+\tag{56.4}
+$$
+
+The first identity gives the first equation in (56.3). The second
+shows that (56.2) is exactly $Q_{\rm rec}(E)=R_{\rm rec}(E)=0$.
+With $n>0$, the latter equation is $nt=E$ and gives $t=E/n$.
+Conversely both product identities make both polynomials vanish,
+so (56.2) follows. $\square$
+

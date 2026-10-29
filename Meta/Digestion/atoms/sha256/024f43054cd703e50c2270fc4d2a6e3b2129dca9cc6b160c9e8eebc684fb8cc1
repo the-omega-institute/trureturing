@@ -1,0 +1,48 @@
+**定理 80.1（完整复集合上的共同常数预测）。** 对任意实角度、任意 $0<d<1$，置
+
+$$
+r=d/2,\qquad
+U_d=\frac12+\sqrt{r(1-r)}
+=\frac12+\sqrt{(d/2)(1-d/2)}.
+\tag{80.1}
+$$
+
+共同的一状态模型
+
+$$
+T_0=T_1=1/2,\qquad p(\rho)=1,\qquad f_{\rm cl}=U_d/2
+\tag{80.2}
+$$
+
+满足
+
+$$
+\sup_{H\ge0}\Delta_H(\mathcal K_d;q)
+\le\frac{U_d}{2}
+=\frac14+\frac12\sqrt{(d/2)(1-d/2)}<\frac12.
+\tag{80.3}
+$$
+
+证明。由 $C=2\xi\xi^\dagger$ 和 (72.1)，每个初始态的 $\xi$ 人口恰为 $r$。又 $V_j\xi=e^{\mathrm i\theta}\xi$，所以每个词后的归一化数学态 $\rho_h=V_h\rho V_h^\dagger$ 仍有相同人口。写 $x_h=e^\dagger\rho_he$，则
+
+$$
+0\le x_h\le1-r,\qquad
+|\xi^\dagger\rho_he|\le\sqrt{rx_h}
+\tag{80.4}
+$$
+
+来自迹一和正的二阶主子块。因此
+
+$$
+\begin{aligned}
+0\le\operatorname{Tr}(\rho_h E)
+&=\tfrac12\big[r+x_h+2\Re(\xi^\dagger\rho_he)\big]\\
+&\le\tfrac12+\sqrt{r(1-r)}=U_d.
+\end{aligned}
+\tag{80.5}
+$$
+
+一状态模型同样保留每词 $2^{-|h|}$ 的质量，且终端是的条件参数恒为 $U_d/2$。区间 $[0,U_d]$ 中任意数与其中点相差至多 $U_d/2$；对全部词按原权重平均，得到每深度 TV 的同一界，因而得到 (80.3)。最后 $0<r<1/2$ 使 $\sqrt{r(1-r)}<1/2$。
+
+这是仅在相对大误差区间 $\varepsilon\ge U_d/2$ 供应的全终点模型。它否定“每一个正误差都必迫使状态数发散”这一全称断言；它不解决比该区间小的一个固定正误差。∎
+

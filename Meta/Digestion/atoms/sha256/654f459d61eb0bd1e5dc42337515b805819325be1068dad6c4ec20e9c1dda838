@@ -1,0 +1,114 @@
+**Proposition 141.1 (An explicit original source with actual nine prefixes; repo-derived).**
+In the original matrices of V Definition 54.1 put
+
+$$
+\begin{gathered}
+\xi=(1,1,1)^{\mathsf T}/\sqrt3,\quad
+v_+=(1,1,-2)^{\mathsf T}/\sqrt6,\quad
+e=(1,-1,0)^{\mathsf T}/\sqrt2,\\
+d=\tfrac12,\qquad \theta=\tfrac\pi4,\qquad
+N=-(\xi v_+^\dagger+v_+\xi^\dagger)+\mathrm i ee^\dagger,\\
+(u_1,\ldots,u_9)
+ =(\varnothing,0,1,00,10,000,010,100,N),\\
+A=\tfrac12,\qquad f=(\xi+\mathrm i v_+)/\sqrt2,
+                    \qquad 0<\eta\le\tfrac12.
+\end{gathered}
+\tag{141.1}
+$$
+
+These data are an allowed source and parameters for Theorems
+139.2, 140.1 and 140.2 on this entire nonzero $\eta$ interval.
+The transverse vector is genuinely complex: no common scalar
+phase makes it real. Every column is its actual weighted prefix
+event, and the ninth is the chronological single call $N$ after
+the empty prefix.
+
+*Proof.* The vectors $(\xi,v_+,e)$ are a real orthonormal basis.
+This is (137.1) with $\chi=\pi/4$, $\phi=0$, $\sigma=1$.
+Thus $N\in U(3)$, $N\xi=-v_+$, $N^2=W$ and $N^4=I_3$.
+The mixing condition follows from $N\xi\perp\xi$, and
+$0<d<1$, $\sin(2\theta)=1$. Use exactly the sole preparation
+of V (91.1):
+
+$$
+\psi=2^{-1/2}Uq+\mathrm i2^{-1/2}Ue,\qquad
+\rho_0=\psi\psi^\dagger.
+\tag{141.2}
+$$
+
+V Proposition 91.3 supplies its original five-dimensional CPTP
+source and full matrix response, with no additional preparation.
+For completeness, the particular actual prefixes in (141.1) can
+be checked directly. In the ordered basis $(\xi,v_+,e)$, removing
+only the common scalar phase from $V_0,V_1$ for the purpose of
+computing their conjugations gives
+
+$$
+\psi=\begin{pmatrix}1/2\\(-1+\mathrm i\sqrt6)/4\\
+                         (\sqrt3+\mathrm i\sqrt2)/4\end{pmatrix},
+\quad V'_0=\begin{pmatrix}
+1&0&0\\0&-1/2&-\mathrm i\sqrt3/2\\
+0&\sqrt3/2&-\mathrm i/2
+\end{pmatrix},
+\quad V'_1=V'_0\operatorname{diag}(1,1,-1),
+\quad N=\begin{pmatrix}0&-1&0\\-1&0&0\\0&0&\mathrm i\end{pmatrix}.
+\tag{141.3}
+$$
+
+For a Hermitian matrix $M$ in this basis define the real column
+
+$$
+\mathbf c(M)=(M_{11},M_{22},M_{33},
+ \operatorname{Re}M_{12},\operatorname{Im}M_{12},
+ \operatorname{Re}M_{13},\operatorname{Im}M_{13},
+ \operatorname{Re}M_{23},\operatorname{Im}M_{23})^{\mathsf T}.
+\tag{141.4}
+$$
+
+For each of the first eight words let
+$\psi_{b_1\cdots b_n}=V'_{b_n}\cdots V'_{b_1}\psi$ and
+$r_i=2^{-|u_i|}\psi_{u_i}\psi_{u_i}^\dagger$; let
+$r_9=N\rho_0N^\dagger$. Multiplication of the displayed matrices
+and the real coordinates (141.4) gives
+
+$$
+\det\bigl(\mathbf c(r_1),\ldots,\mathbf c(r_9)\bigr)
+                 =\frac{11421+12960\sqrt6}{2^{41}}>0.
+\tag{141.5}
+$$
+
+Thus the nine actual columns span $\operatorname{Herm}_3$.
+Each of the first eight belongs to $\mathscr S_{1/4}$ by
+V Theorem 92.1; since (141.5) makes them independent, they form
+one of that theorem's valid native bases. The escape in
+V Theorem 92.2 is here already at $k=1$, because
+
+$$
+\operatorname{Tr}(P_\xi\rho_0)=\tfrac14,\qquad
+\operatorname{Tr}(P_\xi N\rho_0N^\dagger)=\tfrac7{16}\ne\tfrac14.
+\tag{141.6}
+$$
+
+Their raw masses are exactly $2^{-|u_i|}$ for $i\le8$ and $1$
+for $i=9$. V Definition 93.1 uses precisely these prefixes with
+its original eight suffixes, trace row and weighted tables;
+its effect-basis determinant (93.9) is nonzero at $\theta=\pi/4$.
+Consequently these are the original source suppliers of
+VI Definition 114.1, with actual prefixes, both labels and the
+original schedules. The scalar phase removed in (141.3) cancels
+inside the same conjugations; it changes no installed control,
+record basis or record phase.
+
+VI (106.3) gives $t=\tau e$, $\tau>0$, for this same source.
+The chosen $f$ is a complex unit in $e^\perp$. Its coefficients
+along the two real vectors $\xi,v_+$ have ratio $\mathrm i$;
+a common phase making both real would make that ratio real,
+a contradiction. Finally $A=1/2$ and $0<\eta\le1/2$ imply
+$\eta\le A$ and $A^2+\eta^2\le1/2<1$. Thus $h_0$ and all
+$h_\zeta$ lie in the original completion ball. VI Theorem 106.3
+realizes each by a full ten-dimensional completion with all five
+prescribed ready columns, shared within its hypothesis across
+emission, return and every history. This proves all the claimed
+admissibility conditions without substituting a normalized state
+collection for the original raw laws. $\square$
+

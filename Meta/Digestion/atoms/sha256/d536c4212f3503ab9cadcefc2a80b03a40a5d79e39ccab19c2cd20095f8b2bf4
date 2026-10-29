@@ -1,0 +1,46 @@
+**Proposition 102.1 (biased energy-ball radius).** For an integer $d\ge0$,
+allow a deterministic procedure at most $d$ exact scalar replies
+$\ell_i(F)$, where each $\ell_i$ is a continuous real linear functional
+on $\mathscr G_0$ selected using the preceding replies. Selection need
+not be continuous. Allow an arbitrary nonlinear final reconstruction.
+Let $r_d(E)$ be the infimum of the worst-case $L^2$ error of such procedures.
+Then
+
+$$
+r_d(E)=\sqrt{\frac E{\lambda_{d+1}}},\qquad
+\sqrt{\frac{bE}{d+1}}\le r_d(E)\le\sqrt{\frac{BE}{d+1}} .
+\tag{102.1}
+$$
+
+For $E>0$ and $\varepsilon>0$, the least ideal read count for error at most
+$\varepsilon$ is $d_*(E,\varepsilon)=\#\{j:\lambda_j<E/\varepsilon^2\}$.
+The inequality is strict at spectral thresholds, including multiple
+eigenvalues. For $E=0$ the input is $0$ and no reads are needed.
+For $E>0$, exact zero error is impossible with a finite number of these reads.
+
+*Proof.* Reading the first $d$ coefficients and returning their spectral
+projection gives squared error at most $E/\lambda_{d+1}$ by (101.2).
+For the lower bound, run any proposed procedure on $0$ and retain its
+chosen functionals on that transcript; pad early termination by zero
+functionals. Their restrictions to
+$U=\operatorname{span}(e_1,\ldots,e_{d+1})$ have a common nonzero kernel.
+Choose a unit vector $u$ in it and put
+$v=\sqrt{E/\lambda_{d+1}}\,u$. Equation (101.2) gives
+$\mathcal E(v)\le E$. Inductively $v,-v$ and $0$ yield the same replies,
+the same choices and the same stopping decision. If their common output
+is $g$, the triangle inequality gives
+$2\|v\|_2\le\|v-g\|_2+\|-v-g\|_2$.
+Thus some input has error at least $\|v\|_2$, even for nonlinear $g$.
+This also covers $d=0$; for $E=0$ use the zero reconstruction.
+The eigenvalue bounds give (102.1), and
+$r_d(E)\le\varepsilon$ is equivalent to
+$\lambda_{d+1}\ge E/\varepsilon^2$, proving the count. $\square$
+
+The Hilbert ellipsoid width method and adaptive zero-transcript argument
+are classical. Allan Pinkus, [*n-Widths in Hilbert Spaces*, in *n-Widths in
+Approximation Theory*, pp. 63–137][PW101], supplies Hilbert-width background;
+no external numbered adaptive-information theorem is invoked here.
+These general methods are not claimed new. Exact real replies, eigenfunction
+availability and unrestricted real postprocessing in this benchmark are
+ideal supplies, not finite FIB records or a native acquisition protocol.
+

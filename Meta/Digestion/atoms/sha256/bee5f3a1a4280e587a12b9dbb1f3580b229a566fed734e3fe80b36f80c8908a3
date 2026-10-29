@@ -1,0 +1,12 @@
+**定理 89.2（相干记录等距的存在及输出谱）。** 对每个固定实现，数学映射
+
+$$
+\mathcal V:\mathbb C^3\longrightarrow\mathbb C^3\otimes\mathbb C^2,
+\qquad \mathcal Vx=\frac1{\sqrt2}\sum_{j=0}^1U_jx\otimes|j\rangle
+\tag{89.3}
+$$
+
+是等距；保留其整个输出时，$\mathcal VX\mathcal V^\dagger$ 与 $X$ 有相同非零谱及熵。若记录被去相干，联合输出熵为 $S(X)+\log2$；若再丢弃记录，记忆输出为 $\Lambda(X)$。等距的存在不推出原生合同提供相干环境、记录相位或逆向控制访问。
+
+证明。$\mathcal V^\dagger\mathcal V=\frac12\sum_jU_j^\dagger U_j=I_3$，谱结论来自等距嵌入。记录去相干后是两个正交块 $\frac12U_jXU_j^\dagger$，其本征值为 $X$ 每个本征值的一半各重复两次，所以熵为所列值；偏迹给 (89.2) 的相应坐标版本。给 $U_j$ 独立乘相位不改变分支 CP 映射，却可改变 (89.3) 的记录间相位；原合同没有辨别这些相位的记录测量。因此这个数学扩张也没有补出原合同未取得的操作权利。∎
+

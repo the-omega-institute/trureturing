@@ -1,0 +1,12 @@
+**Lemma 3.2 (Floor for a universal vertex).** Let $\ell\ge1$, $n\ge3$ and $G\in\mathcal G(n,\ell)$ have a universal vertex. Then $E(G)\ge c_\ell$, and
+
+$$
+c_\ell\ge\frac{2\ell}{(\ell+1)^2+1}.
+$$
+
+Stance: suspected-novel (see §6).
+
+**Proof.** Let $h$ be a universal vertex. The $n-1$ edges at $h$ each have $\varphi\ge1$. The remaining $m-(n-1)=\ell$ edges avoid $h$. For $u\ne h$ let $e_u$ be the number of these $\ell$ edges at $u$; then $d_u=1+e_u$ and $e_u\le\ell$. If $uv$ is one of the $\ell$ edges avoiding $h$, then $e_u,e_v\ge1$, so $2\le d_u,d_v\le\ell+1$ and $r=\min(d_u,d_v)/\max(d_u,d_v)\ge2/(\ell+1)$. Since $\sqrt{1+r^2}$ increases in $r$, each such edge has $\varphi(d_u,d_v)\ge\sqrt{(\ell+1)^2+4}/(\ell+1)$. Summing, $\Phi(G)\ge(n-1)+\ell\sqrt{(\ell+1)^2+4}/(\ell+1)=m+c_\ell$.
+
+For the lower bound on $c_\ell$, put $x=4/(\ell+1)^2$. Rationalising gives $\sqrt{1+x}-1=x/(\sqrt{1+x}+1)$, and $\sqrt{1+x}\le1+x/2$ (square both sides), so $\sqrt{1+x}-1\ge x/(2+x/2)=2x/(4+x)$. Hence $c_\ell=\ell(\sqrt{1+x}-1)\ge\ell\cdot2x/(4+x)=2\ell/((\ell+1)^2+1)$. ∎
+

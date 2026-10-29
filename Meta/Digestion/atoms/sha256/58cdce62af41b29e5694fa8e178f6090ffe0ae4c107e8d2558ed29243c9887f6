@@ -1,0 +1,37 @@
+#### 定理 3.2（相对门完整分类共同参考框）
+
+映射
+
+$$
+[(U,V)]\longmapsto V^\dagger U
+$$
+
+给出轨道商双射
+
+<a id="equation-3"></a>
+
+<a id="eq-orbit"></a>
+
+$$
+\boxed{G\backslash(G\times G)\cong G.}
+\tag{3}
+$$
+
+在自然拓扑下它也是同胚。共同后接的 $W$ 严格消去：
+$(WV)^\dagger(WU)=V^\dagger U$。
+
+**证明。**
+
+最后一式给出不变性。任意 $R\in G$ 来自 $(R,I)$，故满射。
+若 $V^\dagger U=V'^\dagger U'$，取 $W=V'V^\dagger$，则
+$WV=V'$、$WU=U'$，故同一相对门恰是同一轨道。公式及逆映射
+$R\mapsto[(R,I)]$ 连续，得拓扑结论。
+
+∎
+
+这是轨道空间的结论，并未声称非交换群中的对角子群正规、逐项乘法自动下降为商群乘法。后续递归要另作检验。
+
+<a id="statement-3-3"></a>
+
+<a id="prop-right"></a>
+

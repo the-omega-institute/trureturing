@@ -1,0 +1,142 @@
+**定理 49.1（全有限原生协议的 half-diamond 下界）。** 原生协议只有等待
+$U(t)=\exp(-itK)$、$t\ge0$，完整五结果秩一读出
+$J_s(Y)=P_sYP_s$、$P_s=|e_s\rangle\langle e_s|$，Stop，有限历史反馈及
+输入无关的经典随机化。不许量子旁路、额外 ancilla、reset 或新的粗粒度仪器。
+一个未知系统输入只进入一次；初始控制资料与它独立。每个固定种子所选的决策树有限、
+每条叶均 Stop 并保留全部读取标签、控制及终端质量；协议族与种子之间不要求共同深度界。
+任意种子概率空间 $(\Omega,\mu)$ 均要求树选择、分支 CP 映射和终端后处理可测。
+有限树的分支迹和为输入迹，故平均完整仪器也归一化。
+
+为取得下界，可在同一 $H$ 上把等待扩大为任意系统酉控制：扩大类包含原生类，
+下面对扩大类的下界因而适用于原生类。这不授予实际菜单那些酉门。
+
+取任意非零真投影 $P$，令 $Q=I-P$ 且 $\operatorname{rank}Q=r\ge2$。目标旗标信道为
+
+$$
+\Lambda(Y)=PYP\otimes|+\rangle\langle+|
+       +QYQ\otimes|-\rangle\langle-|.
+\tag{49.1}
+$$
+
+任一上述协议的完整记录经任意经典二值后处理并保留系统输出，得到旗标信道 $\Gamma$。
+二值后处理是完整记录的可测随机函数；其额外随机性也可并入独立种子，不丢弃任何记录。
+比较范数定义在全部复输入及任意未触动的数学参考扩展上，系统输出与二值旗标一并保留。
+这定义一种数学信道距离，不宣称原生菜单可制备纠缠参考或执行联合效果。则
+
+$$
+\frac12\|\Gamma-\Lambda\|_\diamond
+\ge \max\left\{w,(1-w)\frac{r-1}{r}\right\}
+\ge\frac{r-1}{2r-1},
+\tag{49.2}
+$$
+
+其中 $w$ 是被标为负的、在首次量子读出前即终止的路径总质量。对实际五模的单模式
+$P$ 有 $r=4$，所以 half-diamond 距离至少为 $3/7$（未除以二的 diamond 距离至少为
+$6/7$）。
+
+**证明。** 记 $M_-$ 为 $\Gamma$ 的负支子信道。按终端路径是否包含首次量子读出
+分解为
+
+$$
+M_-=N_-+E_-.
+\tag{49.3}
+$$
+
+无读出负路径只含输入无关的经典选择和系统酉，因此在离散情形
+$N_-(Y)=\sum_jp_jV_jYV_j^*$，其中 $p_j\ge0$ 且 $\sum_jp_j=w$。对非原子种子，
+将所有经典选择及负标签随机化并入种子后，同一式写成子概率积分
+
+$$
+N_-(Y)=\int V_\omega YV_\omega^*\,d\nu(\omega),
+\qquad \nu(\Omega)=w.
+\tag{49.4}
+$$
+
+无读出时没有输入相关的量子分支，故 $\nu$ 与未知输入无关，且
+$N_-^*(I)=wI$。若 $w>0$，单位酉共轭映射构成有限维紧集，其凸包紧；
+所以积分 $N_-/w$ 也有有限凸组合表示。不需要把连续种子当作原子求和。
+
+对固定种子的任一含读出终端路径，其 Kraus 算子具有
+$V_mP_{s_m}\cdots V_1P_{s_1}V_0$ 的形式（将相邻酉合并），至少含一个秩一投影，
+故秩至多一，包括零算子情形。这正是
+[静态相融纤维命题 44](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)
+已用的首读/终端秩机制；这里复用它，不复证一个新的通用首读定理。
+秩一算子写成 $|a\rangle\langle b|$ 时，其在任意正的系统—参考输入上的输出为
+$|a\rangle\langle a|$ 乘一个正的参考算子，因此可分离。
+固定种子下所有含读出负叶的有限和给 CP 的 $E_{-,\omega}$。
+
+在此实际有限维 $H$ 上，平均定义为 CP 映射的 Bochner 积分
+$E_-=\int E_{-,\omega}\,d\mu(\omega)$。
+各被积映射是迹不增的，故其 Choi 矩阵可积；有限维可分离正锥闭且凸，
+所以积分的 Choi 矩阵仍可分离，$E_-$ 是 entanglement-breaking（对未归一子信道亦即
+其每个参考输出可分离）。有限维闭锥及紧凸包结论仅用于本节的 $\mathbb C^5$，
+不用来替代 §47 的无限载体概率律。由于 $M_-$ 是子信道，
+
+$$
+0\le E_-^*(I)\le(1-w)I.
+\tag{49.5}
+$$
+
+先取单位向量 $\psi\in\operatorname{ran}P$。目标的负概率为零，而协议的负概率
+$\operatorname{Tr}M_-(|\psi\rangle\langle\psi|)\ge w$。在负旗标上作二值效果测量，
+得到 half-diamond 距离至少为 $w$。
+
+再取 $Q$ 的正交基 $q_1,\ldots,q_r$，并让外部参考系带有基
+$f_1,\ldots,f_r$，置
+
+$$
+|\Phi_Q\rangle=\frac1{\sqrt r}\sum_{i=1}^rq_i\otimes f_i.
+$$
+
+目标在负旗标下输出该纯态，概率为 $1$。协议的未归一负输出写成
+$\sigma_-=((M_-\otimes\operatorname{id})(|\Phi_Q\rangle\langle\Phi_Q|))$。
+无读出部分在 $|\Phi_Q\rangle$ 上的重叠为
+
+$$
+\int\left|\langle\Phi_Q|(V_\omega\otimes I)|\Phi_Q\rangle\right|^2d\nu(\omega)\le w.
+\tag{49.6}
+$$
+
+读出部分是正的可分离算子，迹由 (49.5) 至多为 $1-w$。对任意正的可分离算子
+$\sigma$，标准 Schmidt 重叠界给出
+
+$$
+\langle\Phi_Q|\sigma|\Phi_Q\rangle\le\frac{\operatorname{Tr}\sigma}{r}.
+\tag{49.7}
+$$
+
+具体地，对任意乘积向量 $a\otimes b$，Cauchy–Schwarz 给
+$|\langle\Phi_Q,a\otimes b\rangle|^2\le\|Qa\|^2\|b\|^2/r
+\le\|a\|^2\|b\|^2/r$；再对正的可分离和逐项相加并取闭包，即得 (49.7)。
+它适用于未归一算子及 $5\times r$ 的矩形载体，无须把系统限制后重新归一化。
+因此
+
+$$
+\langle\Phi_Q|\sigma_-|\Phi_Q\rangle
+\le w+\frac{1-w}{r}.
+$$
+
+用负旗标与 $|\Phi_Q\rangle\langle\Phi_Q|$ 的联合投影（按系统、旗标、参考的顺序放置）比较两完整输出，
+得到 half-diamond 距离至少为 $(1-w)(1-1/r)$。合并两个见证即得第一项。对
+$w\in[0,1]$，两项的最大值在
+$w=(r-1)/(2r-1)$ 处达到其最小可能值，给出第二项。∎
+
+两个见证都输入迹一密度，且 $\Gamma$、$\Lambda$ 都是完整 CPTP 信道。
+因此输出差是迹零 Hermitian 算子，对任何 $0\le E\le I$ 都有
+$|\operatorname{Tr}E(\rho-\sigma)|\le\|\rho-\sigma\|_1/2$，
+这正是上述概率差给 half-diamond 下界的归一化依据；$\sigma_-$ 本身始终不除以负概率。
+
+中间供应的标准归属为 Horodecki–Shor–Ruskai，
+[quant-ph/0302031v2，定理 4(A–D)](https://arxiv.org/html/quant-ph/0302031v2)
+的秩一 Kraus、可分离 Choi 与 EB 对应，以及 Terhal–Horodecki，
+[*Schmidt number for density matrices*，引理 1](https://arxiv.org/html/quant-ph/9911117v2)
+的 Schmidt-number-$k$ 最大纠缠重叠界；这里取 $k=1$，并按上面的投影与正缩放用于矩形、
+未归一情形。完整有限协议的共同菜单另见
+[近似单份量子边界定义 1.1–1.2](RECURSIVE_RELATIONAL_OBSERVATION_MEASUREMENT_RELATIVE_QUANTUM_BOUNDARY.md)。
+本节的承重接合是实际五模菜单的无读出/EB 分解与两个见证联合给出的 (49.2)，
+不提出一般 EB、Schmidt 界或范数判别的新定理，不作穷尽检索或优先权主张。
+
+这个下界是对所列原生菜单的资源障碍，不是最优性或可达到性定理，也不提供 Bell
+效果、外部参考制备或额外相干记录。特别地，它与 §§46–48 的源射线模型不在同一
+载体上；原生五模协议不能被默认为实现源核的破坏性或 Lüders 仪器。
+

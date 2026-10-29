@@ -1,0 +1,14 @@
+#### 定义 8.1（共同端点完成问题）
+
+给从同一输入接口到同一候选输出接口的酉路径 $A,B$ 及单位输入 $\psi$。把共同端点作为变量 $z$，定义
+
+$$
+E_\psi(z)=\left\lVert z-A\psi\right\rVert ^2+\left\lVert z-B\psi\right\rVert ^2.
+$$
+
+这是两条单位权重的有效约束。默认 $z$ 是变分场变量，未额外要求单位范数。
+
+<a id="statement-8-2"></a>
+
+<a id="thm-interference"></a>
+

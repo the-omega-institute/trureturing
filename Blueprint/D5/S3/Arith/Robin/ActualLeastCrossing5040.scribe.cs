@@ -12,6 +12,21 @@ internal sealed class ActualLeastCrossing5040Document : IScribeDocumentDefinitio
         H("Uniform Actual Least Crossings and the 5040 Core"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("uniform-actual-height-escape"),
+                DeclarationHandle.Create(Prefix + "uniform_actual_height_escape"),
+                H("Finite exclusion uniform through the half endpoint"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For each fixed real R there is T0>0 before eta such that every actual "
+                    + "m>=3 above height T>=T0 has W(m)>R and log(m)>=exp(2), uniformly for "
+                    + "0<eta<=1/2. Cofinality of the iterated logarithms chooses a finite "
+                    + "cutoff M. One plus the sum over j<M of "
+                    + "max(1,(log(j))^(1/2))*max(F(j)-gamma,0) excludes that initial segment. "
+                    + "Positive height gives F(m)>gamma, so the triple-log bound gives W(m)>R. "
+                    + "Leastness is not used. Both the 5040 and positive-price theorems use "
+                    + "this same finite exclusion."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("uniform-actual-least-crossing-record-5040"),
                 DeclarationHandle.Create(Prefix + "uniform_actual_least_crossing_record_5040"),
                 H("One threshold for every original eta"),

@@ -4,7 +4,43 @@
 
 Same-phase charges across the three moduli
 
-**Theorem 1.1 (Geometric quotient as the shared finite sum).**
+**Theorem 1.1 (Native source digits and nonnegative charges).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.digit_data`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.digit_data` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The native binary quotient gives nonnegative charge and the exact old and new source equations in their shared physical phase. Both periodic shortening and dyadic joint transport consume this owner declaration.
+
+**Theorem 1.2 (The native charge total).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.charge_sum`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.charge_sum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For d>=2 and w<2^(d-1), the charge total over all d physical labels is w. The existing zero-sum source theorem and the geometric power sum give this identity. Periodic source equations and the unused-suffix comparison consume it.
+
+**Theorem 1.3 (The exact dyadic seam charge).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.native_charge_alignment`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.native_charge_alignment` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For b=2^h*a<2^(d-1), a>=1, and tau=(finRotate d)^h, the old values agree after relabelling. At j=tau(i), the b charge equals the a charge plus 2^j*a when j<h, and equals it otherwise. The proof separates wrapped and unwrapped physical exponents and uses the owned digit equations and centered uniqueness. RunFirstEarTransport consumes both conclusions in its same-cut two-source construction; no charge domination is assumed.
+
+**Theorem 1.4 (Geometric quotient as the shared finite sum).**
 
 Lean statement: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.geom_sum`
 
@@ -16,7 +52,7 @@ Lean statement: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.geom_su
 
 The geometric quotient is bound to the existing GeometricSourceRelocation.geometric_quotient. The subsequent multiplication and recurrence calculations consume this equality.
 
-**Theorem 1.2 (The geometric multiplication identity).**
+**Theorem 1.5 (The geometric multiplication identity).**
 
 Lean statement: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.geom_mul`
 
@@ -28,7 +64,7 @@ Lean statement: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.geom_mu
 
 The shared finite geometric sum gives (q-1)*G_r=q^r-1. The cross-modulus range proof and final strict-span calculation consume it.
 
-**Theorem 1.3 (The geometric block recurrence).**
+**Theorem 1.6 (The geometric block recurrence).**
 
 Lean statement: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.geom_succ`
 
@@ -40,7 +76,7 @@ Lean statement: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.geom_su
 
 Appending the last geometric summand gives G_(r+1)=G_r+q^r. Charged block joins and the final source equation consume this recurrence.
 
-**Theorem 1.4 (Monotone geometric block heights).**
+**Theorem 1.7 (Monotone geometric block heights).**
 
 Lean statement: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.geom_mono`
 
@@ -52,7 +88,7 @@ Lean statement: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.geom_mo
 
 For d>=1, the geometric quotients increase with the block count. The physical candidate range and all early-block strips consume this order bound.
 
-**Theorem 1.5 (Same-phase charges across the three moduli).**
+**Theorem 1.8 (Same-phase charges across the three moduli).**
 
 Lean statement: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.periodic_source_equations`
 
@@ -70,10 +106,13 @@ This is a repository derivation of the conditional periodic-shortening construct
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.charge_sum`
+- Truth anchor: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.digit_data`
 - Truth anchor: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.geom_mono`
 - Truth anchor: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.geom_mul`
 - Truth anchor: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.geom_succ`
 - Truth anchor: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.geom_sum`
+- Truth anchor: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.native_charge_alignment`
 - Truth anchor: `D5/S3/Combinatorics/Circle/PeriodicShorteningArithmetic.periodic_source_equations`
 - Dependency: [D5/S3/Combinatorics/Circle/GeometricSourceRelocation](GeometricSourceRelocation.md)
 - Dependency: [D5/S3/Combinatorics/Circle/TwoRunSource](TwoRunSource.md)

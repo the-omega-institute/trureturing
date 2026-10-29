@@ -1,0 +1,28 @@
+**Definition 1.1 (finite native algebra).** Let
+
+$$
+\begin{aligned}
+\mathcal T&::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,\\
+\rho\alpha&=\beta,&
+\rho\beta&=\langle\beta,\alpha\rangle,&
+\rho\langle u,v\rangle&=\langle\rho u,\rho v\rangle,\\
+T_j&=\rho^j\alpha\qquad(j\in\mathbb N).
+\end{aligned}
+\tag{NIC.1}
+$$
+
+Every tree is nonempty, finite and ordered. Pairing is the actual free
+binary constructor of these trees. The symbol $\rho$ has the interpreted
+laws in (NIC.1); it is not a free unary constructor. A native expression
+uses a declared finite tuple $\mathbf x=(x_1,\ldots,x_d)$, finite ground
+trees, pairing and supplied fixed natural powers of $\rho$. The declared
+tuple includes variables unused in the expressions. Every occurrence of
+one name denotes the same tree.
+
+A positive presentation $\mathscr E(\mathbf x)$ is a finite conjunction
+of native expression equalities. A signed presentation adds a finite list
+$\Delta(\mathbf x)$ of whole-tree disequalities. Repetitions in either
+list are retained. The empty conjunction is true, and $\mathcal T^0$
+contains exactly the empty tuple. No source-size or source-depth bound is
+part of these domains.
+

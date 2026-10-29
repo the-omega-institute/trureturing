@@ -1,0 +1,48 @@
+**Proposition 8.2 (Reflection correspondence and all monomial degrees).** For every real $0<d\le\tfrac12$, the actual grid $W_d$ is simple and self-conjugate in $\mathbb D^2$, and
+
+$$
+\frac{|p_d'(1)|}{2}=d,\qquad
+\frac{L_d(m_t)}d
+=Q_{t,2,1}(1-w_d,1-\overline{w_d})\quad(t\in\mathbb Z,\ t\ge2).
+$$
+
+The reflected supplier grid in Theorem 4.1 is $Z_d=(-w_d,-\overline{w_d})$, so the argument of $Q$ here is $Z_d+(1,1)$, not $W_d+(1,1)$. Moreover,
+
+$$
+\sup_{t\in\mathbb Z,\ t\ge2}|L_d(m_t)|=d,
+\qquad L_d(m_2)=L_d(m_3)=d.
+$$
+
+Stance: repo-derived; the all-degree bound is reused from the whole applicable Theorem 4.1, with the correspondence below.
+
+**Proof.** The imaginary part $\sqrt3\,d$ is positive and
+
+$$
+|w_d|^2=(1-d)^2+3d^2=1-2d+4d^2\le1.
+$$
+
+Hence the nodes are distinct nonreal conjugates in $\mathbb D$, and have a real characteristic polynomial with no real roots. Also
+
+$$
+p_d'(1)=2-w_d-\overline{w_d}=2d>0.
+$$
+
+For every integer $t\ge2$, the two-variable identity in cited fact (b) gives
+
+$$
+(I_dm_t)'(1)
+=\frac{h_{t-1}(w_d,\overline{w_d})}{t(t-1)},\qquad
+L_d(m_t)=\frac{t-h_{t-1}(w_d,\overline{w_d})}{t(t-1)}.
+$$
+
+Lemma 3.1 identifies the quotient of the last expression by $d=1-\operatorname{Re}w_d$ with $Q_{t,2,1}(Z_d+(1,1))$. This is also the specialization of the source's Corollary 6.1, equation (30), to test point $z=1$, $(n,k)=(2,1)$ and actual nodes $W_d$: its argument is $1_2-z^{-1}W_d=(1-w_d,1-\overline{w_d})$. Its denominator is nonzero, since $p_d'(1)=2d$, and its interpolation premises hold for this simple disk grid (one may take both radius bounds equal to one). This verifies the sign and the normalization directly, without the reduction in the source's Proposition 6.2.
+
+Now $a=1-d$, $b=\sqrt3\,d$ satisfy $a^2+b^2\le1$, $w_d\ne1$, and $b^2=3(1-a)^2$. Theorem 4.1 therefore gives $|Q_{t,2,1}(Z_d+(1,1))|\le1$ for every integer $t\ge2$. Thus $|L_d(m_t)|\le d$ for all such $t$. Finally,
+
+$$
+h_1(w_d,\overline{w_d})=2(1-d),\qquad
+h_2(w_d,\overline{w_d})=3(1-d)^2-3d^2=3-6d,
+$$
+
+so the displayed formula for $L_d(m_t)$ gives $L_d(m_2)=L_d(m_3)=d$. Both degrees attain the supremum. $\square$
+

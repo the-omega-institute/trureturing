@@ -1,0 +1,17 @@
+#### 定义 8.1（完成函数与临界圆）
+
+使用经典解析延拓定义
+
+$$
+\xi(s)=\frac12s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s).
+$$
+
+$\xi$ 是整函数，$\xi(0)=\xi(1)=1/2$，
+$\xi(s)=\xi(1-s)$，并具有共轭对称；它的零点恰是 $\zeta$ 的非平凡零点，保留重数 [4](#ref-dlmfxi) [5](#ref-dlmfzeros)。对 $\rho\ne0$ 定义
+
+$$
+z_\rho=\frac{\rho-1}{\rho}=1-\frac1\rho.
+$$
+
+<a id="thm-cayley"></a>
+

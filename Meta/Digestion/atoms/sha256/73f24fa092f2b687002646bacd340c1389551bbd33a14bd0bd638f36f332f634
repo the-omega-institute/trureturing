@@ -1,0 +1,26 @@
+**Definition 9.1 (Unnormalized context weights and spectral tails).** Retain exactly $B_n$, $K_m^{a,b}$, $\mathcal D_K$, $\mathscr F_{N,n}^{0,0}$ and $\mathscr R_{N,n}$ from Definitions 1.1–1.3. Let $p$ be band-compatible on $B_n$, and let $C=[c,d]$ be an interior interval, so $1<c\le d<n$ and $m=d-c+1$. A complete complement is $\eta=(u,v)$ with $u=W_{[1,c-1]}$ and $v=W_{[d+1,n]}$. For each extendible $\eta$ write
+
+$$
+p_\eta=p(W_{C^c}=\eta)>0,\qquad
+p_C^\eta(w)=p(W_C=w\mid W_{C^c}=\eta),\qquad
+a=u_{c-1},\quad b=v_1.
+\tag{9.1}
+$$
+
+Here and below $C^c$ in a finite-word conditional means $[1,n]\setminus C$. Let $S_C^{a,b}(p)$ have one row for every extendible complete complement with these adjacent bits, one column for every $w\in K_m^{a,b}$, and entries
+
+$$
+S_C^{a,b}(p)(\eta,w)=\sqrt{p_\eta}\,p_C^\eta(w).
+\tag{9.2}
+$$
+
+The mass $p_\eta$ is not divided by $p(W_{c-1}=a,W_{d+1}=b)$. In particular, the four matrices retain their original relative weights. A type without rows gives the zero matrix. For a finite real matrix $S$ and integer $q\ge0$ put
+
+$$
+\operatorname{tail}_q(S)=\sum_{j>q}\sigma_j(S)^2,\qquad
+c_m=\frac{6^{-4m}}{2m},
+\tag{9.3}
+$$
+
+where singular values are decreasing and continued by zeros.
+

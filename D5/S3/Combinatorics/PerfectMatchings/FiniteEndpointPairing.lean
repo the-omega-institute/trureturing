@@ -52,7 +52,7 @@ private theorem FirstVisit.unique {q : Perm X} {S : Set X} {x : X} {m n : ℕ}
   · exact hmi n hnp h hns
 
 /-- The actual next marked point, not a supplied boundary pairing. -/
-private noncomputable def nextVisit (q : Perm X) (S : Set X) (x : S) : S :=
+noncomputable def nextVisit (q : Perm X) (S : Set X) (x : S) : S :=
   ⟨(q ^ visitTime q S x x.property) x,
     (first_visit_visit_time q S x x.property).2.1⟩
 
@@ -141,7 +141,7 @@ private theorem FirstVisit.reverse_cut {s r : Perm X}
     change r ((q ^ (n - k)) x) = (q ^ (n - k)) x
     simpa only [heq] using hz
 
-private theorem next_visit_eq_of_first_visit {q : Perm X} {S : Set X}
+theorem next_visit_eq_of_first_visit {q : Perm X} {S : Set X}
     (x : S) {n : Nat} (hn : FirstVisit q S x n) :
     (nextVisit q S x : X) = (q ^ n) x := by
   change (q ^ visitTime q S x x.property) x = (q ^ n) x

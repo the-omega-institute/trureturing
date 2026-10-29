@@ -1,0 +1,30 @@
+**Definition 5.1 (inclusive original prefixes).** Write
+
+$$
+u\equiv_h v
+\Longleftrightarrow
+\forall p\in\{L,R\}^*,\quad |p|\le h\ \Longrightarrow\ r_u(p)=r_v(p),
+\tag{NIC.21}
+$$
+
+including the absent reply. Let $\operatorname{PrefDet}(D,Q,h)$ mean
+that $u\equiv_h v$ for $u,v\in D$ implies $R_Q(u)=R_Q(v)$.
+For the pieces of Theorem 4.3 and Assumption 4.4 define, whenever $i\ne j$,
+
+$$
+\begin{aligned}
+J_{ib,jc}(h)\Longleftrightarrow
+\exists\mathbf n,\mathbf z,\mathbf n',\mathbf z'\quad&
+C_{r_i,b}(\mathbf n,\mathbf z)\land
+C_{r_j,c}(\mathbf n',\mathbf z')\\
+&\land\ U_{r_i,b}(\mathbf n,\mathbf z)
+       \equiv_h U_{r_j,c}(\mathbf n',\mathbf z').
+\end{aligned}
+\tag{NIC.22}
+$$
+
+All natural and residual tuples have their own piece's dimensions and
+range over actual finite values. They are independent across the two
+sources except for the displayed joint prefix condition. Each piece
+retains sharing within its own original source.
+

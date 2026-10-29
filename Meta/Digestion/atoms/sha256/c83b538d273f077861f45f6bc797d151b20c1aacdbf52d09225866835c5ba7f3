@@ -1,0 +1,36 @@
+**Definition 12.1 (The full endpoint array problem).** For each integer $a\ge4$, put $r=a+1$ and $s=a+2$. Let $\mathcal X_a$ consist of all the profiles of Definition 1.1 on $[s]$ with $\mathbb E K=a$. Explicitly, the variables are one mass $x_T\ge0$ for every nonempty $T\subseteq[s]$, subject to
+
+$$
+\sum_Tx_T=1,\qquad \sum_T|T|x_T=a,\qquad
+y_i=\sum_{T\ni i}x_T>0\quad(i\in[s]).
+$$
+
+No support or connectedness restriction is imposed. Define
+
+$$
+H(x)=2J_{a+2}(x)
+=\mathbb E\left[K^2\sum_{i\in T}y_i^{-2}\right],\qquad
+B_0=a(a+1)^2,\qquad d(x)=H(x)-B_0,\qquad
+g_a=\frac12\inf_{x\in\mathcal X_a}d(x).
+$$
+
+Write
+
+$$
+M_a=2a^3+2a^2-2a-1,\qquad N_a=2a^3-2a-1.
+$$
+
+Thus $M_a,N_a$ are, respectively, $A_a,E_a$ of Theorem 10.1. On the larger scalar interval $0<t<a$, set
+
+$$
+\begin{aligned}
+h_a(t)
+&=\frac1t+\frac{a^2r^2}{a-t}
+ +\frac{(2a+1)(a-1)r^3t}{(a-t)^2},\\
+\lambda_a(t)
+&=\frac3t-\frac{a(2a+1)r^3t}{(a-t)^2}.
+\end{aligned}\tag{12.1}
+$$
+
+The quantities $K$, all conditional laws and all marginals below always refer to the same $x\in\mathcal X_a$.
+

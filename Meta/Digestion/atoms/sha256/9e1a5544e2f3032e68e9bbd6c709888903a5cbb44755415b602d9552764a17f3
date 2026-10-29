@@ -1,0 +1,78 @@
+#### 定理 6.1（带权静态历史与零残差）
+
+在同一有限维完整载体 $H$ 上给酉门 $G_1,\ldots,G_T$，记
+$U_0=I,\ U_t=G_t\cdots G_1$。选择 $\pi_t>0$、$\sum_{t=0}^T\pi_t=1$。定义
+
+<a id="eq-hist"></a>
+
+$$
+\begin{aligned}
+J_\pi\psi&=\sum_{t=0}^T\sqrt{\pi_t}\lvert t\rangle \otimes U_t\psi,
+\end{aligned}
+\tag{5}
+$$
+
+$$
+\begin{aligned}
+D_t&=\pi_t^{-1/2}\langle t\rvert \otimes I
+-\pi_{t-1}^{-1/2}\langle t-1\rvert \otimes G_t,
+\end{aligned}
+$$
+
+<a id="eq-hprop"></a>
+
+$$
+\begin{aligned}
+H_\pi&=\sum_{t=1}^T a_tD_t^\dagger D_t,\qquad a_t>0.
+\end{aligned}
+\tag{6}
+$$
+
+则 $J_\pi^\dagger J_\pi=I$，$H_\pi\ge0$，且
+
+$$
+\ker H_\pi=\operatorname{im}J_\pi .
+$$
+
+固定单位 $\psi$ 后，$\Omega_\psi=J_\pi\psi$ 的时钟概率为 $\pi_t$，条件数据态为 $U_t\psi$。任意 $\Xi=\sum_t\lvert t\rangle x_t$ 的残差为
+
+<a id="eq-action"></a>
+
+$$
+\langle\Xi,H_\pi\Xi\rangle
+=\sum_{t=1}^T a_t
+\left\lVert \frac{x_t}{\sqrt{\pi_t}}
+-G_t\frac{x_{t-1}}{\sqrt{\pi_{t-1}}}\right\rVert ^2 .
+\tag{7}
+$$
+
+**证明。**
+
+正交时钟使 $J_\pi^\dagger J_\pi=\sum_t\pi_tU_t^\dagger U_t=I$。式 [(7)](#eq-action) 是 [(6)](#eq-hprop) 的平方和展开。正系数使其为零恰等价于每个 $D_t\Xi=0$。令 $y_t=x_t/\sqrt{\pi_t}$，则 $y_t=G_ty_{t-1}=U_ty_0$，故 $\Xi=J_\pi y_0$；反向代入同样成立。时钟投影得到未归一化数据向量 $\sqrt{\pi_t}U_t\psi$，给出概率与条件态。
+
+∎
+
+因此，固定门、权重与边界之后，
+
+$$
+\boxed{\text{递归相容解}\ =\ \text{传播残差的零最小元}\ =\ \text{满足该边界的静态历史}.}
+$$
+
+加上 $H_{\rm in}=\lvert 0\rangle \langle 0\rvert \otimes(I-\lvert \psi_0\rangle \langle \psi_0\rvert )$，归一化零能态在整体相位之外唯一；若直接固定 $y_0=\psi_0$，向量也唯一。没有固定非零边界时，零向量总是残差零点，不能用它证明非平凡预测已成功。
+
+更换 $\pi$ 同时更换 $D_t,H_\pi$。不能说同一个已经固定的传播 Hamiltonian 任意容纳所有权重。虽然
+$e^{-isH_\pi}\Omega_\psi=\Omega_\psi$，这里的 $H_\pi$ 是为相容关系构造的算子；该事实没有认定它就是宇宙真实 Hamiltonian，也没有证明这些历史态能由某个固定门菜单免费精确制备。
+
+把定理 [5.2](#thm-tree) 的有限记录网络作酉扩张后，即可用本定理编码。若 $P_t$ 是时钟投影、$Q_h$ 是另一个因子上的记录投影，则二者对易。在非零共同事件上，先按时钟后按记录或反序条件化都给
+
+$$
+\rho_{t,h}=
+\frac{P_tQ_h\rho Q_hP_t}{\operatorname{Tr} (P_tQ_h\rho)}.
+$$
+
+使用同一 $\rho$ 计算所有条件描述，不要求实际条件态等于原始 $\rho$。这一点与三读口的次序无关一样，都来自明确的兼容代数。
+
+<a id="statement-6-2"></a>
+
+<a id="prop-infinite"></a>
+

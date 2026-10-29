@@ -1,0 +1,8 @@
+**Convention 2.1 (Two-node grids and the parameter $w$).** For $n=2$, $k=1$ write $Q_t=Q_{t,2,1}$. By cited fact (b), $s_{(d\mid 0)}=h_{d+1}$, so
+
+$$
+Q_t(\zeta_1,\zeta_2)=\frac{1}{\binom{t}{2}\,(\zeta_1+\zeta_2)}\sum_{d=0}^{t-2}(-1)^d\binom{t}{d+2}\,h_{d+1}(\zeta_1,\zeta_2),
+$$
+
+defined whenever $\zeta_1+\zeta_2\ne0$. A pair $(z_1,z_2)\in\mathbb{D}^2$ is self-conjugate exactly when $z_2=\overline{z_1}$: either $z_1$ is nonreal and $z_2$ is its conjugate, or $z_1=z_2$ is real. Since $Q_t$ is symmetric, every such pair is written $z=(-w,-\overline{w})$ with $w=a+ib$, $a,b\in\mathbb{R}$, $a^2+b^2\le1$; doubled real nodes are the case $b=0$. The shifted nodes are $\zeta=z+1=(1-w,1-\overline{w})$ and $e_1(\zeta)=2(1-a)$, which vanishes only for $w=1$, that is $z=(-1,-1)$; there $Q_t(z+1)$ is undefined, and this grid is excluded wherever $Q_t(z+1)$ appears. For the second inequality the nodes are written directly as $z=(u,\overline{u})$ with $u=a+ib$. Stance: repo-derived (notation fixed in this volume; the reduction $s_{(d\mid0)}=h_{d+1}$ is cited fact (b)).
+

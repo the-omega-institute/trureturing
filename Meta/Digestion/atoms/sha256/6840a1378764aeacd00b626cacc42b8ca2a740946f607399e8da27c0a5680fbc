@@ -1,0 +1,18 @@
+## 1. 项目快照：本轮究竟推进什么
+
+固定公开研究分支 `dev` 的不可变提交为
+
+`837df9a7545012a9e669c61716dac078f5552d96`。
+
+时间为 2026-10-30 03:49:55（Asia/Singapore），PR #23846，标题为 <em>docs: exclude phase-reset finite-hidden producers from attainment</em>。相对前稿 v19 的 `a5a8bcdf…`，理论目录有 6 条变更路径：4 新增、2 修改；当前目录有 1019 个文件。本轮定向核对 15 份当前正文、2 份旧版及 Git blob；这不构成全库定理认证。
+
+与本轮直接相关的事实是：
+
+1. [v15 黄金门正文](https://github.com/the-omega-institute/trureturing/blob/837df9a7545012a9e669c61716dac078f5552d96/docs/develop/theory/AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md)没有改变：固定 $K$ 已在指定编码和地址条件下具有近似普适性，也已有有限精确表达的算术障碍。其入库正文是此前作者稿件转换。
+2. 新收入的[v17 加乘与对数稿](https://github.com/the-omega-institute/trureturing/blob/837df9a7545012a9e669c61716dac078f5552d96/docs/develop/theory/AURIC_SUM_PRODUCT_LOGARITHMS_AND_QUANTUM_PYTHAGOREAN_GEOMETRY_V17.md)和[v18 三角剖分与递归酉门稿](https://github.com/the-omega-institute/trureturing/blob/837df9a7545012a9e669c61716dac078f5552d96/docs/develop/theory/AURIC_TRIANGULATION_COLLAPSE_AND_RECURSIVE_UNITARY_GATES_V18.md)属于既有手稿转录，不能当作新的独立证明。v18 已明确：固定控制投影的自嵌套只给对易条件相位，不能自动推出通用性。
+3. 新的[同源停止均值与空间风险](https://github.com/the-omega-institute/trureturing/blob/837df9a7545012a9e669c61716dac078f5552d96/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_STOPPED_MEAN_SPATIAL_RISK.md)把实际递归观察的风险、已付查询成本和原独立种子放在同一模型中，给出共同达到的前沿和预算变分问题。本文完整读取该文并在第[12](#sec-12)节使用其明确结论。
+
+因此，本轮的目标是：给出一个更直接的两端口候选结构；把已有的稠密性推进到有相位控制和误差界的递归编译；把“预测 = 递归 = 最优化 = 变分”写成同一对象上的严格等价。新提交中的其他组合结果和事件重置桥不作为本文定理的前提。前稿的黎曼猜想接口也不参与任何普适性证明。
+
+<a id="sec-2"></a>
+

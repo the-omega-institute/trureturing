@@ -1,0 +1,7 @@
+**定义 115.1（中间工具与新增范围）。** §§111–114 的承重增量是本源原四表对整个原竞争类的固定源正误差锥基结论，以及两个保持原合同的识别边界；不把下列一般工具单列为新增定理。
+[Fanizza–Lumbreras–Winter，2209.11225v2，§2.1、Propositions 2–3、(5)–(7)](https://arxiv.org/html/2209.11225v2) 的不变内外锥方法按 §110 的时间反转对应使用；本源有质量行和替代控制，仍不满足该文的平稳过程合同。该文 §2.3、Theorem 6 已研究 qubit FRDN 过程的退极化噪声及正实现所需隐藏状态数；本处 (113.3) 是原九维实载体上的全局合法多面锥族，不限制顶点数或断言同样多的 HMM 隐藏状态。
+[Monras–Winter，1412.3634v1，§4 及 Theorem 6](https://arxiv.org/html/1412.3634v1) 分别给商实现和多面不变锥的正实现背景；(113.2)–(113.3) 在本源上直接证明全域不变性，不以一般实现存在性代替本模型的合法性。
+[Mazurek 等，1710.05948v3，§§II.4、III.5、IV](https://arxiv.org/html/1710.05948v3) 与 [Grabowecky 等，2108.05864v2，§V.3](https://arxiv.org/html/2108.05864v2) 已用 realized／consistent 状态效果集的两侧约束分析 GPT 偏离；它们的多制备／多测量实验、拟合与几何界不是本处单源固定映射和原四表的直接实例，也不供应本处完整不变锥的稳定量词。
+[Hsu–Kakade–Zhang，0811.4413v2，Conditions 1–2、Theorem 6](https://arxiv.org/html/0811.4413v2) 在有限隐藏 Markov、指定秩与抽样合同下给条件数相关的有限长度分布误差；这里没有供应该 HMM 分解或样本合同，不能直接套其样本界。
+仓内 [HoKalmanPerturbation](../../../D5/S3/Observer/Hankel/HoKalmanPerturbation.lean) 的 `solve_error_identity`／`solve_error_le` 属指定左解方程及诱导无穷范数；本处 (111.5) 是右解次序并用 Euclidean／Hilbert–Schmidt 范数，故仅复用扰动恒等式的方法，不冒称直接 Lean 应用。[NoisyHoKalmanRecovery](../../../D5/S3/Observer/Hankel/NoisyHoKalmanRecovery.lean) 还要求单一转移矩阵的有限 Markov 参数和有理程序输出；[HoKalmanPredictionBudget](../../../D5/S3/Observer/Hankel/HoKalmanPredictionBudget.lean) 的单矩阵幂传播同样不直接覆盖三字母。这里用 (112.4) 的有序乘积展开，新增工作是继而控制全部锥基。
+

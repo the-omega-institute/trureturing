@@ -1,0 +1,25 @@
+**Definition 77.3 (FetchGrowth with the original address result).**
+Receive the original unary $U(k)$ into actual backing. Count the current
+$N=e_\alpha(t)$ on the actual source. Compare the acquired unary marks
+against $N$ using a counter saturated at $N+1$. If $k=0$ or $k>N$, return
+OutOfRange. The whole supplied finite input is still acquired and paid;
+saturation avoids constructing an unnecessarily large binary index.
+For $1\le k\le N$, construct that bounded binary index from its acquired
+marks and use the original recursive event selection as follows.
+
+At a subtree root with known birth type, its forced local event prefix
+is empty for an unchanged birth leaf, $P$ for a born-alpha current beta,
+$PS$ for a born-alpha current branch, and $S$ for a born-beta current
+branch. A selection in this prefix returns its actual kind and the
+accumulated literal address. Otherwise subtract the prefix length.
+At a branch, compute $x,y$ on its actual child subtrees and obtain its
+rank by Definition 77.1, except at a forced coordinate. Apply Definition
+48.2's supplied colex peeling to the remaining index: starting from
+$(i,h,z)=(x+y,x,r)$, compare with $\binom{i-1}h$ to peel a last right
+symbol, or a last left symbol while reducing $h,z$, until the requested
+position is reached. Return that side and its within-side occurrence
+number, descend its actual child, and append the side to the acquired
+address. Repeat there. Unary material markers are never logical children.
+Seal the Recall reply with that event kind and full address, then Print,
+End, local acknowledgement, root Return and occupied-work cleanup.
+

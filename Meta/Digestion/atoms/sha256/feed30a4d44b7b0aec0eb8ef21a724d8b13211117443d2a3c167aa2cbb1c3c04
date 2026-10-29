@@ -1,0 +1,29 @@
+**Definition 57.1 (Legal candidate at a prescribed width).** Given
+real $p,v,w$ with $p\ne24$, a width $b>0$ and a real solution $E$
+of (56.2), form in order
+
+$$
+\begin{gathered}
+n=X+\alpha_{\rm w}E,\qquad t=Z+\gamma_{\rm w}E,\\
+q_{\rm s}=\mathcal A_{\rm par}E+D_{\rm par}-4t,\qquad
+j=4E/q_{\rm s},\qquad r=n-j.
+\end{gathered}
+\tag{57.1}
+$$
+
+The expression for $j$ is evaluated only after checking
+$q_{\rm s}\ne0$. The candidate is retained exactly when
+
+$$
+\boxed{\begin{gathered}
+E\ne0,\qquad n>0,\qquad q_{\rm s}\ne0,\\
+j>b,\qquad 0<r<1,\qquad b(j-b)=r(1-r).
+\end{gathered}}
+\tag{57.2}
+$$
+
+These tests enforce the original strict source domain as well as
+its nonlinear source relation. They are not optional filters on an
+eliminant root. A retained candidate has $j>b>0$, so all source
+trace divisions in (48.3) are lawful.
+

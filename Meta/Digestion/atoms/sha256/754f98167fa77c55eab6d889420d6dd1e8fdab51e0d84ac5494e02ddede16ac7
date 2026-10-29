@@ -1,0 +1,57 @@
+**Theorem 62.1 (Two simple positive width roots).** For every $0<r<1$, $N_{\rm exc}(\cdot,r)$ has exactly two positive roots counted with multiplicity. Both are simple. They define real analytic functions on $(0,1)$ with
+
+$$
+0<b_-(r)<1<24<b_+(r)<64.
+\tag{62.3}
+$$
+
+**Proof.** For any polynomial $f$ of degree at most $d$, write its Bernstein expansion as
+
+$$
+f(r)=\sum_{j=0}^d B_j^{(d)}(f)\binom dj r^j(1-r)^{d-j},\qquad
+B_j^{(d)}(f)=\sum_{i=0}^j\frac{\binom ji}{\binom di}[r^i]f.
+\tag{62.4}
+$$
+
+The basis weights are nonnegative and sum to one on $[0,1]$. The degree-four coefficient vectors for $c_3,\ldots,c_9$, in increasing Bernstein index, are
+
+$$
+\begin{array}{c|l}
+ c_3&(299293848,1747613291/2,171611897,451600048,1516105452)\\
+ c_4&(3110538112,5141257791/2,4292991842/3,3187964629/2,2385522996)\\
+ c_5&(4264313242,7524433005/2,2692814071,3952363517/2,1980443778)\\
+ c_6&(2687827848,7970050287/4,2985574697/2,5244897129/4,1601227068)\\
+ c_7&(2732038598,4238795367/2,9578548679/6,4621647957/4,788651414)\\
+ c_8&(881739723,771933913,657305906,537855702,413583301)\\
+ c_9&(44775124,204776087/4,115225839/2,256127269/4,70450715).
+\end{array}
+\tag{62.5}
+$$
+
+Their respective minima are $171611897$, $4292991842/3$, $3952363517/2$, $5244897129/4$, $788651414$, $413583301$, $44775124$, all positive. For $c_2$, use the two half-interval substitutions. The degree-four Bernstein vectors in $u$ for $c_2(u/2)$ and $c_2((1+u)/2)$ are exactly
+
+$$
+\begin{aligned}
+&(0,376445692,3974475377/12,1771247359/8,1172125273/8),\\
+&(1172125273/8,573003187/8,379742861/12,126046231,196646328).
+\end{aligned}
+\tag{62.6}
+$$
+
+On the first half, at every $r>0$ some positive-coefficient basis weight is positive; on the second half all five coefficients are positive. Consequently $c_i(r)>0$ for $2\le i\le9$ and $0<r<1$. Also $c_0(r)<0$ and $c_{10}<0$. In descending width powers the signs therefore have exactly two changes, regardless of the sign or vanishing of $c_1$. Descartes' rule bounds the total multiplicity of positive roots by two.
+
+For completeness the endpoint Bernstein vectors $\bigl(B_j^{(4)}(N_{\rm exc}(w,\cdot))\bigr)_{j=0}^4$ are
+
+$$
+\begin{aligned}
+w=1:\quad &(14018628086,25935013341/2,14774821713/2,28579017491/4,8950732643),\\
+w=24:\quad &(108058548295265882112,109982226112023108240,\\
+&\hspace{12mm}335457005514538140692/3,113564937595636352256,115216701333695424000),\\
+w=64:\quad &(-1121726995611910666190848,-1039744754329513585587840,\\
+&\hspace{12mm}-958712655450236766356196,-878655155132242056408064,-799595227342287555297280).
+\end{aligned}
+\tag{62.7}
+$$
+
+Thus at width one the coefficient range is $[28579017491/4,14018628086]$; at width $24$ it is $[108058548295265882112,115216701333695424000]$; at width $64$ it is $[-1121726995611910666190848,-799595227342287555297280]$. Formula (62.4) applied to (62.2) verifies every entry of (62.5)–(62.7) directly. In particular $N_{\rm exc}(1,r)>0$, $N_{\rm exc}(24,r)>0$, and $N_{\rm exc}(64,r)<0$. Since $N_{\rm exc}(0,r)=c_0(r)<0$, the intermediate value theorem gives a root in $(0,1)$ and one in $(24,64)$. The bound counting multiplicity forces precisely these two roots, each of multiplicity one. The analytic implicit-function theorem then gives local analytic root functions; uniqueness in the disjoint intervals identifies them on overlaps, giving the two analytic graphs throughout $(0,1)$. $\square$
+

@@ -1,0 +1,66 @@
+### 1.2 联合核细化、语义残余与档案 law 残余
+
+先用同一合同的当前读出 $o$ 定义零步关系
+
+$$
+z\,K_0\,u\iff o(z)=o(u).
+$$
+
+对 $n\ge0$，把一步联合核推到上一层商的后继纤维，定义联合核细化候选
+
+$$
+\begin{aligned}
+z\,K_{n+1}\,u\iff{}&z\,K_n\,u,\\
+&\text{且对每个同类型动作 }a,\\
+&\operatorname{Law}_z\bigl(\eta,[\bar z]_{K_n},r\bigr)
+ =\operatorname{Law}_u\bigl(\eta,[\bar z]_{K_n},r\bigr),
+\end{aligned}
+\tag{UJB.7303}
+$$
+
+并且同时比较动作合法性及非法分支的失败标签。这里的等式是同一接口类型上
+的联合 law 等式，不能拆成事件、后继和时钟的若干边缘等式。$K_n$ 是对
+(UJB.7301) 的局部递归细化；只有在测试族对前后合法接续封闭时，才可把它用于
+全部深度不超过 $n$ 的转录。
+
+档案 law 残余则直接按所有自适应实验定义：
+
+$$
+z\,A_n^{\mathrm{law}}\,u
+\iff
+\forall E\in\mathscr T_{\le n},
+\quad \mu_z^E=\mu_u^E .
+\tag{UJB.7304}
+$$
+
+其中 $\mu_z^E$ 是实验 $E$ 的完整档案轨迹分布。式 (UJB.7304) 是 law 残余的
+定义，不能被一般地替换成 (UJB.7303) 的局部核条件。联合核闭合和测试族闭合
+给出一个安全方向：
+
+$$
+\boxed{K_n\subseteq A_n^{\mathrm{law}}.}
+\tag{UJB.7305}
+$$
+
+在完全确定的 Dirac 核情形，且 $o$、事件、失败、记录与后继都采用同一语义
+合同，$K_n$ 退化为过程几何卷的语义残余 $R_n$。若再有每个 $K_{n-1}$ 类的
+continuation law 能被同一实验族统一识别（例如存在共同的可测支持分割，或
+满足相应的类 law 仿射独立性），才能由 (UJB.7303) 反推出 (UJB.7304) 的
+等价；没有这些可识别性条件，(UJB.7303) 只能作为充分条件。令
+
+$$
+K_\infty=\bigcap_{n\ge0}K_n,\qquad
+A_\infty^{\mathrm{law}}=\bigcap_{n\ge0}A_n^{\mathrm{law}}.
+\tag{UJB.7305a}
+$$
+
+因此，有限确定性、闭合测试族和共同后继解码成立时，可以得到
+
+$$
+K_n=R_n=A_n^{\mathrm{law}},
+\tag{UJB.7306}
+$$
+
+但 (UJB.7306) 是带条件的特化，不是随机合同中的无条件恒等式。它也不表示
+观察者已经取得了整个转录 law。
+

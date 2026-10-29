@@ -4646,3 +4646,303 @@ the conditional transport theorem and its finite resources, with precisely
 the entropy and continuous-path support boundary in Proposition 73.1.
 
 ## 追加锚（本行以下为增补区）
+
+## 74. The native critical square-root tube and its killed-law consumer
+
+**Theorem 74.1 (native critical tube exponent).** Retain all G/C/N/F premises
+of Definitions 41.1 and 49.1 and D Definition 35.1. Fix one native data set:
+$0<Z<1$, $H=(1-Z)/2$, $I=(l,u)\Subset(0,H)$, $\varepsilon>0$,
+a signed nonzero $\kappa\in\mathcal K_\times$, deterministic $k_0\in E\Subset I$
+and the prescribed deterministic initial phase lift. In particular retain
+G Definition 25.1 and (25.2)--(25.5)'s original probabilities, rational
+coefficients, sine ground state and clock. Write
+
+$$
+\phi(k)=\sqrt{\frac2{u-l}}\sin\frac{\pi(k-l)}{u-l},\qquad
+J_\kappa=\operatorname{diag}(1,1,\kappa),\qquad y=J_\kappa q.
+$$
+
+Let $\mathbb Q$ be exactly the conservative Doob ground-state law of
+(41.1), killed originally at both height endpoints. Thus its height generator
+is $\varepsilon^2\partial_{kk}+2\varepsilon^2(\phi'/\phi)\partial_k$,
+and its unchanged phase equation is $dq_t=\sqrt2c_\kappa(K_t)dW_t^2$
+with the independent phase driver of (41.6). For every fixed Euclidean unit
+$e\in\mathbb R^3$ and $r>0$, put
+
+$$
+\begin{aligned}
+h&=J_\kappa^{\mathsf T}e,& a(k)&=h\cdot c_\kappa(k),&
+m=\widehat m&=\int_I a(k)^2\phi(k)^2\,dk>0,\\
+X_t&=e\cdot(y_t-y_0),&
+A_T&=\{|X_s|<r\sqrt{1+s}\text{ for every real }0\le s\le T\}.
+\end{aligned}
+\tag{74.1}
+$$
+
+The coefficient $a$ is the actual smooth bounded native coefficient and may
+vanish. For $d>0$, let $\nu(d,r)$ be the principal Dirichlet eigenvalue of
+$-(d\partial_{xx}-(x/2)\partial_x)$ on $(-r,r)$ in
+$L^2((-r,r),e^{-x^2/(4d)}dx)$. Then
+
+$$
+\lim_{T\to\infty}\frac{-\log\mathbb Q(A_T)}{\log(1+T)}
+=\nu(\widehat m,r).
+\tag{74.2}
+$$
+
+This native joint-law comparison is repo-derived from (41.3), (41.6)
+and the bounded-corrector argument of Lemma 43.1. It uses the original
+clock and all-real winding lift, deterministic INITIAL and the full strict
+continuous-time event; no stationary preparation or pointwise positive
+lower bound on $a^2$ is assumed.
+
+Proof. First put $A=\|a\|_\infty^2<\infty$ and
+$V(t)=2\int_0^t a(K_s)^2ds$. By (41.6) and its independent-driver
+explanation, conditional on the full height path, $X$ is centered
+continuous Gaussian with independent disjoint increments and covariance
+$V(\min(s,t))$. On a product space take the same $\mathbb Q$ height law
+and an independent standard real Brownian motion $B$. Given $K$,
+$B(V(t))$ has exactly those Gaussian finite-dimensional laws and continuous
+paths. Rational evaluations generate the Borel sigma-field of continuous
+path space, so $(K,X)$ and $(K,B\circ V)$ have the same joint law on every
+finite horizon, consistently on all horizons. All probabilities below
+therefore refer to the original joint law. Only the auxiliary $B$ is
+independent of $K$; $X$ is not asserted to be independent of $K$.
+The continuous nondecreasing clock $V$ may have plateaus, and the event
+still uses original time $t$.
+
+Fix $0<\delta<1$ and set $v_\pm=2m(1\pm\delta)$. We first establish
+
+$$
+G_L=\{v_-t\le V(t)\le v_+t\text{ for every real }t\ge L\},
+\qquad
+\mathbb Q(G_L^c)\le C_\delta e^{-c_\delta L}
+\quad(L\ge L_\delta),
+\tag{74.3}
+$$
+
+with positive constants independent of the initial height. For
+$f=a^2-m$, $\pi(f)=0$, and (41.3), together with semigroup contraction
+on $[0,1]$, makes $u=\int_0^\infty Q_s f\,ds$ bounded and gives
+$Q_tu-u=-\int_0^tQ_s f\,ds$. This is the corrector construction in
+Lemma 43.1, applied to
+$f=\sum_{i,j}h_ih_j(c_{\kappa,i}c_{\kappa,j}-(M_\kappa)_{ij})$.
+By the Markov property,
+$N_t=u(K_t)-u(K_0)+\int_0^t f(K_s)ds$ is a martingale.
+Its integer increments are bounded in absolute value by
+$b=2\|u\|_\infty+\|f\|_\infty$. For a conditionally centered increment
+$D\in[-b,b]$, the convex chord of $e^{\theta x}$ gives
+$\mathbb E(e^{\theta D}\mid\mathcal F)\le\cosh(\theta b)
+\le e^{\theta^2b^2/2}$; the last inequality follows by integrating
+$\tanh z\le z$ and using symmetry. Iteration and optimization in $\theta$
+give $\mathbb Q(|N_n|>z)\le2e^{-z^2/(2nb^2)}$.
+The occupation integral differs from $N_n$ by at most $2\|u\|_\infty$,
+so for each $\eta>0$ its deviation beyond $\eta n$ has probability
+at most $C_\eta e^{-c_\eta n}$ for all sufficiently large integers $n$.
+If $f=0$, (74.3) is immediate and this estimate is unnecessary.
+Otherwise apply it with $\eta=m\delta/2$: except with exponentially
+small probability, $|V(n)-2mn|\le m\delta n$. For $n\le t\le n+1$,
+the additional centered-clock error is at most $2(A+m)$, since
+$0\le V'(t)\le2A$. Once $n$ is large this implies
+$|V(t)-2mt|\le2m\delta t$ throughout that unit interval.
+Summing the error probabilities over $n\ge\lfloor L\rfloor$ proves
+(74.3), uniformly for deterministic initial heights.
+
+We next give the classical Dirichlet estimates needed inside this proof.
+For $D=(-r,r)$, $w_d(x)=e^{-x^2/(4d)}$ and
+$\mathcal L_d=d\partial_{xx}-(x/2)\partial_x$, its Dirichlet form gives
+
+$$
+\nu(d,r)=
+\inf_{0\ne g\in H_0^1(D)}
+\frac{d\int_D|g'|^2w_d\,dx}{\int_D|g|^2w_d\,dx}>0.
+\tag{74.4}
+$$
+
+Indeed, $w_d$ is bounded above and below by positive constants on the
+bounded interval. Poincare's inequality gives strict positivity, and a
+normalized minimizing sequence is bounded in $H_0^1(D)$. Its weakly
+convergent subsequence converges strongly in $L^2(w_d\,dx)$ by compact
+embedding; lower semicontinuity gives a minimizer. Taking its absolute
+value and using the Euler--Lagrange equation
+$-(d w_d\psi_d')'=\nu(d,r)w_d\psi_d$ gives a smooth nonnegative
+eigenfunction, zero at the endpoints and bounded on $\overline D$.
+It is positive throughout $D$: an interior zero would also have zero
+derivative, and uniqueness for this regular second-order ODE would make
+it identically zero. Integration by parts gives
+$-\mathcal L_d\psi_d=\nu(d,r)\psi_d$ and identifies (74.4) as the
+principal Dirichlet eigenvalue.
+
+Let $P_t^D$ be the semigroup of the OU process with generator
+$\mathcal L_d$, killed on first reaching either endpoint, and let
+$\tau_D$ be that exit time. Stopped Ito applied to
+$e^{\nu(d,r)t}\psi_d(Y_t)$, first at $t\wedge\tau_D$, gives
+$P_t^D\psi_d=e^{-\nu(d,r)t}\psi_d$. Consequently
+
+$$
+\mathbb P_x(\tau_D>t)\ge
+e^{-\nu(d,r)t}\frac{\psi_d(x)}{\|\psi_d\|_\infty}
+\quad(x\in D,\ t\ge0).
+\tag{74.5}
+$$
+
+For the upper bound, integration by parts and (74.4) give
+$\frac{d}{dt}\|P_t^Dg\|_2^2
+=-2d\int_D|(P_t^Dg)'|^2w_d\,dx
+\le-2\nu(d,r)\|P_t^Dg\|_2^2$.
+Initially this holds on the Dirichlet generator domain; density and
+semigroup contraction extend the resulting bound
+$\|P_t^D\|_{2\to2}\le e^{-\nu(d,r)t}$ to all $L^2(w_d\,dx)$.
+The time-one killed transition kernel is dominated by the free OU
+kernel. The latter has Gaussian mean $e^{-1/2}x$ and variance
+$2d(1-e^{-1})$; its density relative to $w_d(y)dy$ is bounded on
+$D\times D$. Cauchy--Schwarz therefore bounds
+$P_1^D:L^2(w_d\,dx)\to L^\infty(D)$. Applying it to
+$P_{t-1}^D1$ proves
+
+$$
+\sup_{x\in D}\mathbb P_x(\tau_D>t)
+\le C_{d,r}e^{-\nu(d,r)t}\quad(t\ge1).
+\tag{74.6}
+$$
+
+These are strict survival estimates over every real time.
+Also $\nu(d,r)$ is continuous for $d>0$. If
+$q_-=\inf_D(w_d/w_{d_0})$ and $q_+=\sup_D(w_d/w_{d_0})$, each Rayleigh
+quotient at $d$ lies between $(d/d_0)(q_-/q_+)$ and
+$(d/d_0)(q_+/q_-)$ times its quotient at $d_0$. Both factors tend to
+one as $d\to d_0$ by uniform convergence of the weights.
+Taking infima in (74.4) proves the claimed continuity.
+
+For $v>0$ define $Y_s=e^{-s/2}B(v(e^s-1))$, $s\ge0$.
+Its Gaussian transition mean over duration $t$ is $e^{-t/2}Y_s$
+and its conditional variance is $v(1-e^{-t})$; hence it is exactly
+OU with generator $\mathcal L_{v/2}$ and $Y_0=0$. Thus
+$|B_u|<r\sqrt{1+u/v}$ for every $u\in[u_0,u_1]$ is precisely strict
+OU survival during
+$[\log(1+u_0/v),\log(1+u_1/v)]$.
+At the deterministic starting time of this interval, (74.6) holds
+uniformly for every interior starting value; starting values outside $D$
+contribute zero. The lower bound (74.5) retains the eigenfunction weight
+of the actual interior starting distribution.
+
+For the lower bound on $\mathbb Q(A_T)$, choose a fixed sufficiently large
+$L$ with $\mathbb Q(G_L)\ge1/2$. Put $D_0=2AL$,
+$s_0=\log(1+D_0/v_+)$, $S_T=\log(1+T)$, and, for $v_+T\ge D_0$, set
+
+$$
+\begin{aligned}
+E_0&=\{|B_u|<r\text{ for every }0\le u\le D_0\},\\
+F_T&=E_0\cap
+\{|B_u|<r\sqrt{1+u/v_+}\text{ for every }D_0\le u\le v_+T\}.
+\end{aligned}
+\tag{74.7}
+$$
+
+On $G_L$, if $t\le L$ then $V(t)\le D_0$. For $t\ge L$, the same
+early condition suffices when $V(t)\le D_0$; otherwise the second
+condition and $V(t)\le v_+t$ imply
+$|B(V(t))|<r\sqrt{1+t}$. Therefore $G_L\cap F_T\subseteq A_T$,
+with strict inequalities for every real time. Independence of the
+auxiliary $B$ and $K$ gives
+$\mathbb Q(A_T)\ge\mathbb Q(G_L)\mathbb P_B(F_T)$.
+The event $E_0$ has positive probability: stopped Ito for the positive
+Dirichlet cosine $\cos(\pi x/(2r))$ of standard Brownian motion gives
+$\mathbb P_B(E_0)\ge e^{-\pi^2D_0/(8r^2)}$.
+On $E_0$, $Y_{s_0}=B_{D_0}/\sqrt{1+D_0/v_+}$ lies strictly in $D$.
+The Markov property at $s_0$ and (74.5), with
+$\psi_+=\psi_{m(1+\delta)}$ and $\nu_+=\nu(m(1+\delta),r)$, give
+
+$$
+\mathbb P_B(F_T)\ge e^{-\nu_+(S_T-s_0)}
+\frac{\mathbb E_B[\mathbf1_{E_0}\psi_+(Y_{s_0})]}{\|\psi_+\|_\infty}.
+\tag{74.8}
+$$
+
+The expectation is strictly positive and independent of $T$.
+Thus $\mathbb Q(A_T)\ge c_\delta(1+T)^{-\nu_+}$ and the limsup in
+(74.2) is at most $\nu_+$.
+
+For the opposite bound put $L_T=(\log(1+T))^2$ and $D_T=2AL_T$.
+On $G_{L_T}$, $V(L_T)\le D_T$ and $V(T)\ge v_-T$.
+For each real $u\in[D_T,v_-T]$, continuity and monotonicity of $V$
+supply $t\in[L_T,T]$ with $V(t)=u$, even when $V$ has plateaus.
+The lower clock bound gives $t\le u/v_-$. Hence
+$A_T\cap G_{L_T}$ implies
+$|B_u|<r\sqrt{1+u/v_-}$ for every real $u$ in this deterministic
+interval. Its logarithmic-time duration is
+$\log((1+T)/(1+D_T/v_-))$, which tends to infinity.
+By (74.3), the OU correspondence and the uniform bound (74.6), for large $T$,
+
+$$
+\mathbb Q(A_T)\le
+C_\delta\left(\frac{1+T}{1+D_T/v_-}\right)^{-\nu_-}
++C_\delta e^{-c_\delta L_T},
+\qquad \nu_-=\nu(m(1-\delta),r).
+\tag{74.9}
+$$
+
+The second term is smaller than every fixed inverse power of $T$, while
+$\log(1+D_T/v_-)=O(\log\log T)$. Therefore the liminf in (74.2) is at
+least $\nu_-$. Letting $\delta\downarrow0$ in the two bounds, using
+the continuity proved after (74.6), gives (74.2). All constants may
+depend on the fixed native data, $e$ and $r$; no parameter-dependent
+initial law, averaged clock or independent scalar replacement was used.
+$\square$
+
+**Corollary 74.2 (original survival exponent and critical entropy lower bound).**
+Under Theorem 74.1's unchanged premises, on the original killed-history
+space put $E_T=\{\zeta>T\}\cap A_T$ and
+$\lambda=\varepsilon^2\pi^2/(u-l)^2$. Then
+
+$$
+\lim_{T\to\infty}
+\frac{-\log\mathbb P(E_T)-\lambda T}{\log(1+T)}
+=\nu(\widehat m,r).
+\tag{74.10}
+$$
+
+For any one consistent infinite law $V$ with the prescribed initial state,
+supported on $\{\zeta=\infty,\ |X_t|<r\sqrt{1+t}\text{ for every real }t\ge0\}$,
+whose full prefixes $V_T$ are absolutely continuous with respect to
+$\mathbb P_T$ and have finite divergence,
+
+$$
+\liminf_{T\to\infty}
+\frac{D(V_T\Vert\mathbb P_T)-\lambda T}{\log(1+T)}
+\ge\nu(\widehat m,r).
+\tag{74.11}
+$$
+
+Proof. Put $g=\phi^{-1}$, $\phi_{\max}=\sqrt{2/(u-l)}$,
+$J=\int_I\phi(k)dk$ and $C_g=(1+C_R)J$.
+The terminal Doob identity (41.5), equivalently Lemma 41.2's
+terminal weighting before normalization, gives
+$\mathbb P(E_T)=e^{-\lambda T}\phi(k_0)
+\mathbb E_Q[\mathbf1_{A_T}g(K_T)]$.
+Here $g$ is unbounded but $\pi$-integrable, with $\pi(g)=J$.
+Equation (41.3) gives $Q_1g\le C_g$ by nonnegative truncation.
+Since $g\ge1/\phi_{\max}$, $A_T\subseteq A_{T-1}$, and conditioning
+in the full height/phase filtration at $T-1$ gives
+$\mathbb E_Q[g(K_T)\mid\mathcal F_{T-1}]=Q_1g(K_{T-1})$,
+for every $T>1$ we obtain
+
+$$
+e^{-\lambda T}\frac{\phi(k_0)}{\phi_{\max}}\mathbb Q(A_T)
+\le\mathbb P(E_T)\le
+e^{-\lambda T}\phi(k_0)C_g\,\mathbb Q(A_{T-1}).
+\tag{74.12}
+$$
+
+The event $A_{T-1}$ retains the original tube and centre; it is not
+restarted at $T-1$. All prefactors are fixed and positive.
+Theorem 74.1 and $\log(1+T-1)/\log(1+T)\to1$ prove (74.10).
+For the stated $V$, $V_T(E_T)=1$; the entropy partition inequality
+(67.2), applied to this critical tube, yields
+$D(V_T\Vert\mathbb P_T)\ge-\log\mathbb P(E_T)$ and hence (74.11).
+This is a lower bound conditional on existence of such a consistent law.
+It asserts neither its existence nor attainment by an infinite law;
+fixed-$T$ conditioned minimizers, if considered, do not supply one
+consistent infinite minimizer. $\square$
+
+## 追加锚（本行以下为增补区）

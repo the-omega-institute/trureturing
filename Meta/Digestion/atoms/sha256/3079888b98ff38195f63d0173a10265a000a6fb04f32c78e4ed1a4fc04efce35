@@ -1,0 +1,24 @@
+**定义 1.2（Shapley 分配、收益核与阻塞赤字）。** 对有限玩家集 $V$、$n=|V|\ge1$ 和满足 $w(\varnothing)=0$ 的价值函数，定义
+
+$$
+\phi_v(w)=\sum_{S\subseteq V\setminus\{v\}}
+\frac{|S|!(n-|S|-1)!}{n!}
+\bigl(w(S\cup\{v\})-w(S)\bigr).
+$$
+
+分配 $p\in\mathbb R^V$ 的收益核条件为
+
+$$
+\sum_{v\in V}p_v=w(V),
+\qquad
+\sum_{v\in C}p_v\ge w(C)\quad\text{对每个 }C\subseteq V.
+$$
+
+第一式称为效率。记满足全部条件的集合为 $\operatorname{Core}(w)$。联盟 $C$ 相对于 $p$ 的赤字为
+
+$$
+\Delta(C;p)=w(C)-\sum_{v\in C}p_v.
+$$
+
+称 $C$ 严格阻塞 $p$，是指 $\Delta(C;p)>0$。这些定义分别对应上述文献 §2.4 的阶乘公式及 Definition 2.7，第 4 页。普通 Shapley 分配是此阶乘公式；另一个分配 $e_v=(|A_G|)_{vv}$，其中 $|A_G|=(A_G^2)^{1/2}$，是该文 Theorems 3.5–3.6，第 6–7 页的 vertex-energy 分配。
+

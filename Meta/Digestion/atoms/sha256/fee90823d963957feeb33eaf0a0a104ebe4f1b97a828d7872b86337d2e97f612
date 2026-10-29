@@ -1,0 +1,33 @@
+#### 引理 5.1（精确平衡交换子）
+
+对 $\Delta\in\operatorname{SU}(2)$，令 $d=\left\lVert \Delta-I\right\rVert_{\rm op}$。存在 $V,W\in\operatorname{SU}(2)$ 使
+
+$$
+\Delta=[V,W]_{\rm g},\qquad
+\left\lVert V-I\right\rVert_{\rm op},\left\lVert W-I\right\rVert_{\rm op}\le\sqrt d.
+$$
+
+**证明。**
+
+$0\le d\le2$。取 $\alpha\in[0,\pi/2]$ 满足
+$\sin^2\alpha=d/2$，置 $V_0=e^{i\alpha X}$、$W_0=e^{i\alpha Y}$。
+由 Pauli 乘法 $XY=iZ$ 及循环关系直接展开有
+
+$$
+\operatorname{Tr}[V_0,W_0]_{\rm g}=2-4\sin^4\alpha=2-d^2.
+$$
+
+$\Delta$ 的特征值 $e^{\pm i\theta}$ 给 $d^2=2-2\cos\theta$，故 $\operatorname{Tr}\Delta=2-d^2$。$\operatorname{SU}(2)$ 中同迹矩阵有相同特征值，彼此酉共轭；共轭矩阵可乘标量使行列式为一。用同一个共轭变换 $V_0,W_0$ 得到 $V,W$，交换子即为 $\Delta$。最后
+
+$$
+\left\lVert V-I\right\rVert_{\rm op}^2
+=2-2\sqrt{1-d/2}
+=\frac{d}{1+\sqrt{1-d/2}}\le d,
+$$
+
+对 $W$ 同理。$d=0$ 可直接取 $V=W=I$。
+
+∎
+
+<a id="lem-stability"></a>
+

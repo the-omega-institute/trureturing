@@ -1,0 +1,183 @@
+**定理 3.1（固定 $a$ 的显式充分阈值）。** 固定整数 $a\ge2$，令 $\alpha=(a-1)/a$，并定义
+
+$$
+\begin{aligned}
+h_a(t)&=\sum_{k=0}^{a-1}\binom{a-1}{k}
+t^k(1-t)^{a-1-k}\bigl(\sqrt{k+1}-\sqrt k\bigr),\\
+u_a&=\sqrt a\int_0^1\sqrt t\,h_a(t)\,dt,
+\qquad \eta_a=u_a-\frac12.
+\end{aligned}
+$$
+
+则 $0<\eta_a<1/2$。对每个满足
+
+$$
+b>\max\left\{\frac{4a^2}{\eta_a^4},
+\frac{1+\eta_a}{4\alpha\eta_a}\right\}
+\tag{3.1}
+$$
+
+的正整数 $b$，$K_{a,b}$ 的普通能量博弈 Shapley 分配不在收益核内。具体地，令
+
+$$
+j_b=\lfloor\alpha b\rfloor+1,\qquad
+u_{a,b}=\frac{ax_{a,b}}{2\sqrt{ab}},\qquad
+\tau_{a,b}=\frac{1-u_{a,b}}{u_{a,b}},\qquad
+r_b=\sqrt{\frac{\alpha b}{j_b}}.
+$$
+
+任意包含 $a-1$ 名 $A$ 侧玩家和 $j_b$ 名 $B$ 侧玩家的联盟 $C_b$ 都满足
+
+$$
+\Delta(C_b;\phi)
+=2\sqrt{ab}\,\frac{j_b}{b}\,u_{a,b}
+(1-r_b)(r_b-\tau_{a,b})>0.
+\tag{3.2}
+$$
+
+边界 $a=1$ 时，对每个正整数 $b$，星图 $K_{1,b}$ 的 Shapley 分配均在核内。式 (3.1) 仅为充分阈值，不要求该阈值最优，也不假定 $a\ge3$ 时核归属对 $b$ 单调。
+
+**证明。** 对每个玩家赋予相互独立、服从 $[0,1]$ 均匀分布的优先级。相等优先级的事件概率为零，按从小到大排序给出均匀排列，所以定理 2.1 的 (2.2) 与定义 1.2 的原始阶乘公式仍完全一致。
+
+条件于目标玩家 $A_1$ 的优先级 $U_{A_1}=t$，其他每名玩家成为前驱的事件都是其自身独立优先级小于 $t$。因此，其他 $A$ 侧前驱数 $J_t$ 与 $B$ 侧前驱数 $S_{b,t}$ 的条件分布为
+
+$$
+J_t\sim\operatorname{Bin}(a-1,t),\qquad
+S_{b,t}\sim\operatorname{Bin}(b,t),
+$$
+
+且在此条件下相互独立。两者由互不相交的独立优先级组生成；无条件独立性并非这里的假设。由 (2.1)，该玩家的边际贡献为
+
+$$
+2\sqrt{S_{b,t}}\bigl(\sqrt{J_t+1}-\sqrt{J_t}\bigr).
+$$
+
+记
+
+$$
+\mu_b(t)=\mathbb E\sqrt{S_{b,t}/b}.
+$$
+
+条件独立性及对 $t$ 积分给出
+
+$$
+x_{a,b}=2\sqrt b\int_0^1h_a(t)\mu_b(t)\,dt,
+\qquad
+u_{a,b}=\sqrt a\int_0^1h_a(t)\mu_b(t)\,dt.
+\tag{3.3}
+$$
+
+对非负实数 $s,t$，$|\sqrt s-\sqrt t|\le\sqrt{|s-t|}$。对条件随机变量 $X=S_{b,t}/b$，两次使用二次矩不等式得到
+
+$$
+\begin{aligned}
+|\mu_b(t)-\sqrt t|
+&\le\mathbb E\sqrt{|X-t|}\\
+&\le\bigl(\mathbb E|X-t|\bigr)^{1/2}\\
+&\le\bigl(\mathbb E(X-t)^2\bigr)^{1/4}\\
+&=\left(\frac{t(1-t)}b\right)^{1/4}
+\le(4b)^{-1/4}.
+\end{aligned}
+\tag{3.4}
+$$
+
+这里 $\mathbb EX=t$，方差为 $t(1-t)/b$。又有 $0<h_a(t)\le1$、$0\le\mu_b(t)\le1$，且凹性给出 $\mu_b(t)\le\sqrt t$。所以积分中有与 $b$ 无关的可积支配函数 $1$，并且 (3.4) 直接给出更强的统一误差控制
+
+$$
+|u_{a,b}-u_a|\le\sqrt a\,(4b)^{-1/4},
+\qquad u_{a,b}\longrightarrow u_a.
+\tag{3.5}
+$$
+
+这个极限只使用各个条件二项分布的矩，不要求跨 $b$ 的随机变量属于同一耦合。
+
+为确定极限相对于 $1/2$ 的严格位置，定义有限二项和
+
+$$
+f_a(t)=\sum_{k=0}^a\binom ak t^k(1-t)^{a-k}\sqrt k
+=\mathbb E\sqrt{\operatorname{Bin}(a,t)}.
+$$
+
+对 $0<t<1$ 逐项求导，用
+$k\binom ak=a\binom{a-1}{k-1}$ 和
+$(a-k)\binom ak=a\binom{a-1}{k}$，移位并相减得到
+
+$$
+\begin{aligned}
+f_a'(t)
+&=a\sum_{k=0}^{a-1}\binom{a-1}{k}t^k(1-t)^{a-1-k}
+\bigl(\sqrt{k+1}-\sqrt k\bigr)\\
+&=a h_a(t).
+\end{aligned}
+\tag{3.6}
+$$
+
+因此，对 $0<\varepsilon<1$，在 $[\varepsilon,1]$ 分部积分给出
+
+$$
+\frac1{\sqrt a}\int_\varepsilon^1\sqrt t\,f_a'(t)\,dt
+=1-\frac{\sqrt\varepsilon f_a(\varepsilon)}{\sqrt a}
+-\frac1{2\sqrt a}\int_\varepsilon^1\frac{f_a(t)}{\sqrt t}\,dt.
+$$
+
+Jensen 不等式给 $0\le f_a(t)\le\sqrt{at}$，故
+$\sqrt\varepsilon f_a(\varepsilon)\le\sqrt a\,\varepsilon\to0$，且
+$f_a(t)/\sqrt t\le\sqrt a$ 是可积控制；左边的被积函数由 (3.6) 也可积。令 $\varepsilon\downarrow0$，得到
+
+$$
+u_a=1-\frac1{2\sqrt a}\int_0^1\frac{f_a(t)}{\sqrt t}\,dt.
+\tag{3.7}
+$$
+
+当 $0<t<1$ 时，$\operatorname{Bin}(a,t)$ 非退化，严格凹的平方根函数给出严格 Jensen 界
+
+$$
+0<f_a(t)<\sqrt{at}.
+$$
+
+这些函数在 $(0,1)$ 连续，故积分也严格满足
+
+$$
+0<\int_0^1\frac{f_a(t)}{\sqrt t}\,dt<\sqrt a.
+$$
+
+由 (3.7)，$1/2<u_a<1$，即 $0<\eta_a<1/2$。
+
+现在设 $b$ 满足 (3.1)。第一个阈值使 $\sqrt a(4b)^{-1/4}<\eta_a/2$，所以 (3.5) 给出
+
+$$
+u_{a,b}>\frac12+\frac{\eta_a}{2},
+\qquad
+\tau_{a,b}<\frac{1-\eta_a}{1+\eta_a}.
+\tag{3.8}
+$$
+
+由 $0<\alpha<1$ 和整数 $b$，
+
+$$
+\alpha b<j_b\le\alpha b+1,\qquad 1\le j_b\le b,
+$$
+
+因此指定联盟确实存在，且 $0<r_b<1$。函数 $(1+s)^{-1/2}$ 在 $s\ge0$ 严格凸，其在零点的切线给出对 $s>0$ 的严格下界 $(1+s)^{-1/2}>1-s/2$。于是
+
+$$
+\begin{aligned}
+r_b
+&\ge\left(1+\frac1{\alpha b}\right)^{-1/2}\\
+&>1-\frac1{2\alpha b}\\
+&>\frac{1-\eta_a}{1+\eta_a}
+>\tau_{a,b}.
+\end{aligned}
+\tag{3.9}
+$$
+
+倒数第二步恰由 (3.1) 的第二个阈值保证。对计数 $(a-1,j_b)$，(2.4) 中的交叉比正是 $r_b$；取其负数即得到 (3.2)。所有因子均严格为正，证明最终失效。
+
+最后在同一判据内处理边界 $a=1$。对唯一中心玩家，前驱中有 $k$ 名叶子的总概率为 $1/(b+1)$，其边际为 $2\sqrt k$，故
+
+$$
+x_{1,b}=\frac2{b+1}\sum_{k=0}^b\sqrt k.
+$$
+
+逐项使用 $\sqrt k\ge k/\sqrt b$（$0\le k\le b$）给出 $x_{1,b}\ge\sqrt b$。因此 $u=x_{1,b}/(2\sqrt b)\ge1/2$，且由 (2.3) 仍有 $u<1$，所以 $0<\tau\le1$。每个混合联盟有 $i=1$、$1\le j\le b$，于是 $r=\sqrt{b/j}\ge1$；(2.4) 给出非负余量。纯侧由 (2.3) 的正性满足，全体由效率取等，得到所有正整数 $b$ 的星图核归属。∎
+

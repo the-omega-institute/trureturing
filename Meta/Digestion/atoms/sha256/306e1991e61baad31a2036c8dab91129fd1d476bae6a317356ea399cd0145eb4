@@ -1,0 +1,22 @@
+#### 定义 10.1（四能级见证及边界振幅）
+
+本节重新局部记 $c=3/5,e=4/5$，矩阵单位 $E_{ij}$ 的索引为 $0,1,2$。令
+
+$$
+A_0=c(E_{01}+E_{12}),\quad A_1=e(E_{10}+E_{21}),\quad
+A_2=eE_{02},\quad A_3=cE_{20}.
+$$
+
+定义
+
+$$
+\Gamma_2:M_3(\mathbb{C} )\longrightarrow\mathbb{C} ^{16},\qquad
+X\longmapsto\bigl(\operatorname{Tr} (XA_iA_j)\bigr)_{i,j=0}^3.
+$$
+
+这里 $X$ 是边界矩阵，输出是*完整复振幅*。
+
+<a id="statement-10-2"></a>
+
+<a id="prop-mpsnorm"></a>
+

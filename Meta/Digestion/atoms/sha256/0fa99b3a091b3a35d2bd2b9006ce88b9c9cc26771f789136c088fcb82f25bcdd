@@ -1,0 +1,7 @@
+# Recursive relational observation: realization of typed joint-kernel threads
+
+本卷是统一联合律桥（UJLB）的窄补充。目标是说明：有限深度的联合核商何时
+下降为一个相容塔，何时给出真正的全局边界，以及为什么逆极限中的形式线程仍
+可能不是任何实际来源或观察者可读状态。全文只讨论声明的经典关系模型，不把
+完成化解释成物理时空，也不把有限 law 表当作观察者免费拥有的资料。
+

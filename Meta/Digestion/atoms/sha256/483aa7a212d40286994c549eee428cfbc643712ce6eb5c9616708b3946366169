@@ -1,0 +1,72 @@
+**引理 69.1（无协变前提的交叉刚性）。** 在匹配正交五维模型中，以固定源下块坐标写
+
+$$
+\rho=\begin{pmatrix}c&z^\dagger\\z&Q_{\rm src}\end{pmatrix},\qquad
+\sigma(\rho)=\begin{pmatrix}p(\rho)&h(\rho)^{\mathsf T}\\h(\rho)&M(\rho)\end{pmatrix},
+\quad
+F=\begin{pmatrix}F_{00}&b^{\mathsf T}\\b&F_{\rm low}\end{pmatrix}.
+\tag{69.1}
+$$
+
+存在与 $\rho$ 无关的 $k>0$ 和正交实矩阵 $Q_*$，使对全部 $\rho\in\mathcal K_d$，
+
+$$
+h(\rho)=kQ_*z_R.
+\tag{69.2}
+$$
+
+此结论不要求整个制备对群作用协变，也不要求初始源仿射包络为全部 Hermitian 空间。
+
+证明。先说明表示结构。源中心 $\operatorname{Ad}(1\oplus(-I_2))$ 的奇部分恰是 $z_R$ 的实四维交叉块；编码侧 $\operatorname{Ad}(1\oplus(-I_4))$ 的奇部分恰是 $h$。由 (66.7)，两边都只有一个基本模，其他对角块均为中心偶。$L$ 在可达线性空间上的交织、满射及该基本模的不可约性，迫使这一交叉对应为非零同构。
+
+此处实 Schur 引理只给非零交织的可逆性，不能把实四维基本模的交换子误写成 $\mathbb R$；它是右四元数代数 $\mathbb H$。其对称交换子却只有实标量：任何交换的对称矩阵的本征子空间均不变，而基本模不可约。故任意非零交织 $T$ 的 $T^{\mathsf T}T$ 为正标量，$T$ 是正标量乘正交矩阵。这里使用 Hall 定理 5.28(1) 的实版本，而不套用仅对复不可约表示成立的标量交换子部分。
+
+还可直接由固定效果系数推出 (69.2)，以避免在这一步隐含制备协变。设 $m\in\mathbb R^4$ 是源读出 $E=(\xi+e)(\xi+e)^\dagger/2$ 的单位下块向量；更换固定下块基后仍有 $\|m\|=1$。分别比较群元 $u$ 和 $-u$，所有中心偶块消去，留下
+
+$$
+2b^{\mathsf T}\mathcal R(u)h(\rho)
+=m^{\mathsf T}\mathcal R(u)z_R
+\quad(\text{全部 }u\in SU(2),\ \rho\in\mathcal K_d).
+\tag{69.3}
+$$
+
+合法纯态给非零源交叉列；其 $SU(2)$ 轨道的右端不恒零，故 $b\ne0$。
+
+将单位四元数参数写为 $u=(u_0,u_1,u_2,u_3)\in S^3$，并写
+
+$$
+\mathcal R(u)=\sum_{\nu=0}^3u_\nu M_\nu,\qquad M_0=I_4,
+\qquad K(v)_{\nu,\cdot}=v^{\mathsf T}M_\nu.
+\tag{69.4}
+$$
+
+在 (68.2) 的坐标约定下，该实矩阵明确为
+
+$$
+\mathcal R(u)=\begin{pmatrix}
+u_0&-u_1&-u_2&-u_3\\
+u_1&u_0&u_3&-u_2\\
+u_2&-u_3&u_0&u_1\\
+u_3&u_2&-u_1&u_0
+\end{pmatrix}.
+$$
+
+左四元数乘法的矩阵满足 $M_\nu M_\mu^{\mathsf T}+M_\mu M_\nu^{\mathsf T}=2\delta_{\nu\mu}I$，所以
+
+$$
+K(v)K(v)^{\mathsf T}=\|v\|^2I_4.
+\tag{69.5}
+$$
+
+比较 (69.3) 的四个一次系数，得到 $2K(b)h=K(m)z_R$，从而
+
+$$
+h=\frac{K(b)^{\mathsf T}K(m)}{2\|b\|^2}z_R,
+\qquad
+k=\frac1{2\|b\|},\qquad
+Q_*=\frac{K(b)^{\mathsf T}K(m)}{\|b\|}\in O(4).
+\tag{69.6}
+$$
+
+同一个 $b,m$ 用于整个原集合，故不存在依赖输入的坐标选择、仿射常数偏移或来自下对角块的混入。由 (69.3) 对群变量的平移及解的唯一性，$Q_*$ 也与相应基本作用交织。这个直接推导只使用每个实际初始态在共同闭包下的响应；即使初始仿射包络是恰当子空间，系数等式仍逐态成立。∎
+

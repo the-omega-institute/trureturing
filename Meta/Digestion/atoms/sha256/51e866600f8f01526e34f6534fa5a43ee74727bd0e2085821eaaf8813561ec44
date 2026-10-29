@@ -1,0 +1,45 @@
+**定理 84.2（完整生成元匹配与全部待定仿射项）。** 在一个固定酉或共同复共轭坐标中，两个 $T_j$ 同时等于原 $\operatorname{Ad}_{V_j}$。存在 $k>0$、实数 $b\ne0$、实数 $A_F,t_F$ 和一个实仿射函数 $p(\rho)$，使全部实际准备满足
+
+$$
+\begin{gathered}
+\rho=\begin{pmatrix}c&z^\dagger\\z&Q\end{pmatrix},\quad
+Q_0=Q-\frac{1-c}{2}I_2,\\
+\sigma(\rho)=\begin{pmatrix}
+p(\rho)&kz^\dagger\\kz&bQ_0+\frac{1-p(\rho)}2I_2
+\end{pmatrix},\\
+F=\begin{pmatrix}
+A_F&e_1^\dagger/(2k)\\
+e_1/(2k)&t_F I_2+(e_1e_1^\dagger/2-I_2/4)/b
+\end{pmatrix},\quad e_1=(1,0)^{\mathsf T},\\
+A_Fp(\rho)+t_F(1-p(\rho))=(1+c)/4.
+\end{gathered}
+\tag{84.3}
+$$
+
+证明。正规性使每个原竞争者酉保持唯一平凡线及其双维补空间；除去各自无关的标量相位后，写为 $1\oplus D_j$。与匹配 $SU(2)$ 的共轭关系相同，故 $D_j=\chi_j B_j$，$|\chi_j|=1$，其中 $B_j$ 是 (62.2) 的实际下块。
+
+$L$ 的交叉模逆映射是一个非零实交织 $T$。这里复二维基本表示视作实表示的交换子是四元数代数，不能仅取复标量。明确地，
+
+$$
+T=\alpha I+\beta\mathcal Q,\quad \alpha,\beta\in\mathbb C,
+\qquad \mathcal Q(v)=\epsilon_2\bar v,
+\quad \epsilon_2=\begin{pmatrix}0&-1\\1&0\end{pmatrix},
+\quad \det_{\mathbb R}T=(|\alpha|^2+|\beta|^2)^2.
+\tag{84.4}
+$$
+
+对 $B\in U(2)$，$\mathcal QB=(\det B)^{-1}B\mathcal Q$。于是两个原生成元的交织 $TB_j=D_jT$ 分别给
+
+$$
+\alpha=\chi_j\alpha,\qquad
+\beta/(\det B_j)=\chi_j\beta,
+\qquad \det B_0=-z_\theta,\quad\det B_1=z_\theta.
+\tag{84.5}
+$$
+
+若 $\alpha\beta\ne0$，两个行列式都必须为一，与其相反符号矛盾。因此 $T$ 纯复线性或纯反线性；只匹配 $SU(2)$ 并不足以排除混合项。线性情形 $\chi_j=1$，固定标量扇区相位使 $T=kI$、$k>0$。反线性情形 $D_j=\epsilon_2\bar B_j\epsilon_2^{-1}$；一个固定下块 $\epsilon_2^{-1}$ 酉及共同共轭把它归入线性情形。此变换同时作用于所有初始态、效果和两个分支。下块伴随系数可变号，因此此阶段仍只要求 $b$ 为非零实数。
+
+源及竞争者的交叉和伴随模都重数一。交叉逆已为 $kI$，伴随实不可约模的交换子为实标量，故其逆为 $bI$。$L$ 在整个可达空间上的线性关系遂逐态给 (84.3) 的制备式；没有要求轨道点仍在初始制备域，也没有额外假设制备协变。迹一给唯一剩余标量函数 $p(\rho)$。它由仿射 $\sigma$ 的一个固定条目给出，因而在原仿射包络上仿射。
+
+将 $\operatorname{Tr}(FX)=\operatorname{Tr}(ELX)$ 配对到完整交叉模和伴随模，分别固定 $F$ 的交叉列及下块无迹部分；余下两个标量为 $A_F,t_F$。源标量部分的 $E$ 配对是 $c/2+(1-c)/4=(1+c)/4$，给最后一式。如果 $\dim\mathscr R=9$，隐藏核方向只能为 $H=\operatorname{diag}(1,-1/2,-1/2)$，且 $\operatorname{Tr}(FH)=A_F-t_F=0$；这个可能性仍保留到原域正性检验。∎
+

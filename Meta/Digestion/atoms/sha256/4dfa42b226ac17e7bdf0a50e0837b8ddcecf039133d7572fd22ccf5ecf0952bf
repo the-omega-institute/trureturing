@@ -1,0 +1,45 @@
+**Theorem 57.3 (exact minimax source-vertex price).** For every finite
+$K$, the deterministic exact competitors of Definition 57.1 satisfy
+
+$$
+\inf_A\ \max_{t\in\mathcal F_K}\Delta_A(t)=m.
+\tag{AAII.15}
+$$
+
+The lower bound holds even with $K$ supplied and without requiring the
+competitor's final source to equal $\nu(t)$. The controller of Definition
+54.1, which needs no supplied $K$, attains the bound, returns that exact
+endpoint, and admits the retained continuation of Theorem 55.2.
+
+Proof. For the lower bound reveal entry bits only when a competitor
+first targets their corresponding variable leaves. If that first
+request is $P_p$, choose entry alpha there; if it is $S_p$, choose
+entry beta. Before this request the chosen bit has influenced no reply,
+by Lemma 57.2. In either case the still unedited target is exactly that
+chosen type, so this first direct request succeeds. It adds respectively
+one or two fresh source vertices.
+
+This delayed choice defines one fixed admitted entry, rather than a
+retroactively changing source. To see both consistency and finite progress,
+consider any finite prefix at which some bits remain unchosen. All
+completions of them are admitted entries giving the same preceding
+trace. Choose one completion temporarily. Its controller must terminate
+in finitely many steps. It cannot return before targeting every remaining
+variable leaf, by Lemma 57.2. Hence the common computation reaches a next
+first target at an unchosen leaf in finite time. Choose that bit as above;
+this choice does not change any earlier reply or edit. Repeat at most
+$m$ times. With all bits chosen, the resulting $t_x$ realizes the whole
+constructed prefix; its remaining run terminates by the competitor's
+totality. The $m$ distinct first-target successes have added at least
+$m$ vertices. Further actions cannot delete them. Thus
+$\max_x\Delta_A(t_x)\ge m$ for every competitor.
+
+For the upper bound, only leaves in $V_K$ can be alpha. Theorem 54.2
+adds exactly one vertex at each such alpha leaf and none elsewhere,
+so its disturbance is at most $m$. The assignment making all $m$
+variable leaves alpha attains $m$. This supplies an admitted competitor
+and proves (AAII.15), without charging a supplied skeleton as acquired
+knowledge. The all-alpha choice here concerns only the variable leaves;
+every left-born leaf remains beta, including in the worst case.
+$\square$
+

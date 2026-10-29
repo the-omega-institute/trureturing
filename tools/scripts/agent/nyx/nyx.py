@@ -31,7 +31,7 @@ import tempfile
 
 USAGE = "usage: nyx.py ask <brief> <out> | nyx.py pools"
 POOLS_ROUTE = ("proxy", "request", "oracle", "api/v1/oracle/pools", "--output", "json")
-CHAT_ROUTE = ("proxy", "request", "oracle", "api/v1/oracle/openai/v1/chat/completions", "--method", "POST", "--data")
+CHAT_ROUTE = ("proxy", "request", "oracle", "api/v1/oracle/openai/v1/chat/completions", "--method", "POST", "--stream", "--data")
 DONE_VALUE = "[DONE]"
 MODEL_FIELDS = ("model_label", "observed_model_switcher", "observed_model_effort")
 ARTIFACT_SUFFIXES = ("", ".request.json", ".stream", ".stderr", ".status.json")

@@ -1,0 +1,5 @@
+**定理 486.3（RH 下的双侧无界性）。** 设 RH 与 (485.1) 成立。
+
+1. 若 $\mathcal T(x)\ge-\kappa$ 对充分大的 $x$ 成立，则对非平凡零点的每个有限集 $Z$ 有 $|Z|\le16\kappa^2$。因此 $\liminf_{x\to\infty}\mathcal T(x)=-\infty$。
+2. 再设 (486.1)。若 $\mathcal T(x)\le K$ 对充分大的 $x$ 成立，则存在 $\delta>0$，使每个长度小于 $\delta$ 的区间内零点重数之和不超过 $4K^2$。这与 (486.1) 矛盾，因此 $\limsup_{x\to\infty}\mathcal T(x)=+\infty$。
+

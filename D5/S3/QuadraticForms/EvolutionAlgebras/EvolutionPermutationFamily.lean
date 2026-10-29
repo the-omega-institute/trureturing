@@ -9,6 +9,8 @@
 import D5.S3.QuadraticForms.EvolutionAlgebras.HuEvolutionJordanFamily
 import D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionSharpBound
 
+/- Escape audit for the newly public owner lemmas is unfinished: https://github.com/the-omega-institute/trureturing/issues/22095 -/
+
 /-! Full bilinear evolution automorphisms, their sharp bound, and attaining products. -/
 
 set_option autoImplicit false
@@ -34,7 +36,7 @@ noncomputable def permutationLinear {n : ℕ} (σ : Equiv.Perm (Fin n)) :
 noncomputable def permutationProduct {n : ℕ} (σ : Equiv.Perm (Fin n)) : Product n :=
   coordinateProduct (permutationLinear σ).toLinearMap
 
-private theorem permutationLinear_basis {n : ℕ} (σ : Equiv.Perm (Fin n)) (i : Fin n) :
+theorem permutationLinear_basis {n : ℕ} (σ : Equiv.Perm (Fin n)) (i : Fin n) :
     permutationLinear σ (Pi.basisFun ℂ (Fin n) i) = Pi.basisFun ℂ (Fin n) (σ i) := by
   classical
   ext j
@@ -51,7 +53,7 @@ private theorem permutation_square {n : ℕ} (σ : Equiv.Perm (Fin n)) (i : Fin 
     simp [Pi.basisFun_apply, Pi.single_apply]
   rw [he, permutationLinear_basis]
 
-private theorem permutation_mixed {n : ℕ} (σ : Equiv.Perm (Fin n))
+theorem permutation_mixed {n : ℕ} (σ : Equiv.Perm (Fin n))
     (i j : Fin n) (hij : i ≠ j) :
     permutationProduct σ (Pi.basisFun ℂ (Fin n) i) (Pi.basisFun ℂ (Fin n) j) = 0 := by
   change permutationLinear σ (_ * _) = 0
@@ -68,7 +70,7 @@ private theorem permutation_perfect {n : ℕ} (σ : Equiv.Perm (Fin n)) :
   exact (coordinate_product_square (permutationLinear σ).toLinearMap).trans
     (permutationLinear σ).range
 
-private theorem permutation_support {n : ℕ} (σ : Equiv.Perm (Fin n)) (i j : Fin n) :
+theorem permutation_support {n : ℕ} (σ : Equiv.Perm (Fin n)) (i j : Fin n) :
     supportRelation (permutationProduct σ) (Pi.basisFun ℂ (Fin n)) i j ↔ j = σ i := by
   classical
   unfold supportRelation structureCoefficient squareVector

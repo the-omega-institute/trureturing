@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b6cbd94e82c787298b1c0193516cbe132df379d66dc5407ed421a2ee870b20b2
+  normalized_sha256: sha256:b6cbd94e82c787298b1c0193516cbe132df379d66dc5407ed421a2ee870b20b2
+cas_ref: sha256:b6cbd94e82c787298b1c0193516cbe132df379d66dc5407ed421a2ee870b20b2
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/Walks/ActualRectangularComponentRefutation.result
+    target_statement_id: sha256:0bfe47a545d88b811bcf92d7a75dad3c67c88b216d051b6c5c5e94f72f79b0a7
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,119 @@
+## 25. Finite rational differential inequalities
+
+**Lemma 25.1.** On each $B_i$, $0<r<1$, $b>0$ and
+
+$$
+1<\widehat D<6/5,\quad .04<H<.05,\quad .23<\mathcal J<.25,\quad .25<\mathcal N<.27.
+$$
+
+With derivative columns $(r,b)$, the entries of $D\mathcal R$ lie strictly
+between the following endpoints, all divided by $10^6$:
+
+| Box | $p_r$ | $p_b$ | $v_r$ | $v_b$ |
+| --- | --- | --- | --- | --- |
+| $B_1$ | $[-17691121,-17691120]$ | $[725498392,725498393]$ | $[103013504,103013505]$ | $[-1673536106,-1673536105]$ |
+| $B_2$ | $[16740247,16740248]$ | $[705190458,705190459]$ | $[-101110471,-101110470]$ | $[-1568667529,-1568667528]$ |
+
+The determinants lie respectively in
+$(-45129404,-45129403)/10^3$ and
+$(45042256,45042257)/10^3$.
+Let
+
+$$
+K_1=\begin{pmatrix}
+.037083053954745515&.016075957923158333\\
+.002282624997885133&.000392008731375771
+\end{pmatrix},\quad
+K_2=\begin{pmatrix}
+-.034826575389614269&-.015656197514671509\\
+.002244791436258976&.000371656511668806
+\end{pmatrix}.
+$$
+
+Then $\|K_i\|_\infty<.054$ and
+$\sup_{B_i}\|(D\mathcal R)^{-1}\|_\infty<.054$. More precisely,
+
+| Box | $\sup\|I-K_iD\mathcal R\|_\infty$ less than | $\|K_i(\mathcal R(z_i)-q_c)\|_\infty$ less than |
+| --- | --- | --- |
+| $B_1$ | $9.101\cdot10^{-16}$ | $2.511\cdot10^{-42}$ |
+| $B_2$ | $2.778\cdot10^{-16}$ | $2.862\cdot10^{-41}$ |
+
+The absolute row sums of $D\Theta(D\mathcal R)^{-1}$ are strictly less
+than the following constants:
+
+| Coordinate | $B_1$ | $B_2$ |
+| --- | ---: | ---: |
+| $r$ | $.053160$ | $.050483$ |
+| $b$ | $.002675$ | $.002617$ |
+| $c_{\rm src}$ | $.169790$ | $.129707$ |
+| $d$ | $.006671$ | $.006985$ |
+| $\alpha_0$ | $.006671$ | $.006985$ |
+| $\alpha_1$ | $.001773$ | $.000856$ |
+| $\alpha_2$ | $.006916$ | $.007510$ |
+| $\alpha_3$ | $.002279$ | $.002353$ |
+
+For $G_a=Da(D\mathcal R)^{-1}$ and $G_m=Dm(D\mathcal R)^{-1}$ the component
+intervals below, divided by $10^{12}$, enclose their values:
+
+| Box | $(G_a)_p$ | $(G_a)_v$ |
+| --- | --- | --- |
+| $B_1$ | $[-3670060067454,-3670060067453]$ | $[8059538465730,8059538465731]$ |
+| $B_2$ | $[-12809349369649,-12809349369648]$ | $[3979838493604,3979838493605]$ |
+
+| Box | $(G_m)_p$ | $(G_m)_v$ |
+| --- | --- | --- |
+| $B_1$ | $[-7215988701689,-7215988701688]$ | $[6191296762938,6191296762939]$ |
+| $B_2$ | $[-7216195354246,-7216195354245]$ | $[6191297749276,6191297749277]$ |
+
+In particular their induced row norms are less than seventeen and
+fourteen, respectively.
+
+**Proof by finite rational inclusions.** Here are exact finite
+arithmetic definitions for the inequalities, including correlations
+needed for the small preconditioned residual. Put $\sigma=10^{110}$.
+Encode $x\in\mathbb Q$ by
+$[\lfloor\sigma x\rfloor,\lceil\sigma x\rceil]/\sigma$.
+Negation and addition use exact endpoint operations. For two grid
+intervals use
+
+$$
+\begin{aligned}
+([L,U]/\sigma)([V,W]/\sigma)&\subseteq
+[\lfloor\min(LV,LW,UV,UW)/\sigma\rfloor,
+\lceil\max(LV,LW,UV,UW)/\sigma\rceil]/\sigma,\\
+([L,U]/\sigma)^{-1}&\subseteq
+[\lfloor\sigma^2/U\rfloor,\lceil\sigma^2/L\rceil]/\sigma
+\quad(LU>0).
+\end{aligned}
+$$
+
+Attach derivatives $(1,0)$ to $r$, $(0,1)$ to $b$, and zero to
+constants. Addition and multiplication use their differentiation
+rules; reciprocal uses $D(f^{-1})=-Df/(ff)$ with interval operations.
+Evaluate Definition 2.1, then (24.2), in
+that order, left to right within sums and products. Squares are
+products. Each operation preserves inclusion, so this gives bounds
+on entire boxes and their derivatives.
+
+Retaining all grid digits, form $A=D\mathcal R$,
+$\delta=A_{11}A_{22}-A_{12}A_{21}$ and
+
+$$
+A^{-1}=\delta^{-1}
+\begin{pmatrix}A_{22}&-A_{12}\\-A_{21}&A_{11}\end{pmatrix}.
+$$
+
+Finite endpoint comparisons give the guard intervals, derivative and
+determinant intervals above. Multiplication by the exact $K_i$, before
+rounding to the printed derivative grid, gives the two strict
+preconditioned bounds. Singleton center evaluation gives the two
+residual bounds. Finally multiply the coordinate and terminal derivative
+rows by this inverse and sum their maximum absolute endpoints. These
+sums are less than the printed coordinate constants; terminal endpoints
+lie within the printed grid intervals. For example the source-$c_{\rm src}$
+row sums are less than $.169789052$ and $.129706357$, and the drift
+row sums less than $.006670211$ and $.006984248$. All comparisons are
+rational integer floor/ceiling comparisons under the formulas above.
+Thus the tables express full-box inclusions, with no sampling or
+floating-point error assumption. ∎
+

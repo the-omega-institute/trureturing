@@ -1,0 +1,55 @@
+## 30. Exact-record interpretation and unresolved scope
+
+An exact record in $\mathcal U$ determines exactly the unordered pair
+of complete worlds above. Increasing-$r$ labels give consistent
+correspondence between the pairs at two nearby records. These labels
+do not identify which member generated the acquired record. The terminal
+M reading cannot resolve that ambiguity uniformly: the full-height
+graph gives exact M collisions of the two distinct worlds. The terminal
+J readings lie in the disjoint intervals $(964,965)$ and $(994,995)$,
+so a terminal J value separates the two local alternatives.
+
+The Lipschitz bounds compare two exact records in the specified
+rectangle, varying only $p,v$. They are not estimates for arbitrary
+errors in all seven acquired readings. The $.17$ bound for a source
+matrix is a maximum-entry bound; the induced infinity norm bound
+proved here is $.223$. Full-state, drift and gain-coefficient bounds
+refer to the displayed coordinates, not to an additional unobserved
+raw factorization of the source. Finite-digit input alone does not
+specify an exact real number, and no computability assertion follows
+merely from inverse uniqueness.
+
+The entire-child cardinality conclusion uses Theorem 12.2, on
+$\mathcal U$ only. The analytic constructions on $\mathcal V$ do not
+assert a global upper bound on all children outside $\mathcal U$.
+No unrestricted common-base result, global strategy depth, physical
+realization, or access to both counterfactual terminal actions in one
+experimental history follows. Original singular and exceptional sources
+remain part of the quantified model and were excluded locally only
+by the exhaustive inherited argument in Sections 13–16.
+
+The general contraction argument is Banach's theorem; analyticity uses
+the real analytic inverse and implicit function theorems. The original-row realization is Lemma 2.2. It supplies the whole-world
+meaning of the two-box differential inequalities, recovery constants,
+sharper enclosure of the same seed and transverse collision graph.
+
+
+The source surface is smooth also at its allowed $\Lambda=0$ sources;
+this is distinct from avoidance of response critical values. Properness
+is relative to the explicit $O$ of (22.2), avoiding the algebraic escape
+overestimate and $p=24$. The entire two-world covering applies only to
+$\Omega_*$, not to all bases. Whole-child J injectivity is local to
+$\mathcal U$. The double-zero condition (28.1) on the full component,
+continuation of the M branch to any specified remote base, and the
+original unrestricted independent-pair target remain unresolved.
+
+The full parent, exact seed and whole-domain exceptional inventory
+remain the owning results in Sections 1–18 and Common Parent Geometry,
+as cited in Definition 19.1; no second seed or eliminant inventory is
+introduced. The new boundary argument supplies bounded drift and whole
+gain, finite-escape curves, their explicit barrier and relative
+properness hypotheses. Classical covering, contraction, inverse and
+implicit function tools are reused with these model-specific hypotheses
+and the displayed quantitative bounds; their generic bindings are not
+additional mathematical contributions.
+

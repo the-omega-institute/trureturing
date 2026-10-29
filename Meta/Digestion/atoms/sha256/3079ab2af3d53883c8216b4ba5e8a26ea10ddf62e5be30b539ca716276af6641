@@ -1,0 +1,107 @@
+**定理 58.1（原响应的实二维充要几何）。** 固定 $\theta\in(\pi/2)\mathbb Z$ 和 $0<d<1$。令
+
+$$
+\begin{gathered}
+\mu=\Sigma/3=(2+d)/8,\qquad
+v(s)=(d+s-\mu,s/\sqrt3),\qquad R(s)=\|v(s)\|_2,\\
+n_1=(-1/2,\sqrt3/2),\quad n_2=(1,0),\quad
+n_3=(-1/2,-\sqrt3/2).
+\end{gathered}
+\tag{58.1}
+$$
+
+则定义 54.3 中允许任意实 Kraus、任意效果和隐藏纤维的实二维模型存在，当且仅当
+
+$$
+R(s)\le\mu\qquad\text{对每个 }\rho\in\mathcal K_d.
+\tag{58.2}
+$$
+
+实一维模型不存在。若 (58.2) 成立，实二维模型可取仿射制备及两个单 Kraus 分支。
+
+证明。(57.3) 可写为 $b_i(s)=\mu+n_i\cdot v(s)$。先证明对任意二维实现的必要性。取所有初始 $\sigma(\rho)$ 及其归一化可达矩阵
+
+$$
+2^{|h|}\Phi_h(\sigma(\rho)).
+\tag{58.3}
+$$
+
+它们为迹一正矩阵，因为完整记录的两种终端结果之和恰为 $2^{-|h|}$。定理 57.1 证明中的三维续响应轨道，使这些矩阵的实线性张成至少三维。由于 $\dim\operatorname{Sym}_2(\mathbb R)=3$，张成必等于整个 $\operatorname{Sym}_2$；续响应映射 $L$ 的秩也为三，故为同构。这一步先排除了隐藏纤维，未假设编码是同构。
+
+记 $\mathcal A_j=2\Phi_j$。在 (58.3) 上 $\mathcal A_j$ 保迹，故在线性张成的整个 $\operatorname{Sym}_2$ 上保迹。若其 Kraus 算子为 $\sqrt2L_{j\alpha}$，这一结论等价于
+
+$$
+2\sum_\alpha L_{j\alpha}^{\mathsf T}L_{j\alpha}=I_2.
+\tag{58.4}
+$$
+
+所以它的实 Kraus 延拓在所有实矩阵上确实 TP。由 $L\mathcal A_j=\pi_jL$，$S_3$ 关系在整个 $\operatorname{Sym}_2$ 上成立，且各归一化分支在这个空间上的逆是 CP 幂。
+
+为补足从对称矩阵到完整矩阵的逆关系，考虑任一这样的逆复合，写成 $\Psi(X)=\sum_\alpha K_\alpha XK_\alpha^{\mathsf T}$。它在每个实纯态 $xx^{\mathsf T}$ 上为恒等。对任意 $y\perp x$，
+
+$$
+0=y^{\mathsf T}\Psi(xx^{\mathsf T})y
+=\sum_\alpha|y^{\mathsf T}K_\alpha x|^2.
+\tag{58.5}
+$$
+
+于是每个 $K_\alpha x$ 平行于 $x$。取 $x=e_1,e_2$ 使每个 $K_\alpha$ 对角，再取 $x=e_1+e_2$ 使两对角元相等，故 $K_\alpha=c_\alpha I_2$。保迹给 $\sum c_\alpha^2=1$，从而 $\Psi$ 在所有实矩阵上恒等。其复线性延拓也在所有复矩阵上恒等。全局 CP 可逆性因此是达到维数饱和之后的结论。
+
+现在 $\mathcal A_j$ 及其逆把整个迹一实正矩阵圆盘双射到自身。写
+
+$$
+\sigma(r)=\tfrac12(I_2+r_xZ+r_yX),\qquad
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\quad
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad\|r\|\le1.
+\tag{58.6}
+$$
+
+圆盘的仿射自同构固定其唯一中心，线性部分正交。平面的每个旋转由一个实二阶正交矩阵的共轭实现，其角度为原矩阵旋转角的两倍；反射亦由实正交共轭实现。故此处的实密度圆盘作用是正交共轭，其忠实 $S_3$ 作用在无迹平面上为标准二维表示。
+
+令 $F_i$ 是三个续效果，它们由 $F$ 在这些全局 TP 分支的对偶下取得，因而全都满足 $0\preceq F_i\preceq I_2$。在可达张成上三效果之和为 $\Sigma I_2$，故在整个空间上也是如此。标准表示的固定无迹向量只有零，三效果可写为
+
+$$
+F_i=\mu I_2+a\,\widetilde n_i\cdot(Z,X),\qquad
+\widetilde n_i\cdot\widetilde n_j=-1/2\ (i\ne j),
+\quad 0\le a\le\mu,
+\tag{58.7}
+$$
+
+其中方向可经统一正交变换与 (58.1) 对齐。幅度上界来自效果的最小本征值 $\mu-a\ge0$；此处 $\mu<1/2$，另一端 $\mu+a\le1$ 不更紧。三个等角方向满足 $\sum_i n_i n_i^{\mathsf T}=3I_2/2$，对 $\widetilde n_i$ 亦然。因此对任意制备 $\sigma(r)$，
+
+$$
+R(s)^2=\frac23\sum_{i=1}^3(b_i(s)-\mu)^2
+=a^2\|r\|^2\le\mu^2.
+\tag{58.8}
+$$
+
+这给任意编码的必要性。实一维的对称空间只有一维，不可能承载已证明的三维续响应。
+
+充分性由以下完整模型给出：
+
+$$
+\begin{gathered}
+\sigma(\rho)=\tfrac12\left[I_2+\frac{d+s-\mu}{\mu}Z+\frac{s}{\sqrt3\mu}X\right],\\
+F_i=\mu[I_2+n_i\cdot(Z,X)],\\
+O_0=\frac12\begin{pmatrix}1&\sqrt3\\\sqrt3&-1\end{pmatrix},\qquad
+O_1=\frac12\begin{pmatrix}1&\sqrt3\\-\sqrt3&1\end{pmatrix},\qquad
+\Phi_j(Y)=O_jYO_j^{\mathsf T}/2.
+\end{gathered}
+\tag{58.9}
+$$
+
+(58.2) 使 $\sigma(\rho)\succeq0$；$\sigma$ 对完整 $\mathcal K_d$ 仿射，三效果的谱为 $\{0,2\mu\}\subset[0,1]$。直接共轭得
+
+$$
+\begin{aligned}
+(O_0^{\mathsf T}F_1O_0,O_0^{\mathsf T}F_2O_0,O_0^{\mathsf T}F_3O_0)&=(F_2,F_1,F_3),\\
+(O_1^{\mathsf T}F_1O_1,O_1^{\mathsf T}F_2O_1,O_1^{\mathsf T}F_3O_1)&=(F_3,F_1,F_2),\\
+\operatorname{Tr}(\sigma(\rho)F_i)&=b_i(s).
+\end{aligned}
+\tag{58.10}
+$$
+
+终端取 $F_1$，按例外角度的奇偶交换两个标签；每个分支质量为 $1/2$，和 TP，故匹配所有原联合记录及补终端结果。
+
+可逆通道的成熟背景见 Nayak–Sen，[*Invertible Quantum Operations and Perfect Encryption of Quantum States*](https://arxiv.org/html/quant-ph/0605041v1)，定理 2.1。它假设复 CPTP 映射具有在所有密度矩阵上为左逆的 CPTP 映射，再推出酉与固定辅助态表示。该定理不能仅从可达子空间上的关系直接用于本题；这里由 (58.3) 的维数饱和、(58.5) 的实 Kraus 延拓和圆盘几何补足了所需桥梁。∎
+

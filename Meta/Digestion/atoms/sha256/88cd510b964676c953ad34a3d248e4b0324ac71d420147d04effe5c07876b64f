@@ -1,0 +1,55 @@
+**Lemma 2.2 (Uniform conditional-moment certificates).** There is an absolute constant $C_0$ such that, simultaneously for all parameters and all laws of Definition 1.1, the notation of Lemma 2.1 satisfies
+
+$$
+\begin{aligned}
+d&\ge\frac{m^2}{t}
+ +t\left(\mathbb E[P_a(K)\mid I=1]-\mathcal A_\theta(t)\right),\\
+d&\ge\frac{m^2}{t}
+ +t\left(C_a-E_a(m-1)-\mathcal A_\theta(t)\right),\\
+m^2&\le td+C_0a^2t^2,
+\end{aligned}\tag{2.9}
+$$
+
+where
+
+$$
+\begin{gathered}
+P_a(k)=(a+2-k)(a+1-k)(2a+k),\\
+C_a=a(a+1)(2a+1),\qquad E_a=3a^2+3a+1,\\
+\mathcal A_\theta(t)=\frac{B-G_\theta(t)}t,\qquad
+|\mathcal A_\theta(t)|\le C_0a^2.
+\end{gathered}\tag{2.10}
+$$
+
+These bounds hold for every $0<t\le q/s$ occurring as a least marginal, not just in the feasible range of (1.4).
+
+**Proof.** Before removing the singleton part from the residual, (2.7) reads
+
+$$
+H=\frac{m^2}{t}+\sum_{i\in C}
+ \left[\frac{a^2}{y_i}+\frac{(2a+1)(\theta-t)}{y_i^2}
+       +\frac{R_i+D_i}{y_i^2}\right].
+$$
+
+The scalar function in the first two terms is strictly convex for $y\ge t$, by the same calculation as (2.8). Since $0<y_i\le1$, $R_i/y_i^2\ge R_i$. Also $Q_a(L)=P_a(K)$ on $I=1$, and $Q_a(L)\ge0$ on the remaining events. Jensen and (2.4) give
+
+$$
+H\ge\frac{m^2}{t}+G_\theta(t)+t\mathbb E[P_a(K)\mid I=1].
+$$
+
+For $0\le v\le t<1$, $q-v\ge a-1$. Direct differentiation of (1.8) gives the three terms
+
+$$
+G_\theta'(v)=\frac{a^2r^2}{(q-v)^2}
+ -\frac{(2a+1)r^3}{(q-v)^2}
+ +\frac{2(2a+1)(\theta-v)r^3}{(q-v)^3}.
+$$
+
+Their absolute sum is at most $C_0a^2$ with an absolute constant. As $G_\theta(0)=B$, the bound on $\mathcal A_\theta$ follows. The integer polynomial $P_a$ is nonnegative for $1\le k\le s$, and
+
+$$
+P_a(k)=C_a-E_a(k-1)+(k-1)^3.
+$$
+
+Take its conditional expectation and use $\mu\le m$. This gives the second certificate. Discarding $P_a\ge0$ from the first one gives the last line of (2.9). ∎
+

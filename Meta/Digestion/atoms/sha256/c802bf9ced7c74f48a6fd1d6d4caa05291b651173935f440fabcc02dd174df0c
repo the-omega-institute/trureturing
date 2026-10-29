@@ -1,0 +1,24 @@
+**Definition 4.2 (total rational recognizer).** A candidate input is a
+finite logical term and a finite list of rational coordinates indexed by
+its material support. An invalid finite term/support/coordinate encoding
+is rejected. Check $t\in\mathcal D$, the exact support, $0\le y_v\le1$
+for every vertex, and $y\ne0$. Maintain a flag which is outermost at the
+first non-alpha stage and inner after its first successful collapse.
+
+At a non-alpha stage set a local gap counter to zero. As long as every
+coordinate is positive, apply the rational inverse $T_t^{-1}$ once and
+increment the counter. After each step reject a negative coordinate, a
+coordinate greater than one, or the zero vector. At the first zero
+coordinate, require exactly one of the two complete fresh-support tests
+in Theorem 4.1, including its literal local constructor. Require that the
+retained coordinates are all strictly positive and the collapsed term is
+in $\mathcal D$. At an inner non-alpha stage also require the counter
+to be at least one. Collapse, restrict, set the flag to inner, and continue.
+
+At alpha require a scalar $a\in(0,1]$. Repeatedly double it while it is
+less than one. Accept exactly if it reaches one; reject if it exceeds one.
+The doubling count is the initial gap. Return the decoded canonical
+history on acceptance. The inner-gap test is never applied to the alpha
+scalar: the initial gap is allowed to be zero. The outermost final gap
+is also allowed to be zero.
+

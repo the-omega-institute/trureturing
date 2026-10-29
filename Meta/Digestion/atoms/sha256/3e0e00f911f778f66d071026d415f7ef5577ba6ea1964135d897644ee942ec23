@@ -1,0 +1,182 @@
+**Theorem 8.4 (Full-law transition value and uniform first correction).** For every $I=[\rho_-,\rho_+]\subset(0,\infty)$ there are constants $C_I<\infty$ and $A_I$ such that all integers $a\ge A_I$, $h\ge1$ with $\rho_a=h/a^{3/2}\in I$ satisfy
+
+$$
+\left|\frac{M(a,h)}{a^3}-F(\rho_a)
+           +\frac{2\rho_a t(\rho_a)}{\sqrt a}\right|
+\le\frac{C_I}{a}.
+\tag{8.6}
+$$
+
+The profile also has the variational representation
+
+$$
+F(\rho)=\min_{0<p<1}\left\{(1-p)^{-4}+\frac{\rho^2}{p}\right\}.
+\tag{8.7}
+$$
+
+Consequently every integer sequence with $\rho_a\to\rho\in(0,\infty)$ has $M(a,h)/a^3\to F(\rho)$. The normalization in (8.6) uses $h$, with $s=a+1+h$ still exact.
+
+**Proof.** First, under $t=(1-p)^{-1}$ the objective in (8.7) becomes
+
+$$
+f_\rho(t)=t^4+\rho^2\frac{t}{t-1},\qquad t>1.
+$$
+
+It diverges at both endpoints, and
+
+$$
+f_\rho'(t)=4t^3-\frac{\rho^2}{(t-1)^2},\qquad
+f_\rho''(t)=12t^2+\frac{2\rho^2}{(t-1)^3}>0.
+$$
+
+Its unique minimum is at the solution of (8.5); substitution gives $f_\rho(t)=t^4(4t-3)$. This proves (8.7). The inverse defining $t(\rho)$ is continuous. Thus, for $\rho\in I$, its values lie in an interval $[1+\delta,T]$ with $\delta>0$ and $T<\infty$ depending only on $I$.
+
+For the full-law lower bound, reuse the pointwise certificate underlying Theorem 2.1 with a movable real contact parameter. The necessary scaled calculation is as follows. For any real $c\ge2$, put
+
+$$
+\begin{aligned}
+b(c)&=4c(c-1)\sqrt{c+1}-2c^2+4c,\\
+L_c&=5c^4-2b(c)c,\qquad N_c=4c^5-b(c)c^2,\\
+W_c(k,v)&=kv^2-L_ck-b(c)v+N_c.
+\end{aligned}
+\tag{8.8}
+$$
+
+We claim $W_c(k,v)\ge0$ for all real $k\ge1$, $v\ge k^2$. Write $b=b(c)$. The inequalities
+
+$$
+\begin{aligned}
+b-2c^2&=4c(c-1)(\sqrt{c+1}-1)\ge0,\\
+2c^3-b&=2c(c-1)(c+2-2\sqrt{c+1})\ge0
+\end{aligned}
+$$
+
+follow from $c\ge2$ and $(c+2)^2-4(c+1)=c^2\ge0$. In particular $2c^2\le b\le2c^3$, $L_c\ge c^4>0$, and $k_0=(b/2)^{1/3}$ lies in $[1,c]$.
+
+If $k\ge k_0$, then $\partial_vW_c=2kv-b\ge2k^3-b\ge0$ on $v\ge k^2$. Its minimum there is at $v=k^2$, and the exact factorization is
+
+$$
+W_c(k,k^2)
+=(k-c)^2\bigl(k^3+2ck^2+3c^2k+4c^3-b\bigr)\ge0,
+\tag{8.9}
+$$
+
+since the factor in parentheses is at least $2c^3$.
+
+If $1\le k\le k_0$, the unconstrained minimizer $v=b/(2k)$ is feasible. Its value multiplied by $4k$ equals the concave quadratic
+
+$$
+Q_c(k)=4N_ck-4L_ck^2-b^2.
+$$
+
+The formula for $b$ gives the exact identity
+
+$$
+b^2+4(c^2-2c)b=16c^5-20c^4,
+$$
+
+and hence $Q_c(1)=0$. At $k=k_0$ the minimizing $v$ is $k_0^2$, so (8.9) gives $Q_c(k_0)\ge0$. A concave quadratic lies above the chord between these two endpoint values. It follows that $Q_c\ge0$ throughout $[1,k_0]$, proving the claim on the remaining interval as well.
+
+For any law in Definition 1.1, the common-law identities (2.3) give
+
+$$
+\mathbb E K=a,\qquad \mathbb E U=s,\qquad
+ aU\ge K^2,\qquad H\ge\mathbb E(KU^2).
+$$
+
+They are necessary relations for that same law, with no assumption on the shape of its support. Taking the expectation of $W_c(K,aU)\ge0$ therefore gives
+
+$$
+H(x)\ge G_c(a,s):=\frac{aL_c+ab(c)s-N_c}{a^2}.
+\tag{8.10}
+$$
+
+One can retain the full nonnegative remainder in this step:
+
+$$
+\begin{aligned}
+H(x)-G_c(a,s)
+ &=\mathcal D(x)+\frac1{a^2}\mathbb E W_c(K,aU),\\
+\mathcal D(x)
+ &=\mathbb E\left[K\sum_{\substack{i<j\\i,j\in T}}
+                  (y_i^{-1}-y_j^{-1})^2\right]\ge0.
+\end{aligned}
+\tag{8.11}
+$$
+
+Indeed $K\sum_{i\in T}y_i^{-2}-U^2=\sum_{i<j,\,i,j\in T}(y_i^{-1}-y_j^{-1})^2$, and multiplying by $K$ proves the identity. For a proposed energy bound $E_0$, any actual law with $H(x)\le E_0$ must consequently satisfy
+
+$$
+\mathcal D(x)+a^{-2}\mathbb E W_c(K,aU)
+\le E_0-G_c(a,s)\qquad(c\ge2).
+\tag{8.12}
+$$
+
+These are necessary residual constraints, not a sufficiency statement for realizability or an equality classification. All expectations are finite because $[s]$ is finite and the actual marginals are positive. At $c=a$, $b(a)/a=\beta_a$ and (8.10) is exactly Theorem 2.1. Thus the certificate is its continuous-contact version, used here to obtain the moving-scale lower bound. Taking expectations of a pointwise bound is the weak-duality principle in D. Bertsimas and I. Popescu, *Optimal inequalities in probability theory: A convex optimization approach*, SIAM J. Optim. 15(3) (2005), 780–804, Theorem 2.1, pp.784–785, DOI [10.1137/S1052623401399903](https://doi.org/10.1137/S1052623401399903) ([author-hosted text](https://www.mit.edu/~dbertsim/papers/MomentProblems/Optimal-inequalities-in-probability-theory-A-convex-optimization-approach-SIAM15.pdf)). Only this elementary direction is used; neither strong duality nor a reduction of the actual-law domain to finitely many cardinalities is required.
+
+Now set $t=t(\rho_a)$ and choose $c=at$ in (8.10). Keeping the exact relation $s=a+1+h$, elementary rearrangement yields
+
+$$
+\frac{G_{at}(a,s)}{a^3}
+=t^4(5-4t)+\frac{b(at)}{a^{5/2}}
+ \left(\rho_a+\frac{(t-1)^2}{\sqrt a}+\frac1{a^{3/2}}\right).
+\tag{8.13}
+$$
+
+Uniformly for $t\in[1+\delta,T]$, the formula for $b$ gives
+
+$$
+\frac{b(at)}{a^{5/2}}
+=4t^{5/2}-\frac{2t^2}{\sqrt a}+O_I(a^{-1}).
+\tag{8.14}
+$$
+
+For example, write the radical part as $4(at)^{5/2}(1-(at)^{-1})\sqrt{1+(at)^{-1}}$; its difference from $4(at)^{5/2}$ is $O_I(a^{3/2})$, while the remaining terms are $-2a^2t^2+4at$. This proves (8.14) with a uniform bound. Multiplying (8.13) out gives
+
+$$
+\begin{aligned}
+\frac{G_{at}(a,s)}{a^3}
+={}&t^4(5-4t)+4\rho_a t^{5/2}\\
+ &+\frac{-2\rho_a t^2+4t^{5/2}(t-1)^2}{\sqrt a}
+ +O_I(a^{-1})\\
+={}&F(\rho_a)-\frac{2\rho_a t}{\sqrt a}+O_I(a^{-1}).
+\end{aligned}
+\tag{8.15}
+$$
+
+The last equality uses $\rho_a=2(t-1)t^{3/2}$ separately in the leading term and in the coefficient of $a^{-1/2}$. Since (8.10) holds for every original law, (8.15) bounds their infimum from below, uniformly on $I$ and without attainment.
+
+For the upper bound, choose the integer
+
+$$
+j=\lfloor a(t-1)\rfloor,\qquad z=\frac{a+j}{a}.
+$$
+
+Uniformly on $I$, for all sufficiently large $a$ one has $j\ge1$, $j\le a(T-1)\le h$, $|z-t|\le a^{-1}$ and $z-1\ge\delta/2$. Thus the actual law in (8.3) is admissible. Its energy has the exact normalized expression
+
+$$
+\frac{H_j(a,h)}{a^3}
+=\frac{z^3(z-a^{-1})}{1-a^{-1}}
+ +\left(\rho_a-\frac{z-1}{\sqrt a}+\frac1{a^{3/2}}\right)^2
+       \frac{z-a^{-1}}{z-1}.
+\tag{8.16}
+$$
+
+The second factor retains the full number $h+1-j$ of singleton labels. On $\rho_a\in I$, $z\in[1+\delta/2,T+1]$, all denominators in (8.16) stay uniformly away from zero, and expansion gives
+
+$$
+\frac{H_j(a,h)}{a^3}
+=f_{\rho_a}(z)-\frac{2\rho_a z}{\sqrt a}+O_I(a^{-1}).
+\tag{8.17}
+$$
+
+Explicitly, the first term in (8.16) is $z^4+O_I(a^{-1})$, and the other is $\rho_a^2z/(z-1)-2\rho_a z/\sqrt a+O_I(a^{-1})$. The derivatives of $f_{\rho_a}$ on the displayed compact set are uniformly bounded, so $|z-t|\le a^{-1}$ gives $f_{\rho_a}(z)=F(\rho_a)+O_I(a^{-1})$. Also $2\rho_a(z-t)/\sqrt a=O_I(a^{-3/2})$. Hence the actual-law upper bound is
+
+$$
+\frac{M(a,h)}{a^3}\le\frac{H_j(a,h)}{a^3}
+=F(\rho_a)-\frac{2\rho_a t(\rho_a)}{\sqrt a}
+ +O_I(a^{-1}).
+$$
+
+Together with (8.15) this proves (8.6). All upper bounds use actual probabilities, their own actual marginals and the exact mean $a$; the scalar minimum (8.7) supplies no substitute for the full-law lower bound. Continuity of $F$ gives the sequential limit asserted in the theorem. ∎
+

@@ -1,0 +1,17 @@
+**Theorem 6.1 (sliding actual acquisition).** Starting at any acquired cut
+of Definition 5.3, actually Tick once, Hold, and Read all $b$ terminals.
+Drop the oldest epoch of the retained $Y$ and append these actual new
+responses. The new four views are exactly the acquired views for $hK$,
+and the actual source is $T_t x_{\rm now}$. This operation can be repeated
+any finite number of times with its actual backing and costs.
+
+**Proof.** The retained old epochs are $J^{\mathsf T}T_t^rx_h$ for
+$r=0,\ldots,I$. After the operation the retained epochs are those for
+$r=1,\ldots,I+1$, exactly $O_IT_tx_h$. The current source is
+$T_t^{I+1}x_h=T_t^I(T_tx_h)$. The new historical recurrence is $hK$,
+which changes only the permitted final gap, or the sole alpha gap.
+It remains in $\mathcal H_A$. Applying §5 to this block gives precisely
+its routes and prediction. The actual last Read block was consumed, so
+the new boundary is genuinely sampled. Induction proves finite repetition.
+$\square$
+

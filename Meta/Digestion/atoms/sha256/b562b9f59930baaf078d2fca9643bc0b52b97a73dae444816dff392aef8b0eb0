@@ -1,0 +1,26 @@
+**Definition 58.1 (Rational branch functions).** On the branch
+$\kappa_{\rm rec}\ne0$ define
+
+$$
+\begin{aligned}
+\nu&=X\kappa_{\rm rec}-\alpha_{\rm w}\eta_{\rm rec},\\
+\theta&=Z\kappa_{\rm rec}-\gamma_{\rm w}\eta_{\rm rec},\\
+\omega&=D_{\rm par}\kappa_{\rm rec}
+          -\mathcal A_{\rm par}\eta_{\rm rec}-4\theta,\\
+\chi_{\rm src}&=\nu\omega+4\eta_{\rm rec}\kappa_{\rm rec},\\
+F_{\rm rec}&=\alpha_{\rm w}\eta_{\rm rec}^2
+ -(X-\beta_{\rm w})\eta_{\rm rec}\kappa_{\rm rec}
+ -Y\kappa_{\rm rec}^2,\\
+G_{\rm rec}&=b(-4\eta_{\rm rec}-b\omega)
+                 \kappa_{\rm rec}^2\omega
+ -\chi_{\rm src}(\kappa_{\rm rec}\omega-\chi_{\rm src}).
+\end{aligned}
+\tag{58.1}
+$$
+
+These are rational functions of $b$ for each fixed $(p,v,w)$.
+Their defining denominators are products of positive numerical
+constants and positive powers of $T,U,H_2$. Their numerator equations
+can therefore be used on $b>0$ without introducing a positive-width
+pole. They are different from $F_{\rm w},G_{\rm w}$ in Section 52.
+

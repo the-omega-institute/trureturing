@@ -1,0 +1,86 @@
+**Theorem 16.2 (joint upper witness and exact minimax queries).** One
+deterministic effective implementation of Definition 16.1 works for
+every finite scaffold $S$ and every $K\ge1$. On every member of
+$\mathcal F(S,K)$ it terminates correctly with zero extra updates and
+simultaneously satisfies
+
+$$
+ \begin{aligned}
+ Q&\le n+r,\\
+ M_{\rm addr}&\le h+2K,\\
+ W&\le L+2Kn+(\delta+2K-1)r.
+ \end{aligned}
+ \tag{GPO.51}
+$$
+
+Consequently, even among competitors allowed arbitrary finite adaptive
+forward updates,
+
+$$
+ \min_A\ \max_{(x,k)\in\mathcal F(S,K)}Q_A(x,k)=n+r.
+ \tag{GPO.52}
+$$
+
+The same comparator's worst $W$ and $M_{\rm addr}$ are each at most
+twice their corresponding lower bounds in (GPO.48).
+
+Proof. The first line of (GPO.45) makes every clock bit exactly the
+threshold test $s\le k$, independent of the unknown label at $p_*$.
+Its update retains $k$ and reduces an interval of $m\ge2$ integers
+to one of sizes $\lfloor m/2\rfloor,\lceil m/2\rceil$. After $t$
+such tests its size is at most $\lceil K/2^t\rceil$. This follows
+inductively from halving integer interval sizes; equivalently, dividing
+an integer interval into its two nearly equal parts at each level leaves
+parts of size at most the ceiling of the original size divided by $2^t$.
+Since $2^r\ge K$, at most $r$ tests suffice. This includes bins whose
+size is not a power of two; their short branches may stop earlier.
+
+Whenever a test is made, its split obeys
+$K+1\le l+1\le s\le z\le2K-1$. Thus each clock word has length
+at most $\delta+2K-1$. When $K=1$ there is no clock query, $r=0$,
+and the public bin already fixes $k=1$; no nonexistent split is used.
+The second line of (GPO.45) makes the following $n$ label queries
+correct, each of length $d_i+k+1$. Their summed length is exactly
+$L+n(k+1)\le L+2Kn$, and their maximum is at most $h+2K$.
+The clock words have maximum at most $\delta+2K-1\le h+2K$.
+Adding the phases proves (GPO.51). For $n=1$ the empty original
+prefix incurs no extra letters, but every suffix is still fully
+submitted and every Read still paid. No balanced or perfect scaffold
+has been assumed.
+
+Here is an effective operational realization of these finite instructions.
+Parse the supplied finite preorder scaffold and use an ordinary stack
+and path buffer to list its leaves, lengths and a shortest leaf. Each
+extension, comparison, stack write and any copying is local work.
+Perform integer addition, subtraction, halving and comparison by finite
+binary tape routines. Construct each repeated suffix with a binary loop
+counter, concatenate its entire path and translate each physical letter
+by the supplied port bit. Retain the actual returned bits, then traverse
+the finite scaffold again to write its labelled output. All intermediate
+counters, words, stack frames and output bytes occupy real owned storage;
+none is obtained from a hidden parameter or a zero-cost selector. Each
+routine is finite on its actual finite operands, and the assumed progress
+and growing backing permit its completion. This proves termination and
+correct retention through handoff, without asserting any uniform workspace,
+local-time, writer-size or total-price optimum. The source remains exactly
+its entrance $\rho^{2k}u_x$ throughout.
+
+Theorem 15.2 gives the lower inequality in (GPO.52); (GPO.51) gives
+the upper inequality with this single comparator. For the claimed common
+factor, all quantities are nonnegative and
+
+$$
+ \begin{aligned}
+ h+2K&\le2(h+K+1),\\
+ L+2Kn+(\delta+2K-1)r
+   &\le2\bigl[L+n(K+1)+(\delta+K+1)r\bigr].
+ \end{aligned}
+ \tag{GPO.53}
+$$
+
+Indeed subtracting the left sides from the right gives respectively
+$h+2$ and $L+2n+(\delta+3)r$. These comparisons use the one-run
+lower bounds for every competitor and one common upper witness. They
+do not assert equality of optimal summed letters, a complete Pareto
+frontier or optimality for a weighted total service price. $\square$
+

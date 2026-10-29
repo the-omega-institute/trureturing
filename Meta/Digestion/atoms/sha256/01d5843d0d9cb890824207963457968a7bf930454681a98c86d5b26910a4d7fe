@@ -1,0 +1,14 @@
+**推论 76.3（最粗 deterministic terminal partition 与正 alphabet）。** 令
+
+$$
+h\sim_{\mathscr E}g\quad\Longleftrightarrow\quad
+\sigma_{\mathscr E}(h)=\sigma_{\mathscr E}(g),\qquad
+N_{n,\theta}(\mathscr E)=|\sigma_{\mathscr E}(\{0,1\}^n)|.
+$$
+
+在定义 76.1 的 terminal contract 下，所有安全 deterministic partitions 恰为该 signature partition 的 refinements；所以它是唯一最粗者。即使允许 stochastic summaries 和任意 qutrit CPTP decoders，最小 positive terminal alphabet 也恰为 $N_{n,\theta}(\mathscr E)$。
+
+**证明。** deterministic 情形直接应用定理 76.2。stochastic 情形中，每条正概率历史至少给一个终端值正质量；不同 signatures 的 histories 不能给同一终端值正质量。因此每个 signature class 必须占用一个不同的 positive value，给出下界。存储 signature class 并按定理 76.2 选 inverse 达到该数。若另有明确不计费的 independent shared seed，条件于该 seed；有限 histories 的共同满测集上同一论证仍成立，故不能降低 conditional alphabet 下界。∎
+
+此唯一最粗商属于终端 exact sharp-task 合同；它不与 §73 的一般动态任务分割相混。对实际下一标签 $j$，signature 的数学更新是将每个成员同时以 $V_j$ 共轭，故其相等性保持。在线实现还须实际取得这些标签并供应相应控制、更新表与时钟；终端 alphabet 定理不优化这些资源，也不产生整个任务控制器或 apparatus minimum。
+

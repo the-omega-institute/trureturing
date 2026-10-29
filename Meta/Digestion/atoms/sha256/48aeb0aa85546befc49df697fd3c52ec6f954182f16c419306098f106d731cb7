@@ -1,0 +1,39 @@
+## 文献与固定项目来源
+
+<a id="ref-project"></a>
+
+[1] 
+<em>trureturing</em>, `dev` 固定提交
+[`23a4ae6f843d1635869b7656fb6bd681121447a8`](https://github.com/the-omega-institute/trureturing/commit/23a4ae6f843d1635869b7656fb6bd681121447a8),
+2026-10-30。主要固定来源：
+[金字塔基础公式](https://github.com/the-omega-institute/trureturing/blob/23a4ae6f843d1635869b7656fb6bd681121447a8/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)；
+[读出与记录三角形，定理 9](https://github.com/the-omega-institute/trureturing/blob/23a4ae6f843d1635869b7656fb6bd681121447a8/docs/develop/theory/AURIC_FIB_ATOM_READOUT_CLOSURE_AND_RECORD_TRIANGLE.md)；
+[固定黄金门，§§2--4、8](https://github.com/the-omega-institute/trureturing/blob/23a4ae6f843d1635869b7656fb6bd681121447a8/docs/develop/theory/AURIC_FIXED_GOLDEN_GATE_AND_BRAID_COMPATIBILITY_ZH.md)；
+[最小纯记录扩张，§§1--7](https://github.com/the-omega-institute/trureturing/blob/23a4ae6f843d1635869b7656fb6bd681121447a8/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_MINIMAL_RECORD_DILATIONS.md)；
+[相干重构续卷，§67](https://github.com/the-omega-institute/trureturing/blob/23a4ae6f843d1635869b7656fb6bd681121447a8/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md)。
+
+<a id="ref-watrous"></a>
+
+[2] 
+J. Watrous, <em>The Theory of Quantum Information</em>, Cambridge University Press, 2018.
+[作者托管第 2 章](https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf)，有限维通道、Kraus 与等距表示、量子仪器。
+
+<a id="ref-hg"></a>
+
+[3] 
+L. Hadjiivanov and L. S. Georgiev, <em>Braiding Fibonacci anyons</em>,
+[arXiv:2404.01778v4](https://arxiv.org/abs/2404.01778v4), 2024，§3 的 $F$ 与 $R$ 矩阵。
+
+<a id="ref-araujo"></a>
+
+[4] 
+M. Araújo, A. Feix, F. Costa and C. Brukner,
+<em>Quantum circuits cannot control unknown operations</em>,
+New Journal of Physics 16 (2014), 093026.
+[arXiv:1309.7976](https://arxiv.org/abs/1309.7976)。
+
+<a id="ref-robinson"></a>
+
+[5] 
+P. L. Robinson, <em>Julia operators and Halmos dilations</em>,
+[arXiv:1803.09329](https://arxiv.org/abs/1803.09329), 2018，定理 2。

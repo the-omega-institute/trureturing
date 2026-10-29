@@ -1,0 +1,11 @@
+**Convention 1.1 (reference input and authorship).** This volume contains
+ordinary mathematics over finite trees and rational fields. It supplies no
+new Lean proof, kernel certification or empirical certification. Lean
+declarations, where cited, retain their own hypotheses and verification
+boundary. Mathematical exposition is by one external Codex CLI theory
+author using `formal-thinking-and-answer` and `theory-volume-template`;
+the cited existing sources supply the results expressly attributed to them.
+The mode is single-author source synthesis and ordinary proof, without
+delegated mathematical coauthors. That description asserts neither an
+independent review result nor independence of model priors.
+

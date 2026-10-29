@@ -1,0 +1,14 @@
+**Proposition 91.1 (zero seed and Reset destroy the asserted historical inverse).** The nonzero earned origin and the restricted paired-clock domain cannot be dropped from the stated inverse by merely retaining the same homogeneous laws. In particular consider the legal words
+
+$$
+w_1=P_\varepsilon S_\varepsilon S_LP_R,\qquad
+w_2=P_\varepsilon S_\varepsilon P_RS_L.
+\tag{91.1}
+$$
+
+They have the same final term $\langle\langle\beta,\alpha\rangle,\beta\rangle$ but different successful serial order. Starting with zero, both pre- and post-clock recurrences remain identically zero on every word. Thus their final Space, all diagnostic replies, and current predictors coincide for (91.1), although Time differs. Starting with the earned positive seed, an actual final Reset at that common final term likewise gives identical zero current fields and identical complete future service. Hence the current-state inverse cannot recover arbitrary old successful words on a zero-seed or Reset-closed domain.
+
+Proof. $P_\varepsilon S_\varepsilon$ creates $\langle\beta,\alpha\rangle$. The two remaining operations are enabled on different children and commute in syntax, giving the displayed common term. Linear homogeneous Ticks and zero extension preserve the zero field. Reset sends any two fields on this common term to that same zero field. The current-service invariant then gives identical future outputs and successors for every common finite continuation. A rule depending only on those identical observations cannot return both different words correctly. $\square$
+
+Refused growths, Read, Hold and waiting also leave the encoded pair unchanged. Inserting any of them without an extra encoding Tick changes a total journal but not the successful word or the recovered field. Their order, duration and replies are therefore not recovered. An unpaired Tick or arbitrary Add changes the recurrence whose image §85 decodes; no inverse of that enlarged journal is asserted. The negative statement about Reset is an actual counterexample, not a claim that every particular extra intervention erases every history distinction.
+

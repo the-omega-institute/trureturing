@@ -1,0 +1,36 @@
+**Lemma 76.1 (which coordinates change).** Let $e$ be an enabled actual
+$P_p$ or $S_p$ at a current logical leaf $p$. For an old branch $v$:
+if $v$ is a proper ancestor of $p$, exactly one of its child event counts
+increases by one, on the side containing $p$; every other old branch's
+counts are unchanged. A split creates just the new branch $p$, whose
+two child counts are zero, so its radix is one. Old branches retain
+their relative preorder. Writing $+$ for the predicted endpoint,
+
+$$
+R_v^+\ge R_v,\qquad F^+\ge F,\qquad G^+\ge G,\qquad N^+=N+1.
+\tag{AAII.36}
+$$
+
+The new digits at old branches are exactly
+
+$$
+r_v^+=
+\begin{cases}
+r_v+\binom{x_v+y_v}{x_v+1},&p\text{ has prefix }vL,\\
+r_v,&p\text{ has prefix }vR\text{ or outside }v.
+\end{cases}
+\tag{AAII.37}
+$$
+
+A prefix $vL$ includes $p=vL$, and similarly for $vR$.
+
+Proof. Projection onto a proper ancestor's first side appends exactly
+that side. An event outside its subtree contributes nothing. There is
+no old branch at the edited leaf. The split's new children are just-born
+beta and alpha, with no child event yet. Old branch objects and their
+ordering survive. The source count identity (AA.73) makes these the
+actual count changes, and Theorem 47.3 gives (AAII.37), including forced
+coordinates. Pascal's identity gives the binomial inequalities, hence
+the product and width inequalities. One actual event is appended to $w$.
+$\square$
+

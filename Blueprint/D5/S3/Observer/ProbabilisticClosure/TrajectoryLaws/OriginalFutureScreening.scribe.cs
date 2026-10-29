@@ -7,6 +7,7 @@ internal sealed class OriginalFutureScreeningDocument : IScribeDocumentDefinitio
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Complete actual future laws and universal screening", H("Complete actual future laws and universal screening"),
         Blocks(
+            Paragraph(Text("The past_prefix_cylinder declaration exposes the existing exact reversal of a finite marked-past prefix and its unchanged proof. OriginalRectangleOccurrence consumes this identity when extending its prescribed-route calculation to every measurable event of the complete marked past.")),
             Describe.Lean(DescribeId.Create("state-mass"),
                 DeclarationHandle.Create("D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/OriginalFutureScreening.state_mass"),
                 H("The original state marginal at every cut"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

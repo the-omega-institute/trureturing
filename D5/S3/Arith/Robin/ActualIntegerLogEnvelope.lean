@@ -4,7 +4,7 @@
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
    utility: none
-   digest: Fixed-price integer optimizers give the unconditional coefficient-two Robin envelope. -/
+   digest: Fixed-price integer optimizers give arbitrary-error actual Robin envelopes. -/
 
 import D5.S3.Arith.Robin.OriginalFirstClockTransport
 import D5.S3.Arith.Robin.EulerLayerInventoryGrowth
@@ -12,7 +12,7 @@ import D5.S3.Arith.Robin.MertensExplicitEnvelope
 import D5.S3.Weil.GronwallUpperEnvelope
 
 /-! The comparator alone has smooth support; global fixed-price optimality transfers its bound
-to every positive target integer. The inventory size error pays the remaining one tenth. -/
+to every positive target integer. The inventory size error is an arbitrary positive parameter. -/
 
 noncomputable section
 
@@ -79,13 +79,13 @@ private theorem strict_support {x : ℝ} (hx : 1 < x) {U : ℕ} (hU : 0 < U)
       (Nat.cast_nonneg p)
   linarith
 
-/-- Every sufficiently large actual integer satisfies the coefficient-two logarithmic
-envelope. Smooth support is used only for a separate strict fixed-price optimizer. -/
-theorem eventual_actual_integer_envelope :
+/-- The strict inventory transfers its arbitrary positive size error to every actual
+positive integer. Only the comparator has smooth support. -/
+theorem eventual_actual_integer_envelope_epsilon (epsilon : ℝ) (hepsilon : 0 < epsilon) :
     ∃ A : ℝ, 286 ≤ A ∧ ∀ n : ℕ, 0 < n → A ≤ Real.log (n : ℝ) →
       originalObjective n - Real.eulerMascheroniConstant ≤
-        2 / Real.log (Real.log (n : ℝ)) := by
-  obtain ⟨T, hT, hgrowth⟩ := strict_inventory_uniform_growth (1 / 10) (by norm_num)
+        ((19 / 10 : ℝ) + epsilon) / Real.log (Real.log (n : ℝ)) := by
+  obtain ⟨T, hT, hgrowth⟩ := strict_inventory_uniform_growth epsilon hepsilon
   refine ⟨max T 286, le_max_right _ _, ?_⟩
   intro n hn hlarge
   let X := Real.log (n : ℝ)
@@ -100,7 +100,7 @@ theorem eventual_actual_integer_envelope :
       U.factorization p = optimalLayerCount (1 / (X * Real.log X)) p :=
     fun p _ => hcount p
   have hnear := hgrowth X ((le_max_left T 286).trans hlarge) U (by omega) hstrict
-  have hratio : 1 - Real.log (U : ℝ) / X ≤ 1 / 10 := by
+  have hratio : 1 - Real.log (U : ℝ) / X ≤ epsilon := by
     linarith [abs_lt.mp hnear |>.1]
   have hs := supported_sigma_bound (by omega : 0 < U)
     (strict_support hX1 (by omega) hstrict)
@@ -123,10 +123,22 @@ theorem eventual_actual_integer_envelope :
     <;> ring
   have hcostle := div_le_div_of_nonneg_right hratio hL.le
   change Real.log ((ArithmeticFunction.sigma 1 n : ℝ) / n) -
-    Real.log (Real.log X) - Real.eulerMascheroniConstant ≤ 2 / Real.log X
-  have hid : (19 / 10 : ℝ) / Real.log X + (1 / 10 : ℝ) / Real.log X =
-      2 / Real.log X := by ring
+    Real.log (Real.log X) - Real.eulerMascheroniConstant ≤
+      ((19 / 10 : ℝ) + epsilon) / Real.log X
+  have hid : (19 / 10 : ℝ) / Real.log X + epsilon / Real.log X =
+      ((19 / 10 : ℝ) + epsilon) / Real.log X := by ring
   linarith
+
+/-- Every sufficiently large actual integer satisfies the coefficient-two logarithmic
+envelope. Smooth support is used only for a separate strict fixed-price optimizer. -/
+theorem eventual_actual_integer_envelope :
+    ∃ A : ℝ, 286 ≤ A ∧ ∀ n : ℕ, 0 < n → A ≤ Real.log (n : ℝ) →
+      originalObjective n - Real.eulerMascheroniConstant ≤
+        2 / Real.log (Real.log (n : ℝ)) := by
+  simpa only [show (19 / 10 : ℝ) + 1 / 10 = 2 by norm_num] using
+    eventual_actual_integer_envelope_epsilon (1 / 10) (by norm_num)
+
+#print axioms eventual_actual_integer_envelope_epsilon
 
 #print axioms eventual_actual_integer_envelope
 

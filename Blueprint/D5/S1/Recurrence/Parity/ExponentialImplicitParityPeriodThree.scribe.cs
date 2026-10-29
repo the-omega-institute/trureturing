@@ -75,6 +75,15 @@ internal sealed class ExponentialImplicitParityPeriodThreeDocument : IScribeDocu
                 "For OEIS A392208 (2026-01-24), the ordinary coefficient of x^n is s(n)/n!. The displayed "
                     + "fraction is rational division; no natural-number or integer division is used.",
                 AssessedProvenance.FromRepo(), DescribeRole.Definition),
+            Node("a392208-egf-series-mul", "egfSeries_mul", "Products are binomial convolutions",
+                EgfSeriesMultiplicationFormula(),
+                "The exponential generating series of the binomial convolution of two rational sequences "
+                    + "is the product of their exponential generating series.",
+                AssessedProvenance.FromRepo(), DescribeRole.Theorem),
+            Node("a392208-derivative-egf-series", "derivative_egfSeries", "Differentiation shifts the sequence",
+                EgfSeriesDerivativeFormula(),
+                "Formal differentiation of a rational exponential generating series shifts its coefficient "
+                    + "sequence forward by one index.", AssessedProvenance.FromRepo(), DescribeRole.Theorem),
             Node("a392208-first-derivative", "exp_definition_derivative_zero",
                 "The first derivative has constant coefficient one", FirstDerivativeFormula(),
                 "Evaluating the defining equation at constant coefficient zero yields A'(0)=1, which the "
@@ -251,6 +260,24 @@ internal sealed class ExponentialImplicitParityPeriodThreeDocument : IScribeDocu
         Formula coefficient = new Formula.Fraction(Call("s", n), Factorial(n));
         return Disp(Seq(Forall, Sp, Typed(s, Arrow(Naturals(), Rationals())), Comma, Sp,
             Equal(Call("egfSeries", s), Call("mk", LambdaAt(n, coefficient)))));
+    }
+
+    private static Formula EgfSeriesMultiplicationFormula()
+    {
+        var f = F.Id("f"); var g = F.Id("g");
+        return Disp(Seq(Forall, Sp, Typed(f, Arrow(Naturals(), Rationals())), Comma, Sp,
+            Typed(g, Arrow(Naturals(), Rationals())), Comma, Sp,
+            Equal(Call("egfSeries", Call("egfMul", f, g)),
+                Mul(Call("egfSeries", f), Call("egfSeries", g)))));
+    }
+
+    private static Formula EgfSeriesDerivativeFormula()
+    {
+        var f = F.Id("f"); var n = F.Id("n");
+        var shifted = Parenthesized(Seq(F.Id("fun"), Sp, Typed(n, Naturals()), Sp,
+            Mapsto, Sp, new Formula.Apply(f, [Add(n, D(1))])));
+        return Disp(Seq(Forall, Sp, Typed(f, Arrow(Naturals(), Rationals())), Comma, Sp,
+            Equal(Call("derivative", Call("egfSeries", f)), Call("egfSeries", shifted))));
     }
 
     private static Formula FirstDerivativeFormula()

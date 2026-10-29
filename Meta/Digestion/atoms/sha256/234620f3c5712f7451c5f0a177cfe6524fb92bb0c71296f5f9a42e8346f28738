@@ -1,0 +1,48 @@
+**thousand times** ratio on the entire closed interval $I_n$, not only
+at its algebraic root.
+
+| Family | $n$ | Variations | Sign of $N_0$ on $I_n$ | Ratio | Enclosure of $1000$ times ratio |
+| --- | --- | --- | --- | --- | --- |
+| $\mathrm a$ | $1063208818552$ | $7,6$ | $-$ | $N_1/N_0$ | $[5003,5004]$ |
+| $\mathrm a$ | $1064700680689$ | $6,5$ | $+$ | $N_1/N_0$ | $[4632,4633]$ |
+| $\mathrm a$ | $1244315019115$ | $5,4$ | $-$ | $N_2/N_0$ | $[-12,-11]$ |
+| $\mathrm b$ | $494812194094$ | $11,10$ | $+$ | $N_2/N_0$ | $[-58,-57]$ |
+| $\mathrm b$ | $595231123153$ | $10,9$ | $+$ | $N_1/N_0$ | $[2838,2839]$ |
+| $\mathrm b$ | $626933545430$ | $9,8$ | $-$ | $N_1/N_0$ | $[3550,3551]$ |
+| $\mathrm b$ | $1207999593070$ | $8,7$ | $+$ | $N_1/N_0$ | $[-2266,-2265]$ |
+| $\mathrm b$ | $1523742217801$ | $7,6$ | $+$ | $N_1/N_0$ | $[-5610,-5609]$ |
+| $\mathrm b$ | $1635486581057$ | $6,5$ | $+$ | $N_2/N_0$ | $[-1074,-1073]$ |
+| $\mathrm b$ | $1746481497259$ | $5,4$ | $+$ | $N_2/N_0$ | $[-152,-151]$ |
+| $\mathrm b$ | $1778429160158$ | $4,3$ | $+$ | $N_1/N_0$ | $[-2225,-2224]$ |
+
+The following rational interval operations completely specify the last
+two sign columns and give a direct way to reproduce them. For intervals,
+addition adds endpoints and multiplication takes the minimum and maximum
+of the four endpoint products. For a polynomial $f$, set
+$c=(2n+1)/(2\cdot10^{12})$, $h=1/(2\cdot10^{12})$, and expand exactly
+$f(c+u)=\sum_{k=0}^da_ku^k$. Start with $J_d=[a_d,a_d]$ and use
+
+$$
+J_k=[a_k,a_k]+[-h,h]J_{k+1}\quad(k=d-1,\ldots,0),
+\qquad\mathfrak I(f)=J_0.
+\tag{15.17}
+$$
+
+For each row, $\mathfrak I(N_0)=[A,B]$ excludes zero and has the
+printed sign. Multiply $\mathfrak I(N_1)$ or $\mathfrak I(N_2)$, as
+indicated, by $[1/B,1/A]$. Multiplying the resulting endpoints by
+$1000$ and rounding the lower down and upper up to integers gives the
+last column of (15.16). All coefficients, centers, radii, additions,
+products, divisions and endpoint comparisons in this prescription are
+rational. In particular it specifies denominator checks before division.
+
+Sturm's theorem applied to (15.14) shows that each open interior of
+$I_n$ contains exactly one positive root. The sums of these drops are
+$3$ and $8$, exactly (15.15)'s total drops. There are no other positive
+roots. At the first two $\mathrm a$ intervals $z>1$ but $S>4$, whereas
+$0<S<2/z<2$ is necessary. At its third interval $T<0$. The eight
+$\mathrm b$ intervals respectively give
+$T<0,S>2,S>2,S<0,S<0,T<0,T<0,S<0$.
+These contradict the stated necessary strict guards. This proves all
+claims of the theorem by the displayed finite arithmetic. ∎
+

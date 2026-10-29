@@ -1,0 +1,47 @@
+**Theorem 6.1 (reinstatement into the earned same-source consumers).**
+At the completed handoff of Theorem 3.2 the actual record (ACR.4) satisfies
+GPO Definition 34.1 with its separately surviving binding and grants.
+On the original domain $n\ge n_0$, it therefore determines exactly
+
+$$
+ S_n,\quad\partial S_n,\quad
+ \mathcal T_n^{\rm birth}=
+ \bigl(n;(t_j,p_j,z_j)_{1\le j\le B_n}\bigr),\quad X_n,
+ \tag{ACR.21}
+$$
+
+and the complete finite-request behavior of that same source. The
+GPO Theorem 34.2 round trips agree on these data images. Without expanding
+the whole tree, GPO Definition 39.3 can answer each supplied physical
+word's label, presence and terminal status with the request-local work
+of GPO Proposition 39.5. With GPO Theorem 34.3's continued real binding,
+rights, completed-call synchronization, progress, retention and backing,
+these consumers remain correct through every finite actual serial
+continuation, including real paid Reads and completed updates.
+
+Proof. The old retained prefix and complete seeded descriptor are
+unchanged. Theorem 3.2 has reinstated precisely the two numerical fields
+missing from GPO (GPO.84). The stationary interval includes installation,
+so they name the actual handoff cut. All other premises of GPO Definition
+34.1 are Assumption 1.2's actual surviving relations, not inferred
+consequences of numerical equality. The maturity bound is exactly that
+of GPO Theorem 34.2, including its separate zero-order case. Apply that
+theorem to obtain (ACR.21) and its commuting round trips.
+
+GPO Theorem 39.4 identifies the physical evaluator on these same $L,n$
+with actual readout at every finite word, including absent words. GPO
+Theorem 34.3 then advances $n,B_n$ only on real completed updates and
+commits new local data before exposing another callable cut. Its invariant
+and continuation premises yield the assertion by induction on actual
+calls. Reconstructing a behavioral phase as in Theorem 3.2 is sufficient;
+it requires no inverse of a singular transition and no identification
+of a private register implementation. An expanded tree or full event
+trace in (ACR.21) still costs its explicit output and backing.
+
+The projections in (ACR.21) omit arbitrary stationary observer actions:
+inserting a stationary Read or local calculation before erasure changes
+the observer journal while leaving $L,n,B_n$ and every birth event
+unchanged. Thus these inverses do not recover arbitrary lost journals,
+all material memory bytes, lost capabilities or physical durations.
+$\square$
+

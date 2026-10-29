@@ -1,0 +1,44 @@
+#### 定理 3.4（Dirichlet–Gibbs 概率律）
+
+对实数 $\sigma>1$，定义
+
+$$
+\Pr_\sigma(N=n)=\frac{n^{-\sigma}}{\zeta(\sigma)}.
+$$
+
+不同素数的指数 $\nu_p(N)$ 独立，其有限维联合律是几何律之积：
+
+$$
+\Pr_\sigma(\nu_p=k_p, p\in S)
+=\prod_{p\in S}(1-p^{-\sigma})p^{-\sigma k_p}.
+$$
+
+若 $\Psi(\sigma)=\log\zeta(\sigma)$，则
+
+$$
+-\Psi'(\sigma)=\mathbb{E}_\sigma[\log N],\qquad
+\Psi''(\sigma)=\operatorname{Var}_\sigma(\log N)
+=\sum_p\frac{(\log p)^2p^\sigma}{(p^\sigma-1)^2}>0.
+$$
+
+**证明。**
+
+在有限素数集 $S$ 上固定指数后，剩余整数与所有 $p\in S$ 互素。
+其权重总和为 $\zeta(\sigma)\prod_{p\in S}(1-p^{-\sigma})$，故得联合律。
+所有 $\log N$ 矩均有限，允许微分配分函数；或直接相加几何律的均值与方差。$N=1,2$ 均有正概率而对数不同，故方差严格为正。
+此外 $\sum_p\Pr(\nu_p\ge1)=\sum_p p^{-\sigma}<\infty$，无限独立实现几乎必然只有有限个非零指数，确实给出一个普通整数。
+
+∎
+
+对熵和平均 $\log N$ 有限的概率律 $q$，
+
+$$
+D(q\Vert\Pr_\sigma)
+=-H(q)+\sigma\mathbb{E}_q[\log N]+\log\zeta(\sigma)\ge0.
+$$
+
+这给出严格的预测–变分接口：该律唯一最小化 $\sigma\mathbb{E}[\log N]-H$。
+其正性在 $\sigma>1$ 已完全成立，并不需要 RH；在 $\sigma=1$，正概率的归一化失效。这个边界与 RH 的 $1/2$ 必须分开。
+
+<a id="section-4"></a>
+

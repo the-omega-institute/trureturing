@@ -1,0 +1,29 @@
+**Theorem 17.1 (representatives, fixed labels, and optional permutations).** Under the field and dimension hypotheses of Theorem 16.1, every original labelled equality matrix, and only such a matrix, is obtained by the following data: an ordered pair of distinct rays $(a,b)$, an unordered two-element subset $J\subset I$, a bijection
+
+$$
+\sigma:I\setminus J\longrightarrow P\setminus\{a,b\},
+$$
+
+and an arbitrary nonzero representative of $b$ at each label in $J$ and of $\sigma(i)$ at each $i\notin J$. Equivalently, after fixing representatives $v_p\in p\setminus\{0\}$, all such matrices have
+
+$$
+G_i=\begin{cases}\lambda_i v_b,&i\in J,\\
+\lambda_i v_{\sigma(i)},&i\notin J,
+\end{cases}
+\qquad \lambda_i\in K^\times.
+$$
+
+With labels fixed, quotienting by invertible row transformations and independent nonzero column scalings is exactly the $\operatorname{PGL}(k,q)$ action on these labelled ray maps $\rho:I\to P$. There is no field-automorphism quotient. If column permutations are additionally allowed, there is exactly one equality type. The raw number of labelled matrices attaining equality, before any of these quotients, is
+
+$$
+N(N-1)\frac{N!}{2}(q-1)^N.
+$$
+
+**Proof.** Theorem 16.1 forces a unique missing ray $a$ and a unique doubled ray $b$. The labels on $b$ form the unique unordered pair $J$, and every remaining label is assigned once to every other ray. This gives precisely $\sigma$ and all its stated data. Conversely every such assignment has exactly the required multiplicities and is zero-free, has rank $k$ by Theorem 15.2, and attains equality at every $t\ge k$. Once the reference $v_p$ are fixed, each nonzero column has one and only one scalar $\lambda_i\in K^\times$, so this parameterization has no further identifications.
+
+Suppose $G'_i=c_i A G_i$ for every fixed label $i$, with $A\in\operatorname{GL}(k,q)$ and $c_i\in K^\times$. Then $\rho'(i)=A\rho(i)$ at each label. Conversely, if this equality of ray maps holds for one $A$, the two nonzero vectors $G'_i$ and $AG_i$ differ by a nonzero scalar $c_i$ separately at each label. Scalar row matrices act trivially on every ray, and quotienting $\operatorname{GL}(k,q)$ by those matrices is precisely $\operatorname{PGL}(k,q)$. To check the action's projective kernel, a linear map fixing every ray fixes basis rays, hence is diagonal, and fixing the rays of sums of two basis vectors forces all diagonal entries equal. This is a linear action over the fixed field $K$; no semilinear transformations are included. Thus the fixed-label classes are exactly the stated projective-group orbits of labelled maps. In particular the double-label pair is preserved by this equivalence, so the optional permutation quotient is a separate operation.
+
+For that optional quotient, $\operatorname{GL}(k,q)$ is transitive on ordered distinct ray pairs: choose independent representatives of each pair, extend each to a basis, and map bases. After this row transformation aligns $(a,b)$ with any other desired pair, a label permutation aligns the double pair and all the singleton fibers; independent column scalings then align all nonzero representatives. Hence there is one equality type under this larger equivalence.
+
+There are $N(N-1)$ choices of $(a,b)$, $\binom N2$ choices of $J$, $(N-2)!$ bijections $\sigma$, and $(q-1)^N$ choices of the actual nonzero vectors. The unique recovery of these data from a labelled matrix prevents overcounting. Since $\binom N2(N-2)!=N!/2$, their product is the asserted raw count. $\square$
+

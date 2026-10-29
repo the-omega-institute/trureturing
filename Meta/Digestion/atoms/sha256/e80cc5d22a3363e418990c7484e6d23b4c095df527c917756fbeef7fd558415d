@@ -1,0 +1,128 @@
+### Full reconstruction and entropy transport in Theorem 78.2
+
+Apply the common measurable full-vector reconstruction maps
+(76.16)--(76.18), with the unchanged actual clock $V_K$:
+
+$$
+\begin{aligned}
+W_t&=\int_0^t\frac{\mathbf1_{\{a(K_s)\ne0\}}}{\sqrt2a(K_s)}
+                           \,d[B_{V_K(s)}]
+       +\int_0^t\mathbf1_{\{a(K_s)=0\}}\,dH_s,\\
+q_t&=q_0+\sqrt2\int_0^t c_\kappa(K_s)\,dW_s.
+\end{aligned}
+\tag{78.18}
+$$
+
+Under the reference input $\widetilde{\mathsf Q}$ these maps give
+exactly the full native $\mathbb Q$ law, including all three phases,
+and $X_t=B_{V_K(t)}$. As in (76.17), the first integrand is zero on
+$\{a(K_s)=0\}$ and its conditional variance is
+
+$$
+\int_0^t\frac{\mathbf1_{\{a(K_s)\ne0\}}}{2a(K_s)^2}\,dV_K(s)
+ =\int_0^t\mathbf1_{\{a(K_s)\ne0\}}ds\le t.
+\tag{78.19}
+$$
+
+The independent $H$ term fills exactly the complementary times.
+Conditional on $K$, $W$ is standard Brownian under the reference,
+with a law independent of $K$. The identity
+$\sqrt2\int_0^t a(K_s)dW_s=B_{V_K(t)}$ holds because the zero set
+has zero $dV_K$ mass. Thus neither division by zero nor a positive
+lower bound on $a^2$ is needed, including on clock plateaus.
+
+The common measurable versions in §76 are obtained by truncation,
+simple approximations and a common subsequence on integer intervals.
+Their restriction through $T$ is measurable with respect to
+$\mathcal G_{2AT,T}$, since $V_K(t)\le2At$. Equation (78.16) gives
+absolute continuity on exactly this sigma-field. Every reference null
+set used for their finite-interval definition, continuity and integral
+identities therefore remains null under $\widetilde{\mathsf V}$.
+Intersecting the resulting probability-one sets over integer horizons
+makes the same infinite reconstruction well-defined, with continuous
+versions and $X_t=B_{V_K(t)}$ simultaneously for every real $t\ge0$.
+This is transport of the existing measurable maps; it does not assume
+that the changed inputs solve an adapted stochastic equation in an
+enlarged filtration.
+
+Let $\mathsf V^{\mathsf Q_K}_\star$ be their one infinite output law,
+using the original canonical cemetery convention. It retains $K$
+unchanged and hence $K_\#\mathsf V^{\mathsf Q_K}_\star=\mathsf Q_K$
+on the full infinite height sigma-field. Height never dies and the
+initial state is the prescribed deterministic state. For each $c$,
+(78.10) has $\mu_c$ probability one; countability and (78.15) make its
+assertion with $c=C(K)$ simultaneous with (78.8). On this set,
+for every real $t\ge0$,
+
+$$
+|X_t|=|B_{V_K(t)}|
+ <r\sqrt{1+\tau_{C(K)}(V_K(t))}\le r\sqrt{1+t}.
+\tag{78.20}
+$$
+
+The second inequality uses the increasing inverse of $v_{C(K)}$.
+Strictness is inherited at every operational time, so it is retained
+at every original time, including a plateau. Neither the clock nor the
+tube event has been changed. All choices in (78.15) and (78.18) were
+made on the infinite spaces, independently of a terminal horizon.
+
+Relative entropy decreases under a measurable pushforward, by
+conditional Jensen applied to its density. Apply this to the full
+native prefix map from $\mathcal G_{2AT,T}$. Its reference output is
+exactly $\mathbb Q_T$, so (78.17) gives
+
+$$
+\begin{gathered}
+(\mathsf V^{\mathsf Q_K}_\star)_T\ll\mathbb Q_T,\\
+D((\mathsf V^{\mathsf Q_K}_\star)_T\Vert\mathbb Q_T)
+ \le B_0+B_1\mathbb E_{\mathsf Q_K}C
+                     +\nu\log(1+(A/m)T)<\infty.
+\end{gathered}
+\tag{78.21}
+$$
+
+On the original full cemetery-inclusive prefix, (76.22) gives
+
+$$
+\frac{d\mathbb Q_T}{d\mathbb P_T}
+ =\mathbf1_{\{\zeta>T\}}e^{\lambda T}
+                      \frac{\phi(K_T)}{\phi(k_0)}
+ \le M_T:=e^{\lambda T}\frac{\|\phi\|_\infty}{\phi(k_0)}<\infty.
+\tag{78.22}
+$$
+
+For probabilities $V,Q,P$ with $V\ll Q\le MP$ and finite
+$D(V\Vert Q)$, the variational entropy formula gives
+$D(V\Vert P)\le D(V\Vert Q)+\log M$. Indeed, for every bounded
+measurable $g$,
+
+$$
+\mathbb E_Vg-\log\mathbb E_Pe^g
+ \le\mathbb E_Vg-\log\mathbb E_Qe^g+\log M
+ \le D(V\Vert Q)+\log M;
+\tag{78.23}
+$$
+
+taking the supremum proves the inequality, with $V\ll P$ also
+following by transitivity. This argument needs no separate
+integrability assertion for $\log\phi(K_T)$ under $V$.
+Equations (78.21)--(78.23) yield
+
+$$
+\begin{aligned}
+D((\mathsf V^{\mathsf Q_K}_\star)_T\Vert\mathbb P_T)
+\le{}&\lambda T+\nu\log(1+(A/m)T)\\
+ &+B_0+B_1\mathbb E_{\mathsf Q_K}C
+          +\log\frac{\|\phi\|_\infty}{\phi(k_0)}<\infty.
+\end{aligned}
+\tag{78.24}
+$$
+
+Since $A/m\ge1$ is fixed,
+$0\le\log(1+(A/m)T)-\log(1+T)\le\log(A/m)$.
+This proves the upper estimate of (78.2), with a fixed finite error.
+Together with (78.20), it establishes every membership condition in
+Definition 78.1. Q Corollary 74.2, specifically (74.11), now applies
+to this very law and supplies the matching liminf. The upper estimate
+gives the matching limsup, proving the limit in (78.2). $\square$
+

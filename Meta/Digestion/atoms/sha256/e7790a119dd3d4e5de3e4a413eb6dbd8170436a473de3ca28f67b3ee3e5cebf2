@@ -1,0 +1,47 @@
+**Definition 15.1 (word counts and physical multiplicities).** Fix a finite field $K$ of cardinality $q$ and an integer $k\ge3$. Retain $V=K^k$, $P=\mathbb P(K,V)$, $N=[k]_q=(q^k-1)/(q-1)$, the $N$ original labelled positions $I$, and the iid uniform sampling with replacement of Definition 14.1. For a rank-$k$ matrix $G\in K^{k\times N}$, let $z(G)$ count its zero columns and put
+
+$$
+n_p(G)=|\{i\in I:G_i\ne0,\ [G_i]=p\}|,
+\qquad z(G)+\sum_{p\in P}n_p(G)=N.
+$$
+
+Every occurrence at a physical position is counted, including equal vectors and nonzero scalar multiples. Write $S_t=R_S(t)$ for the simplex recovery probability.
+
+For integers $d,v\ge0$, let $C(d,v)$ be the number of ordered length-$v$ words over the rays of $K^d$ whose representatives span $K^d$. For $d\ge1$, let $E(d,v)$ be the number of these spanning words avoiding one specified ray. Linear isomorphisms show independence of the specified ray and of the nonzero representatives. The empty word has span zero, and the ray alphabet of $K^0$ is empty. In particular,
+
+$$
+\begin{gathered}
+C(0,0)=1,\qquad C(0,v)=0\ (v>0),\\
+C(d,0)=E(d,0)=0\ (d\ge1),\qquad C(d,v)=E(d,v)=0\ (v<d),\\
+C(1,v)=1\ (v\ge1),\qquad E(1,v)=0\ (v\ge0).
+\end{gathered}
+$$
+
+As a formal dimension-zero convention set $E(0,v)=C(0,v)$; no specified ray is asserted to exist in dimension zero. Put $[0]_q=0$ and $0^0=1$.
+
+The classical subspace Möbius identity gives an explicit evaluation of these counts. With Gaussian coefficients outside $0\le j\le d$ set to zero, put
+
+$$
+\mu_{d,j}=(-1)^{d-j}q^{\binom{d-j}{2}},\qquad
+b_{d,j}=\begin{cases}{d-1\brack j-1}_q,&j\ge1,\\0,&j=0.\end{cases}
+$$
+
+For $d\ge1$ the evaluations are
+
+$$
+\begin{aligned}
+C(d,v)&=\sum_{j=0}^{d}{d\brack j}_q\mu_{d,j}[j]_q^v,\\
+E(d,v)&=\sum_{j=0}^{d}\left({d\brack j}_q-b_{d,j}\right)\mu_{d,j}[j]_q^v
+       +\sum_{j=1}^{d}b_{d,j}\mu_{d,j}([j]_q-1)^v.
+\end{aligned}
+$$
+
+Indeed, the indicator that a word spans is the sum of $\mu_{d,\dim U}$ over subspaces $U$ containing its span. A $j$-space contains $[j]_q$ rays; exactly $b_{d,j}$ such subspaces contain the forbidden ray, and their allowed alphabet has $[j]_q-1$ letters. This is the subspace-Möbius supplier in Kong–Elishco–Wang–Duman, [arXiv:2610.02931v1](https://arxiv.org/pdf/2610.02931v1), Lemma II.2 and Theorem II.3, specialized to one container. Its physical parameters are $M=1$, $n_1=N$, $\rho_U=N^{-1}\sum_{p\subseteq U}n_p(G)$ when $z(G)=0$, and round count equal to draw count. The displayed counting identity itself applies to the stated finite alphabets, including the empty word. The exact word and fiber identities of Sections 11–12 give
+
+$$
+S_t=\frac{C(k,t)}{N^t},\qquad
+R_G(t)=\frac{Q_t(n(G))}{N^t}\quad\text{if }z(G)=0,
+$$
+
+where $Q_t=W_{0,t}=t!F_{0,t}$ uses one representative of every ray and is evaluated at the unnormalized multiplicities in the second formula.
+

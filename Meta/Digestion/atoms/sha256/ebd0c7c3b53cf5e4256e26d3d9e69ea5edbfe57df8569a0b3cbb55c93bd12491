@@ -1,0 +1,56 @@
+**Theorem 32.2 (absence of a bound is a different obstruction).**
+Replace either bounded promise by merely membership in
+$\bigcup_{d\ge0}\mathscr R_d$ or
+$\bigcup_{K\ge1}\mathscr M_K$. No finite presence-only
+preparation, with common initially source-blind initialization, can
+return class-uniform exact readiness at a mature current cut $n\ge2$
+for any of the three tasks. There is also no finite-prefix test that
+authenticates the bound or autonomy premises against unrestricted
+source continuations.
+
+Proof. Every finite binary word $w$ has two eventually zero extensions
+$w0^\infty$ and $w1 0^\infty$. They agree on that word and
+differ on its next bit. Every finite-support stream is annihilated by
+$E^R$ for a sufficiently large $R$, so both extensions are in the
+unbounded recurrence union. Each also has a finite unary path through
+its finite nonzero prefix into a zero-output fixed point, so both are
+in the unbounded Moore union. At any attained cut, take $w$ to be
+its whole visible prefix. Theorem 28.2 gives the same current
+incidence for these two extensions and (GPO.69) gives different
+$\mathcal Q_1$ answers. Corollary 31.3 makes their entire finite
+accessible preparation identical. A terminating deterministic procedure
+therefore cannot be correct on both. A zero-error randomized procedure
+cannot evade this: choose an attained finite epoch and a finite visible
+word on which its finite termination event has positive probability.
+Such a choice exists by countability if termination occurs almost surely.
+The two extensions preserve that event and its accessible record law
+but require different answers.
+
+Likewise, any finite observation is consistent with a generator or
+actuator which follows the observed prefix and changes afterward.
+To see the bound-specific issue even for a lawful bounded prefix,
+keep that prefix and any desired sufficiently long continuation and
+then insert a later deviation; an unrestricted actuator can do this
+without changing any observed reply. A generator with a larger finite
+presentation can realize any prescribed finite extension followed by
+zeros. Each bounded class contains only finitely many distinct streams:
+there are finitely many bounded coefficient/seed rows or labelled Moore
+presentations. A sufficiently long binary extension of any fixed observed
+prefix can therefore be chosen different from all their continuations,
+and then continued by zeros. This gives an actual unbounded-class
+alternative outside the claimed bounded class. Thus finite agreement is
+not a certificate of the authentic class membership, chronological
+installation or absence of unseen inputs.
+These are hypotheses of the bounded results, not empirical conclusions
+of their synthesis algorithm. Moore's Theorem 2 already supplies the
+general missing-state-bound warning; the argument here discharges it
+on this actual growing-tree observation fiber. $\square$
+
+The obstruction concerns zero-error finite readiness in this information
+interface. It says nothing about statistical identification under a
+specified prior, a promise with additional certificates, finite-horizon
+approximation or another physical sensor. The arbitrary-wiring results
+of Theorems 23.1 and 24.3 remain exactly valid. In particular one
+cannot apply the bounded theorem to their sources without the new
+source-owned law and public chronology premises.
+

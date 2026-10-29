@@ -1,0 +1,31 @@
+**推论 27.1（固定阈值的匹配逆平方界）.** 对每个固定 $t\in(0,1)$ 和 $0<|\delta|<d$，集合（27.3）非空，并且
+$$
+\boxed{
+\left\lfloor\frac{c_t^{\rm low}}{\delta^2}\right\rfloor+1
+\le r_*(t,\delta)
+\le\left\lfloor\frac{A_t}{\delta^2}\right\rfloor+1.}
+\tag{27.4}
+$$
+此外，左侧界严格给出
+$$
+ r_*(t,\delta)\delta^2>c_t^{\rm low},
+\qquad
+r_*(t,\delta)\delta^2\le A_t+\delta^2.
+\tag{27.5}
+$$
+因此对每个固定 $t$，首次严格越阈半径具有明确的 $|\delta|^{-2}$ 上下尺度；（27.4）中的下界是第 18.2 定理的必要半径结论，上界才是定理 20.1 的有限观察构造所给出的充分界。
+
+**证明。** 令
+$$
+R_+(t,\delta)=\left\lfloor\frac{A_t}{\delta^2}\right\rfloor+1.
+$$
+则 $R_+\delta^2>A_t$，由定理 20.1
+$$
+E_{R_+}(P_{t,t+\delta})
+\le\mathcal C e^{-\gamma R_+\delta^2}
+<\mathcal C e^{-\gamma A_t}=\frac{V(t)}2.
+$$
+所以（27.3）非空且 $r_*\le R_+$，再由 $\lfloor x\rfloor+1\le x+1$ 得（27.5）的右侧。
+
+定理 18.2 在同一参数范围内给出：若 $r\delta^2\le c_t^{\rm low}$，则 $E_r(P_{t,t+\delta})\ge V(t)/2$。这与（27.3）的严格不等式相容的最小半径不能发生于该区间，故 $r_*\delta^2>c_t^{\rm low}$，并由整数性得到（27.4）的左侧。这里严格越过和地板取整均被保留；当 $\delta=0$ 时，定理 5.1 给出所有有限半径风险均为 $V(t)$，因此（27.3）不定义在对角线上。$\square$
+

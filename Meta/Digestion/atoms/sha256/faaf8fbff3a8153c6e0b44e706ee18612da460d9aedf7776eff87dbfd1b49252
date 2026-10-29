@@ -1,0 +1,20 @@
+### 定义 4.1（条件交互）
+
+对 $i,j\notin A$、$i\ne j$，定义风险交互
+
+$$
+\Gamma_{ij\mid A,d}
+=e_d(A\cup\{i\})+e_d(A\cup\{j\})
+-e_d(A)-e_d(A\cup\{i,j\}).
+$$
+
+同一个量也可写成边际收益的变化：
+
+$$
+\Gamma_{ij\mid A,d}
+=\bigl(e_d(A\cup\{j\})-e_d(A\cup\{i,j\})\bigr)
+-\bigl(e_d(A)-e_d(A\cup\{i\})\bigr).
+$$
+
+正号表示加入 $j$ 后 $i$ 的风险收益增大，称为协同；负号表示加入 $j$ 后 $i$ 的收益减少，称为冗余。这个命名只描述给定风险尺度下的交互，不声称因果关系。
+

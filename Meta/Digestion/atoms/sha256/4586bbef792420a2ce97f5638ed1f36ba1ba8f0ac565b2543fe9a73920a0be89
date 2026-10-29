@@ -1,0 +1,8 @@
+Do not encode an arbitrary inflation graph as an untyped table. Define a finite inflation specification containing:
+
+- copied edge indices;
+- copied party indices;
+- allowed marginal projections;
+- a symmetry action;
+- factorization constraints.
+

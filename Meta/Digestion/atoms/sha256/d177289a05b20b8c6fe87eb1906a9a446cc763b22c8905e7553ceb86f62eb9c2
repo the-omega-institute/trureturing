@@ -1,0 +1,14 @@
+#### 定义 6.1（门历史的复关系核）
+
+设 $\mathcal W$ 为合法门历史的标签集，$U_w$ 为其酉求值。定义
+
+$$
+K_\rho(v,w)=\operatorname{Tr} (\rho U_v^\dagger U_w).
+$$
+
+它比两两概率 $|K_\rho(v,w)|^2$ 保留更多信息。
+
+<a id="statement-6-2"></a>
+
+<a id="thm-kernel"></a>
+

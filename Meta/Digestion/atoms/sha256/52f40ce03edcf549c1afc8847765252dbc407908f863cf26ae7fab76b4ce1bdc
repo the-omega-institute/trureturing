@@ -1,0 +1,27 @@
+**Definition 1.3 (Actual graphs and excess).** Graphs are finite, simple and connected. For integers $n\ge2$ and $\ell\ge0$, let $\mathcal G(n,\ell)$ consist of the graphs of order $n$ and size $m=n-1+\ell$. Set
+
+$$
+\Phi(G)=\sum_{uv\in E(G)}\frac{\sqrt{d_u^2+d_v^2}}{\max(d_u,d_v)},
+\qquad g(t)=\sqrt{1+t^2}-1,
+$$
+
+$$
+E(G)=\Phi(G)-m
+=\sum_{uv\in E(G)}g\!\left(\frac{\min(d_u,d_v)}{\max(d_u,d_v)}\right).
+$$
+
+Each unordered edge is counted once. This is the complementary diminished Sombor index with the normalization of A. M. Albalahi, S. Das, A. Ali, J. Barman and A. E. Hamza, *On the hyperbolic Sombor index and its counterpart*, Discrete Math. Lett. 16 (2025), 108–115, DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176), §1, p.109. Their Conjecture 4.1 is a historical motivation, not an open premise here: its CDSO universal-vertex assertion is refuted by the unicyclic comparison in A. Ali, K. C. Das and A. A. Attiya, *Bond incident degree indices of fixed-order unicyclic graphs*, DOI [10.47443/dml.2025.192](https://doi.org/10.47443/dml.2025.192), Remark 2.3, and for every positive cyclomatic number by A. M. Albalahi, *On Two Conjectures Concerning the Hyperbolic Sombor Index and Its Counterpart*, DOI [10.47443/dml.2026.217](https://doi.org/10.47443/dml.2026.217), Proposition 2.1. The latter paper's Theorem 2.2 concerns maxima.
+
+When adjacent degrees differ, orient each edge toward its endpoint of larger degree. A sink has no outgoing edge, a source has no incoming edge, and a two-layer graph has every edge joining a source to a sink. We use these notions and the fixed-cost reduction of [*CDSO sink incidences and density limits*, Definitions 1.1–1.2 and Theorem 3.1](CDSO_SINK_INCIDENCE_AND_DENSITY_LIMITS.md). In a two-layer graph, label the actual sinks by $[s]$, put $N_s=n-s$, and let $a_T$ count sources with neighborhood exactly $T$. Its actual profile is $x_T=a_T/N_s$. Then
+
+$$
+\sum_Ta_T=N_s,\qquad \sum_T|T|a_T=m,\qquad
+\sum_T(|T|-1)a_T=\ell+s-1,
+$$
+
+$$
+D_i=\sum_{T\ni i}a_T=N_sy_i,\qquad q_s=\frac m{N_s}.
+$$
+
+These identities use the vertices and degrees of one graph.
+

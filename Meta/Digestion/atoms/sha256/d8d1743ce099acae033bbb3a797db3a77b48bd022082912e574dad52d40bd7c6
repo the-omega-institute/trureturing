@@ -1,0 +1,27 @@
+**引理 10.2（实际环的秩二横截性）。** 对每个 $p\in\mathscr D_n$，
+$\mathcal R_p$ 满射到二维空间 $\operatorname{Sym}_0(E)$。
+
+证明。取 $E$ 的正交基 $u,v$，并置
+$F_i=(\langle u,v_i\rangle,\langle v,v_i\rangle)^{\mathsf T}$。
+因为 $M=L(1/p)^+|_H$，对任一 $x\in E$，
+$\rho\,p_i^{-1}(x_i-x_{i+1})=\langle x,v_i\rangle$，
+而 $\langle x,v_i-v_{i-1}\rangle=x_i$。因此
+
+$$
+F_{i+1}+F_{i-1}=(2-p_i/\rho)F_i,\qquad
+\sum_i p_iF_iF_i^{\mathsf T}=\rho I_2. \tag{10.2}
+$$
+
+递推使 $D_i=\det(F_i,F_{i+1})$ 与 $i$ 无关。
+若该常数为零，可选非零线性组合同时消去两个相邻的 $F_i$ 分量；
+二阶递推使所有分量为零，继而 $u,v$ 的同一组合为零，矛盾。
+所以每两个相邻 $F_i$ 线性无关。
+
+若满射失败，存在非零迹零对称 $A$ 使
+$F_i^{\mathsf T}AF_i$ 对 $i$ 为常数。按 $p$ 加权和该常数是
+$\rho\operatorname{tr}A=0$。非零迹零实对称二阶矩阵的零二次型集合
+恰为两条不同直线。相邻 $F_i$ 必交替落在这两条直线上。
+(10.2) 左边落在与 $F_i$ 不同的直线上，故 $2-p_i/\rho=0$ 对每个 $i$ 成立。
+于是 $p_i=1/n$ 且 $\rho=1/(2n)$；但均匀点的实际最大特征值为
+$[4n\sin^2(\pi/n)]^{-1}>1/(2n)$，因为 $n>4$，矛盾。∎
+

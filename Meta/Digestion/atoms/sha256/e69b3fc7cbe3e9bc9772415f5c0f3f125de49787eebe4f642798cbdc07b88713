@@ -1,0 +1,13 @@
+#### 定义 7.1（正规化编译价值）
+
+设 $\mathcal A$ 为有限酉字母表，每个字母有严格正成本 $c_g$。字 $w$ 的成本为 $C(w)=\sum c_g$；允许空字。对目标 $R\in\operatorname{U}(d)$，定义
+
+$$
+b(R)=\frac1d\left\lVert R-I\right\rVert_F^2\in[0,4],\qquad
+F_\eta(R)=\inf_w\{b(U_w^\dagger R)+\eta C(w)\},\quad\eta>0.
+$$
+
+黄金 $\Sigma$ 的每个 $c_g=10$。$\eta$ 是精度与成本的权衡参数，不是黄金重叠 $\lambda_0$。
+
+<a id="thm-bellman"></a>
+

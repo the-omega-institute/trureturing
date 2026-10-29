@@ -1,0 +1,23 @@
+**Proposition 26.5 (actual acquired-bit use and successor agreement).**
+Select from the acquired bit and actually execute Add$(f,\tau)$;
+Hold; Read$(f,3r+1)$. The actual successor and nominal terminal value
+are
+
+$$
+x_\tau^+=x_\tau+\tau e_f,\qquad q_\tau^+=q_\tau+\tau.
+\tag{26.3}
+$$
+
+The new digital reply still has form $2a^++\zeta^+$, where
+$a^+=8^r q_\tau^+$ is a nonnegative integer, so the same extraction
+recovers the nominal value. Extend Time by these actually executed calls,
+Boundary by that performed nominal extraction, and Memory by its real
+successor update. The two successor images remain distinct. Evaluating
+(26.3) from the common bit proves the commutative recovery/dynamics square
+for every pair of expressions. This step is a legal use of an acquired
+selector, not merely an exported symbolic inverse. It adds one Add, Hold
+and digital Read, two field ACKs and one provider bit. Its raw nuisance
+reply is again separate from the nominal view. Other controls may leave
+this two-history image; the full current predictor continues, but no
+arbitrary-history inverse follows.
+

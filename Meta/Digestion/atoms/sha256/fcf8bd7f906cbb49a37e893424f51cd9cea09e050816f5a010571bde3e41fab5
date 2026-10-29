@@ -1,0 +1,27 @@
+**Construction 5.2 (one actual assay).** Hold and Read all $b$ current
+terminal ordinals in their earned order. For $r=1,\ldots,I$, actually
+Tick once, consume its acknowledgement, Hold, and Read all $b$ terminals.
+Consume all complete outputs, End/local acknowledgement/Return and
+cleanup. No extra field action interleaves. The literal sampled block,
+computed historical field, and physically returned field are respectively
+
+$$
+Y=O_Ix_h,\qquad x_h=D_IY,\qquad x_{\rm now}=T_t^Ix_h.
+\tag{5.3}
+$$
+
+The equality for $Y$ follows epoch by epoch from the actually performed
+Ticks and identity Reads/Holds. The left-inverse equation gives the
+middle equality; the actual $I$ Ticks give the last. No source restoration
+is performed. Retain the genuine current binding, code/roster and rights,
+and compute the present autonomous prediction block
+
+$$
+m_{\rm now}=O_Ix_{\rm now}.
+\tag{5.4}
+$$
+
+This block predicts the next $I+1$ nominal terminal epochs from the
+present cut, conditional on those autonomous Ticks. Computing it does
+not secretly execute them.
+

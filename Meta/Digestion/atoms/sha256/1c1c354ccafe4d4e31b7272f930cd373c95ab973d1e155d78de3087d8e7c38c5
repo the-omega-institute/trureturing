@@ -1,0 +1,64 @@
+**Theorem 4.1 (Two-hub rigidity from order 729).** Let $n\ge729$, $\ell\ge1$ and $G\in\mathcal G(n,\ell)$. If
+
+$$
+E(G)\le\frac{17}{4n},
+$$
+
+then $\ell\le n-3$, $G\in\mathcal B(n,\ell)$ up to relabelling, and both hub degrees satisfy $D_i\ge49n/425$.
+
+**Proof.** Put $C=17/4$ and $\eta=C/n$. At $n=729$ the exact inequalities
+
+$$
+2C+\frac{C^2}{n}=\frac{99433}{11664}<9,\qquad
+\frac1{2+C/n}=\frac{2916}{5849}>\frac{49}{100}
+$$
+
+hold; their left sides respectively decrease and increase with $n$. Thus, for every edge of this actual graph,
+
+$$
+r<\frac3{\sqrt n}<1,\qquad g(r)\ge\frac{49}{100}r^2.
+$$
+
+As in Theorem 2.1, the degree orientation exists and
+
+$$
+E(G)\ge\frac{49}{100}\frac{s^2}{n-s}.
+$$
+
+If $s\ge3$, this is greater than $441/(100n)>17/(4n)$. Hence $s\le2$, without having assumed that the graph is two-layer.
+
+A directed path of three edges would give
+
+$$
+1\le d_{v_0}<\frac{27}{n^{3/2}}d_{v_3}
+\le\frac{27(n-1)}{n^{3/2}}<\frac{27}{\sqrt n}\le1.
+$$
+
+There is no such path. If $v$ is mixed, every outgoing neighbor is a sink by the same path argument. Its outgoing degree $k$ is at most two. Writing $d=d_v$ and $j=d-k$ for its incoming degree, one incoming and one outgoing edge give
+
+$$
+\frac{\sqrt n}{3}<d<3\sqrt n,\qquad j\ge d-2,\qquad d\ge9.
+$$
+
+The incoming edges alone yield
+
+$$
+E(G)\ge\frac{49}{100}\frac{d-2}{d^2}.
+$$
+
+The function $(t-2)/t^2$ decreases for $t\ge4$. Using $d<3\sqrt n$ therefore gives
+
+$$
+nE(G)>\frac{49}{100}\left(\frac{\sqrt n}{3}-\frac29\right)
+\ge\frac{3871}{900}>\frac{17}{4},
+$$
+
+a contradiction. Thus the graph is two-layer. One sink would force a star, contradicting $\ell\ge1$, so there are exactly two sinks. Every source has degree one or two. If $b$ sources have degree two, each meets both sinks, and
+
+$$
+m=(n-2-b)+2b=n-2+b=n-1+\ell,
+\qquad b=\ell+1.
+$$
+
+The other $n-\ell-3$ vertices are leaves at these two hubs. In particular $\ell\le n-3$ and the asserted family is recovered from the actual graph. Finally, its $D_i$ sink edges give $E(G)\ge49/(100D_i)$, so $D_i\ge49n/425$. ∎
+

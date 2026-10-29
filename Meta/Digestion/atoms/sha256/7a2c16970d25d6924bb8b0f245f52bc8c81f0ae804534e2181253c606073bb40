@@ -1,0 +1,83 @@
+**定理 8.4（全局有符号赤字渐近）。** 对所有整数 $b>a\ge5$，置
+
+$$
+D_0(a,b)=\frac{(b-a)^2L^2}{64(ab)^{3/2}}
+=\frac{\sqrt{ab}\,\delta^2L^2}{64},
+\qquad
+\mathcal E_D(a)=\frac{10^6}{L}+\frac{10^6L}{a}.
+$$
+
+则
+
+$$
+\left|\frac{D_{a,b}}{D_0(a,b)}-1\right|\le\mathcal E_D(a),
+\tag{8.7}
+$$
+
+其中下界按 $(1-\mathcal E_D)D_0\le D$ 理解；当右端为负时它仍是有效的有限域下界。特别地，误差只依赖于 $a$ 且趋于零，并有统一渐近
+
+$$
+D_{a,b}\sim\frac{(b-a)^2\log(a)^2}{64(ab)^{3/2}}
+\qquad(a\to\infty),
+\tag{8.8}
+$$
+
+量词为所有整数 $b>a$。
+
+**证明。** 先由 (8.5) 和 (8.2) 得
+
+$$
+\frac{D_{a,b}}{D_0(a,b)}
+\le\frac{(1+432/L)^2}{1+2H}
+\le(1+432/L)^2\le1+10^6/L.
+\tag{8.9}
+$$
+
+最后一步可由 $L\ge\log5>1$ 核对：
+$(1+432/L)^2-1=(864+186624/L)/L<10^6/L$。
+这是全体实际联盟的上界。对下界，若 $\mathcal E_D(a)\ge1$，只需使用 $D_{a,b}\ge0$；同时 (8.9) 已给出所需上界。设以下 $\mathcal E_D(a)<1$，于是 $L>10^6$ 且 $L/a<10^{-6}$。令 $m=m_a$，则
+
+$$
+\left|\frac{4m}{L}-1\right|\le\frac2L,
+\qquad
+\left|\frac{16H}{\delta L}-1\right|\le\frac{432}{L},
+\qquad
+\frac ma\le\frac{L+2}{4a}.
+\tag{8.10}
+$$
+
+令 $t=4m/L$、$u=m/a$、$\vartheta=432/L$、
+$S=\sqrt{1-m/a}+\sqrt{1-m/b}$。
+式 (8.6) 及 $S^2\ge4(1-u)$ 直接给出
+
+$$
+\begin{aligned}
+\frac{\Delta(C_a^\#;\phi)}{D_0}
+&\ge2t(1-\vartheta)-\frac{t^2}{1-u}\\
+&=1-(t-1)^2-2t\vartheta-\frac{t^2u}{1-u}.
+\end{aligned}
+$$
+
+这里 $|t-1|\le2/L$、$t\le2$、
+$u\le(L+2)/(4a)\le L/(2a)<1/2$。因此损失至多
+
+$$
+\frac4{L^2}+\frac{1728}{L}+8u
+\le\frac{1732}{L}+\frac{4L}{a}
+\le10^5\left(\frac1L+\frac La\right).
+$$
+
+这证明了
+
+$$
+\frac{\Delta(C_a^\#;\phi)}{2\sqrt{ab}}
+\ge\frac{\delta^2L^2}{128}
+ \left(1-10^5\left(\frac1L+\frac La\right)\right).
+\tag{8.11}
+$$
+
+乘以 $2\sqrt{ab}$，(8.11) 给出
+$D_{a,b}/D_0\ge1-10^5(1/L+L/a)\ge1-\mathcal E_D(a)$。
+与 (8.9) 合并即得 (8.7)。由于 $\mathcal E_D(a)\to0$ 而不含 $b$，(8.8) 是全局而非固定比率的结论。式 (8.6) 是所要求的物理可实现整数联盟比较；本定理没有断言任何有限 $b$ 的精确最大联盟。
+∎
+

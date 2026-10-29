@@ -4,7 +4,19 @@
 
 A rational three-dimensional measurement has overall error below both endpoint quantities.
 
-**Definition 1.1 (State-dependent labeled error).**
+**Theorem 1.1 (Unitary basis projectors resolve the identity).**
+
+$$\forall \left(d: \mathbb{N}\right), \left(\forall \left(a: \operatorname{CoeSort.coe}\left(\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right), \left(\sum_{\left(i: \operatorname{Fin}\left(d\right)\right)} \operatorname{D5.S3.Quantum.Decoherence.DephasingTwoClassicalityBlockRefutation.measurementProjector}\left(a, i\right) = \left(1: \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurement/ErrorDisturbanceEndpointRefutation.sum_projectors` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The rank-one projectors onto the columns of any unitary matrix sum to the identity.
+
+**Definition 1.2 (State-dependent labeled error).**
 
 $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(\rho: \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)\right), \left(\forall \left(a: \operatorname{CoeSort.coe}\left(\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right), \left(\forall \left(c: \operatorname{CoeSort.coe}\left(\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right), \left(\left(\operatorname{D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.errorAt}\left(\rho, a, c\right): \mathbb{R}\right) = \operatorname{iSup}\left(\lambda \left(i: \operatorname{Fin}\left(d\right)\right) \mapsto \left(\left|\operatorname{Complex.re}\left(\operatorname{Matrix.trace}\left(\rho \cdot \left(\operatorname{D5.S3.Quantum.Decoherence.DephasingTwoClassicalityBlockRefutation.measurementProjector}\left(a, i\right) - \operatorname{D5.S3.Quantum.Decoherence.DephasingTwoClassicalityBlockRefutation.measurementProjector}\left(c, i\right)\right)\right)\right)\right|\right)\right)\right)\right)\right)\right)$$
 
@@ -16,7 +28,7 @@ $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(\rho: \operatorname{Ma
 
 For a complex matrix ρ, take the supremum over the labeled outcomes i of the absolute real part of the trace against the difference of the two rank-one projectors. For a density matrix this is the infinity distance between the two outcome distributions. The bases a and c are the columns of unitary matrices. This is the error of new_912arxiv.tex, lines 182–197. The definition itself is given for every matrix ρ and every natural dimension d.
 
-**Definition 1.2 (State-dependent disturbance).**
+**Definition 1.3 (State-dependent disturbance).**
 
 $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(\rho: \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)\right), \left(\forall \left(c: \operatorname{CoeSort.coe}\left(\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right), \left(\forall \left(b: \operatorname{CoeSort.coe}\left(\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right), \left(\left(\operatorname{D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.disturbanceAt}\left(\rho, c, b\right): \mathbb{R}\right) = \operatorname{iSup}\left(\lambda \left(j: \operatorname{Fin}\left(d\right)\right) \mapsto \left(\left|\operatorname{Complex.re}\left(\operatorname{Matrix.trace}\left(\rho \cdot \left(\operatorname{D5.S3.Quantum.Decoherence.DephasingTwoClassicalityBlockRefutation.measurementProjector}\left(b, j\right) - \operatorname{D5.S3.Observer.Conditioning.unreadState}\left(\operatorname{D5.S3.Quantum.Decoherence.DephasingTwoClassicalityBlockRefutation.measurementProjector}\left(c\right), \operatorname{D5.S3.Quantum.Decoherence.DephasingTwoClassicalityBlockRefutation.measurementProjector}\left(b, j\right)\right)\right)\right)\right)\right|\right)\right)\right)\right)\right)\right)$$
 
@@ -28,7 +40,7 @@ $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(\rho: \operatorname{Ma
 
 For outcome j of b, subtract from its projector its image under the unread projective measurement in c, and take the absolute real part of its expectation in ρ. The supremum over j is the infinity distance between the b distributions before and after that measurement when ρ is a density matrix. Here unreadState sends an observable X to the sum of QₖXQₖ over the projectors Qₖ of c. This expresses new_912arxiv.tex, lines 175–197, in terms of observables.
 
-**Definition 1.3 (Overall error in one common state).**
+**Definition 1.4 (Overall error in one common state).**
 
 $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(a: \operatorname{CoeSort.coe}\left(\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right), \left(\forall \left(c: \operatorname{CoeSort.coe}\left(\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right), \left(\forall \left(b: \operatorname{CoeSort.coe}\left(\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right), \left(\left(\operatorname{D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.overallError}\left(a, c, b\right): \mathbb{R}\right) = \operatorname{sSup}\left(\{\left(t: \mathbb{R}\right) \mid \exists \left(\rho: \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)\right), \left(\left(\operatorname{D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity}\left(\rho\right)\right) \land \left(t = \operatorname{D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.errorAt}\left(\rho, a, c\right) + \operatorname{D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.disturbanceAt}\left(\rho, c, b\right)\right)\right)\}\right)\right)\right)\right)\right)$$
 
@@ -40,7 +52,7 @@ $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(a: \operatorname{CoeSo
 
 Take the real supremum of the sum of labeled error and disturbance over density matrices ρ. Both summands use the same ρ; the expression is not the sum of two separately optimized quantities. This is the overall error defined in new_912arxiv.tex, lines 215–223.
 
-**Definition 1.4 (State-independent labeled error).**
+**Definition 1.5 (State-independent labeled error).**
 
 $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(a: \operatorname{CoeSort.coe}\left(\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right), \left(\forall \left(c: \operatorname{CoeSort.coe}\left(\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right), \left(\left(\operatorname{D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.error}\left(a, c\right): \mathbb{R}\right) = \operatorname{sSup}\left(\{\left(t: \mathbb{R}\right) \mid \exists \left(\rho: \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)\right), \left(\left(\operatorname{D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity}\left(\rho\right)\right) \land \left(t = \operatorname{D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.errorAt}\left(\rho, a, c\right)\right)\right)\}\right)\right)\right)\right)$$
 
@@ -52,7 +64,7 @@ $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(a: \operatorname{CoeSo
 
 The state-independent labeled error is the supremum of errorAt over positive semidefinite complex matrices of trace one. The labels of the columns of a and c are kept fixed. This is the state-independent error of new_912arxiv.tex, lines 200–204, with the maximum written as a real supremum.
 
-**Definition 1.5 (State-independent disturbance).**
+**Definition 1.6 (State-independent disturbance).**
 
 $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(c: \operatorname{CoeSort.coe}\left(\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right), \left(\forall \left(b: \operatorname{CoeSort.coe}\left(\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right), \left(\left(\operatorname{D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.disturbance}\left(c, b\right): \mathbb{R}\right) = \operatorname{sSup}\left(\{\left(t: \mathbb{R}\right) \mid \exists \left(\rho: \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)\right), \left(\left(\operatorname{D5.S3.Quantum.Information.SLDSpectralEnergy.IsDensity}\left(\rho\right)\right) \land \left(t = \operatorname{D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.disturbanceAt}\left(\rho, c, b\right)\right)\right)\}\right)\right)\right)\right)$$
 
@@ -64,7 +76,7 @@ $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(c: \operatorname{CoeSo
 
 The state-independent disturbance is the supremum of disturbanceAt over positive semidefinite complex matrices of trace one. This is new_912arxiv.tex, lines 200–209, with the maximum written as a real supremum. No lower bound on d is imposed in these definitions.
 
-**Definition 1.6 (Permuting the outcome labels).**
+**Definition 1.7 (Permuting the outcome labels).**
 
 $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(b: \operatorname{CoeSort.coe}\left(\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right), \left(\forall \left(\pi: \operatorname{Equiv.Perm}\left(\operatorname{Fin}\left(d\right)\right)\right), \left(\left(\operatorname{Subtype.val}\left(\left(\operatorname{D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.relabel}\left(b, \pi\right): \operatorname{CoeSort.coe}\left(\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right)\right): \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right)\right) = \operatorname{Matrix.submatrix}\left(\operatorname{Subtype.val}\left(b\right), \operatorname{Equiv.toFun}\left(\operatorname{Equiv.refl}\left(\operatorname{Fin}\left(d\right)\right)\right), \operatorname{Equiv.toFun}\left(\pi\right)\right)\right)\right)\right)$$
 
@@ -78,7 +90,7 @@ $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(b: \operatorname{CoeSo
 
 The permutation π reorders the columns of b while the row indices are fixed. Thus column i of the relabeled basis is column π(i) of b. Reindexing rows and columns by equivalences preserves unitarity, so the resulting matrix again defines an element of the unitary group. Subtype.val specifies the underlying matrix; its unitarity proof does not affect the value.
 
-**Definition 1.7 (Error with freely relabeled outcomes).**
+**Definition 1.8 (Error with freely relabeled outcomes).**
 
 $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(a: \operatorname{CoeSort.coe}\left(\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right), \left(\forall \left(b: \operatorname{CoeSort.coe}\left(\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right), \left(\left(\operatorname{D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.relaxedError}\left(a, b\right): \mathbb{R}\right) = \operatorname{iInf}\left(\lambda \left(\pi: \operatorname{Equiv.Perm}\left(\operatorname{Fin}\left(d\right)\right)\right) \mapsto \left(\operatorname{D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.error}\left(a, \operatorname{D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.relabel}\left(b, \pi\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -90,7 +102,7 @@ $$\forall \left(d: \mathbb{N}\right), \left(\forall \left(a: \operatorname{CoeSo
 
 Take the infimum of the labeled error over every permutation π of Fin d. Since this permutation type is finite and nonempty, it is a minimum. It implements the disregard of outcome labels in new_912arxiv.tex, lines 614–620.
 
-**Definition 1.8 (The proposed lower bound on overall error).**
+**Definition 1.9 (The proposed lower bound on overall error).**
 
 $$\left(\operatorname{D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.claim}: \operatorname{Prop}\right) = \left(\forall \left(d: \mathbb{N}\right), \left(\left(\left(2: \mathbb{N}\right) \le d\right) \to \left(\forall \left(a: \operatorname{CoeSort.coe}\left(\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right), \left(\forall \left(c: \operatorname{CoeSort.coe}\left(\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right), \left(\forall \left(b: \operatorname{CoeSort.coe}\left(\operatorname{Matrix.unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)\right)\right), \left(\operatorname{min}\left(\operatorname{D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.relaxedError}\left(a, b\right), \operatorname{D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.disturbance}\left(a, b\right)\right) \le \operatorname{D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.overallError}\left(a, c, b\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -104,7 +116,7 @@ $$\left(\operatorname{D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutati
 
 For every natural d at least two and every three unitary measurement bases a, c and b, the proposed inequality bounds overallError from below by the minimum of the relaxed error between a and b and the disturbance of b caused by a. This is the second inequality of Conjecture 3 in new_912arxiv.tex, lines 623–639, with only the endpoint error relaxed over outcome labels. It asserts neither the first inequality nor the equality conditions.
 
-**Theorem 1.9 (A rational counterexample in dimension three).**
+**Theorem 1.10 (A rational counterexample in dimension three).**
 
 $$\neg \left(\operatorname{D5.S3.Quantum.Measurement.ErrorDisturbanceEndpointRefutation.claim}\right)$$
 
@@ -145,6 +157,7 @@ The preceding states and boundedness place disturbance a B and every error a (re
 - Truth anchor: `D5/S3/Quantum/Measurement/ErrorDisturbanceEndpointRefutation.relabel`
 - Truth anchor: `D5/S3/Quantum/Measurement/ErrorDisturbanceEndpointRefutation.relaxedError`
 - Truth anchor: `D5/S3/Quantum/Measurement/ErrorDisturbanceEndpointRefutation.result`
+- Truth anchor: `D5/S3/Quantum/Measurement/ErrorDisturbanceEndpointRefutation.sum_projectors`
 - Dependency: [D5/S3/Quantum/Contextuality/TemporalHardySpinAttainment](../Contextuality/TemporalHardySpinAttainment.md)
 - Dependency: [D5/S3/Quantum/CotfasDVGS](../CotfasDVGS.md)
 - Dependency: [D5/S3/Quantum/Decoherence/DephasingTwoClassicalityBlockRefutation](../Decoherence/DephasingTwoClassicalityBlockRefutation.md)

@@ -1,0 +1,18 @@
+## 8. 边界与未决范围
+
+本卷得到的是一个可检验的分层：
+
+$$
+\text{语义动作残余 }R_\infty
+\quad\longrightarrow\quad
+\text{档案取得残余 }A_\infty
+\quad\longrightarrow\quad
+\text{实际可运行边界}.
+$$
+
+没有因子化、共同支持分离和动态解码条件时，不能把语义表当作观察者已经拥有的输入；不能把一次成功解码外推为所有后续菜单；也不能把当前目标信息量相同的记录直接合并。零即时目标信息的 Unlock 仍可能改变未来可取得的关系。
+
+本卷没有证明任意无限菜单都有固定有限边界，没有证明任意噪声都可被消除，也没有从原子树关系推出物理度量、绝对时间或经验规律。它只给出一个统一的数学判据：何时语义边界、实际档案和权限记忆能够在同一递归核上拼接。
+
+与已有理论的接口是：ADAPTIVE_ACTION_MENU_BRANCHING_RESIDUAL 提供确定性动作菜单的 $R_n$；LAW_IMAGE_ACQUISITION_INTERFACE 提供语义 law-image、实际运行档案和共同支持障碍；FIBONACCI_ATOMIC_RELATION_GENERATION 及原子取得卷提供 $\alpha,\beta$ 载体。本卷新增的是取得核 $A_n$、式 (3.4) 的交换条件，以及权限门把未来分离精确延迟的构造。
+
