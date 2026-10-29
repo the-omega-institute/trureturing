@@ -1,0 +1,9 @@
+For the actual counting-measure screening, including $n=0,1$,
+
+$$
+R_\lambda(T_n)
+ =\left\langle v_n,(I+N_n\lambda\Sigma_n)^{-1}v_n\right\rangle
+ \qquad(\lambda>0).
+\tag{98.7}
+$$
+

@@ -1,0 +1,42 @@
+**Assumption 2.1 (the supplied normal algebra).** Use the bijection of
+[ABC, Theorems 2.2–2.3][ABC]. Its ambient algebra, normal part and expansion
+are
+
+$$
+\begin{aligned}
+\mathcal K&::=[r]\ (r\in\mathbb N)\mid F(\mathcal K,\mathcal K),\\
+E([r])&=T_r,&E(F(X,Y))&=\langle E(X),E(Y)\rangle,\\
+F(X,Y)\in\mathcal N
+&\Longleftrightarrow X,Y\in\mathcal N\ \land\
+ \neg\exists r\ge0\ (X=[r+1]\land Y=[r]).
+\end{aligned}
+\tag{NIC.4}
+$$
+
+All primitives are normal. The canonical map $B:\mathcal T\to\mathcal N$
+and $E|_{\mathcal N}$ are effective inverses. Translation $\tau_a$ adds
+$a$ to every primitive rank and preserves $F$; it preserves normality.
+Native pairing in $\mathcal N$ is
+
+$$
+J(X,Y)=
+\begin{cases}
+[r+2],&X=[r+1],\ Y=[r],\quad r\ge0,\\
+F(X,Y),&\text{otherwise}.
+\end{cases}
+\tag{NIC.5}
+$$
+
+The supplied identities are $B(T_r)=[r]$,
+$B(\rho^a u)=\tau_a B(u)$ and
+$E(J(X,Y))=\langle E(X),E(Y)\rangle$ for normal $X,Y$.
+The finite atomic recurrence is
+
+$$
+T_{r+2}=\langle T_{r+1},T_r\rangle\qquad(r\ge0).
+\tag{NIC.6}
+$$
+
+Only on $\mathcal N$ is $E$ asserted injective. On the full ambient
+algebra it is deliberately allowed to identify different codes.
+

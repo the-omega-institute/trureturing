@@ -29,7 +29,7 @@ def shift {k m : Nat} (a : Nat) : Expression k m → Expression k m
   | .var b j => .var (a + b) j
   | .pair A B => .pair (shift a A) (shift a B)
 
-private theorem shift_value {k m : Nat} (p : Fin k → Nat)
+theorem shift_value {k m : Nat} (p : Fin k → Nat)
     (v : Fin m → CompletionTree) (a : Nat) (E : Expression k m) :
     evaluate p v (shift a E) = rho^[a] (evaluate p v E) := by
   induction E with
@@ -59,7 +59,7 @@ def mapValues {k m : Nat} (p : Fin k → Nat) (R : Fin m → Expression k m)
     (v : Fin m → CompletionTree) : Fin m → CompletionTree :=
   fun i => evaluate p v (R i)
 
-private theorem substitute_value {k m : Nat} (p : Fin k → Nat)
+theorem substitute_value {k m : Nat} (p : Fin k → Nat)
     (R : Fin m → Expression k m) (v : Fin m → CompletionTree) (E : Expression k m) :
     evaluate p v (substitute R E) = evaluate p (mapValues p R v) E := by
   induction E with

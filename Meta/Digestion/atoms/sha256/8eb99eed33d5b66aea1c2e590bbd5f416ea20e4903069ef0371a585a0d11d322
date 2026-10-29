@@ -1,0 +1,24 @@
+**Definition 271.3 (real carrier, optional complexification and clocks).**
+The real quotient in (271.2) is $\mathscr G$, with real time-zero
+multipliers and symmetric heat contractions. Its optional
+complexification is $\mathscr G_{\mathbb C}=L^2(M;\mathbb C)$, with
+$H_{\mathbb C}(F+iG)=HF+iHG$ on
+$\operatorname{Dom}(H)+i\operatorname{Dom}(H)$ and form domain
+$\mathcal D+i\mathcal D$. The complexified form has
+$\mathcal E_{\mathbb C}(F+iG)=\mathcal E(F)+\mathcal E(G)$ for real
+$F,G$. It has the additional bounded multiplication algebra
+$L^\infty(M;\mathbb C)$ and normalized vector $\mathbf1$.
+The cited complex Hilbert reconstruction can equivalently be applied
+after this complexification; complex conjugation leaves its real
+subspace and all preceding real formulas fixed.
+
+Spectral calculus supplies the strongly continuous unitary group
+$U(\tau)=e^{-i\tau H_{\mathbb C}}$, $\tau\in\mathbb R$.
+It preserves the operator and form domains and fixes $\mathbf1$.
+It is distinct from both the full path-shift group and the induced
+heat semigroup. The parameter $s$ in the probability law is Euclidean
+comparison time; $\tau$ is a parameter in this optional mathematical
+unitary representation. Neither their identification nor physical-time
+calibration is a consequence of (271.2). The choice of complexification
+does not provide a native phase reference or coherent preparations.
+

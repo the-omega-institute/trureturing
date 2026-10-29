@@ -1,0 +1,10 @@
+**Definition 4.2 (averaged predictive variance).** For a random variable $U\in\{0,1\}$, an observation $Z$, and a random element or field $V$, put
+
+$$
+\mathcal D(U;Z\mid V)
+=\mathbb E\left[\bigl(\mathbb E[U\mid Z,V]-\mathbb E[U\mid V]\bigr)^2\right].
+\tag{4.4}
+$$
+
+With trivial $V$ write $\mathcal D(U;Z)$. This is a scalar expectation over all the conditioning data. It is at most $\mathbb E\operatorname{Var}(U\mid V)\le1/4$.
+

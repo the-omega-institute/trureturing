@@ -13,6 +13,7 @@ import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Data.Fintype.Quotient
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.List.OfFn
+import Mathlib.SetTheory.Cardinal.Arithmetic
 
 /-! Exact finite multiplicities for roots of complete return-chart families. -/
 
@@ -27,7 +28,7 @@ open PrimitiveLiftRootCriterion PrimeOrbitRootCriterion
 open TwoOrbitSquareRootCriterion (transport transport_point transport_deck)
 universe u v w z
 
-private def chartGauge {H : Type u} [Group H] {Y : Type v} {Z : Type w}
+def chartGauge {H : Type u} [Group H] {Y : Type v} {Z : Type w}
     (B : ReturnAtlas H Y) (C : ReturnAtlas H Z) (hd : B.period = C.period) (b : H) : Y ≃ Z :=
   B.coordinates.symm.trans ((Equiv.prodCongr (finCongr hd) (Equiv.mulRight b)).trans C.coordinates)
 
@@ -35,7 +36,7 @@ private theorem chartGauge_apply {H : Type u} [Group H] {Y : Type v} {Z : Type w
     (B : ReturnAtlas H Y) (C : ReturnAtlas H Z) (hd : B.period = C.period) (b : H) (y : Y) :
     chartGauge B C hd b y = transport B C b y := rfl
 
-private theorem chartGauge_time {H : Type u} [Group H] {Y : Type v} {Z : Type w}
+theorem chartGauge_time {H : Type u} [Group H] {Y : Type v} {Z : Type w}
     (B : ReturnAtlas H Y) (C : ReturnAtlas H Z) (hd : B.period = C.period) (b : H)
     (hb : b * C.holonomy = B.holonomy * b) :
     Function.Semiconj (chartGauge B C hd b) B.time C.time := by
@@ -98,9 +99,9 @@ section Family
 variable {H : Type u} [Group H] {ι : Type w} {X : ι → Type v}
   (A : ∀ i, ReturnAtlas H (X i))
 
-private theorem isotypic_refl (i : ι) : Isotypic A i i := ⟨rfl,1,by simp⟩
+theorem isotypic_refl (i : ι) : Isotypic A i i := ⟨rfl,1,by simp⟩
 
-private def atlasSetoid : Setoid ι :=
+def atlasSetoid : Setoid ι :=
   ⟨Isotypic A,⟨isotypic_refl A, isotypic_symm A, isotypic_trans A⟩⟩
 
 private theorem local_of_isotypic {i j : ι} (hij : Isotypic A i j) (q : ℕ)
@@ -187,15 +188,37 @@ private theorem local_return_root {k ℓ : ℕ} (hℓ : ℓ ∣ k)
     rw [← Function.iterate_mul,Nat.mul_div_cancel' hℓ,hs] at h
     simpa only [jointTime,Sigma.mk.inj_iff,heq_eq_eq,true_and] using h
 
-private theorem root_lengths [Fintype ι] {k : ℕ} (hk : 0 < k)
+noncomputable def infinite_block_equiv {C : Type w} [Infinite C]
+    {P : Type} [Countable P] [Nonempty P] : C ≃ C × P := by
+  have hsmall : Cardinal.lift.{w} (Cardinal.mk P) ≤ Cardinal.aleph0 :=
+    Cardinal.lift_le_aleph0.mpr (Cardinal.mk_le_aleph0 (α := P))
+  have hpos : Cardinal.lift.{w} (Cardinal.mk P) ≠ 0 := by
+    intro h
+    exact Cardinal.mk_ne_zero P (Cardinal.lift_eq_zero.mp h)
+  have hcard : Cardinal.mk (C × P) = Cardinal.mk C := by
+    rw [Cardinal.mk_prod]
+    simp only [Cardinal.lift_id']
+    exact Cardinal.mul_eq_left (Cardinal.aleph0_le_mk C)
+      (hsmall.trans (Cardinal.aleph0_le_mk C)) hpos
+  exact (Cardinal.eq.mp hcard).some.symm
+
+private theorem local_one {Y : Type v} (B : ReturnAtlas H Y) : Local 1 B := by
+  apply (B.root_criterion 1).1
+  refine ⟨B.time, ?_, by simp⟩
+  intro a x
+  obtain ⟨t,z,rfl⟩ := B.covers x
+  rw [B.deck_point, B.time_point, B.time_point, B.deck_point]
+
+private theorem root_lengths_finite {k : ℕ} (hk : 0 < k)
     (R : (Σ i, X i) → Σ i, X i)
     (hr : ∀ a q, R (jointDeck A a q) = jointDeck A a (R q))
-    (hs : R^[k] = jointTime A) (i : ι) :
+    (hs : R^[k] = jointTime A) (i : ι) [Finite {j // Isotypic A i j}] :
     ∃ L : List ℕ, L.sum = Nat.card {j // Isotypic A i j} ∧
       ∀ ℓ ∈ L, 0 < ℓ ∧ ℓ ∣ k ∧ Local (k/ℓ) (A i) := by
   classical
   obtain ⟨σ,htag,hpow,hiso⟩ := root_routing A hk R hr hs
   let C := {j // Isotypic A i j}
+  letI : Fintype C := Fintype.ofFinite C
   let f : C → C := fun j => ⟨σ j,isotypic_trans A j.property (hiso j)⟩
   have hfinj : Function.Injective f := fun a b h => Subtype.ext (σ.injective (congrArg Subtype.val h))
   let τ : Equiv.Perm C := Equiv.ofBijective f ⟨hfinj,Finite.surjective_of_injective hfinj⟩
@@ -215,6 +238,20 @@ private theorem root_lengths [Fintype ι] {k : ℕ} (hk : 0 < k)
     rw [Function.iterate_minimalPeriod] at h
     exact h.symm)
   exact ⟨L,hL.trans (Nat.card_eq_fintype_card.symm),hallow⟩
+
+private theorem root_lengths {k : ℕ} (hk : 0 < k)
+    (R : (Σ i, X i) → Σ i, X i)
+    (hr : ∀ a q, R (jointDeck A a q) = jointDeck A a (R q))
+    (hs : R^[k] = jointTime A) (i : ι) :
+    ∃ L : List ℕ, L.sum = Nat.card {j // Isotypic A i j} ∧
+      ∀ ℓ ∈ L, 0 < ℓ ∧ ℓ ∣ k ∧ Local (k/ℓ) (A i) := by
+  classical
+  let C := {j // Isotypic A i j}
+  by_cases hC : Finite C
+  · letI : Finite C := hC
+    exact root_lengths_finite A hk R hr hs i
+  · letI : Infinite C := not_finite_iff_infinite.mp hC
+    exact ⟨[], Nat.card_eq_zero_of_infinite.symm, by simp⟩
 
 private theorem roots_of_blocks {B : Type z} (ℓ : B → ℕ) (hpos : ∀ b, 0 < ℓ b)
     {k : ℕ} (hdvd : ∀ b, ℓ b ∣ k) (r : B → ι)
@@ -318,6 +355,136 @@ theorem finite_root_criterion [Finite ι] {k : ℕ} (hk : 0 < k) :
     exact roots_of_blocks A n (fun b => (hallow b.1 _ (List.get_mem _ _)).1)
       (fun b => (hallow b.1 _ (List.get_mem _ _)).2.1) (fun b => r b.1) E hi
       (fun b => (hallow b.1 _ (List.get_mem _ _)).2.2)
+
+/-- The same root criterion for an arbitrary index type.  Infinite isotypic fibers have
+no finite multiplicity obstruction: they are partitioned into full `k`-blocks. -/
+theorem arbitrary_root_criterion {k : ℕ} (hk : 0 < k) :
+    (∃ R : (Σ i, X i) → Σ i, X i,
+      (∀ a q, R (jointDeck A a q) = jointDeck A a (R q)) ∧ R^[k] = jointTime A) ↔
+    (∀ i, ∃ L : List ℕ, L.sum = Nat.card {j // Isotypic A i j} ∧
+      ∀ ℓ ∈ L, 0 < ℓ ∧ ℓ ∣ k ∧ Local (k/ℓ) (A i)) := by
+  classical
+  constructor
+  · rintro ⟨R,hr,hs⟩ i
+    exact root_lengths A hk R hr hs i
+  · intro h
+    let s := atlasSetoid A
+    let Q := Quotient s
+    let r : Q → ι := Quotient.out
+    choose L hsum hallow using fun c : Q => h (r c)
+    let fiber (c : Q) := {i : ι // Quotient.mk s i = c}
+    let Qfin := {c : Q // Finite (fiber c)}
+    let Qinf := {c : Q // Infinite (fiber c)}
+    let eSigma : (Σ c : Q, fiber c) ≃
+        (Σ c : Qfin, fiber c.1) ⊕ (Σ c : Qinf, fiber c.1) :=
+      { toFun := fun p =>
+          if hfin : Finite (fiber p.1) then
+            Sum.inl ⟨⟨p.1, hfin⟩, p.2⟩
+          else
+            Sum.inr ⟨⟨p.1, not_finite_iff_infinite.mp hfin⟩, p.2⟩
+        invFun := Sum.elim (fun p => ⟨p.1.1, p.2⟩) (fun p => ⟨p.1.1, p.2⟩)
+        left_inv := by
+          intro p
+          by_cases hfin : Finite (fiber p.1) <;> simp [hfin]
+        right_inv := by
+          rintro (⟨c,x⟩ | ⟨c,x⟩)
+          · simp [c.2]
+          · have hnot : ¬Finite (fiber c.1) := not_finite_iff_infinite.mpr c.2
+            simp [hnot] }
+    have efin (c : Qfin) : fiber c.1 ≃
+        Σ t : Fin (L c.1).length, Fin ((L c.1).get t) := by
+      letI : Finite (fiber c.1) := c.2
+      letI : Fintype (fiber c.1) := Fintype.ofFinite _
+      have ef0 : fiber c.1 ≃ {j // Isotypic A (r c.1) j} :=
+        Equiv.subtypeEquivRight (fun j => by
+          change Quotient.mk s j = c.1 ↔ s.r (r c.1) j
+          constructor
+          · intro hj
+            exact s.symm (Quotient.exact (hj.trans (Quotient.out_eq c.1).symm))
+          · intro hj
+            exact (Quotient.sound (s.symm hj)).trans (Quotient.out_eq c.1))
+      letI : Finite {j // Isotypic A (r c.1) j} :=
+        Finite.of_injective ef0.symm ef0.symm.injective
+      letI : Fintype {j // Isotypic A (r c.1) j} := Fintype.ofFinite _
+      have hcard : Fintype.card (fiber c.1) =
+          Fintype.card (Σ t : Fin (L c.1).length, Fin ((L c.1).get t)) := by
+        rw [Fintype.card_congr ef0, Fintype.card_sigma]
+        simp only [Fintype.card_fin]
+        rw [← List.sum_ofFn, List.ofFn_get]
+        exact (Nat.card_eq_fintype_card.symm.trans (hsum c.1).symm)
+      exact Fintype.equivOfCardEq hcard
+    have einf (c : Qinf) : fiber c.1 ≃ Σ b : fiber c.1, Fin k := by
+      letI : Infinite (fiber c.1) := c.2
+      letI : Nonempty (Fin k) := ⟨⟨0,hk⟩⟩
+      exact (infinite_block_equiv (C := fiber c.1) (P := Fin k)).trans
+        (Equiv.sigmaEquivProd (fiber c.1) (Fin k)).symm
+    let Bfin := Σ c : Qfin, Fin (L c.1).length
+    let Binf := Σ c : Qinf, fiber c.1
+    let B := Bfin ⊕ Binf
+    let n : B → ℕ := Sum.elim
+      (fun b => (L b.1.1).get b.2) (fun _ => k)
+    let qOfBlock : B → Q := Sum.elim (fun b => b.1.1) (fun b => b.1.1)
+    let rBlock : B → ι := fun b => r (qOfBlock b)
+    let efinBlocks : (Σ c : Qfin, fiber c.1) ≃
+        Σ b : Bfin, Fin (n (Sum.inl b)) := by
+      simpa [n, Bfin] using
+        (Equiv.sigmaCongrRight (fun c => efin c)).trans
+          (Equiv.sigmaAssoc (fun (c : Qfin) (t : Fin (L c.1).length) =>
+            Fin ((L c.1).get t))).symm
+    let einfBlocks : (Σ c : Qinf, fiber c.1) ≃
+        Σ b : Binf, Fin (n (Sum.inr b)) := by
+      simpa [n, Binf] using
+        (Equiv.sigmaCongrRight (fun c => einf c)).trans
+          (Equiv.sigmaAssoc (fun (c : Qinf) (b : fiber c.1) => Fin k)).symm
+    let eblocks :
+        ((Σ c : Qfin, fiber c.1) ⊕ (Σ c : Qinf, fiber c.1)) ≃
+          Σ b : B, Fin (n b) :=
+      (Equiv.sumCongr efinBlocks einfBlocks).trans
+        (Equiv.sumSigmaDistrib (fun b : B => Fin (n b))).symm
+    let E : ι ≃ Σ b : B, Fin (n b) :=
+      (Equiv.sigmaFiberEquiv (Quotient.mk s)).symm.trans
+        (eSigma.trans eblocks)
+    have hqfin (x : Σ c : Qfin, fiber c.1) :
+        qOfBlock (eblocks (Sum.inl x)).1 = x.1.1 := by
+      rfl
+    have hqinf (x : Σ c : Qinf, fiber c.1) :
+        qOfBlock (eblocks (Sum.inr x)).1 = x.1.1 := by
+      rfl
+    have hclass (i : ι) : qOfBlock (E i).1 = Quotient.mk s i := by
+      let y := (Equiv.sigmaFiberEquiv (Quotient.mk s)).symm i
+      have hy : y.1 = Quotient.mk s i := rfl
+      change qOfBlock (eblocks (eSigma y)).1 = Quotient.mk s i
+      by_cases hfin : Finite (fiber (Quotient.mk s i))
+      · have he : eSigma y = Sum.inl ⟨⟨y.1, hfin⟩, y.2⟩ := by
+          have hyfin : Finite (fiber y.1) := by simpa [hy] using hfin
+          simp [eSigma, hyfin]
+        rw [he, hqfin]
+        exact hy
+      · have hynot : ¬Finite (fiber y.1) := by simpa [hy] using hfin
+        have he : eSigma y =
+            Sum.inr ⟨⟨y.1, not_finite_iff_infinite.mp hynot⟩, y.2⟩ := by
+          simp [eSigma, hynot]
+        rw [he, hqinf]
+        exact hy
+    have hi (i : ι) : Isotypic A i (rBlock (E i).1) := by
+      change s.r i (r (qOfBlock (E i).1))
+      apply Quotient.exact
+      exact (hclass i).symm.trans (Quotient.out_eq (qOfBlock (E i).1)).symm
+    have hpos : ∀ b : B, 0 < n b := by
+      rintro (b | b)
+      · exact (hallow b.1.1 _ (List.get_mem _ _)).1
+      · exact hk
+    have hdvd : ∀ b : B, n b ∣ k := by
+      rintro (b | b)
+      · exact (hallow b.1.1 _ (List.get_mem _ _)).2.1
+      · exact dvd_rfl
+    have hl : ∀ b : B, Local (k / n b) (A (rBlock b)) := by
+      rintro (b | b)
+      · simpa [n, rBlock, qOfBlock] using
+          (hallow b.1.1 _ (List.get_mem _ _)).2.2
+      · simpa [n, rBlock, qOfBlock, Nat.div_self hk] using
+          local_one (A (rBlock (Sum.inr b)))
+    exact roots_of_blocks A n hpos hdvd rBlock E hi hl
 
 end Family
 

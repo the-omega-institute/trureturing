@@ -1,0 +1,9 @@
+**Definition 69.3 (retained-use invariant).** At an outer Ready cut retain
+one valid live word $v$, the same callable source root and its current
+exclusive authority, the framing/adapter program, and owned pending,
+answer and work backing. The invariant is that the actual physical term
+is $J(v)$. The word is initially the acquired $t$, not a supplied response
+oracle. Retaining it as live mutable state gives no separate immutable
+entry archive: after later represented edits, an old entry report requires
+its own retained copy or the restricted reaccess experiment of §72.
+

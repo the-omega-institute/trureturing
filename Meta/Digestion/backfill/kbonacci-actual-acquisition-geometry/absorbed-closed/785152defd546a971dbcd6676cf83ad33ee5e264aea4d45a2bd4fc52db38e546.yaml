@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:785152defd546a971dbcd6676cf83ad33ee5e264aea4d45a2bd4fc52db38e546
+  normalized_sha256: sha256:785152defd546a971dbcd6676cf83ad33ee5e264aea4d45a2bd4fc52db38e546
+cas_ref: sha256:785152defd546a971dbcd6676cf83ad33ee5e264aea4d45a2bd4fc52db38e546
+coverage_gids:
+  - gid: D5/S1/Words/AdmissibleWords/KBonacciNineBitObstruction.result
+    target_statement_id: sha256:9edeed6ca20464672412d8d6b592386ec9325a134aa537d03722b46943845928
+receipts:
+  unresolved_subitems: []

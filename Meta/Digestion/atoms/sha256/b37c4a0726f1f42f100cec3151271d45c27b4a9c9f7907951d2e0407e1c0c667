@@ -1,0 +1,69 @@
+**Lemma 122.3 (A uniform geometric upper comparison).**
+For every two $h_0,h$ in the closed unit ball, put
+$r=\|h-h_0\|$ and let $A,\eta$ be as in Definition 122.1. Define
+
+$$
+d_\tau=\frac3{2\tau},\qquad B_\tau=2+11d_\tau.
+\tag{122.10}
+$$
+
+Then
+
+$$
+q_{A,\eta}(r)\le B_\tau Q(h;h_0).
+\tag{122.11}
+$$
+
+*Proof.* Write
+$h=(a+x+\mathrm i(\beta+y))e+v_0+w$, with $x,y$ real and
+$w\perp e$, and put $z=\mathrm i y e+w$. The skew-matrix
+diagonal and off-diagonal entries used in (120.14) give
+
+$$
+|y|\le\frac{Q}{2\tau},\qquad
+\|w\|\le\frac Q\tau,\qquad
+\|z\|\le d_\tau Q.
+\tag{122.12}
+$$
+
+Here $x e$ and $z$ are orthogonal as vectors in the underlying real
+Euclidean space, so $|x|\le r\le2$, $\|z\|\le2$, and
+$0\le r-|x|\le\|z\|$. Let $\widehat h=h_0+xe=h-z$.
+Although $\widehat h$ need not lie in the ball, its norm is at most
+$3$. The outer-product identity gives
+
+$$
+\begin{aligned}
+\widehat h\widehat h^\dagger-h_0h_0^\dagger
+ &=x\bigl((2a+x)ee^\dagger+ev_0^\dagger+v_0e^\dagger\bigr),\\
+\|\widehat h\widehat h^\dagger-h_0h_0^\dagger\|_{\rm HS}
+ &=|x|\sqrt{(2a+x)^2+2\eta^2},\\
+\|\widehat h\widehat h^\dagger-hh^\dagger\|_{\rm HS}
+ &\le(\|\widehat h\|+\|h\|)\|z\|\le4\|z\|.
+\end{aligned}
+\tag{122.13}
+$$
+
+Since $||x|-2|a||\le|2a+x|$, it follows that
+
+$$
+q_{A,\eta}(|x|)
+ \le |x|(\eta+|2a+x|)
+ \le\sqrt2\,(Q+4\|z\|).
+\tag{122.14}
+$$
+
+For $A,\eta\le1$, the absolute values of the two derivatives in
+(122.9) are at most $5$ on $[0,2]$. Splitting an interval at
+$2A$ if necessary proves that $q_{A,\eta}$ is $5$-Lipschitz.
+Consequently (122.12)–(122.14) imply
+
+$$
+q_{A,\eta}(r)
+ \le[\sqrt2+(4\sqrt2+5)d_\tau]Q
+ \le B_\tau Q.
+$$
+
+This proof keeps $\beta$ arbitrary and does not assume either sign
+of $a$ or any interior margin for either vector. $\square$
+

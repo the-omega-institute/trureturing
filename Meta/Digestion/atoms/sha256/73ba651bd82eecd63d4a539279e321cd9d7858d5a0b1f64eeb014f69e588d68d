@@ -1,0 +1,38 @@
+**Definition 1.1 (ambient source, authentic branch entry and complete native
+service).** Let $\mathcal T$ be the entire free ordered algebra of Definition
+113.1, with $\rho$, all occurrence addresses and the four replies
+$\{\mathsf{alpha},\mathsf{beta},\mathsf{branch},\mathsf{absent}\}$ from
+ActualTreeReadoutAcquisition.  The authentic branch-entry service has the
+domain
+
+$$
+\mathcal B=\{\langle x,y\rangle:x,y\in\mathcal T\}\subseteq\mathcal T
+$$
+
+and retains the IV112 root record
+$H_0=[(0,\varepsilon,\mathsf{branch})]$.  Thus, for $u\in\mathcal B$, a
+source enters with the root branch record of the authentic entry.  The
+singleton ambient sources $\alpha$ and $\beta$ remain in $\mathcal T$ with
+their own leaf-root replies and no reached $L/R$ holes; they are not silently
+treated as branch entries and are handled only in the explicitly qualified
+$\ell=1$ leaf cases below.  For $u\in\mathcal B$, the full INITIAL target at
+$Q=(L,R)$ is the required output of Definitions 112.1 and 112.2, not a
+supplied source-dependent tag: it retains the two numbered holes, the
+complete exterior and the partition of holes by equality of their original
+subtrees.
+An attempted
+Apply has the common guard $G(\gamma,e,H)$ of Contract 112.1a, where $e$ is
+the accepted epoch and $H$ is the complete chronological Read/status
+history.  Acceptance replaces the source by $\rho u$; refusal leaves it
+unchanged.  A Read is a real event, including repeats and absent addresses.
+Stop is absorbing and executes no suffix.  These records, the guard, the
+common apparatus and the reference are part of the service contract.
+
+On this branch-entry domain, the complete native service means a finite
+history-only operation word may perform every lawful Read and every
+continuation required by this contract.
+In particular, the epoch-zero root-first frontier of Definition 112.9 may
+read every reached node and restore the exact finite ordered source before
+any optional Apply.  The source itself, its phase, $W(u)$, a future specimen,
+or a permission answer is never supplied as a free controller input.
+

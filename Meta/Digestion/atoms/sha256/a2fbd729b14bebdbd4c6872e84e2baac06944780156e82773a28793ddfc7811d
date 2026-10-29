@@ -1,0 +1,64 @@
+**Theorem 62.3 (earned entry and actual random endpoint).** For every
+finite entry in $\mathcal D$, every compatible fixed old producer word
+and every installation of Definition 61.1, both implementations terminate
+almost surely and return exact, separately owned entry and current
+codes. They visit each original logical node exactly once and no other
+node; they retain the same callable source and current authority. Their
+actual endpoint is obtained by the following replacements at original
+leaves, leaving original branches fixed:
+
+$$
+\begin{array}{c|cc}
+ &\text{mode one}&\text{mode zero}\\ \hline
+\alpha&\beta&\alpha\\
+\beta\text{ at an eligible leaf}&\beta&\langle\beta,\alpha\rangle\\
+\beta\text{ at an }L\text{-ending leaf}&\beta&\beta
+\end{array}
+\tag{AAII.26}
+$$
+
+For GLOBAL the endpoint is $\nu(t)$ with probability $q$ and $\psi(t)$
+with probability $1-q$, where $\psi$ leaves original alpha and
+$L$-ending beta leaves unchanged and splits every eligible original beta
+leaf once. For LOCAL the eligible original leaves receive independent
+modes, and (AAII.26) gives the actual mixed endpoint. The endpoint laws
+have the same one-leaf marginals. They differ when $m\ge2$: LOCAL
+assigns positive probability to mixed leaf modes, whereas GLOBAL does
+not. When $m=1$ their endpoint laws coincide, although their sampling
+bills can still differ because LOCAL also samples eligible branches.
+
+Proof. Before a scheduled visit, earlier source changes occur only in
+finished original leaf cones. Distinct original leaves are incomparable,
+so such changes do not modify an unvisited original subtree or its
+navigation path. Every newly scheduled nonroot is a child of an original
+branch whose branch refusal has already been consumed. Original branches
+are never replaced. These assertions hold at initialization and after
+each case in the table. A beta marker is never scheduled.
+
+Induct on the finite original subtree, allowing an arbitrary backed
+pending continuation outside it. At an original alpha, its address is
+eligible by the definition of $\mathcal D$. A $P$ success or $S$
+wrong-type refusal therefore identifies exactly that entry alpha and
+gives the current leaf in (AAII.26). At an original beta, either a $P$
+wrong-type refusal or an eligible $S$ success identifies exactly that
+entry beta. The latter records the entire actual newborn pair without
+recursing into it. At an original branch both kinds refuse as branch;
+the left and then right induction hypotheses apply in disjoint cones.
+The assembled original word is the original branch with its original
+children, and the assembled current word is the actual branch with
+their actual changed children. No case targets an absent position.
+The continuations receive no unobserved subtree as an input.
+
+The finite original tree bounds the number of scheduled visits even
+though the controller does not know that bound. Each visit has finite
+framing, source work, code work and return under the attachment contract.
+GLOBAL uses one almost-surely terminating draw. LOCAL uses finitely many
+such draws. Successive blocks of independent fair bits after a finite
+stopping prefix are fresh: for each fixed finite prefix realizing its
+stop, the remaining cylinder probabilities are again the fair product
+probabilities. Summing over these disjoint prefixes proves independence
+of successive returned modes. Thus the exceptional nontermination set
+has probability zero in both implementations. The table proves the two
+endpoint descriptions, and final ownership and retention are exactly
+those required by Definition 61.1. $\square$
+

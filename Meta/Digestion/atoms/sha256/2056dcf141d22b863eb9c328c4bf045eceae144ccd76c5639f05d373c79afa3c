@@ -1,0 +1,55 @@
+## 参考文献
+
+以下项目条目的文件路径与本稿固定提交一致；每项链接直接指向该提交的 blob。
+
+<a id="ref-1"></a>
+
+**[1]** AURIC 项目，*[Compatible Predictive Waves and Relational Spectra VI](https://github.com/the-omega-institute/trureturing/blob/5517865965160e8d20e4122aafe4e6c468c6c41d/docs/develop/theory/AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_VI.md)*。§§114–121，尤其定义 118.1、定理 118.3、推论 118.4、定理 119.1。 固定提交：5517865965160e8d20e4122aafe4e6c468c6c41d。
+
+<a id="ref-2"></a>
+
+**[2]** AURIC 项目，*[Compatible Predictive Waves and Relational Spectra VII](https://github.com/the-omega-institute/trureturing/blob/5517865965160e8d20e4122aafe4e6c468c6c41d/docs/develop/theory/AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_VII.md)*。§§142–145；117 行有限最大坐标范数及其非线性端点，不含全历史端点的重算。 固定提交：5517865965160e8d20e4122aafe4e6c468c6c41d。
+
+<a id="ref-3"></a>
+
+**[3]** AURIC 项目，*[FIB-ATOM Quantum Principles and Coherent Reconstruction: Continuation](https://github.com/the-omega-institute/trureturing/blob/5517865965160e8d20e4122aafe4e6c468c6c41d/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md)*。§§47–50，尤其定理 49.1 的有限协议分解、参考见证与 3/7 下界。 固定提交：5517865965160e8d20e4122aafe4e6c468c6c41d。
+
+<a id="ref-4"></a>
+
+**[4]** AURIC 项目，*[Recursive Relational Observation: Joint Kernel Minimal Predictive Core Bridge](https://github.com/the-omega-institute/trureturing/blob/5517865965160e8d20e4122aafe4e6c468c6c41d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_JOINT_KERNEL_MINIMAL_PREDICTIVE_CORE_BRIDGE.md)*。完整未来 law 商、实际来源像及最小预测表示。 固定提交：5517865965160e8d20e4122aafe4e6c468c6c41d。
+
+<a id="ref-5"></a>
+
+**[5]** AURIC 项目，*[Recursive Relational Observation: Joint Kernel Thread Realization](https://github.com/the-omega-institute/trureturing/blob/5517865965160e8d20e4122aafe4e6c468c6c41d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_JOINT_KERNEL_THREAD_REALIZATION.md)*。类型化相容塔、实际来源像与虚拟线程的边界。 固定提交：5517865965160e8d20e4122aafe4e6c468c6c41d。
+
+<a id="ref-6"></a>
+
+**[6]** AURIC 项目，*[Recursive Relational Observation: Quantum Stopping Advice Compilation](https://github.com/the-omega-institute/trureturing/blob/5517865965160e8d20e4122aafe4e6c468c6c41d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_QUANTUM_STOPPING_ADVICE_COMPILATION.md)*。Theorem 3.2、Proposition 6.1；已供应可计算校准名字及承诺输入上的有效有限 advice，不是未知源取得定理。 固定提交：5517865965160e8d20e4122aafe4e6c468c6c41d。
+
+<a id="ref-7"></a>
+
+**[7]** AURIC 项目，*[FIB-ATOM Original-Boundary Finite-Specimen Readout](https://github.com/the-omega-institute/trureturing/blob/5517865965160e8d20e4122aafe4e6c468c6c41d/docs/develop/theory/FIB_ATOM_ORIGINAL_BOUNDARY_FINITE_SPECIMEN_READOUT.md)*。§§1、3–5；有限标本、原始 Read、精确旁记录与共同辅助态的合同。 固定提交：5517865965160e8d20e4122aafe4e6c468c6c41d。
+
+<a id="ref-8"></a>
+
+**[8]** AURIC 项目，*[Coherent Relations and Recursive Observation Theory V10](https://github.com/the-omega-institute/trureturing/blob/5517865965160e8d20e4122aafe4e6c468c6c41d/docs/develop/theory/AURIC_COHERENT_RELATIONS_AND_RECURSIVE_OBSERVATION_THEORY_V10.md)*。用户前稿的转换收录版；本次没有修改。 固定提交：5517865965160e8d20e4122aafe4e6c468c6c41d。
+
+<a id="ref-9"></a>
+
+**[9]** Man-Duen Choi, “Completely positive linear maps on complex matrices,”
+*Linear Algebra and its Applications* **10**(3), 285–290 (1975).
+[DOI: 10.1016/0024-3795(75)90075-0](https://doi.org/10.1016/0024-3795(75)90075-0)。
+
+<a id="ref-10"></a>
+
+**[10]** John Watrous, *The Theory of Quantum Information*,
+Cambridge University Press (2018), Chapter 3.
+[第三章作者公开 PDF](https://cs.uwaterloo.ca/~watrous/TQI/TQI.double.3.pdf)。
+本稿用到二元态判别、迹范数与通道距离的标准归一化。
+
+<a id="ref-11"></a>
+
+**[11]** Gus Gutoski, “On a measure of distance for quantum strategies,”
+*Journal of Mathematical Physics* **53**, 032202 (2012).
+[arXiv:1008.4636，v4](https://arxiv.org/html/1008.4636v4)。
+策略距离的背景引用不把本稿有限调用的望远镜证明升级为无限协议定理。

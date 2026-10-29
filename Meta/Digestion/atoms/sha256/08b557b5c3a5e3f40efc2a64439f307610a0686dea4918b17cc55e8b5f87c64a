@@ -1,0 +1,118 @@
+**Lemma 135.2 (The weighted source-row relation; repo-derived).**
+For every source, $A,f$ in Definition 135.1, every
+$z\in\mathbb C^3,g\in\mathbb C$, every original prefix $i$, every
+finite actual intermediate history $w$, every $n\in\mathbb N_0$
+and every $|\lambda|=1$, one has
+
+$$
+\begin{aligned}
+X_1(Wz)&=-WX_1(z)W,\qquad Y_1(Wz)=-WY_1(z)W,\\
+(-g)K_-&=-W(gK_-)W,\\
+\bigl|\ell_{i,w}(Wz,-g)+\ell_{i,wN^n}(z,g)\bigr|
+ &\le a_w\mathscr B_A(z,g)\|N^n-\lambda W\|_{\rm op}.
+\end{aligned}
+\tag{135.4}
+$$
+
+Here $wN^n$ is the chronological word with the deterministic run
+after $w$. Its prefix remains $u_i$, its native labels remain those
+of $w$, and $a_{wN^n}=a_w$, without division by any probability.
+Moreover $\mathscr B_A(Wz,-g)=\mathscr B_A(z,g)$ and
+
+$$
+\left|\mathcal F_a(Wz,-g)-\mathcal F_a(z,g)\right|
+                     \le\epsilon_N\mathscr B_A(z,g).
+\tag{135.5}
+$$
+
+*Proof.* To distinguish the original vectors of V (54.1) from the
+arbitrary tangent $f$, write
+$v_-=(1,-1,0)^{\mathsf T}/\sqrt2$ for that source's minus vector.
+VI (106.3) says $t=\eta\alpha v_-$ with
+$\eta=(\sqrt2+1)/\sqrt{12}>0$ and $\alpha=\sqrt6/4>0$.
+Consequently $e=v_-$, $We=-e$, and $Wf=f$ for every allowed complex
+transverse $f$. The same source gives
+$D=a_+a_+^\dagger+\alpha^2ee^\dagger$ with $a_+=P_+Uq$.
+Since $Wa_+=a_+$, one has $WDW=D$. Formula (125.3) now gives
+$WK_-W=K_-$.
+
+From the definitions of $H,S$ in (125.3), direct conjugation yields
+
+$$
+\begin{gathered}
+H(Wz)=-WH(z)W,\qquad S(Wz)=-WS(z)W,\\
+WH(f)W=-H(f),\qquad WS(f)W=-S(f).
+\end{gathered}
+\tag{135.6}
+$$
+
+Adding $H(f)$ and subtracting $S(f)$, respectively, shows
+$H_1(Wz)=-WH_1(z)W$ and $S_1(Wz)=-WS_1(z)W$.
+Their fixed real linear combinations in (125.3) prove the first
+line of (135.4); commutation of $K_-$ proves its second line.
+These identities and unitary invariance of Hilbert–Schmidt norm
+also prove the asserted identity for $\mathscr B_A$.
+
+For an arbitrary lift $L=(X,Y,Z)\in\mathscr V$ of VI Definition
+116.1 set
+$\mathscr J L=(-WXW,-WYW,-WZW)$ and abbreviate
+
+$$
+q_i(Q,a;L)=\frac a2\operatorname{Tr}[r_i\Phi_Q(L)].
+$$
+
+Every occurrence of $Q$ in $\Phi_Q$ is a conjugation, including
+those followed or preceded by the fixed $W$. Linearity therefore gives
+
+$$
+q_i(Q_w,a_w;\mathscr J L)=-q_i(WQ_w,a_w;L).
+\tag{135.7}
+$$
+
+For unitaries $U,V$ and any complex matrix $M$, expansion into two
+terms gives
+
+$$
+\begin{aligned}
+\|U^\dagger MU-V^\dagger MV\|_{\rm HS}
+ &\le\|(U^\dagger-V^\dagger)MU\|_{\rm HS}
+                  +\|V^\dagger M(U-V)\|_{\rm HS}\\
+ &\le2\|U-V\|_{\rm op}\|M\|_{\rm HS}.
+\end{aligned}
+\tag{135.8}
+$$
+
+Apply this with $U=N^nQ_w$ and $V=\lambda WQ_w$ to each of
+$X,Y,Z,Z^\dagger$ in (116.1). Multiplication by $W$ preserves
+the norm; a scalar phase of $Q$ cancels. Trace Cauchy–Schwarz and
+the original factor $a_w/2$ then give
+
+$$
+\begin{aligned}
+&|q_i(N^nQ_w,a_w;L)-q_i(WQ_w,a_w;L)|\\
+&\quad\le a_w R_{\mathfrak s}\|N^n-\lambda W\|_{\rm op}
+          (\|X\|_{\rm HS}+\|Y\|_{\rm HS}+2\|Z\|_{\rm HS}).
+\end{aligned}
+\tag{135.9}
+$$
+
+The chronological rule V (91.2) gives
+$Q_{wN^n}=N^nQ_w$ and $k(wN^n)=k(w)$.
+Substitute $L=(X_1(z),Y_1(z),gK_-)$ into (135.7)–(135.9)
+to prove the last line of (135.4), with its actual weight intact.
+For each fixed $n,\lambda$, taking the supremum over actual $i,w$
+and only then using $a_w\le1$ gives
+
+$$
+\mathcal F_a(Wz,-g)\le\mathcal F_a(z,g)
+                      +\mathscr B_A(z,g)\|N^n-\lambda W\|_{\rm op}.
+$$
+
+Taking the infimum over $n,\lambda$ gives the same inequality with
+$\epsilon_N$. Repeat it at $(Wz,-g)$, using $\mathscr T^2=I$
+and the identity for $\mathscr B_A$, to obtain (135.5).
+The supremum uses all original schedules; it does not alter a
+schedule already fixed for one history or select a native label.
+A limiting closure witness is only a limit of these numerical rows,
+not an installed operation or an attained history. $\square$
+
