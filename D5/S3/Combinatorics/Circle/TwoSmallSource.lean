@@ -19,7 +19,7 @@ open SourceWidth ExpandingSourcePath TwoSmallProfile TwoSmallPlacement
 open MixedSuffixEnergy TwoOppositeLargeExchange
 open scoped BigOperators
 
-private theorem phase_add {k : ℕ} (hk : 0 < k) (o : Fin k) (j : ℕ) :
+theorem phase_add {k : ℕ} (hk : 0 < k) (o : Fin k) (j : ℕ) :
     phase hk o j = o + (⟨j % k, Nat.mod_lt _ hk⟩ : Fin k) := by
   apply Fin.ext
   simp [phase, Fin.val_add, Nat.add_mod]
