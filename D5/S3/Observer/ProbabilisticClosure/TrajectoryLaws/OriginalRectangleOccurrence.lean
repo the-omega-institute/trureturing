@@ -8,6 +8,8 @@
 
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleSmoothing
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalFutureScreening
+import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.FiniteClosedClasses
+import Mathlib.MeasureTheory.Measure.MeasuredSets
 
 /-! Selected original labelled paths bound one actual visible block event. -/
 
@@ -184,6 +186,91 @@ theorem original_rectangle_occurrence (θ : Presentation H)
       measure_mono_null Set.inter_subset_left hn
     rw [hn',mul_zero]
     exact zero_le
+
+
+private theorem closed_stationary (θ : Presentation H) (C : Finset H)
+    (hclosed : ∀ (i : C) j, j ∉ C → ∀ x, θ.matrix x i.val j = 0) :
+    ∀ j : C, ∑ i : C, θ.initial i.val *
+      (θ.matrix false i.val j.val + θ.matrix true i.val j.val) = θ.initial j.val := by
+  have hs (i : C) : ∑ j : C, (θ.matrix false i.val j.val + θ.matrix true i.val j.val) = 1 := by
+    rw [Finset.sum_coe_sort]
+    calc
+      _ = ∑ j, (θ.matrix false i.val j + θ.matrix true i.val j) := by
+        apply Finset.sum_subset (Finset.subset_univ _)
+        intro j _ hj
+        rw [hclosed i j hj false,hclosed i j hj true,add_zero]
+      _ = 1 := θ.stochastic i.val
+  have hl (j : C) : (∑ i : C, θ.initial i.val *
+      (θ.matrix false i.val j.val + θ.matrix true i.val j.val)) ≤ θ.initial j.val := by
+    rw [←θ.stationary j.val,Finset.sum_coe_sort]
+    exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ _) fun i _ _ =>
+      mul_nonneg (θ.initial_nonneg _) (add_nonneg (θ.matrix_nonneg _ _ _) (θ.matrix_nonneg _ _ _))
+  have ht : (∑ j : C, ∑ i : C, θ.initial i.val *
+      (θ.matrix false i.val j.val + θ.matrix true i.val j.val)) = ∑ j : C, θ.initial j.val := by
+    rw [Finset.sum_comm]
+    simp_rw [←Finset.mul_sum,hs,mul_one]
+  intro j
+  exact (Finset.sum_eq_sum_iff_of_le (fun j _ => hl j)).mp ht j (Finset.mem_univ j)
+
+/-- The actual restriction to a positive-weight closed class, with normalized
+original stationary masses and unchanged original real matrix entries. -/
+def nativeComponent (θ : Presentation H)
+    (C : FiniteClosedClasses.ClosedClass (θ.matrix false+θ.matrix true))
+    (hc : 0 < ∑ i : C.val, θ.initial i.val) : Presentation C.val := by
+  let T := θ.matrix false+θ.matrix true
+  have hT : T ∈ rowStochastic ℝ H := Matrix.mem_rowStochastic_iff_sum.mpr
+    ⟨fun i j => add_nonneg (θ.matrix_nonneg _ _ _) (θ.matrix_nonneg _ _ _),θ.stochastic⟩
+  have hclosed (i : C.val) (j : H) (hj : j ∉ C.val) (x : Bool) : θ.matrix x i.val j = 0 := by
+    have hz := (FiniteClosedClasses.actual_structure T hT).class_no_exit C 1 i j hj
+    change (T^1) i.val j = 0 at hz
+    simp only [pow_one] at hz
+    change θ.matrix false i.val j + θ.matrix true i.val j = 0 at hz
+    cases x <;> linarith [θ.matrix_nonneg false i.val j,θ.matrix_nonneg true i.val j]
+  let c : ℝ := ∑ i : C.val, θ.initial i.val
+  refine { initial := fun i => θ.initial i.val/c
+           matrix := fun x i j => θ.matrix x i.val j.val
+           initial_nonneg := fun i => div_nonneg (θ.initial_nonneg _) hc.le
+           initial_sum := ?_
+           matrix_nonneg := fun x i j => θ.matrix_nonneg _ _ _
+           stochastic := ?_
+           stationary := ?_
+           no11 := ?_ }
+  · rw [←Finset.sum_div]
+    exact div_self (ne_of_gt hc)
+  · intro i
+    rw [Finset.sum_coe_sort]
+    calc
+      _ = ∑ j, (θ.matrix false i.val j + θ.matrix true i.val j) := by
+        apply Finset.sum_subset (Finset.subset_univ _)
+        intro j _ hj
+        rw [hclosed i j hj false,hclosed i j hj true,add_zero]
+      _ = 1 := θ.stochastic i.val
+  · intro j
+    simp_rw [div_mul_eq_mul_div]
+    rw [←Finset.sum_div,closed_stationary θ C.val hclosed j]
+  · apply Finset.sum_eq_zero
+    intro i _
+    apply Finset.sum_eq_zero
+    intro j _
+    have hp : (∑ k : C.val, θ.matrix true i.val k.val * θ.matrix true k.val j.val) =
+        (θ.matrix true*θ.matrix true) i.val j.val := by
+      rw [Matrix.mul_apply,Finset.sum_coe_sort]
+      apply Finset.sum_subset (Finset.subset_univ _)
+      intro k _ hk
+      rw [hclosed i k hk true,zero_mul]
+    have hn (a b : H) : 0 ≤ (θ.matrix true*θ.matrix true) a b :=
+      Finset.sum_nonneg fun k _ => mul_nonneg (θ.matrix_nonneg _ _ _) (θ.matrix_nonneg _ _ _)
+    have hz : θ.initial i.val * (θ.matrix true*θ.matrix true) i.val j.val = 0 := by
+      apply le_antisymm _ (mul_nonneg (θ.initial_nonneg _) (hn _ _))
+      calc
+        _ ≤ ∑ b, θ.initial i.val * (θ.matrix true*θ.matrix true) i.val b :=
+          Finset.single_le_sum (fun b _ => mul_nonneg (θ.initial_nonneg _) (hn _ _)) (Finset.mem_univ j.val)
+        _ ≤ ∑ a, ∑ b, θ.initial a * (θ.matrix true*θ.matrix true) a b :=
+          Finset.single_le_sum (fun a _ => Finset.sum_nonneg fun b _ =>
+            mul_nonneg (θ.initial_nonneg _) (hn _ _)) (Finset.mem_univ i.val)
+        _ = 0 := θ.no11
+    change θ.initial i.val / c * (∑ k : C.val, θ.matrix true i.val k.val * θ.matrix true k.val j.val) = 0
+    rw [hp,div_mul_eq_mul_div,hz,zero_div]
 
 /-- Inclusion of an actual hidden component preserves the original output clock. -/
 def componentInclusion (C : Finset H) (z : PathSpace C) : PathSpace H :=
