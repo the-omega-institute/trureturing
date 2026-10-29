@@ -57,7 +57,7 @@ private theorem route_of_positive_path (θ : Presentation H) {h r : H}
     (p : @Quiver.Path H (Matrix.toQuiver (θ.matrix false+θ.matrix true)) h r) :
     ∃ a : LabelledRoute θ h r,
       a.length = @Quiver.Path.length H (Matrix.toQuiver (θ.matrix false+θ.matrix true)) h r p ∧
-      List.ofFn a.states = p.vertices := by
+      List.ofFn a.states = @Quiver.Path.vertices H (Matrix.toQuiver (θ.matrix false+θ.matrix true)) h r p := by
   letI := Matrix.toQuiver (θ.matrix false+θ.matrix true)
   induction p with
   | nil => exact ⟨emptyRoute θ h,rfl,by simp [emptyRoute, Quiver.Path.vertices]⟩
@@ -69,8 +69,9 @@ private theorem route_of_positive_path (θ : Presentation H) {h r : H}
       · exact ⟨false,hf⟩
       · exact ⟨true,by linarith [le_of_not_gt hf]⟩
     refine ⟨append_label θ _ _ _ a x hx, congrArg Nat.succ ha, ?_⟩
-    simpa only [append_label, List.ofFn_succ', Fin.snoc_castSucc, Fin.snoc_last,
-      List.concat_eq_append, Quiver.Path.vertices_cons, hv]
+    change List.ofFn (Fin.snoc a.states t) = p.vertices.concat t
+    rw [List.ofFn_succ']
+    simp only [Fin.snoc_castSucc, Fin.snoc_last, List.concat_eq_append, hv]
 
 private theorem short_route (θ : Presentation H)
     (hirr : ∀ i j : H, ∃ n : ℕ, 0 < ((θ.matrix false+θ.matrix true)^n) i j)
@@ -129,6 +130,7 @@ theorem irreducible_rectangle_occurrence (θ : Presentation H)
       (∀ h, w.head? = some false → (a h).length < Fintype.card H) ∧
       (∀ h, h ≠ r → w.head? = some true →
         (List.ofFn (a h).labels).getLast? = some false) ∧
+      (∀ h, Function.Injective (a h).states) ∧
       (let ε := selectedEpsilon θ w r a
        let b := w.length + Fintype.card H
        0 < ε ∧ ε ≤ 1 ∧
@@ -140,7 +142,7 @@ theorem irreducible_rectangle_occurrence (θ : Presentation H)
   have hcard : 0 < Fintype.card H := Fintype.card_pos_iff.mpr ⟨r⟩
   have hpos := irreducible_initial_positive θ hirr
   have routes (h : H) : ∃ a : LabelledRoute θ h r,
-      a.length ≤ Fintype.card H ∧ (h = r → a.length = 0) ∧
+      Function.Injective a.states ∧ a.length ≤ Fintype.card H ∧ (h = r → a.length = 0) ∧
       (w.head? = some false → a.length < Fintype.card H) ∧
       (h ≠ r → w.head? = some true → (List.ofFn a.labels).getLast? = some false) := by
     obtain ⟨a,ha,hi⟩ := short_route θ hirr h r
@@ -149,7 +151,7 @@ theorem irreducible_rectangle_occurrence (θ : Presentation H)
       have hf : a.states 0 = a.states (Fin.last a.length) := by rw [a.first,a.last,he]
       have hz := congrArg Fin.val (hi hf)
       simpa using hz.symm
-    refine ⟨a,ha.le,he,fun _ => ha,?_⟩
+    refine ⟨a,hi,ha.le,he,fun _ => ha,?_⟩
     intro hne hw
     have hn : a.length ≠ 0 := by
       intro hz
@@ -163,10 +165,13 @@ theorem irreducible_rectangle_occurrence (θ : Presentation H)
         have hf : (⟨a.length-1,by omega⟩ : Fin a.length).succ = Fin.last a.length := Fin.ext (by simp; omega)
         rw [hx,hf,a.last,one_incoming_zero θ hpos r (first_one_outgoing θ w R r hr hw)] at hp
         exact (lt_irrefl 0 hp).elim
-    simpa [List.getLast?_eq_getElem?, List.getElem?_eq_getElem, hn] using hl
+    simpa [List.getLast?_eq_getElem?, List.getElem?_eq_getElem, hn] using
+      (show ∃ hn : 0 < a.length, a.labels ⟨a.length-1, by omega⟩ = false from
+        ⟨Nat.pos_of_ne_zero hn, hl⟩)
   choose a ha using routes
-  refine ⟨a,(ha r).2.1 rfl,(fun h => (ha h).1),(fun h => (ha h).2.2.1),
-    (fun h => (ha h).2.2.2),?_⟩
-  exact original_rectangle_occurrence θ J hc w R r hr a (fun h => (ha h).1)
+  have hb (h : H) := (ha h).2
+  refine ⟨a,(hb r).2.1 rfl,(fun h => (hb h).1),(fun h => (hb h).2.2.1),
+    (fun h => (hb h).2.2.2),(fun h => (ha h).1),?_⟩
+  exact original_rectangle_occurrence θ J hc w R r hr a (fun h => (hb h).1)
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleRoutes
