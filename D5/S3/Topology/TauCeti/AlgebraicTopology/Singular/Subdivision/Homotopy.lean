@@ -254,11 +254,7 @@ def singularSubdivisionHomotopy : Homotopy (𝟙 _) (singularSubdivisionChainMap
 @[simp]
 lemma singularSubdivisionHomotopy_hom (n : ℕ) :
     (singularSubdivisionHomotopy R X).hom n (n + 1) = singularPrismX R X n :=
-  Homotopy.mkChainComplex_hom_succ
-    (e := (𝟙 _)) (h := singularPrismX R X)
-    (comm_zero := by simp)
-    (comm_succ := fun m ↦ by
-      simp [singularPrismX_boundary_add_boundary_singularPrismX]) n
+  Homotopy.mkChainComplex_hom_succ _ _ _ _ n
 
 /-- Barycentric subdivision induces the identity on singular homology. -/
 @[simp]
