@@ -13,7 +13,6 @@ See https://github.com/the-omega-institute/trureturing/issues/23314.
 namespace Reg.D5.S3.Arith.FactorialRatio.DyadicBinomialCancellation
 
 open _root_.D5.S3.Arith.FactorialRatio.DyadicBinomialCancellation
-open _root_.D5.S0.Certificates.SabbaPolarizationTransferRefutation
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
