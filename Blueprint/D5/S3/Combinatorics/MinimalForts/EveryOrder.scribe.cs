@@ -6,7 +6,7 @@ internal sealed class EveryOrderDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/MinimalForts/EveryOrder.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/becker2024minimalforts");
+        LibraryNoteRef.Create("D5/L/Asymptotics/becker2024minimalforts");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every positive order and the full successive ratio", H("Every positive order and the full successive ratio"),

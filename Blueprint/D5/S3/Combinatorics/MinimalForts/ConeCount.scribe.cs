@@ -6,7 +6,7 @@ internal sealed class ConeCountDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/MinimalForts/ConeCount.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/becker2024minimalforts");
+        LibraryNoteRef.Create("D5/L/Asymptotics/becker2024minimalforts");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact exhaustive count after adjoining a universal root.", H("Exact exhaustive count after adjoining a universal root"),

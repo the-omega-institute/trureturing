@@ -6,7 +6,7 @@ internal sealed class MixedBlocksDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/MinimalForts/MixedBlocks.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/becker2024minimalforts");
+        LibraryNoteRef.Create("D5/L/Asymptotics/becker2024minimalforts");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual mixed-block graphs and their exhaustive minimal-fort counts.",

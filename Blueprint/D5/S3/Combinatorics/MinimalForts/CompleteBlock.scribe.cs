@@ -6,7 +6,7 @@ internal sealed class CompleteBlockDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/MinimalForts/CompleteBlock.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/becker2024minimalforts");
+        LibraryNoteRef.Create("D5/L/Asymptotics/becker2024minimalforts");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Every minimal fort of a complete graph.",
