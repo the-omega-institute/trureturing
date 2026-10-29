@@ -78,7 +78,10 @@ internal sealed class StarGraphEvolutionMapsUnitarilySimilarDocument : IScribeDo
                         "Choose w = D. The preceding unitary membership and conjugation identity "
                             + "supply the two witnesses required by the existential statement, "
                             + "which proves the claim for every n and all the quantified data."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("andrade-severini-2018-star-graph-unitary-similarity"),
+                    ResolutionKind.Proved))),
         []));
 
     private static Formula ScatteringMatrixFormula()
