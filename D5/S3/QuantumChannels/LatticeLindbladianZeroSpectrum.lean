@@ -7,7 +7,6 @@
    digest: Finite-range translation-invariant lattice Lindbladians have zero in their spectrum. -/
 
 import Mathlib.Analysis.InnerProductSpace.l2Space
-import Mathlib.Tactic.Abel
 import Mathlib.Tactic.Choose
 import Mathlib.Tactic.GRewrite
 import Mathlib.Tactic.Push
