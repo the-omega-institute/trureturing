@@ -8,6 +8,7 @@
 
 import D5.S3.VertexAlgebra.LatticeActualStateDerivative
 import Mathlib.Algebra.MvPolynomial.Rename
+import Batteries.Tactic.OpenPrivate
 
 /-!
 The lattice fields and normal-product conventions are those of the original
@@ -21,7 +22,7 @@ Imported residue kernels retain their Scott Carnahan Apache-2.0 attribution.
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 4096
-set_option maxHeartbeats 2000000
+set_option maxHeartbeats 200000
 
 namespace D5.S3.VertexAlgebra.LatticeDualCosetModule
 
@@ -54,9 +55,18 @@ def oldCharge (n : Charge (auxiliary D β)) : Charge D := fun i => n i.castSucc
 
 def liftIndex (x : Index D) : Index (auxiliary D β) := (x.1.castSucc, x.2)
 
+private theorem gram_old (i j : Fin D.rank) :
+    (auxiliary D β).G i.castSucc j.castSucc = D.G i j := by simp [auxiliary]
+
+private theorem gram_star (i : Fin D.rank) :
+    (auxiliary D β).G i.castSucc (Fin.last D.rank) = β i := by simp [auxiliary]
+
 private theorem liftIndex_injective : Function.Injective (liftIndex D β) := by
   intro x y h
-  exact Prod.ext (Fin.castSucc_injective _ (congrArg Prod.fst h)) (congrArg Prod.snd h)
+  apply Prod.ext
+  · exact Fin.castSucc_injective D.rank
+      (congrArg (fun z : Index (auxiliary D β) => z.1) h)
+  · exact congrArg (fun z : Index (auxiliary D β) => z.2) h
 
 def polynomialInjection : Oscillator D →ₐ[ℂ] Oscillator (auxiliary D β) :=
   rename (liftIndex D β)
@@ -83,7 +93,7 @@ private theorem injection_single (t : ℤ) (n : Charge D) (p : Oscillator D) :
       Finsupp.single (liftCharge D β t n) (polynomialInjection D β p) := by
   simp [injection]
 
-private theorem retraction_injection (t : ℤ) (v : Carrier D) :
+theorem retraction_injection (t : ℤ) (v : Carrier D) :
     retraction D β t (injection D β t v) = v := by
   have h : (retraction D β t).comp (injection D β t) = LinearMap.id := by
     apply Finsupp.lhom_ext
@@ -94,7 +104,7 @@ private theorem retraction_injection (t : ℤ) (v : Carrier D) :
     simp [injection_single, retraction, liftCharge, hn, retract_polynomial]
   exact congrArg (fun f : Module.End ℂ (Carrier D) => f v) h
 
-private theorem injection_injective (t : ℤ) : Function.Injective (injection D β t) :=
+theorem injection_injective (t : ℤ) : Function.Injective (injection D β t) :=
   Function.LeftInverse.injective (retraction_injection D β t)
 
 private theorem liftCharge_add (s t : ℤ) (a b : Charge D) :
@@ -130,14 +140,27 @@ private theorem epsilon_lift (a n : Charge D) (t : ℤ) :
 private theorem unit_lift (i : Fin D.rank) :
     unitCharge (auxiliary D β) i.castSucc = liftCharge D β 0 (unitCharge D i) := by
   funext j
-  induction j using Fin.lastCases <;> simp [unitCharge, liftCharge]
+  induction j using Fin.lastCases
+  · simp [unitCharge, liftCharge, (Fin.castSucc_ne_last i).symm]
+  · simp [unitCharge, liftCharge]
 
 private theorem creationSeries_lift (a : Charge D) :
     PowerSeries.map (polynomialInjection D β).toRingHom (creationSeries D a) =
       creationSeries (auxiliary D β) (liftCharge D β 0 a) := by
-  ext q
-  simp [creationSeries, polynomialInjection, liftCharge, Fin.sum_univ_castSucc,
-    liftIndex, map_smul]
+  apply PowerSeries.ext
+  intro q
+  rw [PowerSeries.coeff_map]
+  simp only [creationSeries, PowerSeries.coeff_mk]
+  change polynomialInjection D β
+      (if q = 0 then 0 else (q : ℂ)⁻¹ • ∑ i : Fin D.rank, (a i : ℂ) • X (i, q - 1)) =
+    if q = 0 then 0 else (q : ℂ)⁻¹ •
+      ∑ i : Fin (D.rank + 1), (liftCharge D β 0 a i : ℂ) • X (i, q - 1)
+  by_cases hq : q = 0
+  · simp [hq]
+  · simp only [if_neg hq, map_smul, map_sum]
+    congr 1
+    rw [Fin.sum_univ_castSucc]
+    simp [liftCharge, polynomialInjection, liftIndex]
 
 private theorem creationCoeff_lift (a : Charge D) (k : ℤ) :
     creationCoeff (auxiliary D β) (liftCharge D β 0 a) k =
@@ -148,11 +171,21 @@ private theorem creationCoeff_lift (a : Charge D) (k : ℤ) :
       (creationExponential D a) =
       creationExponential (auxiliary D β) (liftCharge D β 0 a) := by
     unfold creationExponential
-    rw [PowerSeries.map_subst (PowerSeries.HasSubst.of_constantCoeff_zero' hA),
-      PowerSeries.map_exp, creationSeries_lift]
+    have hm := PowerSeries.map_subst (h := (polynomialInjection D β).toRingHom)
+      (PowerSeries.HasSubst.of_constantCoeff_zero' hA) (PowerSeries.exp (Oscillator D))
+    change PowerSeries.map (polynomialInjection D β).toRingHom
+      ((PowerSeries.exp (Oscillator D)).subst (creationSeries D a)) =
+        (PowerSeries.exp (Oscillator (auxiliary D β))).subst _
+    change PowerSeries.map (polynomialInjection D β).toRingHom
+      ((PowerSeries.exp (Oscillator D)).subst (creationSeries D a)) =
+        (PowerSeries.map (polynomialInjection D β).toRingHom
+          (PowerSeries.exp (Oscillator D))).subst
+            (PowerSeries.map (polynomialInjection D β).toRingHom (creationSeries D a)) at hm
+    rw [hm, PowerSeries.map_exp, creationSeries_lift]
   by_cases hk : k < 0
   · simp [creationCoeff, hk]
-  · simpa only [creationCoeff, dif_neg hk, PowerSeries.coeff_map] using
+  · simpa only [creationCoeff, dif_neg hk, PowerSeries.coeff_map, AlgHom.toRingHom_eq_coe,
+      RingHom.coe_coe] using
       (congrArg (PowerSeries.coeff k.toNat) h).symm
 
 private theorem translatedPolynomial_lift (a : Charge D) (p : Oscillator D) :
@@ -164,16 +197,23 @@ private theorem translatedPolynomial_lift (a : Charge D) (p : Oscillator D) :
         Polynomial.map (polynomialInjection D β).toRingHom (translationVariable D a i k) := by
     simp [translationVariable, unit_lift, bilinear_lift, polynomialInjection, liftIndex,
       map_smul]
-  induction p using MvPolynomial.induction_on with
-  | C c => simp [translatedPolynomial, polynomialInjection]
-  | add p q hp hq => simpa only [map_add] using congrArg₂ (· + ·) hp hq
-  | mul_X p x hp =>
-    simp only [map_mul, polynomialInjection, rename_X, translatedPolynomial,
-      MvPolynomial.eval₂Hom_X]
-    change translatedPolynomial (auxiliary D β) (liftCharge D β 0 a)
-      (polynomialInjection D β p) * translationVariable _ _ _ _ = _
-    rw [hp, hv]
-    simp [translatedPolynomial]
+  let f : Oscillator D →+* Polynomial (Oscillator (auxiliary D β)) :=
+    (MvPolynomial.eval₂Hom
+      (Polynomial.C.comp (algebraMap ℂ (Oscillator (auxiliary D β))))
+      (fun x : Index (auxiliary D β) =>
+        translationVariable (auxiliary D β) (liftCharge D β 0 a) x.1 x.2)).comp
+      (polynomialInjection D β).toRingHom
+  let g : Oscillator D →+* Polynomial (Oscillator (auxiliary D β)) :=
+    (Polynomial.mapRingHom (polynomialInjection D β).toRingHom).comp
+      (MvPolynomial.eval₂Hom (Polynomial.C.comp (algebraMap ℂ (Oscillator D)))
+        (fun x : Index D => translationVariable D a x.1 x.2))
+  have h : f = g := by
+    apply MvPolynomial.ringHom_ext
+    · intro c
+      simp [f, g, polynomialInjection]
+    · intro x
+      simpa [f, g, polynomialInjection, liftIndex] using hv x.1 x.2
+  exact congrArg (fun e : Oscillator D →+* Polynomial (Oscillator (auxiliary D β)) => e p) h
 
 /-- The prescribed shifted exponential coefficient on an actual charge-polynomial sector. -/
 def shiftedRawSingle (t : ℤ) (a : Charge D) (k : ℤ) (n : Charge D)
@@ -197,7 +237,7 @@ private theorem rawSingle_lift (t : ℤ) (a n : Charge D) (k : ℤ) (p : Oscilla
   congr 2
   apply Finset.sum_congr rfl
   intro d hd
-  rw [map_smul, ← creationCoeff_lift]
+  simp only [smul_eq_mul, map_mul, ← creationCoeff_lift]
   congr 2
   omega
 
@@ -232,14 +272,14 @@ def action : Carrier D →ₗ[ℂ] VertexOperator ℂ (Carrier D) where
     apply LinearMap.ext
     intro v
     simp only [VertexOperator.coeff_eq_ncoeff, compress_modes, map_add,
-      VertexOperator.ncoeff_add, LinearMap.add_apply]
+      map_add, Pi.add_apply, LinearMap.add_apply]
   map_smul' c a := by
     apply HVertexOperator.coeff_inj
     funext k
     apply LinearMap.ext
     intro v
     simp only [VertexOperator.coeff_eq_ncoeff, compress_modes, map_smul,
-      VertexOperator.ncoeff_smul, LinearMap.smul_apply, RingHom.id_apply]
+      map_smul, Pi.smul_apply, LinearMap.smul_apply, RingHom.id_apply]
 
 private def Intertwines (t : ℤ) (A : VertexOperator ℂ (Carrier D))
     (B : VertexOperator ℂ (Carrier (auxiliary D β))) : Prop :=
@@ -264,9 +304,10 @@ private theorem normal_intertwines (t : ℤ)
     (hA : Intertwines D β t A AE) (hB : Intertwines D β t B BE) :
     Intertwines D β t (normalMinusOne A B).1 (normalMinusOne AE BE).1 := by
   intro m v
-  rw [(normalMinusOne A B).2, (normalMinusOne AE BE).2, map_add,
-    (injection D β t).toAddMonoidHom.map_finsum_of_injective (injection_injective D β t),
-    (injection D β t).toAddMonoidHom.map_finsum_of_injective (injection_injective D β t)]
+  have mapSum (f : ℕ → Carrier D) : injection D β t (∑ᶠ i, f i) =
+      ∑ᶠ i, injection D β t (f i) :=
+    (injection D β t).toAddMonoidHom.map_finsum_of_injective (injection_injective D β t) f
+  rw [(normalMinusOne A B).2, (normalMinusOne AE BE).2, map_add, mapSum, mapSum]
   congr 1 <;> apply finsum_congr <;> intro j
   · exact (hA _ _).trans (congrArg ((AE[[_]])) (hB _ _))
   · exact (hB _ _).trans (congrArg ((BE[[_]])) (hA _ _))
@@ -336,14 +377,18 @@ private theorem current_polynomial_lift (t : ℤ) (i : Fin D.rank)
     · simp [neutralPolynomialMode, shiftedCurrentPolynomial, hm, hz, unit_lift,
         bilinear_lift, hu, map_smul]
     · simp only [neutralPolynomialMode, shiftedCurrentPolynomial, hm, hz, ↓reduceIte,
-        LinearMap.smul_apply, LinearMap.sum_apply, Derivation.coe_toLinearMap,
-        map_smul, map_sum, Fin.sum_univ_castSucc]
-      simp only [auxiliary, Fin.lastCases_castSucc, Fin.lastCases_last, star_derivative,
-        smul_zero, add_zero]
+        LinearMap.smul_apply, LinearMap.sum_apply, map_smul, map_sum]
+      change (m : ℂ) • (∑ j : Fin (D.rank + 1),
+        ((auxiliary D β).G i.castSucc j : ℂ) •
+          pderiv (j, (m - 1).toNat) (polynomialInjection D β p)) =
+        (m : ℂ) • ∑ j : Fin D.rank, (D.G i j : ℂ) •
+          polynomialInjection D β (pderiv (j, (m - 1).toNat) p)
+      rw [Fin.sum_univ_castSucc]
+      simp only [gram_old, gram_star]
+      rw [star_derivative D β p (m - 1).toNat, smul_zero, add_zero]
       congr 1
       apply Finset.sum_congr rfl
       intro j hj
-      rw [map_smul]
       exact congrArg ((D.G i j : ℂ) • ·)
         (pderiv_rename (liftIndex_injective D β) (j, (m - 1).toNat) p)
 
@@ -380,7 +425,8 @@ private theorem current_compressed_intertwines (t : ℤ) (i : Fin D.rank) :
     rw [current_single_lift, retraction_injection]
   exact fun v => congrArg (fun f : Carrier D →ₗ[ℂ] Carrier (auxiliary D β) => f v) h
 
-open private derivative_creation from D5.S3.VertexAlgebra.LatticeAllStateField
+open private derivative_creation normal_right_identity
+  from D5.S3.VertexAlgebra.LatticeAllStateField
 
 private theorem variable_state_field (x : Index D) :
     Y D (Finsupp.single (0 : Charge D) (X x)) =
@@ -399,8 +445,11 @@ private theorem multiplication_recursion (x : Index D) (n : Charge D) (p : Oscil
       (Finsupp.single n p) = Finsupp.single n (X x * p) := by
     rw [variable_state_field]
     exact derivative_creation D x n p
-  rw [← h, LatticeActualStateFieldCalculus.minus_one_product_field,
-    variable_state_field]
+  have hp := LatticeActualStateFieldCalculus.minus_one_product_field D
+    (Finsupp.single (0 : Charge D) (X x)) (Finsupp.single n p)
+  change Y D (((Y D _)[[-1]]) _) = _ at hp
+  rw [h, variable_state_field] at hp
+  exact hp
 
 private def ambientWord (a : Charge D) : List (Index D) →
     VertexOperator ℂ (Carrier (auxiliary D β))
@@ -421,14 +470,18 @@ private theorem ambientWord_realization (a : Charge D) (w : List (Index D)) :
       (injection D β 0 (Finsupp.single a (w.map (fun x => (X x : Oscillator D))).prod)) =
       ambientWord D β a w := by
   induction w with
-  | nil => simp [injection_single, ambientWord, stateField_ground]
+  | nil =>
+    rw [List.map_nil, List.prod_nil, injection_single, map_one, stateField_ground]
+    rfl
   | cons x tail ih =>
     simp only [List.map_cons, List.prod_cons, injection_single, map_mul,
       polynomialInjection, rename_X]
     rw [multiplication_recursion]
-    change (normalMinusOne _ (Y (auxiliary D β)
-      (injection D β 0 (Finsupp.single a (tail.map (fun x => (X x : Oscillator D))).prod))))).1 = _
-    rw [ih]
+    have ih' := ih
+    rw [injection_single] at ih'
+    change Y (auxiliary D β) (Finsupp.single (liftCharge D β 0 a)
+      (rename (liftIndex D β) (tail.map (fun x => (X x : Oscillator D))).prod)) = _ at ih'
+    rw [ih']
     rfl
 
 private theorem word_original_intertwines (a : Charge D) (w : List (Index D)) :
@@ -466,16 +519,17 @@ theorem source_transport (a b : Carrier D) (m : ℤ) :
       funext a
       induction a using Finsupp.induction_linear with
       | zero => simp
-      | add a b ha hb => simp only [map_add, VertexOperator.ncoeff_add,
-          LinearMap.comp_add, LinearMap.add_comp, ha, hb]
+      | add a b ha hb => simp only [map_add, Pi.add_apply,
+          Pi.add_apply, LinearMap.comp_add, LinearMap.add_comp, ha, hb]
       | single n p =>
         induction p using MvPolynomial.induction_on' with
         | add p q hp hq => simp only [map_add, Finsupp.single_add,
-            VertexOperator.ncoeff_add, LinearMap.comp_add, LinearMap.add_comp, hp, hq]
+            map_add, Pi.add_apply, LinearMap.comp_add, LinearMap.add_comp, hp, hq]
         | monomial e c =>
-          have hc : monomial e c = c • (monomial e 1 : Oscillator D) := by simp
-          rw [hc, Finsupp.single_smul]
-          simp only [map_smul, VertexOperator.ncoeff_smul, LinearMap.comp_smul,
+          have hc : monomial e c = c • (monomial e 1 : Oscillator D) := by
+            rw [smul_monomial]; simp only [smul_eq_mul, mul_one]
+          rw [hc, ← Finsupp.smul_single]
+          simp only [map_smul, Pi.smul_apply, Pi.smul_apply, LinearMap.comp_smul,
             LinearMap.smul_comp, RingHom.id_apply]
           congr 1
           rw [stateField_monomial, monomial_ambient]
@@ -502,16 +556,17 @@ theorem module_transport (a v : Carrier D) (m : ℤ) :
       ((Y (auxiliary D β) (injection D β 0 a))[[m]]) (injection D β 1 v) := by
   induction a using Finsupp.induction_linear with
   | zero => simp
-  | add a b ha hb => simp only [map_add, VertexOperator.ncoeff_add,
+  | add a b ha hb => simp only [map_add, Pi.add_apply,
       LinearMap.add_apply, ha, hb]
   | single n p =>
     induction p using MvPolynomial.induction_on' with
     | add p q hp hq => simp only [map_add, Finsupp.single_add,
-        VertexOperator.ncoeff_add, LinearMap.add_apply, hp, hq]
+        map_add, Pi.add_apply, LinearMap.add_apply, hp, hq]
     | monomial e c =>
-      have hc : monomial e c = c • (monomial e 1 : Oscillator D) := by simp
-      rw [hc, Finsupp.single_smul]
-      simp only [map_smul, VertexOperator.ncoeff_smul, LinearMap.smul_apply,
+      have hc : monomial e c = c • (monomial e 1 : Oscillator D) := by
+            rw [smul_monomial]; simp only [smul_eq_mul, mul_one]
+      rw [hc, ← Finsupp.smul_single]
+      simp only [map_smul, Pi.smul_apply, LinearMap.smul_apply,
         RingHom.id_apply]
       congr 1
       rw [action_monomial, monomial_ambient]
@@ -558,8 +613,10 @@ private theorem source_translation (a : Carrier D) :
     congr 1
     rw [map_add, map_mul, derivation_lift]
     congr 2
-    simp [chargePolynomial, Fin.sum_univ_castSucc, liftCharge, map_sum,
-      map_smul, polynomialInjection, liftIndex]
+    change polynomialInjection D β (∑ i : Fin D.rank, (n i : ℂ) • X (i, 0)) =
+      ∑ i : Fin (D.rank + 1), (liftCharge D β 0 n i : ℂ) • X (i, 0)
+    rw [Fin.sum_univ_castSucc]
+    simp [liftCharge, map_sum, map_smul, polynomialInjection, liftIndex]
   exact congrArg (fun f : Carrier D →ₗ[ℂ] Carrier (auxiliary D β) => f a) h
 
 /-- Differentiation is on the original input; no ambient translation is restricted to sector one. -/
@@ -569,8 +626,8 @@ theorem module_input_derivative (a : Carrier D) (m : ℤ) :
   intro v
   apply injection_injective D β 1
   rw [module_transport, source_translation,
-    LatticeActualStateDerivative.state_derivative_modes,
-    LinearMap.smul_apply, map_smul, LinearMap.smul_apply, module_transport]
+    LatticeActualStateDerivative.state_derivative_modes]
+  simp only [LinearMap.smul_apply, map_smul, module_transport]
 
 open StateFieldResidueReconstruction (integerBinomial)
 
@@ -635,6 +692,12 @@ theorem module_borcherds (a b v : Carrier D) (p q r : ℤ) :
   rw [map_sub, map_finsum _ finiteL, map_finsum _ finiteF, map_finsum _ finiteS]
   simp_rw [hl, hf, hs]
   simp_rw [smul_sub] at ambientLaw
+  change (∑ᶠ i : ℕ, LatticeAllStateJacobi.jacobiLeftTerm (auxiliary D β) p q r
+      (injection D β 0 a) (injection D β 0 b) (injection D β 1 v) i) =
+    ∑ᶠ i : ℕ, (LatticeAllStateJacobi.jacobiRightFirstTerm (auxiliary D β) p q r
+      (injection D β 0 a) (injection D β 0 b) (injection D β 1 v) i -
+      LatticeAllStateJacobi.jacobiRightSecondTerm (auxiliary D β) p q r
+        (injection D β 0 a) (injection D β 0 b) (injection D β 1 v) i) at ambientLaw
   rw [finsum_sub_distrib ambientF ambientS] at ambientLaw
   exact ambientLaw
 
@@ -675,6 +738,73 @@ theorem physical_ground_action (μ : Fin D.rank → ℚ)
   constructor
   · exact physical_pairing_integral D β μ hDual a
   · simpa only [shiftedRawSingle, one_mul] using action_ground_coefficients D β a n p m
+
+open private derivative_zero from D5.S3.VertexAlgebra.LatticeAllStateField
+
+/-- The actual source current has the literal shifted multiplication, charge and derivative modes. -/
+theorem action_current_coefficients (i : Fin D.rank) (n : Charge D)
+    (p : Oscillator D) (m : ℤ) :
+    ((action D β (Finsupp.single (0 : Charge D) (X (i, 0))))[[m]])
+        (Finsupp.single n p) =
+      Finsupp.single n (shiftedCurrentPolynomial D β 1 i n m p) := by
+  have hz : liftCharge D β 0 0 = 0 := by
+    funext j
+    induction j using Fin.lastCases <;> simp [liftCharge]
+  have hj : injection D β 0 (Finsupp.single (0 : Charge D) (X (i, 0))) =
+      Finsupp.single (0 : Charge (auxiliary D β)) (X (i.castSucc, 0)) := by
+    simp [injection_single, hz, polynomialInjection, liftIndex]
+  change ((compress D β 1 (Y (auxiliary D β) _))[[m]]) _ = _
+  rw [compress_modes, hj, variable_state_field, derivative_zero,
+    LatticeSugawaraCurrents.neutralField_ncoeff,
+    current_single_lift, retraction_injection]
+
+/-- Explicit finite charge and monomial extension of the literal nested field recipe. -/
+theorem action_expansion (v : Carrier D) :
+    action D β v = ∑ n ∈ v.support,
+      ∑ e ∈ ((basisMonomials (Index D) ℂ).repr (v n)).support,
+        ((basisMonomials (Index D) ℂ).repr (v n) e) •
+          shiftedWord D β n (occurrences D e) := by
+  have hsingle (n : Charge D) (p : Oscillator D) :
+      action D β (Finsupp.single n p) =
+        ∑ e ∈ ((basisMonomials (Index D) ℂ).repr p).support,
+          ((basisMonomials (Index D) ℂ).repr p e) •
+            shiftedWord D β n (occurrences D e) := by
+    conv_lhs => rw [← (basisMonomials (Index D) ℂ).linearCombination_repr p]
+    simp only [Finsupp.linearCombination_apply, Finsupp.sum, map_sum, map_smul,
+      Finsupp.single_finset_sum, ← Finsupp.smul_single,
+      coe_basisMonomials, action_monomial]
+  conv_lhs => rw [← Finsupp.sum_single v]
+  simp only [Finsupp.sum, map_sum, hsingle]
+
+private def fractionalLattice : LatticeData where
+  rank := 1
+  G _ _ := 2
+  symmetric _ _ := rfl
+  even_diagonal _ := ⟨1, by norm_num⟩
+
+/-- A genuinely fractional dual shift has a nonzero charge-changing mode. -/
+theorem fractional_dual_action :
+    (∀ i : Fin 1, ∑ j : Fin 1, (fractionalLattice.G i j : ℚ) * (1 / 2 : ℚ) = 1) ∧
+    (¬ ∃ n : Fin 1 → ℤ, ∀ i, (n i : ℚ) = (1 / 2 : ℚ)) ∧
+    ((action fractionalLattice (fun _ => 1)
+      (Finsupp.single (fun _ => -1) (1 : Oscillator fractionalLattice)))[[0]])
+      (Finsupp.single 0 (1 : Oscillator fractionalLattice)) =
+        Finsupp.single (fun _ => -1) (1 : Oscillator fractionalLattice) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro i
+    change ∑ j : Fin 1, (2 : ℚ) * (1 / 2 : ℚ) = 1
+    norm_num [Fin.sum_univ_succ]
+  · rintro ⟨n, hn⟩
+    have h : (2 : ℚ) * (n 0 : ℚ) = 1 := by linarith [hn 0]
+    have hi : (2 : ℤ) * n 0 = 1 := by exact_mod_cast h
+    omega
+  · rw [action_ground_coefficients]
+    have hs : (1 : Polynomial (Oscillator fractionalLattice)).support = {0} := by
+      simpa using Polynomial.support_C
+        (show (1 : Oscillator fractionalLattice) ≠ 0 from one_ne_zero)
+    norm_num [shiftedRawSingle, translatedPolynomial, bilinear, epsilon,
+      lowerCocycleExponent, paritySign, fractionalLattice, Fin.sum_univ_succ,
+      creationCoeff, exponential_constant, hs]
 
 end
 end D5.S3.VertexAlgebra.LatticeDualCosetModule
