@@ -20,7 +20,8 @@ open FiniteSourceHardy (Edge H P)
 open BiasedBoundaryTrace (G M J Omega cylinder indicator)
 open BiasedBoundaryPathSplit (prefixes prefixSum constG boundary_path_split)
 open BiasedBoundaryFreeRootForm (D energy free_root_least_energy)
-open MeasureTheory Filter
+open MeasureTheory hiding cylinder
+open Filter
 open scoped BigOperators Topology
 
 private theorem prefixes_step (p : Address) (b : Bool) :
@@ -95,7 +96,7 @@ private theorem contracted_prefix (χ : ℝ → ℝ) (hχ : LipschitzWith 1 χ)
 /-- Every real normal contraction acts on the original all-edge extension with
 no increase of increment energy, and its exact potential agrees at every vertex.
 The root is transformed freely; no condition on the image of zero is required. -/
-theorem contracted_extension (χ : ℝ → ℝ) (hχ : LipschitzWith 1 χ)
+private theorem contracted_extension (χ : ℝ → ℝ) (hχ : LipschitzWith 1 χ)
     (c : ℝ) (z : H) :
     (∀ p : Edge, contracted χ hχ c z p =
       χ (potential c z p.val) - χ (potential c z p.val.dropLast)) ∧
@@ -127,26 +128,26 @@ private theorem cutoff_expansion (h : ℕ) (z : H) :
   ext q
   simp only [lp.coeFn_sum, Finset.sum_apply, lp.coeFn_single, Pi.single_apply]
   change (if q.val.length ≤ h then z q else 0) = _
-  simp [← mem_cutoff h q, eq_comm]
+  simp [← mem_cutoff h q]
 
 private theorem ray_prefix_iff (ω : Omega) (h : ℕ) (p : Edge) :
     p.val.IsPrefix (D5.S0.Computability.Coding.BiasedMassFrontier.rayPrefix ω h) ↔
       p.val.length ≤ h ∧ ω ∈ cylinder p.val := by
-  let r := D5.S0.Computability.Coding.BiasedMassFrontier.rayPrefix ω h
-  have hr : r.length = h := by simp [r, D5.S0.Computability.Coding.BiasedMassFrontier.rayPrefix]
   constructor
   · intro hp
-    refine ⟨by simpa only [hr] using hp.length_le, ?_⟩
-    apply (BiasedBoundaryCylinderProjection.cylinder_ray _ _).mpr
-    rw [List.prefix_iff_eq_take.mp hp]
-    simp [r, D5.S0.Computability.Coding.BiasedMassFrontier.rayPrefix, List.take_ofFn,
-      show min p.val.length h = p.val.length from min_eq_left (by simpa only [hr] using hp.length_le)]
+    have hl : p.val.length ≤ h := by
+      simpa [D5.S0.Computability.Coding.BiasedMassFrontier.rayPrefix] using hp.length_le
+    refine ⟨hl, (BiasedBoundaryCylinderProjection.cylinder_ray _ _).mpr ?_⟩
+    apply List.ext_getElem (by simp [D5.S0.Computability.Coding.BiasedMassFrontier.rayPrefix])
+    intro i hi hj
+    have he := hp.getElem hi
+    simpa [D5.S0.Computability.Coding.BiasedMassFrontier.rayPrefix] using he
   · rintro ⟨hl,hω⟩
     rw [(BiasedBoundaryCylinderProjection.cylinder_ray _ _).mp hω]
     apply List.prefix_iff_getElem.mpr
-    refine ⟨by simpa [r, D5.S0.Computability.Coding.BiasedMassFrontier.rayPrefix] using hl, ?_⟩
+    refine ⟨by simpa [D5.S0.Computability.Coding.BiasedMassFrontier.rayPrefix] using hl, ?_⟩
     intro i hi
-    simp [r, D5.S0.Computability.Coding.BiasedMassFrontier.rayPrefix]
+    simp [D5.S0.Computability.Coding.BiasedMassFrontier.rayPrefix]
 
 private theorem cutoff_trace (h : ℕ) (z : H) :
     J (P h z) =ᵐ[M] (fun ω => prefixSum
@@ -164,7 +165,7 @@ private theorem cutoff_trace (h : ℕ) (z : H) :
     with ω hs hi hm
   rw [hs, boundary_path_split.2.2.1]
   simp only [Finset.sum_apply]
-  have he : (cutoff h).filter (fun p => ω ∈ cylinder p.val) =
+  have he : (cutoff h).filter (fun p : Edge => ω ∈ cylinder p.val) =
       prefixes (D5.S0.Computability.Coding.BiasedMassFrontier.rayPrefix ω h) := by
     ext p
     simp only [Finset.mem_filter, mem_cutoff, prefixes, Finset.mem_subtype,
@@ -176,12 +177,68 @@ private theorem cutoff_trace (h : ℕ) (z : H) :
   rw [hm p, hi p]
   by_cases hω : ω ∈ cylinder p.val <;> simp [hω]
 
+private theorem projection_tendsto (z : H) : Tendsto (fun h : ℕ => P h z) atTop (𝓝 z) := by
+  have hc : Tendsto cutoff atTop atTop := by
+    apply tendsto_atTop.mpr
+    intro s
+    filter_upwards [eventually_ge_atTop (s.sup (fun p : Edge => p.val.length))] with h hh
+    intro p hp
+    exact (mem_cutoff h p).mpr ((Finset.le_sup hp).trans hh)
+  have hs := (lp.hasSum_single (by norm_num : (2 : ENNReal) ≠ ⊤) z).comp hc
+  simpa only [Function.comp_def, ← cutoff_expansion] using hs
+
+private theorem shifted_lipschitz (χ : ℝ → ℝ) (hχ : LipschitzWith 1 χ) :
+    LipschitzWith 1 (fun x => χ x - χ 0) := by
+  apply LipschitzWith.of_dist_le_mul
+  intro x y
+  simpa only [dist_eq_norm, sub_sub_sub_cancel_right] using hχ.dist_le_mul x y
+
+/-- Composition on the actual probability L2 space, without requiring χ(0)=0. -/
+def contractLp (χ : ℝ → ℝ) (hχ : LipschitzWith 1 χ) (F : G) : G :=
+  constG (χ 0) + (shifted_lipschitz χ hχ).compLp (by simp) F
+
+private theorem contractLp_ae (χ : ℝ → ℝ) (hχ : LipschitzWith 1 χ) (F : G) :
+    contractLp χ hχ F =ᵐ[M] (fun ω => χ (F ω)) := by
+  filter_upwards [Lp.coeFn_add (constG (χ 0)) ((shifted_lipschitz χ hχ).compLp (by simp) F),
+    boundary_path_split.2.2.2.1 (χ 0),
+    (shifted_lipschitz χ hχ).coeFn_compLp (by simp) F] with ω ha hc hf
+  change (constG (χ 0) + (shifted_lipschitz χ hχ).compLp (by simp) F) ω = _
+  rw [ha, Pi.add_apply, hc, hf]
+  change χ 0 + (χ (F ω) - χ 0) = _
+  ring
+
+private theorem depth_ae (c : ℝ) (z : H) (h : ℕ) :
+    constG c + J (P h z) =ᵐ[M] (fun ω => potential c z
+      (D5.S0.Computability.Coding.BiasedMassFrontier.rayPrefix ω h)) := by
+  filter_upwards [Lp.coeFn_add (constG c) (J (P h z)),
+    boundary_path_split.2.2.2.1 c, cutoff_trace h z] with ω ha hc hz
+  rw [ha, Pi.add_apply, hc, hz]
+  rfl
+
+private theorem trace_compatibility (χ : ℝ → ℝ) (hχ : LipschitzWith 1 χ)
+    (c : ℝ) (z : H) :
+    contractLp χ hχ (constG c + J z) = constG (χ c) + J (contracted χ hχ c z) := by
+  have hc : Continuous (contractLp χ hχ : G → G) :=
+    continuous_const.add ((shifted_lipschitz χ hχ).continuous_compLp (by simp))
+  have hlim (d : ℝ) (w : H) :
+      Tendsto (fun h : ℕ => constG d + J (P h w)) atTop (𝓝 (constG d + J w)) :=
+    tendsto_const_nhds.add (J.continuous.continuousAt.tendsto.comp (projection_tendsto w))
+  have he (h : ℕ) : contractLp χ hχ (constG c + J (P h z)) =
+      constG (χ c) + J (P h (contracted χ hχ c z)) := by
+    apply Lp.ext
+    filter_upwards [contractLp_ae χ hχ (constG c + J (P h z)),
+      depth_ae c z h, depth_ae (χ c) (contracted χ hχ c z) h] with ω hχ hF hG
+    rw [hχ, hF, hG, contracted_prefix]
+  exact tendsto_nhds_unique ((hc.continuousAt.tendsto.comp (hlim c z)).congr he)
+    (hlim (χ c) (contracted χ hχ c z))
+
 /-- The contracted original-edge extension has an actual trace in the original
 free-root domain. Its energy is no larger than that of the least extension of F,
 and its value at every finite vertex is the contracted original potential. -/
-theorem contracted_trace_candidate (χ : ℝ → ℝ) (hχ : LipschitzWith 1 χ) (F : D) :
+private theorem contracted_trace_candidate (χ : ℝ → ℝ) (hχ : LipschitzWith 1 χ) (F : D) :
     ∃ (c : ℝ) (w : H),
       F.val = constG c + J (BiasedBoundaryFreeRootForm.lift F) ∧
+      w = contracted χ hχ c (BiasedBoundaryFreeRootForm.lift F) ∧
       constG (χ c) + J w ∈ D ∧
       energy (constG (χ c) + J w) ≤ energy F.val ∧
       (∀ p : Address, potential (χ c) w p =
@@ -192,7 +249,7 @@ theorem contracted_trace_candidate (χ : ℝ → ℝ) (hχ : LipschitzWith 1 χ)
   have he := free_root_least_energy F
   have hm : constG (χ c) + J w ∈ D := ⟨χ c, w, rfl⟩
   have hw := contracted_extension χ hχ c z
-  refine ⟨c, w, he.2.2.1, hm, ?_, hw.2.2⟩
+  refine ⟨c, w, he.2.2.1, rfl, hm, ?_, hw.2.2⟩
   have hb := (free_root_least_energy ⟨constG (χ c) + J w, hm⟩).2.2.2.2.1
     (χ c) w rfl
   calc
@@ -203,6 +260,19 @@ theorem contracted_trace_candidate (χ : ℝ → ℝ) (hχ : LipschitzWith 1 χ)
     _ ≤ ‖z‖^2 := pow_le_pow_left₀ (norm_nonneg _) hw.2.1 2
     _ = energy F.val := he.2.2.2.1.symm
 
+/-- Every real one-Lipschitz map preserves the actual free-root trace domain
+and decreases its original infimum energy on the actual biased probability law. -/
+theorem actual_trace_contraction (χ : ℝ → ℝ) (hχ : LipschitzWith 1 χ) (F : D) :
+    (contractLp χ hχ F.val =ᵐ[M] (fun ω => χ (F.val ω))) ∧
+    contractLp χ hχ F.val ∈ D ∧ energy (contractLp χ hχ F.val) ≤ energy F.val := by
+  obtain ⟨c,w,hF,hw,hm,hen,_⟩ := contracted_trace_candidate χ hχ F
+  refine ⟨contractLp_ae χ hχ F.val, ?_, ?_⟩
+  · rw [hF, trace_compatibility, ← hw]
+    exact hm
+  · rw [hF, trace_compatibility, ← hw]
+    simpa only [← hF] using hen
+
+#print axioms actual_trace_contraction
 #print axioms contracted_extension
 #print axioms contracted_trace_candidate
 end D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryMarkovSemigroup
