@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Original four-current thermal source bridge and open countable resummation claim.
+   digest: Absolute original four-current thermal resummation on the open coordinate polydisk.
 -/
 
 import D5.S3.VertexAlgebra.Characters.LatticeFourCurrentTrace
@@ -12,10 +12,11 @@ import D5.S3.VertexAlgebra.Characters.LatticeTwoCurrentThermal
 import D5.S3.VertexAlgebra.Sewing.CanonicalFullChargeLoop
 import D5.S3.Combinatorics.Partitions.AnalyticIntegerOccupation
 import D5.S3.Combinatorics.Partitions.AnalyticOddOccupation
+import Mathlib.Data.Finsupp.Encodable
 
-/-! The finite source bridge is compiled here. The countable absolute
-resummation remains an explicit proposition below until its dependent product
-transport is discharged. -/
+/-! The labeled countable matching source is absolutely summable before
+complex rearrangement. Its exact bounded grade fibers recover the original
+four-block trace, including every zero-coordinate face. -/
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -40,7 +41,9 @@ open private unpaired gradeShift matching_parameter_bounds sideMem
   from D5.S3.VertexAlgebra.Characters.LatticeFourCurrentTrace
 open private arcMem edges_ordered
   from D5.S3.VertexAlgebra.Characters.LatticeFourCurrentTrace
-open private markedTerm marked_summable marked_sum
+open private original_four_zero_charge_trace
+  from D5.S3.VertexAlgebra.Characters.LatticeFourCurrentTrace
+open private markedTerm marked_summable marked_sum marked_row
   from D5.S3.VertexAlgebra.Characters.LatticeTwoCurrentThermal
 open private chargeSize bilinear_charge_bound charge_gaussian_moment
   from D5.S3.VertexAlgebra.Sewing.CanonicalFullChargeLoop
@@ -61,6 +64,11 @@ private def sourceFiber (D : LatticeData) (n : Four → ℕ) (M : PM4) :=
 
 private abbrev sourceIndex (D : LatticeData) :=
   Σ M : PM4, Charge D × (Occ D × edgeData M)
+
+private instance source_index_countable (D : LatticeData) : Countable (sourceIndex D) := by
+  classical
+  unfold sourceIndex edgeData
+  infer_instance
 
 private def sourceTerm (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
@@ -280,11 +288,9 @@ private def source_fiber_equiv (D : LatticeData)
         simp [toBounded, fromBounded, he, ht]
         exact (Subtype.heq_iff_coe_eq (fun d => by simp only [ht])).2 rfl
 
-private theorem source_fiber_finite (D : LatticeData)
+private instance bounded_source_finite (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
-    (n : Four → ℕ) (M : PM4) :
-    Finite (sourceFiber D n M) := by
-  letI : Finite (BoundedSourceData D hD n M) := by
+    (n : Four → ℕ) (M : PM4) : Finite (BoundedSourceData D hD n M) := by
     let enc : BoundedSourceData D hD n M →
         {β : Charge D // β ∈ positiveChargeCutoff D hD ((min4 n : ℕ) : ℤ)} ×
           (edgeParam M → Fin (max4 n + 1)) ×
@@ -306,9 +312,94 @@ private theorem source_fiber_finite (D : LatticeData)
     cases hw
     cases ht
     rfl
+private theorem source_fiber_finite (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (n : Four → ℕ) (M : PM4) :
+    Finite (sourceFiber D n M) := by
   letI : Finite (Σ b : BoundedSourceData D hD n M, IntegerFiber D b.t.1) := by
     infer_instance
   exact Finite.of_equiv _ (source_fiber_equiv D hD n M).symm
+
+private abbrev RawBounded (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (n : Four → ℕ) (M : PM4) :=
+  {β : Charge D // β ∈ positiveChargeCutoff D hD ((min4 n : ℕ) : ℤ)} ×
+    (edgeParam M → Fin (max4 n + 1)) × (edgeParam M → Fin 2) ×
+    (edgeParam M → Fin (min4 n + 1)) × Fin (min4 n + 1)
+
+private def RawBounded.valid (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (n : Four → ℕ) (M : PM4) (b : RawBounded D hD n M) : Prop :=
+  (∀ j : Four, n j = (chargeEnergy D b.1.1).toNat + b.2.2.2.2.1 +
+    gradeShift D n b.1.1 M b.2.1 b.2.2.1 b.2.2.2.1 j) ∧
+      ∀ e : edgeParam M, 0 < (b.2.1 e).1
+
+private def boundedRawEquiv (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (n : Four → ℕ) (M : PM4) :
+    BoundedSourceData D hD n M ≃
+      {b : RawBounded D hD n M // RawBounded.valid D hD n M b} where
+  toFun b := ⟨(b.beta, b.ell, b.side, b.winding, b.t), b.grade, b.positive⟩
+  invFun b := ⟨b.1.1, b.1.2.1, b.1.2.2.1, b.1.2.2.2.1, b.1.2.2.2.2,
+    b.2.1, b.2.2⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+
+private def sourceCoefficient (D : LatticeData) (i : Four → Fin D.rank)
+    (M : PM4) (β : Charge D) (v : edgeData M) : ℂ :=
+  (∏ j ∈ unpaired M, (bilinear D (unitCharge D (i j)) β : ℂ)) *
+    ∏ e : edgeParam M, ((v e).1 + 1 : ℂ) * (D.G (i e.1.1) (i e.1.2) : ℂ)
+
+private theorem matching_fiber_coefficient (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (i : Four → Fin D.rank) (n : Four → ℕ) (M : PM4) :
+    (∑' x : sourceFiber D n M, sourceCoefficient D i M x.1.1 x.1.2.2) =
+      ∑ β : {β : Charge D // β ∈ positiveChargeCutoff D hD ((min4 n : ℕ) : ℤ)},
+        ∑ ell : edgeParam M → Fin (max4 n + 1),
+        ∑ ε : edgeParam M → Fin 2,
+        ∑ k : edgeParam M → Fin (min4 n + 1),
+        ∑ t : Fin (min4 n + 1), chargeWeight D i n β.1 M ell ε k t := by
+  classical
+  rw [← (source_fiber_equiv D hD n M).symm.tsum_eq]
+  letI := Fintype.ofFinite (BoundedSourceData D hD n M)
+  have he (b : BoundedSourceData D hD n M) (d : IntegerFiber D b.t.1) :
+      sourceCoefficient D i M ((source_fiber_equiv D hD n M).symm ⟨b, d⟩).1.1
+        ((source_fiber_equiv D hD n M).symm ⟨b, d⟩).1.2.2 =
+      (∏ j ∈ unpaired M, (bilinear D (unitCharge D (i j)) b.beta.1 : ℂ)) *
+        ∏ e : edgeParam M, ((b.ell e).1 : ℂ) *
+          (D.G (i e.1.1) (i e.1.2) : ℂ) := by
+    dsimp [source_fiber_equiv, sourceCoefficient]
+    congr 1
+    apply Finset.prod_congr rfl
+    intro e he
+    have hp := b.positive e
+    have hh : (b.ell e).1 - 1 + 1 = (b.ell e).1 := by omega
+    simpa only [Nat.cast_add, Nat.cast_one] using
+      congrArg (fun a : ℕ => (a : ℂ) * (D.G (i e.1.1) (i e.1.2) : ℂ)) hh
+  rw [tsum_fintype, Fintype.sum_sigma]
+  simp_rw [he]
+  simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul,
+    ← Nat.card_eq_fintype_card]
+  rw [← tsum_fintype (L := SummationFilter.unconditional (BoundedSourceData D hD n M)),
+    ← (boundedRawEquiv D hD n M).symm.tsum_eq]
+  change (∑' c : {b : RawBounded D hD n M // RawBounded.valid D hD n M b},
+    (Nat.card (IntegerFiber D c.1.2.2.2.2.1) : ℂ) *
+      ((∏ j ∈ unpaired M, (bilinear D (unitCharge D (i j)) c.1.1.1 : ℂ)) *
+        ∏ e : edgeParam M, ((c.1.2.1 e).1 : ℂ) *
+          (D.G (i e.1.1) (i e.1.2) : ℂ))) = _
+  erw [tsum_subtype, tsum_fintype]
+  simp only [Set.indicator, Set.mem_setOf_eq, RawBounded.valid]
+  simp only [Fintype.sum_prod_type]
+  apply Finset.sum_congr rfl
+  intro β hβ
+  apply Finset.sum_congr rfl
+  intro ell hell
+  apply Finset.sum_congr rfl
+  intro ε hε
+  apply Finset.sum_congr rfl
+  intro k hk
+  apply Finset.sum_congr rfl
+  intro t ht
+  simp only [chargeWeight]
+  split_ifs <;> simp_all <;> ring
 
 private theorem occupation_norm (D : LatticeData) (q : ℂ) (hq : ‖q‖ < 1) :
     Summable (fun d : Occ D => ‖q ^ oscillatorEnergy d‖) := by
@@ -325,7 +416,8 @@ private theorem ordinary_monomial (D : LatticeData) (q : ℂ) (d : Occ D) :
   simp only [oscillatorEnergy, Finsupp.weight_apply, Finsupp.sum, nsmul_eq_mul]
   exact Finset.sum_congr rfl (fun _ _ => Nat.mul_comm _ _)
 
-private theorem ordinary_euler (D : LatticeData) (q : ℂ) (hq : ‖q‖ < 1) :
+/-- The unsigned ordinary oscillator sum has the integer-frequency Euler product. -/
+theorem ordinary_oscillator_hasProd (D : LatticeData) (q : ℂ) (hq : ‖q‖ < 1) :
     HasProd (fun m : ℕ => ((1 - q ^ (m + 1))⁻¹) ^ D.rank)
       (∑' d : Occ D, q ^ oscillatorEnergy d) := by
   let z : Index D → ℂ := fun a => q ^ (a.2 + 1)
@@ -377,7 +469,8 @@ private theorem product_norm_lt_one (z : Four → ℂ) (hz : ∀ j, ‖z j‖ < 
   have hle : (∏ j : Four, ‖z j‖) ≤ ∏ j ∈ ({0} : Finset Four), ‖z j‖ :=
     Finset.prod_le_prod_of_subset_of_le_one₀ (by simp)
       (fun j _ => norm_nonneg _) (fun j _ _ => (hz j).le)
-  exact (by simpa using hle).trans_lt (hz 0)
+  have hle' : (∏ j : Four, ‖z j‖) ≤ ‖z 0‖ := by simpa using hle
+  exact hle'.trans_lt (hz 0)
 
 private theorem side_product_norm_lt_one (M : PM4) (e : edgeParam M)
     (ε : Fin 2) (z : Four → ℂ) (hz : ∀ j, ‖z j‖ < 1) :
@@ -397,9 +490,12 @@ private theorem side_product_norm_lt_one (M : PM4) (e : edgeParam M)
     Finset.prod_le_prod_of_subset_of_le_one₀ (by simp)
       (fun a _ => norm_nonneg _) (by
         intro a _ _
-        split_ifs <;> simp_all only [norm_one, le_refl]
-        exact (hz a).le)
-  exact (by simpa [hj] using hle).trans_lt (hz j)
+        by_cases h : sideMem ε e.1 a
+        · simpa only [if_pos h] using (hz a).le
+        · simp only [if_neg h, norm_one, le_refl])
+  have hle' : (∏ a : Four, ‖if sideMem ε e.1 a then z a else 1‖) ≤ ‖z j‖ := by
+    simpa [hj] using hle
+  exact hle'.trans_lt (hz j)
 
 private theorem charge_norm (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
@@ -446,8 +542,8 @@ private theorem edge_norm (D : LatticeData) (i : Four → Fin D.rank)
       (product_norm_lt_one z hz) (side_product_norm_lt_one M e ε z hz)).mul_left
       ‖(D.G (i e.1.1) (i e.1.2) : ℂ)‖
     simpa only [g, norm_mul] using ht
-  simpa only [Function.comp_def, g, q, edgeTerm, edgeIndexEquiv] using
-    hs.comp_injective edgeIndexEquiv.injective
+  change Summable (fun v => ‖g (edgeIndexEquiv v)‖)
+  exact hs.comp_injective edgeIndexEquiv.injective
 
 private theorem matching_source_norm (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
@@ -475,50 +571,236 @@ private theorem source_norm (D : LatticeData)
   apply (summable_sigma_of_nonneg (fun x => norm_nonneg (sourceTerm D hD i z x))).2
   exact ⟨matching_source_norm D hD i z hz, Summable.of_finite⟩
 
-private def thermalTerm (D : LatticeData)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
-    (i : Four → Fin D.rank) (z : Four → ℂ) (n : Four → ℕ) : ℂ :=
-  (∏ j : Four, z j ^ n j) * actualFourCurrentCycleTrace D hD i n
+private def gradeFiberEquiv (D : LatticeData) (n : Four → ℕ) :
+    {x : sourceIndex D // sourceGradeMap D x = n} ≃
+      Σ M : PM4, sourceFiber D n M where
+  toFun x := ⟨x.1.1, ⟨x.1.2, fun j => congrFun x.2 j⟩⟩
+  invFun x := ⟨⟨x.1, x.2.1⟩, funext x.2.2⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
 
-private def boundedThermalTerm (D : LatticeData)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
-    (i : Four → Fin D.rank) (z : Four → ℂ) (n : Four → ℕ) : ℂ :=
-  (∏ j : Four, z j ^ n j) * boundedFourCurrentCoefficient D hD i n
-
-/-- The original finite four-current equality survives multiplication by every
-coordinate monomial, including zero coordinates. -/
-theorem thermal_term_eq_bounded (D : LatticeData)
+private theorem grade_fiber_sum (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
     (i : Four → Fin D.rank) (z : Four → ℂ) (n : Four → ℕ) :
-    thermalTerm D hD i z n = boundedThermalTerm D hD i z n := by
-  unfold thermalTerm boundedThermalTerm
+    (∑' x : {x : sourceIndex D // sourceGradeMap D x = n},
+      sourceTerm D hD i z x.1) =
+      (∏ j : Four, z j ^ n j) * actualFourCurrentCycleTrace D hD i n := by
+  classical
+  letI (M : PM4) : Finite (sourceFiber D n M) := source_fiber_finite D hD n M
+  letI (M : PM4) : Fintype (sourceFiber D n M) := Fintype.ofFinite _
+  have he (M : PM4) (x : sourceFiber D n M) :
+      sourceTerm D hD i z ((gradeFiberEquiv D n).symm ⟨M, x⟩).1 =
+        (∏ j : Four, z j ^ n j) * sourceCoefficient D i M x.1.1 x.1.2.2 := by
+    dsimp [gradeFiberEquiv, sourceTerm, sourceCoefficient]
+    have hpow : (∏ j : Four, z j ^
+        sourceGrade D M x.1.1 (oscillatorEnergy x.1.2.1) x.1.2.2 j) =
+        ∏ j : Four, z j ^ n j := by
+      apply Finset.prod_congr rfl
+      intro j hj
+      rw [x.2 j]
+    rw [hpow]
+    ring
+  rw [← (gradeFiberEquiv D n).symm.tsum_eq, tsum_fintype, Fintype.sum_sigma]
+  simp_rw [he]
+  simp only [← Finset.mul_sum]
   rw [actual_four_current_grade_trace]
+  congr 1
+  have hfinite (M : PM4) := tsum_fintype
+    (L := SummationFilter.unconditional (sourceFiber D n M))
+    (fun x : sourceFiber D n M => sourceCoefficient D i M x.1.1 x.1.2.2)
+  simp_rw [← hfinite]
+  simp_rw [matching_fiber_coefficient D hD i n]
+  unfold boundedFourCurrentCoefficient
+  rw [Finset.sum_comm]
+  simp only [Finset.sum_coe_sort]
 
-/-- Structural source grading is exactly the grading predicate used by the
-finite coefficient: after setting `t = oscillatorEnergy d`, every source
-fiber is cut by the four additive equations and by the positive-frequency
-predicate. This is the proposition consumed by the still-open countable
-fiber transport. -/
-def original_four_current_source_fiber_claim (D : LatticeData)
+/-- Absolute summability of the original full-grade four-current thermal
+family on every face of the open coordinate polydisk. -/
+theorem original_four_current_thermal_normSummable (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
-    (i : Four → Fin D.rank) (z : Four → ℂ) : Prop :=
-  ∀ n : Four → ℕ, ∀ M : PM4,
-    ∀ x : sourceFiber D n M,
-      ∀ j : Four,
-        n j = (chargeEnergy D x.1.1).toNat + oscillatorEnergy x.1.2.1 +
-          matchingShift M (fun e => (x.1.2.2 e).1 + 1)
-            (fun e => (x.1.2.2 e).2.1) (fun e => (x.1.2.2 e).2.2) j
+    (i : Four → Fin D.rank) (z : Four → ℂ) (hz : ∀ j, ‖z j‖ < 1) :
+    Summable (fun n : Four → ℕ => ‖(∏ j : Four, z j ^ n j) *
+      actualFourCurrentCycleTrace D hD i n‖) := by
+  have hs := source_norm D hD i z hz
+  have hg := hs.hasSum.tsum_fiberwise (sourceGradeMap D)
+  apply hg.summable.of_nonneg_of_le (fun _ => norm_nonneg _)
+  intro n
+  rw [← grade_fiber_sum D hD i z n]
+  exact norm_tsum_le_tsum_norm (hs.subtype _)
 
-/-- Full open-polydisk norm summability. The exact countable source/fiber
-proof is an explicit open proposition until dependent product transport is
-added; no weaker theorem is substituted here. -/
-def original_four_current_thermal_claim : Prop :=
-  ∀ (D : LatticeData)
+private theorem original_source_hasSum (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
-    (i : Four → Fin D.rank) (z : Four → ℂ),
-    (∀ j, ‖z j‖ < 1) →
-      Summable (fun n : Four → ℕ =>
-        ‖(∏ j : Four, z j ^ n j) *
-          actualFourCurrentCycleTrace D hD i n‖)
+    (i : Four → Fin D.rank) (z : Four → ℂ) (hz : ∀ j, ‖z j‖ < 1) :
+    HasSum (fun n : Four → ℕ => (∏ j : Four, z j ^ n j) *
+      actualFourCurrentCycleTrace D hD i n)
+        (∑' x : sourceIndex D, sourceTerm D hD i z x) := by
+  have hs := (source_norm D hD i z hz).of_norm.hasSum.tsum_fiberwise (sourceGradeMap D)
+  exact hs.congr_fun (fun n => (grade_fiber_sum D hD i z n).symm)
+
+private theorem sum_fin_product {A : Type*} {r : ℕ} (f : Fin r → A → ℂ)
+    (b : Fin r → ℂ) (hn : ∀ a, Summable (fun v => ‖f a v‖))
+    (hf : ∀ a, HasSum (f a) (b a)) :
+    HasSum (fun v : Fin r → A => ∏ a, f a (v a)) (∏ a, b a) := by
+  induction r with
+  | zero => simpa using (hasSum_fintype (fun v : Fin 0 → A => ∏ a, f a (v a)))
+  | succ r ih =>
+    have hi := ih (fun a => f a.succ) (fun a => b a.succ)
+      (fun a => hn a.succ) (fun a => hf a.succ)
+    have hs := norm_fin_product (fun a => f a.succ) (fun a => hn a.succ)
+    have hp := (hf 0).mul hi ((hn 0).mul_norm hs).of_norm
+    exact (Fin.insertNthEquiv (fun _ : Fin (r + 1) => A) 0).hasSum_iff.mp
+      (by simpa [Function.comp_def, Fin.prod_univ_succ, Fin.insertNth_zero] using hp)
+
+private theorem sum_finite_product {A B : Type*} [Fintype B]
+    (f : B → A → ℂ) (b : B → ℂ) (hn : ∀ a, Summable (fun v => ‖f a v‖))
+    (hf : ∀ a, HasSum (f a) (b a)) :
+    HasSum (fun v : B → A => ∏ a, f a (v a)) (∏ a, b a) := by
+  let e := Fintype.equivFin B
+  let E : (B → A) ≃ (Fin (Fintype.card B) → A) :=
+    Equiv.piCongrLeft' (fun _ : B => A) e
+  have hs := sum_fin_product (fun k => f (e.symm k)) (fun k => b (e.symm k))
+    (fun k => hn (e.symm k)) (fun k => hf (e.symm k))
+  have ht := E.hasSum_iff.mpr hs
+  have hb : (∏ k, b (e.symm k)) = ∏ a, b a := e.symm.prod_comp b
+  rw [hb] at ht
+  apply ht.congr_fun
+  intro v
+  exact (e.symm.prod_comp (fun a => f a (v a))).symm
+
+/-- The positive-frequency Lambert kernel of a labeled edge; both sides of
+the edge use natural powers and are defined on zero-coordinate faces. -/
+def edgeKernel (z : Four → ℂ) (e : Four × Four) : ℂ :=
+  ∑' r : ℕ, (r + 1 : ℂ) *
+    (sideProduct z 0 e ^ (r + 1) + sideProduct z 1 e ^ (r + 1)) /
+      (1 - (∏ j : Four, z j) ^ (r + 1))
+
+/-- The unpaired-current charge moment in the original charge coordinates. -/
+def chargeMoment (D : LatticeData) (i : Four → Fin D.rank) (S : Finset Four) (q : ℂ) : ℂ :=
+  ∑' β : Charge D, q ^ (chargeEnergy D β).toNat *
+    ∏ j ∈ S, (bilinear D (unitCharge D (i j)) β : ℂ)
+
+/-- The ordinary oscillator character times the ten labeled matching
+moments and edge kernels, with no occupation signs or edge symmetrization. -/
+def thermalValue (D : LatticeData) (i : Four → Fin D.rank) (z : Four → ℂ) : ℂ :=
+  let q := ∏ j : Four, z j
+  (∑' d : Occ D, q ^ oscillatorEnergy d) *
+    ∑ M : PM4, chargeMoment D i (unpaired M) q *
+      ∏ e : edgeParam M, (D.G (i e.1.1) (i e.1.2) : ℂ) * edgeKernel z e.1
+
+private theorem edge_hasSum (D : LatticeData) (i : Four → Fin D.rank)
+    (z : Four → ℂ) (hz : ∀ j, ‖z j‖ < 1) (M : PM4) (e : edgeParam M) :
+    HasSum (edgeTerm D i z M e)
+      ((D.G (i e.1.1) (i e.1.2) : ℂ) * edgeKernel z e.1) := by
+  let q := ∏ j : Four, z j
+  let L (ε : Fin 2) := ∑' r : ℕ,
+    (r + 1 : ℂ) * sideProduct z ε e.1 ^ (r + 1) / (1 - q ^ (r + 1))
+  let g : Fin 2 × (ℕ × ℕ) → ℂ := fun v => markedTerm q (sideProduct z v.1 e.1) v.2
+  have hn : Summable (fun v => ‖g v‖) :=
+    (summable_prod_of_nonneg (fun v => norm_nonneg (g v))).2
+      ⟨fun ε => marked_summable q (sideProduct z ε e.1)
+        (product_norm_lt_one z hz) (side_product_norm_lt_one M e ε z hz),
+        Summable.of_finite⟩
+  have hrows := hn.of_norm.hasSum.prod_fiberwise (fun ε =>
+    marked_sum q (sideProduct z ε e.1) (product_norm_lt_one z hz)
+      (side_product_norm_lt_one M e ε z hz))
+  have hv : (∑' v, g v) = edgeKernel z e.1 := by
+    rw [← hrows.tsum_eq, tsum_fintype, Fin.sum_univ_two]
+    have h0 := ((marked_summable q (sideProduct z 0 e.1) (product_norm_lt_one z hz)
+      (side_product_norm_lt_one M e 0 z hz)).of_norm.prod).congr
+        (fun r => (marked_row q (sideProduct z 0 e.1) (product_norm_lt_one z hz) r).tsum_eq)
+    have h1 := ((marked_summable q (sideProduct z 1 e.1) (product_norm_lt_one z hz)
+      (side_product_norm_lt_one M e 1 z hz)).of_norm.prod).congr
+        (fun r => (marked_row q (sideProduct z 1 e.1) (product_norm_lt_one z hz) r).tsum_eq)
+    dsimp [edgeKernel, q]
+    rw [← h0.tsum_add h1]
+    apply tsum_congr
+    intro r
+    ring
+  have ht := hn.of_norm.hasSum
+  rw [hv] at ht
+  have hout := (edgeIndexEquiv.hasSum_iff.mpr ht).mul_left
+    (D.G (i e.1.1) (i e.1.2) : ℂ)
+  change HasSum (fun v =>
+    (D.G (i e.1.1) (i e.1.2) : ℂ) * g (edgeIndexEquiv v)) _
+  exact hout
+
+private theorem matching_source_hasSum (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (i : Four → Fin D.rank) (z : Four → ℂ) (hz : ∀ j, ‖z j‖ < 1) (M : PM4) :
+    HasSum (fun x : Charge D × (Occ D × edgeData M) => sourceTerm D hD i z ⟨M, x⟩)
+      (chargeMoment D i (unpaired M) (∏ j : Four, z j) *
+        ((∑' d : Occ D, (∏ j : Four, z j) ^ oscillatorEnergy d) *
+          ∏ e : edgeParam M,
+            (D.G (i e.1.1) (i e.1.2) : ℂ) * edgeKernel z e.1)) := by
+  classical
+  let q := ∏ j : Four, z j
+  have hc := charge_norm D hD i (unpaired M) q (product_norm_lt_one z hz)
+  have ho := occupation_norm D q (product_norm_lt_one z hz)
+  have he := norm_finite_product (fun e : edgeParam M => edgeTerm D i z M e)
+    (fun e => edge_norm D i z hz M e)
+  have hs := sum_finite_product (fun e : edgeParam M => edgeTerm D i z M e)
+    (fun e => (D.G (i e.1.1) (i e.1.2) : ℂ) * edgeKernel z e.1)
+    (fun e => edge_norm D i z hz M e) (fun e => edge_hasSum D i z hz M e)
+  have ht := ho.of_norm.hasSum.mul hs (ho.mul_norm he).of_norm
+  have hu := hc.of_norm.hasSum.mul ht (hc.mul_norm (ho.mul_norm he)).of_norm
+  apply hu.congr_fun
+  rintro ⟨β, d, v⟩
+  rw [source_term_factor]
+  simp only [edgeTerm, Finset.prod_mul_distrib, q]
+  ring
+
+private theorem source_total_value (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (i : Four → Fin D.rank) (z : Four → ℂ) (hz : ∀ j, ‖z j‖ < 1) :
+    (∑' x : sourceIndex D, sourceTerm D hD i z x) = thermalValue D i z := by
+  classical
+  have hs := (source_norm D hD i z hz).of_norm.hasSum.sigma
+    (fun M => matching_source_hasSum D hD i z hz M)
+  rw [← hs.tsum_eq, tsum_fintype]
+  dsimp [thermalValue]
+  rw [Finset.mul_sum]
+  apply Finset.sum_congr rfl
+  intro M hM
+  ring
+
+/-- Exact absolute thermal resummation of the four original current blocks,
+including every zero-coordinate face of the open four-polydisk. -/
+theorem original_four_current_thermal_hasSum (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (i : Four → Fin D.rank) (z : Four → ℂ) (hz : ∀ j, ‖z j‖ < 1) :
+    HasSum (fun n : Four → ℕ => (∏ j : Four, z j ^ n j) *
+      actualFourCurrentCycleTrace D hD i n) (thermalValue D i z) := by
+  rw [← source_total_value D hD i z hz]
+  exact original_source_hasSum D hD i z hz
+
+/-- At the origin the actual four-current thermal value is zero. -/
+theorem thermal_value_all_zero (D : LatticeData)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (i : Four → Fin D.rank) :
+    thermalValue D i (fun _ => 0) = 0 := by
+  classical
+  have htrace : actualFourCurrentCycleTrace D hD i (fun _ => 0) = 0 := by
+    rw [original_four_zero_charge_trace]
+    apply Finset.sum_eq_zero
+    intro β hβ
+    have hQ := (charge_cutoff_nat D hD 0 β).1 hβ
+    have hn := chargeEnergy_nonneg D hD β
+    have hβ0 : β = 0 := (chargeEnergy_eq_zero_iff D hD β).1 (by omega)
+    subst β
+    simp [bilinear]
+  have hz : ∀ n : Four → ℕ,
+      (∏ j : Four, (0 : ℂ) ^ n j) * actualFourCurrentCycleTrace D hD i n = 0 := by
+    intro n
+    by_cases h : ∀ j, n j = 0
+    · have hn : n = fun _ => 0 := funext h
+      subst n
+      simp only [htrace, mul_zero]
+    · push_neg at h
+      obtain ⟨j, hj⟩ := h
+      rw [Finset.prod_eq_zero (Finset.mem_univ j) (zero_pow hj), zero_mul]
+  have hs := original_four_current_thermal_hasSum D hD i (fun _ => 0) (by intro j; norm_num)
+  have hs0 : HasSum (fun n : Four → ℕ =>
+      (∏ j : Four, (0 : ℂ) ^ n j) * actualFourCurrentCycleTrace D hD i n) 0 :=
+    hasSum_zero.congr_fun hz
+  exact hs.unique hs0
 
 end D5.S3.VertexAlgebra.LatticeFourCurrentThermal
