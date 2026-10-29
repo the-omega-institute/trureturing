@@ -64,9 +64,6 @@ _PAYLOAD_PLAN = ContextVar("worktree_removal_payload_plan", default=None)
 
 def reject_nested_git(target):
     """Refuse repository boundaries before checkpointing or deleting payload."""
-    for entry in git(target, "ls-files", "--stage", "-z").stdout.split(b"\0"):
-        if entry.startswith(b"160000 "):
-            raise Refused("nested_git_boundary:" + os.fsdecode(entry.split(b"\t", 1)[1]))
     def unreadable(error):
         raise error
     for directory, folders, files in os.walk(target, followlinks=False, onerror=unreadable):
@@ -78,6 +75,10 @@ def reject_nested_git(target):
         if "HEAD" in files and git(target, "rev-parse", "--resolve-git-dir", path,
                                    check=False).returncode == 0:
             raise Refused("nested_git_boundary:" + str(path.relative_to(target)))
+
+    for entry in git(target, "ls-files", "--stage", "-z").stdout.split(b"\0"):
+        if entry.startswith(b"160000 "):
+            raise Refused("nested_git_boundary:" + os.fsdecode(entry.split(b"\t", 1)[1]))
 
 
 def record_removal(metadata, commit, recovery_branch, predecessors=None, native_locks=None):
@@ -91,14 +92,15 @@ def record_removal(metadata, commit, recovery_branch, predecessors=None, native_
 def remove_payload(target):
     """Retain the Git link and registration throughout fallible content deletion."""
     planned = _PAYLOAD_PLAN.get()
-    payload = planned[1] if planned is not None and planned[0] == Path(target).resolve() else tuple(
-        child for child in target.iterdir() if child.name != ".git")
-    for child in payload:
-        if child.is_dir() and not child.is_symlink():
+    payload = planned[1] if planned is not None and planned[0] == target else tuple(
+        (child, child.is_dir() and not child.is_symlink())
+        for child in target.iterdir() if child.name != ".git")
+    for child, directory in payload:
+        if directory:
             shutil.rmtree(child)
         else:
             child.unlink()
-    if any(child.name != ".git" for child in target.iterdir()):
+    if payload and any(child.name != ".git" for child in target.iterdir()):
         raise Refused("worktree_payload_changed_during_removal")
 
 
@@ -428,16 +430,17 @@ def remove(options):
                     record_removal(metadata, checkpoint["commit"], recovery_branch,
                                    native_locks=checkpoint.get("native_locks", []))
                 flags = ["--force", "--force"] if "locked" in refreshed else ["--force"]
-                payload = tuple(child for child in target.iterdir() if child.name != ".git")
-                qualifying = True
+                payload = tuple((child, child.is_dir() and not child.is_symlink())
+                                for child in target.iterdir() if child.name != ".git")
                 owned_initializer_scope = (refreshed.get("locked", "").startswith("worktree-init:")
                                            if isinstance(refreshed, dict) else False)
-                native_removal_preflight(source, target, flags,
-                                         stack if owned_initializer_scope else None)
-                qualifying = False
-                removing = True
-                payload_token = _PAYLOAD_PLAN.set((target.resolve(), payload))
+                payload_token = _PAYLOAD_PLAN.set((target, payload))
                 try:
+                    qualifying = True
+                    native_removal_preflight(source, target, flags,
+                                             stack if owned_initializer_scope else None)
+                    qualifying = False
+                    removing = True
                     with payload_removal_budget(options.force) as deadline:
                         remove_payload(target)
                 finally:
