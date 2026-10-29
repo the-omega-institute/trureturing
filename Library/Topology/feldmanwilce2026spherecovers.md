@@ -70,37 +70,32 @@ openness and allows overlapping, disconnected original cover members.
 
 ## Reused formal sources
 
-The simplex fixed point theorem is
-`D5.S3.Geometry.FixedPoint.Brouwer`, with the Math_XMUM provenance
-and MIT license retained in its source. Mathlib supplies the orthogonal
-complement basis, open connected components, partitions of unity, finite
-union of proper subspaces, stereographic projection, convex contractibility,
-homotopy composition and compact quotient-map criterion.
+The sphere obstruction endpoint is adopted from the exact declaration
+`TauCeti.not_contractibleSpace_sphere` in
+`TauCeti/AlgebraicTopology/Sphere/Contractible.lean`, TauCetiProject/TauCeti
+revision `5a01f5fe3621126cccf9ba22e700493cbc7b7156`. Its source proof uses
+the six transitive sphere-homology declarations needed by that endpoint, with
+the actual source dependency closure retained under
+`D5/S3/Topology/TauCeti/`. The receiving import paths are namespaced for this
+repository; the proof content and declaration telescopes are ported from the
+immutable source.
 
-The private `normalizeToSphere` definition is a source adaptation of
-`TauCeti.normalizeToSphere` from
-`TauCetiProject/TauCeti`, immutable revision
-`5a01f5fe3621126cccf9ba22e700493cbc7b7156`, file
-`TauCeti/Analysis/Normed/Module/Normalize.lean`.
-Only this definition is reused: visibility, namespace and qualified names
-are adapted; its proof is retained. The upstream pins Lean 4.35.0 and
-Mathlib `ccbef15ebdb41c2addfac682131f83c75904c3c1`, whereas the receiving
-pin is Mathlib `56a005855ea17e0b0958f73ec801ae140b0a1679`. The unequal
-Mathlib pins exclude dependency-form reuse.
-
-Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.
-Released under Apache 2.0. The complete license is retained at
-[the Tau Ceti license](../../docs/reports/polarization-suppliers/tauceti-LICENSE.txt),
+The supplier pins Lean 4.35.0 and Mathlib
+`ccbef15ebdb41c2addfac682131f83c75904c3c1`, whereas this repository pins
+Mathlib `56a005855ea17e0b0958f73ec801ae140b0a1679`, so dependency-form reuse
+is unavailable. Every adapted source file retains the Tau Ceti copyright and
+prominent modification notice. The complete Apache-2.0 license is retained at
+[`docs/reports/licenses/tauceti-sphere-port-LICENSE.txt`](../../docs/reports/licenses/tauceti-sphere-port-LICENSE.txt),
 SHA-256 `b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1`.
 The complete upstream Git tree at the stated revision has no NOTICE file.
 
-Remove this selected definition when the project's own pinned Mathlib
-contains an equivalent declaration at the full telescope and direct
-replacement compiles all its live consumers. Upstream acceptance alone
-does not satisfy that condition.
+Remove this source port only when this project's own pinned Mathlib contains
+an equivalent declaration at the full telescope and all live consumers compile
+with direct replacement. Upstream acceptance alone does not satisfy that
+condition.
 
 ```json
-{"declaration":"normalizeToSphere","source_revision":"5a01f5fe3621126cccf9ba22e700493cbc7b7156","retire_when":{"own_pinned_mathlib_has_equivalent_full_telescope":true,"all_live_consumers_compile_with_direct_replacement":true}}
+{"declaration":"TauCeti.not_contractibleSpace_sphere","source_revision":"5a01f5fe3621126cccf9ba22e700493cbc7b7156","source_path":"TauCeti/AlgebraicTopology/Sphere/Contractible.lean","transitive_source_modules":54,"transitive_source_lines":11455,"retire_when":{"own_pinned_mathlib_has_equivalent_full_telescope":true,"all_live_consumers_compile_with_direct_replacement":true}}
 ```
 
 ## Verified locator
@@ -109,7 +104,7 @@ https://arxiv.org/abs/2608.13320v1
 
 https://arxiv.org/abs/1505.02514v3
 
-https://github.com/TauCetiProject/TauCeti/blob/5a01f5fe3621126cccf9ba22e700493cbc7b7156/TauCeti/Analysis/Normed/Module/Normalize.lean
+https://github.com/TauCetiProject/TauCeti/blob/5a01f5fe3621126cccf9ba22e700493cbc7b7156/TauCeti/AlgebraicTopology/Sphere/Contractible.lean
 
 https://arxiv.org/abs/2606.06148v1
 

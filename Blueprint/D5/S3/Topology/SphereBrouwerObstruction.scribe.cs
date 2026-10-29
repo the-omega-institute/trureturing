@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Topology;
 internal sealed class SphereBrouwerObstructionDocument : IScribeDocumentDefinition
 {
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Geometry/mathxmum2025brouwer");
+        LibraryNoteRef.Create("D5/L/Topology/feldmanwilce2026spherecovers");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The Euclidean sphere cannot be contracted.",
@@ -20,6 +20,6 @@ internal sealed class SphereBrouwerObstructionDocument : IScribeDocumentDefiniti
                 Paragraph(Text("For every positive natural n, the unit sphere of real Euclidean n-space is not contractible. Ambient dimension one is included.")),
                 Paragraph(Text("Suppose a contraction existed. Reverse it and collapse the zero end of the compact cylinder consisting of the unit interval times the sphere. The map sending (t,x) to t times x is a continuous surjection onto the closed unit ball, hence a quotient map. The reversed contraction is constant on each fiber and therefore descends to a continuous retraction of the ball onto its sphere.")),
                 Paragraph(Text("Embed the sphere affinely in the standard simplex on n+1 vertices. Its n nonconstant coordinates are (x_i+1)/(2n), and the remaining coordinate is one minus their sum. The affine map with coordinates 2n times the corresponding simplex coordinate minus one is a left inverse. Radially clip its values into the ball, apply the alleged retraction, take the antipode, and return to the simplex. A fixed point supplied by the existing Brouwer theorem would have a unit vector equal to its own antipode, a contradiction.")),
-                Paragraph(Text("The simplex fixed point theorem is reused from the attributed Math_XMUM formalization. The retraction argument is a classical consequence and carries no novelty claim."))),
+                Paragraph(Text("The endpoint is adopted from the exact TauCeti.not_contractibleSpace_sphere declaration by a source port, because the supplier and receiving Mathlib pins differ. The TauCeti copyright and complete Apache-2.0 license are retained with the port. The retraction argument and lower-six result carry no novelty claim."))),
             DescribeRole.Theorem))));
 }
