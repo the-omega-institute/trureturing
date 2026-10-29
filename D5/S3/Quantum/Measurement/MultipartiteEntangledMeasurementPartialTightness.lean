@@ -226,14 +226,95 @@ private theorem encodings_unitary (n d : ℕ) [NeZero d] :
     ((Matrix.unitaryGroup _ _).pow_mem hzmem x.val)
     ((Matrix.unitaryGroup _ _).pow_mem hxmem y.val)
 
+private theorem fourier_at_point {n d : ℕ} [NeZero n] [NeZero d]
+    (a t : ZMod d) (r : jointIndex n d) (hr : r 0 = 0) :
+    fourierVector a r (sectorPoint t r) =
+      (Real.sqrt d : ℂ)⁻¹ * ZMod.stdAddChar (a * t) := by
+  classical
+  change (if sectorPoint t r = sectorPoint (t + r 0) r then
+    (Real.sqrt d : ℂ)⁻¹ * ZMod.stdAddChar (a * (t + r 0)) else 0) = _
+  rw [hr, add_zero, if_pos rfl]
+
+private theorem fourier_off_sector {n d : ℕ} [NeZero n] [NeZero d]
+    (a : ZMod d) (r i : jointIndex n d) (hi : i ≠ sectorPoint (i 0) r) :
+    fourierVector a r i = 0 := by
+  classical
+  exact if_neg hi
+
+private theorem sector_sum {n d : ℕ} [NeZero n] [NeZero d]
+    (r : jointIndex n d) (hr : r 0 = 0) (f : jointIndex n d → ℂ)
+    (hf : ∀ i, i ≠ sectorPoint (i 0) r → f i = 0) :
+    ∑ i, f i = ∑ t, f (sectorPoint t r) := by
+  classical
+  symm
+  apply Fintype.sum_of_injective (sectorPoint · r)
+    (fun t u h => (sectorPoint_injective r r hr hr t u h).1) _ _
+  · intro i hi
+    apply hf i
+    intro h
+    exact hi ⟨i 0, h.symm⟩
+  · intro t
+    rfl
+
 private theorem sector_basis (n d : ℕ) [NeZero n] [NeZero d]
     (hn : 2 ≤ n) (hd : 2 ≤ d) (a c : ZMod d) (r s : jointIndex n d)
     (hr : r 0 = 0) (hs : s 0 = 0) :
     star (fourierVector a r) ⬝ᵥ fourierVector c s =
       if a = c ∧ r = s then 1 else 0 := by
-  have hcoords := sector_coordinates (sectorPoint (0 : ZMod d) r)
-  have hinj := sectorPoint_injective r s hr hs
-  sorry
+  classical
+  by_cases hrs : r = s
+  · subst s
+    change (∑ i, star (fourierVector a r i) * fourierVector c r i) = _
+    rw [sector_sum r hr _ (by
+      intro i hi
+      rw [fourier_off_sector a r i hi, star_zero, zero_mul])]
+    have heach (t : ZMod d) :
+        star (fourierVector a r (sectorPoint t r)) *
+          fourierVector c r (sectorPoint t r) =
+        ((Real.sqrt d : ℂ)⁻¹ * (Real.sqrt d : ℂ)⁻¹) *
+          ZMod.stdAddChar (t * (c - a)) := by
+      rw [fourier_at_point a t r hr, fourier_at_point c t r hr]
+      simp only [star_mul, star_inv]
+      have hstar : star (Real.sqrt d : ℂ) = (Real.sqrt d : ℂ) :=
+        Complex.conj_ofReal _
+      rw [hstar]
+      have hchar : star (ZMod.stdAddChar (a * t)) =
+          ZMod.stdAddChar (-(a * t)) :=
+        (AddChar.map_neg_eq_conj _ _).symm
+      rw [hchar]
+      calc
+        _ = ((Real.sqrt d : ℂ)⁻¹ * (Real.sqrt d : ℂ)⁻¹) *
+            (ZMod.stdAddChar (-(a * t)) * ZMod.stdAddChar (c * t)) := by ring
+        _ = _ := by
+          rw [← AddChar.map_add_eq_mul]
+          congr 2
+          ring
+    simp_rw [heach]
+    rw [← Finset.mul_sum,
+      AddChar.sum_mulShift (c - a) (ZMod.isPrimitive_stdAddChar d), ZMod.card]
+    by_cases hac : a = c
+    · subst c
+      simp only [sub_self, ↓reduceIte]
+      have hsqrt : (Real.sqrt d : ℂ) ≠ 0 := by
+        apply Complex.ofReal_ne_zero.mpr
+        apply Real.sqrt_ne_zero'.mpr
+        exact_mod_cast (show 0 < d by omega)
+      have hsq : (Real.sqrt d : ℂ) * (Real.sqrt d : ℂ) = (d : ℂ) := by
+        exact_mod_cast Real.mul_self_sqrt (Nat.cast_nonneg d : (0 : ℝ) ≤ d)
+      rw [← hsq]
+      field_simp [hsqrt]
+    · rw [if_neg (sub_ne_zero.mpr (Ne.symm hac)), if_neg (by tauto)]
+      simp only [Nat.cast_zero, mul_zero]
+  · rw [if_neg (fun h => hrs h.2)]
+    change (∑ i, star (fourierVector a r i) * fourierVector c s i) = 0
+    apply Finset.sum_eq_zero
+    intro i _
+    by_cases hi : i = sectorPoint (i 0) r
+    · have his : i ≠ sectorPoint (i 0) s := by
+        intro his
+        exact hrs (sectorPoint_injective r s hr hs (i 0) (i 0) (hi.symm.trans his)).2
+      rw [fourier_off_sector c s i his, mul_zero]
+    · rw [fourier_off_sector a r i hi, star_zero, zero_mul]
 
 private theorem ghz_density (n d : ℕ) [NeZero n] [NeZero d]
     (hn : 2 ≤ n) (hd : 2 ≤ d) : IsDensity (ghzDensity n d) := by
@@ -245,13 +326,81 @@ private theorem ghz_density (n d : ℕ) [NeZero n] [NeZero d]
   rw [if_pos ⟨rfl, rfl⟩] at h
   simpa only [dotProduct_comm] using h
 
+private theorem outcome_pair_injective {n d : ℕ} [NeZero n]
+    (b c : jointIndex n d) (hhead : b 0 = c 0) (hlabel : sectorLabel b = sectorLabel c) :
+    b = c := by
+  funext k
+  by_cases hk : k = 0
+  · subst k
+    exact hhead
+  · have h := congrFun hlabel k
+    change (if k = 0 then 0 else b k) = (if k = 0 then 0 else c k) at h
+    simpa only [if_neg hk] using h
+
+private theorem computational_dot {n d : ℕ} [NeZero n] [NeZero d]
+    (t : ZMod d) (s : jointIndex n d) (v : jointIndex n d → ℂ) :
+    star (computationalVector t s) ⬝ᵥ v = v (sectorPoint t s) := by
+  classical
+  change (∑ i, star (if i = sectorPoint t s then (1 : ℂ) else 0) * v i) = _
+  simp only [apply_ite, star_one, star_zero, ite_mul, one_mul, zero_mul,
+    Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+
+private theorem fourier_other_sector {n d : ℕ} [NeZero n] [NeZero d]
+    (a t : ZMod d) (r s : jointIndex n d) (hr : r 0 = 0) (hs : s 0 = 0)
+    (hrs : r ≠ s) : fourierVector a s (sectorPoint t r) = 0 := by
+  apply fourier_off_sector
+  intro h
+  have h0 : sectorPoint t r 0 = t := by
+    change t + r 0 = t
+    rw [hr, add_zero]
+  rw [h0] at h
+  exact hrs (sectorPoint_injective r s hr hs t t h).2
+
 private theorem selected_orthonormal (n d : ℕ) [NeZero n] [NeZero d]
     (hn : 2 ≤ n) (hd : 2 ≤ d) (r : Finset (jointIndex n d))
     (b c : jointIndex n d) :
     star (selectedVector r b) ⬝ᵥ selectedVector r c = if b = c then 1 else 0 := by
-  have hb := sector_basis n d hn hd (b 0) (c 0) (sectorLabel b) (sectorLabel c)
-    (sectorLabel_zero b) (sectorLabel_zero c)
-  sorry
+  classical
+  have hcomp (b c : jointIndex n d) (hb : sectorLabel b ∈ r) :
+      star (selectedVector r b) ⬝ᵥ selectedVector r c = if b = c then 1 else 0 := by
+    have hbvec : selectedVector r b = computationalVector (b 0) (sectorLabel b) := if_pos hb
+    rw [hbvec, computational_dot]
+    by_cases hc : sectorLabel c ∈ r
+    · have hcvec : selectedVector r c = computationalVector (c 0) (sectorLabel c) := if_pos hc
+      rw [hcvec]
+      change (if sectorPoint (b 0) (sectorLabel b) = sectorPoint (c 0) (sectorLabel c)
+        then (1 : ℂ) else 0) = _
+      have heq : sectorPoint (b 0) (sectorLabel b) = sectorPoint (c 0) (sectorLabel c) ↔ b = c := by
+        constructor
+        · intro h
+          obtain ⟨hh, hl⟩ := sectorPoint_injective _ _
+            (sectorLabel_zero b) (sectorLabel_zero c) _ _ h
+          exact outcome_pair_injective b c hh hl
+        · intro h
+          subst c
+          rfl
+      simp only [heq]
+    · have hcvec : selectedVector r c = fourierVector (c 0) (sectorLabel c) := if_neg hc
+      rw [hcvec]
+      have hlabels : sectorLabel b ≠ sectorLabel c := by
+        intro h
+        exact hc (h ▸ hb)
+      rw [fourier_other_sector _ _ _ _ (sectorLabel_zero b) (sectorLabel_zero c) hlabels]
+      exact (if_neg (fun h : b = c => hlabels (congrArg sectorLabel h))).symm
+  by_cases hb : sectorLabel b ∈ r
+  · exact hcomp b c hb
+  · by_cases hc : sectorLabel c ∈ r
+    · rw [star_dotProduct, hcomp c b hc]
+      by_cases hbc : b = c
+      · subst c
+        exact (hb hc).elim
+      · rw [if_neg (Ne.symm hbc), if_neg hbc, star_zero]
+    · have hbvec : selectedVector r b = fourierVector (b 0) (sectorLabel b) := if_neg hb
+      have hcvec : selectedVector r c = fourierVector (c 0) (sectorLabel c) := if_neg hc
+      rw [hbvec, hcvec, sector_basis n d hn hd _ _ _ _ (sectorLabel_zero b) (sectorLabel_zero c)]
+      have heq : b 0 = c 0 ∧ sectorLabel b = sectorLabel c ↔ b = c :=
+        ⟨fun h => outcome_pair_injective b c h.1 h.2, fun h => by subst c; exact ⟨rfl, rfl⟩⟩
+      simp only [heq]
 
 private theorem sector_measurement (n d : ℕ) [NeZero n] [NeZero d]
     (hn : 2 ≤ n) (hd : 2 ≤ d) (r : Finset (jointIndex n d)) :
@@ -290,13 +439,158 @@ private theorem rankOne_separable_product (n d : ℕ) [NeZero n] [NeZero d]
     (v : jointIndex n d → ℂ) (hv : star v ⬝ᵥ v = 1)
     (hsep : IsFullySeparable (Matrix.vecMulVec v (star v))) :
     ∃ f : Fin n → ZMod d → ℂ, v = fun i => ∏ k, f k (i k) := by
-  sorry
+  classical
+  obtain ⟨l, s, hs, hsum⟩ := hsep
+  let a : Fin l → Matrix (jointIndex n d) (jointIndex n d) ℂ :=
+    fun j i k => ∏ t, s j t (i t) (k t)
+  have hapsd (j : Fin l) : (a j).PosSemidef := by
+    have hprod (t : Finset (Fin n)) :
+        Matrix.PosSemidef (fun i k : jointIndex n d => ∏ u ∈ t, s j u (i u) (k u)) := by
+      induction t using Finset.induction_on with
+      | empty =>
+        have he : (fun i k : jointIndex n d =>
+            ∏ u ∈ (∅ : Finset (Fin n)), s j u (i u) (k u)) =
+            Matrix.vecMulVec (fun _ => (1 : ℂ)) (star (fun _ => 1)) := by
+          funext i k
+          simp only [Finset.prod_empty, Matrix.vecMulVec_apply, Pi.star_apply,
+            star_one, mul_one]
+        rw [he]
+        exact Matrix.posSemidef_vecMulVec_self_star _
+      | @insert u t hu ih =>
+        have he : (fun i k : jointIndex n d => ∏ w ∈ insert u t, s j w (i w) (k w)) =
+            Matrix.hadamard ((s j u).submatrix (fun i : jointIndex n d => i u)
+              (fun i => i u)) (fun i k => ∏ w ∈ t, s j w (i w) (k w)) := by
+          funext i k
+          exact Finset.prod_insert hu
+        rw [he]
+        exact ((hs j u).submatrix (fun i : jointIndex n d => i u)).hadamard ih
+    exact hprod Finset.univ
+  have hmatrix : ∑ j, a j = Matrix.vecMulVec v (star v) := by
+    ext i k
+    rw [Matrix.sum_apply]
+    exact (hsum i k).symm
+  have hker (j : Fin l) (x : jointIndex n d → ℂ) (hx : star v ⬝ᵥ x = 0) :
+      a j *ᵥ x = 0 := by
+    have hzero : ∑ q, star x ⬝ᵥ a q *ᵥ x = 0 := by
+      calc
+        _ = star x ⬝ᵥ (∑ q, a q) *ᵥ x := by
+          rw [Matrix.sum_mulVec, dotProduct_sum]
+        _ = 0 := by
+          rw [hmatrix, Matrix.vecMulVec_mulVec, hx, zero_smul, dotProduct_zero]
+    apply (hapsd j).dotProduct_mulVec_zero_iff.mp
+    exact (Finset.sum_eq_zero_iff_of_nonneg
+      (fun q _ => (hapsd q).dotProduct_mulVec_nonneg x)).mp hzero j (Finset.mem_univ j)
+  have hvne : v ≠ 0 := by
+    intro h
+    rw [h, star_zero, zero_dotProduct] at hv
+    exact zero_ne_one hv
+  obtain ⟨i, hi⟩ : ∃ i, v i ≠ 0 := by
+    by_contra! h
+    exact hvne (funext h)
+  obtain ⟨j, hj⟩ : ∃ j, a j i i ≠ 0 := by
+    by_contra! h
+    have he := hsum i i
+    change v i * star (v i) = ∑ j, a j i i at he
+    simp only [h, Finset.sum_const_zero] at he
+    exact mul_ne_zero hi (star_ne_zero.mpr hi) he
+  let z : ℂ := a j i i / v i
+  have hz : (fun k => a j k i) = z • v := by
+    funext k
+    have hx : star v ⬝ᵥ (Pi.single k (star (v i)) - Pi.single i (star (v k))) = 0 := by
+      simp only [dotProduct_sub, dotProduct_single, Pi.star_apply]
+      ring
+    have h := congrFun (hker j _ hx) i
+    simp only [Matrix.mulVec_sub, Matrix.mulVec_single, Pi.sub_apply, Pi.zero_apply,
+      Pi.smul_apply, MulOpposite.smul_eq_mul_unop, MulOpposite.unop_op, Matrix.col_apply] at h
+    have hstar := congrArg star h
+    simp only [star_sub, star_mul, star_star, star_zero, (hapsd j).isHermitian.apply] at hstar
+    change a j k i = a j i i / v i * v k
+    rw [div_mul_eq_mul_div]
+    apply (eq_div_iff hi).mpr
+    linear_combination hstar
+  have hz0 : z ≠ 0 := by
+    intro h
+    have he := congrFun hz i
+    rw [h, zero_smul] at he
+    exact hj he
+  refine ⟨fun k t => (if k = 0 then z⁻¹ else 1) * s j k t (i k), ?_⟩
+  funext k
+  symm
+  calc
+    _ = z⁻¹ * a j k i := by
+      rw [Finset.prod_mul_distrib]
+      simp only [Finset.prod_ite_eq', Finset.mem_univ, ite_true]
+      rfl
+    _ = z⁻¹ * (z * v k) := by
+      rw [congrFun hz k]
+      rfl
+    _ = v k := by field_simp [hz0]
 
 private theorem fourier_not_product (n d : ℕ) [NeZero n] [NeZero d]
     (hn : 2 ≤ n) (hd : 2 ≤ d) (a : ZMod d) (r : jointIndex n d)
     (hr : r 0 = 0) :
     ¬ ∃ f : Fin n → ZMod d → ℂ, fourierVector a r = fun i => ∏ k, f k (i k) := by
-  sorry
+  classical
+  rintro ⟨f, hf⟩
+  let i := sectorPoint (0 : ZMod d) r
+  let j := sectorPoint (1 : ZMod d) r
+  let q := Function.update i 0 (j 0)
+  let p := Function.update j 0 (i 0)
+  have hi : i = sectorPoint (i 0) r := by
+    change sectorPoint 0 r = sectorPoint (0 + r 0) r
+    rw [hr, add_zero]
+  have hj : j = sectorPoint (j 0) r := by
+    change sectorPoint 1 r = sectorPoint (1 + r 0) r
+    rw [hr, add_zero]
+  have hq0 : q 0 = 1 := by
+    change Function.update i 0 (j 0) 0 = 1
+    rw [Function.update_self]
+    change 1 + r 0 = 1
+    rw [hr, add_zero]
+  have hq : q ≠ sectorPoint (q 0) r := by
+    intro h
+    let k : Fin n := ⟨1, by omega⟩
+    have hk : k ≠ 0 := by
+      intro hk
+      have := congrArg Fin.val hk
+      change 1 = 0 at this
+      omega
+    have hval := congrFun h k
+    change Function.update i 0 (j 0) k = q 0 + r k at hval
+    rw [Function.update_of_ne hk, hq0] at hval
+    change 0 + r k = 1 + r k at hval
+    have h10 : (1 : ZMod d) = 0 := (add_right_cancel hval).symm
+    have := ZMod.one_eq_zero_iff.mp h10
+    omega
+  have hsqrt : (Real.sqrt d : ℂ) ≠ 0 := by
+    apply Complex.ofReal_ne_zero.mpr
+    apply Real.sqrt_ne_zero'.mpr
+    exact_mod_cast (show 0 < d by omega)
+  have hnonzero : ∀ t, t = sectorPoint (t 0) r → fourierVector a r t ≠ 0 := by
+    intro t ht
+    change (if t = sectorPoint (t 0) r then
+      (Real.sqrt d : ℂ)⁻¹ * ZMod.stdAddChar (a * t 0) else 0) ≠ 0
+    rw [if_pos ht, ZMod.stdAddChar_apply]
+    exact mul_ne_zero (inv_ne_zero hsqrt) (Circle.coe_ne_zero _)
+  have hminor : fourierVector a r i * fourierVector a r j =
+      fourierVector a r q * fourierVector a r p := by
+    rw [hf]
+    rw [← Finset.prod_mul_distrib, ← Finset.prod_mul_distrib]
+    apply Finset.prod_congr rfl
+    intro k _
+    by_cases hk : k = 0
+    · subst k
+      change f 0 (i 0) * f 0 (j 0) =
+        f 0 (Function.update i 0 (j 0) 0) * f 0 (Function.update j 0 (i 0) 0)
+      rw [Function.update_self, Function.update_self, mul_comm]
+    · change f k (i k) * f k (j k) =
+        f k (Function.update i 0 (j 0) k) * f k (Function.update j 0 (i 0) k)
+      rw [Function.update_of_ne hk, Function.update_of_ne hk]
+  have hqzero : fourierVector a r q = 0 := by
+    change (if q = sectorPoint (q 0) r then _ else 0) = 0
+    exact if_neg hq
+  rw [hqzero, zero_mul] at hminor
+  exact mul_ne_zero (hnonzero i hi) (hnonzero j hj) hminor
 
 private theorem selected_separable_iff (n d : ℕ) [NeZero n] [NeZero d]
     (hn : 2 ≤ n) (hd : 2 ≤ d) (r : Finset (jointIndex n d)) (b : jointIndex n d) :
@@ -392,7 +686,7 @@ private theorem choose_sectors (n d m : ℕ) [NeZero n] [NeZero d]
         funext k
         by_cases hk : k = 0
         · subst k
-          change (if h : (0 : Fin n) = 0 then (0 : ZMod d) else _) = r.1 0
+          change (if h : (0 : Fin n) = 0 then (0 : ZMod d) else r.1 0) = r.1 0
           rw [dif_pos rfl]
           exact (Finset.mem_filter.mp r.2).2.symm
         · exact dif_neg hk
@@ -422,19 +716,161 @@ private theorem winning_probability (n d : ℕ) [NeZero n] [NeZero d]
       tensorAdjointMatrix (localEncoding n d) x y *
       selectedMeasurement r (winningOutcome x y))).re =
         if sectorCoordinate y ∈ r then (d : ℝ)⁻¹ else 1 := by
-  have hencoded := encoded_ghz n d hn hd x y
+  classical
+  obtain ⟨z, hz, hencoded⟩ := encoded_ghz n d hn hd x y
   have horth := sector_basis n d hn hd (∑ k, x k) (∑ k, x k)
     (sectorCoordinate y) (sectorCoordinate y) (sector_coordinates y).1 (sector_coordinates y).1
-  sorry
+  rw [if_pos ⟨rfl, rfl⟩] at horth
+  have hzprod : z * star z = 1 := by
+    rw [Complex.star_def, RCLike.mul_conj]
+    rw [← Complex.normSq_eq_norm_sq, hz, Complex.ofReal_one]
+  have hstate : tensorMatrix (localEncoding n d) x y * ghzDensity n d *
+      tensorAdjointMatrix (localEncoding n d) x y =
+      Matrix.vecMulVec (fourierVector (∑ k, x k) (sectorCoordinate y))
+        (star (fourierVector (∑ k, x k) (sectorCoordinate y))) := by
+    change tensorMatrix (localEncoding n d) x y *
+      Matrix.vecMulVec (fourierVector 0 (0 : jointIndex n d))
+        (star (fourierVector 0 (0 : jointIndex n d))) *
+        (tensorMatrix (localEncoding n d) x y)ᴴ = _
+    rw [Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, Matrix.vecMul_conjTranspose,
+      star_star, hencoded]
+    ext i j
+    change (z * fourierVector (∑ k, x k) (sectorCoordinate y) i) *
+      star (z * fourierVector (∑ k, x k) (sectorCoordinate y) j) = _
+    simp only [star_mul]
+    calc
+      _ = (z * star z) * (fourierVector (∑ k, x k) (sectorCoordinate y) i *
+          star (fourierVector (∑ k, x k) (sectorCoordinate y) j)) := by ring
+      _ = _ := by rw [hzprod, one_mul]; rfl
+  have hhead : winningOutcome x y 0 = ∑ k, x k := by
+    exact if_pos rfl
+  have hlabel : sectorLabel (winningOutcome x y) = sectorCoordinate y := by
+    funext k
+    by_cases hk : k = 0
+    · subst k
+      rw [sectorLabel_zero]
+      exact (sector_coordinates y).1.symm
+    · change (if k = 0 then 0 else
+        (if k = 0 then ∑ t, x t else y k - y 0)) = y k - y 0
+      rw [if_neg hk, if_neg hk]
+  have htrace (v : jointIndex n d → ℂ) :
+      Matrix.trace (Matrix.vecMulVec (fourierVector (∑ k, x k) (sectorCoordinate y))
+        (star (fourierVector (∑ k, x k) (sectorCoordinate y))) *
+          Matrix.vecMulVec v (star v)) =
+      (star (fourierVector (∑ k, x k) (sectorCoordinate y)) ⬝ᵥ v) *
+        (star v ⬝ᵥ fourierVector (∑ k, x k) (sectorCoordinate y)) := by
+    rw [Matrix.vecMulVec_mul_vecMulVec, Matrix.trace_vecMulVec, dotProduct_smul,
+      dotProduct_comm (fourierVector (∑ k, x k) (sectorCoordinate y)) (star v)]
+  rw [hstate]
+  change (Matrix.trace (_ * Matrix.vecMulVec
+    (selectedVector r (winningOutcome x y)) (star (selectedVector r (winningOutcome x y))))).re = _
+  rw [htrace]
+  have hvec : selectedVector r (winningOutcome x y) =
+      if sectorCoordinate y ∈ r then computationalVector (∑ k, x k) (sectorCoordinate y)
+      else fourierVector (∑ k, x k) (sectorCoordinate y) := by
+    change (if sectorLabel (winningOutcome x y) ∈ r then
+      computationalVector (winningOutcome x y 0) (sectorLabel (winningOutcome x y))
+      else fourierVector (winningOutcome x y 0) (sectorLabel (winningOutcome x y))) = _
+    simp only [hhead, hlabel]
+  rw [hvec]
+  by_cases hy : sectorCoordinate y ∈ r
+  · rw [if_pos hy, if_pos hy, star_dotProduct, computational_dot, computational_dot,
+      fourier_at_point _ _ _ (sector_coordinates y).1]
+    have hchar : star (ZMod.stdAddChar ((∑ k, x k) * (∑ k, x k))) *
+        ZMod.stdAddChar ((∑ k, x k) * (∑ k, x k)) = 1 := by
+      rw [← AddChar.map_neg_eq_conj, ← AddChar.map_add_eq_mul, neg_add_cancel,
+        AddChar.map_zero_eq_one]
+    have hsstar : star (Real.sqrt d : ℂ) = (Real.sqrt d : ℂ) := Complex.conj_ofReal _
+    have hsq : (Real.sqrt d : ℂ) * (Real.sqrt d : ℂ) = (d : ℂ) := by
+      exact_mod_cast Real.mul_self_sqrt (Nat.cast_nonneg d : (0 : ℝ) ≤ d)
+    have hamp : star ((Real.sqrt d : ℂ)⁻¹ *
+        ZMod.stdAddChar ((∑ k, x k) * (∑ k, x k))) *
+        ((Real.sqrt d : ℂ)⁻¹ * ZMod.stdAddChar ((∑ k, x k) * (∑ k, x k))) =
+        (d : ℂ)⁻¹ := by
+      simp only [star_mul, star_inv, hsstar]
+      calc
+        _ = ((Real.sqrt d : ℂ)⁻¹ * (Real.sqrt d : ℂ)⁻¹) *
+            (star (ZMod.stdAddChar ((∑ k, x k) * (∑ k, x k))) *
+              ZMod.stdAddChar ((∑ k, x k) * (∑ k, x k))) := by ring
+        _ = _ := by rw [hchar, mul_one, ← mul_inv_rev, hsq]
+    rw [hamp]
+    simp only [← Complex.ofReal_natCast, ← Complex.ofReal_inv, Complex.ofReal_re]
+  · rw [if_neg hy, if_neg hy, horth, one_mul]
+    rfl
 
 private theorem sector_score (n d : ℕ) [NeZero n] [NeZero d]
     (hn : 2 ≤ n) (hd : 2 ≤ d) (r : Finset (jointIndex n d))
     (hr : ∀ s ∈ r, s 0 = 0) :
     score (ghzDensity n d) (localEncoding n d) (selectedMeasurement r) =
       ((d : ℝ) ^ n - d * r.card + r.card) / (d : ℝ) ^ n := by
+  classical
   have hprob := winning_probability n d hn hd r
   have hcount := sector_count n d hn hd r hr
-  sorry
+  let e : jointIndex n d ≃ jointIndex n d :=
+    { toFun := fun b => sectorPoint (b 0) (sectorLabel b)
+      invFun := fun i => Function.update (sectorCoordinate i) 0 (i 0)
+      left_inv := fun b => by
+        funext k
+        change Function.update (sectorCoordinate (sectorPoint (b 0) (sectorLabel b)))
+          0 (sectorPoint (b 0) (sectorLabel b) 0) k = b k
+        by_cases hk : k = 0
+        · subst k
+          rw [Function.update_self]
+          change b 0 + sectorLabel b 0 = b 0
+          rw [sectorLabel_zero, add_zero]
+        · rw [Function.update_of_ne hk]
+          change (b 0 + sectorLabel b k) - (b 0 + sectorLabel b 0) = b k
+          rw [sectorLabel_zero, add_zero]
+          change (b 0 + (if k = 0 then 0 else b k)) - b 0 = b k
+          rw [if_neg hk]
+          abel
+      right_inv := fun i => by
+        funext k
+        change Function.update (sectorCoordinate i) 0 (i 0) 0 +
+          sectorLabel (Function.update (sectorCoordinate i) 0 (i 0)) k = i k
+        rw [Function.update_self]
+        by_cases hk : k = 0
+        · subst k
+          rw [sectorLabel_zero, add_zero]
+        · change i 0 + (if k = 0 then 0 else
+            Function.update (sectorCoordinate i) 0 (i 0) k) = i k
+          rw [if_neg hk, Function.update_of_ne hk]
+          change i 0 + (i k - i 0) = i k
+          abel }
+  have hcoordinate (b : jointIndex n d) : sectorCoordinate (e b) = sectorLabel b := by
+    funext k
+    change (b 0 + sectorLabel b k) - (b 0 + sectorLabel b 0) = sectorLabel b k
+    rw [sectorLabel_zero, add_zero]
+    abel
+  have hreindex : (∑ y, if sectorCoordinate y ∈ r then (d : ℝ)⁻¹ else 1) =
+      ∑ b : jointIndex n d, if sectorLabel b ∈ r then (d : ℝ)⁻¹ else 1 := by
+    rw [← e.sum_comp (fun y => if sectorCoordinate y ∈ r then (d : ℝ)⁻¹ else 1)]
+    apply Finset.sum_congr rfl
+    intro b _
+    rw [hcoordinate]
+  have hc : ((Finset.univ : Finset (jointIndex n d)).card : ℝ) = (d : ℝ) ^ n := by
+    simp only [Finset.card_univ, Fintype.card_fun, Fintype.card_fin, ZMod.card,
+      Nat.cast_pow]
+  have hcomplement := Finset.card_filter_add_card_filter_not
+    (s := (Finset.univ : Finset (jointIndex n d))) (fun b => sectorLabel b ∈ r)
+  have hcomplementReal :
+      ((Finset.univ.filter (fun b : jointIndex n d => sectorLabel b ∉ r)).card : ℝ) =
+        (d : ℝ) ^ n - d * r.card := by
+    have h := congrArg (fun k : ℕ => (k : ℝ)) hcomplement
+    rw [Nat.cast_add, hcount, Nat.cast_mul, hc] at h
+    linarith
+  have hsum : (∑ y, if sectorCoordinate y ∈ r then (d : ℝ)⁻¹ else 1) =
+      d * r.card * (d : ℝ)⁻¹ + ((d : ℝ) ^ n - d * r.card) := by
+    rw [hreindex, Finset.sum_ite]
+    simp only [Finset.sum_const, nsmul_eq_mul, mul_one, hcount, Nat.cast_mul,
+      hcomplementReal]
+  change ((d : ℝ) ^ (2 * n))⁻¹ * ∑ x, ∑ y, _ = _
+  simp_rw [hprob]
+  rw [hsum, Finset.sum_const, nsmul_eq_mul, hc]
+  have hd0 : (d : ℝ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
+  rw [show 2 * n = n + n by omega, pow_add]
+  field_simp [hd0]
+  <;> ring
 
 theorem result : claim := by
   intro n d m hn hd hm
