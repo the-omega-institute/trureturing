@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Partitions/FerrersLevelTransfer
    mirror-E: none(waiver:gaussian-level-transfer)
-   anchors: [D5/S3/Combinatorics/CylindricPartition/LiUncuRectangle]
+   anchors: []
    utility: none
    digest: Gaussian coefficients count bounded level transitions with a fixed last row. -/
 

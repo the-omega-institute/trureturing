@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Partitions/BarreseAllWidths
    mirror-E: none(waiver:derived-width-normalization)
-   anchors: [D5/S3/Combinatorics/Partitions/BarreseOrderedLevels]
+   anchors: []
    utility: none
    digest: The bottom level total bounds every normalized shape in the unrestricted-width fiber. -/
 

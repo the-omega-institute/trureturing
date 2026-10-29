@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Partitions/FerrersLevelGluing
    mirror-E: none(waiver:ordered-level-gluing-bijection)
-   anchors: [D5/S3/Combinatorics/Partitions/FerrersLevelCounting]
+   anchors: []
    utility: none
    digest: Compatible level paths reconstruct exactly the bounded flat row fibers. -/
 

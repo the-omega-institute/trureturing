@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Partitions/FerrersLevelCounting
    mirror-E: none(waiver:finite-level-counting-recurrence)
-   anchors: [D5/S3/Combinatorics/Partitions/FerrersLevelTransfer, D5/S3/Combinatorics/Partitions/FerrersRowCoordinates]
+   anchors: []
    utility: none
    digest: A finite Gaussian transfer recurrence counts compatible ordered levels. -/
 

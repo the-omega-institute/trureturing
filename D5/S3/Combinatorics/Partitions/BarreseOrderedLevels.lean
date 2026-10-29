@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Partitions/BarreseOrderedLevels
    mirror-E: none(waiver:ordered-level-native-count)
-   anchors: [D5/S3/Combinatorics/Partitions/FerrersLevelGluing]
+   anchors: []
    utility: none
    digest: Native fixed-slot Ferrers boards are counted by the finite Gaussian recurrence. -/
 

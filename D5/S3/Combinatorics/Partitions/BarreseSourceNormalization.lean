@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Combinatorics/Partitions/BarreseSourceNormalization
    mirror-E: none(waiver:positive-column-normalization)
-   anchors: [D5/S3/Combinatorics/Partitions/BarreseAllWidths]
+   anchors: []
    utility: none
    digest: Positive source column tuples give the entire normalized l-fiber without a width parameter. -/
 
