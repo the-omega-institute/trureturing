@@ -194,7 +194,7 @@ private theorem closed_stationary (θ : Presentation H) (C : Finset H)
     ∀ j : C, ∑ i : C, θ.initial i.val *
       (θ.matrix false i.val j.val + θ.matrix true i.val j.val) = θ.initial j.val := by
   have hs (i : C) : ∑ j : C, (θ.matrix false i.val j.val + θ.matrix true i.val j.val) = 1 := by
-    rw [Finset.sum_coe_sort]
+    rw [Finset.sum_coe_sort _ (fun j : H => θ.matrix false i.val j + θ.matrix true i.val j)]
     calc
       _ = ∑ j, (θ.matrix false i.val j + θ.matrix true i.val j) := by
         apply Finset.sum_subset (Finset.subset_univ _)
@@ -203,7 +203,7 @@ private theorem closed_stationary (θ : Presentation H) (C : Finset H)
       _ = 1 := θ.stochastic i.val
   have hl (j : C) : (∑ i : C, θ.initial i.val *
       (θ.matrix false i.val j.val + θ.matrix true i.val j.val)) ≤ θ.initial j.val := by
-    rw [←θ.stationary j.val,Finset.sum_coe_sort]
+    rw [←θ.stationary j.val,Finset.sum_coe_sort C (fun i : H => θ.initial i * (θ.matrix false i j.val + θ.matrix true i j.val))]
     exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ _) fun i _ _ =>
       mul_nonneg (θ.initial_nonneg _) (add_nonneg (θ.matrix_nonneg _ _ _) (θ.matrix_nonneg _ _ _))
   have ht : (∑ j : C, ∑ i : C, θ.initial i.val *
@@ -212,6 +212,21 @@ private theorem closed_stationary (θ : Presentation H) (C : Finset H)
     simp_rw [←Finset.mul_sum,hs,mul_one]
   intro j
   exact (Finset.sum_eq_sum_iff_of_le (fun j _ => hl j)).mp ht j (Finset.mem_univ j)
+
+private theorem weighted_no11 (θ : Presentation H) (i j : H) :
+    θ.initial i * (θ.matrix true*θ.matrix true) i j = 0 := by
+  have hn (a b : H) : 0 ≤ (θ.matrix true*θ.matrix true) a b :=
+    Finset.sum_nonneg fun k _ => mul_nonneg (θ.matrix_nonneg _ _ _) (θ.matrix_nonneg _ _ _)
+  have hz : θ.initial i * (θ.matrix true*θ.matrix true) i j = 0 := by
+    apply le_antisymm _ (mul_nonneg (θ.initial_nonneg _) (hn _ _))
+    calc
+      _ ≤ ∑ b, θ.initial i * (θ.matrix true*θ.matrix true) i b :=
+        Finset.single_le_sum (fun b _ => mul_nonneg (θ.initial_nonneg _) (hn _ _)) (Finset.mem_univ j)
+      _ ≤ ∑ a, ∑ b, θ.initial a * (θ.matrix true*θ.matrix true) a b :=
+        Finset.single_le_sum (fun a _ => Finset.sum_nonneg fun b _ =>
+          mul_nonneg (θ.initial_nonneg _) (hn _ _)) (Finset.mem_univ i)
+      _ = 0 := θ.no11
+  exact hz
 
 /-- The actual restriction to a positive-weight closed class, with normalized
 original stationary masses and unchanged original real matrix entries. -/
@@ -239,7 +254,7 @@ def nativeComponent (θ : Presentation H)
   · rw [←Finset.sum_div]
     exact div_self (ne_of_gt hc)
   · intro i
-    rw [Finset.sum_coe_sort]
+    rw [Finset.sum_coe_sort _ (fun j : H => θ.matrix false i.val j + θ.matrix true i.val j)]
     calc
       _ = ∑ j, (θ.matrix false i.val j + θ.matrix true i.val j) := by
         apply Finset.sum_subset (Finset.subset_univ _)
@@ -255,21 +270,11 @@ def nativeComponent (θ : Presentation H)
     intro j _
     have hp : (∑ k : C.val, θ.matrix true i.val k.val * θ.matrix true k.val j.val) =
         (θ.matrix true*θ.matrix true) i.val j.val := by
-      rw [Matrix.mul_apply,Finset.sum_coe_sort]
+      rw [Matrix.mul_apply,Finset.sum_coe_sort _ (fun k : H => θ.matrix true i.val k * θ.matrix true k j.val)]
       apply Finset.sum_subset (Finset.subset_univ _)
       intro k _ hk
       rw [hclosed i k hk true,zero_mul]
-    have hn (a b : H) : 0 ≤ (θ.matrix true*θ.matrix true) a b :=
-      Finset.sum_nonneg fun k _ => mul_nonneg (θ.matrix_nonneg _ _ _) (θ.matrix_nonneg _ _ _)
-    have hz : θ.initial i.val * (θ.matrix true*θ.matrix true) i.val j.val = 0 := by
-      apply le_antisymm _ (mul_nonneg (θ.initial_nonneg _) (hn _ _))
-      calc
-        _ ≤ ∑ b, θ.initial i.val * (θ.matrix true*θ.matrix true) i.val b :=
-          Finset.single_le_sum (fun b _ => mul_nonneg (θ.initial_nonneg _) (hn _ _)) (Finset.mem_univ j.val)
-        _ ≤ ∑ a, ∑ b, θ.initial a * (θ.matrix true*θ.matrix true) a b :=
-          Finset.single_le_sum (fun a _ => Finset.sum_nonneg fun b _ =>
-            mul_nonneg (θ.initial_nonneg _) (hn _ _)) (Finset.mem_univ i.val)
-        _ = 0 := θ.no11
+    have hz := weighted_no11 θ i.val j.val
     change θ.initial i.val / c * (∑ k : C.val, θ.matrix true i.val k.val * θ.matrix true k.val j.val) = 0
     rw [hp,div_mul_eq_mul_div,hz,zero_div]
 
@@ -407,7 +412,7 @@ private theorem component_product (θ : Presentation H) (C : Finset H)
     have hl : θ.matrix false i.val j+θ.matrix true i.val j +
         (∑ k ∈ C, (θ.matrix false i.val k+θ.matrix true i.val k)) ≤
         ∑ k, (θ.matrix false i.val k+θ.matrix true i.val k) := by
-      rw [←Finset.sum_insert hj]
+      rw [←Finset.sum_insert hj (f := fun k : H => θ.matrix false i.val k + θ.matrix true i.val k)]
       exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ _) fun k _ _ =>
         add_nonneg (θ.matrix_nonneg _ _ _) (θ.matrix_nonneg _ _ _)
     rw [hs,θ.stochastic] at hl
@@ -420,23 +425,30 @@ private theorem component_product (θ : Presentation H) (C : Finset H)
     change (κ.matrix x*product κ w) i j = (θ.matrix x*product θ w) i.val j.val
     rw [Matrix.mul_apply,Matrix.mul_apply]
     simp_rw [hmat,ih]
-    rw [Finset.sum_coe_sort]
+    rw [Finset.sum_coe_sort C (fun k : H => θ.matrix x i.val k * product θ w k j.val)]
     apply Finset.sum_subset (Finset.subset_univ _)
     intro k _ hk
     rw [hclosed i k hk x,zero_mul]
 
 /-- A native positive stationary component is exactly the original marked law
 restricted to that component, with its actual stationary weight. -/
-theorem component_restriction (θ : Presentation H) (C : Finset H)
-    (κ : Presentation C) (c : ℝ) (hc : 0 < c)
-    (hinit : ∀ i : C, c*κ.initial i = θ.initial i.val)
-    (hmat : ∀ x (i j : C), κ.matrix x i j = θ.matrix x i.val j.val)
+theorem component_restriction (θ : Presentation H)
+    (D : FiniteClosedClasses.ClosedClass (θ.matrix false+θ.matrix true))
+    (hc : 0 < ∑ i : D.val, θ.initial i.val)
     (J : Measure (PathSpace H)) [IsProbabilityMeasure J] (hJ : HasOriginalCylinders J θ)
-    (K : Measure (PathSpace C)) [IsProbabilityMeasure K] (hK : HasOriginalCylinders K κ)
+    (K : Measure (PathSpace D.val)) [IsProbabilityMeasure K] (hK : HasOriginalCylinders K (nativeComponent θ D hc))
     (t : ℤ) :
-    ENNReal.ofReal c • K.map (componentInclusion C) =
-      J.restrict (state t ⁻¹' (C : Set H)) ∧
-      (∀ w (i j : C), product κ w i j = product θ w i.val j.val) := by
+    ENNReal.ofReal (∑ i : D.val, θ.initial i.val) • K.map (componentInclusion D.val) =
+      J.restrict (state t ⁻¹' (D.val : Set H)) ∧
+      (∀ w (i j : D.val), product (nativeComponent θ D hc) w i j = product θ w i.val j.val) := by
+  let C := D.val
+  let κ := nativeComponent θ D hc
+  let c := ∑ i : C, θ.initial i.val
+  have hinit (i : C) : c*κ.initial i = θ.initial i.val := by
+    change c*(θ.initial i.val/c) = θ.initial i.val
+    exact mul_div_cancel₀ _ (ne_of_gt hc)
+  have hmat (x : Bool) (i j : C) : κ.matrix x i j = θ.matrix x i.val j.val := rfl
+  change ENNReal.ofReal c • K.map (componentInclusion C) = J.restrict (state t ⁻¹' (C : Set H)) ∧ _
   refine ⟨?_, component_product θ C κ hmat⟩
   let f := componentInclusion (H := H) C
   have hf : Measurable f := componentInclusion_measurable C
