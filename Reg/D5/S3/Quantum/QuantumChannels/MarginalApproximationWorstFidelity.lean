@@ -123,3 +123,106 @@ def registration :
 
 end
 end Reg.D5.S3.Quantum.QuantumChannels.MarginalApproximationWorstFidelity
+
+namespace Reg.D5.S3.Quantum.QuantumChannels.MarginalApproximationWorstFidelity.ProductMatrixDiagonal
+
+open _root_.D5.S3.Quantum.QuantumChannels.MarginalApproximationWorstFidelity
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.D5.S3.Quantum.Recovery.ProductPrefixRigidity (productMap)
+open scoped BigOperators
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+noncomputable section
+universe u
+
+/-- Observe equality of the product-indexed matrices for every index type. -/
+abbrev signature : Signature where
+  Params := Type u
+  State ι := Matrix (ι → Fin 4) (ι → Fin 4) ℂ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ ι := Matrix (ι → Fin 4) (ι → Fin 4) ℂ → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature.{u} :=
+  realize signature (fun _ _ X Y => X = Y) (fun e => nomatch e)
+
+def rejected : Realization signature.{u} :=
+  realize signature (fun _ _ X Y => X ≠ Y) (fun e => nomatch e)
+
+/-- Retain the finite index dictionaries and the arbitrary diagonal family. -/
+abbrev arena : Arena where
+  signature := signature.{u}
+  Law R := ∀ {ι : Type u} [Fintype ι] [DecidableEq ι] (d : ι → Fin 4 → ℂ),
+    R.readout () ι (productMap (fun _ => Fin 4) (fun k => Matrix.diagonal (d k)))
+      (Matrix.diagonal (fun a => ∏ k, d k (a k)))
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  exact h (ι := ULift.{u} Unit) 0 (productMatrix_diagonal 0)
+
+private theorem dependence : ObservationalDependence signature.{u} actual := by
+  intro i
+  let M := Matrix (ULift.{u} Unit → Fin 4) (ULift.{u} Unit → Fin 4) ℂ
+  refine ⟨ULift.{u} Unit, 0, (fun _ _ => 1), ?_⟩
+  intro h
+  have he : ((0 : M) = 0) = ((fun _ _ => (1 : ℂ) : M) = 0) := congrFun h 0
+  have hz := Eq.mp he rfl
+  have hentry := congrFun (congrFun hz (fun _ => 0)) (fun _ => 0)
+  norm_num at hentry
+
+def source_registration : Registration arena.{u} (type_of% @productMatrix_diagonal.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@productMatrix_diagonal, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@productMatrix_diagonal.{u}) (Realization signature.{u}) Unit Unit := {
+  unitName := .str
+    `D5.S3.Quantum.QuantumChannels.MarginalApproximationWorstFidelity.productMatrix_diagonal
+    "__information_unit"
+  realizationName := ``source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ X Y => X = Y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.QuantumChannels.MarginalApproximationWorstFidelity
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end
+end Reg.D5.S3.Quantum.QuantumChannels.MarginalApproximationWorstFidelity.ProductMatrixDiagonal
