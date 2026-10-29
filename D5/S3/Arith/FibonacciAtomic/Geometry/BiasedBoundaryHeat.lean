@@ -9,6 +9,7 @@
 import D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryCounting
 import D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryPolar
 import D5.S3.Quantum.Analysis.ContractionSemigroup
+import D5.S3.HilbertOperators.RealPositiveTrace
 import Mathlib.Analysis.Normed.Lp.lpHolder
 import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
 
@@ -30,6 +31,7 @@ open BiasedBoundaryFreeRootForm (K Sigma)
 open BiasedBoundaryCentering (C Pi mean)
 open BiasedBoundaryOperator (boundaryOperator)
 open MarkovProcess.Semigroup Filter
+open D5.S3.HilbertOperators.RealPositiveTrace (positiveTrace positive_trace_diagonal)
 open scoped Topology ENNReal NNReal InnerProductSpace
 
 private theorem heat_bound (mu : ℕ → ℝ) (hp : ∀ i, 0 < mu i)
@@ -229,6 +231,97 @@ private theorem generator_iff (e : HilbertBasis ℕ ℝ G0) (k : HilbertBasis �
       simpa only [q, HasSum, SummationFilter.unconditional_filter] using e.hasSum_repr u
     exact S.tendsto_differenceQuotient_of_tendsto_generator hu hv
 
+private theorem exponential_series (x : ℝ) (hx : 0 < x) :
+    HasSum (fun n : ℕ => Real.exp (-x * ((n : ℝ)+1)))
+      (Real.exp (-x) / (1-Real.exp (-x))) := by
+  have hq : Real.exp (-x) < 1 := Real.exp_lt_one_iff.mpr (neg_neg_of_pos hx)
+  convert (hasSum_geometric_of_lt_one (Real.exp_pos (-x)).le hq).mul_left
+    (Real.exp (-x)) using 1
+  · funext n
+    rw [← Real.exp_nat_mul, ← Real.exp_add]
+    congr 1
+    ring
+  · rw [div_eq_mul_inv]
+
+private theorem exponential_series_bounds (x : ℝ) (hx : 0 < x) :
+    Real.exp (-x) / x ≤ Real.exp (-x) / (1-Real.exp (-x)) ∧
+    Real.exp (-x) / (1-Real.exp (-x)) ≤ 1/x := by
+  have hq := Real.exp_pos (-x)
+  have hq1 : Real.exp (-x) < 1 := Real.exp_lt_one_iff.mpr (neg_neg_of_pos hx)
+  have hd : 0 < 1-Real.exp (-x) := sub_pos.mpr hq1
+  constructor
+  · apply (div_le_div_iff₀ hx hd).mpr
+    have he := Real.add_one_le_exp (-x)
+    nlinarith [mul_nonneg hq.le (show 0 ≤ x-(1-Real.exp (-x)) by linarith)]
+  · apply (div_le_div_iff₀ hd hx).mpr
+    have he := mul_le_mul_of_nonneg_right (Real.add_one_le_exp x) hq.le
+    have hid : Real.exp x * Real.exp (-x) = 1 := by rw [← Real.exp_add]; simp
+    rw [hid] at he
+    nlinarith
+
+private theorem heat_estimates (e : HilbertBasis ℕ ℝ G0) (mu : ℕ → ℝ)
+    (hp : ∀ i, 0 < mu i)
+    (hl : ∀ i, ((i : ℝ)+1)/BiasedBoundaryCounting.B ≤ (mu i)⁻¹)
+    (hu : ∀ i, (mu i)⁻¹ ≤ ((i : ℝ)+1)/BiasedBoundaryTrace.b)
+    (t : ℝ≥0) (ht : 0 < t) :
+    Summable (fun i => Real.exp (-(t : ℝ)*(mu i)⁻¹)) ∧
+    positiveTrace (heat e mu hp t) < ⊤ ∧
+    (BiasedBoundaryTrace.b/(t : ℝ))*Real.exp (-(t : ℝ)/BiasedBoundaryTrace.b) ≤
+      (positiveTrace (heat e mu hp t)).toReal ∧
+    (positiveTrace (heat e mu hp t)).toReal ≤ BiasedBoundaryCounting.B/(t : ℝ) ∧
+    ((t : ℝ) ≤ BiasedBoundaryTrace.b →
+      BiasedBoundaryTrace.b/(Real.exp 1*(t : ℝ)) ≤
+        (positiveTrace (heat e mu hp t)).toReal) := by
+  let b := BiasedBoundaryTrace.b
+  let B := BiasedBoundaryCounting.B
+  have hb : 0 < b := pow_pos BiasedBoundaryTrace.a_pos 2
+  have hB : 0 < B := div_pos (mul_pos (by norm_num) Real.goldenRatio_pos) hb
+  have htR : 0 < (t : ℝ) := ht
+  have hL := exponential_series ((t : ℝ)/b) (div_pos htR hb)
+  have hU := exponential_series ((t : ℝ)/B) (div_pos htR hB)
+  have hle (i : ℕ) : Real.exp (-((t : ℝ)/b)*((i : ℝ)+1)) ≤
+      Real.exp (-(t : ℝ)*(mu i)⁻¹) := by
+    apply Real.exp_le_exp.mpr
+    have hi := mul_le_mul_of_nonpos_left (hu i) (neg_nonpos.mpr t.coe_nonneg)
+    convert hi using 1 <;> ring
+  have hge (i : ℕ) : Real.exp (-(t : ℝ)*(mu i)⁻¹) ≤
+      Real.exp (-((t : ℝ)/B)*((i : ℝ)+1)) := by
+    apply Real.exp_le_exp.mpr
+    have hi := mul_le_mul_of_nonpos_left (hl i) (neg_nonpos.mpr t.coe_nonneg)
+    convert hi using 1 <;> ring
+  have hs : Summable (fun i => Real.exp (-(t : ℝ)*(mu i)⁻¹)) :=
+    hU.summable.of_nonneg_of_le (fun i => (Real.exp_pos _).le) hge
+  have htr := (positive_trace_diagonal e (heat e mu hp t) _
+    (fun i => (Real.exp_pos _).le) (heat_coeff e mu hp t)).2
+  have hreal : (positiveTrace (heat e mu hp t)).toReal =
+      ∑' i, Real.exp (-(t : ℝ)*(mu i)⁻¹) := by
+    rw [htr, ← ENNReal.ofReal_tsum_of_nonneg (fun i => (Real.exp_pos _).le) hs,
+      ENNReal.toReal_ofReal (tsum_nonneg fun i => (Real.exp_pos _).le)]
+  have hlo := (exponential_series_bounds ((t : ℝ)/b) (div_pos htR hb)).1.trans
+    (hL.tsum_eq ▸ hL.summable.tsum_le_tsum hle hs)
+  have hup := (hU.tsum_eq ▸ hs.tsum_le_tsum hge hU.summable).trans
+    (exponential_series_bounds ((t : ℝ)/B) (div_pos htR hB)).2
+  have hlow : (b/(t : ℝ))*Real.exp (-(t : ℝ)/b) ≤
+      (positiveTrace (heat e mu hp t)).toReal := by
+    rw [hreal]
+    convert hlo using 1 <;> dsimp [b] at *
+    · congr 1 <;> ring
+    · field_simp
+  refine ⟨hs,htr ▸ hs.tsum_ofReal_lt_top,hlow,?_,?_⟩
+  · rw [hreal]
+    convert hup using 1
+    field_simp
+  · intro htb
+    have hratio : (t : ℝ)/b ≤ 1 := (div_le_one hb).mpr htb
+    have he : (Real.exp 1)⁻¹ ≤ Real.exp (-(t : ℝ)/b) := by
+      rw [← Real.exp_neg]
+      apply Real.exp_le_exp.mpr
+      linarith
+    have hm := mul_le_mul_of_nonneg_left he (div_pos hb htR).le
+    have heq : b/(Real.exp 1*(t : ℝ)) = (b/(t : ℝ))*(Real.exp 1)⁻¹ := by ring
+    rw [heq]
+    exact hm.trans hlow
+
 /-- One actual ordered family generates the original operator on every centered vector.
 The strong generator equivalence includes the entire original domain, not only finite sums. -/
 theorem actual_centered_heat :
@@ -239,6 +332,16 @@ theorem actual_centered_heat :
       (∀ i, C (k i).val = Real.sqrt (mu i) • (e i).val) ∧
       ∃ S : StronglyContinuousContractionSemigroup G0,
         (∀ t, S t = heat e mu hp t) ∧
+        (∀ t, (S t).IsPositive ∧ positiveTrace (S t) =
+          ∑' i, ENNReal.ofReal (Real.exp (-(t : ℝ) * (mu i)⁻¹))) ∧
+        (∀ t : ℝ≥0, 0 < t →
+          Summable (fun i => Real.exp (-(t : ℝ)*(mu i)⁻¹)) ∧
+          positiveTrace (S t) < ⊤ ∧
+          (BiasedBoundaryTrace.b/(t : ℝ))*Real.exp (-(t : ℝ)/BiasedBoundaryTrace.b) ≤
+            (positiveTrace (S t)).toReal ∧
+          (positiveTrace (S t)).toReal ≤ BiasedBoundaryCounting.B/(t : ℝ) ∧
+          ((t : ℝ) ≤ BiasedBoundaryTrace.b →
+            BiasedBoundaryTrace.b/(Real.exp 1*(t : ℝ)) ≤ (positiveTrace (S t)).toReal)) ∧
         (∀ u v : G0, Tendsto (fun t : ℝ≥0 => (t : ℝ)⁻¹ • (S t u-u))
           (𝓝[>] 0) (𝓝 v) ↔ (u.val,(-v).val) ∈ boundaryOperator.graph) ∧
         (∀ R : StronglyContinuousContractionSemigroup G0,
@@ -246,19 +349,28 @@ theorem actual_centered_heat :
             (𝓝[>] 0) (𝓝 v) ↔ (u.val,(-v).val) ∈ boundaryOperator.graph) → R = S) := by
   obtain ⟨e,k,mu,hp,hm,ht,hmi,hti,hg,hk,hC,hrest⟩ :=
     BiasedBoundaryCounting.actual_spectral_counting.2
+  rcases hrest with ⟨hcut,hzero,hstrict,hgap,hupper,hlower,hlinear,heig⟩
+  have hl (i : ℕ) : ((i : ℝ)+1)/BiasedBoundaryCounting.B ≤ (mu i)⁻¹ := by
+    simpa [BiasedBoundaryCounting.positiveEigenvalue] using (heig (i+1) (by omega)).1
+  have hu (i : ℕ) : (mu i)⁻¹ ≤ ((i : ℝ)+1)/BiasedBoundaryTrace.b := by
+    simpa [BiasedBoundaryCounting.positiveEigenvalue] using (heig (i+1) (by omega)).2
   let S := semigroup e mu hp
   have hmax := generator_iff e k mu hp hk hC
-  refine ⟨e,k,mu,hp,hm,ht,hk,hC,S,fun _ => rfl,hmax,?_⟩
-  intro R hR
-  apply R.ext_of_generator S
-  · ext u
-    change (∃ v, Tendsto _ _ _) ↔ (∃ v, Tendsto _ _ _)
-    exact exists_congr fun v => (hR u v).trans (hmax u v).symm
-  · intro u hu hv
-    have h1 := (hR u (R.generator ⟨u,hu⟩)).mp (R.tendsto_generator' ⟨u,hu⟩)
-    have h2 := (hmax u (R.generator ⟨u,hu⟩)).mpr h1
-    exact (S.generator_eq_of_tendsto ⟨u,hv⟩ h2).symm
-
+  refine ⟨e,k,mu,hp,hm,ht,hk,hC,S,fun _ => rfl,?_,?_,hmax,?_⟩
+  · intro t
+    exact positive_trace_diagonal e (heat e mu hp t) _ (fun i => (Real.exp_pos _).le)
+      (heat_coeff e mu hp t)
+  · exact fun t ht => heat_estimates e mu hp hl hu t ht
+  ·
+    intro R hR
+    apply R.ext_of_generator S
+    · ext u
+      change (∃ v, Tendsto _ _ _) ↔ (∃ v, Tendsto _ _ _)
+      exact exists_congr fun v => (hR u v).trans (hmax u v).symm
+    · intro u hu hv
+      have h1 := (hR u (R.generator ⟨u,hu⟩)).mp (R.tendsto_generator' ⟨u,hu⟩)
+      have h2 := (hmax u (R.generator ⟨u,hu⟩)).mpr h1
+      exact (S.generator_eq_of_tendsto ⟨u,hv⟩ h2).symm
 #print axioms actual_centered_heat
 
 end D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryHeat

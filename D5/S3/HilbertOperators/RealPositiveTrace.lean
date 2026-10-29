@@ -7,6 +7,7 @@
    digest: Intrinsic real positive trace as a supremum over every finite orthonormal family. -/
 
 import Mathlib.Analysis.InnerProductSpace.l2Space
+import Mathlib.Analysis.InnerProductSpace.Positive
 import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
 import Mathlib.Data.Fintype.EquivFin
 
@@ -74,15 +75,37 @@ private theorem finite_family_le (e : HilbertBasis ι ℝ E) (A : E →L[ℝ] E)
       have hb : ∑ j : Fin n, ENNReal.ofReal ((e.repr (v j) i)^2) ≤ 1 := by
         rw [← ENNReal.ofReal_sum_of_nonneg (fun j _ => sq_nonneg _)]
         exact (ENNReal.ofReal_le_ofReal (hbessel i)).trans_eq (by simp)
-      simpa only [mul_one] using mul_le_mul le_rfl hb (zero_le _) (zero_le _)
+      simpa only [mul_one] using mul_le_mul le_rfl hb zero_le zero_le
+
+private theorem diagonal_positive (e : HilbertBasis ι ℝ E) (A : E →L[ℝ] E)
+    (d : ι → ℝ) (hd : ∀ i, 0 ≤ d i)
+    (hc : ∀ x i, e.repr (A x) i = d i * e.repr x i) : A.IsPositive := by
+  have hb (x y : E) :
+      HasSum (fun i => d i * e.repr x i * e.repr y i) (inner ℝ x (A y)) := by
+    convert e.hasSum_inner_mul_inner x (A y) using 1
+    funext i
+    rw [← e.repr_apply_apply, hc, real_inner_comm (e i) x, ← e.repr_apply_apply]
+    ring
+  apply A.isPositive_iff.mpr
+  constructor
+  · intro x y
+    change inner ℝ (A x) y = inner ℝ x (A y)
+    rw [real_inner_comm y (A x), ← (hb y x).tsum_eq, ← (hb x y).tsum_eq]
+    congr 1
+    funext i
+    ring
+  · intro x
+    rw [real_inner_comm x (A x), ← (quadratic_hasSum e A d hc x).tsum_eq]
+    exact tsum_nonneg fun i => mul_nonneg (hd i) (sq_nonneg _)
 
 /-- A complete positive diagonal presentation has the intrinsic trace of its eigenvalues.
 Every finite orthonormal test family is included in the supremum; infinity is permitted. -/
 theorem positive_trace_diagonal (e : HilbertBasis ι ℝ E) (A : E →L[ℝ] E)
     (d : ι → ℝ) (hd : ∀ i, 0 ≤ d i)
     (hc : ∀ x i, e.repr (A x) i = d i * e.repr x i) :
-    positiveTrace A = ∑' i, ENNReal.ofReal (d i) := by
+    A.IsPositive ∧ positiveTrace A = ∑' i, ENNReal.ofReal (d i) := by
   classical
+  refine ⟨diagonal_positive e A d hd hc, ?_⟩
   apply le_antisymm
   · exact iSup_le fun n => iSup_le fun v => iSup_le fun hv =>
       finite_family_le e A d hd hc n v hv
@@ -101,7 +124,7 @@ theorem positive_trace_diagonal (e : HilbertBasis ι ℝ E) (A : E →L[ℝ] E)
       simp only [v,hdi]
       calc
         ∑ i ∈ s, ENNReal.ofReal (d i) = ∑ i : s, ENNReal.ofReal (d i.val) := by
-          simp
+          exact (Finset.sum_coe_sort s (fun i => ENNReal.ofReal (d i))).symm
         _ = ∑ j : Fin s.card, ENNReal.ofReal (d (f j)) :=
           (s.equivFin.symm.sum_comp (fun i : s => ENNReal.ofReal (d i.val))).symm
     rw [heq]
