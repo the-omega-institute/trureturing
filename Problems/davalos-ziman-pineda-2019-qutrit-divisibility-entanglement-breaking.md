@@ -47,7 +47,7 @@ The module works with complex-linear maps `MatrixMap (Fin 3) (Fin 3) ℂ`. Its d
 
 The channel is
 $W(X)=\tfrac12\bigl(\operatorname{tr}(X)I-X^{\mathsf T}\bigr),\quad D(X)=\tfrac12X+\tfrac16\operatorname{tr}(X)I,\quad T=D\circ W.$
-The private lemmas `wernerHolevo_one_eq_kraus` and `depolarized_one_eq_kraus` identify the two maps with the displayed Kraus families. The completeness identities `wk_complete` and `dk_complete` feed `w_cptp` and `d_cptp`; `t_kraus` gives a Kraus family for the composition and `t_cptp` proves `IsCPTP t`. The formula lemmas `w_formula`, `d_formula` and `t_formula` establish the displayed actions.
+The private lemmas `wernerHolevo_one_eq_kraus` and `depolarized_one_eq_kraus` identify the two maps with the displayed Kraus families. The completeness identities `wk_complete` and `dk_complete` feed `w_cptp` and `d_cptp`; `t_cptp` proves `IsCPTP t` by the frozen `cp_comp` (complete positivity is preserved by composition) and the two trace-preservation identities. The formula lemmas `w_formula`, `d_formula` and `t_formula` establish the displayed actions.
 
 The purity identity `unitary_purity` applies to every unitary $U$ and the input matrix unit $E_{00}$. Comparing it with the explicit outputs proves `w_not_unitary` and `d_not_unitary`. The lemma `t_divisible` then supplies `IsDivisible t` with factors $D$ and $W$, including their `IsCPTP` and non-unitarity hypotheses.
 
