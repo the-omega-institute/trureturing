@@ -22,8 +22,8 @@ internal sealed class IndependentRootCoherenceSeparationDocument : IScribeDocume
             All(Equal(I("f"), D(0)), B("f", Call("AddHom", I("Q"), I("G")))))));
     private static Formula InfiniteFiberStatement => All(
         Seq(Open, D(1), Sp, F.Lt, Sp, I("m"), Close, Sp, Implies, Sp,
-            Call("Infinite", new Formula.SetBuilder(
-                Equal(Smul(I("m"), I("x")), I("c")), I("x"), I("G")))),
+            Call("Infinite", Call("Subtype", Seq(LambdaLower, Sp, I("x"), Colon, Sp,
+                I("G"), Comma, Sp, Equal(Smul(I("m"), I("x")), I("c")))))),
         B("m", I("Nat")));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
