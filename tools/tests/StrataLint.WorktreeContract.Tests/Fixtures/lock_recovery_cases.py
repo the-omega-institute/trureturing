@@ -68,13 +68,21 @@ class LockRecoveryCases:
         current_late, baseline_late = self.tree / "late-ordinary", baseline / "late-ordinary"
         current_bytes = current_late.read_bytes() if current_late.exists() else None
         baseline_bytes = baseline_late.read_bytes() if baseline_late.exists() else None
+        checkpoint = json.loads(record.read_text())
+        late_in_checkpoint = preservation.git(self.main, "cat-file", "-e",
+            checkpoint["commit"] + ":late-ordinary", check=False).returncode == 0
+        registered = any(Path(item["worktree"]) == self.tree for item in preservation.inventory(self.main))
         self.note("scan_lock_comparison", scan=scan, flags=["--force"], actor_exits=actors,
+                  current_late_in_checkpoint=late_in_checkpoint, current_registered=registered,
+                  removal_record_readable=True,
                   current_outcome=current["outcome"], current_error=current.get("error"),
                   current_bytes=current_bytes.hex() if current_bytes is not None else None,
                   baseline_exit=native.returncode, baseline_error=native.stderr,
                   baseline_bytes=baseline_bytes.hex() if baseline_bytes is not None else None,
                   git_version=self.g(self.main, "--version").strip())
         self.assertEqual([0, 0], actors)
+        self.assertFalse(late_in_checkpoint)
+        self.assertTrue(registered)
         self.assertNotEqual(0, native.returncode)
         self.assertEqual(b"late unique bytes\n", baseline_bytes)
         self.assertEqual(b"late unique bytes\n", current_bytes)
@@ -86,6 +94,91 @@ class LockRecoveryCases:
 
     def test_removal_rechecks_lock_after_payload_planning(self):
         self.assert_scan_lock_retained("payload")
+
+    def assert_final_refusal_is_last_observation(self, empty):
+        if empty:
+            self.g(self.tree, "rm", "-r", "--", ".")
+            self.g(self.tree, "commit", "-m", "empty payload")
+        import worktree_preservation as preservation
+        original_preflight = preservation.native_removal_preflight
+        original_git = preservation.git
+        state = dict(final=False, destructive=False, observations=[], empty=empty)
+
+        def preflight(*args, **kwargs):
+            result = original_preflight(*args, **kwargs)
+            state["final"] = True
+            return result
+
+        def observed(name, operation):
+            def invoke(*args, **kwargs):
+                if state["final"] and not state["destructive"]:
+                    state["observations"].append(name)
+                    raise preservation.Refused("observation_after_final_refusal:" + name)
+                return operation(*args, **kwargs)
+            return invoke
+
+        def destructive(operation):
+            def invoke(*args, **kwargs):
+                if state["final"]:
+                    state["destructive"] = True
+                return operation(*args, **kwargs)
+            return invoke
+
+        def native_git(path, *args, **kwargs):
+            if args[:2] == ("worktree", "remove") and state["final"]:
+                state["destructive"] = True
+            return observed("git", original_git)(path, *args, **kwargs)
+
+        with ExitStack() as patches:
+            patches.enter_context(patch.object(preservation, "native_removal_preflight", side_effect=preflight))
+            for owner, name in ((Path, "resolve"), (Path, "iterdir"), (Path, "is_dir"),
+                                (Path, "is_symlink"), (os, "walk"), (os, "scandir"),
+                                (os, "stat"), (os, "lstat")):
+                original = getattr(owner, name)
+                patches.enter_context(patch.object(owner, name, observed(name, original)))
+            patches.enter_context(patch.object(preservation, "git", side_effect=native_git))
+            patches.enter_context(patch.object(Path, "unlink", destructive(Path.unlink)))
+            patches.enter_context(patch.object(os, "unlink", destructive(os.unlink)))
+            patches.enter_context(patch.object(preservation.shutil, "rmtree", destructive(preservation.shutil.rmtree)))
+            result = preservation.remove(self.removal_options())["items"][0]
+        self.note("final_observation_order", **state, outcome=result["outcome"], error=result.get("error"))
+        self.assertEqual([], state["observations"])
+        self.assertTrue(state["destructive"])
+        self.assertEqual("removed", result["outcome"])
+
+    def test_final_refusal_evaluation_immediately_precedes_payload_action(self):
+        self.assert_final_refusal_is_last_observation(False)
+
+    def test_final_refusal_evaluation_immediately_precedes_empty_unregistration(self):
+        self.assert_final_refusal_is_last_observation(True)
+
+    def test_removal_rechecks_gitlinks_after_nested_git_scan(self):
+        import worktree_preservation as preservation
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        record = metadata / preservation.REMOVAL_RECORD
+        native_walk = os.walk
+        changed = []
+        late = self.tree / "dir/late-ordinary"
+
+        def walking(path, *args, **kwargs):
+            for entry in native_walk(path, *args, **kwargs):
+                if Path(path) == self.tree and record.exists() and not changed:
+                    changed.append(True)
+                    self.g(self.tree, "update-index", "--force-remove", "dir/child")
+                    self.g(self.tree, "update-index", "--add", "--cacheinfo", "160000," + self.base + ",dir")
+                    late.write_bytes(b"late unique bytes\n")
+                yield entry
+
+        with patch.object(os, "walk", walking):
+            current = preservation.remove(self.removal_options())["items"][0]
+        current_bytes = late.read_bytes() if late.exists() else None
+        self.note("scan_gitlink_refusal", changed=changed, outcome=current["outcome"],
+                  error=current.get("error"), current_bytes=current_bytes.hex() if current_bytes is not None else None)
+        self.assertEqual([True], changed)
+        self.assertEqual(b"late unique bytes\n", current_bytes)
+        self.assertEqual("refused", current["outcome"])
+        self.assertIn("nested_git_boundary:dir", current["reason"])
+        self.assertIn(str(self.tree), [item["worktree"] for item in preservation.inventory(self.main)])
 
     def test_final_qualification_reuses_owned_initializer_scope(self):
         import worktree_preservation as preservation
