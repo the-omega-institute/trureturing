@@ -1,0 +1,4 @@
+This change from $w^\beta$ to the actual $w$ is what puts the spatial inequality and the time energy in the same measure. The cited paper's parabolic equation has an unweighted time derivative; its parabolic results are not applied to the weighted-time equation (132.4).
+
+2. Justify compactly supported, source-meeting nonlinear tests. If $g\in H^1(\Omega,w)$ has compact support in $\Omega$, its zero extension and its ordinary distributional derivatives lie in $L^2(\mathbb R^4,\widetilde w)$. Convolution by a smooth approximate identity is pointwise bounded by a fixed multiple of the Hardy–Littlewood maximal operator. The weighted maximal theorem of Muckenhoupt and Coifman–Fefferman, quoted as Theorem 2.2, (2.3), on pp. 145–146 of the same paper, gives its $L^2(\widetilde w)$ boundedness because $\widetilde w\in A_2$. Approximation first for continuous compactly supported functions, followed by density and this uniform bound, gives
+

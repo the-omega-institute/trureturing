@@ -59,6 +59,15 @@ preservers and numerical total positivity from Hurwitz stability of
 polynomial determinants. It identifies no settlement in the inspected
 material; completeness remains ASSUMED-UNVERIFIED.
 
+**Independent concurrent settlement.** PrincipiaMathOrg/math-solutions
+publishes a counterexample to the same assertion (Fisk's Conjecture 21.84,
+equivalently Question 10). Its write-up uses
+$f(x,y)=(10x+y+1)(x+y+10)$: [`site-backup/mathdb-380286/mathdb-380286-solution.tex`](https://github.com/PrincipiaMathOrg/math-solutions/blob/47371706c400c79d06e3fb62190fcf6f7a725c85/site-backup/mathdb-380286/mathdb-380286-solution.tex),
+with Lean at `mathdb/Principia/MathDB/Problem380286.lean`. Its first public
+commit is 2026-10-26, after preregistration #21768 (2026-10-25), and MathDB
+problem 380286 lists no posted solution. The write-up's internal date,
+12 September 2026, did not correspond to a public posting that was found.
+
 ## Route
 
 Use $f(x,y)=(4x+y+1)(x+y+4)$. Each affine factor has positive imaginary

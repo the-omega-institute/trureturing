@@ -4438,3 +4438,563 @@ length bound independent of the source and no bound on constants
 as the source itself changes. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 120. Local moduli at the zero-retention boundary
+
+**Definition 120.1 (Fixed-source anchored moduli).**
+Fix an allowed source $\mathfrak s$ of Definition 114.1 and the finite
+vector $P_{\mathfrak s}$ supplied by Proposition 118.2. Its nine raw
+prefix masses, actual intermediate histories, labels, clocks, installed
+menu, and externally fixed schedules are retained exactly as in
+Definitions 107.1, 114.1, and 118.1. For each hypothesis retain one
+full ten-dimensional completion $\mathsf J$ from Definition 106.1 for
+both emission and the single forward return, and use that same
+completion at every history. In a comparison of two hypotheses the
+source is fixed; the completions may be different, as allowed in
+Definition 114.1. Changing $N$, the menu, a clock, a label, a schedule,
+or a raw prefix changes the source and is outside this comparison.
+
+Put $e=t/\tau$, $\tau=\|t\|$, and $\Pi=I_3-ee^\dagger$. For a
+zero-retention anchor $h_0$ with $\|h_0\|\le1$ define
+
+$$
+\begin{aligned}
+\omega_{\mathfrak s,h_0}(\varepsilon)
+  &=\sup\left\{\|h-h_0\|:
+      0<|\gamma|\le1,\ \|h\|\le1,\right.\\[-2pt]
+  &\hspace{42mm}\left.
+      \|P_{\mathfrak s}(\gamma,h)-P_{\mathfrak s}(0,h_0)\|_\infty
+         \le\varepsilon\right\},\\
+\omega^{\rm all}_{\mathfrak s,h_0}(\varepsilon)
+  &=\sup\left\{\|h-h_0\|:
+      0<|\gamma|\le1,\ \|h\|\le1,\right.\\[-2pt]
+  &\hspace{42mm}\left.
+      \Delta_{\rm all}((\gamma,h),(0,h_0))\le\varepsilon\right\}.
+\end{aligned}
+\tag{120.1}
+$$
+
+The second supremum uses the same actual-history family
+$\mathcal I_{\mathfrak s}$ as (114.1); it adds no operation or label.
+For the pair in (120.1), write
+
+$$
+D_0(\gamma,h;h_0)=|\gamma|+\|\mathsf H_h-\mathsf H_{h_0}\|_{\rm HS}
+ +\|\mathsf S_h-\mathsf S_{h_0}\|_{\rm HS}+|\gamma|\|h-h_0\|.
+\tag{120.2}
+$$
+
+The established comparison (118.12) gives, for the same source-fixed
+$c_{\mathfrak s},C_{\mathfrak s}>0$,
+
+$$
+ c_{\mathfrak s}D_0
+ \le \|P_{\mathfrak s}(\gamma,h)-P_{\mathfrak s}(0,h_0)\|_\infty
+ \le \Delta_{\rm all}((\gamma,h),(0,h_0))
+ \le C_{\mathfrak s}D_0.
+\tag{120.3}
+$$
+
+The rank-one lift used in (120.2) is the fixed-source use of the
+matrix-distance principle in Balan--Zou, *On Lipschitz Analysis and
+Lipschitz Synthesis for the Phase Retrieval Problem*,
+[arXiv:1506.02092v1](https://arxiv.org/abs/1506.02092v1), and the affine
+phase-retrieval framework of Gao--Sun--Wang--Xu, *Phase Retrieval From
+the Magnitudes of Affine Linear Measurements*,
+[arXiv:1608.06117v1](https://arxiv.org/abs/1608.06117v1). The latter
+requires its own global injectivity hypotheses; none is added here.
+The observability and implementation intermediates remain those already
+cited in Definitions 114.1 and 118.1, including
+D'Alessandro, [arXiv:quant-ph/0307127v1](https://arxiv.org/abs/quant-ph/0307127v1),
+and Abbott et al., [arXiv:1810.09826v3](https://arxiv.org/abs/1810.09826v3).
+
+**Proposition 120.2 (Singleton anchors and all zero-law alternatives).**
+The zero-retention law at $h_0$ has a singleton fiber in the closed ball
+if and only if
+
+$$
+ h_0\notin\{(x+\mathrm i y)t:x\in\mathbb R\setminus\{0\},\ y\in\mathbb R,
+                    \ (x^2+y^2)\tau^2\le1\}.
+\tag{120.4}
+$$
+
+Equivalently, every $h_0\notin\mathbb C t$ is a singleton, and every
+$h_0=\mathrm i y t$ with $|y|\tau\le1$ is a singleton. If
+$h_0=(x+\mathrm i y)t$ with $x\ne0$ and
+$(x^2+y^2)\tau^2\le1$, the only distinct zero-law alternative is
+
+$$
+ h_1=(-x+\mathrm i y)t,
+ \qquad \|h_1-h_0\|=2|x|\tau.
+\tag{120.5}
+$$
+
+Thus $h_0=0$ is an interior imaginary singleton, while
+$h_0=\pm\mathrm i\,t/\tau$ are the two imaginary unit-sphere singleton
+endpoints. Points in (120.4) with equality in the ball constraint are
+included; the alternatives (120.5) then lie on the same boundary.
+
+*Proof.* Apply Theorem 114.3 with both retentions equal to zero. Its
+necessary and sufficient conditions are equality of the two outer
+products, a real multiple of $t$ for the difference, and no further
+condition on the common zero retention. Solving these equations gives
+exactly (120.4)--(120.5), which is also Proposition 119.3. In
+particular, a purely imaginary multiple of $t$ cannot be paired with a
+distinct vector because the required difference would have to be both
+real and purely imaginary as a multiple of $t$. The boundary and zero
+cases follow by allowing $|y|\tau=1$ and $y=0$. $\square$
+
+**Theorem 120.3 (Sharp anchored modulus for every singleton).**
+Let $h_0$ be a singleton anchor from Proposition 120.2. The two
+moduli in (120.1) have the following matching source- and
+anchor-dependent bounds.
+
+(a) Suppose $h_0\notin\mathbb C t$. Set
+
+$$
+ \eta=\|\Pi h_0\|>0,
+ \qquad L_{\rm out}=\frac1\tau+\frac{1+1/\tau}{\eta},
+ \qquad K_{\rm out}=4+2\tau.
+\tag{120.6}
+$$
+Then, for every $\varepsilon>0$,
+
+$$
+ \omega_{\mathfrak s,h_0}(\varepsilon),\quad
+ \omega^{\rm all}_{\mathfrak s,h_0}(\varepsilon)
+ \le \frac{L_{\rm out}}{c_{\mathfrak s}}\varepsilon.
+\tag{120.7}
+$$
+For $0<\varepsilon\le C_{\mathfrak s}K_{\rm out}\|h_0\|$,
+
+$$
+ \omega_{\mathfrak s,h_0}(\varepsilon),\quad
+ \omega^{\rm all}_{\mathfrak s,h_0}(\varepsilon)
+ \ge \frac{\varepsilon}{C_{\mathfrak s}K_{\rm out}}.
+\tag{120.8}
+$$
+Consequently both moduli have sharp order $\varepsilon$ at every such
+anchor, including anchors on the unit sphere.
+
+(b) Suppose $h_0=\mathrm i\beta e$ with $\beta\in[-1,1]$ (equivalently
+$h_0=\mathrm i y t$ and $\beta=y\tau$). Put
+
+$$
+ L_{\rm im}=\sqrt{1+\frac1\tau}+\frac{3}{2\tau}.
+\tag{120.9}
+$$
+For $0<\varepsilon\le c_{\mathfrak s}$,
+
+$$
+ \omega_{\mathfrak s,h_0}(\varepsilon),\quad
+ \omega^{\rm all}_{\mathfrak s,h_0}(\varepsilon)
+ \le L_{\rm im}\sqrt{\frac{\varepsilon}{c_{\mathfrak s}}}.
+\tag{120.10}
+$$
+If $|\beta|<1$, then for
+$0<\varepsilon\le3C_{\mathfrak s}(1-\beta^2)$,
+
+$$
+ \omega_{\mathfrak s,h_0}(\varepsilon),\quad
+ \omega^{\rm all}_{\mathfrak s,h_0}(\varepsilon)
+ \ge\sqrt{\frac{\varepsilon}{3C_{\mathfrak s}}}.
+\tag{120.11}
+$$
+In particular, (120.11) at $\beta=0$ is the explicit zero-anchor
+witness. At either endpoint $\beta=\sigma\in\{-1,1\}$, for
+$0<\varepsilon\le C_{\mathfrak s}(3+2\tau)$,
+
+$$
+ \omega_{\mathfrak s,\,\mathrm i\sigma e}(\varepsilon),\quad
+ \omega^{\rm all}_{\mathfrak s,\,\mathrm i\sigma e}(\varepsilon)
+ \ge\sqrt{\frac{\varepsilon}{C_{\mathfrak s}(3+2\tau)}}.
+\tag{120.12}
+$$
+Therefore every imaginary singleton, including zero, interior points, and
+both boundary endpoints, has sharp order $\sqrt\varepsilon$.
+
+If $h_0$ is a nonsingleton point in (120.4), then its modulus does not
+vanish: with $h_1$ from (120.5), for
+$0<\varepsilon\le C_{\mathfrak s}(1+2|x|\tau)$,
+
+$$
+ \omega_{\mathfrak s,h_0}(\varepsilon),\quad
+ \omega^{\rm all}_{\mathfrak s,h_0}(\varepsilon)
+ \ge2|x|\tau.
+\tag{120.13}
+$$
+
+*Proof.* For a pair in (120.1), abbreviate $D_0$ by $D$ and write
+$h=\alpha e+v$, $h_0=\alpha_0e+v_0$, with $v,v_0\perp e$.
+If $h_0\notin\mathbb C t$, then $\eta=\|v_0\|>0$. From the
+relations defining $\mathsf S_h$ and $\mathsf H_h$,
+
+$$
+ \Pi(\mathsf S_h-\mathsf S_{h_0})e=\mathrm i\tau(v-v_0),
+ \qquad
+ v_0^\dagger\Pi\mathsf H_h e=(v_0^\dagger v)\overline\alpha.
+\tag{120.14}
+$$
+
+Consequently
+
+$$
+ \|v-v_0\|\le\frac{D}{\tau},
+ \qquad
+ |\alpha-\alpha_0|
+ \le\frac{D}{\eta}+\frac{D}{\tau\eta}.
+\tag{120.15}
+$$
+Indeed, apply the second identity in (120.14) to the difference and
+use $|\alpha|\le1$ and
+$|v_0^\dagger(v-v_0)|\le\eta\|v-v_0\|$. Hence
+$\|h-h_0\|\le L_{\rm out}D$. If either probability distance in
+(120.1) is at most $\varepsilon$, (120.3) gives
+$D\le\varepsilon/c_{\mathfrak s}$, proving (120.7).
+
+For the lower bound in (120.8), let $a=\|h_0\|>0$ and
+$u=h_0/a$. For $0<r\le a$ take
+
+$$
+ h_r=(a-r)u,\qquad \gamma_r=r.
+\tag{120.16}
+$$
+These parameters lie in the closed ball and
+$\|h_r-h_0\|=r$. Moreover
+
+$$
+ \|\mathsf H_{h_r}-\mathsf H_{h_0}\|_{\rm HS}\le2r,
+ \quad
+ \|\mathsf S_{h_r}-\mathsf S_{h_0}\|_{\rm HS}\le2\tau r,
+ \quad
+ |\gamma_r|\|h_r-h_0\|=r^2\le r,
+$$
+so $D_0(\gamma_r,h_r;h_0)\le K_{\rm out}r$. Taking
+$r=\varepsilon/(C_{\mathfrak s}K_{\rm out})$ is allowed under the
+stated threshold, and (120.3) gives both distances at most
+$\varepsilon$. This proves (120.8).
+
+Now let $h_0=\mathrm i\beta e$ and write
+$\alpha=u+\mathrm i b$. The diagonal and off-diagonal components of
+$\mathsf S_h$ and $\mathsf H_h$ give
+
+$$
+ \|v\|\le\frac{D}{\tau},
+ \qquad |b-\beta|\le\frac{D}{2\tau},
+ \qquad |u|^2\le D\left(1+\frac1\tau\right).
+\tag{120.17}
+$$
+The last inequality follows from
+$\bigl||\alpha|^2-\beta^2\bigr|\le D$ and
+$|b^2-\beta^2|\le2|b-\beta|$, using $|b|,|\beta|\le1$.
+When $D\le1$, (120.17) implies
+
+$$
+ \|h-h_0\|\le
+ \left(\sqrt{1+\frac1\tau}+\frac{3}{2\tau}\right)\sqrt D
+ =L_{\rm im}\sqrt D.
+\tag{120.18}
+$$
+If either probability distance is at most $\varepsilon\le c_{\mathfrak s}$,
+then $D\le1$ by (120.3), and (120.10) follows.
+
+For $|\beta|<1$, choose $0<x\le\sqrt{1-\beta^2}$ and set
+
+$$
+ h_x=(x+\mathrm i\beta)e,\qquad \gamma_x=x^2.
+\tag{120.19}
+$$
+Then $\|h_x\|\le1$, $\|h_x-h_0\|=x$,
+$\mathsf S_{h_x}=\mathsf S_{h_0}$,
+$\|\mathsf H_{h_x}-\mathsf H_{h_0}\|_{\rm HS}=x^2$, and
+$D_0(\gamma_x,h_x;h_0)=2x^2+x^3\le3x^2$. Choose
+$x=\sqrt{\varepsilon/(3C_{\mathfrak s})}$; the threshold in
+(120.11) makes this choice admissible, and the upper inequality in
+(120.3) proves (120.11). For $\beta=0$, this is exactly
+$h_x=xe$ and $h_0=0$.
+
+For the two endpoints let $\beta=\sigma\in\{-1,1\}$ and, for
+$0<x\le1$, set
+
+$$
+ h_x=\bigl(x+\mathrm i\sigma\sqrt{1-x^2}\bigr)e,
+ \qquad \gamma_x=x^2.
+\tag{120.20}
+$$
+Both vectors have norm one, and
+$\mathsf H_{h_x}=\mathsf H_{\mathrm i\sigma e}$, while
+
+$$
+ \|\mathsf S_{h_x}-\mathsf S_{\mathrm i\sigma e}\|_{\rm HS}
+ =2\tau\bigl(1-\sqrt{1-x^2}\bigr)\le2\tau x^2,
+ \qquad
+ x\le\|h_x-\mathrm i\sigma e\|\le2x.
+\tag{120.21}
+$$
+Thus $D_0(\gamma_x,h_x;\mathrm i\sigma e)
+\le(3+2\tau)x^2$. Taking
+$x=\sqrt{\varepsilon/[C_{\mathfrak s}(3+2\tau)]}$ proves
+(120.12), and explicitly covers both signs.
+
+Finally, for a nonsingleton anchor use $h_1$ in (120.5). Its outer and
+skew rank-one matrices agree with those of $h_0$, so
+$D_0(\gamma,h_1;h_0)=|\gamma|(1+2|x|\tau)$. Choose
+$\gamma=\varepsilon/[C_{\mathfrak s}(1+2|x|\tau)]$. Equation (120.3)
+then gives (120.13), provided the displayed threshold ensures
+$|\gamma|\le1$.
+
+Every vector used above lies in the closed unit ball. The completion
+realization in Theorem 106.3 therefore supplies, separately for each
+hypothesis, a lawful fixed full ten-dimensional $\mathsf J$ that is
+used for all histories and for the forward return. The source data and
+single-return assumptions remain fixed throughout. The finite and full
+bounds are both consequences of the already existing comparison
+(120.3), so no new observation contract is invoked. $\square$
+
+## 追加锚（本行以下为增补区）
+
+## 121. A uniform joint modulus on a restricted singleton family
+
+**Definition 121.1 (Restricted anchors and the joint scale).**
+For a fixed allowed source $\mathfrak s$ of Definition 114.1, retain
+exactly $P_{\mathfrak s}$ of Proposition 118.2 and both anchored moduli
+of Definition 120.1. Put $\tau=\|t\|$, $e=t/\tau$, $\Pi=I_3-ee^\dagger$,
+and define
+
+$$
+\mathcal A=\{h_0\in\mathbb C^3:\|h_0\|\le1,
+                      \operatorname{Re}(e^\dagger h_0)=0\},\qquad
+\eta=\|\Pi h_0\|,\qquad
+F(\varepsilon,\eta)=\frac{\varepsilon}{\eta+\sqrt\varepsilon}.
+\tag{121.1}
+$$
+
+The source, raw prefix masses, actual histories, labels, clocks, menu
+and schedules, and the full-completion and single forward-return
+hypotheses are precisely those in Definition 120.1. In particular,
+$\mathcal A$ restricts the anchors; alternatives in either supremum
+still range over the entire closed unit ball with $0<|\gamma|\le1$.
+Every anchor in $\mathcal A$ is a singleton by Proposition 120.2.
+
+**Theorem 121.2 (Uniform sharp order and a common error range).**
+For every fixed allowed source there are positive constants
+$l_{\mathfrak s},U_{\mathfrak s},\varepsilon_{\mathfrak s}$, independent
+of $h_0\in\mathcal A$, such that for every such anchor and every
+$0<\varepsilon\le\varepsilon_{\mathfrak s}$,
+
+$$
+l_{\mathfrak s}F(\varepsilon,\eta)
+\le\omega^{\rm all}_{\mathfrak s,h_0}(\varepsilon)
+\le\omega_{\mathfrak s,h_0}(\varepsilon)
+\le U_{\mathfrak s}F(\varepsilon,\eta).
+\tag{121.2}
+$$
+
+Using the source constants $c_{\mathfrak s},C_{\mathfrak s}$ of
+(118.12), sufficient explicit choices are
+
+$$
+\begin{aligned}
+K&=5+2\tau,\qquad A_*=1+2/\tau,\qquad
+B_*=\sqrt{1+1/\tau}+3/(2\tau),\\
+l_{\mathfrak s}&=\min\{1,(2C_{\mathfrak s}K)^{-1}\},\\
+U_{\mathfrak s}&=2\max\{A_*/c_{\mathfrak s},
+                                      B_*/\sqrt{c_{\mathfrak s}}\},\\
+\varepsilon_{\mathfrak s}&=\min\{1,c_{\mathfrak s}\}.
+\end{aligned}
+\tag{121.3}
+$$
+
+For $\eta>0$ the two regimes, within this same error range, are
+
+$$
+\begin{array}{ll}
+\varepsilon\le\eta^2:
+ &\displaystyle\frac{\varepsilon}{2\eta}
+      \le F(\varepsilon,\eta)\le\frac{\varepsilon}{\eta},\\[4pt]
+\eta^2\le\varepsilon:
+ &\displaystyle\frac{\sqrt\varepsilon}{2}
+      \le F(\varepsilon,\eta)\le\sqrt\varepsilon.
+\end{array}
+\tag{121.4}
+$$
+
+At $\eta=0$ one has exactly $F(\varepsilon,0)=\sqrt\varepsilon$.
+Thus (121.2) gives matching order through the transition
+$\varepsilon\asymp\eta^2$, including $h_0=0$, every imaginary
+singleton $h_0=\mathrm i\beta e$, $|\beta|\le1$, both endpoints
+$\pm\mathrm i e$, and every sphere point in $\mathcal A$.
+The constants need not be numerically optimal.
+
+*Proof.* Write $h_0=\mathrm i\beta e+v_0$, where $\beta\in\mathbb R$,
+$v_0\perp e$, $\|v_0\|=\eta$, and $\beta^2+\eta^2\le1$.
+For an alternative write $h=(u+\mathrm i b)e+v$, with $u,b\in\mathbb R$,
+$v\perp e$, and abbreviate $D_0(\gamma,h;h_0)$ by $D$.
+If its finite-law error is at most $\varepsilon$, (120.3) gives
+$D\le\varepsilon/c_{\mathfrak s}\le1$. The skew-matrix off-diagonal
+and diagonal entries, and then the outer-product diagonal entry, give
+
+$$
+\|v-v_0\|\le D/\tau,\qquad
+|b-\beta|\le D/(2\tau),\qquad
+u^2\le D+|b^2-\beta^2|\le(1+1/\tau)D.
+\tag{121.5}
+$$
+
+Indeed the skew entries are those of (120.14) and
+$e^\dagger(\mathsf S_h-\mathsf S_{h_0})e=-2\tau(b-\beta)$;
+the outer entry is $u^2+b^2-\beta^2$, and $|b|,|\beta|\le1$.
+Consequently $\|h-h_0\|\le B_*\sqrt D$. When $\eta>0$, the
+already established off-axis estimate (120.15) also gives
+
+$$
+\|h-h_0\|\le
+\left[\frac1\tau+\frac{1+1/\tau}{\eta}\right]D
+\le A_*D/\eta,
+\tag{121.6}
+$$
+
+since $\eta\le1$. If $\varepsilon\le\eta^2$, use (121.6) and
+the first line of (121.4); otherwise use (121.5) and its second
+line, also allowing $\eta=0$. These give the last inequality in
+(121.2) with (121.3), after taking the supremum. The middle inequality
+follows from inclusion of the full-law error constraint in the finite one.
+The inequalities (121.4) follow directly by comparing $\eta$ with
+$\sqrt\varepsilon$ in the denominator of (121.1).
+
+For a uniform full-law lower witness, take any $0<x\le1$ and put
+
+$$
+q=\sqrt{1-x^2},\qquad h_x=q h_0+xe,\qquad \gamma_x=x^2.
+\tag{121.7}
+$$
+
+Real orthogonality $\operatorname{Re}(e^\dagger h_0)=0$ gives
+
+$$
+\|h_x\|^2=q^2\|h_0\|^2+x^2\le1,\qquad
+x\le r_x:=\|h_x-h_0\|\le x+(1-q)\le2x.
+\tag{121.8}
+$$
+
+The same condition cancels the imaginary axial component in the
+linear outer-product term, giving the exact identities
+
+$$
+\begin{aligned}
+\mathsf H_{h_x}-\mathsf H_{h_0}
+ &=x^2(ee^\dagger-h_0h_0^\dagger)
+                      +qx(ev_0^\dagger+v_0e^\dagger),\\
+\mathsf S_{h_x}-\mathsf S_{h_0}&=(q-1)\mathsf S_{h_0},\\
+\|ev_0^\dagger+v_0e^\dagger\|_{\rm HS}&=\sqrt2\eta.
+\end{aligned}
+\tag{121.9}
+$$
+
+Using $1-q=x^2/(1+q)\le x^2$, $\|h_0h_0^\dagger\|_{\rm HS}\le1$
+and $\|\mathsf S_{h_0}\|_{\rm HS}\le2\tau$, it follows that
+
+$$
+\begin{aligned}
+D_0(\gamma_x,h_x;h_0)
+ &\le x^2+(2x^2+\sqrt2\eta x)+2\tau x^2+2x^3\\
+ &\le K(x^2+\eta x).
+\end{aligned}
+\tag{121.10}
+$$
+
+Choose $x=l_{\mathfrak s}F(\varepsilon,\eta)$. Since
+$F\le\sqrt\varepsilon$, $0<x\le1$ on the common range (121.3).
+Moreover $\eta x\le l_{\mathfrak s}\varepsilon$ and
+$x^2\le l_{\mathfrak s}^2\varepsilon$. Thus
+
+$$
+\Delta_{\rm all}((\gamma_x,h_x),(0,h_0))
+\le C_{\mathfrak s}K(l_{\mathfrak s}+l_{\mathfrak s}^2)
+                 \varepsilon\le\varepsilon,
+\tag{121.11}
+$$
+
+by (120.3) and (121.3). Equations (121.8) and (121.11) prove the
+first inequality of (121.2). If $\|h_0\|=1$, (121.8) gives exactly
+$\|h_x\|=1$; hence no interior margin is needed. At $h_0=0$ the
+witness is $h_x=xe$. At $h_0=\mathrm i\beta e$ it is
+$h_x=(x+\mathrm i q\beta)e$, including both endpoint signs.
+
+For each $z=h_0$ or $h_x$, fix a unit $a\in R^\perp$ and set
+$\kappa_z=Bz+\sqrt{1-\|z\|^2}a$. By Theorem 106.3 choose one
+unitary $T_z:H\to\mathcal M^\perp$ with $T_z\kappa_z=\zeta$;
+then (106.2) gives the full completion $\mathsf J_z$.
+Use this fixed completion for emission, the single forward return and
+every history of that hypothesis. The positive retention $\gamma_x$
+is admissible by Assumption 106.2. Equation (121.11) uses the original
+raw laws; no prefix mass, label, clock or operation is altered.
+
+The rank-one lift intermediate is Balan--Zou,
+[*On Lipschitz Analysis and Lipschitz Synthesis for the Phase Retrieval
+Problem*, §2.2, Theorems 2.3--2.4](https://arxiv.org/pdf/1506.02092v1),
+which uses a global-phase quotient and a phase-retrievable frame.
+Gao--Sun--Wang--Xu,
+[*Phase Retrieval From the Magnitudes of Affine Linear Measurements*,
+Theorems 3.1 and 4.1](https://arxiv.org/pdf/1608.06117v1),
+assume global affine injectivity for their compact-set Lipschitz bound.
+Here the comparison is (120.3); those global injectivity assumptions
+are absent, and (121.7)--(121.11) give the joint lower scale even at
+its quadratic degeneracy. The observability intermediate in that
+comparison remains D'Alessandro,
+[*On Quantum State Observability and Measurement*, §2, Theorem 1](https://arxiv.org/pdf/quant-ph/0307127v1).
+The implementation comparison remains the fixed full return of §106;
+it differs from the controlled-path transformation matrices of
+Abbott et al.,
+[*Communication Through Coherent Control of Quantum Channels*,
+§§4--5 and Appendix C](https://arxiv.org/pdf/1810.09826v3).
+All constants and the retained finite vector are for the fixed source;
+no source-uniform bound on constants or decoder length is asserted.
+The statement concerns exact laws and the terminal-relevant $h$,
+without a sample guarantee, full-unitary recovery or additional
+preparation, repetition or selection service. $\square$
+
+**Proposition 121.3 (Off-axis singleton obstruction and absence of a phase gauge).**
+For any fixed allowed source, no positive $U,E$ can make
+$\omega^{\rm all}_{\mathfrak s,h_0}(\varepsilon)
+\le U F(\varepsilon,\|\Pi h_0\|)$ hold for every singleton anchor
+in the closed ball and every $0<\varepsilon\le E$.
+The family $\mathcal A$ is an actual restriction, not a phase gauge.
+
+*Proof.* Fix a unit $f\perp e$ and, for integers $n\ge1$, set
+
+$$
+\eta_n=\frac1{n+2},\qquad
+h_{0,n}=\tfrac12 e+\eta_n f,\qquad
+h_n=-\tfrac12 e+\eta_n f,\qquad \gamma_n=\eta_n^2.
+\tag{121.12}
+$$
+
+Both vectors have squared norm $1/4+\eta_n^2<1$ and are off-axis
+singletons by Proposition 120.2. Their separation is one, their skew
+matrices agree, and their outer-product difference is
+$-\eta_n(ef^\dagger+fe^\dagger)$. Hence
+
+$$
+D_0(\gamma_n,h_n;h_{0,n})=\sqrt2\eta_n+2\eta_n^2,\qquad
+\Delta_{\rm all}((\gamma_n,h_n),(0,h_{0,n}))
+\le\varepsilon_n:=C_{\mathfrak s}(\sqrt2\eta_n+2\eta_n^2)\longrightarrow0.
+\tag{121.13}
+$$
+
+The completion construction in Theorem 121.2 applies to every vector
+in (121.12), with one fixed completion per hypothesis. Thus
+$\omega^{\rm all}_{\mathfrak s,h_{0,n}}(\varepsilon_n)\ge1$, whereas
+$F(\varepsilon_n,\eta_n)\le\sqrt{\varepsilon_n}\to0$.
+Eventually $\varepsilon_n\le E$, contradicting any such $U$.
+The two limits $e/2,-e/2$ form exactly a reflected nonsingleton
+zero-retention fiber by (114.7); the anchors approach it from outside
+$\mathcal A$, with $\operatorname{Re}(e^\dagger h_{0,n})=1/2$.
+Finally $\mathsf S_{e/2}=0$ but
+$\mathsf S_{\pm\mathrm i e/2}=\mp\tau ee^\dagger\ne0$, so Corollary 118.4
+makes both rotated zero-retention laws distinct from that of $e/2$.
+Multiplication by a phase
+therefore cannot be used to move arbitrary anchors into $\mathcal A$
+while preserving their laws. $\square$
+
+## 追加锚（本行以下为增补区）

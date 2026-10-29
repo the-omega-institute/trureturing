@@ -1,0 +1,23 @@
+**定理 38.3（每个 $SU(d)$ 目标至多 $2(d-1)$ 个秩一反射）。**
+$d\ge2$ 时，每个 $U\in SU(d)$ 可精确写成至多 $2(d-1)$ 个
+$R_w=I-2|w\rangle\langle w|$ 的积，但反射方向依赖目标。
+
+证明。酉对角化 $U=V\operatorname{diag}(e^{i\theta_1},\ldots,e^{i\theta_d})V^\dagger$，
+选 $\theta_d=-\sum_{j<d}\theta_j$ 模 $2\pi$。在每个 $(j,d)$ 平面置
+
+$$
+u_j=(e_j+e_d)/\sqrt2,\qquad
+v_j=(e_j+e^{i\theta_j}e_d)/\sqrt2.
+$$
+
+直接乘二维矩阵得到
+$R_{u_j}R_{v_j}=\operatorname{diag}(e^{i\theta_j},e^{-i\theta_j})$，
+并在该平面外为恒等。这些乘积均对角，故全部相乘得到目标对角矩阵。
+用 $V$ 共轭每个反射即得所需分解；零角的成对反射可省略。∎
+
+对于普通酉通道可先选一个 $SU(d)$ 代表；一般矩阵整体相位须另记。
+这里的“可编程”是另供任意目标依赖反射方向的理想接口，不是固定未知量子程序态驱动的
+通用处理器构造，也没有从有限图、布尔 NAND 或一个固定反射导出这个连续资源。
+
+<a id="v9-native-bus"></a>
+

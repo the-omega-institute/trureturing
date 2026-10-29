@@ -1,0 +1,126 @@
+**Theorem 35.4 (finite-word exactness and the mandatory ready column).**
+For every word of Definition 35.1, every $a,b\ge1$, all algebraic linear
+maps $\mathrm{Enc}:M_a\to M_{2^n}$ and
+$\mathrm{Dec}:M_{2^n}\to M_b$, and every algebraic linear map
+$\mathcal A:M_a\to M_b$,
+
+$$
+\mathrm{Dec}\circ\operatorname{Ad}_W\circ\mathrm{Enc}=\mathcal A
+\quad\Longrightarrow\quad
+\mathrm{Dec}\circ\operatorname{Ad}_{W_0}\circ\mathrm{Enc}=\mathcal A.
+\tag{35.9}
+$$
+
+Likewise, for every algebraic-entry input matrix $\rho\in M_{2^n}$,
+algebraic-entry effect $F\in M_{2^n}$ and $\alpha\in k$,
+
+$$
+\operatorname{Tr}(FW\rho W^\dagger)=\alpha
+\quad\Longrightarrow\quad
+\operatorname{Tr}(FW_0\rho W_0^\dagger)=\alpha.
+\tag{35.10}
+$$
+
+Consequently no finite word in Definition 35.3 satisfies (35.8). It
+already fails the required ready-column output for $e_2f_0$. This
+conclusion holds for each finite actual source execution, with no common
+bound on its precision or length. It is an obstruction for the stated
+coordinate, basis-work and single-pair class.
+
+*Proof.* Choose $b_0\ge0$ so that every actual enabled angle in this
+finite word is $m_\ell 2^{-b_0}$ with $m_\ell\in\mathbb Z$.
+For a word without any $P/B$ factors take $b_0=0$. Put
+$z=e^{i2^{-b_0}}$. The Hermite--Lindemann consequence of
+Lindemann--Weierstrass says that the exponential of a nonzero algebraic
+number is transcendental. Applied to $i2^{-b_0}$, it makes evaluation
+
+$$
+\operatorname{ev}_z:k[t,t^{-1}]\longrightarrow\mathbb C
+\tag{35.11}
+$$
+
+injective: clearing negative powers in a nonzero vanishing Laurent
+polynomial would give a polynomial relation for $z$ over $k$.
+An element algebraic over $k$ is algebraic over $\mathbb Q$, since the
+finitely many coefficients of its polynomial lie in one finite
+extension of $\mathbb Q$. This contradicts transcendence over
+$\mathbb Q$. The classical transcendence ingredient is used in exactly
+its one-exponent form; see Adamczewski--Delaygue,
+[*Algebraic relations between sine and cosine values*, Theorem 3 and
+Corollary 4](https://arxiv.org/html/2406.01296v1).
+
+Represent a phase factor by $\operatorname{diag}(1,t^{-m_\ell})$ and
+the single-occupation block of a hopping factor by
+
+$$
+\begin{pmatrix}
+(t^{m_\ell}+t^{-m_\ell})/2&(t^{m_\ell}-t^{-m_\ell})/2\\
+(t^{m_\ell}-t^{-m_\ell})/2&(t^{m_\ell}+t^{-m_\ell})/2
+\end{pmatrix},
+\tag{35.12}
+$$
+
+retaining its vacuum and double-occupation entries equal to one.
+Keep every $G$ as its full constant matrix. Their ordered product
+$\mathcal W(t)$ lies in $M_{2^n}(k[t,t^{-1}])$ and satisfies
+$\mathcal W(z)=W$, $\mathcal W(1)=W_0$. Negative angles and disabled
+factors are covered by negative and zero exponents.
+
+On this ring conjugate coefficients and send $t$ to $t^{-1}$; together
+with matrix transposition this defines $\mathcal W^\sharp$.
+Since $|z|=1$, its evaluation at $z$ is $W^\dagger$, and its evaluation
+at one is $W_0^\dagger$. Thus every matrix-unit coefficient of
+
+$$
+\mathrm{Dec}\bigl(\mathcal W(t)\mathrm{Enc}(X)
+                            \mathcal W^\sharp(t)\bigr)-\mathcal A(X)
+\tag{35.13}
+$$
+
+is a Laurent polynomial over $k$. Under the premise of (35.9), each
+coefficient at every matrix unit $X$ vanishes at $z$. Injectivity makes
+it identically zero. Evaluation at one proves (35.9). The same argument
+for $\operatorname{Tr}(F\mathcal W(t)\rho\mathcal W^\sharp(t))-\alpha$
+proves (35.10). Channel equality, rather than equality of unitary
+representatives, allows an irrelevant global phase without losing
+relative phases or reference correctness. Enc and Dec are mathematical
+parameters in this argument, not newly installed operations.
+
+For (35.8), the correspondence in (35.9) is
+$a=10$, $b=2^{10}$,
+$\mathrm{Enc}(X)=CXC^\dagger\otimes|\omega\rangle\langle\omega|$,
+$\mathrm{Dec}=\operatorname{Tr}_A$, and
+$\mathcal A(X)=C\mathsf JX\mathsf J^\dagger C^\dagger$.
+All three maps have algebraic matrix-unit coefficients. This supplies
+the necessary condition without discarding any actual work. More
+specifically, (35.3) forces
+
+$$
+\mathsf J(e_2f_0)
+ =\frac12(e_1f_0+e_1f_1+e_4f_0+e_4f_1).
+\tag{35.14}
+$$
+
+Here $e_2=z_H$ is in the original qutrit image $R$; no claim that it is
+an additional installed preparation is needed. Start the mathematical
+column test at the computational basis vector
+$C(e_2f_0)\otimes|\omega\rangle$. For each of the four distinct data
+modes
+$p\in\{p_{10},p_{11},p_{40},p_{41}\}$, the occupation effect
+$n_p=|1\rangle\langle1|_p$, tensored with identity on all other modes,
+must have expectation $1/4$ if (35.8) holds. Both the test input and
+these effects have algebraic entries. Formula (35.10) therefore forces
+the same four expectations to be $1/4$ for $W_0$.
+
+After removing the $P/B$ factors, the remaining word factorizes into
+one unitary on $(r,o)$ and a tensor product of one-qubit monomial
+unitaries on the other modes. This follows by commuting factors with
+disjoint supports, retaining their order on each support. On the stated
+basis input every bit outside $(r,o)$ consequently has one definite
+final value. At least two of the four distinct modes in (35.14) lie
+outside this pair. Each such mode has $W_0$ occupation expectation
+either zero or one, contradicting $1/4$. Work entanglement on the
+distinguished pair and an arbitrary final work state do not alter this
+definiteness outside the pair. This contradiction proves the asserted
+failure of (35.8). $\square$
+
