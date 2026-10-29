@@ -34,7 +34,7 @@ private def tensorEntry {n d : ℕ}
 
 /-- The average winning score for local unitary encodings and a joint measurement. -/
 def score {n d : ℕ}
-    [NeZero n] [NeZero d]
+    [NeZero n] [NeZero d] [Fintype (jointIndex n d)] [DecidableEq (jointIndex n d)]
     (ρ : Matrix (jointIndex n d) (jointIndex n d) ℂ)
     (U : Fin n → ZMod d → ZMod d → Matrix (ZMod d) (ZMod d) ℂ)
     (M : jointIndex n d → Matrix (jointIndex n d) (jointIndex n d) ℂ) : ℝ :=
@@ -53,14 +53,21 @@ def IsFullySeparable {n d : ℕ}
       ∀ i j, A i j = ∑ a, ∏ v, S a v (i v) (j v)
 
 def IsProjectiveMeasurement {n d : ℕ} [NeZero n] [NeZero d]
+    [Fintype (jointIndex n d)] [DecidableEq (jointIndex n d)]
     (M : jointIndex n d → Matrix (jointIndex n d) (jointIndex n d) ℂ) : Prop :=
   (∀ b, (M b).PosSemidef ∧ M b * M b = M b) ∧ ∑ b, M b = 1
 
 def claim : Prop := by
   classical
   exact ∀ n d m : ℕ, 2 ≤ n → 2 ≤ d → m ≤ d ^ (n - 1) →
-    letI : NeZero n := ⟨by omega⟩
-    letI : NeZero d := ⟨by omega⟩
+    letI : NeZero n :=
+      ⟨Nat.ne_of_gt (Nat.lt_of_lt_of_le (by decide) (by omega))⟩
+    letI : NeZero d :=
+      ⟨Nat.ne_of_gt (Nat.lt_of_lt_of_le (by decide) (by omega))⟩
+    letI : Fintype (ZMod d) := Fintype.ofFinite _
+    letI : DecidableEq (ZMod d) := Classical.decEq _
+    letI : Fintype (jointIndex n d) := Fintype.ofFinite _
+    letI : DecidableEq (jointIndex n d) := Classical.decEq _
     ∃ (ρ : Matrix (jointIndex n d) (jointIndex n d) ℂ)
       (U : Fin n → ZMod d → ZMod d → Matrix (ZMod d) (ZMod d) ℂ)
       (M : jointIndex n d → Matrix (jointIndex n d) (jointIndex n d) ℂ),
@@ -71,13 +78,14 @@ def claim : Prop := by
       score ρ U M = ((d : ℝ) ^ n - d * m + m) / (d : ℝ) ^ n
 
 private theorem sector_basis (n d : ℕ) [NeZero n] [NeZero d] (hn : 2 ≤ n) (hd : 2 ≤ d) :
-    ∃ (e : ZMod d → (jointIndex n d → ℂ))
-      (g : ZMod d → (jointIndex n d → ℂ)),
+    ∃ (e : ZMod d → jointIndex n d → jointIndex n d → ℂ)
+      (g : ZMod d → jointIndex n d → jointIndex n d → ℂ),
       (∀ t r, e t r 0 = 1) ∧ (∀ a r, g a r = g a r) := by sorry
 
 private theorem sector_measurement (n d m : ℕ) [NeZero n] [NeZero d]
-    (e : ZMod d → jointIndex n d → ℂ)
-    (g : ZMod d → jointIndex n d → ℂ)
+    [Fintype (jointIndex n d)] [DecidableEq (jointIndex n d)]
+    (e : ZMod d → jointIndex n d → jointIndex n d → ℂ)
+    (g : ZMod d → jointIndex n d → jointIndex n d → ℂ)
     (he : ∀ t r, e t r 0 = 1) (hg : ∀ a r, g a r = g a r)
     (hn : 2 ≤ n) (hd : 2 ≤ d) (hm : m ≤ d ^ (n - 1)) :
     ∃ (R : Finset (jointIndex n d))
@@ -85,13 +93,16 @@ private theorem sector_measurement (n d m : ℕ) [NeZero n] [NeZero d]
       R.card = m ∧ (∀ r ∈ R, r 0 = 0) ∧ IsProjectiveMeasurement M := by sorry
 
 private theorem sector_separability_count (n d m : ℕ) [NeZero n] [NeZero d]
+    [Fintype (jointIndex n d)] [DecidableEq (jointIndex n d)]
     (R : Finset (jointIndex n d))
     (M : jointIndex n d → Matrix (jointIndex n d) (jointIndex n d) ℂ)
     (hR : R.card = m) (hR0 : ∀ r ∈ R, r 0 = 0)
     (hn : 2 ≤ n) (hd : 2 ≤ d) :
-    (Finset.univ.filter (fun b => IsFullySeparable (M b))).card = d * m := by sorry
+    (letI : DecidablePred (fun b => IsFullySeparable (M b)) := Classical.decPred _
+      (Finset.univ.filter (fun b => IsFullySeparable (M b))).card = d * m) := by sorry
 
 private theorem sector_score (n d m : ℕ) [NeZero n] [NeZero d]
+    [Fintype (jointIndex n d)] [DecidableEq (jointIndex n d)]
     (ρ : Matrix (jointIndex n d) (jointIndex n d) ℂ)
     (U : Fin n → ZMod d → ZMod d → Matrix (ZMod d) (ZMod d) ℂ)
     (M : jointIndex n d → Matrix (jointIndex n d) (jointIndex n d) ℂ)
@@ -100,15 +111,23 @@ private theorem sector_score (n d m : ℕ) [NeZero n] [NeZero d]
     (hn : 2 ≤ n) (hd : 2 ≤ d) (hm : m ≤ d ^ (n - 1)) :
     score ρ U M = ((d : ℝ) ^ n - d * m + m) / (d : ℝ) ^ n := by sorry
 
-private theorem density_witness (n d : ℕ) [NeZero n] [NeZero d] (hn : 2 ≤ n) (hd : 2 ≤ d) :
+private theorem density_witness (n d : ℕ) [NeZero n] [NeZero d]
+    [Fintype (jointIndex n d)] [DecidableEq (jointIndex n d)]
+    (hn : 2 ≤ n) (hd : 2 ≤ d) :
     ∃ (ρ : Matrix (jointIndex n d) (jointIndex n d) ℂ)
       (U : Fin n → ZMod d → ZMod d → Matrix (ZMod d) (ZMod d) ℂ),
       IsDensity ρ ∧ ∀ k x y, U k x y ∈ Matrix.unitaryGroup (ZMod d) ℂ := by sorry
 
 theorem result : claim := by
   intro n d m hn hd hm
-  letI : NeZero n := ⟨by omega⟩
-  letI : NeZero d := ⟨by omega⟩
+  letI : NeZero n :=
+    ⟨Nat.ne_of_gt (Nat.lt_of_lt_of_le (by decide) (by omega))⟩
+  letI : NeZero d :=
+    ⟨Nat.ne_of_gt (Nat.lt_of_lt_of_le (by decide) (by omega))⟩
+  letI : Fintype (ZMod d) := Fintype.ofFinite _
+  letI : DecidableEq (ZMod d) := Classical.decEq _
+  letI : Fintype (jointIndex n d) := Fintype.ofFinite _
+  letI : DecidableEq (jointIndex n d) := Classical.decEq _
   obtain ⟨e, g, he, hg⟩ := sector_basis n d hn hd
   obtain ⟨R, M, hR, hR0, hM⟩ :=
     sector_measurement n d m e g he hg hn hd hm
