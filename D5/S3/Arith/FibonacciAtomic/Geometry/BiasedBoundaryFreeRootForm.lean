@@ -109,7 +109,7 @@ private theorem covariance_formula :
     inner ℝ (J w) (J z) - inner ℝ (constG 1) (J z)*inner ℝ (J w) (constG 1)
   rfl
 
-private theorem mean_indicator (p : Edge) : mean (indicator p) = M.real (cylinder p.val) := by
+theorem mean_indicator (p : Edge) : mean (indicator p) = M.real (cylinder p.val) := by
   rw [centered_suffix_residual.1]
   change (∫ ω, indicatorConstLp 2 _ _ (1 : ℝ) ω ∂M) = _
   rw [integral_indicatorConstLp]

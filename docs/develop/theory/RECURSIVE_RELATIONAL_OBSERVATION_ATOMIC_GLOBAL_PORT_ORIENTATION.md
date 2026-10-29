@@ -4202,3 +4202,343 @@ addition is author evidence with ordinary proofs, not independent review,
 Lean certification, publication or completion of the continuing objective.
 
 ## 追加锚（本行以下为增补区）
+
+## 37. Exact paid Read requirement for the full recurrence class
+
+**Definition 37.1 (native preparation and completed future readiness).**
+Fix the entire class $\mathscr R_d$ of Definition 29.1, with public
+$d\ge0$, and the actual source and service of Definition 27.1.
+The source starts at its actual known alpha leaf. Its one autonomous
+stream is fixed before the first birth, satisfies (GPO.75) at every
+nonnegative index, and is aligned by $z_j=s_{j-1}$. Its actual birth
+order is update order followed by physical lexicographic parent order.
+No minimality, nonsingularity, positive order or periodicity is added.
+
+A preparation has common initially source-blind code and accessible
+initial data at fixed public inputs. It may use arbitrary legal finite
+physical-word presence Reads, adaptive serial update schedules, and
+arbitrary finite source-free local computation and retention. It must
+return after finitely many actual operations on every promised source,
+at a completed mature cut $n\ge2$. Write $Q$ for its paid binary
+Read count and $U=n$ for its actual updates from alpha. There is no
+bound here on finite literal lengths or local work. All requested
+words, addresses and schedules must be computed from genuinely
+accessible inputs and acquired replies.
+
+Read alone exposes a source-dependent bit. Updates expose only the
+common acknowledgement. Labels, generator data, hidden writer,
+allocator identities, source backing, work, durations and waiting are
+not observation channels. Actual source/root binding, live Read/update
+grants, exclusive serialization, completion, persistent physical links,
+and sufficient owned growing backing are retained premises, with their
+own charges. No reset, clone, historical root, reroot or richer sensor
+is allowed. An independently supplied local input or random tape has
+no source-dependent advice.
+
+Complete-future readiness means that the returned accessible data and
+installed source-free evaluation procedure already determine exactly
+the whole task of Definition 31.1 on this same actual source: every
+finite presence/update continuation, all its replies, and its physical
+support and labelled-tree successors, including absent-word replies.
+Each supplied finite request must be evaluable by terminating finite
+local work. A finite adaptive request may use actual supplied selector
+inputs as in Theorem 34.3. The evaluator does not obtain new source
+data while predicting a hypothetical request. A returned handle that
+will learn the law by later source calls is not completed readiness.
+Actual execution of a requested call is a separate paid operation.
+
+The joint task additionally asks for the current labelled $X_n$ and
+the current $\mathcal Q_1$ answer at that same returned cut. Only
+these full-future and joint tasks are compared below. A uniform cap
+$q$ means $Q\le q$ on every promised source. For independently
+randomized preparations the requirements are zero error, almost-sure
+finite return, and an almost-sure cap on each source; expected cost
+is a different comparison.
+
+**Theorem 37.2 (exact worst-case native Read minimum).** Under all
+the premises of Definition 37.1, for each integer $d>0$ the minimum
+uniform paid Read cap is exactly $2d$, both for complete-future
+readiness and for the joint task. In particular every correct such
+preparation has a lawful run requiring at least $2d$ Reads, even
+when it may use more updates, longer finite words and more finite local
+work. The same minimum cap holds with the independent zero-error
+randomization specified there. At $d=0$ the minimum is zero.
+
+Proof. First connect distinct streams to this native task, without
+assuming that a full incidence has already been acquired. Fix public
+inputs and, for the moment, a deterministic preparation. At any reached
+Read or return boundary, its entire accessible state is a function of
+the preceding binary reply word. Indeed its next local operations,
+literal and update choices are source-free functions of that state;
+updates return the same acknowledgement and stationary local operations
+reveal no source data. Induction on the actual finite operations gives
+the assertion. Thus the return cut $n$, output and retained evaluator
+are identical whenever the preceding reply word is identical. Physical
+differences in the unobserved source cannot be used as an extra branch
+of this accessible computation.
+
+Suppose two different streams $s,s'\in\mathscr R_d$ reached the
+same return reply word. They then return at the same $n$. Choose a
+birth $j$ at which their bits differ, and a finite $e\ge n$ with
+$v_e=F_e-1\ge j$. Such an $e$ exists. By Theorem 28.2 their
+actual physical supports at cut $e$ differ, since their first $v_e$
+birth bits differ. Choose one physical word in the symmetric difference
+of those two finite supports. The continuation consisting of $e-n$
+updates followed by a Read of that word has different replies on the
+two sources. This is one finite legal request at their common return
+cut. Their identical retained local evaluator would have to predict
+both values from the same accessible data and same request, which is
+impossible. Every distinct stream must therefore occupy a different
+return leaf. This argument also applies to the joint task, which
+contains the complete-future requirement. It does not require equality
+of the two current full incidences.
+
+The number of leaves required here is a classical supplier. Rainer A.
+Rueppel, [*Linear Complexity and Random Sequences*](https://link.springer.com/content/pdf/10.1007/3-540-39805-8_21.pdf),
+in *Advances in Cryptology — EUROCRYPT '85*, LNCS 219, pp. 167–188
+(1986), p. 174, equations (5)–(6), explicitly counts distinct binary
+**semi-infinite streams** of linear complexity at most $d$. For the
+present class his count is
+
+$$
+ D_d=|\mathscr R_d|
+     =1+\sum_{\ell=1}^{d}2^{2\ell-1}
+     =\frac{2\,4^d+1}{3}.
+ \tag{GPO.88}
+$$
+
+The added one is the zero stream. This imports the semi-infinite count,
+not a count of arbitrary length-$2d$ words, private registers or
+primitive periodic generators. Its parameter correspondence is as
+follows. An order-$r$ recurrence (GPO.75) is realized by the length-$r$
+register with state $(s_i,\ldots,s_{i+r-1})$, output $s_i$, and
+successor obtained by shifting and appending
+$\sum_{j<r}c_js_{i+j}$. Conversely that register gives (GPO.75)
+from index zero for every seed. A zero final feedback tap is legal;
+the all-zero row shifts an arbitrary seed out and hence includes finite
+transients. Taking the least possible register length identifies the
+linear complexity, and allowing any length at most $d$ gives exactly
+$\mathscr R_d$. Nonminimal presentations add no distinct streams.
+
+Equivalently, for $r>0$ put $A_s(x)=\sum_{i\ge0}s_ix^i$.
+Equation (GPO.75) is equivalent to
+
+$$
+ H(x)A_s(x)=P(x),\qquad
+ H(x)=1+\sum_{k=1}^{r}c_{r-k}x^k,
+ \qquad \deg P<r,\quad\deg H\le r.
+ \tag{GPO.89}
+$$
+
+The coefficients at degrees $i+r$ give the recurrence in the reverse
+direction; the coefficients below $r$ accommodate the arbitrary seed.
+Thus a polynomial $A_s$ is retained even when $H=1$: its transient
+numerator is not discarded. For a nonzero reduced $P/H$ with $H(0)=1$,
+the least permitted length is
+$\max\{\deg H,1+\deg P\}$, since every presentation has those
+two degree bounds after reduction and this length itself satisfies
+(GPO.89). The zero stream has length zero. This is the all-index and
+singular convention already used in Lemma 29.2 and its Massey
+§§II–IV and Reeds–Sloane §2 suppliers cited in §36. It verifies
+the domain match for (GPO.88); it does not restrict the count to
+invertible or purely periodic sources, or assert uniqueness of the
+actual private presentation.
+
+Now suppose a correct preparation has uniform Read cap $q$. Its
+return reply words form a prefix-free binary family of lengths at
+most $q$: after a return at a given reply word, source-free control
+cannot instead ask another Read on another run with that same word.
+The standard binary decision-tree capacity is at most $2^q$ leaves.
+For example, extending each leaf word to length $q$ gives disjoint
+nonempty sets of binary words, all lying in the $2^q$ length-$q$
+words. Arbitrarily many deterministic update or local operations
+between branches do not increase that capacity. The preceding native
+distinguishability argument and (GPO.88) force $D_d\le2^q$.
+For $d>0$,
+
+$$
+ 2^{2d-1}<\frac{2\,4^d+1}{3}\le2^{2d},
+ \qquad \lceil\log_2D_d\rceil=2d.
+ \tag{GPO.90}
+$$
+
+Consequently $q\ge2d$. These stream counts and binary-tree capacity
+are classical inputs; the source-specific deduction is that every
+full-future return of this native presence service needs that many
+distinct leaves. Query length, query choice, update timing and stored
+local computation do not supply further reply letters.
+
+For randomization, choose one lawful source realization per distinct
+stream, and fix the common public inputs. There are only $D_d$ such
+representatives. For each representative, correctness, finite return
+and the asserted cap hold on a measure-one set of independent tapes.
+The intersection of these finitely many sets has measure one. Any tape
+in it gives a deterministic preparation correct on all representatives,
+to which the same leaf bound applies. Hence a uniform almost-sure cap
+below $2d$ is impossible. If that cap is absent, the theorem makes no
+expected-cost assertion.
+
+For attainment use the actual source-blind preparation of Definition
+33.1 with $m=2d$. Theorem 33.2 obtains exactly the first $2d$
+birth bits by $2d$ paid binary presence Reads on that source, at cut
+$N(2d)$. Its finite synthesis in Lemma 29.2 determines the whole
+actual stream. Theorems 33.2 and 34.3 then provide the current
+labelled tree, $\mathcal Q_1$, and the installed finite local
+evaluator, with completed writes and retained binding as stipulated.
+Thus both tasks attain $Q=2d$. For $d=0$ the unique stream is
+already known; two actual updates reach a mature cut and local forward
+replacement supplies both tasks with no Read. Nonnegativity of $Q$
+proves the zero minimum. $\square$
+
+**Proposition 37.3 (the zero and one-order cases, and a pointwise limit).**
+The zero-order class has mature attainable coordinates $(Q,U)=(0,2)$.
+For $d=1$ the exact class is
+$\{0^\infty,10^\infty,1^\infty\}$, and the uniform Read minimum
+is two, attained together with $U=4$. Nevertheless a correct uniform
+preparation can return on $0^\infty$ with one Read at cut three.
+Thus Theorem 37.2 does not assert $Q\ge2d$ separately on every
+actual source run.
+
+Proof. Order zero fixes all bits to zero, so the first assertion is
+the final case of Theorem 37.2. In order one, the coefficient is zero
+or one and the seed is zero or one. The zero seed always gives zero;
+the other choices give exactly the impulse and the constant-one stream.
+Their first two bits are respectively $00,10,11$. The first birth
+has parent the root and is read by $aa$ at cut three. For a second
+Read, its earned bit determines the parent $p_2$ of birth two:
+$p_2=b$ if $z_1=0$, and $p_2=a$ if $z_1=1$. At cut four the
+legal query $p_2aa$ gives $z_2$ by (GPO.83). These are paid
+presence queries, with real updates between them. Since $v_3=1$
+and $v_4=2$, $N(2)=4$. Three distinct streams exceed a one-bit
+tree's capacity, establishing the worst-case two-Read requirement.
+
+A variant terminates after the first query if its bit is zero, because
+only $0^\infty$ is then compatible in this class. It installs that
+known continuation by finite local computation at cut three. On a one
+reply it performs the second query and returns at cut four. This is
+uniformly correct with worst-case two Reads, yet uses only one on the
+zero source. The example also distinguishes earned information about
+an actual behavior from a fixed presentation bound. $\square$
+
+## 38. Joint uniform caps and their earned continuation
+
+**Theorem 38.1 (exact two-coordinate cap region).** For the full
+$\mathscr R_d$ and all the premises and readiness requirements of
+Definition 37.1, let $\mathcal F_d$ consist of integer pairs
+$(q,u)\in\mathbb N_0^2$ for which one uniform preparation has
+$Q\le q$ and $U\le u$ on every source. Use the corresponding
+almost-sure requirements if independently randomized. For either the
+complete-future task or the joint task, exactly
+
+$$
+ \mathcal F_d=
+ \begin{cases}
+ \{(q,u):q\ge2d,\ u\ge N(2d)\},&d>0,\\
+ \{(q,u):q\ge0,\ u\ge2\},&d=0,
+ \end{cases}
+ \qquad
+ N(m)=\min\{n\ge3:F_n-1\ge m\}\quad(m>0).
+ \tag{GPO.91}
+$$
+
+The lower corner in each case is attained on one actual source run
+by one uniform preparation, simultaneously in both coordinates.
+This is a region of worst-case **caps for $Q,U$ only**.
+
+Proof. For $d>0$, Theorem 37.2 forces $q\ge2d$ regardless of
+the permitted update cap. The sharp adaptive-stopping lower bound of
+Theorem 33.2 forces $u\ge N(2d)$ regardless of the permitted
+Read cap and local work. That proof uses one periodic difficult source
+which remains ambiguous at every earlier mature cut, not merely
+different witnesses chosen separately for fixed cuts. Its indistinguishable
+alternative changes a newest bit and a finite future reply. It therefore
+applies to both tasks here and to independent zero-error randomization.
+
+Conversely, Definition 33.1 with $m=2d$ and Theorem 33.2 have
+$Q=2d$ and $U=N(2d)$ on the same run, with actual acquisition
+and completed installation. This one preparation meets every pair of
+larger caps. There is no need to combine two separately attaining
+preparations. For $d=0$, maturity itself requires the actual counter
+$U\ge2$, and the zero-Read preparation in Theorem 37.2 attains
+$(0,2)$. This proves the two regions.
+
+For a competitor, the stream witnessing its worst Read count need
+not be the stream witnessing its worst update count. The independent
+necessary caps and their common attainment suffice for (GPO.91).
+Nothing in the proof identifies a shared hardest input for every
+competitor, or compares its local work or total material prices.
+$\square$
+
+**Corollary 38.2 (same-source four-view recovery at the attained corner).**
+For the attaining preparation in Theorem 38.1, at its completed return
+and every later synchronized completed cut under Theorem 34.3's
+continued service and retention premises, the four mathematical views
+
+$$
+ S_n,\qquad \partial S_n,\qquad
+ \mathcal T_n^{\rm birth},\qquad M_n^{\rm earned}
+ \tag{GPO.92}
+$$
+
+have exactly the mutual recovery and update compatibility of Theorem
+34.2, and give the current labelled tree and all finite future behavior
+of this same actual source. Real retained binding and grants make the
+continued calls of Theorem 34.3 available. No further paid Read is
+needed to learn the law; requested real Reads still count.
+For $d>0$ this begins at $n=N(2d)$ with $Q=2d$ and
+$U=N(2d)$; for $d=0$ it begins at $n=2$ with $(Q,U)=(0,2)$.
+
+Proof. At $d>0$ the attained first $2d$ bits select the very
+canonical generator and synchronized counters of Definition 34.1,
+with all its genuine retention relations. Theorem 34.2 applies because
+$v_n\ge2d$. At $d=0$ its singleton clause applies with empty
+earned prefix and the canonical zero generator. Each recovered view is
+the view of that same initialized stream, public birth order and actual
+cut, so the existing route and round-trip identities apply on their
+stated data images. No full-incidence scan is an extra prerequisite:
+the acquisition of Theorem 33.2 already constructs each requested
+birth parent from earlier earned bits. Theorem 34.3 preserves the
+actual tree, phase, binding and completed-call invariant for every
+finite actual continuation, and provides each local hypothetical
+evaluation without further law-learning Reads. $\square$
+
+All simultaneous prices of §§34–35 remain attached to this attaining
+run. In particular for $d>0$ its literal traffic and longest address
+are still the actual sum and maximum in (GPO.82), with
+$W\le2d(N(2d)-1)$ and $M_{\rm addr}\le N(2d)-1$.
+Its source has actually generated $B_{N(2d)}$ birth bits, including
+unread bits, and has the nodes and links of (GPO.86). Generator work,
+local synthesis, reconstruction, backing, hidden writer, capabilities,
+installation and continued lifetime retain the charges of Definition
+35.2. Finite continued use adds the coordinates of Proposition 35.3.
+The new Read lower bound does not minimize any of those other
+coordinates. In particular (GPO.91) is neither a total-price minimum
+nor a full-resource Pareto frontier.
+
+The scope of Theorems 37.2 and 38.1 is full-future readiness and the
+joint task on the original all-index $\mathscr R_d$. They assert
+no standalone paid Read lower bound for the current-label or
+$\mathcal Q_1$ task alone, no minimum for $\mathscr M_K$, no
+private-parameter recovery, and no deferred-learning replacement for
+readiness. Expected costs, richer sensors, empirical authenticity and
+physical duration remain outside their claims. The time view in
+(GPO.92) is the actual marked birth chronology of §28, and the
+memory view is the selected earned data of §34; neither is an
+unrestricted observer journal or an entire material installation.
+The authentic source law, bound, actual chronology, binding and
+synchronization remain premises throughout, with the finite-prefix
+authentication limitation of Theorem 32.2 unchanged.
+
+The classical count in (GPO.88) and binary decision capacity are
+reused intermediate suppliers inside Theorem 37.2. The new native
+consumer is the distinct-behavior return-leaf argument under this
+specific presence-only source contract, joined to the existing paid
+attainment. This is source-relative `repo-derived` theory with ordinary
+proofs and the stated literature attribution, without a worldwide
+novelty or Lean-certification claim. The semantic four-valued control
+and replay declarations in `NativeSerialMachine.lean` and
+`NativeFullSourceProducer.lean`, with the owning Scribes and parameter
+boundaries of Definition 36.1, remain documentary suppliers. They are
+not an actual compiled binary-presence specialization of this theorem.
+
+## 追加锚（本行以下为增补区）

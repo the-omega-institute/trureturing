@@ -40,7 +40,21 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm
 
 K is the orthogonal complement of the kernel of Sigma. Vectors in the edge kernel are excluded from this effective increment space.
 
-**Theorem 1.4 (Compact Trace and Actual Covariance).**
+**Theorem 1.4 (Mean of a Boundary Cylinder Indicator).**
+
+$$\forall p: Edge, (\operatorname{mean}\left(\operatorname{indicator}\left(p\right)\right)=\operatorname{Mreal}\left(\operatorname{cylinder}\left(\operatorname{val}\left(p\right)\right)\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm.mean_indicator` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every nonempty edge address p, the mean of its original boundary cylinder indicator is the real measure M([p]). The mean and indicator use the same biased boundary measure M.
+
+Applying the cylinder mass formula gives the corresponding edge coordinate of v=J*1. These coordinates identify the limiting mean vector and distinguish its nonzero boundary values.
+
+**Theorem 1.5 (Compact Trace and Actual Covariance).**
 
 $$(\operatorname{IsCompactOperator}\left(J\right))\land(\operatorname{IsCompactOperator}\left(C\right))\land(\operatorname{IsCompactOperator}\left(Sigma\right))\land(Sigma=\operatorname{compose}\left(\operatorname{adjoint}\left(J\right), J\right)-\operatorname{rankOne}\left(v, v\right))\land(\forall z: H, (\forall w: H, (\operatorname{inner}\left(z, \operatorname{Sigma}\left(w\right)\right)=\operatorname{inner}\left(\operatorname{C}\left(z\right), \operatorname{C}\left(w\right)\right))))\land(\forall z: H, (\operatorname{inner}\left(z, \operatorname{Sigma}\left(z\right)\right)=(\Vert \operatorname{C}\left(z\right) \Vert)^{2}))\land(\operatorname{ker}\left(Sigma\right)=\operatorname{ker}\left(C\right))\land(\forall p: Edge, (\forall q: Edge, (\operatorname{inner}\left(\operatorname{single}\left(2, p, 1\right), \operatorname{Sigma}\left(\operatorname{single}\left(2, q, 1\right)\right)\right)=\operatorname{Mreal}\left(\operatorname{intersection}\left(\operatorname{cylinder}\left(p\right), \operatorname{cylinder}\left(q\right)\right)\right)-\operatorname{product}\left(\operatorname{Mreal}\left(\operatorname{cylinder}\left(p\right)\right), \operatorname{Mreal}\left(\operatorname{cylinder}\left(q\right)\right)\right))))$$
 
@@ -54,7 +68,7 @@ For every positive epsilon, choose a stopping threshold at most both one half an
 
 Self-adjoint centering and its idempotence give Sigma=J* J-v tensor v. For all z,w in H the bilinear covariance equals the inner product of their actual centered traces. In particular its quadratic form is the squared centered trace norm, and its kernel is exactly the kernel of C. On every pair of original unit edge vectors p,q, its entry is M([p] intersect [q])-M([p])M([q]).
 
-**Theorem 1.5 (Centering Has Zero Mean).**
+**Theorem 1.6 (Centering Has Zero Mean).**
 
 $$\forall F: G, (\operatorname{mean}\left(\operatorname{Pi}\left(F\right)\right)=0)$$
 
@@ -70,7 +84,7 @@ This is the mean-zero codomain condition for the actual centered trace.
 
 The original BiasedBoundaryCentering.Pi_const identity removes every actual constant. In the free-root form, constants therefore require no effective increment.
 
-**Theorem 1.6 (Idempotent Centering).**
+**Theorem 1.7 (Idempotent Centering).**
 
 $$\forall F: G, (\operatorname{Pi}\left(\operatorname{Pi}\left(F\right)\right)=\operatorname{Pi}\left(F\right))$$
 
@@ -84,7 +98,7 @@ A centered vector already has zero mean, so centering it again leaves it fixed.
 
 This identity identifies covariance graph coordinates with centered boundary vectors.
 
-**Theorem 1.7 (The Adjoint Lies in the Effective Edge Space).**
+**Theorem 1.8 (The Adjoint Lies in the Effective Edge Space).**
 
 $$\forall h: G, (\operatorname{adjoint}\left(C, h\right)\in K)$$
 
@@ -98,7 +112,7 @@ Every vector C*h is orthogonal to the original covariance kernel because pairing
 
 This effective-space inclusion is consumed by the positive eigenspace identification of the original boundary operator.
 
-**Theorem 1.8 (Pairing with a Mean-Zero Vector).**
+**Theorem 1.9 (Pairing with a Mean-Zero Vector).**
 
 $$\forall h: G, (\forall F: G, (\operatorname{mean}\left(h\right)=0\implies (\operatorname{inner}\left(h, \operatorname{Pi}\left(F\right)\right)=\operatorname{inner}\left(h, F\right))))$$
 
@@ -112,7 +126,7 @@ A vector with zero mean is orthogonal to constants. Its inner product with any c
 
 The identity applies to every test vector in the original boundary L2 space.
 
-**Theorem 1.9 (Projection Removes Only the Trace Kernel).**
+**Theorem 1.10 (Projection Removes Only the Trace Kernel).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm.C_project`
 
@@ -124,7 +138,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm
 
 For every original edge vector z, the centered trace of the orthogonal projection of z onto K equals C(z). The removed vector lies in the covariance kernel, which equals the kernel of the centered trace.
 
-**Definition 1.10 (D).**
+**Definition 1.11 (D).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm.D`
 
@@ -136,7 +150,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm
 
 The domain D is exactly the subspace of all F=c times the constant one plus Jz, with arbitrary real root value c and arbitrary z in the original infinite H. No finite-level restriction or replacement measure enters this domain.
 
-**Definition 1.11 (energy).**
+**Definition 1.12 (energy).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm.energy`
 
@@ -148,7 +162,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm
 
 For an ambient F in G, energy(F) is the real infimum of the set of squared increment norms over all original representations F=constG(c)+Jz. Its asserted energy interpretation is restricted to F in D, where the set is nonempty and the infimum is attained.
 
-**Definition 1.12 (lift).**
+**Definition 1.13 (lift).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm.lift`
 
@@ -160,7 +174,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm
 
 For each F in D, lift(F) is the unique z in K such that Cz=Pi F. Orthogonal projection onto K removes exactly the redundant edge kernel.
 
-**Theorem 1.13 (Attainment of the Original Energy).**
+**Theorem 1.14 (Attainment of the Original Energy).**
 
 $$\forall F: D, ((\operatorname{lift}\left(F\right)\in K)\land(\operatorname{C}\left(\operatorname{lift}\left(F\right)\right)=\operatorname{Pi}\left(F\right))\land(F=\operatorname{constG}\left(\operatorname{mean}\left(F\right)-\operatorname{mean}\left(\operatorname{J}\left(\operatorname{lift}\left(F\right)\right)\right)\right)+\operatorname{J}\left(\operatorname{lift}\left(F\right)\right))\land(\operatorname{energy}\left(F\right)=(\Vert \operatorname{lift}\left(F\right) \Vert)^{2})\land(\forall c: \mathbb{R}, (\forall z: H, (F=\operatorname{constG}\left(c\right)+\operatorname{J}\left(z\right)\implies ((\operatorname{lift}\left(F\right)=\operatorname{starProjection}\left(K, z\right))\land((\Vert \operatorname{lift}\left(F\right) \Vert)^{2}\leq(\Vert z \Vert)^{2})))))\land(\forall z: H, ((z\in K)\land(\operatorname{C}\left(z\right)=\operatorname{Pi}\left(F\right))\implies z=\operatorname{lift}\left(F\right))))$$
 
@@ -174,7 +188,7 @@ For any representation F=constG(c)+Jz, the least increment is the orthogonal pro
 
 The root coefficient is restored as mean(F)-mean(J lift(F)). This is an actual original representation and attains the infimum, so energy(F)=the squared norm of lift(F). Every other representation is included in the comparison.
 
-**Definition 1.14 (form).**
+**Definition 1.15 (form).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm.form`
 
@@ -186,7 +200,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm
 
 The form pairing of F and T in D is the real inner product of their least increments. Its diagonal is the original infimum energy, and its value is one quarter of energy(F+T)-energy(F-T), so it is the polarization of that original energy.
 
-**Definition 1.15 (weakGraph).**
+**Definition 1.16 (weakGraph).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm.weakGraph`
 
@@ -198,7 +212,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm
 
 The pair (u,h) lies in the weak graph when u belongs to the original D and the form pairing of u with every F in D equals the G inner product of h with F.
 
-**Definition 1.16 (formSpace).**
+**Definition 1.17 (formSpace).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm.formSpace`
 
@@ -210,7 +224,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm
 
 The form domain in graph coordinates consists exactly of pairs (F,z) in G times the original H with z in K and Cz=Pi F. It is the closed graph of the unique least increment, hence is complete for the inherited product norm. Its increment norm squared is the original energy.
 
-**Definition 1.17 (formInclusion).**
+**Definition 1.18 (formInclusion).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm.formInclusion`
 
@@ -222,7 +236,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm
 
 The inclusion of the original form domain into G is the first-coordinate map on formSpace. Its second-coordinate map is the unique least increment.
 
-**Theorem 1.18 (The Entire Weak Variational Graph).**
+**Theorem 1.19 (The Entire Weak Variational Graph).**
 
 $$(\forall F: D, (\operatorname{form}\left(F, F\right)=\operatorname{energy}\left(F\right)))\land(\forall F: D, (\forall T: D, (\operatorname{form}\left(F, T\right)=\frac{\operatorname{energy}\left(F+T\right)-\operatorname{energy}\left(F-T\right)}{4})))\land(\operatorname{IsClosed}\left(\operatorname{range}\left((F:D\mapsto\operatorname{pair}\left(F, \operatorname{lift}\left(F\right)\right))\right)\right))\land(\forall x: formSpace, (\exists F:D, (x=\operatorname{pair}\left(F, \operatorname{lift}\left(F\right)\right))\land(\operatorname{energy}\left(F\right)=(\Vert \operatorname{snd}\left(x\right) \Vert)^{2})))\land(\operatorname{IsCompactOperator}\left(formInclusion\right))\land(\forall u: G, (\forall h: G, (\operatorname{weakGraph}\left(u, h\right)\iff(\operatorname{mean}\left(h\right)=0)\land(u=\operatorname{constG}\left(\operatorname{mean}\left(u\right)\right)+\operatorname{C}\left(\operatorname{apply}\left(\operatorname{adjoint}\left(C\right), h\right)\right)))))$$
 
@@ -254,6 +268,7 @@ This module characterizes the entire weak graph without assuming an operator rea
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm.inner_centered`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm.lift`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm.mean_Pi`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm.mean_indicator`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm.v`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm.weakGraph`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryStopping](BiasedBoundaryStopping.md)
