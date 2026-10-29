@@ -1,0 +1,21 @@
+**命题 485.1（幂误差下的 Mellin 留数）。** 设 $\alpha\ge0$，且存在 $C,t_0$ 使 $|E(t)|\le Ct^\alpha$ 对 $t\ge t_0$ 成立。对固定 $x_0\ge3$，令 $\mathcal F(s)=\int_{x_0}^\infty\mathcal T(x)x^{-s-1}\,dx$，它在 $\Re s>\max(1/2,\alpha-3/10)$ 绝对收敛。则存在在
+$$
+D_\alpha=\{s:\Re s>\alpha-7/10\}
+$$
+上全纯的 $R_{x_0,\alpha}$，使在上述收敛半平面内
+$$
+\mathcal F(s)=-\frac12\frac{\zeta'}{\zeta}(s+1/2)-\frac1{2(s-1/2)}+R_{x_0,\alpha}(s),
+\tag{485.2}
+$$
+并且 $|\mathcal T(x)|\ll x^{\alpha-3/10}$。
+
+证明。$\mathcal T$ 由 (481.2) 的有限有符号价格式给出，故为 Borel 可测且局部有界。积分区间长为 $x^{4/5}$，前因子为 $x^{1/2}/x^{8/5}$，得点值界 $|\mathcal T(x)|\ll x^{\alpha-3/10}$；因此 $\mathcal F$ 在 $\Re s>\alpha-3/10$ 绝对收敛。在 $\Re s>\max(1/2,\alpha-3/10)$ 作 (481.4) 的绝对 Fubini 交换，伴随核满足 (481.6)，其中余项对每个紧集 $K\subset\mathbb C$ 一致地有
+$$
+|r_s(t)|\le C_Kt^{-\Re s-7/10},\qquad |\partial_tr_s(t)|\le C_Kt^{-\Re s-17/10}.
+$$
+在 $(A,B]$ 上作 Stieltjes 分部积分：
+$$
+\int_{(A,B]}r_s\,dE=r_s(B)E(B)-r_s(A)E(A)-\int_A^BE(t)\,\partial_tr_s(t)\,dt.
+$$
+边界项为 $O(B^{\alpha-\Re s-7/10})$，导数积分的被积函数为 $O(t^{\alpha-\Re s-17/10})$；二者在 $\Re s>\alpha-7/10$ 的每个紧集上一致地分别趋于零与绝对收敛，故余项部分在 $D_\alpha$ 全纯。主项与有限区间修正同命题 481.1 的证明，给出 (485.2)。证毕。
+

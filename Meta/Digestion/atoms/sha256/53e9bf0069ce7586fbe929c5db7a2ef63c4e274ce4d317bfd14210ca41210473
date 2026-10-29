@@ -1,0 +1,30 @@
+### 命题 9.8（每个 $k$ 都有被扫描拒绝的正秩二来源）
+
+对每个 $k\ge2$，存在 $R\in\mathcal M_k$ 的秩恰为二，且其扫描数据满足
+$s_0=\cdots=s_{k-1}=1$ 而 $t<1$。
+
+**证明。** 取 $p=(1/k,\ldots,1/k)^{\mathsf T}$、$w=e_0-e_1$，并令
+$\delta=1/(4k)$、$\varepsilon=1/4$。定义
+
+$$
+ c_1=\tfrac12(p+\delta w),\quad c_2=\tfrac12(p-\delta w),\qquad
+ \ell_1=\mathbf1^{\mathsf T}-\varepsilon w^{\mathsf T},\quad
+ \ell_2=\mathbf1^{\mathsf T}+\varepsilon w^{\mathsf T}.
+$$
+
+全部坐标严格为正，且对 $a=1,2$ 分别有 $\sum_{i=0}^{k-1}(c_a)_i=1/2$。因此
+
+$$
+ R=c_1\ell_1+c_2\ell_2\in\mathcal M_k,\qquad
+ \sum_iR_{ij}=1\quad(0\le j<k).
+$$
+
+由于 $p^{\mathsf T}w=\mathbf1^{\mathsf T}w=0$，
+
+$$
+ \operatorname{tr}R=1-\delta\varepsilon\,\|w\|_2^2=1-\frac1{8k}<1.
+$$
+
+两列因子 $c_1,c_2$ 线性无关，两个行因子 $\ell_1,\ell_2$ 也线性无关，故
+${\rm rank}(R)=2$。于是 (9.8) 失败，扫描确实拒绝该来源。∎
+

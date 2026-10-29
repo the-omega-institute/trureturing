@@ -1,0 +1,15 @@
+**Theorem 12.2 (Entire-child local J injectivity).** For every
+$(p,v)\in\mathcal U$, the entire acquired child $C(p,v)$ contains at
+most two complete worlds, and its terminal map $a$ is injective.
+The exact base $(p_*,v_*)$ of Theorem 1.3 lies in the interior of
+$\mathcal U$. Its child consists exactly of the two M worlds of that
+theorem. On a sufficiently small connected open interval about $2/5$,
+the analytic arc of Theorem 10.1 also lies in this interior, and each
+entire child on the arc consists exactly of its two supplied M worlds.
+Thus no distinct J-collision pair exists in any of these children.
+
+The proof occupies Sections 13–17. The complete-world quantifiers
+include arbitrary constant real drift, all legal gain zeros, gains
+of lower degree, repeated gain roots, and singular or exceptional
+sources. No bound on an original positive offdiagonal is assumed.
+

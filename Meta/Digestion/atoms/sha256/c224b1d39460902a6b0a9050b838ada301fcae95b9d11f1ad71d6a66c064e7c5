@@ -1,0 +1,24 @@
+**Definition 9.2 (An enclosing rational segment).** Define
+
+$$
+I_b=\left[\frac{40782959048828}{10^{15}},
+             \frac{40782959048829}{10^{15}}\right],\qquad
+S_0=\{2/5\}\times I_b.
+$$
+
+The rational center and radius of Definition 3.1 satisfy
+
+$$
+\frac{40782959048828}{10^{15}}<c_1-\rho
+<c_1+\rho<\frac{40782959048829}{10^{15}}.
+$$
+
+Consequently $(2/5,b_{0*})\in S_0$, by Theorem 4.3.
+
+The derivative enclosures and strict determinant bound in Lemma 9.3,
+and the resulting quantitative motion and local injectivity in Theorem
+10.1, are model-specific ordinary derivations in this repository
+(`repo-derived`), with no claim of literature priority. The chain
+rule, local monotonicity and real analytic identity principle used
+below are classical intermediate inputs.
+

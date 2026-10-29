@@ -1,0 +1,359 @@
+**定理 75.1（原给定径向像的实际八半空间、支撑面片与不可删性）。** 任取同一个六长度向量 $l$，假设每个槽位 $l_k>0$。保留定理 66.2 的原源余弦条件 $-1<\varphi_{01}<1$：具体地，置
+
+$$
+(a,b_0,c,d,e,f_0)=(\cosh l_0,\cosh l_1,\cosh l_2,\cosh l_3,\cosh l_4,\cosh l_5),
+$$
+
+$$
+\begin{aligned}
+\mathcal A&=2ab_0f_0+a^2+b_0^2+f_0^2-1,\\
+\mathcal B&=2ace+a^2+c^2+e^2-1,\\
+\mathcal P&=b_0c+ef_0+ab_0e+acf_0-(a^2-1)d,\\
+\varphi_{01}&=(\mathcal P/\sqrt{\mathcal A})/\sqrt{\mathcal B}.
+\end{aligned}
+$$
+
+给定原矩阵 $M$ 和原映射 $f:C_l\to H^3$，假设
+
+$$
+B(m_i,m_j)=G_{ij}\quad(i,j\in I),\qquad \det M>0,\qquad \det G<0.
+$$
+
+同时保留 $f$ 连续、$f$ 单射、$\operatorname{range}f$ 紧且非空的前提，以及对每个 $\lambda\in C_l$ 的原未来径向坐标前提：存在 $Y\in\mathbb R^4$ 使
+
+$$
+Y=r_l(\lambda)M,\qquad B(Y,Y)=-1,\qquad Y_3>0,\qquad
+f(\lambda)=\left(\frac{Y_0+iY_1}{Y_3-Y_2},\frac1{Y_3-Y_2}\right)=\Psi(Y).
+$$
+
+则以下二十项结论同时成立，全部使用这些原 $l,M,f$。
+
+1. $\det G=-(\det M)^2$。
+
+2. 对每个 $i\in I$，$(G^{-1})_{ii}>0$。
+
+3. 对每个 $i,j\in I$，$B(D_i,m_j)=\delta_{ij}$。
+
+4. 对每个 $i,j\in I$，$B(D_i,D_j)=(G^{-1})_{ij}$。
+
+5. 对每个 $a\in\mathcal S$，$B(n_a,n_a)=1$；相应的外向侧是 $V_a>0$。
+
+6. 原映射的像集精确等于八个闭半空间的交：
+
+   $$
+   \operatorname{range}f=R=\bigcap_{a\in\mathcal S}H_a^-.
+   $$
+
+7. 同一像集也有不作单位化的对偶／cap 符号刻画：
+
+   $$
+   \operatorname{range}f=
+   \{p\in H^3:\forall i\in I,\ B(L(p),D_i)\ge0\ \text{且}\ B(L(p),m_i)\le0\}.
+   $$
+
+8. 实际三维环境内部为
+
+   $$
+   \operatorname{int}_{H^3}(\operatorname{range}f)=R^{<}.
+   $$
+
+9. 同一环境内部的不作单位化刻画为
+
+   $$
+   \operatorname{int}_{H^3}(\operatorname{range}f)=
+   \{p\in H^3:\forall i\in I,\ B(L(p),D_i)>0\ \text{且}\ B(L(p),m_i)<0\}.
+   $$
+
+10. 原系数重心的像点满足 $f(b)\in\operatorname{int}_{H^3}(\operatorname{range}f)$。
+
+11. $\operatorname{int}_{H^3}(\operatorname{range}f)\ne\varnothing$。
+
+12. $\operatorname{range}f$ 在 $H^3$ 中闭。
+
+13. 完整环境边界恰为原映射像集内至少一个支撑活跃的点：
+
+    $$
+    \partial_{H^3}(\operatorname{range}f)=
+    \{p\in\operatorname{range}f:\exists a\in\mathcal S,\ V_a(p)=0\}.
+    $$
+
+14. 对每个 $a\in\mathcal S$，$H_a^-$ 在 $H^3$ 中闭，并存在 $e:H^2\to H^3$，满足
+
+    $$
+    e\ \text{是等距映射},\qquad \operatorname{range}e=P_a,\qquad
+    \partial_{H^3}H_a^-=\operatorname{range}e.
+    $$
+
+15. 对每个 $a\in\mathcal S$，原系数等式截面的像精确为
+
+    $$
+    f(F_a)=\{p\in\operatorname{range}f:V_a(p)=0\}.
+    $$
+
+16. 对每个 $a\in\mathcal S$，存在 $v_a\in C_l$，其系数向量恰为 $\operatorname{facetWitness}(l,a)$，并且
+
+    $$
+    V_a(f(v_a))=0,\qquad
+    \forall c\in\mathcal S,\ c\ne a\Longrightarrow V_c(f(v_a))<0.
+    $$
+
+17. 对每个 $a\in\mathcal S$，存在 $e:H^2\to H^3$ 和 $U\subseteq H^2$，使
+
+    $$
+    \begin{gathered}
+    e\ \text{是等距映射},\qquad \operatorname{range}e=P_a,\\
+    U\ \text{在}\ H^2\ \text{中开且非空},\qquad e(U)\subseteq f(F_a).
+    \end{gathered}
+    $$
+
+18. 对每个 $a\in\mathcal S$，存在 $p\in H^3$，使
+
+    $$
+    V_a(p)>0,\qquad
+    \forall c\in\mathcal S,\ c\ne a\Longrightarrow V_c(p)<0.
+    $$
+
+19. 对每个 $a\in\mathcal S$，删去该不等式使原映射的像集严格扩大：
+
+    $$
+    \operatorname{range}f\subsetneq
+    \{p\in H^3:\forall c\in\mathcal S,\ c\ne a\Longrightarrow V_c(p)\le0\}.
+    $$
+
+20. 映射 $a\mapsto n_a$ 单射，即八个实际单位外法向量两两不同。
+
+**证明（原标架的对偶、余子式与符号）。** 令 $J=\operatorname{diag}(1,1,1,-1)$。原 Gram 等式逐项给出 $MJM^T=G$，故
+
+$$
+\det G=(\det M)(\det J)(\det M^T)=-(\det M)^2.
+$$
+
+两个原行列式前提使 $M,G$ 均可逆。$G$ 对称，所以 $G^{-1}$ 对称。直接对原行作双线性展开，任意系数 $x,z$ 都满足
+
+$$
+B(xM,zM)=\sum_i x_i\sum_jG_{ij}z_j.
+$$
+
+将 $z$ 取为 $G^{-1}$ 的第 $i$ 行并用 $G^{-1}G=1$，得到
+
+$$
+B(xM,D_i)=x_i,\qquad B(xM,m_i)=(Gx)_i.
+$$
+
+取标准基系数和 $G^{-1}$ 的行，分别得到第 3、4 项。
+
+对第 $i$ 个对角余子式，剩下三个标签形成三角形。其三条边的余弦长度记为 $u,v,w$，均严格大于一。该主子式的行列式是
+
+$$
+\det\begin{pmatrix}1&-u&-v\\-u&1&-w\\-v&-w&1\end{pmatrix}
+=1-u^2-v^2-w^2-2uvw<0.
+$$
+
+具体地，$i=0,1,2,3$ 对应的三槽集合依次为 $\{5,4,3\}$、$\{1,2,3\}$、$\{0,2,4\}$、$\{0,1,5\}$；这覆盖原六槽的全部四个对角余子式。由逆矩阵的伴随公式和原前提 $\det G<0$，
+
+$$
+(G^{-1})_{ii}=\frac{\operatorname{adj}(G)_{ii}}{\det G}>0.
+$$
+
+所以全部 $w_a>0$。第 4 项给出 $B(D_i,D_i)=w_{\mathrm L_i}^2$，从而 $B(n_{\mathrm L_i},n_{\mathrm L_i})=1$；cap 法向量的单位性由 $B(m_i,m_i)=G_{ii}=1$ 得到。更一般地，对任意系数 $x$ 有精确支撑公式
+
+$$
+B(xM,n_a)=\frac{S_a(x)}{w_a}.
+$$
+
+此式同时固定八个不等式的方向。
+
+**证明（原映射的提升公式与逆向重构）。** 原未来径向坐标前提和 $L\circ\Psi=\mathrm{id}$ 给出
+
+$$
+L(f(\lambda))=r_l(\lambda)M\qquad(\lambda\in C_l).
+$$
+
+定理 66.1 保证 $q_l(\lambda)<0$。由支撑线性式的齐次性，
+
+$$
+V_a(f(\lambda))=
+\frac{S_a(\lambda)}{\sqrt{-q_l(\lambda)}\,w_a},\qquad
+\sqrt{-q_l(\lambda)}\,w_a>0.
+$$
+
+因此原映射的像集包含于 $R$，而且每个原系数支撑的等式和严格不等式都被精确保留。
+
+反向任取 $p\in R$，用原矩阵的逆定义
+
+$$
+x=L(p)M^{-1},\qquad s=\sum_i x_i.
+$$
+
+于是 $xM=L(p)$。对偶支撑公式和 $V_{\mathrm L_i}(p)\le0$ 给出 $-x_i/w_{\mathrm L_i}\le0$，故每个 $x_i\ge0$；cap 支撑给出 $(Gx)_i\le0$。原 Gram 配对和提升单位式给出
+
+$$
+q_l(x)=B(xM,xM)=B(L(p),L(p))=-1.
+$$
+
+因此 $x\ne0$。有限个非负坐标之和只能在它们全为零时等于零，故 $s>0$。定义 $\lambda_i=x_i/s$。则
+
+$$
+\lambda_i\ge0,\qquad \sum_i\lambda_i=1,\qquad
+(G\lambda)_i=(Gx)_i/s\le0,
+$$
+
+所以 $\lambda\in C_l$，包括全部等式边界。二次齐次性及 $s>0$ 给出
+
+$$
+q_l(\lambda)=-s^{-2},\qquad
+\sqrt{-q_l(\lambda)}=s^{-1},\qquad r_l(\lambda)=x.
+$$
+
+再次使用原 $f$ 的提升公式，$L(f(\lambda))=xM=L(p)$；提升单射性给出 $f(\lambda)=p$。等价地，原坐标式给出 $f(\lambda)=\Psi(L(p))=p$。这里恢复的是原 $f$ 的一个原像，没有重新选择标架或径向映射。这证明第 6 项。最后
+
+$$
+V_{\mathrm L_i}(p)=-\frac{B(L(p),D_i)}{w_{\mathrm L_i}},\qquad
+V_{\mathrm C_i}(p)=B(L(p),m_i)
+$$
+
+和权重正性给出第 7 项，以及 $R^{<}$ 的严格对偶／cap 符号刻画。
+
+**证明（实际环境内部、横穿支撑与完整边界）。** 提升的坐标公式及高度 $h>0$ 表明 $L$ 连续，故每个 $V_a$ 连续。于是每个 $H_a^-$ 闭，$R$ 闭，有限个严格不等式的交 $R^{<}$ 开，且 $R^{<}\subseteq\operatorname{int}_{H^3}R$。
+
+要证明反向包含，任取一个单位类空向量 $N$ 和满足 $B(L(p),N)=0$ 的实际点 $p$。置 $Y=L(p)$，考虑精确曲线
+
+$$
+Z(t)=\cosh(t)Y+\sinh(t)N\qquad(t\in\mathbb R).
+$$
+
+双线性展开给出
+
+$$
+B(Z(t),Z(t))=-1,\qquad B(Z(t),N)=\sinh t,\qquad
+B(Z(t),Z(u))=-\cosh(t-u).
+$$
+
+单位负值意味着 $Z(t)_3^2=1+Z(t)_0^2+Z(t)_1^2+Z(t)_2^2\ge1$。时间坐标连续且在 $t=0$ 为正，故在连通的整个实轴上始终为正。因此 $g(t)=\Psi(Z(t))$ 是实际 $H^3$ 中处处有定义的曲线，且
+
+$$
+L(g(t))=Z(t),\qquad g(0)=p,\qquad d_{H^3}(g(t),g(u))=|t-u|.
+$$
+
+最后一个等式由提升距离公式及 $\cosh$ 在非负实数上的严格单调性得到。这也是既有未来单位双曲测地线接口的直接情形。特别地，$g$ 连续，并有完全确定的横穿符号 $B(L(g(t)),N)=\sinh t$。
+
+若 $p\in R$ 且 $V_a(p)=0$，取 $N=n_a$。每个 $t>0$ 都有 $V_a(g(t))=\sinh t>0$，所以 $g(t)\notin R$，而 $g(t)\to p$ 当 $t\downarrow0$。因此任何活跃支撑点都不是三维环境内部点。反之，$p\in R$ 若没有活跃支撑，其全部八个支撑值严格为负，即 $p\in R^{<}$。得到 $\operatorname{int}_{H^3}R=R^{<}$。结合第 6 项和严格符号刻画，得到第 8、9 项。因 $R$ 闭，
+
+$$
+\partial_{H^3}R=R\setminus\operatorname{int}_{H^3}R
+=\{p\in R:\exists a\in\mathcal S,\ V_a(p)=0\},
+$$
+
+给出第 12、13 项。整个横穿论证发生在 $H^3$ 环境拓扑中。
+
+对原重心 $b$，全部 $S_{\mathrm L_i}(b)=-1/4<0$，且
+
+$$
+S_{\mathrm C_i}(b)=\frac{1+\sum_{j\ne i}G_{ij}}4=\frac{1-A_i}4<0,
+$$
+
+因为 $A_i>3$。定理 66.1 保证 $b\in C_l$；正分母的像支撑公式遂给出 $f(b)\in R^{<}$，从而证明第 10、11 项。
+
+**证明（每个完整实际支撑平面的双曲参数化）。** 使用既有的类空支撑平面实现：对 $B(N,N)>0$，有从标准 $H^2$ 到完整零支撑集 $\{p:B(L(p),N)=0\}$ 的实际距离等距映射。这里说明其构造与覆盖性，以确定所用的是完整平面。
+
+本题中 $B(N,N)=1$。令 $e_1=(0,1,0,0)$，取 $\sigma=1$ 当 $N_1\ge0$，否则取 $\sigma=-1$。置 $W=N+\sigma e_1$，则
+
+$$
+B(W,W)=2(1+\sigma N_1)>0,\qquad
+T(X)=X-\frac{2B(X,W)}{B(W,W)}W.
+$$
+
+这个 Lorentz 反射保持 $B$，满足 $T^2=\mathrm{id}$，并有
+
+$$
+B(T(X),N)=-\sigma X_1.
+$$
+
+它还保持未来单位双曲面：若 $X$ 是未来单位向量，则 $T(X)$ 为单位向量，且
+
+$$
+B(X,T(X))=-1-\frac{2B(X,W)^2}{B(W,W)}<0.
+$$
+
+具体地，若 $X,Z$ 都满足单位负值关系而 $X_3>0>Z_3$，写 $X_{\mathrm{sp}},Z_{\mathrm{sp}}$ 为其三个空间坐标，则 Cauchy–Schwarz 不等式给出
+
+$$
+B(X,Z)\ge X_3|Z_3|-\sqrt{X_3^2-1}\sqrt{Z_3^2-1}>0,
+$$
+
+末项严格性来自 $X_3,|Z_3|\ge1$ 及 $\sqrt{t^2-1}<t$ 对 $t\ge1$。所以负配对排除了异号时间坐标，上式保证 $T(X)$ 仍在未来片。
+
+标准竖直实现 $j:H^2\to H^3$ 为 $j(u+iv)=(u+i0,v)$，其提升第二坐标恒为零。反之，任意未来单位 $X$ 满足 $X_1=0$ 时，
+
+$$
+z=\frac{X_0}{X_3-X_2}+i\frac1{X_3-X_2}\in H^2
+$$
+
+满足 $L(j(z))=X$；分母正性由未来单位关系得到。定义 $e(z)=\Psi(T(L(j(z))))$，则
+
+$$
+B(L(e(z)),N)=0.
+$$
+
+若 $p$ 的 $N$ 支撑值为零，将上述反射恒等式用于 $X=T(L(p))$，得 $T(L(p))_1=0$；故存在 $z$ 使 $L(j(z))=T(L(p))$。再反射一次即得 $e(z)=p$，证明 $\operatorname{range}e$ 是整个零支撑平面。标准 $H^2$ 距离公式给出
+
+$$
+B(L(j(z)),L(j(w)))=-\cosh d_{H^2}(z,w).
+$$
+
+反射保持配对，结合 $H^3$ 的提升距离公式和非负距离上的 $\cosh$ 单射性，得到 $d_{H^3}(e(z),e(w))=d_{H^2}(z,w)$。这正是既有标准双曲平面实现的参数化。
+
+对 $N=n_a$ 得到所需 $e$。单个闭半空间 $H_a^-$ 的严格负值点构成开集，而每个零值点都能由上述 $g(t)$ 横穿至正值侧。故其内部恰为 $V_a<0$，边界恰为 $P_a=\operatorname{range}e$。连同已得闭性，证明第 14 项。
+
+**证明（原系数面的精确像与原显式见证）。** 正分母的像支撑公式表明，对每个 $\lambda\in C_l$ 和 $a\in\mathcal S$，
+
+$$
+V_a(f(\lambda))=0\quad\Longleftrightarrow\quad S_a(\lambda)=0.
+$$
+
+将此等价分别用于 $f(F_a)$ 的点和原映射像集内支撑为零的点，得到第 15 项。
+
+现在验证定义中的同一个 $\operatorname{facetWitness}$。对 $a=\mathrm L_i$，向量 $v$ 在 $i$ 位为零，其余三位均为 $1/3$，故坐标非负且和为一，只有 $S_{\mathrm L_i}(v)=0$，其余系数下界支撑为 $-1/3$。第 $i$ 个 cap 值是三个负非对角元之和除以三，严格为负；对 $r\ne i$，第 $r$ 个 cap 值为
+
+$$
+(Gv)_r=\frac{1+\sum_{j\notin\{i,r\}}G_{rj}}3<0,
+$$
+
+因为该和含两个严格小于 $-1$ 的元。因此 $v\in C_l$，且仅指定的支撑活跃。
+
+对 $a=\mathrm C_i$，设 $D=A_i+3>0$。定义中的原向量有全部坐标严格为正，坐标和为 $(A_i+3)/D=1$，并可写为
+
+$$
+v=\frac{\mathbf1+(A_i-1)e_i}{D}.
+$$
+
+于是对任意 $r\in I$，
+
+$$
+(Gv)_r=\frac{\sum_jG_{rj}+(A_i-1)G_{ri}}D.
+$$
+
+当 $r=i$ 时，$\sum_jG_{ij}=1-A_i$、$G_{ii}=1$，故该值恰为零。当 $r\ne i$ 时，$\sum_jG_{rj}=1-A_r<0$，$A_i-1>0$，而 $G_{ri}<-1$，故该值严格为负。全部下界支撑 $-v_j$ 也严格为负。故这个原 cap 见证同样属于 $C_l$ 且仅指定的支撑活跃。
+
+将两类原系数向量看作 $C_l$ 中的点 $v_a$，再用正分母的像支撑公式，就得到第 16 项的零值和全部其余严格负值。
+
+**证明（原生开面片、严格删除见证与法向量单射）。** 固定任意 $a\in\mathcal S$，令 $p_a=f(v_a)$。选择第 14 项的完整支撑平面等距映射 $e_a:H^2\to H^3$。因 $V_a(p_a)=0$，存在 $z_a\in H^2$ 使 $e_a(z_a)=p_a$。定义
+
+$$
+U_a=\{z\in H^2:\forall c\in\mathcal S,\ c\ne a\Longrightarrow V_c(e_a(z))<0\}.
+$$
+
+等距映射连续，每个支撑值连续，支撑数目有限，故 $U_a$ 在实际 $H^2$ 拓扑中开。第 16 项保证 $z_a\in U_a$，所以它非空。对每个 $z\in U_a$，指定支撑在整个 $e_a$ 平面上为零，其余支撑严格为负；因此 $e_a(z)\in R\cap P_a$。第 6、15 项给出 $e_a(U_a)\subseteq f(F_a)$，证明第 17 项。这个面片是完整支撑平面中一个非空相对开集的等距像。
+
+再在 $p_a$ 处用 $N=n_a$ 构造横穿曲线 $g_a$。它满足
+
+$$
+g_a(0)=p_a,\qquad V_a(g_a(t))=\sinh t.
+$$
+
+对每个 $c\ne a$，第 16 项给出 $V_c(g_a(0))<0$。由连续性及有限性，存在共同 $\varepsilon>0$，使 $|t|<\varepsilon$ 时全部这些不等式仍严格成立。取 $0<t<\varepsilon$，令 $p=g_a(t)$，便有 $V_a(p)>0$ 而其余全部支撑严格为负，证明第 18 项。它同时说明正支撑侧确实在原映射的像集之外，符合上述外向约定。
+
+第 6 项使原映射的像集包含于删除第 $a$ 个不等式后的集合；第 18 项的点属于后者却不属于前者，所以包含严格，得到第 19 项。最后若 $a\ne c$ 而 $n_a=n_c$，则在像点 $p_a=f(v_a)$ 上两个支撑值必相等；但第 16 项给出 $V_a(p_a)=0$ 和 $V_c(p_a)<0$，矛盾。因此八个法向量两两不同，证明第 20 项。证毕。
+
+**范围。** 本节把同一给定六长度标架的径向像与八个实际半空间、三维环境内部、完整支撑平面及其非空开面片相联；证明是经典 Lorentz／双曲框架在这些原对象上的具体综合。完整的循环面关联、原源角与实际二面角的对应、原生闭边管邻域、指定面标记及其等距匹配仍为分别的几何目标；原剖分商及全局 CFMP 结论也仍保留各自前提和证明义务。第 65–66 节所列较大实现目标的其余部分不由本定理推出。
+

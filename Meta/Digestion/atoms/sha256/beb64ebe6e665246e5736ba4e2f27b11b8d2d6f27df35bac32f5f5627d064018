@@ -1,0 +1,28 @@
+## 9. Boundary and conclusion
+
+The project now has a precise answer to why triangles and three-dimensional closures keep reappearing.
+
+A triangle is the smallest cycle in which each node receives two relational inputs while no node receives the third edge. Its geometry is therefore an incidence geometry of three edge sources and three two-edge faces. A three-coordinate quotient can summarize some of the response, but it cannot certify a global independent-source lift. The missing information is carried by hidden fibers such as \(\kappa\), by higher moments, or by an inflation cover.
+
+The deepest connection is not “three sources produce three physical axes.” It is:
+
+\[
+\boxed{
+\text{three-edge product structure}
++
+\text{two-edge local response}
++
+\text{fiber-preserving global gluing}
+}
+\]
+
+A quantum distribution is network-nonlocal when its observed and low-order geometric projections look admissible, yet every attempt to lift them to a product-source, two-edge response object fails. This is a mathematically concrete form of information escape. The project’s three-dimensional response theorem supplies a conditional geometric representation of one layer. Inflation supplies the discrete global-lift obstruction. Neither layer should be promoted to a claim about physical spacetime without an additional operational bridge.
+
+**Open obligations.**
+
+- Construct a nontrivial finite \(\Phi\) for which the FIB \(\kappa\)-fiber is explicitly a necessary marginal of a triangle-local lift.
+- Prove a sound fiber-sensitive inflation relaxation whose certificate can be expressed in the existing Gram or boundary language.
+- Evaluate one exact EJM or RGB4 certificate on the multi-affine independent-source noise polynomial (6.5).
+- Separate rigorous outer bounds, numerical inner models, and exact transition claims in every future noise table.
+
+

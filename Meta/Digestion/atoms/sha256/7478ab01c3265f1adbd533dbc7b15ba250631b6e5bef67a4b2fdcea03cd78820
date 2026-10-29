@@ -1,0 +1,6 @@
+**命题 83.5（decoder-choice hypergraph 与 pairwise 的边界）。** 将定义 83.3 的 inclusion-minimal infeasible subsets 作为 forbidden hyperedges。一个 deterministic task label selecting one fixed decoder per label 满足全部阈值，当且仅当没有 forbidden edge 是 monochromatic。对实际 $F^n$，每条 edge 的大小至多 $5m+1$。singleton edge 意味着任何 labeling 都失败；空 catalogue 约定使用零 labels。
+
+**证明。** 若每个 label fibre feasible，就可分别选择一个其 realizing decoder，且它不能含 forbidden edge。反之，一个 infeasible fibre 因 finite 而含 minimal infeasible subset，故若不存在 monochromatic edge 则每个 fibre feasible。edge-size bound 是定理 83.4。∎
+
+这个 finite task hypergraph 不可一般替换为 pairwise graph。例如，另取 qutrit replacement noise $\mathcal N(\rho)=\operatorname{Tr}(\rho)|0\rangle\langle0|$，三任务为互相正交 coordinate projections $P_1,P_2,P_3$，阈值均为 $1/2$。任意 decoder 的 recovered input effects 是 $p_iI$，其中 $p_i=\operatorname{Tr}(P_i\sigma)$，$\sigma=\mathcal D(|0\rangle\langle0|)$；loss 是 $\max(p_i,1-p_i)$，individual optimum 为 $1/2$。任意 pair 由 preparation decoder 输出 $(P_i+P_j)/2$ 达到，但 triple 要求三个 $p_i=1/2$，违反 $\sum p_i=1$。这是另一个固定 channel 的反例，不声称实际 $F^n$ 存在同样 triple。
+

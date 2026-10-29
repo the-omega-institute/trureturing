@@ -1,0 +1,67 @@
+**Definition 75.1 (native premises, coordinates and clock).** Let
+[Q](FIB_NATIVE_LONG_TIME_PHASE_QUANTITATIVE_BOUNDS.md) denote the
+quantitative-bounds volume,
+[D](FIB_NATIVE_LONG_TIME_PHASE_DIFFUSION.md) the diffusion volume, and
+[G](FIB_NATIVE_TWO_CONTROL_GREEN_STABILITY.md) the Green-stability
+volume. Retain all the G/C/N/F premises of D Definition 35.1 and Q
+Definitions 41.1 and 49.1, with their conditional status unchanged.
+Here C, N and F are precisely the sources named in D Definition 35.1.
+Fix arbitrary data in their stated ranges:
+$0<Z<1$, $H=(1-Z)/2$, $I=(l,u)\Subset(0,H)$,
+$\varepsilon>0$, a signed nonzero $\kappa\in\mathcal K_\times$
+from Q (49.1), a deterministic $k_0\in E\Subset I$, and the prescribed
+deterministic initial phase lift $q_0$. The parameter interval and its
+slightly larger height interval are those fixed in D Definition 35.1.
+The five probabilities are exactly G (25.2),
+
+$$
+(k-2\kappa,H+\kappa-k,Z,H+\kappa-k,k),
+$$
+
+with the immutable preparation phases, negative amplitude convention,
+$h_2=0$ and $h_1=h_3=v$ of G Definition 25.1. The coefficient
+$c_\kappa=(A_\kappa,B_\kappa,b_\kappa)$ is exactly G (25.4).
+Use the all-real winding cover $I\times\mathbb R^3$,
+$q=(\theta,v,x)$, and the signed original coordinates
+$y=J_\kappa q$, $J_\kappa=\operatorname{diag}(1,1,\kappa)$,
+so the third original coordinate is $D=\kappa x$.
+The original killed reference law $\mathbb P$ is Q (41.1), equivalently
+D (35.2), with two independent standard Brownian drivers, covariance
+$\operatorname{diag}(\varepsilon^2,1)$, raw cover measure $dk\,dq$,
+original time and killing at both endpoints of $I$.
+Let $\zeta$ be that exit time, and put
+
+$$
+\phi(k)=\sqrt{\frac2{u-l}}\sin\frac{\pi(k-l)}{u-l},\qquad
+\lambda=\frac{\varepsilon^2\pi^2}{(u-l)^2},\qquad
+\pi(dk)=\phi(k)^2dk.
+\tag{75.1}
+$$
+
+Let $\mathbb Q$ be exactly its conservative Doob ground-state law of
+Q Definition 41.1. Its height semigroup, coefficient bounds and exact
+phase laws are Q (41.3)--(41.6). In particular its height generator is
+$\varepsilon^2\partial_{kk}+2\varepsilon^2(\phi'/\phi)\partial_k$,
+and, conditional on the complete height path, its phase driver is
+independent standard Brownian motion. Fix a Euclidean unit vector
+$e\in\mathbb R^3$ before the history and $r>0$, and set
+
+$$
+\begin{aligned}
+h&=J_\kappa^{\mathsf T}e,& a(k)&=h\cdot c_\kappa(k),\\
+m=\widehat m&=\int_I a(k)^2\pi(dk)>0,&
+A&=\|a\|_\infty^2\ge m,\\
+X_t&=e\cdot(y_t-y_0),&
+V(t)&=2\int_0^t a(K_s)^2ds.
+\end{aligned}
+\tag{75.2}
+$$
+
+The positivity of $m$ is the native tensor conclusion retained in
+Q Theorem 74.1. The actual smooth bounded coefficient $a$ may vanish;
+no pointwise positive lower bound is imposed. Write $\nu=\nu(m,r)>0$
+for the principal Dirichlet eigenvalue of
+$-(m\partial_{zz}-(z/2)\partial_z)$ on $(-r,r)$, in the weighted space
+$L^2((-r,r),e^{-z^2/(4m)}dz)$, as in Q (74.4).
+All divergences below use natural logarithms.
+

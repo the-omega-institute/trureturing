@@ -1,0 +1,19 @@
+## 22. 原整数时钟上的尾界与间隔矩
+
+对任意隐藏起点，任意两条连续发射都全为零的条件概率不超过 $1-\alpha$：准备状态给出 $(1-a)^2\le1-\alpha$，强制状态给出 $1-a\le1-\alpha$。按两个原整数位点一组并使用（2.4），对任意 $\ell\ge0$ 得
+$$
+P_{t,q}(X_u=\cdots=X_{u+\ell-1}=0)
+\le(1-\alpha)^{\lfloor\ell/2\rfloor}.
+\tag{22.1}
+$$
+空块时右端为一。令 $\ell\to\infty$，再对整数起点作可数并，得到两侧几乎处处有无穷多个 $1$；因此 $L,R$ 及全部 outward 列表在一个满测事件上存在。
+
+对 $a\ge\alpha$，几何求和给出
+$$
+\mathbb E_{f_a}e^{\vartheta G}
+=\frac{ae^{2\vartheta}}{1-(1-a)e^{\vartheta}}
+\le\frac{e^{2\vartheta}}{1-(1-\alpha)e^{\vartheta}}=M.
+\tag{22.2}
+$$
+分母为正，因为 $(1-a)e^{\vartheta}\le\sqrt{1-\alpha}<1$。这就是所有选定锚条件下每个交替间隔的统一矩界。
+

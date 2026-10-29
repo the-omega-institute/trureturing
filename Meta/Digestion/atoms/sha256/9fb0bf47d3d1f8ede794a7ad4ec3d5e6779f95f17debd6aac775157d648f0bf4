@@ -1,0 +1,59 @@
+**引理 88.2（绝对参数界）。** 在定义 88.1 的整个正 $q$ interval 上，
+
+$$
+\begin{gathered}
+3q\le y\le\frac{480}{119}q,\qquad
+m_+\ge\frac12,\qquad \mu\ge18q,\qquad
+2q\le\eta\le4q,\\
+\frac34\sqrt q\le h,\qquad
+\frac74h\le w\le2h\le3\sqrt q,\qquad
+w-h\ge\frac12\sqrt q.
+\end{gathered}
+\tag{88.4}
+$$
+
+这些是 exact interval estimates，不使用 $q\downarrow0$ expansion。
+
+**证明。** 从原 root interval 与原 identities 得
+
+$$
+\vartheta\le\frac{41}{1200},\qquad
+\frac y\vartheta=\frac{2-R}{2R(R+1)}\le\frac14,
+\qquad y\le\frac{R-1}{6}\le\frac1{120},
+\qquad \frac wh=\frac4{R(3-R+10d)}.
+$$
+
+$R(3-R)-2=(R-1)(2-R)\ge0$，且 $d<y/3\le\vartheta/12$，所以
+
+$$
+2\le R(3-R+10d)
+ \le\frac{21}{20}\left(2+\frac{41}{1440}\right)
+ =\frac{20447}{9600}<\frac{16}{7}.
+$$
+
+这给 $7h/4\le w\le2h$。用原 identity $w^2=y(1-y)$，
+
+$$
+\begin{aligned}
+y&\ge w^2\ge\frac{49}{16}q(1-q)
+ \ge\frac{49}{16}\frac{999}{1000}q\ge3q,\\
+y&=\frac{w^2}{1-y}\le4q\frac{120}{119}.
+\end{aligned}
+$$
+
+另有 $m_+\ge380/441\ge1/2$。将 $\mu$ 写为
+
+$$
+\mu=\frac{3y(R+2)}{R(2-R)}\ge9y\ge27q\ge18q;
+$$
+
+其中第一步不等式等价于 $(R+2)-3R(2-R)=(3R-2)(R-1)\ge0$。又
+
+$$
+\eta\ge\frac34y\ge\frac94q\ge2q,\qquad
+\eta<\frac56y\le\frac{400}{119}q<4q.
+$$
+
+最后 $1-q\ge999/1000\ge9/16$ 给 $h\ge3\sqrt q/4$；因此
+$w-h\ge3h/4\ge9\sqrt q/16\ge\sqrt q/2$。∎
+

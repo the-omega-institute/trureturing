@@ -1,0 +1,24 @@
+**Definition 24.1 (the prediction cut and its task).** Start instead
+with the actual known alpha leaf in the local service of Definition
+22.1. Let $T_m=\rho^m\alpha$ denote the semantic paper tree and
+$X_n$ its actual physically ordered labelled realization after $n$
+completed serial updates, with all actual persistent birth choices.
+Write $S=\operatorname{Pos}(X_n)$ for its current physical shape and
+$\partial S$ for its terminals. For $n\ge2$, let
+
+$$
+ C(S)=\{p:pa,pb\text{ are both leaves of }S\},\qquad
+ \chi_p=\mathbf1_{X_n(pa)=\beta}\quad(p\in C(S)).
+ \tag{GPO.67}
+$$
+
+The task $\mathcal Q_1$ asks, **before** the next update, for its
+entire successor presence response map on all finite physical words,
+including absent words. It can equivalently serve any later chosen
+stationary Read-and-stop request after that one update. This is not
+the semantic tree $T_n$, which is already known from the seed and
+count. New choices made during the next update do not affect the
+unlabelled shape of the new cherries, so $\mathcal Q_1$ is determined
+by the current labelled state; it does not ask an observer to predict
+unmade choices.
+

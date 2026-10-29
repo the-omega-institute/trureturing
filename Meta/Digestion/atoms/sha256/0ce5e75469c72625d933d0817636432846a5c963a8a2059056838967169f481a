@@ -1,0 +1,56 @@
+**Theorem 28.2 (exact ordered-prefix correspondence).** In Definition
+27.1, for every $n\ge2$, the following statements hold without any
+finite-law promise.
+
+1. $S_n$ and $\partial S_n$ determine one another and determine $n$.
+2. For two streams at that cut, equality of physical incidence is
+   equivalent to equality of their first $v_n$ birth bits. There are
+   explicit finite maps between $S_n$ and $(n,z_1\cdots z_{v_n})$.
+   These maps also recover exactly $\mathcal T_n^{<}$.
+3. The full labelled physical state $X_n$ is equivalent to
+   $(n,z_1\cdots z_{B_n})$. Conditional on $S_n$, only the newest
+   batch of $F_{n-1}$ bits remains to specify that state.
+
+Proof. Prefix closure of the terminal words gives $S_n$; maximality
+in $S_n$ gives its terminals. The leaf count is $F_{n+1}$ by
+Theorem 24.2. This sequence is strictly increasing for $n\ge1$,
+so within $n\ge2$ it determines $n$.
+
+A branch born at update $t$ has, at cut $n$, the shape of a rank
+$m=n-t+2\ge2$ Fibonacci subtree. Its number of descendant leaves
+is $F_{m+1}$. The rank is therefore determined by this number, and
+so is its actual birth update $t=n-m+2$. When $m\ge3$, the
+child descended from its original beta has $F_m$ leaves and the
+child descended from its original alpha has $F_{m-1}$ leaves.
+These are unequal. The position of the larger child thus gives the
+actual birth bit, even if either descendant was subsequently expanded
+many times. The rank-two branches are exactly the newest cherries;
+their children both have one leaf, so their bits are invisible.
+
+Consequently $S_n$ determines the bit and update index of every old
+branch, at its actual persistent address. Ordering these branches
+by recovered update index and then physical parent address yields
+exactly $z_1,\ldots,z_{v_n}$ in Definition 27.1's actual birth
+chronology. This proves recovery of the mature marked trace as well;
+it does not sort by an unavailable semantic frame.
+
+Conversely a prefix of length $v_n=B_{n-1}$ determines the full
+labelled physical tree $X_{n-1}$ by forward replacement from alpha,
+using exactly the specified chronological assignments. Its beta leaves
+determine $S_n$ by (GPO.69), independently of the newest birth bits.
+This proves both implications of assertion 2. A full labelled $X_n$
+also reveals each rank-two bit by its beta child's position. The same
+rank argument then recovers every $z_j$ through $B_n$. Forward
+replacement proves the reverse implication of assertion 3. All these
+algorithms manipulate finite trees and lists. Their existence is not a
+claim that the observer has already scanned or acquired $S_n$.
+$\square$
+
+At a fixed $n$, this identifies geometric information with an ordered
+prefix of an actual autonomous law. It is stronger than counting
+$2^{v_n}$ possible shapes, which alone would provide neither the
+ordering nor an acquisition method. The proof uses the known alpha
+origin and the actual chronological actuator rule. It supplies no
+inverse for an arbitrary original tree or an arbitrary assignment of
+unrecorded actuator choices.
+
