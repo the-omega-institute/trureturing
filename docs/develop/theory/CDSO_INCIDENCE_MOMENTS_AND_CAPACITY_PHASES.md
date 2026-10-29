@@ -2515,3 +2515,509 @@ Substitution into (12.31) and (12.33) proves (12.27)–(12.28). In (12.28) the a
 Theorem 10.1 is the source of the upper family and its exact energy; Jensen and Cauchy–Schwarz are classical intermediate inequalities. The weighted residual, uniform sublevel comparison, equality classification and expansion above are repo-derived mathematical deductions in the domain of Definition 12.1. Their relation to K. Zhao and X. Zhao, DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), is undetermined without that paper's full text; no literature-priority assertion is made. The threshold's least value and the minimum for the remaining finite range $4\le a<a_0$ are not determined here. The array theorem supplies no exact realization or optimality assertion at a prescribed finite graph budget.
 
 ## 追加锚（本行以下为增补区）
+## 13. Fixed surplus hubs and eventual exact capacity
+
+**Definition 13.1 (The fixed-$h$ endpoint array problem).** Fix an integer $h\ge2$. For each integer $a\ge4$, put
+$$
+r=a+1,\qquad s=r+h=a+1+h.
+$$
+Let $\mathcal X_{a,h}$ be the profiles of Definition 1.1 on $[s]$ satisfying
+$$
+\mathbb E K=a,\qquad y_i=\mathbb P(i\in T)>0\quad(1\le i\le s).
+$$
+The law of the one nonempty subset $T$ is the only source of $K$, the incidences and the marginals. Put
+$$
+H(x)=2J_s(x)=\mathbb E\!\left[K^2\sum_{i\in T}y_i^{-2}\right],
+\qquad B_0=a r^2,
+\qquad d(x)=H(x)-B_0.
+$$
+No support, cardinality, or connectedness condition is imposed beyond these actual-array constraints; zero type masses and disconnected incidence support remain allowed.
+
+**Definition 13.2 (The $h$-tail family).** Let $D\subseteq[s]$ have $|D|=h$ and let $C=[s]\setminus D$, so $|C|=r$. For $0<u\le1/a$, define one actual array by
+$$
+x_{\{j\}}=\frac uh\quad(j\in D),\qquad
+x_C=(a-1)u,\qquad
+x_{C\setminus\{i\}}=\frac{1-au}{r}\quad(i\in C),
+$$
+with all other masses zero. Its tail marginals are $u/h$, its core marginals are
+$$
+\bar y=\frac{a-u}{r},
+$$
+and its mean cardinality is $a$. Define
+$$
+\Phi_{a,h}(u)=\frac{h^2}{u}+\frac{a^2r^2}{a-u}
+ +\frac{(a-1)(2a+1)r^3u}{(a-u)^2}.
+\tag{13.1}
+$$
+Then this one joint array has $H=\Phi_{a,h}(u)$.
+
+**Proof.** The masses sum to
+$$
+ u+(a-1)u+1-au=1,
+$$
+and their cardinality mean is
+$$
+ u+r(a-1)u+a(1-au)=a.
+$$
+For $i\in C$, direct incidence counting gives $y_i=(a-u)/r$, while each $j\in D$ occurs only in its singleton and has marginal $u/h$. The tail contribution to $H$ is $h^2/u$. Summing the core contributions and simplifying gives the last two terms of (13.1). Every displayed marginal is positive, including at $u=1/a$; the missing-one masses may then be zero. ∎
+
+**Lemma 13.3 (The scalar optimizer).** For every fixed $h$ and all sufficiently large $a$, $\Phi_{a,h}$ has a unique minimizer $u_h\in(0,1/a)$. It is the unique solution in $(0,a)$ of
+$$
+\frac{h^2}{u_h^2}
+ =\frac{a^2r^2}{(a-u_h)^2}
+ +\frac{(a-1)(2a+1)r^3(a+u_h)}{(a-u_h)^3}.
+\tag{13.2}
+$$
+With
+$$
+M_a=2a^3+2a^2-2a-1,
+\qquad N_a=2a^3-2a-1,
+\qquad b_a=\frac{r^2M_a}{a^2},
+$$
+its scale is
+$$
+ u_h=\frac{h}{\sqrt2\,a^{3/2}}\left(1+O_h(a^{-1})\right).
+\tag{13.3}
+$$
+
+**Proof.** Differentiation gives
+$$
+\Phi_{a,h}''(u)=\frac{2h^2}{u^3}+\frac{2a^2r^2}{(a-u)^3}
+ +\frac{2(a-1)(2a+1)r^3(2a+u)}{(a-u)^4}>0
+$$
+for $0<u<a$. Thus $\Phi_{a,h}'$ is strictly increasing, tends to $-\infty$ at $0$, and tends to $+\infty$ at $a$. Its zero is unique and (13.2) is the equation $\Phi_{a,h}'(u_h)=0$. At $u=1/a$, the positive last term in $\Phi_{a,h}'$ is of order $a^3$, whereas the negative term is $O_h(a^2)$, so the zero lies below $1/a$ for all sufficiently large $a$.
+
+The exact rearrangement of (13.2) is
+$$
+\frac{h^2}{u_h^2}
+=b_a\left(1+\frac{N_a}{M_a}\frac{u_h}{a}\right)
+       \left(1-\frac{u_h}{a}\right)^{-3}.
+\tag{13.4}
+$$
+The two factors after $b_a$ are at least one. Hence $u_h\le h/\sqrt{b_a}=O_h(a^{-3/2})$, and (13.4) gives $u_h=h/\sqrt{b_a}\,(1+O_h(a^{-5/2}))$. Since $b_a=2a^3+O(a^2)$, (13.3) follows. ∎
+
+**Lemma 13.4 (The common tail event and the core remainder).** Fix $h$ and let $a$ be large enough that $a^2\ge3h(2a+1)$. For $x\in\mathcal X_{a,h}$, choose $D$ to be any $h$ labels with the smallest actual marginals, put $C=[s]\setminus D$, and define
+$$
+ t_j=y_j\ (j\in D),\quad
+ u=\sum_{j\in D}t_j,\quad
+ \delta=\max_{j\in D}t_j,
+$$
+$$
+ B=|T\cap D|,\qquad L=|T\cap C|,\qquad A=\{B>0\},\qquad p=\mathbb P(A).
+$$
+Then $\delta\le p\le u\le hp$, every core marginal is at least $\delta\ge u/h$, and
+$$
+Q(l)=(r-l)(a-l)(2a+1+l)
+ =\alpha-\beta l+l^3,
+$$
+where
+$$
+\alpha=a(a+1)(2a+1),\qquad \beta=3a^2+3a+1.
+$$
+Writing
+$$
+ f_u(y)=\frac{a^2}{y}-\frac{(2a+1)u}{y^2},
+ \qquad
+ \mathcal A_a(u)=\frac{r^2(a^2+3a+1+au)}{(a-u)^2},
+$$
+and
+$$
+\mathcal S_f=\sum_{i\in C}f_u(y_i)-r f_u\!\left(\frac{a-u}{r}\right)\ge0,
+$$
+one has the exact lower certificate
+$$
+ d(x)\ge H_D-u\mathcal A_a(u)+\mathbb E Q(L)+\mathcal S_f,
+\qquad
+ H_D=\mathbb E\!\left[K^2\sum_{j\in T\cap D}t_j^{-2}\right].
+\tag{13.5}
+$$
+In particular, $H_D\le d+u\mathcal A_a(u)$ and $\mathcal A_a(u)=O_h(a^2)$ whenever $0<u\le hp$.
+
+**Proof.** Since $D$ contains the $h$ smallest marginals, every core marginal is at least $\delta$, and $\delta\ge u/h$. Also $\delta\le p$ because a tail label with marginal $\delta$ can occur only on $A$, while $p\le u$ and $u\le hp$ are immediate.
+
+For $i\in C$, let $I_i=\mathbf1_{\{i\in T\}}$ and define the pointwise remainder
+$$
+ \rho_i=(1-I_i)(2a+1)(a-L)+I_i(r-L)(r-L-1).
+$$
+If $I_i=0$, then $L\le r-1=a$; if $I_i=1$, the last two factors are consecutive nonnegative integers except that their product is still zero at $L=r$. Hence $\rho_i\ge0$. Put $R_i=\mathbb E\rho_i$. Using $\mathbb E L=a-u$ gives
+$$
+R_i=\mathbb E[L^2I_i]-a^2y_i+(2a+1)u,
+\qquad \sum_{i\in C}R_i=\mathbb E Q(L).
+\tag{13.6}
+$$
+Moreover
+$$
+f_u''(y)=\frac{2(a^2y-3(2a+1)u)}{y^4}\ge0
+$$
+for $y\ge u/h$ under the stated condition. Jensen therefore applies to the actual $r$ core marginals, whose sum is $a-u$, and
+$$
+ r f_u\!\left(\frac{a-u}{r}\right)=B_0-u\mathcal A_a(u).
+\tag{13.7}
+$$
+The core part of $H$ is at least
+$$
+\sum_{i\in C}\left(\frac{a^2}{y_i}-\frac{(2a+1)u}{y_i^2}+\frac{R_i}{y_i^2}\right),
+$$
+because $K^2\ge L^2$. Since $0<y_i\le1$ and $R_i\ge0$, $R_i/y_i^2\ge R_i$. Combining this with (13.7) and the tail part gives (13.5). ∎
+
+**Lemma 13.5 (Localization and bootstrap on every fixed low-energy sublevel).** Fix $h$ and $M>0$. If $a\to\infty$ through integers and $x_a\in\mathcal X_{a,h}$ satisfies
+$$
+ d(x_a)\le M a^{3/2},
+\tag{13.8}
+$$
+then, for every choice of $h$ smallest-marginal labels as in Lemma 13.4,
+$$
+\delta\longrightarrow0,
+$$
+and, with $p,u,H_D$ as there, eventually
+$$
+ p=O_{h,M}(a^{-3/2}),\qquad u=O_{h,M}(a^{-3/2}),\qquad H_D=O_{h,M}(a^{3/2}).
+\tag{13.9}
+$$
+More precisely, after the first bootstrap there is a constant $C_{h,M}>0$, independent of the array and the choice of $D$, such that eventually
+$$
+\begin{aligned}
+ d(x_a)&\ge H_D+(2a^3-C_{h,M}a^2)p\\
+ &\ge\frac{h^2}{p}+(2a^3-C_{h,M}a^2)p.
+\end{aligned}
+\tag{13.10}
+$$
+
+**Proof.** First, $H\ge\mathbb E K^3$. For integer $K\in[1,a+1+h]$,
+$$
+K^3-(3a^2+3a+1)K+a(a+1)(2a+1)
+=(K-a)(K-a-1)(K+2a+1),
+$$
+so, after expectation and $\mathbb E K=a$,
+$$
+\mathbb E K^3-a^3\ge(2a+2)\operatorname{Var}K.
+\tag{13.11}
+$$
+The sublevel bound and $H=B_0+d$ thus give $\operatorname{Var}K=O_{h,M}(a)$.
+
+We prove $\delta\to0$ by contradiction. Suppose that along a subsequence the $h$ selected marginals do not all tend to zero. After passing to a further subsequence, let $Z$ be the set of $z\le h-1$ selected labels whose marginals tend to zero, and let $R=[s]\setminus Z$, with $m=|R|=a+1+h-z$. The marginals in $R$ are at least some $c_0>0$. Put
+$$
+V_R=\sum_{i\in T\cap R}(y_i^{-2}-1).
+$$
+Because $\sum_i(1-y_i)=s-a=h+1$,
+$$
+0\le V_R\le\frac{2(h+1)}{c_0^2},
+$$
+and
+$$
+\mathbb E V_R=\sum_{i\in R}(y_i^{-1}-y_i)
+\ge\frac{m^2}{a-v}-(a-v),
+$$
+where $v=\sum_{i\in Z}y_i\to0$. Put $b=h+1-z\ge2$, so $m=a+b$. For every $a$ in this subsequence, $v\ge0$ and $a-v=\sum_{i\in R}y_i>0$, and hence
+$$
+\frac{m^2}{a-v}-(a-v)
+=2(b+v)+\frac{(b+v)^2}{a-v}\ge2b\ge4.
+$$
+Also (13.11) gives
+$$
+\mathbb E|K^2-a^2|\le(2a+h+1)\sqrt{\operatorname{Var}K}=O_{h,M}(a^{3/2}).
+$$
+Using $H=\mathbb E[K^3+K^2\sum_{i\in T}(y_i^{-2}-1)]$ and dropping the nonnegative $Z$ terms yields
+$$
+H\ge a^3+4a^2-O_{h,M,c_0}(a^{3/2}),
+$$
+contradicting $H\le a^3+2a^2+a+Ma^{3/2}$. Thus $\delta\to0$.
+
+On $A$, put
+$$
+V=\sum_{j\in T\cap D}t_j^{-1},
+\qquad
+W=K^2\sum_{j\in T\cap D}t_j^{-2},
+$$
+and set both zero off $A$. Cauchy--Schwarz within one actual type gives $W\ge V^2$, while $\mathbb E V=h$; Cauchy--Schwarz on the one event $A$ gives
+$$
+H_D\ge\mathbb E V^2\ge\frac{h^2}{p}.
+\tag{13.12}
+$$
+Since $W\ge K^2/\delta^2$ on $A$, $\mathbb E[K^2;A]\le\delta^2H_D$. By (13.5), $H_D\le d+u\mathcal A_a(u)$, and $u\le hp$, so
+$$
+\frac{\mathbb E[K^2\mid A]}{a^2}
+\le M\frac{\delta}{a^{1/2}}+C_hh\delta^2\longrightarrow0,
+\tag{13.13}
+$$
+where $\delta\le p$ was used in the first term. Since $Q(L)\ge\alpha-\beta L$, (13.13) gives
+$$
+\mathbb E[Q(L);A]\ge(2-o(1))a^3p.
+$$
+The terms off $A$ are nonnegative, and $u\mathcal A_a(u)=O_h(a^2p)$, so (13.5) implies $d\ge H_D+a^3p$ eventually. Consequently $p=O_{h,M}(a^{-3/2})$, and then $u=O_{h,M}(a^{-3/2})$ and $H_D=O_{h,M}(a^{3/2})$ by (13.5).
+
+The improved bounds and $\delta\le p$ give
+$$
+\mathbb E[K^2\mid A]\le\frac{\delta^2H_D}{p}=O_{h,M}(1).
+$$
+Thus $\mathbb E[L;A]=O_{h,M}(p)$, and returning to (13.5), using $\alpha=2a^3+O(a^2)$ and $\beta=O(a^2)$, proves (13.10). ∎
+
+**Lemma 13.6 (Necessary structure at the sharp scale).** Under the hypotheses of Lemma 13.5, suppose in addition that
+$$
+\frac{d(x_a)}{a^{3/2}}\longrightarrow2\sqrt2\,h.
+\tag{13.14}
+$$
+Then, for every choice of $h$ smallest-marginal labels,
+$$
+ a^{3/2}p\longrightarrow\frac h{\sqrt2},\qquad
+ a^{3/2}t_j\longrightarrow\frac1{\sqrt2}\quad(j\in D),
+\tag{13.15}
+$$
+$$
+\mathbb E[K^2\mid A]\longrightarrow1,\qquad
+\frac{x_{\{j\}}}{t_j}\longrightarrow1\quad(j\in D),\qquad
+\min_{i\in C}y_i\longrightarrow1.
+\tag{13.16}
+$$
+In particular $u/p\to1$, and conditioned on $A$ the tail count is one with probability tending to one.
+
+**Proof.** The refined lower bound (13.10), followed by (13.12), gives
+$$
+\frac{d(x_a)}{a^{3/2}}
+\ge\frac{h^2}{\pi_a}+(2+o(1))\pi_a,
+\qquad \pi_a=a^{3/2}p.
+$$
+By (13.9), $\pi_a$ is bounded above, and (13.12) together with the bound on $H_D$ in (13.9) bounds it away from zero. The function $h^2/\pi+2\pi$ has minimum $2\sqrt2h$, attained only at $\pi=h/\sqrt2$. Therefore (13.14) forces $\pi_a\to h/\sqrt2$. The same inequalities then force
+$$
+\frac{H_D}{a^{3/2}}\to\sqrt2h,\qquad pH_D\to h^2.
+\tag{13.17}
+$$
+Let $\mathbb E_A$ denote conditional expectation on $A$. Since $H_D=p\mathbb E_A W$ and $\mathbb E_A V=h/p$, conditional Cauchy--Schwarz gives $p^2\mathbb E_A V^2\ge h^2$. Thus (13.17) gives
+$$
+0\le p^2\mathbb E_A(W-V^2)
+=pH_D-p^2\mathbb E_A V^2\le pH_D-h^2\longrightarrow0.
+$$
+On $A$, every $t_j\le p$, so $V\ge1/p$. Since $K\ge B$ and $1\le B\le h$,
+$$
+\frac{K^2}{B}-1\ge\frac{K^2-1}{h+1}.
+$$
+The within-type Cauchy inequality therefore gives
+$$
+W-V^2\ge\left(\frac{K^2}{B}-1\right)V^2
+\ge\frac{K^2-1}{(h+1)p^2}.
+$$
+Consequently
+$$
+0\le\mathbb E_A(K^2-1)
+\le(h+1)p^2\mathbb E_A(W-V^2)\longrightarrow0.
+$$
+Since $K\ge B\ge1$, this implies $\mathbb P(K=1\mid A)\to1$, hence $u/p=\mathbb E_A B\to1$.
+
+Put $q_j=t_j/p$. Then $\sum_jq_j=u/p\to1$, $q_j\le1$, and
+$$
+\sum_{j\in D}\frac1{q_j}=p\sum_{j\in D}\frac1{t_j}
+\le pH_D\longrightarrow h^2.
+$$
+Cauchy--Schwarz gives the reverse limiting inequality $\sum_j1/q_j\ge h^2/(\sum_jq_j)\to h^2$. Its equality case, or compactness after excluding $q_j\downarrow0$, yields $q_j\to1/h$, proving (13.15). Also
+$$
+\mathbb E[(K^2-1)\mathbf1_{\{j\in T\}}]
+\le\mathbb E[(K^2-1);A]=o(p).
+$$
+Every nonsingleton type containing $j$ contributes at least $3$ to $K^2-1$, while $t_j\asymp p$; consequently $x_{\{j\}}/t_j\to1$.
+
+For the core, use the stronger eventual condition $a^2\ge6h(2a+1)$. On the actual interval $y_i\ge u/h$, $f_u''(y)\ge a^2$. Strong Jensen gives
+$$
+\mathcal S_f\ge\frac{a^2}{2}\sum_{i\in C}\left(y_i-\frac{a-u}{r}\right)^2.
+$$
+Equation (13.5), (13.9), and nonnegativity of the other terms give $\mathcal S_f=O_{h,M}(a^{3/2})$. Hence the displayed square sum is $O_{h,M}(a^{-1/2})$, and the minimum core marginal tends to $1$ because $(a-u)/r\to1$. ∎
+
+**Lemma 13.7 (Strict deficit payment).** In the notation of Lemma 13.4, put
+$$
+ b=(a-1)(2a+1),\qquad c=\min_{i\in C}y_i.
+$$
+If
+$$
+\frac3{\delta^2}>\frac{\max\{\alpha,\beta\}}{c^2},
+\tag{13.18}
+$$
+then
+$$
+H(x)\ge\sum_{j\in D}\frac1{t_j}
+ +\sum_{i\in C}\left(\frac{a^2}{y_i}+\frac{bu}{y_i^2}\right).
+\tag{13.19}
+$$
+The inequality is strict if any positive-mass event with $B>0$ has $K\ge2$.
+
+**Proof.** Write
+$$
+H_D=\sum_{j\in D}\frac1{t_j}+Z,
+\qquad
+Z=\mathbb E\!\left[(K^2-1)\sum_{j\in T\cap D}t_j^{-2}\right].
+$$
+For $i\in C$, let $I_i=\mathbf1_{\{i\in T\}}$ and
+$$
+\Delta_i=\mathbb E[(K^2-L^2)I_i]\ge0.
+$$
+Using (13.6), the exact core decomposition is
+$$
+H=\sum_{j\in D}t_j^{-1}+Z
+ +\sum_{i\in C}\left(\frac{a^2}{y_i}-\frac{(2a+1)u}{y_i^2}
+ +\frac{R_i+\Delta_i}{y_i^2}\right).
+\tag{13.20}
+$$
+On $A$, the individual weighted deficits must first be seen to be nonnegative. For $I_i=0$,
+$$
+c_0B-\rho_i=(2a+1)\bigl(a(B-1)+L\bigr)\ge0,
+$$
+and for $I_i=1$,
+$$
+c_0B-\rho_i=c_0(B-1)+(2a+1)L+a^2-L^2\ge0,
+\qquad c_0=a(2a+1).
+$$
+The last inequality is immediate when $L\le a$; when $L=r=a+1$, it reduces to $c_0B\ge0$. Off $A$ the same expression is $-\rho_i\le0$. Therefore, before applying the weight bound,
+$$
+\sum_{i\in C}\frac{\mathbb E[c_0B-\rho_i;A]}{y_i^2}
+\le\frac1{c^2}\mathbb E\!\left[\sum_{i\in C}(c_0B-\rho_i);A\right]
+\le\frac{\max\{\alpha,\beta\}}{c^2}\mathbb E[(K-1);A].
+\tag{13.21}
+$$
+Indeed, summing the unweighted deficits on $A$ gives
+$$
+ r c_0(B-1)+r(2a+1)L+L(a^2-L^2)
+\le\alpha(B-1)+\beta L
+\le\max\{\alpha,\beta\}(K-1).
+$$
+On the other hand, on $A$,
+$$
+Z\text{ has integrand at least }\frac{B(K^2-1)}{\delta^2}
+\ge\frac{3(K-1)}{\delta^2}.
+$$
+Condition (13.18) pays every positive weighted deficit, with strict surplus whenever $K\ge2$. Adding $c_0u=\mathbb E[c_0B]$ to each core coefficient in (13.20) changes $-(2a+1)u$ into $bu$, and the nonnegative $\Delta_i$ can be discarded. This proves (13.19) and its strictness assertion. ∎
+
+**Lemma 13.8 (Attainment and one threshold for all minimizers).** For each fixed $a,h$, the infimum of $H$ on $\mathcal X_{a,h}$ is attained. For every fixed $h$ there is an integer $A(h)$ such that, for every $a\ge A(h)$, every global minimizer and every choice of $h$ smallest-marginal labels satisfy (13.18).
+
+**Proof.** The feasible scalar family in Definition 13.2 supplies a finite positive-marginal comparison. Also
+$$
+H\ge\sum_{i=1}^s\frac1{y_i},
+$$
+so a bounded sublevel has all marginals bounded away from zero. Its intersection with the finite probability simplex and the two affine constraints is compact, and $H$ is continuous there. Hence a minimizing sequence has a convergent subsequence whose limit remains in $\mathcal X_{a,h}$.
+
+For fixed $h$, put $u_0=h/(\sqrt2\,a^{3/2})$, which lies in $(0,1/a]$ for all sufficiently large $a$. The actual array of Definition 13.2 has
+$$
+\begin{aligned}
+\Phi_{a,h}(u_0)-B_0
+&=\frac{h^2}{u_0}+\frac{ar^2u_0}{a-u_0}
+ +\frac{(a-1)(2a+1)r^3u_0}{(a-u_0)^2}\\
+&=2\sqrt2\,h\,a^{3/2}+O_h(a^{1/2}).
+\end{aligned}
+$$
+Every global minimizer therefore belongs to one fixed low-energy sublevel (13.8). For any sequence $a\to\infty$ of such minimizers, and any sequence of choices of $D$, (13.10) supplies a constant $C_h$ independent of those choices such that, eventually, $2a^3-C_ha^2>0$ and
+$$
+2h\sqrt{2a^3-C_ha^2}
+\le\frac{h^2}{p}+(2a^3-C_ha^2)p
+\le d(x_a)\le\Phi_{a,h}(u_0)-B_0.
+$$
+The first inequality is arithmetic--geometric mean. Dividing by $a^{3/2}$ proves the sharp limit $d(x_a)/a^{3/2}\to2\sqrt2h$ for every minimizer sequence. This sharp limit supplies the additional hypothesis of Lemma 13.6: for every such sequence and every choice of $D$, $\delta a^{3/2}\to1/\sqrt2$ and $c\to1$. If no single threshold $A(h)$ made (13.18) hold for every minimizer and every such $D$, one could choose integers $a\to\infty$ and failing pairs $(x_a,D_a)$. These pairs would contradict the two limits, since
+$$
+\frac{3}{\delta^2}\sim6a^3,\qquad
+\frac{\max\{\alpha,\beta\}}{c^2}\sim2a^3.
+$$
+This contradiction proves the common eventual threshold. ∎
+
+**Theorem 13.9 (Eventual exact minimum and all equality arrays).** For every fixed integer $h\ge2$, there is an integer $A(h)$ such that for every $a\ge A(h)$,
+$$
+\min_{x\in\mathcal X_{a,h}}H(x)=\Phi_{a,h}(u_h).
+\tag{13.22}
+$$
+Up to a relabeling of the $s$ labels, equality holds exactly for the array of Definition 13.2 with $u=u_h$:
+$$
+ x_{\{j\}}=\frac{u_h}{h}\ (j\in D),\qquad
+ x_C=(a-1)u_h,\qquad
+ x_{C\setminus\{i\}}=\frac{1-au_h}{r}\ (i\in C),
+\tag{13.23}
+$$
+and all other type masses zero. In particular, the $h$ tail labels have equal singleton masses, the core has one full type and all its missing-one types have equal masses, and the support may be disconnected.
+
+**Proof.** Let $x$ be a minimizer and choose $D$ as in Lemma 13.4. By Lemma 13.8 and (13.19), then by strict Jensen for
+$$
+ g_u(y)=\frac{a^2}{y}+\frac{bu}{y^2},
+$$
+we obtain
+$$
+H(x)\ge\frac{h^2}{u}+\frac{a^2r^2}{a-u}+\frac{bur^3}{(a-u)^2}
+=\Phi_{a,h}(u)\ge\Phi_{a,h}(u_h).
+\tag{13.24}
+$$
+The first inequality uses Cauchy--Schwarz on the actual $h$ tail marginals and Jensen on the actual core marginals; it does not replace the common array by independently chosen marginals. Definition 13.2 attains the last value, proving (13.22).
+
+Suppose equality holds. Strict convexity of $\Phi_{a,h}$ gives $u=u_h$, tail Cauchy equality gives $t_j=u_h/h$, and strict Jensen gives $y_i=(a-u_h)/r$ for every $i\in C$. Lemma 13.7 excludes every positive-mass event with $B>0$ and $K\ge2$, so the only tail-containing types are the singletons $\{j\}$.
+
+For a core-only type, equality in (13.20) forces every $\rho_i$ to vanish. Summing over $i\in C$ gives $Q(L)=0$. For integer $1\le L\le r$, the only zeros are $L=a$ and $L=r$; hence the remaining positive types are exactly $C$ and the $r$ types $C\setminus\{i\}$. Write their masses as $z$ and $b_i$. Normalization and the mean constraint give
+$$
+ z+\sum_i b_i=1-u_h,\qquad
+ rz+a\sum_i b_i=a-u_h,
+$$
+so $z=(a-1)u_h$ and $\sum_i b_i=1-au_h$. Since every core marginal equals $(a-u_h)/r$,
+$$
+1-u_h-b_i=\frac{a-u_h}{r},
+$$
+which forces $b_i=(1-au_h)/r$ for each $i$. This is (13.23). Conversely Definition 13.2 attains equality. Since $u_h<1/a$ eventually, the displayed masses and all marginals are admissible. ∎
+
+**Theorem 13.10 (Sharp value expansion).** For fixed $h\ge2$, as $a\to\infty$ through integers, the exact minimum in Theorem 13.9 satisfies
+$$
+\min_{x\in\mathcal X_{a,h}}J_s(x)-\frac{B_0}{2}
+=\sqrt2\,h\,a^{3/2}+\frac{3h}{\sqrt2}\,a^{1/2}
+ -\frac{h}{4\sqrt2}\,a^{-1/2}
+ +\frac{h^2}{a}+O_h(a^{-3/2}).
+\tag{13.25}
+$$
+The optimizer also has the finer expansion
+$$
+ u_h=\frac{h}{\sqrt2\,a^{3/2}}
+ \left(1-\frac3{2a}+O_h(a^{-2})\right).
+\tag{13.26}
+$$
+
+**Proof.** With $M_a,N_a,b_a$ as in Lemma 13.3, an exact rearrangement of (13.1) is
+$$
+\Phi_{a,h}(u)-B_0=\frac{h^2}{u}+b_au+W_a(u),
+$$
+where
+$$
+W_a(u)=\frac{r^2u^2(2aM_a-a^3-M_au)}{a^2(a-u)^2}.
+\tag{13.27}
+$$
+Equation (13.4) and $u_h=O_h(a^{-3/2})$ give
+$$
+ u_h=\frac{h}{\sqrt{b_a}}+O_h(a^{-4}),
+\tag{13.28}
+$$
+and the exact identity
+$$
+\frac{h^2}{u_h}+b_au_h-2h\sqrt{b_a}
+=\frac{b_a\bigl(u_h-h/\sqrt{b_a}\bigr)^2}{u_h}
+$$
+shows that the error in replacing the first two terms by $2h\sqrt{b_a}$ is $O_h(a^{-7/2})$.
+
+Put
+$$
+ c_{2,a}=r^2\left(\frac{2M_a}{a^3}-\frac1a\right)
+=4a^2+11a+6-\frac7a-\frac8{a^2}-\frac2{a^3}.
+$$
+For $0<u\le Ca^{-3/2}$, expansion of $(1-u/a)^{-2}$ in (13.27) with a bounded remainder gives
+$$
+W_a(u)=c_{2,a}u^2+O_C(au^3).
+\tag{13.29}
+$$
+Using (13.28), (13.29), and $b_a\asymp a^3$ yields
+$$
+\Phi_{a,h}(u_h)-B_0
+=2h\sqrt{b_a}+\frac{h^2c_{2,a}}{b_a}+O_h(a^{-7/2}).
+\tag{13.30}
+$$
+Now
+$$
+ b_a=2a^3+6a^2+4a-3-\frac4a-\frac1{a^2},
+$$
+so Taylor expansion with a bounded remainder gives
+$$
+\sqrt{b_a}=\sqrt2\,a^{3/2}
+ \left(1+\frac3{2a}-\frac1{8a^2}+O(a^{-3})\right),
+\qquad
+\frac{c_{2,a}}{2b_a}=\frac1a+O(a^{-2}).
+$$
+Dividing (13.30) by two proves (13.25). The same expansion of $b_a^{-1/2}$ in (13.28) proves (13.26). ∎
+
+Theorem 13.9 is a repo-derived consequence for every fixed integer $h\ge2$ of one actual joint array, the common-event charge, the integer core polynomial and strict scalar Jensen. Theorem 10.1 and Section 12 supply the one-tail family and the $h=1$ endpoint analysis; they are used as prior material rather than repeated claims. The threshold $A(h)$ is asserted to exist but neither specified nor minimized. No statement is made for $h$ growing with $a$, for the finite range below that threshold, or for a prescribed finite graph budget. The full text of K. Zhao and X. Zhao, DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), has not been obtained, so possible overlap is unassessed and no literature-priority claim is made.
+
+## 追加锚（本行以下为增补区）
