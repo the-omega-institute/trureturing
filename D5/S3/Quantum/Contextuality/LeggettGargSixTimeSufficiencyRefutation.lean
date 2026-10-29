@@ -35,6 +35,8 @@ def IsPairFamily {n : ℕ} (p : PairTables n) : Prop :=
 
 private def sgn (a : Bool) : ℝ := if a then 1 else -1
 
+private theorem sgn_apply (a : Bool) : sgn a = if a then 1 else -1 := rfl
+
 def corr {n : ℕ} (p : PairTables n) (i j : Fin n) : ℝ :=
   ∑ a, ∑ b, sgn a * sgn b * p i j a b
 
@@ -62,25 +64,31 @@ private def p : PairTables 6 := fun i j a b =>
   (1 + sgn a * sgn b * if i = 5 then (if j = 4 then -(1 : ℝ) / 2 else 1 / 2)
     else if j = 5 then (if i = 4 then -(1 : ℝ) / 2 else 1 / 2) else 0) / 4
 
+private theorem p_apply (i j : Fin 6) (a b : Bool) :
+    p i j a b =
+      (1 + sgn a * sgn b * if i = 5 then (if j = 4 then -(1 : ℝ) / 2 else 1 / 2)
+        else if j = 5 then (if i = 4 then -(1 : ℝ) / 2 else 1 / 2) else 0) / 4 := rfl
+
 private theorem p_family : IsPairFamily p := by
   refine ⟨?_, ?_⟩
   · intro i j hij
     constructor
     · intro a b
       fin_cases i <;> fin_cases j <;> fin_cases a <;> fin_cases b <;>
-        norm_num [p, sgn]
+        norm_num [p_apply, sgn_apply]
     · fin_cases i <;> fin_cases j <;>
-        norm_num [p, sgn, Fin.sum_univ_succ]
+        norm_num [p_apply, sgn_apply, Fin.sum_univ_succ]
   · refine ⟨fun _ _ => (1 : ℝ) / 2, ?_⟩
     intro i j hij
     constructor <;> intro a <;> fin_cases i <;> fin_cases j <;> fin_cases a <;>
-      norm_num [p, sgn, Fin.sum_univ_succ]
+      norm_num [p_apply, sgn_apply, Fin.sum_univ_succ]
 
 private theorem p_corr (i j : Fin 6) :
     corr p i j = if i = 5 then (if j = 4 then -(1 : ℝ) / 2 else 1 / 2)
       else if j = 5 then (if i = 4 then -(1 : ℝ) / 2 else 1 / 2) else 0 := by
+  change (∑ a, ∑ b, sgn a * sgn b * p i j a b) = _
   fin_cases i <;> fin_cases j <;>
-    norm_num [corr, p, sgn, Fin.sum_univ_succ]
+    norm_num [p_apply, sgn_apply, Fin.sum_univ_succ]
 
 set_option maxHeartbeats 1000000 in
 -- Enumerating the six Boolean signs expands the polygon expression completely.
@@ -92,7 +100,7 @@ private theorem p_ngon : NGonInequalities p := by
   intro s
   cases h0 : s 0 <;> cases h1 : s 1 <;> cases h2 : s 2 <;>
     cases h3 : s 3 <;> cases h4 : s 4 <;> cases h5 : s 5 <;>
-    norm_num [NGonInequalities, p_corr, sgn, Fin.sum_univ_succ, hodd,
+    norm_num [p_corr, sgn_apply, Fin.sum_univ_succ, hodd,
       h0, h1, h2, h3, h4, h5]
 set_option maxHeartbeats 1000000 in
 -- Enumerating the ordered triples and three signs closes the finite LG checks.
@@ -100,11 +108,15 @@ private theorem p_three : ThreeTimeLG p := by
   intro i j k hij hjk a b c
   fin_cases i <;> fin_cases j <;> fin_cases k <;>
     fin_cases a <;> fin_cases b <;> fin_cases c <;>
-    norm_num [ThreeTimeLG, p_corr, sgn]
+    norm_num [p_corr, sgn_apply]
 
 private def b : Fin 6 → ℝ := ![1, 1, 1, 1, -1, -2]
 
+private theorem b_apply (i : Fin 6) : b i = ![(1 : ℝ), 1, 1, 1, -1, -2] i := rfl
+
 private def weight (x : Fin 6 → Bool) : ℝ := ∑ i, b i * sgn (x i)
+
+private theorem weight_apply (x : Fin 6 → Bool) : weight x = ∑ i, b i * sgn (x i) := rfl
 
 set_option maxHeartbeats 1000000 in
 -- The square identity is discharged by the 64 Boolean assignments.
@@ -113,7 +125,7 @@ private theorem weight_sq_expand (x : Fin 6 → Bool) :
       2 * ∑ i, ∑ j, if i < j then b i * b j * sgn (x i) * sgn (x j) else 0 := by
   cases h0 : x 0 <;> cases h1 : x 1 <;> cases h2 : x 2 <;>
     cases h3 : x 3 <;> cases h4 : x 4 <;> cases h5 : x 5 <;>
-    norm_num [weight, b, sgn, Fin.sum_univ_succ, h0, h1, h2, h3, h4, h5]
+    norm_num [weight_apply, b_apply, sgn_apply, Fin.sum_univ_succ, h0, h1, h2, h3, h4, h5]
 
 private theorem sum_pair_fibers (μ : (Fin 6 → Bool) → ℝ) (i j : Fin 6) :
     ∑ x, μ x = ∑ a, ∑ b, ∑ x with x i = a ∧ x j = b, μ x := by
@@ -129,7 +141,7 @@ private theorem sum_mu_one (μ : (Fin 6 → Bool) → ℝ)
     ∑ x, μ x = 1 := by
   rw [sum_pair_fibers μ 0 1]
   simp_rw [hμ 0 1 (by omega)]
-  norm_num [p, sgn, Fin.sum_univ_succ]
+  norm_num [p_apply, sgn_apply, Fin.sum_univ_succ]
 
 private theorem pair_expect (μ : (Fin 6 → Bool) → ℝ)
     (hμ : ∀ i j, i < j → ∀ a b,
@@ -237,7 +249,7 @@ private theorem weighted_square_sum (μ : (Fin 6 → Bool) → ℝ)
 private theorem weight_sq_lower (x : Fin 6 → Bool) : 1 ≤ weight x ^ 2 := by
   cases h0 : x 0 <;> cases h1 : x 1 <;> cases h2 : x 2 <;>
     cases h3 : x 3 <;> cases h4 : x 4 <;> cases h5 : x 5 <;>
-    norm_num [weight, b, sgn, Fin.sum_univ_succ, h0, h1, h2, h3, h4, h5]
+    norm_num [weight_apply, b_apply, sgn_apply, Fin.sum_univ_succ, h0, h1, h2, h3, h4, h5]
 
 private theorem p_no_joint : ¬ HasJointDistribution p := by
   rintro ⟨μ, hμ_nonneg, hμ⟩
@@ -251,7 +263,7 @@ private theorem p_no_joint : ¬ HasJointDistribution p := by
   have hexpect := weighted_square_sum μ hμ
   have heval : ∑ x, μ x * weight x ^ 2 = -1 := by
     rw [hexpect, hsum]
-    norm_num [b, p_corr, Fin.sum_univ_succ]
+    norm_num [b_apply, p_corr, Fin.sum_univ_succ]
   linarith
 
 theorem result : ¬ claim := by
