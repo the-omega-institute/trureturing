@@ -1,0 +1,17 @@
+**Lemma 20.3 (Original-response correspondence).** For an actual locator
+with $t=x(W)$, the pair $(p_t,v_t)$ is its actual acquired base $(p,v)$.
+
+Proof. The source interface (20.2) identifies its strict source as
+$(r_t,b_t)$. The parent equation O, Theorem 2.1, is
+$e\Lambda=\eta_t$, with $e=d-24$ and $\Lambda$ the evaluation of
+$\lambda_t$ at $z=r_t$. On this strict arc $\Lambda\ne0$ by the
+supplied classification. The fifth-response identity (3.1) of this
+volume, or equivalently O's clock-five interpolating row, is exactly
+(20.5) with $e=\eta_t/\Lambda$. Hence $p=p_t$ using the one
+whole parent gain, without refitting it. Solving $F_0(t,p,v)=0$ for
+$v$ gives $v=k(t)p+c(t)$; its denominator $5t(t+1)$ is positive.
+Equations (20.6) give the asserted $v_t$ and $w_t$.
+The rational-algebra reductions hold at this source because its original
+$j,n,T,U,\Lambda$ denominators are nonzero. The reduced coefficient
+denominators are also separated from zero on $I$ by (23.4). ∎
+

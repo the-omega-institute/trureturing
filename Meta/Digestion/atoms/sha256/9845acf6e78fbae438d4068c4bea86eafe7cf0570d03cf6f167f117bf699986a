@@ -1,0 +1,21 @@
+### 定义 3.1（$r$ 阶调度阴影与闭包）
+
+对 $J\subseteq\{1,\ldots,m\}$，记 $\pi_J$ 为词元组投影。对 $1\le r\le m$，定义 $r$ 阶调度闭包
+
+$$
+\operatorname{cl}_r(W)
+=\left\{
+\mathbf w\in\prod_i\mathcal A_i:
+\forall J\subseteq\{1,\ldots,m\},\ |J|=r,\quad
+\pi_J(\mathbf w)\in\pi_J(W)
+\right\}.
+$$
+
+总有
+
+$$
+W\subseteq\operatorname{cl}_r(W).
+$$
+
+称 $W$ **$r$ 可分解**，若 $W=\operatorname{cl}_r(W)$。只有在 $W$ 为 $2$ 可分解时，所有两两词投影才足以恢复完整调度关系。
+

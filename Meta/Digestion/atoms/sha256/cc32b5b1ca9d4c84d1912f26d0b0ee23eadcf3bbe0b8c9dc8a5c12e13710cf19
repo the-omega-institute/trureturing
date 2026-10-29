@@ -1,0 +1,48 @@
+**Lemma 92.2 (Arbitrary complex lower bound by phase twirling).** For every
+whole complex CPTP map $\mathcal R$,
+
+$$
+\sup_\varphi e_{\mathcal R}(\varphi)
+ \ge (1-t)c.
+\tag{92.5}
+$$
+
+*Proof.* Haar-twirl the map over the phase circle,
+
+$$
+\overline{\mathcal R}=
+ \frac1{2\pi}\int_0^{2\pi}
+ \mathcal G_\theta\circ\mathcal R\circ\mathcal G_{-\theta}\,d\theta.
+\tag{92.6}
+$$
+
+This is again CPTP. Covariance of $\Phi_s$, unitary invariance of the
+operator norm and convexity give
+
+$$
+\sup_\varphi e_{\overline{\mathcal R}}(\varphi)
+ \le \sup_\varphi e_{\mathcal R}(\varphi).
+\tag{92.7}
+$$
+
+It is therefore enough to consider a covariant map. Put
+$D_0=(1-q)P_0+qP_1$ and
+$C=\overline{\mathcal R}^{\dagger}(|0\rangle\langle1|)$. The operator
+$\overline{\mathcal R}^{\dagger}(D_0)$ has charge zero and hence has zero
+$01$ entry. The operator $C$ has charge $-1$, so it is a linear combination
+of $|0\rangle\langle1|$ and $|2\rangle\langle1|$. The adjoint of (92.2)
+multiplies its $01$ entry by $s$ and kills its $21$ entry. Thus the $01$
+entry of
+$\Phi_s^\dagger\overline{\mathcal R}^{\dagger}(E_\varphi)-E_\varphi$
+is
+
+$$
+c\,e^{-i\varphi}(sC_{01}-1).
+\tag{92.8}
+$$
+
+The adjoint of a CPTP map is unital completely positive, so it contracts
+operator norm and $|C_{01}|\le\|C\|_{\rm op}\le1$. Consequently
+$|sC_{01}-1|\ge1-|s|=1-t$. An operator norm dominates the modulus of
+any matrix entry, proving (92.5). $\square$
+

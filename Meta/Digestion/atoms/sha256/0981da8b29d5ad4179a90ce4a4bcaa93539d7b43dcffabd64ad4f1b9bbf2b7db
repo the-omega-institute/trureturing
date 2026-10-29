@@ -1,0 +1,4 @@
+**命题 80.1（任务充分性不等于统一行为或历史逆）。** 对上述声明的 source contracts，可分别使用 finite chosen-action certificate、current raw continuation kernel、terminal sharp-task signature 和 same-law quantitative estimates，但替换合同的任一步都须保留目标、支持、权限、更新及所数资源。具体有：native 的 current kernel 允许忘掉不影响 future behaviour 的 post-Capture chronology；算术 reached register 允许预测改变 endpoint 后的 quotient；sharp signature 允许合并对全部指定 projections 有同一像的 terminal histories；strict-real 的合法三-world child 允许一次声明读取得到 branch label。任何一个充分表示都不单独确定其他合同的 minimum 或逆。
+
+**证明。** native 的反例和 singleton domain 是命题 74.2；算术使用约定 75.1–75.2 的两个不同 target times 与 supplier 的同步更新；terminal conclusion 是定理 76.2 和推论 76.3；局部取得是命题 79.3。它们分别使用不同的 source domain、可见信息与 target。要迁移一个协议，必须有保持这些数据的映射；仅由表示的存在不能补出缺失的读取或更新。命题 74.2 的两条实际历史还直接否定跨到 endpoint-only exact chronology 的迁移。∎
+

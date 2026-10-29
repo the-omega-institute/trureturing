@@ -1,0 +1,35 @@
+**Proposition 99.1 (Necessary support does not suffice for optimality).**
+There is a legal decoder with zero supporting residual and Choi support
+in $K$ whose original all-density loss is one.
+
+*Proof.* Define the replacer
+$\mathcal R_{\rm bad}(X)=\operatorname{Tr}(X)|2\rangle\langle2|$.
+It has Kraus matrices $|2\rangle\langle j|$, $j=0,1,2$, whose
+adjoint products sum to $I_3$, so it is CPTP. Its Choi matrix is
+
+$$
+J_{\rm bad}=\sum_{j=0}^2|2j\rangle\langle2j|,\qquad
+\operatorname{Tr}_{\rm out}J_{\rm bad}=I_3,\qquad
+PJ_{\rm bad}P=J_{\rm bad},\qquad
+\operatorname{Tr}(SJ_{\rm bad})=0 .
+\tag{99.1}
+$$
+
+All three support vectors appear in (97.5). But (96.2) gives
+$\Phi(|0\rangle\langle0|)=|0\rangle\langle0|$, and hence
+
+$$
+\frac12\|\mathcal R_{\rm bad}\Phi(|0\rangle\langle0|)
+                              -|0\rangle\langle0|\|_1
+=\frac12\||2\rangle\langle2|-|0\rangle\langle0|\|_1=1 .
+\tag{99.2}
+$$
+
+For any two density matrices $\rho,\sigma$,
+$\|\rho-\sigma\|_1\le\|\rho\|_1+\|\sigma\|_1=2$.
+Thus the tested value is the maximum:
+$e(\mathcal R_{\rm bad})=1>L$. The corresponding
+$D_{\rm bad}=\mathcal R_{\rm bad}\circ
+\operatorname{Ad}_{U_0^\dagger}$ is an original legal decoder
+with the same loss and transported necessary support. $\square$
+
