@@ -261,7 +261,7 @@ theorem native_dyadic_joint_transport (d a h : ℕ) (hd : 2 ≤ d) (ha : 1 ≤ a
       rw [va.1, ← (align i).1]
     rw [he, va.2]
     simp only [sub_eq_add_neg, List.sum_map_add, List.sum_map_mul_left]
-    rw [List.sum_map_hom _ _ (negAddMonoidHom : ℤ →+ ℤ)]
+    rw [List.sum_map_hom _ alpha (negAddMonoidHom : ℤ →+ ℤ)]
   have prefixB (n : ℕ) :
       (((earWord d sigma r).take n).map (actualSource (d + 1) (2 * (2 ^ h * a)))).sum =
         2 * ((sigma.take (if n ≤ r then n else n - 1)).map v).sum -
@@ -272,7 +272,7 @@ theorem native_dyadic_joint_transport (d a h : ℕ) (hd : 2 ≤ d) (ha : 1 ≤ a
         (fun i => 2 * v i - beta i) := by funext i; exact vb.1 i
     rw [he, vb.2]
     simp only [sub_eq_add_neg, List.sum_map_add, List.sum_map_mul_left]
-    rw [List.sum_map_hom _ _ (negAddMonoidHom : ℤ →+ ℤ)]
+    rw [List.sum_map_hom _ beta (negAddMonoidHom : ℤ →+ ℤ)]
   have hstrip (n : ℕ) :
       (((earWord d sigmaA r).take n).map (actualSource (d + 1) (2 * a))).sum ∈
         Set.Icc (0 : ℤ) (modulus (d + 1) / 2) := by
