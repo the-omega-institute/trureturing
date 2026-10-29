@@ -34,8 +34,7 @@ internal sealed class OdometerCyclicFactorDocument : IScribeDocumentDefinition
                     + "The same N controls all initial points and all times; it is not chosen separately "
                     + "for each orbit. The case N=0 is retained and gives a constant symbolic factor.")),
                 Paragraph(Text(
-                    "This is a classical compactness and equicontinuity consequence, presented as a "
-                    + "formal coverage bridge rather than a literature priority claim. The existing "
+                    "This is a classical compactness and equicontinuity consequence. The existing "
                     + "EquicontinuousObservationPeriod theorem supplies a general positive observation "
                     + "period; this result additionally identifies the canonical p-power residue quotient "
                     + "and reconstructs the complete two-sided name through it. It supplies no effective "
