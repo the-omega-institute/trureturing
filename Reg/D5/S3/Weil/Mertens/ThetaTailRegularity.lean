@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.Mertens.ThetaTailRegularity
 import Reg.Support.SingleDependentReadout
 
+/-! Source-faithful observations for actual theta-tail regularity. -/
+
 namespace Reg.D5.S3.Weil.Mertens.ThetaTailRegularity
 
 open Set MeasureTheory
@@ -41,7 +43,7 @@ def family : Registration arena (type_of% @theta_tail_lipschitz) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    refine ⟨1, 1, 2, ?_⟩
+    refine ⟨(1 : ℝ), (1 : ℝ), (2 : ℝ), ?_⟩
     norm_num [actual, realize]
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
