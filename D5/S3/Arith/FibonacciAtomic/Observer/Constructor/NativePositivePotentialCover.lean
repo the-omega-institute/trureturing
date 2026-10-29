@@ -216,6 +216,37 @@ private theorem computed_source_potential (B : List (BranchEquation X))
     sourceRelaxation B s j _ ((signedGraph B s j).target e)
   omega
 
+/-- Check every original indexed source equation against the finite relaxation
+candidate. Empty edge lists are accepted, and no vertex or integer bound is
+assumed. All arithmetic and equality tests are executable. -/
+def checkSourceConsistency (B : List (BranchEquation X)) (s : X → Term X) (j : X) : Bool :=
+  (sortEdges B s j).all fun e => decide
+    (computedSourcePotential B s j e.1.1 = computedSourcePotential B s j e.1.2 + e.2)
+
+private theorem check_source_consistency_iff_potential
+    (B : List (BranchEquation X)) (s : X → Term X) (j : X) :
+    checkSourceConsistency B s j = true ↔ Potential B s j (computedSourcePotential B s j) := by
+  simp only [checkSourceConsistency, List.all_eq_true, decide_eq_true_eq, Potential]
+
+/-- The finite executable check is sound and complete for the original
+condition on all closed walks of the labelled signed source graph. -/
+theorem source_consistency_iff (B : List (BranchEquation X)) (s : X → Term X) (j : X) :
+    checkSourceConsistency B s j = true ↔ ZeroCycles B s j := by
+  rw [check_source_consistency_iff_potential]
+  constructor
+  · intro h
+    exact (zeroCycles_iff B s j).mpr ⟨computedSourcePotential B s j, h⟩
+  · exact computed_source_potential B s j
+
+/-- Return a certified computed potential precisely when the finite check
+accepts. The certificate is erased during execution; rejection returns none. -/
+def effectiveSourcePotential (B : List (BranchEquation X)) (s : X → Term X) (j : X) :
+    Option {δ : Occurrence X → Int // Potential B s j δ} :=
+  if h : checkSourceConsistency B s j = true then
+    some ⟨computedSourcePotential B s j,
+      (check_source_consistency_iff_potential B s j).mp h⟩
+  else none
+
 private theorem edge_spec (p : Presentation X) (B : List (BranchEquation X))
     (S : SubstInfo)
     (hok : (encodeEquations p (shapeEquations B)).unify SubstInfo.empty = .ok S)
@@ -299,8 +330,14 @@ theorem source_sort_minimum_base (p : Presentation X) (B : List (BranchEquation 
     apply bad
     exact (zeroCycles_iff B (action p S) j).mpr ⟨fun v => (u v l : Int), fun e he => hu e he l⟩
   · intro good
-    let δ := computedSourcePotential B (action p S) j
-    have hδ : Potential B (action p S) j δ := computed_source_potential B (action p S) j good
+    have accepted := (source_consistency_iff B (action p S) j).mpr good
+    have available : (effectiveSourcePotential B (action p S) j).isSome := by
+      simp [effectiveSourcePotential, accepted]
+    let certified := (effectiveSourcePotential B (action p S) j).get available
+    let δ := certified.val
+    have hδ : Potential B (action p S) j δ := certified.property
+    have hcomputed : δ = computedSourcePotential B (action p S) j := by
+      simp [δ, certified, effectiveSourcePotential, accepted]
     let V := (occurrenceVertices p (action p S)).toFinset.filter (fun v => v.2.2 = j)
     have hV : V.Nonempty := by
       obtain ⟨v, hv, hj⟩ := occurs
@@ -313,7 +350,7 @@ theorem source_sort_minimum_base (p : Presentation X) (B : List (BranchEquation 
       intro v hv hj
       have hm := hmin v (Finset.mem_filter.mpr ⟨List.mem_toFinset.mpr hv, hj⟩)
       exact ⟨hm, Int.toNat_of_nonneg (by omega)⟩
-    refine ⟨δ, b, a, rfl, hδ, List.mem_toFinset.mp hb'.1, hb'.2, ?_, ha, ?_⟩
+    refine ⟨δ, b, a, hcomputed, hδ, List.mem_toFinset.mp hb'.1, hb'.2, ?_, ha, ?_⟩
     · simp [a]
     · intro L u
       constructor
@@ -341,13 +378,6 @@ theorem source_sort_minimum_base (p : Presentation X) (B : List (BranchEquation 
 def Leaves : FreeMagma Unit → Type
   | .of _ => Unit
   | .mul A B => Leaves A ⊕ Leaves B
-
-instance leavesFinite : (T : FreeMagma Unit) → Finite (Leaves T)
-  | .of _ => inferInstanceAs (Finite Unit)
-  | .mul A B =>
-      letI := leavesFinite A
-      letI := leavesFinite B
-      inferInstanceAs (Finite (Leaves A ⊕ Leaves B))
 
 instance leavesNonempty : (T : FreeMagma Unit) → Nonempty (Leaves T)
   | .of _ => inferInstanceAs (Nonempty Unit)
