@@ -47,9 +47,12 @@ theorem result : ¬ claim := by
   have hgood : GoodSquare (encode counterexample) := by
     unfold GoodSquare
     decide +kernel
-  have hbad : ¬ GoodSquare (encode counterexample.dropLast) := by
-    unfold GoodSquare
+  have hOne : 1 ∈ Nat.digits 10 ((encode counterexample.dropLast) ^ 2) := by
     decide +kernel
+  have hbad : ¬ GoodSquare (encode counterexample.dropLast) := by
+    intro hg
+    have hf := List.all_eq_true.mp hg 1 hOne
+    simp at hf
   exact hbad (h counterexample (by decide) hgood)
 
 #print axioms result

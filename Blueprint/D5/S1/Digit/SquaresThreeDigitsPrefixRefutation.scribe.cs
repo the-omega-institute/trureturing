@@ -42,7 +42,7 @@ internal sealed class SquaresThreeDigitsPrefixRefutationDocument : IScribeDocume
                 DescribeRole.Definition),
             Node("squares-three-digits-prefix-claim", "The whole prefix implication", "claim",
                 Disp(Iff(F.Id("claim"), AllRuns(Implies(
-                    new Formula.Relation(D(2), FormulaRelationOperator.LessOrEqual,
+                    new Formula.Relation(D(2), FormulaRelationOperator.LessThanOrEqual,
                         Call("length", F.Id("runs"))),
                     Implies(Call("GoodSquare", Call("encode", F.Id("runs"))),
                         Call("GoodSquare", Call("encode", Call("dropLast", F.Id("runs"))))))))),
@@ -74,7 +74,7 @@ internal sealed class SquaresThreeDigitsPrefixRefutationDocument : IScribeDocume
                     + "sum 20 carries a 2 into position 623. Deleting 113 leaves three "
                     + "such pairs, whose sum 15 carries a forbidden 1 instead. "
                     + "This refutes the entire universal implication; it makes no "
-                    + "assertion of a least counterexample or historical priority.", DescribeRole.Theorem)))));
+                    + "assertion of a least counterexample or historical priority.", DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string id, string title, string declaration,
         Formula formula, string prose, DescribeRole role) => Describe.Lean(
