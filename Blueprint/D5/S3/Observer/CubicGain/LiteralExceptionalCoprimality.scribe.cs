@@ -21,7 +21,7 @@ internal sealed class LiteralExceptionalCoprimalityDocument : IScribeDocumentDef
                 H("The displayed degree-133 factor is coprime to FC"),
                 StatementSource.FromAuthor(Result()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The integer polynomial H has natural degree 133, and its real coefficient image is coprime to F. Thus no zero of F is a zero of H. The square-free product G=X (2X+1) (5X+2) (8X-1) (X^2+8X+4) has degree six. Explicit integer polynomials U,V,W satisfy U F+V G=1+101 W. Reduction modulo 101 preserves degrees 67 and six and proves a nonzero fixed-degree resultant. Coefficient maps transfer this nonvanishing to the rationals; the resultant criterion and extension to the reals give coprimality with G. Splitting the five factors and restoring their original powers proves the assertion for H."))), DescribeRole.Theorem),
-            Paragraph(Text("This result concerns the exact displayed H. The identity H=pp_positive(gcd(a0,c0)) for the original fixed minors has not been established here. Consequently it does not identify the actual gcd, determine the reduced a and c, or settle their degrees, their coprimalities, the degree-sixty quotients, or root and world exhaustion.")))));
+            Paragraph(Text("This result concerns the exact displayed H. The identity H=pp_positive(gcd(a0,c0)) for the original fixed minors has not been established here. Consequently it does not identify the actual gcd, determine the reduced a and c, or settle their degrees, their coprimalities with F, the degree-sixty quotients, or root and world exhaustion.")))));
 
     private static Formula Call(string name, params Formula[] args) =>
         Seq(Operatorname, Grp(F.Id(name)), Open, Seq(args), Close);
