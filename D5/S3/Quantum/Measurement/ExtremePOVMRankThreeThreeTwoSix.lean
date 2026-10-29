@@ -204,7 +204,35 @@ private theorem witness_sum : ∑ j, witness j = 1 := by
 private theorem witness_povm : IsPOVM witness := by
   exact ⟨witness_posSemidef, witness_sum⟩
 
-private theorem effect_rank (j : Fin 8) : (effect j).rank = (blocks j).card := by sorry
+private def columns (j : Fin 8) : Matrix (Fin 7) (blocks j) ℂ := fun i b => b.1 i
+
+private def left (j : Fin 8) : Matrix (blocks j) (Fin 7) ℂ :=
+  fun b i => if (if j = 1 then 3 ≤ i.val else i.val < 3) then star (b.1 i) else 0
+
+set_option maxHeartbeats 2000000 in
+private theorem left_columns (j : Fin 8) : left j * columns j = 1 := by
+  classical
+  ext ⟨b, hb⟩ ⟨c, hc⟩
+  fin_cases j <;> norm_num [blocks] at hb hc
+  all_goals
+    rcases hb with rfl | rfl | rfl <;> rcases hc with rfl | rfl | rfl
+    all_goals norm_num [left, columns, vector, Matrix.mul_apply, Fin.sum_univ_succ,
+      Matrix.one_apply, Subtype.mk.injEq, funext_iff, Fin.forall_fin_succ]
+
+private theorem effect_columns (j : Fin 8) : effect j = columns j * (columns j)ᴴ := by
+  ext i k
+  change (∑ b : blocks j, Matrix.vecMulVec b.1 (star b.1)) i k = _
+  simp only [Matrix.sum_apply, columns, Matrix.mul_apply, Matrix.vecMulVec_apply,
+    Matrix.conjTranspose_apply, Pi.star_apply]
+
+private theorem effect_rank (j : Fin 8) : (effect j).rank = (blocks j).card := by
+  classical
+  rw [effect_columns, Matrix.rank_self_mul_conjTranspose]
+  apply le_antisymm
+  · simpa using (columns j).rank_le_card_width
+  · have h := Matrix.rank_mul_le_right (left j) (columns j)
+    rw [left_columns, Matrix.rank_one] at h
+    simpa using h
 
 private theorem witness_rank (j : Fin 8) : (witness j).rank = (effect j).rank := by
   have hstar : IsUnit normalizerᴴ.det := by
@@ -216,7 +244,15 @@ private theorem witness_rank (j : Fin 8) : (witness j).rank = (effect j).rank :=
     Matrix.rank_mul_eq_left_of_isUnit_det normalizerᴴ (effect j) hstar]
 
 private theorem witness_bigRanks :
-    bigRanks witness = ({3, 3, 2, 2, 2, 2, 2, 2} : Multiset ℕ) := by sorry
+    bigRanks witness = ({3, 3, 2, 2, 2, 2, 2, 2} : Multiset ℕ) := by
+  classical
+  have h : (fun j : Fin 8 => (witness j).rank) = ![3, 3, 2, 2, 2, 2, 2, 2] := by
+    funext j
+    rw [witness_rank, effect_rank]
+    fin_cases j <;> norm_num [blocks, vector]
+  change (Finset.univ.val.map (fun j => (witness j).rank)).filter (fun r => 2 ≤ r) = _
+  rw [h]
+  decide
 
 private theorem within_block_product_independent :
     LinearIndependent ℂ
@@ -251,11 +287,131 @@ private theorem normalized_product_independent :
     Function.comp_def] using
     within_block_product_independent.map' normalizeMap normalizeMap_ker
 
+private theorem supported_decomposition {ι : Type} [Fintype ι] [DecidableEq ι]
+    (u : Matrix (Fin 7) ι ℂ) (w : Matrix ι (Fin 7) ℂ) (hwu : w * u = 1)
+    (a b : Matrix (Fin 7) (Fin 7) ℂ) (ha : a.PosSemidef) (hb : b.PosSemidef)
+    (hm : u * uᴴ = (1 / 2 : ℂ) • (a + b)) :
+    a - u * uᴴ = u * (w * (a - u * uᴴ) * wᴴ) * uᴴ := by
+  have hs : a + b = (2 : ℂ) • (u * uᴴ) := by
+    rw [hm, smul_smul]
+    norm_num
+  have hk : ∀ y, uᴴ *ᵥ y = 0 → a *ᵥ y = 0 := by
+    intro y hy
+    apply ha.dotProduct_mulVec_zero_iff.mp
+    have hq : star y ⬝ᵥ a *ᵥ y + star y ⬝ᵥ b *ᵥ y = 0 := by
+      rw [← dotProduct_add, ← Matrix.add_mulVec, hs, Matrix.smul_mulVec,
+        ← Matrix.mulVec_mulVec, hy]
+      simp
+    exact (add_eq_zero_iff_of_nonneg (ha.dotProduct_mulVec_nonneg y)
+      (hb.dotProduct_mulVec_nonneg y)).mp hq |>.1
+  let d := a - u * uᴴ
+  have hd : d.IsHermitian := ha.isHermitian.sub (isHermitian_mul_conjTranspose_self u)
+  have hdk : ∀ y, uᴴ *ᵥ y = 0 → d *ᵥ y = 0 := by
+    intro y hy
+    change (a - u * uᴴ) *ᵥ y = 0
+    rw [Matrix.sub_mulVec, hk y hy, ← Matrix.mulVec_mulVec, hy]
+    simp
+  have hstar : uᴴ * wᴴ = 1 := by
+    rw [← Matrix.conjTranspose_mul, hwu, Matrix.conjTranspose_one]
+  have hr : d = d * wᴴ * uᴴ := by
+    apply Matrix.ext_iff_mulVec.mpr
+    intro z
+    have hz : uᴴ *ᵥ (z - wᴴ *ᵥ (uᴴ *ᵥ z)) = 0 := by
+      rw [Matrix.mulVec_sub, Matrix.mulVec_mulVec, hstar, Matrix.one_mulVec, sub_self]
+    have hh := hdk _ hz
+    rw [Matrix.mulVec_sub] at hh
+    simpa only [← Matrix.mulVec_mulVec] using sub_eq_zero.mp hh
+  have hl : d = u * w * d := by
+    have hh := congrArg Matrix.conjTranspose hr
+    simpa only [Matrix.conjTranspose_mul, Matrix.conjTranspose_conjTranspose,
+      hd.eq, Matrix.mul_assoc] using hh
+  change d = u * (w * d * wᴴ) * uᴴ
+  calc
+    d = u * w * d := hl
+    _ = u * w * (d * wᴴ * uᴴ) := congrArg (fun t => u * w * t) hr
+    _ = _ := by simp only [Matrix.mul_assoc]
+
+private theorem normalized_expansion (j : Fin 8)
+    (x : Matrix (blocks j) (blocks j) ℂ) :
+    (normalizer * columns j) * x * (normalizer * columns j)ᴴ =
+      ∑ b : blocks j, ∑ c : blocks j, x b c •
+        (normalizer * Matrix.vecMulVec b.1 (star c.1) * normalizerᴴ) := by
+  have hx : columns j * x * (columns j)ᴴ =
+      ∑ b : blocks j, ∑ c : blocks j, x b c • Matrix.vecMulVec b.1 (star c.1) := by
+    ext i k
+    simp only [Matrix.mul_apply, Matrix.sum_apply, Matrix.smul_apply,
+      Matrix.vecMulVec_apply, Matrix.conjTranspose_apply, columns, Pi.star_apply, smul_eq_mul]
+    simp_rw [Finset.sum_mul]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro b hb
+    apply Finset.sum_congr rfl
+    intro c hc
+    ring
+  calc
+    _ = normalizeMap (columns j * x * (columns j)ᴴ) := by
+      change _ = normalizer * (columns j * x * (columns j)ᴴ) * normalizerᴴ
+      rw [Matrix.conjTranspose_mul]
+      simp only [Matrix.mul_assoc]
+    _ = _ := by
+      rw [hx]
+      simp only [map_sum, map_smul]
+      rfl
+
 private theorem decomposition_eq_of_product_independence
     (A B : Fin 8 → Matrix (Fin 7) (Fin 7) ℂ)
     (hA : IsPOVM A) (hB : IsPOVM B)
     (hmid : ∀ j, witness j = (1 / 2 : ℂ) • (A j + B j)) :
-    A = witness ∧ B = witness := by sorry
+    A = witness ∧ B = witness := by
+  classical
+  let u := fun j => normalizer * columns j
+  let w := fun j => left j * normalizer⁻¹
+  let x := fun j => w j * (A j - witness j) * (w j)ᴴ
+  have hwu : ∀ j, w j * u j = 1 := by
+    intro j
+    change (left j * normalizer⁻¹) * (normalizer * columns j) = 1
+    rw [Matrix.mul_assoc, ← Matrix.mul_assoc normalizer⁻¹ normalizer,
+      Matrix.nonsing_inv_mul normalizer normalizer_unit, Matrix.one_mul, left_columns]
+  have heffect : ∀ j, witness j = u j * (u j)ᴴ := by
+    intro j
+    change normalizer * effect j * normalizerᴴ = _
+    rw [effect_columns]
+    dsimp only [u]
+    rw [Matrix.conjTranspose_mul]
+    simp only [Matrix.mul_assoc]
+  have hrep : ∀ j, A j - witness j =
+      ∑ b : blocks j, ∑ c : blocks j, x j b c •
+        (normalizer * Matrix.vecMulVec b.1 (star c.1) * normalizerᴴ) := by
+    intro j
+    have hh := supported_decomposition (u j) (w j) (hwu j) (A j) (B j)
+      (hA.1 j) (hB.1 j) ((heffect j).symm.trans (hmid j))
+    rw [← heffect j] at hh
+    exact hh.trans (normalized_expansion j (x j))
+  have hsum : (∑ p : Σ j : Fin 8, (blocks j × blocks j),
+      x p.1 p.2.1 p.2.2 •
+        (normalizer * Matrix.vecMulVec p.2.1.1 (star p.2.2.1) * normalizerᴴ)) = 0 := by
+    rw [Fintype.sum_sigma]
+    simp_rw [Fintype.sum_prod_type, ← hrep]
+    rw [Finset.sum_sub_distrib, hA.2, witness_sum, sub_self]
+  have hcoeff := Fintype.linearIndependent_iff.mp normalized_product_independent _ hsum
+  have hx : ∀ j, x j = 0 := by
+    intro j
+    ext b c
+    exact hcoeff ⟨j, b, c⟩
+  have ha : A = witness := by
+    funext j
+    apply sub_eq_zero.mp
+    rw [hrep j, hx j]
+    simp
+  refine ⟨ha, ?_⟩
+  funext j
+  have hm := hmid j
+  rw [ha] at hm
+  have he := congrArg (fun t => (2 : ℂ) • t) hm
+  norm_num [smul_smul] at he
+  have he' : witness j + witness j = witness j + B j := by
+    simpa only [two_smul] using he
+  exact (add_left_cancel he').symm
 
 private theorem witness_extreme : IsExtreme witness := by
   refine ⟨witness_povm, ?_⟩
