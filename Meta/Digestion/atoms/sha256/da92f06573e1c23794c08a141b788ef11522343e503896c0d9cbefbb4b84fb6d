@@ -1,0 +1,74 @@
+**Theorem 29.1.** There is a unique real analytic graph
+$p=\chi(v)$ over the whole closed interval $[v_c-h,v_c+h]$ such that
+
+$$
+f(p,v)=0\quad\Longleftrightarrow\quad p=\chi(v)
+\qquad((p,v)\in\mathcal U).
+$$
+
+It extends analytically to an open interval containing this closed
+interval, and throughout it
+
+$$
+|\chi(v)-p_c|<4.781\cdot10^{-37}<8\cdot10^{-36},\qquad
+.00477<\chi'(v)<.00478.
+$$
+
+For every point of the closed rectangle,
+
+$$
+.000206652\,|p-\chi(v)|
+\le |m_2(p,v)-m_1(p,v)|
+\le .000206653\,|p-\chi(v)|.
+$$
+
+Both inequalities are strict off the graph; both become equalities
+at zero on the graph. In addition,
+
+$$
+|m_2(p,v)-m_1(p,v)|<2.077\cdot10^{-38}<4.16\cdot10^{-38}.
+$$
+
+**Proof.** Lemma 27.1 gives an actual seed with $f(p_*,v_*)=0$.
+Let $k=.00478$, $L=|v-v_*|$ for any specified closed-interval height.
+The test points $p_*\pm kL$ remain in the interior horizontal interval,
+since
+
+$$
+|p_*-p_c|+k(h+|v_*-v_c|)
+<k h+(1+k)10^{-65}<4.781\cdot10^{-37}<h.
+$$
+
+The vertical mean value bound is
+$|f(p_*,v)|\le.0000009864L$.
+Since $f_p<-.000206652$ and
+$.000206652k>.0000009864$, the left test value is nonnegative and
+the right nonpositive. For $L>0$ their signs are strict; for $L=0$
+the test point itself is the seed zero. The intermediate value theorem
+and strict horizontal monotonicity give exactly one root. The displayed
+location bound follows from its bracket. In particular the values at
+the full rectangle's left and right edges have strictly positive and
+strictly negative signs, including the endpoint heights.
+
+The real analytic implicit function theorem applies because $f_p\ne0$;
+local graphs agree by uniqueness, and $\chi'=-f_v/f_p$.
+At the endpoint heights the roots remain interior to the open
+$\mathcal V$, so their analytic neighborhoods extend past both
+endpoints. Shrinking these endpoint neighborhoods preserves the strict
+location and slope bounds by continuity. This proves the claimed open
+extension and slope interval.
+
+For fixed $v$, integrate $f_p$ from $\chi(v)$ to $p$. Its strict sign
+and strict uniform bounds give exactly the weak inequalities shown,
+and strictness whenever the integration interval has positive length.
+The sharper uniform gap follows from
+
+$$
+|f(p,v)|<.000206653(h+4.781\cdot10^{-37})
+=2.07641007993\cdot10^{-38}<2.077\cdot10^{-38}.
+$$
+
+Alternatively the original $4.16\cdot10^{-38}$ bound follows from
+$\|Df\|<.000208$ and the seed-to-record distance less than $2h$.
+All bounds include the closed rectangle's edges. ∎
+
