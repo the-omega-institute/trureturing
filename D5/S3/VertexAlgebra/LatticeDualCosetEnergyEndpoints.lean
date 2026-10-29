@@ -31,6 +31,7 @@ theorem bottom_eigenvector (β : Charge D)
   congr 1
   simp [a,weight,oscillatorEnergy]
 
+set_option maxHeartbeats 4000000 in
 /-- Complex eigenvalues outside the proved energy image have zero eigenspace. -/
 theorem all_eigenspaces_finiteDimensional (β : Charge D)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
@@ -40,10 +41,14 @@ theorem all_eigenspaces_finiteDimensional (β : Charge D)
     FiniteDimensional ℂ ((moduleL D β H 0).eigenspace z) := by
   classical
   by_cases hv : ∃ v : Carrier D, v ≠ 0 ∧ moduleL D β H 0 v=z • v
-  · obtain ⟨n,rfl⟩ := point_spectrum_subset D β H hHG hGH μ hDual hD z hv
-    exact eigenspace_finiteDimensional D β H hHG hGH μ hDual hD _
+  · obtain ⟨n,hn⟩ := point_spectrum_subset D β H hHG hGH μ hDual hD z hv
+    let e : ℚ := chargeWeight D μ (minimizingCharge D μ hD)+(n : ℚ)
+    have he : z=(e : ℂ) := by
+      simpa only [e,Rat.cast_add] using hn
+    rw [he]
+    exact eigenspace_finiteDimensional D β H hHG hGH μ hDual hD e
   · have hz : (moduleL D β H 0).eigenspace z = ⊥ := by
-      apply Submodule.eq_bot_iff.mpr
+      apply (Submodule.eq_bot_iff _).mpr
       intro v he
       by_contra hn
       exact hv ⟨v,hn,(Module.End.mem_eigenspace_iff).mp he⟩
@@ -68,15 +73,18 @@ theorem half_shift_actual_bottom_multiplicity :
     ext i j
     fin_cases i
     fin_cases j
-    norm_num [H,E,halfShiftLattice,gramComplex,Matrix.mul_apply]
+    change (∑ k : Fin 1,(1/2 : ℂ)*2)=1
+    norm_num
   have hGH : gramComplex E * H = 1 := by
     ext i j
     fin_cases i
     fin_cases j
-    norm_num [H,E,halfShiftLattice,gramComplex,Matrix.mul_apply]
+    change (∑ k : Fin 1,(2 : ℂ)*(1/2))=1
+    norm_num
   have hDual : ∀ i,∑ j,(E.G i j : ℚ)*μ j=((fun _ => 1 : Charge E) i : ℚ) := by
     intro i
-    norm_num [E,μ,halfShiftLattice]
+    change (∑ k : Fin 1,(2 : ℚ)*(1/2))=1
+    norm_num
   obtain ⟨γ,δ,hne,hγ,hδ,hmin⟩ := (half_shift_two_minima).2
   refine ⟨hmin,?_⟩
   let a : Fin 2 → Label E := fun t => (if t=0 then γ else δ,0)
@@ -91,7 +99,9 @@ theorem half_shift_actual_bottom_multiplicity :
   intro t
   rw [moduleL_basis_zero E (fun _ => 1) H hHG hGH μ hDual]
   have hw : weight E μ (a t)=1/4 := by
-    fin_cases t <;> simp [a,weight,oscillatorEnergy,E,μ] <;> assumption
+    fin_cases t
+    · simpa [a,weight,oscillatorEnergy,E,μ] using hγ
+    · simpa [a,weight,oscillatorEnergy,E,μ] using hδ
   rw [hw]
   norm_num
 

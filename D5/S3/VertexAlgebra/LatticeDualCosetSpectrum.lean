@@ -41,7 +41,8 @@ theorem point_spectrum_subset (β : Charge D)
   have heq : (weight D μ a : ℂ)=z := mul_right_cancel₀ ha h
   obtain ⟨n,hn⟩ := weight_levels D β μ hDual (minimizingCharge D μ hD)
     (Classical.choose_spec (attained_minimum D μ hD)).2 a
-  exact ⟨n,heq.symm.trans (congrArg (fun x : ℚ => (x : ℂ)) hn)⟩
+  refine ⟨n,?_⟩
+  simpa only [Rat.cast_add] using heq.symm.trans (congrArg (fun x : ℚ => (x : ℂ)) hn)
 
 /-- Positive rank realizes every natural level by a frequency-one oscillator. -/
 theorem positive_rank_point_spectrum (β : Charge D)
@@ -133,7 +134,9 @@ theorem positive_modes_kill_bottom (β : Charge D)
   obtain ⟨n,hn⟩ := point_spectrum_subset D β H hHG hGH μ hDual hD _
     ⟨moduleL D β H m v,hn,heig⟩
   have hq : chargeWeight D μ (minimizingCharge D μ hD)-(m : ℚ) =
-      chargeWeight D μ (minimizingCharge D μ hD)+(n : ℚ) := Rat.cast_injective hn
+      chargeWeight D μ (minimizingCharge D μ hD)+(n : ℚ) := by
+    apply (Rat.cast_injective : Function.Injective (fun x : ℚ => (x : ℂ)))
+    simpa only [Rat.cast_add] using hn
   have hmQ : (0 : ℚ)<(m : ℚ) := by exact_mod_cast hm
   have hnQ : (0 : ℚ)≤(n : ℚ) := Nat.cast_nonneg n
   linarith
