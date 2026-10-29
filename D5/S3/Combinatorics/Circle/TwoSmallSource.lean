@@ -361,13 +361,14 @@ private theorem normalized_placement (ell m : ℕ) (hle : ell ≤ m)
 
 
 
-/-- A zero-total strip word can be negated by cutting at an attained minimum
-of the negated prefix sums. Only a cyclic rotation of labels is made. -/
-theorem negate_rotation {α : Type*} (f : α → ℤ) (C : ℤ) (L : List α)
+/-- Negating a zero-total strip word admits a cyclic cut whose every prefix
+is nonnegative and bounded by both the strip width and the original cut height. -/
+theorem negate_rotation_prefix_bound {α : Type*} (f : α → ℤ) (C : ℤ) (L : List α)
     (hs : InStrip f C 0 L) (hm : (L.map f).sum = 0) :
     ∃ j ≤ L.length, ∀ n : ℕ,
       0 ≤ (((L.rotate j).take n).map (fun x => -f x)).sum ∧
-      (((L.rotate j).take n).map (fun x => -f x)).sum ≤ C := by
+      (((L.rotate j).take n).map (fun x => -f x)).sum ≤ C ∧
+      (((L.rotate j).take n).map (fun x => -f x)).sum ≤ ((L.take j).map f).sum := by
   classical
   let w := L.map (fun x => -f x)
   have hw : w.sum = 0 := by dsimp [w]; rw [sum_neg_map, hm]; omega
@@ -387,7 +388,7 @@ theorem negate_rotation {α : Type*} (f : α → ℤ) (C : ℤ) (L : List α)
     D5.S1.Words.Compositions.ZeroSumWordCount.nonnegative_rotate_of_minimum hw hj' hminimum
   refine ⟨j, by simpa [w] using hj', ?_⟩
   intro n
-  have hupper : ((w.rotate j).take n).sum ≤ C := by
+  have hupper : ((w.rotate j).take n).sum ≤ -(w.take j).sum := by
     have hsplit := congrArg List.sum (List.take_append_drop j w)
     simp only [List.sum_append] at hsplit
     rw [List.rotate_eq_drop_append_take hj', List.take_append, List.sum_append]
@@ -395,16 +396,31 @@ theorem negate_rotation {α : Type*} (f : α → ℤ) (C : ℤ) (L : List α)
     · have hz : n - (w.drop j).length = 0 := by simp only [List.length_drop]; omega
       rw [hz, List.take_zero, List.sum_nil, add_zero]
       have he := D5.S1.Words.Compositions.ZeroSumWordCount.prefix_segment_sum w j n
-      have h1 := hb j
       have h2 := hb (j + n)
       omega
     · have hd : (w.drop j).length ≤ n := by simp only [List.length_drop]; omega
       rw [List.take_of_length_le hd, List.take_take]
-      have h1 := hb j
       have h2 := hb (min (n - (w.drop j).length) j)
       omega
-  have hh := And.intro (hnonneg n) hupper
+  have hcut : (w.take j).sum = -((L.take j).map f).sum := by
+    dsimp [w]
+    rw [← List.map_take, sum_neg_map]
+  have hwidth := (hb j).1
+  have hh : 0 ≤ ((w.rotate j).take n).sum ∧
+      ((w.rotate j).take n).sum ≤ C ∧
+      ((w.rotate j).take n).sum ≤ ((L.take j).map f).sum :=
+    ⟨hnonneg n, by omega, by omega⟩
   simpa only [w, List.map_rotate, List.map_take] using hh
+
+/-- A zero-total strip word can be negated by cutting at an attained minimum
+of the negated prefix sums. Only a cyclic rotation of labels is made. -/
+theorem negate_rotation {α : Type*} (f : α → ℤ) (C : ℤ) (L : List α)
+    (hs : InStrip f C 0 L) (hm : (L.map f).sum = 0) :
+    ∃ j ≤ L.length, ∀ n : ℕ,
+      0 ≤ (((L.rotate j).take n).map (fun x => -f x)).sum ∧
+      (((L.rotate j).take n).map (fun x => -f x)).sum ≤ C := by
+  obtain ⟨j, hj, hprefix⟩ := negate_rotation_prefix_bound f C L hs hm
+  exact ⟨j, hj, fun n => ⟨(hprefix n).1, (hprefix n).2.1⟩⟩
 
 /-- Complete native completion for exactly two physical SMALL occurrences.
 No gate, competitor, favorable source rotation or value-injectivity premise
