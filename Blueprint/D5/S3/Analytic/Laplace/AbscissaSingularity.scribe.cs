@@ -4,7 +4,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.Laplace;
 
 internal sealed class AbscissaSingularityDocument : IScribeDocumentDefinition
 {
-    // Admission basis: escape-witness. Exponential domination and the actual
+    // Exponential domination and the actual
     // infimum construct an open convergence half-line and its reflected domain.
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The finite infimum of the actual nonnegative Laplace convergence domain admits no holomorphic extension of the same transform.",
