@@ -44,6 +44,18 @@ Lean statement: `D5/S3/Combinatorics/Circle/TwoSmallSource.negate_rotation`
 
 For any integer-valued label word L in [0,C] with total zero, there is a cyclic cut j such that every natural prefix of L.rotate(j), evaluated with the negated weights, is again in [0,C]. Choose an attained minimum of the negated prefix sums. The existing nonnegative_rotate_of_minimum theorem gives the lower bound, while prefix_segment_sum and the original strip give the upper bound. The operation changes only the cyclic starting point and preserves every physical occurrence. Both the two-SMALL completion and the arbitrary-count isolated same-sign SMALL construction consume this same sign-restoration theorem.
 
+**Theorem 1.4 (Controlling the rotated prefixes by the cut height).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/TwoSmallSource.negate_rotation_prefix_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/TwoSmallSource.negate_rotation_prefix_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any integer-valued label word L in [0,C] with total zero, there is a cut j<=L.length for which every natural prefix of the rotated word with negated weights is nonnegative, at most C, and at most the original prefix height at j. A minimum of the negated prefix sums gives the cut. Splitting each rotated prefix at the seam expresses its height as an original prefix height subtracted from the cut height; all original heights are nonnegative. The negate_rotation theorem follows by forgetting the cut-height bound. In the isolated native completion, a strict upper margin on all original prefixes therefore bounds every new prefix, including the empty word, full word and takes beyond the length.
+
 The mathematical source context is Damasdi, Frankl, Pach and Palvolgyi, Monochromatic configurations on a circle, arXiv:2504.10687v2, Conjecture 3.1, DOI 10.5070/C6.68671. This result treats exactly two physical SMALL labels. Arbitrary-defect completion and the full global strict lexicographic exchange remain open.
 
 ## References
@@ -51,6 +63,7 @@ The mathematical source context is Damasdi, Frankl, Pach and Palvolgyi, Monochro
 - Truth anchor: `D5/S3/Combinatorics/Circle/TwoSmallSource.actualSource_two_small_full_completion`
 - Truth anchor: `D5/S3/Combinatorics/Circle/TwoSmallSource.actual_two_gap_profile`
 - Truth anchor: `D5/S3/Combinatorics/Circle/TwoSmallSource.negate_rotation`
+- Truth anchor: `D5/S3/Combinatorics/Circle/TwoSmallSource.negate_rotation_prefix_bound`
 - Dependency: [D5/S1/Words/Compositions/ZeroSumWordCount](../../../S1/Words/Compositions/ZeroSumWordCount.md)
 - Dependency: [D5/S3/Combinatorics/Circle/AntipodalSourceCompletion](AntipodalSourceCompletion.md)
 - Dependency: [D5/S3/Combinatorics/Circle/TwoSmallPlacement](TwoSmallPlacement.md)
