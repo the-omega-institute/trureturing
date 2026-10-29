@@ -9,6 +9,20 @@
 import Mathlib.Data.Nat.Digits.Defs
 
 /-!
+Source statement (arXiv:2112.00444v2, Conjecture 1):
+"If ⟨a₁′,...,aₗ′⟩ is a solution with l ≥ 2, then ⟨a₁′,...,aₗ₋₁′⟩ is also a solution."
+
+Exact event:
+Let N(a_1,...,a_l) be the base-10 integer with decimal word (4 followed by a_1 copies of 9),
+then (4 followed by a_2 copies of 9), continuing through (4 followed by a_l copies of 9), and
+finally 5. If every decimal digit of N(a_1,...,a_l)^2 belongs to {0,2,5}, then every decimal
+digit of N(a_1,...,a_(l-1))^2 belongs to {0,2,5}.
+
+For every finite tuple of natural numbers (a_1,...,a_l) of length l >= 2, with all entries
+allowed to be zero, no bound on length or entries, and ordinary decimal integer squares.
+Deletion removes the last tuple entry and its entire 4/nines block; the final digit 5 remains.
+Allowed-digit subset membership does not require that all three digits occur.
+
 The decimal-word encoding and square-digit predicate are literal.
 A fifteen-block counterexample contradicts prefix closure.
 -/
