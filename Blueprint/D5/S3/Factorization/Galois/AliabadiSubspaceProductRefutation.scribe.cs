@@ -102,7 +102,7 @@ internal sealed class AliabadiSubspaceProductRefutationDocument : IScribeDocumen
     private static Formula PowerSpanFormula() => Disp(All("n", Seq(Mathbb, Grp(F.Id("N"))),
         Eq(Call("powerSpan", F.Id("n")), Call("span", Q(),
             Call("range", Seq(LambdaLower, Sp, Open, F.Id("i"), Colon, Call("Fin", F.Id("n")), Close,
-                Mapsto, new Formula.Power(F.Id("alpha"), Seq(Call("val", F.Id("i")), Plus, D(1)))))))));
+                Mapsto, Sp, new Formula.Power(F.Id("alpha"), Seq(Call("val", F.Id("i")), Plus, D(1)))))))));
 
     private static Formula CountermodelFormula()
     {
