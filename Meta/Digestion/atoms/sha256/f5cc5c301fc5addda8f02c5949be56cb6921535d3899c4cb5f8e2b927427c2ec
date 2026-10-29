@@ -1,0 +1,4 @@
+## 1. Scope
+
+For $d\ge3$ consider the unital maps $\Phi(X)=\lambda X+(1-dq-\lambda)\,\mathrm{diag}(X)+q\,\mathrm{tr}(X)\,I$ on $M_d(\mathbb C)$ with real parameters $\lambda,q$. This volume computes the Schwarz defect $\Phi(X^\ast X)-\Phi(X)^\ast\Phi(X)$ of this family in closed form, reduces the Schwarz property to a family of $d\times d$ Schur-complement conditions indexed by the probability simplex, derives four explicit necessary inequalities with explicit witnesses, determines the Schwarz maps exactly on the slice $q=0$, and shows that the region cut out by the four inequalities is convex. Whether the four inequalities are also sufficient is left open (Open question 6.2); in particular the question quoted in cited fact (a)(iii) is not settled here.
+

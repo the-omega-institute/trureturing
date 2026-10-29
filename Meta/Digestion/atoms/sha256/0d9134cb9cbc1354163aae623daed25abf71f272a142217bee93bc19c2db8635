@@ -1,0 +1,54 @@
+**Theorem 8.3 (An entire quartic exceeding every normalized monomial).** For every real $0<d\le\tfrac12$, define
+
+$$
+e=\frac{d^2}{6},\qquad N=\sqrt{1+4e^2},\qquad
+G_d(z)=\frac{z^3/6+e(z^2/2-z^4/12)}{N}.
+$$
+
+Then $G_d$ has real coefficients and degree exactly four, belongs to $\mathscr E_2(\mathbb D)$ with $\|G_d''\|_{\mathbb D}=1$, and satisfies
+
+$$
+L_d(G_d)=d\sqrt{1+\frac{d^4}{9}}>d
+=\sup_{t\in\mathbb Z,\ t\ge2}|L_d(m_t)|.
+$$
+
+Stance: repo-derived.
+
+**Proof.** Since $e>0$ and $N>0$, the coefficient of $z^4$ is $-e/(12N)\ne0$. Differentiating twice gives
+
+$$
+G_d''(z)=\frac{z+e(1-z^2)}N.
+$$
+
+For $z=e^{i\theta}$ on the unit circle,
+
+$$
+z+e(1-z^2)=z\bigl(1-2ie\sin\theta\bigr),\qquad
+|z+e(1-z^2)|^2=1+4e^2\sin^2\theta\le N^2,
+$$
+
+with equality at $z=i$ and $z=-i$. The classical maximum modulus principle, applied to this polynomial on the closed unit disk, gives $\|G_d''\|_{\mathbb D}=1$. Thus the polynomial is an admissible entire input to the exact class of Definition 8.1.
+
+To calculate its error, set $a=1-d$ and $b=\sqrt3\,d$. The two-variable identity $h_3(a+ib,a-ib)=4a(a^2-b^2)$ gives
+
+$$
+h_3(w_d,\overline{w_d})
+=4(1-d)(1-2d-2d^2)=4-12d+8d^3,
+$$
+
+and hence, by the monomial error formula in Proposition 8.2,
+
+$$
+L_d(m_4)=d-\frac23d^3,\qquad
+L_d(m_2-m_4)=\frac23d^3=4de.
+$$
+
+The functional $L_d$ is complex-linear and $G_d=[m_3+e(m_2-m_4)]/N$. Using Proposition 8.2 at degrees two and three therefore gives
+
+$$
+L_d(G_d)=\frac{d+4de^2}{N}=dN
+=d\sqrt{1+\frac{d^4}{9}}>d.
+$$
+
+The final comparison uses $d>0$ and Proposition 8.2 for every degree $t\ge2$. $\square$
+

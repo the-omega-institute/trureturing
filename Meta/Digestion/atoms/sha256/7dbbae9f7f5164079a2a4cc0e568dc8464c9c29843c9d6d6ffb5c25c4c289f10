@@ -1,0 +1,96 @@
+**Theorem 14.1 (a law-level global word-diameter obstruction).** Let $P_\star$ be the entire stationary two-sided visible law of (13.1), with $X_i$ still labeling $H_i\longrightarrow H_{i+1}$. For every finite stationary nonnegative labeled-edge presentation $(\pi,T_0,T_1)$ of this same law as in (2.1)--(2.2), put $I_+=\{h:\pi_h>0\}$ and $T_x^+=T_x|_{I_+\times I_+}$. Every positive stationary closed irreducible component $C\subseteq I_+$ has visible law $P_\star$. For every integer $m\ge1$ and every no11 word $w=x_1\cdots x_m$,
+
+$$
+\delta(T_w^+)=\delta(\check T_w^+)
+=\delta(T_w^C)=\delta(\check T_w^C)=1.
+\tag{14.1}
+$$
+
+Here $T_x^C=T_x|_{C\times C}$, every diameter uses exactly the feasible rows of Definition 3.4, and
+
+$$
+\check T_x^+(h,k)=\frac{\pi_kT_x(k,h)}{\pi_h}
+\qquad(h,k\in I_+).
+\tag{14.2}
+$$
+
+Restriction to $C$ gives its canonical reverse, since normalizing $\pi|_C$ cancels in this ratio. In $\check T_w^+=\check T_{x_1}^+\cdots\check T_{x_m}^+$ the letters are read in encounter order: motion from $H_i$ to $H_{i-1}$ first reads $X_{i-1}=x_1$, and the last letter is $X_{i-m}=x_m$. All four products in (14.1) are nonzero. Thus changing to any finite stationary presentation of the whole law cannot supply (3.7).
+
+**Proof.** Write $r_0=2/11$ and $r_1=3/11$. Proposition 13.1 gives two versions of a visible phase at every cut:
+
+$$
+\begin{aligned}
+\Phi_i^-=s&\quad\Longleftrightarrow\quad
+\lim_{n\to\infty}\frac1n\sum_{k=1}^nX_{i-2k}=r_s,\\
+\Phi_i^+=s&\quad\Longleftrightarrow\quad
+\lim_{n\to\infty}\frac1n\sum_{k=0}^{n-1}X_{i+2k}=r_s.
+\end{aligned}
+\tag{14.3}
+$$
+
+Define either version arbitrarily when its limit is neither value. Under $P_\star$ they equal the phase $S_i$ of (13.1) almost surely. Consequently they agree, their common value $\Phi_i$ is uniform on $\{0,1\}$, and $\Phi_{i+1}=1-\Phi_i$ almost surely. These assertions hold simultaneously for all $i\in\mathbb Z$. The two versions are measurable in $\sigma(X_j:j<i)$ and $\sigma(X_j:j\ge i)$, respectively. Equality of the whole visible law transfers these assertions to the joint law $J$ of any presentation in the statement.
+
+In that arbitrary presentation the two visible half-lines are conditionally independent given $H_i$. Indeed, (2.2) factors the finite past and future cylinder probabilities at $H_i=h$ whenever $\pi_h>0$; a monotone-class argument in each side gives the full-half-line identity, as in Lemma 3.3. For such an $h$, let
+
+$$
+p_h=J(\Phi_i^-=0\mid H_i=h)=J(\Phi_i^+=0\mid H_i=h).
+$$
+
+The equality of the two versions and conditional independence give
+
+$$
+p_h=J(\Phi_i^-=0,\Phi_i^+=0\mid H_i=h)=p_h^2.
+$$
+
+Thus $p_h\in\{0,1\}$. Define $f(h)=0$ when $p_h=1$ and $f(h)=1$ otherwise. Stationarity of $J$ and the translated definitions (14.3) make $p_h$ independent of $i$. Hence $\Phi_i=f(H_i)$ almost surely at every cut, simultaneously. For every positive labeled edge on $I_+$,
+
+$$
+T_x(h,k)>0\quad\Longrightarrow\quad f(k)=1-f(h),
+\tag{14.4}
+$$
+
+because its stationary probability is $\pi_hT_x(h,k)>0$ and the visible phases flip. This constructs the needed cut factor directly; no finite word is being claimed to identify it.
+
+For completeness, $I_+$ is closed: if $\pi_k=0$, stationarity and nonnegativity give $0=\sum_h\pi_h(T_0+T_1)(h,k)$, so no retained state has an edge to $k$. Trimming therefore preserves all visible cylinders, and the finite stationary chain on $I_+$ decomposes into its positive-weight closed irreducible classes. The same-law trimming and component argument also appear in [the predictive-quotient volume, Lemma 1.3 and Theorem 5.1](FIB_LEGAL_EDGE_LOAD_PREDICTIVE_QUOTIENT_UNIFILAR_ERASURE_TAIL_AND_STRICT_SCOPE.md). Here $P_\star$ is ergodic for the one-step shift: its original finite labeled-edge chain is irreducible, as in the argument of Theorem 7.1, despite period two. Each component visible law $P_C$ is likewise stationary ergodic, and
+
+$$
+P_\star=\sum_C\pi(C)P_C,\qquad P_C\ll P_\star.
+$$
+
+For each finite visible cylinder, its empirical frequency equals its $P_\star$ probability almost surely under $P_\star$, hence under every $P_C$. Under the ergodic law $P_C$ it also equals its $P_C$ probability. The countable collection of these identities gives $P_C=P_\star$. No hidden component label is inferred from the observations.
+
+Every no11 word $w$ is feasible from both visible phases. In the original producer start at $(s,0)$, which has positive stationary mass for either $s$. After a zero both label probabilities are positive, and after a one the forced zero is compatible with $w$. Following $w$ therefore has positive probability. In particular, for either $s\in\{0,1\}$,
+
+$$
+P_\star(\Phi_i=s,\ X_{i:i+m-1}=w)>0.
+\tag{14.5}
+$$
+
+Fix an arbitrary positive component $C$ and write $C_s=\{h\in C:f(h)=s\}$ and $\pi_h^C=\pi_h/\pi(C)$. Since its law is $P_\star$, (14.5) says
+
+$$
+\sum_{h\in C_s}\pi_h^C(T_w^C\mathbf1)_h>0.
+$$
+
+Choose one feasible starting row from each $C_s$. By (14.4), their endpoint distributions are supported on $C_{s+m\bmod2}$. These two supports are disjoint, so their TV distance is one. Every normalized feasible row is a probability vector and has TV distance at most one from another; thus $\delta(T_w^C)=1$.
+
+For the reverse direction let $w^{\leftarrow}=x_m\cdots x_1$. The stationary flux ratios telescope to
+
+$$
+\check T_w^C=D_C^{-1}(T_{w^{\leftarrow}}^C)^{\mathsf T}D_C,
+\qquad D_C=\operatorname{diag}(\pi^C).
+\tag{14.6}
+$$
+
+Every positive reverse edge flips $f$ by (14.4). Both starting phases have positive reverse word mass, because
+
+$$
+\begin{aligned}
+&P_\star(\Phi_i=s,\ X_{i-1}=x_1,\ldots,X_{i-m}=x_m)\\
+&\qquad=P_\star(\Phi_{i-m}=s-m\bmod2,\ X_{i-m:i-1}=w^{\leftarrow})>0
+\end{aligned}
+\tag{14.7}
+$$
+
+by (14.5) for the reversed no11 word. Under $J_C$ the left side is $\sum_{h\in C_s}\pi_h^C(\check T_w^C\mathbf1)_h$. Thus there is a feasible reverse row in each $C_s$, and their endpoints lie in the disjoint sets $C_{s-m\bmod2}$. This proves $\delta(\check T_w^C)=1$. Closed components keep these same forward and reverse rows inside $I_+$; they already witness both remaining equalities in (14.1). $\square$
+

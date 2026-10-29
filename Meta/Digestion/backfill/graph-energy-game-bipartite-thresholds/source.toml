@@ -1,0 +1,5 @@
+source_id = "graph-energy-game-bipartite-thresholds"
+path = "docs/develop/theory/GRAPH_ENERGY_GAME_BIPARTITE_THRESHOLDS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,29 @@
+**命题 7.1（与上半连续和紧域达到相容）。** 对每个固定 $N$，在定义 2.1 的整个 $\Theta_N$ 上，$D_r(P_\theta)$ 连续，$d(P_\theta)=\inf_r D_r(P_\theta)$ 上半连续。令
+
+$$
+U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta),\qquad
+C_N=\sup_{\theta\in\Theta_N}d(P_\theta).
+\tag{7.1}
+$$
+
+则 $C_N$ 取到，且
+
+$$
+C_N=\inf_{r\ge1}U_{N,r}\le c_\star.
+\tag{7.2}
+$$
+
+这些结论不要求窗口收敛对参数一致。
+
+**证明。** $\Theta_N$ 由有限个闭的多项式等式及不等式定义，所有条目在 $[0,1]$，且非空，例如 $M_0$ 为单位阵、$M_1=0$。故它紧。实际柱概率为矩阵条目的多项式，引理 6.1 及有限纤维和使每个 $D_r$ 在整个域上连续。连续函数的下确界上半连续：对任意实数 $a$，$\{\theta:d(P_\theta)<a\}=\bigcup_r\{\theta:D_r(P_\theta)<a\}$ 为开集。
+
+为同时说明（7.2），记 $U=\lim_r U_{N,r}$；该极限存在，因为 $D_r$ 递减。选最大参数 $\theta_r$，取子列 $\theta_{r_j}\to\theta_*$，$r_j\to\infty$。对每个固定 $k$，当 $r_j\ge k$，
+
+$$
+D_k(P_{\theta_{r_j}})\ge D_{r_j}(P_{\theta_{r_j}})=U_{N,r_j}.
+$$
+
+连续性给出 $D_k(P_{\theta_*})\ge U$，对 $k$ 取下确界得 $d(P_{\theta_*})\ge U$。反向对任意 $\theta,k$，$d(P_\theta)\le D_k(P_\theta)\le U_{N,k}$，所以 $d(P_\theta)\le U$。从而最大值在 $\theta_*$ 取到且等于 $U$。这正是 [Universal 卷][U] 定理 6.2 的紧性机制。$\square$
+
+对角线上（6.4）的正值是上半连续所允许的向上取值：从非对角线趋近的极限为零，仍不超过 $V(t)$。在推论 6.4 的固定首参数紧线段 $\{(t,q):|q-t|\le\delta\}$ 上，极限函数不连续，所以 Dini 定理所需的连续极限假设不成立。命题 7.1 的子列论证不使用 Dini 定理，也不把本族公式扩展到边界参数。
+
