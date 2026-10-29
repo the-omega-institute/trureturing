@@ -55,8 +55,8 @@ private theorem dependence : ObservationalDependence signature actual := by
   have hv : v ≠ 0 := by
     intro hz
     have he := congrArg (fun ρ : ObserverHilbertSpace (ℤ × ℤ) => ρ (0, 0)) hz
-    simpa [v] using he
-  letI : Nontrivial (ObserverHilbertSpace (ℤ × ℤ)) := ⟨⟨v, 0, hv⟩⟩
+    simp [v] at he
+  let : Nontrivial (ObserverHilbertSpace (ℤ × ℤ)) := ⟨⟨v, 0, hv⟩⟩
   refine ⟨(), (0 : Operator), (1 : Operator), ?_⟩
   change spectrum ℂ (0 : Operator) ≠ spectrum ℂ (1 : Operator)
   intro heq
