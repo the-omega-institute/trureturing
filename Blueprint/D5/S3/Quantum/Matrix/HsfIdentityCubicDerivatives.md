@@ -100,6 +100,8 @@ Lean statement: `D5/S3/Quantum/Matrix/HsfIdentityCubicDerivatives.qubit_posdef_c
 
 For every positive definite complex Hermitian two by two X, and Hermitian H,K satisfying X+H,X-H,I+K,I-K PSD, the same actual CFC sandwich trace satisfies phi''(0)>=0 and |phi'''(0)|<=5 phi''(0). Unitary diagonalization preserves the original ordered trace coefficients and transports all four PSD endpoints. The actual derivative bridge is applied to the original X,H,K. Repeated eigenvalues and singular endpoints are included. The denominator base point remains Y=I and the dimension is two.
 
+Commuting denominator application. Let X,Y be positive definite, H,K Hermitian, X±H and Y±K PSD, and assume YK=KY. Put Xhat=Y^(-1/3) X Y^(-1/3), Hhat=Y^(-1/3) H Y^(-1/3), Khat=Y^(-1/2) K Y^(-1/2)=Y^(-1)K. Congruence transfers the four endpoints. Commuting functional calculus gives (Y+tK)^(-1/3)=Y^(-1/3)(I+tKhat)^(-1/3) near zero. Thus the original alpha-three sandwich path equals HsfIdentityCubicCompatibility.curve(Xhat,Hhat,Khat), and its identity_cubic_compatibility bound applies. X and H need not commute with Y or K. This is a mathematical application exposition; the displayed commuting CFC factorization and congruence transport are not additional Lean declarations in this module. General noncommuting Y,K remains OPEN: matching a first jet does not identify the actual second and third jets.
+
 The motivating compatibility question is due to He, Saunderson and Fawzi: arXiv:2502.05627v1, Conjecture 6.2; published DOI 10.1007/s10107-025-02314-0, Conjecture 1. No literature-priority claim is made.
 
 ## References
