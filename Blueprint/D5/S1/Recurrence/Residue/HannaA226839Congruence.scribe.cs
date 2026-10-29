@@ -74,13 +74,14 @@ internal sealed class HannaA226839CongruenceDocument : IScribeDocumentDefinition
                 + "ZMod(3); there is no rational-to-residue-field homomorphism. "
                 + "The source's finite-check report supplies no universal proof. "
                 + "The proof is derived in this repository; bounded literature nonhits certify no priority.",
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem, new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a226839-triangular-egf-mod-three"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role) => Describe.Lean(
+        DescribeRole role, OpenProblemResolutionClaim? claim = null) => Describe.Lean(
         DescribeId.Create("hanna-a226839-" + (name == "A" ? "outer" : name == "H" ? "inner" : name.ToLowerInvariant())),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role);
+        AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));
