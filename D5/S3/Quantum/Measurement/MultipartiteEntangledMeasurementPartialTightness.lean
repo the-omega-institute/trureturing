@@ -156,7 +156,7 @@ private theorem sectorPoint_injective {n d : ℕ} [NeZero n]
   rw [ht] at hk
   exact add_left_cancel hk
 
-private theorem computational_projector_separable {n d : ℕ}
+private theorem computational_projector_separable {n d : ℕ} [NeZero d]
     (t : ZMod d) (r : jointIndex n d) :
     IsFullySeparable (Matrix.vecMulVec (computationalVector t r)
       (star (computationalVector t r))) := by
@@ -176,11 +176,12 @@ private theorem computational_projector_separable {n d : ℕ}
         subst j
         change (if sectorPoint t r = sectorPoint t r then (1 : ℂ) else 0) *
           star (if sectorPoint t r = sectorPoint t r then (1 : ℂ) else 0) = _
-        simp only [if_pos rfl, star_one, mul_one]
-        apply (Finset.prod_eq_one _)
+        simp only [ite_true, star_one, mul_one]
+        symm
+        apply Finset.prod_eq_one
         intro k _
-        change (Pi.single (t + r k) (1 : ℂ)) (t + r k) *
-          star ((Pi.single (t + r k) (1 : ℂ)) (t + r k)) = 1
+        change (Pi.single (t + r k) 1 : ZMod d → ℂ) (t + r k) *
+          star ((Pi.single (t + r k) 1 : ZMod d → ℂ) (t + r k)) = 1
         simp only [Pi.single_eq_same, star_one, mul_one]
       · have hjk : ∃ k, j k ≠ t + r k := by
           by_contra h
@@ -193,8 +194,8 @@ private theorem computational_projector_separable {n d : ℕ}
         rw [if_neg hj, star_zero, mul_zero]
         symm
         apply Finset.prod_eq_zero (Finset.mem_univ k)
-        change (Pi.single (t + r k) (1 : ℂ)) (i k) *
-          star ((Pi.single (t + r k) (1 : ℂ)) (j k)) = 0
+        change (Pi.single (t + r k) 1 : ZMod d → ℂ) (i k) *
+          star ((Pi.single (t + r k) 1 : ZMod d → ℂ) (j k)) = 0
         rw [Pi.single_eq_of_ne hk, star_zero, mul_zero]
     · have hik : ∃ k, i k ≠ t + r k := by
         by_contra h
@@ -207,8 +208,8 @@ private theorem computational_projector_separable {n d : ℕ}
       rw [if_neg hi, zero_mul]
       symm
       apply Finset.prod_eq_zero (Finset.mem_univ k)
-      change (Pi.single (t + r k) (1 : ℂ)) (i k) *
-        star ((Pi.single (t + r k) (1 : ℂ)) (j k)) = 0
+      change (Pi.single (t + r k) 1 : ZMod d → ℂ) (i k) *
+        star ((Pi.single (t + r k) 1 : ZMod d → ℂ) (j k)) = 0
       rw [Pi.single_eq_of_ne hk, zero_mul]
 
 private theorem encodings_unitary (n d : ℕ) [NeZero d] :
@@ -241,7 +242,8 @@ private theorem ghz_density (n d : ℕ) [NeZero n] [NeZero d]
     (star (fourierVector 0 (0 : jointIndex n d)))) = 1
   rw [Matrix.trace_vecMulVec]
   have h := sector_basis n d hn hd 0 0 0 0 rfl rfl
-  simpa only [and_self, if_pos rfl, dotProduct_comm] using h
+  rw [if_pos ⟨rfl, rfl⟩] at h
+  simpa only [dotProduct_comm] using h
 
 private theorem selected_orthonormal (n d : ℕ) [NeZero n] [NeZero d]
     (hn : 2 ≤ n) (hd : 2 ≤ d) (r : Finset (jointIndex n d))
@@ -254,8 +256,35 @@ private theorem selected_orthonormal (n d : ℕ) [NeZero n] [NeZero d]
 private theorem sector_measurement (n d : ℕ) [NeZero n] [NeZero d]
     (hn : 2 ≤ n) (hd : 2 ≤ d) (r : Finset (jointIndex n d)) :
     IsProjectiveMeasurement (selectedMeasurement r) := by
+  classical
   have horth := selected_orthonormal n d hn hd r
-  sorry
+  change (∀ b, (selectedMeasurement r b).PosSemidef ∧
+    selectedMeasurement r b * selectedMeasurement r b = selectedMeasurement r b) ∧
+      ∑ b, selectedMeasurement r b = 1
+  constructor
+  · intro b
+    refine ⟨Matrix.posSemidef_vecMulVec_self_star _, ?_⟩
+    have hnorm := horth b b
+    rw [if_pos rfl] at hnorm
+    change Matrix.vecMulVec (selectedVector r b) (star (selectedVector r b)) *
+      Matrix.vecMulVec (selectedVector r b) (star (selectedVector r b)) = _
+    rw [Matrix.vecMulVec_mul_vecMulVec, hnorm, one_smul]
+    rfl
+  · let w : Matrix (jointIndex n d) (jointIndex n d) ℂ := fun i b => selectedVector r b i
+    have hw : wᴴ * w = 1 := by
+      ext b c
+      change (star (selectedVector r b) ⬝ᵥ selectedVector r c) =
+        (1 : Matrix (jointIndex n d) (jointIndex n d) ℂ) b c
+      rw [horth b c, Matrix.one_apply]
+    have hw' : w * wᴴ = 1 := mul_eq_one_comm.mp hw
+    calc
+      ∑ b, selectedMeasurement r b = w * wᴴ := by
+        ext i j
+        rw [Matrix.sum_apply, Matrix.mul_apply]
+        change (∑ b, selectedVector r b i * star (selectedVector r b j)) =
+          ∑ b, selectedVector r b i * star (selectedVector r b j)
+        rfl
+      _ = 1 := hw'
 
 private theorem rankOne_separable_product (n d : ℕ) [NeZero n] [NeZero d]
     (v : jointIndex n d → ℂ) (hv : star v ⬝ᵥ v = 1)
@@ -290,12 +319,49 @@ private theorem selected_separable_iff (n d : ℕ) [NeZero n] [NeZero d]
     exact (fourier_not_product n d hn hd (b 0) (sectorLabel b) (sectorLabel_zero b)
       (rankOne_separable_product n d _ hv hsep)).elim
 
+private theorem sectorLabel_replace {n d : ℕ} [NeZero n] (s : jointIndex n d)
+    (hs : s 0 = 0) (a : ZMod d) : sectorLabel (Function.update s 0 a) = s := by
+  classical
+  funext k
+  by_cases hk : k = 0
+  · subst k
+    exact (sectorLabel_zero _).trans hs.symm
+  · change (if k = 0 then 0 else Function.update s 0 a k) = s k
+    rw [if_neg hk, Function.update_of_ne hk]
+
+private theorem replace_sectorLabel {n d : ℕ} [NeZero n] (b : jointIndex n d) :
+    Function.update (sectorLabel b) 0 (b 0) = b := by
+  classical
+  funext k
+  by_cases hk : k = 0
+  · subst k
+    exact Function.update_self _ _ _
+  · rw [Function.update_of_ne hk]
+    change (if k = 0 then 0 else b k) = b k
+    exact if_neg hk
+
 private theorem sector_count (n d : ℕ) [NeZero n] [NeZero d]
     (hn : 2 ≤ n) (hd : 2 ≤ d) (r : Finset (jointIndex n d))
     (hr : ∀ s ∈ r, s 0 = 0) :
     (Finset.univ.filter (fun b => sectorLabel b ∈ r)).card = d * r.card := by
   classical
-  sorry
+  let e : {b : jointIndex n d // b ∈ Finset.univ.filter (fun b => sectorLabel b ∈ r)} ≃
+      ZMod d × {s : jointIndex n d // s ∈ r} :=
+    { toFun := fun b => (b.1 0, ⟨sectorLabel b.1, (Finset.mem_filter.mp b.2).2⟩)
+      invFun := fun q => ⟨Function.update q.2.1 0 q.1, by
+        apply Finset.mem_filter.mpr
+        refine ⟨Finset.mem_univ _, ?_⟩
+        rw [sectorLabel_replace q.2.1 (hr q.2.1 q.2.2) q.1]
+        exact q.2.2⟩
+      left_inv := fun b => Subtype.ext (replace_sectorLabel b.1)
+      right_inv := fun q => by
+        apply Prod.ext
+        · change Function.update q.2.1 0 q.1 0 = q.1
+          exact Function.update_self _ _ _
+        · apply Subtype.ext
+          exact sectorLabel_replace q.2.1 (hr q.2.1 q.2.2) q.1 }
+  have h := Fintype.card_congr e
+  simpa only [Fintype.card_coe, Fintype.card_prod, ZMod.card] using h
 
 private theorem sector_separability_count (n d : ℕ) [NeZero n] [NeZero d]
     (hn : 2 ≤ n) (hd : 2 ≤ d) (r : Finset (jointIndex n d))
@@ -314,7 +380,33 @@ private theorem sector_separability_count (n d : ℕ) [NeZero n] [NeZero d]
 private theorem choose_sectors (n d m : ℕ) [NeZero n] [NeZero d]
     (hn : 2 ≤ n) (hm : m ≤ d ^ (n - 1)) :
     ∃ r : Finset (jointIndex n d), r.card = m ∧ ∀ s ∈ r, s 0 = 0 := by
-  sorry
+  classical
+  let s : Finset (jointIndex n d) := Finset.univ.filter (fun r => r 0 = 0)
+  let e : {r : jointIndex n d // r ∈ s} ≃ ({k : Fin n // k ≠ 0} → ZMod d) :=
+    { toFun := fun r k => r.1 k.1
+      invFun := fun f => ⟨fun k => if h : k = 0 then 0 else f ⟨k, h⟩, by
+        apply Finset.mem_filter.mpr
+        exact ⟨Finset.mem_univ _, dif_pos rfl⟩⟩
+      left_inv := fun r => by
+        apply Subtype.ext
+        funext k
+        by_cases hk : k = 0
+        · subst k
+          change (if h : (0 : Fin n) = 0 then (0 : ZMod d) else _) = r.1 0
+          rw [dif_pos rfl]
+          exact (Finset.mem_filter.mp r.2).2.symm
+        · exact dif_neg hk
+      right_inv := fun f => by
+        funext k
+        exact dif_neg k.2 }
+  have hc : Fintype.card {k : Fin n // k ≠ 0} = n - 1 := by
+    simpa only [Fintype.card_fin, Fintype.card_subtype_eq] using
+      Fintype.card_subtype_compl (fun k : Fin n => k = 0)
+  have hs : s.card = d ^ (n - 1) := by
+    have h := Fintype.card_congr e
+    simpa only [Fintype.card_coe, Fintype.card_fun, ZMod.card, hc] using h
+  obtain ⟨r, hrs, hcard⟩ := Finset.exists_subset_card_eq (s := s) (hs.symm ▸ hm)
+  exact ⟨r, hcard, fun t ht => (Finset.mem_filter.mp (hrs ht)).2⟩
 
 private theorem encoded_ghz (n d : ℕ) [NeZero n] [NeZero d]
     (hn : 2 ≤ n) (hd : 2 ≤ d) (x y : jointIndex n d) :
