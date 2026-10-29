@@ -156,7 +156,10 @@ internal sealed class StronglyComplementaryPermutationMaximumDocument : IScribeD
                         + "2^(padicValNat 2 n), and every attained cardinality is at most "
                         + "this number. Its supremum is at most this bound and at least "
                         + "the attained value, proving the identity for every n ≥ 1."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("rajchel-gasiorowski-zyczkowski-2018-strongly-complementary-permutations"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ComplementaryFormula() => MatrixBinders(Equivalence(
         Call("IsComplementary", X("p"), X("q")),
