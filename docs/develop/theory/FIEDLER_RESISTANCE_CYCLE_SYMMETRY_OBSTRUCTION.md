@@ -1010,440 +1010,780 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
-## 9. Fourier moments and a sharp uniform comparison
+## 9. Fourier 矩与均匀值的严格比较
 
-**定义 9.1（循环 Fourier 数据）。** 固定 $n\ge5$，令
-$\theta=2\pi/n$、$z=e^{\mathrm i\theta}$，并对 $1\le k\le n-1$ 置
-
-$$
- d_k=1-z^{-k},\qquad \mu_k=|d_k|^{-2}=\frac1{4\sin^2(\pi k/n)}.
-$$
-
-对 $p\in\Delta$ 定义
+**定义 9.1（全部正竞争者的 Fourier 坐标）。** 固定整数 $n\ge5$。
+沿用定义 4.1 的实际环、计数内积、开单纯形与全部无序点对电阻，
+并直接使用定理 5.1–8.1 的全部结论。置
+$\theta=2\pi/n$、$z=e^{\mathrm i\theta}$，所有 Fourier 下标按模 $n$ 解释，并定义
 
 $$
- q_k(p)=\sum_{i=0}^{n-1}p_i z^{ki},\qquad q_0=1,\qquad q_{n-k}=\overline {q_k}.
+\begin{aligned}
+d_k&=1-z^{-k},&
+\mu_k&=|d_k|^{-2}=\frac1{4\sin^2(\pi k/n)}
+ &&(1\le k<n),\\
+q_k(p)&=\sum_{i=0}^{n-1}p_i z^{ki},&
+q_0&=1,&q_{n-k}&=\overline q_k,\\
+\tau_n&=\frac1n\sum_{k=1}^{n-1}\mu_k=\frac{n^2-1}{12n},&
+\rho_n&=\frac{\mu_1}{n},&
+T_n&=\tau_n-2\rho_n,\\
+E_n(p)&=\frac1n\sum_{k=2}^{n-2}\mu_k|q_k(p)|^2,&
+\beta_n&=\frac{\tau_n}{\rho_n},&
+U_n&=n\beta_n.
+\end{aligned} \tag{9.1}
 $$
 
-记
+这里 $E_n$ 排除第一模及其共轭模；$T_n>0$ 是均匀点的互补谱迹。
+经典有限三角和可由 $g(X)=(X^n-1)/(X-1)$ 在 $X=1$ 的两次对数微分得到：
+对 $\zeta^n=1,\zeta\ne1$，
+$\sum(1-\zeta)^{-1}=(n-1)/2$，
+$\sum(1-\zeta)^{-2}=(n-1)^2/4-(n-1)(n-2)/3$；
+再用 $\mu_k=(1-z^k)^{-1}-(1-z^k)^{-2}$ 即得 (9.1) 的 $\tau_n$。
+
+**定理 9.2（精确矩比较及尖锐均匀值区域）。** 对每个 $p\in\Delta^\circ$，
+在顶点 Fourier 基 $f_k(j)=n^{-1/2}z^{kj}$ 的非恒定部分中，有
 
 $$
- \tau_n=\frac1n\sum_{k=1}^{n-1}\mu_k=\frac{n^2-1}{12n},\qquad
- \rho_n=\frac{\mu_1}{n},\qquad
- T_n=\tau_n-2\rho_n,\qquad
- E_n(p)=\frac1n\sum_{k=2}^{n-2}\mu_k|q_k(p)|^2.
+M(p)_{km}=\frac{q_{m-k}-\overline q_kq_m}
+ {n\,\overline d_kd_m}\quad(1\le k,m<n),\qquad
+T(p)=\tau_n-2\rho_n|q_1|^2-E_n(p). \tag{9.2}
 $$
 
-$\tau_n$ 和 $\rho_n$ 分别是均匀权重的迹和最大特征值；$T_n$ 是去掉第一 Fourier 对后的迹。
-
-**定理 9.2（精确 Fourier 矩阵及均匀值比较）。** 对 $p\in\Delta^\circ$，在顶点 Fourier 基
-$f_k=n^{-1/2}(z^{ki})_{i=0}^{n-1}$ 的非恒定部分中，$M(p)$ 的矩阵为
+特别地，令 $a=|q_1|^2$、$b=|q_2-q_1^2|$，则
 
 $$
- M(p)_{km}=\frac{q_{m-k}(p)-\overline {q_k(p)}q_m(p)}
- {n\,\overline {d_k}d_m},\qquad 1\le k,m\le n-1. \tag{9.1}
+\rho(p)\ge\rho_n(1-a+b),\qquad
+\Phi(p)\le
+\frac{n\,[\,\tau_n-2\rho_na-E_n(p)\,]}{\rho_n(1-a+b)}. \tag{9.3}
 $$
 
-因而
+在完整区域 $E_n(p)\ge T_n|q_1(p)|^2$ 上，
 
 $$
- T(p)=\tau_n-2\rho_n|q_1|^2-E_n(p),\qquad
- M(p)_{11}=\rho_n(1-|q_1|^2),\qquad
- \rho(p)\ge\rho_n(1-|q_1|^2). \tag{9.2}
+\Phi(p)\le U_n=\frac{n(n^2-1)}3\sin^2\frac{\pi}{n}, \tag{9.4}
 $$
 
-在区域
+且等号当且仅当 $p_i=1/n$ 对每条边成立。
+
+证明。式 (5.4) 的最小流能量在 Fourier 基中给出 (9.2)：
+关联矩阵在第 $k$ 模上的乘子是 $d_k$，
+$\langle f_k,\operatorname{diag}(p)f_m\rangle=q_{m-k}/n$，
+减去循环流均值的秩一项为 $\overline q_kq_m/n$。
+取迹即得第二式。对指标 $\{1,n-1\}$ 的二阶主压缩作对角酉共轭后，
+其两个特征值为 $\rho_n(1-a\pm b)$，所以 Rayleigh 原理给出 (9.3)。
+正性使 $|q_1|<1$，所有分母均为正。
+
+若 $E_n\ge(\tau_n-2\rho_n)a$，则 $T(p)\le\tau_n(1-a)$，
+而 $\rho(p)\ge\rho_n(1-a)$，得到 (9.4)。
+若取等号且 $q_1=0$，则 $E_n=0$，所有非恒定 Fourier 系数均为零，
+Fourier 反演给出均匀 $p$。
+若取等号且 $q_1\ne0$，Rayleigh 等号迫使 $f_1$ 为最大特征向量。
+(9.2) 的 $(2,1)$ 元为零，给出
+$\overline q_1=\overline q_2q_1$，从而 $|q_2|=1$。
+严格正的概率对至少两个不同的 $z^{2i}$ 赋正质量，故三角不等式严格，
+不可能有 $|q_2|=1$。均匀点直接取等号。∎
+
+**推论 9.3（非恒等旋转与相干矩障碍）。** 对每个 $n\ge5$，
+任何具有非恒等旋转对称性的非均匀正电导，在同一总电阻水平上
+都被均匀电导严格支配。任何满足 $\Phi(p)>U_n$ 的正竞争者必须满足
 
 $$
- {\cal E}_n=\{p\in\Delta^\circ:E_n(p)\ge T_n|q_1(p)|^2\} \tag{9.3}
+q_1\ne0,\qquad
+E_n(p)+\tau_n|q_2-q_1^2|<T_n|q_1|^2. \tag{9.5}
 $$
 
-有尖锐的比较
+此外其全部矩必须共同满足
 
 $$
- \Phi(p)\le \Phi_{\rm unif}:=\frac{n\tau_n}{\rho_n}
- =\frac{n(n^2-1)}3\sin^2\frac{\pi}{n}. \tag{9.4}
+\left(q_{m-k}-\overline q_kq_m\right)_{1\le k,m<n}\succ0,\qquad
+p_i=\frac1n\sum_{k=0}^{n-1}q_kz^{-ki}>0. \tag{9.6}
 $$
 
-等号当且仅当 $p_i=1/n$ 对全部 $i$ 成立。
+因此独立指定各模的大小不能替代同一个正概率向量的相干矩条件。
 
-证明。将 (5.4) 写在 Fourier 基中。边流的第 $k$ 个系数为
-$d_k^{-1}$ 乘以顶点的第 $k$ 个系数，故加权能量的第一项为
-$q_{m-k}/(n\overline d_kd_m)$；最小化循环流常数给出第二项
-$\overline q_kq_m/(n\overline d_kd_m)$，这就是 (9.1)。取对角和得到第一式 (9.2)，取 $(1,1)$ 元并用 Rayleigh 原理得到其余两式。
+证明。旋转 $i\mapsto i+d$ 不变给出 $q_1=z^{-d}q_1$，
+非恒等性使 $q_1=0$；非均匀性使 $E_n>0$。
+于是 $T<\tau_n$、$\rho\ge\rho_n$，严格低于 $U_n$。
+由 (9.3)，严格改进又要求
+$\tau_n-2\rho_na-E_n>\tau_n(1-a+b)$，这恰是 (9.5)。
+(9.6) 的矩阵是非恒定 Fourier 函数在 $p$ 下的协方差 Gram 矩阵；
+严格正的 $p$ 使其正定：若线性组合的方差为零，它在全部 $n$ 个点为常数，
+但其 Fourier 常数系数为零，故组合为零。第二式是 Fourier 反演。
+式 (7.3) 保持比较并把它送到任意 $R_0>0$。∎
 
-若 $E_n(p)\ge T_n|q_1|^2$，则
-$T(p)\le\tau_n(1-|q_1|^2)$，再由 (9.2) 得 (9.4)。以下核对等号。
-若 $q_1=0$，两次不等式同时取等号会给出 $E_n=0$，所以所有非零 Fourier 矩均为零，$p$ 均匀。若 $q_1\ne0$，等号要求 $f_1$ 是 $M(p)$ 的最大特征向量。对 (9.1) 的 $(m,1)$ 元（取 $m=2$）有
-$q_1=\overline q_1q_2$，从而 $|q_2|=1$；严格正的概率向量不可能有非平凡 Fourier 矩的模为一。因此 $q_1=0$，回到前一种情形。∎
+## 10. 每个正双 Fiedler 点的解析正则性与完整曲率条件
 
-**推论 9.3（旋转对称性的严格障碍及改进的必要矩条件）。** 若 $p$ 在非恒等循环旋转下不变，则 $q_1(p)=0$。因此非均匀的此类 $p$ 满足
-
-$$
- \Phi(p)<\Phi_{\rm unif}. \tag{9.5}
-$$
-
-任何满足 $\Phi(p)>\Phi_{\rm unif}$ 的正权重必须满足
-
-$$
- q_1(p)\ne0,\qquad E_n(p)<T_n|q_1(p)|^2, \tag{9.6}
-$$
-
-以及更强的相干谱条件
+**定义 10.1（压缩、切向量及互补谱）。** 令
+$\mathscr D_n=\{p\in\Delta^\circ:\rho(p)\text{ 恰二重}\}$。
+在 $p\in\mathscr D_n$ 处，记 $E=\ker(M-\rho I)$、$\Pi=P_E$、
+$Q=I_H-\Pi$、$v_i=a_i-\bar a(p)$、$\beta=T/\rho$。
+对 $\sum_i\xi_i=0$ 定义
 
 $$
- \rho(p)<\rho_n\,\frac{T(p)}{\tau_n}. \tag{9.7}
+w_\xi=\sum_i\xi_iv_i,\quad C_\xi=\sum_i\xi_iv_iv_i^{\mathsf T},\quad
+\mathcal R_p\xi=\operatorname{tf}_E(\Pi C_\xi\Pi),\quad
+\operatorname{tf}_E A=A-\tfrac12\operatorname{tr}_E(A)I_E. \tag{10.1}
 $$
 
-其 Fourier 矩还必须满足矩阵
+互补逆 $G=Q(\rho I_Q-QMQ)^{-1}Q$ 只在 $QH$ 上取逆，
+在 $E$ 上为零。所有互补特征值都严格小于 $\rho$，所以该定义合法。
+
+**引理 10.2（实际环的秩二横截性）。** 对每个 $p\in\mathscr D_n$，
+$\mathcal R_p$ 满射到二维空间 $\operatorname{Sym}_0(E)$。
+
+证明。取 $E$ 的正交基 $u,v$，并置
+$F_i=(\langle u,v_i\rangle,\langle v,v_i\rangle)^{\mathsf T}$。
+因为 $M=L(1/p)^+|_H$，对任一 $x\in E$，
+$\rho\,p_i^{-1}(x_i-x_{i+1})=\langle x,v_i\rangle$，
+而 $\langle x,v_i-v_{i-1}\rangle=x_i$。因此
 
 $$
- \bigl(q_{m-k}-\overline q_kq_m\bigr)_{1\le k,m\le n-1}\succeq0, \tag{9.8}
+F_{i+1}+F_{i-1}=(2-p_i/\rho)F_i,\qquad
+\sum_i p_iF_iF_i^{\mathsf T}=\rho I_2. \tag{10.2}
 $$
 
-并使 (9.1) 的非对角相位共同降低最大特征值；单独改变各个 $|q_k|$ 而破坏 (9.8) 不能产生可行权重。
+递推使 $D_i=\det(F_i,F_{i+1})$ 与 $i$ 无关。
+若该常数为零，可选非零线性组合同时消去两个相邻的 $F_i$ 分量；
+二阶递推使所有分量为零，继而 $u,v$ 的同一组合为零，矛盾。
+所以每两个相邻 $F_i$ 线性无关。
 
-证明。若 $p_{i+d}=p_i$，则
-$q_1=z^{-d}q_1$，而非恒等性给出 $z^{-d}\ne1$。非均匀性又使某个 $q_k\ne0$，故 (9.2) 和 $\rho\ge\rho_n$ 给出严格式 (9.5)。若 (9.6) 不成立，(9.4) 反向给出不超过均匀值。由严格改进的定义直接得到 (9.7)。最后 (9.8) 是
-$\sum_i p_i(\zeta_i-\bar\zeta)(\zeta_i-\bar\zeta)^*$ 的 Gram 矩阵，其中
-$\zeta_i=(z^{ki})_{k=1}^{n-1}$；它是正半定的必要相干条件。∎
+若满射失败，存在非零迹零对称 $A$ 使
+$F_i^{\mathsf T}AF_i$ 对 $i$ 为常数。按 $p$ 加权和该常数是
+$\rho\operatorname{tr}A=0$。非零迹零实对称二阶矩阵的零二次型集合
+恰为两条不同直线。相邻 $F_i$ 必交替落在这两条直线上。
+(10.2) 左边落在与 $F_i$ 不同的直线上，故 $2-p_i/\rho=0$ 对每个 $i$ 成立。
+于是 $p_i=1/n$ 且 $\rho=1/(2n)$；但均匀点的实际最大特征值为
+$[4n\sin^2(\pi/n)]^{-1}>1/(2n)$，因为 $n>4$，矛盾。∎
 
+**定理 10.3（完整正双 Fiedler 集的局部维数）。** 在每个正电导环
+$\lambda_2=\lambda_3<\lambda_4$ 的附近，实际双 Fiedler 集是实解析子流形：
+共同特征值自由时维数为 $n-2$，归一化为 $\lambda_2=\lambda_3=1$ 时维数为 $n-3$。
+在 $p$ 坐标中，其切空间恰为 $\ker\mathcal R_p$。
 
-## 10. 正双 Fiedler 轨迹的解析结构
+证明。用隔离顶层二阶谱簇的围道 resolvent 定义解析谱投影；
+把固定的 $E$ 投影到该谱簇并作 Gram 矩阵的解析逆平方根，得到解析正交框架。
+该框架中的二阶对称矩阵 $K(p')$ 解析，
+双重条件恰是 $\operatorname{tf}K(p')=0$。
+在 $p$ 处其微分为 $\mathcal R_p$，故引理 10.2 与解析隐函数定理
+给出开单纯形内维数 $(n-1)-2=n-3$，切空间为所述核。
+原电导与 $(p,s)$ 解析双射；自由 $s>0$ 增加一维。
+共同 Laplacian 特征值为 $(s\rho(p))^{-1}$，等于 $1$ 时唯一确定
+$s=1/\rho(p)$。互补谱隙和全部电导正性在邻域内保持。∎
 
-**定义 10.1（双 Fiedler 集）。** 令
-
-$$
- {\cal D}=\{(p,s)\in\Delta^\circ\times(0,\infty):
- \lambda_{\max}(M(p))\text{ 的重数为 }2\},\qquad c_i=(sp_i)^{-1}.
-$$
-
-若 $E(p)$ 是 $M(p)$ 的最大特征空间，记 $\Pi(p)$ 为其正交投影，并写
-$\operatorname{tf}_E A=A-\frac12\operatorname{tr}_E(A)I_E$。
-
-**引理 10.2（双重条件的秩二横截性）。** 在每个 $(p,s)\in{\cal D}$，线性映射
-
-$$
- {\cal R}_p:\{\xi\in\mathbb R^n:\sum_i\xi_i=0\}\longrightarrow\operatorname{Sym}_0(E(p)),\qquad
- {\cal R}_p(\xi)=\operatorname{tf}_E\!\left(\Pi\sum_i\xi_i v_iv_i^{\mathsf T}\Pi\right), \tag{10.1}
-$$
-
-是满射，其中 $v_i=a_i-\bar a(p)$。
-
-证明。设 $u,v$ 是 $E(p)$ 的正交基。若 (10.1) 不满射，则存在非零迹零矩阵
-$A\in\operatorname{Sym}_0(\mathbb R^2)$，使
-
-$$
- (u_i,v_i)A(u_i,v_i)^{\mathsf T}\quad\text{与 }i\text{ 无关}, \tag{10.2}
-$$
-
-其中 $(u_i,v_i)=(\langle u,v_i\rangle,\langle v,v_i\rangle)$。把 $u,v$ 代入环的特征方程，并连续消去相邻坐标，得到
+**定理 10.4（唯一严格正乘子与全部互补谱的必要曲率）。** 在任何内点局部极大值
+$p$ 处，定理 8.1 给出 $p\in\mathscr D_n$。存在唯一的 $W\in\operatorname{Sym}(E)$ 满足
 
 $$
- \sum_i c_i\bigl(u_iv_{i+1}-u_{i+1}v_i\bigr)^2>0. \tag{10.3}
+W\succ0,\qquad \operatorname{tr}_E W=1,\qquad
+\|v_i\|^2=\beta\,(\Pi v_i)^{\mathsf T}W(\Pi v_i)\quad\text{对全部 }i. \tag{10.3}
 $$
 
-且 (10.2) 的左边相邻差的加权和等于
-$-\operatorname{tr}(A)$ 乘以 (10.3)。由于 $\operatorname{tr}(A)=0$，反向消元给出
-$A=0$，矛盾。这里 (10.3) 严格是因为两个独立环特征向量的离散 Wronskian 不可能在一个正系数二阶递推中处处为零；$n\ge5$ 保证消元中至少有三个连续方程。∎
-
-**定理 10.3（双 Fiedler 集的局部解析维数）。** $\mathcal D$ 在每个正双 Fiedler 周期附近是实解析子流形。允许共同特征值自由时，其在 $c$ 空间的局部维数为 $n-2$；加入
-$\lambda_2=\lambda_3=1$ 时，局部维数为 $n-3$。
-
-证明。对称矩阵的二重特征值条件等价于最大特征空间上的迹零压缩为零，即两个独立的解析方程。引理 10.2 给出其微分秩恰为二，解析隐函数定理遂给出
-$(n-1)-2=n-3$ 维的 $p$ 轨迹。坐标
-$c\leftrightarrow(p,s)$ 是正解析双射，共同特征值为
-$(s\rho(p))^{-1}$，故自由尺度增加一维，得到 $n-2$。条件共同特征值为 $1$ 唯一确定
-$s=\rho(p)^{-1}$，不再增加维数，得到 $n-3$。∎
-
-**定理 10.4（局部极大值的唯一正乘子与互补曲率）。** 设 $(p,s)$ 是 $\Phi$ 的内点局部极大值，$E=E(p)$，$\rho=\lambda_{\max}M(p)$，$T=T(p)$，$\beta=T/\rho$。则存在唯一
-$W\in\operatorname{Sym}(E)$ 满足
+对每个 $\xi\in\ker\mathcal R_p$，令
+$H_\xi=\Pi(-w_\xi w_\xi^{\mathsf T}+C_\xi GC_\xi)\Pi$。
+则局部极大值必须满足完整二阶条件
 
 $$
- W\succ0,\qquad \operatorname{tr}_E W=1,\qquad
- \|v_i\|^2=\beta\,\langle W u_i,u_i\rangle\quad(0\le i<n), \tag{10.4}
+\begin{aligned}
+0&\ge-\|w_\xi\|^2-\beta\operatorname{tr}(WH_\xi)\\
+&=-\|w_\xi\|^2+\beta\|W^{1/2}\Pi w_\xi\|^2
+-\beta\sum_{\nu<\rho}
+ \frac{\|W^{1/2}\Pi C_\xi e_\nu\|^2}{\rho-\nu}.
+\end{aligned} \tag{10.4}
 $$
 
-其中 $u_i=\Pi v_i\in E$。令 $Q=I-\Pi$，对任一满足
-$\operatorname{tf}_E\Pi\dot M[\xi]\Pi=0$ 的切向量 $\xi$，置
+和对 $QH$ 的任一完整正交特征基 $Me_\nu=\nu e_\nu$ 取，
+包括所有重数；不只保留邻近的一个互补特征值。
+
+证明。局部极大性的一阶方向条件是
+$\operatorname{tr}C_\xi\le\beta\lambda_{\max}(\Pi C_\xi\Pi)$ 对所有 $\xi$ 成立。
+有限维凸分离给出 $W\succeq0$、迹为一，使
+$\operatorname{tr}C_\xi=\beta\operatorname{tr}(W\Pi C_\xi\Pi)$：
+否则将迹一正半定矩阵的紧凸集合在线性读数映射下与目标读数分离，
+得到某个违反上述方向条件的 $\xi$。
+于是 $\|v_i\|^2-\beta(\Pi v_i)^{\mathsf T}W(\Pi v_i)$ 对 $i$ 为常数；
+其 $p$ 加权和为 $T-\beta\rho=0$，故该常数为零。
+两个乘子的差迹为零，并与 $\mathcal R_p$ 的满像正交，
+所以乘子唯一。
+
+先允许 $W$ 半正定以推导 (10.4)。
+由定理 10.3，每个核向量可延伸为解析双轨迹
+$p(t)=p+t\xi+t^2\eta+O(t^3)$。
+协方差的二阶展开为
 
 $$
- w_\xi=\sum_i\xi_i v_i,\quad A_\xi=\sum_i\xi_i v_iv_i^{\mathsf T},\quad
- {\cal H}_\xi=\Pi\!\left(-w_\xi w_\xi^{\mathsf T}+A_\xi Q(\rho I-M)^{-1}QA_\xi\right)\!\Pi. \tag{10.5}
+M(p(t))=M+tC_\xi+t^2(C_\eta-w_\xi w_\xi^{\mathsf T})+O(t^3).
 $$
 
-则必要的互补谱曲率条件为
+顶层一阶压缩为 $\alpha I_E$。对互补块消元，顶层二阶矩阵为
+$\Pi C_\eta\Pi+H_\xi$；沿双轨迹它是 $\gamma I_E$。
+该 Schur 补计算只用互补逆 $G$：
+解互补分量的一阶项为 $tGC_\xi x$，代回顶层即给出 $t^2\Pi C_\xi GC_\xi\Pi$。
+一阶乘子恒等式又给出
+$\operatorname{tr}C_\xi=\beta\alpha$、
+$\operatorname{tr}C_\eta=\beta(\gamma-\operatorname{tr}WH_\xi)$。
+代入商，二次系数恰为
+$(n/\rho)(-\|w_\xi\|^2-\beta\operatorname{tr}WH_\xi)$。
+局部极大性使其非正。展开 $G$ 的完整谱分解得到 (10.4)。
+
+最后排除秩一 $W=uu^{\mathsf T}$。令 $h_i=\langle u,v_i\rangle$；
+(10.3) 给出 $\|v_i\|^2=\beta h_i^2$，所以 $h_i\ne0$。
+定义
 
 $$
- \lambda_{\max}({\cal H}_\xi)\ge-\frac{\|w_\xi\|^2}{\beta} \qquad\text{对所有上述 }\xi. \tag{10.6}
+S=\sum_i p_i/h_i,\qquad
+w=\sum_i p_iv_i/h_i,\qquad C=\sum_i(p_i/h_i)v_iv_i^{\mathsf T}.
 $$
 
-证明。最大特征值的次梯度是 $\Pi W\Pi$，其中 $W\succeq0$ 且迹为一。对所有单纯形切向量的第一变分为零，给出
-$\|v_i\|^2-\beta\langle Wu_i,u_i\rangle$ 为常数；按 $p$ 加权后常数为零，得到 (10.4)。若 $W$ 有零方向，则 (10.4) 迫使全部 $v_i$ 的投影落在一条直线上；环上 $n\ge5$ 个仿射无关的 $a_i$ 排除该情形，故 $W\succ0$。引理 10.2 又给出线性方程组的唯一性。
-
-沿 $p+t\xi$ 有精确展开
-$M(t)=M+tA_\xi-t^2w_\xi w_\xi^{\mathsf T}$。当顶层一阶压缩为标量时，标准对称矩阵二阶分裂公式给出顶层二阶矩阵 (10.5)。同时
-$T(t)=T+t\beta\alpha-t^2\|w_\xi\|^2$，其中 $\alpha$ 是顶层共同的一阶位移。代入 $nT(t)/\lambda_{\max}M(t)$，$\alpha^2$ 项相消，局部极大性给出
-$-\|w_\xi\|^2-\beta\lambda_{\max}({\cal H}_\xi)\le0$，即 (10.6)。∎
-
-
-## 11. 均匀双 Fiedler 周期的完整二次式
-
-**定义 11.1（均匀点的扰动数据）。** 令 $p^0_i=1/n$，$M_0=M(p^0)$，其最大特征值为 $\rho_n$，最大空间
-$E_0=\operatorname{span}\{f_1,f_{n-1}\}$。对实切向量 $\xi$ 令
+与 (8.4) 同一代数恒等式给出
+$Cu=0$、$\operatorname{tr}C=0$、$\langle u,w\rangle=1$、
+$\|w\|^2<\beta$。严格性来自 $a_i$ 的仿射无关性。
+正解析曲线
+$p_i(t)=p_i(1+t/h_i)/(1+tS)$ 满足
 
 $$
- \widehat\xi_k=\sum_{i=0}^{n-1}\xi_i z^{ki},\qquad \sum_i\xi_i=0,
+M(t)=\frac{M+tC}{1+tS}-\frac{t^2ww^{\mathsf T}}{(1+tS)^2},\quad
+T(t)=\frac T{1+tS}-\frac{t^2\|w\|^2}{(1+tS)^2}. \tag{10.5}
 $$
 
-置 $\rho_k=\mu_k/n$（$1\le k\le n-1$），并在 $H$ 上定义
+取 $E$ 的另一单位向量 $v\perp u$，写 $\delta=v^{\mathsf T}Cv$。
+若 $\delta\ne0$，选 $\delta t<0$，则 $u$ 分支成为顶层；
+其与另一顶层的间隙为一阶，其余谱隙固定。
+二阶秩一项的交叉影响为 $O(|t|^3)$，故
+$\rho(t)=\rho/(1+tS)-t^2/(1+tS)^2+O(|t|^3)$。
+于是目标增加
+$(n/\rho)(\beta-\|w\|^2)t^2+O(|t|^3)>0$，矛盾。
+
+若 $\delta=0$，取 (10.5) 的切向量
+$\xi_i=p_i(1/h_i-S)$。有
+$w_\xi=w$、$C_\xi=C-SM$，
+所以 $\Pi C_\xi\Pi=-S\rho I_E$，即 $\xi\in\ker\mathcal R_p$。
+又 $QC_\xi u=0$、$\langle u,w_\xi\rangle=1$，
+故 $\operatorname{tr}(WH_\xi)=u^{\mathsf T}H_\xi u=-1$。
+(10.4) 的右边等于 $\beta-\|w\|^2>0$，矛盾。
+所以唯一乘子严格正定。
+
+这也确定了完整的一阶临界方向集。
+令 $A_\xi=\Pi C_\xi\Pi$，则最大特征值的一侧方向导数与乘子恒等式给出
 
 $$
- A_\xi=\sum_i\xi_i v_i^0(v_i^0)^{\mathsf T},\qquad
- w_\xi=\sum_i\xi_i v_i^0,\qquad
- G_0=Q_0(\rho_nI-M_0)^{-1}Q_0,\quad Q_0=I-\Pi_0. \tag{11.1}
+D^+\Phi(p)[\xi]=\frac{n\beta}{\rho}
+ [\,\operatorname{tr}(WA_\xi)-\lambda_{\max}(A_\xi)\,]. \tag{10.6}
 $$
 
-在 Fourier 基中
+正定的 $W$ 对 $A_\xi$ 的两个特征方向都赋严格正质量，
+所以括号为零当且仅当 $A_\xi$ 为标量矩阵，即
+$\xi\in\ker\mathcal R_p$；其余方向一阶严格下降。
+因此 (10.4) 在全部一阶临界方向上给出双集的必要曲率，
+没有因舍去某个互补特征值或某类临界方向而缩小条件。∎
+
+## 11. 均匀点全部方向的二阶展开与阶数阈值
+
+**定义 11.1（均匀谱与扰动矩阵）。** 令 $p^0_i=1/n$、
+$M_0=M(p^0)$、$v_i^0=a_i-\bar a(p^0)$、
+$\rho=\rho_n$、$\tau=\tau_n$、$\beta=\beta_n$、
+$\rho_k=\mu_k/n$。均匀点的顶空间为
+$E_0=\operatorname{span}_{\mathbb C}\{f_1,f_{n-1}\}$，按实结构理解为二维实空间。
+记 $\Pi_0$ 为其投影，$Q_0=I_H-\Pi_0$，
+$G_0=Q_0(\rho I_{Q_0H}-Q_0M_0Q_0)^{-1}Q_0$。
+对每个实切向量 $\sum_i\xi_i=0$，定义
+$x_k=\sum_i\xi_i z^{ki}$、$x_0=0$，
+$C_\xi=\sum_i\xi_i v_i^0(v_i^0)^{\mathsf T}$、
+$w_\xi=\sum_i\xi_i v_i^0$。有
 
 $$
- (A_\xi)_{km}=\frac{\widehat\xi_{m-k}}{n\,\overline d_kd_m},\qquad
- \|w_\xi\|^2=\frac1n\sum_{k=1}^{n-1}\mu_k|\widehat\xi_k|^2. \tag{11.2}
+(C_\xi)_{km}=\frac{x_{m-k}}{n\overline d_kd_m},\qquad
+\|w_\xi\|^2=\sum_{k=1}^{n-1}\rho_k|x_k|^2,\qquad
+H_\xi=\Pi_0(-w_\xi w_\xi^{\mathsf T}+C_\xi G_0C_\xi)\Pi_0. \tag{11.1}
 $$
 
-顶层压缩的迹为零，且其两个特征值为
-$\pm\rho_n|\widehat\xi_2|$。
-
-**定理 11.2（每个切向量的精确二次展开）。** 对任一实切向量 $\xi$，令
-
-$$
- {\cal H}_\xi^0=\Pi_0\left(-w_\xi w_\xi^{\mathsf T}+A_\xi G_0A_\xi\right)\Pi_0. \tag{11.3}
-$$
-
-则对 $t\to0$ 有
+**定理 11.2（含一阶分裂的完整二次式）。** 对每个实切向量 $\xi$，
+令 $a=|x_2|$。若 $a>0$，取 $\Pi_0C_\xi\Pi_0$ 对应于
+$\pm\rho a$ 的单位向量 $e_\pm$，置
+$h_\pm=e_\pm^*H_\xi e_\pm$。
+若 $a=0$，置 $h_+=h_-=\lambda_{\max}(H_\xi)$。
+则对 $t\to0^\pm$，
 
 $$
- \rho(p^0+t\xi)=\rho_n+\rho_n|\widehat\xi_2|\,|t|
- +h_\xi^{\operatorname{sgn}t}t^2+o(t^2), \tag{11.4}
+\begin{aligned}
+\rho(p^0+t\xi)&=\rho+\rho a|t|+h_\pm t^2+o(t^2),\\
+\Phi(p^0+t\xi)&=U_n-U_na|t|
++\frac n\rho\left[-\|w_\xi\|^2-\beta h_\pm+\beta\rho a^2\right]t^2
++o(t^2).
+\end{aligned} \tag{11.2}
 $$
 
-其中 $h_\xi^\sigma$ 是 (11.3) 加到顶层一阶压缩的 $\sigma$-分支上的二次系数；当 $\widehat\xi_2=0$ 时
-$h_\xi^\sigma=\lambda_{\max}({\cal H}_\xi^0)$。同时
+若 $\xi$ 切于实际双集，即 $x_2=0$，则任一实现该切向量的解析双轨迹上
+目标的二次系数为
 
 $$
- \Phi(p^0+t\xi)=\Phi_{\rm unif}\bigl(1-|\widehat\xi_2||t|\bigr)
- +\frac n{\rho_n}\left[-\|w_\xi\|^2-\beta_n h_\xi^{\operatorname{sgn}t}
- +\beta_n\rho_n|\widehat\xi_2|^2\right]t^2+o(t^2),\quad
- \beta_n=\frac{\tau_n}{\rho_n}. \tag{11.5}
+\begin{aligned}
+\mathcal Q_n(\xi)&=\frac n\rho\,\mathcal C_n(\xi),\\
+\mathcal C_n(\xi)
+&=-\sum_{k=1}^{n-1}\rho_k|x_k|^2+\beta\rho|x_1|^2\\
+&\quad-\frac{\beta\rho}{2}
+ \sum_{j=2}^{n-2}\frac{\rho_j}{\rho-\rho_j}
+ (|x_{j-1}|^2+|x_{j+1}|^2).
+\end{aligned} \tag{11.3}
 $$
 
-证明。式 (11.2) 是 (9.1) 对 $q_k=t\widehat\xi_k$ 的一阶项和累积流公式。顶层的 $(1,n-1)$ 元模为
-$\rho_n|\widehat\xi_2|$，对角元为零，故一阶分裂如 (11.4)。对补空间作 Schur 补，二阶项正是
-$-w_\xi w_\xi^{\mathsf T}+A_\xi G_0A_\xi$。迹的精确式为
-$T(p^0+t\xi)=\tau_n-t^2\|w_\xi\|^2$。将这两式代入商，线性项和二阶分母项按 (11.5) 合并，得到结论。∎
+这里没有遗漏偶数 $n$ 的自共轭模，也不要求互补特征值单重。
 
-**推论 11.3（双重轨迹上的二次式及 $12$ 阈值）。** 在 $\widehat\xi_2=0$ 的切空间中，能够由解析双 Fiedler 轨迹实现的共同二次曲率为
+证明。式 (9.2) 在 $q_k=tx_k$ 时给出 (11.1)，并给出精确迹
+$T(p^0+t\xi)=\tau-t^2\|w_\xi\|^2$。
+顶层一阶压缩的对角元为零，非对角元模为 $\rho|x_2|$，
+其特征值为 $\pm\rho a$。
+对互补块作与定理 10.4 相同的 Schur 消元，
+顶层二次矩阵为 $H_\xi$，故第一式 (11.2) 成立。
+把迹除以该展开；分母一阶项的平方贡献
+$\beta\rho a^2$，得到第二式。
 
-$$
- {\cal Q}_{\rm dbl}(\xi)=\frac n{\rho_n}\left[-\|w_\xi\|^2-\frac{\beta_n}{2}\operatorname{tr}{\cal H}_\xi^0\right]. \tag{11.6}
-$$
-
-Fourier 模式彼此正交；除第一模式及其共轭外，所有模式在 (11.6) 中的系数严格为负。第一模式的系数为
-
-$$
- 2\rho_n|\widehat\xi_1|^2\,\chi_n,\qquad
- \chi_n=-1+\frac{(n^2-1)\sin^2(\pi/n)\cos(2\pi/n)}
- {3\,[\,4\cos^2(\pi/n)-1\,]}. \tag{11.7}
-$$
-
-并且
-
-$$
- \chi_n<0\quad(5\le n\le11),\qquad \chi_n>0\quad(n\ge12). \tag{11.8}
-$$
-
-证明。若 $\widehat\xi_k$ 只含一对 $k,n-k$，(11.2) 和 (11.3) 中的补谱分母均为
-$\rho_n-\rho_j>0$，所以 $k\ge3$ 的贡献为严格负数。对 $k=1$，有
-$\|w_\xi\|^2=2\rho_n|\widehat\xi_1|^2$，而
+若 $x_2=0$，在双轨迹 $p^0+t\xi+t^2\eta+O(t^3)$ 上，
+共同二次位移是
+$\frac12\operatorname{tr}(H_\xi+\Pi_0C_\eta\Pi_0)$。
+均匀点对所有 $\eta$ 都有
+$\operatorname{tr}C_\eta=0$ 和
+$\operatorname{tr}(\Pi_0C_\eta\Pi_0)=0$，
+故目标二次系数与 $\eta$ 无关，为
+$(n/\rho)(-\|w_\xi\|^2-\frac\beta2\operatorname{tr}H_\xi)$。
+在 Fourier 基中，秩一部分的顶迹为 $-2\rho|x_1|^2$，
+而互补部分的顶迹为
 
 $$
- \frac12\operatorname{tr}{\cal H}_\xi^0
-=\rho_n|\widehat\xi_1|^2\left[-1+\frac{\rho_2/\rho_n}{1-\rho_2/\rho_n}\right],\qquad
- \frac{\rho_2}{\rho_n}=\frac1{4\cos^2(\pi/n)}.
+\operatorname{tr}(\Pi_0C_\xi G_0C_\xi\Pi_0)
+=\rho\sum_{j=2}^{n-2}\frac{\rho_j}{\rho-\rho_j}
+ (|x_{j-1}|^2+|x_{j+1}|^2).
 $$
 
-代入 $\beta_n=(n^2-1)\sin^2(\pi/n)/3$ 即得 (11.7)。不同 Fourier 对在迹和补谱分母中正交，故不存在交叉项。
+这就得到 (11.3)。所有分母严格为正；该公式按每个 Fourier 下标求和，
+因而自动包括偶数中间模及互补重数。∎
 
-为核对符号，令 $x=\pi/n$。把 (11.7) 移项并乘以正数
-$3(4\cos^2x-1)$，符号等价于
-
-$$
- (n^2-1)\sin^2x\cos(2x)-3(4\cos^2x-1). \tag{11.9}
-$$
-
-将 $n=\pi/x$ 代入并微分，在 $0<x\le\pi/5$ 清除正因子后导数严格为负；因此 (11.9) 随 $n$ 严格递增。交错 Taylor 界给出
-$-1/200<\chi_{11}<-1/250$，而
-$1/100<\chi_{12}<1/80$。故 (11.8) 成立。
-
-**定理 11.4（均匀点的局部类型）。** 在固定总电阻的尺度商空间中，均匀正环为严格局部极大值当且仅限于
-$5\le n\le11$；对 $n\ge12$，它是实际双 Fiedler 集上的严格鞍点。
-
-证明。若 $\widehat\xi_2\ne0$，(11.5) 的绝对值线性项在两个方向均严格降低目标。若 $\widehat\xi_2=0$，解析双 Fiedler 轨迹的二阶系数为 (11.6)；(11.8) 与其余模式的严格负系数给出 $5\le n\le11$ 的严格负性。有限维单位球面的紧性把逐模严格性提升为统一的二次负界，故得到严格局部极大值。
-
-当 $n\ge12$，取 $\xi_i=\cos(2\pi i/n)$。由 (11.7)–(11.8)，双轨迹上的二阶系数严格为正。引理 10.2 和解析隐函数定理允许加入唯一的二阶 $2$-模校正，使顶层二阶迹零且不发生分裂；由 (11.6) 该校正不改变共同二次系数。因此均匀点沿实际双 Fiedler 集有增有减，是严格鞍点。∎
-
-
-## 12. 大阶正解析分支与均匀邻域
-
-**定理 12.1（固定电阻上的严格改进分支）。** 对每个 $n\ge12$ 和每个 $R_0>0$，存在正解析曲线 $p(t)\in\Delta^\circ$，定义在 $|t|<\varepsilon_n$，满足
+**引理 11.3（完整双切空间的符号）。** 在 $x_2=0$ 的实切空间上，
+(11.3) 按 Fourier 对角化。除 $\{1,n-1\}$ 外，
+每个允许的非零模的系数严格为负；第一对的贡献为
 
 $$
- p(0)=p^0,\qquad \lambda_2(L(c(t)))=\lambda_3(L(c(t))),\qquad
- c_i(t)=\frac{nT(p(t))}{R_0p_i(t)},\qquad R(c(t))=R_0, \tag{12.1}
+2\rho|x_1|^2\chi_n,\qquad
+\chi_n=-1+\frac{(n^2-1)\sin^2(\pi/n)\cos(2\pi/n)}
+ {3[\,4\cos^2(\pi/n)-1\,]}. \tag{11.4}
 $$
 
-并且对某个符号选择及所有充分小的非零 $t$，有
+而且 $\chi_n<0$ 对 $5\le n\le11$ 成立，
+$\chi_n>0$ 对所有 $n\ge12$ 成立。
+
+证明。(11.3) 是模的平方和；除第一对之外，其第一项严格负，
+其余贡献非正。
+对第一对，置
+$r=\rho_2/\rho=1/[4\cos^2(\pi/n)]$。
+它对 $\frac12\operatorname{tr}H_\xi$ 的贡献为
+$\rho|x_1|^2[-1+r/(1-r)]$，所以其 $\mathcal C_n$ 系数为
+$2\rho|x_1|^2[-1+\frac\beta2(1-2r)/(1-r)]$，恰为 (11.4)。
+
+为证明阈值而不依赖数值图，令 $x=\pi/n$。
+$\chi_n+1$ 等于
 
 $$
- \lambda_2(L(c(t)))R_0>\Phi_{\rm unif}. \tag{12.2}
+\frac13(\pi^2-x^2)
+ \left(\frac{\sin x}{x}\right)^2
+ \frac{1-2\sin^2x}{3-4\sin^2x}. \tag{11.5}
 $$
 
-不把曲线上的任何点称为全局最优。
-
-证明。取定理 11.4 的第一 Fourier 切向量。引理 10.2 给出的秩二方程允许唯一解析地解出二阶法向分量，使最大特征值保持二重；正性由 $p^0$ 的正坐标和连续性保持。式 (11.8) 使曲线上目标的二阶系数为正。最后按 (7.3) 缩放，得到 (12.1) 的总电阻与严格不等式 (12.2)。∎
-
-**推论 12.2（均匀邻域无局部极大值）。** 对每个 $n\ge12$，存在均匀点的一个相对邻域，其中没有实际正环的局部极大值。
-
-证明。局部极大值必满足定理 8.1 的双 Fiedler 条件。定理 10.3 把该双集在均匀点附近解析化，而 (11.6) 的正曲率在第一模式方向上对该解析切场保持；缩小邻域后，每个双点都有一条保持双重性的曲线使目标严格增加。因此该邻域内不存在局部极大值。∎
-
-## 13. 内点极大值的有限位移、余谱锥与证书排除
-
-**定理 13.1（有限位移恒等式与余谱松弛锥）。** 设 $p$ 是任意内点局部极大值，记 $M=M(p)$、$T=T(p)$、$\rho=\rho(p)$，$\Pi$ 为其二重 Fiedler 投影，$Q=I-\Pi$。对任意满足 $\sum_i\xi_i=0$ 且 $p+\xi\in\Delta^\circ$ 的有限位移，置
+在 $0<x\le\pi/5$，三个因子都为正且严格递减：
+第一个显然；第二个由 $\sin x-x\cos x>0$；
+第三个由
+$\frac{d}{du}\frac{1-2u}{3-4u}=-2/(3-4u)^2<0$
+和 $u=\sin^2x$ 严格递增。
+因此 $\chi_n$ 随整数 $n\ge5$ 严格递增。
+在 $n=11$，$\pi<22/7$ 给出 $x<2/7$，
+交错正弦级数给出
+$\sin x<2/7-(2/7)^3/6+(2/7)^5/120=71054/252105$。
+函数 $u(1-2u)/(3-4u)$ 在 $0\le u\le1/10$ 严格递增。
+取 $u_*=5048670916/63556931025<1/10$，有精确有理比较
 
 $$
- w_\xi=\sum_i\xi_i v_i,\qquad C_\xi=\sum_i\xi_i v_iv_i^{\mathsf T},\qquad S_\xi=C_\xi-w_\xi w_\xi^{\mathsf T}. \tag{13.1}
+\chi_{11}<-1+\frac{40u_*(1-2u_*)}{3-4u_*}
+=-\frac{7788680328999988951}{2166987665449056075255}<0.
+$$
+
+在 $n=12$，代入 $\sin^2(\pi/12)=(2-\sqrt3)/4$ 得
+
+$$
+\chi_{12}=\frac{262\sqrt3-453}{24(1+\sqrt3)}>0,
+$$
+
+因为 $3\cdot262^2-453^2=723>0$。单调性完成所有阶数的符号判定。∎
+
+**定理 11.4（对全部邻近竞争者的局部极大值与实际双集上的鞍点）。**
+当 $5\le n\le11$ 时，均匀正环在尺度商上是严格局部极大值；
+等价地，每个 $R_0>0$ 上的均匀电导
+$c_i=n(n^2-1)/(12R_0)$，是固定总电阻问题的严格局部极大值。
+当 $n\ge12$ 时，均匀点在实际双 Fiedler 集上具有正负二阶方向，
+所以是严格鞍点。
+
+证明。先给出覆盖分裂竞争者的统一论证。
+在定理 10.3 的解析框架中，把顶层二阶矩阵写成
+$m(p)I+\begin{pmatrix}g_1&g_2\\g_2&-g_1\end{pmatrix}$。
+以 $v=(g_1,g_2)$ 为两个法向坐标，以 $u\in\mathbb R^{n-3}$
+为其余解析坐标；均匀点为 $(0,0)$，双集恰为 $v=0$。
+于是 $\rho(p)=m(p)+|v|$，而
+$F(p)=nT(p)/m(p)$ 是解析函数。
+在均匀点，$DF=0$；(11.3) 是其双切空间的二次式。
+对 $5\le n\le11$，引理 11.3 使该式负定。
+Taylor 定理和混合项的配方给出常数 $a,C>0$，使
+
+$$
+F(u,v)\le U_n-a|u|^2+C|v|^2
+$$
+
+在一个邻域成立（先吸收 $|u||v|$ 项）。
+$m$ 与 $F$ 在此有正上下界，故再缩小邻域，
+
+$$
+\Phi(u,v)=\frac{F(u,v)}{1+|v|/m(u,v)}
+\le U_n-\tfrac a2|u|^2-c|v|
+$$
+
+对某个 $c>0$ 成立。这严格控制所有邻近正竞争者，包括任意分裂的两个最小正特征值。
+
+当 $n\ge12$，取第一 Fourier 对的非零实切向量，
+(11.4) 给出正二次项；取第三 Fourier 对则给出负二次项。
+定理 10.3 把这两类切向量分别实现为实际正解析双轨迹，
+(11.3) 给出相应的严格增减。
+固定电阻由 (7.3) 与尺度商解析等价，故上述局部类型也适用于固定电阻。
+这些结论没有给出 $5\le n\le11$ 的全局最优性。∎
+
+## 12. 每个大阶环上的实际改进分支与无极大值邻域
+
+**定理 12.1（每个 $n\ge12$ 与每个 $R_0>0$ 的正解析分支）。**
+存在 $\epsilon>0$ 和实解析 $p:(-\epsilon,\epsilon)\to\Delta^\circ$，使
+
+$$
+p(0)=p^0,\qquad p_i'(0)=\cos(2\pi i/n),\qquad
+p(t)\in\mathscr D_n.
+$$
+
+定义
+
+$$
+c_i(t)=\frac{nT(p(t))}{R_0p_i(t)}. \tag{12.1}
+$$
+
+则每个 $|t|<\epsilon$ 都是原来 $n$ 个计数质量上的实际正环，
+$R(c(t))=R_0$、$\lambda_2(c(t))=\lambda_3(c(t))<\lambda_4(c(t))$，
+并且对所有充分小的 $t\ne0$，
+
+$$
+\lambda_2(c(t))R_0>U_n. \tag{12.2}
+$$
+
+证明。给定的切向量满足 $x_2=0$；
+在定理 10.3 的隐函数图中取切坐标的直线，
+解析地解出两个法向坐标，便得到上述曲线及规定的一阶导数。
+其二次项由 (11.3)–(11.4) 给出，严格为正，
+所以在正负两侧的充分小非零 $t$ 都满足 (12.2)。
+严格正性与互补谱隙由连续性保持。
+(7.3) 的全点对电阻恒等式给出 (12.1) 的精确归一化。∎
+
+**推论 12.2（整个均匀邻域内无局部极大值）。** 对每个 $n\ge12$，
+存在 $p^0$ 的一个完整相对邻域 $\mathcal N\subset\Delta^\circ$，
+其中没有尺度不变目标 $\Phi$ 的局部极大值。
+因此每个固定 $R_0>0$ 上对应的均匀电导邻域也没有局部极大值。
+
+证明。用定理 10.3 的局部坐标把双集限制目标写为解析函数 $f(u)$。
+由定理 11.4，存在固定坐标向量 $e$ 使
+$D^2f(0)[e,e]>0$；连续性使
+$D^2f(u)[e,e]>0$ 在一个完整双集邻域成立。
+故该邻域内每点都不能是限制目标的局部极大值：
+一阶导数非零时选增加的方向，为零时正二阶导数给出增加。
+缩小完整邻域 $\mathcal N$ 以保持顶层二阶谱簇隔离。
+由定理 8.1，完整问题的局部极大值必在该双集上，
+因而已全部排除。固定电阻的结论由 (7.3) 的双向参数化得到。∎
+
+## 13. 精确有限位移、余谱松弛锥与完整仿射纤维
+
+**定理 13.1（任意有限位移的目标恒等式与谱松弛锥）。**
+设 $p$ 是内点局部极大值，用定义 10.1 与定理 10.4 的记号。
+对任意 $\sum_i\xi_i=0$、$p+\xi\in\Delta^\circ$，不要求 $\xi$ 小，
+置 $w=w_\xi$、$C=C_\xi$、
+
+$$
+a=\operatorname{tr}(W\Pi C\Pi),\quad
+D=\rho I_H-M,\quad
+\delta=\lambda_{\max}(M+C-ww^{\mathsf T})-\rho-a.
 $$
 
 则有精确恒等式
 
 $$
- M(p+\xi)=M+S_\xi,\qquad T(p+\xi)=T+\operatorname{tr}S_\xi,\qquad
- \Phi(p+\xi)=\frac{n(T+\operatorname{tr}S_\xi)}{\rho+\sigma(S_\xi)}, \tag{13.2}
+\begin{aligned}
+M(p+\xi)&=M+C-ww^{\mathsf T},\\
+T(p+\xi)&=T+\beta a-\|w\|^2,\\
+\Phi(p+\xi)-\Phi(p)
+&=-\frac{n(\|w\|^2+\beta\delta)}{\rho+a+\delta}.
+\end{aligned} \tag{13.1}
 $$
 
-其中 $\sigma(S)=\lambda_{\max}(M+S)-\rho$。总有
-$\sigma(S)\ge\lambda_{\max}(\Pi S\Pi)$。
-定义余谱松弛锥
+分母是实际正最大特征值。
+令标准谱松弛锥为
 
 $$
- {\cal K}_{\Pi}=\left\{S:\ \Pi S\Pi=\alpha\Pi,\quad QS\Pi=0,\quad
- Q(\rho I-M-S)Q\succeq0\ \text{for some }\alpha\in\mathbb R\right\}. \tag{13.3}
+\mathfrak S_H=\{(Y,b)\in\operatorname{Sym}(H)\times\mathbb R:
+ bI_H-Y\succeq0\}. \tag{13.2}
 $$
 
-在该锥上 $\sigma(S)=\alpha$；若最后的半正定式严格正定，则余谱严格有隙。
-
-证明。把协方差按新均值展开即得 (13.1)–(13.2)。在 $E=\operatorname{ran}\Pi$ 上取 Rayleigh 商给出松弛下界。若 $S\in{\cal K}_\Pi$，$M+S$ 按 $E\oplus E^\perp$ 分块，顶块为
-$(\rho+\alpha)I_E$，交叉块为零，余块不超过该值，故最大特征值恰为 $\rho+\alpha$。∎
-
-**推论 13.2（非平凡仿射纤维上的严格支配）。** 定义线性纤维
+这是闭凸锥，且对每个实数 $d$，余谱松弛具有精确判据
 
 $$
- {\cal F}_p=\{\xi:\sum_i\xi_i=0,\ \Pi w_\xi=0,\
- \operatorname{tf}_E(\Pi C_\xi\Pi)=0\}. \tag{13.4}
+\delta\le d
+\ \Longleftrightarrow\
+(C-ww^{\mathsf T}-D,\ a+d)\in\mathfrak S_H
+\ \Longleftrightarrow\
+D+(a+d)I_H-C+ww^{\mathsf T}\succeq0. \tag{13.3}
 $$
 
-若 $\xi\in{\cal F}_p$、$p+\xi\in\Delta^\circ$、$w_\xi\ne0$，且 $S_\xi\in{\cal K}_\Pi$ 的余谱半正定式严格，则
+尤其局部极大性要求
+$\delta\ge-\|w\|^2/\beta$ 对全部充分小可行位移成立。
+(13.3) 包含整个互补谱，不能只核对顶层压缩。
+
+更具体地，令 $u=\Pi w$、$v=Qw$，并置
 
 $$
- \Phi(p+\xi)<\Phi(p). \tag{13.5}
+\begin{aligned}
+A_d&=(a+d)I_E-\Pi C\Pi+uu^{\mathsf T},\\
+B&=-\Pi CQ+uv^{\mathsf T},\\
+Z_d&=QDQ+(a+d)I_Q-QCQ+vv^{\mathsf T}.
+\end{aligned}
 $$
 
-这对整个非平凡纤维同时成立，而不是只对其原点的微分成立。
-
-证明。由 $\Pi w_\xi=0$ 和 (13.4)，$\Pi S_\xi\Pi=\alpha\Pi$。定理 10.4 的乘子恒等式给出
+则 (13.3) 等价于完整 Schur 条件
 
 $$
- \operatorname{tr}C_\xi-\beta\,\alpha=0,\qquad \beta=T/\rho.
+Z_d\succeq0,\qquad \operatorname{ran}(B^{\mathsf T})\subseteq\operatorname{ran}Z_d,
+\qquad A_d-BZ_d^+B^{\mathsf T}\succeq0. \tag{13.4}
 $$
 
-故
-$\operatorname{tr}S_\xi-\beta\alpha=-\|w_\xi\|^2<0$。将 $\sigma(S_\xi)=\alpha$ 代入 (13.2)，即得 (13.5)；若 $w_\xi=0$，同一恒等式给出等值而非严格值。∎
+证明。按新均值 $\bar a+w$ 展开协方差，得到第一式 (13.1)。
+(10.3) 逐项乘以 $\xi_i$ 再相加给出 $\operatorname{tr}C=\beta a$，
+从而得到迹式。令 $\rho'=\rho+a+\delta$，直接通分得最后的目标恒等式。
+最大特征值的序定义给出 (13.2)–(13.3)。
+将 (13.3) 的矩阵按 $E\oplus QH$ 分块正是
+$\begin{pmatrix}A_d&B\\B^{\mathsf T}&Z_d\end{pmatrix}$。
+其正半定性先在 $QH$ 给出 $Z_d\succeq0$；
+在 $\ker Z_d$ 上用任意倍数测试交叉项，得到 $B\ker Z_d=0$，
+等价于范围条件。
+余下在 $\operatorname{ran}Z_d$ 上配方，得到 (13.4)，反向展开也成立。
+这证明奇异余块也被包括。∎
 
-**定理 13.3（固定紧顶空间证书不能在邻域内成立）。** 不存在固定的环境矩阵
-$X\succeq0$、$\operatorname{tr}X=1$，使其在某个包含内点局部极大值的完整邻域内同时满足
-
-$$
-\operatorname{ran}X\subset E(p),\qquad \operatorname{tr}(XM(p))=\rho(p) \tag{13.6}
-$$
-
-并以此给出全邻域的紧顶空间比值证书。
-
-证明。等式 $\operatorname{tr}X(\rho I-M)=0$ 与两矩阵的半正定性等价于
-$X$ 支持在 $E(p)$。若同一个 $X$ 在开邻域内满足 (13.6)，对任一切向量微分
-$M(p+t\xi)X=\rho(p+t)X$ 的余谱分量，得到
-$Q(p)A_\xi X=0$。引理 10.2 的同一 Wronskian 消元表明可选取 $\xi$ 使该分量非零，矛盾。故固定迹一矩阵不可能在完整邻域保持紧性；这只排除该证书路线，不排除其它随 $p$ 变化的证书。∎
-
-
-## 14. 同一环的删边路径与闭合边判据
-
-**定理 14.1（正路径的闭合边判据）。** 从一个正电导环删去边 $e$，得到端点为 $a,b$ 的正电导路径。令
-$A=L_P|_{\mathbf1^\perp}$，其特征对为
-$0<\lambda_2<\lambda_3<\cdots$，取单位特征向量 $x_j$，并置
-$\gamma_j=\langle b,x_j\rangle$、$\ell=b^{\mathsf T}A^{-1}b$。给路径重新加入电导 $h>0$ 的边后，闭环在原路径第三特征值 $\lambda_3$ 处具有
-$\lambda_2=\lambda_3$ 当且仅当
+**定理 13.2（整条非平凡仿射纤维的严格支配）。** 在每个内点局部极大值 $p$ 处，
+完整仿射纤维
 
 $$
- \gamma_3=0,\qquad
- 1+h\sum_{j\ne3}\frac{\gamma_j^2}{\lambda_j-\lambda_3}=0,\qquad
- h=-\left(\sum_{j\ne3}\frac{\gamma_j^2}{\lambda_j-\lambda_3}\right)^{-1}>0. \tag{14.1}
+\mathcal A_p=\{p+\xi\in\Delta^\circ:
+ \sum_i\xi_i=0,\quad\operatorname{tf}_E(\Pi C_\xi\Pi)=0\} \tag{13.5}
 $$
 
-这里的和包含路径的全部正特征值；第二式同时保证 $\lambda_3$ 仍是闭环特征值和另一个根在同一点相交。
+的维数为 $n-3$，且每个 $p'\in\mathcal A_p\setminus\{p\}$ 都满足
+$\Phi(p')<\Phi(p)$。不附加 $\Pi w_\xi=0$、小位移或余谱不变的条件。
 
-证明。Sherman–Morrison 的秩一特征方程为
+证明。引理 10.2 给出两个独立的线性条件，所以纤维维数为 $n-3$。
+对其中的位移，有 $\Pi C\Pi=\alpha I_E$，所以 $a=\alpha$。
+实际新矩阵的顶层压缩为
+$(\rho+\alpha)I_E-uu^{\mathsf T}$。
+二维空间内的秩一矩阵有零特征值，故
+$\rho'\ge\rho+\alpha$，即 $\delta\ge0$。
+又 $\sum_i\xi_i=0$ 时 $w=\sum_i\xi_i a_i$；
+$a_1,\ldots,a_{n-1}$ 线性无关，所以 $w=0$ 强迫所有 $\xi_i=0$。
+非零位移使 $\|w\|^2>0$，(13.1) 遂给出严格支配。
+新矩阵正定，故所有商的分母为正；证明对整条可行纤维有效。∎
+
+**定理 13.3（固定紧顶空间协方差不能给出邻域比值证书）。**
+在内点局部极大值 $p$，不存在固定环境矩阵
+$X\succeq0$、$\operatorname{tr}_H X=1$、$\operatorname{tr}(XM(p))=\rho(p)$，
+使
 
 $$
- 1+h\,b^{\mathsf T}(A-\lambda I)^{-1}b=0. \tag{14.2}
+\operatorname{tr}(XM(q))\ge T(q)/\beta
+\quad\text{对 }p\text{ 的某个完整相对邻域内所有 }q\text{ 成立}. \tag{13.6}
 $$
 
-原特征值 $\lambda_3$ 在更新后保持不变恰当且仅当 $\gamma_3=0$。在此条件下把 $\lambda=\lambda_3$ 代入 (14.2) 即得 (14.1)；正性正是闭合边电导为正的条件。秩一交错定理保证该根位于第二与第三路径根之间，故相交时它们正是闭环的两个最小正根。∎
+因此用一个固定的紧顶空间协方差下界来证明
+$\rho(q)\ge T(q)/\beta$ 的路线在完整邻域内失败；
+该结论只排除这一类证书。
 
-**推论 14.2（电阻与目标的精确关系）。** 记
-$K=A^{-1}$、$v=Kb$、$\tau=h/(1+h\ell)$。闭环伪逆在 $\mathbf1^\perp$ 上为
+证明。紧性及正半定性使 $X$ 支持于 $E$：
+$\operatorname{tr}(X(\rho I-M))=0$，正半定乘积的零迹使其像落在核内。
+若 (13.6) 成立，双向一阶微分给出
+$\operatorname{tr}(XC_\xi)=\operatorname{tr}C_\xi/\beta$
+对每个 $\xi$ 成立，故由定理 10.4 的唯一性有 $X=\Pi W\Pi$。
+对任意有限位移，(13.1) 又给出精确差
 
 $$
- K_h=K-\tau vv^{\mathsf T},\qquad
- R_h=R_P-n\tau\|v\|^2,\qquad
- R_{\rm eff,h}(a,b)=\frac{\ell}{1+h\ell}. \tag{14.3}
+\operatorname{tr}(XM(p+\xi))-T(p+\xi)/\beta
+=\|w_\xi\|^2/\beta-(\Pi w_\xi)^{\mathsf T}W(\Pi w_\xi). \tag{13.7}
+$$
+
+$M$ 在 $n-1\ge4$ 维的 $H$ 上正定，顶层二重，
+所以 $\beta=T/\rho>2$。
+迹一的二阶 $W$ 有特征值 $\omega\ge1/2>1/\beta$。
+映射 $\xi\mapsto w_\xi$ 是单纯形切空间到 $H$ 的线性同构，
+故可取 $w_\xi$ 为该特征值的单位特征向量。
+对每个充分小非零 $t$，$p+t\xi$ 仍严格正，
+(13.7) 为 $t^2(1/\beta-\omega)<0$，违背 (13.6)。∎
+
+## 14. 同一实际环的全部删边路径与闭合边判据
+
+**定理 14.1（原路径第三特征值处的精确正闭合判据）。**
+令 $P_n$ 是任意正电导路径，顶点质量全部为一，端点为 $a,b$，
+$e=\delta_a-\delta_b\in H$。记
+$A=L_P|_H$，其严格递增的特征值为
+$0<\lambda_2<\lambda_3<\cdots<\lambda_n$，
+正交单位特征向量为 $x_j$。置
+
+$$
+\gamma_j=e^{\mathsf T}x_j,\qquad
+S_3=\sum_{\substack{2\le j\le n\\j\ne3}}
+ \frac{\gamma_j^2}{\lambda_j-\lambda_3}.
+$$
+
+给端点间添加实际电导 $h>0$ 后，有
+$\lambda_2(L_P+hee^{\mathsf T})=\lambda_3(L_P+hee^{\mathsf T})=\lambda_3$
+当且仅当
+
+$$
+\gamma_3=0,\qquad S_3<0,\qquad h=-1/S_3. \tag{14.1}
+$$
+
+这包括路径的全部正谱与共同端点向量，不以独立路径边际替代。
+
+证明。正路径的特征向量由端点的一个坐标经首行和三对角递推唯一确定，
+故每个特征值单重。
+对 $\lambda$ 不在路径谱内，直接展开秩一行列式得到经典世俗方程
+
+$$
+1+h\,e^{\mathsf T}(A-\lambda I)^{-1}e
+=1+h\sum_{j=2}^n\frac{\gamma_j^2}{\lambda_j-\lambda}=0. \tag{14.2}
+$$
+
+在 $\lambda=\lambda_3$ 处，若 $\gamma_3\ne0$，
+把更新后的特征方程与 $x_3$ 内积可推出 $e^{\mathsf T}y=0$，
+进而 $y$ 为 $x_3$ 的倍数，再推出 $y=0$，故此时不是特征值。
+若 $\gamma_3=0$，$x_3$ 仍为特征向量。
+在 $x_3^\perp$ 上 $A-\lambda_3I$ 可逆；
+第二个独立特征向量存在当且仅当
+$1+hS_3=0$，且此时其在该补空间中唯一至倍数。
+因为 $h>0$，此条件恰为 (14.1)。
+
+正秩一交错给出，若更新后的正谱为 $\mu_2\le\cdots\le\mu_n$，则
+$\lambda_j\le\mu_j\le\lambda_{j+1}$ 对 $2\le j<n$ 成立。
+$\lambda_3$ 的二重只能出现在 $\mu_2,\mu_3$，
+因为 $\mu_4\ge\lambda_4>\lambda_3$。
+故 (14.1) 给出的二重确为 Fiedler 二重，反向必要性亦成立。
+所用交错也可直接由 Rayleigh 极小极大原理在 $e^\perp$ 上限制得到。∎
+
+**推论 14.2（闭合的全点对电阻和目标）。** 令
+$K=A^{-1}$、$v=Ke$、$\ell=e^{\mathsf T}Ke$、
+$\tau=h/(1+h\ell)$。对任意 $h>0$，
+
+$$
+\begin{aligned}
+K_h&=K-\tau vv^{\mathsf T},\\
+R_h&=R_P-n\tau\|v\|^2,\qquad
+R_{\mathrm{eff},h}(a,b)=\ell/(1+h\ell).
+\end{aligned} \tag{14.3}
 $$
 
 若 (14.1) 成立，则
 
 $$
- \lambda_2(L_h)=\lambda_3(A),\qquad
- \lambda_2(L_h)R_h=\lambda_3(A)\,[R_P-n\tau\|v\|^2]. \tag{14.4}
+\lambda_2(L_h)R_h
+=\lambda_3\left[R_P-
+ n\,\frac{h}{1+h\ell}\sum_{j=2}^n\frac{\gamma_j^2}{\lambda_j^2}\right]. \tag{14.4}
 $$
 
-证明。第一式是秩一逆公式，第二式取迹并用全点对恒等式
-$R=n\operatorname{tr}L^+$，第三式是端点二支路的并联公式。再用定理 14.1 即得 (14.4)。∎
+证明。直接相乘验证秩一逆公式给出第一式，
+取迹并用 $R=n\operatorname{tr}_H K$ 得到第二式；
+取 $e$ 的二次型得到端点电阻式。
+谱分解给出 $\|Ke\|^2=\sum_j\gamma_j^2/\lambda_j^2$，
+再由定理 14.1 得 (14.4)。
+逆与全点对迹的经典输入仍是
+[Ghosh–Boyd–Saberi，DOI:10.1137/050645452](https://web.stanford.edu/~boyd/papers/pdf/eff_res.pdf)
+§§2.4–2.5 的电阻公式。∎
 
-**定理 14.3（同一环逐边删去的兼容性）。** 一个正电导环若要求对每一条边 $e$ 的删边路径都在原路径第三特征值处满足闭合边判据，则必须且只须对每条 $e$ 同时满足 (14.1)，其中
-$A_e,b_e,\lambda_{e,j},\gamma_{e,j}$ 全部由同一个环电导向量删去该边后得到，而闭合边的 $h$ 必须等于原环的同一坐标 $c_e$。此外，各条路径的共同电阻和目标必须由 (14.3) 的同一环伪逆相容；不能把不同删边所得的路径边际最优值分别拼接。
-
-证明。对每一条边独立应用定理 14.1 得必要性。反之，若同一电导向量的每个删边数据都满足 (14.1)，逐边秩一恢复即给出所要求的双 Fiedler 条件；(14.3) 则保证电阻和目标来自同一个闭环。完整路径乘积界及其唯一等号类可直接使用
-FIEDLER_RESISTANCE_PATH_OPTIMIZER.md 的定理 2.1 与推论 3.1；它们约束的是每一个共同实现的删边路径，不能替换为相互独立的路径边际量。∎
-
-## 15. 尚未闭合的尖锐常数与等号类
-
-对每个 $n\ge5$，仍令
+**定理 14.3（每次删除必须属于同一个环）。** 对一个固定的正电导环 $c$，
+对每条边 $e_i$ 删边得到路径 $P^{(i)}$，
+令 $A_i,\lambda_{i,j},\gamma_{i,j},S_{i,3},K_i,v_i,\ell_i$
+为定理 14.1–14.2 在此路径及其原始端点差上的数据。
+则以下条件等价：
+环是双 Fiedler；某一次删除满足 (14.1) 且 $h=c_i$；
+每一次删除都满足 (14.1) 且 $h=c_i$。
+在等价条件成立时，所有 $\lambda_{i,3}$ 都等于同一个环 Fiedler 值 $\Lambda$，且
 
 $$
- B_n=\sup_{c\in(0,\infty)^n}\lambda_2(L(c))R(c),\qquad
- \mathcal P_n=\{p\in\Delta^\circ:\Phi(p)=B_n\}.
+L(c)|_H=A_i+c_i e_ie_i^{\mathsf T},\qquad
+L(c)^+|_H=K_i-\tau_i v_iv_i^{\mathsf T},\qquad
+R(c)=R(P^{(i)})-n\tau_i\|v_i\|^2,\quad
+\tau_i=\frac{c_i}{1+c_i\ell_i}. \tag{14.5}
 $$
 
-定理 7.1 已给出 $A_n<B_n<n(n-1)$ 及正内点达到性；定理 9.2、11.4、12.1、13.1–13.3 和 14.1–14.3 只增加必要条件、局部类型、有限位移恒等式、证书排除与共同删边判据。它们没有给出 $B_n$ 的闭式，也没有给出 $\mathcal P_n$ 的充分且必要刻画；所有原有的全点对、正性、计数质量和竞争者量词保持不变。
+这里 $e_i$ 在矩阵式中表示原边的端点差向量。
+对每个删除路径还须同时保留约定 4.2 引用的完整路径定理：
 
-原始路径中使用的全路径等号类仍仅作为每次删边的已知中间结果。相关电阻恒等式和迹公式见 Ghosh–Boyd–Saberi，[*Minimizing Effective Resistance of a Graph*](https://doi.org/10.1137/050645452)，§§2.4–2.5；路径优化的完整结论见 [FIEDLER_RESISTANCE_PATH_OPTIMIZER.md](FIEDLER_RESISTANCE_PATH_OPTIMIZER.md)。
+$$
+\lambda_{i,2}R(P^{(i)})\le A_n,
+$$
+
+等号当且仅当按该次路径次序
+$c_j=\kappa_i\sqrt{j(n-j)}/[\,2\sqrt{j(n-j)}
+-\sqrt{(j-1)(n-j+1)}-\sqrt{(j+1)(n-j-1)}\,]$
+对同一个 $\kappa_i>0$ 成立。
+每条路径的 $n-1$ 条保留边必须采用原环中相同的电导坐标；
+不同删除路径的共同边共有 $n-2$ 条，并在这些边上逐一相容。
+不能把分别取得的路径最优值同时赋给它们。
+
+证明。若环正谱在最低处二重为 $\Lambda$，
+秩一交错在每次删边给出
+$\lambda_{i,2}\le\Lambda\le\lambda_{i,3}\le\Lambda$，
+故 $\lambda_{i,3}=\Lambda$。
+于是定理 14.1 的必要条件对每条边成立，闭合电导恰为 $c_i$。
+反向只需任一次删除的充分条件；“每次”蕴含“某次”。
+(14.5) 是同一矩阵恢复及 (14.3)，所以它强制全部删除数据相容。
+最后直接应用
+[完整路径定理及全部等号类](https://github.com/the-omega-institute/trureturing/blob/48474969a064d134fa7bb9c78d5919922d48faf9/docs/develop/theory/FIEDLER_RESISTANCE_PATH_OPTIMIZER.md)
+定理 2.1、推论 3.1，其中该文的 $C_n$ 是这里的 $A_n$；
+原顶点质量仍全部为一，路径电阻仍为全部 $\binom n2$ 个点对之和。
+这使用整个路径定理，不重新推导其特例。∎
+
+## 15. 精确优化问题与所用文献的适用范围
+
+**定义 15.1（尚待确定的尖锐值与充分等号条件）。** 对每个 $n\ge5$，
+仍取定义 4.1、8.2 的
+$B_n=\sup_{c>0}\lambda_2(L(c))R(c)$、
+$\mathcal P_n=\{p\in\Delta^\circ:\Phi(p)=B_n\}$。
+定理 7.1–7.2 的正内点达到性、边界排除与紧近最大点，
+以及定理 8.1 的必要双重性，均作为完整输入。
+第 9–14 节给出比较区域、局部类型、分支、必要曲率、
+有限位移支配与兼容闭合条件，没有确定任何尚未求出的 $B_n$，
+也没有给出 $\mathcal P_n$ 的充分且必要刻画。
+$5\le n\le11$ 的局部结论不替代全局问题；
+$n\ge12$ 的改进分支只确定严格超过 $U_n$ 的可行点。
+固定 $R_0>0$ 的完整最优类仍是 (7.3) 作用于 $\mathcal P_n$ 的像。
+
+本节的优化约束是
+[Cruz Ortega–Menéndez-Conde，arXiv:2306.08187v1](https://arxiv.org/html/2306.08187v1)
+§5 的全点对电阻；该文路径小阶结论与约定 4.2 的完整路径供应相区分。
+[Ghosh–Boyd–Saberi](https://doi.org/10.1137/050645452) 的伪逆与全点对迹公式
+是电学中间输入，其固定电导预算的凸优化问题不替代这里的比值最大化。
+[Lin–Shirazi，arXiv:2410.09736v1](https://arxiv.org/html/2410.09736v1)
+§4 定义 4.3、4.6 与定理 4.9 刻画周期且平衡的潜在第二或第三特征向量；
+这里保留同一电导的联合二重条件并额外比较全点对目标。
+[Arroyo–Castro–Fillman，arXiv:2308.12373v1](https://arxiv.org/html/2308.12373v1)
+§§1–2 的周期 Jacobi、Schrödinger 和闭谱隙关系提供二阶周期递推的背景；
+(10.2) 在本模型的正边电阻系数切片上使用，并给出所需横截性。
+[*Laplacian Network Optimization via Information Functions*,
+arXiv:2512.19279v1](https://arxiv.org/html/2512.19279v1) 的谱目标与信息函数框架
+须按其各自的目标和权重约束解释；
+这里的 (9.2)、(10.4)、(11.3) 与 (13.1) 直接针对
+$\lambda_2\,n\operatorname{tr}L^+$，全部竞争者始终为独立正电导。
+经典 Rayleigh 原理、秩一行列式、Schur 补与解析隐函数定理
+只承担上述推导的中间步骤。
 
 ## 追加锚（本行以下为增补区）
