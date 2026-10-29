@@ -4,13 +4,14 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.HilbertOperators.Approximation;
 
 internal sealed class SupportedSingularDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Background = LibraryNoteRef.Create("D5/L/HilbertOperators/tauceti2026approximation");
     private const string Prefix = "D5/S3/HilbertOperators/Approximation/SupportedSingular.";
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Complete real supported coordinates determine approximation numbers on the entire original input space, including an arbitrary orthogonal kernel.",
         H("Approximation from a Complete Supported Singular System"), Blocks(
             Describe.Lean(DescribeId.Create("supported-singular-approximation-number"),
                 DeclarationHandle.Create(Prefix + "approximationNumber"), H("All Bounded Finite Rank Competitors"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Background), Blocks(
                     Paragraph(Text("For any real bounded linear operator T from E to F and any natural n, approximationNumber(T,n) is the real infimum of norm(T-R) over every bounded real linear R from the same E to the same F whose actual cardinal rank is at most n. The index is zero based. No finite dimension of the ambient codomain, chosen diagonal class of competitors, or choice of singular values enters this definition."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("supported-singular-exact"),
                 DeclarationHandle.Create(Prefix + "approximationNumber_eq_supported"), H("Exact Error with the Full Kernel Retained"),
