@@ -50,25 +50,25 @@ private def tensorAdjointMatrix {n d : ℕ}
 def score {n d : ℕ}
     [NeZero n] [NeZero d] [Fintype (jointIndex n d)] [DecidableEq (jointIndex n d)]
     (ρ : Matrix (jointIndex n d) (jointIndex n d) ℂ)
-    (U : Fin n → ZMod d → ZMod d → Matrix (ZMod d) (ZMod d) ℂ)
-    (M : jointIndex n d → Matrix (jointIndex n d) (jointIndex n d) ℂ) : ℝ :=
+    (u : Fin n → ZMod d → ZMod d → Matrix (ZMod d) (ZMod d) ℂ)
+    (p : jointIndex n d → Matrix (jointIndex n d) (jointIndex n d) ℂ) : ℝ :=
   ((d : ℝ) ^ (2 * n))⁻¹ *
     ∑ x, ∑ y,
       (Matrix.trace
-        (tensorMatrix U x y * ρ * tensorAdjointMatrix U x y *
-          M (winningOutcome x y))).re
+        (tensorMatrix u x y * ρ * tensorAdjointMatrix u x y *
+          p (winningOutcome x y))).re
 
 /-- A finite sum of positive product operators is fully separable. -/
 def IsFullySeparable {n d : ℕ}
-    (A : Matrix (jointIndex n d) (jointIndex n d) ℂ) : Prop :=
-  ∃ k : ℕ, ∃ S : Fin k → Fin n → Matrix (ZMod d) (ZMod d) ℂ,
-    (∀ a v, (S a v).PosSemidef) ∧
-      ∀ i j, A i j = ∑ a, ∏ v, S a v (i v) (j v)
+    (a : Matrix (jointIndex n d) (jointIndex n d) ℂ) : Prop :=
+  ∃ k : ℕ, ∃ s : Fin k → Fin n → Matrix (ZMod d) (ZMod d) ℂ,
+    (∀ j v, (s j v).PosSemidef) ∧
+      ∀ i j, a i j = ∑ q, ∏ v, s q v (i v) (j v)
 
 def IsProjectiveMeasurement {n d : ℕ} [NeZero n] [NeZero d]
     [Fintype (jointIndex n d)] [DecidableEq (jointIndex n d)]
-    (M : jointIndex n d → Matrix (jointIndex n d) (jointIndex n d) ℂ) : Prop :=
-  (∀ b, (M b).PosSemidef ∧ M b * M b = M b) ∧ ∑ b, M b = 1
+    (p : jointIndex n d → Matrix (jointIndex n d) (jointIndex n d) ℂ) : Prop :=
+  (∀ b, (p b).PosSemidef ∧ p b * p b = p b) ∧ ∑ b, p b = 1
 
 private theorem neZeroOfTwo (n : ℕ) (h : 2 ≤ n) : NeZero n :=
   ⟨by omega⟩
@@ -79,13 +79,13 @@ def claim : Prop := by
     letI : NeZero n := neZeroOfTwo n hn
     letI : NeZero d := neZeroOfTwo d hd
     ∃ (ρ : Matrix (jointIndex n d) (jointIndex n d) ℂ)
-      (U : Fin n → ZMod d → ZMod d → Matrix (ZMod d) (ZMod d) ℂ)
-      (M : jointIndex n d → Matrix (jointIndex n d) (jointIndex n d) ℂ),
+      (u : Fin n → ZMod d → ZMod d → Matrix (ZMod d) (ZMod d) ℂ)
+      (p : jointIndex n d → Matrix (jointIndex n d) (jointIndex n d) ℂ),
       IsDensity ρ ∧
-      (∀ k x y, U k x y ∈ Matrix.unitaryGroup (ZMod d) ℂ) ∧
-      IsProjectiveMeasurement M ∧
-      ((Finset.univ.filter (fun b => IsFullySeparable (M b))).card = d * m) ∧
-      score ρ U M = ((d : ℝ) ^ n - d * m + m) / (d : ℝ) ^ n
+      (∀ k x y, u k x y ∈ Matrix.unitaryGroup (ZMod d) ℂ) ∧
+      IsProjectiveMeasurement p ∧
+      ((Finset.univ.filter (fun b => IsFullySeparable (p b))).card = d * m) ∧
+      score ρ u p = ((d : ℝ) ^ n - d * m + m) / (d : ℝ) ^ n
 
 private def sectorPoint {n d : ℕ} (t : ZMod d) (r : jointIndex n d) : jointIndex n d :=
   fun k => t + r k
@@ -274,7 +274,7 @@ private theorem sector_basis (n d : ℕ) [NeZero n] [NeZero d]
         ((Real.sqrt d : ℂ)⁻¹ * (Real.sqrt d : ℂ)⁻¹) *
           ZMod.stdAddChar (t * (c - a)) := by
       rw [fourier_at_point a t r hr, fourier_at_point c t r hr]
-      simp only [star_mul, star_inv]
+      simp only [star_mul, star_inv₀]
       have hstar : star (Real.sqrt d : ℂ) = (Real.sqrt d : ℂ) :=
         Complex.conj_ofReal _
       rw [hstar]
@@ -294,7 +294,7 @@ private theorem sector_basis (n d : ℕ) [NeZero n] [NeZero d]
       AddChar.sum_mulShift (c - a) (ZMod.isPrimitive_stdAddChar d), ZMod.card]
     by_cases hac : a = c
     · subst c
-      simp only [sub_self, ↓reduceIte]
+      simp only [sub_self, and_true, ↓reduceIte]
       have hsqrt : (Real.sqrt d : ℂ) ≠ 0 := by
         apply Complex.ofReal_ne_zero.mpr
         apply Real.sqrt_ne_zero'.mpr
@@ -476,7 +476,11 @@ private theorem rankOne_separable_product (n d : ℕ) [NeZero n] [NeZero d]
         _ = star x ⬝ᵥ (∑ q, a q) *ᵥ x := by
           rw [Matrix.sum_mulVec, dotProduct_sum]
         _ = 0 := by
-          rw [hmatrix, Matrix.vecMulVec_mulVec, hx, zero_smul, dotProduct_zero]
+          rw [hmatrix, Matrix.vecMulVec_mulVec, hx]
+          have hzero : MulOpposite.op (0 : ℂ) • v = 0 := by
+            ext k
+            exact mul_zero (v k)
+          rw [hzero, dotProduct_zero]
     apply (hapsd j).dotProduct_mulVec_zero_iff.mp
     exact (Finset.sum_eq_zero_iff_of_nonneg
       (fun q _ => (hapsd q).dotProduct_mulVec_nonneg x)).mp hzero j (Finset.mem_univ j)
@@ -722,8 +726,11 @@ private theorem winning_probability (n d : ℕ) [NeZero n] [NeZero d]
     (sectorCoordinate y) (sectorCoordinate y) (sector_coordinates y).1 (sector_coordinates y).1
   rw [if_pos ⟨rfl, rfl⟩] at horth
   have hzprod : z * star z = 1 := by
-    rw [Complex.star_def, RCLike.mul_conj]
-    rw [← Complex.normSq_eq_norm_sq, hz, Complex.ofReal_one]
+    calc
+      _ = (Complex.normSq z : ℂ) := by
+        rw [Complex.normSq_eq_conj_mul_self]
+        exact mul_comm _ _
+      _ = 1 := by rw [hz, Complex.ofReal_one]
   have hstate : tensorMatrix (localEncoding n d) x y * ghzDensity n d *
       tensorAdjointMatrix (localEncoding n d) x y =
       Matrix.vecMulVec (fourierVector (∑ k, x k) (sectorCoordinate y))
@@ -760,7 +767,7 @@ private theorem winning_probability (n d : ℕ) [NeZero n] [NeZero d]
       (star (fourierVector (∑ k, x k) (sectorCoordinate y)) ⬝ᵥ v) *
         (star v ⬝ᵥ fourierVector (∑ k, x k) (sectorCoordinate y)) := by
     rw [Matrix.vecMulVec_mul_vecMulVec, Matrix.trace_vecMulVec, dotProduct_smul,
-      dotProduct_comm (fourierVector (∑ k, x k) (sectorCoordinate y)) (star v)]
+      dotProduct_comm (fourierVector (∑ k, x k) (sectorCoordinate y)) (star v), smul_eq_mul]
   rw [hstate]
   change (Matrix.trace (_ * Matrix.vecMulVec
     (selectedVector r (winningOutcome x y)) (star (selectedVector r (winningOutcome x y))))).re = _
@@ -774,11 +781,14 @@ private theorem winning_probability (n d : ℕ) [NeZero n] [NeZero d]
     simp only [hhead, hlabel]
   rw [hvec]
   by_cases hy : sectorCoordinate y ∈ r
-  · rw [if_pos hy, if_pos hy, star_dotProduct, computational_dot, computational_dot,
+  · rw [if_pos hy, if_pos hy, star_dotProduct, computational_dot,
       fourier_at_point _ _ _ (sector_coordinates y).1]
     have hchar : star (ZMod.stdAddChar ((∑ k, x k) * (∑ k, x k))) *
         ZMod.stdAddChar ((∑ k, x k) * (∑ k, x k)) = 1 := by
-      rw [← AddChar.map_neg_eq_conj, ← AddChar.map_add_eq_mul, neg_add_cancel,
+      have hneg : star (ZMod.stdAddChar ((∑ k, x k) * (∑ k, x k))) =
+          ZMod.stdAddChar (-((∑ k, x k) * (∑ k, x k))) :=
+        (AddChar.map_neg_eq_conj (ZMod.stdAddChar (N := d)) _).symm
+      rw [hneg, ← AddChar.map_add_eq_mul, neg_add_cancel,
         AddChar.map_zero_eq_one]
     have hsstar : star (Real.sqrt d : ℂ) = (Real.sqrt d : ℂ) := Complex.conj_ofReal _
     have hsq : (Real.sqrt d : ℂ) * (Real.sqrt d : ℂ) = (d : ℂ) := by
@@ -787,12 +797,12 @@ private theorem winning_probability (n d : ℕ) [NeZero n] [NeZero d]
         ZMod.stdAddChar ((∑ k, x k) * (∑ k, x k))) *
         ((Real.sqrt d : ℂ)⁻¹ * ZMod.stdAddChar ((∑ k, x k) * (∑ k, x k))) =
         (d : ℂ)⁻¹ := by
-      simp only [star_mul, star_inv, hsstar]
+      simp only [star_mul, star_inv₀, hsstar]
       calc
         _ = ((Real.sqrt d : ℂ)⁻¹ * (Real.sqrt d : ℂ)⁻¹) *
             (star (ZMod.stdAddChar ((∑ k, x k) * (∑ k, x k))) *
               ZMod.stdAddChar ((∑ k, x k) * (∑ k, x k))) := by ring
-        _ = _ := by rw [hchar, mul_one, ← mul_inv_rev, hsq]
+        _ = _ := by rw [hchar, mul_one, ← _root_.mul_inv_rev, hsq]
     rw [hamp]
     simp only [← Complex.ofReal_natCast, ← Complex.ofReal_inv, Complex.ofReal_re]
   · rw [if_neg hy, if_neg hy, horth, one_mul]
