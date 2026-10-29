@@ -66,6 +66,227 @@ class HostReclaimTests(unittest.TestCase):
     def clean(self, target, delete=True):
         return cleanup.clean_candidate(target, self.cutoff, [], delete=delete, repository=self.main)
 
+    def remnant(self, name="old", blueprint=True):
+        target = self.root / (self.main.name + "-" + name)
+        (target / ".lake/build").mkdir(parents=True)
+        (target / ".lake/build/object").write_bytes(b"regenerable")
+        if blueprint:
+            source = self.main / "Blueprint/Retained.md"
+            source.parent.mkdir(exist_ok=True)
+            source.write_bytes(b"retained blueprint\x00bytes\n")
+            self.git(self.main, "add", "Blueprint")
+            self.git(self.main, "commit", "-m", "Retain blueprint")
+            (target / "Blueprint").mkdir()
+            shutil.copyfile(source, target / "Blueprint/Retained.md")
+        self.age(target)
+        return target
+
+    def clean_remnant(self, target, delete=True, **kwargs):
+        return cleanup.clean_candidate(target, self.cutoff, [], delete=delete,
+                                       repository=self.main, remnant=True, **kwargs)
+
+    def test_remnant_shape_and_unique_bytes_are_retained(self):
+        for name, relative, content, reason in (
+                ("source", "D5/Unique.lean", b"unique", "unknown_top_level"),
+                ("unknown", "notes", b"unique", "unknown_top_level"),
+                ("lake", ".lake/packages/source", b"unique", "lake_content"),
+                ("unique", "Blueprint/Unique.md", b"unique", "blueprint_unrecoverable")):
+            with self.subTest(name=name):
+                target = self.remnant(name, blueprint=False)
+                path = target / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(content)
+                self.age(target)
+                result = self.clean_remnant(target)
+                self.assertEqual(("kept", reason), (result["action"], result["reason"]), result)
+                self.assertEqual(content, path.read_bytes())
+
+    def test_remnant_git_boundaries_are_retained(self):
+        for name, boundary in (("clone", ".git/HEAD"), ("foreign", ".git"),
+                               ("nested", ".lake/build/nested/.git"),
+                               ("bare", ".lake/build/bare/HEAD")):
+            with self.subTest(name=name):
+                target = self.remnant(name, blueprint=False)
+                marker = target / boundary
+                marker.parent.mkdir(parents=True, exist_ok=True)
+                marker.write_text("gitdir: elsewhere" if name == "foreign" else "ref: refs/heads/dev")
+                if name == "bare":
+                    for entry in ("objects", "refs"):
+                        (marker.parent / entry).mkdir()
+                self.age(target)
+                result = self.clean_remnant(target)
+                self.assertEqual(("kept", "repository"), (result["action"], result["reason"]), result)
+                self.assertTrue(marker.exists())
+
+    def test_remnant_registered_overlap_is_retained(self):
+        target = self.remnant(blueprint=False)
+        for registered in (target, target / ".lake/build", self.root):
+            with self.subTest(registered=registered), \
+                 patch.object(cleanup, "registered_worktrees", return_value=[self.main, registered]):
+                result = self.clean_remnant(target)
+                self.assertEqual(("kept", "protected"), (result["action"], result["reason"]))
+        self.assertTrue(target.exists())
+
+    def test_remnant_dangling_and_blob_only_refs_do_not_certify_bytes(self):
+        target = self.remnant(blueprint=False)
+        path = target / "Blueprint/Unique.md"
+        path.parent.mkdir()
+        path.write_text("only in a dangling commit")
+        (self.main / "Blueprint").mkdir()
+        shutil.copyfile(path, self.main / "Blueprint/Unique.md")
+        baseline = self.git(self.main, "rev-parse", "HEAD")
+        self.git(self.main, "add", "Blueprint")
+        self.git(self.main, "commit", "-m", "Dangling blueprint")
+        oid = self.git(self.main, "rev-parse", "HEAD:Blueprint/Unique.md")
+        self.git(self.main, "reset", "--hard", baseline)
+        self.git(self.main, "update-ref", "refs/tags/blob-only", oid)
+        self.age(target)
+        result = self.clean_remnant(target)
+        self.assertEqual(("kept", "blueprint_unrecoverable"), (result["action"], result["reason"]), result)
+        self.assertTrue(path.exists())
+
+    def test_remnant_historical_ref_bytes_dry_run_and_delete(self):
+        target = self.remnant()
+        self.git(self.main, "branch", "retained-blueprint")
+        self.git(self.main, "rm", "Blueprint/Retained.md")
+        self.git(self.main, "commit", "-m", "Remove current blueprint")
+        dry = self.clean_remnant(target, delete=False)
+        self.assertEqual("would_remove", dry["action"], dry)
+        self.assertTrue(target.exists())
+        deleted = self.clean_remnant(target)
+        self.assertEqual("removed", deleted["action"], deleted)
+        self.assertFalse(target.exists())
+
+    def test_remnant_build_only_and_empty_directories_are_reclaimed(self):
+        for name in ("build", "empty"):
+            target = self.remnant(name, blueprint=False)
+            if name == "empty":
+                shutil.rmtree(target / ".lake")
+                self.age(target)
+            result = self.clean_remnant(target)
+            self.assertEqual("removed", result["action"], result)
+            self.assertFalse(target.exists())
+
+    def test_remnant_symlinks_special_files_recent_and_activity_are_retained(self):
+        for name in ("root-link", "internal-link", "fifo", "recent", "activity"):
+            with self.subTest(name=name):
+                target = self.remnant(name, blueprint=False)
+                if name == "root-link":
+                    link = target.with_name(target.name + "-alias")
+                    link.symlink_to(target, target_is_directory=True)
+                    target = link
+                elif name == "internal-link":
+                    (target / ".lake/build/link").symlink_to(self.main)
+                elif name == "fifo":
+                    os.mkfifo(target / ".lake/build/pipe")
+                self.age(target) if name != "root-link" else None
+                if name == "recent":
+                    os.utime(target / ".lake/build/object", (self.cutoff + 1, self.cutoff + 1))
+                protected = [target / ".lake/build"] if name == "activity" else []
+                result = cleanup.clean_candidate(target, self.cutoff, protected, delete=True,
+                                                 repository=self.main, remnant=True)
+                reason = {"root-link": "symlink", "internal-link": "symlink", "fifo": "special_file",
+                          "recent": "recent", "activity": "protected"}[name]
+                self.assertEqual(("kept", reason), (result["action"], result["reason"]), result)
+                self.assertTrue(target.exists())
+
+    def test_remnant_owner_mount_flags_and_readability_guards(self):
+        target = self.remnant(blueprint=False)
+        probe = target / ".lake/build/object"
+        lstat, scandir = Path.lstat, os.scandir
+        for guard, reason in (("owner", "not_owned"), ("mount", "mount"),
+                              ("flags", "protected_flag"), ("read", "unreadable")):
+            def altered(path):
+                info = lstat(path)
+                if path != probe:
+                    return info
+                fields = {name: getattr(info, name) for name in dir(info) if name.startswith("st_")}
+                changes = {"owner": dict(st_uid=os.getuid() + 1), "mount": dict(st_dev=info.st_dev + 1),
+                           "flags": dict(st_flags=stat.UF_IMMUTABLE), "read": {}}[guard]
+                return types.SimpleNamespace(**dict(fields, **changes))
+            def unreadable(path):
+                if guard == "read" and Path(path) == probe.parent:
+                    raise PermissionError("unreadable remnant")
+                return scandir(path)
+            with self.subTest(guard=guard), patch.object(Path, "lstat", altered), \
+                 patch.object(os, "scandir", unreadable):
+                result = self.clean_remnant(target)
+            self.assertEqual(("kept", reason), (result["action"], result["reason"]), result)
+            self.assertTrue(probe.exists())
+
+    def test_remnant_rechecks_fingerprint_activity_registration_and_refs(self):
+        for change in ("bytes", "activity", "registration", "refs"):
+            with self.subTest(change=change):
+                target = self.remnant(change)
+                registrations = cleanup.registered_worktrees
+                def fresh():
+                    if change == "bytes":
+                        (target / "Blueprint/Retained.md").write_bytes(b"unique concurrent bytes")
+                    if change == "registration":
+                        registered.return_value = [self.main, target]
+                        registered.side_effect = None
+                    if change == "refs":
+                        (self.main / "Blueprint/Retained.md").write_bytes(b"new retained version")
+                        self.git(self.main, "commit", "-am", "Change retained ref")
+                    return {target / ".lake/build"} if change == "activity" else set()
+                with patch.object(cleanup, "registered_worktrees", side_effect=registrations) as registered:
+                    result = self.clean_remnant(target, activity=fresh)
+                self.assertEqual(("kept", "changed"), (result["action"], result["reason"]), result)
+                self.assertTrue(target.exists())
+
+    def test_remnant_sweep_uses_main_inventory_and_reports_without_verbose(self):
+        target = self.remnant()
+        excluded = self.root / "unrelated-old"
+        excluded.mkdir()
+        nested = self.root / "container" / (self.main.name + "-nested")
+        nested.mkdir(parents=True)
+        lane = self.root / "arbitrary linked name"
+        self.git(self.main, "worktree", "add", "-b", "linked", lane)
+        options = cleanup.argparse.Namespace(repository=lane, base="dev", codex_home=self.root / "codex",
+            sshx_home=self.root / "sshx", tmp_root=[self.root / "tmp"], min_age_hours=24,
+            delete=False, verbose=False)
+        for delete in (False, True):
+            options.delete = delete
+            output = io.StringIO()
+            with patch.object(cleanup, "clean_worktrees", return_value=0), \
+                 patch.object(cleanup, "active_paths", return_value=set()), contextlib.redirect_stdout(output):
+                self.assertEqual(0, cleanup.run_clean(options), output.getvalue())
+            rows = [json.loads(line) for line in output.getvalue().splitlines()]
+            item = next(row for row in rows if row.get("path") == str(target))
+            self.assertEqual("worktree_remnant", item["category"])
+            self.assertEqual("removed" if delete else "would_remove", item["action"])
+            self.assertEqual(1, rows[-1]["counts"]["worktree_remnant:" + item["action"]])
+            self.assertTrue(excluded.exists())
+            self.assertTrue(nested.exists())
+            self.assertTrue(lane.exists())
+
+    def test_remnant_make_entry_from_linked_worktree_with_spaces(self):
+        target = self.remnant()
+        scripts = self.main / "tools/scripts"
+        scripts.mkdir(parents=True)
+        shutil.copyfile(ROOT / "tools/Makefile", self.main / "tools/Makefile")
+        shutil.copyfile(ROOT / "tools/scripts/host-cleanup.py", scripts / "host-cleanup.py")
+        shutil.copytree(ROOT / "tools/scripts/worktree", scripts / "worktree",
+                        ignore=shutil.ignore_patterns("__pycache__"))
+        (scripts / "clean-lanes.sh").write_text("#!/bin/bash\nexit 0\n")
+        self.git(self.main, "add", "tools")
+        self.git(self.main, "commit", "-m", "Retain production entry")
+        lane = self.root / "arbitrary linked with spaces"
+        self.git(self.main, "worktree", "add", "-b", "entry", lane)
+        environment = dict(os.environ, TMPDIR=str(self.root / "tmp"))
+        (self.root / "tmp").mkdir()
+        arguments = ["make", "--no-print-directory", "-C", str(lane / "tools"), "clean-all", "BASE=dev",
+                     "CLEAN_CODEX_HOME=" + str(self.root / "codex"),
+                     "CLEAN_SSHX_HOME=" + str(self.root / "sshx"), "CLEAN_MIN_AGE_HOURS=24"]
+        for delete in (False, True):
+            result = subprocess.run([*arguments, "FORCE=" + str(int(delete))], cwd=self.root,
+                                    env=environment, capture_output=True, text=True, timeout=60)
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            rows = [json.loads(line) for line in result.stdout.splitlines()]
+            item = next(row for row in rows if row.get("path") == str(target))
+            self.assertEqual("removed" if delete else "would_remove", item["action"], rows)
+            self.assertEqual(not delete, target.exists())
+
     def test_case_inventory_lists_every_case_without_running_git(self):
         environment = dict(os.environ, PATH="")
         result = subprocess.run([sys.executable, "-B", __file__, str(ROOT), "--list-tests"],
