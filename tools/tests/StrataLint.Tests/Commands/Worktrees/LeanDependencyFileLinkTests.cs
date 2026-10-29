@@ -198,6 +198,7 @@ public sealed partial class LeanCacheEnsureCommandTests
                     if (relative == Path.Combine("docs", "README.md"))
                     {
                         Assert.Equal(attempt > 0, File.Exists(referent));
+                        Assert.Equal("additional documentation", File.ReadAllText(Path.Combine(package, "docs/other.md")));
                         Assert.Equal("../README.md", new FileInfo(link).LinkTarget);
                     }
                     yield return entry;
