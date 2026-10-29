@@ -1,10 +1,10 @@
 /- GID: D5/S0/Tower/Tribonacci/RauzyFractal
-   generality: G
+   generality: I
    mirror-B: D5/B/S0/Tower/Tribonacci/RauzyFractal
    mirror-E: none(waiver:exact-attractor-equality)
    anchors: []
-   digest: The bounded Tribonacci window has a compact Rauzy closure and three prefix contractions.
- -/
+   utility: none
+   digest: The bounded Tribonacci window has a compact Rauzy closure and three prefix contractions. -/
 
 import D5.S0.Tower.Tribonacci.ModelSet
 import Mathlib.Topology.MetricSpace.Bounded

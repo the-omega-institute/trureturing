@@ -20,7 +20,9 @@ internal sealed class TribonacciRauzyFractalDocument : IScribeDocumentDefinition
                     DescribeId.Create("tribonacci-rauzy-closure"),
                     DeclarationHandle.Create("D5/S0/Tower/Tribonacci/RauzyFractal.rauzyFractal"),
                     H("Rauzy closure"), StatementSource.WithoutFormula(),
-                    AssessedProvenance.FromRepo(), Blocks(), DescribeRole.Definition),
+                    AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(
+                        "The closure of the finite Tribonacci internal window in the complex "
+                        + "internal coordinate is the Rauzy fractal set."))), DescribeRole.Definition),
                 Describe.Lean(
                     DescribeId.Create("tribonacci-prefix-contractions"),
                     DeclarationHandle.Create("D5/S0/Tower/Tribonacci/RauzyFractal.zeroPrefixMap"),
