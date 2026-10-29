@@ -2294,6 +2294,39 @@ selected points on another branch. All centre definitions retain the
 $240$-bit outward enclosure prescription of Section 7.2. The following
 new response bounds use Definition 8.3.1's $160$-bit prescription.
 
+For all source-circuit enclosures in this subsection, fix the following
+expression convention. Use the first expression
+$B_{\mathrm{coef}}=6/T-2/U$ in (7.1.1), not its algebraically equal
+single quotient. Every displayed rational constant, such as $24/5$,
+$27/5$ or $1/8$, is one rational input. Other quotients mean multiplication
+of the numerator by the reciprocal of the denominator. Evaluate the
+named quantities $j,n,T,U$ by (6.1.4), then the displayed expressions
+(7.1.1)–(7.1.5), with powers before products and products before sums;
+within either level use the displayed left-to-right order. No terms
+are collected, cancelled or replaced by an algebraically equivalent
+expression. Scalar inputs to the two-coefficient algebra are $(u,0)$.
+In its product use exactly
+$(AC+(tB)D,AD+BC)$; in its inverse form
+$L=(A A)-t(B B)$, then $(A L^{-1},(-B)L^{-1})$.
+All operations in these scalar expressions are rounded outward at the
+specified precision. Negation reverses endpoints exactly.
+
+Differentiate each scalar operation by (7.2.4) in its displayed order.
+Thus the product derivative is $\dot u\,v+u\,\dot v$, and the reciprocal
+derivative is $((-\dot u)u^{-1})u^{-1}$, with the same enclosed
+reciprocal at both occurrences. Differentiate the explicit factor $t$
+in the pair operations as well. Matrix products use increasing-index
+sums starting at zero. In Gauss–Jordan elimination retain the old pivot
+and the old elimination factor for each entire row operation; multiply
+by the enclosed pivot reciprocal to normalize every row entry.
+These conventions also apply at $240$ bits when determining the exact
+rounded centres and preconditioners of (7.2.3). Norm sums formed from
+absolute interval endpoints and rational weights, and the final scalar
+quotient in $D_i$, are exact rational operations. Lemma 8.5.3 gives
+sufficient continuation bounds with this convention, replacing the
+tight upper-bound column of the first table in Lemma 7.2.2 wherever
+that table is used here.
+
 Evaluate precisely the rational circuit (7.1.1)–(7.1.5) in the algebra
 $\epsilon^2=t$, with $r=R+\epsilon$, $b=B+k\epsilon$,
 $e=E+\ell\epsilon$. Set
@@ -2313,8 +2346,9 @@ b_{f,i}=f(c_i,t_i)-u_{f,i}G(c_i,t_i).
 \tag{8.5.2}
 $$
 
-Every $J_i$ is invertible already by Lemma 7.2.2 and the derivative argument in
-(7.3.5)–(7.3.8), applied also at the tube centre.
+Every $J_i$ is invertible by the ordered pivot bounds of Lemma 8.5.2;
+alternatively the sufficient contraction bounds of Lemma 8.5.3 and
+(7.3.5)–(7.3.8) imply invertibility also at the tube centre.
 
 Here are finite enclosure definitions for these rational quantities and
 the needed derivatives. Differentiate the six-variable scalar circuit
@@ -2376,10 +2410,10 @@ For every $0\le i<128$, the intervals of (8.5.3) obey
 $$
 \begin{aligned}
 \bigcup_i\mathcal V_{f_p,i}
- &\subseteq[-10892040442283,-10890360243799]/10^{12}
+ &\subseteq[-10892040442289,-10890360243799]/10^{12}
  \subset(-10.892041,-10.890360),\\
 \bigcup_i\mathcal V_{f_v,i}
- &\subseteq[-8154581108751,-8153505324970]/10^{12}
+ &\subseteq[-8154581108770,-8153505324970]/10^{12}
  \subset(-8.154582,-8.153505).
 \end{aligned}
 \tag{8.5.4}
@@ -2401,7 +2435,8 @@ integer comparisons; in particular they evaluate all $128$ cells,
 not just their end cells.
 
 All source denominators are guarded before these evaluations.
-Lemma 7.2.2 gives strict source bounds on every $X_i\times T_i$:
+The source bounds (7.2.7), with the sufficient continuation bounds of
+Lemma 8.5.3, apply on every $X_i\times T_i$:
 at both scalar evaluations $\epsilon=\pm\sqrt t$, one has
 $0<r<1$, $b>0$, and $j,n,T,U>0$. In the two-coefficient algebra the
 denominator of an inverse $(A,B)^{-1}$ is $A^2-tB^2$, the product of
@@ -2413,8 +2448,10 @@ Consequently the differentiated circuit has no unguarded inverse.
 No division by $h$, $\Lambda$, a drift, a gain sample, a leading gain
 coefficient or a gain-root difference occurs. ∎
 
-Proof of the graph assertion in Theorem 8.1.2. For $t\in T_i$ the
-published graph satisfies $y(t)\in X_i$ and $G(y(t),t)=0$. Put
+Proof of the graph assertion in Theorem 8.1.2. The sufficient bounds of
+Lemma 8.5.3 justify the contraction and seam implications of Section 7.3
+for the same tubes and graph. For $t\in T_i$ that graph satisfies
+$y(t)\in X_i$ and $G(y(t),t)=0$. Put
 $F=f-u_{f,i}G$ for either response $f$. At the centre,
 $F(c_i,t_i)=b_{f,i}$, while at that exact graph point
 $F(y(t),t)=f(y(t),t)$. Integrate the derivative of $F$ along the straight
@@ -2437,6 +2474,101 @@ $[0,1/250]$ onto $[0,1/62500]$, the bound covers the entire published
 parameter interval, including seams and both attachments. The scalar
 source denominators stay positive at the singular passage, so the
 argument applies there without a chart change. ∎
+
+**Lemma 8.5.3 (Replacement continuation bounds on the original tubes).**
+Use the $240$-bit source-circuit convention of Definition 8.5.1 on the
+same centres, preconditioners, boxes and parameter cells of (7.2.3).
+Write $q_i^\sharp,\beta_i^\sharp,D_i^\sharp,\widetilde q_i^\sharp$ for
+the resulting rational bounds defined by (7.2.5)–(7.2.6). Then
+
+| Quantity | Rational upper bound | Sufficient strict bound |
+|---|---:|---:|
+| $\max_i q_i^\sharp$ | $440377709788/10^{12}$ | $441/1000$ |
+| $\max_i\beta_i^\sharp$ | $263610681681/10^{12}$ | $264/1000$ |
+| $\max_i\widetilde q_i^\sharp$ | $238818207545/10^{12}$ | $239/1000$ |
+| $\max_i\rho_BD_i^\sharp$ | $2475331406433/10^{12}$ | $5/2$ |
+| $\max_i\rho_kD_i^\sharp$ | $24753314064322/10^{12}$ | $25$ |
+
+All source and matrix inverses in these bounds are defined. In
+particular $q_i^\sharp+\beta_i^\sharp<141/200<1$ on every cell.
+The first table of Lemma 7.2.2 has smaller tight upper bounds for
+$\beta_i$, $\rho_BD_i$ and $\rho_kD_i$ that are not bounds for this
+expression convention. In fact its last cell satisfies
+
+$$
+\begin{aligned}
+\frac{263610681680245}{10^{15}}
+ &<\beta_{127}^\sharp<
+ \frac{263610681680246}{10^{15}},\\
+\frac{2475331406432184}{10^{15}}
+ &<\rho_BD_{127}^\sharp<
+ \frac{2475331406432185}{10^{15}},\qquad
+\rho_kD_{127}^\sharp=10\rho_BD_{127}^\sharp.
+\end{aligned}
+\tag{8.5.6}
+$$
+
+The table in this lemma replaces that earlier tight upper-bound column
+for the uses in Section 8. Its sufficient strict bounds preserve the
+same whole-interval graph, the attachments and the selected singular
+passage of Theorem 7.3.1.
+
+Proof. Starting at the exact seed (7.2.2), enclose each of the five
+successive Newton corrections per cell at $240$ bits, with the ordered
+matrix inverse of Definition 8.5.1. Both endpoints of every updated
+coordinate give the same integer under (7.2.1). The same is true for
+every entry of the rounded inverse defining $C_i$. Thus these finite
+comparisons determine exactly the original $640$ rounded corrections
+and all $128$ preconditioners, rather than alternate roots or centres.
+
+For each of the $128$ product boxes evaluate $D_yG,G_t$ by the stated
+scalar operations and derivative rules. Evaluate $G(c_i,t_i)$ and
+$G_t(c_i,T_i)$ separately for the residual bound. Multiply each of
+these enclosures by the fixed rational $C_i$, take absolute endpoints,
+and form the exact weighted row sums of (7.2.5). The reciprocal in
+$D_i^\sharp$ is formed only after $q_i^\sharp<1$ is established.
+For each of the $127$ seams form the rational midpoint and enlarged
+radii (7.2.6), and repeat its weighted derivative comparison with
+$C_i$. With componentwise interval endpoints and increasing-index
+matrix sums, the five maxima, multiplied by $10^{15}$, lie strictly
+between the respective integer pairs
+
+$$
+\begin{gathered}
+(440377709787541,440377709787542),\qquad
+(263610681680245,263610681680246),\\
+(238818207544966,238818207544967),\qquad
+(2475331406432184,2475331406432185),\\
+(24753314064321844,24753314064321845).
+\end{gathered}
+\tag{8.5.7}
+$$
+
+These are finite rational comparisons: interval products use the four
+endpoint products, each dyadic rounding is characterized by adjacent
+integers, and the norm sums and positive scalar quotient are exact.
+They give the displayed upper-bound table by outward rounding to
+multiples of $10^{-12}$. The same computation at $i=127$ gives
+(8.5.6), whose first two lower endpoints strictly exceed the earlier
+claimed bounds $263610622981/10^{12}$ and $247533043797/10^{11}$.
+Since $\rho_k=10\rho_B$, the earlier third bound fails as well.
+All source-pair reciprocal denominators are positive on the enclosed
+boxes; all matrix pivots exclude zero before normalization.
+
+For applicability, the contraction proof (7.3.5)–(7.3.7) uses only
+$q<1$ and $q+\beta<1$, and the seam argument (7.3.9) uses only
+$\widetilde q<1$. The new bounds supply these inequalities on every
+original tube and every seam. Thus they give a unique zero in each
+$X_i$ at each $t\in T_i$, and the neighboring zeros coincide on every
+seam by the same convex-box argument. The real zero equations and the
+exact rational recurrence (7.2.3) are unchanged, so this is the same
+graph, including $t=0$. Its Jacobian is invertible throughout the
+product boxes by the same Neumann-series argument, and its derivative
+bounds remain $|B_t|<5/2$, $|k_t|<25$. Therefore the attachment
+identifications of Section 7.4 and the crossing argument of Section 7.5
+retain their hypotheses, using (7.2.7) for the same source bounds and
+their stated exact identities and fixed-parameter inclusions. No new
+source restriction or parameter interval is introduced. ∎
 
 ### 8.6 The independent-pair consequence and mathematical scope
 
