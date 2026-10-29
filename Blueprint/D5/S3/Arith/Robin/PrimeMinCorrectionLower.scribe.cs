@@ -45,5 +45,5 @@ internal sealed class PrimeMinCorrectionLowerDocument : IScribeDocumentDefinitio
                         + "inventory equality, record existence, RH hypothesis or signed pure-prime "
                         + "bound is introduced. Control of that signed quantity and the full "
                         + "RH/Robin/5040 goal remain separate obligations."))),
-                DescribeRole.Theorem)))));
+                DescribeRole.Theorem))));
 }

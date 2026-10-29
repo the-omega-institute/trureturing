@@ -82,8 +82,8 @@ private theorem shell_scale {d e : ℝ} (hd : 0 < d) (he : 0 < e) :
     dsimp
     rw [mul_pow, Real.sq_sqrt (by linarith : 0 ≤ X)]
     field_simp
-    <;> rw [Real.sq_sqrt (by linarith : 0 ≤ X)]
-    <;> ring
+    rw [Real.sq_sqrt (by linarith : 0 ≤ X)]
+    ring
 
 
 private def shellLower (a b r : ℝ) (N : ℕ) (X : ℝ) : ℝ :=
@@ -188,7 +188,8 @@ private theorem shell_lower_scale {a b r : ℝ} (ha : 0 < a) (hb : 0 < b)
     have hs0 : Real.sqrt X ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by linarith))
     field_simp [ne_of_gt (Real.log_pos hX), ne_of_gt (show 0 < X by linarith), hs0]
     rw [hs]
-    ring  have hsum := tendsto_finsetSum (range N) (fun k _ =>
+    ring
+  have hsum := tendsto_finsetSum (range N) (fun k _ =>
     shell_scale (mul_pos hb (pow_pos hr (k + 1))) (mul_pos hb (pow_pos hr k)))
   convert hhead.add hsum using 1
   ext X
@@ -248,7 +249,6 @@ private theorem shell_parameters {ε : ℝ} (hε : 0 < ε) :
         (2 / (r * b) * (1 - r⁻¹)) * (r⁻¹) ^ k := by
       rw [pow_succ, inv_pow]
       field_simp
-      <;> ring
     simp_rw [hterm]
     rw [← mul_sum]
     calc
@@ -261,7 +261,7 @@ private theorem shell_parameters {ε : ℝ} (hε : 0 < ε) :
   have hrloss : 2 * s * (r - 1) = e / 8 := by
     dsimp [r]
     field_simp
-    <;> ring
+    ring
   have hcube : 1 ≤ r ^ 2 * (2 * r - 3) + 2 := by
     have hnon : 0 ≤ (r - 1) ^ 2 * (2 * r + 1) := by positivity
     nlinarith only [hnon]
