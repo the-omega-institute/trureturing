@@ -14,13 +14,13 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape
 
 private theorem half_nonzero : realFlow (1 / 2 : ℝ) ≠ 0 := by
   intro h
-  have hc := congrArg (fun x : DyadicSolenoid => x.1 0) h
-  change (((1 / 2 : ℝ) : AddCircle (1 : ℝ))) = 0 at hc
+  have hc : (((1 / 2 : ℝ) : AddCircle (1 : ℝ))) = 0 := by
+    simpa [realFlow] using congrArg (fun x : DyadicSolenoid => x.1 0) h
   have hz := (AddCircle.coe_eq_zero_iff_of_mem_Ico
     (show (1 / 2 : ℝ) ∈ Set.Ico 0 1 by constructor <;> norm_num)).mp hc
   norm_num at hz
 
-def signature : DependentFamily.Signature where
+abbrev signature : DependentFamily.Signature where
   Params := Unit
   State := fun _ => ℝ
   Role := Unit
@@ -69,7 +69,7 @@ def familyRegistration : DependentFamily.Registration arena sourceScope where
       exact Empty.elim i
   dependence := by
     intro i
-    refine ⟨(), (1 / 2 : ℝ), 0, ?_⟩
+    refine ⟨(), (1 / 2 : ℝ), (0 : ℝ), ?_⟩
     change realFlow (1 / 2 : ℝ) ≠ realFlow 0
     simpa only [map_zero] using half_nonzero
 

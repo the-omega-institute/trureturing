@@ -21,7 +21,7 @@ internal sealed class DyadicPathComponentDocument : IScribeDocumentDefinition
                 StatementSource.FromAuthor(Disp(Seq(
                     Forall, Sp, F.Id("x"), Comma, Sp, F.Id("y"), Sp, InMacro, Sp, F.Id("S2"), Comma, Esc,
                     Operatorname, Grp(F.Id("Joined")), Open, F.Id("x"), Comma, Sp, F.Id("y"), Close,
-                    Sp, Iff, Sp, Exists, F.Id("!"), Sp, F.Id("t"), Sp, InMacro, Sp,
+                    Sp, Iff, Sp, Exists, Bang, Sp, F.Id("t"), Sp, InMacro, Sp,
                     Mathbb, Grp(F.Id("R")), Comma, Esc,
                     F.Id("y"), Sp, Eq, Sp, F.Id("j"), Open, F.Id("t"), Close, Sp, Plus, Sp, F.Id("x")))),
                 AssessedProvenance.FromRepo(),

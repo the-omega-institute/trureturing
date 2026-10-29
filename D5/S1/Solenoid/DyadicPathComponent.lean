@@ -11,19 +11,20 @@ import D5.S3.ConceptDynamics.Coding.PrimitiveLifts.ArchimedeanTimeRigidity
 import Mathlib.Topology.Covering.AddCircle
 import Mathlib.Topology.Homotopy.Lifting
 
+/-! Covering lifts identify the paths of the inherited dyadic inverse limit. -/
+
 noncomputable section
 
 namespace D5.S1.Solenoid.DyadicSolenoid
 
 private theorem flow_injective : Function.Injective realFlow := by
-  rcases D5.S3.ConceptDynamics.Coding.PrimitiveLifts.ArchimedeanTimeRigidity.
-      continuous_addHom_injective_or_eq_zero 2 (by norm_num)
+  rcases D5.S3.ConceptDynamics.Coding.PrimitiveLifts.ArchimedeanTimeRigidity.continuous_addHom_injective_or_eq_zero 2 (by norm_num)
       dyadic_time_separation.2.2.2.2.2.1 realFlow dyadic_time_separation.2.2.1 with h | h
   · exact h
   · exfalso
     have he := DFunLike.congr_fun h (1 / 2 : ℝ)
-    have hc := congrArg (fun x : DyadicSolenoid => x.1 0) he
-    change (((1 / 2 : ℝ) : AddCircle (1 : ℝ))) = 0 at hc
+    have hc : (((1 / 2 : ℝ) : AddCircle (1 : ℝ))) = 0 := by
+      simpa [realFlow] using congrArg (fun x : DyadicSolenoid => x.1 0) he
     have hz := (AddCircle.coe_eq_zero_iff_of_mem_Ico
       (show (1 / 2 : ℝ) ∈ Set.Ico 0 1 by constructor <;> norm_num)).mp hc
     norm_num at hz
@@ -53,7 +54,7 @@ theorem dyadic_path_orbit_classification (x y : DyadicSolenoid) :
       (by change (δ 0).1 0 = _; simp [hδ0])
     have hcoord (n : ℕ) (u : unitInterval) :
         (δ u).1 n = ((a u / (2 : ℝ)^n : ℝ) : AddCircle (1 : ℝ)) := by
-      letI : NeZero (2 ^ n : ℕ) := ⟨pow_ne_zero _ (by norm_num)⟩
+      have : NeZero (2 ^ n : ℕ) := ⟨pow_ne_zero _ (by norm_num)⟩
       have hcover := (AddCircle.isAddQuotientCoveringMap_nsmul_of_ne_zero
         (1 : ℝ) (2 ^ n)).isCoveringMap
       have heq := hcover.eq_of_comp_eq
