@@ -284,7 +284,7 @@ def thetaScaleAudit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℝ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Arith.Robin.EulerLayerRootCorrection
     definition := none
@@ -316,7 +316,7 @@ def logScaleAudit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some ℝ
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Arith.Robin.EulerLayerRootCorrection
     definition := none
