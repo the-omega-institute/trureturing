@@ -1,6 +1,5 @@
 """Atomic remnant isolation and ordinary concurrent writer contracts."""
 
-import errno
 import json
 import os
 from pathlib import Path
@@ -134,20 +133,23 @@ handle.flush()
 os.fsync(handle.fileno())
 handle.close()
 """
-                process = subprocess.Popen([sys.executable, "-u", "-c", program,
-                                            str((target / relative).relative_to(self.root)), kind], cwd=self.root,
-                                           stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+                process = None
+                def activity():
+                    nonlocal process
+                    observed = cleanup.active_paths(self.root / "codex", scopes=[self.root])
+                    if process is None:
+                        process = subprocess.Popen([sys.executable, "-u", "-c", program,
+                                                    str((target / relative).relative_to(self.root)), kind], cwd=self.root,
+                                                   stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+                        self.assertEqual(b"ready\n", process.stdout.readline())
+                    return observed
                 try:
-                    self.assertEqual(b"ready\n", process.stdout.readline())
-                    def activity():
-                        return cleanup.active_paths(self.root / "codex", scopes=[self.root])
-                    # The sweep's initial snapshot predates this ordinary open/cwd.
                     result = self.clean_remnant(target, activity=activity)
                     process.communicate(b"save\n", timeout=10)
                     self.assertEqual("kept", result["action"], result)
                     self.assertIn(b'unique saved through retained handle', (target / relative).read_bytes())
                 finally:
-                    if process.poll() is None:
+                    if process is not None and process.poll() is None:
                         process.communicate(timeout=10)
 
     def test_post_isolation_failures_restore_original_name(self):

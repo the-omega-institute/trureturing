@@ -325,7 +325,7 @@ class HostReclaimTests(unittest.TestCase):
         path = target / "Blueprint/Retained.md"
         unique = b"unique ordinary concurrent save\n"
         program = ("import pathlib, sys; print('ready', flush=True); "
-                   "sys.stdin.readline(); pathlib.Path(sys.argv[1]).write_bytes(" + repr(unique) + "); "
+                   "pathlib.Path(sys.stdin.readline().rstrip(\"\\n\")).write_bytes(" + repr(unique) + "); "
                    "print('saved', flush=True)")
         environment = dict(os.environ, CLEAN_TMP_ROOT=str(self.root / "tmp"),
                            CODEX_HOME=str(self.root / "codex"), SSHX_HOME=str(self.root / "sshx"))
@@ -340,10 +340,12 @@ class HostReclaimTests(unittest.TestCase):
             if arguments[-2:] == ["cat-file", "--batch"]:
                 reads += 1
                 if reads == 2:
-                    process.stdin.write(b"save\n")
+                    isolated = next(target.parent.glob(target.name + "-cleanup-*"))
+                    current = isolated / path.relative_to(target)
+                    process.stdin.write(os.fsencode(str(current.relative_to(self.root))) + b"\n")
                     process.stdin.flush()
                     self.assertEqual(b"saved\n", process.stdout.readline())
-                    self.assertGreater(path.stat().st_mtime, self.cutoff)
+                    self.assertGreater(current.stat().st_mtime, self.cutoff)
                     oid = run(["git", "-C", str(self.main), "hash-object", "--stdin"],
                               input=unique, capture_output=True, check=True).stdout.strip()
                     self.assertNotEqual(0, run(["git", "-C", str(self.main), "cat-file", "-e", oid],
@@ -377,10 +379,12 @@ class HostReclaimTests(unittest.TestCase):
                     if arguments[-2:] == ["cat-file", "--batch"]:
                         reads += 1
                         if reads == 2:
+                            isolated = next(target.parent.glob(target.name + "-cleanup-*"))
+                            current = isolated / path.relative_to(target)
                             if change == "content":
-                                path.write_bytes(b"ordinary concurrent build save")
+                                current.write_bytes(b"ordinary concurrent build save")
                             else:
-                                path.chmod(path.stat().st_mode ^ stat.S_IXUSR)
+                                current.chmod(current.stat().st_mode ^ stat.S_IXUSR)
                     return result
                 with patch.object(cleanup.subprocess, "run", side_effect=raced):
                     result = self.clean_remnant(target)

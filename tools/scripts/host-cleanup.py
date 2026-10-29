@@ -4,6 +4,8 @@
 import argparse
 from collections import Counter
 from contextlib import ExitStack
+import ctypes
+import errno
 import fcntl
 import hashlib
 import json
@@ -18,6 +20,7 @@ import subprocess
 import sys
 import tempfile
 import time
+import uuid
 
 REPOSITORY = Path(__file__).resolve().parents[2]
 # BSD file flags by which the owner or the system marks an entry as not to be removed or changed.
@@ -222,7 +225,7 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, re
             return dict(reason="recent")
         digest.update(os.fsencode(str(entry.relative_to(path))))
         digest.update(str((info.st_dev, info.st_ino, info.st_mode, info.st_size,
-                           info.st_mtime_ns, info.st_ctime_ns)).encode())
+                           info.st_mtime_ns, None if remnant and entry == path else info.st_ctime_ns)).encode())
         if stat.S_ISREG(info.st_mode):
             apparent_bytes += info.st_size
             if remnant:
@@ -251,7 +254,7 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, re
                 if entry == path / ".lake" and set(names) - {"build"}:
                     return dict(reason="lake_content")
             if reclaim and entry.name == ".lake":
-                lakes.append(str(entry))
+                lakes.append(str(entry.relative_to(path)) if remnant else str(entry))
             pending.extend(entry / name for name in names)
     if shape_reason:
         return dict(reason=shape_reason)
@@ -278,11 +281,31 @@ def remove_tree(path):
     shutil.rmtree(path)
 
 
+def rename_exclusive(source, destination):
+    """Atomically move a sibling without replacing any destination entry."""
+    native = ctypes.CDLL(None, use_errno=True)
+    if sys.platform == "darwin" and hasattr(native, "renamex_np"):
+        rename = native.renamex_np
+        rename.argtypes = (ctypes.c_char_p, ctypes.c_char_p, ctypes.c_uint)
+        arguments = (os.fsencode(source), os.fsencode(destination), 4)  # RENAME_EXCL
+    elif sys.platform.startswith("linux") and hasattr(native, "renameat2"):
+        rename = native.renameat2
+        rename.argtypes = (ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p, ctypes.c_uint)
+        arguments = (-100, os.fsencode(source), -100, os.fsencode(destination), 1)  # AT_FDCWD, RENAME_NOREPLACE
+    else:
+        raise OSError(errno.ENOTSUP, "exclusive_rename_unavailable")
+    rename.restype = ctypes.c_int
+    if rename(*arguments) != 0:
+        error = ctypes.get_errno()
+        raise OSError(error, os.strerror(error), str(destination))
+
+
 def clean_candidate(path, cutoff, protected, delete=False, repository=None, activity=None,
                     reclaim=True, refresh_activity=False, remnant=False, recovery=None):
     path = Path(path).absolute()
     result = dict(path=str(path), action="kept", reason=None, apparent_bytes=0)
     removal_started = False
+    original, isolated = path, None
     owned_recovery = None
     try:
         kwargs = {} if repository is None else {"repository": repository}
@@ -292,8 +315,8 @@ def clean_candidate(path, cutoff, protected, delete=False, repository=None, acti
             kwargs.update(remnant=True, recovery=recovery)
         if not reclaim:
             kwargs["reclaim"] = False
-        def observe(protection):
-            return inspect_candidate(path, cutoff, protection, **kwargs)
+        def observe(protection, **options):
+            return inspect_candidate(path, cutoff, protection, **kwargs, **options)
         before = observe(protected)
         result.update({key: before[key] for key in ("reason", "detail", "apparent_bytes") if key in before})
         if before["reason"] is not None:
@@ -304,12 +327,24 @@ def clean_candidate(path, cutoff, protected, delete=False, repository=None, acti
         with ExitStack() as stack:
             for lake in before.get("lakes", []):
                 _, release = worktree_modules()
-                stack.enter_context(release.cache_guard(Path(lake).parent))
+                lake_path = path / lake if remnant else Path(lake)
+                stack.enter_context(release.cache_guard(lake_path.parent))
             refreshed = ProtectedPaths(activity()) if activity and (repository is not None or refresh_activity) else protected
-            after = observe(refreshed)
+            after = observe(refreshed, verify_recovery=False) if remnant else observe(refreshed)
             if after != before:
                 result["reason"] = "changed"
                 return result
+            if remnant:
+                destination = path.with_name(path.name + "-cleanup-" + uuid.uuid4().hex)
+                rename_exclusive(path, destination)
+                isolated = path = destination
+                # Original-path opens are now closed off; existing handles and cwd
+                # resolve to the isolated tree in the fresh activity observation.
+                refreshed = ProtectedPaths(activity()) if activity else protected
+                after = observe(refreshed)
+                if after != before:
+                    result["reason"] = "changed"
+                    return result
             removal_started = True
             if path.is_dir():
                 remove_tree(path)
@@ -332,6 +367,13 @@ def clean_candidate(path, cutoff, protected, delete=False, repository=None, acti
             raise
         result.update(action="kept", reason="recovery_unverifiable", detail=str(error))
     finally:
+        if isolated is not None and result["action"] != "removed":
+            try:
+                rename_exclusive(isolated, original)
+            except OSError as error:
+                result.update(retained_path=str(isolated), retention_reason=result["reason"],
+                              reason="restore_destination_exists" if isinstance(error, FileExistsError)
+                              else "restore_failed", restore_detail=str(error))
         if owned_recovery is not None:
             owned_recovery.close()
     return result
