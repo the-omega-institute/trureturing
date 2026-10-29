@@ -138,18 +138,17 @@ private lemma root_rho_square : rootRho * rootRho = rho := by
   have hs5 := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
   change r * r = state
   ext ⟨a, b⟩ ⟨c, d⟩
+  simp only [Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_succ]
   fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
-    norm_num [r, state, Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_succ] <;>
-    simp only [← Complex.ofReal_mul, ← Complex.ofReal_div, ← Complex.ofReal_add,
-      ← Complex.ofReal_inv, ← Complex.ofReal_neg, Complex.ofReal_inj] <;> field_simp <;> nlinarith
+    norm_num [r, state] <;>
+    norm_cast <;> field_simp <;> nlinarith
 
 private lemma rho_density : IsDensity rho := by
   constructor
   · have hp := Matrix.posSemidef_conjTranspose_mul_self rootRho
     rw [root_rho_positive.isHermitian.eq, root_rho_square] at hp
     exact hp
-  ·
-    let d : Matrix (Fin 2 × Fin 3) (Fin 2 × Fin 3) ℂ :=
+  · let d : Matrix (Fin 2 × Fin 3) (Fin 2 × Fin 3) ℂ :=
       fun p q =>
         if p.2 = 2 then
           if q.2 = 2 then (if p.1 = q.1 then 1 / 4 else 3 / 17) else 0
@@ -228,10 +227,10 @@ private lemma root_tau_square : rootTau * rootTau = tau := by
   have hs5 := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
   change r * r = state
   ext a c
+  simp only [Matrix.mul_apply, Fin.sum_univ_succ]
   fin_cases a <;> fin_cases c <;>
-    norm_num [r, state, Matrix.mul_apply, Fin.sum_univ_succ] <;>
-    simp only [← Complex.ofReal_mul, ← Complex.ofReal_div, ← Complex.ofReal_add,
-      ← Complex.ofReal_neg, Complex.ofReal_inj] <;> field_simp <;> nlinarith
+    norm_num [r, state] <;>
+    norm_cast <;> field_simp <;> nlinarith
 
 private lemma root_beta_positive : rootBeta.PosSemidef := by
   let r : Matrix (Fin 3) (Fin 3) ℂ :=
@@ -278,10 +277,10 @@ private lemma root_beta_square : rootBeta * rootBeta = beta := by
   have hs5 := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
   change r * r = state
   ext b d
+  simp only [Matrix.mul_apply, Fin.sum_univ_succ]
   fin_cases b <;> fin_cases d <;>
-    norm_num [r, state, Matrix.mul_apply, Fin.sum_univ_succ] <;>
-    simp only [← Complex.ofReal_mul, ← Complex.ofReal_div, ← Complex.ofReal_add,
-      ← Complex.ofReal_inv, ← Complex.ofReal_neg, Complex.ofReal_inj] <;> field_simp <;> nlinarith
+    norm_num [r, state] <;>
+    norm_cast <;> field_simp <;> nlinarith
 
 private lemma sqrt_rho : CFC.sqrt rho = rootRho := by
   exact (CFC.sqrt_eq_iff rho rootRho rho_density.1.nonneg
@@ -299,7 +298,9 @@ private lemma sqrt_beta : CFC.sqrt beta = rootBeta := by
 
 private lemma value_rho :
     1 - skewCoherence rho = (25 / 34 + (1 / 2 + Real.sqrt 145 / 34)) / 2 := by
-  rw [coherence_complement, sqrt_rho]
+  have he := congrArg (fun a : Matrix (Fin 2 × Fin 3) (Fin 2 × Fin 3) ℂ =>
+    ∑ k, (a k k).re ^ 2) sqrt_rho
+  refine (coherence_complement rho).trans (he.trans ?_)
   let r : Matrix (Fin 2 × Fin 3) (Fin 2 × Fin 3) ℂ :=
     fun p q => (((if p.2 = 2 then
       if q.2 = 2 then
@@ -328,7 +329,9 @@ private lemma value_rho :
 
 private lemma value_tau :
     1 - skewCoherence tau = 1 / 2 + Real.sqrt 145 / 34 := by
-  rw [coherence_complement, sqrt_tau]
+  have he := congrArg (fun a : Matrix (Fin 2) (Fin 2) ℂ =>
+    ∑ k, (a k k).re ^ 2) sqrt_tau
+  refine (coherence_complement tau).trans (he.trans ?_)
   let r : Matrix (Fin 2) (Fin 2) ℂ :=
     fun a c => (((Real.sqrt 29 +
       (if a = c then Real.sqrt 5 else -Real.sqrt 5)) /
@@ -352,7 +355,9 @@ private lemma value_tau :
 
 private lemma value_beta :
     1 - skewCoherence beta = ((1 / 2 + Real.sqrt 145 / 34) + 1) / 2 := by
-  rw [coherence_complement, sqrt_beta]
+  have he := congrArg (fun a : Matrix (Fin 3) (Fin 3) ℂ =>
+    ∑ k, (a k k).re ^ 2) sqrt_beta
+  refine (coherence_complement beta).trans (he.trans ?_)
   let r : Matrix (Fin 3) (Fin 3) ℂ :=
     fun b d => ((if b = 2 then (if d = 2 then 1 / Real.sqrt 2 else 0)
       else if d = 2 then 0
@@ -379,7 +384,9 @@ private lemma violation_gap :
     (1 - skewCoherence rho) -
       (1 - skewCoherence tau) * (1 - skewCoherence beta) =
         (208 - 17 * Real.sqrt 145) / 1156 := by
-  rw [value_rho, value_tau, value_beta]
+  have he := congrArg₂ (fun a b : ℝ => a - b) value_rho
+    (congrArg₂ (fun a b : ℝ => a * b) value_tau value_beta)
+  refine he.trans ?_
   have hs := Real.sq_sqrt (show (0 : ℝ) ≤ 145 by norm_num)
   nlinarith
 
@@ -388,8 +395,8 @@ private lemma strict_violation :
   have hs := Real.sq_sqrt (show (0 : ℝ) ≤ 145 by norm_num)
   have hn := Real.sqrt_nonneg (145 : ℝ)
   have hlt : 17 * Real.sqrt 145 < 208 := by nlinarith
-  have hg := violation_gap
-  linarith
+  have hpos : 0 < (208 - 17 * Real.sqrt 145) / 1156 := by linarith
+  exact sub_pos.mp (lt_of_lt_of_eq hpos violation_gap.symm)
 
 /-- The registered two by three mixed state refutes the conjecture. -/
 theorem result : ¬ claim := by
