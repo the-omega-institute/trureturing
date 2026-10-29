@@ -44,7 +44,7 @@ The permutation finRotate N cyclically rotates the qubit positions. The coeffici
 
 **Theorem 1.4 (Tensor products of diagonal matrices).**
 
-$$\forall (iota: \operatorname{Type}\left(\right)), (\forall (f: \operatorname{Fintype}\left(iota\right)), (\forall (e: \operatorname{DecidableEq}\left(iota\right)), (\forall (d: iota \to \left(\operatorname{Fin}\left(4\right) \to \mathbb{C}\right)), (\operatorname{productMap}\left(\lambda (k: iota) \mapsto (\operatorname{Fin}\left(4\right)), \lambda (k: iota) \mapsto (\operatorname{Matrix.diagonal}\left(d\left(k\right)\right))\right) = \operatorname{Matrix.diagonal}\left(\lambda (a: iota \to \operatorname{Fin}\left(4\right)) \mapsto (\prod_{(k: iota)} (d\left(k, a\left(k\right)\right)))\right)))))$$
+$$\forall (iota: \operatorname{Type}\left(\right)), ((\operatorname{Fintype}\left(iota\right)) \to ((\operatorname{DecidableEq}\left(iota\right)) \to (\forall (d: iota \to \left(\operatorname{Fin}\left(4\right) \to \mathbb{C}\right)), (\operatorname{productMap}\left(\operatorname{Function.const}\left(iota, \operatorname{Fin}\left(4\right)\right), \lambda (k: iota) \mapsto (\operatorname{Matrix.diagonal}\left(d\left(k\right)\right))\right) = \operatorname{Matrix.diagonal}\left(\lambda (a: iota \to \operatorname{Fin}\left(4\right)) \mapsto (\prod_{(k: iota)} (d\left(k, a\left(k\right)\right)))\right)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/MarginalApproximationWorstFidelity.productMatrix_diagonal` (`✓ std3`). ∎
 
