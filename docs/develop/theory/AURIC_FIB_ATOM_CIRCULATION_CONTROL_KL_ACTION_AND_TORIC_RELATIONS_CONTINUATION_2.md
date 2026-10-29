@@ -1711,3 +1711,479 @@ type nine. Formula (46.2) gives length $113-11=102$ and
 shifts $113-3=110$, $113-5=108$, proving (46.7). $\square$
 
 ## 追加锚（本行以下为增补区）
+## 47. Arbitrary retained-edge mixtures and the exact short-branch correction
+
+**Definition 47.1 (The finite mixed retained-edge family).**
+Fix a finite list
+\(\mathbf k=(k_1,\ldots,k_t)\) with \(t\ge2\), every
+\(k_i\ge2\), and at least two distinct values. Let \(G_{\mathbf k}\)
+be the graph whose labelled cycles \(C_i\) have length \(2k_i+1\),
+whose common vertices are \(a,b\), and whose common edge is the
+retained edge \(ab\). The private vertices of \(C_i\) are
+\(x_{i,1},\ldots,x_{i,2k_i-1}\) in the cyclic order
+\(a,b,x_{i,1},\ldots,x_{i,2k_i-1},a\). There are no cross-edges
+between private vertices of different cycles. Put
+\(K=\max_i k_i\). For the actual independent-set presentation set
+
+$$
+\begin{aligned}
+\mathcal I&=\operatorname{Ind}(G_{\mathbf k}),
+&\gamma_I&=(1,\mathbf 1_I),\\
+S&=\mathbb N\{\gamma_I:I\in\mathcal I\},
+&R=\mathbb C[S],\\
+P&=\mathbb C[z_I:I\in\mathcal I],
+&z_I&\longmapsto X^{\gamma_I},
+\end{aligned}
+\tag{47.1}
+$$
+
+where the empty independent set is included and every \(z_I\) has
+ordinary degree one. For \(p=(m,c)\), write \(t=c_a\), \(u=c_b\),
+\(p_i=(m,c|_{C_i})\), and
+\(\delta_i(p)=k_i m-\sum_{v\in C_i}c_v\). The strict interior set is
+
+$$
+T=\left\{p\in\mathbb Z^{1+|V(G_{\mathbf k})|}:
+\begin{array}{l}
+ c_v\ge1,\\
+ c_v+c_w\le m-1\quad(\{v,w\}\in E(G_{\mathbf k})),\\
+ \delta_i(p)\ge1\quad(1\le i\le t)
+\end{array}\right\}.
+\tag{47.2}
+$$
+
+A point of \(T\) is basic when no positive-degree element of \(S\) can
+be subtracted while staying in \(T\). On the \(i\)-th cycle write
+
+$$
+\nu_{i,j}=(2j+1;\,j\mathbf 1_{C_i}),
+\qquad 1\le j<k_i .
+\tag{47.3}
+$$
+
+The local single-cycle classification and the common-edge semigroup
+decomposition are the supplied results of §§41–42 and §45; the point of
+this section is to make their mixed, unequal-length consequence exact.
+
+**Theorem 47.2 (All mixed canonical layers and their multiplicities).**
+The semigroup and its cone satisfy
+
+$$
+S=K_{\mathbf k}\cap\mathbb Z^{1+|V(G_{\mathbf k})|},
+\qquad
+K_{\mathbf k}=\left\{(m,c):
+\begin{array}{l}
+ m\ge0,\ c_v\ge0,\ c_v+c_w\le m,\\
+ k_i m-\sum_{v\in C_i}c_v\ge0\quad(1\le i\le t)
+\end{array}\right\}.
+\tag{47.4}
+$$
+
+Consequently \(R\) is a normal standard-graded Cohen–Macaulay domain,
+\(\dim R=3+\sum_i(2k_i-1)\), and its canonical module is the interior
+monomial ideal
+
+$$
+\omega_R=\bigoplus_{p\in T}\mathbb C X^p .
+\tag{47.5}
+$$
+
+A point \(p\in T\) is basic if and only if one restriction is a local
+basic vector \(\nu_{i,j}\). Hence, for \(1\le j<K\), the complete layer
+of basic exponents of degree \(2j+1\) is
+
+$$
+\Gamma_{2j+1}=\left\{p\in T:
+\begin{array}{l}
+m=2j+1,\quad c_a=c_b=j,\\
+ p_i=\nu_{i,j}\text{ for at least one }i\text{ with }k_i>j
+\end{array}\right\},
+\tag{47.6}
+$$
+
+and there are no basic exponents in any other degree. In particular,
+with \(\varepsilon_{k,j}=\mathbf 1_{\{k>j\}}\), define
+
+$$
+\begin{aligned}
+L_k&=2k-1,\qquad N_j=2j-1,\qquad
+H_j[x,y]=\mathbf 1_{\{x+y\le2j\}},\\
+u_j[x]&=\mathbf 1_{\{x\le j\}}
+\qquad(1\le x,y\le N_j),\\
+B_{k,j}&=(2j+1)(k-1),\\
+A_{k,j}&=u_j^{\mathsf T}H_j^{\,2k-2}u_j
+ -\sum_{q=0}^{j-k}\binom{q+k-1}{k-1}^{\!2},
+\end{aligned}
+\tag{47.7}
+$$
+
+where a sum with negative upper limit is zero. Then
+
+$$
+M_j:=|\Gamma_{2j+1}|
+=\prod_{i=1}^t A_{k_i,j}
+ -\prod_{i=1}^t\bigl(A_{k_i,j}-\varepsilon_{k_i,j}\bigr),
+\qquad
+\operatorname{type}(R)=\sum_{j=1}^{K-1}M_j.
+\tag{47.8}
+$$
+Every \(M_j\) is positive and \(M_1=1\).
+
+*Proof.* For each branch, the local integer decomposition supplied in
+§41 realizes every integral point of the inequalities in (47.4) by
+exactly \(m\) independent-set rows. On a retained edge the three row
+states are \(A=\{a\}\), \(B=\{b\}\), and \(O=\varnothing\). A local
+array has the same multiplicities
+\(t,u,m-t-u\) for these states on every branch. Sorting the rows into
+these three blocks and taking unions row by row gives global independent
+sets, and restriction is inverse to this construction. Thus the mixed
+integer decomposition, including degree zero, is exact. Empty and
+singleton rows generate the full lattice, so the cone is full
+dimensional. The normality, Cohen–Macaulayness, and (47.5) now follow
+from the normal stable-set semigroup argument and the
+Danilov–Stanley theorem in the form used in §45.
+
+The local classification in §42 says that a local interior is basic
+exactly when it is \(\nu_{i,j}\) for some \(j<k_i\). It remains to
+show that unequal residual degrees do not obstruct a common deletion.
+Suppose every restriction of a global \(p\in T\) is nonbasic. Choose
+
+$$
+ p_i=\nu_{i,j_i}+q_i,
+ \qquad n_i=\deg q_i=m-2j_i-1>0.
+\tag{47.9}
+$$
+
+In an \(n_i\)-row realization of \(q_i\), the counts of the three
+shared-edge states are
+
+$$
+ A_i=t-j_i,\qquad B_i=u-j_i,\qquad
+ O_i=n_i-A_i-B_i=m-t-u-1=:h.
+\tag{47.10}
+$$
+
+The last number is independent of both \(i\) and \(j_i\), and it is
+nonnegative by the strict inequality on the retained edge. If \(h>0\),
+choose an \(O\)-row in every branch. If \(h=0\), put
+\(J=\max_i j_i\). Residual coordinate nonnegativity gives
+\(t,u\ge J\). A branch attaining \(J\) has positive residual degree,
+so \(m-1=t+u>2J\). Therefore either \(t>J\) or \(u>J\). In the
+first case every branch has \(A_i=t-j_i>0\); in the second every branch
+has \(B_i=u-j_i>0\). Select that same state on all branches. The
+selected local rows have the same values on \(a,b\), and the absence
+of cross-edges makes their union an independent set of \(G_{\mathbf k}\).
+Deleting it leaves strict inequalities on every branch, so \(p\) is not
+basic.
+
+Conversely, if \(p_i=\nu_{i,j}\), any positive-degree global semigroup
+subtraction restricts to a positive-degree local subtraction and would
+contradict local minimality. This proves the equivalence in (47.6).
+Repeated deletion lowers degree and terminates, so these monomials
+ generate the whole interior ideal. Distinct exponent monomials are
+linearly independent, and \(R_+\omega_R\) is spanned exactly by the
+nonbasic exponents. Thus the classes of the basic monomials form a
+basis of \(\omega_R/R_+\omega_R\), even for arbitrary polynomial
+combinations; graded Nakayama gives all minimal generator degrees and
+multiplicities.
+
+It remains to count one boundary layer. At \(m=2j+1\), \(t=u=j\),
+write the private coordinates on a branch as
+\(x_1,\ldots,x_{L_k}\). The strict edge and total inequalities become
+
+$$
+ x_r\ge1,\qquad x_1,x_{L_k}\le j,qquad
+ x_r+x_{r+1}\le2j,qquad
+ \sum_{r=1}^{L_k}x_r\le B_{k,j}.
+\tag{47.11}
+$$
+
+The local basic vector occurs exactly once when \(k>j\), namely the
+all-\(j\) vector; it is excluded by the total bound when \(k\le j\).
+The exact number of all vectors in (47.11) is proved in Theorem 47.3
+below, giving (47.8). For positivity, \(A_{k,j}\ge1\) because
+\((j,1,j,1,\ldots,j)\) satisfies (47.11), with total-cap slack
+\(j(k-2)\). When \(j<K\), choose the all-\(j\) vector on an eligible
+branch and this alternating vector on all others. Thus \(M_j>0\). For
+\(j=1\), every coordinate is forced to one and \(M_1=1\). \(\square\)
+
+**Theorem 47.3 (Exact capped boundary count for every branch length).**
+For \(k\ge2\) and \(j\ge1\), \(A_{k,j}\) in (47.7) is exactly the
+number of private vectors satisfying (47.11). In particular, the
+subtraction in (47.7) is required whenever \(j\ge k\).
+
+*Proof.* The adjacent inequalities and positivity imply
+\(x_r\le2j-1=N_j\). Therefore the uncapped vectors in (47.11) are counted
+by the matrix product \(u_j^{\mathsf T}H_j^{2k-2}u_j\).
+To isolate those violating the total cap, set
+
+$$
+\begin{aligned}
+s_0&=j-x_1,\\
+s_r&=2j-x_r-x_{r+1}\quad(1\le r<L_k),\\
+s_{L_k}&=j-x_{L_k}.
+\end{aligned}
+\tag{47.12}
+$$
+
+All these slacks are nonnegative. Since \(L_k=2k-1\), direct
+cancellation gives
+
+$$
+\sum_{r\ {\rm even}}s_r
+ =\sum_{r\ {\rm odd}}s_r
+ =L_kj-\sum_{r=1}^{L_k}x_r=:q\ge0,
+\tag{47.13}
+$$
+
+with \(k\) terms in each sum. Since
+\(B_{k,j}=L_kj-(j-k+1)\), a vector violates the total cap exactly
+when \(0\le q\le j-k\). If \(j<k\) this range is empty.
+
+For a fixed such \(q\), choose two weak compositions of \(q\) into
+\(k\) parts, assign them respectively to the even and odd slacks in
+(47.12), and reconstruct
+
+$$
+ x_1=j-s_0,qquad
+ x_{r+1}=2j-s_r-x_r\quad(1\le r<L_k).
+\tag{47.14}
+$$
+
+Equality of the two sums in (47.13) is exactly the final condition
+\(s_{L_k}=j-x_{L_k}\), so reconstruction is inverse to (47.12). If
+\(q\le j-k\), the recurrence gives
+\(j-q\le x_r\le j+q\) for every \(r\). Hence \(x_r\ge k\ge2\),
+all endpoint and adjacency inequalities hold, and the reconstructed
+coordinates lie in \(\{1,\ldots,N_j\}\). Thus this is a genuine
+bijection, not a count in a relaxed polytope. The two compositions have
+\(\binom{q+k-1}{k-1}^2\) choices. Summing over \(q=0,\ldots,j-k\)
+proves (47.7). \(\square\)
+
+**Corollary 47.4 (Length generating function, spectrum, and growth).**
+For fixed \(j\), the exact boundary counts have the rational length series
+
+$$
+\sum_{k\ge2}A_{k,j}w^{k-2}
+=u_j^{\mathsf T}H_j^2(I-wH_j^2)^{-1}u_j
+ -\sum_{k=2}^{j}\left(\sum_{q=0}^{j-k}
+ \binom{q+k-1}{k-1}^{\!2}\right)w^{k-2}.
+\tag{47.15}
+$$
+
+Let \(N=2j-1\), and for \(1\le\ell\le N\) put
+
+$$
+\theta_\ell=\frac{(2\ell-1)\pi}{2N+1},qquad
+\lambda_\ell=\frac{(-1)^{\ell+1}}{2\sin(\theta_\ell/2)},qquad
+w_\ell=\frac{\sin^2(j\theta_\ell)}{(2N+1)\sin^2(\theta_\ell/2)}.
+\tag{47.16}
+$$
+
+Then
+
+$$
+ A_{k,j}=\sum_{\ell=1}^{N}w_\ell\lambda_\ell^{\,2k-2}
+ -\sum_{q=0}^{j-k}\binom{q+k-1}{k-1}^{\!2}.
+\tag{47.17}
+$$
+
+The visible denominator of the first term in (47.15) is
+
+$$
+Q_N(w)=\det(I-wH_j^2)
+ =\sum_{r=0}^{N}(-1)^r\binom{N+r}{2r}w^r.
+\tag{47.18}
+$$
+
+No factor in (47.18) cancels in the boundary series: all \(w_\ell>0\),
+so the least constant-coefficient recurrence for the infinite tail
+\(k>j\) has order \(N=2j-1\). For \(j=1\), \(A_{k,1}=1\). For
+\(j\ge2\), with \(\rho_\ell=\lambda_\ell^2\),
+
+$$
+0\le A_{k,j}-w_1\rho_1^{k-1}
+\le (j-w_1)\rho_2^{k-1}\quad(k>j),
+\qquad
+\frac{A_{k+1,j}}{A_{k,j}}\longrightarrow
+\rho_1=\left(2\sin\frac{\pi}{8j-2}\right)^{-2}.
+\tag{47.19}
+$$
+
+If all other branches are fixed and one eligible branch length \(k>j\)
+varies, write
+\(C_j=\prod_{i<t}A_{k_i,j}\) and
+\(E_j=\prod_{i<t}(A_{k_i,j}-\varepsilon_{k_i,j})\). Then
+
+$$
+M_j(k)=(C_j-E_j)A_{k,j}+E_j.
+\tag{47.20}
+$$
+
+Thus this layer is constant in \(k\) when no other branch is eligible,
+and has ratio limit \(\rho_1\) when at least one other branch is eligible.
+
+*Proof.* The finite correction in (47.15) is just the correction in
+Theorem 47.3, so the geometric matrix series gives the first identity.
+For the spectral form, take
+\(v_\ell[x]=\cos((x-\tfrac12)\theta_\ell)\). The finite cosine sum gives
+
+$$
+(H_jv_\ell)[x]
+=\frac{\sin((N+1-x)\theta_\ell)}{2\sin(\theta_\ell/2)}
+=\lambda_\ell v_\ell[x],
+$$
+
+because \((N+\tfrac12)\theta_\ell=(2\ell-1)\pi/2\). Moreover
+\(\|v_\ell\|^2=(2N+1)/4\) and
+\(u_j^{\mathsf T}v_\ell=\sin(j\theta_\ell)/(2\sin(\theta_\ell/2))\),
+which proves (47.17) by orthogonal projection. This is the classical
+antitriangular transfer spectrum supplied by Bóna–Ju–Yoshida [BJY47]
+and the boundary-transfer framework of Jiang–Yang–Zhong [JYZ47]; the
+endpoint projection and the finite total-cap correction are the parts
+used here.
+
+After reversing one index, the standard continuant for \(H_j^2\) has
+\(Q_0=1\), \(Q_1=1-w\), and
+\(Q_N=(2-w)Q_{N-1}-Q_{N-2}\). Induction gives the binomial expression
+(47.18). Since \(\gcd(j,2N+1)=\gcd(j,4j-1)=1\),
+\(\sin(j\theta_\ell)\ne0\): otherwise \(2N+1\) would divide
+\((2\ell-1)j\), impossible for \(1\le2\ell-1<2N+1\). The numbers
+\(\rho_\ell\) are distinct and the weights sum to \(\|u_j\|^2=j\),
+so every pole remains. The largest is \(\rho_1\), and the remaining
+positive terms are bounded by \((j-w_1)\rho_2^{k-1}\), proving (47.19).
+Substitution of (47.19) into (47.8) gives (47.20). \(\square\)
+
+**Proposition 47.5 (Actual presentation and the complete terminal module).**
+Let \(f_0=1\), \(f_1=2\), and \(f_n=f_{n-1}+f_{n-2}\). Put
+
+$$
+D=\prod_{i=1}^t f_{2k_i-1}+2\prod_{i=1}^t f_{2k_i-2},
+\qquad
+ d=3+\sum_{i=1}^t(2k_i-1),
+\qquad c=D-d.
+\tag{47.21}
+$$
+
+Then \(|\mathcal I|=D\), \(\dim R=d\), and \(\operatorname{pd}_P R=c\). If
+\(\mathcal F_\bullet\to R\) is the minimal standard-graded resolution,
+then its final module is
+
+$$
+\mathcal F_c
+=\bigoplus_{j=1}^{K-1}
+ P\bigl(-(D-2j-1)\bigr)^{M_j}.
+\tag{47.22}
+$$
+
+In the full exponent grading, with
+\(\Sigma=\sum_{I\in\mathcal I}\gamma_I\), the same statement is
+
+$$
+\mathcal F_c
+=\bigoplus_{j=1}^{K-1}\
+  \bigoplus_{p\in\Gamma_{2j+1}}P\bigl(-(\Sigma-p)\bigr).
+\tag{47.23}
+$$
+
+*Proof.* Conditional on the shared-edge state \(O\), branch \(i\) has a
+private path of length \(2k_i-1\), giving \(f_{2k_i-1}\) choices. States
+\(A\) and \(B\) each force one private endpoint absent and leave a path of
+length \(2k_i-2\), giving \(f_{2k_i-2}\) choices. These three cases are
+exclusive and exhaustive, proving \(|\mathcal I|=D\), including the empty
+row in the \(O\) case. The full lattice rank in Theorem 47.2 gives
+\(d=1+|V(G_{\mathbf k})|\).
+
+The polynomial ring \(P\) has depth \(D\), while the nonzero
+Cohen–Macaulay quotient \(R\) has depth \(d\). Hilbert syzygy and
+Auslander–Buchsbaum (Stacks Project, tag 090U [AB44]) give
+\(\operatorname{pd}_P R=D-d=c\). The graded canonical module of \(P\)
+is \(P(-D)\) in ordinary degree and \(P(-\Sigma)\) in the full exponent
+degree. The canonical Ext interface of Barile–Bruns [BB41] identifies
+\(\omega_R\) with the top Ext of \(R\) into this module and kills all
+other Ext degrees. Dualizing a minimal resolution, the incoming map to
+its last dual free module has entries in the homogeneous maximal ideal;
+modulo that ideal, its basis is therefore the canonical quotient
+\(\omega_R/R_+\omega_R\). A summand \(P(-\Theta)\) contributes the
+canonical generator \(\Sigma-\Theta\), so (47.23) follows from
+(47.6). Coarsening to ordinary degree gives
+\(\Theta=D-(2j+1)\), which is (47.22). This uses the actual canonical
+quotient and does not infer the terminal module from an alternating
+Hilbert numerator. \(\square\)
+
+**Proposition 47.6 (The \(C_7+C_9\) terminal module).**
+For \(\mathbf k=(3,4)\), the exact boundary counts are
+
+$$
+A_{3,1}=A_{4,1}=1,
+\qquad A_{3,2}=45,
+\qquad A_{4,2}=227,
+\qquad A_{3,3}=390.
+\tag{47.24}
+$$
+
+Thus
+
+$$
+(M_1,M_2,M_3)=(1,271,390),
+\qquad
+D=778,\quad d=15,\quad c=763,
+\tag{47.25}
+$$
+
+and
+
+$$
+\operatorname{type}(R)=662,
+\qquad
+\mathcal F_{763}
+=P(-775)\oplus P(-773)^{271}\oplus P(-771)^{390}.
+\tag{47.26}
+$$
+
+*Proof.* For \(j=2\),
+
+$$
+H_2=\begin{pmatrix}1&1&1\\1&1&0\\1&0&0\end{pmatrix},
+\qquad
+H_2^2u_2=(5,4,2)^{\mathsf T},
+\qquad
+H_2^3u_2=(11,9,5)^{\mathsf T}.
+$$
+
+Hence \(A_{3,2}=5^2+4^2+2^2=45\) and
+\(A_{4,2}=11^2+9^2+5^2=227\). For \(j=3\),
+\(H_3^2u_3=(12,11,9,6,3)^{\mathsf T}\), so the uncapped count for
+\(k=3\) is \(12^2+11^2+9^2+6^2+3^2=391\). The correction in
+(47.7) is the single \(q=0\) term, because \(j-k=0\), and gives
+\(A_{3,3}=390\). This is the short-branch total-cap subtraction.
+
+The multiplicity formula gives
+\(M_2=45\cdot227-44\cdot226=271\) and
+\(M_3=390\cdot A_{4,3}-390(A_{4,3}-1)=390\), without needing an
+uncapped replacement for the short branch. For the presentation,
+\(f_5=13,f_7=34,f_4=8,f_6=21\), so
+\(D=13\cdot34+2\cdot8\cdot21=778\). The graph has
+\(2+5+7=14\) vertices, hence \(d=15\), and (47.22) gives the stated
+shifts. \(\square\)
+
+**Proposition 47.7 (The five-cycle boundary count).**
+For every \(j\ge1\), \(A_{2,j}=j^3\).
+
+*Proof.* Choose the endpoint values \(a,b\in\{1,\ldots,j\}\). The
+middle coordinate has exactly \(2j+1-a-b\) positive choices: the
+total cap is the active bound and is no larger than either adjacent-edge
+bound. Therefore
+
+$$
+A_{2,j}=\sum_{a,b=1}^j(2j+1-a-b)=j^3.
+$$
+
+This agrees with (47.7), including its correction for every \(j\ge2\).
+\(\square\)
+
+[BJY47]: https://arxiv.org/abs/math/0606163
+
+[JYZ47]: https://arxiv.org/html/2607.22008v1
+
+## 追加锚（本行以下为增补区）
