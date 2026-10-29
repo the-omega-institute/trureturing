@@ -1,0 +1,142 @@
+**定理 45.3（着色的来源对应、全局复 Gram 实现与统一缺陷）。** 对所有实际来源树，
+
+$$
+\lambda_{\rho t}(p)=\lambda_t(p)\quad(p\in\mathcal A).
+\tag{45.5}
+$$
+
+整个 $\lambda_t$ 已由 $S(t)$ 决定：对每个 $p\in S(t)$，着色的奇偶数恰是
+
+$$
+\bigl|\{w\in\mathcal A:p0w\in S(t)\}\bigr|\pmod2.
+\tag{45.6}
+$$
+
+对每个整数 $n\ge1$，令
+
+$$
+k_n=5n,\qquad h_n=r_n=\frac1{k_n},\qquad
+b_n=a_n=1-\frac1{k_n},\qquad
+K_n^{\mathrm c}=a_nP_{h_n}^{\mathrm c}+r_n\delta.
+\tag{45.7}
+$$
+
+则 $K_n^{\mathrm c}$ 满足定义 43.1 的所有精确侧条件，并且
+
+$$
+\sup_{s,t,u,v\in T}|D_{K_n^{\mathrm c}}(s,t,u,v)|
+\le a_n(2h_n+r_n)=\frac{3a_n}{5n}<\frac1n.
+\tag{45.8}
+$$
+
+这里包括任意重复来源标签和任意复系数的 Gram 正性，且有单一载体上的归一化、
+有限支撑、忠实来源提升。
+
+**证明。** 若 $p$ 上的子树为 $\langle u,u\rangle$，则 $p0w\in S(t)$ 当且仅当
+$w\in S(u)$，故 (45.6) 的基数为 $|S(u)|=q(u)$。这对所有 $p\in S(t)$ 同时成立；
+不在 $S(t)$ 中的地址必标零，因而 $S(t)$ 确定整个着色场。此对应只恢复所定义的标签，
+不选择 (45.3) 的复向量，也不从位置集产生 $i$。
+
+对 $t$ 作结构归纳证明 (45.5)。叶 $\alpha$ 的像仍是叶，$\beta$ 的像
+$\langle\beta,\alpha\rangle$ 只新增一个不等子树根，其标签为零。
+内部节点使用 $\rho$ 单射保留子树相等性，使用 (43.7) 保留相等子树的 $q$ 奇偶，
+再由归纳假设保留左右两个地址场。新增根和两个子场分别相同，覆盖全部地址。
+也可从 (44.2) 与 (45.6) 直接得到同一结论。
+
+局部向量给出的矩阵为
+
+$$
+G_h=
+\begin{pmatrix}
+1&\sqrt b&\sqrt b\\
+\sqrt b&1&b+ih\\
+\sqrt b&b-ih&1
+\end{pmatrix}.
+\tag{45.9}
+$$
+
+各向量范数一，所以 $|G_h(j,k)|\le1$。
+又 $1-\sqrt b=h/(1+\sqrt b)\le h$，
+$|(b\pm ih)-1|=\sqrt2h$，故所有 $j,k$ 都满足
+
+$$
+|G_h(j,k)-1|\le\sqrt2h\le2h.
+\tag{45.10}
+$$
+
+在与 §44 相同的 $H_0=\ell^2(\operatorname{Fin}(\mathcal A))$ 中定义
+
+$$
+V_h(t)=b^{|S(t)|/2}\sum_{B\subseteq S(t)}
+ \left(\frac h b\right)^{|B|/2}
+ i^{|B\cap S_2(t)|}e_B.
+\tag{45.11}
+$$
+
+每个向量有有限支撑，而且
+$\|V_h(t)\|^2=b^{|S(t)|}(1+h/b)^{|S(t)|}=1$。
+为核对内积，不需假定一个抽象无限张量积：在有限集
+$U=S(s)\cup S(t)$ 上展开 (45.11)。每个地址不选入 $B$ 时，对标签非零的每一侧贡献
+$\sqrt b$；选入时，该侧贡献 $\sqrt h$ 并在标签 $2$ 时贡献 $i$，第一侧取共轭。
+两侧都为零时只有不选项，贡献一。逐地址的两项和正是 (45.9) 中的对应项。
+有限分配律遂给
+
+$$
+\langle V_h(s),V_h(t)\rangle
+=\prod_{p\in U}G_h(\lambda_s(p),\lambda_t(p))
+=P_h^{\mathrm c}(s,t).
+\tag{45.12}
+$$
+
+这是通常局部 Gram 张量正性的直接展开，作为本来源构造的中间供应使用。
+在同一 $H=H_0\oplus\ell^2(T)$ 中，忠实提升为
+
+$$
+\eta_n^{\mathrm c}(t)=\sqrt{a_n}\,V_{h_n}(t)\oplus\sqrt{r_n}\,e_t.
+\tag{45.13}
+$$
+
+它归一化且实现 $K_n^{\mathrm c}$。任意 $M\ge1$、任意可重复的 $t_i\in T$ 及
+任意 $c_i\in\mathbb C$，严格有
+
+$$
+\sum_{i,j=1}^M\overline{c_i}c_jK_n^{\mathrm c}(t_i,t_j)
+=a_n\left\|\sum_i c_iV_{h_n}(t_i)\right\|^2
+ +r_n\sum_{x\in\{t_1,\ldots,t_M\}}
+       \left|\sum_{i:t_i=x}c_i\right|^2\ge0.
+\tag{45.14}
+$$
+
+Hermitian 性随 Gram 表示成立；$s\ne t$ 时
+$|K_n^{\mathrm c}(s,t)|=a_n|P_{h_n}^{\mathrm c}(s,t)|\le a_n<1$，
+故 $K_n^{\mathrm c}(s,t)=1$ 当且仅当 $s=t$。
+非零 $e_t$ 分量也直接给 (45.13) 的单射性。式 (45.5) 保持 $P_h^{\mathrm c}$，
+运输单射性保持 delta，所以全部来源对的运输不变性精确成立。
+
+对任意四棵树，配对后的地址分成根、$0\mathcal A$、$1\mathcal A$，因此
+
+$$
+P_h^{\mathrm c}(\langle s,t\rangle,\langle u,v\rangle)
+=P_h^{\mathrm c}(s,u)P_h^{\mathrm c}(t,v)
+ G_h(\ell(s,t),\ell(u,v)).
+\tag{45.15}
+$$
+
+该式不要求四树互异或同形。简记 $a,r,h,P^{\mathrm c},K^{\mathrm c}$ 并置
+$A=P^{\mathrm c}(s,u)$、$B=P^{\mathrm c}(t,v)$、$d=\delta_{s,u}$、
+$e=\delta_{t,v}$、$G=G_h(\ell(s,t),\ell(u,v))$。与 (44.10) 相同的代数展开给
+
+$$
+D_{K^{\mathrm c}}(s,t,u,v)
+=aAB(G-1)+ra(A-d)(B-e).
+\tag{45.16}
+$$
+
+这是复数恒等式。$|A|,|B|\le1$；$d=1$ 时 $A=1$，$d=0$ 时
+$|A-d|=|A|\le1$，故总有 $|A-d|\le1$，同理 $|B-e|\le1$。
+结合 (45.10) 得 $|D_{K^{\mathrm c}}|\le a(2h+r)$，对整个 $T^4$ 取上确界给 (45.8)。
+更紧的同一估计为 $a(\sqrt2h+r)$；两者均不依赖树高。
+
+本定理的来源特定内容是相等子树的逐址奇偶对应及其全域运输、(45.15) 与 (45.16)；
+一般 Gram 正性沿用原卷 §§6、15.2、26.2，不作为新的正性定理。∎
+

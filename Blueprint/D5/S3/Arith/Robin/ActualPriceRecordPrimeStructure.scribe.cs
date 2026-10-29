@@ -113,5 +113,61 @@ internal sealed class ActualPriceRecordPrimeStructureDocument : IScribeDocumentD
                         + "and log-size hypotheses is a separate arithmetic-analytic bridge. "
                         + "No crossing existence, unbounded crossing family, Robin sign or "
                         + "Riemann hypothesis follows from this dependency alone."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("actual-record-uniform-sharp-euler-tail-upper"),
+                DeclarationHandle.Create(Prefix + "actual_record_tail_upper"),
+                H("A uniform sharp Euler-tail upper bound for the same record integer"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For every epsilon>0 there is A>0 such that, simultaneously for "
+                        + "all alpha in [1/40,1] and all m>=3 with X=log(m)>=A, a strict "
+                        + "record at lambda=alpha/(X*log(X)) implies "
+                        + "sqrt(P)*log(P)*tail(m)<=2*sqrt(1-alpha/2)+epsilon. Here P is "
+                        + "the original largestPrime(m), and tail and layerTail are exactly "
+                        + "the original finite Euler truncation sums. Every positive "
+                        + "predecessor, including one and two, occurs in the record premise.")),
+                    Paragraph(Text(
+                        "Lowering lambda to lambda0 preserves the record: the score "
+                        + "difference gains (lambda-lambda0)*(log(m)-log(n)). The existing "
+                        + "largest-prime localization therefore applies uniformly in alpha. "
+                        + "Put c=1-alpha/2, choose positive kappa and rho, and split at "
+                        + "u=P^(1/3) and y=sqrt(P/(c+kappa)). The retained exchange price "
+                        + "forces v_q(m)>=2 for every prime u<q<=y, including exclusion "
+                        + "of both zero and one valuations. Indeed, if v_q<=1, its gain "
+                        + "is at least (1-1/q)/q^2. Once 1/u<=kappa/4 and "
+                        + "P*log(P/2)/(X*log(X))>=1-kappa/2, the gain multiplied by P "
+                        + "is at least c+3*kappa/4 and the retained price is at least "
+                        + "alpha/2-kappa/4. Their sum exceeds the exchange bound one.")),
+                    Paragraph(Text(
+                        "Finite Abel summation with the coefficients log(q) at primes "
+                        + "and zero elsewhere gives sum over y<q<=P of 1/q^2 at most "
+                        + "(1+3*rho)/(y*log(y)), provided (1-rho)*t<=theta(t)<= "
+                        + "(1+rho)*t throughout [y,P]. The boundary terms are "
+                        + "theta(P)/P^2-theta(y)/y^2, and the integral is "
+                        + "2*integral(theta(t)/t^3). Qualitative PNT supplies this "
+                        + "whole-interval condition after a fixed lower cutoff.")),
+                    Paragraph(Text(
+                        "The small-prime contribution is at most 2*u/P=2/u^2. "
+                        + "The middle contribution is at most sum(2/q^3)<=4/u^2, "
+                        + "using the existing integer square-tail bound and q>u. "
+                        + "The remaining actual factors contribute at most "
+                        + "(1+3*rho)/((1-1/P)*y*log(y)). The prime q=P occurs "
+                        + "only in this last band, where its actual valuation is at "
+                        + "least one. Thus sqrt(P)*log(P)*tail(m) is at most "
+                        + "6*P^(-1/6)*log(P)+2*(1+3*rho)*sqrt(c+kappa)/(1-1/P).")),
+                    Paragraph(Text(
+                        "Choose kappa=min(1/160,epsilon/32) and "
+                        + "rho=min(1/4,epsilon/96) before alpha and m. A fixed P0 "
+                        + "pays the PNT cutoff, 1/u, and the vanishing error "
+                        + "6*log(P)/P^(1/6)+4/(P-1). Localization with tolerance "
+                        + "kappa/4 and X>=max(2*P0,exp(4*log(4)/kappa)) supplies "
+                        + "the retained-price condition. The square-root difference "
+                        + "is at most kappa since c>=1/2. These uniform choices "
+                        + "pay the complete epsilon budget. No existence or "
+                        + "unboundedness of records, global optimality, attainability "
+                        + "of the constant, signed Mertens bound or RH is asserted."))),
                 DescribeRole.Theorem))));
 }

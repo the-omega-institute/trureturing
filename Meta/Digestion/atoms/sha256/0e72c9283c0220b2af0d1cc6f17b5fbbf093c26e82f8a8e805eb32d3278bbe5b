@@ -1,0 +1,65 @@
+**Theorem 15.5.1 (Independent J alternatives over the reconstructed M base).**
+The original independent-pair target of Definition 6.3 and Proposition
+6.4 is equivalent to the following statement. There is a
+$Z\in\mathfrak A_M$, and, at exactly $p=p_Z$, $v=v_Z$, there are real
+$m_0,m_1$ and guarded candidates
+
+$$
+\xi_i\in\mathcal R(p_Z,v_Z,m_i)\sqcup\mathcal E(p_Z,v_Z,m_i),
+\quad i=0,1,
+\qquad W(\xi_0)\ne W(\xi_1),\quad a(\xi_0)=a(\xi_1),
+\tag{15.33}
+$$
+
+where the candidate sets retain all guards of Theorem 5.2 and $a$ is
+the actual response (6.1), using each candidate's own $m_i$.
+
+Equivalently there is a $Z\in\mathfrak A_M$ such that, at this same
+computed $(p,v)$, at least one of the following **two** alternatives
+holds. All symbols in them are the full guarded polynomials and
+functions of XI, (5.3.1)–(5.5.2), without deleting any equation.
+
+$$
+\begin{aligned}
+\text{(equal $x$)}\quad
+&\exists x>0:\quad \delta(x;p,v)>0,\quad
+\mathcal H(p,v;x,d_+),\quad\mathcal H(p,v;x,d_-),\quad
+\mathcal T(x;p,v)=0;\\
+\text{(different $x$)}\quad
+&\exists x_0,x_1,d_0,d_1:\quad x_0\ne x_1,\quad
+\mathcal H(p,v;x_0,d_0),\quad\mathcal H(p,v;x_1,d_1),\quad
+ a(x_0,d_0)=a(x_1,d_1).
+\end{aligned}
+\tag{15.34}
+$$
+
+Here $d_\pm$ are XI, (5.4.3), and $a=N_J/Q_J$ is XI, (5.5.1).
+In particular $\mathcal H$ retains both $\Phi=0$ and $\mathcal G=0$
+and every strict guard in XI, (5.3.4), not just the necessary
+response-plane filters. The two J worlds need not be the M worlds;
+there is no cross-pair inequality or equality of the two terminal
+common values.
+
+Proof. An original joint configuration gives its chosen ordered M pair,
+hence $Z\in\mathfrak A_M$ by Theorem 15.4.2. Its actual shared acquired
+reads identify $p=p_Z$, $v=v_Z$. The two independently chosen J worlds
+are represented by the full fixed-terminal inverse (5.4), using their
+individual actual M responses as $m_0,m_1$. This gives (15.33) and
+retains distinctness and actual J equality by (6.1).
+Conversely Theorem 15.4.2 supplies the M pair from $Z$, while (5.4)
+supplies the two distinct J worlds from (15.33). All four belong to the
+same entire $C(p_Z,v_Z)$, with the required within-pair equalities.
+This is exactly (6.7); their endpoints may overlap across pairs.
+
+For (15.34), use XI, Theorem 5.3.1, to express every J endpoint at the
+same base by its faithful $(x,d)$ and all of $\mathcal H$. If the two
+$x$ values agree, XI, Theorems 5.4.1 and 5.6.1, give precisely the first
+alternative, including the two distinct drift roots and the full
+secant equation. If the $x$ values differ, distinctness follows from
+that difference, and XI, (5.5.1), gives precisely the second
+alternative. Conversely each alternative reconstructs the indicated
+distinct original J pair at this very base. Thus (15.34) is the exact
+two-term decomposition in XI, Theorem 5.6.2, with its M membership now
+provided by Theorem 15.4.2. Neither J alternative is discarded or
+identified with the M endpoints. ∎
+
