@@ -6,10 +6,8 @@
    utility: none
    digest: Cartesian-control angle matrices are invertible for all finite products. -/
 
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.LinearAlgebra.Matrix.Block
 import Mathlib.Basic.Real.Basic
-import Mathlib.Tactic.NormNum
 
 /-! Invertibility of the Cartesian-control angle matrix. -/
 noncomputable section
