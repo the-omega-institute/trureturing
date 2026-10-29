@@ -451,6 +451,7 @@ files = [
   { pattern = "tools/lean-inspector/LeanInformationAuditRegAnalysis/**/*.lean", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["Lean"], verified_by = ["lean-inspector"], artifact_id = "none", runtime_disposition = "committed-source" },
   # ProductionNegatives.lean and its inputs use make search-reduction-production-negative CASE=<case>.
   # IsolationUnitTests.lean runs in search-reduction-test and compiled-judge-test.
+  # BlockerTests.lean and ExecutionChainTests.lean run through make search-reduction-blocker-test.
   { pattern = "tools/lean-inspector/LeanInformationAuditRegTests/**/*.lean", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["Lean"], verified_by = ["lean-inspector", "make-gate"], artifact_id = "none", runtime_disposition = "committed-source" },
   { pattern = "tools/lean-inspector/README.md", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["reader"], verified_by = ["repository-policy"], artifact_id = "none", runtime_disposition = "committed-source" },
   { pattern = "tools/lean-inspector/build_work.py", kind = "program", admission_plane = "judge", produced_by = "none", consumed_by = ["Lean"], verified_by = ["lean-inspector"], artifact_id = "none", runtime_disposition = "committed-source" },

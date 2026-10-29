@@ -140,7 +140,8 @@ unique operation-level reason or turn an incomplete guard into no-gain. -/
 private def blockerJson (r : Observation) : Json := Id.run do
   let block (guard query stop remedy : String) := Json.mkObj [
     ("guard", toJson guard), ("query_or_check_pair", toJson query),
-    ("stop", toJson stop), ("remedy", toJson remedy),
+    ("stop", toJson (if stop.isEmpty then "NotRun: no completed operation record" else stop)),
+    ("remedy", toJson remedy),
     ("disposition", toJson "reduction not certified; no admission")]
   let some g := r.graph? | return block "isolation" r.target.toString r.reason "complete the named isolation operation"
   if classifyDisposition g != .incomplete then return Json.null
@@ -148,15 +149,29 @@ private def blockerJson (r : Observation) : Json := Id.run do
   if !g.presentationComplete then
     return block "single-source-presentation" r.target.toString r.presentationDetail "complete this presentation check"
   if !g.structureChecked || !g.structureClean then
-    return block "wide-S-and-source-isolation" r.target.toString r.reason "complete the named reconstruction or restatement unit"
+    return block "wide-S-and-source-isolation" r.target.toString
+      (if !r.reason.isEmpty then r.reason else if g.noAuxiliary then
+        "NotRun: no auxiliary structure supplied; paired reconstruction not scheduled"
+       else "NotRun: paired reconstruction has no completed record")
+      "complete the named reconstruction or restatement unit"
   if !g.graph.complete then
     return block "graph-extraction" r.target.toString (reprStr g.graph.issues) "resolve the named extraction operation"
   if !g.targetPartComplete then
     for id in g.selectedSeeds do
+      unless selectedStructureSeed g.graph g.selectedSeeds id do continue
       if let some v := g.graph.vertices.find? (·.id == id) then
         if let .incomplete _ := targetPartDecision v.independentLookup v.reverseLookup then
+          for q in g.queryRecords do
+            if (q.role == s!"target-part-independent:{id}" ||
+                q.role == s!"target-part-reverse:{id}") &&
+                (match q.terminal.guardRun with | .incomplete _ => true | _ => false) then
+              let detail := if q.role == s!"target-part-independent:{id}" then
+                v.independentLookupDetail else v.reverseLookupDetail
+              return block "target-part" s!"{r.target}:seed:{id};query={q.role}:{q.target}"
+                s!"{reprStr q.terminal};{detail}"
+                "supply a permitted positive certificate or complete the reverse exhaustive guard"
           return block "target-part" s!"{r.target}:seed:{id}"
-            s!"independent={v.independentLookupDetail};reverse={v.reverseLookupDetail}"
+            s!"NotRun: no unfinished R query recorded;independent={v.independentLookupDetail};reverse={v.reverseLookupDetail}"
             "supply a permitted positive certificate or complete the reverse exhaustive guard"
   for q in g.queryRecords do
     if q.terminal.price.isNone then
@@ -260,6 +275,7 @@ def terminationDetails (r : Observation) : Array String := Id.run do
     if !reading.targetPartComplete then
       details := details.push "target-part-guard-incomplete"
       for id in reading.selectedSeeds do
+        unless selectedStructureSeed reading.graph reading.selectedSeeds id do continue
         if let some vertex := reading.graph.vertices.find? (·.id == id) then
           details := details.push s!"seed:{id}:independent:{vertex.independentLookupDetail}"
           details := details.push s!"seed:{id}:reverse:{vertex.reverseLookupDetail}"

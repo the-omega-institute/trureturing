@@ -215,6 +215,10 @@ search-reduction-test: export SEARCH_REDUCTION_WORKERS := 1
 search-reduction-execution-mutation-test:
 	@python3 tools/scripts/search-reduction-execution-mutation-test.py
 
+.PHONY: search-reduction-blocker-test
+search-reduction-blocker-test:
+	@$(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegTests.SearchReduction.BlockerTests LeanInformationAuditRegTests.SearchReduction.ExecutionChainTests"
+
 # CASE selects one isolated production calibration; the index stays caller-owned.
 search-reduction-production-negative:
 	@test -n "$$SEARCH_REDUCTION_NEGATIVE_CASE" && $(MAKE) lean LEAN_TARGETS="LeanInformationAuditRegAnalysis.SearchReduction.Commands LeanInformationAuditRegTests.SearchReduction.ProductionNegativeCandidates" && $(MAKE) search-reduction-run REQUESTS=tools/lean-inspector/LeanInformationAuditRegTests/SearchReduction/ProductionNegatives.lean
