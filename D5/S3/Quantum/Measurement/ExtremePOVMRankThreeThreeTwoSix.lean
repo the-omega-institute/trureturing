@@ -57,7 +57,58 @@ private def effect (j : Fin 8) : Matrix (Fin 7) (Fin 7) ℂ :=
 
 private def frame : Matrix (Fin 7) (Fin 7) ℂ := ∑ j, effect j
 
-private theorem frame_posDef : frame.PosDef := by sorry
+set_option maxHeartbeats 2000000 in
+private theorem frame_posDef : frame.PosDef := by
+  classical
+  have hpsd : frame.PosSemidef := by
+    apply Matrix.posSemidef_sum Finset.univ
+    intro j hj
+    apply Matrix.posSemidef_sum Finset.univ
+    intro b hb
+    exact Matrix.posSemidef_vecMulVec_self_star b.1
+  have hframe : frame =
+      !![5, 0, 0, 2 - 2 * Complex.I, 0, 0, 2;
+        0, 5, 0, 0, 2 - 2 * Complex.I, 0, 2;
+        0, 0, 5, 0, 0, 2 - 2 * Complex.I, 2;
+        2 + 2 * Complex.I, 0, 0, 5, 0, 0, 1 + Complex.I;
+        0, 2 + 2 * Complex.I, 0, 0, 5, 0, 1 + Complex.I;
+        0, 0, 2 + 2 * Complex.I, 0, 0, 5, 1 + Complex.I;
+        2, 2, 2, 1 - Complex.I, 1 - Complex.I, 1 - Complex.I, 6] := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [frame, effect, blocks, vector, Matrix.sum_apply,
+        Matrix.vecMulVec_apply, Pi.star_apply, Fin.sum_univ_succ]
+    all_goals ring
+  apply hpsd.posDef_iff_mulVec_injective.mpr
+  rw [hframe]
+  intro x y hxy
+  have hz :
+      (!![5, 0, 0, 2 - 2 * Complex.I, 0, 0, 2;
+        0, 5, 0, 0, 2 - 2 * Complex.I, 0, 2;
+        0, 0, 5, 0, 0, 2 - 2 * Complex.I, 2;
+        2 + 2 * Complex.I, 0, 0, 5, 0, 0, 1 + Complex.I;
+        0, 2 + 2 * Complex.I, 0, 0, 5, 0, 1 + Complex.I;
+        0, 0, 2 + 2 * Complex.I, 0, 0, 5, 1 + Complex.I;
+        2, 2, 2, 1 - Complex.I, 1 - Complex.I, 1 - Complex.I, 6] :
+        Matrix (Fin 7) (Fin 7) ℂ) *ᵥ (x - y) = 0 := by
+    rw [Matrix.mulVec_sub]
+    apply sub_eq_zero.mpr
+    simpa using hxy
+  funext i
+  have h0 := congr_fun hz 0
+  have h1 := congr_fun hz 1
+  have h2 := congr_fun hz 2
+  have h3 := congr_fun hz 3
+  have h4 := congr_fun hz 4
+  have h5 := congr_fun hz 5
+  have h6 := congr_fun hz 6
+  fin_cases i <;>
+    simp only [Matrix.mulVec, dotProduct, Fin.sum_univ_succ, Fin.isValue,
+      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+      Matrix.cons_val_three, Matrix.cons_val_four, Matrix.cons_val_five,
+      Matrix.cons_val_six, Pi.sub_apply, zero_apply, Finset.sum_const_zero,
+      add_zero, zero_add] at h0 h1 h2 h3 h4 h5 h6 ⊢
+  all_goals linear_combination h0 + h1 + h2 + h3 + h4 + h5 + h6
 
 private theorem normalizer_exists :
     ∃ R : Matrix (Fin 7) (Fin 7) ℂ, IsUnit R.det ∧ R * frame * Rᴴ = 1 := by
@@ -159,7 +210,10 @@ private theorem decomposition_eq_of_product_independence
     (hmid : ∀ j, witness j = (1 / 2 : ℂ) • (A j + B j)) :
     A = witness ∧ B = witness := by sorry
 
-private theorem witness_extreme : IsExtreme witness := by sorry
+private theorem witness_extreme : IsExtreme witness := by
+  refine ⟨witness_povm, ?_⟩
+  intro A B hA hB hmid
+  exact decomposition_eq_of_product_independence A B hA hB hmid
 
 theorem result : ¬ claim := by
   intro h
