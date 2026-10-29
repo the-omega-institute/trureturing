@@ -1787,3 +1787,231 @@ $\lambda_2\,n\operatorname{tr}L^+$，全部竞争者始终为独立正电导。
 只承担上述推导的中间步骤。
 
 ## 追加锚（本行以下为增补区）
+
+## 16. 带标号五边形的全局尖锐值
+
+**定义 16.1（五阶 Fourier 数据）。** 令 $p=(p_0,\ldots,p_4)\in\Delta^\circ$，令
+
+$$
+z=e^{2\pi\mathrm i/5},qquad q_k=\sum_{j=0}^4p_jz^{kj}\quad(k\in\mathbb Z/5\mathbb Z),qquad
+a=|q_1|^2,\quad b=|q_2|^2.
+$$
+
+置
+
+$$
+\rho_1=\frac{5+\sqrt5}{50},\qquad
+\rho_2=\frac{5-\sqrt5}{50},\qquad
+\tau=\frac25,qquad
+\kappa=\frac{5+\sqrt5}{20},qquad
+r=\frac{\rho_2}{\rho_1}=\frac{3-\sqrt5}{2},qquad
+h=1-2\kappa=\frac{5-\sqrt5}{10}.
+\tag{16.1}
+$$
+
+For the covariance operator $M(p)$ of Definition 4.1, write
+
+$$
+T=\operatorname{tr}_H M(p)=\tau-2\rho_1a-2\rho_2b,
+\qquad \rho=\lambda_{\max}(M(p)|_H).
+\tag{16.2}
+$$
+
+The relation between this operator and a positive conductance vector is exactly (5.4)–(5.5): if
+$r_i=c_i^{-1}$, $s=\sum_i r_i$, and $p_i=r_i/s$, then
+$\lambda_2(L(c))R(c)=5T/\rho$.
+
+**引理 16.2（全域二模态证书）。** For every $p\in\Delta^\circ$,
+
+$$
+\rho\ge \kappa T.
+\tag{16.3}
+$$
+
+Equality in (16.3) is possible only when $q_1=q_2=0$, and hence only at
+$p_0=\cdots=p_4=1/5$.
+
+**证明。** The $k=1,2$ principal block of the Fourier matrix in (9.2) is the Hermitian matrix
+
+$$
+A=
+\begin{pmatrix}
+\rho_1(1-a)&\displaystyle\frac{q_1-\overline q_1q_2}{5\,\overline d_1d_2}\\[6pt]
+\displaystyle\frac{\overline q_1-q_1\overline q_2}{5\,d_1\overline d_2}&\rho_2(1-b)
+\end{pmatrix},
+\qquad d_k=1-z^{-k}.
+\tag{16.4}
+$$
+
+Indeed, this is (9.2) with $(k,m)=(1,2)$, and
+$|d_k|^{-2}=5\rho_k$. Therefore, with
+$\chi=|q_1-\overline q_1q_2|^2$,
+
+$$
+\det(\kappa T I_2-A)
+=\rho_1^2\bigl[h(a-b)L-r\chi\bigr],
+\qquad
+L=1-r-2\kappa a+rh\,b.
+\tag{16.5}
+$$
+
+The identities used here are
+$\tau=2\rho_1(1+r)$, $1=2\kappa(1+r)$, and $h=2\kappa r$.
+If $a\le b$, then
+
+$$
+L\ge 1-r-2\kappa a+rh\,a=(1-r)(1-a)\ge0,
+\tag{16.6}
+$$
+
+so the right side of (16.5) is nonpositive. Suppose next that $a>b$ and put
+$x=\sqrt a$, $y=\sqrt b$. If $L\le0$, (16.5) is again nonpositive. If $L>0$, the reverse triangle inequality gives
+
+$$
+\chi\ge x^2(1-y)^2.
+\tag{16.7}
+$$
+
+The remaining scalar comparison is valid on the entire square-triangle
+$0\le y\le x\le1$:
+
+$$
+r x^2(1-y)^2-h(x^2-y^2)\bigl(1-r-2\kappa x^2+rh\,y^2\bigr)\ge0.
+\tag{16.8}
+$$
+
+For completeness, its exact factorization is as follows. Put $y=tx$ with
+$0\le t\le1$. The left side of (16.8) equals
+
+$$
+\frac{7-3\sqrt5}{10}\,x^2G_t(x),
+$$
+
+where
+
+$$
+\begin{aligned}
+G_t(x)&=A_t x^2-5(3+\sqrt5)tx+C_t,\\
+A_t&=t^4+(3+\sqrt5)t^2+\frac{7+3\sqrt5}{2},\\
+C_t&=\frac{5+3\sqrt5}{2}t^2+5+\sqrt5.
+\end{aligned}
+\tag{16.9}
+$$
+
+Here $A_t>0$, and the discriminant of this quadratic in $x$ is
+
+$$
+\bigl[-10-6\sqrt5\bigr](1-t)^2(1+t)^2(t^2+4+2\sqrt5)\le0.
+\tag{16.10}
+$$
+
+Thus (16.8) holds. It is strict when $x>y$: in that case $t<1$, so (16.10) is strict. Combining (16.5), (16.7), and (16.8) proves
+$\det(\kappa T I_2-A)\le0$ for every $p\in\Delta^\circ$.
+
+The two eigenvalues of $A$ are real. A nonpositive determinant in (16.5) implies
+$\lambda_{\max}(A)\ge\kappa T$, and Cauchy interlacing then gives (16.3).
+For equality, the case $a>b$ is excluded by the strictness just proved. If
+$a<b$, (16.6) makes (16.5) strictly negative. Hence $a=b$ and $\chi=0$.
+If $a=b>0$, then
+$q_1=\overline q_1q_2$ forces $|q_2|=1$, impossible for a strictly positive
+probability on the five distinct points $z^{2j}$. Therefore $a=b=0$.
+Fourier inversion gives $p_j=1/5$ for every $j$. Conversely, the uniform vector has
+$q_1=q_2=0$ and equality in (16.3). ∎
+
+**定理 16.3（五边形的尖锐全局界与全部等号）。** For every five-tuple of independent finite strictly positive conductances
+$c=(c_0,\ldots,c_4)$ on the labelled cycle $C_5$,
+
+$$
+\lambda_2(L(c))R(c)\le 25-5\sqrt5.
+\tag{16.11}
+$$
+
+The constant is attained by every constant conductance vector. Equality in (16.11)
+holds if and only if
+
+$$
+c=\gamma(1,1,1,1,1)\qquad(\gamma>0).
+\tag{16.12}
+$$
+
+Thus the equality set is the labelled ray (16.12), with no quotient by rotations or
+reflections.
+
+**证明。** By (5.5) and Lemma 16.2,
+
+$$
+\lambda_2(L(c))R(c)=5\frac{T}{\rho}\le\frac5\kappa
+=\frac{100}{5+\sqrt5}=25-5\sqrt5.
+$$
+
+The lemma also says that equality forces $p_i=1/5$. Since $p_i=r_i/s$ with
+$r_i=c_i^{-1}$, this is equivalent to $c_0=\cdots=c_4=\gamma$ for some
+$\gamma>0$. For the converse, the ordinary unit $C_5$ has nonzero spectrum
+
+$$
+2-2\cos\frac{2\pi k}{5}
+\quad(k=1,2,3,4),
+$$
+
+so $\lambda_2(L(\gamma\mathbf1))=\gamma(5-\sqrt5)/2$. The classical
+identity $R(c)=5\operatorname{tr}L(c)^+$ (the all-pairs pseudoinverse identity
+of Ghosh–Boyd–Saberi, §§2.4–2.5, equations (8), (13)–(15)) gives
+$R(\gamma\mathbf1)=10/\gamma$. Their product is $25-5\sqrt5$. ∎
+
+**推论 16.4（固定总电阻的唯一原始等号向量）。** For every $R_0>0$,
+
+$$
+\max_{\substack{c_i>0\text{ finite}\\R(c)=R_0}}
+\lambda_2(L(c))=\frac{25-5\sqrt5}{R_0},
+\tag{16.13}
+$$
+
+and the unique labelled maximizer is
+
+$$
+c_0=c_1=c_2=c_3=c_4=\frac{10}{R_0}.
+\tag{16.14}
+$$
+
+At this vector the attained Fiedler value is $(25-5\sqrt5)/R_0$.
+
+**证明。** The scaling laws $R(\alpha c)=R(c)/\alpha$ and
+$\lambda_2(L(\alpha c))=\alpha\lambda_2(L(c))$ give from (16.11)
+$\lambda_2\le(25-5\sqrt5)/R_0$ on the level set $R=R_0$. Formula
+$R(\gamma\mathbf1)=10/\gamma$ gives (16.14), which attains that bound. The
+equality clause of Theorem 16.3 proves uniqueness. ∎
+
+## 17. 适用范围、路径参数与未决阶数
+
+The comparison in Lemma 16.2 is over the complete Fourier moment domain
+$0\le|q_1|,|q_2|\le1$, including all three scalar cases $a<b$, $a=b$, and
+$a>b$ and the possible sign change of $L$; strict positivity is used only for
+the equality assertion $|q_1|,|q_2|<1$. The bridge from conductances to this domain
+is the all-pairs cycle identity (5.4)–(5.5), with the same ordinary unit vertex
+masses and the same ten unordered original vertex pairs as in Definition 1.1.
+The classical Fourier diagonalization and pseudoinverse trace identity are the
+only external intermediate inputs; the determinant comparison (16.5)–(16.10) is
+the additional five-cycle derivation.
+
+For boundary directions of the resistance simplex, Theorem 5.1 already supplies
+the complete path comparison. Its parameter map is the one in Convention 4.2:
+for $P_5$, $s=(2,\sqrt6,\sqrt6,2)$,
+$d=(4-\sqrt6,2\sqrt6-4,2\sqrt6-4,4-\sqrt6)$, and the path constant is
+
+$$
+A_5=\sum_{i=1}^4s_id_i=40-12\sqrt6.
+$$
+
+The cited path theorem applies to all positive path conductances and extends to
+closed directions by the continuity argument in Theorem 5.1; it retains the five
+original unit vertex masses and never replaces a deleted edge by a vertex
+contraction. Since $25-5\sqrt5>40-12\sqrt6$, these boundary values lie strictly
+below the five-cycle value. No separately optimized path is assigned to more than
+one deletion of the same labelled cycle.
+
+The result above settles only the unrestricted labelled $C_5$. For every $n\ge6$,
+the exact value of $B_n$ and the complete equality set remain unresolved; none of
+the statements here supplies a general-$n$ bound, a kernel result, or a resolution
+of the original all-$n$ problem.
+
+## 18. 追加锚（本行以下为增补区）
