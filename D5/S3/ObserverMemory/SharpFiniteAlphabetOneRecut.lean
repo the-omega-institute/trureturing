@@ -4,7 +4,7 @@
    mirror-E: none(waiver:symbolic-finite-language-family)
    anchors: []
    utility: none
-   digest: Finite-alphabet derivative tables classify actual one-credit boundaries and attain all sharp fiber bounds. -/
+   digest: Actual finite-alphabet derivative tables attain sharp one-credit fiber bounds. -/
 
 import D5.S3.ObserverMemory.SharpBinaryOneRecut
 
@@ -13,7 +13,6 @@ import D5.S3.ObserverMemory.SharpBinaryOneRecut
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
-open Classical
 namespace D5.S3.ObserverMemory.SharpFiniteAlphabetOneRecut
 open StrictAnchoredBoundary
 variable {A : Type}
@@ -71,21 +70,25 @@ def StrictIdentification (C : Set (List A)) (k : Nat) : Prop :=
 
 private theorem residual_finite [Finite A] (C : Set (List A)) (k : Nat) :
     (residualSet C k).Finite := by
+  classical
   exact ((List.finite_length_eq A k).image (residual C)).subset
     (by rintro S ⟨v,hv,_,rfl⟩; exact ⟨v,hv,rfl⟩)
 
 private theorem residual_nonempty {C : Set (List A)} {k : Nat}
     {S : Set (List A)} (hS : S ∈ residualSet C k) : S.Nonempty := by
+  classical
   obtain ⟨v,_,⟨f,hf⟩,rfl⟩ := hS
   exact ⟨f,hf⟩
 
 private theorem shift (C : Set (List A)) (v : List A) (b : A) :
     residual C (v ++ [b]) = derivative (residual C v) b := by
+  classical
   ext f; simp [StrictAnchoredBoundary.residual,derivative,List.append_assoc]
 
 private theorem derivative_member {C : Set (List A)} {k : Nat} (hk : 1 ≤ k)
     {S : Set (List A)} (hS : S ∈ residualSet C (k - 1)) (b : A)
     (he : (derivative S b).Nonempty) : derivative S b ∈ residualSet C k := by
+  classical
   obtain ⟨v,hv,_,rfl⟩ := hS
   obtain ⟨f,hf⟩ := he
   refine ⟨v ++ [b],?_,⟨f,?_⟩,shift C v b⟩
@@ -95,6 +98,7 @@ private theorem derivative_member {C : Set (List A)} {k : Nat} (hk : 1 ≤ k)
 private theorem previous_no_nil {n k : Nat} {C : Set (List A)}
     (hl : ∀ w ∈ C, w.length = n) (hk : 1 ≤ k) (hkn : k ≤ n)
     {S : Set (List A)} (hS : S ∈ residualSet C (k - 1)) : [] ∉ S := by
+  classical
   obtain ⟨v,hv,_,rfl⟩ := hS
   intro h
   have he := hl _ h
@@ -103,6 +107,7 @@ private theorem previous_no_nil {n k : Nat} {C : Set (List A)}
 
 private theorem derivative_ext {S T : Set (List A)} (hS : [] ∉ S) (hT : [] ∉ T)
     (h : ∀ b, derivative S b = derivative T b) : S = T := by
+  classical
   ext f
   cases f with
   | nil => simp [hS,hT]
@@ -110,18 +115,21 @@ private theorem derivative_ext {S T : Set (List A)} (hS : [] ∉ S) (hT : [] ∉
 
 private theorem remaining_card [Finite A] (b : A) :
     Nat.card (Remaining A b) = Nat.card A - 1 := by
-  letI := Fintype.ofFinite A
+  classical
+  let := Fintype.ofFinite A
   simp [Remaining,Nat.card_eq_fintype_card,Fintype.card_subtype_compl]
 
 private theorem sigma_card [Finite A] {B : Type} [Finite B] :
     Nat.card (Σ b : A, Remaining A b → B) = Nat.card A * Nat.card B ^ (Nat.card A - 1) := by
-  letI := Fintype.ofFinite A
+  classical
+  let := Fintype.ofFinite A
   rw [Nat.card_sigma]
-  simp [Nat.card_fun,remaining_card,Nat.card_eq_fintype_card]
+  simp [Nat.card_fun,Nat.card_eq_fintype_card]
 
 private theorem strict_identification [Finite A] [Nonempty A]
     (n : Nat) (C : Set (List A)) (hl : ∀ w ∈ C, w.length = n) (hc : C.Nonempty)
     (k : Nat) (hk : 1 ≤ k) (hkn : k ≤ n) : StrictIdentification C k := by
+  classical
   have hi := (strict_anchored_specialization n C hl hc k 1 hk hkn).2.2.1
   have member : ∀ S b, (S,[b]) ∈ image C (k,1) ↔ (S,b) ∈ oneBoundary C k := by
     intro S b
@@ -150,8 +158,9 @@ private theorem bounds_with [Finite A] (n : Nat) (C : Set (List A))
     (B : Set (Set (List A))) (hB : B.Finite)
     (hder : ∀ S ∈ residualSet C (k - 1), ∀ b, derivative S b ∈ B) :
     Bounds C k (Nat.card B) := by
-  letI := hB.fintype
-  letI := (residual_finite C k).fintype
+  classical
+  let := hB.fintype
+  let := (residual_finite C k).fintype
   let other (S : residualSet C (k - 1)) (b : A) : Remaining A b → B :=
     fun a => ⟨derivative S.val a.val,hder _ S.property _⟩
   have reconstruct : ∀ (S T : residualSet C (k - 1)) (b : A),
@@ -171,7 +180,8 @@ private theorem bounds_with [Finite A] (n : Nat) (C : Set (List A))
     have hb : z.val.2 = w.val.2 := congrArg (fun p => p.2.1) he
     apply Subtype.ext
     apply Prod.ext ?_ hb
-    apply congrArg Subtype.val (reconstruct ⟨z.val.1,z.property.1⟩ ⟨w.val.1,w.property.1⟩ z.val.2 ?_ ?_)
+    apply congrArg Subtype.val
+      (reconstruct ⟨z.val.1,z.property.1⟩ ⟨w.val.1,w.property.1⟩ z.val.2 ?_ ?_)
     · simpa [forward,hb] using congrArg (fun p => p.1.val) he
     · have hh := congrArg Prod.snd he
       cases z with | mk z hz =>
@@ -190,7 +200,8 @@ private theorem bounds_with [Finite A] (n : Nat) (C : Set (List A))
       have hf : Function.Injective f := by
         intro S T he
         apply Subtype.ext
-        exact congrArg (fun S : residualSet C (k - 1) => S.val) (reconstruct ⟨S.val,S.property.1⟩ ⟨T.val,T.property.1⟩ b
+        exact congrArg (fun S : residualSet C (k - 1) => S.val)
+          (reconstruct ⟨S.val,S.property.1⟩ ⟨T.val,T.property.1⟩ b
           (S.property.2.trans T.property.2.symm) he)
       simpa [Nat.card_fun,remaining_card] using Nat.card_le_card_of_injective f hf
     · let f : currentFiber C k E → (Σ b : A, Remaining A b → B) :=
@@ -213,6 +224,7 @@ private theorem encoded_length {N : Nat} (e : Bool ↪ A) (i : Option (Fin N)) :
     (encoded e i).length = N := by simp [encoded,SharpBinaryOneRecut.word_length]
 private theorem encoded_injective (N : Nat) (e : Bool ↪ A) :
     Function.Injective (@encoded A N e) := by
+  classical
   intro i j h
   exact SharpBinaryOneRecut.word_injective N ((List.map_injective_iff.mpr e.injective) h)
 
@@ -220,12 +232,12 @@ private def blocks {N : Nat} (e : Bool ↪ A) (xs : List A) (t : A → Option (F
   xs.flatMap (fun a => encoded e (t a))
 private theorem blocks_length {N : Nat} (e : Bool ↪ A) (xs : List A) (t : A → Option (Fin N)) :
     (blocks e xs t).length = xs.length * N := by
-  induction xs with
-  | nil => simp [blocks]
-  | cons a xs ih => simpa [blocks,encoded_length,Nat.add_mul,Nat.add_comm] using congrArg (N + ·) ih
+  classical
+  simp [blocks,encoded_length]
 private theorem blocks_recover {N : Nat} (e : Bool ↪ A) (xs : List A)
     (t u : A → Option (Fin N)) (h : blocks e xs t = blocks e xs u) :
     ∀ a ∈ xs, t a = u a := by
+  classical
   induction xs with
   | nil => simp
   | cons a xs ih =>
@@ -241,6 +253,7 @@ private theorem anchor_length [Fintype A] {N : Nat} (e : Bool ↪ A) (t : A → 
     (anchor e t).length = Nat.card A * N := by simp [anchor,blocks_length,Nat.card_eq_fintype_card]
 private theorem anchor_injective [Fintype A] (N : Nat) (e : Bool ↪ A) :
     Function.Injective (@anchor A _ N e) := by
+  classical
   intro t u h
   funext a
   exact blocks_recover e _ t u h a (by simp)
@@ -257,10 +270,12 @@ private def relation [Fintype A] (e : Bool ↪ A) (N : Nat) (full : Bool) : Set 
 
 private theorem derivative_predecessor {N : Nat} (e : Bool ↪ A) (t : A → Option (Fin N)) (b : A) :
     derivative (predecessor e t) b = payload e (t b) := by
+  classical
   ext f
   simp [derivative,predecessor,payload]
 private theorem payload_injective (N : Nat) (e : Bool ↪ A) :
     Function.Injective (@payload A N e) := by
+  classical
   intro i j he
   cases i with
   | none =>
@@ -269,7 +284,7 @@ private theorem payload_injective (N : Nat) (e : Bool ↪ A) :
     | some t =>
       have hh : encoded e (some t) ∈ payload e (some t) := ⟨t,rfl,rfl⟩
       rw [← he] at hh
-      simpa [payload] using hh
+      simp [payload] at hh
   | some s =>
     have hh : encoded e (some s) ∈ payload e (some s) := ⟨s,rfl,rfl⟩
     rw [he] at hh
@@ -277,6 +292,7 @@ private theorem payload_injective (N : Nat) (e : Bool ↪ A) :
     exact encoded_injective N e ht
 private theorem predecessor_injective (N : Nat) (e : Bool ↪ A) :
     Function.Injective (@predecessor A N e) := by
+  classical
   intro t u h
   funext b
   apply payload_injective N e
@@ -285,6 +301,7 @@ private theorem predecessor_injective (N : Nat) (e : Bool ↪ A) :
 private theorem residual_anchor [Fintype A] (N : Nat) (full : Bool)
     (e : Bool ↪ A) (t : A → Option (Fin N)) (ht : Admissible full t) :
     residual (relation e N full) (anchor e t) = predecessor e t := by
+  classical
   ext f
   constructor
   · rintro ⟨u,hu,b,s,hs,he⟩
@@ -299,6 +316,7 @@ private theorem previous_prefix_complete [Fintype A] {N : Nat} {full : Bool}
     (e : Bool ↪ A) {v : List A} (hv : v.length = Nat.card A * N) :
     (∃ f, v ++ f ∈ relation e N full) ↔
       ∃ t : A → Option (Fin N), Admissible full t ∧ v = anchor e t := by
+  classical
   constructor
   · rintro ⟨f,t,ht,b,s,hs,he⟩
     exact ⟨t,ht,(List.append_inj he (hv.trans (anchor_length e t).symm)).1⟩
@@ -311,6 +329,7 @@ private theorem current_prefix_complete [Fintype A] {N : Nat} {full : Bool}
     (∃ f, v ++ f ∈ relation e N full) ↔
       ∃ t : A → Option (Fin N), Admissible full t ∧
         ∃ b s, t b = some s ∧ v = anchor e t ++ [b] := by
+  classical
   constructor
   · rintro ⟨f,t,ht,b,s,hs,he⟩
     have he' : v ++ f = (anchor e t ++ [b]) ++ encoded e (some s) := by
@@ -324,6 +343,7 @@ private theorem residual_selected [Fintype A] {N : Nat} {full : Bool}
     (e : Bool ↪ A) (t : A → Option (Fin N)) (ht : Admissible full t)
     (b : A) (s : Fin N) (hs : t b = some s) :
     residual (relation e N full) (anchor e t ++ [b]) = {encoded e (some s)} := by
+  classical
   rw [shift,residual_anchor N full e t ht,derivative_predecessor,hs]
   ext f
   simp [payload]
@@ -331,6 +351,7 @@ private theorem residual_selected [Fintype A] {N : Nat} {full : Bool}
 private theorem previous_residuals [Fintype A] (N : Nat) (full : Bool) (e : Bool ↪ A) :
     residualSet (relation e N full) (Nat.card A * N) =
       {S | ∃ t : A → Option (Fin N), Admissible full t ∧ predecessor e t = S} := by
+  classical
   ext S
   constructor
   · rintro ⟨v,hv,hC,rfl⟩
@@ -344,6 +365,7 @@ private theorem previous_residuals [Fintype A] (N : Nat) (full : Bool) (e : Bool
 private theorem current_residuals [Fintype A] (N : Nat) (full : Bool) (e : Bool ↪ A) :
     residualSet (relation e N full) (Nat.card A * N + 1) =
       Set.range (fun s : Fin N => ({encoded e (some s)} : Set (List A))) := by
+  classical
   ext S
   constructor
   · rintro ⟨v,hv,hC,rfl⟩
@@ -359,6 +381,7 @@ private theorem actual_boundary [Fintype A] (N : Nat) (full : Bool) (e : Bool �
     oneBoundary (relation e N full) (Nat.card A * N + 1) =
       {z | ∃ t : A → Option (Fin N), Admissible full t ∧
         ∃ s, t z.2 = some s ∧ z.1 = predecessor e t} := by
+  classical
   ext z
   rcases z with ⟨S,b⟩
   simp only [oneBoundary,Set.mem_ofPred_eq,Nat.add_sub_cancel,previous_residuals]
@@ -374,6 +397,7 @@ private theorem actual_boundary [Fintype A] (N : Nat) (full : Bool) (e : Bool �
 
 private theorem full_branching [Fintype A] (N : Nat) (e : Bool ↪ A) :
     FullBranching (relation e N true) (Nat.card A * N + 1) := by
+  classical
   intro v hv hC b
   have hv' : v.length = Nat.card A * N := by omega
   obtain ⟨t,ht,rfl⟩ := (previous_prefix_complete e hv').mp hC
@@ -383,6 +407,7 @@ private theorem full_branching [Fintype A] (N : Nat) (e : Bool ↪ A) :
 
 private theorem boundary_finite [Finite A] (C : Set (List A)) (k : Nat) :
     (oneBoundary C k).Finite := by
+  classical
   exact ((residual_finite C (k - 1)).prod (Set.finite_univ : (Set.univ : Set A).Finite)).subset
     (fun _ hz => ⟨hz.1,Set.mem_univ _⟩)
 private theorem fixed_finite [Finite A] (C : Set (List A)) (k : Nat) (E : Set (List A)) (b : A) :
@@ -394,7 +419,8 @@ private theorem current_finite [Finite A] (C : Set (List A)) (k : Nat) (E : Set 
 private theorem current_fiber_card [Fintype A] (C : Set (List A)) (k : Nat)
     (E : Set (List A)) (hE : E.Nonempty) :
     Nat.card (currentFiber C k E) = ∑ b : A, Nat.card (fixedFiber C k E b) := by
-  letI (b : A) : Finite (fixedFiber C k E b) := (fixed_finite C k E b).to_subtype
+  classical
+  let (b : A) : Finite (fixedFiber C k E b) := (fixed_finite C k E b).to_subtype
   let e : currentFiber C k E ≃ Σ b : A, fixedFiber C k E b := {
     toFun := fun z => ⟨z.val.2,⟨z.val.1,z.property.1.1,z.property.2⟩⟩
     invFun := fun z => ⟨(z.2.val,z.1),⟨z.2.property.1,by
@@ -404,10 +430,11 @@ private theorem current_fiber_card [Fintype A] (C : Set (List A)) (k : Nat)
     right_inv := by rintro ⟨b,S⟩; rfl }
   rw [Nat.card_congr e,Nat.card_sigma]
 
-private theorem boundary_card [Fintype A] (C : Set (List A)) (k : Nat)
+private theorem boundary_card [Finite A] (C : Set (List A)) (k : Nat)
     [Fintype (residualSet C k)] (hk : 1 ≤ k) :
     Nat.card (oneBoundary C k) = ∑ E : residualSet C k, Nat.card (currentFiber C k E.val) := by
-  letI (E : residualSet C k) : Finite (currentFiber C k E.val) :=
+  classical
+  let (E : residualSet C k) : Finite (currentFiber C k E.val) :=
     (current_finite C k E.val).to_subtype
   let e : oneBoundary C k ≃ Σ E : residualSet C k, currentFiber C k E.val := {
     toFun := fun z => ⟨⟨forward z.val,derivative_member hk z.property.1 _ z.property.2⟩,
@@ -423,9 +450,12 @@ private theorem boundary_card [Fintype A] (C : Set (List A)) (k : Nat)
 
 private def fill {N : Nat} {full : Bool} (b : A) (s : Fin N)
     (r : Remaining A b → SharpBinaryOneRecut.Spare N full) : A → Option (Fin N) :=
-  fun a => if h : a = b then some s else (r ⟨a,h⟩).val
+  by
+    classical
+    exact fun a => if h : a = b then some s else (r ⟨a,h⟩).val
 private theorem fill_admissible {N : Nat} {full : Bool} (b : A) (s : Fin N)
     (r : Remaining A b → SharpBinaryOneRecut.Spare N full) : Admissible full (fill b s r) := by
+  classical
   refine ⟨⟨b,s,by simp [fill]⟩,?_⟩
   intro hf a
   by_cases ha : a = b
@@ -436,6 +466,7 @@ private def fixed_fiber_equiv [Fintype A] {N : Nat} (full : Bool)
     (e : Bool ↪ A) (s : Fin N) (b : A) :
     (Remaining A b → SharpBinaryOneRecut.Spare N full) ≃
       fixedFiber (relation e N full) (Nat.card A * N + 1) {encoded e (some s)} b := by
+  classical
   let f : (Remaining A b → SharpBinaryOneRecut.Spare N full) →
       fixedFiber (relation e N full) (Nat.card A * N + 1) {encoded e (some s)} b :=
     fun r => ⟨predecessor e (fill b s r),by
@@ -484,6 +515,7 @@ private theorem attained_counts [Fintype A] (N : Nat) (full : Bool) (e : Bool �
         Nat.card A * (N + if full then 0 else 1) ^ (Nat.card A - 1)) ∧
     Nat.card (oneBoundary (relation e N full) (Nat.card A * N + 1)) =
       Nat.card A * N * (N + if full then 0 else 1) ^ (Nat.card A - 1) := by
+  classical
   have width : Nat.card (residualSet (relation e N full) (Nat.card A * N + 1)) = N := by
     rw [current_residuals,Nat.card_range_of_injective]
     · simp
@@ -507,9 +539,10 @@ private theorem attained_counts [Fintype A] (N : Nat) (full : Bool) (e : Bool �
     simp_rw [fixed]
     simp only [Finset.sum_const,Finset.card_univ,smul_eq_mul,← Nat.card_eq_fintype_card]
   refine ⟨width,fibers,?_⟩
-  letI := (residual_finite (relation e N full) (Nat.card A * N + 1)).fintype
+  let := (residual_finite (relation e N full) (Nat.card A * N + 1)).fintype
   rw [boundary_card _ _ (by omega)]
-  simp_rw [fun E : residualSet (relation e N full) (Nat.card A * N + 1) => (fibers E.val E.property).2]
+  simp_rw [fun E : residualSet (relation e N full) (Nat.card A * N + 1) =>
+    (fibers E.val E.property).2]
   simp only [Finset.sum_const,Finset.card_univ,smul_eq_mul,← Nat.card_eq_fintype_card,width]
   ring
 
@@ -517,6 +550,7 @@ private theorem attained_counts [Fintype A] (N : Nat) (full : Bool) (e : Bool �
 private theorem finite_carriers [Finite A] [Nonempty A] (n : Nat) (C : Set (List A))
     (hl : ∀ w ∈ C, w.length = n) (hc : C.Nonempty) (k : Nat) (hk : 1 ≤ k) (hkn : k ≤ n) :
     FiniteCarriers C k := by
+  classical
   refine ⟨(List.finite_length_eq A n).subset hl,?_,boundary_finite C k,?_,?_⟩
   · intro j
     refine ⟨(List.finite_length_eq A j).subset (fun _ h => h.1),residual_finite C j,?_⟩
@@ -528,7 +562,7 @@ private theorem finite_carriers [Finite A] [Nonempty A] (n : Nat) (C : Set (List
     change f.length = n-j
     omega
   · obtain ⟨e,_⟩ := strict_identification n C hl hc k hk hkn
-    letI := (boundary_finite C k).to_subtype
+    let := (boundary_finite C k).to_subtype
     exact Set.finite_coe_iff.mp (Finite.of_equiv _ e)
   · intro E
     exact ⟨current_finite C k E,fixed_finite C k E⟩
@@ -541,8 +575,9 @@ private theorem universal_bounds [Finite A] [Nonempty A] (hq : 2 ≤ Nat.card A)
     (∀ z ∈ oneBoundary C k, forward z ∈ residualSet C k) ∧
     Bounds C k (Nat.card (residualSet C k)+1) ∧
     (FullBranching C k → FullBounds C k) := by
+  classical
   have hfin := residual_finite C k
-  letI := hfin.fintype
+  let := hfin.fintype
   have hn : 0 < Nat.card (residualSet C k) := by
     obtain ⟨w,hw⟩ := hc
     have hR : residual C (w.take k) ∈ residualSet C k := by
@@ -555,7 +590,7 @@ private theorem universal_bounds [Finite A] [Nonempty A] (hq : 2 ≤ Nat.card A)
   · have hempty : (∅ : Set (List A)) ∉ residualSet C k := by
       intro h; exact (residual_nonempty h).ne_empty rfl
     have hB := hfin.insert (∅ : Set (List A))
-    letI := hB.fintype
+    let := hB.fintype
     have hcard : Nat.card (insert (∅ : Set (List A)) (residualSet C k) : Set (Set (List A))) =
         Nat.card (residualSet C k)+1 := by
       rw [Nat.card_eq_fintype_card,Nat.card_eq_fintype_card,Set.card_insert _ hempty]
@@ -577,10 +612,13 @@ private theorem universal_bounds [Finite A] [Nonempty A] (hq : 2 ≤ Nat.card A)
       rw [pow_succ]; ring
     simpa only [hp,Nat.mul_assoc] using hbound.2
 
-private theorem attainment [Fintype A] (hq : 2 ≤ Nat.card A) (N : Nat) (hN : 1 ≤ N)
+private theorem attainment [Finite A] (hq : 2 ≤ Nat.card A) (N : Nat) (hN : 1 ≤ N)
     (full : Bool) : Attains (A := A) N full := by
+  classical
+  let := Fintype.ofFinite A
   obtain ⟨e⟩ : Nonempty (Bool ↪ A) :=
-    Function.Embedding.nonempty_of_card_le (by simpa only [Fintype.card_bool,Nat.card_eq_fintype_card] using hq)
+    Function.Embedding.nonempty_of_card_le (by
+      simpa only [Fintype.card_bool,Nat.card_eq_fintype_card] using hq)
   let s : Fin N := ⟨0,by omega⟩
   let t : A → Option (Fin N) := fun _ => some s
   have ht : Admissible full t := ⟨⟨e false,s,rfl⟩,by simp [t]⟩
@@ -611,9 +649,10 @@ theorem sharp_finite_alphabet_one_recut :
       Bounds C k (Nat.card (residualSet C k)+1) ∧
       (FullBranching C k → FullBounds C k)) ∧
     (∀ N : Nat, 1 ≤ N → Attains (A := A) N false ∧ Attains (A := A) N true) := by
+  classical
   intro A _ hq
-  letI := Fintype.ofFinite A
-  haveI : Nontrivial A := Fintype.one_lt_card_iff_nontrivial.mp (by
+  let := Fintype.ofFinite A
+  have : Nontrivial A := Fintype.one_lt_card_iff_nontrivial.mp (by
     simpa only [← Nat.card_eq_fintype_card] using (show 1 < Nat.card A by omega))
   exact ⟨universal_bounds hq,fun N hN => ⟨attainment hq N hN false,attainment hq N hN true⟩⟩
 

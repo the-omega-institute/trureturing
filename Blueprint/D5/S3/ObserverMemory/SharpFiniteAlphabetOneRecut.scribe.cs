@@ -22,6 +22,7 @@ internal sealed class SharpFiniteAlphabetOneRecutDocument : IScribeDocumentDefin
     private static Formula Mem(Formula x, Formula s) => Call("Member", x, s);
     private static Formula Fin(Formula s) => Call("Finite", s);
     private static Formula Card(Formula s) => Call("card", s);
+    private static Formula Pow(Formula x, Formula y) => Seq(Open, x, Close, Caret, Grp(y));
     private static Formula Words => Call("List", V("A"));
     private static Formula Languages => Call("Set", Words);
     private static Formula Pairs => Call("Prod", Languages, V("A"));
