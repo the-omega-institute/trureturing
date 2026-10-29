@@ -14,6 +14,8 @@ import Mathlib.LinearAlgebra.BilinearMap
 import Mathlib.Data.Finite.Perm
 import D5.S3.FiniteGroups.SuccessorPowerAssignments
 
+/- Escape audit for the newly public owner lemmas is unfinished: https://github.com/the-omega-institute/trureturing/issues/22095 -/
+
 /-! The definitions below retain the full bilinear, potentially nonassociative
     multiplication-preserving LinearEquiv group. No associative algebra or graph
     automorphism surrogate is used. -/
@@ -41,7 +43,7 @@ def supportRelation {n : ℕ} (μ : Product n)
     (b : Module.Basis (Fin n) ℂ (Coord n)) (i j : Fin n) : Prop :=
   structureCoefficient μ b i j ≠ 0
 
-private theorem structure_map_injective {n : ℕ} (μ : Product n)
+theorem structure_map_injective {n : ℕ} (μ : Product n)
     (b : Module.Basis (Fin n) ℂ (Coord n)) (hp : perfect μ)
     (M : Coord n →ₗ[ℂ] Coord n)
     (hM : ∀ x y, b.equivFun (μ x y) = M (b.equivFun x * b.equivFun y)) :
