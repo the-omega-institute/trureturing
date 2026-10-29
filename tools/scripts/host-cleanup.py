@@ -99,11 +99,16 @@ class ProtectedPaths:
 
 
 class RefRecovery:
-    """Check byte recovery from retained commit refs, with a sweep-local object listing."""
+    """Check intact blobs against a bounded sample of retained commit trees."""
+    REF_TIP_LIMIT = 16
+    HISTORY_LIMIT = 32
+
     def __init__(self, repository):
         self.repository = repository
+        self.candidate = None
         self.refs = None
-        self.objects = tempfile.TemporaryFile()
+        self.roots = []
+        self.scanned = set()
         self.reachable = set()
         self._algorithm = None
 
@@ -115,37 +120,70 @@ class RefRecovery:
         return self._algorithm
 
     def close(self):
-        self.objects.close()
+        self.refs = None
+        self.roots.clear()
+        self.scanned.clear()
+        self.reachable.clear()
+
+    def selected_roots(self):
+        # Names prioritize evidence only; even an exact match certifies no bytes.
+        name = os.fsencode(self.candidate.name) if self.candidate is not None else b""
+        name = re.sub(rb"(?:-cleanup-[0-9a-f]{32})+$", b"", name)
+        def priority(root):
+            ref = root[0]
+            leaf = ref.rsplit(b"/", 1)[-1]
+            matches = name == leaf or name.endswith(b"-" + leaf)
+            return (-len(leaf) if matches else 0, ref)
+        return list(dict.fromkeys(oid for _, oid in sorted(self.roots, key=priority)))[:self.REF_TIP_LIMIT]
+
+    def scan_commit(self, commit):
+        if commit in self.scanned:
+            return
+        preservation, _ = worktree_modules()
+        listing = preservation.git(self.repository, "--no-replace-objects", "ls-tree", "-r", "-z",
+                                   "--full-tree", commit.decode("ascii"), "--", "Blueprint", timeout=60).stdout
+        for row in listing.split(b"\0"):
+            if not row:
+                continue
+            metadata, separator, _ = row.partition(b"\t")
+            fields = metadata.split()
+            if not separator or len(fields) != 3:
+                raise ValueError("recovery_tree_unreadable")
+            if fields[1] == b"blob":
+                self.reachable.add(fields[2])
+        self.scanned.add(commit)
 
     def check(self, wanted):
         preservation, _ = worktree_modules()
         from worktree_protocol import git_environment, scope_fds
         refs = preservation.git(self.repository, "for-each-ref", "--format=%(refname) %(objectname)").stdout
         if refs != self.refs:
-            # Peeling to commits excludes blob/tree-only refs and includes annotated tags.
-            names = [row.split(b" ", 1)[0] + b"^{commit}\n" for row in refs.splitlines()]
-            peeled = preservation.git(self.repository, "cat-file", "--batch-check=%(objectname) %(objecttype)",
-                                      input=b"".join(names)).stdout
-            roots = [row.split()[0] for row in peeled.splitlines() if row.endswith(b" commit")]
-            self.objects.seek(0)
-            self.objects.truncate()
-            if roots:
-                subprocess.run(["git", "--no-replace-objects", "-C", str(self.repository), "rev-list",
-                                "--objects", "--no-object-names", "--stdin"],
-                               input=b"\n".join(roots) + b"\n", stdout=self.objects,
-                               stderr=subprocess.PIPE, check=True, timeout=60,
-                               env=git_environment(), pass_fds=scope_fds())
-            self.refs, self.reachable = refs, set()
+            # Peel snapshot OIDs, so a moving ref cannot substitute another root.
+            records = [row.split(b" ", 1) for row in refs.splitlines()]
+            names = [oid + b"^{commit}\n" for _, oid in records]
+            peeled = preservation.git(self.repository, "--no-replace-objects", "cat-file",
+                                      "--batch-check=%(objectname) %(objecttype)", input=b"".join(names)).stdout
+            rows = peeled.splitlines()
+            if len(rows) != len(records):
+                raise ValueError("recovery_roots_unreadable")
+            self.roots = [(record[0], row.split()[0]) for record, row in zip(records, rows)
+                          if row.endswith(b" commit")]
+            self.refs, self.reachable, self.scanned = refs, set(), set()
+        roots = self.selected_roots()
+        for root in roots:
+            if wanted <= self.reachable:
+                break
+            self.scan_commit(root)
+        if roots and not wanted <= self.reachable:
+            # Sample commit history without enumerating the reachable object database.
+            history = preservation.git(self.repository, "--no-replace-objects", "rev-list",
+                                       "--max-count=" + str(self.HISTORY_LIMIT), "--stdin",
+                                       input=b"\n".join(roots) + b"\n", timeout=60).stdout
+            for commit in history.splitlines():
+                self.scan_commit(commit)
+                if wanted <= self.reachable:
+                    break
         missing = set(wanted) - self.reachable
-        if missing:
-            self.objects.seek(0)
-            for row in self.objects:
-                oid = row.strip()
-                if oid in missing:
-                    missing.remove(oid)
-                    self.reachable.add(oid)
-                    if not missing:
-                        break
         if not missing:
             # Listing a blob does not establish that its bytes are present and intact.
             with tempfile.TemporaryFile() as blobs:
@@ -312,6 +350,7 @@ def clean_candidate(path, cutoff, protected, delete=False, repository=None, acti
         if remnant:
             if recovery is None:
                 owned_recovery = recovery = RefRecovery(repository)
+            recovery.candidate = path
             kwargs.update(remnant=True, recovery=recovery)
         if not reclaim:
             kwargs["reclaim"] = False

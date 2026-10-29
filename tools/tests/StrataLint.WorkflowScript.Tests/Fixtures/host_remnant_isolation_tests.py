@@ -269,7 +269,7 @@ print('finished without isolation', flush=True)
             self.git(self.main, "update-ref", "refs/heads/a-unrelated-" + str(index), commit)
 
     def bounded_recovery_calls(self, calls):
-        run = subprocess.run
+        popen = subprocess.Popen
         def observed(arguments, **kwargs):
             if arguments[0] == "git":
                 self.assertNotIn("--objects", arguments, "[FAIL] bounded_recovery_no_object_walk")
@@ -277,8 +277,8 @@ print('finished without isolation', flush=True)
                 calls.append(arguments)
                 if "rev-list" in arguments:
                     self.assertIn("--max-count=32", arguments, "[FAIL] bounded_recovery_history_sample")
-            return run(arguments, **kwargs)
-        return patch.object(cleanup.subprocess, "run", side_effect=observed)
+            return popen(arguments, **kwargs)
+        return patch.object(cleanup.subprocess, "Popen", side_effect=observed)
 
     def test_recovery_matching_tip_ignores_unrelated_object_history(self):
         baseline = self.git(self.main, "rev-parse", "HEAD")
