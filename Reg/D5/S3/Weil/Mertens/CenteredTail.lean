@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.Mertens.CenteredTail
 import Reg.Support.SingleDependentReadout
 
+/-! A source-bound real-variable audit of the original centered Mertens tail. -/
+
 namespace Reg.D5.S3.Weil.Mertens.CenteredTail
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily

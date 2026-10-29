@@ -127,9 +127,9 @@ private theorem eventual_envelope_of_prime_product {B c : ℝ} (hB : 286 ≤ B)
   have hcostle := div_le_div_of_nonneg_right hratio hL.le
   change Real.log ((ArithmeticFunction.sigma 1 n : ℝ) / n) -
     Real.log (Real.log X) - Real.eulerMascheroniConstant ≤
-      ((c) + epsilon) / Real.log X
-  have hid : (c) / Real.log X + epsilon / Real.log X =
-      ((c) + epsilon) / Real.log X := by ring
+      (c + epsilon) / Real.log X
+  have hid : c / Real.log X + epsilon / Real.log X =
+      (c + epsilon) / Real.log X := by ring
   linarith
 
 /-- The strict inventory transfers its arbitrary positive size error to every actual
