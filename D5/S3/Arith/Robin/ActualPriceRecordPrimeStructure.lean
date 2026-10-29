@@ -4,12 +4,16 @@
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
    utility: none
-   digest: Positive-price predecessor records have same-integer prime structure and localization. -/
+   digest: Positive-price records have same-integer prime structure, localization and uniform Euler-tail upper control. -/
 
 import D5.S3.Arith.ExponentExchange.PrefixNormalForm
 import D5.S3.Arith.Robin.OriginalEndpointPrimeTail
 import D5.S3.Arith.Robin.EulerLayerRootCorrection
+import D5.S3.Arith.ExponentExchange.PriceRecordMissingLayer
 import Mathlib.Analysis.Complex.ExponentialBounds
+import Mathlib.NumberTheory.AbelSummation
+import Mathlib.Analysis.SumIntegralComparisons
+import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 
 /-! All positive predecessors, including one and two, occur in the record premise.
 The strict inventory is used as a divisible envelope, with its own full counts.
@@ -315,6 +319,653 @@ theorem price_record_largest_prime_localization :
     have hr := (div_lt_iff₀ hX).mpr hh
     change P / X - 1 < epsilon
     linarith only [hr]
+
+private theorem finite_theta_abel_upper {y z rho : ℝ} (hy : 1 < y) (hyz : y ≤ z)
+    (hrho : 0 ≤ rho)
+    (htheta : ∀ t ∈ Set.Icc y z,
+      (1 - rho) * t ≤ θ t ∧ θ t ≤ (1 + rho) * t) :
+    (∑ p ∈ (Ioc ⌊y⌋₊ ⌊z⌋₊).filter Nat.Prime, 1 / (p : ℝ) ^ 2) ≤
+      (1 + 3 * rho) / (y * Real.log y) := by
+  classical
+  let c : ℕ → ℝ := fun p => if p.Prime then Real.log p else 0
+  let f : ℝ → ℝ := fun t => 1 / t ^ 2
+  have hy0 : 0 < y := by linarith
+  have hz0 : 0 < z := hy0.trans_le hyz
+  have hc (t : ℝ) : (∑ p ∈ Icc 0 ⌊t⌋₊, c p) = θ t := by
+    simp only [c, ← sum_filter, Chebyshev.theta_eq_sum_Icc]
+  have hd (t : ℝ) (ht : t ∈ Set.Icc y z) :
+      HasDerivAt f (-2 / t ^ 3) t := by
+    have ht0 : t ≠ 0 := (hy0.trans_le ht.1).ne'
+    convert (hasDerivAt_const t (1 : ℝ)).fun_div ((hasDerivAt_id t).pow 2)
+      (pow_ne_zero 2 ht0) using 1 <;> dsimp [f] <;> field_simp <;> ring
+  have hcont : ContinuousOn (fun t : ℝ => -2 / t ^ 3) (Set.Icc y z) :=
+    continuousOn_const.div (continuousOn_id.pow 3)
+      (fun t ht => pow_ne_zero _ (hy0.trans_le ht.1).ne')
+  have hi : MeasureTheory.IntegrableOn (deriv f) (Set.Icc y z) :=
+    hcont.integrableOn_Icc.congr_fun (fun t ht => (hd t ht).deriv.symm)
+      measurableSet_Icc
+  have habel := sum_mul_eq_sub_sub_integral_mul c hy0.le hyz
+    (fun t ht => (hd t ht).differentiableAt) hi
+  simp_rw [hc] at habel
+  rw [← intervalIntegral.integral_of_le hyz] at habel
+  have hprod : MeasureTheory.IntegrableOn (fun t => deriv f t * θ t) (Set.Icc y z) := by
+    simpa only [hc] using integrableOn_mul_sum_Icc c hy0.le hi (m := 0)
+  have hlowcont : ContinuousOn (fun t : ℝ => -2 * (1 + rho) / t ^ 2)
+      (Set.Icc y z) := continuousOn_const.div (continuousOn_id.pow 2)
+        (fun t ht => pow_ne_zero _ (hy0.trans_le ht.1).ne')
+  have hlowint := hlowcont.intervalIntegrable_of_Icc (μ := MeasureTheory.volume) hyz
+  have hint := intervalIntegral.integral_mono_on hyz hlowint
+    ((intervalIntegrable_iff_integrableOn_Icc_of_le hyz).mpr hprod) (fun t ht => by
+      rw [(hd t ht).deriv]
+      have ht0 : 0 < t := hy0.trans_le ht.1
+      have hh := mul_le_mul_of_nonpos_left (htheta t ht).2
+        (show -2 / t ^ 3 ≤ 0 by exact div_nonpos_of_nonpos_of_nonneg (by norm_num) (by positivity))
+      convert hh using 1 <;> field_simp <;> ring)
+  have hFTC : (∫ t in y..z, -2 * (1 + rho) / t ^ 2) =
+      2 * (1 + rho) / z - 2 * (1 + rho) / y := by
+    apply intervalIntegral.integral_eq_sub_of_hasDerivAt
+      (f := fun t : ℝ => 2 * (1 + rho) / t) _ hlowint
+    intro t ht
+    rw [Set.uIcc_of_le hyz] at ht
+    have ht0 : t ≠ 0 := (hy0.trans_le ht.1).ne'
+    convert (hasDerivAt_const t (2 * (1 + rho))).fun_div (hasDerivAt_id t) ht0
+      using 1 <;> simp only [id_eq, zero_mul, mul_one, zero_sub, neg_mul]
+  rw [hFTC] at hint
+  have htop : f z * θ z ≤ (1 + rho) / z := by
+    have hh := mul_le_mul_of_nonneg_left (htheta z ⟨hyz, le_rfl⟩).2
+      (show 0 ≤ f z by dsimp [f]; positivity)
+    convert hh using 1 <;> dsimp [f] <;> field_simp <;> ring
+  have hbot : (1 - rho) / y ≤ f y * θ y := by
+    have hh := mul_le_mul_of_nonneg_left (htheta y ⟨le_rfl, hyz⟩).1
+      (show 0 ≤ f y by dsimp [f]; positivity)
+    convert hh using 1 <;> dsimp [f] <;> field_simp <;> ring
+  have hweighted : (∑ p ∈ (Ioc ⌊y⌋₊ ⌊z⌋₊).filter Nat.Prime,
+      Real.log p / (p : ℝ) ^ 2) ≤ (1 + 3 * rho) / y := by
+    have hs : (∑ p ∈ Ioc ⌊y⌋₊ ⌊z⌋₊, f p * c p) =
+        ∑ p ∈ (Ioc ⌊y⌋₊ ⌊z⌋₊).filter Nat.Prime, Real.log p / (p : ℝ) ^ 2 := by
+      simp only [sum_filter, c, f, mul_ite, mul_zero, one_div_mul_eq_div]
+    rw [hs] at habel
+    have hzterm : 0 ≤ (1 + rho) / z := by positivity
+    have heq : (1 + rho) / z - (1 - rho) / y -
+        (2 * (1 + rho) / z - 2 * (1 + rho) / y) =
+        (1 + 3 * rho) / y - (1 + rho) / z := by ring
+    linarith
+  have hlogy : 0 < Real.log y := Real.log_pos hy
+  have hcompare : Real.log y *
+      (∑ p ∈ (Ioc ⌊y⌋₊ ⌊z⌋₊).filter Nat.Prime, 1 / (p : ℝ) ^ 2) ≤
+      ∑ p ∈ (Ioc ⌊y⌋₊ ⌊z⌋₊).filter Nat.Prime, Real.log p / (p : ℝ) ^ 2 := by
+    rw [mul_sum]
+    apply sum_le_sum
+    intro p hp
+    have hpy : y < (p : ℝ) := (Nat.floor_lt hy0.le).mp (mem_Ioc.mp (mem_filter.mp hp).1).1
+    have hlog := Real.log_le_log hy0 hpy.le
+    simpa only [div_eq_mul_inv, one_mul] using
+      mul_le_mul_of_nonneg_right hlog (inv_nonneg.mpr (sq_nonneg (p : ℝ)))
+  rw [← div_div]
+  apply (le_div_iff₀ hlogy).mpr
+  rw [mul_comm]
+  exact hcompare.trans hweighted
+
+private theorem record_lower_price {m : ℕ} (hm : 0 < m) {a b : ℝ} (hab : a ≤ b)
+    (hrecord : ∀ n : ℕ, 0 < n → n < m →
+      goldenResourceObjective b n < goldenResourceObjective b m) :
+    ∀ n : ℕ, 0 < n → n < m →
+      goldenResourceObjective a n < goldenResourceObjective a m := by
+  intro n hn hnm
+  have hlog := Real.log_lt_log (by exact_mod_cast hn : (0 : ℝ) < n)
+    (by exact_mod_cast hnm : (n : ℝ) < m)
+  have hr := hrecord n hn hnm
+  rw [golden_resource_sigma_identity b (by omega : 1 ≤ n),
+    golden_resource_sigma_identity b (by omega : 1 ≤ m)] at hr
+  rw [golden_resource_sigma_identity a (by omega : 1 ≤ n),
+    golden_resource_sigma_identity a (by omega : 1 ≤ m)]
+  nlinarith [mul_nonneg (sub_nonneg.mpr hab) (sub_nonneg.mpr hlog.le)]
+
+private theorem short_layer_gain_lower {m q : ℕ} (hq : q.Prime)
+    (hv : m.factorization q ≤ 1) :
+    (1 - 1 / (q : ℝ)) / (q : ℝ) ^ 2 ≤
+      goldenLayerMarginal q (m.factorization q + 1) * Real.log q := by
+  let x := (q : ℝ)⁻¹
+  let r := x ^ (m.factorization q + 1)
+  have hq0 : (0 : ℝ) < q := by exact_mod_cast hq.pos
+  have hx : 0 < x := inv_pos.mpr hq0
+  have hx1 : x < 1 := (inv_lt_one₀ hq0).mpr (by exact_mod_cast hq.one_lt)
+  have hr0 : 0 ≤ r := (pow_pos hx _).le
+  have hr1 : r < 1 := pow_lt_one₀ hx.le hx1 (by omega)
+  have hrx : r * x < 1 := by nlinarith
+  have hden : 0 < 1 - r := by linarith
+  have hnum : 0 < 1 - r * x := by linarith
+  have hlog := Real.one_sub_inv_le_log_of_pos (div_pos hnum hden)
+  have hbase : r * (1 - x) ≤ 1 - ((1 - r * x) / (1 - r))⁻¹ := by
+    rw [inv_div]
+    have hh : (1 - r) / (1 - r * x) ≤ 1 - r * (1 - x) := by
+      apply (div_le_iff₀ hnum).mpr
+      nlinarith [mul_nonneg (mul_nonneg hr0 (sub_nonneg.mpr hx1.le))
+        (mul_nonneg hr0 hx.le)]
+    linarith
+  have hpow : x ^ 2 ≤ r := pow_le_pow_of_le_one hx.le hx1.le (by omega)
+  have hsmall := mul_le_mul_of_nonneg_right hpow (sub_nonneg.mpr hx1.le)
+  have heq : goldenLayerMarginal q (m.factorization q + 1) * Real.log q =
+      Real.log ((1 - r * x) / (1 - r)) := by
+    unfold goldenLayerMarginal
+    rw [div_mul_cancel₀ _ hq.log_pos.ne', pow_succ]
+  rw [heq]
+  have hh := hsmall.trans (hbase.trans hlog)
+  convert hh using 1 <;> dsimp [x] <;> field_simp <;> ring
+
+private theorem actual_layer_tail_le {m q : ℕ} (hq : q.Prime) {k : ℕ}
+    (hk : 1 ≤ k) (hkv : k ≤ m.factorization q + 1) :
+    OriginalEndpointPrimeTail.layerTail m q ≤
+      (q : ℝ)⁻¹ ^ k / (1 - (q : ℝ)⁻¹ ^ k) := by
+  have hq0 : (0 : ℝ) < q := by exact_mod_cast hq.pos
+  have hx : 0 < (q : ℝ)⁻¹ := inv_pos.mpr hq0
+  have hx1 : (q : ℝ)⁻¹ < 1 :=
+    (inv_lt_one₀ hq0).mpr (by exact_mod_cast hq.one_lt)
+  have hrk : (q : ℝ)⁻¹ ^ (m.factorization q + 1) ≤ (q : ℝ)⁻¹ ^ k :=
+    pow_le_pow_of_le_one hx.le hx1.le hkv
+  have hkl : (q : ℝ)⁻¹ ^ k < 1 := pow_lt_one₀ hx.le hx1 (by omega)
+  have hr : 0 < 1 - (q : ℝ)⁻¹ ^ (m.factorization q + 1) := by linarith
+  have hlog : -Real.log (1 - (q : ℝ)⁻¹ ^ k) ≤
+      (q : ℝ)⁻¹ ^ k / (1 - (q : ℝ)⁻¹ ^ k) := by
+    have hh := Real.log_le_sub_one_of_pos (inv_pos.mpr (sub_pos.mpr hkl))
+    rw [Real.log_inv] at hh
+    calc
+      _ ≤ (1 - (q : ℝ)⁻¹ ^ k)⁻¹ - 1 := hh
+      _ = _ := by
+        apply (eq_div_iff (sub_pos.mpr hkl).ne').mpr
+        rw [sub_mul, inv_mul_cancel₀ (sub_pos.mpr hkl).ne']
+        ring
+  exact (neg_le_neg (Real.log_le_log (sub_pos.mpr hkl) (by linarith))).trans hlog
+
+private theorem medium_valuation {m P q : ℕ} {lam alpha kappa u y : ℝ}
+    (hm : 0 < m) (hlam : 0 < lam)
+    (hrecord : ∀ n : ℕ, 0 < n → n < m →
+      goldenResourceObjective lam n < goldenResourceObjective lam m)
+    (hP : P.Prime) (hPm : P ∣ m) (hq : q.Prime) (hqP : q < P)
+    (hu : 0 < u) (hk : 0 < kappa) (ha0 : 0 ≤ 1 - alpha / 2 + kappa)
+    (ha1 : 1 - alpha / 2 + kappa ≤ 1)
+    (huy : u < (q : ℝ)) (hqy : (q : ℝ) ≤ y) (hy : 0 ≤ y)
+    (hyP : y ^ 2 * (1 - alpha / 2 + kappa) = (P : ℝ))
+    (huk : 1 / u ≤ kappa / 4)
+    (hprice : alpha / 2 - kappa / 4 ≤
+      (P : ℝ) * lam * (Real.log P - Real.log q)) :
+    2 ≤ m.factorization q := by
+  by_contra hval
+  have hlow := short_layer_gain_lower hq (by omega : m.factorization q ≤ 1)
+  obtain ⟨_, _, _, _, _, hex, hlast, _⟩ :=
+    ExponentExchange.PriceRecordMissingLayer.price_record_missing_layer
+      hm hlam hrecord hP hPm hq hqP
+  have hq0 : (0 : ℝ) < q := by exact_mod_cast hq.pos
+  have hP0 : (0 : ℝ) < P := by exact_mod_cast hP.pos
+  have hq1 : (1 : ℝ) < q := by exact_mod_cast hq.one_lt
+  have hqp : (1 - alpha / 2 + kappa) * (q : ℝ) ^ 2 ≤ (P : ℝ) := by
+    have hs : (q : ℝ) ^ 2 ≤ y ^ 2 := by nlinarith
+    nlinarith [mul_le_mul_of_nonneg_left hs ha0]
+  have hInv : 1 / (q : ℝ) ≤ kappa / 4 :=
+    (one_div_le_one_div_of_le hu huy.le).trans huk
+  have hscale : 1 - alpha / 2 + 3 * kappa / 4 ≤
+      (P : ℝ) * ((1 - 1 / (q : ℝ)) / (q : ℝ) ^ 2) := by
+    have hdiff : 0 ≤ 1 - 1 / (q : ℝ) := by
+      have hh := (by simpa using one_div_lt_one_div_of_lt (by norm_num : (0 : ℝ) < 1) hq1 : 1 / (q : ℝ) < 1)
+      linarith
+    have hh := mul_le_mul_of_nonneg_right hqp hdiff
+    have hsmall : (1 - alpha / 2 + kappa) * (1 / (q : ℝ)) ≤ kappa / 4 := by
+      nlinarith [mul_le_mul_of_nonneg_right ha1 (by positivity : 0 ≤ 1 / (q : ℝ))]
+    have hh' : (1 - alpha / 2 + 3 * kappa / 4) * (q : ℝ) ^ 2 ≤
+        (P : ℝ) * (1 - 1 / (q : ℝ)) := by
+      have hz := mul_nonneg (sq_nonneg (q : ℝ))
+        (show 0 ≤ (1 - alpha / 2 + kappa) * (1 - 1 / (q : ℝ)) -
+          (1 - alpha / 2 + 3 * kappa / 4) by nlinarith)
+      nlinarith
+    simpa only [mul_div_assoc] using (le_div_iff₀ (sq_pos_of_pos hq0)).mpr hh'
+  have hg := mul_le_mul_of_nonneg_left hlow hP0.le
+  have he := mul_lt_mul_of_pos_left (hex.trans_le hlast) hP0
+  have hcancel : (P : ℝ) * (1 / (P : ℝ)) = 1 := by field_simp
+  rw [hcancel] at he
+  nlinarith only [hg, he, hscale, hprice, hk]
+
+private theorem finite_cubic_tail {u : ℝ} (hu : 0 < u) (S : Finset ℕ)
+    (hS : ∀ p ∈ S, u < (p : ℝ)) :
+    (∑ p ∈ S, 1 / (p : ℝ) ^ 3) ≤ 2 / u ^ 2 := by
+  classical
+  let K := ⌊u⌋₊ + 1
+  have hK1 : 1 ≤ K := by dsimp [K]; omega
+  have huK : u ≤ (K : ℝ) := by
+    dsimp [K]
+    simpa only [Nat.cast_add, Nat.cast_one] using (Nat.lt_floor_add_one u).le
+  have hKp (p : ℕ) (hp : p ∈ S) : K ≤ p := by
+    have := (Nat.floor_lt hu.le).mpr (hS p hp)
+    dsimp [K]; omega
+  have hshift : (∑ p ∈ S, 1 / (p : ℝ) ^ 2) =
+      ∑ k ∈ S.image (fun p => p - K), 1 / ((k + K : ℕ) : ℝ) ^ 2 := by
+    rw [sum_image (by
+      intro p hp q hq heq
+      have := hKp p hp
+      have := hKp q hq
+      change p - K = q - K at heq
+      omega)]
+    apply sum_congr rfl
+    intro p hp
+    rw [Nat.sub_add_cancel (hKp p hp)]
+  have hsum : Summable (fun k : ℕ => 1 / ((k + K : ℕ) : ℝ) ^ 2) := by
+    simpa only [Nat.cast_add] using
+      (summable_nat_add_iff K).mpr
+        (Real.summable_one_div_nat_pow.mpr (by norm_num : 1 < (2 : ℕ)))
+  have hsquare : (∑ p ∈ S, 1 / (p : ℝ) ^ 2) ≤ 2 / u := by
+    rw [hshift]
+    calc
+      _ ≤ ∑' k : ℕ, 1 / ((k + K : ℕ) : ℝ) ^ 2 :=
+        hsum.sum_le_tsum _ (by intro k hk; positivity)
+      _ ≤ 2 / (K : ℝ) := by
+        simpa only [Nat.cast_add] using
+          (Mertens.sum_one_div_sq_le (N := (K : ℝ)) (by exact_mod_cast hK1))
+      _ ≤ 2 / u := div_le_div_of_nonneg_left (by norm_num) hu huK
+  calc
+    _ ≤ (1 / u) * ∑ p ∈ S, 1 / (p : ℝ) ^ 2 := by
+      rw [mul_sum]
+      apply sum_le_sum
+      intro p hp
+      have hp0 : 0 < (p : ℝ) := hu.trans (hS p hp)
+      have hh := mul_le_mul_of_nonneg_right
+        (one_div_le_one_div_of_le hu (hS p hp).le)
+        (show 0 ≤ 1 / (p : ℝ) ^ 2 by positivity)
+      convert hh using 1 <;> field_simp <;> ring
+    _ ≤ (1 / u) * (2 / u) := mul_le_mul_of_nonneg_left hsquare (by positivity)
+    _ = 2 / u ^ 2 := by ring
+
+private theorem actual_tail_finite {m : ℕ} {lam alpha kappa rho u y : ℝ}
+    (hm : 3 ≤ m) (hlam : 0 < lam)
+    (hrecord : ∀ n : ℕ, 0 < n → n < m →
+      goldenResourceObjective lam n < goldenResourceObjective lam m)
+    (hk : 0 < kappa) (ha0 : 0 < 1 - alpha / 2 + kappa)
+    (ha1 : 1 - alpha / 2 + kappa ≤ 1)
+    (hu : 2 ≤ u) (huP : u ^ 3 = (largestPrime m : ℝ))
+    (huy : u ≤ y) (hyP : y ^ 2 * (1 - alpha / 2 + kappa) = (largestPrime m : ℝ))
+    (hylt : y < (largestPrime m : ℝ))
+    (hyroot : Real.sqrt (largestPrime m : ℝ) ≤ y)
+    (huk : 1 / u ≤ kappa / 4) (hrho : 0 ≤ rho)
+    (htheta : ∀ t ∈ Set.Icc y (largestPrime m : ℝ),
+      (1 - rho) * t ≤ θ t ∧ θ t ≤ (1 + rho) * t)
+    (hprice : ∀ q : ℕ, q.Prime → u < (q : ℝ) → (q : ℝ) ≤ y →
+      alpha / 2 - kappa / 4 ≤
+        (largestPrime m : ℝ) * lam * (Real.log (largestPrime m) - Real.log q)) :
+    OriginalEndpointPrimeTail.tail m ≤ 6 / u ^ 2 +
+      (1 + 3 * rho) / ((1 - 1 / (largestPrime m : ℝ)) * y * Real.log y) := by
+  classical
+  let P := largestPrime m
+  let S := m.primeFactors
+  let small := S.filter (fun p : ℕ => (p : ℝ) ≤ u)
+  let medium := S.filter (fun p : ℕ => u < (p : ℝ) ∧ (p : ℝ) ≤ y)
+  let large := S.filter (fun p : ℕ => y < (p : ℝ))
+  have hne : S.Nonempty := Nat.nonempty_primeFactors.mpr (by omega)
+  obtain ⟨v, hv, hvu⟩ := exists_mem_eq_sup S hne id
+  have hPS : P ∈ S := by
+    have heq : P = v := hvu
+    exact heq.symm ▸ hv
+  have hP : P.Prime := Nat.prime_of_mem_primeFactors hPS
+  have hPm : P ∣ m := Nat.dvd_of_mem_primeFactors hPS
+  have hP0 : (0 : ℝ) < P := by exact_mod_cast hP.pos
+  have hP1 : (1 : ℝ) < P := by exact_mod_cast hP.one_lt
+  have hmax (p : ℕ) (hp : p ∈ S) : p ≤ P := le_sup (f := id) hp
+  have hu0 : 0 < u := by linarith
+  have hy : 1 < y := by linarith
+  have huplt : u < (P : ℝ) := huy.trans_lt hylt
+  have hcard : (small.card : ℝ) ≤ u := by
+    have hsub : small ⊆ Ioc 0 ⌊u⌋₊ := by
+      intro p hp
+      obtain ⟨hpS, hpu⟩ := mem_filter.mp hp
+      exact mem_Ioc.mpr ⟨(Nat.prime_of_mem_primeFactors hpS).pos, Nat.le_floor hpu⟩
+    calc
+      _ ≤ ((Ioc 0 ⌊u⌋₊).card : ℝ) := by exact_mod_cast card_le_card hsub
+      _ = (⌊u⌋₊ : ℝ) := by simp
+      _ ≤ u := Nat.floor_le hu0.le
+  have hsmall : (∑ p ∈ small, OriginalEndpointPrimeTail.layerTail m p) ≤ 2 / u ^ 2 := by
+    have hs := sum_le_card_nsmul small (OriginalEndpointPrimeTail.layerTail m)
+      (2 / (P : ℝ)) (by
+        intro p hp
+        obtain ⟨hpS, hpu⟩ := mem_filter.mp hp
+        have hpP : p < P := by exact_mod_cast hpu.trans_lt huplt
+        have hh := ExponentExchange.PriceRecordMissingLayer.price_record_missing_layer
+          (by omega : 0 < m) hlam hrecord hP hPm (Nat.prime_of_mem_primeFactors hpS) hpP
+        exact hh.2.2.2.2.2.2.2.2.2.2.2.le)
+    rw [nsmul_eq_mul] at hs
+    calc
+      _ ≤ (small.card : ℝ) * (2 / (P : ℝ)) := hs
+      _ ≤ u * (2 / (P : ℝ)) := mul_le_mul_of_nonneg_right hcard (by positivity)
+      _ = 2 / u ^ 2 := by rw [← huP]; field_simp
+  have hmedium : (∑ p ∈ medium, OriginalEndpointPrimeTail.layerTail m p) ≤ 4 / u ^ 2 := by
+    have hpoint (p : ℕ) (hp : p ∈ medium) :
+        OriginalEndpointPrimeTail.layerTail m p ≤ 2 / (p : ℝ) ^ 3 := by
+      obtain ⟨hpS, hup, hpy⟩ := mem_filter.mp hp
+      have hprime := Nat.prime_of_mem_primeFactors hpS
+      have hpP : p < P := by exact_mod_cast hpy.trans_lt hylt
+      have hval := medium_valuation (by omega : 0 < m) hlam hrecord hP hPm hprime hpP
+        hu0 hk ha0.le ha1 hup hpy (by linarith) hyP huk (hprice p hprime hup hpy)
+      have hh := actual_layer_tail_le (m := m) hprime (by norm_num : 1 ≤ (3 : ℕ)) (by omega)
+      have hp0 : (0 : ℝ) < p := by exact_mod_cast hprime.pos
+      have hpinv : (p : ℝ)⁻¹ ≤ 1 / 2 := by
+        simpa only [one_div] using one_div_le_one_div_of_le (by norm_num : (0 : ℝ) < 2)
+          (by exact_mod_cast hprime.two_le : (2 : ℝ) ≤ p)
+      have hpow : (p : ℝ)⁻¹ ^ 3 ≤ 1 / 2 := by
+        have hh' := pow_le_pow_of_le_one (inv_nonneg.mpr hp0.le)
+          (show (p : ℝ)⁻¹ ≤ 1 by linarith) (by norm_num : 1 ≤ (3 : ℕ))
+        simp only [pow_one] at hh'
+        linarith
+      have hb : (p : ℝ)⁻¹ ^ 3 / (1 - (p : ℝ)⁻¹ ^ 3) ≤ 2 * (p : ℝ)⁻¹ ^ 3 := by
+        apply (div_le_iff₀ (by linarith : 0 < 1 - (p : ℝ)⁻¹ ^ 3)).mpr
+        nlinarith [pow_nonneg (inv_nonneg.mpr hp0.le) 3]
+      simpa only [inv_pow, div_eq_mul_inv, mul_one] using hh.trans hb
+    calc
+      _ ≤ ∑ p ∈ medium, 2 / (p : ℝ) ^ 3 := sum_le_sum hpoint
+      _ = 2 * ∑ p ∈ medium, 1 / (p : ℝ) ^ 3 := by simp only [mul_sum, mul_one_div]
+      _ ≤ 2 * (2 / u ^ 2) := mul_le_mul_of_nonneg_left
+        (finite_cubic_tail hu0 medium (fun p hp => (mem_filter.mp hp).2.1)) (by norm_num)
+      _ = 4 / u ^ 2 := by ring
+  have hden : 0 < 1 - 1 / (P : ℝ) := by
+    have := (by simpa using one_div_lt_one_div_of_lt (by norm_num : (0 : ℝ) < 1) hP1 : 1 / (P : ℝ) < 1)
+    linarith
+  have hlarge : (∑ p ∈ large, OriginalEndpointPrimeTail.layerTail m p) ≤
+      (1 + 3 * rho) / ((1 - 1 / (P : ℝ)) * y * Real.log y) := by
+    have hsub : large ⊆ (Ioc ⌊y⌋₊ ⌊(P : ℝ)⌋₊).filter Nat.Prime := by
+      intro p hp
+      obtain ⟨hpS, hyp⟩ := mem_filter.mp hp
+      refine mem_filter.mpr ⟨mem_Ioc.mpr ⟨(Nat.floor_lt (by linarith : 0 ≤ y)).mpr hyp,
+        ?_⟩, Nat.prime_of_mem_primeFactors hpS⟩
+      simpa only [Nat.floor_natCast] using hmax p hpS
+    have hpoint (p : ℕ) (hp : p ∈ large) :
+        OriginalEndpointPrimeTail.layerTail m p ≤
+          (1 / (1 - 1 / (P : ℝ))) * (1 / (p : ℝ) ^ 2) := by
+      obtain ⟨hpS, hyp⟩ := mem_filter.mp hp
+      have hprime := Nat.prime_of_mem_primeFactors hpS
+      have hval : 1 ≤ m.factorization p :=
+        hprime.factorization_pos_of_dvd (by omega) (Nat.dvd_of_mem_primeFactors hpS)
+      have hh := actual_layer_tail_le (m := m) hprime (by norm_num : 1 ≤ (2 : ℕ)) (by omega)
+      have hp0 : (0 : ℝ) < p := by exact_mod_cast hprime.pos
+      have hsq : (P : ℝ) ≤ (p : ℝ) ^ 2 := by
+        nlinarith [Real.sq_sqrt hP0.le, Real.sqrt_nonneg (P : ℝ)]
+      have hinv : (p : ℝ)⁻¹ ^ 2 ≤ 1 / (P : ℝ) := by
+        simpa only [one_div, inv_pow] using one_div_le_one_div_of_le hP0 hsq
+      have hd := div_le_div_of_nonneg_left (pow_nonneg (inv_nonneg.mpr hp0.le) 2)
+        hden (show 1 - 1 / (P : ℝ) ≤ 1 - (p : ℝ)⁻¹ ^ 2 by linarith)
+      calc
+        _ ≤ (p : ℝ)⁻¹ ^ 2 / (1 - (p : ℝ)⁻¹ ^ 2) := hh
+        _ ≤ (p : ℝ)⁻¹ ^ 2 / (1 - 1 / (P : ℝ)) := hd
+        _ = (1 / (1 - 1 / (P : ℝ))) * (1 / (p : ℝ) ^ 2) := by
+          simpa only [inv_pow, one_div, div_eq_mul_inv, one_mul] using
+            (mul_comm ((p : ℝ) ^ 2)⁻¹ (1 - (P : ℝ)⁻¹)⁻¹)
+    calc
+      _ ≤ ∑ p ∈ large, (1 / (1 - 1 / (P : ℝ))) * (1 / (p : ℝ) ^ 2) := sum_le_sum hpoint
+      _ = (1 / (1 - 1 / (P : ℝ))) * ∑ p ∈ large, 1 / (p : ℝ) ^ 2 := (mul_sum ..).symm
+      _ ≤ (1 / (1 - 1 / (P : ℝ))) *
+          ∑ p ∈ (Ioc ⌊y⌋₊ ⌊(P : ℝ)⌋₊).filter Nat.Prime, 1 / (p : ℝ) ^ 2 :=
+        mul_le_mul_of_nonneg_left (sum_le_sum_of_subset_of_nonneg hsub
+          (by intro p hp hnot; positivity)) (by positivity)
+      _ ≤ (1 / (1 - 1 / (P : ℝ))) * ((1 + 3 * rho) / (y * Real.log y)) :=
+        mul_le_mul_of_nonneg_left (finite_theta_abel_upper hy hylt.le hrho htheta) (by positivity)
+      _ = _ := by simp only [div_eq_mul_inv, mul_inv_rev]; ring
+  have hsplit : OriginalEndpointPrimeTail.tail m =
+      (∑ p ∈ small, OriginalEndpointPrimeTail.layerTail m p) +
+      (∑ p ∈ medium, OriginalEndpointPrimeTail.layerTail m p) +
+      ∑ p ∈ large, OriginalEndpointPrimeTail.layerTail m p := by
+    simp only [OriginalEndpointPrimeTail.tail, small, medium, large, sum_filter,
+      ← sum_add_distrib]
+    apply sum_congr rfl
+    intro p hp
+    by_cases hpu : (p : ℝ) ≤ u
+    · have hpy : (p : ℝ) ≤ y := hpu.trans huy
+      simp [hpu, hpy, not_lt.mpr hpu, not_lt.mpr hpy]
+    · by_cases hpy : (p : ℝ) ≤ y <;> simp [hpu, hpy, ← not_le]
+  change _ ≤ 6 / u ^ 2 + (1 + 3 * rho) / ((1 - 1 / (P : ℝ)) * y * Real.log y)
+  rw [hsplit]
+  calc
+    _ ≤ (2 / u ^ 2 + 4 / u ^ 2) +
+        (1 + 3 * rho) / ((1 - 1 / (P : ℝ)) * y * Real.log y) :=
+      add_le_add (add_le_add hsmall hmedium) hlarge
+    _ = _ := by ring
+
+set_option maxHeartbeats 800000 in
+/-- A single log-size threshold controls the Euler tail of every full predecessor
+record at every price in the stated interval. The integer and its largest prime
+are the original ones throughout. -/
+theorem actual_record_tail_upper :
+    ∀ epsilon : ℝ, 0 < epsilon → ∃ A : ℝ, 0 < A ∧
+      ∀ alpha : ℝ, alpha ∈ Set.Icc (1 / 40) 1 →
+      ∀ m : ℕ, 3 ≤ m → A ≤ Real.log (m : ℝ) →
+      (∀ n : ℕ, 0 < n → n < m →
+        goldenResourceObjective (alpha / (Real.log m * Real.log (Real.log m))) n <
+          goldenResourceObjective (alpha / (Real.log m * Real.log (Real.log m))) m) →
+      Real.sqrt (largestPrime m : ℝ) * Real.log (largestPrime m) *
+          OriginalEndpointPrimeTail.tail m ≤ 2 * Real.sqrt (1 - alpha / 2) + epsilon := by
+  intro epsilon hepsilon
+  let kappa := min (1 / 160 : ℝ) (epsilon / 32)
+  let rho := min (1 / 4 : ℝ) (epsilon / 96)
+  have hk : 0 < kappa := lt_min (by norm_num) (by positivity)
+  have hk160 : kappa ≤ 1 / 160 := min_le_left _ _
+  have hke : kappa ≤ epsilon / 32 := min_le_right _ _
+  have hr : 0 < rho := lt_min (by norm_num) (by positivity)
+  have hr4 : rho ≤ 1 / 4 := min_le_left _ _
+  have hre : rho ≤ epsilon / 96 := min_le_right _ _
+  have hloglimit : Tendsto (fun t : ℝ => Real.log t / t ^ (1 / 6 : ℝ)) atTop (𝓝 0) :=
+    (isLittleO_log_rpow_atTop (by norm_num : (0 : ℝ) < 1 / 6)).tendsto_div_nhds_zero
+  have hinvlimit : Tendsto (fun t : ℝ => (4 : ℝ) / (t - 1)) atTop (𝓝 0) :=
+    tendsto_const_nhds.div_atTop (by
+      simpa only [sub_eq_add_neg, id_eq] using tendsto_atTop_add_const_right atTop (-1 : ℝ) tendsto_id)
+  have herrlimit : Tendsto (fun t : ℝ =>
+      6 * (Real.log t / t ^ (1 / 6 : ℝ)) + 4 / (t - 1)) atTop (𝓝 0) := by
+    simpa only [mul_zero, zero_add] using (hloglimit.const_mul 6).add hinvlimit
+  obtain ⟨E, hE⟩ := eventually_atTop.mp
+    (herrlimit.eventually (eventually_lt_nhds (show 0 < epsilon / 2 by positivity)))
+  have hulimit : Tendsto (fun t : ℝ => 1 / t ^ (1 / 3 : ℝ)) atTop (𝓝 0) :=
+    tendsto_const_nhds.div_atTop (tendsto_rpow_atTop (by norm_num))
+  obtain ⟨U, hU⟩ := eventually_atTop.mp
+    (hulimit.eventually (eventually_lt_nhds (show 0 < kappa / 4 by positivity)))
+  obtain ⟨Y0, hY0⟩ := eventually_atTop.mp
+    (EulerLayerRootCorrection.prime_number_limits.2.eventually
+      (Metric.ball_mem_nhds (1 : ℝ) hr))
+  let Y := max Y0 1
+  let P0 := max 8 (max (Y ^ 2) (max U E))
+  obtain ⟨A0, hA0, hloc⟩ := price_record_largest_prime_localization (kappa / 4) (by positivity)
+  let A := max A0 (max (2 * P0) (max 2 (Real.exp (4 * Real.log 4 / kappa))))
+  refine ⟨A, hA0.trans_le (le_max_left _ _), ?_⟩
+  intro alpha halpha m hm hAm hrecord
+  let X := Real.log (m : ℝ)
+  let P := (largestPrime m : ℝ)
+  let c := 1 - alpha / 2
+  let u := P ^ (1 / 3 : ℝ)
+  let y := Real.sqrt (P / (c + kappa))
+  have hX2 : 2 ≤ X :=
+    ((le_max_left _ _).trans ((le_max_right _ _).trans (le_max_right _ _))).trans hAm
+  have hX0 : 0 < X := by linarith
+  have hLX : 0 < Real.log X := Real.log_pos (by linarith)
+  have hdenX : 0 < X * Real.log X := mul_pos hX0 hLX
+  have halpha0 : 0 < alpha := by linarith [halpha.1]
+  have hlam : 0 < alpha / (X * Real.log X) := div_pos halpha0 hdenX
+  have hlowprice : 1 / (40 * X * Real.log X) ≤ alpha / (X * Real.log X) := calc
+    _ = (1 / 40 : ℝ) / (X * Real.log X) := by ring
+    _ ≤ _ := (div_le_div_iff_of_pos_right hdenX).mpr halpha.1
+  have hrecord0 := record_lower_price (by omega : 0 < m) hlowprice hrecord
+  have hA0X : A0 ≤ X := (le_max_left _ _).trans hAm
+  have hnear := hloc m hm hA0X hrecord0
+  change |P / X - 1| < kappa / 4 at hnear
+  have hPX : (1 - kappa / 4) * X ≤ P := by
+    have hh := (lt_div_iff₀ hX0).mp
+      (show 1 - kappa / 4 < P / X by linarith [(abs_lt.mp hnear).1])
+    exact hh.le
+  have hhalf : X / 2 ≤ P := by nlinarith
+  have hP0bound : P0 ≤ P := by
+    have hh : 2 * P0 ≤ X := ((le_max_left _ _).trans (le_max_right _ _)).trans hAm
+    linarith
+  have hP8 : 8 ≤ P := (le_max_left _ _).trans hP0bound
+  have hP0 : 0 < P := by linarith
+  have hc : 1 / 2 ≤ c := by dsimp [c]; linarith [halpha.2]
+  have hck : 0 < c + kappa := by linarith
+  have hck1 : c + kappa ≤ 1 := by dsimp [c]; linarith [halpha.1]
+  have hu0 : 0 < u := Real.rpow_pos_of_pos hP0 _
+  have huP : u ^ 3 = P := by
+    dsimp [u]
+    rw [← Real.rpow_mul_natCast hP0.le]
+    norm_num
+  have hu2 : 2 ≤ u := by
+    apply (pow_le_pow_iff_left₀ (by norm_num : (0 : ℝ) ≤ 2) hu0.le (by norm_num : (3 : ℕ) ≠ 0)).mp
+    norm_num
+    linarith
+  have hy0 : 0 < y := Real.sqrt_pos.mpr (div_pos hP0 hck)
+  have hySq : y ^ 2 = P / (c + kappa) := Real.sq_sqrt (by positivity)
+  have hyP : y ^ 2 * (c + kappa) = P := by rw [hySq]; exact div_mul_cancel₀ _ hck.ne'
+  have hPySq : P ≤ y ^ 2 := by
+    have hh := mul_le_mul_of_nonneg_left hck1 (sq_nonneg y)
+    nlinarith only [hh, hyP]
+  have hy2P : y ^ 2 ≤ 2 * P := by
+    have hh := mul_le_mul_of_nonneg_left (show 1 / 2 ≤ c + kappa by linarith only [hc, hk])
+      (sq_nonneg y)
+    nlinarith only [hh, hyP]
+  have hyroot : Real.sqrt P ≤ y := (Real.sqrt_le_left hy0.le).mpr hPySq
+  have hylt : y < P := by
+    have hh : 2 * P < P ^ 2 := by
+      nlinarith only [mul_pos hP0 (show 0 < P - 2 by linarith only [hP8])]
+    have hs := hy2P.trans_lt hh
+    nlinarith only [hs, hy0, hP0]
+  have huy : u ≤ y := by
+    have huSq : u ^ 2 ≤ P := by
+      nlinarith only [huP, mul_nonneg (sq_nonneg u) (show 0 ≤ u - 1 by linarith only [hu2])]
+    exact ((Real.le_sqrt hu0.le hP0.le).mpr huSq).trans hyroot
+  have hUP : U ≤ P := ((le_max_left _ _).trans ((le_max_right _ _).trans
+    (le_max_right _ _))).trans hP0bound
+  have huk : 1 / u ≤ kappa / 4 := (hU P hUP).le
+  have hEP : E ≤ P := ((le_max_right _ _).trans ((le_max_right _ _).trans
+    (le_max_right _ _))).trans hP0bound
+  have herror : 6 * (Real.log P / P ^ (1 / 6 : ℝ)) + 4 / (P - 1) < epsilon / 2 := hE P hEP
+  have hYP : Y ^ 2 ≤ P := ((le_max_left _ _).trans (le_max_right _ _)).trans hP0bound
+  have hYroot : Y ≤ Real.sqrt P := (Real.le_sqrt (by dsimp [Y]; positivity) hP0.le).mpr hYP
+  have htheta : ∀ t ∈ Set.Icc y P, (1 - rho) * t ≤ θ t ∧ θ t ≤ (1 + rho) * t := by
+    intro t ht
+    have htY : Y0 ≤ t := (le_max_left _ _).trans (hYroot.trans (hyroot.trans ht.1))
+    have ht0 : 0 < t := hy0.trans_le ht.1
+    have hh := hY0 t htY
+    rw [Real.dist_eq] at hh
+    constructor
+    · have hl := (lt_div_iff₀ ht0).mp (show 1 - rho < θ t / t by linarith [(abs_lt.mp hh).1])
+      exact hl.le
+    · have hl := (div_lt_iff₀ ht0).mp (show θ t / t < 1 + rho by linarith [(abs_lt.mp hh).2])
+      exact hl.le
+  have hExpX : Real.exp (4 * Real.log 4 / kappa) ≤ X :=
+    ((le_max_right _ _).trans ((le_max_right _ _).trans (le_max_right _ _))).trans hAm
+  have hlog4 : 0 < Real.log (4 : ℝ) := Real.log_pos (by norm_num)
+  have hlogXlarge : Real.log 4 ≤ kappa / 4 * Real.log X := by
+    have hh := Real.log_le_log (Real.exp_pos _) hExpX
+    rw [Real.log_exp] at hh
+    have hh' := (div_le_iff₀ hk).mp hh
+    nlinarith only [hh']
+  have hPlog : (1 - kappa / 4) * Real.log X ≤ Real.log (P / 2) := by
+    have hh := Real.log_le_log (div_pos hX0 (by norm_num))
+      (show X / 4 ≤ P / 2 by linarith)
+    rw [Real.log_div hX0.ne' (by norm_num)] at hh
+    linarith only [hh, hlogXlarge]
+  have hD : 1 - kappa / 2 ≤ P * Real.log (P / 2) / (X * Real.log X) := by
+    apply (le_div_iff₀ hdenX).mpr
+    have hprod := mul_le_mul hPX hPlog
+      (mul_nonneg (by linarith : 0 ≤ 1 - kappa / 4) hLX.le) hP0.le
+    have hsq : 1 - kappa / 2 ≤ (1 - kappa / 4) ^ 2 := by
+      nlinarith only [sq_nonneg kappa]
+    have hh := mul_le_mul_of_nonneg_right hsq hdenX.le
+    nlinarith only [hprod, hh]
+  have hprice : ∀ q : ℕ, q.Prime → u < (q : ℝ) → (q : ℝ) ≤ y →
+      alpha / 2 - kappa / 4 ≤ P * (alpha / (X * Real.log X)) * (Real.log P - Real.log q) := by
+    intro q hq _ hqy
+    have hq0 : (0 : ℝ) < q := by exact_mod_cast hq.pos
+    have hqSq : (q : ℝ) ^ 2 ≤ 2 * P :=
+      (pow_le_pow_left₀ hq0.le hqy 2).trans hy2P
+    have hlogs := Real.log_le_log (sq_pos_of_pos hq0) hqSq
+    rw [Real.log_pow, Real.log_mul (by norm_num) hP0.ne'] at hlogs
+    norm_num only [Nat.cast_ofNat] at hlogs
+    have hlogdiv : Real.log (P / 2) = Real.log P - Real.log 2 :=
+      Real.log_div hP0.ne' (by norm_num)
+    have hlogdiff : Real.log (P / 2) / 2 ≤ Real.log P - Real.log q := by
+      linarith only [hlogs, hlogdiv]
+    have hmul := mul_le_mul_of_nonneg_left hlogdiff
+      (show 0 ≤ P * (alpha / (X * Real.log X)) by positivity)
+    have heq : P * (alpha / (X * Real.log X)) * (Real.log (P / 2) / 2) =
+        (alpha / 2) * (P * Real.log (P / 2) / (X * Real.log X)) := by ring
+    rw [heq] at hmul
+    have hh := mul_le_mul_of_nonneg_left hD (show 0 ≤ alpha / 2 by positivity)
+    have halphak := mul_le_mul_of_nonneg_right halpha.2 hk.le
+    nlinarith only [hmul, hh, halphak]
+  have hfinite := actual_tail_finite hm hlam hrecord hk hck hck1 hu2 huP huy hyP
+    hylt hyroot huk hr.le htheta hprice
+  change OriginalEndpointPrimeTail.tail m ≤ 6 / u ^ 2 +
+    (1 + 3 * rho) / ((1 - 1 / P) * y * Real.log y) at hfinite
+  have hlogP : 0 < Real.log P := Real.log_pos (by linarith)
+  have hlogy : 0 < Real.log y := Real.log_pos (by linarith)
+  have hlogPy : Real.log P ≤ 2 * Real.log y := by
+    have hh := Real.log_le_log hP0 hPySq
+    simpa only [Real.log_pow, Nat.cast_ofNat] using hh
+  have hroot : Real.sqrt P = y * Real.sqrt (c + kappa) := by
+    rw [← hyP, Real.sqrt_mul (sq_nonneg y), Real.sqrt_sq_eq_abs, abs_of_pos hy0]
+  have hden : 0 < 1 - 1 / P := by
+    have hh : 1 / P < 1 := by simpa using one_div_lt_one_div_of_lt (by norm_num : (0 : ℝ) < 1) (show 1 < P by linarith)
+    linarith
+  have hscale : Real.sqrt P * Real.log P * OriginalEndpointPrimeTail.tail m ≤
+      6 * (Real.log P / P ^ (1 / 6 : ℝ)) +
+        2 * (1 + 3 * rho) * Real.sqrt (c + kappa) / (1 - 1 / P) := by
+    have hh := mul_le_mul_of_nonneg_left hfinite
+      (show 0 ≤ Real.sqrt P * Real.log P by positivity)
+    have hsmallEq : Real.sqrt P * Real.log P * (6 / u ^ 2) =
+        6 * (Real.log P / P ^ (1 / 6 : ℝ)) := by
+      dsimp [u]
+      rw [Real.sqrt_eq_rpow, ← Real.rpow_mul_natCast hP0.le,
+        show (1 / 3 : ℝ) * (2 : ℕ) = 2 / 3 by norm_num]
+      have hp : P ^ (2 / 3 : ℝ) = P ^ (1 / 2 : ℝ) * P ^ (1 / 6 : ℝ) := by
+        rw [← Real.rpow_add hP0]; norm_num
+      rw [hp]
+      field_simp [(Real.rpow_pos_of_pos hP0 (1 / 2 : ℝ)).ne',
+        (Real.rpow_pos_of_pos hP0 (1 / 6 : ℝ)).ne'] <;> ring
+    have hlargeBound : Real.sqrt P * Real.log P *
+        ((1 + 3 * rho) / ((1 - 1 / P) * y * Real.log y)) ≤
+          2 * (1 + 3 * rho) * Real.sqrt (c + kappa) / (1 - 1 / P) := by
+      rw [hroot]
+      apply (le_div_iff₀ hden).mpr
+      have hlogs := mul_le_mul_of_nonneg_left hlogPy
+        (show 0 ≤ (1 + 3 * rho) * Real.sqrt (c + kappa) by positivity)
+      have heq : y * Real.sqrt (c + kappa) * Real.log P *
+          ((1 + 3 * rho) / ((1 - 1 / P) * y * Real.log y)) * (1 - 1 / P) =
+          ((1 + 3 * rho) * Real.sqrt (c + kappa) * Real.log P) / Real.log y := by
+        field_simp [hy0.ne', hlogy.ne', hden.ne', hP0.ne',
+          show P - 1 ≠ 0 by linarith] <;> ring
+      rw [heq]
+      apply (div_le_iff₀ hlogy).mpr
+      nlinarith only [hlogs]
+    rw [mul_add, hsmallEq] at hh
+    exact hh.trans (add_le_add (le_refl _) hlargeBound)
+  have hrootc : 1 / 2 ≤ Real.sqrt c :=
+    (Real.le_sqrt (by norm_num) (by linarith : 0 ≤ c)).mpr (by linarith)
+  have hrootck : Real.sqrt (c + kappa) ≤ 1 :=
+    (Real.sqrt_le_left (by norm_num)).mpr (by norm_num; exact hck1)
+  have hrootmono : Real.sqrt c ≤ Real.sqrt (c + kappa) := Real.sqrt_le_sqrt (by linarith)
+  have hrootdiff : Real.sqrt (c + kappa) - Real.sqrt c ≤ kappa := by
+    have hsqc := Real.sq_sqrt (show 0 ≤ c by linarith)
+    have hsqck := Real.sq_sqrt hck.le
+    have hh := mul_nonneg (sub_nonneg.mpr hrootmono)
+      (show 0 ≤ Real.sqrt (c + kappa) + Real.sqrt c - 1 by linarith)
+    nlinarith only [hsqc, hsqck, hh]
+  have hnum : 2 * (1 + 3 * rho) * Real.sqrt (c + kappa) ≤
+      2 * Real.sqrt c + epsilon / 4 := by
+    have hh := mul_le_mul_of_nonneg_left hrootck hr.le
+    nlinarith only [hh, hrootdiff, hke, hre, hepsilon]
+  have hnum4 : 2 * (1 + 3 * rho) * Real.sqrt (c + kappa) ≤ 4 := by
+    have hh := mul_le_mul_of_nonneg_left hrootck (show 0 ≤ 1 + 3 * rho by positivity)
+    nlinarith only [hh, hr4]
+  have hdenpay : 2 * (1 + 3 * rho) * Real.sqrt (c + kappa) / (1 - 1 / P) ≤
+      2 * Real.sqrt c + epsilon / 4 + 4 / (P - 1) := by
+    have heq : 2 * (1 + 3 * rho) * Real.sqrt (c + kappa) / (1 - 1 / P) =
+        2 * (1 + 3 * rho) * Real.sqrt (c + kappa) +
+          (2 * (1 + 3 * rho) * Real.sqrt (c + kappa)) / (P - 1) := by
+      field_simp [hP0.ne', hden.ne', show P - 1 ≠ 0 by linarith] <;> ring
+    rw [heq]
+    exact add_le_add hnum ((div_le_div_iff_of_pos_right (by linarith : 0 < P - 1)).mpr hnum4)
+  change Real.sqrt P * Real.log P * OriginalEndpointPrimeTail.tail m ≤ 2 * Real.sqrt c + epsilon
+  linarith only [hscale, hdenpay, herror, hepsilon]
+
+#print axioms actual_record_tail_upper
 
 #print axioms price_record_prime_structure
 #print axioms price_record_divides_strictInteger
