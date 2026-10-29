@@ -140,6 +140,8 @@ theorem moduleL_minus_one_single
     show (-(-1 : ℤ)-1).toNat=0 by norm_num,LinearMap.mulLeft_apply]
   simp only [Finsupp.smul_single,← Finsupp.single_finsetSum,← Finsupp.single_add,
     chargePolynomial,add_smul,Finset.sum_add_distrib,add_mul,Finset.sum_mul,smul_mul_assoc]
+  congr 1
+  abel
 
 end
 end D5.S3.VertexAlgebra.LatticeDualCosetConformal
