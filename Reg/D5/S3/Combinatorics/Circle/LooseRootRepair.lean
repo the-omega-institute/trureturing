@@ -68,7 +68,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro law
   obtain ⟨P, Q, _, _, _, _, hheads, _, hstrip, _⟩ := law sampleWeight ∅
     (ULift.up 0) (ULift.up 1) (ULift.up 2) (ULift.up 3) 31 8 15 10 11 0 6
-    (by decide) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+    (by simp) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
     (by norm_num) (by norm_num [sampleWeight]) (by norm_num [sampleWeight])
     (by norm_num [sampleWeight]) (by norm_num [sampleWeight])
     (by norm_num [sampleWeight]) (by norm_num [sampleWeight])
