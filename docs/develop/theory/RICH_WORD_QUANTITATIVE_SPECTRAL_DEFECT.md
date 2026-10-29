@@ -332,3 +332,109 @@ $$
 The unrestricted target is $`RT(\mathcal C_d)=E^*(u_{2d-1})`$ for every $d\ge2$, as in source Conjecture 3. With $d=r+1$, Corollary 3.1 constrains candidate morphic families for its upper inequality. It supplies a necessary restriction: it neither constructs such a family nor proves the lower inequality for all of $\mathcal C_d$. Corollary 3.2 gives no sufficiency statement for spectral cancellation, richness or an ordinary exponent bound.
 
 ## 追加锚（本行以下为增补区）
+## 4. Cancellation without richness in an actual source image
+
+**Proposition 4.1 (The normalized cancellation boundary).** Specialize Definition 1.2 to $r=3$, write the substitution as $\varphi_3$, and let $u_7=\varphi_3^\omega(0)$. Define the nonerasing morphism $\eta_3:\{0,1,2,3,4,5,6\}^*\to\{0,1,2,3\}^*$ by
+
+$$
+\eta_3(0)=0,\quad \eta_3(1)=1,\quad \eta_3(2)=2,\quad \eta_3(3)=3,\quad
+\eta_3(4)=11,\quad \eta_3(5)=1221,\quad \eta_3(6)=12133121.
+$$
+
+For its length row $h=(1,1,1,1,2,4,8)$ and the normalized eigenvector $v_\beta$ of Definition 1.3, one has $h v_\beta=0$. Nevertheless, for the infinite image $w_3=\eta_3(u_7)$ the factor
+
+$$
+z=w_3[60,72)=301020101213
+$$
+
+has exactly $11$ distinct palindromic factors, including the empty word. Since $|z|=12$, it is not rich and its palindromic defect is $2$.
+
+**Proof.** For the cancellation, the chosen row and the normalization in Definition 1.3 give
+
+$$
+h v_\beta=(\beta-2)(\beta^5+\beta^4+\beta^3+\beta^2+2\beta+4)+8.
+$$
+
+The polynomial identity
+
+$$
+(x-2)(x^2+x^3+x^4+x^5+2x+4)+8
+=x^3(x^3-x^2-x-1)
+$$
+
+holds identically. The number $\beta$ is the positive root of $x^3-x^2-x-1$, so the displayed scalar is zero. This is the normalized relation $h v_\beta=0$, rather than a statement about an unnormalized eigenvector.
+
+It remains to locate the stated factor in the actual infinite word. Put $T_n=\varphi_3^n(0)$ and let $\nu_2(q)$ denote the exponent of $2$ in a positive integer $q$. For $0\le n\le6$,
+
+$$
+|T_n|=2^n,\qquad T_n[j]=\nu_2(j+1)\quad(0\le j<2^n).
+$$
+
+The assertion is immediate for $n=0$. If $n<6$, every letter occurring in $T_n$ is at most $n$, so only the length-two rules $\varphi_3(i)=0(i+1)$ are used. Thus
+
+$$
+T_{n+1}[2j]=0=\nu_2(2j+1),\qquad
+T_{n+1}[2j+1]=T_n[j]+1=\nu_2(2j+2),
+$$
+
+which proves the induction through $T_6$. The letter $6$ first occurs at $T_6[63]$; the exceptional rule $\varphi_3(6)=066$ is therefore not used in constructing $T_6$.
+
+The positions $55$ through $63$ of $T_6$ correspond to the integers $56$ through $64$, hence
+
+$$
+T_6[55,64)=(3,0,1,0,2,0,1,0,6).
+$$
+
+Before position $55$, a letter greater than $3$ occurs exactly when $j+1$ is a multiple of $16$. The only such positions are $15,31,47$, with letters $4,5,4$. Since the images of $4,5,4$ have lengths $2,4,2$ and every other image in $T_6[0,55)$ has length one,
+
+$$
+|\eta_3(T_6[0,55))|=55+(2-1)+(4-1)+(2-1)=60.
+$$
+
+The next eight source letters have single-letter images, so
+
+$$
+\eta_3(T_6[55,63))=30102010,
+$$
+
+while $\eta_3(6)$ begins with $1213$. Consequently
+
+$$
+\eta_3(T_6)[60,72)=301020101213.
+$$
+
+The whole prefix has length
+
+$$
+|\eta_3(T_6)|=64+(2-1)+(4-1)+(2-1)+(8-1)=76,
+$$
+
+so both endpoints of this interval lie inside $\eta_3(T_6)$. Since $T_{n+1}=T_n\varphi_3^n(1)$ is a proper prefix extension and $\eta_3$ is nonerasing, these prefixes embed compatibly in $w_3=\eta_3(u_7)$; the displayed finite word is therefore the actual factor $w_3[60,72)$.
+
+For the palindrome count, the adjacent letters of $z$ are all different, so no nonempty even-length palindrome occurs. The largest odd radii at centers $0,1,\ldots,11$ are
+
+$$
+(0,0,1,0,3,0,1,1,0,1,0,0).
+$$
+
+Every odd palindrome is obtained by choosing a center and a radius no larger than the corresponding entry. Centers $2$ and $6$ give $010$; center $4$ gives $020$, $10201$, and $0102010$; center $7$ gives $101$; and center $9$ gives $121$. Radius zero gives the four single letters. Thus the complete set of distinct palindromic factors is
+
+$$
+\{\varepsilon,0,1,2,3,010,020,101,121,10201,0102010\}.
+$$
+
+It has $1+4+4+1+1=11$ elements, whereas richness of a length-$12$ word requires $12+1=13$. Hence $z$ has defect $2$ and is not rich. \qed
+
+## 5. Scope of the cancellation boundary
+
+The example satisfies the exact necessary cancellation condition from Corollary 3.2 and is an actual nonerasing source image, but its finite factor $z$ fails the defining richness condition. Therefore $h v_\beta=0$ is not sufficient for richness, and it is not a richness-preserving construction principle. Theorem 2.1 still supplies the ordinary bound $E(w_3)\ge e_3$ through its zero-defect case; this example supplies no matching upper bound and no assertion about attainment.
+
+This conclusion is restricted to the displayed $r=3$ morphic image and its explicit factor. It does not impose a condition on every rich word, does not prove or refute the unrestricted equality
+
+$$
+RT(\mathcal C_d)=E^*(u_{2d-1})\qquad(d\ge2),
+$$
+
+and does not provide the upper construction required for that equality. In particular, cancellation, richness, and control of the ordinary exponent remain separate requirements for any proposed source-image route.
+
+## 追加锚（本行以下为增补区）
