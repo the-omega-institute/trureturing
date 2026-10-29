@@ -102,6 +102,87 @@ theorem finite72_obstruction :
     exact result (fun _ _ => ⟨x, hx⟩)
   · exact ⟨⟨.a 1, 1⟩, ⟨.xa 0, 1⟩, by decide⟩
 
+private theorem root_of_dvd {G : Type*} [Monoid G] {u : G} {m n : ℕ}
+    (hmn : m ∣ n) (hn : ∃ x : G, x ^ n = u) : ∃ x : G, x ^ m = u := by
+  obtain ⟨k, rfl⟩ := hmn
+  obtain ⟨x, hx⟩ := hn
+  exact ⟨x ^ k, by simpa only [← pow_mul, Nat.mul_comm] using hx⟩
+
+private theorem root_iff_gcd {G : Type*} [Group G] {N : ℕ}
+    (hN : ∀ x : G, x ^ N = 1) (q : ℕ) (u : G) :
+    (∃ x : G, x ^ q = u) ↔ ∃ x : G, x ^ Nat.gcd q N = u := by
+  constructor
+  · exact root_of_dvd (Nat.gcd_dvd_left q N)
+  · rintro ⟨x, hx⟩
+    have key := congrArg (fun z : ℤ => x ^ z) (Nat.gcd_eq_gcd_ab q N)
+    rw [zpow_add, zpow_mul, zpow_mul, zpow_natCast, zpow_natCast, zpow_natCast,
+      hN, one_zpow, mul_one] at key
+    refine ⟨x ^ Nat.gcdA q N, ?_⟩
+    calc
+      (x ^ Nat.gcdA q N) ^ q = (x ^ q) ^ Nat.gcdA q N := by
+        rw [← zpow_natCast, ← zpow_mul, mul_comm, zpow_mul, zpow_natCast]
+      _ = x ^ Nat.gcd q N := key.symm
+      _ = u := hx
+
+set_option maxRecDepth 32768 in
+set_option maxHeartbeats 1600000 in
+private theorem exponent_bound (x : H) : x ^ 36 = 1 := by
+  have alternatives : ∀ y : H, y ^ 12 = 1 ∨ y ^ 18 = 1 := by decide
+  rcases alternatives x with hx | hx
+  · calc
+      x ^ 36 = (x ^ 12) ^ 3 := pow_mul x 12 3
+      _ = 1 := by rw [hx, one_pow]
+  · calc
+      x ^ 36 = (x ^ 18) ^ 2 := pow_mul x 18 2
+      _ = 1 := by rw [hx, one_pow]
+
+private theorem no_fourth_root (x : H) : x ^ 4 ≠ h := by
+  intro hx
+  have hn : h ^ 9 ≠ 1 := by decide
+  apply hn
+  rw [← hx, ← pow_mul]
+  exact exponent_bound x
+
+private theorem no_ninth_root (x : H) : x ^ 9 ≠ h := by
+  intro hx
+  have hn : h ^ 4 ≠ 1 := by decide
+  apply hn
+  rw [← hx, ← pow_mul]
+  exact exponent_bound x
+
+private theorem divisor_cases (d : ℕ) (hd : d ∣ 36) :
+    d = 1 ∨ d = 2 ∨ d = 3 ∨ 4 ∣ d ∨ 6 ∣ d ∨ 9 ∣ d := by
+  have hb : d ≤ 36 := Nat.le_of_dvd (by decide) hd
+  have small : ∀ e : Fin 37, e.val ∣ 36 →
+      e.val = 1 ∨ e.val = 2 ∨ e.val = 3 ∨ 4 ∣ e.val ∨ 6 ∣ e.val ∨ 9 ∣ e.val := by
+    decide
+  exact small ⟨d, Nat.lt_succ_of_le hb⟩ hd
+
+/-- The complete root-degree spectrum, including degree zero. -/
+theorem root_degree_spectrum (q : ℕ) :
+    (∃ x : H, x ^ q = h) ↔
+      Nat.gcd q 36 = 1 ∨ Nat.gcd q 36 = 2 ∨ Nat.gcd q 36 = 3 := by
+  rw [root_iff_gcd exponent_bound]
+  constructor
+  · intro hr
+    rcases divisor_cases (Nat.gcd q 36) (Nat.gcd_dvd_right q 36) with
+      hd | hd | hd | hd | hd | hd
+    · exact Or.inl hd
+    · exact Or.inr (Or.inl hd)
+    · exact Or.inr (Or.inr hd)
+    · obtain ⟨x, hx⟩ := root_of_dvd hd hr
+      exact (no_fourth_root x hx).elim
+    · obtain ⟨x, hx⟩ := root_of_dvd hd hr
+      exact (no_sixth_root x hx).elim
+    · obtain ⟨x, hx⟩ := root_of_dvd hd hr
+      exact (no_ninth_root x hx).elim
+  · rintro (hd | hd | hd)
+    · exact ⟨h, by rw [hd, pow_one]⟩
+    · exact ⟨a, by rw [hd]; exact square_root⟩
+    · exact ⟨b, by rw [hd]; exact cube_root⟩
+
+#print axioms root_degree_spectrum
+
 #print axioms result
 #print axioms finite72_obstruction
 

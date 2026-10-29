@@ -1,0 +1,91 @@
+**Corollary 32.3 (exact routes, task kernel and installed complete
+service).** On this actual QN-D assay image all four numerical contents
+recover one another, every route agrees, and their equality kernels
+are exactly equality of the actual current field in fixed context.
+This is also the kernel of complete current service. Construction 32.1
+installs that service and can actually use it on this specimen.
+
+Proof. Write $\operatorname{Dec}$ for the proved decoder of (30.2).
+The four routes to the same actual field are
+
+$$
+\begin{aligned}
+\mathrm{Space}&\longmapsto s,\\
+\mathrm{Time}=q&\longmapsto A_n^H\operatorname{Dec}(q)=s,\\
+\mathrm{Boundary}=q'&\longmapsto\operatorname{Dec}(q')=s,\\
+\mathrm{Memory}=z&\longmapsto z/D=s.
+\end{aligned}
+\tag{32.2}
+$$
+
+Theorem 31.1 gives the integral inverse $A_n^{-H}$ on $\Lambda_D$.
+Consequently from any one recovered $s$ the reverse routes give
+
+$$
+x=A_n^{-H}s,\qquad R_H(x),\qquad R_H(s),\qquad Ds.
+\tag{32.3}
+$$
+
+The actual window was deterministic on precisely this $x$, so the
+regenerated integers equal its actual measured integers, including all
+epoch labels. Every lattice $s$ has a lattice preimage $A_n^{-H}s$;
+the chart is on this actual image, not an arbitrary unrecognized array.
+The decoder, (32.1) and the two lattice inverse identities show that
+each forward/reverse composition is the identity. Every indirect route
+uses the same uniquely recovered $s$, so all routes agree. These are
+partial inverse maps on the declared images; an off-image input is not
+assumed to have a valid inverse.
+
+For full service reuse NLBAII Theorem 64.1's entire one-step invariant,
+with exactly its numerical Read row replaced by (28.2). At the final
+handoff actual and retained term, graph, map, all current coordinates
+and context agree. Add translates the same bound coordinate; Tick uses
+the same whole adjacency; Hold preserves it. Growth preserves all old
+values/edges and introduces the literal fresh zeros and genuine roster
+updates. Read returns the floor of the retained actual rational, with
+its entire integer encoding. The separate absent/branch/wrong-type,
+RangeRefusal and BadFrame outcomes are computed from the same code and
+input. Proper incomplete frames keep the same backed parser/pending
+state and have no completed reply; disabled calls do not become invented
+refusals. The original complete End/acknowledgement/Return and retained
+update occur before the next settled request. Thus induction, also for
+an adaptive next request from common replies, gives all whole outputs
+and successors for every sufficiently backed finite continuation.
+No field-dependent side channel or unknown-law port is added.
+
+Equal current fields therefore give equal complete services. Unequal
+lattice current fields have different $R_H(s)$ by Theorem 30.2, so a
+real finite passive probe distinguishes them. Hence the complete-service
+kernel and all four view kernels are equality of $s$ in this context.
+
+For one actual selected use, find the least terminal label $j$ in earned
+order maximizing $|s_{\lambda(j)}|$, by a finite comparison of the
+acquired rationals.
+Let
+
+$$
+a=\frac{\lceil Dh\rceil}{D}\ge h>0.
+\tag{32.4}
+$$
+
+Actually execute Add$(j,a-s_{\lambda(j)})$, Hold and Read$_h(j)$. The
+source really has field $s+(a-s_{\lambda(j)})e_{\lambda(j)}$, and its returned integer is
+$\lfloor a/h\rfloor$. The predictor computes this operand and
+successor from the acquired state and updates on the same completed
+calls. The real selector, source terminal, right, operand, output and
+current vector are used, without an unknown seed or external answer
+selector. The three calls and their local work are additional. $\square$
+
+When (28.3) is the installed deterministic interface, the same construction
+applies at the actually available fixed $p_0$, with $h=2^{-p_0}$:
+every assay/use Read includes that precision payload, and the retained
+exact vector predicts later requests at every finite $p$. This transfers
+only the identical numerical subcase, not an arbitrary rational-scale
+opcode or the optional nuisance interface.
+
+The exact predictor continues under later arbitrary rational Adds and
+original growth even when the state leaves the fixed $\Lambda_D$ or
+the graph leaves this family. That broader current service does not
+extend the fixed-image Time inverse. Similarly, a current field without
+the fixed assay phase need not identify any arbitrary forgotten past.
+

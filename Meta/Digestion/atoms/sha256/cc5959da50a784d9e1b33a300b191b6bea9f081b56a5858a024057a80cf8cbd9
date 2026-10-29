@@ -1,0 +1,102 @@
+**Theorem 7.3.1 (Finite second-J arc, attachments and singular passage).** There is a continuous graph
+
+$$
+y(t)=(R(t),B(t),E(t),k(t),\ell(t)),\qquad
+0\le t\le1/62500,
+\tag{7.3.1}
+$$
+
+with $G(y(t),t)=0$, lying in $X_i$ whenever $t\in T_i$. At every point it has a locally real analytic extension. In each $X_i$ the zero is unique for fixed $t\in T_i$, and the two neighboring roots agree at every common seam. These are the uniqueness domains of the theorem; no maximal-component assertion is part of it.
+
+For every $0<h\le1/250$, put $t=h^2$ and use (7.1.6). The resulting complete worlds are distinct and legal, realize every original acquired row, and satisfy
+
+$$
+\begin{gathered}
+\bar p(h)=p(W_+(h))=p(W_-(h))\ne24,\\
+\bar v(h)=v(W_+(h))=v(W_-(h)),\qquad
+\bar a(h)=a(W_+(h))=a(W_-(h)),\\
+W_+(h),W_-(h)\in C(\bar p(h),\bar v(h)),\qquad
+2.85(2h)<x(W_+(h))-x(W_-(h))<2.86(2h).
+\end{gathered}
+\tag{7.3.2}
+$$
+
+The family has the exact critical/local-germ attachment of Theorems 6.3.2 and 6.6.1 at $t=0$, where the two worlds coalesce, and the exact finite-pair attachment of Theorem 6.7.2 at $h=1/1000$.
+
+There is exactly one occurrence of $\Lambda=0$ among these two selected endpoints for $0<h\le1/250$. It occurs at the plus endpoint, at a parameter $h_*$ satisfying the rational bracket
+
+$$
+0.0029244590442435<h_*<0.0029244590442437.
+\tag{7.3.3}
+$$
+
+At that parameter,
+
+$$
+b_+(h_*)=1/8,\qquad r_+(h_*)=\varrho_+,\qquad
+\bar v(h_*)=s_+(\bar p(h_*)),
+\tag{7.3.4}
+$$
+
+where $\varrho_+$ and $s_+$ are exactly the designated root and original singular response line of [Support X](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_X.md), (13.6)–(13.11). The crossing is transverse: $d\Lambda_+/dh>0$ there. The minus endpoint has $\Lambda_-<0$ throughout. The same complete-world graph continues through this event and includes the entire strict post-crossing interval $[3/1000,1/250]$.
+
+The numerical source and positive-drift bounds (7.2.7) are properties of this constructed family. The ambient domain remains Definition 7.1.1. The common base in (7.3.2) is chosen separately at each same $h$; no worlds from different $h$ are combined. At $h=0$ the coalesced world is an attachment, not a distinct-pair witness. The quantifiers in this theorem concern this selected ordered pair and the stated tubes. The independent-pair quantifiers of (6.8.5), which range over the entire child and independent terminal values, remain the definition of the broader problem.
+
+Proof of the graph and its complete-world assertions. For fixed $t\in T_i$ define
+
+$$
+\mathcal T_{i,t}(y)=y-C_iG(y,t).
+\tag{7.3.5}
+$$
+
+The line-segment mean-value formula and (7.2.5) give a Lipschitz constant $q_i<1$ on the convex box $X_i$ in the $\rho$ norm. The parameter mean-value formula at the fixed centre gives
+
+$$
+\|C_iG(c_i,t)\|_\rho\le\beta_i.
+\tag{7.3.6}
+$$
+
+Thus, for $y\in X_i$,
+
+$$
+\|\mathcal T_{i,t}(y)-c_i\|_\rho
+\le\beta_i+q_i\|y-c_i\|_\rho<1.
+\tag{7.3.7}
+$$
+
+Iteration is Cauchy in the complete closed box: successive distances are bounded by a geometric series with ratio $q_i$. Its limit is a fixed point, unique in that box. At every point of the tube, $\|I-C_iD_yG\|_\rho<1$, so the convergent Neumann series in $I-C_iD_yG$ inverts $C_iD_yG$. Since both matrices are square, both $C_i$ and $D_yG$ are invertible. Consequently the fixed points in question are exactly the zeros of $G$. This is the contraction principle of S. Banach, *Sur les opérations dans les ensembles abstraits et leur application aux équations intégrales*, Fundamenta Mathematicae 3, 133–181, [doi:10.4064/fm-3-1-133-181](https://doi.org/10.4064/fm-3-1-133-181), applied to these explicit boxes; the preceding geometric-series argument gives the needed implication in full.
+
+Comparing fixed-point equations at two parameters gives continuity: the parameter term is bounded by a constant times $|t-t'|$, and the difference in fixed points is bounded by that term divided by $1-q_i$. Taylor expansion of $G$ at a zero, with this continuity and the invertible $y$ Jacobian, gives
+
+$$
+y_t=-(D_yG)^{-1}G_t,\qquad
+\|y_t\|_\rho\le D_i,\qquad |B_t|<5/2,\quad |k_t|<25.
+\tag{7.3.8}
+$$
+
+These bounds hold up to a seam from either side. The rational circuit is analytic wherever its denominators are nonzero. For completeness, local analytic dependence can also be seen without any uniform analytic radius: complexify near an exact zero, precondition by its exact inverse $y$ Jacobian, and choose small complex balls where the derivative of the fixed-point map has norm less than one. For nearby complex $t$ the map sends the smaller closed ball into itself. Its holomorphic iterates converge locally uniformly by the same geometric bound. The Cauchy integral formula passes to the limit, making the fixed point holomorphic. Real coefficients and uniqueness make it real for real $t$. This is the usual analytic implicit-function theorem, also stated in J. Lebl, *Tasty Bits of Several Complex Variables*, Theorem 1.3.8, [author's text](https://www.jirka.org/scv/scv.pdf).
+
+At $t=\sigma_i$, both zeros belong to $\widetilde X_i$. If they were $u,v$, their zero equations and (7.2.6) would imply
+
+$$
+\|u-v\|_{\widetilde\rho_i}
+=\|(u-C_iG(u,\sigma_i))-(v-C_iG(v,\sigma_i))\|_{\widetilde\rho_i}
+\le\widetilde q_i\|u-v\|_{\widetilde\rho_i}.
+\tag{7.3.9}
+$$
+
+Since $\widetilde q_i<1$, they coincide. This is uniqueness on a common containing box, not an inference from overlap of rounded root coordinates. Local implicit uniqueness identifies their analytic extensions across the seam. All cells therefore give one continuous, locally analytic graph on the full closed interval. The graph is connected as the continuous image of that interval.
+
+When $t=h^2$, evaluation at $\epsilon=\pm h$ is an algebra homomorphism in (7.1.3). Its inverses are legitimate by the source and denominator bounds of Lemma 7.2.2. Equations $H_{\mathrm{av}}=H_{\mathrm{sec}}=0$ imply $H(r_\pm,b_\pm,e_\pm)=0$; the other three zero coefficients imply exact equality of the two p, v and a values. These are identities of the actual response functions, rather than overlap of numerical response intervals.
+
+The fixed-node polynomial in (7.1.1) has samples $q_i$ at clocks $i=0,1,2,3$ and the rows (7.1.2) at clocks $5,6,7$. Its clock-four value is $g(4)=-q_0+4q_1-6q_2+4q_3$, and direct substitution gives
+
+$$
+24+e+Ug(4)-18=U H(r,b,e).
+\tag{7.3.10}
+$$
+
+Hence each endpoint gives exactly $(0,24,147/5,24,18,p,v)$ at the original clocks zero through six. The acquired traces and the two clock-seven traces are exactly (6.1.4)–(6.1.5), with the chronological left products (6.1.2); these are the whole-world interfaces of [common-parent geometry](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md), Definitions 1.1–1.3 and Theorem 2.1. Both endpoints share the actual ancestor $H_4=(0,J,24,M,147/5,J,24,M,18)$, followed by the same fifth-M response $\bar p(h)$ and sixth-M response $\bar v(h)$ at that fixed $h$.
+
+The interpolation is the classical distinct-node formula; see J.-P. Berrut and L. N. Trefethen, *Barycentric Lagrange Interpolation*, SIAM Review 46, 501–517, Section 2, [doi:10.1137/S0036144502417715](https://doi.org/10.1137/S0036144502417715). Here it supplies one polynomial per world, at all original clocks, including the terminal alternatives. An identically zero gain would make the first two readings equal to the same drift, contradicting $0\ne24$. The bounds $0<r_\pm<1,b_\pm>0$ make $P(r_\pm,b_\pm)$ strictly positive, trace one and determinant zero, hence rank one. The two r coordinates differ by $2h$, so for $h>0$ the complete worlds are distinct. Lemma 7.2.2 gives $p\ne24$. Its $x_{\mathrm{sec}}$ row gives the last inequality in (7.3.2) because $x_+-x_-=2h x_{\mathrm{sec}}$. Finally all four gain coefficients and both drifts vary continuously by (7.1.1). Thus the passage is a connected passage in complete-world coordinates as well as in source coordinates. The attachments and singular assertions are proved in Sections 7.4–7.6. ∎
+

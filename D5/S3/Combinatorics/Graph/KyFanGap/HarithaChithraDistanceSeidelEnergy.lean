@@ -22,11 +22,13 @@ formula has a different diagonal. The alternative diagonal is not proved here.
 Literature completeness: ASSUMED-UNVERIFIED.
 -/
 
+import D5.S3.Combinatorics.Graph.KyFanGap.MandalMehatariDasSeidelMinimum
 import Mathlib.Combinatorics.SimpleGraph.Metric
 import Mathlib.Analysis.Matrix.Order
 import Mathlib.Algebra.Order.Chebyshev
 
 namespace D5.S3.Combinatorics.Graph.KyFanGap.HarithaChithraDistanceSeidelEnergy
+open D5.S3.Combinatorics.Graph.KyFanGap.MandalMehatariDasSeidelMinimum (energy energy_eigenvalues)
 
 /-! Binding conventions for T. Haritha and A. V. Chithra, "Distance Seidel matrix of a connected graph",
 arXiv:2210.05940v2 (published as "The distance Seidel matrix of connected graphs", DOI 10.1080/09728600.2025.2479147):
@@ -39,11 +41,6 @@ open Matrix
 /-- `D^S(G) = J − I − 2D`, with `D` the shortest-path distance matrix of `G`. -/
 noncomputable def distSeidel {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) : Matrix V V ℝ :=
   Matrix.of fun u v => 1 - (if u = v then 1 else 0) - 2 * (G.dist u v : ℝ)
-
-/-- `E(M) = Σ_r |∂_r|`, the sum of the absolute values of the eigenvalues of a real symmetric matrix, counted with
-multiplicity (the roots of its characteristic polynomial, which splits over `ℝ`). -/
-noncomputable def energy {V : Type*} [Fintype V] [DecidableEq V] (M : Matrix V V ℝ) : ℝ :=
-  (M.charpoly.roots.map (fun x => |x|)).sum
 
 /-- Problem 5.1, answered as the universal statement: for all `a, b ≥ 2` and every edge `e` of `K_{a,b}`, deleting `e`
 strictly increases the distance Seidel energy. -/
@@ -322,36 +319,6 @@ open scoped MatrixOrder Matrix.Norms.L2Operator
 namespace Spectral
 variable {V : Type*} [Fintype V] [DecidableEq V]
 
-/-- proof_shape: bind-only; consumers: Spectral.sign_energy. -/
-private theorem sum_abs_eq_trace_sqrt {X : Matrix V V ℝ} (hX : X.IsHermitian) :
-    (∑ i, |hX.eigenvalues i|) = (CFC.sqrt (Xᵀ * X)).trace := by
-  let U : Matrix V V ℝ := hX.eigenvectorUnitary
-  let d : V → ℝ := hX.eigenvalues
-  let S : Matrix V V ℝ := U * diagonal (fun i => |d i|) * Uᵀ
-  have huu : U * Uᵀ = 1 := (Matrix.mem_orthogonalGroup_iff V ℝ).mp hX.eigenvectorUnitary.2
-  have hut : Uᵀ * U = 1 := (Matrix.mem_orthogonalGroup_iff' V ℝ).mp hX.eigenvectorUnitary.2
-  have hx : X = U * diagonal d * Uᵀ := by
-    simpa [U, d, Unitary.conjStarAlgAut_apply, Matrix.star_eq_conjTranspose, Matrix.conjTranspose_eq_transpose_of_trivial] using hX.spectral_theorem
-  have hp : S.PosSemidef := by
-    simpa [S, Matrix.conjTranspose_eq_transpose_of_trivial] using (Matrix.PosSemidef.diagonal (d := fun i => |d i|)
-      (fun i => abs_nonneg (d i))).mul_mul_conjTranspose_same U
-  have hsq : S * S = Xᵀ * X := by
-    rw [hX.isSymm.eq]
-    conv_rhs => rw [hx]
-    have hd : diagonal (fun i => |d i|) * diagonal (fun i => |d i|) =
-        diagonal d * diagonal d := by
-      rw [diagonal_mul_diagonal, diagonal_mul_diagonal]
-      congr 1; funext i; nlinarith only [sq_abs (d i)]
-    calc
-      S * S = U * (diagonal (fun i => |d i|) * diagonal (fun i => |d i|)) * Uᵀ := by
-        dsimp [S]; simp only [Matrix.mul_assoc, ← Matrix.mul_assoc Uᵀ U, hut, one_mul]
-      _ = U * (diagonal d * diagonal d) * Uᵀ := by rw [hd]
-      _ = (U * diagonal d * Uᵀ) * (U * diagonal d * Uᵀ) := by
-        simp only [Matrix.mul_assoc, ← Matrix.mul_assoc Uᵀ U, hut, one_mul]
-  rw [CFC.sqrt_unique hsq hp.nonneg]
-  dsimp [S]
-  rw [Matrix.trace_mul_cycle, hut, one_mul, Matrix.trace_diagonal]
-
 /-- proof_shape: bind-only; consumers: baseline_energy. -/
 private theorem sign_energy {X H : Matrix V V ℝ} (hX : X.IsHermitian) (hH : H.IsSymm)
     (h2 : H * H = 1) (hp : (H * X).PosSemidef) :
@@ -365,7 +332,7 @@ private theorem sign_energy {X H : Matrix V V ℝ} (hX : X.IsHermitian) (hH : H.
       (H * X) * (H * X) = H * (X * H) * X := by noncomm_ring
       _ = H * (H * X) * X := by rw [hc]
       _ = X * X := by simp only [← Matrix.mul_assoc, h2, one_mul]
-  rw [sum_abs_eq_trace_sqrt hX, CFC.sqrt_unique he hp.nonneg]
+  rw [D5.S3.Combinatorics.Graph.KyFanGap.MandalMehatariDasSeidelMinimum.Spectral.sum_abs_eq_trace_sqrt hX, CFC.sqrt_unique he hp.nonneg]
 
 end Spectral
 
@@ -522,12 +489,6 @@ private theorem trace_S (a b : ℕ) (ha : a ≠ 0) (hb : b ≠ 0) : (S a b).trac
 end Blocks
 
 open Matrix SimpleGraph
-
-/-- proof_shape: bind-only; consumers: baseline_energy, deletion_increases. -/
-private theorem energy_eigenvalues {V : Type*} [Fintype V] [DecidableEq V]
-    {X : Matrix V V ℝ} (hX : X.IsHermitian) :
-    energy X = ∑ i, |hX.eigenvalues i| := by
-  simp [energy, hX.roots_charpoly_eq_eigenvalues, Multiset.map_map, Function.comp_def]
 
 /-- proof_shape: bind-only; consumers: deletion_increases. -/
 private theorem distSeidel_hermitian {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V) :

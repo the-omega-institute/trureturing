@@ -295,7 +295,7 @@ theorem inner_centered (h F : G) (hh : mean h = 0) :
   rw [← Submodule.inner_starProjection_left_eq_right]
   exact congrArg (fun x => inner ℝ x F) he
 
-private theorem represented_of_centered (F : G) (z : H) (hz : C z = Pi F) : F ∈ D := by
+theorem represented_of_centered (F : G) (z : H) (hz : C z = Pi F) : F ∈ D := by
   refine ⟨mean F-mean (J z),z,?_⟩
   change Pi (J z) = Pi F at hz
   rw [centered_suffix_residual.2.2.1, centered_suffix_residual.2.2.1] at hz
