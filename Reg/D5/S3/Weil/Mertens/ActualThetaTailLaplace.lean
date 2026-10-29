@@ -58,15 +58,23 @@ def family : Registration arena (type_of% actual_theta_tail_laplace_ode) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    refine ⟨(), (0 : ℝ), Real.log 2, ?_⟩
-    change q 0 ≠ q (Real.log 2)
-    have h0 : q 0 = -1 := by simp [q]
-    have h2 : q (Real.log 2) = (Chebyshev.theta 2 - 2) / 2 := by
-      rw [q, Real.exp_neg, Real.exp_log (by norm_num : (0 : ℝ) < 2)]
+    refine ⟨(), Real.log (9 / 4), Real.log (5 / 2), ?_⟩
+    change q (Real.log (9 / 4)) ≠ q (Real.log (5 / 2))
+    have ht₁ : Chebyshev.theta (9 / 4) = Real.log 2 := by
+      norm_num [Chebyshev.theta, show Finset.Ioc 0 2 = {1, 2} by decide]
+    have ht₂ : Chebyshev.theta (5 / 2) = Real.log 2 := by
+      norm_num [Chebyshev.theta, show Finset.Ioc 0 2 = {1, 2} by decide]
+    have hq₁ : q (Real.log (9 / 4)) = (Real.log 2 - 9 / 4) / (9 / 4) := by
+      simp only [q, Real.exp_neg, Real.exp_log (by norm_num : (0 : ℝ) < 9 / 4), ht₁]
       ring
-    rw [h0, h2]
-    have ht := Chebyshev.theta_pos (x := (2 : ℝ)) le_rfl
+    have hq₂ : q (Real.log (5 / 2)) = (Real.log 2 - 5 / 2) / (5 / 2) := by
+      simp only [q, Real.exp_neg, Real.exp_log (by norm_num : (0 : ℝ) < 5 / 2), ht₂]
+      ring
+    rw [hq₁, hq₂]
+    have hp : 0 < Real.log 2 := Real.log_pos (by norm_num)
+    norm_num
     linarith
+
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@actual_theta_tail_laplace_ode) (Realization signature) Unit Unit where

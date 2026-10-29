@@ -200,7 +200,8 @@ private lemma tail_integrable : IntegrableOn f (Ioi u₀) := by
     exact (integrable_indicator_iff measurableSet_Ioc).mpr (integrableOn_const (by simp))
   have hGn (v : ℝ) (hv : u₀ < v) :
       (∫ u : ℝ, ‖G (v, u)‖) = (v - u₀) * ‖k v‖ := by
-    simp_rw [show ∀ u, G (v, u) = (Ioc u₀ v).indicator (fun _ => k v) u from fun u => congrFun (hGe v) u]
+    simp_rw [show ∀ u, G (v, u) = (Ioc u₀ v).indicator (fun _ => k v) u from
+      fun u => congrFun (hGe v) u]
     simp only [norm_indicator_eq_indicator_norm, integral_indicator measurableSet_Ioc,
       integral_const, Measure.real, Real.volume_Ioc, ENNReal.toReal_ofReal (sub_nonneg.mpr hv.le),
       smul_eq_mul, Measure.restrict_apply_univ]
@@ -253,7 +254,7 @@ private lemma P_measurable (n : ℕ) (s : ℂ) {U : ℝ} (hU : u₀ ≤ U) :
 
 private lemma P_norm (n : ℕ) (s : ℂ) {u : ℝ} (hu : 0 ≤ u) :
     ‖P n s u‖ = u ^ n * Real.exp (-s.re * u) * ‖f u‖ := by
-  simp [P, norm_mul, norm_pow, Complex.norm_real, Real.norm_eq_abs,
+  simp [P, norm_pow, Complex.norm_real, Real.norm_eq_abs,
     abs_of_nonneg hu, Complex.norm_exp, Complex.mul_re]
 
 private lemma exp_majorant_integrable {U c : ℝ} (hU : u₀ ≤ U) (hc : 0 < c) (n : ℕ) :
@@ -393,7 +394,6 @@ private lemma J_eq (s : ℂ) {u : ℝ} (hu : u ≠ 0) :
   push_cast
   have hc : (u : ℂ) ≠ 0 := by exact_mod_cast hu
   field_simp
-  <;> ring
 
 private lemma R_eq (s : ℂ) (u : ℝ) : R s u = 2 * P 1 s u - s * P 2 s u := by
   dsimp [R, Hprime, P]
@@ -439,8 +439,8 @@ private lemma improper_ibp {U : ℝ} (hU : u₀ ≤ U) {s : ℂ} (hs : 0 < s.re)
       (fun T => H s T * (f T : ℂ) - H s U * (f U : ℂ) - ∫ u in U..T, R s u) := by
     filter_upwards [eventually_ge_atTop U] with T hT
     exact complex_tail_ibp hU hT (H s) (Hprime s)
-      (by change ContDiff ℝ 1 (fun u : ℝ => (u : ℂ) ^ 2 * Complex.exp (-s * (u : ℂ)))
-          fun_prop)
+      (by have hc : ContDiff ℝ 1 (fun u : ℝ => (u : ℂ)) := Complex.ofRealCLM.contDiff
+          exact (hc.pow 2).mul (((contDiff_const (c := -s)).mul hc).cexp))
       (by change Continuous (fun u : ℝ =>
             (2 * (u : ℂ) - s * (u : ℂ) ^ 2) * Complex.exp (-s * (u : ℂ)))
           fun_prop) (H_hasDeriv s)
@@ -475,7 +475,6 @@ private lemma tail_ae_identity :
   rw [hd.deriv, k]
   have hu0 : u ≠ 0 := ne_of_gt (u₀_pos.trans hu)
   field_simp
-  <;> ring
 
 /-- The actual signed theta tail and its complex Laplace ODE, with its positive
 cutoff boundary term retained at every admissible real cutoff. -/

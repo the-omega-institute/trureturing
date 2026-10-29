@@ -62,7 +62,7 @@ internal sealed class ActualThetaTailLaplaceDocument : IScribeDocumentDefinition
                         + "are the theta transform and derivative from ThetaLaplaceContinuation.")),
                     Paragraph(Text(
                         "Consequently, for every U>=log(2) and every complex s with Re(s)>0, "
-                        + "s*L-second(U,s)+2*L-prime(U,s)=-Q-prime(U,s)+Q(U,s)" 
+                        + "s*L-second(U,s)+2*L-prime(U,s)=-Q-prime(U,s)+Q(U,s)"
                         + "+U^2*f(U)*exp(-s*U). The cutoff term has a positive sign on the "
                         + "right side. No vanishing of f(U) is asserted or needed. All integrals "
                         + "and derivatives refer to the actual theta function and the exact "
