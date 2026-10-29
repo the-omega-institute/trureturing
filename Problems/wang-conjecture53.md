@@ -35,7 +35,7 @@ image, and Gamma consists of the actual stabilizer translation maps.
 | group property in epsilon | `CyclicIsGroup`, `epsilon` |
 | every independently nonzero coefficient | `GoodSequence` quantifies all nonzero scalar functions of position |
 | supremum, including unboundedness | `algebraicD : ENat`, supremum over every finite list |
-| actual principal ideals and congruence quotient | `Below`, `Green`, `greenCon`, `GreenQuotient` |
+| actual principal ideals and congruence quotient | `Below`, `Green`, `greenCon` and its upstream canonical quotient |
 | relative Davenport constant and empty subsequences | `SequenceSum`, `IrreducibleAt`, `relativeD` |
 | actual stabilizer translations, equality of maps | `HClass`, `Gamma`, composition addition |
 | maximum of the exact summands | `rightSide`, an ENat supremum over the finite carrier |
@@ -48,6 +48,20 @@ zero does not affect the supremum. The empty sequence sums to an identity
 only if the semigroup already has one. The model lies in a monoid over Q,
 where the usual nonzero empty product is available. No zero-ring claim is
 needed for the field-valued conjecture.
+
+## Motivation
+
+The formula joins the two classes highlighted by the paper, Clifford and
+Archimedean semigroups. A finite product semigroup tests whether their
+local quotient and stabilizer information still predicts nonvanishing in
+the ordinary semigroup algebra.
+
+## Gap
+
+Irreducibility of a quotient sequence does not force the corresponding
+algebraic factors to have a nonzero product for all nonzero scalars. In the
+witness, the quotient retains distinct labels while products of two
+transient factors lose the distinctions needed to prevent cancellation.
 
 ## Route
 
@@ -69,7 +83,7 @@ The claim uses the full finite-semigroup domain. Substituting one admissible
 monoid into that universal claim is a logical counterexample to it; it is
 not a conjecture restricted to monoids or to a bounded sequence length.
 
-## Admission and boundaries
+## Evidence
 
 [Issue 23871](https://github.com/the-omega-institute/trureturing/issues/23871)
 is the pre-probe Tier 1 named-problem admission basis. The externally named
@@ -96,3 +110,19 @@ incorrect cyclic periods, or a global Davenport constant substituted for
 the relative one invalidates this refutation. Every such distinction is
 kept in the source definitions. The numerical inequalities must follow
 from the actual algebra and quotient, not from supplied number placeholders.
+
+## Triage
+
+Tier 1: Conjecture 5.3 is a published, named universal assertion. One
+admissible finite counterexample refutes the entire equality, counting as
+one question. The exact kernel theorem is the literal negation of the
+full finite-semigroup claim. Independent source/form approval, freezing,
+required CI and publication are separate obligations.
+
+## ASSUMED-UNVERIFIED
+
+The bounded literature screen does not establish worldwide absence of an
+earlier settlement or independent novelty. The finite-length ENat
+convention does not assert an infinite product in an algebra without a
+topology. No statement is made about a general zero coefficient ring,
+minimal counterexamples, the exact proposed maximum, or Conjecture 3.26.

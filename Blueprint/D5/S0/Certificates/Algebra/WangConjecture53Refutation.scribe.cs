@@ -69,11 +69,9 @@ internal sealed class WangConjecture53RefutationDocument : IScribeDocumentDefini
                 "Two elements are equivalent exactly when their principal ideals are equal."),
             Node("green-congruence", "The Green congruence", "greenCon",
                 "Equality of principal ideals is an additive congruence in a commutative "
-                    + "semigroup; the proof establishes compatibility with addition."),
-            Node("green-quotient", "The canonical quotient S/H", "GreenQuotient",
-                "Use the upstream AddCon quotient and its canonical quotient map. For this "
-                    + "witness, an exact finite check of principal ideals proves that the "
-                    + "canonical quotient map is injective."),
+                    + "semigroup; the proof establishes compatibility with addition. Use its upstream "
+                    + "AddCon quotient and canonical quotient map directly. For the witness, an "
+                    + "exact finite check of principal ideals proves this map injective."),
             Node("sequence-sums", "Sequence sums and existing identities", "SequenceSum",
                 "A nonempty list sums by the semigroup operation. The empty list sums to a "
                     + "only when a is already a two-sided identity in that semigroup."),

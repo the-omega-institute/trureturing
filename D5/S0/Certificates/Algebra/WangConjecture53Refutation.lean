@@ -123,9 +123,6 @@ def greenCon (S : Type*) [AddCommSemigroup S] : AddCon S where
     simpa only [add_comm c b, add_comm d b] using
       (show Green (a+c) (b+d) from fun x => (h₁ x).trans (h₂ x))
 
-/-- Canonical quotient S/H. -/
-def GreenQuotient (S : Type*) [AddCommSemigroup S] := (greenCon S).Quotient
-
 /-- A sequence sum with the source's empty-sum convention: the empty sequence
 sums to an identity only when that identity already exists in the semigroup. -/
 def SequenceSum {S : Type*} [AddSemigroup S] : List S → S → Prop
@@ -175,8 +172,7 @@ def epsilon {S : Type*} [Add S] (a : S) : ℕ∞ := by
 
 /-- The exact source right side, with the actual quotient and translation semigroup. -/
 def rightSide (S K : Type*) [AddCommSemigroup S] [Field K] : ℕ∞ :=
-  ⨆ a : S, epsilon a * relativeD (S := GreenQuotient S) ((greenCon S).toQuotient a) +
-    algebraicD (Gamma a) K
+  ⨆ a : S, epsilon a * relativeD ((greenCon S).toQuotient a) + algebraicD (Gamma a) K
 
 /-- Wang arXiv:2509.18724v1 Conjecture 5.3, over all finite commutative
 semigroups and fields, preserving the splitting/characteristic disjunction. -/
