@@ -8,7 +8,43 @@ The exact source family is actualData = zetaZeroData, with the real kernel pairW
 
 The natural-index enumeration is equivalent to the sigma family of Fin (actualData.multiplicity n) over the exhaustive actual family. ActualZeroOccurrence, its infinite instance, actualOccurrenceEquiv : N ≃ ActualZeroOccurrence, actualZero, the exact fiber identity and fiber cardinality give exact transports of the infinite mass and the finite inclusive cutoffs. The resulting family includes both imaginary signs and every positive analytic multiplicity. The reciprocal-square summability and strict total bound are transported through those fibers. After height ten is proved, the complete inverse-square mass is sharpened to at most (101/100)*firstLiMass. The mathematical count consequence applies that sharper mass to the literal cutoff |Im(actualZero k)| ≤ T and gives ncard ≤ floor(2*T^2) for every T ≥ 10, without a filtered family or RH premise.
 
-**Theorem 1.1 (Complete Height-Derived Inverse Square Mass).**
+**Theorem 1.1 (Complete Complex First Li Mass).**
+
+Lean statement: `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_complex_pairWeight_hasSum`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_complex_pairWeight_hasSum` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The normalized xi resolvent gives the multiplicity-weighted complex first Li mass. Taking real parts yields the real pair-weight mass; transporting the complex sum to every analytic occurrence supplies the complete integrated series.
+
+**Theorem 1.2 (First Li Mass Normalization).**
+
+Lean statement: `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.firstLiMass_split`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.firstLiMass_split` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The first Li mass equals 2 plus the Euler constant minus twice log 2 minus log pi. This normalization supplies the height estimates and the scalar cancellation in the integrated explicit formula.
+
+**Theorem 1.3 (Xi Logarithmic Derivative at Zero).**
+
+Lean statement: `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.zero_endpoint_logDeriv`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.zero_endpoint_logDeriv` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The logarithmic derivative of xi at zero is minus half the first Li mass. Reflection gives the endpoint at one, and the zero endpoint normalizes the complete resolvent.
+
+**Theorem 1.4 (Complete Height-Derived Inverse Square Mass).**
 
 $$\sum_{k \in \mathbb{N}} \left(\operatorname{im}\left(\operatorname{actualZero}\left(k\right)\right)^{-1}\right)^{2} \le \frac{101}{100} \cdot \mathit{firstLiMass}$$
 
@@ -28,7 +64,7 @@ $$
 
 For each distinct source zero n, the occurrence fiber is exactly {actualOccurrenceEquiv.symm (n,j) : j in Fin(actualData.multiplicity n)}. Its cardinality is actualData.multiplicity n, and multiplicity_spec identifies this number with the analytic order. The weighted reciprocal-square series is summable; its coarse mass is below 2*firstLiMass < 2. Transport through the natural equivalence gives both the natural-index summability and mass < 2. The distinct indices |Im(zero n)| <= T form a finite set for every real T: the strip bounds its spectral radius by T+1. Taking all finite occurrence fibers and mapping back by the equivalence yields exactly the inclusive natural cutoff, with no change of cutoff or sign restriction. For every real-valued weight w, the finite natural sum equals the sum over these distinct indices of multiplicity(n)*w(zero n). Its cardinality equals the sum of the exact fiber cardinalities. For T >= 10, every cutoff occurrence contributes at least 1/T^2, so count/T^2 <= the full mass <= (101/100)*firstLiMass < 2. Thus count < 2*T^2, and the natural-floor inequality displayed above follows.
 
-**Theorem 1.2 (First Resolvent at Six).**
+**Theorem 1.5 (First Resolvent at Six).**
 
 $$\forall rho \in \mathbb{C},\; \operatorname{IsNontrivialZero}\left(\mathit{rho}\right) \Rightarrow 10 < \left|\operatorname{im}\left(\mathit{rho}\right)\right|$$
 
@@ -54,8 +90,11 @@ The proof uses endpoint normalization, strip and conjugation algebra, occurrence
 
 ## References
 
+- Truth anchor: `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_complex_pairWeight_hasSum`
 - Truth anchor: `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_height_gt_ten`
 - Truth anchor: `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.actual_inverse_square_mass_le_height`
+- Truth anchor: `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.firstLiMass_split`
+- Truth anchor: `D5/S3/Weil/ZeroData/ActualReciprocalSquareBounds.zero_endpoint_logDeriv`
 - Dependency: [D5/S3/Weil/ZeroData/UnconditionalCanonicalZeroData](UnconditionalCanonicalZeroData.md)
 - Dependency: [D5/S3/Zeros/Endpoints/FirstLiCoefficientPositivity](../../Zeros/Endpoints/FirstLiCoefficientPositivity.md)
 - Dependency: [D5/S3/Zeros/Resolvent/XiSquareExteriorRemainder](../../Zeros/Resolvent/XiSquareExteriorRemainder.md)
