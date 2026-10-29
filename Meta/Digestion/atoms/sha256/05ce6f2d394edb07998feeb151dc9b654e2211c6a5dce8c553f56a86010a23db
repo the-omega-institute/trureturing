@@ -1,0 +1,26 @@
+#### 定义 3.1（占位投影与通道稳定）
+
+在 $H_5=\mathbb{C}^\Sigma$ 中，令
+
+$$
+
+N_x=\operatorname{diag}(0,1,0,0,1),\quad
+N_y=\operatorname{diag}(0,0,0,1,1),\quad
+N_z=\operatorname{diag}(0,0,1,0,0).
+
+$$
+
+它们两两对易，且 $N_xN_y=\lvert 13\rangle\langle 13\rvert$。固定 CPTP 通道 $\Lambda$ 对所有输入保持三读出，是指
+
+$$
+
+\Lambda^\dagger(N_a)=N_a\quad(a=x,y,z),
+
+$$
+
+等价于对每个密度算符 $\rho$ 都保持对应期望。这里不是只对某个已知 $\rho$ 成立。
+
+<a id="statement-3-2"></a>
+
+<a id="thm-schur"></a>
+

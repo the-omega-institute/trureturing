@@ -1,0 +1,49 @@
+**Theorem 8.1 (An explicit unconditional upper-density interval for all $r$).** For every integer $r\ge5$, put
+
+$$
+\delta_r=\min\left\{1,\frac{\kappa_r}{2r^2-\kappa_r}\right\}.
+$$
+
+For $q=r-\delta$ with $0\le\delta\le\delta_r$, every finite $s\ge r$ and every profile of mean $q$ satisfy $J_s(x)\ge F_r(q)$, with equality exactly for $s=r$, $x=x^*(q)$. For $s\ge r+1$ the following strict bound holds throughout this closed interval:
+
+$$
+2\bigl(J_s(x)-F_r(q)\bigr)
+\ge\kappa_r-(2r^2-\kappa_r)\delta+r\delta^2
++\kappa_r(s-r-1)>0.\tag{8.1}
+$$
+
+More generally, for every $q\in[r-1,r]$ and $s\ge r+1$,
+
+$$
+2\bigl(J_s(x)-F_r(q)\bigr)
+\ge\Gamma_r(q)+\kappa_r(s-r-1),
+$$
+
+$$
+\Gamma_r(q)=\kappa_r(r+1-q)
+-\left(\frac{r^2}{q^2}-1\right)f_r(q).\tag{8.2}
+$$
+
+In particular every hub count
+
+$$
+s>q+\frac{(r^2/q^2-1)f_r(q)}{\kappa_r}
+$$
+
+is strictly excluded from equality or improvement over the candidate.
+
+**Proof.** Theorem 2.1 at $\beta=\kappa_r$ gives (8.2). The positivity $2r^2-\kappa_r>0$ follows from $\kappa_r\le2(r-1)^2<2r^2$. Monotonicity of $F_r$ on $[r-1,r]$ gives
+
+$$
+\frac{f_r(q)}{q^2}=\frac{2F_r(q)}{r^2}\le r.
+$$
+
+Therefore, when $q=r-\delta$,
+
+$$
+\left(\frac{r^2}{q^2}-1\right)f_r(q)
+\le r(r^2-q^2)=2r^2\delta-r\delta^2.
+$$
+
+Substitute this in (8.2) to obtain (8.1). At $\delta=0$ its first three terms equal $\kappa_r>0$. For $0<\delta\le\kappa_r/(2r^2-\kappa_r)$ the first two terms have nonnegative sum and $r\delta^2>0$. Thus the stated endpoints are strict as well. Theorem 3.1 supplies the equality class for $s=r$. The last exclusion follows by rearranging Theorem 2.1 directly. ∎
+

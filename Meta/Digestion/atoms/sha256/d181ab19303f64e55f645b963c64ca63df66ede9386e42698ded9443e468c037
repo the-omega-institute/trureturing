@@ -1,0 +1,36 @@
+**Theorem 4.2 (Weighted low-cardinality defect without the hypothesis).** For any profile, define
+
+$$
+\Delta_d(x)=\sum_{1\le|T|<d}x_T(d-|T|)
+\sum_{i\in T}(y_i^{-2}-1),\qquad d=r-2.
+$$
+
+For $q\in[r-1,r]$ and $s\ge r+1$, without any restriction on the support,
+
+$$
+J_s(x)-F_r(q)\ge\gamma_r+
+\frac{d^2[s^2-(r+1)^2]}{2q}-\frac{2r-3}{2}\Delta_d(x).\tag{4.6}
+$$
+
+Thus $J_s(x)\le F_r(q)$ requires
+
+$$
+\Delta_d(x)\ge
+\frac{2\gamma_r+d^2[s^2-(r+1)^2]/q}{2r-3};\tag{4.7}
+$$
+
+a strict counterexample requires a strict inequality in (4.7).
+
+**Proof.** Retain the integer quadratic inequality at the start of (4.3), but now keep track of its signed coefficient:
+
+$$
+\begin{aligned}
+\mathbb E\left[(K-d)\sum_{i\in T}y_i^{-2}\right]
+&=\mathbb E[K(K-d)]\\
+&\quad+\sum_Tx_T(K-d)\sum_{i\in T}(y_i^{-2}-1)\\
+&\ge\mathbb E[K(K-d)]-\Delta_d(x).
+\end{aligned}
+$$
+
+The terms with $K\ge d$ are nonnegative, while the others are exactly the negative of the displayed defect. Hence $2J_s\ge B_{r,s}(q)-(2r-3)\Delta_d(x)$. Apply (4.5). The remaining implications follow by rearranging. All the favorable terms and all the defect terms belong to the same array. This is a necessary condition on a possible counterexample, not such a counterexample. ∎
+

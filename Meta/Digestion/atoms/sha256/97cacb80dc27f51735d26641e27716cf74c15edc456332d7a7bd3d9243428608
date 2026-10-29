@@ -1,0 +1,64 @@
+**引理 68.1（不指定编码的纯态响应与零圆）。** 在引理 67.1 导出的匹配正交表示中，设 $\rho\in\mathcal K_d$ 为任意纯态，$\Sigma=\sigma(\rho)$。则固定合法效果必有 $\operatorname{rank}F\le2$；若 $\operatorname{rank}F=2$，则 $\operatorname{rank}\Sigma=1$。结论不假定 $\mathcal P_5$、制备协变或下块无隐藏分量。
+
+证明。由 (62.3) 及共同紧闭包，对每个 $u\in SU(2)$，同一个源状态与同一个编码状态的响应等式仍成立。因 $\rho_{\xi\xi}=c$，选其不影响密度矩阵的总体相位，可写
+
+$$
+\psi=\sqrt c\,\xi+\sqrt{1-c}\,r_0,
+\qquad r_0\in\xi^\perp,\quad\|r_0\|=1.
+\tag{68.1}
+$$
+
+$SU(2)$ 在复二维单位球上传递。选 $H\in SU(2)$ 使 $He=r_0$，将群变量写为 $g=uH^{-1}$。在编码侧只把本次响应式中的 $\Sigma$ 换成 $O(H^{-1})\Sigma O(H^{-1})^{\mathsf T}$，保持其正性、迹和秩。这是等式的变量代换，不是对源集合添加制备，也不改变固定效果。于是要研究的响应为
+
+$$
+\begin{gathered}
+u=(u_1,u_2)\in\mathbb C^2,\quad |u_1|^2+|u_2|^2=1,\qquad
+U(u)=\begin{pmatrix}u_1&-\bar u_2\\u_2&\bar u_1\end{pmatrix},\\
+\operatorname{Tr}\bigl(F O(u)\Sigma O(u)^{\mathsf T}\bigr)
+=f_c(u):=\tfrac12|\sqrt c+\sqrt{1-c}\,u_1|^2.
+\end{gathered}
+\tag{68.2}
+$$
+
+此处实下块按 $(\Re z_1,\Im z_1,\Re z_2,\Im z_2)$ 排列。令
+
+$$
+\alpha=\sqrt{c/(1-c)}\in(0,1),\qquad
+R_c=\sqrt{1-\alpha^2}>0.
+\tag{68.3}
+$$
+
+目标响应在整个圆 $u_1=-\alpha$、$u_2=R_c e^{\mathrm i\varphi}$ 上为零。
+
+若两个正矩阵的迹配对为零，则它们的支持正交。因此把 $F,\Sigma$ 作任意实秩一谱分解，零圆上的每个幅度分别为零；等价地，对所有 $w\in\operatorname{ran}F$、$v\in\operatorname{ran}\Sigma$，
+
+$$
+w_0v_0+\Re\bigl(w_{\rm low}^\dagger U(u)v_{\rm low}\bigr)=0
+\quad(u_1=-\alpha,\ u_2=R_ce^{\mathrm i\varphi}).
+\tag{68.4}
+$$
+
+$f_c(u)-f_c(-u)$ 的非零一次项要求 $\Sigma$ 的标量–下块交叉非零。因此可选 $v\in\operatorname{ran}\Sigma$，其标量 $s$ 和下块范数 $r$ 均非零。把实四维基本模看作左四元数模；单位右四元数变换与每个 $U(u)$ 交换，并在下块单位球上传递。用这种固定正交变换可令 $v=(s,r,0)$，下块复坐标为 $(r,0)$，且不改变 (68.2) 的同一个 $u$。
+
+对 $w=(w_0,w_1,w_2)$，(68.4) 变为
+
+$$
+sw_0-\alpha r\Re w_1+
+ rR_c\Re(\bar w_2e^{\mathrm i\varphi})=0
+\quad(\text{所有 }\varphi).
+\tag{68.5}
+$$
+
+故 $w_2=0$、$w_0=(\alpha r/s)\Re w_1$。所有 $w$ 位于一个实二维平面，得到 $\operatorname{rank}F\le2$。
+
+若秩恰为二，$w_1$ 在该支持上遍历整个 $\mathbb C$。对任意其他支持向量 $v'=(s',x+\mathrm iy,z+\mathrm it)$，代回 (68.4)。$e^{-\mathrm i\varphi}$ 系数对所有 $w_1$ 为零，给 $z=t=0$；剩余常数式为
+
+$$
+\frac{\alpha r}{s}s'\Re w_1
+-\alpha\Re\bigl(\bar w_1(x+\mathrm iy)\bigr)=0
+\quad(\text{所有 }w_1\in\mathbb C).
+\tag{68.6}
+$$
+
+所以 $y=0$、$x=(r/s)s'$。全部 $v'$ 均在同一实直线上，$\operatorname{rank}\Sigma=1$。这些约束覆盖原任意下块；没有删除伴随表示或其他中心偶分量。∎
+

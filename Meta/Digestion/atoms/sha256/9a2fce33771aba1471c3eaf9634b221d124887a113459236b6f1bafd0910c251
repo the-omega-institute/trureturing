@@ -1,0 +1,86 @@
+**Lemma 1.2 (Two actual upper families and one scalar root).** For every parameter of Definition 1.1 there is an admissible law with
+
+$$
+H_{\rm dense}=\frac{s^2Z}{q^2},\qquad
+H_{\rm dense}-B=\frac{(2r+1)Z}{q^2}=2a^2+O(a),\tag{1.3}
+$$
+
+where the constant is absolute and uniform in $\delta$. If $\delta>0$, a second admissible family, indexed by a label $e$, $C=[s]\setminus\{e\}$ and $0<t\le\delta/a$, is
+
+$$
+x_{\{e\}}=t,\qquad x_C=\theta+(a-1)t,\qquad
+x_{C\setminus\{j\}}=\frac{\delta-at}{r}\quad(j\in C),\qquad
+x_T=0\ \text{for all other }T.\tag{1.4}
+$$
+
+It has $y_e=t$, $y_i=(q-t)/r$ on $C$, and $H=h_\theta(t)$. Uniformly for $0<t\le1/a$ and $0\le\theta\le1$,
+
+$$
+h_\theta(t)-B=\frac1t+2a^3t+O(a^2t).\tag{1.5}
+$$
+
+On the larger interval $(0,q)$, $h_\theta$ has a unique minimizer $t_*$, the unique positive root of
+
+$$
+(q-t)^3=t^2(M_0+N_0t),\tag{1.6}
+$$
+
+where
+
+$$
+\begin{aligned}
+A_0&=a^2r^2,\qquad E_0=(2a+1)r^3,\\
+M_0&=A_0q+E_0[(a-1)q+2\theta],\\
+N_0&=E_0(a-1)-A_0=r^2(2a^3-2a-1)>0.
+\end{aligned}
+$$
+
+Equivalently this root solves
+
+$$
+(1+N_0)t^3+(M_0-3q)t^2+3q^2t-q^3=0.\tag{1.7}
+$$
+
+**Proof.** For the first law, choose a uniformly distributed $a$-subset of $[s]$ with probability $\delta$, and a uniformly distributed $r$-subset with probability $\theta$. Its mean is $q$, every marginal is $q/s$, and its third moment is $Z$. Thus its energy is $s^2Z/q^2$. Subtraction gives (1.3), since $s^2-r^2=2r+1$, $Z=a^3+O(a^2)$ and $q=a+O(1)$ uniformly.
+
+For (1.4), the masses add to $t+\theta+(a-1)t+\delta-at=1$, and their cardinality mean is
+
+$$
+t+r[\theta+(a-1)t]+a(\delta-at)=a+\theta.
+$$
+
+The masses are nonnegative in the stated range. A core marginal is $1-t-(\delta-at)/r=(q-t)/r$. Direct counting gives
+
+$$
+\mathbb E[K^2I_i]=a^2y_i+(2a+1)[\theta+(a-1)t]\quad(i\in C),
+\qquad \mathbb E[K^2I_e]=t,
+$$
+
+which proves the energy formula. This extends, in the mean parameter, the actual family supplied by the parent volume's Theorem 10.1; its $\theta=0$ instance is that same family.
+
+For (1.5), let
+
+$$
+G_\theta(t)=\frac{a^2r^2}{q-t}
+ +\frac{(2a+1)(\theta-t)r^3}{(q-t)^2}.
+\tag{1.8}
+$$
+
+Then $G_\theta(0)=B$ and
+$h_\theta(t)=1/t+G_\theta(t)+\Lambda_\theta(t)$.
+On $0\le t\le1/a$, direct differentiation gives $G_\theta'(t)=O(a^2)$, and
+$a(2a+1)r^3/(q-t)^2=2a^3+O(a^2)$, with absolute constants. This proves (1.5).
+
+Differentiation on $(0,q)$ gives
+
+$$
+\begin{aligned}
+h_\theta'(t)&=-\frac1{t^2}+\frac{M_0+N_0t}{(q-t)^3},\\
+h_\theta''(t)&=\frac2{t^3}+\frac{2A_0}{(q-t)^3}
+ +E_0\left[\frac{4(a-1)}{(q-t)^3}
+ +\frac{6[\theta+(a-1)t]}{(q-t)^4}\right]>0.
+\end{aligned}\tag{1.9}
+$$
+
+The first derivative tends to $-\infty$ at zero and to $+\infty$ at $q$. Strict convexity proves uniqueness and (1.6). Both $M_0,N_0$ are positive, so (1.6) has no root $t\ge q$; this also proves uniqueness among all positive real roots. Expansion of (1.6) yields (1.7). ∎
+

@@ -1,0 +1,90 @@
+**引理 70.1（对每个内点参数的实际纯曲线及原五维提升）。** 令
+
+$$
+\begin{gathered}
+\delta_d=\min\left\{1,\sqrt{\frac{1-d}{2d}}\right\}>0,
+\qquad |t|<\delta_d,\\
+f_d(t)=\sqrt{\frac{1-3d+2d\cos t}{13-12\cos t}},\\
+\psi_t=\sqrt d\,a+\sqrt d(e^{\mathrm it}-1)h_{\rm out}
++\mathrm i(3e^{\mathrm it}-2)f_d(t)g,\qquad
+\rho_t=\psi_t\psi_t^\dagger.
+\end{gathered}
+\tag{70.1}
+$$
+
+则每个 $\rho_t$ 属于原完整 $\mathcal K_d$，并有原五维 CPTP 提升 $\mathcal T_t\in\mathcal F_{\sqrt d}$，其后继为 $S_{\rho_t}$。特别地，这不是仅满足松弛人口界或两个矩的曲线。
+
+证明。由 $1-\cos t\le t^2/2$，
+
+$$
+1-3d+2d\cos t=1-d-2d(1-\cos t)
+>\frac{1-d}{2}>0,
+\qquad 13-12\cos t\ge1.
+\tag{70.2}
+$$
+
+因此区间对每个 $0<d<1$ 非空，$f_d$ 正、偶且连续。在 $(a,h_{\rm out},g)$ 正交基中，置 $x=\cos t$，直接得
+
+$$
+\begin{gathered}
+\|\psi_t\|^2=d+2d(1-x)+(13-12x)f_d(t)^2=1,
+\qquad (\rho_t)_{aa}=d,\\
+\operatorname{Tr}(C\rho_t)=|\sqrt d+\sqrt d(e^{\mathrm it}-1)|^2=d,\\
+\operatorname{Tr}(E\rho_t)
+=\frac{d(13-12x)+6(1-3d+2dx)}{16}
+=\frac{6-5d}{16}.
+\end{gathered}
+\tag{70.3}
+$$
+
+最后一式也可由 $q^\dagger\psi_t=(3e^{\mathrm it}-2)(\sqrt d+\mathrm i\sqrt6 f_d(t))/4$ 直接读出。取 $A=\rho_t,D=0$，即满足 (54.2) 的原分解；此时 $s=0$，$B_d(\rho_t)$ 是 $a,\ell$ 振幅的正秩一 Gram 矩阵。
+
+明确给出原物理提升。为区别于证明中的实支持，仍以 $H=\mathbb C^5$ 表示 (54.1) 的物理空间，置
+
+$$
+\begin{gathered}
+p_{\rm phys}=Bq,\qquad
+c_{\rm phys}=(e_0+e_1-e_3-e_4)/2,\\
+\eta_t=\sqrt d\,p_{\rm phys}
++\sqrt d(e^{\mathrm it}-1)Br
++\mathrm i(3e^{\mathrm it}-2)f_d(t)c_{\rm phys}.
+\end{gathered}
+\tag{70.4}
+$$
+
+三个物理向量 $p_{\rm phys},Br,c_{\rm phys}$ 正交归一，故 $\|\eta_t\|=1$。用原 $K_0,K_1$，而非重选仪器，有
+
+$$
+\begin{gathered}
+K_jp_{\rm phys}=Ba/\sqrt2,
+\qquad K_jBr=Bh_{\rm out}/\sqrt2,
+\qquad K_jc_{\rm phys}=Bg/\sqrt2\quad(j=0,1),\\
+K_0\eta_t=K_1\eta_t=B\psi_t/\sqrt2.
+\end{gathered}
+\tag{70.5}
+$$
+
+因此取两个 Kraus 算子 $BP_+$、$\eta_tf^\dagger$，得到
+
+$$
+\mathcal T_t(X)=BP_+XP_+B^\dagger
++(f^\dagger Xf)\eta_t\eta_t^\dagger,
+\qquad P_++\|\eta_t\|^2ff^\dagger=I_3.
+\tag{70.6}
+$$
+
+它是原域 $M_3(\mathbb C)\to M_5(\mathbb C)$ 的 CPTP 通道，(70.5) 给 $\mathcal G\mathcal T_t=S_{\rho_t}$。
+
+再核对完整原效果，而不只核对 $ff^\dagger$ 上的输出。第一卷 (35.3) 的原 $J_0=P,J_1,J_2$ 在 $(q,r,f)$ 输入基中的供应值为
+
+$$
+\begin{gathered}
+Y_0=\operatorname{diag}(1,0,d),\qquad
+Y_1=\frac1{16}\begin{pmatrix}1&3&0\\3&9&0\\0&0&6-5d\end{pmatrix},\\
+Y_2=\frac1{32}\begin{pmatrix}17&3&0\\3&9&0\\0&0&6+11d\end{pmatrix}.
+\end{gathered}
+\tag{70.7}
+$$
+
+(70.6) 的伴随为 $P_+B^\dagger J_jBP_++\langle\eta_t,J_j\eta_t\rangle ff^\dagger$，故跨扇区条目全部为零，$q,r$ 块是同一个原供应块。标量条目分别是 $d$、$\operatorname{Tr}(E\rho_t)=e_d$、$\operatorname{Tr}(F_{\rm src}\rho_t)=(6+11d)/32$，其中 $F_{\rm src}=B^\dagger J_1B$ 是第一卷的原 qutrit 效果，满足 $E+2F_{\rm src}=3I/4+3C/8$。前者来自 $|p_{\rm phys}^\dagger\eta_t|^2=d$；由 $J_1=\mathcal G^\dagger(P)$、$J_2=\mathcal G^\dagger(J_1)$ 和 (70.5)，后两者分别是 $\psi_t^\dagger E\psi_t$ 与 $\psi_t^\dagger F_{\rm src}\psi_t$。这给 $\mathcal T_t^\dagger(J_j)=Y_j$，$j=0,1,2$，作为完整矩阵的等式。原递推 $J_{j+2}=(J_j+J_{j+1})/2$ 对 $j\ge1$ 将它们延续到全部深度。因此 $\mathcal T_t\in\mathcal F_{\sqrt d}$。此处复用第一卷的原提升接口与递推，只把当前曲线的所有参数明确代入。∎
+

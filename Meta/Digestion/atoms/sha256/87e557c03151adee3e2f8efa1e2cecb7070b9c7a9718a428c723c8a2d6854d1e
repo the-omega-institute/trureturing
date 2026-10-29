@@ -1,0 +1,90 @@
+**定理 83.1（三维合同迫使全矩阵 CP 群）。** 每个定义 82.1 的实现，其全部可达支持就是 $\mathbb C^3$；归一化分支 $T_j=2\Phi_j$ 在完整矩阵空间上的词闭包是具有 CP 逆的紧群。
+
+证明。将 (82.3) 两种结果相加，得
+
+$$
+X_{h,\rho}=T_h\sigma(\rho)\succeq0,
+\qquad \operatorname{Tr}X_{h,\rho}=1.
+\tag{83.1}
+$$
+
+令 $H_{\rm r}$ 为这些矩阵支持的复线性张成，$n=\dim H_{\rm r}\le3$。若 $v\perp H_{\rm r}$，则
+
+$$
+0=v^\dagger T_j(X_{h,\rho})v
+=2\sum_\alpha\|X_{h,\rho}^{1/2}L_{j\alpha}^\dagger v\|^2.
+\tag{83.2}
+$$
+
+逐项非负性使每个原 Kraus 算子保持 $H_{\rm r}$。因此压缩到它仍为复 CP，原仪器和仍 TP，效果压缩合法，制备仿射且保留所有记录。取有限个支持张成的可达密度矩阵的严格正权凸组合 $\Omega\succ0$ 于 $H_{\rm r}$，并取 $\eta>0$ 使 $\Omega\succeq\eta I$。词拼接给 $\operatorname{Tr}(T_h\Omega)=1$，从而
+
+$$
+0\preceq T_h(I)\preceq\eta^{-1}T_h(\Omega),
+\qquad \|T_h\|_{\rm cb}=\|T_h(I)\|\le\eta^{-1}.
+\tag{83.3}
+$$
+
+CP 范数等式也可由正的二乘二算子块在每个矩阵层推出。因此有界的是完整 $M_n(\mathbb C)$ 上的映射，并非仅可达 Hermitian 子空间。其范数闭包 $\mathscr S$ 是紧 CP 半群。
+
+令 $\mathscr R=\operatorname{span}_{\mathbb R}\{X_{h,\rho}\}$。源的两个不同供应是：第二卷定理 40.1 的 $I_3$ 加八个加权效果张成九维 $\operatorname{Herm}_3(\mathbb C)$；本卷 (64.10)–(64.12) 的源可达空间恰为
+
+$$
+\mathscr S_c=\{X\in\operatorname{Herm}_3(\mathbb C):
+ X_{\xi\xi}=c\operatorname{Tr}X\},\qquad \dim_{\mathbb R}\mathscr S_c=8.
+\tag{83.4}
+$$
+
+后一个供应使用原合法纯态 $\sqrt d\,a+\mathrm i\sqrt{1-d}\,g$ 和引理 63.1 的实际下块 $SU(2)$，并非假设初始集合张成全部状态空间。该引理适用于每个 $e^{-2\mathrm i\theta}\notin\{1,-1\}$，包括单位根情形；其下块生成元就是 (62.2) 的 $B_0,B_1$，无实竞争者前提。
+
+定义
+
+$$
+L(X_{h,\rho})=V_h\rho V_h^\dagger.
+\tag{83.5}
+$$
+
+若编码侧有线性关系，将它与迹及每个继续词的 $FT_k$ 配对，便使相应源关系与 $I_3$ 及八个 $M_k$ 配对为零。源效果基非退化，故源关系为零。这证明 $L$ 良定义、满射到 $\mathscr S_c$ 且 $LT_j=\operatorname{Ad}_{V_j}L$，同时 $\operatorname{Tr}X=\operatorname{Tr}LX$ 和 $\operatorname{Tr}(FX)=\operatorname{Tr}(ELX)$ 于 $\mathscr R$。没有假设竞争者自己的效果张成九维。
+
+$\mathscr R,\ker L$ 对闭包不变。选线性截面 $J_L$，则 $\pi(s)=LsJ_L$ 与截面无关，是到源词闭群 $G$ 的连续半群同态；它满射，因为每个源极限可沿同一词子列借 $\mathscr S$ 紧性取得编码极限。源正词闭包是群，所需逆来自紧酉群中的同时回归，而不是新的操作权限。
+
+在已经闭合的 $\mathscr S$ 中取完整复线性映射秩最小的 $a$，秩记为 $r$。$\operatorname{rank}a^2=r$ 排除零处的非平凡 Jordan 块；有界幂排除模大于一的本征值及单位圆上的非平凡 Jordan 块。若非零本征值有模小于一者，令所有单位模本征值同时回归一，幂的极限会有更小秩，矛盾。同一回归遂给 CP 幂等元 $P$，$\operatorname{rank}_{\mathbb C}P=r$。因 $\pi(P)$ 为群中幂等元，$\pi(P)=1$、$LP=L$ 于 $\mathscr R$。
+
+角 $\mathscr K=P\mathscr S P$ 中每个元素的秩都是 $r$，在 $\operatorname{ran}P$ 上可逆；此限制忠实，且其像为紧的可逆矩阵半群。紧性给奇异值的统一正下界；同时回归的正幂给单位与逆。因此 $\mathscr K$ 是单位为 $P$ 的紧群，逆仍有完整矩阵 CP 代表。
+
+置 $H_1=\operatorname{supp}(P\Omega)=\operatorname{supp}P(I)$。在 $P$ 的 Kraus 表中，它等于所有 Kraus 像的张成，所以 $P$ 的整个复矩阵像左右均支持于 $H_1$。只将 $P,\mathscr K$ 限制到 $H_1$，此时不声称原 $T_j$ 保持它。对正的像元素 $Y$，由 $Y\preceq b\Omega$ 再作用 $P$ 得 $Y\preceq bP\Omega$；故 $P\Omega$ 是像锥序单位。对 $k^{-1}(P\Omega)$ 应用该界，给 $P\Omega\preceq b k(P\Omega)$。于是角群的 Haar 平均
+
+$$
+\Omega_1=\int_{\mathscr K}k(P\Omega)\,dk\succ0
+\quad\text{于 }H_1
+\tag{83.6}
+$$
+
+被全角群固定。以 $D_1=\Omega_1^{1/2}$ 作合同，得到完整 $M_{n_1}(\mathbb C)$ 上的 UCP 幂等元
+
+$$
+\widetilde P=\operatorname{Ad}_{D_1^{-1}}P\operatorname{Ad}_{D_1},
+\qquad n_1=\dim H_1\le n.
+\tag{83.7}
+$$
+
+在此消费 Choi–Effros 乘法定理，采用 Prunaru，[*On the Choi–Effros multiplication*](https://arxiv.org/html/1304.6664v2)，定理 1：CP、收缩、幂等映射的像，带乘法 $x\star y=\widetilde P(xy)$、原伴随及继承的完整矩阵序，是复 $C^*$ 代数 $\mathcal A$。这里 CP 与幂等已经成立，保单位 CP 给收缩；并未假设 $P$ 忠实或其像在通常乘法下封闭。角群及其逆在此抽象代数上 UCP，两次 Schwarz 使它们为 $*$ 自同构。
+
+比较物理维数须使用抽象收缩。令 $i:\mathcal A\to M_{n_1}(\mathbb C)$ 是完全序包含，$r_0=i^{-1}\widetilde P$ 是到抽象 $\mathcal A$ 的 UCP 收缩，$r_0i=1$。对 $x\in\mathcal A$，Schwarz 先施于 $i$ 再施 $r_0$，以及直接施于 $r_0$，分别给
+
+$$
+r_0(i(x)^\dagger i(x))\preceq x^*\star x
+\preceq r_0(i(x)^\dagger i(x)).
+\tag{83.8}
+$$
+
+同理有 $xx^*$ 的等号。因此 $i(x)$ 属于抽象 $r_0$ 的乘法域，$r_0:C^*(i(\mathcal A))\to\mathcal A$ 是满射 $*$ 同态。此处不能改称环境投影 $\widetilde P$ 的像全属于其通常乘法域。
+
+有限维具体代数 $C^*(i(\mathcal A))$ 忠实作用于 $\mathbb C^{n_1}$。其核是若干完整简单因子的直和；去掉这些因子的中心物理子空间，便得到 $\mathcal A$ 的维数至多 $n_1$ 的忠实复表示。写 $\mathcal A=\bigoplus_\ell M_{n_\ell}(\mathbb C)$，则
+
+$$
+\sum_\ell n_\ell\le n_1\le n\le3.
+\tag{83.9}
+$$
+
+由于 $LP=L$，$P$ 的自伴像满射到八维 $\mathscr S_c$。保持伴随的复线性映射之复像维数等于其自伴像的实维数。故 $\dim_{\mathbb R}\mathcal A_{\rm sa}\ge8$。成本至多三的复代数中，除 $M_3(\mathbb C)$ 外，只有 $\mathbb C$、$\mathbb C^2$、$M_2(\mathbb C)$、$\mathbb C^3$、$\mathbb C\oplus M_2(\mathbb C)$，自伴维数至多五。因此 $\mathcal A=M_3(\mathbb C)$，$n_1=n=3$，$\operatorname{rank}_{\mathbb C}P=9$，满秩幂等元 $P=I$。这里使用复因子成本，没有把实六维结论移植成复分类。$\mathscr K=\mathscr S$ 遂是所述全矩阵 CP 群。∎
+

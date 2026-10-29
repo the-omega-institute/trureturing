@@ -1,0 +1,83 @@
+**引理 64.2（八维源空间上的良定义商）。** 令
+
+$$
+\begin{gathered}
+\mathscr R=\operatorname{span}_{\mathbb R}\{X_{h,\rho}:h\in\{0,1\}^{<\infty},\ \rho\in\mathcal K_d\},\\
+\mathscr V=\operatorname{span}_{\mathbb R}\{V_h\rho V_h^\dagger:h\in\{0,1\}^{<\infty},\ \rho\in\mathcal K_d\},\qquad
+\mathscr S_c=\{X\in\operatorname{Herm}_3(\mathbb C):
+X_{\xi\xi}=c\operatorname{Tr}X\}.
+\end{gathered}
+\tag{64.5}
+$$
+
+其中 $h$ 遍历所有有限词。则 $\mathscr V=\mathscr S_c$，实维数为八，且
+
+$$
+L(X_{h,\rho})=V_h\rho V_h^\dagger
+\tag{64.6}
+$$
+
+唯一延伸为良定义满射 $L:\mathscr R\to\mathscr S_c$。它给出连续满射半群同态
+
+$$
+\pi:\mathscr S\longrightarrow G,
+\tag{64.7}
+$$
+
+其中 $G$ 是实际源词作用在 $\mathscr S_c$ 上的紧群闭包；$LT_j=\operatorname{Ad}(V_j)L$。
+
+证明。首先精确区分效果空间与状态空间。第二卷定理 40.1 供应的是
+
+$$
+\{I_3\}\cup\{2^{-|k|}M_k:k\in\mathcal H\},\qquad
+\mathcal H=(\varnothing,0,1,00,10,000,010,100),
+\tag{64.8}
+$$
+
+这九个元素的行列式是 (60.3)，非零。八个词效果单独不是九维基；$I_3$ 必须由两终端总质量或迹配对另行供应。
+
+若 $\sum_\nu a_\nu X_{h_\nu,\rho_\nu}=0$，将关系与每个继续词的 $F T_k$ 配对，得到
+
+$$
+\operatorname{Tr}\!\left(M_k\sum_\nu a_\nu
+V_{h_\nu}\rho_\nu V_{h_\nu}^\dagger\right)=0.
+\tag{64.9}
+$$
+
+将原关系取迹，又给源关系与 $I_3$ 的配对为零，因为两边的每个生成矩阵迹均为一。由 (64.8)，源关系为零。因此 (64.6) 良定义、满射到 $\mathscr V$，且词的拼接给交织关系。没有假设 $\sigma$ 单射，也没有先删除不可观察的隐藏纤维。
+
+每个源可达矩阵满足 $X_{\xi\xi}=c\operatorname{Tr}X$，所以 $\mathscr V\subseteq\mathscr S_c$。为证反向，只需一个实际合法纯态
+
+$$
+\psi_0=\sqrt d\,a+\mathrm i\sqrt{1-d}\,g,\qquad
+\rho_0=\psi_0\psi_0^\dagger.
+\tag{64.10}
+$$
+
+它范数为一，$\rho_{0,aa}=d$、$\operatorname{Tr}(C\rho_0)=d$、$\operatorname{Tr}(E\rho_0)=(6-5d)/16$。取分解 $A=\rho_0,D=0$，即属于原 (54.2)。由引理 63.1，源词闭包包含它的 $SU(2)$ 轨道；有限维线性张成闭，故该轨道位于 $\mathscr V$。写成
+
+$$
+\rho_0=\begin{pmatrix}c&z_0^\dagger\\z_0&Q_0\end{pmatrix}_{(\xi,e,f)}.
+\tag{64.11}
+$$
+
+纯性给 $\|z_0\|^2=c(1-c)>0$，$Q_0$ 是迹 $1-c$ 的秩一矩阵，故其无迹部分非零。$\mathscr S_c$ 在 $SU(2)$ 下分解为互不同构的
+
+$$
+\mathbb R\operatorname{diag}(c,(1-c)I_2/2)
+\ \oplus\ \mathbb R^4_{\rm fund}
+\ \oplus\ \mathbb R^3_{\rm ad}.
+\tag{64.12}
+$$
+
+第一个分量来自群平均；交叉列给实四维基本表示，$Q_0$ 的无迹部分给三维伴随表示，两者都不可约且非零。紧群完全可约性或相应等型投影表明该轨道张成所有三个分量。因此 $\mathscr V=\mathscr S_c$，而非九维的全部 $\operatorname{Herm}_3(\mathbb C)$。这里没有说初始 $\mathcal K_d$ 是八维；其仿射维数仍为六。
+
+最后，$\mathscr R$ 和 $\ker L$ 对每个 $T_h$ 不变，故对其闭包不变。选任意线性右逆 $J:\mathscr S_c\to\mathscr R$，定义
+
+$$
+\pi(s)=L s J.
+\tag{64.13}
+$$
+
+因 $\ker L$ 不变，此式与 $J$ 无关，且 $Ls=\pi(s)L$。它连续并保持乘法。每个 $s$ 是词映射的极限，故 $\pi(s)$ 是源词作用的极限；反过来任意源极限可借 $\mathscr S$ 的紧性选择同一词子列的映射极限。因此像恰为 $G$。同一极限也保持 $\operatorname{Tr}(F s\sigma(\rho))=\operatorname{Tr}(E\pi(s)\rho)$，其中 $\pi(s)$ 按源共轭作用解释。其 $SU(2)$ 子群在 (64.12) 上忠实：基本表示使 $-I_2$ 也可见。∎
+
