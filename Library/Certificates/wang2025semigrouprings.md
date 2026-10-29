@@ -25,11 +25,11 @@ The source archive has SHA256
 
 - URL: https://arxiv.org/abs/2509.18724v1
 - Versioned source: v1, submitted 2025-09-23.
-- Source locator: Section 5, Conjecture 5.3, TeX line 842 and HTML anchor
+- Source locator: Section 5, Conjecture 5.3, TeX lines 842–851 and HTML anchor
   [S5.Thmtheorem3](https://arxiv.org/html/2509.18724v1#S5.Thmtheorem3).
 - Definition scope: Section 2, especially lines 203–213 for the ordinary
-  semigroup algebra and Definition 2.1; Section 5, lines 813–842 for the
-  constants and the conjectured equality.
+  semigroup algebra and Definition 2.1; Section 5, lines 842–851 for the
+  complete conjecture hypotheses, equality, and epsilon definition.
 
 ## Source statement
 
