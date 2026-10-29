@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/Laplace/AbscissaSingularity
    mirror-E: none(waiver:analytic-proof-only)
-   anchors: [D5/S3/Analytic/Laplace/NonnegativeContinuation]
+   anchors: []
    utility: none
    digest: The actual finite Laplace convergence cut of a nonnegative function is singular. -/
 
