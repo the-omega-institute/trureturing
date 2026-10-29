@@ -1,0 +1,67 @@
+**Theorem 4.1 (Region of the first inequality).** Let $w=a+ib$ with $a^2+b^2\le1$ and $w\ne1$, let $z=(-w,-\overline{w})$, and let $f(x)=(x+w)(x+\overline{w})$ be the characteristic polynomial of $z$. The following are equivalent.
+
+1. $\lvert Q_{t,2,1}(z_1+1,z_2+1)\rvert\le1$ for every $t\ge2$.
+2. $\lvert Q_{3,2,1}(z_1+1,z_2+1)\rvert\le1$.
+3. $b^2\le3(1-a)^2$; equivalently, $z$ lies in the closed sector with vertex $-1$, bisected by the ray $[-1,\infty)$, of half-opening angle $\pi/3$.
+4. $f'(-1)^2\ge f(-1)$.
+
+Stance: suspected-novel (see Section 7).
+
+**Proof.** Since $h_2(w,\overline{w})=(w+\overline{w})^2-w\overline{w}=4a^2-(a^2+b^2)=3a^2-b^2$,
+
+$$
+F_3(a,b)=6(1-a)-3+3a^2-b^2=3(1-a)^2-b^2,
+$$
+
+so 2 and 3 are equivalent by Lemma 3.2. In terms of $z_1=-w$ the inequality $\lvert b\rvert\le\sqrt3\,(1-a)$ reads $\lvert\operatorname{Im}z_1\rvert\le\sqrt3\,(\operatorname{Re}z_1+1)$, which is the stated sector. Further $f(-1)=(1-w)(1-\overline{w})=(1-a)^2+b^2$ and $f'(x)=2x+2a$, so $f'(-1)^2=4(1-a)^2$, and $f'(-1)^2\ge f(-1)$ is $3(1-a)^2\ge b^2$; thus 3 and 4 are equivalent. Clearly 1 implies 2.
+
+It remains to show that 3 implies 1. Let
+
+$$
+S=\{(a,b)\in\mathbb{R}^2:\ a^2+b^2\le1,\ b^2\le3(1-a)^2\}.
+$$
+
+By Lemma 3.2 it suffices to show $F_t\ge0$ on $S$ for every $t\ge2$; the point $(1,0)$ belongs to $S$ and causes no difficulty, since $F_t(1,0)=-t+h_{t-1}(1,1)=0$. For $t=2$, $h_1(w,\overline{w})=2a$ gives $F_2\equiv0$. For $t=3$ the claim is the definition of $S$. Let $t\ge4$. Since $F_t$ is even in $b$, assume $b\ge0$.
+
+*Monotonicity in $a$.* For fixed $b$, $\partial_a$ acts on $h_{t-1}(a+ib,a-ib)$ as $\partial_x+\partial_y$, so by cited fact (b) and the bound of Convention 2.2,
+
+$$
+\partial_aF_t(a,b)=-t(t-1)+t\,h_{t-2}(w,\overline{w})\le-t(t-1)+t(t-1)\lvert w\rvert^{t-2}\le0
+$$
+
+on the closed unit disk. For $0\le b\le1$, the condition $b^2\le3(1-a)^2$ together with $a\le1$ is equivalent to $a\le1-b/\sqrt3$, so the horizontal section of $S$ at height $b$ is the interval $-\sqrt{1-b^2}\le a\le\alpha(b)$ with $\alpha(b)=\min\{\sqrt{1-b^2},\,1-b/\sqrt3\}$; it is nonempty because $1-b/\sqrt3>0$. The segment lies in the unit disk, so $F_t(a,b)\ge F_t(\alpha(b),b)$ on it. Squaring shows $(1-b/\sqrt3)^2\le1-b^2$ exactly when $b\le\sqrt3/2$. Therefore the points $(\alpha(b),b)$ form two arcs: the edge $w=1+\beta\omega$, $0\le\beta\le1$, with $\omega=e^{2\pi i/3}$ and $\beta=2b/\sqrt3$; and the circular arc $w=e^{i\theta}$, $\pi/3\le\theta\le\pi/2$. It suffices to prove $F_t\ge0$ on both.
+
+*Circular arc.* For $w=e^{i\theta}$ with $\pi/3\le\theta\le\pi/2$ one has $1-a=1-\cos\theta\ge\tfrac12$ and $h_{t-1}(w,\overline{w})=\sin(t\theta)/\sin\theta\ge-1/\sin\theta\ge-2/\sqrt3$. Hence
+
+$$
+F_t\ge\frac{t(t-1)}{2}-t-\frac{2}{\sqrt3}=\frac{t(t-3)}{2}-\frac{2}{\sqrt3}\ge2-\frac{2}{\sqrt3}>0\qquad(t\ge4).
+$$
+
+*Edge.* Let $w=1+\beta\omega$ with $0<\beta\le1$ (the endpoint $\beta=0$ is $(1,0)$). Then $1-a=\beta/2$ and $w-\overline{w}=\beta(\omega-\overline{\omega})=i\sqrt3\,\beta$. Write $\omega^j-\overline{\omega}^j=2i\sin(2\pi j/3)=i\sqrt3\,\chi(j)$, where $\chi(j)$ equals $1$, $-1$, $0$ according as $j\equiv1,2,0\pmod 3$. The binomial theorem gives
+
+$$
+h_{t-1}(w,\overline{w})=\frac{w^t-\overline{w}^t}{w-\overline{w}}=\sum_{j=1}^{t}\binom{t}{j}\beta^{j-1}\chi(j)=\sum_{m\ge0}\Bigl[\binom{t}{3m+1}\beta^{3m}-\binom{t}{3m+2}\beta^{3m+1}\Bigr],
+$$
+
+with binomial coefficients vanishing beyond $t$. The term $m=0$ is $t-\binom{t}{2}\beta$, which cancels $t(t-1)(1-a)-t=\binom{t}{2}\beta-t$. Hence
+
+$$
+F_t(1-\tfrac{\beta}{2},\tfrac{\sqrt3}{2}\beta)=\sum_{m\ge1}\binom{t}{3m+1}\beta^{3m}\Bigl[1-\beta\,\frac{t-3m-1}{3m+2}\Bigr],
+$$
+
+using $\binom{t}{3m+2}=\binom{t}{3m+1}\frac{t-3m-1}{3m+2}$, valid also when $3m+1>t$ since then both coefficients vanish. For $m\ge1$ and $3m+1\le t$ one has $\frac{t-3m-1}{3m+2}\le\frac{t-4}{5}$. Therefore every bracket with a nonzero coefficient is nonnegative whenever $\beta(t-4)\le5$, and then $F_t\ge0$. This covers every $\beta\in(0,1]$ when $t\le9$. Let $t\ge10$ and $\beta>5/(t-4)$. Using $\lvert w\rvert\le1$,
+
+$$
+\lvert h_{t-1}(w,\overline{w})\rvert=\frac{\lvert w^t-\overline{w}^t\rvert}{\sqrt3\,\beta}\le\frac{2}{\sqrt3\,\beta},
+\qquad
+F_t\ge g(\beta):=\frac{t(t-1)}{2}\beta-t-\frac{2}{\sqrt3\,\beta}.
+$$
+
+The function $g$ is increasing on $(0,\infty)$, and
+
+$$
+g\Bigl(\frac{5}{t-4}\Bigr)=\frac{5t(t-1)-2t(t-4)}{2(t-4)}-\frac{2(t-4)}{5\sqrt3}=\frac{3t(t+1)}{2(t-4)}-\frac{2(t-4)}{5\sqrt3}>\frac{3t}{2}-\frac{t}{4}>0,
+$$
+
+because $\frac{t+1}{t-4}>1$ and $\frac{2}{5\sqrt3}<\frac14$. Hence $F_t\ge g(\beta)>g(5/(t-4))>0$. Thus $F_t\ge0$ on the edge for every $t\ge4$, which completes the proof. $\square$
+

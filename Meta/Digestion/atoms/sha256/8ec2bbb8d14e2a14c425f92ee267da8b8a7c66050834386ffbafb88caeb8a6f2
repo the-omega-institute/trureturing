@@ -1,0 +1,10 @@
+**Definition 14.1 (binary block form on the actual sources).** In Definition 10.1 write $(S_1,S_2,S_3)=(\alpha,\beta,\gamma)$, with respective finite alphabets $\Omega_i$. Suppose $A=B=C=X$ almost surely, put $p_x=\mathbb P(X=x)$, and let $\mathcal O_X=\{x:p_x>0\}$ and $m=|\mathcal O_X|$. Entropies use natural logarithms and $0\log0=0$. A binary block form means a bijection $h:\mathbb F_2^2\to\mathcal O_X$ and probability vectors $q_i^0,q_i^1$ on each original $\Omega_i$, satisfying $\operatorname{supp}q_i^0\cap\operatorname{supp}q_i^1=\varnothing$, for which
+
+$$
+\mathbb P(X=h(u,v),S_1=s_1,S_2=s_2,S_3=s_3)
+=\frac14 q_1^u(s_1)q_2^v(s_2)q_3^{u+v}(s_3)
+\tag{14.1}
+$$
+
+for every $u,v\in\mathbb F_2$ and every source triple $s\in\Omega_1\times\Omega_2\times\Omega_3$. Addition of block labels is modulo two. The vectors are normalized on the original alphabets and may have arbitrary further zeros. Thus (14.1) specifies the whole original joint law of $(X,S_1,S_2,S_3)$, including zero cells. Output relabelling and relabelling either block of a source are allowed.
+

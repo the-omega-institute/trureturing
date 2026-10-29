@@ -1,0 +1,59 @@
+**定义 44.1（完整观察与取得契约）。** 对每个 $0<p,q<1$，隐藏状态 $H_i$ 位于发射 $X_i$ 之前。仅有六条正发射边：
+
+$$
+1\xrightarrow{0,1-p}1,\quad
+1\xrightarrow{1,p}3,\quad
+3\xrightarrow{0,1}2,\quad
+2\xrightarrow{0,1-q}2,\quad
+2\xrightarrow{1,q}4,\quad
+4\xrightarrow{0,1}1.
+\tag{44.1}
+$$
+
+令 $M_x(h,h')$ 为这些带符号边的权重，其余条目为零，并置
+
+$$
+Z=2+1/p+1/q,\qquad \lambda=Z^{-1}(1/p,1/q,1,1).
+\tag{44.2}
+$$
+
+实际两侧平稳联合律仍由
+
+$$
+J_{p,q}(H_u=h_u,\ldots,H_{v+1}=h_{v+1},X_u=x_u,\ldots,X_v=x_v)
+=\lambda_{h_u}\prod_{i=u}^vM_{x_i}(h_i,h_{i+1})
+\tag{44.3}
+$$
+
+给出，可见边缘记为 $P_{p,q}$。每行总和为一，且输入质量为
+$Z^{-1}((1-p)/p+1,(1-q)/q+1,1,1)=\lambda$，故两端边缘相容并平稳。成功边后必有强制零，所以可见律满足 no11。每个合法有限词可从正质量的准备状态沿正自环、成功边和强制零边实现，故在整个开参数方形上有共同的完整合法有限支撑。
+
+观察者在整数半径 $r\ge1$ 只取得
+
+$$
+Y_r=(X_{-r},\ldots,X_{-1},X_1,\ldots,X_r),\qquad
+\mathcal F_r=\sigma(Y_r),\qquad
+\mathcal E_0=\sigma(X_j:j\ne0),\qquad
+F=\{X_{-1}=X_1=0\}.
+\tag{44.4}
+$$
+
+$F$ 是事件，区别于字段 $\mathcal F_r$。中心和所有隐藏状态始终被扣留。固定 $\epsilon>0$ 后，一个共享确定规则为同一个可测映射 $(\tau,D)$，其中 $\tau\in\mathbb Z_{\ge1}\cup\{\infty\}$，$D\in\{0,1\}$ 只在有限终止时定义，且
+
+$$
+\{\tau\le r\}\in\mathcal F_r,\qquad
+\{\tau=r,D=a\}\in\mathcal F_r\quad(a=0,1).
+\tag{44.5}
+$$
+
+共享指这些映射在整个参数族中不变。称其为 $\epsilon$ 合格规则，如果对每个非对角线参数均有
+
+$$
+P_{p,q}(\tau<\infty)=1,\qquad
+P_{p,q}(\tau<\infty,D\ne X_0)\le\epsilon
+\quad(0<p,q<1, p\ne q).
+\tag{44.6}
+$$
+
+这是无条件的有限终止二值错误，不是对每个停止词的条件保证，也不是实值后验的平方损失。对角线上不要求终止。成本为扩展期望 $\mathbb E_{p,q}\tau\in[1,\infty]$；取得的不同原外部位恰为 $2\tau$ 个，故期望位数是 $2\mathbb E_{p,q}\tau$，无穷值亦如此。两侧窗口一直共同扩大，不能把已获证书的一侧、锚距离或任何间隔当作免费输入。下界不限制规则必须使用间隔、对比分数或检查点；允许空窗口停止 $\tau=0$ 时，同一证明仍适用。
+

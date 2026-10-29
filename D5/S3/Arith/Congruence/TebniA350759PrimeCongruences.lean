@@ -15,8 +15,6 @@ F3: D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.derivative_egfS
 F4: D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.egfMul
 F5: D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.egfSeries
 F6: D5/S1/Recurrence/Parity/ExponentialImplicitParityPeriodThree.egfSeries_mul
-Declaration statement_id readings are pending the Stage B scoped report;
-the existing report predates the merged base and does not contain the Dold owner.
 The generated egf.eq_1 equation is accounted for under its egf owner F2.
 Each row gives its proof shape, direct frozen owners and actual consumers.
 Expansion.G: proof_shape: bind-only; frozen: none;

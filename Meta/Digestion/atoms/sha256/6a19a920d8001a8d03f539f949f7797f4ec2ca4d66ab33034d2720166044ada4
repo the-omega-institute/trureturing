@@ -1,0 +1,4 @@
+## 1. Scope
+
+Ostrovskii and Shcherbakov define a symmetric rational function $Q_{t,n,k}$ of $n$ variables, built from hook Schur polynomials, and state a conjecture with two inequalities for self-conjugate grids in the closed unit disk (cited fact (a)). This volume treats the case $n=2$, $k=1$. For every self-conjugate grid of two nodes it determines exactly when the first inequality holds for all degrees $t$ (Theorem 4.1), and, for grids with nonnegative real parts, exactly when the second inequality holds for all $t$ (Theorem 5.1). In both cases the condition for all $t$ coincides with the condition at $t=3$, and the admissible grids form an explicit region bounded by a line and by a branch of a hyperbola, respectively. In particular, Theorems 4.1 and 5.1 show that both inequalities fail on part of $\mathbb{D}^2$ for $(n,k)=(2,1)$. Corollary 4.3 gives the largest origin-centred disk on which the first inequality holds for all two-node self-conjugate grids.
+
