@@ -19,6 +19,8 @@ import Mathlib.Topology.Instances.Discrete
 
 noncomputable section
 
+open Classical
+
 open Set Function
 open scoped Topology
 open SymbolicDynamics
@@ -79,8 +81,11 @@ theorem edgeLanguage_isCompact_isClosed (edge : V → V → Prop) :
     isCompact_univ.of_isClosed_subset (isClosed_pathSet edge) (subset_univ _)
   have himage : IsCompact ((fun p : ℕ → V => p) '' pathSet edge) :=
     hpath.image continuous_id
-  rw [← edgeLanguage_eq_pathSet_image edge]
-  exact ⟨himage, himage.isClosed⟩
+  constructor
+  · rw [edgeLanguage_eq_pathSet_image edge]
+    exact himage
+  · rw [edgeLanguage_eq_pathSet_image edge]
+    exact himage.isClosed
 
 /-- Dropping the first symbol of an edge path is again an edge path. -/
 theorem edgeLanguage_shift_invariant (edge : V → V → Prop) :
@@ -91,7 +96,7 @@ theorem edgeLanguage_shift_invariant (edge : V → V → Prop) :
   · intro n
     exact hp (n + 1)
   · intro n
-    simpa only [FullShift.shift_apply, id_eq] using hl (n + 1)
+    simpa only [FullShift.shift_apply, id_eq, Nat.add_comm] using hl (n + 1)
 
 /-- Under right-totality, the empty prefix is realized and every edge path
 prefix can be extended to an infinite path. -/
@@ -103,23 +108,41 @@ private theorem finite_path_extend (edge : V → V → Prop)
   classical
   let chooseNext : V → V := fun v => Classical.choose (ht v)
   have hchoose (v : V) : edge v (chooseNext v) := Classical.choose_spec (ht v)
+  have hiterate_comm : ∀ (m : ℕ) (v : V),
+      (chooseNext^[m]) (chooseNext v) = chooseNext ((chooseNext^[m]) v) := by
+    intro m
+    induction m with
+    | zero => intro v; simp
+    | succ m ih =>
+        intro v
+        simp only [Function.iterate_succ_apply']
+        rw [ih]
   let w : ℕ → V := fun k =>
     if hk : k ≤ n then p ⟨k, by omega⟩ else
       (chooseNext^[k - n]) (p (Fin.last n))
   refine ⟨w, ?_, ?_⟩
   · intro k
     by_cases hk : k < n
-    · simp only [w, dif_pos (by omega)]
-      exact hp ⟨k, hk⟩
+    · have hk' : k ≤ n := by omega
+      have hk1' : k + 1 ≤ n := by omega
+      simp only [w, dif_pos hk', dif_pos hk1']
+      simpa using hp ⟨k, hk⟩
     · by_cases hkn : k = n
       · subst k
-        simp only [w, dif_pos le_rfl, Function.iterate_zero, id_eq]
-        exact hchoose _
+        simp only [w, dif_pos le_rfl, dif_neg (by omega)]
+        have hlast : (⟨n, by omega⟩ : Fin (n + 1)) = Fin.last n := by
+          rfl
+        simpa [hlast] using hchoose (p (Fin.last n))
       · have hkn' : n < k := by omega
-        simp only [w, dif_neg (by omega)]
-        rw [← Function.iterate_succ_apply']
-        exact hchoose _
+        have hiter : k + 1 - n = (k - n) + 1 := by omega
+        have hcomm : (chooseNext^[k - n]) (chooseNext (p (Fin.last n))) =
+            chooseNext ((chooseNext^[k - n]) (p (Fin.last n))) :=
+          hiterate_comm (k - n) (p (Fin.last n))
+        simpa [w, show ¬ k ≤ n by omega, show ¬ k + 1 ≤ n by omega,
+          hiter, Function.iterate_succ_apply, Function.iterate_succ_apply', hcomm] using
+          hchoose ((chooseNext^[k - n]) (p (Fin.last n)))
   · intro i
-    simp only [w, dif_pos (by omega)]
+    have hi : (i : ℕ) ≤ n := by omega
+    simp only [w, dif_pos hi]
 
 end D5.S1.Dynamics.Symbolic.FiniteGraphEntropy
