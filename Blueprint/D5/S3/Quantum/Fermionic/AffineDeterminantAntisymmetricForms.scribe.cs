@@ -85,7 +85,10 @@ internal sealed class AffineDeterminantAntisymmetricFormsDocument : IScribeDocum
                         "The four conjuncts give a scalar-polynomial reading of the two conjectures in lines 266–269. "
                             + "The total-degree bound includes homogeneous polynomials of degree d. "
                             + "The separate collapse conjecture in lines 271–272 is outside these statements."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("rouleux-2019-affine-determinant-antisymmetric-forms"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, string prose) => Describe.Lean(
