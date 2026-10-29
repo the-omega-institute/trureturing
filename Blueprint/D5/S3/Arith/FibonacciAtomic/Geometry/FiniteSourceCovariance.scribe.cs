@@ -36,16 +36,16 @@ internal sealed class FiniteSourceCovarianceDocument : IScribeDocumentDefinition
     private static Formula Ex(string s, Formula t, Formula x) => Seq(Exists, Sp, V(s), Colon, Sp, t, Comma, Sp, Par(x));
     private static Formula Imp(Formula x, Formula y) => Seq(Par(x), Sp, Implies, Sp, Par(y));
     private static Formula And(Formula x, Formula y) => Seq(Par(x), Sp, Land, Sp, Par(y));
-    private static Formula Lt(Formula x, Formula y) => Seq(x, Sp, Less, Sp, y);
+    private static Formula Lt(Formula x, Formula y) => Seq(x, Sp, F.Lt, Sp, y);
     private static Formula Sub(Formula x, Formula y) => Seq(Par(x), Sp, Minus, Sp, Par(y));
     private static Formula Norm(Formula x) => Seq(Vert, Sp, x, Sp, Vert);
     private static Formula ResultFormula()
     {
         Formula n=V("n"), k=V("N"), epsilon=V("epsilon");
         Formula real=Seq(Mathbb,Grp(V("R"))), nat=Seq(Mathbb,Grp(V("N")));
-        Formula errors=And(Lt(Norm(Sub(Call("v",n),Call("boundaryMean"))),epsilon),
-            And(Lt(Norm(Sub(Call("B",n),Call("comp",Call("adjoint",Call("boundaryTrace")),Call("boundaryTrace")))),epsilon),
-                Lt(Norm(Sub(Call("Sigma",n),Call("boundarySigma"))),epsilon)));
+        Formula errors=And(Lt(Norm(Sub(Call("v",n),Call("BiasedBoundaryFreeRootForm.v"))),epsilon),
+            And(Lt(Norm(Sub(Call("B",n),Call("comp",Call("adjoint",Call("BiasedBoundaryTrace.J")),Call("BiasedBoundaryTrace.J"))),epsilon),
+                Lt(Norm(Sub(Call("Sigma",n),Call("BiasedBoundaryFreeRootForm.Sigma"))),epsilon)));
         return All("epsilon",real,Imp(Lt(D(0),epsilon),Ex("N",nat,
             All("n",nat,Imp(Seq(k,Sp,Leq,Sp,n),errors)))));
     }
