@@ -21,6 +21,16 @@ submitted 2025-09-23. The versioned TeX source `Semigroupring.tex` has SHA256
 The source archive has SHA256
 `f413479d65c2eeffcbd50ed2468fd2ba558f8033decade5767314848e5b12c1c`.
 
+## Verified locator
+
+- URL: https://arxiv.org/abs/2509.18724v1
+- Versioned source: v1, submitted 2025-09-23.
+- Source locator: Section 5, Conjecture 5.3, TeX line 842 and HTML anchor
+  [S5.Thmtheorem3](https://arxiv.org/html/2509.18724v1#S5.Thmtheorem3).
+- Definition scope: Section 2, especially lines 203–213 for the ordinary
+  semigroup algebra and Definition 2.1; Section 5, lines 813–842 for the
+  constants and the conjectured equality.
+
 ## Source statement
 
 Conjecture 5.3, TeX line 842, HTML anchor
