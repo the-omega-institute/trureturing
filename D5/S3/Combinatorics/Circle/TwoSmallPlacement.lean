@@ -155,7 +155,9 @@ theorem even_placement (p q : ℕ) (hpq : p ≤ q) (hne : 1 ≤ p + q)
       f (2 * p + 2 + 2 * j) = N - (2 * a + 1) * (4 : ℤ) ^ j ∧
       f (2 * p + 3 + 2 * j) = -(N + 2 * (2 * a + 1) * (4 : ℤ) ^ j)) :
     ∃ word : List ℕ, word.Perm (List.range (2 * p + 2 * q + 2)) ∧
-      InStrip f (3 * C) 0 word ∧ (word.map f).sum = 0 := by
+      InStrip f (3 * C) 0 word ∧ (word.map f).sum = 0 ∧
+      word.filter (fun j => decide (j ≠ 0 ∧ j ≠ 2 * p + 1)) =
+        List.range' 1 (2 * p) ++ List.range' (2 * p + 2) (2 * q) := by
   let h := q - p - 1
   let v : ℤ := (4 : ℤ) ^ h
   let alpha := 2 * b + 1
@@ -272,10 +274,38 @@ theorem even_placement (p q : ℕ) (hpq : p ≤ q) (hne : 1 ≤ p + q)
     dsimp [B, D]
     rw [List.range'_append_1]
     congr 1 <;> omega
+  have hdeleted :
+      word.filter (fun j => decide (j ≠ 0 ∧ j ≠ 2 * p + 1)) =
+        List.range' 1 (2 * p) ++ List.range' (2 * p + 2) (2 * q) := by
+    have hA : A.filter (fun j => decide (j ≠ 0 ∧ j ≠ 2 * p + 1)) = A :=
+      List.filter_eq_self.mpr (by
+        intro x hx
+        simp only [A, List.mem_range'] at hx
+        rcases hx with ⟨i, hi, rfl⟩
+        rw [decide_eq_true_eq]
+        constructor <;> omega)
+    have hB : B.filter (fun j => decide (j ≠ 0 ∧ j ≠ 2 * p + 1)) = B :=
+      List.filter_eq_self.mpr (by
+        intro x hx
+        simp only [B, List.mem_range'] at hx
+        rcases hx with ⟨i, hi, rfl⟩
+        rw [decide_eq_true_eq]
+        constructor <;> omega)
+    have hD : D.filter (fun j => decide (j ≠ 0 ∧ j ≠ 2 * p + 1)) = D :=
+      List.filter_eq_self.mpr (by
+        intro x hx
+        simp only [D, List.mem_range'] at hx
+        rcases hx with ⟨i, hi, rfl⟩
+        rw [decide_eq_true_eq]
+        constructor <;> omega)
+    simp only [word, List.filter_append]
+    rw [hA, hB, hD]
+    simp
+    rw [hBD]
   have hinventory : [0] ++ A ++ [2 * p + 1] ++ B ++ D =
       List.range (2 * p + 2 * q + 2) := by
     simpa only [A, List.append_assoc, hBD] using gap_inventory (2 * p) (2 * q)
-  refine ⟨word, ?_, hsword, hmword⟩
+  refine ⟨word, ?_, hsword, hmword, hdeleted⟩
   rw [← hinventory]
   apply List.perm_iff_count.mpr
   intro x
@@ -297,7 +327,9 @@ theorem odd_placement (p q : ℕ) (a b N C : ℤ)
     (hsecondP : ∀ j < q, f (2 * p + 4 + 2 * j) =
       N - 2 * (2 * a - 1) * (4 : ℤ) ^ j) :
     ∃ word : List ℕ, word.Perm (List.range (2 * p + 2 * q + 4)) ∧
-      InStrip f (3 * C) 0 word ∧ (word.map f).sum = 0 := by
+      InStrip f (3 * C) 0 word ∧ (word.map f).sum = 0 ∧
+      word.filter (fun j => decide (j ≠ 0 ∧ j ≠ 2 * p + 2)) =
+        List.range' 1 (2 * p + 1) ++ List.range' (2 * p + 3) (2 * q + 1) := by
   let D := 2 * b - 1
   let E := 2 * a - 1
   let F := 3 * (C + 1) - (a + 2 * b)
@@ -436,12 +468,33 @@ theorem odd_placement (p q : ℕ) (a b N C : ℤ)
     simp only [word, List.map_append, List.sum_append, List.map_cons, List.map_nil,
       List.sum_cons, List.sum_nil, add_zero, hma, hmb]
     linarith
+  have hdeleted :
+      word.filter (fun j => decide (j ≠ 0 ∧ j ≠ 2 * p + 2)) =
+        List.range' 1 (2 * p + 1) ++ List.range' (2 * p + 3) (2 * q + 1) := by
+    have hA : A.filter (fun j => decide (j ≠ 0 ∧ j ≠ 2 * p + 2)) = A :=
+      List.filter_eq_self.mpr (by
+        intro x hx
+        simp only [A, List.mem_range'] at hx
+        rcases hx with ⟨i, hi, rfl⟩
+        rw [decide_eq_true_eq]
+        constructor <;> omega)
+    have hB : B.filter (fun j => decide (j ≠ 0 ∧ j ≠ 2 * p + 2)) = B :=
+      List.filter_eq_self.mpr (by
+        intro x hx
+        simp only [B, List.mem_range'] at hx
+        rcases hx with ⟨i, hi, rfl⟩
+        rw [decide_eq_true_eq]
+        constructor <;> omega)
+    simp only [word, List.filter_append]
+    rw [hA, hB]
+    simp
+    simpa [A, B]
   have hi : [0] ++ A ++ [2 * p + 2] ++ B = List.range (2 * p + 2 * q + 4) := by
     simpa only [A, B, show 2 * p + 1 + 1 = 2 * p + 2 by omega,
       show 2 * p + 1 + 2 = 2 * p + 3 by omega,
       show 2 * p + 1 + (2 * q + 1) + 2 = 2 * p + 2 * q + 4 by omega] using
       gap_inventory (2 * p + 1) (2 * q + 1)
-  refine ⟨word, ?_, hsword, hmword⟩
+  refine ⟨word, ?_, hsword, hmword, hdeleted⟩
   rw [← hi]
   apply List.perm_iff_count.mpr
   intro x

@@ -24,6 +24,54 @@ private theorem phase_add {k : ℕ} (hk : 0 < k) (o : Fin k) (j : ℕ) :
   apply Fin.ext
   simp [phase, Fin.val_add, Nat.add_mod]
 
+private theorem filter_rotate {α : Type*} (p : α → Bool) (l : List α) (n : ℕ) :
+    (l.rotate n).filter p ~r l.filter p := by
+  let r := n % l.length
+  have hright : l.filter p = (l.take r).filter p ++ (l.drop r).filter p := by
+    rw [← List.filter_append, List.take_append_drop]
+  rw [List.rotate_eq_drop_append_take_mod, List.filter_append, hright]
+  exact List.isRotated_append
+
+private theorem range_filter_delete (ell m : ℕ) :
+    (List.range (ell + m + 2)).filter (fun j => decide (j ≠ 0 ∧ j ≠ ell + 1)) =
+      List.range' 1 ell ++ List.range' (ell + 2) m := by
+  have h1 : List.range' 1 ell ++ [ell + 1] = List.range' 1 (ell + 1) := by
+    simpa only [Nat.add_comm] using (List.range'_1_concat (s := 1) (n := ell)).symm
+  have h2 : List.range' 1 (ell + 1) ++ List.range' (ell + 2) m =
+      List.range' 1 (ell + 1 + m) := by
+    simpa only [show 1 + (ell + 1) = ell + 2 by omega] using
+      (List.range'_append_1 (s := 1) (m := ell + 1) (n := m))
+  have hinv : [0] ++ List.range' 1 ell ++ [ell + 1] ++ List.range' (ell + 2) m =
+      List.range (ell + m + 2) := by
+    calc
+      [0] ++ List.range' 1 ell ++ [ell + 1] ++ List.range' (ell + 2) m =
+          [0] ++ ((List.range' 1 ell ++ [ell + 1]) ++ List.range' (ell + 2) m) := by
+            simp only [List.append_assoc]
+      _ = [0] ++ List.range' 1 (ell + 1 + m) := by rw [h1, h2]
+      _ = List.range (ell + m + 2) := by
+        rw [List.range_eq_range', show ell + m + 2 = (ell + 1 + m) + 1 by omega,
+          List.range'_succ]
+        rfl
+  have hmid : (List.range' 1 ell).filter
+      (fun j => decide (j ≠ 0 ∧ j ≠ ell + 1)) = List.range' 1 ell := by
+    apply List.filter_eq_self.mpr
+    intro x hx
+    simp only [List.mem_range'] at hx
+    rcases hx with ⟨i, hi, rfl⟩
+    rw [decide_eq_true_eq]
+    constructor <;> omega
+  have htail : (List.range' (ell + 2) m).filter
+      (fun j => decide (j ≠ 0 ∧ j ≠ ell + 1)) = List.range' (ell + 2) m := by
+    apply List.filter_eq_self.mpr
+    intro x hx
+    simp only [List.mem_range'] at hx
+    rcases hx with ⟨i, hi, rfl⟩
+    rw [decide_eq_true_eq]
+    constructor <;> omega
+  rw [← hinv, List.filter_append, List.filter_append, List.filter_append,
+    List.filter_cons, List.filter_nil, hmid, htail]
+  simp
+
 private theorem short_gap {k : ℕ} (hk : 0 < k) (P : Fin k → Prop)
     (a b : Fin k) (hab : a ≠ b) (hP : ∀ i, P i ↔ i = a ∨ i = b) :
     ∃ o : Fin k, ∃ d : ℕ, 0 < d ∧ d < k ∧ d ≤ k - d ∧
@@ -105,6 +153,7 @@ theorem actual_two_gap_profile {k : ℕ} (hk : 3 ≤ k) (t : ℕ)
         3 * r = half k - (-2 : ℤ) ^ ell ∧
         (∀ j ≤ ell, 3 * w (j + 1) =
           paritySign j * modulus k + (2 : ℤ) ^ j * (6 * w 0 - modulus k)) ∧
+        (∀ j < k, quarter k ≤ |w j| ↔ j ≠ 0 ∧ j ≠ ell + 1) ∧
         (∀ j ≤ m, 3 * (paritySign ell * w (ell + 1 + (j + 1))) =
           paritySign j * modulus k + (2 : ℤ) ^ j * (6 * r - modulus k)) := by
   classical
@@ -158,6 +207,25 @@ theorem actual_two_gap_profile {k : ℕ} (hk : 3 ≤ k) (t : ℕ)
     rw [hh]
     cases negative <;> simp only [orient, Bool.false_eq_true, ite_false, ite_true]
     exact (doubleStep_neg (le_of_lt hN0)).symm
+  have hwlarge' : ∀ j < k, quarter k ≤ |w j| ↔ j ≠ 0 ∧ j ≠ ell + 1 := by
+    intro j hj
+    have hh := hchar j hj
+    have hs : |w j| < quarter k ↔ j = 0 ∨ j = ell + 1 := by
+      simpa only [w, orient_abs, hd] using hh
+    constructor
+    · intro h
+      constructor
+      · intro hj0
+        exact (not_lt_of_ge h) (hs.mpr (Or.inl hj0))
+      · intro hjd
+        exact (not_lt_of_ge h) (hs.mpr (Or.inr hjd))
+    · intro h
+      have hn : ¬ |w j| < quarter k := by
+        intro hs'
+        rcases hs.mp hs' with hj0 | hjd
+        · exact h.1 hj0
+        · exact h.2 hjd
+      omega
   have hwclose : w (ell + m + 2) = w 0 := by
     have he : phase (by omega) o (ell + m + 2) = phase (by omega) o 0 := by
       apply Fin.ext
@@ -171,7 +239,7 @@ theorem actual_two_gap_profile {k : ℕ} (hk : 3 ≤ k) (t : ℕ)
     cyclic_two_gap_classifier ell m (quarter k) (modulus k) (half k) hQ hpow hN hC w
       hwb ⟨hwpos, hws⟩ hwsmall hwlarge hwstep hwclose
   exact ⟨o, negative, ell, m, hk', by dsimp [ell, m]; omega, hpar,
-    hwpos, hr, hs, hrval, hfirst, hsecond⟩
+    hwpos, hr, hs, hrval, hfirst, hwlarge', hsecond⟩
 
 
 private theorem two_even (n : ℕ) : (2 : ℤ) ^ (2 * n) = (4 : ℤ) ^ n := by
@@ -194,7 +262,9 @@ private theorem normalized_placement (ell m : ℕ) (hle : ell ≤ m)
       paritySign j * N + (2 : ℤ) ^ j *
         (6 * (paritySign ell * w (ell + 1)) - N)) :
     ∃ word : List ℕ, word.Perm (List.range (ell + m + 2)) ∧
-      InStrip w C 0 word ∧ (word.map w).sum = 0 := by
+      InStrip w C 0 word ∧ (word.map w).sum = 0 ∧
+      word.filter (fun j => decide (j ≠ 0 ∧ j ≠ ell + 1)) =
+        List.range' 1 ell ++ List.range' (ell + 2) m := by
   let p := ell / 2
   let q := m / 2
   by_cases he : ell % 2 = 0
@@ -214,7 +284,7 @@ private theorem normalized_placement (ell m : ℕ) (hle : ell ≤ m)
     have h6s : 6 * w 0 - N = -(2 * b + 1) := by nlinarith
     have h6r : 6 * w (2 * p + 1) - N = -(2 * a + 1) := by nlinarith
     let f := fun j => 3 * w j
-    obtain ⟨word, hperm, hstrip, hsum⟩ := even_placement p q hpq hne a b N C rfl rfl hn hc f
+    obtain ⟨word, hperm, hstrip, hsum, hdel⟩ := even_placement p q hpq hne a b N C rfl rfl hn hc f
       hs' hr' (by
         intro i hi
         have h1 := hfirst (2 * i) (by omega)
@@ -234,10 +304,11 @@ private theorem normalized_placement (ell m : ℕ) (hle : ell ≤ m)
         rw [show 2 * p + 1 + (2 * j + 1 + 1) = 2 * p + 3 + 2 * j by omega] at h2
         constructor <;> nlinarith only [h1, h2])
     refine ⟨word, by simpa [hell, hm, Nat.add_assoc] using hperm,
-      unscale_strip w C 0 word hstrip, ?_⟩
+      unscale_strip w C 0 word hstrip, ?_, ?_⟩
     have hsum' : 3 * (word.map w).sum = 0 := by
       simpa only [f, List.sum_map_mul_left] using hsum
-    omega
+    · omega
+    · simpa [hell, hm] using hdel
   · have hell : ell = 2 * p + 1 := by dsimp [p]; omega
     have hm : m = 2 * q + 1 := by dsimp [q]; omega
     let a : ℤ := 2 * (4 : ℤ) ^ p
@@ -257,7 +328,7 @@ private theorem normalized_placement (ell m : ℕ) (hle : ell ≤ m)
     have h6s : 6 * w 0 - N = 2 * b - 1 := by nlinarith
     have h6r : 6 * (-w (2 * p + 2)) - N = 2 * a - 1 := by nlinarith
     let f := fun j => 3 * w j
-    obtain ⟨word, hperm, hstrip, hsum⟩ := odd_placement p q a b N C rfl rfl hn hc f
+    obtain ⟨word, hperm, hstrip, hsum, hdel⟩ := odd_placement p q a b N C rfl rfl hn hc f
       hs' (by dsimp [f]; nlinarith only [hr']) (by
         intro i hi
         have ht := hfirst (2 * i) (by omega)
@@ -282,10 +353,11 @@ private theorem normalized_placement (ell m : ℕ) (hle : ell ≤ m)
         rw [show 2 * p + 2 + (2 * j + 1 + 1) = 2 * p + 4 + 2 * j by omega] at ht
         dsimp [f]; nlinarith only [ht])
     refine ⟨word, by simpa only [show ell + m + 2 = 2 * p + 2 * q + 4 by omega] using hperm,
-      unscale_strip w C 0 word hstrip, ?_⟩
+      unscale_strip w C 0 word hstrip, ?_, ?_⟩
     have hsum' : 3 * (word.map w).sum = 0 := by
       simpa only [f, List.sum_map_mul_left] using hsum
-    omega
+    · omega
+    · simpa [hell, hm] using hdel
 
 
 
@@ -346,18 +418,20 @@ theorem actualSource_two_small_full_completion {k : ℕ} (hk : 3 ≤ k) (t : ℕ
       InStrip (actualSource k t) (half k) 0 L ∧
       (∀ n : ℕ, 0 ≤ mass (actualSource k t) (L.take n) ∧
         mass (actualSource k t) (L.take n) ≤ half k) ∧
-      mass (actualSource k t) L = 0 ∧ Legal k t L := by
+      mass (actualSource k t) L = 0 ∧ Legal k t L ∧
+      (L.filter (fun i => decide (quarter k ≤ |actualSource k t i|))).IsRotated
+        ((List.finRange k).filter (fun i => decide (quarter k ≤ |actualSource k t i|))) := by
   classical
   letI : NeZero k := ⟨by omega⟩
   obtain ⟨o, negative, ell, m, hk', hle, hpar, hspos, hrpos,
-    hs, hr, hfirst, hsecond⟩ := actual_two_gap_profile hk t htwo
+    hs, hr, hfirst, hlarge, hsecond⟩ := actual_two_gap_profile hk t htwo
   let w := fun j => orient negative (actualSource k t (phase (by omega) o j))
   obtain ⟨hQ, hN, hC, hN0, hodd⟩ := source_geometry hk
   have hpow : quarter k = (2 : ℤ) ^ (ell + m) := by
     unfold quarter; congr 1; omega
   have hn : modulus k = 4 * (2 : ℤ) ^ (ell + m) - 1 := by rwa [hpow] at hN
   have hc : half k = 2 * (2 : ℤ) ^ (ell + m) - 1 := by rwa [hpow] at hC
-  obtain ⟨word, hp, hwstrip, hwsum⟩ := normalized_placement ell m hle hpar (by omega)
+  obtain ⟨word, hp, hwstrip, hwsum, hdeleted⟩ := normalized_placement ell m hle hpar (by omega)
     (modulus k) (half k) hn hc w hs hr hfirst hsecond
   let phi := phase (by omega : 0 < k) o
   let L := word.map phi
@@ -369,6 +443,49 @@ theorem actualSource_two_small_full_completion {k : ℕ} (hk : 3 ≤ k) (t : ℕ
     change phase (by omega) o i.val = o + i
     apply Fin.ext
     rfl
+  have hphase : (List.range k).map phi = (List.finRange k).rotate o.val := by
+    rw [hbase]
+    apply List.ext_getElem
+    · simp
+    · intro i hi₁ hi₂
+      simp only [List.getElem_ofFn, List.getElem_rotate, List.getElem_finRange,
+        List.length_ofFn, List.length_rotate, List.length_finRange]
+      apply Fin.ext
+      simp [e, phi, phase, Fin.val_add, Nat.add_mod, Nat.add_comm]
+  let p : Fin k → Bool := fun i => decide (quarter k ≤ |actualSource k t i|)
+  let q : ℕ → Bool := fun j => decide (j ≠ 0 ∧ j ≠ ell + 1)
+  have hpred (j : ℕ) (hj : j ∈ word) : p (phi j) = q j := by
+    have hjk : j < k := by
+      have hh := hp.mem_iff.mp hj
+      simp only [List.mem_range] at hh
+      omega
+    have hh := hlarge j hjk
+    apply decide_eq_decide.mpr
+    simpa only [p, q, phi, w, orient_abs] using hh
+  have hwordfilter : L.filter p = (word.filter q).map phi := by
+    dsimp only [L]
+    rw [List.filter_map]
+    congr 1
+    apply List.filter_congr
+    intro j hj
+    simpa only [Function.comp_def] using hpred j hj
+  have hfullfilter : ((List.range k).map phi).filter p =
+      ((List.range k).filter q).map phi := by
+    rw [List.filter_map]
+    congr 1
+    apply List.filter_congr
+    intro j hj
+    have hjk := List.mem_range.mp hj
+    have hh := hlarge j hjk
+    apply decide_eq_decide.mpr
+    simpa only [Function.comp_def, p, q, phi, w, orient_abs] using hh
+  have hforwardQ : (List.range k).filter q = word.filter q := by
+    rw [hk', range_filter_delete]
+    simpa only [q] using hdeleted.symm
+  have hphaseorder : L.filter p ~r (List.finRange k).filter p := by
+    rw [hwordfilter, ← hforwardQ, ← hfullfilter, hphase]
+    exact filter_rotate p (List.finRange k) o.val
+
   have hpL : L.Perm (List.ofFn (fun q : Fin k => q)) := by
     have hh := hp.map phi
     rw [← hk', hbase] at hh
@@ -384,10 +501,12 @@ theorem actualSource_two_small_full_completion {k : ℕ} (hk : 3 ≤ k) (t : ℕ
   have hsum : (L.map (fun q => orient negative (actualSource k t q))).sum = 0 := by
     simpa only [L, phi, w, List.map_map, Function.comp_def] using hwsum
   have hcompletion : ∃ R : List (Fin k), R.Perm (List.ofFn (fun q : Fin k => q)) ∧
-      InStrip (actualSource k t) (half k) 0 R ∧ mass (actualSource k t) R = 0 := by
+      InStrip (actualSource k t) (half k) 0 R ∧ mass (actualSource k t) R = 0 ∧
+      L.IsRotated R := by
     cases negative with
     | false => exact ⟨L, hpL, by simpa only [orient, Bool.false_eq_true, ite_false] using hstrip,
-        by simpa only [orient, Bool.false_eq_true, ite_false, mass] using hsum⟩
+        by simpa only [orient, Bool.false_eq_true, ite_false, mass] using hsum,
+        List.IsRotated.refl L⟩
     | true =>
       obtain ⟨j, hj, hrot⟩ := negate_rotation
         (fun q => orient true (actualSource k t q)) (half k) L hstrip hsum
@@ -402,8 +521,9 @@ theorem actualSource_two_small_full_completion {k : ℕ} (hk : 3 ≤ k) (t : ℕ
         dsimp [mass]
         rw [((List.rotate_perm L j).map (actualSource k t)).sum_eq]
         exact hmL
-      exact ⟨L.rotate j, hpR, strip_of_all_prefixes _ (by simpa using hprefixR), hmR⟩
-  obtain ⟨R, hpR, hsR, hmR⟩ := hcompletion
+      exact ⟨L.rotate j, hpR, strip_of_all_prefixes _ (by simpa using hprefixR), hmR,
+        (List.IsRotated.forall L j).symm⟩
+  obtain ⟨R, hpR, hsR, hmR, hLR⟩ := hcompletion
   have hnR : R.Nodup := hpR.nodup_iff.mpr
     (List.nodup_ofFn_ofInjective (f := fun q : Fin k => q) (fun _ _ h => h))
   have huR : R.toFinset = Finset.univ := by
@@ -411,7 +531,11 @@ theorem actualSource_two_small_full_completion {k : ℕ} (hk : 3 ≤ k) (t : ℕ
     intro q
     exact List.mem_toFinset.mpr (hpR.mem_iff.mpr (List.mem_ofFn.mpr ⟨q, rfl⟩))
   have hlegal : Legal k t R := legal_of_strip hnR hsR
-  exact ⟨R, hpR, hnR, huR, hsR, hlegal.2, hmR, hlegal⟩
+  have hRfilter : R.filter p ~r (List.finRange k).filter p := by
+    rcases hLR with ⟨j, hj⟩
+    rw [← hj]
+    exact (filter_rotate p L j).trans hphaseorder
+  exact ⟨R, hpR, hnR, huR, hsR, hlegal.2, hmR, hlegal, by simpa only [p] using hRfilter⟩
 
 
 
