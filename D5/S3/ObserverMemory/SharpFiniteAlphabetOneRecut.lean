@@ -7,6 +7,7 @@
    digest: Actual finite-alphabet derivative tables attain sharp one-credit fiber bounds. -/
 
 import D5.S3.ObserverMemory.SharpBinaryOneRecut
+import Mathlib.Computability.MyhillNerode
 
 /-! Actual derivative-table reconstruction and finite-alphabet sharpness. -/
 
@@ -82,8 +83,7 @@ private theorem residual_nonempty {C : Set (List A)} {k : Nat}
 
 private theorem shift (C : Set (List A)) (v : List A) (b : A) :
     residual C (v ++ [b]) = derivative (residual C v) b := by
-  classical
-  ext f; simp [StrictAnchoredBoundary.residual,derivative,List.append_assoc]
+  exact Language.leftQuotient_append C v [b]
 
 private theorem derivative_member {C : Set (List A)} {k : Nat} (hk : 1 ≤ k)
     {S : Set (List A)} (hS : S ∈ residualSet C (k - 1)) (b : A)
@@ -428,24 +428,6 @@ private theorem current_fiber_card [Fintype A] (C : Set (List A)) (k : Nat)
     right_inv := by rintro ⟨b,S⟩; rfl }
   rw [Nat.card_congr e,Nat.card_sigma]
 
-private theorem boundary_card [Finite A] (C : Set (List A)) (k : Nat)
-    [Fintype (residualSet C k)] (hk : 1 ≤ k) :
-    Nat.card (oneBoundary C k) = ∑ E : residualSet C k, Nat.card (currentFiber C k E.val) := by
-  classical
-  let (E : residualSet C k) : Finite (currentFiber C k E.val) :=
-    (current_finite C k E.val).to_subtype
-  let e : oneBoundary C k ≃ Σ E : residualSet C k, currentFiber C k E.val := {
-    toFun := fun z => ⟨⟨forward z.val,derivative_member hk z.property.1 _ z.property.2⟩,
-      ⟨z.val,z.property,rfl⟩⟩
-    invFun := fun z => ⟨z.2.val,z.2.property.1⟩
-    left_inv := fun _ => rfl
-    right_inv := by
-      rintro ⟨⟨E,hE⟩,⟨z,hz,he⟩⟩
-      dsimp at he
-      cases he
-      rfl }
-  rw [Nat.card_congr e,Nat.card_sigma]
-
 private def fill {N : Nat} {full : Bool} (b : A) (s : Fin N)
     (r : Remaining A b → SharpBinaryOneRecut.Spare N full) : A → Option (Fin N) :=
   by
@@ -460,6 +442,45 @@ private theorem fill_admissible {N : Nat} {full : Bool} (b : A) (s : Fin N)
   · simp [fill,ha]
   · simpa [fill,ha] using (r ⟨a,ha⟩).property hf
 
+private def boundary_equiv [Fintype A] {N : Nat} (full : Bool) (e : Bool ↪ A) :
+    (Fin N × (Σ b : A, Remaining A b → SharpBinaryOneRecut.Spare N full)) ≃
+      oneBoundary (relation e N full) (Nat.card A * N + 1) := by
+  classical
+  let f : (Fin N × (Σ b : A, Remaining A b → SharpBinaryOneRecut.Spare N full)) →
+      oneBoundary (relation e N full) (Nat.card A * N + 1) :=
+    fun z => ⟨(predecessor e (fill z.2.1 z.1 z.2.2),z.2.1),by
+      rw [actual_boundary]
+      exact ⟨fill z.2.1 z.1 z.2.2,fill_admissible _ _ _,z.1,by simp [fill],rfl⟩⟩
+  apply Equiv.ofBijective f
+  constructor
+  · rintro ⟨s,b,r⟩ ⟨u,c,v⟩ he
+    have hb : b = c := congrArg (fun z => z.val.2) he
+    subst c
+    have ht := predecessor_injective N e (congrArg (fun z => z.val.1) he)
+    have hs : s = u := Option.some.inj (by simpa [fill] using congrFun ht b)
+    subst u
+    have hr : r = v := by
+      funext a
+      apply Subtype.ext
+      simpa [fill,a.property] using congrFun ht a.val
+    subst v
+    rfl
+  · intro z
+    have hz := (Set.ext_iff.mp (actual_boundary N full e) z.val).mp z.property
+    obtain ⟨t,ht,s,hs,he⟩ := hz
+    let r : Remaining A z.val.2 → SharpBinaryOneRecut.Spare N full :=
+      fun a => ⟨t a.val,fun hf => ht.2 hf a.val⟩
+    have hr : fill z.val.2 s r = t := by
+      funext a
+      by_cases ha : a = z.val.2
+      · simpa [fill,ha] using hs.symm
+      · simp [fill,ha,r]
+    refine ⟨⟨s,z.val.2,r⟩,Subtype.ext ?_⟩
+    change (predecessor e (fill z.val.2 s r),z.val.2) = z.val
+    apply Prod.ext
+    · rw [hr,← he]
+    · rfl
+
 private def fixed_fiber_equiv [Fintype A] {N : Nat} (full : Bool)
     (e : Bool ↪ A) (s : Fin N) (b : A) :
     (Remaining A b → SharpBinaryOneRecut.Spare N full) ≃
@@ -469,11 +490,8 @@ private def fixed_fiber_equiv [Fintype A] {N : Nat} (full : Bool)
       fixedFiber (relation e N full) (Nat.card A * N + 1) {encoded e (some s)} b :=
     fun r => ⟨predecessor e (fill b s r),by
       constructor
-      · have hz : (predecessor e (fill b s r),b) ∈
-            oneBoundary (relation e N full) (Nat.card A * N + 1) := by
-          rw [actual_boundary]
-          exact ⟨fill b s r,fill_admissible b s r,s,by simp [fill],rfl⟩
-        exact hz.1
+      · rw [Nat.add_sub_cancel,previous_residuals]
+        exact ⟨fill b s r,fill_admissible b s r,rfl⟩
       · rw [derivative_predecessor]
         simp [fill,payload]⟩
   apply Equiv.ofBijective f
@@ -537,11 +555,8 @@ private theorem attained_counts [Fintype A] (N : Nat) (full : Bool) (e : Bool �
     simp_rw [fixed]
     simp only [Finset.sum_const,Finset.card_univ,smul_eq_mul,← Nat.card_eq_fintype_card]
   refine ⟨width,fibers,?_⟩
-  let := (residual_finite (relation e N full) (Nat.card A * N + 1)).fintype
-  rw [boundary_card _ _ (by omega)]
-  simp_rw [fun E : residualSet (relation e N full) (Nat.card A * N + 1) =>
-    (fibers E.val E.property).2]
-  simp only [Finset.sum_const,Finset.card_univ,smul_eq_mul,← Nat.card_eq_fintype_card,width]
+  rw [← Nat.card_congr (boundary_equiv full e),Nat.card_prod,sigma_card,
+    SharpBinaryOneRecut.spare_card,Nat.card_fin]
   ring
 
 

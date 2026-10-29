@@ -55,21 +55,19 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actualReadout := by
   intro i
-  let C : Set (List Bool) := {[false]}
+  let C : Set (List Bool) := {[false,false]}
   refine ⟨⟨Bool,C⟩,1,2,?_⟩
   intro he
   change oneBoundary C 1 = oneBoundary C 2 at he
   have hm : (residual C [],false) ∈ oneBoundary C 1 := by
-    refine ⟨⟨[],rfl,⟨[false],rfl⟩,rfl⟩,⟨[],?_⟩⟩
+    refine ⟨⟨[],rfl,⟨[false,false],rfl⟩,rfl⟩,⟨[false],?_⟩⟩
     exact rfl
   rw [he] at hm
   obtain ⟨v,hv,_,hr⟩ := hm.1
-  obtain ⟨f,hf⟩ := hm.2
-  have hw : v ++ false :: f = [false] := by
-    change v ++ false :: f ∈ C
-    change false :: f ∈ residual C v
+  have hw : v ++ [false,false] = [false,false] := by
+    change [false,false] ∈ residual C v
     rw [hr]
-    exact hf
+    exact rfl
   have hh := congrArg List.length hw
   simp only [List.length_append,List.length_cons,List.length_nil] at hh
   omega
