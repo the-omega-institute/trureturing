@@ -32,10 +32,11 @@ theorem example_invertible (t : Source) : (clock 1 2 t).det ≠ 0 := by
     by_cases hi : i = j <;> by_cases hn : j.val ∈ neighbors t i.val <;>
       norm_num [M, clock, hi, hn]
   have htwo : M.map (fun n => (n : ZMod 2)) = 1 := by
+    have htwo0 : (2 : ZMod 2) = 0 := ZMod.natCast_self 2
     ext i j
     change ((M i j : ℤ) : ZMod 2) = _
     by_cases hi : i = j <;> by_cases hn : j.val ∈ neighbors t i.val <;>
-      norm_num [M, Matrix.one_apply, hi, hn]
+      norm_num [M, Matrix.one_apply, hi, hn, htwo0]
   intro h
   have hz : (M.det : ℚ) = 0 := by rw [Int.cast_det, hrat, h]
   have hz' : M.det = 0 := by exact_mod_cast hz
@@ -99,7 +100,7 @@ private theorem dependence : ObservationalDependence signature actual := by
       (fun e => zeroInclude e.1 (.of false) e.2 ⟨[false], by simp [material]⟩) ≠
       (encode 1 4 [.promote []]).map
       (fun e => zeroInclude e.1 (.of false) e.2 ⟨[false], by simp [material]⟩) := by
-    decide
+    decide +kernel
   exact hn hh
 
 def familyRegistration : Registration arena (type_of% (@postclock_inverse)) := {
