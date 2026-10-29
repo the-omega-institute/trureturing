@@ -1378,11 +1378,17 @@ $$
 
 ## 46. 全树复核模的实 Gram 完成与统一缺陷
 
+沿用 §§42–45 的整个 $T=\mathrm{FreeMagma}(\mathrm{Bool})$，不取商、不限树高、
+不只取单条轨道。运输仍严格为 $\rho(\alpha)=\beta$、
+$\rho(\beta)=\langle\beta,\alpha\rangle$、
+$\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle$。
+下面的取模正性由这个明确来源族的局部完成证明；不宣称任意正定核逐项取模仍正定。
+
 **定义 46.1（逐址的实局部完成）。** 对 $0<h<1$ 置 $b=1-h$，并令
 
 $$
-c=\sqrt{b^2+h^2},qquad
-\gamma=\frac{c-b}{\sqrt h},qquad
+c=\sqrt{b^2+h^2},\qquad
+\gamma=\frac{c-b}{\sqrt h},\qquad
 \varphi=\sqrt{h-\gamma^2}.
 \tag{46.1}
 $$
@@ -1391,8 +1397,8 @@ $$
 正交单位基 $e_0,e_1,e_2$，定义
 
 $$
-u_0=e_0,qquad
-u_1=\sqrt b\,e_0+\sqrt h\,e_1,qquad
+u_0=e_0,\qquad
+u_1=\sqrt b\,e_0+\sqrt h\,e_1,\qquad
 u_2=\sqrt b\,e_0+\gamma e_1+\varphi e_2.
 \tag{46.2}
 $$
@@ -1431,7 +1437,7 @@ $$
 至多有 $3^{|S(t)|}$ 个非零坐标。有限分配律和 (46.3) 给出
 
 $$
-\|U_h(t)\|=1,qquad
+\|U_h(t)\|=1,\qquad
 Q_h(s,t):=\langle U_h(s),U_h(t)\rangle
  =\prod_{p\in\mathcal A}H_h(\lambda_s(p),\lambda_t(p))
  =\left|P_h^{\mathrm c}(s,t)\right|.
@@ -1444,7 +1450,7 @@ $$
 **定理 46.2（全来源的正实模核）。** 对 $n\ge1$ 令
 
 $$
-h_n=r_n=\frac1{5n},qquad a_n=b_n=1-h_n,qquad
+h_n=r_n=\frac1{5n},\qquad a_n=b_n=1-h_n,\qquad
 R_n(s,t)=a_nQ_{h_n}(s,t)+r_n\delta_{s,t}.
 \tag{46.7}
 $$
@@ -1487,7 +1493,12 @@ $$
 \tag{46.11}
 $$
 
-这同时证明正性、重复标签的处理、归一化和 (46.9) 的 Gram 表示。delta 分量给出
+这同时证明正性、重复标签的处理、归一化和 (46.9) 的 Gram 表示。
+对 $s\ne t$，两核的 delta 项都为零，故
+$|K_n^{\mathrm c}(s,t)|=a_n|P_{h_n}^{\mathrm c}(s,t)|=a_nQ_{h_n}(s,t)$；
+对 $s=t$，两边都为 $1$，证明 (46.8)。所有局部因子严格为正且只有有限个非单位因子，
+故 $Q_h(s,t)>0$。实对称性给 Hermitian 性，运输由 (45.5) 和 $\rho$ 的单射性保持。
+delta 分量给出
 来源标签的忠实性；因此 (46.8) 也给出 $R_n(s,t)=1$ 当且仅当 $s=t$。
 
 对四棵树置
@@ -1511,59 +1522,80 @@ $|A-d|,|B-e|\le1$。式 (46.10) 随即成立。∎
 
 ## 47. 破坏性重置菜单的完整记录等价
 
-**定义 47.1（分别供给的破坏性查询）。** 复模型和实模型分别使用其自身的全局载体，
-记对应的源射线为 $v_t^{\mathrm c}=\eta_n^{\mathrm c}(t)$ 与
-$v_t^R=\eta_n^R(t)$。在每一个模型中另取正交的失败标记 $|\mathrm{fail}\rangle$，
-置 $\widetilde H_X=\mathcal H_X\oplus\mathbb C|\mathrm{fail}\rangle$，其中
-$X\in\{\mathrm c,R\}$，并令
+**定义 47.1（分别供给的破坏性查询）。** 固定 $n$。复模型使用 (45.13) 的
+复 Hilbert 载体 $\mathcal H_{\mathrm c}$；实模核模型使用 (46.9) 的实空间的复化
+$\mathcal H_{R,\mathbb C}=\mathcal H_R\otimes_{\mathbb R}\mathbb C$，其源向量仍有全实坐标。
+记对应源向量为 $v_t^{\mathrm c}=\eta_n^{\mathrm c}(t)$ 与 $v_t^R=\eta_n^R(t)$。
+以下密度算子及 CP 映射都在这些复 Hilbert 空间上定义；实模型的所用制备及仪器
+保持实坐标子理论。这一步只统一数学记号，不由实 Gram 数据推断物理复标量。
 
-$$
-\widetilde P_t^X=|v_t^X\rangle\langle v_t^X|\oplus0.
-$$
-
-查询 $t$ 的两支仪器定义为
+在每个载体中另取正交单位失败标记 $|\mathrm{fail}\rangle$，置
+$\widetilde H_{\mathrm c}=\mathcal H_{\mathrm c}\oplus\mathbb C|\mathrm{fail}\rangle$、
+$\widetilde H_R=\mathcal H_{R,\mathbb C}\oplus\mathbb C|\mathrm{fail}\rangle$ 以及
+$\widetilde P_t^X=|v_t^X\rangle\langle v_t^X|\oplus0$。对迹类算子 $Y$，查询 $t$ 的两支为
 
 $$
 \begin{aligned}
-J_{t,X}^{+}(Y)&=\widetilde P_t^X,Y\,\widetilde P_t^X,\\
+J_{t,X}^{+}(Y)&=\widetilde P_t^X Y\widetilde P_t^X,\\
 J_{t,X}^{-}(Y)&=\operatorname{Tr}\!\left[(I-\widetilde P_t^X)Y\right]
- |\mathrm{fail}\rangle\langle\mathrm{fail}|.
+ |\mathrm{fail}\rangle\langle\mathrm{fail}|,\qquad X\in\{\mathrm c,R\}.
 \end{aligned}
 \tag{47.1}
 $$
 
-两支的迹和为 $\operatorname{Tr}Y$，失败标记在后续查询下保持吸收。这里的仪器是
-每个源模型中另行给定的菜单；它不是由五模原生菜单或由 (46.9) 自动提供。
+正支是单 Kraus CP 映射，负支是正效果后制备固定态的 CP 映射；两支迹和为
+$\operatorname{Tr}Y$。这在可分无限维载体也成立：若 $E=I-\widetilde P_t^X$，
+取任意可数正交基 $f_j$，则负支的 Kraus 算子可取
+$|\mathrm{fail}\rangle\langle f_j|\sqrt E$，其和在正迹类输入上按迹范数收敛。
+失败标记在继续查询时吸收。协议约定负结果随即 Stop，正结果可继续或 Stop；
+Stop 不改变系统并保留质量。这里的两个菜单分别供给，均不由 Gram 实现或五模原生菜单自动提供。
 
-**定理 47.2（全有限自适应原始记录相同）。** 允许 Stop、独立于未知输入的经典随机化、
-以及仅依赖此前完整经典记录的有限自适应选择。对复模型与实模型采用相同的经典策略并作
-源标签对应，则每一条有限完整原始记录的未归一质量相同，包括零质量记录、终端负支和
-Stop；不作后选择。具体地，若某一活动前缀质量为 $m$、当前源为 $s$、查询为 $t$，
-则正支质量和负支质量分别为
+**定理 47.2（对应源制备的完整破坏性记录等价）。** 根输入明确限于同一标签 $s_0$
+的对应制备 $|v_{s_0}^X\rangle\langle v_{s_0}^X|$。也可用同一个经典分布选择并记录
+$s_0$，但不允许由此引入相干叠加。使用相同的可测经典策略：查询标签或 Stop 只依赖
+此前完整经典记录和输入无关的随机种子。每个固定种子选出的决策树有限、每条叶终止，
+但不同种子或协议之间不要求共同深度界。则两个模型的完整原始记录概率律相同，
+包括零质量历史、终端负支、全部 Stop 和经典随机化信息，不作后选择。
+
+具体地，若一个尚未终止的前缀质量为 $m$、当前源标签为 $s$、查询为 $t$，则
 
 $$
-m\,|K_n^{\mathrm c}(s,t)|^2=m\,R_n(s,t)^2,qquad
-m\bigl(1-|K_n^{\mathrm c}(s,t)|^2\bigr)=m\bigl(1-R_n(s,t)^2\bigr).
+\begin{aligned}
+m_+&=m\,|K_n^{\mathrm c}(s,t)|^2=m\,R_n(s,t)^2,\\
+m_-&=m\bigl(1-|K_n^{\mathrm c}(s,t)|^2\bigr)
+     =m\bigl(1-R_n(s,t)^2\bigr).
+\end{aligned}
 \tag{47.2}
 $$
 
-正支的归一化状态是 $v_t^X$，负支保留其失败标记；Stop 保留前缀质量。
+正质量正支的归一化密度为 $|v_t^X\rangle\langle v_t^X|$，负支为失败标记；
+零质量支只保留零算子，不定义其条件态。结论只关于这些对应制备与菜单，
+不关于任意相干输入、任意效果、系统输出态相同、量子参考扩展或独立复合系统。
 
-**证明。** 对一棵有限决策树按深度归纳。根前缀的质量均为 $1$；(47.1) 给出
-(47.2)，正支再置于同一对应源射线上，负支成为终端，Stop 不改变质量。因而每个
-完整记录的质量在两模型间逐层相同，零质量记录也由同一递推保留。有限棵树的所有终端
-质量相加为 $1$，没有隐含的 postselection。
+**证明。** 先固定全部经典选择，包括可能选择的根标签。有限树根质量为 $1$；
+(47.1) 给 (47.2)，正支恢复对应的下一源标签，负支终止，Stop 保留前缀质量。
+逐前缀对未归一质量归纳即得所有叶质量相同；迹保持和有限终止使每棵树的叶质量和为 $1$。
+不从零历史取条件概率。
 
-若独立随机种子取值于非原子概率空间，不能把单点种子当作具有正概率的分支。对每个
-可测种子 $\omega$，先把每一终端记录写成有限维的 CP 子映射 $\Phi_{r,\omega}$，再定义
+对任意独立种子概率空间 $(\Omega,\mu)$，要求所选标签、树、终止规则及分支概率可测。
+所有有限标签/正负/Stop 字构成可数记录集 $\mathscr R$；将不属于某棵树的记录质量设为零。
+记给定种子时记录 $a$ 的质量为 $p_{X,\omega}(a)$。上面的有限乘积递推给出可测函数，且
+对每个 $\omega$ 有 $p_{\mathrm c,\omega}(a)=p_{R,\omega}(a)$ 及
+$\sum_a p_{X,\omega}(a)=1$。因此对每个可测 $B\subseteq\Omega$，
 
 $$
-\overline\Phi_r(Y)=\int \Phi_{r,\omega}(Y)\,d\mu(\omega).
+\Pr_X(\omega\in B,\ a)=\int_B p_{X,\omega}(a)\,d\mu(\omega),\qquad
+\sum_{a\in\mathscr R}\int_\Omega p_{X,\omega}(a)\,d\mu(\omega)=1.
 \tag{47.3}
 $$
 
-有限维 Choi 矩阵的 Bochner 积仍为正，迹和与终端质量也逐项积分；两模型在每个种子
-上的 (47.2) 相同，故积分后的完整记录律仍相同。∎
+第二式由 Tonelli 定理，不需共同深度界。第一式给两模型相同的种子与记录联合律，
+遗忘种子或对记录作同一可测经典处理仍相同。非原子种子按此积分，不能对单点种子的
+概率求和。此证明直接使用实际无限载体上的分支概率；不借有限维 Choi 矩阵替代它。∎
+
+一般 Gram 实现、效果与更新的区别及完整分支质量计算分别复用
+[原卷 §§6、7.7、19、35.1](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md)。
+本节把它们应用于 (46.8) 的全来源对应，不提出新的仪器表示或概率积分定理。
 
 ## 48. 保留拒绝的相干记录差异
 
@@ -1573,7 +1605,7 @@ $P_j^X=|v_{W_{j,k}}^X\rangle\langle v_{W_{j,k}}^X|$，先施加保留负支的
 Lüders 二元仪器
 
 $$
-L_{1,X}^{+}(Y)=P_1^XYP_1^X,qquad
+L_{1,X}^{+}(Y)=P_1^XYP_1^X,\qquad
 L_{1,X}^{-}(Y)=(I-P_1^X)Y(I-P_1^X),
 \tag{48.1}
 $$
@@ -1701,7 +1733,7 @@ $\sigma_-=((M_-\otimes\operatorname{id})(|\Phi_Q\rangle\langle\Phi_Q|))$。
 无读出部分在 $|\Phi_Q\rangle$ 上的重叠为
 
 $$
-\int\left|\langle\Phi_Q|(V_\omega\otimes I)|\Phi_Q\rangle\right|^2d\nu(\omega)le w.
+\int\left|\langle\Phi_Q|(V_\omega\otimes I)|\Phi_Q\rangle\right|^2d\nu(\omega)\le w.
 \tag{49.6}
 $$
 
