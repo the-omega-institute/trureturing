@@ -1,0 +1,40 @@
+**定义 77.1（量化任务与记号）。** 本节严格使用 [Environment §27](AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md) 的实际 fair law $2^{-n}$，完全擦除历史且不保留 summary。令
+
+$$
+\Delta_W(X)=\tfrac12(X+WXW),\quad
+F=\operatorname{Ad}_{U_0}\circ\Delta_W,\qquad\mathcal N_n=F^n.
+$$
+
+actual angle family 的 averaged channel 在每个 $\theta$ 都是该 $F$，但单独 word matrices 未被替换。对固定 unit vector $v$ 与 $E=|v\rangle\langle v|$，任务为
+
+$$
+\eta_n(E)=\min_{\mathcal D\ {\rm CPTP}}
+\sup_{\rho\in\mathsf D(\mathbb C^3)}
+\left|\operatorname{Tr}(E\mathcal D F^n(\rho))-\operatorname{Tr}(E\rho)\right|.
+$$
+
+所有 qutrit inputs 均在 supremum 中，decoder 只按固定 $E,n$ 选择，没有历史、reference access、较小 input code、intermediate correction 或 postselection。此处是 Born-probability error，不是 diamond distance。
+
+取 ordered orthonormal basis
+
+$$
+\xi=(1,1,1)^{\mathsf T}/\sqrt3,\quad
+ e_q=(1,1,-2)^{\mathsf T}/\sqrt6,\quad
+ f_q=(1,-1,0)^{\mathsf T}/\sqrt2,
+$$
+
+并记
+
+$$
+p=|\langle\xi,v\rangle|^2,\quad
+q=|\langle e_q,v\rangle|^2,\quad
+r=|\langle f_q,v\rangle|^2,\quad p+q+r=1.
+$$
+
+这些是 task populations，不是 history law，也不是 §75 的 entry register。对有限 $n\ge1$，置
+
+$$
+s=(-1/2)^{n-1},\quad\tau=|s|>0,\quad
+\alpha=(1+s)/2,\quad\beta=(1-s)/2,\quad k=\sqrt{r(1-r)}.
+$$
+

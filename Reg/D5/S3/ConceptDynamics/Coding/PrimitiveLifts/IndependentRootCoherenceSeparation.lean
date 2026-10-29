@@ -1,4 +1,5 @@
 import D5.S3.ConceptDynamics.Coding.PrimitiveLifts.IndependentRootCoherenceSeparation
+import Reg.D5.S3.ConceptDynamics.Coding.PrimitiveLifts.IndependentRootInfiniteFibers
 import Reg.Support.DependentFamily
 import LeanInformationAuditInterface.Contract.Registration
 

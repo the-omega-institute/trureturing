@@ -1,0 +1,108 @@
+**Theorem 145.1 (Every compact minimizer is physically punctured; repo-derived).**
+For the source (142.1), for every $0<\eta\le\eta_0$, retain the
+anchor $h_0(\eta)=e/2+\eta f$ and exactly the nonlinear reflection-side
+minima $\mu_f(\eta),\nu_f(\eta)$ of Definitions 124.1 and 126.2.
+These minima are positive and attained, with
+
+$$
+\begin{gathered}
+\frac{c}{2(1+2/\tau)}\eta
+ \le\mu_f(\eta)\le\nu_f(\eta)\le M\eta,\\
+\boxed{\quad\nu_f(\eta)-\mu_f(\eta)\ge\frac{\eta}{20000}>0.\quad}
+\end{gathered}
+\tag{145.1}
+$$
+
+Every compact $\mu_f$ minimizer $(\gamma,h)$ obeys
+
+$$
+\boxed{\qquad a_-\eta\le|\gamma|\le a_+\eta,\qquad}
+\tag{145.2}
+$$
+
+with the strictly positive source constants in (144.1). Both extremal
+retention radii of Definition 131.1 are attained and satisfy
+
+$$
+0<a_-\eta\le r_f^-(\eta)\le r_f^+(\eta)\le a_+\eta.
+\tag{145.3}
+$$
+
+For the original punctured reflection side there is no alternative
+at error $\varepsilon<\mu_f(\eta)$, an alternative exists at
+$\varepsilon=\mu_f(\eta)$, and alternatives exist for every
+$\varepsilon>\mu_f(\eta)$. Thus its exact endpoint has type III of
+Theorem 132.1 throughout this interval. In particular the original
+finite anchored modulus satisfies
+$\omega_{\mathfrak s,h_0(\eta)}(\mu_f(\eta))\ge1/2$.
+
+*Proof.* Since $R>1$, $\eta_0\le1/(4R)<1/4$, so the anchor is
+strictly inside the original ball:
+$\|h_0(\eta)\|^2=1/4+\eta^2<1$.
+Theorem 126.3 applies with the explicit constants of §144 and gives
+positive attained minima, the first line of (145.1), and
+
+$$
+|\mu_f(\eta)-\eta m_f|\le E\eta^2,\qquad
+|\nu_f(\eta)-\eta n_f|\le E\eta^2.
+\tag{145.4}
+$$
+
+The strictly positive lower bound follows there from (124.3);
+compactness includes the full complex disk and full closed completion
+ball on the original half-ball
+$\operatorname{Re}(e^\dagger h)\le0$.
+By (143.8) and $\eta\le1/(40000E)$,
+
+$$
+\nu_f-\mu_f
+ \ge\eta\left(\frac1{10000}-2E\eta\right)
+ \ge\frac{\eta}{20000}.
+\tag{145.5}
+$$
+
+For every fixed admissible $h$, the only paired lift in changing
+retention from $0$ to $\gamma$ is $(0,0,\gamma K_h)$.
+Since $\|K_h\|_{\rm HS}\le K$ on the whole ball and
+$\|r_i\|_{\rm HS}\le1$, the original weighted-row triangle inequality
+in (127.4) is
+$d_f(0,h;h_0)\le d_f(\gamma,h;h_0)+K|\gamma|$.
+At every compact minimizer this implies
+$K|\gamma|\ge\nu_f-\mu_f\ge\eta/20000$.
+The localization (126.9), valid for every minimizer, gives
+$|\gamma|\le G\eta$. This proves (145.2); compactness of the
+nonempty minimizer fiber then proves (145.3).
+
+All compact minimizers consequently have nonzero retention. The exact
+endpoint criterion of Theorem 124.2 proves the assertions at and on
+either side of $\mu_f$. Equivalently $r_f^->0$ and
+$\nu_f>\mu_f$, which is precisely type III in Theorem 132.1.
+Every reflected point has
+$\|h-h_0\|\ge|\operatorname{Re}(e^\dagger(h-h_0))|\ge A=1/2$;
+using a punctured minimizer in the original modulus proves its stated
+lower bound at equality. This deduction uses the actual nonlinear
+minima and every compact minimizer; the rational trial in (143.9)
+is neither asserted to minimize nor substituted for an actual law.
+
+For completeness, all lifted tangent witnesses used by Theorem 126.3
+are admissible on this same interval, since
+
+$$
+\|-Ae+\eta z\|\le\tfrac12+\eta R\le\tfrac34,
+\quad\operatorname{Re}(e^\dagger(-Ae+\eta z))\le-\tfrac14,
+\quad|\eta g|\le\tfrac12
+\quad(\|z\|\le R,\ |g|\le G).
+\tag{145.6}
+$$
+
+VI Theorem 106.3 realizes each actual pair by one full ten-dimensional
+completion with its five prescribed ready columns, shared over
+emission, the single forward return and all of that hypothesis's
+histories. A competing hypothesis may use a different such completion.
+The anchor's particular complex direction imposes no restriction on
+competitors. All raw prefix masses, both terminal labels, the factors
+$a_w/2$, the sole preparation, original menus, clocks and schedules
+are retained. No extra preparation, lottery, randomization, repetition,
+postselection, record phase, normalized replacement state or selected
+outcome enters these conclusions. $\square$
+

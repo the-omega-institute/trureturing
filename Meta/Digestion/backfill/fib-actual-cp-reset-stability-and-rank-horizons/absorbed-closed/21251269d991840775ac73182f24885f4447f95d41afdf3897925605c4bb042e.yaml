@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:21251269d991840775ac73182f24885f4447f95d41afdf3897925605c4bb042e
+  normalized_sha256: sha256:21251269d991840775ac73182f24885f4447f95d41afdf3897925605c4bb042e
+cas_ref: sha256:21251269d991840775ac73182f24885f4447f95d41afdf3897925605c4bb042e
+coverage_gids:
+  - gid: D5/S3/Quantum/QuantumChannels/OriginalDataQuantitativeDetectorRankHorizon.detector_rank_horizon
+    target_statement_id: sha256:1b74c3ca845e0aa545530841179216df3acfac47f96872081914225441cbb3d4
+receipts:
+  unresolved_subitems: []

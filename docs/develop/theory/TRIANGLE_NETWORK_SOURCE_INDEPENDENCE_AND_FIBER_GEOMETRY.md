@@ -773,3 +773,498 @@ A quantum distribution is network-nonlocal when its observed and low-order geome
 - Existing finite classical carrier: D5/S3/Quantum/Entanglement/TriangleSymmetricLocalRefutation.lean.
 - Existing inequality counterexample using that carrier: D5/S3/Quantum/Entanglement/TriangleInequalityL1Refutation.lean.
 - Existing FIB quotient and hidden-fiber source: docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md and docs/develop/theory/AURIC_FIB_ATOM_READOUT_CLOSURE_AND_RECORD_TRIANGLE.md.
+## 10. Finite observable certificates for a source dependence budget
+
+**Definition 10.1 (one finite incident realization).** Let $\Omega_\alpha,\Omega_\beta,\Omega_\gamma$ and $\mathcal O$ be nonempty finite sets. Let $\nu$ be any probability law on the source product, with no independence or full-support assumption. For every incident input pair let $K_A(\cdot\mid\beta,\gamma)$, $K_B(\cdot\mid\gamma,\alpha)$ and $K_C(\cdot\mid\alpha,\beta)$ be nonnegative probability vectors on $\mathcal O$. All random variables in §§10–12 have the single joint law
+
+$$
+\mathbb P(\alpha,\beta,\gamma,a,b,c)
+=\nu(\alpha,\beta,\gamma)
+ K_A(a\mid\beta,\gamma)K_B(b\mid\gamma,\alpha)K_C(c\mid\alpha,\beta).
+\tag{10.1}
+$$
+
+Thus output draws are independent conditional on all three sources, and their private randomness supplies no extra common selector. Write $P$ for the output marginal. With natural logarithms, $0\log0=0$, and zero-probability conditioning values omitted, use the usual finite Shannon entropy $H$, mutual information $I(U;V)$, conditional mutual information $I(U;V\mid W)$, and relative entropy $D$. The hidden source budget is the source-independence defect of Definition 4.1:
+
+$$
+C_{\rm src}
+:=D(\nu\Vert\nu_\alpha\otimes\nu_\beta\otimes\nu_\gamma)
+=H(\alpha)+H(\beta)+H(\gamma)-H(\alpha,\beta,\gamma).
+\tag{10.2}
+$$
+
+Every positive cell of $\nu$ has three positive one-source marginals, so this relative entropy is finite, even with structural zeros. It is the classical total correlation of the actual hidden law. It vanishes exactly when that law is the full product of its three marginals; pairwise independence alone does not suffice.
+
+**Theorem 10.2 (observable source-budget obstruction).** Every realization in Definition 10.1 satisfies
+
+$$
+\begin{aligned}
+I(A;B)+I(A;C)-H(A)&\le 2C_{\rm src},\\
+I(B;C)+I(B;A)-H(B)&\le 2C_{\rm src},\\
+I(C;A)+I(C;B)-H(C)&\le 2C_{\rm src}.
+\end{aligned}
+\tag{10.3}
+$$
+
+Consequently the observable quantity
+
+$$
+\mathcal B(P):=\frac12\max\bigl\{0,
+ I(A;B)+I(A;C)-H(A),
+ I(B;C)+I(B;A)-H(B),
+ I(C;A)+I(C;B)-H(C)\bigr\}
+\tag{10.4}
+$$
+
+is a lower bound on the source defect of every such realization of $P$. For any specified $c\ge0$, the strict inequality $\mathcal B(P)>c$ excludes every finite incident lift of $P$ having $C_{\rm src}\le c$.
+
+*Proof.* Reuse the finite entropy chain rule, strong subadditivity and Markov data processing. Their roles in the product-source case are exactly Fritz, Lemma 2.14, equation (2.10), with $\lambda_{AB}=\gamma$, $\lambda_{CA}=\beta$, $\lambda_{BC}=\alpha$. For the possibly dependent law (10.1), keep the two additional conditional information costs rather than importing product-source conditional independences.
+
+Indeed, summing over unobserved outputs in (10.1) shows that $A$ and $B$ are conditionally independent given $(\alpha,\gamma)$: the conditional law of $B$ is the fixed kernel $K_B$, irrespective of $\beta$ or $A$. Also $A$ and $\alpha$ are conditionally independent given $(\beta,\gamma)$. Conditional versions of data processing are obtained by applying the finite inequality on each positive conditioning slice and averaging. Hence
+
+$$
+\begin{aligned}
+I(A;B)&\le I(A;\alpha,\gamma)
+ =I(A;\gamma)+I(A;\alpha\mid\gamma)\\
+&\le I(A;\gamma)+I(\beta;\alpha\mid\gamma),\\
+I(A;C)&\le I(A;\alpha,\beta)
+ \le I(A;\beta)+I(\gamma;\alpha\mid\beta).
+\end{aligned}
+\tag{10.5}
+$$
+
+The second line uses the corresponding conditional independences with $C$. Each assertion concerns marginals of (10.1), including when a conditioning value has no mass. The standard chain-rule identity is
+
+$$
+I(A;\beta)+I(A;\gamma)-H(A)
+=I(\beta;\gamma)-I(\beta;\gamma\mid A)-H(A\mid\beta,\gamma)
+\le I(\beta;\gamma).
+\tag{10.6}
+$$
+
+Combining (10.5) and (10.6) bounds the first left side of (10.3) by
+
+$$
+\begin{aligned}
+&I(\beta;\gamma)+I(\alpha;\beta\mid\gamma)+I(\alpha;\gamma\mid\beta)\\
+&\quad=H(\alpha,\beta)+H(\alpha,\gamma)+H(\beta,\gamma)
+       -2H(\alpha,\beta,\gamma)\\
+&\quad=2C_{\rm src}
+ -I(\alpha;\beta)-I(\alpha;\gamma)-I(\beta;\gamma)
+ \le 2C_{\rm src}.
+\end{aligned}
+\tag{10.7}
+$$
+
+The middle entropy expression is the classical three-variable dual total correlation, used here only as an attributed intermediate. The equalities are the standard entropy identities for total and dual total correlation, not a new entropy functional. Nonnegativity of mutual information proves the final inequality. Cyclic permutation of $(A,B,C)$ together with $(\alpha,\beta,\gamma)$ proves the other two bounds. Nonnegativity of relative entropy gives (10.4) and its budget consumer.
+
+When $\nu$ is a product, all source information terms in (10.5)–(10.7) vanish. Thus (10.3) explicitly recovers the existing Fritz product-source baseline $I(A;B)+I(A;C)\le H(A)$ and its cyclic versions. No continuity comparison with a different output law is involved. ∎
+
+## 11. Exact common records, equality fibers and the binary boundary
+
+**Theorem 11.1 (recoverability and complete equality criterion).** Suppose (10.1) has $A=B=C=X$ almost surely. Then there exist incident maps $f_A,f_B,f_C$ such that
+
+$$
+X=f_A(\beta,\gamma)=f_B(\gamma,\alpha)=f_C(\alpha,\beta)
+\quad\text{almost surely}.
+\tag{11.1}
+$$
+
+In particular,
+
+$$
+C_{\rm src}\ge\frac12H(X).
+\tag{11.2}
+$$
+
+Equality in (11.2) holds on this same realization if and only if both of the following conditions hold: the three source pairs are unconditionally independent, and for every $x$ with $p_x:=\mathbb P(X=x)>0$,
+
+$$
+\nu(\alpha,\beta,\gamma\mid X=x)
+=\nu_\alpha(\alpha\mid x)\nu_\beta(\beta\mid x)\nu_\gamma(\gamma\mid x)
+\quad\text{for all }\alpha,\beta,\gamma.
+\tag{11.3}
+$$
+
+Thus the conditional requirement is a threefold product on each positive output fiber, including its zero cells.
+
+*Proof.* First derive (11.1) from the stochastic kernels. For a source triple $s$ with $\nu(s)>0$, the conditional product of the three response vectors must give mass one to the output diagonal. Otherwise its positive off-diagonal mass would contribute positively to $\mathbb P(A,B,C\text{ not all equal})$. Choose one positive coordinate in each response vector. Their labels must be the same, say $x_s$. Keeping the chosen coordinates of the other two vectors fixed shows that every positive coordinate in any one vector has label $x_s$. Each of the three vectors is therefore $\delta_{x_s}$.
+
+If an incident pair $(\beta,\gamma)$ has positive marginal mass, it has at least one positive extension $\alpha$. The preceding argument makes $K_A(\cdot\mid\beta,\gamma)$ a point mass. Its label cannot depend on the chosen extension because it is the same kernel row. Define $f_A$ to be this label, and do the same for $f_B,f_C$. On zero-marginal incident pairs assign any label of the nonempty output alphabet; these assignments affect no probability. This proves (11.1), and in particular
+
+$$
+H(X\mid\alpha,\beta)=H(X\mid\alpha,\gamma)
+=H(X\mid\beta,\gamma)=H(X\mid\alpha,\beta,\gamma)=0.
+\tag{11.4}
+$$
+
+Theorem 10.2 now gives (11.2), since $I(A;B)=I(A;C)=H(X)$.
+
+For the full equality assertion, retain all terms in a different, exact entropy balance. The classical conditional dual total correlation, averaged over the positive $X$-fibers, is the intermediate quantity
+
+$$
+\begin{aligned}
+\mathcal D_X
+&:=H(\alpha,\beta\mid X)+H(\alpha,\gamma\mid X)
+  +H(\beta,\gamma\mid X)-2H(\alpha,\beta,\gamma\mid X)\\
+&=I(\alpha;\beta,\gamma\mid X)
+  +I(\beta;\gamma\mid\alpha,X)\ge0.
+\end{aligned}
+\tag{11.5}
+$$
+
+By (11.4), each unconditional source-pair entropy is $H(X)$ plus its entropy conditional on $X$, and the same holds for the source triple. Substituting into (10.7) yields the exact same-law identity
+
+$$
+2C_{\rm src}-H(X)
+=I(\alpha;\beta)+I(\alpha;\gamma)+I(\beta;\gamma)+\mathcal D_X.
+\tag{11.6}
+$$
+
+All four terms are nonnegative. Vanishing of the first three is exactly unconditional pairwise source independence, by the zero-relative-entropy characterization. It remains to identify $\mathcal D_X=0$ without replacing it by conditional pairwise independence.
+
+Since (11.5) is a finite average of nonnegative terms, $\mathcal D_X=0$ forces, on every positive $x$-fiber, both
+
+$$
+\alpha\perp(\beta,\gamma)\mid X=x,
+\qquad I(\beta;\gamma\mid\alpha,X=x)=0.
+\tag{11.7}
+$$
+
+The first relation makes the conditional law of $(\beta,\gamma)$ given $(\alpha,x)$ equal to its law given $x$ for every positive $\alpha$ in that fiber. Thus the second term of (11.7) equals $I(\beta;\gamma\mid X=x)$, which must be zero. The fiber law is consequently the product in (11.3). This argument only divides by positive conditioning masses; cells outside the conditional marginal supports have zero mass on both sides of (11.3). Conversely, (11.3) makes both conditional information terms in (11.5) zero. Together with unconditional pairwise independence, (11.6) then proves equality. This establishes both directions on the stipulated joint law. ∎
+
+**Theorem 11.2 (strict binary cost and finite-lift exclusion).** Let $0<p<1$ and let the observed common record have $\mathbb P(X=1)=p$, $\mathbb P(X=0)=1-p$. Every individual finite realization of this diagonal output law satisfying Definition 10.1 has
+
+$$
+C_{\rm src}>\frac12 h(p),
+\qquad h(p):=-p\log p-(1-p)\log(1-p).
+\tag{11.8}
+$$
+
+Equivalently, for
+
+$$
+P_p(0,0,0)=1-p,\qquad P_p(1,1,1)=p,
+\qquad P_p(a,b,c)=0\text{ otherwise},
+\tag{11.9}
+$$
+
+there is no choice of nonempty finite source alphabets, hidden law and normalized incident kernels realizing $P_p$ with source budget at most $h(p)/2$. Such finite realizations do exist at larger budgets.
+
+*Proof.* Suppose equality held in (11.2). By Theorem 11.1, the two positive conditional source laws would be threefold products. Write their one-source probability vectors as $u_i,v_i,w_i$ for $i\in\{0,1\}$. Then
+
+$$
+\nu=(1-p)u_0\otimes v_0\otimes w_0
+       +p u_1\otimes v_1\otimes w_1.
+\tag{11.10}
+$$
+
+Unconditional independence of $\alpha,\beta$ implies, entry by entry,
+
+$$
+0=\nu_{\alpha\beta}-\nu_\alpha\otimes\nu_\beta
+=p(1-p)(u_1-u_0)\otimes(v_1-v_0).
+\tag{11.11}
+$$
+
+A tensor product of two finite real vectors is zero only if at least one vector is zero: if each had a nonzero coordinate their product at that pair of coordinates would be nonzero. Thus $u_0=u_1$ or $v_0=v_1$. The other two unconditional pair independences give the analogous alternatives for $(u,w)$ and $(v,w)$. At most one of the three source marginal vectors can change with $i$; at least two are identical across the two fibers.
+
+Choose two such sources, say $\alpha,\beta$. Their conditional joint law in each fiber is the same product $u_0\otimes v_0=u_1\otimes v_1$. They are jointly independent of $X$. This contradicts $H(X\mid\alpha,\beta)=0$ in (11.4), because joint independence would give $H(X\mid\alpha,\beta)=h(p)>0$. Equivalently, choose a positive coordinate in each of the two common marginal vectors. Their pair has positive probability under both output fibers, so it cannot have a unique deterministic incident readout. This also verifies the contradiction when other cells are structural zeros. The same argument applies whichever two source vectors are unchanged. Equality is impossible, and (11.2) gives (11.8).
+
+For nonvacuity take a Bernoulli $Y$ of parameter $p$, put $\alpha=\beta=Y$ and let $\gamma$ be constant. Use the deterministic incident responses $A=\beta$, $B=\alpha$, $C=\alpha$. They are normalized kernels of exactly the permitted form, can be defined the same way on off-support input pairs, and give $A=B=C=Y$. Here
+
+$$
+C_{\rm src}=H(\alpha)+H(\beta)+H(\gamma)-H(\alpha,\beta,\gamma)=h(p)>h(p)/2.
+$$
+
+This proves existence without assigning an optimal binary cost. ∎
+
+The quantifier in Theorem 11.2 is over each finite realization, with no cardinality bound imposed uniformly on all realizations. Pointwise strictness does not prove a uniform positive margin above $h(p)/2$, nor determine whether the infimum over unbounded finite alphabets equals that boundary or a larger value. For $p=0$ or $p=1$, the record is constant and a product-source realization has cost zero; the strict assertion requires both fibers to have positive probability. For a constant record in any finite model, Theorem 11.1 reduces equality to $C_{\rm src}=0$, as expected.
+
+## 12. A sharp group family and the noisy-agreement consequence
+
+**Proposition 12.1 (incidence-faithful attainment of the factor two).** Let $G$ be any finite group of order $n\ge2$. Take independent uniform $U,V\in G$, and define the source law and deterministic output maps by
+
+$$
+\begin{gathered}
+\alpha=U,\qquad\beta=V,\qquad\gamma=UV,\qquad\mathcal O=G\times G,\\
+f_A(\beta,\gamma)=(\gamma\beta^{-1},\beta),\qquad
+f_B(\gamma,\alpha)=(\alpha,\alpha^{-1}\gamma),\qquad
+f_C(\alpha,\beta)=(\alpha,\beta).
+\end{gathered}
+\tag{12.1}
+$$
+
+With kernels $K_v(o\mid\cdot)=\mathbf1_{\{o=f_v(\cdot)\}}$, this is a realization of Definition 10.1 with
+
+$$
+A=B=C=X=(U,V),\qquad H(X)=2\log n,\qquad C_{\rm src}=\log n.
+\tag{12.2}
+$$
+
+Each response depends essentially on both incident source slots. Hence the universal coefficient $2$ in (10.3) cannot be decreased, and the coefficient $1/2$ in (11.2) is attained for these larger output alphabets.
+
+*Proof.* Every source is uniform. For fixed $u,g$ there is exactly one $v=u^{-1}g$, and for fixed $v,g$ exactly one $u=gv^{-1}$. Thus the pairs $(\alpha,\beta)$, $(\alpha,\gamma)$ and $(\beta,\gamma)$ are all uniform on $G^2$ and pairwise independent, whereas the triple is supported on $\gamma=\alpha\beta$. Its $n^2$ positive cells have mass $n^{-2}$; the product of its marginals has mass $n^{-3}$ on all $n^3$ cells. Therefore $C_{\rm src}=\log n$, also obtained from the three marginal entropies and triple entropy $2\log n$.
+
+Group cancellation in the specified order gives all three outputs $(U,V)$; commutativity is unnecessary. The conditional source law given $X=(u,v)$ is a point mass at $(u,v,uv)$, hence a threefold product. This verifies the equality criterion directly. For fixed $\beta$, changing $\gamma$ changes the first coordinate of $f_A$; for fixed $\gamma$, changing $\beta$ changes its second coordinate. For $f_B$, changing $\alpha$ changes its first coordinate, and changing $\gamma$ at fixed $\alpha$ changes its second coordinate. Both slots of $f_C$ are explicit coordinates. Every incident pair has positive marginal probability, so this essential dependence is not hidden in unused kernel rows. All three maps use only incident sources, proving the claimed incidence fidelity. Finally $I(A;B)+I(A;C)-H(A)=H(X)=2C_{\rm src}>0$. ∎
+
+**Corollary 12.2 (Fano certificate from two observed errors).** In Definition 10.1 let $\mathcal O$ have $m\ge2$ symbols, let $A$ be uniform, and assume
+
+$$
+\mathbb P(A\ne B)\le\varepsilon,\qquad
+\mathbb P(A\ne C)\le\varepsilon,\qquad
+0\le\varepsilon\le1-1/m.
+\tag{12.3}
+$$
+
+Then
+
+$$
+C_{\rm src}\ge
+\max\left\{0,\frac{\log m}{2}-h(\varepsilon)
+                         -\varepsilon\log(m-1)\right\}.
+\tag{12.4}
+$$
+
+For $m=1$ the output is constant and the conclusion is simply $C_{\rm src}\ge0$; no $\log(m-1)$ expression is used.
+
+*Proof.* Use Fano's finite-alphabet inequality in nats, with $B$ itself as an estimator of $A$, and separately with $C$ as an estimator of $A$. If their actual error probabilities are $e_B,e_C$, the classical inequality gives
+
+$$
+H(A\mid B)\le h(e_B)+e_B\log(m-1),\qquad
+H(A\mid C)\le h(e_C)+e_C\log(m-1).
+\tag{12.5}
+$$
+
+These are the sharp-cardinality Fano bounds, not an independence assertion about errors. For clarity, the first follows by adjoining $E_B=\mathbf1_{\{A\ne B\}}$: since $E_B$ is determined by $(A,B)$,
+
+$$
+H(A\mid B)=H(E_B\mid B)+H(A\mid E_B,B)
+\le h(e_B)+e_B\log(m-1).
+$$
+
+When $E_B=0$ there is no uncertainty in $A$; when $E_B=1$, at most $m-1$ symbols remain. The same argument gives the second bound. Zero-probability error events contribute zero conditional entropy. This is the usual Fano argument, attributed to Fano's *Transmission of Information* and represented in the repository by `FanoSharp.fano_inequality_sharp`.
+
+The function $g_m(t)=h(t)+t\log(m-1)$ is continuous on $[0,1]$ and has derivative
+
+$$
+g_m'(t)=\log\!\left(\frac{(1-t)(m-1)}{t}\right)\ge0
+\quad\text{for }0<t\le1-1/m.
+$$
+
+Thus both upper bounds in (12.5) are at most $g_m(\varepsilon)$, including the endpoints by continuity. Since $H(A)=\log m$,
+
+$$
+\begin{aligned}
+I(A;B)+I(A;C)-H(A)
+&=\log m-H(A\mid B)-H(A\mid C)\\
+&\ge\log m-2g_m(\varepsilon).
+\end{aligned}
+$$
+
+Apply Theorem 10.2 and $C_{\rm src}\ge0$. No step conditions on, multiplies, or assumes independence of the two error events. At $\varepsilon=0$, (12.4) agrees with the half-entropy bound; for a nonconstant binary exact record Theorem 11.2 strengthens that particular conclusion to strictness. At $\varepsilon=1-1/m$, $g_m(\varepsilon)=\log m$, so (12.4) gives only zero. ∎
+
+## 13. Information retained, literature correspondence and remaining scope
+
+The observable inputs to (10.4) are the three one-party entropies and the three pairwise mutual informations, all calculated from the same $P$. Equivalently, the one-party and two-party marginal tables suffice. A single chosen cyclic inequality needs just the two pair tables incident to its central output. Corollary 12.2 instead needs the declared common output alphabet, uniformity of $A$, and the two probabilities in (12.3), with no independence of errors. Theorem 11.2 needs the exact Bernoulli diagonal output law, including absence of every off-diagonal event.
+
+These observable quantities constrain $\mathfrak d_{\rm src}(\nu)$ of a candidate hidden lift in §4; they do not identify the hidden law or its defect. In particular (10.4) is only a necessary condition for a lift of a given budget. A statistic that retains an arbitrary FIB quotient need not retain the marginal tables, entropy values or error events just specified. Applying these certificates after such a quotient requires a supplied map proving that the requisite quantities are determined by it. The fiber identity (2.8), by itself, gives no such entropy access.
+
+The product-source baseline used inside Theorem 10.2 is literature-attested: Tobias Fritz, *Beyond Bell's theorem: correlation scenarios*, [arXiv:1206.5115v2](https://arxiv.org/abs/1206.5115v2), Lemma 2.14 and equation (2.10), in the classical triangle with mutually independent sources. The total correlation in (10.2) is Watanabe's classical quantity (*Information theoretical analysis of multivariate correlation*, IBM Journal of Research and Development 4, 66–82); the dual total correlation in (10.7) and (11.5) is the classical entropy quantity of Han (*Nonnegative entropy measures of multivariate symmetric correlations*, Information and Control 36, 133–156). They are attributed intermediate identities here. Fano's conditional-entropy inequality is also an attributed intermediate; its use in (12.4) composes it with the source-budget certificate.
+
+Marc-Olivier Renou, Yuyi Wang, Sadra Boreiri, Salman Beigi, Nicolas Gisin and Nicolas Brunner, *Limits on correlations in networks for quantum and no-signaling resources*, [arXiv:1901.08287v1](https://arxiv.org/abs/1901.08287v1), Theorem 1, prove the independent-source triangle bound
+
+$$
+P(a,b,c)\le\sqrt{P_A(a)P_B(b)P_C(c)}.
+$$
+
+Their Theorem 2 extends the Finner bound to arbitrary graphs of independent bipartite quantum sources and fractional independent-set weights; the classical multipartite-source version is also discussed there. This is independent-source context, not a KL-budget theorem for (10.1), and it is not the distinct Renou et al. four-output nonlocality family cited in §7.
+
+Ivan Šupić, Jean-Daniel Bancal and Nicolas Brunner, *Quantum nonlocality in networks can be demonstrated with an arbitrarily small level of independence between the sources*, [arXiv:2007.12950v1](https://arxiv.org/abs/2007.12950v1), equations (3)–(5), introduce a central variable $\lambda$ and require pointwise minorization
+
+$$
+p(\alpha,\beta,\gamma\mid\lambda)
+\ge\epsilon_1 p(\alpha)p(\beta)p(\gamma),\qquad\epsilon_1>0,
+$$
+
+with their accompanying pointwise upper comparison. That restriction, for every $\lambda$, is different from the upper bound $D(\nu\Vert\nu_\alpha\nu_\beta\nu_\gamma)\le c$ on one actual source law. The latter allows structural zeros even where the product of the marginals is positive, as Proposition 12.1 demonstrates. None of the pointwise minorization conclusions is imported as a consequence of a KL upper budget.
+
+The relevant repository suppliers have correspondingly narrower mathematical scopes. `Entropy/Submodularity/MarkovDataProcessing` supplies finite Markov data processing and its conditional-product equality characterization; `MutualInformationChainRule`, `ConditionalMutualInformation` and `StrongSubadditivity` supply the finite entropy identities and inequalities. `Entropy/ConditionalEntropyEquality` handles point masses only on positive-marginal conditioning slices, and `CommonStateEntropyBound` concerns a state determined by either of two supplied coordinates. Its deterministic-readout premise is supplied here by the kernel-support argument, rather than postulated for stochastic outputs. `Estimation/FanoSharp` supplies the finite $\log(m-1)$ correction for a non-singleton target alphabet. These are the D5 modules under `D5/S3/` and their corresponding Blueprint Scribe sources; their existing statements do not by themselves assert Theorem 11.2.
+
+`ConceptDynamics/PartialIdentification/FiniteIndependentSourceGrouping` preserves the full elementary product law under regrouping and restriction. Its companion `IndependentSourceCounterfactualFactorization` requires disjoint readout supports for response independence. The triangle supports overlap, so that disjoint-support result cannot certify independence of $A,B,C$. `Quantum/Entanglement/TriangleInflationSoundness` constructs observable laws on independent continuous source copies with four-output measurable kernels. That product-source construction is not transferred unchanged to dependent $\nu$. The separate `TriangleSymmetricLocalRefutation` concerns a fully symmetric four-output local model with agreement probability $41/144>1/4$; it concerns imperfect agreement under independent sources, rather than a nonconstant exact common record at a source-KL boundary.
+
+The source-budget certificate, its same-realization equality analysis and the binary finite-lift exclusion are repo-derived consequences in this finite incidence model. They are not assertions of worldwide novelty or resolutions of a named external open problem. The Bernoulli exclusion is a concrete strengthening of the observable budget test exactly at its boundary; Proposition 12.1 shows why that exclusion cannot be extended to all finite output alphabets. Determining the infimum source cost for binary common records over unbounded finite source alphabets remains a separate mathematical question. Likewise, arbitrary output laws, physical source installation, statistical estimation from samples, infinite-alphabet extensions and the physical EJM noise-threshold obligations in §9 require additional arguments.
+
+## 追加锚（本行以下为增补区）
+## 14. Four-symbol saturation and the complete finite source form
+
+**Definition 14.1 (binary block form on the actual sources).** In Definition 10.1 write $(S_1,S_2,S_3)=(\alpha,\beta,\gamma)$, with respective finite alphabets $\Omega_i$. Suppose $A=B=C=X$ almost surely, put $p_x=\mathbb P(X=x)$, and let $\mathcal O_X=\{x:p_x>0\}$ and $m=|\mathcal O_X|$. Entropies use natural logarithms and $0\log0=0$. A binary block form means a bijection $h:\mathbb F_2^2\to\mathcal O_X$ and probability vectors $q_i^0,q_i^1$ on each original $\Omega_i$, satisfying $\operatorname{supp}q_i^0\cap\operatorname{supp}q_i^1=\varnothing$, for which
+
+$$
+\mathbb P(X=h(u,v),S_1=s_1,S_2=s_2,S_3=s_3)
+=\frac14 q_1^u(s_1)q_2^v(s_2)q_3^{u+v}(s_3)
+\tag{14.1}
+$$
+
+for every $u,v\in\mathbb F_2$ and every source triple $s\in\Omega_1\times\Omega_2\times\Omega_3$. Addition of block labels is modulo two. The vectors are normalized on the original alphabets and may have arbitrary further zeros. Thus (14.1) specifies the whole original joint law of $(X,S_1,S_2,S_3)$, including zero cells. Output relabelling and relabelling either block of a source are allowed.
+
+**Theorem 14.2 (classification at support size at most four).** For every choice of the nonempty finite alphabets, source law $\nu$, and nonnegative row-normalized stochastic incident kernels of Definition 10.1, assume $A=B=C=X$ almost surely and $2\le m\le4$. Then
+
+$$
+C_{\rm src}=\frac12H(X)
+\quad\Longleftrightarrow\quad
+m=4\ \text{and the actual joint law has the form (14.1)}.
+$$
+
+In this form let $T_i^b=\operatorname{supp}q_i^b$, $T_i=T_i^0\cup T_i^1$, and let $b_i:T_i\to\mathbb F_2$ record the block. Every positive-marginal incident kernel row is forced to be the point mass at its corresponding entry in
+
+$$
+\begin{aligned}
+f_A(s_2,s_3)&=h\bigl(b_2(s_2)+b_3(s_3),b_2(s_2)\bigr),\\
+f_B(s_3,s_1)&=h\bigl(b_1(s_1),b_1(s_1)+b_3(s_3)\bigr),\\
+f_C(s_1,s_2)&=h\bigl(b_1(s_1),b_2(s_2)\bigr).
+\end{aligned}
+\tag{14.2}
+$$
+
+Conversely, every choice of the disjointly supported probability vectors in Definition 14.1, on arbitrary finite source alphabets admitting such vectors, gives a realization of (14.1) by these incident point-mass kernels. On zero-marginal incident pairs all three kernels may be completed by arbitrary probability vectors on $\mathcal O$. No additional restriction is imposed on those rows.
+
+For every equality realization define $e_i=\tfrac12\bigl(H(q_i^0)+H(q_i^1)\bigr)$. Its exact entropies and source cost are
+
+$$
+\begin{aligned}
+H(X)&=\log4,& H(S_i)&=\log2+e_i,\\
+H(S_1,S_2,S_3)&=\log4+e_1+e_2+e_3,
+& C_{\rm src}&=\log2.
+\end{aligned}
+\tag{14.3}
+$$
+
+*Proof.* Assume equality. Apply Theorem 11.1 on the original stochastic law (10.1). Its kernel-support argument forces all three response rows at each positive source triple to be point masses at the same symbol, and makes $X$ a function of each incident pair. Its equality criterion, equivalently the vanishing of every nonnegative term in (11.6), gives unconditional pairwise independence of $S_1,S_2,S_3$ and the conditional product law (11.3). These are properties of the given sources and kernels; no different realization is substituted.
+
+Write $\mu_i(s)=\mathbb P(S_i=s)$, $T_i=\{s:\mu_i(s)>0\}$, and $r_i^x(s)=\mathbb P(S_i=s\mid X=x)$ for $x\in\mathcal O_X$. Every $p_x$ is positive. Conditional product structure and source-pair independence give, for $i\ne j$,
+
+$$
+\begin{aligned}
+\mathbb P(X=x,S_i=s,S_j=t)&=p_xr_i^x(s)r_j^x(t),\\
+\sum_xp_xr_i^x(s)r_j^x(t)&=\mu_i(s)\mu_j(t).
+\end{aligned}
+\tag{14.4}
+$$
+
+For $s\in T_i$ set
+
+$$
+\ell_i(s)(x)=\frac{r_i^x(s)}{\mu_i(s)},\qquad
+w_i(s)(x)=p_x\ell_i(s)(x)=\mathbb P(X=x\mid S_i=s),\qquad
+C_i(s)=\{x:w_i(s)(x)>0\}.
+$$
+
+All $w_i(s)$ are probability vectors and $\sum_s\mu_i(s)w_i(s)=p$. For every $s\in T_i$ and $t\in T_j$, the pair has strictly positive probability $\mu_i(s)\mu_j(t)$. Recoverability from that pair and (14.4) imply
+
+$$
+|C_i(s)\cap C_j(t)|=1.
+\tag{14.5}
+$$
+
+Indeed, the conditional mass at $x$ is positive exactly on this intersection, and the conditional law of $X$ at that pair is a point mass. This is the usual positive-weight mixture-selector support criterion, also expressed by the private selector helper and the upper-entropy equality theorem in `Entropy/Mixing/MixtureEntropyUpperEquality`; here it is applied to the pair-component vectors $r_i^x\otimes r_j^x$. Positivity is asserted only on $T_i\times T_j$.
+
+No $C_i(s)$ can be the whole $\mathcal O_X$. If it were, (14.5) would make every $C_j(t)$ a singleton for each of the other two sources $j$. Thus $X$ would be a function of either of those sources separately. Their unconditional independence would then make $X$ independent of itself. Explicitly, for distinct positive symbols $x,y$, the two readout events would have joint probability $p_xp_y>0$, although they require $X=x$ and $X=y$ simultaneously. This contradiction uses $m\ge2$. Therefore every posterior row $w_i(s)$ has a zero coordinate.
+
+Use the positive definite weighted inner product $\langle a,b\rangle_p=\sum_xp_xa(x)b(x)$ on $\mathbb R^{\mathcal O_X}$, and put
+
+$$
+E_0=\{a:\langle a,1\rangle_p=0\},\qquad
+V_i=\operatorname{span}\{\ell_i(s)-1:s\in T_i\}.
+$$
+
+Normalization gives $V_i\subset E_0$. Equation (14.4) gives $\langle\ell_i(s),\ell_j(t)\rangle_p=1$; since each of the two vectors has weighted mean one, it follows that $V_i\perp V_j$ for $i\ne j$. Consequently
+
+$$
+\dim V_1+\dim V_2+\dim V_3\le\dim E_0=m-1.
+\tag{14.6}
+$$
+
+This is the classical weighted-orthogonality method for pairwise independent variables: compare Gavinsky and Pudlák, *On the Joint Entropy of $d$-Wise-Independent Variables*, [arXiv:1503.08154v4](https://arxiv.org/abs/1503.08154v4), §3.1, where centered coordinate functions give weighted orthogonal columns. Here the functions are conditional likelihoods on the positive $X$-alphabet; their orthogonality has been verified directly from the actual law in (14.4). The paper's logarithms are base two; the dimension argument is independent of that convention.
+
+Each $V_i$ is nonzero: otherwise all $\ell_i(s)=1$, hence $w_i(s)=p$ has full support, contradicting the preceding paragraph. Thus (14.6) implies $m\ge4$. In the stipulated range necessarily $m=4$ and all three dimensions equal one. In particular this already excludes equality for two or three positive output symbols.
+
+For each $i$, multiplication of likelihood coordinates by $p_x$ now places every posterior on one affine line
+
+$$
+w_i(s)=p+t_i(s)d_i,\qquad d_i\ne0,\quad \sum_xd_i(x)=0.
+\tag{14.7}
+$$
+
+The nonzero vector $d_i$ has both positive and negative coordinates. Since all $p_x>0$, the set of real $t$ for which $p+td_i$ is a probability vector is the interval $[a_i,c_i]$, where
+
+$$
+a_i=\max_{d_i(x)>0}\frac{-p_x}{d_i(x)}<0,
+\qquad
+c_i=\min_{d_i(x)<0}\frac{-p_x}{d_i(x)}>0.
+$$
+
+Every point with $a_i<t<c_i$ has all coordinates positive. Every actual posterior has a zero coordinate, so $t_i(s)$ is either $a_i$ or $c_i$. Both possibilities occur: averaging (14.7) with weights $\mu_i(s)$ gives $\sum_s\mu_i(s)t_i(s)=0$, whereas $a_i<0<c_i$. This derives two nonempty blocks $T_i^0,T_i^1$ of the original marginal support, with one posterior vector $w_i^b$ on each block. No binary quotient is assumed in advance, and the source values inside a block have not been identified with one another in the actual law.
+
+Define the random bit $B_i=b_i(S_i)$ by these blocks, and let $\rho_i(b)=\mathbb P(B_i=b)>0$. The three bits are pairwise independent, as functions of pairwise independent sources. For any source values in blocks $u,v$, (14.4) gives the exact posterior
+
+$$
+\mathbb P(X=x\mid S_i=s,S_j=t)
+=\frac{w_i^u(x)w_j^v(x)}{p_x}.
+\tag{14.8}
+$$
+
+It is a point mass by recoverability and depends only on the two blocks. Thus there is a map $F_{ij}:\mathbb F_2^2\to\mathcal O_X$ such that $X=F_{ij}(B_i,B_j)$ almost surely. All four block pairs have positive probability $\rho_i(u)\rho_j(v)$. Every positive output occurs, so $F_{ij}$ is surjective onto four symbols and hence bijective. This holds for each source pair. It follows in particular that every $B_i$ is a function of $X$.
+
+Take $h=F_{12}$. Since $B_3$ is a function of $X$, write $B_3=g(B_1,B_2)$. Each row and each column of the binary table $g$ contains distinct entries. For instance, equal entries at $(u,0)$ and $(u,1)$ would give the same pair $(B_1,B_3)$ for the distinct outputs $h(u,0)$ and $h(u,1)$, contradicting bijectivity of $F_{13}$. The column argument uses $F_{23}$. If $g(0,0)=c$, the row and column restrictions force $g(0,1)=g(1,0)=1+c$ and $g(1,1)=c$. Relabel the third bit by adding $c$. Then
+
+$$
+B_3=B_1+B_2\quad\text{almost surely}.
+\tag{14.9}
+$$
+
+Let $a=\mathbb P(B_1=1)$ and $b=\mathbb P(B_2=1)$; both lie strictly between zero and one. Independence of $B_1,B_2$ makes the conditional probabilities $\mathbb P(B_3=1\mid B_1=0)$ and $\mathbb P(B_3=1\mid B_1=1)$ equal to $b$ and $1-b$. Independence of $B_1,B_3$ forces these to agree, giving $b=1/2$. Interchanging the first two bits and using independence of $B_2,B_3$ gives $a=1/2$. Thus every pair $(B_1,B_2)=(u,v)$ has mass $1/4$ and $p_{h(u,v)}=1/4$. The parity table and its weighted-orthogonality interpretation are classical binary pairwise-independence structure; the Hadamard/code constructions in Gavinsky–Pudlák §4 give the corresponding known balanced examples. Here the binary structure and its weights have been deduced from the original stochastic realization.
+
+It remains to recover the whole conditional source distributions. On the original $\Omega_i$ define
+
+$$
+q_i^b(s)=
+\begin{cases}
+\mu_i(s)/\rho_i(b),&s\in T_i^b,\\
+0,&s\notin T_i^b.
+\end{cases}
+\tag{14.10}
+$$
+
+These are probability vectors with disjoint supports. Since the posterior is constant within a block, $w_i^b(x)=\mathbb P(X=x\mid B_i=b)$. Since $B_i$ is a function of $X$, this equals $p_x/\rho_i(b)$ when the block label of $x$ is $b$, and zero otherwise. Bayes' identity then gives $r_i^x=q_i^b$ for the label $b$ determined by $x$. For $s\notin T_i$, the same equality holds with both sides zero: $0=\mu_i(s)=\sum_xp_xr_i^x(s)$ and all summands are nonnegative. Substitution into the conditional threefold product (11.3), together with (14.9) and $p_x=1/4$, proves (14.1) for every original source triple. This is the required reconstruction of arbitrary within-block source noise, not just a classification of the three bits.
+
+For the converse, start with any probability vectors and bijection in Definition 14.1. Summing its nonnegative right side over all triples and all four output labels gives total mass one. The marginal of each source and every source pair are
+
+$$
+\mu_i=\frac12(q_i^0+q_i^1),\qquad
+\nu_{ij}(s,t)=\frac14\bigl(q_i^0(s)+q_i^1(s)\bigr)
+                         \bigl(q_j^0(t)+q_j^1(t)\bigr)
+=\mu_i(s)\mu_j(t).
+\tag{14.11}
+$$
+
+Hence the source pairs are independent, and their positive supports are exactly $T_i\times T_j$. Disjoint block supports imply that the bit triple at every positive source triple is $(u,v,u+v)$ for a unique $(u,v)$. The maps (14.2) use precisely the two permitted incident sources and all return $h(u,v)$ there. Set each active kernel row to the point mass at that map value. Extend each other row by any normalized probability vector. Multiplying these kernels with the source marginal of (14.1) in (10.1) gives exactly the joint law (14.1) with $A=B=C=X$. Thus arbitrary within-block stochastic source noise is allowed, without any shared output randomness. Every zero-marginal pair has zero contribution for each of its extensions, so the arbitrary completions cannot alter this law. For an existing realization with (14.1), Theorem 11.1 forces the same active rows, and (14.2) identifies their labels.
+
+Finally $X$ is uniform on four symbols, and the source law given $X=h(u,v)$ is the threefold product of $q_1^u,q_2^v,q_3^{u+v}$. Therefore $H(S_1,S_2,S_3\mid X)=e_1+e_2+e_3$. The sources determine $X$, so their triple entropy is $H(X)$ plus that conditional entropy. Each $B_i$ is a fair bit determined by $S_i$, and $S_i$ conditional on $B_i=b$ has law $q_i^b$, giving $H(S_i)=\log2+e_i$. These are precisely the standard entropy chain and disjoint-mixture identities used in §§11–12. They prove (14.3) and $C_{\rm src}=3\log2-\log4=\log2=H(X)/2$. The point-source special case is Proposition 12.1 with $G=\mathbb F_2$; the necessity and the reconstruction (14.10) concern arbitrary original finite source alphabets.
+
+The classical independent-source triangle premises in Fritz, *Beyond Bell's theorem: correlation scenarios*, [arXiv:1206.5115v2](https://arxiv.org/abs/1206.5115v2), Definition 2.12 and Lemma 2.14, require the full source product. Likewise Renou et al., *Limits on correlations in networks for quantum and no-signaling resources*, [arXiv:1901.08287v1](https://arxiv.org/abs/1901.08287v1), Theorems 1–2, impose independent network sources. Neither independent-source hypothesis is substituted for (14.4): at the equality classified here $C_{\rm src}=\log2>0$, although every source pair is independent. The likelihood-space and posterior-support reconstruction above is a repo-derived consequence of the same-law equality criterion in Theorem 11.1, using weighted orthogonality, selector supports and binary parity as attributed intermediate tools. ∎
+
+**Corollary 14.3 (exact boundary exclusions for finite diagonal lifts).** Let $p$ be any probability law on a finite output alphabet, with positive support size $2\le m\le4$, and let $P_p(a,b,c)=p_a$ when $a=b=c$ and zero otherwise. If $m=2$, $m=3$, or $m=4$ with $p$ nonuniform on its positive support, every finite incident realization of $P_p$ satisfies
+
+$$
+C_{\rm src}>\frac12H(p).
+\tag{14.12}
+$$
+
+Consequently, for each such $p$, the lift problem of Definition 4.1 has no finite realization with source defect at most $H(p)/2$. In this output range, a lift with source defect at most that boundary exists exactly when $p$ is uniform on four symbols; every lift at the boundary then has (14.1). The two-symbol exclusion is Theorem 11.2; the three-symbol and nonuniform four-symbol exclusions and the complete description of the surviving lifts follow from Theorem 14.2.
+
+*Proof.* Theorem 11.1 supplies the lower bound $C_{\rm src}\ge H(p)/2$ on each realization. Theorem 14.2 excludes equality in all the stated cases, proving (14.12). This excludes the boundary budget that the non-strict observable test (10.4) alone leaves undecided. If $p$ is uniform on four symbols, Proposition 12.1 with $G=\mathbb F_2$ and an output bijection realizes it at cost $\log2=H(p)/2$. Conversely a lift of cost at most $H(p)/2$ must be an equality lift by Theorem 11.1 and hence has (14.1) by Theorem 14.2.
+
+The strictness in (14.12) is pointwise in each finite realization. It supplies no positive gap uniform in unbounded finite source cardinalities and no value of the binary source-cost infimum discussed after Theorem 11.2. The proof classifies exact agreement with at most four positive output symbols; a quantitative stability statement under approximate agreement and the classification for $m\ge5$ require additional arguments. No infinite-alphabet or physical-source assertion follows from this finite classification. ∎
+
+## 追加锚（本行以下为增补区）

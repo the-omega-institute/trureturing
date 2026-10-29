@@ -1,0 +1,166 @@
+**Lemma 23.2 (Finite arithmetic bounds).** For $0\le i\le2048$, let
+
+$$
+t_i=\frac{4719}{10000}
+          +\frac{734i}{10000\cdot2048}.
+$$
+
+For $0\le i<2048$ set $I_i=[t_i,t_{i+1}]$.
+
+Enclose $y\in I_i-1/2$ by (23.1), and evaluate all eight functions
+in (23.3) by the prescribed rational Horner rule. Denote their
+resulting real intervals by $\mathbf U_i,\mathbf T_i,\mathbf b_i,
+\boldsymbol\Delta_i,\mathbf a_i,\mathbf h_i,
+\mathbf w_{0i},\mathbf w_{1i}$.
+Every rational-function denominator interval excludes zero. More
+precisely, the degree pairs of the normalized numerator and denominator,
+and uniform strict lower bounds for the distance of each denominator
+interval from zero, are
+
+$$
+\begin{array}{c|c|c}
+\text{function}&(\deg\mathrm{num},\deg\mathrm{den})&
+ \operatorname{dist}(0,\text{denominator interval})>\\ \hline
+U_t&(3,3)&1\\
+T_t&(3,3)&1\\
+b_t&(3,3)&1\\
+\Delta_t&(7,6)&2\\
+a&(22,21)&475000\\
+h&(19,20)&871000\\
+w_0&(22,21)&4750000\\
+w_1&(19,20)&8710000
+\end{array}
+\qquad
+\inf\boldsymbol\Delta_i>16.
+\tag{23.4}
+$$
+
+Next, in exactly this order, form
+
+$$
+\begin{aligned}
+\mathbf r_i&=(\mathbf T_i-\sqrt{\boldsymbol\Delta_i})/2,\\
+\mathbf p_i&=\mathbf a_i+\mathbf h_i\mathbf r_i,\qquad
+\mathbf w_i=\mathbf w_{0i}+\mathbf w_{1i}\mathbf r_i,\\
+\mathbf P_i&=\mathbf p_i+90,\qquad
+\mathbf W_i=\mathbf w_i+10.
+\end{aligned}
+\tag{23.5}
+$$
+
+The following inclusions hold for every cell, with finite decimals
+interpreted as exact rationals:
+
+$$
+\begin{gathered}
+\mathbf p_i\subset[-114.436330,-70.198698]\subset(-115,-70),\\
+\mathbf w_i\subset[-12.665012,-8.442640]\subset(-13,-8).
+\end{gathered}
+\tag{23.6}
+$$
+
+For every pair in (22.3), evaluate each of its nineteen polynomials
+(22.6) at $(\mathbf P_i,\mathbf W_i)$ using (23.1) and its Horner
+order; call the resulting intervals $\mathbf q_{i,k}$.
+All of their first and last coefficient intervals exclude zero.
+The maximal possible sign variations and their endpoint signs are
+
+$$
+\begin{array}{c|c|c|c}
+(\alpha,\beta)&
+ \operatorname{sgn}\mathbf q_{i,0}&
+ \operatorname{sgn}\mathbf q_{i,18}&
+ \text{maximal variation}\ \le\\ \hline
+(0,1/5)&+&+&0\\
+(3/10,2/5)&-&-&0\\
+(2/5,3/5)&-&+&1\\
+(3/5,4/5)&+&+&0
+\end{array}
+\tag{23.7}
+$$
+
+Here every first and last coefficient interval has distance greater
+than one from zero, uniformly over all $2048$ cells and all four rows.
+
+For completeness, the finite variation operation in (23.7) includes
+all signs compatible with each interval. For an interval $J$, let
+
+$$
+\Sigma(J)=\bigl(\{-1\}:\inf J<0\bigr)
+ \cup\bigl(\{0\}:0\in J\bigr)
+ \cup\bigl(\{1\}:\sup J>0\bigr),
+\tag{23.8}
+$$
+
+where a parenthesized set contributes the empty set when its condition
+is false. The maximal variation is the maximum of the ordinary
+zero-omitting variation of $(s_0,\ldots,s_{18})$ over
+$\prod_{k=0}^{18}\Sigma(\mathbf q_{i,k})$. In particular an interval
+straddling zero permits both nonzero signs and zero. No sign is chosen
+from a midpoint.
+
+Proof. The families in this lemma consist of exactly $2048$ closed
+cells, eight normalized rational functions per cell, and $76$
+coefficient polynomials per cell. The following finite expansion rules
+give the stated bounds using integer arithmetic. For any normalized
+numerator or denominator $A(t)=\sum_j A_jt^j$, its shifted coefficient
+of $y^k$ is exactly
+
+$$
+\sum_{j\ge k} A_j\binom jk2^{k-j}.
+\tag{23.9}
+$$
+
+Obtain the eight pairs $A$ by (20.1), (20.4)–(20.6) and the normalization
+(23.3); their degrees are the middle column of (23.4). For each of the
+$2048$ explicitly given pairs $(t_i,t_{i+1})$, apply the integer
+rounding (23.1), (23.9) and the Horner recurrence
+
+$$
+H_m=C_m,\qquad H_j=H_{j+1}Y+C_j\quad(j=m-1,\ldots,0).
+\tag{23.10}
+$$
+
+The resulting denominator distances have the strict lower bounds in
+(23.4); the same recurrence for the numerator of $\Delta_t$, followed
+by its division, gives $\inf\boldsymbol\Delta_i>16$. Thus every
+reciprocal and square root in (23.5) is defined. Applying (23.5) gives
+(23.6). For the carrier coefficients, expand the fixed quotient
+(22.1), extract $R_i$, use the binomial sum (22.5), translate by
+(22.6), and apply (23.10) first in $\mathbf W_i$ and then in
+$\mathbf P_i$. This gives the endpoint signs and distances in (23.7).
+
+The finite maximum in (23.8) can be evaluated by the following exact
+recurrence, which also specifies the treatment of every coefficient
+interval containing zero. Initially the sole state is $(0,0)$,
+meaning no preceding nonzero sign and zero variation. On processing a
+sign $s\in\Sigma(J)$, a state $(h,v)$ contributes
+
+$$
+\begin{cases}
+(h,v),&s=0,\\
+(s,v+\mathbf1_{h\ne0,\ h\ne s}),&s\ne0.
+\end{cases}
+\tag{23.11}
+$$
+
+For each last sign retain the largest variation. Processing all
+nineteen coefficients yields the bounds $(0,0,1,0)$ in (23.7).
+The complete index ranges are $0\le i<2048$, the four rows of
+(22.3), and $0\le k\le18$; there is no omitted cell, subdivision,
+endpoint family or unresolved branch in these finite inequalities.
+Equations (20.4), (22.5), (23.1), (23.9)–(23.11) and the displayed
+index ranges specify every rational and integer in this calculation.
+
+Finally, the rounding rules enclose each exact operation: the four
+endpoint products give the product extrema, reciprocal reverses the
+endpoints on either component of $\mathbb R\setminus\{0\}$, and
+the square function is increasing on nonnegative reals. Induction on
+(23.10) and then on (23.5) encloses the exact response of each
+$t\in I_i$. Induction on (23.11) takes the maximum over every allowed
+sign prefix, so its result bounds the variation of the exact
+coefficient sequence at that same $t$. These inclusions prove the
+uniform, rather than pointwise, interpretation of the finite bounds.
+The closed cells join at their common rational endpoints and have
+union $I$. ∎
+

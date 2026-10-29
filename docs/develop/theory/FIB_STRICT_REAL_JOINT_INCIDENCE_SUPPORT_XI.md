@@ -2628,3 +2628,1798 @@ fixed48 problem, and no selected-source bounds have replaced the
 original world domain.
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Literal relative indices and a finite original-H outer locus
+
+**Definition 9.1 (Fixed objects and primitive conventions).** Write S, IX
+and X for [Support](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md),
+[Support IX](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IX.md) and
+[Support X](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_X.md). The integer
+polynomials $D,a_i,f,K,F_0,\alpha,\beta,R$ are exactly IX, (4.1),
+(4.3)–(4.7), with $K=4k$ and
+
+$$
+\operatorname{Res}_d(f,K)=256D^8F_0^2R,
+\qquad \rho=[x^{18}]R.
+\tag{9.1}
+$$
+
+In $B=\mathbb Q(p,v)[x]/(R/\rho)$ use the coefficient basis
+$1,x,\ldots,x^{17}$. Put $\delta=-\beta/\alpha$ and use the *robust*
+functions of S, Theorem 4.3:
+
+$$
+\begin{gathered}
+H_i=a_i(x,\delta)/D\quad(i=0,1,2,7),\qquad
+B_0=294/5-2\delta-H_2,\\
+C_0=\delta^2+B_0^2,\qquad N_0=-\delta H_0+B_0H_2,\\
+\tau_M=\delta+(2x+3)H_7,\\
+\tau_J=\delta+
+ \left(4x+\frac12+\frac{C_0}{2N_0}
+                    -\frac{2(24-\delta)}{H_1}\right)H_7,\\
+\chi_E(z)=\det(zI-M(\tau_E)),\qquad
+\iota_E=\det[1,\tau_E,\ldots,\tau_E^{17}].
+\end{gathered}
+\tag{9.2}
+$$
+
+Here $M$ is multiplication in $B$, and the determinant columns in
+$\iota_E$ are coefficient vectors. The symbol $\iota$ avoids the
+unrelated overlap index $\kappa$ of Section 1. The symbols $C_0,N_0$
+are quotient-algebra elements; $N_J,N_M$ below are scalar polynomials.
+
+For an integer polynomial $A\ne0$, let $\operatorname{pp}_+(A)$ mean
+division by its positive integer coefficient content, followed by the sign
+which makes its lexicographic leading coefficient positive. In scalar
+polynomials the order is $p>v$. For a rational function, first cancel its
+polynomial numerator-denominator gcd over $\mathbb Q[p,v]$, then clear
+rational scalar denominators, and take $\operatorname{pp}_+$ separately
+on numerator and denominator. A rational scalar multiplying the resulting
+fraction is retained separately. Let $N_E,D_E^{\rm ind}$ be these
+primitive numerator and denominator of $\iota_E$.
+Thus $N_E$ is literally the polynomial in S, Theorem 4.3.
+
+Let $E_0$ be *that same* theorem's primitive squarefree product: $\rho$,
+$\operatorname{Disc}_x(R)$, both sides of the five reduced norms of
+$\alpha,D,H_1,C_0,N_0$, all its listed coefficient denominators, and the
+two power-determinant denominators. Define
+
+$$
+H=(p-24)E_0,\qquad \rho_0=\operatorname{pp}_+(\rho).
+\tag{9.3}
+$$
+
+In particular no factor $d,H_0,F_0,\beta$, terminal coordinate, or gain
+coefficient is added to this inventory. Total degree without a subscript
+means degree in the indicated parameter variables, not degree in $x$.
+
+**Theorem 9.2 (Literal M normalization and finite joint outer locus).**
+There are uniquely determined primitive positive polynomials
+$C_{121},V_{69}\in\mathbb Z[p,v]$, of total degrees $121,69$, for which
+
+$$
+N_M=\rho_0^{17}C_{121},\qquad D_M^{\rm ind}=V_{69}.
+\tag{9.4}
+$$
+
+These are equalities with the primitive conventions in Definition 9.1,
+not replacements up to multiplication by factors of $H$. Furthermore
+
+$$
+\gcd(C_{121},N_J)=\gcd(C_{121},H)=1
+\quad\hbox{in }\mathbb Q[p,v].
+\tag{9.5}
+$$
+
+Consequently the following set is finite and may be empty:
+
+$$
+\begin{aligned}
+Z_H
+&=\{(p,v)\in\mathbb C^2:H(p,v)\ne0,\ N_J(p,v)=N_M(p,v)=0\}\\
+&=\{(p,v)\in\mathbb C^2:H(p,v)\ne0,\
+                         N_J(p,v)=C_{121}(p,v)=0\}.
+\end{aligned}
+\tag{9.6}
+$$
+
+Every four-world configuration in (6.8.5), with its two independently
+chosen distinct equal-$J$ and equal-$M$ pairs in the same entire
+$C(p,v)$, satisfies either $H(p,v)=0$ or $(p,v)\in Z_H$.
+This applies to every overlap stratum of Sections 1–3 and to independently
+chosen $m_0,m_1,m$. Proofs of (9.4)–(9.6) are given in Sections 10–14.
+
+## 10. A compact polynomial for the literal M response
+
+**Definition 10.1 (Integer terminal resultant circuit).** Use $z$ for a
+formal terminal $M$ value and write $a_7=A_7+B_7d$, where
+
+$$
+\begin{aligned}
+A_7&=72x^3+(192-6p+4v)x^2+(72-12p+4v)x-48,\\
+B_7&=-4x^3-9x^2+3x+2,\\
+q&=D+(2x+3)B_7=-8x^4-29x^3-18x^2+15x+6,\\
+t&=zD-(2x+3)A_7.
+\end{aligned}
+\tag{10.1}
+$$
+
+For $A=\sum_{i=0}^n A_id^i$ define its denominator-cleared substitution
+$A[t:q]=\sum_{i=0}^n A_it^iq^{n-i}$, retaining its displayed generic
+$d$-degree. Set
+
+$$
+\begin{gathered}
+f_M=\frac{f[t:q]}{2D^2},\qquad K_M=\frac{K[t:q]}{4D^4},\\
+Q=\frac{\operatorname{Res}_x(q,t)}{1152},\qquad
+L=\frac{\operatorname{Res}_x(F_0,t)}{2592pv},\\
+P_M=\frac{\operatorname{Res}_x(f_M,K_M)}{82944Q^8L^2}.
+\end{gathered}
+\tag{10.2}
+$$
+
+Every quotient here is an exact integer polynomial quotient. No content
+or sign adjustment is made to $P_M$. Resultants have their displayed
+operand order and generic degrees. They use the convention
+$\operatorname{Res}_x(A,B)=a_n^{\deg B}\prod_{A(\xi)=0}B(\xi)$.
+
+**Lemma 10.2 (Exact quotient and characteristic-polynomial identification).**
+The polynomial $P_M$ is primitive, of total degree $18$ in $(p,v,z)$,
+with $\deg_zP_M=18$ and constant leading coefficient
+
+$$
+c=[z^{18}]P_M=33917016093258200081122929199218750000000.
+\tag{10.3}
+$$
+
+It satisfies $P_M=c\chi_M$ in $\mathbb Q(p,v)[z]$.
+
+Proof. The following finite coefficient identities also specify the
+polynomial quotient without an expanded array. The arithmetic convention
+for regenerating all the finite identities in this chapter is as follows.
+An integer polynomial is its finite monomial-to-coefficient map. Addition,
+multiplication and differentiation use coefficient addition, convolution
+and the exponent rule. Exact division means leading-monomial division in
+lexicographic order $d>x>p>v>z$, with zero remainder; the quotient is
+checked by multiplication. Coefficients in a selected variable are
+collected before each resultant. For degrees $n,m$, form the Sylvester
+matrix from the descending coefficient rows of $A,xA,\ldots,x^{m-1}A$
+and $B,xB,\ldots,x^{n-1}B$, ordered to give the above product convention.
+Its determinant, or its fraction-free elimination, gives the resultant.
+For elimination one may choose the first nonzero pivot in row order,
+exchange rows with the corresponding sign, and update a trailing entry
+by $(a_{kk}a_{ij}-a_{ik}a_{kj})/a_{k-1,k-1}$, initially with previous
+pivot $1$. Each such division is exact. This is the usual Bareiss
+calculation of the same determinant. Thus these instructions involve
+only finite integer arithmetic; no numerical root or parameter sample
+occurs.
+
+Starting with IX, (4.1), (4.3)–(4.7), and (10.1), the divisions and
+multiplications in (10.2) give the following inventories:
+
+| Polynomial or identity | Exact result |
+| --- | --- |
+| $f[t:q]-2D^2f_M$ | $0$; $\deg_x f_M=7$, $74$ monomials |
+| $K[t:q]-4D^4K_M$ | $0$; $\deg_x K_M=14$, $525$ monomials |
+| $\operatorname{Res}_x(q,t)-1152Q$ | $0$; $Q$ primitive, $35$ monomials, total degree $4$, $z$-degree $4$ |
+| $\operatorname{Res}_x(F_0,t)-2592pvL$ | $0$; $L$ primitive, $20$ monomials, total degree $3$, $z$-degree $3$ |
+| $\operatorname{Res}_x(f_M,K_M)$ | $32509$ monomials, total degree $56$ |
+| $\operatorname{Res}_x(f_M,K_M)-82944Q^8L^2P_M$ | $0$ |
+| $P_M$ | content $1$, $1330$ monomials, coordinate degrees $(p,v,z)=(18,18,18)$; (10.3) |
+
+For clarity, the last row is obtained by exact division by the *whole*
+displayed divisor, not by selecting a factor of a numerical resultant.
+The same monomial rules, including the specified divisions, determine
+every coefficient and every zero residual in this table.
+
+At the generic source point, IX, Sections 6–7, identify $B$ with the
+original source field and make the actual $\tau_M$ primitive of degree
+$18$. The terminal equation gives $t=q\delta$ there. Thus the homogeneous
+substitutions defining $f_M,K_M$ vanish at $z=\tau_M$ without dividing
+by $q$. Their resultant identity yields
+
+$$
+Q(\tau_M)^8L(\tau_M)^2P_M(\tau_M)=0.
+\tag{10.4}
+$$
+
+A nonzero polynomial of terminal degree $4$ or $3$ cannot annihilate an
+element of degree $18$. Hence neither of the first two factors vanishes
+in this field, and $P_M(\tau_M)=0$. Comparing degrees and the leading
+coefficient proves $P_M=c\chi_M$. This is a generic function-field
+identity. Actual-world evaluation is through the robust regular functions
+and S, Lemma 9.9; (10.4) does not remove the sets $q=0,Q=0,L=0$ or
+$F_0=0$ from the original domain. ∎
+
+## 11. Characteristic-zero degree and repeated-root bounds
+
+**Definition 11.1 (The common degree-five divisor).** Put
+
+$$
+\begin{aligned}
+T_5={}&(p-24)(55p-28v-1572)(58p-23v-1350)Q_2,\\
+Q_2={}&120p^2-38pv-3360p+3v^2+522v+23112,\\
+E={}&\operatorname{Disc}_x(R),\qquad F=\operatorname{Disc}_z(P_M).
+\end{aligned}
+\tag{11.1}
+$$
+
+$T_5$ is already primitive with positive lexicographic leading coefficient.
+
+**Lemma 11.2 (Small identities and discriminant divisors).** Over
+$\mathbb Q[p,v]$, $T_5$ is squarefree and
+
+$$
+T_5^2\mid E,\qquad T_5^2\mid F.
+\tag{11.2}
+$$
+
+Proof. Here are the finite coefficient substitutions needed for this
+assertion. A rational substitution is evaluated by multiplying by the
+indicated constant or polynomial denominator to the degree of the
+substituted variable, and then using convolution. Zero means the resulting
+polynomial is identically zero, not a value at one point.
+
+| Height-one factor | Carrier root $x_*$ | Terminal root $z_*$ |
+| --- | --- | --- |
+| $p-24$ | $(v-84)/30$ | $(32v-1128)/5$ |
+| $55p-28v-1572$ | $-(v+42)/33$ | $(184v-60)/55$ |
+| $58p-23v-1350$ | $(4v+144)/(v-138)$ | $(381v-1770)/116$ |
+
+For each row substitute its $p$ as a rational affine function of $v$.
+Direct application of the monomial rules of Lemma 10.2 gives
+
+$$
+R(x_*)=R_x(x_*)=R_p(x_*)=0,\qquad
+P_M(z_*)=(P_M)_z(z_*)=(P_M)_p(z_*)=0.
+\tag{11.3}
+$$
+
+The specializations of $R_{xx}(x_*),\rho,(P_M)_{zz}(z_*)$ are nonzero
+polynomials. Equivalently, the terminal linear polynomials
+$32v-5z-1128$, $184v-55z-60$, $381v-116z-1770$ divide the specialized
+$P_M$ twice and its transverse $p$ derivative once. These statements can
+be regenerated by ordinary univariate polynomial division after the
+constant denominator clearing just specified.
+
+For the quadratic row use $x_*=0$ and
+$z_*=(1824-135p+54v)/10$. The complete division tests are
+
+$$
+\begin{gathered}
+Q_2^2\mid R(0),\qquad Q_2^3\nmid R(0),\qquad Q_2\mid R_x(0),\\
+R_{xx}(0)\not\equiv0\pmod{Q_2},\qquad
+\rho\not\equiv0\pmod{Q_2},\\
+Q_2^2\mid 10^{18}P_M(z_*),\qquad
+Q_2\mid10^{17}(P_M)_z(z_*),\\
+10^{16}(P_M)_{zz}(z_*)\not\equiv0\pmod{Q_2}.
+\end{gathered}
+\tag{11.4}
+$$
+
+For example, the last two divisible quantities have quotients of total
+degrees $14,15$ and respectively $120,136$ monomials in the order
+$10^{18}P_M(z_*)/Q_2^2$, $10^{17}(P_M)_z(z_*)/Q_2$.
+Equations (11.3)–(11.4) are finite exact arithmetic with the explicitly
+fixed $R,P_M$; division in $p$ over $\mathbb Q[v]$ gives the displayed
+remainders. The leading coefficients of the divisors are constants.
+
+The three linear factors are distinct and none divides $Q_2$.
+Moreover
+
+$$
+\operatorname{Disc}_p(Q_2)=4(v^2+1200v+48960).
+\tag{11.5}
+$$
+
+The polynomial in parentheses is coprime to its derivative, so it has
+simple roots and is not a square in $\mathbb Q(v)$. Thus $Q_2$ is
+irreducible over $\mathbb Q[p,v]$. These facts prove squarefreeness of
+$T_5$.
+
+At the height-one local ring of a factor $T$ of $T_5$, translate the
+displayed carrier root to $0$. The constant coefficient has valuation at
+least $2$, the linear coefficient at least $1$, and the quadratic and
+leading coefficients are units. For the linear rows, the constant
+coefficient assertion follows from its value and transverse derivative in
+(11.3); for $Q_2$ it is the first division in (11.4). The same statements
+hold for $P_M$ with its displayed terminal root. The denominators of the
+root translations are units at this generic point, including $v-138$
+in the third carrier row.
+
+After completion and an unramified residue-field extension, the reduced
+polynomial has a factor $y^2$ coprime to its remaining factor, since the
+quadratic coefficient is a unit. Hensel factorization gives a monic
+quadratic $y^2+by+a$ times that remaining factor. Comparing constant
+and linear coefficients gives $a\in(T^2)$ and $b\in(T)$.
+Its discriminant $b^2-4a$ is in $(T^2)$. The discriminant of the whole
+polynomial is that discriminant times the remaining discriminant and
+the square of a resultant, with unit leading-coefficient corrections;
+these other factors have nonnegative valuation. Consequently $T^2$
+divides each whole discriminant. Multiplying the four coprime factors
+proves (11.2). These are divisor calculations, not deletions of any
+exceptional curve. ∎
+
+**Lemma 11.3 (Carrier degree at most 199).** The total parameter degree
+of $E$ is at most $199$.
+
+Proof. Put $R_i=[x^i]R$ and use $[A]_j$ for the homogeneous degree-$j$
+part of a parameter polynomial. Coefficient collection from (9.1) gives
+
+$$
+\deg R_i=6\ (0\le i\le16),\qquad \deg R_{17}=5,
+\qquad\deg R_{18}=4.
+\tag{11.6}
+$$
+
+The following small homogeneous identities specify the cancellation at
+infinity. Set
+
+$$
+\begin{gathered}
+A=[R_{18}]_4,\quad B_\infty=[R_{17}]_5,\quad C=[R_{16}]_6,\\
+N=-975p^2+720pv-128v^2,\qquad D_\infty=8460p-3840v,\\
+F_3(y)=\sum_{i=15}^{18}[R_i]_{21-i}y^{i-15},\qquad
+F_4(y)=\sum_{i=14}^{18}[R_i]_{20-i}y^{i-14},\qquad
+\ell=N/D_\infty.
+\end{gathered}
+\tag{11.7}
+$$
+
+$A,N,D_\infty$ are nonzero, and exact coefficient arithmetic gives
+
+$$
+B_\infty^2=4AC,\quad 2AN+B_\infty D_\infty=0,\quad
+F_3(\ell)=0,\quad F_3'(\ell)^2=4AF_4(\ell).
+\tag{11.8}
+$$
+
+These tests require only the indicated homogeneous coefficient parts of
+the $512$-term $R$. For completely polynomial tests, multiply the third
+identity by $D_\infty^3$ and the fourth by $D_\infty^4$; expansion and
+coefficient subtraction give zero. Thus no resultant expansion is used
+for this upper bound.
+
+Take algebraically independent $P,V$ and substitute $p=tP,v=tV$.
+Work over an algebraic Puiseux extension of $\mathbb Q(P,V)((t^{-1}))$.
+The Newton polygon from (11.6) gives sixteen bounded roots and two roots
+of order $t$; the nonzero coefficients $C,A$ give these multiplicities.
+The leading equation of the latter two roots $x=ty$ is
+$y^{16}(Ay^2+B_\infty y+C)=Ay^{16}(y-\ell)^2$.
+Here and in the rest of this argument the homogeneous quantities are
+evaluated at $(P,V)$, and $\ell\ne0$.
+
+Substitute $x=t\ell+z$. At the first nonzero order, the equation for
+$z$ is, up to the nonzero factor $\ell^{14}$,
+
+$$
+A\ell^2z^2+\ell F_3'(\ell)z+F_4(\ell)=0.
+\tag{11.9}
+$$
+
+The missing order follows from $F_3(\ell)=0$ in (11.8). The
+quadratic's discriminant vanishes by the last identity there.
+Consequently both roots have the expansion
+
+$$
+x=t\ell-\frac{F_3'(\ell)}{2A\ell}+O(t^{-1/2}).
+\tag{11.10}
+$$
+
+This order estimate also follows by translating the double root in
+(11.9): the next coefficients are of order $t^{-1}$, so the Newton
+polygon places the translated roots at order at most $t^{-1/2}$.
+The difference of the two large roots is therefore $O(t^{-1/2})$.
+
+Use $\operatorname{Disc}(R)=\rho^{34}\prod_{i<j}(x_i-x_j)^2$.
+The leading coefficient contributes $34\cdot4=136$. The $32$
+large/bounded pairs contribute at most $64$. Bounded/bounded differences
+contribute at most $0$, even if some bounded limiting roots coincide.
+The large/large difference contributes at most $-1$. Thus the total
+exponent is at most $136+64-1=199$. Algebraic independence of $P,V$
+identifies that exponent with total parameter degree, proving the bound.
+This is a characteristic-zero argument. ∎
+
+**Lemma 11.4 (Terminal degree at most 303).** The total parameter degree
+of $F$ is at most $303$.
+
+Proof. Let $P_j$ be the homogeneous total-degree-$j$ part of $P_M$ in
+$(p,v,z)$ and put
+
+$$
+\ell_M=(-30p+32v)/5,\qquad g_M=30p-32v+5z.
+\tag{11.11}
+$$
+
+The complete small homogeneous tests, by the coefficient operations of
+Lemma 10.2, are
+
+$$
+\begin{gathered}
+P_{18}=g_M^2S_{16},\qquad
+S_{16}(\ell_M)\ne0,\qquad
+\gcd(S_{16},\partial_zS_{16})=1,\\
+P_{17}(\ell_M)=0,\\
+A_M=\tfrac12(\partial_z^2P_{18})(\ell_M)\ne0,\quad
+B_M=(\partial_zP_{17})(\ell_M),\quad C_M=P_{16}(\ell_M),\\
+B_M^2=4A_MC_M.
+\end{gathered}
+\tag{11.12}
+$$
+
+$S_{16}$ has $153$ monomials and $z$-degree $16$. Its exact division by
+$g_M^2$ has zero remainder. Evaluations can all be made polynomial by
+using the common multiplier $5^{18}$, and the division by $2$ in $A_M$
+is exact over $\mathbb Q$. The gcd is over $\mathbb Q[p,v,z]$ and also
+says that no parameter-only content survives in $S_{16}$. To regenerate
+it one may perform primitive Euclidean gcd in $z$ over
+$\mathbb Q(p,v)$ and take the coefficient-content gcd separately.
+
+Set $\epsilon=t^{-1}$ and consider
+$t^{-18}P_M(tP,tV,tZ)$. At $\epsilon=0$ its roots consist of sixteen
+simple slopes and the double slope $\ell_M$, by (11.12). Hensel
+factorization separates the simple factors from the monic quadratic at
+that double slope. In its coordinate $Z=\ell_M+u$, its first terms,
+after multiplication by a unit, are
+
+$$
+A_Mu^2+\epsilon B_Mu+\epsilon^2C_M
++O(u^3,\epsilon u^2,\epsilon^2u,\epsilon^3).
+\tag{11.13}
+$$
+
+The term of order $\epsilon$ at $u=0$ vanishes because
+$P_{17}(\ell_M)=0$. The quadratic discriminant has order at least
+$\epsilon^3$, since its order-$\epsilon^2$ coefficient is
+$(B_M^2-4A_MC_M)/A_M^2=0$. The simple-root discriminant and the
+cross-resultant are units. Thus the entire discriminant in $Z$ is
+$O(\epsilon^3)$. Scaling eighteen roots from $Z$ to $z=tZ$ contributes
+$t^{18\cdot17}=t^{306}$. The terminal leading coefficient (10.3) is
+constant, so no further parameter degree is introduced. The exponent
+is at most $306-3=303$, as asserted. ∎
+
+## 12. Bivariate finite arithmetic and the robust J comparison
+
+**Definition 12.1 (A terminal-linear J circuit).** In this section $z$
+is a formal $J$ value. Write $f=ad^2+b_fd+c_f$ as in IX, (4.4), and put
+
+$$
+\begin{aligned}
+G={}&2Da_0a_1(z-d)\\
+ &-\bigl((8x+1)a_0a_1-dDa_1-4(24-d)Da_0\bigr)a_7,\\
+g_i={}&[d^i]G,\\
+L_J={}&a^2g_1-ab_fg_2+(b_f^2-ac_f)g_3,\\
+T_J^{\rm rem}={}&a^2g_0-ac_fg_2+b_fc_fg_3,\\
+A_6={}&177x^6+724x^5+542x^4-742x^3-629x^2+196x+160,\\
+J_{\rm lin}={}&
+\frac{T_J^{\rm rem}\alpha-L_J\beta}{6400D^6F_0A_6^2}.
+\end{aligned}
+\tag{12.1}
+$$
+
+The last division is exact in $\mathbb Z[x,p,v,z]$, with no sign or
+content adjustment. This $L_J$ is unrelated to $L$ in (10.2).
+
+**Lemma 12.2 (Faithful generic J equation).** The polynomial
+$J_{\rm lin}$ is primitive, has $647$ monomials, $x$-degree $18$,
+$z$-degree $1$, and total degree $21$. It represents the robust
+$\tau_J$ of (9.2) in the generic carrier field, both in characteristic
+zero and after reduction modulo $101$.
+
+Proof. Before substituting $d=\delta$ put
+$B_n=294D-10dD-5a_2$, $C_n=25D^2d^2+B_n^2$ and
+$N_n=-5dDa_0+B_na_2$. Coefficient expansion gives
+
+$$
+5dDN_n+a_0C_n-B_nf=0.
+\tag{12.2}
+$$
+
+Dividing only in the generic field shows
+$dN_0+H_0C_0=0$ on $f=0$. Hence $C_0/N_0=-d/H_0$ where the latter
+expression is defined generically. Substitution in (9.2), followed by
+multiplication by $2Da_0a_1$, gives exactly $G=0$.
+Polynomial division also gives
+
+$$
+f\mid a^2G-L_Jd-T_J^{\rm rem},\qquad a=-10A_6.
+\tag{12.3}
+$$
+
+Combining the linear remainder with $\alpha d+\beta=0$ gives (12.1).
+The exact divisions and the generic cancellations are specified by these
+finite tests:
+
+| Quantity | Result over $\mathbb Q$ and over $\mathbb F_{101}$ |
+| --- | --- |
+| $T_J^{\rm rem}\alpha-L_J\beta-6400D^6F_0A_6^2J_{\rm lin}$ | $0$ |
+| $\gcd_x(R,6400D^6F_0A_6^2)$ | $1$ |
+| $\gcd_x(R,a)$ | $1$ |
+| $\gcd_x(R,\alpha)$ | $1$ |
+| $\gcd_x(R,([d^0]a_0)\alpha-([d]a_0)\beta)$ | $1$ |
+| $\gcd_x(R,[z]J_{\rm lin})$ | $1$ |
+
+Here gcds are monic over the corresponding parameter fraction field;
+the same characteristic-zero polynomial identities are used before
+reduction. They are regenerated by (12.1)–(12.3), coefficient collection
+and Euclidean division. The fourth gcd controls the generic $H_0$
+cancellation. Thus $[z]J_{\rm lin}$ is a unit in the generic carrier,
+and its equation is $z=\tau_J$. This proves the claimed correspondence.
+The five norm calculations below also ensure that the original robust
+functions are defined after reduction. This generic comparison does
+not impose $d\ne0,H_0\ne0,F_0\ne0$ or $\beta\ne0$ on actual worlds;
+all-world evaluation still uses (9.2) and S, Lemma 9.9. ∎
+
+**Lemma 12.3 (Complete bivariate residue family).** Keep $p,v$
+algebraically indeterminate and reduce the displayed integer circuits
+modulo $101$. An overline denotes this reduction, never a specialization
+of either parameter. The following finite arithmetic holds in
+$\mathbb F_{101}[p,v]$.
+
+Proof and specification of the arithmetic. For a nonzero polynomial
+write $\operatorname{mon}(A)$ for division by its lexicographic leading
+coefficient, with order $p>v>z$ when $z$ is present. In the rest of this
+proof all gcds are monic. Reduce a rational fraction by its polynomial
+gcd and normalize its two polynomial sides separately to be monic,
+recording the residual scalar. Gcd in $p,v$ can be regenerated by
+collecting coefficients in $p$, computing their contents in
+$\mathbb F_{101}[v]$, and using Euclidean division in
+$\mathbb F_{101}(v)[p]$ on the primitive parts; clear denominators, remove
+content, and restore the content gcd. Apply the same procedure recursively
+when $x$ or $z$ is present. The characteristic-zero version uses
+$\mathbb Q$ instead of $\mathbb F_{101}$ and Gauss primitive parts.
+These instructions, together with the Sylvester determinant in Lemma
+10.2, fix all the arithmetic below.
+
+First form $\overline R,\overline\rho,\overline P_M$ by (9.1),
+(10.1)–(10.2), using exact polynomial quotients. The degrees of the
+operands in the eliminated variable are retained. Put
+
+$$
+\begin{gathered}
+\mathsf E=-\operatorname{Res}_x(\overline R,\overline R_x)/\overline\rho,
+\qquad
+\mathsf F=-\operatorname{Res}_z(\overline P_M,
+                       \partial_z\overline P_M)/\overline c,\\
+\mathsf R_J=\operatorname{Res}_x(\overline R,\overline J_{\rm lin}),\\
+\mathsf P_J=\operatorname{mon}
+ \left(\mathsf R_J/\gcd_{0\le i\le18}([z^i]\mathsf R_J)\right),
+\qquad \mathsf l_J=[z^{18}]\mathsf P_J,\\
+\mathsf D_J=-\operatorname{Res}_z(\mathsf P_J,\partial_z\mathsf P_J)
+                                      /\mathsf l_J,\\
+\mathsf K_M=\frac{\overline\rho^{34}\mathsf F}
+                  {\overline c^{34}\mathsf E},\qquad
+\mathsf K_J=\frac{\overline\rho^{34}\mathsf D_J}
+                  {\mathsf l_J^{34}\mathsf E}.
+\end{gathered}
+\tag{12.4}
+$$
+
+The minus signs are $(-1)^{18\cdot17/2}$. The divisions defining
+$\mathsf E,\mathsf F,\mathsf D_J$ are exact polynomial divisions.
+The last two expressions are reduced rational fractions.
+The content gcd of $\mathsf R_J$ is in $\mathbb F_{101}[p,v]$.
+In particular $\mathsf P_J$ is defined *after* modular reduction; no
+commutation of characteristic-zero primitive extraction with reduction
+is assumed.
+
+Here is the full construction of the numerator and denominator square
+roots used in the table. Reduce $\mathsf K_E$ to
+$s_E A_E/B_E$ with $A_E,B_E$ separately monic and coprime. Their unique
+monic polynomial square roots are $n_E,d_E$. They can be computed without
+factorization: start with the square root of the leading monomial and,
+if a partial root is $u$, add the leading monomial of the residual
+$(A_E-u^2)/(2\operatorname{LT}(u))$; repeat until the residual is zero.
+Do the same for $B_E$. Exponents in each division must be nonnegative;
+verify by squaring the final roots. Characteristic $101$ makes $2$ a
+unit. This prescription gives an unambiguous finite test and the exact
+identities
+
+$$
+\mathsf K_J=13(n_J/d_J)^2,\qquad
+\mathsf K_M=36(n_M/d_M)^2.
+\tag{12.5}
+$$
+
+These are squares of the literal indices by the Vandermonde identity of
+IX, (7.3), and Lemmas 10.2 and 12.2. In the modular carrier the latter
+lemma identifies
+$\mathsf P_J/\mathsf l_J=\chi_J$ because the norm of its linear equation
+is its leading norm times $\chi_J$. Its coefficient content changes only
+that scalar rational function of $p,v$. Thus it cancels from (12.4).
+
+| Polynomial or reduced pair | Total degree | Number of monomials |
+| --- | --- | --- |
+| $\mathsf E$ | $199$ | $19884$ |
+| $\mathsf F$ | $303$ | $45881$ |
+| $\overline P_M$ | $18$ | $1314$ |
+| $\mathsf R_J$ | $192$ | $320281$ |
+| $\mathsf P_J$ | $20$ | $1747$ |
+| $n_J$ | $228$ | $26098$ |
+| $d_J$ | $107$ | $5819$ |
+| $n_M$ | $189$ | $17963$ |
+| $d_M$ | $69$ | $2459$ |
+| $\mathsf C_J=n_J/\operatorname{mon}(\overline\rho)^{17}$ | $160$ | $12915$ |
+| $\mathsf C_M=n_M/\operatorname{mon}(\overline\rho)^{17}$ | $121$ | $7429$ |
+
+The additional scalar and leading-coefficient tests are
+
+$$
+\begin{gathered}
+\overline c=88,\qquad
+\deg\overline\rho=4,\qquad \operatorname{content}(\rho)=20250000
+                                      \equiv5\pmod{101},\\
+\mathsf l_J=28p^2+37pv+20p+51v^2+6v+18,\\
+21\mathsf l_J=83p^2+70pv+16p+61v^2+25v+75.
+\end{gathered}
+\tag{12.6}
+$$
+
+Here $\mathsf R_J$ and $\mathsf P_J$ both have terminal degree $18$.
+All exact square-root identities in (12.5) have zero residual, and
+
+$$
+\begin{gathered}
+\gcd(n_J,d_J)=\gcd(n_M,d_M)=1,\\
+\gcd(n_J,n_M)=\operatorname{mon}(\overline\rho)^{17},\\
+\gcd(\mathsf C_M,n_J)=\gcd(\mathsf C_M,d_J)
+=\gcd(\mathsf C_M,d_M)=1,\\
+\gcd(\mathsf C_M,\overline\rho)
+=\gcd(\mathsf C_M,\mathsf E)
+=\gcd(\mathsf C_M,p-24)
+=\gcd(\mathsf C_M,\overline T_5)=1.
+\end{gathered}
+\tag{12.7}
+$$
+
+For the common discriminant data there is an equally compact
+factorization-free prescription. Define
+
+$$
+\begin{gathered}
+\mathsf U=\gcd(\mathsf E,\partial_p\mathsf E,\partial_v\mathsf E),
+\qquad
+\mathsf B=\operatorname{mon}(\mathsf E/\mathsf U^2),\\
+\mathsf W=\sqrt{\operatorname{mon}(\mathsf F/\mathsf B)}.
+\end{gathered}
+\tag{12.8}
+$$
+
+Use the monic square-root rule above. The divisions are exact. The
+results and residual identities are
+
+$$
+\begin{gathered}
+\deg\mathsf B=51,\quad |\operatorname{supp}\mathsf B|=1366,
+\quad \gcd(\mathsf B,\mathsf B_p,\mathsf B_v)=1,\\
+\deg\mathsf U=74,\quad \deg\mathsf W=126,\qquad
+\operatorname{mon}(\mathsf E)=\mathsf B\mathsf U^2,
+\quad \operatorname{mon}(\mathsf F)=\mathsf B\mathsf W^2,\\
+\gcd(\mathsf U,\mathsf W)=\operatorname{mon}(\overline T_5),
+\quad \gcd(\mathsf E,\mathsf F)=
+                         \mathsf B\operatorname{mon}(\overline T_5)^2,\\
+\operatorname{mon}(\mathsf U/\overline T_5)=d_M,
+\qquad \operatorname{mon}(\mathsf W/\overline T_5)=\mathsf C_M,
+\qquad\gcd(\overline\rho,d_M)=1.
+\end{gathered}
+\tag{12.9}
+$$
+
+In particular the common discriminant gcd has degree $61$. These are
+identities in the full bivariate polynomial ring, not a slice through it.
+The formulas (12.4), (12.8), the monomial arithmetic, and the explicit gcd
+and square-root rules determine all coefficients of all the objects in
+(12.5)–(12.9). Multiplication after each exact quotient and squaring
+after each square root give their stated zero residuals. The degree and
+support counts are obtained by taking the largest exponent sum and
+counting the nonzero entries of these same finite coefficient maps.
+Thus this supplies reproducible exact finite arithmetic for the entire
+family without relying on an expanded coefficient list. ∎
+
+## 13. Every original inversion and denominator
+
+**Proposition 13.1 (The five-norm adjugate inventory).** The original
+$E_0$ of Definition 9.1 has precisely the radical support described by
+(13.8) below. The following polynomial matrices account for every
+inversion in its defining circuit.
+
+Proof. All matrices in this proof are $18$ by $18$, with entries in
+$\mathbb Z[p,v]$ except for explicitly displayed scalar denominators.
+Number rows and columns $0,\ldots,17$ and put $r=\rho$,
+$R=\sum_{i=0}^{18}r_ix^i$. Define
+
+$$
+\mathcal T_{i+1,i}=r\ (i<17),\qquad
+\mathcal T_{i,17}=-r_i\ (0\le i<18),
+\tag{13.1}
+$$
+
+with other entries zero. Then $\mathcal X=\mathcal T/r$ is exactly
+multiplication by $x$ in the original coefficient basis. Write
+$a_i=A_i(x)+B_i(x)d$ and set
+
+$$
+\begin{gathered}
+\mathcal A=r^{32}\alpha(\mathcal X),\quad
+\mathcal B=r^{32}\beta(\mathcal X),\quad
+\mathcal D=r^3D(\mathcal X),\\
+\mathcal P_i=r^3A_i(\mathcal X),\quad
+\mathcal Q_i=r^3B_i(\mathcal X),\\
+s_a=\det\mathcal A,\qquad s_d=\det\mathcal D,\qquad
+\Delta=-\operatorname{adj}(\mathcal A)\mathcal B,\qquad q_0=s_as_d.
+\end{gathered}
+\tag{13.2}
+$$
+
+The degrees $\deg_x\alpha=\deg_x\beta=32$ and
+$\deg_x A_i,\deg_xB_i\le3$, obtained directly from IX, (4.1)–(4.5),
+make these polynomial matrices. They all lie in the commutative
+multiplication algebra generated by $\mathcal X$. Their adjugates
+commute there too, as follows either from the characteristic-polynomial
+formula for the adjugate or by passing to the generic inverse.
+
+Define polynomial numerators
+
+$$
+\begin{gathered}
+Y_i=(\mathcal P_is_a+\mathcal Q_i\Delta)
+                                      \operatorname{adj}(\mathcal D),\\
+V_b=294q_0I-10s_d\Delta-5Y_2,\\
+C_b=25s_d^2\Delta^2+V_b^2,\qquad
+N_b=-5s_d\Delta Y_0+V_bY_2,\\
+s_1=\det Y_1,\qquad s_C=\det C_b,\qquad s_N=\det N_b.
+\end{gathered}
+\tag{13.3}
+$$
+
+Then the full five-inverse list is
+
+$$
+\begin{aligned}
+M(\alpha^{-1})&=r^{32}\operatorname{adj}(\mathcal A)/s_a,&
+M(D^{-1})&=r^3\operatorname{adj}(\mathcal D)/s_d,\\
+M(H_1^{-1})&=q_0\operatorname{adj}(Y_1)/s_1,&
+M(C_0^{-1})&=25q_0^2\operatorname{adj}(C_b)/s_C,\\
+M(N_0^{-1})&=5q_0^2\operatorname{adj}(N_b)/s_N.
+\end{aligned}
+\tag{13.4}
+$$
+
+Indeed $A\operatorname{adj}(A)=\det(A)I$ proves each equality and
+also gives the coefficient formulas
+
+$$
+\begin{gathered}
+M(\delta)=\Delta/s_a,\qquad M(H_i)=Y_i/q_0,\qquad
+M(B_0)=V_b/(5q_0),\\
+M(C_0)=C_b/(25q_0^2),\qquad M(N_0)=N_b/(5q_0^2),\qquad
+M(U)=5N_b\operatorname{adj}(C_b)/s_C.
+\end{gathered}
+\tag{13.5}
+$$
+
+The last robust reconstruction identity uses $U=N_0/C_0$ and needs
+neither a drift inverse nor an $H_0$ inverse.
+
+For completeness the two response denominators and numerators are
+
+$$
+\begin{aligned}
+q_M={}&rq_0,\\
+T_M={}&rs_d\Delta+(2\mathcal T+3rI)Y_7,\\
+J_b={}&5s_Ns_1(8\mathcal T+rI)+rs_1C_b\operatorname{adj}(N_b)\\
+ &-20rs_Ns_d(24s_aI-\Delta)\operatorname{adj}(Y_1),\\
+q_J={}&10rq_0s_Ns_1,\\
+T_J={}&10rs_Ns_1s_d\Delta+J_bY_7,\\
+M(\tau_E)={}&T_E/q_E\qquad(E=J,M).
+\end{aligned}
+\tag{13.6}
+$$
+
+Substituting (13.5) into the *robust* (9.2) proves (13.6) by common
+denominators. In particular $C_0/(2N_0)$ contributes
+$C_b\operatorname{adj}(N_b)/(10s_N)$; this accounts for its scalar $5$
+and for the factor $s_N$ even on strata where a generic J simplification
+would cancel a different expression. Each of (13.4)–(13.6) is a
+commutative polynomial cross-product identity after multiplication by its
+displayed denominators.
+
+Let $e_0=(1,0,\ldots,0)^t$. All coefficient, characteristic-polynomial
+and power-index denominators are now explicit:
+
+$$
+\begin{gathered}
+\chi_E(z)=\det(q_EzI-T_E)/q_E^{18},\\
+\mathcal F_E=\det[e_0,T_Ee_0,T_E^2e_0,\ldots,T_E^{17}e_0],\qquad
+\iota_E=\mathcal F_E/q_E^{153},\qquad
+153=0+1+\cdots+17.
+\end{gathered}
+\tag{13.7}
+$$
+
+Thus $\mathcal F_E$ is an integer polynomial, without a primitive
+normalization. Put $S_*=rs_as_ds_1s_Cs_N$. The exact norm equations are
+
+$$
+\begin{gathered}
+\operatorname{Nm}(\alpha)=s_a/r^{576},\qquad
+\operatorname{Nm}(D)=s_d/r^{54},\qquad
+\operatorname{Nm}(H_1)=s_1/q_0^{18},\\
+\operatorname{Nm}(C_0)=s_C/(25^{18}q_0^{36}),\qquad
+\operatorname{Nm}(N_0)=s_N/(5^{18}q_0^{36}),\\
+\operatorname{rad}(E_0)=\operatorname{rad}(ES_*),\qquad
+\operatorname{rad}(H)=\operatorname{rad}(ES_*).
+\end{gathered}
+\tag{13.8}
+$$
+
+Radicals here mean products of nonconstant irreducible factors over
+$\mathbb Q$, without scalar factors. To prove the first support equality,
+$r$ is an original factor. The first two norm equations put every factor
+of $s_a,s_d$ in the union of $r$ and the reduced sides of those norms.
+Next the third puts all factors of $s_1$ in the preceding support and
+the reduced sides of $\operatorname{Nm}(H_1)$. The last two do the same
+for $s_C,s_N$. This proves $S_*$-support is contained in the original
+inventory. Conversely these exact equations put both reduced sides of
+every norm inside $S_*$-support, and (13.5)–(13.7) put every original
+coefficient and index denominator there. Including the original $E$
+proves the reverse containment. Finally $p-24$ divides $E$ by Lemma
+11.2, giving the second equality. This identifies the support of the
+original polynomial; it does not replace or redefine $H$.
+
+There is a short resultant recipe for all norm arithmetic, which also
+checks factors lost in reduced fractions. For a polynomial $w$ in $x$,
+define
+
+$$
+\mathcal N(w)=\operatorname{Res}_x(R,w)/r^{\deg_xw},
+\qquad \mathcal N(w_1/w_2)=\mathcal N(w_1)/\mathcal N(w_2).
+\tag{13.9}
+$$
+
+This is the norm because $R/r$ is monic. Put
+
+$$
+\begin{gathered}
+h_i=A_i\alpha-B_i\beta,\qquad
+b_n=294D\alpha+10D\beta-5h_2,\\
+c_n=25D^2\beta^2+b_n^2,\qquad
+n_n=5D\beta h_0+b_nh_2.
+\end{gathered}
+\tag{13.10}
+$$
+
+The five norms in (13.8) are computed by (13.9) on
+$\alpha,D,h_1/(D\alpha),c_n/(25D^2\alpha^2),
+n_n/(5D^2\alpha^2)$ respectively. Reduce each complete fraction only
+after these operations. Modulo $101$ the results are as follows; each
+last-column entry lists all three gcds, separately.
+
+| Original norm | Numerator degree | Denominator degree | Monic denominator | $\gcd(n,d),\gcd(\mathsf C_M,n),\gcd(\mathsf C_M,d)$ |
+| --- | --- | --- | --- | --- |
+| $\operatorname{Nm}(\alpha)$ | $240$ | $128$ | $\operatorname{mon}(\overline r^{32})$ | $1,1,1$ |
+| $\operatorname{Nm}(D)$ | $18$ | $12$ | $\operatorname{mon}(\overline r^3)$ | $1,1,1$ |
+| $\operatorname{Nm}(H_1)$ | $14$ | $0$ | $1$ | $1,1,1$ |
+| $\operatorname{Nm}(C_0)$ | $32$ | $0$ | $1$ | $1,1,1$ |
+| $\operatorname{Nm}(N_0)$ | $32$ | $0$ | $1$ | $1,1,1$ |
+
+This table is regenerated by the exact bivariate resultant and fraction
+gcd instructions of Lemma 12.3 applied to the five explicitly displayed
+fractions. The scalar norm of a constant is its eighteenth power.
+It supplies all ten core-versus-norm-side gcds, not just checks on the
+five reduced numerators. All five norms are nonzero.
+
+Polynomial matrix evaluation, determinants and adjugates commute with
+reduction. From $\overline r\ne0$ and the first two nonzero modular
+norms, $\overline s_a,\overline s_d$ are nonzero. Then the remaining
+three norms prove $\overline s_1,\overline s_C,\overline s_N\ne0$.
+The norm equations therefore remain identities in
+$\mathbb F_{101}(p,v)$. Applying the ten gcds successively to these
+same equations, beginning with
+$\gcd(\mathsf C_M,\overline r)=1$, gives
+
+$$
+\gcd(\mathsf C_M,\overline S_*)=1,
+\qquad \gcd(\mathsf C_M,\overline q_J)=1.
+\tag{13.11}
+$$
+
+For example, $\overline s_a\,d=\overline r^{576}n$ for the reduced
+modular norm sides; a common factor of $\mathsf C_M,\overline s_a$
+would have to divide $\overline r$ or $n$, already excluded. Continue
+with $s_d,s_1,s_C,s_N$. This induction controls raw factors even when
+they have canceled from a norm fraction.
+
+Finally (12.5), (12.7) say that the literal reduced modular $J$ index
+has numerator proportional to $n_J$, since $13=35^2$ modulo $101$.
+Using (13.7) and (13.11) yields
+
+$$
+\gcd(\mathsf C_M,\overline{\mathcal F_J})=1,
+\qquad
+\gcd(\mathsf C_M,\overline E\,\overline S_*)=1.
+\tag{13.12}
+$$
+
+No assertion about reduction of the characteristic-zero primitive
+$N_J$ was needed. ∎
+
+## 14. Degree forcing, literal coprimality and the entire-child consumer
+
+**Lemma 14.1 (Characteristic-zero normalization forced by degrees).**
+There are primitive positive polynomials $B_{51},C_{121},V_{69}$ such
+that
+
+$$
+\begin{gathered}
+E=uB_{51}T_5^2V_{69}^2,\qquad
+F=wB_{51}T_5^2C_{121}^2,\qquad u,w\in\mathbb Q^*,\\
+\iota_M=\lambda\rho_0^{17}C_{121}/V_{69},\qquad
+\lambda\in\mathbb Q^*,\qquad v_{101}(\lambda)=0,\\
+\gcd(C_{121},V_{69})=\gcd(\rho_0,V_{69})=1.
+\end{gathered}
+\tag{14.1}
+$$
+
+The subscripts are total degrees. Both $C_{121}$ and $V_{69}$ retain
+these degrees after reduction; their reductions are scalar multiples of
+$\mathsf C_M,d_M$ respectively. In particular (9.4) is literal.
+
+Proof. The monic-carrier Vandermonde identity IX, (7.3), together with
+$P_M=c\chi_M$ gives the exact rational identity
+
+$$
+\rho^{34}F=c^{34}E\iota_M^2.
+\tag{14.2}
+$$
+
+The nonzero bivariate residues of degrees $199,303$ in Lemma 12.3
+supply the lower bounds for the characteristic-zero polynomials $E,F$.
+Lemmas 11.3–11.4 supply the respective upper bounds. Therefore
+
+$$
+\deg E=199,\qquad\deg F=303,
+\tag{14.3}
+$$
+
+and both degrees survive reduction. This uses ordinary
+characteristic-zero degree bounds, not a modular upper-bound inference.
+
+Parity of each irreducible valuation in the UFD $\mathbb Q[p,v]$ in
+(14.2) says that $E,F$ have the same odd squarefree part. Thus write
+
+$$
+E=uBU^2,\qquad F=wBW^2,
+\tag{14.4}
+$$
+
+where $B,U,W$ are primitive positive integer polynomials and $B$ is
+squarefree. All three have $101$-Gauss valuation zero: for a nonzero
+polynomial this valuation is the minimum $101$-adic valuation of its
+coefficients, which is additive under multiplication by Gauss' lemma.
+The nonzero reductions of the raw $E,F$ imply $v_{101}(u)=v_{101}(w)=0$.
+Reducing (14.4), the odd squarefree part $\mathsf B$ of $\mathsf E$
+in (12.8) must divide $\overline B$. Hence $\deg B\ge51$.
+
+By (11.2), $T_5$ divides both $U,W$: an irreducible exponent at least
+$2$ in a discriminant has square-root exponent at least $1$, whether
+its parity is odd or even. Put
+
+$$
+g=\operatorname{pp}_+(\gcd(U,W)),\qquad
+C=\operatorname{pp}_+(W/g),\qquad
+V=\operatorname{pp}_+(U/g).
+\tag{14.5}
+$$
+
+Then $\deg g\ge5$, $\gcd(C,V)=1$, and (14.3)–(14.4) give
+
+$$
+\deg C=\frac{303-\deg B}{2}-\deg g\le121,
+\qquad
+\deg V=\frac{199-\deg B}{2}-\deg g\le69.
+\tag{14.6}
+$$
+
+The exact index (14.2) now has the form
+$\iota_M=\lambda\rho_0^{17}C/V$ for a nonzero rational $\lambda$;
+its scalar is rational because this is an identity with the already
+rational index. Taking a square does not choose a new square-root
+branch. The scalar sign is irrelevant to its separately primitive
+numerator and denominator.
+
+We check its $101$-adic status before reducing. Every scalar inversion
+in (9.2), (13.2)–(13.7) is a power of $2$ or $5$; the polynomial
+inversions have the nonzero reductions proved in Proposition 13.1.
+The constants $10,25,256,6400,1152,2592,82944$ reduce respectively to
+$10,25,54,37,41,67,23$, and $\overline c=88$ and the content of
+$\rho$ reduces to $5$. Thus these constants are $101$-units.
+The nonzero literal modular index in (12.5), together with
+$\overline q_M\ne0$, gives $\overline{\mathcal F_M}\ne0$ in (13.7).
+Consequently $\iota_M$ has Gauss valuation zero. The primitive factors
+$\rho_0,C,V$ each have Gauss valuation zero, so
+$v_{101}(\lambda)=0$. Reduction of their rational equality is now
+legitimate.
+
+By (12.5) the reduced modular $M$ index is a scalar multiple of
+$n_M/d_M$; $36=6^2$ in $\mathbb F_{101}$. Its reduced denominator has
+degree $69$. But reduction of (14.6) has denominator degree at most
+$\deg\overline V\le\deg V\le69$, and cancellation can only decrease
+it. Thus equality holds throughout and there is no modular cancellation
+between $\overline V$ and the numerator. Equality in (14.6) also forces
+$\deg B=51$ and $\deg g=5$. Since $T_5\mid g$, their primitive positive
+normalizations give $g=T_5$. Then $\deg C=121$.
+
+The modular numerator has degree $189=17\cdot4+121$. The degree of
+$\overline\rho_0$ is $4$, so $\deg\overline C=121$ too. Unique reduced
+fractions identify $\operatorname{mon}(\overline C)=\mathsf C_M$ and
+$\operatorname{mon}(\overline V)=d_M$. The same no-cancellation
+conclusion, or $\gcd(\overline\rho,d_M)=1$ with preserved degrees,
+gives $\gcd(\rho_0,V)=1$ in characteristic zero. We already have
+$\gcd(C,V)=1$. Naming these polynomials $C_{121},V_{69}$ and $B$ as
+$B_{51}$ proves (14.1). The product $\rho_0^{17}C_{121}$ is itself
+primitive positive by Gauss' lemma. It is therefore exactly the original
+$N_M$, and $V_{69}$ is exactly its primitive denominator. This proves
+(9.4), including its scalar/content convention. ∎
+
+**Theorem 14.2 (Original-H transfer and the independent-pair restriction).**
+Equations (9.5)–(9.6) and the all-world assertion of Theorem 9.2 hold.
+
+Proof. Here is the degree-preservation argument which transfers the
+finite-field gcds. If a primitive positive polynomial $C\in\mathbb Z[p,v]$
+retains its total degree after reduction modulo $101$, then every
+nonconstant characteristic-zero factor retains its degree too. Indeed
+write $C=AB$ with primitive integer factors, using Gauss' lemma.
+Both reductions are nonzero, and
+
+$$
+\deg\overline C=\deg\overline A+\deg\overline B
+\le\deg A+\deg B=\deg C.
+\tag{14.7}
+$$
+
+Equality forces equality in both degree inequalities. In particular a
+nonconstant factor has nonconstant reduction.
+
+Apply this to $C=C_{121}$, whose degree is preserved by Lemma 14.1.
+A common irreducible factor of $C_{121}$ and the integer polynomial
+$\mathcal F_J$ would, by Gauss' lemma, reduce to a nonconstant common
+factor of $\mathsf C_M$ and $\overline{\mathcal F_J}$, contradicting
+(13.12). Therefore $\gcd(C_{121},\mathcal F_J)=1$. The reduced primitive
+$N_J$ divides $\mathcal F_J$ up to a rational scalar by (13.7), so
+$\gcd(C_{121},N_J)=1$.
+
+The same argument with the integer polynomial $ES_*$ and the second
+gcd in (13.12) gives $\gcd(C_{121},ES_*)=1$. The exact support identity
+(13.8) gives $\gcd(C_{121},H)=1$. This establishes (9.5) for the
+*original* $H$. It uses neither a degree-preservation premise for $N_J$
+nor a claim that its characteristic-zero primitive extraction commutes
+with reduction. The raw determinant and the full original norm inventory
+supply the transfer instead.
+
+On $H\ne0$, $\rho_0$ is a unit. Equation (9.4) therefore makes
+$N_M=0$ exactly $C_{121}=0$, proving the equality of sets in (9.6).
+Also $V_{69}$ is a unit there by its factorization in $E$ in (14.1),
+and every original coefficient or index denominator is a unit by its
+inclusion in $E_0$. Equivalently the literal index zero loci in
+$\mathbb Q[p,v,H^{-1}]$ are the same. If the raw J determinant is used,
+(13.7) changes $N_J$ only by a scalar and factors supported on $H$;
+these are units on this same open. No saturation or primitive-reduction
+commutation is invoked.
+
+For completeness, coprime nonzero polynomials in two variables have a
+finite, possibly empty complex affine intersection. One elementary proof
+uses their nonzero resultant over $\mathbb Q(p)$ after a generic rational
+linear change of coordinates. Every common zero projects to one of the
+finitely many zeros of this resultant. At any such coordinate, both
+specialized polynomials cannot vanish identically in the other variable:
+a common vertical line over an algebraic extension would, with its
+conjugates, give a common polynomial factor over $\mathbb Q$.
+Each fibre is therefore finite. Coprimality persists over $\mathbb C$ by
+the same conjugate-factor argument, or by the resultant identity.
+Applying this to $C_{121},N_J$ proves finiteness of (9.6). It does not
+assert that $1$ lies in their ideal or that the intersection is empty.
+
+Finally take any original configuration (6.8.5) with $H(p,v)\ne0$.
+S, Lemma 9.9, is an all-world statement: every one of its four complete
+worlds is represented in this same carrier, distinct worlds have distinct
+$x$, and the robust functions (9.2) give their actual clock-seven
+responses. The Vandermonde evaluation argument there forces $N_J=0$
+from the chosen distinct equal-$J$ pair and $N_M=0$ from the independently
+chosen distinct equal-$M$ pair. By (9.6) their common acquired base lies
+in $Z_H$. This reasoning is applied at one fixed $(p,v)$ to one entire
+child, not to pairs from different bases, branches, parents, or gain
+histories. There is no equation $m_0=m_1=m$, and the two common terminal
+answers need not be equal. Cross-pair overlaps of size $0,1,2$ are all
+allowed, so every overlap stratum is covered simultaneously. This proves
+the last assertion of Theorem 9.2. ∎
+
+## 15. Mathematical attribution and the retained world boundary
+
+**Definition 15.1 (Scope of the finite restriction).** The source-specific
+result of Sections 9–14 is the literal primitive M normalization, the
+coprimality transfer for the unchanged original five-norm exceptional
+inventory, and the finite necessary base condition for the full
+independent-pair relation. It is repo-derived. The polynomial, valuation
+and plane-curve tools used inside its proof are classical: Sylvester
+resultants and their gcd criterion are as in M. Moreno Maza,
+*Advanced Computer Algebra: The resultant*, “The resultant”, Definition 4
+and Propositions 5–7,
+[primary text](https://www.csd.uwo.ca/~mmorenom/CS874/Lectures/ResultantGcd.html/node3.html).
+The determinant elimination is E. H. Bareiss, “Sylvester's Identity and
+Multistep Integer-Preserving Gaussian Elimination”, Mathematics of
+Computation 22, 565–578,
+[doi:10.1090/S0025-5718-1968-0226829-0](https://doi.org/10.1090/S0025-5718-1968-0226829-0).
+Gauss' lemma, height-one UFD valuations, Hensel factorization,
+Newton–Puiseux order estimates, discriminant multiplicativity and finite
+intersection of coprime plane curves are used in their ordinary
+characteristic-zero senses, with the needed applications proved above.
+No new general algebraic algorithm or worldwide priority is asserted.
+The all-world source and Vandermonde identifications are reused from S,
+Theorem 4.3 and Lemma 9.9, and IX, Sections 4–7. The independent-pair
+inverse correspondence is the existing X, Definition 6.3 and Proposition
+6.4, and XI, Sections 1–4, Theorem 5.3.1 and Definition 6.8.1.
+
+**Proposition 15.2 (Unchanged realization and read obligations).** The
+finite restriction is necessary only. It supplies no strict-real lift,
+existence or absence at a base of $Z_H$, explicit list or cardinality of
+$Z_H$, inverse on it, classification of $H=0$ (including $p=24$), or
+full-domain eight/nine-read recovery. All actual worlds in its consumer
+retain the following domain and history:
+
+$$
+\begin{gathered}
+P=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\qquad
+0<r<1,\quad b>0,\\
+0\ne g\in\mathbb R[s],\quad\deg g\le3,\quad d\in\mathbb R,\\
+(E_1,\ldots,E_6)=(\mathsf J,\mathsf M,\mathsf J,\mathsf M,\mathsf M,\mathsf M),\\
+(y_0,\ldots,y_6)=(0,24,147/5,24,18,p,v),\qquad
+ y_i=d+g(i)\operatorname{tr}(Q_iP).
+\end{gathered}
+\tag{15.1}
+$$
+
+Proof. The consumer uses only the implication in S, Lemma 9.9, from
+actual worlds to index zeros. None of the steps constructs worlds from
+complex zeros or proves that every zero lifts. Conversely, all actual
+worlds with this history and $H\ne0$ are covered by that lemma, including
+all gain signs, lower degrees, sampled gain zeros, repeated roots, any
+fixed real drift, and the original singular-source possibilities.
+Each world has its own whole gain and drift; equality of worlds in an
+overlap stratum means equality of those complete data. No bound on an
+unused companion, no common drift across distinct worlds, and no
+additional gain or source guard has entered the proof.
+
+The acquired rows in (15.1) use one nonresettable trajectory. The initial
+read is counted; each atomic J or M action is read immediately; terminal
+J and M are alternatives at original clock seven. Algebraically comparing
+the alternatives does not acquire both on one trajectory. There is no
+reset, copy, idle skipped read, unread composite action, extra port or
+clock renumbering. In a deterministic history-dependent procedure this
+is a conditional restriction at a node with exactly these actual acquired
+rows; it imposes no new action or early-stopping rule and proves no
+unrestricted adaptive recovery statement.
+
+The real joint question on the remaining finite outer bases and on all
+$H=0$ strata is therefore still subject to the original complete-world
+and actual-history conditions. The settled first negative-J family and
+the old exact $p_J$ classification are not reopened. The local VII
+results, XI7 attachments and XI8 whole-arc exclusion retain their stated
+scopes; an isolated finite pair is not identified with a local germ by
+this argument. Fixed48 V(18.12)(i), rootQ, genuine common-ancestor and
+both-child compatibility, and the original full-domain adaptive
+8/9-read problem receive no solution from this finite complex outer
+restriction. ∎
+
+## 追加锚（本行以下为增补区）
+
+## 16. The actual source as an open of the terminal normalization
+
+**Definition 16.1 (Source chart and terminal order).** Retain S, IX and X
+as in Definition 9.1. To distinguish source polynomials from the action
+matrices and from the inverse circuits, write
+
+$$
+\begin{gathered}
+J_s=b^2+r-r^2,\quad N_s=J_s+br,\quad T=1+b,\quad U=1+2b,\\
+A_s=(8b-1)(5b+2),\\
+C_s=2(b^2+8b+4)J_sN_s-4bTU(J_s+N_s),\\
+\mathcal P_s=5eC_s+6A_sJ_sN_s,\\
+X_s=V_{\mathbb C}(\mathcal P_s)\cap
+ D\bigl(br(1-r)TUJ_sN_s\bigr).
+\end{gathered}
+\tag{16.1}
+$$
+
+This is exactly IX, Definition 2.2. Its actual drift is $d=24+e$,
+$j=J_s/b$, $n=N_s/b$, and its actual entire gain $g$ is the unique
+polynomial of degree at most three with
+
+$$
+(g(0),g(1),g(2),g(3))=
+\left(-24-e,-e/j,(27/5-e)/T,-e/n\right).
+\tag{16.2}
+$$
+
+Use the regular responses $p,v,m$ of IX, (1.8)–(1.9), and put
+$x=n/U$, $h=Ug$, $H_i=h(i)$ and $S_0=H_0^2+H_2^2$. In particular
+
+$$
+\begin{gathered}
+p=d+(U+n)g(5),\quad v=d+(2U+n)g(6),\quad
+m=d+(3U+2n)g(7),\\
+a=d+(T+2j+4r)g(7).
+\end{gathered}
+\tag{16.3}
+$$
+
+The smooth source chart used below is
+
+$$
+\mathcal U=X_s\cap
+ D\bigl((p-24)eC_s(x+1)(x+2)(2x+3)H_1S_0\bigr).
+\tag{16.4}
+$$
+
+The chart imposes no nonzero condition on $d$, $H_0$, $F_0$, $\beta$,
+$g(7)$, the leading gain coefficient or the gain discriminant. Gain signs,
+lower degrees, sampled zeros, repeated roots and zero drift are retained
+whenever consistent with the original readings and nonsingularity.
+
+Let $R_b=\mathbb C[p,v]$, and use the literal polynomial of Definition
+10.1, with its original sign and content, to define
+
+$$
+\begin{gathered}
+c=33917016093258200081122929199218750000000,\\
+f_{\rm ter}=P_M/c,\qquad
+A=R_b[z]/(f_{\rm ter}),\qquad Y=\operatorname{Spec}(A).
+\end{gathered}
+\tag{16.5}
+$$
+
+Here $z$ is sent to the actual response $m$. Write $K_s=\mathbb C(X_s)$
+and let $B$ be the integral closure of $A$ in $K_s$.
+
+**Proposition 16.2 (Full real endpoint coverage and the actual field).**
+Every original strict-real off-$24$ nonsingular endpoint belongs to
+$\mathcal U$. The chart $\mathcal U$ is a nonempty smooth integral
+complex surface, $A$ is a domain finite free of rank eighteen over
+$R_b$, and
+
+$$
+\operatorname{Frac}(A)=\mathbb C(p,v,m)=K_s.
+\tag{16.6}
+$$
+
+The morphism $\phi=(p,v,m):\mathcal U\to Y$ is regular and birational.
+
+Proof. IX, Proposition 2.3, identifies every original real world with
+its point of $X_s$, including the entire gain (16.2). Strict positivity
+makes $b,T,U,j,n,x$ positive and $r(1-r)>0$. The off-$24$ consequence
+in X, Assumption 1.2, gives $e\ne0$. Clock one gives
+$H_1=-Ue/j\ne0$. Direct multiplication of IX, (2.11), gives
+
+$$
+\Lambda=\frac{C_s}{TUJ_sN_s}.
+\tag{16.7}
+$$
+
+Thus nonsingularity gives $C_s\ne0$. The clock-zero and clock-two
+identities of X, (3.6), with $u=1/U$, are
+
+$$
+uH_0+d=0,\qquad uH_2+H_2+2d-294/5=0.
+\tag{16.8}
+$$
+
+If $H_0=H_2=0$ these force both $d=0$ and $2d=294/5$.
+For a real world, therefore, $S_0>0$. All the factors in (16.4) are
+nonzero. This uses reality only for $S_0>0$; complex points with
+$S_0=0$ are not in this chart.
+
+By IX, Theorem 3.1, $X_s$ is absolutely integral. Since
+$\partial_e\mathcal P_s=5C_s$ is a unit on $\mathcal U$, the
+Jacobian criterion makes this open smooth of dimension two. The point
+IX, (3.3), has $b=1,r=1/2,e=1029/121$, $p=9918/121$ and
+$\Lambda=-121/105$; the preceding argument puts it in $\mathcal U$.
+Thus the open is nonempty and has the same function field as $X_s$.
+
+IX, Theorem 6.1, identifies the degree-eighteen generic acquired fibre
+with the original sources and their entire gains and drifts. IX,
+Theorem 7.1, makes their actual $m$ a primitive element. These are
+statements over $\mathbb C(p,v)$: the source is absolutely integral,
+and the displayed nonzero generic determinants remain nonzero after
+extending constants to $\mathbb C$. Lemma 10.2 identifies precisely
+this minimal polynomial with the monic $f_{\rm ter}$. Consequently
+the evaluation map $R_b[z]\to K_s$ has kernel $(f_{\rm ter})$,
+by monic division followed by minimality over $\mathbb C(p,v)$.
+It gives (16.6), and the monic degree eighteen gives the free basis
+$1,z,\ldots,z^{17}$ of $A$ over $R_b$. Finally $f_{\rm ter}(m)=0$
+in $K_s$ is an identity of regular functions on $X_s$, so it holds
+everywhere there. This proves regularity and birationality of $\phi$.
+No factor of the original $H$ has been inverted in this argument. ∎
+
+**Proposition 16.3 (The source normalization open).** The normalization
+$\nu:\operatorname{Spec}(B)\to Y$ is finite, and $\phi$ factors as
+an open immersion $\mathcal U\hookrightarrow\operatorname{Spec}(B)$
+followed by $\nu$.
+
+Proof. First $\phi$ is quasi-finite, including over nonclosed points.
+Work over an algebraic closure of any residue field of a point of $Y$;
+this is a characteristic-zero field. Use the exact X, (2.5), quartic
+and numerator, denoting them $K_{\rm inv},N_{\rm inv}$, and X,
+(3.1), denoting its polynomials $F_{\rm inv},G_{\rm inv}$.
+The tail denominator $\Delta=(x+1)(x+2)(2x+3)$ is a unit on our
+chart. X, Proposition 5.1, proves that $F_{\rm inv}$ never vanishes
+identically at any complex response triple. The proof works over every
+algebraically closed characteristic-zero field: its polynomial identity
+(5.1), the fixed rational coprimalities with $K_{\rm inv}$, and the
+contradictory constant terms in $N_{\rm inv}=18K_{\rm inv}$ are
+unchanged by field extension. Thus at $K_{\rm inv}\ne0$ there are
+at most seven possible $x$, and $d=N_{\rm inv}/K_{\rm inv}$.
+
+At $K_{\rm inv}=0$ there are at most four possible $x$. The coprimalities
+in X, Proposition 4.1 and (3.4), give $\Delta\mathscr H\ne0$ at
+every such root. By X, (4.10), compatibility of (16.8) is a quadratic
+in $d$ whose leading coefficient is $\mathscr H/\Delta^2\ne0$.
+There are therefore only finitely many possible $(x,d)$ in this case
+also; necessity includes $N_{\rm inv}=0$, without dividing by $K_{\rm inv}$.
+
+For each possible $(x,d)$ the four tail samples of X, (2.2), determine
+$h$. With $C_t=H_2+2d-294/5$, equations (16.8) give the unique
+
+$$
+ u=-\frac{dH_0+H_2C_t}{S_0},\quad
+ b=\frac{1-u}{2u},\quad j=\frac{24-d}{uH_1},\quad
+ n=\frac xu,\quad r=n-j,\quad g=uh.
+\tag{16.9}
+$$
+
+The denominators are units at a point of $\mathcal U$: $S_0,H_1$
+by definition and $u=1/U$ by (16.1). These formulas establish
+uniqueness among source points, without imposing any real inequalities
+on complex fibres. All geometric fibres are finite. The finite-type
+morphism $\phi$ is consequently quasi-finite; it is separated since
+both source and target are separated over $\mathbb C$.
+
+Normalization of a finite-type complex domain is finite (Stacks Project,
+Lemma 33.27.1, [Tag 0BXQ](https://stacks.math.columbia.edu/tag/0BXQ)).
+The normal dominant source factors uniquely through this normalization
+by Lemma 29.55.5,
+[Tag 035E](https://stacks.math.columbia.edu/tag/035E).
+For clarity, the relative normalization used in Zariski's main theorem
+is exactly $B$ here. Every element of $B$ is integral over each
+$\mathcal O_{\mathcal U,w}$ and belongs to its fraction field $K_s$;
+normality makes it regular at every $w$. Conversely every element of
+$K_s$ integral over $A$ is in $B$ by definition. Thus the integral
+closure of $A$ in the regular functions of $\mathcal U$ equals $B$,
+and the same holds after localization on $Y$.
+The relative-normalization form of Zariski's main theorem, Lemma 37.43.1,
+[Tag 02LQ](https://stacks.math.columbia.edu/tag/02LQ), now applies to
+the finite-type separated map $\phi$. Its quasi-finite locus is all of
+$\mathcal U$, so the induced map is an isomorphism onto an open of
+$\operatorname{Spec}(B)$. This proves the claim at all source points. ∎
+
+## 17. Exact generic exclusions of the three terminal double sections
+
+**Definition 17.1 (Component fields and literal inverse circuits).** Put
+$T_{55}=55p-28v-1572$, $T_{58}=58p-23v-1350$ and retain $Q_2$ of
+(11.1). The following table gives $p_T,v_T,z_T,a_T$ in $\mathbb Q(t)$:
+
+| $T$ | $p_T$ | $v_T$ | $z_T$ | $a_T$ |
+| --- | --- | --- | --- | --- |
+| $T_{55}$ | $(28t+1572)/55$ | $t$ | $(184t-60)/55$ | $-(t+42)/33$ |
+| $T_{58}$ | $(23t+1350)/58$ | $t$ | $(381t-1770)/116$ | $4(t+36)/(t-138)$ |
+| $Q_2$ | $18(4t^2-57t+204)/((t-6)(3t-20))$ | $6(23t^2-400t+1680)/((t-6)(3t-20))$ | $(1824-135p_T+54v_T)/10$ | $0$ |
+
+Specialize exactly X, (2.5) and (3.1), by
+$(p,v,m)=(p_T,v_T,z_T)$, writing their results $K,N,F,G,Z_i$ in
+this section. Thus $K=K_{\rm inv}$, not the drift polynomial $K$
+of IX. The exact divisions defining $f_5,f_6,f_7$ remain the polynomial
+divisions of X, Proposition 3.2; no rational substitute for them is used.
+
+**Lemma 17.2 (Generic-section certificates).** Over each component
+function field, and over every extension of that field,
+
+$$
+\gcd(K,N)=1,\qquad \operatorname{mon}(\gcd(F,G))=x-a_T.
+\tag{17.1}
+$$
+
+There is no point of $\mathcal U$ over the generic point of $T=0$
+with $m=z_T$.
+
+Proof. The two line rows identify their component fields with
+$\mathbb C(t)$, $t=v$. For the conic, substitute $v=84+t(p-24)$:
+
+$$
+Q_2(p,84+t(p-24))=(p-24)
+\bigl((3t^2-38t+120)p-72t^2+1026t-3672\bigr).
+\tag{17.2}
+$$
+
+The polynomial $Q_2$ is absolutely irreducible: its discriminant in $p$
+is $4(v^2+1200v+48960)$, whose two roots are simple, hence this
+polynomial is not a square even in $\mathbb C(v)$. The linear factor
+$p-24$ is not $Q_2$. In its function field $p-24$ is therefore a
+unit, so (17.2) yields exactly the conic row. Conversely direct substitution
+gives $Q_2(p_T,v_T)=0$ and
+
+$$
+p_T-24=-\frac{6(19t-132)}{(t-6)(3t-20)},\qquad
+v_T-84=t(p_T-24).
+\tag{17.3}
+$$
+
+The resulting nonconstant rational parametrization and the inverse
+$t=(v-84)/(p-24)$ identify its field with $\mathbb C(t)$.
+The denominators $t-6,3t-20,t-138$ in the table are nonzero
+field elements; all numerical denominators are nonzero constants.
+In particular these are the literal XI, (11.3)–(11.4), terminal
+sections over the actual divisor fields.
+
+Here are small exact certificates for (17.1). Substitution into the
+four $f_i$ and the three $Z_i$ of X gives the following rational
+identities. The entries in the last column are $(Z_0,Z_1,Z_2)/K$
+evaluated at $x=a_T$.
+
+| $T$ | $K(a_T)$ | $N(a_T)/K(a_T)$ | $(Z_0,Z_1,Z_2)(a_T)/K(a_T)$ |
+| --- | --- | --- | --- |
+| $T_{55}$ | $(8t^4+387t^3-16308t^2-508005t+4094064)/1185921$ | $24$ | $(-24/5,0,9/5)$ |
+| $T_{58}$ | $2(2063t^4+103236t^3-3802464t^2-68896656t+1049336208)/(t-138)^4$ | $(660-t)/29$ | $(0,0,0)$ |
+| $Q_2$ | $-6$ | $24$ | $(24(t-8)/(3t-20),0,-27(t-8)/(5(t-6)))$ |
+
+Each $K(a_T)$ is nonzero. These identities are obtained simply by
+inserting $a_T$ in X, (2.5) and (3.1), and multiplying by the displayed
+denominators. For example their constant numerators at $t=0$ in the
+first two $K$ entries are $4094064$ and $2098672416$.
+They give $F(a_T)=G(a_T)=0$: for $F$ use the identity
+
+$$
+F=5K^2\bigl(H_0(H_2+2d-294/5)-dH_2\bigr),\quad
+H_i=Z_i/K,\quad d=N/K.
+\tag{17.4}
+$$
+
+The last column makes its right side zero in each row. For $G$, in
+the first and third rows $Z_1=0$ and $L=24K-N=0$, hence also
+$Z=xZ_1-L=0$ in X, (3.1). In the second row $Z_0=Z_2=0$,
+so $D_*=W_*=0$, which also makes $G=0$. Thus
+$F_1=F/(x-a_T)$ and $G_1=G/(x-a_T)$ are exact polynomials
+in $\mathbb Q(t)[x]$.
+
+For completeness the remaining coprimalities have the following
+finite algebra certificates. A vector $[c_0,\ldots,c_n]$ denotes
+$\sum c_ix^i$ in $\mathbb F_{101}[x]$. In the next two tables,
+reduce the specified exact polynomials by the ring map $t\mapsto0$
+and reduction modulo $101$. Their coefficient denominators are units
+in $D=\mathbb Z[t]_{(101,t)}$: the circuits and monic division by
+$x-a_T$ use only the constant denominators in the table and
+$t-138,t-6,3t-20$. The reduced input vectors are:
+
+| $T$ | input | vector |
+| --- | --- | --- |
+| all | $K$ | $[95,86,18,29,8]$ |
+| $T_{55}$ | $N$ | $[58,61,26,91,43]$ |
+| $T_{58}$ | $N$ | $[58,37,79,73,43]$ |
+| $Q_2$ | $N$ | $[58,25,32,86,43]$ |
+| $T_{55}$ | $F_1$ | $[63,72,50,26,20,77,67]$ |
+| $T_{55}$ | $G_1$ | $[11,3,16,17,38,78,82,71,72,30,40,96,64,1,86,84,87,32,58,15]$ |
+| $T_{58}$ | $F_1$ | $[88,13,60,19,65,22,30]$ |
+| $T_{58}$ | $G_1$ | $[36,56,68,44,45,71,95,8,94,85,37,37,75,73,16,10,9,52,75,46]$ |
+| $Q_2$ | $F_1$ | $[51,53,67,0,79,96,37]$ |
+| $Q_2$ | $G_1$ | $[0,47,79,64,58,52,65,4,68,53,25,84,13,64,87,47,82,3,88,29]$ |
+
+The degrees of $K,N,F_1,G_1$ before and after this map are respectively
+$4,4,6,19$ in every row. In particular their leading coefficients are
+units of $D$. Starting with the indicated ordered pair, take the ordinary
+polynomial remainder and divide each nonzero remainder by its leading
+coefficient. For the cofactor pair start with $(G_1,F_1)$. The complete
+successive nonzero monic remainder vectors are:
+
+| $T$ | pair | successive vectors |
+| --- | --- | --- |
+| $T_{55}$ | $(K,N)$ | $[35,85,26,1];\ [19,9,1];\ [66,1];\ [1]$ |
+| $T_{58}$ | $(K,N)$ | $[21,65,84,1];\ [17,0,1];\ [78,1];\ [1]$ |
+| $Q_2$ | $(K,N)$ | $[39,76,47,1];\ [93,14,1];\ [0,1];\ [1]$ |
+| $T_{55}$ | $(G_1,F_1)$ | $[97,58,34,90,50,1];\ [0,87,73,71,1];\ [15,77,5,1];\ [58,15,1];\ [34,1];\ [1]$ |
+| $T_{58}$ | $(G_1,F_1)$ | $[72,99,46,14,30,1];\ [10,59,76,91,1];\ [57,39,8,1];\ [18,29,1];\ [56,1];\ [1]$ |
+| $Q_2$ | $(G_1,F_1)$ | $[97,29,70,70,87,1];\ [72,23,2,76,1];\ [71,33,89,1];\ [100,86,1];\ [15,1];\ [1]$ |
+
+These are polynomial-division identities with the displayed input
+vectors; after $[1]$ the remainder is zero. They certify that the two
+resultants in $D$ are units, equivalently that no nonconstant common
+factor exists over $\mathbb Q(t)$. One can also see the lifting directly:
+$D$ is a normal UFD, and division by the unit leading coefficients
+makes both input polynomials monic over $D$. Any monic common factor
+over its fraction field $\mathbb Q(t)$ has coefficients integral over
+$D$, hence in $D$. Its monic reduction would retain positive degree
+and contradict the displayed final remainder $[1]$.
+This proves $\gcd(K,N)=\gcd(F_1,G_1)=1$ over $\mathbb Q(t)$.
+Together with the exact factors $x-a_T$, it proves (17.1).
+Bézout identities over $\mathbb Q(t)[x]$ remain identities over
+$\mathbb C(t)$ and every further field extension. No assertion about
+a gcd at an exceptional numerical value of $t$ is involved.
+
+Now suppose a source point over the algebraic closure of a component
+field has $m=z_T$. The tail and original clock equations give
+$Kd=N$ by X, Proposition 2.2. The first coprimality in (17.1)
+excludes $K=0$. With $d=N/K$, the actual source gives $F=G=0$
+by X, (3.8) and (3.11), whose clearing factors are units on
+$\mathcal U$. Hence $x=a_T$. In the $T_{55}$ row the table forces
+$d=24$, contrary to $e\ne0$. In the $T_{58}$ row it forces
+$H_0=H_2=0$, contrary to (16.8) in characteristic zero. In the
+$Q_2$ row it forces $x=0$, whereas $x=N_s/(bU)$ is already a
+unit on $X_s$. This proves all three generic source exclusions. ∎
+
+## 18. Every-point separation through the original exceptional divisor
+
+**Theorem 18.1 (Nonsingular M separation outside the literal core).**
+The map
+
+$$
+\phi:\mathcal U\cap D(C_{121})\longrightarrow Y,\qquad
+W\longmapsto(p(W),v(W),m(W))
+\tag{18.1}
+$$
+
+is injective on geometric points. In particular the conclusion includes
+every intersection with the original $H=0$ that lies in the stated
+source chart. For original strict-real off-$24$ nonsingular endpoints,
+equality of $(p,v,m)$ outside $C_{121}=0$ implies equality of the
+complete source, entire gain and drift.
+
+Proof. Identify $\mathcal U$ with the normalization open of Proposition
+16.3. The conductor of the finite birational inclusion $A\subset B$ is
+
+$$
+I=\operatorname{Hom}_A(B,A)
+ =\{h\in A:hB\subset A\}\subset B.
+\tag{18.2}
+$$
+
+Indeed, after tensoring with the common fraction field $K_s$, every
+$A$-linear map is multiplication by a scalar; evaluation at $1$ puts
+that scalar in $A$. This identifies the two expressions and their
+$B$-module structures. The ideal is nonzero, since clearing denominators
+of finitely many $A$-generators of $B$ gives a nonzero $h$ with
+$hB\subset A$.
+
+We first show that $I\mathcal O_{\mathcal U}$ is invertible. This is
+where the smoothness of the actual source is essential. The polynomial
+ring $S_b=\mathbb C[p,v,z]$ has dualizing complex $S_b[3]$.
+The resolution $0\to S_b\xrightarrow{f_{\rm ter}}S_b\to A\to0$
+gives $R\operatorname{Hom}_{S_b}(A,S_b[3])=A[2]$.
+Finite duality therefore gives the dualizing complex
+$R\operatorname{Hom}_A(B,A[2])$ of $B$.
+Here the precise classical results are Stacks Project, Dualizing
+Complexes, Lemmas 47.15.6, 47.15.8 and 47.15.9 (localization, finite
+maps and quotients), and Lemmas 47.20.2 and 47.21.3–47.21.4
+(Cohen–Macaulay and regular/Gorenstein local rings); their statements
+are in the [dualizing-complexes source](https://github.com/stacks/stacks-project/blob/master/dualizing.tex).
+The rings in this application are the Noetherian finite-type rings
+$S_b,A,B$, and $A\to B$ is the finite map of Proposition 16.3.
+
+The normal surface $\operatorname{Spec}(B)$ is Cohen–Macaulay:
+normality gives Serre's $S_2$ condition, and every local dimension is
+at most two (Serre's criterion, Lemma 10.157.4,
+[Tag 031S](https://stacks.math.columbia.edu/tag/031S)).
+Finite duality here preserves normalization at closed points. Since $B$
+is equidimensional of dimension two and Cohen–Macaulay, its dualizing
+complex is concentrated in degree $-2$; its canonical module is therefore
+$H^{-2}(R\operatorname{Hom}_A(B,A[2]))=I$.
+Localizing to the smooth open $\mathcal U$ gives an invertible canonical
+module, since its local rings are regular. Thus the nonzero ideal
+$\mathcal I=I\mathcal O_{\mathcal U}$ is invertible. At any point
+where it is not the unit ideal, a local nonzero generator has a
+height-one zero component through that point: a minimal prime over
+this nonunit principal ideal has height one by the principal ideal
+theorem and the domain property. This rules out an isolated
+codimension-two failure unless a conductor divisor passes through it.
+
+We now exclude every conductor divisor on $\mathcal U\cap D(C_{121})$.
+Let $T$ be an irreducible polynomial of $R_b$ and localize at its
+generic point. The ring $O=(R_b)_{(T)}$ is a DVR, and both $A_O$
+and $B_O$ are finite torsion-free, hence free, $O$-modules of rank
+eighteen. The total quotient field extension is separable in
+characteristic zero. If $C$ is the inclusion matrix in free bases,
+the trace matrices satisfy $G_A=C^{\mathsf t}G_BC$. Smith normal
+form over $O$ gives
+
+$$
+\operatorname{ord}_T\operatorname{Disc}(A_O/O)
+=\operatorname{ord}_T\operatorname{Disc}(B_O/O)
+ +2\operatorname{length}_O(B_O/A_O).
+\tag{18.3}
+$$
+
+Both discriminants are nonzero; the first is
+$\operatorname{Disc}_z(f_{\rm ter})$ in the power basis. The trace
+of multiplication on the integral free algebra $B_O$ has entries in
+$O$, so its discriminant has nonnegative valuation. A valuation at
+most one on the left of (18.3) therefore forces $A_O=B_O$.
+
+By (14.1) and the constant normalization (16.5),
+
+$$
+\operatorname{Disc}_z(f_{\rm ter})
+=\frac{w}{c^{34}}B_{51}T_5^2C_{121}^2.
+\tag{18.4}
+$$
+
+The polynomial $B_{51}$ is geometrically squarefree: it is squarefree
+over the characteristic-zero field $\mathbb Q$, so separable
+extension of its coefficient field cannot create a repeated prime
+factor. This can also be checked by the criterion that the polynomial
+and all its partial derivatives have no common prime factor, which is
+preserved by extending a perfect field. The same holds for $T_5$;
+its four factors are distinct over $\mathbb C$, including the absolutely
+irreducible $Q_2$ proved in Lemma 17.2. Away from $C_{121}$,
+(18.3)–(18.4) leave only the four factors of $T_5$ as possible base
+images of conductor divisors.
+
+To justify that this covers every divisor, the composite
+$\operatorname{Spec}(B)\to\operatorname{Spec}(R_b)$ is finite.
+The closure in $\operatorname{Spec}(B)$ of a divisor in the open
+$\mathcal U$ is a height-one integral curve. It has a one-dimensional
+image under this finite map, since its coordinate
+ring is integral and finite over that of its image. Hence it maps
+onto a base divisor, not only to an isolated base point. Its generic
+point in $\mathcal U$ cannot lie over $p-24=0$ by (16.4).
+
+Fix one of $T_{55},T_{58},Q_2$ and work at its base DVR $O$.
+Theorem 14.2 gives $\gcd(C_{121},H)=1$, and each of these $T$
+divides $H$: $T_5^2\mid E$ by Lemma 11.2 and $E$ is in the
+original inventory (9.3). Thus $C_{121}$ is a unit in $O$.
+The valuation in (18.4) is $2+\epsilon$, where
+$\epsilon=\operatorname{ord}_T(B_{51})\in\{0,1\}$.
+No coprimality between $B_{51}$ and $T$ is required.
+
+Translate $z$ by the literal lift $z_T$ of Definition 17.1, writing
+$y=z-z_T$. The denominators of these lifts are constants, hence
+units in $O$. Lemma 11.2 gives
+
+$$
+f_{\rm ter}(z_T)\in(T^2),\qquad
+(f_{\rm ter})_z(z_T)\in(T),\qquad
+(f_{\rm ter})_{zz}(z_T)\in O^*.
+\tag{18.5}
+$$
+
+For the line rows these follow from the value and transverse $p$
+derivative identities (11.3); $z_T$ there is independent of $p$
+and $\partial_pT$ is a nonzero constant. For $Q_2$ they are
+literally (11.4), since powers of $10$ and $c$ are units. Thus the
+residual polynomial is $y^2\overline h$ with
+$\overline h(0)\ne0$, and the residual root has exactly multiplicity
+two. The completion $\widehat O$ is henselian. The coprime monic
+factorization form of Hensel's lemma (Lemmas 10.153.3 and 10.153.9,
+[Tag 04GE](https://stacks.math.columbia.edu/tag/04GE)) applies with
+residual factors $y^2,\overline h$, giving
+
+$$
+f_{\rm ter}(y+z_T)=(y^2+by+a)h(y)
+\quad\text{in }\widehat O[y],\qquad h(0)\in\widehat O^*.
+\tag{18.6}
+$$
+
+The cross-resultant is a unit. Comparing constants and then linear
+coefficients with (18.5) gives $a\in(T^2)$ and $b\in(T)$.
+The quadratic discriminant $b^2-4a$ has valuation at least two.
+Discriminant multiplicativity and (18.4) then give
+$\operatorname{ord}_T\operatorname{Disc}(h)\le1$.
+The degree-sixteen complementary order $\widehat O[y]/(h)$ is
+therefore normal by the same trace/index argument (18.3), applied
+to its integral closure. Its total generic algebra is separable,
+as its nonzero discriminant shows. Its integral closure is finite,
+being the corresponding direct factor of the finite product of complete
+DVRs described in the next paragraph. Consequently every generic
+conductor point over $T$ must be on the
+quadratic block, with residual value $m=z_T$.
+
+Here completion does not introduce or discard a possible conductor
+point. Indeed $B_O$ is a semilocal normal one-dimensional ring; its
+localizations at the maximal ideals are DVRs. Its $T$-adic completion
+is the product of their complete DVRs and is normal. It is finite
+birational over $A_O\otimes_O\widehat O$ in its total generic
+algebra, hence is precisely that algebra's integral closure. The
+coprime factorization (18.6) splits the latter into its quadratic and
+complementary parts. Finally the conductor (18.2) commutes with flat
+completion, since $B_O$ is a finitely presented $A_O$-module: apply flat base
+change to the kernel describing $\operatorname{Hom}_{A_O}(B_O,A_O)$
+from a finite presentation. Faithful flatness of completion descends the statement that the
+complementary part has unit conductor. Thus the preceding restriction
+to the residual double section holds at the original generic divisor.
+A generic point of a divisor above $T$ has residue field finite over
+$\mathbb C(T)$, since $B$ is finite over $R_b$. Lemma 17.2 excludes
+every point of $\mathcal U$ on that section after this field extension.
+No conductor divisor on
+$\mathcal U\cap D(C_{121})$ remains.
+
+Invertibility of $\mathcal I$ now makes it the unit ideal at every
+point of this open: a nonunit stalk would yield the excluded
+height-one component. This argument includes all intersections of
+the original factors of $H$, with no specialization of the generic
+gcds of Lemma 17.2 to those intersections.
+
+Finally let $q\in\mathcal U\cap D(C_{121})$ lie over $y\in Y$.
+Unit conductor at $q$ gives some $h\in I$ not in the prime $q$.
+Since $I\subset A$, $h$ also avoids the prime $y=q\cap A$.
+The inclusion $hB\subset A$ implies $B_h=A_h$. Thus there is
+exactly one normalization point over $y$, and the open immersion
+of Proposition 16.3 makes $\phi$ injective there. All these statements
+persist after algebraically closed extension of constants. Formula
+(16.2) identifies equality of source points with equality of the
+entire gain and drift. Proposition 16.2 gives the asserted original
+real endpoint conclusion. ∎
+
+## 19. The finite all-off24 independent-pair outer restriction
+
+**Theorem 19.1 (Original four-world necessary base set).** Let
+$p,v\in\mathbb R$, $p\ne24$, and let $W_0,W_1,W_2,W_3$ be
+complete original worlds in one entire child $C(p,v)$, with
+
+$$
+W_0\ne W_1,\quad a(W_0)=a(W_1),\qquad
+W_2\ne W_3,\quad m(W_2)=m(W_3).
+\tag{19.1}
+$$
+
+Each world has its own nonzero real polynomial gain of degree at most
+three and its own fixed real drift. Cross-pair overlaps of sizes
+$0,1,2$ and independent auxiliary M responses at the J endpoints are
+permitted. Then
+
+$$
+C_{121}(p,v)=0,\qquad H(p,v)N_J(p,v)=0.
+\tag{19.2}
+$$
+
+Consequently every such base belongs to
+
+$$
+V_{\mathbb C}(C_{121},HN_J)\cap D(p-24),
+\tag{19.3}
+$$
+
+a finite, possibly empty complex set.
+
+Proof. S, Corollary 18.2, applied to the entire child in (19.1),
+excludes a singular endpoint of the chosen M pair. It imposes no
+nonsingularity condition on the chosen J pair or on unused worlds.
+Both $W_2,W_3$ therefore lie in $\mathcal U$ by Proposition 16.2.
+If $C_{121}(p,v)\ne0$, Theorem 18.1 applied to their common
+$(p,v,m)$ makes these two complete worlds equal, contradicting
+(19.1). This proves the first equality in (19.2) for every original
+off-$24$ base, including $H=0$.
+
+If $H(p,v)\ne0$, the original all-world implication S, Theorem 4.3
+and Lemma 9.9, applies to the chosen distinct equal-J pair and gives
+$N_J(p,v)=0$. If $H(p,v)=0$, the second equality in (19.2) already
+holds. No equality between $m(W_0),m(W_1)$ and the common M answer
+has been used. The reasoning depends only on the two stated
+within-pair distinctness conditions, so all permitted overlaps remain.
+
+Theorem 14.2 gives the literal coprimalities
+$\gcd(C_{121},H)=\gcd(C_{121},N_J)=1$. Therefore
+$C_{121}$ and $HN_J$ are coprime also over $\mathbb C$, and the
+plane-curve intersection argument in that theorem makes (19.3)
+finite, possibly empty. This reuses the unchanged original five-norm
+inventory and its literal $N_J$, rather than replacing its exceptional
+set or imposing a common gain or drift.
+
+The source-specific consequence is (18.1) and its application (19.2).
+Normalization, finite duality, Hensel factorization, DVR trace indices
+and finite plane intersection are the classical intermediate results
+cited in their applications above. These implications do not provide
+real lifts, a list or count of the complex bases, existence or absence
+of a real configuration, or an assertion at $p=24$.
+All clocks and read conditions remain (15.1): the initial read and
+every post-atom read are immediate and counted, and J and M at
+clock seven are alternatives on the original trajectory. The argument
+introduces no reset, copy, idle, skipped read, unread composite, extra
+port or renumbered clock. It establishes no fixed48, rootQ,
+common-ancestor, both-child or global eight/nine-read conclusion. ∎
+
+## 追加锚（本行以下为增补区）

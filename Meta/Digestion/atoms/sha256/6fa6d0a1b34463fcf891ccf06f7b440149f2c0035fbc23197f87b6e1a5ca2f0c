@@ -1,0 +1,41 @@
+**Definition 13.1 (Inherited elimination interface).** Use exactly
+[Common Parent Geometry](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+Definitions 12.1, 20.1 and 24.1. In that notation
+
+$$
+\begin{gathered}
+X=b^2+r-r^2,\quad N=X+br,\quad T=1+b,\quad U=1+2b,\\
+D_\Lambda=(b^2+8b+4)XN-2bTU(X+N),\\
+\mathsf A=5b(p-24)D_\Lambda+3(8b-1)H(r,b),\qquad
+\mathsf B=5bD_\Lambda v-\mathsf N_u(r,b).
+\end{gathered}
+$$
+
+Here $H$ is precisely that source's sextic (12.2), and
+$\mathsf N_u$ is its polynomial (20.1), including the exact division
+by $1+b$. Retain the fixed ordered Sylvester identity
+
+$$
+\operatorname{Res}_b(\mathsf A,\mathsf B)
+=52488000r^{11}(r-1)^9\Psi_2\Psi_4\Phi R(r,p,v),
+$$
+
+where
+
+$$
+\begin{aligned}
+\Psi_2&=4r^2-2r-1,\\
+\Psi_4&=625r^4-1000r^3+50r^2+260r+36,\\
+\Phi&=438272r^4-931328r^3+540800r^2-50728r-853.
+\end{aligned}
+$$
+
+The symbol $R$ denotes exactly the degree-eighteen polynomial with
+the 668 integer coefficients of that source's Definition 24.1.
+Neither its scale nor its sign is changed. Theorem 20.2 there implies
+that every actual regular world projects to a zero of
+$R\Psi_2\Psi_4\Phi$. This is a necessary implication only. Its fixed
+determinant form remains necessary at degree drops; furthermore the
+leading $b$ coefficients $5p+216$ and $5v+1125$ are positive on
+$\mathcal U$.
+

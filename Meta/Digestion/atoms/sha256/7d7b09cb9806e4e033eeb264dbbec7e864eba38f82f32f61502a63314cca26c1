@@ -1,0 +1,30 @@
+**Definition 1.3 (Spectral parameters).** Let $\Lambda\in(2,3)$ and $\beta\in(1,2)$ be specified by
+
+$$
+\Lambda^r(\Lambda-2)=1,\qquad
+\beta^r(\beta-2)=-1,
+$$
+
+where $\beta$ is the positive root of $t^r-t^{r-1}-\cdots-t-1$. Put
+
+$$
+L=\frac{1}{3-\Lambda},\qquad e_r=1+L,\qquad
+\kappa_r=\frac{\log\Lambda}{\log\beta},
+$$
+
+and, for each eigenvalue $\lambda$ of $M$, use the normalization
+
+$$
+v_\lambda=
+\bigl(\lambda^{2r-1}(\lambda-2),
+ \lambda^{2r-2}(\lambda-2),\ldots,\lambda-2,1\bigr)^T.
+$$
+
+In particular,
+
+$$
+\rho=\frac{|h v_\beta|}{H}.
+$$
+
+The source identity $`E^*(u_{2r+1})=e_r`$ and the eigenvector normalization are literature-attested: [arXiv:2509.06104v1, §2, equation (4), and Appendix P1–P2](https://arxiv.org/html/2509.06104v1). The parameter $r$ here is the parameter $d$ in that paper's Type I/II formulas.
+

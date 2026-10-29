@@ -1,0 +1,40 @@
+## 4. 一枚固定的 AURIC 黄金门
+
+取标准方向
+
+$$
+\zeta=e^{3\pi\mathrm i/5},
+\qquad
+K_A=\zeta\bigl[I+(\zeta-1)P_A\bigr].
+$$
+
+为了在任意长度链上统一使用，令三位置为 $L,C,R$，并记
+
+$$
+n=|1\rangle\langle1|,
+\qquad
+g=(I-n_L)(I-n_R).
+$$
+
+定义三比特算子
+
+$$
+\boxed{
+\mathcal P=
+n_Ln_R+
+g\left[
+\varphi^{-1}(I-n_C)
++\varphi^{-2}n_C
++\varphi^{-3/2}X_C
+\right].
+}
+$$
+
+最后定义固定门
+
+$$
+\boxed{K=\zeta\bigl[I+(\zeta-1)\mathcal P\bigr].}
+$$
+
+所有参数已经固定，运行时只选择把同一枚门作用在哪三个相邻位置。
+

@@ -1,0 +1,58 @@
+## 70. Exact finite horizon-three memory threshold
+
+The newest approximate-online recovery volume closes a different part of the
+controller problem: a finite, fully specified quantum contract with an encoded
+qutrit input, three acquired labels, peak classical width at most six,
+system-only terminal CPTP decoders, an input-independent shared seed, and no
+intermediate quantum feedback or reference access. Let \(W_3(\varepsilon)\)
+denote the least peak width if it exists under that contract. Put
+
+$$
+\tau=\frac{3\sqrt3}{8},\qquad
+c=\frac{\sqrt{13}}4,\qquad
+r=\sqrt{1+\tau},
+$$
+
+$$
+E^*
+=1-\left[
+\frac{r-c}{r-1+\sqrt2(1-c)}
+\right]^2.
+$$
+
+The complete partition reduction, common tester and matching online channel
+give
+
+$$
+\varepsilon_{\mathrm{op}}(6,3)=E^*,
+$$
+
+and, in the stated range \(0<\varepsilon<1/4\),
+
+$$
+\varepsilon\ge E^*
+\Longleftrightarrow
+W_3(\varepsilon)\le6,
+\qquad
+0<\varepsilon<E^*
+\Longrightarrow
+W_3(\varepsilon)\ge7.
+$$
+
+This is a global finite result: the lower certificate covers all 266 complete
+partitions after convexifying independent seed programs, while the upper
+certificate is an actually legal online protocol. It therefore upgrades the
+fixed-partition witness of Section 67 to a statement about the entire
+declared peak-six controller class. The proof also shows why terminal alphabet
+size alone is insufficient: online feasibility depends on the complete
+prefix transition layers and on the joint Choi geometry of all collision
+cells.
+
+The threshold is task- and contract-relative. It does not determine the full
+width curve \(W_3\), any horizon-uniform \(W_n\) law, the critical pair-energy
+limit, physical implementation cost, or Lean/kernel certification. It also
+does not turn an averaged-channel optimum into a single seed that succeeds on
+every history. The finite result belongs after the acquisition and
+branch-complete conditions above; it cannot be used as a universal memory
+bound for other FIB contracts.
+

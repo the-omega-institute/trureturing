@@ -1,0 +1,97 @@
+**Theorem 12.3 (directional quotient application).** Fix a positive stationary component and a quotient as in Proposition 11.1. For the left direction, use exactly
+
+$$
+V_j^L=(X_{-j:-1},X_{1:\infty}),\qquad
+Z_j^L=Q_{-j}
+$$
+
+from (6.4), and put
+
+$$
+W_j^L=(X_{-j-1},\ldots,X_{-j-m_-}),
+\qquad
+Z_{j+m_-}^L=Q_{-j-m_-}.
+$$
+
+For the right direction, use exactly
+
+$$
+V_j^R=(X_{-\infty:-1},X_{1:j}),\qquad
+Z_j^R=Q_{j+1}
+$$
+
+from (6.8), and put
+
+$$
+W_j^R=(X_{j+1},\ldots,X_{j+m_+}),
+\qquad
+Z_{j+m_+}^R=Q_{j+m_++1}.
+$$
+
+Suppose that, in each direction $d\in\{L,R\}$, there is a positive integer block length $m_d\ge1$ ($m_L=m_-$ and $m_R=m_+$), a good word set $G_d$, numbers $0\le\rho_d,\eta_d\le1$, and
+
+$$
+\kappa_d=\rho_d+(1-\rho_d)\eta_d<1
+\tag{12.6}
+$$
+
+such that every good word of positive conditional probability has the corresponding quotient diameter at most $\rho_d$, and for every recursion cut $j\ge0$ the conditional bad-word variance inequality
+
+$$
+\sum_{\substack{w\notin G_d\\p_{j,v}^d(w)>0}}
+p_{j,v}^d(w)\,\Delta_{j,w}^d(v)
+\le \eta_d\,\Delta_j^d(v)
+\tag{12.7}
+$$
+
+holds for almost every $v$. Here $p_{j,v}^d(w)$, $\Delta_{j,w}^d(v)$, and $\Delta_j^d(v)$ are the quantities in (12.1) formed from $V_j^d,Z_j^d,W_j^d$.
+
+Then, for every $j\ge0$,
+
+$$
+e_L^{P_C}(j)\le\frac14\kappa_-^{\lfloor j/m_-\rfloor},
+\qquad
+e_R^{P_C}(j)\le\frac14\kappa_+^{\lfloor j/m_+\rfloor}.
+\tag{12.8}
+$$
+
+Consequently, for every $r\ge0$,
+
+$$
+A_{P_C}(r)\le\frac12\left[
+\frac{m_-\kappa_-^{\lfloor r/m_-\rfloor/2}}{1-\sqrt{\kappa_-}}
++
+\frac{m_+\kappa_+^{\lfloor r/m_+\rfloor/2}}{1-\sqrt{\kappa_+}}
+\right],
+\tag{12.9}
+$$
+
+and
+
+$$
+\tau_{P_C}(r)\le\frac14\left[
+\frac{m_-\kappa_-^{\lfloor r/m_-\rfloor}}{1-\kappa_-}
++
+\frac{m_+\kappa_+^{\lfloor r/m_+\rfloor}}{1-\kappa_+}
+\right].
+\tag{12.10}
+$$
+
+If every positive stationary component satisfies these directional conditions, the finite-mixture conclusions of Theorem 7.1 apply with the component-specific constants.
+
+**Proof.** Work on the quotient producer of Proposition 11.1, whose joint $(Q,X)$ law is (11.2). Apply Lemma 3.3 to its identity quotient and canonical reverse (11.1); no reverse lumpability of the original hidden representation is assumed. This supplies (5.1) at each left cut with $B_w=R_w$ and at each right cut with $B_w=\bar M_w$. Corollary 12.2 and (12.7) give the one-block recursions
+
+$$
+\mathcal D(U;Z_{j+m_-}^L\mid V_j^L,W_j^L)
+\le\kappa_-\mathcal D(U;Z_j^L\mid V_j^L),
+$$
+
+and
+
+$$
+\mathcal D(U;Z_{j+m_+}^R\mid V_j^R,W_j^R)
+\le\kappa_+\mathcal D(U;Z_j^R\mid V_j^R).
+$$
+
+The Jensen step in the proof of Theorem 6.1 transfers these quotient-state variances to the original output erasure errors. Starting from the $1/4$ variance bound at the initial cut, iterate complete blocks; a remainder of length smaller than $m_d$ has coefficient at most one. This proves (12.8). The geometric tail sums are exactly the estimates used for (6.2) and (6.3), with $\rho_\pm$ replaced by $\kappa_\pm$. No variance proof is added beyond Lemma 12.1, and no stationary word-average condition replaces the cutwise requirement (12.7). $\square$
+

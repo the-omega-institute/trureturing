@@ -1,0 +1,13 @@
+**Definition 11.1 (The common degree-five divisor).** Put
+
+$$
+\begin{aligned}
+T_5={}&(p-24)(55p-28v-1572)(58p-23v-1350)Q_2,\\
+Q_2={}&120p^2-38pv-3360p+3v^2+522v+23112,\\
+E={}&\operatorname{Disc}_x(R),\qquad F=\operatorname{Disc}_z(P_M).
+\end{aligned}
+\tag{11.1}
+$$
+
+$T_5$ is already primitive with positive lexicographic leading coefficient.
+

@@ -1,0 +1,19 @@
+**Proposition 11.2 (Scope of the compatibility separation).** For every $N\ge2$, Theorem 10.1 disproves the implication from vanishing sums of independently minimized fixed-block discrepancies, for every fixed block length, to $\mathscr R_{N,n}(\mu_n)=o(n)$, even among marginals of one actual stationary finite producer with the band at every length. The law in that theorem satisfies
+
+$$
+A_{P^{(N)}}\le2,\qquad d(P^{(N)})\le\frac17<c_\star,
+\qquad\neg\mathsf Z_\Delta(P^{(N)}).
+\tag{11.4}
+$$
+
+It supplies no instance of (11.2). A sufficient unresolved optimizer inequality for each intended $N$ is precisely
+
+$$
+\exists n,\ \exists\{C_j\}\text{ disjoint interior intervals}:\quad
+\sum_j\frac{6^{-4|C_j|}}{2|C_j|}
+\sum_{a,b}\operatorname{tail}_{N^2}\bigl(S_{C_j}^{a,b}(\pi_n)\bigr)>\tau.
+\tag{11.5}
+$$
+
+Proof. The two limits (10.6)–(10.7) contradict that implication for the same law $P^{(N)}$. Proposition 6.3 applies to its finite persistent mixture, proving (11.4) with the original entire-exterior density. Its exhibited hidden dimension is $2(N^2+1)$, whereas the comparison rank is $N$; it is not an $N$-state attainer. Every matrix in (11.5) instead uses the conditionals and weights of the actual full optimizer $\pi_n$. Theorems 9.2 and 10.1 establish neither a positive lower bound for those tails nor a coupling that transfers (10.17) to them. The implication from (11.5) is Corollary 11.1, whose strict spectral premise remains additional. In particular, no all-$N$ strict-gap conclusion or finite attainer follows from this comparison construction. $\square$
+
