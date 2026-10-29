@@ -11,13 +11,15 @@ internal sealed class FiniteRootFiberCoherenceDocument : IScribeDocumentDefiniti
             + "finite_root_fibers_rational_coherence";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Finite positive-degree root fibers remove the coherence obstruction for a rational "
-            + "one-parameter subgroup through a fixed group element.",
+        "Under finite positive-degree root fibers, independent roots at every positive degree "
+            + "are equivalent to a genuine monoid homomorphism from Multiplicative Q to H "
+            + "with phi(Multiplicative.ofAdd(1:Q))=h.",
         H("Finite Root Fiber Coherence"),
         Blocks(Describe.Lean(
             DescribeId.Create("finite-root-fibers-rational-coherence"),
             DeclarationHandle.Create(Declaration),
-            H("Finite root fibers are equivalent to rational coherence"),
+            H("Under finite positive-degree root fibers, independent roots at every positive degree "
+                + "are equivalent to rational coherence"),
             StatementSource.FromAuthor(TheoremFormula()),
             AssessedProvenance.FromRepo(),
             Blocks(
@@ -25,7 +27,9 @@ internal sealed class FiniteRootFiberCoherenceDocument : IScribeDocumentDefiniti
                     "For an arbitrary group H, fix h and assume that every positive-degree "
                         + "fiber {b | b^n=h} is finite. The existence of a root in every positive "
                         + "degree is equivalent to a monoid homomorphism from Multiplicative Q to H "
-                        + "whose value at 1 is h. No commutativity, divisibility, uniqueness, "
+                        + "with phi(Multiplicative.ofAdd(1:Q))=h. In the formula, ofAdd(q) denotes "
+                        + "Multiplicative.ofAdd(q:Q), so ofAdd(1) is additive rational one; "
+                        + "the multiplicative identity is ofAdd(0). No commutativity, divisibility, uniqueness, "
                         + "surjectivity, or topology hypothesis is used.")),
                 Paragraph(Text(
                     "The forward implication is the compactness step. Positive degrees are ordered "
@@ -39,7 +43,7 @@ internal sealed class FiniteRootFiberCoherenceDocument : IScribeDocumentDefiniti
                         + "and q+r. Every term is then an integer power of that same group element. "
                         + "Rat.add_num_den' supplies the exponent identity, so no commutation between "
                         + "different group elements is needed. The reverse implication evaluates the "
-                        + "homomorphism at 1/n and uses map_pow.")),
+                        + "homomorphism at Multiplicative.ofAdd(1/n:Q) and uses map_pow.")),
                 Paragraph(Text(
                     "The theorem asserts existence only. Finite fibers do not imply uniqueness of "
                         + "the resulting homomorphism."))),
@@ -56,7 +60,7 @@ internal sealed class FiniteRootFiberCoherenceDocument : IScribeDocumentDefiniti
             Call("Multiplicative", rationals), group);
         Formula phi = F.Id("phi");
         Formula action = Exists("phi", actionType,
-            Equal(Call("value", phi, D(1)), h));
+            Equal(Call("value", phi, Call("ofAdd", D(1))), h));
         Formula equivalence = new Formula.Logic(
             positiveRoots, FormulaLogicOperator.Iff, action);
         Formula hClause = new Formula.TypeArrow(finiteFibers, equivalence);

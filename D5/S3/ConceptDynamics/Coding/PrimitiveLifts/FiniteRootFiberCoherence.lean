@@ -4,7 +4,7 @@
    mirror-E: none(waiver:symbolic-structural-theorems)
    anchors: []
    utility: none
-   digest: Finite positive-degree root fibers admit a coherent rational one-parameter subgroup. -/
+   digest: Under finite positive-degree root fibers, independent roots at every positive degree are equivalent to rational coherence. -/
 
 import Mathlib.CategoryTheory.CofilteredSystem
 import Mathlib.Data.PNat.Basic
@@ -230,8 +230,9 @@ private theorem rational_action_of_coherent_roots {H : Type u} [Group H] (h : H)
   refine ⟨χ.toMonoidHom, ?_⟩
   simpa [χ, value, degree] using hb (degree 1)
 
-/-- Under finite positive-degree root fibers, independent roots in all positive degrees
-are equivalent to a rational one-parameter subgroup through the fixed element. -/
+/-- For any group H and fixed h with finite positive-degree root fibers, independent roots
+in every positive degree are equivalent to a monoid homomorphism φ : Multiplicative ℚ →* H
+with φ (Multiplicative.ofAdd (1 : ℚ)) = h. -/
 theorem finite_root_fibers_rational_coherence {H : Type u} [Group H] (h : H)
     (hfin : ∀ n : ℕ, 0 < n → Finite {b : H // b ^ n = h}) :
     (∀ n : ℕ, 0 < n → ∃ b : H, b ^ n = h) ↔
