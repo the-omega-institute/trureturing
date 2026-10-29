@@ -1,0 +1,79 @@
+**定理 3.1（单一合法设计辨识对角集中）。** 固定假设1.1的 $a,b$ 和任意原种子律。对任意 $\Lambda$，定义2.1的整个终止计数律 $h=(h_n)_{n\ge1}$、等价的终端空间范围律，确定下列数和测度：
+
+$$
+\begin{aligned}
+t_k(h)&=\sum_{n>4k}h_n,\\
+\nu_k(h)&=t_k(h)-h_{4k+1}/a,\\
+v_k(h)&=t_k(h)-h_{4k+3}/b,\\
+\rho_h&=( (x,y)\mapsto xy)_\#\Lambda.
+\end{aligned}
+\tag{CPI.12}
+$$
+
+其中 $\rho_h$ 是 $[0,1]$ 上唯一满足 $\int p^k\rho_h(dp)=t_k(h)$ 的 Borel 概率测度；它实际集中在 $(0,1)$。特别地，下面是从整个取得律到关系缺口的精确映射：
+
+$$
+\begin{aligned}
+\mathcal J(h)
+&=\nu_0(h)+v_0(h)-2\int\sqrt p\,\rho_h(dp)\\
+&=\int(\sqrt x-\sqrt y)^2\,\Lambda(dx,dy)\ \ge0,\\
+\mathcal J(h)=0
+&\quad\Longleftrightarrow\quad\Lambda(\mathsf D)=1.
+\end{aligned}
+\tag{CPI.13}
+$$
+
+积分项可以直接写成所恢复尾坐标的极限。对每个整数 $m\ge1$ 令
+
+$$
+A_m(h)=\sum_{j=0}^{m}\sqrt{j/m}\binom mj
+       \sum_{i=0}^{m-j}(-1)^i\binom{m-j}{i}\,t_{j+i}(h).
+\tag{CPI.14}
+$$
+
+则 $A_m(h)\to\int\sqrt p\,\rho_h(dp)$，并有统一误差界
+
+$$
+\left|A_m(h)-\int\sqrt p\,\rho_h(dp)\right|
+\le(4m)^{-1/4}.
+\tag{CPI.15}
+$$
+
+若 $\mathcal J(h)=0$，共同参数的原先验也由该律唯一恢复为
+
+$$
+\mu=(p\mapsto\sqrt p)_\#\rho_h,
+\qquad \Lambda=\Delta_\#\mu.
+\tag{CPI.16}
+$$
+
+因此若一个比较源的 $\pi_\square$ 终止律等于某个原 PG27 共同源在该同一设计下的终止律，它必集中在对角线上，且具有相同的共同参数先验。
+
+证明。定理2.2给 $t_k=\Pr(T>4k)$，式（CPI.8）给其余两个恢复式，故式（CPI.12）的前三式与式（CPI.7）相同。$P$ 的推送律确实具有这些矩。将它视为紧区间上的概率测度，若另一个概率测度具有相同矩，则二者对多项式积分相同；多项式在 $C([0,1])$ 中一致稠密，故它们对所有连续函数积分相同，从而是同一 Borel 测度。这正是原终止实验中使用的经典紧区间矩唯一性中间步骤，在此作用于乘积 $P$，没有假设 $Q_L,Q_R$ 独立或边缘相等。
+
+式（CPI.14）来自通常的 Bernstein 多项式
+
+$$
+B_m(p)=\sum_{j=0}^{m}\sqrt{j/m}\binom mj p^j(1-p)^{m-j}.
+\tag{CPI.17}
+$$
+
+展开 $(1-p)^{m-j}$ 后对 $\rho_h$ 积分，恰得 $A_m(h)$。作为这一经典逼近步骤的定量界，若 $K$ 具有二项分布 $\operatorname{Bin}(m,p)$，则 $B_m(p)=\mathbb E\sqrt{K/m}$。利用 $|\sqrt u-\sqrt v|\le\sqrt{|u-v|}$、Cauchy–Schwarz 不等式及该二项分布的方差，有
+
+$$
+\begin{aligned}
+|B_m(p)-\sqrt p|
+&\le\mathbb E\sqrt{|K/m-p|}\\
+&\le\bigl(\mathbb E|K/m-p|^2\bigr)^{1/4}
+=\bigl(p(1-p)/m\bigr)^{1/4}
+\le(4m)^{-1/4}.
+\end{aligned}
+\tag{CPI.18}
+$$
+
+因此对任意先验均得到式（CPI.15）和该极限，无需对未知的 $\Lambda$ 作有限支撑限制。这里的二项随机变量仅表示多项式的数学恒等式，不是给观察者增设的抽样操作。
+
+又有 $\nu_0=\mathbb E Q_L$、$v_0=\mathbb E Q_R$，且 $\int\sqrt p\rho_h(dp)=\mathbb E\sqrt{Q_LQ_R}$；展开平方即得式（CPI.13）。被积函数非负，零点集恰为 $\mathsf D$。若积分为零，则对每个 $r\ge1$，其大于等于 $1/r$ 的集合质量不超过 $r\mathcal J(h)=0$；这些集合的并为 $\mathsf D^c$，故对角质量为一。反向在对角线上平方恒为零，积分也为零。这只把非负积分零的既有原则用于该实际取得律所恢复的缺口。
+
+在对角线上 $P=Q_L^2$ 且 $Q_L>0$，故 $Q_L=\sqrt P$，得到式（CPI.16）并由命题1.3回到原源。若两个设计律相同，它们给同一 $\mathcal J$ 与 $\rho_h$；原共同源的缺口为零，比较源因而也为对角集中，并由式（CPI.16）给出同一 $\mu$。该恢复只针对共同参数性质及成立时的共同先验，不断言此设计在所有双参数先验上都是单射。证毕。
+
