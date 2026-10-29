@@ -6,7 +6,7 @@
    utility: none
    digest: Quadratic contraction of actual equal-spectrum qubit Holevo entropy. -/
 
-import D5.S3.Quantum.Entanglement.GraphDensity.FormationBounds
+import D5.S3.Quantum.Information.QubitNormalFormState
 import Mathlib.Analysis.SpecialFunctions.BinaryEntropy
 import Mathlib.Analysis.SpecialFunctions.Sqrt
 import Mathlib.Analysis.Convex.Deriv
@@ -14,7 +14,7 @@ import Mathlib.Tactic
 
 noncomputable section
 namespace D5.S3.Quantum.Information.QubitEntropyContraction
-open Set Matrix
+open Set _root_.Matrix
 open scoped ComplexOrder MatrixOrder
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
 
@@ -28,9 +28,11 @@ private lemma logRatio_deriv {r : ℝ} (hr : r ∈ Ioo (-1 : ℝ) 1) :
   have hd : 1 - r ^ 2 ≠ 0 := by nlinarith [hr.1, hr.2]
   have h := (((hasDerivAt_id r).const_add 1).log hp).sub
     (((hasDerivAt_const r 1).sub (hasDerivAt_id r)).log hm)
-  convert h using 1 <;> dsimp [logRatio]
-  field_simp
-  ring
+  convert h using 1
+  · rfl
+  · change 2 / (1 - r ^ 2) = 1 / (1 + r) - (0 - 1) / (1 - r)
+    field_simp [hd, hp, hm]
+    <;> ring
 
 private lemma logRatio_bound {r : ℝ} (hr : r ∈ Ico (0 : ℝ) 1) :
     logRatio r ≤ 2 * r / (1 - r ^ 2) := by
@@ -41,9 +43,11 @@ private lemma logRatio_bound {r : ℝ} (hr : r ∈ Ico (0 : ℝ) 1) :
     have h := (((hasDerivAt_id r).const_mul 2).div
       ((hasDerivAt_const r 1).sub ((hasDerivAt_id r).pow 2)) hd).sub
       (logRatio_deriv ⟨by linarith [hr.1], hr.2⟩)
-    convert h using 1 <;> dsimp [g]
-    field_simp
-    ring
+    convert h using 1
+    · rfl
+    · dsimp
+      field_simp [hd]
+      <;> ring
   have hm : MonotoneOn g (Ico (0 : ℝ) 1) := by
     apply monotoneOn_of_hasDerivWithinAt_nonneg (convex_Ico 0 1)
       (fun r hr => (hg r hr).continuousAt.continuousWithinAt)
@@ -62,6 +66,7 @@ private lemma radial_deriv {u : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1) :
   have h := (Real.hasDerivAt_binEntropy hp0 hp1).comp u
     (((Real.hasDerivAt_sqrt hu.1.ne').const_add 1).div_const 2)
   convert h using 1
+  · rfl
   dsimp [logRatio]
   rw [show 1 - (1 + Real.sqrt u) / 2 = (1 - Real.sqrt u) / 2 by ring,
     Real.log_div (by linarith : 1 - Real.sqrt u ≠ 0) (by norm_num),
@@ -80,8 +85,12 @@ private lemma radial_deriv2 {u : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1) :
     (Real.hasDerivAt_sqrt hu.1.ne')).neg).div
       ((Real.hasDerivAt_sqrt hu.1.ne').const_mul 4) (by positivity : 4 * Real.sqrt u ≠ 0)
   convert h using 1
+  · rfl
+  dsimp only [Function.comp_apply, Pi.neg_apply]
+  generalize Real.sqrt u = r at *
+  rw [← hsq]
   field_simp
-  nlinarith [hsq]
+  <;> ring
 
 private lemma radial_concave : ConcaveOn ℝ (Icc (0 : ℝ) 1) radialEntropy := by
   apply concaveOn_of_hasDerivWithinAt2_nonpos (convex_Icc 0 1)
@@ -99,9 +108,9 @@ private lemma radial_concave : ConcaveOn ℝ (Icc (0 : ℝ) 1) radialEntropy := 
 private lemma radial_antitone : AntitoneOn radialEntropy (Icc (0 : ℝ) 1) := by
   intro u hu v hv huv
   apply Real.binEntropy_strictAntiOn.antitoneOn
-    ⟨by linarith [Real.sqrt_nonneg u], by nlinarith [Real.sq_sqrt hu.1, Real.sqrt_nonneg u]⟩
-    ⟨by linarith [Real.sqrt_nonneg v], by nlinarith [Real.sq_sqrt hv.1, Real.sqrt_nonneg v]⟩
-  exact (add_le_add_left (Real.sqrt_le_sqrt huv) 1).trans_eq (by ring)
+    ⟨by linarith [Real.sqrt_nonneg u], by have h := Real.sqrt_le_sqrt hu.2; norm_num at h; linarith⟩
+    ⟨by linarith [Real.sqrt_nonneg v], by have h := Real.sqrt_le_sqrt hv.2; norm_num at h; linarith⟩
+  linarith [Real.sqrt_le_sqrt huv]
 
 /-- Scalar curvature estimate used by the actual qubit spectral bridge. -/
 private lemma radial_contraction {x z t : ℝ} (hdisk : x ^ 2 + z ^ 2 ≤ 1)
@@ -124,4 +133,21 @@ private lemma radial_contraction {x z t : ℝ} (hdisk : x ^ 2 + z ^ 2 ≤ 1)
     simp only [smul_eq_mul, he] at hc
     nlinarith
 
+/-- Quadratic contraction of the actual symmetric qubit ensemble entropy, in nats.
+Both closed-disk and channel endpoints are included. -/
+theorem qubit_holevo_contraction {x z t : ℝ} (hdisk : x ^ 2 + z ^ 2 ≤ 1)
+    (ht : t ∈ Icc (0 : ℝ) 1) :
+    let hscaled : x ^ 2 + (t * z) ^ 2 ≤ 1 := by
+      nlinarith [mul_nonneg (show 0 ≤ 1 - t ^ 2 by nlinarith [ht.1, ht.2]) (sq_nonneg z)]
+    0 ≤ QubitNormalFormState.qubitHolevo x (t * z) hscaled ∧
+      QubitNormalFormState.qubitHolevo x (t * z) hscaled ≤
+        t ^ 2 * QubitNormalFormState.qubitHolevo x z hdisk := by
+  dsimp only
+  simp only [QubitNormalFormState.qubitHolevo, QubitNormalFormState.qubit_state_entropy,
+    neg_sq, zero_pow (by decide : (2 : ℕ) ≠ 0), add_zero, mul_pow]
+  have h := radial_contraction hdisk ht
+  dsimp only [radialEntropy] at h
+  constructor <;> linarith [h.1, h.2]
+
+#print axioms qubit_holevo_contraction
 end D5.S3.Quantum.Information.QubitEntropyContraction

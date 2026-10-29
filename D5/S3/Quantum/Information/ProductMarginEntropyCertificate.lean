@@ -74,7 +74,7 @@ theorem binary_entropy_certificate {s : ℝ} (hs : s ∈ Icc (2 / 3) 1) :
     have he : 4 * b * Real.log 2 + (1 - 6 * b) * Real.binEntropy b -
         (1 - 2 * b) * (Real.binEntropy b / (1 - b)) =
         b * (4 * Real.log 2 - (5 - 6 * b) / (1 - b) * Real.binEntropy b) := by
-      field_simp; ring
+      field_simp <;> ring
     have hg := mul_le_mul_of_nonneg_left hbudget hb.1
     calc
       b * Real.log (4096 / 3125) = b * (4 * Real.log 2 - 5 * Real.binEntropy (1 / 5)) := by rw [fifth_log_gap]
@@ -85,19 +85,20 @@ theorem binary_entropy_certificate {s : ℝ} (hs : s ∈ Icc (2 / 3) 1) :
     rw [← Real.binEntropy_one_sub ((1 + s) / 2)]
     congr 1; dsimp [b]; ring
   have hq : (1 - s) / (1 + s) = b / (1 - b) := by
-    dsimp [b]; field_simp [show 1 + s ≠ 0 by linarith]; ring
+    apply (div_eq_div_iff (show 1 + s ≠ 0 by linarith) hd.ne').mpr
+    dsimp [b]; ring
   have hn' : b * Real.log (4096 / 3125) ≤ s *
       (Real.log 2 - Real.binEntropy ((1 - s) / (1 + s)) -
         (3 - 2 / s) * (Real.log 2 - Real.binEntropy ((1 + s) / 2))) := by
     rw [hsym, hq]
     convert hn using 1
-    dsimp [b]; field_simp; ring
+    dsimp [b]; field_simp <;> ring
   have hf : b * Real.log (4096 / 3125) / s ≤
       Real.log 2 - Real.binEntropy ((1 - s) / (1 + s)) -
         (3 - 2 / s) * (Real.log 2 - Real.binEntropy ((1 + s) / 2)) :=
     (div_le_iff₀ hs0).mpr (by simpa only [mul_comm] using hn')
   convert hf using 1
-  dsimp [b]; field_simp; ring
+  dsimp [b]; field_simp <;> ring
 
 
 /-- A sufficient scalar information budget. The quantum application must separately prove
@@ -140,7 +141,7 @@ theorem information_budget_nonneg {a b k j c d : ℝ}
       2 / s ≤ (a + b) / (a * b) := by
         apply (div_le_div_iff₀ hs (mul_pos ha' hb')).mpr
         nlinarith [mul_nonneg hs.le (sub_nonneg.mpr ham)]
-      _ = _ := by field_simp; ring
+      _ = _ := by field_simp <;> ring
   have hhigh : 2 / 3 ≤ s := by
     have he : 2 / s < 3 := lt_of_le_of_lt hinv (lt_of_not_ge hlow)
     have he' := (div_lt_iff₀ hs).mp he

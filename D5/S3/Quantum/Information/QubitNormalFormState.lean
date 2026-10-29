@@ -37,10 +37,10 @@ private lemma qubit_pos {x z : ℝ} (h : x ^ 2 + z ^ 2 ≤ 1) :
   have hH := qubit_hermitian x z
   have ht := congrArg Complex.re hH.trace_eq_sum_eigenvalues
   rw [qubit_trace] at ht
-  simp only [Fin.sum_univ_two, Complex.add_re, Complex.ofReal_re, Complex.one_re] at ht
+  simp only [Fin.sum_univ_two, Complex.add_re, RCLike.ofReal_eq_complex_ofReal, Complex.ofReal_re, Complex.one_re] at ht
   have hd := congrArg Complex.re hH.det_eq_prod_eigenvalues
   rw [qubit_det] at hd
-  simp only [Fin.prod_univ_two, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im,
+  simp only [Fin.prod_univ_two, Complex.mul_re, RCLike.ofReal_eq_complex_ofReal, Complex.ofReal_re, Complex.ofReal_im,
     mul_zero, sub_zero] at hd
   have hp : 0 ≤ hH.eigenvalues 0 * hH.eigenvalues 1 := by nlinarith [h]
   have h0 : 0 ≤ hH.eigenvalues 0 := by nlinarith [sq_nonneg (hH.eigenvalues 0)]

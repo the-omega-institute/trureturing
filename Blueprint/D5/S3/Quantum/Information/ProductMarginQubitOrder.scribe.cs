@@ -4,6 +4,11 @@ internal sealed class ProductMarginQubitOrderDocument : IScribeDocumentDefinitio
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The distinct pure-factor boundary", H("ProductMarginQubitOrder"), Blocks(
+            Describe.Lean(DescribeId.Create("common-trace"),
+                DeclarationHandle.Create("D5/S3/Quantum/Information/ProductMarginQubitOrder.common_lower_trace_bound"),
+                H("The closed-disk common-trace bound"), StatementSource.FromLean(),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Quantum/codex2026productmargin")),
+                Blocks(Paragraph(Text("For independent local closed-disk coordinates with nonnegative x less than one, every complex PSD common lower matrix K of the two actual product margins has trace at most (1-s)/(1+s), where s is the square root of the product of the two reliabilities z squared divided by one minus x squared. The proof constructs an explicit identity split and evaluates its quadratic energy. A zero denominator forces a pure local factor, handled by the annihilating split below. Neither K nor the individual product margins are required to be invertible, and K need not commute with them. The exceptional x=1 factors require the separate product-state entropy argument."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("pure-common-lower"),
                 DeclarationHandle.Create("D5/S3/Quantum/Information/ProductMarginQubitOrder.common_lower_zero_of_pure_left"),
                 H("The distinct pure-factor boundary"), StatementSource.FromLean(),

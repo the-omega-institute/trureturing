@@ -46,7 +46,8 @@ private lemma gamma_pos {P Q K : Matrix n n ℂ}
   have hp := (Matrix.le_iff.mp hKP).smul (by norm_num : (0 : ℝ) ≤ 1 / 2)
   have hq := (Matrix.le_iff.mp hKQ).smul (by norm_num : (0 : ℝ) ≤ 1 / 2)
   have hk := hK.smul (by norm_num : (0 : ℝ) ≤ 1 / 2)
-  fin_cases a <;> fin_cases b <;> simpa [gamma] using (by first | exact hp | exact hq | exact hk)
+  fin_cases a <;> fin_cases b <;>
+    first | simpa [gamma] using hp | simpa [gamma] using hq | simpa [gamma] using hk
 
 private lemma block_pos {P Q K : Matrix n n ℂ}
     (hK : K.PosSemidef) (hKP : K ≤ P) (hKQ : K ≤ Q) :

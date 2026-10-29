@@ -288,7 +288,7 @@ private theorem re_trace_cfc {A : Matrix n n ℂ} (hA : A.IsHermitian) (f : ℝ 
     Matrix.trace_diagonal, Complex.re_sum]
   exact Finset.sum_congr rfl fun i _ => by simp
 
-private theorem entropy_eq_spectral (rho : DensityState n) :
+theorem entropy_eq_spectral (rho : DensityState n) :
     vonNeumannEntropy rho = spectralEntropy (density_posSemidef rho).isHermitian := by
   let M : Matrix n n ℂ := CStarMatrix.ofMatrix.symm rho.1
   have hM : M.IsHermitian := (density_posSemidef rho).isHermitian
