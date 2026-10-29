@@ -410,8 +410,8 @@ private theorem positive_completion {α : Type*} [Fintype α] [Nonempty α]
       (show -(N / 2) ≤ w i ∧ w i ≤ N / 2 by rw [hhalf]; exact hbound i)
     simpa only [← hstep i, potential] using hh
   have hzero : ∑ i, w i = 0 := by
-    have hh := Finset.sum_congr (s := Finset.univ) (t := Finset.univ) rfl
-      (fun i _ => hpotential i)
+    have hh : (∑ i, (potential (σ i) - potential i)) = ∑ i, w i :=
+      Finset.sum_congr rfl (fun i _ => hpotential i)
     rw [Finset.sum_sub_distrib, Equiv.sum_comp σ potential, sub_self] at hh
     exact hh.symm
   have hmass : mass w (roots.flatMap (packet σ w Q)) = 0 := by
