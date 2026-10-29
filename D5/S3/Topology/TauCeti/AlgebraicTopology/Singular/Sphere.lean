@@ -2,14 +2,8 @@ import D5.S3.Topology.TauCeti.AlgebraicTopology.Singular.MayerVietoris.Reduced
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Sphere.Equator
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Sphere.Puncture
 import D5.S3.Topology.TauCeti.AlgebraicTopology.Sphere.Zero
-import D5.S3.Topology.TauCeti.Analysis.Normed.Group.BallSphere
-import Mathlib.Analysis.InnerProductSpace.Orientation
-import Mathlib.Analysis.InnerProductSpace.Projection.FiniteDimensional
-import D5.S3.Topology.TauCeti.AlgebraicTopology.Disk
 import D5.S3.Topology.TauCeti.Analysis.Normed.Module.Ball.Homeomorph
-import D5.S3.Topology.TauCeti.Analysis.InnerProductSpace.LinearIsometry
 import D5.S3.Topology.TauCeti.Analysis.InnerProductSpace.OrthogonalLast
-import D5.S3.Topology.TauCeti.Geometry.Sphere.LinearIsometry
 
 /-!
 This file is a minimal source port adapted from TauCetiProject/TauCeti at immutable
