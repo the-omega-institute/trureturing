@@ -1,6 +1,6 @@
-/- GID: D5/S3/VertexAlgebra/BcGhostFock
+/- GID: D5/S3/Quantum/Fermionic/BcGhostFock
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/BcGhostFock
+   mirror-B: D5/B/S3/Quantum/Fermionic/BcGhostFock
    mirror-E: none(waiver:algebraic-ghost-car)
    anchors: []
    utility: none
@@ -13,7 +13,7 @@ import D5.S3.Quantum.Fermionic.CountableOccupationFock
 open D5.S3.Quantum.Fermionic.CountableOccupationFock
 
 noncomputable section
-namespace D5.S3.VertexAlgebra.BcGhostFock
+namespace D5.S3.Quantum.Fermionic.BcGhostFock
 
 def b (m : ℤ) : Module.End ℂ Fock :=
   if m ≤ -2 then create (2 * (-m-2).toNat)
@@ -94,4 +94,4 @@ theorem ghost_parity (m : ℤ) :
     · simpa [c, hm, mode] using parity_odd (2*(1-m).toNat+1) true
     · simpa [c, hm, mode] using parity_odd (2*(m-2).toNat) false
 
-end D5.S3.VertexAlgebra.BcGhostFock
+end D5.S3.Quantum.Fermionic.BcGhostFock

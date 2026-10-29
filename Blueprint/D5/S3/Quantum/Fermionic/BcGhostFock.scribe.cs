@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Fermionic;
 
 internal sealed class BcGhostFockDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/VertexAlgebra/BcGhostFock.";
+    private const string Prefix = "D5/S3/Quantum/Fermionic/BcGhostFock.";
     private static Formula V(string x) => F.Id(x);
     private static Formula C(string name, params Formula[] args)
     {

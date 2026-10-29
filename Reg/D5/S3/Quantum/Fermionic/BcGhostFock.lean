@@ -1,14 +1,14 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
-import D5.S3.VertexAlgebra.BcGhostFock
+import D5.S3.Quantum.Fermionic.BcGhostFock
 
 /-! A source-family audit candidate for the all-integer mixed ghost relation. -/
 
 noncomputable section
-namespace Reg.D5.S3.VertexAlgebra.BcGhostFock
+namespace Reg.D5.S3.Quantum.Fermionic.BcGhostFock
 
 open _root_.D5.S3.Quantum.Fermionic.CountableOccupationFock
-open _root_.D5.S3.VertexAlgebra.BcGhostFock
+open _root_.D5.S3.Quantum.Fermionic.BcGhostFock
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
@@ -60,8 +60,8 @@ def family : Registration arena (type_of% @ghost_mixed_car) where
 
 def mixed_audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@ghost_mixed_car) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.VertexAlgebra.BcGhostFock.mixedUnit
-  realizationName := `Reg.D5.S3.VertexAlgebra.BcGhostFock.family
+  unitName := `Reg.D5.S3.Quantum.Fermionic.BcGhostFock.mixedUnit
+  realizationName := `Reg.D5.S3.Quantum.Fermionic.BcGhostFock.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -78,7 +78,7 @@ def mixed_audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := some ℤ
   sourceSelection := some {
-    owner := `D5.S3.VertexAlgebra.BcGhostFock
+    owner := `D5.S3.Quantum.Fermionic.BcGhostFock
     definition := none
     coordinates := #[1]
     readouts := #[{
@@ -91,4 +91,4 @@ def mixed_audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   familyRecord := none
   options := #[]
 
-end Reg.D5.S3.VertexAlgebra.BcGhostFock
+end Reg.D5.S3.Quantum.Fermionic.BcGhostFock
