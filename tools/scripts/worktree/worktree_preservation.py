@@ -86,12 +86,9 @@ def record_removal(metadata, commit, recovery_branch, predecessors=None, native_
     os.replace(staged, metadata / REMOVAL_RECORD)
 
 
-def remove_payload(target):
+def remove_payload(target, payload):
     """Retain the Git link and registration throughout fallible content deletion."""
-    reject_nested_git(target)
-    for child in target.iterdir():
-        if child.name == ".git":
-            continue
+    for child in payload:
         if child.is_dir() and not child.is_symlink():
             shutil.rmtree(child)
         else:
@@ -100,12 +97,14 @@ def remove_payload(target):
         raise Refused("worktree_payload_changed_during_removal")
 
 
-def native_removal_preflight(source, target, flags):
+def native_removal_preflight(source, target, flags, stack=None):
     """Recheck every native refusal condition immediately before payload deletion."""
-    item = qualify(source, target)
+    # The tree walk must finish before the final qualification so a concurrent
+    # lock is observed by the last refusal check before payload deletion.
+    reject_nested_git(target)
+    item = qualify(source, target, stack)
     if "locked" in item and flags.count("--force") < 2:
         raise Refused("native_locked:" + item["locked"])
-    reject_nested_git(target)
     return item
 
 
@@ -221,7 +220,10 @@ def qualify(source, path, stack=None, snapshot=None, deadline=None):
                 if stack is None:
                     with ExitStack() as probe:
                         tree_scope(probe, source, path, True)
-                else:
+                elif not any(not handle.closed
+                             and handle.scope_key == "tree:" + str(path)
+                             and handle.scope_exclusive
+                             for handle in getattr(stack, "scope_handles", [])):
                     tree_scope(stack, source, path, True)
             except Refused as error:
                 if not str(error).startswith("busy_scope:"):
@@ -421,12 +423,13 @@ def remove(options):
                     record_removal(metadata, checkpoint["commit"], recovery_branch,
                                    native_locks=checkpoint.get("native_locks", []))
                 flags = ["--force", "--force"] if "locked" in refreshed else ["--force"]
+                payload = tuple(child for child in target.iterdir() if child.name != ".git")
                 qualifying = True
-                native_removal_preflight(source, target, flags)
+                native_removal_preflight(source, target, flags, stack)
                 qualifying = False
                 removing = True
                 with payload_removal_budget(options.force) as deadline:
-                    remove_payload(target)
+                    remove_payload(target, payload)
                 remaining = None if deadline is None else deadline - time.monotonic()
                 if remaining is not None and remaining <= 0:
                     raise subprocess.TimeoutExpired(["worktree", "remove"], 300)
