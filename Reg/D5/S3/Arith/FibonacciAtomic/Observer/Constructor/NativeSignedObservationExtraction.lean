@@ -103,7 +103,7 @@ noncomputable def registration : LeanInformationAudit.Contract.Registration.{0,1
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativeSignedObservationExtraction
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeSignedObservationExtraction
     definition := none
     coordinates := #[0,1,4,5,6,7]
     readouts := #[{

@@ -3,12 +3,14 @@
    mirror-B: none(waiver:unbounded-symbolic-proof)
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
-   utility: kind=checker; basis=terminal=gid:D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeSignedObservationExtraction.entire_input_extraction; instance=D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeSignedObservationExtraction.endpoint
+   utility: kind=checker; basis=consumer=D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeSignedObservationExtraction.entire_input_extraction; instance=D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeSignedObservationExtraction.endpoint
    digest: Exact signed mixed-epoch extraction with complete original row records. -/
 
 import D5.S3.Arith.FibonacciAtomic.Observer.NativeHistoryCells
 import D5.S3.Arith.FibonacciAtomic.Observer.NativePayloadHistoryInstallation
 import D5.S3.Arith.FibonacciAtomic.Observer.NativeSimultaneousPrefixSeparation
+
+/-! Finite signed observations retain the whole original source and both complete rows. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -60,12 +62,13 @@ private theorem endpoint_exact {X : Type} (d : Nat) (a p : Address) (t : Term X)
       | of c => cases c with
         | inl c =>
             change ((subtree (b :: p) (substitution^[epoch] (.of c))).map
-              (fun g => MixedExpr.ground g)).map (eval v) = _
+              (fun g => MixedExpr.ground g)).map (eval v) =
+                subtree (b :: p) (substitution^[epoch] (.of c))
             cases subtree (b :: p) (substitution^[epoch] (.of c)) <;> rfl
         | inr x => simp only [DeepAt] at deep; simp only [List.length_cons] at bound; omega
       | mul l r =>
           have bd : (a ++ [b]).length + p.length < d := by
-            simp only [List.length_append, List.length_singleton, List.length_cons] at *
+            simp only [List.length_append, List.length_cons, List.length_nil] at *
             omega
           have pair := Function.Semiconj₂.iterate
             (show Function.Semiconj₂ substitution FreeMagma.mul FreeMagma.mul from
@@ -88,16 +91,17 @@ abbrev Program (X : Type) := Option (List (Constraint X))
 def ProgramHolds {X : Type} (v : X → Source) (program : Program X) : Prop :=
   ∃ cs, program = some cs ∧ ∀ c ∈ cs, ConstraintHolds v c
 
-def appendProgram {X : Type} (left right : Program X) : Program X := do
-  let l ← left
-  let r ← right
-  pure (l ++ r)
+def appendProgram {X : Type} (left right : Program X) : Program X :=
+  match left, right with
+  | some l, some r => some (l ++ r)
+  | _, _ => none
 
 private theorem append_exact {X : Type} (v : X → Source) (left right : Program X) :
     ProgramHolds v (appendProgram left right) ↔
       ProgramHolds v left ∧ ProgramHolds v right := by
   cases left <;> cases right <;>
-    simp [appendProgram, ProgramHolds, List.forall_mem_append]
+    simp only [appendProgram, ProgramHolds, Option.some.injEq, reduceCtorEq,
+      false_and, exists_false, exists_eq_left, and_false, List.forall_mem_append]
 
 def compileList {X Y : Type} (compile : Y → Program X) : List Y → Program X
   | [] => some []
@@ -112,10 +116,10 @@ private theorem list_exact {X Y : Type} (compile : Y → Program X) (v : X → S
 
 /-- Both endpoints are computed before either comparison sign is accepted. -/
 def comparison {X : Type} (t : Term X) (sign : Bool)
-    (a : Nat) (p : Address) (b : Nat) (q : Address) : Program X := do
-  let E ← endpoint a p t
-  let F ← endpoint b q t
-  pure [(sign,E,F)]
+    (a : Nat) (p : Address) (b : Nat) (q : Address) : Program X :=
+  match endpoint a p t, endpoint b q t with
+  | some E, some F => some [(sign,E,F)]
+  | _, _ => none
 
 private theorem comparison_exact {X : Type} (d : Nat) (t : Term X)
     (deep : DeepAt d [] t) (v : X → Source) (sign : Bool)
@@ -130,8 +134,8 @@ private theorem comparison_exact {X : Type} (d : Nat) (t : Term X)
           subtree q (substitution^[b] (evaluate v t))) := by
   rw [← endpoint_exact d [] p t deep (by simpa using hp) a v,
     ← endpoint_exact d [] q t deep (by simpa using hq) b v]
-  cases endpoint a p t <;> cases endpoint b q t <;> cases sign <;>
-    simp [comparison, ProgramHolds, ConstraintHolds]
+  cases hE : endpoint a p t <;> cases hF : endpoint b q t <;> cases sign <;>
+    simp [comparison, hE, hF, ProgramHolds, ConstraintHolds]
 
 def recordAddresses : Record → List Address
   | .literal _ p _ => [p]
