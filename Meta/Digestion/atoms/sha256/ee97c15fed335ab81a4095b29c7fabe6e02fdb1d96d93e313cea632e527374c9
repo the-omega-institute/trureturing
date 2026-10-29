@@ -1,0 +1,55 @@
+**引理 8.3（连续赤字与合法等删联盟）。** 对 $z,s\in[0,1]$，置
+
+$$
+\mathfrak d_H(z,s)=\sqrt{zs}-\left(\frac12+H\right)z-\left(\frac12-H\right)s .
+$$
+
+则
+
+$$
+\max_{z,s\in[0,1]}\mathfrak d_H(z,s)\le\frac{2H^2}{1+2H},
+\qquad
+D_{a,b}\le\frac{4\sqrt{ab}\,H^2}{1+2H}.
+\tag{8.5}
+$$
+
+令
+
+$$
+ m_a=\max\left\{1,\left\lfloor\frac L4+\frac12\right\rfloor\right\},
+\qquad
+ C_a^\#=(A\setminus K)\sqcup(B\setminus L'),
+\quad |K|=|L'|=m_a .
+$$
+
+则 $C_a^\#$ 是实际合法联盟，并且
+
+$$
+\frac{\Delta(C_a^\#;\phi)}{2\sqrt{ab}}
+ =m_a\delta\left[
+ H-\frac{m_a\delta}
+ {2\bigl(\sqrt{1-m_a/a}+\sqrt{1-m_a/b}\bigr)^2}
+ \right].
+\tag{8.6}
+$$
+
+**证明。** 令 $q=\sqrt{z/s}$（$s=0$ 时直接取值为非正），则
+
+$$
+\mathfrak d_H(z,s)=s\left[q-\left(\frac12+H\right)q^2-\left(\frac12-H\right)\right].
+$$
+
+对固定 $s$，右侧关于 $q$ 的顶点为 $q=(1+2H)^{-1}$，其值为 $2H^2s/(1+2H)$，故 (8.5) 的第一式成立。对实际联盟，(4.9) 给出
+$\Delta/(2\sqrt{ab})=\mathfrak d_H(i/a,j/b)$；取最大值即得第二式。
+
+对 $C_a^\#$ 令 $z=1-m_a/a$、$s=1-m_a/b$。恒等式
+
+$$
+\sqrt{zs}=1-\frac12\left(\frac{m_a}{a}+\frac{m_a}{b}\right)
+-\frac12(\sqrt z-\sqrt s)^2
+$$
+
+和 $z-s=-m_a\delta$ 给出 (8.6)。由 $\log a\le a-1$，
+$m_a\le1+L/4\le(a+3)/4\le a/2$（$a\ge5$），
+所以两个删除集合均为合法的有限标号集合。∎
+
