@@ -1,0 +1,172 @@
+**Proposition 135.2 (rank target, unavoidable terminal discrepancy and exact cancellation criterion).** Under Definition 135.1, for every allowed tuple the class $\mathscr D_{12}(a,\eta,d,b)$ is nonempty, every $D$ in that class satisfies $m(D_y)>0$ for each $y\in\mathcal L$, and
+
+$$
+\operatorname{rank}A^f=2.
+$$
+
+For every $D\in\mathscr D_{12}(a,\eta,d,b)$, write $q=q_D$ and $\delta=q-cg$. Then
+
+$$
+\begin{gathered}
+0<q<1\quad m\text{-a.e.},\qquad \delta\ne0\text{ in }L^2(m),\\
+\langle b,\delta\rangle_m
+=\langle g_{2d},\delta\rangle_m
+=\langle g_{3d},\delta\rangle_m=0,\\
+m(\{\delta>0\})>0,\qquad m(\{\delta<0\})>0,
+\qquad q/g\text{ is not constant }m\text{-a.e.}
+\end{gathered}
+$$
+
+Define the separate comparison and correction matrices by
+
+$$
+\begin{aligned}
+(B_D)_{yz}&=c\langle g\mathbf1_{D_y},P(g\mathbf1_{D_z})\rangle_m,\\
+(E_D)_{yz}&=\langle g\mathbf1_{D_y},P(\delta\mathbf1_{D_z})\rangle_m.
+\end{aligned}
+$$
+
+The matrix $B_D$ is symmetric positive definite, of rank four, while
+
+$$
+A^D=B_D+E_D.
+$$
+
+With the positive definite square root of $B_D$, put
+
+$$
+F_D=B_D^{-1/2}E_DB_D^{-1/2}.
+$$
+
+The actual matrix $A^D$ and $F_D$ need not be symmetric. The exact finite-dimensional criterion is
+
+$$
+\begin{gathered}
+\operatorname{rank}A^D=4-\dim_{\mathbb R}\ker(I_4+F_D),\\
+\operatorname{rank}A^D\le2
+\quad\Longleftrightarrow\quad
+\dim_{\mathbb R}\ker(I_4+F_D)\ge2,\\
+\operatorname{rank}A^D\le2\quad\Longrightarrow\quad
+\operatorname{rank}E_D\ge2.
+\end{gathered}
+$$
+
+Thus the requirement at $-1$ is a geometric eigenspace dimension of at least two, not merely an algebraic multiplicity. The prescribed terminal marginal masses also satisfy
+
+$$
+t_r:=\int_Gg_{rd}f_3\,dm
+=c\langle b,P^{r-1}b\rangle_m\quad(r\in\{2,3,4\}),
+\qquad 0<t_4<t_3<t_2\le\frac14.
+$$
+
+These source-specific deductions are `repo-derived` relative to Definition 134.1 and its inherited suppliers. The finite linear vector-measure theorem, spectral calculus and finite-rank algebra used in the proof are attributed intermediates, rather than separate new general theorems.
+
+*Proof.* First obtain the common partition for the fixed linear marginals. On the Borel sigma-algebra of the original whole $G$, let
+
+$$
+\nu_r(A)=\int_Ag_{rd}\,dm,\qquad r=2,3,4.
+$$
+
+These are three finite probability measures, each absolutely continuous with respect to coordinate Lebesgue measure. For any Borel $A$, the function $t\mapsto\nu_r(A\cap\{x\le t\})$ is continuous: coordinate hyperplanes have Lebesgue measure zero, so dominated convergence gives continuity at every $t$. Its limits at the two ends of the real line are $0$ and $\nu_r(A)$. If $\nu_r(A)>0$, it therefore attains $\nu_r(A)/2$, proving atomlessness on this very Borel space. The pointwise Borel vector $(f_y)_{y\in\mathcal L}$ has nonnegative entries summing to one. Apply Dvoretzky–Wald–Wolfowitz, [*Relations among certain ranges of vector measures*, Pacific J. Math. 1 (1951), 59–74, §3 Theorem 4 and Lemma 2](https://msp.org/pjm/1951/1-1/pjm-v1-n1-p06-s.pdf), with these three measures and four labels. Its equality of probability-vector and decomposition-vector ranges, with the definitions on pp. 59–60 and Lemma 2 on pp. 66–67, gives one Borel partition preserving all twelve entries simultaneously. Since $g_{rd}>0$ almost everywhere and every $f_y>0$ everywhere, each prescribed entry is strictly positive. Hence each cell of every marginal-feasible partition has positive $m$-measure. This use of the theorem preserves fixed linear integrals only; it does not prescribe the partition-dependent terminal factor or the joint coefficients.
+
+For the rank computation, the spectral-calculus identity already used in §134 gives, for real $u\in L^2(m)$ and $s>0$,
+
+$$
+\|T_su\|_2^2
+=\int_{[0,\infty)}e^{-2s\lambda}\,d\langle u,E_K(\lambda)u\rangle_m.
+$$
+
+The multiplier is strictly positive at every finite $\lambda\ge0$. Thus $T_s$ is injective, and $\langle u,Pu\rangle_m=\|T_{d/2}u\|_2^2>0$ when $u\ne0$.
+
+The class $b$ is nonconstant. Indeed, if it were constant, mass one would force $g_d=1$. For every $0<u<d$, propagation and conservation would then give $T_{d-u}(g_u-1)=0$, hence $g_u=1$ by injectivity. Choose a nonzero nonnegative continuous compactly supported function $\psi$ away from $e$. Strict positivity of $h$ off $e$ gives $\int_G\psi\,dm>0$. On the other hand the continuous source start implies $\mathbb E_e[\psi(Z_u)]\to\psi(e)=0$ as $u\downarrow0$, by bounded convergence. The supplied density formula with $g_u=1$ would make all these expectations equal to the fixed positive integral. This contradiction proves nonconstancy without replacing the source law by a stationary initial law.
+
+Let $b^0=1$ and define a real $2$-by-$2$ matrix and a real $4$-by-$2$ matrix by
+
+$$
+H_{ij}=\langle gb^i,P(gb^j)\rangle_m\quad(i,j\in\{0,1\}),\qquad
+R=\begin{pmatrix}
+3/8&-c/2\\
+3/8&-c/2\\
+0&c\\
+1/4&0
+\end{pmatrix}.
+$$
+
+All entries are finite because $g\in L^2(m)$, $b$ is bounded and $P$ is an $L^2$ contraction. The classes $g,gb$ are linearly independent: $g>0$ almost everywhere would otherwise make $b$ constant. For $\xi=(\xi_0,\xi_1)\ne0$,
+
+$$
+\xi^{\mathsf T}H\xi
+=\|T_{d/2}(g(\xi_0+\xi_1b))\|_2^2>0.
+$$
+
+Thus $H$ is positive definite. The rows of $R$ express the four $f_y$ in the basis $(1,b)$. Propagation gives $Pf_3=cPb=cg$ as an $m$-class, and consequently
+
+$$
+A^f=cRHR^{\mathsf T}.
+$$
+
+The minor of $R$ formed by rows $3,B$ has determinant $-c/4\ne0$. Hence $\operatorname{rank}R=2$, and positive definiteness of $H$ gives $\ker A^f=\ker R^{\mathsf T}$; rank-nullity proves $\operatorname{rank}A^f=2$. This argument concerns the prescribed stochastic slice alone.
+
+Now fix any $D\in\mathscr D_{12}(a,\eta,d,b)$. Both $\mathbf1_{D_3}$ and $1-\mathbf1_{D_3}$ are nonzero nonnegative $L^2(m)$ classes. Positivity improvement of the original semigroup, as supplied in Theorem 117.2 using the irreducibility equivalence of Lenz–Stollmann–Veselić, [*The Allegretto–Piepenbrink Theorem for Strongly local forms*, Theorem 1.1](https://arxiv.org/html/0811.2135v1#S1.Thmtheorem1), gives $P\mathbf1_{D_3}>0$ and $P(1-\mathbf1_{D_3})>0$ almost everywhere. Conservation therefore proves $0<q<1$ almost everywhere.
+
+Put $v=\mathbf1_{D_3}-cb$. It is a bounded real class, and $\delta=Pv\in L^2(m)$. If $\delta=0$, injectivity of $P$ would give $\mathbf1_{D_3}=cb$ almost everywhere, impossible because $0<cb\le1/4$ everywhere. For the three moment identities, the label-$3$ marginal constraints say
+
+$$
+\langle g_{2d},v\rangle_m
+=\langle g_{3d},v\rangle_m
+=\langle g_{4d},v\rangle_m=0.
+$$
+
+Since $Pb=g_{2d}$, $Pg_{2d}=g_{3d}$ and $Pg_{3d}=g_{4d}$, self-adjointness gives exactly
+
+$$
+\langle b,\delta\rangle_m=\langle Pb,v\rangle_m=0,\qquad
+\langle g_{2d},\delta\rangle_m=\langle Pg_{2d},v\rangle_m=0,\qquad
+\langle g_{3d},\delta\rangle_m=\langle Pg_{3d},v\rangle_m=0.
+$$
+
+All pairings are finite by boundedness of $b$, the $L^2$ density bounds and the contraction property. Nonzero $\delta$, strict positivity of $b$ and $\langle b,\delta\rangle_m=0$ force both sign sets of $\delta$ to have positive measure. If $q/g$ were a constant $k$ almost everywhere, this same moment equation would give $(k-c)\langle b,g\rangle_m=0$. The last inner product is finite and strictly positive, so $k=c$, contradicting $\delta\ne0$. No identity $\int_G\delta\,dm=0$ is used or asserted.
+
+The comparison matrices are well defined: $g\mathbf1_{D_y}$ and $\delta\mathbf1_{D_z}$ are in real $L^2(m)$. For $x=(x_y)_{y\in\mathcal L}\in\mathbb R^4$,
+
+$$
+x^{\mathsf T}B_Dx
+=c\left\|T_{d/2}\left(g\sum_{y\in\mathcal L}x_y\mathbf1_{D_y}\right)\right\|_2^2.
+$$
+
+If $x\ne0$, disjointness and positive measure of every cell, together with $g>0$ almost everywhere, make the vector inside $T_{d/2}$ nonzero. Injectivity proves positive definiteness of the symmetric $B_D$. Substitute the exact equality $q=cg+\delta$ in the actual coefficient, retaining its actual terminal factor:
+
+$$
+\begin{aligned}
+A^D_{yz}
+&=\langle g\mathbf1_{D_y},P(\mathbf1_{D_z}q)\rangle_m\\
+&=c\langle g\mathbf1_{D_y},P(g\mathbf1_{D_z})\rangle_m
++\langle g\mathbf1_{D_y},P(\delta\mathbf1_{D_z})\rangle_m.
+\end{aligned}
+$$
+
+This proves $A^D=B_D+E_D$. Ordinary finite-dimensional square-root algebra gives
+
+$$
+A^D=B_D^{1/2}(I_4+F_D)B_D^{1/2}.
+$$
+
+Multiplication by the invertible square roots preserves rank. Rank-nullity for $I_4+F_D$ proves the displayed rank formula and its equivalent geometric-eigenspace condition, without a symmetry assumption on $F_D$. Finally,
+
+$$
+4=\operatorname{rank}B_D
+=\operatorname{rank}(A^D-E_D)
+\le\operatorname{rank}A^D+\operatorname{rank}E_D
+$$
+
+proves the correction-rank requirement when $\operatorname{rank}A^D\le2$. Positive definiteness of the comparison matrix has not been transferred to the actual matrix.
+
+For the marginal masses, propagation gives $g_{rd}=P^{r-1}b$, so self-adjointness proves the stated formula for $t_r$. Let $\sigma_b$ be the spectral measure of $b$ for $K$. Since $\ker K=\mathbb C1$ and $b$ is nonconstant, $\sigma_b((0,\infty))>0$. For $r=2,3$,
+
+$$
+t_r-t_{r+1}
+=c\int_{[0,\infty)}e^{-(r-1)d\lambda}(1-e^{-d\lambda})\,d\sigma_b(\lambda)>0.
+$$
+
+The integrand is strictly positive on $(0,\infty)$. Also $t_4>0$ follows from $g_{4d}>0$ almost everywhere and $f_3>0$, and $t_2\le1/4$ follows from $f_3\le1/4$ and the mass-one density. No spectral gap or numerical rank approximation enters any of these conclusions. $\square$
+
