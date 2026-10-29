@@ -99,10 +99,11 @@ private theorem charges_distinct : ∃ k l, charges k ≠ charges l := by
 
 private theorem gauge_inverse (φ : ℝ) : ungauge φ * gauge φ = 1 := by
   change Matrix.diagonal _ * Matrix.diagonal _ = _
-  rw [Matrix.diagonal_mul_diagonal]
-  ext i j
-  fin_cases i <;> fin_cases j <;>
-    simp [Complex.exp_neg, Complex.exp_ne_zero]
+  rw [Matrix.diagonal_mul_diagonal, Matrix.diagonal_eq_one]
+  funext i
+  change Complex.exp (-((i.val : ℂ) * φ * Complex.I)) *
+    Complex.exp ((i.val : ℂ) * φ * Complex.I) = 1
+  rw [← Complex.exp_add, neg_add_cancel, Complex.exp_zero]
 
 private theorem charge_conjugation (φ : ℝ) (k : Fin 4) :
     gauge φ * kraus k * ungauge φ =
