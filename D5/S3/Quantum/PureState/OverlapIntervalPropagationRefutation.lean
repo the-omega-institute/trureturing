@@ -186,11 +186,12 @@ private lemma span_saturation {n : ℕ} (a b c : EuclideanSpace ℂ (Fin n))
     change ‖inner ℂ b c‖ ^ 2 = 1 / 2 at hbc
     rw [hac, hbc]
     norm_num
-  apply sub_eq_zero.mp
-  apply norm_eq_zero.mp
-  apply sq_eq_zero_iff.mp
-  rw [norm_sub_sq (𝕜 := ℂ), hc, hip, hp]
-  norm_num
+  apply eq_of_norm_le_re_inner_eq_norm_sq (𝕜 := ℂ)
+  · apply (sq_le_sq₀ (norm_nonneg _) (norm_nonneg _)).mp
+    rw [hc, hp]
+    norm_num
+  · rw [hp]
+    exact hip
 
 private lemma forced_overlap {n : ℕ} (ψ : Fin 4 → EuclideanSpace ℂ (Fin n))
     (hψ : realizes 2 3 givenOverlaps ψ) : overlap (ψ 2) (ψ 3) = 1 / 4 := by
