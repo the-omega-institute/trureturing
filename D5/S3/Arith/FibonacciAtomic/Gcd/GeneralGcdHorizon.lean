@@ -1,6 +1,6 @@
 /- GID: D5/S3/Arith/FibonacciAtomic/Gcd/GeneralGcdHorizon
    generality: I
-   mirror-B: D5/B/S3/Arith/FibonacciAtomic/GeneralGcdHorizon
+   mirror-B: D5/B/S3/Arith/FibonacciAtomic/Gcd/GeneralGcdHorizon
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
