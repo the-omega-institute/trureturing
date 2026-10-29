@@ -41,11 +41,11 @@ internal sealed class FiniteFiberEntropyDocument : IScribeDocumentDefinition
             H("Entropy equality under uniformly finite fibers"),
             StatementSource.FromAuthor(Disp(new Formula.Aligned([
                 Seq(All("X", Id("Type")), Sp, All("Y", Id("Type"))),
-                Seq(Instance("UniformSpace", "X"), Sp, Instance("CompactSpace", "X"), Sp,
-                    Instance("UniformSpace", "Y"), Sp, Instance("CompactSpace", "Y"), Sp, Instance("T2Space", "Y"), Comma),
-                Seq(All("S", Seq(Id("X"), To, Id("X"))), Sp,
-                    All("T", Seq(Id("Y"), To, Id("Y"))), Sp,
-                    All("π", Seq(Id("X"), To, Id("Y")))),
+                Seq(Grp(Instance("UniformSpace", "X"), Sp, Instance("CompactSpace", "X"), Sp,
+                    Instance("UniformSpace", "Y"), Sp, Instance("CompactSpace", "Y"), Sp, Instance("T2Space", "Y"), Comma)),
+                Seq(All("S", Seq(Id("X"), Sp, To, Sp, Id("X"))), Sp,
+                    All("T", Seq(Id("Y"), Sp, To, Sp, Id("Y"))), Sp,
+                    All("π", Seq(Id("X"), Sp, To, Sp, Id("Y")))),
                 Seq(Call("Continuous", Id("S")), Sp, Rightarrow, Sp,
                     Call("Continuous", Id("π")), Sp, Rightarrow),
                 Seq(Call("Function.Surjective", Id("π")), Sp, Rightarrow, Sp,
@@ -54,7 +54,8 @@ internal sealed class FiniteFiberEntropyDocument : IScribeDocumentDefinition
                 Seq(Grp(All("y", Id("Y")), Sp, Call("Set.Finite", Fiber), Sp, Land, Sp,
                     Call("Set.ncard", Fiber), Sp, Le, Sp, Id("M")), Sp, Rightarrow),
                 Seq(Entropy("S"), Sp, Eq, Sp, Entropy("T"))
-            ]))), AssessedProvenance.FromRepo(), Blocks(
+            ]))), AssessedProvenance.FromRepo(
+                LibraryNoteRef.Create("D5/L/Dynamics/bowen1971entropy")), Blocks(
                 Paragraph(Text("For a symmetric source entourage U and fixed block length n, the n-step balls "
                     + "centered on a fiber cover that fiber using at most M centers. Since π is a closed map, "
                     + "this cover extends to the inverse image of a neighborhood of the base point. "
