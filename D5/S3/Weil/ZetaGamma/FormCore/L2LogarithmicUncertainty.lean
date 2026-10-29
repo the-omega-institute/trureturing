@@ -1,5 +1,5 @@
 /- GID: D5/S3/Weil/ZetaGamma/FormCore/L2LogarithmicUncertainty
-   generality: G
+   generality: I
    mirror-B: none(waiver:source-capacity-repair)
    mirror-E: none(waiver:source-capacity-repair)
    anchors: []
