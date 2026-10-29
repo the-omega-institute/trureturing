@@ -59,7 +59,7 @@ def family : Registration arena (type_of% @native_count) where
     refine ⟨⟨0,0⟩,[],[1],?_⟩
     norm_num [actual, realize, count, transition, gauss, Fin.sum_univ_succ, Polynomial.coeff_one]
 
-def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@native_count) (type_of% actual) Type Unit where
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@native_count) (type_of% actual) Unit Unit where
   unitName := `D5.S3.Combinatorics.Partitions.BarreseOrderedLevels.native_count.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Partitions.BarreseOrderedLevels.nativecount.family
   realizationSource := none
@@ -75,7 +75,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@native_coun
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (List ℕ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Partitions.BarreseOrderedLevels
     definition := none
@@ -138,7 +138,7 @@ def family : Registration arena (type_of% @source2023_count) where
     refine ⟨⟨1,1,⟨by decide⟩⟩,(fun _ => 0),(fun _ => 2),?_⟩
     norm_num [actual, realize, count, transition, gauss, Fin.sum_univ_succ,
       List.ofFn_succ, Polynomial.coeff_one]
-def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@source2023_count) (type_of% actual) (ℕ → Type) Unit where
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@source2023_count) (type_of% actual) Unit Unit where
   unitName := `D5.S3.Combinatorics.Partitions.BarreseOrderedLevels.source2023_count.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Partitions.BarreseOrderedLevels.source2023count.family
   realizationSource := none
@@ -154,7 +154,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@source2023_
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some (fun n => Fin n → ℕ)
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Partitions.BarreseOrderedLevels
     definition := none

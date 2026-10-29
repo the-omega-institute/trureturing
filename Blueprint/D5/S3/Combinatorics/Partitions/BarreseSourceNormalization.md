@@ -58,7 +58,7 @@ Lean statement: `D5/S3/Combinatorics/Partitions/BarreseSourceNormalization.LFibe
 
 *Commentary.*
 
-LFiber(m,c) consists of every positive source column tuple whose bottom-up totals are the reverse of c and zero thereafter, with every entry of c strictly positive. For nonempty c this is exactly the trimmed top-down tuple in Definition 4: each displayed level is nonempty and every higher one is empty. An explicit zero in a nonempty target tuple is rejected. The empty-board extension used here is l(empty)=[], which is stated separately because Definition 4 does not define its largest nonempty level.
+LFiber(m,c) consists of every positive source column tuple whose bottom-up totals are the reverse of c and zero thereafter, with every entry of c strictly positive. For nonempty c this is exactly the trimmed top-down tuple in Definition 4 of Barrese, Loehr, Remmel and Sagan, arXiv:1508.05944v1: each displayed level is nonempty and every higher one is empty. An explicit zero in a nonempty target tuple is rejected. The empty-board extension used here is l(empty)=[], which is stated separately because that definition does not define its largest nonempty level.
 
 **Theorem 1.5 (The entire normalized all-width source count).**
 
@@ -114,7 +114,7 @@ Lean statement: `D5/S3/Combinatorics/Partitions/BarreseSourceNormalization.lOper
 
 *Commentary.*
 
-For every positive m and every c, the number of arbitrary-width positive source column tuples B satisfying lOperator(m,B)=c is the same guarded Gaussian recurrence as source2015_count. No width bound is supplied as a premise: last(c), or zero for the empty list, is derived from the bottom-level total. This answers the prescribed l-fiber question under normalized source-column notation. Counting all possible horizontal translations in an unbounded absolute grid is a different carrier; in the fixed 2023 rectangle all literal column positions remain fixed instead.
+For every positive m and every c, the number of arbitrary-width positive source column tuples B satisfying lOperator(m,B)=c is the same guarded Gaussian recurrence as source2015_count. No width bound is supplied as a premise: last(c), or zero for the empty list, is derived from the bottom-level total. This is the prescribed l-fiber count of Section 6.2 of arXiv:1508.05944v1 under normalized source-column notation. Counting all possible horizontal translations in an unbounded absolute grid is a different carrier; in the fixed 2023 rectangle all literal column positions remain fixed instead.
 
 ## References
 

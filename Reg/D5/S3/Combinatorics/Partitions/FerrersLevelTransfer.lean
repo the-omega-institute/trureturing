@@ -55,7 +55,7 @@ def family : Registration arena (type_of% @level_card) where
     refine ⟨⟨0,1,0,1⟩,0,1,?_⟩
     norm_num [actual, realize, transition, gauss]
 
-def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@level_card) (type_of% actual) (ℕ → Type) Unit where
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@level_card) (type_of% actual) Unit Unit where
   unitName := `D5.S3.Combinatorics.Partitions.FerrersLevelTransfer.level_card.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Partitions.FerrersLevelTransfer.family
   realizationSource := none
@@ -71,7 +71,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@level_card)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some Fin
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Partitions.FerrersLevelTransfer
     definition := none

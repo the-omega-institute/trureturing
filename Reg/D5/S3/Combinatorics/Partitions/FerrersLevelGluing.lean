@@ -58,7 +58,7 @@ def family : Registration arena (type_of% @flat_card) where
     refine ⟨⟨0,1,[1]⟩,0,1,?_⟩
     norm_num [actual, realize, count, transition, gauss, Fin.sum_univ_succ, Polynomial.coeff_one]
 
-def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@flat_card) (type_of% actual) (ℕ → Type) Unit where
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@flat_card) (type_of% actual) Unit Unit where
   unitName := `D5.S3.Combinatorics.Partitions.FerrersLevelGluing.flat_card.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Partitions.FerrersLevelGluing.flatcard.family
   realizationSource := none
@@ -74,7 +74,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@flat_card) 
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some Fin
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Partitions.FerrersLevelGluing
     definition := none
