@@ -109,7 +109,7 @@ private lemma gram_factorization (m : Fin 5 → Matrix (Fin 2) (Fin 2) ℂ) :
 private lemma gram_det_zero (m : Fin 5 → Matrix (Fin 2) (Fin 2) ℂ) :
     Matrix.det (Matrix.of fun i j => (m i * m j).trace) = 0 := by
   classical
-  let y : Matrix (Fin 2 × Fin 2) (Fin 5) ℂ := fun p j => m j p.2 p.1
+  let y : Matrix (Fin 2 × Fin 2) (Fin 5) ℂ := Matrix.of fun p j => m j p.2 p.1
   have hk : LinearMap.ker (Matrix.mulVecLin y) ≠ ⊥ :=
     LinearMap.ker_ne_bot_of_finrank_lt (by
       norm_num [Module.finrank_fintype_fun_eq_card])
