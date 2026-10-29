@@ -56,7 +56,10 @@ def PM4.edges : PM4 → Finset (Four × Four)
   | .p13_24 => {e13, e24}
   | .p14_23 => {e14, e23}
 
-private abbrev edgeParam (M : PM4) := M.edges
+private abbrev edgeParam (M : PM4) := {e : Four × Four // e ∈ M.edges}
+
+private instance : IsEmpty (edgeParam PM4.empty) :=
+  ⟨fun e => Finset.not_mem_empty e.1 e.2⟩
 
 private def PM4.unpaired (M : PM4) : Finset Four :=
   Finset.univ.filter fun j =>
@@ -67,6 +70,11 @@ private def arcMem (e : Four × Four) (j : Four) : Prop :=
 
 private def sideMem (ε : Fin 2) (e : Four × Four) (j : Four) : Prop :=
   if ε.1 = 0 then arcMem e j else ¬ arcMem e j
+
+private instance sideMem_decidable (ε : Fin 2) (e : Four × Four) (j : Four) :
+    Decidable (sideMem ε e j) := by
+  unfold sideMem arcMem
+  split_ifs <;> infer_instance
 
 private def min4 (n : Four → ℕ) : ℕ :=
   min (min (n 0) (n 1)) (min (n 2) (n 3))
@@ -728,8 +736,15 @@ private theorem no_increase_constant (n : Four → ℕ)
     (h0 : ¬ n 0 < n 1) (h1 : ¬ n 1 < n 2)
     (h2 : ¬ n 2 < n 3) (h3 : ¬ n 3 < n 0) :
     n = fun _ => n 0 := by
+  have h10 : n 1 = n 0 := by omega
+  have h20 : n 2 = n 0 := by omega
+  have h30 : n 3 = n 0 := by omega
   funext a
-  fin_cases a <;> omega
+  fin_cases a
+  · rfl
+  · exact h10
+  · exact h20
+  · exact h30
 
 private theorem original_four_closed_coefficient (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
@@ -815,8 +830,15 @@ private theorem matching_equations_iff (n : Four → ℕ) (Q t : ℕ) (M : PM4)
     rw [← matching_shift_mode M ell ε k 1] at h2
     rw [← matching_shift_mode M ell ε k 2] at h3
     norm_num [currentMode] at h1 h2 h3
+    have hn1 : n 1 = Q + t + matchingShift M ell ε k 1 := by omega
+    have hn2 : n 2 = Q + t + matchingShift M ell ε k 2 := by omega
+    have hn3 : n 3 = Q + t + matchingShift M ell ε k 3 := by omega
     intro a
-    fin_cases a <;> omega
+    fin_cases a
+    · exact h0
+    · exact hn1
+    · exact hn2
+    · exact hn3
 
 private theorem matching_edges_disjoint : ∀ (M : PM4) (e f : Four × Four),
     e ∈ M.edges → f ∈ M.edges → e ≠ f →
@@ -1067,7 +1089,12 @@ private theorem charge_weight_ordered (D : LatticeData)
     · rintro ⟨hc, heq⟩
       exact ⟨(matching_energy_transport n _ _ M _ hc).mpr heq,
         (compatible_matching_modes n M hc).1⟩
-  simp only [chargeWeight, orderedChargeWeight, hi, boundedModeFrequency]
+  unfold chargeWeight orderedChargeWeight
+  split_ifs with h h'
+  · rfl
+  · exact False.elim (h' (hi.mp h))
+  · exact False.elim (h (hi.mpr h'))
+  · rfl
 
 private theorem bounded_coefficient_ordered (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
@@ -1111,7 +1138,7 @@ private theorem compatible_constant_iff (N : ℕ) (M : PM4) :
   constructor
   · intro hc
     apply (edges_empty_iff M).mp
-    apply Finset.eq_empty_iff_forall_not_mem.mpr
+    apply Finset.eq_empty_iff_forall_notMem.mpr
     intro e he
     exact (hc.2 ⟨e, he⟩).2 (by simp [currentMode])
   · rintro rfl
@@ -1119,8 +1146,7 @@ private theorem compatible_constant_iff (N : ℕ) (M : PM4) :
     · intro a _
       simp [currentMode]
     · intro e
-      have h := e.2
-      simp [PM4.edges] at h
+      exact isEmptyElim e
 
 private theorem ordered_weight_incompatible (D : LatticeData)
     (i : Four → Fin D.rank) (n : Four → ℕ) (β : Charge D) (M : PM4)
@@ -1149,24 +1175,25 @@ private theorem ordered_constant_coefficient (D : LatticeData)
     orderedFourCurrentCoefficient D hD i (fun _ => N) = zeroFourCoefficient D hD i N := by
   classical
   unfold orderedFourCurrentCoefficient zeroFourCoefficient
-  simp only [min4, min_self]
-  apply Finset.sum_congr rfl
+  have hmin : min4 (fun _ => N) = N := by simp [min4]
+  have hcut : positiveChargeCutoff D hD (min4 (fun _ => N) : ℤ) =
+      positiveChargeCutoff D hD (N : ℤ) := by rw [hmin]
+  apply Finset.sum_congr hcut
   intro β hβ
   have hq : (chargeEnergy D β).toNat ≤ N := by
     have hQ : chargeEnergy D β ≤ (N : ℤ) := by simpa [positiveChargeCutoff] using hβ
     omega
   rw [Finset.sum_eq_single PM4.empty]
   · simp_rw [ordered_empty_weight]
-    have hsum : ∀ k : edgeParam PM4.empty → Fin (N + 1),
-        (∑ t : Fin (N + 1),
+    have hsum :
+        (∑ t : Fin (min4 (fun _ => N) + 1),
           if N = (chargeEnergy D β).toNat + t.1 then
             (Nat.card (IntegerFiber D t.1) : ℂ) *
               ∏ a : Four, (bilinear D (unitCharge D (i a)) β : ℂ)
           else 0) =
         (Nat.card (IntegerFiber D (N - (chargeEnergy D β).toNat)) : ℂ) *
           ∏ a : Four, (bilinear D (unitCharge D (i a)) β : ℂ) := by
-      intro k
-      let t0 : Fin (N + 1) := ⟨N - (chargeEnergy D β).toNat, by omega⟩
+      let t0 : Fin (min4 (fun _ => N) + 1) := ⟨N - (chargeEnergy D β).toNat, by rw [hmin]; omega⟩
       rw [Finset.sum_eq_single t0]
       · simp [t0, Nat.add_sub_of_le hq]
       · intro t _ hne
@@ -1178,12 +1205,7 @@ private theorem ordered_constant_coefficient (D : LatticeData)
           omega
         simp [hneq]
       · simp
-    simp_rw [hsum]
-    have hi : IsEmpty (edgeParam PM4.empty) := by
-      refine ⟨fun e => ?_⟩
-      have h := e.2
-      simpa [PM4.edges] using h
-    letI := hi
+    rw [hsum]
     simp [mul_comm]
   · intro M _ hM
     have hc : ¬ modeCompatible (fun _ => N) M := by
@@ -1251,6 +1273,12 @@ private def rotateEdgeValues (M : PM4) (α : Type*) :
     (edgeParam M → α) ≃ (edgeParam (rotateMatching M) → α) :=
   Equiv.arrowCongr (rotateEdgeEquiv M) (Equiv.refl α)
 
+private theorem rotate_values_apply (M : PM4) (α : Type*)
+    (f : edgeParam M → α) (e : edgeParam M) :
+    rotateEdgeValues M α f (rotateEdgeEquiv M e) = f e := by
+  change f ((rotateEdgeEquiv M).symm (rotateEdgeEquiv M e)) = f e
+  rw [Equiv.symm_apply_apply]
+
 private def flipSide (e : Four × Four) (ε : Fin 2) : Fin 2 :=
   if e.1 = 0 then 1 - ε else ε
 
@@ -1272,6 +1300,13 @@ private def rotateSides (M : PM4) :
     funext e
     simp [flip_side_twice]
 
+private theorem rotate_sides_apply (M : PM4) (ε : edgeParam M → Fin 2)
+    (e : edgeParam M) :
+    rotateSides M ε (rotateEdgeEquiv M e) = flipSide e.1 (ε e) := by
+  change flipSide ((rotateEdgeEquiv M).symm (rotateEdgeEquiv M e)).1
+    (ε ((rotateEdgeEquiv M).symm (rotateEdgeEquiv M e))) = _
+  rw [Equiv.symm_apply_apply]
+
 private theorem matching_shift_rotation (M : PM4) (ell : edgeParam M → ℕ)
     (ε : edgeParam M → Fin 2) (k : edgeParam M → ℕ) (a : Four) :
     matchingShift M ell ε k (a + 1) =
@@ -1282,7 +1317,10 @@ private theorem matching_shift_rotation (M : PM4) (ell : edgeParam M → ℕ)
   apply Fintype.sum_equiv (rotateEdgeEquiv M)
   intro e
   have hs := side_rotation e.1 (edges_ordered M e.1 e.2) (ε e) a
-  simpa [rotateEdgeValues, Equiv.arrowCongr, rotateSides, rotateEdgeEquiv, hs]
+  simp only [rotate_values_apply, rotate_sides_apply]
+  change ell e * (k e + if sideMem (ε e) e.1 (a + 1) then 1 else 0) =
+    ell e * (k e + if sideMem (flipSide e.1 (ε e)) (rotateEdge e.1) a then 1 else 0)
+  simp only [hs]
 
 private theorem min4_rotation (n : Four → ℕ) : min4 (rotateFour n) = min4 n := by
   dsimp [min4, rotateFour]
@@ -1300,8 +1338,10 @@ private theorem gram_rotation (D : LatticeData) (i : Four → Fin D.rank)
     D.G ((rotateFour i) (rotateEdge e).1) ((rotateFour i) (rotateEdge e).2) =
       D.G (i e.1) (i e.2) := by
   rcases e with ⟨a, b⟩
-  fin_cases a <;> fin_cases b <;> norm_num at he ⊢ <;>
-    simp [rotateEdge, rotateFour] <;> first | rfl | exact D.symmetric _ _
+  fin_cases a <;> fin_cases b
+  all_goals norm_num at he
+  all_goals simp [rotateEdge, rotateFour]
+  all_goals exact D.symmetric _ _
 
 private def unrestrictedChargeWeight (D : LatticeData) (i : Four → Fin D.rank)
     (n : Four → ℕ) (β : Charge D) (M : PM4) (ell : edgeParam M → ℕ)
@@ -1341,8 +1381,7 @@ private theorem paired_weight_rotation (D : LatticeData) (i : Four → Fin D.ran
   classical
   apply Fintype.prod_equiv (rotateEdgeEquiv M)
   intro e
-  simp only [rotateEdgeValues, Equiv.arrowCongr_apply, Equiv.refl_apply,
-    Equiv.symm_apply_apply]
+  simp only [rotate_values_apply]
   change (ell e : ℂ) * (D.G (i e.1.1) (i e.1.2) : ℂ) =
     (ell e : ℂ) * (D.G ((rotateFour i) (rotateEdge e.1).1)
       ((rotateFour i) (rotateEdge e.1).2) : ℂ)
@@ -1374,11 +1413,12 @@ private theorem unrestricted_weight_rotation (D : LatticeData) (i : Four → Fin
       exact h ((rotateEdgeEquiv M).symm e)
     · intro h e
       have h' := h (rotateEdgeEquiv M e)
-      simpa [rotateEdgeValues, Equiv.arrowCongr] using h'
+      rwa [rotate_values_apply] at h'
   unfold unrestrictedChargeWeight
-  rw [← heq, ← hpos]
-  split_ifs
+  split_ifs with h h'
   · rw [← unpaired_weight_rotation, ← paired_weight_rotation]
+  · exact False.elim (h' ⟨heq.mp h.1, hpos.mp h.2⟩)
+  · exact False.elim (h ⟨heq.mpr h'.1, hpos.mpr h'.2⟩)
   · rfl
 
 private theorem bounded_coefficient_rotation (D : LatticeData)
@@ -1413,5 +1453,81 @@ private theorem bounded_coefficient_rotation (D : LatticeData)
   intro t _
   exact unrestricted_weight_rotation D i n β M (fun e => (ell e).1) ε
     (fun e => (k e).1) t.1
+
+
+private theorem finite_residual_delta (f : ℕ → ℂ) (N x B : ℕ) (hN : N ≤ B) :
+    (∑ t : Fin (B + 1), if N = x + t.1 then f t.1 else 0) =
+      if x ≤ N then f (N - x) else 0 := by
+  classical
+  by_cases hx : x ≤ N
+  · rw [if_pos hx]
+    let t0 : Fin (B + 1) := ⟨N - x, by omega⟩
+    rw [Finset.sum_eq_single t0]
+    · simp [t0, Nat.add_sub_of_le hx]
+    · intro t _ ht
+      have hne : N ≠ x + t.1 := by
+        intro he
+        apply ht
+        apply Fin.ext
+        dsimp [t0]
+        omega
+      simp [hne]
+    · simp
+  · rw [if_neg hx]
+    apply Finset.sum_eq_zero
+    intro t _
+    have hne : N ≠ x + t.1 := by omega
+    simp [hne]
+
+private theorem bounded_division_sum (f : ℕ → ℂ) (N ell B : ℕ)
+    (hl : 0 < ell) (hN : N ≤ B) :
+    (∑ k : Fin (B + 1), if k.1 * ell ≤ N then f k.1 else 0) =
+      ∑ k ∈ Finset.range (N / ell + 1), f k := by
+  classical
+  rw [Fin.sum_univ_eq_sum_range]
+  have hb : N / ell + 1 ≤ B + 1 := by
+    have hd := Nat.div_le_self N ell
+    omega
+  calc
+    _ = ∑ k ∈ Finset.range (N / ell + 1), if k * ell ≤ N then f k else 0 := by
+      apply (Finset.sum_subset (Finset.range_mono hb) ?_).symm
+      intro k hk hnot
+      have hk' : N / ell < k := by simpa using hnot
+      have hn : ¬ k * ell ≤ N := by
+        intro he
+        have := (Nat.le_div_iff_mul_le hl).mpr he
+        omega
+      simp [hn]
+    _ = _ := by
+      apply Finset.sum_congr rfl
+      intro k hk
+      have hk' : k ≤ N / ell := by simpa using hk
+      rw [if_pos ((Nat.le_div_iff_mul_le hl).mp hk')]
+
+private theorem bounded_geometric_delta (f : ℕ → ℂ) (N x ell B : ℕ)
+    (hl : 0 < ell) (hN : N ≤ B) :
+    (∑ k : Fin (B + 1), ∑ t : Fin (B + 1),
+      if N = x + t.1 + k.1 * ell then f t.1 else 0) =
+      if x ≤ N then
+        ∑ k ∈ Finset.range ((N - x) / ell + 1), f (N - x - k * ell)
+      else 0 := by
+  classical
+  have hs (k : Fin (B + 1)) :
+      (∑ t : Fin (B + 1), if N = x + t.1 + k.1 * ell then f t.1 else 0) =
+        if x + k.1 * ell ≤ N then f (N - x - k.1 * ell) else 0 := by
+    have he (t : Fin (B + 1)) : x + t.1 + k.1 * ell = (x + k.1 * ell) + t.1 := by omega
+    simp_rw [he]
+    rw [finite_residual_delta f N (x + k.1 * ell) B hN, Nat.sub_sub]
+  simp_rw [hs]
+  by_cases hx : x ≤ N
+  · rw [if_pos hx]
+    have he (k : Fin (B + 1)) : x + k.1 * ell ≤ N ↔ k.1 * ell ≤ N - x := by omega
+    simp_rw [he]
+    exact bounded_division_sum (fun k => f (N - x - k * ell)) (N - x) ell B hl (by omega)
+  · rw [if_neg hx]
+    apply Finset.sum_eq_zero
+    intro k _
+    have hn : ¬ x + k.1 * ell ≤ N := by omega
+    simp [hn]
 
 end D5.S3.VertexAlgebra.LatticeFourCurrentTrace
