@@ -9,6 +9,8 @@
 import D5.S3.Arith.FibonacciAtomic.Geometry.NativeFreshSensorGrowth
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 
+/-! Local inverse of the actual zero-extended, post-clock native field. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option Elab.async false
@@ -50,7 +52,7 @@ private theorem edit_structure (b : Bool) (p : Address) (t : Source)
       subst t
       cases b <;>
         simp [fresh, replacement, replace, subtree, material, neighbors,
-          Geometry.NativeMaterialRootRecognition.children, readout]
+          Geometry.NativeMaterialRootRecognition.children, readout, or_assoc]
   | cons d p ih =>
       cases t with
       | of c => simp [subtree] at h
@@ -76,7 +78,7 @@ private theorem edit_structure (b : Bool) (p : Address) (t : Source)
                 · simp [material, List.mem_map, hu]
                 · simp only [replace, Geometry.NativeMaterialRootRecognition.neighbors_cons]
                   exact List.mem_append_left _ (List.mem_map.mpr ⟨u, hn, rfl⟩)
-              · simpa only [replace] using congrArg (fun s => Source.mul s r) hc
+              · simpa only [replace] using congrArg (fun s : Source => .mul s r) hc
           | true =>
               obtain ⟨hm, hf, hn, hs, hc⟩ := ih r h
               refine ⟨?_, ?_, ?_, hs, ?_⟩
@@ -97,7 +99,7 @@ private theorem edit_structure (b : Bool) (p : Address) (t : Source)
                 · simp [material, List.mem_map, hu]
                 · simp only [replace, Geometry.NativeMaterialRootRecognition.neighbors_cons]
                   exact List.mem_append_left _ (List.mem_map.mpr ⟨u, hn, rfl⟩)
-              · simpa only [replace] using congrArg (Source.mul l) hc
+              · simpa only [replace] using congrArg (fun s : Source => .mul l s) hc
 
 /-- Coordinates are the finite, explicitly listed native material support. -/
 abbrev Coordinate (t : Source) := {p : Address // p ∈ (material t).toFinset}
@@ -108,7 +110,7 @@ local instance coordinates (t : Source) : Fintype (Coordinate t) :=
 abbrev Field (t : Source) := Coordinate t → ℚ
 
 /-- Literal zero inclusion, with no old value attached to a fresh cell. -/
-def include (t u : Source) (x : Field t) : Field u :=
+def zeroInclude (t u : Source) (x : Field t) : Field u :=
   fun p => if h : p.val ∈ (material t).toFinset then x ⟨p.val, h⟩ else 0
 
 /-- The actual rational diagonal plus unit material adjacency. -/
@@ -128,18 +130,18 @@ private theorem untick_tick (a c : ℚ) (t : Source) (x : Field t)
   have hm : ((clock a c t).det⁻¹ • (clock a c t).adjugate) * clock a c t = 1 := by
     rw [Matrix.smul_mul, Matrix.adjugate_mul, smul_smul, inv_mul_cancel₀ h, one_smul]
   unfold untick tick
-  rw [← Matrix.mulVec_mulVec, hm, Matrix.one_mulVec]
+  rw [Matrix.mulVec_mulVec, hm, Matrix.one_mulVec]
 
 private theorem tick_positive (a c : ℚ) (ha : 0 < a) (hc : 0 < c)
     (b : Bool) (p : Address) (t : Source) (h : subtree p t = some (.of b))
     (x : Field t) (hx : ∀ q, 0 < x q) :
     ∀ q, 0 < tick a c (replace t p (replacement b))
-      (include t (replace t p (replacement b)) x) q := by
+      (zeroInclude t (replace t p (replacement b)) x) q := by
   let u := replace t p (replacement b)
   obtain ⟨hm, hf, hn, _, _⟩ := edit_structure b p t h
-  have hi : ∀ q : Coordinate u, 0 ≤ include t u x q := by
+  have hi : ∀ q : Coordinate u, 0 ≤ zeroInclude t u x q := by
     intro q
-    unfold include
+    unfold zeroInclude
     split
     · exact (hx _).le
     · exact le_rfl
@@ -153,13 +155,13 @@ private theorem tick_positive (a c : ℚ) (ha : 0 < a) (hc : 0 < c)
   · refine ⟨q, Finset.mem_univ _, mul_pos ?_ ?_⟩
     · have : 0 ≤ (if q.val ∈ neighbors u q.val then c else 0) := by split <;> positivity
       simpa only [clock, ↓reduceIte] using add_pos_of_pos_of_nonneg ha this
-    · simpa [include, List.mem_toFinset.mpr hq] using hx ⟨q.val, List.mem_toFinset.mpr hq⟩
+    · simpa [zeroInclude, List.mem_toFinset.mpr hq] using hx ⟨q.val, List.mem_toFinset.mpr hq⟩
   · obtain ⟨r, hr, hqr⟩ := hn q.val hq
     let r' : Coordinate u := ⟨r, List.mem_toFinset.mpr ((hm r).mpr (Or.inl hr))⟩
     refine ⟨r', Finset.mem_univ _, mul_pos ?_ ?_⟩
     · have : 0 ≤ (if q = r' then a else 0) := by split <;> positivity
       simpa only [clock, if_pos hqr] using add_pos_of_nonneg_of_pos this hc
-    · simpa [include, r', List.mem_toFinset.mpr hr] using hx ⟨r, List.mem_toFinset.mpr hr⟩
+    · simpa [zeroInclude, r', List.mem_toFinset.mpr hr] using hx ⟨r, List.mem_toFinset.mpr hr⟩
 
 /-- The two fields carried at a returned encoding cut are entirely current data. -/
 abbrev Endpoint := (t : Source) × Field t
@@ -175,7 +177,7 @@ def edited (t : Source) (g : Call) : Source :=
   replace t (address g) (replacement (kind g))
 
 def appendEndpoint (a c : ℚ) (e : Endpoint) (g : Call) : Endpoint :=
-  ⟨edited e.1 g, tick a c (edited e.1 g) (include e.1 (edited e.1 g) e.2)⟩
+  ⟨edited e.1 g, tick a c (edited e.1 g) (zeroInclude e.1 (edited e.1 g) e.2)⟩
 
 /-- A pure encoding success, retaining the original guarded logical test. -/
 def forward (a c : ℚ) (e : Endpoint) (g : Call) : Option Endpoint :=
@@ -194,10 +196,10 @@ def encode (a c : ℚ) : List Call → Option Endpoint := replay a c origin
 def zeros (t : Source) (x : Field t) : Finset Address :=
   (Finset.univ.filter (fun p : Coordinate t => x p = 0)).image Subtype.val
 
-private theorem include_zeros (b : Bool) (p : Address) (t : Source)
+private theorem zeroInclude_zeros (b : Bool) (p : Address) (t : Source)
     (h : subtree p t = some (.of b)) (x : Field t) (hx : ∀ q, 0 < x q) :
     zeros (replace t p (replacement b))
-      (include t (replace t p (replacement b)) x) = (fresh b p).toFinset := by
+      (zeroInclude t (replace t p (replacement b)) x) = (fresh b p).toFinset := by
   obtain ⟨hm, hf, _, _, _⟩ := edit_structure b p t h
   ext q
   simp only [zeros, Finset.mem_image, Finset.mem_filter, Finset.mem_univ, true_and,
@@ -205,15 +207,15 @@ private theorem include_zeros (b : Bool) (p : Address) (t : Source)
   constructor
   · rintro ⟨r, hr, rfl⟩
     rcases (hm r.val).mp (List.mem_toFinset.mp r.property) with ho | hn
-    · have hh : include t (replace t p (replacement b)) x r =
-          x ⟨r.val, List.mem_toFinset.mpr ho⟩ := by simp [include, ho]
+    · have hh : zeroInclude t (replace t p (replacement b)) x r =
+          x ⟨r.val, List.mem_toFinset.mpr ho⟩ := by simp [zeroInclude, ho]
       exact False.elim ((ne_of_gt (hx _)) (hh.symm.trans hr))
     · exact hn
   · intro hq
     let r : Coordinate (replace t p (replacement b)) :=
       ⟨q, List.mem_toFinset.mpr ((hm q).mpr (Or.inr hq))⟩
     refine ⟨r, ?_, rfl⟩
-    simp [include, r, hf q hq]
+    simp [zeroInclude, r, hf q hq]
 
 private theorem suffix_ne (p q : Address) : p ++ [false] ≠ q ++ [true] := by
   intro h
@@ -226,18 +228,15 @@ private theorem fresh_unique (b d : Bool) (p q : Address)
   · have hr : p ++ [true] ∈ (fresh false q).toFinset := by
       rw [← h]
       simp [fresh]
-    simp only [fresh, Bool.false_eq_true, ↓reduceIte, List.toFinset_cons,
-      List.toFinset_nil, Finset.mem_insert, Finset.mem_singleton] at hr
+    simp [fresh] at hr
     rcases hr with hr | hr
     · exact False.elim (suffix_ne (q ++ [false]) p (by simpa [List.append_assoc] using hr.symm))
     · exact ⟨rfl, List.append_cancel_right hr⟩
   · have hr : p ++ [true] ∈ (fresh true q).toFinset := by rw [← h]; simp [fresh]
-    simp only [fresh, ↓reduceIte, List.toFinset_cons, List.toFinset_nil,
-      Finset.insert_empty_eq, Finset.mem_singleton] at hr
+    simp [fresh] at hr
     exact False.elim (suffix_ne q p hr.symm)
   · have hr : q ++ [true] ∈ (fresh true p).toFinset := by rw [h]; simp [fresh]
-    simp only [fresh, ↓reduceIte, List.toFinset_cons, List.toFinset_nil,
-      Finset.insert_empty_eq, Finset.mem_singleton] at hr
+    simp [fresh] at hr
     exact False.elim (suffix_ne p q hr.symm)
   · have : p ++ [false] = q ++ [false] := by simpa [fresh] using h
     exact ⟨rfl, List.append_cancel_right this⟩
@@ -259,9 +258,9 @@ def lastEvent (t : Source) (z : Field t) : Option Call :=
 private theorem last_event (t : Source) (g : Call)
     (h : subtree (address g) t = some (.of (kind g)))
     (x : Field t) (hx : ∀ q, 0 < x q) :
-    lastEvent (edited t g) (include t (edited t g) x) = some g := by
+    lastEvent (edited t g) (zeroInclude t (edited t g) x) = some g := by
   obtain ⟨hm, _, _, hs, _⟩ := edit_structure (kind g) (address g) t h
-  have hz := include_zeros (kind g) (address g) t h x hx
+  have hz := zeroInclude_zeros (kind g) (address g) t h x hx
   have hg : g ∈ candidates (edited t g) := by
     cases g with
     | promote p =>
@@ -272,12 +271,12 @@ private theorem last_event (t : Source) (g : Call)
         have hf : p ++ [true] ∈ material (edited t (.split p)) :=
           (hm _).mpr (Or.inr (by simp [kind, address, fresh]))
         exact List.mem_flatMap.mpr ⟨p ++ [true], hf, by simp⟩
-  have hp : decide (zeros (edited t g) (include t (edited t g) x) =
+  have hp : decide (zeros (edited t g) (zeroInclude t (edited t g) x) =
       (fresh (kind g) (address g)).toFinset ∧
       subtree (address g) (edited t g) = some (replacement (kind g))) = true := by
     exact decide_eq_true ⟨hz, hs⟩
   have hex := List.find?_isSome.mpr ⟨g, hg, hp⟩
-  cases he : lastEvent (edited t g) (include t (edited t g) x) with
+  cases he : lastEvent (edited t g) (zeroInclude t (edited t g) x) with
   | none => simp only [lastEvent] at he; rw [he] at hex; cases hex
   | some g' =>
       have hh := of_decide_eq_true (List.find?_some he)
@@ -291,22 +290,22 @@ def collapse (t : Source) (g : Call) : Source :=
 def predecessor (a c : ℚ) (e : Endpoint) : Option (Endpoint × Call) := do
   let z := untick a c e.1 e.2
   let g ← lastEvent e.1 z
-  pure (⟨collapse e.1 g, include e.1 (collapse e.1 g) z⟩, g)
+  pure (⟨collapse e.1 g, zeroInclude e.1 (collapse e.1 g) z⟩, g)
 
 private theorem predecessor_append (a c : ℚ) (e : Endpoint) (g : Call)
     (he : subtree (address g) e.1 = some (.of (kind g)))
     (hx : ∀ q, 0 < e.2 q) (hi : (clock a c (edited e.1 g)).det ≠ 0) :
     predecessor a c (appendEndpoint a c e g) = some (e, g) := by
   obtain ⟨hm, _, _, _, hc⟩ := edit_structure (kind g) (address g) e.1 he
-  have hz := untick_tick a c (edited e.1 g) (include e.1 (edited e.1 g) e.2) hi
+  have hz := untick_tick a c (edited e.1 g) (zeroInclude e.1 (edited e.1 g) e.2) hi
   have hl := last_event e.1 g he e.2 hx
   unfold predecessor appendEndpoint
   dsimp only
   rw [hz, hl]
   simp only [Option.bind_some, pure]
   change some (⟨collapse (edited e.1 g) g,
-    include (edited e.1 g) (collapse (edited e.1 g) g)
-      (include e.1 (edited e.1 g) e.2)⟩, g) = some (e, g)
+    zeroInclude (edited e.1 g) (collapse (edited e.1 g) g)
+      (zeroInclude e.1 (edited e.1 g) e.2)⟩, g) = some (e, g)
   change replace (replace e.1 (address g) (replacement (kind g)))
     (address g) (.of (kind g)) = e.1 at hc
   simp only [collapse, edited, hc]
@@ -314,7 +313,7 @@ private theorem predecessor_append (a c : ℚ) (e : Endpoint) (g : Call)
   funext q
   have hq : q.val ∈ (material (edited e.1 g)).toFinset :=
     List.mem_toFinset.mpr ((hm q.val).mpr (Or.inl (List.mem_toFinset.mp q.property)))
-  simp [include, hq, q.property]
+  simp [zeroInclude, hq, q.property]
 
 /-- Fuel is measured in current material vertices; it is not a supplied history bound. -/
 def decodeFuel (a c : ℚ) : ℕ → Endpoint → Option (List Call)
@@ -394,16 +393,23 @@ private theorem encoded_invariants (a c : ℚ) (ha : 0 < a) (hc : 0 < c)
       intro n hn
       have hn' : (material (edited e.1 g)).length ≤ n := hn
       have hn0 : 0 < (material e.1).length :=
-        List.length_pos_iff.mpr ⟨[], root_mem e.1⟩
+        List.length_pos_iff.mpr (by
+          intro hem
+          have hm := root_mem e.1
+          simpa [hem] using hm)
       have hne : (appendEndpoint a c e g).1 ≠ .of true := by
         intro hh
-        have hm : (material (edited e.1 g)).length = 1 := by rw [← hh]; rfl
+        have hm : (material (edited e.1 g)).length = 1 := by
+          change edited e.1 g = .of true at hh
+          rw [hh]
+          rfl
         omega
       cases n with
       | zero => omega
       | succ n =>
-          simp only [decodeFuel, if_neg hne,
-            predecessor_append a c e g he ih.2.1 hi, Option.bind_some]
+          simp only [decodeFuel, if_neg hne]
+          rw [predecessor_append a c e g he ih.2.1 hi]
+          change (decodeFuel a c n e).bind (fun u => some (u ++ [g])) = some (w ++ [g])
           rw [ih.2.2 n (by omega)]
           rfl
 
