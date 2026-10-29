@@ -55,7 +55,19 @@ private def p : PairTables 6 := fun i j a b =>
   (1 + sgn a * sgn b * if i = 5 then (if j = 4 then -(1 : ℝ) / 2 else 1 / 2)
     else if j = 5 then (if i = 4 then -(1 : ℝ) / 2 else 1 / 2) else 0) / 4
 
-private theorem p_family : IsPairFamily p := by sorry
+private theorem p_family : IsPairFamily p := by
+  refine ⟨?_, ?_⟩
+  · intro i j hij
+    constructor
+    · intro a b
+      fin_cases i <;> fin_cases j <;> fin_cases a <;> fin_cases b <;>
+        norm_num [p, sgn]
+    · fin_cases i <;> fin_cases j <;>
+        norm_num [p, sgn, Fin.sum_univ_succ]
+  · refine ⟨fun _ _ => (1 : ℝ) / 2, ?_⟩
+    intro i j hij
+    constructor <;> intro a <;> fin_cases i <;> fin_cases j <;> fin_cases a <;>
+      norm_num [p, sgn, Fin.sum_univ_succ]
 private theorem p_ngon : NGonInequalities p := by sorry
 private theorem p_three : ThreeTimeLG p := by sorry
 private theorem p_no_joint : ¬ HasJointDistribution p := by sorry
