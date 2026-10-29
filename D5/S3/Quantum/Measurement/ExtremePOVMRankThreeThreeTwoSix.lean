@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.QuantumChannels.ConcealmentKernelNecessityRefutation
 import Mathlib.Analysis.Matrix.Order
+import Mathlib.LinearAlgebra.Matrix.Bilinear
 import Mathlib.LinearAlgebra.Matrix.Rank
 
 set_option autoImplicit false
@@ -124,10 +125,34 @@ private theorem within_block_product_independent :
       (fun p : Σ j : Fin 8, (blocks j × blocks j) =>
         Matrix.vecMulVec p.2.1.1 (star p.2.2.1)) := by sorry
 
+private def normalizeMap :
+    Matrix (Fin 7) (Fin 7) ℂ →ₗ[ℂ] Matrix (Fin 7) (Fin 7) ℂ :=
+  (Matrix.mulRightLinearMap (Fin 7) ℂ normalizerᴴ).comp
+    (Matrix.mulLeftLinearMap (Fin 7) ℂ normalizer)
+
+private theorem normalizeMap_ker : LinearMap.ker normalizeMap = ⊥ := by
+  apply le_antisymm
+  · intro X hX
+    have hstar : IsUnit normalizerᴴ.det := by
+      rw [Matrix.det_conjTranspose]
+      exact normalizer_unit.star
+    have hright := Matrix.mul_left_injective_of_inv normalizerᴴ (normalizerᴴ)⁻¹
+      (Matrix.mul_nonsing_inv normalizerᴴ
+        ((Matrix.isUnit_iff_isUnit_det normalizerᴴ).mpr hstar))
+    have hleft := Matrix.mul_right_injective_of_inv normalizer⁻¹ normalizer
+      (Matrix.nonsing_inv_mul normalizer normalizer_unit)
+    apply hleft
+    apply hright
+    simpa [normalizeMap, Matrix.mulLeftLinearMap, Matrix.mulRightLinearMap] using hX
+  · exact bot_le
+
 private theorem normalized_product_independent :
     LinearIndependent ℂ
       (fun p : Σ j : Fin 8, (blocks j × blocks j) =>
-        normalizer * Matrix.vecMulVec p.2.1.1 (star p.2.2.1) * normalizerᴴ) := by sorry
+        normalizer * Matrix.vecMulVec p.2.1.1 (star p.2.2.1) * normalizerᴴ) := by
+  simpa [normalizeMap, Matrix.mulLeftLinearMap, Matrix.mulRightLinearMap,
+    Function.comp_def] using
+    within_block_product_independent.map' normalizeMap normalizeMap_ker
 
 private theorem decomposition_eq_of_product_independence
     (A B : Fin 8 → Matrix (Fin 7) (Fin 7) ℂ)
