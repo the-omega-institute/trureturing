@@ -75,7 +75,7 @@ class HostReclaimTests(unittest.TestCase):
             source.parent.mkdir(exist_ok=True)
             source.write_bytes(b"retained blueprint\x00bytes\n")
             self.git(self.main, "add", "Blueprint")
-            self.git(self.main, "commit", "-m", "Retain blueprint")
+            self.git(self.main, "commit", "--allow-empty", "-m", "Retain blueprint")
             (target / "Blueprint").mkdir()
             shutil.copyfile(source, target / "Blueprint/Retained.md")
         self.age(target)
@@ -157,6 +157,47 @@ class HostReclaimTests(unittest.TestCase):
         self.assertEqual("removed", deleted["action"], deleted)
         self.assertFalse(target.exists())
 
+    def test_remnant_missing_or_corrupt_recovery_blob_is_retained(self):
+        import zlib
+        for corruption in ("missing", "corrupt"):
+            with self.subTest(corruption=corruption):
+                target = self.remnant(corruption)
+                oid = self.git(self.main, "rev-parse", "HEAD:Blueprint/Retained.md")
+                blob = self.main / ".git/objects" / oid[:2] / oid[2:]
+                original = blob.read_bytes()
+                if corruption == "missing":
+                    blob.unlink()
+                else:
+                    blob.write_bytes(zlib.compress(b"blob 25\0different retained bytes\n"))
+                self.age(target)
+                try:
+                    result = self.clean_remnant(target)
+                    self.assertEqual("kept", result["action"], result)
+                    self.assertIn(result["reason"], ("recovery_unverifiable", "blueprint_unrecoverable"))
+                    self.assertTrue(target.exists())
+                finally:
+                    blob.write_bytes(original)
+
+    def test_remnant_actual_cwd_and_open_file_are_retained(self):
+        for handle in ("cwd", "open"):
+            with self.subTest(handle=handle):
+                target = self.remnant(handle, blueprint=False)
+                program = ("import sys; " + ("f=open(sys.argv[1], 'rb'); " if handle == "open" else "") +
+                           "print('ready', flush=True); sys.stdin.read()")
+                process = subprocess.Popen([sys.executable, "-u", "-c", program,
+                                            str(target / ".lake/build/object")],
+                                           cwd=target / ".lake/build" if handle == "cwd" else self.root,
+                                           stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+                try:
+                    self.assertEqual(b"ready\n", process.stdout.readline())
+                    active = cleanup.active_paths(self.root / "codex", scopes=[target])
+                    result = cleanup.clean_candidate(target, self.cutoff, active, delete=True,
+                                                     repository=self.main, remnant=True)
+                    self.assertEqual(("kept", "protected"), (result["action"], result["reason"]), result)
+                    self.assertTrue(target.exists())
+                finally:
+                    process.communicate(timeout=10)
+
     def test_remnant_build_only_and_empty_directories_are_reclaimed(self):
         for name in ("build", "empty"):
             target = self.remnant(name, blueprint=False)
@@ -166,6 +207,19 @@ class HostReclaimTests(unittest.TestCase):
             result = self.clean_remnant(target)
             self.assertEqual("removed", result["action"], result)
             self.assertFalse(target.exists())
+
+    def test_remnant_main_identity_failure_has_named_closed_result(self):
+        target = self.remnant(blueprint=False)
+        preservation, _ = cleanup.worktree_modules()
+        git = preservation.git
+        def unverifiable(root, *args, **kwargs):
+            if args == ("rev-parse", "--show-toplevel"):
+                raise RuntimeError("main identity unavailable")
+            return git(root, *args, **kwargs)
+        with patch.object(preservation, "git", side_effect=unverifiable):
+            with self.assertRaisesRegex(OSError, "main_checkout_unverifiable"):
+                list(cleanup.remnant_candidates(self.main, [self.main]))
+        self.assertTrue(target.exists())
 
     def test_remnant_symlinks_special_files_recent_and_activity_are_retained(self):
         for name in ("root-link", "internal-link", "fifo", "recent", "activity"):
@@ -236,6 +290,17 @@ class HostReclaimTests(unittest.TestCase):
 
     def test_remnant_sweep_uses_main_inventory_and_reports_without_verbose(self):
         target = self.remnant()
+        clone = self.root / (self.main.name + "-clone")
+        self.git(self.main, "clone", "--no-hardlinks", self.main, clone)
+        foreign = self.root / (self.main.name + "-foreign")
+        self.git(clone, "worktree", "add", "-b", "foreign", foreign)
+        registered = self.root / (self.main.name + "-registered")
+        self.git(self.main, "worktree", "add", "-b", "registered", registered)
+        source = self.root / (self.main.name + "-source")
+        (source / "D5").mkdir(parents=True)
+        (source / "D5/Only.lean").write_text("unique source")
+        for path in (clone, foreign, registered, source):
+            self.age(path)
         excluded = self.root / "unrelated-old"
         excluded.mkdir()
         nested = self.root / "container" / (self.main.name + "-nested")
@@ -259,6 +324,11 @@ class HostReclaimTests(unittest.TestCase):
             self.assertTrue(excluded.exists())
             self.assertTrue(nested.exists())
             self.assertTrue(lane.exists())
+            actions = {row["path"]: (row["action"], row["reason"]) for row in rows if "path" in row}
+            for path, reason in ((clone, "repository"), (foreign, "repository"),
+                                 (registered, "protected"), (source, "unknown_top_level")):
+                self.assertEqual(("kept", reason), actions[str(path)], rows)
+                self.assertTrue(path.exists())
 
     def test_remnant_make_entry_from_linked_worktree_with_spaces(self):
         target = self.remnant()
@@ -267,6 +337,10 @@ class HostReclaimTests(unittest.TestCase):
         shutil.copyfile(ROOT / "tools/Makefile", self.main / "tools/Makefile")
         shutil.copyfile(ROOT / "tools/scripts/host-cleanup.py", scripts / "host-cleanup.py")
         shutil.copytree(ROOT / "tools/scripts/worktree", scripts / "worktree",
+                        ignore=shutil.ignore_patterns("__pycache__"))
+        shutil.copytree(ROOT / "tools/scripts/report", scripts / "report",
+                        ignore=shutil.ignore_patterns("__pycache__"))
+        shutil.copytree(ROOT / "tools/lean-inspector", self.main / "tools/lean-inspector",
                         ignore=shutil.ignore_patterns("__pycache__"))
         (scripts / "clean-lanes.sh").write_text("#!/bin/bash\nexit 0\n")
         self.git(self.main, "add", "tools")

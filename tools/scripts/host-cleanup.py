@@ -95,7 +95,81 @@ class ProtectedPaths:
         return path in self.prefixes
 
 
-def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True):
+class RefRecovery:
+    """Check byte recovery from retained commit refs, with a sweep-local object listing."""
+    def __init__(self, repository):
+        self.repository = repository
+        self.refs = None
+        self.objects = tempfile.TemporaryFile()
+        self.reachable = set()
+        self._algorithm = None
+
+    @property
+    def algorithm(self):
+        if self._algorithm is None:
+            preservation, _ = worktree_modules()
+            self._algorithm = preservation.git(self.repository, "rev-parse", "--show-object-format").stdout.strip().decode("ascii")
+        return self._algorithm
+
+    def close(self):
+        self.objects.close()
+
+    def check(self, wanted):
+        preservation, _ = worktree_modules()
+        from worktree_protocol import git_environment, scope_fds
+        refs = preservation.git(self.repository, "for-each-ref", "--format=%(refname) %(objectname)").stdout
+        if refs != self.refs:
+            # Peeling to commits excludes blob/tree-only refs and includes annotated tags.
+            names = [row.split(b" ", 1)[0] + b"^{commit}\n" for row in refs.splitlines()]
+            peeled = preservation.git(self.repository, "cat-file", "--batch-check=%(objectname) %(objecttype)",
+                                      input=b"".join(names)).stdout
+            roots = [row.split()[0] for row in peeled.splitlines() if row.endswith(b" commit")]
+            self.objects.seek(0)
+            self.objects.truncate()
+            if roots:
+                subprocess.run(["git", "--no-replace-objects", "-C", str(self.repository), "rev-list",
+                                "--objects", "--no-object-names", "--stdin"],
+                               input=b"\n".join(roots) + b"\n", stdout=self.objects,
+                               stderr=subprocess.PIPE, check=True, timeout=60,
+                               env=git_environment(), pass_fds=scope_fds())
+            self.refs, self.reachable = refs, set()
+        missing = set(wanted) - self.reachable
+        if missing:
+            self.objects.seek(0)
+            for row in self.objects:
+                oid = row.strip()
+                if oid in missing:
+                    missing.remove(oid)
+                    self.reachable.add(oid)
+                    if not missing:
+                        break
+        if not missing:
+            # Listing a blob does not establish that its bytes are present and intact.
+            with tempfile.TemporaryFile() as blobs:
+                subprocess.run(["git", "--no-replace-objects", "-C", str(self.repository), "cat-file", "--batch"],
+                               input=b"\n".join(sorted(wanted)) + b"\n", stdout=blobs,
+                               stderr=subprocess.PIPE, check=True, timeout=60,
+                               env=git_environment(), pass_fds=scope_fds())
+                blobs.seek(0)
+                for oid in sorted(wanted):
+                    header = blobs.readline().split()
+                    if len(header) != 3 or header[:2] != [oid, b"blob"]:
+                        raise ValueError("recovery_blob_unreadable")
+                    size = int(header[2])
+                    digest = hashlib.new(self.algorithm, b"blob " + header[2] + b"\0")
+                    remaining = size
+                    while remaining > 0:
+                        chunk = blobs.read(min(remaining, 1024 * 1024))
+                        if not chunk:
+                            raise ValueError("recovery_blob_truncated")
+                        digest.update(chunk)
+                        remaining -= len(chunk)
+                    if blobs.read(1) != b"\n" or digest.hexdigest().encode("ascii") != oid:
+                        missing.add(oid)
+        return missing, hashlib.sha256(refs).hexdigest()
+
+
+def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, remnant=False, recovery=None):
     """Fingerprint owned, inactive trees without following links or crossing mounts."""
     path = Path(path).absolute()
     if path.name == ".git" and not reclaim:
@@ -114,11 +188,15 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True):
     root_stat = path.lstat()
     if stat.S_ISLNK(root_stat.st_mode):
         return dict(reason="symlink")
+    if remnant and not stat.S_ISDIR(root_stat.st_mode):
+        return dict(reason="not_directory")
     if reclaim and root_stat.st_dev != path.parent.stat().st_dev:
         return dict(reason="mount")
     digest = hashlib.sha256()
     apparent_bytes = 0
     lakes = []
+    blueprint = set()
+    shape_reason = None
     pending = [path]
     while pending:
         entry = pending.pop()
@@ -127,13 +205,15 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True):
             return dict(reason="not_owned")
         if info.st_dev != root_stat.st_dev:
             return dict(reason="mount")
+        if remnant and stat.S_ISLNK(info.st_mode):
+            return dict(reason="symlink")
         if getattr(info, "st_flags", 0) & PROTECTED_FLAGS:
             return dict(reason="protected_flag")
         if "\n" in str(entry) or "\r" in str(entry):
             return dict(reason="unrepresentable_path")
         # FIFOs and sockets hold no data; reclaimable trees treat them like empty files.
         if not (stat.S_ISREG(info.st_mode) or stat.S_ISDIR(info.st_mode) or stat.S_ISLNK(info.st_mode)
-                or reclaim and (stat.S_ISFIFO(info.st_mode) or stat.S_ISSOCK(info.st_mode))):
+                or reclaim and not remnant and (stat.S_ISFIFO(info.st_mode) or stat.S_ISSOCK(info.st_mode))):
             return dict(reason="special_file")
         if info.st_mtime > cutoff:
             return dict(reason="recent")
@@ -142,16 +222,42 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True):
                            info.st_mtime_ns, info.st_ctime_ns)).encode())
         if stat.S_ISREG(info.st_mode):
             apparent_bytes += info.st_size
+            if remnant:
+                with entry.open("rb") as handle:
+                    if path / "Blueprint" in entry.parents:
+                        blob = hashlib.new(recovery.algorithm)
+                        blob.update(b"blob " + str(info.st_size).encode("ascii") + b"\0")
+                        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+                            blob.update(chunk)
+                        blueprint.add(blob.hexdigest().encode("ascii"))
+                        digest.update(blob.digest())
+                if entry.parent == path:
+                    shape_reason = "lake_content" if entry.name == ".lake" else "unknown_top_level"
+                if entry == path / ".lake/build":
+                    shape_reason = "lake_content"
         elif stat.S_ISDIR(info.st_mode):
             with os.scandir(entry) as children:
                 names = sorted(child.name for child in children)
             if not reclaim and ".git" in names:
                 return dict(reason="repository")
+            if remnant:
+                if ".git" in names or {"HEAD", "objects", "refs"}.issubset(names):
+                    return dict(reason="repository")
+                if entry == path and set(names) - {".lake", "Blueprint"}:
+                    return dict(reason="unknown_top_level")
+                if entry == path / ".lake" and set(names) - {"build"}:
+                    return dict(reason="lake_content")
             if reclaim and entry.name == ".lake":
                 lakes.append(str(entry))
             pending.extend(entry / name for name in names)
-    return dict(reason=None, fingerprint=digest.hexdigest(), apparent_bytes=apparent_bytes,
-                lakes=lakes)
+    if shape_reason:
+        return dict(reason=shape_reason)
+    result = dict(reason=None, fingerprint=digest.hexdigest(), apparent_bytes=apparent_bytes, lakes=lakes)
+    if remnant and blueprint:
+        missing, result["retained_refs"] = recovery.check(blueprint)
+        if missing:
+            return dict(reason="blueprint_unrecoverable")
+    return result
 
 
 def remove_tree(path):
@@ -165,12 +271,17 @@ def remove_tree(path):
 
 
 def clean_candidate(path, cutoff, protected, delete=False, repository=None, activity=None,
-                    reclaim=True, refresh_activity=False):
+                    reclaim=True, refresh_activity=False, remnant=False, recovery=None):
     path = Path(path).absolute()
     result = dict(path=str(path), action="kept", reason=None, apparent_bytes=0)
     removal_started = False
+    owned_recovery = None
     try:
         kwargs = {} if repository is None else {"repository": repository}
+        if remnant:
+            if recovery is None:
+                owned_recovery = recovery = RefRecovery(repository)
+            kwargs.update(remnant=True, recovery=recovery)
         if not reclaim:
             kwargs["reclaim"] = False
         def observe(protection):
@@ -208,6 +319,13 @@ def clean_candidate(path, cutoff, protected, delete=False, repository=None, acti
             result.update(action="kept", reason="unreadable", detail=str(error))
     except OSError as error:
         result.update(action="failed", reason=str(error))
+    except (RuntimeError, ValueError, subprocess.SubprocessError) as error:
+        if not remnant:
+            raise
+        result.update(action="kept", reason="recovery_unverifiable", detail=str(error))
+    finally:
+        if owned_recovery is not None:
+            owned_recovery.close()
     return result
 
 
@@ -391,6 +509,27 @@ def registered_worktrees(repository):
             for field in result.stdout.split(b"\0") if field.startswith(b"worktree ")]
 
 
+def remnant_candidates(repository, inventory):
+    """Select only physical siblings of the inventory's verified main checkout."""
+    if not inventory:
+        return
+    main = next(iter(inventory))
+    siblings = [path for path in children(main.parent)
+                if path.name.startswith(main.name + "-") and (path.is_symlink() or path.is_dir())]
+    if not siblings:
+        return
+    preservation, _ = worktree_modules()
+    try:
+        top = preservation.git(main, "rev-parse", "--show-toplevel").stdout.strip()
+        if (Path(os.fsdecode(top)).resolve() != main or not (main / ".git").is_dir()
+                or preservation.common(main) != (main / ".git").resolve()
+                or preservation.common(repository) != preservation.common(main)):
+            raise OSError("main_checkout_unverifiable")
+    except (OSError, RuntimeError, ValueError, subprocess.SubprocessError) as error:
+        raise OSError("main_checkout_unverifiable: " + str(error)) from error
+    yield from sorted(siblings)
+
+
 def containing_repository(path):
     """Find the governing Git boundary, including nested project directories."""
     for parent in (path, *path.parents):
@@ -506,7 +645,8 @@ def clean_from_anchor(options, caller, disk_descriptor):
             apparent_bytes += result["apparent_bytes"]
         elif result["action"] == "kept":
             skipped[result["reason"]] += 1
-        if options.verbose or result["action"] == "failed" or result["reason"] == "unreadable":
+        if (options.verbose or category == "worktree_remnant" or result["action"] == "failed"
+                or result["reason"] == "unreadable"):
             emit("host_cleanup_item", category=category, **result)
 
     def unobservable(path, error):
@@ -533,6 +673,17 @@ def clean_from_anchor(options, caller, disk_descriptor):
             lake = tree / ".lake"
             if lake.is_dir() and not lake.is_symlink():
                 clean_staging(lake)
+        with ExitStack() as remnant_stack:
+            recovery = None
+            for path in remnant_candidates(main_checkout, inventory):
+                if recovery is None:
+                    recovery = RefRecovery(main_checkout)
+                    remnant_stack.callback(recovery.close)
+                seen.add(path)
+                result = clean_candidate(path, cutoff, protections["sshx"], options.delete,
+                                         repository=main_checkout, activity=fresh_protection,
+                                         remnant=True, recovery=recovery)
+                record("worktree_remnant", result)
         for category, path in candidates(codex, sshx, roots):
             if path in seen:
                 continue
