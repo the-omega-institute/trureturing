@@ -95,7 +95,7 @@ with direct replacement. Upstream acceptance alone does not satisfy that
 condition.
 
 ```json
-{"declaration":"TauCeti.not_contractibleSpace_sphere","source_revision":"5a01f5fe3621126cccf9ba22e700493cbc7b7156","source_path":"TauCeti/AlgebraicTopology/Sphere/Contractible.lean","transitive_source_modules":54,"transitive_source_lines":11455,"retire_when":{"own_pinned_mathlib_has_equivalent_full_telescope":true,"all_live_consumers_compile_with_direct_replacement":true}}
+{"declaration":"TauCeti.not_contractibleSpace_sphere","source_revision":"5a01f5fe3621126cccf9ba22e700493cbc7b7156","source_path":"TauCeti/AlgebraicTopology/Sphere/Contractible.lean","transitive_source_modules":47,"transitive_source_lines":9556,"retire_when":{"own_pinned_mathlib_has_equivalent_full_telescope":true,"all_live_consumers_compile_with_direct_replacement":true}}
 ```
 
 ## Verified locator
