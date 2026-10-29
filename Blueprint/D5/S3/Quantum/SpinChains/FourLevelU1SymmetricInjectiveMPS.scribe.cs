@@ -83,7 +83,10 @@ internal sealed class FourLevelU1SymmetricInjectiveMPSDocument : IScribeDocument
                             + "The preceding argument gives x − y = 0, hence x = y. Thus block length two gives injectivity. "
                             + "Applying the proposed obstruction to these local matrices, the identity unitary and these eigenvalues contradicts that injectivity. "
                             + "The example has general integer generator eigenvalues and does not assert SU(2) symmetry or symmetry under the usual spin-three-halves generator."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("sanz-wolf-perez-garcia-cirac-2009-spin-three-halves-u1-injective-mps"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula, string prose,
         AssessedProvenance provenance) => Describe.Lean(
