@@ -555,6 +555,7 @@ private theorem rank_slots_actual (p : NativeTermUnification.Presentation X)
     (i : Fin (rankSlots p s B).length) :
     ((rankSlots p s B).get i).Correct u (rankParameters p s B u i) := by
   have hi := List.get_mem (rankSlots p s B) i
+  simp only [rankParameters]
   generalize he : (rankSlots p s B).get i = a at hi ⊢
   change a.Correct u (a.value u)
   simp only [rankSlots, List.mem_append, List.mem_flatMap, List.mem_map] at hi
