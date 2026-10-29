@@ -41,21 +41,9 @@ theorem diagram_mem {H U : ℕ} (r : Rows H U) (i j : ℕ) :
 
 theorem diagram_rowLen {H U : ℕ} (r : Rows H U) (i : Fin H) :
     (diagram r).rowLen i = (r.val i).val := by
-  apply Nat.le_antisymm
-  · by_contra! h
-    have hm := (YoungDiagram.mem_iff_lt_rowLen).mpr h
-    obtain ⟨hi, hh⟩ := (diagram_mem r _ _).mp hm
-    exact (Nat.lt_irrefl _) hh
-  · by_contra! h
-    have hm := (diagram_mem r i ((diagram r).rowLen i)).mpr ⟨i.isLt,h⟩
-    exact (Nat.lt_irrefl _) ((YoungDiagram.mem_iff_lt_rowLen).mp hm)
-
-private theorem diagram_rowLen_bound {H U : ℕ} (r : Rows H U) (i : ℕ) :
-    (diagram r).rowLen i ≤ U := by
-  by_contra! h
-  obtain ⟨hi, hh⟩ := (diagram_mem r i U).mp ((YoungDiagram.mem_iff_lt_rowLen).mpr h)
-  have := (r.val ⟨i,hi⟩).isLt
-  omega
+  simpa [diagram, rowList] using
+    (YoungDiagram.rowLen_ofRowLens (w := rowList r) (hw := rowList_sorted r)
+      ⟨i.val, by simpa [rowList] using i.isLt⟩)
 
 private theorem diagram_transpose_bound {H U : ℕ} (r : Rows H U) (j : ℕ) :
     (diagram r).transpose.rowLen j ≤ H := by
