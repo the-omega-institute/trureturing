@@ -30,7 +30,7 @@ The Lean declaration is `result : \lnot claim`.
 
 ## Motivation
 
-The conjecture would make the protocol with intermediate memory resets uniformly at least as accurate as the protocol that lets memory correlations pass between successive transpositions. Such a guarantee would control the approximation error for the reduced neighbour-transposition words used to reach permutation vertices of the infinite-temperature thermal cone. A counterexample identifies a limit of that guarantee and separates one-block convergence behaviour from compositions of blocks.
+The conjecture would make the protocol without intermediate memory resets, which lets memory correlations pass between successive transpositions, uniformly at least as accurate as the protocol that resets the memory after each transposition. Such a guarantee would control the approximation error for the reduced neighbour-transposition words used to reach permutation vertices of the infinite-temperature thermal cone. A counterexample identifies a limit of that guarantee and separates one-block convergence behaviour from compositions of blocks.
 
 ## Gap
 
