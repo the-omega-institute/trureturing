@@ -8,11 +8,13 @@ The target is the original WholePlaneDensity from TotalDominationSeeds: for ever
 
 **Theorem 1.1 (Actual roots at every nonunit logarithmic radius).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/Domination/TotalDominationDensity.roots_approximate_exp_nonunit`
+$$\forall (xi:\mathbb{C}), (\operatorname{re}\left(xi\right) \ne 0) \Rightarrow (\forall (epsilon:\mathbb{R}), (0 < epsilon) \Rightarrow (\exists (n:\mathbb{N}), \exists (G:\operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right)), \exists (w:\mathbb{C}), (2 \le n) \land ((\forall (v:\operatorname{Fin}\left(n\right)), \exists (u:\operatorname{Fin}\left(n\right)), \operatorname{Adj}\left(G, v, u\right)) \land ((\operatorname{complexPolynomial}\left(G\right) \ne 0) \land ((\operatorname{IsRoot}\left(\operatorname{complexPolynomial}\left(G\right), w\right)) \land (\Vert w - \left(\operatorname{exp}\left(xi\right) - (1:\mathbb{C})\right)\Vert < epsilon))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/TotalDominationDensity.roots_approximate_exp_nonunit` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Pingping Shao; Chengye Zhao (2026). *On the Roots of Connected Domination Polynomials*. DOI: [10.48550/arXiv.2609.06569](https://doi.org/10.48550/arXiv.2609.06569). URL: <https://arxiv.org/html/2609.06569v5>.
 
 *Commentary.*
 
@@ -20,11 +22,13 @@ For every complex xi with xi.re nonzero and every positive real epsilon there ex
 
 **Theorem 1.2 (The unit-circle boundary follows by continuity).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/Domination/TotalDominationDensity.roots_approximate_exp`
+$$\forall (xi:\mathbb{C}), \forall (epsilon:\mathbb{R}), (0 < epsilon) \Rightarrow (\exists (n:\mathbb{N}), \exists (G:\operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right)), \exists (w:\mathbb{C}), (2 \le n) \land ((\forall (v:\operatorname{Fin}\left(n\right)), \exists (u:\operatorname{Fin}\left(n\right)), \operatorname{Adj}\left(G, v, u\right)) \land ((\operatorname{complexPolynomial}\left(G\right) \ne 0) \land ((\operatorname{IsRoot}\left(\operatorname{complexPolynomial}\left(G\right), w\right)) \land (\Vert w - \left(\operatorname{exp}\left(xi\right) - (1:\mathbb{C})\right)\Vert < epsilon)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/TotalDominationDensity.roots_approximate_exp` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
+
+*Acknowledgement.* Pingping Shao; Chengye Zhao (2026). *On the Roots of Connected Domination Polynomials*. DOI: [10.48550/arXiv.2609.06569](https://doi.org/10.48550/arXiv.2609.06569). URL: <https://arxiv.org/html/2609.06569v5>.
 
 *Commentary.*
 
@@ -32,17 +36,19 @@ For every complex xi, including xi.re=0, and every positive epsilon there is an 
 
 **Theorem 1.3 (The exact original whole-plane target).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/Domination/TotalDominationDensity.result`
+$$\forall (z:\mathbb{C}), \forall (epsilon:\mathbb{R}), (0 < epsilon) \Rightarrow (\exists (n:\mathbb{N}), \exists (G:\operatorname{SimpleGraph}\left(\operatorname{Fin}\left(n\right)\right)), \exists (w:\mathbb{C}), (2 \le n) \land ((\forall (v:\operatorname{Fin}\left(n\right)), \exists (u:\operatorname{Fin}\left(n\right)), \operatorname{Adj}\left(G, v, u\right)) \land ((\operatorname{complexPolynomial}\left(G\right) \ne 0) \land ((\operatorname{IsRoot}\left(\operatorname{complexPolynomial}\left(G\right), w\right)) \land (\Vert w - z\Vert < epsilon)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/TotalDominationDensity.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Pingping Shao; Chengye Zhao (2026). *On the Roots of Connected Domination Polynomials*. DOI: [10.48550/arXiv.2609.06569](https://doi.org/10.48550/arXiv.2609.06569). URL: <https://arxiv.org/html/2609.06569v5>.
+
 *Commentary.*
 
-The theorem has literal type TotalDominationSeeds.WholePlaneDensity. For arbitrary complex z and real epsilon>0, if 1+z=0 use the genuine seed roots accumulating at -1. Otherwise apply roots_approximate_exp at log(1+z); the existing exact identity exp(log(1+z))=1+z identifies the target. The resulting witness is an actual finite simple undirected graph on Fin n with n>=2 and no isolated vertices, its actual subset-count total-domination polynomial is nonzero, and the same actual complex root is within epsilon of z. This is the mathematical whole-target result for the unchanged issue 23313 registration. Independent source/prior-art, admission, audit and publication remain separate obligations; this document asserts no external-resolution credit or delivery.
+The theorem has literal type TotalDominationSeeds.WholePlaneDensity. For arbitrary complex z and real epsilon>0, if 1+z=0 use the genuine seed roots accumulating at -1. Otherwise apply roots_approximate_exp at log(1+z); the existing exact identity exp(log(1+z))=1+z identifies the target. The resulting witness is an actual finite simple undirected graph on Fin n with n>=2 and no isolated vertices, its actual subset-count total-domination polynomial is nonzero, and the same actual complex root is within epsilon of z. This is the whole-plane density conclusion for the actual total-domination polynomial.
 
-The cone, disjoint-union, friendship and independent-fibre substitution formulas are known consumed ingredients; see the provenance in TotalDominationSeeds and TotalDominationBlowup. The direct route does not assume ordinary domination-root density or a conditional total-density supplier. The published whole-question source is Shao and Zhao, arXiv:2609.06569v5, section 5.2 Open Problem 2. Global priority and source-admission checks are not established by this mathematical proof.
+The cone, disjoint-union, friendship and independent-fibre substitution formulas are known consumed ingredients; see the provenance in TotalDominationSeeds and TotalDominationBlowup. The direct route does not assume ordinary domination-root density or a conditional total-density supplier. The published whole-question source is Shao and Zhao, arXiv:2609.06569v5, section 5.2 Open Problem 2. The proof concerns the stated polynomial and does not assert literature priority.
 
 ## References
 

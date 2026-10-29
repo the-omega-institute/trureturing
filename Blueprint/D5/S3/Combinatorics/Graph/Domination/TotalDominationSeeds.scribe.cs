@@ -78,7 +78,7 @@ internal sealed class TotalDominationSeedsDocument : IScribeDocumentDefinition
     private static Formula Real => Seq(Mathbb, Grp(V("R")));
     private static Formula Complex => Seq(Mathbb, Grp(V("C")));
     private static Formula Type => Call("Type");
-    private static Formula Call(string s, params Formula[] xs) => new Formula.Apply(Seq(Operatorname, Grp(V(s))), [.. xs]);
+    private static Formula Call(string s, params Formula[] xs) => xs.Length == 0 ? Seq(Operatorname, Grp(V(s))) : new Formula.Apply(Seq(Operatorname, Grp(V(s))), [.. xs]);
     private static Formula Par(Formula x) => Seq(Open,x,Close);
     private static Formula Cast(Formula x, Formula t) => Par(Seq(x,Colon,t));
     private static Formula Pow(Formula x, Formula n) => Seq(Par(x),Caret,Grp(n));

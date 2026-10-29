@@ -8,7 +8,7 @@ The complex exponential is the existing Mathlib exponential. No graph or density
 
 **Theorem 1.1 (Joint radial and angular approximation).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/Domination/TotalDominationApproximation.joint_power_root_approximation`
+$$\forall (xi:\mathbb{C}), (\operatorname{re}\left(xi\right) \ne 0) \Rightarrow (\forall (epsilon:\mathbb{R}), (0 < epsilon) \Rightarrow (\exists (N:\mathbb{N}), \forall (t:\mathbb{R}), \forall (alpha:\mathbb{R}), ((N:\mathbb{R}) + 2 < \frac{t}{\operatorname{re}\left(xi\right)}) \Rightarrow (\exists (k:\mathbb{N}), \exists (w:\mathbb{C}), (0 < k) \land (((w)^{k} = \operatorname{exp}\left((t:\mathbb{C}) + (alpha:\mathbb{C}) \cdot \operatorname{I}\left(\right)\right)) \land (\Vert w - \operatorname{exp}\left(xi\right)\Vert < epsilon)))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Domination/TotalDominationApproximation.joint_power_root_approximation` (`✓ std3`). ∎
 
