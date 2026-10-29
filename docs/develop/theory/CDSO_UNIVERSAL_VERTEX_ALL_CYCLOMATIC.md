@@ -603,7 +603,7 @@ $$
 
 ∎
 
-**Theorem 11.2 (A finite bound for hub imbalance).** Let $\ell\ge1$, $n\ge\max\{453,8\ell+22\}$, and let $G$ be any graph obtained from $K_{2,\ell+1}$ by attaching its remaining vertices as leaves only to its two hubs. If their degrees are $D_1,D_2$, then
+**Theorem 11.2 (A finite bound for hub imbalance).** Let $\ell\ge1$, $n\ge\max\{453,8\ell+22\}$, and let $G\in\mathcal G(n,\ell)$ be any graph obtained from $K_{2,\ell+1}$ by attaching its remaining vertices as leaves only to its two hubs. If their degrees are $D_1,D_2$, then
 
 $$
 \left(\frac{D_1-D_2}{n}\right)^2
