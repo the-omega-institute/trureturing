@@ -613,6 +613,7 @@ private def prepareLocalMemo (table : LookupTable) (graph : ProofGraph) : MetaM 
     root.bind (·.origin.constName?), graph.vertices.map (·.type), vocabulary,
     ← IO.getEnv "SEARCH_REDUCTION_RESUME_INPUTS")
   localMemoContext.set identity
+  lookupPhase s!"lookup/memo-context bytes={identity.utf8ByteSize}"
 
 private def checkMemoProof (target : Expr) (types : List Expr)
     (result : LocalResult) : MetaM Unit := do
@@ -631,11 +632,14 @@ private unsafe def memoizedLocalRebuild (target : Expr) (types : List Expr)
   let context ← localMemoContext.get
   if context.isEmpty || target.hasFVar || target.hasMVar ||
       types.any (fun type => type.hasFVar || type.hasMVar) then return ← action
-  let identity := context ++ reprStr (target, types)
-  if let some result := (← localMemoAnswers.get)[identity]? then
+  -- prepareLocalMemo clears this map whenever the shared context changes.
+  -- Keep that context once per round; disk records still bind its full bytes.
+  let key := reprStr (target, types)
+  if let some result := (← localMemoAnswers.get)[key]? then
     checkMemoProof target types result
-    lookupPhase s!"lookup/memo hit=round query={hash identity}"
+    lookupPhase s!"lookup/memo hit=round query={hash (context ++ key)}"
     return result
+  let identity := context ++ key
   let directory := (← IO.getEnv "SEARCH_REDUCTION_QUERY_CACHE").getD
     "build/lean-inspector/search-reduction-query-cache"
   let path := (System.FilePath.mk directory) / s!"target-{hash context}" / s!"query-{hash identity}.pickle"
@@ -645,7 +649,7 @@ private unsafe def memoizedLocalRebuild (target : Expr) (types : List Expr)
       localMemoRegions.modify (·.push region)
       unless record.identity == identity do throwError "lookup.memo_input_mismatch"
       checkMemoProof target types record.result
-      localMemoAnswers.modify (·.insert identity record.result)
+      localMemoAnswers.modify (·.insert key record.result)
       lookupPhase s!"lookup/memo hit=disk query={hash identity}"
       return record.result
     catch ex =>
@@ -654,7 +658,8 @@ private unsafe def memoizedLocalRebuild (target : Expr) (types : List Expr)
   lookupPhase s!"lookup/memo miss query={hash identity}"
   let result ← action
   checkMemoProof target types result
-  localMemoAnswers.modify (·.insert identity result)
+  localMemoAnswers.modify (·.insert key result)
+  lookupPhase s!"lookup/memo-retained entries={(← localMemoAnswers.get).size} query_key_bytes={key.utf8ByteSize} shared_context_bytes={context.utf8ByteSize}"
   if !directory.isEmpty then
     IO.FS.createDirAll path.parent.get!
     let temporary := path.addExtension "tmp"
