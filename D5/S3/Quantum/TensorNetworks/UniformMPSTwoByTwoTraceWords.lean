@@ -635,7 +635,8 @@ private lemma delta_monomial_mem (e : Fin 5 → ℕ) :
       (fun p => (word (l ++ [1, 0]) p).trace) := by
     funext p
     simp only [word_append, Pi.sub_apply]
-    simp only [word, Ring.lie_def]
+    dsimp only [word]
+    rw [Ring.lie_def]
     simp only [List.map_cons, List.map_nil, List.prod_cons, List.prod_nil, mul_one,
       mul_sub, Matrix.trace_sub]
   have hb (l : List (Fin 2)) (hl : l ∈ q.support) (b : List (Fin 2)) (hb : b.length = 2) :
