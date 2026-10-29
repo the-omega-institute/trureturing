@@ -36,4 +36,12 @@ abbrev sourceScope_energy_covariance := type_of% (@_root_.D5.S3.VertexAlgebra.La
 theorem source_actual_energy_covariance : sourceScope_energy_covariance :=
   @_root_.D5.S3.VertexAlgebra.LatticeDualCosetConformal.energy_covariance
 
+abbrev sourceScope_ward_commutator := type_of% (@_root_.D5.S3.VertexAlgebra.LatticeDualCosetConformal.ward_commutator)
+theorem source_actual_ward_commutator : sourceScope_ward_commutator :=
+  @_root_.D5.S3.VertexAlgebra.LatticeDualCosetConformal.ward_commutator
+
+abbrev sourceScope_translation_covariance := type_of% (@_root_.D5.S3.VertexAlgebra.LatticeDualCosetConformal.translation_covariance)
+theorem source_actual_translation_covariance : sourceScope_translation_covariance :=
+  @_root_.D5.S3.VertexAlgebra.LatticeDualCosetConformal.translation_covariance
+
 end Reg.D5.S3.VertexAlgebra.LatticeDualCosetConformal

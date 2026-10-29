@@ -20,4 +20,12 @@ abbrev sourceScope_inverse_dual_vector := type_of% (@_root_.D5.S3.VertexAlgebra.
 theorem source_actual_inverse_dual_vector : sourceScope_inverse_dual_vector :=
   @_root_.D5.S3.VertexAlgebra.LatticeDualCosetConformal.inverse_dual_vector
 
+abbrev sourceScope_moduleL_minus_one := type_of% (@_root_.D5.S3.VertexAlgebra.LatticeDualCosetConformal.moduleL_minus_one)
+theorem source_actual_moduleL_minus_one : sourceScope_moduleL_minus_one :=
+  @_root_.D5.S3.VertexAlgebra.LatticeDualCosetConformal.moduleL_minus_one
+
+abbrev sourceScope_moduleL_minus_one_single := type_of% (@_root_.D5.S3.VertexAlgebra.LatticeDualCosetConformal.moduleL_minus_one_single)
+theorem source_actual_moduleL_minus_one_single : sourceScope_moduleL_minus_one_single :=
+  @_root_.D5.S3.VertexAlgebra.LatticeDualCosetConformal.moduleL_minus_one_single
+
 end Reg.D5.S3.VertexAlgebra.LatticeDualCosetVirasoro

@@ -137,7 +137,7 @@ theorem actual_mode_grade (β : Charge D)
   simp only [LinearMap.sub_apply,Module.End.mul_apply,hea,hev,map_smul,
     LinearMap.smul_apply] at h
   push_cast
-  linear_combination h
+  linear_combination (norm := module) h
 
 /-- Finite-dimensional actual energy spaces and a natural-indexed internal decomposition. -/
 theorem positive_energy (β : Charge D)
@@ -145,7 +145,7 @@ theorem positive_energy (β : Charge D)
     (hHG : H * gramComplex D=1) (hGH : gramComplex D * H=1)
     (μ : Fin D.rank → ℚ) (hDual : ∀ i, ∑ j, (D.G i j : ℚ) * μ j=(β i : ℚ))
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) :
-    ∃ γ₀ : Charge D, let h := chargeWeight D μ γ₀
+    ∃ γ₀ : Charge D, let h := chargeWeight D μ γ₀;
       0≤h ∧ (∀ γ, h≤chargeWeight D μ γ) ∧
       (∀ a : Label D, ∃ n : ℕ, weight D μ a=h+(n : ℚ)) ∧
       (∀ e : ℚ, FiniteDimensional ℂ ((moduleL D β H 0).eigenspace (e : ℂ))) ∧

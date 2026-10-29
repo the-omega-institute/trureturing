@@ -91,7 +91,7 @@ theorem moduleL_shift_complex
         apply Finset.sum_congr rfl
         intro i _
         ring
-      _ = _ := by simp_rw [hc,← hGu,Finset.mul_sum]; rfl
+      _ = _ := by simp_rw [hc,← hGu,Finset.mul_sum,mul_assoc]
   rw [moduleL_normal]
   simp_rw [normal_current_shift,smul_add,smul_smul,Finset.sum_add_distrib]
   rw [first,second]
@@ -109,9 +109,37 @@ theorem moduleL_shift_complex
 theorem inverse_dual_vector (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hGH : gramComplex D * H = 1) :
     ∀ i, ∑ j, (D.G i j : ℂ) * (∑ k, H j k * (β k : ℂ)) = (β i : ℂ) := by
-  have h := congrArg (fun M => M *ᵥ (fun k => (β k : ℂ))) hGH
+  have h := congrArg (fun M => Matrix.mulVec M (fun k => (β k : ℂ))) hGH
   rw [← Matrix.mulVec_mulVec,Matrix.one_mulVec] at h
   exact fun i => congrFun h i
+
+/-- The sector translation is derived from original omega, not ambient translation. -/
+theorem moduleL_minus_one
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D=1) (hGH : gramComplex D * H=1)
+    (u : Fin D.rank → ℂ) (hGu : ∀ i,∑ j,(D.G i j : ℂ)*u j=(β i : ℂ)) :
+    moduleL D β H (-1) = translation D + shiftCurrent D u (-1) := by
+  rw [moduleL_shift_complex D β H hHG hGH u hGu,
+    sugawaraMode_minus_one_eq_translation D H hHG hGH]
+  norm_num
+
+/-- Literal charged-polynomial action of the original conformal minus-one mode. -/
+theorem moduleL_minus_one_single
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D=1) (hGH : gramComplex D * H=1)
+    (u : Fin D.rank → ℂ) (hGu : ∀ i,∑ j,(D.G i j : ℂ)*u j=(β i : ℂ))
+    (γ : Charge D) (p : Oscillator D) :
+    moduleL D β H (-1) (Finsupp.single γ p) =
+      Finsupp.single γ (oscillatorDerivation D p +
+        (∑ i, ((γ i : ℂ)+u i) • MvPolynomial.X (i,0)) * p) := by
+  classical
+  rw [moduleL_minus_one D β H hHG hGH u hGu]
+  simp only [LinearMap.add_apply,translation_single,shiftCurrent,
+    LinearMap.sum_apply,LinearMap.smul_apply,neutralMode_single]
+  simp only [neutralPolynomialMode,show (-1 : ℤ)<0 by omega,ite_true,
+    show (-(-1 : ℤ)-1).toNat=0 by norm_num,LinearMap.mulLeft_apply]
+  simp only [Finsupp.smul_single,← Finsupp.single_finsetSum,← Finsupp.single_add,
+    chargePolynomial,add_smul,Finset.sum_add_distrib,add_mul,Finset.sum_mul,smul_mul_assoc]
 
 end
 end D5.S3.VertexAlgebra.LatticeDualCosetConformal

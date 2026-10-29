@@ -15,6 +15,6 @@ internal sealed class LatticeDualCosetConformalShiftDocument : IScribeDocumentDe
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeDualCosetConformalShift.normal_current_shift"),
                 H("normal current shift"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The exact declaration below uses the objects and hypotheses stated above."))),
+                Blocks(Paragraph(Text("The normal coefficient at m+1 equals its unshifted value plus beta_j H_i(m), beta_i H_j(m), and beta_i beta_j delta(m,0) times identity. All sums are vectorwise finite."))),
                 DescribeRole.Theorem))));
 }

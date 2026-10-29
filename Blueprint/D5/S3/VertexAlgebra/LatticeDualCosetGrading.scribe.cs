@@ -15,20 +15,20 @@ internal sealed class LatticeDualCosetGradingDocument : IScribeDocumentDefinitio
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeDualCosetGrading.minimizingCharge"),
                 H("minimizingCharge"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The exact declaration below uses the objects and hypotheses stated above."))),
+                Blocks(Paragraph(Text("Choose the charge whose existence and global minimality were proved using finite rational sublevels."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("latticedualcosetgrading-actual-mode-grade"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeDualCosetGrading.actual_mode_grade"),
                 H("actual mode grade"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The exact declaration below uses the objects and hypotheses stated above."))),
+                Blocks(Paragraph(Text("If an ORIGINAL state has integer weight k and a module vector has rational weight e, its actual q-mode has weight e+k-q-1 for every integer q."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticedualcosetgrading-positive-energy"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeDualCosetGrading.positive_energy"),
                 H("positive energy"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The exact declaration below uses the objects and hypotheses stated above."))),
+                Blocks(Paragraph(Text("There is a constructed nonnegative attained minimum h; all basis weights are h+n; actual rational eigenspaces are finite dimensional; and the entire actual carrier is the internal direct sum of actual L_0 eigenspaces at h+n for natural n. Zero summands are allowed."))),
                 DescribeRole.Theorem))));
 }

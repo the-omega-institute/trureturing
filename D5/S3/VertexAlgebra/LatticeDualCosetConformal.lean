@@ -196,5 +196,36 @@ theorem energy_covariance (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
   simp only [LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply]
   rw [neg_smul, sub_eq_add_neg, add_comm]
 
+/-- All-integer Ward identity with finite original-state products before weighting. -/
+theorem ward_commutator (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (a : Carrier D) (m q : ℤ) :
+    moduleL D β H m * ((action D β a)[[q]]) -
+      ((action D β a)[[q]]) * moduleL D β H m =
+      ∑ᶠ j : ℕ, integerBinomial (m+1) j •
+        ((action D β (sugawaraMode D H ((j : ℤ)-1) a))[[m+q+1-j]]) := by
+  have h := mode_commutator D β (omega D H) a (m+1) q
+  unfold moduleL
+  rw [h]
+  apply finsum_congr
+  intro j
+  unfold commutatorTerm
+  rw [omega_product,show m+1+q-(j : ℤ)=m+q+1-j by omega]
+
+/-- Translation covariance on every original state and every integer mode. -/
+theorem translation_covariance (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
+    (hHG : H * gramComplex D=1) (hGH : gramComplex D * H=1)
+    (a : Carrier D) (q : ℤ) :
+    moduleL D β H (-1) * ((action D β a)[[q]]) -
+      ((action D β a)[[q]]) * moduleL D β H (-1) =
+      -(q : ℂ) • ((action D β a)[[q-1]]) := by
+  rw [ward_commutator]
+  rw [finsum_eq_single _ 0]
+  · simp only [neg_add_cancel,integerBinomial,Int.reduceNeg,Ring.choose_zero_right,
+      Int.cast_one,one_smul,Nat.cast_zero,zero_sub,sub_zero]
+    rw [sugawaraMode_minus_one_eq_translation D H hHG hGH]
+    simpa only [show (-1 : ℤ)+q+1=q by omega] using module_input_derivative D β a q
+  · intro j hj
+    simp [integerBinomial,Ring.choose_zero_pos ℤ (Nat.pos_of_ne_zero hj)]
+
 end
 end D5.S3.VertexAlgebra.LatticeDualCosetConformal

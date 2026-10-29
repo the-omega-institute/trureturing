@@ -15,6 +15,6 @@ internal sealed class LatticeDualCosetVirasoroLawDocument : IScribeDocumentDefin
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeDualCosetVirasoroLaw.moduleL_virasoro"),
                 H("moduleL virasoro"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("The exact declaration below uses the objects and hypotheses stated above."))),
+                Blocks(Paragraph(Text("All integer actual original-omega modes obey Virasoro with central charge rank(D), including rank zero, under the two original inverse equations alone."))),
                 DescribeRole.Theorem))));
 }

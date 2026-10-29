@@ -16,7 +16,7 @@ set_option maxHeartbeats 4000000
 namespace D5.S3.VertexAlgebra.LatticeDualCosetEnergy
 open LatticeGeneratingFieldLocality LatticePositiveEnergy
 open LatticeFiniteNegativeGeneration LatticeSugawaraConformal LatticeSugawaraCurrents
-open LatticeDualCosetModule LatticeDualCosetConformal
+open LatticeDualCosetModule LatticeDualCosetConformal LatticeSugawaraVirasoro
 open scoped BigOperators VertexOperator TensorProduct DirectSum
 noncomputable section
 
@@ -55,7 +55,7 @@ theorem chargeWeight_expansion (β : Charge D) (μ : Fin D.rank → ℚ)
   have hq : chargeWeight D μ 0 = pairing D μ μ/2 := by simp [chargeWeight]
   change pairing D (fun i => (γ i : ℚ)) μ = _ at hp
   rw [hq]
-  linear_combination he/2 + hp
+  linear_combination -he/2 + hp
 
 /-- The minimum is attained; its nonnegative integral differences give natural levels. -/
 theorem weight_levels (β : Charge D) (μ : Fin D.rank → ℚ)
@@ -79,7 +79,8 @@ theorem weight_levels (β : Charge D) (μ : Fin D.rank → ℚ)
       linarith
     exact_mod_cast hzq
   refine ⟨oscillatorEnergy a.2 + z.toNat, ?_⟩
-  rw [hz,Nat.cast_add,Int.toNat_of_nonneg hn,Int.cast_natCast]
+  have hcast : (z.toNat : ℚ)=(z : ℚ) := by exact_mod_cast Int.toNat_of_nonneg hn
+  rw [hz,Nat.cast_add,hcast]
   ring
 
 private theorem halfNorm_cast (μ : Fin D.rank → ℚ) :
@@ -93,7 +94,7 @@ private theorem shiftCurrent_zero_basis (μ : Fin D.rank → ℚ) (a : Label D) 
       (pairing D (fun i => (a.1 i : ℚ)) μ : ℂ) • carrierBasis D a := by
   classical
   rw [carrierBasis_apply]
-  simp only [shiftCurrent,Finset.sum_apply,LinearMap.smul_apply,neutralMode_zero_single,
+  simp only [shiftCurrent,LinearMap.sum_apply,LinearMap.smul_apply,neutralMode_zero_single,
     smul_smul,← Finset.sum_smul]
   congr 1
   simp only [chargeScalar,bilinear,unitCharge,Int.cast_sum,Int.cast_mul,Int.cast_ite,
