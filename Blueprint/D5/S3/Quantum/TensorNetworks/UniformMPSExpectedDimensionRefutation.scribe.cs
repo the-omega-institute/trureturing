@@ -102,7 +102,10 @@ internal sealed class UniformMPSExpectedDimensionRefutationDocument : IScribeDoc
                             + "Thus the minimum is at least 15 in ℕ. Casting this inequality to "
                             + "WithBot ℕ∞ and substituting the asserted dimension equality gives "
                             + "15 ≤ varietyDim (uMPS 2 5 2) ≤ 14, a contradiction."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("czaplinski-michalek-seynnaeve-2023-umps-expected-dimension"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string id, string declaration, string title, Formula formula,
         AssessedProvenance provenance, string prose) =>
