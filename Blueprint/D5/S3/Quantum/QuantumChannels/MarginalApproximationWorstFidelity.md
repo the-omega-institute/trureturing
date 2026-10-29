@@ -42,7 +42,21 @@ $$\forall (N: \mathbb{N}), (\forall (a: \operatorname{Fin}\left(N\right) \to \op
 
 The permutation finRotate N cyclically rotates the qubit positions. The coefficient shiftCoeff N a is the trace pairing of the Pauli string a with the transpose of qubitPermutation (finRotate N), divided by two to the power N. The transpose fixes the direction of the wire permutation in this convention. Both the power of two and its inverse are complex numbers. These coefficients specify the pure process matrix used to attain the bound.
 
-**Definition 1.4 (The universal lower bound and cyclic-shift attainment).**
+**Theorem 1.4 (Tensor products of diagonal matrices).**
+
+$$\forall (iota: \operatorname{Type}\left(\right)), (\forall (f: \operatorname{Fintype}\left(iota\right)), (\forall (e: \operatorname{DecidableEq}\left(iota\right)), (\forall (d: iota \to \left(\operatorname{Fin}\left(4\right) \to \mathbb{C}\right)), (\operatorname{productMap}\left(\lambda (k: iota) \mapsto (\operatorname{Fin}\left(4\right)), \lambda (k: iota) \mapsto (\operatorname{Matrix.diagonal}\left(d\left(k\right)\right))\right) = \operatorname{Matrix.diagonal}\left(\lambda (a: iota \to \operatorname{Fin}\left(4\right)) \mapsto (\prod_{(k: iota)} (d\left(k, a\left(k\right)\right)))\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/MarginalApproximationWorstFidelity.productMatrix_diagonal` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* James Sud; Jeffrey Marshall; Zhihui Wang; Eleanor Rieffel; Filip A. Wudarski (2022). *Dual-map framework for noise characterization of quantum computers*. DOI: [10.1103/PhysRevA.106.012606](https://doi.org/10.1103/PhysRevA.106.012606). URL: <https://arxiv.org/abs/2112.04414v1>.
+
+*Commentary.*
+
+For any finite index type, the tensor product of four-dimensional diagonal matrices is diagonal, and its entry at a word is the product of the selected local entries.
+
+**Definition 1.5 (The universal lower bound and cyclic-shift attainment).**
 
 $$(\operatorname{claim}) \Leftrightarrow ((\forall (N: \mathbb{N}), (((1: \mathbb{N}) \le N) \Rightarrow (\forall (chi: \operatorname{Matrix}\left((\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(4\right)), (\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(4\right)), \mathbb{C}\right)), ((\operatorname{IsProcessCPTP}\left(chi\right)) \Rightarrow (\frac{(1: \mathbb{R})}{((4: \mathbb{R}))^{N}} \le \operatorname{sqFidelity}\left(chi, \operatorname{productMap}\left(\operatorname{Function.const}\left(\operatorname{Fin}\left(N\right), \operatorname{Fin}\left(4\right)\right), \operatorname{marginal}\left(chi\right)\right)\right)))))) \land (\forall (N: \mathbb{N}), (((2: \mathbb{N}) \le N) \Rightarrow ((\sum_{a: \operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(4\right)} ((\operatorname{shiftCoeff}\left(N, a\right)) \cdot (\operatorname{tensorOp}\left(\lambda (k: \operatorname{Fin}\left(N\right)) \mapsto (\operatorname{sigma}\left(a\left(k\right)\right))\right))) = \operatorname{Matrix.transpose}\left(\operatorname{qubitPermutation}\left(\operatorname{finRotate}\left(N\right)\right)\right)) \land ((\operatorname{IsProcessCPTP}\left(\operatorname{rankOneDensity}\left(\operatorname{shiftCoeff}\left(N\right)\right)\right)) \land ((\forall (k: \operatorname{Fin}\left(N\right)), (\operatorname{marginal}\left(\operatorname{rankOneDensity}\left(\operatorname{shiftCoeff}\left(N\right)\right), k\right) = (\frac{(1: \mathbb{C})}{(4: \mathbb{C})}) \cdot ((1: \operatorname{Matrix}\left(\operatorname{Fin}\left(4\right), \operatorname{Fin}\left(4\right), \mathbb{C}\right))))) \land (\operatorname{sqFidelity}\left(\operatorname{rankOneDensity}\left(\operatorname{shiftCoeff}\left(N\right)\right), \operatorname{productMap}\left(\operatorname{Function.const}\left(\operatorname{Fin}\left(N\right), \operatorname{Fin}\left(4\right)\right), \operatorname{marginal}\left(\operatorname{rankOneDensity}\left(\operatorname{shiftCoeff}\left(N\right)\right)\right)\right)\right) = \frac{(1: \mathbb{R})}{((4: \mathbb{R}))^{N}})))))))$$
 
@@ -58,7 +72,7 @@ The source conjectures the worst-case fidelity value in main.tex lines 284–290
 
 The second conjunct specifies an attaining family: for every N at least two, the Pauli expansion with coefficients shiftCoeff N equals the transposed cyclic wire permutation, its rank-one process matrix is CPTP, every marginal is one quarter of the four-dimensional identity, and its squared fidelity with the product of its marginals is exactly four to the minus N. The cyclic-shift construction supplies this attainment assertion. Here productMap forms the tensor product of its matrix arguments, rankOneDensity v has entries v(a) times the complex conjugate of v(b), and sqFidelity is the square of the real part of the trace of the positive square root of √ρ σ √ρ. Its values and the bound are real.
 
-**Theorem 1.5 (The lower bound is sharp).**
+**Theorem 1.6 (The lower bound is sharp).**
 
 $$(\forall (N: \mathbb{N}), (((1: \mathbb{N}) \le N) \Rightarrow (\forall (chi: \operatorname{Matrix}\left((\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(4\right)), (\operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(4\right)), \mathbb{C}\right)), ((\operatorname{IsProcessCPTP}\left(chi\right)) \Rightarrow (\frac{(1: \mathbb{R})}{((4: \mathbb{R}))^{N}} \le \operatorname{sqFidelity}\left(chi, \operatorname{productMap}\left(\operatorname{Function.const}\left(\operatorname{Fin}\left(N\right), \operatorname{Fin}\left(4\right)\right), \operatorname{marginal}\left(chi\right)\right)\right)))))) \land (\forall (N: \mathbb{N}), (((2: \mathbb{N}) \le N) \Rightarrow ((\sum_{a: \operatorname{Fin}\left(N\right) \to \operatorname{Fin}\left(4\right)} ((\operatorname{shiftCoeff}\left(N, a\right)) \cdot (\operatorname{tensorOp}\left(\lambda (k: \operatorname{Fin}\left(N\right)) \mapsto (\operatorname{sigma}\left(a\left(k\right)\right))\right))) = \operatorname{Matrix.transpose}\left(\operatorname{qubitPermutation}\left(\operatorname{finRotate}\left(N\right)\right)\right)) \land ((\operatorname{IsProcessCPTP}\left(\operatorname{rankOneDensity}\left(\operatorname{shiftCoeff}\left(N\right)\right)\right)) \land ((\forall (k: \operatorname{Fin}\left(N\right)), (\operatorname{marginal}\left(\operatorname{rankOneDensity}\left(\operatorname{shiftCoeff}\left(N\right)\right), k\right) = (\frac{(1: \mathbb{C})}{(4: \mathbb{C})}) \cdot ((1: \operatorname{Matrix}\left(\operatorname{Fin}\left(4\right), \operatorname{Fin}\left(4\right), \mathbb{C}\right))))) \land (\operatorname{sqFidelity}\left(\operatorname{rankOneDensity}\left(\operatorname{shiftCoeff}\left(N\right)\right), \operatorname{productMap}\left(\operatorname{Function.const}\left(\operatorname{Fin}\left(N\right), \operatorname{Fin}\left(4\right)\right), \operatorname{marginal}\left(\operatorname{rankOneDensity}\left(\operatorname{shiftCoeff}\left(N\right)\right)\right)\right)\right) = \frac{(1: \mathbb{R})}{((4: \mathbb{R}))^{N}}))))))$$
 
@@ -93,6 +107,7 @@ Finally let c = 1/4ᴺ as a real number. The product of the marginals is (c : �
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/MarginalApproximationWorstFidelity.IsProcessCPTP`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/MarginalApproximationWorstFidelity.claim`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/MarginalApproximationWorstFidelity.marginal`
+- Truth anchor: `D5/S3/Quantum/QuantumChannels/MarginalApproximationWorstFidelity.productMatrix_diagonal`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/MarginalApproximationWorstFidelity.result`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/MarginalApproximationWorstFidelity.shiftCoeff`
 - Dependency: [D5/S3/Quantum/Codes/StabilizerGenuineEntanglementCommutationRank](../Codes/StabilizerGenuineEntanglementCommutationRank.md)
