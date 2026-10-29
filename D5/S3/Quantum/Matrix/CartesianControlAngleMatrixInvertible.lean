@@ -76,7 +76,7 @@ private theorem Linv_mul_A (m : ℕ) : Linv m * A m = (1 : Matrix (Fin m) (Fin m
               intro h
               apply ht0
               simpa using congrArg Fin.val h
-            norm_num [A, Matrix.one_apply, ht0, htn, ht1]
+            norm_num [A, Matrix.one_apply, ht0, htn, Ne.symm htn, ht1]
         · by_cases hrlast : (r : ℕ) + 1 = n + 1 + 1
           · have hr : r = ⟨n + 1, by omega⟩ := by
               apply Fin.ext
@@ -99,7 +99,11 @@ private theorem Linv_mul_A (m : ℕ) : Linv m * A m = (1 : Matrix (Fin m) (Fin m
                 simp
               have hAlast : A (n + 1 + 1) ⟨n + 1, by omega⟩ t = 1 := by
                 change (if 0 < n + 1 ∧ n + 1 ≤ (t : ℕ) then (-1 : ℝ) else 1) = 1
-                by_cases hle : n + 1 ≤ (t : ℕ) <;> simp [hle, htlast]
+                by_cases hle : n + 1 ≤ (t : ℕ)
+                · exfalso
+                  apply htlast
+                  omega
+                · simp [hle]
               norm_num [A, Matrix.one_apply, htlast]
           · have hrpos : 0 < (r : ℕ) := by omega
             have hrsucc : (r : ℕ) + 1 < n + 1 + 1 := by omega
@@ -120,7 +124,6 @@ private theorem Linv_mul_A (m : ℕ) : Linv m * A m = (1 : Matrix (Fin m) (Fin m
                 (1 / 2 : ℝ) * A (n + 1 + 1) ⟨(r : ℕ) + 1, hrsucc⟩ t := by
               simpa only [one_div] using hsumrs
             rw [hsumrs']
-            have hreq : (⟨(r : ℕ) + 1, hrsucc⟩ : Fin (n + 1 + 1)) = r := by omega
             by_cases htr : (t : ℕ) < (r : ℕ)
             · have htr' : (t : ℕ) < (r : ℕ) + 1 := by omega
               have har : A (n + 1 + 1) r t = 1 := by
@@ -132,7 +135,7 @@ private theorem Linv_mul_A (m : ℕ) : Linv m * A m = (1 : Matrix (Fin m) (Fin m
                 have hcond : ¬(0 < (r : ℕ) + 1 ∧ (r : ℕ) + 1 ≤ (t : ℕ)) := by omega
                 rw [if_neg hcond]
               rw [har, has]
-              ring
+              norm_num
               have hrt : r ≠ t := by
                 intro h
                 have hv := congrArg Fin.val h
@@ -148,7 +151,8 @@ private theorem Linv_mul_A (m : ℕ) : Linv m * A m = (1 : Matrix (Fin m) (Fin m
                   change (if 0 < (r : ℕ) + 1 ∧ (r : ℕ) + 1 ≤ (r : ℕ) then (-1 : ℝ) else 1) = 1
                   simp
                 rw [har, has]
-                ring
+                norm_num
+                simp
               · have htr' : (r : ℕ) < (t : ℕ) := by omega
                 have har : A (n + 1 + 1) r t = -1 := by
                   change (if 0 < (r : ℕ) ∧ (r : ℕ) ≤ (t : ℕ) then (-1 : ℝ) else 1) = -1
@@ -164,10 +168,8 @@ private theorem Linv_mul_A (m : ℕ) : Linv m * A m = (1 : Matrix (Fin m) (Fin m
                     intro h
                     have hv := congrArg Fin.val h
                     omega
-                  simp [hnext, Matrix.one_apply, hrt]
-                · have : (t : ℕ) = (r : ℕ) := by omega
-                  apply hteq
-                  simpa using this
+                  norm_num [hnext, Matrix.one_apply, hrt]
+                · omega
 
 private theorem A_mul_Linv (m : ℕ) : A m * Linv m = (1 : Matrix (Fin m) (Fin m) ℝ) := by
   rw [mul_eq_one_comm]
