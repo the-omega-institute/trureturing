@@ -2435,7 +2435,7 @@ $k$ 读成功，则它在该来源的零误差运行也至多 $k$ 读输出 $2$�
 **证明。** 对任意固定来源 $Q\in\mathcal M_k$ 令
 
 $$
- M(Q)=\max\left(\{a_i(Q):0\le i<k\}\ 
+ M(Q)=\max\left(\{a_i(Q):0\le i<k\}\,
        \cup\{b_j^{(q)}(Q):0\le q,j<k\}\right)>0.
 \tag{13.27}
 $$
