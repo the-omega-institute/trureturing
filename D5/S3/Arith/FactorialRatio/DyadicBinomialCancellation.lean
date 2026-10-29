@@ -6,7 +6,6 @@
    utility: none
    digest: Exact reduced polarization-transfer fractions at every positive index. -/
 
-import D5.S0.Certificates.SabbaPolarizationTransferRefutation
 import Mathlib.Data.Nat.Choose.Bounds
 import Mathlib.Data.Nat.Factorization.Basic
 import Mathlib.Tactic.FieldSimp
@@ -29,7 +28,15 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Arith.FactorialRatio.DyadicBinomialCancellation
 
-open D5.S0.Certificates.SabbaPolarizationTransferRefutation
+/- The two rational functions are restated locally so this general arithmetic
+result remains independent of the S0 certified counterexample layer. -/
+def f (n : ℕ) : ℚ :=
+  if n % 2 = 0 then (2 : ℚ) ^ ((1 : ℤ) - n) * n * (n - 1).choose (n / 2)
+  else (2 : ℚ) ^ ((1 : ℤ) - n) * n * (n - 1).choose ((n - 1) / 2)
+
+def g (n : ℕ) : ℚ :=
+  if n % 2 = 0 then 2 * (1 - (2 : ℚ) ^ (-(n : ℤ)) * n.choose (n / 2))
+  else 2 * (1 - (2 : ℚ) ^ (-(n : ℤ)) * n.choose ((n - 1) / 2))
 
 private theorem bounds_as_fractions (n : ℕ) (hn : 1 ≤ n) :
     f n = (2 : ℚ) * ((n - n / 2 : ℕ) : ℚ) * n.choose (n / 2) / 2 ^ n ∧
