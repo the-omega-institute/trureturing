@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/Density/RationalBracketCollisionDensity
-   generality: S
+   generality: G
    mirror-B: D5/B/S3/Arith/Density/RationalBracketCollisionDensity
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Data.Rat.Floor, mathlib/module/Mathlib.Data.Nat.Periodic]
@@ -10,8 +10,29 @@ import D5.S3.ObserverMemory.Prediction.EventualCycleAverage
 import Mathlib.Data.Rat.Floor
 import Mathlib.Data.Nat.Periodic
 
-open Filter Finset
-open scoped Topology BigOperators Classical
+/-! Rational bracket expressions have rational collision densities.
+
+admission_basis: open-problem-resolution
+Source question: Larsson–Manabe, arXiv:2603.10414v2, Section 7, Question 20(iii).
+The result answers the rationality subquestion, including existence of the limit.
+It does not assert a closed form or settle the other questions in Question 20.
+
+Proof shapes (semantic assessment):
+* affine_blocks: bind-only; consumed by bracket_affine and affine_image_tail.
+* bracket_affine: content; constructs a common positive period and integer drift.
+* affine_image_tail: content; constructs eventual periodicity of actual image membership.
+* eventual_periodic_density: bind-only; consumed by result.
+* result: content; uses the affine image construction and the frozen averaging theorem.
+
+The direct frozen supplier after helper expansion is
+D5/S3/ObserverMemory/Prediction/EventualCycleAverage.eventual_cycle_average,
+statement_id sha256:2e3154d85f7181f0927cc78bd2487ecbbef22bbb3b139cd74a7bb868b5c281be.
+The period and image-tail constructions feed the actual collision predicate into this
+supplier. No density or periodicity premise is assumed in the public claim.
+-/
+
+open Filter Finset Classical
+open scoped Topology BigOperators
 namespace D5.S3.Arith.Density.RationalBracketCollisionDensity
 noncomputable section
 
@@ -32,8 +53,10 @@ private theorem affine_image_tail (w : ℕ → ℤ) (q : ℕ) (hq : 0 < q) (d : 
   let M := (∑ r : Fin q, (w r).natAbs) + 1
   have hb (r : Fin q) : w r < (M : ℤ) := by
     have hr : (w r).natAbs ≤ ∑ j : Fin q, (w j).natAbs :=
-      Finset.single_le_sum (f := fun j : Fin q => (w j).natAbs) (fun _ _ => Nat.zero_le _) (Finset.mem_univ r)
-    have hr' : ((w r).natAbs : ℤ) < (M : ℤ) := by exact_mod_cast (show (w r).natAbs < M by omega)
+      Finset.single_le_sum (f := fun j : Fin q => (w j).natAbs)
+        (fun _ _ => Nat.zero_le _) (Finset.mem_univ r)
+    have hr' : ((w r).natAbs : ℤ) < (M : ℤ) := by
+      exact_mod_cast (show (w r).natAbs < M by omega)
     exact lt_of_le_of_lt (Int.le_natAbs) hr'
   have decomp (n : ℕ) : w n = w (n % q) + ((n / q : ℕ) : ℤ) * d := by
     have hh := affine_blocks w q d h (n % q) (n / q)
@@ -44,7 +67,8 @@ private theorem affine_image_tail (w : ℕ → ℤ) (q : ℕ) (hq : 0 < q) (d : 
     have hnot (x : ℕ) (hx : M ≤ x) : ¬ ∃ n, w n = (x : ℤ) := by
       rintro ⟨n, hn⟩
       have hr := hb ⟨n % q, Nat.mod_lt n hq⟩
-      have hm : ((n / q : ℕ) : ℤ) * d ≤ 0 := mul_nonpos_of_nonneg_of_nonpos (by positivity) hd
+      have hm : ((n / q : ℕ) : ℤ) * d ≤ 0 :=
+        mul_nonpos_of_nonneg_of_nonpos (by positivity) hd
       rw [decomp n] at hn
       have hx' : (M : ℤ) ≤ x := by exact_mod_cast hx
       dsimp at hr
@@ -137,7 +161,8 @@ private theorem eventual_periodic_density (P : ℕ → Prop)
     exact (hlim.comp ((tendsto_add_atTop_iff_nat 1).mpr tendsto_id)).congr'
       (Eventually.of_forall fun N => rfl)
   have hratio : Tendsto (fun N : ℕ => ((N + 1 : ℕ) : ℝ) / (N : ℝ)) atTop (𝓝 1) := by
-    have hh := (tendsto_const_nhds (x := (1 : ℝ))).div_atTop (tendsto_natCast_atTop_atTop (R := ℝ))
+    have hh := (tendsto_const_nhds (x := (1 : ℝ))).div_atTop
+      (tendsto_natCast_atTop_atTop (R := ℝ))
     have htotal : Tendsto (fun N : ℕ => 1 + (1 : ℝ) / (N : ℝ)) atTop (𝓝 1) := by
       simpa using (tendsto_const_nhds (x := (1 : ℝ))).add hh
     apply htotal.congr'
@@ -203,6 +228,7 @@ def claim : Prop :=
       (fun N : ℕ => (((Finset.range (N + 1)).filter (collision c α k)).card : ℝ) / (N : ℝ))
       atTop (𝓝 (a : ℝ))
 
+/-- Every rational-modulus bracket expression has an existing rational collision density. -/
 theorem result : claim := by
   intro t c α _ k _
   obtain ⟨q, hq, d, hd⟩ := bracket_affine c α
@@ -214,7 +240,6 @@ theorem result : claim := by
   have hh := hmem (x + k) (by omega)
   simpa only [show x + p + k = x + k + p by omega] using and_congr Iff.rfl hh
 
-#print axioms result
 
 end
 end D5.S3.Arith.Density.RationalBracketCollisionDensity
