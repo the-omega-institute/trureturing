@@ -2323,3 +2323,342 @@ $$
 which simplifies to the second line of (14.12). This completes the exact algebraic specification and the equality classification. ∎
 
 ## 追加锚（本行以下为增补区）
+
+## 15. The finite rare/dense crossing on the whole continuous window
+
+**Definition 15.1 (Crossing threshold and branch values).** Fix
+
+$$
+\frac12<L<1,
+\qquad
+A_\times(L)=\left\lceil
+\max\left\{10^4,\frac{64}{1-L},\frac{8L}{2L-1}\right\}
+\right\rceil.
+\tag{15.1}
+$$
+
+For an integer $a\ge A_\times(L)$ and $0<\delta\le L/a$, retain
+$r=a+1$, $s=a+2$, $q=r-\delta$, $C=2r-1$, and
+$
+\gamma=C\delta,
+\mu=q/s,
+\tau=3(2r+1)\delta/r^2.
+$
+Define the scalar energy
+
+$$
+h(\varepsilon,\delta)
+=\frac{2r^2}{\mu+\varepsilon}
+ +a\left[\frac{r^2}{\mu-2\varepsilon/a}
+ -\frac{C\delta}{(\mu-2\varepsilon/a)^2}\right].
+$$
+Let $\varepsilon_*(\delta)$ be the unique point supplied by Theorem 14.3, and put
+
+$$
+\begin{aligned}
+ u_*(\delta)&=\mu+\varepsilon_*(\delta),
+ &v_*(\delta)&=\mu-\frac{2\varepsilon_*(\delta)}a,\\
+ M_a(\delta)&=\frac{2r^2}{u_*(\delta)}
+ +a\left(\frac{r^2}{v_*(\delta)}-
+ \frac{C\delta}{v_*(\delta)^2}\right),\\
+ R_a(\delta)&=\frac a\delta+
+ \frac{r^3}{1-\delta/a}.
+\end{aligned}
+\tag{15.2}
+$$
+
+Thus $M_a=\mathscr D_a$ is the exact dense value from Theorem 14.3, while
+$R_a=H_r$ is the exact rare value from Theorem 9.1.
+
+**Theorem 15.2 (Unique finite crossing and the complete phase diagram).** For every
+$1/2<L<1$ and every integer $a\ge A_\times(L)$ there is a unique number
+
+$$
+\delta_c(a)\in\left(0,\frac1{2a}\right)\subset\left(0,\frac La\right)
+\tag{15.3}
+$$
+
+such that
+
+$$
+M_a(\delta_c(a))=R_a(\delta_c(a)).
+\tag{15.4}
+$$
+
+For every $0<\delta\le L/a$, on the full law domain of Definition 1.1,
+including arbitrary cardinalities, zero type masses, disconnected support and
+non-symmetric laws,
+
+$$
+\boxed{\quad
+\inf_x H(x)=\min\{M_a(\delta),R_a(\delta)\},
+\qquad
+D_a(\delta)=\min\{M_a(\delta),R_a(\delta)\}-B(\delta).
+\quad}
+\tag{15.5}
+$$
+
+The infimum is attained. Its equality laws are exactly as follows.
+
+* If $0<\delta<\delta_c(a)$, they are the $\binom{s}{2}$ laws $D_P$ indexed by
+  $P\subset[s]$, $|P|=2$, with
+
+  $$
+  x_{[s]\setminus P}=\delta,
+  \quad
+  x_{[s]\setminus\{i\}}=\frac{1-r\delta}{s}-\varepsilon_*(\delta)\ (i\in P),
+  \quad
+  x_{[s]\setminus\{j\}}=\frac{1+\delta}{s}+\frac{2\varepsilon_*(\delta)}a\ (j\notin P),
+  \tag{15.6}
+  $$
+
+  with all other masses zero.
+* If $\delta_c(a)<\delta\le L/a$, they are the $s$ laws $R_e$ indexed by
+  $e\in[s]$, with
+
+  $$
+  x_{\{e\}}=\frac\delta a,
+  \qquad
+  x_{[s]\setminus\{e\}}=1-\frac\delta a,
+  \tag{15.7}
+  $$
+
+  and all other masses zero.
+* At $\delta=\delta_c(a)$ the equality class is the disjoint union of the two
+  displayed families. There is no additional mixed equality law.
+
+Put $F_a=R_a-M_a$. Then $F_a$ is continuous on $(0,L/a]$, is $C^1$ on
+$(0,L/a)$, and
+
+$$
+F_a'(\delta)<-a^3+44a^2<0.
+\tag{15.8}
+$$
+
+Consequently $F_a>0$ before $\delta_c(a)$ and $F_a<0$ after it.
+
+**Proof.** Write $m(\delta)=(1-r\delta)/s$. Since
+$\delta\le L/a<1/a$ and $a\ge64/(1-L)$,
+
+$$
+ r\delta\le L+\frac1a
+ \le L+\frac{1-L}{64}<1,
+\tag{15.9}
+$$
+
+so $m>0$. On $0\le\varepsilon\le m$, the quantities in (14.2) obey
+
+$$
+ u=\mu+\varepsilon\le\mu+m=1-\delta<1,
+ \qquad
+ v=\mu-\frac{2\varepsilon}{a}
+ \ge\frac{a+1-3/a}{a+2}>\frac12,
+ \qquad \mu>\frac12.
+\tag{15.10}
+$$
+
+Also $0<\gamma< C/a<3$. Direct differentiation of the scalar energy in
+(14.2) gives
+
+$$
+\partial_\varepsilon h
+ =2r^2(v^{-2}-u^{-2})-4\gamma v^{-3},
+\qquad
+\partial_{\varepsilon\varepsilon}h
+ =\frac{4r^2}{u^3}
+ +\frac{8(r^2v-3\gamma)}{av^4}.
+\tag{15.11}
+$$
+
+The second expression is strictly positive, because
+$r^2v-3\gamma>a^2/2-9>0$. The point $\varepsilon_*(\delta)$ is interior by
+Theorem 14.3, so the implicit-function theorem and (15.11) make it $C^1$ in
+$\delta$; uniqueness makes the local branches agree. It is continuous at the
+right endpoint by the same interior bounds. Moreover
+$u_*>v_*>1/2$, and hence $v_*/u_*\in(1/2,1)$.
+
+The partial derivative with respect to $\delta$, at fixed $\varepsilon$, has
+the exact identity
+
+$$
+\partial_\delta h
+ =\frac{r^2}{u^2}-\frac{aC}{v^2}
+ +\frac{a}{2s}\,\partial_\varepsilon h.
+\tag{15.12}
+$$
+
+At the stationary point the last term vanishes. Therefore the envelope value
+satisfies
+
+$$
+M_a'(\delta)=\frac{r^2}{u_*^2}-\frac{aC}{v_*^2}
+ \ge-4aC\ge-12a^2,
+\tag{15.13}
+$$
+
+where $C=2a+1\le3a$. On the other hand,
+
+$$
+R_a'(\delta)=-\frac a{\delta^2}
+ +\frac{r^3}{a(1-\delta/a)^2}
+ <-a^3+32a^2.
+\tag{15.14}
+$$
+
+Indeed $\delta<1/a$ gives the first bound, while $r\le2a$ and
+$1-\delta/a>1-1/a^2\ge3/4$ give the second. Equations (15.13)–(15.14)
+prove (15.8), since $a\ge10^4$.
+
+It remains to establish opposite endpoint signs. At $\varepsilon=0$,
+$\partial_\varepsilon h=-4\gamma/\mu^3$. Using
+$\partial_{\varepsilon\varepsilon}h\ge4r^2$ and the mean-value theorem at the
+zero $\varepsilon_*$ gives
+
+$$
+0<\varepsilon_*(\delta)
+ \le\frac{\gamma}{r^2\mu^3}.
+\tag{15.15}
+$$
+
+Thus $\varepsilon_*(\delta)\to0$ as $\delta\downarrow0$ and
+$M_a(\delta)\to h(0,0)=rs^2$, whereas $R_a(\delta)\to+\infty$. Hence
+$F_a(\delta)\to+\infty$ at the left endpoint.
+
+For a finite negative value, set $\delta_0=1/(2a)$. It lies in the prescribed
+window because $L>1/2$. With
+
+$$
+ P_a=24a^6+56a^5-72a^3-38a^2+12a+9,
+ \qquad
+ Q_a=(2a^2-1)(2a^2+2a-1)^2,
+\tag{15.16}
+$$
+
+substitution into the exact rational expressions for $R_a$ and $H_d$ gives
+
+$$
+R_a(\delta_0)-H_d(\delta_0)+a=-a\frac{P_a}{Q_a}.
+\tag{15.17}
+$$
+
+Both $P_a$ and $Q_a$ are positive for $a\ge2$: group the first two negative
+terms as
+$24a^3(a^3-3)$ and $56a^5-38a^2$, with the remaining terms positive.
+The dense minimizer is dense, and at $\delta_0$ the hypothesis of Theorem 8.1
+holds because $b=(2r+1)\delta_0<2$ and $\mu>1/2$, so
+$b/(r^2\mu)<4/a^2\le1/12$. Therefore
+
+$$
+M_a(\delta_0)\ge H_d(\delta_0)-72\delta_0^2\mu^{-6}
+ >H_d(\delta_0)-\frac{1152}{a^2}.
+\tag{15.18}
+$$
+
+Equations (15.17)–(15.18) imply
+$F_a(\delta_0)<-a+1152/a^2<0$. Continuity and the intermediate value theorem
+produce a zero in $(0,\delta_0)$, and (15.8) makes it unique and fixes the
+signs on both sides.
+
+For each fixed $\delta$, Theorem 14.3 gives the exact lower bound $M_a$ and
+all dense equality laws, while Theorem 9.1 gives the exact lower bound $R_a$ and
+all rare equality laws. The conditions $\min_i y_i\ge\tau$ and
+$\min_i y_i<\tau$ partition the full original law domain, so the two attained
+bounds give (15.5) and the three equality alternatives. In particular, a law
+mixing distinct displayed minimizers cannot be an additional minimizer: it lies
+in one of the two regions and would then have to belong to that region's
+exhaustive equality class. The masses in (15.6) and (15.7) are actual laws of
+mean $q$ by the constructions in Theorems 14.3 and 9.1, so no independent
+marginal or cardinality optimization has been spliced into the comparison. ∎
+
+**Proposition 15.3 (Exact algebraic prescription without spurious roots).**
+For $a\ge A_\times(L)$, let $d$ and $z$ be real variables and define
+
+$$
+q_d=r-d,
+\qquad
+\varepsilon(d,z)=\frac{a q_d(1-z)}{s(2+az)}.
+\tag{15.19}
+$$
+
+Let $\mathcal R_a$ be the legal region
+
+$$
+\mathcal R_a=\left\{(d,z):
+0<d<\frac1{2a},\quad \frac12<z<1,\quad
+0<\varepsilon(d,z)<\frac{1-rd}{s}\right\}.
+\tag{15.20}
+$$
+
+There is exactly one pair $(d,z)\in\mathcal R_a$ satisfying the two
+integer-coefficient equations
+
+$$
+\begin{aligned}
+ r^2(r-d)z(1-z^2)-2C d(2+az)&=0,\\
+ 2a(r-d)z(a-d+r^3d)
+ -r^2d(a-d)(2+az)(az^2+4z+a)&=0.
+\end{aligned}
+\tag{15.21}
+$$
+
+Its first coordinate is $d=\delta_c(a)$. The optimizer is recovered exactly by
+
+$$
+ u=\frac{r-d}{2+az},
+ \qquad v=zu,
+ \qquad \varepsilon_*=u-\frac{r-d}{s}
+ =\varepsilon(d,z).
+\tag{15.22}
+$$
+
+**Proof.** At the crossing put $z=v_*/u_*$. The bounds in (15.10) and the
+strict positivity of $\varepsilon_*$ give $(\delta_c,z)\in\mathcal R_a$. Since
+$2u_*+av_*=q$, (15.22) follows. The stationary equation (14.8), after division
+by the positive factor $u_*^2$ and substitution of (15.22), is exactly the
+first equation in (15.21).
+
+Conversely, take any $(d,z)\in\mathcal R_a$ satisfying (15.21), and define
+$u,v,\varepsilon$ by (15.22). The first equation is equivalent, after
+multiplication only by the positive factor $2+az$, to
+
+$$
+ r^2v(u^2-v^2)=2Cd\,u^2,
+\tag{15.23}
+$$
+
+which is the stationary equation for the scalar dense energy. Strict convexity
+in (15.11) and the legal inequalities in (15.20) therefore force
+$\varepsilon=\varepsilon_*(d)$.
+
+Using the first equation to replace $Cd$ in the scalar energy gives
+
+$$
+M_a(d)=
+\frac{r^2(2+az)(az^2+4z+a)}{2z(r-d)}.
+\tag{15.24}
+$$
+
+All factors in $2z(r-d)d(a-d)$ are positive on $\mathcal R_a$, and direct
+clearing of these denominators shows that the second equation in (15.21) is
+exactly
+
+$$
+R_a(d)-M_a(d)=0.
+\tag{15.25}
+$$
+
+Thus every legal solution gives $F_a(d)=0$, hence $d=\delta_c(a)$ by (15.8).
+The crossing pair already constructed supplies existence, so the legal solution
+is unique. The positivity restrictions in (15.20) are retained throughout the
+clearing step; roots outside them are not admissible and are not counted. ∎
+
+The finite crossing uses the exact full-law results of Theorems 9.1 and 14.3.
+The envelope calculation is proved directly from the displayed scalar function;
+Milgrom and Segal, *Envelope Theorems for Arbitrary Choice Sets*,
+Econometrica 70 (2002), 583–601, provides the classical envelope background but
+is not used to supply the moving-domain regularity or the slope bound here.
+The endpoint identity (15.17) is a rational identity, and the dense estimate
+(15.18) is Theorem 8.1; no asymptotic expansion, numerical grid or convexity of
+$H$ as a function of the law is used.
+
+## 追加锚（本行以下为增补区）
