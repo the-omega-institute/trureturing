@@ -183,6 +183,19 @@ inductive Pattern (k m : Nat) where
   | block : Fin m → Nat → Pattern k m
   | pair : Pattern k m → Pattern k m → Pattern k m
 
+/-- The decoration has exactly the leaves of the supplied free shape.
+An explicit leaf carries a scalar; a residual occurrence carries its native sort and offset. -/
+def Decoration (k m : Nat) : NativeTermUnification.Term X → Type
+  | .of (.inl _) => Scalar k
+  | .of (.inr _) => Fin m × Nat
+  | .mul l r => Decoration k m l × Decoration k m r
+
+/-- Assemble every original and auxiliary name by recursion on its actual free-shape term. -/
+def assemble {k m : Nat} : (s : NativeTermUnification.Term X) → Decoration k m s → Pattern k m
+  | .of (.inl _), r => .scalar r
+  | .of (.inr _), b => .block b.1 b.2
+  | .mul l r, d => .pair (assemble l d.1) (assemble r d.2)
+
 def Pattern.code {k m : Nat} (n : Fin k → Nat) (z : Fin m → Source) : Pattern k m → Code
   | .scalar r => .of (r.value n)
   | .block i a => shiftCode a (encode (z i))
@@ -282,7 +295,7 @@ private theorem shift_code {k m : Nat} (a : Nat) (t : Pattern k m)
 
 /-- Collapse ranks are explicit natural parameters, shared across its three comparisons. -/
 def branchComparisons {k m : Nat} (t : X → Pattern k m)
-    (c : BranchEquation X → Fin k) (b : BranchEquation X) :
+    (c : BranchEquation X → Scalar k) (b : BranchEquation X) :
     List (Pattern k m × Pattern k m) :=
   match b with
   | .primitive x a => [(t x, .scalar (.constant a))]
@@ -290,9 +303,9 @@ def branchComparisons {k m : Nat} (t : X → Pattern k m)
   | .ordinary x y z => [(t x, .pair (t y) (t z))]
   | .same x y => [(t x, t y)]
   | .collapse x y z =>
-      [(t y, .scalar (.parameter (c b) 1)),
-       (t z, .scalar (.parameter (c b) 0)),
-       (t x, .scalar (.parameter (c b) 2))]
+      [(t y, .scalar ((c b).shift 1)),
+       (t z, .scalar (c b)),
+       (t x, .scalar ((c b).shift 2))]
 
 def collect {k m : Nat} : List (Pattern k m × Pattern k m) → Option (Guard k)
   | [] => some []
@@ -318,7 +331,7 @@ private theorem collect_sound {k m : Nat} (L : List (Pattern k m × Pattern k m)
       · exact ih b hb (fun e he => hn e (List.mem_append_right _ he)) q hq
 
 private theorem comparisons_branch {k m : Nat} (t : X → Pattern k m)
-    (c : BranchEquation X → Fin k) (b : BranchEquation X)
+    (c : BranchEquation X → Scalar k) (b : BranchEquation X)
     (n : Fin k → Nat) (z : Fin m → Source)
     (h : ∀ p ∈ branchComparisons t c b, p.1.code n z = p.2.code n z) :
     b.Holds (fun x => (t x).code n z) := by
@@ -330,25 +343,29 @@ private theorem comparisons_branch {k m : Nat} (t : X → Pattern k m)
   | ordinary x y z => exact h _ (List.mem_singleton_self _)
   | same x y => exact h _ (List.mem_singleton_self _)
   | collapse x y w =>
-      refine ⟨n (c (.collapse x y w)),
-        h (t y, .scalar (.parameter (c (.collapse x y w)) 1))
-          (by simp [branchComparisons]), ?_,
-        h (t x, .scalar (.parameter (c (.collapse x y w)) 2))
-          (by simp [branchComparisons])⟩
-      simpa only [Pattern.code, Scalar.value, Nat.add_zero] using
-        h (t w, .scalar (.parameter (c (.collapse x y w)) 0))
-          (by simp [branchComparisons])
+      have scalar_shift (r : Scalar k) (a : Nat) :
+          (r.shift a).value n = r.value n + a := by
+        cases r <;> simp [Scalar.shift, Scalar.value, Nat.add_assoc]
+      refine ⟨(c (.collapse x y w)).value n, ?_, ?_, ?_⟩
+      · simpa only [Pattern.code, scalar_shift] using
+          h (t y, .scalar ((c (.collapse x y w)).shift 1)) (by simp [branchComparisons])
+      · exact h (t w, .scalar (c (.collapse x y w))) (by simp [branchComparisons])
+      · simpa only [Pattern.code, scalar_shift] using
+          h (t x, .scalar ((c (.collapse x y w)).shift 2)) (by simp [branchComparisons])
 
 /-- Successful finite comparison extraction yields an image sound for every native filling.
 The arithmetic domain depends only on natural scalar parameters. -/
 theorem guarded_mixed_sound {k m : Nat} (E : List (MixedExpr X × MixedExpr X))
     (B : List (BranchEquation (Name X)))
     (hB : B ∈ NativePositiveBranchReduction.branches (flatten E))
-    (t : Name X → Pattern k m) (c : BranchEquation (Name X) → Fin k)
-    (g : Guard k) (hg : collect (B.flatMap (branchComparisons t c)) = some g)
+    (s : Name X → NativeTermUnification.Term (Name X))
+    (d : ∀ x, Decoration k m (s x)) (c : BranchEquation (Name X) → Scalar k)
+    (g : Guard k)
+    (hg : collect (B.flatMap (branchComparisons (fun x => assemble (s x) (d x)) c)) = some g)
     (n : Fin k → Nat) (hn : g.Holds n) (z : Fin m → Source) :
-    ∀ e ∈ E, eval (fun x => rankedEval n z (t (.inl x)).template) e.1 =
-      eval (fun x => rankedEval n z (t (.inl x)).template) e.2 := by
+    ∀ e ∈ E, eval (fun x => rankedEval n z (assemble (s (.inl x)) (d (.inl x))).template) e.1 =
+      eval (fun x => rankedEval n z (assemble (s (.inl x)) (d (.inl x))).template) e.2 := by
+  let t : Name X → Pattern k m := fun x => assemble (s x) (d x)
   have comparisons := collect_sound _ g hg n hn z
   have branch : ∀ b ∈ B, b.Holds (fun x => (t x).code n z) := by
     intro b hb
