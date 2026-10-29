@@ -10,7 +10,6 @@ import Mathlib.Basic.Complex.Basic
 import Mathlib.RingTheory.Nullstellensatz
 import Mathlib.RingTheory.KrullDimension.Polynomial
 import Mathlib.RingTheory.KrullDimension.Field
-import Mathlib.Tactic.FinCases
 
 /-! The two-site trace Gram determinant gives a strict expected-dimension defect. -/
 
