@@ -6,10 +6,7 @@
    utility: none
    digest: IC pairs are exactly injective pairs with acyclic fiber graphs. -/
 
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import Mathlib.Basic.Real.Basic
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Tactic.Linarith
+import D5.S3.TotalVariation.CycleSingleCutMinimax
 
 /-!
 # Informationally complete pairs and forests
@@ -30,12 +27,9 @@ The probability and completeness notions are those of Section 5 of S. Gudder,
 
 noncomputable section
 open scoped BigOperators
+open D5.S3.TotalVariation.CycleSingleCutMinimax (Probability)
 
 namespace D5.S3.Observer.Tomography.InformationallyCompletePairForest
-
-/-- A nonnegative, normalized probability weight on a finite sample space. -/
-def IsProbability {α : Type*} [Fintype α] [DecidableEq α] (μ : α → ℝ) : Prop :=
-  (∀ x, 0 ≤ μ x) ∧ ∑ x, μ x = 1
 
 open Classical in
 /-- The distribution of a real random variable, evaluated on an arbitrary set. -/
@@ -45,7 +39,7 @@ def distribution {α : Type*} [Fintype α] [DecidableEq α]
 
 /-- The two marginal distributions determine every probability weight uniquely. -/
 def IsICPair {α : Type*} [Fintype α] [DecidableEq α] (f g : α → ℝ) : Prop :=
-  ∀ μ ν, IsProbability μ → IsProbability ν →
+  ∀ μ ν, Probability μ → Probability ν →
     distribution f μ = distribution f ν → distribution g μ = distribution g ν → μ = ν
 
 /-- A point supplies an edge between its two tagged random-variable values. -/
@@ -92,47 +86,14 @@ private noncomputable def locallyFinite_of_finite_edgeSet {V : Type*} (G : Simpl
     [Finite G.edgeSet] : G.LocallyFinite := by
   classical
   intro v
-  letI : Finite (G.neighborSet v) := Finite.of_injective
-    (fun z : G.neighborSet v => (⟨s(v, z.1), G.mem_edgeSet.mpr z.2⟩ : G.edgeSet)) (by
-      intro a b hab
-      apply Subtype.ext
-      have hab' := congrArg Subtype.val hab
-      rw [Sym2.eq_iff] at hab'
-      rcases hab' with ⟨_, h⟩ | ⟨hva, hav⟩
-      · exact h
-      · exfalso
-        have ha : G.Adj v a := a.2
-        exact ha.ne hav.symm)
-  exact Fintype.ofFinite _
+  letI : Fintype (G.incidenceSet v) :=
+    ((Set.toFinite G.edgeSet).subset (G.incidenceSet_subset v)).fintype
+  exact Fintype.ofEquiv (G.incidenceSet v) (G.incidenceSetEquivNeighborSet v)
 
 private lemma finite_component_edgeSet {V : Type*} (G : SimpleGraph V)
     [Finite G.edgeSet] (C : G.ConnectedComponent) : Finite C.toSimpleGraph.edgeSet := by
-  classical
-  have map_mem : ∀ (e : Sym2 C), e ∈ C.toSimpleGraph.edgeSet →
-      Sym2.map (fun z : C => z.1) e ∈ G.edgeSet := by
-    intro e he
-    induction e using Sym2.inductionOn with
-    | _ u v =>
-      exact G.mem_edgeSet.mpr ((SimpleGraph.Embedding.induce C.supp).toHom.map_rel
-        (C.toSimpleGraph.mem_edgeSet.mp he))
-  apply Finite.of_injective
-    (fun e : C.toSimpleGraph.edgeSet =>
-      (⟨Sym2.map (fun z : C => z.1) e.1, map_mem e.1 e.2⟩ : G.edgeSet))
-  intro e₁ e₂ he
-  rcases e₁ with ⟨e₁, he₁⟩
-  rcases e₂ with ⟨e₂, he₂⟩
-  apply Subtype.ext
-  have he' := congrArg Subtype.val he
-  induction e₁ using Sym2.inductionOn with
-  | _ u v =>
-    induction e₂ using Sym2.inductionOn with
-    | _ x y =>
-      dsimp at he'
-      change s(u, v) = s(x, y)
-      rw [Sym2.eq_iff] at he' ⊢
-      rcases he' with ⟨hu, hv⟩ | ⟨hu, hv⟩
-      · exact Or.inl ⟨Subtype.ext hu, Subtype.ext hv⟩
-      · exact Or.inr ⟨Subtype.ext hu, Subtype.ext hv⟩
+  exact Finite.of_injective (SimpleGraph.Embedding.induce C.supp).mapEdgeSet
+    (SimpleGraph.Embedding.induce C.supp).mapEdgeSet.injective
 
 private lemma distribution_eq_iff_fiber_sums {α : Type*} [Fintype α] [DecidableEq α]
     (f : α → ℝ) (μ ν : α → ℝ) :
@@ -195,11 +156,11 @@ private lemma not_injective_not_ic {α : Type*} [Fintype α] [DecidableEq α] {f
   have hfx : f x = f y := congrArg Prod.fst hpair
   have hgx : g x = g y := congrArg Prod.snd hpair
   intro hic
-  have hprob (z : α) : IsProbability (Pi.single z (1 : ℝ)) := by
-    refine ⟨?_, ?_⟩
-    · intro u
-      by_cases huz : u = z <;> simp [huz]
-    · simp
+  have hprob (z : α) : Probability (Pi.single z (1 : ℝ)) := by
+    have h : Probability (Convexity.StdSimplex.single (R := ℝ) z).weights :=
+      ⟨(Convexity.StdSimplex.single (R := ℝ) z).weights_nonneg,
+        (Convexity.StdSimplex.single (R := ℝ) z).total_of_fintype⟩
+    simpa only [Convexity.StdSimplex.weights_single, Finsupp.single_eq_pi_single] using h
   have hf : distribution f (Pi.single x (1 : ℝ)) =
       distribution f (Pi.single y (1 : ℝ)) := by
     funext δ
@@ -212,9 +173,7 @@ private lemma not_injective_not_ic {α : Type*} [Fintype α] [DecidableEq α] {f
     simp [hgx]
   have heq := hic _ _ (hprob x) (hprob y) hf hg
   have hneq : (Pi.single x (1 : ℝ) : α → ℝ) ≠ Pi.single y (1 : ℝ) := by
-    intro hsingle
-    have hvalue := congrFun hsingle x
-    simp [hxy] at hvalue
+    exact (Pi.single_left_injective (one_ne_zero : (1 : ℝ) ≠ 0)).ne hxy
   exact hneq heq
 
 private lemma walk_weights {α : Type*} [Fintype α] [DecidableEq α] {f g : α → ℝ}
@@ -310,11 +269,7 @@ private lemma zero_fibers_not_ic {α : Type*} [Fintype α] [DecidableEq α]
     (hg : ∀ b, (∑ x ∈ Finset.univ.filter (fun x => g x = b), w x) = 0) :
     ¬ IsICPair f g := by
   classical
-  obtain ⟨x, hx⟩ : ∃ x, w x ≠ 0 := by
-    by_contra h
-    apply hw
-    funext x
-    simpa using not_exists.mp h x
+  obtain ⟨x, hx⟩ : ∃ x, w x ≠ 0 := Function.ne_iff.mp hw
   have : Nonempty α := ⟨x⟩
   let n : ℝ := Fintype.card α
   have hn : 0 < n := by
@@ -330,7 +285,7 @@ private lemma zero_fibers_not_ic {α : Type*} [Fintype α] [DecidableEq α]
     exact hf a
   let μ : α → ℝ := fun x => (1 + w x) / n
   let ν : α → ℝ := fun _ => 1 / n
-  have hμ : IsProbability μ := by
+  have hμ : Probability μ := by
     constructor
     · intro z
       have hz := (abs_le.mp (hb z)).1
@@ -338,7 +293,7 @@ private lemma zero_fibers_not_ic {α : Type*} [Fintype α] [DecidableEq α]
     · change (∑ z, (1 + w z) / n) = 1
       rw [← Finset.sum_div, Finset.sum_add_distrib, htotal]
       simp [n, ne_of_gt hn]
-  have hν : IsProbability ν := by
+  have hν : Probability ν := by
     constructor
     · intro z
       exact le_of_lt (div_pos zero_lt_one hn)
@@ -417,11 +372,7 @@ private lemma injective_acyclic_ic {α : Type*} [Fintype α] [DecidableEq α] {f
   by_contra hneq
   let w : α → ℝ := μ - ν
   have hwne : w ≠ 0 := by
-    intro hw
-    apply hneq
-    funext x
-    have hx := congrFun hw x
-    exact sub_eq_zero.mp hx
+    exact sub_ne_zero.mpr hneq
   have hsumf (a : ℝ) :
       ∑ x ∈ Finset.univ.filter (fun x => f x = a), w x = 0 := by
     have heq := (distribution_eq_iff_fiber_sums f μ ν).mp hfd a
@@ -464,12 +415,7 @@ private lemma injective_acyclic_ic {α : Type*} [Fintype α] [DecidableEq α] {f
   have hfinite : H.edgeSet.Finite := supportGraph_edge_finite f g w
   let : Finite H.edgeSet := hfinite.fintype.finite
   let : H.LocallyFinite := locallyFinite_of_finite_edgeSet H
-  obtain ⟨x, hx⟩ : ∃ x, w x ≠ 0 := by
-    by_contra hzero
-    apply hwne
-    funext x
-    by_contra hzx
-    exact hzero ⟨x, hzx⟩
+  obtain ⟨x, hx⟩ : ∃ x, w x ≠ 0 := Function.ne_iff.mp hwne
   have hxe : H.Adj (Sum.inl (f x)) (Sum.inr (g x)) := by
     dsimp only [H, supportGraph]
     rw [SimpleGraph.fromRel_adj]
