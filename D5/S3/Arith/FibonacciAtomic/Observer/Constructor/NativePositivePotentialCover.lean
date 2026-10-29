@@ -726,6 +726,38 @@ private theorem scalar_decorate_erase (x : X) (q : List Bool) (t : Term X) :
   | of b => cases b <;> rfl
   | mul A B ihA ihB => exact congrArg₂ FreeMagma.mul (ihA _) (ihB _)
 
+private def comparisonProjection : DecoratedTerm X → Term (Occurrence X)
+  | .scalar b _ => .of (.inl b)
+  | .block o => .of (.inr o)
+  | .pair A B => .mul (comparisonProjection A) (comparisonProjection B)
+
+/-- Project exactly the original indexed block equations, preserving repetitions. -/
+def ComparisonInventory.blockEdges : ComparisonInventory X →
+    List ((Occurrence X × Occurrence X) × Int)
+  | .scalar _ _ _ => []
+  | .block v w a => [((v,w),(a : Int))]
+  | .both I J => I.blockEdges ++ J.blockEdges
+  | .incompatible => []
+
+private theorem comparison_inventory_edges (a : Nat) (A B : DecoratedTerm X) :
+    (comparisonInventory a A B).blockEdges =
+      offsetComparisonEdges (a : Int) (comparisonProjection A) (comparisonProjection B) := by
+  induction A generalizing B with
+  | scalar b n => cases B <;> rfl
+  | block v => cases B <;> rfl
+  | pair A₁ A₂ ihA ihB =>
+      cases B with
+      | scalar c m => rfl
+      | block w => rfl
+      | pair C D => simp only [comparisonInventory, ComparisonInventory.blockEdges,
+          comparisonProjection, offsetComparisonEdges, ihA, ihB]
+
+private theorem scalar_decorate_projection (x : X) (q : List Bool) (t : Term X) :
+    comparisonProjection (scalarDecorateFrom x q t) = decorateFrom x q t := by
+  induction t generalizing q with
+  | of a => cases a <;> rfl
+  | mul A B ihA ihB => exact congrArg₂ FreeMagma.mul (ihA _) (ihB _)
+
 /-- Equality of the erased terms is the actual shape-unifier invariant.
 The two valuations are otherwise arbitrary and independent. -/
 private theorem comparison_inventory_iff (a : Nat) (A B : DecoratedTerm X)
@@ -798,6 +830,38 @@ def branchInventory (s : X → Term X) : BranchEquation X → BranchInventory X
       (.both (comparisonInventory 0 (scalarDecorate s y) (.scalar true (.constant n)))
         (comparisonInventory 0 (scalarDecorate s z) (.scalar true (.constant (n+2)))))
 
+def BranchInventory.blockEdges : BranchInventory X →
+    List ((Occurrence X × Occurrence X) × Int)
+  | .comparison I => I.blockEdges
+  | .collapse _ => []
+
+private theorem branch_inventory_edges (s : X → Term X) (b : BranchEquation X) :
+    (branchInventory s b).blockEdges = sourceOffsetEdges [b] s := by
+  have proj (x : X) : comparisonProjection (scalarDecorate s x) = decorate s x :=
+    scalar_decorate_projection x [] (s x)
+  cases b with
+  | primitive z n =>
+      change (comparisonInventory 0 (scalarDecorate s z)
+        (.scalar true (.constant n))).blockEdges = []
+      rw [comparison_inventory_edges]
+      cases comparisonProjection (scalarDecorate s z) with
+      | of a => cases a <;> rfl
+      | mul A B => rfl
+  | collapse z x y => rfl
+  | shift z a x =>
+      change (comparisonInventory a (scalarDecorate s z) (scalarDecorate s x)).blockEdges =
+        offsetComparisonEdges (a : Int) (decorate s z) (decorate s x) ++ []
+      simp only [comparison_inventory_edges, proj, List.append_nil]
+  | ordinary z x y =>
+      change (comparisonInventory 0 (scalarDecorate s z)
+        (.pair (scalarDecorate s x) (scalarDecorate s y))).blockEdges =
+        offsetComparisonEdges 0 (decorate s z) (.mul (decorate s x) (decorate s y)) ++ []
+      simp only [comparison_inventory_edges, comparisonProjection, proj, List.append_nil]
+  | same x y =>
+      change (comparisonInventory 0 (scalarDecorate s x) (scalarDecorate s y)).blockEdges =
+        offsetComparisonEdges 0 (decorate s x) (decorate s y) ++ []
+      simp only [comparison_inventory_edges, proj, List.append_nil]
+
 /-- Complete normalization of one original comparison, including its natural
 collapse witness. No scalar constraint is an external hypothesis. -/
 private theorem branch_inventory_iff (s : X → Term X) (b : BranchEquation X)
@@ -852,14 +916,27 @@ private theorem branch_inventory_iff (s : X → Term X) (b : BranchEquation X)
       simpa only [DecoratedTerm.value, RankExpression.value,
         NativePositiveBranchReduction.shift_zero] using and_congr cx (and_congr cy cz)
 
+private theorem source_inventory_edges (B : List (BranchEquation X)) (s : X → Term X) :
+    B.flatMap (fun b => (branchInventory s b).blockEdges) = sourceOffsetEdges B s := by
+  induction B with
+  | nil => rfl
+  | cons b B ih =>
+      change (branchInventory s b).blockEdges ++
+        B.flatMap (fun c => (branchInventory s c).blockEdges) = _
+      rw [branch_inventory_edges, ih]
+      simp [sourceOffsetEdges]
+
 /-- The complete separately decorated system is equivalent to the same
 original branch system, for every scalar and block assignment. -/
 theorem source_decorated_comparison_equivalence (p : Presentation X)
     (B : List (BranchEquation X)) (S : SubstInfo)
     (hok : (encodeEquations p (shapeEquations B)).unify SubstInfo.empty = .ok S)
     (r : ScalarPosition X → Nat) (u : Occurrence X → NativeFiniteNormalInversion.Code) :
-    (∀ b ∈ B, (branchInventory (action p S) b).Holds r u) ↔
-      ∀ b ∈ B, b.Holds (fun x => (scalarDecorate (action p S) x).value r u) := by
+    (B.flatMap (fun b => (branchInventory (action p S) b).blockEdges) =
+      sourceOffsetEdges B (action p S)) ∧
+    ((∀ b ∈ B, (branchInventory (action p S) b).Holds r u) ↔
+      ∀ b ∈ B, b.Holds (fun x => (scalarDecorate (action p S) x).value r u)) := by
+  refine ⟨source_inventory_edges B (action p S), ?_⟩
   have sh : ∀ e ∈ shapeEquations B,
       substitute (action p S) e.1 = substitute (action p S) e.2 := by
     intro e he
@@ -947,7 +1024,7 @@ theorem native_source_block_recovery (p : Presentation X) (E : List (Equation X)
     (NativeFiniteNormalInversion.encode (v x)) (by simp [subtree]) (factor x).symm
   have inventory := (source_decorated_comparison_equivalence p B S hok
     (sourceScalarRanks (fun y => NativeFiniteNormalInversion.encode (v y)))
-    (occurrenceCode (fun y => NativeFiniteNormalInversion.encode (v y)))).mpr
+    (occurrenceCode (fun y => NativeFiniteNormalInversion.encode (v y)))).2.mpr
       (by simpa only [scalarDecorate, reconstruction] using sat)
   refine ⟨B, hB, S, hok, sat, reconstruction, inventory, ?_⟩
   intro j occurs
