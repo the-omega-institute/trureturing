@@ -1,0 +1,71 @@
+**定义 121.2（完整纤维）。** 给定实际完整数据 $x$，令 $k_i,l_i$ 为正类行的两种出发计数，
+并取原分数和完整窗口
+
+$$
+W_i=k_i\log\frac{1+r}{1-\epsilon_c}
+       +l_i\log\frac{1-r}{1+\epsilon_c},\qquad
+J=\{i:\tau-w<W_i\le\tau+w\}.
+\tag{121.4}
+$$
+
+以精确分数相等分组 $J=\bigsqcup_jJ_j$，$C_j=|J_j|$。
+取唯一共同赔率乘子 $h_x$，使
+
+$$
+p_i=\frac{e^{W_i+h_x}}{1+e^{W_i+h_x}},\qquad \sum_i p_i=q.
+\tag{121.5}
+$$
+
+组内 $p_i=p_j$。令 $\mathsf Q_x$ 为这些辅助独立 Bernoulli 的乘积律，
+$\pi_i$ 为原完整固定 $q$ 后验的包含概率，$\mu_j=\sum_{i\in J_j}\pi_i$。
+记 $e_k(u_A)=\sum_{I\subseteq A,\,|I|=k}\prod_{i\in I}u_i$，非法指标处取零。
+原计数后验为
+
+$$
+P_x(m)=\frac{e_{q-\sum_jm_j}((e^{W_i})_{i\notin J})}
+ {e_q((e^{W_i})_i)}
+ \prod_j\binom{C_j}{m_j}e^{W_jm_j}.
+\tag{121.6}
+$$
+
+其支持取全部使右侧为正的 $0\le m_j\le C_j$ 元组。
+在任何后续幂和中，式 (121.6) 的整个质量连同全部二项多重度一起取幂。
+独立 Bernoulli 在总数为 $q$ 下条件化恰给这个后验。特别地，置
+
+$$
+Q_x(m)=\prod_j\binom{C_j}{m_j}p_j^{m_j}(1-p_j)^{C_j-m_j},\quad
+D(m)=\sum_j(m_j-C_jp_j),\quad\mathcal D(m)=D(m)/B,
+$$
+
+$$
+\ell(m)=\log\frac{\mathsf Q_x(S_{J^c}=q-\sum_jm_j)}
+ {\mathsf Q_x(S_{\mathrm{all}}=q)};
+\qquad P_x(m)=e^{\ell(m)}Q_x(m).
+\tag{121.7}
+$$
+
+在整个盒均可行的纤维上，$\ell$ 在整个盒有限。
+这正是谱边界式 (68.3)–(68.5)、(70.6) 的完整计数对象。
+
+定义
+
+$$
+v_j=\frac{C_jp_j(1-p_j)}{B^2},\quad
+ e_j=\frac{\mu_j-C_jp_j}{B},\quad
+V=\sum_jv_j,\quad
+E(m)=\sum_j((m_j-\mu_j)/B)^2,\quad
+T_x(m)=\frac{E(m)-V}{\sqrt\delta}.
+\tag{121.8}
+$$
+
+空组补零。给定 $\sigma>0$，令
+
+$$
+\lambda_y(m)=\frac{(T_x(m)-y)^2}{2\sigma^2},\quad
+P_x^y(m)=\frac{P_x(m)e^{-\lambda_y(m)}}
+ {\sum_uP_x(u)e^{-\lambda_y(u)}},\quad
+C3_x(y)=\mathbb E_{P_x^y}
+ \left[-\log P_x^y-\mathbb E_{P_x^y}(-\log P_x^y)\right]^3.
+\tag{121.9}
+$$
+
