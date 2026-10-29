@@ -7,9 +7,6 @@
    digest: The linear span of binary bond-two uniform matrix product states. -/
 
 import D5.S3.Quantum.TensorNetworks.UniformMPSTwoByTwoTraceWords
-import Mathlib.LinearAlgebra.Dual.Lemmas
-import Mathlib.Data.Finsupp.Multiset
-import Mathlib.Data.Sym.NatCard
 
 /-! The source tensor span and the weighted invariant monomial count. -/
 
