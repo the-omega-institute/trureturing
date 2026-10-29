@@ -539,12 +539,260 @@ private lemma projection_norm_sq (n : ℕ) : ‖projection n‖ ^ 2 = 2 * (n : �
   push_cast
   ring
 
+private lemma entry_single_support (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ)
+    (ℓ : ℤ → ℤ → ℤ → ℂ) (hf : IsFiniteRange r h ℓ) (q : ℤ × ℤ) (x y : ℤ)
+    (hq : 2 * (r : ℤ) < |q.1 - x| ∨ 2 * (r : ℤ) < |q.2 - y|) :
+    lindbladEntry g h ℓ (Pi.single q 1) x y = 0 := by
+  classical
+  calc
+    _ = lindbladEntry g h ℓ (fun _ => 0) x y := by
+      apply entry_locality r g h ℓ hf
+      intro u v hu hv
+      have hn : (u, v) ≠ q := by
+        intro he
+        have h1 := congrArg Prod.fst he
+        have h2 := congrArg Prod.snd he
+        dsimp at h1 h2
+        rcases hq with hq | hq <;> simp only [h1, h2] at hu hv <;> omega
+      exact Pi.single_eq_of_ne hn 1
+    _ = 0 := by simp only [lindbladEntry, mul_zero, zero_mul, tsum_zero, sub_zero, add_zero]
+
+private lemma entry_single_formula (g : ℝ) (h : ℤ → ℤ → ℂ)
+    (ℓ : ℤ → ℤ → ℤ → ℂ) (u v x y : ℤ) :
+    lindbladEntry g h ℓ (Pi.single (u, v) 1) x y =
+      -Complex.I * ((if y = v then h x u else 0) - (if x = u then h v y else 0)) +
+      (g : ℂ) * ∑' k, (ℓ k x u * star (ℓ k y v) -
+        (1 / 2 : ℂ) * (if y = v then ∑' w, star (ℓ k w x) * ℓ k w u else 0) -
+        (1 / 2 : ℂ) * (if x = u then ∑' w, star (ℓ k w v) * ℓ k w y else 0)) := by
+  classical
+  have hg (k : ℤ) : (∑' a, ∑' b,
+      ℓ k x a * (Pi.single (u, v) 1 : ℤ × ℤ → ℂ) (a, b) * star (ℓ k y b)) =
+        ℓ k x u * star (ℓ k y v) := by
+    rw [tsum_eq_single u]
+    · rw [tsum_eq_single v]
+      · simp only [Pi.single_eq_same, mul_one]
+      · intro b hb
+        simp [Pi.single_apply, Prod.mk.injEq, hb]
+    · intro a ha
+      simp [Pi.single_apply, Prod.mk.injEq, ha]
+  unfold lindbladEntry
+  simp only [hg]
+  by_cases hx : x = u <;> by_cases hy : y = v <;>
+    simp [Pi.single_apply, Prod.mk.injEq, ite_and, hx, hy, mul_ite, ite_mul]
+
+private lemma trace_single_zero (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ)
+    (ℓ : ℤ → ℤ → ℤ → ℂ) (hf : IsFiniteRange r h ℓ) (u v : ℤ) :
+    ∑' x, lindbladEntry g h ℓ (Pi.single (u, v) 1) x x = 0 := by
+  classical
+  let s := Finset.Icc (min u v - 2 * r) (max u v + 2 * r)
+  let t := Finset.Icc (u - r) (u + r) ∪ Finset.Icc (v - r) (v + r)
+  let d (k x : ℤ) : ℂ := ℓ k x u * star (ℓ k x v) -
+    (1 / 2 : ℂ) * (if x = v then ∑' w, star (ℓ k w x) * ℓ k w u else 0) -
+    (1 / 2 : ℂ) * (if x = u then ∑' w, star (ℓ k w v) * ℓ k w x else 0)
+  have hu : u ∈ s := by simp only [s, Finset.mem_Icc]; constructor <;> omega
+  have hv : v ∈ s := by simp only [s, Finset.mem_Icc]; constructor <;> omega
+  have hfinite (x : ℤ) : ∑' k, d k x = ∑ k ∈ t, d k x := by
+    apply tsum_eq_sum
+    intro k hk
+    have huk : (r : ℤ) < |u - k| := by
+      simp only [t, Finset.mem_union, Finset.mem_Icc] at hk
+      rw [lt_abs]; omega
+    have hvk : (r : ℤ) < |v - k| := by
+      simp only [t, Finset.mem_union, Finset.mem_Icc] at hk
+      rw [lt_abs]; omega
+    dsimp only [d]
+    split_ifs <;>
+      simp only [jump_zero_right r h ℓ hf k _ u huk,
+        jump_zero_right r h ℓ hf k _ v hvk, star_zero, zero_mul, mul_zero,
+        tsum_zero, sub_zero]
+  have htrace (k : ℤ) (hk : k ∈ t) : ∑ x ∈ s, d k x = 0 := by
+    have hw : (∑' w, star (ℓ k w v) * ℓ k w u) =
+        ∑ w ∈ s, star (ℓ k w v) * ℓ k w u := by
+      apply tsum_eq_sum
+      intro w hws
+      have hwk : (r : ℤ) < |w - k| := by
+        simp only [s, Finset.mem_Icc] at hws
+        simp only [t, Finset.mem_union, Finset.mem_Icc] at hk
+        rw [lt_abs]; omega
+      rw [jump_zero_left r h ℓ hf k w v hwk, star_zero, zero_mul]
+    have hg : (∑ x ∈ s, ℓ k x u * star (ℓ k x v)) =
+        ∑' w, star (ℓ k w v) * ℓ k w u := by
+      rw [hw]
+      apply Finset.sum_congr rfl
+      intro x hx
+      exact mul_comm _ _
+    simp only [d, Finset.sum_sub_distrib, ← Finset.mul_sum]
+    simp only [Finset.sum_ite_eq', hu, hv, ite_true]
+    rw [hg]
+    ring
+  have he (x : ℤ) : lindbladEntry g h ℓ (Pi.single (u, v) 1) x x =
+      -Complex.I * ((if x = v then h x u else 0) - (if x = u then h v x else 0)) +
+      (g : ℂ) * ∑ k ∈ t, d k x := by
+    rw [entry_single_formula]
+    change _ + (g : ℂ) * ∑' k, d k x = _
+    rw [hfinite]
+  rw [tsum_eq_sum (s := s)]
+  · simp only [he, Finset.sum_add_distrib, ← Finset.mul_sum]
+    have hh : (∑ x ∈ s, ((if x = v then h x u else 0) -
+        (if x = u then h v x else 0))) = 0 := by
+      simp [Finset.sum_sub_distrib, hu, hv]
+    rw [hh, mul_zero, zero_add, Finset.sum_comm]
+    rw [show (∑ k ∈ t, ∑ x ∈ s, d k x) = 0 from Finset.sum_eq_zero htrace, mul_zero]
+  · intro x hx
+    apply entry_single_support r g h ℓ hf
+    left
+    simp only [s, Finset.mem_Icc] at hx
+    rw [lt_abs]
+    omega
+
 private lemma boundary_estimate (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ)
     (ℓ : ℤ → ℤ → ℤ → ℂ) (hf : IsFiniteRange r h ℓ)
     (ht : IsTranslationInvariant h ℓ) :
     ∃ k : ℝ, 0 ≤ k ∧ ∀ (n : ℕ) (ρ : Kernel),
       ‖∑ x ∈ Finset.Icc (-(n : ℤ)) n, lindbladEntry g h ℓ ρ x x‖ ≤ k * ‖ρ‖ := by
-  sorry
+  classical
+  obtain ⟨m, hm, hc⟩ := coefficient_bound r g h ℓ hf ht
+  let c : ℕ := 2 * (4 * r + 1) * (8 * r + 1)
+  let b : ℝ := (4 * (r : ℝ) + 1) * m
+  have hb : 0 ≤ b := by dsimp [b]; positivity
+  have he_bound (q : ℤ × ℤ) (x : ℤ) :
+      ‖lindbladEntry g h ℓ (Pi.single q 1) x x‖ ≤ m := by
+    have he : (x, x) + (q - (x, x)) = q := by abel
+    simpa only [coefficient, he] using hc (q - (x, x)) (x, x)
+  refine ⟨(c : ℝ) * b, mul_nonneg (Nat.cast_nonneg _) hb, ?_⟩
+  intro n ρ
+  let i := Finset.Icc (-(n : ℤ)) n
+  let j := Finset.Icc (-(n : ℤ) - 2 * r) ((n : ℤ) + 2 * r)
+  let qset := j ×ˢ j
+  let ends := Finset.Icc ((n : ℤ) - 2 * r) ((n : ℤ) + 2 * r) ∪
+    Finset.Icc (-(n : ℤ) - 2 * r) (-(n : ℤ) + 2 * r)
+  let edge := ends.biUnion fun u =>
+    (Finset.Icc (u - 4 * r) (u + 4 * r)).image fun v => (u, v)
+  let κ (q : ℤ × ℤ) : ℂ := ∑ x ∈ i, lindbladEntry g h ℓ (Pi.single q 1) x x
+  have hκ_bound (q : ℤ × ℤ) : ‖κ q‖ ≤ b := by
+    let s := Finset.Icc (q.1 - 2 * r) (q.1 + 2 * r)
+    have he : κ q = ∑ x ∈ i ∩ s, lindbladEntry g h ℓ (Pi.single q 1) x x := by
+      symm
+      apply Finset.sum_subset (Finset.inter_subset_left)
+      intro x hxi hx
+      apply entry_single_support r g h ℓ hf
+      left
+      simp only [Finset.mem_inter, hxi, true_and, s, Finset.mem_Icc] at hx
+      rw [lt_abs]; omega
+    have hcard : (i ∩ s).card ≤ 4 * r + 1 := by
+      apply (Finset.card_le_card (Finset.inter_subset_right)).trans_eq
+      dsimp only [s]
+      rw [Int.card_Icc]
+      omega
+    rw [he]
+    calc
+      _ ≤ ((i ∩ s).card : ℝ) * m := norm_sum_bound _ _ m fun x _ => he_bound q x
+      _ ≤ ((4 * r + 1 : ℕ) : ℝ) * m :=
+        mul_le_mul_of_nonneg_right (by exact_mod_cast hcard) hm
+      _ = b := by dsimp only [b]; push_cast; rfl
+  have hκ_zero (q : ℤ × ℤ) (hq : q ∉ edge) : κ q = 0 := by
+    by_cases hd : 4 * (r : ℤ) < |q.2 - q.1|
+    · apply Finset.sum_eq_zero
+      intro x hx
+      apply entry_single_support r g h ℓ hf
+      by_contra hn
+      push_neg at hn
+      have h1 := abs_le.mp hn.1
+      have h2 := abs_le.mp hn.2
+      rw [lt_abs] at hd
+      omega
+    have hu : q.1 ∉ ends := by
+      intro hu
+      apply hq
+      apply Finset.mem_biUnion.mpr
+      refine ⟨q.1, hu, Finset.mem_image.mpr ⟨q.2, ?_, Prod.eta q⟩⟩
+      simp only [Finset.mem_Icc]
+      have hv := abs_le.mp (le_of_not_gt hd)
+      constructor <;> omega
+    have hcases : q.1 < -(n : ℤ) - 2 * r ∨ (n : ℤ) + 2 * r < q.1 ∨
+        (-(n : ℤ) + 2 * r < q.1 ∧ q.1 < (n : ℤ) - 2 * r) := by
+      simp only [ends, Finset.mem_union, Finset.mem_Icc] at hu
+      omega
+    rcases hcases with hout | hout | hin
+    · apply Finset.sum_eq_zero
+      intro x hx
+      apply entry_single_support r g h ℓ hf
+      left
+      simp only [i, Finset.mem_Icc] at hx
+      rw [lt_abs]; omega
+    · apply Finset.sum_eq_zero
+      intro x hx
+      apply entry_single_support r g h ℓ hf
+      left
+      simp only [i, Finset.mem_Icc] at hx
+      rw [lt_abs]; omega
+    · have hfull : (∑' x, lindbladEntry g h ℓ (Pi.single q 1) x x) = κ q := by
+        apply tsum_eq_sum
+        intro x hx
+        apply entry_single_support r g h ℓ hf
+        left
+        simp only [i, Finset.mem_Icc] at hx
+        rw [lt_abs]; omega
+      rw [← hfull]
+      exact trace_single_zero r g h ℓ hf q.1 q.2
+  have hcard_edge : edge.card ≤ c := by
+    have hs (u : ℤ) : ((Finset.Icc (u - 4 * r) (u + 4 * r)).image
+        (fun v => (u, v))).card ≤ 8 * r + 1 := by
+      apply Finset.card_image_le.trans_eq
+      rw [Int.card_Icc]; omega
+    have he : ends.card ≤ 2 * (4 * r + 1) := by
+      apply (Finset.card_union_le _ _).trans
+      have h1 : (Finset.Icc ((n : ℤ) - 2 * r) ((n : ℤ) + 2 * r)).card = 4 * r + 1 := by
+        rw [Int.card_Icc]; omega
+      have h2 : (Finset.Icc (-(n : ℤ) - 2 * r) (-(n : ℤ) + 2 * r)).card = 4 * r + 1 := by
+        rw [Int.card_Icc]; omega
+      rw [h1, h2]; omega
+    calc
+      edge.card ≤ ∑ u ∈ ends,
+          ((Finset.Icc (u - 4 * r) (u + 4 * r)).image fun v => (u, v)).card :=
+        Finset.card_biUnion_le
+      _ ≤ ∑ _u ∈ ends, (8 * r + 1) := Finset.sum_le_sum fun u _ => hs u
+      _ = ends.card * (8 * r + 1) := by simp only [Finset.sum_const, nsmul_eq_mul, Nat.cast_id]
+      _ ≤ c := Nat.mul_le_mul_right _ he
+  have hdecomp (x : ℤ) (hx : x ∈ i) : lindbladEntry g h ℓ ρ x x =
+      ∑ q ∈ qset, lindbladEntry g h ℓ (Pi.single q 1) x x * ρ q := by
+    let σ : ℤ × ℤ → ℂ := ∑ q ∈ qset, ρ q • Pi.single q 1
+    have he : lindbladEntry g h ℓ ρ x x = lindbladEntry g h ℓ σ x x := by
+      apply entry_locality r g h ℓ hf
+      intro u v hu hv
+      have hq : (u, v) ∈ qset := by
+        simp only [qset, Finset.mem_product, j, Finset.mem_Icc]
+        simp only [i, Finset.mem_Icc] at hx
+        have h1 := abs_le.mp hu
+        have h2 := abs_le.mp hv
+        constructor <;> constructor <;> omega
+      simp [σ, Finset.sum_apply, Pi.smul_apply, Pi.single_apply, smul_eq_mul, hq]
+    rw [he, ← entryLinear_apply r g h ℓ hf σ]
+    change entryLinear r g h ℓ x x (∑ q ∈ qset, ρ q • Pi.single q 1) = _
+    rw [map_sum]
+    apply Finset.sum_congr rfl
+    intro q hq
+    rw [map_smul, entryLinear_apply r g h ℓ hf]
+    exact mul_comm _ _
+  have he : (∑ x ∈ i, lindbladEntry g h ℓ ρ x x) = ∑ q ∈ qset, κ q * ρ q := by
+    calc
+      _ = ∑ x ∈ i, ∑ q ∈ qset, lindbladEntry g h ℓ (Pi.single q 1) x x * ρ q :=
+        Finset.sum_congr rfl hdecomp
+      _ = _ := by rw [Finset.sum_comm]; simp only [κ, Finset.sum_mul]
+  have hs : (∑ q ∈ qset, κ q * ρ q) = ∑ q ∈ qset ∩ edge, κ q * ρ q := by
+    symm
+    apply Finset.sum_subset Finset.inter_subset_left
+    intro q hq hn
+    rw [hκ_zero q (by simpa only [Finset.mem_inter, hq, true_and] using hn), zero_mul]
+  change ‖∑ x ∈ i, lindbladEntry g h ℓ ρ x x‖ ≤ _
+  rw [he, hs]
+  calc
+    _ ≤ ((qset ∩ edge).card : ℝ) * (b * ‖ρ‖) := norm_sum_bound _ _ _ fun q hq => by
+      rw [norm_mul]
+      exact mul_le_mul (hκ_bound q) (lp.norm_apply_le_norm (by norm_num) ρ q) (norm_nonneg _) hb
+    _ ≤ (c : ℝ) * (b * ‖ρ‖) := mul_le_mul_of_nonneg_right (by
+      exact_mod_cast (Finset.card_le_card Finset.inter_subset_right).trans hcard_edge) (by positivity)
+    _ = (c : ℝ) * b * ‖ρ‖ := by ring
 
 private lemma nonunit_from_boundary (t : Kernel →L[ℂ] Kernel)
     (hb : ∃ k : ℝ, 0 ≤ k ∧ ∀ (n : ℕ) (ρ : Kernel),
