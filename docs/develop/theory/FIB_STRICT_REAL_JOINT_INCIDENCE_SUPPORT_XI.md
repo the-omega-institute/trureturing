@@ -1773,3 +1773,858 @@ Fixed48, V(18.12)(i), rootQ, the common-tree obligations and the original full-d
 The literature correspondence is bounded to the methods used above: fixed-node interpolation in Berrut–Trefethen, the contraction principle in Banach, preconditioned interval enclosures in Krawczyk, and the analytic implicit-function theorem as in Lebl's stated theorem. Their classical content is reused, with the contraction and parameter-passage implications given explicitly here. The finite rational source circuit, its inequalities and its two attachments are repo-derived ordinary mathematics. Neither these citations nor the finite continuation imply a global priority or originality claim. The proof concerns the declared original acquisition model and its exact full-world relations.
 
 ## 追加锚（本行以下为增补区）
+
+## 8. A closed entire-child M exclusion containing the finite second-J arc
+
+### 8.1 Complete worlds and the quantitative statement
+
+**Definition 8.1.1 (The rectangle and its entire children).** Retain the
+complete worlds of Definition 7.1.1. Explicitly,
+
+$$
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\qquad
+0<r<1,\quad b>0,\quad0\ne g\in\mathbb R[s],\quad\deg g\le3,
+\quad d\in\mathbb R.
+\tag{8.1.1}
+$$
+
+Let $Q_0=I$, $Q_i=E_iQ_{i-1}$, with the original actions
+$(E_1,\ldots,E_6)=(J,M,J,M,M,M)$ and
+$y_i=d+g(i)\operatorname{tr}(Q_iP)$. The entire child $C(p,v)$ consists
+of all such worlds with
+
+$$
+(y_0,\ldots,y_6)=(0,24,147/5,24,18,p,v),\qquad
+m(W)=d+g(7)\operatorname{tr}(MQ_6P).
+\tag{8.1.2}
+$$
+
+The matrices $J,M$ are those of (6.1.1)–(6.1.3). Thus the initial read
+counts, each atomic action is immediately read, and clock-seven $J$
+and $M$ are alternative actions on this same history. No operation,
+clock, source copy or observation is added here. Each world retains one
+whole gain and one fixed drift; different worlds can have unrelated
+drifts. All finite decimals in Section 8 denote exact rational numbers.
+Set
+
+$$
+\begin{gathered}
+\mathcal B=[-10.893,-10.890]\times[-8.155,-8.153],\\
+p_c=-10.8915,\quad p_H=0.0015,\qquad
+v_c=-8.154,\quad v_H=0.001.
+\end{gathered}
+\tag{8.1.3}
+$$
+
+**Theorem 8.1.2 (Closed-rectangle separation and whole-arc containment).**
+For every $(p,v)\in\mathcal B$, the function
+$m:C(p,v)\longrightarrow\mathbb R$ is injective. In particular equality
+of the alternative $M$ readings forces equality of the complete worlds,
+including their entire gain polynomials and fixed drifts.
+
+For the very same graph $y(t)$ of Theorem 7.3.1 and its actual common
+base, including the coalesced attachment at $h=0$,
+
+$$
+\begin{gathered}
+-10.892041<\bar p(h)<-10.890360,\\
+-8.154582<\bar v(h)<-8.153505,
+\qquad0\le h\le1/250.
+\end{gathered}
+\tag{8.1.4}
+$$
+
+Consequently this entire finite base arc lies strictly inside
+$\mathcal B$. For every $0<h\le1/250$ its child contains the distinct
+$J$ pair of Theorem 7.3.1 but contains no distinct equal-$M$ pair at all.
+This excludes (6.8.5) at every base of this arc, including its selected
+singular passage. At $h=0$ only the attachment, not a distinct $J$ pair,
+is asserted.
+
+The ambient quantifiers in the theorem include every sign of the gain,
+all lower degrees, sampled zeros, repeated roots, zero drift, singular
+parent sources and unrelated unused companions. They do not impose the
+positive-drift bounds of the selected family on an arbitrary child.
+
+### 8.2 The all-world carrier and the forced response
+
+Write $\mathscr R$ for exactly the carrier of
+[Support VII](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md),
+(15.4)–(15.6), rather than a differently normalized parent eliminant.
+The following finite polynomial definitions fix that normalization and
+the additional polynomials used in the bounds. Put
+
+$$
+\begin{gathered}
+D=x(x+1)(x+2),\qquad z_3=(24-d)(x+1)(x+2),\qquad z_4=(18-d)D,\\
+z_5=(p-d)x(x+2),\qquad z_6=(v-d)x(x+1),\\
+a_0=20z_3-45z_4+36z_5-10z_6,\\
+a_1=10z_3-20z_4+15z_5-4z_6,\qquad
+a_2=4z_3-6z_4+4z_5-z_6,\\
+z_*=xa_1-D(24-d),\\
+f=5dDa_2+a_0\bigl((294-10d)D-5a_2\bigr),\\
+K=4a_0^2z_*^2+2a_0(dD-a_0)z_*a_1
+ -(a_0+dD)\bigl(dD+(1-2x)a_0\bigr)a_1^2,\\
+F_0=405x^3+(975-18p+5v)x^2+(90-36p+5v)x-480.
+\end{gathered}
+\tag{8.2.1}
+$$
+
+In the polynomial ring, write $f=A_fd^2+B_fd+C_f$ and
+$K=\sum_{i=0}^4K_id^i$. Form the six-by-six Sylvester matrix whose
+rows are the coefficients of $d^3f,d^2f,df,f,dK,K$, in the columns
+$d^5,d^4,\ldots,1$. Then define $\mathscr R$ by
+
+$$
+\det\mathsf S=256D^8F_0^2\mathscr R.
+\tag{8.2.2}
+$$
+
+This is exact polynomial division, not pointwise cancellation at
+$F_0=0$. The quotient has integer coefficients, $512$ nonzero terms and
+multidegree $(18,6,6)$ in $(x,p,v)$, with
+
+$$
+[x^0]\mathscr R=10^6(32p-5v-366)^2
+ (120p^2-38pv-3360p+3v^2+522v+23112)^2.
+\tag{8.2.3}
+$$
+
+Keep the polynomial drift identity of Support VII, (16.1)–(16.3):
+
+$$
+\begin{aligned}
+\alpha={}&K_4(-B_f^3+2A_fB_fC_f)
+ +K_3A_f(B_f^2-A_fC_f)-K_2A_f^2B_f+K_1A_f^3,\\
+\zeta={}&K_4(-B_f^2C_f+A_fC_f^2)
+ +K_3A_fB_fC_f-K_2A_f^2C_f+K_0A_f^3,\\
+A={}&\alpha/(32D^3),\qquad Z=\zeta/(32D^3),\qquad Z_1=Z/F_0.
+\end{aligned}
+\tag{8.2.4}
+$$
+
+All three quotients in the last line are polynomials. Define further
+
+$$
+\begin{aligned}
+B_n={}&-20(x+1)(x+2)+45D-36x(x+2)+10x(x+1),\\
+B_1={}&\frac{-2A-(B_n+D)Z_1}{2D},\\
+L_7={}&-24(x+1)(x+2)+72D-6p\,x(x+2)+4v\,x(x+1),\\
+T_7={}&(x+1)(x+2)-4D+6x(x+2)-4x(x+1),\\
+N={}&\frac{-ZD+(3+2x)(L_7A-T_7Z)}{D},\qquad
+\Omega=N_xA-NA_x.
+\end{aligned}
+\tag{8.2.5}
+$$
+
+Here too $B_1,N$ are polynomial quotients with zero remainder. Thus
+these definitions do not introduce divisions by the numerical value of
+$F_0$ or $D$ when their coefficients are formed. For an explicit
+coefficient construction, expand every product by finite convolution,
+expand $\det\mathsf S$ as its $6!$ signed products, and perform the
+indicated exact divisions over $\mathbb Q[x,p,v]$. The numbers of
+nonzero terms of $(\alpha,\zeta,A,Z,Z_1,B_1,N,\Omega)$ are
+$(280,405,220,315,190,190,334,1512)$, respectively.
+
+The necessary, faithful all-world interface used below is Support VII,
+Section 15 and Lemma 15.1. In that interface
+
+$$
+\begin{gathered}
+x=(j+r)/U>0,\qquad j=b+r(1-r)/b,\qquad U=1+2b,\\
+h_3=(24-d)/x,\quad h_4=18-d,\quad
+h_5=(p-d)/(x+1),\quad h_6=(v-d)/(x+2),\\
+H(s)=\sum_{i=3}^6h_i
+ \prod_{\substack{3\le k\le6\\k\ne i}}\frac{s-k}{i-k},\\
+H_0=20h_3-45h_4+36h_5-10h_6,\\
+H_1=10h_3-20h_4+15h_5-4h_6,\quad
+H_2=4h_3-6h_4+4h_5-h_6,\\
+H_7=-h_3+4h_4-6h_5+4h_6,\\
+B_0=294/5-2d-H_2,\quad C_0=d^2+B_0^2,\\
+U=(-dH_0+B_0H_2)/C_0,\quad
+b=(U-1)/2,\quad j=U(24-d)/H_1,\quad r=xU-j,\\
+g=H/U,\qquad m=d+(3+2x)H_7.
+\end{gathered}
+\tag{8.2.6}
+$$
+
+At every actual off-$24$ world this interface gives
+$D>0$, $d\ne24$, $H_1\ne0$, $C_0>0$, $U>1$,
+$f=K=\mathscr R=0$ and $\alpha d+\zeta=0$.
+It includes $d=0$, $F_0=0$, singular original sources and all degree
+drops; the map from complete worlds to $(x,d)$ is injective. These are
+reused results, not converses from a resultant root.
+
+In particular, wherever $A\ne0$, an actual world has
+
+$$
+d=-Z/A,\qquad m=\mu(x;p,v):=N/A,\qquad
+\mu_x=\Omega/A^2.
+\tag{8.2.7}
+$$
+
+The extra source filter on a label where also $Z_1\ne0$ is
+
+$$
+b=B_1/Z_1.
+\tag{8.2.8}
+$$
+
+To verify these new polynomial forms directly, expansion gives
+$a_0=-2F_0+B_nd$ and $DH_7=L_7+T_7d$. Substituting $d=-Z/A$ in the
+second identity gives (8.2.7). If $Z,Z_1\ne0$, then $d\ne0$ and the
+actual equation $dU=-H_0$ gives
+
+$$
+U=\frac{-2F_0A-B_nZ}{DZ}
+  =\frac{-2A-B_nZ_1}{DZ_1},\qquad
+\frac{U-1}{2}=\frac{B_1}{Z_1}.
+\tag{8.2.9}
+$$
+
+This establishes (8.2.8) only where it will be guarded below; no
+nonzero-drift assumption is made on the central interval. The identity
+$\alpha d+\zeta=0$ follows without dividing by $A_f$: polynomially,
+
+$$
+\begin{gathered}
+A_f^3K-\alpha d-\zeta=fQ,\\
+Q=K_4(A_f^2d^2-A_fB_fd+B_f^2-A_fC_f)
+  +K_3A_f(A_fd-B_f)+K_2A_f^2.
+\end{gathered}
+\tag{8.2.10}
+$$
+
+Thus no assumption that the specialized quadratic retains its degree
+enters the forced drift.
+
+### 8.3 Finite rational enclosure definitions
+
+**Definition 8.3.1 (Coefficient and interval enclosures).** For any of
+the polynomials $P(x,p,v)$ above, define its translated coefficients by
+
+$$
+\begin{aligned}
+P(c+X,p_c+P_0,v_c+V_0)
+ &=\sum_{i,j,k}q_{ijk}^{(c)}X^iP_0^jV_0^k,\\
+q_{ijk}^{(c)}
+ &=\sum_{a\ge i,\,b\ge j,\,e\ge k}
+ [x^ap^bv^e]P\binom ai\binom bj\binom ek
+ c^{a-i}p_c^{b-j}v_c^{e-k},\\
+s_c(P;\delta)
+ &=\sum_{i+j+k>0}|q_{ijk}^{(c)}|\delta^ip_H^jv_H^k.
+\end{aligned}
+\tag{8.3.1}
+$$
+
+Zero powers, including $0^0$ in this finite coefficient formula, mean
+one. For $\delta\ge0$, let
+
+$$
+\mathcal E_c(P;\delta)
+=\mathcal O_{160}\bigl([q_{000}^{(c)}-s_c(P;\delta),
+                       q_{000}^{(c)}+s_c(P;\delta)]\bigr),\qquad
+\mathcal O_q([l,u])=
+[2^{-q}\lfloor2^ql\rfloor,2^{-q}\lceil2^qu\rceil].
+\tag{8.3.2}
+$$
+
+The coefficient sums in (8.3.1) are exact rational sums before this
+last rounding. They enclose $P$ on
+$[c-\delta,c+\delta]\times\mathcal B$, even for $\delta=0$.
+
+For subsequent interval expressions use the ordinary endpoint rules,
+then apply $\mathcal O_{160}$ after every scalar addition,
+subtraction, multiplication and reciprocal; rational inputs are first
+enclosed by this same rule. A product uses all four endpoint products.
+A reciprocal is formed only for $0\notin[l,u]$, and is $[1/u,1/l]$
+before outward rounding. Negation reverses endpoints. Powers mean
+successive multiplication starting from one. Displayed sums and
+products are left associated in their displayed order, and finite sums
+start from zero in increasing index order. Thus all interval operations
+are enclosing rational operations.
+
+For a gap $[a,b]$ define $T_l(P_0,V_0)$ by the exact expansion
+
+$$
+(1+w)^{18}\mathscr R\!\left(\frac{a+bw}{1+w},
+                   p_c+P_0,v_c+V_0\right)
+ =\sum_{l=0}^{18}T_l(P_0,V_0)w^l,\qquad
+T_l=\sum_{j,k}t_{ljk}P_0^jV_0^k.
+\tag{8.3.3}
+$$
+
+For the final half-line $[a,\infty)$ instead expand
+$\mathscr R(a+w,p_c+P_0,v_c+V_0)$ in $w$ to define these coefficients.
+No rational function remains in (8.3.3). In either case set
+
+$$
+\theta_{a,b}=
+\max_{0\le l\le18}
+\frac{\sum_{j+k>0}|t_{ljk}|p_H^jv_H^k}{|t_{l00}|}.
+\tag{8.3.4}
+$$
+
+The nonzero denominators in this definition are part of the following
+coefficient comparisons.
+
+**Lemma 8.3.2 (Exhaustive positive cover and legality filter).** The
+coefficients of (8.3.3) satisfy this table: every $t_{l00}$ has the
+indicated strict sign, and the final column is exactly
+$\lceil10^6\theta_{a,b}\rceil$.
+
+| $a$ | $b$ | Sign of all $t_{l00}$ | $\lceil10^6\theta_{a,b}\rceil$ |
+|---:|---:|:---:|---:|
+| $0$ | $0.31$ | $+$ | $590$ |
+| $0.34$ | $0.48$ | $-$ | $421$ |
+| $0.52$ | $1.07$ | $+$ | $1129$ |
+| $1.11$ | $1.21$ | $-$ | $1886$ |
+| $1.24$ | $1.295$ | $+$ | $18221$ |
+| $1.32$ | $1.36$ | $-$ | $808191$ |
+| $1.395$ | $2.13$ | $-$ | $742848$ |
+| $2.18$ | $2.80$ | $+$ | $12509$ |
+| $2.86$ | $\infty$ | $-$ | $14965$ |
+
+Define
+
+$$
+\begin{aligned}
+I_1&=[0.31,0.34],&I_2&=[0.48,0.52],&I_3&=[1.07,1.11],\\
+I_4&=[1.21,1.24],&I_5&=[1.295,1.32],&I_6&=[2.13,2.18],\\
+I_7&=[2.80,2.86],&&I_*=[1.36,1.395].
+\end{aligned}
+\tag{8.3.5}
+$$
+
+Every positive root of $\mathscr R(\cdot;p,v)$ over $\mathcal B$ lies
+in their union. All actual worlds lie in $I_*$.
+
+Here are complete finite bounds for the last assertion. Starting with
+each $[a,b]=I_k$, repeat four times the following root-retaining
+inclusion, with each new interval used in the next step:
+
+$$
+\begin{gathered}
+c=(a+b)/2,\quad\delta=(b-a)/2,\quad
+V=\mathcal E_c(\mathscr R;0),\quad
+L=\mathcal E_c(\mathscr R_x;\delta),\\
+[l,u]=[a,b]\cap\bigl(\mathcal O_{160}([c,c])-V/L\bigr),\qquad
+[a,b]_{\mathrm{new}}=
+[10^{-9}\lfloor10^9l\rfloor,10^{-9}\lceil10^9u\rceil].
+\end{gathered}
+\tag{8.3.6}
+$$
+
+All $28$ derivative intervals $L$ exclude zero. Writing their endpoints
+as $L_-,L_+$, they satisfy
+
+$$
+\max\frac{L_+-L_-}{|L_++L_-|}<570877/10^6<1.
+\tag{8.3.7}
+$$
+
+Every pair in the next table is the pair of integer endpoints of
+$10^9[a,b]_{\mathrm{new}}$ after the indicated step.
+
+| $k$ | Step 1 | Step 2 | Step 3 | Step 4 |
+|---:|:---|:---|:---|:---|
+| $1$ | $(326288597,328336555)$ | $(326892048,326919206)$ | $(326906144,326910357)$ | $(326906145,326910353)$ |
+| $2$ | $(499726399,499864488)$ | $(499808288,499824244)$ | $(499808292,499824223)$ | $(499808292,499824223)$ |
+| $3$ | $(1090257932,1090713981)$ | $(1090367550,1090414690)$ | $(1090368232,1090414432)$ | $(1090368232,1090414431)$ |
+| $4$ | $(1226585675,1228656991)$ | $(1227237557,1227302251)$ | $(1227251578,1227293002)$ | $(1227251578,1227292995)$ |
+| $5$ | $(1308630812,1309829217)$ | $(1308989261,1309089523)$ | $(1309004558,1309079111)$ | $(1309004558,1309079103)$ |
+| $6$ | $(2155241979,2156493938)$ | $(2155354138,2155758090)$ | $(2155358123,2155757478)$ | $(2155358125,2155757459)$ |
+| $7$ | $(2830771782,2834764461)$ | $(2831152307,2832052116)$ | $(2831191601,2832023839)$ | $(2831191783,2832023535)$ |
+
+On each final interval, using its midpoint $c$ and radius $\delta$,
+
+$$
+\begin{gathered}
+\sup\mathcal E_c(A;\delta)<-10^{13},\\
+\inf\{|z|:z\in\mathcal E_c(Z;\delta)\}>10^{14},\qquad
+\inf\{|z|:z\in\mathcal E_c(Z_1;\delta)\}>10^{10}.
+\end{gathered}
+\tag{8.3.8}
+$$
+
+In particular all three enclosures exclude zero. On the first final
+interval evaluate $d=-\mathcal E_c(Z;\delta)/\mathcal E_c(A;\delta)$,
+then the circuit (8.2.6), using the whole intervals for $x,p,v$. Its
+bounds are
+
+$$
+-32<H_1<-28,\qquad216<C_0<223,\qquad7<r<8.
+\tag{8.3.9}
+$$
+
+For the other six intervals the polynomial ratio
+$\mathcal E_c(B_1;\delta)/\mathcal E_c(Z_1;\delta)$ is strictly inside
+the corresponding open interval in this table.
+
+| $k$ | Strict enclosure for the forced $b$ |
+|---:|:---|
+| $2$ | $(-7,-5)$ |
+| $3$ | $(-0.09,-0.08)$ |
+| $4$ | $(-0.45,-0.43)$ |
+| $5$ | $(-0.60,-0.51)$ |
+| $6$ | $(-0.16,-0.15)$ |
+| $7$ | $(-0.27,-0.26)$ |
+
+Proof of the finite comparisons and their implications. Equations
+(8.2.1)–(8.2.5), convolution and the six-by-six determinant specify all
+coefficients used here. For the gap comparison, first translate $p,v$
+by the binomial sum (8.3.1). For each coefficient of $P_0^jV_0^k$,
+replace each $x^i$ by $(a+bw)^i(1+w)^{18-i}$ and collect powers of $w$;
+for the half-line replace it by $(a+w)^i$. This gives the signed
+$t_{l00}$ and the nine rational maxima (8.3.4). Their ceilings are the
+nine integers displayed above. All are below $10^6$, so throughout the
+whole rectangle every coefficient $T_l$ retains that strict sign.
+For $w\ge0$ the transformed polynomial cannot vanish. For a finite
+gap its constant coefficient excludes $a$, and its leading coefficient,
+which is $\mathscr R(b;p,v)$, excludes $b$. This proves the stated
+positive-root cover, including the unbounded positive half-line.
+There is no root-count or multiplicity inference.
+
+For (8.3.6), the translated coefficient formula gives $V,L$ by finite
+rational sums; the endpoint rules of Definition 8.3.1 give the four
+successive integer pairs in each row. The $28$ strict unit comparisons
+and their maximum ratio give (8.3.7). Evaluation of $A,Z,Z_1$ by the
+same formula on the fourth-step pairs gives (8.3.8). Substituting these
+intervals in the displayed order of (8.2.6) gives (8.3.9); thus every
+division by $x,x+1,x+2,H_1,C_0,A$ used in this row is guarded.
+For the last six rows form the ratio in (8.2.8) after its two polynomial
+enclosures; (8.3.8) guards its denominator. These are finite rational
+inequalities: after substituting (8.3.1), each floor or ceiling is
+specified by its adjacent-integer inequalities, and clearing positive
+integer denominators gives exactly the table comparisons. In particular
+they do not require approximate choices of roots.
+
+To see why the inclusions retain every root, fix its actual base. If
+$x\in[a,b]$ and $\mathscr R(x;p,v)=0$, the real mean-value theorem gives
+$x=c-\mathscr R(c;p,v)/\mathscr R_x(\xi;p,v)$ for some $\xi$ between
+$c$ and $x$. The prescribed $L$ contains this derivative and excludes
+zero. Hence $x$ remains in the intersection and in its outward-rounded
+successor. Four such inclusions put any root originally in $I_k$ in
+the corresponding final row, without asserting that it lifts.
+
+For an actual world (8.3.8) forces $d=-Z/A$, with $d\ne0$ on these
+seven rejected rows. Its necessary reconstruction in the first row has
+$r>7$, contrary to $r<1$. In each other row (8.2.9) forces $b<0$,
+contrary to $b>0$. Thus none of these rows contains an actual world.
+Every actual positive label lies in $I_*$, as claimed. ∎
+
+### 8.4 Separation on the full surviving interval
+
+**Lemma 8.4.1 (Strict forced-M monotonicity).** On all of
+$I_*\times\mathcal B$, one has $A\ne0$ and
+
+$$
+-33<\frac{\Omega}{A^2}<-16.
+\tag{8.4.1}
+$$
+
+Proof. Partition $I_*$ into the $32$ closed cells
+
+$$
+J_i=\left[\frac{34}{25}+\frac{7i}{6400},
+          \frac{34}{25}+\frac{7(i+1)}{6400}\right],
+\quad c_i=\operatorname{mid}J_i,\quad
+\delta_i=7/12800,\qquad0\le i<32.
+\tag{8.4.2}
+$$
+
+These $c_i$ are used only in this lemma and are not the five-coordinate
+tube centres of (7.2.3). Evaluate (8.3.1)–(8.3.2) for $A,\Omega$ at
+each of these $32$ rational midpoints. The complete finite comparisons
+are
+
+$$
+\begin{gathered}
+\max_{0\le i<32}\sup\mathcal E_{c_i}(A;\delta_i)<-10^{13},\\
+\bigcup_{i=0}^{31}
+\frac{\mathcal E_{c_i}(\Omega;\delta_i)}
+     {\mathcal E_{c_i}(A;\delta_i)^2}
+\ \subseteq\
+\frac{[-32935095741486,-16484504306425]}{10^{12}}
+\ \subset(-33,-16).
+\end{gathered}
+\tag{8.4.3}
+$$
+
+Here the square and quotient are interval operations of Definition
+8.3.1. The first comparison excludes zero before the reciprocal.
+The second follows by substituting the binomial coefficient sums for
+the $1512$-term polynomial $\Omega$ and the $220$-term polynomial $A$,
+forming the endpoint products for the square and the guarded
+reciprocal, and taking the minimum lower and maximum upper endpoints
+over the finite range $0\le i<32$. This gives the displayed rational
+outer endpoints. The enclosure property and the exact derivative in
+(8.2.7) prove (8.4.1) on every cell and their shared boundaries. ∎
+
+Proof of the rectangle assertion in Theorem 8.1.2. Fix any
+$(p,v)\in\mathcal B$. It is off $24$. By the reused all-world carrier
+necessity, every $W\in C(p,v)$ has $x>0$, $\mathscr R(x;p,v)=0$ and
+$\alpha d+\zeta=0$. Lemma 8.3.2 puts all of these worlds in $I_*$.
+There $A$ never vanishes, so their drifts and terminal responses are
+exactly (8.2.7). At this fixed base the rational function $\mu$ is
+differentiable on the entire interval $I_*$, including between any two
+actual labels. Lemma 8.4.1 and the mean-value theorem make it strictly
+decreasing there. Equal terminal readings therefore force equal $x$.
+The same forced drift gives equal $d$. Finally the faithful reconstruction
+(8.2.6) gives equal $U,b,j,r$ and the identical interpolant $H$, hence
+the identical whole gain $g=H/U$. The complete worlds are equal.
+
+The proof has not assumed equal drifts, regular sources, source
+compactness or realizability of any particular resultant root. It has
+not divided by a gain sample, a leading coefficient, a root difference,
+$F_0$ at an actual point, or the original singular-parent factor. The
+positive $D$ and the actual guards $H_1\ne0$, $C_0>0$, $U>1$ come from
+the reused complete-world interface. Thus the rectangle assertion has
+the whole domain of (8.1.1). ∎
+
+### 8.5 Bounds on the actual published graph
+
+**Definition 8.5.1 (Centred response bounds on the given tubes).** In
+this subsection $c_i,X_i,T_i,t_i,\rho,\Delta$ are exactly those of
+(7.2.2)–(7.2.3), with $0\le i<128$. In particular the centres use that
+same seed, the same five $Q_{45}$-rounded Newton corrections per cell,
+and the same ordering $y=(R,B,E,k,\ell)$; they are not independently
+selected points on another branch. All centre definitions retain the
+$240$-bit outward enclosure prescription of Section 7.2. The following
+new response bounds use Definition 8.3.1's $160$-bit prescription.
+
+For all source-circuit enclosures in this subsection, fix the following
+expression convention. Use the first expression
+$B_{\mathrm{coef}}=6/T-2/U$ in (7.1.1), not its algebraically equal
+single quotient. Every displayed rational constant, such as $24/5$,
+$27/5$ or $1/8$, is one rational input. Other quotients mean multiplication
+of the numerator by the reciprocal of the denominator. Evaluate the
+named quantities $j,n,T,U$ by (6.1.4), then the displayed expressions
+(7.1.1)–(7.1.5), with powers before products and products before sums;
+within either level use the displayed left-to-right order. No terms
+are collected, cancelled or replaced by an algebraically equivalent
+expression. Scalar inputs to the two-coefficient algebra are $(u,0)$.
+In its product use exactly
+$(AC+(tB)D,AD+BC)$; in its inverse form
+$L=(A A)-t(B B)$, then $(A L^{-1},(-B)L^{-1})$.
+All operations in these scalar expressions are rounded outward at the
+specified precision. Negation reverses endpoints exactly.
+
+Differentiate each scalar operation by (7.2.4) in its displayed order.
+Thus the product derivative is $\dot u\,v+u\,\dot v$, and the reciprocal
+derivative is $((-\dot u)u^{-1})u^{-1}$, with the same enclosed
+reciprocal at both occurrences. Differentiate the explicit factor $t$
+in the pair operations as well. Matrix products use increasing-index
+sums starting at zero. In Gauss–Jordan elimination retain the old pivot
+and the old elimination factor for each entire row operation; multiply
+by the enclosed pivot reciprocal to normalize every row entry.
+These conventions also apply at $240$ bits when determining the exact
+rounded centres and preconditioners of (7.2.3). Norm sums formed from
+absolute interval endpoints and rational weights, and the final scalar
+quotient in $D_i$, are exact rational operations. Lemma 8.5.3 gives
+sufficient continuation bounds with this convention, replacing the
+tight upper-bound column of the first table in Lemma 7.2.2 wherever
+that table is used here.
+
+Evaluate precisely the rational circuit (7.1.1)–(7.1.5) in the algebra
+$\epsilon^2=t$, with $r=R+\epsilon$, $b=B+k\epsilon$,
+$e=E+\ell\epsilon$. Set
+
+$$
+f_p(y,t)=p_{\mathrm{av}}(y,t),\qquad
+f_v(y,t)=v_{\mathrm{av}}(y,t),\qquad
+J_i=D_yG(c_i,t_i).
+\tag{8.5.1}
+$$
+
+The exact rational row and scalar for either $f\in\{f_p,f_v\}$ are
+
+$$
+u_{f,i}=D_yf(c_i,t_i)J_i^{-1},\qquad
+b_{f,i}=f(c_i,t_i)-u_{f,i}G(c_i,t_i).
+\tag{8.5.2}
+$$
+
+Every $J_i$ is invertible by the ordered pivot bounds of Lemma 8.5.2;
+alternatively the sufficient contraction bounds of Lemma 8.5.3 and
+(7.3.5)–(7.3.8) imply invertibility also at the tube centre.
+
+Here are finite enclosure definitions for these rational quantities and
+the needed derivatives. Differentiate the six-variable scalar circuit
+using (7.2.4), including the derivative of $t$ in pair multiplication
+and in its inverse. Enclose the point values of $G,D_yG,f,D_yf$ at
+$(c_i,t_i)$ by the $160$-bit endpoint rules. Invert the interval point
+matrix enclosing $J_i$ by Gauss–Jordan elimination on its augmentation
+by the identity. Use pivots $1,\ldots,5$ in order, normalize the entire
+pivot row, then eliminate that column in every other row in increasing
+row order; use the old elimination factor for the entire row update.
+No row interchange or replacement of an interval pivot by an exact
+one is made. Let $\mathcal C_i$ be the resulting interval inverse.
+For interval finite sums use increasing indices starting from zero.
+Let $\mathcal U_{f,i}$ be the interval row obtained from the point
+$D_yf$ enclosure times $\mathcal C_i$, and let
+$\mathcal B_{f,i}$ be the point $f$ enclosure minus that row times the
+point $G$ enclosure. They contain $u_{f,i}$ and $b_{f,i}$.
+
+Write $[\partial_jf]_{X_i,T_i}$ and
+$[\partial_jG_k]_{X_i,T_i}$ for the derivative enclosures on the
+whole product box, in variable order $(R,B,E,k,\ell,t)$. Define
+
+$$
+\begin{aligned}
+\mathcal D_{f,i,j}
+ &=[\partial_jf]_{X_i,T_i}
+   -\sum_{k=1}^5(\mathcal U_{f,i})_k
+                    [\partial_jG_k]_{X_i,T_i},\\
+\eta_{f,i}
+ &=\sum_{j=1}^5\rho_j|\mathcal D_{f,i,j}|_{\sup}
+       +\Delta|\mathcal D_{f,i,6}|_{\sup},\\
+\mathcal V_{f,i}
+ &=\mathcal B_{f,i}
+      +\mathcal O_{160}([-\eta_{f,i},\eta_{f,i}]).
+\end{aligned}
+\tag{8.5.3}
+$$
+
+The sum defining $\eta$ is an exact rational sum of the interval
+absolute endpoints. In differentiating $f-u_{f,i}G$, the row $u_{f,i}$
+is fixed at the centre, so its derivatives are not included.
+
+**Lemma 8.5.2 (The 128 whole-tube response comparisons).** All interval
+inverses in Definition 8.5.1 are defined. For each pivot position the
+absolute values of all its interval endpoints over the $128$ final
+point matrices lie strictly between the indicated integers, with the
+whole pivot interval excluding zero:
+
+| Pivot position | Strict lower bound for its absolute value | Strict upper bound |
+|---:|---:|---:|
+| $1$ | $292$ | $293$ |
+| $2$ | $350$ | $351$ |
+| $3$ | $16$ | $17$ |
+| $4$ | $407$ | $408$ |
+| $5$ | $26$ | $27$ |
+
+For every $0\le i<128$, the intervals of (8.5.3) obey
+
+$$
+\begin{aligned}
+\bigcup_i\mathcal V_{f_p,i}
+ &\subseteq[-10892040442289,-10890360243799]/10^{12}
+ \subset(-10.892041,-10.890360),\\
+\bigcup_i\mathcal V_{f_v,i}
+ &\subseteq[-8154581108770,-8153505324970]/10^{12}
+ \subset(-8.154582,-8.153505).
+\end{aligned}
+\tag{8.5.4}
+$$
+
+Proof. The finite parameter range is the original $128$ cells of
+(7.2.3). Obtain their exact rational centres from that recurrence.
+The outward $240$-bit evaluation of each of its five corrections puts
+both endpoints of each updated coordinate in the same $Q_{45}$
+rounding cell, so it fixes exactly the stated rational centre. For the
+new bounds, use the point derivatives at those centres and $t_i$,
+perform the five ordered interval pivots just defined, and apply
+(8.5.3) on $X_i\times T_i$. The minima and maxima of the five pivot
+absolute endpoints give the integer bounds in the table. The minimum
+lower and maximum upper response endpoints, rounded outward to
+multiples of $10^{-12}$, give (8.5.4). These instructions involve only
+the displayed rational circuit, the six derivative rules and finite
+integer comparisons; in particular they evaluate all $128$ cells,
+not just their end cells.
+
+All source denominators are guarded before these evaluations.
+The source bounds (7.2.7), with the sufficient continuation bounds of
+Lemma 8.5.3, apply on every $X_i\times T_i$:
+at both scalar evaluations $\epsilon=\pm\sqrt t$, one has
+$0<r<1$, $b>0$, and $j,n,T,U>0$. In the two-coefficient algebra the
+denominator of an inverse $(A,B)^{-1}$ is $A^2-tB^2$, the product of
+those two scalar values. For $b,j,n,T,U$ these products are positive,
+and their outward intervals exclude zero. The remaining new inverse
+operations are the five point-matrix pivots; their interval bounds
+above exclude zero. Fixed interpolation constants are nonzero.
+Consequently the differentiated circuit has no unguarded inverse.
+No division by $h$, $\Lambda$, a drift, a gain sample, a leading gain
+coefficient or a gain-root difference occurs. ∎
+
+Proof of the graph assertion in Theorem 8.1.2. The sufficient bounds of
+Lemma 8.5.3 justify the contraction and seam implications of Section 7.3
+for the same tubes and graph. For $t\in T_i$ that graph satisfies
+$y(t)\in X_i$ and $G(y(t),t)=0$. Put
+$F=f-u_{f,i}G$ for either response $f$. At the centre,
+$F(c_i,t_i)=b_{f,i}$, while at that exact graph point
+$F(y(t),t)=f(y(t),t)$. Integrate the derivative of $F$ along the straight
+segment in the convex product box from $(c_i,t_i)$ to $(y(t),t)$.
+The five coordinate displacements are bounded by $\rho_j$, and the
+parameter displacement by $\Delta$. The derivative enclosures in
+(8.5.3) therefore imply
+
+$$
+|f(y(t),t)-b_{f,i}|\le\eta_{f,i},\qquad
+f(y(t),t)\in\mathcal V_{f,i}.
+\tag{8.5.5}
+$$
+
+At a zero of $G$, $p_{\mathrm{sec}}=v_{\mathrm{sec}}=0$, so its
+$p_{\mathrm{av}},v_{\mathrm{av}}$ are exactly the two endpoints'
+common actual responses. This also defines their continuous common
+base at $t=0$. Equation (8.5.4) now gives (8.1.4). Since $t=h^2$ maps
+$[0,1/250]$ onto $[0,1/62500]$, the bound covers the entire published
+parameter interval, including seams and both attachments. The scalar
+source denominators stay positive at the singular passage, so the
+argument applies there without a chart change. ∎
+
+**Lemma 8.5.3 (Replacement continuation bounds on the original tubes).**
+Use the $240$-bit source-circuit convention of Definition 8.5.1 on the
+same centres, preconditioners, boxes and parameter cells of (7.2.3).
+Write $q_i^\sharp,\beta_i^\sharp,D_i^\sharp,\widetilde q_i^\sharp$ for
+the resulting rational bounds defined by (7.2.5)–(7.2.6). Then
+
+| Quantity | Rational upper bound | Sufficient strict bound |
+|---|---:|---:|
+| $\max_i q_i^\sharp$ | $440377709788/10^{12}$ | $441/1000$ |
+| $\max_i\beta_i^\sharp$ | $263610681681/10^{12}$ | $264/1000$ |
+| $\max_i\widetilde q_i^\sharp$ | $238818207545/10^{12}$ | $239/1000$ |
+| $\max_i\rho_BD_i^\sharp$ | $2475331406433/10^{12}$ | $5/2$ |
+| $\max_i\rho_kD_i^\sharp$ | $24753314064322/10^{12}$ | $25$ |
+
+All source and matrix inverses in these bounds are defined. In
+particular $q_i^\sharp+\beta_i^\sharp<141/200<1$ on every cell.
+The first table of Lemma 7.2.2 has smaller tight upper bounds for
+$\beta_i$, $\rho_BD_i$ and $\rho_kD_i$ that are not bounds for this
+expression convention. In fact its last cell satisfies
+
+$$
+\begin{aligned}
+\frac{263610681680245}{10^{15}}
+ &<\beta_{127}^\sharp<
+ \frac{263610681680246}{10^{15}},\\
+\frac{2475331406432184}{10^{15}}
+ &<\rho_BD_{127}^\sharp<
+ \frac{2475331406432185}{10^{15}},\qquad
+\rho_kD_{127}^\sharp=10\rho_BD_{127}^\sharp.
+\end{aligned}
+\tag{8.5.6}
+$$
+
+The table in this lemma replaces that earlier tight upper-bound column
+for the uses in Section 8. Its sufficient strict bounds preserve the
+same whole-interval graph, the attachments and the selected singular
+passage of Theorem 7.3.1.
+
+Proof. Starting at the exact seed (7.2.2), enclose each of the five
+successive Newton corrections per cell at $240$ bits, with the ordered
+matrix inverse of Definition 8.5.1. Both endpoints of every updated
+coordinate give the same integer under (7.2.1). The same is true for
+every entry of the rounded inverse defining $C_i$. Thus these finite
+comparisons determine exactly the original $640$ rounded corrections
+and all $128$ preconditioners, rather than alternate roots or centres.
+
+For each of the $128$ product boxes evaluate $D_yG,G_t$ by the stated
+scalar operations and derivative rules. Evaluate $G(c_i,t_i)$ and
+$G_t(c_i,T_i)$ separately for the residual bound. Multiply each of
+these enclosures by the fixed rational $C_i$, take absolute endpoints,
+and form the exact weighted row sums of (7.2.5). The reciprocal in
+$D_i^\sharp$ is formed only after $q_i^\sharp<1$ is established.
+For each of the $127$ seams form the rational midpoint and enlarged
+radii (7.2.6), and repeat its weighted derivative comparison with
+$C_i$. With componentwise interval endpoints and increasing-index
+matrix sums, the five maxima, multiplied by $10^{15}$, lie strictly
+between the respective integer pairs
+
+$$
+\begin{gathered}
+(440377709787541,440377709787542),\qquad
+(263610681680245,263610681680246),\\
+(238818207544966,238818207544967),\qquad
+(2475331406432184,2475331406432185),\\
+(24753314064321844,24753314064321845).
+\end{gathered}
+\tag{8.5.7}
+$$
+
+These are finite rational comparisons: interval products use the four
+endpoint products, each dyadic rounding is characterized by adjacent
+integers, and the norm sums and positive scalar quotient are exact.
+They give the displayed upper-bound table by outward rounding to
+multiples of $10^{-12}$. The same computation at $i=127$ gives
+(8.5.6), whose first two lower endpoints strictly exceed the earlier
+claimed bounds $263610622981/10^{12}$ and $247533043797/10^{11}$.
+Since $\rho_k=10\rho_B$, the earlier third bound fails as well.
+All source-pair reciprocal denominators are positive on the enclosed
+boxes; all matrix pivots exclude zero before normalization.
+
+For applicability, the contraction proof (7.3.5)–(7.3.7) uses only
+$q<1$ and $q+\beta<1$, and the seam argument (7.3.9) uses only
+$\widetilde q<1$. The new bounds supply these inequalities on every
+original tube and every seam. Thus they give a unique zero in each
+$X_i$ at each $t\in T_i$, and the neighboring zeros coincide on every
+seam by the same convex-box argument. The real zero equations and the
+exact rational recurrence (7.2.3) are unchanged, so this is the same
+graph, including $t=0$. Its Jacobian is invertible throughout the
+product boxes by the same Neumann-series argument, and its derivative
+bounds remain $|B_t|<5/2$, $|k_t|<25$. Therefore the attachment
+identifications of Section 7.4 and the crossing argument of Section 7.5
+retain their hypotheses, using (7.2.7) for the same source bounds and
+their stated exact identities and fixed-parameter inclusions. No new
+source restriction or parameter interval is introduced. ∎
+
+### 8.6 The independent-pair consequence and mathematical scope
+
+**Corollary 8.6.1 (No independent M pair along the finite J arc).** For
+each $0<h\le1/250$, the literal same-child independent relation
+(6.8.5) has no solution at
+$(p,v)=(\bar p(h),\bar v(h))$, irrespective of cross-pair overlap or
+of the common terminal values assigned separately to the two pairs.
+
+Proof. Theorem 7.3.1 supplies its two distinct legal $J$ endpoints in
+that entire child, each with its own whole gain, fixed drift and the
+original common acquired history. Equations (8.1.4) put this same
+actual base strictly in $\mathcal B$. The rectangle assertion of
+Theorem 8.1.2 excludes every distinct equal-$M$ pair in that entire
+child, including pairs selected independently of the supplied $J$
+endpoints. The two pairs required in (6.8.5) therefore cannot coexist
+there. No endpoints at different parameters or different bases have
+been combined. ∎
+
+The source-specific content is the explicit closed rectangle,
+exhaustive legality filter and forced-M separation, together with
+containment of the whole previously constructed finite graph. Support
+VII, Theorem 25.2 and Sections 28–30, already give unspecified open
+neighborhoods of M-injectivity; they do not specify (8.1.3) or contain
+the whole finite arc by a stated radius. Theorem 7.3.1 supplies that
+arc, its local-germ and finite-pair attachments, and its singular
+crossing. Their existence and attachment proofs are reused, not
+replaced by a new choice of graph. Tube uniqueness serves only to
+identify that supplied graph; the entire-child inventory reduction
+comes instead from Support VII's all-world carrier and faithful
+reconstruction. Support, Corollary 18.2, already excludes chosen-M
+singular endpoints in the original joint relation, but no regular-only
+restriction is needed for the stronger rectangle theorem here.
+
+The fixed-node interpolation in (8.2.6) is the classical formula of
+J.-P. Berrut and L. N. Trefethen, *Barycentric Lagrange Interpolation*,
+SIAM Review 46, 501–517, §2,
+[doi:10.1137/S0036144502417715](https://doi.org/10.1137/S0036144502417715).
+The fixed Sylvester determinant is the classical resultant construction;
+see S. Basu, R. Pollack and M.-F. Roy, *Algorithms in Real Algebraic
+Geometry*, second edition, Chapter 8,
+[doi:10.1007/3-540-33099-2](https://doi.org/10.1007/3-540-33099-2).
+Their mathematical content is reused. The root-retaining inclusion and
+the centred response estimate follow from the ordinary real mean-value
+formula as shown above; the endpoint enclosure property follows by
+induction on the displayed rational operations. No new general
+interpolation, resultant or interval theorem is asserted. The finite
+quantitative conclusions of Section 8 are repo-derived; they make no
+worldwide priority claim.
+
+This exclusion is confined to (8.1.3) and the entire stated finite XI7
+arc. The all-real independent J/M question outside that rectangle,
+fixed48 V(18.12)(i), rootQ, the common-tree/ancestor obligations and the
+original full-domain eight/nine-read recovery problem remain open.
+In particular a changed actual parent response has not resolved the
+fixed48 problem, and no selected-source bounds have replaced the
+original world domain.
+
+## 追加锚（本行以下为增补区）
