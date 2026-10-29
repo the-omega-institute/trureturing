@@ -134,16 +134,9 @@ theorem minus_one_product_field (a b : Carrier D) :
   simp only [moduleFirst, moduleSecond, minus_one_binomial, one_smul,
     StateFieldResidueReconstruction.epsilon, show (-1 : ℂ)^(-1 : ℤ) = -1 by norm_num,
     neg_smul, one_smul] at h
-  rw [h]
-  rw [finsum_neg_distrib]
-  simp only [neg_neg, sub_neg_eq_add, zero_add]
-  congr 1
-  · apply finsum_congr
-    intro i
-    congr 2 <;> omega
-  · apply finsum_congr
-    intro i
-    congr 2 <;> omega
+  simpa only [finsum_neg_distrib, sub_neg_eq_add, zero_add,
+    show ∀ i : ℕ, (-1 : ℤ)-i = -(i : ℤ)-1 by intro i; omega,
+    show ∀ i : ℕ, -power-1 + -1-i = -power-1-i-1 by intro i; omega] using h
 
 /-- The actual current differs from the original one only in its zero mode. -/
 theorem action_current (i : Fin D.rank) (m : ℤ) :

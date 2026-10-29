@@ -42,13 +42,13 @@ theorem normal_current_shift (i j : Fin D.rank) (m : ℤ) :
   have hf : Function.HasFiniteSupport f := by
     have h := (normalSummand_finite D i j m v).comp_of_injective
       (show Function.Injective (fun k : ℕ => -(k : ℤ)-1) by
-        intro a b hab; omega)
+        intro a b hab; change -(a : ℤ)-1 = -(b : ℤ)-1 at hab; omega)
     convert h using 1
     ext k
     simp [f, normalSummand, show -(k : ℤ)-1 < 0 by omega,
       show m-(-(k : ℤ)-1)=m+1+k by omega]
   have hg : Function.HasFiniteSupport g := by
-    have h := (normalSummand_finite D i j m v).comp_of_injective Int.natCast_injective
+    have h := (normalSummand_finite D i j m v).comp_of_injective (show Function.Injective (fun k : ℕ => (k : ℤ)) by intro a b h; change (a : ℤ) = (b : ℤ) at h; exact_mod_cast h)
     convert h using 1
     ext k
     simp [g, normalSummand, show ¬ (k : ℤ)<0 by omega]
@@ -62,7 +62,7 @@ theorem normal_current_shift (i j : Fin D.rank) (m : ℤ) :
     apply (Set.finite_singleton 0).subset
     intro k hk
     by_contra h
-    exact hk (by simp [y,h])
+    exact hk (by simp [y,show k ≠ 0 by simpa using h])
   have hz : Function.HasFiniteSupport z := by
     apply (Set.finite_singleton m.toNat).subset
     intro k hk
@@ -73,14 +73,14 @@ theorem normal_current_shift (i j : Fin D.rank) (m : ℤ) :
     apply (Set.finite_singleton 0).subset
     intro k hk
     by_contra h
-    exact hk (by simp [t,h])
+    exact hk (by simp [t,show k ≠ 0 by simpa using h])
   have first (k : ℕ) :
       ((action D β (currentState D i))[[-(k : ℤ)-1]])
         (((action D β (currentState D j))[[m+1+k]]) v) = f k + x k := by
     rw [action_current, action_current]
     by_cases h : m+1+(k : ℤ)=0
     · have hi : -(k : ℤ)-1=m := by omega
-      simp [f,x,h,show -(k : ℤ)-1 ≠ 0 by omega,hi,map_add,map_smul]
+      simp [f,x,h,show -(k : ℤ)-1 ≠ 0 by omega,hi,show m ≠ 0 by omega,map_add,map_smul]
     · simp [f,x,h,show -(k : ℤ)-1 ≠ 0 by omega]
   have second (k : ℕ) :
       ((action D β (currentState D j))[[m+1-k-1]])
@@ -93,8 +93,8 @@ theorem normal_current_shift (i j : Fin D.rank) (m : ℤ) :
       simp [g,y,z,t,map_add,map_smul,add_smul,smul_add,smul_smul,mul_comm]
       abel
     · subst k
-      simp only [sub_zero] at hm
-      simp [g,y,z,t,hm,map_add,map_smul]
+      have hm0 : m ≠ 0 := by simpa using hm
+      simp [g,y,z,t,hm0,map_add,map_smul]
     · have hkm : (k : ℤ)=m := by omega
       simp [g,y,z,t,hk,hm,hkm,show m ≠ 0 by omega,map_add,map_smul]
     · simp [g,y,z,t,hk,hm,show (k : ℤ) ≠ 0 by omega]
@@ -122,8 +122,8 @@ theorem normal_current_shift (i j : Fin D.rank) (m : ℤ) :
   rw [(normalMinusOne (action D β (currentState D i))
     (action D β (currentState D j))).2]
   simp_rw [first,second]
-  rw [finsum_add_distrib hf hx, finsum_add_distrib ((hg.add hy).add hz) ht,
-    finsum_add_distrib (hg.add hy) hz, finsum_add_distrib hg hy,sx,sy,sz,st]
+  rw [finsum_add_distrib hf hx, finsum_add_distrib (f := fun k => g k + y k + z k) (g := t) ((hg.add hy).add hz) ht,
+    finsum_add_distrib (f := fun k => g k + y k) (g := z) (hg.add hy) hz, finsum_add_distrib hg hy,sx,sy,sz,st]
   simp only [LinearMap.add_apply,LinearMap.smul_apply,Module.End.one_apply]
   have old : ((quadraticSummand D i j)[[m+1]]) v = (∑ᶠ k,f k)+(∑ᶠ k,g k) := by
     rw [quadraticSummand,(normalMinusOne (neutralField D i) (neutralField D j)).2]

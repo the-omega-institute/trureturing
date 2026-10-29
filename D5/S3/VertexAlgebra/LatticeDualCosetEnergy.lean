@@ -46,7 +46,7 @@ theorem common_denominator (μ : Fin D.rank → ℚ) :
   have hm : μ i * ((μ i).den : ℚ) = ((μ i).num : ℚ) :=
     (eq_div_iff (by exact_mod_cast (μ i).den_ne_zero)).mp (Rat.num_div_den (μ i)).symm
   rw [← hiq]
-  push_cast
+  simp only [Int.cast_mul, Int.cast_natCast]
   linear_combination ((s / (μ i).den : ℕ) : ℚ) * hm
 
 def clearedCharge (s : ℕ) (ν : Charge D) (γ : Charge D) : Charge D :=
@@ -81,9 +81,9 @@ theorem chargeWeight_cleared (μ : Fin D.rank → ℚ) (s : ℕ) (hs : 0 < s)
     intro j _
     ring
   rw [hb] at he
-  rw [div_eq_iff (pow_ne_zero 2 (by exact_mod_cast ne_of_gt hs))]
+  rw [eq_div_iff (pow_ne_zero 2 (by exact_mod_cast ne_of_gt hs))]
   unfold chargeWeight
-  linear_combination he / 2
+  linear_combination -he / 2
 
 theorem chargeWeight_nonneg (μ : Fin D.rank → ℚ)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (γ : Charge D) :
@@ -122,7 +122,7 @@ theorem sublevel_finite (μ : Fin D.rank → ℚ)
   let O := {d : Exponent D | oscillatorEnergy d ≤ N}
   have hc : C.Finite := charge_sublevel_finite D μ hD N
   have ho : O.Finite := by
-    haveI := oscillatorLeFinite D N
+    letI : Finite O := oscillatorLeFinite D N
     exact Set.toFinite O
   apply (hc.prod ho).subset
   intro a ha
@@ -142,8 +142,8 @@ theorem attained_minimum (μ : Fin D.rank → ℚ)
   classical
   let S := {γ : Charge D | chargeWeight D μ γ ≤ chargeWeight D μ 0}
   have hS : S.Finite := charge_sublevel_finite D μ hD _
-  have hn : S.Nonempty := ⟨0, le_rfl⟩
-  obtain ⟨γ₀, hγ₀, hmin⟩ := hS.exists_min_image (chargeWeight D μ) hn
+  have hn : S.Nonempty := ⟨0, by simp [S]⟩
+  obtain ⟨γ₀, hγ₀, hmin⟩ := Set.exists_min_image S (chargeWeight D μ) hS hn
   refine ⟨γ₀, chargeWeight_nonneg D μ hD γ₀, ?_⟩
   intro γ
   by_cases hγ : γ ∈ S
