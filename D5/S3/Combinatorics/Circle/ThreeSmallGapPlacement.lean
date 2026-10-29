@@ -13,7 +13,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 @[expose] public section
-namespace D5.S3.Combinatorics.Circle.ThreeSmallSameSignSource
+namespace D5.S3.Combinatorics.Circle.ThreeSmallGapPlacement
 open SourceWidth ExpandingSourcePath TwoSmallProfile TwoSmallPlacement
 open MixedSuffixEnergy TwoOppositeLargeExchange
 
@@ -608,4 +608,4 @@ theorem three_blocks (A B D : ℕ) (hA : 0 < A) (hB : 0 < B) (hD : 0 < D)
     rw [show X ++ Y0 ++ Y1 ++ Z0 ++ Z1 = X ++ (Y0 ++ Y1) ++ (Z0 ++ Z1) by simp only [List.append_assoc], hYjoin, hZjoin]
 
 
-end D5.S3.Combinatorics.Circle.ThreeSmallSameSignSource
+end D5.S3.Combinatorics.Circle.ThreeSmallGapPlacement

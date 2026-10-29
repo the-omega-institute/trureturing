@@ -14,7 +14,7 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.Circle.ThreeSmallSameSignSource
 open SourceWidth ExpandingSourcePath TwoSmallProfile TwoSmallPlacement
-open MixedSuffixEnergy TwoOppositeLargeExchange
+open MixedSuffixEnergy TwoOppositeLargeExchange ThreeSmallGapPlacement
 
 private theorem positive_three_gap_profile (k : ℕ) (Q N : ℤ) (hQ : 2 ≤ Q)
     (hN : N = 4 * Q - 1) (w : ℕ → ℤ) (p r : ℕ)
