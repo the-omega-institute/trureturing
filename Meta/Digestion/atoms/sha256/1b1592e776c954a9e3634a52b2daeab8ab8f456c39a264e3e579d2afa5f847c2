@@ -1,0 +1,76 @@
+**Theorem 8.1 (Dense lower bound with quadratic error).** For any law of Definition 1.1 with $0<\delta\le1$, suppose
+
+$$
+t:=\min_i y_i\ge\tau,\qquad
+\frac b{r^2\mu}\le\frac1{12}.
+\tag{8.1}
+$$
+
+Then, without any restriction on the cardinalities in its support,
+
+$$
+H(x)\ge H_d-72\delta^2\mu^{-6}.\tag{8.2}
+$$
+
+**Proof.** Use the full-label residuals of Lemma 3.1, writing $R_i=\widehat R_i=w_i-r^2y_i+b$ and $\tau=t_{\rm conv}$. That lemma, on exactly the full law domain used here, gives
+
+$$
+R_i\ge0,\qquad S:=\sum_iR_i
+=\mathbb E K^3-r^2q+sb\ge6r\delta=:S_0.
+\tag{8.5}
+$$
+
+Put $f(y)=r^2/y-b/y^2$. The exact energy decomposition and the centered rational identity are
+
+$$
+H=\sum_i f(y_i)+\sum_i\frac{R_i}{y_i^2},\tag{8.6}
+$$
+
+$$
+f(y)-f(\mu)-f'(\mu)(y-\mu)
+=\frac{(y-\mu)^2}{\mu^2y^2}
+ \left[r^2y-b\left(1+\frac{2y}{\mu}\right)\right].
+\tag{8.7}
+$$
+
+This is an identity after bringing its two sides to a common denominator. If $y\ge\tau=3b/r^2$, then $b\le r^2y/3$, while the other condition in (8.1) gives $2by/\mu\le r^2y/6$. Thus the bracket in (8.7) is at least $r^2y/2$. Using $\mu,y_i\le1$ and $\sum_i(y_i-\mu)=0$, obtain
+
+$$
+\sum_i f(y_i)\ge sf(\mu)+\frac{r^2}{2}V,
+\qquad V=\sum_i(y_i-\mu)^2.
+\tag{8.8}
+$$
+
+To retain the residual's dependence on the marginals, let $M=\max_i y_i\ge\mu$. Nonnegativity of $R_i$, (8.5), and the elementary tangent inequality for the inverse square give
+
+$$
+\begin{aligned}
+\sum_i\frac{R_i}{y_i^2}
+&\ge\frac{S_0}{M^2}\\
+&\ge\frac{S_0}{\mu^2}
+ -\frac{2S_0}{\mu^3}(M-\mu)\\
+&\ge\frac{S_0}{\mu^2}
+ -\frac{2S_0}{\mu^3}\sqrt V.
+\end{aligned}\tag{8.9}
+$$
+
+The middle inequality can also be read directly from
+
+$$
+\frac1{M^2}-\frac1{\mu^2}+\frac{2(M-\mu)}{\mu^3}
+=\frac{(M-\mu)^2(2M+\mu)}{\mu^3M^2}\ge0.
+$$
+
+Finally, (8.5) gives $sf(\mu)+S_0/\mu^2=H_d$. Substitution of (8.8)–(8.9) into (8.6), followed by completion of the square in $\sqrt V$, yields
+
+$$
+\begin{aligned}
+H-H_d
+&\ge\frac{r^2}{2}V-\frac{2S_0}{\mu^3}\sqrt V\\
+&\ge-\frac{2S_0^2}{r^2\mu^6}
+=-72\delta^2\mu^{-6}.
+\end{aligned}
+$$
+
+Only the auxiliary rational expression has been centered; no convexity of $H$ has been assumed. ∎
+
