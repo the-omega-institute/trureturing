@@ -50,5 +50,50 @@ theorem all_eigenspaces_finiteDimensional (β : Charge D)
     rw [hz]
     infer_instance
 
+
+/-- The half-shifted rank-one bottom contains two independent actual eigenvectors. -/
+theorem half_shift_actual_bottom_multiplicity :
+    let E := halfShiftLattice
+    let μ : Fin E.rank → ℚ := fun _ => 1/2
+    let H : Matrix (Fin E.rank) (Fin E.rank) ℂ := fun _ _ => 1/2
+    (∀ γ : Charge E, 1/4 ≤ chargeWeight E μ γ) ∧
+      ∃ v : Fin 2 → Carrier E, LinearIndependent ℂ v ∧
+        ∀ t, moduleL E (fun _ => 1) H 0 (v t) = (1/4 : ℂ) • v t := by
+  classical
+  dsimp only
+  let E := halfShiftLattice
+  let μ : Fin E.rank → ℚ := fun _ => 1/2
+  let H : Matrix (Fin E.rank) (Fin E.rank) ℂ := fun _ _ => 1/2
+  have hHG : H * gramComplex E = 1 := by
+    ext i j
+    fin_cases i
+    fin_cases j
+    norm_num [H,E,halfShiftLattice,gramComplex,Matrix.mul_apply]
+  have hGH : gramComplex E * H = 1 := by
+    ext i j
+    fin_cases i
+    fin_cases j
+    norm_num [H,E,halfShiftLattice,gramComplex,Matrix.mul_apply]
+  have hDual : ∀ i,∑ j,(E.G i j : ℚ)*μ j=((fun _ => 1 : Charge E) i : ℚ) := by
+    intro i
+    norm_num [E,μ,halfShiftLattice]
+  obtain ⟨γ,δ,hne,hγ,hδ,hmin⟩ := (half_shift_two_minima).2
+  refine ⟨hmin,?_⟩
+  let a : Fin 2 → Label E := fun t => (if t=0 then γ else δ,0)
+  have ha : Function.Injective a := by
+    intro s t h
+    fin_cases s <;> fin_cases t
+    · rfl
+    · exact False.elim (hne (by simpa [a] using congrArg Prod.fst h))
+    · exact False.elim (hne (by simpa [a] using (congrArg Prod.fst h).symm))
+    · rfl
+  refine ⟨fun t => carrierBasis E (a t),(carrierBasis E).linearIndependent.comp a ha,?_⟩
+  intro t
+  rw [moduleL_basis_zero E (fun _ => 1) H hHG hGH μ hDual]
+  have hw : weight E μ (a t)=1/4 := by
+    fin_cases t <;> simp [a,weight,oscillatorEnergy,E,μ] <;> assumption
+  rw [hw]
+  norm_num
+
 end
 end D5.S3.VertexAlgebra.LatticeDualCosetEnergy

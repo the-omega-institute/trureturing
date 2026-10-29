@@ -22,5 +22,12 @@ internal sealed class LatticeDualCosetEnergyEndpointsDocument : IScribeDocumentD
                 H("all eigenspaces finite dimensional"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For EVERY complex lambda, the actual original-omega L_0 eigenspace is finite dimensional. Outside cast(h+N) it equals zero."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("latticedualcosetenergyendpoints-half-shift-actual-bottom-multiplicity"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeDualCosetEnergyEndpoints.half_shift_actual_bottom_multiplicity"),
+                H("half shift actual bottom multiplicity"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For Gram [2] and mu=1/2, every charge weight is at least 1/4, and the ACTUAL original-omega L_0 eigenspace at 1/4 contains two linearly independent vectors from distinct minimizing charges."))),
                 DescribeRole.Theorem))));
 }
