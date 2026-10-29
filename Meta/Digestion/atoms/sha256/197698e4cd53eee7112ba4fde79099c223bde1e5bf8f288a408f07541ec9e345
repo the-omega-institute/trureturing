@@ -1,0 +1,13 @@
+**Definition 93.1 (Limiting restricted phase family).** Let
+$0\le q\le1/2$, $h=\sqrt{q(1-q)}$, and use the same effects $E_\varphi$
+from (92.1). At the actual limiting channel,
+
+$$
+\mathcal N_\infty=\Phi_0,\qquad
+\Phi_0(X)=x_{00}P_0+\frac{x_{11}+x_{22}}2(P_1+P_2).
+\tag{93.1}
+$$
+
+This is the $s=0$ limiting channel. It is not the empty-horizon identity
+$\mathcal N_0$.
+

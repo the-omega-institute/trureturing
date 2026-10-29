@@ -1,0 +1,10 @@
+**定义 84.1（各命题的 owning supplier）。** §§73–80 保留其原 source contract；本批次只按下表使用明确的固定来源。一个来源更新不改变另一个来源的对象、权限或误差度量。
+
+| 来源与固定版本 | 在本批次供应的中间结论 | 不转移的条件 |
+| --- | --- | --- |
+| [Environment §27][F81ENV27]，`033c1b370f2447aa20e191a6a3da609aba697e50` | actual all-angle fair chronological channel、whole-qutrit task、entire complex effect image 与单 effect right inverse | 不是 arbitrary law 或多任务 common right inverse |
+| [Purity §§87–91][F84PA87]，`29400a844a8c71ee6134aeec1d34ec0103084b4e` | normalized Choi spectra、finite NPT、EB limit、frame norms 与 full-table injectivity | scalar norms 的承诺模型不能替换为所有 states/channels |
+| [Purity §92][F84PA92] 与 [Environment §28][F84ENV28]，`054965ffe9988c98e97c1fbdc4d6edc125acde96` | separable same-scalar partners 与同一 fixed-$P$ task 的 exact optimum separation | 每 horizon 各有 partner，不是同一 partner semigroup、共同 decoder 或实际历史 |
+| [RRO carrier §§9、11][F84RRO]，`8d00be1638132bbcf0ef888fa0901cacb583ca45` | actual unassisted delayed joint encoding 的 exact capacity 与 endpoint half-trace necessity | normalized live-state error、晚选 wait/execute 和全部 usable information 的 factorization 必须保留 |
+| [Strict-real §§7–10][F84STRICT]，`3350fc26dcbaf210d8ab035c7e25ab99c76e8447` | both-endpoint tail、whole-child singleton neighbourhood、actual mixed-$M$ child 与 finite exceptional-meeting outer set | 不把 complex candidates、别的 child 或 counterfactual alternative 当作实际 acquired world |
+

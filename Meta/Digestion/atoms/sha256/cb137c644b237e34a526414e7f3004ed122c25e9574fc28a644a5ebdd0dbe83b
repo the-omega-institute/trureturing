@@ -1,0 +1,57 @@
+**Definition 96.1 (Unassisted whole-state contract).** Work on
+$M_3=\mathcal B(\mathbb C^3)$, using the ordered orthonormal basis
+
+$$
+|0\rangle=\frac{(1,1,1)^{\mathsf T}}{\sqrt3},\qquad
+|1\rangle=\frac{(1,1,-2)^{\mathsf T}}{\sqrt6},\qquad
+|2\rangle=\frac{(1,-1,0)^{\mathsf T}}{\sqrt2}.
+\tag{96.1}
+$$
+
+At the actual horizon $n=2$, the erased-history channel and its reduced
+form are, by Terminal (93.5) and (118.3),
+
+$$
+\begin{aligned}
+F^2&=\operatorname{Ad}_{U_0}\circ\Phi,\qquad
+U_0=1\oplus
+\begin{pmatrix}-1/2&\sqrt3/2\\ \sqrt3/2&1/2\end{pmatrix},\\
+\Phi(X)&=\Phi_{-1/2}(X)=
+\begin{pmatrix}
+x_{00}&-x_{01}/2&0\\
+-x_{10}/2&(x_{11}+3x_{22})/4&0\\
+0&0&(3x_{11}+x_{22})/4
+\end{pmatrix}.
+\end{aligned}
+\tag{96.2}
+$$
+
+Here $X=(x_{jk})$ is any complex matrix and
+$\operatorname{Ad}_U(X)=UXU^\dagger$. A legal decoder $D:M_3\to M_3$
+is one input-independent completely positive trace-preserving map
+(CPTP), defined on the entire complex matrix algebra. It receives only
+the terminal qutrit. Set
+
+$$
+\begin{aligned}
+\mathcal R&=D\circ\operatorname{Ad}_{U_0},&
+D&=\mathcal R\circ\operatorname{Ad}_{U_0^\dagger},\\
+e_2(D)&=\max_{\rho\in\mathsf D(\mathbb C^3)}
+ \frac12\|DF^2(\rho)-\rho\|_1,&
+e(\mathcal R)&=\max_{\rho\in\mathsf D(\mathbb C^3)}
+ \frac12\|\mathcal R\Phi(\rho)-\rho\|_1 .
+\end{aligned}
+\tag{96.3}
+$$
+
+The set $\mathsf D(\mathbb C^3)$ contains every positive semidefinite
+complex matrix of trace one, pure or mixed;
+$\|X\|_1=\operatorname{Tr}\sqrt{X^\dagger X}$. Composition in (96.3)
+is a bijection between all legal $D$ and all CPTP $\mathcal R$, and
+$e_2(D)=e(\mathcal R)$. The target remains the original input $\rho$.
+There is no reference in the input test or decoder, no history register,
+no smaller input code, no postselection, no intermediate correction and
+no additional observer resource. In particular this is the
+unassisted half trace norm objective, not the stabilized objective of
+Terminal §93 or a projection-probability task from §§86–93 of this volume.
+

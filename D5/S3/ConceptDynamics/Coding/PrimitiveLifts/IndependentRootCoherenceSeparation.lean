@@ -8,6 +8,7 @@
 
 import Mathlib.Algebra.DirectSum.Basic
 import Mathlib.Data.ZMod.Basic
+import Mathlib.Data.Fintype.EquivFin
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.Linarith
@@ -193,5 +194,39 @@ theorem independent_roots_without_rational_coherence :
   intro n hn
   obtain ⟨j, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hn)
   exact ⟨root j, root_relation j⟩
+
+/-- Every nontrivial degree has infinitely many actual roots of the same element c. -/
+theorem infinite_root_fiber (m : ℕ) (hm : 1 < m) : Infinite {x : G // m • x = c} := by
+  let i : ℕ → ℕ := fun n => m * (n + 1) - 1
+  have hi (n : ℕ) : i n + 1 = m * (n + 1) := by
+    dsimp [i]
+    exact Nat.sub_add_cancel (by nlinarith)
+  have hi_inj : Function.Injective i := by
+    intro n k h
+    have hmul : m * (n + 1) = m * (k + 1) := by rw [← hi n, ← hi k, h]
+    have hsucc : n + 1 = k + 1 := (mul_left_cancel₀ (by omega : m ≠ 0)) hmul
+    omega
+  have hproj (j : ℕ) :
+      projection (root j) = DirectSum.of (fun t => ZMod (t + 1)) j 1 := by
+    change beta (generator j) = _
+    simp [beta, generator, reduction]
+  let F : ℕ → {x : G // m • x = c} := fun n =>
+    ⟨(n + 1) • root (i n), by
+      rw [← mul_nsmul', ← hi n, root_relation]⟩
+  apply Infinite.of_injective F
+  intro n k h
+  by_contra hnk
+  have hik : i n ≠ i k := fun he => hnk (hi_inj he)
+  have he := congrArg (fun x : {x : G // m • x = c} => projection x.val (i n)) h
+  change projection ((n + 1) • root (i n)) (i n) =
+    projection ((k + 1) • root (i k)) (i n) at he
+  rw [map_nsmul, map_nsmul, hproj, hproj, DFinsupp.nsmul_apply,
+    DFinsupp.nsmul_apply, DirectSum.of_eq_same,
+    DirectSum.of_eq_of_ne _ _ _ hik] at he
+  simp only [nsmul_eq_mul, mul_one, mul_zero] at he
+  have hlt : n + 1 < i n + 1 := by rw [hi]; nlinarith
+  have hv := congrArg ZMod.val he
+  rw [ZMod.val_natCast_of_lt hlt, ZMod.val_zero] at hv
+  omega
 
 end D5.S3.ConceptDynamics.Coding.PrimitiveLifts.IndependentRootCoherenceSeparation

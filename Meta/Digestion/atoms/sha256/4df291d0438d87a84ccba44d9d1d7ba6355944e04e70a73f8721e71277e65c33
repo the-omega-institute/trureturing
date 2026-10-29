@@ -1,0 +1,38 @@
+**引理 30.1（条件参数与中心对应）。** 分别条件于 $R=h,C_R=b$ 和 $L=-h,C_L=b$，$h\ge1$、$b\in\{p,q\}$，各自的 $W_k^\pm$ 是独立同分布的 Bernoulli 对之差；右侧一对的参数为 $(b,\overline b)$，左侧为 $(\overline b,b)$，每对内部也独立。对应的均值及符号为
+
+$$
+\mu_+=C_R-\overline{C_R},\qquad
+\mu_-=\overline{C_L}-C_L,\qquad
+\sigma_\pm=\operatorname{sgn}(\mu_\pm),\qquad
+|\mu_\pm|=\Delta.
+\tag{30.3}
+$$
+
+在同一实际轨道上，$X_0=0$ 时 $\sigma_-\sigma_+=1$；$X_0=1$ 时 $\sigma_-\sigma_+=-1$。
+
+**证明。** 直接使用（21.6）–（21.9）的归一化选定锚柱集。其参数对应是：原式中的锚距离 $s$ 换名为 $h$，标记 $a$ 换名为 $b$，间隔律仍为（21.3）的 $f_b$，故 $f_b(2)=b$。右侧条件间隔参数为 $b,\overline b,b,\overline b,\ldots$，左侧为 $\overline b,b,\overline b,b,\ldots$。不同对使用互不相交的间隔指标，给出所述两种单侧条件乘积律。它们各自的原律权重仍为
+
+$$
+w_+(h,b)=Z^{-1}T_{\overline b}(h),\qquad
+w_-(h,b)=Z^{-1}T_b(h),\qquad
+\sum_{h\ge1}\sum_{b\in\{p,q\}}w_\pm(h,b)=1.
+\tag{30.4}
+$$
+
+这里 $T_b(h)$ 是（21.5）的间隔尾，区别于（29.2）的有限词统计 $T_\pm(y)$。权重的归一化及其中的平稳因子均复用第 21 节；不另作 Palm 条件化。
+
+若 $X_0=0$，两个最近锚是相邻占据位，故 $C_R=\overline{C_L}$；若 $X_0=1$，连续占据位为 $L,0,R$，故 $C_R=C_L$。用 $q-p=\delta$ 逐项写出方向为
+
+$$
+\begin{array}{c|c|c|c|c}
+X_0&C_L&C_R&\mu_-&\mu_+\\\hline
+0&p&q&\delta&\delta\\
+0&q&p&-\delta&-\delta\\
+1&p&p&\delta&-\delta\\
+1&q&q&-\delta&\delta
+\end{array}
+\tag{30.5}
+$$
+
+所以两种标记方向和 $\delta$ 的正负均给出同一判决原则。如果两个实际统计均有各自均值的严格符号，（29.3）即恢复中心。任一邻位为一时，合法性使其默认零输出正确。此处中心只用于逐路径说明标记关系，没有条件于中心、另一侧锚或窗口容纳事件来抽样。$\square$
+

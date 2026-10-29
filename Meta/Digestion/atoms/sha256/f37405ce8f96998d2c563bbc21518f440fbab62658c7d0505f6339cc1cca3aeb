@@ -1,0 +1,65 @@
+**Lemma 5.1 (observed-block recursion).** Let $U$ be binary, $Z,Z'$ finite, and $V$ any standard Borel conditioning data. Let $W$ range over a finite family of block words. Suppose nonnegative matrices $B_w$ satisfy $\sum_w B_w\mathbf1=\mathbf1$ and
+
+$$
+\mathbb P(W=w,Z'=t\mid Z=i,U,V)=B_w(i,t)
+\quad\text{almost surely}.
+\tag{5.1}
+$$
+
+Assume $\delta(B_w)\le\rho$ for every $w$ with positive probability, with $0\le\rho\le1$. Then
+
+$$
+\begin{aligned}
+\mathcal D(U;Z'\mid V,W)
+&\le\rho\mathcal D(U;Z\mid V,W)\\
+&=\rho\bigl[\mathcal D(U;Z\mid V)-\mathcal D(U;W\mid V)\bigr]\\
+&\le\rho\mathcal D(U;Z\mid V).
+\end{aligned}
+\tag{5.2}
+$$
+
+**Proof.** Fix a $V$-fiber with $b_v(i)=\mathbb P(Z=i\mid V=v)$. Conditioning further on a feasible word $w$ reweights this prior to
+
+$$
+\mathbb P(Z=i\mid V=v,W=w)
+=\frac{b_v(i)(B_w\mathbf1)_i}
+{\sum_h b_v(h)(B_w\mathbf1)_h}.
+\tag{5.3}
+$$
+
+Zero-likelihood rows have zero mass. On feasible rows, (5.1) gives the conditional endpoint kernel
+
+$$
+\mathbb P(Z'=t\mid U,Z=i,V=v,W=w)
+=K_w(i,t):=\frac{B_w(i,t)}{(B_w\mathbf1)_i}.
+\tag{5.4}
+$$
+
+It is independent of $U,v$ and has diameter at most $\rho$. Extend any excluded row by a feasible row if needed. Lemma 4.3 applies conditional on $(V,W)$ and proves the first inequality in (5.2) after integrating over those data. No contraction is asserted for the nonlinear reweighting (5.3).
+
+To identify its variance cost, put
+
+$$
+g=\mathbb E[U\mid Z,V],\qquad
+h=\mathbb E[U\mid V,W],\qquad
+a=\mathbb E[U\mid V].
+$$
+
+By (5.1), $W$ is independent of $U$ conditional on $(Z,V)$, hence $\mathbb E[U\mid Z,V,W]=g$ and $h=\mathbb E[g\mid V,W]$. Therefore
+
+$$
+\mathbb E[(g-h)(h-a)]=0,
+\qquad
+\mathbb E[(g-a)^2]=\mathbb E[(h-a)^2]+\mathbb E[(g-h)^2].
+$$
+
+These are exactly
+
+$$
+\mathcal D(U;Z\mid V)
+=\mathcal D(U;W\mid V)+\mathcal D(U;Z\mid V,W).
+\tag{5.5}
+$$
+
+Substitution proves the equality and last inequality in (5.2). The identity is averaged over the observed word. A comparison with the old variance on each individual realized word is not asserted or needed. $\square$
+

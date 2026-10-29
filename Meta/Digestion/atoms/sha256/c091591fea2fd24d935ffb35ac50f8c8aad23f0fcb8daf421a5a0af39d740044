@@ -1,0 +1,15 @@
+**引文 11.8（供应与已有数学的准确范围）。** 本卷 §2–3 已有有限均值悬挂、相邻间隔平稳流和 Brier 投影；[统一更新卷][SC-R] §4–6 已有标量最近锚条件化、两个边界一均计入的插入式、对称分数分离及原位点奖励。[相位卷][SC-Phase] §55–57 给相容端点映射的必要条件及空间距离推进，其 §58–60 处理每事件推进的循环间隔类。[观察商卷][SC-O] 更正 16.1 和 §17 分别供应固定生产者根和及整个闭最近邻位时钟的排除。[强零卷][SC-A] 定理 1.5、推论 9.1 和 [保护替换卷][SC-G] 定理 5.1 供应在同一实际律内的强零等价；[共享上下文卷][SC-S] §11–12 的谱条件仍有其单独的共同生产者前提。这里的综合推导消费这些供应，增加的是空间核的完整外部原损失连接、有向端点能量判据和被命题 11.6 消费的定量矩形界，并不将标量结论或最近邻结论重新算作新结论。
+
+[Caravenna–Giacomin–Zambotti][SC-CGZ] *Infinite volume limits of polymer chains with periodic charges*，arXiv:math/0604426v1，§2.1 式（2.4）、§2.2 的 Markov 更新核，其剩余类约束正是终点减起点等于距离模周期；其周期聚合物的自由能和无限体积极限不供应坐标 Brier 取得结论。[Alsmeyer][SC-Al] *Quasi-stochastic matrices and Markov renewal theory*，arXiv:1312.3090v2，§1–2 式（9）–（10）的对应为 $p_{ab}F_{ab}(\{g\})=f_a(g)\mathbf1_{\{b=a+g\}}$，$p_{ab}=K(a,b)$；这里是算术核。其定理 1.5 关于非算术线性更新方程的有界解，不能用于消去这里的非线性分数或相位势。
+
+[Dawid–Lauritzen–Parry][DLP] §4.2、例 4.4、式（14）是坐标全条件 Brier 评分及平方后验差的经典来源，其严格正有限乘积空间不替代这里的硬 no11 完成纤维和原平稳目标。[Marzen–Crutchfield][MC] §II.1、§V 的 iid 更新及有限生成与无限预测记忆的区别保留原范围。平稳占据、条件投影、有限链遍历和有限循环势分解是已知机制，仅作为上述原损失推导的中间步骤。以上比较限于所引正文及其明确假设，不作穷尽文献或优先权结论。
+
+[SC-A]: FIB_LEGAL_EDGE_LOAD_ATTAINMENT_STRONG_ZERO_EQUIVALENCE_AND_FINITE_OPTIMIZER_COMPARISON.md
+[SC-G]: FIB_LEGAL_EDGE_LOAD_GUARDED_REPLACEMENT_ATTAINMENT_AND_CONDITIONAL_RANK_OBSTRUCTION.md
+[SC-O]: FIB_LEGAL_EDGE_LOAD_OBSERVABLE_QUOTIENT_CONDITIONAL_VARIANCE_AND_ERASURE_SUMMABILITY.md
+[SC-R]: FIB_LEGAL_EDGE_LOAD_UNIFORM_RENEWAL_NONATTAINMENT_AND_THREE_STATE_SEPARATION.md
+[SC-Phase]: FIB_LEGAL_EDGE_LOAD_VISIBLE_TAIL_PHASE_RIGIDITY_AND_WINDOW_LIMITS.md
+[SC-S]: FIB_LEGAL_EDGE_LOAD_GLOBAL_LOCAL_RANK_COMPATIBILITY_AND_RESET_VARIANCE_OBSTRUCTION.md
+[SC-CGZ]: https://arxiv.org/html/math/0604426v1
+[SC-Al]: https://arxiv.org/html/1312.3090v2
+

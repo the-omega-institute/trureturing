@@ -1,0 +1,4 @@
+**Corollary 5.2 (The compatibility absent from independent minima).** In Theorem 5.1, no choice of one global $r_n\in\mathscr F_{2,n}^{0,0}$ can achieve the vanishing total discrepancy of the independently chosen conditional fits.
+
+Proof. The discrepancy of every such $r_n$ is bounded below by (5.2), which grows linearly with positive asymptotic coefficient. The independently minimized fixed-block sum tends to zero by (5.3). The reset law (2.2) is a necessary constraint on every global candidate, whereas the choice in (4.4) may depend on a component learned from the full complement. Those conditional choices are not thereby the conditionals of a common global candidate. $\square$
+
