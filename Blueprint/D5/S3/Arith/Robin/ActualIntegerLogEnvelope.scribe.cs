@@ -48,6 +48,33 @@ internal sealed class ActualIntegerLogEnvelopeDocument : IScribeDocumentDefiniti
                     + "ActualLeastCrossingPriceRecord takes epsilon=1/20 directly."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("actual-integer-small-error-envelope"),
+                DeclarationHandle.Create(Prefix + "eventual_actual_integer_envelope_small_error"),
+                H("An arbitrarily small coefficient for every sufficiently large actual integer"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For every real epsilon>0 there exists a real A>=286 such that every "
+                        + "positive natural integer n with A<=log(n) satisfies "
+                        + "originalObjective(n)-gamma<=epsilon/log(log(n)). The threshold A "
+                        + "is chosen before n. The original objective and actual integer n are "
+                        + "unchanged, and n has no support or optimizer hypothesis.")),
+                    Paragraph(Text(
+                        "CenteredTail.E2p_isLittleO_inv_log bounds E₂p(X) above by "
+                        + "(epsilon/2)/log(X) eventually. The original inequality -E₂p(X)<=E₃(X) "
+                        + "and exact prime-product identity then bound the reciprocal product by "
+                        + "exp(gamma)*log(X)*exp((epsilon/2)/log(X)). Set X=log(n). At price "
+                        + "1/(X*log(X)), the strict comparator U has all prime support below X "
+                        + "and uniform inventory growth gives 1-log(U)/X<=epsilon/2.")),
+                    Paragraph(Text(
+                        "The same private fixed-price transfer used by the existing "
+                        + "19/10+epsilon theorem bounds the comparator's logarithmic sigma ratio "
+                        + "and transfers it to n, adding at most (epsilon/2)/log(X). The two "
+                        + "halves sum to epsilon/log(X). This is an unconditional vanishing "
+                        + "upper coefficient, with no rate asserted for the threshold; it proves "
+                        + "neither a signed nonpositive bound, Robin's inequality, nor RH."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("actual-integer-coefficient-two-envelope"),
                 DeclarationHandle.Create(Prefix + "eventual_actual_integer_envelope"),
                 H("An unconditional coefficient-two bound for every sufficiently large integer"),

@@ -192,6 +192,67 @@ def epsilonAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+abbrev smallErrorArena : Arena where
+  signature := signature
+  Law R := ∀ epsilon : ℝ, 0 < epsilon →
+    ∃ A : ℝ, 286 ≤ A ∧ ∀ n : ℕ, 0 < n → A ≤ Real.log (n : ℝ) →
+      R.readout () () n - Real.eulerMascheroniConstant ≤
+        epsilon / Real.log (Real.log (n : ℝ))
+
+private theorem small_error_rejected_law : ¬ smallErrorArena.Law rejected := by
+  intro h
+  exact rejected_law (h 2 (by norm_num))
+
+def smallErrorFamily : Registration smallErrorArena
+    (type_of% @eventual_actual_integer_envelope_small_error) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨eventual_actual_integer_envelope_small_error, rejected,
+    small_error_rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, small_error_rejected_law⟩
+      intro j h
+      exact (h (Subsingleton.elim j i)).elim
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+def smallErrorAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@eventual_actual_integer_envelope_small_error) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.ActualIntegerLogEnvelope.eventual_actual_integer_envelope_small_error.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.ActualIntegerLogEnvelope.smallErrorFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨smallErrorArena⟩
+  objectArena := .source ⟨smallErrorArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source smallErrorArena ⟨smallErrorFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.ActualIntegerLogEnvelope
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "arg", "body", "arg", "body", "body", "body", "fn", "arg", "fn", "arg"]
+      stateBinder := 3
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms smallErrorAudit
+
 #print axioms epsilonAudit
 
 #print axioms envelopeFamily
