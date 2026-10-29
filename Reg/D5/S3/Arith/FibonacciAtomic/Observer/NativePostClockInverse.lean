@@ -32,11 +32,20 @@ theorem example_invertible (t : Source) : (clock 1 2 t).det ≠ 0 := by
     by_cases hi : i = j <;> by_cases hn : j.val ∈ neighbors t i.val <;>
       norm_num [M, clock, hi, hn]
   have htwo : M.map (fun n => (n : ZMod 2)) = 1 := by
-    have htwo0 : (2 : ZMod 2) = 0 := ZMod.natCast_self 2
     ext i j
     change ((M i j : ℤ) : ZMod 2) = _
-    simp only [M, Int.cast_add, apply_ite, Int.cast_one, Int.cast_zero,
-      Int.cast_ofNat, htwo0, ite_self, add_zero, Matrix.one_apply]
+    by_cases hi : i = j
+    · subst j
+      by_cases hn : i.val ∈ neighbors t i.val
+      · simp only [M, Matrix.one_apply, ite_eq_left (Eq.refl i), ite_eq_left hn] <;>
+          decide +kernel
+      · simp only [M, Matrix.one_apply, ite_eq_left (Eq.refl i), ite_eq_right hn] <;>
+          decide +kernel
+    · by_cases hn : j.val ∈ neighbors t i.val
+      · simp only [M, Matrix.one_apply, ite_eq_right hi, ite_eq_left hn] <;>
+          decide +kernel
+      · simp only [M, Matrix.one_apply, ite_eq_right hi, ite_eq_right hn] <;>
+          decide +kernel
   intro h
   have hz : (M.det : ℚ) = 0 := by rw [Int.cast_det, hrat, h]
   have hz' : M.det = 0 := by exact_mod_cast hz
