@@ -10,9 +10,10 @@ import D5.S3.Combinatorics.Graph.Domination.TotalDominationSeeds
 
 /-!
 Independent fibres retain the open-neighbourhood total condition.
-The H-join substitution formula is a known ingredient of the direct density route
-(Subramanian--Selvakumar, Filomat 2025); no new identity credit is claimed.
-This source is an unfinished ingredient of the original issue 23313 consumer.
+The independent-fibre substitution formula is derived below from actual subsets.
+No exact external H-join theorem is attested as a source for this formula, and no
+claim of original discovery is made. The identity supplies the root pullback used
+in the complex density argument.
 -/
 
 set_option autoImplicit false
@@ -231,10 +232,8 @@ theorem labelled_root_blowup (n : ℕ) (G : SimpleGraph (Fin n))
     rw [harg]
     exact hη
 
-#print axioms labelled_root_blowup
 
 
 
-#print axioms blowup_polynomial
 
 end D5.S3.Combinatorics.Graph.Domination.TotalDominationBlowup

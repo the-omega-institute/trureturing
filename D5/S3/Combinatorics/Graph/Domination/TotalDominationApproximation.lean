@@ -99,6 +99,5 @@ theorem joint_power_root_approximation (ξ : ℂ) (hξ : ξ.re ≠ 0)
   refine ⟨k, Complex.exp v, hk, hv, ?_⟩
   simpa [dist_eq_norm] using hcont (by simpa [dist_eq_norm] using hvδ)
 
-#print axioms joint_power_root_approximation
 
 end D5.S3.Combinatorics.Graph.Domination.TotalDominationApproximation

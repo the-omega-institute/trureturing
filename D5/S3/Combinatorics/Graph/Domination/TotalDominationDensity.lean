@@ -122,9 +122,6 @@ theorem result : WholePlaneDensity := by
       ring
     rwa [he] at hclose
 
-#print axioms roots_approximate_exp
-#print axioms result
 
-#print axioms roots_approximate_exp_nonunit
 
 end D5.S3.Combinatorics.Graph.Domination.TotalDominationDensity

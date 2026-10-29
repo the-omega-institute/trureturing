@@ -5,7 +5,7 @@ year: 2016
 title: On the roots of total domination polynomial of graphs
 doi: 10.48550/arXiv.1605.02222
 url: https://arxiv.org/html/1605.02222v1
-claim: "The introduction defines actual total dominating subsets and their counting polynomial; Theorem 2.1(ii) gives the friendship expression for n>=2."
+claim: "The introduction defines actual total dominating subsets and their counting polynomial; Theorem 2.1(ii) gives the friendship expression for n>=2, and Theorem 3.6 gives a negative friendship root in (-n,-ln n) for sufficiently large n."
 strata_touched:
   - D5/S3/Combinatorics/Graph/Domination/TotalDominationSeeds
 license: citation-only
@@ -21,6 +21,8 @@ Theorem 2.1(ii) states, for n ≥ 2,
 $$D_t(F_n,x)=x(x+1)^{2n}+x^{2n}-x.$$
 
 The source defines F_n as n triangles sharing a common vertex. The local friendshipGraph m consists of m+1 such triangles, so n=m+1 and the theorem applies for m≥1. The local m=0 graph is a triangle; its polynomial 3X²+X³ is proved directly by subset enumeration. That base is not an extension literally stated in Theorem 2.1. Local proofs and use of this expression assert no original discovery of the friendship identity.
+
+Theorem 3.6 states that, for all sufficiently large natural n, the total domination polynomial of F_n has a real root in the interval (-n,-ln n). Thus these negative friendship roots are unbounded below: for any fixed R, sufficiently large n have ln n>R and a root r<-ln n<-R. The correspondence friendshipGraph(m)=F_(m+1) identifies the same graph family. The local friendship_root_unbounded proves this known qualitative conclusion by a direct endpoint argument, with explicit nonzero-polynomial and no-isolated-vertex clauses. Its labelled_unbounded_negative_roots transport reindexes the same graphs by Fin n and maps real coefficients to complex coefficients. Neither is a separate new root-unboundedness result, and neither claims to formalize the sharper published interval theorem.
 
 ## Verified locator
 

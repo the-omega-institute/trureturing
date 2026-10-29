@@ -13,10 +13,11 @@ import Mathlib.Tactic
 /-!
 Total domination always uses an open neighbourhood, including at selected vertices.
 The seed family is the cone over the disjoint union of m copies of C5 and K3.
-Cycle, clique, disjoint-union and cone polynomial identities are known ingredients
-(arXiv:1605.02222 and the H-join framework of Subramanian--Selvakumar, Filomat 2025).
+The actual-subset polynomial identities are derived locally. The friendship
+expression and qualitative unboundedness of negative friendship roots are attested
+in Alikhani--Jafari, arXiv:1605.02222v1, Theorems 2.1(ii) and 3.6.
 The quantitative right-hand seed argument is an ingredient of the direct route to
-Shao--Zhao arXiv:2609.06569v5, section 5.2, Open Problem 2, registered as issue 23313.
+Shao--Zhao arXiv:2609.06569v5, section 5.2, Open Problem 2.
 This module does not assert whole-plane density.
 -/
 
@@ -655,16 +656,10 @@ theorem labelled_unbounded_negative_roots (R : ℝ) (hR : 2 < R) :
   · rw [complex_polynomial_map, hp]
     exact hz.map
 
-#print axioms labelled_unbounded_negative_roots
 
-#print axioms friendship_root_unbounded
 
-#print axioms complex_seed_accumulation
 
-#print axioms arbitrarily_small_positive_shift
 
-#print axioms actual_seed_root_right
 
-#print axioms seed_root_right
 
 end D5.S3.Combinatorics.Graph.Domination.TotalDominationSeeds
