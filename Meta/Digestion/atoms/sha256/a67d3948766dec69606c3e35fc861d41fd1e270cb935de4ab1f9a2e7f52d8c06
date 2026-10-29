@@ -1,0 +1,31 @@
+## 4. The finite four-hub capacity phase
+
+For integers $n,\ell$ in the range
+
+$$
+ n\ge3{,}000{,}000,
+\qquad 2n-7\le\ell\le3n-15,
+$$
+
+put
+
+$$
+N=n-4,
+\qquad c=\ell-2n+11,
+\qquad b=3n-\ell-15.
+$$
+
+Then
+
+$$
+4\le c\le N,\qquad b\ge0,\qquad b+c=N,\qquad 3b+4c=n-1+\ell.
+$$
+
+Let $b=4q+r$ with $0\le r\le3$. For a nonnegative integer parameter $c$, define, for real $D>0$,
+
+$$
+M_c(D)=(D-c)g(3/D)+c\,g(4/D),
+$$
+
+and let $H^{(4)}_{n,\ell}$ be the two-layer graph with four hubs, $c$ sources adjacent to all four hubs, and $b$ sources adjacent to all but one hub, with the four missing-hub counts equal to $q+1$ for $r$ hubs and $q$ for the other $4-r$ hubs. Its hub degrees are $N-q-1$ on the first group and $N-q$ on the second group.
+

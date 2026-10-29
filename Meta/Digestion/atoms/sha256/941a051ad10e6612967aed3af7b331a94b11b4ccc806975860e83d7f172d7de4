@@ -1,0 +1,80 @@
+## 1. Graphs and joint profiles
+
+All graphs below are finite, simple and connected. For integers $n\ge2$ and $\ell\ge0$, let $\mathcal G(n,\ell)$ be the graphs with $n$ vertices and
+
+$$
+m=n-1+\ell
+$$
+
+edges. For an edge $uv$ write
+
+$$
+r_{uv}=\frac{\min(d_u,d_v)}{\max(d_u,d_v)},\qquad
+g(r)=\sqrt{1+r^2}-1,
+$$
+
+and set
+
+$$
+E(G)=\sum_{uv\in E(G)}g(r_{uv}),\qquad
+\Phi(G)=m+E(G),
+$$
+
+so minimizing the CDSO index $\Phi$ at fixed $(n,\ell)$ is the same as minimizing $E$. These are the conventions of *CDSO sink incidences and density limits*, §§1--3.
+
+A two-layer graph has independent hubs $[s]=\{1,\ldots,s\}$ and sources outside $[s]$, with every edge joining a source to a hub. For a source $v$, write $T(v)\subseteq[s]$ for its nonempty hub neighborhood. If $N_T$ is the number of sources with $T(v)=T$, put
+
+$$
+N_s=n-s,\qquad x_T=\frac{N_T}{N_s},\qquad
+y_i=\sum_{T\ni i}x_T.
+$$
+
+The same source distribution determines every quantity below. Its mean source degree and excess are
+
+$$
+q=\sum_{\varnothing\ne T\subseteq[s]}|T|x_T=\sum_{i=1}^s y_i,
+\qquad a=q-1=\sum_T(|T|-1)x_T.
+$$
+
+The normalized joint profile domain is
+
+$$
+\mathcal P_s(a)=\left\{(x_T):
+\begin{array}{l}
+x_T\ge0,\quad \sum_Tx_T=1,\quad \sum_T(|T|-1)x_T=a,\\
+ y_i=\sum_{T\ni i}x_T>0\quad(1\le i\le s)
+\end{array}\right\}.
+$$
+
+For $x\in\mathcal P_s(a)$ define the profile energy
+
+$$
+J_s(x)=\frac12\sum_Tx_T|T|^2\sum_{i\in T}\frac1{y_i^2}.
+$$
+
+The positivity condition on every $y_i$ is the finite-energy hub condition. Types of zero mass remain in the domain.
+
+For an actual two-layer graph, the same edge count gives
+
+$$
+\sum_TN_T=N_s,\qquad
+\sum_T(|T|-1)N_T=\ell+s-1,
+\qquad D_i=\sum_{T\ni i}N_T,
+$$
+
+and therefore
+
+$$
+a=\frac{\ell+s-1}{N_s},\qquad q=\frac{m}{N_s}.
+$$
+
+The elementary remainder identity
+
+$$
+0\le \frac{r^2}{2}-g(r)
+=\frac{r^4}{2(\sqrt{1+r^2}+1)^2}
+\le \frac{r^4}{8}
+$$
+
+will always be applied to the actual source--hub edges.
+
