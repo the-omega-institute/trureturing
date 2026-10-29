@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Analysis.Matrix.Order]
    utility: none
-   digest: Actual arbitrary-dimensional cubic HSF compatibility at identity with sharp constant five. -/
+   digest: Actual arbitrary-dimensional cubic HSF compatibility at identity with constant five. -/
 
 /-
 admission_basis: escape-witness
@@ -218,18 +218,5 @@ theorem identity_cubic_compatibility (U H K : Matrix n n ℂ) (hK : K.IsHermitia
   rw [hr2,hr3,he2,he3,mul_neg,← hf2,← hf3] at hl
   have hab := abs_le.mpr ⟨by linarith, hu⟩
   exact ⟨by nlinarith [abs_nonneg (iteratedDeriv 3 (curve U H K) 0)], hab⟩
-
-/-- The scalar feasible direction H=U=I, K=-I attains the constant five. -/
-theorem sharp5 :
-    iteratedDeriv 2 (curve (1 : Matrix (Fin 1) (Fin 1) ℂ) 1 (-1)) 0 = 24 ∧
-    iteratedDeriv 3 (curve (1 : Matrix (Fin 1) (Fin 1) ℂ) 1 (-1)) 0 = 120 := by
-  have hk : (-1 : Matrix (Fin 1) (Fin 1) ℂ).IsHermitian := Matrix.isHermitian_one.neg
-  obtain ⟨h2,h3⟩ := identity_cubic_trace_derivatives
-    (1 : Matrix (Fin 1) (Fin 1) ℂ) 1 (-1) hk
-  change iteratedDeriv 2 (curve (1 : Matrix (Fin 1) (Fin 1) ℂ) 1 (-1)) 0 = _ at h2
-  change iteratedDeriv 3 (curve (1 : Matrix (Fin 1) (Fin 1) ℂ) 1 (-1)) 0 = _ at h3
-  rw [h2,h3]
-  norm_num [coefficient2, coefficient3, traceCoefficient2, traceCoefficient3,
-    Matrix.trace, Fin.sum_univ_succ]
 
 end D5.S3.Quantum.Matrix.HsfIdentityCubicCompatibility
