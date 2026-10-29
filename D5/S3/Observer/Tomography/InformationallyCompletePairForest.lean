@@ -122,7 +122,8 @@ private lemma cycle_not_ic {X : Type*} [Fintype X] [DecidableEq X] {f g : X → 
 
 private lemma ic_injective {X : Type*} [Fintype X] [DecidableEq X] {f g : X → ℝ}
     (hic : IsICPair f g) : Function.Injective (fun x => (f x, g x)) := by
-  sorry
+  by_contra h
+  exact not_injective_not_ic h hic
 
 private lemma ic_acyclic {X : Type*} [Fintype X] [DecidableEq X] {f g : X → ℝ}
     (hic : IsICPair f g) (hinj : Function.Injective (fun x => (f x, g x))) :
