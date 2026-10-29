@@ -73,20 +73,23 @@ def blockState (P Q : DensityState n) (K : Matrix n n ℂ)
     block_trace P.2.2 Q.2.2⟩
 
 /-- Reading either bit leaves the same two unnormalized quantum row sums, P/2 and Q/2.
-The last identity reads both bits and gives the exact quantum mixture (P+Q)/2. -/
+Tracing both bits gives the exact quantum mixture (P+Q)/2. Tracing the quantum index gives the diagonal AB state with the actual block traces. -/
 theorem block_partial_traces (P Q K : Matrix n n ℂ) :
     partialTraceLeft (blockMatrix P Q K) =
       (1 / 2 : ℝ) • (pointer 0 ⊗ₖ P + pointer 1 ⊗ₖ Q) ∧
     (fun a c => ∑ b : Fin 2, blockMatrix P Q K (a.1, (b, a.2)) (c.1, (b, c.2))) =
       (1 / 2 : ℝ) • (pointer 0 ⊗ₖ P + pointer 1 ⊗ₖ Q) ∧
-    partialTraceLeft (partialTraceLeft (blockMatrix P Q K)) = (1 / 2 : ℝ) • (P + Q) := by
+    partialTraceLeft (partialTraceLeft (blockMatrix P Q K)) = (1 / 2 : ℝ) • (P + Q) ∧
+    (fun a c : Fin 2 × Fin 2 => ∑ i : n,
+      blockMatrix P Q K (a.1, (a.2, i)) (c.1, (c.2, i))) =
+      Matrix.diagonal (fun a => (gamma P Q K a.1 a.2).trace) := by
   have hleft : partialTraceLeft (blockMatrix P Q K) =
       (1 / 2 : ℝ) • (pointer 0 ⊗ₖ P + pointer 1 ⊗ₖ Q) := by
     ext ⟨b,i⟩ ⟨c,j⟩
     fin_cases b <;> fin_cases c <;>
       simp [partialTraceLeft, blockMatrix, pointer, gamma, Fin.sum_univ_two,
         Matrix.kronecker_apply, Matrix.diagonal_apply, Matrix.smul_apply] <;> ring
-  refine ⟨hleft, ?_, ?_⟩
+  refine ⟨hleft, ?_, ?_, ?_⟩
   · ext ⟨a,i⟩ ⟨c,j⟩
     fin_cases a <;> fin_cases c <;>
       simp [blockMatrix, pointer, gamma, Fin.sum_univ_two,
@@ -96,6 +99,11 @@ theorem block_partial_traces (P Q K : Matrix n n ℂ) :
     simp [partialTraceLeft, pointer, Fin.sum_univ_two, Matrix.kronecker_apply,
       Matrix.diagonal_apply, Matrix.smul_apply]
     <;> ring
+
+  · ext ⟨a,b⟩ ⟨c,d⟩
+    fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
+      simp [blockMatrix, pointer, gamma, Fin.sum_univ_two, Matrix.kronecker_apply,
+        Matrix.diagonal_apply, Matrix.smul_apply, Matrix.trace]
 
 /-- The complete four-parameter physical family, with the prescribed two product margins.
 Feasibility is imposed on the actual complex CD matrix. Nonnegative coordinate restrictions

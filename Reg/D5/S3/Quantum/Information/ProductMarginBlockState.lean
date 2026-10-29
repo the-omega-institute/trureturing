@@ -36,7 +36,10 @@ abbrev arena.{u} : Arena where
       ((1 / 2 : ℝ) • (pointer 0 ⊗ₖ P + pointer 1 ⊗ₖ Q)) ∧
     (fun a c => ∑ b : Fin 2, blockMatrix P Q K (a.1, (b, a.2)) (c.1, (b, c.2))) =
       (1 / 2 : ℝ) • (pointer 0 ⊗ₖ P + pointer 1 ⊗ₖ Q) ∧
-    partialTraceLeft (partialTraceLeft (blockMatrix P Q K)) = (1 / 2 : ℝ) • (P + Q)
+    partialTraceLeft (partialTraceLeft (blockMatrix P Q K)) = (1 / 2 : ℝ) • (P + Q) ∧
+    (fun a c : Fin 2 × Fin 2 => ∑ i : n,
+      blockMatrix P Q K (a.1, (a.2, i)) (c.1, (c.2, i))) =
+      Matrix.diagonal (fun a => (gamma P Q K a.1 a.2).trace)
 private theorem bad_law.{u} : ¬ arena.{u}.Law bad := by
   intro h
   exact (@h (ULift.{u} Unit) inferInstance inferInstance 0 0 0).1
