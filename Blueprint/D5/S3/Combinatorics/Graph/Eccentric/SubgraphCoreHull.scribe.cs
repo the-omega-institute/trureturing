@@ -26,5 +26,5 @@ internal sealed class SubgraphCoreHullDocument : IScribeDocumentDefinition
                     + "and a simple path between them is itself included in the union. "
                     + "Concatenating these paths proves the required reachability. "
                     + "For a singleton S, the union is a singleton; deleting its sole vertex "
-                    + "leaves no pair to disconnect."))), DescribeRole.Theorem))), []));
+                    + "leaves no pair to disconnect."))), DescribeRole.Theorem)), []));
 }
