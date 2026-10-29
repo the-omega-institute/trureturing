@@ -193,7 +193,7 @@ LOCK_AGE_SECONDS = 24 * 60 * 60
 
 
 def qualify(source, path, stack=None, snapshot=None, deadline=None):
-    """Validate identity, nested repositories and Git lock age without activity checks."""
+    """Validate identity and Git lock age, without inspecting users or contents."""
     if Path(path).is_symlink():
         raise Refused("linked_tree")
     path = Path(path).resolve()
@@ -206,7 +206,6 @@ def qualify(source, path, stack=None, snapshot=None, deadline=None):
         raise Refused("main_worktree")
     if any(path in Path(row["worktree"]).resolve().parents for row in rows):
         raise Refused("nested_worktree")
-    reject_nested_git(path)
     if "locked" in item:
         if item["locked"].startswith("worktree-init:"):
             try:
@@ -351,6 +350,7 @@ def remove(options):
     qualified = {}
     for target in targets:
         item = qualify(source, target)
+        reject_nested_git(target)
         expected_rows = [json.loads(raw) for raw in options.expected]
         matches = [row for row in expected_rows if Path(row["path"]).resolve() == target.resolve()]
         if expected_rows and len(matches) != 1:

@@ -419,6 +419,7 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("removal_payload_process_death_retains_registration_and_resumes")]
     [InlineData("native_unregistration_failure_leaves_only_git_link")]
     [InlineData("removal_refuses_nested_repository_before_any_payload")]
+    [InlineData("qualification_keeps_nonremoval_nested_cache_eligibility")]
     [InlineData("removal_refuses_gitlink_before_any_payload")]
     [InlineData("removal_refuses_submodule_before_any_payload")]
     [InlineData("removal_refuses_foreign_worktree_before_any_payload")]

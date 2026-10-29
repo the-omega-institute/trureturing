@@ -39,6 +39,16 @@ class LockRecoveryCases:
         (self.tree / ".gitignore").write_text(".lake/\n")
         self.assert_payload_boundary_retained(boundary)
 
+    def test_qualification_keeps_nonremoval_nested_cache_eligibility(self):
+        import worktree_preservation as preservation
+        boundary = self.tree / ".lake/vendor"
+        boundary.mkdir(parents=True)
+        self.g(boundary, "init")
+        (boundary / "unique").write_text("cached repository bytes\n")
+        item = preservation.qualify(self.main, self.tree)
+        self.assertEqual("refs/heads/" + self.branch, item["branch"])
+        self.assertEqual("cached repository bytes\n", (boundary / "unique").read_text())
+
     def test_removal_refuses_gitlink_before_any_payload(self):
         boundary = self.tree / "module"
         boundary.mkdir()
