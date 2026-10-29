@@ -1,10 +1,10 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.SourceBPZ;
 
 internal sealed class OriginalSourcePairingDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/VertexAlgebra/OriginalSourcePairing.";
+    private const string Prefix = "D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The literal original integer-source complex-bilinear pairing obtained by frequency retuning of the existing signed polynomial Wick supplier.",

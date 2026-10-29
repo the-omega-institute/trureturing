@@ -1,11 +1,10 @@
-/- GID: D5/S3/VertexAlgebra/OriginalSourcePairing
+/- GID: D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/OriginalSourcePairing
+   mirror-B: D5/B/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/algebra/vertex/vertexoperator, mathlib/algebra/mvpolynomial/pderiv]
    utility: none
-   digest: Integer-frequency retuning of the signed polynomial Wick form and its finite-charge lift to the original Carrier.
--/
+   digest: Integer-frequency retuning of the signed polynomial Wick form and its finite-charge lift to the original Carrier. -/
 
 import D5.S3.VertexAlgebra.TwistedGround.SignedOscillatorWick
 import D5.S3.VertexAlgebra.LatticeInvolution
@@ -28,7 +27,7 @@ noncomputable section
 
 open scoped BigOperators
 
-namespace D5.S3.VertexAlgebra.OriginalSourcePairing
+namespace D5.S3.VertexAlgebra.SourceBPZ.OriginalSourcePairing
 
 open LatticeGeneratingFieldLocality LatticeHalfFock
 open LatticeAllStateField
@@ -350,4 +349,4 @@ theorem sourcePairing_nondegenerate (D : LatticeData) (hu : IsUnit D.G.det) :
     rw [sourcePairing_single] at hzero
     exact hp (by simpa using hzero)
 
-end D5.S3.VertexAlgebra.OriginalSourcePairing
+end D5.S3.VertexAlgebra.SourceBPZ.OriginalSourcePairing

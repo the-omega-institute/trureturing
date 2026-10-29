@@ -22,6 +22,6 @@ The construction consumes the existing signed Wick, substitution, annihilation a
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/OriginalSourcePairing`
+- Truth anchor: `D5/S3/VertexAlgebra/SourceBPZ/OriginalSourcePairing`
 - Supplier: `D5/S3/VertexAlgebra/TwistedGround/SignedOscillatorWick`
 - Substitution supplier: `D5/S3/VertexAlgebra/OriginalCurrentMetric`
