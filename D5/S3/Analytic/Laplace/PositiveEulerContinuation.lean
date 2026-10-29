@@ -2,9 +2,9 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/Laplace/PositiveEulerContinuation
    mirror-E: none(waiver:analytic-proof-only)
-   anchors: [mathlib/module/Mathlib.Analysis.Meromorphic.Order, mathlib/module/Mathlib.MeasureTheory.Integral.DominatedConvergence]
+   anchors: [mathlib/module/Mathlib.Analysis.Meromorphic.Order]
    utility: none
-   digest: Meromorphic Euler forcing regular on the real axis forces actual positive Laplace convergence. -/
+   digest: Real-regular meromorphic Euler forcing forces positive Laplace convergence. -/
 
 import D5.S3.Analytic.Laplace.AbscissaSingularity
 import D5.S3.Analytic.Laplace.EulerLocalContinuation
@@ -41,6 +41,7 @@ private theorem analytic_laplace {c : ℝ} (h : Ioi c ⊆ convergenceSet X μ) :
     have hi := h (show -u ∈ Ioi c by change c < -u; change u < -c at hu; linarith)
     simpa only [convergenceSet, mem_ofPred_eq, integrableExpSet, neg_neg] using hi
   intro z hz
+  change c < z.re at hz
   have hi : (-z).re ∈ interior (integrableExpSet X μ) := by
     apply mem_interior_iff_mem_nhds.mpr
     apply Filter.mem_of_superset (isOpen_Iio.mem_nhds (show (-z).re ∈ Iio (-c) by
@@ -67,7 +68,7 @@ private theorem laplace_zero_limit [IsFiniteMeasure μ]
     intro ω
     have hx : Tendsto (fun x : ℝ => (x : ℂ)) (𝓝[Ioi 0] 0) (𝓝 (0 : ℂ)) :=
       Complex.continuous_ofReal.continuousAt.tendsto.mono_left nhdsWithin_le_nhds
-    simpa using (Complex.continuous_exp.tendsto (-(0 : ℂ) * (X ω : ℂ))).comp
+    simpa [Function.comp_def] using (Complex.continuous_exp.tendsto (-(0 : ℂ) * (X ω : ℂ))).comp
       (hx.neg.mul_const (X ω : ℂ))
   exact tendsto_integral_filter_of_dominated_convergence (fun _ : Ω => (1 : ℝ))
     hm hb (integrable_const 1) hl
@@ -86,7 +87,7 @@ theorem integrable_and_analytic_of_euler [IsFiniteMeasure μ]
     (∀ x : ℝ, a < x → Integrable (fun ω => Real.exp (-x * X ω)) μ) ∧
       AnalyticOnNhd ℂ (fun z => complexMGF X μ (-z)) {z | a < z.re} := by
   have hzero : (0 : ℝ) ∈ convergenceSet X μ := by
-    simpa [convergenceSet] using (integrable_const (1 : ℝ) : Integrable (fun _ : Ω => 1) μ)
+    simp [convergenceSet]
   have hconv : ∀ x : ℝ, a < x → x ∈ convergenceSet X μ := by
     intro x hax
     by_contra hx
@@ -112,7 +113,7 @@ theorem integrable_and_analytic_of_euler [IsFiniteMeasure μ]
     let D : ℂ → ℂ := fun z => z * deriv (deriv G) z + 2 * deriv G z - R z
     have hDm : MeromorphicOn D U := by
       have hGm := hGa.meromorphicOn
-      have hR' : MeromorphicOn R U := hRm.mono (fun z hz => lt_trans haσ hz)
+      have hR' : MeromorphicOn R U := fun z hz => hRm z (lt_trans haσ hz)
       exact ((analyticOnNhd_id.meromorphicOn.mul hGm.deriv.deriv).add
         ((analyticOnNhd_const.meromorphicOn).mul hGm.deriv)).sub hR'
     have hD1 : meromorphicOrderAt D (1 : ℂ) = ⊤ := by
@@ -139,7 +140,8 @@ theorem integrable_and_analytic_of_euler [IsFiniteMeasure μ]
         ((continuousAt_id.mul (hGd2.differentiableAt (hU.mem_nhds hz.2)).continuousAt).add
           ((hGd1.differentiableAt (hU.mem_nhds hz.2)).continuousAt.const_mul 2)).sub
             (hRball.differentiableAt (Metric.isOpen_ball.mem_nhds hz.1)).continuousAt
-      have hp := meromorphicOrderAt_eq_top_iff.mp (hDtop z hz.2)
+      have hp : D =ᶠ[𝓝[≠] z] (fun _ => 0) :=
+        meromorphicOrderAt_eq_top_iff.mp (hDtop z hz.2)
       have hDz : D z = 0 := tendsto_nhds_unique
         (hDc.tendsto.mono_left nhdsWithin_le_nhds) (tendsto_const_nhds.congr' hp.symm)
       exact sub_eq_zero.mp hDz
