@@ -25,7 +25,7 @@ open private sum_fullFiber
   from D5.S3.VertexAlgebra.Characters.LatticeTwoCurrentTrace
 
 open private e12 e13 e14 e23 e24 e34 edgeParam
-  PM4.unpaired arcMem sideMem min4 max4 matchingShift contraction
+  arcMem sideMem min4 max4 matchingShift contraction
   rotateFour original_four_rotate edges_ordered le_max4
   from D5.S3.VertexAlgebra.Characters.FourCurrent.TraceRecurrence
 

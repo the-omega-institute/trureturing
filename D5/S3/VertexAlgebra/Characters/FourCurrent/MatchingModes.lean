@@ -24,7 +24,7 @@ open LatticeThetaCharacter LatticeTwoCurrentTrace
 open private sum_fullFiber
   from D5.S3.VertexAlgebra.Characters.LatticeTwoCurrentTrace
 
-open private edgeParam PM4.unpaired arcMem sideMem min4 max4 matchingShift
+open private edgeParam arcMem sideMem min4 max4 matchingShift
   gradeShift chargeWeight gradeTrace contraction pair_trace_signed original_four_finite_sum edges_ordered
   le_max4
   from D5.S3.VertexAlgebra.Characters.FourCurrent.TraceRecurrence

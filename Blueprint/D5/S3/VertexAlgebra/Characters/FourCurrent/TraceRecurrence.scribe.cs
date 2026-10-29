@@ -8,6 +8,10 @@ internal sealed class TraceRecurrenceDocument : IScribeDocumentDefinition
         "Original signed four-current finite recurrence.",
         H("Original signed four-current finite recurrence"),
         Blocks(
+            Describe.Lean(DescribeId.Create("four-current-unpaired-slots"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Characters/FourCurrent/TraceRecurrence.unpaired"),
+                H("Unpaired labeled slots"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For each of the ten labeled partial matchings, PM4.unpaired is the subset of Fin 4 whose slots are neither endpoint of any edge. The original definition is used directly by the matching-mode compatibility, charge weights and channel proof."))), DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("four-current-finite-recurrence"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Characters/FourCurrent/TraceRecurrence.original_four_finite_sum"),
                 H("Original signed four-current finite recurrence"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

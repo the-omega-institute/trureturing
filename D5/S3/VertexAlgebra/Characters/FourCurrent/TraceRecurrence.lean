@@ -60,7 +60,7 @@ private abbrev edgeParam (M : PM4) := {e : Four × Four // e ∈ M.edges}
 private instance : IsEmpty (edgeParam PM4.empty) :=
   ⟨fun e => Finset.notMem_empty e.1 e.2⟩
 
-private def PM4.unpaired (M : PM4) : Finset Four :=
+def PM4.unpaired (M : PM4) : Finset Four :=
   Finset.univ.filter fun j =>
     ∀ e ∈ M.edges, j ≠ e.1 ∧ j ≠ e.2
 
