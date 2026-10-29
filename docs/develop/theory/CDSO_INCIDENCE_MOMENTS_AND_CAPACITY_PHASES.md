@@ -372,6 +372,111 @@ $$
 
 Subtract this constant from $2J_{10}>680$ to obtain (2.9). These bounds do not identify the true minimum at $q=8$, $s=10$, or an attaining array; in particular $680$ is not asserted to be optimal. ∎
 
+**Theorem 2.4 (Ten-hub comparison from a shared-budget certificate).** Let $s\ge11$ be finite, let $x$ be one profile of Definition 1.1, and suppose $9\le q\le10$. With $t=q-9\in[0,1]$, define
+
+$$
+G_q(k,u)=ku^2-292k-100u+151q+1440.
+$$
+
+For every positive integer $k$ and every real $u\ge\max\{k,k^2/q\}$,
+
+$$
+G_q(k,u)\ge0,\qquad
+G_q(k,u)=0\ \Longleftrightarrow\ (q,k,u)=(9,9,9).\tag{2.10}
+$$
+
+For the actual array, with $R_{\mathrm{inc}}$ as in Theorem 2.1, the exact remainder formula is
+
+$$
+\begin{aligned}
+2\bigl(J_s(x)-F_{10}(q)\bigr)
+&=29+100(s-11)+\frac{521t+3438t^2+141t^3}{q^2}\\
+&\quad+R_{\mathrm{inc}}+\mathbb E G_q(K,U_T),
+\end{aligned}\tag{2.11}
+$$
+
+where $\mathbb E G_q(K,U_T)>0$. Consequently
+
+$$
+J_s(x)-F_{10}(q)>\frac{29}{2}+50(s-11),\qquad
+F_{10}(q)=\frac{50(271q-1710)}{q^2}.\tag{2.12}
+$$
+
+**Proof.** First prove (2.10) for every positive integer $k$, without any upper cutoff. For $1\le k\le7$, completing the square gives
+
+$$
+G_q(k,u)=k(u-50/k)^2+c_k+151t,
+$$
+
+where, in order of increasing $k$,
+
+$$
+(c_1,\ldots,c_7)=
+(7,965,3269/3,1006,839,1891/3,2785/7).
+$$
+
+Each constant is strictly positive, so these cases hold strictly for every real $u$.
+
+For $k=8,9$, the derivative $2ku-100$ is strictly positive on $u\ge k$, since $2k^2-100>0$. Thus
+
+$$
+G_q(8,u)\ge G_q(8,8)=175+151t>0,\qquad
+G_q(9,u)\ge G_q(9,9)=151t\ge0.
+$$
+
+Equality in these cases requires exactly $q=9$, $k=9$, $u=9$.
+
+For $k=10$, the permitted range has $u\ge100/q$. The derivative is at least $2000/q-100\ge100>0$, so it suffices to evaluate at $u=100/q$. Expansion gives
+
+$$
+q^2G_q(10,100/q)=199+53t+2597t^2+151t^3>0.\tag{2.13}
+$$
+
+For every integer $k\ge11$, the same monotonicity reduces to $u=k^2/q$, because $2k^3/q-100>0$. Set
+
+$$
+h_k(q)=G_q(k,k^2/q)
+=\frac{k^5}{q^2}-\frac{100k^2}{q}-292k+151q+1440.
+$$
+
+Its derivative is
+
+$$
+h_k'(q)=\frac{-2k^5+100k^2q+151q^3}{q^3}<0\quad(9\le q\le10).
+$$
+
+Indeed its numerator is at most $-2k^5+1000k^2+151000$, whereas
+
+$$
+2k^5-1000k^2=2k^2(k^3-500)
+\ge2\cdot121\cdot831=201102>151000.
+$$
+
+Hence $h_k(q)\ge h_k(10)$. With $v=k-11\ge0$, the exact expansion
+
+$$
+100h_k(10)=v^5+55v^4+1210v^3+12310v^2+22005v+13851>0\tag{2.14}
+$$
+
+finishes the unbounded tail. This proves (2.10), including its equality class and both endpoints of the $q$ interval.
+
+For the actual pairs $(K,U_T)$, (2.2) supplies the permitted domain of (2.10). The incidence identity of Theorem 2.1 and the two means give exactly
+
+$$
+2J_s(x)=141q+100s-1440+R_{\mathrm{inc}}+\mathbb E G_q(K,U_T).\tag{2.15}
+$$
+
+If the last expectation were zero, nonnegativity and the unique zero in (2.10) would force $q=9$ and $K=U_T=9$ almost surely. Then $\mathbb E U_T=9$, contradicting $\mathbb E U_T=s\ge11$. Thus that expectation is strictly positive; no strictness assumption on $R_{\mathrm{inc}}$ is needed.
+
+Finally the benchmark subtraction is the polynomial identity
+
+$$
+q^2(141q-340)-100(271q-1710)
+=2349+1043t+3467t^2+141t^3.
+$$
+
+Subtracting $29q^2$ from this identity leaves $521t+3438t^2+141t^3$. Substitute into (2.15) to obtain (2.11). Every additional term there is nonnegative, and the expectation is strictly positive, proving (2.12). Zero type masses, arbitrarily small positive marginals, rare types and disconnected incidence supports are all permitted. The common budget (2.2) and both means are taken from this one array. The coefficient $100$ is part of (2.10), whose domain includes $u\ge k^2/q$; it is not a substitution for $\beta$ in the different certificate (2.1). ∎
+
 ## 3. Fixed hub count, strict equality and stability
 
 **Theorem 3.1 (The fixed-$r$ remainder as a stability estimate).** For every integer $r\ge5$, every profile on $[r]$ with $q\in[r-1,r]$ satisfies $J_r(x)\ge F_r(q)$. Write
@@ -463,7 +568,7 @@ $$
 
 Combining (3.4) with (3.1) gives (3.2). Finally $\Delta=0$ forces $p=0$ and every $y_i=q/r$. The displayed identities then give exactly $x^*(q)$. Conversely that candidate attains $F_r(q)$ by Definition 1.2. The proof did not require either $\theta$ or $1-\theta$ to be positive. ∎
 
-**Theorem 3.2 (Unrestricted profiles for $r=5,6,7,8,9$).** Let $r\in\{5,6,7,8,9\}$, $q\in[r-1,r]$, and let $x$ be any profile on any finite $[s]$ with $s\ge r$. Then
+**Theorem 3.2 (Unrestricted profiles for $r=5,6,7,8,9,10$).** Let $r\in\{5,6,7,8,9,10\}$, $q\in[r-1,r]$, and let $x$ be any profile on any finite $[s]$ with $s\ge r$. Then
 
 $$
 J_s(x)\ge F_r(q),
@@ -473,10 +578,10 @@ with equality exactly when $s=r$ and $x=x^*(q)$, up to relabeling. For $s\ge r+1
 
 $$
 J_s(x)-F_r(q)\ge\frac12+\frac{\beta_r}{2}(s-r-1),\qquad
-(\beta_5,\beta_6,\beta_7,\beta_8,\beta_9)=(23,32,42,53,\kappa_9).\tag{3.5}
+(\beta_5,\beta_6,\beta_7,\beta_8,\beta_9,\beta_{10})=(23,32,42,53,\kappa_9,\kappa_{10}).\tag{3.5}
 $$
 
-For these same five values of $r$, every profile with $s\ge r+1$ and $q\ge r$ satisfies
+For these same six values of $r$, every profile with $s\ge r+1$ and $q\ge r$ satisfies
 
 $$
 2J_s(x)\ge r^3+\beta_r(s-r)+(D-\beta_r)(q-r)
@@ -513,7 +618,14 @@ $$
 \kappa_9=2+8\sqrt{63}<66<84,\qquad 2048/81>1,
 $$
 
-that bound implies (3.5) with $\beta_9=\kappa_9$ for every finite $s\ge10$ and $q\in[8,9]$. It uses no restriction on source cardinalities or positive type masses. For $s=r$, Theorem 3.1 gives the inequality and the complete equality class. Thus no assumption on the cardinalities in the support is needed.
+that bound implies (3.5) with $\beta_9=\kappa_9$ for every finite $s\ge10$ and $q\in[8,9]$. For $r=10$, Theorem 2.4 gives
+
+$$
+2\bigl(J_s(x)-F_{10}(q)\bigr)>29+100(s-11)
+\quad(s\ge11,\ 9\le q\le10).
+$$
+
+Since $\kappa_{10}=2+24\sqrt{10}<78<100$ and $29>1$, this implies (3.5) with $\beta_{10}=\kappa_{10}$. Neither application restricts source cardinalities, requires positive mass for every type, or discards any hub with positive marginal. For $s=r$, Theorem 3.1 gives the inequality and the complete equality class. Thus no assumption on the cardinalities in the support is needed.
 
 For (3.6), use Theorem 2.1 outside the candidate interval as allowed there. Since $f_r(r)=r^3$,
 
@@ -766,7 +878,7 @@ Here $N\ge n/2$. All the cost estimates hold for $n\ge2r$; the stronger $n\ge3r$
 
 **Theorem 6.1 (Uniform sufficient threshold and unique finite minimum).** Fix $r\ge5$. Let the admissible class $\mathcal A_r(n,\ell)$ be either of the following:
 
-1. for $r\in\{5,6,7,8,9\}$, all of $\mathcal G(n,\ell)$;
+1. for $r\in\{5,6,7,8,9,10\}$, all of $\mathcal G(n,\ell)$;
 2. for any $r\ge5$, the members of $\mathcal G(n,\ell)$ whose minimum degree is at least $r-2$.
 
 Define
@@ -804,7 +916,7 @@ E_r^{\min}(n,\ell):=\min_{G\in\mathcal A_r(n,\ell)}E(G)
 =\sum_{i=1}^rM_c(N-b_i),\tag{6.2}
 $$
 
-with $N,c,b_i$ as in Definition 5.1; the minimum of $\Phi$ is $m$ plus (6.2). The threshold is sufficient; it is not asserted to be least. For $r\ge10$, the second class here is a material minimum-degree restriction; for $r=9$ the unrestricted conclusion holds throughout the interval $[L_9(n),U_9(n)]=[7n-62,8n-80]$.
+with $N,c,b_i$ as in Definition 5.1; the minimum of $\Phi$ is $m$ plus (6.2). The threshold is sufficient; it is not asserted to be least. For $r\ge11$, the second class here is a material minimum-degree restriction. The unrestricted conclusion includes the full intervals $[L_9(n),U_9(n)]=[7n-62,8n-80]$ and $[L_{10}(n),U_{10}(n)]=[8n-79,9n-99]$.
 
 **Proof.** The candidate belongs to either stated class, has source degrees $r-1,r$, and its hub degrees exceed $r$ at this threshold. It has $E(H_r)\le C_0/n$ by Theorem 5.2. A graph with larger excess is already strictly worse than the candidate. It suffices to consider actual graphs $G$ with $E(G)\le C_0/n$.
 
@@ -866,7 +978,14 @@ $$
 2J_s(x)\ge729+\kappa_9(s-9)+(217-\kappa_9)(q_s-9)\qquad(q_s\ge9).
 $$
 
-Here $217-\kappa_9>0$, so the gap is at least $\kappa_9/2>1/2$, even when $q_s>9$. If instead $q_s\le9$, the same graph has $8<q_s\le9$, and (2.8) gives $J_s-F_9(q_s)>1024/81+42(s-10)>1/2$. These two cases cover the actual budget $q_s=m/(n-s)$ without substituting $q_r$ for it. Thus $\widehat\gamma=1/2$ is a common gap in both cases, with $C_0,A,K_0,R,B,H$ as defined in the statement. This is the upper-capacity bridge: a graph with more hubs and $q_s>r$ is still separated by a fixed positive amount. Both cases therefore imply, using $F_r(q_r)>0$, $N_s\le n-r$ and (6.3)–(6.4),
+Here $217-\kappa_9>0$, so the gap is at least $\kappa_9/2>1/2$, even when $q_s>9$. If instead $q_s\le9$, the same graph has $8<q_s\le9$, and (2.8) gives $J_s-F_9(q_s)>1024/81+42(s-10)>1/2$. For $r=10$, (3.6) likewise gives the unrestricted estimate
+
+$$
+2J_s(x)\ge1000+\kappa_{10}(s-10)+(271-\kappa_{10})(q_s-10)
+\qquad(s\ge11,\ q_s\ge10).
+$$
+
+Here $271-\kappa_{10}>0$, so the gap above $1000/2$ is at least $\kappa_{10}/2>1/2$. In the other case the same actual graph has $9<q_s\le10$, and (2.12) gives $J_s(x)-F_{10}(q_s)>29/2+50(s-11)>1/2$. Thus the interval certificate is used only in its domain; the unrestricted certificate supplies every value $q_s>10$. For both $r=9$ and $r=10$, these two cases cover the actual budget $q_s=m/(n-s)$ without substituting $q_r$ for it. Thus $\widehat\gamma=1/2$ is a common gap in both cases, with $C_0,A,K_0,R,B,H$ as defined in the statement. This is the upper-capacity bridge: a graph with more hubs and $q_s>r$ is still separated by a fixed positive amount. Both cases therefore imply, using $F_r(q_r)>0$, $N_s\le n-r$ and (6.3)–(6.4),
 
 $$
 E(G)-E(H_r)\ge\frac{\widehat\gamma}{n}-\frac H{n^3}>0.\tag{6.5}
@@ -1014,7 +1133,7 @@ $$
 \|x^{(n)}-x^*(q_r)\|_1\longrightarrow0.\tag{7.3}
 $$
 
-In the unrestricted class this includes $r=9$ and every $\alpha\in[7,8]$; for general $r\ge5$ the second class retains its minimum-degree hypothesis. Labels of the $r$ sinks may be chosen separately at each order; the limiting candidate is permutation invariant. In particular every hub degree divided by $n$ tends to $(1+\alpha)/r$. These conclusions allow $o(n)$ low-cardinality sources and unbounded sublinear hub imbalances. They do not assert finite disappearance of exceptional sources or a bounded difference of hub degrees.
+In the unrestricted class this includes $r=9$ with every $\alpha\in[7,8]$, and $r=10$ with every $\alpha\in[8,9]$; for general $r\ge5$ the second class retains its minimum-degree hypothesis. Labels of the $r$ sinks may be chosen separately at each order; the limiting candidate is permutation invariant. In particular every hub degree divided by $n$ tends to $(1+\alpha)/r$. These conclusions allow $o(n)$ low-cardinality sources and unbounded sublinear hub imbalances. They do not assert finite disappearance of exceptional sources or a bounded difference of hub degrees.
 
 **Proof.** Theorem 6.1 gives the exact minimum at every sufficiently large order. For its balanced graph, $q_r\to1+\alpha$, $y_i=q_r/r+O(1/N)$, and the actual-edge error (6.3) together with (5.2) gives
 
@@ -1163,16 +1282,227 @@ $$
 
 Every one of these eight marginals would equal one. Every positive-mass type would then contain all these eight elements, forcing $K\ge8$ almost surely. This contradicts the positive mass at $K=1$. The positive mass at $(K,U)=(9,9)$ also violates (2.2), since $q=8$ requires $U\ge81/8>9$ on every nine-element type of any actual array. Thus both laws exhibit the insufficiency of the relaxed moment constraints. They provide no genuine-array counterexample, and the exact relaxed optimum (8.3) coexists with the strictly larger actual-array bound of Theorem 2.3. ∎
 
-**Definition 8.3 (Remaining comparison and its method boundary).** For $r\ge10$ outside the unconditional region of Theorem 8.1, and without the support hypothesis of Theorem 4.1, the remaining comparison asks whether every genuine profile of mean $q\in[r-1,r]$ and finite $s\ge r$ satisfies
+**Definition 8.3 (Remaining comparison and its method boundary).** For $r\ge11$ outside the unconditional region of Theorem 8.1, and without the support hypothesis of Theorem 4.1, the remaining comparison asks whether every genuine profile of mean $q\in[r-1,r]$ and finite $s\ge r$ satisfies
 
 $$
 J_s(x)\ge F_r(q).
 $$
 
-Theorem 4.2 specifies a necessary weighted low-cardinality defect for any counterexample, and (8.2) already excludes sufficiently large $s$. This unrestricted comparison for $r\ge10$ remains open in that range; the conditional graph minimum of Theorem 6.1 does not settle it.
+Theorem 4.2 specifies a necessary weighted low-cardinality defect for any counterexample, and (8.2) already excludes sufficiently large $s$. This unrestricted comparison for $r\ge11$ remains open in that range; the conditional graph minimum of Theorem 6.1 does not settle it.
 
-For $r=9$, the full interval $q\in[8,9]$ is covered by Theorem 3.2. At $q=8$, $s=10$, (2.9) supplies the quantitative compensation above the moment-relaxation optimum $516+16\sqrt{63}$, with a strict margin greater than $32$ beyond the $132-16\sqrt{63}$ needed to reach $2F_9(8)=648$. The exact actual-array minimum and all minimizing arrays at that point are not determined here. The overlap constraints (2.2)–(2.3) are necessary, with no claim that they characterize every realizable joint law; the certificate (2.5) is asserted only for $q\in[8,9]$.
+For $r=9$, the full interval $q\in[8,9]$ is covered by Theorem 3.2. At $q=8$, $s=10$, (2.9) supplies the quantitative compensation above the moment-relaxation optimum $516+16\sqrt{63}$, with a strict margin greater than $32$ beyond the $132-16\sqrt{63}$ needed to reach $2F_9(8)=648$. The exact actual-array minimum and all minimizing arrays at that point are not determined here. For $r=10$, Theorem 2.4 settles the comparison for the full interval $q\in[9,10]$ and every finite $s\ge11$; optimality of its numerical gap is not determined here. The overlap constraints (2.2)–(2.3) are necessary, with no claim that they characterize every realizable joint law. The certificate (2.5) is asserted only for $q\in[8,9]$, and (2.10) only for $q\in[9,10]$. Theorem 9.2 shows that even the self-consistent distribution-dependent $m_k$ constraints are insufficient by themselves to prove the all-$r$ comparison. Theorem 10.1 gives a genuine-array restriction on the scale of a possible uniform all-$r$ gap.
 
-The shared-budget certificate and its nine-hub graph consequences are repo-derived for the array and graph classes defined here. The fixed-cost reduction, the actual-edge expansion and the two-hub convexity argument are supplied by the two cited repository volumes with the scope specified above; the original CDSO papers supply the definition and historical comparisons, not these higher-capacity minima. No new literature priority claim is made. The full text of the Zhao–Zhao work has not been obtained here, so its hypotheses, conclusions and possible overlap are not assessed and it is not used as an input theorem.
+The shared-budget certificates, their nine- and ten-hub graph consequences, the rational relaxation obstruction of Theorem 9.2 and the genuine-array gap family of Theorem 10.1 are repo-derived for the classes defined here. The fixed-cost reduction, the actual-edge expansion and the two-hub convexity argument are supplied by the two cited repository volumes with the scope specified above; the original CDSO papers supply the definition and historical comparisons, not these higher-capacity minima. No new literature priority claim is made. The full text of the Zhao–Zhao work has not been obtained here, so its hypotheses, conclusions and possible overlap are not assessed and it is not used as an input theorem.
+
+## 9. A self-consistent overlap relaxation that fails for every $r\ge17$
+
+**Definition 9.1 (Distribution-dependent scalar relaxation).** For a positive integer $s$ and a real $q$, consider finite probability laws on pairs $(K,U)$ such that
+
+$$
+K\in\{1,\ldots,s\},\qquad
+\mathbb E K=q,\qquad \mathbb E U=s,\qquad
+m_k=\mathbb E\min(k,K)\quad(k\in\mathbb Z_{\ge1}),
+$$
+
+$$
+U\ge\max\{K,K^2/m_K\}\quad\text{almost surely}.
+$$
+
+The surrogate objective is $V=\mathbb E(KU^2)$. The same $K$ law is used to compute every $m_k$; these values are not independent variables. By (2.2) and the incidence identity, every actual array supplies a feasible law with $V\le2J_s(x)$. Sufficiency of these scalar constraints for an actual array is not part of this definition.
+
+**Theorem 9.2 (A rational obstruction throughout $r\ge17$).** For every integer $a\ge16$, put $r=a+1$, $q=a$, $s=a+2$, and $M=5a^2-a+1$. The following law is feasible in Definition 9.1:
+
+$$
+\begin{array}{c|ccc}
+K&1&a&a+1\\ \hline
+\mathbb P&1/(5a)&4/5&(a-1)/(5a)\\
+U&(41a^4+13a^2+1)/(aM)&5a^3/M&(a+1)^2/a.
+\end{array}\tag{9.1}
+$$
+
+Its objective satisfies
+
+$$
+V-a(a+1)^2=-\frac{P(a)}{5a^2M^2}<0,\tag{9.2}
+$$
+
+where
+
+$$
+P(a)=110a^8-1697a^7+58a^6-949a^5+56a^4-211a^3+24a^2-18a+2.
+$$
+
+No actual array on $[s]$ with all marginals positive induces this law. In particular minimizing the scalar surrogate under Definition 9.1 cannot alone give the lower bound $2F_r(a)=a(a+1)^2$ for all $r$.
+
+**Proof.** All three probabilities are positive and sum to one. Their means are
+
+$$
+\frac1{5a}+\frac{4a}{5}+\frac{(a+1)(a-1)}{5a}=a,
+$$
+
+$$
+\begin{aligned}
+\mathbb E U
+&=\frac{41a^4+13a^2+1}{5a^2M}
+ +\frac{4a^3}{M}+\frac{(a-1)(a+1)^2}{5a^2}\\
+&=a+2=s.
+\end{aligned}
+$$
+
+The same $K$ law gives, at all cardinalities that carry mass,
+
+$$
+m_1=1,\qquad
+m_a=\frac1{5a}+a\left(\frac45+\frac{a-1}{5a}\right)
+=a-\frac{a-1}{5a}=\frac{M}{5a},\qquad
+m_{a+1}=a.
+$$
+
+Writing $U_k$ for the value of $U$ at cardinality $k$ in (9.1), one has $U_a=a^2/m_a$ and $U_{a+1}=(a+1)^2/m_{a+1}$. Since $m_a\le a$ and $m_{a+1}\le a+1$, these two values also satisfy $U\ge K$. For the singleton atom,
+
+$$
+U_1-1=\frac{41a^4-5a^3+14a^2-a+1}{aM}>0.
+$$
+
+Its numerator is $a^3(41a-5)+a(14a-1)+1>0$ for $a\ge1$, so both constraints hold there as well. Also $1\le K\le a+1<s$. This proves all of the relaxed feasibility conditions simultaneously.
+
+Direct substitution into $V$ gives
+
+$$
+V=\frac{(41a^4+13a^2+1)^2}{5a^3M^2}
++\frac{20a^7}{M^2}+\frac{(a-1)(a+1)^5}{5a^3}.
+$$
+
+Subtracting $a(a+1)^2$ and collecting terms gives (9.2). To prove its strict sign for every $a\ge16$, group the polynomial as
+
+$$
+\begin{aligned}
+P(a)&=a^7(110a-1697)+a^5(58a-949)\\
+&\quad+a^3(56a-211)+(24a^2-18a+2).
+\end{aligned}
+$$
+
+The first two terms together are at least
+
+$$
+63a^7-21a^5=21a^5(3a^2-1)>0,
+$$
+
+and the other two grouped terms are positive. Thus $P(a)>0$ for the entire unbounded range.
+
+For nonrealizability, suppose an actual array with $s=a+2$ and positive marginals induced (9.1). Every positive-mass type of size $a+1$ would then have $U_T=(a+1)^2/a$. Such types have positive total mass. Each omits one of the $s$ hubs, whose marginal is positive; consequently
+
+$$
+b_T=\sum_{i\in T}y_i<\sum_{i=1}^s y_i=q=a.
+$$
+
+The within-type inequality in (2.2) forces
+
+$$
+U_T\ge\frac{(a+1)^2}{b_T}>\frac{(a+1)^2}{a},
+$$
+
+a contradiction. The obstruction is a failure of common-array realization, even though $m_k$ is self-consistent with the one displayed $K$ law. It is a counterexample to the sufficiency of this relaxation for the desired bound, not to the original array or graph comparison.
+
+For example, at $a=16$ the probabilities in (9.1) are $1/80,4/5,3/16$, its $U$ values are $538061/4048,4096/253,289/16$, and its corresponding $m_K$ values are $1,253/16,16$. Formula (9.2) gives
+
+$$
+V=\frac{37817565947}{8193152},\qquad
+2F_{17}(16)=4624,\qquad
+V-2F_{17}(16)=-\frac{67568901}{8193152}.
+$$
+
+These follow by substituting $a=16$ in the proved formulas. ∎
+
+## 10. Genuine rare extra hubs and the scale of a uniform gap
+
+**Theorem 10.1 (A genuine family with gap of order $r^{3/2}$).** For every integer $a\ge4$, put $r=a+1$, $s=a+2$, $H=[a+1]$ and $e=a+2$. For each real $0<\varepsilon\le1/a$, define the one array
+
+$$
+x_{\{e\}}=\varepsilon,\qquad x_H=(a-1)\varepsilon,\qquad
+x_{H\setminus\{j\}}=\frac{1-a\varepsilon}{a+1}\quad(j\in H),
+$$
+
+with every other type mass zero. This is an actual profile of mean $q=a$ with positive marginals. Its support hypergraph, with vertices $[s]$ and hyperedges the positive-mass types, has two connected components. Define
+
+$$
+E_a=2a^3-2a-1,\qquad A_a=2a^3+2a^2-2a-1.
+$$
+
+Its energy and gap are exactly
+
+$$
+2J_s(x)=\frac{(a+1)^2[a^3+\varepsilon E_a]}{(a-\varepsilon)^2}
++\frac1\varepsilon,\tag{10.1}
+$$
+
+$$
+2\bigl(J_s(x)-F_r(a)\bigr)
+=\frac1\varepsilon+
+\frac{(a+1)^2\varepsilon(A_a-a\varepsilon)}{(a-\varepsilon)^2}>0.\tag{10.2}
+$$
+
+For $\varepsilon_a=1/(\sqrt2\,a^{3/2})$ the limit is
+
+$$
+\frac{J_s(x(\varepsilon_a))-F_{a+1}(a)}{a^{3/2}}
+\longrightarrow\sqrt2,
+\qquad
+\frac{J_s(x(\varepsilon_a))-F_{a+1}(a)}{(a+1)^{3/2}}
+\longrightarrow\sqrt2.\tag{10.3}
+$$
+
+Thus no constant $c>0$ can satisfy $J_s(x)-F_r(q)\ge cr^2$ uniformly for all integers $r\ge5$, all finite $s\ge r+1$ and all actual profiles with $q\in[r-1,r]$.
+
+**Proof.** The displayed masses are nonnegative and sum to
+
+$$
+\varepsilon+(a-1)\varepsilon+1-a\varepsilon=1.
+$$
+
+Their cardinality mean is
+
+$$
+\varepsilon+(a+1)(a-1)\varepsilon+a(1-a\varepsilon)=a.
+$$
+
+Counting the types containing each hub gives
+
+$$
+y_i=\frac{a-\varepsilon}{a+1}>0\quad(i\in H),\qquad
+y_e=\varepsilon>0,
+$$
+
+$$
+\begin{aligned}
+w_i&=\frac{a^3(1-a\varepsilon)}{a+1}
+ +(a+1)^2(a-1)\varepsilon
+ =\frac{a^3+\varepsilon E_a}{a+1}\quad(i\in H),\\
+w_e&=\varepsilon.
+\end{aligned}
+$$
+
+In particular the extra marginal is retained. The only positive-mass type containing $e$ is $\{e\}$, while $H$ itself has positive mass. No positive-mass type meets both $H$ and $\{e\}$, so the incidence support has these two components. This remains true at $\varepsilon=1/a$, where all missing-one masses are zero; the core marginals remain positive there.
+
+Summing $w_i/y_i^2$ gives (10.1). Since $2F_r(a)=a(a+1)^2$, subtraction gives (10.2). Its denominator is positive. Moreover $a\varepsilon\le1$ and $A_a>1$ for $a\ge4$, so both summands are strictly positive. Hence these arrays do not improve or tie the candidate.
+
+The choice $\varepsilon_a$ lies in $(0,1/a]$. Dividing (10.2) by $2a^{3/2}$ gives
+
+$$
+\frac{J_s(x(\varepsilon_a))-F_r(a)}{a^{3/2}}
+=\frac1{\sqrt2}
++\frac{(1+1/a)^2\bigl(A_a/a^3-\varepsilon_a/a^2\bigr)}
+ {2\sqrt2(1-\varepsilon_a/a)^2}.
+$$
+
+As $a\to\infty$, the second term tends to $1/\sqrt2$, proving the first limit in (10.3). The second follows from $a/(a+1)\to1$. A wholly rational infinite subfamily is
+
+$$
+a=2b^2,\qquad \varepsilon=\frac1{4b^3},\qquad b\in\mathbb Z,\ b\ge2;
+$$
+
+it has exactly the same limit. Thus the gap divided by $r^2$ tends to zero through actual positive-marginal arrays. For any proposed $c>0$, a sufficiently large member violates the asserted uniform lower bound. ∎
+
+The formulas (10.1)–(10.3) do not assert that these arrays minimize $J_s$, or determine the largest positive gap for any fixed $r$. They restrict the possible scale of a uniform all-$r$ gap. The exact array family has disconnected support; it is not itself a connected finite graph construction at every prescribed budget. Theorem 7.1 can realize a fixed profile asymptotically under its stated budget hypotheses, but does not identify the finite optimum or transfer (10.2) to every integer graph budget.
 
 ## 追加锚（本行以下为增补区）
