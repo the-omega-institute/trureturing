@@ -581,3 +581,278 @@ $$
 逐项使用 $\sqrt k\ge k/\sqrt b$（$0\le k\le b$）给出 $x_{1,b}\ge\sqrt b$。因此 $u=x_{1,b}/(2\sqrt b)\ge1/2$，且由 (2.3) 仍有 $u<1$，所以 $0<\tau\le1$。每个混合联盟有 $i=1$、$1\le j\le b$，于是 $r=\sqrt{b/j}\ge1$；(2.4) 给出非负余量。纯侧由 (2.3) 的正性满足，全体由效率取等，得到所有正整数 $b$ 的星图核归属。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 4. 固定一侧规模的最大阻塞赤字
+
+**定义 4.1（最大赤字与极限轮廓）。** 对整数 $a\ge2$、$b\ge1$，在定义 1.1–1.3 的同一个图 $K_{a,b}$ 及其普通能量博弈上，记
+
+$$
+D_{a,b}=\max_{C\subseteq A\sqcup B}\Delta(C;\phi)
+=\max_{C\subseteq A\sqcup B}
+\left(w_{K_{a,b}}(C)-\sum_{v\in C}\phi_v(w_{K_{a,b}})\right).
+\tag{4.1}
+$$
+
+这里最大化有符号的阻塞赤字；空联盟给出 $D_{a,b}\ge0$。价值函数与阶乘 Shapley 分配采用 Arizmendi–Arizmendi，[*The graph energy game*, arXiv:2012.14114v2](https://arxiv.org/pdf/2012.14114v2)，Definition 3.1、§2.4 的约定。沿用定理 3.1 的 $h_a$、$u_a$ 以及 (3.3) 的 $u_{a,b}$，并置
+
+$$
+v_a=1-u_a,\qquad
+\varepsilon_{a,b}=\sqrt a\,(4b)^{-1/4}.
+$$
+
+由 (3.5)–(3.7)，$1/2<u_a<1$、$0<v_a<1/2$，且
+$|u_{a,b}-u_a|\le\varepsilon_{a,b}$。对 $z\in[0,1]$ 定义
+
+$$
+M_a(z)=
+\begin{cases}
+\displaystyle\frac{z(2u_a-1)^2}{4v_a},&0\le z\le4v_a^2,\\[6pt]
+\sqrt z-u_a z-v_a,&4v_a^2<z\le1.
+\end{cases}
+\tag{4.2}
+$$
+
+另记
+
+$$
+\rho_a=\frac{a}{4u_a^2},\qquad
+I_a=\{\lfloor\rho_a\rfloor,\lceil\rho_a\rceil\}
+\cap\{0,1,\ldots,a\},\qquad
+L_a=\max_{i\in I_a}M_a(i/a).
+\tag{4.3}
+$$
+
+**定理 4.2（最大赤字系数、两计数约化与实现联盟）。** 对每个整数 $a\ge2$，有
+
+$$
+L_a=\max_{0\le i\le a,\ i\in\mathbb Z}M_a(i/a)>0,
+\qquad
+\operatorname*{arg\,max}_{0\le i\le a,\ i\in\mathbb Z}M_a(i/a)
+\subseteq I_a.
+\tag{4.4}
+$$
+
+对每个整数 $b\ge1$，有显式比较
+
+$$
+\left|\frac{D_{a,b}}{2\sqrt{ab}}-L_a\right|
+\le\sqrt a\,(4b)^{-1/4}+b^{-1/2}+b^{-1}.
+\tag{4.5}
+$$
+
+因此固定 $a$、令 $b$ 沿正整数趋于无穷时，
+
+$$
+\frac{D_{a,b}}{\sqrt b}\longrightarrow2\sqrt a\,L_a>0.
+\tag{4.6}
+$$
+
+具体地，对任一使 $M_a(i/a)$ 最大的整数 $i$，置
+
+$$
+s_i=\min\left\{1,\frac{i/a}{4v_a^2}\right\},\qquad
+j_b=\lfloor bs_i\rfloor.
+\tag{4.7}
+$$
+
+任取 $i$ 名 $A$ 侧玩家与 $j_b$ 名 $B$ 侧玩家组成联盟 $C_b$，均有
+
+$$
+\frac{\Delta(C_b;\phi)}{2\sqrt{ab}}\longrightarrow L_a.
+\tag{4.8}
+$$
+
+式 (4.4) 保留 $I_a$ 中两计数并列的可能；若 $\rho_a$ 为整数，$I_a$ 只有一个计数。式 (4.5) 对所有 $a\ge2,b\ge1$ 成立，不要求 $b\ge a$；(4.6)、(4.8) 的极限均固定 $a$。
+
+**证明。** 首先把所有联盟的赤字写在同一个图的两个计数上。设
+
+$$
+z=i/a,\qquad s=j/b,\qquad U=u_{a,b}.
+$$
+
+由 (2.1)–(2.3) 的联盟能量、同侧对称性和效率，
+
+$$
+\begin{aligned}
+\frac{\Delta(C;\phi)}{2\sqrt{ab}}
+&=\frac{2\sqrt{ij}-ix_{a,b}-jy_{a,b}}{2\sqrt{ab}}\\
+&=\sqrt{zs}-Uz-(1-U)s.
+\end{aligned}
+\tag{4.9}
+$$
+
+每个整数计数对 $0\le i\le a$、$0\le j\le b$ 都由实际联盟实现；计数相同的联盟赤字相同。式 (4.9) 同时包含空联盟、纯侧联盟和全体联盟。
+
+对任意 $z,s\in[0,1]$ 记
+
+$$
+F_a(z,s)=\sqrt{zs}-u_a z-v_a s.
+$$
+
+式 (4.9) 与此函数的差恰为 $(U-u_a)(s-z)$。由 (3.5)，统一有
+
+$$
+\left|\sqrt{zs}-Uz-(1-U)s-F_a(z,s)\right|
+\le\varepsilon_{a,b}.
+\tag{4.10}
+$$
+
+现对固定的 $z$ 在 $s\in[0,1]$ 上最大化 $F_a$。用通常的一元二次配方法，令 $q=\sqrt s\in[0,1]$，则
+
+$$
+F_a(z,q^2)
+=-v_a\left(q-\frac{\sqrt z}{2v_a}\right)^2
++\frac{z}{4v_a}-u_a z.
+$$
+
+因 $v_a>0$，唯一最大点为
+$q=\min\{1,\sqrt z/(2v_a)\}$，亦即
+$s=\min\{1,z/(4v_a^2)\}$，包括 $z=0$ 时的 $s=0$。利用
+$1-4u_av_a=(2u_a-1)^2$，得到
+
+$$
+\max_{0\le s\le1}F_a(z,s)=M_a(z).
+\tag{4.11}
+$$
+
+在分支连接点 $z_0=4v_a^2\in(0,1)$，(4.2) 两式都等于
+$v_a(2u_a-1)^2$，左右导数也都等于
+
+$$
+c_a=\frac{(2u_a-1)^2}{4v_a}>0.
+$$
+
+在 $0<z<z_0$，导数为 $c_a$；在 $z_0<z<1$，导数为
+$1/(2\sqrt z)-u_a$。后者只在
+
+$$
+z_*=(4u_a^2)^{-1}
+$$
+
+为零。因为 $4u_av_a=1-(2u_a-1)^2<1$，有
+$z_0<z_*<1$；同时 $z_*>1/4$。所以 $M_a$ 在 $[0,z_*]$ 上严格递增，在 $[z_*,1]$ 上严格递减。其两端为
+$M_a(0)=M_a(1)=0$，从而对每个 $0<z<1$ 都有 $M_a(z)>0$。
+
+现在只在 $z=i/a$ 上取值。因 $az_*=\rho_a\in(0,a)$，若 $i<\lfloor\rho_a\rfloor$，则向右移一个整数计数使 $M_a(i/a)$ 严格增大；若 $i>\lceil\rho_a\rceil$，则向左移一个整数计数使其严格增大。因此所有最大计数均在 $I_a$ 中。若两邻点的值相等，两者都保留；若 $\rho_a$ 为整数，严格单调性排除其它计数。又因 $a\ge2$，$1/a\in(0,1)$，故
+$L_a\ge M_a(1/a)>0$，证得 (4.4)。
+
+最后比较连续最大值与合法的 $B$ 侧网格。对任意 $z,s,t\in[0,1]$，平方根的基本不等式给出
+
+$$
+\begin{aligned}
+|F_a(z,s)-F_a(z,t)|
+&\le\sqrt z\,|\sqrt s-\sqrt t|+v_a|s-t|\\
+&\le\sqrt{|s-t|}+|s-t|.
+\end{aligned}
+\tag{4.12}
+$$
+
+对每个 $i\in\{0,\ldots,a\}$，令 $s_i$ 如 (4.7)，即使 $i$ 不是最大计数也采用同一公式。由 (4.11)，
+$F_a(i/a,s_i)=M_a(i/a)$。置 $t_{i,b}=\lfloor bs_i\rfloor/b$，则
+
+$$
+0\le\lfloor bs_i\rfloor\le b,\qquad
+0\le s_i-t_{i,b}<b^{-1}.
+$$
+
+所以该取整始终给出实际联盟，包括 $s_i=0,1$ 时精确落在端点的情形。由 (4.10)–(4.12)，任一对应联盟 $C_{i,b}$ 满足
+
+$$
+\left|\frac{\Delta(C_{i,b};\phi)}{2\sqrt{ab}}-M_a(i/a)\right|
+\le\varepsilon_{a,b}+b^{-1/2}+b^{-1}.
+\tag{4.13}
+$$
+
+另一方面，对任意合法计数 $(i,j)$，(4.10)、(4.11)、(4.4) 依次给出
+
+$$
+\frac{\Delta(C;\phi)}{2\sqrt{ab}}
+\le F_a(i/a,j/b)+\varepsilon_{a,b}
+\le M_a(i/a)+\varepsilon_{a,b}
+\le L_a+\varepsilon_{a,b}.
+$$
+
+在全部联盟上取最大值即得同一上界。取任一最大计数 $i$，(4.13) 给出下界
+
+$$
+\frac{D_{a,b}}{2\sqrt{ab}}
+\ge L_a-\varepsilon_{a,b}-b^{-1/2}-b^{-1}.
+$$
+
+合并上下界得到 (4.5)。对固定 $a$，右侧误差趋于零，乘以 $2\sqrt a$ 即得 (4.6)。对每个最大计数直接应用 (4.13)，即得任意标签选择的 (4.8)。这里确定的是极限最大赤字系数及实现其极限的联盟，未给出有限 $b$ 的精确最大联盟或核归属分类，也未推出核归属随 $b$ 的单调性。∎
+
+**命题 4.3（$a=2$ 的精确最大系数）。** 当 $a=2$ 时，定义 4.1 的常数满足
+
+$$
+\begin{aligned}
+u_2&=\frac{12-2\sqrt2}{15},&
+v_2&=\frac{3+2\sqrt2}{15},& I_2&=\{1,2\},\\
+L_2&=\frac{627-442\sqrt2}{120},&
+s_1&=\frac{225}{8(17+12\sqrt2)}.
+\end{aligned}
+\tag{4.14}
+$$
+
+在全部 $i\in\{0,1,2\}$ 中，唯一最大计数是 $i=1$。于是
+
+$$
+\frac{D_{2,b}}{\sqrt b}
+\longrightarrow\frac{627\sqrt2-884}{60},
+\tag{4.15}
+$$
+
+且任取一名 $A$ 侧玩家及 $\lfloor bs_1\rfloor$ 名 $B$ 侧玩家得到的联盟实现 (4.8)。
+
+**证明。** 定理 3.1 的有限二项式在此为
+$h_2(t)=1+(\sqrt2-2)t$。直接代入其中的收益积分得到
+
+$$
+u_2=\sqrt2\left(\frac23+\frac25(\sqrt2-2)\right)
+=\frac{12-2\sqrt2}{15},
+$$
+
+相减即得 $v_2$。这里使用的是 (3.3)–(3.7) 的收益极限。由
+$1<\sqrt2$ 可知 $u_2<2/3$，而 $4/9<1/2$ 给出
+$2/3<1/\sqrt2$；结合 $u_2>1/2$，得到
+
+$$
+1<\rho_2=\frac1{2u_2^2}<2.
+$$
+
+所以 $I_2=\{1,2\}$。又有
+
+$$
+4v_2^2=\frac{4(17+12\sqrt2)}{225}>\frac12,
+$$
+
+因为 $8(17+12\sqrt2)>136+96>225$。故 $z=1/2$ 位于 (4.2) 的第一分支，且 $0<s_1<1$。于是
+
+$$
+\begin{aligned}
+M_2(1/2)
+&=\frac{(2u_2-1)^2}{8v_2}
+=\frac{113-72\sqrt2}{120(3+2\sqrt2)}\\
+&=\frac{(113-72\sqrt2)(3-2\sqrt2)}{120}
+=\frac{627-442\sqrt2}{120},\\
+s_1&=\frac1{8v_2^2}
+=\frac{225}{8(17+12\sqrt2)}.
+\end{aligned}
+$$
+
+定理 4.2 给 $M_2(1/2)>0$，而 $M_2(0)=M_2(1)=0$，所以唯一最大计数为 $1$，且 $L_2=M_2(1/2)$。将其乘以 $2\sqrt2$ 得到 (4.15)，实现联盟由 (4.7)–(4.8) 给出。
+
+作为比较，补集联盟 $(A\sqcup B)\setminus\{A_1\}$ 的计数为 $(1,b)$，由 (4.9)、(3.5) 得到其赤字除以 $\sqrt b$ 的系数
+
+$$
+2\sqrt2\,F_2(1/2,1)=\frac{26-18\sqrt2}{15}.
+$$
+
+此补集联盟正是[完全二部图能量及 Shapley 分配](../../../Blueprint/D5/S3/Combinatorics/SpectralGraph/ArizmendiEnergyGameShapleyRefutation.md)中使用的阻塞联盟；它的渐近系数亦见 [aa2012 的相应计算](../../../Problems/aa2012.md#triage)。由于二次配方中的最大点 $\sqrt{s_1}<1$，严格有
+
+$$
+L_2-F_2(1/2,1)=v_2(1-\sqrt{s_1})^2>0.
+$$
+
+因此 (4.15) 给出的最大赤字系数严格大于该补集联盟的系数。两者均涉及定义 1.2 的同一个普通 Shapley 分配。∎
+
+## 追加锚（本行以下为增补区）
