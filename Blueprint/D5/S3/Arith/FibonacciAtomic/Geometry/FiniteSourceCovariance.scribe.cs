@@ -34,7 +34,7 @@ internal sealed class FiniteSourceCovarianceDocument : IScribeDocumentDefinition
     private static Formula Par(Formula x) => Seq(Open, x, Close);
     private static Formula All(string s, Formula t, Formula x) => Seq(Forall, Sp, V(s), Colon, Sp, t, Comma, Sp, Par(x));
     private static Formula Ex(string s, Formula t, Formula x) => Seq(Exists, Sp, V(s), Colon, Sp, t, Comma, Sp, Par(x));
-    private static Formula Imp(Formula x, Formula y) => Seq(Par(x), Sp, Rightarrow, Sp, Par(y));
+    private static Formula Imp(Formula x, Formula y) => Seq(Par(x), Sp, Implies, Sp, Par(y));
     private static Formula And(Formula x, Formula y) => Seq(Par(x), Sp, Land, Sp, Par(y));
     private static Formula Lt(Formula x, Formula y) => Seq(x, Sp, Less, Sp, y);
     private static Formula Sub(Formula x, Formula y) => Seq(Par(x), Sp, Minus, Sp, Par(y));

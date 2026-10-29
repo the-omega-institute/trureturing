@@ -130,8 +130,8 @@ private theorem P_expand (h : ℕ) (z : H) : P h z = ∑ p ∈ block h, z p • 
     (lp.evalCLM ℝ (fun _ : Edge => ℝ) 2 q) (∑ p ∈ block h, z p • e p)
   rw [map_sum]
   change (if q.val.length ≤ h then z q else 0) =
-    ∑ p ∈ block h, z p * (if p = q then 1 else 0)
-  simp [mul_ite, mem_block]
+    ∑ p ∈ block h, z p * (e p) q
+  simp [e, lp.coeFn_single, Pi.single_apply, mul_ite, mem_block, eq_comm]
 
 private theorem P_norm (h : ℕ) : ‖P h‖ ≤ 1 := by
   apply LinearMap.mkContinuous_norm_le
