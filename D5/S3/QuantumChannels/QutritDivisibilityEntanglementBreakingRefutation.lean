@@ -6,7 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/QuantumChannels/QutritDivisibilityEntanglementBreakingRefutation.claim; result=D5/S3/QuantumChannels/QutritDivisibilityEntanglementBreakingRefutation.result; claim=D5/S3/QuantumChannels/QutritDivisibilityEntanglementBreakingRefutation.claim
    digest: A divisible qutrit channel outside P-divisibility is not entanglement breaking. -/
 
-import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
+import D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence
 import D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation
 import D5.S3.Quantum.QuantumChannels.NoisyWernerHolevoLindbladEmbedding
 import D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound
@@ -28,6 +28,9 @@ open D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite (partialTranspose)
 open D5.S3.QuantumChannels.CoPRelativeQuantumnessRefutation (IsCPTP)
 open D5.S3.Quantum.QuantumChannels.NoisyWernerHolevoLindbladEmbedding (wernerHolevo)
 open D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound (depolarized)
+open D5.S3.Quantum.QuantumChannels.IptPptSquaredEquivalence (cp_comp)
+open D5.S3.Quantum.QuantumChannels.TomiyamaDiagonalKPositivity (KPositive)
+open D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace (twoPositive_star_preserving)
 open D5.S3.QuantumBounds.PeritoTsirelson (maxEntangled maxEntangledVector max_entangled_density)
 open D5.S3.Observer.Existence.EmpiricalReflexiveSeparation (complex_sqrt_two_sq)
 
@@ -188,32 +191,9 @@ private lemma d_cptp : IsCPTP (depolarized (LinearMap.id : MatrixMap (Fin 3) (Fi
   · exact MatrixMap.of_kraus_isCompletelyPositive dk
   · exact MatrixMap.IsTracePreserving.of_kraus_isTracePreserving dk dk dk_complete
 
-private lemma of_kraus_comp {κ ι : Type*} [Fintype κ] [Fintype ι]
-    (M : κ → Matrix (Fin 3) (Fin 3) ℂ)
-    (N : ι → Matrix (Fin 3) (Fin 3) ℂ) :
-    (MatrixMap.of_kraus M M).comp (MatrixMap.of_kraus N N) =
-      MatrixMap.of_kraus (fun p : κ × ι => M p.1 * N p.2)
-        (fun p : κ × ι => M p.1 * N p.2) := by
-  ext X i j
-  simp only [MatrixMap.of_kraus, LinearMap.coe_comp, Function.comp_apply,
-    LinearMap.sum_apply, LinearMap.coe_mk, AddHom.coe_mk]
-  simp_rw [Matrix.mul_sum, Finset.sum_mul]
-  simp only [Matrix.conjTranspose_mul, Matrix.mul_assoc]
-  rw [Fintype.sum_prod_type]
-
-private lemma t_kraus : t =
-    MatrixMap.of_kraus (fun p : Fin 10 × Fin 3 => dk p.1 * wk p.2)
-      (fun p : Fin 10 × Fin 3 => dk p.1 * wk p.2) := by
-  change
-    (depolarized (LinearMap.id : MatrixMap (Fin 3) (Fin 3) ℂ) (1 / 2)).comp
-        (wernerHolevo 1) = _
-  rw [depolarized_one_eq_kraus, wernerHolevo_one_eq_kraus]
-  exact of_kraus_comp dk wk
-
 private lemma t_cptp : IsCPTP t := by
   refine ⟨?_, ?_⟩
-  · rw [t_kraus]
-    exact MatrixMap.of_kraus_isCompletelyPositive _
+  · exact cp_comp d_cptp.1 w_cptp.1
   · intro X
     change Matrix.trace
       (depolarized (LinearMap.id : MatrixMap (Fin 3) (Fin 3) ℂ) (1 / 2)
@@ -222,14 +202,14 @@ private lemma t_cptp : IsCPTP t := by
 
 private lemma cptp_hermiticity (T : MatrixMap (Fin 3) (Fin 3) ℂ)
     (hT : IsCPTP T) : ∀ X, T X.conjTranspose = (T X).conjTranspose := by
-  obtain ⟨K, hK⟩ := MatrixMap.IsCompletelyPositive.exists_kraus T hT.1
-  rw [hK]
-  intro X
-  change (∑ c, K c * X.conjTranspose * (K c).conjTranspose) =
-    (∑ c, K c * X * (K c).conjTranspose).conjTranspose
-  simp [Matrix.conjTranspose_sum, Matrix.conjTranspose_mul,
-    Matrix.conjTranspose_conjTranspose]
-  simp only [Matrix.mul_assoc]
+  have hk : KPositive 2 3 T := by
+    intro X hX
+    have hp := (hT.1 2 (hX.submatrix Prod.swap)).submatrix Prod.swap
+    convert hp using 1
+    ext ⟨i, a⟩ ⟨j, b⟩
+    fin_cases i <;> fin_cases j <;>
+      simp [MatrixMap.kron_def, Matrix.single]
+  exact twoPositive_star_preserving T hk
 
 private lemma unitary_purity (U : Matrix.unitaryGroup (Fin 3) ℂ) :
     Matrix.trace (((U : Matrix (Fin 3) (Fin 3) ℂ) * Matrix.single (0 : Fin 3) (0 : Fin 3) 1 *
@@ -237,14 +217,7 @@ private lemma unitary_purity (U : Matrix.unitaryGroup (Fin 3) ℂ) :
       ((U : Matrix (Fin 3) (Fin 3) ℂ) * Matrix.single (0 : Fin 3) (0 : Fin 3) 1 *
       (U : Matrix (Fin 3) (Fin 3) ℂ).conjTranspose)) = 1 := by
   rw [D5.S3.Quantum.Entanglement.AbsolutePPT.QutritSpectralReduction.unitary_purity_trace]
-  have he : Matrix.single (0 : Fin 3) (0 : Fin 3) (1 : ℂ) *
-      Matrix.single (0 : Fin 3) (0 : Fin 3) 1 =
-      Matrix.single (0 : Fin 3) (0 : Fin 3) 1 := by
-    ext i j
-    simp [Matrix.mul_apply, Matrix.single, Fin.sum_univ_three] <;>
-      split_ifs <;> simp_all <;> omega
-  rw [he]
-  simp [Matrix.trace, Matrix.single]
+  simp only [Matrix.single_mul_single_same, mul_one, Matrix.trace_single_eq_same]
 
 private lemma w_not_unitary : ¬ IsUnitaryChannel (wernerHolevo 1) := by
   rintro ⟨U, hU⟩
