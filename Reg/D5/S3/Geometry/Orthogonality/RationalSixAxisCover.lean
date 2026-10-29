@@ -59,7 +59,7 @@ private theorem dependence : ObservationalDependence signature actual := by
     inner ℝ (-(pole : Space)) (pole : Space)
   have hp : ‖(pole : Space)‖ = 1 := by
     simpa only [Metric.mem_sphere, dist_zero_right] using pole.property
-  simp [inner_neg_left, real_inner_self_eq_norm_sq, hp]
+  norm_num [inner_neg_left, hp]
 
 def family : Registration arena (type_of% (@rational_six_axis_open_cover)) where
   actual := actual
