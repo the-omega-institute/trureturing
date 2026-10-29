@@ -16,8 +16,9 @@ The FORMULA field of OEIS A378495, revision 70, states verbatim:
 
 > Conjecture: T(n,n-2) - T(n,n)   = (n-3)!*(n-4)*(n-1)/2 for n >= 5.
 
-$T(n,k)$ counts all derangements in $S_n$ with no $k$-cycle,
-$1\le k\le n$. The triangle is read by rows, with offset `1,5`.
+On the source-agreeing columns $2\le k\le n$, $T(n,k)$ counts derangements
+in $S_n$ with no $k$-cycle; the source explicitly sets $T(n,1)=0$.
+The triangle is read by rows, with offset `1,5`.
 Both cardinalities are cast to $\mathbb Q$ before ordinary subtraction;
 the division by two is rational division.
 

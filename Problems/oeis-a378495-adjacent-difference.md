@@ -16,7 +16,8 @@ OEIS A378495, revision 70, FORMULA, states verbatim:
 
 > Conjecture: T(n,n-1) - T(n,n-2) = abs(A238474(n-4)) for n >= 4.
 
-$T(n,k)$ counts all derangements of $S_n$ having no $k$-cycle.
+On the source-agreeing columns $2\le k\le n$, $T(n,k)$ counts derangements
+of $S_n$ having no $k$-cycle; the source explicitly sets $T(n,1)=0$.
 The triangle has offset `1,5`. The dependent A238474 entry, revision 15,
 has offset `0,1` and formula $b(m)=(-1)^m(m+3)!/(2(m+1))$ for every
 natural $m$. This is interpreted in $\mathbb Q$, with rational ordinary
