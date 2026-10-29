@@ -15,7 +15,8 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.SeedQueueInvariant
 open SourceWidth
 
-/-- Longest affordable initial segment paired with its literal suffix. -/
+/-- Initial segment before the first budget crossing, paired with its literal
+suffix. For positive weights this is the longest affordable prefix. -/
 def splitBudget {α : Type*} (f : α → ℤ) : ℤ → List α → List α × List α
   | _, [] => ([], [])
   | B, x :: xs => if f x ≤ B then

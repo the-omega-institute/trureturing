@@ -245,6 +245,12 @@ theorem native_chain_extraction {k t : ℕ} (hk : 3 ≤ k)
       rw [Nat.mod_add_mod]
       have hh : n.val + k - 1 + 1 = n.val + k := by omega
       rw [hh, Nat.add_mod_right, Nat.mod_eq_of_lt n.isLt]
+    have hpredpos : 0 < actualSource k t pred := by
+      by_contra hh
+      have hz := hnz pred
+      have hp := (hneg pred (by omega)).2.2
+      rw [he] at hp
+      omega
     have hp : quarter k ≤ actualSource k t pred := by
       have hbpred := centered_bounds hNpos hodd ((2 : ℤ) ^ pred.val * t)
       change -half k ≤ actualSource k t pred ∧ actualSource k t pred ≤ half k at hbpred
