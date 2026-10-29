@@ -100,6 +100,15 @@ def remove_payload(target):
         raise Refused("worktree_payload_changed_during_removal")
 
 
+def native_removal_preflight(source, target, flags):
+    """Recheck every native refusal condition immediately before payload deletion."""
+    item = qualify(source, target)
+    if "locked" in item and flags.count("--force") < 2:
+        raise Refused("native_locked:" + item["locked"])
+    reject_nested_git(target)
+    return item
+
+
 @contextmanager
 def payload_removal_budget(force):
     """Bound interruptible payload deletion and share its deadline with Git."""
@@ -412,6 +421,9 @@ def remove(options):
                     record_removal(metadata, checkpoint["commit"], recovery_branch,
                                    native_locks=checkpoint.get("native_locks", []))
                 flags = ["--force", "--force"] if "locked" in refreshed else ["--force"]
+                qualifying = True
+                native_removal_preflight(source, target, flags)
+                qualifying = False
                 removing = True
                 with payload_removal_budget(options.force) as deadline:
                     remove_payload(target)
