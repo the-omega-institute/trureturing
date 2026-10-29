@@ -685,3 +685,198 @@ $\square$
 [BY]: https://www.slac.stanford.edu/pubs/slacpubs/1500/slac-pub-1679.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 9. 无保留律与切口的联合分隔边界
+
+**定义 9.1（擦除入口的联合服务）。** 固定 GPO 定义 27.1 的真实
+alpha-origin、真实物理字典序出生和同根服务。公开整数为 $d$，真实流
+$s$ 属于 $\mathscr R_d$，当前已完成切口为 $n$。本节的承诺域为
+
+$$
+ {\cal A}_d=
+ \begin{cases}
+ \{n:n\ge N(2d)\},&d>0,\\
+ \{n:n\ge2\},&d=0,
+ \end{cases}
+ \qquad
+ N(m)=\min\{u\ge3:F_u-1\ge m\}.
+ \tag{ACR.23}
+$$
+
+入口擦除了源比特、种子、递推律、年龄、相位、树、支持、边界、标签、
+历史、收据、分配器和持续时间；等价行为的不同私有表示也被视为同一
+候选行为。入口仅保留公开 $d$，真实同根绑定，真实的 total presence-Read
+和后续 update 授权，共同的有限 source-blind 代码，以及新增长且可读的
+自有 backing。恢复期间不作 source update。每一条物理 Read、局部位运算、
+中间写、最终写和 handoff 都是有偿操作，并且排他且已完成的切口静止区
+覆盖这些操作。
+
+**定义 9.2（成熟候选数据与行为数）。** 令 $\mathscr C_d$ 是
+$\mathscr R_d$ 中不同无限输出行为的集合，记
+
+$$
+ D_d=|\mathscr C_d|=1+\sum_{r=1}^{d}2^{2r-1}
+     =\frac{2\,4^d+1}{3}.
+ \tag{ACR.24}
+$$
+
+成熟候选数据是对 $(s,u)$，其中 $s\inmathscr C_d$ 且
+$u\in{\cal A}_d$。不同的私有 recurrence presentation 不产生不同的
+候选数据。对一个有限窗口 $[A,H]$，令
+$A'=\max\{A,n_0\}$，其中 $n_0=N(2d)$（$d>0$）或 $n_0=2$（$d=0$）；
+有效窗口是 $[A',H]$。
+
+**命题 9.3（固定成熟候选的物理分隔字）。** 对两个不同的成熟候选
+$x=(s,u)$ 和 $y=(t,v)$，存在一个有限物理字 $\omega_{x,y}$，使得
+
+$$
+ \operatorname{Read}^{s}_{u}(\omega_{x,y})
+ \ne
+ \operatorname{Read}^{t}_{v}(\omega_{x,y}).
+ \tag{ACR.25}
+$$
+
+可以取
+
+$$
+ \omega_{x,y}=\min\bigl(S_u(s)\mathbin{\triangle}S_v(t)\bigr),
+ \tag{ACR.26}
+$$
+
+其中最小值按物理字典序排列。这个字由 GPO 定理 28.2 的有限
+incidence-prefix 映射和 GPO 命题 39.2 的 rank 描述构造；构造只沿候选
+前缀作 rank-guided descent，不读取或展开实际未知的 $S_n$ 全树。
+
+**证明。** 若 $u\ne v$，两个支持的叶数分别为 $F_{u+1}$ 和 $F_{v+1}$，
+因而支持不相等。若 $u=v$ 而 $s\ne t$，成熟条件给出
+$F_u-1\ge2d$（零阶时只有一个行为），GPO 定理 28.2 说明 incidence
+相等当且仅当前 $F_u-1$ 个出生位相等；GPO 引理 29.2 说明不同的
+$s,t$ 必在这些位中分开。因此支持仍不相等，(ACR.26) 有定义，且成员
+关系正好给出 (ACR.25)。
+
+GPO 定理 28.2 的证明按分支 rank 比较子树的 Fibonacci 叶数；在第一个
+不相等的 rank 处沿对应物理边继续即可得到一个对称差字。该过程至多
+访问候选字的最大深度个前缀描述，并没有访问实际成熟树的所有节点。
+这是依赖 alpha-origin、物理出生顺序和持久端口的 source-specific
+分隔结论；$D_d$ 的目录计数本身不能推出它。$\square$
+
+**推论 9.4（同一律的年龄分隔）。** 若 $s=t$ 且 $u<v$，则 ACR
+命题 2.2 的物理编译器给出
+
+$$
+ \operatorname{Read}^{s}_{u}(C_s(u+1))=0,qquad
+ \operatorname{Read}^{s}_{v}(C_s(u+1))=1.
+ \tag{ACR.27}
+$$
+
+该字长为 $\lceil (u+1)/2\rceil$，不使用递推逆可性；奇异、非最小、
+零流和有限 transient 都在 GPO 定义 29.1 的正向域内。
+
+**证明。** $C_s(u+1)$ 的首次出现时刻恰为 $u+1$，而物理支持持久，
+故 (ACR.27) 成立。$\square$
+
+**命题 9.5（有限窗口的联合信息与 literal 下界）。** 设有效窗口非空，
+$N_w=H-A'+1$。对同一入口资源、无 source update 的任何零误差程序，
+若它在窗口上同时确定行为和切口，则一条最坏运行的 Read 数满足
+
+$$
+ Q_w\ge\left\lceil\log_2(D_dN_w)\right\rceil.
+ \tag{ACR.28}
+$$
+
+若 $N_w\ge2$，同一程序的某一条运行还满足 ACR 固定律窗口的既有
+literal 限制
+
+$$
+ M_w\ge\left\lceil\frac H2\right\rceil,qquad
+ W_w\ge
+ \left\lceil\frac{A'+1}{2}\right\rceil
+ \left\lceil\log_2N_w\right\rceil.
+ \tag{ACR.29}
+$$
+
+若 $N_w=1$，年龄部分没有 Read 或 literal 下界，行为部分仍有
+$\lceil\log_2D_d\rceil$ 的下界。特别地，$d=0$ 且
+$A'=H=2$ 时，联合下界为零。
+
+**证明。** 命题 9.3 和推论 9.4 使 $D_dN_w$ 个成熟候选数据具有
+两两不同的正确输出要求。长度至多 $q$ 的二叉回复树至多有 $2^q$
+个叶，故 (ACR.28) 成立。固定任一合法行为并限制程序到该行为，
+ACR 定理 4.2 的同一运行峰值和 traffic 下界给出 (ACR.29)；ACR
+命题 4.3 的 interior 和下端点逐点账单在此只作既有结果引用，不重述。
+窗口 singleton 没有年龄邻居，所以不把下界错误施加到 $N_w=1$。
+[Cicalese--Laber--Saettler][CLS] 的同一路径 function-evaluation 树说明
+traffic 下界是单次运行的路径账，而非两个不同输入的最坏数相加。$\square$
+
+**定理 9.6（有限窗口上的付费终止取得）。** 在一个给定有限有效窗口
+$[A',H]$ 内，存在一个不作 source update 的自适应程序，终止于每个
+允许的 $(s,n)$，并返回该行为的前 $2d$ 位、GPO 引理 29.2 的 fixed
+canonical seeded descriptor、准确的 $n$ 和 $B_n=F_{n+1}-1$。一种直接
+实现至多使用 $D_dN_w-1$ 次实际 Reads，峰值 submitted literal 不超过
+$H$，literal traffic 不超过 $H(D_dN_w-1)$；$d=0$ 的 singleton 使用
+零次 Read。
+
+**证明。** 将窗口内的 $D_dN_w$ 个候选数据固定编号。每次从尚未
+分开的两个候选中选取一对，提交命题 9.3 的 $\omega_{x,y}$，并删除
+预测回复与实际回复不相容的候选。每次至少删除一个候选，故至多
+$D_dN_w-1$ 次后只剩一个。对剩余候选用 GPO 引理 29.2 的固定有限
+synthesis 取得前缀和 canonical descriptor，再写入
+$(P,L,n,F_{n+1}-1)$ 并在静止区 handoff。每个 separator 是有限物理字，
+且候选切口不超过 $H$，故给出所列峰值和 traffic。候选 rank descent、
+Fibonacci 算术、operand、中间结果、最终写和 handoff 都是有限本地工作，
+并可复用工作区。
+
+该上界只是在有限窗口内的终止性结果；其 pair-elimination 控制壳是
+[Angluin][ANG] membership-query 框架的有限实例，不能被记作一般有限学习的
+新定理。新内容是命题 9.3 将每一对真实 GPO 候选落实为物理 separator。
+它不声称未知无界切口上的 $O(\log(n+2)+4^d)$ 读取上界。$\square$
+
+**定理 9.7（无界擦除入口没有固定律分隔族）。** 对任意有限的物理字族
+$\mathcal W$，存在 $N_{\mathcal W}$，使得对所有 $s\in\mathscr C_d$ 和
+所有 $n\ge N_{\mathcal W}$，
+
+$$
+ \operatorname{Read}^{s}_{n}(w)=1qquad(w\inmathcal W).
+ \tag{ACR.30}
+$$
+
+因此不存在一个与当前未知年龄无关、大小仅依赖 $d$ 的固定 Read 字族，
+能够在所有 $n\in{\cal A}_d$ 上分隔 $\mathscr C_d$ 的行为。任何无界
+联合取得程序都必须让其 separating literal 随当前年龄证据移动，或者
+保留一个额外的年龄/律输入。
+
+**证明。** 对任意固定 $s$ 和有限字 $w$，ACR 命题 2.2 给出有限首次
+出现时刻 $b_s(w)\le2|w|$（空字从初始切口存在）。对有限集合
+$\mathscr C_d\times\mathcal W$ 取这些时刻的最大值即为
+$N_{\mathcal W}$；持久性给出 (ACR.30)。若固定字族在所有成熟切口上
+分隔行为，则任意两个行为必须在某个字上有不同回复，但 (ACR.30) 使
+所有回复同时为一，矛盾。故无界输入不能把有限窗口的 separator 直接
+冻结为 $O(4^d)$ 个年龄独立查询。
+
+这也是为何 GPO 的完整扫描和 ACR 的律已知阈值逆不能直接合并为本节
+的无保留律结论。[Nowak][NOW] 的对数 generalized-binary-search 界需要额外的
+splitting geometry；本物理 membership 接口并未提供该假设。$\square$
+
+**推论 9.8（当前未闭合的精确桥）。** 在定义 9.1 的无界承诺域上，命题
+9.3、推论 9.4 和定理 9.7 共同确定了真实 source-specific separator
+的存在、有限窗口的付费终止和固定分隔族的失效。它们没有证明在不保留
+律、年龄或 archive 且不作 update 时，Read 上界
+$O(\log(n+2)+4^d)$、peak $O(n)$ 和 traffic
+$O(n(\log(n+2)+4^d))$ 的联合取得。若以后得到该桥，写入的
+$(P,L,n,B_n)$ 才能应用 GPO 定理 34.2、34.3 和命题 39.5；推断出的
+$P$ 仍不产生过去的 origin-acquisition journal，也不恢复根/授权真实性、
+私有机器身份或 physical duration。
+
+**证明。** 前三项分别是命题 9.3、推论 9.4、定理 9.6 和定理 9.7 的
+直接合取。GPO 定理 34.2 和 39.4 的消费者要求已经获得的 law-ready
+record 及同步切口；定义 9.1 恰好擦除了这些输入，所以只能作条件应用。
+最后，journal、私有身份和 duration 不出现在任何 presence 回复或
+(ACR.23)--(ACR.30) 的目标坐标中，故它们不由这些数学数据逆推出。
+$\square$
+
+[ANG]: https://link.springer.com/article/10.1023/A:1022821128753
+[NOW]: https://arxiv.org/pdf/0910.4397v5
+[CLS]: https://arxiv.org/pdf/1309.2796v2
+[BIL]: https://arxiv.org/pdf/1001.1565v3
+
+## 追加锚（本行以下为增补区）
