@@ -1,0 +1,2 @@
+**Definition 4.1 (Two-hub graph).** Let $\ell\ge1$ and $n\ge\ell+3$, and put $p=n-\ell-3\ge0$. The graph $H_{n,\ell}$ has vertices $a,b$, $w_0,\dots,w_\ell$ and $q_1,\dots,q_p$; its edges are $aw_i$ and $bw_i$ for $0\le i\le\ell$, $aq_j$ for $1\le j\le\lfloor p/2\rfloor$, and $bq_j$ for $\lfloor p/2\rfloor<j\le p$. Stance: repo-derived (construction fixed in this volume).
+

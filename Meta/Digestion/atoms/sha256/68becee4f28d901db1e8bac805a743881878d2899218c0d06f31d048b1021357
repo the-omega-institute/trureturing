@@ -1,0 +1,132 @@
+**Theorem 42.2 (Synchronized descent on a retained edge).**
+A global interior exponent of $G^e_{k,b}$ is basic if and only
+if at least one local restriction equals some $\nu_j$.
+Consequently its basic exponents are precisely all tuples of
+local interior exponents with common boundary
+$(m,t,u)=(2j+1,j,j)$ and at least one entry $\nu_j$, for
+$1\le j\le k-1$. These monomials form exactly a minimal
+generating set of the canonical module.
+
+Proof. The local classification is the supplier in Theorem 31.3
+and §31.2 [Supplier41], also used at the common root in
+Theorem 35.4. Its primary source for length $2k+1\ge7$ is
+Miyazaki, *Non-Gorenstein locus and almost Gorenstein property
+of the Ehrhart ring of the stable set polytope of a cycle graph*,
+§4, Lemmas 4.1–4.4 and the argument immediately before
+Theorem 4.5 [Miyazaki42]. The exact correspondence is his
+$\ell=k$, $\eta(v_i)=c_i$, $\eta(-\infty)=m$,
+$\eta_j=\nu_j$ and $R^{(0)}$ equal to the deficit-zero
+face algebra. His injection has target $\omega_{R_k}(3)$;
+its cokernel is $(\omega_{R_k}/X^{\nu_1}R_k)(3)$.
+Thus the translation is by ordinary degree three, not by the
+number of shared vertices. Theorem 4.5 itself is the Ulrich
+and almost-Gorenstein conclusion; the minimal-generator
+classification used here precedes it.
+
+We give the needed local proof in these coordinates, including
+$k=2$. Write $\delta=km-\sum_i c_i$ for a local interior
+point $p=(m,c)$. If $\delta\ge k-1$, then $p-\nu_1$
+has nonnegative coordinates, edge sums at most $m-3$, and
+deficit $\delta-(k-1)\ge0$. Its degree is nonnegative because
+positivity of two adjacent coordinates and their strict edge
+bound give $m\ge3$. Hence $p-\nu_1\in\mathcal S_k$.
+Otherwise $1\le\delta\le k-2$; put $j=k-\delta$.
+For each vertex $i$, partition the other $2k$ vertices into
+the $k$ edges $\{i+1,i+2\},\ldots,\{i+2k-1,i+2k\}$.
+Their strict bounds imply
+
+$$
+km-\delta=\sum_r c_r\le c_i+k(m-1),
+\qquad c_i\ge k-\delta=j.
+\tag{42.2}
+$$
+
+An edge gives $m\ge2j+1$. Subtracting $\nu_j$ leaves
+nonnegative coordinates and degree, valid edge bounds in
+degree $m-2j-1$, and deficit zero. Thus every local interior
+has the form $\nu_j+s$, $s\in\mathcal S_k$.
+Conversely, $\nu_j$ has positive coordinates, edge slacks one
+and deficit $k-j\ge1$, so adding any semigroup point preserves
+interiority. At $k=2$ only the first case occurs: every local
+interior is $\nu_1+\mathcal S_2$. This proves the five-cycle
+endpoint directly, without extending the length hypothesis of
+Miyazaki's §4.
+
+For local minimality suppose $\nu_j-s$ is interior, with
+$s=(q,d)\in\mathcal S_k$. Its edge slacks are one minus
+the nonnegative edge slacks of $s$, and must be at least one.
+Every slack of $s$ is therefore zero, so
+$d_i+d_{i+1}=q$ for every cyclic edge. The odd cycle forces
+$d_i=q/2$ for all $i$. Its total inequality gives
+$(2k+1)q/2\le kq$, hence $q=0$ and $d=0$.
+Thus each $\nu_j$ is basic. The generation already proved
+shows that there are no other local basic exponents. For any
+nonbasic local $p$, choose $p=\nu_j+s$ with $s\ne0$.
+Its residual degree $q=m-2j-1$ is strictly positive, since
+a degree-zero semigroup point is zero.
+
+Now retain the endpoint data $(m,t,u)$ throughout this local
+decomposition. The residual $q$-row realization has edge
+pattern multiplicities
+
+$$
+r_{10}=t-j,\qquad r_{01}=u-j,\qquad
+r_{00}=q-r_{10}-r_{01}=m-t-u-1.
+\tag{42.3}
+$$
+
+All are nonnegative integers. The last one is independent
+of the chosen $j$. Choose the removed edge state by the rule
+
+$$
+\sigma(m,t,u)=
+\begin{cases}
+00,&m-t-u-1>0,\\
+10,&m-t-u-1=0\text{ and }t\ge u,\\
+01,&m-t-u-1=0\text{ and }t<u.
+\end{cases}
+\tag{42.4}
+$$
+
+The strict shared-edge bound ensures $m-t-u-1\ge0$, so
+these cases exhaust every interior boundary. In the first
+case $r_{00}>0$. In the second case
+$q=r_{10}+r_{01}>0$ and $r_{10}\ge r_{01}$, so
+$r_{10}>0$. In the last case $r_{01}>r_{10}\ge0$.
+At $t=u$ in the zero-$00$ case, positivity of $q$ gives
+$r_{10}=r_{01}>0$, so the specified $10$ choice still exists.
+These implications are valid for every possible local $j$
+and every positive residual degree, including degree one.
+
+Local integer decomposition realizes $s$ by exactly $q$ rows.
+The chosen state has positive multiplicity, so some legal row
+$I_\ell$ has that state. Removing it leaves a semigroup point
+$s-(1,\mathbf1_{I_\ell})$, and therefore
+$p-(1,\mathbf1_{I_\ell})$ remains interior. If every local
+restriction of a global $p$ is nonbasic, apply the same rule
+(42.4) to all of them. Their chosen rows agree on both shared
+vertices. Their union is a legal global independent set $I$;
+the global remainder $p-(1,\mathbf1_I)$ has all restrictions
+interior, hence is interior by (41.3). Thus $p$ is not basic.
+
+Conversely suppose $p_\ell=\nu_j$ for some branch. Any nonzero
+global semigroup point has positive common degree, and its
+restriction to that branch has the same positive degree.
+If it could be subtracted from $p$ leaving a global interior,
+it could be subtracted from $\nu_j$ leaving a local interior,
+contrary to local basicness. This proves the equivalence.
+Such an entry fixes the common boundary to $(2j+1,j,j)$;
+distinct $j$ cannot occur at that same boundary.
+
+Repeated subtraction when all restrictions are nonbasic lowers
+the integer degree. It must terminate, since an interior has
+degree at least three. It terminates at one of the stated basic
+exponents, proving generation of the entire interior ideal.
+The classes of those monomials in
+$\omega_{R^e_{k,b}}/R^e_{k,b,+}\omega_{R^e_{k,b}}$ are
+linearly independent: a nonbasic exponent is exactly an
+interior exponent plus a nonzero semigroup exponent, and
+distinct exponent monomials are independent. Hence these
+classes form a basis and the asserted generators are minimal
+even among arbitrary polynomial generators. $\square$
+

@@ -581,3 +581,766 @@ $$
 逐项使用 $\sqrt k\ge k/\sqrt b$（$0\le k\le b$）给出 $x_{1,b}\ge\sqrt b$。因此 $u=x_{1,b}/(2\sqrt b)\ge1/2$，且由 (2.3) 仍有 $u<1$，所以 $0<\tau\le1$。每个混合联盟有 $i=1$、$1\le j\le b$，于是 $r=\sqrt{b/j}\ge1$；(2.4) 给出非负余量。纯侧由 (2.3) 的正性满足，全体由效率取等，得到所有正整数 $b$ 的星图核归属。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 4. 固定一侧规模的最大阻塞赤字
+
+**定义 4.1（最大赤字与极限轮廓）。** 对整数 $a\ge2$、$b\ge1$，在定义 1.1–1.3 的同一个图 $K_{a,b}$ 及其普通能量博弈上，记
+
+$$
+D_{a,b}=\max_{C\subseteq A\sqcup B}\Delta(C;\phi)
+=\max_{C\subseteq A\sqcup B}
+\left(w_{K_{a,b}}(C)-\sum_{v\in C}\phi_v(w_{K_{a,b}})\right).
+\tag{4.1}
+$$
+
+这里最大化有符号的阻塞赤字；空联盟给出 $D_{a,b}\ge0$。价值函数与阶乘 Shapley 分配采用 Arizmendi–Arizmendi，[*The graph energy game*, arXiv:2012.14114v2](https://arxiv.org/pdf/2012.14114v2)，Definition 3.1、§2.4 的约定。沿用定理 3.1 的 $h_a$、$u_a$ 以及 (3.3) 的 $u_{a,b}$，并置
+
+$$
+v_a=1-u_a,\qquad
+\varepsilon_{a,b}=\sqrt a\,(4b)^{-1/4}.
+$$
+
+由 (3.5)–(3.7)，$1/2<u_a<1$、$0<v_a<1/2$，且
+$|u_{a,b}-u_a|\le\varepsilon_{a,b}$。对 $z\in[0,1]$ 定义
+
+$$
+M_a(z)=
+\begin{cases}
+\displaystyle\frac{z(2u_a-1)^2}{4v_a},&0\le z\le4v_a^2,\\[6pt]
+\sqrt z-u_a z-v_a,&4v_a^2<z\le1.
+\end{cases}
+\tag{4.2}
+$$
+
+另记
+
+$$
+\rho_a=\frac{a}{4u_a^2},\qquad
+I_a=\{\lfloor\rho_a\rfloor,\lceil\rho_a\rceil\}
+\cap\{0,1,\ldots,a\},\qquad
+L_a=\max_{i\in I_a}M_a(i/a).
+\tag{4.3}
+$$
+
+**定理 4.2（最大赤字系数、两计数约化与实现联盟）。** 对每个整数 $a\ge2$，有
+
+$$
+L_a=\max_{0\le i\le a,\ i\in\mathbb Z}M_a(i/a)>0,
+\qquad
+\operatorname*{arg\,max}_{0\le i\le a,\ i\in\mathbb Z}M_a(i/a)
+\subseteq I_a.
+\tag{4.4}
+$$
+
+对每个整数 $b\ge1$，有显式比较
+
+$$
+\left|\frac{D_{a,b}}{2\sqrt{ab}}-L_a\right|
+\le\sqrt a\,(4b)^{-1/4}+b^{-1/2}+b^{-1}.
+\tag{4.5}
+$$
+
+因此固定 $a$、令 $b$ 沿正整数趋于无穷时，
+
+$$
+\frac{D_{a,b}}{\sqrt b}\longrightarrow2\sqrt a\,L_a>0.
+\tag{4.6}
+$$
+
+具体地，对任一使 $M_a(i/a)$ 最大的整数 $i$，置
+
+$$
+s_i=\min\left\{1,\frac{i/a}{4v_a^2}\right\},\qquad
+j_b=\lfloor bs_i\rfloor.
+\tag{4.7}
+$$
+
+任取 $i$ 名 $A$ 侧玩家与 $j_b$ 名 $B$ 侧玩家组成联盟 $C_b$，均有
+
+$$
+\frac{\Delta(C_b;\phi)}{2\sqrt{ab}}\longrightarrow L_a.
+\tag{4.8}
+$$
+
+式 (4.4) 保留 $I_a$ 中两计数并列的可能；若 $\rho_a$ 为整数，$I_a$ 只有一个计数。式 (4.5) 对所有 $a\ge2,b\ge1$ 成立，不要求 $b\ge a$；(4.6)、(4.8) 的极限均固定 $a$。
+
+**证明。** 首先把所有联盟的赤字写在同一个图的两个计数上。设
+
+$$
+z=i/a,\qquad s=j/b,\qquad U=u_{a,b}.
+$$
+
+由 (2.1)–(2.3) 的联盟能量、同侧对称性和效率，
+
+$$
+\begin{aligned}
+\frac{\Delta(C;\phi)}{2\sqrt{ab}}
+&=\frac{2\sqrt{ij}-ix_{a,b}-jy_{a,b}}{2\sqrt{ab}}\\
+&=\sqrt{zs}-Uz-(1-U)s.
+\end{aligned}
+\tag{4.9}
+$$
+
+每个整数计数对 $0\le i\le a$、$0\le j\le b$ 都由实际联盟实现；计数相同的联盟赤字相同。式 (4.9) 同时包含空联盟、纯侧联盟和全体联盟。
+
+对任意 $z,s\in[0,1]$ 记
+
+$$
+F_a(z,s)=\sqrt{zs}-u_a z-v_a s.
+$$
+
+式 (4.9) 与此函数的差恰为 $(U-u_a)(s-z)$。由 (3.5)，统一有
+
+$$
+\left|\sqrt{zs}-Uz-(1-U)s-F_a(z,s)\right|
+\le\varepsilon_{a,b}.
+\tag{4.10}
+$$
+
+现对固定的 $z$ 在 $s\in[0,1]$ 上最大化 $F_a$。用通常的一元二次配方法，令 $q=\sqrt s\in[0,1]$，则
+
+$$
+F_a(z,q^2)
+=-v_a\left(q-\frac{\sqrt z}{2v_a}\right)^2
++\frac{z}{4v_a}-u_a z.
+$$
+
+因 $v_a>0$，唯一最大点为
+$q=\min\{1,\sqrt z/(2v_a)\}$，亦即
+$s=\min\{1,z/(4v_a^2)\}$，包括 $z=0$ 时的 $s=0$。利用
+$1-4u_av_a=(2u_a-1)^2$，得到
+
+$$
+\max_{0\le s\le1}F_a(z,s)=M_a(z).
+\tag{4.11}
+$$
+
+在分支连接点 $z_0=4v_a^2\in(0,1)$，(4.2) 两式都等于
+$v_a(2u_a-1)^2$，左右导数也都等于
+
+$$
+c_a=\frac{(2u_a-1)^2}{4v_a}>0.
+$$
+
+在 $0<z<z_0$，导数为 $c_a$；在 $z_0<z<1$，导数为
+$1/(2\sqrt z)-u_a$。后者只在
+
+$$
+z_*=(4u_a^2)^{-1}
+$$
+
+为零。因为 $4u_av_a=1-(2u_a-1)^2<1$，有
+$z_0<z_*<1$；同时 $z_*>1/4$。所以 $M_a$ 在 $[0,z_*]$ 上严格递增，在 $[z_*,1]$ 上严格递减。其两端为
+$M_a(0)=M_a(1)=0$，从而对每个 $0<z<1$ 都有 $M_a(z)>0$。
+
+现在只在 $z=i/a$ 上取值。因 $az_*=\rho_a\in(0,a)$，若 $i<\lfloor\rho_a\rfloor$，则向右移一个整数计数使 $M_a(i/a)$ 严格增大；若 $i>\lceil\rho_a\rceil$，则向左移一个整数计数使其严格增大。因此所有最大计数均在 $I_a$ 中。若两邻点的值相等，两者都保留；若 $\rho_a$ 为整数，严格单调性排除其它计数。又因 $a\ge2$，$1/a\in(0,1)$，故
+$L_a\ge M_a(1/a)>0$，证得 (4.4)。
+
+最后比较连续最大值与合法的 $B$ 侧网格。对任意 $z,s,t\in[0,1]$，平方根的基本不等式给出
+
+$$
+\begin{aligned}
+|F_a(z,s)-F_a(z,t)|
+&\le\sqrt z\,|\sqrt s-\sqrt t|+v_a|s-t|\\
+&\le\sqrt{|s-t|}+|s-t|.
+\end{aligned}
+\tag{4.12}
+$$
+
+对每个 $i\in\{0,\ldots,a\}$，令 $s_i$ 如 (4.7)，即使 $i$ 不是最大计数也采用同一公式。由 (4.11)，
+$F_a(i/a,s_i)=M_a(i/a)$。置 $t_{i,b}=\lfloor bs_i\rfloor/b$，则
+
+$$
+0\le\lfloor bs_i\rfloor\le b,\qquad
+0\le s_i-t_{i,b}<b^{-1}.
+$$
+
+所以该取整始终给出实际联盟，包括 $s_i=0,1$ 时精确落在端点的情形。由 (4.10)–(4.12)，任一对应联盟 $C_{i,b}$ 满足
+
+$$
+\left|\frac{\Delta(C_{i,b};\phi)}{2\sqrt{ab}}-M_a(i/a)\right|
+\le\varepsilon_{a,b}+b^{-1/2}+b^{-1}.
+\tag{4.13}
+$$
+
+另一方面，对任意合法计数 $(i,j)$，(4.10)、(4.11)、(4.4) 依次给出
+
+$$
+\frac{\Delta(C;\phi)}{2\sqrt{ab}}
+\le F_a(i/a,j/b)+\varepsilon_{a,b}
+\le M_a(i/a)+\varepsilon_{a,b}
+\le L_a+\varepsilon_{a,b}.
+$$
+
+在全部联盟上取最大值即得同一上界。取任一最大计数 $i$，(4.13) 给出下界
+
+$$
+\frac{D_{a,b}}{2\sqrt{ab}}
+\ge L_a-\varepsilon_{a,b}-b^{-1/2}-b^{-1}.
+$$
+
+合并上下界得到 (4.5)。对固定 $a$，右侧误差趋于零，乘以 $2\sqrt a$ 即得 (4.6)。对每个最大计数直接应用 (4.13)，即得任意标签选择的 (4.8)。这里确定的是极限最大赤字系数及实现其极限的联盟，未给出有限 $b$ 的精确最大联盟或核归属分类，也未推出核归属随 $b$ 的单调性。∎
+
+**命题 4.3（$a=2$ 的精确最大系数）。** 当 $a=2$ 时，定义 4.1 的常数满足
+
+$$
+\begin{aligned}
+u_2&=\frac{12-2\sqrt2}{15},&
+v_2&=\frac{3+2\sqrt2}{15},& I_2&=\{1,2\},\\
+L_2&=\frac{627-442\sqrt2}{120},&
+s_1&=\frac{225}{8(17+12\sqrt2)}.
+\end{aligned}
+\tag{4.14}
+$$
+
+在全部 $i\in\{0,1,2\}$ 中，唯一最大计数是 $i=1$。于是
+
+$$
+\frac{D_{2,b}}{\sqrt b}
+\longrightarrow\frac{627\sqrt2-884}{60},
+\tag{4.15}
+$$
+
+且任取一名 $A$ 侧玩家及 $\lfloor bs_1\rfloor$ 名 $B$ 侧玩家得到的联盟实现 (4.8)。
+
+**证明。** 定理 3.1 的有限二项式在此为
+$h_2(t)=1+(\sqrt2-2)t$。直接代入其中的收益积分得到
+
+$$
+u_2=\sqrt2\left(\frac23+\frac25(\sqrt2-2)\right)
+=\frac{12-2\sqrt2}{15},
+$$
+
+相减即得 $v_2$。这里使用的是 (3.3)–(3.7) 的收益极限。由
+$1<\sqrt2$ 可知 $u_2<2/3$，而 $4/9<1/2$ 给出
+$2/3<1/\sqrt2$；结合 $u_2>1/2$，得到
+
+$$
+1<\rho_2=\frac1{2u_2^2}<2.
+$$
+
+所以 $I_2=\{1,2\}$。又有
+
+$$
+4v_2^2=\frac{4(17+12\sqrt2)}{225}>\frac12,
+$$
+
+因为 $8(17+12\sqrt2)>136+96>225$。故 $z=1/2$ 位于 (4.2) 的第一分支，且 $0<s_1<1$。于是
+
+$$
+\begin{aligned}
+M_2(1/2)
+&=\frac{(2u_2-1)^2}{8v_2}
+=\frac{113-72\sqrt2}{120(3+2\sqrt2)}\\
+&=\frac{(113-72\sqrt2)(3-2\sqrt2)}{120}
+=\frac{627-442\sqrt2}{120},\\
+s_1&=\frac1{8v_2^2}
+=\frac{225}{8(17+12\sqrt2)}.
+\end{aligned}
+$$
+
+定理 4.2 给 $M_2(1/2)>0$，而 $M_2(0)=M_2(1)=0$，所以唯一最大计数为 $1$，且 $L_2=M_2(1/2)$。将其乘以 $2\sqrt2$ 得到 (4.15)，实现联盟由 (4.7)–(4.8) 给出。
+
+作为比较，补集联盟 $(A\sqcup B)\setminus\{A_1\}$ 的计数为 $(1,b)$，由 (4.9)、(3.5) 得到其赤字除以 $\sqrt b$ 的系数
+
+$$
+2\sqrt2\,F_2(1/2,1)=\frac{26-18\sqrt2}{15}.
+$$
+
+此补集联盟正是[完全二部图能量及 Shapley 分配](../../../Blueprint/D5/S3/Combinatorics/SpectralGraph/ArizmendiEnergyGameShapleyRefutation.md)中使用的阻塞联盟；它的渐近系数亦见 [aa2012 的相应计算](../../../Problems/aa2012.md#triage)。由于二次配方中的最大点 $\sqrt{s_1}<1$，严格有
+
+$$
+L_2-F_2(1/2,1)=v_2(1-\sqrt{s_1})^2>0.
+$$
+
+因此 (4.15) 给出的最大赤字系数严格大于该补集联盟的系数。两者均涉及定义 1.2 的同一个普通 Shapley 分配。∎
+
+## 追加锚（本行以下为增补区）
+
+## 5. 三顶点侧的有限核分类
+
+**定理 5.1（$K_{3,b}$ 的唯一零赤字端点）。** 对每个整数 $b\ge3$ 及每对不交的有限标号集 $A,B$，若 $|A|=3$、$|B|=b$，令 $G$ 为恰含全部 $A$–$B$ 边的简单图。采用定义 1.1–1.2 的普通邻接能量价值与阶乘 Shapley 分配，以及定义 4.1 在全部联盟上的有符号最大赤字，则
+
+$$
+D_{3,b}=0\quad\Longleftrightarrow\quad b=3.
+\tag{5.1}
+$$
+
+具体地，$b=3$ 时每名玩家的 Shapley 分配均为 $1$；每个整数 $b\ge4$ 时，置
+
+$$
+j_b=\left\lfloor\frac{2b}{3}\right\rfloor+1.
+\tag{5.2}
+$$
+
+任取两名 $A$ 侧玩家和 $j_b$ 名 $B$ 侧玩家组成的联盟 $C_b$，均有
+$\Delta(C_b;\phi)>0$，从而 $D_{3,b}>0$。这里的价值与分配是 Arizmendi–Arizmendi，[*The graph energy game*, arXiv:2012.14114v2](https://arxiv.org/pdf/2012.14114v2)，§2.2、§2.4、Definition 3.1 的同一普通能量博弈；Theorem 3.6 的 vertex-energy 分配与 Proposition 4.13 的 $2$-energy Shapley 分配分别是不同的分配与不同的价值函数。
+
+**证明。** 只用保持两侧各自不变的顶点置换，同侧玩家的分配分别记为 $x_{3,b}$、$y_{3,b}$。任意标号集可经两侧各自的双射与定义 1.3 的标号对应；这样的双射逐项运输阶乘和中的前驱集合，保持其大小和边际价值。由 (2.1)–(2.3)，对每个联盟 $C$，包括某侧计数为零的情形，
+
+$$
+w_G(C)=2\sqrt{ij},\qquad
+x_{3,b}>0,\quad y_{3,b}>0,\quad
+3x_{3,b}+by_{3,b}=2\sqrt{3b},
+\qquad i=|C\cap A|,\quad j=|C\cap B|.
+\tag{5.3}
+$$
+
+因而 $u_{3,b}=3x_{3,b}/(2\sqrt{3b})$ 属于 $(0,1)$。证明先确定平衡端点的实际分配，再把其余全部整数归约到两个有限分配计算。
+
+（一）沿用 (3.3)、(3.6) 的有限二项式积分与导数恒等式。记
+
+$$
+f_n(t)=\sum_{k=0}^n\binom nk t^k(1-t)^{n-k}\sqrt k,
+\qquad \mu_n(t)=\frac{f_n(t)}{\sqrt n}
+\quad(n\ge1),
+$$
+
+则 $f_3'(t)=3h_3(t)$，且
+
+$$
+u_{3,b}=\sqrt3\int_0^1h_3(t)\mu_b(t)\,dt.
+\tag{5.4}
+$$
+
+这些恒等式来自同一阶乘分配：给目标玩家和其他玩家独立均匀优先级，条件于目标优先级 $t$ 时，其余两名 $A$ 侧玩家的前驱数为 $\operatorname{Bin}(2,t)$，$B$ 侧前驱数为 $\operatorname{Bin}(b,t)$，且在这个条件下独立。固定前驱集合 $S$ 的排列数仍为 $|S|!(b+2-|S|)!$，总排列数为 $(b+3)!$，故没有遗漏任何前驱集合。
+
+在 $b=3$ 时，直接代入 (5.4) 而不预设两侧分配相等，得到
+
+$$
+\begin{aligned}
+u_{3,3}
+&=\int_0^1h_3(t)f_3(t)\,dt
+=\frac13\int_0^1f_3'(t)f_3(t)\,dt\\
+&=\frac{f_3(1)^2-f_3(0)^2}{6}
+=\frac12,
+\end{aligned}
+\tag{5.5}
+$$
+
+因为 $f_3(1)=\sqrt3$、$f_3(0)=0$。所以 $x_{3,3}=1$，再由 (5.3) 得 $y_{3,3}=1$。对所有整数计数 $0\le i,j\le3$，
+
+$$
+\Delta(C;\phi)=2\sqrt{ij}-i-j
+=-(\sqrt i-\sqrt j)^2\le0.
+$$
+
+空联盟与全体联盟都取零，故在所有联盟上的有符号最大值恰为 $D_{3,3}=0$。
+
+（二）为比较 (5.4) 中不同样本大小的二项式平均，固定 $t\in[0,1]$ 和正整数 $n$，在同一个概率空间取 $n+1$ 个独立 $\operatorname{Bernoulli}(t)$ 变量 $X_1,\ldots,X_{n+1}$。令
+
+$$
+T=\sum_{\ell=1}^{n+1}X_\ell,\qquad
+Y_\ell=\frac{T-X_\ell}{n}.
+$$
+
+同一次实现内有
+
+$$
+\frac1{n+1}\sum_{\ell=1}^{n+1}Y_\ell
+=\frac{T}{n+1}.
+$$
+
+平方根的凹性逐次实现给出
+
+$$
+\sqrt{\frac{T}{n+1}}
+\ge\frac1{n+1}\sum_{\ell=1}^{n+1}\sqrt{Y_\ell}.
+$$
+
+每个 $nY_\ell$ 都服从 $\operatorname{Bin}(n,t)$；这些删去一个变量的和之间不要求独立。取期望便得 $\mu_{n+1}(t)\ge\mu_n(t)$，包含 $t=0,1$。这是经典的删去一个样本的 Jensen 比较，见 Lamkin–Tkocz，[*Log-concavity and log-convexity of moments of averages of i.i.d. random variables*, arXiv:2001.06439v3](https://arxiv.org/pdf/2001.06439v3)，§1，第 1 页，式 (1) 后的平均恒等式；期刊为 *Canadian Mathematical Bulletin* **65**(2)，271–278，[DOI:10.4153/S0008439521000254](https://doi.org/10.4153/S0008439521000254)。这里直接使用非负 Bernoulli 变量和有限 Jensen 不等式，零值处也在定义域中。
+
+由于 $h_3(t)>0$，把这个比较代入 (5.4)，所需的结论为
+
+$$
+u_{3,b}\ge u_{3,5}\qquad(b\ge5).
+\tag{5.6}
+$$
+
+（三）计算 $u_{3,4}$、$u_{3,5}$。对目标 $A$ 侧玩家，将其前驱集按其中另外两名 $A$ 侧玩家的数量 $r\in\{0,1,2\}$ 和 $B$ 侧玩家数量 $k\in\{0,\ldots,b\}$ 分类。该类前驱集的阶乘总权重恰为
+
+$$
+W_{r,k}=\binom2r\binom bk
+\frac{(k+r)!(b+2-k-r)!}{(b+3)!}.
+$$
+
+令 $H_b=(b+1)(b+2)(b+3)$。用 $\binom bk k!(b-k)!=b!$ 约去阶乘，三类分别为
+
+$$
+\begin{aligned}
+W_{0,k}&=\frac{(b+2-k)(b+1-k)}{H_b},\\
+W_{1,k}&=\frac{2(k+1)(b+1-k)}{H_b},\\
+W_{2,k}&=\frac{(k+1)(k+2)}{H_b}.
+\end{aligned}
+$$
+
+其边际价值为 $2\sqrt k(\sqrt{r+1}-\sqrt r)$。包括 $k=0$ 的零边际端点，完整相加得到
+
+$$
+\begin{aligned}
+x_{3,b}&=\frac2{H_b}\sum_{k=0}^b\sqrt k\,P_b(k),\\
+P_b(k)&=(b+2-k)(b+1-k)
++2(\sqrt2-1)(k+1)(b+1-k)\\
+&\hspace{2em}+(\sqrt3-\sqrt2)(k+1)(k+2).
+\end{aligned}
+\tag{5.7}
+$$
+
+代入 $b=4,5$，分别先将和式合并为
+
+$$
+\begin{aligned}
+\sum_{k=0}^4\sqrt k\,P_4(k)
+&=60-36\sqrt2+56\sqrt3+8\sqrt6,\\
+\sum_{k=0}^5\sqrt k\,P_5(k)
+&=66-10\sqrt2+54\sqrt3+16\sqrt6
+-10\sqrt5-30\sqrt{10}+42\sqrt{15}.
+\end{aligned}
+$$
+
+由 (5.7) 先乘以 $2/H_b$ 得到 $x_{3,b}$，再乘以 $3/(2\sqrt{3b})$，即得
+
+$$
+\begin{aligned}
+u_{3,4}&=\frac{42+6\sqrt2+15\sqrt3-9\sqrt6}{105},\\
+u_{3,5}&=\frac{315+81\sqrt5+24\sqrt{10}+33\sqrt{15}
+-5\sqrt{30}-25\sqrt3-75\sqrt6}{840}.
+\end{aligned}
+\tag{5.8}
+$$
+
+为作严格有理比较，沿用定理 2.1 证明中的
+$L_2=14142/10000$、$L_3=17320/10000$、$U_3=17321/10000$、$U_6=24495/10000$，其中 $L_d<\sqrt d<U_d$。另取
+
+$$
+L_5=\frac{22360}{10000},\quad
+L_{10}=\frac{31622}{10000},\quad
+L_{15}=\frac{38729}{10000},\quad
+U_{30}=\frac{54773}{10000}.
+$$
+
+这些新端点所需的严格平方比较是
+
+$$
+\begin{aligned}
+22360^2&=499969600<500000000,\\
+31622^2&=999950884<1000000000,\\
+38729^2&=1499935441<1500000000,\\
+54773^2&=3000081529>3000000000.
+\end{aligned}
+$$
+
+所有端点均为正，故 $L_d<\sqrt d$ 对 $d=5,10,15$ 成立，而 $\sqrt{30}<U_{30}$。按 (5.8) 中每项系数的符号代入，得到
+
+$$
+\begin{aligned}
+u_{3,4}
+&>\frac{42+6L_2+15L_3-9U_6}{105}
+=\frac{181399}{350000}
+>\frac{1287}{2500}
+=9-6L_2
+>9-6\sqrt2,\\
+u_{3,5}
+&>\frac{315+81L_5+24L_{10}+33L_{15}
+-5U_{30}-25U_3-75U_6}{840}\\
+&=\frac{148471}{280000}
+=\frac{53}{100}+\frac{71}{280000}
+>\frac{53}{100}.
+\end{aligned}
+\tag{5.9}
+$$
+
+第一行中间的有理严格差为 $1219/350000$。
+
+（四）验证指定联盟对全部 $b\ge4$ 都严格阻塞。由 (5.2) 与 $b\ge3$，
+
+$$
+\frac{2b}{3}<j_b\le\frac{2b}{3}+1\le b.
+$$
+
+因此所需的两侧玩家数量均可取得，并且
+
+$$
+r_b=\sqrt{\frac{2b}{3j_b}}\in(0,1),\qquad
+\tau_{3,b}=\frac{1-u_{3,b}}{u_{3,b}}.
+$$
+
+当 $b=4$ 时，$j_4=3$，所以
+
+$$
+\frac1{1+r_4}
+=\frac1{1+2\sqrt2/3}=9-6\sqrt2<u_{3,4}
+\tag{5.10}
+$$
+
+由 (5.9) 得到。若 $b=5$，则 $j_5=4\le5b/6$；若 $b\ge6$，则
+$j_b\le2b/3+1\le5b/6$。故全部 $b\ge5$ 同时满足
+
+$$
+r_b\ge\frac2{\sqrt5},\qquad
+\frac1{1+r_b}\le\frac1{1+2/\sqrt5}
+=5-2\sqrt5
+<5-2L_5=\frac{66}{125}<\frac{53}{100}
+<u_{3,5}\le u_{3,b}.
+\tag{5.11}
+$$
+
+式 (5.10)–(5.11) 给出每个整数 $b\ge4$ 的严格不等式
+$u_{3,b}>1/(1+r_b)$。因为 $u_{3,b}>0$，这等价于
+$r_b>\tau_{3,b}$。对计数 $(i,j)=(2,j_b)$，(2.4) 的因式分解于是给出精确赤字
+
+$$
+\Delta(C_b;\phi)
+=2\sqrt{3b}\,\frac{j_b}{b}\,u_{3,b}
+(1-r_b)(r_b-\tau_{3,b})>0.
+\tag{5.12}
+$$
+
+这里每个因子都严格为正，且任意指定标签的 $C_b$ 都是实际联盟。全部联盟组成有限非空集合，所以定义 4.1 的最大值确实取得，并有 $D_{3,b}\ge\Delta(C_b;\phi)>0$。结合（一）的 $D_{3,3}=0$，得到 (5.1)。式 (5.12) 只给出严格阻塞联盟，不将其指定为有限 $b$ 的最大赤字联盟。∎
+
+**定义 5.2（其余固定侧规模的有限分类域）。** 对整数 $a\ge4$，沿用定理 3.1 的 $\alpha=(a-1)/a$、$\eta_a$，记
+
+$$
+B_a=\max\left\{\frac{4a^2}{\eta_a^4},
+\frac{1+\eta_a}{4\alpha\eta_a}\right\},\qquad
+Z_a=\{b\in\mathbb Z:\ b\ge a,\ D_{a,b}=0\}.
+$$
+
+由定理 3.1 与效率，$Z_a\subseteq\{b\in\mathbb Z:a\le b\le B_a\}$；确定这个有限集合的成员是 $a\ge4$ 的有限核分类问题。定理 5.1 的充要式只量化 $a=3$、$b\ge3$，不确定 $Z_a$，也不要求 $D_{3,b}$ 的单调性或正赤字的精确最大值。
+
+## 追加锚（本行以下为增补区）
+
+## 6. 四顶点侧的有限核分类
+
+**定理 6.1（$K_{4,b}$ 的唯一零赤字端点）。** 对每个整数 $b\ge4$ 及每对不交的有限标号集 $A,B$，设 $|A|=4$、$|B|=b$，且 $G$ 恰含全部 $A$–$B$ 边。采用定义 1.1–1.2 的普通邻接能量价值与原始阶乘 Shapley 分配，以及定义 4.1 在全部联盟上的有符号最大赤字，则
+
+$$
+D_{4,b}=0\quad\Longleftrightarrow\quad b=4.
+\tag{6.1}
+$$
+
+$b=4$ 时每名玩家的分配均为 $1$，且每个联盟 $C$，记 $i=|C\cap A|$、$j=|C\cap B|$，均满足
+
+$$
+\Delta(C;\phi)=-(\sqrt i-\sqrt j)^2.
+\tag{6.2}
+$$
+
+每个整数 $b\ge5$ 时，令
+
+$$
+j_b=\left\lfloor\frac{3b}{4}\right\rfloor+1.
+\tag{6.3}
+$$
+
+任取三名 $A$ 侧玩家和 $j_b$ 名 $B$ 侧玩家组成的联盟 $C_b$ 都合法，并且
+
+$$
+\Delta(C_b;\phi)>0,\qquad D_{4,b}>0.
+\tag{6.4}
+$$
+
+这里的价值与分配对应 Arizmendi–Arizmendi，[*The graph energy game*, arXiv:2012.14114v2](https://arxiv.org/pdf/2012.14114v2)，§2.2、§2.4、Definition 3.1。该文 Theorems 3.5–3.6 的 vertex-energy 分配 $e_v=(|A_G|)_{vv}$ 与本定理的阶乘分配不同；Proposition 4.13 的 $2$-energy 博弈采用 $\operatorname{tr}(|A_G|^2)$，也不同于此处的普通能量 $\operatorname{tr}|A_G|$。
+
+**证明。** 对两个标号集分别取双射，会在阶乘和中双射地运输全部前驱集合，保持其大小、边际价值及权重。因此可沿用定义 1.3 的 $K_{4,b}$ 标号。由 (2.1)–(2.3) 的谱计算、排列平均、同侧对称性和效率，记 $x_b=x_{4,b}$、$y_b=y_{4,b}$，则
+
+$$
+w_G(C)=2\sqrt{ij},\qquad x_b>0,\quad y_b>0,\quad
+4x_b+by_b=4\sqrt b.
+\tag{6.5}
+$$
+
+置
+
+$$
+u_b=u_{4,b}=\frac{x_b}{\sqrt b}\in(0,1),\qquad
+\tau_b=\frac{1-u_b}{u_b}.
+$$
+
+式 (4.9) 在这里给出全部联盟的同一个公式
+
+$$
+\frac{\Delta(C;\phi)}{4\sqrt b}
+=\sqrt{\frac i4\frac jb}-u_b\frac i4-(1-u_b)\frac jb,
+\quad 0\le i\le4,\quad 0\le j\le b.
+\tag{6.6}
+$$
+
+每个整数计数对均由实际联盟实现，纯侧与空联盟也包含在内。下面先计算平衡端点，再给出其余整数的统一严格阻塞界。
+
+（一）沿用定理 3.1 与定理 5.1 证明中的有限二项式
+
+$$
+f_n(t)=\sum_{k=0}^n\binom nk t^k(1-t)^{n-k}\sqrt k,
+\qquad \mu_n(t)=\frac{f_n(t)}{\sqrt n}\quad(n\ge1).
+$$
+
+由 (3.3)、(3.6)，
+
+$$
+f_4'(t)=4h_4(t),\qquad
+u_b=2\int_0^1h_4(t)\mu_b(t)\,dt.
+\tag{6.7}
+$$
+
+参数对应为 $a=4$：条件于目标 $A$ 侧玩家的优先级为 $t$，其余三名同侧玩家的前驱数服从 $\operatorname{Bin}(3,t)$，异侧前驱数服从 $\operatorname{Bin}(b,t)$，且在此条件下独立。此时边际贡献为 $2\sqrt k(\sqrt{r+1}-\sqrt r)$。固定前驱集的排列数为 $(k+r)!(b+3-k-r)!$，总排列数为 $(b+4)!$，与定义 1.2 完全相同。式 (6.7) 是这个有限阶乘和的优先级积分，不取 $b\to\infty$ 的极限。
+
+当 $b=4$ 时，$\mu_4=f_4/2$，$f_4(0)=0$、$f_4(1)=2$，故
+
+$$
+\begin{aligned}
+u_4
+&=\int_0^1h_4(t)f_4(t)\,dt
+=\frac14\int_0^1f_4'(t)f_4(t)\,dt\\
+&=\frac{f_4(1)^2-f_4(0)^2}{8}=\frac12.
+\end{aligned}
+$$
+
+所以 $x_4=1$，由 (6.5) 得 $y_4=1$。对每个 $0\le i,j\le4$，直接有
+$\Delta(C;\phi)=2\sqrt{ij}-i-j=-(\sqrt i-\sqrt j)^2\le0$。等号恰在 $i=j$ 时成立；空联盟与全体联盟都取零，故全部联盟上的最大值恰为 $D_{4,4}=0$。
+
+（二）复用定理 5.1 证明（二）的删去一个样本的 Jensen 比较：对每个 $t\in[0,1]$ 与正整数 $n$，$\mu_{n+1}(t)\ge\mu_n(t)$。其经典中间步骤见 Lamkin–Tkocz，[*Log-concavity and log-convexity of moments of averages of i.i.d. random variables*, arXiv:2001.06439v3](https://arxiv.org/pdf/2001.06439v3)，§1，第 1 页，式 (1) 后的平均恒等式。此处取独立 $\operatorname{Bernoulli}(t)$ 变量、函数 $s\mapsto\sqrt s$ 及样本数 $n$；平方根在零处连续，故 $t=0,1$ 与样本均值为零的实现均包括在内。仅使用该 Jensen 比较，不使用该文更强的矩对数凹性结论。因为 $h_4(t)>0$，(6.7) 立即给出所需比较
+
+$$
+u_b\ge u_6\qquad(b\ge6).
+\tag{6.8}
+$$
+
+（三）从四顶点侧的全部前驱集合计算 $u_5,u_6$。对目标 $A$ 侧玩家，令 $r\in\{0,1,2,3\}$、$k\in\{0,\ldots,b\}$ 分别为同侧及异侧前驱数。该类集合的阶乘总权重为
+
+$$
+W_{r,k}=\binom3r\binom bk
+\frac{(k+r)!(b+3-k-r)!}{(b+4)!}.
+$$
+
+令 $H_b=(b+1)(b+2)(b+3)(b+4)$，用
+$\binom bk k!(b-k)!=b!$ 约去阶乘，得到包含全部端点的四式
+
+$$
+\begin{aligned}
+H_bW_{0,k}&=(b+3-k)(b+2-k)(b+1-k),\\
+H_bW_{1,k}&=3(k+1)(b+2-k)(b+1-k),\\
+H_bW_{2,k}&=3(k+1)(k+2)(b+1-k),\\
+H_bW_{3,k}&=(k+1)(k+2)(k+3).
+\end{aligned}
+\tag{6.9}
+$$
+
+乘以边际贡献并相加，可写为
+
+$$
+\begin{aligned}
+P_b(k)&=(b+3-k)(b+2-k)(b+1-k)\\
+&\quad+3(\sqrt2-1)(k+1)(b+2-k)(b+1-k)\\
+&\quad+3(\sqrt3-\sqrt2)(k+1)(k+2)(b+1-k)\\
+&\quad+(2-\sqrt3)(k+1)(k+2)(k+3),\\
+x_b&=\frac2{H_b}\sum_{k=0}^b\sqrt k\,P_b(k),\qquad
+u_b=\frac2{bH_b}\sum_{k=0}^b\sqrt{bk}\,P_b(k).
+\end{aligned}
+\tag{6.10}
+$$
+
+这里 $k=0$ 的边际为零，其余前驱集合没有删减。代入 $b=5,6$，分别使用 $H_5=3024$、$H_6=5040$ 并合并根式，得
+
+$$
+\begin{aligned}
+u_5&=\frac{535-75\sqrt2-175\sqrt3+173\sqrt5
+-5\sqrt{10}+27\sqrt{15}+8\sqrt{30}}{1260},\\
+u_6&=\frac{546+18\sqrt2-164\sqrt3+106\sqrt6
+-21\sqrt{10}-24\sqrt{15}+49\sqrt{30}}{1260}.
+\end{aligned}
+\tag{6.11}
+$$
+
+为对这两个有限和给出严格有理界，沿用定理 2.1 和定理 5.1 证明中的端点
+
+$$
+\begin{gathered}
+L_2=\frac{14142}{10000},\quad U_2=\frac{14143}{10000},\quad
+U_3=\frac{17321}{10000},\quad L_5=\frac{22360}{10000},\\
+L_6=\frac{24494}{10000},\qquad L_{15}=\frac{38729}{10000}.
+\end{gathered}
+$$
+
+它们各自满足 $L_d<\sqrt d$ 或 $\sqrt d<U_d$。另取
+
+$$
+U_{10}=\frac{31623}{10000},\qquad
+U_{15}=\frac{38730}{10000},\qquad
+L_{30}=\frac{54772}{10000}.
+$$
+
+正性及下列整数平方比较给出新增的三个严格端点：
+
+$$
+\begin{aligned}
+31623^2&=1000014129>1000000000,\\
+38730^2&=1500012900>1500000000,\\
+54772^2&=2999971984<3000000000.
+\end{aligned}
+$$
+
+在 (6.11) 中，正系数的根式代入下端点，负系数的根式代入上端点，得到
+
+$$
+\begin{aligned}
+u_5
+&>\frac{535-75U_2-175U_3+173L_5-5U_{10}
++27L_{15}+8L_{30}}{1260}\\
+&=\frac{76811}{150000}
+=\frac{51}{100}+\frac{311}{150000}>\frac{51}{100},\\
+u_6
+&>\frac{546+18L_2-164U_3+106L_6-21U_{10}
+-24U_{15}+49L_{30}}{1260}\\
+&=\frac{6560501}{12600000}
+=\frac{13}{25}+\frac{8501}{12600000}>\frac{13}{25}.
+\end{aligned}
+\tag{6.12}
+$$
+
+（四）现验证 (6.3) 的实际联盟。对 $b\ge5$，
+
+$$
+\frac{3b}{4}<j_b\le\frac{3b}{4}+1\le b.
+$$
+
+因此三名同侧玩家与 $j_b$ 名异侧玩家均可取得。记
+
+$$
+r_b=\sqrt{\frac{3b}{4j_b}}\in(0,1).
+$$
+
+$b=5$ 时 $j_5=4$，所以 $r_5=\sqrt{15}/4$。由
+$196^2=38416<39015=15\cdot51^2$，有 $\sqrt{15}>196/51$，故 (6.12) 给出
+
+$$
+\frac1{1+r_5}=\frac4{4+\sqrt{15}}<\frac{51}{100}<u_5.
+\tag{6.13}
+$$
+
+$b=6,7$ 时分别有 $j_6=5\le7\cdot6/8$、$j_7=6\le7\cdot7/8$；$b\ge8$ 时则有
+$j_b\le3b/4+1\le7b/8$。故所有 $b\ge6$ 均满足 $r_b\ge\sqrt{6/7}$。又因
+$6\cdot169=1014>1008=7\cdot144$，有 $\sqrt{6/7}>12/13$。结合 (6.8)、(6.12)，
+
+$$
+\frac1{1+r_b}\le\frac1{1+\sqrt{6/7}}
+<\frac{13}{25}<u_6\le u_b\qquad(b\ge6).
+\tag{6.14}
+$$
+
+式 (6.13)–(6.14) 覆盖全部整数 $b\ge5$。因 $u_b>0$，所得
+$u_b>1/(1+r_b)$ 等价于 $r_b>\tau_b$。对于计数 $(i,j)=(3,j_b)$，取 (2.4) 的负数即得精确恒等式
+
+$$
+\Delta(C_b;\phi)
+=4\sqrt b\,\frac{j_b}{b}\,u_b(1-r_b)(r_b-\tau_b)>0.
+\tag{6.15}
+$$
+
+各因子均严格为正，且任意具有该计数的联盟都具有同一赤字。全部联盟构成有限非空集合，所以定义 4.1 的最大值取得，并满足
+$D_{4,b}\ge\Delta(C_b;\phi)>0$。结合（一）的 $D_{4,4}=0$，完成 (6.1) 的两个方向。∎
+
+本定理确定定义 5.2 中的 $Z_4=\{4\}$。对每个整数 $a\ge5$，后续有限分类仍是确定
+$Z_a\subseteq\{b\in\mathbb Z:a\le b\le B_a\}$ 的全部成员，其中 $B_a$ 沿用定义 5.2、有限上界沿用定理 3.1。对 $a=4$、$b\ge5$，(6.15) 只给出严格阻塞联盟；正最大值 $D_{4,b}$ 的精确值及其全部最大联盟未由本定理确定，亦不推出 $D_{4,b}$ 关于 $b$ 的单调性。
+
+## 追加锚（本行以下为增补区）

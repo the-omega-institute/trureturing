@@ -1,0 +1,87 @@
+**命题 25.1（常尺度、长度六与八中性时的共同必要方程）。**
+在定义 12.1 的同一实际有限相型律中，设核族具有（12.18）的正、最终中性表示，
+$E=\mathbb Z/6\mathbb Z$、$\kappa_a=k>0$。
+若 $d(P)=c_\star$，则定理 11.5、定理 12.2 和命题 12.4 的全部必要条件成立，
+并有以下方程。
+定理 22.1 给出 $z_a(6)=z_a(8)=1$。以下推导只需这两个中性长度，
+不假设长度五或七中性。实际 $J,P,Q,f$、平稳 Palm 行 $\nu K=\nu$、
+均值 $\mu$、完整原外部风险及两个严格半线解码器均如定义 11.1，
+且 $k\in[1/3,1]$、$e=\mathcal P(k)$ 来自（12.27）–（12.29）的空间周期计数。
+置
+
+$$
+\begin{gathered}
+x_a=z_a(2),\qquad y_a=z_a(3),\qquad q_a=z_a(4),\qquad w_a=z_a(5),\\
+s=\beta(k),\qquad e=\mathcal P(k)=c_\star,
+\end{gathered}
+\tag{25.1}
+$$
+
+以下所有下标模 $6$，$W_a(n)$ 始终指（12.26）的规范能量 $\widetilde W_a(n)$。定义
+
+$$
+\begin{aligned}
+ A_a&=\beta(kx_a),& C_a&=\beta(ky_a),& Q_a&=\beta(kq_a),& D_a^{(5)}&=\beta(kw_a),\\
+ T_a&=\beta\!\left(k\frac{x_ax_{a+2}}{q_a}\right),&
+ U_a&=\beta\!\left(k\frac{x_ay_{a+2}}{w_a}\right),&
+ V_a&=\beta\!\left(k\frac{y_ax_{a+3}}{w_a}\right).
+\end{aligned}
+\tag{25.2}
+$$
+
+取得所需的短方程包括
+
+$$
+\begin{gathered}
+T_a=A_a+A_{a+2}-s,\qquad
+\Xi(T_a)+2Q_a-s=2T_a,\\
+U_a=A_a+C_{a+2}-s,\qquad
+V_a=C_a+A_{a+3}-s,\\
+U_a=V_a,\qquad
+2U_a=2\Xi(U_a)+2D_a^{(5)}-s,\\
+T_a+A_{a+4}=3e+\frac{s}{2},\qquad
+T_{a+2}+A_a=3e+\frac{s}{2}.
+\end{gathered}
+\tag{25.3}
+$$
+
+完整长度六的余边界方程还要求
+
+$$
+6e=s
+ +\Xi\!\bigl(\beta(kx_aq_{a+2})\bigr)
+ +\Xi\!\bigl(\beta(ky_ay_{a+3})\bigr)
+ +\Xi\!\bigl(\beta(kq_ax_{a+4})\bigr),
+\tag{25.4}
+$$
+
+若另有 $z_a(7)=1$（特别地，实际终端为 $M=5$），则还有
+
+$$
+\begin{aligned}
+7e+H_{a+1}-H_a=s
+&+\Xi\!\bigl(\beta(kx_aw_{a+2})\bigr)
+ +\Xi\!\bigl(\beta(ky_aq_{a+3})\bigr)\\
+&+\Xi\!\bigl(\beta(kq_ay_{a+4})\bigr)
+ +\Xi\!\bigl(\beta(kw_ax_{a+5})\bigr).
+\end{aligned}
+\tag{25.5}
+$$
+
+证明。由 $z_a(4)=q_a$ 和 $z_a(5)=w_a$，长度四的
+$(2,2)$ 及长度五的 $(2,3),(3,2)$ 有向恒等式给出（25.3）的前面各项。
+完整长度四能量为 $\Xi(T_a)+2Q_a-s$，而余边界可加性及
+$W_a(2)=2A_a-s$ 给出 $W_a(4)=2T_a$，即第二项。完整长度五只有
+内部位置 $j=2,3$，所以
+
+$$
+W_a(5)=2D_a^{(5)}-s+\Xi(U_a)+\Xi(V_a).
+$$
+
+按 $2+3$ 和 $3+2$ 分解，分别得到 $W_a(5)=2U_a$ 和
+$W_a(5)=2V_a$，从而得到（25.3）的第四、第五项。由定理 22.1，
+$z_a(6)=1$；将长度六分别按 $4+2$ 和 $2+4$ 分解，并使用
+$W_a(4)=2T_a$，得到（25.3）的最后两项。直接将（12.26）写在
+$n=6$、$n=7$ 并保留所有内部位置和端点项，得到（25.4）；在 $z_a(7)=1$ 的附加条件下得到（25.5），其势差仍为 $H_{a+1}-H_a$。
+$\square$
+

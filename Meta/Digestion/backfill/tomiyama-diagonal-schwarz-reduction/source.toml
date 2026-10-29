@@ -1,0 +1,5 @@
+source_id = "tomiyama-diagonal-schwarz-reduction"
+path = "docs/develop/theory/TOMIYAMA_DIAGONAL_SCHWARZ_REDUCTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

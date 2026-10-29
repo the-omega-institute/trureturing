@@ -1,0 +1,24 @@
+**定义 16.1（平方风险与比较常数）。** 对每个实值外部预测器 $g(Y_r)$，置
+
+$$
+\begin{aligned}
+R_{t,q,r}(g)&=\mathbb E_{P_{t,q}}[(X_0-g(Y_r))^2],\\
+\mu_{t,q}^r&=\operatorname{Law}_{P_{t,q}}(X_0,Y_r).
+\end{aligned}
+\tag{16.2}
+$$
+
+这里 $g$ 可以在 $t,q,r$ 给定之后选择，包括使用精确参数的预测器。沿用定理 5.1 的同律风险 $V(t)$，定义
+
+$$
+\begin{aligned}
+V(t)&=\frac{t(1-t)^2}{(1+t)((1-t)^2+t)},\\
+C_t&=\frac{1+2t}{t^2}+\frac{3}{t(1-t)},\\
+\delta_t&=\frac{\min(t,1-t)}2,\qquad
+c_t=\frac{V(t)^2}{2C_t}.
+\end{aligned}
+\tag{16.3}
+$$
+
+这四个量对每个固定 $t\in(0,1)$ 均有限且严格为正。这里 $C_t$ 是风险界的常数，不是第 3、10 节以整数位点为下标的隐藏出向标记。
+

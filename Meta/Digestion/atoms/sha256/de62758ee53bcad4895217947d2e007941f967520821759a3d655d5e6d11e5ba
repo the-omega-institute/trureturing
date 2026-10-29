@@ -1,0 +1,32 @@
+**Proposition 3.3 (Actual conditional mixture and its interior formula).** Let $C=[u,v]\subseteq[1,n]$ have length $m$, and let $\eta$ be any extendible word on its entire complement. Write
+
+$$
+\theta_\ell(\eta)=J(L=\ell\mid W_{[1,n]\setminus C}=\eta),\qquad
+r_{\ell,C}^{\eta}=R^{a_\ell}(W_C=\cdot\mid W_{[1,n]\setminus C}=\eta).
+$$
+
+Then all $\theta_\ell(\eta)$ are positive and
+
+$$
+p_C^\eta:=\mu_n(W_C=\cdot\mid W_{[1,n]\setminus C}=\eta)
+=\sum_{\ell=1}^K\theta_\ell(\eta)r_{\ell,C}^\eta.
+\tag{3.5}
+$$
+
+For an interior interval, $1<u\le v<n$, let $a=\eta_{u-1}$ and $b=\eta_{v+1}$. Then
+
+$$
+r_{\ell,C}^{\eta}(w)=\frac{z_\ell^{k(w)}}{Z_{\ell,m}^{a,b}},\qquad
+Z_{\ell,m}^{a,b}=\sum_{w\in K_m^{a,b}}z_\ell^{k(w)}>0.
+\tag{3.6}
+$$
+
+Proof. An extendible complement has at least one legal completion, positive under every component by Proposition 3.2. Bayes' formula therefore gives positive posterior weights and (3.5), with no null denominator. In a fixed component the exterior transition factors cancel in the conditional. For the path from $a$ through $w$ to $b$, there are $k(w)+b$ transitions $0\to1$, $k(w)+a$ transitions $1\to0$, and $m+1-a-b-2k(w)$ transitions $0\to0$. Its transition product is
+
+$$
+a_\ell^b(1-a_\ell)^{m+1-a-b}z_\ell^{k(w)}.
+\tag{3.7}
+$$
+
+The prefactor is independent of $w$, proving (3.6). This formula is used only when both adjacent exterior bits are actually present. Formula (3.5) and Proposition 3.2 cover open-endpoint blocks and the whole interval without imposing fictitious exterior observations. Nonextendible complements have zero weight throughout. $\square$
+

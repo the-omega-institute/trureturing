@@ -6,7 +6,31 @@ Computed occurrence potentials for native epoch transport
 
 Finite occurrence positions are enumerated directly from every original equation. The resulting graph keeps loops, parallel edges, repeated occurrences, disconnected states, empty systems, signed exponent differences and equations with undefined heads.
 
-**Definition 1.1 (An input-only terminating natural tuple program).**
+**Theorem 1.1 (The initial base is below the folded maximum).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeComputedEpochPotential.base_le_fold_max`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeComputedEpochPotential.base_le_fold_max` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every list l of integers and every integer b, b is at most l.foldr max b. This original supplier is applied with base zero by NativePositivePotentialCover.sourceRelaxation_nonneg.
+
+**Theorem 1.2 (A maximum retains a property of every candidate).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeComputedEpochPotential.fold_max_property`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeComputedEpochPotential.fold_max_property` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every predicate P on integers, list l and integer b, if P(b) and P(a) for every a in l, then P(l.foldr max b). This original supplier is applied with base zero to construct an attaining original walk in NativePositivePotentialCover.sourceRelaxation_attained.
+
+**Definition 1.3 (An input-only terminating natural tuple program).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeComputedEpochPotential.computedPotential`
 
@@ -18,7 +42,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeComputed
 
 For every n, k and m and every input I : EpochInput n k m, computedPotential I has type Fin m → Nat. Its integer precursor computedSignedPotential I is the m-th relaxation iterate. The zero iterate d_i is a_i when equation i is defined and zero otherwise. The next iterate at i is the maximum of d_i and all preceding values at j plus a_i-b for each syntax-position occurrence of rho^b X_j in equation i. Each round scans the finite indexed occurrence list; the natural round counter decreases structurally. The output is defined even when the cycle criterion fails, with correctness conditional on that criterion.
 
-**Definition 1.2 (The computed tuple and its correctness certificate).**
+**Definition 1.4 (The computed tuple and its correctness certificate).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeComputedEpochPotential.constructPotential`
 
@@ -30,7 +54,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeComputed
 
 For every input I and proof hcycle : CycleCondition I, constructPotential I hcycle returns the subtype {s : Fin m → Nat // Potential I s}. Its value is definitionally computedPotential I. Nonnegativity comes from the initial lower bounds; a maximizing finite walk and nonpositive cycle deletion prove the edge inequalities after m rounds. Only the proof component uses the cycle condition. The tuple itself needs no additional mathematical witness.
 
-**Theorem 1.3 (Cycle criterion and computed potential).**
+**Theorem 1.5 (Cycle criterion and computed potential).**
 
 $$\forall n: Nat, (\forall k: Nat, (\forall m: Nat, (\forall I: \operatorname{EpochInput}\left(n, k, m\right), ((\operatorname{CycleCondition}\left(I\right) \iff \exists s: \operatorname{Fin}\left(m\right) \to Nat, (\operatorname{Potential}\left(I, s\right)))))))$$
 
@@ -42,7 +66,7 @@ $$\forall n: Nat, (\forall k: Nat, (\forall m: Nat, (\forall I: \operatorname{Ep
 
 The graph reverses an occurrence edge so its max-plus potential inequality is exactly the natural difference inequality. A potential telescopes around every closed walk. Conversely, initialize each defined head at its nonnegative head exponent and each undefined state at zero. In each round, replace each value by the maximum of its initial lower bound and the preceding source value plus the signed weight over every incoming occurrence edge. After exactly as many rounds as there are states, the resulting integer tuple is nonnegative and satisfies every edge inequality. Every finite-round value is attained by a walk; removing nonpositive cycles gives a simple path with fewer edges than states, proving that the fixed finite bound suffices. Taking natural values therefore computes the required tuple solely from the original equations and head powers, without any supplied potential, parameter assignment or prefix depth. The empty input produces the empty tuple. The recursive ShiftLegal predicate is then proved by induction over the actual expression syntax, including ordered pairs and repeated occurrences.
 
-**Theorem 1.4 (The computed potential feeds the original solution correspondence).**
+**Theorem 1.6 (The computed potential feeds the original solution correspondence).**
 
 $$\forall n: Nat, (\forall k: Nat, (\forall m: Nat, (\forall I: \operatorname{EpochInput}\left(n, k, m\right), ((\operatorname{CycleCondition}\left(I\right) \implies \exists s: \operatorname{Fin}\left(m\right) \to Nat, ((\operatorname{Potential}\left(I, s\right) \land \forall p: \operatorname{Fin}\left(n\right) \to Nat, (\forall w: \operatorname{Fin}\left(m\right) \to CompletionTree, (((\operatorname{Legal}\left(\operatorname{functionalInput}\left(I, s\right), p\right) \land (\operatorname{SourceSatisfies}\left(\operatorname{functionalInput}\left(I, s\right), p, w\right) \land \operatorname{SourcePasses}\left(\operatorname{functionalInput}\left(I, s\right), p, w\right))) \iff \exists! v: \operatorname{Fin}\left(m\right) \to CompletionTree, ((\operatorname{OriginalAdmissible}\left(I, p, v\right) \land \operatorname{imageValues}\left(s, v\right) = w))))))))))))$$
 
@@ -56,9 +80,11 @@ Under the cycle condition, constructPotential pairs the executable computedPoten
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeComputedEpochPotential.base_le_fold_max`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeComputedEpochPotential.computedPotential`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeComputedEpochPotential.constructPotential`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeComputedEpochPotential.cycleCondition_gives_epoch_transport`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeComputedEpochPotential.cycleCondition_iff_potential`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeComputedEpochPotential.fold_max_property`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeOriginalReconstructionBridge](NativeOriginalReconstructionBridge.md)
 - Dependency: [D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual](../../../../Combinatorics/Graph/LayeredCirculation/SupplierDual.md)

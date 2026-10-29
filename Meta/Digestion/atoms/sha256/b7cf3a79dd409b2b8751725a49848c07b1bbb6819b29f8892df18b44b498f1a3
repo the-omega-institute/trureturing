@@ -1,0 +1,19 @@
+**Definition 10.1 (implicit subtree ranks).** For a present descriptor
+$(b_p,\sigma_p)$ at a hypothetical cut $u$, define
+
+$$
+ \kappa_u(p)=u-b_p+\mathbf1_{\sigma_p=\beta},\qquad
+ f(q)=F_{q+1}\quad(q\ge0).
+ \tag{ACR.30}
+$$
+
+The subtree has $f(\kappa_u(p))$ terminal leaves. It is a singleton
+exactly at ranks zero and one, and a branch at every rank at least two.
+A branch of rank $q$ has child ranks $q-1,q-2$, with rank $q-1$ at
+$a$ iff its actual orientation bit is one. These are ranks of the
+orientation-independent leaf counts, not names of fixed physical
+semantic children. Their meaning follows by the two label transitions
+and the recurrence $f(q)=f(q-1)+f(q-2)$ for $q\ge2$, as in GPO
+Theorem 24.2. In particular $f(0)=f(1)=1$: tests below compare leaf
+counts, and do not treat ranks zero and one as unequal supports.
+

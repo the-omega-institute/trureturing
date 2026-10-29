@@ -1,0 +1,19 @@
+**Proposition 47.7 (The five-cycle boundary count).**
+For every $j\ge1$, $A_{2,j}=j^3$.
+
+*Proof.* Choose the endpoint values $a,b\in\{1,\ldots,j\}$. The
+middle coordinate has exactly $2j+1-a-b$ positive choices: the
+total cap is the active bound and is no larger than either adjacent-edge
+bound. Therefore
+
+$$
+A_{2,j}=\sum_{a,b=1}^j(2j+1-a-b)=j^3.
+$$
+
+This agrees with (47.7), including its correction for every $j\ge2$.
+$\square$
+
+[BJY47]: https://arxiv.org/abs/math/0606163
+
+[JYZ47]: https://arxiv.org/html/2607.22008v1
+

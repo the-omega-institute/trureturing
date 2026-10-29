@@ -1,0 +1,39 @@
+**定理 14.1（在原目标上的密度二分）。** 对每个固定有限 $m\ge1$ 和 $\mathbf p\in(0,1)^m$，按约定 1.3 的原目标及供应接口，
+
+$$
+d(P_{\mathbf p})=\lim_{n\to\infty}\frac{\Phi_n((P_{\mathbf p})_n)}n
+=\begin{cases}
+0,&d\ge2\quad(\mathbf p\text{ 非常数}),\\
+V(t),&d=1\quad(p_j=t\text{ 对所有 }j).
+\end{cases}
+\tag{14.1}
+$$
+
+这里左侧的 $d(P)$ 是密度记号，右侧无自变量的整数 $d$ 是最小周期，二者含义不同。
+
+**证明。** 定理 12.1、13.1 给出同一原律的完整外部风险。命题 9.2 已核对平稳性与合法性，因此（1.4）可直接应用：其 $E_r$、$\eta_r$、$\eta$ 分别对应 [Universal 卷][U] 定义 1.2 的 $D_r$、$q_r$、$q$，原边缘为（9.5）在位点 $1,\ldots,n$ 上的分布。
+
+还可直接核对该接口的时钟和边界。令
+
+$$
+\mathcal G_{n,i}=\sigma(X_j:1\le j\le n,\ j\ne i),\qquad
+R=\mathbb E_P[(X_0-\eta)^2].
+$$
+
+在原完整词域中，一个合法双点坐标纤维质量为 $s,t$，其条件平方损失贡献为 $h(s,t)$；强制零或零总质量纤维贡献零。每条原 Hamming 边恰属一个坐标纤维，故
+
+$$
+\Phi_n(P_n)=\sum_{i=1}^n
+\mathbb E_P\left[(X_i-\mathbb E_P[X_i\mid\mathcal G_{n,i}])^2\right].
+\tag{14.2}
+$$
+
+端点使用原开放端点的可补全纤维，并未补上首尾连边，也未删除任何原边。每个 $\mathcal G_{n,i}\subseteq\mathcal E_i$，所以各项至少为 $R$。对 $r+1\le i\le n-r$，该字段含平移后的 $\mathcal F_r$，所以该项至多为 $E_r(P)$；其余每项至多为 $1/4$。于是当 $n\ge2r+1$，
+
+$$
+nR\le\Phi_n(P_n)\le(n-2r)E_r(P)+\frac{2r}{4}.
+\tag{14.3}
+$$
+
+先固定 $r$，除以 $n$ 并令 $n\to\infty$，再由引理 1.4 令 $r\to\infty$，得密度等于 $R$。这也逐项核对了（1.4）的应用；没有乘除 $\rho$，没有把原有限位柱换成 Palm 间隔柱。代入已证风险即为（14.1）。$\square$
+
