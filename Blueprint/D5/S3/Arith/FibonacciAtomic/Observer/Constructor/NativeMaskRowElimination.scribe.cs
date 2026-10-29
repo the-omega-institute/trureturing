@@ -86,11 +86,15 @@ internal sealed class NativeMaskRowEliminationDocument : IScribeDocumentDefiniti
         var prefix = Bounded("r", V("RawRow"), rs, C("CutPrefixFree", Fst(r)));
         var depth = Bounded("r", V("RawRow"), rs,
             Bounded("q", V("Address"), Fst(r), Seq(C("length", V("q")), Sp, Lt, Sp, V("d"))));
-        return All("X", V("Type"), All("p", C("Presentation", V("X")),
-            All("d", V("Nat"), All("pat", C("Pattern", V("d")),
-                All("name", Arr(C("Frontier", V("pat")), V("X")),
-                    All("rs", C("List", V("RawRow")), All("extra", C("SignedConstraints", V("X")),
-                        All("v", Arr(V("X"), V("Source")),
-                            Imp(prefix, Imp(depth, And(Exterior(), And(expressions, IffOf(And(rows, Extras()), Image()))))))))))));
+        Formula body = Imp(prefix, Imp(depth,
+            And(Exterior(), And(expressions, IffOf(And(rows, Extras()), Image())))));
+        body = All("v", Arr(V("X"), V("Source")), body);
+        body = All("extra", C("SignedConstraints", V("X")), body);
+        body = All("rs", C("List", V("RawRow")), body);
+        body = All("name", Arr(C("Frontier", V("pat")), V("X")), body);
+        body = All("pat", C("Pattern", V("d")), body);
+        body = All("d", V("Nat"), body);
+        body = All("p", C("Presentation", V("X")), body);
+        return All("X", V("Type"), body);
     }
 }
