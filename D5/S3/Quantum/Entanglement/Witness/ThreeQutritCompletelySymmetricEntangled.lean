@@ -79,6 +79,9 @@ private def witness (w : Word (Fin 3) 3) : ℝ :=
   else if counts w = ![0, 0, 3] then 1
   else if counts w = ![1, 1, 1] then -1 / 2
   else 0
+private theorem productVector_three (v : Fin 3 → Fin 3 → ℂ) (w : Word (Fin 3) 3) :
+    productVector v w = v 0 (w 0) * v 1 (w 1) * v 2 (w 2) :=
+  Fin.prod_univ_three _
 
 private theorem counts_sum (w : Word (Fin 3) 3) (j : Fin 3) :
     counts w j = ∑ k : Fin 3, if w k = j then 1 else 0 := by
@@ -145,16 +148,19 @@ private theorem gram_factor : state =
   ext a b
   rcases counts_classes a with ha | ha | ha | ha | ha | ha | ha | ha | ha | ha <;>
     rcases counts_classes b with hb | hb | hb | hb | hb | hb | hb | hb | hb | hb <;>
-    norm_num [state, moment, gramWeight, gramVector, ha, hb, Fin.sum_univ_succ,
-      funext_iff, Fin.forall_fin_succ, Matrix.sum_apply, Matrix.smul_apply,
-      Matrix.vecMulVec_apply, Pi.star_apply, smul_eq_mul, map_ofNat]
+    (delta state moment gramWeight gramVector
+     norm_num [ha, hb, Fin.sum_univ_succ, funext_iff, Fin.forall_fin_succ,
+       Matrix.sum_apply, Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply,
+       smul_eq_mul, map_ofNat])
 
 private theorem state_psd : state.PosSemidef := by
   rw [gram_factor]
   have hp (k : Fin 7) :
       ((gramWeight k : ℂ) • vecMulVec (gramVector k) (star (gramVector k))).PosSemidef := by
     apply (Matrix.posSemidef_vecMulVec_self_star (gramVector k)).smul
-    have hw : 0 ≤ gramWeight k := by fin_cases k <;> norm_num [gramWeight]
+    have hw : 0 ≤ gramWeight k := by
+      delta gramWeight
+      fin_cases k <;> norm_num
     exact_mod_cast hw
   exact Finset.sum_induction _ _ (fun a b ha hb => ha.add hb) .zero (fun k _ => hp k)
 
@@ -162,7 +168,8 @@ private theorem state_trace : trace state = 1 := by
   apply Complex.ext
   · change (∑ w, state w w).re = 1
     rw [Complex.re_sum, sum_words]
-    norm_num [Fin.sum_univ_three, state, moment, counts_three, funext_iff,
+    delta state moment
+    norm_num [Fin.sum_univ_three, counts_three, funext_iff,
       Fin.forall_fin_succ]
   · change (∑ w, state w w).im = 0
     rw [Complex.im_sum]
@@ -212,10 +219,9 @@ private theorem symmetric_product_power (v : Fin 3 → Fin 3 → ℂ)
   · refine ⟨0, fun _ => 0, ?_⟩
     intro w
     rw [hz w, zero_mul]
-  push Not at hz
-  obtain ⟨w, hw⟩ := hz
+  obtain ⟨w, hw⟩ := not_forall.mp hz
   have hp : productVector v w = v 0 (w 0) * v 1 (w 1) * v 2 (w 2) :=
-    Fin.prod_univ_three _
+    productVector_three v w
   rw [hp] at hw
   have h0 : v 0 (w 0) ≠ 0 := fun h => hw (by rw [h, zero_mul, zero_mul])
   have h1 : v 1 (w 1) ≠ 0 := fun h => hw (by rw [h, mul_zero, zero_mul])
@@ -231,8 +237,8 @@ private theorem symmetric_product_power (v : Fin 3 → Fin 3 → ℂ)
           (if c = j then 1 else 0)
       omega
     have h := hs _ _ hc
-    simp only [productVector, Fin.prod_univ_three] at h
-    exact h
+    simpa only [productVector_three, Matrix.cons_val_zero, Matrix.cons_val_one,
+      Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons] using h
   have hs02 (a b c : Fin 3) :
       v 0 a * v 1 b * v 2 c = v 0 c * v 1 b * v 2 a := by
     have hc : counts ![a, b, c] = counts ![c, b, a] := by
@@ -244,15 +250,15 @@ private theorem symmetric_product_power (v : Fin 3 → Fin 3 → ℂ)
           (if a = j then 1 else 0)
       omega
     have h := hs _ _ hc
-    simp only [productVector, Fin.prod_univ_three] at h
-    exact h
+    simpa only [productVector_three, Matrix.cons_val_zero, Matrix.cons_val_one,
+      Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons] using h
   have hb (z : Fin 3) : v 1 z = (v 1 (w 0) / v 0 (w 0)) * v 0 z := by
     have h := mul_right_cancel₀ h2 (hs01 (w 0) z (w 2))
     apply mul_left_cancel₀ h0
     calc
       v 0 (w 0) * v 1 z = v 0 z * v 1 (w 0) := h
       _ = v 0 (w 0) * (v 1 (w 0) / v 0 (w 0) * v 0 z) := by
-        field_simp [h0]
+        rw [← mul_assoc, mul_div_cancel₀ _ h0, mul_comm]
   have hc (z : Fin 3) : v 2 z = (v 2 (w 0) / v 0 (w 0)) * v 0 z := by
     have h : v 0 (w 0) * v 2 z = v 0 z * v 2 (w 0) := by
       apply mul_left_cancel₀ h1
@@ -265,7 +271,7 @@ private theorem symmetric_product_power (v : Fin 3 → Fin 3 → ℂ)
     calc
       v 0 (w 0) * v 2 z = v 0 z * v 2 (w 0) := h
       _ = v 0 (w 0) * (v 2 (w 0) / v 0 (w 0) * v 0 z) := by
-        field_simp [h0]
+        rw [← mul_assoc, mul_div_cancel₀ _ h0, mul_comm]
   refine ⟨(v 1 (w 0) / v 0 (w 0)) * (v 2 (w 0) / v 0 (w 0)), v 0, ?_⟩
   intro q
   change (∏ k : Fin 3, v k (q k)) = _
@@ -295,7 +301,8 @@ private theorem power_witness_nonneg (c : ℂ) (x : Fin 3 → ℂ) :
         Complex.normSq (x 0) * Complex.normSq (x 1) ^ 2 + Complex.normSq (x 2) ^ 3 -
         3 * Complex.normSq (x 0) * Complex.normSq (x 1) * Complex.normSq (x 2)) := by
     rw [sum_words]
-    norm_num [Fin.sum_univ_three, Fin.prod_univ_three, witness, counts_three,
+    delta witness
+    norm_num [Fin.sum_univ_three, Fin.prod_univ_three, counts_three,
       funext_iff, Fin.forall_fin_succ, Complex.normSq_mul]
     ring
   rw [he]
@@ -312,7 +319,8 @@ private theorem symmetric_product_witness_nonneg (v : Fin 3 → Fin 3 → ℂ)
 private theorem state_witness_value :
     (∑ w : Word (Fin 3) 3, witness w * (state w w).re) = -1 / 471 := by
   rw [sum_words]
-  norm_num [Fin.sum_univ_three, witness, state, moment, counts_three,
+  delta witness state moment
+  norm_num [Fin.sum_univ_three, counts_three,
     funext_iff, Fin.forall_fin_succ]
 
 private theorem state_entangled : ¬ IsFullySeparable state := by
