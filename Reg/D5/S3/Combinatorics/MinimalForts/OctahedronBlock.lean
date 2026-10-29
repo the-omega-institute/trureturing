@@ -130,7 +130,7 @@ def rootedFamily : Registration (propArena SubsetState)
   have h1 : rootedLeft pairState := by
     apply (h pairState).mpr
     refine ⟨by simp [pairState], ?_⟩
-    change Set.InjOn Prod.fst (({(0,0),(1,0)} : Finset (Fin 2 × Fin 2)) : Set _)
+    change Transversal ({(0,0),(1,0)} : Finset (Fin 2 × Fin 2))
     have hs : ∀ v : Fin 2 × Fin 2, v ∈ ({(0,0),(1,0)} : Finset _) → v.2 = 0 := by
       intro v hv
       simp only [Finset.mem_insert, Finset.mem_singleton] at hv
