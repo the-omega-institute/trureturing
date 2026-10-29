@@ -1,0 +1,51 @@
+**Proposition 15.2 (Unchanged realization and read obligations).** The
+finite restriction is necessary only. It supplies no strict-real lift,
+existence or absence at a base of $Z_H$, explicit list or cardinality of
+$Z_H$, inverse on it, classification of $H=0$ (including $p=24$), or
+full-domain eight/nine-read recovery. All actual worlds in its consumer
+retain the following domain and history:
+
+$$
+\begin{gathered}
+P=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\qquad
+0<r<1,\quad b>0,\\
+0\ne g\in\mathbb R[s],\quad\deg g\le3,\quad d\in\mathbb R,\\
+(E_1,\ldots,E_6)=(\mathsf J,\mathsf M,\mathsf J,\mathsf M,\mathsf M,\mathsf M),\\
+(y_0,\ldots,y_6)=(0,24,147/5,24,18,p,v),\qquad
+ y_i=d+g(i)\operatorname{tr}(Q_iP).
+\end{gathered}
+\tag{15.1}
+$$
+
+Proof. The consumer uses only the implication in S, Lemma 9.9, from
+actual worlds to index zeros. None of the steps constructs worlds from
+complex zeros or proves that every zero lifts. Conversely, all actual
+worlds with this history and $H\ne0$ are covered by that lemma, including
+all gain signs, lower degrees, sampled gain zeros, repeated roots, any
+fixed real drift, and the original singular-source possibilities.
+Each world has its own whole gain and drift; equality of worlds in an
+overlap stratum means equality of those complete data. No bound on an
+unused companion, no common drift across distinct worlds, and no
+additional gain or source guard has entered the proof.
+
+The acquired rows in (15.1) use one nonresettable trajectory. The initial
+read is counted; each atomic J or M action is read immediately; terminal
+J and M are alternatives at original clock seven. Algebraically comparing
+the alternatives does not acquire both on one trajectory. There is no
+reset, copy, idle skipped read, unread composite action, extra port or
+clock renumbering. In a deterministic history-dependent procedure this
+is a conditional restriction at a node with exactly these actual acquired
+rows; it imposes no new action or early-stopping rule and proves no
+unrestricted adaptive recovery statement.
+
+The real joint question on the remaining finite outer bases and on all
+$H=0$ strata is therefore still subject to the original complete-world
+and actual-history conditions. The settled first negative-J family and
+the old exact $p_J$ classification are not reopened. The local VII
+results, XI7 attachments and XI8 whole-arc exclusion retain their stated
+scopes; an isolated finite pair is not identified with a local germ by
+this argument. Fixed48 V(18.12)(i), rootQ, genuine common-ancestor and
+both-child compatibility, and the original full-domain adaptive
+8/9-read problem receive no solution from this finite complex outer
+restriction. ∎
+

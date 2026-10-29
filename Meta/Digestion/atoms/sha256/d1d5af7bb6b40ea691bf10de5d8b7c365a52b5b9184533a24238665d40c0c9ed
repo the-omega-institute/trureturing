@@ -1,0 +1,62 @@
+**Definition 9.1 (Fixed objects and primitive conventions).** Write S, IX
+and X for [Support](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md),
+[Support IX](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IX.md) and
+[Support X](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_X.md). The integer
+polynomials $D,a_i,f,K,F_0,\alpha,\beta,R$ are exactly IX, (4.1),
+(4.3)–(4.7), with $K=4k$ and
+
+$$
+\operatorname{Res}_d(f,K)=256D^8F_0^2R,
+\qquad \rho=[x^{18}]R.
+\tag{9.1}
+$$
+
+In $B=\mathbb Q(p,v)[x]/(R/\rho)$ use the coefficient basis
+$1,x,\ldots,x^{17}$. Put $\delta=-\beta/\alpha$ and use the *robust*
+functions of S, Theorem 4.3:
+
+$$
+\begin{gathered}
+H_i=a_i(x,\delta)/D\quad(i=0,1,2,7),\qquad
+B_0=294/5-2\delta-H_2,\\
+C_0=\delta^2+B_0^2,\qquad N_0=-\delta H_0+B_0H_2,\\
+\tau_M=\delta+(2x+3)H_7,\\
+\tau_J=\delta+
+ \left(4x+\frac12+\frac{C_0}{2N_0}
+                    -\frac{2(24-\delta)}{H_1}\right)H_7,\\
+\chi_E(z)=\det(zI-M(\tau_E)),\qquad
+\iota_E=\det[1,\tau_E,\ldots,\tau_E^{17}].
+\end{gathered}
+\tag{9.2}
+$$
+
+Here $M$ is multiplication in $B$, and the determinant columns in
+$\iota_E$ are coefficient vectors. The symbol $\iota$ avoids the
+unrelated overlap index $\kappa$ of Section 1. The symbols $C_0,N_0$
+are quotient-algebra elements; $N_J,N_M$ below are scalar polynomials.
+
+For an integer polynomial $A\ne0$, let $\operatorname{pp}_+(A)$ mean
+division by its positive integer coefficient content, followed by the sign
+which makes its lexicographic leading coefficient positive. In scalar
+polynomials the order is $p>v$. For a rational function, first cancel its
+polynomial numerator-denominator gcd over $\mathbb Q[p,v]$, then clear
+rational scalar denominators, and take $\operatorname{pp}_+$ separately
+on numerator and denominator. A rational scalar multiplying the resulting
+fraction is retained separately. Let $N_E,D_E^{\rm ind}$ be these
+primitive numerator and denominator of $\iota_E$.
+Thus $N_E$ is literally the polynomial in S, Theorem 4.3.
+
+Let $E_0$ be *that same* theorem's primitive squarefree product: $\rho$,
+$\operatorname{Disc}_x(R)$, both sides of the five reduced norms of
+$\alpha,D,H_1,C_0,N_0$, all its listed coefficient denominators, and the
+two power-determinant denominators. Define
+
+$$
+H=(p-24)E_0,\qquad \rho_0=\operatorname{pp}_+(\rho).
+\tag{9.3}
+$$
+
+In particular no factor $d,H_0,F_0,\beta$, terminal coordinate, or gain
+coefficient is added to this inventory. Total degree without a subscript
+means degree in the indicated parameter variables, not degree in $x$.
+

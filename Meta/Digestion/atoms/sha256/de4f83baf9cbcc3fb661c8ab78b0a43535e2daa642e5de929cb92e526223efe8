@@ -1,0 +1,27 @@
+**Theorem 4.1 (Necessary conditions).** If $\Phi$ is Schwarz, then
+
+- (i) $0\le q\le 1/(d-1)$;
+- (ii) $\lambda^2\le 1-(d-1)q$;
+- (iii) $(d+2)\lambda^2\le(d+2-d^2q)\big(1-(d-2)q\big)$;
+- (iv) $(d-1)\lambda^2-(d-2)\lambda\le1-q$, equivalently $(1-\lambda)\big(1+(d-1)\lambda\big)\ge q$.
+
+Stance: (i) and (ii) follow from cited fact (b)(i) applied with $c_{kj}=q$, $c_{jj}=p$ and $\lambda_{ij}=\lambda$, and are literature-attested; (iii) and (iv) are suspected-novel (see §7). The proof below is self-contained.
+
+**Proof.** (i), (ii). For $X=E_{12}$, $X^\ast X=E_{22}$ and $\Phi(X)=\lambda E_{12}$, so $S(E_{12})=\Phi(E_{22})-\lambda^2E_{22}=(p-\lambda^2)E_{22}+q(I-E_{22})$. Hence $q\ge0$ and $\lambda^2\le p$, and then $(d-1)q\le1-\lambda^2\le1$.
+
+(iii). Put $r=1-(d-2)q$. For real $y$ let $X_y=E_{11}-E_{22}+y(E_{12}-E_{21})$ and $v=e_1+e_2$. A direct computation with Lemma 3.1 gives
+
+$$
+v^{T}S(X_y)\,v=4\left(\frac{q(d+2-d^2q)}{2}+\lambda dq\,y+\frac{r-\lambda^2}{2}\,y^2\right).
+$$
+
+If $q=0$, inequality (iii) reads $\lambda^2\le1$ and follows from (ii). If $q>0$, then (ii) gives $r-\lambda^2\ge r-p=q>0$; taking $y=-\lambda dq/(r-\lambda^2)$, nonnegativity yields $q(d+2-d^2q)(r-\lambda^2)\ge\lambda^2d^2q^2$. Dividing by $q$ and rearranging, $(d+2-d^2q)\,r\ge\lambda^2(d^2q+d+2-d^2q)=(d+2)\lambda^2$, which is (iii).
+
+(iv). Let $X=\sum_{j=2}^{d}E_{1j}$ and $u=\sum_{j=2}^{d}e_j$. Then $X^\ast X=uu^{T}$, $\Phi(X)=\lambda X$, $\mathrm{diag}(uu^{T})=I-E_{11}$ and $\mathrm{tr}(uu^{T})=d-1$, so $S(X)=\lambda(1-\lambda)uu^{T}+\mu(I-E_{11})+(d-1)qI$. Hence
+
+$$
+u^{T}S(X)\,u=(d-1)\Big((d-1)\lambda(1-\lambda)+\mu+(d-1)q\Big)=(d-1)\Big(1-q+(d-2)\lambda-(d-1)\lambda^2\Big),
+$$
+
+and nonnegativity is (iv). The equivalent form follows from $1+(d-2)\lambda-(d-1)\lambda^2=(1-\lambda)(1+(d-1)\lambda)$. ∎
+
