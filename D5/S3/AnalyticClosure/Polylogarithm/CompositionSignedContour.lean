@@ -54,21 +54,32 @@ private theorem signed_horizontal {g F G : ℂ → ℂ} {a b : ℝ} (ha : a < 0)
       (-2 * I) * ((∫ x in 0..b, -(g x).im * Real.exp (-(n : ℝ) * x) : ℝ) : ℂ) := by
   have hc0 : ContinuousOn (fun x : ℝ ↦ g x) (Icc a b) := by
     simpa using horizontal_continuous hc (y := 0) (by constructor <;> positivity)
-  have hc2 := horizontal_continuous hc (y := 2 * Real.pi) (by constructor <;> positivity)
-  have hf : ContinuousOn (fun x : ℝ ↦ logIntegrand g n x) (Icc a b) := hc0.mul (by fun_prop)
+  have hc2 := horizontal_continuous hc (y := 2 * Real.pi) ⟨by positivity, le_rfl⟩
+  have hc2' : ContinuousOn (fun x : ℝ ↦ g (x + 2 * Real.pi * I)) (Icc a b) := by
+    simpa only [ofReal_mul, ofReal_ofNat] using hc2
+  have hf : ContinuousOn (fun x : ℝ ↦ logIntegrand g n x) (Icc a b) :=
+    hc0.fun_mul (by fun_prop)
   have ht : ContinuousOn (fun x : ℝ ↦ logIntegrand g n (x + 2 * Real.pi * I))
-      (Icc a b) := hc2.mul (by fun_prop)
+      (Icc a b) := hc2'.fun_mul (by fun_prop)
   let jump : ℝ → ℂ := fun x ↦ logIntegrand g n x -
     logIntegrand g n (x + 2 * Real.pi * I)
-  have hjc : ContinuousOn jump (Icc a b) := hf.sub ht
+  have hjc : ContinuousOn jump (Icc a b) := hf.fun_sub ht
+  have hker (x : ℝ) : Complex.exp (-(n : ℂ) * (x : ℂ)) =
+      (Real.exp (-(n : ℝ) * x) : ℂ) := by
+    have he : -(n : ℂ) * (x : ℂ) = ((-(n : ℝ) * x : ℝ) : ℂ) := by
+      push_cast
+      rfl
+    rw [he, ← Complex.ofReal_exp]
   have hjleft : (∫ x in a..0, jump x) = 0 := by
-    apply intervalIntegral.integral_eq_zero_of_forall
-    intro x hx
-    rw [uIcc_of_le ha.le] at hx
-    dsimp [jump, logIntegrand]
-    rw [hbot x hx.1 (hx.2.trans hb.le), htop x hx.1 (hx.2.trans hb.le),
-      hcancel x hx.1 hx.2, periodic_kernel]
-    simp only [← Complex.ofReal_mul, ← Complex.ofReal_neg, Complex.ofReal_exp, sub_self]
+    calc
+      _ = ∫ _ : ℝ in a..0, (0 : ℂ) := by
+        apply intervalIntegral.integral_congr
+        intro x hx
+        rw [uIcc_of_le ha.le] at hx
+        dsimp [jump, logIntegrand]
+        rw [hbot x hx.1 (hx.2.trans hb.le), htop x hx.1 (hx.2.trans hb.le),
+          hcancel x hx.1 hx.2, periodic_kernel, hker, sub_self]
+      _ = 0 := intervalIntegral.integral_zero
   have hjright : (∫ x in 0..b, jump x) =
       (-2 * I) * ((∫ x in 0..b, -(g x).im * Real.exp (-(n : ℝ) * x) : ℝ) : ℂ) := by
     rw [← intervalIntegral.integral_ofReal, ← intervalIntegral.integral_const_mul]
@@ -78,8 +89,7 @@ private theorem signed_horizontal {g F G : ℂ → ℂ} {a b : ℝ} (ha : a < 0)
     have hbx := hbot x (ha.le.trans hx.1) hx.2
     dsimp [jump, logIntegrand]
     rw [hbx, htop x (ha.le.trans hx.1) hx.2, hconj x hx.1 hx.2, periodic_kernel,
-      ← Complex.ofReal_mul, ← Complex.ofReal_neg, Complex.ofReal_exp, ← sub_mul,
-      Complex.sub_conj, hbx]
+      hker, ← sub_mul, Complex.sub_conj]
     push_cast
     ring
   rw [← intervalIntegral.integral_sub (hf.intervalIntegrable_of_Icc (ha.trans hb).le)
@@ -102,24 +112,33 @@ private theorem actual_signed_contour (head : ℕ+) (tail : List ℕ+) (ell : �
   let a : ℝ := Real.log (1 / 2)
   let b : ℝ := Real.log R
   let g := logLift F G
+  change ContinuousOn g (Icc a b ×ℂ Icc 0 (2 * Real.pi)) at hc
+  change ∀ x : ℝ, a ≤ x → x ≤ b → g x = F (Real.exp x) at hbot
+  change ∀ x : ℝ, a ≤ x → x ≤ b →
+    g (x + 2 * Real.pi * I) = G (Real.exp x) at htop
   have ha : a < 0 := Real.log_neg (by norm_num) (by norm_num)
   have hb : 0 < b := Real.log_pos hR
   have hbc : ContinuousOn (fun x : ℝ ↦ g x) (Icc a b) := by
-    simpa using horizontal_continuous hc (y := 0) (by constructor <;> positivity)
+    simpa only [ofReal_zero, zero_mul, add_zero] using
+      horizontal_continuous hc (y := 0) ⟨le_rfl, by positivity⟩
   have hoc : ContinuousOn (fun theta : ℝ ↦ g (b + theta * I)) (Icc 0 (2 * Real.pi)) := by
     apply hc.comp (by fun_prop)
     intro theta htheta
+    change ((b : ℂ) + theta * I).re ∈ Icc a b ∧
+      ((b : ℂ) + theta * I).im ∈ Icc 0 (2 * Real.pi)
     constructor
-    · simpa [g, b] using And.intro (ha.trans hb).le (le_refl b)
+    · simpa only [mem_Icc, add_re, ofReal_re, mul_re, I_re, ofReal_im,
+        I_im, mul_zero, zero_mul, sub_zero, add_zero] using
+        And.intro (ha.trans hb).le (le_refl b)
     · simpa only [add_im, ofReal_im, mul_im, ofReal_re, I_im, I_re,
         mul_one, mul_zero, add_zero, zero_add] using htheta
   obtain ⟨B, hB⟩ := isCompact_Icc.exists_bound_of_continuousOn hoc
   let h : ℝ → ℝ := fun x ↦ -(g x).im
   refine ⟨b, B, hb, h, ?_, ?_, ?_, ?_⟩
-  · exact (Complex.continuous_im.comp_continuousOn hbc).neg.mono
+  · exact (Complex.continuous_im.comp_continuousOn hbc).fun_neg.mono
       (Icc_subset_Icc ha.le le_rfl)
-  · dsimp [h]
-    rw [hbot 0 ha.le hb.le, Real.exp_zero, Complex.ofReal_one, hF1, neg_zero]
+  · simpa only [h, ofReal_zero, Real.exp_zero, ofReal_one, hF1, neg_zero] using
+      congrArg (fun z : ℂ ↦ -z.im) (hbot 0 ha.le hb.le)
   · intro x hx hxb
     dsimp [h]
     rw [hbot x (ha.le.trans hx.le) hxb]
@@ -149,6 +168,7 @@ private theorem actual_signed_contour (head : ℕ+) (tail : List ℕ+) (ell : �
       rw [add_sub_assoc, hj] at hh
       rw [hh]
       change (2 * (Real.pi : ℂ) * I)⁻¹ * (I * outer + (-2 * I) * _) = _
+      dsimp only [h, g]
       field_simp
       <;> ring
     have houter : ((1 / (2 * Real.pi) : ℂ) * outer).re ≤
@@ -162,12 +182,17 @@ private theorem actual_signed_contour (head : ℕ+) (tail : List ℕ+) (ell : �
         _ ≤ (1 / (2 * Real.pi)) *
             ((B * Real.exp (-(n : ℝ) * b)) * (2 * Real.pi)) :=
           mul_le_mul_of_nonneg_left hon (by positivity)
-        _ = _ := by field_simp; ring
+        _ = _ := by field_simp
+    have hscale : (1 / (2 * Real.pi) : ℂ) = ((1 / (2 * Real.pi) : ℝ) : ℂ) := by
+      push_cast
+      rfl
+    have hscale' : (1 / Real.pi : ℂ) = ((1 / Real.pi : ℝ) : ℂ) := by
+      push_cast
+      rfl
+    rw [hscale, hscale'] at heq
+    rw [hscale] at houter
     have hre := congrArg Complex.re heq
-    simp only [ofReal_re, sub_re, mul_re, div_re, one_re, ofNat_re,
-      mul_im, one_im, ofNat_im, ofReal_im, mul_zero, zero_mul, add_zero, sub_zero,
-      zero_div, div_self, Real.pi_ne_zero, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true] at hre
-    dsimp [h] at hre ⊢
+    simp only [ofReal_re, sub_re, mul_re, ofReal_im, zero_mul, sub_zero] at hre houter
     linarith
 
 end D5.S3.AnalyticClosure.Polylogarithm.CompositionSignedContour

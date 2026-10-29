@@ -1,6 +1,6 @@
 /- GID: D5/S3/AnalyticClosure/Polylogarithm/CompositionReciprocalSeries
    generality: G
-   mirror-B: none(waiver:private-implementation-module)
+   mirror-B: D5/B/S3/AnalyticClosure/Polylogarithm/CompositionReciprocalSeries
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none

@@ -39,7 +39,7 @@ private theorem positive_mass {h : ℝ → ℝ} {b : ℝ} (hb : 0 < b)
   refine ⟨h x0 * (beta - alpha) / Real.pi, beta, by positivity, hbb, ?_⟩
   intro n
   let f : ℝ → ℝ := fun x ↦ h x * Real.exp (-(n : ℝ) * x)
-  have hfc : ContinuousOn f (Icc 0 b) := hc.mul (by fun_prop)
+  have hfc : ContinuousOn f (Icc 0 b) := hc.fun_mul (by fun_prop)
   have hfi : IntervalIntegrable f volume 0 b := hfc.intervalIntegrable_of_Icc hb.le
   have hfn : ∀ x ∈ Icc 0 b, 0 ≤ f x := by
     intro x hx
@@ -51,13 +51,14 @@ private theorem positive_mass {h : ℝ → ℝ} {b : ℝ} (hb : 0 < b)
       ∫ x in alpha..beta, f x := by
     calc
       _ = ∫ _ : ℝ in alpha..beta, h x0 * Real.exp (-(n : ℝ) * beta) := by
-        simp [intervalIntegral.integral_const, smul_eq_mul, mul_comm]
+        simp only [intervalIntegral.integral_const, smul_eq_mul]
+        ring
       _ ≤ _ := intervalIntegral.integral_mono_on hab.le intervalIntegrable_const
         (hfc.mono hsub |>.intervalIntegrable_of_Icc hab.le) (by
           intro x hx
           apply mul_le_mul (hmin hx) _ (Real.exp_pos _).le (hm.le.trans (hmin hx))
           apply Real.exp_le_exp.mpr
-          exact mul_le_mul_of_nonpos_left hx.2 (by positivity))
+          exact mul_le_mul_of_nonpos_left hx.2 (neg_nonpos.mpr (Nat.cast_nonneg n)))
   have hglobal : (∫ x in alpha..beta, f x) ≤ ∫ x in 0..b, f x :=
     intervalIntegral.integral_mono_interval ha.le hab.le hbb.le
       ((ae_restrict_iff' measurableSet_Ioc).mpr (ae_of_all _
@@ -72,11 +73,11 @@ private theorem exponential_dominance {B c beta b : ℝ} (hc : 0 < c) (hbeta : b
       B * Real.exp (-(n : ℝ) * b) < c * Real.exp (-(n : ℝ) * beta) := by
   have hq0 : 0 ≤ Real.exp (beta - b) := (Real.exp_pos _).le
   have hq1 : Real.exp (beta - b) < 1 := Real.exp_lt_one_iff.mpr (sub_neg.mpr hbeta)
-  have ht := tendsto_const_nhds.mul (tendsto_pow_atTop_nhds_zero_of_lt_one hq0 hq1)
-    (x := B)
+  have ht : Tendsto (fun n : ℕ ↦ B * Real.exp (beta - b) ^ n) atTop (𝓝 0) := by
+    simpa only [mul_zero] using
+      (tendsto_const_nhds (x := B)).mul (tendsto_pow_atTop_nhds_zero_of_lt_one hq0 hq1)
   have he : ∀ᶠ n : ℕ in atTop, B * Real.exp (beta - b) ^ n < c := by
-    apply ht.eventually
-    simpa using Iio_mem_nhds hc
+    exact ht.eventually (eventually_lt_nhds hc)
   filter_upwards [he] with n hn
   have hexp : Real.exp (-(n : ℝ) * b) =
       Real.exp (beta - b) ^ n * Real.exp (-(n : ℝ) * beta) := by

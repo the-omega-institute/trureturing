@@ -37,8 +37,14 @@ private theorem log_rect_identity {g : ℂ → ℂ} {a b : ℝ} (hab : a < b)
         (∫ x : ℝ in a..b, logIntegrand g n (x + 2 * Real.pi * I)) := by
   have hce : Continuous (fun w : ℂ ↦ Complex.exp (-(n : ℂ) * w)) := by fun_prop
   have hde : Differentiable ℂ (fun w : ℂ ↦ Complex.exp (-(n : ℂ) * w)) := by fun_prop
-  have hcn := hc.mul hce.continuousOn
-  have hdn := hd.mul hde.differentiableOn
+  have hcn : ContinuousOn (fun w ↦ g w * Complex.exp (-(n : ℂ) * w))
+      (Icc a b ×ℂ Icc 0 (2 * Real.pi)) := by
+    intro w hw
+    exact (hc w hw).fun_mul hce.continuousAt.continuousWithinAt
+  have hdn : DifferentiableOn ℂ (fun w ↦ g w * Complex.exp (-(n : ℂ) * w))
+      (Ioo a b ×ℂ Ioo 0 (2 * Real.pi)) := by
+    intro w hw
+    exact (hd w hw).fun_mul (hde w).differentiableWithinAt
   have h := Complex.integral_boundary_rect_eq_zero_of_continuousOn_of_differentiableOn
     (logIntegrand g n) (⟨a, 0⟩ : ℂ) (⟨b, 2 * Real.pi⟩ : ℂ)
     (by change ContinuousOn (fun w ↦ g w * Complex.exp (-(n : ℂ) * w)) _
