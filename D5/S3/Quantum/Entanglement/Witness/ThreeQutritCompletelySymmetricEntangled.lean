@@ -8,7 +8,6 @@
 
 import D5.S3.Quantum.Entanglement.OccupancyWordSectors
 import D5.S3.Quantum.Information.SLDSpectralEnergy
-import Mathlib.Analysis.MeanInequalities
 
 /-! A count-invariant density matrix separated from pure product mixtures. -/
 
