@@ -3,6 +3,7 @@ import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleRoute
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
 noncomputable section
 open MeasureTheory ProbabilityTheory LeanInformationAudit
 open scoped BigOperators Classical
@@ -52,12 +53,13 @@ private def toyRectangle : Rectangle (product MarkedPredictiveQuotient.toy.{u} [
   zero i j h := (h ⟨Finset.mem_univ i, Finset.mem_univ j⟩).elim
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  classical
   intro h
   let θ := MarkedPredictiveQuotient.toy.{u}
   obtain ⟨J,hc,_⟩ := original_law θ
   have hirr (i j : MarkedPredictiveQuotient.Toy.{u}) :
       ∃ n : ℕ, 0 < ((θ.matrix false+θ.matrix true)^n) i j := by
-    exact ⟨1,by simp [θ, MarkedPredictiveQuotient.toy]⟩
+    exact ⟨1,by norm_num [θ, MarkedPredictiveQuotient.toy, Matrix.add_apply]⟩
   obtain ⟨a,_,_,_,_,hp⟩ := h θ (J : Measure _) hc hirr [] toyRectangle ⟨()⟩ (Finset.mem_univ _)
   obtain ⟨hε,_,hlower,_⟩ := hp
   have he := hlower 0 ⟨()⟩ (by norm_num [θ, MarkedPredictiveQuotient.toy])
@@ -77,7 +79,7 @@ def family : Registration arena.{u} (type_of% (@irreducible_rectangle_occurrence
       exact (hj (Subsingleton.elim j i)).elim
     · intro i
       exact nomatch i
-  dependence := OriginalRectangleOccurrence.family.dependence
+  dependence := OriginalRectangleOccurrence.family.{u}.dependence
 
 def audit : Contract.Registration
     (@irreducible_rectangle_occurrence.{u}) (Realization signature) Type Unit where
