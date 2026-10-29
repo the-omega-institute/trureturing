@@ -4542,3 +4542,208 @@ boundaries of Definition 36.1, remain documentary suppliers. They are
 not an actual compiled binary-presence specialization of this theorem.
 
 ## 追加锚（本行以下为增补区）
+
+## 39. A request-sized physical evaluator from an earned recurrence
+
+**Definition 39.1 (birth descriptors and sibling masses).** Keep the
+actual source, physical order $a<b$, and stream convention of Definition
+27.1. Let $F_0=0,F_1=1$ and $B_t=F_{t+1}-1$. A node born at update $b$ with
+initial label $\sigma\in\{\alpha,\beta\}$ has branch time
+
+$$
+ \tau=b+\delta(\sigma),\qquad \delta(\alpha)=2,\quad\delta(\beta)=1.
+ \tag{GPO.93}
+$$
+
+Its number of beta leaves after $e\ge0$ further updates is
+
+$$
+ \lambda_\alpha(e)=F_e,\qquad \lambda_\beta(e)=F_{e+1}.
+ \tag{GPO.94}
+$$
+
+These counts ignore port orientation but retain the initial label. Give
+the root descriptor $(b_\varepsilon,\sigma_\varepsilon)=(0,\alpha)$;
+then $\tau_\varepsilon=2$. If $q$ is a branch and $z_{j_q}$ is its
+orientation bit, the child descriptors at birth $b=\tau_q$ are
+
+$$
+ \sigma_{qa}=\begin{cases}\beta&z_{j_q}=1\\\alpha&z_{j_q}=0,\end{cases}\qquad
+ \sigma_{qb}=\begin{cases}\alpha&z_{j_q}=1\\\beta&z_{j_q}=0.\end{cases}
+ \tag{GPO.95}
+$$
+
+For a non-root node $p$, write its successive proper prefixes as $q c$,
+where $c\in\{a,b\}$ is the next letter. Once the earlier descriptors
+are known, define its one-based rank among beta leaves immediately before
+its branch update by
+
+$$
+ R_{\tau_p}(p)=1+\sum_{\substack{q c\preceq p\\c=b}}
+       \lambda_{\sigma_{qa}}(\tau_p-1-\tau_q),\qquad
+ j_p=F_{\tau_p}-1+R_{\tau_p}(p).                 \tag{GPO.96}
+$$
+
+The sum is over the earlier sibling subtrees in physical lexicographic
+order. The event $(j_p,\tau_p,p)$ is therefore the actual birth event at
+which $p$ consumes $z_{j_p}$. For the root,
+$R_2(\varepsilon)=1$ and $j_\varepsilon=1$. Formula (GPO.96) is a finite
+recurrence, not a random-access tree oracle: each summand is a Fibonacci
+mass of an actually specified sibling and every term has a previously
+determined orientation bit.
+
+**Proposition 39.2 (the actual index relation).** The descriptors and
+(GPO.96) agree with the physical process of Definition 27.1. In
+particular, if $p$ is the parent of birth $j$, then
+
+$$
+ t_j=\tau_p,\qquad p_j=p,\qquad
+ B_{\tau_p-1}<j\le B_{\tau_p},\qquad
+ j=F_{\tau_p}-1+R_{\tau_p}(p).                 \tag{GPO.97}
+$$
+
+Equivalently, for a given $j\ge1$,
+$\tau(j)=\min\{t\ge2:j\le F_{t+1}-1\}$ and
+$R(j)=j-(F_{\tau(j)}-1)$; $p_j$ is the unique beta leaf of
+$X_{\tau(j)-1}$ whose rank in (GPO.96) is $R(j)$.
+
+For a physical word $w$ of length $\ell\ge1$, every law bit needed to
+decide the labels on its prefixes has index at most
+$F_{2\ell+1}-1$; at most $\ell$ law bits are needed.
+
+Proof. The two label transitions give (GPO.94) by induction on $e$. A
+descriptor born at $b$ is $\beta$ at age $\delta(\sigma)-1$ and is a
+branch at age $\delta(\sigma)$, proving (GPO.93). Induction on
+the depth of $p$ gives $\tau_p\le2|p|+2$. At update $\tau_p$, its parent
+is a beta leaf immediately before the update. The beta leaves of the
+whole old tree are the disjoint sibling cones encountered along the
+root-to-$p$ path, together with $p$ itself. By (GPO.94), the cones
+skipped exactly when the path takes $b$ contribute the summands in
+(GPO.96). Thus $R_{\tau_p}(p)$ is its actual lexicographic rank. There
+are $F_{\tau_p-1}$ old beta leaves, so
+$1\le R_{\tau_p}(p)\le F_{\tau_p-1}$ and (GPO.97) follows from
+$B_{\tau_p-1}=F_{\tau_p}-1$.
+
+For a word of length $\ell$, only its proper prefixes can supply
+orientation bits. A prefix of depth $r<\ell$ has
+$\tau\le2r+2\le2\ell$, hence (GPO.97) gives
+$j\le B_{2\ell}=F_{2\ell+1}-1$. The recurrence (GPO.96) evaluates one
+new bit per depth and stops at the first prefix whose cut time exceeds
+the requested cut, so no more than $\ell$ bits are used. The argument
+explicitly includes all earlier sibling subtrees; no assumed global
+random-access operation is present. $\square$
+
+**Definition 39.3 (direct physical literal evaluator).** Let a completed
+cut be a binary integer $n$ together with the retained source binding of
+Definition 34.1 and an earned recurrence descriptor
+$L=(r,c_0,\ldots,c_{r-1},s_0,\ldots,s_{r-1})$, $r\le d$. The descriptor
+is the retained canonical row and seed selected by Lemma 29.2; for the
+zero law take $r=0$. It denotes the same stream $z_j=s_{j-1}$.
+
+For a literal word $w$, construct its prefix descriptors by
+(GPO.93)--(GPO.96), evaluating each required $z_{j_p}$ from $L$. At a
+descriptor $(b,\sigma)$ at cut $n$, return
+
+$$
+ E_L(n;b,\sigma)=\begin{cases}
+ \mathsf{absent},&n<b,\\
+ \sigma,&n=b,\\
+ \beta,&n=b+1,\ \sigma=\alpha,\\
+ \mathsf{branch},&n=b+1,\ \sigma=\beta,\\
+ \mathsf{branch},&n\ge b+2.
+ \end{cases}                                      \tag{GPO.98}
+$$
+
+The root uses $(b,\sigma)=(0,\alpha)$. Descending a letter is permitted
+only after the preceding value is $\mathsf{branch}$; the child descriptor
+is then generated by (GPO.95). If a prefix is not yet born, return
+$\mathsf{absent}$ for the whole word. Define
+
+$$
+ P_L(n,w)=\mathbf1_{E_L(n,w)\ne\mathsf{absent}},\qquad
+ \partial_L(n,w)=\mathbf1_{E_L(n,w)\in\{\alpha,\beta\}}. \tag{GPO.99}
+$$
+
+Thus the empty word, an absent word, a terminal alpha or beta, and a
+branch all have direct literal answers. The terminal boundary is the
+set $\{w:\partial_L(n,w)=1\}$; asking for the entire finite boundary
+enumerates its output and pays that output cost.
+
+**Theorem 39.4 (literal correctness and same-source continuation).**
+On every law-ready synchronized cut of Definition 34.1, for every finite
+physical word $w$,
+
+$$
+ E_L(n,w)=r^\mathrm{actual}_n(w),\qquad
+ P_L(n,w)=\operatorname{Read}_n(w),\qquad
+ \partial_L(n,w)=\mathbf1_{w\in\partial S_n}. \tag{GPO.100}
+$$
+
+The evaluator remains correct after every finite same-source continuation
+of actual updates and Reads under Theorem 34.3. It makes no law-learning
+Read: actual Reads, updates, grants, root binding, serialization, source
+authenticity and writer records retain their original premises and costs.
+
+Proof. The root cases at cuts $0,1,2$ are immediate. Suppose a branch
+descriptor is correct. Definition 27.1 creates both children at its
+actual event $(j_p,\tau_p,p)$, in the order used by (GPO.96), and
+(GPO.95) gives their actual initial labels. The label transition in
+(GPO.98) is exactly alpha-to-beta, beta-to-branch, and persistence of a
+branch. Induction on word length therefore proves the first equality in
+(GPO.100), including early cuts and absent extensions; the other two
+are its presence and terminal projections. The same induction on update
+count proves that incrementing the binary cut counter and regenerating
+descriptors gives the actual successor. At a real Read the evaluator's
+projection agrees with the paid source reply, while the call is still
+executed and charged. Induction on the serial call word, including
+adaptive choices whose inputs are actually supplied, proves continued
+agreement. $\square$
+
+**Proposition 39.5 (polynomial request cost).** Put
+$b_n=\lceil\log_2(n+2)\rceil$ and let the literal length be $\ell$.
+For $\ell\ge1$, Definition 39.3 uses at most $\ell$ law evaluations,
+at indices bounded by $F_{2\ell+1}-1$. A forward companion-matrix power
+computes one such bit using $O(d^3\ell)$ binary operations and
+$O(d^2+d\ell)$ working bits; it uses no inverse and is valid for
+singular, nonminimal and both constant laws. Consequently one request
+has, for an absolute machine-model constant $C$,
+
+$$
+ \operatorname{work}\le C\bigl(d^3\ell^2+\ell^3+\ell b_n+\ell+d^2+d\ell+\ell^2+b_n\bigr),
+ \tag{GPO.101}
+$$
+
+apart from the supplied literal and any requested output. This is
+polynomial in $(d,\ell,\log(n+2))$ and does not iterate through the
+$n$ updates or allocate the whole tree.
+
+Proof. For $r>0$, use the binary companion matrix taking
+$(s_i,\ldots,s_{i+r-1})$ to
+$(s_{i+1},\ldots,s_{i+r})$, with the last coordinate
+$\sum_jc_js_{i+j}$, and exponentiate it by repeated squaring to
+$j-1$. All arithmetic is over $\mathbb F_2$; the exponent has
+$O(\ell)$ bits by Proposition 39.2. The $r=0$ case returns zero, while
+$(r,c_0,s_0)=(1,1,1)$ returns the constant-one stream and
+$(1,0,0)$ the constant-zero stream. No determinant or final coefficient
+is assumed nonzero. Fibonacci fast doubling, the rank sums in (GPO.96),
+binary comparisons with $n$, and prefix storage have respectively
+polynomial cost in $\ell$ and $b_n$. Summing over at most $\ell$ matrix
+powers gives (GPO.101). The bound concerns one literal request; full
+boundary or full-tree enumeration keeps its actual output, backing and
+source-generation costs from Proposition 35.1. $\square$
+
+The rank recurrence is the source-specific addition. Cover's
+[*Enumerative Source Encoding*](https://isl.stanford.edu/~cover/papers/transIT/0073cove.pdf)
+is a documentary analogue for lexicographic prefix blocks, not a free
+rank oracle here. Bostan--Mori,
+[arXiv:2008.08822](https://arxiv.org/html/2008.08822v1), §§1.1--1.3,
+supplies the forward-recurrence term-evaluation setting; the companion
+power above deliberately avoids invertibility assumptions. Bille--Landau--Weimann,
+[arXiv:1001.1565](https://arxiv.org/pdf/1001.1565v1), studies random
+access when a compressed representation is actually given; it does not
+replace the retained recurrence, physical rank proof or paid acquisition.
+Theorems 28.2, 33.2, 34.2 and 34.3 supply the earned prefix, four views,
+binding and continued source use reused here. No acquisition or synthesis
+complexity is reduced, and no full-resource optimum is claimed.
+
+## 追加锚（本行以下为增补区）
