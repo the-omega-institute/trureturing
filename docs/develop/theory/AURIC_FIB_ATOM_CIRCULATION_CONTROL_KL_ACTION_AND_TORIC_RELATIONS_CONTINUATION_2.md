@@ -1771,9 +1771,11 @@ The semigroup and its cone satisfy
 $$
 S=K_{\mathbf k}\cap\mathbb Z^{1+|V(G_{\mathbf k})|},
 \qquad
-K_{\mathbf k}=\left\{(m,c):
+K_{\mathbf k}=\left\{(m,c)\in\mathbb R\times\mathbb R^{V(G_{\mathbf k})}:
 \begin{array}{l}
- m\ge0,\ c_v\ge0,\ c_v+c_w\le m,\\
+ m\ge0,\\
+ c_v\ge0\quad(v\in V(G_{\mathbf k})),\\
+ c_v+c_w\le m\quad(\{v,w\}\in E(G_{\mathbf k})),\\
  k_i m-\sum_{v\in C_i}c_v\ge0\quad(1\le i\le t)
 \end{array}\right\}.
 \tag{47.4}
@@ -2037,11 +2039,12 @@ $$
 because $(N+\tfrac12)\theta_\ell=(2\ell-1)\pi/2$. Moreover
 $\|v_\ell\|^2=(2N+1)/4$ and
 $u_j^{\mathsf T}v_\ell=\sin(j\theta_\ell)/(2\sin(\theta_\ell/2))$,
-which proves (47.17) by orthogonal projection. This is the classical
-antitriangular transfer spectrum supplied by Bóna–Ju–Yoshida [BJY47]
-and the boundary-transfer framework of Jiang–Yang–Zhong [JYZ47]; the
-endpoint projection and the finite total-cap correction are the parts
-used here.
+which proves (47.17) by orthogonal projection. For the general
+transfer-matrix, determinant, and rationality framework, see
+Bóna–Ju–Yoshida [BJY47] and Jiang–Yang–Zhong [JYZ47]. The
+trigonometric eigensystem and the boundary projection in
+(47.16)–(47.17) follow from the calculation above; the finite
+total-cap correction is supplied by Theorem 47.3.
 
 After reversing one index, the standard continuant for $H_j^2$ has
 $Q_0=1$, $Q_1=1-w$, and
