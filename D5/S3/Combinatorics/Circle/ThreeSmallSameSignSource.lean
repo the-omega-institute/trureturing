@@ -528,7 +528,7 @@ private theorem three_blocks (A B D : ℕ) (hA : 0 < A) (hB : 0 < B) (hD : 0 < D
     constructor
     · nlinarith only [hzupper]
     constructor
-    · nlinarith only [hdN, hzN,
+    · nlinarith only [hd, hdN, hzN,
         mul_nonneg (show 0 ≤ u by omega) (le_of_lt hz)]
     exact ⟨by nlinarith only [hh.1], by nlinarith only [hh.2]⟩
   have hsga := inStrip_append hsg (by simp only [List.map_singleton, List.sum_singleton]; rw [show f gamma = N - z from hc]; convert hSZ1 using 1 <;> ring)
@@ -541,7 +541,7 @@ private theorem three_blocks (A B D : ℕ) (hA : 0 < A) (hB : 0 < B) (hD : 0 < D
     constructor
     · nlinarith only [hbefore]
     constructor
-    · nlinarith only [h4d,
+    · nlinarith only [hd, h4d,
         mul_nonneg (show 0 ≤ v by omega) (le_of_lt he)]
     exact ⟨by nlinarith only [hh.1], by nlinarith only [hh.2]⟩
   have hsaa := inStrip_append hsa (by simp only [List.map_singleton, List.sum_singleton, ha]; convert hsYZ using 1 <;> ring)
