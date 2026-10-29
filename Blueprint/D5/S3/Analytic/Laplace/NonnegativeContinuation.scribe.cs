@@ -7,7 +7,7 @@ internal sealed class NonnegativeContinuationDocument : IScribeDocumentDefinitio
     // Proposed nonbinding construction: identify the full-ball Taylor coefficients
     // with t^n/n! times the original weighted moments, then use positivity and
     // Tonelli to obtain finite exponential integral at the new real parameter.
-    // Admission basis: escape-witness. The finite integral is derived, not assumed.
+    // The finite integral is derived, not assumed.
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Holomorphic extension of a nonnegative Laplace germ forces convergence across its original margin.",
         H("Nonnegative Laplace Continuation"),
