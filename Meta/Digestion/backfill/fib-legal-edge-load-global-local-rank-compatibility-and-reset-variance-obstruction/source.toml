@@ -1,0 +1,5 @@
+source_id = "fib-legal-edge-load-global-local-rank-compatibility-and-reset-variance-obstruction"
+path = "docs/develop/theory/FIB_LEGAL_EDGE_LOAD_GLOBAL_LOCAL_RANK_COMPATIBILITY_AND_RESET_VARIANCE_OBSTRUCTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
