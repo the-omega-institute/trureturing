@@ -18,7 +18,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 open MeasureTheory ProbabilityTheory Matrix
-open scoped BigOperators Classical
+open scoped BigOperators Classical ENNReal
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkedPredictiveQuotient
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalMarkedLaw
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalFutureCylinders
@@ -118,6 +118,32 @@ private theorem first_one_outgoing (θ : Presentation H) (w : List Bool)
   obtain ⟨k,_,hk⟩ := (Finset.sum_pos_iff_of_nonneg (fun k _ =>
     mul_nonneg (θ.matrix_nonneg _ _ _) (product_nonneg θ xs k j))).mp hp
   exact ⟨k,pos_of_mul_pos_left hk (product_nonneg θ xs k j)⟩
+
+/-- If the source rectangle word starts with one, its row state cannot have
+received an incoming one under the actual irreducible original law. -/
+theorem first_one_incoming_past_null (θ : Presentation H)
+    (J : Measure (PathSpace H)) [IsProbabilityMeasure J] (hc : HasOriginalCylinders J θ)
+    (hirr : ∀ i j : H, ∃ n : ℕ, 0 < ((θ.matrix false+θ.matrix true)^n) i j)
+    (w : List Bool) (R : Rectangle (product θ w)) (r : H) (hr : r ∈ R.rows)
+    (hw : w.head? = some true) (t : ℤ) :
+    J {z | state t z = r ∧ z.2 (t-1) = true} = 0 := by
+  have hz := one_incoming_zero θ (irreducible_initial_positive θ hirr) r
+    (first_one_outgoing θ w R r hr hw)
+  let E (s : H) := MarkedPredictiveQuotient.cylinder (t-1) 1
+    (Fin.cons s (fun _ => r)) (fun _ => true)
+  have hnull (s : H) : J (E s) = 0 := by
+    apply (ENNReal.toReal_eq_zero_iff _).mp ?_ |>.resolve_right (measure_ne_top _ _)
+    change J.real (E s) = 0
+    rw [hc]
+    simp [pathMass,hz]
+  apply measure_mono_null (t := ⋃ s, E s) ?_ (measure_iUnion_null hnull)
+  intro z h
+  refine Set.mem_iUnion.mpr ⟨z.1 (t-1),?_,?_⟩
+  · intro i
+    fin_cases i <;> simpa [state] using (by first | rfl | exact h.1 : _)
+  · intro i
+    fin_cases i
+    simpa using h.2
 
 /-- Bounded positive original routes, with the first-one seam paid by a final zero
 edge, give the actual visible success-event bound on an irreducible class. -/

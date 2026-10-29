@@ -30,10 +30,10 @@ def past (t : ℤ) (z : PathSpace H) : ℕ → H × Bool :=
 
 def state (t : ℤ) (z : PathSpace H) : H := z.1 t
 
-private def joinHidden (m n : ℕ) (h : Fin (m + 1) → H) (k : Fin n → H) :
+def joinHidden (m n : ℕ) (h : Fin (m + 1) → H) (k : Fin n → H) :
     Fin (m + n + 1) → H := Fin.append (m := m) (n := n+1) (Fin.init h) (Fin.cons (h (Fin.last m)) k)
 
-private theorem join_left (m n : ℕ) (h : Fin (m + 1) → H) (k : Fin n → H)
+theorem join_left (m n : ℕ) (h : Fin (m + 1) → H) (k : Fin n → H)
     (j : Fin (m + 1)) : joinHidden m n h k ⟨j.val, by omega⟩ = h j := by
   by_cases hj : j.val < m
   · have he : (⟨j.val, by omega⟩ : Fin (m + n + 1)) =
@@ -51,13 +51,13 @@ private theorem join_left (m n : ℕ) (h : Fin (m + 1) → H) (k : Fin n → H)
     dsimp
     omega
 
-private theorem join_right (m n : ℕ) (h : Fin (m + 1) → H) (k : Fin n → H)
+theorem join_right (m n : ℕ) (h : Fin (m + 1) → H) (k : Fin n → H)
     (j : Fin (n + 1)) : joinHidden m n h k ⟨m + j.val, by omega⟩ =
       (Fin.cons (h (Fin.last m)) k : Fin (n+1) → H) j := by
   change Fin.append _ _ (Fin.natAdd m j) = _
   exact Fin.append_right _ _ j
 
-private theorem path_concat (M : Bool → Matrix H H ℝ) (m n : ℕ)
+theorem path_concat (M : Bool → Matrix H H ℝ) (m n : ℕ)
     (h : Fin (m + 1) → H) (k : Fin n → H) (w : Fin m → Bool) (v : Fin n → Bool) :
     pathMass M (m+n) (joinHidden m n h k) (Fin.append w v) =
       pathMass M m h w * pathMass M n (Fin.cons (h (Fin.last m)) k) v := by
@@ -147,70 +147,6 @@ theorem past_future_mass (θ : Presentation H) (J : Measure (PathSpace H))
     exact hh
   simp_rw [hmass, mul_assoc]
   rw [← Finset.mul_sum, ← Finset.mul_sum, sum_path_tails]
-
-/-- A prescribed hidden path after the cut, followed by an arbitrary output word,
-retains its exact path weight in the original marked-cylinder law. -/
-theorem past_route_future_mass (θ : Presentation H) (J : Measure (PathSpace H))
-    [IsProbabilityMeasure J] (hc : HasOriginalCylinders J θ) (t : ℤ) (m n l : ℕ)
-    (h : Fin (m+1) → H) (w : Fin m → Bool) (k : Fin (n+1) → H)
-    (v : Fin n → Bool) (u : Fin l → Bool) (hk : k 0 = h (Fin.last m)) :
-    J.real (MarkedPredictiveQuotient.cylinder (t-m) m h w ∩
-      MarkedPredictiveQuotient.cylinder t n k v ∩
-      Prod.snd ⁻¹' visibleCylinder (t+n) l u) =
-      θ.initial (h 0) * pathMass θ.matrix m h w *
-        (pathMass θ.matrix n k v * futureMass θ.matrix (k (Fin.last n)) l u) := by
-  let g := joinHidden m n h (Fin.tail k)
-  have hg (i : Fin (n+1)) :
-      g ⟨m+i.val, by omega⟩ = k i := by
-    rw [show g = joinHidden m n h (Fin.tail k) from rfl, join_right, ← hk]
-    simp only [Fin.cons_self_tail]
-  have he : MarkedPredictiveQuotient.cylinder (t-m) m h w ∩
-      MarkedPredictiveQuotient.cylinder t n k v =
-      MarkedPredictiveQuotient.cylinder (t-m) (m+n) g (Fin.append w v) := by
-    ext z
-    constructor
-    · rintro ⟨⟨hh,hw⟩,⟨hh',hv⟩⟩
-      constructor
-      · intro i
-        by_cases hi : i.val ≤ m
-        · exact (hh ⟨i.val, by omega⟩).trans (join_left m n h (Fin.tail k) ⟨i.val, by omega⟩).symm
-        · let j : Fin (n+1) := ⟨i.val-m, by omega⟩
-          have ht : t-(m:ℤ)+i.val = t+j.val := by dsimp [j]; omega
-          have hi' : i = ⟨m+j.val, by omega⟩ := by ext; dsimp [j]; omega
-          rw [ht,hi',hg]
-          exact hh' j
-      · intro i
-        refine Fin.addCases (fun j => ?_) (fun j => ?_) i
-        · simpa only [Fin.append_left, Fin.val_castAdd] using hw j
-        · rw [Fin.append_right]
-          convert hv j using 1 <;> simp only [Fin.val_natAdd, Nat.cast_add] <;> congr 1 <;> omega
-    · rintro ⟨hh,hw⟩
-      constructor
-      · constructor
-        · intro i
-          exact (hh ⟨i.val, by omega⟩).trans (join_left m n h (Fin.tail k) i)
-        · intro i
-          simpa only [Fin.append_left, Fin.val_castAdd] using hw (Fin.castAdd n i)
-      · constructor
-        · intro i
-          have hh' := (hh ⟨m+i.val, by omega⟩).trans (hg i)
-          convert hh' using 1 <;> push_cast <;> congr 1 <;> omega
-        · intro i
-          have hw' := hw (Fin.natAdd m i)
-          rw [Fin.append_right] at hw'
-          convert hw' using 1 <;> simp only [Fin.val_natAdd, Nat.cast_add] <;> congr 1 <;> omega
-  rw [he]
-  have hm := past_future_mass θ J hc (t+n) (m+n) l g (Fin.append w v) u
-  have ht : t+(n:ℤ)-(m+n:ℕ) = t-m := by push_cast; omega
-  rw [ht] at hm
-  have h0 : g 0 = h 0 := join_left m n h (Fin.tail k) 0
-  have hn : g (Fin.last (m+n)) = k (Fin.last n) := by
-    convert hg (Fin.last n) using 1
-  have hp : pathMass θ.matrix (m+n) g (Fin.append w v) =
-      pathMass θ.matrix m h w * pathMass θ.matrix n k v := by
-    rw [show g = joinHidden m n h (Fin.tail k) from rfl, path_concat, ← hk, Fin.cons_self_tail]
-  rw [h0,hn,hp] at hm
-  simpa only [mul_assoc] using hm
 
 #print axioms past_future_mass
 
