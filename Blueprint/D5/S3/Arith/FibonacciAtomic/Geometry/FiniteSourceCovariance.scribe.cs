@@ -18,7 +18,7 @@ internal sealed class FiniteSourceCovarianceDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create(Prefix + "finite_source_covariance_convergence"),
                 H("Simultaneous Norm Limits"), StatementSource.FromAuthor(ResultFormula()),
                 AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("For every positive real epsilon there is one natural N such that every n at least N satisfies all three norm bounds. The finite objects use the original all-occurrence law and the original cardinality N(n). The boundary objects are precisely those of BiasedBoundaryTrace and BiasedBoundaryFreeRootForm, with a equal to the inverse golden ratio and b equal to its inverse square. False is L and true is R.")),
+                    Paragraph(Text("In the formula, boundaryMean is BiasedBoundaryFreeRootForm.v, boundaryTrace is BiasedBoundaryTrace.J, and boundarySigma is BiasedBoundaryFreeRootForm.Sigma. For every positive real epsilon there is one natural N such that every n at least N satisfies all three norm bounds. The finite objects use the original all-occurrence law and the original cardinality N(n). The boundary objects are precisely those of BiasedBoundaryTrace and BiasedBoundaryFreeRootForm, with a equal to the inverse golden ratio and b equal to its inverse square. False is L and true is R.")),
                     Paragraph(Text("The original path maps ignore absent edges and vanish at the root. The definitions include the singleton sources n=0 and n=1. The claim compares the mean vectors and operators on the common edge Hilbert space; it requires no identification of the changing node spaces.")),
                     Paragraph(Text("The exact node cardinality and Fibonacci formula give convergence of every fixed descendant mass. Comparable addresses have Gram entry equal to the mass of the longer address; incomparable addresses have entry zero. These identities hold for absent addresses as well.")),
                     Paragraph(Text("For a fixed depth h the coordinate projection has finite support. Its mean block is the sum of descendant masses times unit edge vectors, and its Gram block is the double sum of Gram coefficients times coordinate rank-one maps. The finite blocks therefore converge in norm.")),
@@ -43,10 +43,10 @@ internal sealed class FiniteSourceCovarianceDocument : IScribeDocumentDefinition
     {
         Formula n=V("n"), k=V("N"), epsilon=V("epsilon");
         Formula real=Seq(Mathbb,Grp(V("R"))), nat=Seq(Mathbb,Grp(V("N")));
-        Formula meanError=Norm(Sub(Call("v",n),Call("BiasedBoundaryFreeRootForm.v")));
-        Formula gramTarget=Call("comp",Call("adjoint",Call("BiasedBoundaryTrace.J")),Call("BiasedBoundaryTrace.J"));
+        Formula meanError=Norm(Sub(Call("v",n),Call("boundaryMean")));
+        Formula gramTarget=Call("comp",Call("adjoint",Call("boundaryTrace")),Call("boundaryTrace"));
         Formula gramError=Norm(Sub(Call("B",n),gramTarget));
-        Formula sigmaError=Norm(Sub(Call("Sigma",n),Call("BiasedBoundaryFreeRootForm.Sigma")));
+        Formula sigmaError=Norm(Sub(Call("Sigma",n),Call("boundarySigma")));
         Formula errors=And(Lt(meanError,epsilon),And(Lt(gramError,epsilon),Lt(sigmaError,epsilon)));
         return All("epsilon",real,Imp(Lt(D(0),epsilon),Ex("N",nat,
             All("n",nat,Imp(Seq(k,Sp,Leq,Sp,n),errors)))));
