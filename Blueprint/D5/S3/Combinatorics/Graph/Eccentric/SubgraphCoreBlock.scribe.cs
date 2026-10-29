@@ -5,6 +5,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Eccentric;
 internal sealed class SubgraphCoreBlockDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Eccentric/SubgraphCoreBlock.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/GraphInvariants/pandeypatra2021subgraphcore");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The entire maximizing set of actual connected-subgraph counts lies in one block.",
@@ -35,7 +37,10 @@ internal sealed class SubgraphCoreBlockDocument : IScribeDocumentDefinition
             Node("result", "One block contains all maximizers", "result",
                 "For every finite vertex type V and every connected simple graph G on V, "
                 + "there exists a native block B of G with subgraphCore(G) contained in B.verts. "
-                + "The block is shared by the entire maximizing set.", DescribeRole.Theorem),
+                + "The block is shared by the entire maximizing set.", DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("pandey-patra-2021-subgraph-core"),
+                    ResolutionKind.Proved)),
             Paragraph(Text("The counting argument extends a connected subgraph H containing x and "
                 + "omitting r along a path from r to x, stopping at its first encounter with H. "
                 + "Let L be the path before that encounter and K the union of the path with H. "
@@ -61,7 +66,8 @@ internal sealed class SubgraphCoreBlockDocument : IScribeDocumentDefinition
                 + "singleton subgraph. Finiteness extends either subgraph to a maximal one."))), []));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,
-        DescribeRole role) => Describe.Lean(DescribeId.Create(id),
+        DescribeRole role, OpenProblemResolutionClaim? openProblemResolutionClaim = null) => Describe.Lean(DescribeId.Create(id),
             DeclarationHandle.Create(Prefix + declaration), H(title), StatementSource.WithoutFormula(),
-            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+            declaration == "result" ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: openProblemResolutionClaim);
 }

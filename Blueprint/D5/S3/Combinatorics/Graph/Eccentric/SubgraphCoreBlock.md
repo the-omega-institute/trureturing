@@ -48,7 +48,11 @@ Lean statement: `D5/S3/Combinatorics/Graph/Eccentric/SubgraphCoreBlock.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Eccentric/SubgraphCoreBlock.result` (`✓ std3`). ∎
 
-*Source.* Repository-derived.
+*Resolves.* `Problems/pandey-patra-2021-subgraph-core` (proved) by `D5/S3/Combinatorics/Graph/Eccentric/SubgraphCoreBlock.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"pandey-patra-2021-subgraph-core","declaration_gid":"D5/S3/Combinatorics/Graph/Eccentric/SubgraphCoreBlock.result","resolution_kind":"proved"} -->
+
+*Citation.* Dinesh Pandey; Kamal Lochan Patra (2021). *Some new central parts of connected graphs*. URL: <https://arxiv.org/abs/2110.00738v1>.
 
 *Commentary.*
 
