@@ -170,8 +170,8 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   let V := ULift.{u} ℝ
   have hlim := h (V := V) 0 (1 : V)
   have heq := tendsto_nhds_unique hlim (scalar_derivative 0 (1 : V))
-  have hbad : (-1 : ℝ) = 0 := by
-    simpa [rejected,realize] using congrArg ULift.down heq
+  have hbad := congrArg ULift.down heq
+  change (-1 : ℝ) * 1 = -0 * 1 at hbad
   norm_num at hbad
 
 theorem actual_dependence : ObservationalDependence signature actual := by
