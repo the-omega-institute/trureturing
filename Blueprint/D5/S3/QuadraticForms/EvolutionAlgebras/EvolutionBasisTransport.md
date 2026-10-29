@@ -66,7 +66,19 @@ $$\forall A \in Typeu,\; \operatorname{FiniteDimensionalComplexVectorSpace}\left
 
 For any finite index type I and any basis b indexed by I, finrank equals card(I). Given finrank(A)=n, Fintype.equivFinOfCardEq and Basis.reindex produce the n-indexed basis. Its naturality follows by injectivity of the index equivalence. Thus the original natural basis is arbitrary, and the n-dimensional source quantifier is retained.
 
-**Theorem 1.6 (Joint control on the actual algebra group).**
+**Theorem 1.6 (Reindexing preserves zero mixed products).**
+
+$$\forall A \in \operatorname{Type},\; [\operatorname{AddCommGroup}\left(A\right)] [\operatorname{Module}\left(Complex, A\right)] [\operatorname{FiniteDimensional}\left(Complex, A\right)] \forall I \in \operatorname{Type},\; [\operatorname{Fintype}\left(I\right)] \forall n \in Nat,\; \forall hn \in \operatorname{Module}.\operatorname{finrank}\left(Complex, A\right) = n,\; \forall mu \in \operatorname{LinearMap}\left(Complex, A, \operatorname{LinearMap}\left(Complex, A, A\right)\right),\; \forall b \in \operatorname{Module}.\operatorname{Basis}\left(I, Complex, A\right),\; \left(\forall i \in I,\; \forall j \in I,\; i \ne j \Rightarrow mu\left(b\left(i\right), b\left(j\right)\right) = 0\right) \Rightarrow \left(\forall i \in \operatorname{Fin}\left(n\right),\; \forall j \in \operatorname{Fin}\left(n\right),\; i \ne j \Rightarrow mu\left(\operatorname{dimensionBasis}\left(hn, b\right)\left(i\right), \operatorname{dimensionBasis}\left(hn, b\right)\left(j\right)\right) = 0\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionBasisTransport.dimensionBasis_natural` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let A be a finite-dimensional complex vector space, I a finite index type, hn an equality finrank(A)=n, mu a bilinear product and b an I-indexed basis. If mu(b(i),b(j))=0 for distinct I-indices, the same is true of dimensionBasis hn b for distinct Fin n indices. Injectivity of the reindexing equivalence preserves distinctness. The arbitrary-module automorphism bound uses this to apply the coordinate theorem.
+
+**Theorem 1.7 (Joint control on the actual algebra group).**
 
 $$\forall A \in Typeu,\; \operatorname{FiniteDimensionalComplexVectorSpace}\left(A\right) \Rightarrow \left(\forall I \in Typeu,\; \operatorname{Fintype}\left(I\right) \Rightarrow \left(\forall n \in \operatorname{NaturalNumbers}\left(\right),\; \operatorname{finrank}\left(A\right) = n \Rightarrow \left(\forall mu \in \operatorname{BilinearProduct}\left(A\right),\; \forall b \in \operatorname{Basis}\left(I, Complex, A\right),\; \operatorname{NaturalBasisAt}\left(mu, b\right) \Rightarrow \left(\operatorname{productSpan}\left(mu\right) = Top \Rightarrow \left(\operatorname{Finite}\left(\operatorname{Aut}\left(mu\right)\right) \land \operatorname{card}\left(\operatorname{Aut}\left(mu\right)\right) \le \operatorname{cycleWeight}\left(\operatorname{beta}\left(\operatorname{SupportOfCoordinateProduct}\left(mu, b, n\right)\right)\right) \cdot \operatorname{card}\left(\operatorname{centralizer}\left(\operatorname{beta}\left(\operatorname{SupportOfCoordinateProduct}\left(mu, b, n\right)\right)\right)\right) \cdot \operatorname{BlockFactorialProduct}\left(\operatorname{SupportOfCoordinateProduct}\left(mu, b, n\right)\right)\right)\right)\right)\right)\right)$$
 
@@ -84,6 +96,7 @@ This joint control concerns the full source family in Conjecture 3 of Kaygorodov
 
 - Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionBasisTransport.automorphismConjugacy`
 - Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionBasisTransport.dimensionBasis`
+- Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionBasisTransport.dimensionBasis_natural`
 - Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionBasisTransport.finite_and_joint_bound`
 - Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionBasisTransport.natural_basis_transport_iff`
 - Truth anchor: `D5/S3/QuadraticForms/EvolutionAlgebras/EvolutionBasisTransport.product_span_transport`
