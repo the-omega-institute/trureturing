@@ -414,6 +414,10 @@ $$\neg (\operatorname{claim}\left(\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/KuNearLineRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ku-2026-monochromatic-k-in-a-row-conjecture-5-6` (refuted) by `D5/S3/Combinatorics/Geometry/KuNearLineRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ku-2026-monochromatic-k-in-a-row-conjecture-5-6","declaration_gid":"D5/S3/Combinatorics/Geometry/KuNearLineRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Kuo-Han Ku (2026). *Monochromatic k in a row*. URL: <https://arxiv.org/html/2606.12880v1>.
