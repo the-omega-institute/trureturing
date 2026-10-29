@@ -26,6 +26,7 @@ internal sealed class CountableOccupationFockDocument : IScribeDocumentDefinitio
     private static Formula R(Formula x, FormulaRelationOperator op, Formula y) => new Formula.Relation(x, op, y);
     private static Formula Eqn(Formula x, Formula y) => R(x, FormulaRelationOperator.Equal, y);
     private static Formula And(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.And, y);
+    private static Formula Iff(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Iff, y);
     private static Formula Imp(Formula x, Formula y) => new Formula.Logic(x, FormulaLogicOperator.Implies, y);
     private static Formula Add(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Add, y);
     private static Formula Mul(Formula x, Formula y) => new Formula.Binary(x, FormulaBinaryOperator.Multiply, y);
@@ -124,6 +125,8 @@ internal sealed class CountableOccupationFockDocument : IScribeDocumentDefinitio
                 Node("parity_involution", Eqn(Mul(V("parity"), V("parity")), One), "Squaring the occupation sign gives the identity on every basis state."),
                 Node("parity_odd", A("j", Nat, A("b", V("Bool"), Eqn(Add(Mul(V("parity"), Mode(j, b)), Mul(Mode(j, b), V("parity"))), Zero))), "Every nonzero insertion or deletion changes the cardinality by one."),
                 Node("creator_spanning", Eqn(C("Submodule.span", Complex, C("Set.range", Lam("w", C("List", Nat), C("word", C("List.map", Lam("j", Nat, C("Prod.mk", j, V("true"))), w), V("vacuum"))))), C("Submodule.top", Complex, Fock)), "Insertion induction produces each occupation basis vector as a nonzero scalar multiple of a creator word. Finite linear extension spans the entire carrier."),
+                Node("common_annihilator_kernel", A("v", Fock, Iff(A("j", Nat, Eqn(Act("annihilate", j, v), Zero)), E("alpha", Complex, Eqn(v, Smul(V("alpha"), V("vacuum")))))), "If a nonempty occupation S contains j, the coefficient of S with j deleted in annihilate j v is phase j S times the coefficient of S in v. Deletion is injective among occupations containing j, and the sign is nonzero. Thus every nonempty coefficient vanishes, while the empty coefficient supplies the unique scalar. Conversely all annihilators kill each scalar multiple of the actual vacuum."),
+                Node("eq_scalar_of_creator_commutation", A("A", End, A("alpha", Complex, Imp(Eqn(new Formula.Apply(V("A"), [V("vacuum")]), Smul(V("alpha"), V("vacuum"))), Imp(A("j", Nat, Eqn(Mul(V("A"), C("create", j)), Mul(C("create", j), V("A")))), Eqn(V("A"), Smul(V("alpha"), One)))))), "Commutation moves A through each finite creator word. Its scalar action on the vacuum therefore holds on every creator-word state, and creator_spanning with linear-map extensionality extends that same scalar to every Fock vector. No irreducibility hypothesis or finite cutoff is imposed."),
                 Paragraph(Text("This algebraic representation asserts CAR, exact cutoff transport and parity. Statewise quadratic normal sums, the bc Virasoro anomaly, the all-state super vertex algebra, graded tensor matter, BRST charge and nilpotence, cohomology, no-ghost results and the Monster, sewing, string and AdS identifications require further constructions.")))));
     }
 }
