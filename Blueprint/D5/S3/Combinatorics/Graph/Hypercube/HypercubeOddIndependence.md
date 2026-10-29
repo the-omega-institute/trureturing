@@ -8,7 +8,7 @@ The graph Q_d consists of all Boolean functions on Fin d, with adjacency at Hamm
 
 **Definition 1.1 (Odd independent sets).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence.IsOddIndependent`
+$$\forall n \in \operatorname{Nat},\; \forall S \in \operatorname{Finset}\left((\operatorname{Fin}\left(n\right) \to \operatorname{Bool})\right),\; (\operatorname{IsOddIndependent}\left(S\right)) \Leftrightarrow ((\forall x \in \operatorname{Fin}\left(n\right) \to \operatorname{Bool},\; (x \in S) \Rightarrow (\forall y \in \operatorname{Fin}\left(n\right) \to \operatorname{Bool},\; (y \in S) \Rightarrow (\neg ((\operatorname{hypercube}\left(n\right)).\operatorname{Adj}\left(x, y\right))))) \land (\forall x \in \operatorname{Fin}\left(n\right) \to \operatorname{Bool},\; (\neg (x \in S)) \Rightarrow (((\operatorname{Finset}.\operatorname{inter}\left((\operatorname{hypercube}\left(n\right)).\operatorname{neighborFinset}\left(x\right), S\right)).\operatorname{card} = 0) \lor (\operatorname{Odd}\left((\operatorname{Finset}.\operatorname{inter}\left((\operatorname{hypercube}\left(n\right)).\operatorname{neighborFinset}\left(x\right), S\right)).\operatorname{card}\right)))))$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence.IsOddIndependent` (`✓ std3`).
 
@@ -20,7 +20,7 @@ A finite set S is independent if none of its vertices are adjacent to one anothe
 
 **Definition 1.2 (The finite maximum).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence.oddIndependenceNumber`
+$$\forall n \in \operatorname{Nat},\; \operatorname{oddIndependenceNumber}\left(n\right) = \operatorname{Nat}.\operatorname{findGreatest}\left((\lambda (m: \operatorname{Nat}) \mapsto (\exists S \in \operatorname{Finset}\left((\operatorname{Fin}\left(n\right) \to \operatorname{Bool})\right),\; (\operatorname{IsOddIndependent}\left(S\right)) \land ((S).\operatorname{card} = m))), 2^{n}\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence.oddIndependenceNumber` (`✓ std3`).
 
@@ -32,7 +32,7 @@ The number is the greatest cardinality attained by an odd independent set, bound
 
 **Theorem 1.3 (The limit through all even dimensions).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence.result`
+$$\forall epsilon \in \mathbb{R},\; (0 < epsilon) \Rightarrow (\exists D \in \operatorname{Nat},\; \forall d \in \operatorname{Nat},\; (\operatorname{Even}\left(d\right)) \Rightarrow ((D \le d) \Rightarrow (\left|\frac{(\operatorname{oddIndependenceNumber}\left(d\right): \mathbb{R})}{(2^{d}: \mathbb{R})} - \frac{1}{2}\right| < epsilon)))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence.result` (`✓ std3`). ∎
 
@@ -55,4 +55,4 @@ The actual maximum lies between these lower and upper bounds. Choose k so that 1
 - Truth anchor: `D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence.IsOddIndependent`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence.oddIndependenceNumber`
 - Truth anchor: `D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence.result`
-- Dependency: [D5/S3/Combinatorics/Graph/HypercubeSubQuorum](HypercubeSubQuorum.md)
+- Dependency: [D5/S3/Combinatorics/Graph/HypercubeSubQuorum](../HypercubeSubQuorum.md)

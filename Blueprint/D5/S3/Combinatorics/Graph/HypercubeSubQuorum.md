@@ -6,7 +6,7 @@ For every Boolean cube of dimension at least two, the largest number of colors i
 
 **Definition 1.1 (Binary vertex parity).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/HypercubeSubQuorum.cubeParity`
+$$\forall n \in \operatorname{Nat},\; \forall x \in (\operatorname{Fin}\left(n\right) \to \operatorname{Bool}),\; (\operatorname{cubeParity}\left(x\right): \operatorname{Bool}) = (\sum_{(i: \operatorname{Fin}\left(n\right))} x\left(i\right): \operatorname{Bool})$$
 
 *Formalization.* `D5/S3/Combinatorics/Graph/HypercubeSubQuorum.cubeParity` (`✓ std3`).
 
@@ -18,7 +18,7 @@ The parity of a Boolean vertex is the sum of its coordinates in the two-element 
 
 **Theorem 1.2 (Adjacency reverses parity).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/HypercubeSubQuorum.cubeParity_ne_of_adj`
+$$\forall n \in \operatorname{Nat},\; \forall x \in (\operatorname{Fin}\left(n\right) \to \operatorname{Bool}),\; \forall y \in (\operatorname{Fin}\left(n\right) \to \operatorname{Bool}),\; ((\operatorname{hypercube}\left(n\right)).\operatorname{Adj}\left(x, y\right)) \Rightarrow (\operatorname{cubeParity}\left(x\right) \ne \operatorname{cubeParity}\left(y\right))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/HypercubeSubQuorum.cubeParity_ne_of_adj` (`✓ std3`). ∎
 
