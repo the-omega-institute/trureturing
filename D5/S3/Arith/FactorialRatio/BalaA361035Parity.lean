@@ -7,7 +7,7 @@
    digest: Bala's A361035 factorial quotient is odd exactly at shifted powers of two. -/
 
 /-
-escape_witness: D5.S3.Arith.FactorialRatio.BalaA361034Parity.of_digits_sum_one
+escape_witness: none
 admission_basis: open-problem-resolution (#18607; Proved)
 Direct frozen dependencies: the declarations listed below belong to
 D5/S3/Arith/FactorialRatio/OeisA347854BalaHalfIndexIntegral.
@@ -17,12 +17,15 @@ The scoped report records declaration statement_id values:
 No module pin is used as a declaration ID.
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/21857
 The sequence and claim use the source expressions with natural division.
+The upstream route for of_digits_sum_one described in BalaA361034Parity makes
+this result bind-only after helper expansion; no escape witness is claimed.
+Its admission basis is the external open-problem resolution above.
 Declarations (same-delivery helpers expanded for proof classification):
   a: proof_shape: bind-only; escape_witness: none; consumers: claim, result.
     Direct frozen dependencies: none.
   claim: proof_shape: bind-only; escape_witness: none; consumers: result.
     Direct frozen dependencies: none.
-  result: proof_shape: content; escape_witness: D5.S3.Arith.FactorialRatio.BalaA361034Parity.of_digits_sum_one; consumers: settling result.
+  result: proof_shape: bind-only; escape_witness: none; consumers: settling result.
     Direct frozen dependencies: OeisA347854BalaHalfIndexIntegral.mul_div_reduce, OeisA347854BalaHalfIndexIntegral.factorial_prod_dvd_of_floor.
 -/
 
