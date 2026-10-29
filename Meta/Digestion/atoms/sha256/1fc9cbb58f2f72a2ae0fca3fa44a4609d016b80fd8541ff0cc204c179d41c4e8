@@ -1,0 +1,29 @@
+### 定义 2.1（诱导超图嵌入）
+
+从 $\mathscr H_n$ 到下一层的第 $b$ 个子层嵌入，是一个注入
+
+$$
+\iota_b:V_n\hookrightarrow V_{n+1},
+\qquad b\in\{0,1\}.
+$$
+
+它是**诱导嵌入**，如果对每个非空 $e\subseteq V_n$ 都有
+
+$$
+\boxed{
+e\in\mathscr E_n
+\quad\Longleftrightarrow\quad
+\iota_b[e]\in\mathscr E_{n+1}.
+}
+\tag{2.1}
+$$
+
+两个子层支撑不交，如果
+
+$$
+\iota_0[V_n]\cap\iota_1[V_n]=\varnothing.
+\tag{2.2}
+$$
+
+“边反射”只有右向左的蕴含，不能替代 (2.1)；反例见第 5 节。
+

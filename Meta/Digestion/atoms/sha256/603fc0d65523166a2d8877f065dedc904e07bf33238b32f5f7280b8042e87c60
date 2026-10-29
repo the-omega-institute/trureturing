@@ -1,0 +1,13 @@
+**Lemma 8.5.2 (The 128 whole-tube response comparisons).** All interval
+inverses in Definition 8.5.1 are defined. For each pivot position the
+absolute values of all its interval endpoints over the $128$ final
+point matrices lie strictly between the indicated integers, with the
+whole pivot interval excluding zero:
+
+| Pivot position | Strict lower bound for its absolute value | Strict upper bound |
+|---:|---:|---:|
+| $1$ | $292$ | $293$ |
+| $2$ | $350$ | $351$ |
+| $3$ | $16$ | $17$ |
+| $4$ | $407$ | $408$ |
+| $5$ | $26$ | $27$ |

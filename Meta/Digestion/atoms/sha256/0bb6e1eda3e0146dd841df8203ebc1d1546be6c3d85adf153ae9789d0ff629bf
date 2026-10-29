@@ -1,0 +1,62 @@
+## 44. Full-box rational interval inequalities
+
+Use $\sigma_{\cap}=10^{70}$ and represent an interval by $[L,U]/\sigma_{\cap}$. Encode a rational
+$t$ by $[\lfloor \sigma_{\cap}t\rfloor,\lceil \sigma_{\cap}t\rceil]/\sigma_{\cap}$. Addition and negation
+are exact. For multiplication use
+
+$$
+[L,U][V,W]/\sigma_{\cap}^2\ \subseteq\
+[\lfloor\min(LV,LW,UV,UW)/\sigma_{\cap}\rfloor,
+ \lceil\max(LV,LW,UV,UW)/\sigma_{\cap}\rceil]/\sigma_{\cap}.
+$$
+
+For a reciprocal, require $0\notin[L,U]$ and use
+
+$$
+([L,U]/\sigma_{\cap})^{-1}\subseteq
+[\lfloor \sigma_{\cap}^2/U\rfloor,\lceil \sigma_{\cap}^2/L\rceil]/\sigma_{\cap}.
+$$
+
+Division means multiplication by this reciprocal. These rounding rules
+apply after every multiplication or reciprocal, including operations
+inside derivative propagation. Use interval jets $(v,q)$ with
+
+$$
+(v,q)+(w,t)=(v+w,q+t),\quad
+(v,q)(w,t)=(vw,qw+vt),\quad
+(v,q)^{-1}=(v^{-1},-qv^{-1}v^{-1}).
+$$
+
+Variables start with their unit derivative vectors and constants with
+zero derivatives. Use the same response circuit (31.4), with
+$c_{\rm src},j,n,T,U,\Lambda$ followed by $\epsilon$, then
+$z_0,z_1,z_2,z_3,d$, then $t_5,t_6,t_7,p,v,a,m$. For this interval
+expression put $o=0r+1$, evaluate $j=b+r(1-r)/b$, $T=o+b$, $U=o+2b$,
+and use the following explicitly associated forms for the same scalars:
+
+$$
+\epsilon=-24(b-o/8)(6/T-2/U)/5/\Lambda,\qquad
+z_2=(27o/5-\epsilon)/T.
+\tag{44.1}
+$$
+
+The other expressions are exactly (31.4). All products,
+divisions and sums are associated from left to right, with each written
+pair of parentheses evaluated first. In $G$, construct its constant
+second source coordinate as $(0u_1+1)/8$. Form the indicated differences
+in (43.1) and (43.3). Matrix products sum in increasing column index,
+starting at zero. This finite rational arithmetic gives the following
+strict bounds. Row $i$ bounds
+$\sum_j\sup|(I-L_kD\mathcal H)_{ij}|$ for the indicated map $\mathcal H$ and box.
+
+| Dimension and map | Row | Strict upper bound |
+| --- | --- | --- |
+| 3, $G$ on $Y_{\cap}$ | 1 | $7\cdot10^{-14}$ |
+| 3, $G$ on $Y_{\cap}$ | 2 | $24\cdot10^{-14}$ |
+| 3, $G$ on $Y_{\cap}$ | 3 | $16\cdot10^{-14}$ |
+| 6, $F$ on $X_{\cap}$ | 1 | $13\cdot10^{-10}$ |
+| 6, $F$ on $X_{\cap}$ | 2 | $6\cdot10^{-10}$ |
+| 6, $F$ on $X_{\cap}$ | 3 | $7\cdot10^{-10}$ |
+| 6, $F$ on $X_{\cap}$ | 4 | $3\cdot10^{-10}$ |
+| 6, $F$ on $X_{\cap}$ | 5 | $6\cdot10^{-10}$ |
+| 6, $F$ on $X_{\cap}$ | 6 | $4\cdot10^{-10}$ |
