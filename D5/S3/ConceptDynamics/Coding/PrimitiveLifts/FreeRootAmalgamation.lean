@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/ConceptDynamics/Coding/PrimitiveLifts/FreeRootAmalgamation
    mirror-E: none(waiver:symbolic-structural-theorems)
-   anchors: [mathlib/module/Mathlib.GroupTheory.FreeGroup.CyclicallyReduced, mathlib/module/Mathlib.GroupTheory.SpecificGroups.Dihedral, mathlib/module/Mathlib.GroupTheory.Subgroup.Centralizer, D5/S3/ConceptDynamics/Coding/PrimitiveLifts/NilpotentRootAmalgamation]
+   anchors: [mathlib/module/Mathlib.GroupTheory.FreeGroup.CyclicallyReduced, mathlib/module/Mathlib.GroupTheory.SpecificGroups.Dihedral, mathlib/module/Mathlib.GroupTheory.Subgroup.Centralizer]
    utility: none
    digest: The actual free group on Bool is an infinite nonnilpotent sharpness countermodel with unique coprime roots. -/
 
