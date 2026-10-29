@@ -9,7 +9,7 @@
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Information.SLDSpectralEnergy
 
-/-! A rational two by three density matrix violating Yu’s mixed-state conjecture. -/
+/-! A counterexample to Yu, arXiv:1704.04871v1, Eq. (2) and Appendix D. -/
 
 set_option autoImplicit false
 set_option linter.style.longLine false
@@ -74,39 +74,6 @@ private def rootBeta : Matrix (Fin 3) (Fin 3) ℂ :=
     else (Real.sqrt 29 + (if b = d then Real.sqrt 5 else -Real.sqrt 5)) /
       (2 * Real.sqrt 68) : ℝ) : ℂ)
 
-private lemma rho_apply (p q : Fin 2 × Fin 3) :
-    rho p q = if p.2 = 2 then
-      if q.2 = 2 then (if p.1 = q.1 then 1 / 4 else 3 / 17) else 0
-    else if q.2 = 2 then 0 else if p = q then 1 / 8
-    else if p.1 = q.1 ∨ p.2 = q.2 then 3 / 34 else 9 / 136 := rfl
-
-private lemma tau_apply (a c : Fin 2) :
-    tau a c = if a = c then 1 / 2 else 6 / 17 := rfl
-
-private lemma beta_apply (b d : Fin 3) :
-    beta b d = if b = 2 then (if d = 2 then 1 / 2 else 0)
-    else if d = 2 then 0 else if b = d then 1 / 4 else 3 / 17 := rfl
-
-private lemma root_rho_apply (p q : Fin 2 × Fin 3) :
-    rootRho p q = (((if p.2 = 2 then
-      if q.2 = 2 then
-        Real.sqrt 29 + (if p.1 = q.1 then Real.sqrt 5 else -Real.sqrt 5)
-      else 0
-      else if q.2 = 2 then 0 else if p = q then 5
-      else if p.1 = q.1 ∨ p.2 = q.2 then 2 else 1) /
-        (2 * Real.sqrt 68) : ℝ) : ℂ) := rfl
-
-private lemma root_tau_apply (a c : Fin 2) :
-    rootTau a c = (((Real.sqrt 29 +
-      (if a = c then Real.sqrt 5 else -Real.sqrt 5)) /
-        (2 * Real.sqrt 34) : ℝ) : ℂ) := rfl
-
-private lemma root_beta_apply (b d : Fin 3) :
-    rootBeta b d = ((if b = 2 then (if d = 2 then 1 / Real.sqrt 2 else 0)
-      else if d = 2 then 0
-      else (Real.sqrt 29 + (if b = d then Real.sqrt 5 else -Real.sqrt 5)) /
-        (2 * Real.sqrt 68) : ℝ) : ℂ) := rfl
-
 private lemma coherence_complement {ι : Type*} [Fintype ι] [DecidableEq ι]
     (ρ : Matrix ι ι ℂ) :
     1 - skewCoherence ρ = ∑ k, (CFC.sqrt ρ k k).re ^ 2 := by
@@ -114,6 +81,15 @@ private lemma coherence_complement {ι : Type*} [Fintype ι] [DecidableEq ι]
   ring
 
 private lemma root_rho_positive : rootRho.PosSemidef := by
+  let r : Matrix (Fin 2 × Fin 3) (Fin 2 × Fin 3) ℂ :=
+    fun p q => (((if p.2 = 2 then
+      if q.2 = 2 then
+        Real.sqrt 29 + (if p.1 = q.1 then Real.sqrt 5 else -Real.sqrt 5)
+      else 0
+      else if q.2 = 2 then 0
+      else if p = q then 5
+      else if p.1 = q.1 ∨ p.2 = q.2 then 2 else 1) /
+        (2 * Real.sqrt 68) : ℝ) : ℂ)
   let v : Fin 6 → (Fin 2 × Fin 3 → ℂ) := ![
     (fun p => if p.2 = 2 then 0 else 1),
     (fun p => if p.2 = 2 then 0 else if p.2 = 0 then 1 else -1),
@@ -130,48 +106,96 @@ private lemma root_rho_positive : rootRho.PosSemidef := by
       (Matrix.posSemidef_vecMulVec_self_star (v k)).smul (hw k)
   have he : rootRho = (1 / (2 * Real.sqrt 68) : ℝ) •
       (∑ k : Fin 6, w k • vecMulVec (v k) (star (v k))) := by
+    change r = _
     ext ⟨a, b⟩ ⟨c, d⟩
     fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
-      norm_num [root_rho_apply, Matrix.smul_apply, Matrix.sum_apply,
+      norm_num [r, Matrix.smul_apply, Matrix.sum_apply,
         Fin.sum_univ_succ, Matrix.vecMulVec_apply, Pi.star_apply, v, w,
         Complex.real_smul] <;> ring
   rw [he]
   exact hp.smul (by positivity)
 
 private lemma root_rho_square : rootRho * rootRho = rho := by
+  let r : Matrix (Fin 2 × Fin 3) (Fin 2 × Fin 3) ℂ :=
+    fun p q => (((if p.2 = 2 then
+      if q.2 = 2 then
+        Real.sqrt 29 + (if p.1 = q.1 then Real.sqrt 5 else -Real.sqrt 5)
+      else 0
+      else if q.2 = 2 then 0
+      else if p = q then 5
+      else if p.1 = q.1 ∨ p.2 = q.2 then 2 else 1) /
+        (2 * Real.sqrt 68) : ℝ) : ℂ)
+  let state : Matrix (Fin 2 × Fin 3) (Fin 2 × Fin 3) ℂ :=
+    fun p q =>
+      if p.2 = 2 then
+        if q.2 = 2 then (if p.1 = q.1 then 1 / 4 else 3 / 17) else 0
+      else if q.2 = 2 then 0
+      else if p = q then 1 / 8
+      else if p.1 = q.1 ∨ p.2 = q.2 then 3 / 34 else 9 / 136
   have h68 : Real.sqrt 68 ≠ 0 := by positivity
   have hs68 := Real.sq_sqrt (show (0 : ℝ) ≤ 68 by norm_num)
   have hs29 := Real.sq_sqrt (show (0 : ℝ) ≤ 29 by norm_num)
   have hs5 := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
+  change r * r = state
   ext ⟨a, b⟩ ⟨c, d⟩
   fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
-    norm_num [Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_succ,
-      root_rho_apply, rho_apply] <;>
-    simp only [← Complex.ofReal_one, ← Complex.ofReal_ofNat, ← Complex.ofReal_mul,
-      ← Complex.ofReal_div, ← Complex.ofReal_add, ← Complex.ofReal_inv,
-      ← Complex.ofReal_neg, ← Complex.ofReal_sub, Complex.ofReal_inj] <;> field_simp <;> nlinarith
+    norm_num [r, state, Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_succ] <;>
+    simp only [← Complex.ofReal_mul, ← Complex.ofReal_div, ← Complex.ofReal_add,
+      ← Complex.ofReal_inv, ← Complex.ofReal_neg, Complex.ofReal_inj] <;> field_simp <;> nlinarith
 
 private lemma rho_density : IsDensity rho := by
   constructor
   · have hp := Matrix.posSemidef_conjTranspose_mul_self rootRho
     rw [root_rho_positive.isHermitian.eq, root_rho_square] at hp
     exact hp
-  · change (∑ p, rho p p) = 1
-    norm_num [Fintype.sum_prod_type, Fin.sum_univ_succ, rho_apply]
+  ·
+    let d : Matrix (Fin 2 × Fin 3) (Fin 2 × Fin 3) ℂ :=
+      fun p q =>
+        if p.2 = 2 then
+          if q.2 = 2 then (if p.1 = q.1 then 1 / 4 else 3 / 17) else 0
+        else if q.2 = 2 then 0
+        else if p = q then 1 / 8
+        else if p.1 = q.1 ∨ p.2 = q.2 then 3 / 34 else 9 / 136
+    change (∑ p, d p p) = 1
+    norm_num [d, Fintype.sum_prod_type, Fin.sum_univ_succ]
 
 private lemma marginal_right : partialTraceRight rho = tau := by
+  let d : Matrix (Fin 2 × Fin 3) (Fin 2 × Fin 3) ℂ :=
+    fun p q =>
+      if p.2 = 2 then
+        if q.2 = 2 then (if p.1 = q.1 then 1 / 4 else 3 / 17) else 0
+      else if q.2 = 2 then 0
+      else if p = q then 1 / 8
+      else if p.1 = q.1 ∨ p.2 = q.2 then 3 / 34 else 9 / 136
+  let t : Matrix (Fin 2) (Fin 2) ℂ :=
+    fun a c => if a = c then 1 / 2 else 6 / 17
   ext a c
-  change (∑ b : Fin 3, rho (a, b) (c, b)) = tau a c
+  change (∑ b : Fin 3, d (a, b) (c, b)) = t a c
   fin_cases a <;> fin_cases c <;>
-    norm_num [Fin.sum_univ_succ, rho_apply, tau_apply]
+    norm_num [d, t, Fin.sum_univ_succ]
 
 private lemma marginal_left : partialTraceLeft rho = beta := by
-  ext b d
-  change (∑ a : Fin 2, rho (a, b) (a, d)) = beta b d
-  fin_cases b <;> fin_cases d <;>
-    norm_num [Fin.sum_univ_succ, rho_apply, beta_apply]
+  let d : Matrix (Fin 2 × Fin 3) (Fin 2 × Fin 3) ℂ :=
+    fun p q =>
+      if p.2 = 2 then
+        if q.2 = 2 then (if p.1 = q.1 then 1 / 4 else 3 / 17) else 0
+      else if q.2 = 2 then 0
+      else if p = q then 1 / 8
+      else if p.1 = q.1 ∨ p.2 = q.2 then 3 / 34 else 9 / 136
+  let t : Matrix (Fin 3) (Fin 3) ℂ :=
+    fun b d =>
+      if b = 2 then (if d = 2 then 1 / 2 else 0)
+      else if d = 2 then 0 else if b = d then 1 / 4 else 3 / 17
+  ext b e
+  change (∑ a : Fin 2, d (a, b) (a, e)) = t b e
+  fin_cases b <;> fin_cases e <;>
+    norm_num [d, t, Fin.sum_univ_succ]
 
 private lemma root_tau_positive : rootTau.PosSemidef := by
+  let r : Matrix (Fin 2) (Fin 2) ℂ :=
+    fun a c => (((Real.sqrt 29 +
+      (if a = c then Real.sqrt 5 else -Real.sqrt 5)) /
+        (2 * Real.sqrt 34) : ℝ) : ℂ)
   let v : Fin 2 → ℂ := ![1, -1]
   have hp : (Real.sqrt 29 • vecMulVec (fun _ : Fin 2 => (1 : ℂ))
       (star (fun _ : Fin 2 => (1 : ℂ))) +
@@ -182,27 +206,39 @@ private lemma root_tau_positive : rootTau.PosSemidef := by
       (Real.sqrt 29 • vecMulVec (fun _ : Fin 2 => (1 : ℂ))
         (star (fun _ : Fin 2 => (1 : ℂ))) +
         Real.sqrt 5 • vecMulVec v (star v)) := by
+    change r = _
     ext a c
     fin_cases a <;> fin_cases c <;>
-      simp only [root_tau_apply, Matrix.smul_apply, Matrix.add_apply,
+      simp only [r, Matrix.smul_apply, Matrix.add_apply,
         Matrix.vecMulVec_apply, Pi.star_apply] <;>
       norm_num [v, Complex.real_smul] <;> ring
   rw [he]
   exact hp.smul (by positivity)
 
 private lemma root_tau_square : rootTau * rootTau = tau := by
+  let r : Matrix (Fin 2) (Fin 2) ℂ :=
+    fun a c => (((Real.sqrt 29 +
+      (if a = c then Real.sqrt 5 else -Real.sqrt 5)) /
+        (2 * Real.sqrt 34) : ℝ) : ℂ)
+  let state : Matrix (Fin 2) (Fin 2) ℂ :=
+    fun a c => if a = c then 1 / 2 else 6 / 17
   have h34 : Real.sqrt 34 ≠ 0 := by positivity
   have hs34 := Real.sq_sqrt (show (0 : ℝ) ≤ 34 by norm_num)
   have hs29 := Real.sq_sqrt (show (0 : ℝ) ≤ 29 by norm_num)
   have hs5 := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
+  change r * r = state
   ext a c
   fin_cases a <;> fin_cases c <;>
-    norm_num [Matrix.mul_apply, Fin.sum_univ_succ, root_tau_apply, tau_apply] <;>
-    simp only [← Complex.ofReal_one, ← Complex.ofReal_ofNat, ← Complex.ofReal_mul,
-      ← Complex.ofReal_div, ← Complex.ofReal_add, ← Complex.ofReal_inv,
-      ← Complex.ofReal_neg, ← Complex.ofReal_sub, Complex.ofReal_inj] <;> field_simp <;> nlinarith
+    norm_num [r, state, Matrix.mul_apply, Fin.sum_univ_succ] <;>
+    simp only [← Complex.ofReal_mul, ← Complex.ofReal_div, ← Complex.ofReal_add,
+      ← Complex.ofReal_neg, Complex.ofReal_inj] <;> field_simp <;> nlinarith
 
 private lemma root_beta_positive : rootBeta.PosSemidef := by
+  let r : Matrix (Fin 3) (Fin 3) ℂ :=
+    fun b d => ((if b = 2 then (if d = 2 then 1 / Real.sqrt 2 else 0)
+      else if d = 2 then 0
+      else (Real.sqrt 29 + (if b = d then Real.sqrt 5 else -Real.sqrt 5)) /
+        (2 * Real.sqrt 68) : ℝ) : ℂ)
   let v : Fin 3 → ℂ := ![1, 1, 0]
   let w : Fin 3 → ℂ := ![1, -1, 0]
   let z : Fin 3 → ℂ := ![0, 0, 1]
@@ -214,9 +250,10 @@ private lemma root_beta_positive : rootBeta.PosSemidef := by
       (Real.sqrt 29 • vecMulVec v (star v) +
         Real.sqrt 5 • vecMulVec w (star w)) +
       (1 / Real.sqrt 2 : ℝ) • vecMulVec z (star z) := by
+    change r = _
     ext b d
     fin_cases b <;> fin_cases d <;>
-      simp only [root_beta_apply, Matrix.smul_apply, Matrix.add_apply,
+      simp only [r, Matrix.smul_apply, Matrix.add_apply,
         Matrix.vecMulVec_apply, Pi.star_apply] <;>
       norm_num [v, w, z, Complex.real_smul] <;> ring
   rw [he]
@@ -224,18 +261,27 @@ private lemma root_beta_positive : rootBeta.PosSemidef := by
     ((Matrix.posSemidef_vecMulVec_self_star z).smul (by positivity))
 
 private lemma root_beta_square : rootBeta * rootBeta = beta := by
+  let r : Matrix (Fin 3) (Fin 3) ℂ :=
+    fun b d => ((if b = 2 then (if d = 2 then 1 / Real.sqrt 2 else 0)
+      else if d = 2 then 0
+      else (Real.sqrt 29 + (if b = d then Real.sqrt 5 else -Real.sqrt 5)) /
+        (2 * Real.sqrt 68) : ℝ) : ℂ)
+  let state : Matrix (Fin 3) (Fin 3) ℂ :=
+    fun b d =>
+      if b = 2 then (if d = 2 then 1 / 2 else 0)
+      else if d = 2 then 0 else if b = d then 1 / 4 else 3 / 17
   have h68 : Real.sqrt 68 ≠ 0 := by positivity
   have h2 : Real.sqrt 2 ≠ 0 := by positivity
   have hs68 := Real.sq_sqrt (show (0 : ℝ) ≤ 68 by norm_num)
   have hs2 := Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
   have hs29 := Real.sq_sqrt (show (0 : ℝ) ≤ 29 by norm_num)
   have hs5 := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
+  change r * r = state
   ext b d
   fin_cases b <;> fin_cases d <;>
-    norm_num [Matrix.mul_apply, Fin.sum_univ_succ, root_beta_apply, beta_apply] <;>
-    simp only [← Complex.ofReal_one, ← Complex.ofReal_ofNat, ← Complex.ofReal_mul,
-      ← Complex.ofReal_div, ← Complex.ofReal_add, ← Complex.ofReal_inv,
-      ← Complex.ofReal_neg, ← Complex.ofReal_sub, Complex.ofReal_inj] <;> field_simp <;> nlinarith
+    norm_num [r, state, Matrix.mul_apply, Fin.sum_univ_succ] <;>
+    simp only [← Complex.ofReal_mul, ← Complex.ofReal_div, ← Complex.ofReal_add,
+      ← Complex.ofReal_inv, ← Complex.ofReal_neg, Complex.ofReal_inj] <;> field_simp <;> nlinarith
 
 private lemma sqrt_rho : CFC.sqrt rho = rootRho := by
   exact (CFC.sqrt_eq_iff rho rootRho rho_density.1.nonneg
@@ -254,6 +300,16 @@ private lemma sqrt_beta : CFC.sqrt beta = rootBeta := by
 private lemma value_rho :
     1 - skewCoherence rho = (25 / 34 + (1 / 2 + Real.sqrt 145 / 34)) / 2 := by
   rw [coherence_complement, sqrt_rho]
+  let r : Matrix (Fin 2 × Fin 3) (Fin 2 × Fin 3) ℂ :=
+    fun p q => (((if p.2 = 2 then
+      if q.2 = 2 then
+        Real.sqrt 29 + (if p.1 = q.1 then Real.sqrt 5 else -Real.sqrt 5)
+      else 0
+      else if q.2 = 2 then 0
+      else if p = q then 5
+      else if p.1 = q.1 ∨ p.2 = q.2 then 2 else 1) /
+        (2 * Real.sqrt 68) : ℝ) : ℂ)
+  change (∑ k, (r k k).re ^ 2) = _
   have h68 : Real.sqrt 68 ≠ 0 := by positivity
   have h34 : Real.sqrt 34 ≠ 0 := by positivity
   have h2 : Real.sqrt 2 ≠ 0 := by positivity
@@ -265,7 +321,7 @@ private lemma value_rho :
   have hm : Real.sqrt 29 * Real.sqrt 5 = Real.sqrt 145 := by
     rw [← Real.sqrt_mul (by norm_num)]
     norm_num
-  simp only [Fintype.sum_prod_type, Fin.sum_univ_succ, root_rho_apply, Complex.ofReal_re]
+  simp only [r, Fintype.sum_prod_type, Fin.sum_univ_succ, Complex.ofReal_re]
   norm_num
   field_simp
   nlinarith
@@ -273,6 +329,11 @@ private lemma value_rho :
 private lemma value_tau :
     1 - skewCoherence tau = 1 / 2 + Real.sqrt 145 / 34 := by
   rw [coherence_complement, sqrt_tau]
+  let r : Matrix (Fin 2) (Fin 2) ℂ :=
+    fun a c => (((Real.sqrt 29 +
+      (if a = c then Real.sqrt 5 else -Real.sqrt 5)) /
+        (2 * Real.sqrt 34) : ℝ) : ℂ)
+  change (∑ k, (r k k).re ^ 2) = _
   have h68 : Real.sqrt 68 ≠ 0 := by positivity
   have h34 : Real.sqrt 34 ≠ 0 := by positivity
   have h2 : Real.sqrt 2 ≠ 0 := by positivity
@@ -284,7 +345,7 @@ private lemma value_tau :
   have hm : Real.sqrt 29 * Real.sqrt 5 = Real.sqrt 145 := by
     rw [← Real.sqrt_mul (by norm_num)]
     norm_num
-  simp only [Fin.sum_univ_succ, root_tau_apply, Complex.ofReal_re]
+  simp only [r, Fin.sum_univ_succ, Complex.ofReal_re]
   norm_num
   field_simp
   nlinarith
@@ -292,6 +353,12 @@ private lemma value_tau :
 private lemma value_beta :
     1 - skewCoherence beta = ((1 / 2 + Real.sqrt 145 / 34) + 1) / 2 := by
   rw [coherence_complement, sqrt_beta]
+  let r : Matrix (Fin 3) (Fin 3) ℂ :=
+    fun b d => ((if b = 2 then (if d = 2 then 1 / Real.sqrt 2 else 0)
+      else if d = 2 then 0
+      else (Real.sqrt 29 + (if b = d then Real.sqrt 5 else -Real.sqrt 5)) /
+        (2 * Real.sqrt 68) : ℝ) : ℂ)
+  change (∑ k, (r k k).re ^ 2) = _
   have h68 : Real.sqrt 68 ≠ 0 := by positivity
   have h34 : Real.sqrt 34 ≠ 0 := by positivity
   have h2 : Real.sqrt 2 ≠ 0 := by positivity
@@ -303,7 +370,7 @@ private lemma value_beta :
   have hm : Real.sqrt 29 * Real.sqrt 5 = Real.sqrt 145 := by
     rw [← Real.sqrt_mul (by norm_num)]
     norm_num
-  simp only [Fin.sum_univ_succ, root_beta_apply, Complex.ofReal_re]
+  simp only [r, Fin.sum_univ_succ, Complex.ofReal_re]
   norm_num
   field_simp
   nlinarith
@@ -328,8 +395,12 @@ private lemma strict_violation :
 theorem result : ¬ claim := by
   intro h
   have hi := h 2 3 (by norm_num) rho rho_density
-  rw [marginal_right, marginal_left] at hi
-  exact (not_le_of_gt strict_violation) hi
+  have hr := congrArg (fun a : Matrix (Fin 2) (Fin 2) ℂ => 1 - skewCoherence a)
+    marginal_right
+  have hl := congrArg (fun b : Matrix (Fin 3) (Fin 3) ℂ => 1 - skewCoherence b)
+    marginal_left
+  exact (not_le_of_gt strict_violation)
+    (le_of_le_of_eq hi (congrArg₂ (fun x y : ℝ => x * y) hr hl))
 
 end
 
