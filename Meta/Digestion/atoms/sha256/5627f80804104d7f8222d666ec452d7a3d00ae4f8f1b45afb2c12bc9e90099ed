@@ -1,0 +1,119 @@
+**Theorem 139.2 (Complete feasibility classification; repo-derived).**
+For every source and every parameter in Definition 139.1, every
+$x=(\gamma,h)\in\mathcal P$ and every $0<\lambda\le1$, the
+following equivalence holds on the full original domain:
+
+$$
+(1-\lambda)R_x+\lambda JR_x\in\mathscr D_\eta
+\quad\Longleftrightarrow\quad
+\gamma=0,\qquad
+h=\epsilon Ae+\eta\zeta f,
+\quad \epsilon\in\{-1,1\},\quad |\zeta|=1.
+\tag{139.5}
+$$
+
+In the feasible case $JR_x=R_x$ and the representing parameter pair
+is uniquely $x$. If $x$ is restricted to
+$\operatorname{Re}(e^\dagger h)\le0$, only $\epsilon=-1$ occurs;
+the same equivalence then holds with $\mathscr D_\eta^-$ as target.
+In particular the signed reflection ($\lambda=1$) and the midpoint
+($\lambda=1/2$) are feasible exactly in the same cases. Uniqueness
+here concerns $(\gamma,h)$, not the full completion behind a given $h$.
+
+*Proof.* Put $\kappa=1-2\lambda$, write
+$h=\alpha e+v_\perp$ with $v_\perp\perp e$, and suppose the left
+side is $R_{x'}$ for $x'=(\gamma',h')\in\mathcal P$. Write
+$h'=\alpha'e+v'_\perp$. By (139.3) its lift is equal, modulo the
+common kernel of VI Lemma 116.2, to
+$(1-\lambda)L_x+\lambda\mathscr J L_x$.
+
+The maps (118.8) on the entire lift space give
+$\mathfrak H(L)=(X+Y)/b$ and
+$\mathfrak S(L)=\Pi_v(X-s^2(X+Y))/(sc)$.
+The decoder vector $v$ is perpendicular to $t$, so $Wv=v$;
+consequently $\Pi_v(WMW)=W\Pi_v(M)W$. Both maps therefore
+intertwine $\mathscr J$ with $M\mapsto-WMW$. Since
+$W\mathsf S_{h_0}W=-\mathsf S_{h_0}$, (139.4) implies
+
+$$
+\begin{aligned}
+h'h'^\dagger
+ &=(1-\lambda)hh^\dagger-\lambda Whh^\dagger W
+                  +2\lambda(A^2ee^\dagger+\eta^2ff^\dagger),\\
+\mathsf S_{h'}
+ &=(1-\lambda)\mathsf S_h-\lambda W\mathsf S_hW.
+\end{aligned}
+\tag{139.6}
+$$
+
+In the decomposition $\mathbb Ce\oplus e^\perp$, the right side
+of the first line has diagonal blocks
+$\kappa|\alpha|^2+2\lambda A^2$ and
+$\kappa v_\perp v_\perp^\dagger+2\lambda\eta^2ff^\dagger$,
+and upper-right block $\alpha v_\perp^\dagger$.
+The second line, using
+
+$$
+\mathsf S_h=-2\tau\operatorname{Im}(\alpha)ee^\dagger
+ +\mathrm i\tau(v_\perp e^\dagger-ev_\perp^\dagger),
+\tag{139.7}
+$$
+
+first forces
+$v'_\perp=v_\perp$ and
+$\operatorname{Im}\alpha'=\kappa\operatorname{Im}\alpha$.
+The transverse block of the first line now gives
+
+$$
+v_\perp v_\perp^\dagger=\eta^2ff^\dagger.
+\tag{139.8}
+$$
+
+Since $\eta>0$, this means $v_\perp=\eta\zeta f$ for one
+$|\zeta|=1$, and $v_\perp\ne0$. The upper-right block gives
+$\alpha'v_\perp^\dagger=\alpha v_\perp^\dagger$, hence
+$\alpha'=\alpha$. As $\lambda>0$, (139.7) then makes $\alpha$
+real. The $ee^\dagger$ entry of (139.6) gives $\alpha^2=A^2$.
+Thus $h'=h=\epsilon Ae+\eta\zeta f$.
+
+It remains to exclude every nonzero complex retention. The $Z$
+component of the common-kernel relation says, for some real $y$,
+
+$$
+\gamma'K_h-\gamma\bigl((1-\lambda)K_h-\lambda WK_hW\bigr)
+                                      =\mathrm i yI_3.
+\tag{139.9}
+$$
+
+Use the actual source functional $\ell(M)=\operatorname{Tr}(FM)$
+of VI Lemma 116.3. Its $F$ is supported on $e^\perp$, so
+$WFW=F$. It annihilates scalars, and
+$\ell(K_h)=\mathrm i scq_h$ with $q_h\ge5/8-b>0$ on the whole
+completion ball. Applying $\ell$ to (139.9) yields
+$\gamma'=\kappa\gamma$, including complex $\gamma,\gamma'$.
+Let $K_h^-=(K_h-WK_hW)/2$. Taking the $W$-odd part of
+(139.9) gives $(\gamma'-\gamma)K_h^-=0$. If
+$a=\epsilon A$ and $v_\perp=\eta\zeta f$, the original formula
+for $K_h$ gives
+
+$$
+K_h^-=(\tau s^2-\mathrm i scba)ev_\perp^\dagger
+             +(\tau c^2-\mathrm i scba)v_\perp e^\dagger.
+\tag{139.10}
+$$
+
+Its first coefficient has strictly positive real part $\tau s^2$,
+and $v_\perp\ne0$, so $K_h^-\ne0$. Therefore
+$-2\lambda\gamma=0$, proving $\gamma=\gamma'=0$.
+This proves necessity and uniqueness of the representing pair.
+
+Conversely for either sign and every $|\zeta|=1$, the diagonal
+blocks of $hh^\dagger-h_0h_0^\dagger$ vanish, and
+$\mathsf S_h-\mathsf S_{h_0}$ has only off-diagonal blocks.
+Both are fixed by $M\mapsto-WMW$. With $\gamma=0$, (118.9)
+then makes $L_x$ fixed by $\mathscr J$. Hence $JR_x=R_x$, and
+all averages in (139.5) equal that original residual. Its norm
+condition is $\|h\|^2=A^2+\eta^2\le1$. Since $A>0$, exactly
+the negative sign lies in the stated half-ball. This also proves
+the signed-reflection and midpoint consequences. $\square$
+
