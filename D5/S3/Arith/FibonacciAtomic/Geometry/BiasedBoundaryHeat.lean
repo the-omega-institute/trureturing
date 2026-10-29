@@ -8,7 +8,7 @@
 
 import D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryCounting
 import D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryPolar
-import D5.S3.Quantum.Analysis.ContractionSemigroup
+import D5.S3.Quantum.Analysis.DiagonalHeat
 import D5.S3.HilbertOperators.RealPositiveTrace
 import Mathlib.Analysis.Normed.Lp.lpHolder
 import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
@@ -117,16 +117,6 @@ private theorem heat_continuous (e : HilbertBasis ℕ ℝ G0) (mu : ℕ → ℝ)
       exact add_lt_add (add_lt_add hu hs) hu
     _ = ε := by ring
 
-private theorem scalar_derivative {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
-    (a : ℝ) (z : V) :
-    Tendsto (fun t : ℝ≥0 => (t : ℝ)⁻¹ • (Real.exp (-(t : ℝ)*a) • z-z))
-      (𝓝[>] 0) (𝓝 ((-a) • z)) := by
-  have hd : HasDerivAt (fun s : ℝ => Real.exp (-s*a) • z) ((-a) • z) 0 := by
-    convert (((hasDerivAt_id (0 : ℝ)).neg.mul_const a).exp.smul_const z) using 1 <;> simp
-  simpa only [zero_add,neg_zero,zero_mul,Real.exp_zero,one_smul] using
-    MarkovProcess.Semigroup.StronglyContinuousContractionSemigroup.tendsto_slope_add_of_hasDerivAt hd
-
-
 private theorem graph_coeff (e : HilbertBasis ℕ ℝ G0) (k : HilbertBasis ℕ ℝ K)
     (mu : ℕ → ℝ) (hp : ∀ i, 0 < mu i)
     (hk : ∀ i, Sigma (k i).val = mu i • (k i).val)
@@ -190,7 +180,8 @@ private theorem generator_iff (e : HilbertBasis ℕ ℝ G0) (k : HilbertBasis �
       Tendsto (fun t : ℝ≥0 => (t : ℝ)⁻¹ •
         (heat e mu hp t (∑ i ∈ F,c i • e i) - ∑ i ∈ F,c i • e i))
         (𝓝[>] 0) (𝓝 (-∑ i ∈ F,((mu i)⁻¹*c i) • e i)) := by
-    have hs := tendsto_finsetSum F (fun i _ => scalar_derivative ((mu i)⁻¹) (c i • e i))
+    have hs := tendsto_finsetSum F (fun i _ =>
+      D5.S3.Quantum.Analysis.DiagonalHeat.scalar_derivative ((mu i)⁻¹) (c i • e i))
     convert hs using 1
     · funext t
       simp only [map_sum,map_smul,heat_basis,← Finset.sum_sub_distrib,Finset.smul_sum]
@@ -211,7 +202,8 @@ private theorem generator_iff (e : HilbertBasis ℕ ℝ G0) (k : HilbertBasis �
         (𝓝[>] 0) (𝓝 (e.repr v i)) at hc
       simpa only [map_smul,map_sub,heat_coeff,lp.coeFn_smul,lp.coeFn_sub,
         Pi.smul_apply,Pi.sub_apply,smul_eq_mul] using hc
-    have heq := tendsto_nhds_unique hlim (scalar_derivative ((mu i)⁻¹) (e.repr u i))
+    have heq := tendsto_nhds_unique hlim
+      (D5.S3.Quantum.Analysis.DiagonalHeat.scalar_derivative ((mu i)⁻¹) (e.repr u i))
     simpa [heq] using congrArg Neg.neg heq
   · intro hg
     have hc := (graph_coeff e k mu hp hk hC u (-v)).mp hg
