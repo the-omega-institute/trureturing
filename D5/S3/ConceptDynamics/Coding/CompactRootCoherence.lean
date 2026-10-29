@@ -1,11 +1,10 @@
 /- GID: D5/S3/ConceptDynamics/Coding/CompactRootCoherence
    generality: G
-   mirror-B: none(waiver:formal-unit-only)
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/CompactRootCoherence
+   mirror-E: none(waiver:symbolic-structural-theorems)
    anchors: []
    utility: none
-   digest: Compactness turns separate positive roots in a compact Hausdorff group into one coherent rational homomorphism.
--/
+   digest: In a compact Hausdorff topological group, independent positive roots exist iff one rational homomorphism sends additive rational one to the element. -/
 
 import Mathlib.Algebra.Group.TypeTags.Hom
 import Mathlib.Algebra.Order.Floor.Ring

@@ -81,9 +81,9 @@ internal sealed class CompactRootCoherenceDocument : IScribeDocumentDefinition
                             + "the existence of a positive n-th root of h for every positive "
                             + "natural n is equivalent to one algebraic homomorphism from the "
                             + "additive rationals, represented as Multiplicative Q, sending "
-                            + "one to h.")),
+                            + "additive rational one to h, that is, phi(ofAdd(1:Q)) = h.")),
                     Paragraph(Text(
-                        "The forward direction puts all rational-valued functions into the "
+                        "The forward direction puts all H-valued functions indexed by Q into the "
                             + "compact product H^Q. Each finite set of rational coordinates "
                             + "has a nonempty closed constraint set: a single D-th root of h "
                             + "supplies the values, and denominator clearing makes the finite "
@@ -92,7 +92,7 @@ internal sealed class CompactRootCoherenceDocument : IScribeDocumentDefinition
                             + "a global homomorphism. Hausdorffness is used for the closed "
                             + "equalizers.")),
                     Paragraph(Text(
-                        "The reverse direction evaluates the homomorphism at 1 divided by n "
+                        "The reverse direction uses the root phi(ofAdd(1/n)) "
                             + "and applies its power map. No topology on Q, continuity, "
                             + "connectedness, Lie structure, faithfulness, or commutativity of "
                             + "H is asserted."))),

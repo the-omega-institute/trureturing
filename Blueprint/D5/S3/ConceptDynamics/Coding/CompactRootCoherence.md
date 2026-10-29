@@ -14,11 +14,11 @@ $$\forall H: \operatorname{Type}(u), [\operatorname{Group}(H)] [\operatorname{To
 
 *Commentary.*
 
-For an arbitrary compact Hausdorff topological group H and h in H, the existence of a positive n-th root of h for every positive natural n is equivalent to one algebraic homomorphism from the additive rationals, represented as Multiplicative Q, sending one to h.
+For an arbitrary compact Hausdorff topological group H and h in H, the existence of a positive n-th root of h for every positive natural n is equivalent to one algebraic homomorphism from the additive rationals, represented as Multiplicative Q, sending additive rational one to h, that is, phi(ofAdd(1:Q)) = h.
 
-The forward direction puts all rational-valued functions into the compact product H^Q. Each finite set of rational coordinates has a nonempty closed constraint set: a single D-th root of h supplies the values, and denominator clearing makes the finite addition equations hold inside its cyclic subgroup. Compactness then supplies a point in every finite constraint set, which is a global homomorphism. Hausdorffness is used for the closed equalizers.
+The forward direction puts all H-valued functions indexed by Q into the compact product H^Q. Each finite set of rational coordinates has a nonempty closed constraint set: a single D-th root of h supplies the values, and denominator clearing makes the finite addition equations hold inside its cyclic subgroup. Compactness then supplies a point in every finite constraint set, which is a global homomorphism. Hausdorffness is used for the closed equalizers.
 
-The reverse direction evaluates the homomorphism at 1 divided by n and applies its power map. No topology on Q, continuity, connectedness, Lie structure, faithfulness, or commutativity of H is asserted.
+The reverse direction uses the root phi(ofAdd(1/n)) and applies its power map. No topology on Q, continuity, connectedness, Lie structure, faithfulness, or commutativity of H is asserted.
 
 ## References
 
