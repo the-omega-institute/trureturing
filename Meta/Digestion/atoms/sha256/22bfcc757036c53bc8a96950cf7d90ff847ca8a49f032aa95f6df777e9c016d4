@@ -1,0 +1,179 @@
+**Lemma 12.4 (Uniform localization of the entire candidate sublevel).** Fix $M>0$. Uniformly over all $x\in\mathcal X_a$ with $d(x)\le Ma^{3/2}$ and every choice of a smallest-marginal label $e$, the notation of Lemma 12.3 satisfies, for all sufficiently large $a$ depending only on $M$,
+
+$$
+\frac1M\le\tau:=a^{3/2}t\le M,\qquad
+1\le m\le M,\qquad
+\frac{d(x)}{a^{3/2}}
+\ge\frac{m^2}{\tau}+2\tau-O_M(a^{-1}).
+\tag{12.14}
+$$
+
+Define the sublevel using the scalar candidate already specified in Lemma 12.2:
+
+$$
+\mathcal U_a
+=\{x\in\mathcal X_a:H(x)\le h_a(\epsilon_a)+1\}.
+\tag{12.15}
+$$
+
+There are absolute constants and an integer $a_1\ge7$ such that, for every integer $a\ge a_1$, every $x\in\mathcal U_a$ and every smallest-marginal label $e$,
+
+$$
+m^2-1=O(a^{-1}),\qquad
+\beta=O(a^{-1}),\qquad
+\tau=\frac1{\sqrt2}+O(a^{-1/2}),\qquad
+t\lambda_a(t)=2+O(a^{-1/2})>0.
+\tag{12.16}
+$$
+
+All constants and thresholds are independent of $x$, its support, the sizes of its positive marginals, and the choice among tied smallest marginals.
+
+**Proof.** Put $\Delta=\operatorname{Var}(K)$. As $\mathbb E K=a$,
+
+$$
+\mathbb E[(K-a)(K-a-1)]=\Delta.
+$$
+
+The integer identity
+
+$$
+k^3-D_ak+C_a=(k-a)(k-a-1)(k+2a+1)
+$$
+
+implies
+
+$$
+\mathbb E K^3-a^3\ge(2a+2)\Delta.
+\tag{12.17}
+$$
+
+To see the sign without a real-variable support relaxation, subtract
+$(2a+2)(k-a)(k-a-1)$
+from the identity's right side. The remainder is
+$(k-a)(k-a-1)(k-1)\ge0$
+for each integer $k\ge1$. Also $aD_a-C_a=a^3$. Since $y_i\le1$, $H\ge\mathbb E K^3$. Thus the assumed sublevel gives
+
+$$
+\Delta\le\frac{2a^2+a+Ma^{3/2}}{2a+2}=O_M(a).
+\tag{12.18}
+$$
+
+We first control $t$ without any rarity assumption. On this same array define
+
+$$
+V_T=\sum_{i\in T}(y_i^{-2}-1).
+$$
+
+The exact marginal budget is $\sum_i(1-y_i)=s-a=2$. It gives
+
+$$
+\begin{aligned}
+0\le V_T
+&\le\sum_i(y_i^{-2}-1)
+ =\sum_i\frac{(1-y_i)(1+y_i)}{y_i^2}
+ \le\frac4{t^2},\\
+\mathbb E V_T
+&=\sum_i\frac1{y_i}-a
+ \ge\frac{(a+2)^2}{a}-a=4+\frac4a.
+\end{aligned}\tag{12.19}
+$$
+
+The last inequality is Cauchy–Schwarz with $\sum_i y_i=a$. As $K\le a+2$,
+
+$$
+\mathbb E|K^2-a^2|
+\le(2a+2)\mathbb E|K-a|
+\le(2a+2)\sqrt\Delta.
+$$
+
+Consequently the exact equality $H=\mathbb E K^3+\mathbb E[K^2V_T]$ and (12.17)–(12.19) yield
+
+$$
+H\ge a^3+4a^2+4a
+ -\frac{8(a+1)\sqrt\Delta}{t^2}.
+$$
+
+Compare with $H\le a^3+2a^2+a+Ma^{3/2}$. The denominator below is positive for all sufficiently large $a$ depending only on $M$, and then
+
+$$
+t^2\le
+\frac{8(a+1)\sqrt\Delta}{2a^2+3a-Ma^{3/2}}
+=O_M(a^{-1/2}).
+\tag{12.20}
+$$
+
+This first gives $t=O_M(a^{-1/4})$ uniformly.
+
+By $P_a(K)\ge0$ and the first inequality in (12.7),
+
+$$
+m^2\le t\bigl[d+t\mathcal A_a(t)\bigr]
+\le Ma^{3/2}t+O(a^2t^2)=O_M(a^{3/2}).
+$$
+
+In particular $m/a=O_M(a^{-1/4})$. Therefore
+
+$$
+\kappa=C_a-D_a(m-1)-\mathcal A_a(t)
+=2a^3+O_M(a^{11/4})\ge a^3
+$$
+
+eventually, uniformly over the entire sublevel. The second inequality in (12.7) improves the estimates to
+
+$$
+d\ge\frac{m^2}{t}+a^3t.
+\tag{12.21}
+$$
+
+Each summand is positive. Since $m\ge1$ and $d\le Ma^{3/2}$, (12.21) gives
+
+$$
+\frac1M\le a^{3/2}t\le M,\qquad m^2\le M(a^{3/2}t)\le M^2.
+$$
+
+Now return to $\kappa$: the improved bound $m=O_M(1)$ gives
+$\kappa=2a^3+O_M(a^2)$.
+Substituting this in (12.7), and using $\tau\le M$, proves (12.14).
+
+For (12.16), put $t_0=1/(\sqrt2\,a^{3/2})$. It lies in $(0,1/a]$, and the exact formula (12.4) gives
+
+$$
+h_a(\epsilon_a)-B_0
+\le h_a(t_0)-B_0
+=2\sqrt2\,a^{3/2}+O(a^{1/2}).
+\tag{12.22}
+$$
+
+For example, this follows directly from
+$r^2M_a/a^2=2a^3+O(a^2)$ and
+$t_0/a=O(a^{-5/2})$
+in that formula. Thus every $x\in\mathcal U_a$ satisfies $d\le4a^{3/2}$ for all sufficiently large $a$, with a threshold independent of $x$. Apply (12.14) with the fixed constant $M=4$. After comparison with (12.22), it gives
+
+$$
+\frac{m^2-1}{\tau}
++\left(\frac1\tau+2\tau-2\sqrt2\right)
+\le O(a^{-1}),\qquad \frac14\le\tau\le4.
+\tag{12.23}
+$$
+
+Both terms on the left are nonnegative, and
+
+$$
+\frac1\tau+2\tau-2\sqrt2
+=\frac{2(\tau-1/\sqrt2)^2}{\tau}.
+$$
+
+It follows uniformly that $m^2-1=O(a^{-1})$ and
+$\tau=1/\sqrt2+O(a^{-1/2})$.
+Since $3\beta\le m^2-1$, the asserted estimate for $\beta$ follows as well. Finally (12.1) gives
+
+$$
+t\lambda_a(t)
+=3-\frac{(2a+1)r^3}{a^2(a-t)^2}\tau^2
+=2+O(a^{-1/2}),
+$$
+
+because the coefficient of $\tau^2$ is $2+O(a^{-1})$. This is strictly positive eventually.
+
+All bounds were obtained with constants depending only on the initially fixed $M$, followed by the single choice $M=4$. Hence one integer $a_1$ works simultaneously for every array in (12.15) and every least marginal. The sublevel's definition used only the feasible scalar candidate, not an assumed global minimum. ∎
+

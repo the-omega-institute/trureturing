@@ -1,0 +1,130 @@
+**Theorem 11.2 (Common-incidence truncation and an integer-moment gap).** Let $r\ge2$ and $s\ge r+1$ be integers. Suppose the datum of Definition 11.1 has $a\le q\le r$, where $a=r-1$. Relabel its marginals so that $y_1\ge\cdots\ge y_s>0$, and put
+
+$$
+A=\{1,\ldots,r\},\qquad h=s-r,\qquad
+u=\sum_{i\in A}y_i,\qquad v=\sum_{i\notin A}y_i=q-u,
+$$
+
+Define
+
+$$
+M_2=\sum_kk^2p_k,\qquad B_{\mathrm{inc}}=M_2-a^2,\qquad
+\Delta_{\mathrm{int}}=\sum_k(k-a)(k-r)p_k.
+$$
+
+Then $u,v>0$, $B_{\mathrm{inc}}\ge0$, $\Delta_{\mathrm{int}}\ge0$, and
+
+$$
+\begin{aligned}
+2\mathcal J_s(p,z)
+&\ge\sum_{i\in A}\left(\frac{a^2}{y_i}
+                    +\frac{B_{\mathrm{inc}}}{y_i^2}\right)
+       +\sum_{i\notin A}\frac1{y_i}\\
+&\ge\frac{a^2r^2}{u}+\frac{B_{\mathrm{inc}}r^3}{u^2}
+       +\frac{h^2}{v}.\tag{11.1}
+\end{aligned}
+$$
+
+Consequently
+
+$$
+2\bigl(\mathcal J_s(p,z)-F_r(q)\bigr)
+\ge\frac{h(2ar+h)}q+\frac{r^3\Delta_{\mathrm{int}}}{q^2}>0.\tag{11.2}
+$$
+
+In particular
+
+$$
+\mathcal J_s(p,z)-F_r(q)
+\ge\frac{2ar+1}{2q}\ge a+\frac1{2r}.
+$$
+
+The assertions allow zero columns, zero entries, ties between marginals, arbitrarily small positive marginals, and all sizes $1\le k\le s$. No assertion of optimality of these gap constants is made.
+
+**Proof.** Write $t=q-a\in[0,1]$. Consecutive integrality gives $(k-a)(k-r)\ge0$ for every integer $k$, so
+
+$$
+B_{\mathrm{inc}}=(2a+1)t+\Delta_{\mathrm{int}}\ge0.\tag{11.3}
+$$
+
+Order the reciprocal weights $\omega_i=y_i^{-2}$, so that $\omega_i\le\omega_r$ on $A$ and $\omega_i\ge\omega_r$ on its complement. For every $k\ge r$, use the cap $z_{ik}\le p_k$ on $A$ and nonnegativity on its complement to obtain
+
+$$
+\begin{aligned}
+\sum_i\omega_i z_{ik}-p_k\sum_{i\in A}\omega_i
+&=\sum_{i\in A}\omega_i(z_{ik}-p_k)
+  +\sum_{i\notin A}\omega_i z_{ik}\\
+&\ge\omega_r\left(\sum_i z_{ik}-rp_k\right)
+ =\omega_r(k-r)p_k\ge0.\tag{11.4}
+\end{aligned}
+$$
+
+This calculation also covers $p_k=0$. It uses the same ordered marginals for every column.
+
+For the low and high columns set
+
+$$
+L_{\mathrm{col}}=\sum_{k<a}(a^2-k^2)p_k,\qquad
+P_{\mathrm{col}}=\sum_{k\ge r}(k^2-a^2)p_k,\qquad
+\tau_i=\sum_k\min\{k^2,a^2\}z_{ik}.
+$$
+
+Since there is no integer strictly between $a$ and $r$, one has the exact identities
+
+$$
+w_i=\tau_i+\sum_{k\ge r}(k^2-a^2)z_{ik},\qquad
+P_{\mathrm{col}}-L_{\mathrm{col}}=B_{\mathrm{inc}}.
+$$
+
+For $i\in A$, the very same column caps give
+
+$$
+\tau_i=a^2y_i-\sum_{k<a}(a^2-k^2)z_{ik}
+\ge a^2y_i-L_{\mathrm{col}}.
+$$
+
+For $i\notin A$, the inequalities $k\ge1$ and $a\ge1$ give $\tau_i\ge y_i$. Multiply these inequalities by $\omega_i$ and sum. In the high-column part use (11.4), whose coefficients $k^2-a^2$ are nonnegative. The result is
+
+$$
+\begin{aligned}
+\sum_i\frac{w_i}{y_i^2}
+&\ge a^2\sum_{i\in A}\frac1{y_i}
+  -L_{\mathrm{col}}\sum_{i\in A}\frac1{y_i^2}
+  +\sum_{i\notin A}\frac1{y_i}
+  +P_{\mathrm{col}}\sum_{i\in A}\frac1{y_i^2}\\
+&=a^2\sum_{i\in A}\frac1{y_i}
+  +B_{\mathrm{inc}}\sum_{i\in A}\frac1{y_i^2}
+  +\sum_{i\notin A}\frac1{y_i}.
+\end{aligned}
+$$
+
+Thus the high-column gain cancels the entire low-column loss on this one core. No separate choice or optimization of their marginals has occurred. The elementary Cauchy–Schwarz inequalities
+
+$$
+\sum_{i\in A}\frac1{y_i}\ge\frac{r^2}{u},\qquad
+\sum_{i\in A}\frac1{y_i^2}
+\ge\frac1r\left(\sum_{i\in A}\frac1{y_i}\right)^2
+\ge\frac{r^3}{u^2},\qquad
+\sum_{i\notin A}\frac1{y_i}\ge\frac{h^2}{v}
+$$
+
+prove (11.1), since $B_{\mathrm{inc}}\ge0$.
+
+Because $u+v=q$ and $u,v>0$,
+
+$$
+\frac{a^2r^2}{u}+\frac{h^2}{v}-\frac{(ar+h)^2}{q}
+=\frac{(arv-hu)^2}{uvq}\ge0,
+\qquad \frac{B_{\mathrm{inc}}r^3}{u^2}
+\ge\frac{B_{\mathrm{inc}}r^3}{q^2}.
+$$
+
+The target has the exact identity
+
+$$
+2F_r(q)=\frac{a^2r^2}{q}
+       +\frac{(2a+1)t r^3}{q^2},\tag{11.5}
+$$
+
+because $D=a^2+(2a+1)r$ and $C=a(2a+1)r$. Substitute (11.3) in (11.1), apply the preceding two inequalities and subtract (11.5). Expanding $(ar+h)^2-a^2r^2=h(2ar+h)$ proves (11.2). Finally $h\ge1$ and $q\le r$ imply the stated uniform positive bound. All divisions used only $u,v,q,y_i>0$, not positivity of any individual type or column mass. ∎
+

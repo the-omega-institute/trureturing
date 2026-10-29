@@ -1,0 +1,68 @@
+**Theorem 3.2 (Unrestricted profiles for $r=5,6,7,8,9,10$).** Let $r\in\{5,6,7,8,9,10\}$, $q\in[r-1,r]$, and let $x$ be any profile on any finite $[s]$ with $s\ge r$. Then
+
+$$
+J_s(x)\ge F_r(q),
+$$
+
+with equality exactly when $s=r$ and $x=x^*(q)$, up to relabeling. For $s\ge r+1$ the stronger bound is
+
+$$
+J_s(x)-F_r(q)\ge\frac12+\frac{\beta_r}{2}(s-r-1),\qquad
+(\beta_5,\beta_6,\beta_7,\beta_8,\beta_9,\beta_{10})=(23,32,42,53,\kappa_9,\kappa_{10}).\tag{3.5}
+$$
+
+For these same six values of $r$, every profile with $s\ge r+1$ and $q\ge r$ satisfies
+
+$$
+2J_s(x)\ge r^3+\beta_r(s-r)+(D-\beta_r)(q-r)
+\ge r^3+\beta_r.\tag{3.6}
+$$
+
+**Proof.** For $r=5,6,7,8$, the four choices of $\beta$ lie in $[2,\kappa_r]$: the comparisons $(\beta-2)^2\le8a(a^2-1)$ are respectively
+
+$$
+441\le480,\quad900\le960,\quad1600\le1680,\quad2601\le2688.
+$$
+
+For these four values, put $t=q-a\in[0,1]$ and $L_r(q)=f_r(q)+\beta_r(r+1-q)$. The following are exact polynomial identities:
+
+$$
+\begin{array}{c|l}
+r&q^2\bigl[L_r(q)-2F_r(q)-1\bigr]\\ \hline
+5&144-45t+413t^2+38t^3\\
+6&200+79t+778t^2+59t^3\\
+7&180+425t+1319t^2+85t^3\\
+8&1140t+2072t^2+116t^3.
+\end{array}\tag{3.7}
+$$
+
+The first polynomial is at least $144-45=99$; the remaining three have nonnegative coefficients. Therefore $L_r(q)\ge2F_r(q)+1$ on the entire closed interval. Theorem 2.1 now gives
+
+$$
+2J_s(x)\ge L_r(q)+\beta_r(s-r-1),
+$$
+
+proving (3.5) for $r=5,6,7,8$. For $r=9$, Theorem 2.3 gives the stronger strict bound (2.8). Since
+
+$$
+\kappa_9=2+8\sqrt{63}<66<84,\qquad 2048/81>1,
+$$
+
+that bound implies (3.5) with $\beta_9=\kappa_9$ for every finite $s\ge10$ and $q\in[8,9]$. For $r=10$, Theorem 2.4 gives
+
+$$
+2\bigl(J_s(x)-F_{10}(q)\bigr)>29+100(s-11)
+\quad(s\ge11,\ 9\le q\le10).
+$$
+
+Since $\kappa_{10}=2+24\sqrt{10}<78<100$ and $29>1$, this implies (3.5) with $\beta_{10}=\kappa_{10}$. Neither application restricts source cardinalities, requires positive mass for every type, or discards any hub with positive marginal. For $s=r$, Theorem 3.1 gives the inequality and the complete equality class. Thus no assumption on the cardinalities in the support is needed.
+
+For (3.6), use Theorem 2.1 outside the candidate interval as allowed there. Since $f_r(r)=r^3$,
+
+$$
+f_r(q)+\beta_r(s-q)
+=r^3+\beta_r(s-r)+(D-\beta_r)(q-r).
+$$
+
+Both $D-\beta_r>0$ and $q-r\ge0$, proving (3.6). This gives a fixed positive separation even if an actual extra-hub graph has mean cardinality above $r$. ∎
+
