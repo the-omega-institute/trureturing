@@ -179,15 +179,23 @@ theorem rectangular_torus_gcd_descent {T : Type*} {n m : ℕ}
     (hn : 0 < n) (hm : 0 < m)
     (f : ZMod n → ZMod m → T) (F : ℤ × ℤ → T)
     (lift_eq : ∀ x y, F (x, y) = f (x : ZMod n) (y : ZMod m))
-    (a : RightAction) (translation : ℤ × ℤ) (rho : T → T)
-    (fixed : ∀ z, F (linear a z + translation) = rho (F z)) :
+    (a : RightAction) (shift center : ℤ × ℤ) (rho : T → T)
+    (fixed : ∀ z, F (linear a (z + shift) + center) = rho (F z)) :
     ∃ H : ZMod (Nat.gcd n m) → ZMod (Nat.gcd n m) → T,
       0 < Nat.gcd n m ∧ PlaneEquivalent F (PlaneLift H) := by
   let P := Period F
   have hnx : ((n : ℤ), 0) ∈ P := source_x_period F f lift_eq
   have hmy : (0, (m : ℤ)) ∈ P := source_y_period F f lift_eq
-  have hny : (0, (n : ℤ)) ∈ P := transported_x_axis F a translation rho fixed hnx
-  have hmx : ((m : ℤ), 0) ∈ P := transported_y_axis F a translation rho fixed hmy
+  have fixed' : ∀ z, F (linear a z + (linear a shift + center)) = rho (F z) := by
+    intro z
+    calc
+      F (linear a z + (linear a shift + center)) =
+          F (linear a (z + shift) + center) := by rw [linear_add, add_assoc]
+      _ = rho (F z) := fixed z
+  have hny : (0, (n : ℤ)) ∈ P :=
+    transported_x_axis F a (linear a shift + center) rho fixed' hnx
+  have hmx : ((m : ℤ), 0) ∈ P :=
+    transported_y_axis F a (linear a shift + center) rho fixed' hmy
   have haxes := gcd_axis_periods F hn hm hnx hmx hny hmy
   have hg : 0 < Nat.gcd n m := Nat.gcd_pos_of_pos_left m hn
   let H : ZMod (Nat.gcd n m) → ZMod (Nat.gcd n m) → T := fun u v =>
