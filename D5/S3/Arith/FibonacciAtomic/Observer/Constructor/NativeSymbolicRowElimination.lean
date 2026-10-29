@@ -4,11 +4,11 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Exact sort-sensitive inversion of symbolic row exteriors into consumed bindings. -/
+   digest: Complete raw row elimination and shared original-source reconstruction by the native MGU. -/
 
 import D5.S3.Arith.FibonacciAtomic.Observer.NativeWholeRowPlan
 
-/-! Exact sort-sensitive inversion of symbolic row exteriors into consumed bindings. -/
+/-! Complete raw row elimination and shared original-source reconstruction by the native MGU. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -231,7 +231,7 @@ def rowPairList {X : Type} (Q : CutSet) (t : Term X) : List (Address × Address)
 private theorem row_pair_list_mem {X : Type} (Q : CutSet) (t : Term X)
     (pq : Address × Address) : pq ∈ rowPairList Q t ↔ pq ∈ reachedPairs Q t := by
   rcases pq with ⟨a, b⟩
-  simp [rowPairList, reachedPairs, List.mem_product]
+  simp [rowPairList, reachedPairs]
 
 def positivePairs {X : Type} (Q : CutSet) (t : Term X)
     (K : Finset (Address × Address)) : Equations X :=
@@ -373,7 +373,7 @@ private theorem compile_row_exact {X : Type} (t : Term X) (r : RawRow)
           ((Sol (bindingEquations bs) v ∧ Sol (positivePairs Q t K) v) ∧
             Diseq (negativePairs Q t K) v)
         rw [binding_equations_exact]
-        simp only [sub, true_and]
+        simp only [true_and]
         tauto
   · simp [compileRow, sub]
 
@@ -429,7 +429,8 @@ private theorem unbound_complete {X : Type} (p : Presentation X) (S : Lambda.Sub
   apply List.mem_filterMap.mpr
   refine ⟨⟨x.val, p.complete x.val⟩, by simp, ?_⟩
   dsimp only
-  rw [dif_pos x.property]
+  have hx : p.code x.val ∉ S.subst.keys := x.property
+  exact dite_eq_left hx
 
 /-- The free carrier is a subset of the original finite presentation.
 There are no positive equations or shape restrictions on its valuations. -/
@@ -444,10 +445,11 @@ def outputHolds {X : Type} (o : RowOutput X) (v : X → Source) : Prop :=
   ∃ z : o.free → Source, (∀ x, evaluate z (o.theta x) = v x) ∧ Diseq o.delta z
 
 def eliminateRows {X : Type} (p : Presentation X) (t : Term X)
-    (rs : List RawRow) : Option (RowOutput X) :=
+    (rs : List RawRow) (extra : SignedConstraints X) : Option (RowOutput X) :=
   match compileRows t rs with
   | none => none
-  | some c =>
+  | some rows =>
+      let c := mergeConstraints rows extra
       match h : (NativeGroundSolutionSpace.encodeEquations p c.1).unify Lambda.SubstInfo.empty with
       | .error _ => none
       | .ok S => some {
@@ -497,41 +499,46 @@ private theorem mgu_output_exact {X : Type} (p : Presentation X)
 /-- All raw rows are eliminated on one total original variable family.
 A successful output may have an empty disequality domain. -/
 private theorem symbolic_rows_elimination {X : Type} (p : Presentation X) (t : Term X)
-    (rs : List RawRow) (v : X → Source) :
-    (∀ r ∈ rs, symbolicRecord r.1 t v = r.2) ↔
-      ∃ o, eliminateRows p t rs = some o ∧ outputHolds o v := by
+    (rs : List RawRow) (extra : SignedConstraints X) (v : X → Source) :
+    ((∀ r ∈ rs, symbolicRecord r.1 t v = r.2) ∧ constraintsHold extra v) ↔
+      ∃ o, eliminateRows p t rs extra = some o ∧ outputHolds o v := by
   rw [compile_rows_exact]
   unfold eliminateRows
   cases hc : compileRows t rs with
   | none => simp
-  | some c =>
+  | some rows =>
       simp only [Option.some.injEq, exists_eq_left']
+      rw [← constraints_merge_exact]
+      dsimp only
       split
       · rename_i e hu
-        have no : ¬ constraintsHold c v := by
+        have no : ¬ constraintsHold (mergeConstraints rows extra) v := by
           intro h
-          obtain ⟨S, hs⟩ := NativeGroundSolutionSpace.native_complete p c.1 v h.1
+          obtain ⟨S, hs⟩ := NativeGroundSolutionSpace.native_complete p
+            (mergeConstraints rows extra).1 v h.1
           rw [hu] at hs
           cases hs
         simp [no]
       · rename_i S hu
-        simpa only [Option.some.injEq, exists_eq_left'] using mgu_output_exact p c S hu v
+        simpa only [Option.some.injEq, exists_eq_left'] using
+          mgu_output_exact p (mergeConstraints rows extra) S hu v
 
 
 /-- The same executable output describes arbitrary symbolic rows and the
 actual rows of every sufficiently deep original prefix pattern. -/
 theorem complete_row_elimination {X : Type} (p : Presentation X) (t : Term X)
-    (rs : List RawRow) (v : X → Source) :
-    ((∀ r ∈ rs, symbolicRecord r.1 t v = r.2) ↔
-      ∃ o, eliminateRows p t rs = some o ∧ outputHolds o v) ∧
+    (rs : List RawRow) (extra : SignedConstraints X) (v : X → Source) :
+    (((∀ r ∈ rs, symbolicRecord r.1 t v = r.2) ∧ constraintsHold extra v) ↔
+      ∃ o, eliminateRows p t rs extra = some o ∧ outputHolds o v) ∧
     ∀ (d : Nat) (pat : NativeDepthPatterns.Pattern d)
       (name : NativeDepthPatterns.Frontier pat → X),
       t = NativeHistoryCells.patternTerm pat name →
       (∀ r ∈ rs, CutPrefixFree r.1) →
       (∀ r ∈ rs, ∀ q ∈ r.1, q.length < d) →
-      ((∀ r ∈ rs, literalRecord r.1 (NativeDepthPatterns.fill pat (v ∘ name)) = r.2) ↔
-        ∃ o, eliminateRows p t rs = some o ∧ outputHolds o v) := by
-  have hs := symbolic_rows_elimination p t rs v
+      (((∀ r ∈ rs, literalRecord r.1 (NativeDepthPatterns.fill pat (v ∘ name)) = r.2) ∧
+        constraintsHold extra v) ↔
+        ∃ o, eliminateRows p t rs extra = some o ∧ outputHolds o v) := by
+  have hs := symbolic_rows_elimination p t rs extra v
   refine ⟨hs, ?_⟩
   intro d pat name ht freecuts bound
   have deep : DeepAt d [] t := by
@@ -550,6 +557,6 @@ theorem complete_row_elimination {X : Type} (p : Presentation X) (t : Term X)
     · have he := (symbolic_recut_exact d r.1 (freecuts r hr) (bound r hr) t deep v).2.2.2
       rw [filled] at he
       exact he.trans (h r hr)
-  exact rows.trans hs
+  exact (and_congr rows Iff.rfl).trans hs
 
 end D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeSymbolicRowElimination
