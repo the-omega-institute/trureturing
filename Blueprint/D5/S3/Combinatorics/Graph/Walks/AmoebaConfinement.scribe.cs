@@ -53,10 +53,11 @@ internal sealed class AmoebaConfinementDocument : IScribeDocumentDefinition
                 + "A finite tree has one fewer edge than vertices, so the containing map must be surjective. "
                 + "Its injective map on undirected edge sets is also surjective, which supplies adjacency reflection. "
                 + "This proves the assertion for every minimizer, including the zero-length and zero-multiplicity cases. "
-                + "The bridge is bind-only and is consumed by total_confinement in AmoebaHost. Its private "
-                + "coincides_of_edge_count helper is also bind-only and is consumed by dead_of_hasExtension: "
-                + "upstream tree cardinality, injectivity and nonsurjectivity facts supply the surjectivity witnesses, "
-                + "followed by logical recombination and normalization. This helper chain supplies no separate escape witness or admission basis.",
+                + "The bridge is used by total_confinement in AmoebaHost. The edge-count helper supplies the "
+                + "edge-surjectivity step in dead_of_hasExtension: finite-tree cardinality, injectivity and "
+                + "nonsurjectivity facts give the needed surjectivity witnesses, after which the conclusions combine "
+                + "to obtain the displayed coincidence. Thus an existing extension implies deadness, including the "
+                + "zero-length and zero-multiplicity cases.",
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("exists_safe_degree", "A degree outside every demand interval", SafeDegreeFormula(),
                 "The union of the integer intervals from d(v) inclusive to d(v)+m(v) exclusive has size at most the sum k of m. "
