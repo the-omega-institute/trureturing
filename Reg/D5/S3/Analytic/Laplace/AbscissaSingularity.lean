@@ -70,7 +70,7 @@ private theorem rejected_fails : ¬ arena.{u}.Law rejected := by
   have hH : DifferentiableOn ℂ H (Metric.ball ((sInf (convergenceSet X μ) : ℝ) : ℂ) (1 / 2)) := by
     intro z hz
     have hz' : ‖z‖ < (1 : ℝ) / 2 := by simpa [hσ, Metric.mem_ball, dist_zero_right] using hz
-    have hre : 0 < z.re + 1 := by have hl := Complex.neg_norm_le_re z; linarith
+    have hre : 0 < z.re + 1 := by have hl := (abs_le.mp (Complex.abs_re_le_norm z)).1; linarith
     have hd : (-(z + 1)).re ∈ interior (integrableExpSet X μ) := by
       simp only [hE, isOpen_Iio.interior_eq, mem_Iio, Complex.neg_re,
         Complex.add_re, Complex.one_re]
@@ -89,6 +89,7 @@ def registration : Registration arena.{u} (type_of% (@no_holomorphic_extension_a
   bridge := Iff.rfl
   variation := ⟨@no_holomorphic_extension_at_abscissa.{u}, rejected, rejected_fails⟩
   sensitivity := by
+    dsimp only [Sensitivity, arena]
     constructor
     · intro i
       refine ⟨rejected, ?_, rfl, rejected_fails⟩
@@ -97,6 +98,7 @@ def registration : Registration arena.{u} (type_of% (@no_holomorphic_extension_a
     · intro e
       exact nomatch e
   dependence := by
+    change ObservationalDependence signature actual
     intro i
     exact ⟨id, 0, 1, zero_ne_one⟩
 
@@ -124,9 +126,10 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[9]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+      path := #["body", "body", "body", "body", "body", "body",
+        "body", "body", "body", "body", "body",
         "arg", "arg", "body", "body", "body", "fn", "arg"]
-      stateBinder := 11
+      stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
       booleanPredicate := false }] }
