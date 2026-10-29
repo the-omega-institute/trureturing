@@ -5,15 +5,15 @@
    anchors: [mathlib/module/Mathlib.Data.List.Perm.Basic]
    utility: none
    digest: A centered doubling permutation with isolated SMALL labels of one sign admits a full half-strip ordering. -/
-module
-public import D5.S3.Combinatorics.Circle.SmallStepOrdering
-public import D5.S3.Combinatorics.Circle.TwoSmallSource
-public import Mathlib.Data.Finset.Max
+import D5.S3.Combinatorics.Circle.SmallStepOrdering
+import D5.S3.Combinatorics.Circle.TwoSmallSource
+import Mathlib.Data.Finset.Max
+
+/-! # Full inventory ordering for isolated SMALL labels of one sign -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-@[expose] public section
 namespace D5.S3.Combinatorics.Circle.IsolatedSmallSource
 open SourceWidth ExpandingSourcePath
 open scoped BigOperators
@@ -95,10 +95,13 @@ private theorem order_packets {α β : Type*} [DecidableEq α]
             exact hfit ⟨i, by simp, hall i (by simp), by omega⟩
           have htail : mass w (L.flatMap packet) ≤ 0 := by
             rw [mass_flatMap]
-            apply List.sum_nonpos
-            intro z hz
-            obtain ⟨j, hj, rfl⟩ := List.mem_map.mp hz
-            exact (hU j (by simp [hj]) (hall j (by simp [hj]))).1
+            calc
+              (L.map (fun j => mass w (packet j))).sum ≤
+                  (L.map (fun _ => (0 : ℤ))).sum := by
+                apply List.sum_le_sum
+                intro j hj
+                exact (hU j (by simp [hj]) (hall j (by simp [hj]))).1
+              _ = 0 := by simp
           simp only [List.flatMap_cons, mass, List.map_append, List.sum_append] at hbalance
           dsimp only [mass] at htail hfail
           omega
@@ -146,12 +149,12 @@ private theorem packet_inventory {α : Type*} [Fintype α] [DecidableEq α]
     have hnQ : ¬Q ≤ w (σ i) := by omega
     by_cases ht : |w (σ (σ i))| < Q
     · have hzQ : ¬Q ≤ w (σ (σ i)) := by have := abs_lt.mp ht; omega
-      simp only [packet, if_pos ht, List.mem_cons, List.mem_singleton] at hx
+      simp only [packet, if_pos ht, List.mem_cons, List.not_mem_nil, or_false] at hx
       rcases hx with rfl | rfl | rfl
       · simp [owner, hp]
       · simp [owner, hzQ, show ¬w (σ (σ i)) < 0 by omega]
       · simp [owner, hnQ, hn]
-    · simp only [packet, if_neg ht, List.mem_cons, List.mem_singleton] at hx
+    · simp only [packet, if_neg ht, List.mem_cons, List.not_mem_nil, or_false] at hx
       rcases hx with rfl | rfl
       · simp [owner, hp]
       · simp [owner, hnQ, hn]
@@ -502,53 +505,5 @@ theorem finite_isolated_small_completion {α : Type*} [Fintype α] [Nonempty α]
         have hh := sum_neg_map w word
         omega
       exact he.trans hz
-
-
--- Transient exact application; remove after the scoped build checks it.
-example (k t : ℕ) (hk : 3 ≤ k)
-    (hsmall : (∀ i : Fin k, |actualSource k t i| < ExpandingSourcePath.quarter k →
-        0 ≤ actualSource k t i) ∨
-      (∀ i : Fin k, |actualSource k t i| < ExpandingSourcePath.quarter k →
-        actualSource k t i ≤ 0))
-    (hisolated : ∀ i : Fin k, |actualSource k t i| < ExpandingSourcePath.quarter k →
-      ExpandingSourcePath.quarter k ≤ |actualSource k t (finRotate k i)|) :
-    ∃ L : List (Fin k), L.Perm (List.finRange k) ∧ L.Nodup ∧
-      L.toFinset = Finset.univ ∧ InStrip (actualSource k t) (half k) 0 L ∧
-      (∀ n : ℕ, 0 ≤ ((L.take n).map (actualSource k t)).sum ∧
-        ((L.take n).map (actualSource k t)).sum ≤ half k) ∧
-      (L.map (actualSource k t)).sum = 0 ∧ TwoOppositeLargeExchange.Legal k t L := by
-  classical
-  letI : NeZero k := ⟨by omega⟩
-  obtain ⟨hQ, hN, hC, hNpos, hodd⟩ := ExpandingSourcePath.source_geometry hk
-  have hbound (i : Fin k) : -(2 * ExpandingSourcePath.quarter k - 1) ≤ actualSource k t i ∧
-      actualSource k t i ≤ 2 * ExpandingSourcePath.quarter k - 1 := by
-    have hh := centered_bounds hNpos hodd ((2 : ℤ) ^ i.val * (t : ℤ))
-    change -(half k) ≤ actualSource k t i ∧ actualSource k t i ≤ half k at hh
-    rwa [hC] at hh
-  have hstep (i : Fin k) : actualSource k t (finRotate k i) =
-      doubleStep (4 * ExpandingSourcePath.quarter k - 1) (actualSource k t i) := by
-    have hh := (ZeroSumSubsets.source_cycle (by omega : 0 < k) t).2.2 i
-    rw [← hN]
-    unfold doubleStep
-    split_ifs with ha hb
-    · simp only [if_pos ha] at hh
-      omega
-    · simp only [if_neg ha, if_pos hb] at hh
-      omega
-    · simp only [if_neg ha, if_neg hb] at hh
-      omega
-  obtain ⟨L, hL, hstrip, hmass⟩ := finite_isolated_small_completion
-    (finRotate k) (actualSource k t) (ExpandingSourcePath.quarter k)
-    hQ hbound hstep hsmall hisolated
-  have hnodup : L.Nodup := hL.nodup_iff.mpr (Finset.nodup_toList _)
-  have hmem (i : Fin k) : i ∈ L := hL.mem_iff.mpr (by simp)
-  have hfull : L.Perm (List.finRange k) :=
-    (List.perm_ext_iff_of_nodup hnodup (List.nodup_finRange k)).mpr
-      (fun i => by simp [hmem i])
-  have hset : L.toFinset = Finset.univ := by ext i; simp [hmem i]
-  rw [← hC] at hstrip
-  exact ⟨L, hfull, hnodup, hset, hstrip,
-    fun n => by simpa using inStrip_prefix hstrip n, hmass,
-    TwoOppositeLargeExchange.legal_of_strip hnodup hstrip⟩
 
 end D5.S3.Combinatorics.Circle.IsolatedSmallSource

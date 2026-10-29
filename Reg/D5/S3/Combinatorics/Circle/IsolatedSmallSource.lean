@@ -2,15 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.Circle.IsolatedSmallSource
 import Reg.Support.DependentFamily
 
-/-! The source and readout retain the finite carrier, permutation and every
-hypothesis. Lawful source selection, whole-family intervention sensitivity and
-observational dependence remain unresolved under issue #22063. The bridge is
-not a completed four-slot Contract.Registration. -/
-
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-noncomputable section
-universe u
 
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -18,61 +11,134 @@ open _root_.D5.S3.Combinatorics.Circle.SourceWidth
 open _root_.D5.S3.Combinatorics.Circle.IsolatedSmallSource
 
 namespace Reg.D5.S3.Combinatorics.Circle.IsolatedSmallSource
+universe u
+noncomputable section
 
-structure Source where
-  carrier : Type u
-  finite : Fintype carrier
-  inhabited : Nonempty carrier
-  σ : Equiv.Perm carrier
-  w : carrier → ℤ
-  Q : ℤ
-
-def Assumptions (q : Source.{u}) : Prop :=
-  2 ≤ q.Q ∧
-  (∀ i, -(2 * q.Q - 1) ≤ q.w i ∧ q.w i ≤ 2 * q.Q - 1) ∧
-  (∀ i, q.w (q.σ i) = doubleStep (4 * q.Q - 1) (q.w i)) ∧
-  ((∀ i, |q.w i| < q.Q → 0 ≤ q.w i) ∨
-    (∀ i, |q.w i| < q.Q → q.w i ≤ 0)) ∧
-  (∀ i, |q.w i| < q.Q → q.Q ≤ |q.w (q.σ i)|)
-
-def candidate (q : Source.{u}) (L : List q.carrier) : Prop :=
-  letI := q.finite
-  L.Perm (Finset.univ.toList : List q.carrier) ∧
-    InStrip q.w (2 * q.Q - 1) 0 L ∧ (L.map q.w).sum = 0
-
+/-- The actual weight operand in the returned word's strip condition. -/
 abbrev signature : Signature where
-  Params := Source.{u}
-  State q := List q.carrier
+  Params := Σ α : Type u, α → ℤ
+  State p := p.1
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ _ := Prop
+  Output _ _ := ℤ
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature :=
-  realize signature (fun _ q L => candidate q L) (fun e => nomatch e)
+def actual : Realization signature.{u} :=
+  realize signature (fun _ p i => p.2 i) (fun e => nomatch e)
 
+def rejected : Realization signature.{u} :=
+  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
+
+/-- Hypotheses and the zero sum retain the original weights; the selected
+source operand belongs only to the returned strip observation. -/
 abbrev arena : Arena where
-  signature := signature
-  Law R := ∀ q : Source.{u}, Assumptions q → ∃ L, R.readout () q L
+  signature := signature.{u}
+  Law R := ∀ {α : Type u} [Fintype α] [Nonempty α]
+    (σ : Equiv.Perm α) (w : α → ℤ) (Q : ℤ) (hQ : 2 ≤ Q)
+    (hbound : ∀ i, -(2 * Q - 1) ≤ w i ∧ w i ≤ 2 * Q - 1)
+    (hstep : ∀ i, w (σ i) = doubleStep (4 * Q - 1) (w i))
+    (hsmall : (∀ i, |w i| < Q → 0 ≤ w i) ∨
+      (∀ i, |w i| < Q → w i ≤ 0))
+    (hisolated : ∀ i, |w i| < Q → Q ≤ |w (σ i)|),
+    ∃ word : List α, word.Perm (Finset.univ.toList : List α) ∧
+      InStrip (R.readout () ⟨α, w⟩) (2 * Q - 1) 0 word ∧
+      (word.map w).sum = 0
 
-abbrev sourceScope := type_of% (@finite_isolated_small_completion.{u})
+private def sampleRotate : Equiv.Perm (ULift.{u} (Fin 2)) :=
+  Equiv.ulift.trans ((Equiv.swap (0 : Fin 2) 1).trans Equiv.ulift.symm)
 
-theorem bridge : sourceScope ↔ arena.Law actual := by
-  constructor
-  · intro h q hq
-    letI := q.finite
-    letI := q.inhabited
-    obtain ⟨hQ, hb, hs, hsign, hi⟩ := hq
-    exact h q.σ q.w q.Q hQ hb hs hsign hi
-  · intro h α fi ni σ w Q hQ hb hs hsign hi
-    exact h ⟨α, fi, ni, σ, w, Q⟩ ⟨hQ, hb, hs, hsign, hi⟩
+private def sampleWeight (i : ULift.{u} (Fin 2)) : ℤ :=
+  if i.down = 0 then 5 else -5
 
-theorem actual_law : arena.Law actual :=
-  bridge.mp (@finite_isolated_small_completion.{u})
+private theorem sample_abs (i : ULift.{u} (Fin 2)) : |sampleWeight i| = 5 := by
+  unfold sampleWeight
+  split_ifs <;> norm_num
 
-#print axioms bridge
-#print axioms actual_law
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  classical
+  intro h
+  have hnosmall (i : ULift.{u} (Fin 2)) : ¬|sampleWeight i| < 4 := by
+    rw [sample_abs]
+    norm_num
+  obtain ⟨word, hp, hs, _⟩ := h sampleRotate sampleWeight 4
+    (by norm_num)
+    (by intro i; unfold sampleWeight; split_ifs <;> norm_num)
+    (by
+      intro i
+      obtain ⟨i⟩ := i
+      fin_cases i <;>
+        norm_num [sampleRotate, sampleWeight, Equiv.swap_apply_def, doubleStep])
+    (Or.inl (fun i hi => False.elim (hnosmall i hi)))
+    (fun i hi => False.elim (hnosmall i hi))
+  have hmem : (ULift.up (0 : Fin 2)) ∈ word := hp.mem_iff.mpr (by simp)
+  change InStrip (fun _ : ULift.{u} (Fin 2) => (-1 : ℤ)) 7 0 word at hs
+  cases word with
+  | nil => simpa using hmem
+  | cons a tail =>
+    have hh := (inStrip_prefix hs 1).1
+    norm_num at hh
 
+private theorem actual_dependence : ObservationalDependence signature.{u} actual := by
+  intro i
+  refine ⟨⟨ULift.{u} (Fin 2), fun j => (j.down.val : ℤ)⟩,
+    ULift.up (0 : Fin 2), ULift.up (1 : Fin 2), ?_⟩
+  norm_num [actual, realize]
+
+def source_registration : Registration arena.{u}
+    (type_of% (@finite_isolated_small_completion.{u})) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@finite_isolated_small_completion.{u}, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact False.elim (hji (Subsingleton.elim _ _))
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
+/-- Source selection addresses the weight operand inside the existential
+word's InStrip conjunct, preserving every other source occurrence. -/
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Combinatorics.Circle.IsolatedSmallSource.finite_isolated_small_completion.{u})
+    (type_of% (realize signature.{u} (fun _ p i => p.2 i) (fun e => nomatch e)))
+    Nat Unit where
+  unitName := `D5.S3.Combinatorics.Circle.IsolatedSmallSource.finite_isolated_small_completion.__information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Circle.IsolatedSmallSource.source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena.{u}⟩
+  objectArena := .source ⟨arena.{u}⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena.{u} ⟨source_registration.{u}⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature.{u} (fun _ p i => p.2 i) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Circle.IsolatedSmallSource
+    definition := none
+    coordinates := #[0, 4]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body",
+        "arg", "body", "arg", "fn", "arg", "fn", "fn", "fn", "arg"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms source_registration
+
+end
 end Reg.D5.S3.Combinatorics.Circle.IsolatedSmallSource
