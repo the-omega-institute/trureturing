@@ -61,7 +61,10 @@ internal sealed class QuadrupledLinearExponentDyadicSupportDocument : IScribeDoc
                     + "theorem give the parity equivalence for every source solution. "
                     + "The assertion concerns the parameter four; the entire parameter "
                     + "triangle and the source's reversion identities are separate questions."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hanna397594"),
+                    ResolutionKind.Proved)))));
 
     private static Formula SourceDefinition()
     {
