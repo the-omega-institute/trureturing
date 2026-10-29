@@ -660,62 +660,6 @@ private theorem actual_rank_blocks (p : Presentation X) (B : List (BranchEquatio
     rw [fill_readRanks _ _ (valid v hv hj)]
     exact (actual_occurrence_code p B S hok C factor v hv).1
 
-/-- A genuine native solution supplies the block equations and literal
-occurrence subtrees automatically. Primitive and collapse scalars remain
-exactly in its selected branch, including r,r+1,r+2. -/
-theorem native_source_block_recovery (p : Presentation X) (E : List (Equation X))
-    (v : X → NativeGroundSolutionSpace.Source) (hv : ∀ e ∈ E, e.Holds v) :
-    ∃ B ∈ branches E, ∃ S : SubstInfo,
-      (encodeEquations p (shapeEquations B)).unify SubstInfo.empty = .ok S ∧
-      (∀ b ∈ B, b.Holds (fun x => NativeFiniteNormalInversion.encode (v x))) ∧
-      ∀ j, (∃ o ∈ occurrenceVertices p (action p S), o.2.2 = j) →
-        ∃ (b : Occurrence X) (a : Occurrence X → Nat),
-          b ∈ occurrenceVertices p (action p S) ∧ b.2.2 = j ∧ a b = 0 ∧
-          (∀ o ∈ occurrenceVertices p (action p S), o.2.2 = j →
-            computedSourcePotential B (action p S) j b ≤ computedSourcePotential B (action p S) j o ∧
-            (a o : Int) = computedSourcePotential B (action p S) j o -
-              computedSourcePotential B (action p S) j b) ∧
-          NativeFiniteNormalInversion.Normal
-            (occurrenceCode (fun x => NativeFiniteNormalInversion.encode (v x)) b) ∧
-          ∀ o ∈ occurrenceVertices p (action p S), o.2.2 = j →
-            occurrenceCode (fun x => NativeFiniteNormalInversion.encode (v x)) o =
-              NativeFiniteNormalInversion.shiftCode (a o)
-                (occurrenceCode (fun x => NativeFiniteNormalInversion.encode (v x)) b) ∧
-            NativeFiniteNormalInversion.expand
-              (occurrenceCode (fun x => NativeFiniteNormalInversion.encode (v x)) o) =
-              GenealogicalFiberTransport.substitution^[a o]
-                (NativeFiniteNormalInversion.expand
-                  (occurrenceCode (fun x => NativeFiniteNormalInversion.encode (v x)) b)) := by
-  obtain ⟨B, hB, normal, sat, S, hok, factor, _, _⟩ :=
-    (native_branch_reduction p E v).mp hv
-  refine ⟨B, hB, S, hok, sat, ?_⟩
-  intro j occurs
-  let C := fun x => NativeFiniteNormalInversion.encode (v x)
-  let T := codeTree (C j)
-  let u := fun o => readRanks T (occurrenceCode C o)
-  have blocks := actual_rank_blocks p B S hok C factor sat j
-  change BlockSolution B (action p S) j u ∧ _ at blocks
-  have good : ZeroCycles B (action p S) j := by
-    let l : Leaves T := Classical.choice (leavesNonempty T)
-    exact (zeroCycles_iff B (action p S) j).mpr
-      ⟨fun o => (u o l : Int), fun e he => blocks.1 e he l⟩
-  obtain ⟨b, a, hb, hj, hab, hmin, recovery⟩ :=
-    source_canonical_block_recovery p B S hok j occurs good
-  have recovered := recovery T u C blocks.1 normal blocks.2
-  have identity (o : Occurrence X) (ho : o ∈ occurrenceVertices p (action p S))
-      (hoj : o.2.2 = j) : fill T (u o) = occurrenceCode C o := by
-    have h1 := blocks.2 o ho hoj
-    have h2 := (actual_occurrence_code p B S hok C factor o ho).1
-    exact Option.some.inj (h1.symm.trans h2)
-  refine ⟨b, a, hb, hj, hab, hmin, ?_, ?_⟩
-  · simpa only [identity b hb hj] using recovered.1
-  · intro o ho hoj
-    constructor
-    · simpa only [identity o ho hoj, identity b hb hj] using (recovered.2 o ho hoj).1
-    · simpa only [identity o ho hoj, identity b hb hj] using (recovered.2 o ho hoj).2.1
-
-#print axioms source_sort_minimum_base
-
 /-- Explicit primitive positions and residual positions have separate labels. -/
 abbrev ScalarPosition (X : Type) := X × List Bool
 
@@ -793,10 +737,15 @@ private theorem comparison_inventory_iff (a : Nat) (A B : DecoratedTerm X)
   | scalar b n =>
       cases B with
       | scalar c m =>
-          simp only [comparisonInventory, ComparisonInventory.Holds,
-            DecoratedTerm.value, NativeFiniteNormalInversion.shiftCode,
-            FreeMagma.of.injEq]
-          omega
+          change ((n.value r : Int) = (m.value r : Int) + (a : Int)) ↔
+            FreeMagma.of (n.value r) = FreeMagma.of (m.value r + a)
+          constructor
+          · intro h
+            congr 1
+            omega
+          · intro h
+            have hn : n.value r = m.value r + a := by injection h
+            omega
       | block w => cases same
       | pair C D => cases same
   | block v =>
@@ -812,10 +761,17 @@ private theorem comparison_inventory_iff (a : Nat) (A B : DecoratedTerm X)
           have parts : A₁.erase = C.erase ∧ A₂.erase = D.erase := by
             injection same with hA hB
             exact ⟨hA,hB⟩
-          simp only [comparisonInventory, ComparisonInventory.Holds,
-            DecoratedTerm.value, NativeFiniteNormalInversion.shiftCode,
-            FreeMagma.mul.injEq]
-          exact and_congr (ihA C parts.1) (ihB D parts.2)
+          change (_ ∧ _) ↔ FreeMagma.mul _ _ = FreeMagma.mul _ _
+          constructor
+          · intro h
+            exact congrArg₂ FreeMagma.mul ((ihA C parts.1).mp h.1)
+              ((ihB D parts.2).mp h.2)
+          · intro h
+            have hc : A₁.value r u = NativeFiniteNormalInversion.shiftCode a (C.value r u) ∧
+                A₂.value r u = NativeFiniteNormalInversion.shiftCode a (D.value r u) := by
+              injection h with h₁ h₂
+              exact ⟨h₁,h₂⟩
+            exact ⟨(ihA C parts.1).mpr hc.1, (ihB D parts.2).mpr hc.2⟩
 
 /-- Each collapse has one natural witness shared by all three comparisons. -/
 inductive BranchInventory (X : Type) where
@@ -859,7 +815,7 @@ private theorem branch_inventory_iff (s : X → Term X) (b : BranchEquation X)
       change s z = .of (.inl true) at h
       simpa only [branchInventory, BranchInventory.Holds, BranchEquation.Holds,
         DecoratedTerm.value, RankExpression.value, NativePositiveBranchReduction.shift_zero]
-        using cmp 0 (scalarDecorate s z) (.scalar true (.constant n)) (by simpa [er] using h)
+        using cmp 0 (scalarDecorate s z) (.scalar true (.constant n)) (by simpa only [DecoratedTerm.erase, er] using h)
   | shift z a x =>
       have h := sh _ (List.mem_singleton_self _)
       change s z = s x at h
@@ -887,20 +843,14 @@ private theorem branch_inventory_iff (s : X → Term X) (b : BranchEquation X)
       change (∃ n, _ ∧ _ ∧ _) ↔ ∃ n, _ ∧ _ ∧ _
       apply exists_congr
       intro n
-      exact and_congr
-        (by simpa only [DecoratedTerm.value, RankExpression.value,
-          NativePositiveBranchReduction.shift_zero] using
-          cmp 0 (scalarDecorate s x) (.scalar true (.constant (n+1)))
-            (by simpa only [DecoratedTerm.erase, er] using hx))
-        (and_congr
-          (by simpa only [DecoratedTerm.value, RankExpression.value,
-            NativePositiveBranchReduction.shift_zero] using
-            cmp 0 (scalarDecorate s y) (.scalar true (.constant n))
-              (by simpa only [DecoratedTerm.erase, er] using hy))
-          (by simpa only [DecoratedTerm.value, RankExpression.value,
-            NativePositiveBranchReduction.shift_zero] using
-            cmp 0 (scalarDecorate s z) (.scalar true (.constant (n+2)))
-              (by simpa only [DecoratedTerm.erase, er] using hz)))
+      have cx := cmp 0 (scalarDecorate s x) (.scalar true (.constant (n+1)))
+        (by simpa only [DecoratedTerm.erase, er] using hx)
+      have cy := cmp 0 (scalarDecorate s y) (.scalar true (.constant n))
+        (by simpa only [DecoratedTerm.erase, er] using hy)
+      have cz := cmp 0 (scalarDecorate s z) (.scalar true (.constant (n+2)))
+        (by simpa only [DecoratedTerm.erase, er] using hz)
+      simpa only [DecoratedTerm.value, RankExpression.value,
+        NativePositiveBranchReduction.shift_zero] using and_congr cx (and_congr cy cz)
 
 /-- The complete separately decorated system is equivalent to the same
 original branch system, for every scalar and block assignment. -/
@@ -922,6 +872,113 @@ theorem source_decorated_comparison_equivalence (p : Presentation X)
     branch_inventory_iff (action p S) b r u
       (fun e he => sh e (List.mem_flatMap.mpr ⟨b,hb,he⟩))
 
+/-- Read the natural rank at an explicit primitive address. -/
+def sourceScalarRanks (C : X → NativeFiniteNormalInversion.Code)
+    (q : ScalarPosition X) : Nat :=
+  match subtree (C q.1) q.2 with
+  | some (.of n) => n
+  | _ => 0
+
+private theorem scalar_decorate_actual (C : X → NativeFiniteNormalInversion.Code)
+    (w : X → NativeGroundSolutionSpace.Source) (x : X) (t : Term X)
+    (q : List Bool) (D : NativeFiniteNormalInversion.Code)
+    (actual : subtree (C x) q = some D) (sh : shape D = evaluate w t) :
+    (scalarDecorateFrom x q t).value (sourceScalarRanks C) (occurrenceCode C) = D := by
+  induction t generalizing q D with
+  | of a =>
+      cases a with
+      | inl b =>
+          cases D with
+          | of n => simp [scalarDecorateFrom, DecoratedTerm.value,
+              RankExpression.value, sourceScalarRanks, actual]
+          | mul D E => cases sh
+      | inr j =>
+          change (subtree (C x) q).getD (.of 0) = D
+          rw [actual]
+          rfl
+  | mul A B ihA ihB =>
+      cases D with
+      | of n => cases sh
+      | mul D E =>
+          have hs : shape D = evaluate w A ∧ shape E = evaluate w B := by
+            injection sh with hD hE
+            exact ⟨hD,hE⟩
+          have hc := subtree_child (C x) q D E actual
+          exact congrArg₂ FreeMagma.mul (ihA _ _ hc.1 hs.1) (ihB _ _ hc.2 hs.2)
+
+/-- A genuine native solution supplies the block equations and literal
+occurrence subtrees automatically. Primitive and collapse scalars remain
+exactly in its selected branch, including r,r+1,r+2. -/
+theorem native_source_block_recovery (p : Presentation X) (E : List (Equation X))
+    (v : X → NativeGroundSolutionSpace.Source) (hv : ∀ e ∈ E, e.Holds v) :
+    ∃ B ∈ branches E, ∃ S : SubstInfo,
+      (encodeEquations p (shapeEquations B)).unify SubstInfo.empty = .ok S ∧
+      (∀ b ∈ B, b.Holds (fun x => NativeFiniteNormalInversion.encode (v x))) ∧
+      (∀ x, (scalarDecorate (action p S) x).value
+        (sourceScalarRanks (fun y => NativeFiniteNormalInversion.encode (v y)))
+        (occurrenceCode (fun y => NativeFiniteNormalInversion.encode (v y))) =
+          NativeFiniteNormalInversion.encode (v x)) ∧
+      (∀ b ∈ B, (branchInventory (action p S) b).Holds
+        (sourceScalarRanks (fun y => NativeFiniteNormalInversion.encode (v y)))
+        (occurrenceCode (fun y => NativeFiniteNormalInversion.encode (v y)))) ∧
+      ∀ j, (∃ o ∈ occurrenceVertices p (action p S), o.2.2 = j) →
+        ∃ (b : Occurrence X) (a : Occurrence X → Nat),
+          b ∈ occurrenceVertices p (action p S) ∧ b.2.2 = j ∧ a b = 0 ∧
+          (∀ o ∈ occurrenceVertices p (action p S), o.2.2 = j →
+            computedSourcePotential B (action p S) j b ≤ computedSourcePotential B (action p S) j o ∧
+            (a o : Int) = computedSourcePotential B (action p S) j o -
+              computedSourcePotential B (action p S) j b) ∧
+          NativeFiniteNormalInversion.Normal
+            (occurrenceCode (fun x => NativeFiniteNormalInversion.encode (v x)) b) ∧
+          ∀ o ∈ occurrenceVertices p (action p S), o.2.2 = j →
+            occurrenceCode (fun x => NativeFiniteNormalInversion.encode (v x)) o =
+              NativeFiniteNormalInversion.shiftCode (a o)
+                (occurrenceCode (fun x => NativeFiniteNormalInversion.encode (v x)) b) ∧
+            NativeFiniteNormalInversion.expand
+              (occurrenceCode (fun x => NativeFiniteNormalInversion.encode (v x)) o) =
+              GenealogicalFiberTransport.substitution^[a o]
+                (NativeFiniteNormalInversion.expand
+                  (occurrenceCode (fun x => NativeFiniteNormalInversion.encode (v x)) b)) := by
+  obtain ⟨B, hB, normal, sat, S, hok, factor, _, _⟩ :=
+    (native_branch_reduction p E v).mp hv
+  have reconstruction (x : X) := scalar_decorate_actual
+    (fun y => NativeFiniteNormalInversion.encode (v y))
+    (fun y => shape (NativeFiniteNormalInversion.encode (v y))) x (action p S x) []
+    (NativeFiniteNormalInversion.encode (v x)) (by simp [subtree]) (factor x).symm
+  have inventory := (source_decorated_comparison_equivalence p B S hok
+    (sourceScalarRanks (fun y => NativeFiniteNormalInversion.encode (v y)))
+    (occurrenceCode (fun y => NativeFiniteNormalInversion.encode (v y)))).mpr
+      (by simpa only [scalarDecorate, reconstruction] using sat)
+  refine ⟨B, hB, S, hok, sat, reconstruction, inventory, ?_⟩
+  intro j occurs
+  let C := fun x => NativeFiniteNormalInversion.encode (v x)
+  let T := codeTree (C j)
+  let u := fun o => readRanks T (occurrenceCode C o)
+  have blocks := actual_rank_blocks p B S hok C factor sat j
+  change BlockSolution B (action p S) j u ∧ _ at blocks
+  have good : ZeroCycles B (action p S) j := by
+    let l : Leaves T := Classical.choice (leavesNonempty T)
+    exact (zeroCycles_iff B (action p S) j).mpr
+      ⟨fun o => (u o l : Int), fun e he => blocks.1 e he l⟩
+  obtain ⟨b, a, hb, hj, hab, hmin, recovery⟩ :=
+    source_canonical_block_recovery p B S hok j occurs good
+  have recovered := recovery T u C blocks.1 normal blocks.2
+  have identity (o : Occurrence X) (ho : o ∈ occurrenceVertices p (action p S))
+      (hoj : o.2.2 = j) : fill T (u o) = occurrenceCode C o := by
+    have h1 := blocks.2 o ho hoj
+    have h2 := (actual_occurrence_code p B S hok C factor o ho).1
+    exact Option.some.inj (h1.symm.trans h2)
+  refine ⟨b, a, hb, hj, hab, hmin, ?_, ?_⟩
+  · simpa only [identity b hb hj] using recovered.1
+  · intro o ho hoj
+    constructor
+    · simpa only [identity o ho hoj, identity b hb hj] using (recovered.2 o ho hoj).1
+    · simpa only [identity o ho hoj, identity b hb hj] using (recovered.2 o ho hoj).2.1
+
+#print axioms source_sort_minimum_base
+
+
+#print axioms source_decorated_comparison_equivalence
 #print axioms native_source_block_recovery
 #print axioms source_canonical_block_recovery
 
