@@ -363,7 +363,7 @@ private theorem normalized_placement (ell m : ℕ) (hle : ell ≤ m)
 
 /-- A zero-total strip word can be negated by cutting at an attained minimum
 of the negated prefix sums. Only a cyclic rotation of labels is made. -/
-private theorem negate_rotation {α : Type*} (f : α → ℤ) (C : ℤ) (L : List α)
+theorem negate_rotation {α : Type*} (f : α → ℤ) (C : ℤ) (L : List α)
     (hs : InStrip f C 0 L) (hm : (L.map f).sum = 0) :
     ∃ j ≤ L.length, ∀ n : ℕ,
       0 ≤ (((L.rotate j).take n).map (fun x => -f x)).sum ∧

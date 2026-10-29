@@ -26,6 +26,21 @@ Now let f:Q->G be additive. For each rational q and coordinate j, write q=(j+1)*
 
 For the single period-one return atlas, take the carrier G with deck translations and time map T(x)=x+c. A signed chart is A(t,z)=z+t*c for integer t. Its seam law is A(t,z)=A(s,w) exactly when t=s+k and z+k*c=w for an integer k; its normalized phase is the unique element of Fin 1. Thus the primitive base period is one, while T itself has order two. In the multiplicative ReturnAtlas API the deck group is Multiplicative G, with holonomy corresponding to c. The translation R_n(x)=x+b_(n-1) satisfies R_n^n=T for every positive n and commutes with every deck translation. These roots even commute pairwise because G is abelian. A coherent rational system of translations would instead be an additive map a:Q->G with a(1)=c, which the theorem excludes. Every map commuting with all deck translations is itself a translation, as follows by evaluating it at zero. Thus the same obstruction excludes a deck-equivariant rational action whose time-one map is T. Pairwise commutation supplies no denominator compatibility. This is a standard reduced torsion group construction used as an explicit sharpness example; no literature priority or physical continuity assertion is intended.
 
+**Theorem 1.2 (Every nontrivial root fiber is infinite).**
+
+$$\forall m \in Nat,\; (1 < m) \implies \operatorname{Infinite}\left(\operatorname{Subtype}\left(\lambda x: G, \operatorname{nsmul}\left(m, x\right) = c\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/IndependentRootCoherenceSeparation.infinite_root_fiber` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+In this exact quotient G and for every natural m>1, the subtype of all x with m*x=c is infinite. An explicit injection from Nat sends n to u_n=(n+1)*b_(m*(n+1)-1). The defining relation gives m*u_n=c. Under the same residual projection pi, its only possibly nonzero coordinate is i_n=m*(n+1)-1, with coefficient n+1 modulo m*(n+1). Since 0<n+1<m*(n+1), that coefficient is nonzero. The indices i_n are distinct, so evaluation at i_n distinguishes u_n from every u_k with k different from n. This proves infinitude at every nontrivial degree, rather than at just one degree. Degree one has the unique root c. No integer linear independence is asserted: all these roots satisfy the common equation m*u_n=c.
+
+Consequently, finite-root-fiber compactness cannot be applied to these full root-choice sets: its finiteness hypothesis fails at every degree m>1 in the original counterexample. Infinite fibers alone do not exclude coherent roots. Here the separate proved facts that every additive map Q->G is zero and c is nonzero supply the actual obstruction to rational coherence. This coordinate argument is a repository derivation for the displayed group; it makes no claim of literature novelty or a new general compactness theorem.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/IndependentRootCoherenceSeparation.independent_roots_without_rational_coherence`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/IndependentRootCoherenceSeparation.infinite_root_fiber`

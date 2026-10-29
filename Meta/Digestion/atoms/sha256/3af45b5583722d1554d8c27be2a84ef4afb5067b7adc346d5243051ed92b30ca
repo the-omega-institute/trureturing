@@ -1,0 +1,31 @@
+**Theorem 33.1 (Rank and null curvature).** At $(\alpha_{\rm f},1)$,
+$$
+ \det DA=0,\qquad \operatorname{rank}DA=1,
+ \qquad 96<p_b<97.
+ \tag{33.6}
+$$
+With the specified normalization
+$$
+ k=(1,-p_r/p_b),\qquad \lambda=(-v_b/p_b,1),
+$$
+we have
+$$
+ DA\,k=0,\qquad \lambda DA=0,\qquad
+ 111<\lambda D^2A[k,k]=\kappa(\alpha_{\rm f},1)<130.
+ \tag{33.7}
+$$
+Consequently the weaker bounds $110<\kappa<131$ also hold.
+
+**Proof.** Equation (32.3) and $\Phi_{\rm f}(\alpha_{\rm f})=0$ give zero determinant.
+The strict $p_b$ bound gives rank at least one, hence exactly one.
+The displayed kernel and cokernel vectors then follow by substitution.
+Their second derivative contraction is precisely (33.2). The interval
+table proves its positive lower and upper bounds. This curvature uses
+$dr=1$; rescaling the null vector would rescale it quadratically. ∎
+
+The values
+$\kappa(\alpha_{\rm f},1)\approx120.212450343622$,
+$\mathcal{L}a(\alpha_{\rm f},1)\approx558.633655878502$, and
+$\mathcal{L}m(\alpha_{\rm f},1)\approx136.761630337034$
+are consistent illustrations of the exact inequalities, not their proof.
+
