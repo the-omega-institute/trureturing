@@ -3,6 +3,8 @@ import Reg.Support.DependentFamily
 import Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkedPredictiveQuotient
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleOccurrence
 
+/-! A dependent-family audit attempt for the complete occurrence theorem telescope. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section

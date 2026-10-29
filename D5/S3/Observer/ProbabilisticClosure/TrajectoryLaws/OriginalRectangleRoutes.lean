@@ -4,11 +4,13 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Irreducibility supplies bounded positive original labelled routes for rectangular-word occurrence. -/
+   digest: Irreducible original routes pay rectangular-word occurrence. -/
 
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleOccurrence
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 import Mathlib.LinearAlgebra.Matrix.Irreducible.Defs
+
+/-! Bounded original labelled routes and their same-law visible occurrence payment. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -36,6 +38,7 @@ private def emptyRoute (θ : Presentation H) (r : H) : LabelledRoute θ r r wher
   last := rfl
   positive i := nomatch i
 
+omit [MeasurableSpace H] [MeasurableSingletonClass H] in
 private theorem bounded_positive_power (A : Matrix H H ℝ) (hA : ∀ i j, 0 ≤ A i j)
     (i j : H) (hp : ∃ n : ℕ, 0 < (A^n) i j) :
     ∃ n < Fintype.card H, 0 < (A^n) i j := by
@@ -71,6 +74,7 @@ private def append_label (θ : Presentation H) (h s r : H) (a : LabelledRoute θ
     · simpa only [Fin.snoc_last, Fin.snoc_castSucc, Fin.succ_last, a.last] using he
     · simpa only [Fin.snoc_castSucc, Fin.succ_castSucc] using a.positive j
 
+omit [MeasurableSpace H] [MeasurableSingletonClass H] in
 private theorem route_of_positive_path (θ : Presentation H) {h r : H}
     (p : @Quiver.Path H (Matrix.toQuiver (θ.matrix false+θ.matrix true)) h r) :
     ∃ a : LabelledRoute θ h r,
@@ -108,6 +112,7 @@ private def append_zero (θ : Presentation H) (h s r : H) (a : LabelledRoute θ 
     (he : 0 < θ.matrix false s r) : LabelledRoute θ h r :=
   append_label θ h s r a false he
 
+omit [MeasurableSpace H] [MeasurableSingletonClass H] in
 private theorem zero_predecessor (θ : Presentation H) (hpos : ∀ h, 0 < θ.initial h)
     (r : H) (hout : ∃ k, 0 < θ.matrix true r k) : ∃ s, 0 < θ.matrix false s r := by
   obtain ⟨k,hk⟩ := hout

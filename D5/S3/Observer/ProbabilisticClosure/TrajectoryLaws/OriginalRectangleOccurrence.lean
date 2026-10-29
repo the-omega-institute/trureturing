@@ -4,10 +4,12 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Selected original labelled paths pay the visible rectangular-word event against the complete marked past. -/
+   digest: Selected paths pay actual word occurrence against the complete marked past. -/
 
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleSmoothing
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalFutureScreening
+
+/-! Selected original labelled paths bound one actual visible block event. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
