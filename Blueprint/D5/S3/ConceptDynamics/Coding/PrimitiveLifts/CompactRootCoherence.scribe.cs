@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding;
+namespace StrataLint.Scribe.Blueprint.D5.S3.ConceptDynamics.Coding.PrimitiveLifts;
 
 internal sealed class CompactRootCoherenceDocument : IScribeDocumentDefinition
 {
@@ -70,7 +70,7 @@ internal sealed class CompactRootCoherenceDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("exists-all-positive-roots-iff-exists-rat-hom"),
                 DeclarationHandle.Create(
-                    "D5/S3/ConceptDynamics/Coding/CompactRootCoherence."
+                    "D5/S3/ConceptDynamics/Coding/PrimitiveLifts/CompactRootCoherence."
                         + "exists_all_positive_roots_iff_exists_rat_hom"),
                 H("Positive roots and rational homomorphisms are equivalent"),
                 StatementSource.FromAuthor(Statement()),

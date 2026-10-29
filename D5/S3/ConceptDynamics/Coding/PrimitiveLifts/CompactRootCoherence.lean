@@ -1,6 +1,6 @@
-/- GID: D5/S3/ConceptDynamics/Coding/CompactRootCoherence
+/- GID: D5/S3/ConceptDynamics/Coding/PrimitiveLifts/CompactRootCoherence
    generality: G
-   mirror-B: D5/B/S3/ConceptDynamics/Coding/CompactRootCoherence
+   mirror-B: D5/B/S3/ConceptDynamics/Coding/PrimitiveLifts/CompactRootCoherence
    mirror-E: none(waiver:symbolic-structural-theorems)
    anchors: []
    utility: none
@@ -23,7 +23,7 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 
-namespace D5.S3.ConceptDynamics.Coding.CompactRootCoherence
+namespace D5.S3.ConceptDynamics.Coding.PrimitiveLifts.CompactRootCoherence
 
 private theorem rat_nat_mul_is_int {q : ℚ} {D : ℕ} (hD : q.den ∣ D) :
     ∃ z : ℤ, (D : ℚ) * q = z := by
@@ -128,4 +128,4 @@ theorem exists_all_positive_roots_iff_exists_rat_hom
         field_simp [Nat.ne_of_gt hn]
       _ = h := hφ
 
-end D5.S3.ConceptDynamics.Coding.CompactRootCoherence
+end D5.S3.ConceptDynamics.Coding.PrimitiveLifts.CompactRootCoherence

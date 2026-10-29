@@ -8,7 +8,7 @@ Compactness turns separate positive roots into one coherent rational homomorphis
 
 $$\forall H: \operatorname{Type}(u), [\operatorname{Group}(H)] [\operatorname{TopologicalSpace}(H)] [\operatorname{IsTopologicalGroup}(H)] [\operatorname{T2Space}(H)] [\operatorname{CompactSpace}(H)] \forall h: H, {\forall n: \mathbb{N}, 0 < n \Rightarrow \exists x: H, x^{n} = h} \iff {\exists phi: \operatorname{MonoidHom}(\operatorname{Multiplicative}(\mathbb{Q}), H), \operatorname{phi}(\operatorname{ofAdd}(1)) = h}.$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/CompactRootCoherence.exists_all_positive_roots_iff_exists_rat_hom` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/CompactRootCoherence.exists_all_positive_roots_iff_exists_rat_hom` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,4 +22,4 @@ The reverse direction uses the root phi(ofAdd(1/n)) and applies its power map. N
 
 ## References
 
-- Truth anchor: `D5/S3/ConceptDynamics/Coding/CompactRootCoherence.exists_all_positive_roots_iff_exists_rat_hom`
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/CompactRootCoherence.exists_all_positive_roots_iff_exists_rat_hom`

@@ -1,11 +1,11 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
-import D5.S3.ConceptDynamics.Coding.CompactRootCoherence
+import D5.S3.ConceptDynamics.Coding.PrimitiveLifts.CompactRootCoherence
 
-open _root_.D5.S3.ConceptDynamics.Coding.CompactRootCoherence
+open _root_.D5.S3.ConceptDynamics.Coding.PrimitiveLifts.CompactRootCoherence
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
-namespace Reg.D5.S3.ConceptDynamics.Coding.CompactRootCoherence
+namespace Reg.D5.S3.ConceptDynamics.Coding.PrimitiveLifts.CompactRootCoherence
 
 universe u
 
@@ -111,8 +111,8 @@ noncomputable def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
       (@exists_all_positive_roots_iff_exists_rat_hom)
       (Realization signature.{u}) Unit Unit where
-  unitName := `D5.S3.ConceptDynamics.Coding.CompactRootCoherence.exists_all_positive_roots_iff_exists_rat_hom.__information_unit
-  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.CompactRootCoherence.familyRegistration
+  unitName := `D5.S3.ConceptDynamics.Coding.PrimitiveLifts.CompactRootCoherence.exists_all_positive_roots_iff_exists_rat_hom.__information_unit
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.PrimitiveLifts.CompactRootCoherence.familyRegistration
   realizationSource := none
   generated := false
   arena := .source ⟨arena.{u}⟩
@@ -135,4 +135,4 @@ noncomputable def registration :
 
 #print axioms registration
 
-end Reg.D5.S3.ConceptDynamics.Coding.CompactRootCoherence
+end Reg.D5.S3.ConceptDynamics.Coding.PrimitiveLifts.CompactRootCoherence
