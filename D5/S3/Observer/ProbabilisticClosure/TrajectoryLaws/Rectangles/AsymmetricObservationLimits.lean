@@ -7,14 +7,16 @@
    digest: Actual asymmetric erased-bit conditionals converge in both ordered half-line limits. -/
 
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.ErasedExteriorFiltration
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
+import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleSmoothing
+
+/-! Asymmetric finite windows and both ordered half-line limits under a single visible law. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
 open MeasureTheory ProbabilityTheory Function Filter
-open scoped Topology Classical
+open scoped Topology
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalErasureComparison
 
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.Rectangles.AsymmetricObservationLimits
@@ -34,17 +36,20 @@ def MeanSquareLimit (μ : Measure Visible) (f : ℕ → Visible → ℝ) (g : Vi
   (∀ᵐ z ∂μ, Tendsto (fun n => f n z) atTop (𝓝 (g z))) ∧
     Tendsto (fun n => ∫ z, (f n z - g z)^2 ∂μ) atTop (𝓝 0)
 
-private def leftField (n : ℕ) : MeasurableSpace Visible :=
+private abbrev leftField (n : ℕ) : MeasurableSpace Visible :=
   MeasurableSpace.comap (leftWord n) inferInstance
-private def rightField (n : ℕ) : MeasurableSpace Visible :=
+private abbrev rightField (n : ℕ) : MeasurableSpace Visible :=
   MeasurableSpace.comap (rightWord n) inferInstance
 
 private theorem pair_field {E F : Type*} [MeasurableSpace E] [MeasurableSpace F]
     (a : Visible → E) (b : Visible → F) :
     MeasurableSpace.comap (fun z => (a z,b z)) inferInstance =
       MeasurableSpace.comap a inferInstance ⊔ MeasurableSpace.comap b inferInstance := by
-  simp only [MeasurableSpace.prod, MeasurableSpace.comap_sup,
-    MeasurableSpace.comap_comp, Function.comp_def]
+  change MeasurableSpace.comap (fun z => (a z,b z))
+    (MeasurableSpace.prod inferInstance inferInstance) = _
+  rw [MeasurableSpace.prod, MeasurableSpace.comap_sup,
+    MeasurableSpace.comap_comp, MeasurableSpace.comap_comp]
+  rfl
 
 private theorem left_mono : Monotone leftField := by
   apply monotone_nat_of_le_succ
@@ -77,7 +82,7 @@ private theorem left_sup : (⨆ n, leftField n) = MeasurableSpace.comap before i
   · have hm (n : ℕ) : @Measurable Visible Bool (⨆ n, leftField n) inferInstance
         (fun z => before z n) := by
       have h : Measurable[leftField (n+1)] (fun z => leftWord (n+1) z 0) :=
-        (measurable_pi_apply 0).comp (Measurable.of_comap_le le_rfl)
+        (measurable_pi_apply 0).comp (show Measurable[leftField (n+1)] (leftWord (n+1)) from Measurable.of_comap_le le_rfl)
       convert h.mono (le_iSup leftField (n+1)) le_rfl using 1
       funext z
       dsimp [leftWord,before]
@@ -94,7 +99,7 @@ private theorem right_sup : (⨆ n, rightField n) = MeasurableSpace.comap after 
   · have hm (n : ℕ) : @Measurable Visible Bool (⨆ n, rightField n) inferInstance
         (fun z => after z n) := by
       have h : Measurable[rightField (n+1)] (fun z => rightWord (n+1) z (Fin.last n)) :=
-        (measurable_pi_apply (Fin.last n)).comp (Measurable.of_comap_le le_rfl)
+        (measurable_pi_apply (Fin.last n)).comp (show Measurable[rightField (n+1)] (rightWord (n+1)) from Measurable.of_comap_le le_rfl)
       exact h.mono (le_iSup rightField (n+1)) le_rfl
     letI : MeasurableSpace Visible := ⨆ n, rightField n
     exact (Measurable.of_eval hm).comap_le
@@ -124,8 +129,9 @@ private theorem observation_limit {E : ℕ → Type*} [∀ n, MeasurableSpace (E
     filter_upwards [hc,hall,hq] with z hz hpz hqz
     change Tendsto (fun n => μ[erasedBit | MeasurableSpace.comap (o n) inferInstance] z)
       atTop (𝓝 (μ[erasedBit | ⨆ n, MeasurableSpace.comap (o n) inferInstance] z)) at hz
-    rw [hsup] at hz
-    exact (hz.congr (fun n => (hpz n).symm)).trans (by simpa only [mean,Function.comp_apply] using tendsto_const_nhds.congr' (Filter.Eventually.of_forall fun _ => hqz.symm))
+    change mean μ v z = μ[erasedBit | MeasurableSpace.comap v inferInstance] z at hqz
+    rw [hsup, ← hqz] at hz
+    exact hz.congr (fun n => (hpz n).symm)
   refine ⟨ha,?_⟩
   have hd := tendsto_integral_of_dominated_convergence (μ := μ)
     (F := fun n z => (mean μ (o n) z-mean μ v z)^2) (f := fun _ => (0 : ℝ))
@@ -136,8 +142,10 @@ private theorem observation_limit {E : ℕ → Type*} [∀ n, MeasurableSpace (E
       obtain ⟨ha,hb⟩ := mean_bounds μ (o n) z
       obtain ⟨hc,hd⟩ := mean_bounds μ v z
       rw [Real.norm_eq_abs,abs_of_nonneg (sq_nonneg _)]
-      nlinarith [mul_nonneg ha hc, mul_nonneg (1-hb) (1-hd)])
-    (ha.mono fun z hz => by simpa using (hz.sub tendsto_const_nhds).pow 2)
+      have hprod := mul_nonneg (show 0 ≤ 1-(mean μ (o n) z-mean μ v z) by linarith)
+        (show 0 ≤ 1+(mean μ (o n) z-mean μ v z) by linarith)
+      nlinarith)
+    (ha.mono fun z hz => by simpa using (hz.sub (tendsto_const_nhds (x := mean μ v z))).pow 2)
   simpa using hd
 
 /-- Both ordered completions use actual conditional distributions under one law.
@@ -181,6 +189,74 @@ theorem ordered_half_line_limits (μ : Measure Visible) [IsProbabilityMeasure μ
       (by unfold exterior before after; fun_prop)
       (by intro a b hab; simp only [hL]; exact sup_le_sup (left_mono hab) le_rfl)
       (by simp only [hL,hE,iSup_sup_eq,left_sup,iSup_const])
+
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleSmoothing
+open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.PositiveRectangleLaw
+
+private theorem record_fiber (l r : ℕ) (z : Visible) :
+    record (List.ofFn (leftWord l z)) (List.ofFn (rightWord r z)) =
+      observation l r ⁻¹' {observation l r z} := by
+  ext y
+  simp [record,block,observation,leftWord,rightWord,funext_iff]
+
+private theorem finite_ratio (μ : Measure Visible) [IsProbabilityMeasure μ] (l r : ℕ) :
+    ∀ᵐ z ∂μ,
+      0 < μ.real (record (List.ofFn (leftWord l z)) (List.ofFn (rightWord r z))) ∧
+      mean μ (observation l r) z =
+        recordPosterior μ (List.ofFn (leftWord l z)) (List.ofFn (rightWord r z)) := by
+  let o := observation l r
+  have ho : Measurable o := by unfold o observation leftWord rightWord; fun_prop
+  have hnull : ∀ᵐ z ∂μ, ∀ e, μ (o ⁻¹' {e}) = 0 → o z ≠ e := by
+    apply ae_all_iff.mpr
+    intro e
+    by_cases he : μ (o ⁻¹' {e}) = 0
+    · have hn : ∀ᵐ z ∂μ, z ∉ o ⁻¹' {e} := by
+        rw [ae_iff]
+        simpa using he
+      exact hn.mono fun z hz _ => hz
+    · exact Filter.Eventually.of_forall fun z hz => (he hz).elim
+  filter_upwards [hnull] with z hz
+  have hp : μ (o ⁻¹' {o z}) ≠ 0 := fun h => hz (o z) h rfl
+  have hpos : 0 < μ.real (o ⁻¹' {o z}) := ENNReal.toReal_pos hp (measure_ne_top _ _)
+  rw [record_fiber]
+  refine ⟨hpos,?_⟩
+  have hpmap : μ.map o {o z} ≠ 0 := by
+    rwa [Measure.map_apply ho (measurableSet_singleton _)]
+  have hk := condDistrib_apply_of_ne_zero (μ := μ) ho
+    (measurable_pi_apply (0 : ℤ)) (o z) hpmap {true}
+  rw [Measure.map_apply ho (measurableSet_singleton _),
+    Measure.map_apply (ho.prodMk (measurable_pi_apply (0 : ℤ)))
+      ((measurableSet_singleton _).prod (measurableSet_singleton true))] at hk
+  have hs : (fun z : Visible => (o z,z 0)) ⁻¹' ({o z} ×ˢ {true}) =
+      (o ⁻¹' {o z}) ∩ {z | z 0 = true} := rfl
+  rw [hs] at hk
+  have hkreal := congrArg ENNReal.toReal hk
+  simpa only [mean,Function.comp_apply,bitPredictor,recordPosterior,record_fiber,
+    measureReal_def,ENNReal.toReal_mul,ENNReal.toReal_inv,div_eq_mul_inv,mul_comm] using hkreal
+
+private theorem left_append (k j : ℕ) (z : Visible) :
+    List.ofFn (leftWord (k+j) z) =
+      List.ofFn (fun i : Fin k => z (-((k+j : ℕ) : ℤ)+i)) ++ List.ofFn (leftWord j z) := by
+  rw [List.ofFn_add]
+  congr 1
+  apply congrArg List.ofFn
+  funext i
+  dsimp [leftWord]
+  apply congrArg z
+  push_cast
+  omega
+
+private theorem right_append (j k : ℕ) (z : Visible) :
+    List.ofFn (rightWord (j+k) z) =
+      List.ofFn (rightWord j z) ++ List.ofFn (fun i : Fin k => z (j+i+1)) := by
+  rw [List.ofFn_add]
+  congr 1
+  apply congrArg List.ofFn
+  funext i
+  dsimp [rightWord]
+  apply congrArg z
+  push_cast
+  omega
 
 #print axioms ordered_half_line_limits
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.Rectangles.AsymmetricObservationLimits
