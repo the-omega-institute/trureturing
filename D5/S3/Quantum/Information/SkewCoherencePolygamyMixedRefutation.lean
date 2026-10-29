@@ -149,7 +149,7 @@ private lemma root_rho_square : rootRho * rootRho = rho := by
       root_rho_apply, rho_apply] <;>
     simp only [← Complex.ofReal_one, ← Complex.ofReal_ofNat, ← Complex.ofReal_mul,
       ← Complex.ofReal_div, ← Complex.ofReal_add, ← Complex.ofReal_inv,
-      Complex.ofReal_inj] <;> field_simp <;> nlinarith
+      ← Complex.ofReal_neg, ← Complex.ofReal_sub, Complex.ofReal_inj] <;> field_simp <;> nlinarith
 
 private lemma rho_density : IsDensity rho := by
   constructor
@@ -200,7 +200,7 @@ private lemma root_tau_square : rootTau * rootTau = tau := by
     norm_num [Matrix.mul_apply, Fin.sum_univ_succ, root_tau_apply, tau_apply] <;>
     simp only [← Complex.ofReal_one, ← Complex.ofReal_ofNat, ← Complex.ofReal_mul,
       ← Complex.ofReal_div, ← Complex.ofReal_add, ← Complex.ofReal_inv,
-      Complex.ofReal_inj] <;> field_simp <;> nlinarith
+      ← Complex.ofReal_neg, ← Complex.ofReal_sub, Complex.ofReal_inj] <;> field_simp <;> nlinarith
 
 private lemma root_beta_positive : rootBeta.PosSemidef := by
   let v : Fin 3 → ℂ := ![1, 1, 0]
@@ -235,7 +235,7 @@ private lemma root_beta_square : rootBeta * rootBeta = beta := by
     norm_num [Matrix.mul_apply, Fin.sum_univ_succ, root_beta_apply, beta_apply] <;>
     simp only [← Complex.ofReal_one, ← Complex.ofReal_ofNat, ← Complex.ofReal_mul,
       ← Complex.ofReal_div, ← Complex.ofReal_add, ← Complex.ofReal_inv,
-      Complex.ofReal_inj] <;> field_simp <;> nlinarith
+      ← Complex.ofReal_neg, ← Complex.ofReal_sub, Complex.ofReal_inj] <;> field_simp <;> nlinarith
 
 private lemma sqrt_rho : CFC.sqrt rho = rootRho := by
   exact (CFC.sqrt_eq_iff rho rootRho rho_density.1.nonneg
@@ -308,13 +308,21 @@ private lemma value_beta :
   field_simp
   nlinarith
 
+private lemma violation_gap :
+    (1 - skewCoherence rho) -
+      (1 - skewCoherence tau) * (1 - skewCoherence beta) =
+        (208 - 17 * Real.sqrt 145) / 1156 := by
+  rw [value_rho, value_tau, value_beta]
+  have hs := Real.sq_sqrt (show (0 : ℝ) ≤ 145 by norm_num)
+  nlinarith
+
 private lemma strict_violation :
     (1 - skewCoherence tau) * (1 - skewCoherence beta) < 1 - skewCoherence rho := by
-  rw [value_tau, value_beta, value_rho]
   have hs := Real.sq_sqrt (show (0 : ℝ) ≤ 145 by norm_num)
   have hn := Real.sqrt_nonneg (145 : ℝ)
   have hlt : 17 * Real.sqrt 145 < 208 := by nlinarith
-  nlinarith
+  have hg := violation_gap
+  linarith
 
 /-- The registered two by three mixed state refutes the conjecture. -/
 theorem result : ¬ claim := by
