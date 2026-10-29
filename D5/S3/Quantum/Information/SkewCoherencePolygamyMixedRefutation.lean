@@ -8,7 +8,8 @@
 
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.Quantum.Information.SLDSpectralEnergy
-import Mathlib.Analysis.Matrix.Order
+
+/-! A rational two by three density matrix violating Yu’s mixed-state conjecture. -/
 
 set_option autoImplicit false
 set_option linter.style.longLine false
@@ -73,57 +74,247 @@ private def rootBeta : Matrix (Fin 3) (Fin 3) ℂ :=
     else (Real.sqrt 29 + (if b = d then Real.sqrt 5 else -Real.sqrt 5)) /
       (2 * Real.sqrt 68) : ℝ) : ℂ)
 
+private lemma rho_apply (p q : Fin 2 × Fin 3) :
+    rho p q = if p.2 = 2 then
+      if q.2 = 2 then (if p.1 = q.1 then 1 / 4 else 3 / 17) else 0
+    else if q.2 = 2 then 0 else if p = q then 1 / 8
+    else if p.1 = q.1 ∨ p.2 = q.2 then 3 / 34 else 9 / 136 := rfl
+
+private lemma tau_apply (a c : Fin 2) :
+    tau a c = if a = c then 1 / 2 else 6 / 17 := rfl
+
+private lemma beta_apply (b d : Fin 3) :
+    beta b d = if b = 2 then (if d = 2 then 1 / 2 else 0)
+    else if d = 2 then 0 else if b = d then 1 / 4 else 3 / 17 := rfl
+
+private lemma root_rho_apply (p q : Fin 2 × Fin 3) :
+    rootRho p q = (((if p.2 = 2 then
+      if q.2 = 2 then
+        Real.sqrt 29 + (if p.1 = q.1 then Real.sqrt 5 else -Real.sqrt 5)
+      else 0
+      else if q.2 = 2 then 0 else if p = q then 5
+      else if p.1 = q.1 ∨ p.2 = q.2 then 2 else 1) /
+        (2 * Real.sqrt 68) : ℝ) : ℂ) := rfl
+
+private lemma root_tau_apply (a c : Fin 2) :
+    rootTau a c = (((Real.sqrt 29 +
+      (if a = c then Real.sqrt 5 else -Real.sqrt 5)) /
+        (2 * Real.sqrt 34) : ℝ) : ℂ) := rfl
+
+private lemma root_beta_apply (b d : Fin 3) :
+    rootBeta b d = ((if b = 2 then (if d = 2 then 1 / Real.sqrt 2 else 0)
+      else if d = 2 then 0
+      else (Real.sqrt 29 + (if b = d then Real.sqrt 5 else -Real.sqrt 5)) /
+        (2 * Real.sqrt 68) : ℝ) : ℂ) := rfl
+
+private lemma coherence_complement {ι : Type*} [Fintype ι] [DecidableEq ι]
+    (ρ : Matrix ι ι ℂ) :
+    1 - skewCoherence ρ = ∑ k, (CFC.sqrt ρ k k).re ^ 2 := by
+  change 1 - (1 - _) = _
+  ring
+
 private lemma root_rho_positive : rootRho.PosSemidef := by
-  sorry
+  let v : Fin 6 → (Fin 2 × Fin 3 → ℂ) := ![
+    (fun p => if p.2 = 2 then 0 else 1),
+    (fun p => if p.2 = 2 then 0 else if p.2 = 0 then 1 else -1),
+    (fun p => if p.2 = 2 then 0 else if p.1 = 0 then 1 else -1),
+    (fun p => if p.2 = 2 then 0 else
+      (if p.1 = 0 then 1 else -1) * (if p.2 = 0 then 1 else -1)),
+    (fun p => if p.2 = 2 then 1 else 0),
+    (fun p => if p.2 = 2 then (if p.1 = 0 then 1 else -1) else 0)]
+  let w : Fin 6 → ℝ := ![5 / 2, 1, 1, 1 / 2, Real.sqrt 29, Real.sqrt 5]
+  have hw (k : Fin 6) : 0 ≤ w k := by
+    fin_cases k <;> norm_num [w]
+  have hp : (∑ k : Fin 6, w k • vecMulVec (v k) (star (v k))).PosSemidef :=
+    Matrix.posSemidef_sum _ fun k _ =>
+      (Matrix.posSemidef_vecMulVec_self_star (v k)).smul (hw k)
+  have he : rootRho = (1 / (2 * Real.sqrt 68) : ℝ) •
+      (∑ k : Fin 6, w k • vecMulVec (v k) (star (v k))) := by
+    ext ⟨a, b⟩ ⟨c, d⟩
+    fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
+      norm_num [root_rho_apply, Matrix.smul_apply, Matrix.sum_apply,
+        Fin.sum_univ_succ, Matrix.vecMulVec_apply, Pi.star_apply, v, w,
+        Complex.real_smul] <;> ring
+  rw [he]
+  exact hp.smul (by positivity)
 
 private lemma root_rho_square : rootRho * rootRho = rho := by
-  sorry
+  have h68 : Real.sqrt 68 ≠ 0 := by positivity
+  have hs68 := Real.sq_sqrt (show (0 : ℝ) ≤ 68 by norm_num)
+  have hs29 := Real.sq_sqrt (show (0 : ℝ) ≤ 29 by norm_num)
+  have hs5 := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
+  ext ⟨a, b⟩ ⟨c, d⟩
+  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
+    norm_num [Matrix.mul_apply, Fintype.sum_prod_type, Fin.sum_univ_succ,
+      root_rho_apply, rho_apply] <;>
+    simp only [← Complex.ofReal_one, ← Complex.ofReal_ofNat, ← Complex.ofReal_mul,
+      ← Complex.ofReal_div, ← Complex.ofReal_add, ← Complex.ofReal_inv,
+      Complex.ofReal_inj] <;> field_simp <;> nlinarith
 
 private lemma rho_density : IsDensity rho := by
-  sorry
+  constructor
+  · have hp := Matrix.posSemidef_conjTranspose_mul_self rootRho
+    rw [root_rho_positive.isHermitian.eq, root_rho_square] at hp
+    exact hp
+  · change (∑ p, rho p p) = 1
+    norm_num [Fintype.sum_prod_type, Fin.sum_univ_succ, rho_apply]
 
 private lemma marginal_right : partialTraceRight rho = tau := by
-  sorry
+  ext a c
+  change (∑ b : Fin 3, rho (a, b) (c, b)) = tau a c
+  fin_cases a <;> fin_cases c <;>
+    norm_num [Fin.sum_univ_succ, rho_apply, tau_apply]
 
 private lemma marginal_left : partialTraceLeft rho = beta := by
-  sorry
+  ext b d
+  change (∑ a : Fin 2, rho (a, b) (a, d)) = beta b d
+  fin_cases b <;> fin_cases d <;>
+    norm_num [Fin.sum_univ_succ, rho_apply, beta_apply]
 
 private lemma root_tau_positive : rootTau.PosSemidef := by
-  sorry
+  let v : Fin 2 → ℂ := ![1, -1]
+  have hp : (Real.sqrt 29 • vecMulVec (fun _ : Fin 2 => (1 : ℂ))
+      (star (fun _ : Fin 2 => (1 : ℂ))) +
+      Real.sqrt 5 • vecMulVec v (star v)).PosSemidef :=
+    ((Matrix.posSemidef_vecMulVec_self_star _).smul (Real.sqrt_nonneg 29)).add
+      ((Matrix.posSemidef_vecMulVec_self_star v).smul (Real.sqrt_nonneg 5))
+  have he : rootTau = (1 / (2 * Real.sqrt 34) : ℝ) •
+      (Real.sqrt 29 • vecMulVec (fun _ : Fin 2 => (1 : ℂ))
+        (star (fun _ : Fin 2 => (1 : ℂ))) +
+        Real.sqrt 5 • vecMulVec v (star v)) := by
+    ext a c
+    fin_cases a <;> fin_cases c <;>
+      simp only [root_tau_apply, Matrix.smul_apply, Matrix.add_apply,
+        Matrix.vecMulVec_apply, Pi.star_apply] <;>
+      norm_num [v, Complex.real_smul] <;> ring
+  rw [he]
+  exact hp.smul (by positivity)
 
 private lemma root_tau_square : rootTau * rootTau = tau := by
-  sorry
+  have h34 : Real.sqrt 34 ≠ 0 := by positivity
+  have hs34 := Real.sq_sqrt (show (0 : ℝ) ≤ 34 by norm_num)
+  have hs29 := Real.sq_sqrt (show (0 : ℝ) ≤ 29 by norm_num)
+  have hs5 := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
+  ext a c
+  fin_cases a <;> fin_cases c <;>
+    norm_num [Matrix.mul_apply, Fin.sum_univ_succ, root_tau_apply, tau_apply] <;>
+    simp only [← Complex.ofReal_one, ← Complex.ofReal_ofNat, ← Complex.ofReal_mul,
+      ← Complex.ofReal_div, ← Complex.ofReal_add, ← Complex.ofReal_inv,
+      Complex.ofReal_inj] <;> field_simp <;> nlinarith
 
 private lemma root_beta_positive : rootBeta.PosSemidef := by
-  sorry
+  let v : Fin 3 → ℂ := ![1, 1, 0]
+  let w : Fin 3 → ℂ := ![1, -1, 0]
+  let z : Fin 3 → ℂ := ![0, 0, 1]
+  have hp : (Real.sqrt 29 • vecMulVec v (star v) +
+      Real.sqrt 5 • vecMulVec w (star w)).PosSemidef :=
+    ((Matrix.posSemidef_vecMulVec_self_star v).smul (Real.sqrt_nonneg 29)).add
+      ((Matrix.posSemidef_vecMulVec_self_star w).smul (Real.sqrt_nonneg 5))
+  have he : rootBeta = (1 / (2 * Real.sqrt 68) : ℝ) •
+      (Real.sqrt 29 • vecMulVec v (star v) +
+        Real.sqrt 5 • vecMulVec w (star w)) +
+      (1 / Real.sqrt 2 : ℝ) • vecMulVec z (star z) := by
+    ext b d
+    fin_cases b <;> fin_cases d <;>
+      simp only [root_beta_apply, Matrix.smul_apply, Matrix.add_apply,
+        Matrix.vecMulVec_apply, Pi.star_apply] <;>
+      norm_num [v, w, z, Complex.real_smul] <;> ring
+  rw [he]
+  exact (hp.smul (by positivity)).add
+    ((Matrix.posSemidef_vecMulVec_self_star z).smul (by positivity))
 
 private lemma root_beta_square : rootBeta * rootBeta = beta := by
-  sorry
+  have h68 : Real.sqrt 68 ≠ 0 := by positivity
+  have h2 : Real.sqrt 2 ≠ 0 := by positivity
+  have hs68 := Real.sq_sqrt (show (0 : ℝ) ≤ 68 by norm_num)
+  have hs2 := Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
+  have hs29 := Real.sq_sqrt (show (0 : ℝ) ≤ 29 by norm_num)
+  have hs5 := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
+  ext b d
+  fin_cases b <;> fin_cases d <;>
+    norm_num [Matrix.mul_apply, Fin.sum_univ_succ, root_beta_apply, beta_apply] <;>
+    simp only [← Complex.ofReal_one, ← Complex.ofReal_ofNat, ← Complex.ofReal_mul,
+      ← Complex.ofReal_div, ← Complex.ofReal_add, ← Complex.ofReal_inv,
+      Complex.ofReal_inj] <;> field_simp <;> nlinarith
 
 private lemma sqrt_rho : CFC.sqrt rho = rootRho := by
-  sorry
+  exact (CFC.sqrt_eq_iff rho rootRho rho_density.1.nonneg
+    root_rho_positive.nonneg).2 root_rho_square
 
 private lemma sqrt_tau : CFC.sqrt tau = rootTau := by
-  sorry
+  have hp := partialTraceRight_posSemidef rho_density.1
+  rw [marginal_right] at hp
+  exact (CFC.sqrt_eq_iff tau rootTau hp.nonneg root_tau_positive.nonneg).2 root_tau_square
 
 private lemma sqrt_beta : CFC.sqrt beta = rootBeta := by
-  sorry
+  have hp := partialTraceLeft_posSemidef rho_density.1
+  rw [marginal_left] at hp
+  exact (CFC.sqrt_eq_iff beta rootBeta hp.nonneg root_beta_positive.nonneg).2 root_beta_square
 
 private lemma value_rho :
     1 - skewCoherence rho = (25 / 34 + (1 / 2 + Real.sqrt 145 / 34)) / 2 := by
-  sorry
+  rw [coherence_complement, sqrt_rho]
+  have h68 : Real.sqrt 68 ≠ 0 := by positivity
+  have h34 : Real.sqrt 34 ≠ 0 := by positivity
+  have h2 : Real.sqrt 2 ≠ 0 := by positivity
+  have hs68 := Real.sq_sqrt (show (0 : ℝ) ≤ 68 by norm_num)
+  have hs34 := Real.sq_sqrt (show (0 : ℝ) ≤ 34 by norm_num)
+  have hs2 := Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
+  have hs29 := Real.sq_sqrt (show (0 : ℝ) ≤ 29 by norm_num)
+  have hs5 := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
+  have hm : Real.sqrt 29 * Real.sqrt 5 = Real.sqrt 145 := by
+    rw [← Real.sqrt_mul (by norm_num)]
+    norm_num
+  simp only [Fintype.sum_prod_type, Fin.sum_univ_succ, root_rho_apply, Complex.ofReal_re]
+  norm_num
+  field_simp
+  nlinarith
 
 private lemma value_tau :
     1 - skewCoherence tau = 1 / 2 + Real.sqrt 145 / 34 := by
-  sorry
+  rw [coherence_complement, sqrt_tau]
+  have h68 : Real.sqrt 68 ≠ 0 := by positivity
+  have h34 : Real.sqrt 34 ≠ 0 := by positivity
+  have h2 : Real.sqrt 2 ≠ 0 := by positivity
+  have hs68 := Real.sq_sqrt (show (0 : ℝ) ≤ 68 by norm_num)
+  have hs34 := Real.sq_sqrt (show (0 : ℝ) ≤ 34 by norm_num)
+  have hs2 := Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
+  have hs29 := Real.sq_sqrt (show (0 : ℝ) ≤ 29 by norm_num)
+  have hs5 := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
+  have hm : Real.sqrt 29 * Real.sqrt 5 = Real.sqrt 145 := by
+    rw [← Real.sqrt_mul (by norm_num)]
+    norm_num
+  simp only [Fin.sum_univ_succ, root_tau_apply, Complex.ofReal_re]
+  norm_num
+  field_simp
+  nlinarith
 
 private lemma value_beta :
     1 - skewCoherence beta = ((1 / 2 + Real.sqrt 145 / 34) + 1) / 2 := by
-  sorry
+  rw [coherence_complement, sqrt_beta]
+  have h68 : Real.sqrt 68 ≠ 0 := by positivity
+  have h34 : Real.sqrt 34 ≠ 0 := by positivity
+  have h2 : Real.sqrt 2 ≠ 0 := by positivity
+  have hs68 := Real.sq_sqrt (show (0 : ℝ) ≤ 68 by norm_num)
+  have hs34 := Real.sq_sqrt (show (0 : ℝ) ≤ 34 by norm_num)
+  have hs2 := Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
+  have hs29 := Real.sq_sqrt (show (0 : ℝ) ≤ 29 by norm_num)
+  have hs5 := Real.sq_sqrt (show (0 : ℝ) ≤ 5 by norm_num)
+  have hm : Real.sqrt 29 * Real.sqrt 5 = Real.sqrt 145 := by
+    rw [← Real.sqrt_mul (by norm_num)]
+    norm_num
+  simp only [Fin.sum_univ_succ, root_beta_apply, Complex.ofReal_re]
+  norm_num
+  field_simp
+  nlinarith
 
 private lemma strict_violation :
     (1 - skewCoherence tau) * (1 - skewCoherence beta) < 1 - skewCoherence rho := by
-  sorry
+  rw [value_tau, value_beta, value_rho]
+  have hs := Real.sq_sqrt (show (0 : ℝ) ≤ 145 by norm_num)
+  have hn := Real.sqrt_nonneg (145 : ℝ)
+  have hlt : 17 * Real.sqrt 145 < 208 := by nlinarith
+  nlinarith
 
 /-- The registered two by three mixed state refutes the conjecture. -/
 theorem result : ¬ claim := by
