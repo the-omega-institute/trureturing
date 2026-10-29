@@ -72,7 +72,10 @@ theorem no_holomorphic_extension_at_abscissa
     intro z hz
     calc
       dist z (σ : ℂ) ≤ dist z (a : ℂ) + dist (a : ℂ) (σ : ℂ) := dist_triangle _ _ _
-      _ < 3 * R / 4 + R / 4 := by rw [hadist]; exact add_lt_add_right (Metric.mem_ball.mp hz) _
+      _ < 3 * R / 4 + R / 4 := by
+        rw [hadist]
+        have hz' := Metric.mem_ball.mp hz
+        linarith
       _ = R := by ring
   have hHsmall : DifferentiableOn ℂ H (Metric.ball (a : ℂ) (3 * R / 4)) := hH.mono hball
   have hagerm : H =ᶠ[𝓝 (a : ℂ)] fun z => complexMGF X μ (-z) := by
