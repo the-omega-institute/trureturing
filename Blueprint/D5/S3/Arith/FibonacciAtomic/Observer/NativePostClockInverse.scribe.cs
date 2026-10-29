@@ -10,7 +10,7 @@ internal sealed class NativePostClockInverseDocument : IScribeDocumentDefinition
         "Exact rational post-clock fields recover every finite legal native addressed word.",
         H("Native post-clock inverse"), Blocks(
             Paragraph(Text("Source is the original Boolean free magma: true is alpha and false is beta. Material coordinates include each beta's separate left marker. The original guarded Call runner promotes alpha at p or splits beta at p into the literal branch (beta,alpha). Promotion adds only pL. Splitting retains the old pL and adds only pLL and pR. The current endpoint consists of the term and a rational function on its explicitly listed finite material support.")),
-            Paragraph(Text("For positive rational a and c, clock(a,c,t) is a times the identity plus c times the unit native material adjacency. Its determinant is assumed nonzero on every guarded term D. Encoding starts at the earned alpha field 1, and each successful letter performs actual zero inclusion followed by Tick on the new term. Replay is partial exactly through the original logical guard; no Reset, Add or extra Tick appears in this recurrence.")),
+            Paragraph(Text("For positive rational a and c, clock(a,c,t) is a times the identity plus c times the unit native material adjacency. Its determinant is assumed nonzero on every actual term reached by a finite legal word. Encoding starts at the earned alpha field 1, and each successful letter performs actual zero inclusion followed by Tick on the new term. Replay is partial exactly through the original logical guard; no Reset, Add or extra Tick appears in this recurrence.")),
             Describe.Lean(
                 DescribeId.Create("nativepostclockinverse"),
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/NativePostClockInverse.postclock_inverse"),
@@ -56,8 +56,9 @@ internal sealed class NativePostClockInverseDocument : IScribeDocumentDefinition
         Formula Enc(Formula word) => C("encode", a, c, word);
         Formula Dec(Formula endpoint) => C("decode", a, c, endpoint);
         var tx = C("endpoint", t, x);
-        var law = Q("t", Source, Im(C("D", t),
-            Seq(C("det", C("clock", a, c, t)), Sp, Neq, Sp, D(0))));
+        var law = All(["v", "t"], [Word, Source],
+            Im(Eqn(C("run", C("alpha"), v), Some(t)),
+                Seq(C("det", C("clock", a, c, t)), Sp, Neq, Sp, D(0))));
         var legal = All(["w", "t"], [Word, Source],
             Im(Eqn(C("run", C("alpha"), w), Some(t)),
                 Ex("x", C("Field", t), Ands(Eqn(Enc(w), Some(tx)), Eqn(Dec(tx), Some(w)),

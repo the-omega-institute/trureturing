@@ -78,7 +78,7 @@ private theorem edit_structure (b : Bool) (p : Address) (t : Source)
                 · simp [material, List.mem_map, hu]
                 · simp only [replace, Geometry.NativeMaterialRootRecognition.neighbors_cons]
                   exact List.mem_append_left _ (List.mem_map.mpr ⟨u, hn, rfl⟩)
-              · simpa only [replace] using congrArg (fun s : Source => .mul s r) hc
+              · simpa only [replace] using congrArg (fun s : Source => FreeMagma.mul s r) hc
           | true =>
               obtain ⟨hm, hf, hn, hs, hc⟩ := ih r h
               refine ⟨?_, ?_, ?_, hs, ?_⟩
@@ -99,7 +99,7 @@ private theorem edit_structure (b : Bool) (p : Address) (t : Source)
                 · simp [material, List.mem_map, hu]
                 · simp only [replace, Geometry.NativeMaterialRootRecognition.neighbors_cons]
                   exact List.mem_append_left _ (List.mem_map.mpr ⟨u, hn, rfl⟩)
-              · simpa only [replace] using congrArg (fun s : Source => .mul l s) hc
+              · simpa only [replace] using congrArg (fun s : Source => FreeMagma.mul l s) hc
 
 /-- Coordinates are the finite, explicitly listed native material support. -/
 abbrev Coordinate (t : Source) := {p : Address // p ∈ (material t).toFinset}
@@ -160,6 +160,7 @@ private theorem tick_positive (a c : ℚ) (ha : 0 < a) (hc : 0 < c)
     let r' : Coordinate u := ⟨r, List.mem_toFinset.mpr ((hm r).mpr (Or.inl hr))⟩
     refine ⟨r', Finset.mem_univ _, mul_pos ?_ ?_⟩
     · have : 0 ≤ (if q = r' then a else 0) := by split <;> positivity
+      change r'.val ∈ neighbors u q.val at hqr
       simpa only [clock, if_pos hqr] using add_pos_of_nonneg_of_pos this hc
     · simpa [zeroInclude, r', List.mem_toFinset.mpr hr] using hx ⟨r, List.mem_toFinset.mpr hr⟩
 
@@ -231,13 +232,11 @@ private theorem fresh_unique (b d : Bool) (p q : Address)
     simp [fresh] at hr
     rcases hr with hr | hr
     · exact False.elim (suffix_ne (q ++ [false]) p (by simpa [List.append_assoc] using hr.symm))
-    · exact ⟨rfl, List.append_cancel_right hr⟩
+    · exact ⟨rfl, hr⟩
   · have hr : p ++ [true] ∈ (fresh true q).toFinset := by rw [← h]; simp [fresh]
     simp [fresh] at hr
-    exact False.elim (suffix_ne q p hr.symm)
   · have hr : q ++ [true] ∈ (fresh true p).toFinset := by rw [h]; simp [fresh]
     simp [fresh] at hr
-    exact False.elim (suffix_ne p q hr.symm)
   · have : p ++ [false] = q ++ [false] := by simpa [fresh] using h
     exact ⟨rfl, List.append_cancel_right this⟩
 
@@ -275,7 +274,9 @@ private theorem last_event (t : Source) (g : Call)
       (fresh (kind g) (address g)).toFinset ∧
       subtree (address g) (edited t g) = some (replacement (kind g))) = true := by
     exact decide_eq_true ⟨hz, hs⟩
-  have hex := List.find?_isSome.mpr ⟨g, hg, hp⟩
+  have hex : (lastEvent (edited t g) (zeroInclude t (edited t g) x)).isSome := by
+    unfold lastEvent
+    exact List.find?_isSome.mpr ⟨g, hg, hp⟩
   cases he : lastEvent (edited t g) (zeroInclude t (edited t g) x) with
   | none => simp only [lastEvent] at he; rw [he] at hex; cases hex
   | some g' =>
@@ -299,21 +300,23 @@ private theorem predecessor_append (a c : ℚ) (e : Endpoint) (g : Call)
   obtain ⟨hm, _, _, _, hc⟩ := edit_structure (kind g) (address g) e.1 he
   have hz := untick_tick a c (edited e.1 g) (zeroInclude e.1 (edited e.1 g) e.2) hi
   have hl := last_event e.1 g he e.2 hx
+  have hback (v : Source) (hv : v = e.1) :
+      (⟨v, zeroInclude (edited e.1 g) v
+        (zeroInclude e.1 (edited e.1 g) e.2)⟩ : Endpoint) = e := by
+    subst v
+    apply Sigma.ext rfl
+    apply heq_of_eq
+    funext q
+    have hq : q.val ∈ (material (edited e.1 g)).toFinset :=
+      List.mem_toFinset.mpr ((hm q.val).mpr (Or.inl (List.mem_toFinset.mp q.property)))
+    simp [zeroInclude, hq, q.property]
   unfold predecessor appendEndpoint
   dsimp only
   rw [hz, hl]
-  simp only [Option.bind_some, pure]
   change some (⟨collapse (edited e.1 g) g,
     zeroInclude (edited e.1 g) (collapse (edited e.1 g) g)
       (zeroInclude e.1 (edited e.1 g) e.2)⟩, g) = some (e, g)
-  change replace (replace e.1 (address g) (replacement (kind g)))
-    (address g) (.of (kind g)) = e.1 at hc
-  simp only [collapse, edited, hc]
-  congr 3
-  funext q
-  have hq : q.val ∈ (material (edited e.1 g)).toFinset :=
-    List.mem_toFinset.mpr ((hm q.val).mpr (Or.inl (List.mem_toFinset.mp q.property)))
-  simp [zeroInclude, hq, q.property]
+  rw [hback (collapse (edited e.1 g) g) hc]
 
 /-- Fuel is measured in current material vertices; it is not a supplied history bound. -/
 def decodeFuel (a c : ℚ) : ℕ → Endpoint → Option (List Call)
@@ -352,6 +355,56 @@ private theorem encoded_of_encode (a c : ℚ) (w : List Call) (e : Endpoint)
     (h : encode a c w = some e) : Encoded a c w e := by
   simpa using reached_replay a c (Encoded.seed) h
 
+private theorem replay_append (a c : ℚ) (e : Endpoint) (w v : List Call) :
+    replay a c e (w ++ v) = (replay a c e w).bind (fun u => replay a c u v) := by
+  induction w generalizing e with
+  | nil => rfl
+  | cons g w ih =>
+      simp only [List.cons_append, replay]
+      cases forward a c e g <;> simp [ih]
+
+private theorem encode_of_encoded (a c : ℚ) {w : List Call} {e : Endpoint}
+    (hw : Encoded a c w e) : encode a c w = some e := by
+  induction hw with
+  | seed => rfl
+  | @append w e hw g he ih =>
+      change replay a c origin (w ++ [g]) = _
+      rw [replay_append]
+      change (encode a c w).bind _ = _
+      rw [ih]
+      simp [replay, forward, he]
+
+private theorem replay_term (a c : ℚ) (e : Endpoint) (w : List Call) :
+    (replay a c e w).map (fun u => u.1) = run e.1 w := by
+  induction w generalizing e with
+  | nil => rfl
+  | cons g w ih =>
+      cases g with
+      | promote p =>
+          cases hs : subtree p e.1 with
+          | none => simp [replay, forward, kind, address, hs, run]
+          | some t =>
+              cases t with
+              | of b => cases b <;>
+                  simp [replay, forward, kind, address, hs, run, ih, appendEndpoint,
+                    edited, replacement]
+              | mul l r => simp [replay, forward, kind, address, hs, run]
+      | split p =>
+          cases hs : subtree p e.1 with
+          | none => simp [replay, forward, kind, address, hs, run]
+          | some t =>
+              cases t with
+              | of b => cases b <;>
+                  simp [replay, forward, kind, address, hs, run, ih, appendEndpoint,
+                    edited, replacement]
+              | mul l r => simp [replay, forward, kind, address, hs, run]
+
+private theorem encoded_trace (a c : ℚ) {w : List Call} {e : Endpoint}
+    (hw : Encoded a c w e) : run (.of true) w = some e.1 := by
+  have hh := congrArg (fun o : Option Endpoint => o.map (fun u => u.1))
+    (encode_of_encoded a c hw)
+  simpa only [encode, replay_term, Option.map_some, origin] using hh
+
 private theorem singleton_run (t : Source) (g : Call)
     (h : subtree (address g) t = some (.of (kind g))) :
     run t [g] = some (edited t g) := by
@@ -372,7 +425,8 @@ private theorem edit_growth (t : Source) (ht : D t) (g : Call)
     omega
 
 private theorem encoded_invariants (a c : ℚ) (ha : 0 < a) (hc : 0 < c)
-    (hinv : ∀ t, D t → (clock a c t).det ≠ 0)
+    (hinv : ∀ (v : List Call) (t : Source), run (.of true) v = some t →
+      (clock a c t).det ≠ 0)
     {w : List Call} {e : Endpoint} (hw : Encoded a c w e) :
     D e.1 ∧ (∀ q, 0 < e.2 q) ∧
       ∀ n, (material e.1).length ≤ n → decodeFuel a c n e = some w := by
@@ -388,7 +442,8 @@ private theorem encoded_invariants (a c : ℚ) (ha : 0 < a) (hc : 0 < c)
         | succ n => rfl
   | @append w e hw g he ih =>
       obtain ⟨hd, hg⟩ := edit_growth e.1 ih.1 g he
-      have hi := hinv (edited e.1 g) hd
+      have hi := hinv (w ++ [g]) (edited e.1 g)
+        (encoded_trace a c (Encoded.append hw g he))
       refine ⟨hd, tick_positive a c ha hc (kind g) (address g) e.1 he e.2 ih.2.1, ?_⟩
       intro n hn
       have hn' : (material (edited e.1 g)).length ≤ n := hn
@@ -440,7 +495,8 @@ private theorem replay_exists (a c : ℚ) (e : Endpoint) (w : List Call) (t : So
 
 /-- The full post-clock image has a finite local inverse, including its earned empty origin. -/
 theorem postclock_inverse (a c : ℚ) (ha : 0 < a) (hc : 0 < c)
-    (hinv : ∀ t, D t → (clock a c t).det ≠ 0) :
+    (hinv : ∀ (v : List Call) (t : Source), run (.of true) v = some t →
+      (clock a c t).det ≠ 0) :
     (∀ (w : List Call) (t : Source), run (.of true) w = some t →
       ∃ x : Field t, encode a c w = some ⟨t, x⟩ ∧
         decode a c ⟨t, x⟩ = some w ∧ ∀ q, 0 < x q) ∧
@@ -471,6 +527,7 @@ theorem postclock_inverse (a c : ℚ) (ha : 0 < a) (hc : 0 < c)
   · intro w e g hw hg
     have hh := encoded_invariants a c ha hc hinv (encoded_of_encode a c w e hw)
     have hd := edit_growth e.1 hh.1 g hg
-    exact ⟨predecessor_append a c e g hg hh.2.1 (hinv _ hd.1), hd.2⟩
+    exact ⟨predecessor_append a c e g hg hh.2.1 (hinv (w ++ [g]) _
+      (encoded_trace a c (Encoded.append (encoded_of_encode a c w e hw) g hg))), hd.2⟩
 
 end D5.S3.Arith.FibonacciAtomic.Observer.NativePostClockInverse

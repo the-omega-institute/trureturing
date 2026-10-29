@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.Observer.NativePostClockInverse
-import Mathlib.LinearAlgebra.Matrix.Gershgorin
+import Mathlib.Data.ZMod.Basic
 import Reg.Support.DependentFamily
 
 set_option autoImplicit false
@@ -20,39 +20,22 @@ local instance finiteCoordinates (t : Source) : Fintype (Coordinate t) := coordi
 
 noncomputable section
 
-private theorem example_invertible (t : Source) : (clock 4 1 t).det ≠ 0 := by
-  apply Matrix.det_ne_zero_of_sum_row_lt_diag
-  intro k
-  let S : Finset (Coordinate t) := Finset.univ.filter (fun j => j.val ∈ neighbors t k.val)
-  have hdeg : (neighbors t k.val).length ≤ 3 := by
-    unfold neighbors children
-    split <;> split <;> simp_all
-  have hcard : S.card ≤ 3 := by
-    calc
-      S.card = (S.image Subtype.val).card :=
-        (Finset.card_image_of_injective S Subtype.val_injective).symm
-      _ ≤ ((neighbors t k.val).toFinset).card := Finset.card_le_card (by
-        intro q hq
-        obtain ⟨j, hj, rfl⟩ := Finset.mem_image.mp hq
-        exact List.mem_toFinset.mpr (Finset.mem_filter.mp hj).2)
-      _ ≤ (neighbors t k.val).length := List.toFinset_card_le _
-      _ ≤ 3 := hdeg
-  have hrow : ∑ j ∈ Finset.univ.erase k, ‖clock 4 1 t k j‖ ≤ (3 : ℝ) := by
-    calc
-      _ = ∑ j ∈ Finset.univ.erase k,
-          (if j.val ∈ neighbors t k.val then (1 : ℝ) else 0) := by
-        apply Finset.sum_congr rfl
-        intro j hj
-        have hne : k ≠ j := Ne.symm (Finset.mem_erase.mp hj).1
-        simp [clock, hne]
-      _ ≤ ∑ j : Coordinate t, (if j.val ∈ neighbors t k.val then (1 : ℝ) else 0) :=
-        Finset.sum_le_sum_of_subset_of_nonneg (Finset.erase_subset _ _) (by intros; positivity)
-      _ = (S.card : ℝ) := by simp [S, Finset.card_filter]
-      _ ≤ 3 := by exact_mod_cast hcard
-  have hdiag : (4 : ℝ) ≤ ‖clock 4 1 t k k‖ := by
-    simp only [clock, ↓reduceIte]
-    split <;> norm_num
-  linarith
+theorem example_invertible (t : Source) : (clock 1 2 t).det ≠ 0 := by
+  let M : Matrix (Coordinate t) (Coordinate t) ℤ := fun i j =>
+    (if i = j then 1 else 0) + (if j.val ∈ neighbors t i.val then 2 else 0)
+  have hrat : M.map (fun n => (n : ℚ)) = clock 1 2 t := by
+    ext i j
+    simp [M, clock, Matrix.map_apply]
+  have htwo : M.map (fun n => (n : ZMod 2)) = 1 := by
+    ext i j
+    by_cases hi : i = j <;> by_cases hn : j.val ∈ neighbors t i.val <;>
+      simp [M, Matrix.map_apply, Matrix.one_apply, hi, hn]
+  intro h
+  have hz : (M.det : ℚ) = 0 := by rw [Int.cast_det, hrat, h]
+  have hz' : M.det = 0 := by exact_mod_cast hz
+  have hmod := congrArg (fun n : ℤ => (n : ZMod 2)) hz'
+  rw [Int.cast_det, htwo, Matrix.det_one] at hmod
+  norm_num at hmod
 
 @[reducible] def signature : Signature where
   Params := ℚ
@@ -72,7 +55,8 @@ def bad : Realization signature :=
 
 def inverseLaw (E : ℚ → ℚ → List Call → Option Endpoint) : Prop :=
   ∀ (a c : ℚ) (ha : 0 < a) (hc : 0 < c)
-    (hinv : ∀ t, D t → (clock a c t).det ≠ 0),
+    (hinv : ∀ (v : List Call) (t : Source), run (.of true) v = some t →
+      (clock a c t).det ≠ 0),
     (∀ (w : List Call) (t : Source), run (.of true) w = some t →
       ∃ x : Field t, E a c w = some ⟨t, x⟩ ∧
         decode a c ⟨t, x⟩ = some w ∧ ∀ q, 0 < x q) ∧
@@ -93,7 +77,7 @@ def inverseLaw (E : ℚ → ℚ → List Call → Option Endpoint) : Prop :=
 
 private theorem bad_law : ¬ arena.Law bad := by
   intro h
-  have hh := h 4 1 (by norm_num) (by norm_num) (fun t _ => example_invertible t)
+  have hh := h 1 2 (by norm_num) (by norm_num) (fun _ t _ => example_invertible t)
   obtain ⟨x, hx, _⟩ := hh.1 [] (.of true) rfl
   change none = some _ at hx
   contradiction
@@ -101,11 +85,11 @@ private theorem bad_law : ¬ arena.Law bad := by
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
   cases i
-  refine ⟨0, 0, 1, ?_⟩
+  refine ⟨1, 2, 4, ?_⟩
   intro he
   have hh := congrArg (fun f => (f [.promote []]).map
     (fun e => zeroInclude e.1 (.of false) e.2 ⟨[false], by simp [material]⟩)) he
-  change some (0 : ℚ) = some 1 at hh
+  change some (2 : ℚ) = some 4 at hh
   contradiction
 
 def familyRegistration : Registration arena (type_of% (@postclock_inverse)) := {
@@ -143,7 +127,8 @@ noncomputable def postclockInverseRegistration :
     definition := none
     coordinates := #[1]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn", "fn"]
+      path := #["body", "body", "body", "body", "body", "fn", "arg",
+        "body", "body", "body", "arg", "body", "fn", "arg", "fn", "arg", "fn"]
       stateBinder := 1, functionOperand := false, stateOperand := some #["arg"]
       booleanPredicate := false }] }
   continuation := .unknown
