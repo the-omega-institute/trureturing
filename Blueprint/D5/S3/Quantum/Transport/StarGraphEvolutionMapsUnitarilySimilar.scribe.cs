@@ -23,11 +23,11 @@ internal sealed class StarGraphEvolutionMapsUnitarilySimilarDocument : IScribeDo
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "For a star with n vertices, the amplitude index is a pair consisting of "
-                        + "an edge in Fin (n − 1) and a direction in Fin 2. At an edge index p, "
-                        + "an incoming direction zero scatters only to the reverse direction at "
-                        + "the same edge with amplitude r. An incoming direction one scatters "
-                        + "to direction zero, with amplitude r1 on the same edge and t1 on every "
-                        + "other edge. This is the matrix displayed for Sₙ in the source at TeX "
+                        + "an edge in Fin (n − 1) and a direction in Fin 2. A direction-zero row p "
+                        + "has r(p.1) only in the same-edge direction-one column. A direction-one "
+                        + "row has zero in direction-one columns, r1 in the same-edge direction-zero "
+                        + "column, and t1 in every other direction-zero column. This is the matrix "
+                        + "displayed for Sₙ in the source at TeX "
                         + "lines 383–405."))),
                 DescribeRole.Definition),
             Describe.Lean(
@@ -100,7 +100,7 @@ internal sealed class StarGraphEvolutionMapsUnitarilySimilarDocument : IScribeDo
         return All("n", Naturals, All("r", Arrow(Fin(Sub(n, D(1))), Complexes),
             All("r1", Complexes, All("t1", Complexes,
                 All("p", IndexType(n), All("q", IndexType(n),
-                    Eq(Typed(LocalCall("scatteringMatrix", r, r1, t1, p, q), MatrixType(n)),
+                    Eq(Typed(LocalCall("scatteringMatrix", r, r1, t1, p, q), Complexes),
                         value)))))));
     }
 
