@@ -61,13 +61,18 @@ internal sealed class AmoebaHostDocument : IScribeDocumentDefinition
                 + "Given an arbitrary finite initial T containing H, use its buffered layered host S. Every copy has the root degree budgets "
                 + "and the full path-length margin, so the simultaneous extension lemma applies to every copy, with its own transported multiplicities. "
                 + "The minimum-total-edge bridge makes every one of these copies dead for every minimizing growth. Composing the preserved core "
-                + "embedding with the initial copy also proves that S admits a copy. Thus S is confining and contains the arbitrary T.")),
+                + "embedding with the initial copy also proves that S admits a copy. Thus S is confining and contains the arbitrary T.",
+                resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gurvich-krnc-vyalyi-conjecture-1-total-amoeba-confinement"),
+                    ResolutionKind.Proved))),
         []));
 
-    private static DocumentBlock Node(string name, string title, Formula formula, string prose) => Describe.Lean(
+    private static DocumentBlock Node(string name, string title, Formula formula, string prose,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("amoeba-host-" + name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.FromAuthor(formula), AssessedProvenance.FromRepo(Source),
-        Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+        Blocks(Paragraph(Text(prose))), DescribeRole.Theorem,
+        openProblemResolutionClaim: resolution);
     private static Formula Id(string s) => F.Id(s);
     private static Formula Call(string s, params Formula[] a) => a.Length == 0
         ? new Formula.NamedConstant(FormulaIdentifier.Create(s))

@@ -84,6 +84,10 @@ $$\forall V \in \mathrm{Type},\; [\mathrm{Fintype}\left(V\right)] \forall H \in 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Walks/AmoebaHost.total_confinement` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gurvich-krnc-vyalyi-conjecture-1-total-amoeba-confinement` (proved) by `D5/S3/Combinatorics/Graph/Walks/AmoebaHost.total_confinement`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gurvich-krnc-vyalyi-conjecture-1-total-amoeba-confinement","declaration_gid":"D5/S3/Combinatorics/Graph/Walks/AmoebaHost.total_confinement","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Vladimir Gurvich; Matjaž Krnc; Mikhail Vyalyi (2025). *Growing Trees and Amoebas’ Replications*. DOI: [10.1007/s00025-025-02421-6](https://doi.org/10.1007/s00025-025-02421-6). URL: <https://arxiv.org/abs/2401.07484>.
