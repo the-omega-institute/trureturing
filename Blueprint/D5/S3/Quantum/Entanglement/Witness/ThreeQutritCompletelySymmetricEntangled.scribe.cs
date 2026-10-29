@@ -106,7 +106,10 @@ internal sealed class ThreeQutritCompletelySymmetricEntangledDocument : IScribeD
                         + "Interchanging the two finite sums would express the W-weighted diagonal sum as a sum of nonnegative terms. "
                         + "This contradicts its strictly negative value, proving that ρ is entangled. "
                         + "Finally, applying the universal assertion at d = 3 to the positive semidefinite, trace-one, completely symmetric matrix ρ would make it fully separable, yielding the contradiction."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("chen-chu-qian-shen-2019-multi-qutrit-completely-symmetric-separability"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula CompletelySymmetricFormula()
     {
