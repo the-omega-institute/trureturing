@@ -1,0 +1,57 @@
+## 14. 本轮形成的理论与可检验的后续问题
+
+现在可以把“它们都有关联”写成一组保持运算的映射：
+
+$$
+\begin{aligned}
+\text{正权电路的加乘}
+&\xrightarrow{\log}\text{log-sum-exp 与加法},
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\text{五模式四角乘积比}
+&\xrightarrow{\log}\text{隐藏关联的对偶坐标 }\eta,
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\text{三读出相容纤维}
+&\xrightarrow{\text{最大熵投影}}\text{KL 勾股分解},
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\text{正交直和与张量复合}
+&\xrightarrow{ \left\lVert \cdot\right\rVert ^{2}}\text{可加与可乘的重量},
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\text{条件复振幅表 }M
+&\longmapsto(\eta,\Phi;\,st/R^2)
+\longmapsto\text{纠缠双平方和},
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\tau\otimes\tau=\mathbf1\oplus\tau
+&\xrightarrow{d}\varphi^2=1+\varphi
+\xrightarrow{\text{相容}}\text{黄金门的相位与转移权重}.
+\end{aligned}
+$$
+
+<a id="table-1"></a>
+
+| 层次 | 精确对象 | 勾股或相容结论 |
+| --- | --- | --- |
+| 欧氏占位几何 | 五点与指定标准内积 | 九直角一等边；两剖分对应纤维两端 |
+| 概率信息几何 | 同一五律、最大熵参考 | KL 分解；Fisher 可见与隐藏切向正交 |
+| 统计记录几何 | 同源后验均值及记录权重 | 三记录最小性；协方差等于面积平方加和 |
+| 复振幅几何 | 条件两比特纯态和四角复比 | 双曲平方加相位平方；$C^2+\lvert r\rvert^2=1$ |
+| 黄金相干块 | 融合规则、投影与编织关系 | 黄金归一三角及相对相位 $e^{\pm3\pi i/5}$ |

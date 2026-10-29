@@ -1,0 +1,20 @@
+#### 定义 6.2（最大熵参考下的五元函数）
+
+固定满支撑 $p^*$，令 $u=X/R,v=Y/R$，定义
+
+$$
+\begin{aligned}
+t_z&=\frac{z-Z}{\sqrt{ZR}},&
+t_x&=\frac{(1-z)(x-u)}{\sqrt{Ru(1-u)}},
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+t_y&=\frac{(1-z)(y-v)}{\sqrt{Rv(1-v)}},&
+t_h&=\frac{(1-z)(x-u)(y-v)}{\sqrt{Ru(1-u)v(1-v)}}.
+\end{aligned}
+$$
+
+<a id="statement-6-3"></a>
+

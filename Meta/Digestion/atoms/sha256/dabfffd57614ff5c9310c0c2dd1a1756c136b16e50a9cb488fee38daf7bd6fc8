@@ -1,0 +1,30 @@
+#### 命题 6.1（原始读出通常不统计正交）
+
+同一实际律下，三个中心化读出的 Gram 矩阵为
+
+$$
+\operatorname{Cov}(x,y,z)=
+\begin{pmatrix}
+X(1-X)&\kappa-XY&-XZ\\
+\kappa-XY&Y(1-Y)&-YZ\\
+-XZ&-YZ&Z(1-Z)
+\end{pmatrix}.
+$$
+
+在 $p^*$ 上仍有 $\operatorname{Cov}(x,y)=XYZ/R$。当 $X,Y,Z>0$ 时，未中心化且单位归一的指示函数 Gram 为
+
+$$
+\begin{pmatrix}1&\kappa/\sqrt{XY}&0\\
+\kappa/\sqrt{XY}&1&0\\0&0&1\end{pmatrix}.
+$$
+
+<a id="proof-6-1"></a>
+
+**证明。** 
+由 $x^2=x,y^2=y,z^2=z,xz=yz=0$ 及 $\mathbb{E} xy=\kappa$ 直接计算。最大熵情形代入 $\kappa=XY/R$。
+ ∎
+
+因此可以研究严格成立的*读出方向正交化*，而不必假定原始三随机变量已经正交。
+
+<a id="statement-6-2"></a>
+

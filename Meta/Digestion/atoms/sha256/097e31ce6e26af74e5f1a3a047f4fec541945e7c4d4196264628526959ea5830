@@ -1,0 +1,20 @@
+#### 推论 6.4（隐藏关系的精确 Pearson 平方）
+
+令 $\delta=\kappa-\kappa^*$。同三均值的 $p$ 满足
+
+$$
+\frac p{p^*}=1+
+\frac{\delta}{\sqrt{Ru(1-u)v(1-v)}}t_h,
+\qquad
+\boxed{\sum_s\frac{(p_s-p_s^*)^2}{p_s^*}
+=\frac{\delta^2}{Ru(1-u)v(1-v)}.}
+$$
+
+<a id="proof-6-4"></a>
+
+**证明。** 
+密度差与常数及三个可见方向正交，只能沿 $t_h$；其系数为 $\mathbb{E}_pt_h$，展开分子得 $\delta/\sqrt{Ru(1-u)v(1-v)}$。再用 Parseval。
+ ∎
+
+<a id="statement-6-5"></a>
+
