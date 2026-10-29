@@ -21,7 +21,7 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ p x => inner ℝ (x : Space) (p.2 : Space))
+  realize signature (fun _ p y => inner ℝ (p.2 : Space) (y : Space))
     (fun e => nomatch e)
 
 def rejected : Realization signature :=
@@ -32,7 +32,7 @@ abbrev arena : Arena where
   Law R :=
     (∀ i : Fin 6, IsOpen (color i)) ∧
     (∀ (i : Fin 6) (x : UnitSphere), x ∈ color i →
-      ∀ (y : UnitSphere), y ∈ color i → R.readout () (i, y) x ≠ 0) ∧
+      ∀ (y : UnitSphere), y ∈ color i → R.readout () (i, x) y ≠ 0) ∧
     (⋃ i : Fin 6, color i) = Set.univ
 
 private def pole : UnitSphere :=
@@ -56,10 +56,10 @@ private theorem dependence : ObservationalDependence signature actual := by
         simpa only [Metric.mem_sphere, dist_zero_right] using pole.property)⟩
   refine ⟨(0, pole), pole, south, ?_⟩
   change inner ℝ (pole : Space) (pole : Space) ≠
-    inner ℝ (-(pole : Space)) (pole : Space)
+    inner ℝ (pole : Space) (-(pole : Space))
   have hp : ‖(pole : Space)‖ = 1 := by
     simpa only [Metric.mem_sphere, dist_zero_right] using pole.property
-  norm_num [inner_neg_left, hp]
+  norm_num [inner_neg_right, hp]
 
 def family : Registration arena (type_of% (@rational_six_axis_open_cover)) where
   actual := actual
@@ -84,7 +84,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
   readout := some (realize signature
-    (fun _ p x => inner ℝ (x : Space) (p.2 : Space)) (fun e => nomatch e))
+    (fun _ p y => inner ℝ (p.2 : Space) (y : Space)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -92,10 +92,10 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   sourceSelection := some {
     owner := `D5.S3.Geometry.Orthogonality.RationalSixAxisCover
     definition := none
-    coordinates := #[0, 3]
+    coordinates := #[0, 1]
     readouts := #[{
       path := #["arg", "fn", "arg", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 1
+      stateBinder := 3
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
