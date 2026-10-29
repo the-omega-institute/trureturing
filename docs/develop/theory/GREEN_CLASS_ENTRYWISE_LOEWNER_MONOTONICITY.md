@@ -53,6 +53,8 @@ with finite positive Borel $\mu$ and finite integral for every $t>0$ preserves p
 
 The assertion in 1 includes every $n\ge1$, arbitrary unrelated positive $q_A,q_B$, and singular Green matrices arising from weak ratio equalities.
 
+The fixed-$q$ classification, the Green factorization and ratio criterion, the all-orders positive-semidefinite preserver theorem, and the Schur product theorem are cited premises. The varying-$q$ implication is obtained here by the reciprocal interpolation in Sections 2.2–2.4; the common Schur regularizer in Section 2.5 extends it to every singular endpoint. The result is restricted to finite Green matrices with strictly positive parameters, all finite orders, real $C^1$ functions on $(0,\infty)$, and the exact antiderivative representation displayed in Theorem 2.1.
+
 ### Proof
 
 #### 2.1. The representation supplies a positive derivative
@@ -199,10 +201,6 @@ This proves 1 from 2 for every order, every pair of positive parameter vectors, 
 Assume 1. Fix $n$ and a single $q\in(0,\infty)^n$, and restrict 1 to pairs $A,B$ in that common-$q$ Green family. Xie, Theorem 4.1, applies with exactly the hypothesis $f\in C^1((0,\infty))$ and all finite orders, and supplies the representation in 2, with arbitrary real $c$, a finite positive measure on $[0,\infty)$ (possibly zero), and finiteness of the integral at every $t>0$.
 
 Both implications are proved. The one-dimensional case is included: the adjacency conditions in Lemma 2.2 are empty and the same regularization has a single positive ratio. $\square$
-
-## 3. Scope of the deduction
-
-The fixed-$q$ classification, the Green factorization and ratio criterion, the all-orders positive-semidefinite preserver theorem, and the Schur product theorem are cited premises. The varying-$q$ implication is obtained here by the reciprocal interpolation in Sections 2.2–2.4; the common Schur regularizer in Section 2.5 extends it to every singular endpoint. No claim of worldwide literature originality is made. The result is restricted to finite Green matrices with strictly positive parameters, all finite orders, real $C^1$ functions on $(0,\infty)$, and the exact antiderivative representation displayed in Theorem 2.1.
 
 ## References
 
