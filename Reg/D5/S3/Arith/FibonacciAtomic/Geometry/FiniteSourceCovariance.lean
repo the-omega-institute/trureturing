@@ -59,7 +59,7 @@ private theorem J_zero : FiniteSourceHardy.J 0 = 0 := by
   intro z
   change FiniteSourceHardy.trace 0 0 z = 0
   unfold FiniteSourceHardy.trace
-  rw [← MemLp.toLp_zero (memLp_zero : MemLp (0 : FiniteSourceMass.Node 0 → ℝ) 2 (FiniteSourceMass.μ 0))]
+  rw [← MemLp.toLp_zero (MemLp.zero : MemLp (0 : FiniteSourceMass.Node 0 → ℝ) 2 (FiniteSourceMass.μ 0))]
   apply MemLp.toLp_congr
   apply Filter.Eventually.of_forall
   intro x
@@ -127,13 +127,7 @@ def registration :
   sensitivity := .absent,
   partialSensitivity := none,
   escapeFrom := none,
-  sourceSelection := some {
-    owner := `D5.S3.Arith.FibonacciAtomic.Geometry.FiniteSourceCovariance,
-    definition := none, coordinates := #[],
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg"],
-      stateBinder := 3, functionOperand := false, stateOperand := none,
-      booleanPredicate := false }] },
+  sourceSelection := none,
   continuation := .unknown,
   familyRecord := none,
   options := #[] }

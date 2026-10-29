@@ -43,9 +43,11 @@ internal sealed class FiniteSourceCovarianceDocument : IScribeDocumentDefinition
     {
         Formula n=V("n"), k=V("N"), epsilon=V("epsilon");
         Formula real=Seq(Mathbb,Grp(V("R"))), nat=Seq(Mathbb,Grp(V("N")));
-        Formula errors=And(Lt(Norm(Sub(Call("v",n),Call("BiasedBoundaryFreeRootForm.v"))),epsilon),
-            And(Lt(Norm(Sub(Call("B",n),Call("comp",Call("adjoint",Call("BiasedBoundaryTrace.J")),Call("BiasedBoundaryTrace.J"))),epsilon),
-                Lt(Norm(Sub(Call("Sigma",n),Call("BiasedBoundaryFreeRootForm.Sigma"))),epsilon)));
+        Formula meanError=Norm(Sub(Call("v",n),Call("BiasedBoundaryFreeRootForm.v")));
+        Formula gramTarget=Call("comp",Call("adjoint",Call("BiasedBoundaryTrace.J")),Call("BiasedBoundaryTrace.J"));
+        Formula gramError=Norm(Sub(Call("B",n),gramTarget));
+        Formula sigmaError=Norm(Sub(Call("Sigma",n),Call("BiasedBoundaryFreeRootForm.Sigma")));
+        Formula errors=And(Lt(meanError,epsilon),And(Lt(gramError,epsilon),Lt(sigmaError,epsilon)));
         return All("epsilon",real,Imp(Lt(D(0),epsilon),Ex("N",nat,
             All("n",nat,Imp(Seq(k,Sp,Leq,Sp,n),errors)))));
     }
