@@ -244,10 +244,11 @@ internal sealed class MarginalApproximationWorstFidelityDocument : IScribeDocume
             Parenthesized(App(data, F.Id("k"), App(F.Id("a"), F.Id("k")))));
         Formula localMatrices = LambdaOf(F.Id("k"), index,
             App(Qualified("Matrix", "diagonal"), App(data, F.Id("k"))));
-        Formula identity = Equal(Call("productMap", LambdaOf(F.Id("k"), index, Fin(D(4))), localMatrices),
+        Formula identity = Equal(Call("productMap", App(Qualified("Function", "const"), index, Fin(D(4))), localMatrices),
             App(Qualified("Matrix", "diagonal"), LambdaOf(F.Id("a"), word, product)));
-        return All(index, Call("Type"), All(F.Id("f"), Call("Fintype", index),
-            All(F.Id("e"), Call("DecidableEq", index), All(data, entries, identity))));
+        return All(index, Call("Type"), new Formula.TypeArrow(Parenthesized(Call("Fintype", index)),
+            Parenthesized(new Formula.TypeArrow(Parenthesized(Call("DecidableEq", index)),
+                Parenthesized(All(data, entries, identity))))));
     }
 
     private static Formula ClaimFormula()
