@@ -106,27 +106,4 @@ def family : Registration arena.{u} (type_of% (@original_rectangle_occurrence.{u
       exact nomatch i
   dependence := dependence
 
-def audit : Contract.Registration
-    (@original_rectangle_occurrence.{u}) (Realization signature) Type Unit where
-  unitName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleOccurrence.unit
-  realizationName := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleOccurrence.family
-  realizationSource := none
-  generated := false
-  arena := .source ⟨arena.{u}⟩
-  objectArena := .source ⟨arena.{u}⟩
-  catalog := Lean.Name.anonymous
-  localNames := false
-  realization := .source arena.{u} ⟨family⟩
-  correspondence := {stage := .evidence, objectStage := .evidence}
-  bundleNonempty := .absent
-  readout := some (realize signature (fun _ b w => success w b) Empty.elim)
-  variation := .absent
-  sensitivity := .absent
-  partialSensitivity := none
-  escapeFrom := some (List Bool)
-  sourceSelection := none
-  continuation := .unknown
-  familyRecord := none
-  options := #[]
-
 end Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleOccurrence
