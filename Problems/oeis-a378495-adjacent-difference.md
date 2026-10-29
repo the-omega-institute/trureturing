@@ -85,6 +85,10 @@ identity is `sha256:38f5f82bc3c0255dc8908fb63b1c0200d69e76147a4b223e00f6ffd41fd9
 The definition `claim` has literal compiled type `Prop`, and `result`
 has literal compiled type `Not claim`. The accepted axiom closure is
 contained in `Classical.choice`, `Quot.sound`, `propext`.
+The display formulas are typed authored presentations of the exact
+source, with complete mathematical prose. The projector reports
+`missing` for the unfrozen declarations; no kernel-derived formula
+projection is claimed. Independent fidelity review remains required.
 
 ### Declaration form, admission and utility
 

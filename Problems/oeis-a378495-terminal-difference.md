@@ -89,6 +89,11 @@ The proof source is `D5/S3/Combinatorics/Derangements/TerminalDifference.lean`;
 its typed descriptions and generated mirror are under the corresponding
 Blueprint path. The accepted axiom closure is contained in
 `Classical.choice`, `Quot.sound`, `propext`; no new axiom is introduced.
+The typed display formulas are authored from the exact source statements:
+the current projector has no fixture entries for these unfrozen
+declarations (`missing`). They are not claimed to be kernel-derived
+formula projections. The formulas, mathematical prose and original
+source remain subject to independent fidelity review.
 
 ### Declaration form and actual consumers
 
