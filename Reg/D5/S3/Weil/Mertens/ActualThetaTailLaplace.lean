@@ -61,9 +61,9 @@ def family : Registration arena (type_of% actual_theta_tail_laplace_ode) where
     refine ⟨(), Real.log (9 / 4), Real.log (5 / 2), ?_⟩
     change q (Real.log (9 / 4)) ≠ q (Real.log (5 / 2))
     have ht₁ : Chebyshev.theta (9 / 4) = Real.log 2 := by
-      norm_num [Chebyshev.theta, show Finset.Ioc 0 2 = {1, 2} by decide]
+      norm_num [Chebyshev.theta, show Finset.Ioc 0 2 = {1, 2} by decide, Finset.sum_filter]
     have ht₂ : Chebyshev.theta (5 / 2) = Real.log 2 := by
-      norm_num [Chebyshev.theta, show Finset.Ioc 0 2 = {1, 2} by decide]
+      norm_num [Chebyshev.theta, show Finset.Ioc 0 2 = {1, 2} by decide, Finset.sum_filter]
     have hq₁ : q (Real.log (9 / 4)) = (Real.log 2 - 9 / 4) / (9 / 4) := by
       simp only [q, Real.exp_neg, Real.exp_log (by norm_num : (0 : ℝ) < 9 / 4), ht₁]
       ring
@@ -78,7 +78,8 @@ def family : Registration arena (type_of% actual_theta_tail_laplace_ode) where
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@actual_theta_tail_laplace_ode) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Weil.Mertens.ActualThetaTailLaplace.actual_theta_tail_laplace_ode.__information_unit
+  unitName :=
+    `D5.S3.Weil.Mertens.ActualThetaTailLaplace.actual_theta_tail_laplace_ode.__information_unit
   realizationName := `Reg.D5.S3.Weil.Mertens.ActualThetaTailLaplace.family
   realizationSource := none
   generated := false
