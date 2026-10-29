@@ -7,7 +7,6 @@
    digest: A non-stationary pure state has metrotropy greater than half its ergotropy. -/
 
 import Mathlib.Analysis.Matrix.PosDef
-import Mathlib.LinearAlgebra.Matrix.Unitary
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
