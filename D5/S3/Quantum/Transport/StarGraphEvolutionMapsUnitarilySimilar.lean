@@ -9,6 +9,8 @@
 import Mathlib.Analysis.Complex.Trigonometric
 import Mathlib.LinearAlgebra.UnitaryGroup
 
+/-! Unitary similarity in Andrade–Severini, arXiv:1808.01154v2, Claim 1. -/
+
 namespace D5.S3.Quantum.Transport.StarGraphEvolutionMapsUnitarilySimilar
 
 noncomputable section
@@ -35,22 +37,34 @@ def claim : Prop :=
         propagationMatrix k ℓ * scatteringMatrix r r1 t1
 
 private lemma phase_norm (k l : ℝ) : ‖Complex.exp (Complex.I * k * l)‖ = 1 := by
-  sorry
+  rw [show Complex.I * (k : ℂ) * (l : ℂ) = ((k * l : ℝ) : ℂ) * Complex.I by
+    rw [Complex.ofReal_mul]
+    ac_rfl]
+  exact Complex.norm_exp_ofReal_mul_I (k * l)
 
 private lemma propagation_unitary {n : ℕ} (k : ℝ) (ℓ : Fin (n - 1) → ℝ) :
     propagationMatrix k ℓ ∈ Matrix.unitaryGroup (Fin (n - 1) × Fin 2) ℂ := by
-  sorry
+  change Matrix.diagonal (fun p : Fin (n - 1) × Fin 2 =>
+    Complex.exp (Complex.I * k * ℓ p.1)) ∈ unitary _
+  rw [Matrix.diagonal_mem_unitary, Pi.mem_unitary_iff]
+  intro p
+  rw [Unitary.mem_iff]
+  simp only [Complex.star_def, ← Complex.normSq_eq_conj_mul_self, Complex.mul_conj,
+    Complex.normSq_eq_norm_sq, phase_norm, one_pow, Complex.ofReal_one, and_self]
 
 private lemma evolution_conjugation {n : ℕ} (r : Fin (n - 1) → ℂ) (r1 t1 : ℂ)
     (k : ℝ) (ℓ : Fin (n - 1) → ℝ) :
     propagationMatrix k ℓ * (scatteringMatrix r r1 t1 * propagationMatrix k ℓ) *
       star (propagationMatrix k ℓ) = propagationMatrix k ℓ * scatteringMatrix r r1 t1 := by
-  sorry
+  rw [Matrix.mul_assoc, Matrix.mul_assoc,
+    Matrix.mem_unitaryGroup_iff.mp (propagation_unitary k ℓ), Matrix.mul_one]
 
 /-- The propagation matrix itself witnesses unitary similarity. -/
 theorem result : claim := by
   intro n _ r r1 t1 k ℓ
   exact ⟨propagationMatrix k ℓ, propagation_unitary k ℓ,
     evolution_conjugation r r1 t1 k ℓ⟩
+
+end
 
 end D5.S3.Quantum.Transport.StarGraphEvolutionMapsUnitarilySimilar
