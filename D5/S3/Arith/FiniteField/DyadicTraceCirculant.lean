@@ -9,7 +9,16 @@
 import Mathlib.FieldTheory.Finite.GaloisField
 import Mathlib.FieldTheory.Finite.Trace
 import Mathlib.GroupTheory.Index
+import Mathlib.Data.Fintype.Units
 import D5.S3.Analytic.GoldenTomography.FinitePronyMatrixPencil
+
+/-!
+# Unit dyadic trace-circulant sections
+
+The binary trace-one spectrum has exactly half the field cardinality. Its
+root-sum kernel identifies the consecutive circulant section with a column
+reversal of a square finite Prony Hankel matrix.
+-/
 
 namespace D5.S3.Arith.FiniteField.DyadicTraceCirculant
 
@@ -42,7 +51,7 @@ private lemma binary_trace_fiber_card {k : ℕ} (hk : k ≠ 0) :
   let tr := (Algebra.trace (ZMod 2) (BinaryField k)).toAddMonoidHom
   have hsurj : Function.Surjective tr :=
     Algebra.trace_surjective (ZMod 2) (BinaryField k)
-  have hker := tr.card_ker_mul_card_of_surjective hsurj
+  have hker := AddSubgroup.card_ker_mul_card_of_surjective (f := tr) hsurj
   have hfiber := AddMonoidHom.card_fiber_eq_of_mem_range tr
     (hsurj 0) (hsurj 1)
   have hzero : (Finset.univ.filter fun a : BinaryField k => tr a = 0).card =
@@ -97,10 +106,11 @@ private lemma unit_inverse_power {k : ℕ} (hk : k ≠ 0)
     ((u : BinaryField k) ^ y)⁻¹ = (u : BinaryField k) ^ (2 ^ k - 1 - y) := by
   have hN : (u : BinaryField k) ^ (2 ^ k - 1) = 1 := by
     simpa [Fintype.card_units, binary_field_card hk] using
-      congrArg Units.val (pow_card_eq_one u)
+      congrArg Units.val (pow_card_eq_one (x := u))
   apply (mul_right_injective₀ (pow_ne_zero y u.ne_zero))
-  rw [inv_mul_cancel₀ (pow_ne_zero y u.ne_zero), ← pow_add,
-    Nat.sub_add_cancel hy, hN]
+  dsimp only
+  rw [mul_inv_cancel₀ (pow_ne_zero y u.ne_zero), ← pow_add,
+    Nat.add_sub_of_le hy, hN]
 
 private lemma unit_root_sum {k : ℕ} (hk : k ≠ 0) (a : ℕ) :
     (∑ u : (BinaryField k)ˣ, (u : BinaryField k) ^ a) =
@@ -118,7 +128,7 @@ private lemma binary_trace_indicator {k : ℕ} (a : BinaryField k) :
       algebraMap (ZMod 2) (BinaryField k)
         (Algebra.trace (ZMod 2) (BinaryField k) a) := by
   generalize Algebra.trace (ZMod 2) (BinaryField k) a = b
-  fin_cases b <;> simp
+  fin_cases b <;> norm_num
 
 private lemma trace_kernel_identity {k t x y : ℕ} (hk : k ≠ 0)
     (hy : y ≤ 2 ^ k - 1) :
@@ -176,7 +186,7 @@ private lemma trace_kernel_identity {k t x y : ℕ} (hk : k ≠ 0)
       apply Finset.sum_congr rfl
       intro i _
       rw [unit_root_sum hk, hdisplacement]
-    _ = _ := by simp only [map_sum, map_ite, map_one, map_zero]
+    _ = _ := by simp only [map_sum, apply_ite, map_one, map_zero]
 
 /-- The consecutive half-size section of every unit dyadic circulant has determinant one. -/
 theorem dyadic_trace_circulant_det_one {k t : ℕ} (hk : 2 ≤ k)
@@ -242,8 +252,8 @@ theorem dyadic_trace_circulant_det_one {k t : ℕ} (hk : 2 ≤ k)
   have hA : (dyadicTraceCirculant k t).det ≠ 0 := by
     intro hzero
     apply hB
-    change ((dyadicTraceCirculant k t).map (algebraMap (ZMod 2) (BinaryField k))).det = 0
-    rw [← RingHom.map_det, hzero, map_zero]
+    exact ((algebraMap (ZMod 2) (BinaryField k)).map_det
+      (dyadicTraceCirculant k t)).symm.trans (by rw [hzero, map_zero])
   apply ZMod.val_injective 2
   have hval := ZMod.val_lt (dyadicTraceCirculant k t).det
   have hnon : ((dyadicTraceCirculant k t).det).val ≠ 0 := by
