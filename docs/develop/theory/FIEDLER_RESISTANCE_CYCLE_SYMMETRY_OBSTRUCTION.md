@@ -1030,8 +1030,8 @@ $$
 $$
  \tau_n=\frac1n\sum_{k=1}^{n-1}\mu_k=\frac{n^2-1}{12n},\qquad
  \rho_n=\frac{\mu_1}{n},\qquad
- T_n=\tau_n-\rho_n,\qquad
- E_n(p)=\frac1n\sum_{k=2}^{n-1}\mu_k|q_k(p)|^2.
+ T_n=\tau_n-2\rho_n,\qquad
+ E_n(p)=\frac1n\sum_{k=2}^{n-2}\mu_k|q_k(p)|^2.
 $$
 
 $\tau_n$ 和 $\rho_n$ 分别是均匀权重的迹和最大特征值；$T_n$ 是去掉第一 Fourier 对后的迹。
@@ -1047,7 +1047,7 @@ $$
 因而
 
 $$
- T(p)=\tau_n-\rho_n|q_1|^2-E_n(p),\qquad
+ T(p)=\tau_n-2\rho_n|q_1|^2-E_n(p),\qquad
  M(p)_{11}=\rho_n(1-|q_1|^2),\qquad
  \rho(p)\ge\rho_n(1-|q_1|^2). \tag{9.2}
 $$
