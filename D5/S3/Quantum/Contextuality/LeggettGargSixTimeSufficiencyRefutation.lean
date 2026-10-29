@@ -12,6 +12,7 @@ import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.Ring
 import Mathlib.Tactic.Linarith
+import D5.S3.Combinatorics.IsingUniquenessSets
 
 /-! The six-time counterexample to polygon-plus-three-time sufficiency. -/
 
@@ -21,6 +22,7 @@ set_option linter.style.longLine false
 namespace D5.S3.Quantum.Contextuality.LeggettGargSixTimeSufficiencyRefutation
 
 open scoped BigOperators
+open D5.S3.Combinatorics.IsingUniquenessSets (sgn)
 
 noncomputable section
 
@@ -32,8 +34,6 @@ def IsPairFamily {n : ℕ} (p : PairTables n) : Prop :=
     ∀ i j, i < j →
       (∀ a, ∑ b, p i j a b = m i a) ∧
       (∀ b, ∑ a, p i j a b = m j b)
-
-private def sgn (a : Bool) : ℝ := if a then 1 else -1
 
 def corr {n : ℕ} (p : PairTables n) (i j : Fin n) : ℝ :=
   ∑ a, ∑ b, sgn a * sgn b * p i j a b
@@ -136,19 +136,14 @@ private theorem weight_sq_expand (x : Fin 6 → Bool) :
     cases h3 : x 3 <;> cases h4 : x 4 <;> cases h5 : x 5 <;>
     norm_num [Fin.sum_univ_succ, h0, h1, h2, h3, h4, h5]
 
-private theorem sum_pair_fibers (μ : (Fin 6 → Bool) → ℝ) (i j : Fin 6) :
-    ∑ x, μ x = ∑ a, ∑ b, ∑ x with x i = a ∧ x j = b, μ x := by
-  have h := Finset.sum_fiberwise (s := (Finset.univ : Finset (Fin 6 → Bool)))
-    (g := fun x : Fin 6 → Bool => (x i, x j)) μ
-  rw [← h]
-  rw [Fintype.sum_prod_type]
-  congr 1
-
 private theorem sum_mu_one (μ : (Fin 6 → Bool) → ℝ)
     (hμ : ∀ i j, i < j → ∀ a b,
       (∑ x with x i = a ∧ x j = b, μ x) = p i j a b) :
     ∑ x, μ x = 1 := by
-  rw [sum_pair_fibers μ 0 1]
+  rw [show (∑ x, μ x) = ∑ a, ∑ b, ∑ x with x 0 = a ∧ x 1 = b, μ x by
+    simpa [Fintype.sum_prod_type] using
+      (Finset.sum_fiberwise (s := (Finset.univ : Finset (Fin 6 → Bool)))
+        (g := fun x : Fin 6 → Bool => (x 0, x 1)) μ).symm]
   simp_rw [hμ 0 1 (by omega)]
   exact (p_family.1 0 1 (by omega)).2
 
