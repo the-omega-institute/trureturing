@@ -370,7 +370,7 @@ section
 open scoped BigOperators Classical
 def occupationSet {d : ℕ} (x : ((Fin d → Bool))) : Finset ℕ :=
   (occupiedModes x).map ⟨Fin.val,Fin.val_injective⟩
-theorem mem_occupationSet {d : ℕ} (x : ((Fin d → Bool))) (i : Fin d) :
+private theorem mem_occupationSet {d : ℕ} (x : ((Fin d → Bool))) (i : Fin d) :
     i.val ∈ occupationSet x ↔ x i=true := by
   simp only [occupationSet,occupiedModes,Finset.mem_map,Function.Embedding.coeFn_mk,
     Finset.mem_filter,Finset.mem_univ,true_and]
@@ -386,7 +386,7 @@ private theorem occupationSet_card {d : ℕ} (x : ((Fin d → Bool))) :
   have ht (i : Fin d) : (x i).toNat = if x i = true then 1 else 0 := by cases x i <;> rfl
   simp_rw [ht]
   simp [occupationSet,occupiedModes]
-theorem occupationSet_injective (d : ℕ) : Function.Injective (@occupationSet d) := by
+private theorem occupationSet_injective (d : ℕ) : Function.Injective (@occupationSet d) := by
   intro x y h
   funext i
   have he : x i=true ↔ y i=true := by
@@ -459,7 +459,7 @@ section
 open scoped BigOperators Classical Topology
 open Filter
 def occupationOfSet (d : ℕ) (S : Finset ℕ) : ((Fin d → Bool)) := fun i => decide (i.val ∈ S)
-theorem occupationSet_ofSet (d : ℕ) (S : Finset ℕ) (hS : ∀ n ∈ S,n<d) :
+private theorem occupationSet_ofSet (d : ℕ) (S : Finset ℕ) (hS : ∀ n ∈ S,n<d) :
     occupationSet (occupationOfSet d S)=S := by
   ext n
   constructor

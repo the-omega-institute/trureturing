@@ -6,6 +6,7 @@
    utility: none
    digest: Signed finite occupations intertwine the finite Jordan-Wigner action. -/
 
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Quantum.SpinChains.SupersymmetricFermion.HardCoreCompression
 import D5.S3.Quantum.Fermionic.FockMajoranaCarrier
 import D5.S3.Quantum.FermionicCorrelationalBound.CompletedCorrelationalBound
@@ -17,6 +18,8 @@ open scoped BigOperators Matrix
 open D5.S3.Quantum.SpinChains.SupersymmetricFermion.JordanWigner
 open D5.S3.Quantum.SpinChains.SupersymmetricFermion.HardCoreCompression (fullC_entry)
 open D5.S3.Quantum.FermionicCorrelationalBound.CompletedCorrelationalBound
+open private mem_occupationSet occupationSet_injective occupationSet_ofSet from
+  D5.S3.Quantum.FermionicCorrelationalBound.CompletedCorrelationalBound
 open PredictiveThermodynamic.Physical (Assignment)
 
 noncomputable section
