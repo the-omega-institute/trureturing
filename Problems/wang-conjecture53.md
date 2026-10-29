@@ -1,6 +1,7 @@
 ---
 slug: wang-conjecture53
 bibkey: wang2025semigrouprings
+doi: null
 url: https://arxiv.org/abs/2509.18724v1
 triage: theorem
 motivation_gids:

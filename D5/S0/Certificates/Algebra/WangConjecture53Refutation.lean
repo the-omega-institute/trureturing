@@ -175,7 +175,8 @@ def epsilon {S : Type*} [Add S] (a : S) : ℕ∞ := by
 
 /-- The exact source right side, with the actual quotient and translation semigroup. -/
 def rightSide (S K : Type*) [AddCommSemigroup S] [Field K] : ℕ∞ :=
-  ⨆ a : S, epsilon a * relativeD ((greenCon S).toQuotient a) + algebraicD (Gamma a) K
+  ⨆ a : S, epsilon a * relativeD (S := GreenQuotient S) ((greenCon S).toQuotient a) +
+    algebraicD (Gamma a) K
 
 /-- Wang arXiv:2509.18724v1 Conjecture 5.3, over all finite commutative
 semigroups and fields, preserving the splitting/characteristic disjunction. -/

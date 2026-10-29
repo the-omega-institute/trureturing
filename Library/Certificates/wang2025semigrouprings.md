@@ -3,6 +3,7 @@ bibkey: wang2025semigrouprings
 authors: Guoqing Wang
 year: 2025
 title: Semigroup rings and algebraically independent sequences with respect to idempotents in commutative semigroups
+doi: null
 url: https://arxiv.org/abs/2509.18724v1
 claim: Conjecture 5.3 asserts a formula for the algebraic Davenport constant using relative Davenport constants of the Green quotient and Schutzenberger translation groups.
 strata_touched:
