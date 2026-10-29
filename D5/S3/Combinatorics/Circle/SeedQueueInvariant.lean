@@ -2,7 +2,7 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/SeedQueueInvariant
    mirror-E: none(waiver:audit-open-22063)
-   anchors: [D5/S3/Combinatorics/Circle/SourceWidth]
+   anchors: [mathlib/module/Mathlib.Algebra.Order.BigOperators.Group.List]
    utility: none
    digest: Deferred prefixes preserve ancestor heights and bound the first-omission peak. -/
 module
