@@ -39,7 +39,7 @@ private abbrev BinaryField (k : ℕ) := GaloisField 2 k
 
 noncomputable local instance (k : ℕ) : Fintype (BinaryField k) := Fintype.ofFinite _
 
-open scoped Classical
+noncomputable local instance (k : ℕ) : DecidableEq (BinaryField k) := Classical.decEq _
 
 private lemma binary_field_card {k : ℕ} (hk : k ≠ 0) :
     Fintype.card (BinaryField k) = 2 ^ k := by
@@ -133,13 +133,13 @@ private lemma binary_trace_indicator {k : ℕ} (a : BinaryField k) :
         (Algebra.trace (ZMod 2) (BinaryField k) a) := by
   generalize Algebra.trace (ZMod 2) (BinaryField k) a = b
   by_cases hb : b = 1
-  · rw [hb, if_pos rfl, map_one]
+  · rw [hb, ite_eq_left rfl, map_one]
   · have hb0 : b = 0 := by
       apply (ZMod.val_eq_zero b).mp
       have hlt := ZMod.val_lt b
       have hne : b.val ≠ 1 := fun h => hb ((ZMod.val_eq_one (by decide) b).mp h)
       omega
-    rw [if_neg hb, hb0, map_zero]
+    rw [ite_eq_right hb, hb0, map_zero]
 
 private lemma trace_kernel_identity {k t x y : ℕ} (hk : k ≠ 0)
     (hy : y ≤ 2 ^ k - 1) :
@@ -196,7 +196,7 @@ private lemma trace_kernel_identity {k t x y : ℕ} (hk : k ≠ 0)
           (t : ZMod (2 ^ k - 1)) * 2 ^ i.val then (1 : BinaryField k) else 0 := by
       apply Finset.sum_congr rfl
       intro i _
-      rw [unit_root_sum hk, hdisplacement]
+      simp only [unit_root_sum hk, hdisplacement]
     _ = _ := by simp only [map_sum, apply_ite, map_one, map_zero]
 
 /-- The consecutive half-size section of every unit dyadic circulant has determinant one. -/
