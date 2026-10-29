@@ -1,4 +1,4 @@
-/- GID: D5/S3/Arith/FibonacciAtomic/Observer/NativePostClockInverse
+/- GID: D5/S3/Arith/FibonacciAtomic/Observer/OriginalVector/NativePostClockInverse
    generality: G
    mirror-B: none(waiver:unbounded-symbolic-proof)
    mirror-E: none(waiver:unbounded-symbolic-proof)
@@ -15,7 +15,7 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option Elab.async false
 
-namespace D5.S3.Arith.FibonacciAtomic.Observer.NativePostClockInverse
+namespace D5.S3.Arith.FibonacciAtomic.Observer.OriginalVector.NativePostClockInverse
 
 open GenealogicalFiberTransport (Source)
 open ActualTreeReadoutAcquisition (Address readout)
@@ -544,4 +544,4 @@ theorem postclock_inverse (a c : ℚ) (ha : 0 < a) (hc : 0 < c)
     exact ⟨predecessor_append a c e g hg hh.2.1 (hinv (w ++ [g]) _
       (encoded_trace a c (Encoded.append (encoded_of_encode a c w e hw) g hg))), hd.2⟩
 
-end D5.S3.Arith.FibonacciAtomic.Observer.NativePostClockInverse
+end D5.S3.Arith.FibonacciAtomic.Observer.OriginalVector.NativePostClockInverse

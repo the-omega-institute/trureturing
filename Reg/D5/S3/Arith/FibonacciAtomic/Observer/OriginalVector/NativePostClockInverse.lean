@@ -1,5 +1,5 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Arith.FibonacciAtomic.Observer.NativePostClockInverse
+import D5.S3.Arith.FibonacciAtomic.Observer.OriginalVector.NativePostClockInverse
 import Mathlib.Data.ZMod.Basic
 import Reg.Support.DependentFamily
 
@@ -8,7 +8,7 @@ import Reg.Support.DependentFamily
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
-namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativePostClockInverse
+namespace Reg.D5.S3.Arith.FibonacciAtomic.Observer.OriginalVector.NativePostClockInverse
 
 open _root_.D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport (Source)
 open _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition (Address readout)
@@ -16,7 +16,7 @@ open _root_.D5.S3.Arith.FibonacciAtomic.ActualLeafHistoryRigidity (subtree)
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.NativeMaterialRootRecognition
   (D material neighbors children)
 open _root_.D5.S3.Arith.FibonacciAtomic.Geometry.NativeGuardedLeafRepair (Call run)
-open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativePostClockInverse
+open _root_.D5.S3.Arith.FibonacciAtomic.Observer.OriginalVector.NativePostClockInverse
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 local instance finiteCoordinates (t : Source) : Fintype (Coordinate t) := coordinates t
@@ -125,10 +125,10 @@ noncomputable def postclockInverseRegistration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@postclock_inverse) (type_of% (realize signature actual.readout actual.anchor)) Unit Unit := {
   unitName := Lean.Name.str
-    `D5.S3.Arith.FibonacciAtomic.Observer.NativePostClockInverse.postclock_inverse
+    `D5.S3.Arith.FibonacciAtomic.Observer.OriginalVector.NativePostClockInverse.postclock_inverse
     "__information_unit"
   realizationName :=
-    `Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativePostClockInverse.familyRegistration
+    `Reg.D5.S3.Arith.FibonacciAtomic.Observer.OriginalVector.NativePostClockInverse.familyRegistration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -144,7 +144,7 @@ noncomputable def postclockInverseRegistration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativePostClockInverse
+    owner := `D5.S3.Arith.FibonacciAtomic.Observer.OriginalVector.NativePostClockInverse
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -158,4 +158,4 @@ noncomputable def postclockInverseRegistration :
 
 end
 
-end Reg.D5.S3.Arith.FibonacciAtomic.Observer.NativePostClockInverse
+end Reg.D5.S3.Arith.FibonacciAtomic.Observer.OriginalVector.NativePostClockInverse

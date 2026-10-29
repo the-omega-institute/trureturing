@@ -2,7 +2,7 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.Observer;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic.Observer.OriginalVector;
 
 internal sealed class NativePostClockInverseDocument : IScribeDocumentDefinition
 {
@@ -13,7 +13,7 @@ internal sealed class NativePostClockInverseDocument : IScribeDocumentDefinition
             Paragraph(Text("For positive rational a and c, clock(a,c,t) is a times the identity plus c times the unit native material adjacency. Its determinant is assumed nonzero on every actual term reached by a finite legal word. Encoding starts at the earned alpha field 1, and each successful letter performs actual zero inclusion followed by Tick on the new term. Replay is partial exactly through the original logical guard; no Reset, Add or extra Tick appears in this recurrence.")),
             Describe.Lean(
                 DescribeId.Create("nativepostclockinverse"),
-                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/NativePostClockInverse.postclock_inverse"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Observer/OriginalVector/NativePostClockInverse.postclock_inverse"),
                 H("Complete reached-image inverse"), StatementSource.FromAuthor(Statement()),
                 AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("For every finite successful addressed word, including the empty word, encoding exists on its actual final term and every material coordinate is strictly positive. Decode of that endpoint returns exactly that word. Decode followed by replay returns the input endpoint on the reached image, and equal encoded endpoints force equal words. At every further enabled event, the local predecessor returns exactly the original endpoint and event; its material size is strictly smaller.")),
