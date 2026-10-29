@@ -2355,7 +2355,11 @@ order-$r$ recurrence, so forward induction makes it identically zero,
 contradicting minimality. Hence the leading block has rank $r$, and so
 does $H(P)$. The consistent binary system then has affine dimension
 $d-r$, proving (ACR.80). For $r=0$, $H(P)=0$ and $y(P)=0$, so the same
-statement gives $2^d$ passing rows. $\square$
+statement gives $2^d$ passing rows. Consequently, on this entire
+zero-stream fibre, for every original enumeration,
+$\kappa_d(0^{2d})=\rho_d(0)$ and
+$\operatorname{EN}_d(0^{2d})=(\rho_d(0),0^d)$; the row need not be
+zero. The empty descriptor belongs to the separate $d=0$ case. $\square$
 
 The finite-prefix minimal-synthesis supplier used below is Massey,
 *Shift-Register Synthesis and BCH Decoding*: its §II LFSR length setup
@@ -2449,35 +2453,66 @@ even when its constant coefficient is zero and the stream has a finite
 transient. Theorem 21.2 identifies the passing rows with the monic
 degree-$d$ multiples of $m$ in the very same order $\rho_d$, proving the
 first component of $R_{m\to P}$; its second component is exactly the
-constructed $\sigma_{m,d}$. For $m=1$, the generated stream and both
-components are the zero convention. $\square$
+constructed $\sigma_{m,d}$. For $m=1$ and every $d\ge1$, the
+constructed stream is zero, every degree-$d$ monic polynomial is a
+multiple of $1$, and therefore
+$\operatorname{FM}_d(1)=\rho_d(0)$ and
+$\operatorname{EN}_d(P_1)=(\rho_d(0),0^d)$. This is the same identity
+on every authentic zero-stream input, not a choice of a new first row.
+For example, $d=1$, $\rho_1=(1,0)$ gives descriptor $(1,0)$.
+Only $d=0$ has the empty descriptor; the synthetic seed in the reverse
+map is still distinct in provenance from the acquired seed. $\square$
 
 The reductions have polynomial local overhead in $d$ besides their one
-call to the other row/descriptor task, and that statement does not hide
-a candidate-recurrence enumeration. The computational model is a
-bit-addressed binary RAM: stored data are bits, an address or counter
-uses $\ell=\lceil\log_2(d+2)\rceil$ bits, an addressed bit operation is
-charged $O(\ell)$ bit work, every bit write is counted cumulatively, and
-there is no word-parallel operation. A standard in-place
-Berlekamp--Massey pass keeps three $(d+1)$-bit connection/work arrays,
-scans at most $2d$ discrepancies, and performs at most $O(d^2)$ binary
-updates. Therefore, for absolute constants,
+call to the other row/descriptor task; that call retains its own costs,
+including the original enumeration when used. The following local model
+makes the overhead executable without a fixed address-width assumption.
+Use a fixed finite number of sequential binary tapes, with explicit end
+markers and finitely many tracks. One symbol read/write or one-cell head
+move costs one unit of bit work. Every written bit, including scratch,
+indices, counters, markers and control, counts cumulatively; reusable
+backing counts every visited tape cell, including blank cells traversed.
+Each symbol has a fixed-size binary encoding. There is no random access,
+head teleportation, implicit integer register, or free relocation.
+Integers are binary strings on tapes, and copying or returning a head
+across a string costs its actual scans. Allocation and actual physical
+writes retain their separate tariffs.
+
+For the $d$-local reductions put
+$\ell_d=\lceil\log_2(64(d+2)^4)\rceil$. This suffices to represent
+all local array positions, lengths and polynomial-loop counters; it is
+not an address width imposed on other routines. A requested access to
+an $M$-bit local array can be implemented by scanning from its left
+marker with a binary position counter, then returning the head. With
+$\ell$ bits sufficient for its positions and loop indices, this costs
+$O((M+1)\ell^2)$ work and cumulative writes and $O(\ell)$ counter
+backing. Counter increments, comparisons, address arithmetic in the
+index description, initialization and return scans are included. This
+loose bound follows by at most $M+1$ cell visits, with $O(\ell^2)$
+bit work and writes for each counter operation; it does not grant a
+unit-cost array access.
+
+A Berlekamp--Massey pass uses three $O(d+1)$-bit work arrays and
+$O(d^2)$ binary updates. Its complete local costs, including scan and
+counter writes, consequently satisfy
 
 $$
- C_{\rm BM}(d)=O(d^2\ell),\qquad
- W_{\rm BM}(d)=O(d^2),\qquad
- V_{\rm BM}(d)=O(d+\ell),
+ C_{\rm BM}(d)=O((d+1)^3\ell_d^2),\qquad
+ W_{\rm BM}(d)=O((d+1)^3\ell_d^2),\qquad
+ V_{\rm BM}(d)=O(d+1+\ell_d).
  \tag{ACR.85}
 $$
 
-where $V$ is reusable backing and the $O(d)$ output bits for the
-polynomial are charged separately. Generating $P_m$ from $m$ and
-$\iota_r$ by the displayed recurrence costs
-$O(d^2\ell)$ bit work, $O(d)$ generated writes, and $O(d+\ell)$ reusable
-bits; extracting $\sigma_{m,d}$ costs $O(d)$ writes. Thus both maps have
-uniform polynomial overhead. The costs of the invoked $\operatorname{FM}_d$
-or $\operatorname{EN}_d$ task remain its own costs, including the
-original enumeration when that task uses it.
+Writing its polynomial output and copying the authentic seed are
+included in these conservative bounds. Generating $P_m$ by the
+recurrence, retaining its first $d$ bits, and copying the typed task
+input/output obey the same work/write bound and $O(d+1+\ell_d)$
+backing bound: there are $O(d^2)$ binary updates on $O(d+1)$ data.
+All $O(d)$ generated data bits are really written; the larger cumulative
+write bound also pays their intermediate accumulators, scans and
+counters. A called task receives and returns explicit bit strings; its
+own computation is not replaced by a unit-cost answer. In particular,
+no supplied original-enumeration cost is declared polynomial here.
 
 **Definition 21.5 (uniform affine ordinal-prefix access).** Interpret a
 binary word $u\in\{0,1\}^t$ as its integer value $[u]_2$. The original
@@ -2506,8 +2541,14 @@ feasibility and no free feasibility bit. Let $C_{\rm img}(d)$,
 $W_{\rm img}(d)$, and $V_{\rm img}(d)$ be uniform upper bounds over
 $t,u$ for bit work including address generation, cumulative bits written
 including retained output, and peak reusable backing, respectively.
-The property requires these three bounds to be fixed polynomials in $d$;
-all source-independent index preparation is included in them.
+These are costs of a uniform implementation in the serial local model
+just specified, including every working and output tape, explicit record
+encoding, index data, counter write and head return. The property
+requires all three bounds to be fixed polynomials in $d$; all
+source-independent index preparation is included in them. In particular,
+$V_{\rm img}$ includes the returned record, whose length is no greater
+than its visited backing. The record is delimited and explicitly parsed;
+a large index record cannot be treated as a free constant-size object.
 
 **Theorem 21.6 (constructive conditional canonical normalization).**
 Assume Definition 21.5. For $d=0$ use the original zero descriptor. For
@@ -2520,21 +2561,44 @@ is empty, construct and retain $u1$. At depth $d$, the retained cell is
 a singleton, and its row is exactly $\kappa_d(P)$. Append the unchanged
 seed $s_d(P)$ to obtain $\operatorname{EN}_d(P)$.
 
-At most two child images are constructed at each depth. In the
-bit-addressed model above, exact elimination of two affine systems with
-at most $d$ variables and $d$ equations costs $O(d^3\ell)$ bit work,
-$O(d^3)$ cumulative writes, and $O(d^2)$ reusable bits. Absorbing the
-constant two into absolute constants, the complete ordinal normalizer
-has the conservative bounds
+At most two child images are constructed at each depth. Put
+
+$$
+ \ell_{\rm aff}=\left\lceil\log_2
+ \bigl(64(d+2)^4+2V_{\rm img}(d)+2\bigr)\right\rceil.
+$$
+
+The image routine runs on its own counted tapes; the caller keeps only
+one image at a time. Parsing its full record and copying its base and
+basis into $O(d^2)$ caller data costs
+$O((V_{\rm img}+(d+1)^2)\ell_{\rm aff}^2)$ work and cumulative
+writes. All movements through its index record are paid even though
+firstness uses the ordinal prefix, rather than an inverse-index oracle.
+The prefix $u$ itself is an explicit at-most-$d$-bit word, not a
+unit-cost ordinal register. Forming the intersection equations, including
+the product $H B$, and Gaussian elimination require $O((d+1)^3)$
+binary updates on $O((d+1)^2)$ data. The scan implementation above
+therefore costs $O((d+1)^5\ell_{\rm aff}^2)$ work and cumulative
+writes, with $O((d+1)^2+\ell_{\rm aff})$ caller backing. The bounds
+include construction of the earned fibre, every feasibility test,
+descriptor emission and the seed copy. Thus, for an absolute constant,
 
 $$
  \begin{aligned}
- C_{\rm aff}(d)&\le C_1\!\left((d+1)\bigl(C_{\rm img}(d)+d^3\ell\bigr)+d^3\ell\right),\\
- W_{\rm aff}(d)&\le C_1\!\left((d+1)\bigl(W_{\rm img}(d)+d^3\bigr)+d^3\right),\\
- V_{\rm aff}(d)&\le V_{\rm img}(d)+C_1d^2.
+ C_{\rm aff}(d)&\le C_1\left[(d+1)\left(C_{\rm img}(d)
+    +\bigl(V_{\rm img}(d)+(d+1)^5\bigr)\ell_{\rm aff}^2\right)
+    +(d+1)^5\ell_{\rm aff}^2\right],\\
+ W_{\rm aff}(d)&\le C_1\left[(d+1)\left(W_{\rm img}(d)
+    +\bigl(V_{\rm img}(d)+(d+1)^5\bigr)\ell_{\rm aff}^2\right)
+    +(d+1)^5\ell_{\rm aff}^2\right],\\
+ V_{\rm aff}(d)&\le V_{\rm img}(d)
+    +C_1\bigl((d+1)^2+\ell_{\rm aff}\bigr).
  \end{aligned}
  \tag{ACR.88}
 $$
+
+These remain polynomials in $d$ under Definition 21.5; in particular the
+image's working data and its caller's counters both fit the backing.
 
 The final normalizer emits $2d$ descriptor bits and retains the original
 $2d$-bit $P$; no affine feasibility result is treated as a proof without
@@ -2556,41 +2620,110 @@ search, the explicit Fibonacci construction of $B_n$, and the final
 payload write from that supplier bill; it does not remove or reprice any
 source action, literal, grant, catalogue entry, or physical tariff.
 
+The composed access model retains the original suppliers as costed
+subroutines in their supplied execution model and uses the serial
+controller above for the new local routines. It does not claim a free
+simulation of a supplier in the tape model. Their bit-work terms retain
+all their own original operand/address operations, and their backing
+terms include those operands. Transfers between the two parts are
+additional operations. Here is a conservative explicit transfer rule.
+For a supplier with $v$ backing bits returning $q$ explicit bits, each
+returned bit is copied to a local tape. Its supplied output address,
+length and running index are represented, not machine integers. At
+most $b=O(v+q+1)$ bits suffice for those operands: existing address
+operands are already part of $v$, and the additional index needs only
+$O(\log(q+2))$ bits. A variable-length bit-addressed transfer uses
+$O(b^2)$ bit work and writes per bit, including forming/copying its
+address, accessing the supplied output cell, advancing its binary
+counter and writing the destination tape. There is no parallel-word
+operation. Transfer scratch takes $O(b)$ bits; its address registers
+and backing are counted. Every referenced cell belongs to already
+charged supplier backing; the variable address can encode each supplied
+reference, independently of $d$ or $n$. No cells are accessed through an
+uncharged window. The supplier's original generation is charged once and this
+extra read/copy is charged separately. If it already emits sequential
+output, the actual transfer can be smaller. Physical access, allocation
+and write tariffs remain the actual ones in either implementation.
+
+In particular, export the earned $P,n$ (and any needed finite control)
+from the acquisition supplier, with the following loose bounds, also
+charging the retained local copies:
+
+$$
+ \begin{aligned}
+ C_X,W_X&=O\bigl((d+n+1)(V_{\rm sup}+d+n+2)^2\bigr),\\
+ V_X&=O(V_{\rm sup}+d+n+1).
+ \end{aligned}
+$$
+
+This transfer does not reread the physical source or change a literal.
+Its backing may be reused after the export. The new local routines
+then work on tapes and need no absolute address into the earlier
+catalogue. In particular, the old supplier retains its $4^d$
+preparation; these interface terms do not assert a faster preparation.
+
 Use Corollary 21.3 for the final normalization. On a full-rank fibre,
-its added local terms are
+Gaussian elimination with the charged scans gives
 
 $$
  (C_{\rm norm},W_{\rm norm},V_{\rm norm})
- =\bigl(O(d^3\ell),O(d^3),O(d^2)\bigr).
+ =\bigl(O((d+1)^5\ell_d^2),O((d+1)^5\ell_d^2),
+        O((d+1)^2+\ell_d)\bigr).
  \tag{ACR.89}
 $$
 
-On a deficient fibre, invoke the original fixed enumeration verbatim.
-If $\omega_d$ denotes that enumerator's already charged cumulative bit
-writes (alongside the existing $e_d,v_d$ charges), the added terms are
+On a deficient fibre, invoke the original fixed enumeration verbatim,
+with its original $e_d,v_d$ and cumulative writes $\omega_d$.
+Export each tested row to the tape controller using the transfer rule,
+at an additional cost at most
+$O((d+1)(v_d+d+2)^2)$ work and writes per row. The controller's
+Hankel row test has at most $O((d+1)^2)$ binary updates on
+$O((d+1)^2)$ data, and its rank computation was already charged.
+A conservative bound for the added terms is therefore
 
 $$
- (C_{\rm norm},W_{\rm norm},V_{\rm norm})
- =\bigl(e_d+O(2^d(d+1)^2\ell),
-        \omega_d+O(2^dd^2),
-        v_d+O(d^2)\bigr).
+ \begin{aligned}
+ C_{\rm norm}&\le e_d+O\left((d+1)^5\ell_d^2+
+  2^d\bigl((d+1)^4\ell_d^2+(d+1)(v_d+d+2)^2\bigr)\right),\\
+ W_{\rm norm}&\le\omega_d+O\left((d+1)^5\ell_d^2+
+  2^d\bigl((d+1)^4\ell_d^2+(d+1)(v_d+d+2)^2\bigr)\right),\\
+ V_{\rm norm}&\le v_d+O\bigl(v_d+(d+1)^2+\ell_d\bigr).
+ \end{aligned}
  \tag{ACR.90}
 $$
 
-The $O(2^d(d+1)^2\ell)$ term is only the row-test arithmetic; it does
-not enumerate candidate recurrences and it is absent on the full-rank
-branch. Under Definition 21.5, replace (ACR.89)--(ACR.90) on every rank
-by (ACR.88), with no $e_d,\omega_d$ charge.
+These terms include both the row-transfer scratch and all row-test
+counter writes. The supplied enumeration costs are separate and are
+not assumed polynomial in $d$. On full rank there is no enumeration
+or row export. Under Definition 21.5, use (ACR.88) at every rank,
+with no $e_d,\omega_d,v_d$ or enumerator-transfer term. At $d=0$
+use the empty descriptor, with constant local normalization costs.
 
-Compute the original cut field explicitly by forward Fibonacci addition
-and write it, rather than retaining an unevaluated expression. In the
-same bit model this contributes
+For the arbitrary earned cut, put
+$L_n=\lceil\log_2(64(n+2)^4)\rceil$. Compute the cut field by
+forward ripple-carry Fibonacci addition on serial tapes, followed by
+explicit subtraction of one. All intermediate Fibonacci numbers through
+$F_{n+2}$ fit $n+2$ bits since $F_{n+2}\le2^{n+1}$ for $n\ge0$.
+A fixed number of buffers therefore takes $O(n+1)$ bits. Store $n$,
+the iteration number, buffer lengths and scan indices as binary strings
+of at most $L_n$ bits. Each of the $O(n+2)$ rounds costs
+$O((n+2)L_n^2)$ work and writes: scan and ripple-add the buffers,
+copy the next pair, reset each head by paid moves, and update the
+counters. Growing/initializing the buffers and the final subtract-one
+and output copy obey the same bound. This gives
 
 $$
  (C_B(n),W_B(n),V_B(n))
- =\bigl(O((n+2)^2),O((n+2)^2),O(n+1)\bigr).
+ =\bigl(O((n+2)^2L_n^2),O((n+2)^2L_n^2),O(n+1+L_n)\bigr).
  \tag{ACR.91}
 $$
+
+Every intermediate carry, overwritten buffer and counter write is in
+$W_B$. No $d$-only register represents $n$ or addresses this field:
+a tape head reaches its $j$th cell by $j$ charged moves, and all visited
+cells count as backing. This works for fixed $d=0$ or $1$ and arbitrarily
+large finite $n$; neither an upper cut bound nor an integer-valued
+unevaluated output is used.
 
 Finally write the completed original payload
 
@@ -2600,27 +2733,63 @@ $$
  \tag{ACR.92}
 $$
 
-its ready control, and any requested forward phase into the granted
-readable backing. Its output contains the original $P$, the original
-row and seed, $n$, and an explicit $\Theta(n)$-bit $F_{n+1}-1$ field; its
-payload writes and bit work are $O(d+n)$. The composed local bill is
-therefore the disjoint sum
+and its ready control into the granted readable backing. Set
+$L_{d,n}=\lceil\log_2(64(d+n+2)^4)\rceil$. The explicit record
+has $O(d+n+1)$ data bits: $2d$ for $P$, $2d$ for row/seed,
+$O(\log(n+2))$ for $n$, and $O(n+1)$ for the binary $B_n$
+(which is $\Theta(n)$ as $n$ grows). Its final sequential copy,
+field/control writes and the copy counters cost
+$O((d+n+1)L_{d,n}^2)$ work and cumulative writes and
+$O(d+n+1+L_{d,n})$ backing. The data writes alone are linear in
+the record length; the displayed larger write bill also includes its
+counter and control writes. Set ready only after all data, including any
+requested phase, are installed.
+
+If a forward phase is requested and $d>0$, compute it explicitly from
+the selected original row and seed by forward binary powering
+$C^{B_n}s_d(P)$. Scan the already computed binary exponent in a fixed
+direction; there are $O(n+2)$ squarings/multiplications, not $B_n$
+unit-cost iterations. Dense binary matrix multiplication has
+$O((d+1)^3)$ binary updates on $O((d+1)^2)$ tape data, so the
+same charged-scan construction gives additional bounds
+
+$$
+ C_\phi,W_\phi=O((n+2)(d+1)^5L_{d,n}^2),\qquad
+ V_\phi=O((d+1)^2+L_{d,n}).
+$$
+
+The exponent tape is already in $V_B$ and is read by paid moves; matrix
+buffers, copies, counters and intermediate writes belong to these phase
+terms. The final $d$ phase bits are copied in the final-write term
+above. For no requested phase or for $d=0$, take all phase terms zero.
+No private actual generator state is recovered or inverted. Exclude this
+optional computation from $C_{\rm sup},W_{\rm sup},V_{\rm sup}$
+when adding these phase terms; otherwise use its already charged
+supplier implementation and do not add them a second time.
+
+With the optional phase charged in the new local part, the disjoint
+work/write bill and conservative sum of peak backing bounds are
 
 $$
  \begin{aligned}
- C_{\rm total}&=C_{\rm sup}+C_{\rm norm}+C_B(n)+O(d+n),\\
- W_{\rm total}&=W_{\rm sup}+W_{\rm norm}+W_B(n)+O(d+n),\\
- V_{\rm total}&\le V_{\rm sup}+V_{\rm norm}+V_B(n)+O(d+n).
+ C_{\rm total}&\le C_{\rm sup}+C_X+C_{\rm norm}+C_B+C_\phi
+                      +O((d+n+1)L_{d,n}^2),\\
+ W_{\rm total}&\le W_{\rm sup}+W_X+W_{\rm norm}+W_B+W_\phi
+                      +O((d+n+1)L_{d,n}^2),\\
+ V_{\rm total}&\le V_{\rm sup}+V_X+V_{\rm norm}+V_B+V_\phi
+                      +O(d+n+1+L_{d,n}).
  \end{aligned}
  \tag{ACR.93}
 $$
 
-The supplier term retains the original $4^d$ preparation and every
-actual source/literal/read charge, while (ACR.89)--(ACR.92) charge only
-the newly selected local normalization, explicit cut arithmetic, and
-completed writes. Thus no supplier term is counted twice. The physical
-service and handoff tariffs and their durations remain the actual ones;
-these abstract bit-operation bounds do not infer physical duration.
+The supplied work, every transfer, normalization, cut arithmetic, optional
+phase and final copy are different operations; scratch reuse can only
+reduce the backing sum. The old supplier retains every actual physical
+Read/literal charge, catalogue entry, grant and stationarity premise.
+The physical service, allocation, retention and handoff tariffs and
+durations remain actual; these bit-operation bounds do not infer a
+physical duration. In particular stationarity must cover the transfers,
+all intermediate and retained writes, any requested phase and handoff.
 
 The writeback is source-faithful because $P$ is the prefix earned from
 the original unknown-law, unknown-cut source, and the hybrid changes no
