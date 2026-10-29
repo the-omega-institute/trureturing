@@ -19,7 +19,8 @@ namespace D5.S3.Arith.FibonacciAtomic.Observer.NativePositiveBranchReduction
 open NativeFiniteNormalInversion (Code Normal expand encode smart shiftCode)
 open NativeTermUnification (Term Presentation evaluate)
 open NativeGroundSolutionSpace (Sol action encodeEquations)
-open NativePositiveImageCover (occurrenceVertices Connected)
+open NativePositiveImageCover (Occurrence occurrenceVertices Connected occurrenceEdges comparisonEdges
+  comparisonTerm mgu_occurrence_graph_exact)
 open GenealogicalFiberTransport (substitution)
 open Lambda Strata.Util
 
@@ -91,6 +92,108 @@ def BranchEquation.shapeEquations : BranchEquation X → NativeGroundSolutionSpa
 
 def shapeEquations (B : List (BranchEquation X)) : NativeGroundSolutionSpace.Equations X :=
   B.flatMap BranchEquation.shapeEquations
+
+/-! The source-side comparison carrier keeps the rank information that is
+discarded by `shape`.  A shift contributes its actual natural offset, while
+ordinary and equality comparisons contribute zero offset.  Primitive and
+collapse cases retain their scalar constraints in `B` but contribute no
+residual block edge. -/
+
+private def offsetComparisonEdges (d : Int) : Term (Occurrence X) → Term (Occurrence X) →
+    List ((Occurrence X × Occurrence X) × Int)
+  | .of (.inr a), .of (.inr b) => [((a, b), d)]
+  | .mul l r, .mul u v => offsetComparisonEdges d l u ++ offsetComparisonEdges d r v
+  | _, _ => []
+
+private theorem offsetComparisonEdges_projection (d : Int)
+    (A B : Term (Occurrence X)) :
+    (offsetComparisonEdges d A B).map (fun e => e.1) = comparisonEdges A B := by
+  induction A generalizing B with
+  | of a =>
+      cases B with
+      | of b => cases a <;> cases b <;> rfl
+      | mul l r => simp [offsetComparisonEdges, comparisonEdges]
+  | mul l r hl hr =>
+      cases B with
+      | of a => rfl
+      | mul u v =>
+          simp only [offsetComparisonEdges, comparisonEdges, List.map_append, hl, hr]
+
+def sourceOffsetEdges (B : List (BranchEquation X)) (s : X → Term X) :
+    List ((Occurrence X × Occurrence X) × Int) :=
+  B.flatMap fun b => match b with
+  | .primitive _ _ => []
+  | .shift z a x =>
+      offsetComparisonEdges (Int.ofNat a)
+        (comparisonTerm s (name z)) (comparisonTerm s (name x))
+  | .ordinary z x y =>
+      offsetComparisonEdges 0
+        (comparisonTerm s (name z))
+        (comparisonTerm s (.mul (name x) (name y)))
+  | .collapse _ _ _ => []
+  | .same x y =>
+      offsetComparisonEdges 0
+        (comparisonTerm s (name x)) (comparisonTerm s (name y))
+
+def sourceOccurrenceEdges (B : List (BranchEquation X)) (s : X → Term X) :
+    List (Occurrence X × Occurrence X) :=
+  (sourceOffsetEdges B s).map (fun e => e.1)
+
+def sourceConnected (B : List (BranchEquation X)) (s : X → Term X) :
+    Occurrence X → Occurrence X → Prop :=
+  Relation.EqvGen (fun a b => (a, b) ∈ sourceOccurrenceEdges B s)
+
+private theorem comparisonTerm_primitive_leaf (s : X → Term X) :
+    comparisonTerm s (.of (.inl true) : Term X) =
+      (.of (.inl true) : Term (Occurrence X)) := by
+  rfl
+
+private theorem comparisonEdges_primitive_right (A : Term (Occurrence X)) (b : Bool) :
+    comparisonEdges A (.of (.inl b)) = [] := by
+  cases A with
+  | of a => cases a <;> rfl
+  | mul l r => rfl
+
+theorem source_comparison_graph_identification (B : List (BranchEquation X))
+    (s : X → Term X) :
+    sourceOccurrenceEdges B s = occurrenceEdges (shapeEquations B) s := by
+  induction B with
+  | nil => rfl
+  | cons b B ih =>
+      have head :
+          (sourceOffsetEdges [b] s).map (fun e => e.1) =
+            occurrenceEdges (BranchEquation.shapeEquations b) s := by
+        cases b <;>
+          simp [sourceOffsetEdges, occurrenceEdges, BranchEquation.shapeEquations,
+            offsetComparisonEdges_projection, comparisonEdges,
+            name, shapeLeaf]
+        all_goals
+          simp [comparisonTerm_primitive_leaf, comparisonEdges_primitive_right]
+      calc
+        sourceOccurrenceEdges (b :: B) s =
+            (sourceOffsetEdges [b] s).map (fun e => e.1) ++
+              sourceOccurrenceEdges B s := by
+                change (sourceOffsetEdges (b :: B) s).map (fun e => e.1) =
+                  (sourceOffsetEdges [b] s).map (fun e => e.1) ++
+                    (sourceOffsetEdges B s).map (fun e => e.1)
+                simp [sourceOffsetEdges, List.flatMap_cons, List.map_append,
+                  List.flatMap_singleton]
+        _ = occurrenceEdges (BranchEquation.shapeEquations b) s ++
+              occurrenceEdges (shapeEquations B) s := by rw [head, ih]
+        _ = occurrenceEdges (shapeEquations (b :: B)) s := by
+              simp only [shapeEquations, List.flatMap_cons, occurrenceEdges,
+                List.flatMap_append]
+
+theorem source_connected_iff_sort (p : Presentation X)
+    (B : List (BranchEquation X)) (S : SubstInfo)
+    (hok : (encodeEquations p (shapeEquations B)).unify SubstInfo.empty = .ok S)
+    (a b : Occurrence X)
+    (ha : a ∈ occurrenceVertices p (action p S))
+    (hb : b ∈ occurrenceVertices p (action p S)) :
+    (sourceConnected B (action p S) a b ↔ a.2.2 = b.2.2) := by
+  unfold sourceConnected
+  rw [source_comparison_graph_identification]
+  exact (mgu_occurrence_graph_exact p (shapeEquations B) S hok).2.2 a b ha hb
 
 private theorem shift_smart (a : Nat) (A B : Code) :
     smart (shiftCode a A) (shiftCode a B) = shiftCode a (smart A B) := by
@@ -279,7 +382,10 @@ theorem native_branch_reduction (p : Presentation X) (E : List (Equation X)) (v 
           (∀ x, evaluate (fun y => shape (encode (v y))) (action p S x) = shape (encode (v x))) ∧
           (∀ a b, a ∈ occurrenceVertices p (action p S) →
             b ∈ occurrenceVertices p (action p S) →
-            (Connected (shapeEquations B) (action p S) a b ↔ a.2.2 = b.2.2)) := by
+            (Connected (shapeEquations B) (action p S) a b ↔ a.2.2 = b.2.2)) ∧
+          (∀ a b, a ∈ occurrenceVertices p (action p S) →
+            b ∈ occurrenceVertices p (action p S) →
+            (sourceConnected B (action p S) a b ↔ a.2.2 = b.2.2)) := by
   constructor
   · intro hv
     obtain ⟨B,hB,sat⟩ := (branches_exact E v).mp hv
@@ -288,13 +394,14 @@ theorem native_branch_reduction (p : Presentation X) (E : List (Equation X)) (v 
       obtain ⟨b,hb,hc⟩ := List.mem_flatMap.mp hc
       exact branch_shape _ b (sat b hb) c hc
     obtain ⟨S,hok⟩ := NativeGroundSolutionSpace.native_complete p _ _ shapes
-    refine ⟨B,hB,fun x => (NativeFiniteNormalInversion.encode_law (v x)).1,sat,S,hok,?_,
-      (NativePositiveImageCover.mgu_occurrence_graph_exact p _ S hok).2.2⟩
-    intro x
-    have eq := congrFun (NativeGroundSolutionSpace.Ext_restriction p _ S hok _ shapes) x
-    simpa only [NativeGroundSolutionSpace.Ext, NativeGroundSolutionSpace.sigma,
-      NativeGroundSolutionSpace.evaluate_restrictTerm] using eq
-  · rintro ⟨B,hB,_,sat,_⟩
+    refine ⟨B,hB,fun x => (NativeFiniteNormalInversion.encode_law (v x)).1,sat,S,hok,?_,?_,?_⟩
+    · intro x
+      have eq := congrFun (NativeGroundSolutionSpace.Ext_restriction p _ S hok _ shapes) x
+      simpa only [NativeGroundSolutionSpace.Ext, NativeGroundSolutionSpace.sigma,
+        NativeGroundSolutionSpace.evaluate_restrictTerm] using eq
+    · exact (NativePositiveImageCover.mgu_occurrence_graph_exact p _ S hok).2.2
+    · exact source_connected_iff_sort p B S hok
+  · rintro ⟨B,hB,_,sat,S,hok,_,_,_⟩
     exact (branches_exact E v).mpr ⟨B,hB,sat⟩
 
 end D5.S3.Arith.FibonacciAtomic.Observer.NativePositiveBranchReduction
