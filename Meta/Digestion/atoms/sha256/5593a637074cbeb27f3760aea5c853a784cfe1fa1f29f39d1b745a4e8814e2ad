@@ -1,0 +1,14 @@
+#### 定义 5.1（记录量词与缺陷）
+
+对事件 $A\subseteq\Omega$，定义
+
+$$
+u_f(A)=\nu(f[A]),\qquad
+\ell_f(A)=\nu(Y\setminus f[A^c]),\qquad
+\delta_f(A)=u_f(A)-\mu(A).
+$$
+
+$u_f$ 把“记录纤维里存在一个 $A$ 见证”当真；$\ell_f$ 只在“纤维内所有世界属于 $A$”时当真。
+
+<a id="thm-saturation"></a>
+
