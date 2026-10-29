@@ -4,7 +4,31 @@
 
 For every Boolean cube of dimension at least two, the largest number of colors in a sub-quorum coloring is exactly one parity class, namely two to the power n-1.
 
-**Definition 1.1 (Source-faithful partial colorings).**
+**Definition 1.1 (Binary vertex parity).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/HypercubeSubQuorum.cubeParity`
+
+*Formalization.* `D5/S3/Combinatorics/Graph/HypercubeSubQuorum.cubeParity` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The parity of a Boolean vertex is the sum of its coordinates in the two-element Boolean ring. It is false for even weight and true for odd weight. This same parity distinguishes the two parts of the cube.
+
+**Theorem 1.2 (Adjacency reverses parity).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/HypercubeSubQuorum.cubeParity_ne_of_adj`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/HypercubeSubQuorum.cubeParity_ne_of_adj` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Adjacent vertices differ at exactly one coordinate. Separate that coordinate from the sum. The remaining coordinate sums agree, while the two Boolean values at the exceptional coordinate differ; cancellation shows that the total parities differ.
+
+**Definition 1.3 (Source-faithful partial colorings).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/HypercubeSubQuorum.IsSubQuorumColoring`
 
@@ -16,7 +40,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/HypercubeSubQuorum.IsSubQuorumColorin
 
 A coloring consists of a finite colored support S in the Boolean cube and an onto map from S to the positive color type Fin k. At every colored vertex, the center together with its same-color colored neighbors is at least half of the center together with all colored neighbors. The center occurs once on each side, while uncolored neighbors do not enter either count. This is exactly Definition 2.2 of the source.
 
-**Definition 1.2 (Attainable color counts).**
+**Definition 1.4 (Attainable color counts).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/HypercubeSubQuorum.SubQuorumAttainable`
 
@@ -28,7 +52,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/HypercubeSubQuorum.SubQuorumAttainabl
 
 A natural number k is attainable in dimension n when some finite support and onto admissible partial coloring use exactly k colors. Positivity is part of admissibility, rather than an external convention.
 
-**Definition 1.3 (The attained bounded maximum).**
+**Definition 1.5 (The attained bounded maximum).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/HypercubeSubQuorum.subQuorumChromaticNumber`
 
@@ -40,7 +64,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/HypercubeSubQuorum.subQuorumChromatic
 
 The invariant is Nat.findGreatest over attainable k bounded by the number of cube vertices. Surjectivity bounds every attainable k by 2^n. A one-vertex, one-color support proves positive attainment in every dimension, so the default zero behavior of findGreatest on an empty predicate is never used; the selected maximum is itself attainable.
 
-**Theorem 1.4 (The exact value in every dimension at least two).**
+**Theorem 1.6 (The exact value in every dimension at least two).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/HypercubeSubQuorum.subQuorumChromaticNumber_hypercube`
 
@@ -70,6 +94,8 @@ Sahbi supplies Definition 2.2, the selection idea of Lemma 5.4, the cases throug
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeSubQuorum.IsSubQuorumColoring`
 - Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeSubQuorum.SubQuorumAttainable`
+- Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeSubQuorum.cubeParity`
+- Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeSubQuorum.cubeParity_ne_of_adj`
 - Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeSubQuorum.subQuorumChromaticNumber`
 - Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeSubQuorum.subQuorumChromaticNumber_hypercube`
 - Dependency: [D5/S3/Combinatorics/Graph/Hypercube](Hypercube.md)
