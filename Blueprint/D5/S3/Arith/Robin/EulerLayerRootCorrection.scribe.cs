@@ -29,6 +29,30 @@ internal sealed class EulerLayerRootCorrectionDocument : IScribeDocumentDefiniti
                     + "records once their own first-prime mass is localized."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("euler-layer-theta-sqrt-scale"),
+                DeclarationHandle.Create(Prefix + "theta_sqrt_scale"),
+                H("Theta at a fixed square-root scale"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every fixed c>0, theta(c*sqrt(t))/sqrt(t) tends to c. "
+                    + "The existing prime-number limit is composed with c*sqrt(t). "
+                    + "This supplier is shared by the strict-inventory analysis and the "
+                    + "finite geometric prime-shell lower correction."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("euler-layer-log-sqrt-scale"),
+                DeclarationHandle.Create(Prefix + "log_sqrt_scale"),
+                H("Logarithm at a fixed square-root scale"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every fixed c>0, log(c*sqrt(t))/log(t) tends to one half. "
+                    + "The logarithm product and square-root identities reduce the "
+                    + "quotient to log(c)/log(t)+1/2. Both the original second cutoff "
+                    + "and the finite geometric prime-shell analysis consume this supplier."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("strict-inventory-third-layer-bound"),
                 DeclarationHandle.Create(Prefix + "strict_inventory_third_layer_bound"),
                 H("Finite envelope for the complete third-and-higher layer mass"),
