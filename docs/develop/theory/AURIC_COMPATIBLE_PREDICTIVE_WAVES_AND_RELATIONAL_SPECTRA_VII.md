@@ -4045,3 +4045,587 @@ nonlinear argmin or exact optimum value nor global originality or
 a resolution of an external named open problem. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 146. An order-three certificate for the original full-history norm
+
+**Definition 146.1 (The reduced all-history family and its signed rows).**
+For the source of Definition 142.1, write every original history uniquely
+in the form
+
+$$
+w=N^{n_0}\epsilon_1N^{n_1}\cdots\epsilon_kN^{n_k},
+\qquad \epsilon_j\in\{0,1\},\quad n_j\ge0,
+$$
+
+where $k$ is the number of native instrument labels. Since $N^3=I_3$,
+replace each $n_j$ by its residue in $\{0,1,2\}$. Let
+$\mathscr W_{\le3}$ be the resulting finite family with $0\le k\le3$.
+The replacement changes the product $Q_w$ only by a scalar of modulus one,
+so it preserves every original row value and its original weight
+$a_w/2=2^{-k}/2$.
+
+Use the six real completion coordinates in the ordered basis
+$(\xi,\mathrm i\xi,f,\mathrm if,e,\mathrm ie)$ and the two real coordinates
+of $g$. In the notation of (125.4), choose the seven actual rows, in order,
+with the indicated signs:
+
+$$
+\begin{aligned}
+(\rho_j,\sigma_j)_{j=1}^7={}&((9,\varnothing),+1),
+ ((1,NN),-1), ((1,0),-1), ((9,0),+1),\\
+ &((1,NN0N),+1), ((1,N1N),+1), ((2,NN1N),+1).
+\end{aligned}
+\tag{146.1}
+$$
+
+Put $c_j=\sigma_j\beta_{\rho_j}$ and let $M$ have first row all ones and
+rows $2$ through $7$ equal to the signed six-coordinate vectors
+$\sigma_jU_{\rho_j}$.
+
+**Theorem 146.2 (Exact full-history lower certificate; repo-derived).**
+For the full-history tangent norm of (125.5),
+
+$$
+n_a>\frac{189}{4096}.
+\tag{146.2}
+$$
+
+*Proof.* Let $d_0=\det M$, and let $d_j$ replace column $j$ of $M$ by
+$(1,0,0,0,0,0,0)^{\mathsf T}$, for $1\le j\le7. Direct expansion in
+$\mathbb Q(\sqrt2,\sqrt3)$ gives
+
+$$
+\begin{aligned}
+d_0={}&\frac{148689184238033\sqrt2+210278927993446
++169606516283115\sqrt6+239860620630880\sqrt3}
+{4722366482869645213696},\\
+d_1={}&\frac{-704179540270-497912696323\sqrt2+5522995798882\sqrt3
++3905391073879\sqrt6}{1180591620717411303424},\\
+d_2={}&\frac{4431862778894+3134204531693\sqrt2+23397372993571\sqrt6
++33088950632464\sqrt3}{4722366482869645213696},\\
+d_3={}&\frac{6657713390264\sqrt2+9415871119692+7081008641242\sqrt3
++5007043628175\sqrt6}{1180591620717411303424},\\
+d_4={}&\frac{-3205241353621\sqrt6-4532858035242\sqrt3+8819173387014
++6236145086803\sqrt2}{295147905179352825856},\\
+d_5={}&\frac{-5035357134791\sqrt2-7120923894510+6089708029451\sqrt6
++8612159649921\sqrt3}{295147905179352825856},\\
+d_6={}&\frac{773296199455\sqrt3+546834469621\sqrt6+2887987934358
++2042152182645\sqrt2}{295147905179352825856},\\
+d_7={}&\frac{762660156774+539286990438\sqrt2+434832704329\sqrt6
++614953806342\sqrt3}{36893488147419103232}.
+\end{aligned}
+\tag{146.3}
+$$
+
+The rational radical bounds (143.5)–(143.6), applied by integer
+multiplication, give the following strict intervals after multiplication
+by $10^{15}$:
+
+$$
+\begin{array}{c|rrrrrrrr}
+&d_0&d_1&d_2&d_3&d_4&d_5&d_6&d_7\\ \hline
+10^{15}d_j\text{ lies in}&
+(265006410,265006411)&(15012803,15012804)&
+(26149530,26149531)&(36727914,36727915)&
+(6559653,6559654)&(52825654,52825655)&
+(28646251,28646252)&(99084602,99084603)
+\end{array}
+$$
+
+Thus all eight determinants are positive. Cramer's rule gives
+$\lambda_j=d_j/d_0>0$, $\sum_j\lambda_j=1$, and
+$\sum_j\lambda_j\sigma_jU_{\rho_j}=0$. The same exact expansion gives
+
+$$
+\sum_{j=1}^7d_j\left(c_j-\frac{189}{4096}\right)
+=\frac{-20327335451999776\sqrt3-14373489159543967\sqrt6
++35385978341760498+25021737772452819\sqrt2}
+{19342813113834066795298816}>0.
+\tag{146.4}
+$$
+
+The last positivity is certified by (143.5)–(143.6); its value times
+$10^{15}$ lies strictly in $(18423,18424)$. Hence
+$\sum_j\lambda_jc_j>189/4096$. The signed cancellation identity and
+Proposition 128.1 give $\mathcal F_a(z,0)\ge\sum_j\lambda_jc_j$ for every
+complex $z$. Taking the infimum proves (146.2). Every row in (146.1) is an
+actual original history, with its original prefix mass and native-label
+weight.
+
+**Theorem 146.3 (All-history upper certificate and strict source gap).**
+Define
+
+$$
+\begin{aligned}
+z_*={1\over10^8}\big(&(-20328269+36581420\mathrm i)\xi
+ +(95916322-29623864\mathrm i)f\\
+ &+(-1841089-2547800\mathrm i)e\big),\\
+g_*={-3298492+5963260\mathrm i\over10^8}.
+\end{aligned}
+\tag{146.5}
+$$
+
+For every $i$ and every $w\in\mathscr W_{\le3}$, direct expansion of
+(143.2) at $(z_*,g_*)$, with the radical enclosure (143.5), gives
+
+$$
+\begin{array}{c|c|c}
+k(w)&\#\{w\in\mathscr W_{\le3}:k(w)=k\}&
+\displaystyle\max_{i,\,k(w)=k}|\ell_{i,w}(z_*,g_*)|\\ \hline
+0&3&<4485/100000\\
+1&18&<4485/100000\\
+2&108&<97/2500\\
+3&648&<233/10000
+\end{array}
+\tag{146.6}
+$$
+
+The inequalities in (146.6) are finite integer comparisons after replacing
+$\sqrt2,\sqrt3,\sqrt6$ by the lower and upper rational bounds in (143.5);
+they include all nine prefixes and both terminal labels through the sign
+identity following (125.4). Moreover, for the same exact matrices,
+
+$$
+T_*:=\frac12\left(\|X_1(z_*)\|_{\rm HS}+\|Y_1(z_*)\|_{\rm HS}
++2|g_*|\|K_-\|_{\rm HS}\right)<\frac38.
+\tag{146.7}
+$$
+
+For a history with $k\ge4$, trace Cauchy–Schwarz in the original row
+(116.2), $\max_i\|r_i\|_{\rm HS}=1$, and (146.7) give
+$|\ell_{i,w}(z_*,g_*)|\le2^{-k}T_*<3/128<23/512$.
+For $k\le3$, (146.6) and $4485/100000<23/512$ give the same bound.
+Reduction modulo $N^3=I_3$ therefore covers every finite actual history, and
+
+$$
+m_a\le\mathcal F_a(z_*,g_*)<\frac{23}{512}.
+\tag{146.8}
+$$
+
+Combining (146.2) and (146.8) yields the source-specific full-history
+certificate
+
+$$
+\boxed{\quad\delta_a=n_a-m_a>\frac{189}{4096}-\frac{23}{512}
+=\frac5{4096}>\frac3{4096}.\quad}
+\tag{146.9}
+$$
+
+This is an all-history upper bound, not a finite-decoder substitution:
+the tail estimate uses the original weighted rows, and the finite part
+contains every reduced history with at most three native labels.
+
+**Theorem 146.4 (Original nonlinear full-law endpoint on a positive interval).**
+Set
+
+$$
+\Delta_a=\frac3{4096},\qquad
+\eta_a=\min\left\{\eta_0,\frac{3}{16384E}\right\},
+\tag{146.10}
+$$
+
+where $E,\eta_0$ are the explicit source constants of (144.1). Then
+$\eta_a>0$, and for every $0<\eta\le\eta_a$ the original full-history
+thresholds of Definition 126.2 satisfy
+
+$$
+\boxed{\qquad \nu_a(\eta)-\mu_a(\eta)
+\ge\frac{3}{8192}\eta>0.\qquad}
+\tag{146.11}
+$$
+
+All compact minimizers of the unchanged original $\mu_a(\eta)$ have
+
+$$
+\frac{3}{8192L}\eta\le|\gamma|
+\le\frac{M-9/16384}{\underline c}\eta\le G\eta,
+\tag{146.12}
+$$
+
+and both extremal retention radii of Definition 131.1 are attained and
+obey the same positive lower and upper bounds. Thus the original
+full-history endpoint is type III throughout this interval.
+
+*Proof.* The gap (146.9) permits the weaker certified value
+$\delta_a\ge\Delta_a$. Apply Theorem 127.1 with this $\Delta_a$.
+It applies throughout (146.10), its threshold gap is
+$\Delta_a\eta/2=3\eta/8192$, and its retention bounds are (146.12).
+The attainment and type-III statements are the endpoint criterion of
+Theorem 124.2 together with Definition 131.1. The construction retains
+one full ten-dimensional completion per hypothesis, shared across
+emission, the single forward return and every history; compared
+hypotheses may use different completions. All original prefix masses,
+the factors $a_w/2$, both terminal labels, clocks, schedules, sole
+preparation and installed menu remain unchanged. No normalized rows,
+extra preparation, randomization, postselection, record-phase gauge or
+new control is introduced.
+
+The certificate is source-specific and repo-derived. It does not give an
+exact optimizer or exact optimum value, and it makes no claim of global
+novelty or of resolving an external named problem. Its only literature
+intermediates are the finite-source decoder and comparison results already
+cited in §§106, 116, 118 and the Chebyshev signed-witness principle cited
+in §128. The remaining dependence is the original return premise VI
+Assumption 106.2. $\square$
+
+## 追加锚（本行以下为增补区）
+## 147. The installed phase family and its actual moving prefix
+
+**Definition 147.1 (A phase on the installed control).**
+Keep the source, preparation, vectors and original schedules of
+Definition 142.1. Put
+
+$$
+P=ee^\dagger,\qquad \Pi=I_3-P,\qquad
+N_t=N_0\Pi+e^{\mathrm i t}P,\qquad t\in\mathbb R,
+\tag{147.1}
+$$
+
+where $N_0$ is the displayed order-three control in (142.1). Since
+$N_0P=P$, $N_0\Pi=\Pi N_0$, and $N_0^3\Pi=\Pi$, every $N_t$ is
+unitary and $N_tP=e^{\mathrm i t}P$. The phase $t$ labels a different
+installed source; it is not a phase selector available during one run.
+
+For $i\le8$ retain the actual prefixes $u_i$ of (142.1), and set
+
+$$
+u_9(t)=N_t,\qquad r_i(t)=r_i\ (i\le8),\qquad
+r_9(t)=N_t\rho_0N_t^\dagger .
+\tag{147.2}
+$$
+
+For $w\in\mathcal W_2$, let $U_{w,t}$ be the chronological product
+formed with $V_0,V_1,N_t$, let $Q_{w,t}=U_{w,t}V$, and let
+$q_{i,w,t}$ be the literal row (116.2), with $r_i(t)$ and the original
+factor $a_w/2$. No row is normalized and no closure element is installed.
+
+**Theorem 147.2 (Local admissibility and the moving ninth event).**
+There is an explicit source-only radius $\rho>0$ such that, for every
+$|t|\le\rho$, (147.1) is an allowed source of VI Definition 114.1,
+the first eight columns are the original columns, and the ninth actual
+column is exactly the single chronological call $N_t$ after the empty
+prefix. The nine columns span $\operatorname{Herm}_3$, and the same
+literal $117$-row finite decoder has real rank $34$.
+
+More explicitly, let $\Delta_r(t)=\det(\mathbf c(r_1(t)),\ldots,
+\mathbf c(r_9(t)))$, $\chi(t)=\operatorname{Tr}(P_\xi r_9(t))-1/4$, and
+$\sigma(t)=\|[N_t,P_\xi]\|_{\rm op}$. Define
+
+$$
+\begin{aligned}
+L_r&=\sup_{|s|\le1/12}|\Delta_r'(s)|,&
+L_\chi&=\sup_{|s|\le1/12}|\chi'(s)|,&
+L_\sigma&=\sup_{\substack{|u|,|v|\le1/12\\u\ne v}}\frac{|\sigma(u)-\sigma(v)|}{|u-v|},\\
+\Delta_T(t)&=\det T_t,\qquad
+L_T=\sup_{|s|\le1/12}|\Delta_T'(s)|,
+\end{aligned}
+\tag{147.3}
+$$
+
+where $T_t$ is the $34\times34$ minor obtained from the rows
+$q_{i,w,t}$ exactly as in (142.7). With the convention $x/0=+\infty$, put
+
+$$
+\rho=\min\left\{\frac1{12},
+\frac{\Delta_r(0)}{2L_r},\frac{\chi(0)}{2L_\chi},
+\frac{\sigma(0)}{2L_\sigma},
+\frac{|\Delta_T(0)|}{2L_T}\right\}.
+\tag{147.4}
+$$
+
+The exact determinant calculation (142.3), (142.5), and the rank minor
+(142.8) give the four positive numerators in (147.4). The functions in
+(147.3) are finite trigonometric polynomials, so the displayed suprema
+are finite source-only numbers. The mean-value theorem gives, on this
+interval, $\Delta_r(t)>0$, $\chi(t)>0$, $\sigma(t)>0$, and
+$\Delta_T(t)\ne0$. The first three inequalities are respectively the
+column-span, escape, and mixing requirements of VI Definition 114.1;
+the last is the same decoder rank certificate, now for the phase rows.
+
+**Theorem 147.3 (One completion per hypothesis, shared by every history).**
+Fix $|t|\le\rho$, an anchor or alternative completion vector $h$ in the
+closed unit ball, and the original retention parameter $\gamma$. VI
+Theorem 106.3 supplies one full ten-dimensional completion
+$\mathsf J_h$ with the prescribed five ready columns. The same
+$\mathsf J_h$ is used for emission, the single forward return, and every
+finite history of that hypothesis. It is independent of the phase label
+once $h$ is fixed: changing $N_0$ to $N_t$ changes only the installed
+control in the chronological word. Thus a comparison at two phases uses
+the same retention parameters and the same two full completions whenever
+the two vectors are held fixed. This is the fixed-installation statement
+of VI (106.3), not a row-wise choice of operations or completions.
+
+## 148. Uniform finite decoding and the original nonlinear remainder
+
+**Definition 148.1 (Common phase constants).**
+On $[-\rho,\rho]$, use the phase minor $T_t$ of (147.3) and define
+
+$$
+\begin{gathered}
+\Lambda_*=\max_{|t|\le\rho}
+ \frac{\sum_{j,k}|\operatorname{cof}_{jk}(T_t)|}{|\det T_t|},
+\quad p=1+\sqrt3,\quad B_*=(8/b+13p)\Lambda_*,\\
+m_*=5/8-b,\quad \kappa_*={\sqrt2(2+b)B_*\over m_*},\quad
+K_*=\tau+\tfrac12(\sqrt{34}/8+b),\\
+R_*=pK_*,\quad Z_*={[1+\tfrac p2(1+b)]B_*+\kappa_*R_*\over\tau},\quad
+c_*={1\over2(\kappa_*+B_*+Z_*)},\\
+C_*={1\over2}\max\{2K_*,2b,1,2\tau\},\quad
+J_*=1+{5\over2\tau},\quad M_*=\sqrt2 C_*,\quad G_*={M_*\over c_*},\\
+R_*'=1+{2J_*M_*\over c_*},\qquad
+E_*={1\over2}\left[b((R_*')^2+1)+2G_*\{(\tau+b/2)R_*'+(b/2)(R_*')^2\}\right],\\
+\eta_*=\min\left\{1,{1\over4R_*'},{1\over2G_*},{1\over40000E_*}\right\},\\
+G_{\rm ref}=2\sqrt2\,C_*/c_*,\quad R_{\rm ref}=1+J_*G_{\rm ref},\\
+\kappa_{\rm ref}=\tau+|s_\theta c_\theta|(\|D\|_{\rm HS}+b),\\
+C_{\rm ref,*}=R_{\mathfrak s}\left[(b+2|s_\theta c_\theta|\tau)(R_{\rm ref}+1)+\kappa_{\rm ref}G_{\rm ref}\right].
+\end{gathered}
+\tag{148.1}
+$$
+
+All maxima are over the compact phase interval and all entries are the
+literal rows with the original subnormalised masses. Hence these are
+finite, strictly positive, source-only constants; they contain no optimum
+value.
+
+**Theorem 148.2 (One decoder and one comparison on the whole paired domain).**
+For every $|t|\le\rho$, every completion in the original closed ball, every
+complex retention in its original disk, and the unchanged original
+domains, the finite rows of length at most two give the common estimates
+
+$$
+c_*D_0\le d_{f,t}\le d_{a,t}\le C_*D_0.
+\tag{148.2}
+$$
+
+Here $d_{f,t}$ is the literal finite raw-error norm for the phase-$t$
+source and $d_{a,t}$ is its full-history norm. The proof is the Cramer
+decoder argument of (144.2), with $\Lambda_*$ in place of $\Lambda$;
+the upper full-history estimate keeps the original factor $a_w$ and
+uses the trace bound for every actual history. The retention estimate uses
+the same $F$ and $m_*=5/8-b>0$, so it applies to the entire complex
+retention disk and the boundary of the completion ball.
+
+For $j\in\{f,a\}$, let $\mathcal F_{j,t}$, $m_{j,t},n_{j,t}$ be
+(125.3)–(125.5) with the phase-$t$ rows. Then, for every
+$|t|\le\rho$ and $0<\eta\le\eta_*$, the unchanged original nonlinear
+thresholds obey
+
+$$
+|\mu_{j,t}(\eta)-\eta m_{j,t}|\le E_*\eta^2,\qquad
+|\nu_{j,t}(\eta)-\eta n_{j,t}|\le E_*\eta^2.
+\tag{148.3}
+$$
+
+Every compact minimizer lies in $\|z\|\le R_*'$, $|g|\le G_*$, and
+the lifted pair is $(\eta g,-Ae+\eta z)$ with $A=1/2$ and
+$f=(\xi+\mathrm i v_+)/\sqrt2$. Thus the remainder in (148.3) is
+uniform in phase, in the full history, and in the whole original paired
+domain. It is the same source-only expansion as Lemma 125.2 and
+Theorem 126.3, with no finite-decoder substitution for $d_{a,t}$.
+
+The decoder intermediary is the finite dual-span construction of VI
+Proposition 118.2; the comparison of indistinguishability with an
+observable linear span is the source correspondence cited in (144.2) to
+D'Alessandro, *On Quantum State Observability and Measurement*, §2,
+Theorem 1. These references supply the interface; the phase-dependent
+minor and all constants in (148.1) are the present source calculation.
+
+## 149. Finite tangent robustness
+
+**Theorem 149.1 (A uniform finite gap).**
+Let
+
+$$
+B_f={163\over4000},\qquad U_f={813\over20000},\qquad
+G_f=B_f-U_f={1\over10000}.
+\tag{149.1}
+$$
+
+These are respectively the lower and upper certificates (143.8) for the
+literal $117$-row problem at $t=0$. For the finite row family
+$\mathscr R_f=\{(i,w):w\in\mathcal W_2\}$, write
+$\ell_{\rho,t}=\beta_{\rho,t}+U_{\rho,t}\cdot x+V_{\rho,t}\cdot y$ and set
+
+$$
+L_f=\sup_{|s|\le\rho}\max_{\rho\in\mathscr R_f}
+\left(|\partial_s\beta_{\rho,s}|+R_*'\|\partial_sU_{\rho,s}\|+G_*\|\partial_sV_{\rho,s}\|\right),
+\qquad
+\rho_f=\min\left\{\rho,{G_f\over4L_f}\right\}.
+\tag{149.2}
+$$
+
+For $L_f=0$ take the second entry as $+\infty$. Then, for every
+$|t|\le\rho_f$,
+
+$$
+\boxed{\qquad \delta_{f,t}=n_{f,t}-m_{f,t}\ge {1\over20000}.\qquad}
+\tag{149.3}
+$$
+
+The derivative bound in (149.2) is a finite maximum of source trigonometric
+polynomials. Uniform coercivity from (148.2) puts every finite minimizer
+inside the displayed $\|z\|\le R_*'$, $|g|\le G_*$ ball. On that ball, the
+mean-value theorem gives
+$|m_{f,t}-m_{f,0}|\le L_f|t|$ and
+$|n_{f,t}-n_{f,0}|\le L_f|t|$. Therefore
+
+$$
+\delta_{f,t}\ge G_f-2L_f|t|\ge G_f/2=1/20000.
+\tag{149.4}
+$$
+
+This is a tangent statement. It does not identify a nonlinear optimizer,
+an endpoint type, or an equality case from a tangent tie.
+
+## 150. Full-history collapse and the legal exact reflection sequence
+
+**Theorem 150.1 (Uniform collapse at every nonzero small phase).**
+For $0<|t|<\min\{\rho,\pi/3\}$, define
+
+$$
+q(t)=\left\lfloor {\pi\over3|t|}+{1\over2}\right\rfloor\ge1.
+\tag{150.1}
+$$
+
+Then the actual word consisting of $3q(t)$ consecutive installed calls
+$N_t$ satisfies
+
+$$
+\epsilon_{N_t}\le\|N_t^{3q(t)}-W\|_{\rm op}
+ =|e^{\mathrm i3q(t)t}+1|\le {3\over2}|t|.
+\tag{150.2}
+$$
+
+Consequently, with $C_{\rm ref,*}$ obtained from (136.1) by replacing
+the source constants by the uniform constants (148.1),
+
+$$
+0\le\delta_{a,t}\le {3\over2}C_{\rm ref,*}|t|.
+\tag{150.3}
+$$
+
+Thus the full-history tangent gap tends to zero through every nonzero
+positive or negative phase, with an explicit uniform bound. The argument
+uses only legal finite histories; the closure in (135.1) is used only to
+take the infimum after the legal-word estimate.
+
+At the exact phases
+
+$$
+t_q={\pi\over3q}\quad\text{or}\quad t_q=-{\pi\over3q},
+\qquad q\ge1,\qquad |t_q|\le\rho,
+\tag{150.4}
+$$
+
+the legal word of $3q$ installed calls gives
+
+$$
+N_{t_q}^{3q}=\Pi+e^{\pm\mathrm i\pi}P=W,
+\qquad \epsilon_{N_{t_q}}=0,\qquad \boxed{\delta_{a,t_q}=0}.
+\tag{150.5}
+$$
+
+No reflection is inserted into the menu and no closure element is treated
+as an operation. At $t=0$, by contrast, $N_0^3=I_3$, and the
+independently published source certificate (146.9) gives
+
+$$
+\delta_{a,0}>{3\over4096}.
+\tag{150.6}
+$$
+
+## 151. Cross-source optimization jump and one fixed actual pair
+
+**Theorem 151.1 (Positive jump of the optimized original threshold).**
+Let $(\lambda_j,\sigma_j,\rho_j)$ be the seven signed rows of (146.1),
+and put $B_{\rm lb}=\sum_j\lambda_jc_j$. The exact certificate (146.4)
+gives $B_{\rm lb}>189/4096$. Define the source-only variation bound
+
+$$
+L_{\rm lb}=\sup_{|s|\le\rho}\max_{1\le j\le7}
+\left(|\partial_s\beta_{\rho_j,s}|+R_*'\|\partial_sU_{\rho_j,s}\|\right),
+\qquad K_{\rm jump}=L_{\rm lb}+{3\over2}C_{\rm ref,*},
+\tag{151.1}
+$$
+
+and set
+
+$$
+\Delta={3\over4096},\qquad G_0={5\over4096},\qquad
+\rho_\Delta=\min\left\{\rho_f,{G_0-\Delta\over2K_{\rm jump}}\right\},\qquad
+\eta_\Delta=\min\left\{\eta_*,{\Delta\over4E_*}\right\}.
+\tag{151.2}
+$$
+
+For every fixed $0<\eta\le\eta_\Delta$ and every nonzero
+$|t|\le\rho_\Delta$,
+
+$$
+\boxed{\qquad \mu_{a,t}(\eta)-\mu_{a,0}(\eta)
+       \ge {\Delta\over2}\eta>0.\qquad}
+\tag{151.3}
+$$
+
+Indeed, every minimizer of $n_{a,t}$ lies in the uniform ball of
+(148.1). The signed cancellation in (146.1), followed by the mean-value
+bound (151.1), gives
+
+$$
+n_{a,t}\ge {189\over4096}-L_{\rm lb}|t|,\qquad
+m_{a,t}\ge n_{a,t}-C_{\rm ref,*}\epsilon_{N_t}.
+\tag{151.4}
+$$
+
+Since $m_{a,0}<23/512$ by (146.8), (150.2), and (151.2) imply
+$m_{a,t}-m_{a,0}\ge\Delta$. Applying the two uniform remainder bounds
+(148.3) gives (151.3). The quantifiers are phase-by-phase: no claim is
+made that an optimizer has the same coordinates for different $t$.
+
+**Theorem 151.2 (A single fixed pair witnesses the same raw-error jump).**
+Choose any attained tangent minimizer $(z_0,g_0)$ of
+$\mathcal F_{a,0}$. For $0<\eta\le\eta_\Delta$, define one actual
+alternative pair, independent of $t$, by
+
+$$
+\gamma_\eta=\eta g_0,\qquad h_\eta=-Ae+\eta z_0,\qquad
+h_0(\eta)=Ae+\eta f.
+\tag{151.5}
+$$
+
+The localization and (148.1) make this pair admissible for every
+$|t|\le\rho_\Delta$. Choose the two full completions from VI Theorem
+106.3 once for $h_\eta$ and $h_0(\eta)$; those completions and the
+retention parameters in (151.5) are held fixed across all phases and
+all histories. Then, for every nonzero $|t|\le\rho_\Delta$,
+
+$$
+d_{a,t}(\gamma_\eta,h_\eta;h_0(\eta))
+-d_{a,0}(\gamma_\eta,h_\eta;h_0(\eta))
+\ge {\Delta\over2}\eta>0.
+\tag{151.6}
+$$
+
+To prove this, (136.3) applied to $(z_0,g_0)$, the definition of
+$n_{a,t}$, and (151.4) give
+
+$$
+\mathcal F_{a,t}(z_0,g_0)
+\ge n_{a,t}-C_{\rm ref,*}\epsilon_{N_t}
+\ge m_{a,0}+\Delta.
+\tag{151.7}
+$$
+
+The uniform nonlinear expansion gives the lower bound
+$d_{a,t}\ge\eta(m_{a,0}+\Delta)-E_*\eta^2$, while
+$\mathcal F_{a,0}(z_0,g_0)=m_{a,0}$ gives
+$d_{a,0}\le\eta m_{a,0}+E_*\eta^2$. Since
+$2E_*\eta\le\Delta/2$, (151.6) follows. This is an actual
+full-history raw-error comparison with the original labels, weights,
+clocks, menus, preparation and one-return schedule. It does not require
+the coordinates of the tangent minimizer to be known, and it does not
+turn a tangent tie into a nonlinear equality or an endpoint
+classification. The only literature inputs are the fixed-completion
+construction of VI Theorem 106.3 and the finite decoder/comparison
+interfaces already identified in (148.2); all phase and jump estimates
+are source-specific deductions above.
+
+## 追加锚（本行以下为增补区）

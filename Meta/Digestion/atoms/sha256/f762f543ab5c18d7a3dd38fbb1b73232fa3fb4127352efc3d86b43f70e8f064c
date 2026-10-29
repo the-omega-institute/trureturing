@@ -1,0 +1,6 @@
+**约定 10.1（文献与方法归属）。** [Marzen–Crutchfield][MC] *Informational and Causal Architecture of Discrete-Time Renewal Processes*，arXiv:1408.6876v2，§II.1、§V、附录 A，使用平稳持久二元更新过程、归一化 iid 零计数 $F(n)$（$n\ge0$）和有限计数均值。此处对应是 $F(0)=0$、$F(n)=w_n$，其计数均值加一等于本卷屋顶均值 $\mu$。更新归一化、年龄／剩余时间及有限生成与无限预测记忆的区别是已有机制。其信息量目标不供应原调和最优性；其遍历设置不直接给出本卷的全零混合闭包。
+
+[Dawid–Lauritzen–Parry][DLP] *Proper Local Scoring Rules on Discrete Sample Spaces*，arXiv:1104.2224v2，§4.2、例 4.4、式（14），给出条件 Brier 损失与后验平方差的 ratio matching 机制。其全乘积空间严格 proper 论证假定概率处处正；硬 no11 不满足该前提。这里复用供应的合法双点、强制单点、零总质量身份，并在引理 3.3 直接证明所需正交式。没有把其估计结论移到本目标。
+
+悬挂、事件条件概率、可数相容概率扩张、条件正交、上半连续紧极值、有限开覆盖及秩零度公式均是成熟工具。相对于 §1 的供应，定理 4.3、5.2、6.1、7.1–7.2 和有效三状态推论是本卷的 `repo-derived` 综合；通用工具不单列为新知识。所需新增承重证明均在正文给出，候选提议不作为定理前提。
+

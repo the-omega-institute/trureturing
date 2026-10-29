@@ -1,0 +1,21 @@
+### Definition 61.1 (destructive calibrated reader)
+
+The initial source is \((i,z)\) with \(i\in\{1,2,3\}\) and \(z\in\{0,1\}\). The
+target is \(z\). The three actions have responses
+
+| calibration class | \(a\) | \(b\) | \(c\) |
+|---|---:|---:|---:|
+| \(i=1\) | \(z\) | \(z\) | \(\star\) |
+| \(i=2\) | \(\star\) | \(z\) | \(z\) |
+| \(i=3\) | \(z\) | \(\star\) | \(z\) |
+
+\(\star\) is independent of \(z\). Every action sends the reader to the same
+terminal state \(s_\dagger\); later responses contain only \(\star\). Let
+
+$$
+B_i=\{(0,s_{i,0}),(1,s_{i,1})\}.
+$$
+
+The class labels may themselves be represented by any three distinct legal FIB
+words; their names are not available to the controller after they are erased.
+

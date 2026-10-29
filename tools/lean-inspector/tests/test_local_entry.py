@@ -35,7 +35,21 @@ class LocalEntryTests(SeedGenerationTests, unittest.TestCase):
         self.fixture.setUp()
         self.addCleanup(self.fixture.doCleanups)
         self.root = self.fixture.root
-        self.api = self.fixture.receipt()
+        # Coordinate preimages contain compatibility and ordered source/config
+        # file digests, never the fixture's absolute path. Verify that projection
+        # for every fresh setup; reuse only the scalar used to create its seed.
+        inputs = publication.selection.Selection(self.root)
+        inputs.validate('lean-report')
+        groups = tuple(tuple(inputs.expand(group)) for group in ('report_modules', 'config_inputs'))
+        files = tuple((name, publication.digest(inputs.safe_file(name)))
+                      for name in sorted({name for group in groups for name in group}))
+        key = inputs.compatibility(), groups, files
+        initial = getattr(type(self), '_initial_seed_coordinates', None)
+        if initial is None or initial[0] != key:
+            initial = key, publication.coordinates(self.root)
+            type(self)._initial_seed_coordinates = initial
+        with patch.object(publication, 'coordinates', return_value=dict(initial[1])):
+            self.api = self.fixture.receipt()
         self.seed = self.fixture.report
         self.output = self.root / '.lake/build/stratalint' / publication.RAW
         for name in ('Makefile', 'tools/scripts/report/lean-report.sh',
@@ -535,6 +549,27 @@ esac
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual(self.calls, [])
         self.assertIn('extracted_modules=0 aggregates=0', result.stdout)
+
+    def test_seed_coordinate_reuse_keeps_fresh_inputs_and_private_cold_roots(self):
+        original = self.root
+        seed_bytes = {suffix: publication.member(self.seed, suffix).read_bytes()
+                      for suffix in publication.SUFFIXES}
+        self.setUp()
+        self.assertNotEqual(self.root, original)
+        for root in (original, self.root):
+            self.assertFalse((root / '.lake').exists())
+            self.assertTrue((root / '.git').is_dir())
+        for suffix, expected in seed_bytes.items():
+            target = publication.member(self.seed, suffix)
+            self.assertEqual(target.read_bytes(), expected)
+            self.assertNotEqual(target.stat().st_ino,
+                                (original / 'seed' / target.name).stat().st_ino)
+        # Exercise the real coordinate command after leaving the setup patch.
+        publication.validate_bundle(self.seed, publication.coordinates(self.root), self.root)
+        self.fixture.write('D5/A.lean', 'def a := 2\n')
+        self.assertTrue(self.api.probe(self.root, self.seed)['needs_lake'])
+        self.assertNotEqual(publication.coordinates(self.root), self._initial_seed_coordinates[1])
+        self.assertFalse((self.root / '.lake').exists())
 
     def test_rebuild_opt_in_enters_full_path_without_fetch_or_receipt_reuse(self):
         result = self.run_entry('REBUILD_REPORT_CACHE=1')

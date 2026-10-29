@@ -1,0 +1,143 @@
+**命题 12.4（精确有限余项及其全部耦合条件）。** 在定理 12.2 的结论下，将（12.5）的右侧延拓到每个 $n\ge2$，记为 $\tau_a(n)$。存在有限支持的有符号余项 $\delta_a(n)$，使
+
+$$
+\begin{gathered}
+f_a(n)=\tau_a(n)+\delta_a(n)
+=\rho^n\frac{\eta_{a+n}}{\eta_a}\kappa_{a+n}z_a(n),\\
+z_a(n)>0,\qquad z_a(n)=1\quad(n\ge N).
+\end{gathered}
+\tag{12.18}
+$$
+
+非零特征根的标量最小因子满足
+
+$$
+q_a(x)\mid x^m-\rho^m,\qquad
+\delta_a(k+2)=0\quad(k\ge r_a).
+\tag{12.19}
+$$
+
+特别地，余项允许正负，不可将它当作额外正混合分量；其生成函数是有限多项式。更明确地，若 $U_a(z)=\sum_{k\ge0}u_a(k)z^k$，则
+
+$$
+U_a(z)=
+\frac{\displaystyle\sum_{j=0}^{m-1}
+ \rho^{2+j}\kappa_{a+2+j}\eta_{a+2+j}z^j/\eta_a}
+ {1-\rho^mz^m}
++\sum_{n=2}^{N-1}\delta_a(n)z^{n-2}.
+\tag{12.20}
+$$
+
+实际 $f_a$ 的完整归一化恰为
+
+$$
+\sum_{n=2}^{N-1}\rho^n\kappa_{a+n}\eta_{a+n}z_a(n)
++\frac{\displaystyle\sum_{j=0}^{m-1}
+ \rho^{N+j}\kappa_{a+N+j}\eta_{a+N+j}}{1-\rho^m}
+=\eta_a.
+\tag{12.21}
+$$
+
+以下有限系统保留全部取得方程。所有相位模 $m$，约定 $z_a(n)=1$ 于 $n\ge N$。精确原拆分比及有向恒等式为
+
+$$
+\begin{aligned}
+R_a(l,r)&=\kappa_{a+l}
+ \frac{z_a(l)z_{a+l}(r)}{z_a(l+r)},\\
+R_a(l,r)R_a(l+r,t)&=R_{a+l}(r,t)R_a(l,r+t).
+\end{aligned}
+\tag{12.22}
+$$
+
+全部后验带等价于有限方形 $2\le l,r<N$ 上对（12.22）的带，以及
+
+$$
+\frac13\le\kappa_b\le1,\qquad
+\frac13\le\kappa_a z_a(n)\le1,\qquad
+\frac13\le\kappa_{a+n}z_a(n)\le1
+\quad(2\le n<N).
+\tag{12.23}
+$$
+
+全部有向分数矩形为零等价于在每个 $b$ 和 $2\le h,g<N$ 上满足
+
+$$
+\beta\!\left(\kappa_b
+ \frac{z_{b-h}(h)z_b(g)}{z_{b-h}(h+g)}\right)
+=\beta(\kappa_bz_{b-h}(h))+\beta(\kappa_bz_b(g))-s_b,
+\qquad s_b:=\beta(\kappa_b).
+\tag{12.24}
+$$
+
+它给出的合法有向规范为
+
+$$
+\widetilde L_b(h)=\beta(\kappa_bz_{b-h}(h))-s_b,\qquad
+\widetilde O_b(g)=\beta(\kappa_bz_b(g)).
+\tag{12.25}
+$$
+
+在此规范中，原间隔内的全部零损失和两个端点一所形成的能量是
+
+$$
+\begin{aligned}
+V_a(n)&=\sum_{j=2}^{n-2}
+ \mathcal P\!\left(\kappa_{a+j}
+ \frac{z_a(j)z_{a+j}(n-j)}{z_a(n)}\right),\\
+\widetilde W_a(n)&=V_a(n)
+ +\beta(\kappa_a z_a(n))
+ +\beta(\kappa_{a+n}z_a(n))-s_{a+n}.
+\end{aligned}
+\tag{12.26}
+$$
+
+空和为零，故仍有 $V_a(2)=V_a(3)=0$，邻接端点一的强制零损失也未删改。置
+
+$$
+e_b=\mathcal P(\kappa_b)=\Xi(s_b),\qquad
+\bar e=\frac1m\sum_be_b.
+\tag{12.27}
+$$
+
+完整余边界条件等价于存在 $H:E\to\mathbb R$，使有限组方程
+
+$$
+\widetilde W_a(n)=\bar e\,n+H_{a+n}-H_a
+\quad(a\in E,\ 2\le n\le2N+m-1)
+\tag{12.28}
+$$
+
+成立；这时同一式对所有 $n\ge2$ 成立，且斜率必为 $\bar e$。若这些条件属于定义 11.1 的同一实际律，定理 11.5 将它们与取得等价，并识别 $d(P)=c_\star=\bar e$。对新提出的有限参数，仍须另外证明两个实际半线解码器存在。
+
+证明。（12.18）只是完整实际质量的恒等分解。有限表示的一般 Jordan 展开可含非零特征根的多项式乘指数项及零特征根的有限支持项；定理 12.2 消去与精确尾不符的所有持久项，而非预先排除它们。因为 $(\mathsf E^m-\rho^m)u_a$ 有限支持，某个 $x^s(x^m-\rho^m)$ 零化 $u_a$。最小多项式整除它，故得到（12.19）的第一式，非零根均为简单的 $m$ 次根型。又 $p_a(\mathsf E)\tau_a(k+2)$ 是 $\rho^k$ 乘周期序列，且在尾部为零，所以处处为零。于是 $p_a(\mathsf E)\delta_a(k+2)=0$。序列 $\mathsf E^{r_a}\delta_a(k+2)$ 被常数项非零的 $q_a(\mathsf E)$ 零化，且尾部为零；从最后的非零项向前反推，或直接利用 $q_a(0)\ne0$ 的反向递推，知其恒为零。这给（12.19）的第二式。几何级数给（12.20）–（12.21）；有限前段及 $\rho<1$ 同时保证有限均值。
+
+将（12.18）代回实际比值，全部 $\rho$ 和 $\eta$ 因子相消，给（12.22），没有损失相位结合律。若一边间隔不小于 $N$，它与合并间隔的 $z$ 都为一，带便只剩（12.23）中的一个单边条件；两边都短时由有限方形检验。这证明带的有限等价。
+
+若分数有向分离，在固定分割相位 $b$ 将入距和出距分别取到不小于 $N$，其三个参照分数恰为 $\beta(\kappa_bz_b(g))$、$\beta(\kappa_bz_{b-h}(h))$ 和 $s_b$，零矩形遂给（12.24）的全部长度版本。反之，只要有限方形成立，其余长度版本因一边及合并的 $z$ 为一而自动成立，所以（12.25）确实分离全部 $B_b$。
+
+与（11.23）相比，有向规范的改变形如 $\widetilde L_b=L_b-\lambda_b$、$\widetilde O_b=O_b+\lambda_b$，故 $\widetilde W_a(n)=W_a(n)+\lambda_a-\lambda_{a+n}$。它只改变相位势，不改变斜率或原实际风险。（12.26）正是 $V_a(n)+\widetilde O_a(n)+\widetilde L_{a+n}(n)$，所以两个端点一均仍在原式中。
+
+最后，定义两个完整短端修正
+
+$$
+\begin{aligned}
+A_a&=\sum_{j=2}^{N-1}
+ [\mathcal P(\kappa_{a+j}z_a(j))-e_{a+j}],\\
+D_b^{\rm end}&=\sum_{r=2}^{N-1}
+ [\mathcal P(\kappa_{b-r}z_{b-r}(r))-e_{b-r}].
+\end{aligned}
+$$
+
+对 $n\ge2N$，两个短端范围不交，合并间隔的 $z_a(n)=1$，因而逐项计数给
+
+$$
+\widetilde W_a(n)=\sum_{j=2}^{n-2}e_{a+j}
+ +A_a+D_{a+n}^{\rm end}+s_a,\qquad
+\widetilde W_a(n+m)-\widetilde W_a(n)=m\bar e.
+\tag{12.29}
+$$
+
+与任何全长度仿射余边界式比较，斜率必为 $\bar e$；反向只需在 $2N,\ldots,2N+m-1$ 给出每个模 $m$ 的代表，再用（12.29）延拓。加上全部较短长度，正好是（12.28）。此处的算术相位平均来自一条长原间隔内部的周期计数，不是将事件 Palm 行 $\nu$ 设为均匀。识别实际 $d(P)$ 时仍用（11.28）的同一 $\nu K=\nu$ 与原 $\mu$。
+
+上述有限前段形式本身仍有有限非负吸收表示：对每个 $a$，令 $S_a(n)=\sum_{g\ge n}f_a(g)$，在年龄 $n\ge2$ 以 $f_a(n)/S_a(n)\in(0,1)$ 吸收，否则推进一格。从年龄二起步，吸收于年龄 $n$ 的概率恰为 $f_a(n)$。尾部满足 $f_a(n+m)=\rho^mf_a(n)$、$S_a(n+m)=\rho^mS_a(n)$，故风险率在 $n\ge N$ 后模 $m$ 周期。保留年龄 $2,\ldots,N+m-1$ 并将最后一个未吸收转移接回 $N$，即给（12.1）。这仅实现间隔行，不证明其标记由两个可见半线解码，也不把任意 $\Theta_N$ 表示成定义 11.1 的类。$\square$
+

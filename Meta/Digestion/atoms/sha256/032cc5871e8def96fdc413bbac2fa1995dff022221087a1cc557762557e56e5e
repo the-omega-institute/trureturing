@@ -1,0 +1,43 @@
+**Theorem 4.3 (complete original-source signed image strata).** Fix the
+input of Definition 4.1 and any complete finite row label $r$ at $Q$.
+One can construct finitely many source templates $U_{r,b}$ and predicates
+
+$$
+C_{r,b}(\mathbf n,\mathbf z)
+=P_{r,b}(\mathbf n)\land\Delta_{r,b}(\mathbf n,\mathbf z)
+\tag{NIC.19}
+$$
+
+of the form in Theorem 3.3 such that
+
+$$
+D_r:=\{u\in D:R_Q(u)=r\}
+=\bigcup_b\{U_{r,b}(\mathbf n,\mathbf z):C_{r,b}(\mathbf n,\mathbf z)\}.
+\tag{NIC.20}
+$$
+
+Every produced source satisfies all retained records with both guards,
+the entire old row and exactly the finite row label $r$. Conversely
+every original $u\in D_r$ is reconstructed as that same source.
+
+Proof. Apply the finite fixed-navigation decomposition of [NSF, Lemma
+5.1][NSF] to the entire predicate in (NIC.17) and $R_Q(u)=r$. Here are
+the concrete data preserved by that application. Choose a finite
+original prefix depth strictly beyond all finitely listed cut positions
+and record endpoint lengths. Enumerate its finite native prefix
+patterns, with independent frontier variables at its reached boundary.
+A source has its actual pattern and actual frontier subtrees; filling
+these returns that very source. Repeated references to the source use
+the same pattern and variables, not independent copies.
+
+At each fixed epoch and endpoint, navigation through the transformed
+pattern either yields a native expression in those frontiers, yields a
+subtree of the explicitly transformed early ground leaf, or is absent.
+No requested endpoint enters an unspecified frontier, because its
+address is shorter than the chosen original depth. Fixed powers preserve
+original branch nodes and expand early leaves by explicitly finite trees.
+Thus guards and literal replies are decided exactly in each case. An
+absent endpoint rejects either signed record, and a reached pair retains
+its entire native equality or disequality. Repetition retains the same
+expression wherever that endpoint is used.
+

@@ -1,0 +1,12 @@
+### 定理 5.2（固定黄金门的近似编码普适性）
+
+在上述编码、初始化和相邻接线条件下，对任意 $n$ 比特酉变换 $U$ 和任意 $\varepsilon>0$，存在仅由 $K$ 的正向调用构成的有限电路 $C_K$，使
+
+$$
+\boxed{
+\left\|C_K\widehat J_n-e^{\mathrm i\gamma}\widehat J_nU\right\|_{\mathrm{op}}<\varepsilon
+}
+$$
+
+对某个整体相位 $\gamma$ 成立。
+

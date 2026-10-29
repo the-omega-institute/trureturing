@@ -1,0 +1,8 @@
+such that:
+
+1. the source law is the product \(\mu_\alpha\otimes\mu_\beta\otimes\mu_\gamma\);
+2. the response kernels use only the two incident source variables;
+3. the pushforward of the resulting distribution is \(\widetilde p\);
+4. \(\pi(\widetilde p)=q\);
+5. every required shared-edge marginal and normalization condition is satisfied.
+

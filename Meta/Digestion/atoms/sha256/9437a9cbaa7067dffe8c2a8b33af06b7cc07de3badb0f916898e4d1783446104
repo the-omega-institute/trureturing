@@ -1,0 +1,8 @@
+交叉边族 $\mathcal Y\subseteq\mathscr E_{n+1}$ 是外部交叉见证，如果：
+
+1. $|\mathcal Y|=\lambda_n$，且 $\mathcal Y$ 内部两两顶点不交；
+2. 每条 $y\in\mathcal Y$ 的顶点都不在两个子层像中：
+   $$
+   y\cap\bigl(\iota_0[V_n]\cup\iota_1[V_n]\bigr)=\varnothing.
+   $$
+

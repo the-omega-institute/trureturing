@@ -1,0 +1,56 @@
+**Corollary 12.2 (Fano certificate from two observed errors).** In Definition 10.1 let $\mathcal O$ have $m\ge2$ symbols, let $A$ be uniform, and assume
+
+$$
+\mathbb P(A\ne B)\le\varepsilon,\qquad
+\mathbb P(A\ne C)\le\varepsilon,\qquad
+0\le\varepsilon\le1-1/m.
+\tag{12.3}
+$$
+
+Then
+
+$$
+C_{\rm src}\ge
+\max\left\{0,\frac{\log m}{2}-h(\varepsilon)
+                         -\varepsilon\log(m-1)\right\}.
+\tag{12.4}
+$$
+
+For $m=1$ the output is constant and the conclusion is simply $C_{\rm src}\ge0$; no $\log(m-1)$ expression is used.
+
+*Proof.* Use Fano's finite-alphabet inequality in nats, with $B$ itself as an estimator of $A$, and separately with $C$ as an estimator of $A$. If their actual error probabilities are $e_B,e_C$, the classical inequality gives
+
+$$
+H(A\mid B)\le h(e_B)+e_B\log(m-1),\qquad
+H(A\mid C)\le h(e_C)+e_C\log(m-1).
+\tag{12.5}
+$$
+
+These are the sharp-cardinality Fano bounds, not an independence assertion about errors. For clarity, the first follows by adjoining $E_B=\mathbf1_{\{A\ne B\}}$: since $E_B$ is determined by $(A,B)$,
+
+$$
+H(A\mid B)=H(E_B\mid B)+H(A\mid E_B,B)
+\le h(e_B)+e_B\log(m-1).
+$$
+
+When $E_B=0$ there is no uncertainty in $A$; when $E_B=1$, at most $m-1$ symbols remain. The same argument gives the second bound. Zero-probability error events contribute zero conditional entropy. This is the usual Fano argument, attributed to Fano's *Transmission of Information* and represented in the repository by `FanoSharp.fano_inequality_sharp`.
+
+The function $g_m(t)=h(t)+t\log(m-1)$ is continuous on $[0,1]$ and has derivative
+
+$$
+g_m'(t)=\log\!\left(\frac{(1-t)(m-1)}{t}\right)\ge0
+\quad\text{for }0<t\le1-1/m.
+$$
+
+Thus both upper bounds in (12.5) are at most $g_m(\varepsilon)$, including the endpoints by continuity. Since $H(A)=\log m$,
+
+$$
+\begin{aligned}
+I(A;B)+I(A;C)-H(A)
+&=\log m-H(A\mid B)-H(A\mid C)\\
+&\ge\log m-2g_m(\varepsilon).
+\end{aligned}
+$$
+
+Apply Theorem 10.2 and $C_{\rm src}\ge0$. No step conditions on, multiplies, or assumes independence of the two error events. At $\varepsilon=0$, (12.4) agrees with the half-entropy bound; for a nonconstant binary exact record Theorem 11.2 strengthens that particular conclusion to strictness. At $\varepsilon=1-1/m$, $g_m(\varepsilon)=\log m$, so (12.4) gives only zero. ∎
+

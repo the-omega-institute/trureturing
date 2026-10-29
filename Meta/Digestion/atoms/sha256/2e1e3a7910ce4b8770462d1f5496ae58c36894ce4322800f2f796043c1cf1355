@@ -1,0 +1,20 @@
+**Definition 12.1 (A terminal-linear J circuit).** In this section $z$
+is a formal $J$ value. Write $f=ad^2+b_fd+c_f$ as in IX, (4.4), and put
+
+$$
+\begin{aligned}
+G={}&2Da_0a_1(z-d)\\
+ &-\bigl((8x+1)a_0a_1-dDa_1-4(24-d)Da_0\bigr)a_7,\\
+g_i={}&[d^i]G,\\
+L_J={}&a^2g_1-ab_fg_2+(b_f^2-ac_f)g_3,\\
+T_J^{\rm rem}={}&a^2g_0-ac_fg_2+b_fc_fg_3,\\
+A_6={}&177x^6+724x^5+542x^4-742x^3-629x^2+196x+160,\\
+J_{\rm lin}={}&
+\frac{T_J^{\rm rem}\alpha-L_J\beta}{6400D^6F_0A_6^2}.
+\end{aligned}
+\tag{12.1}
+$$
+
+The last division is exact in $\mathbb Z[x,p,v,z]$, with no sign or
+content adjustment. This $L_J$ is unrelated to $L$ in (10.2).
+

@@ -1,0 +1,32 @@
+**Lemma 14.3 (Disjoint terminal J images).** Any actual worlds from
+rows one and two respectively satisfy
+
+$$
+\begin{array}{c|cc}
+ &1&2\\\hline
+\widehat D/b^2&(673,674)&(643,644)\\
+a&(964,965)&(994,995).
+\end{array}
+$$
+
+Proof. Evaluate the polynomial circuit of Definition 2.1 on
+$I_i$ times the corresponding positive $b$ interval of Lemma 14.2.
+Exact interval addition, negation, endpoint multiplication and
+reciprocal yield the sharper rational outer bounds
+
+$$
+\begin{array}{c|cc}
+&1&2\\\hline
+\widehat D/b^2&(6732076478185,6732076478186)/10^{10}
+ &(6436744834752,6436744834754)/10^{10}\\
+a&(9640512711405,9640512711406)/10^{10}
+ &(9948201599656,9948201599658)/10^{10}.
+\end{array}
+$$
+
+The expressions are evaluated in the displayed factored order of
+Definition 2.1. Both $b$ and $\widehat D$ are positive throughout
+these boxes, so the quotients have no pole. Lemma 2.2 identifies
+these values with the literal terminal readings of the same entire
+gains and fixed drifts. The two J intervals are disjoint. ∎
+

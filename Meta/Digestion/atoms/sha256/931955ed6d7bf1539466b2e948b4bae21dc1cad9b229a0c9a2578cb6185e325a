@@ -1,0 +1,16 @@
+**命题 76.4（$\theta=0,n\ge3$ 的三个不同终端任务）。** 令 $\xi=(1,1,1)^{\mathsf T}/\sqrt3$，$P=|\xi\rangle\langle\xi|$，并用标准坐标基 $\epsilon_1,\epsilon_2,\epsilon_3$。取三种预先指定任务：$(P)$；$(|\epsilon_1\rangle\langle\epsilon_1|)$；以及下列 finite tomographic projection family
+
+$$
+\mathscr E_{\rm full}=
+\left(\ |\epsilon_i\rangle\langle\epsilon_i|\ (1\le i\le3),\quad
+\frac{|\epsilon_i+\epsilon_j\rangle\langle\epsilon_i+\epsilon_j|}{2},\quad
+\frac{|\epsilon_i+\mathrm i\epsilon_j\rangle\langle\epsilon_i+\mathrm i\epsilon_j|}{2}
+\ (1\le i<j\le3)\ \right).
+$$
+
+其最小 terminal alphabets 依次为 $1,3,6$。若把一个 terminal label 单独编码为固定长度、禁止子串 $11$ 的 binary word，且不混入 horizon/phase/其他资源，则最短长度依次为 $0,2,4$。
+
+**证明。** Environment §§4–5 的 Theorems 4.1、5.1 已供应 actual chronological words 在 $n\ge3$ 恰遍历 $S_3$，且 permutation matrices 的 projective equality 就是 equality。全部 words 固定 $P$，给出一个 signature；坐标 rank-one projection 的 orbit 有三个成员。$\mathscr E_{\rm full}$ 的 Hermitian real span 为全部 Hermitian $M_3$，因为它给出各 diagonal、off-diagonal real part 和 imaginary part；所以同时保留其 Born probabilities 等价于 full-state channel identity。相同 full signatures 要求两 word matrices 之比与全部 $M_3$ 交换，即相差 scalar；此处恰有六类。推论 76.3 给出三个 alphabets，包括 stochastic 情形。禁止 $11$ 的长度 $\ell$ words 数为 $F_{\ell+2}$（$F_0=0,F_1=1$），由按首位 $0$ 或 $10$ 分类的递推得到；长度 $0,1,2,3,4$ 分别有 $1,2,3,5,8$ 个。于是三个最短长度为 $0,2,4$。∎
+
+Environment Theorem 4.1 对 full projective-word statistic 另供应 clock/table 条件下的 online realization，§5 还供应 homogeneous six-value register；这些是独立的 supplier 结论。上述单个 forbidden-$11$ code 长度不计 paid label acquisitions、fresh environments、calibration、clock、tables、inverse controls 或动态编码更新，不能据此推论整个任务控制器的最小成本。
+

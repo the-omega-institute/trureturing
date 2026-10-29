@@ -1,0 +1,12 @@
+**定义 82.1（共同终端目标）。** 在定义 81.1 的同一 source 与权限下，令
+
+$$
+\begin{aligned}
+L_{n,\mathcal D}(A)&=\|(F^n)^\dagger\mathcal D^\dagger(A)-A\|_{\rm op},\\
+c_n(q)&=\min_{\mathcal D\ {\rm CPTP}}
+       \max\{L_{n,\mathcal D}(P),L_{n,\mathcal D}(E(q))\}.
+\end{aligned}
+$$
+
+两个 losses 必须来自同一个 complex CPTP map，不要求 exact preservation of $P$。有限维 Choi set $\{J\ge0:\operatorname{Tr}_{\rm out}J=I_3\}$ compact、convex、非空，且目标连续，故此 minimum 及下文的 finite common minima 均达到。这是标准 Choi/Kraus representation 的应用，见 [Watrous，Theorems 2.22、2.26 与 Corollary 2.27 的现有条目](../../../Library/Quantum/watrous2018theory.md)。
+

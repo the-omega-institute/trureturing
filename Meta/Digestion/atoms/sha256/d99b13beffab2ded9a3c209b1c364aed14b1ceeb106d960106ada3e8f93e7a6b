@@ -1,0 +1,23 @@
+**命题 3.3（有界可达域与概率坐标的产品界）。** 若有限维可达集合 $\mathcal K=\{B_wb\}$ 有界且张成 $\mathbb R^r$，则
+
+<a id="eq-3-u08"></a>
+
+$$
+Q=\overline{\operatorname{conv}}(\mathcal K\cup-\mathcal K)
+$$
+
+是一个范数的单位球，每个 $B_a$ 在该范数下收缩。若校准列是真实可达次归一化状态、观察行为是概率效果、闭合成立，且对全部合法续接 $w$，$T_wC$ 的各列仍为合法次归一化状态，则
+
+<a id="eq-3-5"></a>
+
+$$
+\sup_w\|B_w\|_\infty
+\le\|H^{-1}\|_{\infty\to1}
+\le r\|H^{-1}\|_{\infty\to\infty}.
+\tag{3.5}
+$$
+
+**证明。** $Q$ 闭、有界、凸、中心对称；张成性保证它含原点邻域，所以 Minkowski 泛函是范数。由于 $B_a\mathcal K\subseteq\mathcal K$，有 $B_aQ\subseteq Q$。第二式由 $B_wH=OT_wC=:M_w$ 得到；$M_w$ 的每个元素均在 $[0,1]$ 内，所以 $\|M_wv\|_\infty\le\|v\|_1$，从而 $\|B_wu\|_\infty\le\|H^{-1}u\|_1$，最后用 $\|v\|_1\le r\|v\|_\infty$。该结论需要全部可达域有界；估计模型不会仅凭真实模型的收缩范数自动保持这一性质。
+
+<a id="sec-3-3"></a>
+

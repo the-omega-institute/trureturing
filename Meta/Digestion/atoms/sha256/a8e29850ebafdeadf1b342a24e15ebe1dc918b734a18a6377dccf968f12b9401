@@ -1,0 +1,33 @@
+**Corollary 12.2 (good/bad sufficient condition).** In the setup of Lemma 12.1, let the word family be split into good and bad words, $G\sqcup H$. Suppose $0\le\rho,\eta\le1$,
+
+$$
+\delta(B_w)\le\rho\quad(w\in G,\ p_v(w)>0),
+\qquad
+\sum_{w\in H,\ p_v(w)>0}p_v(w)\Delta_w(v)\le\eta\,\Delta(v)
+\tag{12.4}
+$$
+
+for almost every $v$. Then (12.2) holds with
+
+$$
+\kappa=\rho+(1-\rho)\eta.
+\tag{12.5}
+$$
+
+In particular, if $\rho+(1-\rho)\eta<1$, Lemma 12.1 gives strict contraction.
+
+**Proof.** Since every diameter is at most one,
+
+$$
+\begin{aligned}
+\sum_{w:p_v(w)>0}p_v(w)\delta(B_w)\Delta_w(v)
+&\le \rho\sum_{w\in G,\ p_v(w)>0}p_v(w)\Delta_w(v)
+   +\sum_{w\in H,\ p_v(w)>0}p_v(w)\Delta_w(v)\\
+&=\rho\left(\Delta(v)-\sum_{w\in H,\ p_v(w)>0}p_v(w)\Delta_w(v)\right)
+  +\sum_{w\in H,\ p_v(w)>0}p_v(w)\Delta_w(v)\\
+&\le \rho\Delta(v)+(1-\rho)\eta\Delta(v).
+\end{aligned}
+$$
+
+This is (12.2) with (12.5). The endpoint cases $\rho=0,1$ and $\eta=0,1$ are included. $\square$
+

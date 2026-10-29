@@ -1,0 +1,103 @@
+## 69. Spent-trigger fibres and paid promotion to an executable controller
+
+The latest LAB continuation supplies an actual-image instance of the
+task-compatible memory problem. It is useful because the hidden distinction is
+not an arbitrary bit appended to a source: it is the order of two already
+consumed growth triggers in one legal history. The source, selected word and
+service rights are shared; only the selector state may differ.
+
+Let \(\mathcal H(t)\) be the complete set of legal successful-event words for
+one attained source \(t\), and let \(\nu\) be the selected word produced by the
+two-state selector \(F_n\). For the left-trigger subword \(\nu_L\) and the set
+of sufficiently deep right events \(H_R^n(t)\), the actual-history fibre is
+
+$$
+\Phi_n(t,\nu)=
+\begin{cases}
+\{1\},&\nu_L\ne\varepsilon,\\
+\{0\},&\nu_L=\varepsilon\text{ and }\operatorname{set}(\nu)\ne H_R^n(t),\\
+\{0,1\},&\nu_L=\varepsilon\text{ and }\operatorname{set}(\nu)=H_R^n(t).
+\end{cases}
+$$
+
+This formula is quantified over the actual image of one initialized service.
+It does not treat an arbitrary source, seed or record tuple as a legal witness.
+The last case is a genuine history fibre: two different trigger orders produce
+the same current source and the same nonempty selected word, while leaving
+different selector controls.
+
+The two controls cannot be merged merely because their present source and
+record agree. They are persistently future-distinguishable. After both
+triggers are spent, split a deepest \(\beta\)-leaf down to depth at least \(n\).
+The high-control run selects the new event and the low-control run does not;
+FetchSelected or NextSelected then returns different complete replies and
+successors. Thus this is a behaviour-fibre obstruction in the sense of
+Sections 60--62, not only a forgotten-history distinction.
+
+The four-state absorbing latch in the same LAB continuation makes a second
+boundary explicit. A selected-word observation can itself be coarser than the
+control state: on the empty selected-word stratum, two absorbing states have
+the same current word but different future replies. Conversely, the two-state
+selector and the latch can produce different selected-word observations on the
+same source-history family. Therefore “the selected record” is not a universal
+substitute for the controller state; the observation contract must name the
+selector and its update law.
+
+The ambiguity also has an exact same-run acquisition cost. Let \(D\) be the
+greatest current logical leaf depth and set
+
+$$
+g=\max\{1,n-D+1\}.
+$$
+
+After the paid stationary prepass, every deterministic finite-return requester
+that must return a self-sufficient predictor for both controls satisfies
+
+$$
+G_{\mathrm{inc}}\ge g,\qquad R_{\mathrm{inc}}\ge g+1,
+$$
+
+where \(G_{\mathrm{inc}}\) counts successful growth events and
+\(R_{\mathrm{inc}}\) counts all completed requests. The bound is attained by
+splitting a deepest \(\beta\)-leaf \(g\) times and then fetching the next
+selected record. The first \(g-1\) growths have identical complete replies in
+both runs; the final growth creates the first new selected discrepancy, and the
+extra fetch exposes it. This is a coupled-transcript lower bound and an
+actual same-run upper bound, not a static information-count estimate.
+
+Consequently the abstract acquisition layers acquire a concrete promotion
+map:
+
+$$
+\text{actual history fibre}
+\xrightarrow[\text{paid probes}]{(g,g+1)}
+\text{identified control}
+\xrightarrow{\text{ranked predictor}}
+\text{finite closed-loop continuation}.
+$$
+
+The returned description remains task-relative. It predicts and executes
+future requests from the reached source, selected word, public selector code
+and live rights; it does not restore the old cut, install a reset or recover
+the complete unselected chronology. In particular, making the residual
+control known is a homing operation, not a solution of the old static equality
+problem. This supplies the missing acquisition and permission data required
+before a response collision can be promoted to an executable obstruction or
+protocol.
+
+The result sharpens the controller hierarchy of this volume:
+
+$$
+\begin{aligned}
+\text{semantic fibre}&:\text{ which histories share the current record},\\
+\text{behaviour fibre}&:\text{ which histories share every legal future},\\
+\text{task fibre}&:\text{ which histories admit one common protocol},\\
+\text{execution certificate}&:\text{ which protocol has legal updates and a decreasing rank}.
+\end{aligned}
+$$
+
+The LAB theorem closes the acquisition-to-execution bridge for its declared
+actual-image contract. It does not establish a universal finite controller,
+state-minimality, total-cost optimality, unknown-seed acquisition or recovery
+of all unselected chronology.
+

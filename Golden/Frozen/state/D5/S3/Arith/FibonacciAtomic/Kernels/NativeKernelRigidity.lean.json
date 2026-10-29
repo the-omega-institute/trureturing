@@ -1,0 +1,1 @@
+{"statement_id":"sha256:765991d5cfbbff08a9638bf5a9bf254e267d6af9f97c3dbcc9b68e03b49303ed","declarations":[{"declaration_name_key":"ns(ns(ns(ns(ns(ns(ns(n0,2:D5),2:S3),5:Arith),15:FibonacciAtomic),7:Kernels),20:NativeKernelRigidity),18:kernel_zero_or_one)","kind":"theorem"}]}

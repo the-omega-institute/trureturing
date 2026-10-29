@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:69f085c69f25f44e4c664b60288a0dc4de8367b9d7d09730e70194a04f0dbbbe
+  normalized_sha256: sha256:69f085c69f25f44e4c664b60288a0dc4de8367b9d7d09730e70194a04f0dbbbe
+cas_ref: sha256:69f085c69f25f44e4c664b60288a0dc4de8367b9d7d09730e70194a04f0dbbbe
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Kernels/NativeKernelRigidity.kernel_zero_or_one
+    target_statement_id: sha256:991c8171befe16d9821871bd9bf768ba51a0cc79df08dc6d158618e33d3564a1
+receipts:
+  unresolved_subitems: []

@@ -26,7 +26,7 @@ internal sealed class LatticeFourCurrentTraceDocument : IScribeDocumentDefinitio
             Paragraph(Text("This structural identity is uniform in arbitrary natural grades and original lattice data; it is not a bounded enumeration of fixed inputs. Four-point joint absolute convergence, thermal summation, modularity, sewing, Monster realization, and the full string/AdS program remain separate obligations.")))));
 
     private static DocumentBlock Definition(string id, string name, string title, string prose) =>
-        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create("D5/S3/VertexAlgebra/Characters/FourCurrent/TraceRecurrence." + name), H(title),
             StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
