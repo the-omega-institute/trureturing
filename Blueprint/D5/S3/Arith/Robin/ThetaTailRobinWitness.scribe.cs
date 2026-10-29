@@ -24,8 +24,9 @@ internal sealed class ThetaTailRobinWitnessDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "Write I(x)=(theta(x)-x)/(x*log(x))-E₂p(x). Classical finite Abel summation "
                         + "gives I(u)=I(x)-integral_x^u (theta(t)-t)*w(t) dt. The finite calculation "
-                        + "uses the reciprocal logarithmic weight in ActualRobinClockCovariance and "
-                        + "the prime-cutoff and continuity identities used in ThetaTailPartialSummation. "
+                        + "reuses the canonical ThetaTailPartialSummation.theta_tail_finite supplier "
+                        + "from MertensCumulativePeak; its reciprocal logarithmic weight and "
+                        + "prime-cutoff identities provide the finite bridge. "
                         + "The elementary bound 0<=theta(u)<=u*log(4), together with "
                         + "|E₂p(u)|<=(log(4)+6+Mertens.E₁)/log(u), proves I(u) tends to zero. "
                         + "ActualThetaTailLaplace supplies unconditional integrability of the same actual kernel. "

@@ -11,8 +11,9 @@ import D5.S3.Weil.Mertens.ActualThetaTailLaplace
 
 /-! Classical Abel summation and the Mertens correction connect the actual
 Chebyshev theta tail to the prefix-lcm response. The finite Abel calculation
-follows ThetaTailPartialSummation in MertensCumulativePeak; unconditional tail
-integrability is supplied by ActualThetaTailLaplace. -/
+reuses the canonical `ThetaTailPartialSummation.theta_tail_finite` supplier
+from MertensCumulativePeak; unconditional tail integrability is supplied by
+ActualThetaTailLaplace. -/
 
 noncomputable section
 open Set Finset Real MeasureTheory Filter
@@ -21,111 +22,8 @@ namespace D5.S3.Arith.Robin.ThetaTailRobinWitness
 open OriginalMovingWindowMoment (weight_continuous)
 private abbrev I (u : ℝ) : ℝ :=
   (Chebyshev.theta u - u) / (u * log u) - Mertens.E₂p u
-private abbrev k (u : ℝ) : ℝ := log (log u) - 1 / log u
 private abbrev w := ActualRobinClockCovariance.activationDensity
-private abbrev reciprocal := ActualRobinClockCovariance.g
 private abbrev g (u : ℝ) : ℝ := (Chebyshev.theta u - u) * w u
-
-private theorem theta_mul_integrable {a b : ℝ} (ha : 2 ≤ a)
-    {f : ℝ → ℝ} (hf : IntegrableOn f (Icc a b)) :
-    IntegrableOn (fun t => f t * Chebyshev.theta t) (Icc a b) := by
-  simpa only [Chebyshev.theta_eq_sum_Icc, sum_filter] using
-    (integrableOn_mul_sum_Icc (fun n : ℕ => if n.Prime then log n else 0)
-      (show 0 ≤ a by linarith) hf (m := 0))
-
-private theorem reciprocal_deriv {t : ℝ} (ht : 2 ≤ t) :
-    deriv reciprocal t = -w t :=
-  (ActualRobinClockCovariance.g_has_deriv_at (by linarith : 1 < t)).deriv
-
-private theorem theta_tail_representation {u : ℝ} (hu : 2 ≤ u) :
-    I u = Mertens.M + k u - ∫ t in (2 : ℝ)..u, Chebyshev.theta t * w t := by
-  let c : ℕ → ℝ := fun n => if n.Prime then log n else 0
-  have hc (t : ℝ) : (∑ n ∈ Icc 0 ⌊t⌋₊, c n) = Chebyshev.theta t := by
-    simp only [c, ← sum_filter, Chebyshev.theta_eq_sum_Icc]
-  have hs : (∑ n ∈ Icc 0 ⌊u⌋₊, reciprocal n * c n) =
-      ∑ p ∈ Ioc 0 ⌊u⌋₊ with p.Prime, (1 : ℝ) / p := by
-    simp only [c, mul_ite, mul_zero]
-    rw [← sum_filter]
-    rw [PrimorialGlobalLaplaceEnvelope.prime_filter_Icc]
-    apply sum_congr rfl
-    intro p hp
-    have hpp := (mem_filter.mp hp).2
-    have hp0 : (p : ℝ) ≠ 0 := by exact_mod_cast hpp.ne_zero
-    have hl0 : log (p : ℝ) ≠ 0 :=
-      (log_pos (by exact_mod_cast hpp.one_lt : (1 : ℝ) < p)).ne'
-    dsimp [reciprocal, ActualRobinClockCovariance.g]
-    field_simp
-  have hfi : IntegrableOn (deriv reciprocal) (Icc (2 : ℝ) u) := by
-    refine ((weight_continuous (by norm_num : (1 : ℝ) < 2)).neg.integrableOn_Icc
-      (μ := volume)).congr_fun
-      (fun t ht => (reciprocal_deriv ht.1).symm) measurableSet_Icc
-  have ha := sum_mul_eq_sub_integral_mul₁ c (by simp [c]) (by simp [c]) u
-    (fun t ht => (ActualRobinClockCovariance.g_has_deriv_at
-      (by linarith [ht.1] : 1 < t)).differentiableAt) hfi
-  rw [hs, hc] at ha
-  have hi : (∫ t in Ioc (2 : ℝ) u, deriv reciprocal t * ∑ n ∈ Icc 0 ⌊t⌋₊, c n) =
-      -(∫ t in (2 : ℝ)..u, Chebyshev.theta t * w t) := by
-    rw [← intervalIntegral.integral_of_le hu, ← intervalIntegral.integral_neg]
-    refine intervalIntegral.integral_congr ?_
-    intro t ht
-    rw [uIcc_of_le hu] at ht
-    change deriv reciprocal t * (∑ n ∈ Icc 0 ⌊t⌋₊, c n) = -(Chebyshev.theta t * w t)
-    rw [hc, reciprocal_deriv ht.1]
-    ring
-  rw [hi] at ha
-  dsimp [I, Mertens.E₂p, k, reciprocal, ActualRobinClockCovariance.g] at *
-  have hu0 : u ≠ 0 := by linarith
-  have hl0 : log u ≠ 0 := (log_pos (by linarith : 1 < u)).ne'
-  rw [ha]
-  field_simp; ring
-
-private theorem k_hasDerivAt {t : ℝ} (ht : 2 ≤ t) :
-    HasDerivAt k (t * w t) t := by
-  have ht0 : t ≠ 0 := by linarith
-  have hl0 : log t ≠ 0 := (log_pos (by linarith : 1 < t)).ne'
-  have hd := ((Real.hasDerivAt_log hl0).comp t (Real.hasDerivAt_log ht0)).sub
-    ((hasDerivAt_const t (1 : ℝ)).div (Real.hasDerivAt_log ht0) hl0)
-  refine hd.congr_deriv ?_
-  simp only [w, ActualRobinClockCovariance.activationDensity,
-    one_mul, zero_mul, zero_sub]
-  field_simp [ht0, hl0]; ring
-
-private theorem theta_tail_finite {a u : ℝ} (ha : 2 ≤ a) (hau : a ≤ u) :
-    I u = I a - ∫ t in a..u, g t := by
-  have hu : 2 ≤ u := ha.trans hau
-  have hkw : (∫ t in a..u, t * w t) = k u - k a := by
-    apply intervalIntegral.integral_eq_sub_of_hasDerivAt
-    · intro t ht
-      rw [uIcc_of_le hau] at ht
-      exact k_hasDerivAt (ha.trans ht.1)
-    · exact (continuousOn_id.mul
-        (weight_continuous (by linarith : 1 < a))).intervalIntegrable_of_Icc hau
-  have htheta : IntervalIntegrable (fun t => Chebyshev.theta t * w t) volume (2 : ℝ) u := by
-    rw [intervalIntegrable_iff_integrableOn_Icc_of_le hu]
-    simpa only [mul_comm, MellinWeightedVariation.weight, w,
-      ActualRobinClockCovariance.activationDensity] using
-      theta_mul_integrable (by norm_num : (2 : ℝ) ≤ 2)
-      ((weight_continuous (by norm_num : (1 : ℝ) < 2)).integrableOn_Icc (μ := volume))
-  have htheta_a : IntervalIntegrable (fun t => Chebyshev.theta t * w t)
-      volume (2 : ℝ) a := htheta.mono_set
-    (by rw [uIcc_of_le hu, uIcc_of_le ha]; exact Icc_subset_Icc_right hau)
-  have htheta_au : IntervalIntegrable (fun t => Chebyshev.theta t * w t) volume a u :=
-    htheta.mono_set
-    (by rw [uIcc_of_le hu, uIcc_of_le hau]; exact Icc_subset_Icc_left ha)
-  have hsplit := intervalIntegral.integral_add_adjacent_intervals htheta_a htheta_au
-  have hg : (∫ t in a..u, g t) =
-      (∫ t in a..u, Chebyshev.theta t * w t) - (k u - k a) := by
-    have hiu : IntervalIntegrable (fun t : ℝ => t * w t) volume a u := by
-      apply ContinuousOn.intervalIntegrable_of_Icc hau
-      intro t ht
-      exact continuousWithinAt_id.mul (weight_continuous (by linarith : 1 < a) t ht)
-    rw [← hkw, ← intervalIntegral.integral_sub htheta_au hiu]
-    apply intervalIntegral.integral_congr
-    intro t ht
-    dsimp [g]
-    ring
-  rw [theta_tail_representation hu, theta_tail_representation ha, hg]
-  linarith
 
 private theorem normalized_error_tendsto : Tendsto I atTop (𝓝 0) := by
   have htheta : Tendsto (fun x : ℝ => (Chebyshev.theta x - x) / (x * log x))
@@ -166,7 +64,7 @@ private theorem actual_tail_identity {x : ℝ} (hx : 2 ≤ x) :
   have hright := (tendsto_const_nhds (x := I x)).sub normalized_error_tendsto
   have he : (fun u => ∫ t in x..u, g t) =ᶠ[atTop] (fun u => I x - I u) := by
     filter_upwards [eventually_ge_atTop x] with u hu
-    linarith [theta_tail_finite hx hu]
+    linarith [D5.S3.Arith.Robin.ThetaTailPartialSummation.theta_tail_finite hx hu]
   have hlim := tendsto_nhds_unique hleft (hright.congr' he.symm)
   dsimp only [I, id_eq] at hlim ⊢
   linarith
