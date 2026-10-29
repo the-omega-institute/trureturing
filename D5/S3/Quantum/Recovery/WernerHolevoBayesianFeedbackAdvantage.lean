@@ -662,8 +662,8 @@ private theorem abs_canonical (i : Fin 3) :
     have hi := congrFun h i
     simp [Pi.single_apply] at hi
   have hn : ‖(WithLp.toLp 2 (Pi.single i (1 : ℂ) : Fin 3 → ℂ) : EuclideanSpace ℂ (Fin 3))‖ = 1 := by
-    fin_cases i <;> norm_num [EuclideanSpace.norm_eq, Complex.sq_norm, finiteComplexEnergy,
-        Pi.single_apply, Fin.sum_univ_succ]
+    change ‖(PiLp.single 2 i (1 : ℂ) : EuclideanSpace ℂ (Fin 3))‖ = 1
+    simp only [PiLp.norm_single, norm_one]
   have hv : Matrix.vecMulVec ((Pi.single i (1 : ℂ) : Fin 3 → ℂ)) (star ((Pi.single i (1 : ℂ) : Fin 3
       → ℂ))) =
       Matrix.single i i 1 := by
