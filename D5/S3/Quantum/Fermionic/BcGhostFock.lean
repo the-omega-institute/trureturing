@@ -94,4 +94,54 @@ theorem ghost_parity (m : ℤ) :
     · simpa [c, hm, mode] using parity_odd (2*(1-m).toNat+1) true
     · simpa [c, hm, mode] using parity_odd (2*(m-2).toNat) false
 
+
+/-- The two full ghost vacuum cuts enumerate exactly the source annihilators. -/
+theorem ghost_common_annihilator_kernel (v : Fock) :
+    ((∀ m : ℤ, -1 ≤ m → b m v = 0) ∧
+      (∀ n : ℤ, 2 ≤ n → c n v = 0)) ↔ ∃ α : ℂ, v = α • vacuum := by
+  constructor
+  · rintro ⟨hb, hc⟩
+    apply (common_annihilator_kernel v).mp
+    intro j
+    by_cases he : j % 2 = 0
+    · have hj : j = 2 * (j / 2) := by omega
+      rw [hj, ← (mode_correspondence (j / 2)).2.1]
+      exact hc ((j / 2 : ℕ) + 2) (by omega)
+    · have hj : j = 2 * (j / 2) + 1 := by omega
+      rw [hj, ← (mode_correspondence (j / 2)).2.2.2]
+      exact hb ((j / 2 : ℕ) - 1) (by omega)
+  · rintro ⟨α, rfl⟩
+    constructor
+    · intro m hm
+      rw [map_smul, ghost_vacuum.1 m hm, smul_zero]
+    · intro n hn
+      rw [map_smul, ghost_vacuum.2.1 n hn, smul_zero]
+
+/-- Every endomorphism commuting with all integer ghost modes is scalar on every state. -/
+theorem scalar_commutant (A : Module.End ℂ Fock)
+    (hb : ∀ m : ℤ, A * b m = b m * A)
+    (hc : ∀ n : ℤ, A * c n = c n * A) :
+    ∃ α : ℂ, A = α • (1 : Module.End ℂ Fock) := by
+  have hAvac : (∀ m : ℤ, -1 ≤ m → b m (A vacuum) = 0) ∧
+      (∀ n : ℤ, 2 ≤ n → c n (A vacuum) = 0) := by
+    constructor
+    · intro m hm
+      calc
+        b m (A vacuum) = A (b m vacuum) := (LinearMap.congr_fun (hb m) vacuum).symm
+        _ = 0 := by rw [ghost_vacuum.1 m hm, map_zero]
+    · intro n hn
+      calc
+        c n (A vacuum) = A (c n vacuum) := (LinearMap.congr_fun (hc n) vacuum).symm
+        _ = 0 := by rw [ghost_vacuum.2.1 n hn, map_zero]
+  obtain ⟨α, hvac⟩ := (ghost_common_annihilator_kernel (A vacuum)).mp hAvac
+  refine ⟨α, eq_scalar_of_creator_commutation A α hvac ?_⟩
+  intro j
+  by_cases he : j % 2 = 0
+  · have hj : j = 2 * (j / 2) := by omega
+    rw [hj, ← (mode_correspondence (j / 2)).1]
+    exact hb (-(j / 2 : ℕ) - 2)
+  · have hj : j = 2 * (j / 2) + 1 := by omega
+    rw [hj, ← (mode_correspondence (j / 2)).2.2.1]
+    exact hc (1 - (j / 2 : ℕ))
+
 end D5.S3.Quantum.Fermionic.BcGhostFock

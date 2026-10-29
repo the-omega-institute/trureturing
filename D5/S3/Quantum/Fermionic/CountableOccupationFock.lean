@@ -443,4 +443,74 @@ theorem creator_spanning :
     rw [he, ← hw]
     exact Submodule.smul_mem _ _ hword
 
+
+/-- An occupied coefficient is recovered from the coefficient after deleting its site. -/
+private theorem annihilate_coefficient (j : ℕ) (v : Fock) (S : Finset ℕ) (hj : j ∈ S) :
+    annihilate j v (S.erase j) = phase j S * v S := by
+  classical
+  induction v using Finsupp.induction_linear with
+  | zero => simp
+  | add f g hf hg =>
+    simp only [map_add, Finsupp.add_apply, hf, hg]
+    ring
+  | single T a =>
+    have hs : Finsupp.single T a = a • ket T := by simp [ket]
+    rw [hs, map_smul, annihilate_ket]
+    by_cases hjT : j ∈ T
+    · rw [if_pos hjT]
+      by_cases hTS : T = S
+      · subst T
+        simp [ket, smul_smul, mul_comm]
+      · have he : T.erase j ≠ S.erase j := by
+          intro he
+          apply hTS
+          calc
+            T = insert j (T.erase j) := (Finset.insert_erase hjT).symm
+            _ = insert j (S.erase j) := congrArg (insert j) he
+            _ = S := Finset.insert_erase hj
+        simp [ket, he, hTS, eq_comm]
+    · have hTS : T ≠ S := by rintro rfl; exact hjT hj
+      simp [hjT, ket, hTS, eq_comm]
+
+/-- The simultaneous kernel of all actual annihilators is precisely the vacuum line. -/
+theorem common_annihilator_kernel (v : Fock) :
+    (∀ j : ℕ, annihilate j v = 0) ↔ ∃ α : ℂ, v = α • vacuum := by
+  classical
+  constructor
+  · intro h
+    refine ⟨v ∅, ?_⟩
+    ext S
+    by_cases hS : S = ∅
+    · subst S
+      simp [vacuum, ket]
+    · obtain ⟨j, hj⟩ := Finset.nonempty_iff_ne_empty.mpr hS
+      have hz : phase j S * v S = 0 := by
+        rw [← annihilate_coefficient j v S hj, h j]
+        rfl
+      have hv : v S = 0 := (mul_eq_zero.mp hz).resolve_left
+        (pow_ne_zero _ (by norm_num : (-1 : ℂ) ≠ 0))
+      simp [hv, vacuum, ket, hS]
+  · rintro ⟨α, rfl⟩ j
+    rw [map_smul, annihilate_vacuum, smul_zero]
+
+/-- Creator spanning extends a scalar vacuum value to the entire actual carrier. -/
+theorem eq_scalar_of_creator_commutation (A : Module.End ℂ Fock) (α : ℂ)
+    (hvac : A vacuum = α • vacuum)
+    (hc : ∀ j : ℕ, A * create j = create j * A) :
+    A = α • (1 : Module.End ℂ Fock) := by
+  apply LinearMap.ext_on_range creator_spanning
+  intro w
+  have hw : ∀ w : List ℕ,
+      A (word (w.map (fun j => (j, true))) vacuum) =
+        α • word (w.map (fun j => (j, true))) vacuum := by
+    intro w
+    induction w with
+    | nil => simpa [word] using hvac
+    | cons j w ih =>
+      have hj (v : Fock) : A (create j v) = create j (A v) :=
+        LinearMap.congr_fun (hc j) v
+      simpa only [List.map_cons, word, Module.End.mul_apply, mode, ite_true,
+        hj, ih, map_smul]
+  exact hw w
+
 end D5.S3.Quantum.Fermionic.CountableOccupationFock
