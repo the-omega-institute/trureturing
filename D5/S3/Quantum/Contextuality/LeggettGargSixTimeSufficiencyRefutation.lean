@@ -34,7 +34,7 @@ def corr {n : ℕ} (p : PairTables n) (i j : Fin n) : ℝ :=
 def NGonInequalities {n : ℕ} (p : PairTables n) : Prop :=
   ∀ s : Fin n → Bool,
     (if Odd n then (1 : ℝ) else 0) ≤
-      n + 2 * ∑ i, ∑ j in Finset.Ioi i, sgn (s i) * sgn (s j) * corr p i j
+      n + 2 * ∑ i, ∑ j ∈ Finset.Ioi i, sgn (s i) * sgn (s j) * corr p i j
 
 def ThreeTimeLG {n : ℕ} (p : PairTables n) : Prop :=
   ∀ i j k, i < j → j < k → ∀ a b c : Bool,
@@ -64,4 +64,5 @@ theorem result : ¬ claim := by
   intro h
   exact p_no_joint (h 6 p (by omega) p_family p_ngon p_three)
 
+end
 end D5.S3.Quantum.Contextuality.LeggettGargSixTimeSufficiencyRefutation
