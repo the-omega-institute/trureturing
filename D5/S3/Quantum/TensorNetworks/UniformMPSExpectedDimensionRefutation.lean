@@ -7,7 +7,6 @@
    digest: Two-site uniform matrix product states can miss the expected dimension. -/
 
 import Mathlib.Basic.Complex.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.Logic.Equiv.Fin.Rotate
 import Mathlib.RingTheory.Nullstellensatz
 import Mathlib.RingTheory.KrullDimension.Polynomial
