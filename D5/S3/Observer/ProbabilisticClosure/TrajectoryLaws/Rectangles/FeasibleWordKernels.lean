@@ -4,14 +4,17 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Original word conditionals factor through feasible normalized transitions with structural zeros. -/
+   digest: Original word conditionals use feasible transitions with structural zeros. -/
 
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalFutureScreening
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.PositiveRectangleLaw
-import Mathlib.Tactic
+
+/-! Original word likelihoods and their feasible conditional path products. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 noncomputable section
 open scoped BigOperators Classical
 open Matrix MeasureTheory
@@ -21,7 +24,7 @@ open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalFutureCylinders
 open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalFutureScreening
 
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.Rectangles.FeasibleWordKernels
-variable {H : Type*} [Fintype H]
+variable {H : Type*} [Fintype H] [MeasurableSpace H] [MeasurableSingletonClass H]
 
 /-- The original likelihood of a word followed by an arbitrary terminal message. -/
 def message (θ : Presentation H) (n : ℕ) (w : Fin n → Bool) (z : H → ℝ) : H → ℝ :=
@@ -52,6 +55,7 @@ private theorem message_nonneg (θ : Presentation H) (n : ℕ) (w : Fin n → Bo
     (by rw [← PositiveRectangleLaw.product_ofFn]; exact PositiveRectangleLaw.product_nonneg θ _ s t)
     (hz t)
 
+omit [MeasurableSpace H] [MeasurableSingletonClass H] in
 private theorem weighted_transition (θ : Presentation H) (x : Bool) (z : H → ℝ)
     (hz : ∀ s, 0 ≤ z s) (s t : H) :
     (θ.matrix x *ᵥ z) s * transition θ x z s t = θ.matrix x s t * z t := by
@@ -66,7 +70,7 @@ private theorem weighted_transition (θ : Presentation H) (x : Bool) (z : H → 
 private theorem weighted_product (θ : Presentation H) (z : H → ℝ) (hz : ∀ s, 0 ≤ z s)
     (n : ℕ) (w : Fin n → Bool) (s t : H) :
     message θ n w z s * forwardProduct θ n w z s t = wordMatrix θ.matrix n w s t * z t := by
-  induction n generalizing w s with
+  induction n generalizing s with
   | zero =>
     simp only [message,wordMatrix,Matrix.one_mulVec,forwardProduct,Matrix.one_apply]
     split_ifs with h
@@ -75,7 +79,7 @@ private theorem weighted_product (θ : Presentation H) (z : H → ℝ) (hz : ∀
   | succ n ih =>
     have hm : message θ (n+1) w z = θ.matrix (w 0) *ᵥ message θ n (Fin.tail w) z := by
       simp only [message,wordMatrix,Matrix.mulVec_mulVec]
-    rw [forwardProduct,Matrix.mul_apply,Finset.mul_sum,Matrix.mul_apply,Finset.sum_mul]
+    rw [forwardProduct,Matrix.mul_apply,Finset.mul_sum,wordMatrix,Matrix.mul_apply,Finset.sum_mul]
     apply Finset.sum_congr rfl
     intro r _
     rw [hm]
@@ -100,8 +104,10 @@ private theorem weighted_path (θ : Presentation H) (z : H → ℝ) (hz : ∀ s,
     have hm : message θ (n+1) w z = θ.matrix (w 0) *ᵥ message θ n (Fin.tail w) z := by
       simp only [message,wordMatrix,Matrix.mulVec_mulVec]
     rw [forwardPath,hm,← mul_assoc,weighted_transition θ _ _ (message_nonneg θ n _ z hz)]
-    rw [mul_assoc,ih (Fin.tail w) (Fin.tail h),path_step]
-    rfl
+    rw [mul_assoc,path_step,mul_assoc]
+    apply congrArg (fun r => θ.matrix (w 0) (h 0) (h 1) * r)
+    have h01 : (0 : Fin (n+1)).succ = (1 : Fin (n+2)) := by ext; simp
+    simpa only [Fin.tail,h01,Fin.succ_last] using ih (Fin.tail w) (Fin.tail h)
 
 /-- On precisely the positive-likelihood states, the chronological product is the original
 word kernel, is a probability row, and assigns zero mass to infeasible endpoints. -/
@@ -111,8 +117,10 @@ theorem feasible_word_product (θ : Presentation H) (n : ℕ) (w : Fin n → Boo
       wordMatrix θ.matrix n w s t * z t / message θ n w z s) ∧
     (∑ t, forwardProduct θ n w z s t) = 1 ∧
     (∀ t, z t = 0 → forwardProduct θ n w z s t = 0) := by
-  have he (t : H) := (eq_div_iff hs.ne').mpr
-    (by simpa only [mul_comm] using weighted_product θ z hz n w s t)
+  have he (t : H) : forwardProduct θ n w z s t =
+      wordMatrix θ.matrix n w s t * z t / message θ n w z s := by
+    apply (eq_div_iff hs.ne').mpr
+    exact (mul_comm _ _).trans (weighted_product θ z hz n w s t)
   refine ⟨he,?_,?_⟩
   · simp_rw [he]
     rw [← Finset.sum_div]
@@ -121,7 +129,6 @@ theorem feasible_word_product (θ : Presentation H) (n : ℕ) (w : Fin n → Boo
     rw [he,ht,mul_zero,zero_div]
 
 section Actual
-variable [MeasurableSpace H] [MeasurableSingletonClass H]
 
 /-- The actual observed word and future, with the initial hidden state retained. -/
 def startingRecord (t : ℤ) (m n : ℕ) (s : H) (w : Fin m → Bool) (v : Fin n → Bool) :
@@ -145,14 +152,14 @@ private theorem starting_mass (θ : Presentation H) (J : Measure (PathSpace H))
       wordMatrix θ.matrix m w * wordMatrix θ.matrix n v := by
     simp only [← PositiveRectangleLaw.product_ofFn, List.ofFn_fin_append,
       PositiveRectangleLaw.product,List.map_append,List.prod_append]
-  simp only [futureMass,message,hp,Matrix.mul_apply,Finset.sum_mul,Finset.mul_sum,Matrix.mulVec,dotProduct]
+  simp only [futureMass,message,hp,Matrix.mul_apply,Finset.mul_sum,Matrix.mulVec,dotProduct]
   exact Finset.sum_comm
 
 /-- On the same original law, a positive observed record has exactly the chronological
 normalized hidden-path probability. No positive-coordinate hypothesis is imposed. -/
 theorem actual_conditioned_word_path (θ : Presentation H) (J : Measure (PathSpace H))
     [IsProbabilityMeasure J] (hc : HasOriginalCylinders J θ) (t : ℤ) (m n : ℕ)
-    (h : Fin (m+1) → H) (w : Fin m → Bool) (v : Fin n → Bool)
+    (h : Fin (m + 1) → H) (w : Fin m → Bool) (v : Fin n → Bool)
     (hpos : 0 < J.real (startingRecord t m n (h 0) w v)) :
     J.real (MarkedPredictiveQuotient.cylinder t m h w ∩
       Prod.snd ⁻¹' visibleCylinder (t+m) n v) /
@@ -170,10 +177,14 @@ theorem actual_conditioned_word_path (θ : Presentation H) (J : Measure (PathSpa
   rw [hm,starting_mass θ J hc]
   have he := weighted_path θ z hz m w h
   change message θ m w z (h 0) * forwardPath θ m w z h = _ at he
-  change _ / (θ.initial (h 0) * message θ m w z (h 0)) = _
+  change (θ.initial (h 0) * pathMass θ.matrix m h w * z (h (Fin.last m))) /
+    (θ.initial (h 0) * message θ m w z (h 0)) = forwardPath θ m w z h
   apply (div_eq_iff (ne_of_gt hpos)).mpr
-  rw [mul_comm (forwardPath θ m w z h),mul_assoc,he]
-  ring
+  calc
+    _ = θ.initial (h 0) * (message θ m w z (h 0) * forwardPath θ m w z h) := by
+      rw [he]
+      ring
+    _ = _ := by ring
 
 #print axioms feasible_word_product
 #print axioms actual_conditioned_word_path
