@@ -6,16 +6,14 @@
    utility: none
    digest: Actual ideals, support cells and spectral transport for three prime powers. -/
 
-module
-
-public import D5.S3.Combinatorics.SpectralGraph.SixSupportLaplacianLowRoot
-public import Mathlib.Data.Nat.Factorization.Basic
-public import Mathlib.Data.ZMod.QuotientRing
-public import Mathlib.RingTheory.PrincipalIdealDomain
-public import Mathlib.Combinatorics.SimpleGraph.LapMatrix
-public import Mathlib.Data.Fintype.BigOperators
-public import Mathlib.Data.Fintype.Powerset
-public import Lean.Elab.Tactic.Omega
+import D5.S3.Combinatorics.SpectralGraph.SixSupportLaplacianLowRoot
+import Mathlib.Data.Nat.Factorization.Basic
+import Mathlib.Data.ZMod.QuotientRing
+import Mathlib.RingTheory.PrincipalIdealDomain
+import Mathlib.Combinatorics.SimpleGraph.LapMatrix
+import Mathlib.Data.Fintype.BigOperators
+import Mathlib.Data.Fintype.Powerset
+import Lean.Elab.Tactic.Omega
 
 /-!
 The ideal-intersection graph and its support decomposition are attributed to
@@ -27,7 +25,6 @@ These Lean proofs are independently authored. This module concerns a graph
 prerequisite and makes no claim to complete the nonintegrality classification.
 -/
 
-@[expose] public section
 
 set_option autoImplicit false
 noncomputable section
