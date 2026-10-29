@@ -70,7 +70,10 @@ internal sealed class MetrotropyHalfErgotropyRefutationDocument : IScribeDocumen
                             + "Its infimum is therefore nonnegative, giving ergotropy at most 178/25. "
                             + "Half the ergotropy is consequently at most 89/25 = 356/100, strictly below the metrotropy lower bound 387/100. "
                             + "Applying the universal inequality to dimension four, H, and ρ would contradict these bounds; hence the proposition is false."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("solfanelli-buffoni-cuccoli-campisi-2019-metrotropy-half-ergotropy"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(
