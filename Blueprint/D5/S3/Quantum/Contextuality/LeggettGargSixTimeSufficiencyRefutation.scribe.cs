@@ -117,7 +117,10 @@ internal sealed class LeggettGargSixTimeSufficiencyRefutationDocument : IScribeD
                             + "sufficiency assertion and admit no matching joint distribution. "
                             + "Applying that assertion at n = 6 would give the impossible joint "
                             + "distribution, so the universal assertion is false."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("halliwell-mawby-2019-leggett-garg-six-time-sufficiency"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Definition(string id, string declaration, string title,
         Formula formula, string prose) => Describe.Lean(
