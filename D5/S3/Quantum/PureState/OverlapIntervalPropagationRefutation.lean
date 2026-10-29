@@ -7,8 +7,6 @@
    digest: Five pure-state overlaps force a sixth beyond three-state interval propagation. -/
 
 import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
 
 /-! The one-unknown-edge procedure can miss the exact feasible lower endpoint. -/
 
