@@ -6,7 +6,7 @@ The actual free group on Bool is an infinite nonnilpotent sharpness countermodel
 
 **Theorem 1.1 (Exact FreeGroup Bool countermodel).**
 
-$$((\operatorname{Infinite}\left(\operatorname{FreeGroup}\left(Bool\right)\right) \land \neg \operatorname{Group.IsNilpotent}\left(\operatorname{FreeGroup}\left(Bool\right)\right)) \land \forall x \in \operatorname{FreeGroup}\left(Bool\right), y \in \operatorname{FreeGroup}\left(Bool\right), m \in Nat, n \in Nat,\; (\operatorname{Coprime}\left(m, n\right) \implies (x^{m} = y^{n} \iff \exists z \in \operatorname{FreeGroup}\left(Bool\right),\; ((x = z^{n} \land y = z^{m}) \land \forall w \in \operatorname{FreeGroup}\left(Bool\right),\; ((x = w^{n} \land y = w^{m}) \implies w = z)))))$$
+$$(\operatorname{Infinite}\left(\operatorname{FreeGroup}\left(Bool\right)\right) \land (\neg \operatorname{Group.IsNilpotent}\left(\operatorname{FreeGroup}\left(Bool\right)\right) \land \forall x \in \operatorname{FreeGroup}\left(Bool\right), y \in \operatorname{FreeGroup}\left(Bool\right), m \in Nat, n \in Nat,\; (\operatorname{Coprime}\left(m, n\right) \implies (x^{m} = y^{n} \iff \exists z \in \operatorname{FreeGroup}\left(Bool\right),\; ((x = z^{n} \land y = z^{m}) \land \forall w \in \operatorname{FreeGroup}\left(Bool\right),\; ((x = w^{n} \land y = w^{m}) \implies w = z))))))$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/FreeRootAmalgamation.freeGroupBool_infinite_not_nilpotent_coprime_root` (`✓ std3`). ∎
 

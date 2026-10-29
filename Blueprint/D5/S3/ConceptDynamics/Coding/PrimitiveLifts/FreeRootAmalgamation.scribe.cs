@@ -50,9 +50,9 @@ internal sealed class FreeRootAmalgamationDocument : IScribeDocumentDefinition
                 "D5/S3/ConceptDynamics/Coding/PrimitiveLifts/FreeRootAmalgamation.freeGroupBool_infinite_not_nilpotent_coprime_root"),
             H("Exact FreeGroup Bool countermodel"),
             StatementSource.FromAuthor(Disp(And(
-                And(Call("Infinite", FreeGroup()),
-                    new Formula.Not(App(Qualified("Group", "IsNilpotent"), FreeGroup()))),
-                RootEquation()))),
+                Call("Infinite", FreeGroup()),
+                And(new Formula.Not(App(Qualified("Group", "IsNilpotent"), FreeGroup())),
+                    RootEquation())))),
             AssessedProvenance.FromRepo(), Blocks(
                 Paragraph(Text("For the actual group FreeGroup Bool, infinitude, failure of nilpotence, and the full coprime-power root equivalence hold in one conjunction. For every x,y and every natural m,n with m.Coprime n, x^m=y^n if and only if there exists exactly one z with x=z^n and y=z^m. The statement retains both zero-exponent boundaries: coprimality turns m=0 into n=1 (and symmetrically in the displayed equivalence), so no positivity hypothesis has been added.")),
                 Paragraph(Text("The root proof first uses Mathlib's HasUniqueRoots instance for FreeGroup. Conjugating x by y and applying conj_pow transports the equality of mth powers to the conjugate; when m is nonzero, power injectivity gives y*x*y⁻¹=x and hence Commute x y. When m=0, the coprimality boundary gives n=1 and the equality gives y=1 directly. The commuting pair is placed in H=Subgroup.closure {x,y}; Subgroup.isMulCommutative_closure supplies the pinned commutative instance, and the existing repository theorem NilpotentRootAmalgamation.pow_eq_pow_iff_exists_unique is applied to H. Its witness is transported back to FreeGroup, while ambient uniqueness uses the nonzero m power map; the m=0 branch is handled explicitly. The reverse implication is the general identity (z^n)^m=(z^m)^n.")),
