@@ -40,7 +40,8 @@ private lemma binary_trace_fiber_card {k : ℕ} (hk : k ≠ 0) :
       2 ^ (k - 1) := by
   classical
   let tr := (Algebra.trace (ZMod 2) (BinaryField k)).toAddMonoidHom
-  have hsurj : Function.Surjective tr := Algebra.trace_surjective
+  have hsurj : Function.Surjective tr :=
+    Algebra.trace_surjective (ZMod 2) (BinaryField k)
   have hker := tr.card_ker_mul_card_of_surjective hsurj
   have hfiber := AddMonoidHom.card_fiber_eq_of_mem_range tr
     (hsurj 0) (hsurj 1)
@@ -95,7 +96,8 @@ private lemma unit_inverse_power {k : ℕ} (hk : k ≠ 0)
     (u : (BinaryField k)ˣ) {y : ℕ} (hy : y ≤ 2 ^ k - 1) :
     ((u : BinaryField k) ^ y)⁻¹ = (u : BinaryField k) ^ (2 ^ k - 1 - y) := by
   have hN : (u : BinaryField k) ^ (2 ^ k - 1) = 1 := by
-    simpa [binary_field_card hk] using congrArg Units.val (pow_card_eq_one u)
+    simpa [Fintype.card_units, binary_field_card hk] using
+      congrArg Units.val (pow_card_eq_one u)
   apply (mul_right_injective₀ (pow_ne_zero y u.ne_zero))
   rw [inv_mul_cancel₀ (pow_ne_zero y u.ne_zero), ← pow_add,
     Nat.sub_add_cancel hy, hN]
@@ -107,7 +109,7 @@ private lemma unit_root_sum {k : ℕ} (hk : k ≠ 0) (a : ℕ) :
   rw [FiniteField.sum_pow_units, binary_field_card hk]
   have hneg : (-1 : BinaryField k) = 1 := by
     have htwo : (2 : BinaryField k) = 0 := CharP.cast_eq_zero _ 2
-    linear_combination htwo
+    linear_combination -htwo
   rw [hneg]
 
 private lemma binary_trace_indicator {k : ℕ} (a : BinaryField k) :

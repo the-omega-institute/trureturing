@@ -6,9 +6,6 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FiniteField;
 
 internal sealed class DyadicTraceCirculantDocument : IScribeDocumentDefinition
 {
-    private static readonly LibraryNoteRef FiniteFields =
-        LibraryNoteRef.Create("D5/L/ArithSums/lidlniederreiter1997finitefields");
-
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A unit dyadic translation circulant has a nonsingular consecutive half-size section over the binary field.",
         H("Dyadic Trace-Circulant Determinant"),
@@ -24,7 +21,7 @@ internal sealed class DyadicTraceCirculantDocument : IScribeDocumentDefinition
                 D(2), Caret, Grp(F.Id("k")), Minus, D(1), Close, Eq, D(1), Sp,
                 Rightarrow, Sp, Operatorname, Grp(F.Id("det")), Open,
                 F.Id("A"), Close, Eq, D(1), Dot))),
-            AssessedProvenance.FromLiterature(FiniteFields),
+            AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
                     "Put N = 2^k - 1 and M = 2^(k - 1). The rows and columns of A are the consecutive residues 0 through M - 1. Its entry at x,y is the sum in F_2 of the indicators y - x = t 2^i in Z/NZ, for 0 <= i < k. Both endpoints are first mapped to Z/NZ and then subtracted, including when y < x. The parameter t is coprime to N.")),
