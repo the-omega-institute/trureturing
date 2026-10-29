@@ -1,4 +1,4 @@
-# Exact inversion of a complete symbolic exterior
+# Complete raw rows and shared source reconstruction
 
 ## Abstract
 
@@ -16,7 +16,7 @@ $$\forall X: Type, (\forall p: \operatorname{SymbolicExterior}\left(X\right), (\
 
 A symbolic exterior has Boolean leaves, residual variables and literal address holes. The matcher descends through ordered pair constructors, rejects constructor and hole mismatches, and decodes a target subtree into a source term only when that subtree contains no address hole. Every successful variable match contributes an explicit binding to a finite list; repeated variables are retained as repeated bindings.
 
-For every valuation, the theorem equates the filled symbolic exterior with an arbitrary concrete hole exterior exactly with the existence of the matcher output whose bindings all evaluate to the valuation. Thus malformed labels and absent or literal holes are rejected by the matcher, while arbitrary free subtrees remain unconstrained except for the returned bindings. The full row compiler combines these bindings with every sign of the reached partition. Interpreted positive history equations remain separate.
+For every valuation, the theorem equates the filled symbolic exterior with an arbitrary concrete hole exterior exactly with the existence of the matcher output whose bindings all evaluate to the valuation. Constructor and address-hole mismatches are rejected. Literal holes with the same address match exactly, while residual variables expand only to hole-free source subtrees and retain every returned binding. The full row compiler combines these bindings with every sign of the reached partition. Interpreted positive history equations remain separate.
 
 **Theorem 1.2 (All raw rows and free signed comparisons share one exact reconstruction).**
 
@@ -32,7 +32,7 @@ A raw row is a cut set paired with an arbitrary concrete hole exterior and an ar
 
 The finite extra argument contains arbitrary additional free-term equations and disequalities over the same original type. All rows, exterior bindings and extra equations enter one existing native unifier. Its total action reconstructs every original variable, including repeated and unused coordinates. The output explicitly enumerates its free subtype of the original finite presentation. Its domain consists only of arbitrary finite native trees satisfying the substituted disequalities; no positive row equation, shape restriction or normality condition remains. Failure means that no assignment satisfies the positive constraints. Success may still have an empty disequality domain.
 
-For every sufficiently deep prefix pattern, filling the same named frontiers gives the actual original source. The existing symbolic recutting theorem identifies its complete literal row with the symbolic row, preserving the concrete exterior and every partition bit. The second conjunct below states that exact actual-source consequence for all prefix-free cuts whose addresses lie above the frontier. Taking the naming map to be the identity gives the original pattern and its literal original frontier tuple.
+For every sufficiently deep prefix pattern, filling the same named frontiers gives the actual original source. The existing symbolic recutting theorem identifies its complete literal row with the symbolic row, preserving the concrete exterior and every partition bit. The second conjunct states that exact actual-source consequence for all prefix-free cuts whose addresses lie above the frontier. Taking the naming map to be the identity gives the original pattern and its literal original frontier tuple.
 
 In the formula, fst and snd are pair projections, free and theta and delta are output fields, and composition(v,name) is the valuation x mapped to v(name(x)). Evaluation after simultaneous substitution reconstructs the same source term because it reconstructs every original coordinate. The result eliminates free row equalities only; equations involving the interpreted substitution history and the general mixed image and cofinality conclusions remain outside its scope.
 
