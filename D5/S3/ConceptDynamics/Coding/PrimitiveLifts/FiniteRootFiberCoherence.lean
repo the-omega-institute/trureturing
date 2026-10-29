@@ -1,11 +1,10 @@
 /- GID: D5/S3/ConceptDynamics/Coding/PrimitiveLifts/FiniteRootFiberCoherence
    generality: G
    mirror-B: D5/B/S3/ConceptDynamics/Coding/PrimitiveLifts/FiniteRootFiberCoherence
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   mirror-E: none(waiver:symbolic-structural-theorems)
    anchors: []
    utility: none
-   digest: Finite positive-degree root fibers admit a coherent rational one-parameter subgroup.
--/
+   digest: Finite positive-degree root fibers admit a coherent rational one-parameter subgroup. -/
 
 import Mathlib.CategoryTheory.CofilteredSystem
 import Mathlib.Data.PNat.Basic
@@ -231,8 +230,8 @@ private theorem rational_action_of_coherent_roots {H : Type u} [Group H] (h : H)
   refine ⟨χ.toMonoidHom, ?_⟩
   simpa [χ, value, degree] using hb (degree 1)
 
-/-- Finite positive-degree root fibers are exactly the obstruction-free condition for a
-rational one-parameter subgroup through the fixed element. -/
+/-- Under finite positive-degree root fibers, independent roots in all positive degrees
+are equivalent to a rational one-parameter subgroup through the fixed element. -/
 theorem finite_root_fibers_rational_coherence {H : Type u} [Group H] (h : H)
     (hfin : ∀ n : ℕ, 0 < n → Finite {b : H // b ^ n = h}) :
     (∀ n : ℕ, 0 < n → ∃ b : H, b ^ n = h) ↔
