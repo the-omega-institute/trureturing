@@ -1,0 +1,40 @@
+**Construction 26.1 (actual terminal acquisition for every $r>d$).**
+At the completed cut (25.7), actually Hold and Read the terminal $f$ at
+precision
+
+$$
+p_*=3r+1.
+\tag{26.1}
+$$
+
+Each coordinate of $x_\tau$ is an integer divided by $8^r$. Write
+$q_\tau=a/8^r$, $a\in\mathbb N$. The actual response is therefore
+
+$$
+k=2a+\zeta,\qquad \zeta\in\{0,1\},\qquad
+ a=\lfloor k/2\rfloor,\qquad \tau=\mathbf1_{a>0}.
+\tag{26.2}
+$$
+
+Compute the true whole field $x_\tau$ from the known finite recurrence
+in (25.7) and initialize its full current set-valued predictor. This
+predictor returns exactly the **complete allowed response set** (25.2)
+for every subsequent valid digital Read, and the complete deterministic
+reply/refusal and successor rule for each other enabled completed call.
+It does not predict a future provider's choice of $\zeta$.
+
+**Proof.** Powers of $T$ and zero extensions give denominator $8^r$.
+Equation (26.2) follows directly from the actual digital law at precision
+$3r+1$. Corollary 25.4 identifies placement from $a$. Known recipe and
+bit now determine all rational coordinates, including internal cells. Keep
+the genuine actual graph, raw roster, law, reference/right and parser phase
+alongside that vector. Induction on each later common completed call gives
+identical actual current: a growth zero-includes and updates the real
+bindings, Tick applies (25.1), Add and Reset apply their literal source
+rules, and Hold preserves the held field. Digital replies belong to the
+computed exact two-element set; the observed choice is consumed before
+Return but does not change the source field. Complete refusal, malformed
+frame, pending and missing-right cases retain the original contracts. This
+is the full-current supplier of §§7–8 applied at this actually acquired
+endpoint, not a new physical installation theorem. $\square$
+

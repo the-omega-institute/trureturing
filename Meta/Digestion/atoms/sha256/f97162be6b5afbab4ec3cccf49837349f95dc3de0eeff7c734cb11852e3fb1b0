@@ -1,0 +1,30 @@
+**Definition 48.2 (one local indexed routing call).** Suppose the current
+source traversal has obtained $x,y,n=x+y$, and an acquired positive
+index $j\le n$ requests the $j$th side of $W_v$ and its within-side
+occurrence number. A forced coordinate returns $(L,j)$ if $y=0$, or
+$(R,j)$ if $x=0$, without a record read. The simultaneous-zero case has
+no such positive index. Otherwise read exactly the $b_v$ bits from the
+actually bound header into a work integer $r$; the stored list remains
+intact.
+
+Use work variables $(i,h,z)=(n,x,r)$. At any stage with a valid rank
+and $i>0$, compute $C=\binom{i-1}h$. If $z<C$, the last symbol of this
+work word is $R$; replace $(i,h,z)$ by $(i-1,h,z)$. Otherwise its last
+symbol is $L$; replace it by $(i-1,h-1,z-C)$. First perform these steps
+only while $i>j$. At $i=j$, use the same comparison to determine its
+last symbol $d$, but return its occurrence number as
+
+$$
+(d,q)=
+\begin{cases}
+(L,h),&z\ge\binom{j-1}h,\\
+(R,j-h),&z<\binom{j-1}h.
+\end{cases}
+\tag{AAII.5}
+$$
+
+This need not materialize the whole local word or a complete history.
+All counts, the residual rank, index and comparison operands remain
+backed work. Valid installed coordinates alone are its domain; storage
+corruption does not add a new request/default to the original service.
+

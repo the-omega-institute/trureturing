@@ -1,0 +1,59 @@
+**Theorem 22.2 (forced predecessor and block/gap inverse).**
+$F_{\rm blk}$ is injective on all of $\mathcal H_{\rm blk}$,
+including arbitrary finite unknown gaps and alpha. Its inverse
+is the following finite exact procedure on its image.
+
+At a non-alpha $(u,y)$, reverse $T_u$ while every coordinate is
+positive. At the first zero let $q$ be the inversion count and
+$W=\{a:y_a>0\}$. Parse $W$ as the material support of a term $s$
+by the original terminal/unary/binary arity rules. Compare $s$ with
+$u$: at each old branch compare the two subtrees recursively; an
+old logical leaf must be unchanged or changed by exactly its one
+enabled edit. The changed old leaves are the last nonempty block.
+Restrict $y$ to $W$ and repeat on $s$. At alpha, double the scalar
+until one to recover $q_0$. Reverse the recovered block list,
+retaining each recovered following gap.
+
+Proof. Before every block the field on all its current vertices is
+positive. Initially it is $2^{-q_0}>0$; after each independent block,
+Theorem 21.2 makes one Tick positive everywhere, and any additional
+Tick preserves positivity. Positive internal gaps establish the
+induction. Immediately after a block its zeros are exactly the union
+of its fresh supports. Coordinates always lie in $[0,1]$ and the
+field is nonzero by the same positive contraction/lattice induction
+as Observation 3.3.
+
+For the actual last block $B:s\to u$ and final gap $q_m$,
+
+$$
+x_h=T_u^{q_m}\iota_Bz,\qquad z>0\text{ on }V_s.
+\tag{22.2}
+$$
+
+If $q_m=0$ there are already fresh zeros. If $q_m>0$, every reversed
+cut before the $q_m$th is a positive power $T_u^r\iota_Bz$ with
+$r\ge1$, positive everywhere by Theorem 21.2. At the $q_m$th it
+is precisely $\iota_Bz$. Thus the first zero forces exactly $q_m$
+and the positive support $W=V_s$; no selected collapse or search
+among smaller predecessors is needed.
+
+AA Definition 17.3 parses this old support uniquely, including unary
+markers. At each old branch, no block event is allowed at that branch
+and its root constructor persists. At an old alpha leaf, the only
+changed possibility is beta; at an old beta leaf, it is literally
+$\langle\beta,\alpha\rangle$. These comparisons with the whole current
+$u$ determine which old leaves changed, hence exactly the typed block.
+They also distinguish an unchanged unary marker from a new logical
+position. Restriction recovers the actual $z$.
+
+Each block removes at least one material vertex in this local reverse
+calculation. Applying (22.2) inductively therefore reaches the actual
+alpha and its scalar $2^{-q_0}$; doubling recovers $q_0$ uniquely.
+This proves decoding after actual evaluation is identity.
+Conversely the scalar equation and every stored equation (22.2)
+replay the actual legal zero extensions and Ticks. Thus evaluating
+the decoded history returns the input pair. Every support, block and
+counter was forced, which proves injectivity and both inverse
+identities. All reversals are local rational computations; no source
+vertex is deleted or physically reversed. $\square$
+

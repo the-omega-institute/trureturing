@@ -1,0 +1,51 @@
+**Lemma 7.4.1 (Small-box inclusions at the two anchors).** At each named parameter in the following table, perform five rounded Newton corrections as in (7.2.3), starting from the centre $c_i$ of a containing parameter cell; use $i=0$ at $t=0$ and $i=7$ at $t=10^{-6}$. Recompute the preconditioner there. With radius
+
+$$
+\rho^{\mathrm{tight}}=10^{-38}(1,1,200,10,300),
+\tag{7.4.1}
+$$
+
+the resulting boxes lie strictly inside the corresponding $X_i$ and have a unique zero. Their rational centres are:
+
+| Coordinate | $t=0$ | $t=1/1000000$ |
+|---|---|---|
+| $R$ | $0.899531674121598268409726976420781980350411105$ | $0.899530919795779879028677658291656578654896203$ |
+| $B$ | $0.128566730308264757217243801879783944149492431$ | $0.128566482008496858677308365111163394715205371$ |
+| $E$ | $6.805704635534469639189632374509777994071045443$ | $6.805816643366348228487842227674526738692718910$ |
+| $k$ | $-1.218947509008715401675263421889754639362546698$ | $-1.218941298820345919523723807358533335069648080$ |
+| $\ell$ | $-40.433124883610480451982746582403325602528193723$ | $-40.433314353357228754415347410117133065899974444$ |
+
+Using (7.2.5) with these radii, fixed $t$ and $\Delta=0$, the respective upper bounds for $q+\beta$ are
+
+$$
+\frac{2717869591}{10^{18}}<10^{-7},\qquad
+\frac{23574135691}{10^{18}}<10^{-7}.
+\tag{7.4.2}
+$$
+
+The first $(R,B)$ box lies strictly in $X_*$ of (6.3.5); the second $(R,B,k)$ box lies strictly in $X_0$ of (6.7.1).
+
+Proof. The prescription is the same rational circuit, differentiation and outward arithmetic as Definition 7.2.1, now with a singleton parameter interval. Its weighted residual and derivative sums give (7.4.2). The strict containments in $X_i$ follow coordinatewise from $|c_j^{\mathrm{tight}}-c_{i,j}|+\rho_j^{\mathrm{tight}}<\rho_j$. The source-box containments follow by comparing the displayed rational centres with (6.3.5) and (6.7.1), with their radii $10^{-35}$ and $10^{-30}$. The contraction argument (7.3.5)–(7.3.7) then supplies the unique zero of each tight box, and uniqueness in $X_i$ identifies it with the graph root at that same $t$. No equality between rounded coordinates and an exact source has been used. ∎
+
+Proof of the attachment clauses of Theorem 7.3.1. At $t=0$ the root has $B>1/8$ and $E>6$. Thus $H=0$ implies $\Lambda<0$. The regular implicit solution of $H=0$ is
+
+$$
+e(r,b)=-\frac{(24/5)(b-1/8)B_{\mathrm{coef}}}{\Lambda}.
+\tag{7.4.3}
+$$
+
+This elimination is used only near the regular attachment. The coefficient equation $H_{\mathrm{sec}}=0$ gives $\ell=e_r+k e_b$. Consequently the remaining three equations at zero are precisely
+
+$$
+F_r(R,B)+kF_b(R,B)=0
+\tag{7.4.4}
+$$
+
+for the exact regular map $F=(p,v,a)$ of (6.2.2). Indeed $D=(5/2)TUjn\Lambda$, and substitution of (7.4.3) in (7.1.1) gives $d=-C_0/D$ and $q_i=C_i/D$ of (6.2.1)–(6.2.2). The interpolants are therefore the same entire polynomial.
+
+On $X_*$, the existing $p_b$ bound of Section 6.5 excludes zero. The p row of (7.4.4) gives $k=-p_r/p_b$. The other two rows imply $\det D(p,v)=\det D(p,a)=0$, hence $E_1=E_2=0$ by (6.3.4)–(6.3.6). Lemma 7.4.1 puts $(R,B)$ in $X_*$; uniqueness in Theorem 6.3.2 now gives $(R,B)=z_*$ exactly, and then $k=k_*$. Equation (7.4.3) fixes $E$, and $H_{\mathrm{sec}}=0$ fixes $\ell$. This identifies the complete coalesced world with the exact second critical world, not merely with its displayed approximation.
+
+For sufficiently small positive $h$, continuity keeps both endpoints regular and places $(R(h^2),B(h^2),k(h^2))$ in the uniqueness neighborhood of Theorem 6.6.1. Eliminating $e_\pm$ by (7.4.3) makes their p, v and a equations exactly its $S_F=0$. The local uniqueness (6.6.1) therefore identifies this projection with that even analytic germ. This proves the germ attachment, including its existing entire gains, without a numerical comparison of two germs.
+
+At $t=10^{-6}$, Lemma 7.4.1 gives both $b_\pm>1/8$, so $H_\pm=0$ and $e_\pm>6$ again imply $\Lambda_\pm<0$. The same exact regular elimination gives $S_F(R,B,k,1/1000)=0$. Its $(R,B,k)$ lies in $X_0$, so Theorem 6.7.2 identifies it with that unique exact finite zero. Formula (7.1.1) then identifies both entire polynomials and drifts with (6.2.2), not only their sources or responses. This is the finite bridge between the local germ and the independently isolated pair. ∎
+

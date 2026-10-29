@@ -1,0 +1,30 @@
+**Definition 80.4 (work of the chosen finite routines).** For explicit
+accounting, a preflight pass evaluates both old and predicted radices
+at every old branch, even when they agree. The post-edit pass evaluates
+both recovered old and actual new radices at every old branch, skipping
+only a new split's unit branch. If $m$ is the old branch count and $d_L$
+is the number of its ancestors affected on the left, these passes call
+exactly $4m$ child-counting tours, $4m+d_L$ binomial evaluations and
+$m$ digit divmods, besides the whole-source event count, branch scans,
+repeated parent-chain tests, width computations, product operations,
+$G$ old-bit acquisition and the $G^+$-bit rewrite. The $d_L$ evaluations
+are the nontrivial calls in (AAII.37); zero-coefficient cases may still
+be evaluated. A pass entering the new unit branch still pays its arity
+and traversal tests. Object reservations, all reference-field operations,
+links and buffer clearing are added, not absorbed into these call counts.
+
+Each digit extraction at $v$ reads at most $G$ live bits, scans a finite
+branch prefix and calls two child-counting tours, one radix evaluation
+and one divmod per scanned branch. Fetch additionally pays its actual
+source count, range comparison, forced-prefix tests and every coefficient
+comparison/subtraction in its colex peeling. There are at most the
+source's finite height many recursive descents, with at most the current
+$N$ peel steps per call. Repeated scans need not be efficient to be
+finite. Next adds this actual recall work, its historical-address and
+left-descent navigation, one preflight/transaction when in range, and
+its larger output/cleanup. All integer routines have bounded finite
+operands as in Proposition 80.3 (with current sizes for a query), and
+every loop decreases a finite traversal, bit count, divisor subroutine
+counter or peeling index. These formulas specify finite paid work, not
+unit-cost oracle calls or a total running-time comparison.
+

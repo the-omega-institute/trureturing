@@ -1,0 +1,23 @@
+**Definition 78.1 (full ingress, replies and phases).** Keep AA Definition
+20.2's seven disjoint three-bit request tags. Tag, $P$, $S$,
+HasPromotion and HasSplit take exactly $A(p)=1^{|p|}0p$; FetchGrowth and
+Next take exactly $U(k)=1^k0$. The remaining tag returns BadFrame. The
+reply alphabet is exactly its eight three-bit tags and payloads. At a
+present address, HasPromotion is true exactly when it was born alpha
+and its current subtree is not alpha; HasSplit is true exactly at a
+branch. Both are false absent. Growth refusal reasons are exactly
+absent, branch and wrong type. Missing rights or a wrong phase disables
+the primitive, rather than supplying an extra refusal answer.
+
+The phase graph is Receive, Navigate/Guard, Reserve when needed, actual
+edit, global Maintain, BuildAnswer/seal, Print, End, local ACK, Return,
+cleanup, Ready. Receive copies each occupied input-latch bit to actual
+request backing before releasing it, and retains its tag, length/index
+marks and parser subphase. A proper incomplete frame waits with exactly
+its acquired prefix and pending parser state; it produces no premature
+reply. Queries cannot enter while a transaction or output is pending.
+For a query no edit/maintenance phase is needed; for an internally
+continued Next the retained continuation connects Fetch to Reserve and
+the actual source operation. Complete output, return and cleanup are
+conditions of the declared returned cut, not optional postprocessing.
+
