@@ -2169,7 +2169,7 @@ $$
 \tag{8.9}
 $$
 
-最后一步可由 $L>\log5>1$ 核对：
+最后一步可由 $L\ge\log5>1$ 核对：
 $(1+432/L)^2-1=(864+186624/L)/L<10^6/L$。
 这是全体实际联盟的上界。对下界，若 $\mathcal E_D(a)\ge1$，只需使用 $D_{a,b}\ge0$；同时 (8.9) 已给出所需上界。设以下 $\mathcal E_D(a)<1$，于是 $L>10^6$ 且 $L/a<10^{-6}$。令 $m=m_a$，则
 
@@ -2178,11 +2178,12 @@ $$
 \qquad
 \left|\frac{16H}{\delta L}-1\right|\le\frac{432}{L},
 \qquad
-\frac ma<\frac{L+2}{4a}.
+\frac ma\le\frac{L+2}{4a}.
 \tag{8.10}
 $$
 
-令 $t=4m/L$、$u=m/a$、$\vartheta=432/L$。
+令 $t=4m/L$、$u=m/a$、$\vartheta=432/L$、
+$S=\sqrt{1-m/a}+\sqrt{1-m/b}$。
 式 (8.6) 及 $S^2\ge4(1-u)$ 直接给出
 
 $$
@@ -2232,16 +2233,21 @@ $$
 在 $\sigma(a)<1/4$ 的范围内，所有这样的最大联盟同时满足
 
 $$
-\begin{aligned}
-\frac ia&\ge1-\frac{4\sigma(a)}{(1-\sqrt{\sigma(a)})^2},
-&\frac jb&\ge1-\frac{4\sigma(a)}{(1-\sqrt{\sigma(a)})^2},
-\tag{8.12}\\
-\left|q-4H\right|&\le4H\sqrt{\sigma(a)},
-\tag{8.13}\\
-\left|\frac{q}{\delta L/4}-1\right|&\le
-Q(a):=\frac{432}{L}+(1+\vartheta(a))\sqrt{\sigma(a)}.
+\frac ia\ge1-\frac{4\sigma(a)}{(1-\sqrt{\sigma(a)})^2},
+\qquad
+\frac jb\ge1-\frac{4\sigma(a)}{(1-\sqrt{\sigma(a)})^2}.
+\tag{8.12}
+$$
+
+$$
+\left|q-4H\right|\le4H\sqrt{\sigma(a)}.
+\tag{8.13}
+$$
+
+$$
+\left|\frac{q}{\delta L/4}-1\right|
+\le Q(a):=\frac{432}{L}+(1+\vartheta(a))\sqrt{\sigma(a)}.
 \tag{8.14}
-\end{aligned}
 $$
 
 因此 $i/a,j/b\to1$，并且
@@ -2414,7 +2420,8 @@ $$
 \tag{8.26}
 $$
 
-第一项与 $kL/16$ 的差由 (8.1) 控制，贡献至多
+其中线性项为 $128kH/(\delta L^2)$，
+它与 $8k/L$ 的差由 (8.1) 控制，至多
 $128\cdot27k/L^2=3456k/L^2$。又
 
 $$
