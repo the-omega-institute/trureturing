@@ -49,15 +49,15 @@ private theorem geometry {k t : ℕ} (hk : 3 ≤ k)
       change 0 < w i at hp
       omega
     have ht := hs i
-    rw [doubleStep, if_neg (by omega : ¬modulus k < 4 * w i),
-      if_pos (by omega : 4 * w i < -modulus k)] at ht
+    rw [doubleStep, ite_eq_right (by omega : ¬modulus k < 4 * w i),
+      ite_eq_left (by omega : 4 * w i < -modulus k)] at ht
     have hbi := hb i
     exact ⟨hl, ht, by omega⟩
   have posStep (i : Fin k) (hi : quarter k ≤ w i) :
       w (σ i) = 2 * w i - modulus k ∧ w (σ i) < 0 ∧
       w (σ (σ i)) = 4 * w i - modulus k ∧ 0 < w (σ (σ i)) := by
     have ht := hs i
-    rw [doubleStep, if_pos (by omega : modulus k < 4 * w i)] at ht
+    rw [doubleStep, ite_eq_left (by omega : modulus k < 4 * w i)] at ht
     have hbi := hb i
     have hneg : w (σ i) < 0 := by omega
     obtain ⟨_, ht2, hp2⟩ := neg (σ i) hneg
@@ -75,8 +75,8 @@ private theorem geometry {k t : ℕ} (hk : 3 ≤ k)
   have haLarge : quarter k ≤ w a := by
     by_contra hh
     have ht := hs a
-    rw [doubleStep, if_neg (by omega : ¬modulus k < 4 * w a),
-      if_neg (by omega : ¬4 * w a < -modulus k)] at ht
+    rw [doubleStep, ite_eq_right (by omega : ¬modulus k < 4 * w a),
+      ite_eq_right (by omega : ¬4 * w a < -modulus k)] at ht
     have hm := hmax (σ a) ((memP _).2 (by omega))
     omega
   obtain ⟨_, _, ht, hp⟩ := posStep a haLarge
@@ -84,6 +84,7 @@ private theorem geometry {k t : ℕ} (hk : 3 ≤ k)
   refine ⟨hnz, ?_, neg⟩
   intro j hj
   have hmj := hmax j ((memP _).2 hj)
+  change 3 * w j ≤ modulus k
   omega
 
 private theorem phase_add {k : ℕ} (hk : 0 < k) (a : Fin k) (i j : ℕ) :
@@ -95,7 +96,7 @@ private theorem phase_add {k : ℕ} (hk : 0 < k) (a : Fin k) (i j : ℕ) :
 private theorem path_nodup {k : ℕ} (hk : 0 < k) (a : Fin k) (m : ℕ)
     (hm : m ≤ k) : (path hk a m).Nodup := by
   unfold path
-  apply (List.nodup_range m).map_on
+  refine List.Nodup.map_on ?_ List.nodup_range
   intro i hi j hj he
   have hi' : i < k := lt_of_lt_of_le (List.mem_range.mp hi) hm
   have hj' : j < k := lt_of_lt_of_le (List.mem_range.mp hj) hm
@@ -123,11 +124,15 @@ private theorem first_root {k t : ℕ} (hk : 3 ≤ k)
     | h n ih =>
       intro a hn ha
       by_cases hl : quarter k ≤ actualSource k t a
-      · exact ⟨0, by simpa using hl, by omega, by intro j hj; have : j = 0 := by omega; subst j; simp⟩
+      · refine ⟨0, by simpa using hl, by omega, ?_⟩
+        intro j hj
+        have hj0 : j = 0 := by omega
+        subst j
+        simp
       · have hstep : actualSource k t (phase (by omega) a 1) = 2 * actualSource k t a := by
           have ht := phase_step hk t a 0
           simp only [phase_zero, zero_add] at ht
-          rw [doubleStep, if_neg (by omega), if_neg (by omega)] at ht
+          rw [doubleStep, ite_eq_right (by omega), ite_eq_right (by omega)] at ht
           exact ht
         let b := phase (by omega : 0 < k) a 1
         have hb : 0 < actualSource k t b := by dsimp [b]; omega
@@ -209,7 +214,7 @@ theorem native_chain_extraction {k t : ℕ} (hk : 3 ≤ k)
   have hinv : path (by omega) a r ++ [root, neg] = path (by omega) a (r + 2) := by
     unfold path
     rw [List.range_add, List.map_append]
-    norm_num [List.map_map, Function.comp_def, root, neg]
+    norm_num [List.range_succ, List.map_map, Function.comp_def, root, neg]
   have hnodup : (path (by omega) a r ++ [root, neg]).Nodup := by
     rw [hinv]
     exact path_nodup (by omega) a (r + 2) hlen
@@ -222,7 +227,7 @@ theorem native_chain_extraction {k t : ℕ} (hk : 3 ≤ k)
   have hrootstep : actualSource k t neg = 2 * actualSource k t root - modulus k := by
     have ht := phase_step hk t a r
     change actualSource k t neg = doubleStep (modulus k) (actualSource k t root) at ht
-    rw [doubleStep, if_pos (by omega)] at ht
+    rw [doubleStep, ite_eq_left (by omega)] at ht
     exact ht
   have hnegval : actualSource k t neg < 0 := by omega
   have hnextstep : actualSource k t next = 4 * actualSource k t root - modulus k := by
@@ -230,7 +235,6 @@ theorem native_chain_extraction {k t : ℕ} (hk : 3 ≤ k)
     have he : phase (by omega) neg 1 = next := by
       dsimp [neg, next]
       rw [phase_add]
-      congr 1
     rw [he, hrootstep] at ht
     omega
   have hnextpos : 0 < actualSource k t next := by
@@ -262,7 +266,7 @@ theorem native_chain_extraction {k t : ℕ} (hk : 3 ≤ k)
     have hpn : actualSource k t n = 2 * actualSource k t pred - modulus k := by
       have ht := phase_step hk t pred 0
       simp only [phase_zero, zero_add, he] at ht
-      rw [doubleStep, if_pos (by omega)] at ht
+      rw [doubleStep, ite_eq_left (by omega)] at ht
       exact ht
     have hna := (hneg n hn).2.1
     change actualSource k t a = 2 * actualSource k t n + modulus k at hna
@@ -273,7 +277,7 @@ theorem native_chain_extraction {k t : ℕ} (hk : 3 ≤ k)
           ((List.range m).map (fun i => phase (by omega) a (j + i))) := by
       intro j m
       induction m generalizing j with
-      | zero => simp [Dyadic]
+      | zero => intro _; trivial
       | succ m ih =>
         intro hj
         rw [List.range_succ_eq_map]
@@ -295,7 +299,12 @@ theorem native_chain_extraction {k t : ℕ} (hk : 3 ≤ k)
     rw [path_length] at hsum
     rw [hsum, hrootpow]
     ring
-  refine ⟨r, hlen, hnodup, ha, hseedmod, hpre, hdyadic, hrootpow, hroot, hu,
-    hrootstep, hnegval, hnextstep, hnextpos, ?_, hmass, ?_, ?_⟩ <;> omega
+  have hnextmod : actualSource k t next % 4 = 1 := by omega
+  have hdebt : 0 ≤ -actualSource k t neg - actualSource k t root := by omega
+  have htransport : ((path (by omega) a r).map (actualSource k t)).sum -
+      (-actualSource k t neg - actualSource k t root) =
+        actualSource k t next - actualSource k t a := by omega
+  exact ⟨r, hlen, hnodup, ha, hseedmod, hpre, hdyadic, hrootpow, hroot, hu,
+    hrootstep, hnegval, hnextstep, hnextpos, hnextmod, hmass, hdebt, htransport⟩
 
 end D5.S3.Combinatorics.Circle.NativeSeedChains

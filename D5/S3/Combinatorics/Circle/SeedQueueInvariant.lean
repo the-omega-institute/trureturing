@@ -4,7 +4,7 @@
    mirror-E: none(waiver:audit-open-22063)
    anchors: [D5/S3/Combinatorics/Circle/SourceWidth]
    utility: none
-   digest: Literal deferred prefixes preserve ancestor heights and control the first-omission peak. -/
+   digest: Deferred prefixes preserve ancestor heights and bound the first-omission peak. -/
 module
 public import D5.S3.Combinatorics.Circle.SourceWidth
 
@@ -73,13 +73,13 @@ private theorem split_spec {α : Type*} (f : α → ℤ) (B : ℤ) (l : List α)
     by_cases hx : f x ≤ B
     · have hp := ih (B - f x) (by omega)
       dsimp only at hp ⊢
-      simp only [splitBudget, if_pos hx, List.map_cons, List.sum_cons]
+      simp only [splitBudget, ite_eq_left hx, List.map_cons, List.sum_cons]
       refine ⟨?_, by omega, ?_⟩
       · simpa using congrArg (List.cons x) hp.1
       · intro y ys he
         have hh := hp.2.2 y ys he
         omega
-    · simp only [splitBudget, if_neg hx, List.nil_append, List.map_nil, List.sum_nil, true_and]
+    · simp only [splitBudget, ite_eq_right hx, List.nil_append, List.map_nil, List.sum_nil, true_and]
       refine ⟨hB, ?_⟩
       intro y ys he
       have : x = y := (List.cons.inj he).1
@@ -120,11 +120,23 @@ theorem deferred_prefix_invariant {α : Type*} (f : α → ℤ)
       exact dyadic_ancestors hdyadic (by simpa using hh.1) (by simpa using hh.2)
   have hq := ancestor_prefix q e (hsplit ▸ hall)
   have he : Ancestors f mu D (q.map f).sum e := by
-    simpa using ancestor_suffix q e (hsplit ▸ hall)
+    have hsuf := ancestor_suffix q e (hsplit ▸ hall)
+    rw [zero_add] at hsuf
+    exact hsuf
   have hconserve : (old.map f).sum + (small.map f).sum =
       (q.map f).sum + (e.map f).sum := by
     have ht := congrArg (fun l : List α => (l.map f).sum) hsplit
     simpa only [List.map_append, List.sum_append] using ht
+  change old ++ small = q ++ e ∧ Ancestors f mu D 0 q ∧
+    0 ≤ b - mu - (q.map f).sum ∧
+    (a - mu - (old.map f).sum) + (e.map f).sum + p - B =
+      b - mu - (q.map f).sum ∧
+    (∀ x xs, e = x :: xs → b - mu - (q.map f).sum < f x ∧
+      B + (b - mu - (q.map f).sum) ≤ C + D / 2) ∧
+    (e = [] → B + (b - mu - (q.map f).sum) = a - mu - (old.map f).sum + p) ∧
+    (b = mu → (∀ x ∈ old ++ small, 0 < f x) →
+      q = [] ∧ b - mu - (q.map f).sum = 0)
+  change ∀ x xs, e = x :: xs → b - mu < (q.map f).sum + f x at hmax
   refine ⟨hsplit, hq, by omega, by omega, ?_, ?_, ?_⟩
   · intro x xs hex
     have hd : 0 ≤ f x - mu - (q.map f).sum ∧ f x - mu - (q.map f).sum ≤ D := by
