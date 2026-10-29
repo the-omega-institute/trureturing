@@ -67,7 +67,7 @@ internal sealed class DyadicRootFiberArithmeticDocument : IScribeDocumentDefinit
         var fiber = Call("RootFiber", m, V("a"));
         var arithmetic = Both(Call("Nonempty", Call("AddEquiv", Call("Kernel", Call("nsmul", m, V("S2"))), Call("ZMod", V("q")))),
             All("a", V("S2"), Both(Call("Finite", fiber),
-                new Formula.Relation(Call("Nat.card", fiber), FormulaRelationOperator.Equal, V("q")))));
+                new Formula.Relation(Call("card", fiber), FormulaRelationOperator.Equal, V("q")))));
         return Disp(All("k", V("N"), All("q", V("N"),
             new Formula.Logic(Call("Odd", V("q")), FormulaLogicOperator.Implies, arithmetic))));
     }
