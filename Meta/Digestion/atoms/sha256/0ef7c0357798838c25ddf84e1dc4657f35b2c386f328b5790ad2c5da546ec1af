@@ -1,0 +1,79 @@
+### 定理 2：删除空模式后，关系成为 NOR
+
+定义
+
+$$
+N=\Sigma\setminus\{000\}.
+$$
+
+则
+
+$$
+N(x,y,z)
+\iff
+xz=yz=0
+\quad\text{且}\quad
+x\lor y\lor z=1.
+$$
+
+这恰好等价于
+
+$$
+\boxed{z=\neg(x\lor y).}
+$$
+
+<a id="theorem-2-proof"></a>
+
+#### 证明
+
+若 $z=1$，前两个约束迫使 $x=y=0$。
+
+若 $z=0$，非空条件迫使 $x\lor y=1$。
+
+这正是 NOR 的真值关系。证毕。
+
+由 NOR 可构造
+
+$$
+\neg x=\operatorname{NOR}(x,x),
+$$
+
+$$
+x\lor y
+=
+\operatorname{NOR}
+\bigl(\operatorname{NOR}(x,y),\operatorname{NOR}(x,y)\bigr),
+$$
+
+以及 AND，因此任意布尔验证电路都可用多项式规模的 NOR 电路表示。
+
+把输入留作未知变量、输出钉为一，就得到：
+
+$$
+\exists x\; C(x)=1.
+$$
+
+这一问题属于 NP，并可编码一般 SAT，所以是 NP 完全的。
+
+这里有一个非常具体的“删东西后的边界”：
+
+$$
+\boxed{
+\text{裸五模式}
+\quad\longrightarrow\quad
+\text{加入非空要求}
+\quad\longrightarrow\quad
+\text{NOR 电路的存在性求解}.
+}
+$$
+
+其中变化的是**关系的表达能力和封闭性**。这还没有证明 $P\ne NP$，但准确指出了此前廉价预测证明失效的位置。
+
+还要保留一个重要操作条件：项目 §28 证明，非空关系不能由裸 $\Sigma$、钉值和相等关系通过上述合取与存在量化免费构造出来。它是一个新增供应。[来源：Selection Calculus §28](https://github.com/the-omega-institute/trureturing/blob/388e1086d5de6323c9dd6913d26e72fd91ddfdb6/docs/develop/theory/AURIC_FIB_ATOM_SELECTION_CALCULUS.md)
+
+这对辅助线研究给出了一个更精确的问题：
+
+> 哪些辅助结构保留了容易处理的封闭性？哪些辅助结构破坏它？破坏之后，能否取得新的表示，使任务重新出现可利用的封闭性？
+
+<a id="sec-3"></a>
+

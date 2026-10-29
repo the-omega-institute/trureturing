@@ -1,0 +1,26 @@
+## 九、ETH 之后，研究目标已经可以分成清楚的几个层级
+
+本次核对的 OpenAI 官方仓库仍是上次版本。官方说明其结果已在 Lean 中验证，研究者的公开声明则将工作表述为对该主张组织开放独立检查。这里继续把公开算法与复杂度界作为明确供应，而不把本次源码阅读视为重新完成了独立认证。[OpenAI](https://openai.com/index/building-scientific-understanding-with-academic-communities/?utm_source=chatgpt.com)
+
+公开 Lean 范围给出的固定宽度计数时间为
+
+$$
+\operatorname{poly}(L)\,
+2^{O\!\left(
+n(\log\log n)^2/\sqrt{\log n}
+\right)}.
+$$
+
+项目现在已在 Selection §27、预测谱 §14 中将其接入有限关系计数、前缀完成及数量目标。这个界提供亚指数路线，尚未提供多项式界。[GitHub](https://github.com/openai/math/blob/7ef5c0cc5ca4b0e072b7a050fca09ab24bc6fa3a/lean/docs/378.md?utm_source=chatgpt.com)
+
+由此，可以把不同目标放在同一张表里：
+
+| 观察者取得的保证 | 严格后果 |
+|---|---|
+| 裸 $\Sigma$ 网络的结构性粗预测 | 该子类可多项式求解，无须精确计数 |
+| 一般 SAT 的亚指数精确计数供应 | 亚指数时间的可靠前缀增长与完成 |
+| 一般 SAT 的统一多项式预测器，某条有效轨迹至多 $O(\log L)$ 次暂缓 | $P=NP$ |
+| 统一多项式随机生成器，对每个 YES 输入有逆多项式有效解质量 | $NP=RP$ |
+| 相应的统一多项式量子生成与验证保证 | $NP\subseteq BQP$ |
+
+> 
