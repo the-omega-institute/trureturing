@@ -26,6 +26,8 @@ def normalizedColumnsEquiv : YoungDiagram ≃ PositiveColumns where
     fun x hx => μ.transpose.pos_of_mem_rowLens x (List.mem_reverse.mp hx)⟩
   invFun b := (YoungDiagram.ofRowLens b.val.reverse b.property.1.reverse).transpose
   left_inv μ := by
+    dsimp only
+    simp only [List.reverse_reverse]
     change (YoungDiagram.ofRowLens μ.transpose.rowLens _).transpose = μ
     rw [YoungDiagram.ofRowLens_to_rowLens_eq_self, YoungDiagram.transpose_transpose]
   right_inv b := by
@@ -50,8 +52,11 @@ private theorem column_cell (b : PositiveColumns) (r : ℕ) (i : Fin b.val.lengt
     omega
   constructor
   · intro h
-    exact ⟨by simpa using i.rev.isLt, by simpa only [hrev] using h⟩
+    refine ⟨by simpa using i.rev.isLt, ?_⟩
+    change r < b.val.reverse[i.rev.val]
+    simpa only [hrev] using h
   · rintro ⟨hi,h⟩
+    change r < b.val.reverse[i.rev.val] at h
     simpa only [hrev] using h
 
 private theorem columns_row_bound (b : PositiveColumns) (r : ℕ) :
@@ -119,5 +124,115 @@ theorem source2015_count (m : ℕ) (hm : 0 < m) (c : List ℕ) :
   · rw [Nat.card_congr (sourceShapeEquiv (r+1) c hc), all_width_count]
   · haveI : IsEmpty (LFiber (r+1) c) := ⟨fun b => hc b.property.1⟩
     simp
+
+private theorem column_anti (m : ℕ) (b : PositiveColumns) : Antitone (columnLevel m b) := by
+  intro p q hpq
+  rw [columnLevel_shape, columnLevel_shape]
+  apply Finset.sum_le_sum
+  intro j _
+  exact (normalizedColumnsEquiv.symm b).rowLen_anti _ _
+    (Nat.add_le_add_right (Nat.mul_le_mul_left m hpq) j.val)
+
+private theorem zero_exists (m : ℕ) (b : PositiveColumns) :
+    ∃ p, columnLevel m b p = 0 := by
+  by_cases hm : m = 0
+  · subst m
+    exact ⟨0, by simp [columnLevel]⟩
+  let μ := normalizedColumnsEquiv.symm b
+  refine ⟨μ.colLen 0, ?_⟩
+  rw [columnLevel_shape]
+  apply Finset.sum_eq_zero
+  intro j _
+  apply Nat.eq_zero_of_not_pos
+  intro hz
+  have hc : (m * μ.colLen 0 + j.val, 0) ∈ μ := YoungDiagram.mem_iff_lt_rowLen.mpr hz
+  have hh := YoungDiagram.mem_iff_lt_colLen.mp hc
+  have hmul : μ.colLen 0 ≤ m * μ.colLen 0 := by
+    simpa using Nat.mul_le_mul_right (μ.colLen 0) (show 1 ≤ m by omega)
+  omega
+
+private def firstZero (m : ℕ) (b : PositiveColumns) : ℕ := Nat.find (zero_exists m b)
+
+/-- Reverse the nonempty bottom-up levels, stopping at the first empty level.
+    The empty board has the empty tuple. -/
+def lOperator (m : ℕ) (b : PositiveColumns) : List ℕ :=
+  (List.ofFn (fun p : Fin (firstZero m b) => columnLevel m b p.val)).reverse
+
+private theorem operator_spec (m : ℕ) (b : PositiveColumns) :
+    (∀ x ∈ lOperator m b, 0 < x) ∧
+    ∀ p, columnLevel m b p = (lOperator m b).reverse.getD p 0 := by
+  constructor
+  · intro x hx
+    obtain ⟨p,rfl⟩ := List.mem_ofFn.mp (List.mem_reverse.mp hx)
+    apply Nat.pos_of_ne_zero
+    exact Nat.find_min (zero_exists m b) p.isLt
+  · intro p
+    simp only [lOperator, List.reverse_reverse]
+    by_cases hp : p < firstZero m b
+    · rw [List.getD_eq_getElem _ _ (by simpa using hp), List.getElem_ofFn]
+    · rw [List.getD_eq_default _ _ (by simpa using (show firstZero m b ≤ p by omega))]
+      have hz : columnLevel m b (firstZero m b) = 0 := Nat.find_spec (zero_exists m b)
+      have hh := column_anti m b (show firstZero m b ≤ p by omega)
+      omega
+
+private theorem positive_data_unique (a b : List ℕ)
+    (ha : ∀ x ∈ a, 0 < x) (hb : ∀ x ∈ b, 0 < x)
+    (h : ∀ p, a.getD p 0 = b.getD p 0) : a = b := by
+  induction a generalizing b with
+  | nil =>
+    cases b with
+    | nil => rfl
+    | cons y ys =>
+      have hy := hb y (by simp)
+      have hh := h 0
+      simp at hh
+      omega
+  | cons x xs ih =>
+    cases b with
+    | nil =>
+      have hx := ha x (by simp)
+      have hh := h 0
+      simp at hh
+      omega
+    | cons y ys =>
+      have hxy : x = y := by simpa using h 0
+      subst y
+      congr 1
+      apply ih ys
+      · intro z hz
+        exact ha z (by simp [hz])
+      · intro z hz
+        exact hb z (by simp [hz])
+      · intro p
+        simpa using h (p+1)
+
+private theorem operator_iff (m : ℕ) (b : PositiveColumns) (c : List ℕ) :
+    lOperator m b = c ↔ (∀ x ∈ c, 0 < x) ∧
+      ∀ p, columnLevel m b p = c.reverse.getD p 0 := by
+  constructor
+  · rintro rfl
+    exact operator_spec m b
+  · rintro ⟨hc,h⟩
+    have hs := operator_spec m b
+    have he : (lOperator m b).reverse = c.reverse := positive_data_unique _ _
+      (fun x hx => hs.1 x (List.mem_reverse.mp hx))
+      (fun x hx => hc x (List.mem_reverse.mp hx))
+      (fun p => (hs.2 p).symm.trans (h p))
+    exact List.reverse_injective he
+
+/-- The native operator equality and the absolute-level cell specification are equivalent fibers. -/
+def operatorFiberEquiv (m : ℕ) (c : List ℕ) :
+    {b : PositiveColumns // lOperator m b = c} ≃ LFiber m c :=
+  Equiv.subtypeEquivRight (fun b => operator_iff m b c)
+
+/-- Complete all-width evaluation of the native l-operator fiber. -/
+theorem lOperator_count (m : ℕ) (hm : 0 < m) (c : List ℕ) :
+    (Nat.card {b : PositiveColumns // lOperator m b = c} : ℤ) =
+      if (∀ x ∈ c, 0 < x) then
+        count (m-1) (c.reverse.getD 0 0) c.reverse
+          ⟨c.reverse.getD 0 0, Nat.lt_succ_self _⟩ else 0 := by
+  rw [Nat.card_congr (operatorFiberEquiv m c)]
+  exact source2015_count m hm c
+
 
 end D5.S3.Combinatorics.Partitions.BarreseSourceNormalization

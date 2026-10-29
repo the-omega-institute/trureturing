@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Partitions;
 internal sealed class FerrersLevelTransferDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Partitions/FerrersLevelTransfer.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithSums/barrese2023levels");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithSums/RookTheory/barrese2023levels");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A whole level is counted by a guarded Gaussian coefficient after its last row is fixed.",

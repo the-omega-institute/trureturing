@@ -45,7 +45,7 @@ def family : Registration arena (type_of% @level_card) where
       refine ⟨rejected, ?_, rfl, bad⟩
       intro j hj
       change Unit at j
-      exact (hj (Subsingleton.elim _ _)).elim
+      exact (hj (by cases j; cases i; rfl)).elim
     · intro i
       change Empty at i
       exact nomatch i
