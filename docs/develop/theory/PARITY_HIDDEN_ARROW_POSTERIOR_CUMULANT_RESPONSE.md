@@ -1467,16 +1467,25 @@ $H_m=A_y+b_0-\ell(m)\ge0$；第二函数是相同类型的正测度积分，
 对数配分的凸性与单调性，加上 (130.14)，给
 
 $$
-0\le -f'(b)\le \frac{2}{h}\{f(a-h)-f(a)\}\le CQ^2,
+0\le -f'(b)=\mathbb E_bH\le CQ^2,
 \qquad a-h/2\le b\le a.
 \tag{131.3}
 $$
 
-具体地，凸性使
-$-f'(b)\le\{f(a-h)-f(b)\}/(b-a+h)$，
-分子不超过 $f(a-h)-f(a)$。乘 $e^{-zb_0}$ 的变化仅为 $O(h\delta^5)$。
-因此对 $0\le r\le h/2$，
-$Z(a-r)/Z(a)\le e^{CQ^2r}$。
+具体地，令 $r=h/2$。由 $H\ge0$，$Z$ 随实参数递减；于是
+$b-r\ge a-h$、$b\le a$ 蕴含
+
+$$
+\mathbb E_b e^{rH}=\frac{Z(b-r)}{Z(b)}
+ \le\frac{Z(a-h)}{Z(a)}\le e^{CQ^2}.
+$$
+
+Jensen 不等式给 $r\mathbb E_bH\le CQ^2$；乘 $e^{-zb_0}$ 的变化仅为
+$O(h\delta^5)$。沿 $[a-h/2,a]$ 积分 (131.3)，对 $0\le r\le h/2$ 有
+
+$$
+\frac{Z(a-r)}{Z(a)}\le e^{CQ^2r}.
+$$
 若 $|z-a|\le r$，正势能的积分表示又给
 
 $$
