@@ -1793,3 +1793,475 @@ normalization charged in polynomial total work remains open.
 [RRO-ZUC]: https://www.cs.utexas.edu/~diz/pubs/sampler.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 18. Exponential approximate Walsh norm on an actual order-one source
+
+**Definition 18.1 (the physical sibling observable and its approximate norm).**
+Keep the entire joint entrance of Definition 9.1, earn $h$ by Proposition
+9.2, and set $H=2h+1$ as in Definition 13.1. For the actual chronological
+parent $p_j$ of birth $j\le2d$, use Definition 13.1's paid physical walks
+and define
+
+$$
+ g_{s,n,j}(u)=D_{s,n,p_ja}(u)-D_{s,n,p_jb}(u),
+ \qquad u\in\{0,1\}^H.
+ \tag{ACR.58}
+$$
+
+Zero chooses physical $a$, one chooses physical $b$, and the same tape
+restarts at position one in each child cone. Both cones retain their
+full original-root prefix in every literal submitted to the source.
+The rank in Definition 10.1 is a proof variable, not an observed field.
+Maturity and Theorem 13.2 supply present children, authentic parents
+from previously earned bits, and
+
+$$
+ (2z_j-1)\mathbb E_U g_{s,n,j}
+ =\mu_{n-t_j+1}-\mu_{n-t_j}\ge\frac12,
+ \tag{ACR.59}
+$$
+
+where $U$ is uniform on the physical tape cube. For a real function $f$
+on $\{0,1\}^v$, use normalized Walsh coefficients and put
+
+$$
+ \begin{aligned}
+ \chi_A(x)&=(-1)^{\sum_{i\in A}x_i},&
+ \widehat f(A)&=2^{-v}\sum_x f(x)\chi_A(x),\\
+ \rho(f)&=\sum_{\varnothing\ne A\subseteq[v]}|\widehat f(A)|,&
+ \rho_\epsilon(f)&=\inf_{\|p-f\|_\infty\le\epsilon}\rho(p).
+ \end{aligned}
+ \tag{ACR.60}
+$$
+
+The infimum ranges over all real functions on the cube, without a degree,
+symmetry, coefficient-precision or algorithm restriction. The full
+Fourier $\ell_1$ norm is $|\widehat f(\varnothing)|+\rho(f)$.
+These are the standard normalized character conventions of
+[Naor--Naor, §2][ACR-NN] and [Ada--Fawzi--Kulkarni, §2][ACR-AFK];
+(ACR.60) explicitly separates the constant coefficient.
+
+**Theorem 18.2 (an earned-horizon, approximation-robust obstruction).**
+For every integer $k\ge2$, take the admitted actual source with public
+$d=1$, coefficient $c_0=1$, seed $s_0=1$, and completed cut $n=2k+4$.
+Its first chronological parent is $p_1=\varepsilon$ at $t_1=2$.
+Proposition 9.2 actually earns
+
+$$
+ h=n-1=2k+3,\qquad H=2n-1=4k+7.
+ \tag{ACR.61}
+$$
+
+Writing $g_k=g_{s,n,1}$ on this earned cube, for every
+$0\le\epsilon<1/2$ one has
+
+$$
+ \rho_\epsilon(g_k)\ge
+ \frac5{24}(1-2\epsilon)\left(\frac2{\sqrt3}\right)^k,
+ \qquad
+ \rho_{1/64}(g_k)\ge
+ \frac{155}{768}\left(\frac2{\sqrt3}\right)^{(H-7)/4}.
+ \tag{ACR.62}
+$$
+
+In particular no single polynomial $M(d,H)$ bounds
+$\rho_{1/64}(g_{s,n,j})$ for all admitted actual sources, mature cuts
+and required early siblings. This is a lower bound for the specified
+approximate nonconstant Walsh norm.
+
+Proof. The all-index recurrence $s_{i+1}=s_i$ with seed one produces
+$z_j=1$ at every birth. Under GPO Definition 27.1, every actual split
+therefore puts beta at $a$ and alpha at $b$. The root first splits at
+update two, and its two child ranks at cut $n$ are $n-1,n-2$ by
+Definition 10.1. Every proper prefix on the physical $a$-ray is initially
+beta, so (ACR.7) gives $b(a^\ell)=\ell+1$ for $\ell\ge1$.
+The actual spine acquisition consequently returns (ACR.61). The cut is
+mature since $N(2)=4\le n$. Neither its law nor its age is entry advice.
+
+In any cone of rank $q\ge2$ on this source, a physical $a$ step lowers
+rank by one, and a physical $b$ step lowers rank by two. Both terminal
+ranks zero and one have depth zero. For a tape $u$ put
+
+$$
+ A_0=0,\qquad A_\ell=\sum_{i=1}^\ell(1+u_i)\quad(0\le\ell\le H),
+ \qquad T_m=\min\{0\le\ell\le H:A_\ell\ge m\}\quad(0\le m\le H).
+ \tag{ACR.63}
+$$
+
+For $q\ge1$ its actual terminal depth is $T_{q-1}$: before the first
+crossing the residual rank is at least two, and at the crossing it is
+zero or one. For the two child cones the needed crossings occur within
+$H$ positions, since all increments are at least one and the largest
+threshold is $n-2<H$. Thus, with the same locally restarted physical
+tape in the two cones,
+
+$$
+ g_k(u)=T_{n-2}-T_{n-3}
+       =\mathbf1_{\{A_\ell=n-3\text{ for some }0\le\ell\le H\}}.
+ \tag{ACR.64}
+$$
+
+Indeed a hit of $n-3$ requires exactly one more step to cross $n-2$;
+an overshoot of $n-3$ is exactly $n-2$, crossing both thresholds at
+once. This derives the observable from actual support and the actual
+first parent. It introduces no rank or label sensor.
+
+Restrict the first $k$ coordinates to free $x\in\{0,1\}^k$ and fix
+all remaining physical directions to $a,b,a,b,\ldots$ through position
+$H$. Write $w=|x|$. At the end of the free block, $A_k=k+w\le2k$,
+strictly below $n-3=2k+1$; no earlier hit is possible. The remaining
+distance is $k+1-w$. The alternating tail has partial sums
+$0,1,3,4,6,7,\ldots$, precisely the nonnegative integers with residues
+zero or one modulo three. Its $H-k=3k+7$ positions suffice even to
+cross the larger remaining threshold $k+2$. Hence this coordinate
+restriction $R$ of the actual tape cube satisfies
+
+$$
+ g_k(Rx)=f_k(x):=1-\mathbf1_{\{|x|\equiv r_k\pmod3\}},
+ \qquad r_k\equiv k-1\pmod3.
+ \tag{ACR.65}
+$$
+
+This substitution is used only in the norm proof; it is not a claim
+that the restricted tape law is uniform on the original cube.
+
+Here is the restriction inequality with its constant term accounted
+for. For any real $p$ on the original cube and fixed tail $v$, expansion
+in characters gives, for every $A\subseteq[k]$,
+
+$$
+ \widehat{p(\cdot,v)}(A)=
+ \sum_{B\subseteq\{k+1,\ldots,H\}}
+       \widehat p(A\cup B)\chi_B(v),\qquad
+ \rho(p\circ R)\le\rho(p).
+ \tag{ACR.66}
+$$
+
+To prove the inequality, take absolute values and sum only over
+nonempty $A$. The groups $A\cup B$ are disjoint for distinct $A$,
+and each such group contains only nonempty original supports. The
+original constant can contribute only to the restricted constant.
+Uniform approximation error also cannot increase under $R$.
+
+For completeness, the required approximation lower bound for this
+specific modular restriction has an elementary dual proof. Let
+$\omega=e^{2\pi i/3}$, $a=(1+\omega)/2$, $b=(1-\omega)/2$, so
+$|a|=1/2$ and $|b|=\sqrt3/2$. The root-of-unity identity
+
+$$
+ I_r(x):=\mathbf1_{\{|x|\equiv r\pmod3\}}
+ =\frac{1+\omega^{-r}\omega^{|x|}
+             +\omega^{-2r}\omega^{2|x|}}3
+ \tag{ACR.67}
+$$
+
+gives $\widehat{\omega^{|x|}}(A)=a^{k-|A|}b^{|A|}$ by factoring
+the uniform sum into its $k$ coordinates. The other term is its
+complex conjugate after multiplication by its phase. Thus, for every
+nonempty $A$,
+
+$$
+ \begin{aligned}
+ |\widehat f_k(A)|
+ &\le\frac23(1/2)^{k-|A|}(\sqrt3/2)^{|A|}
+ \le\frac23(\sqrt3/2)^k,\\
+ \left|\pi_k-\frac13\right|&\le\frac2{3\,2^k},\qquad
+ \pi_k:=\mathbb E_U I_{r_k}\in[1/6,1/2],\qquad
+ \operatorname{Var}_U(f_k)=\pi_k(1-\pi_k)\ge\frac5{36}.
+ \end{aligned}
+ \tag{ACR.68}
+$$
+
+The estimate for $\pi_k$ is (ACR.67) at the empty Fourier support;
+its stated interval uses $k\ge2$. Set $\psi=f_k-\mathbb E_U f_k$.
+Then $\mathbb E_U\psi=0$, $\mathbb E_U f_k\psi=\operatorname{Var}_U(f_k)$
+and $\mathbb E_U|\psi|=2\operatorname{Var}_U(f_k)$, the last equality
+following by evaluating the two values of the Boolean $f_k$.
+For any real $q$ with $\|q-f_k\|_\infty\le\epsilon$, orthogonality of
+the finite character basis gives
+
+$$
+ \begin{aligned}
+ (1-2\epsilon)\operatorname{Var}_U(f_k)
+ &\le\mathbb E_U q\psi
+ =\sum_{A\ne\varnothing}\widehat q(A)\widehat\psi(A)\\
+ &\le\rho(q)\max_{A\ne\varnothing}|\widehat f_k(A)|.
+ \end{aligned}
+ \tag{ACR.69}
+$$
+
+The first inequality uses the pointwise approximation at every input,
+not merely correlation of $f_k$ with itself. Combining (ACR.68)--(ACR.69)
+gives $\rho(q)\ge(5/24)(1-2\epsilon)(2/\sqrt3)^k$.
+For any allowed approximant $p$ to $g_k$, take $q=p\circ R$ and apply
+(ACR.65)--(ACR.66). This proves the infimum bound in (ACR.62), including
+all real nonsymmetric approximants of unrestricted degree.
+
+There is no unpriced constant-coefficient loophole: since $g_k,f_k$
+take values in $\{0,1\}$, any such $p,q$ obey
+$|\widehat p(\varnothing)|,|\widehat q(\varnothing)|\le1+\epsilon$,
+in particular $65/64$ at the specified error. More strongly,
+$\widehat\psi(\varnothing)=0$ removes their constants exactly from
+(ACR.69). The bound is directly on $\rho$, rather than a full-norm
+bound with its constant silently discarded. Substituting
+$\epsilon=1/64$ yields $5\cdot31/(24\cdot32)=155/768$.
+As $H=4k+7$ and $d=1$, the exponential dominates every polynomial in
+$d+H$, proving the last assertion.
+
+The Fourier framework and the distinction between exact and pointwise
+approximate norm are classical; [Ada--Fawzi--Kulkarni, §2 and Theorem
+3.4][ACR-AFK] study the approximate full norm for symmetric Boolean
+functions. Their theorem is not needed for the explicit modular dual
+above. The repo-derived content is the actual-origin stopping identity,
+its earned-horizon restriction and the resulting quantified bound on
+(ACR.58). This is ordinary conditional mathematics, with no additional
+Lean certificate or worldwide novelty claim. $\square$
+
+## 19. Lawful sign acquisition on the same full one-order class
+
+**Theorem 19.1 (two constant tapes separate sign recovery from norm approximation).**
+Under the entire joint entrance of Definition 9.1 with public $d=1$,
+there is a source-blind zero-update consumer of the two tapes
+$a^H,b^H$ which earns the unknown law and cut and actually installs
+exactly $(P,K_1(P),n,B_n)$. It works on all three behaviors of
+$\mathscr R_1$, at every mature cut $n\ge4$, including every source
+and cut in Theorem 18.2. It requires no uniform pointwise approximant.
+
+Proof. Reuse GPO Proposition 37.3's classification
+$\mathscr C_1=\{0^\infty,10^\infty,1^\infty\}$ and its authentic
+prefixes $00,10,11$. First acquire $h,k_\mathrm{sp}$ by Proposition
+9.2, where $k_\mathrm{sp}=\lceil\log_2(h+1)\rceil$, and set $H=2h+1$.
+Generate the two length-$H$ constant tapes, charging $2H$ data writes
+and $O(H)$ generation work. For $j=1,2$, perform the two paid walks
+in each child cone of the authentic $p_j$ and return one for a positive
+sum of depth differences, zero for a negative sum. The walks are
+exactly Definition 13.1's full-root literal procedure, including each
+terminal absent-child test. There are eight walks in total.
+
+At the first stage $p_1=\varepsilon,t_1=2$. After the first bit has
+been earned, $p_2=a$ if $z_1=1$ and $p_2=b$ otherwise, with $t_2=3$.
+This is the beta child of the actual root at update two, hence the sole
+old beta parent at update three. No current label, source-law input,
+semantic port or later bit is used to choose it. This is the $d=1$
+instance of Theorem 13.2's earned-parent construction.
+
+In each of the two descendant cones being compared, every subsequent
+branch has a common constant orientation: one for $1^\infty$, zero
+for $0^\infty$ and $10^\infty$. For the impulse, its sole exceptional
+bit is the original root's first birth, outside all these child cones.
+For a rank-$q$ cone with this constant descendant orientation, following
+the larger-rank port forever has depth $\max(q-1,0)$, and following
+the other port forever has depth $\lfloor q/2\rfloor$. The first
+formula subtracts one until rank one; the second subtracts two until
+rank zero or one. Thus for the adjacent child ranks
+$q=n-t_j+1\ge2$ and $q-1$, the two constant tapes give exactly
+
+$$
+ (2z_j-1)\bigl(g_{s,n,j}(a^H)+g_{s,n,j}(b^H)\bigr)
+ =1+\left\lfloor\frac q2\right\rfloor
+      -\left\lfloor\frac{q-1}2\right\rfloor\in\{1,2\}.
+ \tag{ACR.70}
+$$
+
+Here a physical tape written with letters denotes its zero/one encoding
+in (ACR.58). The same descendant orientation in both cones licenses the
+adjacent-rank comparison. Both tapes are long enough by $H\ge n$.
+The sums never vanish and have the actual orientation signs. Induction
+therefore earns both bits; the impulse, constant zero and constant one
+are all included, rather than only the obstruction's constant-one law.
+
+Run exactly the original fixed $K_1(P)$, retaining its original row
+ordering and seed. An equivalent minimal row is not substituted, even
+on prefix $00$, for which either order-one coefficient might pass.
+GPO Lemma 29.2 authenticates its complete behavior. The already earned
+$h$ then permits the following paid age completion, with at most one
+additional Read:
+
+$$
+ n=\begin{cases}
+ h+1,&P=11,\\
+ 2h+\operatorname{Read}(ba^h),&P=00,\\
+ 2h-1+\operatorname{Read}(ba^{h-1}),&P=10.
+ \end{cases}
+ \tag{ACR.71}
+$$
+
+To verify these literals on the original root, apply (ACR.5)--(ACR.7).
+For $00$, $b(a^\ell)=2\ell$ and $b(ba^h)=2h+1$, so the two possible
+ages are $2h,2h+1$. For $10$, $b(a)=2$ and
+$b(a^\ell)=2\ell-1$ for $\ell\ge2$; maturity gives $h\ge2$.
+The possible ages are $2h-1,2h$, and $b(ba^{h-1})=2h$: the root's
+$b$ child is initially alpha, branches at four, and each later $a$
+proper prefix is initially alpha. For $11$, the spine birth formula
+is $b(a^\ell)=\ell+1$. These computations prove (ACR.71) without an
+age oracle or a richer reply. In the $10,h=2$ endpoint maturity already
+excludes age three; the displayed paid Read remains valid and returns
+one. No update occurs in any case.
+
+Compute $B_n=F_{n+1}-1$ by forward integer addition and really write
+$(P,K_1(P),n,B_n)$, its ready control and any requested forward phase
+into the granted readable backing. Finish the actual handoff while the
+same completed cut remains stationary. The installed canonical record
+is precisely (ACR.25), so the same-source consumers of GPO §§34,39 apply
+with their original binding/grant and execution premises.
+
+The achieved same-run resource coordinates can be stated separately:
+
+$$
+ \begin{aligned}
+ U_{\rm source}&=0,&
+ Q_{\rm Read}&\le2k_\mathrm{sp}+8n+1,\\
+ M_{\rm literal}&\le2n-2,&
+ W_{\rm literal}&\le2k_\mathrm{sp}2^{k_\mathrm{sp}}+8n^2+n.
+ \end{aligned}
+ \tag{ACR.72}
+$$
+
+Every walk uses at most $n$ paid Reads and literals of length at most
+$n$, by (ACR.7), including its terminal test. The spine has its actual
+overshoot $2^{k_\mathrm{sp}}\le2h\le2n-2$ and the traffic of Proposition
+9.2. The final age literal has length at most $h+1\le n$.
+These facts give (ACR.72); computed depths never replace paid calls.
+
+In the binary-operation model, one realization including tape generation,
+all full-literal copies, counters, sums, arithmetic, initialized scratch
+and cumulative data writes has work
+$e_1+O((n+2)^2\log_2(n+2))$ and reusable owned data backing
+$v_1+O(n+1)$ bits. Here $e_1,v_1$ are the actual original canonical
+enumeration costs of Definition 9.1, not a newly ordered enumeration.
+To obtain these bounds, reuse one $O(n)$-bit literal buffer and the two
+tapes. Depth and length counters have $O(\log(n+2))$ bits; the eight
+walks and spine use the number of calls in (ACR.72), with $O(n)$ copying
+and at most $O(n\log(n+2))$ local bit work per call. Forward Fibonacci
+addition uses $O(n^2)$ work and cumulative writes with $O(n)$ resident
+bits. Testing the at most two order-one rows, computing an optional
+phase by forward powers, and actually installing the remaining fields
+fit the same bounds. The explicit $B_n$ requires $\Theta(n)$ final
+binary writes, with $O(n+1)$ final data writes overall; it is not
+replaced by a short unevaluated Fibonacci expression.
+
+Actual root/grant acquisition, source generation and material, fixed
+code and its installation, service, backing allocation and lifetime,
+retained write tariffs and completed handoff retain their separate
+actual charges. In particular (ACR.72) is not a physical-duration bound.
+The stationary interval covers tape preparation, every calculation,
+Read, intermediate write, canonical normalization, final write and
+handoff. Fresh owned growing backing, reliable completion and finite
+local progress remain the premises of Definition 9.1.
+
+This is a restricted-class separation between a strong analytic
+requirement and this sign consumer. Theorem 11.2 already acquires all
+of $\mathscr R_d$, including $d=1$, with its stated finite-enumeration
+bill; no improvement on that acquisition theorem or optimality of
+(ACR.72) is asserted. GPO Proposition 37.3 supplies the class and early
+parents, not an unknown-cut stationary acquisition at arbitrary $n$.
+The additional conclusion is that the two constant tapes suffice on
+that whole class despite (ACR.62). $\square$
+
+## 20. The failed sufficient bridge and the unchanged full-class task
+
+**Proposition 20.1 (scope of the analytic obstruction).** For the physical
+observables (ACR.58), the following sufficient route to sign recovery
+has a false uniform polynomial-norm premise. Suppose a distribution
+$\nu$ on length-$H$ tapes has $|\mathbb E_\nu\chi_A|\le\eta$ for every
+nonempty $A$, and $\|p-g_{s,n,j}\|_\infty\le\epsilon$. Then
+
+$$
+ |\mathbb E_\nu g_{s,n,j}-\mathbb E_U g_{s,n,j}|
+ \le2\epsilon+\eta\rho(p).
+ \tag{ACR.73}
+$$
+
+Consequently $\epsilon=1/64$ and $\eta\rho(p)\le1/64$ preserve the
+sign in (ACR.59), with signed mean at least $29/64$. But the premise
+that all these observables have $\rho(p)\le M(d,H)$ for one fixed
+polynomial $M$ is refuted by Theorem 18.2.
+
+Proof. The standard small-bias estimate, in the conventions of
+[Naor--Naor, §2][ACR-NN], follows by expanding $p$ in normalized
+characters. The constant cancels between the two probability laws;
+each nonconstant expectation is bounded by $\eta$, so their total
+contribution is at most $\eta\rho(p)$. The two pointwise approximation
+errors each contribute at most $\epsilon$, proving (ACR.73).
+Combine with (ACR.59). This valid implication supplies no polynomial
+norm bound of its own, and (ACR.62) disproves that universal premise.
+
+For a specified common nonempty multiset $\mathcal A$ of tapes
+constructed from $d,H$ alone, this equal-weight sign consumer instead
+needs only
+
+$$
+ (2z_j-1)\sum_{u\in\mathcal A}g_{s,n,j}(u)>0
+ \quad\text{for every admitted actual }(s,n),\ j\le2d
+ \text{ in its earned bracket }n_0\le n\le H.
+ \tag{ACR.74}
+$$
+
+These are necessary and sufficient inequalities for the signs returned
+by this particular consumer at the authentic early parents. Simultaneous
+validity licenses their inductive choice by Theorem 13.2; it is not a
+minimality claim among all legal acquisition protocols. Equation
+(ACR.70) proves them on the entire $\mathscr R_1$ class using two tapes.
+For those tapes all even-size nonempty parities have bias one when
+$H\ge2$, so this construction is not a small-bias construction.
+No pointwise norm premise is needed for (ACR.74).
+
+Given its displayed target $n-3$, (ACR.64) itself has a direct exact
+evaluator with $O(H)$ counter steps and an $O(\log(H+2))$-bit running
+sum; this supplied-target evaluation is not erased-cut acquisition.
+Its exponential approximate
+Walsh norm is compatible with a short exact evaluator and with the
+lawful acquisition of Theorem 19.1. The obstruction proves no lower
+bound for arbitrary representations, circuits, approximation algorithms,
+samplers or legal acquisition protocols. It neither denies finite
+exact Fourier expansions nor rules out a different successful small-bias
+use. A one-sided minorant requirement, such as
+$\ell\le(2z_j-1)g_{s,n,j}$ with positive uniform mean and small
+$\rho(\ell)$, is a different condition: the two-sided error step in
+(ACR.69) does not follow from that requirement. No existence or
+impossibility result for such minorants is supplied here. $\square$
+
+**Definition 20.2 (the retained acquisition and normalization gaps).**
+For the full original $\mathscr R_d$, the remaining uniform-work task
+is to construct and enumerate a common sign-correct tape family, or
+another legal acquisition procedure, with total bit work, preparation,
+literal traffic, writes and owned backing bounded by fixed polynomials
+in $d+n$, and with the unknown law and cut both acquired. A common
+family has to satisfy (ACR.74) on the entire authentic class, including
+singular, nonminimal and finite-transient behaviors; the order-one
+result does not restrict that class. Exact installation still requires
+the original $K_d(P)$, with its original ordering and seed, and its
+separately charged $e_d,v_d$ until a suitable polynomial normalization
+procedure is established. An arbitrary equivalent passing row does
+not discharge that exact output obligation.
+
+Theorem 14.2's finite-catalogue constructor and Theorem 15.1's
+polynomial-Read acquisition remain suppliers with their stated $4^d$
+preparation cost; their moment construction does not assume the
+polynomial approximate norm refuted here. Theorem 11.2 retains its
+own finite candidate comparison and costs. Their published conclusions
+are not replaced by (ACR.62). The source-specific mean and earned-parent
+proofs of §13 are reused in (ACR.59), without duplicating the constructor
+or affine certificate of §§14--16.
+
+The native `NativeRankedNavigationCompiler.atomic_navigation` and its
+private realization helpers concern fixed semantic orientation;
+`ActualFibonacciSupportChain` and its proof-local recurrence establish
+native support comparisons. `NativeBirthVectorDecoder` concerns its
+recursive birth codes, and `NativeFullSourceProducer`'s private traversal
+uses richer native replies. `NativeFibonacciStaticScan`'s private
+execution and cost helpers retain their supplied address lists. Their
+owning Blueprint narratives have the same boundaries. They supply
+neither the unknown local physical orientations nor (ACR.62).
+The Walsh functions and bounded-degree spaces in
+`D5/S3/Combinatorics/IsingUniquenessSets.lean` supply standard character
+algebra, not an approximate norm bound for this actual stopping function.
+No fresh formal certification of these applications is asserted.
+The new source-specific results leave full-class polynomial sign-family
+construction, total acquisition and exact canonical normalization
+unresolved; no universal acquisition impossibility follows.
+
+[ACR-NN]: https://www.wisdom.weizmann.ac.il/~naor/PAPERS/bias.pdf
+[ACR-AFK]: https://arxiv.org/pdf/1704.03176v1
+
+## 追加锚（本行以下为增补区）
