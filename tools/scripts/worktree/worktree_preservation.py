@@ -425,7 +425,10 @@ def remove(options):
                 flags = ["--force", "--force"] if "locked" in refreshed else ["--force"]
                 payload = tuple(child for child in target.iterdir() if child.name != ".git")
                 qualifying = True
-                native_removal_preflight(source, target, flags, stack)
+                owned_initializer_scope = (refreshed.get("locked", "").startswith("worktree-init:")
+                                           if isinstance(refreshed, dict) else False)
+                native_removal_preflight(source, target, flags,
+                                         stack if owned_initializer_scope else None)
                 qualifying = False
                 removing = True
                 with payload_removal_budget(options.force) as deadline:
