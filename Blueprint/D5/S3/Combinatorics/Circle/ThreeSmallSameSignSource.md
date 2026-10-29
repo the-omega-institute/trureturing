@@ -29,4 +29,4 @@ The source context is Damasdi, Frankl, Pach and Palvolgyi, Monochromatic configu
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/ThreeSmallSameSignSource.actualSource_three_small_same_sign_full_completion`
-- Dependency: [D5/S3/Combinatorics/Circle/TwoSmallSource](TwoSmallSource.md)
+- Dependency: [D5/S3/Combinatorics/Circle/ThreeSmallGapPlacement](ThreeSmallGapPlacement.md)
