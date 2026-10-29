@@ -134,4 +134,62 @@ Contract.Registration is asserted here, so this attempt is explicitly not
 declared_validated and does not claim an audit pass.
 -/
 
+
+abbrev tailDataScope := type_of% (@tail_robin_data)
+
+abbrev tailDataArena : Arena where
+  signature := signature
+  Law R := ∀ {m : ℕ}, 0 < m →
+    m.primeFactors = Nat.primesLE (largestPrime m) →
+    0 ≤ R.readout () 0 m ∧
+      robinLogMargin m = _root_.Mertens.E₃ (largestPrime m) + tail m +
+        Real.log (Real.log (Real.log (m : ℝ))) -
+        Real.log (Real.log (largestPrime m))
+
+private theorem tail_data_rejected_law : ¬ tailDataArena.Law rejected := by
+  intro h
+  have hbad := (h (m := 1) (by norm_num) (by simp [largestPrime])).1
+  norm_num [rejected, realize] at hbad
+
+def tailDataFamily : Registration tailDataArena tailDataScope where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@tail_robin_data, rejected, tail_data_rejected_law⟩
+  sensitivity := ⟨fun i => ⟨rejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, tail_data_rejected_law⟩,
+    fun e => nomatch e⟩
+  dependence := actual_dependence
+
+def tailDataAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@tail_robin_data) (Realization signature) Type Unit where
+  unitName := `D5.S3.Arith.Robin.OriginalEndpointPrimeTail.tail_robin_data.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.OriginalEndpointPrimeTail.tailDataFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨tailDataArena⟩
+  objectArena := .source ⟨tailDataArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source tailDataArena ⟨tailDataFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature actual.readout actual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := some ℕ
+  sourceSelection := some {
+    owner := `D5.S3.Arith.Robin.OriginalEndpointPrimeTail
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 0
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
 end Reg.D5.S3.Arith.Robin.OriginalEndpointPrimeTail

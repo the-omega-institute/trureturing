@@ -36,11 +36,10 @@ abbrev scope := type_of% (@uniform_min_tail_robin_lower)
 
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {ε c : ℝ}, 0 < ε → 0 < c → ∃ A : ℝ,
+  Law R := ∀ {ε : ℝ}, 0 < ε → ∃ A : ℝ,
     1 < R.readout () () A ∧ ∀ m : ℕ, 0 < m →
       m.primeFactors = Nat.primesLE (largestPrime m) →
       1 < θ (largestPrime m) → A ≤ Real.log (m : ℝ) →
-      c * Real.log (m : ℝ) ≤ largestPrime m →
       (2 * Real.sqrt 2 - ε) /
           (Real.sqrt (Real.log (m : ℝ)) * Real.log (Real.log (m : ℝ))) <
         tail m + Real.log (Real.log (Real.log (m : ℝ))) -
@@ -56,7 +55,7 @@ theorem actual_law : arena.Law actual := @uniform_min_tail_robin_lower
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  obtain ⟨A, hA, _⟩ := h (ε := 1) (c := 1) (by norm_num) (by norm_num)
+  obtain ⟨A, hA, _⟩ := h (ε := 1) (by norm_num)
   norm_num [rejected, realize] at hA
 
 def family : Registration arena scope where
@@ -93,8 +92,8 @@ def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "body", "fn", "arg", "arg"]
-      stateBinder := 4
+      path := #["body", "body", "arg", "body", "fn", "arg", "arg"]
+      stateBinder := 2
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }

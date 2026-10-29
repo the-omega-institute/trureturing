@@ -16,10 +16,10 @@ internal sealed class PrimeMinCorrectionLowerDocument : IScribeDocumentDefinitio
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text(
-                        "For every epsilon>0 and fixed c>0, a real A>1 is chosen before "
+                        "For every epsilon>0, a real A>1 is chosen before "
                         + "the positive natural integer m. Put X=log(m) and P=largestPrime(m). "
                         + "For every such m with the literal initial support equality "
-                        + "m.primeFactors=Nat.primesLE(P), theta(P)>1, A<=X and c*X<=P, "
+                        + "m.primeFactors=Nat.primesLE(P), theta(P)>1 and A<=X, "
                         + "the correction (2*sqrt(2)-epsilon)/(sqrt(X)*log(X)) is strictly below "
                         + "tail(m)+log(log(X))-log(log(theta(P))). The same integer also satisfies "
                         + "the strict original-margin inequality obtained by adding Mertens.E₃(P) "
@@ -39,9 +39,20 @@ internal sealed class PrimeMinCorrectionLowerDocument : IScribeDocumentDefinitio
                         + "a=s-e/4, r=1+e/(16*s), and b=s*r. Choose N before X with "
                         + "r^(-N)<e/(8*s). This gives a lower constant above 2*s-e/2; "
                         + "the remaining margin absorbs the finite endpoint approximations. "
-                        + "The last endpoint lies below c*X eventually, uniformly in P. "
-                        + "The existing finite_min_tail_robin_bound then supplies both conclusions, "
-                        + "including its original E₃ identity. No optimizer hypothesis, full layer "
+                        + "A consumed private conditional helper places the last endpoint below c*X eventually. "
+                        + "The existing finite_min_tail_robin_bound supplies both conditional conclusions, "
+                        + "including its original E₃ identity.")),
+                    Paragraph(Text(
+                        "Fix c=1/(2*log(4)) and enlarge the conditional threshold to max(A0,64), "
+                        + "before choosing m. If X/2<=theta(P), Chebyshev's unconditional bound "
+                        + "theta(P)<=log(4)*P implies c*X<=P, so the full finite-shell proof applies. "
+                        + "Otherwise the strict log-log tangent at X gives a clock gap exceeding "
+                        + "1/(2*log(X)). Since sqrt(X)>=8 and 4*sqrt(2)<8, this exceeds "
+                        + "(2*sqrt(2)-epsilon)/(sqrt(X)*log(X)) for every epsilon>0, including "
+                        + "epsilon>=2*sqrt(2). The original complete tail is nonnegative. "
+                        + "The shared tail_robin_data helper in OriginalEndpointPrimeTail retains "
+                        + "the exact same-m margin identity, giving the second strict conclusion. "
+                        + "The public telescope has no c or prime-ratio premise. No optimizer hypothesis, full layer "
                         + "inventory equality, record existence, RH hypothesis or signed pure-prime "
                         + "bound is introduced. Control of that signed quantity and the full "
                         + "RH/Robin/5040 goal remain separate obligations."))),

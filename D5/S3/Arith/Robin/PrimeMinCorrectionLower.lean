@@ -338,7 +338,7 @@ private theorem uniform_prime_min {ε c : ℝ} (hε : 0 < ε) (hc : 0 < c) :
 
 /-- One threshold, chosen before the integer, gives both the full lower
 correction and its same-integer original Robin-margin consequence. -/
-theorem uniform_min_tail_robin_lower {ε c : ℝ} (hε : 0 < ε) (hc : 0 < c) :
+private theorem conditional_min_tail_robin_lower {ε c : ℝ} (hε : 0 < ε) (hc : 0 < c) :
     ∃ A : ℝ, 1 < A ∧ ∀ m : ℕ, 0 < m →
       m.primeFactors = Nat.primesLE (largestPrime m) →
       1 < θ (largestPrime m) → A ≤ Real.log (m : ℝ) →
@@ -358,6 +358,79 @@ theorem uniform_min_tail_robin_lower {ε c : ℝ} (hε : 0 < ε) (hc : 0 < c) :
   rw [← hsupport] at h
   have hfinite := finite_min_tail_robin_bound hm hsupport htheta
   exact ⟨h.trans_le hfinite.1, by linarith [hfinite.2]⟩
+
+/-- One threshold before every original integer gives the full lower correction
+and its same-integer Robin consequence, without a prime-ratio premise. -/
+theorem uniform_min_tail_robin_lower {ε : ℝ} (hε : 0 < ε) :
+    ∃ A : ℝ, 1 < A ∧ ∀ m : ℕ, 0 < m →
+      m.primeFactors = Nat.primesLE (largestPrime m) →
+      1 < θ (largestPrime m) → A ≤ Real.log (m : ℝ) →
+      (2 * Real.sqrt 2 - ε) /
+          (Real.sqrt (Real.log (m : ℝ)) * Real.log (Real.log (m : ℝ))) <
+        tail m + Real.log (Real.log (Real.log (m : ℝ))) -
+          Real.log (Real.log (θ (largestPrime m))) ∧
+      (2 * Real.sqrt 2 - ε) /
+          (Real.sqrt (Real.log (m : ℝ)) * Real.log (Real.log (m : ℝ))) +
+          Mertens.E₃ (largestPrime m) + Real.log (Real.log (θ (largestPrime m))) -
+          Real.log (Real.log (largestPrime m)) < robinLogMargin m := by
+  have hlog4 : 0 < Real.log 4 := Real.log_pos (by norm_num)
+  let c : ℝ := 1 / (2 * Real.log 4)
+  have hc : 0 < c := by dsimp [c]; positivity
+  obtain ⟨A₀, hA₀, hconditional⟩ := conditional_min_tail_robin_lower hε hc
+  refine ⟨max A₀ 64, hA₀.trans_le (le_max_left _ _), ?_⟩
+  intro m hm hsupport htheta hAm
+  let X : ℝ := Real.log (m : ℝ)
+  let Y : ℝ := θ (largestPrime m)
+  have hX64 : 64 ≤ X := (le_max_right A₀ 64).trans hAm
+  have hX : 1 < X := by linarith
+  have hX0 : 0 < X := by linarith
+  have hlogX : 0 < Real.log X := Real.log_pos hX
+  by_cases hhalf : X / 2 ≤ Y
+  · have hcheb := Chebyshev.theta_le_log4_mul_x
+      (x := (largestPrime m : ℝ)) (Nat.cast_nonneg _)
+    have hratio : c * X ≤ (largestPrime m : ℝ) := by
+      dsimp [c]
+      rw [one_div_mul_eq_div]
+      apply (div_le_iff₀ (by positivity : 0 < 2 * Real.log 4)).mpr
+      dsimp [Y] at hhalf
+      nlinarith only [hhalf, hcheb]
+    exact hconditional m hm hsupport htheta ((le_max_left A₀ 64).trans hAm) hratio
+  · have hgap : Y < X / 2 := lt_of_not_ge hhalf
+    have ht := D5.S3.Arith.Robin.RestrictedDivisorStrictInventory.loglog_tangent
+      (x := X) (y := Y) hX htheta (by linarith)
+    have ht' : Real.log (Real.log Y) - Real.log (Real.log X) <
+        (Y - X) / (X * Real.log X) := by
+      simpa [D5.S3.Arith.Robin.ActualRobinClockCovariance.g, div_eq_mul_inv] using ht
+    have hclock : 1 / (2 * Real.log X) <
+        Real.log (Real.log X) - Real.log (Real.log Y) := by
+      have hcharge : 1 / (2 * Real.log X) < (X - Y) / (X * Real.log X) := by
+        apply (div_lt_div_iff₀ (by positivity : 0 < 2 * Real.log X)
+          (mul_pos hX0 hlogX)).mpr
+        nlinarith only [mul_pos (by linarith : 0 < X / 2 - Y) hlogX]
+      have hflip : (X - Y) / (X * Real.log X) <
+          Real.log (Real.log X) - Real.log (Real.log Y) := by
+        rw [sub_div] at ht' ⊢
+        linarith only [ht']
+      exact hcharge.trans hflip
+    have hsX : 8 ≤ Real.sqrt X := by
+      have h := Real.sqrt_le_sqrt hX64
+      norm_num at h ⊢
+      exact h
+    have hs2 : Real.sqrt 2 < 2 := by
+      nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num), Real.sqrt_nonneg 2]
+    have hsmall : (2 * Real.sqrt 2 - ε) / (Real.sqrt X * Real.log X) <
+        1 / (2 * Real.log X) := by
+      apply (div_lt_div_iff₀ (mul_pos (Real.sqrt_pos.mpr hX0) hlogX)
+        (by positivity : 0 < 2 * Real.log X)).mpr
+      have hcoeff : 2 * (2 * Real.sqrt 2 - ε) < Real.sqrt X := by linarith
+      nlinarith only [mul_pos (sub_pos.mpr hcoeff) hlogX]
+    obtain ⟨htail, hmargin⟩ := tail_robin_data hm hsupport
+    have hlower : (2 * Real.sqrt 2 - ε) / (Real.sqrt X * Real.log X) <
+        tail m + Real.log (Real.log X) - Real.log (Real.log Y) := by
+      linarith [hsmall.trans hclock]
+    refine ⟨hlower, ?_⟩
+    dsimp [X, Y] at hlower
+    linarith only [hlower, hmargin]
 
 end
 
