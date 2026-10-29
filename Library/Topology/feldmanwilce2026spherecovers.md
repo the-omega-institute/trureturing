@@ -3,7 +3,7 @@ bibkey: feldmanwilce2026spherecovers
 authors: David V. Feldman and Alexander Wilce
 year: 2026
 title: A Note on Compactness and Clique Size, Question 3
-doi: 10.48550/arXiv.2608.13320
+doi: null
 url: https://arxiv.org/abs/2608.13320v1
 claim: Question 3 asks for the least number of open orthogonality-free sets covering the two-sphere and, more generally, estimates in every dimension.
 strata_touched:
