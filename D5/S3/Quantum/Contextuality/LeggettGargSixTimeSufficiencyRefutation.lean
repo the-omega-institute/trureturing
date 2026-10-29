@@ -6,7 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Contextuality/LeggettGargSixTimeSufficiencyRefutation.claim; result=D5/S3/Quantum/Contextuality/LeggettGargSixTimeSufficiencyRefutation.result; claim=D5/S3/Quantum/Contextuality/LeggettGargSixTimeSufficiencyRefutation.claim
    digest: A six-time Leggett-Garg family satisfies all polygon inequalities but has no joint law. -/
 
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 import Mathlib.Data.Fin.Basic
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
@@ -89,6 +89,7 @@ private theorem p_corr (i j : Fin 6) :
     norm_num [corr, p, sgn, Fin.sum_univ_succ]
 
 set_option maxHeartbeats 1000000 in
+-- Enumerating the six Boolean signs expands the polygon expression completely.
 private theorem p_ngon : NGonInequalities p := by
   have hodd : ¬ Odd (6 : ℕ) := by
     intro h
@@ -100,6 +101,7 @@ private theorem p_ngon : NGonInequalities p := by
     norm_num [NGonInequalities, p_corr, sgn, Fin.sum_univ_succ, hodd,
       h0, h1, h2, h3, h4, h5]
 set_option maxHeartbeats 1000000 in
+-- Enumerating the ordered triples and three signs closes the finite LG checks.
 private theorem p_three : ThreeTimeLG p := by
   intro i j k hij hjk a b c
   fin_cases i <;> fin_cases j <;> fin_cases k <;>
@@ -111,6 +113,7 @@ private def b : Fin 6 → ℝ := ![1, 1, 1, 1, -1, -2]
 private def weight (x : Fin 6 → Bool) : ℝ := ∑ i, b i * sgn (x i)
 
 set_option maxHeartbeats 1000000 in
+-- The square identity is discharged by the 64 Boolean assignments.
 private theorem weight_sq_expand (x : Fin 6 → Bool) :
     weight x ^ 2 = ∑ i, b i ^ 2 +
       2 * ∑ i, ∑ j, if i < j then b i * b j * sgn (x i) * sgn (x j) else 0 := by
@@ -221,8 +224,8 @@ private theorem weighted_square_sum (μ : (Fin 6 → Bool) → ℝ)
       rw [Finset.sum_add_distrib]
       rw [← Finset.sum_mul]
       congr 1
-      ring
-      calc
+      · ring
+      · calc
         _ = ∑ x, 2 * (μ x * (∑ i, ∑ j,
               if i < j then b i * b j * sgn (x i) * sgn (x j) else 0)) := by
           apply Finset.sum_congr rfl
