@@ -71,31 +71,45 @@ private def gauge (φ : ℝ) : Matrix (Fin 3) (Fin 3) ℂ :=
 private def ungauge (φ : ℝ) : Matrix (Fin 3) (Fin 3) ℂ :=
   Matrix.diagonal (fun i => Complex.exp (-((i.val : ℂ) * φ * Complex.I)))
 
+private theorem kraus_formula : kraus =
+  ![!![0, 3/5, 0; 0, 0, 3/5; 0, 0, 0],
+    !![0, 0, 0; 4/5, 0, 0; 0, 4/5, 0],
+    !![0, 0, 4/5; 0, 0, 0; 0, 0, 0],
+    !![0, 0, 0; 0, 0, 0; 3/5, 0, 0]] := rfl
+
+private theorem charges_formula : charges = (![-1, 1, -2, 2] : Fin 4 → ℝ) := rfl
+
 private theorem kraus_nonzero : ∀ k, kraus k ≠ 0 := by
   intro k h
   fin_cases k
   · have he := congrArg (fun m : Matrix (Fin 3) (Fin 3) ℂ => m 0 1) h
-    norm_num [kraus] at he
+    rw [kraus_formula] at he
+    norm_num at he
   · have he := congrArg (fun m : Matrix (Fin 3) (Fin 3) ℂ => m 1 0) h
-    norm_num [kraus] at he
+    rw [kraus_formula] at he
+    norm_num at he
   · have he := congrArg (fun m : Matrix (Fin 3) (Fin 3) ℂ => m 0 2) h
-    norm_num [kraus] at he
+    rw [kraus_formula] at he
+    norm_num at he
   · have he := congrArg (fun m : Matrix (Fin 3) (Fin 3) ℂ => m 2 0) h
-    norm_num [kraus] at he
+    rw [kraus_formula] at he
+    norm_num at he
 
 private theorem kraus_normalized : (∑ k, kraus k * star (kraus k)) = 1 := by
+  rw [kraus_formula]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [kraus, Fin.sum_univ_succ, Matrix.mul_apply, Matrix.vecMul_apply_eq_sum,
+    norm_num [Fin.sum_univ_succ, Matrix.mul_apply, Matrix.vecMul_apply_eq_sum,
       Matrix.star_apply,
       Matrix.one_apply, map_ofNat]
 
 private theorem charges_nonzero : ∀ k, charges k ≠ 0 := by
+  rw [charges_formula]
   intro k
-  fin_cases k <;> norm_num [charges]
+  fin_cases k <;> norm_num
 
 private theorem charges_distinct : ∃ k l, charges k ≠ charges l := by
-  exact ⟨0, 1, by norm_num [charges]⟩
+  exact ⟨0, 1, by rw [charges_formula]; norm_num⟩
 
 private theorem gauge_inverse (φ : ℝ) : ungauge φ * gauge φ = 1 := by
   change Matrix.diagonal _ * Matrix.diagonal _ = _
@@ -117,9 +131,10 @@ private theorem charge_conjugation (φ : ℝ) (k : Fin 4) :
       (fun r : Fin 3 => Complex.exp ((r.val : ℂ) * φ * Complex.I)) * kraus k) *
     Matrix.diagonal
       (fun r : Fin 3 => Complex.exp (-((r.val : ℂ) * φ * Complex.I)))) i j = _
-  rw [Matrix.mul_diagonal, Matrix.diagonal_mul, Matrix.smul_apply, smul_eq_mul, he]
+  rw [Matrix.mul_diagonal, Matrix.diagonal_mul, Matrix.smul_apply, smul_eq_mul, he,
+    kraus_formula, charges_formula]
   fin_cases k <;> fin_cases i <;> fin_cases j <;>
-    norm_num [kraus, charges] <;> congr 2 <;> ring
+    norm_num <;> congr 2 <;> ring
 
 private theorem conjugation_words (φ : ℝ) (l : List (Fin 4)) :
     gauge φ * (l.map kraus).prod * ungauge φ =
@@ -192,9 +207,10 @@ private theorem two_products :
     kraus 3 * kraus 2 = (12/25 : ℂ) • Matrix.single 2 2 1 ∧
     kraus 0 * kraus 1 - kraus 2 * kraus 3 =
       (12/25 : ℂ) • Matrix.single 1 1 1 := by
+  rw [kraus_formula]
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩ <;>
     ext i j <;> fin_cases i <;> fin_cases j <;>
-    norm_num [kraus, Matrix.mul_apply, Fin.sum_univ_succ, Matrix.single_apply,
+    norm_num [Matrix.mul_apply, Fin.sum_univ_succ, Matrix.single_apply,
       Matrix.smul_apply]
 
 private theorem trace_kernel (x : Matrix (Fin 3) (Fin 3) ℂ)
