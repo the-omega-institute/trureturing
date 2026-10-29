@@ -130,7 +130,7 @@ internal sealed class TotalDominationSeedsDocument : IScribeDocumentDefinition
     private static Formula RecursiveFintype(string s, string baseName, byte initial, byte step) => And(
         Eq(Cast(Call(s,D(0)),Call("Fintype",Call(baseName,D(0)))),Call("inferInstanceAs",Call("Fintype",Fin(D(initial))))),
         All("m",Nat,Eq(Cast(Call(s,Add(V("m"),D(1))),Call("Fintype",Call(baseName,Add(V("m"),D(1))))),
-            Call("@instFintypeSum",Fin(D(step)),Call(baseName,V("m")),Call("inferInstanceAs",Call("Fintype",Fin(D(step)))),Call(s,V("m"))))));
+            Call("instFintypeSum",Fin(D(step)),Call(baseName,V("m")),Call("inferInstanceAs",Call("Fintype",Fin(D(step)))),Call(s,V("m"))))));
     private static Formula Instance(string s, string baseName, bool nonempty) => All("m",Nat,Cast(Call(s,V("m")),Call(nonempty?"Nonempty":"Fintype",Call(baseName,V("m")))));
     private static Formula Friendship(bool labelled) {
         var r=V("r");var g=labelled?V("G"):Call("friendshipGraph",V("m"));var t=labelled?Fin(V("n")):SumType(Call("Unit"),Call("EdgeBase",V("m")));
