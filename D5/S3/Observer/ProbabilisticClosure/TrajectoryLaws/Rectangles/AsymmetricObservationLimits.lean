@@ -34,6 +34,7 @@ def mean {E : Type*} [MeasurableSpace E] (μ : Measure Visible)
 /-- Almost-sure and mean-square convergence; the latter is convergence in L². -/
 def MeanSquareLimit (μ : Measure Visible) (f : ℕ → Visible → ℝ) (g : Visible → ℝ) : Prop :=
   (∀ᵐ z ∂μ, Tendsto (fun n => f n z) atTop (𝓝 (g z))) ∧
+    (∀ n, MemLp (f n) 2 μ) ∧ MemLp g 2 μ ∧
     Tendsto (fun n => ∫ z, (f n z - g z)^2 ∂μ) atTop (𝓝 0)
 
 private abbrev leftField (n : ℕ) : MeasurableSpace Visible :=
@@ -132,7 +133,12 @@ private theorem observation_limit {E : ℕ → Type*} [∀ n, MeasurableSpace (E
     change mean μ v z = μ[erasedBit | MeasurableSpace.comap v inferInstance] z at hqz
     rw [hsup, ← hqz] at hz
     exact hz.congr (fun n => (hpz n).symm)
-  refine ⟨ha,?_⟩
+  refine ⟨ha,?_,?_,?_⟩
+  · intro n
+    exact memLp_of_bounded (Filter.Eventually.of_forall (mean_bounds μ (o n)))
+      ((bitPredictor_measurable μ _ _).comp (ho n)).aestronglyMeasurable 2
+  · exact memLp_of_bounded (Filter.Eventually.of_forall (mean_bounds μ v))
+      ((bitPredictor_measurable μ _ _).comp hv).aestronglyMeasurable 2
   have hd := tendsto_integral_of_dominated_convergence (μ := μ)
     (F := fun n z => (mean μ (o n) z-mean μ v z)^2) (f := fun _ => (0 : ℝ))
     (fun _ => (1 : ℝ))
@@ -197,8 +203,28 @@ private theorem record_fiber (l r : ℕ) (z : Visible) :
     record (List.ofFn (leftWord l z)) (List.ofFn (rightWord r z)) =
       observation l r ⁻¹' {observation l r z} := by
   ext y
-  simp [record,block,observation,leftWord,rightWord,funext_iff]
-  simp only [List.length_ofFn,add_comm]
+  change y ∈ record (List.ofFn (leftWord l z)) (List.ofFn (rightWord r z)) ↔
+    observation l r y = observation l r z
+  simp only [record,block,Set.mem_inter_iff,Set.mem_setOf_eq]
+  constructor
+  · rintro ⟨hl,hr⟩
+    apply Prod.ext
+    · funext i
+      have hi := hl (Fin.cast (by simp : (List.ofFn (leftWord l z)).length = l).symm i)
+      simpa [List.get_ofFn,leftWord,observation] using hi
+    · funext i
+      have hi := hr (Fin.cast (by simp : (List.ofFn (rightWord r z)).length = r).symm i)
+      simpa [List.get_ofFn,rightWord,observation,add_comm] using hi
+  · intro he
+    have hl := congrArg Prod.fst he
+    have hr := congrArg Prod.snd he
+    constructor
+    · intro i
+      have hi := congrFun hl (Fin.cast (by simp : (List.ofFn (leftWord l z)).length = l) i)
+      simpa [List.get_ofFn,leftWord,observation] using hi
+    · intro i
+      have hi := congrFun hr (Fin.cast (by simp : (List.ofFn (rightWord r z)).length = r) i)
+      simpa [List.get_ofFn,rightWord,observation,add_comm] using hi
 
 private theorem finite_ratio (μ : Measure Visible) [IsProbabilityMeasure μ] (l r : ℕ) :
     ∀ᵐ z ∂μ,
@@ -214,6 +240,7 @@ private theorem finite_ratio (μ : Measure Visible) [IsProbabilityMeasure μ] (l
     · have hn : ∀ᵐ z ∂μ, z ∉ o ⁻¹' {e} := by
         rw [ae_iff]
         convert he using 1
+        congr 1
         ext a
         simp
       exact hn.mono fun z hz _ => hz
@@ -294,7 +321,8 @@ theorem same_law_counted_half_line_smoothing
       (List.ofFn (leftWord j z)) (List.ofFn (rightWord n z))
       (by rw [← left_append k j z]; exact hz1.1) hz2.1
     rw [← left_append k j z] at h
-    simpa only [← hz1.2,← hz2.2,List.length_ofFn] using h
+    rw [hz1.2,hz2.2]
+    simpa only [List.length_ofFn,μ,ρ,b,leftCount,rightCount] using h
   have hRF (k j n : ℕ) : ∀ᵐ z ∂μ,
       |mean μ (observation n (j+k)) z-mean μ (observation n j) z| ≤
         ρ ^ rightCount w b j z := by
@@ -303,7 +331,8 @@ theorem same_law_counted_half_line_smoothing
       (List.ofFn (fun i : Fin k => z (j+i+1)))
       (by rw [← right_append j k z]; exact hz1.1) hz2.1
     rw [← right_append j k z] at h
-    simpa only [← hz1.2,← hz2.2,List.length_ofFn] using h
+    rw [hz1.2,hz2.2]
+    simpa only [List.length_ofFn,μ,ρ,b,leftCount,rightCount] using h
   have hshift (j : ℕ) : Tendsto (fun k : ℕ => k+j) atTop atTop := by
     apply tendsto_atTop.mpr
     intro a
@@ -323,7 +352,7 @@ theorem same_law_counted_half_line_smoothing
     filter_upwards [hlim,ae_all_iff.mpr (fun k => hRF k j n)] with z hz hb
     have hlim' : Tendsto (fun k => mean μ (observation n (j+k)) z)
         atTop (𝓝 (mean μ (leftObservation n) z)) := by
-      simpa only [Nat.add_comm] using hz.comp (hshift j)
+      simpa only [Function.comp_def,Nat.add_comm] using hz.comp (hshift j)
     exact le_of_tendsto ((hlim'.sub
       (tendsto_const_nhds (x := mean μ (observation n j) z))).abs)
       (Filter.Eventually.of_forall hb)
