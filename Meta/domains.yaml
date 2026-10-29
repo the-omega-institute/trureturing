@@ -38,9 +38,6 @@ domains:
   CharacterSums:
     stratum: S3
     definition: Multiplicative characters and Gauss and Jacobi sums over finite fields, including affine and projective point counts and character-sum bounds.
-  ChromaticFunctions:
-    stratum: S3
-    definition: Chromatic symmetric functions of finite graphs and their ordinary and t-refined principal specializations.
   Combinatorics:
     stratum: S3
     definition: Graph families and their invariants, including the hypercube, extremal subgraph counts, perfect matchings and matching components on arbitrary vertex types.
