@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Absolute original four-current thermal resummation on the open coordinate polydisk.
--/
+   digest: Absolute original four-current thermal resummation on the open coordinate polydisk. -/
 
 import D5.S3.VertexAlgebra.Characters.LatticeFourCurrentTrace
 import D5.S3.VertexAlgebra.Characters.LatticeTwoCurrentThermal
