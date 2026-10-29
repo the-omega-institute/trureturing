@@ -489,17 +489,14 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
         self.assertEqual(self.base, self.g(self.main, "rev-parse", "refs/heads/" + self.branch).strip())
 
     def interrupted_removal(self):
-        """Stop native removal after it deleted tracked files, as a timeout or kill does."""
-        native_git = preservation.git
-        def interrupt(root, *args, **kwargs):
-            if args[:2] == ("worktree", "remove"):
-                for name in ("owned", "other"):
-                    (self.tree / name).unlink()
-                raise subprocess.TimeoutExpired(["git", *map(str, args)], 300)
-            return native_git(root, *args, **kwargs)
+        """Stop content removal after deleting tracked files."""
+        def interrupt(target):
+            for name in ("owned", "other"):
+                (target / name).unlink()
+            raise OSError("content deletion interrupted")
         options = argparse.Namespace(source=self.main, names="tree", path=[], force=False,
                                      preview=False, expected=[])
-        with patch.object(preservation, "git", side_effect=interrupt):
+        with patch.object(preservation, "remove_payload", side_effect=interrupt):
             result = preservation.remove(options)["items"][0]
         self.assertEqual("partial_or_indeterminate", result["outcome"])
         self.assertEqual(" D other\n D owned\n", self.g(self.tree, "status", "--porcelain"))

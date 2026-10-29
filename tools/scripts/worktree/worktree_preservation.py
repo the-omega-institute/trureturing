@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import signal
 import stat
 import subprocess
@@ -59,15 +60,28 @@ REMOVAL_RECORD = "worktree-removal"
 
 
 def record_removal(metadata, commit, recovery_branch, predecessors=None, native_locks=None):
-    """Record the verified snapshot in Git metadata, which native removal deletes last."""
+    """Keep the verified snapshot in Git metadata until content deletion succeeds."""
     staged = metadata / (REMOVAL_RECORD + ".tmp")
     staged.write_text(json.dumps(dict(commit=commit, recovery_branch=recovery_branch,
                                      predecessors=predecessors or [], native_locks=native_locks or [])))
     os.replace(staged, metadata / REMOVAL_RECORD)
 
 
+def remove_payload(target):
+    """Retain the Git link and registration throughout fallible content deletion."""
+    for child in target.iterdir():
+        if child.name == ".git":
+            continue
+        if child.is_dir() and not child.is_symlink():
+            shutil.rmtree(child)
+        else:
+            child.unlink()
+    if any(child.name != ".git" for child in target.iterdir()):
+        raise Refused("worktree_payload_changed_during_removal")
+
+
 def interrupted_removal(target, metadata, stack, source, branch):
-    """Return the record of an earlier removal whose native deletion stopped part way."""
+    """Return the record of an earlier removal whose deletion stopped part way."""
     record = metadata / REMOVAL_RECORD
     if not record.exists():
         return None
@@ -106,7 +120,7 @@ def interrupted_removal(target, metadata, stack, source, branch):
                        getattr(stack, "native_locks", []))
         return dict(commit=snapshot["commit"], recovery_branch=current_root, reconverged=True,
                     native_locks=getattr(stack, "native_locks", []))
-    # Native deletion only deletes files; other differences may be later changes.
+    # Content deletion only deletes files; other differences may be later changes.
     status = git(target, "status", "--porcelain", "--untracked-files=all").stdout.splitlines()
     if any(not line.startswith(b" D ") for line in status):
         raise Refused("interrupted_removal_tree_changed")
@@ -303,7 +317,7 @@ def remove(options):
                 _, metadata = identity(source, target)
                 resumed = interrupted_removal(target, metadata, stack, source, branch)
                 if resumed:
-                    # The earlier removal verified this snapshot clean before native
+                    # The earlier removal verified this snapshot clean before content
                     # deletion began; missing files are its effects, not changes.
                     checkpoint = dict(event="worktree_checkpoint", status="reconverged" if resumed.get("reconverged") else "resumed",
                                       commit=resumed["commit"], branch=branch,
@@ -336,6 +350,7 @@ def remove(options):
                                    native_locks=checkpoint.get("native_locks", []))
                 flags = ["--force", "--force"] if "locked" in refreshed else ["--force"]
                 removing = True
+                remove_payload(target)
                 git(source, "worktree", "remove", *flags, "--", target,
                     timeout=None if options.force else 300)
                 outcomes.append(dict(path=str(target), outcome="removed", checkpoint=checkpoint,
