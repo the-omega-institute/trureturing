@@ -7,8 +7,6 @@
    digest: The ordinary three-dimensional board has maximal saturated near-line-avoiding density below one third. -/
 
 import D5.S3.Combinatorics.LatinEulerianDefs
-import Mathlib.Data.Fintype.Powerset
-import Mathlib.Data.Finset.Max
 import Mathlib.Tactic
 
 set_option maxHeartbeats 2000000
