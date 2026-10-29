@@ -35,11 +35,11 @@ private theorem rowList_sorted {H U : ℕ} (r : Rows H U) : (rowList r).SortedGE
 def diagram {H U : ℕ} (r : Rows H U) : YoungDiagram :=
   YoungDiagram.ofRowLens (rowList r) (rowList_sorted r)
 
-private theorem diagram_mem {H U : ℕ} (r : Rows H U) (i j : ℕ) :
+theorem diagram_mem {H U : ℕ} (r : Rows H U) (i j : ℕ) :
     (i,j) ∈ diagram r ↔ ∃ hi : i < H, j < (r.val ⟨i, hi⟩).val := by
   simp [diagram, YoungDiagram.mem_ofRowLens, rowList]
 
-private theorem diagram_rowLen {H U : ℕ} (r : Rows H U) (i : Fin H) :
+theorem diagram_rowLen {H U : ℕ} (r : Rows H U) (i : Fin H) :
     (diagram r).rowLen i = (r.val i).val := by
   apply Nat.le_antisymm
   · by_contra! h

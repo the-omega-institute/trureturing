@@ -56,7 +56,7 @@ theorem paths_card (r U : ℕ) (as : List ℕ) (u : Fin (U+1)) :
       intro v _
       rw [level_card, ih]
 
-private def index (m t : ℕ) (p : Fin t) (j : Fin m) : Fin (m*t) :=
+def rowIndex (m t : ℕ) (p : Fin t) (j : Fin m) : Fin (m*t) :=
   ⟨m*p.val+j.val, by
     have hp := Nat.mul_le_mul_left m (Nat.succ_le_of_lt p.isLt)
     rw [Nat.mul_succ] at hp
@@ -66,6 +66,6 @@ private def index (m t : ℕ) (p : Fin t) (j : Fin m) : Fin (m*t) :=
 abbrev FlatFiber (r U : ℕ) (as : List ℕ) (u : Fin (U+1)) :=
   {x : Fin ((r+1)*as.length) → Fin (U+1) //
     Antitone x ∧ (∀ j, x j ≤ u) ∧
-    ∀ p : Fin as.length, ∑ j : Fin (r+1), (x (index (r+1) as.length p j)).val = as[p.val]}
+    ∀ p : Fin as.length, ∑ j : Fin (r+1), (x (rowIndex (r+1) as.length p j)).val = as[p.val]}
 
 end D5.S3.Combinatorics.Partitions.FerrersLevelCounting
