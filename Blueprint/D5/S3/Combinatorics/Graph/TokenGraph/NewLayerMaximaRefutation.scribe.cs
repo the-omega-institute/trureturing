@@ -8,7 +8,7 @@ internal sealed class NewLayerMaximaRefutationDocument : IScribeDocumentDefiniti
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/TokenGraph/NewLayerMaximaRefutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/reyes2023tokenspectra");
+        LibraryNoteRef.Create("D5/L/Eigenstructure/reyes2023tokenspectra");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "For the actual connected star on four vertices, the first two new Laplacian layers have maxima 4 and 3. Their decrease refutes the whole successive-layer monotonicity conjecture.",
