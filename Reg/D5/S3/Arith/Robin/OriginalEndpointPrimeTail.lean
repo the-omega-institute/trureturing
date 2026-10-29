@@ -165,7 +165,8 @@ abbrev tailDataArena : Arena where
 private theorem tail_data_rejected_law : ¬ tailDataArena.Law tailDataRejected := by
   intro h
   have hbad := (h (m := 1) (by norm_num) (by simp [largestPrime])).1
-  norm_num [tailDataRejected, realize] at hbad
+  change (0 : ℝ) ≤ -1 at hbad
+  norm_num at hbad
 
 def tailDataFamily : Registration tailDataArena tailDataScope where
   actual := tailDataActual
