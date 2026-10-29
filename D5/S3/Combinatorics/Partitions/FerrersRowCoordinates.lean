@@ -1,0 +1,115 @@
+/- GID: D5/S3/Combinatorics/Partitions/FerrersRowCoordinates
+   generality: G
+   mirror-B: D5/B/S3/Combinatorics/Partitions/FerrersRowCoordinates
+   mirror-E: none(waiver:bounded-ferrers-coordinate-equivalence)
+   anchors: [mathlib/module/Mathlib.Combinatorics.Young.YoungDiagram]
+   utility: none
+   digest: Fixed ambient Ferrers coordinates retain every zero row and column. -/
+
+import Mathlib.Combinatorics.Young.YoungDiagram
+import Mathlib.Data.List.OfFn
+import Mathlib.Tactic
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+noncomputable section
+namespace D5.S3.Combinatorics.Partitions.FerrersRowCoordinates
+
+/-- Bottom-to-top row lengths, including all ambient zero rows. -/
+abbrev Rows (H U : ℕ) := {r : Fin H → Fin (U + 1) // Antitone r}
+
+/-- Source column heights, from left to right, including all ambient zero columns. -/
+abbrev Board (U H : ℕ) := {b : Fin U → Fin (H + 1) // Monotone b}
+
+private def rowList {H U : ℕ} (r : Rows H U) : List ℕ :=
+  List.ofFn (fun i => (r.val i).val)
+
+private theorem rowList_sorted {H U : ℕ} (r : Rows H U) : (rowList r).SortedGE := by
+  apply List.sortedGE_iff_pairwise.mpr
+  rw [rowList, List.pairwise_ofFn]
+  intro i j hij
+  exact Fin.le_iff_val_le_val.mp (r.property (le_of_lt hij))
+
+/-- The underlying finite diagram forgets only the ambient padding. -/
+def diagram {H U : ℕ} (r : Rows H U) : YoungDiagram :=
+  YoungDiagram.ofRowLens (rowList r) (rowList_sorted r)
+
+private theorem diagram_mem {H U : ℕ} (r : Rows H U) (i j : ℕ) :
+    (i,j) ∈ diagram r ↔ ∃ hi : i < H, j < (r.val ⟨i, hi⟩).val := by
+  simp [diagram, YoungDiagram.mem_ofRowLens, rowList]
+
+private theorem diagram_rowLen {H U : ℕ} (r : Rows H U) (i : Fin H) :
+    (diagram r).rowLen i = (r.val i).val := by
+  apply Nat.le_antisymm
+  · by_contra! h
+    have hm := (YoungDiagram.mem_iff_lt_rowLen).mpr h
+    obtain ⟨hi, hh⟩ := (diagram_mem r _ _).mp hm
+    exact (Nat.lt_irrefl _) hh
+  · by_contra! h
+    have hm := (diagram_mem r i ((diagram r).rowLen i)).mpr ⟨i.isLt,h⟩
+    exact (Nat.lt_irrefl _) ((YoungDiagram.mem_iff_lt_rowLen).mp hm)
+
+private theorem diagram_rowLen_bound {H U : ℕ} (r : Rows H U) (i : ℕ) :
+    (diagram r).rowLen i ≤ U := by
+  by_contra! h
+  obtain ⟨hi, hh⟩ := (diagram_mem r i U).mp ((YoungDiagram.mem_iff_lt_rowLen).mpr h)
+  have := (r.val ⟨i,hi⟩).isLt
+  omega
+
+private theorem diagram_transpose_bound {H U : ℕ} (r : Rows H U) (j : ℕ) :
+    (diagram r).transpose.rowLen j ≤ H := by
+  by_contra! h
+  have hm : (j,H) ∈ (diagram r).transpose := (YoungDiagram.mem_iff_lt_rowLen).mpr h
+  have ht : (H,j) ∈ diagram r := YoungDiagram.mem_transpose.mp hm
+  obtain ⟨hi,_⟩ := (diagram_mem r H j).mp ht
+  omega
+
+/-- Conjugation, with both ambient dimensions retained. -/
+def conjugate {H U : ℕ} (r : Rows H U) : Rows U H :=
+  ⟨fun j => ⟨(diagram r).transpose.rowLen j,
+      Nat.lt_succ_of_le (diagram_transpose_bound r j)⟩,
+    fun i j hij => Fin.le_iff_val_le_val.mpr
+      ((diagram r).transpose.rowLen_anti i j hij)⟩
+
+private theorem diagram_conjugate {H U : ℕ} (r : Rows H U) :
+    diagram (conjugate r) = (diagram r).transpose := by
+  ext c
+  rw [diagram_mem, YoungDiagram.mem_iff_lt_rowLen]
+  constructor
+  · rintro ⟨hi,hj⟩
+    exact hj
+  · intro hj
+    have hm : (c.1,c.2) ∈ (diagram r).transpose :=
+      YoungDiagram.mem_iff_lt_rowLen.mpr hj
+    have ht : (c.2,c.1) ∈ diagram r := YoungDiagram.mem_transpose.mp hm
+    obtain ⟨_,hc⟩ := (diagram_mem r _ _).mp ht
+    have hu : c.1 < U := lt_of_lt_of_le hc (Nat.le_of_lt_succ (Fin.isLt _))
+    exact ⟨hu,hj⟩
+
+/-- Conjugation is an involution even for zero dimensions and padded zero entries. -/
+theorem conjugate_involutive {H U : ℕ} (r : Rows H U) :
+    conjugate (conjugate r) = r := by
+  apply Subtype.ext
+  funext i
+  apply Fin.ext
+  change (diagram (conjugate r)).transpose.rowLen i = (r.val i).val
+  rw [diagram_conjugate, YoungDiagram.transpose_transpose, diagram_rowLen]
+
+/-- The exact row/column coordinate bijection in a fixed rectangle. -/
+def boardRowsEquiv (U H : ℕ) : Board U H ≃ Rows H U where
+  toFun b := conjugate ⟨fun i => b.val i.rev, fun _ _ h => b.property (Fin.rev_le_rev.mpr h)⟩
+  invFun r := ⟨fun i => (conjugate r).val i.rev,
+    fun _ _ h => (conjugate r).property (Fin.rev_le_rev.mpr h)⟩
+  left_inv b := by
+    have hh := conjugate_involutive
+      (⟨fun i => b.val i.rev, fun _ _ h => b.property (Fin.rev_le_rev.mpr h)⟩ : Rows U H)
+    apply Subtype.ext
+    funext i
+    have hv := congrArg (fun r : Rows U H => r.val i.rev) hh
+    simpa using hv
+  right_inv r := by
+    change conjugate ⟨fun i => (conjugate r).val i.rev.rev, _⟩ = r
+    simpa using conjugate_involutive r
+
+end D5.S3.Combinatorics.Partitions.FerrersRowCoordinates
