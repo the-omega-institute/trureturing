@@ -161,7 +161,10 @@ theorem mixed_graph_count (x y z r : ℕ) :
       simpa only [show 2 * 3 = 6 by rfl, show Nat.choose 3 3 = 1 by decide,
         Nat.mul_one, show 3 + 8 = 11 by rfl, show Nat.choose 3 2 = 3 by decide,
         show 4 * 3 = 12 by rfl] using And.intro h.1 (And.intro h.2.1 h.2.2.1)
-    convert h0 using 1 <;> congr 3
+    refine ⟨?_, ?_, ?_⟩
+    · convert h0.1 using 1 <;> congr 3
+    · convert h0.2.1 using 1 <;> congr 3
+    · convert h0.2.2 using 1 <;> congr 3
   refine ⟨?_, cone_connected _, ?_⟩
   · change Fintype.card (Option ((copies (complete 4) x).V ⊕
       ((copies (complete 1) (2 * y)).V ⊕ ((copies oct z).V ⊕ (complete r).V)))) = _

@@ -1,6 +1,8 @@
 import Reg.Support.DependentFamily
 import D5.S3.Combinatorics.MinimalForts.OctahedronBlock
 
+/-! Source models for unbounded whole-part and transversal classifications. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -46,8 +48,12 @@ private def propFamily {X : Type} (L R : X → Prop) (h : ∀ s, L s ↔ R s)
     cases i with
     | false => exact hR0 (hb0.mp trivial)
     | true => exact h0 (hb0.mpr trivial)
-  refine { actual := propActual L R, bridge := Iff.rfl,
-    variation := ⟨h,bad,hbad⟩, sensitivity := ?_, dependence := ?_ }
+  refine {
+    actual := propActual L R
+    bridge := Iff.rfl
+    variation := ⟨h,bad,hbad⟩
+    sensitivity := ?_
+    dependence := ?_ }
   · constructor
     · intro i
       refine ⟨altered i, ?_, rfl, halt i⟩
@@ -91,8 +97,12 @@ def minimalFamily : Registration (propArena SubsetState)
   have h1 : minimalLeft partState :=
     (h partState).mpr (Or.inl ⟨0,rfl⟩)
   let e := propFamily minimalLeft minimalRight h emptyState partState h0 h1
-  refine { actual := e.actual, bridge := ?_, variation := e.variation,
-    sensitivity := e.sensitivity, dependence := e.dependence }
+  refine {
+    actual := e.actual
+    bridge := ?_
+    variation := e.variation
+    sensitivity := e.sensitivity
+    dependence := e.dependence }
   change (∀ m (hm : 2 ≤ m) S, MinimalFort (SimpleGraph.completeEquipartiteGraph m 2) S ↔
     (∃ i, S = part i) ∨ (S.card = 3 ∧ Transversal S)) ↔
       ∀ s : SubsetState, minimalLeft s ↔ minimalRight s
@@ -120,12 +130,20 @@ def rootedFamily : Registration (propArena SubsetState)
   have h1 : rootedLeft pairState := by
     apply (h pairState).mpr
     refine ⟨by simp [pairState], ?_⟩
+    change Set.InjOn Prod.fst (({(0,0),(1,0)} : Finset (Fin 2 × Fin 2)) : Set _)
+    have hs : ∀ v : Fin 2 × Fin 2, v ∈ ({(0,0),(1,0)} : Finset _) → v.2 = 0 := by
+      intro v hv
+      simp only [Finset.mem_insert, Finset.mem_singleton] at hv
+      rcases hv with hv | hv <;> simp [hv]
     intro a ha b hb he
-    simp only [pairState, Finset.mem_insert, Finset.mem_singleton] at ha hb
-    rcases ha with rfl | rfl <;> rcases hb with rfl | rfl <;> simp_all
+    exact Prod.ext he ((hs a ha).trans (hs b hb).symm)
   let e := propFamily rootedLeft rootedRight h emptyState pairState h0 h1
-  refine { actual := e.actual, bridge := ?_, variation := e.variation,
-    sensitivity := e.sensitivity, dependence := e.dependence }
+  refine {
+    actual := e.actual
+    bridge := ?_
+    variation := e.variation
+    sensitivity := e.sensitivity
+    dependence := e.dependence }
   change (∀ m (hm : 2 ≤ m) S,
     MinimalFort (cone (SimpleGraph.completeEquipartiteGraph m 2)) (rootSet S) ↔
     S.card = 2 ∧ Transversal S) ↔ ∀ s : SubsetState, rootedLeft s ↔ rootedRight s
