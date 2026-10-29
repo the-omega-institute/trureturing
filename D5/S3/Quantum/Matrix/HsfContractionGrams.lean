@@ -7,9 +7,9 @@
    digest: Four exact integer Gram matrices for the full contraction cubic certificate. -/
 
 /-
-admission_basis: escape-witness
-proof_shape: grams_posSemidef: content
-escape_witness: grams_posSemidef
+admission_basis: none
+proof_shape: grams_posSemidef: bind-only; consumer: HsfContractionCubic.coefficient_gap_nonneg
+escape_witness: none; research checkpoint, not eligible for first freeze
 The exact rational LDL decompositions are reconstructed by kernel-checked arithmetic.
 The matrices are used in the arbitrary-dimensional full-contraction trace certificate.
 -/

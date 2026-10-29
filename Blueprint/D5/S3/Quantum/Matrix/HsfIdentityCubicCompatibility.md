@@ -38,27 +38,14 @@ Lean statement: `D5/S3/Quantum/Matrix/HsfIdentityCubicCompatibility.identity_cub
 
 *Commentary.*
 
-For every finite complex matrix size, Hermitian K and PSD endpoints U+H,U-H,I+K,I-K, the actual function f(t)=Re Tr(((I+tK)^(-1/3)(U+tH)(I+tK)^(-1/3))^3) satisfies f_second(0)>=0 and abs(f_third(0))<=5 f_second(0). This includes every positive definite U and Hermitian H, arbitrary noncommuting U,H,K, singular endpoints and zero Hessian. The derivative inequality also holds for PSD U. The denominator base point is identity.
+For every finite complex matrix size, Hermitian K and PSD endpoints U+H,U-H,I+K,I-K, the actual function f(t)=Re Tr(((I+tK)^(-1/3)(U+tH)(I+tK)^(-1/3))^3) satisfies f_second(0)>=0 and abs(f_third(0))<=5 f_second(0). The endpoint conditions allow singular U and zero Hessian, and require no pairwise commutation among U,H,K. The denominator varies along I+tK, with base point identity.
 
-**Theorem 1.4 (The sharp scalar direction).**
-
-Lean statement: `D5/S3/Quantum/Matrix/HsfIdentityCubicCompatibility.sharp5`
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/HsfIdentityCubicCompatibility.sharp5` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-In dimension one U=H=I,K=-I gives actual second derivative 24 and actual third derivative 120. Thus constant five is attained by an endpoint-feasible positive definite scalar center.
-
-The target is He, Saunderson and Fawzi, arXiv:2502.05627v1 Conjecture 6.2, journal DOI 10.1007/s10107-025-02314-0 Conjecture 1. The formal result has alpha=3 and Y=I; no full-general-Y or literature-priority claim is made.
+He, Saunderson and Fawzi, arXiv:2502.05627v1 Conjecture 6.2, journal DOI 10.1007/s10107-025-02314-0 Conjecture 1, predict a compatibility parameter (2 alpha-1)/3. The derivative constant five here corresponds to beta=5/3 at alpha=3. The result concerns denominator center Y=I; the conjecture at general noncommuting denominator centers remains open, and no literature-priority claim is made.
 
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Matrix/HsfIdentityCubicCompatibility.identity_cubic_compatibility`
 - Truth anchor: `D5/S3/Quantum/Matrix/HsfIdentityCubicCompatibility.positive_direction_bound`
-- Truth anchor: `D5/S3/Quantum/Matrix/HsfIdentityCubicCompatibility.sharp5`
 - Truth anchor: `D5/S3/Quantum/Matrix/HsfIdentityCubicCompatibility.signed_derivative_transfer`
 - Dependency: [D5/S3/Quantum/Matrix/HsfContractionCubic](HsfContractionCubic.md)
 - Dependency: [D5/S3/Quantum/Matrix/HsfIdentityCubicDerivatives](HsfIdentityCubicDerivatives.md)

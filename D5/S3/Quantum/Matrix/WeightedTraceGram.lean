@@ -7,9 +7,9 @@
    digest: Positive weighted trace Gram forms in arbitrary finite complex dimension. -/
 
 /-
-admission_basis: escape-witness
-proof_shape: weighted_traceGram_nonneg: content
-escape_witness: weighted_traceGram_nonneg
+admission_basis: none
+proof_shape: weighted_traceGram_nonneg: bind-only; consumer: HsfContractionCubic.coefficient_gap_nonneg
+escape_witness: none; research checkpoint, not eligible for first freeze
 The two physical matrix weights and the coefficient Gram matrix are independent.
 No invertibility, commutativity, or fixed physical dimension is assumed.
 -/

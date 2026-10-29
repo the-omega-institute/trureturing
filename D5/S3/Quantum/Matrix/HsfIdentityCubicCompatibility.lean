@@ -7,9 +7,9 @@
    digest: Actual arbitrary-dimensional cubic HSF compatibility at identity with constant five. -/
 
 /-
-admission_basis: escape-witness
-proof_shape: identity_cubic_compatibility: content
-escape_witness: HsfContractionCubic.coefficient_gap_identity
+admission_basis: none
+proof_shape: positive_direction_bound, signed_derivative_transfer, identity_cubic_compatibility: bind-only; helper consumers: signed_upper, identity_cubic_compatibility
+escape_witness: none; research checkpoint, not eligible for first freeze
 The actual CFC derivative bridge is applied to the signed and positive pencils.
 The full contraction certificate keeps all four PSD endpoints.
 -/

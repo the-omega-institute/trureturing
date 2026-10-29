@@ -7,9 +7,9 @@
    digest: Full-contraction four-Gram identity for the cubic identity-denominator trace. -/
 
 /-
-admission_basis: escape-witness
-proof_shape: coefficient_gap_identity: content
-escape_witness: coefficient_gap_identity
+admission_basis: none
+proof_shape: coefficient_gap_identity, coefficient_gap_nonneg: bind-only; consumers: coefficient_gap_nonneg, HsfIdentityCubicCompatibility.positive_direction_bound
+escape_witness: none; research checkpoint, not eligible for first freeze
 The identity uses only cyclic trace rotations. No projection relation or word
 reversal is imposed. The four physical weights retain both endpoints.
 -/
