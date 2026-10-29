@@ -31,7 +31,7 @@ private theorem sphere_retraction_of_contractible {E : Type*}
       ∀ x : sphere (0 : E) 1,
         R ⟨x.val, mem_closedBall_zero_iff.mpr
           (mem_sphere_zero_iff_norm.mp x.property).le⟩ = x := by
-  letI := h
+  let := h
   obtain ⟨p, ⟨H⟩⟩ := id_nullhomotopic (sphere (0 : E) 1)
   let G := H.symm
   let q : unitInterval × sphere (0 : E) 1 → closedBall (0 : E) 1 := fun z =>
@@ -61,7 +61,7 @@ private theorem sphere_retraction_of_contractible {E : Type*}
     by_cases ht : (t : ℝ) = 0
     · have ht' : t = 0 := Subtype.ext ht
       subst t
-      simp only [G, ContinuousMap.Homotopy.map_zero_left, ContinuousMap.const_apply]
+      exact (G.map_zero_left x).trans (G.map_zero_left y).symm
     · have hxy : x = y := by
         apply Subtype.ext
         have hh := congrArg (fun z : closedBall (0 : E) 1 => (t : ℝ)⁻¹ • (z : E)) heq
@@ -71,7 +71,7 @@ private theorem sphere_retraction_of_contractible {E : Type*}
   let R : closedBall (0 : E) 1 → sphere (0 : E) 1 := fun y => G (invFun q y)
   have hRq : ∀ z, R (q z) = G z := by
     intro z
-    exact hfiber _ _ (hsurj.rightInverse_invFun (q z))
+    exact hfiber _ _ (Function.rightInverse_invFun q hsurj (q z))
   have hR : Continuous R := by
     apply (Topology.IsQuotientMap.of_surjective_continuous hsurj hq).continuous_iff.mpr
     convert G.continuous using 1
@@ -79,9 +79,8 @@ private theorem sphere_retraction_of_contractible {E : Type*}
   refine ⟨⟨R, hR⟩, ?_⟩
   intro x
   have hh := hRq (1, x)
-  simpa only [q, unitInterval.coe_one, one_smul, G,
-    ContinuousMap.Homotopy.map_one_left, ContinuousMap.id_apply,
-    ContinuousMap.coe_mk] using hh
+  rw [G.map_one_left] at hh
+  simpa [q] using hh
 
 /-- A positive-dimensional Euclidean unit sphere cannot be contractible: a contraction
 would yield a ball retraction and hence a fixed-point-free simplex self-map. -/
@@ -110,7 +109,7 @@ theorem not_contractible_unit_sphere (n : ℕ) (hn : 0 < n) :
         intro i _
         dsimp [a]
         apply (div_le_iff₀ (by positivity : (0 : ℝ) < 2 * n)).mpr
-        have hh : (1 / (n : ℝ)) * (2 * n) = 2 := by field_simp; ring
+        have hh : (1 / (n : ℝ)) * (2 * n) = 2 := by field_simp
         rw [hh]
         linarith [(hcoord x i).2]
       _ = 1 := by simp [hn0]
@@ -124,20 +123,27 @@ theorem not_contractible_unit_sphere (n : ℕ) (hn : 0 < n) :
       · rw [Fin.sum_univ_succ]
         simp only [Fin.cons_zero, Fin.cons_succ]
         ring⟩
+  have hac : ∀ j, Continuous (fun x : S => a x j) := by
+    intro j
+    exact (((PiLp.continuous_apply 2 _ j).comp continuous_subtype_val).add
+      continuous_const).div_const _
   have hA : Continuous A := by
     apply Continuous.subtype_mk
     apply continuous_pi
     intro i
     refine Fin.cases ?_ (fun j => ?_) i
     · change Continuous fun x : S => 1 - ∑ j, a x j
-      dsimp [a]
-      fun_prop
+      exact continuous_const.sub (continuous_finsetSum _ fun j _ => hac j)
     · change Continuous fun x : S => a x _
-      dsimp [a]
-      fun_prop
+      exact hac _
   let B : stdSimplex ℝ (Fin (n + 1)) → E := fun z =>
     WithLp.toLp 2 (fun i => (2 * n : ℝ) * z.val i.succ - 1)
-  have hB : Continuous B := by dsimp [B]; fun_prop
+  have hB : Continuous B := by
+    apply (PiLp.continuous_toLp 2 _).comp
+    apply continuous_pi
+    intro i
+    exact (continuous_const.mul ((continuous_apply i.succ).comp continuous_subtype_val)).sub
+      continuous_const
   have hBA : ∀ x, B (A x) = (x : E) := by
     intro x
     ext i
@@ -178,7 +184,12 @@ theorem not_contractible_unit_sphere (n : ℕ) (hn : 0 < n) :
   have hy0 : (y : E) = 0 := by
     have hh := congrArg Subtype.val hRy
     change (y : E) = -(y : E) at hh
-    exact (eq_neg_self_iff.mp hh)
+    have ht : (2 : ℝ) • (y : E) = 0 := by
+      calc
+        (2 : ℝ) • (y : E) = (y : E) + (y : E) := two_smul _ _
+        _ = (y : E) + -(y : E) := congrArg (fun z : E => (y : E) + z) hh
+        _ = 0 := add_neg_cancel _
+    exact (smul_eq_zero.mp ht).resolve_left (by norm_num)
   have hnorm := mem_sphere_zero_iff_norm.mp y.property
   simp [hy0] at hnorm
 

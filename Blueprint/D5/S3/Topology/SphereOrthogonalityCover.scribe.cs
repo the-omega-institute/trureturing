@@ -8,7 +8,7 @@ internal sealed class SphereOrthogonalityCoverDocument : IScribeDocumentDefiniti
         LibraryNoteRef.Create("D5/L/Topology/feldmanwilce2026spherecovers");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Open orthogonality-free sphere covers need at least twice the ambient dimension minus one sets.",
+        "Relatively open orthogonality-free covers of the real two-sphere need at least six sets.",
         H("Open orthogonality-free sphere covers"),
         Blocks(
             Entry("component-inner-pos", "component_inner_pos", "Components are acute",
@@ -29,12 +29,21 @@ internal sealed class SphereOrthogonalityCoverDocument : IScribeDocumentDefiniti
             Entry("acute-multiplicity-contractible", "acute_cover_contractible_of_multiplicity_lt", "The acute multiplicity obstruction",
                 "A finite open acute cover with multiplicities strictly smaller than the positive ambient dimension would make the sphere contractible.",
                 "The normalized cover map is homotopic to the identity and omits a point. Stereographic projection identifies the punctured sphere with a real vector space, which is contractible. The map is therefore nullhomotopic, so the identity is nullhomotopic as well."),
+            Entry("open-cover-multiplicity-contractible", "open_cover_contractible_of_multiplicity_lt", "The original color multiplicity obstruction",
+                "In ambient dimension n+1, a relatively open orthogonality-free cover whose original point multiplicities are below n+1 makes the sphere contractible.",
+                "Pass to the finite acute component refinement, which preserves the original color multiplicity. Apply the normalized-map and omitted-point obstruction."),
             Entry("low-color-contractible", "low_color_cover_contractible", "Too few colors force a contraction",
                 "In ambient dimension n+1, an open orthogonality-free cover by at most 2n sets would make the sphere contractible. No component, acuteness, refinement or multiplicity hypothesis is assumed here.",
                 "The orthogonal-complement count bounds every original color multiplicity by n. Finite refinement by actual acute components preserves this bound. Since n is smaller than the ambient dimension n+1, the acute multiplicity obstruction applies."),
             Entry("sphere-open-cover-lower-bound", "sphere_open_orthogonality_free_cover_lower_bound", "The general lower bound",
                 "For every natural n at least two and every finite family of relatively open subsets of the real unit sphere in n dimensions, if the family covers the sphere and no member contains an orthogonal pair, then its size k satisfies 2n-1 at most k. Neither connectedness of the cover members nor any noncontractibility premise is required.",
-                "If k were at most 2n-2, the preceding construction would contract the sphere. The sphere obstruction obtained from the existing simplex Brouwer theorem rules this out. This is a general lower estimate for Feldman and Wilce's Question 3, not an exact computation of the open chromatic number. The dimension-three lower bound five is already a consequence of Holmsen and Lee's classification theorem. No priority or novelty claim is made."))));
+                "If k were at most 2n-2, the preceding construction would contract the sphere. The sphere obstruction obtained from the existing simplex Brouwer theorem rules this out. This general lower estimate and the normalized weighted-sum mechanism are antecedents of Blondal, Hatami, Hatami, Lalov and Tretiak, arXiv:2606.06148v1, Theorem 2.1 (COLT 2026, Theorem 2). Here the dimension-two case is consumed by the perpendicular-circle step of the lower bound six. No priority or novelty claim is made."),
+            Entry("sphere-three-absent-colors", "sphere_three_absent_colors", "Three colors absent at each point",
+                "For every relatively open orthogonality-free finite cover of the real two-sphere and every unit vector x, at least three original colors omit x.",
+                "Use an orthonormal basis of the perpendicular plane to identify its unit circle isometrically with the real unit circle. A color containing x has no point on this perpendicular circle. Restrict the remaining colors along the continuous isometry; they remain relatively open and orthogonality-free and cover the circle. The dimension-two general lower bound requires at least three such colors."),
+            Entry("sphere-two-lower-six", "sphere_two_open_orthogonality_free_cover_lower_six", "The lower bound six",
+                "Every finite relatively open orthogonality-free cover of the unit sphere in real Euclidean three-space has at least six members. Cover members may overlap and need not be connected.",
+                "Assume at most five colors. At every sphere point the perpendicular-circle result excludes at least three colors, leaving multiplicity at most two. The original-color multiplicity obstruction contracts the two-sphere, contradicting the Brouwer sphere obstruction. The exact triangular lower bound is a known consequence of Proposition 4.1 in the OpenAI September 23 manuscript and its Lean Admissible.label_bound; this proof uses a topological cover construction and claims no new mathematical priority. Together with a separately verified six-set cover it gives the exact value six."))));
 
     private static DocumentBlock Entry(string id, string declaration, string title,
         string statement, string proof) => Describe.Lean(

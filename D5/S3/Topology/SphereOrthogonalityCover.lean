@@ -305,12 +305,12 @@ theorem acute_cover_contractible_of_multiplicity_lt [FiniteDimensional ℝ E]
   obtain ⟨q, hq⟩ := nullhomotopic_of_misses_point g p hp
   exact (contractible_iff_id_nullhomotopic _).mpr ⟨q, hid.trans hq⟩
 
-/-- In ambient dimension `n + 1`, an open orthogonality-free cover with at most `2*n` colors
-would make the sphere contractible. All component and finite-refinement conditions are derived. -/
-theorem low_color_cover_contractible {n k : ℕ} [Fact (finrank ℝ E = n + 1)]
+/-- An open orthogonality-free cover whose point multiplicities are below the ambient
+dimension would contract the sphere. The finite acute refinement is constructed. -/
+theorem open_cover_contractible_of_multiplicity_lt {n k : ℕ} [Fact (finrank ℝ E = n + 1)]
     (U : Fin k → Set (sphere (0 : E) 1)) (hopen : ∀ i, IsOpen (U i))
     (hcover : ∀ x, ∃ i, x ∈ U i) (hfree : ∀ i, OrthogonalityFree (U i))
-    (hk : k ≤ 2 * n) : ContractibleSpace (sphere (0 : E) 1) := by
+    (hmult : ∀ x, (Finset.univ.filter fun i => x ∈ U i).card < n + 1) : ContractibleSpace (sphere (0 : E) 1) := by
   classical
   letI : FiniteDimensional ℝ E :=
     FiniteDimensional.of_fact_finrank_eq_succ (K := ℝ) (V := E) n
@@ -331,7 +331,7 @@ theorem low_color_cover_contractible {n k : ℕ} [Fact (finrank ℝ E = n + 1)]
   · rw [hdim]
     omega
   · intro x
-    have hbound := cover_color_multiplicity (n := n) U hcover hfree x
+    have hbound := hmult x
     have hrefine := htm x
     have heq : (Finset.univ.filter fun j : t => x ∈ V j).card =
         (t.filter fun j => x ∈ j.2).card := by
@@ -340,6 +340,17 @@ theorem low_color_cover_contractible {n k : ℕ} [Fact (finrank ℝ E = n + 1)]
       simp
     rw [heq, hdim]
     omega
+
+/-- The orthogonal-complement count supplies the general low-color obstruction. -/
+theorem low_color_cover_contractible {n k : ℕ} [Fact (finrank ℝ E = n + 1)]
+    (U : Fin k → Set (sphere (0 : E) 1)) (hopen : ∀ i, IsOpen (U i))
+    (hcover : ∀ x, ∃ i, x ∈ U i) (hfree : ∀ i, OrthogonalityFree (U i))
+    (hk : k ≤ 2 * n) : ContractibleSpace (sphere (0 : E) 1) := by
+  classical
+  apply open_cover_contractible_of_multiplicity_lt (n := n) U hopen hcover hfree
+  intro x
+  have := cover_color_multiplicity (n := n) U hcover hfree x
+  omega
 
 /-- Every finite relatively open orthogonality-free cover of the real unit sphere in
 ambient dimension `n ≥ 2` has at least `2*n - 1` members. -/
@@ -352,6 +363,67 @@ theorem sphere_open_orthogonality_free_cover_lower_bound {n k : ℕ} (hn : 2 ≤
     ⟨by simp only [finrank_euclideanSpace_fin]; omega⟩
   apply SphereBrouwerObstruction.not_contractible_unit_sphere n (by omega)
   apply low_color_cover_contractible (n := n - 1) U hopen hcover hfree
+  omega
+
+/-- Restriction to the perpendicular unit circle requires at least three absent colors. -/
+theorem sphere_three_absent_colors {k : ℕ}
+    (U : Fin k → Set (sphere (0 : EuclideanSpace ℝ (Fin 3)) 1))
+    (hopen : ∀ i, IsOpen (U i)) (hcover : ∀ x, ∃ i, x ∈ U i)
+    (hfree : ∀ i, OrthogonalityFree (U i))
+    (x : sphere (0 : EuclideanSpace ℝ (Fin 3)) 1) :
+    3 ≤ (Finset.univ.filter fun i => x ∉ U i).card := by
+  classical
+  let E := EuclideanSpace ℝ (Fin 3)
+  letI : Fact (finrank ℝ E = 2 + 1) := ⟨by simp [E]⟩
+  let b := OrthonormalBasis.fromOrthogonalSpanSingleton (𝕜 := ℝ) 2
+    (ne_zero_of_mem_unit_sphere x)
+  let f : sphere (0 : EuclideanSpace ℝ (Fin 2)) 1 → sphere (0 : E) 1 :=
+    fun y => ⟨(b.repr.symm y.val : E), by
+      rw [mem_sphere_zero_iff_norm]
+      change ‖b.repr.symm y.val‖ = 1
+      rw [b.repr.symm.norm_map, mem_sphere_zero_iff_norm.mp y.property]⟩
+  have hf : Continuous f := by
+    apply Continuous.subtype_mk
+    exact continuous_subtype_val.comp (b.repr.symm.continuous.comp continuous_subtype_val)
+  have hperp : ∀ y, ⟪(x : E), (f y : E)⟫_ℝ = 0 := by
+    intro y
+    exact Submodule.mem_orthogonal_singleton_iff_inner_right.mp (b.repr.symm y.val).property
+  let t := Finset.univ.filter fun i => x ∉ U i
+  let e : Fin (Fintype.card t) ≃ t := (Fintype.equivFin t).symm
+  let V : Fin (Fintype.card t) → Set (sphere (0 : EuclideanSpace ℝ (Fin 2)) 1) :=
+    fun j => f ⁻¹' U (e j).val
+  have hVcover : ∀ y, ∃ j, y ∈ V j := by
+    intro y
+    obtain ⟨i, hi⟩ := hcover (f y)
+    have hx : x ∉ U i := fun hxi => hfree i x hxi (f y) hi (hperp y)
+    let j : t := ⟨i, Finset.mem_filter.mpr ⟨Finset.mem_univ _, hx⟩⟩
+    refine ⟨e.symm j, ?_⟩
+    simpa [V, j] using hi
+  have hVfree : ∀ j, OrthogonalityFree (V j) := by
+    intro j y hy z hz hzero
+    apply hfree (e j).val (f y) hy (f z) hz
+    change ⟪b.repr.symm y.val, b.repr.symm z.val⟫_ℝ = 0
+    rwa [b.repr.symm.inner_map_map]
+  have h := sphere_open_orthogonality_free_cover_lower_bound (n := 2) (by omega)
+    V (fun j => (hopen _).preimage hf) hVcover hVfree
+  simpa only [Fintype.card_coe, Nat.reduceMul, Nat.reduceSub] using h
+
+/-- Every finite relatively open orthogonality-free cover of the real two-sphere has at
+least six members. The perpendicular circle supplies the strengthened point multiplicity. -/
+theorem sphere_two_open_orthogonality_free_cover_lower_six {k : ℕ}
+    (U : Fin k → Set (sphere (0 : EuclideanSpace ℝ (Fin 3)) 1))
+    (hopen : ∀ i, IsOpen (U i)) (hcover : ∀ x, ∃ i, x ∈ U i)
+    (hfree : ∀ i, OrthogonalityFree (U i)) : 6 ≤ k := by
+  classical
+  by_contra hk
+  letI : Fact (finrank ℝ (EuclideanSpace ℝ (Fin 3)) = 2 + 1) := ⟨by simp⟩
+  apply SphereBrouwerObstruction.not_contractible_unit_sphere 3 (by omega)
+  apply open_cover_contractible_of_multiplicity_lt (n := 2) U hopen hcover hfree
+  intro x
+  have habsent := sphere_three_absent_colors U hopen hcover hfree x
+  have hsum := Finset.card_filter_add_card_filter_not (s := Finset.univ)
+    (p := fun i => x ∈ U i)
+  simp only [Finset.card_univ, Fintype.card_fin] at hsum
   omega
 
 end D5.S3.Topology.SphereOrthogonalityCover
