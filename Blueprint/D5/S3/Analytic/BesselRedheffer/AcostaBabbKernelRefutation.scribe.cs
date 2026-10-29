@@ -74,7 +74,8 @@ internal sealed class AcostaBabbKernelRefutationDocument : IScribeDocumentDefini
             DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance,
             Blocks(Paragraph(prose)), role,
-            null);
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("ab2410"), ResolutionKind.Refuted) : null);
     private static Formula SourceJ(Formula m) => new Formula.Subscript(X("j"), m);
     private static Formula SourceJPow(Formula m) => Seq(X("j"), Underscore, Grp(m), Caret, Grp(Alpha));
     private static Formula SourceJZero(Formula z) =>
