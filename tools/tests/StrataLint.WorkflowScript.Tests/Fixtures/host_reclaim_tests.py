@@ -272,6 +272,12 @@ class HostReclaimTests(unittest.TestCase):
         for change in ("bytes", "activity", "registration", "refs"):
             with self.subTest(change=change):
                 target = self.remnant(change)
+                if change == "refs":
+                    content = b"only the latest commit retains these bytes"
+                    (self.main / "Blueprint/Retained.md").write_bytes(content)
+                    self.git(self.main, "commit", "-am", "Retain distinct recovery bytes")
+                    (target / "Blueprint/Retained.md").write_bytes(content)
+                    self.age(target)
                 registrations = cleanup.registered_worktrees
                 def fresh():
                     if change == "bytes":
@@ -280,13 +286,21 @@ class HostReclaimTests(unittest.TestCase):
                         registered.return_value = [self.main, target]
                         registered.side_effect = None
                     if change == "refs":
-                        (self.main / "Blueprint/Retained.md").write_bytes(b"new retained version")
-                        self.git(self.main, "commit", "-am", "Change retained ref")
+                        self.git(self.main, "reset", "--hard", "HEAD~1")
                     return {target / ".lake/build"} if change == "activity" else set()
                 with patch.object(cleanup, "registered_worktrees", side_effect=registrations) as registered:
                     result = self.clean_remnant(target, activity=fresh)
                 self.assertEqual(("kept", "changed"), (result["action"], result["reason"]), result)
                 self.assertTrue(target.exists())
+
+    def test_remnant_unrelated_ref_updates_do_not_block_recoverable_bytes(self):
+        target = self.remnant()
+        def fresh():
+            self.git(self.main, "commit", "--allow-empty", "-m", "Unrelated retained work")
+            return set()
+        result = self.clean_remnant(target, activity=fresh)
+        self.assertEqual("removed", result["action"], result)
+        self.assertFalse(target.exists())
 
     def test_remnant_sweep_uses_main_inventory_and_reports_without_verbose(self):
         target = self.remnant()

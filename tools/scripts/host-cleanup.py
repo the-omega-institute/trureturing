@@ -166,7 +166,7 @@ class RefRecovery:
                         remaining -= len(chunk)
                     if blobs.read(1) != b"\n" or digest.hexdigest().encode("ascii") != oid:
                         missing.add(oid)
-        return missing, hashlib.sha256(refs).hexdigest()
+        return missing
 
 
 def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, remnant=False, recovery=None):
@@ -254,7 +254,7 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, re
         return dict(reason=shape_reason)
     result = dict(reason=None, fingerprint=digest.hexdigest(), apparent_bytes=apparent_bytes, lakes=lakes)
     if remnant and blueprint:
-        missing, result["retained_refs"] = recovery.check(blueprint)
+        missing = recovery.check(blueprint)
         if missing:
             return dict(reason="blueprint_unrecoverable")
     return result
