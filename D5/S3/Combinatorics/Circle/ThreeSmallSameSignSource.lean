@@ -449,7 +449,7 @@ private theorem three_blocks (A B D : ℕ) (hA : 0 < A) (hB : 0 < B) (hD : 0 < D
     refine ⟨B - 1, by omega, ?_⟩
     rw [Nat.sub_add_cancel hB]
     change d ≤ G * e
-    nlinarith only [h4d, hYZ, hz]
+    nlinarith only [hd, h4d, hYZ, hz]
   let s := Nat.find hex
   let v : ℤ := (4 : ℤ) ^ s
   have hs : s < B := (Nat.find_spec hex).1
