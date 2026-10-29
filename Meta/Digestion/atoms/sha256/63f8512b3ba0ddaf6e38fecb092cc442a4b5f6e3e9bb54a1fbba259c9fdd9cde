@@ -1,0 +1,56 @@
+**Theorem 4.2 (window Read/peak optima, with a same-run traffic bound).**
+For Definition 4.1,
+
+$$
+ Q_*=q,\qquad
+ M_*=\begin{cases}0,&N=1,\\\lceil H/2\rceil,&N\ge2.\end{cases}
+ \tag{ACR.16}
+$$
+
+One finite arithmetic controller jointly attains these two worst-case
+coordinates. For $N\ge2$, with $c_A=\lceil(A+1)/2\rceil$,
+
+$$
+ c_Aq\ \le\ W_*\ \le\ \lceil H/2\rceil q.
+ \tag{ACR.17}
+$$
+
+In particular, for $H\le C A$ with fixed $C\ge1$ and $N\ge2$,
+the attained optimal orders are $Q_*=\Theta(\log N)$,
+$M_*=\Theta(H)$ and $W_*=\Theta(A\log N)$.
+No exact value of $W_*$ is asserted in (ACR.17).
+
+Proof. For the fixed law, every physical word has exactly the step
+response (ACR.7), or is the constant-present empty word. Its replies
+have two values. Every deterministic controller terminating on these finitely many
+candidates therefore induces a finite binary decision tree after
+restriction to their runs. Removing all
+constant-reply queries and local computation preserves $N$ distinct
+leaves. Some path has at least $q$ informative queries, establishing
+the Read lower bound. The constant-query contraction and same-run bill
+reuse [CAB, Theorem 6.2 and §§7.1–7.4][CAB], as intermediate arguments.
+CAB's four-reply native scaffold and
+`NativeStationaryIntervalResources` do not give the two-reply physical
+capacity without (ACR.7). Each informative query here has first birth in $[A+1,H]$,
+hence length at least $c_A$ by Proposition 2.2. The same path therefore
+has traffic at least $c_Aq$; this multiplies costs on one run.
+
+The cuts $H-1,H$ are both allowed when $N\ge2$. A physical presence
+query separates them only if its first-birth time is exactly $H$.
+Induction on the two adaptive runs forces such a query on their common
+prefix before their outputs can differ. Its length is at least
+$\lceil H/2\rceil$, proving the peak lower bound. Conversely bisect
+the actual candidate interval using thresholds $t\in[A+1,H]$ and
+compile each one by Proposition 2.2. A midpoint split leaves at most
+$\lceil N/2\rceil$ candidates; iteration uses at most $q$ queries.
+All words have length at most $\lceil H/2\rceil$, proving joint
+attainment and the traffic upper bound. For $N=1$, return $A$ without
+a Read. The order statements follow from these inequalities.
+
+For zero-error randomized controllers terminating almost surely on this
+finite window, intersect the finitely many probability-one correctness
+and termination events. Any coin tape in that intersection induces the
+same deterministic lower-bound problem. The stated worst-case bounds
+therefore also hold for worst-case call/traffic budgets with zero error;
+no expected-cost optimum is asserted. $\square$
+
