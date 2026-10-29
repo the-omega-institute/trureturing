@@ -6,6 +6,7 @@
    utility: none
    digest: Cartesian-control angle matrices are invertible for all finite products. -/
 
+import Mathlib.Combinatorics.Enumerative.IncidenceAlgebra
 import Mathlib.LinearAlgebra.Matrix.Block
 import Mathlib.Basic.Real.Basic
 
@@ -23,10 +24,8 @@ private def E (m : ℕ) : Matrix (Fin m) (Fin m) ℝ := fun r t =>
   if (r : ℕ) = 0 then (if (t : ℕ) = 0 then 1 else 0)
   else (if (t : ℕ) = 0 then 1 / 2 else 0) - (if t = r then 1 / 2 else 0)
 
-private def U (m : ℕ) : Matrix (Fin m) (Fin m) ℝ := fun r s =>
-  if (r : ℕ) ≤ (s : ℕ) then 1 else 0
-
-private theorem E_mul_A (m : ℕ) : E m * A m = U m := by
+private theorem E_mul_A (m : ℕ) :
+    E m * A m = (⇑(IncidenceAlgebra.zeta ℝ (α := Fin m)) : Matrix (Fin m) (Fin m) ℝ) := by
   ext r s
   let z : Fin m := ⟨0, Nat.zero_lt_of_lt r.isLt⟩
   have hz (t : Fin m) : (t : ℕ) = 0 ↔ t = z := by
@@ -49,29 +48,19 @@ private theorem E_mul_A (m : ℕ) : E m * A m = U m := by
       ↓reduceIte, hrpos, true_and]
     split_ifs <;> norm_num
 
-private theorem det_U (m : ℕ) : (U m).det = 1 := by
-  have ht : (U m).IsUpperTriangular := by
+private theorem det_zeta (m : ℕ) :
+    Matrix.det (⇑(IncidenceAlgebra.zeta ℝ (α := Fin m))) = 1 := by
+  have ht :
+      Matrix.IsUpperTriangular (⇑(IncidenceAlgebra.zeta ℝ (α := Fin m))) := by
     intro i j hji
-    change (if (i : ℕ) ≤ (j : ℕ) then (1 : ℝ) else 0) = 0
-    exact ite_eq_right (Nat.not_le_of_lt hji)
+    exact IncidenceAlgebra.apply_eq_zero_of_not_le (not_le_of_gt hji) _
   rw [Matrix.det_of_isUpperTriangular ht]
-  have hd (i : Fin m) : U m i i = 1 := by
-    change (if (i : ℕ) ≤ (i : ℕ) then (1 : ℝ) else 0) = 1
-    exact ite_eq_left le_rfl
-  simp only [hd, Finset.prod_const_one]
+  simp only [IncidenceAlgebra.zeta_apply, le_refl, ↓reduceIte, Finset.prod_const_one]
 
 private theorem det_A_isUnit (m : ℕ) : IsUnit (A m).det := by
   have h : (E m).det * (A m).det = 1 := by
-    rw [← Matrix.det_mul, E_mul_A, det_U]
-  apply isUnit_iff_ne_zero.mpr
-  intro ha
-  rw [ha, mul_zero] at h
-  exact zero_ne_one h
-
-private def Linv (m : ℕ) : Matrix (Fin m) (Fin m) ℝ := (A m)⁻¹
-
-private theorem Linv_mul_A (m : ℕ) : Linv m * A m = (1 : Matrix (Fin m) (Fin m) ℝ) :=
-  Matrix.nonsing_inv_mul (A m) (det_A_isUnit m)
+    rw [← Matrix.det_mul, E_mul_A, det_zeta]
+  exact IsUnit.of_mul_eq_one_right (E m).det h
 
 private def K {k : ℕ} (d : Fin k → ℕ) :
     Matrix ((l : Fin k) → Fin (d l)) ((l : Fin k) → Fin (d l)) ℝ := fun r s =>
@@ -79,21 +68,21 @@ private def K {k : ℕ} (d : Fin k → ℕ) :
 
 private def LinvPrime {k : ℕ} (d : Fin k → ℕ) :
     Matrix ((l : Fin k) → Fin (d l)) ((l : Fin k) → Fin (d l)) ℝ := fun r s =>
-  ∏ l, Linv (d l) (r l) (s l)
+  ∏ l, (A (d l))⁻¹ (r l) (s l)
 
 private theorem LinvPrime_mul_K {k : ℕ} (d : Fin k → ℕ) :
     LinvPrime d * K d = (1 : Matrix ((l : Fin k) → Fin (d l)) ((l : Fin k) → Fin (d l)) ℝ) := by
   classical
   ext s t
   change (∑ r : (l : Fin k) → Fin (d l),
-    (∏ l, Linv (d l) (s l) (r l)) * (∏ l, A (d l) (r l) (t l))) = _
+    (∏ l, (A (d l))⁻¹ (s l) (r l)) * (∏ l, A (d l) (r l) (t l))) = _
   simp_rw [← Finset.prod_mul_distrib]
   rw [← Fintype.prod_sum (fun l (r : Fin (d l)) =>
-    Linv (d l) (s l) r * A (d l) r (t l))]
-  have h (l : Fin k) : (∑ r, Linv (d l) (s l) r * A (d l) r (t l)) =
+    (A (d l))⁻¹ (s l) r * A (d l) r (t l))]
+  have h (l : Fin k) : (∑ r, (A (d l))⁻¹ (s l) r * A (d l) r (t l)) =
       if s l = t l then 1 else 0 := by
-    change (Linv (d l) * A (d l)) (s l) (t l) = _
-    rw [Linv_mul_A, Matrix.one_apply]
+    change ((A (d l))⁻¹ * A (d l)) (s l) (t l) = _
+    rw [Matrix.nonsing_inv_mul _ (det_A_isUnit _), Matrix.one_apply]
   simp only [h, Fintype.prod_boole, ← funext_iff, Matrix.one_apply]
 
 def angleMatrix {k : ℕ} (d : Fin k → ℕ)
@@ -101,17 +90,13 @@ def angleMatrix {k : ℕ} (d : Fin k → ℕ)
     Matrix (Fin (∏ l, d l)) (Fin (∏ l, d l)) ℝ := fun i j =>
   ∏ l, (if 0 < (b i l : ℕ) ∧ (b i l : ℕ) ≤ (g j l : ℕ) then (-1 : ℝ) else 1)
 
-private theorem angleMatrix_eq_submatrix {k : ℕ} (d : Fin k → ℕ)
-    (b g : Fin (∏ l, d l) ≃ ((l : Fin k) → Fin (d l))) :
-    angleMatrix d b g = (K d).submatrix b g := rfl
-
 def claim : Prop := ∀ (k : ℕ) (d : Fin k → ℕ)
     (b g : Fin (∏ l, d l) ≃ ((l : Fin k) → Fin (d l))),
     IsUnit (angleMatrix d b g)
 
 theorem result : claim := by
   intro k d b g
-  rw [angleMatrix_eq_submatrix]
+  change IsUnit ((K d).submatrix b g)
   exact (Matrix.isUnit_submatrix_equiv b g).mpr
     ((Matrix.isUnit_iff_isUnit_det (K d)).mpr
       (Matrix.isUnit_det_of_left_inverse (LinvPrime_mul_K d)))
