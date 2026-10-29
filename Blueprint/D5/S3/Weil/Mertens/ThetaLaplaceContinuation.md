@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The actual cutoff theta transform continues meromorphically and detects every zeta zero with its full multiplicity.
+The actual cutoff theta transform continues meromorphically and detects every zeta zero with real part greater than one half with its full multiplicity.
 
 **Theorem 1.1 (Actual integrals, arbitrary cutoffs and multiplicity-dependent poles).**
 

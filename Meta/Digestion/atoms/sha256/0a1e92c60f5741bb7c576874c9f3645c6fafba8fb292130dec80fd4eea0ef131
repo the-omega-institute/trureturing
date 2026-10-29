@@ -1,0 +1,18 @@
+**Proposition 8.4 (actual cap comparison).** Given $B\ge1$, $j\ge1$
+and a finite nonempty actual $y$, left-before-right traversal of $F_j^o(y)$
+can decide whether $a_j^o(y)>B$ with at most $2B-1$ paid Reads, each
+of length at most $j+B+1$. It uses no acquired full shape.
+
+Proof. Use exactly ABT34.3's branch-cap traversal, with its probe replaced
+by $pR^jLL$. Count positive tests and stop at the $B$th, reporting greater;
+if the pending stack is exhausted first, report at most. A full binary
+tree has one more leaf than branch, so both answers are correct. Before
+a query, pending-slot count $1+b-l>0$ implies $l\le b$, where $b,l$
+are previous positive and negative tests. Thus the $B$th positive has
+at most $B-1$ preceding zeros; a completed smaller traversal also has at
+most $2B-1$ nodes. Each queried $p$ has at most $B-1$ discovered branch
+ancestors, so $|pR^jLL|\le j+B+1$. A positive test implies a real branch,
+which justifies scheduling its children. These are actual requests and
+finite stack computations, not evaluation of an unknown pruning in control.
+$\square$
+

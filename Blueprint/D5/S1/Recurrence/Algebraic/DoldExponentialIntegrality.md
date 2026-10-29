@@ -44,7 +44,19 @@ $$\forall f: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{c
 
 Substitution into PowerSeries.exp_pow_eq_rescale_exp gives the natural-scaling identity.
 
-**Theorem 1.4 (Dold congruences imply integrality).**
+**Theorem 1.4 (Exponential of a sum).**
+
+$$\forall f: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \forall g: \operatorname{PowerSeries}\left(\mathbb{Q}\right), (\operatorname{constantCoeff}\left(f\right) = 0) \implies ((\operatorname{constantCoeff}\left(g\right) = 0) \implies (\operatorname{subst}\left(f + g, \operatorname{exp}\left(\mathbb{Q}\right)\right) = \operatorname{subst}\left(f, \operatorname{exp}\left(\mathbb{Q}\right)\right) \cdot \operatorname{subst}\left(g, \operatorname{exp}\left(\mathbb{Q}\right)\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.expSeries_add` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For two rational formal series with zero constant coefficients, substituting their sum into the exponential gives the product of the two substituted exponentials.
+
+**Theorem 1.5 (Dold congruences imply integrality).**
 
 $$\forall c: \mathbb{N} \to \mathbb{Z}, (\operatorname{Dold}\left(c\right)) \implies (\forall n: \mathbb{N}, \exists z: \mathbb{Z}, \operatorname{coeff}\left(n, \operatorname{subst}\left(\operatorname{logInput}\left(c\right), \operatorname{exp}\left(\mathbb{Q}\right)\right)\right) = (z: \mathbb{Q}))$$
 
@@ -59,6 +71,7 @@ Apply the sufficient Dieudonne-Dwork criterion at each prime. The Dold congruenc
 ## References
 
 - Truth anchor: `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.Dold`
+- Truth anchor: `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.expSeries_add`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.expSeries_nsmul`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.integral_exp_of_dold`
 - Truth anchor: `D5/S1/Recurrence/Algebraic/DoldExponentialIntegrality.logInput`

@@ -1,0 +1,60 @@
+**Proposition 11.3 (continued resources on the same run).** For a completed
+finite logical continuation from the acquisition handoff let $R$ count
+its Reads, let $A_0$ count its root-alpha
+replies, let $R_+$ count its beta-or-branch replies, and let its addresses
+be $p_i$ with $D_i=|p_i|+k+1$. The compiler just proved has exact costs
+
+$$
+ Q_c=2R-A_0,\qquad
+ W_c=2\sum_{i=1}^R D_i+R_+-(k+1)A_0,
+ \qquad U_c=U,                                    \tag{GPO.39}
+$$
+
+where $U$ counts logical updates. Each beta/branch macro has maximum
+$D_i+1$, each other macro maximum $D_i$; an empty fragment has maximum
+zero. Every local instruction/evaluator transition, literal construction,
+translation, pending-state write, retained read, output and allocation is
+paid. On the bit-machine tariff the macro word/counter work can be bounded
+by
+
+$$
+ C\sum_{i=1}^R(D_i+2)\lceil\log_2(k+|p_i|+4)\rceil^2,            \tag{GPO.40}
+$$
+
+in addition to actual consumer/selector/continuation evaluation, closure
+storage/copying, attachment and its original localSteps. These additional
+costs and their actual workspace need not have a uniform bound.
+
+Proof. Sum Theorem 11.1's path table. Every root-alpha macro removes one
+length-$k+1$ call from the baseline two length-$D_i$ calls; every beta or
+branch adds one letter. Each logical update executes exactly once.
+For (GPO.40), copy the supplied finite path, append the right suffix and
+one or two left letters using binary loops, translate and project, and
+store the finite phase tag and acquired bit. The same tape construction
+as Theorem 9.2 costs $O((D_i+2)\log^2(k+|p_i|+4))$ per macro. Reading
+and copying any larger effective continuation closure or consumer state
+is accounted separately by its actual evaluator, rather than hidden in
+this address-dependent bound. A reusable literal buffer has peak length
+at most the maximum displayed $D_i+1$; a pending cut also retains $p_i$,
+its effective continuation and any in-progress evaluator workspace.
+
+If $J_c$ is the actual total continuation localStep count, including all
+these tasks, the full preparation/acquisition/continuation run pays
+
+$$
+ Q+Q_c,\quad W+W_c,\quad
+ \max(M_{\rm addr},M_c),\quad 1+U,\quad J+J_p+J_c. \tag{GPO.41}
+$$
+
+Cuts inside a macro instead count its already executed calls/words, with
+pending work retained; concatenation adds actual expenditures without
+refunds. The raw writer is exactly
+$H_{\rm old}H_{\rm prep}H_{\rm acq}H_{\rm cont}$, with one preparation
+update and every physical macro reply. For a finite fragment its epoch
+fields are bounded by $N+U$; its new continuation payload can be
+$O(J_c+W_c+(Q_c+U)\log_2(N+U+M_c+2))$ bits before framing and service
+metadata. Apply the one-pass material accounting of Proposition 9.3 at
+each actual continuation update, with that update's actual composition
+and height. All retained lifetime, source material, backing, extra output
+and service charges coexist with (GPO.41). $\square$
+
