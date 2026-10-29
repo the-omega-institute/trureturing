@@ -525,7 +525,7 @@ For (24), the supplied attaining alphabet has size $r+2^r$, and the proof takes 
 ## 追加锚（本行以下为增补区）
 ## 5. Exact $r=3$ source-image boundary
 
-The preceding Proposition 4.5 shows abstractly that a cancellation row can coexist with a non-rich image, but it does not identify a factor in a fixed source prefix or certify its complete palindrome set. The following $r=3$ instance supplies that concrete boundary: it is an actual image of $u_7$, and the exhaustive count records exactly where cancellation stops short of richness.
+Proposition 4.5 gives a constructive non-rich image for every $r\ge3$ and $h\in\mathcal K_r$: it locates the factor $abca$ through the occurrence of $2r$ in $\varphi^{2r}(0)$ and gives its complete palindrome set $\{\varepsilon,a,b,c\}$. The following $r=3$ instance records the prescribed four-letter dictionary $\eta_3$ and its specific certificate in the actual image of $u_7$: the factor at $[60,72)$ has the exhaustive palindrome count below and defect $2$.
 
 **Proposition 5.1 (The normalized cancellation boundary).** Specialize Definition 1.2 to $r=3$, write the substitution as $\varphi_3$, and let $u_7=\varphi_3^\omega(0)$. Define the nonerasing morphism $\eta_3:\{0,1,2,3,4,5,6\}^*\to\{0,1,2,3\}^*$ by
 
