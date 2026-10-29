@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.Geometry.KuNearLineRefutation
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound cardinality observation for the ordinary-board bound. -/
+
 set_option autoImplicit false
 
 namespace Reg.D5.S3.Combinatorics.Geometry.KuNearLineRefutation
@@ -25,7 +27,7 @@ private theorem rejected_not_law : ¬ arena.Law rejected := by
   have he : Config (∅ : Finset P) := by simp [Config]
   have hn := h ∅ he
   change 9 ≤ 8 at hn
-  omega
+  exact (Nat.not_succ_le_self 8) hn
 
 def family : Registration arena (type_of% (@config_bound)) where
   actual := actual
