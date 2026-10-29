@@ -88,7 +88,7 @@ private theorem split_spec {α : Type*} (f : α → ℤ) (B : ℤ) (l : List α)
 
 /-- Appending dyadic SMALL labels preserves every retained ancestor height.
 A first omission bounds the peak by C+floor(D/2). If all labels are retained,
-the peak is exactly the old height plus the positive root. -/
+the peak is exactly the old height plus the root parameter. -/
 theorem deferred_prefix_invariant {α : Type*} (f : α → ℤ)
     (old small : List α) (mu D a b p B C : ℤ)
     (hold : Ancestors f mu D 0 old) (hdyadic : Dyadic f a small)
