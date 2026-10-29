@@ -10,11 +10,11 @@ $$\forall runs \in \operatorname{List}{\mathbb{N}},\; \operatorname{decimalWord}
 
 *Formalization.* `D5/S1/Digit/SquaresThreeDigitsPrefixRefutation.decimalWord` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Michael Geißer, Theresa Körner, Sascha Kurz and Anne Zahn (2021). *Squares with three digits*. URL: <https://arxiv.org/abs/2112.00444v2>.
 
 *Commentary.*
 
-For each natural entry a, block(a) is the digit 4 followed by exactly a copies of 9. Concatenate those blocks in their listed order and append one final digit 5. Entries equal to zero produce a lone 4. This is the shorthand on page 25 of Geisser, Korner, Kurz and Zahn, Squares with three digits, arXiv:2112.00444v2.
+For each natural entry a, block(a) is the digit 4 followed by exactly a copies of 9. Concatenate those blocks in their listed order and append one final digit 5. Entries equal to zero produce a lone 4. This is the shorthand in Section 3.3, page 25 of the source.
 
 **Definition 1.2 (The ordinary decimal integer).**
 
@@ -22,7 +22,7 @@ $$\forall runs \in \operatorname{List}{\mathbb{N}},\; \operatorname{encode}\left
 
 *Formalization.* `D5/S1/Digit/SquaresThreeDigitsPrefixRefutation.encode` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Michael Geißer, Theresa Körner, Sascha Kurz and Anne Zahn (2021). *Squares with three digits*. URL: <https://arxiv.org/abs/2112.00444v2>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ $$\forall n \in \mathbb{N},\; (\operatorname{GoodSquare}\left(n\right)) \Leftrig
 
 *Formalization.* `D5/S1/Digit/SquaresThreeDigitsPrefixRefutation.GoodSquare` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Michael Geißer, Theresa Körner, Sascha Kurz and Anne Zahn (2021). *Squares with three digits*. URL: <https://arxiv.org/abs/2112.00444v2>.
 
 *Commentary.*
 
@@ -46,7 +46,7 @@ $$(claim) \Leftrightarrow (\forall runs \in \operatorname{List}{\mathbb{N}},\; (
 
 *Formalization.* `D5/S1/Digit/SquaresThreeDigitsPrefixRefutation.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* Michael Geißer, Theresa Körner, Sascha Kurz and Anne Zahn (2021). *Squares with three digits*. URL: <https://arxiv.org/abs/2112.00444v2>.
 
 *Commentary.*
 
@@ -60,6 +60,8 @@ $$counterexample = [0,1,3,7,15,31,63,127,2,6,14,62,14,6,2]$$
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* Michael Geißer, Theresa Körner, Sascha Kurz and Anne Zahn (2021). *Squares with three digits*. URL: <https://arxiv.org/abs/2112.00444v2>.
+
 *Commentary.*
 
 The tuple is [0,1,3,7,15,31,63,127,2,6,14,62,14,6,2]. Its cumulative block lengths are 1,3,7,15,31,63,127,255,258,265,280,343,358,365,368. The full root has 369 decimal digits. Removing the final block leaves a root with 366 decimal digits.
@@ -70,7 +72,13 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Digit/SquaresThreeDigitsPrefixRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/geisser-2021-squares-prefix` (refuted) by `D5/S1/Digit/SquaresThreeDigitsPrefixRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"geisser-2021-squares-prefix","declaration_gid":"D5/S1/Digit/SquaresThreeDigitsPrefixRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
+
+*Acknowledgement.* Michael Geißer, Theresa Körner, Sascha Kurz and Anne Zahn (2021). *Squares with three digits*. URL: <https://arxiv.org/abs/2112.00444v2>.
 
 *Commentary.*
 
