@@ -28,7 +28,7 @@ open PrimitiveLiftRootCriterion PrimeOrbitRootCriterion
 open TwoOrbitSquareRootCriterion (transport transport_point transport_deck)
 universe u v w z
 
-private def chartGauge {H : Type u} [Group H] {Y : Type v} {Z : Type w}
+def chartGauge {H : Type u} [Group H] {Y : Type v} {Z : Type w}
     (B : ReturnAtlas H Y) (C : ReturnAtlas H Z) (hd : B.period = C.period) (b : H) : Y ≃ Z :=
   B.coordinates.symm.trans ((Equiv.prodCongr (finCongr hd) (Equiv.mulRight b)).trans C.coordinates)
 
@@ -36,7 +36,7 @@ private theorem chartGauge_apply {H : Type u} [Group H] {Y : Type v} {Z : Type w
     (B : ReturnAtlas H Y) (C : ReturnAtlas H Z) (hd : B.period = C.period) (b : H) (y : Y) :
     chartGauge B C hd b y = transport B C b y := rfl
 
-private theorem chartGauge_time {H : Type u} [Group H] {Y : Type v} {Z : Type w}
+theorem chartGauge_time {H : Type u} [Group H] {Y : Type v} {Z : Type w}
     (B : ReturnAtlas H Y) (C : ReturnAtlas H Z) (hd : B.period = C.period) (b : H)
     (hb : b * C.holonomy = B.holonomy * b) :
     Function.Semiconj (chartGauge B C hd b) B.time C.time := by
@@ -101,7 +101,7 @@ variable {H : Type u} [Group H] {ι : Type w} {X : ι → Type v}
 
 theorem isotypic_refl (i : ι) : Isotypic A i i := ⟨rfl,1,by simp⟩
 
-private def atlasSetoid : Setoid ι :=
+def atlasSetoid : Setoid ι :=
   ⟨Isotypic A,⟨isotypic_refl A, isotypic_symm A, isotypic_trans A⟩⟩
 
 private theorem local_of_isotypic {i j : ι} (hij : Isotypic A i j) (q : ℕ)
@@ -188,15 +188,18 @@ private theorem local_return_root {k ℓ : ℕ} (hℓ : ℓ ∣ k)
     rw [← Function.iterate_mul,Nat.mul_div_cancel' hℓ,hs] at h
     simpa only [jointTime,Sigma.mk.inj_iff,heq_eq_eq,true_and] using h
 
-private noncomputable def infinite_block_equiv {C : Type w} [Infinite C] {k : ℕ} (hk : 0 < k) :
-    C ≃ C × Fin k := by
-  have hcard : Cardinal.mk (C × Fin k) = Cardinal.mk C := by
+noncomputable def infinite_block_equiv {C : Type w} [Infinite C]
+    {P : Type} [Countable P] [Nonempty P] : C ≃ C × P := by
+  have hsmall : Cardinal.lift.{w} (Cardinal.mk P) ≤ Cardinal.aleph0 :=
+    Cardinal.lift_le_aleph0.mpr (Cardinal.mk_le_aleph0 (α := P))
+  have hpos : Cardinal.lift.{w} (Cardinal.mk P) ≠ 0 := by
+    intro h
+    exact Cardinal.mk_ne_zero P (Cardinal.lift_eq_zero.mp h)
+  have hcard : Cardinal.mk (C × P) = Cardinal.mk C := by
     rw [Cardinal.mk_prod]
-    simp only [Cardinal.lift_id', Cardinal.mk_fintype, Fintype.card_fin,
-      Cardinal.lift_natCast]
-    apply Cardinal.mul_eq_left (Cardinal.aleph0_le_mk C)
-    · exact Cardinal.natCast_le_aleph0.trans (Cardinal.aleph0_le_mk C)
-    · exact_mod_cast Nat.ne_of_gt hk
+    simp only [Cardinal.lift_id']
+    exact Cardinal.mul_eq_left (Cardinal.aleph0_le_mk C)
+      (hsmall.trans (Cardinal.aleph0_le_mk C)) hpos
   exact (Cardinal.eq.mp hcard).some.symm
 
 private theorem local_one {Y : Type v} (B : ReturnAtlas H Y) : Local 1 B := by
@@ -412,7 +415,8 @@ theorem arbitrary_root_criterion {k : ℕ} (hk : 0 < k) :
       exact Fintype.equivOfCardEq hcard
     have einf (c : Qinf) : fiber c.1 ≃ Σ b : fiber c.1, Fin k := by
       letI : Infinite (fiber c.1) := c.2
-      exact (infinite_block_equiv (C := fiber c.1) hk).trans
+      letI : Nonempty (Fin k) := ⟨⟨0,hk⟩⟩
+      exact (infinite_block_equiv (C := fiber c.1) (P := Fin k)).trans
         (Equiv.sigmaEquivProd (fiber c.1) (Fin k)).symm
     let Bfin := Σ c : Qfin, Fin (L c.1).length
     let Binf := Σ c : Qinf, fiber c.1

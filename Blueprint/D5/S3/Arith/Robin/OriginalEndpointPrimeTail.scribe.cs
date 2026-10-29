@@ -51,6 +51,20 @@ internal sealed class OriginalEndpointPrimeTailDocument : IScribeDocumentDefinit
                     Paragraph(Text("These are the original lower-control and equivalent prime-log derivations, not new canonical theorem bindings. Their exact original statements and Lean proof bodies remain transient. The remaining original obligation is strict positivity of E3(u)+T+log(log A)-log(log u) at both endpoints for every q>0 with strictInteger(q)>5040. J>=0 or a local strict gain does not prove that sign. Positivity of E3(u)+B+log(log A)-log(log u) would be sufficient, but is neither necessary nor proved here. The sharp upper-tail estimate cannot supply a lower sign."))),
                 DescribeRole.Lemma),
             Describe.Lean(
+                DescribeId.Create("complete-tail-robin-data"),
+                DeclarationHandle.Create(Prefix + "tail_robin_data"),
+                H("Shared complete-tail positivity and original margin identity"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every positive m with literal initial prime support, the full tail(m) "
+                    + "is nonnegative and robinLogMargin(m)=E3(P)+tail(m)+log(log(log(m))) "
+                    + "-log(log(P)), where P=largestPrime(m). The existing layer nonnegativity "
+                    + "and finite Euler/log-sigma calculations are shared by finite_min_tail_robin_bound "
+                    + "and the uniform lower correction's complementary clock-gap branch. "
+                    + "Every actual prime exponent remains in tail(m); no optimizer or RH premise is used."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
                 DescribeId.Create("finite-same-integer-min-tail-robin-bound"),
                 DeclarationHandle.Create(Prefix + "finite_min_tail_robin_bound"),
                 H("Finite same-integer min-cost correction and Robin decomposition"),
@@ -80,6 +94,6 @@ internal sealed class OriginalEndpointPrimeTailDocument : IScribeDocumentDefinit
                         + "V+E3(P)+log(log(theta(P)))-log(log(P))<=robinLogMargin(m). "
                         + "The support and theta hypotheses are finite theorem premises only; "
                         + "they do not assert actual-record structure, 5040 divisibility, RH, "
-                        + "or the unresolved analytic 2*sqrt(2)-epsilon continuation."))),
+                        + "or control of the remaining signed pure-prime quantity."))),
                 DescribeRole.Theorem))));
 }
