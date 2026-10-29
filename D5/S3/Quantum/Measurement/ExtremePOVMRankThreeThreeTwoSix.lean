@@ -59,14 +59,25 @@ private def frame : Matrix (Fin 7) (Fin 7) ℂ := ∑ j, effect j
 private theorem frame_posDef : frame.PosDef := by sorry
 
 private theorem normalizer_exists :
-    ∃ R : Matrix (Fin 7) (Fin 7) ℂ, IsUnit R.det ∧ R * frame * Rᴴ = 1 := by sorry
+    ∃ R : Matrix (Fin 7) (Fin 7) ℂ, IsUnit R.det ∧ R * frame * Rᴴ = 1 := by
+  rcases (CStarAlgebra.isStrictlyPositive_iff_eq_mul_star_self.mp
+    frame_posDef.isStrictlyPositive) with ⟨b, hb, hframe⟩
+  refine ⟨b⁻¹, ?_, ?_⟩
+  · exact Matrix.isUnit_iff_isUnit_det _ |>.mp (Matrix.isUnit_nonsing_inv_iff.mpr hb)
+  · rw [hframe, Matrix.conjTranspose_nonsing_inv]
+    rw [Matrix.mul_assoc, Matrix.mul_assoc, Matrix.nonsing_inv_mul_cancel_left]
+    · rw [Matrix.mul_assoc, Matrix.mul_nonsing_inv]
+      exact Matrix.one_mul _
+    · exact hb.det.isUnit
 
 private def normalizer : Matrix (Fin 7) (Fin 7) ℂ :=
   Classical.choose normalizer_exists
 
-private theorem normalizer_unit : IsUnit normalizer.det := by sorry
+private theorem normalizer_unit : IsUnit normalizer.det := by
+  exact (Classical.choose_spec normalizer_exists).1
 
-private theorem normalizer_identity : normalizer * frame * normalizerᴴ = 1 := by sorry
+private theorem normalizer_identity : normalizer * frame * normalizerᴴ = 1 := by
+  exact (Classical.choose_spec normalizer_exists).2
 
 private def witness (j : Fin 8) : Matrix (Fin 7) (Fin 7) ℂ :=
   normalizer * effect j * normalizerᴴ
@@ -82,15 +93,22 @@ private theorem witness_posSemidef (j : Fin 8) : (witness j).PosSemidef := by
 private theorem witness_sum : ∑ j, witness j = 1 := by
   simp only [witness]
   simp_rw [Matrix.mul_assoc]
-  rw [← Matrix.mul_sum, ← Matrix.sum_mul, show (∑ j, effect j) = frame from rfl,
-    normalizer_identity]
+  rw [← Matrix.mul_sum, ← Matrix.sum_mul, show (∑ j, effect j) = frame from rfl]
+  simpa only [Matrix.mul_assoc] using normalizer_identity
 
 private theorem witness_povm : IsPOVM witness := by
   exact ⟨witness_posSemidef, witness_sum⟩
 
 private theorem effect_rank (j : Fin 8) : (effect j).rank = (blocks j).card := by sorry
 
-private theorem witness_rank (j : Fin 8) : (witness j).rank = (effect j).rank := by sorry
+private theorem witness_rank (j : Fin 8) : (witness j).rank = (effect j).rank := by
+  have hstar : IsUnit normalizerᴴ.det := by
+    rw [Matrix.det_conjTranspose]
+    exact normalizer_unit.star
+  rw [witness, Matrix.mul_assoc,
+    Matrix.rank_mul_eq_right_of_isUnit_det normalizer (effect j * normalizerᴴ)
+      normalizer_unit,
+    Matrix.rank_mul_eq_left_of_isUnit_det normalizerᴴ (effect j) hstar]
 
 private theorem witness_bigRanks :
     bigRanks witness = ({3, 3, 2, 2, 2, 2, 2, 2} : Multiset ℕ) := by sorry
