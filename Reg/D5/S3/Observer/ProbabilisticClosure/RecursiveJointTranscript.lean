@@ -46,7 +46,7 @@ def actual : Realization signature.{u} :=
 
 @[reducible] def arena : Arena where
   signature := signature.{u}
-  Law R := ∀ (T : Interface.{u}) (S : Source T) (Archive : Type u) (n : ℕ)
+  Law R := ∀ {T : Interface.{u}} (S : Source T) (Archive : Type u) (n : ℕ)
     {i : T.Ty} {z w : T.State i}, residual S n i z w →
     ∀ d (_hd : d ≤ n) (P : Policy T Archive) (c : Archive) (h : List (Token T)),
       R.readout () ⟨T, S, Archive, n, i, d, P, c, h⟩ z =
@@ -97,7 +97,7 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
     have hh := congrArg ULift.down eq
     cases z.down <;> simp_all [w]
   have related : residual p.source 0 p.i z w := by rfl
-  have hh := law p.interface p.source p.Archive 0 related 0 le_rfl p.policy p.archive []
+  have hh := law (T := p.interface) p.source p.Archive 0 related 0 le_rfl p.policy p.archive []
   change rejected.readout () p z = rejected.readout () p w at hh
   simp only [rejected, realize, dite_eq_left ht] at hh
   change (if z = z then PMF.pure ([Token.horizon p.i], [p.archive])
