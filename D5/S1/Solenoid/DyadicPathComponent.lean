@@ -7,7 +7,6 @@
    digest: Unique real-flow time classifies paths in the actual dyadic solenoid. -/
 
 import D5.S1.Solenoid.DyadicTimeSeparation
-import D5.S3.ConceptDynamics.Coding.PrimitiveLifts.ArchimedeanTimeRigidity
 import Mathlib.Topology.Covering.AddCircle
 import Mathlib.Topology.Homotopy.Lifting
 
@@ -18,16 +17,22 @@ noncomputable section
 namespace D5.S1.Solenoid.DyadicSolenoid
 
 private theorem flow_injective : Function.Injective realFlow := by
-  rcases D5.S3.ConceptDynamics.Coding.PrimitiveLifts.ArchimedeanTimeRigidity.continuous_addHom_injective_or_eq_zero 2 (by norm_num)
-      dyadic_time_separation.2.2.2.2.2.1 realFlow dyadic_time_separation.2.2.1 with h | h
-  · exact h
-  · exfalso
-    have he := DFunLike.congr_fun h (1 / 2 : ℝ)
-    have hc : (((1 / 2 : ℝ) : AddCircle (1 : ℝ))) = 0 := by
-      simpa [realFlow] using congrArg (fun x : DyadicSolenoid => x.1 0) he
-    have hz := (AddCircle.coe_eq_zero_iff_of_mem_Ico
-      (show (1 / 2 : ℝ) ∈ Set.Ico 0 1 by constructor <;> norm_num)).mp hc
-    norm_num at hz
+  apply (injective_iff_map_eq_zero realFlow).2
+  intro t ht
+  obtain ⟨n, hn⟩ := pow_unbounded_of_one_lt |t| (show (1 : ℝ) < 2 by norm_num)
+  have hcoordinate := congrArg (fun x : DyadicSolenoid => x.1 n) ht
+  change (((t / (2 : ℝ)^n : ℝ) : AddCircle (1 : ℝ)) = 0) at hcoordinate
+  rcases (AddCircle.coe_eq_zero_iff (1 : ℝ)).mp hcoordinate with ⟨z, hz⟩
+  have hzreal : (z : ℝ) = t / (2 : ℝ)^n := by
+    simpa [zsmul_eq_mul] using hz
+  have hzabs : |(z : ℝ)| < 1 := by
+    rw [hzreal, abs_div, abs_of_pos (by positivity : (0 : ℝ) < 2^n)]
+    exact (div_lt_one (by positivity : (0 : ℝ) < 2^n)).2 hn
+  have hz0 : z = 0 := by
+    apply Int.abs_lt_one_iff.mp
+    exact_mod_cast hzabs
+  rw [hz0, Int.cast_zero] at hzreal
+  exact (div_eq_zero_iff.mp hzreal.symm).resolve_right (pow_ne_zero _ (by norm_num))
 
 private theorem coordinate_power (x : DyadicSolenoid) (n : ℕ) :
     (2 ^ n : ℕ) • x.1 n = x.1 0 := by

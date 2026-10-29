@@ -37,22 +37,21 @@ internal sealed class DyadicPathComponentDocument : IScribeDocumentDefinition
                         + "They agree initially, so covering-lift uniqueness on the connected unit interval identifies them everywhere. The endpoint is j(a(1)). "
                         + "Conversely u maps to j(u t)+x along the unit interval and is an explicit path.")),
                     Paragraph(Text(
-                        "The independent repository theorem continuous_addHom_injective_or_eq_zero in ArchimedeanTimeRigidity is applied with K=R, A=S2 and p=2. "
-                        + "The public dyadic_time_separation package supplies continuity of j and the zero kernel of doubling. "
-                        + "The circle coordinate j(1/2)(0)=[1/2] is nonzero, ruling out the zero homomorphism. Hence j is injective; cancellation supplies uniqueness of t. "
-                        + "The local coordinate induction and rigidity application are consumed helpers, while the new construction is the identification of arbitrary dyadic paths.")),
+                        "Injectivity follows directly from the dyadic coordinates. If j(t)=0, choose n with 2^n greater than the absolute value of t. "
+                        + "Coordinate n says that t/2^n is an integer. Its absolute value is less than one, so it is zero and hence t=0. "
+                        + "The additive kernel criterion makes j injective; cancellation supplies uniqueness of t. "
+                        + "The local coordinate induction and kernel argument are consumed helpers, while the new construction is the identification of arbitrary dyadic paths.")),
                     Paragraph(Text(
                         "Let h be the parent's alternating order-three point thirdPoint. If a path joined zero to h, the classification would give h=j(t). "
                         + "Then r maps to j(t r) would be a continuous additive real homomorphism taking 1 to h, contradicting the parent's real-time obstruction. "
                         + "Consequently S2 is connected but is not path connected. The parent's algebraic rational homomorphism taking 1 to h is discontinuous "
                         + "and does not supply a path or a continuous real action through h.")),
                     Paragraph(Text(
-                        "The proof reuses the pinned Mathlib covering and path-lifting APIs and the repository's verified time rigidity and dyadic construction. "
+                        "The proof reuses the pinned Mathlib covering, path-lifting, unbounded-power and additive-circle APIs and the repository's dyadic construction. "
                         + "The covering technique also occurs in StreamlineDecomposition for the different all-degree carrier. "
                         + "These are classical solenoid phenomena; no literature novelty or physical realization is asserted."))),
                 DescribeRole.Theorem)),
         [
             DocumentEdge.Dependency.Create(GidRef.Create("D5/S1/Solenoid/DyadicTimeSeparation")),
-            DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/ConceptDynamics/Coding/PrimitiveLifts/ArchimedeanTimeRigidity")),
         ]));
 }
