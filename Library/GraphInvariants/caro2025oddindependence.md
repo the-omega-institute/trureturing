@@ -7,7 +7,7 @@ doi: 10.48550/arXiv.2509.20763
 url: https://arxiv.org/abs/2509.20763v2
 claim: "Problem 40, final question, asks whether alpha_od(Q_d)/2^d tends to one half as d tends to infinity through even integers. Odd independence permits zero or an odd number of neighbours in the independent set at every external vertex."
 strata_touched:
-  - D5/S3/Combinatorics/Graph/HypercubeOddIndependence
+  - D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence
 license: citation-only
 triage: anchor
 ---

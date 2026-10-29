@@ -8,9 +8,9 @@ The graph Q_d consists of all Boolean functions on Fin d, with adjacency at Hamm
 
 **Definition 1.1 (Odd independent sets).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/HypercubeOddIndependence.IsOddIndependent`
+Lean statement: `D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence.IsOddIndependent`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/HypercubeOddIndependence.IsOddIndependent` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence.IsOddIndependent` (`✓ std3`).
 
 *Citation.* Yair Caro; Mirko Petruševski; Riste Škrekovski; Zsolt Tuza (2025). *The odd independence number of graphs, I: Foundations and classical classes*. DOI: [10.48550/arXiv.2509.20763](https://doi.org/10.48550/arXiv.2509.20763). URL: <https://arxiv.org/abs/2509.20763v2>.
 
@@ -20,9 +20,9 @@ A finite set S is independent if none of its vertices are adjacent to one anothe
 
 **Definition 1.2 (The finite maximum).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/HypercubeOddIndependence.oddIndependenceNumber`
+Lean statement: `D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence.oddIndependenceNumber`
 
-*Formalization.* `D5/S3/Combinatorics/Graph/HypercubeOddIndependence.oddIndependenceNumber` (`✓ std3`).
+*Formalization.* `D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence.oddIndependenceNumber` (`✓ std3`).
 
 *Citation.* Yair Caro; Mirko Petruševski; Riste Škrekovski; Zsolt Tuza (2025). *The odd independence number of graphs, I: Foundations and classical classes*. DOI: [10.48550/arXiv.2509.20763](https://doi.org/10.48550/arXiv.2509.20763). URL: <https://arxiv.org/abs/2509.20763v2>.
 
@@ -32,9 +32,9 @@ The number is the greatest cardinality attained by an odd independent set, bound
 
 **Theorem 1.3 (The limit through all even dimensions).**
 
-Lean statement: `D5/S3/Combinatorics/Graph/HypercubeOddIndependence.result`
+Lean statement: `D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence.result`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/HypercubeOddIndependence.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -52,7 +52,7 @@ The actual maximum lies between these lower and upper bounds. Choose k so that 1
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeOddIndependence.IsOddIndependent`
-- Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeOddIndependence.oddIndependenceNumber`
-- Truth anchor: `D5/S3/Combinatorics/Graph/HypercubeOddIndependence.result`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence.IsOddIndependent`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence.oddIndependenceNumber`
+- Truth anchor: `D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence.result`
 - Dependency: [D5/S3/Combinatorics/Graph/HypercubeSubQuorum](HypercubeSubQuorum.md)

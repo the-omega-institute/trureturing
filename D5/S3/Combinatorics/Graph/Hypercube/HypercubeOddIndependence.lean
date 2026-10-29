@@ -1,20 +1,19 @@
-/- GID: D5/S3/Combinatorics/Graph/HypercubeOddIndependence
+/- GID: D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence
    generality: G
-   mirror-B: D5/B/S3/Combinatorics/Graph/HypercubeOddIndependence
+   mirror-B: D5/B/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: [D5/S3/Combinatorics/Graph/Hypercube, D5/S3/Combinatorics/Graph/HypercubeSubQuorum, mathlib/module/Mathlib.Combinatorics.Pigeonhole]
+   anchors: []
    utility: none
    digest: Odd independent sets in Boolean cubes via parity and syndrome classes. -/
 
 import D5.S3.Combinatorics.Graph.HypercubeSubQuorum
 import Mathlib.Combinatorics.Pigeonhole
-import Mathlib.Algebra.Order.Archimedean.Basic
 
 /-! Odd independence via a smallest even-parity syndrome fiber. -/
 
 set_option autoImplicit false
 
-namespace D5.S3.Combinatorics.Graph.HypercubeOddIndependence
+namespace D5.S3.Combinatorics.Graph.Hypercube.HypercubeOddIndependence
 
 open scoped BigOperators Classical
 open Hypercube HypercubeSubQuorum
@@ -344,4 +343,4 @@ theorem result : ∀ ε : ℝ, 0 < ε → ∃ D : ℕ, ∀ d : ℕ,
 
 #print axioms result
 
-end D5.S3.Combinatorics.Graph.HypercubeOddIndependence
+end D5.S3.Combinatorics.Graph.Hypercube.HypercubeOddIndependence

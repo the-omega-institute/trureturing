@@ -1,10 +1,12 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph.Hypercube;
 
 internal sealed class HypercubeOddIndependenceDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S3/Combinatorics/Graph/HypercubeOddIndependence.";
+    private const string Prefix = "D5/S3/Combinatorics/Graph/Hypercube/HypercubeOddIndependence.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/GraphInvariants/caro2025oddindependence");
 
@@ -23,7 +25,7 @@ internal sealed class HypercubeOddIndependenceDocument : IScribeDocumentDefiniti
                 DescribeId.Create("odd-independent-set"),
                 DeclarationHandle.Create(Prefix + "IsOddIndependent"),
                 H("Odd independent sets"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Disp(OddIndependentFormula())),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "A finite set S is independent if none of its vertices are adjacent to one "
@@ -36,7 +38,7 @@ internal sealed class HypercubeOddIndependenceDocument : IScribeDocumentDefiniti
                 DescribeId.Create("odd-independence-number"),
                 DeclarationHandle.Create(Prefix + "oddIndependenceNumber"),
                 H("The finite maximum"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Disp(MaximumFormula())),
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text(
                     "The number is the greatest cardinality attained by an odd independent set, "
@@ -49,7 +51,7 @@ internal sealed class HypercubeOddIndependenceDocument : IScribeDocumentDefiniti
                 DescribeId.Create("even-cube-odd-independence-limit"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("The limit through all even dimensions"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Disp(LimitFormula())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(
                     Paragraph(Text(
@@ -87,4 +89,68 @@ internal sealed class HypercubeOddIndependenceDocument : IScribeDocumentDefiniti
                             + "even dimension."))),
                 DescribeRole.Theorem)),
         []));
+
+    private static Formula X(string name) => F.Id(name);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Named(string name) => Seq(Operatorname, Grp(X(name)));
+    private static Formula App(Formula function, params Formula[] arguments) =>
+        new Formula.Apply(function, [.. arguments]);
+    private static Formula Invoke(string name, params Formula[] arguments) => App(Named(name), arguments);
+    private static Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));
+    private static Formula Method(Formula value, string name, params Formula[] arguments) =>
+        arguments.Length == 0 ? Seq(Parenthesized(value), Dot, Named(name))
+            : App(Seq(Parenthesized(value), Dot, Named(name)), arguments);
+    private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Some(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
+    private static Formula Rel(Formula left, FormulaRelationOperator op, Formula right) =>
+        new Formula.Relation(left, op, right);
+    private static Formula Logic(Formula left, FormulaLogicOperator op, Formula right) =>
+        new Formula.Logic(Parenthesized(left), op, Parenthesized(right));
+    private static Formula Imp(Formula left, Formula right) => Logic(left, FormulaLogicOperator.Implies, right);
+    private static Formula And(Formula left, Formula right) => Logic(left, FormulaLogicOperator.And, right);
+    private static Formula NatType() => Named("Nat");
+    private static Formula RealType() => Seq(Mathbb, Grp(X("R")));
+    private static Formula VertexType(Formula n) =>
+        new Formula.TypeArrow(Invoke("Fin", n), Named("Bool"));
+    private static Formula SetType(Formula n) => Invoke("Finset", Parenthesized(VertexType(n)));
+    private static Formula Member(Formula x, Formula s) => Rel(x, FormulaRelationOperator.MemberOf, s);
+    private static Formula Card(Formula s) => Method(s, "card");
+
+    private static Formula OddIndependentFormula()
+    {
+        Formula n = X("n"), s = X("S"), x = X("x"), y = X("y");
+        Formula graph = Invoke("hypercube", n);
+        Formula independence = All("x", VertexType(n), Imp(Member(x, s),
+            All("y", VertexType(n), Imp(Member(y, s),
+                new Formula.Not(Parenthesized(Method(graph, "Adj", x, y)))))));
+        Formula count = Card(App(Qualified("Finset", "inter"), Method(graph, "neighborFinset", x), s));
+        Formula external = All("x", VertexType(n), Imp(new Formula.Not(Parenthesized(Member(x, s))),
+            Logic(Equal(count, D(0)), FormulaLogicOperator.Or, Invoke("Odd", count))));
+        return All("n", NatType(), All("S", SetType(n),
+            Logic(Invoke("IsOddIndependent", s), FormulaLogicOperator.Iff, And(independence, external))));
+    }
+
+    private static Formula MaximumFormula()
+    {
+        Formula n = X("n"), s = X("S"), m = X("m");
+        Formula predicate = Parenthesized(Seq(LambdaLower, Sp, Typed(m, NatType()), Sp, Mapsto, Sp,
+            Parenthesized(Some("S", SetType(n), And(Invoke("IsOddIndependent", s), Equal(Card(s), m))))));
+        return All("n", NatType(), Equal(Invoke("oddIndependenceNumber", n),
+            App(Qualified("Nat", "findGreatest"), predicate, new Formula.Power(D(2), n))));
+    }
+
+    private static Formula LimitFormula()
+    {
+        Formula epsilon = X("epsilon"), d = X("d"), threshold = X("D");
+        Formula ratio = new Formula.Fraction(Typed(Invoke("oddIndependenceNumber", d), RealType()),
+            Typed(new Formula.Power(D(2), d), RealType()));
+        Formula error = new Formula.Absolute(Subtract(ratio, new Formula.Fraction(D(1), D(2))));
+        return All("epsilon", RealType(), Imp(Rel(D(0), FormulaRelationOperator.LessThan, epsilon),
+            Some("D", NatType(), All("d", NatType(), Imp(Invoke("Even", d),
+                Imp(Rel(threshold, FormulaRelationOperator.LessThanOrEqual, d),
+                    Rel(error, FormulaRelationOperator.LessThan, epsilon)))))));
+    }
 }

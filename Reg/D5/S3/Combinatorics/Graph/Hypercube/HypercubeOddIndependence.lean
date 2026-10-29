@@ -1,14 +1,14 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Combinatorics.Graph.HypercubeOddIndependence
+import D5.S3.Combinatorics.Graph.Hypercube.HypercubeOddIndependence
 import Reg.Support.DependentFamily
 import Reg.Support.SingleDependentReadout
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open _root_.D5.S3.Combinatorics.Graph.HypercubeOddIndependence
+open _root_.D5.S3.Combinatorics.Graph.Hypercube.HypercubeOddIndependence
 open LeanInformationAudit
 
 noncomputable section
-namespace Reg.D5.S3.Combinatorics.Graph.HypercubeOddIndependence
+namespace Reg.D5.S3.Combinatorics.Graph.Hypercube.HypercubeOddIndependence
 
 abbrev errorSignature : Signature :=
   _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℝ) (fun _ => ℝ)
@@ -46,11 +46,11 @@ def errorRecord : Registration errorArena (type_of% (@result)) where
 
 noncomputable def result_registration :
     Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Combinatorics.Graph.HypercubeOddIndependence.result)
+    (@_root_.D5.S3.Combinatorics.Graph.Hypercube.HypercubeOddIndependence.result)
     (type_of% (realize errorSignature (fun _ _ x => |x|) (fun e => nomatch e)))
     Unit Unit := {
-  unitName := `Reg.D5.S3.Combinatorics.Graph.HypercubeOddIndependence.error_information_unit
-  realizationName := `Reg.D5.S3.Combinatorics.Graph.HypercubeOddIndependence.errorRecord
+  unitName := `Reg.D5.S3.Combinatorics.Graph.Hypercube.HypercubeOddIndependence.error_information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.Hypercube.HypercubeOddIndependence.errorRecord
   realizationSource := none
   generated := false
   arena := .source ⟨errorArena⟩
@@ -66,7 +66,7 @@ noncomputable def result_registration :
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Combinatorics.Graph.HypercubeOddIndependence
+    owner := `D5.S3.Combinatorics.Graph.Hypercube.HypercubeOddIndependence
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -82,4 +82,4 @@ noncomputable def result_registration :
 #print axioms errorRecord
 #print axioms result_registration
 
-end Reg.D5.S3.Combinatorics.Graph.HypercubeOddIndependence
+end Reg.D5.S3.Combinatorics.Graph.Hypercube.HypercubeOddIndependence

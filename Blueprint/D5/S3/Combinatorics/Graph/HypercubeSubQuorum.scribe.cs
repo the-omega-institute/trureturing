@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Graph;
 
@@ -17,7 +19,7 @@ internal sealed class HypercubeSubQuorumDocument : IScribeDocumentDefinition
                 DescribeId.Create("cube-parity"),
                 DeclarationHandle.Create(Prefix + "cubeParity"),
                 H("Binary vertex parity"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Disp(ParityFormula())),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "The parity of a Boolean vertex is the sum of its coordinates in the "
@@ -28,7 +30,7 @@ internal sealed class HypercubeSubQuorumDocument : IScribeDocumentDefinition
                 DescribeId.Create("adjacent-parities-differ"),
                 DeclarationHandle.Create(Prefix + "cubeParity_ne_of_adj"),
                 H("Adjacency reverses parity"),
-                StatementSource.WithoutFormula(),
+                StatementSource.FromAuthor(Disp(AdjacentParityFormula())),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "Adjacent vertices differ at exactly one coordinate. Separate that "
@@ -127,4 +129,34 @@ internal sealed class HypercubeSubQuorumDocument : IScribeDocumentDefinition
             DocumentEdge.Dependency.Create(GidRef.Create(
                 "D5/S3/Combinatorics/Graph/Hypercube"))
         ]));
+
+    private static Formula X(string name) => F.Id(name);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Named(string name) => Seq(Operatorname, Grp(X(name)));
+    private static Formula App(Formula function, params Formula[] arguments) =>
+        new Formula.Apply(function, [.. arguments]);
+    private static Formula Invoke(string name, params Formula[] arguments) => App(Named(name), arguments);
+    private static Formula Typed(Formula value, Formula type) => Parenthesized(Seq(value, Colon, Sp, type));
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula VertexType(Formula n) =>
+        new Formula.TypeArrow(Invoke("Fin", n), Named("Bool"));
+
+    private static Formula ParityFormula()
+    {
+        Formula n = X("n"), x = X("x"), i = X("i");
+        Formula sum = Seq(new Formula.Subscript(Sum, Typed(i, Invoke("Fin", n))), Sp, App(x, i));
+        return All("n", Named("Nat"), All("x", Parenthesized(VertexType(n)),
+            Equal(Typed(Invoke("cubeParity", x), Named("Bool")), Typed(sum, Named("Bool")))));
+    }
+
+    private static Formula AdjacentParityFormula()
+    {
+        Formula n = X("n"), x = X("x"), y = X("y");
+        Formula adjacency = App(Seq(Parenthesized(Invoke("hypercube", n)), Dot, Named("Adj")), x, y);
+        return All("n", Named("Nat"), All("x", Parenthesized(VertexType(n)),
+            All("y", Parenthesized(VertexType(n)), new Formula.Logic(Parenthesized(adjacency),
+                FormulaLogicOperator.Implies,
+                Parenthesized(NotEqual(Invoke("cubeParity", x), Invoke("cubeParity", y)))))));
+    }
 }
