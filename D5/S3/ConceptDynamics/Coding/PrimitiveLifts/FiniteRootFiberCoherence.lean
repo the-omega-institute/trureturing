@@ -4,11 +4,13 @@
    mirror-E: none(waiver:symbolic-structural-theorems)
    anchors: []
    utility: none
-   digest: Under finite positive-degree root fibers, independent roots at every positive degree are equivalent to rational coherence. -/
+   digest: Finite or compact root fibers give rational coherence from positive roots. -/
 
 import Mathlib.CategoryTheory.CofilteredSystem
 import Mathlib.Data.PNat.Basic
 import Mathlib.Data.Rat.Lemmas
+import Mathlib.Topology.Algebra.Group.Basic
+import Mathlib.Topology.Category.TopCat.Limits.Konig
 import Mathlib.Tactic
 
 open CategoryTheory Opposite
@@ -35,7 +37,7 @@ private instance : IsDirectedOrder PosDegree where
     · exact dvd_mul_right _ _
     · exact dvd_mul_left _ _
 
-private def rootFiber {H : Type u} [Group H] (h : H) (n : PosDegree) :=
+private abbrev rootFiber {H : Type u} [Group H] (h : H) (n : PosDegree) :=
   {b : H // b ^ n.val.val = h}
 
 private def quotient (m n : PosDegree) (hnm : n ≤ m) : ℕ+ :=
@@ -253,5 +255,59 @@ theorem finite_root_fibers_rational_coherence {H : Type u} [Group H] (h : H)
     exact hp.symm
 
 #print axioms finite_root_fibers_rational_coherence
+
+private def topologicalRootSystem {H : Type u} [Group H] [TopologicalSpace H]
+    [IsTopologicalGroup H] (h : H) : PosDegreeᵒᵖ ⥤ TopCat.{u} where
+  obj n := TopCat.of (rootFiber h n.unop)
+  map f := TopCat.ofHom
+    { toFun := rootMap (h := h) (leOfHom f.unop)
+      continuous_toFun := (continuous_subtype_val.pow _).subtype_mk _ }
+  map_id n := by
+    ext x
+    exact congrArg Subtype.val
+      (congrFun (congrArg (fun f => f.hom) ((rootSystem h).map_id n)) x)
+  map_comp f g := by
+    ext x
+    exact congrArg Subtype.val
+      (congrFun (congrArg (fun f => f.hom) ((rootSystem h).map_comp f g)) x)
+
+/-- Compact positive-degree root fibers in the actual topology of a Hausdorff topological
+group suffice for algebraic rational coherence. Neither the ambient group nor the root
+fibers need be finite, and no continuity of the resulting homomorphism is asserted. -/
+theorem compact_root_fibers_rational_coherence {H : Type u} [Group H]
+    [TopologicalSpace H] [IsTopologicalGroup H] [T2Space H] (h : H)
+    (hcompact : ∀ n : ℕ, 0 < n → IsCompact {x : H | x ^ n = h}) :
+    (∀ n : ℕ, 0 < n → ∃ x : H, x ^ n = h) ↔
+      ∃ φ : Multiplicative ℚ →* H, φ (Multiplicative.ofAdd (1 : ℚ)) = h := by
+  constructor
+  · intro hex
+    let F := topologicalRootSystem h
+    haveI : ∀ n : PosDegreeᵒᵖ, CompactSpace (F.obj n) := fun n => by
+      change CompactSpace {x : H // x ^ n.unop.val.val = h}
+      exact isCompact_iff_compactSpace.mp (hcompact n.unop.val.val n.unop.val.pos)
+    haveI : ∀ n : PosDegreeᵒᵖ, T2Space (F.obj n) := fun n => by
+      change T2Space {x : H // x ^ n.unop.val.val = h}
+      infer_instance
+    haveI : ∀ n : PosDegreeᵒᵖ, Nonempty (F.obj n) := fun n => by
+      change Nonempty {x : H // x ^ n.unop.val.val = h}
+      obtain ⟨x, hx⟩ := hex n.unop.val.val n.unop.val.pos
+      exact ⟨⟨x, hx⟩⟩
+    obtain ⟨s⟩ := TopCat.nonempty_limitCone_of_compact_t2_cofiltered_system F
+    apply rational_action_of_coherent_roots h (fun n => (s.val (op n)).val)
+      (fun n => (s.val (op n)).property)
+    intro m n hnm
+    exact congrArg Subtype.val (s.property (homOfLE hnm).op)
+  · rintro ⟨φ, hφ⟩ n hn
+    refine ⟨φ (Multiplicative.ofAdd (1 / n : ℚ)), ?_⟩
+    have hp := φ.map_pow (Multiplicative.ofAdd (1 / n : ℚ)) n
+    have hx : (Multiplicative.ofAdd (1 / n : ℚ)) ^ n =
+        Multiplicative.ofAdd (1 : ℚ) := by
+      change Multiplicative.ofAdd (n • (1 / n : ℚ)) = Multiplicative.ofAdd (1 : ℚ)
+      congr 1
+      norm_num [nsmul_eq_mul, hn.ne']
+    rw [hx, hφ] at hp
+    exact hp.symm
+
+#print axioms compact_root_fibers_rational_coherence
 
 end D5.S3.ConceptDynamics.Coding.PrimitiveLifts.FiniteRootFiberCoherence
