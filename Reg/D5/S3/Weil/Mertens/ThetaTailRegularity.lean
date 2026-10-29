@@ -44,7 +44,8 @@ def family : Registration arena (type_of% @theta_tail_lipschitz) where
   dependence := by
     intro i
     refine ⟨(1 : ℝ), (1 : ℝ), (2 : ℝ), ?_⟩
-    norm_num [actual, realize]
+    change |(1 : ℝ) - 1| ≠ |(2 : ℝ) - 1|
+    norm_num
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@theta_tail_lipschitz) (Realization signature) Unit Unit where
