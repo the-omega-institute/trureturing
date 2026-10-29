@@ -1,0 +1,15 @@
+**定义 1.2（共同谱参数）。** 对定义 1.1 的同一组 $k,\ell$，记
+
+$$
+S=k+\ell+2,\qquad d=\sqrt{(k-\ell)^2+4\ell},\qquad
+a=\frac{S-d}{2},\qquad b=\frac{S+d}{2}.
+\tag{1.2}
+$$
+
+以下的 $n,a,b,d$ 始终由这一组树参数产生，且记
+
+$$
+C_*=2+\frac{6\sqrt5}{5}.
+\tag{1.3}
+$$
+

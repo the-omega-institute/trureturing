@@ -33,8 +33,10 @@ The convolution and power constructions are reused from ExponentialImplicitParit
 
 import Batteries.Tactic.OpenPrivate
 import Mathlib.Algebra.Polynomial.CoeffList
+import D5.S1.Recurrence.Residue.IntegralEGFComposition
 import D5.S1.Recurrence.Residue.QuarticEGFFixedPoint
 import D5.S1.Recurrence.Invariants.PowerSeriesNormalizedContraction
+import D5.S1.Recurrence.Invariants.UnitReversionSquareParity
 import D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree
 
 open PowerSeries Finset

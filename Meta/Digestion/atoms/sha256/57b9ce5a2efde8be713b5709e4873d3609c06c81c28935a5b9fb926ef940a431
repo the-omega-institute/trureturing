@@ -1,0 +1,19 @@
+**Statement 9.3 (retained original all-$N$ alternative).** In the notation of the original-goal interface of [R], $d(P)$ is its stationary density functional and $D_r(P)$ its finite-window upper functional. Write
+
+$$
+C_N=\sup_{\theta\in\Theta_N}d(P_\theta),\qquad
+U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta).
+$$
+
+The full original alternative is whether some finite $N$ and $\theta\in\Theta_N$ attain $d(P_\theta)=c_\star$, or whether $C_N<c_\star$ for every finite $N$. The attributed equivalent formulation of the latter is
+
+$$
+\forall N\ge1\ \exists r,m\ge1:\qquad
+U_{N,r}<\frac{\kappa_m}{m+1}.
+\tag{9.3}
+$$
+
+This is an attributed statement of the original problem, not a theorem established here. This volume does not expand the definitions of $d,D_r$ or prove this equivalence; they are retained only as supplier symbols in this paragraph and are not inputs to any proof above. In particular, no new definition of either functional is silently substituted. The standalone erasure theorem is expressed entirely through the fully defined quantities (2.1)–(2.4).
+
+A hypothetical attainer must still establish the quotient and contraction assumptions before using this sufficient theorem. Neither alternative in Statement 9.3 is decided. The volume proves no strict enlargement of other sufficient classes, optimizer-rank growth, nonzero intrinsic-null response, strong-zero property, higher-order continuation obligation, or global continuation bridge. The rectangular-word theorem and flag-block estimates of [R] are not premises of any proof here. Their classes are not compared for strict inclusion. No empirical machine-learning claim is made.
+
