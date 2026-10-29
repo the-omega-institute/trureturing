@@ -375,3 +375,637 @@ $\mathcal A_n$ 及缩放描述。
 本卷的有限十二阶环结论不重复这些图类的证明，也不把它们当作任意环的尖锐解。
 
 ## 追加锚（本行以下为增补区）
+
+## 4. 任意阶实际环与电阻单纯形
+
+**定义 4.1（全部独立正电导与边界坐标）。** 固定整数 $n\ge5$，
+顶点标为 $1,\ldots,n$，边标为
+$e_i=\{i,i+1\}$（$1\le i<n$）及 $e_0=\{n,1\}$。
+每条边的电导 $c_i$ 独立遍历 $(0,\infty)$。
+令 $L(c)$ 为普通计数测度 Laplacian，$R(c)$ 为全部无序不同顶点对的
+有效电阻之和，并置
+
+$$
+H=\mathbf1^\perp\subset\mathbb R^n,\qquad
+P=I-\frac1n\mathbf1\mathbf1^{\mathsf T},\qquad
+r_i=\frac1{c_i},\quad s=\sum_{i=0}^{n-1}r_i,\quad p_i=\frac{r_i}{s}.
+$$
+
+这里顶点内积始终是 $\langle x,y\rangle=\sum_{j=1}^n x_jy_j$。
+记
+
+$$
+\begin{aligned}
+\Delta&=\{p\in[0,1]^n:\sum_i p_i=1\},&
+\Delta^\circ&=\{p\in\Delta:p_i>0\ \text{对所有 }i\},\\
+\mathcal V&=\{\varepsilon_0,\ldots,\varepsilon_{n-1}\},&
+a_0&=0,\qquad a_i=P\sum_{j=1}^i\delta_j\quad(1\le i<n),\\
+\bar a(p)&=\sum_i p_i a_i,&
+M(p)&=\sum_i p_i a_i a_i^{\mathsf T}-\bar a(p)\bar a(p)^{\mathsf T}.
+\end{aligned}
+$$
+
+$\delta_j$ 是顶点坐标向量，$\varepsilon_i$ 是边坐标向量；
+$M(p)$ 作为 $H$ 上的算子。对 $p\in\Delta\setminus\mathcal V$，置
+
+$$
+T(p)=\operatorname{tr}_H M(p),\qquad
+\rho(p)=\lambda_{\max}(M(p)|_H),\qquad
+\Phi(p)=\frac{nT(p)}{\rho(p)}.
+\tag{4.1}
+$$
+
+下文将证明该定义中的分母严格为正，并在内点证明
+$\Phi(p)=\lambda_2(L(c))R(c)$。
+令
+
+$$
+B_n=\sup_{c\in(0,\infty)^n}\lambda_2(L(c))R(c).
+\tag{4.2}
+$$
+
+因此 $B_n$ 与定义 3.1 的 $\mathcal M_n$ 是同一个上确界；
+记号 (4.2) 不指定它的精确数值。
+Laplacian 和全点对电阻采用定义 1.1 所引
+[Cruz Ortega–Menéndez-Conde，arXiv:2306.08187v1](https://arxiv.org/html/2306.08187v1)
+§§2–4 的约定，顶点数改为 $n$。
+
+**约定 4.2（完整路径定理的参数对应）。** 置
+
+$$
+s_0=s_n=0,\qquad s_i=\sqrt{i(n-i)},\qquad
+ d_i=2s_i-s_{i-1}-s_{i+1},\qquad
+A_n=\sum_{j=1}^n(s_j-s_{j-1})^2=\sum_{i=1}^{n-1}s_id_i.
+$$
+
+这里的 $s_i$ 带下标，与定义 4.1 的总边电阻 $s$ 不同。
+直接使用[完整路径优化定理](https://github.com/the-omega-institute/trureturing/blob/48474969a064d134fa7bb9c78d5919922d48faf9/docs/develop/theory/FIEDLER_RESISTANCE_PATH_OPTIMIZER.md)
+定理 2.1、推论 3.1 的全部结论：$d_i>0$，普通计数测度路径 $P_n$
+的任意正电导满足 $\lambda_2R\le A_n$，等号恰为
+$c_i=\kappa s_i/d_i$、$\kappa>0$；此时 $\lambda_2=\kappa$，
+特征向量为 $(s_j-s_{j-1})_{j=1}^n$；固定 $R_0>0$ 时唯一最优电导为
+$(A_n/R_0)s_i/d_i$。被引定理记作 $C_n$ 的常数在这里记作 $A_n$。
+删去实际环的 $e_0$ 后，顶点仍为 $1,\ldots,n$，每个顶点质量仍为 $1$，
+第 $i$ 条路径边就是 $e_i$，所以这是真正的参数对应。
+含零边电阻的边界不直接当作普通单位质量的缩点路径。
+
+## 5. 顶点退化的全部方向
+
+**定理 5.1（顶点附近的一致路径界）。** 对每个 $n\ge5$，
+$\Phi$ 在 $\Delta\setminus\mathcal V$ 上连续，在 $\Delta^\circ$ 上等于
+实际环的 $\lambda_2R$。固定任一顶点 $\varepsilon_\ell$，
+令 $q\in\Delta$、$q_\ell=0$，并定义
+
+$$
+K_\ell(q)=\sum_{i\ne\ell}q_i(a_i-a_\ell)(a_i-a_\ell)^{\mathsf T},\qquad
+\Psi_\ell(q)=\frac{n\operatorname{tr}K_\ell(q)}{\lambda_{\max}(K_\ell(q))}.
+$$
+
+则 $\max_{q_\ell=0}\Psi_\ell(q)=A_n$，且对所有这样的 $q$ 以及
+所有 $0<\epsilon<1$，均有
+
+$$
+(1-\epsilon)\Psi_\ell(q)
+\le\Phi\bigl((1-\epsilon)\varepsilon_\ell+\epsilon q\bigr)
+\le\frac{\Psi_\ell(q)}{1-\epsilon},
+\tag{5.1}
+$$
+
+从而
+
+$$
+\left|\Phi\bigl((1-\epsilon)\varepsilon_\ell+\epsilon q\bigr)
+-\Psi_\ell(q)\right|\le\frac{A_n\epsilon}{1-\epsilon}.
+\tag{5.2}
+$$
+
+特别地，顶点逼近的上确界极限恰为
+
+$$
+\lim_{\delta\downarrow0}\,
+\sup\{\Phi(p):p\in\Delta^\circ,\ 0<1-p_\ell\le\delta\}=A_n.
+\tag{5.3}
+$$
+
+式 (5.2) 对方向 $q$ 一致，允许 $q$ 随 $\epsilon$ 任意变化、趋于任意面，
+以及各坐标具有任意不同的衰减尺度。
+
+证明。先验证 (4.1) 与实际模型的关系。把 $e_i$ 定向为 $i\to i+1$，
+$e_0$ 定向为 $n\to1$，令关联矩阵为 $D$。
+对 $h\in H$，所有满足 $Dz=h$ 的流都写成
+
+$$
+z_i=t+\sum_{j=1}^i h_j=t+\langle a_i,h\rangle\quad(1\le i<n),
+\qquad z_0=t.
+$$
+
+采用经典的最小耗散原理，或直接令
+$u=L(c)^+h$、$z_*=\operatorname{diag}(c_i)D^{\mathsf T}u$：
+$Dz_*=h$，且 $\sum_i r_i(z_*)_i=\mathbf1^{\mathsf T}D^{\mathsf T}u=0$。
+于是 $z_*$ 与所有常循环流在电阻内积下正交，得到
+
+$$
+\begin{aligned}
+h^{\mathsf T}L(c)^+h
+&=\min_t\sum_i r_i\bigl(t+\langle a_i,h\rangle\bigr)^2\\
+&=s\left[\sum_i p_i\langle a_i,h\rangle^2
+-\left(\sum_i p_i\langle a_i,h\rangle\right)^2\right]
+=s\,h^{\mathsf T}M(p)h.
+\end{aligned}
+\tag{5.4}
+$$
+
+这里最小点为 $t=-\sum_i p_i\langle a_i,h\rangle$。
+这也将第 2 节式 (1) 的流计算直接接到任意 $n$ 的实际边上。
+全点对恒等式
+$\sum_{i<j}(\delta_i-\delta_j)(\delta_i-\delta_j)^{\mathsf T}=nP$
+给出 $R(c)=n\operatorname{tr}L(c)^+$。
+电学伪逆和迹公式的经典出处仍是
+[Ghosh–Boyd–Saberi，DOI:10.1137/050645452](https://web.stanford.edu/~boyd/papers/pdf/eff_res.pdf)，
+§§2.4–2.5，式 (8)、(13)–(15)；这里只使用其电学恒等式。
+由 (5.4) 和谱分解，内点上有
+
+$$
+L(c)^+|_H=sM(p),\qquad
+\lambda_2(L(c))=\frac1{s\rho(p)},\qquad
+R(c)=nsT(p),\qquad \lambda_2R=\Phi(p).
+\tag{5.5}
+$$
+
+向量 $a_1,\ldots,a_{n-1}$ 线性无关：若
+$\sum_{i=1}^{n-1}\alpha_i a_i=0$，其未投影的累积向量为常数，
+但第 $n$ 坐标为零，故各坐标均为零，依次相减给出所有 $\alpha_i=0$。
+因此 $a_0,\ldots,a_{n-1}$ 仿射无关，且
+
+$$
+M(p)=\sum_i p_i(a_i-\bar a)(a_i-\bar a)^{\mathsf T}
+\tag{5.6}
+$$
+
+在支撑大小为 $k$ 的点上秩恰为 $k-1$。
+事实上二次型为零当且仅当该向量与全部支撑点之差正交。
+非顶点时 $k\ge2$，故 $T,\rho>0$；连续性由矩阵元素和最大特征值的
+连续性得到。内点时 $M$ 在 $H$ 上正定。
+
+先取 $\ell=0$。删边后的普通路径若有正边电阻 $q_i$，
+其唯一流为 $z_i=\langle a_i,h\rangle$，同一能量计算给出
+$L_{P_n}^+|_H=K_0(q)$。
+因此约定 4.2 的完整路径定理直接给出 $\Psi_0(q)\le A_n$，
+并在 $q_i$ 与 $d_i/s_i$ 成比例时取等号。
+若一些 $q_i=0$，以正 $q$ 逼近：由于
+
+$$
+\|a_i\|^2=\frac{i(n-i)}n\ge\frac{n-1}n,\qquad
+\operatorname{tr}K_0(q)\ge\frac{n-1}n,
+$$
+
+分母在整个闭方向单纯形上不为零，连续延拓保持该上界。
+这一步没有以单位质量的缩点路径替换原来的 $n$ 个顶点。
+对一般 $\ell$，循环重标号给出完全相同的路径、电学恒等式和范数界。
+
+令 $v=\sum_{i\ne\ell}q_i(a_i-a_\ell)$、$K=K_\ell(q)$。
+将 (5.6) 在 $p=(1-\epsilon)\varepsilon_\ell+\epsilon q$ 处展开，得到
+
+$$
+M(p)=\epsilon(K-\epsilon vv^{\mathsf T}),\qquad
+vv^{\mathsf T}\preceq K.
+\tag{5.7}
+$$
+
+后一不等式是标量 Cauchy–Schwarz 不等式
+$(\sum_i q_i\langle a_i-a_\ell,h\rangle)^2
+\le\sum_i q_i\langle a_i-a_\ell,h\rangle^2$。
+所以
+
+$$
+(1-\epsilon)K\preceq K-\epsilon vv^{\mathsf T}\preceq K.
+$$
+
+对迹和最大特征值分别使用这些序界，即得 (5.1)，继而得 (5.2)。
+上界对全部闭方向一致；下界取上述严格正的路径最优方向，令
+$\epsilon\downarrow0$，便证明 (5.3)。∎
+
+## 6. 路径值的严格超越与每个真面的排除
+
+**定理 6.1（实际正环严格超过完整路径常数）。** 对每个整数 $n\ge5$，
+存在全部 $n$ 条边电导均有限且严格为正的实际 $C_n$，满足
+$\lambda_2R>A_n$。因此 $B_n>A_n$。
+
+证明。仅调用约定 4.2 的完整路径最优点，取
+$c_i=s_i/d_i$、$1\le i<n$。
+令 $K=L_{P_n}^+|_H$、$T=\operatorname{tr}K$、
+$r_i=d_i/s_i$。被引定理给出
+
+$$
+\lambda_{\max}(K)=1,\qquad T=\frac{A_n}{n},\qquad
+u_j=\frac{s_j-s_{j-1}}{\sqrt{A_n}},\qquad K\nu=\nu,
+\quad\|\nu\|=1.
+$$
+
+此最大特征值单重：路径 Laplacian 的任一特征向量由其第一个坐标
+通过首行及后继行唯一递推确定，若第一个坐标为零便全为零；
+实对称性使几何重数与代数重数相同。
+
+令 $b=\delta_1-\delta_n$、$v=Kb$、$\ell=b^{\mathsf T}Kb=\sum_i r_i$。
+给缺失的实际边 $e_0$ 添加电导 $h>0$，在 $H$ 上直接相乘验证逆矩阵为
+
+$$
+K_h=(L_{P_n}|_H+hbb^{\mathsf T})^{-1}
+=K-\tau vv^{\mathsf T},\qquad
+\tau=\frac{h}{1+h\ell}>0.
+\tag{6.1}
+$$
+
+为计算严格增益，$\langle a_i,b\rangle=1$ 给出
+$v=\sum_i r_i a_i$，且
+
+$$
+\langle\nu,a_i\rangle=\frac{s_i}{\sqrt{A_n}},\qquad
+\langle\nu,v\rangle=\frac{\sum_i d_i}{\sqrt{A_n}}
+=\frac{2\sqrt{n-1}}{\sqrt{A_n}}.
+\tag{6.2}
+$$
+
+对 $1\le i\le j<n$，
+
+$$
+\langle a_i,a_j\rangle=\frac{i(n-j)}n
+\le\frac{s_is_j}{n},
+$$
+
+其中 $i<j$ 时严格，因为 $i(n-j)<j(n-i)$。
+所有 $r_i>0$，且有至少两个不同的路径边指标，所以
+
+$$
+\|v\|^2=\sum_{i,j}r_ir_j\langle a_i,a_j\rangle
+<\frac1n\left(\sum_i r_i s_i\right)^2
+=\frac{4(n-1)}n.
+\tag{6.3}
+$$
+
+使用有限维简单特征值的一阶展开，
+
+$$
+\lambda_{\max}(K-\tau vv^{\mathsf T})
+=1-\tau\langle\nu,v\rangle^2+O(\tau^2).
+\tag{6.4}
+$$
+
+这里的余项可直接由谱隙得到：在
+$\mathbb R\nu\oplus\nu^\perp$ 中，右下块的最大特征值与 $1$ 有严格间隙，
+交叉块为 $O(\tau)$。Rayleigh 下界取 $\nu$；上界对交叉项配方，
+便与左上标量相差 $O(\tau^2)$。
+于是 (5.5)、(6.1)–(6.4) 给出
+
+$$
+\begin{aligned}
+\lambda_2(L_{P_n}+hbb^{\mathsf T})R
+&=\frac{n(T-\tau\|v\|^2)}{\lambda_{\max}(K-\tau vv^{\mathsf T})}\\
+&=A_n+\tau\bigl(4(n-1)-n\|v\|^2\bigr)+O(\tau^2)>A_n
+\end{aligned}
+$$
+
+对所有充分小的 $h>0$ 成立。式 (6.3) 保证一阶系数严格为正，
+因此选择的是有限正电导，并非只在删边极限取值。∎
+
+**定理 6.2（任意非顶点真面的严格内点支配）。** 固定 $n\ge5$。
+对每个 $p\in\partial\Delta\setminus\mathcal V$，存在
+$p'\in\Delta^\circ$ 使 $\Phi(p')>\Phi(p)$。
+此结论涵盖每个真面的全部非顶点，包括任意数目的零坐标，
+并在原来的 $n$ 个计数质量上成立。
+
+证明。令 $S_p=\{i:p_i>0\}$，$k=|S_p|\ge2$，并置
+
+$$
+W=\operatorname{span}\{a_i-a_l:i\in S_p\}\subset H
+$$
+
+其中 $l\in S_p$。式 (5.6) 表明 $M(p)$ 的像恰为 $W$，
+在 $W^\perp$ 上为零，在 $W$ 上正定。
+至少有一个零坐标，故可在循环边指标上选取相邻的两个支撑指标 $l,r$，
+它们之间沿选定方向有 $m-1\ge1$ 个零坐标。
+因支撑至少有两个，$2\le m\le n-1$。
+在该间隙任选距 $l$ 为 $j$ 的指标 $k_0$，$1\le j<m$，置
+
+$$
+\theta=\frac jm,\qquad
+ d=a_r-a_l,\qquad
+ w=a_{k_0}-(1-\theta)a_l-\theta a_r,\qquad
+ z=(1-\theta)a_l+\theta a_r-\bar a(p).
+\tag{6.5}
+$$
+
+跨过循环指标 $0$ 时，用 $a_n=a_0$ 和
+$a_i-a_{i-1}=P\delta_i$（顶点指标也按周期解释）计算。
+若 $I$ 是间隙对应的 $m$ 个原始顶点，$J$ 是其中前 $j$ 个，则
+
+$$
+d=P\mathbf1_I,\qquad
+w=\mathbf1_J-\frac jm\mathbf1_I,\qquad
+\|w\|^2=\frac{j(m-j)}m=:b_0>0,\qquad
+\|d\|^2=\frac{m(n-m)}n.
+\tag{6.6}
+$$
+
+每个 $a_i-a_l$、$i\in S_p$ 在 $I$ 的全部坐标上取同一数值，
+所以 $w\perp W$。同时 $d,z\in W$。
+这一步保留了每个原始顶点的内积；若以块常数 $x_i=y_I$ 表示，
+范数贡献是 $|I|y_I^2$，不是 $y_I^2$。
+
+取
+
+$$
+p(t)=p+t\bigl(\varepsilon_{k_0}-(1-\theta)\varepsilon_l
+-\theta\varepsilon_r\bigr).
+$$
+
+对充分小的 $t>0$，它仍在 $\Delta$，因为只减去两个严格正的支撑坐标。
+其均值变化为 $tw$。逐项展开协方差，得到精确恒等式
+
+$$
+M(p(t))=M(p)-t\theta(1-\theta)dd^{\mathsf T}
++t(zw^{\mathsf T}+wz^{\mathsf T})+t(1-t)ww^{\mathsf T}.
+\tag{6.7}
+$$
+
+因此，无论 $\rho=\rho(p)$ 的重数是多少，$W$ 上的整个压缩都不增加。
+另一方面，取迹并使用 $w\perp W$，得到
+
+$$
+T(p(t))=T(p)+a_0t-b_0t^2,\qquad
+ a_0=b_0-\theta(1-\theta)\|d\|^2=\frac{j(m-j)}n>0.
+\tag{6.8}
+$$
+
+以下控制整个最大特征空间，而非单独选择一个特征向量。
+令 $T=T(p)$，并取 $0<t<1$ 足够小，使 $tb_0\le\rho/2$。
+在 $W\oplus W^\perp$ 中，(6.7) 对任意向量 $(x,y)$ 给出
+
+$$
+\begin{aligned}
+\langle M(p(t))(x,y),(x,y)\rangle
+&\le\rho\|x\|^2+2t\|z\|\|w\|\|x\|\|y\|
++\frac\rho2\|y\|^2\\
+&\le(\rho+C t^2)\|x\|^2+\rho\|y\|^2,\qquad
+ C=\frac{2\|z\|^2b_0}{\rho}.
+\end{aligned}
+$$
+
+最后一步使用 $2AB\le 2A^2/\rho+\rho B^2/2$。
+于是 $\rho(p(t))\le\rho+Ct^2$，并由 (6.8) 得到
+
+$$
+\Phi(p(t))\ge\frac{n(T+a_0t-b_0t^2)}{\rho+Ct^2}
+>\frac{nT}{\rho}=\Phi(p)
+\tag{6.9}
+$$
+
+只要再取 $t<\rho a_0/(\rho b_0+TC)$。
+所有限制都可与两个支撑坐标的正性限制同时满足。
+若 $p(t)$ 还有零坐标，令
+$p'=(1-\eta)p(t)+\eta(1/n,\ldots,1/n)$；
+定理 5.1 的非顶点连续性保证对充分小的 $\eta>0$ 仍保留 (6.9) 的严格性。
+此时 $p'\in\Delta^\circ$，对应同一实际 $n$ 顶点环上的有限正电导
+$c_i'=1/p_i'$。由 (5.5)，其乘积恰为 $\Phi(p')$。∎
+
+## 7. 全边界排除后的达到性与定量分离
+
+**定理 7.1（有限正最大点与严格双界）。** 对每个整数 $n\ge5$，
+$B_n$ 在实际标号环的有限严格正电导处达到，并且
+
+$$
+A_n<B_n<n(n-1).
+\tag{7.1}
+$$
+
+每个 $R_0>0$ 都满足
+
+$$
+\max_{c\in(0,\infty)^n,\ R(c)=R_0}\lambda_2(L(c))=\frac{B_n}{R_0}.
+\tag{7.2}
+$$
+
+证明。由 (5.5) 和 (4.2)，$B_n=\sup_{p\in\Delta^\circ}\Phi(p)$。
+$M(p)$ 在 $H$ 上正定，维数为 $n-1$，所以
+$\Phi(p)\le n(n-1)$，从而上确界有限。
+定理 6.1 已经给出 $B_n>A_n$。
+
+取 $\Phi(p^{(k)})\to B_n$ 的内点序列，先在闭单纯形内取一个收敛子列，
+记其极限为 $p^*$。若 $p^*$ 是顶点，定理 5.1 的一致界给出
+$\limsup_k\Phi(p^{(k)})\le A_n<B_n$，矛盾。
+若 $p^*\in\partial\Delta\setminus\mathcal V$，连续性给出
+$\Phi(p^*)=B_n$，而定理 6.2 给出实际内点 $p'$ 满足
+$\Phi(p')>B_n$，也矛盾。
+已经排除全部边界，故 $p^*\in\Delta^\circ$，连续性才给出
+$\Phi(p^*)=B_n$，这证明达到性。
+
+若某一内点有 $\Phi(p)=n(n-1)$，迹与最大特征值之比取等号迫使
+$M(p)=\rho(p)I_H$。式 (5.4) 于是给出
+
+$$
+L(c)=\frac1{s\rho(p)}P.
+$$
+
+但右边任意两个不同顶点间的矩阵元都是负数，而 $n\ge5$ 的实际环
+存在非相邻顶点，它们之间的 Laplacian 矩阵元为零，矛盾。
+将这一严格性应用于刚证明存在的最大点，便得 (7.1) 的严格上界。
+
+最后任取内点 $p$，令 $\widehat c_i=1/p_i$。
+此时总边电阻为 $1$，由 (5.5) 得
+$R(\widehat c)=nT(p)$。定义
+
+$$
+c_i^{(R_0)}=\frac{nT(p)}{R_0p_i}.
+\tag{7.3}
+$$
+
+缩放律给出
+
+$$
+R(c^{(R_0)})=R_0,\qquad
+\lambda_2(L(c^{(R_0)}))=\frac{\Phi(p)}{R_0}.
+$$
+
+取 $p=p^*$ 就达到 (7.2)；任一其它可行电导的乘积不超过 $B_n$，
+所以 (7.2) 的上界也对全部独立正电导成立。∎
+
+**定理 7.2（全部近最大点的一致内部分离）。** 对每个固定整数 $n\ge5$，
+存在仅依赖于 $n$ 的 $\epsilon_n>0$ 和 $\delta_n>0$，使
+
+$$
+p\in\Delta^\circ,\quad \Phi(p)\ge B_n-\epsilon_n
+\quad\Longrightarrow\quad \min_i p_i\ge\delta_n.
+\tag{7.4}
+$$
+
+尤其所有趋于 $B_n$ 的序列最终都落入同一个开单纯形内的紧子集。
+任意固定 $R_0>0$ 时，这些点经 (7.3) 对应的电导也落入
+$(0,\infty)^n$ 的一个紧子集。
+
+证明。定义实际边界水平
+
+$$
+\Gamma_n=\max\left\{A_n,\,
+\sup_{p\in\partial\Delta\setminus\mathcal V}\Phi(p)\right\}.
+$$
+
+首先证明 $\Gamma_n<B_n$。每个非顶点边界点都被定理 6.2 的内点严格支配，
+故其值严格小于 $B_n$。若这些边界值的上确界仍为 $B_n$，
+取逼近它的边界序列并在闭单纯形取收敛子列。
+极限非顶点时，连续性会给出一个值为 $B_n$ 的边界点，矛盾；
+极限为顶点时，(5.1) 对闭方向也成立，给出上极限不超过
+$A_n<B_n$，仍矛盾。结合 $A_n<B_n$，得所需严格间隙。
+
+令 $\epsilon_n=(B_n-\Gamma_n)/4>0$。
+存在 $\delta_n>0$ 使
+
+$$
+p\in\Delta^\circ,\quad\min_i p_i<\delta_n
+\quad\Longrightarrow\quad\Phi(p)\le\Gamma_n+\epsilon_n.
+\tag{7.5}
+$$
+
+否则可选取 $\min_i p_i\to0$ 而
+$\Phi(p)>\Gamma_n+\epsilon_n$ 的内点序列。其收敛子列的极限在边界；
+非顶点极限由连续性否定这一严格下界，顶点极限由 (5.1) 否定它。
+这证明 (7.5)，并因
+$\Gamma_n+\epsilon_n=B_n-3\epsilon_n<B_n-\epsilon_n$
+得到 (7.4)。必要时减小 $\delta_n$，可使 $\delta_n<1/n$。
+该论证证明分离常数存在，没有指定未经推导的数值。
+
+集合 $\{p\in\Delta:p_i\ge\delta_n\ \text{对所有 }i\}$ 是开单纯形内的紧集。
+其上 $T(p)$ 连续且严格为正，(7.3) 因而是取值于有限正电导的连续映射，
+像亦紧。这同时排除固定总电阻下近最大点的任一电导逃逸。∎
+
+## 8. 内点最大值的必要重数与尚未确定的精确问题
+
+**定理 8.1（任何内点局部最大值的 Fiedler 重数恰为二）。** 固定 $n\ge5$。
+若实际正环的电导 $c$ 是尺度不变量 $\lambda_2R$ 的局部最大点，
+或是任意固定 $R_0>0$ 水平上 $\lambda_2$ 的局部最大点，则
+
+$$
+\lambda_2(L(c))=\lambda_3(L(c))<\lambda_4(L(c)).
+\tag{8.1}
+$$
+
+因此 (8.1) 适用于定理 7.1 的每一个全局最大点。
+
+证明。先在 $p\in\Delta^\circ$ 上证明 $\rho(p)$ 在 $\Phi$ 的局部最大点
+不能单重。暂设它单重，取单位最大特征向量 $u\in H$，并记
+
+$$
+v_i=a_i-\bar a(p),\qquad h_i=\langle u,v_i\rangle,\qquad
+T=T(p),\quad\rho=\rho(p),\quad\beta=\frac T\rho.
+$$
+
+若 $\xi\in\mathbb R^n$ 满足 $\sum_i\xi_i=0$，协方差的一阶变化为
+$\sum_i\xi_i v_i v_i^{\mathsf T}$。
+简单特征值的 Rayleigh 展开（与 (6.4) 的谱隙配方论证相同）给出
+
+$$
+D\Phi(p)[\xi]=\frac n\rho
+\sum_i\xi_i\bigl(\|v_i\|^2-\beta h_i^2\bigr).
+\tag{8.2}
+$$
+
+局部最大点允许所有这样的双向变化，故括号对 $i$ 为常数；
+其 $p$ 加权和是 $T-\beta\rho=0$，所以
+
+$$
+\|v_i\|^2=\beta h_i^2\qquad\text{对所有 }i.
+\tag{8.3}
+$$
+
+仿射无关性和 $p_i>0$ 保证 $\bar a(p)\ne a_i$，所以每个 $v_i\ne0$，
+继而每个 $h_i\ne0$。定义
+
+$$
+S=\sum_i\frac{p_i}{h_i},\qquad
+w=\sum_i\frac{p_i v_i}{h_i},\qquad
+C=\sum_i\frac{p_i}{h_i}v_i v_i^{\mathsf T}.
+$$
+
+由 $\sum_i p_iv_i=0$、$\sum_i p_i h_i=0$ 以及 (8.3)，有
+
+$$
+\langle u,w\rangle=1,\qquad Cu=0,\qquad\operatorname{tr}C=0,
+\qquad \|w\|^2<\sum_i p_i\left\|\frac{v_i}{h_i}\right\|^2=\beta.
+\tag{8.4}
+$$
+
+最后的不等式严格：平方范数的加权凸性取等号要求所有 $v_i/h_i$ 相同，
+这会使全部 $v_i$ 共线，与 $n$ 个 $a_i$ 在 $n-1\ge2$ 维空间中
+仿射无关相矛盾。
+
+对充分小的正负 $t$，令
+
+$$
+p_i(t)=\frac{p_i(1+t/h_i)}{1+tS},\qquad d(t)=1+tS.
+$$
+
+这些坐标严格为正、总和为 $1$，并在 $t=0$ 回到 $p$。
+相对于旧均值，新均值为 $tw/d(t)$，故有精确公式
+
+$$
+M(p(t))=\frac{M(p)+tC}{d(t)}
+-\frac{t^2}{d(t)^2}ww^{\mathsf T},\qquad
+T(p(t))=\frac{T}{d(t)}-\frac{t^2}{d(t)^2}\|w\|^2.
+\tag{8.5}
+$$
+
+因 $Cu=0$，第一项在 $\mathbb Ru\oplus u^\perp$ 上是块对角的，
+$u$ 方向特征值为 $\rho/d(t)$。
+单重性保证它与另一块的最大特征值保持一个固定正谱隙。
+第二项的交叉块为 $O(t^2)$，且其 $u,u$ 元为 $-t^2/d(t)^2$，
+因为 $\langle u,w\rangle=1$。与 (6.4) 相同的配方上界和取 $u$ 的下界给出
+
+$$
+\rho(p(t))=\frac{\rho}{d(t)}-\frac{t^2}{d(t)^2}+O(t^4).
+$$
+
+代回 (8.5)，得到
+
+$$
+\Phi(p(t))=n\beta+
+\frac n\rho\bigl(\beta-\|w\|^2\bigr)t^2+O(t^3)>\Phi(p)
+$$
+
+对所有充分小的非零 $t$ 成立，违背局部最大性。
+这证明最大特征值必须至少二重；整个论证没有假定其它特征值单重。
+
+由 (5.5)，$M(p)$ 的最大特征空间与 $L(c)$ 的 Fiedler 特征空间相同。
+而实际正环上任意特征值 $\lambda$ 的特征向量满足
+
+$$
+c_i x_{i+1}=(c_{i-1}+c_i-\lambda)x_i-c_{i-1}x_{i-1},
+$$
+
+顶点和边指标按周期解释。因 $c_i>0$，两个相邻坐标唯一确定其余坐标，
+所以每个特征空间维数至多为 $2$。
+实对称性使代数重数也至多为 $2$，故 Fiedler 重数恰为 $2$，即 (8.1)。
+
+最后，$c\mapsto(p,s)$ 是正电导空间到
+$\Delta^\circ\times(0,\infty)$ 的光滑双射，逆为 $c_i=1/(sp_i)$。
+$\lambda_2R$ 只依赖 $p$。在 $R=R_0$ 水平上，式 (5.5) 将 $s$ 唯一确定为
+$R_0/(nT(p))$，式 (7.3) 给出双向连续的参数化，
+其目标为 $\Phi(p)/R_0$。因此两种局部最大性都归于刚证明的情形。∎
+
+**定义 8.2（剩余的精确优化问题）。** 对每个 $n\ge5$，令
+
+$$
+\mathcal P_n=\{p\in\Delta^\circ:\Phi(p)=B_n\}.
+$$
+
+定理 7.1–7.2 确定 $\mathcal P_n$ 非空且在开单纯形内紧，
+定理 8.1 给出其每一点必须满足的二重 Fiedler 条件。
+待确定的仍是 $B_n$ 的精确值及 $\mathcal P_n$ 的完整刻画；
+二重条件不作为局部或全局最优的充分条件。
+固定 $R_0$ 的完整等号集合由 (7.3) 作用于 $\mathcal P_n$ 给出，
+这一定义不评价该集合或 $B_n$。
+对 $n=12$，定理 2.1 的有限向量及严格不变性障碍仍成立，
+并与本节最大点存在及必要重数结论同时适用。
+[Menéndez-Conde，arXiv:1808.07976v2](https://arxiv.org/html/1808.07976v2)
+§3 定义 2 的相邻点对电阻约束，以及 Ghosh–Boyd–Saberi §1 式 (2) 的
+固定电导预算，均不同于本节的全点对电阻约束。
+
+## 追加锚（本行以下为增补区）
