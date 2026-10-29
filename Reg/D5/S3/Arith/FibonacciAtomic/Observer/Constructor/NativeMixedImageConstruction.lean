@@ -9,7 +9,7 @@ set_option relaxedAutoImplicit false
 
 open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativeMixedImageConstruction
 open _root_.D5.S3.Arith.FibonacciAtomic.Observer.NativePrefixIdentityReflection
-open _root_.D5.S3.Arith.FibonacciAtomic.Observer.GenealogicalFiberTransport
+open _root_.D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 
@@ -69,7 +69,7 @@ def evidence : Registration arena (type_of% (@flatten_exact)) where
   dependence := readout_depends
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@flatten_exact) (Realization signature) (Nat → Type) Unit where
+    (@flatten_exact) (Realization signature) (Type → Type) Unit where
   unitName := `D5.S3.Arith.FibonacciAtomic.Observer.NativeMixedImageConstruction.flatten_exact.__information_unit
   realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeMixedImageConstruction.evidence
   realizationSource := none
