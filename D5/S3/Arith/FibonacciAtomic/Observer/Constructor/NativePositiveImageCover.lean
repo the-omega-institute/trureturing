@@ -21,6 +21,8 @@ namespace D5.S3.Arith.FibonacciAtomic.Observer.NativePositiveImageCover
 open Lambda Strata.Util NativeTermUnification
 open NativeGroundSolutionSpace
 
+abbrev Source := NativeGroundSolutionSpace.Source
+
 variable {X : Type}
 
 /-- A residual occurrence retains its declared output name, ordered address
@@ -126,7 +128,7 @@ private theorem evaluate_subtree {A : Type} (v : A → Source)
   | nil =>
       simp only [subtree, Option.some.injEq] at h
       subst t
-      rfl
+      simp only [subtree, evaluate, FreeMagma.lift_of, Sum.elim_inr]
   | cons b q ih =>
       cases t with
       | of a => cases h
@@ -173,10 +175,10 @@ private theorem comparison_evaluate (A B : Term (Occurrence X))
               cases b with
               | inl d => cases he
               | inr u => exact hv [] o u rfl rfl
-      | mul l r => cases he
+      | mul l r => cases a <;> cases he
   | mul l r hl hr =>
       cases B with
-      | of b => cases he
+      | of b => cases b <;> cases he
       | mul u w =>
           have parts : erase l = erase u ∧ erase r = erase w := by
             injection he with h1 h2; exact ⟨h1,h2⟩
@@ -184,10 +186,22 @@ private theorem comparison_evaluate (A B : Term (Occurrence X))
             (hl u parts.1 (fun q a b ha hb => hv (false :: q) a b ha hb))
             (hr w parts.2 (fun q a b ha hb => hv (true :: q) a b ha hb))
 
+private theorem unified_comparison (p : Presentation X) (C : Equations X)
+    (S : SubstInfo) (hok : (encodeEquations p C).unify SubstInfo.empty = .ok S)
+    (c : Term X × Term X) (hc : c ∈ C) :
+    erase (comparisonTerm (action p S) c.1) =
+      erase (comparisonTerm (action p S) c.2) := by
+  have native := Constraints.unify_sound (encodeEquations p C) SubstInfo.empty S hok
+    (encode p c.1, encode p c.2) (List.mem_map.mpr ⟨c,hc,rfl⟩)
+  have eqs : substitute (action p S) c.1 = substitute (action p S) c.2 := by
+    apply encode_injective p
+    simpa only [action_substitute_encode p C S hok] using native
+  rw [erase_comparison, erase_comparison, eqs]
+
 /-- In the actual total MGU of any finite free constructor problem, any two
 occurrences of the same residual sort are connected by positive comparisons.
 There is no assertion about an empty, unused residual sort. -/
-theorem mgu_occurrence_connected (p : Presentation X) (C : Equations X)
+private theorem same_sort_connected (p : Presentation X) (C : Equations X)
     (S : SubstInfo) (hok : (encodeEquations p C).unify SubstInfo.empty = .ok S)
     (a b : Occurrence X) (ha : IsOccurrence (action p S) a)
     (hb : IsOccurrence (action p S) b) (hsort : a.2.2 = b.2.2) :
@@ -208,15 +222,8 @@ theorem mgu_occurrence_connected (p : Presentation X) (C : Equations X)
   let v : X → Source := fun x => evaluate color (decorate s x)
   have sat : Sol C v := by
     intro c hc
-    have native := Constraints.unify_sound (encodeEquations p C) SubstInfo.empty S hok
-      (encode p c.1, encode p c.2) (List.mem_map.mpr ⟨c,hc,rfl⟩)
-    have eqs : substitute s c.1 = substitute s c.2 := by
-      apply encode_injective p
-      simpa only [s, action_substitute_encode p C S hok] using native
-    have erased : erase (comparisonTerm s c.1) = erase (comparisonTerm s c.2) := by
-      rw [erase_comparison, erase_comparison, eqs]
     have same := comparison_evaluate (comparisonTerm s c.1) (comparisonTerm s c.2)
-      color erased (by
+      color (unified_comparison p C S hok c hc) (by
         intro q o u ho hu
         apply edge_color
         exact List.mem_flatMap.mpr ⟨c,hc,comparison_edge_at _ _ q o u ho hu⟩)
@@ -224,7 +231,7 @@ theorem mgu_occurrence_connected (p : Presentation X) (C : Equations X)
   have factor : ∀ x, evaluate v (s x) = v x := by
     intro x
     have eq := congrFun (Ext_restriction p C S hok v sat) x
-    simpa only [Ext, sigma, evaluate_restrictTerm, s] using eq
+    simpa only [NativeGroundSolutionSpace.Ext, sigma, evaluate_restrictTerm, s] using eq
   have at_color (o : Occurrence X) (ho : IsOccurrence s o) : color o = v o.2.2 := by
     have hd : subtree (decorate s o.1) o.2.1 = some (.of (.inr o)) := by
       simpa only [decorate, List.nil_append] using
@@ -238,7 +245,151 @@ theorem mgu_occurrence_connected (p : Presentation X) (C : Equations X)
     simp only [color, show Connected C s a a from .refl _, decide_true]
   rw [ca] at colors
   have truth : decide (Connected C s a b) = true := by
-    exact (FreeMagma.of.inj colors.symm)
+    injection colors.symm
   exact of_decide_eq_true truth
+
+private theorem subtree_var_mem {A : Type} (t : Term A) (q : List Bool) (y : A)
+    (h : subtree t q = some (.of (.inr y))) : y ∈ termVars t := by
+  induction q generalizing t with
+  | nil =>
+      simp only [subtree, Option.some.injEq] at h
+      subst t
+      exact List.mem_singleton_self _
+  | cons b q ih =>
+      cases t with
+      | of a => cases h
+      | mul l r =>
+          cases b
+          · exact List.mem_append_left _ (ih l h)
+          · exact List.mem_append_right _ (ih r h)
+
+private theorem decorated_vars (x : X) (p : List Bool) (t : Term X)
+    (o : Occurrence X) (ho : o ∈ termVars (decorateFrom x p t)) :
+    ∃ y q, o = (x,p ++ q,y) ∧ subtree t q = some (.of (.inr y)) := by
+  induction t generalizing p with
+  | of a =>
+      cases a with
+      | inl b => cases ho
+      | inr y =>
+          refine ⟨y, [], ?_, rfl⟩
+          simpa only [decorateFrom, termVars, List.mem_singleton, List.append_nil] using ho
+  | mul l r hl hr =>
+      rcases List.mem_append.mp ho with ho | ho
+      · obtain ⟨y,q,eq,hq⟩ := hl (p ++ [false]) ho
+        refine ⟨y,false :: q,?_,hq⟩
+        simpa only [List.append_assoc, List.cons_append, List.nil_append] using eq
+      · obtain ⟨y,q,eq,hq⟩ := hr (p ++ [true]) ho
+        refine ⟨y,true :: q,?_,hq⟩
+        simpa only [List.append_assoc, List.cons_append, List.nil_append] using eq
+
+private theorem vertex_spec (p : Presentation X) (s : X → Term X) (o : Occurrence X) :
+    o ∈ occurrenceVertices p s ↔ IsOccurrence s o := by
+  constructor
+  · intro h
+    obtain ⟨x,_,ho⟩ := List.mem_flatMap.mp h
+    obtain ⟨y,q,rfl,hq⟩ := decorated_vars x [] (s x) o ho
+    simpa only [IsOccurrence, List.nil_append] using hq
+  · intro h
+    refine List.mem_flatMap.mpr ⟨o.1,p.complete o.1,?_⟩
+    apply subtree_var_mem (decorate s o.1) o.2.1 o
+    simpa only [decorate, List.nil_append] using
+      decorate_subtree o.1 [] o.2.1 (s o.1) o.2.2 h
+
+private theorem comparison_vars_valid (s : X → Term X) (t : Term X)
+    (o : Occurrence X) (h : o ∈ termVars (comparisonTerm s t)) : IsOccurrence s o := by
+  induction t with
+  | of a =>
+      cases a with
+      | inl b => cases h
+      | inr x =>
+          obtain ⟨y,q,rfl,hq⟩ := decorated_vars x [] (s x) o h
+          simpa only [IsOccurrence, List.nil_append] using hq
+  | mul l r hl hr =>
+      rcases List.mem_append.mp h with h | h
+      · exact hl h
+      · exact hr h
+
+private theorem erase_subtree (t : Term (Occurrence X)) (q : List Bool) (o : Occurrence X)
+    (h : subtree t q = some (.of (.inr o))) :
+    subtree (erase t) q = some (.of (.inr o.2.2)) := by
+  induction q generalizing t with
+  | nil =>
+      simp only [subtree, Option.some.injEq] at h
+      subst t
+      rfl
+  | cons b q ih =>
+      cases t with
+      | of a => cases h
+      | mul l r => cases b <;> exact ih _ h
+
+private theorem edge_position (A B : Term (Occurrence X)) (a b : Occurrence X)
+    (h : (a,b) ∈ comparisonEdges A B) :
+    ∃ q, subtree A q = some (.of (.inr a)) ∧ subtree B q = some (.of (.inr b)) := by
+  induction A generalizing B with
+  | of c =>
+      cases c with
+      | inl c => cases B <;> simp [comparisonEdges] at h
+      | inr o =>
+          cases B with
+          | of d =>
+              cases d with
+              | inl d => cases h
+              | inr u =>
+                  simp only [comparisonEdges, List.mem_singleton, Prod.mk.injEq] at h
+                  rcases h with ⟨rfl,rfl⟩
+                  exact ⟨[],rfl,rfl⟩
+          | mul l r => cases h
+  | mul l r hl hr =>
+      cases B with
+      | of d => cases d <;> cases h
+      | mul u v =>
+          rcases List.mem_append.mp h with h | h
+          · obtain ⟨q,ha,hb⟩ := hl u h
+            exact ⟨false :: q,ha,hb⟩
+          · obtain ⟨q,ha,hb⟩ := hr v h
+            exact ⟨true :: q,ha,hb⟩
+
+private theorem edge_spec (p : Presentation X) (C : Equations X) (S : SubstInfo)
+    (hok : (encodeEquations p C).unify SubstInfo.empty = .ok S)
+    (a b : Occurrence X) (h : (a,b) ∈ occurrenceEdges C (action p S)) :
+    IsOccurrence (action p S) a ∧ IsOccurrence (action p S) b ∧ a.2.2 = b.2.2 := by
+  obtain ⟨c,hc,edge⟩ := List.mem_flatMap.mp h
+  obtain ⟨q,ha,hb⟩ := edge_position _ _ a b edge
+  refine ⟨comparison_vars_valid _ _ a (subtree_var_mem _ q a ha),
+    comparison_vars_valid _ _ b (subtree_var_mem _ q b hb), ?_⟩
+  have h1 := erase_subtree _ q a ha
+  have h2 := erase_subtree _ q b hb
+  rw [unified_comparison p C S hok c hc] at h1
+  have same := Option.some.inj (h1.symm.trans h2)
+  injection same with same
+  exact Sum.inr.inj same
+
+/-- The computed finite graph contains exactly all residual occurrences in
+the total MGU outputs. Its edges join valid occurrences of the same sort,
+and two valid vertices are connected exactly when their sorts agree. -/
+theorem mgu_occurrence_graph_exact (p : Presentation X) (C : Equations X)
+    (S : SubstInfo) (hok : (encodeEquations p C).unify SubstInfo.empty = .ok S) :
+    (∀ o, o ∈ occurrenceVertices p (action p S) ↔ IsOccurrence (action p S) o) ∧
+    (∀ a b, (a,b) ∈ occurrenceEdges C (action p S) →
+      a ∈ occurrenceVertices p (action p S) ∧ b ∈ occurrenceVertices p (action p S) ∧
+        a.2.2 = b.2.2) ∧
+    (∀ a b, a ∈ occurrenceVertices p (action p S) →
+      b ∈ occurrenceVertices p (action p S) →
+      (Connected C (action p S) a b ↔ a.2.2 = b.2.2)) := by
+  refine ⟨vertex_spec p _, ?_, ?_⟩
+  · intro a b edge
+    have h := edge_spec p C S hok a b edge
+    exact ⟨(vertex_spec p _ a).mpr h.1, (vertex_spec p _ b).mpr h.2.1, h.2.2⟩
+  · intro a b ha hb
+    constructor
+    · intro h
+      clear ha hb
+      induction h with
+      | rel a b edge => exact (edge_spec p C S hok a b edge).2.2
+      | refl a => rfl
+      | symm a b _ ih => exact ih.symm
+      | trans a b c _ _ ih1 ih2 => exact ih1.trans ih2
+    · exact same_sort_connected p C S hok a b
+        ((vertex_spec p _ a).mp ha) ((vertex_spec p _ b).mp hb)
 
 end D5.S3.Arith.FibonacciAtomic.Observer.NativePositiveImageCover
