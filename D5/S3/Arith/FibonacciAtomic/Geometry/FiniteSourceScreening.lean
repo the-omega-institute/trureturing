@@ -440,4 +440,143 @@ def screened_inverse (n : ℕ) (lam : ℝ) (hlam : 0 < lam) : H →L[ℝ] H :=
   unitInverse (ContinuousLinearMap.id ℝ H + ((N n : ℝ) * lam) • Sigma n)
     (screened_unit n lam hlam)
 
+private theorem inverse_apply (E : Type*) [NormedAddCommGroup E]
+    [InnerProductSpace ℝ E] [CompleteSpace E]
+    (A : E →L[ℝ] E) (hA : IsUnit A) (x : E) :
+    A (unitInverse A hA x) = x := by
+  letI := hA.invertible
+  change (A * ⅟A) x = x
+  rw [mul_invOf_self]
+  rfl
+
+private theorem inverse_cancel (E : Type*) [NormedAddCommGroup E]
+    [InnerProductSpace ℝ E] [CompleteSpace E]
+    (A : E →L[ℝ] E) (hA : IsUnit A) (x : E) :
+    unitInverse A hA (A x) = x := by
+  letI := hA.invertible
+  change (⅟A * A) x = x
+  rw [invOf_mul_self]
+  rfl
+
+private theorem reconstruction_energy (n : ℕ) (c : ℝ) (z : H) (g : Potential n) :
+    (N n : ℝ) * inner ℝ (c • one n - FiniteSourceHardy.J n z)
+      (L n (nodeLp n g)) = inner ℝ z (gradient n g) := by
+  rw [← nodeLp_reconstruct, L_nodeLp, (actual_reconstruction_energy n).2.2.1]
+  calc
+    inner ℝ (gradient n (reconstruct n c z)) (gradient n g) =
+        inner ℝ (gradient n g) (gradient n (reconstruct n c z)) := real_inner_comm _ _
+    _ = inner ℝ (gradient n g) z := by
+      rw [inner_gradient, inner_gradient]
+      apply Finset.sum_congr rfl
+      intro p hp
+      rw [gradient_apply, dif_pos hp]
+      dsimp [reconstruct]
+      rw [value_parent]
+      ring
+    _ = inner ℝ z (gradient n g) := real_inner_comm _ _
+
+private theorem L_symmetric (n : ℕ) (f g : NodeL2 n) :
+    inner ℝ (L n f) g = inner ℝ f (L n g) := by
+  let a := (nodeEquiv n).symm f
+  let b := (nodeEquiv n).symm g
+  have ha : nodeLp n a = f := (nodeEquiv n).apply_symm_apply f
+  have hb : nodeLp n b = g := (nodeEquiv n).apply_symm_apply g
+  have he := (actual_reconstruction_energy n).2.2.1 a b
+  have he' := (actual_reconstruction_energy n).2.2.1 b a
+  rw [← L_nodeLp, ha, hb] at he he'
+  apply mul_left_cancel₀ (show (N n : ℝ) ≠ 0 by
+    exact_mod_cast (FiniteSourceMass.N_pos n).ne')
+  calc
+    (N n : ℝ) * inner ℝ (L n f) g =
+        (N n : ℝ) * inner ℝ g (L n f) := by rw [real_inner_comm]
+    _ = inner ℝ (gradient n b) (gradient n a) := he'
+    _ = inner ℝ (gradient n a) (gradient n b) := real_inner_comm _ _
+    _ = (N n : ℝ) * inner ℝ f (L n g) := he.symm
+
+/-- The exact centered counting response for every original finite source. -/
+theorem finite_source_screening (n : ℕ) (lam : ℝ) (hlam : 0 < lam) :
+    root_response n lam hlam - 1 / ((N n : ℝ) * lam) =
+      inner ℝ (v n) (screened_inverse n lam hlam (v n)) := by
+  let τ : ℝ := (N n : ℝ) * lam
+  have hτ : τ ≠ 0 := mul_ne_zero (by exact_mod_cast (FiniteSourceMass.N_pos n).ne') hlam.ne'
+  let z : H := screened_inverse n lam hlam (v n)
+  let c : ℝ := τ⁻¹ + inner ℝ (v n) z
+  let f : NodeL2 n := c • one n - FiniteSourceHardy.J n z
+  have hAz : z + τ • Sigma n z = v n := by
+    exact inverse_apply H _ (screened_unit n lam hlam) (v n)
+  have hτc : τ * c = 1 + τ * inner ℝ (v n) z := by
+    dsimp [c]
+    rw [mul_add, mul_inv_cancel₀ hτ]
+  have hz : z = τ • (FiniteSourceHardy.J n).adjoint f := by
+    calc
+      z = v n - τ • Sigma n z := eq_sub_of_add_eq hAz
+      _ = τ • (FiniteSourceHardy.J n).adjoint f := by
+        dsimp [f]
+        simp only [map_sub, map_smul, FiniteSourceCovariance.Sigma,
+          ContinuousLinearMap.sub_apply, rankOne_apply, smul_sub, smul_smul]
+        change v n - (τ • B n z - (τ * inner ℝ (v n) z) • v n) =
+          (τ * c) • v n - τ • B n z
+        rw [hτc, add_smul, one_smul]
+        abel
+  have ho : inner ℝ (one n) (one n) = 1 := by
+    rw [real_inner_self_eq_norm_sq, FiniteSourceCovariance.one_norm]
+    norm_num
+  have hmean : inner ℝ f (one n) = τ⁻¹ := by
+    rw [real_inner_comm]
+    dsimp [f]
+    rw [inner_sub_right, real_inner_smul_right, ho, mul_one]
+    have hv : inner ℝ (one n) (FiniteSourceHardy.J n z) = inner ℝ (v n) z :=
+      (ContinuousLinearMap.adjoint_inner_left _ _ _).symm
+    rw [hv]
+    dsimp [c]
+    ring
+  have hweak (g : Potential n) :
+      (N n : ℝ) * inner ℝ f (L n (nodeLp n g)) +
+        τ * inner ℝ f (nodeLp n g) = g (rootNode n) := by
+    have hrec := (actual_reconstruction_energy n).1 g
+    have hdec : nodeLp n g =
+        g (rootNode n) • one n - FiniteSourceHardy.J n (gradient n g) := by
+      exact (congrArg (nodeLp n) hrec).symm.trans (nodeLp_reconstruct n _ _)
+    have he := reconstruction_energy n c z g
+    change (N n : ℝ) * inner ℝ f (L n (nodeLp n g)) = _ at he
+    have hedge : inner ℝ z (gradient n g) =
+        τ * inner ℝ f (FiniteSourceHardy.J n (gradient n g)) := by
+      rw [hz, real_inner_smul_left, ContinuousLinearMap.adjoint_inner_left]
+    rw [he, hdec, inner_sub_right, real_inner_smul_right, hmean, hedge]
+    field_simp [hτ]
+    <;> ring
+  have hsol : (L n + lam • (1 : NodeL2 n →L[ℝ] NodeL2 n)) f = source n := by
+    apply ext_inner_right ℝ
+    intro u
+    let g := (nodeEquiv n).symm u
+    have hg : nodeLp n g = u := (nodeEquiv n).apply_symm_apply u
+    have hw := hweak g
+    rw [hg] at hw
+    have hs : (N n : ℝ) * inner ℝ (source n) u = g (rootNode n) := by
+      rw [← hg]
+      unfold source
+      rw [nodeLp_inner]
+      simp only [ite_mul, one_mul, zero_mul, Finset.sum_ite_eq',
+        Finset.mem_univ, ite_true]
+      rw [← mul_assoc, mul_inv_cancel₀ (by
+        exact_mod_cast (FiniteSourceMass.N_pos n).ne'), one_mul]
+    apply mul_left_cancel₀ (show (N n : ℝ) ≠ 0 by
+      exact_mod_cast (FiniteSourceMass.N_pos n).ne')
+    simp only [ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply,
+      ContinuousLinearMap.one_apply, inner_add_left, real_inner_smul_left,
+      L_symmetric]
+    dsimp [τ] at hw
+    nlinarith [hs]
+  have hfinv : unitInverse (L n + lam • (1 : NodeL2 n →L[ℝ] NodeL2 n))
+      (laplacian_unit n lam hlam) (source n) = f := by
+    rw [← hsol]
+    exact inverse_cancel _ _ _ _
+  unfold root_response
+  rw [hfinv]
+  change root n (c • one n - FiniteSourceHardy.J n z) - 1 / τ = inner ℝ (v n) z
+  rw [(actual_screening_bridge n).2.2.1 c z]
+  dsimp [c]
+  rw [one_div]
+  ring
+
 end D5.S3.Arith.FibonacciAtomic.Geometry.FiniteSourceScreening
