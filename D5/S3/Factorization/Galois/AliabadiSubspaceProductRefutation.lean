@@ -70,7 +70,7 @@ private theorem polynomial_irreducible : Irreducible polynomial := by
   have hf : Irreducible f := he.irreducible hp hm.isPrimitive (by simp only [f, natDegree_X_pow_sub_C]; decide)
   change Irreducible (X ^ 7 - C (2 : ℚ))
   simpa only [f, Polynomial.map_sub, Polynomial.map_pow, Polynomial.map_X,
-    Polynomial.map_C, Int.castRingHom_apply, Int.cast_ofNat] using
+    Polynomial.map_C, map_ofNat, Polynomial.map_ofNat] using
     (Polynomial.IsPrimitive.Int.irreducible_iff_irreducible_map_cast hm.isPrimitive).mp hf
 
 private instance polynomialFact : Fact (Irreducible polynomial) := ⟨polynomial_irreducible⟩
