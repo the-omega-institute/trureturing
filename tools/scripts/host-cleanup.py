@@ -166,6 +166,8 @@ class RefRecovery:
                         remaining -= len(chunk)
                     if blobs.read(1) != b"\n" or digest.hexdigest().encode("ascii") != oid:
                         missing.add(oid)
+        if preservation.git(self.repository, "for-each-ref", "--format=%(refname) %(objectname)").stdout != refs:
+            raise ValueError("recovery_refs_changed")
         return missing
 
 

@@ -302,6 +302,24 @@ class HostReclaimTests(unittest.TestCase):
         self.assertEqual("removed", result["action"], result)
         self.assertFalse(target.exists())
 
+    def test_remnant_recovery_ref_disappearing_during_final_read_is_retained(self):
+        target = self.remnant()
+        run = subprocess.run
+        reads = 0
+        def raced(arguments, **kwargs):
+            nonlocal reads
+            result = run(arguments, **kwargs)
+            if arguments[-2:] == ["cat-file", "--batch"]:
+                reads += 1
+                if reads == 2:
+                    self.git(self.main, "reset", "--hard", "HEAD~1")
+            return result
+        with patch.object(cleanup.subprocess, "run", side_effect=raced):
+            result = self.clean_remnant(target)
+        self.assertEqual(2, reads)
+        self.assertEqual("kept", result["action"], result)
+        self.assertTrue(target.exists())
+
     def test_remnant_sweep_uses_main_inventory_and_reports_without_verbose(self):
         target = self.remnant()
         clone = self.root / (self.main.name + "-clone")
