@@ -26,7 +26,7 @@ internal sealed class BinghamCaterpillarPs3FamilyDocument : IScribeDocumentDefin
             Node("alpha", "The first family", "alpha", FamilyFormula("alpha", 5, 4),
                 "The tuple denotes the Fin 5 indexed function with the displayed entries, all in the positive naturals.", AssessedProvenance.FromLiterature(Source)),
             Node("beta", "The second family", "beta", FamilyFormula("beta", 4, 5),
-                "The repeated internal part is the same arbitrary positive natural j in both positions. The fixed end blocks 5,4,3 are essential to the stated algebraic identity; arbitrary replacements are not asserted.", AssessedProvenance.FromLiterature(Source)),
+                "The repeated internal part is the same arbitrary positive natural j in both positions. The proof uses the fixed end blocks 5,4,3 in the stated algebraic identity.", AssessedProvenance.FromLiterature(Source)),
             Node("claim", "Remark 3.11, first question", "claim", Iff(F.Id("claim"), P(ClaimBody())),
                 "The domain is all positive integers, including j=1. Equality is formal polynomial equality in Z[X], with an indeterminate X. The second question, whether these are the only such pairs, is outside this statement.", AssessedProvenance.FromLiterature(Source)),
             Describe.Lean(DescribeId.Create("bingham-family-result"), DeclarationHandle.Create(Prefix + "result"),
