@@ -151,7 +151,7 @@ private theorem tester_to_povm_compatible {y x j k : Type}
       partialTraceRight_smul, partialTraceRight_smul,
       partialTraceRight_kronecker, hρ.2, one_smul]
 
-private theorem povm_tensor_identity {y j : Type} [Fintype y] [DecidableEq y]
+private theorem povm_tensor_identity {y j : Type} [Finite y] [DecidableEq y]
     [Fintype j] (r : ℕ) (m : j → Matrix y y ℂ) (hm : (∀ a, (m a).PosSemidef) ∧ ∑ a, m a = 1) :
     (∀ a, (Matrix.kronecker (m a) (1 : Matrix (Fin r) (Fin r) ℂ)).PosSemidef) ∧
       ∑ a, Matrix.kronecker (m a) (1 : Matrix (Fin r) (Fin r) ℂ) = 1 := by
@@ -175,15 +175,17 @@ private theorem povm_to_ancilla_compatible {y j k : Type} [Fintype y] [Decidable
   · intro a
     rw [kronecker_sum, hgm a]
     change ((1 - lam) • m a + lam • u a) ⊗ₖ (1 : Matrix (Fin r) (Fin r) ℂ) =
-      (1 - lam) • (m a ⊗ₖ (1 : Matrix (Fin r) (Fin r) ℂ)) + lam • (u a ⊗ₖ (1 : Matrix (Fin r) (Fin r) ℂ))
+      (1 - lam) • (m a ⊗ₖ (1 : Matrix (Fin r) (Fin r) ℂ)) +
+        lam • (u a ⊗ₖ (1 : Matrix (Fin r) (Fin r) ℂ))
     rw [Matrix.add_kronecker, Matrix.smul_kronecker, Matrix.smul_kronecker]
   · intro b
     rw [kronecker_sum, hgn b]
     change ((1 - lam) • n b + lam • v b) ⊗ₖ (1 : Matrix (Fin r) (Fin r) ℂ) =
-      (1 - lam) • (n b ⊗ₖ (1 : Matrix (Fin r) (Fin r) ℂ)) + lam • (v b ⊗ₖ (1 : Matrix (Fin r) (Fin r) ℂ))
+      (1 - lam) • (n b ⊗ₖ (1 : Matrix (Fin r) (Fin r) ℂ)) +
+        lam • (v b ⊗ₖ (1 : Matrix (Fin r) (Fin r) ℂ))
     rw [Matrix.add_kronecker, Matrix.smul_kronecker, Matrix.smul_kronecker]
 
-private theorem compression_povm {y j : Type} [Fintype y] [DecidableEq y]
+private theorem compression_povm {y j : Type} [DecidableEq y]
     [Fintype j] (r : ℕ) (hr : 0 < r)
     (m : j → Matrix (y × Fin r) (y × Fin r) ℂ) (hm : (∀ a, (m a).PosSemidef) ∧ ∑ a, m a = 1) :
     (∀ a, ((m a).submatrix (fun b => (b, ⟨0, hr⟩))
