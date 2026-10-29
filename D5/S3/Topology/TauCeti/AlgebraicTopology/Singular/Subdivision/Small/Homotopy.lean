@@ -168,11 +168,14 @@ def smallSingularSubdivisionHomotopy : Homotopy (𝟙 _) (smallSingularSubdivisi
 @[simp]
 lemma smallSingularSubdivisionHomotopy_hom (n : ℕ) :
     (smallSingularSubdivisionHomotopy R U).hom n (n + 1) = smallSingularPrismX R U n :=
-  Homotopy.mkChainComplex_hom_succ
-    (e := (𝟙 _)) (h := smallSingularPrismX R U)
-    (comm_zero := by simp)
-    (comm_succ := fun m ↦ by
-      simp [smallSingularPrismX_boundary_add_boundary_smallSingularPrismX]) n
+  by
+    simpa [smallSingularSubdivisionHomotopy, Homotopy.equivSubZero] using
+      (Homotopy.mkChainComplex_hom_succ
+        (e := (𝟙 _ - smallSingularSubdivisionChainMap R U))
+        (h := smallSingularPrismX R U)
+        (comm_zero := by simp)
+        (comm_succ := fun m ↦
+          by simp [smallSingularPrismX_boundary_add_boundary_smallSingularPrismX]) n)
 
 variable {κ : Type*} {Y : TopCat.{w}} (V : κ → Set Y)
   (f : X ⟶ Y) (r : ι → κ) (hf : ∀ i, Set.MapsTo f (U i) (V (r i)))
