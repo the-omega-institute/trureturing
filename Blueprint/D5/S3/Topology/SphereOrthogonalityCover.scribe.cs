@@ -11,6 +11,13 @@ internal sealed class SphereOrthogonalityCoverDocument : IScribeDocumentDefiniti
         "Relatively open orthogonality-free covers of the real two-sphere need at least six sets.",
         H("Open orthogonality-free sphere covers"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("orthogonality-free"),
+                DeclarationHandle.Create("D5/S3/Topology/SphereOrthogonalityCover.OrthogonalityFree"),
+                H("Orthogonality-free sets"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("For an arbitrary real inner product space E and a subset U of its unit sphere, OrthogonalityFree U means that every two points x and y in U have nonzero real inner product. The topology used for openness is the sphere's relative topology."))),
+                DescribeRole.Definition),
             Entry("component-inner-pos", "component_inner_pos", "Components are acute",
                 "In a real inner product space, every actual connected component of an orthogonality-free subset of the unit sphere has strictly positive inner products between all its points.",
                 "Fix one point x of the component. The continuous function taking y to its inner product with x never vanishes there and is positive at x. Connectedness forces it to remain positive throughout the component."),
