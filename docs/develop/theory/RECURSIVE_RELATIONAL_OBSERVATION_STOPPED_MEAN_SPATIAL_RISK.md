@@ -422,13 +422,15 @@ The shared-$Q$ posterior, parity replay, and all-marker stopping identities
 are the PG27.1--27.3 and PG27.14--27.19 results in [Process Geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md).
 The terminal risks and their lawful cap attainers are supplied by [Finite-query
 spatial recovery](RECURSIVE_RELATIONAL_OBSERVATION_FINITE_QUERY_SPATIAL_RECOVERY.md),
-at immutable supplier revision `5234b4de599f6ed513dab4bbe2f65b5c743f0115`, especially §§2--4.\nThe stopping-tail interface is also exposed by
+at immutable supplier revision `5234b4de599f6ed513dab4bbe2f65b5c743f0115`, especially §§2--4.
+The stopping-tail interface is also exposed by
 `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.lean` and
 its Blueprint source. The mixed-mean suppliers in that directory are
 BeneficialMarkerDeflection.lean and SingleDeflectionOptimalController.lean.
 The cylinder and parity helpers, including private statements, in
 FiniteAtomLinearRealization.lean and RawFiniteAtomLinearRealization.lean
-supply the same fixed-source interfaces. These are repo-derived suppliers;\nthis companion adds
+supply the same fixed-source interfaces. These are repo-derived suppliers;
+this companion adds
 the common finite-horizon cost/risk attainment and the original-seed
 replacement statement.
 
