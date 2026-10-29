@@ -53,8 +53,8 @@ internal sealed class NativePositiveImageCoverDocument : IScribeDocumentDefiniti
     private static Formula V(string n) => F.Id(n);
     private static Formula Call(string n, params Formula[] args) => new Formula.Apply(Seq(Operatorname, Grp(V(n))), [.. args]);
     private static Formula EqOf(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
-    private static Formula And(Formula a, Formula b) => Seq(Open, a, Sp, Land, Sp, b, Close);
-    private static Formula Imp(Formula a, Formula b) => Seq(Open, a, Sp, Implies, Sp, b, Close);
-    private static Formula IffOf(Formula a, Formula b) => Seq(Open, a, Sp, Iff, Sp, b, Close);
+    private static Formula And(Formula a, Formula b) => Seq(Open, a, Close, Sp, Land, Sp, Open, b, Close);
+    private static Formula Imp(Formula a, Formula b) => Seq(Open, a, Close, Sp, Implies, Sp, Open, b, Close);
+    private static Formula IffOf(Formula a, Formula b) => Seq(Open, a, Close, Sp, Iff, Sp, Open, b, Close);
     private static Formula All(string n, Formula t, Formula b) => Seq(Forall, Sp, V(n), Colon, Sp, t, Comma, Sp, Open, b, Close);
 }

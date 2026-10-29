@@ -14,7 +14,7 @@ internal sealed class NativePositiveBranchReductionDocument : IScribeDocumentDef
             Paragraph(Text("X is the entire declared finite family of names, represented by a presentation p. An Equation is a primitive definition z=T(n), a native shift definition z=rho to power a of x, an ordered pair definition z=pair(x,y), or an equality x=y. Every occurrence of a name refers to the same original source value. Unused declared names remain in X. Source consists of arbitrary finite ordered Boolean trees, and rho is the actual native substitution, not a free unary symbol. In the display, canonicalCodes(v)(x)=encode(v(x)), canonicalShapes(v)(x)=shape(encode(v(x))), NativeHolds is Equation.Holds, and BranchHolds is BranchEquation.Holds.")),
             Entry("branches", "Executable finite constructor choices",
                 "choices retains primitive, shift and equality equations. For each pair definition it offers exactly an ordinary case and a collapse case. branches forms their finite ordered product over the whole input list, retaining repeated constraints. An ordinary case requires the output code to be the pair of its input codes. A collapse case requires input ranks r+1 and r and output rank r+2 for some unrestricted natural r. That rank is not enumerated or bounded. Every code in the theorem is the actual canonical encode of the same original valuation."),
-            Entry("shapeEquations", "Erase ranks only after selecting cases",
+            Entry("shape", "Erase ranks only after selecting cases",
                 "shape replaces each primitive rank by one fixed free primitive leaf and preserves ordered pairs. Primitive definitions and collapse cases become primitive shape equalities. Shift definitions become equalities of shapes. An ordinary pair definition becomes a free binary constructor equation. No interpreted native power is sent to the free occurs check. The exact canonical branch equations are retained alongside these weaker free-shape equations."),
             Describe.Lean(DescribeId.Create("native-canonical-branch-shape-reduction"),
                 DeclarationHandle.Create(Prefix + "native_branch_reduction"),
@@ -45,7 +45,7 @@ internal sealed class NativePositiveBranchReductionDocument : IScribeDocumentDef
         var components = All("a", Call("Occurrence", V("X")), All("b", Call("Occurrence", V("X")),
             Imp(Call("ListMem", V("a"), vertices), Imp(Call("ListMem", V("b"), vertices),
                 IffOf(Call("Connected", c, s, V("a"), V("b")),
-                    EqOf(Call("sort", V("a")), Call("sort", V("b")))))));
+                    EqOf(Call("sort", V("a")), Call("sort", V("b"))))))));
         var unifier = Some("S", V("SubstInfo"), And(
             EqOf(Call("unify", Call("encodeEquations", V("p"), c), V("empty")), Call("ok", V("S"))),
             And(factors, components)));
@@ -60,9 +60,9 @@ internal sealed class NativePositiveBranchReductionDocument : IScribeDocumentDef
     private static Formula Call(string n, params Formula[] args) => new Formula.Apply(Seq(Operatorname, Grp(V(n))), [.. args]);
     private static Formula Arr(Formula a, Formula b) => Seq(a, Sp, To, Sp, b);
     private static Formula EqOf(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
-    private static Formula And(Formula a, Formula b) => Seq(Open, a, Sp, Land, Sp, b, Close);
-    private static Formula Imp(Formula a, Formula b) => Seq(Open, a, Sp, Implies, Sp, b, Close);
-    private static Formula IffOf(Formula a, Formula b) => Seq(Open, a, Sp, Iff, Sp, b, Close);
+    private static Formula And(Formula a, Formula b) => Seq(Open, a, Close, Sp, Land, Sp, Open, b, Close);
+    private static Formula Imp(Formula a, Formula b) => Seq(Open, a, Close, Sp, Implies, Sp, Open, b, Close);
+    private static Formula IffOf(Formula a, Formula b) => Seq(Open, a, Close, Sp, Iff, Sp, Open, b, Close);
     private static Formula All(string n, Formula t, Formula b) => Seq(Forall, Sp, V(n), Colon, Sp, t, Comma, Sp, Open, b, Close);
     private static Formula Some(string n, Formula t, Formula b) => Seq(Exists, Sp, V(n), Colon, Sp, t, Comma, Sp, Open, b, Close);
 }
