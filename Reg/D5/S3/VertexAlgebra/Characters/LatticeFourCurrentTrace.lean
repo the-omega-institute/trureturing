@@ -85,6 +85,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   exact one_ne_zero (add_left_cancel (hb.trans (add_zero _).symm))
 
 private theorem dependence : ObservationalDependence signature actual := by
+  classical
   intro role
   refine ⟨⟨probe, probePositive, fun _ => 0⟩, (fun _ => 0), ![0, 1, 0, 1], ?_⟩
   change actualFourCurrentCycleTrace probe probePositive (fun _ => 0) (fun _ => 0) ≠

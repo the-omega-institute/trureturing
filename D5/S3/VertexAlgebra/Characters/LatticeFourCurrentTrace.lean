@@ -132,11 +132,6 @@ def boundedFourCurrentCoefficient (D : LatticeData)
           ∑ k : edgeParam M → Fin (min4 n + 1),
             ∑ t : Fin (min4 n + 1), chargeWeight D i n β M ell ε k t
 
-/-- There are exactly ten labeled partial matchings; in particular the empty assignment is unique. -/
-private theorem pm4_card : Fintype.card PM4 = 10 := by decide
-
-private theorem pm4_empty_edges : PM4.empty.edges = ∅ := rfl
-
 private theorem pm4_empty_unpaired : PM4.empty.unpaired = Finset.univ := by
   classical
   ext j
@@ -612,29 +607,6 @@ private theorem matching_parameter_bounds (n : Four → ℕ) (Q t : ℕ) (M : PM
   exact ⟨by omega,
     le_min (le_min (hwind 0) (hwind 1)) (le_min (hwind 2) (hwind 3))⟩
 
-private theorem bounded_matching_assignment (D : LatticeData)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
-    (n : Four → ℕ) (β : Charge D) (t : ℕ) (M : PM4)
-    (ell : edgeParam M → ℕ) (ε : edgeParam M → Fin 2) (k : edgeParam M → ℕ)
-    (hpos : ∀ e, 0 < ell e)
-    (heq : ∀ j, n j = (chargeEnergy D β).toNat + t + matchingShift M ell ε k j) :
-    β ∈ positiveChargeCutoff D hD (min4 n : ℤ) ∧
-      ∃ (ell' : edgeParam M → Fin (max4 n + 1))
-        (k' : edgeParam M → Fin (min4 n + 1)) (t' : Fin (min4 n + 1)),
-        (∀ e, (ell' e).1 = ell e) ∧ (∀ e, (k' e).1 = k e) ∧ t'.1 = t ∧
-        (∀ j, n j = (chargeEnergy D β).toNat + t'.1 +
-          gradeShift D n β M ell' ε k' j) := by
-  have hb := matching_parameter_bounds n (chargeEnergy D β).toNat t M ell ε k hpos heq
-  have hq := chargeEnergy_nonneg D hD β
-  have hcast := Int.toNat_of_nonneg hq
-  have hQ : chargeEnergy D β ≤ (min4 n : ℤ) := by omega
-  constructor
-  · simpa [positiveChargeCutoff] using hQ
-  · refine ⟨(fun e => ⟨ell e, Nat.lt_succ_of_le (hb.2.2 e).1⟩),
-      (fun e => ⟨k e, Nat.lt_succ_of_le (hb.2.2 e).2⟩),
-      ⟨t, Nat.lt_succ_of_le hb.2.1⟩, (fun _ => rfl), (fun _ => rfl), rfl, ?_⟩
-    exact heq
-
 private def signedPairCoefficient (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
     (i j : Fin D.rank) (N q : ℤ) : ℂ := by
@@ -694,43 +666,12 @@ private theorem original_four_finite_coefficient (D : LatticeData)
     contracted_pair_coefficient D hD (i 0) (i 3) (i 1) (i 2) _ _ _ _ _ (by omega)]
 
 
-private def positiveFourCoefficient (D : LatticeData)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
-    (i : Four → Fin D.rank) (n : Four → ℕ) : ℂ :=
-  let ell := n 1 - n 0
-  let p := (n 2 : ℤ) - n 1
-  let q := (n 3 : ℤ) - n 2
-  let r := (n 0 : ℤ) - n 3
-  ∑ a ∈ Finset.range (n 0 / ell + 1),
-    (contraction D (i 0) (i 1) ell p *
-        signedPairCoefficient D hD (i 2) (i 3) ((n 0 : ℤ) - (a : ℤ) * ell) q +
-      contraction D (i 0) (i 2) ell q *
-        signedPairCoefficient D hD (i 1) (i 3) ((n 0 : ℤ) - (a : ℤ) * ell) p +
-      contraction D (i 0) (i 3) ell r *
-        signedPairCoefficient D hD (i 1) (i 2) ((n 0 : ℤ) - (a : ℤ) * ell) p)
-
 private def zeroFourCoefficient (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
     (i : Four → Fin D.rank) (N : ℕ) : ℂ :=
   ∑ β ∈ positiveChargeCutoff D hD (N : ℤ),
     (∏ a : Four, (bilinear D (unitCharge D (i a)) β : ℂ)) *
       (Nat.card (IntegerFiber D (N - (chargeEnergy D β).toNat)) : ℂ)
-
-/- This finite expression contains no trace, mode word, recursive call or
-coefficient of an assumed matching answer. The ten-matching transport is a
-separate equality still required for the final theorem. -/
-private def closedFourCoefficient (D : LatticeData)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
-    (i : Four → Fin D.rank) (n : Four → ℕ) : ℂ :=
-  if n 0 < n 1 then positiveFourCoefficient D hD i n
-  else if n 1 < n 2 then
-    positiveFourCoefficient D hD (rotateFour i) (rotateFour n)
-  else if n 2 < n 3 then
-    positiveFourCoefficient D hD (rotateFour (rotateFour i)) (rotateFour (rotateFour n))
-  else if n 3 < n 0 then
-    positiveFourCoefficient D hD (rotateFour (rotateFour (rotateFour i)))
-      (rotateFour (rotateFour (rotateFour n)))
-  else zeroFourCoefficient D hD i (n 0)
 
 private theorem no_increase_constant (n : Four → ℕ)
     (h0 : ¬ n 0 < n 1) (h1 : ¬ n 1 < n 2)
@@ -745,27 +686,6 @@ private theorem no_increase_constant (n : Four → ℕ)
   · exact h10
   · exact h20
   · exact h30
-
-private theorem original_four_closed_coefficient (D : LatticeData)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
-    (i : Four → Fin D.rank) (n : Four → ℕ) :
-    actualFourCurrentCycleTrace D hD i n = closedFourCoefficient D hD i n := by
-  classical
-  unfold closedFourCoefficient
-  split_ifs with h0 h1 h2 h3
-  · exact original_four_finite_coefficient D hD i n h0
-  · rw [original_four_rotate]
-    exact original_four_finite_coefficient D hD (rotateFour i) (rotateFour n) h1
-  · rw [original_four_rotate, original_four_rotate D hD (rotateFour i)]
-    exact original_four_finite_coefficient D hD (rotateFour (rotateFour i))
-      (rotateFour (rotateFour n)) h2
-  · rw [original_four_rotate, original_four_rotate D hD (rotateFour i),
-      original_four_rotate D hD (rotateFour (rotateFour i))]
-    exact original_four_finite_coefficient D hD (rotateFour (rotateFour (rotateFour i)))
-      (rotateFour (rotateFour (rotateFour n))) h3
-  · have hn := no_increase_constant n h0 h1 h2 h3
-    rw [hn]
-    exact original_four_zero_charge_trace D hD i (n 0)
 
 private def currentMode (n : Four → ℕ) (a : Four) : ℤ :=
   (n (a + 1) : ℤ) - n a
@@ -2150,8 +2070,11 @@ private theorem matching_channel_sum (D : LatticeData)
         intro t _
         have he : n 0 = (chargeEnergy D β).toNat + t.1 + a.1 * (n 1 - n 0) ↔
             n 0 - a.1 * (n 1 - n 0) = (chargeEnergy D β).toNat + t.1 := by omega
-        rw [he]
-        split_ifs <;> ring
+        split_ifs with hleft hright hright
+        · ring
+        · exact False.elim (hright (he.mp hleft))
+        · exact False.elim (hleft (he.mpr hright))
+        · ring
       · rw [if_neg ha, mul_zero]
         apply Finset.sum_eq_zero
         intro β _
@@ -2180,8 +2103,11 @@ private theorem matching_channel_sum (D : LatticeData)
             n 0 - a.1 * (n 1 - n 0) = (chargeEnergy D β).toNat + t.1 +
               (-currentMode n (channelRest c).1).toNat +
                 b.1 * (currentMode n (channelRest c).1).natAbs := by omega
-        rw [he]
-        split_ifs <;> ring
+        split_ifs with hleft hright hright
+        · ring
+        · exact False.elim (hright (he.mp hleft))
+        · exact False.elim (hleft (he.mpr hright))
+        · ring
       · rw [if_neg ha, mul_zero]
         apply Finset.sum_eq_zero
         intro β _
@@ -2271,7 +2197,7 @@ private theorem original_four_positive_matching (D : LatticeData)
   rw [Fin.sum_univ_succ, Fin.sum_univ_succ, Fin.sum_univ_succ]
   simp only [Fin.sum_univ_zero, add_zero]
   rw [← Finset.sum_add_distrib, ← Finset.sum_add_distrib]
-  simpa only [channelMate, channelRest, currentMode, add_assoc] using
+  simpa [channelMate, channelRest, currentMode, add_assoc] using
     original_four_finite_coefficient D hD i n h
 
 /-- The bounded labeled partial-matching formula for the original finite four-current cycle
