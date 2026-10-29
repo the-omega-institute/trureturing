@@ -10,6 +10,7 @@ import shutil
 import signal
 import stat
 import subprocess
+import tempfile
 import time
 import uuid
 
@@ -99,6 +100,27 @@ def remove_payload(target):
         raise Refused("worktree_payload_changed_during_removal")
 
 
+def ignored_by_snapshot(target, metadata, commit, paths):
+    """Evaluate untracked paths against the checkpoint's tracked ignore files."""
+    with tempfile.TemporaryDirectory(prefix="worktree-removal-ignore-") as directory:
+        rules = Path(directory).resolve()
+        for entry in git(target, "ls-tree", "-r", "-z", commit).stdout.split(b"\0"):
+            if not entry:
+                continue
+            header, name = entry.split(b"\t", 1)
+            mode, kind, oid = header.split(b" ")
+            if Path(os.fsdecode(name)).name == ".gitignore" and mode in (b"100644", b"100755"):
+                file = rules / os.fsdecode(name)
+                file.parent.mkdir(parents=True, exist_ok=True)
+                file.write_bytes(git(target, "cat-file", "blob", oid.decode("ascii")).stdout)
+        result = git(rules, "--git-dir=" + str(metadata), "--work-tree=" + str(rules),
+                     "check-ignore", "--no-index", "-z", "--stdin",
+                     input=b"\0".join(paths) + b"\0", check=False)
+        if result.returncode not in (0, 1):
+            raise GitFailure(result.stderr.decode(errors="replace").strip() or "ignore inspection failed")
+        return set(result.stdout.split(b"\0")) >= set(paths)
+
+
 def interrupted_removal(target, metadata, stack, source, branch):
     """Return the record of an earlier removal whose deletion stopped part way."""
     record = metadata / REMOVAL_RECORD
@@ -140,8 +162,10 @@ def interrupted_removal(target, metadata, stack, source, branch):
         return dict(commit=snapshot["commit"], recovery_branch=current_root, reconverged=True,
                     native_locks=getattr(stack, "native_locks", []))
     # Content deletion only deletes files; other differences may be later changes.
-    status = git(target, "status", "--porcelain", "--untracked-files=all").stdout.splitlines()
-    if any(not line.startswith(b" D ") for line in status):
+    status = git(target, "status", "--porcelain", "-z", "--untracked-files=all").stdout.split(b"\0")
+    changed = [line for line in status if line and not line.startswith(b" D ")]
+    if changed and (any(not line.startswith(b"?? ") for line in changed)
+                    or not ignored_by_snapshot(target, metadata, commit, [line[3:] for line in changed])):
         raise Refused("interrupted_removal_tree_changed")
     return removal
 

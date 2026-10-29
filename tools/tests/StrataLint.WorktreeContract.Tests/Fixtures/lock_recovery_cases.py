@@ -113,6 +113,89 @@ class LockRecoveryCases:
         self.assertTrue((self.tree / ".lake/build/output").is_file())
         self.assertEqual(snapshot, self.g(self.main, "rev-parse", self.branch).strip())
 
+    def test_removal_native_timeout_uses_remaining_payload_budget(self):
+        import worktree_preservation as preservation
+        clock = [1000.0]
+        native_payload, native_git = preservation.remove_payload, preservation.git
+        observed = []
+        def consume_budget(target):
+            native_payload(target)
+            clock[0] += 125
+        def observe_native(path, *args, **kwargs):
+            if args[:2] == ("worktree", "remove"):
+                observed.append(kwargs["timeout"])
+            return native_git(path, *args, **kwargs)
+        with patch.object(preservation.time, "monotonic", side_effect=lambda: clock[0]), \
+                patch.object(preservation.signal, "setitimer", return_value=(0, 0)) as timer, \
+                patch.object(preservation, "remove_payload", side_effect=consume_budget), \
+                patch.object(preservation, "git", side_effect=observe_native):
+            item = preservation.remove(self.removal_options())["items"][0]
+        self.assertEqual("removed", item["outcome"])
+        self.assertEqual([175], observed)
+        self.assertEqual((signal.ITIMER_REAL, 300), timer.call_args_list[0].args)
+        self.assertEqual((signal.ITIMER_REAL, 0, 0), timer.call_args_list[-1].args)
+
+    def test_removal_expired_budget_never_starts_native_unregistration(self):
+        import worktree_preservation as preservation
+        (self.tree / "owned").write_text("snapshot before deletion\n")
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        clock = [1000.0]
+        native_payload, native_git = preservation.remove_payload, preservation.git
+        def exhaust_budget(target):
+            native_payload(target)
+            clock[0] += 300
+        def no_native(path, *args, **kwargs):
+            self.assertNotEqual(("worktree", "remove"), args[:2])
+            return native_git(path, *args, **kwargs)
+        with patch.object(preservation.time, "monotonic", side_effect=lambda: clock[0]), \
+                patch.object(preservation.signal, "setitimer", return_value=(0, 0)), \
+                patch.object(preservation, "remove_payload", side_effect=exhaust_budget), \
+                patch.object(preservation, "git", side_effect=no_native):
+            item = preservation.remove(self.removal_options())["items"][0]
+        self.assertEqual("partial_or_indeterminate", item["outcome"])
+        self.assertIn("timed out", item["error"])
+        self.assert_removal_recoverable(metadata)
+        self.assertEqual("resumed", json.loads(self.remove().stdout)["items"][0]["checkpoint"]["status"])
+        self.assertFalse(self.tree.exists())
+
+    def test_removal_payload_alarm_keeps_record_and_can_resume(self):
+        import worktree_preservation as preservation
+        (self.tree / "owned").write_text("snapshot before deletion\n")
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        previous = signal.getsignal(signal.SIGALRM)
+        native_unlink = os.unlink
+        def expire_during_unlink(path, *args, **kwargs):
+            native_unlink(path, *args, **kwargs)
+            handler = signal.getsignal(signal.SIGALRM)
+            self.assertTrue(callable(handler), "payload needs an interruptible deadline")
+            handler(signal.SIGALRM, None)
+        with patch.object(preservation.signal, "setitimer", return_value=(0, 0)) as timer, \
+                patch.object(os, "unlink", side_effect=expire_during_unlink):
+            item = preservation.remove(self.removal_options())["items"][0]
+        self.assertEqual("partial_or_indeterminate", item["outcome"])
+        self.assertIn("timed out after 300 seconds", item["error"])
+        self.assertEqual(previous, signal.getsignal(signal.SIGALRM))
+        self.assertEqual((signal.ITIMER_REAL, 300), timer.call_args_list[0].args)
+        self.assert_removal_recoverable(metadata)
+        self.remove()
+        self.assertFalse(self.tree.exists())
+
+    def test_force_removal_disables_only_the_removal_budget(self):
+        import worktree_preservation as preservation
+        options = self.removal_options()
+        options.force = True
+        native_git = preservation.git
+        observed = []
+        def observe_native(path, *args, **kwargs):
+            if args[:2] == ("worktree", "remove"):
+                observed.append(kwargs["timeout"])
+            return native_git(path, *args, **kwargs)
+        with patch.object(preservation.signal, "setitimer", side_effect=AssertionError("force armed deadline")), \
+                patch.object(preservation, "git", side_effect=observe_native):
+            item = preservation.remove(options)["items"][0]
+        self.assertEqual("removed", item["outcome"])
+        self.assertEqual([None], observed)
+
     def test_removal_payload_failure_retains_registration_and_resumes(self):
         import worktree_preservation as preservation
         (self.tree / "owned").write_text("snapshot before deletion\n")

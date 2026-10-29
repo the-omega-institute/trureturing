@@ -425,6 +425,10 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("removal_refuses_bare_repository_before_any_payload")]
     [InlineData("removal_resumes_after_worktree_ignore_is_deleted")]
     [InlineData("removal_with_deleted_ignore_retains_new_ordinary_file")]
+    [InlineData("removal_native_timeout_uses_remaining_payload_budget")]
+    [InlineData("removal_expired_budget_never_starts_native_unregistration")]
+    [InlineData("removal_payload_alarm_keeps_record_and_can_resume")]
+    [InlineData("force_removal_disables_only_the_removal_budget")]
     public void RemovalKeepsRegistrationUntilPayloadIsGone(string probe)
     {
         if (OperatingSystem.IsWindows()) return;
