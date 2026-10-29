@@ -84,7 +84,7 @@ def compactFamily : Registration compactArena.{u}
     · intro i
       refine ⟨compactRejected, ?_, rfl, compact_rejected_law⟩
       intro j hj
-      exact (hj (Subsingleton.elim _ _)).elim
+      exact (hj (Subsingleton.elim (α := Unit) j i)).elim
     · intro e
       exact nomatch e
   dependence := actual_dependence
@@ -147,7 +147,7 @@ def shiftFamily : Registration shiftArena.{u}
     · intro i
       refine ⟨shiftRejected, ?_, rfl, shift_rejected_law⟩
       intro j hj
-      exact (hj (Subsingleton.elim _ _)).elim
+      exact (hj (Subsingleton.elim (α := Unit) j i)).elim
     · intro e
       exact nomatch e
   dependence := actual_dependence

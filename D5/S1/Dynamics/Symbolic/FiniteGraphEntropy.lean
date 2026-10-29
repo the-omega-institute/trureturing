@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Finite right-total graph languages are closed shift systems whose prefix growth is counted by adjacency powers. -/
+   digest: Finite graph languages are compact, closed and invariant under the one-sided shift. -/
 
 /- This module records the finite graph to symbolic-dynamics bridge.  The
 right-total hypothesis is explicit: without it, a finite vertex path can end
