@@ -34,6 +34,84 @@ def fiberGraph {X : Type*} [Fintype X] [DecidableEq X] (f g : X → ℝ) : Simpl
     | Sum.inl a, Sum.inr b => ∃ x, f x = a ∧ g x = b
     | _, _ => False)
 
+private def supportGraph {X : Type*} [Fintype X] [DecidableEq X]
+    (f g w : X → ℝ) : SimpleGraph (ℝ ⊕ ℝ) :=
+  SimpleGraph.fromRel (fun v z =>
+    match v, z with
+    | Sum.inl a, Sum.inr b => ∃ x, f x = a ∧ g x = b ∧ w x ≠ 0
+    | _, _ => False)
+
+private lemma supportGraph_edge_finite {X : Type*} [Fintype X] [DecidableEq X]
+    (f g w : X → ℝ) : (supportGraph f g w).edgeSet.Finite := by
+  classical
+  apply (Set.finite_range (fun x : X => s(Sum.inl (f x), Sum.inr (g x)))).subset
+  intro e he
+  induction e using Sym2.inductionOn with
+  | _ v z =>
+    rw [SimpleGraph.mem_edgeSet] at he
+    have he' := (SimpleGraph.fromRel_adj _ _ _).mp he
+    rcases he'.2 with hrel | hrel
+    · rcases v with a | a
+      · rcases z with b | b
+        · simp_all [supportGraph]
+        · rcases hrel with ⟨x, hfx, hgx, hw⟩
+          refine ⟨x, ?_⟩
+          simp [hfx, hgx]
+      · rcases z with b | b <;> simp_all [supportGraph]
+    · rcases v with a | a
+      · rcases z with b | b <;> simp_all [supportGraph]
+      · rcases z with b | b
+        · rcases hrel with ⟨x, hfx, hgx, hw⟩
+          refine ⟨x, ?_⟩
+          simp [hfx, hgx]
+        · simp_all [supportGraph]
+
+private noncomputable def locallyFinite_of_finite_edgeSet {V : Type*} (G : SimpleGraph V)
+    [Finite G.edgeSet] : G.LocallyFinite := by
+  classical
+  intro v
+  letI : Finite (G.neighborSet v) := Finite.of_injective
+    (fun z : G.neighborSet v => (⟨s(v, z.1), G.mem_edgeSet.mpr z.2⟩ : G.edgeSet)) (by
+      intro a b hab
+      apply Subtype.ext
+      have hab' := congrArg Subtype.val hab
+      rw [Sym2.eq_iff] at hab'
+      rcases hab' with ⟨_, h⟩ | ⟨hva, hav⟩
+      · exact h
+      · exfalso
+        have ha : G.Adj v a := a.2
+        exact ha.ne hav.symm)
+  exact Fintype.ofFinite _
+
+private lemma finite_component_edgeSet {V : Type*} (G : SimpleGraph V)
+    [Finite G.edgeSet] (C : G.ConnectedComponent) : Finite C.toSimpleGraph.edgeSet := by
+  classical
+  have map_mem : ∀ (e : Sym2 C), e ∈ C.toSimpleGraph.edgeSet →
+      Sym2.map (fun z : C => z.1) e ∈ G.edgeSet := by
+    intro e he
+    induction e using Sym2.inductionOn with
+    | _ u v =>
+      exact G.mem_edgeSet.mpr ((SimpleGraph.Embedding.induce C.supp).toHom.map_rel
+        (C.toSimpleGraph.mem_edgeSet.mp he))
+  apply Finite.of_injective
+    (fun e : C.toSimpleGraph.edgeSet =>
+      (⟨Sym2.map (fun z : C => z.1) e.1, map_mem e.1 e.2⟩ : G.edgeSet))
+  intro e₁ e₂ he
+  rcases e₁ with ⟨e₁, he₁⟩
+  rcases e₂ with ⟨e₂, he₂⟩
+  apply Subtype.ext
+  have he' := congrArg Subtype.val he
+  induction e₁ using Sym2.inductionOn with
+  | _ u v =>
+    induction e₂ using Sym2.inductionOn with
+    | _ x y =>
+      dsimp at he'
+      change s(u, v) = s(x, y)
+      rw [Sym2.eq_iff] at he' ⊢
+      rcases he' with ⟨hu, hv⟩ | ⟨hu, hv⟩
+      · exact Or.inl ⟨Subtype.ext hu, Subtype.ext hv⟩
+      · exact Or.inr ⟨Subtype.ext hu, Subtype.ext hv⟩
+
 private lemma distribution_eq_iff_fiber_sums {X : Type*} [Fintype X] [DecidableEq X]
     (f : X → ℝ) (μ ν : X → ℝ) :
     distribution f μ = distribution f ν ↔
@@ -133,7 +211,143 @@ private lemma ic_acyclic {X : Type*} [Fintype X] [DecidableEq X] {f g : X → �
 private lemma injective_acyclic_ic {X : Type*} [Fintype X] [DecidableEq X] {f g : X → ℝ}
     (hinj : Function.Injective (fun x => (f x, g x)))
     (hacyc : (fiberGraph f g).IsAcyclic) : IsICPair f g := by
-  sorry
+  intro μ ν hμ hν hfd hgd
+  classical
+  by_contra hneq
+  let w : X → ℝ := μ - ν
+  have hwne : w ≠ 0 := by
+    intro hw
+    apply hneq
+    funext x
+    have hx := congrFun hw x
+    exact sub_eq_zero.mp hx
+  have hsumf (a : ℝ) :
+      ∑ x ∈ Finset.univ.filter (fun x => f x = a), w x = 0 := by
+    have heq := (distribution_eq_iff_fiber_sums f μ ν).mp hfd a
+    simpa [w, Finset.sum_sub_distrib, heq]
+  have hsumg (b : ℝ) :
+      ∑ x ∈ Finset.univ.filter (fun x => g x = b), w x = 0 := by
+    have heq := (distribution_eq_iff_fiber_sums g μ ν).mp hgd b
+    simpa [w, Finset.sum_sub_distrib, heq]
+  let H : SimpleGraph (ℝ ⊕ ℝ) := supportGraph f g w
+  have hHsub : H ≤ fiberGraph f g := by
+    intro v z hadj
+    rcases v with a | a <;> rcases z with b | b
+    · simp [H, supportGraph, fiberGraph] at hadj ⊢
+    · have hs : ∃ y, f y = a ∧ g y = b ∧ w y ≠ 0 := by
+        simpa [H, supportGraph, SimpleGraph.fromRel_adj] using hadj
+      have hs' : ∃ y, f y = a ∧ g y = b := by
+        rcases hs with ⟨y, hfy, hgy, hwy⟩
+        exact ⟨y, hfy, hgy⟩
+      simpa [fiberGraph, SimpleGraph.fromRel_adj] using
+        (show Sum.inl a ≠ Sum.inr b ∧
+            ((∃ y, f y = a ∧ g y = b) ∨ False) from
+          ⟨Sum.inl_ne_inr, Or.inl hs'⟩)
+    · have hs : ∃ y, f y = b ∧ g y = a ∧ w y ≠ 0 := by
+        simpa [H, supportGraph, SimpleGraph.fromRel_adj] using hadj
+      have hs' : ∃ y, f y = b ∧ g y = a := by
+        rcases hs with ⟨y, hfy, hgy, hwy⟩
+        exact ⟨y, hfy, hgy⟩
+      simpa [fiberGraph, SimpleGraph.fromRel_adj] using
+        (show Sum.inr a ≠ Sum.inl b ∧
+            (False ∨ (∃ y, f y = b ∧ g y = a)) from
+          ⟨Sum.inr_ne_inl, Or.inr hs'⟩)
+    · simp [H, supportGraph, fiberGraph] at hadj ⊢
+  have hHacyc : H.IsAcyclic := hacyc.anti hHsub
+  have hfinite : H.edgeSet.Finite := by
+    simpa [H] using supportGraph_edge_finite f g w
+  letI : Finite H.edgeSet := hfinite.fintype.finite
+  letI : H.LocallyFinite := locallyFinite_of_finite_edgeSet H
+  obtain ⟨x, hx⟩ : ∃ x, w x ≠ 0 := by
+    by_contra hzero
+    apply hwne
+    funext x
+    by_contra hzx
+    exact hzero ⟨x, hzx⟩
+  have hxe : H.Adj (Sum.inl (f x)) (Sum.inr (g x)) := by
+    simp only [H, supportGraph, SimpleGraph.fromRel_adj]
+    exact ⟨Sum.inl_ne_inr, Or.inl ⟨x, rfl, rfl, hx⟩⟩
+  let C := H.connectedComponentMk (Sum.inl (f x))
+  have hleft : Sum.inl (f x) ∈ C :=
+    SimpleGraph.ConnectedComponent.connectedComponentMk_mem
+  have hright : Sum.inr (g x) ∈ C := C.mem_supp_of_adj_mem_supp hleft hxe
+  have hfiniteC : Finite C.toSimpleGraph.edgeSet := finite_component_edgeSet H C
+  letI : Finite C.toSimpleGraph.edgeSet := hfiniteC
+  letI : C.toSimpleGraph.LocallyFinite := locallyFinite_of_finite_edgeSet _
+  letI : Nontrivial C := ⟨⟨⟨Sum.inl (f x), hleft⟩, ⟨Sum.inr (g x), hright⟩, by
+    intro h
+    exact Sum.inl_ne_inr (congrArg Subtype.val h)⟩⟩
+  have htree : C.toSimpleGraph.IsTree := hHacyc.isTree_connectedComponent C
+  obtain ⟨u, v, huv, hu, hv⟩ := htree.exists_ne_and_degree_eq_one
+  obtain ⟨q, huq, huq_unique⟩ :=
+    (SimpleGraph.degree_eq_one_iff_existsUnique_adj.mp hu)
+  have huqH : H.Adj u.1 q.1 :=
+    (C.toSimpleGraph_adj u.2 q.2).mp huq
+  have hcontra : False := by
+    rcases huval : u.1 with a | a <;> rcases hqval : q.1 with b | b
+    · simp [H, supportGraph, huval, hqval] at huqH
+    · have hy : ∃ y, f y = a ∧ g y = b ∧ w y ≠ 0 := by
+        simpa [H, supportGraph, SimpleGraph.fromRel_adj] using (show H.Adj (Sum.inl a) (Sum.inr b) by simpa [huval, hqval] using huqH)
+      obtain ⟨y, hyf, hyg, hyw⟩ := hy
+      have hsum_single :
+          ∑ z ∈ Finset.univ.filter (fun z => f z = a), w z = w y := by
+        apply Finset.sum_eq_single y
+        · intro z hz hzy
+          by_contra hwz
+          have hzf : f z = a := by simpa using hz
+          have hzad : H.Adj (Sum.inl a) (Sum.inr (g z)) := by
+            simp only [H, supportGraph, SimpleGraph.fromRel_adj]
+            exact ⟨Sum.inl_ne_inr, Or.inl ⟨z, hzf, rfl, hwz⟩⟩
+          have hzmem : Sum.inr (g z) ∈ C :=
+            C.mem_supp_of_adj_mem_supp (show Sum.inl a ∈ C from huval ▸ u.2) hzad
+          let qz : C := ⟨Sum.inr (g z), hzmem⟩
+          have hzadC : C.toSimpleGraph.Adj u qz :=
+            (C.toSimpleGraph_adj u.2 qz.2).mpr (by simpa [huval, qz] using hzad)
+          have hqeq : qz = q := huq_unique qz hzadC
+          have hqeqval := congrArg Subtype.val hqeq
+          have hgz : g z = b := by simpa [qz, hqval] using hqeqval
+          apply hzy
+          apply hinj
+          exact Prod.ext (hzf.trans hyf.symm) (hgz.trans hyg.symm)
+        · intro hy_not
+          exfalso
+          apply hy_not
+          simp [hyf]
+      have hzero := hsumf a
+      rw [hsum_single] at hzero
+      exact hyw hzero
+    · have hy : ∃ y, f y = b ∧ g y = a ∧ w y ≠ 0 := by
+        simpa [H, supportGraph, SimpleGraph.fromRel_adj] using (show H.Adj (Sum.inr a) (Sum.inl b) by simpa [huval, hqval] using huqH)
+      obtain ⟨y, hyf, hyg, hyw⟩ := hy
+      have hsum_single :
+          ∑ z ∈ Finset.univ.filter (fun z => g z = a), w z = w y := by
+        apply Finset.sum_eq_single y
+        · intro z hz hzy
+          by_contra hwz
+          have hzg : g z = a := by simpa using hz
+          have hzad : H.Adj (Sum.inr a) (Sum.inl (f z)) := by
+            simp only [H, supportGraph, SimpleGraph.fromRel_adj]
+            exact ⟨Sum.inr_ne_inl, Or.inr ⟨z, rfl, hzg, hwz⟩⟩
+          have hzmem : Sum.inl (f z) ∈ C :=
+            C.mem_supp_of_adj_mem_supp (show Sum.inr a ∈ C from huval ▸ u.2) hzad
+          let qz : C := ⟨Sum.inl (f z), hzmem⟩
+          have hzadC : C.toSimpleGraph.Adj u qz :=
+            (C.toSimpleGraph_adj u.2 qz.2).mpr (by simpa [huval, qz] using hzad)
+          have hqeq : qz = q := huq_unique qz hzadC
+          have hqeqval := congrArg Subtype.val hqeq
+          have hfz : f z = b := by simpa [qz, hqval] using hqeqval
+          apply hzy
+          apply hinj
+          exact Prod.ext (hfz.trans hyf.symm) (hzg.trans hyg.symm)
+        · intro hy_not
+          exfalso
+          apply hy_not
+          simp [hyg]
+      have hzero := hsumg a
+      rw [hsum_single] at hzero
+      exact hyw hzero
+    · simp [H, supportGraph, huval, hqval] at huqH
+  exact hcontra.elim
 
 theorem result {X : Type*} [Fintype X] [DecidableEq X] (f g : X → ℝ) :
     IsICPair f g ↔
