@@ -8,10 +8,13 @@
 
 import Mathlib.Data.Nat.Digits.Defs
 
+/-!
+The decimal-word encoding and square-digit predicate are literal.
+A fifteen-block counterexample contradicts prefix closure.
+-/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option maxRecDepth 100000
-set_option maxHeartbeats 0
 
 namespace D5.S1.Digit.SquaresThreeDigitsPrefixRefutation
 
@@ -36,11 +39,17 @@ def claim : Prop :=
 def counterexample : List ℕ :=
   [0, 1, 3, 7, 15, 31, 63, 127, 2, 6, 14, 62, 14, 6, 2]
 
+set_option maxRecDepth 100000 in
+set_option maxHeartbeats 0 in
 /-- The full tuple satisfies the source predicate, while deleting its last block fails it. -/
 theorem result : ¬ claim := by
   intro h
-  have hgood : GoodSquare (encode counterexample) := by decide +kernel
-  have hbad : ¬ GoodSquare (encode counterexample.dropLast) := by decide +kernel
+  have hgood : GoodSquare (encode counterexample) := by
+    unfold GoodSquare
+    decide +kernel
+  have hbad : ¬ GoodSquare (encode counterexample.dropLast) := by
+    unfold GoodSquare
+    decide +kernel
   exact hbad (h counterexample (by decide) hgood)
 
 #print axioms result
