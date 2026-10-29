@@ -1,0 +1,55 @@
+**Lemma 6.3 (regular universe, exact projections and their regular
+images).** The language $W$ is regular. Both projections are exact on
+$W$, and the projection of any regular $L\subseteq W$ is a regular
+native-tree language. Relative regular subsets of $W$ are closed under
+complement within $W$ and intersection.
+
+Proof. An explicit finite grammar checks canonical padding. Use
+nonterminals indexed by the expected presence bits $(e_1,e_2)$,
+excluding $(0,0)$. At a node choose a symbol whose coordinate is $\bot$
+exactly when the corresponding expected bit is zero, and otherwise is
+one of $\alpha,\beta,\mathsf b$. If neither coordinate branches, this
+is a rank-zero production. If one branches, make both child
+nonterminals have presence bits
+$(\mathbf1_{a=\mathsf b},\mathbf1_{b=\mathsf b})$, the same bits for
+left and right. Start with $(1,1)$. These finitely many productions
+recognize exactly $W$: induction gives one absent or complete finite
+native tree in each coordinate, and every canonical convolution follows
+them. Finite regular grammars and bottom-up automata describe the same
+finite-tree languages, by reading a production as a transition.
+
+For projection exactness, at a coordinate's branch the two children
+are both present in that coordinate, so induction returns its true two
+native subtrees. At its leaf all children contributed only by the other
+coordinate are erased. An absent coordinate similarly returns only
+$\bot$ at that root. Since the roots of a $W$ tree both have presence
+one, induction gives the original native outputs, with no retained
+$\bot$ below their branches.
+
+Here is the regular-image construction, specialized to (NIC.26).
+Remove unproductive states from a bottom-up automaton for $L$. For each
+remaining state $q$ introduce a grammar nonterminal $q$. A rank-two
+transition $\gamma(q_1,q_2)\to q$ with projected coordinate
+$\mathsf b$ yields $q\to\mathsf b(q_1,q_2)$. If that coordinate is
+$a\in\{\alpha,\beta,\bot\}$, it yields $q\to a$. A rank-zero
+transition yields its projected constant. Use the accepting states as
+start nonterminals. Each generated output has an input witness: in an
+erasing production choose any original witnesses for the productive
+child states, and in a branch production combine the inductively
+recovered child witnesses using the indicated original transition.
+Conversely every accepting input run projects by exactly these
+productions. Thus the grammar recognizes $\pi_i(L)$ in both directions.
+On $L\subseteq W$ it contains only native trees, by the preceding
+exactness. This is the linear, possibly erasing homomorphism construction
+of [TATA, Theorem 1.4.3][TATA], with no copying of a child.
+
+For completeness of the set operations, determinize a finite bottom-up
+automaton by assigning to a subtree the set of all old states reachable
+there. A symbol computes its parent set from the finite child sets;
+acceptance means that the root set meets the old accepting states.
+This finite complete deterministic automaton has the same language.
+Changing accepting to nonaccepting states recognizes its complement.
+A product of two automata recognizes intersection. Applying these
+constructions with the regular $W$ proves the relative statements.
+These are the constructions of [TATA, §§1.1 and 1.3][TATA]. $\square$
+
