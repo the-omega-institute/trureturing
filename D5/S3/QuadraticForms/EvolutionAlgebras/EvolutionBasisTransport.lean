@@ -8,6 +8,8 @@
 
 import D5.S3.QuadraticForms.EvolutionAlgebras.EvolutionAutomorphismControl
 
+/- Escape audit for the newly public owner lemmas is unfinished: https://github.com/the-omega-institute/trureturing/issues/22095 -/
+
 /-! Pair-product spans, natural bases and complete automorphism groups are invariant under linear transport. -/
 
 set_option autoImplicit false
@@ -111,7 +113,7 @@ noncomputable def dimensionBasis [FiniteDimensional ℂ A] {ι : Type*} [Fintype
     Module.Basis (Fin n) ℂ A :=
   b.reindex (Fintype.equivFinOfCardEq ((Module.finrank_eq_card_basis b).symm.trans hn))
 
-private theorem dimensionBasis_natural [FiniteDimensional ℂ A] {ι : Type*} [Fintype ι]
+theorem dimensionBasis_natural [FiniteDimensional ℂ A] {ι : Type*} [Fintype ι]
     {n : ℕ} (hn : Module.finrank ℂ A = n) (μ : A →ₗ[ℂ] A →ₗ[ℂ] A)
     (b : Module.Basis ι ℂ A) (hb : ∀ i j : ι, i ≠ j → μ (b i) (b j) = 0) :
     ∀ i j : Fin n, i ≠ j → μ (dimensionBasis hn b i) (dimensionBasis hn b j) = 0 := by

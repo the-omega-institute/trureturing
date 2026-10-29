@@ -1,0 +1,55 @@
+**Proposition 9.3 (the one-pass material and writer charges).** Let
+$(x_0,y_0)$ be the actual entrance-register composition, inaccessible to
+acquisition control. Set
+
+$$
+ L_0=x_0+y_0,\quad L_1=x_0+2y_0,\quad
+ N_i=2L_i-1,\quad G=\lceil\log_2(N_1+2)\rceil.       \tag{GPO.35}
+$$
+
+The old-node implementation in Proposition 5.3, stopped after one pass,
+processes exactly $N_0$ old nodes, overwrites $L_0$ old leaf tags, creates
+$2y_0$ new nodes and writes $2y_0$ new child links. Its peak live source
+is $N_1$ nodes. In that proposition's compact sequential representation,
+internal actuator work is $O((N_0+N_1)N_1G^2)$, source backing is
+$O(N_1G)$ bits, and traversal scratch is $O((H_0+1)G)$ bits for entrance
+height $H_0$. The actor's sparse costs (GPO.33) do not pay these charges.
+
+The new native writer has exactly $Q+J+J_p+1$ entries. It contains the
+one actual update at old epoch $2k$, all acquisition Reads at epoch
+$2k+1$ with their full physical replies and literal words, and every
+controller localStep. A self-delimiting binary payload costs
+$O(J+J_p+W+(Q+1)\Lambda)$ bits besides old prefix, framing/capability
+and storage-service metadata. For the root/edge-following Read backend,
+its additional traversals cost at most $W+Q$ root/edge steps.
+
+Proof. Reuse the one-pass part of Proposition 5.3's implementation: visit
+only nodes present at the beginning of the pass. An old alpha tag becomes
+beta; an old beta tag becomes branch and receives the ordered new beta,
+alpha children. Newly allocated children are not visited in this pass.
+The composition changes to $(y_0,x_0+y_0)$, proving all exact structural
+counts and $N_1-N_0=2y_0$. The root and old branch identities persist.
+The source grows by actual allocation, using private compact indices,
+not an accessible size operand or an exposed timing channel.
+
+There are $O(N_0+N_1)$ processing, tag, allocation, link and stack
+operations. As in Proposition 5.3, each can use a sequential lookup or
+width-change scan of $O(N_1G^2)$ bit work; records occupy $O(N_1G)$
+bits and stack depth at most $H_0+1$. This proves the representation-
+specific bounds without a random-access oracle or a second callable source.
+Actuator-internal transitions are this separate work coordinate, not new
+native controller events. Another supplied source representation incurs
+its own access or conversion price.
+
+The native event counts follow directly from the installed append writer.
+All word lengths and the update/Read epochs have $O(\Lambda)$-bit
+encodings; a localStep marker has constant payload. Literal letters cost
+$W$, giving the writer bound. Each Read starts at the root and follows at
+most its submitted length in edges, giving $W+Q$. If authentic $u$ has
+composition $(a_0,b_0)$, entrance material has
+$a_0F_{2k+1}+b_0F_{2k+2}$ leaves, as in ABT35.3. Its earlier preparation
+price remains before this interval, not zero. Advice uses additionally
+$b(A)+b(B)$ bits; authentication, installation, retained lifetime,
+source/service maintenance and output copying retain their actual prices.
+$\square$
+
