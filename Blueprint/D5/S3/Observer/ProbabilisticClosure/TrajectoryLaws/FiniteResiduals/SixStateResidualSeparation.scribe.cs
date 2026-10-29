@@ -46,7 +46,7 @@ internal sealed class SixStateResidualSeparationDocument : IScribeDocumentDefini
         Formula h = Seq(Neg, Sp, Call("residual", k, D(2), D(0), D(1)));
         Formula i = Seq(Neg, Sp, Open, All("n", nat, Call("residual", k, n, D(0), D(1))), Close);
         Formula j = F.Id("StochasticQuotient");
-        Formula l = All("update", Seq(five, Rightarrow, F.Id("Bool"), Rightarrow, five),
+        Formula l = All("update", Seq(five, Rightarrow, Sp, F.Id("Bool"), Rightarrow, Sp, five),
             Seq(Fraction(D(1), D(2)), Leq, Call("updateFailure", F.Id("update"), D(0))));
         return And(a,b,c,d,e,f,g,h,i,j,l);
     }
