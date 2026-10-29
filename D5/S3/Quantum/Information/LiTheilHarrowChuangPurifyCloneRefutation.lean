@@ -479,7 +479,7 @@ private theorem target_density_and_marginal {d r : ℕ} (ρ : DensityState (Fin 
   exact ⟨(mem_densityMatrices_iff A).mp hden |>.1,
     (mem_densityMatrices_iff A).mp hden |>.2, hmarg⟩
 
-private theorem rank_pos_of_trace_one {a : Type*} [Fintype a] [DecidableEq a]
+theorem rank_pos_of_trace_one {a : Type*} [Fintype a] [DecidableEq a]
     {A : (Matrix a a ℂ)} (htr : A.trace = 1) : 0 < A.rank := by
   by_contra hn
   have hz : A.rank = 0 := Nat.eq_zero_of_not_pos hn
