@@ -450,4 +450,3 @@ theorem odd_placement (p q : ℕ) (a b N C : ℤ)
 
 
 end D5.S3.Combinatorics.Circle.TwoSmallPlacement
-
