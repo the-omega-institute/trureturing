@@ -1,0 +1,38 @@
+## 6. Sources and limits
+
+The shared-$Q$ posterior, parity replay, and all-marker stopping identities
+are the PG27.1--27.3 and PG27.14--27.19 results in [Process Geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md).
+The terminal risks and their lawful cap attainers are supplied by [Finite-query
+spatial recovery](RECURSIVE_RELATIONAL_OBSERVATION_FINITE_QUERY_SPATIAL_RECOVERY.md),
+at immutable supplier revision `5234b4de599f6ed513dab4bbe2f65b5c743f0115`, especially §§2--4.
+The stopping-tail interface is also exposed by
+`D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.lean` and
+its Blueprint source. The mixed-mean suppliers in that directory are
+BeneficialMarkerDeflection.lean and SingleDeflectionOptimalController.lean.
+The cylinder and parity helpers, including private statements, in
+FiniteAtomLinearRealization.lean and RawFiniteAtomLinearRealization.lean
+supply the same fixed-source interfaces. These are repo-derived suppliers;
+this companion adds
+the common finite-horizon cost/risk attainment and the original-seed
+replacement statement.
+
+Visible-seed averaging itself is supplied by [Wave-particle events, Theorem
+393.3](RECURSIVE_RELATIONAL_OBSERVATION_WAVE_PARTICLE_EVENTS.md); it is used
+only for prior-average cost and risk, with the seed visible and independent.
+Measure splitting, diagonal compactness of probability vectors with a retained
+infinite endpoint, and supporting lines of convex functions are used only as
+intermediate classical facts, with the needed arguments given in Proposition
+5.3. They do not supply the source-specific common realization in Theorems
+3.2 and 4.2. The new bridge and its mean-budget consequences are repo-derived
+ordinary conditional mathematics.
+
+Paid fresh-edge count excludes computation, seed bits, record/output/storage,
+effective prior precision, and physical time. Fixed-prior measurable control
+does not provide effective synthesis from arbitrary approximate descriptions
+of $\mu$, its moments, or exact Bernoulli weights. The labels recovered are
+only those of the actual exposed interval; neither the unacquired law table
+nor $Q$ is recovered. The frontier describes the best feasible tradeoff;
+an arbitrary controller can use a worse decoder at the same cost. These
+results assert no physical realization, whole-literature novelty, total-memory
+optimum, or complete four-expression recovery.
+
