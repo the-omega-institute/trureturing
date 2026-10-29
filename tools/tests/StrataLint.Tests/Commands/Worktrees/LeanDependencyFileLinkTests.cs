@@ -104,8 +104,8 @@ public sealed partial class LeanCacheEnsureCommandTests
             {
                 if (Path.GetFileName(source) != "packages") return;
                 var stagedPackage = Path.Combine(staged, "batteries");
-                // Recreate the referent after the link-bearing directory so the
-                // public fixture observes the problematic link-before-referent order.
+                // Keep both the real relative link and its referent in staging.
+                // The ordered-traversal test controls the order consumed by restoration.
                 File.Delete(Path.Combine(stagedPackage, "README.md"));
                 File.CreateSymbolicLink(Path.Combine(stagedPackage, "docs/README.md"), "../README.md");
                 File.WriteAllText(Path.Combine(stagedPackage, "README.md"), "donor documentation");
@@ -145,6 +145,88 @@ public sealed partial class LeanCacheEnsureCommandTests
             Assert.Equal(prior.Time, File.GetLastWriteTimeUtc(path));
         }
         Assert.Empty(Directory.GetDirectories(lake, "*.stage-*"));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void DependencyRecoveryDefersExistingLinkValidationInControlledMaterialOrder(bool stamped)
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeFileLinkRepository(repository.Path);
+        WriteCache(repository.Path, "donor build", projectWarm: true);
+        var donorPackage = Path.Combine(repository.Path, ".lake/packages/batteries");
+        WriteRestoreFixture(donorPackage, "README.md", "donor documentation");
+        WriteRestoreFixture(donorPackage, "docs/other.md", "additional documentation");
+        var target = AddWorktree(repository.Path, "controlled-link-order");
+        WriteCache(target, "retained compiler", stamp: stamped, mathlibComplete: false, projectWarm: true);
+        var lake = Path.Combine(target, ".lake");
+        var package = Path.Combine(lake, "packages/batteries");
+        WriteRestoreFixture(package, "docs/target-only.md", "target-only source");
+        WriteRestoreFixture(lake, "build/stratalint/raw-lean-report.json", "target-only report");
+        var before = Directory.GetFiles(lake, "*", SearchOption.AllDirectories)
+            .ToDictionary(path => path, path => (Bytes: File.ReadAllBytes(path), Time: File.GetLastWriteTimeUtc(path)));
+        var referent = Path.Combine(package, "README.md");
+        var link = Path.Combine(package, "docs/README.md");
+        File.CreateSymbolicLink(link, "../README.md");
+        var linkTime = File.GetLastWriteTimeUtc(link);
+        var runner = new RecordingWorktreeProcessRunner();
+        var stagedPackage = "";
+        var cloner = new RecordingDirectoryCloner
+        {
+            AfterClone = (_, staged) =>
+            {
+                stagedPackage = Path.Combine(staged, "batteries");
+                File.CreateSymbolicLink(Path.Combine(stagedPackage, "docs/README.md"), "../README.md");
+            },
+        };
+        var pins = ReadPins(target);
+        using var selection = new LeanCacheDonorSelection(repository.Path, null);
+        using var writer = LeanCacheWriterGuard.TryAcquire(lake)
+            ?? throw new InvalidOperationException("fixture target writer is busy");
+        for (var attempt = 0; attempt < 2; attempt++)
+        {
+            var visited = new List<string>();
+            IEnumerable<string> LinkBeforeReferent(string directory)
+            {
+                foreach (var entry in Directory.EnumerateFileSystemEntries(directory)
+                    .OrderBy(path => Path.GetFileName(path) == "README.md" ? 1 : 0)
+                    .ThenBy(path => path, StringComparer.Ordinal))
+                {
+                    var relative = Path.GetRelativePath(stagedPackage, entry);
+                    visited.Add(relative);
+                    if (relative == Path.Combine("docs", "README.md"))
+                    {
+                        Assert.Equal(attempt > 0, File.Exists(referent));
+                        Assert.Equal("../README.md", new FileInfo(link).LinkTarget);
+                    }
+                    yield return entry;
+                }
+            }
+
+            LeanDependencyLayerRestorer.Restore(selection, target, pins, runner, writer, cloner,
+                enumerateMaterialEntries: LinkBeforeReferent);
+
+            Assert.Contains("docs", visited);
+            Assert.Contains("README.md", visited);
+            Assert.Contains(Path.Combine("docs", "README.md"), visited);
+            Assert.True(visited.IndexOf("docs") < visited.IndexOf("README.md"));
+            Assert.True(visited.IndexOf(Path.Combine("docs", "README.md")) < visited.IndexOf("README.md"));
+            Assert.Equal("donor documentation", File.ReadAllText(link));
+            Assert.Equal("../README.md", new FileInfo(link).LinkTarget);
+            Assert.Equal(linkTime, File.GetLastWriteTimeUtc(link));
+            foreach (var (path, prior) in before)
+            {
+                Assert.Equal(prior.Bytes, File.ReadAllBytes(path));
+                Assert.Equal(prior.Time, File.GetLastWriteTimeUtc(path));
+            }
+            Assert.Equal("additional documentation", File.ReadAllText(Path.Combine(package, "docs/other.md")));
+            Assert.Equal(stamped ? LeanCacheStampState.Match : LeanCacheStampState.Missing,
+                LeanCacheStamp.Inspect(lake, pins).State);
+            Assert.Empty(Directory.GetDirectories(lake, "*.stage-*"));
+        }
+        Assert.Equal(2, cloner.Invocations.Count);
+        Assert.DoesNotContain(runner.Invocations, call => Path.GetFileName(call.FileName) is "lake" or "lean");
     }
 
     public static IEnumerable<object[]> DependencyReferentTopologyCases()
