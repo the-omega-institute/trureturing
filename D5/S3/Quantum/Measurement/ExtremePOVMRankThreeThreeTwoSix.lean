@@ -66,13 +66,13 @@ private theorem frame_posDef : frame.PosDef := by
     intro b hb
     exact Matrix.posSemidef_vecMulVec_self_star b.1
   have hframe : frame =
-      !![!![5, 0, 0, 2 - 2 * Complex.I, 0, 0, 2];
-        !![0, 5, 0, 0, 2 - 2 * Complex.I, 0, 2];
-        !![0, 0, 5, 0, 0, 2 - 2 * Complex.I, 2];
-        !![2 + 2 * Complex.I, 0, 0, 5, 0, 0, 1 + Complex.I];
-        !![0, 2 + 2 * Complex.I, 0, 0, 5, 0, 1 + Complex.I];
-        !![0, 0, 2 + 2 * Complex.I, 0, 0, 5, 1 + Complex.I];
-        !![2, 2, 2, 1 - Complex.I, 1 - Complex.I, 1 - Complex.I, 6]] := by
+      !![5, 0, 0, 2 - 2 * Complex.I, 0, 0, 2;
+        0, 5, 0, 0, 2 - 2 * Complex.I, 0, 2;
+        0, 0, 5, 0, 0, 2 - 2 * Complex.I, 2;
+        2 + 2 * Complex.I, 0, 0, 5, 0, 0, 1 + Complex.I;
+        0, 2 + 2 * Complex.I, 0, 0, 5, 0, 1 + Complex.I;
+        0, 0, 2 + 2 * Complex.I, 0, 0, 5, 1 + Complex.I;
+        2, 2, 2, 1 - Complex.I, 1 - Complex.I, 1 - Complex.I, 6] := by
     ext i j
     fin_cases i <;> fin_cases j <;>
       norm_num [frame, effect, blocks, vector, Matrix.sum_apply,
