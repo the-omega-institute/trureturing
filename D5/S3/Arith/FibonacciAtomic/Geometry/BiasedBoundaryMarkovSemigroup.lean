@@ -7,6 +7,7 @@
    digest: Nonlinear contractions of the actual free-root tree extensions. -/
 
 import D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryFreeRootForm
+import D5.S3.Arith.FibonacciAtomic.Geometry.FiniteSourceCovariance
 
 /-! Nonlinear original-edge extensions and their actual biased boundary traces. -/
 
@@ -131,7 +132,7 @@ private theorem cutoff_expansion (h : ℕ) (z : H) :
     change p ∈ ((List.finite_length_le Bool h).toFinset).subtype (· ≠ []) ↔ p ∈ cutoff h
     simp [mem_cutoff]
   · intro p hp
-    change z p • lp.single 2 p (1 : ℝ) = lp.single 2 p (z p)
+    change (z p • lp.single 2 p (1 : ℝ) : H) = lp.single 2 p (z p)
     rw [← lp.single_smul]
     simp
 

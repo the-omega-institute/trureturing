@@ -78,3 +78,4 @@ This establishes the normal-contraction property of the actual free-root form. I
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryMarkovSemigroup.contractedCoordinate`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryMarkovSemigroup.potential`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryFreeRootForm](BiasedBoundaryFreeRootForm.md)
+- Dependency: [D5/S3/Arith/FibonacciAtomic/Geometry/FiniteSourceCovariance](FiniteSourceCovariance.md)
