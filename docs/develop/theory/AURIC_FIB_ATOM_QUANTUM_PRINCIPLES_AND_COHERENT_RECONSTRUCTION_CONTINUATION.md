@@ -1375,3 +1375,389 @@ $$
 没有由裸 FIB 标签推出复数域、相干制备、Born 规则或量子起源；这些接口条件仍须另行建立。
 
 ## 追加锚（本行以下为增补区）
+
+## 46. 全树复核模的实 Gram 完成与统一缺陷
+
+**定义 46.1（逐址的实局部完成）。** 对 $0<h<1$ 置 $b=1-h$，并令
+
+$$
+c=\sqrt{b^2+h^2},qquad
+\gamma=\frac{c-b}{\sqrt h},qquad
+\varphi=\sqrt{h-\gamma^2}.
+\tag{46.1}
+$$
+
+由 $b<c<b+h=1$ 得 $0<\gamma<\sqrt h$，所以 $\varphi>0$。在实三维空间取
+正交单位基 $e_0,e_1,e_2$，定义
+
+$$
+u_0=e_0,qquad
+u_1=\sqrt b\,e_0+\sqrt h\,e_1,qquad
+u_2=\sqrt b\,e_0+\gamma e_1+\varphi e_2.
+\tag{46.2}
+$$
+
+三个向量都是单位向量，且其 Gram 矩阵为
+
+$$
+H_h=
+\begin{pmatrix}
+1&\sqrt b&\sqrt b\\
+\sqrt b&1&c\\
+\sqrt b&c&1
+\end{pmatrix}.
+\tag{46.3}
+$$
+
+事实上 $\langle u_1,u_2\rangle=b+\sqrt h\,\gamma=c$。由 (45.9)，
+
+$$
+H_h(j,l)=\left|G_h(j,l)\right|\qquad(j,l\in\{0,1,2\}).
+\tag{46.4}
+$$
+
+令 $\mathsf E$ 为所有有限支撑映射 $\sigma:\mathcal A\to\{0,1,2\}$ 的集合，
+并以 $e_\sigma$ 为 $\ell^2(\mathsf E;\mathbb R)$ 的标准基。若
+$u_j=\sum_{q=0}^2u_{j,q}e_q$，对每棵树定义有限支撑向量
+
+$$
+U_h(t)=
+\sum_{\substack{\sigma:\mathcal A\to\{0,1,2\}\\
+                 \sigma(p)=0\ (p\notin S(t))}}
+\left(\prod_{p\in S(t)}u_{\lambda_t(p),\sigma(p)}\right)e_\sigma.
+\tag{46.5}
+$$
+
+至多有 $3^{|S(t)|}$ 个非零坐标。有限分配律和 (46.3) 给出
+
+$$
+\|U_h(t)\|=1,qquad
+Q_h(s,t):=\langle U_h(s),U_h(t)\rangle
+ =\prod_{p\in\mathcal A}H_h(\lambda_s(p),\lambda_t(p))
+ =\left|P_h^{\mathrm c}(s,t)\right|.
+\tag{46.6}
+$$
+
+最后一个等式可逐因子取模，因为所有 $H_h(j,l)$ 都是非负实数。这个构造只使用
+每棵树的有限位置集；它不要求一个抽象的无限张量积，也不把地址坐标宣称为物理子系统。
+
+**定理 46.2（全来源的正实模核）。** 对 $n\ge1$ 令
+
+$$
+h_n=r_n=\frac1{5n},qquad a_n=b_n=1-h_n,qquad
+R_n(s,t)=a_nQ_{h_n}(s,t)+r_n\delta_{s,t}.
+\tag{46.7}
+$$
+
+则 $R_n$ 是全 $T$ 上的归一化实 Gram 核，并且
+
+$$
+R_n(s,t)=\left|K_n^{\mathrm c}(s,t)\right|
+\qquad(s,t\in T).
+\tag{46.8}
+$$
+
+它保持 $\rho$，对不同来源满足 $0<R_n(s,t)\le a_n<1$，且所有重复标签的复
+Gram 测试均非负。存在一个与 $n$ 无关的实 Hilbert 空间
+$\mathcal H_R=\ell^2(\mathsf E;\mathbb R)\oplus\ell^2(T;\mathbb R)$ 及单位向量
+
+$$
+\eta_n^R(t)=\sqrt{a_n}\,U_{h_n}(t)\oplus\sqrt{r_n}\,e_t
+\tag{46.9}
+$$
+
+实现该核。对所有 $s,t,u,v\in T$，若
+$D_{R_n}(s,t,u,v):=R_n(\langle s,t\rangle,\langle u,v\rangle)
+-R_n(s,u)R_n(t,v)$，则
+
+$$
+\sup_{T^4}|D_{R_n}|\le a_n(h_n+r_n)=\frac{2a_n}{5n}<\frac1n.
+\tag{46.10}
+$$
+
+**证明。** 由 (45.5) 和 (46.6)，$Q_h(\rho s,\rho t)=Q_h(s,t)$。对任意
+可重复的 $t_1,\ldots,t_M$ 和 $c_1,\ldots,c_M\in\mathbb C$，把实空间复
+化后有
+
+$$
+\sum_{i,j}\overline{c_i}c_jR_n(t_i,t_j)
+=a_n\left\|\sum_i c_iU_{h_n}(t_i)\right\|^2
+ +r_n\sum_{x\in\{t_i\}}
+       \left|\sum_{i:t_i=x}c_i\right|^2\ge0.
+\tag{46.11}
+$$
+
+这同时证明正性、重复标签的处理、归一化和 (46.9) 的 Gram 表示。delta 分量给出
+来源标签的忠实性；因此 (46.8) 也给出 $R_n(s,t)=1$ 当且仅当 $s=t$。
+
+对四棵树置
+
+$$
+A=Q_h(s,u),\quad B=Q_h(t,v),\quad d=\delta_{s,u},\quad e=\delta_{t,v},
+\quad C=H_h(\ell(s,t),\ell(u,v)).
+$$
+
+地址分解与 (45.15) 同样给出 $Q_h(\langle s,t\rangle,\langle u,v\rangle)=ABC$，
+而构造子的单射性给出对应 delta 为 $de$。于是有精确恒等式
+
+$$
+D_{R_n}=a_nAB(C-1)+r_na_n(A-d)(B-e).
+\tag{46.12}
+$$
+
+因为 $1-\sqrt b\le h$ 且 $1-c\le h$，故 $|C-1|\le h$。又
+$0\le A,B\le1$，且 $d=1$ 时 $A=1$、$d=0$ 时 $|A-d|=A$，所以
+$|A-d|,|B-e|\le1$。式 (46.10) 随即成立。∎
+
+## 47. 破坏性重置菜单的完整记录等价
+
+**定义 47.1（分别供给的破坏性查询）。** 复模型和实模型分别使用其自身的全局载体，
+记对应的源射线为 $v_t^{\mathrm c}=\eta_n^{\mathrm c}(t)$ 与
+$v_t^R=\eta_n^R(t)$。在每一个模型中另取正交的失败标记 $|\mathrm{fail}\rangle$，
+置 $\widetilde H_X=\mathcal H_X\oplus\mathbb C|\mathrm{fail}\rangle$，其中
+$X\in\{\mathrm c,R\}$，并令
+
+$$
+\widetilde P_t^X=|v_t^X\rangle\langle v_t^X|\oplus0.
+$$
+
+查询 $t$ 的两支仪器定义为
+
+$$
+\begin{aligned}
+J_{t,X}^{+}(Y)&=\widetilde P_t^X,Y\,\widetilde P_t^X,\\
+J_{t,X}^{-}(Y)&=\operatorname{Tr}\!\left[(I-\widetilde P_t^X)Y\right]
+ |\mathrm{fail}\rangle\langle\mathrm{fail}|.
+\end{aligned}
+\tag{47.1}
+$$
+
+两支的迹和为 $\operatorname{Tr}Y$，失败标记在后续查询下保持吸收。这里的仪器是
+每个源模型中另行给定的菜单；它不是由五模原生菜单或由 (46.9) 自动提供。
+
+**定理 47.2（全有限自适应原始记录相同）。** 允许 Stop、独立于未知输入的经典随机化、
+以及仅依赖此前完整经典记录的有限自适应选择。对复模型与实模型采用相同的经典策略并作
+源标签对应，则每一条有限完整原始记录的未归一质量相同，包括零质量记录、终端负支和
+Stop；不作后选择。具体地，若某一活动前缀质量为 $m$、当前源为 $s$、查询为 $t$，
+则正支质量和负支质量分别为
+
+$$
+m\,|K_n^{\mathrm c}(s,t)|^2=m\,R_n(s,t)^2,qquad
+m\bigl(1-|K_n^{\mathrm c}(s,t)|^2\bigr)=m\bigl(1-R_n(s,t)^2\bigr).
+\tag{47.2}
+$$
+
+正支的归一化状态是 $v_t^X$，负支保留其失败标记；Stop 保留前缀质量。
+
+**证明。** 对一棵有限决策树按深度归纳。根前缀的质量均为 $1$；(47.1) 给出
+(47.2)，正支再置于同一对应源射线上，负支成为终端，Stop 不改变质量。因而每个
+完整记录的质量在两模型间逐层相同，零质量记录也由同一递推保留。有限棵树的所有终端
+质量相加为 $1$，没有隐含的 postselection。
+
+若独立随机种子取值于非原子概率空间，不能把单点种子当作具有正概率的分支。对每个
+可测种子 $\omega$，先把每一终端记录写成有限维的 CP 子映射 $\Phi_{r,\omega}$，再定义
+
+$$
+\overline\Phi_r(Y)=\int \Phi_{r,\omega}(Y)\,d\mu(\omega).
+\tag{47.3}
+$$
+
+有限维 Choi 矩阵的 Bochner 积仍为正，迹和与终端质量也逐项积分；两模型在每个种子
+上的 (47.2) 相同，故积分后的完整记录律仍相同。∎
+
+## 48. 保留拒绝的相干记录差异
+
+**定理 48.1（移动三源的保留拒绝间隙）。** 对 $k=5n$ 使用 (45.17) 的三棵源
+$W_{0,k},W_{1,k},W_{2,k}$。在每个模型 $X\in\{\mathrm c,R\}$ 中置
+$P_j^X=|v_{W_{j,k}}^X\rangle\langle v_{W_{j,k}}^X|$，先施加保留负支的
+Lüders 二元仪器
+
+$$
+L_{1,X}^{+}(Y)=P_1^XYP_1^X,qquad
+L_{1,X}^{-}(Y)=(I-P_1^X)Y(I-P_1^X),
+\tag{48.1}
+$$
+
+再以破坏性查询 $P_2^X$ 记录正负，最后对每条记录 Stop。若
+$x=|K_n^{\mathrm c}(W_{1,k},W_{0,k})|^2$、
+$y=|K_n^{\mathrm c}(W_{2,k},W_{1,k})|^2$、
+$z=|K_n^{\mathrm c}(W_{2,k},W_{0,k})|^2$，则复模型完整四记录律按
+$(++,+-,-+,--)$ 排列为
+
+$$
+\bigl(xy,\ x(1-y),\ z+xy-2\operatorname{Re}\mathcal B_n,\
+1-x-z-xy+2\operatorname{Re}\mathcal B_n\bigr),
+\tag{48.2}
+$$
+
+实模型将其中的 $\operatorname{Re}\mathcal B_n$ 替换为 $|\mathcal B_n|$。因此
+
+$$
+p_{\mathrm c}(-,+)-p_R(-,+)
+=2\bigl(|\mathcal B_n|-\operatorname{Re}\mathcal B_n\bigr)
+=2|\mathcal B_n|(1-\cos\theta_n)
+\ge \Delta_*:=2\left(\frac45\right)^{23}(1-\cos1)>0.
+\tag{48.3}
+$$
+
+**证明。** 负后正分支的未归一振幅为
+
+$$
+P_2^X(I-P_1^X)v_{W_{0,k}}^X,
+$$
+
+故其质量为 $|K_{20}-K_{21}K_{10}|^2$；这里下标指三棵 $W_{j,k}$，并且不除以
+第一次负支的质量。对复模型，Hermitian 性把交叉项写成
+$\mathcal B_n=K_{01}K_{12}K_{20}$，所以负后正质量是
+$z+xy-2\operatorname{Re}\mathcal B_n$。实模型的三条边分别是复边的模，闭路积为
+$|\mathcal B_n|$，得到 (48.2) 和 (48.3)。式 (45.19) 给
+$\theta_n\in(1,5/4)\subset(0,\pi)$ 与
+$|\mathcal B_n|\ge(4/5)^{23}$；在该区间 $1-\cos\theta_n\ge1-\cos1$。
+四项均为各仪器分支的范数平方，和为 $1$，所以所有终端质量都被保留。∎
+
+共轭整个复模型会把 $\mathcal B_n$ 换成其共轭，但 (48.3) 只读取 $\cos\theta_n$，
+因此不决定相位方向。标准的 doubled-realification
+
+$$
+F(A)=\begin{pmatrix}\operatorname{Re}A&-\operatorname{Im}A\\
+\operatorname{Im}A&\operatorname{Re}A\end{pmatrix}
+\tag{48.4}
+$$
+
+可在更大的实载体上模拟复密度、效果和 Kraus 算子；这不把本节的实模核嵌入五维
+载体，也不选择物理复标量。Lüders 保留负支是额外的仪器资源，不能以读完全部模式后
+把四个负标签作经典合并来替代。
+
+## 49. 五模原生菜单的相干拒绝障碍
+
+**定理 49.1（全有限原生协议的 half-diamond 下界）。** 令 $H=\mathbb C^5$，原生
+协议由等待 $U(t)=\exp(-itK)$、完整的五模秩一读出
+$J_s(Y)=P_sYP_s$、Stop、有限历史反馈和独立经典随机化组成；为取得下界可把等待
+控制扩大为任意 $U\in U(5)$。不许量子旁路、额外 ancilla、reset 或新的粗粒度仪器。
+每棵决策树在每条叶终止并保留全部终端质量，协议族不要求一个共同的深度上界。
+
+取任意非零真投影 $P$，令 $Q=I-P$ 且 $\operatorname{rank}Q=r\ge2$。目标旗标信道为
+
+$$
+\Lambda(Y)=PYP\otimes|+\rangle\langle+|
+       +QYQ\otimes|-\rangle\langle-|.
+\tag{49.1}
+$$
+
+任一上述协议的完整记录经任意经典二值后处理并保留系统输出，得到旗标信道 $\Gamma$。
+则
+
+$$
+\frac12\|\Gamma-\Lambda\|_\diamond
+\ge \max\left\{w,(1-w)\frac{r-1}{r}\right\}
+\ge\frac{r-1}{2r-1},
+\tag{49.2}
+$$
+
+其中 $w$ 是被标为负的、在首次量子读出前即终止的路径总质量。对实际五模的单模式
+$P$ 有 $r=4$，所以 half-diamond 距离至少为 $3/7$（未除以二的 diamond 距离至少为
+$6/7$）。
+
+**证明。** 记 $M_-$ 为 $\Gamma$ 的负支子信道。按终端路径是否包含首次量子读出
+分解为
+
+$$
+M_-=N_-+E_-.
+\tag{49.3}
+$$
+
+无读出负路径只含输入无关的经典选择和系统酉，因此在离散情形
+$N_-(Y)=\sum_jp_jV_jYV_j^*$，其中 $p_j\ge0$ 且 $\sum_jp_j=w$。对非原子种子，
+同一式写成子概率积分
+
+$$
+N_-(Y)=\int V_\omega YV_\omega^*\,d\nu(\omega),
+\qquad \nu(\Omega)=w.
+\tag{49.4}
+$$
+
+首次秩一读出后的任意终端 Kraus 乘积秩至多一；后续等待、读出和反馈只在左、右侧
+乘以算子，故仍秩至多一。有限维 Choi 矩阵的有限和或 (49.4) 型积分保持可分离锥，
+所以 $E_-$ 是 entanglement-breaking。由于 $M_-$ 是子信道，
+
+$$
+0\le E_-^*(I)\le(1-w)I.
+\tag{49.5}
+$$
+
+先取单位向量 $\psi\in\operatorname{ran}P$。目标的负概率为零，而协议的负概率
+$\operatorname{Tr}M_-(|\psi\rangle\langle\psi|)\ge w$。在负旗标上作二值效果测量，
+得到 half-diamond 距离至少为 $w$。
+
+再取 $Q$ 的正交基 $q_1,\ldots,q_r$，并让外部参考系带有基
+$f_1,\ldots,f_r$，置
+
+$$
+|\Phi_Q\rangle=\frac1{\sqrt r}\sum_{i=1}^rq_i\otimes f_i.
+$$
+
+目标在负旗标下输出该纯态，概率为 $1$。协议的未归一负输出写成
+$\sigma_-=((M_-\otimes\operatorname{id})(|\Phi_Q\rangle\langle\Phi_Q|))$。
+无读出部分在 $|\Phi_Q\rangle$ 上的重叠为
+
+$$
+\int\left|\langle\Phi_Q|(V_\omega\otimes I)|\Phi_Q\rangle\right|^2d\nu(\omega)le w.
+\tag{49.6}
+$$
+
+读出部分是正的可分离算子，迹由 (49.5) 至多为 $1-w$。对任意正的可分离算子
+$\sigma$，Schmidt 展开逐项给出
+
+$$
+\langle\Phi_Q|\sigma|\Phi_Q\rangle\le\frac{\operatorname{Tr}\sigma}{r}.
+\tag{49.7}
+$$
+
+因此
+
+$$
+\langle\Phi_Q|\sigma_-|\Phi_Q\rangle
+\le w+\frac{1-w}{r}.
+$$
+
+用联合效果 $|-\rangle\langle-|\otimes|\Phi_Q\rangle\langle\Phi_Q|$ 比较两旗标输出，
+得到 half-diamond 距离至少为 $(1-w)(1-1/r)$。合并两个见证即得第一项。对
+$w\in[0,1]$，两项的最大值在
+$w=(r-1)/(2r-1)$ 处达到其最小可能值，给出第二项。∎
+
+这个下界是对所列原生菜单的资源障碍，不是最优性或可达到性定理，也不提供 Bell
+效果、外部参考制备或额外相干记录。特别地，它与 §§46–48 的源射线模型不在同一
+载体上；原生五模协议不能被默认为实现源核的破坏性或 Lüders 仪器。
+
+## 50. 两个载体的秩边界与联合结论
+
+对 $R_n$ 的任意 $m$ 个互异来源 $t_1,\ldots,t_m$，其 Gram 矩阵满足
+
+$$
+\bigl[R_n(t_i,t_j)\bigr]_{i,j=1}^m
+=a_n\bigl[Q_{h_n}(t_i,t_j)\bigr]_{i,j=1}^m+r_nI_m
+\succeq r_nI_m.
+\tag{50.1}
+$$
+
+所以其秩至少为 $m$；$K_n^{\mathrm c}$ 的同一 delta 提升也有相同的有限秩下界。
+由于 $m$ 任意，源核的单一全局载体含有无界的有限独立秩，不能由保持全部 Gram
+内积的映射放入 $\mathbb C^5$。有限见证集当然可在其有限向量张成空间中实现，
+但这只说明有限数学模型存在，不提供原生制备、控制门或统一的制备成本。
+
+因此 §§46–48 的结论是：同一全来源标签可有相同的全部破坏性原始记录律，而在明确
+保留拒绝的仪器下由移动闭环的 $\cos\theta_n$ 产生统一可见差异；§49 则独立说明，
+实际五模的完整秩一读出菜单无法把四维拒绝子空间以小于 $3/7$ 的 half-diamond
+误差保留下来。二者共同推进的是量子起源接口中的“记录等价—拒绝相干性”分界，
+并没有把两个载体、制备权限、仪器合同、物理复标量、独立组合或 Born 对应连接起来。
+移动见证随 $n$ 变化；固定 $n$ 时
+
+$$
+R_n(W_{0,m},W_{1,m})=a_nb_n^{m/2}\longrightarrow0\qquad(m\to\infty),
+\tag{50.2}
+$$
+
+故 (48.3) 不是固定标签或统一制备资源成本的下界。相位整体共轭保留所有记录概率，
+而更大的实倍增载体仍可表达复菜单；这些边界均不由源标签本身消除。
+
+## 追加锚（本行以下为增补区）
