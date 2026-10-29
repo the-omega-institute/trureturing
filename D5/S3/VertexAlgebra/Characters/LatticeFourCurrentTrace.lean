@@ -1977,7 +1977,7 @@ private theorem mode_energy_support (D : LatticeData) (i : Four → Fin D.rank)
     ((matching_energy_transport n _ _ M k hh.1).mpr hh.2)
   exact ⟨hb.1, hb.2.1, fun e => (hb.2.2 e).2⟩
 
-private theorem bounded_tuple_sum {ι : Type*} [Fintype ι]
+private theorem bounded_tuple_sum {ι : Type*} [Fintype ι] [DecidableEq ι]
     (B C : ℕ) (hBC : B ≤ C) (f : (ι → ℕ) → ℕ → ℂ)
     (hs : ∀ k t, f k t ≠ 0 → t ≤ B ∧ ∀ e, k e ≤ B) :
     (∑ k : ι → Fin (B + 1), ∑ t : Fin (B + 1), f (fun e => (k e).1) t.1) =
@@ -2058,7 +2058,7 @@ private theorem sum_double_edge (M : PM4) (a b : Four × Four)
     (α : Type*) [Fintype α] (f : (edgeParam M → α) → ℂ) :
     (∑ k, f k) = ∑ x : α, ∑ y : α, f (fun e => if e.1 = a then x else y) := by
   have h := ((doubleEdgeValueEquiv M a b ha hab α).symm.sum_comp f).symm
-  simpa only [Fintype.sum_prod_type] using h
+  simpa only [Fintype.sum_prod_type, doubleEdgeValueEquiv, Equiv.coe_fn_symm_mk] using h
 
 private theorem matching_single_sum (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
@@ -2113,7 +2113,7 @@ private theorem matching_double_sum (D : LatticeData)
   intro b _
   apply Finset.sum_congr rfl
   intro t _
-  exact double_mode_energy_weight D i n β h c a.1 b.1 t.1
+  simpa only [apply_ite] using double_mode_energy_weight D i n β h c a.1 b.1 t.1
 
 private theorem matching_channel_sum (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
@@ -2122,12 +2122,12 @@ private theorem matching_channel_sum (D : LatticeData)
       matchingEnergyCoefficient D hD i n (n 0) (channelDouble c) =
         channelEnergyCoefficient D hD i n c := by
   classical
-  have hc : contraction D (i 0) (i (channelMate c)) (n 1 - n 0)
+  have hc : contraction D (i 0) (i (channelMate c)) ((n 1 - n 0 : ℕ) : ℤ)
       (currentMode n (channelMate c)) =
       if currentMode n 0 + currentMode n (channelMate c) = 0 then
         ((n 1 - n 0 : ℕ) : ℂ) * (D.G (i 0) (i (channelMate c)) : ℂ) else 0 := by
     rw [leading_frequency n h]
-    rfl
+    simp only [contraction, Int.cast_natCast]
   rw [matching_single_sum D hD i n h c, matching_double_sum D hD i n h c]
   unfold channelEnergyCoefficient
   dsimp only
@@ -2222,8 +2222,12 @@ private theorem ordered_positive_channels (D : LatticeData)
   have hc0 := matching_channel_sum D hD i n h 0
   have hc1 := matching_channel_sum D hD i n h 1
   have hc2 := matching_channel_sum D hD i n h 2
-  simp only [channelSingle, channelDouble, Matrix.cons_val_zero, Matrix.cons_val_one,
-    Matrix.cons_val_two] at hc0 hc1 hc2
+  change matchingEnergyCoefficient D hD i n (n 0) .p12 +
+    matchingEnergyCoefficient D hD i n (n 0) .p12_34 = _ at hc0
+  change matchingEnergyCoefficient D hD i n (n 0) .p13 +
+    matchingEnergyCoefficient D hD i n (n 0) .p13_24 = _ at hc1
+  change matchingEnergyCoefficient D hD i n (n 0) .p14 +
+    matchingEnergyCoefficient D hD i n (n 0) .p14_23 = _ at hc2
   rw [Fin.sum_univ_succ, Fin.sum_univ_succ, Fin.sum_univ_succ]
   simp only [Fin.sum_univ_zero, add_zero]
   change _ = channelEnergyCoefficient D hD i n 0 +
@@ -2234,24 +2238,24 @@ private theorem channel_energy_original (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
     (i : Four → Fin D.rank) (n : Four → ℕ) (h : n 0 < n 1) (c : Fin 3) :
     channelEnergyCoefficient D hD i n c =
-      contraction D (i 0) (i (channelMate c)) (n 1 - n 0) (currentMode n (channelMate c)) *
+      contraction D (i 0) (i (channelMate c)) ((n 1 - n 0 : ℕ) : ℤ) (currentMode n (channelMate c)) *
         ∑ a ∈ Finset.range (n 0 / (n 1 - n 0) + 1),
           signedPairCoefficient D hD (i (channelRest c).1) (i (channelRest c).2)
-            ((n 0 : ℤ) - (a : ℤ) * (n 1 - n 0)) (currentMode n (channelRest c).1) := by
+            ((n 0 : ℤ) - (a : ℤ) * ((n 1 - n 0 : ℕ) : ℤ)) (currentMode n (channelRest c).1) := by
   classical
   unfold channelEnergyCoefficient
   dsimp only
   congr 1
   rw [← bounded_division_sum
     (fun a => signedPairCoefficient D hD (i (channelRest c).1) (i (channelRest c).2)
-      ((n 0 : ℤ) - (a : ℤ) * (n 1 - n 0)) (currentMode n (channelRest c).1))
+      ((n 0 : ℤ) - (a : ℤ) * ((n 1 - n 0 : ℕ) : ℤ)) (currentMode n (channelRest c).1))
     (n 0) (n 1 - n 0) (n 0) (by omega) le_rfl]
   apply Finset.sum_congr rfl
   intro a _
   by_cases ha : a.1 * (n 1 - n 0) ≤ n 0
   · rw [if_pos ha, if_pos ha]
     have he : ((n 0 - a.1 * (n 1 - n 0) : ℕ) : ℤ) =
-        (n 0 : ℤ) - (a.1 : ℤ) * (n 1 - n 0) := by
+        (n 0 : ℤ) - (a.1 : ℤ) * ((n 1 - n 0 : ℕ) : ℤ) := by
       rw [Nat.cast_sub ha, Nat.cast_mul]
     rw [← he]
     exact (pair_energy_coefficient D hD _ _ _ _ (by omega) _).symm
@@ -2267,7 +2271,8 @@ private theorem original_four_positive_matching (D : LatticeData)
   rw [Fin.sum_univ_succ, Fin.sum_univ_succ, Fin.sum_univ_succ]
   simp only [Fin.sum_univ_zero, add_zero]
   rw [← Finset.sum_add_distrib, ← Finset.sum_add_distrib]
-  exact original_four_finite_coefficient D hD i n h
+  simpa only [channelMate, channelRest, currentMode, add_assoc] using
+    original_four_finite_coefficient D hD i n h
 
 /-- The bounded labeled partial-matching formula for the original finite four-current cycle
 on every full natural energy-grade quadruple. -/
