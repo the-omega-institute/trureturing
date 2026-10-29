@@ -12,7 +12,7 @@ internal sealed class LatticeFourCurrentTraceDocument : IScribeDocumentDefinitio
         Blocks(
             Definition("four-current-matchings", "PM4", "Ten labeled partial matchings",
                 "The slots are Fin 4. There is one empty matching, six single-edge matchings, and three two-edge matchings. Every edge is ordered by its two slot labels; different edges remain distinct when their frequencies coincide."),
-            Definition("four-current-matching-edges", "PM4.edges", "Labeled edge sets",
+            Definition("four-current-matching-edges", "edges", "Labeled edge sets",
                 "Each partial matching has its literal finite set of ordered pairs of distinct slots. The edge assignments in the coefficient are functions on this set, including its empty domain."),
             Definition("lattice-four-current-cycle", "actualFourCurrentCycleTrace", "Original finite four-current cycle trace",
                 "For every original LatticeData D with positive-definite real Gram matrix, every i : Fin 4 → Fin D.rank and every n : Fin 4 → Nat, the trace is the finite complex LinearMap.trace on the original grade n(0) of B0 composed with B1 composed with B2 composed with B3. Here Ba is the literal existing actualCurrentBlock D (i(a)) (n(a)) (n(a+1)), with cyclic indices. The rightmost block acts first. All charge and oscillator labels of each full grade remain in the domain, and the current-label domain retains rank zero."),
