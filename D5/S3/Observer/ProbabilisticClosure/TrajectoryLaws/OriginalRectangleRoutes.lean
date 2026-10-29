@@ -9,6 +9,8 @@
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleOccurrence
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
 import Mathlib.LinearAlgebra.Matrix.Irreducible.Defs
+import Mathlib.Combinatorics.Quiver.Arborescence
+import D5.S3.Combinatorics.Graph.PerronFrobenius.MCMCSupplier.Combinatorics.Quiver.Path
 
 /-! Bounded original labelled routes and their same-law visible occurrence payment. -/
 
@@ -38,30 +40,6 @@ private def emptyRoute (θ : Presentation H) (r : H) : LabelledRoute θ r r wher
   last := rfl
   positive i := nomatch i
 
-omit [MeasurableSpace H] [MeasurableSingletonClass H] in
-private theorem bounded_positive_power (A : Matrix H H ℝ) (hA : ∀ i j, 0 ≤ A i j)
-    (i j : H) (hp : ∃ n : ℕ, 0 < (A^n) i j) :
-    ∃ n < Fintype.card H, 0 < (A^n) i j := by
-  letI : Nonempty H := ⟨i⟩
-  by_contra hh
-  have hz (n : ℕ) (hn : n < Fintype.card H) : (A^n) i j = 0 := by
-    exact le_antisymm (le_of_not_gt (fun hn' => hh ⟨n,hn,hn'⟩))
-      (Matrix.pow_apply_nonneg hA n i j)
-  obtain ⟨n,hn⟩ := hp
-  have hc : A.charpoly ≠ 1 := by
-    intro he
-    have hd := congrArg Polynomial.natDegree he
-    rw [Matrix.charpoly_natDegree_eq_dim, Polynomial.natDegree_one] at hd
-    exact (Fintype.card_ne_zero : Fintype.card H ≠ 0) hd
-  have hd : (Polynomial.X^n %ₘ A.charpoly).natDegree < Fintype.card H := by
-    simpa only [Matrix.charpoly_natDegree_eq_dim] using
-      Polynomial.natDegree_modByMonic_lt (Polynomial.X^n) A.charpoly_monic hc
-  have he : (A^n) i j = 0 := by
-    rw [Matrix.pow_eq_aeval_mod_charpoly, Polynomial.aeval_eq_sum_range' hd]
-    simp only [Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul]
-    exact Finset.sum_eq_zero fun k hk => by rw [hz k (Finset.mem_range.mp hk), mul_zero]
-  exact (ne_of_gt hn) he
-
 private def append_label (θ : Presentation H) (h s r : H) (a : LabelledRoute θ h s)
     (x : Bool) (he : 0 < θ.matrix x s r) : LabelledRoute θ h r where
   length := a.length+1
@@ -78,60 +56,53 @@ omit [MeasurableSpace H] [MeasurableSingletonClass H] in
 private theorem route_of_positive_path (θ : Presentation H) {h r : H}
     (p : @Quiver.Path H (Matrix.toQuiver (θ.matrix false+θ.matrix true)) h r) :
     ∃ a : LabelledRoute θ h r,
-      a.length = @Quiver.Path.length H (Matrix.toQuiver (θ.matrix false+θ.matrix true)) h r p := by
+      a.length = @Quiver.Path.length H (Matrix.toQuiver (θ.matrix false+θ.matrix true)) h r p ∧
+      List.ofFn a.states = p.vertices := by
   letI := Matrix.toQuiver (θ.matrix false+θ.matrix true)
   induction p with
-  | nil => exact ⟨emptyRoute θ h,rfl⟩
+  | nil => exact ⟨emptyRoute θ h,rfl,by simp [emptyRoute, Quiver.Path.vertices]⟩
   | @cons s t p e ih =>
-    obtain ⟨a,ha⟩ := ih
+    obtain ⟨a,ha,hv⟩ := ih
     have hs : 0 < θ.matrix false s t + θ.matrix true s t := e.down
     obtain ⟨x,hx⟩ : ∃ x : Bool, 0 < θ.matrix x s t := by
       by_cases hf : 0 < θ.matrix false s t
       · exact ⟨false,hf⟩
       · exact ⟨true,by linarith [le_of_not_gt hf]⟩
-    exact ⟨append_label θ _ _ _ a x hx, congrArg Nat.succ ha⟩
-
-private theorem route_of_positive_power (θ : Presentation H) (n : ℕ) (h r : H)
-    (hp : 0 < ((θ.matrix false+θ.matrix true)^n) h r) :
-    ∃ a : LabelledRoute θ h r, a.length = n := by
-  obtain ⟨⟨p,he⟩⟩ := (Matrix.pow_apply_pos_iff_nonempty_path
-    (fun i j => add_nonneg (θ.matrix_nonneg false i j) (θ.matrix_nonneg true i j))
-      n h r).mp hp
-  obtain ⟨a,ha⟩ := route_of_positive_path θ p
-  exact ⟨a,ha.trans he⟩
+    refine ⟨append_label θ _ _ _ a x hx, congrArg Nat.succ ha, ?_⟩
+    simpa only [append_label, List.ofFn_succ', Fin.snoc_castSucc, Fin.snoc_last,
+      List.concat_eq_append, Quiver.Path.vertices_cons, hv]
 
 private theorem short_route (θ : Presentation H)
     (hirr : ∀ i j : H, ∃ n : ℕ, 0 < ((θ.matrix false+θ.matrix true)^n) i j)
-    (h r : H) : ∃ a : LabelledRoute θ h r, a.length < Fintype.card H := by
-  obtain ⟨n,hn,hp⟩ := bounded_positive_power (θ.matrix false+θ.matrix true)
-    (fun i j => add_nonneg (θ.matrix_nonneg _ _ _) (θ.matrix_nonneg _ _ _)) h r (hirr h r)
-  obtain ⟨a,ha⟩ := route_of_positive_power θ n h r hp
-  exact ⟨a,ha ▸ hn⟩
-
-private def append_zero (θ : Presentation H) (h s r : H) (a : LabelledRoute θ h s)
-    (he : 0 < θ.matrix false s r) : LabelledRoute θ h r :=
-  append_label θ h s r a false he
+    (h r : H) : ∃ a : LabelledRoute θ h r,
+      a.length < Fintype.card H ∧ Function.Injective a.states := by
+  letI := Matrix.toQuiver (θ.matrix false+θ.matrix true)
+  letI : Quiver.RootedConnected h := ⟨fun j => by
+    obtain ⟨n,hn⟩ := hirr h j
+    obtain ⟨⟨p,_⟩⟩ := (Matrix.pow_apply_pos_iff_nonempty_path
+      (fun i j => add_nonneg (θ.matrix_nonneg _ _ _) (θ.matrix_nonneg _ _ _)) n h j).mp hn
+    exact ⟨p⟩⟩
+  let p := Quiver.shortestPath h r
+  have hs := Quiver.Path.isStrictlySimple_of_shortest p (Quiver.shortest_path_spec h)
+  have hb := Quiver.Path.length_le_card_minus_one_of_isSimple p hs
+  obtain ⟨a,ha,hv⟩ := route_of_positive_path θ p
+  have hi : Function.Injective a.states := List.nodup_ofFn.mp (hv.symm ▸ hs)
+  have hc : 0 < Fintype.card H := Fintype.card_pos_iff.mpr ⟨h⟩
+  exact ⟨a, by omega, hi⟩
 
 omit [MeasurableSpace H] [MeasurableSingletonClass H] in
-private theorem zero_predecessor (θ : Presentation H) (hpos : ∀ h, 0 < θ.initial h)
-    (r : H) (hout : ∃ k, 0 < θ.matrix true r k) : ∃ s, 0 < θ.matrix false s r := by
+private theorem one_incoming_zero (θ : Presentation H) (hpos : ∀ h, 0 < θ.initial h)
+    (r : H) (hout : ∃ k, 0 < θ.matrix true r k) : ∀ s, θ.matrix true s r = 0 := by
   obtain ⟨k,hk⟩ := hout
-  have hnr (s : H) : θ.matrix true s r = 0 := by
-    have hz := congrFun (congrFun (trim_no11 θ) (⟨s,hpos s⟩ : Positive θ))
-      (⟨k,hpos k⟩ : Positive θ)
-    change (∑ l : Positive θ, θ.matrix true s l.val * θ.matrix true l.val k) = 0 at hz
-    have hle : θ.matrix true s r * θ.matrix true r k ≤ 0 := by
-      rw [← hz]
-      exact Finset.single_le_sum (fun (l : Positive θ) _ => mul_nonneg (θ.matrix_nonneg true s l.val)
-        (θ.matrix_nonneg true l.val k)) (Finset.mem_univ (⟨r,hpos r⟩ : Positive θ))
-    nlinarith [θ.matrix_nonneg true s r]
-  have hs : 0 < ∑ s, θ.initial s * (θ.matrix false s r+θ.matrix true s r) := by
-    rw [θ.stationary]
-    exact hpos r
-  obtain ⟨s,_,hs⟩ := (Finset.sum_pos_iff_of_nonneg (fun s _ => mul_nonneg
-    (θ.initial_nonneg s) (add_nonneg (θ.matrix_nonneg _ _ _) (θ.matrix_nonneg _ _ _)))).mp hs
-  rw [hnr s,add_zero] at hs
-  exact ⟨s,pos_of_mul_pos_right hs (θ.initial_nonneg s)⟩
+  intro s
+  have hz := congrFun (congrFun (trim_no11 θ) (⟨s,hpos s⟩ : Positive θ))
+    (⟨k,hpos k⟩ : Positive θ)
+  change (∑ l : Positive θ, θ.matrix true s l.val * θ.matrix true l.val k) = 0 at hz
+  have hle : θ.matrix true s r * θ.matrix true r k ≤ 0 := by
+    rw [← hz]
+    exact Finset.single_le_sum (fun (l : Positive θ) _ => mul_nonneg (θ.matrix_nonneg true s l.val)
+      (θ.matrix_nonneg true l.val k)) (Finset.mem_univ (⟨r,hpos r⟩ : Positive θ))
+  nlinarith [θ.matrix_nonneg true s r]
 
 private theorem first_one_outgoing (θ : Presentation H) (w : List Bool)
     (R : Rectangle (product θ w)) (r : H) (hr : r ∈ R.rows)
@@ -172,23 +143,27 @@ theorem irreducible_rectangle_occurrence (θ : Presentation H)
       a.length ≤ Fintype.card H ∧ (h = r → a.length = 0) ∧
       (w.head? = some false → a.length < Fintype.card H) ∧
       (h ≠ r → w.head? = some true → (List.ofFn a.labels).getLast? = some false) := by
-    by_cases he : h = r
-    · subst h
-      exact ⟨emptyRoute θ r,Nat.zero_le _,fun _ => rfl,fun _ => hcard,
-        fun hn => (hn rfl).elim⟩
-    · by_cases ht : w.head? = some true
-      · obtain ⟨s,hs⟩ := zero_predecessor θ hpos r (first_one_outgoing θ w R r hr ht)
-        obtain ⟨a,ha⟩ := short_route θ hirr h s
-        refine ⟨append_zero θ h s r a hs,Nat.succ_le_of_lt ha,fun hh => (he hh).elim,
-          ?_,?_⟩
-        · intro hf
-          rw [ht] at hf
-          cases hf
-        · intro _ _
-          simp only [append_zero, append_label, List.ofFn_succ', Fin.snoc_castSucc, Fin.snoc_last,
-            List.concat_eq_append, List.getLast?_concat]
-      · obtain ⟨a,ha⟩ := short_route θ hirr h r
-        exact ⟨a,ha.le,fun hh => (he hh).elim,fun _ => ha,fun _ hh => (ht hh).elim⟩
+    obtain ⟨a,ha,hi⟩ := short_route θ hirr h r
+    have he : h = r → a.length = 0 := by
+      intro he
+      have hf : a.states 0 = a.states (Fin.last a.length) := by rw [a.first,a.last,he]
+      have hz := congrArg Fin.val (hi hf)
+      simpa using hz.symm
+    refine ⟨a,ha.le,he,fun _ => ha,?_⟩
+    intro hne hw
+    have hn : a.length ≠ 0 := by
+      intro hz
+      have hf : (0 : Fin (a.length+1)) = Fin.last a.length := Fin.ext (by simpa using hz.symm)
+      exact hne (a.first.symm.trans ((congrArg a.states hf).trans a.last))
+    have hl : a.labels ⟨a.length-1,by omega⟩ = false := by
+      cases hx : a.labels ⟨a.length-1,by omega⟩ with
+      | false => rfl
+      | true =>
+        have hp := a.positive ⟨a.length-1,by omega⟩
+        have hf : (⟨a.length-1,by omega⟩ : Fin a.length).succ = Fin.last a.length := Fin.ext (by simp; omega)
+        rw [hx,hf,a.last,one_incoming_zero θ hpos r (first_one_outgoing θ w R r hr hw)] at hp
+        exact (lt_irrefl 0 hp).elim
+    simpa [List.getLast?_eq_getElem?, List.getElem?_eq_getElem, hn] using hl
   choose a ha using routes
   refine ⟨a,(ha r).2.1 rfl,(fun h => (ha h).1),(fun h => (ha h).2.2.1),
     (fun h => (ha h).2.2.2),?_⟩
