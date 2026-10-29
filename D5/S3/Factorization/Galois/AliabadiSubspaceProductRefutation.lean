@@ -15,6 +15,8 @@ import Mathlib.LinearAlgebra.Dimension.Constructions
 import Mathlib.Algebra.Algebra.Operations
 import Mathlib.Tactic
 
+/-! A prime-degree quotient field contradicts the uncapped universal product bound. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -35,7 +37,7 @@ def intersectionPremise {K L : Type} [Field K] [Field L] [Algebra K L]
     (A B : Submodule K L) : Prop :=
   ∀ (a b : L) (M : IntermediateField K L), ⊥ < M → M < ⊤ →
     FiniteDimensional K M →
-      finrank K (translate a M ⊓ A) + finrank K (translate b M ⊓ B) ≤
+      finrank K ↥(translate a M ⊓ A) + finrank K ↥(translate b M ⊓ B) ≤
         finrank K M + 1
 
 /-- Aliabadi's whole Conjecture 5.1 (journal Conjecture 38).
@@ -49,7 +51,7 @@ def claim : Prop :=
           finrank K (Submodule.span K ((S : Set L) * (T : Set L)))
 
 /-- The rational polynomial defining the extension. -/
-def polynomial : ℚ[X] := X ^ 7 - C 2
+abbrev polynomial : ℚ[X] := X ^ 7 - C 2
 
 private theorem polynomial_irreducible : Irreducible polynomial := by
   let f : ℤ[X] := X ^ 7 - C 2
@@ -60,14 +62,16 @@ private theorem polynomial_irreducible : Irreducible polynomial := by
   have he : f.IsEisensteinAt (Ideal.span ({2} : Set ℤ)) := by
     apply hm.isEisensteinAt_of_mem_of_notMem hp.ne_top
     · intro i hi
-      have hi7 : i < 7 := by simpa [f] using hi
+      have hi7 : i < 7 := by simpa only [f, natDegree_X_pow_sub_C] using hi
       rw [Ideal.mem_span_singleton]
       interval_cases i <;> norm_num [f, coeff_sub, coeff_X_pow, coeff_C]
     · rw [Ideal.span_singleton_pow, Ideal.mem_span_singleton]
       norm_num [f, coeff_sub, coeff_X_pow, coeff_C]
-  have hf : Irreducible f := he.irreducible hp hm.isPrimitive (by simp [f])
-  simpa [polynomial, f] using
-    (hm.isPrimitive.Int.irreducible_iff_irreducible_map_cast).mp hf
+  have hf : Irreducible f := he.irreducible hp hm.isPrimitive (by simp only [f, natDegree_X_pow_sub_C]; decide)
+  change Irreducible (X ^ 7 - C (2 : ℚ))
+  simpa only [f, Polynomial.map_sub, Polynomial.map_pow, Polynomial.map_X,
+    Polynomial.map_C, Int.castRingHom_apply, Int.cast_ofNat] using
+    (Polynomial.IsPrimitive.Int.irreducible_iff_irreducible_map_cast hm.isPrimitive).mp hf
 
 private instance polynomialFact : Fact (Irreducible polynomial) := ⟨polynomial_irreducible⟩
 
@@ -109,7 +113,7 @@ private theorem powerSpan_dim {n : ℕ} (hn : n ≤ 6) : finrank ℚ (powerSpan 
   have h := powerBasis.basis.linearIndependent.comp (powerIndex hn) (powerIndex_injective hn)
   have hli : LinearIndependent ℚ (fun i : Fin n => alpha ^ (i.val + 1)) := by
     simpa only [Function.comp_def, powerBasis.basis_eq_pow, powerBasis_gen, powerIndex] using h
-  simpa [powerSpan] using finrank_span_eq_card hli
+  rw [powerSpan, finrank_span_eq_card hli, Fintype.card_fin]
 
 private theorem one_not_mem_powerSpan {n : ℕ} (hn : n ≤ 6) :
     (1 : Extension) ∉ powerSpan n := by
@@ -163,7 +167,8 @@ private theorem countermodel_verified : countermodel := by
     · exact False.elim (hbot.ne h.symm)
     · exact False.elim (htop.ne h)
   have hroot : alpha ^ 7 = (2 : Extension) := by
-    simpa [alpha, polynomial] using (root_X_pow_sub_C_pow (K := ℚ) 7 2)
+    simpa only [alpha, polynomial, map_ofNat] using
+      (root_X_pow_sub_C_pow (K := ℚ) 7 2)
   exact ⟨extension_degree, hroot, hd6, hd5, hstrict, hproper, hnot6, hnot5, hprem,
     (Submodule.finrank_le _).trans_eq extension_degree⟩
 
