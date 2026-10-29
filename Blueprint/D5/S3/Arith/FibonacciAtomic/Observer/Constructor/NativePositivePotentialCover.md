@@ -16,7 +16,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 *Commentary.*
 
-sortEdges(B,s,j) filters sourceOffsetEdges(B,s) by the sort of the left endpoint. It preserves list order, every repeated equation and every parallel edge. For a successful unifier, both endpoints are actual vertices of the same sort. A source shift contributes its original nonnegative integer offset. Ordinary and equality comparisons contribute zero. The primitive constraints r=r'+d and r=d, the natural collapse parameter r and its ranks r,r+1,r+2 remain in the original branch data; this block theorem does not solve those scalar constraints.
+sortEdges(B,s,j) filters sourceOffsetEdges(B,s) by the sort of the left endpoint. It preserves list order, every repeated equation and every parallel edge. For a successful unifier, both endpoints are actual vertices of the same sort. A source shift contributes its original nonnegative integer offset. Ordinary and equality comparisons contribute zero. Explicit primitive ranks are separately decorated at their named addresses. The complete comparison inventory below retains scalar equations r=r'+d and r=d and one shared natural collapse parameter with ranks r,r+1,r+2. Its block projection is exactly sourceOffsetEdges; it does not solve the independent scalar equations.
 
 **Definition 1.2 (Both orientations retain each edge identity).**
 
@@ -168,7 +168,141 @@ For every actual successful source unifier and occurring sort with zero signed c
 
 The rank classification supplies the same minimum vertex for all fillings. Normality descends along the actual ordered subtree address in the normal named code. Structural filling converts the pointwise rank equation to literal code translation. NativeFiniteNormalInversion.shift_expand gives the native equality, and exact_natural_rank_inverse gives every exact inverse rank without truncated subtraction. No desired normal base, integer potential or reconstruction equality is assumed. The concrete subtree identities and BlockSolution are hypotheses of this intermediate theorem. They are derived automatically on the live proof path of native_source_block_recovery.
 
-**Definition 1.14 (Read the actual occurrence subtree).**
+**Definition 1.14 (Separate scalar positions).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.ScalarPosition`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.ScalarPosition` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A scalar label consists of a declared name and its ordered address. Every explicit primitive occurrence gets its own label, while repeated uses of one name reuse the same decorated term. Residual blocks retain the existing name, address and sort labels.
+
+**Definition 1.15 (Natural scalar variables and constants).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.RankExpression`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.RankExpression` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A rank expression is either a separately addressed natural scalar or a supplied natural constant. Its value is evaluated independently of the residual block valuation.
+
+**Definition 1.16 (A complete decoration of each named term).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.DecoratedTerm`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.DecoratedTerm` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The decorated syntax distinguishes explicit scalar leaves, residual block leaves and ordered pairs. Erasure retains the original primitive Boolean or residual sort. Evaluation substitutes a natural rank at each scalar leaf and an ambient finite code at each residual occurrence.
+
+**Definition 1.17 (Decorate every explicit and residual position).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.scalarDecorateFrom`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.scalarDecorateFrom` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Structural descent extends the address by false on the left and true on the right. It labels every primitive occurrence and every residual occurrence without identifying positions.
+
+**Definition 1.18 (One shared decoration per original name).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.scalarDecorate`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.scalarDecorate` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+scalarDecorate(s,x) starts at the empty address in the entire substituted term s(x). It includes unused names and has no depth bound.
+
+**Definition 1.19 (Scalar and block equations in one finite inventory).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.ComparisonInventory`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.ComparisonInventory` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A scalar comparison states an exact integer equation r=r'+a for natural ranks and the original natural shift a. A supplied constant gives r=d. A block comparison states literal code translation by the same shift. Pair comparisons retain both child inventories; mismatched scalar, block or pair constructors are incompatible. Under the successful shape unifier the compared erased terms agree, so no mixed scalar/block equation is generated.
+
+**Definition 1.20 (Recursive comparison with both directions proved).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.comparisonInventory`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.comparisonInventory` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Matching scalar leaves emit their scalar offset equation; matching residual leaves emit the original block offset equation; matching pairs recursively compare both ordered children. For equal erased terms, the inventory holds exactly when the evaluated left code is the supplied shift of the evaluated right code. This equivalence is proved for arbitrary independent natural scalar and code-block assignments.
+
+**Definition 1.21 (The actual natural collapse witness).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.BranchInventory`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.BranchInventory` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A branch inventory is a comparison or a collapse family quantified existentially over one natural number. A collapse uses the same witness n in its three equations at ranks n+1,n,n+2. Separate collapse equations retain their own witnesses.
+
+**Definition 1.22 (All original comparison constructors).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.branchInventory`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.branchInventory` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Primitive equations compare with their supplied rank. Shifts retain their original offset. Ordinary constructor and equality comparisons use zero offset. Collapse compares all three named terms against the three scalar constants determined by its single natural witness. The original branch list retains repeated equations.
+
+**Theorem 1.23 (The complete decorated system is equivalent to the original branch system).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.source_decorated_comparison_equivalence`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.source_decorated_comparison_equivalence` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For the actual successful shape unifier S of the entire finite branch list B, and for every independent assignment of natural scalar values and ambient residual codes, the complete branch inventories hold exactly when every original BranchEquation holds on the reconstructed named codes. Both implications retain primitive constants, scalar offsets, ordinary zero offsets and each original existential natural collapse witness. No scalar equivalence or scalar consistency is assumed.
+
+The theorem also identifies the concatenation of every inventory's block edges with exactly sourceOffsetEdges(B,action(p,S)), including repeated and parallel edges. The recursive projection erases only scalar equations. Collapse has no residual edge. Thus the same block equations feed the computed source potentials and minimum normalization above; no replacement graph is introduced. Successful unification supplies the erased comparison equalities; a structural equivalence handles each comparison, and then each original constructor and the entire branch list. Empty lists and empty declared families remain in scope.
+
+**Definition 1.24 (Read actual scalar ranks at their original addresses).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.sourceScalarRanks`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.sourceScalarRanks` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+At a valid primitive address sourceScalarRanks reads its exact natural rank. A default zero is used only elsewhere. Structural reconstruction proves that evaluating every separately decorated named term with these scalar ranks and occurrenceCode gives the entire original named code, so no default affects an explicit primitive position.
+
+**Definition 1.25 (Read the actual occurrence subtree).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.occurrenceCode`
 
@@ -180,7 +314,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 occurrenceCode(C,o) reads the code subtree of the original named code C(o.name) at o.address, using a fixed default only at invalid addresses. The native source theorem proves every MGU occurrence address is valid before using its code; the default contributes no valid block.
 
-**Theorem 1.15 (Original native solutions supply their own canonical blocks).**
+**Theorem 1.26 (Original native solutions supply their own canonical blocks).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.native_source_block_recovery`
 
@@ -190,26 +324,37 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 *Commentary.*
 
-For every finite presentation p of the entire declared named family X, original equation list E and actual native solution v, the theorem selects B in branches(E) and an actual successful shape unifier S. Every original selected BranchEquation.Holds remains true of C(x)=encode(v(x)). Thus primitive ranks, full shifts, ordinary zero-offset constructors, equalities, and collapse witnesses r with ranks r,r+1,r+2 remain attached to the same actual solution. For every occurring residual sort there is an actual base occurrence b minimizing computedSourcePotential and natural offsets a(o)=computedSourcePotential(o)-computedSourcePotential(b), with a(b)=0. Its actual occurrenceCode is normal, and every actual occurrence block is literally shiftCode(a(o),occurrenceCode(C,b)); expansion gives the identical original native substitution iterated a(o) times.
+For every finite presentation p of the entire declared named family X, original equation list E and actual native solution v, the theorem selects B in branches(E) and an actual successful shape unifier S. Every original selected BranchEquation.Holds remains true of C(x)=encode(v(x)). The theorem reconstructs every original named code from its separately addressed scalar ranks and actual occurrence blocks, and proves the complete branch inventory on these same values. Thus primitive constants, scalar offsets, full block shifts, ordinary zero offsets, equalities, and collapse witnesses r with ranks r,r+1,r+2 remain attached to this same actual solution. For every occurring residual sort there is an actual base occurrence b minimizing computedSourcePotential and natural offsets a(o)=computedSourcePotential(o)-computedSourcePotential(b), with a(b)=0. Its actual occurrenceCode is normal, and every actual occurrence block is literally shiftCode(a(o),occurrenceCode(C,b)); expansion gives the identical original native substitution iterated a(o) times.
 
 The shape factorization is supplied by native_branch_reduction. A structural fit of the decorated MGU terms to C extracts each actual source-offset equation from BranchEquation.Holds, using the same comparison recursion. Descent through the factorized shape proves valid code subtrees and the common ground shape. Reading their ordered leaf ranks gives BlockSolution and the exact fill identities. A nonempty leaf detects zero signed cycles. These derived facts consume source_canonical_block_recovery, whose base and offsets come from source_sort_minimum_base and its computed potential. No BlockSolution, potential, desired subtree identity or desired reconstruction is an external premise. Isolated occurrences, unused names and repeated edges remain in scope. If no sort occurs the conclusion is the empty universal family. This theorem does not assert the image-cover or Theorem 3.2.
 
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.BlockSolution`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.BranchInventory`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.ComparisonInventory`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.DecoratedTerm`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.Leaves`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.Potential`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.RankExpression`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.ScalarPosition`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.ZeroCycles`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.branchInventory`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.comparisonInventory`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.computedSourcePotential`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.fill`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.native_source_block_recovery`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.occurrenceCode`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.scalarDecorate`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.scalarDecorateFrom`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.signedEdges`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.signedGraph`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.signedWeight`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.sortEdges`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.sourceRelaxation`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.sourceScalarRanks`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.source_canonical_block_recovery`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.source_decorated_comparison_equivalence`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.source_sort_minimum_base`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction](NativePositiveBranchReduction.md)
 - Dependency: [D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual](../../../../Combinatorics/Graph/LayeredCirculation/SupplierDual.md)

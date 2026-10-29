@@ -57,11 +57,11 @@ internal sealed class NativePositivePotentialCoverDocument : IScribeDocumentDefi
             Entry("scalarDecorate", "One shared decoration per original name",
                 "scalarDecorate(s,x) starts at the empty address in the entire substituted term s(x). It includes unused names and has no depth bound."),
             Entry("ComparisonInventory", "Scalar and block equations in one finite inventory",
-                "A scalar comparison states an exact integer equation r=r'+a for natural ranks and the original natural shift a. A supplied constant gives r=d. A block comparison states literal code translation by the same shift. Pair comparisons retain both child inventories; mismatched scalar, block or pair constructors are incompatible. Under the successful shape unifier the compared erased terms agree, so no mixed scalar/block equation is generated."),
+                "A scalar comparison states an exact integer equation r=r'+a for natural ranks and the original natural shift a. A supplied constant gives r=d. A block comparison states literal code translation by the same shift. Pair comparisons retain both child inventories; mismatched scalar, block or pair constructors are incompatible. Under the successful shape unifier the compared erased terms agree, so no mixed scalar/block equation is generated.", "comparison-inventory-type"),
             Entry("comparisonInventory", "Recursive comparison with both directions proved",
                 "Matching scalar leaves emit their scalar offset equation; matching residual leaves emit the original block offset equation; matching pairs recursively compare both ordered children. For equal erased terms, the inventory holds exactly when the evaluated left code is the supplied shift of the evaluated right code. This equivalence is proved for arbitrary independent natural scalar and code-block assignments."),
             Entry("BranchInventory", "The actual natural collapse witness",
-                "A branch inventory is a comparison or a collapse family quantified existentially over one natural number. A collapse uses the same witness n in its three equations at ranks n+1,n,n+2. Separate collapse equations retain their own witnesses."),
+                "A branch inventory is a comparison or a collapse family quantified existentially over one natural number. A collapse uses the same witness n in its three equations at ranks n+1,n,n+2. Separate collapse equations retain their own witnesses.", "branch-inventory-type"),
             Entry("branchInventory", "All original comparison constructors",
                 "Primitive equations compare with their supplied rank. Shifts retain their original offset. Ordinary constructor and equality comparisons use zero offset. Collapse compares all three named terms against the three scalar constants determined by its single natural witness. The original branch list retains repeated equations."),
             Describe.Lean(DescribeId.Create("source-decorated-comparison-equivalence"),
@@ -83,8 +83,8 @@ internal sealed class NativePositivePotentialCoverDocument : IScribeDocumentDefi
 
         )));
 
-    private static DocumentBlock Entry(string name, string title, string prose) =>
-        Describe.Lean(DescribeId.Create("source-potential-" + name.ToLowerInvariant()),
+    private static DocumentBlock Entry(string name, string title, string prose, string? id = null) =>
+        Describe.Lean(DescribeId.Create("source-potential-" + (id ?? name.ToLowerInvariant())),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 }
