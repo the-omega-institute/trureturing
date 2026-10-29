@@ -2,9 +2,11 @@
    generality: G
    mirror-B: D5/B/S3/Analytic/Laplace/NonnegativeContinuation
    mirror-E: none(waiver:analytic-proof-only)
-   anchors: [mathlib/module/Mathlib.Probability.Moments.ComplexMGF, mathlib/module/Mathlib.Analysis.Complex.TaylorSeries]
+   anchors: [mathlib/module/Mathlib.Probability.Moments.ComplexMGF,
+     mathlib/module/Mathlib.Analysis.Complex.TaylorSeries]
    utility: none
-   digest: Holomorphic extension of a nonnegative Laplace germ forces new exponential integrability. -/
+   digest: Holomorphic extension of a nonnegative Laplace germ
+     forces new exponential integrability. -/
 
 import Mathlib.Probability.Moments.ComplexMGF
 import Mathlib.Analysis.Complex.TaylorSeries
@@ -47,7 +49,6 @@ private theorem mgf_extension {c R t : ℝ} {H : ℂ → ℂ}
     rw [iteratedDeriv_complexMGF hc' n]
     simp only [← Complex.ofReal_mul, ← Complex.ofReal_pow, ← Complex.ofReal_exp,
       integral_complex_ofReal]
-    exact integral_complex_ofReal
   have hball : ((c + t : ℝ) : ℂ) ∈ Metric.ball (c : ℂ) R := by
     simpa [Metric.mem_ball, dist_eq_norm, ← Complex.ofReal_sub, Real.norm_eq_abs,
       abs_of_pos ht] using htR
