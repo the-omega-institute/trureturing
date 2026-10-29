@@ -152,9 +152,6 @@ private theorem model_ext {x y : Model} (hA : x.support = y.support)
 @[simp] private theorem level_add_val (x y : Model) :
     (x+y).level.val = min 2 (x.level.val+y.level.val) := rfl
 
-@[simp] private theorem mk_add (A B : Finset ℕ) (k l : Fin 3) :
-    (⟨A,k⟩ : Model) + ⟨B,l⟩ = ⟨A ∪ B, ⟨min 2 (k.val+l.val), by omega⟩⟩ := rfl
-
 instance : AddCommMonoid Model where
   add_assoc x y z := by
     apply model_ext
@@ -180,7 +177,7 @@ def modelE (x : Model) : Model := ⟨x.support, if x.level = 0 then 0 else 2⟩
 private theorem model_laws (x : Model) :
     x+x = modelE x ∧ x+modelE x = modelE x ∧ modelE x+modelE x = modelE x := by
   obtain ⟨A, k⟩ := x
-  fin_cases k <;> simp [modelE]
+  fin_cases k <;> simp [modelE, modelAdd, HAdd.hAdd, Add.add]
 
 private theorem model_cyclic (x : Model) :
     (cyclic x : Set Model) = {x, modelE x} := by
@@ -238,7 +235,7 @@ private theorem pair_vanish (x y : Model) : factor x (1 : ℚ) * factor y 1 = 0 
   have hxy : x+y = x+modelE y ∧ x+y = modelE x+y ∧
       x+y = modelE x+modelE y := by
     obtain ⟨A,k⟩ := x; obtain ⟨B,l⟩ := y
-    simp_all [modelE]
+    simp_all [modelE, modelAdd, HAdd.hAdd, Add.add]
   simp only [factor, model_e, sub_mul, mul_sub,
     AddMonoidAlgebra.single_mul_single, mul_one, ← hxy.1, ← hxy.2.1, ← hxy.2.2]
   abel
@@ -395,8 +392,11 @@ private theorem unbounded_relative : nongroupSup Model = ⊤ := by
   exact (by simp : (n : ℕ∞) ≤ n+1).trans (hl.trans hu)
 
 /- admission_basis: open-problem-resolution (issue #23896).
-All private mathematical helpers occur on the live proof path of result.
-Only the designated literal refutation theorem is public. -/
+proof_shape: bind-only for every authored theorem, including result.
+The remaining private theorems serve the result's derivation; none is an escape witness.
+The Infinite Model instance independently certifies the fixed witness's infinitude;
+it is not consumed by result and is not a result helper or escape witness.
+Only the designated literal refutation theorem is public and audit-exempt. -/
 /-- The entire published implication fails for the single infinite periodic model. -/
 theorem result : ¬ claim := by
   intro h

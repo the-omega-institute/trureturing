@@ -2,7 +2,7 @@
 slug: wang-conjecture326
 bibkey: wang2025semigrouprings
 doi: null
-url: https://arxiv.org/html/2509.18724v1#S3.Thmtheorem26
+url: https://arxiv.org/abs/2509.18724v1
 triage: theorem
 motivation_gids:
   - D5/S0/Certificates/Algebra/WangConjecture326Refutation.result
@@ -118,6 +118,14 @@ injectivity and the unbounded irreducible family form its proof path.
 The primary versioned HTML supplies the whole source statement. The
 related source note records the versioned author-source hashes and the
 separate 5.3 statement.
+
+All authored theorems have `proof_shape: bind-only`. The named external
+Tier1 admission basis is `open-problem-resolution` under issue 23896.
+The private theorems are consumed in the result's derivation and are not
+escape witnesses. The `Infinite Model` instance is a separate certificate
+of the fixed witness's infinitude, not a consumed result helper or escape
+witness. The only public authored theorem is the designated literal
+refutation `result`, exempt from the four-slot escape audit.
 
 ## Triage
 

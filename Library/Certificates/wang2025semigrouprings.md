@@ -21,6 +21,21 @@ submitted 2025-09-23. The versioned TeX source `Semigroupring.tex` has SHA256
 The source archive has SHA256
 `f413479d65c2eeffcbd50ed2468fd2ba558f8033decade5767314848e5b12c1c`.
 
+## Verified locator
+
+The declared version is https://arxiv.org/abs/2509.18724v1.
+[Conjecture 3.26](https://arxiv.org/html/2509.18724v1#S3.Thmtheorem26)
+is the complete periodic-semigroup implication addressed by this local formal unit.
+Section 2 supplies the
+[positive cyclic and periodic conventions](https://arxiv.org/html/2509.18724v1#S2.p2),
+[principal ideals and Green relation](https://arxiv.org/html/2509.18724v1#S2.p4),
+[ordinary semigroup algebra](https://arxiv.org/html/2509.18724v1#S2.p7),
+[Definition 2.1 and its independently nonzero coefficients](https://arxiv.org/html/2509.18724v1#S2.Thmtheorem1),
+and [sequence conventions](https://arxiv.org/html/2509.18724v1#S2.p9)
+with [Definition D's relative Davenport constant](https://arxiv.org/html/2509.18724v1#S2.p10).
+The separate Conjecture 5.3 exposition below is retained as source context;
+this note's local formal binding is to Conjecture 3.26 only.
+
 ## Source statement
 
 Conjecture 5.3, TeX line 842, HTML anchor
@@ -148,3 +163,11 @@ varying-semigroup family is used. An exact formula for each relative
 constant, a minimal counterexample, and a novelty or priority claim are
 not asserted. The later-literature screen is bounded by the source and
 preregistration [23896](https://github.com/the-omega-institute/trureturing/issues/23896).
+
+The authored 3.26 theorems have `proof_shape: bind-only`. The designated
+`result` is admitted under the named external Tier1 open-problem-resolution
+basis in issue 23896; its consumed private theorems organize the derivation
+and supply no escape witness. The `Infinite Model` instance separately
+certifies infinitude of the fixed witness. It is not consumed by `result`
+and is neither a result helper nor an escape witness. Only `result` is a
+public authored theorem and the designated refutation is audit-exempt.
