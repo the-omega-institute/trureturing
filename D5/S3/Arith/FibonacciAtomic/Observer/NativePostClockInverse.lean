@@ -427,11 +427,14 @@ private theorem edit_growth (t : Source) (ht : D t) (g : Call)
   have hd := Geometry.NativeGuardedLeafRepair.run_preserves_D ht hr
   have hh := Geometry.NativeGuardedLeafRepair.history_card
     (⟨edited t g, [g], hr, hd⟩ : Geometry.NativeGuardedLeafRepair.History t)
-  simp only [Geometry.NativeGuardedLeafRepair.material_card] at hh
+  change (material (edited t g)).toFinset.card = (material t).toFinset.card +
+    Geometry.NativeGuardedLeafRepair.promotions [g] +
+      2 * Geometry.NativeGuardedLeafRepair.splits [g] at hh
+  rw [Geometry.NativeGuardedLeafRepair.material_card,
+    Geometry.NativeGuardedLeafRepair.material_card] at hh
   refine ⟨hd, ?_⟩
   cases g <;>
-    simp [Geometry.NativeGuardedLeafRepair.pairCost,
-      Geometry.NativeGuardedLeafRepair.promotions,
+    simp [Geometry.NativeGuardedLeafRepair.promotions,
       Geometry.NativeGuardedLeafRepair.splits] at hh <;>
     omega
 
