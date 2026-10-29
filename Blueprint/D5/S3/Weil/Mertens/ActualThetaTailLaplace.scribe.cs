@@ -11,9 +11,9 @@ internal sealed class ActualThetaTailLaplaceDocument : IScribeDocumentDefinition
         H("Actual theta signed tails"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("actual-theta-tail-source"),
-                DeclarationHandle.Create(Prefix + "actual_theta_tail_source"),
-                H("Absolute convergence and the exponential change of variables"),
+                DescribeId.Create("actual-theta-tail-laplace-ode"),
+                DeclarationHandle.Create(Prefix + "actual_theta_tail_laplace_ode"),
+                H("Absolute convergence, complex moments and the cutoff Laplace equation"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
@@ -50,6 +50,24 @@ internal sealed class ActualThetaTailLaplaceDocument : IScribeDocumentDefinition
                         + "integrable on u>U. A positive exponential margin dominates derivatives "
                         + "in a complex neighborhood: L-prime is minus the first moment and "
                         + "the derivative of L-prime is the positive second moment. "
-                        + "These are complex derivatives on the full open half-plane."))),
+                        + "These are complex derivatives on the full open half-plane.")),
+                    Paragraph(Text(
+                        "Almost everywhere u^2*f-prime(u)=(u+1)*q(u). For Re(s)>0, integrate "
+                        + "u^2*exp(-s*u)*f-prime(u) by parts on [U,T], using absolute "
+                        + "continuity of f and the smooth complex factor. Real and imaginary "
+                        + "parts satisfy the real absolute-continuity formula. The derivative "
+                        + "of u^2*exp(-s*u) is (2*u-s*u^2)*exp(-s*u). Boundedness of f "
+                        + "and polynomial-exponential decay make the endpoint at T vanish "
+                        + "as T tends to infinity. The convergent actual Q and its first moment "
+                        + "are the theta transform and derivative from ThetaLaplaceContinuation.")),
+                    Paragraph(Text(
+                        "Consequently, for every U>=log(2) and every complex s with Re(s)>0, "
+                        + "s*L-second(U,s)+2*L-prime(U,s)=-Q-prime(U,s)+Q(U,s)" 
+                        + "+U^2*f(U)*exp(-s*U). The cutoff term has a positive sign on the "
+                        + "right side. No vanishing of f(U) is asserted or needed. All integrals "
+                        + "and derivatives refer to the actual theta function and the exact "
+                        + "activation density. The equation is on the convergence half-plane; "
+                        + "continuation of L to a negative half-plane and the Riemann hypothesis "
+                        + "are separate questions."))),
                 DescribeRole.Theorem))));
 }

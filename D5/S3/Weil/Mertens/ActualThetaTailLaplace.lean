@@ -324,9 +324,162 @@ private lemma L_analytic {U : ℝ} (hU : u₀ ≤ U) :
   intro s hs
   exact (L_hasDeriv hU hs).differentiableAt.differentiableWithinAt
 
-/-- Absolute convergence, the actual exponential substitution, regularity and
-complex moments of the actual signed tail, without analytic supplier hypotheses. -/
-theorem actual_theta_tail_source :
+private lemma real_tail_ibp {a b : ℝ} (ha : u₀ ≤ a) (hab : a ≤ b)
+    (g : ℝ → ℝ) (hg : ContDiff ℝ 1 g) :
+    (∫ u in a..b, g u * k u) =
+      g b * f b - g a * f a - ∫ u in a..b, deriv g u * f u := by
+  have hd : ∀ᵐ u : ℝ, u ∈ Ioi u₀ → deriv f u = k u :=
+    (ae_restrict_iff' measurableSet_Ioi).mp (tail_ae_deriv.mono fun _ h => h.deriv)
+  have he : (∫ u in a..b, g u * k u) = ∫ u in a..b, g u * deriv f u := by
+    apply intervalIntegral.integral_congr_ae
+    filter_upwards [hd] with u hu huu
+    rw [uIoc_of_le hab] at huu
+    rw [hu (lt_of_le_of_lt ha huu.1)]
+  exact he.trans (hg.contDiffOn.absolutelyContinuousOnInterval.integral_mul_deriv_eq_deriv_mul
+    (tail_ac ha hab))
+
+private lemma complex_tail_ibp {a b : ℝ} (ha : u₀ ≤ a) (hab : a ≤ b)
+    (g g' : ℝ → ℂ) (hg : ContDiff ℝ 1 g) (hg' : Continuous g')
+    (hdg : ∀ u, HasDerivAt g (g' u) u) :
+    (∫ u in a..b, g u * (k u : ℂ)) =
+      g b * (f b : ℂ) - g a * (f a : ℂ) - ∫ u in a..b, g' u * (f u : ℂ) := by
+  have hki : IntervalIntegrable k volume a b := by
+    rw [intervalIntegrable_iff_integrableOn_Ioc_of_le hab]
+    exact k_integrable.mono_set (fun u hu => lt_of_le_of_lt ha hu.1)
+  have hfi := (tail_ac ha hab).continuousOn.intervalIntegrable (μ := volume)
+  have hleft : IntervalIntegrable (fun u => g u * (k u : ℂ)) volume a b := by
+    simpa only [Complex.real_smul, mul_comm] using
+      hki.smul_continuousOn hg.continuous.continuousOn
+  have hright : IntervalIntegrable (fun u => g' u * (f u : ℂ)) volume a b := by
+    simpa only [Complex.real_smul, mul_comm] using
+      hfi.smul_continuousOn hg'.continuousOn
+  have hp (ℓ : ℂ →L[ℝ] ℝ) :
+      ℓ (∫ u in a..b, g u * (k u : ℂ)) =
+        ℓ (g b * (f b : ℂ) - g a * (f a : ℂ) -
+          ∫ u in a..b, g' u * (f u : ℂ)) := by
+    rw [← ℓ.intervalIntegral_comp_comm hleft, map_sub, map_sub,
+      ← ℓ.intervalIntegral_comp_comm hright]
+    have hscl (z : ℂ) (r : ℝ) : ℓ (z * (r : ℂ)) = ℓ z * r := by
+      rw [mul_comm, ← Complex.real_smul, map_smul, smul_eq_mul, mul_comm]
+    simp_rw [hscl]
+    have hd (u : ℝ) : deriv (fun v => ℓ (g v)) u = ℓ (g' u) :=
+      (ℓ.hasFDerivAt.comp_hasDerivAt u (hdg u)).deriv
+    simpa only [hd] using real_tail_ibp ha hab (fun u => ℓ (g u)) (ℓ.contDiff.comp hg)
+  exact Complex.ext (hp Complex.reCLM) (hp Complex.imCLM)
+
+private def H (s : ℂ) (u : ℝ) : ℂ := (u : ℂ) ^ 2 * Complex.exp (-s * (u : ℂ))
+
+private def Hprime (s : ℂ) (u : ℝ) : ℂ :=
+  (2 * (u : ℂ) - s * (u : ℂ) ^ 2) * Complex.exp (-s * (u : ℂ))
+
+private lemma H_hasDeriv (s : ℂ) (u : ℝ) : HasDerivAt (H s) (Hprime s u) u := by
+  have h := ((Complex.ofRealCLM.hasDerivAt (x := u)).pow 2).mul
+    (((Complex.ofRealCLM.hasDerivAt (x := u)).const_mul (-s)).cexp)
+  change HasDerivAt (fun v : ℝ => (v : ℂ) ^ 2 * Complex.exp (-s * (v : ℂ)))
+    ((2 * (u : ℂ) - s * (u : ℂ) ^ 2) * Complex.exp (-s * (u : ℂ))) u
+  convert h using 1
+  · ext v
+    simp only [Pi.mul_apply, Pi.pow_apply, Complex.ofRealCLM_apply]
+  · norm_num
+    ring
+
+private def J (s : ℂ) (u : ℝ) : ℂ := H s u * (k u : ℂ)
+private def R (s : ℂ) (u : ℝ) : ℂ := Hprime s u * (f u : ℂ)
+
+private lemma J_eq (s : ℂ) {u : ℝ} (hu : u ≠ 0) :
+    J s u = (u : ℂ) * Complex.exp (-s * (u : ℂ)) * (q u : ℂ) +
+      Complex.exp (-s * (u : ℂ)) * (q u : ℂ) := by
+  dsimp [J, H, k]
+  push_cast
+  have hc : (u : ℂ) ≠ 0 := by exact_mod_cast hu
+  field_simp
+  <;> ring
+
+private lemma R_eq (s : ℂ) (u : ℝ) : R s u = 2 * P 1 s u - s * P 2 s u := by
+  dsimp [R, Hprime, P]
+  ring
+
+private lemma J_integrable {U : ℝ} (hU : u₀ ≤ U) {s : ℂ} (hs : 0 < s.re) :
+    IntegrableOn (J s) (Ioi U) := by
+  obtain ⟨hQ, _, hQ₁, _⟩ := (ThetaLaplaceContinuation.theta_laplace_continuation U
+    (u₀_pos.le.trans hU)).2.2.2.1 s hs
+  refine (hQ₁.add hQ).congr_fun ?_ measurableSet_Ioi
+  intro u hu
+  exact (J_eq s (ne_of_gt (u₀_pos.trans_le (hU.trans hu.le)))).symm
+
+private lemma R_integrable {U : ℝ} (hU : u₀ ≤ U) {s : ℂ} (hs : 0 < s.re) :
+    IntegrableOn (R s) (Ioi U) := by
+  have hr : IntegrableOn (fun u => 2 * P 1 s u - s * P 2 s u) (Ioi U) :=
+    ((P_integrable hU 1 hs).const_mul 2).sub ((P_integrable hU 2 hs).const_mul s)
+  refine hr.congr_fun ?_ measurableSet_Ioi
+  intro u _
+  exact (R_eq s u).symm
+
+private lemma boundary_tendsto {s : ℂ} (hs : 0 < s.re) :
+    Tendsto (fun u => H s u * (f u : ℂ)) atTop (𝓝 0) := by
+  have h := (tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero (2 : ℝ) s.re hs).mul_const
+    (∫ v in Ioi u₀, ‖k v‖)
+  simp only [Real.rpow_two, zero_mul] at h
+  refine squeeze_zero_norm' ?_ h
+  filter_upwards [eventually_ge_atTop u₀] with u hu
+  change ‖P 2 s u‖ ≤ _
+  rw [P_norm 2 s (u₀_pos.le.trans hu)]
+  exact mul_le_mul_of_nonneg_left (tail_bound hu) (by positivity)
+
+private lemma improper_ibp {U : ℝ} (hU : u₀ ≤ U) {s : ℂ} (hs : 0 < s.re) :
+    (∫ u in Ioi U, J s u) =
+      -H s U * (f U : ℂ) - ∫ u in Ioi U, R s u := by
+  have hleft := intervalIntegral_tendsto_integral_Ioi U (J_integrable hU hs)
+    (tendsto_id : Tendsto (id : ℝ → ℝ) atTop atTop)
+  have hright := ((boundary_tendsto hs).sub
+    (tendsto_const_nhds (x := H s U * (f U : ℂ)))).sub
+    (intervalIntegral_tendsto_integral_Ioi U (R_integrable hU hs)
+      (tendsto_id : Tendsto (id : ℝ → ℝ) atTop atTop))
+  have he : (fun T => ∫ u in U..T, J s u) =ᶠ[atTop]
+      (fun T => H s T * (f T : ℂ) - H s U * (f U : ℂ) - ∫ u in U..T, R s u) := by
+    filter_upwards [eventually_ge_atTop U] with T hT
+    exact complex_tail_ibp hU hT (H s) (Hprime s)
+      (by change ContDiff ℝ 1 (fun u : ℝ => (u : ℂ) ^ 2 * Complex.exp (-s * (u : ℂ)))
+          fun_prop)
+      (by change Continuous (fun u : ℝ =>
+            (2 * (u : ℂ) - s * (u : ℂ) ^ 2) * Complex.exp (-s * (u : ℂ)))
+          fun_prop) (H_hasDeriv s)
+  have hlim := tendsto_nhds_unique hleft (hright.congr' he.symm)
+  simpa only [id_eq, zero_sub, neg_mul] using hlim
+
+private lemma actual_ode {U : ℝ} (hU : u₀ ≤ U) {s : ℂ} (hs : 0 < s.re) :
+    s * deriv (deriv (L U)) s + 2 * deriv (L U) s =
+      -deriv (Q U) s + Q U s +
+        (U : ℂ) ^ 2 * (f U : ℂ) * Complex.exp (-s * (U : ℂ)) := by
+  obtain ⟨hQ, _, hQ₁, hdQ⟩ := (ThetaLaplaceContinuation.theta_laplace_continuation U
+    (u₀_pos.le.trans hU)).2.2.2.1 s hs
+  have hJ : (∫ u in Ioi U, J s u) = -deriv (Q U) s + Q U s := by
+    rw [hdQ.deriv, neg_neg, Q, ← integral_add hQ₁ hQ]
+    apply setIntegral_congr_fun measurableSet_Ioi
+    intro u hu
+    exact J_eq s (ne_of_gt (u₀_pos.trans_le (hU.trans hu.le)))
+  have hR : (∫ u in Ioi U, R s u) =
+      2 * (∫ u in Ioi U, P 1 s u) - s * (∫ u in Ioi U, P 2 s u) := by
+    rw [← integral_const_mul, ← integral_const_mul,
+      ← integral_sub ((P_integrable hU 1 hs).const_mul 2) ((P_integrable hU 2 hs).const_mul s)]
+    exact setIntegral_congr_fun measurableSet_Ioi (fun u _ => R_eq s u)
+  have hi := improper_ibp hU hs
+  rw [hJ, hR] at hi
+  rw [(L_hasDeriv hU hs).deriv, (Lsecond_hasDeriv hU hs).deriv]
+  dsimp [H] at hi
+  linear_combination -hi
+
+private lemma tail_ae_identity :
+    ∀ᵐ u ∂volume.restrict (Ioi u₀), u ^ 2 * deriv f u = (u + 1) * q u := by
+  filter_upwards [tail_ae_deriv, ae_restrict_mem measurableSet_Ioi] with u hd hu
+  rw [hd.deriv, k]
+  have hu0 : u ≠ 0 := ne_of_gt (u₀_pos.trans hu)
+  field_simp
+  <;> ring
+
+/-- The actual signed theta tail and its complex Laplace ODE, with its positive
+cutoff boundary term retained at every admissible real cutoff. -/
+theorem actual_theta_tail_laplace_ode :
     IntegrableOn q (Ioi u₀) ∧ IntegrableOn k (Ioi u₀) ∧
     (∀ U : ℝ, u₀ ≤ U → IntegrableOn (fun t : ℝ => (Chebyshev.theta t - t) *
       D5.S3.Arith.Robin.ActualRobinClockCovariance.activationDensity t) (Ioi (Real.exp U))) ∧
@@ -335,7 +488,8 @@ theorem actual_theta_tail_source :
     (∀ u : ℝ, u₀ ≤ u → ‖f u‖ ≤ ∫ v in Ioi u₀, ‖k v‖) ∧
     Tendsto f atTop (𝓝 0) ∧
     (∀ a b : ℝ, u₀ ≤ a → a ≤ b → AbsolutelyContinuousOnInterval f a b) ∧
-    (∀ᵐ u ∂volume.restrict (Ioi u₀), HasDerivAt f (k u) u) ∧
+    (∀ᵐ u ∂volume.restrict (Ioi u₀), HasDerivAt f (k u) u ∧
+      u ^ 2 * deriv f u = (u + 1) * q u) ∧
     (∀ U : ℝ, u₀ ≤ U → AnalyticOnNhd ℂ (L U) {s | 0 < s.re} ∧
       ∀ s : ℂ, 0 < s.re →
         (∀ n : ℕ, IntegrableOn (fun u : ℝ =>
@@ -343,15 +497,19 @@ theorem actual_theta_tail_source :
         HasDerivAt (L U)
           (-(∫ u in Ioi U, (u : ℂ) * Complex.exp (-s * (u : ℂ)) * (f u : ℂ))) s ∧
         HasDerivAt (deriv (L U))
-          (∫ u in Ioi U, (u : ℂ) ^ 2 * Complex.exp (-s * (u : ℂ)) * (f u : ℂ)) s) := by
+          (∫ u in Ioi U, (u : ℂ) ^ 2 * Complex.exp (-s * (u : ℂ)) * (f u : ℂ)) s ∧
+        s * deriv (deriv (L U)) s + 2 * deriv (L U) s =
+          -deriv (Q U) s + Q U s +
+            (U : ℂ) ^ 2 * (f U : ℂ) * Complex.exp (-s * (U : ℂ))) := by
   refine ⟨q_integrable, k_integrable, fun _ h => original_integrable h, tail_substitution,
     tail_integrable, fun _ h => tail_bound h, tail_tendsto, fun _ _ h h' => tail_ac h h',
-    tail_ae_deriv, ?_⟩
+    tail_ae_deriv.and tail_ae_identity, ?_⟩
   intro U hU
-  refine ⟨L_analytic hU, fun s hs => ⟨fun n => P_integrable hU n hs, ?_, Lsecond_hasDeriv hU hs⟩⟩
+  refine ⟨L_analytic hU, fun s hs => ⟨fun n => P_integrable hU n hs, ?_,
+    Lsecond_hasDeriv hU hs, actual_ode hU hs⟩⟩
   simpa only [P, pow_one] using L_hasDeriv hU hs
 
-#print axioms actual_theta_tail_source
+#print axioms actual_theta_tail_laplace_ode
 
 end
 end D5.S3.Weil.Mertens.ActualThetaTailLaplace

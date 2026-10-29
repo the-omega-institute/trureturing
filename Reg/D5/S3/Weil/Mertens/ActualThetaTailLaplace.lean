@@ -9,7 +9,7 @@ namespace Reg.D5.S3.Weil.Mertens.ActualThetaTailLaplace
 open Set MeasureTheory Filter
 open scoped Topology
 open _root_.D5.S3.Weil.Mertens.ActualThetaTailLaplace
-open _root_.D5.S3.Weil.Mertens.ThetaLaplaceContinuation (q)
+open _root_.D5.S3.Weil.Mertens.ThetaLaplaceContinuation (q Q)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit
 noncomputable section
@@ -31,7 +31,8 @@ abbrev arena : Arena where
     (∀ u : ℝ, u₀ ≤ u → ‖f u‖ ≤ ∫ v in Ioi u₀, ‖k v‖) ∧
     Tendsto f atTop (𝓝 0) ∧
     (∀ a b : ℝ, u₀ ≤ a → a ≤ b → AbsolutelyContinuousOnInterval f a b) ∧
-    (∀ᵐ u ∂volume.restrict (Ioi u₀), HasDerivAt f (k u) u) ∧
+    (∀ᵐ u ∂volume.restrict (Ioi u₀), HasDerivAt f (k u) u ∧
+      u ^ 2 * deriv f u = (u + 1) * q u) ∧
     (∀ U : ℝ, u₀ ≤ U → AnalyticOnNhd ℂ (L U) {s | 0 < s.re} ∧
       ∀ s : ℂ, 0 < s.re →
         (∀ n : ℕ, IntegrableOn (fun u : ℝ =>
@@ -39,17 +40,20 @@ abbrev arena : Arena where
         HasDerivAt (L U)
           (-(∫ u in Ioi U, (u : ℂ) * Complex.exp (-s * (u : ℂ)) * (f u : ℂ))) s ∧
         HasDerivAt (deriv (L U))
-          (∫ u in Ioi U, (u : ℂ) ^ 2 * Complex.exp (-s * (u : ℂ)) * (f u : ℂ)) s)
+          (∫ u in Ioi U, (u : ℂ) ^ 2 * Complex.exp (-s * (u : ℂ)) * (f u : ℂ)) s ∧
+        s * deriv (deriv (L U)) s + 2 * deriv (L U) s =
+          -deriv (Q U) s + Q U s +
+            (U : ℂ) ^ 2 * (f U : ℂ) * Complex.exp (-s * (U : ℂ)))
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hi : IntegrableOn (fun _ : ℝ => (1 : ℝ)) (Ioi u₀) := h.1
   simpa [integrableOn_const_iff, Real.volume_Ioi] using hi
 
-def family : Registration arena (type_of% actual_theta_tail_source) where
+def family : Registration arena (type_of% actual_theta_tail_laplace_ode) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨actual_theta_tail_source, rejected, rejected_law⟩
+  variation := ⟨actual_theta_tail_laplace_ode, rejected, rejected_law⟩
   sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
     arena.Law actual rejected rejected_law
   dependence := by
@@ -65,8 +69,8 @@ def family : Registration arena (type_of% actual_theta_tail_source) where
     linarith
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-    (@actual_theta_tail_source) (Realization signature) Unit Unit where
-  unitName := `D5.S3.Weil.Mertens.ActualThetaTailLaplace.actual_theta_tail_source.__information_unit
+    (@actual_theta_tail_laplace_ode) (Realization signature) Unit Unit where
+  unitName := `D5.S3.Weil.Mertens.ActualThetaTailLaplace.actual_theta_tail_laplace_ode.__information_unit
   realizationName := `Reg.D5.S3.Weil.Mertens.ActualThetaTailLaplace.family
   realizationSource := none
   generated := false
