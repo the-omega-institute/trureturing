@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Finite four-current cycle traces and the bounded labeled partial-matching coefficient.
--/
+   digest: Finite four-current cycle traces and the bounded labeled partial-matching coefficient. -/
 
 import D5.S3.VertexAlgebra.Characters.LatticeTwoCurrentTrace
 import D5.S3.VertexAlgebra.Energy.LatticeCoefficientEnergy
