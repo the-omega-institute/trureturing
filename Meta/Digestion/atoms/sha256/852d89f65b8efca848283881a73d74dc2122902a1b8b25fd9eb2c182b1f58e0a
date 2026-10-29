@@ -1,0 +1,30 @@
+**Definition 41.1 (Labelled odd cycles with a common edge).**
+Fix integers $k\ge2$ and $b\ge1$. Let $G^e_{k,b}$ have shared vertices
+$a,b_0$ with the edge $\{a,b_0\}$ retained. For each branch
+$\ell=1,\ldots,b$ add $2k-1$ private vertices and a path from
+$b_0$ through these vertices to $a$, of $2k$ edges. Together
+with the shared edge this is a labelled $C_{2k+1}$, denoted
+$C_\ell$. There are no other identifications or cross edges. On each cycle use
+cyclic indices $0,1,\ldots,2k$, with $0=a$ and $1=b_0$;
+positions $2,\ldots,2k$ are private. Thus
+$|V(G^e_{k,b})|=2+b(2k-1)$. The superscript $e$ distinguishes
+this graph from the one-common-root graph of §§35–38 [Supplier41].
+Set $t=c_a$, $u=c_{b_0}$ and define
+
+$$
+\begin{aligned}
+\mathcal S^e_{k,b}=\{(m,c)\in\mathbb Z_{\ge0}^{3+b(2k-1)}:
+&\ c_v+c_w\le m\quad(\{v,w\}\in E(G^e_{k,b})),\\
+&\ \sum_{v\in C_\ell}c_v\le km\quad(1\le\ell\le b)\},\\
+\delta_\ell(m,c)&=km-\sum_{v\in C_\ell}c_v,\qquad
+R^e_{k,b}=\mathbb C[\mathcal S^e_{k,b}].
+\end{aligned}
+\tag{41.1}
+$$
+
+The degree is $m$, the boundary grading is $(m,t,u)$, and
+$X^pX^s=X^{p+s}$. Each shared occupancy is one global coordinate
+and occurs once in each local cycle inequality. Let $\mathcal S_k$
+denote the single-cycle semigroup of Definition 31.1, extended
+to $k=2$ with its same displayed inequalities.
+
