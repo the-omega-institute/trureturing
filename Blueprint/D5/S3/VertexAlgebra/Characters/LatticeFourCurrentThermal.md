@@ -40,7 +40,7 @@ Lean statement: `D5/S3/VertexAlgebra/Characters/LatticeFourCurrentThermal.therma
 
 *Commentary.*
 
-The value is Zosc(D,q) times the sum over the actual ten PM4 partial matchings M of Theta_(unpaired M)(D,i,q) times product_(e in M) G(i(e.first),i(e.second))*K_e. Here Zosc is the ordinary unsigned sum of q^N(d). The empty edge assignment is the unique function on an empty edge type; no factorial or quotient identifies edge slots.
+The value is Zosc(D,q) times the sum over the actual ten PM4 partial matchings M of Theta_(unpaired M)(D,i,q) times product_(e in M) G(i(e.first),i(e.second))*K_e. Here Zosc is the genuine ordinary unsigned Euler product over natural m of ((1-q^(m+1))^(-1))^rank. On norm(q)<1 its equality with the occupation sum is consumed in source_total_value through ordinary_oscillator_hasProd.tprod_eq. The empty edge assignment is the unique function on an empty edge type; no factorial or quotient identifies edge slots.
 
 **Theorem 1.4 (Ordinary oscillator Euler product).**
 
@@ -52,7 +52,7 @@ Lean statement: `D5/S3/VertexAlgebra/Characters/LatticeFourCurrentThermal.ordina
 
 *Commentary.*
 
-For every original lattice datum and norm(q)<1, HasProd of ((1-q^(m+1))^(-1))^rank, indexed by all natural m, has value sum_d q^N(d). Absolute convergence uses the accepted signed occupation theorem only through equality of norms. Finite Finsupp power algebra identifies the unsigned monomial with q^N(d). The generic ordinary occupation Euler supplier is then applied and its finite color factors are collected; the signed Euler value is never substituted.
+For every original lattice datum and norm(q)<1, HasProd of ((1-q^(m+1))^(-1))^rank, indexed by all natural m, has value sum_d q^N(d). Absolute convergence uses the accepted signed occupation theorem only through equality of norms. Finite Finsupp power algebra identifies the unsigned monomial with q^N(d). The generic ordinary occupation Euler supplier is then applied and its finite color factors are collected; the signed Euler value is never substituted. This specialization is a consumed binding helper for the original thermal endpoint, rather than a separate new mathematical result.
 
 **Theorem 1.5 (Absolute original-grade thermal family).**
 
@@ -80,7 +80,7 @@ Lean statement: `D5/S3/VertexAlgebra/Characters/LatticeFourCurrentThermal.origin
 
 *Commentary.*
 
-The original thermal family has HasSum equal to thermalValue D i z on the entire open four-polydisk. After global source absolute convergence, independent charge, ordinary occupation and labeled-edge products can be evaluated. Each edge value applies the accepted marked_sum theorem separately to its two Fin 2 orientations. Finite matching sums and the exact original-grade fiber pushforward give the stated value. Negative cross Gram factors keep their signs in this value and enter absolute values only in convergence bounds.
+The original thermal family has HasSum equal to thermalValue D i z on the entire open four-polydisk. After global source absolute convergence, independent charge, ordinary occupation and labeled-edge products can be evaluated. Each edge value applies the accepted marked_sum theorem separately to its two Fin 2 orientations. The source_total_value proof rewrites the Euler product factor using ordinary_oscillator_hasProd.tprod_eq and norm(product_j z(j))<1. Finite matching sums and the exact original-grade fiber pushforward then give the stated value with its ordinary unsigned Euler product factor. Negative cross Gram factors keep their signs in this value and enter absolute values only in convergence bounds.
 
 **Theorem 1.7 (Zero at the coordinate origin).**
 
