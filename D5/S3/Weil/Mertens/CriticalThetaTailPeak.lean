@@ -586,7 +586,6 @@ private theorem boundary_moment_limits {μ : Measure ℝ} {U σ c δ : ℝ}
       envelope_second hU hσ hc (by simp only [add_re, ofReal_re]; linarith)]
     simp only [add_sub_cancel_left]
     field_simp
-    ring
   have hm1 : Tendsto (fun ε : ℝ => (ε : ℂ) ^ 2 * moment μ 1 ((σ : ℂ) + (ε : ℂ)))
       (𝓝[Ioi 0] 0) (𝓝 (0 : ℂ)) := by
     have hh0 : Tendsto (fun ε : ℝ => -((ε : ℂ) ^ 2 * deriv K ((σ : ℂ) + (ε : ℂ))) +
