@@ -19,12 +19,12 @@ open SourceWidth ExpandingSourcePath TwoSmallProfile TwoSmallPlacement
 open MixedSuffixEnergy TwoOppositeLargeExchange
 open scoped BigOperators
 
-private theorem phase_add {k : ℕ} (hk : 0 < k) (o : Fin k) (j : ℕ) :
+theorem phase_add {k : ℕ} (hk : 0 < k) (o : Fin k) (j : ℕ) :
     phase hk o j = o + (⟨j % k, Nat.mod_lt _ hk⟩ : Fin k) := by
   apply Fin.ext
   simp [phase, Fin.val_add, Nat.add_mod]
 
-private theorem filter_rotate {α : Type*} (p : α → Bool) (l : List α) (n : ℕ) :
+theorem filter_rotate {α : Type*} (p : α → Bool) (l : List α) (n : ℕ) :
     (l.rotate n).filter p ~r l.filter p := by
   let r := n % l.length
   have hright : l.filter p = (l.take r).filter p ++ (l.drop r).filter p := by

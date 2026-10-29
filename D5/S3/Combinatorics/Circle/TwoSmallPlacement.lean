@@ -19,7 +19,7 @@ open SourceWidth
 
 /-- A segment of consecutive physical pairs, checking its intermediate peak
 as well as both pair endpoints. -/
-private theorem paired_segment (f : ℕ → ℤ) (B : ℤ) (off start len : ℕ)
+theorem paired_segment (f : ℕ → ℤ) (B : ℤ) (off start len : ℕ)
     (H P : ℕ → ℤ)
     (hH : ∀ j, start ≤ j → j ≤ start + len → 0 ≤ H j ∧ H j ≤ B)
     (hP : ∀ j, start ≤ j → j < start + len → 0 ≤ P j ∧ P j ≤ B)
