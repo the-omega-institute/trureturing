@@ -81,9 +81,9 @@ private def sectorBasisSpec {n d : ℕ} [NeZero n] [NeZero d]
 
 def claim : Prop := by
   classical
-  exact ∀ n d m : ℕ, 2 ≤ n → 2 ≤ d → m ≤ d ^ (n - 1) →
-    letI : NeZero n := neZeroOfTwo n (by omega)
-    letI : NeZero d := neZeroOfTwo d (by omega)
+  exact ∀ n d m : ℕ, (hn : 2 ≤ n) → (hd : 2 ≤ d) → m ≤ d ^ (n - 1) →
+    letI : NeZero n := neZeroOfTwo n hn
+    letI : NeZero d := neZeroOfTwo d hd
     letI : Fintype (ZMod d) := Fintype.ofFinite _
     letI : DecidableEq (ZMod d) := Classical.decEq _
     letI : Fintype (jointIndex n d) := Fintype.ofFinite _
