@@ -120,3 +120,98 @@ def registration :
 
 end
 end Reg.D5.S3.Quantum.QuantumChannels.AncillaFreeTesterRobustnessEquality
+
+namespace Reg.D5.S3.Quantum.QuantumChannels.AncillaFreeTesterRobustnessEquality.RankPosOfTraceOne
+
+open _root_.D5.S3.Quantum.QuantumChannels.AncillaFreeTesterRobustnessEquality
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+
+noncomputable section
+universe u
+
+/-- Observe the strict order relation between zero and the matrix rank. -/
+abbrev signature : Signature where
+  Params := Unit
+  State _ := ℕ
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := ℕ → Prop
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : Realization signature :=
+  realize signature (fun _ _ x y => x < y) (fun e => nomatch e)
+
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+/-- Retain every finite index type, matrix, and trace-one hypothesis. -/
+abbrev arena : Arena where
+  signature := signature
+  Law R := ∀ {a : Type u} [Fintype a] [DecidableEq a]
+    {A : Matrix a a ℂ}, A.trace = 1 → R.readout () () 0 A.rank
+
+private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+  intro h
+  exact h (a := ULift.{u} Unit) (A := 1) (by simp [Matrix.trace])
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  have hpos : (0 : ℕ) < 1 := by decide
+  exact (lt_irrefl (1 : ℕ)) (Eq.mp (congrFun h 1) hpos)
+
+def source_registration : Registration arena.{u} (type_of% @rank_pos_of_trace_one.{u}) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@rank_pos_of_trace_one, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      exact ⟨rejected, fun j hj => (hj (Subsingleton.elim j i)).elim, rfl, rejected_law⟩
+    · intro e
+      exact nomatch e
+  dependence := dependence
+
+def registration :
+    LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
+      (@rank_pos_of_trace_one.{u}) (Realization signature) Unit Unit := {
+  unitName := .str
+    `D5.S3.Quantum.QuantumChannels.AncillaFreeTesterRobustnessEquality.rank_pos_of_trace_one
+    "__information_unit"
+  realizationName := ``source_registration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨source_registration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ _ x y => x < y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Quantum.QuantumChannels.AncillaFreeTesterRobustnessEquality
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms source_registration
+#print axioms registration
+
+end
+end Reg.D5.S3.Quantum.QuantumChannels.AncillaFreeTesterRobustnessEquality.RankPosOfTraceOne
