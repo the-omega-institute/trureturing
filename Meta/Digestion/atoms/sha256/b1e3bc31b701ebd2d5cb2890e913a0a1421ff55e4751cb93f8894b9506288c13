@@ -1,0 +1,39 @@
+#### 定理 9.1（新记录的乘积律与可见去相干极限）
+
+对同一个父投影 $P$，每个有限段的初态为 $\rho\otimes\sigma_1\otimes\cdots\otimes\sigma_n$，各 $W_j,\sigma_j$ 预先固定，不依记录自适应选择。每层作相应提升后不再相干访问旧子系统。第 $j$ 层的重叠为 $m_j=\operatorname{Tr}(\sigma_jW_j)$。则 $n$ 层之后[(9)](#eq-coherence)中的交叉系数为
+
+$$
+
+\Gamma_n=\prod_{j=1}^nm_j.
+
+$$
+
+对具有非零 $P\rho(I-P)$ 的输入，约化态趋于非选择 Lüders 态，当且仅当 $|\Gamma_n|\to0$。若所有 $m_j\ne0$，此条件等价于
+
+$$
+
+\sum_{j=1}^{\infty}-\log|m_j|=+\infty.
+
+$$
+
+若某个 $m_j=0$，之后已完全去相干。
+
+**证明。** 
+每层保留两个对角块，仅把同一交叉块乘 $m_j$，归纳得到乘积。令 $B=P\rho(I-P)$，差态只含两个互为伴随的块 $\Gamma_nB$ 与 $\bar\Gamma_nB^\dagger$，其奇异值给出
+
+$$
+
+\left\lVert \Lambda_{\Gamma_n}(\rho)-\Lambda_0(\rho)\right\rVert_1
+=2|\Gamma_n|\left\lVert B\right\rVert_1.
+
+$$
+
+对 $B\ne0$ 即得充要条件。对数把非零模的乘积转成上述和。
+ ∎
+
+若 $|m_j|\le r<1$，则相干上界按 $r^n$ 衰减，可以定义何时低于某个分辨率。但递归本身没有保证 $r<1$。取 $m_j=1$，根本不会去相干；若因子过快趋于模一，它们的无限乘积也可以为正。这里的“新准备且不再访问”是实际独立与记录保留条件。
+
+<a id="statement-9-2"></a>
+
+<a id="thm-revival"></a>
+

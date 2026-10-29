@@ -236,7 +236,7 @@ private lemma productMatrix_star {ι : Type*} [Fintype ι] [DecidableEq ι]
   ext a b
   simp [productMap, Matrix.conjTranspose_apply]
 
-private lemma productMatrix_diagonal {ι : Type*} [Fintype ι] [DecidableEq ι] (d : ι → Fin 4 → ℂ) :
+lemma productMatrix_diagonal {ι : Type*} [Fintype ι] [DecidableEq ι] (d : ι → Fin 4 → ℂ) :
     productMap (fun _ => Fin 4) (fun k => Matrix.diagonal (d k)) =
       Matrix.diagonal (fun a => ∏ k, d k (a k)) := by
   classical
