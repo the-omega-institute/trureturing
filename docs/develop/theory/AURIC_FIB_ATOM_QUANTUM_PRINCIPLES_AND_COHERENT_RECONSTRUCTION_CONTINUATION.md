@@ -798,3 +798,217 @@ Zorzitto 的 *The stability of the equation f(x+y)=f(x)f(y)*，
 故定理 43.2 的结论只否定所列复值一致模；它既不给出这些实现桥梁，也不解决量子起源。
 
 ## 追加锚（本行以下为增补区）
+
+## 44. 相等子树的位置集与模长、平方模长的全域不稳定性
+
+**定义 44.1（保留位置的相等子树记录）。** 来源域、运输和核类严格沿用定义 43.1 的
+整个 $T$、$\rho$ 和 $\mathcal C_\varepsilon$。令 $\mathcal A=\{0,1\}^*$，空地址为
+$\epsilon$，$jB=\{jp:p\in B\}$。定义有限集
+
+$$
+\begin{aligned}
+S(\alpha)&=S(\beta)=\varnothing,\\
+S(\langle s,t\rangle)
+&=R(s,t)\sqcup0S(s)\sqcup1S(t),\\
+R(s,t)&=\begin{cases}\{\epsilon\},&s=t,\\\varnothing,&s\ne t,\end{cases}\\
+d(s,u)&=|S(s)\mathbin\triangle S(u)|.
+\end{aligned}
+\tag{44.1}
+$$
+
+地址 $0$ 指左子树，$1$ 指右子树；$S(t)$ 恰为直接左右子树相等的内部节点地址集。
+$\sqcup$ 表示地址区域不交。这里没有按 $S$ 的取值合并来源标签。
+
+**命题 44.2（位置不变量与配对的精确距离分解）。** 对全部 $t\in T$，
+
+$$
+|S(t)|=q(t),\qquad S(\rho t)=S(t),
+\tag{44.2}
+$$
+
+其中 $q$ 是 (43.3) 的原有计数。$d$ 是 $T$ 上的伪度量，而且对任意
+$s,t,u,v\in T$ 有
+
+$$
+d(\langle s,t\rangle,\langle u,v\rangle)
+=d(s,u)+d(t,v)+|\delta_{s,t}-\delta_{u,v}|.
+\tag{44.3}
+$$
+
+**证明。** 三个地址区域 $\{\epsilon\},0\mathcal A,1\mathcal A$ 两两不交，
+故 (44.1) 的基数递推正是 (43.3)，结构归纳给 $|S|=q$。
+复用 §42 所列实际自由树运输的单射性，$\rho s=\rho t$ 当且仅当 $s=t$。
+两个叶子的像分别为 $\beta$ 和 $\langle\beta,\alpha\rangle$；后者的两个子树不等，
+所以两个像的 $S$ 都为空。内部节点使用运输保持构造子、上述相等关系及两个归纳假设，
+逐一保留 (44.1) 的三个区域，得到 $S(\rho t)=S(t)$。
+
+有限集的对称差非负、对称，且对角为空。包含关系
+$X\triangle Z\subseteq(X\triangle Y)\cup(Y\triangle Z)$ 给三角不等式，故 $d$ 为伪度量。
+它不必分离来源，例如 $S(\alpha)=S(\beta)$。对两个配对树在三个不交地址区域分别取
+对称差，根地址的贡献为 $|\delta_{s,t}-\delta_{u,v}|$，子地址的贡献分别为
+$d(s,u),d(t,v)$，这就证明 (44.3)。∎
+
+**定理 44.3（位置核的忠实全域实现与统一缺陷）。** 对 $h>0$ 定义
+$P_h(s,u)=e^{-hd(s,u)}$。对每个整数 $n\ge1$，令
+
+$$
+h_n=r_n=\frac1{5n},\qquad a_n=1-r_n,\qquad
+L_n(s,u)=a_nP_{h_n}(s,u)+r_n\delta_{s,u}.
+\tag{44.4}
+$$
+
+每个 $L_n$ 在整个 $T$ 上满足定义 43.1 的全部精确侧条件，并且
+
+$$
+\sup_{s,t,u,v\in T}|D_{L_n}(s,t,u,v)|
+\le a_n(1-e^{-h_n}+r_n)
+\le\frac{2a_n}{5n}<\frac1n.
+\tag{44.5}
+$$
+
+特别地 $L_n\in\mathcal C_{1/n}$，且 $s\ne u$ 时 $0<L_n(s,u)\le a_n<1$。
+
+**证明。** 记 $\operatorname{Fin}(\mathcal A)$ 为所有有限地址子集。
+在单一复 Hilbert 空间 $H_0=\ell^2(\operatorname{Fin}(\mathcal A))$ 中取标准正交基 $e_B$，
+并对每棵实际来源树定义有限支撑向量
+
+$$
+v_h(t)=e^{-h|S(t)|}
+ \sum_{B\subseteq S(t)}(e^{2h}-1)^{|B|/2}e_B.
+\tag{44.6}
+$$
+
+内积对第一项共轭线性。令 $I=S(s)\cap S(u)$，有限二项展开直接给
+
+$$
+\begin{aligned}
+\langle v_h(s),v_h(u)\rangle
+&=e^{-h(|S(s)|+|S(u)|)}\sum_{B\subseteq I}(e^{2h}-1)^{|B|}\\
+&=e^{-h(|S(s)|+|S(u)|-2|I|)}=P_h(s,u).
+\end{aligned}
+\tag{44.7}
+$$
+
+取 $s=u$ 得范数一。在与 $n$ 无关的 $H=H_0\oplus\ell^2(T)$ 中，
+
+$$
+\eta_n(t)=\sqrt{a_n}\,v_{h_n}(t)\oplus\sqrt{r_n}\,e_t
+\tag{44.8}
+$$
+
+是 $L_n$ 的归一 Gram 实现。任意 $M\ge1$、可重复的来源列 $t_1,\ldots,t_M$、
+任意复数 $c_1,\ldots,c_M$ 均满足
+
+$$
+\begin{aligned}
+\sum_{i,j=1}^M\overline{c_i}c_jL_n(t_i,t_j)
+&=a_n\left\|\sum_i c_i v_{h_n}(t_i)\right\|^2
+ +r_n\sum_{x\in\{t_1,\ldots,t_M\}}
+       \left|\sum_{i:t_i=x}c_i\right|^2\ge0.
+\end{aligned}
+\tag{44.9}
+$$
+
+所以正性包括所有重复标签的复 Gram 测试，不只是实系数或互异树测试。
+式 (44.7) 给实对称性和对角归一化；(44.2) 保持 $P_h$，运输单射性保持 delta 项，
+故 $L_n(\rho s,\rho u)=L_n(s,u)$ 精确成立。$r_n>0$ 使 (44.8) 分离所有实际来源；
+直接看核也有 $L_n(s,u)=1\Longleftrightarrow s=u$。特征 $S$ 的碰撞没有改变来源域。
+
+固定 $n$ 并简写 $a,r,h,P,L$。对任意四棵树置
+
+$$
+A=P(s,u),\quad B=P(t,v),\quad d_0=\delta_{s,u},\quad e_0=\delta_{t,v},
+\quad c=|\delta_{s,t}-\delta_{u,v}|,\quad E=e^{-hc}.
+$$
+
+式 (44.3) 给 $P(\langle s,t\rangle,\langle u,v\rangle)=ABE$，
+构造子单射性给对应 delta 为 $d_0e_0$。由 $a+r=1$，逐项展开得精确恒等式
+
+$$
+\begin{aligned}
+D_L(s,t,u,v)
+&=aABE+rd_0e_0-(aA+rd_0)(aB+re_0)\\
+&=aAB(E-1)+ra(A-d_0)(B-e_0).
+\end{aligned}
+\tag{44.10}
+$$
+
+这里 $0<A,B\le1$，$c\in\{0,1\}$；$d_0=1$ 时 $A=1$，否则
+$0<A-d_0\le1$，所以总有 $|A-d_0|\le1$，同理 $|B-e_0|\le1$。
+故 $|D_L|\le a(1-e^{-h})+ra\le a(h+r)$，证明 (44.5)。
+整个推导未限制四树的相等关系、形状、深度或叶数。
+
+指数 Hamming 核的正性与张量 Gram 正性是标准中间供应；(44.6)–(44.9) 直接完成所需计算。
+本定理使用的新接合是实际树位置不变量、忠实来源提升和无树高限制的 (44.10)，
+复用 §43 的计数及缺陷展开，不把一般正性机制另列为新结果。∎
+
+**定理 44.4（移动来源对、任意重相位与零闭路边界）。** 不存在趋零的一致模，能够对
+所有 $K\in\mathcal C_\varepsilon$ 控制下列任一量：
+
+$$
+\sup_{s,u\in T}\operatorname{dist}(|K(s,u)|,\{0,1\}),\qquad
+\sup_{s,u\in T}\operatorname{dist}(|K(s,u)|^2,\{0,1\}).
+\tag{44.11}
+$$
+
+具体取 §43 的实际树 $C=\langle\alpha,\alpha\rangle$、$w_0=\beta$、
+$w_{k+1}=\langle w_k,C\rangle$，则
+
+$$
+\begin{aligned}
+S(w_k)&=\{0^j1:0\le j<k\},\\
+x_n:=L_n(\alpha,w_{5n})&=a_n/e,\\
+\frac14<x_n<\frac12,\qquad
+\operatorname{dist}(x_n,\{0,1\})&=x_n>\frac14,\\
+\operatorname{dist}(x_n^2,\{0,1\})&=x_n^2>\frac1{16}.
+\end{aligned}
+\tag{44.12}
+$$
+
+任意实数 $\theta$ 还满足
+
+$$
+\min\{|e^{i\theta}x_n|,|e^{i\theta}x_n-1|\}=x_n>\frac14.
+\tag{44.13}
+$$
+
+每个固定来源对有 $L_n(s,u)\to1$，每个固定有限来源集合上收敛一致；极限核不忠实。
+每个有限 $n$ 的核不满足精确乘法。所有 $L_n$ 的有限闭合 Bargmann 积均为正实数，
+闭路相位恒为零，即使作任意顶点重相位也如此。
+
+**证明。** $S(C)=\{\epsilon\}$。$w_0$ 是叶，$k\ge1$ 时 $w_k$ 的右子树为 $C$，
+而 $C$ 的右子树为 $\alpha\ne C$，故全部 $w_k\ne C$。
+递推根地址从不进入 $S$，因此
+$S(w_{k+1})=0S(w_k)\sqcup\{1\}$，归纳得到 (44.12) 第一式。
+$S(\alpha)=\varnothing$ 且 $\alpha\ne w_{5n}$，故核值为 $a_ne^{-h_n5n}=a_n/e$。
+由 $4/5\le a_n<1$ 和 $2<e<3$，
+
+$$
+x_n\ge\frac4{5e}>\frac4{15}>\frac14,\qquad
+x_n<\frac1e<\frac12,\qquad
+\frac1{16}<\frac{16}{225}<\frac{16}{25e^2}\le x_n^2<\frac14.
+$$
+
+两个最近端点都是零，给 (44.12)。若 (44.11) 中任何一致模存在，代入
+$\varepsilon=1/n$ 和定理 44.3 的同一全域核，就迫使其在 $1/n$ 处分别大于
+$1/4$ 或 $1/16$，与趋零矛盾。见证来源随 $n$ 增长，这不是固定有限切片结论。
+任何 $\{0,1\}$ 值精确核的一致逼近都会蕴含相应端点距离界，因而也受到此反例限制。
+
+反三角不等式给 $|e^{i\theta}x_n-1|\ge1-x_n>x_n$，证明 (44.13)。
+任意来源依赖的顶点重相位在该见证对上只改变 $\theta$，所以连允许所有这种选择也不能
+消去这一复值端点距离。此处的缺陷事件始终是原始 $L_n\in\mathcal C_{1/n}$；
+没有假定任意重相位仍保持运输或同一缺陷界。
+
+固定 $s,u$ 时 $d(s,u)$ 有限，$e^{-d(s,u)/(5n)}\to1$，且 $a_n\to1,r_n\to0$。
+固定有限集合上取有限个距离的最大值即可得一致收敛。全 $1$ 极限合并全部 Gram 代表，
+故不忠实。另一方面，在实际四元组 $(\alpha,\beta,\beta,\alpha)$ 上，
+$A=B=E=1,d_0=e_0=0$，(44.10) 给 $D_{L_n}=r_na_n>0$；
+因此 §42 的精确刚性原封适用，不被近似反例推翻。
+
+每个核项严格为正，故任意有限环 $t_0,t_1,\ldots,t_m=t_0$ 的
+$\prod_{j=0}^{m-1}L_n(t_j,t_{j+1})$ 为正实数。在
+$\eta(t)\mapsto e^{i\chi_t}\eta(t)$ 下，边因子乘
+$e^{i(\chi_{t_{j+1}}-\chi_{t_j})}$，闭环中相消。因此本族的模长不稳定性不提供
+非零规范不变闭路相位；这与 §43 原秩一相位族的可移除相位也须区分。∎
+
+## 追加锚（本行以下为增补区）
