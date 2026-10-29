@@ -16,7 +16,7 @@ internal sealed class BarkerMinimalGridEncodingDocument : IScribeDocumentDefinit
             N("Closed", "Closed neighbourhoods", "Closed G u v means u=v or G.Adj u v."),
             N("ClosedPrivate", "Existential private witnesses", "ClosedPrivate G S v z means z is closed-adjacent to v and every selected closed neighbour of z equals v. Witnesses are propositions and are never counted choices."),
             T("minimal_iff_closed_private", "Private-witness characterization", PrivateFormula(), "The proof uses the existing criticalVertices, privateNeighbors and selfCritical_no_selected_neighbor suppliers. The isolated-or-outside-private-neighbour characterization, under the domination premise, is published as Proposition 1 of Gangloff and Talon, arXiv:1906.10779v2, https://arxiv.org/abs/1906.10779. No novelty is claimed for that characterization. No external prose or proof code is transplanted.",
-                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/GridDomination/gangloff2019dominating"))),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Automata/gangloff2019dominating"))),
             N("grid", "The ordinary open grid", "Vertices are Fin 3 × Fin n; (r,c) represents the source label (r+1,c+1). Adjacency is exactly Nat.dist r s + Nat.dist c d = 1. The finite column type supplies open ends."),
             N("encode", "Read the masks", "Each column mask has one Boolean bit for each of the three labelled rows. The bit is true exactly when the actual vertex belongs to the subset."),
             N("decode", "Recover the subset", "The decoded subset contains precisely the vertices whose column-mask bit is true."),

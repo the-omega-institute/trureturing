@@ -15,7 +15,7 @@ motivation_gids:
 Colin Barker's first generating-function conjecture in OEIS A286848 concerns
 **every** labelled inclusion-minimal dominating vertex subset of the ordinary
 open grid $P_3\mathbin{\square}P_n$, for every $n\ge1$.
-The source note is [barker2017a286848](../Library/GridDomination/barker2017a286848.md),
+The source note is [barker2017a286848](../Library/RecurrenceComposition/barker2017a286848.md),
 and the immutable original question is preregistered in
 [#22395](https://github.com/the-omega-institute/trureturing/issues/22395).
 The exact settling declaration is
@@ -61,7 +61,7 @@ A finite-state method becomes a proof of the external identity only when it
 counts the actual family without multiplicity and determines every coefficient.
 The declaration above supplies that all-width identity. The local
 private-neighbour characterization is established literature, credited to
-[Gangloff–Talon, Proposition 1](../Library/GridDomination/gangloff2019dominating.md).
+[Gangloff–Talon, Proposition 1](../Library/Automata/gangloff2019dominating.md).
 The particular all-state quotient, orbit certificates and complete series
 assembly are repository derivations; no priority claim is made.
 
