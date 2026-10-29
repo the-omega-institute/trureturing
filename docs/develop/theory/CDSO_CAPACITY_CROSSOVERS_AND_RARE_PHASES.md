@@ -2662,3 +2662,550 @@ The endpoint identity (15.17) is a rational identity, and the dense estimate
 $H$ as a function of the law is used.
 
 ## 追加锚（本行以下为增补区）
+
+
+## 16. Exact dense support transitions through the terminal endpoint
+
+**Definition 16.1 (Capacity-sensitive marginal functions).** Retain Definition 1.1 and the dense domain (11.1). Throughout this section assume
+
+$$
+a\ge4096,\qquad a\in\mathbb Z,\qquad 0<\delta\le\frac1a,
+\qquad r=a+1,\quad s=a+2,\quad n=a-1,
+\tag{16.1}
+$$
+
+and write
+
+$$
+q=r-\delta,\quad \mu=\frac qs,\quad \theta=1-\delta,
+\quad c=2a+1,\quad \gamma=c\delta,
+\quad \tau=\frac{3(2a+3)\delta}{r^2}.
+\tag{16.2}
+$$
+
+In particular $\mathscr D_a(\delta)$ continues to mean the infimum over all laws on nonempty subsets of $[s]$ with this mean and with every actual marginal at least $\tau$. No restriction on cardinalities, symmetry or zero masses is imposed. For an omitted set $J\subsetneq[s]$ put $\bar x_J=x_{[s]\setminus J}$. Define
+
+$$
+g_0(z)=\frac{r^2}{z},\qquad
+g_1(z)=\frac{r^2}{z}-\frac{\gamma}{z^2},\qquad
+f(z)=\frac{a^2}{z}+\frac{c\theta}{z^2}.
+\tag{16.3}
+$$
+
+For real variables $u,w$ set
+
+$$
+v=\frac{q-2u-w}{n},\qquad
+\Omega=\{(u,w):\tau\le v\le w\le u\le1\},
+\tag{16.4}
+$$
+
+and, on $\Omega$, define
+
+$$
+\begin{aligned}
+F_0(u,w)&=2g_0(u)+g_1(w)+n g_1(v),\\
+F_1(u,w)&=2f(u)+\frac{r^2}{w}
+ +\frac{c(2u+\delta-2)}{w^2}+n g_1(v),\\
+F(u,w)&=\max\{F_0(u,w),F_1(u,w)\}.
+\end{aligned}
+\tag{16.5}
+$$
+
+These are functions of grouped marginals, with $v$ determined by the same mean constraint. The graph normalization remains precisely the one in Definition 1.1 and its citation to Albalahi et al., DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176), p.109.
+
+**Lemma 16.2 (A capacity certificate on the entire subset domain).** Let $x$ be any dense law in Definition 16.1, and relabel its actual marginals so that $y_1\ge\cdots\ge y_s$. Put
+
+$$
+\alpha_i=y_i^{-2},\quad W=\sum_i\alpha_i,\quad
+\omega=\alpha_3,\quad b_i=c(\omega-\alpha_i)_+,
+\quad W_T=\sum_{i\in T}\alpha_i.
+\tag{16.6}
+$$
+
+For every nonempty $T\subseteq[s]$, with $k=|T|$ and $J=[s]\setminus T$, the expression
+
+$$
+\mathcal R_y(T)
+=(r-k)\big[c(W-2\omega)-(r+k)W_T\big]
+ +\sum_{i\in J}b_i
+\tag{16.7}
+$$
+
+is nonnegative. Its entire zero set is
+
+$$
+\mathcal R_y(T)=0
+\quad\Longleftrightarrow\quad
+\begin{cases}
+k=r,\ J=\{i\},\ y_i\le y_3,\quad\text{or}\\
+k=a,\ J=\{i,j\},\ y_i,y_j\ge y_3.
+\end{cases}
+\tag{16.8}
+$$
+
+For the grouped point
+
+$$
+u=\frac{y_1+y_2}{2},\qquad w=y_3,\qquad
+v=\frac1n\sum_{i=4}^s y_i
+\tag{16.9}
+$$
+
+one has $(u,w)\in\Omega$ and $H(x)\ge F(u,w)$. In the inequality $H(x)\ge F_1(u,w)$, equality forces $y_1=y_2=u$ and $y_4=\cdots=y_s=v$ as well as $\mathcal R_y(T)=0$ on every positive-mass atom.
+
+**Proof.** The actual mean and ordering give $q\le2+a y_3$. Thus, with $\ell=1-2/a$,
+
+$$
+y_3\ge\frac{a-1-\delta}{a}\ge\ell,\qquad
+\omega\le\ell^{-2}\le(32/31)^2<16/15,
+\qquad \alpha_i\ge1.
+\tag{16.10}
+$$
+
+For $k=r$, the residual is $b_i$ on the atom omitting $i$, proving the first zero case. For $k=a$, direct substitution gives
+
+$$
+\mathcal R_y(T)
+=c\sum_{i\in J}(\alpha_i-\omega)_+,
+\tag{16.11}
+$$
+
+proving the second case. At $k=s$ it equals $2W+2c\omega>0$.
+
+For the remaining cardinalities $k<a$, put $d=|J|$, so $3\le d\le s-1$. The bracket in (16.7) is
+
+$$
+(d-2)W+(2s-1-d)\sum_{i\in J}\alpha_i-2c\omega
+\ge3sd-2s-d-d^2-2c\omega.
+\tag{16.12}
+$$
+
+The quadratic in $d$ on the right is concave. Its minimum on $[3,s-1]$ is at least $7s-12$: the endpoint values before subtracting $2c\omega$ are $7s-12$ and $2s(s-2)$. Consequently the bracket is at least
+
+$$
+7s-12-\frac{32c}{15}
+=\frac{41a-2}{15}>0.
+\tag{16.13}
+$$
+
+Since $r-k>0$ and $b_i\ge0$, the residual is strictly positive there. This proves nonnegativity and exhausts the zero set over every allowed nonempty subset.
+
+Expanding (16.7) and using $\mathbb E(r-K)=\delta$ and $\mathbb P(i\in J)=1-y_i$ gives the exact identity under the original law
+
+$$
+H(x)=r^2\sum_i\frac1{y_i}
+ -c\delta(W-2\omega)-\sum_i(1-y_i)b_i
+ +\mathbb E_x\mathcal R_y(T).
+\tag{16.14}
+$$
+
+Only $b_1,b_2$ can be nonzero. Its non-residual part therefore equals
+
+$$
+f(y_1)+f(y_2)+\frac{r^2}{y_3}
+ +\frac{c(y_1+y_2+\delta-2)}{y_3^2}
+ +\sum_{i=4}^s g_1(y_i).
+\tag{16.15}
+$$
+
+Here $f''>0$, and
+
+$$
+g_1''(z)=\frac{2(r^2z-3\gamma)}{z^4}>0
+\quad(\tau\le z\le1),\qquad
+r^2\tau-3\gamma=6\delta>0.
+\tag{16.16}
+$$
+
+Apply finite Jensen separately to $f(y_1)+f(y_2)$ and to the last $n$ terms in (16.15). The coupling depends on $y_1,y_2$ only through their sum, and $y_3=w$ is fixed. This gives $H(x)\ge F_1(u,w)$, with exactly the asserted necessary equality conditions. Lemma 14.2, with the two largest marginals as its omitted pair, gives the other inequality $H(x)\ge F_0(u,w)$ by the same grouping, using $g_0$ instead of $f$.
+
+The expectation step is the classical pointwise-certificate form of weak duality; see Bertsimas and Popescu, *Optimal inequalities in probability theory: A convex optimization approach*, DOI [10.1137/S1052623401399903](https://doi.org/10.1137/S1052623401399903), Theorem 2.1. Finite Jensen is used in the form of Boyd and Vandenberghe, *Convex Optimization*, §3.1.8, pp.77–78, [author-hosted text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf). The explicitly proved residual supplies the first principle's hypothesis, and (16.16) supplies the second principle's convexity hypothesis. Both are applied to the same actual law; no convexity of $H$ as a function of $x$ is asserted. ∎
+
+**Lemma 16.3 (Strict convexity and the ordered minimum of the second certificate).** The set $\Omega$ is nonempty, compact and convex. Both $F_0$ and $F_1$ are strictly convex there, as is $F$. In fact
+
+$$
+\nabla^2F_1\succeq a^2 I_2\quad\text{on }\Omega.
+\tag{16.17}
+$$
+
+The unique minimum $(u_1,w_1)$ of $F_1$ on $\Omega$ satisfies
+
+$$
+\sqrt{(u_1-\mu)^2+(w_1-\mu)^2}<\frac{64}{a^2},
+\qquad u_1>w_1,\qquad u_1,w_1<1.
+\tag{16.18}
+$$
+
+**Proof.** The point $(\mu,\mu)$ belongs to $\Omega$. Every point of $\Omega$ satisfies
+
+$$
+1\ge u\ge w\ge v\ge\frac{q-3}{n}
+=1-\frac{1+\delta}{a-1}\ge\ell=1-\frac2a>\tau,
+\tag{16.19}
+$$
+
+which also proves compactness. On $[\ell,1]$, elementary bounds give
+
+$$
+a^2\le g_1''(z)<3a^2,\qquad f''(z)\ge2a^2,
+\qquad c\le\frac{33a}{16},\qquad
+\ell^{-3}<\frac{10}{9},\quad\ell^{-4}<\frac87.
+\tag{16.20}
+$$
+
+For example, $g_1''(z)\ge2a^2-6\gamma\ell^{-4}>a^2$ and $g_1''(z)\le2r^2\ell^{-3}<3a^2$. These bounds already hold for $a\ge64$ in the parameter range at issue.
+
+Put $D=2u+\delta-2$. Differentiating with $v=(q-2u-w)/n$ gives
+
+$$
+\begin{aligned}
+(F_1)_{uu}&=2f''(u)+\frac4n g_1''(v),\\
+(F_1)_{uw}&=-\frac{4c}{w^3}+\frac2n g_1''(v),\\
+(F_1)_{ww}&=\frac{2r^2}{w^3}
+ +\frac{6cD}{w^4}+\frac1n g_1''(v).
+\end{aligned}
+\tag{16.21}
+$$
+
+Since $D\ge-4/a$, (16.20) implies
+
+$$
+(F_1)_{uu}\ge4a^2,\qquad
+|(F_1)_{uw}|<10a,\qquad
+(F_1)_{ww}\ge2a^2-\frac{396}{7}.
+\tag{16.22}
+$$
+
+For the middle bound, the two terms of opposite signs in $(F_1)_{uw}$ each have absolute value less than $10a$. Subtracting the off-diagonal row sums from the diagonal entries proves (16.17). The Hessian quadratic form of $F_0$ is
+
+$$
+\frac{4r^2}{u^3}(du)^2+g_1''(w)(dw)^2
+ +\frac{g_1''(v)}n(2du+dw)^2,
+\tag{16.23}
+$$
+
+so $F_0$ is strictly convex too. The maximum of two strictly convex functions is strictly convex, which proves the assertion for $F$.
+
+At $p_0=(\mu,\mu)$ both functions equal the actual uniform-law value $H_d$. Direct differentiation gives
+
+$$
+\nabla F_1(p_0)
+=-\frac{4c}{\mu^3}\big(1-\mu,\ \mu+\delta-1\big),
+\qquad \|\nabla F_1(p_0)\|<32.
+\tag{16.24}
+$$
+
+Indeed $1-\mu=(1+\delta)/s<1/a$ and $|\mu+\delta-1|=|r\delta-1|/s<1/a$. Strong convexity, together with $F_1(u_1,w_1)\le F_1(p_0)$, yields
+
+$$
+\frac{a^2}{2}\|(u_1,w_1)-p_0\|^2
+\le\|\nabla F_1(p_0)\|\,\|(u_1,w_1)-p_0\|.
+\tag{16.25}
+$$
+
+This proves the distance bound. Since $1-\mu\ge1/s>64/a^2$, both $u_1,w_1$ are less than one. The lower marginal boundary is already excluded by (16.19).
+
+If $u_1=w_1=v$, the point is $p_0$, where increasing $u$ with $w$ fixed is feasible and has derivative $-4c(1-\mu)/\mu^3<0$. If $u_1=w_1=z>v$, the feasible direction $(du,dw)=(1,-2)$ keeps $v$ fixed and has derivative
+
+$$
+\frac{4c(3z+2\delta-3)}{z^3}<0.
+\tag{16.26}
+$$
+
+For its sign, (16.18)'s distance bound gives
+
+$$
+3(1-z)-2\delta
+\ge\frac{3-c\delta}{s}-\frac{192}{a^2}
+\ge\frac1{2a}-\frac{192}{a^2}>0.
+$$
+
+Neither case can minimize $F_1$. Thus $u_1>w_1$. ∎
+
+**Lemma 16.4 (The two exact support thresholds).** For $0<t<1/r$ put
+
+$$
+U(t)=1-t,\qquad V(t)=1-\frac{1-t}{a},\qquad
+C_0=r^2,\quad C_1=r^2+c,
+\tag{16.27}
+$$
+
+and define the polynomials
+
+$$
+P_j(t)=C_j V(t)\big[U(t)^2-V(t)^2\big]
+ -2ct\,U(t)^2\qquad(j=0,1).
+\tag{16.28}
+$$
+
+Each has exactly one real root in $(0,1/r)$. Denote the root of $P_0$ by $\delta_1$ and that of $P_1$ by $\delta_2$. They obey
+
+$$
+\frac{a-4}{a^2}<\delta_1<\delta_2<\frac{a-2}{a^2}
+<\frac1r<\frac1a.
+\tag{16.29}
+$$
+
+For each $0<\delta\le1/a$ there is also exactly one root $u_0\in(\mu,\mu+4/a^2)$ of
+
+$$
+r^2v_0(u_0^2-v_0^2)=2\gamma u_0^2,
+\qquad v_0=\frac{q-2u_0}{a}.
+\tag{16.30}
+$$
+
+It satisfies $u_0<\mu+3/a^2$. For $\delta<1/r$, it is less than, equal to, or greater than $\theta$ according as $\delta$ is less than, equal to, or greater than $\delta_1$.
+
+**Proof.** On $(0,1/r)$ one has $U>V>0$. Dividing $P_j(t)=0$ by $tU(t)^2$ gives
+
+$$
+C_j\frac{V(t)}t\left[1-\left(\frac{V(t)}{U(t)}\right)^2\right]=2c.
+\tag{16.31}
+$$
+
+The two positive factors on the left strictly decrease: $V(t)/t=(a-1)/(at)+1/a$, while $V(t)/U(t)$ strictly increases. Their product tends to infinity at zero and to zero at $1/r$. This proves existence and uniqueness in the stated region. At the first root, $P_1-P_0=cV(U^2-V^2)>0$, so $\delta_1<\delta_2$.
+
+At $t=(a-4)/a^2$, one has $U-V>3/a^2$ and $U,V\ge31/32$. Hence the positive term in (16.28) exceeds $6(31/32)^2$, whereas $2ctU^2\le4+2/a$. Both polynomials are positive there. At $t=(a-2)/a^2$, one has $U-V\le33/(32a^2)$ and $C_j\le9a^2/8$. Their positive term is at most $297/128$, whereas $2ctU^2\ge4(31/32)^3$. Both polynomials are negative there. This proves (16.29).
+
+For the scalar root consider
+
+$$
+\Phi(u)=2g_0(u)+a g_1\left(\frac{q-2u}{a}\right).
+\tag{16.32}
+$$
+
+On the ordered interval $\mu\le u\le1$, the lower argument is at least $\ell$, and $\Phi''(u)>4r^2$. Also $\Phi'(\mu)=-4\gamma/\mu^3<0$. The point $\mu+4/a^2$ is less than one, and integration of this second-derivative bound gives $\Phi'(\mu+4/a^2)>0$. Thus the root is unique and
+
+$$
+0<u_0-\mu<\frac{\gamma}{r^2\mu^3}<\frac3{a^2}.
+\tag{16.33}
+$$
+
+The derivative equation is exactly (16.30), with positive $u_0,v_0$. For $\delta<1/r$, the point $u=\theta$ belongs to this ordered interval and its lower argument is $V=V(\delta)$. Half its derivative is
+
+$$
+E_0=r^2(V^{-2}-\theta^{-2})-\frac{2\gamma}{V^3}
+=\frac{P_0(\delta)}{\theta^2V^3}.
+\tag{16.34}
+$$
+
+Strict increase of $\Phi'$ proves the final comparison. ∎
+
+**Theorem 16.5 (The exact dense minimum and all labeled equality laws).** Under Definition 16.1, the dense infimum is attained and has precisely the following three branches. All unlisted atom masses in each displayed law are zero.
+
+If $0<\delta<\delta_1$, use the unique $u_0,v_0$ of (16.30). Then
+
+$$
+\mathscr D_a(\delta)=2g_0(u_0)+a g_1(v_0).
+\tag{16.35}
+$$
+
+All equality laws are indexed by unordered pairs $P\subseteq[s]$ and are
+
+$$
+\bar x_P=\delta,\qquad
+\bar x_{\{i\}}=\theta-u_0\quad(i\in P),\qquad
+\bar x_{\{j\}}=1-v_0\quad(j\notin P).
+\tag{16.36}
+$$
+
+Every displayed mass is positive. Their actual marginals are $u_0$ on $P$ and $v_0$ elsewhere.
+
+If $\delta_1\le\delta\le\delta_2$, put $V=V(\delta)$. Then
+
+$$
+\mathscr D_a(\delta)=2g_0(\theta)+a g_1(V).
+\tag{16.37}
+$$
+
+All equality laws are indexed by unordered pairs $P$ and are
+
+$$
+\bar x_P=\delta,\qquad
+\bar x_{\{j\}}=\frac\theta a\quad(j\notin P).
+\tag{16.38}
+$$
+
+Their actual marginals are $\theta$ on $P$ and $V$ elsewhere. In particular the two singleton-omission masses on $P$ are zero throughout this closed interval, including both thresholds.
+
+If $\delta_2<\delta\le1/a$, there is exactly one real triple $(u,w,v)$ in the legal region
+
+$$
+2u+w+n v=q,\qquad \tau<v<w<u<1,\qquad u>\theta
+\tag{16.39}
+$$
+
+satisfying the polynomial equations
+
+$$
+\begin{aligned}
+[a^2u+2c\theta]w^3
+ &=[(r^2+c)w+2c(2u+\delta-2)]u^3,\\
+[r^2w+2c(2u+\delta-2)]v^3
+ &=[r^2v-2\gamma]w^3.
+\end{aligned}
+\tag{16.40}
+$$
+
+This triple also satisfies the isolating bound (16.18). With $\eta=u+\delta-1>0$, the exact value is
+
+$$
+\boxed{\quad
+\mathscr D_a(\delta)
+=2\left(\frac{a^2}{u}+\frac{c\theta}{u^2}\right)
+ +\frac{r^2}{w}-\frac{c(\delta-2\eta)}{w^2}
+ +n\left(\frac{r^2}{v}-\frac{\gamma}{v^2}\right).
+\quad}
+\tag{16.41}
+$$
+
+Every equality law is obtained by choosing an unordered pair $P=\{p_1,p_2\}$ and a label $h\notin P$. Its positive masses are exactly
+
+$$
+\begin{aligned}
+\bar x_P&=\delta-2\eta,\\
+\bar x_{\{p_1,h\}}=\bar x_{\{p_2,h\}}&=\eta,\\
+\bar x_{\{h\}}&=1-w-2\eta,\\
+\bar x_{\{j\}}&=1-v\qquad(j\notin P\cup\{h\}).
+\end{aligned}
+\tag{16.42}
+$$
+
+The actual marginals are $u$ on $P$, $w$ on $h$ and $v$ on the other labels. There are exactly $\binom{s}{2}$ labeled minimizers in each of the first two branches, and exactly $a\binom{s}{2}$ in the third. Each branch has one minimizer up to relabeling. The dense minimum of $d(x)$ is the displayed value of $\mathscr D_a(\delta)$ minus $B$.
+
+**Proof.** Every grouped point in Lemma 16.2 lies in the same convex set $\Omega$, and that lemma bounds every actual dense law by $F$ there.
+
+For the first branch, Jensen across all $a$ lower coordinates gives
+
+$$
+F_0(u,w)\ge\Phi(u)\ge\Phi(u_0).
+\tag{16.43}
+$$
+
+The ordered mean implies $u\ge\mu$, so Lemma 16.4 applies on the entire possible interval. It also gives $u_0<\theta$, while $u_0>v_0$. Thus (16.36) has positive masses. Its pair mass is $\delta$ and its singleton-omission masses sum to $1-\delta$. Its omission probabilities are $1-u_0$ on $P$ and $1-v_0$ off $P$. It is therefore an actual law of total mass one, mean $a\delta+r(1-\delta)=q$, and exactly the claimed marginals, all greater than $\tau$. Labels on $P$ never belong to its sole cardinality-$a$ atom. Consequently their incidence second moments are $r^2u_0$, whereas the others have $r^2v_0-\gamma$. Its energy is exactly (16.35), attaining (16.43).
+
+For the middle branch put $p_\theta=(\theta,V)$. This point belongs to $\Omega$ since $\delta_2<1/r$. At it,
+
+$$
+F_0(p_\theta)=F_1(p_\theta)
+=2g_0(\theta)+a g_1(V),
+\qquad
+\nabla F_0(p_\theta)=(2E_0,0),\quad
+\nabla F_1(p_\theta)=(2E_1,0),
+\tag{16.44}
+$$
+
+where
+
+$$
+E_j=C_j(V^{-2}-\theta^{-2})-\frac{2\gamma}{V^3}
+=\frac{P_j(\delta)}{\theta^2V^3}.
+\tag{16.45}
+$$
+
+Lemma 16.4 gives $E_0\le0\le E_1$. The supporting-plane inequalities for these convex functions show that $F_0(u,w)$ is at least their common value when $u\le\theta$, and $F_1(u,w)$ is at least that value when $u\ge\theta$. Hence $F$ is minimized at $p_\theta$, uniquely by strict convexity. The law (16.38) has pair mass $\delta$ and singleton-omission mass $a(\theta/a)=1-\delta$. Its actual omissions are $\delta$ on $P$ and $\theta/a$ elsewhere; thus its marginals, mean and energy are as claimed. Its energy attains the bound, including at both endpoints.
+
+For the third branch take the minimum $(u_1,w_1)$ of $F_1$ from Lemma 16.3. First it has $u_1>\theta$. If $\delta_2<\delta<1/r$, then $E_1<0$. The supporting plane at $p_\theta$ gives
+
+$$
+F_1(u,w)\ge F_1(p_\theta)+2E_1(u-\theta)
+\ge F_1(p_\theta)\quad(u\le\theta).
+\tag{16.46}
+$$
+
+Increasing $u$ slightly from $p_\theta$ with $w$ fixed is feasible and strictly decreases $F_1$, so its minimum cannot have $u_1\le\theta$. If $\delta\ge1/r$, the ordered mean and $u_1>w_1$ give $u_1>\mu\ge\theta$, proving the same conclusion.
+
+Next $w_1>v_1$. Indeed, on the face $w=v$ with $u>\theta$, differentiation in the feasible direction increasing $w$ with $u$ fixed gives
+
+$$
+(F_1)_w=-\frac{4c(u+\delta-1)}{w^3}<0.
+\tag{16.47}
+$$
+
+Lemma 16.3 already gives $u_1>w_1$ and excludes the cube boundary. Thus the minimizer is interior in $\Omega$ and its stationary equations are
+
+$$
+f'(u)+\frac{c}{w^2}
+=-\frac{r^2}{w^2}-\frac{2c(2u+\delta-2)}{w^3}
+=g_1'(v).
+\tag{16.48}
+$$
+
+Clearing positive denominators gives exactly (16.40). Conversely, any triple satisfying (16.39) and (16.40) gives an interior stationary point of $F_1$ on $\Omega$. Strict convexity makes that point its unique minimum. This proves both existence and uniqueness in the specified legal region and excludes any further algebraic root there. Roots outside this region are not part of the specification.
+
+Write this triple as $(u,w,v)$ and put $\eta=u+\delta-1$. The distance bound in Lemma 16.3 and $\mu+\delta-1\le1/[a(a+2)]$ give
+
+$$
+0<\eta<\frac{65}{a^2},\qquad
+\delta-2\eta>\frac1{2a}-\frac{130}{a^2}>0,
+\qquad
+1-w-2\eta>\frac1{a+2}-\frac{194}{a^2}>0.
+\tag{16.49}
+$$
+
+Here $\delta>\delta_2>1/(2a)$ by (16.29). Also $v<\mu<1$, so $1-v>0$. These prove the positivity of every mass in (16.42). Their pair total is $\delta$, and their singleton-omission total, using $2u+w+n v=q$, is
+
+$$
+1-w-2\eta+n(1-v)=1-\delta.
+\tag{16.50}
+$$
+
+The omission probabilities on $P$ are $(\delta-2\eta)+\eta=1-u$; that on $h$ is $2\eta+(1-w-2\eta)=1-w$; and those on the other labels are $1-v$. This verifies total mass, the mean $q$, and every marginal from one law. Density follows from (16.19). Its actual incidence second moments are, respectively,
+
+$$
+r^2u-c\eta=a^2u+c\theta,\qquad
+r^2w-c(\delta-2\eta),\qquad r^2v-\gamma.
+\tag{16.51}
+$$
+
+They give (16.41), which is $F_1(u,w)$. Thus the law attains the lower bound $H(x)\ge\min_\Omega F_1$ on the full original dense domain.
+
+It remains to exhaust equality laws. In the first branch, equality in (16.43) and the strict Jensen inequalities fixes the marginals as two copies of $u_0$ and $a$ copies of $v_0$. In the middle branch, the unique minimizing point of $F$ is $p_\theta$. Since $F_0=F_1$ there, equality also forces equality in the $F_0$ certificate and its strict Jensen inequalities. Thus the marginals are two copies of $\theta$ and $a$ copies of $V$. In both branches the two larger marginals recover a unique pair $P$. Lemma 14.2 forces every positive-mass atom to have cardinality $r$, except for the unique cardinality-$a$ atom omitting $P$. The mean forces its mass to be $\delta$, and the actual omission probabilities force all singleton-omission masses. These are precisely (16.36) and (16.38), with no additional equality laws at either threshold.
+
+In the third branch, strict convexity of $F_1$ and equality in Lemma 16.2 force marginals $u,u,w,v,\ldots,v$. The zero set (16.8) allows only singleton omissions outside $P$ and pair omissions inside $P\cup\{h\}$; all other cardinalities have strictly positive residual. In particular the singleton-omission masses on $P$ vanish. The mean forces total pair mass $\delta$, and the two actual omission probabilities $1-u$ force the three pair masses to be $\delta-2\eta,\eta,\eta$. The remaining marginals force every singleton-omission mass in (16.42). Hence this is the complete equality class. The strict marginal groups recover $P$, and in the third branch also recover $h$. Their possible choices give the stated labeled counts, and permutations relate all laws in each branch. ∎
+
+The capacity certificate and equality classification in Theorem 16.5 are repo-derived deductions for the actual subset-law model. The classical sources attached to Lemma 16.2 supply only weak duality and finite Jensen. The finite-graph extrema in A. M. Albalahi, *On Two Conjectures Concerning the Hyperbolic Sombor Index and Its Counterpart*, DOI [10.47443/dml.2026.217](https://doi.org/10.47443/dml.2026.217), Proposition 2.1 and Theorem 2.2, concern prescribed graph order and cyclomatic number; they are not input theorems for this law-domain classification. The full text of Zhao–Zhao, DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), is not an input here. Its possible overlap remains unassessed, and no worldwide priority assertion is made.
+
+**Corollary 16.6 (The exact endpoint and the uniform continuous terminal layer).** For every integer $a\ge4096$, set
+
+$$
+\kappa_j=a-a^2\delta_j\quad(j=1,2).
+\tag{16.52}
+$$
+
+Then $2<\kappa_2<\kappa_1<4$. Throughout the entire continuous interval
+
+$$
+\delta=\frac{1-\kappa/a}{a},\qquad 0\le\kappa\le8,
+\tag{16.53}
+$$
+
+the complete dense optimizer classification is (16.36) when $\kappa>\kappa_1$, (16.38) when $\kappa_2\le\kappa\le\kappa_1$, and (16.42) when $\kappa<\kappa_2$, with the exact energies and unique legal roots of Theorem 16.5. These are genuine support changes: two positive singleton-omission masses disappear at $\kappa_1$, and two additional pair-omission masses become positive below $\kappa_2$.
+
+At the endpoint $\delta=1/a$, substitute
+
+$$
+\theta=\frac{a-1}{a},\qquad q=a+1-\frac1a,
+\qquad \gamma=\frac{2a+1}{a}
+\tag{16.54}
+$$
+
+in (16.39)–(16.41). This specifies the exact dense minimum by a unique real algebraic triple in the displayed legal region. All attaining laws are exactly (16.42), with strictly positive displayed masses and
+
+$$
+\eta>\frac1{a(a+2)}.
+\tag{16.55}
+$$
+
+There are exactly $a\binom{a+2}{2}$ labeled endpoint minimizers, forming one class up to relabeling. These assertions make no claim for smaller $a$, for the least sufficient threshold, for $\delta>1/a$, or for realization by a finite graph with prescribed budgets.
+
+**Proof.** The threshold bounds and all terminal branches follow directly from (16.29) and Theorem 16.5, including both threshold equality classes. The endpoint is strictly in the third branch because $\delta_2<1/r<1/a$. Its mean and strict marginal ordering imply $u>\mu$, and
+
+$$
+\mu+\frac1a-1=\frac1{a(a+2)},
+$$
+
+which proves (16.55). All masses, moments and the energy are those of the one law already verified in (16.49)–(16.51). In contrast, the parameter $m=(1-r\delta)/s$ in (14.13) equals $-1/[a(a+2)]$ at this endpoint, so its masses $m-\varepsilon$ cannot define a law for $\varepsilon\ge0$. The three-pair branch supplies the actual endpoint law. ∎
+
+## 追加锚（本行以下为增补区）
