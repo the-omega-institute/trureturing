@@ -1,0 +1,11 @@
+**定义 7.1（输入与输出双基）。** 取 $d^2$ 个密度态 $\rho_j$ 构成 $\operatorname{Herm}_d$ 的实基，取 $m^2$ 个合法效果 $0\le E_i\le I$ 构成 $\operatorname{Herm}_m$ 的实基。取 Hermitian 对偶基 $D_j,F_i$，满足
+
+$$
+\operatorname{Tr}(D_j\rho_k)=\delta_{jk},
+\qquad \operatorname{Tr}(E_iF_\ell)=\delta_{i\ell}.
+$$
+
+双基通常不是正算子；它们用于数学重构，不自动是可执行操作。
+
+<a id="thm-7-2"></a>
+

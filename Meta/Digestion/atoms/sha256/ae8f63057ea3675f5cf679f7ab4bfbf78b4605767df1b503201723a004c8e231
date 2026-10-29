@@ -1,0 +1,20 @@
+**定义 75.3（分开的资源与继续使用）。** 对实际 pre-call sources $u_i$ 和分别供应的 tariffs $\rho_H,\gamma,\tau$，source-service work 为
+
+$$
+W_{\rm svc}=
+\sum_{i\in\mathcal I_{\rm read}}\rho_H(u_i)
++\sum_{i\in\mathcal I_G}\gamma(u_i)
++\sum_{i\in\mathcal I_R}\tau(u_i).
+$$
+
+另外计入 local bit work、tape reads/writes、installed code/data、source storage/retention、backing、binding/rights、acknowledgement 和 output/installation。supplier 的 $O(H\log(H+1))$ acquisition tape 与 $O(\log(H+1))$ modular working space 是充分 local bounds，不控制 source backing 或 source services 对未知入口的依赖，也不覆盖任意未来 trace 保留。
+
+同一 source 的继续使用由 supplier (AQBRP.22)–(AQBRP.23) 供应：
+
+$$
+\operatorname{Out}_H(c)=\gcd(2c_1+3c_2,H),\qquad
+\delta_R(c)=Mc,\qquad\delta_G(c)=c+\alpha.
+$$
+
+真实 source action 完成后再 local commit，才开放下一个 callable cut。这里取得的是改变 endpoint 后的 arithmetic quotient；相同 residue 的源可有不同整数 composition、树顺序/括号、chronology、handle、权限与 service bill。固定数量的 primitive replacements 不等于固定总费用，所列点也不是 minimum、reset 策略的支配比较或物理 gcd 口实现。
+

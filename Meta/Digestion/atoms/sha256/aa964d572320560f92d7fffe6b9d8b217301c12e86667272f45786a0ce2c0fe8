@@ -1,0 +1,12 @@
+**例 7.3（尺子退化使小坐标差失去意义）。** 在 qubit 上取效果基
+
+$$
+I/2,\quad (I+\epsilon X)/2,\quad
+(I+\epsilon Y)/2,\quad(I+\epsilon Z)/2,
+\qquad 0<\epsilon\le1.
+$$
+
+它始终张成 $\operatorname{Herm}_2$。但态 $|0\rangle\langle0|$、$|1\rangle\langle1|$ 的迹距离为一，而所有测试概率差至多 $\epsilon$。对偶基必相应放大，不能删除定理 7.2 中的双基范数。
+
+<a id="sec-8"></a>
+

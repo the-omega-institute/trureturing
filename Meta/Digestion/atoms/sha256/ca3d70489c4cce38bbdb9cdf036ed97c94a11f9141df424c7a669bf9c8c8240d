@@ -1,0 +1,10 @@
+## 96. Exact second-horizon premises and the original decoder domain
+
+The exact second-horizon result in [Terminal recovery, §§118–126][F96TERM]
+supplies a fixed supporting certificate for the original density-input
+recovery problem. Its positive residual gives necessary structure for every
+optimal decoder, as well as a forbidden-direction budget for nearoptimizers.
+The deductions below take that exact value, its attaining decoder and its
+certificate as paper premises. They do not repeat the root-isolation or
+global upper-bound argument.
+

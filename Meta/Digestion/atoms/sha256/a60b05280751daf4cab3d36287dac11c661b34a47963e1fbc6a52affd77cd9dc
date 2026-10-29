@@ -1,0 +1,96 @@
+**Proposition 92.5 (Strict phasewise individual gap).** In the same range,
+
+$$
+0<\Delta_1(q,n),\qquad
+\eta_{(q,n)}<\varepsilon_{\circ}(q,n).
+\tag{92.14}
+$$
+
+*Proof.* Use $\sigma=\operatorname{sgn}(s)$. For $0<r<1-q$, set
+
+$$
+z_r=\sqrt{(1-q-r)(q+r)},\qquad
+A_r=
+\begin{pmatrix}
+ 1-q-r&\sigma z_r&0\\
+ \sigma z_r&q+r&0\\
+ 0&0&q+r
+\end{pmatrix}.
+\tag{92.15}
+$$
+
+The $01$ block is a rank-one projection and its $22$ entry is in $(0,1)$;
+therefore $0\le A_r\le I$. Prepare the actual task state $E_0$ on the
+$A_r$ outcome and the orthogonal state $P_2$ on its complement:
+
+$$
+\mathcal R_{A_r}(X)=\operatorname{Tr}(A_rX)E_0
+ +\operatorname{Tr}((I-A_r)X)P_2
+\tag{92.16}
+$$
+
+This is a whole-qutrit CPTP map. Explicitly, with
+$a=q+r$,
+$|w_r\rangle=\sqrt{1-a}|0\rangle+\sigma\sqrt a|1\rangle$ and
+$|u_r\rangle=\sigma\sqrt a|0\rangle-\sqrt{1-a}|1\rangle$,
+a Kraus family is
+
+$$
+L_0=|v_0\rangle\langle w_r|,\quad
+L_1=\sqrt a\,|v_0\rangle\langle2|,\quad
+L_2=|2\rangle\langle u_r|,\quad
+L_3=\sqrt{1-a}\,P_2.
+$$
+
+The first two adjoint products sum to $A_r$, the last two to $I-A_r$,
+and all four to $I_3$. Its adjoint on any matrix $B$ is
+
+$$
+\mathcal R_{A_r}^\dagger(B)
+ =\operatorname{Tr}(E_0B)A_r
+  +\operatorname{Tr}(P_2B)(I-A_r).
+$$
+
+Since $E_0^2=E_0$, $\operatorname{Tr}E_0=1$ and $E_0P_2=0$, this gives
+$\mathcal R_{A_r}^\dagger(E_0)=A_r$. The actual terminal decoder is
+$D_{A_r}=\mathcal R_{A_r}\circ\operatorname{Ad}_{U_0^\dagger}$, with
+Kraus operators $L_jU_0^\dagger$. Applying (92.2) in the adjoint direction
+leaves the equal $11,22$ entries of $A_r$ fixed and sends its $01$ entry
+to $s\sigma z_r=tz_r$. Thus its full phase-zero residual is
+
+$$
+\Phi_s^\dagger\mathcal R_{A_r}^\dagger(E_0)-E_0=
+\begin{pmatrix}
+-r&tz_r-c&0\\
+tz_r-c&r&0\\
+0&0&q+r
+\end{pmatrix}
+$$
+
+with eigenvalues $\pm\sqrt{r^2+(c-tz_r)^2}$ and $q+r$. Hence
+
+$$
+e_{\mathcal R_{A_r}}(0)=\max\left\{
+ \sqrt{r^2+(c-tz_r)^2},\ q+r\right\}.
+\tag{92.17}
+$$
+
+At $r=0$ the first term is $(1-t)c$ and the second is strictly smaller
+by (92.12). Moreover
+
+$$
+z'_0=\frac{1-2q}{2c}>0,
+$$
+
+and the derivative at zero of the square of the first term in (92.17)
+is $-2t(1-t)c z'_0=-t(1-t)(1-2q)<0$. For each fixed $(q,n)$ in the
+declared range, $0<t\le1/2$ and $1-2q>0$. The derivative and continuity
+therefore give an $r>0$ with $r<1-q$ and $q+r<(1-t)c$ for which both
+terms in (92.17) are strictly smaller than $(1-t)c$. This proves
+$\eta_{(q,n)}<\varepsilon_{\circ}(q,n)$ at every finite $n\ge2$;
+no choice of $r$ uniform in $n$ is needed. Phase covariance gives
+$e_{\mathcal G_\varphi\circ\mathcal R\circ\mathcal G_{-\varphi}}(\varphi)
+=e_{\mathcal R}(0)$, so the individual minimum is the same
+$\eta_{(q,n)}$ at every phase. It is attained by compactness of the
+finite-dimensional Choi set, and $\Delta_1>0$. $\square$
+
