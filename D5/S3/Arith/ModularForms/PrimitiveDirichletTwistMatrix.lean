@@ -232,8 +232,13 @@ def dirichletTranslationTwist (N : ℕ) [NeZero N]
 theorem restrictedTranslation_one_zero_apply
     (k : ℤ) (f : CuspForm 𝒮ℒ k) (z : ℍ) :
     (restrictedTranslation 1 k (0 : ZMod 1) f) z = f z := by
-  change (f ∣[k]
-      GeneralLinearGroup.upperRightHom ((0 : ℝ) / (1 : ℝ))) z = f z
+  dsimp [restrictedTranslation]
+  change (CuspForm.translate f
+      (GeneralLinearGroup.upperRightHom
+        (((0 : ZMod 1).val : ℝ) / ((1 : ℕ) : ℝ)))) z = f z
+  change ((⇑f ∣[k]
+      GeneralLinearGroup.upperRightHom
+        (((0 : ZMod 1).val : ℝ) / ((1 : ℕ) : ℝ))) z) = f z
   rw [upperRight_slash_apply]
   simp
 
@@ -241,9 +246,10 @@ theorem dirichletTranslationTwist_one_apply
     (k : ℤ) (f : CuspForm 𝒮ℒ k) (z : ℍ) :
     (dirichletTranslationTwist 1 (1 : DirichletCharacter ℂ 1) k f) z = f z := by
   have hstd : (ZMod.stdAddChar (N := 1) : AddChar (ZMod 1) ℂ) = 1 := by
-    apply AddMonoidHom.ext
+    apply AddChar.ext
     intro u
-    exact Subsingleton.elim _ _
+    rw [show u = 0 by exact Subsingleton.elim _ _]
+    simp
   have htrans (u : ZMod 1) : (restrictedTranslation 1 k u f) z = f z := by
     rw [show u = 0 by exact Subsingleton.elim _ _]
     exact restrictedTranslation_one_zero_apply k f z
@@ -252,7 +258,7 @@ theorem dirichletTranslationTwist_one_apply
       (∑ u : ZMod 1, ((1 : DirichletCharacter ℂ 1)⁻¹ u) *
         (restrictedTranslation 1 k u f) z) = f z
   rw [inv_one, hstd, gaussSum_one_one]
-  simp [htrans]
+  simp [htrans, MulChar.one_apply (isUnit_of_subsingleton _)]
 
 end
 
