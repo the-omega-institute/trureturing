@@ -6,14 +6,16 @@
    utility: none
    digest: Actual ideals, support cells and spectral transport for three prime powers. -/
 
-import D5.S3.Combinatorics.SpectralGraph.SixSupportLaplacianLowRoot
-import Mathlib.Data.Nat.Factorization.Basic
-import Mathlib.Data.ZMod.QuotientRing
-import Mathlib.RingTheory.PrincipalIdealDomain
-import Mathlib.Combinatorics.SimpleGraph.LapMatrix
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Fintype.Powerset
-import Lean.Elab.Tactic.Omega
+module
+
+public import D5.S3.Combinatorics.SpectralGraph.SixSupportLaplacianLowRoot
+public import Mathlib.Data.Nat.Factorization.Basic
+public import Mathlib.Data.ZMod.QuotientRing
+public import Mathlib.RingTheory.PrincipalIdealDomain
+public import Mathlib.Combinatorics.SimpleGraph.LapMatrix
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Fintype.Powerset
+public import Lean.Elab.Tactic.Omega
 
 /-!
 The ideal-intersection graph and its support decomposition are attributed to
@@ -24,6 +26,8 @@ the graph and invariant-subspace section and the six-support quotient section.
 These Lean proofs are independently authored. This module concerns a graph
 prerequisite and makes no claim to complete the nonintegrality classification.
 -/
+
+@[expose] public section
 
 set_option autoImplicit false
 noncomputable section
@@ -176,7 +180,14 @@ def lastCoordinate (k : Fin 3 → ℕ) : Box k := fun i => ⟨k i, Nat.lt_succ_s
 
 private lemma coordinate_top (p k : Fin 3 → ℕ) :
     coordinateIdeal p k (zeroCoordinate k) = ⊤ := by
-  simp [coordinateIdeal, zeroCoordinate, primeProduct, divisorIdeal, Ideal.map_top]
+  have hz : primeProduct p (fun i => (zeroCoordinate k i).val) = 1 := by
+    simp [primeProduct, zeroCoordinate]
+  unfold coordinateIdeal divisorIdeal
+  rw [hz]
+  change Ideal.map (Int.castRingHom (ZMod (primeProduct p k)))
+    (Ideal.span {(1 : ℤ)}) = ⊤
+  rw [Ideal.span_singleton_one]
+  exact Ideal.map_top _
 
 private lemma coordinate_bot (p k : Fin 3 → ℕ) :
     coordinateIdeal p k (lastCoordinate k) = ⊥ := by
@@ -185,7 +196,6 @@ private lemma coordinate_bot (p k : Fin 3 → ℕ) :
     (divisorIdeal (primeProduct p k) (primeProduct p k)) = _
   rw [comap_divisorIdeal _ _ (dvd_refl _), ← RingHom.ker_eq_comap_bot,
     ZMod.ker_intCastRingHom]
-  rfl
 
 private lemma coordinate_inf (p k : Fin 3 → ℕ)
     (hp : ∀ i, (p i).Prime) (hi : Function.Injective p) (α β : Box k) :
@@ -216,6 +226,7 @@ def idealEquiv (p k : Fin 3 → ℕ) (hp : ∀ i, (p i).Prime)
       change (α ≠ zeroCoordinate k ∧ α ≠ lastCoordinate k) ↔
         (coordinateIdeal p k α ≠ ⊥ ∧ coordinateIdeal p k α ≠ ⊤)
       have hinj := (coordinate_bijective p k hp hi).injective
+      simp only [ne_eq]
       rw [show coordinateIdeal p k α = ⊥ ↔ α = lastCoordinate k from
         ⟨fun h => hinj (h.trans (coordinate_bot p k).symm), fun h => h ▸ coordinate_bot p k⟩,
         show coordinateIdeal p k α = ⊤ ↔ α = zeroCoordinate k from
@@ -272,8 +283,12 @@ private lemma support_zero (k : Fin 3 → ℕ) (hk : ∀ i, 0 < k i) :
     support k (zeroCoordinate k) = Finset.univ := by
   apply Finset.ext
   intro i
-  simp only [support, Finset.mem_filter, Finset.mem_univ, true_and, zeroCoordinate]
-  exact iff_true_intro (hk i)
+  constructor
+  · intro _
+    exact Finset.mem_univ i
+  · intro _
+    change i ∈ Finset.univ.filter (fun j : Fin 3 => 0 < k j)
+    exact Finset.mem_filter.mpr ⟨Finset.mem_univ i, hk i⟩
 
 private lemma support_last (k : Fin 3 → ℕ) :
     support k (lastCoordinate k) = ∅ := by
@@ -477,7 +492,7 @@ def complementQuotient (k : Fin 3 → ℕ) : Matrix (Fin 6) (Fin 6) ℝ :=
 /-- The proper-support intersection Laplacian quotient `B`. -/
 def intersectionQuotient (k : Fin 3 → ℕ) : Matrix (Fin 6) (Fin 6) ℝ :=
   (properOrder k : ℝ) • (1 : Matrix (Fin 6) (Fin 6) ℝ) -
-    (fun (_ : Fin 6) (j : Fin 6) => (cellSizes k j : ℝ)) - complementQuotient k
+    ((fun _ j => (cellSizes k j : ℝ)) : Matrix (Fin 6) (Fin 6) ℝ) - complementQuotient k
 
 private lemma complementQuotient_action (k : Fin 3 → ℕ) (v : Fin 6 → ℝ) (i : Fin 6) :
     (complementQuotient k *ᵥ v) i =
@@ -514,7 +529,7 @@ private lemma intersectionQuotient_action (k : Fin 3 → ℕ) (v : Fin 6 → ℝ
 private lemma quotient_reflection (k : Fin 3 → ℕ) :
     intersectionQuotient k + complementQuotient k =
       (properOrder k : ℝ) • (1 : Matrix (Fin 6) (Fin 6) ℝ) -
-        (fun (_ : Fin 6) (j : Fin 6) => (cellSizes k j : ℝ)) := by
+        ((fun _ j => (cellSizes k j : ℝ)) : Matrix (Fin 6) (Fin 6) ℝ) := by
   simp [intersectionQuotient]
 
 private lemma laplacian_sum {X : Type*} [Fintype X] [DecidableEq X]
@@ -578,8 +593,14 @@ private lemma reindex_overlap (k : Fin 3 → ℕ) (sigma : Equiv.Perm (Fin 3))
     exact ⟨sigma i, ha, hb⟩
   · rintro ⟨i, ha, hb⟩
     refine ⟨sigma.symm i, ?_, ?_⟩
-    · simpa only [sigma.apply_symm_apply] using ha
-    · simpa only [sigma.apply_symm_apply] using hb
+    · change (α.val (sigma (sigma.symm i))).val < k (sigma (sigma.symm i))
+      rw [congrArg (fun j => (α.val j).val) (sigma.apply_symm_apply i),
+        sigma.apply_symm_apply]
+      exact ha
+    · change (β.val (sigma (sigma.symm i))).val < k (sigma (sigma.symm i))
+      rw [congrArg (fun j => (β.val j).val) (sigma.apply_symm_apply i),
+        sigma.apply_symm_apply]
+      exact hb
 
 /-- Any prime assignment and any exponent permutation give isomorphic actual ideal graphs.
 No ordering on primes or exponents is imposed, and the rings need not have the same modulus. -/
@@ -608,7 +629,8 @@ section ActualRealization
 variable (p k : Fin 3 → ℕ) (hp : ∀ i, (p i).Prime)
   (hi : Function.Injective p) (hk : ∀ i, 0 < k i)
 
-local instance actualFintype : Fintype (IdealVertex (primeProduct p k)) := by
+/-- The finite enumeration of the literal ideal carrier, constructed from the proved equivalence. -/
+def actualFintype : Fintype (IdealVertex (primeProduct p k)) := by
   classical
   exact Fintype.ofEquiv (ExponentVertex k) (idealEquiv p k hp hi)
 
@@ -629,6 +651,7 @@ def HGraph : SimpleGraph (HVertex p k hp hi) where
 
 local instance hFintype : Fintype (HVertex p k hp hi) := by
   classical
+  letI := actualFintype p k hp hi
   exact Subtype.fintype _
 
 local instance hDecidableEq : DecidableEq (HVertex p k hp hi) := Classical.decEq _
@@ -668,6 +691,7 @@ private def hFiberEquiv (j : Fin 6) :
 
 private lemma cell_card (hk : ∀ i, 0 < k i) (j : Fin 6) :
     Fintype.card {I : HVertex p k hp hi // cell p k hp hi I = j} = cellSizes k j := by
+  letI := actualFintype p k hp hi
   rw [Fintype.card_congr (hFiberEquiv p k hp hi j), ← Nat.card_eq_fintype_card]
   exact proper_fiber_card p k hp hi hk j
 
@@ -745,7 +769,7 @@ private lemma actual_h_restriction (hk : ∀ i, 0 < k i) (v : Fin 6 → ℝ) :
     intro J
     by_cases h : I = J
     · subst J; simp
-    · simp only [h_adj_support p k hp hi, h, not_false_eq_true, true_and]
+    · simp only [h_adj_support p k hp hi, ne_eq, h, not_false_eq_true, true_and]
   simp_rw [hmask]
   rw [sum_cell_function (cell p k hp hi)
     (fun j => if (properSupports (cell p k hp hi I) ∩ properSupports j).Nonempty
@@ -783,6 +807,7 @@ abbrev FullVertex :=
 
 local instance fullFintype : Fintype (FullVertex p k hp hi) := by
   classical
+  letI := actualFintype p k hp hi
   exact Subtype.fintype _
 
 private lemma full_card (hk : ∀ i, 0 < k i) : Fintype.card (FullVertex p k hp hi) = universalOrder k := by
@@ -806,14 +831,22 @@ def joinPartition : IdealVertex (primeProduct p k) ≃
 
 include hp hi in
 private lemma total_card (hk : ∀ i, 0 < k i) :
-    Fintype.card (IdealVertex (primeProduct p k)) = totalOrder k := by
-  rw [Fintype.card_congr (joinPartition p k hp hi), Fintype.card_sum,
-    h_card p k hp hi hk, full_card p k hp hi hk]
-  rfl
+    Nat.card (IdealVertex (primeProduct p k)) = totalOrder k := by
+  letI := actualFintype p k hp hi
+  calc
+    Nat.card (IdealVertex (primeProduct p k)) =
+        Fintype.card (IdealVertex (primeProduct p k)) := Nat.card_eq_fintype_card
+    _ = Fintype.card (HVertex p k hp hi ⊕ FullVertex p k hp hi) :=
+        Fintype.card_congr (joinPartition p k hp hi)
+    _ = properOrder k + universalOrder k := by
+        rw [Fintype.card_sum, h_card p k hp hi hk, full_card p k hp hi hk]
+    _ = totalOrder k := rfl
 
 private lemma actual_partition_sum (f : IdealVertex (primeProduct p k) → ℝ) :
+    letI : Fintype (IdealVertex (primeProduct p k)) := actualFintype p k hp hi;
     ∑ I, f I = (∑ I : HVertex p k hp hi, f I.val) +
       ∑ I : FullVertex p k hp hi, f I.val := by
+  letI := actualFintype p k hp hi
   have h := (joinPartition p k hp hi).symm.sum_comp f
   rw [Fintype.sum_sum_type] at h
   change (∑ I : HVertex p k hp hi, f I.val) +
@@ -938,9 +971,11 @@ private lemma extend_nonzero (hk : ∀ i, 0 < k i) (v : Fin 6 → ℝ) (hv : v �
   simpa only [extend_H p k hp hi, Pi.zero_apply] using hh
 
 private lemma join_action_H (hk : ∀ i, 0 < k i) (v : Fin 6 → ℝ) (I : HVertex p k hp hi) :
+    letI : Fintype (IdealVertex (primeProduct p k)) := actualFintype p k hp hi;
     ((idealGraph (primeProduct p k)).lapMatrix ℝ *ᵥ extendByZero p k hp hi v) I.val =
       ((HGraph p k hp hi).lapMatrix ℝ *ᵥ cellEmbedding p k hp hi v) I +
         (universalOrder k : ℝ) * cellEmbedding p k hp hi v I := by
+  letI := actualFintype p k hp hi
   rw [laplacian_sum, actual_partition_sum]
   rw [laplacian_sum]
   congr 1
@@ -953,8 +988,10 @@ private lemma join_action_H (hk : ∀ i, 0 < k i) (v : Fin 6 → ℝ) (I : HVert
       full_card p k hp hi hk, nsmul_eq_mul]
 
 private lemma join_action_full (hk : ∀ i, 0 < k i) (v : Fin 6 → ℝ) (I : FullVertex p k hp hi) :
+    letI : Fintype (IdealVertex (primeProduct p k)) := actualFintype p k hp hi;
     ((idealGraph (primeProduct p k)).lapMatrix ℝ *ᵥ extendByZero p k hp hi v) I.val =
       -dotProduct (fun j => (cellSizes k j : ℝ)) v := by
+  letI := actualFintype p k hp hi
   rw [laplacian_sum, actual_partition_sum]
   have hh : ∀ J : HVertex p k hp hi,
       (idealGraph (primeProduct p k)).Adj I.val J.val := by
@@ -967,10 +1004,12 @@ private lemma join_action_full (hk : ∀ i, 0 < k i) (v : Fin 6 → ℝ) (I : Fu
 private lemma actual_eigenpair (hk : ∀ i, 0 < k i) (mu : ℝ) (v : Fin 6 → ℝ) (hv : v ≠ 0)
     (hmu : mu ≠ 0) (hN : mu ≠ (properOrder k : ℝ))
     (he : complementQuotient k *ᵥ v = mu • v) :
+    letI : Fintype (IdealVertex (primeProduct p k)) := actualFintype p k hp hi;
     ((properOrder k : ℝ) - mu ≠ 0) ∧
     extendByZero p k hp hi v ≠ 0 ∧
     (idealGraph (primeProduct p k)).lapMatrix ℝ *ᵥ extendByZero p k hp hi v =
       ((totalOrder k : ℝ) - mu) • extendByZero p k hp hi v := by
+  letI := actualFintype p k hp hi
   refine ⟨sub_ne_zero.mpr hN.symm, extend_nonzero p k hp hi hk v hv, ?_⟩
   have hz := quotient_weighted_zero_sum k hk mu v hmu he
   have href := reflected_eigenpair k hk mu v hmu he
@@ -998,14 +1037,15 @@ private lemma actual_eigenpair (hk : ∀ i, 0 < k i) (mu : ℝ) (v : Fin 6 → �
     simpa only [Pi.smul_apply, smul_eq_mul, extend_full p k hp hi v J, mul_zero] using h
 
 /-- A nonintegral quotient eigenpair gives a nonintegral eigenpair on actual ideals. -/
-include hp hi in
 private lemma actual_nonintegral_eigenpair (hk : ∀ i, 0 < k i) (mu : ℝ) (v : Fin 6 → ℝ) (hv : v ≠ 0)
     (hmu : ¬∃ z : ℤ, mu = (z : ℝ))
     (he : complementQuotient k *ᵥ v = mu • v) :
+    letI : Fintype (IdealVertex (primeProduct p k)) := actualFintype p k hp hi;
     ∃ f : IdealVertex (primeProduct p k) → ℝ, f ≠ 0 ∧
       (idealGraph (primeProduct p k)).lapMatrix ℝ *ᵥ f =
         ((totalOrder k : ℝ) - mu) • f ∧
       ¬∃ z : ℤ, (totalOrder k : ℝ) - mu = (z : ℝ) := by
+  letI := actualFintype p k hp hi
   have h0 : mu ≠ 0 := by intro h; exact hmu ⟨0, by simpa using h⟩
   have hN : mu ≠ (properOrder k : ℝ) := by
     intro h
@@ -1035,7 +1075,7 @@ structure SpectralRealization : Prop where
       actualSupport p k hp hi I = properSupports j} = cellSizes k j
   fullFiber : Nat.card (FullVertex p k hp hi) = universalOrder k
   hOrder : Fintype.card (HVertex p k hp hi) = properOrder k
-  graphOrder : Fintype.card (IdealVertex (primeProduct p k)) = totalOrder k
+  graphOrder : Nat.card (IdealVertex (primeProduct p k)) = totalOrder k
   zeroUniversal : universalOrder k = 0 → IsEmpty (FullVertex p k hp hi)
   fullClique : ∀ I J : FullVertex p k hp hi,
     (idealGraph (primeProduct p k)).Adj I.val J.val ↔ I ≠ J
@@ -1053,7 +1093,7 @@ structure SpectralRealization : Prop where
       cellEmbedding p k hp hi (complementQuotient k *ᵥ v)
   reflection : intersectionQuotient k + complementQuotient k =
     (properOrder k : ℝ) • (1 : Matrix (Fin 6) (Fin 6) ℝ) -
-      (fun (_ : Fin 6) (j : Fin 6) => (cellSizes k j : ℝ))
+      ((fun _ j => (cellSizes k j : ℝ)) : Matrix (Fin 6) (Fin 6) ℝ)
   hEigenpair : ∀ (mu : ℝ) (v : Fin 6 → ℝ), v ≠ 0 → mu ≠ 0 →
     mu ≠ (properOrder k : ℝ) → complementQuotient k *ᵥ v = mu • v →
     cellEmbedding p k hp hi v ≠ 0 ∧ ((properOrder k : ℝ) - mu ≠ 0) ∧
@@ -1061,12 +1101,14 @@ structure SpectralRealization : Prop where
         ((properOrder k : ℝ) - mu) • cellEmbedding p k hp hi v
   eigenpair : ∀ (mu : ℝ) (v : Fin 6 → ℝ), v ≠ 0 → mu ≠ 0 →
     mu ≠ (properOrder k : ℝ) → complementQuotient k *ᵥ v = mu • v →
+    letI : Fintype (IdealVertex (primeProduct p k)) := actualFintype p k hp hi;
       ((properOrder k : ℝ) - mu ≠ 0) ∧
       extendByZero p k hp hi v ≠ 0 ∧
       (idealGraph (primeProduct p k)).lapMatrix ℝ *ᵥ extendByZero p k hp hi v =
         ((totalOrder k : ℝ) - mu) • extendByZero p k hp hi v
   nonintegralTransfer : ∀ (mu : ℝ) (v : Fin 6 → ℝ), v ≠ 0 →
     (¬∃ z : ℤ, mu = (z : ℝ)) → complementQuotient k *ᵥ v = mu • v →
+    letI : Fintype (IdealVertex (primeProduct p k)) := actualFintype p k hp hi;
     ∃ f : IdealVertex (primeProduct p k) → ℝ, f ≠ 0 ∧
       (idealGraph (primeProduct p k)).lapMatrix ℝ *ᵥ f =
         ((totalOrder k : ℝ) - mu) • f ∧
