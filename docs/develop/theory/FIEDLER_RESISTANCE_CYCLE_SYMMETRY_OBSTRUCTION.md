@@ -482,7 +482,7 @@ $$
 特别地，顶点逼近的上确界极限恰为
 
 $$
-\lim_{\delta\downarrow0}\ 
+\lim_{\delta\downarrow0}\,
 \sup\{\Phi(p):p\in\Delta^\circ,\ 0<1-p_\ell\le\delta\}=A_n.
 \tag{5.3}
 $$
@@ -845,7 +845,7 @@ $(0,\infty)^n$ 的一个紧子集。
 证明。定义实际边界水平
 
 $$
-\Gamma_n=\max\left\{A_n,\ 
+\Gamma_n=\max\left\{A_n,\,
 \sup_{p\in\partial\Delta\setminus\mathcal V}\Phi(p)\right\}.
 $$
 
