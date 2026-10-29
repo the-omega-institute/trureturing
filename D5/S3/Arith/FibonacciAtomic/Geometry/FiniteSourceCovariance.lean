@@ -255,9 +255,8 @@ private theorem boundary_mean_entry (p : Edge) :
   rw [BiasedBoundaryFreeRootForm.v, ContinuousLinearMap.adjoint_inner_right,
     BiasedBoundaryTrace.J_single, one_smul, real_inner_comm]
   change BiasedBoundaryCentering.mean (BiasedBoundaryTrace.indicator p) = _
-  rw [BiasedBoundaryCentering.centered_suffix_residual.1]
-  rw [BiasedBoundaryTrace.indicator, integral_indicatorConstLp]
-  simpa only [measureReal_def, smul_eq_mul, mul_one] using BiasedBoundaryTrace.cylinder_mass p.val
+  rw [BiasedBoundaryFreeRootForm.mean_indicator]
+  simpa only [measureReal_def] using BiasedBoundaryTrace.cylinder_mass p.val
 
 private theorem gram_entry (n : ℕ) (p q : Edge) :
     inner ℝ (e p) (B n (e q)) = kernel (FiniteSourceMass.mass n) p q := by

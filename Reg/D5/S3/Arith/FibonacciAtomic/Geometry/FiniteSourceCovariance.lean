@@ -76,8 +76,7 @@ private theorem boundary_mean_ne_zero : BiasedBoundaryFreeRootForm.v ≠ 0 := by
     unfold unitEdge
     rw [BiasedBoundaryTrace.J_single, one_smul, real_inner_comm]
     change BiasedBoundaryCentering.mean (BiasedBoundaryTrace.indicator edge) = _
-    rw [BiasedBoundaryCentering.centered_suffix_residual.1]
-    rw [BiasedBoundaryTrace.indicator, MeasureTheory.integral_indicatorConstLp]
+    rw [BiasedBoundaryFreeRootForm.mean_indicator]
     simpa [measureReal_def, edge, BiasedBoundaryTrace.mass] using
       BiasedBoundaryTrace.cylinder_mass edge.val
   rw [hz, inner_zero_right] at he
