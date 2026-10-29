@@ -729,3 +729,697 @@ triples. Theorem 5.1 transfers precisely this remaining problem
 to every positive resistance level.
 
 ## 追加锚（本行以下为增补区）
+
+## 7. The unrestricted strict-triangle optimizer
+
+**Definition 7.1 (Strict-triangle parameters and cited intermediates).**
+Throughout this section let $a,b,c$ be integers with
+$2\le a\le b\le c<a+b$, and retain the original labelled vertices,
+independent positive conductances, counting-measure Laplacian and all-pairs
+resistance of Definition 1.1. Put
+
+$$
+\begin{aligned}
+\eta&=\frac{(a+b-c)(a+c-b)(b+c-a)}{4abc},\\
+C_{a,b,c}&=n\left(n-3+\frac3{2+\eta}\right),\qquad n=a+b+c,\\
+h^*_{AB}&=\frac{a+b-c}{2ab},\qquad
+h^*_{AC}=\frac{a+c-b}{2ac},\qquad
+h^*_{BC}=\frac{b+c-a}{2bc}.
+\end{aligned}
+\tag{7.1}
+$$
+The notation $h^*_{IJ}$ assigns that value to every original edge of
+$E_{IJ}$; it places no restriction on competing assignments.
+
+The classical all-pairs and scaling identities (1.5)–(1.6) are used with
+exactly the correspondence in Convention 1.2 to Ghosh–Boyd–Saberi,
+[*Minimizing Effective Resistance of a Graph*](https://web.stanford.edu/~boyd/papers/pdf/eff_res.pdf),
+§§2.4–2.5, equations (8), (13)–(15). The finite-list spectral comparison
+from the proof of the [general bipartite theorem](FIEDLER_RESISTANCE_GENERAL_BIPARTITE_OPTIMIZER.md),
+Theorem 3.1, equation (3.3), will be applied only as a matrix inequality.
+The new comparison below concerns all three edge classes simultaneously.
+Its part-sum determinant is the classical Gram-area, equivalently Heron,
+identity, expanded explicitly in Lemma 7.2.
+
+For the design correspondence, choose an $n$ by $(n-1)$ matrix $Q$ with
+orthonormal columns spanning $\mathbf1^\perp$. With the original incidence
+vectors $b_e=e_x-e_y$ and $x_e=Q^{\mathsf T}b_e$, the positive definite
+information matrix is
+
+$$
+\mathcal I(g)=Q^{\mathsf T}L(g)Q=\sum_{e\in E}g_e x_e x_e^{\mathsf T}.
+$$
+Rosa–Harman, [*Laplacian Network Optimization via Information Functions*,
+arXiv:2512.19279v1](https://arxiv.org/pdf/2512.19279v1),
+§§2.3–2.4 and Theorem 1, give the corresponding criteria
+$\Phi_A=(n-1)/\operatorname{tr}\mathcal I^{-1}$ and
+$\Phi_E=\lambda_{\min}(\mathcal I)$, so that
+$F=n(n-1)\Phi_E/\Phi_A$.
+Passing to $p_e=g_e/\sum_f g_f$ preserves this ratio and parametrizes every
+positive conductance ray. Consequently a design theorem for this same
+ratio, these same $x_e$, and the complete positive simplex would also
+supply the present optimization; a budget parametrization alone does not
+distinguish the problems. Their problem (1) selects a prescribed number
+of edges with fixed edge weights, problem (2) and its approximate-design
+relaxation optimize a chosen information criterion, and their Theorems
+1–5 supply spectral reformulation, derivatives and matrix updates.
+Those statements are used here at the specified intermediate identities,
+not as a whole optimizer for this ratio. No theorem from Harman,
+[*Minimal efficiency of designs under the class of orthogonally invariant
+information criteria*, DOI:10.1007/s001840300301](https://link.springer.com/article/10.1007/s001840300301),
+or from the [institutional article 16817](https://repository.uaeh.edu.mx/revistas/index.php/icbi/article/view/16817)
+is a premise of the proofs below.
+
+**Lemma 7.2 (A three-part second-excess comparison).** Let
+$h\in\mathcal C_{a,b,c}$, and set
+
+$$
+\begin{gathered}
+H=L(h)-P,\qquad S=\operatorname{tr}H,\qquad s=S-1,\\
+z_A=D_A-a,\quad z_B=D_B-b,\quad z_C=D_C-c,\qquad
+D_I=\sum_{x\in I}d_x(h).
+\end{gathered}
+\tag{7.2}
+$$
+Let $E(H)$ be the second elementary symmetric sum of the eigenvalues of
+$H$, equivalently the sum of all its second-order principal minors.
+Then $z_A,z_B,z_C\ge0$, $s=z_A+z_B+z_C\ge0$, and
+
+$$
+E(H)\ge\eta+
+ \frac{a^2+b^2-c^2}{2abc}s-\frac n{4abc}s^2.
+\tag{7.3}
+$$
+In particular,
+
+$$
+s=0\ \Longrightarrow\ E(H)\ge\eta,\qquad
+0<s\le1\ \Longrightarrow\ E(H)>\eta-\frac s4.
+\tag{7.4}
+$$
+No invariance of the within-part difference spaces is assumed.
+
+*Proof.* Lemma 2.1 gives $H\succeq0$, $H\mathbf1=0$, $D_I\ge|I|$
+and $S=D_A+D_B+D_C-(n-1)$, proving the first assertions.
+Let $m_A=a,m_B=b,m_C=c$, and form the three orthonormal vectors
+$f_I=\mathbf1_I/\sqrt{m_I}$. Let $K$ be the compression of $H$ to their
+span, $K_{IJ}=f_I^{\mathsf T}Hf_J$, and put
+
+$$
+B_{IJ}=\sqrt{m_I m_J}\,K_{IJ}
+       =\sum_{x\in I,\,y\in J}H_{xy},\qquad X_I=B_{II}.
+$$
+The letter $B$ here denotes a symmetric three by three matrix, not a
+replacement graph. Since each original part is independent, its
+principal block of $H$ has diagonal $d_x(h)-1+1/n$ and off-diagonal
+$1/n$. Thus
+
+$$
+X_A=\frac{a^2}n+z_A,\quad
+X_B=\frac{b^2}n+z_B,\quad
+X_C=\frac{c^2}n+z_C.
+\tag{7.5}
+$$
+Also $B\mathbf1_3=0$, because $H\mathbf1=0$. Solving these three row-sum
+relations gives, for distinct $I,J,K'$ in $\{A,B,C\}$,
+
+$$
+B_{IJ}=\frac{X_{K'}-X_I-X_J}{2}.
+$$
+Consequently every numerator of a second-order principal minor of $K$
+is the same number
+
+$$
+\begin{aligned}
+\Omega(X)
+&=X_I X_J-\frac{(X_{K'}-X_I-X_J)^2}{4}\\
+&=\frac{2(X_A X_B+X_A X_C+X_B X_C)
+              -X_A^2-X_B^2-X_C^2}{4},\\
+E(K)&=\left(\frac1{ab}+\frac1{ac}+\frac1{bc}\right)\Omega(X)
+     =\frac n{abc}\Omega(X).
+\end{aligned}
+\tag{7.6}
+$$
+For a Gram representation $H_{xy}=\langle v_x,v_y\rangle$, the vectors
+$V_I=\sum_{x\in I}v_x$ satisfy $V_A+V_B+V_C=0$ and
+$\|V_I\|^2=X_I$. Then $\Omega(X)=\|V_A\wedge V_B\|^2$.
+This is precisely the squared-area identity for that actual triple of
+part sums. In particular the three areas are evaluated in a common Gram
+representation. The algebra in (7.5)–(7.6) uses only symmetry, the
+within-part entries and zero row sums; it does not require positivity
+once those entries are specified.
+
+Complete $f_A,f_B,f_C$ to an orthonormal basis of $\mathbb R^V$.
+In that basis every second-order principal minor of the positive
+semidefinite matrix $H$ is nonnegative, and the three minors using only
+the first three coordinates sum to $E(K)$. Since
+$E(H)=((\operatorname{tr}H)^2-\operatorname{tr}(H^2))/2$ is unchanged by
+this orthogonal change of basis, $E(H)\ge E(K)$. This inequality retains
+all the other original coordinates.
+
+Substitution of (7.5) into (7.6) gives the exact expression
+
+$$
+\begin{aligned}
+E(K)=\eta
+ &+\frac{b^2+c^2-a^2}{2abc}z_A
+  +\frac{a^2+c^2-b^2}{2abc}z_B
+  +\frac{a^2+b^2-c^2}{2abc}z_C\\
+ &+\frac n{4abc}
+  \left(2(z_Az_B+z_Az_C+z_Bz_C)-z_A^2-z_B^2-z_C^2\right).
+\end{aligned}
+\tag{7.7}
+$$
+For its constant term the elementary Heron expansion is
+
+$$
+2(a^2b^2+a^2c^2+b^2c^2)-a^4-b^4-c^4
+=n(a+b-c)(a+c-b)(b+c-a).
+$$
+The smallest of the three linear coefficients in (7.7) is the one
+multiplying $z_C$, because $c$ is the largest part. The parenthesis on
+the second line is at least $-s^2$: adding $s^2$ to it gives
+$4(z_Az_B+z_Az_C+z_Bz_C)\ge0$. These facts prove (7.3).
+
+Here the integer hypotheses yield a useful strict coefficient estimate:
+
+$$
+\frac{a^2+b^2-c^2}{2abc}-\frac n{4abc}>-\frac14.
+\tag{7.8}
+$$
+To prove it without discarding any size-two case, put
+$J(c)=abc+2a^2+2b^2-2c^2-a-b-c$.
+It is a concave quadratic in $c$ on $[b,a+b-1]$, so it is at least the
+smaller of its endpoint values. Those values are
+
+$$
+\begin{aligned}
+J(b)&=ab^2+2a^2-a-2b>0,\\
+J(a+b-1)&=ab(a+b-5)+2(a+b)-1>0.
+\end{aligned}
+$$
+For the first inequality, $ab^2-2b=b(ab-2)>0$ and $2a^2-a>0$.
+For the second, if $a+b=4$ its value is $3$; if $a+b\ge5$ both the
+nonnegative first term and the strictly positive last terms have the
+indicated signs. Integrality and $c<a+b$ give $c\le a+b-1$, hence
+$J(c)>0$. Division by $4abc$ proves (7.8).
+If $0<s\le1$, then $s^2\le s$, so (7.3) and (7.8) give the strict
+inequality in (7.4). The assertion at $s=0$ is immediate from (7.3). ∎
+
+**Theorem 7.3 (All positive weights, exact maximum, rigidity and spectrum).**
+For every integer triple $2\le a\le b\le c<a+b$,
+
+$$
+0<\eta\le\frac14,\qquad
+\eta=\frac14\ \Longleftrightarrow\ a=b=c,
+\qquad
+M_{a,b,c}=C_{a,b,c}
+=n\left(n-3+\frac3{2+\eta}\right).
+\tag{7.9}
+$$
+For every one of the $ab+ac+bc$ independently positive finite original
+edge assignments,
+
+$$
+F(g)\le C_{a,b,c},\qquad
+F(g)=C_{a,b,c} \Longleftrightarrow\
+g=\tau h^*\text{ for some }\tau>0.
+\tag{7.10}
+$$
+This is a unique ray in the labelled coordinate space. On that ray the
+actual Fiedler eigenvalue is $\lambda_2(g)=\tau$, the resistance is
+$R(g)=C_{a,b,c}/\tau$, and the full original $n$-vertex spectrum is
+
+$$
+0\ \text{once},\qquad
+\tau\ \text{with multiplicity }n-3,\qquad
+\frac{\tau(3-\sqrt{1-4\eta})}{2},\qquad
+\frac{\tau(3+\sqrt{1-4\eta})}{2}.
+\tag{7.11}
+$$
+Each of the last two entries has multiplicity one, with multiplicities
+added when they coincide. On the auxiliary domain
+$\mathcal C_{a,b,c}$ the bound is $R(h)\le C_{a,b,c}$, with equality
+exactly at $h=h^*$. Thus nonnegative competitors do not create further
+normalized equality points.
+
+*Proof.* Write $x=a+b-c$, $y=a+c-b$, $z=b+c-a$. These are positive,
+$a=(x+y)/2$, $b=(x+z)/2$, $c=(y+z)/2$, and
+
+$$
+\eta=\frac{2xyz}{(x+y)(x+z)(y+z)}\le\frac14.
+$$
+The three arithmetic-geometric mean inequalities in the denominator
+are simultaneous equalities exactly when $x=y=z$, equivalently
+$a=b=c$. This proves the first assertions in (7.9).
+
+Take any $h\in\mathcal C_{a,b,c}$ and the matrices in Lemma 7.2.
+The nonzero-vertex spectral excesses
+$q_k=\lambda_k(h)-1$ for $2\le k\le n$ are nonnegative; together with
+one zero they are all the eigenvalues of $H$. Put
+
+$$
+\Delta=\sum_{k=2}^n\frac{q_k}{1+q_k},\qquad
+\delta_* =\frac{1+2\eta}{2+\eta}.
+$$
+Then $S=\sum q_k\ge1$ and $R(h)/n=n-1-\Delta$.
+The cited finite-list identity gives
+
+$$
+\Delta\ge\frac{S+2E(H)}{1+S+E(H)}.
+\tag{7.12}
+$$
+Indeed, if $e_j$ are the elementary symmetric sums of the $q_k$,
+$e_0=1$, its exact ratio is
+$\Delta=(\sum_{j\ge1}j e_j)/(\sum_{j\ge0}e_j)$.
+The ratio retaining only $e_0,e_1,e_2$ is strictly less than $2$, since
+$2(1+S+E)-(S+2E)=2+S>0$; each omitted term has coefficient $j\ge3$.
+Thus (7.12) applies with no rank premise.
+
+If $1<S\le2$, set $s=S-1\in(0,1]$ and use Lemma 7.2. The numerator
+in the difference between the right side of (7.12) and $\delta_*$ is
+
+$$
+\begin{aligned}
+(1-\eta)(S-1)+3(E(H)-\eta)
+&>\left(\frac14-\eta\right)s\ge0,
+\end{aligned}
+\tag{7.13}
+$$
+after multiplication by the positive denominator
+$(1+S+E(H))(2+\eta)$. Hence $\Delta>\delta_*$ in this case.
+If $S>2$, the trace comparison (3.5) gives
+
+$$
+\Delta\ge\frac S{1+S}>\frac23\ge\delta_*;
+$$
+the last inequality is equivalent to $\eta\le1/4$.
+If $S=1$, Lemma 7.2 gives $E(H)\ge\eta$, and the right side of
+(7.12) is increasing in $E(H)$, so $\Delta\ge\delta_*$.
+Consequently every $h\in\mathcal C$ satisfies
+
+$$
+R(h)\le n(n-1-\delta_*)
+=n\left(n-3+\frac3{2+\eta}\right)=C_{a,b,c},
+\tag{7.14}
+$$
+and equality forces $S=1$.
+
+We next determine the actual original edge coordinates when $S=1$.
+Lemma 2.1 says $H$ annihilates each $U_I$ in (2.3), so
+$L(h)(e_x-e_y)=e_x-e_y$ for distinct vertices of the same part.
+At a vertex $r$ outside that part this equality reads
+$-h_{\{r,x\}}+h_{\{r,y\}}=0$. At $x,y$ it gives
+$d_x(h)=d_y(h)=1$, because $x,y$ are nonadjacent.
+Every part has at least two vertices. Applying the outside-coordinate
+identity to each part shows that each cross-part block is constant
+in both endpoint labels, and every vertex degree is $1$.
+Thus, if those three block values are $u,v,w$ on $AB,AC,BC$,
+
+$$
+bu+cv=1,\qquad au+cw=1,\qquad av+bw=1.
+$$
+Equivalently, the three block totals $ab u,ac v,bc w$ have pair sums
+$a,b,c$. Their unique solution is exactly (7.1). Hence $h=h^*$.
+Block constancy has followed from unrestricted equality, including
+when one or more parts have size two.
+
+It remains to show that this positive assignment has the stated scale
+and attains the bound. All three values in (7.1) are finite and positive,
+and its vertex degrees are all $1$. For this explicit assignment,
+$U_A\oplus U_B\oplus U_C$ is invariant with eigenvalue $1$ and
+dimension $n-3$: the cross-part sums of each difference vector vanish.
+On its orthogonal complement the orthonormal basis
+$f_A,f_B,f_C$ gives the restriction of the same original Laplacian as
+
+$$
+T=\begin{pmatrix}
+1&-\sqrt{ab}\,h^*_{AB}&-\sqrt{ac}\,h^*_{AC}\\
+-\sqrt{ab}\,h^*_{AB}&1&-\sqrt{bc}\,h^*_{BC}\\
+-\sqrt{ac}\,h^*_{AC}&-\sqrt{bc}\,h^*_{BC}&1
+\end{pmatrix},\qquad
+\xi=(\sqrt a,\sqrt b,\sqrt c)^{\mathsf T},\qquad T\xi=0.
+\tag{7.15}
+$$
+Let $K_*=T-I_3+\xi\xi^{\mathsf T}/n$. It is symmetric, annihilates
+$\xi$, has trace $1$, and its diagonal entries are $a/n,b/n,c/n$.
+The purely algebraic part of (7.5)–(7.7), with all $z_I=0$, gives
+$E(K_*)=\eta$. Thus its other two eigenvalues are
+
+$$
+q_\pm=\frac{1\pm\sqrt{1-4\eta}}2>0.
+$$
+On $\xi^\perp$, $T=I_3+K_*$. Its two nonzero eigenvalues are
+$1+q_-$ and $1+q_+$, and both exceed $1$. This proves (7.11) at
+$\tau=1$, with $\lambda_2(h^*)=1$ on the original $n$ vertices.
+The two remaining eigenvalues have sum $3$ and product $2+\eta$, so
+(1.5) gives
+
+$$
+R(h^*)=n\left(n-3+\frac3{2+\eta}\right)=C_{a,b,c}.
+$$
+This proves attainment and the unique normalized equality on
+$\mathcal C$. For arbitrary positive $g$, the normalization
+$h=g/\lambda_2(g)$ belongs to $\mathcal C$ and has $R(h)=F(g)$.
+Equation (7.14), the just-proved equality necessity and scaling (1.6)
+give (7.9)–(7.11) with $\tau=\lambda_2(g)$. ∎
+
+## 8. Coercivity, all sequences and every resistance level
+
+**Lemma 8.1 (A coercive threshold on the original coordinates).** Fix
+any integer triple $2\le a\le b\le c$. For every positive sequence
+$(g_j)$ with
+
+$$
+\liminf_{j\to\infty}F(g_j)>n(n-2),
+\tag{8.1}
+$$
+the sequence $h_j=g_j/\lambda_2(g_j)$ is bounded in every original
+edge coordinate. More precisely, if $0<\epsilon<1$ and
+$F(g_j)\ge n(n-2+\epsilon)$ eventually, then eventually
+
+$$
+S_j\le\frac{1-\epsilon}{\epsilon},\qquad
+\sum_{e\in E}(h_j)_e\le\frac12\left(n-2+\frac1\epsilon\right).
+\tag{8.2}
+$$
+Every cluster point $h$ belongs to $\mathcal C_{a,b,c}$ and has connected
+support. If in addition $F(g_j)\to\ell$, then every such point satisfies
+$R(h)=\ell$. Every $h\in\mathcal C_{a,b,c}$ satisfies
+$R(h)\le M_{a,b,c}$ and is a limit of normalized positive assignments.
+Thus if $\ell=M_{a,b,c}$, these cluster points are actual maximizers on
+the connected nonnegative original domain.
+
+*Proof.* For each $h_j$ let $q_{j,k},S_j,\Delta_j$ be as in the proof
+of Theorem 3.2. The same original all-pairs identity and (3.5) give
+
+$$
+\Delta_j=n-1-\frac{F(g_j)}n\ge\frac{S_j}{1+S_j},\qquad S_j\ge1.
+$$
+The assumed eventual lower bound gives $\Delta_j\le1-\epsilon<1$,
+so $S_j\le\Delta_j/(1-\Delta_j)\le(1-\epsilon)/\epsilon$.
+Since $\operatorname{tr}L(h_j)=n-1+S_j=2\sum_e(h_j)_e$, this proves
+(8.2). Such an $\epsilon$ exists under (8.1), and the finite preceding
+part of the sequence also has bounded coordinates. Nonnegative
+coordinates and the bound on their sum give boundedness individually.
+
+There are finitely many original edges, hence every subsequence has a
+further convergent subsequence. At its limit $h$, coordinate continuity
+preserves $h\ge0$ and $\lambda_2(h)=1$. A nonnegative weighted
+Laplacian has zero energy exactly on vectors constant on each component
+of its positive support, by (1.3). Thus two or more components would
+force $\lambda_2(h)=0$, which is impossible. The limit is connected.
+All its nonzero eigenvalues are positive, so (1.5) and continuity of
+the eigenvalues give $R(h)=\lim R(h_j)=\ell$ when that limit is assumed.
+No resistance is assigned to a disconnected limit.
+
+For completeness the bridge back to the positive domain is explicit.
+For any fixed $h\in\mathcal C$ put
+
+$$
+p^{(\varepsilon)}=h+\varepsilon\mathbf1_E,\qquad
+\widetilde p^{(\varepsilon)}
+ =\frac{p^{(\varepsilon)}}{\lambda_2(p^{(\varepsilon)})}
+ \quad(\varepsilon>0).
+\tag{8.3}
+$$
+All original coordinates of $p^{(\varepsilon)}$ are positive and finite.
+Continuity at the connected $h$ gives
+$\lambda_2(p^{(\varepsilon)})\to1$ and
+$\widetilde p^{(\varepsilon)}\to h$. Also
+$F(p^{(\varepsilon)})=R(\widetilde p^{(\varepsilon)})\to R(h)$.
+Each term is at most the positive-domain supremum $M$, proving
+$R(h)\le M$. This also verifies that a connected nonnegative maximizer
+with value $M$ is positively approximable on exactly the original
+vertices and edge coordinates. ∎
+
+**Theorem 8.2 (Complete sequence classification and all exact levels).**
+Fix integers $2\le a\le b\le c<a+b$. For every sequence of arbitrary
+positive original labelled assignments,
+
+$$
+F(g_j)\longrightarrow C_{a,b,c}
+\quad\Longleftrightarrow\quad
+\frac{g_j}{\lambda_2(g_j)}\longrightarrow h^*
+\quad\text{in every original edge coordinate}.
+\tag{8.4}
+$$
+For every $R_0>0$ the exact-resistance level has the attained maximum
+
+$$
+\max_{g\in\mathcal F_{a,b,c,R_0}}\lambda_2(g)
+=\frac{C_{a,b,c}}{R_0},
+\qquad
+\operatorname*{argmax}_{g\in\mathcal F_{a,b,c,R_0}}\lambda_2(g)
+=\left\{\frac{C_{a,b,c}}{R_0}h^*\right\}.
+\tag{8.5}
+$$
+For every sequence in that exact level set,
+
+$$
+\lambda_2(g_j)\longrightarrow\frac{C_{a,b,c}}{R_0}
+\quad\Longleftrightarrow\quad
+g_j\longrightarrow\frac{C_{a,b,c}}{R_0}h^*
+\quad\text{in every original edge coordinate}.
+\tag{8.6}
+$$
+The full original-vertex spectrum at the maximum is (7.11) with
+$\tau=C_{a,b,c}/R_0$.
+
+*Proof.* By $\eta\le1/4$, and in particular $\eta<1$,
+
+$$
+\frac{C_{a,b,c}}n=n-3+\frac3{2+\eta}>n-2.
+$$
+Thus a sequence satisfying the left side of (8.4) meets Lemma 8.1.
+Its normalized sequence is bounded, and every cluster point is connected
+and has resistance $C_{a,b,c}$. Theorem 7.3 forces every such point
+to be $h^*$. Hence the whole normalized sequence converges to $h^*$:
+otherwise a subsequence stays a fixed positive distance from $h^*$,
+and boundedness supplies a further cluster point at that distance,
+a contradiction. Conversely, normalized convergence to $h^*$ and
+continuity of $R$ there give
+$F(g_j)=R(g_j/\lambda_2(g_j))\to R(h^*)=C_{a,b,c}$.
+This proves both directions with no symmetry or boundedness premise
+on the original $g_j$.
+
+Theorem 5.1 supplies the exact scaling bijection for every positive
+resistance level. Applying Theorem 7.3 to that bijection gives (8.5):
+the unique point on its equality ray has scale $C/R_0$, all its original
+conductances are finite and positive, and its resistance is exactly
+$C/(C/R_0)=R_0$. Its spectrum follows from (7.11).
+
+For an exact-level sequence, $F(g_j)=R_0\lambda_2(g_j)$.
+If it is maximizing, (8.4) gives
+$g_j/\lambda_2(g_j)\to h^*$ and its scalar multiplier tends to
+$C/R_0$. Their product tends to $(C/R_0)h^*$, proving necessity in
+(8.6). Conversely, this original-coordinate convergence implies
+$\lambda_2(g_j)\to\lambda_2((C/R_0)h^*)=C/R_0$ by eigenvalue
+continuity and the actual spectral scale in Theorem 7.3. ∎
+
+**Corollary 8.3 (Balanced graphs with unrestricted competitors).** For
+every integer $m\ge2$, on the labelled $K_{m,m,m}$ with all $3m^2$
+original conductances independently positive,
+
+$$
+M_{m,m,m}=m(9m-5),\qquad h^*_e=\frac1{2m}.
+\tag{8.7}
+$$
+Equality holds precisely on the unique constant ray
+$g_e=\tau/(2m)$, $\tau>0$, with actual spectrum
+$0$ once, $\tau$ with multiplicity $3m-3$, and $3\tau/2$ with
+multiplicity two. Every arbitrary positive sequence is maximizing
+exactly when $g_{j,e}/\lambda_2(g_j)\to1/(2m)$ for every original edge.
+For every $R_0>0$ the unique exact-level maximizer has
+
+$$
+g_e=\frac{9m-5}{2R_0}\quad(e\in E),\qquad
+\lambda_2(g)=\frac{m(9m-5)}{R_0},
+\tag{8.8}
+$$
+and an exact-level sequence is maximizing exactly when all its original
+edge coordinates tend to the values in (8.8).
+
+*Proof.* Substitute $a=b=c=m$, $n=3m$, $\eta=1/4$ in Theorems 7.3
+and 8.2. The two final spectral entries in (7.11) coincide and their
+multiplicities add. The classical value at the uniform assignment is
+already supplied by Bapat–Karimi–Liu,
+[*Kirchhoff Index and Degree Kirchhoff Index of Complete Multipartite
+Graphs*, arXiv:1611.09457v1](https://arxiv.org/pdf/1611.09457v1),
+Proposition 3.3 and Corollary 3.5: on the unweighted $K_{m,m,m}$ their
+positive spectrum is $2m$ with multiplicity $3m-3$ and $3m$ with
+multiplicity two, and their unordered-pair Kirchhoff index is
+$(9m-5)/2$. Their vertices and unit conductances are the same original
+ones here, so multiplying that index by $2m$ gives (8.7)'s value at
+uniform weights. The unrestricted upper comparison, equality necessity
+and both sequence equivalences asserted here follow instead from
+Theorems 7.3 and 8.2, which apply to every independent positive
+assignment. ∎
+
+## 9. Whole deletion faces and the remaining complementary problem
+
+**Definition 9.1 (Deletion faces on the same original vertices).** For
+any $2\le a\le b\le c$, let $\mathcal D_{IJ}$ consist of the connected
+nonnegative assignments on the original $K_{a,b,c}$ whose entire $IJ$
+edge class is zero. The other two edge classes are nonnegative; their
+strictly positive subdomain is included. Deleting $AB$, $AC$ or $BC$
+gives, respectively, the labelled bipartite graphs
+
+$$
+K_{a+b,c}\text{ on }(A\sqcup B,C),\quad
+K_{a+c,b}\text{ on }(A\sqcup C,B),\quad
+K_{b+c,a}\text{ on }(B\sqcup C,A).
+\tag{9.1}
+$$
+These are actual vertex bijections with identical edge sets after
+deletion. Their ordinary $n$ by $n$ Laplacians and all unordered
+original-pair resistances coincide, including pairs lying in different
+original parts that become nonedges. No vertices are identified and
+no pair is removed from the resistance sum.
+
+**Proposition 9.2 (Two strict failures of whole-deletion comparisons).**
+For $K_{2,2,2}$ the attained positive maximum is $26$, while each of
+the three whole-deletion faces has maximum $51/2<26$. For $K_{2,2,5}$,
+
+$$
+\max_{g\in\mathcal D_{AB}}F(g)=64,\qquad
+\max_{g\in\mathcal D_{AC}}F(g)
+=\max_{g\in\mathcal D_{BC}}F(g)=\frac{450}{7}>64,
+\qquad M_{2,2,5}\ge\frac{450}{7}.
+\tag{9.2}
+$$
+The last bound is obtained by strictly positive approximants on the
+original tripartite graph. These statements refute, respectively, a
+universal reduction to a best whole-deletion face and a universal
+choice of the $AB$-deletion face. They assert neither the exact value
+of $M_{2,2,5}$ nor that a best deletion face always gives the
+tripartite supremum.
+
+*Proof.* Theorem 7.3, or Corollary 8.3 with $m=2$, gives the positive
+$K_{2,2,2}$ maximum $2(18-5)=26$. Every whole deletion is $K_{2,4}$
+on the same six vertices, by (9.1). Apply the whole
+[two-hub theorem](FIEDLER_RESISTANCE_K2M_OPTIMIZER.md), Theorem 2.1,
+with its two hubs equal to one original part and its four
+leaves equal to the union of the other two parts. Its unrestricted
+positive product maximum is
+
+$$
+(4+2)\left(4+\frac14\right)=\frac{51}{2}.
+$$
+Its strictly positive bipartite equality assignments belong to the
+specified deletion face, proving face attainment.
+
+For $K_{2,2,5}$, deleting $AB$ gives $K_{4,5}$. The whole
+[general bipartite theorem](FIEDLER_RESISTANCE_GENERAL_BIPARTITE_OPTIMIZER.md),
+Theorem 4.1, applies with its smaller class of size $4$ mapped
+bijectively onto $A\sqcup B$ and its larger class onto $C$.
+Its hypotheses $4\le4\le5$ hold. Substitution of $n=9$ and $d=1$
+into its constant gives
+
+$$
+9(9-3)+\frac{5(1+3)}{1+1}=64.
+$$
+Deleting $AC$ instead gives $K_{2,7}$ with hubs $B$ and leaves
+$A\sqcup C$; deleting $BC$ gives the same graph with hubs $A$ and
+leaves $B\sqcup C$. The whole two-hub Theorem 2.1 applies with $m=7$
+and gives
+
+$$
+(7+2)\left(7+\frac17\right)=\frac{450}{7},\qquad
+\frac{450}{7}-64=\frac27>0.
+$$
+All these are whole-domain bipartite optimizations, not uniform-weight
+values. Their equality conductances are strictly positive on every
+retained bipartite edge. If a face assignment has further zero
+coordinates but connected support, add $\varepsilon$ to every retained
+edge. This stays in that face and gives positive bipartite conductances
+converging to the given connected assignment. Eigenvalue and resistance
+continuity from Convention 1.2 transfer the same upper bound to it.
+Thus the displayed positive bipartite optimizers attain the maxima on
+the entire connected nonnegative faces as defined in Definition 9.1.
+
+Finally take any bipartite optimizer on the $AC$-deletion face in the
+$K_{2,2,5}$ example. Add $\varepsilon>0$ to every deleted $AC$ edge,
+leaving the positive retained coordinates fixed. These are finite
+strictly positive assignments on all original tripartite edges.
+Their Laplacians tend to the connected face Laplacian on the same nine
+vertices, so their products tend to $450/7$. This proves the last
+inequality in (9.2) within the original positive domain. The two strict
+comparisons prove the stated route failures and give no upper
+comparison for every positive weighting of $K_{2,2,5}$. ∎
+
+**Proposition 9.3 (A two-vertex part supplies partial coercivity).** For
+every integer triple $2=a\le b\le c$, with $n=2+b+c$,
+
+$$
+M_{2,b,c}\ge n\left(n-2+\frac1{n-2}\right)>n(n-2).
+\tag{9.3}
+$$
+Every positive maximizing sequence $g_j$, that is
+$F(g_j)\to M_{2,b,c}$, is bounded after normalization by its own
+$\lambda_2(g_j)$. Each cluster point of
+$g_j/\lambda_2(g_j)$ is a connected nonnegative original assignment
+with $\lambda_2=1$ and $R=M_{2,b,c}$. In particular at least one
+such cluster point exists. For $c>b+2$, this gives no exact value of
+$M_{2,b,c}$, no classification of these maximizers, and no assertion
+of positive attainment.
+
+*Proof.* Delete $BC$, identifying the retained graph by an actual
+vertex bijection as $K_{2,n-2}$ with hubs $A$ and leaves $B\sqcup C$.
+Here $m=n-2=b+c\ge4$, so the whole two-hub Theorem 2.1 applies.
+At its equality assignment with scale $t=1$ it supplies finite positive
+conductances on all retained edges, $\lambda_2=1$, and product
+
+$$
+(m+2)\left(m+\frac1m\right)
+=n\left(n-2+\frac1{n-2}\right).
+$$
+Set the deleted coordinates to zero and then add $\varepsilon>0$ to
+every $BC$ edge. The limiting support is connected. As in Proposition
+9.2, continuity on the same original vertices and pairs proves the
+lower bound by positive tripartite approximants. Its excess above
+$n(n-2)$ is $n/(n-2)>0$.
+The supremum $M$ is finite by Theorem 3.2. A maximizing sequence exists
+by the definition of supremum on the nonempty positive domain.
+Every such sequence satisfies (8.1), so Lemma 8.1 gives boundedness,
+connectedness and the value of each normalized cluster point, as well
+as a convergent subsequence. The positive-approximation bridge in that
+lemma identifies its value as a maximum on the connected nonnegative
+original domain. None of these steps determines its coordinates or
+makes its zero coordinates positive. ∎
+
+**Definition 9.4 (The remaining exact all-weight and sequence bridges).**
+The strict-triangle part of Definition 6.2 is determined by Theorems
+7.3 and 8.2. The case $c=a+b$ is supplied by Theorems 4.1, 4.3, 5.1
+and 5.2, including its nonattainment and full sequence classification.
+For every integer triple $2\le a\le b\le c$ with $c>a+b$, the
+remaining complementary target is still the exact value of
+$M_{a,b,c}$, the full positive equality set
+$\mathcal E_{a,b,c}$, positive attainment or nonattainment, and a
+classification of every positive maximizing sequence on the original
+labelled coordinates, together with its exact-$R_0$ counterpart for
+every $R_0>0$.
+
+The all-weight bridge requires a sharp upper comparison for every
+$g\in(0,\infty)^{ab+ac+bc}$, matching positive assignments or positive
+approximants, and necessity of every claimed equality coordinate.
+An optimum within block-constant weights, within a deletion face, or
+under an additional trace or rank constraint does not provide that
+comparison. Proposition 6.1 remains an upper estimate and Propositions
+9.2–9.3 supply specified lower estimates; they do not identify this
+exact value for $c>a+b$.
+
+The sequence bridge requires controlling all normalized escape
+sequences and identifying every connected nonnegative original
+maximizer that can occur as a limit. If normalized coordinates are
+bounded, Lemma 8.1's connected-limit and positive-approximation argument
+is available; the actual limiting coordinates still have to be
+determined. For $a=2$, Proposition 9.3 supplies boundedness and connected
+maximizing cluster points but leaves their complete set and positive
+attainment undetermined when $c>a+b$. For general $a$, a coercivity
+argument or a complete treatment of unbounded normalization is also
+required. Theorem 5.1 transfers an established product answer and its
+positive equality rays to every exact resistance level; it does not
+supply these missing all-weight or sequence conclusions.
+
+## 追加锚（本行以下为增补区）
