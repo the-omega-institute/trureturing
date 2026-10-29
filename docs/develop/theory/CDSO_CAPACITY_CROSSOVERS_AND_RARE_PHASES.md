@@ -1469,3 +1469,517 @@ $$
 eventually. Theorem 8.1 then puts every law with least marginal at least $\tau$ strictly above $H_r$. Theorem 9.1 bounds the complementary region by $H_r$ and classifies all equality laws, proving the exact global rare assertion. If $\zeta<-5/4$, (10.9) instead gives $H_d<H_r$ eventually. The symmetric trial law therefore excludes every rare-region law from global minimization. Also $\delta_a<1/r$ eventually, so Theorem 7.2 supplies $\inf H<H_d$. This proves precisely the stated dense-side conclusions. ∎
 
 ## 追加锚（本行以下为增补区）
+
+## 11. The sharp dense improvement on the entire law domain
+
+**Definition 11.1 (Dense infimum and centered incidence).** Retain Definition 1.1, with no restriction on the cardinalities of positive-mass types, and the notation of Definition 7.1. For $0<\delta\le1$ define
+
+$$
+\mathscr D_a(\delta)
+=\inf\{H(x):x\text{ satisfies Definition 1.1 and }\min_i y_i\ge\tau\}.
+\tag{11.1}
+$$
+
+The additional condition in (11.1) defines the dense part of the original domain; it imposes neither exchangeability nor a prescribed support. For a vector $v\in\mathbb R^s$ let
+
+$$
+\Pi v=v-\frac1s\Bigl(\sum_i v_i\Bigr)\mathbf1,
+\qquad \|v\|^2=\sum_i v_i^2.
+$$
+
+For each actual law put
+
+$$
+\begin{aligned}
+z&=r-K,\qquad
+\Phi(z)=z(z-1)(3r-z-1),\\
+\Delta&=\mathbb E K^3-Z,\qquad
+d_i=y_i-\mu,\qquad V=\|d\|^2,\\
+c_i&=\mathbb E[(K^2-r^2)I_i],\qquad c^\circ=\Pi c,\\
+\kappa&=\sqrt{\frac{2a}{s}},\qquad
+A=\kappa(2r-1)\delta,\\
+Q_*&=\frac{A^2}{r^2\mu^3}
+=\frac{2a}{s}\frac{(2r-1)^2\delta^2}{r^2\mu^3}.
+\end{aligned}\tag{11.2}
+$$
+
+Every expectation in these definitions is taken under the same $x$. The reference moment $Z$ is still the adjacent-cardinality moment, rather than an imposed third moment. The polynomial deficit in Lemma 3.1, the centered identity (8.7), and the actual comparison laws (7.2) will be used below. The optimization of feasible joint moments and the distinction between tight bounds and attained bounds have the classical background of D. Bertsimas and I. Popescu, *Optimal inequalities in probability theory: A convex optimization approach*, SIAM J. Optim. 15(3), 780–804, DOI [10.1137/S1052623401399903](https://doi.org/10.1137/S1052623401399903), pp.780–781. The nonlinear dense estimate here is a repo-derived consequence of the actual incidence relation proved below; it is not an application of a theorem optimizing the moment coordinates independently.
+
+**Proposition 11.2 (A centered incidence constraint from the actual law).** Every law of Definition 1.1 satisfies
+
+$$
+\Delta=\mathbb E\Phi(z)\ge0,
+\qquad \boxed{\ \|c^\circ\|\le A+3\Delta.\ }
+\tag{11.3}
+$$
+
+Neither density nor an energy sublevel is assumed.
+
+**Proof.** The secant residual of $k^3$ at $k=a,r$ is
+
+$$
+(k-a)(k-r)(k+a+r)
+=k^3-(a^2+ar+r^2)k+ar(a+r).
+$$
+
+Its expectation is $\mathbb E K^3-Z$, because the actual mean and the reference mean both equal $q$. Substitution $k=r-z$ gives $\Phi(z)$, the deficit already used in (3.3). Its value at $z=-1$ is $6r$, its values at $z=0,1$ vanish, and it is positive for integers $2\le z\le r-1$. This proves the first assertion on every allowed cardinality $1\le K\le s$.
+
+Linearity of projection gives the same-law identity
+
+$$
+c^\circ=\mathbb E\left[(K^2-r^2)
+ \left(I-\frac Ks\mathbf1\right)\right],
+\qquad
+\left\|\mathbf1_T-\frac{|T|}{s}\mathbf1\right\|^2
+=\frac{|T|(s-|T|)}s.
+\tag{11.4}
+$$
+
+Write $p_j=\mathbb P(z=j)$. At $z=-1$ the projected incidence vector is zero, and at $z=0$ the multiplier $K^2-r^2$ is zero. At $z=1$, the norm of each integrand in (11.4) is $(2r-1)\kappa$. For $2\le z\le r-1$, the ratio of its norm to $\Phi(z)$ is
+
+$$
+\frac{(2r-z)\sqrt{(r-z)(z+1)/s}}
+ {(z-1)(3r-z-1)}
+\le\frac{\sqrt{z+1}}{z-1}\le2.
+\tag{11.5}
+$$
+
+Here $2r-z\le3r-z-1$ and $(r-z)/s\le1$; the last inequality follows from $z+1\le4(z-1)^2$ for integers $z\ge2$. The total contribution of these cardinalities therefore has norm at most $2\Delta$. Finally $\mathbb E z=\delta$ implies
+
+$$
+p_1=\delta+p_{-1}-\sum_{j\ge2}j p_j
+\le\delta+\frac{\Delta}{6r}.
+$$
+
+The triangle inequality in (11.4) now gives
+
+$$
+\|c^\circ\|\le(2r-1)\kappa p_1+2\Delta
+\le A+\left(2+\frac{\kappa(2r-1)}{6r}\right)\Delta
+\le A+3\Delta.
+$$
+
+The last coefficient bound uses $\kappa\le\sqrt2$. Thus both the vector being bounded and the deficit paying for all other cardinalities come from the original law. ∎
+
+**Lemma 11.3 (Dense sublevel localization retaining the moment deficit).** Fix $L>0$. For all sufficiently large $a$, uniformly over $0<\delta\le L/a$, every actual dense law with $H\le H_d$ satisfies
+
+$$
+\sqrt V\le\frac{24\delta}{r\mu^3},\qquad
+0\le\Delta\le72\delta^2\mu^{-6},\qquad
+\max_i|c_i|=O_L(r\delta).
+\tag{11.6}
+$$
+
+In particular $y_i=\mu+O_L(\delta/r)$ for every label. These are consequences for this sublevel and are not extra assumptions on the law domain.
+
+**Proof.** Set $R_i=c_i+b$, as in Lemma 3.1. Its pointwise nonnegative residual is
+
+$$
+(1-I_i)(2r+1)(r-K)+I_i(s-K)(s-K-1).
+$$
+
+Consequently
+
+$$
+R_i\ge0,\qquad
+\sum_iR_i=S_0+\Delta,\qquad S_0=6r\delta.
+\tag{11.7}
+$$
+
+The sum identity follows from $\sum_i c_i=\mathbb E K^3-r^2q$ and $Z-r^2q+sb=6r\delta$. With $f(y)=r^2/y-b/y^2$, (8.6)–(8.8) give, for all sufficiently large $a$ in the stated window,
+
+$$
+H=\sum_i f(y_i)+\sum_i\frac{R_i}{y_i^2},\qquad
+\sum_i f(y_i)\ge sf(\mu)+\frac{r^2}{2}V,
+\qquad sf(\mu)+\frac{S_0}{\mu^2}=H_d.
+$$
+
+Indeed $\mu\ge1/2$ and $b/(r^2\mu)\le1/12$ eventually, and density is exactly the other hypothesis needed in (8.7). Put $M=\max_i y_i$. Since $M\le1$, the inverse-square tangent inequality yields
+
+$$
+\begin{aligned}
+\sum_i\frac{R_i}{y_i^2}
+&\ge\frac{S_0+\Delta}{M^2}\\
+&\ge\frac{S_0}{\mu^2}
+ -\frac{2S_0}{\mu^3}(M-\mu)+\Delta\\
+&\ge\frac{S_0}{\mu^2}
+ -\frac{2S_0}{\mu^3}\sqrt V+\Delta.
+\end{aligned}
+$$
+
+Thus
+
+$$
+H-H_d\ge\Delta+\frac{r^2}{2}V
+ -12r\delta\mu^{-3}\sqrt V.
+\tag{11.8}
+$$
+
+Under $H\le H_d$, nonnegativity of $\Delta$ first gives the bound for $\sqrt V$ in (11.6). Maximizing $12r\delta\mu^{-3}u-r^2u^2/2$ over $u\ge0$ gives the displayed bound for $\Delta$. Finally (11.7) implies
+$|c_i|\le b+S_0+\Delta=O_L(r\delta)$, since $\delta/r$ is uniformly bounded and tends to zero. ∎
+
+**Theorem 11.4 (Uniform sharp dense infimum with no lower window cutoff).** For every fixed $0<L<1$ there are constants $a_0(L),C_L$ such that, for all integers $a\ge a_0(L)$ and all $0<\delta\le L/a$,
+
+$$
+\boxed{\quad
+\left|\mathscr D_a(\delta)-H_d+Q_*\right|
+\le C_L\frac{\delta^3}{r}.
+\quad}\tag{11.9}
+$$
+
+The dense infimum is attained. In particular, for every compact interval $J\subset(0,1)$, uniformly for $\lambda\in J$,
+
+$$
+\mathscr D_a(\lambda/a)
+=H_d-\frac{8\lambda^2}{a^2}+O_J(a^{-4}).
+\tag{11.10}
+$$
+
+The lower bound in (11.9) holds on the entire dense part of Definition 1.1, including laws with arbitrary positive cardinalities and disconnected support.
+
+**Proof.** First consider a dense law with $H\le H_d$. Lemma 11.3 gives uniform lower bounds on all $y_i$ and $\mu$, as well as $\|d\|=O_L(\delta/r)$. Expand the exact identity
+
+$$
+H=\sum_i\left(\frac{r^2}{y_i}+\frac{c_i}{y_i^2}\right).
+$$
+
+The constant term is $(r^2q+\sum_i c_i)/\mu^2=H_d+\Delta/\mu^2$. The $r^2$ linear term vanishes because $\sum_i d_i=0$, and $\langle c,d\rangle=\langle c^\circ,d\rangle$. Thus
+
+$$
+H-H_d=\frac{\Delta}{\mu^2}
+ +\mu^{-3}\left(r^2\|d\|^2-2\langle c^\circ,d\rangle\right)
+ +E,\qquad |E|\le C_L\frac{\delta^3}{r}.
+\tag{11.11}
+$$
+
+To justify the error without a factor depending on the number of labels, use the exact scalar identities
+
+$$
+\begin{aligned}
+\frac1{\mu+d}-\frac1\mu+\frac d{\mu^2}-\frac{d^2}{\mu^3}
+ &=-\frac{d^3}{\mu^3(\mu+d)},\\
+\frac1{(\mu+d)^2}-\frac1{\mu^2}+\frac{2d}{\mu^3}
+ &=\frac{d^2(3\mu+2d)}{\mu^3(\mu+d)^2}.
+\end{aligned}
+$$
+
+They imply
+
+$$
+|E|\le C\left[r^2\sum_i|d_i|^3
+ +(\max_i|c_i|)V\right]
+\le C_L\left(r^2V^{3/2}+r\delta V\right)
+\le C_L\frac{\delta^3}{r}.
+$$
+
+Complete the square in (11.11):
+
+$$
+H-H_d+Q_*
+=\frac{r^2}{\mu^3}\left\|d-\frac{c^\circ}{r^2}\right\|^2
+ +\frac{\Delta}{\mu^2}
+ +\frac{A^2-\|c^\circ\|^2}{r^2\mu^3}+E.
+$$
+
+By Proposition 11.2 the possibly negative norm gap is at least
+$-(6A\Delta+9\Delta^2)/(r^2\mu^3)$. Since
+$A=O(r\delta)$ and $\Delta=O_L(\delta^2)$, uniformly on the stated window and for large $a$,
+
+$$
+\mu^{-2}-\frac{6A+9\Delta}{r^2\mu^3}\ge\frac12.
+$$
+
+We obtain the stronger sublevel stability estimate
+
+$$
+\boxed{\quad
+H-H_d+Q_*\ge\frac\Delta2
+ +\frac{r^2}{\mu^3}\left\|d-\frac{c^\circ}{r^2}\right\|^2
+ -C_L\frac{\delta^3}{r}.
+\quad}\tag{11.12}
+$$
+
+Dropping its nonnegative terms proves the required lower bound for $H\le H_d$; laws with $H>H_d$ satisfy that lower bound automatically.
+
+For a matching actual upper law, fix a pair $P\subset[s]$ and use (7.2), with its labels relabeled to $P$, at
+
+$$
+\varepsilon_*=
+\frac as\frac{(2r-1)\delta}{r^2}.
+\tag{11.13}
+$$
+
+The two missing-one masses on $P$ are $(1-r\delta)/s-\varepsilon_*$, and each missing-one mass off $P$ is $(1+\delta)/s+2\varepsilon_*/a$. For large $a$, the former are positive uniformly over the whole window: $1-r\delta\ge(1-L)/2$, while $\varepsilon_*=O_L(\delta/r)=O_L(a^{-2})$. The masses of cardinality $r$ add to $1-\delta$, and the sole cardinality-$a$ mass is $\delta$ on $[s]\setminus P$. Hence this is an actual probability law of mean $q$. Its marginals are $\mu+\varepsilon_*$ on $P$ and $\mu-2\varepsilon_*/a$ off $P$, so it is dense for all sufficiently large $a$.
+
+For this one law, directly,
+
+$$
+\begin{aligned}
+\Delta&=0,\qquad
+c_i=0\ (i\in P),\qquad
+c_j=-(2r-1)\delta\ (j\notin P),\\
+c^\circ&=(2r-1)\delta
+ \left(\mathbf1_P-\frac2s\mathbf1\right),\qquad
+\|c^\circ\|^2=A^2,\qquad d=\frac{c^\circ}{r^2}.
+\end{aligned}\tag{11.14}
+$$
+
+Its explicit vectors satisfy $\|d\|=O_L(\delta/r)$ and $\max_i|c_i|=O(r\delta)$, so the scalar identities proving (11.11) apply to it directly, without assuming its energy lies in a sublevel. Equations (11.11) and (11.14) give $H=H_d-Q_*+O_L(\delta^3/r)$, proving the upper bound. No exact finite-$a$ minimizing property of this family is needed. The feasible dense laws form a nonempty compact subset of the finite probability simplex with $y_i\ge\tau>0$. Continuity of $H$ proves attainment.
+
+Finally put $h=1/a$ and $\delta=\lambda h$. The exact expression (11.2) becomes
+
+$$
+Q_*=\frac{2\lambda^2h^2(2+h)^2(1+2h)^2}
+ {(1+h)^2(1+h-\lambda h^2)^3}.
+\tag{11.15}
+$$
+
+The rational factor multiplying $\lambda^2h^2$ has constant coefficient $8$ and linear coefficient zero: the relative linear coefficient of both its numerator and denominator is $5$. Taylor expansion with denominators bounded away from zero uniformly on $J$ gives
+$Q_*=8\lambda^2h^2+O_J(h^4)$. Also $\delta^3/r=O_J(h^4)$. Substitution in (11.9) proves (11.10). ∎
+
+## 12. Necessary concentration of an omitted pair
+
+**Theorem 12.1 (Structure forced by asymptotically minimizing dense laws).** Let $J$ be a fixed compact interval in $(0,1)$. For each sufficiently large integer $a$, choose $\lambda_a\in J$, set $\delta_a=\lambda_a/a$, and let $x_a$ be any actual dense law satisfying
+
+$$
+H(x_a)-\mathscr D_a(\delta_a)=o(a^{-2}).
+\tag{12.1}
+$$
+
+Then there exist pairs $P_a\subset[s]$ such that
+
+$$
+\begin{aligned}
+\mathbb P_{x_a}(K=a)&=\delta_a+o(a^{-3}),\\
+\mathbb P_{x_a}(K\notin\{a,r\})&=o(a^{-3}),\\
+\mathbb P_{x_a}(T=[s]\setminus P_a\mid K=a)&=1-o(1),\\
+\left\|y-\mu\mathbf1
+ -\frac{(2r-1)\delta_a}{r^2}
+ \left(\mathbf1_{P_a}-\frac2s\mathbf1\right)\right\|
+ &=o(a^{-2}).
+\end{aligned}\tag{12.2}
+$$
+
+All little-oh assertions are along the given sequence $a\to\infty$; $\lambda_a$ need not converge. The conditional law is defined eventually by the first line. This is a necessary asymptotic structure, not a finite-$a$ equality classification or a sufficiency assertion for arbitrary laws satisfying (12.2).
+
+**Proof.** Since $\lambda_a$ stays bounded away from zero, $Q_*$ is bounded below by a positive constant times $a^{-2}$. Theorem 11.4 and (12.1) therefore put $x_a$ in $H<H_d$ eventually. The left side of (11.12) is $o(a^{-2})$, and its error is $O_J(a^{-4})$. Consequently
+
+$$
+\Delta=o(a^{-2}),\qquad
+\left\|d-\frac{c^\circ}{r^2}\right\|=o(a^{-2}).
+\tag{12.3}
+$$
+
+For $z\ge2$, $\Phi(z)\ge2rz(z-1)$, while $\Phi(-1)=6r$. Hence, with $p_j=\mathbb P(z=j)$,
+
+$$
+p_{-1}+\sum_{j\ge2}p_j=O(\Delta/r),\qquad
+\left|p_1-\delta_a\right|
+=\left|p_{-1}-\sum_{j\ge2}j p_j\right|
+=O(\Delta/r).
+$$
+
+These estimates prove the first two lines of (12.2).
+
+Let $e=d-c^\circ/r^2$. Rewriting (11.11) gives
+
+$$
+H-H_d=-\frac{\|c^\circ\|^2}{r^2\mu^3}
+ +\frac\Delta{\mu^2}+\frac{r^2}{\mu^3}\|e\|^2+E.
+$$
+
+Equations (12.1), (12.3) and Theorem 11.4 imply
+
+$$
+\|c^\circ\|^2=A^2+o(1).
+\tag{12.4}
+$$
+
+Write $p=\mathbb P(K=a)$ and
+
+$$
+v=\mathbb E\left[I-\frac as\mathbf1\ \middle|\ K=a\right].
+$$
+
+The other cardinalities in (11.4) have total projected contribution $O(\Delta)$ by (11.5), and therefore
+
+$$
+c^\circ=-(2r-1)p v+O_{\|\cdot\|}(\Delta).
+\tag{12.5}
+$$
+
+Here $O_{\|\cdot\|}(\Delta)$ denotes a vector of Euclidean norm $O(\Delta)$. The scalar $(2r-1)p$ is bounded above and away from zero, and $p/\delta_a\to1$. Combining (12.4)–(12.5) yields
+$\|v\|^2=\kappa^2-o(1)$, since each centered cardinality-$a$ incidence vector has squared norm $\kappa^2$.
+
+Take independent conditional draws $U,U'$ given $K=a$. The Euclidean variance identity gives
+
+$$
+\mathbb E\|\mathbf1_U-\mathbf1_{U'}\|^2
+=2(\kappa^2-\|v\|^2)=o(1).
+$$
+
+Two distinct $a$-subsets have squared incidence distance at least two. Thus their conditional coincidence probability tends to one. If $\pi_U=\mathbb P(T=U\mid K=a)$, then
+
+$$
+1-o(1)=\sum_U\pi_U^2\le\max_U\pi_U\le1.
+$$
+
+Choose a largest atom $U_a=[s]\setminus P_a$. This proves the third line of (12.2). Since all the centered incidence vectors have norm $\kappa\le\sqrt2$, their mean differs from the vector at this atom by norm at most $2\sqrt2(1-\pi_{U_a})=o(1)$. Hence
+
+$$
+v=\mathbf1_{[s]\setminus P_a}-\frac as\mathbf1+o_{\|\cdot\|}(1).
+$$
+
+Equation (12.5) and $p=\delta_a+o(a^{-3})$ now give
+
+$$
+c^\circ=(2r-1)\delta_a
+ \left(\mathbf1_{P_a}-\frac2s\mathbf1\right)+o_{\|\cdot\|}(1).
+$$
+
+Together with (12.3) this proves the final line of (12.2). In particular the two enhanced marginals and the concentrated omitted pair are properties of the same actual law. ∎
+
+## 13. The sixth competition scale and its fixed critical sequence
+
+**Theorem 13.1 (Sixth-scale competition and eventual phases).** Fix $\eta\in\mathbb R$ and put
+
+$$
+\delta_a=\frac1{2a}-\frac1{a^2}+\frac5{4a^3}
+ -\frac5{4a^4}+\frac\eta{a^5}.
+\tag{13.1}
+$$
+
+These parameters are positive and admissible for all sufficiently large $a$, and
+
+$$
+\boxed{\quad
+\lim_{a\to\infty}a^2
+ \left[D_a(\delta_a)-2a^2-5a-2-\frac7{2a}\right]
+=\min\left\{-\frac{17}{2},-1-4\eta\right\}.
+\quad}\tag{13.2}
+$$
+
+If $\eta<15/8$, every globally minimizing law is eventually dense, and
+
+$$
+D_a(\delta_a)=2a^2+5a+2+\frac7{2a}
+ -\frac{17}{2a^2}+\frac{41}{2a^3}+O_\eta(a^{-4}).
+\tag{13.3}
+$$
+
+If $\eta\ge15/8$, including the fixed value $\eta=15/8$, the global minimum of $H$ is eventually exactly $H_r$. All globally minimizing laws are, up to relabeling,
+
+$$
+x_{\{e\}}=\frac{\delta_a}{a},\qquad
+x_{[s]\setminus\{e\}}=1-\frac{\delta_a}{a},\qquad
+x_T=0\text{ otherwise},
+\tag{13.4}
+$$
+
+and on this side
+
+$$
+D_a(\delta_a)=2a^2+5a+2+\frac7{2a}
+ +\frac{-1-4\eta}{a^2}
+ +\frac{24-14\eta}{a^3}+O_\eta(a^{-4}).
+\tag{13.5}
+$$
+
+The parameter $\eta$ in these assertions is fixed. Neither an exact finite-$a$ dense optimizer nor an exact crossing curve for parameters moving beyond the specified sequence is determined by this theorem. The conclusions concern precisely the subset-law domain of Definition 1.1 and do not assert realization or optimality at a prescribed finite graph budget.
+
+**Proof.** The parameters (13.1) eventually satisfy $0<\delta_a\le(3/4)/a$, so both Theorem 11.4 and Theorem 9.1 apply. The latter gives the exact rare minimum $H_r$, attained only by (13.4). Dense and rare are an exhaustive partition of the original domain. Thus
+
+$$
+\inf_xH(x)=\min\{\mathscr D_a(\delta_a),H_r\}.
+\tag{13.6}
+$$
+
+Attainment is also provided by Theorem 10.1.
+
+For the required expansions put $h=1/a$, substitute
+$\delta=h/2-h^2+5h^3/4-5h^4/4+\eta h^5$, and define
+
+$$
+\begin{aligned}
+Q_0&=1+h-h\delta,\\
+P_0&=(1+h)^3-\delta(3h+3h^2+h^3),\\
+F&=P_0/Q_0^2,\\
+R&=\frac{(1+h)^3}{1-h\delta}-(1+h)^2F.
+\end{aligned}
+$$
+
+The exact rational identities (10.7) read
+
+$$
+H_d-B=h^{-2}(2+3h)F,\qquad
+H_r-B=\frac1{h\delta}+h^{-3}R.
+\tag{13.7}
+$$
+
+Multiplying the numerator polynomials and the inverse denominator series gives
+
+$$
+\begin{aligned}
+F&=1+h-\frac12h^2+\frac52h^3-7h^4
+ +\frac{67}{4}h^5+O_\eta(h^6),\\
+\frac1{h\delta}
+ &=2h^{-2}+4h^{-1}+3+h
+ +\left(\frac92-4\eta\right)h^2
+ +(14-16\eta)h^3+O_\eta(h^4),\\
+R&=h^2-h^3+\frac52h^4-\frac{11}{2}h^5
+ +(10+2\eta)h^6+O_\eta(h^7).
+\end{aligned}\tag{13.8}
+$$
+
+For example the first series is characterized to the displayed order by
+$Q_0^2F=P_0$; the second by $(h\delta)(h\delta)^{-1}=1$ after factoring $h^2$; and the third follows by substitution of the first into its defining difference. All inverse factors after these powers of $h$ are removed are analytic near zero: $Q_0\to1$, $1-h\delta\to1$, and $\delta/h\to1/2$. Thus the remainders in (13.8) are bounded Taylor remainders for each fixed $\eta$.
+
+Equations (13.7)–(13.8) yield
+
+$$
+\begin{aligned}
+H_d-B&=2a^2+5a+2+\frac7{2a}
+ -\frac{13}{2a^2}+\frac{25}{2a^3}+O_\eta(a^{-4}),\\
+H_r-B&=2a^2+5a+2+\frac7{2a}
+ +\frac{-1-4\eta}{a^2}
+ +\frac{24-14\eta}{a^3}+O_\eta(a^{-4}).
+\end{aligned}\tag{13.9}
+$$
+
+In (11.15) the moving parameter is
+$\lambda_a=a\delta_a=1/2-h+5h^2/4-5h^3/4+\eta h^4$. It stays in a fixed compact interval in $(0,1)$, so
+
+$$
+Q_*=8\lambda_a^2h^2+O_\eta(h^4)
+=2h^2-8h^3+O_\eta(h^4),\qquad
+\frac{\delta_a^3}{r}=O_\eta(h^4).
+$$
+
+Theorem 11.4 therefore sharpens the dense branch to
+
+$$
+\mathscr D_a(\delta_a)-B
+=2a^2+5a+2+\frac7{2a}
+ -\frac{17}{2a^2}+\frac{41}{2a^3}+O_\eta(a^{-4}).
+\tag{13.10}
+$$
+
+Taking the smaller of (13.9) and (13.10) in (13.6) proves (13.2). More precisely,
+
+$$
+H_r-\mathscr D_a(\delta_a)
+=\frac{15/2-4\eta}{a^2}
+ +\frac{7/2-14\eta}{a^3}+O_\eta(a^{-4}).
+\tag{13.11}
+$$
+
+For fixed $\eta<15/8$ the first coefficient is positive, so every rare law has energy strictly greater than the attained dense infimum. This proves (13.3) and the dense assertion. For fixed $\eta>15/8$ it is negative, so the dense region is strictly above $H_r$; Theorem 9.1 then proves (13.4)–(13.5). At the fixed value $\eta=15/8$, the first coefficient vanishes but the second equals $-91/4$. Hence
+
+$$
+H_r-\mathscr D_a(\delta_a)
+=-\frac{91}{4a^3}+O(a^{-4})<0
+$$
+
+for all sufficiently large $a$, giving the same exact rare minimum and equality class. In this case the $a^{-3}$ coefficients of the rare and dense branches are $-9/4$ and $41/2$, respectively. This decides the stated fixed critical sequence without determining a general finite-$a$ transition curve. ∎
+
+## 追加锚（本行以下为增补区）
