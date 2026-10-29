@@ -313,6 +313,15 @@ private theorem conv_map {R S : Type*} [CommRing R] [CommRing S] (φ : R →+* S
 private def T (n : ℕ) : ℤ := ∑ j ∈ range (n+1), ((2*n).choose (2*j) : ℤ)
 private def E (n : ℕ) : ℤ := ∑ j ∈ range (n+1), ((2*n).choose (2*j) : ℤ)*(-1)^j
 
+/-
+Bind-first owner: D5.S3.Estimation.ErrorExponents.SymmetricBinomialChiSquare.symmetric_binomial_chi_square.
+At B = 2*n and z = 1, with n > 0, its closed-form and finite-sum identities give
+the sum over Icc 1 n as 2^(2*n)/2 - 1 over the reals. Adjoining the zero-index
+term, multiplying by two, and using injectivity of the integer-to-real cast
+gives the statement below. The S1 placement is not a mathematical obstruction
+to this specialization. The current proof uses add_pow and does not consume
+that owner.
+-/
 private theorem even_binomial (n : ℕ) (hn : 0<n) : 2*T n = 2^(2*n) := by
   have hp := add_pow (1 : ℤ) 1 (2*n)
   have hm := add_pow (-1 : ℤ) 1 (2*n)
