@@ -1,0 +1,48 @@
+**Lemma 12.2 (The scalar candidate and its unique positive root).** For every integer $a\ge4$, the function $h_a$ is strictly convex on $(0,a)$. Its unique minimizer $\epsilon_a$ belongs to $(0,1/a)$ and is the unique positive real solution of
+
+$$
+(a-\epsilon_a)^3
+=r^2\epsilon_a^2\bigl[aM_a+N_a\epsilon_a\bigr].
+\tag{12.2}
+$$
+
+The family of Theorem 10.1, with its parameter set to any $0<t\le1/a$, has energy $h_a(t)$. In particular $h_a(\epsilon_a)$ is an attained upper bound for $\inf_{\mathcal X_a}H$, without presupposing global optimality.
+
+**Proof.** Reuse the array of Theorem 10.1, with its core denoted by $C$ and its remaining label by $e$:
+
+$$
+x_{\{e\}}=t,\qquad x_C=(a-1)t,\qquad
+x_{C\setminus\{j\}}=\frac{1-at}{r}\quad(j\in C),
+\qquad x_T=0\text{ otherwise}.
+\tag{12.3}
+$$
+
+Its admissibility and energy were computed there. Formula (10.2) gives
+
+$$
+h_a(t)-B_0
+=\frac1t+\frac{r^2t(M_a-at)}{(a-t)^2}.
+\tag{12.4}
+$$
+
+The right side agrees with (12.1) by expansion. Thus no new construction is required.
+
+For $U=a^2r^2>0$ and $V=(2a+1)(a-1)r^3>0$, differentiation gives
+
+$$
+h_a''(t)
+=\frac2{t^3}+\frac{2U}{(a-t)^3}
+ +\frac{V(4a+2t)}{(a-t)^4}>0.
+$$
+
+Also
+
+$$
+h_a'(t)=-\frac1{t^2}
+ +\frac{r^2(aM_a+N_at)}{(a-t)^3},\qquad
+h_a'(1/a)=\frac{a^3(2a^2+a+4)}{(a-1)^2}>0.
+\tag{12.5}
+$$
+
+Since $h_a'(t)\to-\infty$ as $t\downarrow0$, strict convexity gives one stationary point in $(0,1/a)$ and makes it the unique minimum on $(0,a)$. Equation (12.5) proves (12.2). Since $M_a,N_a>0$, (12.2) has no positive solution with $\epsilon_a\ge a$; hence this is its unique positive root. The array (12.3) at $\epsilon_a$ supplies the asserted upper bound. ∎
+
