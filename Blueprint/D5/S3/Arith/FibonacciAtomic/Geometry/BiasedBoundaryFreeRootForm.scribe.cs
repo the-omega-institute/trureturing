@@ -13,7 +13,7 @@ internal sealed class BiasedBoundaryFreeRootFormDocument : IScribeDocumentDefini
             Def("v", "The vector v is the adjoint of the actual bounded path trace J applied to the constant one in G=L2(M). The biased product measure and the infinite square-summable increment space are fixed throughout."),
             Def("Sigma", "Sigma=C* C acts on the original infinite increment space H, where C=Pi J is included in the original ambient G. Taking this ambient adjoint is the same as extending the adjoint from the mean-zero boundary subspace by zero on constants."),
             Def("K", "K is the orthogonal complement of the kernel of Sigma. Vectors in the edge kernel are excluded from this effective increment space."),
-            Result("mean_indicator", "Mean of a Boundary Cylinder Indicator", All("p",V("Edge"),Seq(Call("mean",Call("indicator",V("p"))),Eq,Call("Mreal",Call("cylinder",Call("val",V("p"))))))),
+            Result("mean_indicator", "Mean of a Boundary Cylinder Indicator", All("p",V("Edge"),Seq(Call("mean",Call("indicator",V("p"))),Eq,Call("Mreal",Call("cylinder",Call("val",V("p")))))),
                 "For every nonempty edge address p, the mean of its original boundary cylinder indicator is the real measure M([p]). The mean and indicator use the same biased boundary measure M.",
                 "Applying the cylinder mass formula gives the corresponding edge coordinate of v=J*1. These coordinates identify the limiting mean vector and distinguish its nonzero boundary values."),
             Result("actual_compact_covariance", "Compact Trace and Actual Covariance", CompactFormula(),
