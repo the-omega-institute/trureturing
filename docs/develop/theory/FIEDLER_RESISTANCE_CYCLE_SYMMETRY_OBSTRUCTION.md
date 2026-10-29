@@ -2006,7 +2006,7 @@ The cited path theorem applies to all positive path conductances and extends to
 closed directions by the continuity argument in Theorem 5.1; it retains the five
 original unit vertex masses and never replaces a deleted edge by a vertex
 contraction. Since $25-5\sqrt5>40-12\sqrt6$, these boundary values lie strictly
-below the five-cycle value. No separately optimized path is assigned to more than
+below the five-cycle value. Indeed, this is equivalent to $12\sqrt6>15+5\sqrt5$; squaring gives $514>150\sqrt5$, and squaring once more gives $264196>112500$. No separately optimized path is assigned to more than
 one deletion of the same labelled cycle.
 
 The result above settles only the unrestricted labelled $C_5$. For every $n\ge6$,
