@@ -51,14 +51,18 @@ private theorem minimum_hitting (F : Finset (Finset E)) :
   exact ⟨Nat.find_spec (hitting_exists F),
     fun K hK => Nat.find_min' (hitting_exists F) ⟨K, hK, rfl⟩⟩
 
-def effectiveSize {F : Finset (Finset E)} {Q : Type v}
+noncomputable def effectiveSize {F : Finset (Finset E)} {Q : Type v}
     (r : State F → Q) : ℕ := (symbols r).card
 
 private theorem mem_sinks (F : Finset (Finset E)) (C : State F) :
-    C ∈ sinks F ↔ Sink F C := by classical; simp [sinks]
+    C ∈ sinks F ↔ Sink F C := by
+  classical
+  simp [sinks]
 
 private theorem mem_nonsinks (F : Finset (Finset E)) (C : State F) :
-    C ∈ nonsinks F ↔ ¬ Sink F C := by classical; simp [nonsinks]
+    C ∈ nonsinks F ↔ ¬ Sink F C := by
+  classical
+  simp [nonsinks]
 
 private theorem effective_lower_bound {F : Finset (Finset E)} (hF : F.Nonempty)
     {Q : Type v} (r : State F → Q) (hc : CommonEnabled r) :
@@ -141,7 +145,8 @@ private theorem attaining_readout {F : Finset (Finset E)} (hF : F.Nonempty)
     ((sinks F).image Sum.inl) ∪ (H.image Sum.inr)
   have hsub : symbols r ⊆ labels := by
     intro q hq
-    obtain ⟨C, _, rfl⟩ := Finset.mem_image.mp hq
+    obtain ⟨C, rfl⟩ : ∃ C, r C = q := by
+      simpa only [symbols, Finset.mem_image, Finset.mem_univ, true_and] using hq
     by_cases hs : Sink F C
     · apply Finset.mem_union_left
       exact Finset.mem_image.mpr ⟨C, (mem_sinks F C).mpr hs, by simp [r, hs]⟩

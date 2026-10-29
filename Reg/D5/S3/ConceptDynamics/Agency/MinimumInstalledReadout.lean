@@ -2,6 +2,8 @@ import D5.S3.ConceptDynamics.Agency.MinimumInstalledReadout
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
+/-! Dependent-family realization of the attained installed-readout minimum. -/
+
 noncomputable section
 open LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape.DependentFamily

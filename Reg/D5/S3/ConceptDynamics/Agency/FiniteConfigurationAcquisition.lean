@@ -2,6 +2,8 @@ import D5.S3.ConceptDynamics.Agency.FiniteConfigurationAcquisition
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
+/-! Dependent-family realization of the acquired-history criterion. -/
+
 noncomputable section
 open LeanInformationAudit
 open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
@@ -93,7 +95,7 @@ private theorem dependence : ObservationalDependence signature.{u,v} actual := b
     cases hn with
     | stop D h hp => simp [bad] at hp
     | step D h e n hp he tail =>
-      exact Finset.insert_ne_empty e D.val (Finset.mem_singleton.mp he.2)
+      exact Finset.insert_ne_empty e _ (Finset.mem_singleton.mp he.2)
   refine ⟨small, good, bad, ?_⟩
   intro heq
   exact hb (heq.mp hg)
