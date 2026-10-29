@@ -56,12 +56,43 @@ Combining the exact original margin decomposition, E3(u)>=-E2p(u), the preceding
 
 These are the original lower-control and equivalent prime-log derivations, not new canonical theorem bindings. Their exact original statements and Lean proof bodies remain transient. The remaining original obligation is strict positivity of E3(u)+T+log(log A)-log(log u) at both endpoints for every q>0 with strictInteger(q)>5040. J>=0 or a local strict gain does not prove that sign. Positivity of E3(u)+B+log(log A)-log(log u) would be sufficient, but is neither necessary nor proved here. The sharp upper-tail estimate cannot supply a lower sign.
 
+**Lemma 1.3 (Shared complete-tail positivity and original margin identity).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.tail_robin_data`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.tail_robin_data` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive m with literal initial prime support, the full tail(m) is nonnegative and robinLogMargin(m)=E3(P)+tail(m)+log(log(log(m))) -log(log(P)), where P=largestPrime(m). The existing layer nonnegativity and finite Euler/log-sigma calculations are shared by finite_min_tail_robin_bound and the uniform lower correction's complementary clock-gap branch. Every actual prime exponent remains in tail(m); no optimizer or RH premise is used.
+
+**Theorem 1.4 (Finite same-integer min-cost correction and Robin decomposition).**
+
+Lean statement: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.finite_min_tail_robin_bound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.finite_min_tail_robin_bound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a positive natural m, put X=log(m) and P=largestPrime(m). Under the explicit support equality m.primeFactors=Nat.primesLE(P) and the real domain condition 1<theta(P), the theorem sums, over every active prime including exponent-one primes, the minimum of log(p)/(X*log(X)) and -log(1-p^-2). It bounds this finite cost by the complete same-integer Euler tail plus the exact log-log clock difference log(log(X))-log(log(theta(P))).
+
+The proof uses the canonical logarithm factorization log(m)=theta(P)+Q, where Q is the full sum of (factorization(p)-1)*log(p) with natural truncated subtraction on the actual support. The existing strict log-log tangent at X reverses to Q/(X*log(X))<=the clock difference. For valuation one the minimum is charged exactly to layerTail; for valuation at least two the first minimum argument is charged to its positive Q-term and layerTail is nonnegative. No exponent, prime, product, or optimizer endpoint is replaced by a cutoff.
+
+The same declaration then consumes the canonical Mertens.E3 prefix identity and the shared general log-sigma/Euler helper to obtain V+E3(P)+log(log(theta(P)))-log(log(P))<=robinLogMargin(m). The support and theta hypotheses are finite theorem premises only; they do not assert actual-record structure, 5040 divisibility, RH, or control of the remaining signed pure-prime quantity.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.endpoint_local`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.finite_min_tail_robin_bound`
 - Truth anchor: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.original_endpoint_prime_tail_supply`
+- Truth anchor: `D5/S3/Arith/Robin/OriginalEndpointPrimeTail.tail_robin_data`
 - Dependency: [D5/S3/Arith/GoldenResource/FirstLayerMarginalAntitone](../GoldenResource/FirstLayerMarginalAntitone.md)
 - Dependency: [D5/S3/Arith/GoldenResourceObjectiveFactorization](../GoldenResourceObjectiveFactorization.md)
 - Dependency: [D5/S3/Arith/Robin/ActualGlobalBracketing](ActualGlobalBracketing.md)
+- Dependency: [D5/S3/Arith/Robin/EulerLayerInventoryGrowth](EulerLayerInventoryGrowth.md)
 - Dependency: [D5/S3/Arith/Robin/LogarithmBounds](LogarithmBounds.md)
 - Dependency: [D5/S3/Weil/GronwallLowerEnvelope](../../Weil/GronwallLowerEnvelope.md)

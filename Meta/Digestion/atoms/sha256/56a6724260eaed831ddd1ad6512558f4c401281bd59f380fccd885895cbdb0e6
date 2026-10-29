@@ -1,0 +1,17 @@
+**Corollary 78.3 (exact original task relation).** At every returned
+state of this installation, replace its global record mathematically
+by the local shuffle tuple, or by AA's literal ancestral tapes, without
+changing the source. The original $Q_g$ replies, enabledness and semantic
+successors agree for every finite request sequence, including full
+Next results and the corresponding actually selected growth event.
+
+Proof. Lemma 75.3 recovers the exact tuple of the actual word. The
+supplied local/tape services and Theorems 76.4, 77.4, 77.6 use that same
+word for their recall and continuation decisions. For a successful event
+each tuple is updated to the projection of $we$; for a query or refusal
+it is unchanged. Induction gives agreement of all returned semantic
+states and replies. This relation compares the declared service, not
+unexposed allocator identities, intermediate phases or primitive timing.
+It does not claim that a physical conversion of backing or rights is
+free or has been requested. $\square$
+

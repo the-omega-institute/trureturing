@@ -1,0 +1,20 @@
+**Theorem 77.6 (finite actual continuation with full result).** An
+in-range Next on a valid returned state performs exactly one genuine
+enabled source growth, returns both the actual recalled event/address
+and the actual new event/address, preserves all previous history entries
+and makes its appended event callable at the following Ready. An
+out-of-range Next returns without growth.
+
+Proof. Theorem 77.4 acquires the old result on this source and record.
+Historical logical positions persist under both source edits, so $p$
+is present now. A finite left descent reaches a leaf, where exactly one
+of the original $P/S$ source changes is enabled. The current exclusive
+rights and preflight backing give its actual execution; Theorem 76.4
+maintains precisely the appended word. The retained old pair is not
+replaced by a recomputation at its new index. Output contains that pair
+and the actually selected new pair. Finite sealing, printing, End,
+local acknowledgement, return and clearing finish the continuation.
+OutOfRange follows the same outer lifecycle without a reservation or
+edit. This proves the original continuation, not a computation on a
+newly synthesized source. $\square$
+

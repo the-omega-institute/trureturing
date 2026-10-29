@@ -401,7 +401,7 @@ private theorem finite_nodupIncomingWeights [Finite E] (weight : E → 𝕜) (ve
   exact ⟨walk.edges, hnd.length_le_card, rfl⟩
 
 
-private theorem exists_nodup_visited_walkWeight_le {weight : E → 𝕜}
+theorem exists_nodup_visited_walkWeight_le {weight : E → 𝕜}
     (hcyc : ∀ (vertex : V) (cycle : G.Walk vertex vertex), walkWeight weight cycle ≤ 0) :
     ∀ (bound : ℕ) {start finish : V} (walk : G.Walk start finish), walk.length ≤ bound →
       ∃ pruned : G.Walk start finish,

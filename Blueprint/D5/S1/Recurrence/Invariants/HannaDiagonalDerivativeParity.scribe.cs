@@ -19,6 +19,12 @@ internal sealed class HannaDiagonalDerivativeParityDocument : IScribeDocumentDef
                 + "The inverse is taken in the formal power-series ring; the denominator has constant coefficient one. "
                 + "Indices and powers are natural numbers, and subtraction in the support indices is natural subtraction. "
                 + "The displayed rational coercion identifies each coefficient with an integer m.")),
+            Node("step", "The diagonal coefficient recursion", StepFormula(),
+                "For a commutative ring R, a forcing sequence t and a series f, the constant "
+                    + "coefficient is zero. At every positive index n, subtract coefficient n "
+                    + "of the displayed nonlinear series from t(n). At f=0 this retains "
+                    + "exactly the positive coefficients of t.",
+                DescribeRole.Definition, AssessedProvenance.FromRepo()),
             Node("IsDiagonal", "An arbitrary diagonal forcing sequence", IsDiagonalFormula(),
                 "The diagonal derivative coefficient at positive index n equals n times the rational forcing value t(n). "
                 + "The constant coefficient of the solution is zero.", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
@@ -100,6 +106,21 @@ internal sealed class HannaDiagonalDerivativeParityDocument : IScribeDocumentDef
                 Parenthesized(Equal(n, Sub(Pow(D(2), k), D(1)))))));
         return Exist("m", Integers(), And(Equal(Call("coeff", n, a), Cast(m, Rationals())),
             Seq(Parenthesized(Call("Odd", m)), Sp, Iff, Sp, Parenthesized(support))));
+    }
+
+    private static Formula StepFormula()
+    {
+        Formula r = F.Id("R"), t = F.Id("t"), f = F.Id("f"), n = F.Id("n");
+        Formula nonlinear = Mul(Mul(Mul(F.Id("X"), Call("derivative", f)), f),
+            Call("invOfUnit", Sub(D(1), Mul(Call("C", Cast(n, r)), f)), D(1)));
+        Formula coefficient = Call("ite", Equal(n, D(0)), D(0),
+            Sub(new Formula.Apply(t, [n]), Call("coeff", n, nonlinear)));
+        return Disp(Seq(Bound("R", Seq(F.Id("Type"), Star)),
+            OpenBracket, Call("CommRing", r), CloseBracket, Comma, Sp,
+            Bound("t", Arrow(Naturals(), r)), Bound("f", Call("PowerSeries", r)),
+            Equal(Call("step", t, f), new Formula.Apply(
+                Seq(Operatorname, Grp(F.Id("PowerSeries")), Dot, Operatorname, Grp(F.Id("mk"))),
+                [Function("n", Naturals(), coefficient)]))));
     }
 
     private static Formula IsGFFormula()

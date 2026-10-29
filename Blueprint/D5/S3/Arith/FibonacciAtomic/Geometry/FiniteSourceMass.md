@@ -88,7 +88,31 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/FiniteSourceMass.a`
 
 a is the reciprocal of the real golden ratio.
 
-**Theorem 1.8 (Actual Fibonacci Descendant Masses).**
+**Theorem 1.8 (All Occurrence Cardinality).**
+
+$$\forall n: \mathbb{N}, (\operatorname{N}\left(n\right) = ((2) \cdot (\operatorname{fib}\left((n) + (1)\right))) - (1))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/FiniteSourceMass.cardinality` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every original finite source has twice its Fibonacci leaf count minus one occurrences. The subtraction is in the natural numbers, including the singleton sources.
+
+**Theorem 1.9 (Occurrence and Subtree).**
+
+$$\forall S: \operatorname{Source}\left(\right), (\forall x: \operatorname{Address}\left(\right), ((x \in \operatorname{nodes}\left(S\right)) \iff (\exists U: \operatorname{Source}\left(\right), (\operatorname{subtree}\left(x, S\right) = \operatorname{some}\left(U\right)))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/FiniteSourceMass.node_iff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+An address occurs in an arbitrary original source exactly when its addressed subtree exists.
+
+**Theorem 1.10 (Actual Fibonacci Descendant Masses).**
 
 $$((((((((\forall n: \mathbb{N}, (\forall p: \operatorname{Address}\left(\right), ((p \neq []) \implies ((\exists U: \operatorname{Source}\left(\right), (\operatorname{subtree}\left(p, \operatorname{T}\left(n\right)\right) = \operatorname{some}\left(U\right))) \iff ((\operatorname{pathCost}\left(p\right) \leq n) \land ((\operatorname{pathCost}\left(\operatorname{dropLast}\left(p\right)\right)) + (2) \leq n)))))) \land (\forall n: \mathbb{N}, (\forall p: \operatorname{Address}\left(\right), ((p \neq []) \implies ((\operatorname{pathCost}\left(p\right) \leq n) \implies (((\operatorname{pathCost}\left(\operatorname{dropLast}\left(p\right)\right)) + (2) \leq n) \implies ((\operatorname{subtree}\left(p, \operatorname{T}\left(n\right)\right) = \operatorname{some}\left(\operatorname{T}\left((n) - (\operatorname{pathCost}\left(p\right))\right)\right)) \land (\operatorname{mass}\left(n, p\right) = \frac{\operatorname{N}\left((n) - (\operatorname{pathCost}\left(p\right))\right)}{\operatorname{N}\left(n\right)})))))))) \land (\forall n: \mathbb{N}, (\forall p: \operatorname{Address}\left(\right), ((\operatorname{subtree}\left(p, \operatorname{T}\left(n\right)\right) = \operatorname{none}\left(\right)) \implies (\operatorname{mass}\left(n, p\right) = 0))))) \land (\forall n: \mathbb{N}, (\forall p: \operatorname{Address}\left(\right), (\operatorname{mass}\left(n, p\right) \leq ((2) \cdot (\operatorname{goldenRatio}\left(\right))) \cdot ((a)^{\operatorname{length}\left(p\right)}))))) \land (\forall n: \mathbb{N}, (\forall p: \operatorname{Address}\left(\right), (\operatorname{descendantMeasure}\left(n, p\right) = \operatorname{mass}\left(n, p\right))))) \land (\forall n: \mathbb{N}, (\forall x: \operatorname{Node}\left(n\right), (\operatorname{pointMeasure}\left(n, x\right) = \frac{1}{\operatorname{N}\left(n\right)})))) \land (\forall n: \mathbb{N}, (\forall p: \operatorname{Address}\left(\right), ((\operatorname{subtree}\left(p, \operatorname{T}\left(n\right)\right) = \operatorname{some}\left(\operatorname{T}\left((n) - (\operatorname{pathCost}\left(p\right))\right)\right)) \implies (\operatorname{readout}\left(p, \operatorname{T}\left(n\right)\right) = \operatorname{label}\left((n) - (\operatorname{pathCost}\left(p\right))\right)))))) \land (\forall n: \mathbb{N}, (\forall p: \operatorname{Address}\left(\right), (\forall b: \operatorname{Bool}\left(\right), ((\operatorname{subtree}\left(p, \operatorname{T}\left(n\right)\right) = \operatorname{some}\left(\operatorname{of}\left(b\right)\right)) \implies (\forall q: \operatorname{Address}\left(\right), ((q \neq []) \implies (\operatorname{subtree}\left(\operatorname{append}\left(p, q\right), \operatorname{T}\left(n\right)\right) = \operatorname{none}\left(\right))))))))) \land (\forall n: \mathbb{N}, ((\operatorname{mass}\left(n, []\right) = 1) \land (\operatorname{readout}\left([], \operatorname{T}\left(n\right)\right) = \operatorname{label}\left(n\right))))$$
 
@@ -111,11 +135,14 @@ The two singleton sources are retained: the root is alpha at n=0 and beta at n=1
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/FiniteSourceMass.N`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/FiniteSourceMass.Node`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/FiniteSourceMass.a`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/FiniteSourceMass.cardinality`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/FiniteSourceMass.descendants`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/FiniteSourceMass.finite_source_masses`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/FiniteSourceMass.mass`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/FiniteSourceMass.node_iff`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/FiniteSourceMass.vertices`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/FiniteSourceMass.μ`
+- Dependency: [D5/S0/Diagonal/Probability/EquivariantEscape](../../../../S0/Diagonal/Probability/EquivariantEscape.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/ActualCompletionHorizon](../Observer/ActualCompletionHorizon.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativeRankedNavigationCompiler](../Observer/NativeRankedNavigationCompiler.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/SourceCoordinates/NativeRotationDepthGap](../SourceCoordinates/NativeRotationDepthGap.md)

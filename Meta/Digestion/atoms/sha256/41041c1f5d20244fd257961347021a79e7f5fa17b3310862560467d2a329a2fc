@@ -1,0 +1,41 @@
+**Definition 60.5 (credited content and the resource distinction).**
+AA Theorem 19.2 supplies the product and the source-to-history inverse;
+Theorems 47.3 and 49.1–49.2 supply acquired rank values and the complete
+original FetchGrowth/Next service and successors; Theorem 51.2 supplies
+the annotated four-view correspondence. Those constructions and proofs
+are reused. Distinct histories in one fixed-source fibre differ at an
+indexed event, so the original FetchGrowth already separates them.
+Thus the fixed-width complement needs $2^g\ge F$ and at least $G$ bits.
+This is the supplied conditional alphabet principle, not a newly
+installed consumer or acquisition of an unknown old history.
+
+Enumerative ranking and its inverse are classical; the exact arithmetic
+supplier remains [Cover, *Enumerative Source Encoding*, §I Propositions
+1–2 and §II Example 2](https://isl.stanford.edu/~cover/papers/transIT/0073cove.pdf),
+as used in §52. The general counting of increasing rooted-tree orders
+is also classical; see [Kuba, *A Note on Hook Length Formulas for Trees*,
+§3.2](https://arxiv.org/pdf/1004.1883v1). That hook-length count is
+background, not an asserted supplier of (AAII.18)'s extremum in terms
+of the number of ambiguous LAB coordinates. The `repo-derived` delta
+here is the sharp born-type factorial floor with its actual equality
+family and the resulting uniform refinement of the existing rounding
+estimate (AAII.8). The proof uses elementary pair-subset counting and
+ceilings; no worldwide novelty or new Lean verification is claimed.
+
+The comparison $B$ versus $G$ concerns only conditional history payload.
+All actual material of (AAII.7) remains: the source and its three edge
+reference fields per vertex, its auxiliary slots, the $h$ headers with
+two references each, and the $B$ rank-cell next references in addition
+to the $B$ payload bits. Actual reference widths, descriptors, allocator
+state, retained cleared capacity, arithmetic/traversal work, program,
+request/output backing, bindings, current rights and callable consumers
+are further resources. No part of them is bounded by $B-G$, and no
+actual local rank value is acquired from the source by this estimate.
+It installs no $G$-bit global packer, gives no total-resource optimum,
+and asserts no optimal upper rounding loss among LAB families. Earlier
+operational abstention remains valid for its original acquisition task:
+counting or more tightly bounding a missing historical value does not
+supply it. Guard-only late attachment and full historical recall remain
+different services. Every original fixed-model obligation and the full
+common-process four-expression programme retains its prior scope.
+

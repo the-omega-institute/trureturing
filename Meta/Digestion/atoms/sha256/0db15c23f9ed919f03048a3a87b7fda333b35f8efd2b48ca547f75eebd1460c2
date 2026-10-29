@@ -1,0 +1,20 @@
+**Correspondence 15.2 (formal library and pinned upstream).** The following
+declarations and their owning Scribes have a smaller formal scope than
+the present acquisition and historical statements.
+
+| Source | What it supplies and what it does not |
+| --- | --- |
+| [FiniteObservabilityEquivalence.lean](../../../D5/S3/Observer/Linear/FiniteObservabilityEquivalence.lean), `finite_observability_equivalence`, [Scribe](../../../Blueprint/D5/S3/Observer/Linear/FiniteObservabilityEquivalence.scribe.cs) | Set State to Euclidean $\mathbb R^{V_t}$, Output to $\mathbb R^b$, update to $T_t$, readout to $J^{\mathsf T}$ and horizon to $I+1$. Its stacked map is $O_I$. Our rational left-inverse identity persists over the reals and verifies the full-rank member of its kernel/rank/Gram equivalence; it does not physically acquire a block or prove historical injectivity. |
+| [FiniteTimeTomographySaturation.lean](../../../D5/S3/ObserverMemory/Dynamics/FiniteTimeTomographySaturation.lean), `all_future_kernel_eq_finrank_kernel`, [Scribe](../../../Blueprint/D5/S3/ObserverMemory/Dynamics/FiniteTimeTomographySaturation.scribe.cs) | Finite-dimensional all-future kernel saturation over a field, with a separate traceless-Hermitian specialization. It does not produce the native rooted forcing horizon, a sensor or a paid readout. |
+| [SharpTrajectoryNoiseRecovery.lean](../../../D5/S3/Observer/Linear/SharpTrajectoryNoiseRecovery.lean), including its private modulus/risk/trajectory helpers, [Scribe](../../../Blueprint/D5/S3/Observer/Linear/SharpTrajectoryNoiseRecovery.scribe.cs) | Sharp norm-ball recovery for its fixed Hilbert operator and positive lower-modulus hypotheses. No growing-tree uniform conditioning, denominator-lattice digital extraction or A unknown-$Q$ noise result follows from that fixed-operator theorem. |
+| [QuantizedWordApproximation.lean](../../../D5/S3/ObserverMemory/Prediction/QuantizedWordApproximation.lean), [Scribe](../../../Blueprint/D5/S3/ObserverMemory/Prediction/QuantizedWordApproximation.scribe.cs) | A supplied quantizer/center system and Lipschitz-action approximation theorem. It does not acquire native fields, install (8.1), or prove exact original-word recovery. |
+| [NativeUniformTree.lean](../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformTree.lean), including its private tree-view, child, walk and root-reply helpers, [Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Observer/NativeUniformTree.scribe.cs) | Primitive recursive operations on supplied term codes. Symbolic traversal agrees with the earned code here; an actual fresh terminal reference, grant or addressed source dispatcher is an additional installation resource. |
+| Pinned mathlib [Matrix/NonsingularInverse.lean](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/LinearAlgebra/Matrix/NonsingularInverse.lean) | Determinant-unit and two-sided matrix inverse machinery. Our finite rational nonsingularity meets its algebraic inverse setting; it supplies neither positivity nor acquisition. |
+| Pinned mathlib [Floor/Defs.lean](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Algebra/Order/Floor/Defs.lean) | Ordinary signed integer floor inequalities used in §§9–10. They do not install a physical floor port or supply the source's dyadic lattice. |
+
+This is a source-level correspondence, not a claim of a fresh compiled
+application. The pinned revision in these upstream links is the one
+used for the algebraic comparison. The ordinary proofs in this volume
+do not rely on a new axiom or on an uninspected private theorem as a
+substitute for the missing acquisition bridge.
+

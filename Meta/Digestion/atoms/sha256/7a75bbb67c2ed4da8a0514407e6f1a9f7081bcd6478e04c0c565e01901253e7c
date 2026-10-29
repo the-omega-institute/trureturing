@@ -1,0 +1,42 @@
+**Lemma 29.2 (the classical finite separation in this domain).** Any
+two streams of $\mathscr R_d$ agreeing in their first $2d$ output
+bits agree at every index. From such a prefix there is a terminating
+finite algorithm producing a generator for the actual full stream.
+It need not recover its private coefficients, register or seed
+presentation.
+
+Proof. For a stream of order $r$, let $E$ be forward shift on
+one-sided sequences and put
+$p(E)=E^r-\sum_{j<r}c_jE^j$. The monic polynomial $p$
+annihilates that stream at every nonnegative index. If $q$ similarly
+annihilates the other stream of order $r'$, commuting shifts make
+$p(E)q(E)$ annihilate their difference. This polynomial is monic of
+degree $r+r'\le2d$. A sequence satisfying that homogeneous forward
+recurrence and having its first $r+r'$ entries zero has every entry
+zero, by induction. Agreement through $2d$ therefore suffices. This
+argument includes degree zero, zero trailing taps and singular shifts;
+it never runs the recurrence backwards.
+
+For an explicit algorithm when $d>0$, pad any order-$r$ annihilator
+to order $d$ by multiplication by $E^{d-r}$. Enumerate all $2^d$
+coefficient rows for a monic order-$d$ recurrence. Give each candidate
+the observed first $d$ bits as its initial seed, generate its first
+$2d$ bits, and retain the first candidate matching the observed word.
+At least the padded actual recurrence passes. Every passing candidate
+belongs to $\mathscr R_d$, so the separation just proved makes its
+entire output equal to the actual stream. A fixed enumeration makes
+the returned behavioral description canonical. At $d=0$ simply
+return the known zero generator. All operations are finite binary
+operations; no exact-real comparison or source oracle is involved.
+
+The separation and shift-register synthesis are classical suppliers,
+not new identification results. Massey, *Shift-Register Synthesis and
+BCH Decoding*, §II–III, explicitly permits a zero final tap and gives
+the $2L$ synthesis boundary; his §IV distinguishes finite transient
+numerator degree from denominator degree. Reeds–Sloane, §2 of
+*Shift-Register Synthesis (Modulo m)*, retains that finite-length
+convention in its broader ring setting. Here only the binary field
+and the all-index bounded class (GPO.75) are used. The direct monic
+argument verifies their applicability to the stated nonminimal and
+singular domain. $\square$
+
