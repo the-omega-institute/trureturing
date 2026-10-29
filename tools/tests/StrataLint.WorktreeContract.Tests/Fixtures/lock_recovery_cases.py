@@ -3,6 +3,10 @@
 import argparse
 from contextlib import ExitStack
 import json
+import os
+import select
+import shutil
+import sys
 import subprocess
 from pathlib import Path
 from unittest.mock import patch
@@ -194,36 +198,113 @@ class LockRecoveryCases:
                             "bytes from interrupted checkout\n" for ref in references))
 
     def test_large_initialization_checkout_preserves_partial_bytes(self):
+        import worktree_protocol as protocol
         import worktree_publication as publication
+        # A package-free SDK project exercises the real restore stage offline.
+        tools = self.main / "tools"
+        tools.mkdir()
+        (self.main / "global.json").write_bytes((self.source_root / "global.json").read_bytes())
+        (self.main / ".gitignore").write_text("**/obj/\n**/bin/\n")
+        (self.main / "NuGet.Config").write_text(
+            "<configuration><packageSources><clear /></packageSources></configuration>")
+        (tools / "Fixture.csproj").write_text(
+            '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup>'
+            '<TargetFramework>net10.0</TargetFramework>'
+            '<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile></PropertyGroup></Project>')
+        (tools / "packages.lock.json").write_text('{"version":1,"dependencies":{"net10.0":{}}}\n')
+        project = "{11111111-1111-1111-1111-111111111111}"
+        (tools / "StrataLint.sln").write_text(
+            'Microsoft Visual Studio Solution File, Format Version 12.00\n'
+            'Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = '
+            '"Fixture", "Fixture.csproj", "' + project + '"\nEndProject\n'
+            'Global\nGlobalSection(SolutionConfigurationPlatforms) = preSolution\n'
+            'Debug|Any CPU = Debug|Any CPU\nEndGlobalSection\n'
+            'GlobalSection(ProjectConfigurationPlatforms) = postSolution\n'
+            + project + '.Debug|Any CPU.ActiveCfg = Debug|Any CPU\n'
+            + project + '.Debug|Any CPU.Build.0 = Debug|Any CPU\nEndGlobalSection\nEndGlobal\n')
+        self.g(self.main, "add", ".")
+        self.g(self.main, "commit", "-m", "offline initialization restore fixture")
+        self.base = self.g(self.main, "rev-parse", "HEAD").strip()
         target, branch, token = self.owned_initialization()
-        (target / "owned").write_text("bytes from interrupted large checkout\n")
-        native_git = publication.git
-        large_calls = []
-        refresh_results = []
-        def slow_git(path, *arguments, **options):
-            if arguments[0] in ("add", "checkout-index", "update-index"):
-                large_calls.append(arguments[0])
-                if options.get("timeout", 300) < 600:
-                    raise subprocess.TimeoutExpired(["git", *arguments], options.get("timeout", 300))
-            result = native_git(path, *arguments, **options)
-            if arguments[0] == "update-index":
-                refresh_results.append(result.returncode)
-            return result
-        options = argparse.Namespace(source=self.main, path=target, branch=branch,
-                                     base=self.base, skip_restore=True)
-        with patch.object(publication, "git", side_effect=slow_git):
-            publication.recover_initialization(options)
-        self.assertIn("add", large_calls)
-        self.assertIn("checkout-index", large_calls)
-        self.assertIn("update-index", large_calls)
-        self.assertEqual([1], refresh_results)
-        self.assertEqual("bytes from interrupted large checkout\n", (target / "owned").read_text())
-        self.assertTrue((target / "other").is_file())
-        self.assertEqual(self.base, self.g(target, "rev-parse", "HEAD").strip())
-        self.assertEqual(self.g(target, "rev-parse", "HEAD^{tree}"),
-                         self.g(target, "write-tree"))
+        payload = b"interrupted checkout bytes\x00\xff\n"
+        (target / "owned").write_bytes(payload)
         metadata = Path(self.g(target, "rev-parse", "--absolute-git-dir").strip())
+        witness = self.main / (".git/logs/refs/heads/" + branch)
+        creation_record = witness.read_bytes()
+        (metadata / "index.lock").write_text("dead initializer\n")
+
+        binary = self.root / "delayed-git"
+        binary.mkdir()
+        ready, release = self.root / "git.ready", self.root / "git.release"
+        os.mkfifo(ready)
+        os.mkfifo(release)
+        real_git = shutil.which("git")
+        shim = binary / "git"
+        shim.write_text(f'''#!{sys.executable}
+import os,sys
+if len(sys.argv) > 3 and sys.argv[2] == {str(target)!r} and sys.argv[3] in ("add", "checkout-index", "update-index"):
+    with open({str(ready)!r}, "w") as output: output.write(sys.argv[3] + "\\n")
+    with open({str(release)!r}) as input: input.readline()
+os.execv({real_git!r}, [{real_git!r}] + sys.argv[1:])
+''')
+        shim.chmod(0o755)
+        reader = os.open(ready, os.O_RDONLY | os.O_NONBLOCK)
+        self.addCleanup(os.close, reader)
+        # Keep a writer open so successive readiness reads cannot observe FIFO EOF.
+        writer = os.open(ready, os.O_WRONLY | os.O_NONBLOCK)
+        self.addCleanup(os.close, writer)
+        native_communicate = subprocess.Popen.communicate
+        completed = []
+
+        def delayed_communicate(process, input=None, timeout=None):
+            args = process.args
+            if (len(args) < 4 or args[0] != "git" or args[2] != str(target)
+                    or args[3] not in ("add", "checkout-index", "update-index")):
+                return native_communicate(process, input, timeout)
+            self.assertTrue(select.select([reader], [], [], 10)[0], "delayed Git readiness timeout")
+            self.assertEqual((args[3] + "\n").encode(), os.read(reader, 100))
+            self.assertEqual(token, (metadata / "locked").read_text().strip())
+            self.assertEqual(creation_record, witness.read_bytes())
+            with ExitStack() as contender:
+                with self.assertRaisesRegex(protocol.Refused, "busy_scope"):
+                    protocol.tree_scope(contender, self.main, target, True)
+            # Compress any finite production deadline while Git is deterministically
+            # blocked. The host releases supervised operations; no long wait is needed.
+            if timeout is not None:
+                return native_communicate(process, input, timeout=0.05)
+            with release.open("w") as output:
+                output.write("host release\n")
+            result = native_communicate(process, input, timeout=10)
+            completed.append((args[3], process.returncode))
+            return result
+
+        options = argparse.Namespace(source=self.main, path=target, branch=branch,
+                                     base=self.base, skip_restore=False)
+        with patch.dict(os.environ, PATH=str(binary) + os.pathsep + os.environ["PATH"]), \
+                patch.object(subprocess.Popen, "communicate", delayed_communicate):
+            result = publication.recover_initialization(options)
+        self.assertEqual([("add", 0), ("checkout-index", 0), ("update-index", 1)], completed)
+        self.assertEqual("recovered", result["status"])
+        self.assertEqual("native_lock_cleared", result["native_locks"][0]["status"])
+        self.assertEqual(creation_record, witness.read_bytes())
+        self.assertEqual(payload, (target / "owned").read_bytes())
+        recovery = result["recovery_branch"]
+        self.assertTrue(recovery)
+        self.assertEqual(payload, protocol.git(self.main, "show", recovery + ":owned").stdout)
+        self.assertTrue((target / "other").is_file())
+        self.assertTrue((target / "tools/obj/project.assets.json").is_file())
+        self.assertEqual(self.base, self.g(target, "rev-parse", "HEAD").strip())
+        self.assertEqual(self.g(target, "rev-parse", "HEAD^{tree}"), self.g(target, "write-tree"))
         self.assertFalse((metadata / "locked").exists())
+        self.assertFalse((metadata / "index.lock").exists())
+        self.assertEqual([], list(metadata.glob("initialization-index-*")))
+        self.assertIn("worktree-recovered:" + token.removeprefix("worktree-init:"),
+                      self.g(target, "reflog", "show", "--format=%gs", "HEAD"))
+        # The preserved working edit is expected; returning it to the base leaves
+        # a clean checkout while the recovery ref still retains the exact bytes.
+        self.g(target, "restore", "--worktree", "--", "owned")
+        self.assertEqual("", self.g(target, "status", "--porcelain"))
+        self.assertEqual(payload, protocol.git(self.main, "show", recovery + ":owned").stdout)
 
     def test_owned_unregistered_branch_can_resume(self):
         target, branch, token = self.owned_initialization(registered=False)

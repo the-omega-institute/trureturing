@@ -1,0 +1,71 @@
+**定理 95.1（无一般位置例外的实际控制闭包）。** 对 (91.1) 的每个允许角度和每个 $[N,P_\xi]\ne0$，实际三个酉共轭的正词闭包恰为 $\operatorname{Ad}(PU(3))$。这包括 $\langle\xi,N\xi\rangle=0$；不要求 $N$ 接近恒等或单态／双态之间的重叠非零。
+
+证明。由 (92.2) 和引理 63.1，去公共相位的原生酉闭群包含
+$K=\{1\oplus u:u\in SU(2)\}$。令 $G\subseteq U(3)$ 为这些代表和 $N$ 生成的闭群，$\mathfrak g$ 为其 Lie 代数；它包含
+$\mathfrak k=0\oplus\mathfrak{su}(2)$。闭矩阵群的 Lie 结构及连通分支由指数生成的事实，按引理 63.1 已列明的 Hall 定理 3.23 使用。单位分支在 $G$ 中正规，因此即使 $N$ 不在单位分支，也有
+
+$$
+N\mathfrak kN^\dagger\subseteq\mathfrak g.
+\tag{95.1}
+$$
+
+以下直接验证其中一定存在交叉块，包含完全送入下双态的边界。写
+
+$$
+N^\dagger\xi=\alpha\xi+b,\qquad b\perp\xi,\qquad
+s=\|b\|^2=1-|\langle\xi,N\xi\rangle|^2\in(0,1].
+\tag{95.2}
+$$
+
+$s>0$ 与混合条件等价。令 $\sigma_1,\sigma_2,\sigma_3$ 为下双态标准 Pauli 矩阵，
+$A_i=0\oplus\mathrm i\sigma_i\in\mathfrak k$，
+$X_i=NA_iN^\dagger\in\mathfrak g$。则
+
+$$
+\begin{aligned}
+\|(I_3-P_\xi)X_i\xi\|^2
+&=\|A_iN^\dagger\xi\|^2
+ -|\xi^\dagger X_i\xi|^2\\
+&=s-|b^\dagger\sigma_i b|^2.
+\end{aligned}
+\tag{95.3}
+$$
+
+若 $b=(b_1,b_2)^{\mathsf T}$，三个实数
+$b^\dagger\sigma_i b$ 为
+$2\Re(\bar b_1b_2)$、$2\Im(\bar b_1b_2)$、
+$|b_1|^2-|b_2|^2$，所以其平方和为
+$(|b_1|^2+|b_2|^2)^2=s^2$。于是
+
+$$
+\sum_{i=1}^3\|(I_3-P_\xi)X_i\xi\|^2
+=3s-s^2>0.
+\tag{95.4}
+$$
+
+故有某个 $X\in\mathfrak g$ 的交叉块非零；当 $N\xi$ 完全在下双态空间时 $s=1$，右端为二，仍严格非零。
+
+$Q=\operatorname{diag}(1,-1,-1)\in K$，$\mathfrak g$ 对其共轭不变。因此
+$(X-QXQ)/2\in\mathfrak g$ 提取出纯交叉块
+
+$$
+K(z)=\begin{pmatrix}0&-z^\dagger\\z&0_{2\times2}\end{pmatrix},
+\qquad 0\ne z\in\mathbb C^2.
+\tag{95.5}
+$$
+
+$K$ 的共轭把 $K(z)$ 送到 $K(uz)$。$SU(2)$ 在该复二维球面上传递，球面的实跨度是整个 $\mathbb C^2$，故 $\mathfrak g$ 包含所有四个实交叉方向
+$K(e_1),K(\mathrm i e_1),K(e_2),K(\mathrm i e_2)$。又
+
+$$
+[K(e_1),K(\mathrm i e_1)]
+=\operatorname{diag}(-2\mathrm i,2\mathrm i,0).
+\tag{95.6}
+$$
+
+此方向不在 $\mathfrak k$ 中。它与 $\mathfrak k$ 的三个方向及四个交叉方向共同给出八个独立无迹反 Hermitian 矩阵，恰为 $\mathfrak{su}(3)$。所以
+$\mathfrak{su}(3)\subseteq\mathfrak g$，从指数生成和 $SU(3)$ 连通性得
+$SU(3)\subseteq G$。所有酉共轭的像都在 $PU(3)$ 中，其像又包含整个 $PU(3)$，故共轭闭包恰为该群；无需主张额外标量 $U(1)$ 相位也被生成。
+
+最后，在紧酉群中每个生成元的逆都是其正幂的极限，正词半群闭包因而等于所生成群的闭包。去掉公共标量相位从未改变任何共轭。故结论适用于实际三个正向映射，不需要安装逆，也不把闭包中的任意酉当成可在有限时间精确调用的控制。∎
+

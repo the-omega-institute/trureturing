@@ -1,0 +1,18 @@
+**Corollary 10.2 (The quadratic error order is necessary).** Fix $0<\lambda<1/2$ and put $\delta=\lambda/a$. Then $H_d<H_r$ eventually and
+
+$$
+H_d-\inf_xH(x)
+\ge\frac{8\lambda^2}{a^2}+O_\lambda(a^{-3}).
+\tag{10.3}
+$$
+
+Consequently the $O_L(a^{-2})$ gap in (10.2) cannot be replaced throughout this region by $o(a^{-2})$. This is a lower bound on the global improvement furnished by one actual family; it does not identify the optimal quadratic coefficient.
+
+**Proof.** Substitution in the exact rational formulas gives
+
+$$
+\frac{H_r-H_d}{a^2}\longrightarrow\lambda^{-1}-2>0.
+$$
+
+The actual law of Theorem 7.4 has energy $H_d-8\lambda^2/a^2+O_\lambda(a^{-3})$, so the global infimum is at most this value. This proves (10.3) and the failure of an $o(a^{-2})$ bound even along any such fixed $\lambda$. ∎
+

@@ -1,0 +1,90 @@
+### Scalar supplier and uniform constants in Theorem 78.2
+
+For each positive integer $c$, put
+
+$$
+\tau_c=v_c^{-1},\qquad
+\rho_c(u)=\sqrt{1+\tau_c(u)},\qquad
+s_c(u)=\int_0^u\frac{dw}{2m\rho_c(w)^2}.
+\tag{78.9}
+$$
+
+Use exactly the infinite scalar law of (76.9)--(76.15), with its
+constant $C$ replaced by the deterministic $c$. In particular, $Y$
+is the OU ground-state conditioned law, started at zero in $(-r,r)$,
+and $\mu_c$ is the law of the whole path
+$B^{(c)}_u=\rho_c(u)Y_{s_c(u)}$.
+The scalar construction is valid for every deterministic $c>0$;
+its definition and normalization do not use the height event $G$ of
+(76.2) or its probability. It supplies
+
+$$
+\begin{gathered}
+\mu_c\{|B_u|<r\sqrt{1+\tau_c(u)}
+                    \text{ for every real }u\ge0\}=1,\\
+(\mu_c)_U\ll\mathsf W_U,\qquad
+\frac{d(\mu_c)_U}{d\mathsf W_U}
+       \le C_0(c)e^{\nu s_c(U)}\quad(U\ge0),
+\end{gathered}
+\tag{78.10}
+$$
+
+where $\mathsf W_U$ is standard Wiener measure on the full scalar
+prefix. The same infinite law is used for all $U$.
+
+We extract the dependence of $C_0(c)$ rather than averaging its
+exponential. Write $\eta_c$ for (76.12) at this value of $c$.
+It lies in $[-1/2,0]$ and increases to zero. Equation (76.13) and
+monotonicity give
+
+$$
+L_c:=\int_0^\infty|\eta_c|ds=\frac{cp}{4m(1-p)},\qquad
+\int_0^\infty\eta_c^2ds\le\tfrac12L_c,\qquad
+\int_0^\infty|\eta_c'|ds\le\tfrac12.
+\tag{78.11}
+$$
+
+For every surviving path $|z|<r$, the four terms on the second line
+of (76.14) therefore obey
+
+$$
+|J_S|\le\frac{r^2}{4m}
+       +\left(\frac12+\frac{3r^2}{8m}\right)L_c
+       =j_0+j_1c,
+\quad
+j_0=\frac{r^2}{4m},\quad
+j_1=\left(\frac12+\frac{3r^2}{8m}\right)
+                       \frac{p}{4m(1-p)}.
+\tag{78.12}
+$$
+
+Indeed the endpoint term and the $\eta_c'$ term are each at most
+$r^2/(8m)$ in absolute value; the integral without $z^2$ is at most
+$L_c/2$; and the remaining integral is at most $3r^2L_c/(8m)$.
+With the positive OU eigenfunction $\psi$ of (76.9), which is
+independent of $c$, (76.15) thus permits
+$C_0(c)=e^{j_0+j_1c}\|\psi\|_\infty/\psi(0)$.
+Moreover (76.8) gives exactly
+
+$$
+s_c(v_c(t))=\log(1+t)+\frac{cp}{2m(1-p)}
+                        (1-(1+t)^{p-1}).
+\tag{78.13}
+$$
+
+Since $v_c(t)\ge2mt$, substitute $t=\tau_c(U)\le U/(2m)$
+in (78.13). It follows that constants independent of both $c$ and $U$
+can be chosen as
+$B_0=j_0+\log(\|\psi\|_\infty/\psi(0))\ge0$ and
+$B_1=j_1+\nu p/[2m(1-p)]\ge0$, giving
+
+$$
+\log\left\|\frac{d(\mu_c)_U}{d\mathsf W_U}\right\|_\infty
+\le B_0+B_1c+\nu\log(1+U/(2m)).
+\tag{78.14}
+$$
+
+All density bounds concern full scalar prefixes. The constant-radius
+OU path is an intermediate supplier for the moving operational-time
+tube in (78.10).
+

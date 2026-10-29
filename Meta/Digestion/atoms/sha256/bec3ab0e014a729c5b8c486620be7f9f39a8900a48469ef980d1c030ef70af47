@@ -1,0 +1,6 @@
+For a nonzero rational polynomial, $\operatorname{pp}_+$ means its
+primitive integer associate with positive leading coefficient. Put
+$h=\operatorname{pp}_+(\gcd(a_0,c_0))$, $a=a_0/h$, $c=c_0/h$.
+These divisions are exact in $\mathbb Q[b]$; the actual coefficients
+in this normalization are integers.
+

@@ -1,0 +1,82 @@
+**Theorem 127.1 (Quantitative entry at the actual threshold; repo-derived).**
+Fix $j=f$ or $j=a$, with that norm's coefficients in (125.5).
+Suppose a number $\Delta>0$ satisfies $\delta_j\ge\Delta$.
+Keep $M,E,\eta_*$ from §126 and put
+
+$$
+\begin{aligned}
+K_*&=\tau+|s_\theta c_\theta|(\|D\|_{\rm HS}+b),\qquad
+L=R_{\mathfrak s}K_*>0,\\
+\eta_\Delta&=\min\{\eta_*,\Delta/(4E)\}>0.
+\end{aligned}
+\tag{127.1}
+$$
+
+For every $0<\eta\le\eta_\Delta$ and every compact minimiser
+$(\gamma,h)$ of the unchanged $\mu_j(\eta)$,
+
+$$
+\begin{gathered}
+\nu_j(\eta)-\mu_j(\eta)\ge\tfrac12\Delta\eta>0,\\
+\boxed{\quad
+\frac{\Delta}{2L}\eta\le|\gamma|
+ \le\frac{M-3\Delta/4}{\underline c}\eta\le G\eta.
+\quad}
+\end{gathered}
+\tag{127.2}
+$$
+
+The two linear bounds have strictly positive coefficients.
+In particular, every compact minimiser belongs to the original
+punctured reflection side, and entry there occurs at exactly
+$\varepsilon=\mu_j(\eta)$, including that endpoint. One may take
+$\Delta=\delta_j$ whenever that strict gap is known. The hypothesis
+belongs separately to each norm.
+
+*Proof.* By (126.8),
+
+$$
+\nu_j-\mu_j\ge\eta(n_j-m_j)-2E\eta^2
+ \ge\eta(\Delta-2E\eta)\ge\tfrac12\Delta\eta.
+\tag{127.3}
+$$
+
+For every fixed $\|h\|\le1$, the exact difference between the laws
+at $(\gamma,h)$ and $(0,h)$ has paired lift $(0,0,\gamma K_h)$.
+The bound $\|K_h\|_{\rm HS}\le K_*$ in (118.19) gives, in each
+actual coordinate, magnitude at most $a_w\|r_i\|_{\rm HS}K_*|\gamma|$.
+Thus for either original norm the triangle inequality yields
+
+$$
+d_j(0,h;h_0)\le d_j(\gamma,h;h_0)+L|\gamma|.
+\tag{127.4}
+$$
+
+At any compact minimiser $h$ is on the same reflection side used
+in (126.6), so $\nu_j\le\mu_j+L|\gamma|$.
+Combine this with (127.3) to prove the lower retention bound for
+every minimiser. For the upper bound use
+$|\gamma|\le D_0\le\mu_j/\underline c$ and
+
+$$
+\mu_j\le\eta(m_j+E\eta)
+ \le\eta(n_j-\Delta+\Delta/4)
+ \le\eta(M-3\Delta/4).
+\tag{127.5}
+$$
+
+Since $0<\Delta\le\delta_j=n_j-m_j<M$, the upper coefficient is
+positive. The lower one is positive since $L>0$.
+The nonzero minimiser, with its one fixed full completion, is an
+actual admissible alternative at error $\mu_j$. Below $\mu_j$
+no reflection-side alternative exists by Theorem 124.2. Its equality
+characterisation now proves the stated exact endpoint entry. $\square$
+
+Theorems 126.1 and 126.3 do not assume a strict gap. If
+$\delta_j=0$, they still give both original nonlinear thresholds to
+first order, but finite-$\eta$ nonzero-retention attainment at
+$\varepsilon=\mu_j(\eta)$ remains unresolved by these results.
+Indeed $0\le\nu_j-\mu_j\le2E\eta^2$ in that case, and (127.4)
+provides no positive linear retention lower bound. Retention of size
+$o(\eta)$ is not excluded, nor is a zero-retention compact minimiser.
+

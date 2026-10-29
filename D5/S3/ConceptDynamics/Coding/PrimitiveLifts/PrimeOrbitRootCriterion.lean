@@ -33,13 +33,13 @@ def jointTime : (Σ i, X i) → Σ i, X i := fun q => ⟨q.1, (A q.1).time q.2�
 /-- The specified left deck action, on every component. -/
 def jointDeck (a : H) : (Σ i, X i) → Σ i, X i := fun q => ⟨q.1, (A q.1).deck a q.2⟩
 
-private theorem jointTime_injective : Function.Injective (jointTime A) := by
+theorem jointTime_injective : Function.Injective (jointTime A) := by
   rintro ⟨i,x⟩ ⟨j,y⟩ h
   have hij : i = j := congrArg Sigma.fst h
   subst j
   exact congrArg (Sigma.mk i) ((A i).time_injective (by simpa [jointTime] using h))
 
-private theorem component_constant (f : (Σ i, X i) → Σ i, X i)
+theorem component_constant (f : (Σ i, X i) → Σ i, X i)
     (hf : ∀ a q, f (jointDeck A a q) = jointDeck A a (f q))
     (ht : ∀ q, f (jointTime A q) = jointTime A (f q)) (i : ι) :
     ∀ x, (f ⟨i,x⟩).1 = (f ⟨i,(A i).point 0 1⟩).1 := by
@@ -73,10 +73,10 @@ private theorem factorization (f : (Σ i, X i) → Σ i, X i)
   choose g hg using image
   exact ⟨g,hg⟩
 
-private def Isotypic (i j : ι) : Prop :=
+def Isotypic (i j : ι) : Prop :=
   (A i).period = (A j).period ∧ ∃ b : H, b * (A j).holonomy = (A i).holonomy * b
 
-private theorem isotypic_trans {i j k : ι} (hij : Isotypic A i j)
+theorem isotypic_trans {i j k : ι} (hij : Isotypic A i j)
     (hjk : Isotypic A j k) : Isotypic A i k := by
   obtain ⟨hd,b,hb⟩ := hij
   obtain ⟨he,c,hc⟩ := hjk
@@ -86,7 +86,7 @@ private theorem isotypic_trans {i j k : ι} (hij : Isotypic A i j)
     _ = b*((A j).holonomy*c) := by rw [hc]
     _ = (A i).holonomy*(b*c) := by rw [← mul_assoc,hb,mul_assoc]
 
-private theorem isotypic_symm {i j : ι} (hij : Isotypic A i j) : Isotypic A j i := by
+theorem isotypic_symm {i j : ι} (hij : Isotypic A i j) : Isotypic A j i := by
   obtain ⟨hd,b,hb⟩ := hij
   refine ⟨hd.symm,b⁻¹,?_⟩
   apply mul_left_cancel (a := b)
@@ -109,7 +109,7 @@ private theorem injective_factor_isotypic {i j : ι} (f : X i → X j)
     omega
   exact ⟨by simpa [hmone] using hd,b,by simpa [hmone] using hb⟩
 
-private theorem routing_isotypic (f : (Σ i, X i) → Σ i, X i)
+theorem routing_isotypic (f : (Σ i, X i) → Σ i, X i)
     (hf : ∀ a q, f (jointDeck A a q) = jointDeck A a (f q))
     (ht : ∀ q, f (jointTime A q) = jointTime A (f q))
     (hinj : Function.Injective f) (σ : ι → ι) (hσ : ∀ q, (f q).1 = σ q.1) :
@@ -133,11 +133,11 @@ private theorem routing_isotypic (f : (Σ i, X i) → Σ i, X i)
 
 end Family
 
-private def cycleStep {Y : Type v} (p : ℕ) (hp : 0 < p) (t : Y → Y) :
+def cycleStep {Y : Type v} (p : ℕ) (hp : 0 < p) (t : Y → Y) :
     Fin p × Y → Fin p × Y := fun q =>
   (⟨(q.1.val+1)%p,Nat.mod_lt _ hp⟩,t^[(q.1.val+1)/p] q.2)
 
-private theorem cycleStep_iterate {Y : Type v} (p : ℕ) (hp : 0 < p) (t : Y → Y)
+theorem cycleStep_iterate {Y : Type v} (p : ℕ) (hp : 0 < p) (t : Y → Y)
     (n : ℕ) (i : Fin p) (y : Y) :
     (cycleStep p hp t)^[n] (i,y) =
       (⟨(i.val+n)%p,Nat.mod_lt _ hp⟩,t^[(i.val+n)/p] y) := by

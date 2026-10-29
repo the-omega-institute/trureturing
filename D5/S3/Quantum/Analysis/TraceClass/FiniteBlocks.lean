@@ -153,7 +153,7 @@ theorem trace_compression_sum {T : Blocks ι H →L[ℂ] Blocks ι H}
 def embedding (A : H →L[ℂ] H) (i : ι) : Blocks ι H →L[ℂ] Blocks ι H :=
   (insertion i).comp (A.comp (coordinate i))
 
-private theorem embedding_nonneg {A : H →L[ℂ] H} (hA : 0 ≤ A) (i : ι) :
+theorem embedding_nonneg {A : H →L[ℂ] H} (hA : 0 ≤ A) (i : ι) :
     0 ≤ embedding A i := by
   apply ContinuousLinearMap.nonneg_iff_isPositive.mpr
   simpa [embedding, insertion, ContinuousLinearMap.comp_assoc] using

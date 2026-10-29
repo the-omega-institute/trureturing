@@ -551,3 +551,228 @@ The multiplicity correction does not alter the definitions and determinant, grap
 The formulas and ordinary proofs in §10 are a correction and reuse of Theorem 3.8, Proposition 5.1, Theorem 5.2, Corollary 5.4 and Lemma 6.2; Remark 11.2 reuses Theorem 7.1 and the cut counts of Corollary 7.2. The primary definitions and the Table 1 example are literature-attested. No independent-priority, worldwide-novelty or kernel-verification claim is made for this correction.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. Unrestricted pure Gaussian states at replica order two
+
+**Definition 12.1 (Gaussian data, canonical contraction and ordinary purities).** Let $q\ge2$ be an integer, let $N_1,\ldots,N_q$ be positive finite integers, and set $N=\sum_{k=1}^qN_k$. Use the party coordinate blocks and projections $P_k$ of Theorem 3.8. Let $A,B$ be real symmetric $N\times N$ matrices, with $A>0$, and let $d,p\in\mathbb R^N$ be arbitrary. Put $W=A+iB$ and
+
+$$
+\psi(y)=c_A\exp\left[-\frac12(y-d)^\top W(y-d)+ip^\top y\right],
+\qquad c_A=\left(\frac{\det A}{\pi^N}\right)^{1/4}.
+$$
+
+This is the nonsingular finite-mode pure bosonic Gaussian wavefunction class, allowing arbitrary position–momentum phase correlations. Its centered convention agrees with Camargo and Nishida, [arXiv:2609.30754v2, §2.3, Eqs. (21)–(22)](https://arxiv.org/html/2609.30754v2#S2.SS3), with their $\mathbf R=A$, $\mathbf S=B$, and $\mathbf W=W$. No permutation symmetry is assumed.
+
+Let $R=\mathbb F_2^{q-1}$, $M=2^{q-1}$, $t_k=e_k$ for $k<q$, and $t_q=0$. For $y=(y_r)_{r\in R}$ set
+
+$$
+y'_r=\sum_{k=1}^qP_ky_{r+t_k},\qquad
+Z_2^{(q)}=\int_{(\mathbb R^N)^R}
+\prod_{r\in R}\psi(y_r)\overline{\psi(y'_r)}\prod_{r\in R}dy_r.
+$$
+
+The integral is the actual canonical replica contraction of Convention 2.4 with the pure-state density kernel $\psi(y)\overline{\psi(y')}$. The normalization $\int|\psi|^2=1$ makes its usual denominator equal to $1$. Use the entropy normalization of Definition 6.3 at order two,
+
+$$
+S_2^{(q)}=-2^{2-q}\log Z_2^{(q)}.
+$$
+
+For a nonempty proper set $S$ of party labels, write $\mathcal H_S=L^2(\mathbb R^{\sum_{k\in S}N_k})$ and define the ordinary reduced density operator and its purity by
+
+$$
+\rho_S=\operatorname{Tr}_{\mathcal H_{S^c}}|\psi\rangle\langle\psi|,
+\qquad E_S=\operatorname{Tr}_{\mathcal H_S}(\rho_S^2),
+\qquad S_2^{(2)}(S:S^c)=-\log E_S.
+$$
+
+Here $S^c$ is the complement in $\{1,\ldots,q\}$; a matrix subscript $S$ denotes all coordinates of these parties. Thus $A_{SS}$ has size $\sum_{k\in S}N_k$, and $B_{S S^c}$ contains every phase coupling across this cut. These are partial traces of the same state $\psi$, independently of the replica contraction.
+
+**Theorem 12.2 (Same-state cut factorization without Gaussian permutation symmetry).** For every datum of Definition 12.1 with $q\ge4$, the contraction is absolutely convergent and
+
+$$
+Z_2^{(q)}=\prod_{\varnothing\ne S\subseteq\{1,\ldots,q-1\}}E_S>0,
+\qquad
+S_2^{(q)}=2^{2-q}\sum_{\varnothing\ne S\subseteq\{1,\ldots,q-1\}}
+S_2^{(2)}(S:S^c).
+$$
+
+Each unordered nontrivial cut occurs exactly once, including when distinct cuts have equal purities. All positive finite party sizes and all symmetric $B$ are included, without any rank or nonzero-coupling assumption.
+
+The $q=2$ identity is the ordinary swap formula for purity, and the unrestricted $q=3$ factorization is the whole result of Camargo and Nishida, [§4, Eq. (58)](https://arxiv.org/html/2609.30754v2#S4.E58), including position–momentum correlations. Together with those cases the displayed identities hold for every integer $q\ge2$. The fully symmetric all-$q$ specialization is Theorem 7.1. The inference added here is the identification, for unrestricted $q\ge4$, of every nontrivial binary-character block with a cut purity of the original state; this fills precisely the Gaussian restriction in Remarks 8.4 and 11.3. It addresses the higher-party order-two factorization question in Camargo–Nishida, [§6](https://arxiv.org/html/2609.30754v2#S6), within the finite nonsingular pure bosonic Gaussian class specified above.
+
+The Gaussian integral and Schur-complement methods of §3 and the finite-character method of §4 are ordinary intermediate tools, with their sources in §9. The general reflected-purification relation in [*Multipartite Markov Gaps and Entanglement Wedge Multiway Cuts*, arXiv:2507.15262v2, §4.3, Eqs. (4.9)–(4.13)](https://arxiv.org/html/2507.15262v2#S4.SS3), and its iterated form in [*Where Multipartite Entanglement Localizes: The Junction Law for Genuine Multi-Entropy*, arXiv:2602.16331v1, Appendix C](https://arxiv.org/html/2602.16331v1#A3), supply a known reduction to entropies on successively purified states. The conclusion here specifies the original-state purities $E_S$; the proof establishes that identification directly. No priority claim is attached to this extension.
+
+**Proof.** The argument uses binary characters and is valid uniformly for $q\ge2$. First,
+
+$$
+\int_{\mathbb R^N}|\psi(y)|^2dy
+=c_A^2\frac{\pi^{N/2}}{\sqrt{\det A}}=1.
+$$
+
+The substitution $y_r=x_r+d$ gives $y'_r=x'_r+d$ because $\sum_kP_k=I$. Moreover $\sum_r x'_r=\sum_r x_r$, since each party translation permutes $R$. Consequently all linear phases $ip^\top(y_r-y'_r)$ cancel in the product. This reduces $Z_2^{(q)}$ to the case $d=p=0$. Each $E_S$ is unchanged by this reduction: the map $f(y_k)\mapsto e^{i(P_kp)^\top y_k}f(y_k-P_kd)$ on the party coordinate space is unitary, and their tensor product carries the centered state to $\psi$. Partial trace therefore conjugates $\rho_S$ by the tensor product of the unitaries in $S$ and preserves its squared trace. Here the vectors in each party formula are restricted to that party's coordinates.
+
+Let $T$ send $(x_r)_r$ to $(x'_r)_r$. This is an orthogonal coordinate permutation. If $\lambda>0$ is the least eigenvalue of $A$, the absolute value of the centered replica integrand is
+
+$$
+c_A^{2M}\exp\left[-\frac12\sum_r
+\big(x_r^\top Ax_r+(Tx)_r^\top A(Tx)_r\big)\right]
+\le c_A^{2M}\exp\left[-\lambda\sum_r\|x_r\|^2\right].
+$$
+
+This proves absolute convergence. The same argument applies to the two-copy swap integral below. Changes of variables and the integrations used in the proof are thus justified by an integrable Gaussian bound.
+
+For $v\in\mathbb F_2^{q-1}$ set
+
+$$
+\chi_v(r)=(-1)^{v\cdot r},\qquad
+z_v=M^{-1/2}\sum_{r\in R}\chi_v(r)x_r,\qquad
+D_v=\sum_{k=1}^q\chi_v(t_k)P_k.
+$$
+
+The character orthogonality identity $\sum_r\chi_v(r)\chi_w(r)=M\,[v=w]$ makes this a real orthogonal change of replica coordinates, with absolute Jacobian $1$. If $v\ne w$, the identity follows by pairing $r$ with $r+e_k$ at any coordinate where $v_k\ne w_k$; the case $v=w$ has $M$ summands equal to $1$. Translation of the summation index gives
+
+$$
+M^{-1/2}\sum_r\chi_v(r)(Tx)_r=D_vz_v.
+$$
+
+Thus the exponent of the centered product separates into
+
+$$
+-\sum_{v\in R}z_v^\top H_vz_v,\qquad
+H_v=\frac12\big(W+D_v\overline W D_v\big).
+$$
+
+The trivial character gives $D_0=I$ and $H_0=A$. For $v\ne0$ let $S(v)=\{k<q:v_k=1\}$ and $C=S(v)^c$. Then $D_v$ is minus the identity on $S(v)$ and plus the identity on $C$. Ordering the coordinates by these two sets gives
+
+$$
+H_v=H_{S(v)}=
+\begin{pmatrix}
+ A_{SS}&iB_{SC}\\
+ iB_{CS}&A_{CC}
+\end{pmatrix},\qquad
+\operatorname{Re}H_{S(v)}=
+\begin{pmatrix}A_{SS}&0\\0&A_{CC}\end{pmatrix}>0.
+$$
+
+In particular, the arbitrary cross-phase block survives as $iB_{SC}$. The real cross block cancels in $H_S$ but remains in $\det A$ in the normalization.
+
+To evaluate a nontrivial block without a complex square-root choice, put
+
+$$
+\Delta_S=\det A_{SS}\,
+\det\big(A_{CC}+B_{CS}A_{SS}^{-1}B_{SC}\big)>0.
+$$
+
+The principal blocks of $A$ are positive definite, and the added matrix $B_{CS}A_{SS}^{-1}B_{SC}$ is positive semidefinite. The ordinary Gaussian Fourier integral, for real $K>0$ and $h\in\mathbb R^m$, is
+
+$$
+\int_{\mathbb R^m}e^{-u^\top Ku-2iu^\top h}du
+=\frac{\pi^{m/2}}{\sqrt{\det K}}e^{-h^\top K^{-1}h}.
+$$
+
+For completeness, the scalar transform $F(t)=\int_{\mathbb R}e^{-u^2-2itu}du$ satisfies $F'(t)=-2tF(t)$ by differentiation under the integral and integration by parts, with $F(0)=\sqrt\pi$. Hence $F(t)=\sqrt\pi e^{-t^2}$. Orthogonal diagonalization and real rescaling of $K$ give the displayed formula. Apply it first in the $S$ coordinates with $h=B_{SC}z_C$, then use the real Gaussian integral in the $C$ coordinates. Absolute integrability follows from $\operatorname{Re}H_S>0$, and the result is
+
+$$
+I_S:=\int_{\mathbb R^N}e^{-z^\top H_Sz}dz
+=\frac{\pi^{N/2}}{\sqrt{\Delta_S}}>0,
+\qquad
+I_0:=\int_{\mathbb R^N}e^{-z^\top Az}dz
+=\frac{\pi^{N/2}}{\sqrt{\det A}}.
+$$
+
+Equivalently, the Schur complement gives $\det H_S=\Delta_S$, but all square roots above are roots of explicitly positive real numbers. No inverse of a cross-coupling block has been used.
+
+It remains to identify $I_S$ with the ordinary partial trace in Definition 12.1. For a fixed nonempty proper $S$, write $y=(u,w)$ in the $S,C$ coordinates. The actual reduced kernel and its squared trace give
+
+$$
+\begin{aligned}
+\rho_S(u,u')&=\int\psi(u,w)\overline{\psi(u',w)}dw,\\
+E_S&=\int\psi(u,w)\overline{\psi(u',w)}
+          \psi(u',w')\overline{\psi(u,w')}\,du\,du'\,dw\,dw'.
+\end{aligned}
+$$
+
+Indeed the second equality expands $\operatorname{Tr}(\rho_S^2)$, or equivalently the squared Hilbert–Schmidt norm of the Hermitian reduced kernel; the four-factor Gaussian bound just established justifies Fubini. The reduced operator is positive of trace $1$, since $\psi$ is normalized. In this integral take $x_0=(u,w)$, $x_1=(u',w')$. Its two primed vectors swap exactly the $S$ coordinates. Under the orthogonal substitution
+
+$$
+z_+=\frac{x_0+x_1}{\sqrt2},\qquad
+z_-=\frac{x_0-x_1}{\sqrt2},
+$$
+
+the swap fixes $z_+$ and sends $z_-$ to $D_Sz_-$, with $D_S=-I$ on $S$ and $+I$ on $C$. The two exponent blocks are therefore exactly $A$ and $H_S$. Consequently
+
+$$
+E_S=c_A^4 I_0I_S
+=\frac{\det A}{\pi^N}
+  \frac{\pi^{N/2}}{\sqrt{\det A}}
+  \frac{\pi^{N/2}}{\sqrt{\Delta_S}}
+=\left(\frac{\det A}{\Delta_S}\right)^{1/2}>0.
+$$
+
+This is an evaluation of the ordinary purity, with no change to its definition. Exchanging $S$ and $C$ in the four-factor integral exchanges the swapped and unswapped labels and leaves the value unchanged; hence $E_S=E_C$, also the usual equality of complementary purities for a pure state.
+
+There is one nontrivial character for each nonempty $S\subseteq\{1,\ldots,q-1\}$. Multiplying the $M$ block integrals now yields
+
+$$
+\begin{aligned}
+Z_2^{(q)}
+&=c_A^{2M}I_0\prod_{\varnothing\ne S\subseteq\{1,\ldots,q-1\}}I_S\\
+&=(\det A)^{(M-1)/2}
+  \prod_{\varnothing\ne S\subseteq\{1,\ldots,q-1\}}\Delta_S^{-1/2}
+=\prod_{\varnothing\ne S\subseteq\{1,\ldots,q-1\}}E_S>0.
+\end{aligned}
+$$
+
+Every unordered nontrivial cut has exactly one side excluding party $q$, so the $M-1$ factors count the cuts once each. Taking the real logarithm of the positive product and applying $S_2^{(q)}=-2^{2-q}\log Z_2^{(q)}$ proves the entropy coefficient. Vanishing or rank-deficient cross couplings cause no exception: only positive principal blocks of $A$ are inverted. For example, if $A_{SC}=B_{SC}=0$, then $\Delta_S=\det A$ and this cut contributes $E_S=1$, as required for a product across that cut. ∎
+
+The theorem concerns finite nonsingular pure bosonic Gaussian states at replica order two. The non-Gaussian obstruction in Remark 8.3 remains valid. Mixed states, fermionic states, singular or infinite-mode limits, and replica orders $n\ge3$ require separate hypotheses and arguments.
+
+**Corollary 12.3 (The four-party consumer for unrestricted pure Gaussian data).** Let $q=4$ and take arbitrary data of Definition 12.1 on the distinct parties $A,B,C,D$. Use exactly $\mathrm{GM}_2^{(4)}$ of Definition 11.1, with real $\alpha,\beta$ satisfying $\alpha+\beta=1/3$. Set
+
+$$
+C_{\mathrm{tot}}=\sum_{C\in\mathcal C}S_2^{(2)}(C),\qquad
+P_{\mathrm{tot}}=\sum_{P\in\mathcal P}S_2^{(2)}(P),
+$$
+
+with the four single cuts $\mathcal C$ and three pair cuts $\mathcal P$ of Definition 11.1. Then
+
+$$
+\mathrm{GM}_2^{(4)}=(\beta-1/4)(C_{\mathrm{tot}}-P_{\mathrm{tot}}).
+$$
+
+In particular $\mathrm{GM}_2^{(4)}=0$ at $\alpha=1/12$, $\beta=1/4$ for every such Gaussian datum. The four-party definition is supplied by Iizuka and Nishida, [arXiv:2502.07995v1, §5, Eqs. (65)–(66)](https://arxiv.org/html/2502.07995v1#S5.E65), equivalently [v5, §5.1, Eqs. (67)–(68)](https://arxiv.org/html/2502.07995v5#S5.SS1), with their $(a,b)=(\alpha,\beta)$. The convention written using $\mathrm{GM}^{(3)}$ has the shifted coefficients of Definition 11.1. The cut-count algebra is that of Corollary 7.2 and Remark 11.2; the enlarged Gaussian domain is the consequence here.
+
+**Proof.** Theorem 12.2 gives
+
+$$
+S_2^{(4)}=\frac14(C_{\mathrm{tot}}+P_{\mathrm{tot}}).
+$$
+
+For any of the six merges $XY:Z:W$, the same global state is still a pure Gaussian state, now with party sizes $N_X+N_Y,N_Z,N_W$. Regrouping coordinates conjugates $A,B$ by a coordinate permutation and preserves $A>0$. Camargo–Nishida's unrestricted tripartite factorization, Eq. (58), therefore gives
+
+$$
+S_2^{(3)}(XY:Z:W)=\frac12\big(
+S_2^{(2)}(XY:ZW)+S_2^{(2)}(Z:XYW)+S_2^{(2)}(W:XYZ)\big).
+$$
+
+The partial traces in this formula are those of the original four-party state. Each pair cut is supplied by two complementary choices of merged pair, and each single cut by the three choices of a merged pair among its complementary three parties. These are exactly the multiplicities in Remark 11.2. Thus
+
+$$
+\sum_{XY\in\mathcal M}S_2^{(3)}(XY:Z:W)
+=P_{\mathrm{tot}}+\frac32C_{\mathrm{tot}}.
+$$
+
+Substitution into Definition 11.1 gives
+
+$$
+\begin{aligned}
+\mathrm{GM}_2^{(4)}
+&=\left(\frac14-\frac12+\beta\right)C_{\mathrm{tot}}
+ +\left(\frac14-\frac13+\alpha\right)P_{\mathrm{tot}}\\
+&=(\beta-1/4)C_{\mathrm{tot}}+(1/4-\beta)P_{\mathrm{tot}},
+\end{aligned}
+$$
+
+where the last equality uses $\alpha+\beta=1/3$. This proves the formula and its stated zero. The vanishing is a property of this entropy combination and entails no separability conclusion. ∎
+
+## 追加锚（本行以下为增补区）

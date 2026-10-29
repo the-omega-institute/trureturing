@@ -1,0 +1,10 @@
+**Proposition 4.7 (Window for the minimum excess).** Let $\ell\ge1$, $n\ge\ell+3$, and let $E^\ast(n,\ell)=\min\{E(G):G\in\mathcal G(n,\ell)\}$. Then
+
+$$
+\frac{\sqrt2-1}{n}<E^\ast(n,\ell)\le\frac{2(n+7\ell+5)}{(n+\ell-2)^2}.
+$$
+
+In particular, for fixed $\ell$, $E^\ast(n,\ell)$ lies between $(\sqrt2-1)/n$ and $(2+o(1))/n$ as $n\to\infty$, while by Lemma 3.2 every graph with a universal vertex has excess at least $2\ell/((\ell+1)^2+1)$, independent of $n$. Stance: suspected-novel (see §6).
+
+**Proof.** The upper bound is Lemma 4.2. For the lower bound let $G\in\mathcal G(n,\ell)$ and $uv\in E(G)$. Since $1\le\min(d_u,d_v)$ and $\max(d_u,d_v)\le n-1$, the ratio satisfies $r\ge1/(n-1)$. The function $x\mapsto\sqrt{1+x}-1$ is concave on $[0,1]$ with values $0$ and $\sqrt2-1$ at the endpoints, so it lies above its chord $(\sqrt2-1)x$ there; with $x=r^2\le1$ this gives $\varphi(d_u,d_v)-1\ge(\sqrt2-1)r^2\ge(\sqrt2-1)/(n-1)^2$. Summing over the $m=n-1+\ell\ge n$ edges, $E(G)\ge(\sqrt2-1)n/(n-1)^2>(\sqrt2-1)/n$. ∎
+

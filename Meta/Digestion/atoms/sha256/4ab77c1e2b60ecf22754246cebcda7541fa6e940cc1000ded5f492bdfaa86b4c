@@ -1,0 +1,87 @@
+**Theorem 2.1 (Integer support with incidence remainders).** For every integer $r\ge5$, every finite $s\ge1$, every profile of Definition 1.1, and every $2\le\beta\le\kappa_r$, one has
+
+$$
+2J_s(x)=f_r(q)+\beta(s-q)+R_{\mathrm{inc}}+R_{\mathrm{sc}}
+\ge f_r(q)+\beta(s-q),
+$$
+
+where
+
+$$
+R_{\mathrm{inc}}
+=\mathbb E\left[K\sum_{\substack{i<j\\i,j\in T}}
+ (y_i^{-1}-y_j^{-1})^2\right]\ge0,
+$$
+
+$$
+R_{\mathrm{sc}}
+=\mathbb E\left[KU_T^2-(D-\beta)K-\beta U_T+C\right]\ge0.
+$$
+
+There is no restriction $q\in[r-1,r]$ in this theorem.
+
+**Proof.** The incidence identity
+
+$$
+\mathbb E U_T=\sum_{i=1}^s\frac{\mathbb P(i\in T)}{y_i}=s
+$$
+
+uses precisely the marginals of $x$. For a fixed nonempty $T$ of cardinality $k$, the elementary identity
+
+$$
+k\sum_{i\in T}z_i^2-\left(\sum_{i\in T}z_i\right)^2
+=\sum_{\substack{i<j\\i,j\in T}}(z_i-z_j)^2
+$$
+
+with $z_i=y_i^{-1}$ gives
+
+$$
+K^2\sum_{i\in T}y_i^{-2}=KU_T^2+
+K\sum_{\substack{i<j\\i,j\in T}}(y_i^{-1}-y_j^{-1})^2.
+$$
+
+It remains to prove the pointwise support inequality
+
+$$
+ku^2\ge(D-\beta)k+\beta u-C
+\quad\text{for every integer }k\ge1\text{ and every real }u\ge k.\tag{2.1}
+$$
+
+First, $\kappa_r\le2a^2$. Indeed $2a\le a^2-1$ for $a\ge4$, so
+
+$$
+\sqrt{2a(a^2-1)}\le a^2-1,
+\qquad 2+\sqrt{8a(a^2-1)}\le2a^2.
+$$
+
+Consequently $D-\beta\ge a^2+3a+1>0$. Let $h=\sqrt{\beta/2}$; then $1\le h\le a$.
+
+If the integer $k\ge h$, the derivative with respect to $u$ of the difference in (2.1) is $2ku-\beta\ge2k^2-\beta\ge0$. Its minimum on $u\ge k$ occurs at $u=k$ and equals
+
+$$
+k^3-Dk+C=(k-a)(k-a-1)(k+2a+1)\ge0.
+$$
+
+For an integer $k$, the first two factors are both nonpositive when $k\le a$, and both nonnegative when $k\ge a+1$; there is no integer strictly between $a$ and $a+1$.
+
+If instead $1\le k\le h$, the unconstrained minimizer $u=\beta/(2k)$ is feasible. Its value, multiplied by $4k>0$, is
+
+$$
+Q(k)=4Ck-4(D-\beta)k^2-\beta^2.
+$$
+
+This is a concave quadratic on the real interval $[1,h]$. Its endpoint values satisfy
+
+$$
+Q(1)=8a(a^2-1)-(\beta-2)^2\ge0,
+$$
+
+$$
+Q(h)=4h\bigl(h^3-Dh+C\bigr)
+=4h(h-a)(h-a-1)(h+2a+1)\ge0.
+$$
+
+The latter sign follows from $h\le a$. Concavity bounds $Q$ below by its endpoint chord, hence $Q(k)\ge0$ throughout $[1,h]$. If $h=1$ the interval is a singleton and the same endpoint computation applies. These two cases exhaust all positive integers $k$, including their common boundary. This proves (2.1).
+
+Apply (2.1) to each actual pair $(K,U_T)$, integrate, and use $\mathbb E K=q$, $\mathbb E U_T=s$. Combining with the incidence identity gives the stated exact decomposition. Types of mass zero contribute zero, with no division by $x_T$. ∎
+

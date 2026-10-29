@@ -1,0 +1,19 @@
+**Proposition 42.4 (The seven-cycle counts and a scoped shared-root comparison).**
+For shared-edge seven-cycles,
+
+$$
+A_{3,1}=1,\qquad A_{3,2}=45,\qquad
+\operatorname{type}R^e_{3,b}=1+45^b-44^b.
+\tag{42.8}
+$$
+
+For two cycles the degree-three generator is unique and the
+degree-five generators number $89$, giving type $90$.
+The complete comparison with the one-common-vertex family
+of Proposition 35.6 [Supplier41] is
+
+| Number $b$ of labelled seven-cycles | One common vertex | One retained common edge |
+| ---: | ---: | ---: |
+| 1 | 2 | 2 |
+| 2 | 202 | 90 |
+| 3 | 30302 | 5942 |

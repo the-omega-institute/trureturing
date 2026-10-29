@@ -1,0 +1,140 @@
+**Theorem 41.2 (Actual edge-compatible rows and the canonical cone).**
+Every point of (41.1) is realized by exactly $m$ global independent
+sets. Restriction is an additive bijection
+
+$$
+\mathcal S^e_{k,b}\ \longleftrightarrow
+\{(p_1,\ldots,p_b)\in\mathcal S_k^b:
+\deg_{(m,t,u)}p_1=\cdots=\deg_{(m,t,u)}p_b\}.
+\tag{41.2}
+$$
+
+Its real cone is precisely the real solution cone of (41.1),
+its group lattice is $\mathbb Z^{3+b(2k-1)}$, and
+$\mathcal S^e_{k,b}$ is the intersection of this cone with that
+lattice. The ring is a normal standard graded Cohen–Macaulay
+domain of dimension $d=3+b(2k-1)$. Its canonical module is the
+interior-monomial ideal with basis the exponents
+
+$$
+\mathcal S^{e,\circ}_{k,b}=
+\{(m,c)\in\mathcal S^e_{k,b}:c_v\ge1,\ c_v+c_w\le m-1\ (\{v,w\}\in E),
+\ \delta_\ell(m,c)\ge1\ (1\le\ell\le b)\}.
+\tag{41.3}
+$$
+
+Proof. The local integer decomposition supplier is Theorem 28.2
+[Supplier41], with the same ordinary degree $m$ and the same
+occupancy coordinates. Its short construction explains why the
+integral interface, not just a polytope description, is available.
+For a single odd cycle, nonnegative integer coordinates satisfying
+the edge bounds and $\sum c_i\le km$ decompose by induction on
+$m$. At $m=0$ all coordinates vanish. If some coordinate is zero,
+delete its vertex; the remaining support is a union of paths.
+Two-color each path. On one color occupy the first $c_i$ rows,
+and on the other color occupy the last $c_i$ rows, always using
+the same row set of size $m$. Each edge bound makes the two
+occupied row sets disjoint. Insert the
+deleted zero columns to obtain legal cyclic rows.
+
+Otherwise all coordinates are positive. Some edge $i,i+1$ has
+sum at most $m-1$, since saturation of every edge would give
+$2\sum c_i=(2k+1)m>2km$. The independent set
+$\{i+2,i+4,\ldots,i+2k\}$ meets every other edge once and
+has size $k$. Subtract its indicator and one from the degree.
+Nonnegativity, all new edge bounds and the new total bound hold.
+Induction supplies the other $m-1$ rows. This proves the local
+integer decomposition for every $k\ge2$, including the five-cycle.
+
+Apply it separately to each $p_\ell$. The retained shared edge
+permits just three states, with forced multiplicities
+
+$$
+h_{00}=m-t-u,\qquad h_{10}=t,\qquad h_{01}=u;
+\qquad 11\text{ is forbidden}.
+\tag{41.4}
+$$
+
+Reorder each local array into these same three blocks. Rowwise
+union then produces independent sets of the actual graph, since
+the edge choices agree and there are no additional edges.
+This is the complete-separator part of Theorem 39.2 for $H=K_2$.
+Conversely a global array restricts to such local arrays and
+satisfies (41.1). At $m=0$ the construction is the empty array.
+The exponent tuple reconstructs the private coordinates and the
+two common coordinates uniquely, proving (41.2). Both maps
+commute with addition. Consequently the actual algebra also has
+the boundary-diagonal presentation
+
+$$
+R^e_{k,b}\simeq
+\bigoplus_{m\ge0}\ \bigoplus_{\substack{t,u\ge0\\t+u\le m}}
+(R_k)_{(m,t,u)}^{\otimes b},
+\tag{41.5}
+$$
+
+where multiplication adds the boundary degrees and multiplies
+the corresponding local monomials. The monomial-basis bijection
+(41.2) proves injectivity and surjectivity of this algebra map.
+
+For the real assertion, the degree-one solution polytope is
+bounded: every coordinate is between zero and one, since each
+vertex has a neighbor. Every independent-set indicator lies in
+it. Multiply a rational point by a common positive denominator
+$m$; the integer construction gives $m$ independent sets, whose
+average is the original point. Rational points are dense in a
+rational polytope and the finite convex hull of indicators is
+closed. Thus this polytope is exactly that convex hull. At real
+degree zero the edge inequalities force all coordinates to zero,
+so homogenizing proves the full real-cone assertion as well.
+
+There are finitely many degree-one indicators and they generate
+the entire semigroup by the row construction. The empty-set
+indicator gives $(1,0)$; subtracting it from the singleton
+indicator at $v$ gives $(0,e_v)$. Hence the group is the full
+stated lattice. At degree one choose every occupancy equal to
+a positive $\varepsilon$ with $2\varepsilon<1$ and
+$(2k+1)\varepsilon<k$. All nonzero defining forms, including
+degree, are then strictly positive, so the cone is full
+dimensional. It is pointed and rational. Its integral points
+are exactly (41.1); in particular if a positive integer multiple
+of a lattice point lies in the semigroup, that point itself does.
+This proves saturation and normality. The monomial embedding
+in $\mathbb C[z_0,(z_v)_v]$ proves the domain assertion, and
+degree-one generation proves standard grading.
+
+Strictness of every defining nonzero supporting form characterizes
+the interior: an equality forbids an ambient open ball, while
+finitely many strict positive margins allow one. This argument
+does not assume that the inequality list is an irredundant facet
+list. For integral points, strictness gives exactly (41.3), and
+the coordinate and edge bounds already imply $m\ge3$.
+Addition by any semigroup point preserves those inequalities.
+
+Hochster's theorem now gives Cohen–Macaulayness for this normal
+affine monoid ring. The Danilov–Stanley interior formula, in the
+full graded form of Barile–Bruns, *$\mathbb Z^r$-graded rings
+and their canonical modules*, §5 and Theorem 5.1 [BB41], gives
+the asserted canonical ideal. Their monoid is $\mathcal S^e_{k,b}$,
+their coefficient field is $\mathbb C$, and their rank $r$ is
+$d$; finite generation, the full group, normality, pointedness
+and full cone dimension have all been established here. Thus
+the canonical interpretation follows from its hypotheses, not
+from the later numerical counts.
+
+For the classical gluing correspondence, Matsuda–Ohsugi–Shibata,
+Proposition 1.3 [MOS41], treats the union of two graphs along
+an induced clique, with edge set their union. Each successive
+gluing here has intersection the actual retained $K_2$. Its
+three clique-pattern degrees are (41.4), an integral change
+of coordinates from $(m,t,u)$. Their toric-fiber-product and
+normality result therefore applies to this precise graph.
+It is an intermediate supplier; it does not assert the uniform
+interior subtraction needed in §42. Deleting the shared edge
+would permit a fourth pattern and would change this argument.
+$\square$
+
+[Supplier41]: AURIC_FIB_ATOM_CIRCULATION_CONTROL_KL_ACTION_AND_TORIC_RELATIONS_CONTINUATION.md
+[MOS41]: https://arxiv.org/html/1603.01850v1
+[BB41]: https://arxiv.org/html/2505.11402v1
+

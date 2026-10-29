@@ -384,7 +384,7 @@ private lemma real_inner_mono_of_le {P Q : H →L[ℂ] H} (hPQ : P ≤ Q) (x : H
     exact hx.2
   simpa [sub_apply, inner_sub_right, map_sub] using hx'
 
-private lemma isTraceClass_posPart_of_isSelfAdjoint {T : H →L[ℂ] H} (hT : IsSelfAdjoint T)
+lemma isTraceClass_posPart_of_isSelfAdjoint {T : H →L[ℂ] H} (hT : IsSelfAdjoint T)
     (h : IsTraceClass T) : IsTraceClass T⁺ := by
   obtain ⟨w, b, hb⟩ := h
   refine ⟨w, b, ?_⟩
@@ -400,7 +400,7 @@ private lemma isTraceClass_posPart_of_isSelfAdjoint {T : H →L[ℂ] H} (hT : Is
     exact real_inner_mono_of_le hle (b i)
   · exact hb
 
-private lemma isTraceClass_negPart_of_isSelfAdjoint {T : H →L[ℂ] H} (hT : IsSelfAdjoint T)
+lemma isTraceClass_negPart_of_isSelfAdjoint {T : H →L[ℂ] H} (hT : IsSelfAdjoint T)
     (h : IsTraceClass T) : IsTraceClass T⁻ := by
   obtain ⟨w, b, hb⟩ := h
   refine ⟨w, b, ?_⟩

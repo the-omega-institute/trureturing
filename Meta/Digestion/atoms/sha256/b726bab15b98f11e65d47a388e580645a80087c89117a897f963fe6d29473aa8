@@ -1,0 +1,90 @@
+**Theorem 16.1 (a singular source and an exact affine certificate).**
+For $k=\lceil\log_2(H+1)\rceil$, consider all $2^{k+1}$ tapes
+
+$$
+ u_i(v,c)=\langle v,\operatorname{bin}_k(i)\rangle\mathbin\oplus c,
+ \quad1\le i\le H,\quad v\in\mathbb F_2^k,\quad c\in\mathbb F_2,
+ \tag{ACR.55}
+$$
+
+where zero chooses physical $a$. This family fails even the early-sibling
+sign consumer on an admitted mature source with an actually earned
+$H$. Namely take $d=4$, coefficient row $(0,0,1,0)$ and seed
+$(1,0,0,1)$, so $s_{i+4}=s_{i+2}$ at every $i\ge0$ and
+$z_j=1$ exactly for $j=1$ or even $j\ge4$. At cut $n=14$ the
+spine earns $h=8,H=17$, but the affine means in cones $a,b$ obey
+
+$$
+ \overline D_a=\frac{249}{32}<\frac{125}{16}=\overline D_b,
+ \qquad z_1=1.
+ \tag{ACR.56}
+$$
+
+Proof. This is an all-index singular order-four presentation, rather
+than a recurrence asserted only after a transient. Its first two
+terms are $1,0$; thereafter the odd indices $i\ge3$ are one and
+the even indices are zero. Here $N(8)=7\le14$. Applying the actual
+chronological descriptors gives successive births of
+$a,a^2,\ldots,a^9$ at
+$2,3,5,7,9,10,12,13,15$. Thus $a^8$ is present and $a^9$ absent
+at cut 14; Proposition 9.2 really earns $H=17$, not an externally
+chosen truncation. The root's bit one puts the larger child at $a$,
+with ranks $13,12$ and true means
+$\mu_{13}=16839/2048$, $\mu_{12}=7737/1024$.
+
+For completeness, the following finite table certifies the affine
+depths. Its columns are $D_a(v,0),D_b(v,0),D_a(v,1),D_b(v,1)$.
+The row for $v+16$ equals that for $v$: every listed depth is at
+most ten, before index 16 can use the fifth coordinate of $v$.
+
+| $v$ | $D_a(v,0)$ | $D_b(v,0)$ | $D_a(v,1)$ | $D_b(v,1)$ |
+|---|---|---|---|---|
+| 0 | 7 | 8 | 9 | 7 |
+| 1 | 8 | 7 | 8 | 7 |
+| 2 | 7 | 9 | 7 | 8 |
+| 3 | 10 | 6 | 9 | 6 |
+| 4 | 7 | 9 | 8 | 8 |
+| 5 | 9 | 7 | 9 | 8 |
+| 6 | 7 | 9 | 7 | 8 |
+| 7 | 8 | 7 | 7 | 8 |
+| 8 | 7 | 8 | 8 | 7 |
+| 9 | 8 | 7 | 8 | 7 |
+| 10 | 7 | 10 | 7 | 9 |
+| 11 | 9 | 6 | 8 | 6 |
+| 12 | 7 | 10 | 8 | 9 |
+| 13 | 8 | 7 | 8 | 8 |
+| 14 | 7 | 10 | 7 | 9 |
+| 15 | 8 | 7 | 7 | 8 |
+
+Each entry is determined by this exact recursion, which also specifies
+an independent way to check the certificate. Encode initial alpha by
+zero and beta by one. Start with $(b_\varepsilon,\sigma_\varepsilon)
+=(0,0)$ and use the actual GPO §39 chronological formula
+
+$$
+ \begin{aligned}
+ \tau_p&=b_p+2-\sigma_p,\\
+ j_p&=F_{\tau_p}+
+   \sum_{\substack{qc\preceq p\\c=b}}
+       F_{\tau_p-1-\tau_q+\sigma_{qa}},\\
+ b_{pa}&=b_{pb}=\tau_p,\qquad
+ \sigma_{pa}=z_{j_p},\qquad\sigma_{pb}=1-z_{j_p}.
+ \end{aligned}
+ \tag{ACR.57}
+$$
+
+In either starting cone, stop when $14-b_p+\sigma_p\le1$;
+otherwise follow the next bit of (ACR.55) and count one edge. The
+sibling sum in (ACR.57) prices no hidden rank sensor: it is a finite
+integer calculation of the actual physical chronology. The given row,
+seed, Fibonacci initial values and stopping rule determine every table
+entry without unspecified source data. Summing the table and doubling
+for $v+16$ gives depth totals $498,500$ over the 64 tapes, proving
+(ACR.56). The true sibling difference is $1365/2048>0$, while the
+affine difference is $-1/32$. Hence the sign decoder returns zero
+for the actual first bit one. Its individual mean errors are
+$-903/2048$ and $263/1024$, both exceeding $1/8$ in magnitude.
+This refutes this named affine family and this consumer, not every
+deterministic acquisition procedure or another tape construction.
+$\square$
+

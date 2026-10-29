@@ -1,0 +1,159 @@
+**定理 73.1（实际见证的统一半径与正号对比）。** 在 (55.2) 的严格相容点取
+
+$$
+\begin{gathered}
+\eta=\frac{d(1-d)}{100},\qquad t=\frac\eta{16}
+ =\frac{d(1-d)}{1600},\\
+\rho_*=
+\begin{pmatrix}
+d+\eta&-\eta&4\eta/\sqrt6\\
+-\eta&\eta&0\\
+4\eta/\sqrt6&0&1-d-2\eta
+\end{pmatrix}_{(a,h_{\rm out},g)},\\
+D_0=\mathrm i(\xi e^\dagger-e\xi^\dagger),\qquad
+\rho_\pm=\rho_*\pm tD_0.
+\end{gathered}
+\tag{73.1}
+$$
+
+这里 $t$ 是双世界的扰动幅度，不是第一卷原通道参数 $\sqrt d$。两个世界属于引理 55.1 已有的见证线段，均严格满足完整复 $\mathcal K_d$ 的条件，并有原五维通道提升。
+
+置 $\zeta=e^{-2\mathrm i\theta}$、$c=\cos(2\theta)$、$s_\theta=\sin(2\theta)$，以及
+
+$$
+B_\zeta=
+\begin{pmatrix}-1/2&\sqrt3\zeta/2\\\sqrt3/2&\zeta/2\end{pmatrix},
+\qquad u_n=\Im(B_\zeta^n)_{11}.
+\tag{73.2}
+$$
+
+实际加权终端对比恰为
+
+$$
+a_n:=p_{\rho_+}(0^n,1)-p_{\rho_-}(0^n,1)
+=2t\,2^{-n}u_n.
+\tag{73.3}
+$$
+
+其符号为正的 $2t$，补终端结果的对比是 $-a_n$。未加权序列 $u_n$ 的一个首一消去多项式是
+
+$$
+Q_\theta(x)=x^4+(1-c)x^3+\frac{1-5c}{2}x^2+(1-c)x+1.
+\tag{73.4}
+$$
+
+因此 $a_n$ 的相应首一消去多项式是 $Q_\theta(2x)/16$，而不是直接用 $Q_\theta(x)$。
+
+证明。先给严格正性的显式下界。对 $z=(z_a,z_h,z_g)$，用
+
+$$
+\begin{aligned}
+2\eta|z_a z_h|&\le2\eta|z_a|^2+\frac\eta2|z_h|^2,\\
+\frac{8\eta}{\sqrt6}|z_a z_g|
+&\le\frac d4|z_a|^2+\frac{32\eta^2}{3d}|z_g|^2
+\end{aligned}
+\tag{73.5}
+$$
+
+估计二次型，得到
+
+$$
+z^\dagger\rho_*z\ge
+\left(\frac{3d}4-\eta\right)|z_a|^2
++\frac\eta2|z_h|^2
++\left(1-d-2\eta-\frac{32\eta^2}{3d}\right)|z_g|^2
+\ge\frac\eta2\|z\|^2.
+\tag{73.6}
+$$
+
+最后一步只用 $\eta\le d/100$、$\eta\le(1-d)/100$：第三个系数至少为 $(100-2-8/75)\eta>\eta/2$，第一个也大于 $\eta/2$。另由 (54.5)，
+
+$$
+\begin{aligned}
+\det B_d(\rho_*)&=\frac43\eta\left(\frac d{\sqrt2}-\eta\right),\\
+\operatorname{Tr}B_d(\rho_*)&=d(1+\tau/6)+\frac43\eta,
+\qquad \tau=3-2\sqrt2.
+\end{aligned}
+\tag{73.7}
+$$
+
+两对角条目正、行列式正，故此二阶块正定。使用 $1/\sqrt2>7/10$、$\tau<1/5$ 及 $\eta\le d/100$，其最小本征值满足
+
+$$
+\lambda_{\min}(B_d(\rho_*))
+\ge\frac{\det B_d(\rho_*)}{\operatorname{Tr}B_d(\rho_*)}
+>\frac{138}{157}\eta>\frac\eta2.
+\tag{73.8}
+$$
+
+也可直接用 Sylvester 判据表达同一余量。写 $d=x/(1+x)$、$x>0$，则 $\rho_*-\eta I_3/2$ 的三个顺序主子式为
+
+$$
+\frac{x(200x+201)}{200(1+x)^2},\qquad
+\frac{x^2(200x+197)}{40000(1+x)^4},\qquad
+\frac{x^2(117000x^2+235213x+118200)}{24000000(1+x)^6},
+\tag{73.9}
+$$
+
+均严格正；而
+
+$$
+\det(B_d(\rho_*)-\eta I_2/2)
+=\frac{d^2(1-d)(21d-921+1000\sqrt2)}{120000}>0
+\tag{73.10}
+$$
+
+且首对角元 $d-\eta/2>0$。这也给两个严格本征值下界。
+
+矩阵 $D_0$ 的范数为一，且在全部实向量上的二次型为零。因此迹、$C,E$ 矩和 $aa$ 人口不变；$s=\rho_{aa}-d=\eta>0$ 不变。$B_d$ 的扰动仅有共轭非对角条目，范数至多 $t$，因为 $a,\ell$ 为单位向量。(73.6)、(73.8) 和 $t=\eta/16$ 保留两个正定条件。引理 55.1 的线段半径是两个最小本征值的较小者的四分之一，至少 $\eta/8$，故本定理的两个端点均在该线段内。
+
+原域提升具体复用 (55.4)–(55.5)：令
+
+$$
+\begin{gathered}
+L_\rho=\ell^\dagger\rho\ell,\quad
+A_{\min,\rho}=\rho\ell\ell^\dagger\rho/L_\rho,\quad
+\alpha_\rho=\frac{d-a^\dagger A_{\min,\rho}a}
+ {a^\dagger\rho a-a^\dagger A_{\min,\rho}a},\\
+A_\rho=(1-\alpha_\rho)A_{\min,\rho}+\alpha_\rho\rho,
+\quad D_\rho=\rho-A_\rho,\\
+\omega_\rho=D_+^\dagger A_\rho D_++D_-^\dagger D_\rho D_-,\qquad
+T_{\omega_\rho}(X)=BP_+XP_+B^\dagger+(f^\dagger Xf)\omega_\rho.
+\end{gathered}
+\tag{73.11}
+$$
+
+其中 $D_\pm:\mathbb C^5\to\mathbb C^3$ 是 (55.5) 的原矩阵。严格条件保证分母正、$0<\alpha_\rho<1$；供应定理给 $T_{\omega_\rho}\in\mathcal F_{\sqrt d}$ 及 $\mathcal GT_{\omega_\rho}=S_\rho$。因此这里的双世界并非只满足部分人口约束的替代态。
+
+在 $(\xi,e,f)$ 基中，$V_0$ 去掉公共相位后是 $1\oplus B_\zeta$，而 $E=(\xi+e)(\xi+e)^\dagger/2$。对任意二阶 $G$，直接配对得
+
+$$
+\operatorname{Tr}\bigl[D_0(1\oplus G)^\dagger E(1\oplus G)\bigr]
+=\mathrm i(\overline{G_{11}}-G_{11})/2=\Im G_{11}.
+\tag{73.12}
+$$
+
+取 $G=B_\zeta^n$ 并保留联合权重，得到 (73.3)。由
+
+$$
+\det(xI_2-B_\zeta)=x^2+\frac{1-\zeta}{2}x-\zeta,
+\qquad
+Q_\theta(x)=\det(xI_2-B_\zeta)\det(xI_2-\overline{B_\zeta}),
+\tag{73.13}
+$$
+
+Cayley–Hamilton 给 (73.4)。为明确随后有限矩阵的全部条目，前七项为
+
+$$
+\begin{aligned}
+u_0&=u_1=0,\qquad u_2=-3s_\theta/4,\\
+u_3&=3(1-c)s_\theta/4,\\
+u_4&=-3(1+c+2c^2)s_\theta/8,\\
+u_5&=3(1-c)(c^2+3c+1)s_\theta/4,\\
+u_6&=3(-4c^4-14c^3+9c^2-3)s_\theta/16.
+\end{aligned}
+\tag{73.14}
+$$
+
+这些式子也可由 $u_{n+4}+(1-c)u_{n+3}+(1-5c)u_{n+2}/2+(1-c)u_{n+1}+u_n=0$ 逐项得到。∎
+

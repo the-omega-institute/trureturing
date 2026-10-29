@@ -1,0 +1,30 @@
+### 定义 1.1（有限根协议）
+
+对 $i\in\{1,2\}$，取一个有限、非空的确定性根协议
+
+$$
+\mathcal P_i=(H_i,H_{i,\circ},E_i,\delta_i,R_i,\operatorname{Term}_i,t_i).
+$$
+
+其中 $H_i$ 是隐藏历史，$H_{i,\circ}$ 是根集，$E_i$ 是公开事件字母表，
+
+$$
+\delta_i:H_i\times E_i\rightharpoonup H_i
+$$
+
+是部分确定性后继，$R_i$ 是终端记录集，
+
+$$
+\operatorname{Term}_i\subseteq H_i\times R_i
+$$
+
+是合法终端对，且
+
+$$
+ t_i:\operatorname{Term}_i\to Y_i
+$$
+
+是组件读数。局部词 $u\in E_i^*$ 的运行记为 $\delta_{i,u}(x)$；它只在逐步后继全部定义时有意义。
+
+只考虑由声明根实际到达的历史。若某一公开词在一个根上非法，它不为该根产生支持或冲突见证。
+

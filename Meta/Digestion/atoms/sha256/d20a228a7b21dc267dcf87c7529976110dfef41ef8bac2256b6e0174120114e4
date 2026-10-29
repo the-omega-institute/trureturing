@@ -1,0 +1,50 @@
+#### 推论 3.3（稳定性带有限误差时的边界）
+
+若 $\Lambda$ 为 CPTP，且
+
+$$
+
+\left\lVert \Lambda^\dagger(N_x)-N_x\right\rVert\le\varepsilon_x,
+\qquad\left\lVert \Lambda^\dagger(N_y)-N_y\right\rVert\le\varepsilon_y,
+
+$$
+
+则
+
+$$
+
+\boxed{\left\lVert \Lambda^\dagger(N_xN_y)-N_xN_y\right\rVert
+\le\sqrt{\varepsilon_x}+\sqrt{\varepsilon_y}.}
+
+$$
+
+从而任意输入的 $|\Delta\kappa|$ 服从同界。该常数不声称最优。
+
+**证明。** 
+取等距表示 $V$，使 $\Lambda^\dagger(A)=V^\dagger(A\otimes I)V$。对投影 $N$ 置
+
+$$
+
+E_N=\Lambda^\dagger(N)-N,\qquad
+D_N=(N\otimes I)V-VN.
+
+$$
+
+直接展开得 $D_N^\dagger D_N=E_N-E_NN-NE_N$。相对 $\operatorname{Ran}N\oplus\ker N$，此算符是 $\operatorname{diag}(-E_{11},E_{00})$，故 $\left\lVert D_N\right\rVert\le\sqrt{\left\lVert E_N\right\rVert}$。再用
+
+$$
+
+(N_xN_y\otimes I)V-VN_xN_y
+=(N_x\otimes I)D_{N_y}+D_{N_x}N_y,
+
+$$
+
+左乘 $V^\dagger$ 并取范数即得。
+ ∎
+
+这回答了“尺子也测不准”的一个有限模型版本：若连读出操作也仅近似稳定，必须把误差放进假设。仅对一态的三次期望近似相同，不足以提供本推论要求的对全部态的算子范数保证。
+
+<a id="statement-3-4"></a>
+
+<a id="prop-phase"></a>
+

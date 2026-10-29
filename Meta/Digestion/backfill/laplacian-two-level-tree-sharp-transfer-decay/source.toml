@@ -1,0 +1,5 @@
+source_id = "laplacian-two-level-tree-sharp-transfer-decay"
+path = "docs/develop/theory/LAPLACIAN_TWO_LEVEL_TREE_SHARP_TRANSFER_DECAY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

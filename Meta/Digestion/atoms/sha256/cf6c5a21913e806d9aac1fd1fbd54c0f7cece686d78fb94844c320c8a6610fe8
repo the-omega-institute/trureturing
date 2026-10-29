@@ -1,0 +1,14 @@
+## 8. 黄金门中的相干递归与概率递归
+
+使用项目已经收录的固定门（[5](#ref-repogate)）。在不变空间 $\operatorname{span}\{|000\rangle,|010\rangle\}$ 上，
+
+$$
+P=\begin{pmatrix}\varphi^{-1}&\varphi^{-3/2}\\\varphi^{-3/2}&\varphi^{-2}\end{pmatrix},
+\quad \zeta=e^{3\pi i/5},\quad
+K=\zeta[I+(\zeta-1)P].
+$$
+
+因为 $P^2=P$，门的特征值为 $\zeta,\zeta^2$，故 $K^{10}=I$。
+
+<a id="thm-goldenrecord"></a>
+

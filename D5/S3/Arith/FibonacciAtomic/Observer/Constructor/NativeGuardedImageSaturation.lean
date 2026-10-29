@@ -141,7 +141,7 @@ noncomputable def canonical {k m : Nat} (S : System k m) (p : Fin k → Nat)
     (guarded : Guarded S) {s : Nat} (mode : Mode s m) : Fin m → CompletionTree :=
   Classical.choose (guarded_extension S p guarded (canonicalFree mode)).exists
 
-private theorem canonical_law {k m : Nat} (S : System k m) (p : Fin k → Nat)
+theorem canonical_law {k m : Nat} (S : System k m) (p : Fin k → Nat)
     (guarded : Guarded S) {s : Nat} (mode : Mode s m) :
     Satisfies S p (canonical S p guarded mode) ∧
       Extends S (canonicalFree mode) (canonical S p guarded mode) :=

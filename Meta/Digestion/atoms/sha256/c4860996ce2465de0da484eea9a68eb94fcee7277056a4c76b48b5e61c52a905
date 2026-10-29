@@ -1,0 +1,61 @@
+### Normalized infinite kernel in Theorem 78.2
+
+On the product of the infinite height space, the infinite operational
+scalar path space and an auxiliary infinite original-time Brownian
+path space, define once and for all
+
+$$
+\widetilde{\mathsf V}(dK,dB,dH)
+ =\mathsf Q_K(dK)\,\mu_{C(K)}(dB)\,\mathsf W(dH),
+\qquad
+\widetilde{\mathsf Q}=\mathsf Q_K\otimes\mathsf W\otimes\mathsf W.
+\tag{78.15}
+$$
+
+Here $H$ denotes the auxiliary path, distinct from the fixed scalar
+$H=(1-Z)/2$. Because $C$ is countably valued, $K\mapsto\mu_{C(K)}$
+is a measurable probability kernel: for every Borel set $D$ of scalar
+paths, $\mu_{C(K)}(D)=\sum_{c\ge1}\mathbf1_{\{C(K)=c\}}\mu_c(D)$.
+It integrates to one for every $K$. Thus (78.15) is a probability
+measure whose height marginal on the entire infinite path sigma-field
+is exactly $\mathsf Q_K$.
+
+Choose measurable versions $f_{c,U}=d(\mu_c)_U/d\mathsf W_U$.
+For
+$\mathcal G_{U,T}=\sigma(K_{[0,\infty)},B_{[0,U]},H_{[0,T]})$,
+the density relative to $\widetilde{\mathsf Q}$ is
+
+$$
+F_U(K,B)=\sum_{c\ge1}\mathbf1_{\{C(K)=c\}}f_{c,U}(B),
+\qquad
+\int F_U(K,B)\,\mathsf W_U(dB)=1.
+\tag{78.16}
+$$
+
+This identity follows first on product cylinders by integration and
+then on $\mathcal G_{U,T}$ by the monotone-class theorem. In particular
+it includes the entire height path, even when $C$ uses its full future.
+For each $c$, (78.14) bounds $\int f_{c,U}\log^+f_{c,U}\,d\mathsf W_U$
+by $B_0+B_1c+\nu\log(1+U/(2m))$, since $\int f_{c,U}=1$.
+The negative part is at most $1/e$ in integral, by
+$x\log x\ge-1/e$. Integrating first over $B$ and then over $K$
+therefore proves
+
+$$
+\begin{aligned}
+D(\widetilde{\mathsf V}|_{\mathcal G_{U,T}}\Vert
+  \widetilde{\mathsf Q}|_{\mathcal G_{U,T}})
+ &=\sum_{c\ge1}\mathsf Q_K(C=c)
+                       D((\mu_c)_U\Vert\mathsf W_U)\\
+ &\le B_0+B_1\mathbb E_{\mathsf Q_K}C
+                       +\nu\log(1+U/(2m))<\infty.
+\end{aligned}
+\tag{78.17}
+$$
+
+Only the first moment of $C$ is used. No exponential moment of $C$
+is asserted or required; in particular no integral of $C_0(C)$ is
+used. There is no height-conditioning entropy charge, because the
+conditional densities (78.16) have mean one and retain every height
+level with its original $\mathsf Q_K$ probability.
+

@@ -1,0 +1,17 @@
+**定义 112.1（目标轨道的有限证书）。** 对 $\tau>0$，选取两个有限正向词集 $\mathcal W_{\rm s},\mathcal W_{\rm e}$，使
+
+$$
+\{U_w\rho_0U_w^\dagger:w\in\mathcal W_{\rm s}\},\qquad
+\{U_w^\dagger EU_w:w\in\mathcal W_{\rm e}\}
+\tag{112.1}
+$$
+
+各为全部复秩一迹一投影的 $\tau$-网，最大词长记为 $n$。每个固定源均有这样的证书：定理 95.1 给两侧稠密轨道，纯投影集合紧，有限子覆盖给有限网。这是目标侧数学证书，不是新增的实测词、可执行逆或纯态制备。
+置
+
+$$
+F_n=(1+\beta)^n-1,\qquad q_n=(1+\beta)^n(1+\gamma)-1,\qquad
+ g(q)=\frac{(1+\sqrt3)q}{1-\sqrt3q}.
+\tag{112.2}
+$$
+

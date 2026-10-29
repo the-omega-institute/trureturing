@@ -1,0 +1,75 @@
+### 14.3. A necessary quadratic with strict-source guards
+
+For an actual world at a base in $\mathcal S$, define the following
+rational functions of the same $x,p,v$:
+
+$$
+\begin{gathered}
+\gamma=294/5,\quad
+\tau=20/x-45+36/(x+1)-10/(x+2),\\
+\tau_2=4/x-6+4/(x+1)-1/(x+2),\qquad
+s=16/x+1/(x+2),\\
+c_0=480/x-810+36p/(x+1)-10v/(x+2),\\
+c_2=96/x-108+4p/(x+1)-v/(x+2),\qquad
+e=c_0-9c_2=162-384/x-v/(x+2).
+\end{gathered}
+\tag{14.8}
+$$
+
+All three denominators $x,x+1,x+2$ are positive. Interpolation gives
+$H_0=c_0-d\tau$, $H_2=c_2-d\tau_2$ and
+$9\tau_2-\tau=s-9$. The restored identities in (12.9) therefore give
+
+$$
+\begin{aligned}
+A_U&=d(U-\tau)+c_0=0,\\
+B_U&=(U+1)(c_2-d\tau_2)-(\gamma-2d)U=0.
+\end{aligned}
+\tag{14.9}
+$$
+
+Consequently the necessary quadratic is
+
+$$
+\begin{aligned}
+\Phi(U)
+ &=(U+1)\{c_2(U-\tau)+c_0\tau_2\}
+                     -\{\gamma(U-\tau)+2c_0\}U\\
+ &=(U-\tau)B_U+\{(U+1)\tau_2-2U\}A_U=0,\\
+\Phi(U)&=\lambda_2U^2+\lambda_1U+\lambda_0,\\
+\lambda_2&=c_2-\gamma,\\
+\lambda_1&=\{c_0(s-26)+e(\tau-1)\}/9+\gamma\tau,\\
+\lambda_0&=\{c_0(s-9)+e\tau\}/9.
+\end{aligned}
+\tag{14.10}
+$$
+
+In particular the factor $U+1$ multiplies the entire first bracket.
+The undivided identity in (14.10) is valid also at $d=0$ or
+$U=\tau$; no converse from $\Phi=0$ alone is asserted.
+
+The original source identity $j=b+r(1-r)/b$, together with
+$x=(j+r)/U$ and $U=1+2b$, gives
+
+$$
+\begin{gathered}
+r^2-(b+1)r+bxU-b^2=0,\\
+\Psi(U):=(5-8x)U^2+(8x-6)U+5=4(2r-b-1)^2\ge0.
+\end{gathered}
+\tag{14.11}
+$$
+
+If $x>13/16$, then $\Psi''<0$, $\Psi'(1)=4-8x<0$ and
+$\Psi(2)=13-16x<0$. Since the source has $U>1$, monotonicity on
+$[1,\infty)$ forces $1<U<2$. This uses the actual source equation,
+without selecting either of its quadratic roots.
+
+Here are sufficient rational bounds for (14.10). They hold on each
+entire indicated closed interval and all of $Z_{pw}$.
+
+| $x$ interval | Bounds for $\tau,s$ | Bounds for $c_0,c_2,e$ |
+| --- | --- | --- |
+| $[1/3,5/12]$ | $1<\tau<40$, $s>35$ | $c_0<-5000$, $c_2<0$, $e<0$ |
+| $I_c=[24/25,501/500]$ | $-11<\tau<-9$, $s<35/2$ | $c_0<-5500$, $c_2<0$, $e<130$ |
+| $[19/10,63/25]$ | $-30<\tau<0$, $s<9$ | $c_0<-3200$, $c_2<0$, $e<280$ |
+| $[27,34]$ | $-44<\tau<-43$, $1/3<s<1$ | $-1140<c_0<0$, $c_2<0$, $e>172$ |

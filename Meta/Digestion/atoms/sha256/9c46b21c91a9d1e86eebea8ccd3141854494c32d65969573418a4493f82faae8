@@ -1,0 +1,46 @@
+**定理 83.1（phase family 的 optimal-image separation）。** 固定 $n=2$、$0<q\le1/1000$，令
+
+$$
+E_\varphi(q)=|\sqrt{1-q}\,\xi+e^{i\varphi}\sqrt q\,e\rangle
+ \langle\sqrt{1-q}\,\xi+e^{i\varphi}\sqrt q\,e|,
+\qquad \varphi\in\mathbb R/(2\pi\mathbb Z).
+$$
+
+它们的 individual optima 均为定理 81.4 的 $\eta$。每个任务的 optimal recovered image 唯一为
+
+$$
+C_\varphi=Z_\varphi G_{-1/2}(K_0)Z_\varphi^\dagger,\quad
+Z_\varphi=\operatorname{diag}(1,e^{i\varphi},1),\quad
+K_0=\begin{pmatrix}1-y&-w\\-w&y\end{pmatrix}\oplus d,
+\quad (C_\varphi)_{\xi e}=\frac w2e^{-i\varphi}.
+$$
+
+任意两个不同 phases 没有一个共同 CPTP decoder 同时达到这两个 individual optima。因此对 $N\ge1$ 个不同 phases，若一个已供应的 deterministic task label 仅用于从固定 terminal decoder dictionary 选一个 decoder，并要求每个任务恰达到 individual optimum，则最少恰需 $N$ 个 labels。
+
+**证明。** $G_s$ 与 $Z_\varphi$ 的 conjugation 交换，后者保持整个 effect interval；这是 supplier Proposition 27.2 的 attainable-set invariance，并非 $F$ 的 covariance。故定理 81.4 的 optimum、optimizer 与 dual certificate 都逐 phase conjugate，给出所列 unique image。令 $B_\varphi=U_0Z_\varphi K_0Z_\varphi^\dagger U_0^\dagger$，以 $E_\varphi$ 与 $|f\rangle\langle f|$ 为 prepared states 的 supplier map 达到该 optimum。
+
+令 $h=\sqrt{q(1-q)}$。定理 81.4 的 residual identity 给出
+
+$$
+h=w/2+(\eta+d)\gamma=\gamma(3-R+10d)/8,
+\qquad \frac wh=\frac4{R(3-R+10d)}.
+$$
+
+由 $\vartheta\le41/1200$、$y\le\vartheta/4$、$d<y/3$，
+
+$$
+0<R(3-R+10d)<\frac{21}{20}\left(2+\frac{41}{1440}\right)
+ =\frac{20447}{9600}<4,
+\qquad w/h>1.
+$$
+
+对不同 $\varphi,\psi$，置 $a_{\varphi\psi}=|e^{-i\varphi}-e^{-i\psi}|>0$。$H=E_\varphi-E_\psi$ 的 eigenvalues 为 $ha_{\varphi\psi},-ha_{\varphi\psi},0$，故 $\|H\|=ha_{\varphi\psi}$。任何同一个 CPTP decoder 满足
+
+$$
+\left|\big((F^2)^\dagger\mathcal D^\dagger(H)\big)_{\xi e}\right|
+ \le\frac12\|\mathcal D^\dagger(H)\|
+ \le\frac12ha_{\varphi\psi}.
+$$
+
+若它对两个 tasks 都 individually optimal，unique image 与线性性却要求该 entry 的模为 $wa_{\varphi\psi}/2$，矛盾。因此每个 dictionary label fibre 至多含一个 phase；逐任务使用上面的 attaining map 则 $N$ labels 足够。这里没有 decoder uniqueness 结论。∎
+

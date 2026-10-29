@@ -1,0 +1,97 @@
+**Proposition 138.1 (Length change without decoder symmetry; repo-derived).**
+For a fixed source suppose $N^r=\lambda W$ for an integer $r\ge0$
+and $|\lambda|=1$. For every lift $L=(X,Y,Z)\in\mathscr V$ and
+integer $L_0\ge0$, put
+
+$$
+\mathcal Q_{L_0}(L)=\max_{1\le i\le9,\ |w|\le L_0}|q_{i,w}(L)|,
+\qquad \mathscr J L=(-WXW,-WYW,-WZW).
+\tag{138.1}
+$$
+
+The lawful original-row relation and length-bounded consequences are
+
+$$
+\begin{gathered}
+q_{i,w}(\mathscr J L)=-q_{i,wN^r}(L),\qquad
+\mathcal Q_{L_0}(\mathscr J L)\le\mathcal Q_{L_0+r}(L),\\
+\mathcal Q_{L_0}(L)\le\mathcal Q_{L_0+r}(\mathscr J L).
+\end{gathered}
+\tag{138.2}
+$$
+
+In particular, writing
+$\mathcal F_{\le L_0}(z,g)=\max_{i,|w|\le L_0}|\ell_{i,w}(z,g)|$
+with precisely (125.3), one has
+
+$$
+\begin{aligned}
+\mathcal F_{\le L_0}(Wz,-g)&\le\mathcal F_{\le L_0+r}(z,g),\\
+\mathcal F_{\le L_0}(\Pi z,0)
+ &\le\tfrac12\bigl(\mathcal F_{\le L_0}(z,g)
+                          +\mathcal F_{\le L_0+r}(z,g)\bigr)
+ \le\mathcal F_{\le L_0+r}(z,g).
+\end{aligned}
+\tag{138.3}
+$$
+
+For the family of Proposition 137.1 take $r=2$. Separately, let
+$K=K_{\mathfrak s}$ of (129.1) and use the actual finite family
+$\mathscr W_{K,4}$ of (134.1). For all paired hypotheses in
+$\mathcal P^2$ and all tangent parameters,
+
+$$
+\begin{aligned}
+\Delta_{\rm all}(x,x')&=
+ \max_{\substack{1\le i\le9,\ w\in\mathscr W_{K,4}\\\beta\in\{0,1\}}}
+                  |p_x(u_i,w,\beta)-p_{x'}(u_i,w,\beta)|
+ =\Delta_{4K+3}(x,x'),\\
+\mathcal F_a(z,g)&=\max_{1\le i\le9,\ w\in\mathscr W_{K,4}}
+                                              |\ell_{i,w}(z,g)|.
+\end{aligned}
+\tag{138.4}
+$$
+
+Consequently its common positive tangent optimum has the attained
+linear-program epigraph below, with four transverse coordinates and
+one epigraph variable, using the original columns of (125.4):
+
+$$
+ m_a=n_a=\min_{x\in\mathbb R^4,\ v\in\mathbb R}v
+ \quad\text{subject to}\quad
+ -v\le\beta_\rho+\sum_{j=1}^4U_{\rho,j+2}x_j\le v
+ \quad(\rho=(i,w),\ w\in\mathscr W_{K,4}).
+\tag{138.5}
+$$
+
+The finite norming family in (138.4) is the separate full-law family
+of §134, not the fixed decoder $P_{\mathfrak s}$.
+Neither (138.2) nor (138.4) asserts invariance of the decoder's
+fixed length $L_{\mathfrak s}$ or $m_f=n_f$.
+
+*Proof.* Equations (135.7), the chronological identity
+$Q_{wN^r}=N^rQ_w=\lambda WQ_w$ and phase cancellation give the
+first equality of (138.2). The appended word has length $|w|+r$
+and unchanged native-label count, so it has exactly the same row
+weight $a_w/2$ and unchanged prefix mass. Taking maxima gives the
+first inequality; applying it to $\mathscr J L$ and using
+$\mathscr J^2=I$ gives the second. The tangent lift satisfies
+$L(Wz,-g)=\mathscr J L(z,g)$ by Lemma 135.2, proving the first
+line of (138.3). Convexity of the finite maximum and its midpoint
+then prove the second line. The comparison enlarges the length
+bound; a word at the old bound need not stay inside that bound.
+It therefore supplies no equality for that fixed finite decoder.
+
+For the specified family $N^4=I_3$, so apply Corollary 134.1 with
+$p=4$. Its length bound is $K+3(K+1)=4K+3$ and its two full-law
+norming identities are exactly (138.4). This invocation concerns
+actual histories and preserves every original weight. Original and
+reduced clocks and records remain distinct even where their row
+values coincide. Apply (136.4), express the transverse vector by
+(136.8), and use (125.4): the four retained columns are precisely
+columns $3,4,5,6$, and $g=0$ removes both retention columns.
+The epigraph of the resulting finite maximum is (138.5).
+Theorem 126.1 and the projection in Theorem 136.1 supply attainment.
+This does not identify (138.4) with the error of $P_{\mathfrak s}$.
+$\square$
+

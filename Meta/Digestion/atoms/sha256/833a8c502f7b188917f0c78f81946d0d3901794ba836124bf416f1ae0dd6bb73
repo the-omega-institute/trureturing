@@ -1,0 +1,39 @@
+**Proposition 18.5 (one-Tick same-run account).** Through the paid
+seed, $h$ and Construction 17.2, with its actual scout count $d$,
+
+$$
+\begin{array}{c|c}
+\mathrm{Reset}&1\\
+\mathrm{Add}&1\\
+\mathrm{digital\ Read}&1+d+b(n+1)\\
+\mathrm{Tick}&Q+n+1\\
+\mathrm{Hold}&n+2\\
+\mathrm{raw\ growth}&n\\
+\mathrm{fixed\ field\ acknowledgements}&Q+2n+5 .
+\end{array}
+\tag{18.3}
+$$
+
+Peak requested precision is $P=18p_*+3n+1=O(Q+n+1)$.
+If $N_i$ is the tree size after birth $i$, source Tick products number
+$\sum_{i=0}^nq_i(3N_i-2)+(n+1)(3N-2)$; sums replace $3M-2$
+by $2M-2$. The whole run uses $1+d+b(n+1)$ real provider bits.
+
+Proof. Add the four seed calls, $Q$ historical Ticks, $n$ raw births,
+one scout Tick/Hold, $d$ scout Reads, and the $n$ assay Ticks,
+$n$ further Holds and $b(n+1)$ assay Reads. Acknowledgements count
+Reset, Add, Tick and Hold only. Equation (17.3) gives the peak bound;
+Proposition 13.3 supplies the actual-size source work. The seed
+precision one is below $P$. Each enabled digital Read consumes exactly
+one bit. No transaction lifecycle is absorbed in the acknowledgement
+row. $\square$
+
+The numerical routes and inherited valid-image gap decoding use the
+bound of Proposition 13.5, with digital extraction, scout input/output,
+integer floors, shifts and counters added at their actual widths.
+Source values through acquisition have widths $O(Q+n+1)$ by the
+numerator induction; inverse and elimination intermediates need their
+separate width parameter. A zero or otherwise off-promise entrance
+need not terminate the scout. This is not a total digital image
+recognizer, unknown-seed assay or physical restoration procedure.
+
