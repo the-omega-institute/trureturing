@@ -4,11 +4,13 @@
    mirror-E: none(waiver:symbolic-structural-theorems)
    anchors: []
    utility: none
-   digest: A complete return chart admits coherent rational time precisely at period one with a rational holonomy homomorphism. -/
+   digest: Rational time on a complete return chart requires period one and coherent holonomy. -/
 
 import D5.S3.ConceptDynamics.Coding.PrimitiveLifts.PrimitiveLiftRootCriterion
 import Mathlib.Algebra.Group.End
 import Mathlib.Data.Rat.Cast.Order
+
+/-! A single complete signed return chart and its coherent rational time actions. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -31,7 +33,7 @@ private theorem period_one_of_action
   let q := Multiplicative.ofAdd (1 / (A.period : ℚ))
   have hq : q ^ A.period = Multiplicative.ofAdd (1 : ℚ) := by
     apply Multiplicative.toAdd.injective
-    simp [q, Multiplicative.toAdd_pow, nsmul_eq_mul, hd]
+    simp [q, toAdd_pow, nsmul_eq_mul, hd]
   have hp : ρ q ^ A.period = ρ (Multiplicative.ofAdd (1 : ℚ)) := by
     rw [← map_pow, hq]
   have hroot : (ρ q : X → X)^[A.period] = A.time := by
@@ -58,34 +60,22 @@ private def zeroChart (hd : A.period = 1) : H ≃ X :=
       change A.point 0 z = A.point (j.val : ℤ) z
       simp [hj])
 
-private theorem zeroChart_deck (hd : A.period = 1) (a z : H) :
-    zeroChart A hd (a*z) = A.deck a (zeroChart A hd z) :=
-  (A.deck_point a 0 z).symm
-
-private theorem zeroChart_time (hd : A.period = 1) (z : H) :
-    zeroChart A hd (z*A.holonomy) = A.time (zeroChart A hd z) := by
-  change A.point 0 (z*A.holonomy) = A.time (A.point 0 z)
-  rw [A.time_point]
-  symm
-  apply (A.relation _ _ _ _).2
-  exact ⟨1,by simp [hd],by simp⟩
-
 private theorem holonomy_hom_of_action (hd : A.period = 1)
     (ρ : Multiplicative ℚ →* Equiv.Perm X)
     (heq : ∀ q, A.Equivariant (ρ q))
     (htime : (ρ (Multiplicative.ofAdd (1 : ℚ)) : X → X) = A.time) :
     ∃ φ : Multiplicative ℚ →* H, φ (Multiplicative.ofAdd (1 : ℚ)) = A.holonomy := by
   let e := zeroChart A hd
+  have deck (a z : H) : A.deck a (e z) = e (a * z) := A.deck_point a 0 z
   let b (q : Multiplicative ℚ) := e.symm (ρ q (e 1))
   have eb (q : Multiplicative ℚ) : e (b q) = ρ q (e 1) := e.apply_symm_apply _
   have law (q : Multiplicative ℚ) (z : H) : ρ q (e z) = e (z * b q) := by
     calc
       ρ q (e z) = ρ q (A.deck z (e 1)) := by
-        rw [← zeroChart_deck A hd]
-        simp only [mul_one]
+        rw [deck, mul_one]
       _ = A.deck z (ρ q (e 1)) := heq q z (e 1)
       _ = A.deck z (e (b q)) := by rw [eb]
-      _ = e (z*b q) := (zeroChart_deck A hd z (b q)).symm
+      _ = e (z*b q) := deck z (b q)
   let φ : Multiplicative ℚ →* H := {
     toFun := b
     map_one' := by
@@ -101,7 +91,13 @@ private theorem holonomy_hom_of_action (hd : A.period = 1)
   apply e.injective
   change e (b (Multiplicative.ofAdd (1 : ℚ))) = e A.holonomy
   rw [eb,congrFun htime]
-  simpa only [one_mul] using (zeroChart_time A hd 1).symm
+  have ht : e (1 * A.holonomy) = A.time (e 1) := by
+    change A.point 0 (1 * A.holonomy) = A.time (A.point 0 1)
+    rw [A.time_point]
+    symm
+    apply (A.relation _ _ _ _).2
+    exact ⟨1, by simp [hd], by simp⟩
+  simpa only [one_mul] using ht.symm
 
 private theorem action_of_holonomy_hom (hd : A.period = 1)
     (φ : Multiplicative ℚ →* H)
@@ -110,6 +106,7 @@ private theorem action_of_holonomy_hom (hd : A.period = 1)
       (∀ q, A.Equivariant (ρ q)) ∧
       (ρ (Multiplicative.ofAdd (1 : ℚ)) : X → X) = A.time := by
   let e := zeroChart A hd
+  have deck (a z : H) : A.deck a (e z) = e (a * z) := A.deck_point a 0 z
   let ψ : Multiplicative ℚ →* Equiv.Perm H := {
     toFun q := Equiv.mulRight (φ q)
     map_one' := by simp
@@ -124,11 +121,15 @@ private theorem action_of_holonomy_hom (hd : A.period = 1)
   refine ⟨ρ,?_,?_⟩
   · intro q a x
     obtain ⟨z,rfl⟩ := e.surjective x
-    rw [← zeroChart_deck A hd,law,law,← zeroChart_deck A hd,mul_assoc]
+    rw [deck, law, law, deck, mul_assoc]
   · funext x
     obtain ⟨z,rfl⟩ := e.surjective x
     rw [law,hφ]
-    exact zeroChart_time A hd z
+    change A.point 0 (z * A.holonomy) = A.time (A.point 0 z)
+    rw [A.time_point]
+    symm
+    apply (A.relation _ _ _ _).2
+    exact ⟨1, by simp [hd], by simp⟩
 
 /-- A single complete signed return chart admits a genuine deck-equivariant rational
 time action exactly when its period is one and its holonomy extends coherently to ℚ. -/
