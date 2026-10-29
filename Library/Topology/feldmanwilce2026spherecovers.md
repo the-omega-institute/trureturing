@@ -71,7 +71,7 @@ openness and allows overlapping, disconnected original cover members.
 ## Reused formal sources
 
 The simplex fixed point theorem is
-`D5.S3.Geometry.FixedPoint.Brouwer.Brouwer`, with the Math_XMUM provenance
+`D5.S3.Geometry.FixedPoint.Brouwer`, with the Math_XMUM provenance
 and MIT license retained in its source. Mathlib supplies the orthogonal
 complement basis, open connected components, partitions of unity, finite
 union of proper subspaces, stereographic projection, convex contractibility,

@@ -9,7 +9,7 @@ whole-source arena for the cover, topology and varying dimension, an enrolled
 readout and sourceSelection, a realization-equivalence bridge, whole-family
 variation and sensitivity, and actual observational dependence.
 No declared_validated registration is claimed. The linked-issue exception
-is tracked at https://github.com/the-omega-institute/trureturing/issues/23716.
+is tracked at https://github.com/the-omega-institute/trureturing/issues/23724.
 -/
 
 namespace Reg.D5.S3.Topology.SphereBrouwerObstruction
