@@ -29,18 +29,18 @@ private lemma P_dependence (L : PeriodPair) : ∃ u v : ℂ, L.weierstrassP u �
 
 namespace Weierstrass
 abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature PeriodPair (fun _ => ℂ) (fun _ => ℂ)
+  Reg.Support.SingleDependentReadout.signature (Σ _ : SL(2, ℤ), UpperHalfPlane) (fun _ => ℂ) (fun _ => ℂ)
 
 def actual : Realization signature :=
-  realize signature (fun _ L w => L.weierstrassP w) (fun e => nomatch e)
+  realize signature (fun _ p w => (periodPair (p.1 • p.2)).weierstrassP w) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ L w => L.weierstrassP w + 1) (fun e => nomatch e)
+  realize signature (fun _ p w => (periodPair (p.1 • p.2)).weierstrassP w + 1) (fun e => nomatch e)
 
 def arena : Arena where
   signature := signature
   Law R := ∀ (γ : SL(2, ℤ)) (τ : UpperHalfPlane) (w : ℂ),
     w ∉ (periodPair τ).lattice →
-    R.readout () (periodPair (γ • τ)) (w / UpperHalfPlane.denom γ τ) =
+    R.readout () ⟨γ, τ⟩ (w / UpperHalfPlane.denom γ τ) =
       UpperHalfPlane.denom γ τ ^ 2 * (periodPair τ).weierstrassP w
 
 private lemma rejected_law : ¬ arena.Law rejected := by
@@ -55,7 +55,7 @@ private lemma rejected_law : ¬ arena.Law rejected := by
 private lemma dependence : ObservationalDependence signature actual := by
   intro i
   obtain ⟨u, v, h⟩ := P_dependence (periodPair sampleTau)
-  exact ⟨periodPair sampleTau, u, v, h⟩
+  exact ⟨⟨1, sampleTau⟩, u, v, by simpa [actual] using h⟩
 
 def family : Registration arena (type_of% (@weierstrassP_modular)) where
   actual := actual
@@ -77,7 +77,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ L w => L.weierstrassP w) (fun e => nomatch e))
+  readout := some (realize signature (fun _ p w => (periodPair (p.1 • p.2)).weierstrassP w) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -85,7 +85,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.Characters.EllipticModularTransport
     definition := none
-    coordinates := #[]
+    coordinates := #[0, 1]
     readouts := #[{
       path := #["body", "body", "body", "body", "fn", "arg", "fn"]
       stateBinder := 0
@@ -100,18 +100,18 @@ end Weierstrass
 
 namespace Continued
 abbrev signature : Signature :=
-  Reg.Support.SingleDependentReadout.signature UpperHalfPlane (fun _ => ℂ) (fun _ => ℂ)
+  Reg.Support.SingleDependentReadout.signature (Σ _ : SL(2, ℤ), UpperHalfPlane) (fun _ => ℂ) (fun _ => ℂ)
 
 def actual : Realization signature :=
-  realize signature (fun _ τ w => continuedKernel τ w) (fun e => nomatch e)
+  realize signature (fun _ p w => continuedKernel (p.1 • p.2) w) (fun e => nomatch e)
 def rejected : Realization signature :=
-  realize signature (fun _ τ w => continuedKernel τ w + 1) (fun e => nomatch e)
+  realize signature (fun _ p w => continuedKernel (p.1 • p.2) w + 1) (fun e => nomatch e)
 
 def arena : Arena where
   signature := signature
   Law R := ∀ (γ : SL(2, ℤ)) (τ : UpperHalfPlane) (w : ℂ),
     w ∉ (periodPair τ).lattice →
-    R.readout () (γ • τ) (w / UpperHalfPlane.denom γ τ) =
+    R.readout () ⟨γ, τ⟩ (w / UpperHalfPlane.denom γ τ) =
       UpperHalfPlane.denom γ τ ^ 2 * continuedKernel τ w -
         (γ 1 0 : ℂ) * UpperHalfPlane.denom γ τ / (2 * π * I)
 
@@ -127,9 +127,10 @@ private lemma rejected_law : ¬ arena.Law rejected := by
 private lemma dependence : ObservationalDependence signature actual := by
   intro i
   obtain ⟨u, v, h⟩ := P_dependence (periodPair sampleTau)
-  refine ⟨sampleTau, u, v, ?_⟩
+  refine ⟨⟨1, sampleTau⟩, u, v, ?_⟩
   intro hk
-  change continuedKernel sampleTau u = continuedKernel sampleTau v at hk
+  change continuedKernel (1 • sampleTau) u = continuedKernel (1 • sampleTau) v at hk
+  simp only [one_smul] at hk
   unfold continuedKernel at hk
   have he : (periodPair sampleTau).weierstrassP u / (2 * π * I) ^ 2 =
       (periodPair sampleTau).weierstrassP v / (2 * π * I) ^ 2 := sub_left_inj.mp hk
@@ -155,7 +156,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   realization := .source arena ⟨family⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ τ w => continuedKernel τ w) (fun e => nomatch e))
+  readout := some (realize signature (fun _ p w => continuedKernel (p.1 • p.2) w) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -163,7 +164,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   sourceSelection := some {
     owner := `D5.S3.VertexAlgebra.Characters.EllipticModularTransport
     definition := none
-    coordinates := #[]
+    coordinates := #[0, 1]
     readouts := #[{
       path := #["body", "body", "body", "body", "fn", "arg", "fn"]
       stateBinder := 0
