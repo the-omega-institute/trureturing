@@ -2266,11 +2266,11 @@ unresolved; no universal acquisition impossibility follows.
 
 ## 追加锚（本行以下为增补区）
 
-## 21. The canonical Hankel fibre and original-order reinstatement
+## 21. Source-faithful Hankel fibres, typed normalization, and conditional ordinal access
 
-**Definition 21.1 (the earned prefix fibre).** For $d\ge1$, write the
-acquired prefix as $P=(\zeta _0,\ldots,\zeta _{2d-1})$, where
-$\zeta_i=z_{i+1}$ in the indexing of Definition 9.1. Put
+**Definition 21.1 (row, seed, and canonical descriptor).** For $d\ge1$, let
+$P=(\zeta _0,\ldots,\zeta _{2d-1})$ be the actually acquired prefix,
+with $\zeta_i=z_{i+1}$ in Definition 9.1. Put
 
 $$
  H(P)_{ij}=\zeta_{i+j},\qquad y(P)_i=\zeta_{i+d}
@@ -2278,210 +2278,360 @@ $$
  \tag{ACR.75}
 $$
 
-Let $\rho_d:\{0,\ldots,2^d-1\}\to\mathbb F_2^d$ be the same fixed
-coefficient-row enumeration used in $K_d$. A row $c$ passes on $P$ when
-$H(P)c=y(P)$. Its monic polynomial is
+Let $s_d(P)=(\zeta _0,\ldots,\zeta _{d-1})\in\mathbb F_2^d$ be the
+original first-$d$ seed, and let $\rho_d$ be the same fixed bijective
+coefficient-row enumeration used by Definition 9.1. Define the row
+projection
 
 $$
- p_c(E)=E^d-\sum_{j<d}c_jE^j.
+ \kappa_d(P)=\rho_d(i_P),\qquad
+ i_P=\min\{i<2^d:H(P)\rho_d(i)=y(P)\},
  \tag{ACR.76}
 $$
 
-For an authentic $P$, let $m_P$ be the monic annihilator of least degree
-of its all-index stream, and write $r=\deg m_P$; the zero stream has
-$m_P=1$ and $r=0$. The canonical row $K_d(P)$ is the first $\rho_d(i)$
-that passes, together with the original first $d$ bits of $P$ as its seed.
+and define the full descriptor
 
-**Theorem 21.2 (the exact affine fibre).** Let $P$ be authentic for a
-stream in $\mathscr R_d$. Then
+$$
+ \operatorname{EN}_d(P)=\bigl(\kappa_d(P),s_d(P)\bigr)\in
+ \mathbb F_2^d\times\mathbb F_2^d.
+ \tag{ACR.77}
+$$
+
+Thus $K_d(P)$ in the original target is this full descriptor:
+$K_d(P)=\operatorname{EN}_d(P)$. Its first component is the original
+first passing row; its second component is copied from the authentic
+prefix and is never fabricated from that row. For $d=0$, set
+$\operatorname{EN}_0(\varnothing)=(\varnothing,\varnothing)$, the
+original zero descriptor.
+
+For $c\in\mathbb F_2^d$, write
+
+$$
+ p_c(E)=E^d-\sum_{j<d}c_jE^j.
+ \tag{ACR.78}
+$$
+
+**Theorem 21.2 (the exact all-index affine fibre).** Let $P$ be the
+authentic first $2d$ values of a stream in $\mathscr R_d$, let $m_P$ be
+its monic least all-index annihilator, and put $r=\deg m_P\le d$; for
+the zero stream take $m_P=1$ and $r=0$. Then
 
 $$
  \{c\in\mathbb F_2^d:H(P)c=y(P)\}
- =\{c:p_c\text{ is a monic degree-}d\text{ multiple of }m_P\},
- \tag{ACR.77}
+ =\{c\in\mathbb F_2^d:m_P\mid p_c\},
+ \tag{ACR.79}
 $$
 
 and
 
 $$
- \operatorname{rank}H(P)=r,qquad
+ \operatorname{rank}H(P)=r,\quad
  \left|\{c:H(P)c=y(P)\}\right|=2^{d-r}.
- \tag{ACR.78}
-$$
-
-For the zero stream, $H(P)=0$, every row passes, and (ACR.78) reads
-$2^d$ with $m_P=1$.
-
-Proof. The equation in (ACR.75) says exactly that the recurrence with
-seed $(\zeta_0,\ldots,\zeta_{d-1})$ has the next $d$ values
-$\zeta_d,\ldots,\zeta_{2d-1}$. Thus a passing row generates a member of
-$\mathscr R_d$ agreeing with the authentic stream in its first $2d$
-values. GPO Lemma 29.2 makes the two all-index streams equal, so
-$p_c$ annihilates the authentic stream. Conversely, an all-index
-annihilator of degree $d$ gives the displayed equations, so it passes.
-If $p$ is any annihilator, divide it by the monic minimal annihilator
-$m_P$: the remainder also annihilates the stream, and minimality forces
-that remainder to vanish. This proves (ACR.77).
-
-It remains to compute the rank. Every row of $H(P)$ after the first $r$
-rows is an $\mathbb F_2$-linear combination of those rows by the
-order-$r$ recurrence, so its rank is at most $r$. If the leading
-$r\times r$ Hankel block had a nonzero column relation, the corresponding
-polynomial $q$ of degree $<r$ would give a sequence $q(E)s$ whose first
-$r$ entries vanish. That sequence itself satisfies the order-$r$
-recurrence, hence forward induction makes it identically zero, contrary
-to minimality. The block has rank $r$, and therefore so does $H(P)$.
-The solution set of a consistent rank-$r$ linear system in $d$ binary
-unknowns is an affine space of dimension $d-r$, proving (ACR.78).
-The zero case is immediate. $\square$
-
-The distinction in this theorem is between a nonsingular observed Hankel
-block and an invertible source transition. For $d\ge1$, take the authentic
-finite impulse $\zeta_i=1$ exactly at $i=d-1$ and zero elsewhere. Its
-minimal annihilator is $E^d$, while $H(P)$ is the antiidentity and hence
-has rank $d$; the companion transition is nilpotent and singular. The
-number of length-$2d$ prefixes with full-rank $H(P)$ is
-$2^{2d-1}$. This is the standard binary nonsingular-Hankel count (the
-last prefix symbol is free, and the $d\times d$ nonsingular Hankel blocks
-number $2^{2d-2}$); it is a count of prefixes, not a probability or an
-entrance assumption. The finite Hankel enumeration is the supplier in
-Massey, *Shift-Register Synthesis and BCH Decoding*, §II
-([MAS]).
-
-**Corollary 21.3 (an unconditional rank-adaptive canonical step).**
-After the authentic prefix has been earned, compute $r=\operatorname{rank}H(P)$.
-If $r=d$, solve the single system $H(P)c=y(P)$. Its unique solution is
-$K_d(P)$, independently of the order in $\rho_d$, so no coefficient-row
-enumeration is needed on that branch. If $r<d$, retain the original
-enumeration and its first-passing rule. At $d=0$ retain the zero
-descriptor. This is a decidable branch on earned data; it adds no promise
-at the entrance and covers singular, nonminimal, finite-transient and
-zero streams through the deficient-rank fallback.
-
-**Theorem 21.4 (two local reductions with the same enumeration).** Fix
-$d\ge1$ and the original $\rho_d$. For a monic polynomial $m$ of degree
-$r\le d$, let $\operatorname{FM}_d(m)$ be the first row in $\rho_d$ whose
-polynomial is a monic degree-$d$ multiple of $m$. For an authentic prefix
-$P$, let $\operatorname{EN}_d(P)=K_d(P)$, including its original first
-$d$-bit seed. The following reductions are exact and preserve the fixed
-enumeration:
-
-1. Given authentic $P$, compute its least all-index annihilator $m_P$
-   by a finite exact minimal-recurrence computation and return
-   $\operatorname{FM}_d(m_P)$. By (ACR.77), this is $\operatorname{EN}_d(P)$.
-2. Given an arbitrary monic $m$ of degree $r\ge1$, generate the stream
-   with recurrence $m$ and seed $0^{r-1}1$, take its first $2d$ values
-   $P_m$, and return $\operatorname{EN}_d(P_m)$. The result is
-   $\operatorname{FM}_d(m)$. For $r=0$, use $m=1$, the zero stream and
-   its separate zero-order convention.
-
-Both transformations have only polynomial local overhead in $d$ besides
-their one call to the other task. They are reductions of finite
-normalization computations; they do not manufacture, reset or replace the
-actual source in Definition 9.1.
-
-Proof. The first assertion is (ACR.77). For the reverse direction, the
-recurrence with seed $0^{r-1}1$ is an authentic member of $\mathscr R_d$.
-No nonzero polynomial of degree $t<r$ can annihilate it: at index
-$i=r-1-t$, its leading term reads the unique one at index $r-1$, while
-all other terms read the preceding zero prefix. Therefore $m$ is its
-least annihilator, even when its constant coefficient is zero and the
-stream has a finite transient. Theorem 21.2 then identifies its passing
-rows with the monic degree-$d$ multiples of $m$, in the very same order
-$\rho_d$. For $r=0$, the only degree-zero case is $m=1$ and the stream is
-zero. Generating $2d$ recurrence values, solving the finite minimal-row
-problem, and carrying the seed are ordinary polynomial-size binary
-computations; none is a source action. $\square$
-
-**Definition 21.5 (uniform affine prefix-image access).** Say that the
-original enumeration has the affine prefix-image property when, for every
-$d$ and every ordinal binary prefix $u\in\{0,1\}^t$ with
-$0\le t\le d$, the set
-
-$$
- A_{d,t,u}=\{\rho_d(i):0\le i<2^d,
-          \lfloor i/2^{d-t}\rfloor=u\}
- \tag{ACR.79}
-$$
-
-is supplied by a uniform finite procedure as an explicit affine subspace
-(or affine coset) of $\mathbb F_2^d$. The procedure must construct the
-base and a basis, prepare the ordinal index data, and charge every
-intermediate and retained write and its backing. In particular, it must
-not return a free feasibility bit. Its bit work, writes and backing must
-be bounded by fixed polynomials in $d$ uniformly over $t,u$.
-
-Under this property, the intersection of $A_{d,t,u}$ with the earned
-fibre in (ACR.78) is obtained by one exact Gaussian elimination. Starting
-at the empty prefix, test the child $u0$ and retain it when the
-intersection is nonempty; otherwise retain $u1$. At depth $d$ the
-remaining ordinal cell is a singleton, so the selected row is exactly
-$K_d(P)$, including rank-deficient fibres. If one image construction costs
-$C_{\rm img}(d)$ bit operations, $W_{\rm img}(d)$ written bits and
-$V_{\rm img}(d)$ working bits, a conservative implementation costs
-
-$$
- O\!\left((d+1)\bigl(C_{\rm img}(d)+(d+1)^3+W_{\rm img}(d)\bigr)\right)
  \tag{ACR.80}
 $$
 
-bit operations and
+The assertion includes singular companion recurrences, nonminimal
+presentations, finite transients, and the zero stream; it does not
+assume a nonzero constant coefficient or an invertible transition.
+
+Proof. The equation $H(P)c=y(P)$ is exactly the order-$d$ recurrence
+with seed $s_d(P)$ evaluated at the next $d$ positions. A passing row
+therefore generates a member of $\mathscr R_d$ agreeing with the
+authentic stream in its first $2d$ values. GPO Lemma 29.2 makes the two
+all-index streams equal, so $p_c$ annihilates the authentic stream.
+Conversely, an all-index annihilator of degree $d$ gives the displayed
+Hankel equations. If an annihilator $p$ is divided by the monic $m_P$,
+the remainder also annihilates the stream; minimality forces the
+remainder to vanish. This proves (ACR.79), including the cases in which
+$m_P$ has zero constant coefficient.
+
+For the rank, every row of $H(P)$ after the first $r$ rows is an
+$\mathbb F_2$-linear combination of those rows by the order-$r$
+recurrence, so the rank is at most $r$. If the leading $r\times r$
+Hankel block had a nonzero column relation, the associated nonzero
+polynomial $q$ of degree $<r$ would produce a sequence $q(E)s$ whose
+first $r$ values vanish. The sequence $q(E)s$ satisfies the same
+order-$r$ recurrence, so forward induction makes it identically zero,
+contradicting minimality. Hence the leading block has rank $r$, and so
+does $H(P)$. The consistent binary system then has affine dimension
+$d-r$, proving (ACR.80). For $r=0$, $H(P)=0$ and $y(P)=0$, so the same
+statement gives $2^d$ passing rows. $\square$
+
+The finite-prefix minimal-synthesis supplier used below is Massey,
+*Shift-Register Synthesis and BCH Decoding*: its §II LFSR length setup
+and its §III Theorem 3 with corollary ([MAS]). That result supplies the
+shortest shift-register synthesis and the $2r$-symbol uniqueness
+threshold. It is used here as
+an intermediate supplier for this source-specific fibre theorem; it is
+not evidence for a count of nonsingular Hankel blocks, and no such
+incidental count is claimed.
+
+**Corollary 21.3 (the full-domain hybrid normalizer).** Once the
+authentic prefix has been earned, compute the exact rank of $H(P)$. If
+$r=d$, solve the single system $H(P)c=y(P)$ and return
 
 $$
- O\bigl(V_{\rm img}(d)+(d+1)^2\bigr)
+ (c,s_d(P))=\operatorname{EN}_d(P).
  \tag{ACR.81}
 $$
 
-reusable bits, with the index preparation and affine feasibility included.
-A lexicographic binary order has this property because its prefix images
-are coordinate affine subspaces; a reflected Gray order has it because
-its index map is an invertible binary-linear map. These are only examples
-conditional on proving that the original convention $\rho_d$ is that
-order. No such equality, and no affine feasibility oracle, is assumed
-here.
+The solution is unique, so this row is the same first row selected by
+$\rho_d$, whatever that enumeration is. If $r<d$, run the original
+$\rho_d$ first-passing enumeration and return
+$(\kappa_d(P),s_d(P))$. Keep the $d=0$ zero descriptor. Thus every
+branch returns the original order-$d$ row together with the original
+first-$d$ seed, including deficient-rank and finite-transient fibres.
+No entrance assumption or physical source action is added.
 
-**Theorem 21.6 (same-source composition and the remaining boundary).**
-Run the lawful acquisition of Theorem 15.1 unchanged through its authentic
-$P$, earned $n$ and $H$, including Theorem 14.2's $4^d$ catalogue
-preparation, all its actual Reads, literal traffic, grants and stationarity.
-Replace only its final canonical-normalization step by Corollary 21.3.
-On a full-rank fibre solve (ACR.75) and on a deficient fibre run the
-original $\rho_d$ enumeration. Then the completed writeback installs
-exactly
+**Theorem 21.4 (typed local interreductions under the original
+enumeration).** Fix $d\ge1$. Let
 
 $$
- (P,K_d(P),n,F_{n+1}-1),
+ \mathcal M_d=\{m\in\mathbb F_2[E]:m\text{ monic},\ \deg m\le d\},
+$$
+
+and for $m\in\mathcal M_d$ define the row-valued task
+
+$$
+ \operatorname{FM}_d(m)=\rho_d(i_m),\qquad
+ i_m=\min\{i<2^d:m\mid p_{\rho_d(i)}\}\in\{0,\ldots,2^d-1\}.
  \tag{ACR.82}
 $$
 
-with the original seed, ready control and any requested forward phase,
-and the same-source continuation of GPO Definitions 34.1 and 39.4--39.5
-applies after the completed handoff. The source Read vector, literal
-traffic, $4^d$ preparation bill, incumbent binding/grant conditions and
-service/handoff tariffs are unchanged. The final normalization's own
-working writes and backing are charged by its selected branch. Only the
-separately charged coefficient-enumerator costs $e_d,v_d$ are removed on
-full-rank runs; the fallback retains them. If the affine prefix-image
-property holds, it removes the final $e_d,v_d$ enumeration on every rank
-while adding the explicit polynomial costs (ACR.80)--(ACR.81).
+For $r=\deg m>0$, let $\iota_r=0^{r-1}1\in\mathbb F_2^r$; set
+$\iota_0=\varnothing$ for $m=1$. Let $s^{m}$ be the all-index
+stream generated by $m$ from the initial $r$ values $\iota_r$ (and the
+zero stream when $r=0$), let
 
-Proof. Theorem 15.1 has already earned an authentic prefix and cut under
-the original source and has paid its catalogue, separators, physical
-literals and completed writes. Theorem 21.2 proves that the rank branch
-returns the same first row as the original enumeration; the deficient
-branch invokes that enumeration verbatim. Thus (ACR.82), rather than an
-equivalent private presentation, is written before the same stationary
-handoff. The existing GPO consumers use precisely these fields and the
-surviving source binding, so their continuation hypotheses are unchanged.
-The affine-prefix procedure has the same conclusion by the child-prefix
-induction following (ACR.79), with its construction, feasibility, writes
-and backing charged as stated. The catalogue and all physical source
-coordinates are untouched in either case. Consequently this result does
-not turn the full acquisition into a polynomial-in-$d$ procedure: the
-original $4^d$ preparation and its total resource contract remain. A
-uniform polynomial total acquisition for the original unknown-law,
-unknown-cut class, and a proof that the unspecified $\rho_d$ has the
-conditional affine property, remain open. $\square$
+$$
+ P_m=(s^m_0,\ldots,s^m_{2d-1}),\qquad
+ \sigma_{m,d}=(s^m_0,\ldots,s^m_{d-1}),
+ \tag{ACR.83}
+$$
+
+and regard $\operatorname{EN}_d(P_m)$ as a value in
+$\mathbb F_2^d\times\mathbb F_2^d$. The two exact reductions are
+
+$$
+ \begin{aligned}
+ R_{P\to m}(P)&=\bigl(\operatorname{FM}_d(m_P),s_d(P)\bigr),\\
+ R_{m\to P}(m)&=\operatorname{EN}_d(P_m)
+   =\bigl(\operatorname{FM}_d(m),\sigma_{m,d}\bigr).
+ \end{aligned}
+ \tag{ACR.84}
+$$
+
+The first map has row output in its first component and the authentic
+seed in its second; the second has the same row type and the explicitly
+generated order-$d$ seed in its second. In particular,
+$\pi_1R_{P\to m}(P)=\kappa_d(P)$ and
+$\pi_1R_{m\to P}(m)=\operatorname{FM}_d(m)$. The reverse input
+$P_m$ is a constructed input to this local normalization reduction
+only; it is never substituted for the physical source prefix.
+
+Proof. Run the Berlekamp--Massey LFSR synthesis on the $2d$ bits of
+an authentic $P$. In Massey's connection-polynomial convention, retain
+the shortest register length $r$ and reverse the coefficient convention
+to the forward-shift polynomial $m_P(E)=E^rC(E^{-1})$, padding the
+trailing zero coefficients when the recurrence is singular. The output
+is then a shortest recurrence for the finite prefix; since
+$\deg m_P\le d$, the $2r\le2d$-symbol uniqueness supplier cited above
+and GPO Lemma 29.2 force it to be the least all-index annihilator.
+Equation (ACR.79) then gives the first component of $R_{P\to m}$,
+while the second is copied verbatim from $P$.
+
+For the reverse map, the recurrence with initial values $\iota_r$ is
+annihilated by $m$. If a nonzero polynomial $q$ of degree $t<r$ were an
+annihilator, evaluate $q(E)s^m$ at index $r-1-t$: its leading term sees
+the unique one at index $r-1$, while every lower term sees a zero in the
+initial prefix. This is impossible. Thus $m$ is the least annihilator,
+even when its constant coefficient is zero and the stream has a finite
+transient. Theorem 21.2 identifies the passing rows with the monic
+degree-$d$ multiples of $m$ in the very same order $\rho_d$, proving the
+first component of $R_{m\to P}$; its second component is exactly the
+constructed $\sigma_{m,d}$. For $m=1$, the generated stream and both
+components are the zero convention. $\square$
+
+The reductions have polynomial local overhead in $d$ besides their one
+call to the other row/descriptor task, and that statement does not hide
+a candidate-recurrence enumeration. The computational model is a
+bit-addressed binary RAM: stored data are bits, an address or counter
+uses $\ell=\lceil\log_2(d+2)\rceil$ bits, an addressed bit operation is
+charged $O(\ell)$ bit work, every bit write is counted cumulatively, and
+there is no word-parallel operation. A standard in-place
+Berlekamp--Massey pass keeps three $(d+1)$-bit connection/work arrays,
+scans at most $2d$ discrepancies, and performs at most $O(d^2)$ binary
+updates. Therefore, for absolute constants,
+
+$$
+ C_{\rm BM}(d)=O(d^2\ell),\qquad
+ W_{\rm BM}(d)=O(d^2),\qquad
+ V_{\rm BM}(d)=O(d+\ell),
+ \tag{ACR.85}
+$$
+
+where $V$ is reusable backing and the $O(d)$ output bits for the
+polynomial are charged separately. Generating $P_m$ from $m$ and
+$\iota_r$ by the displayed recurrence costs
+$O(d^2\ell)$ bit work, $O(d)$ generated writes, and $O(d+\ell)$ reusable
+bits; extracting $\sigma_{m,d}$ costs $O(d)$ writes. Thus both maps have
+uniform polynomial overhead. The costs of the invoked $\operatorname{FM}_d$
+or $\operatorname{EN}_d$ task remain its own costs, including the
+original enumeration when that task uses it.
+
+**Definition 21.5 (uniform affine ordinal-prefix access).** Interpret a
+binary word $u\in\{0,1\}^t$ as its integer value $[u]_2$. The original
+enumeration has the affine prefix-image property if a single uniform
+procedure $\operatorname{Img}(d,t,u)$, for every $0\le t\le d$,
+constructs an exact record
+
+$$
+ \operatorname{Img}(d,t,u)=(a_{d,t,u},B_{d,t,u},\mathsf{idx}_{d,t,u}),
+ \quad
+ A_{d,t,u}=a_{d,t,u}+\operatorname{im}B_{d,t,u},
+ \tag{ACR.86}
+$$
+
+where
+
+$$
+ A_{d,t,u}=\left\{\rho_d(i):0\le i<2^d,
+ \left\lfloor i/2^{d-t}\right\rfloor=[u]_2\right\}.
+ \tag{ACR.87}
+$$
+
+The base $a$, an explicit basis matrix $B$ over $\mathbb F_2$, and the
+ordinal index record $\mathsf{idx}$ are all returned, with exact
+feasibility and no free feasibility bit. Let $C_{\rm img}(d)$,
+$W_{\rm img}(d)$, and $V_{\rm img}(d)$ be uniform upper bounds over
+$t,u$ for bit work including address generation, cumulative bits written
+including retained output, and peak reusable backing, respectively.
+The property requires these three bounds to be fixed polynomials in $d$;
+all source-independent index preparation is included in them.
+
+**Theorem 21.6 (constructive conditional canonical normalization).**
+Assume Definition 21.5. For $d=0$ use the original zero descriptor. For
+$d\ge1$, from an authentic $P$, first represent the fibre
+in (ACR.79) by an affine base and kernel basis using exact Gaussian
+elimination. At depth $t$, test the child prefix $u0$ by constructing
+$\operatorname{Img}(d,t+1,u0)$ and intersecting its affine image with
+the earned fibre. Retain $u0$ when the intersection is nonempty; if it
+is empty, construct and retain $u1$. At depth $d$, the retained cell is
+a singleton, and its row is exactly $\kappa_d(P)$. Append the unchanged
+seed $s_d(P)$ to obtain $\operatorname{EN}_d(P)$.
+
+At most two child images are constructed at each depth. In the
+bit-addressed model above, exact elimination of two affine systems with
+at most $d$ variables and $d$ equations costs $O(d^3\ell)$ bit work,
+$O(d^3)$ cumulative writes, and $O(d^2)$ reusable bits. Absorbing the
+constant two into absolute constants, the complete ordinal normalizer
+has the conservative bounds
+
+$$
+ \begin{aligned}
+ C_{\rm aff}(d)&\le C_1\!\left((d+1)\bigl(C_{\rm img}(d)+d^3\ell\bigr)+d^3\ell\right),\\
+ W_{\rm aff}(d)&\le C_1\!\left((d+1)\bigl(W_{\rm img}(d)+d^3\bigr)+d^3\right),\\
+ V_{\rm aff}(d)&\le V_{\rm img}(d)+C_1d^2.
+ \end{aligned}
+ \tag{ACR.88}
+$$
+
+The final normalizer emits $2d$ descriptor bits and retains the original
+$2d$-bit $P$; no affine feasibility result is treated as a proof without
+its returned base and basis. The child-prefix induction proves exact
+firstness: the fibre is nonempty, its ordinal cells partition at every
+depth, and the chosen child is the first nonempty cell. This conclusion
+is conditional on the stated property; the unspecified original
+$\rho_d$ is not asserted to have it.
+
+**Theorem 21.7 (source-faithful composition, charged writeback, and the
+remaining boundary).** Run Theorem 15.1 unchanged through its authentic
+$P$, earned $n$ and $H$, including Theorem 14.2's $4^d$ catalogue
+preparation, every actual Read and literal, all grants and stationarity.
+Let $(C_{\rm sup},W_{\rm sup},V_{\rm sup})$ denote exactly the already
+charged non-normalization supplier terms of that theorem: the physical
+acquisition, source-independent catalogue and measurement work, and
+their writes and backing. This notation removes only the old final row
+search, the explicit Fibonacci construction of $B_n$, and the final
+payload write from that supplier bill; it does not remove or reprice any
+source action, literal, grant, catalogue entry, or physical tariff.
+
+Use Corollary 21.3 for the final normalization. On a full-rank fibre,
+its added local terms are
+
+$$
+ (C_{\rm norm},W_{\rm norm},V_{\rm norm})
+ =\bigl(O(d^3\ell),O(d^3),O(d^2)\bigr).
+ \tag{ACR.89}
+$$
+
+On a deficient fibre, invoke the original fixed enumeration verbatim.
+If $\omega_d$ denotes that enumerator's already charged cumulative bit
+writes (alongside the existing $e_d,v_d$ charges), the added terms are
+
+$$
+ (C_{\rm norm},W_{\rm norm},V_{\rm norm})
+ =\bigl(e_d+O(2^d(d+1)^2\ell),
+        \omega_d+O(2^dd^2),
+        v_d+O(d^2)\bigr).
+ \tag{ACR.90}
+$$
+
+The $O(2^d(d+1)^2\ell)$ term is only the row-test arithmetic; it does
+not enumerate candidate recurrences and it is absent on the full-rank
+branch. Under Definition 21.5, replace (ACR.89)--(ACR.90) on every rank
+by (ACR.88), with no $e_d,\omega_d$ charge.
+
+Compute the original cut field explicitly by forward Fibonacci addition
+and write it, rather than retaining an unevaluated expression. In the
+same bit model this contributes
+
+$$
+ (C_B(n),W_B(n),V_B(n))
+ =\bigl(O((n+2)^2),O((n+2)^2),O(n+1)\bigr).
+ \tag{ACR.91}
+$$
+
+Finally write the completed original payload
+
+$$
+ \bigl(P,\operatorname{EN}_d(P),n,F_{n+1}-1\bigr)
+ =\bigl(P,K_d(P),n,F_{n+1}-1\bigr),
+ \tag{ACR.92}
+$$
+
+its ready control, and any requested forward phase into the granted
+readable backing. Its output contains the original $P$, the original
+row and seed, $n$, and an explicit $\Theta(n)$-bit $F_{n+1}-1$ field; its
+payload writes and bit work are $O(d+n)$. The composed local bill is
+therefore the disjoint sum
+
+$$
+ \begin{aligned}
+ C_{\rm total}&=C_{\rm sup}+C_{\rm norm}+C_B(n)+O(d+n),\\
+ W_{\rm total}&=W_{\rm sup}+W_{\rm norm}+W_B(n)+O(d+n),\\
+ V_{\rm total}&\le V_{\rm sup}+V_{\rm norm}+V_B(n)+O(d+n).
+ \end{aligned}
+ \tag{ACR.93}
+$$
+
+The supplier term retains the original $4^d$ preparation and every
+actual source/literal/read charge, while (ACR.89)--(ACR.92) charge only
+the newly selected local normalization, explicit cut arithmetic, and
+completed writes. Thus no supplier term is counted twice. The physical
+service and handoff tariffs and their durations remain the actual ones;
+these abstract bit-operation bounds do not infer physical duration.
+
+The writeback is source-faithful because $P$ is the prefix earned from
+the original unknown-law, unknown-cut source, and the hybrid changes no
+source Read, source update, literal, grant, stationarity premise, or
+canonical enumeration fallback. The reverse map in Theorem 21.4 remains
+a constructed local input. A uniform polynomial total acquisition for
+the full all-index class, including the original $4^d$ preparation and
+its total resource contract, remains open. The affine-prefix property
+for the unspecified original $\rho_d$ remains unproved, so the
+conditional polynomial normalizer does not settle that general case.
+$\square$
 
 [MAS]: https://www.isiweb.ee.ethz.ch/archive/massey_pub/pdf/BI411.pdf
 
