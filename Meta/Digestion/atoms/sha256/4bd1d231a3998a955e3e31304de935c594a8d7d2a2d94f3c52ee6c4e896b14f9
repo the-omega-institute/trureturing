@@ -1,0 +1,60 @@
+### 定理 9.9（三读是 $k=2$ 等列证书的尖锐费用）
+
+对任意 $k=2$ 的正秩一等列来源，任何可靠秩一证书至少需要三次初始计入读数；
+定理 9.5 的先 $L_0$ 后 $N$ 协议达到三次。这个结论把初始矩阵恢复区分于
+秩认证：三读证书并不恢复 $R$。
+
+**证明。** 设等列来源的迹为 $t>0$。初读后立即停止时，正秩二矩阵
+
+$$
+ B_0=\begin{pmatrix}t/2&t/3\\t/4&t/2\end{pmatrix}
+$$
+
+具有同一初读，且 $\det B_0=t^2/6>0$。
+若第一原子为 $L_0$，等列来源的第二读为 $t$；取
+
+$$
+ B_L=\begin{pmatrix}a&a/2\\t-a&t-a\end{pmatrix},\qquad0<a<t,
+$$
+
+则 $\operatorname{tr}B_L=t$、$\operatorname{tr}(L_0B_L)=t$，且
+$\det B_L=a(t-a)/2>0$。若第一原子为 $N$，写等列来源为
+$R=\bigl(\begin{smallmatrix}x&x\\y&y\end{smallmatrix}\bigr)$，其中
+$x+y=t$、$0<x<t$；其第二读为 $x$。取
+
+$$
+ B_N=\begin{pmatrix}t/2&x\\t/4&t/2\end{pmatrix},
+$$
+
+则 $\operatorname{tr}B_N=t$、$\operatorname{tr}(NB_N)=x$，且
+$\det B_N=t(t-x)/4>0$。
+
+这里三个 $B$ 都是严格正的秩二 $2\times2$ 矩阵，因而确实属于
+$\mathcal M_2$。具体地，把任一严格正二阶矩阵的第 $j$ 列写成
+$x_j(1,r_j)^{\mathsf T}$，其中 $x_j,r_j>0$。
+选 $0<r_-<\min_jr_j\le\max_jr_j<r_+$，则
+
+$$
+ x_j\begin{pmatrix}1\\r_j\end{pmatrix}
+ =\frac{x_j(r_+-r_j)}{r_+-r_-}\begin{pmatrix}1\\r_-\end{pmatrix}
+ +\frac{x_j(r_j-r_-)}{r_+-r_-}\begin{pmatrix}1\\r_+\end{pmatrix}.
+$$
+
+两个系数均严格为正；把每种系数随 $j$ 排成行，就得到运行前固定的两项正分解。
+故任一至多两读历史都含有同历史的秩二来源，不能认证秩一。
+三读达到性已由定理 9.5 证明。事实上，第一原子为 $N$ 时
+$u=e_1,v=e_0$ 对等列来源同样满足引理 9.2 的两个不平行条件；
+第一步已将 $u$ 消为零，所以任意 $N$ 起始的后续实际历史都无法认证秩一。
+
+最后，三读中 $t=s_0=s_1$ 的所有实现虽均为秩一，却形成实际的初始矩阵歧义族
+
+$$
+ R_a=\begin{pmatrix}a&a\\t-a&t-a\end{pmatrix},\qquad0<a<t.
+\tag{9.9}
+$$
+
+每个 $R_a=(a,t-a)^{\mathsf T}(1,1)$ 都是合法的固定正来源。
+它们都给出同一三读而彼此不同；第一步 $L_0R_a=e_0(t,t)$ 还完全相同，
+故在此扫描后的任意共同后续动作下仍不能区分初始 $R_a$。
+因此秩证书不等于初始 $R$ 恢复。∎
+
