@@ -89,7 +89,7 @@ else:
             return open_file(path, *args, **kwargs)
         def activity():
             siblings = [target, *target.parent.glob(target.name + "-cleanup-*")]
-            return cleanup.active_paths(self.root / "codex", scopes=siblings)
+            return fixtures.fixture_active_paths(self.root / "codex", [process.pid], scopes=siblings)
         with patch.object(cleanup.subprocess, "run", side_effect=raced_run), \
              patch.object(Path, "open", raced_open):
             result = self.clean_remnant(target, activity=activity)
@@ -136,7 +136,8 @@ handle.close()
                 process = None
                 def activity():
                     nonlocal process
-                    observed = cleanup.active_paths(self.root / "codex", scopes=[self.root])
+                    pids = [process.pid] if process is not None else [os.getpid()]
+                    observed = fixtures.fixture_active_paths(self.root / "codex", pids, scopes=[self.root])
                     if process is None:
                         process = subprocess.Popen([sys.executable, "-u", "-c", program,
                                                     str((target / relative).relative_to(self.root)), kind], cwd=self.root,

@@ -27,6 +27,25 @@ cleanup = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(cleanup)
 
 
+def fixture_active_paths(codex, pids, scopes=()):
+    """Use the production observer on fixture-owned processes only."""
+    pids = {str(pid) for pid in pids}
+    selection = ",".join(sorted(pids))
+    iterdir, run = Path.iterdir, subprocess.run
+    def inventory(path):
+        entries = iterdir(path)
+        return (entry for entry in entries if entry.name in pids) if path == Path("/proc") else entries
+    def observe(arguments, **kwargs):
+        if arguments[0] == "ps":
+            arguments = ["ps", "-p", selection, "-o", arguments[-1]]
+        elif arguments[0] == "lsof":
+            arguments = [*arguments, "-p", selection]
+        return run(arguments, **kwargs)
+    with patch.object(Path, "iterdir", inventory), \
+         patch.object(cleanup.subprocess, "run", side_effect=observe):
+        return cleanup.active_paths(codex, scopes=scopes)
+
+
 class HostReclaimTests(unittest.TestCase):
     def setUp(self):
         self.workspace = tempfile.TemporaryDirectory(prefix="host reclaim with spaces ")
@@ -178,6 +197,46 @@ class HostReclaimTests(unittest.TestCase):
                 finally:
                     blob.write_bytes(original)
 
+    def test_fixture_activity_isolates_peers_and_fails_closed_for_owned_process(self):
+        target = self.remnant(blueprint=False)
+        owned, peer = (self.root / "proc" / name for name in ("123", "124"))
+        for process in (owned, peer):
+            (process / "fd").mkdir(parents=True)
+            (process / "status").write_text("State: S (sleeping)\nThreads: 1\n")
+        (owned / "cwd").symlink_to(target / ".lake/build", target_is_directory=True)
+        (owned / "fd/0").symlink_to(target / ".lake/build/object")
+        iterdir, readlink = Path.iterdir, os.readlink
+        def inventory(path):
+            return iter([peer, owned]) if path == Path("/proc") else iterdir(path)
+        def observe(arguments, **kwargs):
+            self.assertEqual(["ps", "-p", owned.name, "-o", "uid=,pid=,args="], arguments)
+            return subprocess.CompletedProcess(arguments, 0, "", "")
+        for unavailable in (peer, owned):
+            with self.subTest(unavailable=unavailable.name):
+                def denied(path):
+                    if path == unavailable / "cwd":
+                        raise PermissionError(errno.EACCES, "Permission denied", str(path))
+                    return readlink(path)
+                with patch.object(cleanup.sys, "platform", "linux"), \
+                     patch.object(Path, "iterdir", inventory), \
+                     patch.object(os, "readlink", denied), \
+                     patch.object(cleanup.subprocess, "run", side_effect=observe):
+                    def activity():
+                        return fixture_active_paths(self.root / "codex", [int(owned.name)], scopes=[target])
+                    if unavailable == peer:
+                        active = activity()
+                        self.assertIn((target / ".lake/build").resolve(), active)
+                        self.assertIn((target / ".lake/build/object").resolve(), active)
+                        result = cleanup.clean_candidate(target, self.cutoff, active, delete=True,
+                                                         repository=self.main, remnant=True, activity=activity)
+                        self.assertEqual(("kept", "protected"), (result["action"], result["reason"]), result)
+                    else:
+                        result = self.clean_remnant(target, activity=activity)
+                        self.assertEqual("failed", result["action"], result)
+                        self.assertIn("linux_activity_unavailable", result["reason"])
+                        self.assertIn('"boundary": "cwd"', result["reason"])
+                self.assertEqual(b"regenerable", (target / ".lake/build/object").read_bytes())
+
     def test_remnant_actual_cwd_and_open_file_are_retained(self):
         for handle in ("cwd", "open"):
             with self.subTest(handle=handle):
@@ -190,7 +249,7 @@ class HostReclaimTests(unittest.TestCase):
                                            stdin=subprocess.PIPE, stdout=subprocess.PIPE)
                 try:
                     self.assertEqual(b"ready\n", process.stdout.readline())
-                    active = cleanup.active_paths(self.root / "codex", scopes=[target])
+                    active = fixture_active_paths(self.root / "codex", [process.pid], scopes=[target])
                     result = cleanup.clean_candidate(target, self.cutoff, active, delete=True,
                                                      repository=self.main, remnant=True)
                     self.assertEqual(("kept", "protected"), (result["action"], result["reason"]), result)
@@ -352,7 +411,7 @@ class HostReclaimTests(unittest.TestCase):
                                               capture_output=True).returncode)
             return result
         def activity():
-            observed = cleanup.active_paths(self.root / "codex", scopes=[target])
+            observed = fixture_active_paths(self.root / "codex", [process.pid], scopes=[target])
             self.assertNotIn(target, cleanup.ProtectedPaths(observed))
             return observed
         try:
