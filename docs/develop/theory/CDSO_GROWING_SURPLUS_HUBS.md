@@ -476,3 +476,380 @@ The admissible class still permits partially occupied dense cores, several tail 
 No classification or attainment of the finite infimum, stability assertion, realization by connected finite graphs at prescribed budgets, or uniform sharp asymptotic for $h=o(\sqrt a)$ follows from the results here. The parameter regime (1.2) has fixed positive limiting ratio; the constants and errors for fixed $j,v$ in Section 3 are used only in that regime. The cited repository comparisons supply the baseline and shared marginal relation, while the original graph-index literature supplies no input theorem for the array extremum proved here. No assertion of literature priority is made.
 
 ## 追加锚（本行以下为增补区）
+
+## 7. The unrestricted square-root surplus value
+
+**Lemma 7.1 (A core and tail certificate from one law).** Fix constants $C\ge1$ and $0<L\le R<\infty$. There are constants $A,E<\infty$, depending only on $C,L,R$, with the following property. For every pair of integers $a\ge A$, $h\ge1$ with $L\le h/\sqrt a\le R$, and every law $x\in\mathcal X(a,h)$ satisfying
+
+$$
+H(x)\le a^3+Ca^2,
+\tag{7.1}
+$$
+
+there are an integer $j$ and a real number $v$ such that
+
+$$
+1\le j\le4C,\qquad \frac{L^2}{8C}\le v\le j+Ea^{-1/2},
+\tag{7.2}
+$$
+
+and
+
+$$
+\frac{H(x)-B_0(a)}{a^2}
+\ge \frac{(h+1-j)^2}{av}+2v+2j-2-Ea^{-1/2}.
+\tag{7.3}
+$$
+
+More precisely, $a+j$ is the number of labels in a set $\mathcal C$ determined by the actual marginals of $x$, and $v=a\mathbb P_x(T\cap\mathcal D\ne\varnothing)$ for its complement $\mathcal D=[s]\setminus\mathcal C$. Thus the integer and the probability in (7.2)–(7.3) belong to the same law.
+
+**Proof.** All constants implicit in $O(\cdot)$ in this proof depend only on $C,L,R$; the estimates hold uniformly over (7.1). Put $I_i=\mathbf1_{\{i\in T\}}$ and $V=\operatorname{Var}(K)$. Since $y_i\le1$,
+
+$$
+H\ge\mathbb E K^3,\qquad
+\mathbb E K^3-a^3
+=\mathbb E[(K-a)^2(K+2a)]\ge2aV.
+\tag{7.4}
+$$
+
+The identity follows by expanding and using $\mathbb E K=a$. Consequently
+
+$$
+V\le Ca/2,\qquad p_*:=\mathbb P(K<a/2)\le2C/a.
+\tag{7.5}
+$$
+
+The second inequality follows by bounding $(K-a)^2$ below by $a^2/4$ on that event. The nonnegative residual is
+
+$$
+\mathcal R=H-\mathbb E K^3
+=\sum_i\mathbb E[K^2I_i](y_i^{-2}-1)\le Ca^2.
+$$
+
+Set $z_i^*=\mathbb P(i\in T,K\ge a/2)$. Restricting the nonnegative summands to $K\ge a/2$ yields
+
+$$
+\sum_i z_i^*(y_i^{-2}-1)\le4C.
+\tag{7.6}
+$$
+
+Take $b=4C$ and define
+
+$$
+\mathcal C=\{i:y_i\ge b/a\},\qquad
+\mathcal D=[s]\setminus\mathcal C.
+$$
+
+For $i\in\mathcal C$, (7.5) gives $z_i^*\ge y_i-p_*\ge y_i/2$. Hence
+
+$$
+\sum_{i\in\mathcal C}(y_i^{-1}-y_i)\le8C,
+\qquad y_i\ge c:=(8C+1)^{-1}\quad(i\in\mathcal C).
+\tag{7.7}
+$$
+
+Indeed each nonnegative summand in the sum is at most $8C$, so $1/y_i\le8C+y_i\le8C+1$. This produces a fixed positive lower bound on core marginals from (7.1), without assuming one in the original domain.
+
+Write
+
+$$
+m=|\mathcal C|,\qquad n=|\mathcal D|,\qquad
+t=\sum_{i\in\mathcal D}y_i,\qquad
+\delta=\sum_{i\in\mathcal C}(1-y_i).
+$$
+
+Since $y^{-1}-y\ge2(1-y)$ on $(0,1]$, (7.7) implies $\delta\le4C$. The common marginal budget gives
+
+$$
+a=m-\delta+t,\qquad n=h+1-\delta+t,
+\qquad t\le\frac{bn}{a}.
+\tag{7.8}
+$$
+
+Thus, for $a>b$,
+
+$$
+h+1-4C\le n\le\frac{h+1}{1-b/a}=O(\sqrt a),
+\qquad t=O(a^{-1/2}).
+\tag{7.9}
+$$
+
+The integer $j=m-a=\delta-t$ therefore satisfies $0\le j\le4C$ for all sufficiently large $a$: its lower bound follows from $j\ge-t>-1$. In particular
+
+$$
+m=a+j,\qquad n=h+1-j,\qquad n\ge L\sqrt a/2>0
+\tag{7.10}
+$$
+
+once $a$ is sufficiently large.
+
+Consider the actual event
+
+$$
+A=\{T\cap\mathcal D\ne\varnothing\},\qquad
+p=\mathbb P(A),\qquad e=\mathbb E[K\mathbf1_A],
+$$
+
+and the tail energy
+
+$$
+H_D=\mathbb E\left[K^2\sum_{i\in T\cap\mathcal D}y_i^{-2}\right].
+$$
+
+Positivity of every marginal and $n>0$ imply $p>0$. For $i\in\mathcal D$ one has $y_i<b/a$, so the tail contribution to $\mathcal R$ gives
+
+$$
+(1-b^2/a^2)H_D\le\mathcal R,\qquad H_D\le2Ca^2
+\tag{7.11}
+$$
+
+for sufficiently large $a$. If $K_D=|T\cap\mathcal D|$, then $K_D\ge1$ on $A$. Therefore
+
+$$
+\mathbb E[K^2\mathbf1_A]
+\le\mathbb E[K^2K_D]
+\le\frac{b^2}{a^2}H_D\le Q:=2Cb^2.
+\tag{7.12}
+$$
+
+Cauchy–Schwarz gives $e\le\sqrt{Qp}$. On $A^c$ one has $T\subseteq\mathcal C$ and $K\le m$, whence the mean constraint implies
+
+$$
+a\le m(1-p)+e,\qquad mp\le j+e\le j+\sqrt{Qp}.
+$$
+
+Using $\sqrt{Qp}\le mp/2+Q/(2m)$ gives
+
+$$
+p\le\frac{2j}{m}+\frac Q{m^2}=O(a^{-1}),\qquad
+e=O(a^{-1/2}).
+\tag{7.13}
+$$
+
+Put $v=ap$. As $j\ge0$ and $m=a+j$, the preceding mean inequality also gives
+
+$$
+v\le mp\le j+O(a^{-1/2}).
+\tag{7.14}
+$$
+
+To bound the tail energy sharply using this same probability, put
+
+$$
+U_D(T)=\sum_{i\in T\cap\mathcal D}y_i^{-1}.
+$$
+
+The actual marginal identity gives $\mathbb E U_D=n$. Pointwise Cauchy–Schwarz and $K_D\le K\le K^2$ give
+
+$$
+U_D^2\le K_D\sum_{i\in T\cap\mathcal D}y_i^{-2}
+\le K^2\sum_{i\in T\cap\mathcal D}y_i^{-2}.
+$$
+
+Since $U_D=0$ on $A^c$, another application of Cauchy–Schwarz gives
+
+$$
+H_D\ge\mathbb E U_D^2\ge\frac{n^2}{p},\qquad
+v\ge\frac{n^2}{2Ca}\ge\frac{L^2}{8C}.
+\tag{7.15}
+$$
+
+Combining this positive lower bound with (7.14) excludes $j=0$ for all sufficiently large $a$. This proves (7.2), after enlarging the uniform constant.
+
+It remains to retain the core contribution to order $a^2$, including the change of marginals under conditioning. The following elementary estimate will be applied to the conditional law. Suppose a law on nonempty subsets of $[m]$ has mean $q=m-d$ and marginals $u_i\ge\gamma>0$. With its own energy denoted by $H_m$ and $Z_T=\sum_{i\in T}u_i^{-2}$, one has
+
+$$
+\sum_i u_i^{-1}\ge m+d,\qquad
+\sum_i u_i^{-2}\le m+2d/\gamma^2.
+$$
+
+The first inequality is $u^{-1}\ge2-u$ summed over $i$; the second follows from $u^{-2}-1\le2(1-u)/\gamma^2$. The exact identity and pointwise bound
+
+$$
+H_m=m^2\sum_i u_i^{-1}-\mathbb E[(m^2-K^2)Z_T],
+\qquad 0\le m^2-K^2\le2m(m-K)
+$$
+
+therefore imply
+
+$$
+H_m\ge m^2(m+d)-2md(m+2d/\gamma^2)
+=m^2q-4md^2/\gamma^2.
+\tag{7.16}
+$$
+
+For each $i\in\mathcal C$, set
+
+$$
+r_i=\mathbb P(i\in T,A),\qquad z_i=y_i-r_i,\qquad \pi=1-p.
+$$
+
+By (7.13), $\pi>0$ for sufficiently large $a$. The conditional law $x^0=\mathcal L(T\mid A^c)$ is a law on nonempty subsets of $\mathcal C$ with
+
+$$
+y_i^0=z_i/\pi,\qquad q_0=(a-e)/\pi,\qquad
+d_0=m-q_0=\frac{j+e-mp}{\pi}\ge0.
+\tag{7.17}
+$$
+
+Here $d_0=O(1)$ and $r_i\le p=O(a^{-1})$. By (7.7), $z_i\ge c/2$ eventually, so $y_i^0\ge c/2$. Applying (7.16) to this actual conditional law yields
+
+$$
+H_0\ge m^2q_0-O(a),
+\tag{7.18}
+$$
+
+where $H_0$ uses the conditional marginals $y_i^0$. The original and conditional denominators must be compared: the derivative of $u^{-2}$ on $u\ge c/2$ gives
+
+$$
+0\le z_i^{-2}-y_i^{-2}\le16c^{-3}r_i,
+\qquad \sum_{i\in\mathcal C}r_i=\mathbb E[K-K_D;A]\le e.
+$$
+
+Let $H_C=H-H_D$. Restricting its nonnegative integrand to $A^c$, where $K\le m$, gives
+
+$$
+\begin{aligned}
+H_C
+&\ge\mathbb E\left[K^2\sum_{i\in T}y_i^{-2};A^c\right]\\
+&\ge\mathbb E\left[K^2\sum_{i\in T}z_i^{-2};A^c\right]
+       -16c^{-3}m^2e\\
+&=\frac{H_0}{\pi}-16c^{-3}m^2e\\
+&\ge\frac{m^2(a-e)}{(1-p)^2}-O(a^{3/2})\\
+&\ge a^3+(2j+2v)a^2-O(a^{3/2}).
+\end{aligned}
+\tag{7.19}
+$$
+
+The equality uses $y_i^0=z_i/\pi$: $H_0=\pi\mathbb E[K^2\sum_{i\in T}z_i^{-2};A^c]$. For the last inequality, $m=a+j$, $p=v/a$, and boundedness of $j,v$ give
+
+$$
+\frac{m^2a}{(1-p)^2}
+\ge(a+j)^2a(1+2v/a)
+\ge a^3+(2j+2v)a^2,
+$$
+
+while $m^2e/(1-p)^2=O(a^{3/2})$. Adding (7.15) and (7.19), and using $B_0(a)=a^3+2a^2+a$, proves (7.3).
+
+All divisions involve positive actual marginals or the positive event probabilities just established. The Cauchy–Schwarz inequality used here is the finite inner-product inequality; see S. Boyd and L. Vandenberghe, *Convex Optimization*, Appendix A.1 ([author-hosted text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)). No independence of inclusion events, support connectedness, or restriction on the cardinalities was used. ∎
+
+**Theorem 7.2 (Full positive-ratio limit and uniform error).** In the unrestricted domain of Definition 1.1, for every $0<L\le R<\infty$ there are finite constants $A_{L,R}$ and $C_{L,R}$ such that all integers $a\ge A_{L,R}$ and $h\ge1$ with $L\le h/\sqrt a\le R$ satisfy
+
+$$
+\left|\frac{M(a,h)-B_0(a)}{a^2}
+             -U\!\left(\frac h{\sqrt a}\right)\right|
+\le C_{L,R}a^{-1/2}.
+\tag{7.20}
+$$
+
+In particular, for every sequence (1.2),
+
+$$
+\lim_{n\to\infty}D_n=U(\kappa).
+\tag{7.21}
+$$
+
+For $0<\kappa\le\sqrt2$, the value is $2\sqrt2\,\kappa$. On $\kappa\ge\sqrt2$, the value is $F_1(\kappa)$ on $[\sqrt2,2\sqrt2]$, and is $F_j(\kappa)$ on
+
+$$
+[\,2\sqrt{j(j-1)},\ 2\sqrt{j(j+1)}\,]
+\qquad(j\ge2).
+\tag{7.22}
+$$
+
+At $2\sqrt{j(j+1)}$ the adjacent formulas $F_j,F_{j+1}$ agree, and no other integer branch attains the value. In the interior of each displayed integer interval its integer branch is unique. The linear formula and $F_1$ agree at $\sqrt2$.
+
+Thus (7.21) determines every ratio in Open problem 6.1, and (7.22) identifies the upper-bound phases of Proposition 4.3 as phases of the unrestricted asymptotic value. The earlier bounds and even-ratio limits remain valid; the description of the other fixed positive ratios as unresolved is replaced by (7.21). This assertion concerns values and does not classify finite minimizers or all laws attaining a limiting value.
+
+**Proof.** Introduce, only as an intermediate variational quantity,
+
+$$
+\mathcal V(k)=\inf_{\substack{j\in\mathbb Z_{\ge1}\\0<v\le j}}
+\left(\frac{k^2}{v}+2v+2j-2\right)\qquad(k>0).
+\tag{7.23}
+$$
+
+This infimum is attained in these scalar parameters. Indeed the choice $j=v=1$ has value $k^2+2$, whereas the objective is at least $2j-2$ and at least $k^2/v$. Thus a minimizing sequence has bounded $j$ and has $v$ bounded away from zero, after discarding terms above $k^2+3$; compactness for the finitely many remaining integers proves attainment. Uniformly for $L\le k\le R$, any scalar minimizer has
+
+$$
+j\le(R^2+4)/2,\qquad v\ge L^2/(R^2+2),\qquad v\le j.
+\tag{7.24}
+$$
+
+These scalar assertions make no attainment claim for $M(a,h)$.
+
+Take $C=R^2+10$ in Lemma 7.1 and put $k=h/\sqrt a$. For every law in its sublevel, (7.3) and boundedness of $j$ give
+
+$$
+\frac{H-B_0(a)}{a^2}
+\ge\frac{k^2}{v}+2v+2j-2-O_{L,R}(a^{-1/2}).
+\tag{7.25}
+$$
+
+Here $((h+1-j)^2/a)-k^2=2k(1-j)/\sqrt a+(1-j)^2/a$, and $v$ has the positive lower bound (7.2). If $v>j$, replace $v$ by $j$. By (7.2) the change is $O_{L,R}(a^{-1/2})$: the derivative $-k^2/v^2+2$ is bounded uniformly on the interval between $v$ and $j$, since $j\ge1$ and $v\ge L^2/(8C)$. Hence (7.25) is at least $\mathcal V(k)-O_{L,R}(a^{-1/2})$.
+
+A law outside the sublevel already has
+
+$$
+\frac{H-B_0(a)}{a^2}>C-2-1/a>R^2+2\ge\mathcal V(k).
+$$
+
+The same lower bound therefore holds for every original law, with one uniform constant. Taking its infimum gives
+
+$$
+\frac{M(a,h)-B_0(a)}{a^2}
+\ge\mathcal V(k)-O_{L,R}(a^{-1/2}).
+\tag{7.26}
+$$
+
+In particular there is no assumption that an optimal law exists, nor any replacement of the original laws by independent marginal and moment data.
+
+For the upper bound, use exactly the actual law of Proposition 3.2, choosing $j,v$ to minimize (7.23). By (7.24), for sufficiently large $a$ one has $h\ge j$, uniformly over $L\le k\le R$, so these laws are admissible. To make its error estimate uniform, write $\mu=a+v$ and use its notation $\ell=\lfloor v\rfloor$, $\theta=v-\ell$. The core third moment in (3.4) has the exact expansion
+
+$$
+M_3=\mu^3+3\mu\theta(1-\theta)
+                 +\theta(1-\theta)(1-2\theta)
+=\mu^3+O_{L,R}(a).
+$$
+
+Since $p=v/(a+v-1)$ and $1/(1-p)=1+v/(a-1)$, (7.24) and (3.4) yield
+
+$$
+\frac{(a+j)^2M_3}{(1-p)(a+v)^2}
+=a^3+(2j+2v)a^2+O_{L,R}(a),
+$$
+
+$$
+\frac{(h+1-j)^2}{p}
+=\frac{(h+1-j)^2(a+v-1)}v
+=\frac{k^2}{v}a^2+O_{L,R}(a^{3/2}).
+$$
+
+All constants are uniform also when $v$ crosses an integer, since $0\le\theta<1$. Subtracting $B_0(a)$ and using that $M(a,h)$ is bounded above by each constructed energy proves
+
+$$
+\frac{M(a,h)-B_0(a)}{a^2}
+\le\mathcal V(k)+O_{L,R}(a^{-1/2}).
+\tag{7.27}
+$$
+
+Finally evaluate the scalar quantity in (7.23), without interpreting it as a restriction of the original domain. For fixed $j$, the minimizing $v$ is $\min(j,k/\sqrt2)$. Put $w=k/\sqrt2$. If $w\le1$, all $j\ge1$ permit $v=w$; the smallest $j=1$ gives $4w=2\sqrt2\,k$. If $w>1$, the integers $j\le w$ give the endpoint values $F_j(k)$. For $j>w$ the optimized value is $4w+2j-2$, increasing with $j$. When $w$ is not an integer and $r=\lfloor w\rfloor\ge1$, the smallest of these latter values exceeds $F_r(k)$ by
+
+$$
+4w+2r-F_r(k)=2-\frac{2(w-r)^2}{r}>0.
+$$
+
+When $w$ is an integer, each $j>w$ likewise gives $4w+2j-2>F_w(k)$. Thus no interior choice $v<j$ is globally minimizing when $k>\sqrt2$. Every endpoint choice is available in (7.23), so
+
+$$
+\mathcal V(k)=U(k).
+\tag{7.28}
+$$
+
+Equations (7.26)–(7.28) prove (7.20). The adjacent branch comparison in Proposition 4.3 now applies to the unrestricted value and gives (7.22) and its ties. The function $U$ is continuous: on any compact positive interval only finitely many integer branches can minimize, their values agree at adjacent crossings, and the linear branch agrees with $F_1$ at $\sqrt2$. Every sequence (1.2) eventually lies in such a compact interval, so (7.20) gives (7.21). ∎
+
+**Open problem 7.3 (Finite values and other scales).** Determine the exact finite infimum $M(a,h)$ and all equality or near-equality laws for the range where $a,h$ both vary. Determine the least thresholds for any eventual exact formulas, and sharp uniform estimates when $h/\sqrt a$ tends to zero or to infinity. Determine which optimizing or asymptotically optimizing laws admit connected finite-graph realizations at prescribed budgets. Theorem 7.2 supplies a uniform value estimate only on fixed compact subintervals of $(0,\infty)$; neither its integer label counts nor its constructed laws constitute such an equality classification or graph realization theorem.
+
+The CDSO normalization is the one cited in Definition 1.1 through the parent volume: A. M. Albalahi, S. Das, A. Ali, J. Barman and A. E. Hamza, *On the hyperbolic Sombor index and its counterpart*, Discrete Math. Lett. 16 (2025), 108–115, DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176), p.109. No finite-graph extremal assertion from that source is a premise of Lemma 7.1 or Theorem 7.2. Their lower certificate is a deduction for the common-law domain (1.1), using the existing constructions solely for the matching upper bound. The relation to K. Zhao and X. Zhao, *Extremal values with respect to vertex-degree-based topological indices in unicyclic and bicyclic graphs*, DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), is undetermined without its full text; its metadata and abstract supply no mathematical premise here.
+
+## 追加锚（本行以下为增补区）
