@@ -1,0 +1,80 @@
+**引理 66.1（源基本表示迫使五维全实矩阵代数）。** 假定原模型 $m\le5$。引理 65.1 的代数必为 $\mathcal A\simeq M_5(\mathbb R)$；$m=\dim H_{\rm r}=\dim H_1=5$，且 $P=I$ 是完整矩阵映射。相应共同源 $SU(2)$ 的正交提升在底层五维实空间上等价于 $1\oplus\mathbb R^4_{\rm fund}$。因此 $m\le4$ 已不可能。
+
+证明。先给必须用于比较物理维数的表示成本，而不把完全序嵌入误认为代数嵌入。记
+
+$$
+i:\mathcal A\longrightarrow M_{n_1}(\mathbb R),\qquad
+r=i^{-1}\widetilde P:M_{n_1}(\mathbb R)\longrightarrow\mathcal A.
+\tag{66.1}
+$$
+
+$i$ 是完全序包含，$r$ 是到抽象代数的保单位 CP 收缩，$ri=\operatorname{id}_{\mathcal A}$。对任意 $a\in\mathcal A$，先对 $i$ 用 Schwarz、再作用 $r$，以及直接对 $r$ 用 Schwarz，分别给
+
+$$
+r(i(a)^*i(a))\preceq a^*\star a,
+\qquad
+a^*\star a\preceq r(i(a)^*i(a)).
+\tag{66.2}
+$$
+
+同样有 $aa^*$ 的等号。因此 $i(a)$ 属于抽象收缩 $r$ 的乘法域。由乘法域的左右乘法恒等式，$r$ 限制到
+
+$$
+\mathcal D=C^*_{\mathbb R}(i(\mathcal A))\subseteq M_{n_1}(\mathbb R)
+\tag{66.3}
+$$
+
+是满射实 $*$ 同态到 $\mathcal A$。此论断的余域是带 $\star$ 乘法的 $\mathcal A$；不声称 $i$ 保持通常乘法，也不声称环境投影 $\widetilde P$ 的通常乘法域等于其像。
+
+有限维实 $C^*$ 结构定理把 $\mathcal D$ 分解为 $M_s(\mathbb R)$、$M_s(\mathbb C)$、$M_s(\mathbb H)$ 因子的直和。实不可约表示的三种交换子类型参见 Rosenberg，[*Structure and applications of real C*-algebras*](https://arxiv.org/html/1505.04091)，定理 1.3、推论 1.4；其假设是实 Hilbert 空间上的不可约 $*$ 表示，这里施于各简单因子的不可约矩阵模。各因子的最小忠实实表示维数为
+
+$$
+\operatorname{cost}_{\mathbb R}M_s(\mathbb R)=s,\qquad
+\operatorname{cost}_{\mathbb R}M_s(\mathbb C)=2s,\qquad
+\operatorname{cost}_{\mathbb R}M_s(\mathbb H)=4s.
+\tag{66.4}
+$$
+
+这些数是各除环上的列模的实维数。不同因子的中心投影要求互相正交的非零模，故直和成本相加。有限维理想是若干整因子的直和；由 (66.3) 的核丢弃相应因子，并在 $\mathbb R^{n_1}$ 的忠实表示中保留剩余中心投影的物理子空间，便得到 $\mathcal A$ 的忠实实表示。因此
+
+$$
+\operatorname{cost}_{\mathbb R}\mathcal A\le n_1\le m.
+\tag{66.5}
+$$
+
+下一步把源基本表示放入这个代数的自伴部分。$\mathscr K$ 在 $\operatorname{ran}P$ 上忠实地是紧矩阵群，故为紧 Lie 群；$\pi:\mathscr K\to G$ 是连续满射。紧 Lie 群的分支数有限，故 $G/\pi(\mathscr K^0)$ 有限，而 $G^0$ 连通，得到 $\pi(\mathscr K^0)=G^0$；相应 Lie 代数映射满射。用紧 Lie 代数上的 Ad 不变正内积，将核理想取正交补；该正交补仍是理想，并同构于 $\operatorname{Lie}(G)$。在补理想中提升源的实际 $\mathfrak{su}(2)$，再从单连通 $SU(2)$ 积分，得到
+
+$$
+\lambda:SU(2)\longrightarrow\mathscr K,
+\qquad \pi\lambda(u)=\operatorname{Ad}(1\oplus u)|_{\mathscr S_c}.
+\tag{66.6}
+$$
+
+这里使用的是紧 Lie 代数理想分裂与单连通群的 Lie 同态积分；参数域确为单连通 $SU(2)$，不是 $SO(3)$。两个同态的微分一致且域连通，故它们在整个群上一致。
+
+$P\mathscr R$ 在该作用下不变，$L:P\mathscr R\to\mathscr S_c$ 满射。Haar 平均内积给紧群完全可约性，所以 (64.12) 中的实四维基本表示必须出现在 $\mathcal A_{\rm sa}$ 中。它在中心 $-I_2$ 下变号。
+
+现在逐因子排除成本至多五的其他可能。连通 $SU(2)$ 不能置换有限个简单因子，也不能进入离散外自同构分支。对于 $M_s(\mathbb R)$，实 $*$ 自同构为正交内自同构；从单连通 $SU(2)$ 到投影正交群的作用可提升到 $O(s)$。低维实不可约 $SU(2)$ 模只有维数 $1,3,4,5$。具体地，复最高权 $k$ 的模 $\operatorname{Sym}^k\mathbb C^2$ 有复维数 $k+1$，中心作用为 $(-1)^k$，不变反线性结构的平方为 $(-1)^k$；偶 $k$ 为实型、奇 $k$ 为四元数型。因此维数至多五时，唯一中心非平凡的实不可约模是四维基本模。对于 $s\le4$，底层模不是全由中心为正的模组成，就是恰为实四维基本模；两种情形中心都是标量，故共轭在 $\operatorname{Sym}_s(\mathbb R)$ 上中心平凡，不能产生所需基本分量。
+
+成本至多五的非实非交换因子只有 $M_2(\mathbb C)$ 和 $\mathbb H$。前者的自伴部分是 $1\oplus\mathbb R^3_{\rm ad}$，连通实 $*$ 自同构群为 $PU(2)\simeq SO(3)$；从 $SU(2)$ 的同态在中心上平凡。$\mathbb C$ 的额外共轭自同构离散，不能改变结论。$\mathbb H$ 的自伴部分只有实标量。其余复、四元数矩阵因子成本超过五。不同直和因子间不存在交叉矩阵条目，不能拼出一个中心非平凡的基本分量。
+
+所以总成本至多五时，唯一余项是 $\mathcal A=M_5(\mathbb R)$，底层实表示必须为 $1\oplus\mathbb R^4_{\rm fund}$；整数自旋五维或 $3\oplus1\oplus1$ 的中心平凡，均不合要求。相应自伴分解为
+
+$$
+\operatorname{Sym}^2(\mathbb R^4_{\rm fund})
+=1\oplus3\,\mathbb R^3_{\rm ad},\qquad
+\operatorname{Sym}^2(1\oplus\mathbb R^4_{\rm fund})
+=2\cdot1\oplus\mathbb R^4_{\rm fund}\oplus3\,\mathbb R^3_{\rm ad}.
+\tag{66.7}
+$$
+
+最后用的是全矩阵维数，不是自伴维数：$\dim_{\mathbb R}M_5(\mathbb R)=25$，而
+
+$$
+25=\dim_{\mathbb R}\operatorname{ran}P
+\le (\dim H_1)^2\le (\dim H_{\rm r})^2\le m^2\le25.
+\tag{66.8}
+$$
+
+全部等号成立，$H_1=H_{\rm r}=\mathbb R^5$，$P$ 为满秩幂等线性映射，故 $P=I$。因最小秩已经是全秩，每个 $s\in\mathscr S$ 都可逆，紧半群本身成为群。至此才消除了原支持与角支持之间的区别。∎
+

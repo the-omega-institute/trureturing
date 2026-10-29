@@ -1,0 +1,92 @@
+**定理 96.1（有限单制备数据的同时酉／共同共轭分类）。** 对每个 (91.1) 的源及每个假设 91.2 的竞争者，四表等式 (93.6) 当且仅当存在一个固定 $R_0\in U(3)$ 和一个共同选择
+$\kappa\in\{\mathrm{id},\text{逐项复共轭}\}$，使
+
+$$
+\begin{gathered}
+\sigma_0=R_0\kappa(\rho_0)R_0^\dagger,\qquad
+F=R_0\kappa(E)R_0^\dagger,\\
+B_j=\tfrac12\operatorname{Ad}_{R_0\kappa(V_j)R_0^\dagger}\quad(j=0,1),
+\qquad
+B_N=\operatorname{Ad}_{R_0\kappa(N)R_0^\dagger}.
+\end{gathered}
+\tag{96.1}
+$$
+
+各分支恒等式作用于全部 $M_3(\mathbb C)$。同一个 $R_0$ 和同一个 $\kappa$ 同时作用于制备、效果及全部标签映射，不允许逐映射独立换基、独立共轭或交换标签。此时所有有限正向历史、两种终端结果及其完整联合质量均相等。$\sigma_0$ 的纯性、$F$ 的投影性及分支的公平／酉性均为结论。
+
+证明。必要性先由定理 93.2、94.1 给一个可逆保迹 $T$、状态／效果恒等式及 (94.5)。到此还没有赋予 $T$ 或 $T^{-1}$ 正性。现分别使用源的一个纯制备和一个纯效果。
+
+由竞争者的 $\sigma_0\succeq0$ 和每个正向 $C_w$ 的 CP 性，
+
+$$
+T(U_w\rho_0U_w^\dagger)=C_w\sigma_0\succeq0.
+\tag{96.2}
+$$
+
+定理 95.1 使左端输入的闭包包含每个秩一投影：$PU(3)$ 在完整纯态射线空间上传递，且 $\rho_0$ 本身秩一。$T$ 有限维连续、正锥闭，故 $T(P)\succeq0$ 对每个秩一投影 $P$ 成立。任意正矩阵是这些投影的非负谱和，所以 $T$ 在整个正锥上为正。这里没有新给任何其他制备；轨道和极限只用于限制一个固定线性映射。
+
+另由竞争效果 $F\succeq0$，(94.5) 独立给
+
+$$
+(T^{-1})^*(U_w^\dagger EU_w)=C_w^*F\succeq0.
+\tag{96.3}
+$$
+
+正向群闭包为全部 $PU(3)$，取逆是紧群的同胚，故
+$\{U_w^\dagger EU_w\}$ 的闭包也包含每个秩一投影。$E$ 的秩一性在此是源前提；竞争 $F$ 无此先验承诺。连续性和谱和给
+$(T^{-1})^*$ 在全部正锥上为正。对任意 $X,Y\succeq0$，
+
+$$
+\operatorname{Tr}(Y T^{-1}X)
+=\operatorname{Tr}(((T^{-1})^*Y)X)\ge0.
+\tag{96.4}
+$$
+
+Hermitian 正锥对迹配对自对偶，故 $T^{-1}X\succeq0$。自对偶性也可直接看出：若某个 Hermitian 矩阵有负本征值，取该本征向量的秩一投影配对即为负。至此 $T$ 和 $T^{-1}$ 都全局正且保迹。
+
+因此 $T$ 是整个 qutrit 密度矩阵凸集的仿射双射，双射地映射极端点，即完整纯态投影集合。它也保持所有 Hermitian 差的迹范数。确实，写谱分解
+$X=X_+-X_-$，正性及保迹性给
+
+$$
+\|TX\|_1
+\le\|TX_+\|_1+\|TX_-\|_1
+=\operatorname{Tr}X_++\operatorname{Tr}X_-=\|X\|_1.
+\tag{96.5}
+$$
+
+对 $T^{-1}$ 应用同一不等式，得到反向不等式，故恒有等号。这是全局迹距离保持，并非只在有限制备对上的数值保持。
+
+对任意秩一投影 $P,Q$，$P-Q$ 的非零本征值为
+$\pm\sqrt{1-\operatorname{Tr}(PQ)}$：在它们的至多二维张成内，迹为零，平方迹为
+$2(1-\operatorname{Tr}(PQ))$；正交补上为零。重合和正交端点也符合该公式。于是 (96.5) 给
+
+$$
+\operatorname{Tr}(T(P)T(Q))=\operatorname{Tr}(PQ)
+\quad\text{对全部纯态对 }P,Q.
+\tag{96.6}
+$$
+
+现在恰满足 Wigner 定理的完整假设：复维数三的全部射线空间上，一个一一且满的映射，保持每一对射线的转移概率。所用明确版本见 Simon–Mukunda–Chaturvedi–Srinivasan，
+[*Two elementary proofs of the Wigner theorem on symmetry in quantum mechanics*](https://arxiv.org/html/0808.0779v2)，§II 式 (8) 及其后的定理陈述。故有一个固定酉 $R_0$，使所有纯态投影同时满足
+
+$$
+T(P)=R_0PR_0^\dagger
+\quad\text{或同时满足}\quad
+T(P)=R_0P^{\mathsf T}R_0^\dagger.
+\tag{96.7}
+$$
+
+纯态投影实张成 $\operatorname{Herm}_3$，所以同一公式延伸到整个 $T$。在 Hermitian 矩阵上转置就是逐项复共轭；其在全部复矩阵上的复线性延伸仍为转置，不是反线性映射 $X\mapsto\bar X$。
+
+(96.7) 的两种映射都保持 Hermitian 迹配对，故 $T^*=T^{-1}$。由
+$T^*F=E$、$T\rho_0=\sigma_0$ 得 $F=T(E)$ 和第一行 (96.1)。将同一个 $T$ 代入
+
+$$
+B_a=TA_aT^{-1}
+\tag{96.8}
+$$
+
+得其余公式；在转置情形，$\mathsf t\operatorname{Ad}_V\mathsf t=\operatorname{Ad}_{\bar V}$，故每个酉代表都使用同一个复共轭选择。Nayak–Sen 已给出的各自酉性在此被提升为全部资料的同一坐标关系。
+
+反之，共同酉变换保持 Born 迹，整体共轭把每个实概率变为自身。将 (96.1) 按时间顺序复合，保留每个 $1/2$ 权重，便得所有词的两种终端概率相等，特别给 (93.6)。每个酉代表的标量相位不可由共轭通道辨认；这是相位代表的自由，不是独立的物理转置通道。定理既未假设也未取得这样一个转置 CP 操作。∎
+

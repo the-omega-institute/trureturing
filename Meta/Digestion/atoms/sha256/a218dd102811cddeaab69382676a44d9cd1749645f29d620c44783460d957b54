@@ -1,0 +1,76 @@
+**定义 72.1（相同原对象上的有限比较）。** 沿用定义 54.1、假设 54.2 的全部复相容集合、五维仪器和固定终端测量。特别地，初始域仍为
+
+$$
+\begin{split}
+\mathcal K_d=\{\rho=A+D:\;&A,D\succeq0,\quad D\ell=0,\quad
+\operatorname{Tr}\rho=1,\\
+&a^\dagger Aa=d,\quad \operatorname{Tr}(C\rho)=d,\quad
+\operatorname{Tr}(E\rho)=e_d\},\qquad 0<d<1,
+\end{split}
+\tag{72.1}
+$$
+
+其中 $C=2\xi\xi^\dagger$、$e_d=(6-5d)/16$，各向量及矩阵取 (54.1)，不限制为实态或纯态。对每个 $\rho$，第一卷定理 35.4 供应原域 $T\in\mathcal F_{\sqrt d}$，其后继为 (54.6) 的 $S_\rho$。第二卷定理 39.3–39.4 供应实际五维桥
+
+$$
+\begin{gathered}
+h=(j_1,\ldots,j_n),\quad
+A_h=A_{j_n}\cdots A_{j_1},\quad V_h=V_{j_n}\cdots V_{j_1},\\
+V_0=Ue^{\mathrm i\theta W},\quad V_1=V_0W,\quad
+A_hB=2^{-n/2}BV_h,\quad M_h=V_h^\dagger EV_h,\\
+p_\rho(h,1)=2^{-n}\operatorname{Tr}(\rho M_h),\qquad
+p_\rho(h,0)=2^{-n}[1-\operatorname{Tr}(\rho M_h)].
+\end{gathered}
+\tag{72.2}
+$$
+
+最左字母最早作用；空词取单位矩阵。概率表可以理解为在 $B\rho B^\dagger$ 上执行原仪器，也可以理解为原输入 $ff^\dagger$ 经 $S_\rho$ 后执行同一仪器。两种终端结果和全部历史均保留；每个历史的总质量是 $2^{-n}$。
+
+令 $\mathcal D\subseteq\mathcal K_d$ 非空。一个 $k\ge1$ 状态比较器 $q$ 取固定的
+
+$$
+T_0,T_1\in\mathbb R_+^{k\times k},\qquad
+\mathbf1^{\mathsf T}(T_0+T_1)=\mathbf1^{\mathsf T},\qquad
+f_{\rm cl}\in[0,1]^k,
+\tag{72.3}
+$$
+
+以及任意函数 $\rho\mapsto p(\rho)\in\Delta_{k-1}$，并置
+
+$$
+\begin{aligned}
+q_\rho(h,1)&=f_{\rm cl}^{\mathsf T}T_hp(\rho),\\
+q_\rho(h,0)&=(\mathbf1-f_{\rm cl})^{\mathsf T}T_hp(\rho),
+\qquad T_h=T_{j_n}\cdots T_{j_1}.
+\end{aligned}
+\tag{72.4}
+$$
+
+对整数 $H\ge0$，定义实际完整记录误差
+
+$$
+\Delta_H(\mathcal D;q)
+=\sup_{\rho\in\mathcal D}\ \max_{0\le n\le H}
+\frac12\sum_{h\in\{0,1\}^n}\sum_{b=0}^1
+|p_\rho(h,b)-q_\rho(h,b)|.
+\tag{72.5}
+$$
+
+记 $k_{\mathcal D}(H,\varepsilon)$ 为满足 $\Delta_H\le\varepsilon$ 的最小正整数状态数，没有有限比较器时为 $\infty$；$k(H,\varepsilon)$ 专指 $\mathcal D=\mathcal K_d$。角度及 $d$ 在这些记号中固定。
+
+这里不要求制备函数仿射，不要求隐藏状态逐支公平、最小、可达、可观察或不可约。只有分支和列随机；单独的 $2T_0$ 或 $2T_1$ 不预设随机性。固定矩阵和效果必须同时用于全部深度与全部 $\rho$。在每个深度，两张完整表都是概率分布：对经典表求和使用 $\mathbf1^{\mathsf T}(T_0+T_1)^n p=1$。
+
+后文使用 TV 的标准事件不等式在本源上的对应。若 $\rho_+,\rho_-\in\mathcal D$ 且 $\Delta_H(\mathcal D;q)\le\varepsilon$，则对每个 $0\le n\le H$，令 $p_\pm=p(\rho_\pm)$，有
+
+$$
+\begin{aligned}
+|\mathbf1^{\mathsf T}T_0^np_\pm-2^{-n}|&\le\varepsilon,\\
+|f_{\rm cl}^{\mathsf T}T_0^np_\pm-p_{\rho_\pm}(0^n,1)|&\le\varepsilon,\\
+|f_{\rm cl}^{\mathsf T}T_0^n(p_+-p_-)
+ -[p_{\rho_+}(0^n,1)-p_{\rho_-}(0^n,1)]|&\le2\varepsilon.
+\end{aligned}
+\tag{72.6}
+$$
+
+证明。两个归一化概率分布的任一事件概率差不超过它们的 TV。第一行的事件是“全部标签为零”，包含两个终端结果；第二行是其中终端为是的联合事件。分别对两个制备使用第二行，再取差，得第三行。这些界没有除以 $2^{-n}$；归一化稀有词会把绝对误差放大，不能保留同一个 $\varepsilon$。∎
+
