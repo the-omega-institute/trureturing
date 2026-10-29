@@ -74,17 +74,18 @@ def conjugate {H U : ℕ} (r : Rows H U) : Rows U H :=
 
 private theorem diagram_conjugate {H U : ℕ} (r : Rows H U) :
     diagram (conjugate r) = (diagram r).transpose := by
-  ext c
+  ext ⟨i,j⟩
+  change (i,j) ∈ diagram (conjugate r) ↔ (i,j) ∈ (diagram r).transpose
   rw [diagram_mem, YoungDiagram.mem_iff_lt_rowLen]
   constructor
   · rintro ⟨hi,hj⟩
     exact hj
   · intro hj
-    have hm : (c.1,c.2) ∈ (diagram r).transpose :=
+    have hm : (i,j) ∈ (diagram r).transpose :=
       YoungDiagram.mem_iff_lt_rowLen.mpr hj
-    have ht : (c.2,c.1) ∈ diagram r := YoungDiagram.mem_transpose.mp hm
+    have ht : (j,i) ∈ diagram r := YoungDiagram.mem_transpose.mp hm
     obtain ⟨_,hc⟩ := (diagram_mem r _ _).mp ht
-    have hu : c.1 < U := lt_of_lt_of_le hc (Nat.le_of_lt_succ (Fin.isLt _))
+    have hu : i < U := lt_of_lt_of_le hc (Nat.le_of_lt_succ (Fin.isLt _))
     exact ⟨hu,hj⟩
 
 /-- Conjugation is an involution even for zero dimensions and padded zero entries. -/
@@ -111,5 +112,37 @@ def boardRowsEquiv (U H : ℕ) : Board U H ≃ Rows H U where
   right_inv r := by
     change conjugate ⟨fun i => (conjugate r).val i.rev.rev, _⟩ = r
     simpa using conjugate_involutive r
+
+/-- The row coordinate is exactly the number of occupied cells in that source row. -/
+private theorem boardRows_cell {U H : ℕ} (b : Board U H) (i : Fin H) (j : Fin U) :
+    i.val < (b.val j).val ↔ j.rev.val < ((boardRowsEquiv U H b).val i).val := by
+  let c : Rows U H := ⟨fun j => b.val j.rev,
+    fun _ _ h => b.property (Fin.rev_le_rev.mpr h)⟩
+  change i.val < (b.val j).val ↔ j.rev.val < ((conjugate c).val i).val
+  rw [← diagram_rowLen, ← YoungDiagram.mem_iff_lt_rowLen,
+    diagram_conjugate, YoungDiagram.mem_transpose, diagram_mem]
+  constructor
+  · intro h
+    refine ⟨j.rev.isLt, ?_⟩
+    change i.val < (b.val j.rev.rev).val
+    simpa only [Fin.rev_rev] using h
+  · rintro ⟨hj,h⟩
+    change i.val < (b.val j.rev.rev).val at h
+    simpa only [Fin.rev_rev] using h
+
+/-- Counting literal source cells in a row agrees with the padded row coordinate. -/
+theorem board_row_count {U H : ℕ} (b : Board U H) (i : Fin H) :
+    Fintype.card {j : Fin U // i.val < (b.val j).val} =
+      ((boardRowsEquiv U H b).val i).val := by
+  classical
+  let w := (boardRowsEquiv U H b).val i
+  let e : {j : Fin U // i.val < (b.val j).val} ≃ Fin w.val :=
+    { toFun := fun j => ⟨j.val.rev.val, (boardRows_cell b i j.val).mp j.property⟩
+      invFun := fun k =>
+        let j : Fin U := ⟨k.val, lt_of_lt_of_le k.isLt (Nat.le_of_lt_succ w.isLt)⟩
+        ⟨j.rev, (boardRows_cell b i j.rev).mpr (by simpa only [Fin.rev_rev] using k.isLt)⟩
+      left_inv := by intro j; apply Subtype.ext; exact Fin.rev_rev j.val
+      right_inv := by intro k; apply Fin.ext; dsimp only; rw [Fin.rev_rev] }
+  exact (Fintype.card_congr e).trans (Fintype.card_fin w.val)
 
 end D5.S3.Combinatorics.Partitions.FerrersRowCoordinates
