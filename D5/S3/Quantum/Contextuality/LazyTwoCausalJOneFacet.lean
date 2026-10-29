@@ -8,10 +8,8 @@
 
 import Mathlib.Analysis.Convex.Hull
 import Mathlib.Basic.Real.Basic
-import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
-import Mathlib.LinearAlgebra.Dimension.Finrank
+import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
 
 /-! The lazy binary scenario and inequality (10) of Abbott–Wechs–Costa–Branciard,
     Genuinely Multipartite Noncausality, arXiv:1708.07663v2, Definition 2.
@@ -96,8 +94,11 @@ private lemma vertex_valid {n : ℕ} {k : Finset (Fin n)}
     single_le_sum (fun t _ => hnonneg t t) (by simp [hf.1, hf.2.1])
   have hle : deterministicCorrelation f univ univ ≤ deterministicCorrelation f k k := by
     by_cases hu : f univ = univ
-    · simp only [deterministicCorrelation, hu, hforced hu, ite_eq_left, le_refl]
-    · simpa only [deterministicCorrelation, ite_eq_right hu] using hnonneg k k
+    · change (if f univ = univ then (1 : ℝ) else 0) ≤ if f k = k then 1 else 0
+      rw [ite_eq_left hu, ite_eq_left (hforced hu)]
+    · calc
+        deterministicCorrelation f univ univ = 0 := ite_eq_right hu
+        _ ≤ deterministicCorrelation f k k := hnonneg k k
   exact sub_nonneg.mpr (hle.trans hsingle)
 
 private lemma validity (n : ℕ) : ∀ p ∈ twoCausalPolytope n, 0 ≤ jOne p := by
@@ -343,14 +344,23 @@ private lemma off_diagonal_coordinate {n : ℕ} (i j : FaceIndex n)
   rw [hz, sub_zero]
   by_cases he : i = j
   · subst j
-    simp only [facePoint, ite_eq_right hi, deterministicCorrelation, spike, ite_true]
+    change (if i.1.1.2 = i.1.1.1 then deterministicCorrelation (block i.1.1.1)
+      else deterministicCorrelation (spike i.1.1.1 i.1.1.2)) i.1.1.1 i.1.1.2 = _
+    rw [ite_eq_right hi]
+    change (if (if i.1.1.1 = i.1.1.1 then i.1.1.2 else ∅) = i.1.1.2
+      then (1 : ℝ) else 0) = if i = i then 1 else 0
+    simp only [ite_true]
   · have hf : spike i.1.1.1 i.1.1.2 j.1.1.1 ≠ j.1.1.2 := by
       change (if j.1.1.1 = i.1.1.1 then i.1.1.2 else ∅) ≠ j.1.1.2
       split_ifs with ht
       · intro ha
         exact he (Subtype.ext (Subtype.ext (Prod.ext ht.symm ha)))
       · exact Ne.symm j.1.2.1.ne_empty
-    simp only [facePoint, ite_eq_right hi, deterministicCorrelation, ite_eq_right hf, ite_eq_right he]
+    change (if i.1.1.2 = i.1.1.1 then deterministicCorrelation (block i.1.1.1)
+      else deterministicCorrelation (spike i.1.1.1 i.1.1.2)) j.1.1.1 j.1.1.2 = _
+    rw [ite_eq_right hi]
+    change (if spike i.1.1.1 i.1.1.2 j.1.1.1 = j.1.1.2 then (1 : ℝ) else 0) = _
+    rw [ite_eq_right hf, ite_eq_right he]
 
 private lemma diagonal_coordinate {n : ℕ} (i j : FaceIndex n)
     (hj : j.1.1.2 = j.1.1.1) :
@@ -368,8 +378,13 @@ private lemma diagonal_coordinate {n : ℕ} (i j : FaceIndex n)
     rw [hz, sub_zero]
     by_cases he : i = j
     · subst i
-      simp only [facePoint, hj, ite_true, deterministicCorrelation, block,
-        ite_eq_left (subset_refl _), ite_eq_right hju, union_empty]
+      change (if j.1.1.2 = j.1.1.1 then deterministicCorrelation (block j.1.1.1)
+        else deterministicCorrelation (spike j.1.1.1 j.1.1.2)) j.1.1.1 j.1.1.2 = _
+      rw [ite_eq_left hj]
+      change (if ((if j.1.1.1 ⊆ j.1.1.1 then j.1.1.1 else ∅) ∪
+        (if j.1.1.1 = univ then univ \ j.1.1.1 else ∅)) = j.1.1.2
+        then (1 : ℝ) else 0) = if j = j then 1 else 0
+      simp only [hj, ite_true, ite_eq_left (subset_refl _), ite_eq_right hju, union_empty]
     · have hnt : i.1.1.1 ≠ j.1.1.1 := by
         intro h
         exact he (Subtype.ext (Subtype.ext (Prod.ext h (hi.trans (h.trans hj.symm)))))
@@ -380,7 +395,11 @@ private lemma diagonal_coordinate {n : ℕ} (i j : FaceIndex n)
         split_ifs
         · exact fun h => hnt (h.trans hj)
         · exact Ne.symm j.1.2.1.ne_empty
-      simp only [facePoint, ite_eq_left hi, deterministicCorrelation, ite_eq_right hf, ite_eq_right he]
+      change (if i.1.1.2 = i.1.1.1 then deterministicCorrelation (block i.1.1.1)
+      else deterministicCorrelation (spike i.1.1.1 i.1.1.2)) j.1.1.1 j.1.1.2 = _
+      rw [ite_eq_left hi]
+      change (if block i.1.1.1 j.1.1.1 = j.1.1.2 then (1 : ℝ) else 0) = _
+      rw [ite_eq_right hf, ite_eq_right he]
   · exact off_diagonal_coordinate i j hi
 
 private lemma face_independent (n : ℕ) : LinearIndependent ℝ
