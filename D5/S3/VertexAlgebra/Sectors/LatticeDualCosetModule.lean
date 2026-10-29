@@ -1,6 +1,6 @@
-/- GID: D5/S3/VertexAlgebra/LatticeDualCosetModule
+/- GID: D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/LatticeDualCosetModule
+   mirror-B: D5/B/S3/VertexAlgebra/Sectors/LatticeDualCosetModule
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
