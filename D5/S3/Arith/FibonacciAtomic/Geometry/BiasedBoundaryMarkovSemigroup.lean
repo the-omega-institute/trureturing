@@ -125,10 +125,15 @@ private theorem mem_cutoff (h : ℕ) (p : Edge) : p ∈ cutoff h ↔ p.val.lengt
 private theorem cutoff_expansion (h : ℕ) (z : H) :
     P h z = ∑ p ∈ cutoff h, lp.single 2 p (z p) := by
   classical
-  ext q
-  simp only [lp.coeFn_sum, Finset.sum_apply, lp.coeFn_single, Pi.single_apply]
-  change (if q.val.length ≤ h then z q else 0) = _
-  simp [← mem_cutoff h q]
+  rw [FiniteSourceCovariance.P_expand]
+  apply Finset.sum_congr
+  · ext p
+    change p ∈ ((List.finite_length_le Bool h).toFinset).subtype (· ≠ []) ↔ p ∈ cutoff h
+    simp [mem_cutoff]
+  · intro p hp
+    change z p • lp.single 2 p (1 : ℝ) = lp.single 2 p (z p)
+    rw [← lp.single_smul]
+    simp
 
 private theorem ray_prefix_iff (ω : Omega) (h : ℕ) (p : Edge) :
     p.val.IsPrefix (D5.S0.Computability.Coding.BiasedMassFrontier.rayPrefix ω h) ↔

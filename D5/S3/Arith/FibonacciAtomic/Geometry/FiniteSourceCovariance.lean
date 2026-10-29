@@ -123,7 +123,7 @@ private theorem mem_block (h : ℕ) (p : Edge) : p ∈ block h ↔ p.val.length 
   classical
   simp [block]
 
-private theorem P_expand (h : ℕ) (z : H) : P h z = ∑ p ∈ block h, z p • e p := by
+theorem P_expand (h : ℕ) (z : H) : P h z = ∑ p ∈ block h, z p • e p := by
   classical
   ext q
   change (if q.val.length ≤ h then z q else 0) =
