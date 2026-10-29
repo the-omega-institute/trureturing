@@ -15,7 +15,7 @@ set_option relaxedAutoImplicit false
 
 @[expose] public section
 namespace D5.S3.Combinatorics.Circle.IsolatedSmallSource
-open SourceWidth
+open SourceWidth ExpandingSourcePath
 open scoped BigOperators
 
 private def mass {α : Type*} (w : α → ℤ) (L : List α) : ℤ := (L.map w).sum
@@ -239,7 +239,7 @@ private theorem packet_inventory {α : Type*} [Fintype α] [DecidableEq α]
         refine ⟨i, (hroot i).mpr hi, ?_⟩
         have htwo : σ (σ i) = x := by rw [histep, hnstep]
         simp [packet, htwo, hxsmall]
-  apply List.perm_ext_iff_of_nodup hnodup (Finset.nodup_toList _ ) |>.mpr
+  apply (List.perm_ext_iff_of_nodup hnodup (Finset.nodup_toList _)).mpr
   intro x
   simp only [Finset.mem_toList, Finset.mem_univ, iff_true]
   exact hcomplete x
@@ -502,5 +502,53 @@ theorem finite_isolated_small_completion {α : Type*} [Fintype α] [Nonempty α]
         have hh := sum_neg_map w word
         omega
       exact he.trans hz
+
+
+-- Transient exact application; remove after the scoped build checks it.
+example (k t : ℕ) (hk : 3 ≤ k)
+    (hsmall : (∀ i : Fin k, |actualSource k t i| < ExpandingSourcePath.quarter k →
+        0 ≤ actualSource k t i) ∨
+      (∀ i : Fin k, |actualSource k t i| < ExpandingSourcePath.quarter k →
+        actualSource k t i ≤ 0))
+    (hisolated : ∀ i : Fin k, |actualSource k t i| < ExpandingSourcePath.quarter k →
+      ExpandingSourcePath.quarter k ≤ |actualSource k t (finRotate k i)|) :
+    ∃ L : List (Fin k), L.Perm (List.finRange k) ∧ L.Nodup ∧
+      L.toFinset = Finset.univ ∧ InStrip (actualSource k t) (half k) 0 L ∧
+      (∀ n : ℕ, 0 ≤ ((L.take n).map (actualSource k t)).sum ∧
+        ((L.take n).map (actualSource k t)).sum ≤ half k) ∧
+      (L.map (actualSource k t)).sum = 0 ∧ TwoOppositeLargeExchange.Legal k t L := by
+  classical
+  letI : NeZero k := ⟨by omega⟩
+  obtain ⟨hQ, hN, hC, hNpos, hodd⟩ := ExpandingSourcePath.source_geometry hk
+  have hbound (i : Fin k) : -(2 * ExpandingSourcePath.quarter k - 1) ≤ actualSource k t i ∧
+      actualSource k t i ≤ 2 * ExpandingSourcePath.quarter k - 1 := by
+    have hh := centered_bounds hNpos hodd ((2 : ℤ) ^ i.val * (t : ℤ))
+    change -(half k) ≤ actualSource k t i ∧ actualSource k t i ≤ half k at hh
+    rwa [hC] at hh
+  have hstep (i : Fin k) : actualSource k t (finRotate k i) =
+      doubleStep (4 * ExpandingSourcePath.quarter k - 1) (actualSource k t i) := by
+    have hh := (ZeroSumSubsets.source_cycle (by omega : 0 < k) t).2.2 i
+    rw [← hN]
+    unfold doubleStep
+    split_ifs with ha hb
+    · simp only [if_pos ha] at hh
+      omega
+    · simp only [if_neg ha, if_pos hb] at hh
+      omega
+    · simp only [if_neg ha, if_neg hb] at hh
+      omega
+  obtain ⟨L, hL, hstrip, hmass⟩ := finite_isolated_small_completion
+    (finRotate k) (actualSource k t) (ExpandingSourcePath.quarter k)
+    hQ hbound hstep hsmall hisolated
+  have hnodup : L.Nodup := hL.nodup_iff.mpr (Finset.nodup_toList _)
+  have hmem (i : Fin k) : i ∈ L := hL.mem_iff.mpr (by simp)
+  have hfull : L.Perm (List.finRange k) :=
+    (List.perm_ext_iff_of_nodup hnodup (List.nodup_finRange k)).mpr
+      (fun i => by simp [hmem i])
+  have hset : L.toFinset = Finset.univ := by ext i; simp [hmem i]
+  rw [← hC] at hstrip
+  exact ⟨L, hfull, hnodup, hset, hstrip,
+    fun n => by simpa using inStrip_prefix hstrip n, hmass,
+    TwoOppositeLargeExchange.legal_of_strip hnodup hstrip⟩
 
 end D5.S3.Combinatorics.Circle.IsolatedSmallSource
