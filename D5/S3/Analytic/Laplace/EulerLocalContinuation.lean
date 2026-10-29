@@ -11,6 +11,8 @@ import Mathlib.Analysis.Complex.Convex
 import Mathlib.Analysis.Analytic.Order
 import Mathlib.Tactic
 
+/-! Double primitives reduce the complex Euler equation to an affine defect. -/
+
 noncomputable section
 open Complex Set Filter Metric
 open scoped Topology
@@ -24,7 +26,7 @@ private theorem half_open (c r : ℝ) : IsOpen (rightHalfDisk c r) :=
   isOpen_ball.inter (isOpen_lt continuous_const Complex.continuous_re)
 
 private theorem half_preconnected (c r : ℝ) : IsPreconnected (rightHalfDisk c r) :=
-  ((convex_ball (c : ℂ) r).inter (Complex.convex_halfSpace_re_gt c)).isPreconnected
+  ((convex_ball (c : ℂ) r).inter (convex_halfSpace_re_gt c)).isPreconnected
 
 /-- Twice integrating the equation leaves precisely an affine defect in zF. -/
 private theorem affine_defect {U : Set ℂ} (hU : IsOpen U) (hUc : IsPreconnected U)
@@ -36,26 +38,27 @@ private theorem affine_defect {U : Set ℂ} (hU : IsOpen U) (hUc : IsPreconnecte
   let E : ℂ → ℂ := fun z => F z + z * deriv F z - Q z
   have hE : ∀ z ∈ U, HasDerivAt E 0 z := by
     intro z hz
-    have hd := ((hF z hz).hasDerivAt (hU.mem_nhds hz)).add
-      ((hasDerivAt_id z).mul (((hF.deriv hU) z hz).hasDerivAt (hU.mem_nhds hz)))
-      |>.sub (hQ z hz)
-    convert hd using 1
-    dsimp
-    linear_combination -(hode z hz)
+    have hd : HasDerivAt E
+        (deriv F z + (deriv F z + z * deriv (deriv F) z) - R z) z := by
+      simpa only [E, Pi.add_apply, Pi.mul_apply, Pi.sub_apply, id_eq, one_mul] using!
+        ((hF.hasDerivAt (hU.mem_nhds hz)).add
+          ((hasDerivAt_id z).mul ((hF.deriv hU).hasDerivAt (hU.mem_nhds hz)))).sub
+            (hQ z hz)
+    have he : deriv F z + (deriv F z + z * deriv (deriv F) z) - R z = 0 := by
+      linear_combination hode z hz
+    exact he ▸ hd
   obtain ⟨A, hA⟩ := hU.exists_is_const_of_deriv_eq_zero hUc
     (fun z hz => (hE z hz).differentiableAt.differentiableWithinAt)
     (fun z hz => (hE z hz).deriv)
   let G : ℂ → ℂ := fun z => z * F z - P z - A * z
   have hG : ∀ z ∈ U, HasDerivAt G 0 z := by
     intro z hz
-    have hd := (((hasDerivAt_id z).mul
-      ((hF z hz).hasDerivAt (hU.mem_nhds hz))).sub (hP z hz)).sub
-      ((hasDerivAt_id z).const_mul A)
-    convert hd using 1
-    have he := hA z hz
-    dsimp [E] at he
-    dsimp
-    linear_combination -he
+    have hd : HasDerivAt G (F z + z * deriv F z - Q z - A) z := by
+      simpa only [G, Pi.sub_apply, Pi.mul_apply, id_eq, one_mul, mul_one] using!
+        ((((hasDerivAt_id z).mul (hF.hasDerivAt (hU.mem_nhds hz))).sub
+          (hP z hz)).sub ((hasDerivAt_id z).const_mul A))
+    have he : F z + z * deriv F z - Q z - A = 0 := sub_eq_zero.mpr (hA z hz)
+    exact he ▸ hd
   obtain ⟨B, hB⟩ := hU.exists_is_const_of_deriv_eq_zero hUc
     (fun z hz => (hG z hz).differentiableAt.differentiableWithinAt)
     (fun z hz => (hG z hz).deriv)
@@ -90,13 +93,13 @@ theorem exists_extension_of_ne_zero {c r : ℝ} (hc : c ≠ 0) (hr : 0 < r)
     linarith
   let H : ℂ → ℂ := fun z => (P z + A * z + B) / z
   refine ⟨δ, hδ, min_le_left _ _, H, ?_, ?_⟩
-  · exact (((fun z hz => (hP z (hsub hz)).differentiableAt.differentiableWithinAt).add
-      (differentiableOn_const.mul differentiableOn_id)).add differentiableOn_const).div
-      differentiableOn_id hnz
+  · have hPd : DifferentiableOn ℂ P (ball (c : ℂ) δ) :=
+      fun z hz => (hP z (hsub hz)).differentiableAt.differentiableWithinAt
+    exact ((hPd.add ((differentiableOn_const A).mul differentiableOn_id)).add
+      (differentiableOn_const B)).div differentiableOn_id hnz
   · intro z hz
     have he := hAB z ⟨hsub hz.1, hz.2⟩
     apply (div_eq_iff (hnz z hz.1)).mpr
-    dsimp
     linear_combination -he
 
 /-- A finite positive-real boundary limit removes the singular homogeneous solution at zero. -/
@@ -126,7 +129,7 @@ theorem exists_extension_at_zero {r : ℝ} (hr : 0 < r) {R F : ℂ → ℂ} {ell
   have hH0 : H 0 = ell := by
     have hh : HasDerivAt P (H 0) 0 := by
       rw [hPf]
-      simpa using (hasDerivAt_id (0 : ℂ)).mul hHa.differentiableAt.hasDerivAt
+      simpa using! (hasDerivAt_id (0 : ℂ)).mul hHa.differentiableAt.hasDerivAt
     exact (hh.unique (hP 0 (mem_ball_self hr))).trans hQ0
   obtain ⟨ε, hε, hεsub⟩ := Metric.mem_nhds_iff.mp hHa.eventually_analyticAt
   let δ := min r ε
@@ -139,11 +142,11 @@ theorem exists_extension_at_zero {r : ℝ} (hr : 0 < r) {R F : ℂ → ℂ} {ell
     filter_upwards [self_mem_nhdsWithin,
       mem_nhdsWithin_of_mem_nhds (Iio_mem_nhds hδ)] with x hx hxδ
     refine ⟨?_, hx⟩
-    simpa [mem_ball, dist_eq_norm, Real.norm_eq_abs, abs_of_pos hx] using hxδ
+    simpa [mem_ball, dist_eq_norm, Real.norm_eq_abs, abs_of_pos (show 0 < x from hx)] using hxδ
   have hxc : Tendsto (fun x : ℝ => (x : ℂ)) (𝓝[Ioi 0] 0) (𝓝 (0 : ℂ)) :=
     Complex.continuous_ofReal.continuousAt.tendsto.mono_left nhdsWithin_le_nhds
   have hPlim : Tendsto (fun x : ℝ => P (x : ℂ)) (𝓝[Ioi 0] 0) (𝓝 (0 : ℂ)) := by
-    simpa [hP0] using (hP 0 (mem_ball_self hr)).continuousAt.tendsto.comp hxc
+    simpa only [Function.comp_def, hP0] using (hP 0 (mem_ball_self hr)).continuousAt.tendsto.comp hxc
   have hBlim : Tendsto (fun x : ℝ => (x : ℂ) * F (x : ℂ) - P (x : ℂ) - A * (x : ℂ))
       (𝓝[Ioi 0] 0) (𝓝 (0 : ℂ)) := by
     simpa using ((hxc.mul hlim).sub hPlim).sub (tendsto_const_nhds.mul hxc)
@@ -167,7 +170,7 @@ theorem exists_extension_at_zero {r : ℝ} (hr : 0 < r) {R F : ℂ → ℂ} {ell
     exact hFA _ hx
   have hA : A = 0 := by
     have he : ell = ell + A := tendsto_nhds_unique hlim (hHlim.congr' hAeq.symm)
-    linear_combination he
+    linear_combination -he
   refine ⟨δ, hδ, min_le_left _ _, H, hHd, ?_, hH0⟩
   intro z hz
   simpa [hA] using (hFA z hz).symm
