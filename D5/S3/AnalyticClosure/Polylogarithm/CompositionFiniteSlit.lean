@@ -146,7 +146,7 @@ private theorem log_lift_continuous {f F G : ℂ → ℂ} {a b R : ℝ}
         (isClosed_le Complex.continuous_im continuous_const).closure_eq
       have hw' := hw.2
       rw [hcl] at hw'
-      exact hw' 
+      exact hw'
     exact ⟨hnorm w hw.1, exp_im_nonneg hw.1.2.1 hpi⟩
   · apply hG.comp Complex.continuous_exp.continuousOn
     intro w hw
@@ -156,7 +156,7 @@ private theorem log_lift_continuous {f F G : ℂ → ℂ} {a b R : ℝ}
         exact Complex.closure_setOfPred_lt_im _
       have hw' := hw.2
       rw [hcl] at hw'
-      exact hw' 
+      exact hw'
     exact ⟨hnorm w hw.1, exp_im_nonpos hpi hw.1.2.2⟩
 
 private theorem log_lift_agrees {f F G : ℂ → ℂ} {R : ℝ}

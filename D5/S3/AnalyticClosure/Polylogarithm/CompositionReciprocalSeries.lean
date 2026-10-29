@@ -143,7 +143,7 @@ private theorem actual_series (head : ℕ+) (tail : List ℕ+) (ell : ℕ+) :
     apply pow_ne_zero
     rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply]
     simp only [fc, f, PowerSeries.coeff_map, PowerSeries.coeff_mk, Complex.ofRealHom_eq_coe]
-    exact Complex.ofReal_ne_zero.mpr ((CompositionDisk.source_series head tail).1 0).ne' 
+    exact Complex.ofReal_ne_zero.mpr ((CompositionDisk.source_series head tail).1 0).ne'
   have hpq : p = PowerSeries.map Complex.ofRealHom (ordinarySeries head tail ell) := by
     have hunit := (PowerSeries.isUnit_iff_constantCoeff.mpr
       (isUnit_iff_ne_zero.mpr hfczero))
