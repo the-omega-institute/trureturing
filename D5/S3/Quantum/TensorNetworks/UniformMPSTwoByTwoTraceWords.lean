@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.TensorNetworks.UniformMPSExpectedDimensionRefutation
 import D5.S0.Observation.MatrixTracePowerSum
+import Mathlib.Algebra.Lie.Classical
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -33,18 +34,10 @@ private def mon (e : Fin 5 → ℕ) (p : parameters) : ℂ :=
 private def graded (k : ℤ) : Submodule ℂ (parameters → ℂ) :=
   Submodule.span ℂ {f | ∃ e : Fin 5 → ℕ, (degree e : ℤ) = k ∧ f = mon e}
 
-private def commutator (p : parameters) : Matrix (Fin 2) (Fin 2) ℂ :=
-  p 0 * p 1 - p 1 * p 0
-
 private def delta (p : parameters) : ℂ :=
   invariants p 4 ^ 2 - invariants p 0 * invariants p 1 * invariants p 4 +
     invariants p 0 ^ 2 * invariants p 3 + invariants p 1 ^ 2 * invariants p 2 -
     4 * invariants p 2 * invariants p 3
-
-private def deltaMap : (parameters → ℂ) →ₗ[ℂ] (parameters → ℂ) where
-  toFun f p := delta p * f p
-  map_add' f g := by ext p; exact mul_add _ _ _
-  map_smul' c f := by ext p; exact mul_left_comm _ _ _
 
 private def word (l : List (Fin 2)) (p : parameters) : Matrix (Fin 2) (Fin 2) ℂ :=
   (l.map p).prod
@@ -255,15 +248,14 @@ private lemma word_reduction (l : List (Fin 2)) :
         exact reduction_left_y (p 0) (p 1) (r 0 p) (r 1 p) (r 2 p) (r 3 p)
 
 private lemma commutator_traces (p : parameters) :
-    (commutator p).trace = 0 ∧ (p 0 * commutator p).trace = 0 ∧
-      (p 1 * commutator p).trace = 0 ∧ (p 0 * p 1 * commutator p).trace = delta p := by
-  have h0 : (commutator p).trace = 0 := by
-    change (p 0 * p 1 - p 1 * p 0).trace = 0
-    rw [Matrix.trace_sub, Matrix.trace_mul_comm (p 0) (p 1), sub_self]
-  have hx : (p 0 * commutator p).trace = 0 := by
+    (⁅p 0, p 1⁆).trace = 0 ∧ (p 0 * ⁅p 0, p 1⁆).trace = 0 ∧
+      (p 1 * ⁅p 0, p 1⁆).trace = 0 ∧ (p 0 * p 1 * ⁅p 0, p 1⁆).trace = delta p := by
+  have h0 : (⁅p 0, p 1⁆).trace = 0 :=
+    LieAlgebra.matrix_trace_commutator_zero (Fin 2) ℂ (p 0) (p 1)
+  have hx : (p 0 * ⁅p 0, p 1⁆).trace = 0 := by
     change (p 0 * (p 0 * p 1 - p 1 * p 0)).trace = 0
     rw [mul_sub, Matrix.trace_sub, Matrix.trace_mul_cycle' (p 0) (p 1) (p 0), sub_self]
-  have hy : (p 1 * commutator p).trace = 0 := by
+  have hy : (p 1 * ⁅p 0, p 1⁆).trace = 0 := by
     change (p 1 * (p 0 * p 1 - p 1 * p 0)).trace = 0
     rw [mul_sub, Matrix.trace_sub, Matrix.trace_mul_cycle' (p 1) (p 0) (p 1), sub_self]
   refine ⟨h0, hx, hy, ?_⟩
@@ -276,12 +268,12 @@ private lemma commutator_traces (p : parameters) :
   ring
 
 private lemma trace_word_commutator (l : List (Fin 2)) :
-    (fun p => (word l p * commutator p).trace) ∈
-      (graded ((l.length : ℤ) - 2)).map deltaMap := by
+    (fun p => (word l p * ⁅p 0, p 1⁆).trace) ∈
+      (graded ((l.length : ℤ) - 2)).map (LinearMap.mulLeft ℂ delta) := by
   obtain ⟨r, _, _, _, hr3, hr⟩ := word_reduction l
   refine ⟨r 3, hr3, ?_⟩
   funext p
-  change delta p * r 3 p = (word l p * commutator p).trace
+  change delta p * r 3 p = (word l p * ⁅p 0, p 1⁆).trace
   rw [hr p]
   obtain ⟨h0, hx, hy, hxy⟩ := commutator_traces p
   simp only [add_mul, smul_mul_assoc, one_mul, Matrix.trace_add, Matrix.trace_smul,
@@ -316,7 +308,7 @@ private lemma trace_swap_identity (a b x y : Matrix (Fin 2) (Fin 2) ℂ) :
 private lemma trace_swap (a b : List (Fin 2)) :
     (fun p => (word (a ++ 0 :: 1 :: b) p).trace -
       (word (a ++ 1 :: 0 :: b) p).trace) =
-    (fun p => (word (b ++ a) p * commutator p).trace) := by
+    (fun p => (word (b ++ a) p * ⁅p 0, p 1⁆).trace) := by
   funext p
   change _ = (word (b ++ a) p * (p 0 * p 1 - p 1 * p 0)).trace
   simp only [word_append]
@@ -328,9 +320,9 @@ private lemma trace_swap (a b : List (Fin 2)) :
 private lemma trace_adjacent_mem (a b : List (Fin 2)) (x y : Fin 2) :
     (fun p => (word (a ++ x :: y :: b) p).trace -
       (word (a ++ y :: x :: b) p).trace) ∈
-      (graded (((a ++ x :: y :: b).length : ℤ) - 4)).map deltaMap := by
-  have h : (fun p => (word (b ++ a) p * commutator p).trace) ∈
-      (graded (((a ++ x :: y :: b).length : ℤ) - 4)).map deltaMap := by
+      (graded (((a ++ x :: y :: b).length : ℤ) - 4)).map (LinearMap.mulLeft ℂ delta) := by
+  have h : (fun p => (word (b ++ a) p * ⁅p 0, p 1⁆).trace) ∈
+      (graded (((a ++ x :: y :: b).length : ℤ) - 4)).map (LinearMap.mulLeft ℂ delta) := by
     have hd : (((b ++ a).length : ℤ) - 2) = (((a ++ x :: y :: b).length : ℤ) - 4) := by
       simp only [List.length_append, List.length_cons, Nat.cast_add, Nat.cast_one]
       omega
@@ -338,24 +330,24 @@ private lemma trace_adjacent_mem (a b : List (Fin 2)) (x y : Fin 2) :
     exact trace_word_commutator (b ++ a)
   fin_cases x <;> fin_cases y <;> simp only [Fin.mk_zero, Fin.mk_one] at *
   · simpa only [sub_self, Pi.zero_def] using
-      ((graded (((a ++ (0 : Fin 2) :: 0 :: b).length : ℤ) - 4)).map deltaMap).zero_mem
+      ((graded (((a ++ (0 : Fin 2) :: 0 :: b).length : ℤ) - 4)).map (LinearMap.mulLeft ℂ delta)).zero_mem
   · rw [trace_swap]
     exact h
   · have heq : (fun p => (word (a ++ (1 : Fin 2) :: 0 :: b) p).trace -
         (word (a ++ 0 :: 1 :: b) p).trace) =
-        -(fun p => (word (b ++ a) p * commutator p).trace) := by
+        -(fun p => (word (b ++ a) p * ⁅p 0, p 1⁆).trace) := by
       rw [← trace_swap]
       funext p
       change _ - _ = -(_ - _)
       ring
     rw [heq]
-    exact (Submodule.map deltaMap _).neg_mem h
+    exact (Submodule.map (LinearMap.mulLeft ℂ delta) _).neg_mem h
   · simpa only [sub_self, Pi.zero_def] using
-      ((graded (((a ++ (1 : Fin 2) :: 1 :: b).length : ℤ) - 4)).map deltaMap).zero_mem
+      ((graded (((a ++ (1 : Fin 2) :: 1 :: b).length : ℤ) - 4)).map (LinearMap.mulLeft ℂ delta)).zero_mem
 
 private lemma trace_perm_mem {l r : List (Fin 2)} (h : l.Perm r) (a : List (Fin 2)) :
     (fun p => (word (a ++ l) p).trace - (word (a ++ r) p).trace) ∈
-      (graded (((a ++ l).length : ℤ) - 4)).map deltaMap := by
+      (graded (((a ++ l).length : ℤ) - 4)).map (LinearMap.mulLeft ℂ delta) := by
   induction h generalizing a with
   | nil =>
     refine ⟨(0 : parameters → ℂ), (graded _).zero_mem, ?_⟩
@@ -367,7 +359,7 @@ private lemma trace_perm_mem {l r : List (Fin 2)} (h : l.Perm r) (a : List (Fin 
   | swap x y l => exact trace_adjacent_mem a l y x
   | @trans l r t h1 h2 ih1 ih2 =>
     have ht : (fun p => (word (a ++ r) p).trace - (word (a ++ t) p).trace) ∈
-        (graded (((a ++ l).length : ℤ) - 4)).map deltaMap := by
+        (graded (((a ++ l).length : ℤ) - 4)).map (LinearMap.mulLeft ℂ delta) := by
       simpa only [List.length_append, h1.length_eq] using ih2 a
     have heq : (fun p : parameters => (word (a ++ l) p).trace -
         (word (a ++ t) p).trace) =
@@ -379,24 +371,24 @@ private lemma trace_perm_mem {l r : List (Fin 2)} (h : l.Perm r) (a : List (Fin 
         ((word (a ++ r) p).trace - (word (a ++ t) p).trace)
       ring
     exact (congrArg (fun f : parameters → ℂ => f ∈
-      (graded (((a ++ l).length : ℤ) - 4)).map deltaMap) heq).mpr
-        (((graded (((a ++ l).length : ℤ) - 4)).map deltaMap).add_mem (ih1 a) ht)
+      (graded (((a ++ l).length : ℤ) - 4)).map (LinearMap.mulLeft ℂ delta)) heq).mpr
+        (((graded (((a ++ l).length : ℤ) - 4)).map (LinearMap.mulLeft ℂ delta)).add_mem (ih1 a) ht)
 
 private lemma binary_count (l : List (Fin 2)) : l.count 0 + l.count 1 = l.length := by
-  induction l with
-  | nil => rfl
-  | cons x l ih =>
-    fin_cases x <;> simp_all <;> omega
+  simpa only [Fin.sum_univ_two, Multiset.coe_count, Multiset.coe_card] using
+    (Multiset.sum_count_eq_card (s := Finset.univ) (m := (l : Multiset (Fin 2)))
+      (fun _ _ => Finset.mem_univ _))
 
 private lemma sorted_perm (l : List (Fin 2)) :
     l.Perm (List.replicate (l.count 0) 0 ++ List.replicate (l.count 1) 1) := by
-  apply List.perm_iff_count.mpr
-  intro x
-  fin_cases x <;> simp [List.count_replicate]
+  apply (List.perm_replicate_append_replicate (by decide : (0 : Fin 2) ≠ 1)).mpr
+  refine ⟨rfl, rfl, ?_⟩
+  intro x _
+  fin_cases x <;> simp
 
 private lemma coordinates_upper (n : ℕ) :
     coordinates n ≤ Submodule.span ℂ (Set.range (ordered n)) ⊔
-      (graded ((n : ℤ) - 4)).map deltaMap := by
+      (graded ((n : ℤ) - 4)).map (LinearMap.mulLeft ℂ delta) := by
   apply Submodule.span_le.mpr
   rintro _ ⟨i, rfl⟩
   let l := List.ofFn i
@@ -428,10 +420,10 @@ private lemma coordinates_upper (n : ℕ) :
   have hs : ordered n a ∈ Submodule.span ℂ (Set.range (ordered n)) :=
     Submodule.subset_span ⟨a, rfl⟩
   have ht : (fun p => traceWord 2 2 n p i - ordered n a p) ∈
-      Submodule.span ℂ (Set.range (ordered n)) ⊔ (graded ((n : ℤ) - 4)).map deltaMap :=
+      Submodule.span ℂ (Set.range (ordered n)) ⊔ (graded ((n : ℤ) - 4)).map (LinearMap.mulLeft ℂ delta) :=
     Submodule.mem_sup_right hp
   have hu : ordered n a ∈ Submodule.span ℂ (Set.range (ordered n)) ⊔
-      (graded ((n : ℤ) - 4)).map deltaMap := Submodule.mem_sup_left hs
+      (graded ((n : ℤ) - 4)).map (LinearMap.mulLeft ℂ delta) := Submodule.mem_sup_left hs
   have hfun : (fun p => traceWord 2 2 n p i) =
       (fun p => traceWord 2 2 n p i - ordered n a p) + ordered n a := by
     funext p
@@ -440,48 +432,43 @@ private lemma coordinates_upper (n : ℕ) :
   change (fun p => traceWord 2 2 n p i) ∈ _
   rw [hfun]
   exact (Submodule.span ℂ (Set.range (ordered n)) ⊔
-    (graded ((n : ℤ) - 4)).map deltaMap).add_mem ht hu
+    (graded ((n : ℤ) - 4)).map (LinearMap.mulLeft ℂ delta)).add_mem ht hu
 
 private def combinationEval (q : List (Fin 2) →₀ ℂ) (p : parameters) :
     Matrix (Fin 2) (Fin 2) ℂ :=
-  q.sum fun l c => c • word l p
-
-private def pureWords (n : ℕ) (q : List (Fin 2) →₀ ℂ) : Prop :=
-  ∀ l ∈ q.support, l.length = n
+  Finsupp.linearCombination ℂ (fun l => word l p) q
 
 private def wrap (a b : List (Fin 2)) (q : List (Fin 2) →₀ ℂ) :
     List (Fin 2) →₀ ℂ := q.mapDomain fun l => a ++ l ++ b
 
 private lemma pure_add {n : ℕ} {q r : List (Fin 2) →₀ ℂ}
-    (hq : pureWords n q) (hr : pureWords n r) : pureWords n (q + r) := by
-  intro l hl
-  rcases Finset.mem_union.mp (Finsupp.support_add hl) with hl | hl
-  · exact hq l hl
-  · exact hr l hl
+    (hq : q ∈ Finsupp.supported ℂ ℂ {w : List (Fin 2) | w.length = n})
+    (hr : r ∈ Finsupp.supported ℂ ℂ {w : List (Fin 2) | w.length = n}) :
+    q + r ∈ Finsupp.supported ℂ ℂ {w : List (Fin 2) | w.length = n} := by
+  exact (Finsupp.supported ℂ ℂ {l : List (Fin 2) | l.length = n}).add_mem hq hr
 
 private lemma pure_single (l : List (Fin 2)) (c : ℂ) :
-    pureWords l.length (Finsupp.single l c) := by
-  intro r hr
-  have heq : r = l := Finset.mem_singleton.mp (Finsupp.support_single_subset hr)
-  rw [heq]
+    Finsupp.single l c ∈ Finsupp.supported ℂ ℂ {w : List (Fin 2) | w.length = l.length} := by
+  exact Finsupp.single_mem_supported ℂ c rfl
 
-private lemma pure_wrap {n : ℕ} {q : List (Fin 2) →₀ ℂ} (hq : pureWords n q)
-    (a b : List (Fin 2)) : pureWords (a.length + n + b.length) (wrap a b q) := by
+private lemma pure_wrap {n : ℕ} {q : List (Fin 2) →₀ ℂ}
+    (hq : q ∈ Finsupp.supported ℂ ℂ {w : List (Fin 2) | w.length = n})
+    (a b : List (Fin 2)) :
+    wrap a b q ∈ Finsupp.supported ℂ ℂ {w : List (Fin 2) | w.length = a.length + n + b.length} := by
   intro l hl
   change l ∈ (q.mapDomain fun l => a ++ l ++ b).support at hl
   obtain ⟨r, hr, rfl⟩ := Finset.mem_image.mp (Finsupp.mapDomain_support hl)
-  simp only [List.length_append, hq r hr]
+  change (a ++ r ++ b).length = a.length + n + b.length
+  have hlen : r.length = n := hq hr
+  simp only [List.length_append, hlen]
 
 private lemma combinationEval_add (q r : List (Fin 2) →₀ ℂ) (p : parameters) :
     combinationEval (q + r) p = combinationEval q p + combinationEval r p := by
-  change (q + r).sum (fun l c => c • word l p) =
-    q.sum (fun l c => c • word l p) + r.sum (fun l c => c • word l p)
-  exact Finsupp.sum_add_index' (fun _ => zero_smul _ _) (fun _ _ _ => add_smul _ _ _)
+  exact map_add (Finsupp.linearCombination ℂ (fun l => word l p)) q r
 
 private lemma combinationEval_single (l : List (Fin 2)) (c : ℂ) (p : parameters) :
     combinationEval (Finsupp.single l c) p = c • word l p := by
-  change (Finsupp.single l c).sum (fun l c => c • word l p) = c • word l p
-  exact Finsupp.sum_single_index (zero_smul ℂ (word l p))
+  exact Finsupp.linearCombination_single ℂ c l
 
 private lemma wrap_eval (a b : List (Fin 2)) (q : List (Fin 2) →₀ ℂ) (p : parameters) :
     combinationEval (wrap a b q) p = word a p * combinationEval q p * word b p := by
@@ -498,8 +485,9 @@ private def wordOp (j : Fin 5) (q : List (Fin 2) →₀ ℂ) : List (Fin 2) →�
     wrap [0] [0] q, wrap [1] [1] q, wrap [0, 1] [] q + wrap [] [1, 0] q] j
 
 private lemma wordOp_pure (j : Fin 5) {n : ℕ} {q : List (Fin 2) →₀ ℂ}
-    (hq : pureWords n q) :
-    pureWords (n + if j.val < 2 then 1 else 2) (wordOp j q) := by
+    (hq : q ∈ Finsupp.supported ℂ ℂ {w : List (Fin 2) | w.length = n}) :
+    wordOp j q ∈ Finsupp.supported ℂ ℂ
+      {w : List (Fin 2) | w.length = n + if j.val < 2 then 1 else 2} := by
   have hw (a b : List (Fin 2)) := pure_wrap hq a b
   dsimp only [wordOp]
   fin_cases j <;>
@@ -515,12 +503,12 @@ private lemma wordOp_pure (j : Fin 5) {n : ℕ} {q : List (Fin 2) →₀ ℂ}
       (by simpa using hw [] [1, 0])
 
 private lemma commutator_operations (p : parameters) :
-    p 0 * commutator p + commutator p * p 0 = invariants p 0 • commutator p ∧
-    p 1 * commutator p + commutator p * p 1 = invariants p 1 • commutator p ∧
-    p 0 * commutator p * p 0 = invariants p 2 • commutator p ∧
-    p 1 * commutator p * p 1 = invariants p 3 • commutator p ∧
-    p 0 * p 1 * commutator p + commutator p * p 1 * p 0 =
-      invariants p 4 • commutator p := by
+    p 0 * ⁅p 0, p 1⁆ + ⁅p 0, p 1⁆ * p 0 = invariants p 0 • ⁅p 0, p 1⁆ ∧
+    p 1 * ⁅p 0, p 1⁆ + ⁅p 0, p 1⁆ * p 1 = invariants p 1 • ⁅p 0, p 1⁆ ∧
+    p 0 * ⁅p 0, p 1⁆ * p 0 = invariants p 2 • ⁅p 0, p 1⁆ ∧
+    p 1 * ⁅p 0, p 1⁆ * p 1 = invariants p 3 • ⁅p 0, p 1⁆ ∧
+    p 0 * p 1 * ⁅p 0, p 1⁆ + ⁅p 0, p 1⁆ * p 1 * p 0 =
+      invariants p 4 • ⁅p 0, p 1⁆ := by
   change
     p 0 * (p 0 * p 1 - p 1 * p 0) + (p 0 * p 1 - p 1 * p 0) * p 0 =
       (p 0).trace • (p 0 * p 1 - p 1 * p 0) ∧
@@ -539,7 +527,7 @@ private lemma commutator_operations (p : parameters) :
       Fin.mk_zero, Fin.mk_one] <;> ring
 
 private lemma commutator_square (p : parameters) :
-    commutator p * commutator p = delta p • (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
+    ⁅p 0, p 1⁆ * ⁅p 0, p 1⁆ = delta p • (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
   change (p 0 * p 1 - p 1 * p 0) * (p 0 * p 1 - p 1 * p 0) =
     ((p 0 * p 1).trace ^ 2 - (p 0).trace * (p 1).trace * (p 0 * p 1).trace +
       (p 0).trace ^ 2 * (p 1).det + (p 1).trace ^ 2 * (p 0).det -
@@ -552,8 +540,8 @@ private lemma commutator_square (p : parameters) :
       Nat.one_ne_zero, Nat.zero_ne_one, ↓reduceIte] <;> ring
 
 private lemma wordOp_eval (j : Fin 5) (q : List (Fin 2) →₀ ℂ) (f : parameters → ℂ)
-    (hq : ∀ p, combinationEval q p = f p • commutator p) (p : parameters) :
-    combinationEval (wordOp j q) p = (invariants p j * f p) • commutator p := by
+    (hq : ∀ p, combinationEval q p = f p • ⁅p 0, p 1⁆) (p : parameters) :
+    combinationEval (wordOp j q) p = (invariants p j * f p) • ⁅p 0, p 1⁆ := by
   obtain ⟨h0, h1, h2, h3, h4⟩ := commutator_operations p
   dsimp only [invariants] at h0 h1 h2 h3 h4
   simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
@@ -580,18 +568,20 @@ private lemma wordOp_eval (j : Fin 5) (q : List (Fin 2) →₀ ℂ) (f : paramet
 private lemma invariant_multiple (e : Fin 5 → ℕ) :
     ∃ q : List (Fin 2) →₀ ℂ,
       (∀ l ∈ q.support, l.length = degree e + 2) ∧
-      ∀ p, combinationEval q p = mon e p • commutator p := by
+      ∀ p, combinationEval q p = mon e p • ⁅p 0, p 1⁆ := by
   classical
   let q0 : List (Fin 2) →₀ ℂ := Finsupp.single [0, 1] 1 + Finsupp.single [1, 0] (-1)
-  have hq0 : pureWords 2 q0 := pure_add (pure_single [0, 1] 1) (pure_single [1, 0] (-1))
-  have hq0eval (p : parameters) : combinationEval q0 p = commutator p := by
+  have hq0 : q0 ∈ Finsupp.supported ℂ ℂ {w : List (Fin 2) | w.length = 2} :=
+    pure_add (pure_single [0, 1] 1) (pure_single [1, 0] (-1))
+  have hq0eval (p : parameters) : combinationEval q0 p = ⁅p 0, p 1⁆ := by
     rw [combinationEval_add, combinationEval_single, combinationEval_single]
     change (1 : ℂ) • (p 0 * (p 1 * 1)) + (-1 : ℂ) • (p 1 * (p 0 * 1)) =
       p 0 * p 1 - p 1 * p 0
     simp only [mul_one, one_smul, neg_one_smul, sub_eq_add_neg]
   suffices ∀ m (f : Fin 5 → ℕ), (∑ j, f j) = m →
-      ∃ q : List (Fin 2) →₀ ℂ, pureWords (degree f + 2) q ∧
-        ∀ p, combinationEval q p = mon f p • commutator p from this _ e rfl
+      ∃ q : List (Fin 2) →₀ ℂ,
+        q ∈ Finsupp.supported ℂ ℂ {w : List (Fin 2) | w.length = degree f + 2} ∧
+        ∀ p, combinationEval q p = mon f p • ⁅p 0, p 1⁆ from this _ e rfl
   intro m
   induction m using Nat.strong_induction_on with
   | h m ih =>
@@ -640,12 +630,12 @@ private lemma invariant_multiple (e : Fin 5 → ℕ) :
 private lemma delta_monomial_mem (e : Fin 5 → ℕ) :
     (fun p => delta p * mon e p) ∈ coordinates (degree e + 4) := by
   obtain ⟨q, hq, hep⟩ := invariant_multiple e
-  have hm (l : List (Fin 2)) : (fun p => (word l p * commutator p).trace) =
+  have hm (l : List (Fin 2)) : (fun p => (word l p * ⁅p 0, p 1⁆).trace) =
       (fun p => (word (l ++ [0, 1]) p).trace) -
       (fun p => (word (l ++ [1, 0]) p).trace) := by
     funext p
     simp only [word_append, Pi.sub_apply]
-    dsimp only [word, commutator]
+    simp only [word, Ring.lie_def]
     simp only [List.map_cons, List.map_nil, List.prod_cons, List.prod_nil, mul_one,
       mul_sub, Matrix.trace_sub]
   have hb (l : List (Fin 2)) (hl : l ∈ q.support) (b : List (Fin 2)) (hb : b.length = 2) :
@@ -653,12 +643,12 @@ private lemma delta_monomial_mem (e : Fin 5 → ℕ) :
     have hd : (l ++ b).length = degree e + 4 := by
       rw [List.length_append, hq l hl, hb]
     simpa only [hd] using word_trace_mem (l ++ b)
-  have htr : (fun p => (combinationEval q p * commutator p).trace) ∈
+  have htr : (fun p => (combinationEval q p * ⁅p 0, p 1⁆).trace) ∈
       coordinates (degree e + 4) := by
-    have heq : (fun p => (combinationEval q p * commutator p).trace) =
-        ∑ l ∈ q.support, q l • (fun p => (word l p * commutator p).trace) := by
+    have heq : (fun p => (combinationEval q p * ⁅p 0, p 1⁆).trace) =
+        ∑ l ∈ q.support, q l • (fun p => (word l p * ⁅p 0, p 1⁆).trace) := by
       funext p
-      change ((∑ l ∈ q.support, q l • word l p) * commutator p).trace = _
+      change ((∑ l ∈ q.support, q l • word l p) * ⁅p 0, p 1⁆).trace = _
       simp only [Finset.sum_mul, smul_mul_assoc, Matrix.trace_sum, Matrix.trace_smul,
         Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     rw [heq]
@@ -667,7 +657,7 @@ private lemma delta_monomial_mem (e : Fin 5 → ℕ) :
     apply (coordinates _).smul_mem
     rw [hm]
     exact (coordinates _).sub_mem (hb l hl [0, 1] rfl) (hb l hl [1, 0] rfl)
-  have heq : (fun p => (combinationEval q p * commutator p).trace) =
+  have heq : (fun p => (combinationEval q p * ⁅p 0, p 1⁆).trace) =
       (2 : ℂ) • (fun p => delta p * mon e p) := by
     funext p
     simp only [hep p, smul_mul_assoc, commutator_square, Matrix.trace_smul,

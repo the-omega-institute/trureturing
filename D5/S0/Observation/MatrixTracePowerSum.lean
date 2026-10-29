@@ -72,7 +72,7 @@ namespace D5.S0.Observation.MatrixTracePowerSum
 variable {R : Type*} [CommRing R]
 
 /-- The Cayley identity in size two, proved entrywise. -/
-theorem sq_eq (M : Matrix (Fin 2) (Fin 2) R) :
+private theorem sq_eq (M : Matrix (Fin 2) (Fin 2) R) :
     M ^ 2 = Matrix.trace M • M - Matrix.det M • (1 : Matrix (Fin 2) (Fin 2) R) := by
   ext i j
   fin_cases i <;> fin_cases j <;>

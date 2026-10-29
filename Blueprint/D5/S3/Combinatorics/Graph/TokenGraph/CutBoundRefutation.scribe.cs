@@ -14,13 +14,6 @@ internal sealed class CutBoundRefutationDocument : IScribeDocumentDefinition
         "A phase product on the 100-token graph of the five-cycle blow-up with block size 40 has Rayleigh quotient below the cut and matching bound of Apte, Parekh and Sud.",
         H("The token-graph cut bound fails on a five-cycle blow-up"),
         Blocks(
-            Describe.Lean(DescribeId.Create("apscut-sum-five"),
-                DeclarationHandle.Create(Prefix + "sum5"),
-                H("A sum over five indices"),
-                StatementSource.FromAuthor(SumFiveFormula()),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("In an additive commutative monoid, the sum over Fin 5 is the sum of the five indexed values in order."))),
-                DescribeRole.Lemma),
             Node("crosses", "An unordered edge crossing a cut", CrossesFormula(),
                 "Page 8: \"Let δ(S) be the set of edges in G that cross from S to V ∖ S, and Cut(S) be the sum of the weights of the edges δ(S).\" Exactly one endpoint belongs to S. Sym2.lift descends the displayed symmetric endpoint predicate to unordered pairs; its proof of symmetry is implicit.",
                 "crosses", AssessedProvenance.FromLiterature(Source)),
@@ -85,16 +78,6 @@ internal sealed class CutBoundRefutationDocument : IScribeDocumentDefinition
     private static Formula GraphBinders(Formula body) => All("n", N,
         All("G", Call("SimpleGraph", Fin(F.Id("n"))),
             Instance(Call("DecidableRel", App(Q("SimpleGraph", "Adj"), F.Id("G"))), body)));
-
-    private static Formula SumFiveFormula()
-    {
-        Formula a = F.Id("A"), f = F.Id("f"), i = F.Id("i");
-        Formula sum = Seq(Sum, Underscore, Grp(i, Colon, Sp, Fin(D(5))), Sp, App(f, i));
-        Formula terms = Add(Add(Add(Add(App(f, D(0)), App(f, D(1))), App(f, D(2))),
-            App(f, D(3))), App(f, D(4)));
-        return Disp(All("A", F.Id("Type"), Instance(Call("AddCommMonoid", a),
-            All("f", Seq(Fin(D(5)), Sp, To, Sp, a), Eq(sum, terms)))));
-    }
 
     private static Formula AdjacencyMapFormula()
     {

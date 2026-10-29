@@ -7,7 +7,6 @@
    digest: The linear span of binary bond-two uniform matrix product states. -/
 
 import D5.S3.Quantum.TensorNetworks.UniformMPSTwoByTwoTraceWords
-import D5.S3.Combinatorics.Graph.TokenGraph.CutBoundRefutation
 
 /-! The source tensor span and the weighted invariant monomial count. -/
 
@@ -135,12 +134,12 @@ private def expandExponents (r s : ℕ) (e : Fin 5 → ℕ) : Fin 5 → ℕ :=
 
 private lemma half_sum (e : Fin 5 → ℕ) :
     (∑ j, halfExponents e j) = e 0 / 2 + e 1 / 2 + e 2 + e 3 + e 4 := by
-  rw [D5.S3.Combinatorics.Graph.TokenGraph.CutBoundRefutation.sum5]
+  rw [Fin.sum_univ_five]
   rfl
 
 private lemma expand_weight (r s : ℕ) (e : Fin 5 → ℕ) :
     weight (expandExponents r s e) = 2 * (∑ j, e j) + r + s := by
-  rw [D5.S3.Combinatorics.Graph.TokenGraph.CutBoundRefutation.sum5]
+  rw [Fin.sum_univ_five]
   change (2 * e 0 + r) + (2 * e 1 + s) + 2 * e 2 + 2 * e 3 + 2 * e 4 = _
   omega
 

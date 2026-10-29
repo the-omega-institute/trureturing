@@ -167,7 +167,7 @@ private lemma block_sum {α : Type*} [AddCommMonoid α] (F : Fin 5 → α) :
     _ = 40 • (∑ i : Fin 5, F i) := by simp [Finset.smul_sum]
 
 private noncomputable def z : ℂ := (-4 + 3 * Complex.I) / 5
-lemma sum5 {α : Type*} [AddCommMonoid α] (f : Fin 5 → α) :
+private lemma sum5 {α : Type*} [AddCommMonoid α] (f : Fin 5 → α) :
     (∑ i : Fin 5, f i) = f 0 + f 1 + f 2 + f 3 + f 4 := by
   simp [Fin.sum_univ_succ]
   abel
