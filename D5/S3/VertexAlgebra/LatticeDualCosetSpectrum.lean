@@ -26,9 +26,9 @@ theorem point_spectrum_subset (β : Charge D)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H * gramComplex D=1) (hGH : gramComplex D * H=1)
     (μ : Fin D.rank → ℚ) (hDual : ∀ i,∑ j,(D.G i j : ℚ)*μ j=(β i : ℚ))
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (λ : ℂ)
-    (hv : ∃ v : Carrier D, v ≠ 0 ∧ moduleL D β H 0 v=λ • v) :
-    ∃ n : ℕ, λ=((chargeWeight D μ (minimizingCharge D μ hD)+(n : ℚ)) : ℂ) := by
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (z : ℂ)
+    (hv : ∃ v : Carrier D, v ≠ 0 ∧ moduleL D β H 0 v=z • v) :
+    ∃ n : ℕ, z=((chargeWeight D μ (minimizingCharge D μ hD)+(n : ℚ)) : ℂ) := by
   classical
   obtain ⟨v,hv,he⟩ := hv
   have hc : carrierCoeffEquiv D v ≠ 0 := by
@@ -38,7 +38,7 @@ theorem point_spectrum_subset (β : Charge D)
   have h := congrArg (fun w : Carrier D => carrierCoeffEquiv D w a) he
   rw [moduleL_coeff D β H hHG hGH μ hDual] at h
   simp only [map_smul,Finsupp.smul_apply,smul_eq_mul] at h
-  have heq : (weight D μ a : ℂ)=λ := mul_right_cancel₀ ha h
+  have heq : (weight D μ a : ℂ)=z := mul_right_cancel₀ ha h
   obtain ⟨n,hn⟩ := weight_levels D β μ hDual (minimizingCharge D μ hD)
     (Classical.choose_spec (attained_minimum D μ hD)).2 a
   exact ⟨n,heq.symm.trans (congrArg (fun x : ℚ => (x : ℂ)) hn)⟩
@@ -48,11 +48,11 @@ theorem positive_rank_point_spectrum (β : Charge D)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H * gramComplex D=1) (hGH : gramComplex D * H=1)
     (μ : Fin D.rank → ℚ) (hDual : ∀ i,∑ j,(D.G i j : ℚ)*μ j=(β i : ℚ))
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (hr : 0<D.rank) (λ : ℂ) :
-    (∃ v : Carrier D, v ≠ 0 ∧ moduleL D β H 0 v=λ • v) ↔
-      ∃ n : ℕ, λ=((chargeWeight D μ (minimizingCharge D μ hD)+(n : ℚ)) : ℂ) := by
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (hr : 0<D.rank) (z : ℂ) :
+    (∃ v : Carrier D, v ≠ 0 ∧ moduleL D β H 0 v=z • v) ↔
+      ∃ n : ℕ, z=((chargeWeight D μ (minimizingCharge D μ hD)+(n : ℚ)) : ℂ) := by
   constructor
-  · exact point_spectrum_subset D β H hHG hGH μ hDual hD λ
+  · exact point_spectrum_subset D β H hHG hGH μ hDual hD z
   · rintro ⟨n,rfl⟩
     let i : Fin D.rank := ⟨0,hr⟩
     let a : Label D := (minimizingCharge D μ hD,Finsupp.single (i,0) n)
@@ -64,8 +64,8 @@ theorem positive_rank_point_spectrum (β : Charge D)
 
 /-- Rank zero has the single eigenvalue zero on the nonzero vacuum line. -/
 theorem zero_rank_point_spectrum (β : Charge D)
-    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (hr : D.rank=0) (λ : ℂ) :
-    (∃ v : Carrier D, v ≠ 0 ∧ moduleL D β H 0 v=λ • v) ↔ λ=0 := by
+    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) (hr : D.rank=0) (z : ℂ) :
+    (∃ v : Carrier D, v ≠ 0 ∧ moduleL D β H 0 v=z • v) ↔ z=0 := by
   classical
   letI : IsEmpty (Fin D.rank) := ⟨fun i => by have hi := i.isLt; omega⟩
   have hz : moduleL D β H 0=0 := by simp [moduleL,omega,conformalPolynomial]
@@ -87,6 +87,7 @@ theorem bottom_fiber (μ : Fin D.rank → ℚ)
     weight D μ a=chargeWeight D μ (minimizingCharge D μ hD) ↔
       chargeWeight D μ a.1=chargeWeight D μ (minimizingCharge D μ hD) ∧ a.2=0 := by
   have hmin := (Classical.choose_spec (attained_minimum D μ hD)).2 a.1
+  change chargeWeight D μ (minimizingCharge D μ hD) ≤ chargeWeight D μ a.1 at hmin
   have hn : (0 : ℚ) ≤ (oscillatorEnergy a.2 : ℚ) := Nat.cast_nonneg _
   constructor
   · intro h
@@ -161,20 +162,26 @@ theorem half_shift_two_minima :
     ∃ γ δ : Charge E, γ ≠ δ ∧ chargeWeight E μ γ=1/4 ∧ chargeWeight E μ δ=1/4 ∧
       ∀ ν : Charge E, 1/4 ≤ chargeWeight E μ ν := by
   dsimp only
+  have hformula (ν : Fin 1 → ℤ) :
+      chargeWeight halfShiftLattice (fun _ => 1/2) ν = ((ν 0 : ℚ)+1/2)^2 := by
+    change (∑ i : Fin 1, ∑ j : Fin 1,
+      ((ν i : ℚ)+1/2)*2*((ν j : ℚ)+1/2))/2 = _
+    simp only [Fin.sum_univ_one]
+    ring
   constructor
   · intro i
-    norm_num [halfShiftLattice]
+    change (∑ j : Fin 1, (2 : ℚ)*(1/2))=1
+    norm_num
   · refine ⟨0,(fun _ => -1),?_,?_,?_,?_⟩
     · intro h
       have hh := congrFun h (0 : Fin 1)
       norm_num at hh
-    · norm_num [chargeWeight,pairing,halfShiftLattice]
-    · norm_num [chargeWeight,pairing,halfShiftLattice]
+    · rw [hformula]
+      norm_num
+    · rw [hformula]
+      norm_num
     · intro ν
-      have hformula : chargeWeight halfShiftLattice (fun _ => 1/2) ν =
-          ((ν 0 : ℚ)+1/2)^2 := by
-        simp [chargeWeight,pairing,halfShiftLattice]
-        ring
+      change Fin 1 → ℤ at ν
       rw [hformula]
       by_cases h : 0 ≤ ν 0
       · have hq : (0 : ℚ) ≤ (ν 0 : ℚ) := by exact_mod_cast h

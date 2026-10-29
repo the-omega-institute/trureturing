@@ -36,13 +36,13 @@ theorem all_eigenspaces_finiteDimensional (β : Charge D)
     (H : Matrix (Fin D.rank) (Fin D.rank) ℂ)
     (hHG : H * gramComplex D=1) (hGH : gramComplex D * H=1)
     (μ : Fin D.rank → ℚ) (hDual : ∀ i,∑ j,(D.G i j : ℚ)*μ j=(β i : ℚ))
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (λ : ℂ) :
-    FiniteDimensional ℂ ((moduleL D β H 0).eigenspace λ) := by
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (z : ℂ) :
+    FiniteDimensional ℂ ((moduleL D β H 0).eigenspace z) := by
   classical
-  by_cases hv : ∃ v : Carrier D, v ≠ 0 ∧ moduleL D β H 0 v=λ • v
-  · obtain ⟨n,rfl⟩ := point_spectrum_subset D β H hHG hGH μ hDual hD λ hv
+  by_cases hv : ∃ v : Carrier D, v ≠ 0 ∧ moduleL D β H 0 v=z • v
+  · obtain ⟨n,rfl⟩ := point_spectrum_subset D β H hHG hGH μ hDual hD z hv
     exact eigenspace_finiteDimensional D β H hHG hGH μ hDual hD _
-  · have hz : (moduleL D β H 0).eigenspace λ = ⊥ := by
+  · have hz : (moduleL D β H 0).eigenspace z = ⊥ := by
       apply Submodule.eq_bot_iff.mpr
       intro v he
       by_contra hn

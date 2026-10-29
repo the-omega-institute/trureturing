@@ -167,8 +167,10 @@ theorem positive_energy (β : Charge D)
     have hs : {a : Label D | naturalLevel D β μ hDual hD a=n} =
         {a : Label D | weight D μ a=chargeWeight D μ γ₀+(n : ℚ)} := by
       ext a
+      change naturalLevel D β μ hDual hD a=n ↔
+        weight D μ a=chargeWeight D μ γ₀+(n : ℚ)
       rw [naturalLevel_spec D β μ hDual hD]
-      simp only [add_left_cancel_iff,Nat.cast_inj]
+      simp only [γ₀,add_left_cancel_iff,Nat.cast_inj]
     simp only [coefficientGrade,rationalGrade,hs]
   exact ⟨(coefficientDecomposition D (naturalLevel D β μ hDual hD)).trans
     (DirectSum.congrLinearEquiv (fun n => LinearEquiv.ofEq _ _ (he n)))⟩
