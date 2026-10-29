@@ -1,0 +1,68 @@
+**Lemma 122.4 (Ball-preserving lower witnesses).**
+For every anchor of Definition 122.1 and every $r\in[0,2]$,
+there exists $h_r$ in the closed unit ball such that, with
+$J_\tau=6+2\tau$,
+
+$$
+\|h_r-h_0\|\ge r/\sqrt5,\qquad
+Q(h_r;h_0)\le J_\tau q_{A,\eta}(r).
+\tag{122.15}
+$$
+
+One explicit choice is obtained by taking $\sigma=\operatorname{sgn}(a)$
+when $a\ne0$, either sign when $a=0$, and setting
+
+$$
+z_r=h_0-\sigma r e,\qquad
+m_r=\max\{1,\|z_r\|\},\qquad h_r=z_r/m_r.
+\tag{122.16}
+$$
+
+For $r\le2A$ no projection occurs and the displacement is exactly
+$r$. These assertions include every anchor on the unit sphere.
+
+*Proof.* The exact norm calculation is
+
+$$
+\|z_r\|^2=\|h_0\|^2+r(r-2A)\le1+r(r-2A)\le5.
+\tag{122.17}
+$$
+
+Thus $m_r\le\sqrt5$. If $r\le2A$, then $m_r=1$.
+If $m_r>1$, necessarily $r>2A$; the real axial component of
+$h_r-h_0$ has absolute value
+
+$$
+\frac r{m_r}+A\left(1-\frac1{m_r}\right)\ge\frac r{\sqrt5}.
+\tag{122.18}
+$$
+
+This proves the displacement assertion in both cases.
+The real axial displacement leaves the skew matrix unchanged, and
+the outer-product calculation in (122.13), now with $x=-\sigma r$,
+gives
+
+$$
+\|z_rz_r^\dagger-h_0h_0^\dagger\|_{\rm HS}
+ =r\sqrt{(r-2A)^2+2\eta^2}
+ \le\sqrt2\,q_{A,\eta}(r).
+\tag{122.19}
+$$
+
+If projection occurs, write $d=\|z_r-h_r\|=m_r-1$.
+Equation (122.17) implies
+
+$$
+d=\frac{\|z_r\|^2-1}{\|z_r\|+1}
+ \le r(r-2A)\le q_{A,\eta}(r).
+\tag{122.20}
+$$
+
+If no projection occurs, $d=0$. In either case the correction to
+the outer product is at most
+$(\sqrt5+1)d\le4d$, and that to the skew matrix is at most
+$2\tau d$. Adding these bounds to (122.19) proves (122.15),
+since $\sqrt2+4+2\tau\le J_\tau$.
+The construction uses the full closed ball itself; (122.17) is
+also valid when $\|h_0\|=1$. $\square$
+

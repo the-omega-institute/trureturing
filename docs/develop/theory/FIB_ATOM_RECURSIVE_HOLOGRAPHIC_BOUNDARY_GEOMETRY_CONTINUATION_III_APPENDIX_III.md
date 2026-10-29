@@ -243,3 +243,292 @@ The scalar marginal result of Corollary 133.3, with its complete hypotheses and 
 The existence of deterministic representatives in every full 64-coordinate common-readout fiber, the general joint quadratic and cubic requirements for such a construction, and any native or physical realization remain unresolved here. Proposition 134.2 refutes the specified universal negative-index premise for the joint-coefficient route; it is not a counterexample to purification itself.
 
 ## 追加锚（本行以下为增补区）
+
+## 135. The prescribed rank-two slice and the actual terminal correction
+
+**Definition 135.1 (the unchanged source and the full marginal partition class).** Retain the entire telescope of Definition 134.1, including (134.1)–(134.12), all its original hypotheses and the complete inherited suppliers of Appendix II §§115–117, 123–125 and 133. Thus $a,\eta,d>0$ are arbitrary original finite parameters, $G=H^1\times\mathbb R$ has the product in (134.1), $e=(0,0,0,0)$, and the raw Haar measure is $d\mu=dx\,dy\,dz\,d\zeta$. The original unit-source field satisfies $L\Gamma=\delta_e$, with $X_1=\partial_x$, $X_2=\partial_y+x\partial_\zeta$, $X_3=\partial_z$, $L=-\sum_{r=1}^3X_r^2$, $D_\zeta=-i\partial_\zeta$ and $g_c=16\sqrt{a\eta}$. Keep the coefficient-one vector $w_*$, the coefficient-positive normalization $h=w_*/\|w_*\|_{L^2(\mu)}$, and precisely the actual selector
+
+$$
+\begin{gathered}
+S=(aL+\eta D_\zeta^2-g_c\Gamma)|_{C_c^\infty(G\setminus\{e\};\mathbb C)},\qquad
+\rho=\frac{A_{\rm src}(h)}{C_{\rm src}(h)},\qquad C_{\rm src}(h)>0,\\
+D(H_{\rm end})=\{u\in D(S^*):A_{\rm src}(u)=\rho C_{\rm src}(u)\},\qquad H_{\rm end}u=S^*u,\\
+m=h^2\mu,\qquad m(G)=1,\qquad U_hv=hv,\qquad
+K=U_h^{-1}H_{\rm end}U_h\ge0,\qquad T_s=e^{-sK}.
+\end{gathered}
+$$
+
+The source coefficients and central units are those already fixed in Definition 134.1. The full form domain is still $\mathscr V=\mathscr V_0\dotplus\mathbb C1$ with the closure and energy in (134.3); it is not its killed part. The measure $m$ is the same nonatomic Borel probability, absolutely continuous with respect to the raw Haar measure, with $m(\{e\})=0$. The actual conservative diffusion starts at $e$ at original time zero, and the three observation epochs remain $2d,3d,4d$. Its supplied real densities satisfy
+
+$$
+g_s>0\quad m\text{-a.e.},\qquad
+g_s\in L^2(m),\qquad \int_Gg_s\,dm=1,\qquad
+g_{s+r}=T_rg_s\quad(s>0,\ r\ge0).
+$$
+
+Conservation, self-adjointness, positivity improvement at every positive time, and $\ker K=\mathbb C1$ are the original endpoint and source suppliers. In particular $T_s1=1$ and the real $L^2(m)$ subspace is preserved. The finite bound needed below is exactly Theorem 133.2 for this fixed tuple; no parameter-uniform estimate is assumed. Set, as before,
+
+$$
+P=T_d,\qquad g=g_{2d},\qquad
+M=1+\|g_d\|_{L^\infty(m)}<\infty,\qquad c=\frac1{4M},
+$$
+
+and allow any real Borel representative $b$ with $[b]=g_d$ and $0<b\le M$ at every point of the whole $G$. With $\mathcal L=\{0,1,3,B\}$ keep
+
+$$
+f_3=cb,\qquad f_B=\frac14,\qquad
+f_0=f_1=\frac{3/4-cb}{2},\qquad
+\mathcal C(u,v,w)=\int_Gg\,u\,P(vPw)\,dm.
+$$
+
+Define $\mathscr D_{12}(a,\eta,d,b)$ to consist of single pointwise Borel partitions $D=(D_y)_{y\in\mathcal L}$ of the whole $G$, pairwise disjoint with union $G$, satisfying all twelve equalities
+
+$$
+\int_Gg_{rd}\mathbf1_{D_y}\,dm
+=\int_Gg_{rd}f_y\,dm
+\qquad(r\in\{2,3,4\},\ y\in\mathcal L).
+$$
+
+In the fixed order $(0,1,3,B)$, distinguish the prescribed stochastic slice and the actual partition slice:
+
+$$
+\begin{aligned}
+A^f_{yz}&=\mathcal C(f_y,f_z,f_3),\\
+q_D&=P\mathbf1_{D_3},\\
+A^D_{yz}&=\mathcal C(\mathbf1_{D_y},\mathbf1_{D_z},\mathbf1_{D_3})
+=\int_Gg\mathbf1_{D_y}P(\mathbf1_{D_z}q_D)\,dm.
+\end{aligned}
+$$
+
+All pairings and matrix ranks below are real. In particular $q_D$ is the actual terminal factor in $A^D$; the propagation identity $Pf_3=cg$ describes the prescribed readout and does not identify $q_D$ with $cg$.
+
+**Proposition 135.2 (rank target, unavoidable terminal discrepancy and exact cancellation criterion).** Under Definition 135.1, for every allowed tuple the class $\mathscr D_{12}(a,\eta,d,b)$ is nonempty, every $D$ in that class satisfies $m(D_y)>0$ for each $y\in\mathcal L$, and
+
+$$
+\operatorname{rank}A^f=2.
+$$
+
+For every $D\in\mathscr D_{12}(a,\eta,d,b)$, write $q=q_D$ and $\delta=q-cg$. Then
+
+$$
+\begin{gathered}
+0<q<1\quad m\text{-a.e.},\qquad \delta\ne0\text{ in }L^2(m),\\
+\langle b,\delta\rangle_m
+=\langle g_{2d},\delta\rangle_m
+=\langle g_{3d},\delta\rangle_m=0,\\
+m(\{\delta>0\})>0,\qquad m(\{\delta<0\})>0,
+\qquad q/g\text{ is not constant }m\text{-a.e.}
+\end{gathered}
+$$
+
+Define the separate comparison and correction matrices by
+
+$$
+\begin{aligned}
+(B_D)_{yz}&=c\langle g\mathbf1_{D_y},P(g\mathbf1_{D_z})\rangle_m,\\
+(E_D)_{yz}&=\langle g\mathbf1_{D_y},P(\delta\mathbf1_{D_z})\rangle_m.
+\end{aligned}
+$$
+
+The matrix $B_D$ is symmetric positive definite, of rank four, while
+
+$$
+A^D=B_D+E_D.
+$$
+
+With the positive definite square root of $B_D$, put
+
+$$
+F_D=B_D^{-1/2}E_DB_D^{-1/2}.
+$$
+
+The actual matrix $A^D$ and $F_D$ need not be symmetric. The exact finite-dimensional criterion is
+
+$$
+\begin{gathered}
+\operatorname{rank}A^D=4-\dim_{\mathbb R}\ker(I_4+F_D),\\
+\operatorname{rank}A^D\le2
+\quad\Longleftrightarrow\quad
+\dim_{\mathbb R}\ker(I_4+F_D)\ge2,\\
+\operatorname{rank}A^D\le2\quad\Longrightarrow\quad
+\operatorname{rank}E_D\ge2.
+\end{gathered}
+$$
+
+Thus the requirement at $-1$ is a geometric eigenspace dimension of at least two, not merely an algebraic multiplicity. The prescribed terminal marginal masses also satisfy
+
+$$
+t_r:=\int_Gg_{rd}f_3\,dm
+=c\langle b,P^{r-1}b\rangle_m\quad(r\in\{2,3,4\}),
+\qquad 0<t_4<t_3<t_2\le\frac14.
+$$
+
+These source-specific deductions are `repo-derived` relative to Definition 134.1 and its inherited suppliers. The finite linear vector-measure theorem, spectral calculus and finite-rank algebra used in the proof are attributed intermediates, rather than separate new general theorems.
+
+*Proof.* First obtain the common partition for the fixed linear marginals. On the Borel sigma-algebra of the original whole $G$, let
+
+$$
+\nu_r(A)=\int_Ag_{rd}\,dm,\qquad r=2,3,4.
+$$
+
+These are three finite probability measures, each absolutely continuous with respect to coordinate Lebesgue measure. For any Borel $A$, the function $t\mapsto\nu_r(A\cap\{x\le t\})$ is continuous: coordinate hyperplanes have Lebesgue measure zero, so dominated convergence gives continuity at every $t$. Its limits at the two ends of the real line are $0$ and $\nu_r(A)$. If $\nu_r(A)>0$, it therefore attains $\nu_r(A)/2$, proving atomlessness on this very Borel space. The pointwise Borel vector $(f_y)_{y\in\mathcal L}$ has nonnegative entries summing to one. Apply Dvoretzky–Wald–Wolfowitz, [*Relations among certain ranges of vector measures*, Pacific J. Math. 1 (1951), 59–74, §3 Theorem 4 and Lemma 2](https://msp.org/pjm/1951/1-1/pjm-v1-n1-p06-s.pdf), with these three measures and four labels. Its equality of probability-vector and decomposition-vector ranges, with the definitions on pp. 59–60 and Lemma 2 on pp. 66–67, gives one Borel partition preserving all twelve entries simultaneously. Since $g_{rd}>0$ almost everywhere and every $f_y>0$ everywhere, each prescribed entry is strictly positive. Hence each cell of every marginal-feasible partition has positive $m$-measure. This use of the theorem preserves fixed linear integrals only; it does not prescribe the partition-dependent terminal factor or the joint coefficients.
+
+For the rank computation, the spectral-calculus identity already used in §134 gives, for real $u\in L^2(m)$ and $s>0$,
+
+$$
+\|T_su\|_2^2
+=\int_{[0,\infty)}e^{-2s\lambda}\,d\langle u,E_K(\lambda)u\rangle_m.
+$$
+
+The multiplier is strictly positive at every finite $\lambda\ge0$. Thus $T_s$ is injective, and $\langle u,Pu\rangle_m=\|T_{d/2}u\|_2^2>0$ when $u\ne0$.
+
+The class $b$ is nonconstant. Indeed, if it were constant, mass one would force $g_d=1$. For every $0<u<d$, propagation and conservation would then give $T_{d-u}(g_u-1)=0$, hence $g_u=1$ by injectivity. Choose a nonzero nonnegative continuous compactly supported function $\psi$ away from $e$. Strict positivity of $h$ off $e$ gives $\int_G\psi\,dm>0$. On the other hand the continuous source start implies $\mathbb E_e[\psi(Z_u)]\to\psi(e)=0$ as $u\downarrow0$, by bounded convergence. The supplied density formula with $g_u=1$ would make all these expectations equal to the fixed positive integral. This contradiction proves nonconstancy without replacing the source law by a stationary initial law.
+
+Let $b^0=1$ and define a real $2$-by-$2$ matrix and a real $4$-by-$2$ matrix by
+
+$$
+H_{ij}=\langle gb^i,P(gb^j)\rangle_m\quad(i,j\in\{0,1\}),\qquad
+R=\begin{pmatrix}
+3/8&-c/2\\
+3/8&-c/2\\
+0&c\\
+1/4&0
+\end{pmatrix}.
+$$
+
+All entries are finite because $g\in L^2(m)$, $b$ is bounded and $P$ is an $L^2$ contraction. The classes $g,gb$ are linearly independent: $g>0$ almost everywhere would otherwise make $b$ constant. For $\xi=(\xi_0,\xi_1)\ne0$,
+
+$$
+\xi^{\mathsf T}H\xi
+=\|T_{d/2}(g(\xi_0+\xi_1b))\|_2^2>0.
+$$
+
+Thus $H$ is positive definite. The rows of $R$ express the four $f_y$ in the basis $(1,b)$. Propagation gives $Pf_3=cPb=cg$ as an $m$-class, and consequently
+
+$$
+A^f=cRHR^{\mathsf T}.
+$$
+
+The minor of $R$ formed by rows $3,B$ has determinant $-c/4\ne0$. Hence $\operatorname{rank}R=2$, and positive definiteness of $H$ gives $\ker A^f=\ker R^{\mathsf T}$; rank-nullity proves $\operatorname{rank}A^f=2$. This argument concerns the prescribed stochastic slice alone.
+
+Now fix any $D\in\mathscr D_{12}(a,\eta,d,b)$. Both $\mathbf1_{D_3}$ and $1-\mathbf1_{D_3}$ are nonzero nonnegative $L^2(m)$ classes. Positivity improvement of the original semigroup, as supplied in Theorem 117.2 using the irreducibility equivalence of Lenz–Stollmann–Veselić, [*The Allegretto–Piepenbrink Theorem for Strongly local forms*, Theorem 1.1](https://arxiv.org/html/0811.2135v1#S1.Thmtheorem1), gives $P\mathbf1_{D_3}>0$ and $P(1-\mathbf1_{D_3})>0$ almost everywhere. Conservation therefore proves $0<q<1$ almost everywhere.
+
+Put $v=\mathbf1_{D_3}-cb$. It is a bounded real class, and $\delta=Pv\in L^2(m)$. If $\delta=0$, injectivity of $P$ would give $\mathbf1_{D_3}=cb$ almost everywhere, impossible because $0<cb\le1/4$ everywhere. For the three moment identities, the label-$3$ marginal constraints say
+
+$$
+\langle g_{2d},v\rangle_m
+=\langle g_{3d},v\rangle_m
+=\langle g_{4d},v\rangle_m=0.
+$$
+
+Since $Pb=g_{2d}$, $Pg_{2d}=g_{3d}$ and $Pg_{3d}=g_{4d}$, self-adjointness gives exactly
+
+$$
+\langle b,\delta\rangle_m=\langle Pb,v\rangle_m=0,\qquad
+\langle g_{2d},\delta\rangle_m=\langle Pg_{2d},v\rangle_m=0,\qquad
+\langle g_{3d},\delta\rangle_m=\langle Pg_{3d},v\rangle_m=0.
+$$
+
+All pairings are finite by boundedness of $b$, the $L^2$ density bounds and the contraction property. Nonzero $\delta$, strict positivity of $b$ and $\langle b,\delta\rangle_m=0$ force both sign sets of $\delta$ to have positive measure. If $q/g$ were a constant $k$ almost everywhere, this same moment equation would give $(k-c)\langle b,g\rangle_m=0$. The last inner product is finite and strictly positive, so $k=c$, contradicting $\delta\ne0$. No identity $\int_G\delta\,dm=0$ is used or asserted.
+
+The comparison matrices are well defined: $g\mathbf1_{D_y}$ and $\delta\mathbf1_{D_z}$ are in real $L^2(m)$. For $x=(x_y)_{y\in\mathcal L}\in\mathbb R^4$,
+
+$$
+x^{\mathsf T}B_Dx
+=c\left\|T_{d/2}\left(g\sum_{y\in\mathcal L}x_y\mathbf1_{D_y}\right)\right\|_2^2.
+$$
+
+If $x\ne0$, disjointness and positive measure of every cell, together with $g>0$ almost everywhere, make the vector inside $T_{d/2}$ nonzero. Injectivity proves positive definiteness of the symmetric $B_D$. Substitute the exact equality $q=cg+\delta$ in the actual coefficient, retaining its actual terminal factor:
+
+$$
+\begin{aligned}
+A^D_{yz}
+&=\langle g\mathbf1_{D_y},P(\mathbf1_{D_z}q)\rangle_m\\
+&=c\langle g\mathbf1_{D_y},P(g\mathbf1_{D_z})\rangle_m
++\langle g\mathbf1_{D_y},P(\delta\mathbf1_{D_z})\rangle_m.
+\end{aligned}
+$$
+
+This proves $A^D=B_D+E_D$. Ordinary finite-dimensional square-root algebra gives
+
+$$
+A^D=B_D^{1/2}(I_4+F_D)B_D^{1/2}.
+$$
+
+Multiplication by the invertible square roots preserves rank. Rank-nullity for $I_4+F_D$ proves the displayed rank formula and its equivalent geometric-eigenspace condition, without a symmetry assumption on $F_D$. Finally,
+
+$$
+4=\operatorname{rank}B_D
+=\operatorname{rank}(A^D-E_D)
+\le\operatorname{rank}A^D+\operatorname{rank}E_D
+$$
+
+proves the correction-rank requirement when $\operatorname{rank}A^D\le2$. Positive definiteness of the comparison matrix has not been transferred to the actual matrix.
+
+For the marginal masses, propagation gives $g_{rd}=P^{r-1}b$, so self-adjointness proves the stated formula for $t_r$. Let $\sigma_b$ be the spectral measure of $b$ for $K$. Since $\ker K=\mathbb C1$ and $b$ is nonconstant, $\sigma_b((0,\infty))>0$. For $r=2,3$,
+
+$$
+t_r-t_{r+1}
+=c\int_{[0,\infty)}e^{-(r-1)d\lambda}(1-e^{-d\lambda})\,d\sigma_b(\lambda)>0.
+$$
+
+The integrand is strictly positive on $(0,\infty)$. Also $t_4>0$ follows from $g_{4d}>0$ almost everywhere and $f_3>0$, and $t_2\le1/4$ follows from $f_3\le1/4$ and the mass-one density. No spectral gap or numerical rank approximation enters any of these conclusions. $\square$
+
+**Proposition 135.3 (the necessary parent consequence and the remaining quantifiers).** Under Definition 135.1, if a full pointwise Borel partition $D$ attains all $64$ prescribed coordinates,
+
+$$
+\mathcal C(\mathbf1_{D_y},\mathbf1_{D_z},\mathbf1_{D_w})
+=\mathcal C(f_y,f_z,f_w)
+\qquad(y,z,w\in\mathcal L),
+$$
+
+then $D\in\mathscr D_{12}(a,\eta,d,b)$, $A^D=A^f$, and $\operatorname{rank}A^D=2$. For fixed $a,\eta,d$, changing only the allowed null-set representative $b$ leaves this marginal-feasible class, every actual matrix $A^D$, and the prescribed $64$ coordinates unchanged.
+
+Let $\Theta$ denote all tuples $(a,\eta,d,b)$ allowed by Definition 135.1. The all-partition rank obstruction is precisely the following unresolved statement, equivalently written using Proposition 135.2:
+
+$$
+\begin{aligned}
+&\exists\theta\in\Theta\ \forall D\in\mathscr D_{12}(\theta),
+&&\operatorname{rank}A^D\ge3,\\
+\Longleftrightarrow\quad
+&\exists\theta\in\Theta\ \forall D\in\mathscr D_{12}(\theta),
+&&\dim_{\mathbb R}\ker(I_4+F_D)\le1.
+\end{aligned}
+$$
+
+Its negation requires the fully quantified alternative
+
+$$
+\begin{aligned}
+&\forall\theta\in\Theta\ \exists D\in\mathscr D_{12}(\theta),
+&&\operatorname{rank}A^D\le2,\\
+\Longleftrightarrow\quad
+&\forall\theta\in\Theta\ \exists D\in\mathscr D_{12}(\theta),
+&&\dim_{\mathbb R}\ker(I_4+F_D)\ge2.
+\end{aligned}
+$$
+
+The obstruction, if established, excludes full $64$-coordinate attainment for its tuple. Neither quantified alternative, nor full $64$-coordinate attainment, is established by Proposition 135.2. Its marginal feasibility, terminal sign and moment identities, nonconstant ratio and positive comparison matrix supply no bound excluding the required cancellation for all feasible partitions. The forward necessary condition above supplies no converse from rank two to equality with $A^f$ or to attainment of the full law; a low-rank construction would still have to satisfy those additional equalities.
+
+*Proof.* For either common simplex tuple $u=f$ or $u_y=\mathbf1_{D_y}$, summation over the other two labels, conservation and self-adjoint propagation give the three slot marginals:
+
+$$
+\begin{aligned}
+\sum_{z,w\in\mathcal L}\mathcal C(u_y,u_z,u_w)
+&=\mathcal C(u_y,1,1)=\langle g_{2d},u_y\rangle_m,\\
+\sum_{y,w\in\mathcal L}\mathcal C(u_y,u_z,u_w)
+&=\mathcal C(1,u_z,1)=\langle Pg_{2d},u_z\rangle_m
+=\langle g_{3d},u_z\rangle_m,\\
+\sum_{y,z\in\mathcal L}\mathcal C(u_y,u_z,u_w)
+&=\mathcal C(1,1,u_w)=\langle P^2g_{2d},u_w\rangle_m
+=\langle g_{4d},u_w\rangle_m.
+\end{aligned}
+$$
+
+Equality of the two full laws therefore implies all twelve marginal equations. Fixing the third label to $3$ gives $A^D=A^f$, and Proposition 135.2 then gives rank two. Consequently a tuple for which every marginal-feasible partition has rank at least three cannot have a partition attaining the full law.
+
+For representative invariance, the essential norm defining $M$ and $c$ is unchanged. Any two allowed $b$ differ only on an $m$-null set, so their $f_y$ are the same bounded $m$-classes, their marginal targets agree, and $\mathcal C$ has the same values. The actual formula for $A^D$ contains no chosen representative $b$. Likewise any Borel null-set alteration of a finite partition, if kept disjoint and exhaustive, preserves its indicator classes, its marginal integrals and its actual coefficients. If one begins with completed-measurable partition classes, take finitely many Borel representatives, contain their exceptional overlaps and missing points in a Borel null set, and assign that set to one label after removing it from the other cells. This gives a full Borel partition with the same classes. All three observation epochs are positive and their laws are absolutely continuous with respect to $m$; no assertion about a time-zero read or its value at $e$ follows from this invariance.
+
+Finally $\operatorname{rank}A^D$ is an integer between zero and four. Thus the negation of rank at least three is rank at most two, and Proposition 135.2 identifies these alternatives with the respective nullity conditions. Negating the existential universal statement interchanges its two quantifiers and gives exactly the displayed universal existential alternative. The marginal-feasibility argument proves nonemptiness of each partition class; it yields no bound on this nullity. Representative invariance removes only the null-set choice of $b$, retaining the quantifiers over the original $a,\eta,d$. The compact-fiber and approximation statements of §123, the factorization statements of §124, the conditional constructions of §125, the scalar marginal result of §133 and the joint-pencil result of §134 retain their stated scopes. The full common-readout attainment problem and any native or physical realization remain unresolved here. $\square$
+
+## 追加锚（本行以下为增补区）
