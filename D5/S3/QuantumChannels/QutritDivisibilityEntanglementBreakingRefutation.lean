@@ -101,10 +101,9 @@ private lemma wernerHolevo_one_eq_kraus :
     rw [inv_pow, complex_sqrt_two_sq]; norm_num
   symm
   ext X i j
-  dsimp only [wk]
+  dsimp only [wk, wernerHolevo, Matrix.transposeLinearEquiv, Matrix.traceLinearMap]
   simp [MatrixMap.of_kraus, Matrix.mul_apply, Matrix.conjTranspose_apply,
     Matrix.single, Fin.sum_univ_three, Matrix.trace,
-    wernerHolevo, Matrix.transposeLinearEquiv, Matrix.traceLinearMap,
     Matrix.one_apply, Matrix.transpose_apply]
   fin_cases i <;> fin_cases j <;>
     norm_num [Matrix.single, Matrix.one_apply, Matrix.mul_apply,
@@ -118,10 +117,10 @@ private lemma depolarized_one_eq_kraus :
     rw [inv_pow, complex_sqrt_two_sq]; norm_num
   symm
   ext X i j
-  dsimp only [dk]
+  dsimp only [dk, depolarized, Matrix.traceLinearMap]
   simp [MatrixMap.of_kraus, Matrix.mul_apply, Matrix.conjTranspose_apply,
     Matrix.single, Fin.sum_univ_succ, Matrix.trace,
-    depolarized, Matrix.traceLinearMap, Matrix.one_apply]
+    Matrix.one_apply]
   fin_cases i <;> fin_cases j <;>
     norm_num [Matrix.single, Matrix.one_apply, Matrix.mul_apply,
       Matrix.conjTranspose_apply, Fin.sum_univ_succ] <;>
@@ -134,16 +133,16 @@ private def t : MatrixMap (Fin 3) (Fin 3) ℂ :=
 private lemma w_formula (X : Matrix (Fin 3) (Fin 3) ℂ) :
     wernerHolevo 1 X =
       (1 / 2 : ℂ) • (X.trace • (1 : Matrix (Fin 3) (Fin 3) ℂ) - X.transpose) := by
-  unfold wernerHolevo
-  simp [Matrix.transposeLinearEquiv, Matrix.traceLinearMap]
+  dsimp only [wernerHolevo, Matrix.transposeLinearEquiv, Matrix.traceLinearMap]
+  simp
   module
 
 private lemma d_formula (X : Matrix (Fin 3) (Fin 3) ℂ) :
     depolarized (LinearMap.id : MatrixMap (Fin 3) (Fin 3) ℂ) (1 / 2) X =
       (1 / 2 : ℂ) • X + (1 / 2 : ℂ) • (X.trace / 3) •
       (1 : Matrix (Fin 3) (Fin 3) ℂ) := by
-  unfold depolarized
-  simp [Matrix.traceLinearMap]
+  dsimp only [depolarized, Matrix.traceLinearMap]
+  simp
   module
 
 private lemma t_formula (X : Matrix (Fin 3) (Fin 3) ℂ) :
@@ -496,7 +495,14 @@ private lemma witness_partial_transpose_negative :
     decide
   have hc2 : (Finset.univ.filter (fun x : Fin 3 => (2 : Fin 3) = x)).card = 1 := by
     decide
-  simp [maxEntangledVector, maxEntangled, partialTranspose, MatrixMap.kron_def,
+  have hv : maxEntangledVector (Fin 3) = fun i : Fin 3 × Fin 3 =>
+      if i.1 = i.2 then
+        (((Real.sqrt (Fintype.card (Fin 3) : ℝ))⁻¹ : ℝ) : ℂ)
+      else 0 := rfl
+  have hm : maxEntangled (Fin 3) =
+      Matrix.vecMulVec (maxEntangledVector (Fin 3)) (star (maxEntangledVector (Fin 3))) := rfl
+  rw [hm, hv]
+  simp [partialTranspose, MatrixMap.kron_def,
     MatrixMap.id, t_formula, Matrix.mulVec, dotProduct, Matrix.vecMulVec,
     Matrix.single, Matrix.trace, Matrix.transpose_apply, Fin.sum_univ_three,
     Fin.sum_univ_succ, Fintype.sum_prod_type]
