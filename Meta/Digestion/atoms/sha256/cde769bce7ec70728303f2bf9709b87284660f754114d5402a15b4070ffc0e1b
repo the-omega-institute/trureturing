@@ -1,0 +1,43 @@
+**Theorem 148.2 (One decoder and one comparison on the whole paired domain).**
+For every $|t|\le\rho$, every completion in the original closed ball, every
+complex retention in its original disk, and the unchanged original
+domains, the finite rows of length at most two give the common estimates
+
+$$
+c_*D_0\le d_{f,t}\le d_{a,t}\le C_*D_0.
+\tag{148.2}
+$$
+
+Here $d_{f,t}$ is the literal finite raw-error norm for the phase-$t$
+source and $d_{a,t}$ is its full-history norm. The proof is the Cramer
+decoder argument of (144.2), with $\Lambda_*$ in place of $\Lambda$;
+the upper full-history estimate keeps the original factor $a_w$ and
+uses the trace bound for every actual history. The retention estimate uses
+the same $F$ and $m_*=5/8-b>0$, so it applies to the entire complex
+retention disk and the boundary of the completion ball.
+
+For $j\in\{f,a\}$, let $\mathcal F_{j,t}$, $m_{j,t},n_{j,t}$ be
+(125.3)–(125.5) with the phase-$t$ rows. Then, for every
+$|t|\le\rho$ and $0<\eta\le\eta_*$, the unchanged original nonlinear
+thresholds obey
+
+$$
+|\mu_{j,t}(\eta)-\eta m_{j,t}|\le E_*\eta^2,\qquad
+|\nu_{j,t}(\eta)-\eta n_{j,t}|\le E_*\eta^2.
+\tag{148.3}
+$$
+
+Every compact minimizer lies in $\|z\|\le R_*'$, $|g|\le G_*$, and
+the lifted pair is $(\eta g,-Ae+\eta z)$ with $A=1/2$ and
+$f=(\xi+\mathrm i v_+)/\sqrt2$. Thus the remainder in (148.3) is
+uniform in phase, in the full history, and in the whole original paired
+domain. It is the same source-only expansion as Lemma 125.2 and
+Theorem 126.3, with no finite-decoder substitution for $d_{a,t}$.
+
+The decoder intermediary is the finite dual-span construction of VI
+Proposition 118.2; the comparison of indistinguishability with an
+observable linear span is the source correspondence cited in (144.2) to
+D'Alessandro, *On Quantum State Observability and Measurement*, §2,
+Theorem 1. These references supply the interface; the phase-dependent
+minor and all constants in (148.1) are the present source calculation.
+

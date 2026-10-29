@@ -1,0 +1,26 @@
+### 定义 4.1（词完备的长度合同）
+
+称 $W$ 是**词完备的长度合同**，如果存在关系
+
+$$
+\Lambda\subseteq\mathbb N_0\times\mathbb N_0
+$$
+
+使得
+
+$$
+W=\{(u,v): (|u|,|v|)\in\Lambda\}.
+$$
+
+也就是说，只要两个词长属于 $\Lambda$，该长度下的所有局部词对都被全局调度允许；调度不再检查词的字母内容。
+
+对局部根对定义长度关系
+
+$$
+S_i^n(x,x')\;:\Longleftrightarrow\;\exists u\in E_i^n\;S_i^u(x,x'),
+$$
+
+$$
+C_i^n(x,x')\;:\Longleftrightarrow\;\exists u\in E_i^n\;C_i^u(x,x').
+$$
+

@@ -1,0 +1,13 @@
+**Theorem 92.4 (Finite phase-circle common minimax).** For every finite
+$n\ge2$ and $0<q\le10^{-3}$,
+
+$$
+\boxed{\displaystyle
+\varepsilon_{\circ}(q,n)=\bigl(1-2^{1-n}\bigr)\sqrt{q(1-q)}.}
+\tag{92.13}
+$$
+
+*Proof.* Lemma 92.2 gives the lower bound for every arbitrary complex
+whole-map competitor, and Lemma 92.3 attains it with one map for all
+phases. $\square$
+
