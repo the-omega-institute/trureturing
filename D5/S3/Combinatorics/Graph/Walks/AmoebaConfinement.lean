@@ -20,9 +20,9 @@
    dead_of_hasExtension: proof_shape: content; escape_witness: edge-count
    equality forces surjectivity and adjacency reflection for the same containing
    map; consumers: total_confinement.
-   exists_safe_degree: proof_shape: content; escape_witness: the finite interval
-   union bound produces a degree outside every demand interval; consumers:
-   exists_buffered_host.
+   exists_safe_degree: proof_shape: bind-only; escape_witness: bind-only;
+   consumed helper: exists_buffered_host -> exists_safe_degree on its live
+   proof path (AmoebaHost).
    admission_basis: open-problem-resolution (#23364; Proved)
    Direct frozen dependencies: none (pinned Mathlib and same-delivery modules).
 -/
