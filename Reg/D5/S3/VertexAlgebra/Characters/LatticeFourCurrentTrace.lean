@@ -98,7 +98,7 @@ private theorem dependence : ObservationalDependence signature actual := by
       ordered_positive_channels probe probePositive (fun _ => 0) ![0, 1, 0, 1] (by decide)]
     norm_num [Fin.sum_univ_succ, channelEnergyCoefficient, channelMate, channelRest,
       currentMode, contraction, pairEnergyCoefficient, cutoff_zero, multiplicity_zero,
-      bilinear, probe]
+      bilinear, probe, LatticePositiveEnergy.chargeEnergy_zero]
   rw [hz, h4]
   norm_num
 
