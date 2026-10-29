@@ -11,14 +11,14 @@ internal sealed class LatticeDualCosetConformalDocument : IScribeDocumentDefinit
             Paragraph(Text("D has any finite rank, including zero. Its Gram matrix is integral, symmetric and even on the diagonal. beta is integral. moduleL(H,m) is defined to be the normalized coefficient m+1 of the ACTUAL action of the ORIGINAL omega_D(H). It is not defined from a shifted diagonal formula. Borcherds supplies separate finite supports. Normal-product sums are evaluated on each vector before they are split; no globally finite endomorphism normal sum is asserted. Energy covariance uses both original inverse-Gram equations H G=1 and G H=1 and applies to every original input state and integer mode.")),
             Paragraph(Text("Classical construction context: Bakalov-Kac, math/0402315v1, section 4.1. The imported Sugawara architecture retains Kalle Kytola's Apache-2.0 attribution and VirasoroProject revision 5ff4245383b2cdd4eea7a0524bc1274c32041eb4. The finite reductions and actual-action connections are native mathematical proofs; no external novelty is asserted.")),
             Describe.Lean(
-                DescribeId.Create("latticedualcosetconformal-moduleL"),
+                DescribeId.Create("latticedualcosetconformal-modulel"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeDualCosetConformal.moduleL"),
                 H("moduleL"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("L_m is exactly action_D,beta(omega_D(H)) at normalized mode m+1 on the actual full carrier."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("latticedualcosetconformal-commutatorTerm"),
+                DescribeId.Create("latticedualcosetconformal-commutatorterm"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeDualCosetConformal.commutatorTerm"),
                 H("commutatorTerm"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
@@ -60,7 +60,7 @@ internal sealed class LatticeDualCosetConformalDocument : IScribeDocumentDefinit
                 Blocks(Paragraph(Text("For every integer m, the actual module current is the original neutral current plus beta_i delta(m,0) times identity."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("latticedualcosetconformal-moduleL-normal"),
+                DescribeId.Create("latticedualcosetconformal-modulel-normal"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeDualCosetConformal.moduleL_normal"),
                 H("moduleL normal"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),

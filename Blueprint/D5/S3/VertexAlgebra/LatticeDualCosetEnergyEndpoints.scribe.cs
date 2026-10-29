@@ -17,7 +17,7 @@ internal sealed class LatticeDualCosetEnergyEndpointsDocument : IScribeDocumentD
                 Blocks(Paragraph(Text("The constructed nonnegative attained minimum has a nonzero actual eigenvector in every rank, including rank zero."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("latticedualcosetenergyendpoints-all-eigenspaces-finiteDimensional"),
+                DescribeId.Create("latticedualcosetenergyendpoints-all-eigenspaces-finitedimensional"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeDualCosetEnergyEndpoints.all_eigenspaces_finiteDimensional"),
                 H("all eigenspaces finite dimensional"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),

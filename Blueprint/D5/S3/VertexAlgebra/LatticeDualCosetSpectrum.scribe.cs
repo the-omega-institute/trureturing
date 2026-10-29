@@ -59,7 +59,7 @@ internal sealed class LatticeDualCosetSpectrumDocument : IScribeDocumentDefiniti
                 Blocks(Paragraph(Text("The constructed rational minimum h equals zero in rank zero, by the existing collapse of all actual labels."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("latticedualcosetspectrum-halfShiftLattice"),
+                DescribeId.Create("latticedualcosetspectrum-halfshiftlattice"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeDualCosetSpectrum.halfShiftLattice"),
                 H("halfShiftLattice"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
