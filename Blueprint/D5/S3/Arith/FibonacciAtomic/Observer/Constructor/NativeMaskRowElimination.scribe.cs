@@ -18,7 +18,7 @@ internal sealed class NativeMaskRowEliminationDocument : IScribeDocumentDefiniti
             Blocks(
                 Paragraph(Text("The native mask recursively replaces each encountered cut subtree by alpha, the Boolean leaf true. A concrete exterior instead replaces it by its literal address hole. Filling every address hole by alpha gives exactly the native mask. Cutting that filled mask again at the original cuts restores the complete exterior. Thus equality of masks together with equality of reached sets is equivalent to equality of complete exteriors on the original tree carrier. Concrete leaves and ordered branches outside the cuts are retained without a size bound.")),
                 Paragraph(Text("For an arbitrary raw row, maskRowHolds means the following conjunction: cutting the label's filled mask at its cut set gives back its literal exterior; the source mask equals that filled mask; the source reached set equals the set of literal address holes; and the entire actual partition equals the label relation. The first conjunct checks address coherence directly. It is automatic for an exterior cut from any source, and rejects malformed raw labels without an attained-label certificate. The other three conjuncts retain both complete exterior descriptors and every partition bit.")),
-                Paragraph(Text("Every row is evaluated on the same original source fill(pat,composition(v,name)). Each row cut is prefix-free and every cut address has length strictly less than d. The list may contain both old and new cuts and any additional rows. The source has its actual original prefix pattern and the same named frontiers throughout; the identity naming map retains every original frontier coordinate. Early ground leaves, absent cuts, the root cut, uncut frontiers and repeated names remain in scope.")),
+                Paragraph(Text("Every row is evaluated on the same original source fill(pat,composition(v,name)). The maskExpression operation changes literal address holes to alpha in the symbolic exterior and retains every uncut frontier variable. The second conjunct identifies evaluation of this native term with the concrete mask of that very original source. Each row cut is prefix-free and every cut address has length strictly less than d. The list may contain both old and new cuts and any additional rows. The source has its actual original prefix pattern and the same named frontiers throughout; the identity naming map retains every original frontier coordinate. Early ground leaves, absent cuts, the root cut, uncut frontiers and repeated names remain in scope.")),
                 Paragraph(Text("All reached ordered pairs are retained by the underlying row compiler, including diagonals, both orders, repeated classes and all cross-class and off-task disequalities. An empty reached set has no pairs. A one-hole partition has no distinct pair tests; its ordered diagonal is the reflexive equality, and a raw label denying that equality has empty solution domain. No selected partition projection replaces the complete relation.")),
                 Paragraph(Text("The same finite extra equations and disequalities enter the existing full row elimination. The output has an explicitly enumerated free subtype of the original finite presentation, a total substitution theta for every original coordinate, and only substituted disequalities delta. One unrestricted valuation z on that free subtype reconstructs every original coordinate, including unused variables and auxiliaries. Replacing all original coordinates in the pattern term therefore reconstructs the same original source. Interpreted substitution histories, mixed image construction, and all-rank cofinality require further results."))),
             DescribeRole.Theorem))));
@@ -80,6 +80,9 @@ internal sealed class NativeMaskRowEliminationDocument : IScribeDocumentDefiniti
         var rs = V("rs");
         var source = C("fill", V("pat"), C("composition", V("v"), V("name")));
         var rows = Bounded("r", V("RawRow"), rs, C("maskRowHolds", r, source));
+        var expressions = Bounded("r", V("RawRow"), rs,
+            EqOf(C("evaluate", V("v"), C("maskExpression", C("symbolicExterior", Fst(r), C("nil"), C("patternTerm", V("pat"), V("name"))))),
+                C("nativeMask", Fst(r), C("nil"), source)));
         var prefix = Bounded("r", V("RawRow"), rs, C("CutPrefixFree", Fst(r)));
         var depth = Bounded("r", V("RawRow"), rs,
             Bounded("q", V("Address"), Fst(r), Seq(C("length", V("q")), Sp, Lt, Sp, V("d"))));
@@ -88,6 +91,6 @@ internal sealed class NativeMaskRowEliminationDocument : IScribeDocumentDefiniti
                 All("name", Arr(C("Frontier", V("pat")), V("X")),
                     All("rs", C("List", V("RawRow")), All("extra", C("SignedConstraints", V("X")),
                         All("v", Arr(V("X"), V("Source")),
-                            Imp(prefix, Imp(depth, And(Exterior(), IffOf(And(rows, Extras()), Image())))))))))));
+                            Imp(prefix, Imp(depth, And(Exterior(), And(expressions, IffOf(And(rows, Extras()), Image()))))))))))));
     }
 }

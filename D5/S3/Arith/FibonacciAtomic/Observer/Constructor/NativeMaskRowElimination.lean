@@ -20,7 +20,8 @@ open ActualTreeReadoutAcquisition (Address)
 open ActualCutPartitionRecovery (CutSet CutPrefixFree reachedHoles)
 open ActualCutPartitionDecoder
   (HoleExterior cutExterior exteriorHoles actualPartition literalRecord)
-open NativeGroundSeparation (Term)
+open NativeGroundSeparation (Term evaluate)
+open NativeSymbolicRecutting (SymbolicExterior exteriorFill symbolicExterior)
 open NativeSymbolicRowElimination
 open NativeTermUnification (Presentation)
 
@@ -33,6 +34,29 @@ def nativeMask (Q : CutSet) : Address → Source → Source
 /-- Fill every literal address hole by alpha, retaining all concrete leaves. -/
 def fillMask : HoleExterior →ₙ* Source :=
   FreeMagma.lift (Sum.elim FreeMagma.of (fun _ => .of true))
+
+/-- The mask expression keeps every uncut frontier variable literally. -/
+def maskExpression {X : Type} : SymbolicExterior X →ₙ* Term X :=
+  FreeMagma.lift (Sum.elim FreeMagma.of (fun _ => .of (.inl true)))
+
+private theorem mask_expression_fill {X : Type} (v : X → Source)
+    (e : SymbolicExterior X) :
+    evaluate v (maskExpression e) = fillMask (exteriorFill v e) := by
+  have embedded : fillMask.comp (FreeMagma.map Sum.inl) = MulHom.id Source := by
+    apply FreeMagma.hom_ext
+    funext b
+    rfl
+  have h : (evaluate v).comp maskExpression = fillMask.comp (exteriorFill v) := by
+    apply FreeMagma.hom_ext
+    funext a
+    cases a with
+    | inl b => cases b with
+      | inl b => rfl
+      | inr x =>
+          change v x = fillMask (FreeMagma.map Sum.inl (v x))
+          exact (congrArg (fun f : Source →ₙ* Source => f (v x)) embedded).symm
+    | inr q => rfl
+  exact congrArg (fun f : SymbolicExterior X →ₙ* Source => f e) h
 
 private theorem mask_fill (Q : CutSet) (a : Address) (u : Source) :
     nativeMask Q a u = fillMask (cutExterior Q a u) := by
@@ -92,6 +116,7 @@ def maskRowHolds (r : RawRow) (u : Source) : Prop :=
 
 private theorem mask_row_exact (r : RawRow) (u : Source) :
     maskRowHolds r u ↔ literalRecord r.1 u = r.2 := by
+  rcases r with ⟨Q, e, K⟩
   rw [maskRowHolds, ← mask_exterior_exact]
   simp only [literalRecord, Prod.mk.injEq]
 
@@ -108,19 +133,29 @@ theorem original_mask_row_elimination {X : Type} (p : Presentation X)
       (nativeMask Q [] u = nativeMask Q [] w ∧
         (reachedHoles Q [] u).toFinset = (reachedHoles Q [] w).toFinset) ↔
         cutExterior Q [] u = cutExterior Q [] w) ∧
+    (∀ r ∈ rs,
+      evaluate v (maskExpression (symbolicExterior r.1 []
+        (NativeHistoryCells.patternTerm pat name))) =
+        nativeMask r.1 [] (NativeDepthPatterns.fill pat (v ∘ name))) ∧
     (((∀ r ∈ rs, maskRowHolds r (NativeDepthPatterns.fill pat (v ∘ name))) ∧
       constraintsHold extra v) ↔
       ∃ o, eliminateRows p (NativeHistoryCells.patternTerm pat name) rs extra = some o ∧
         outputHolds o v) := by
-  refine ⟨mask_sources_exact, ?_⟩
-  have rows :
-      (∀ r ∈ rs, maskRowHolds r (NativeDepthPatterns.fill pat (v ∘ name))) ↔
-      (∀ r ∈ rs, literalRecord r.1 (NativeDepthPatterns.fill pat (v ∘ name)) = r.2) := by
-    constructor <;> intro h r hr
-    · exact (mask_row_exact r _).mp (h r hr)
-    · exact (mask_row_exact r _).mpr (h r hr)
-  exact (and_congr rows Iff.rfl).trans
-    ((complete_row_elimination p (NativeHistoryCells.patternTerm pat name) rs extra v).2
-      d pat name rfl freecuts bound)
+  refine ⟨mask_sources_exact, ?_, ?_⟩
+  · intro r hr
+    rw [mask_expression_fill]
+    have deep := NativeHistoryCells.pattern_deep d d pat name [] (by simp)
+    have he := (NativeSymbolicRecutting.symbolic_recut_exact d r.1
+      (freecuts r hr) (bound r hr) (NativeHistoryCells.patternTerm pat name) deep v).2.1
+    rw [← he, ← mask_fill, NativeHistoryCells.pattern_evaluate]
+  · have rows :
+        (∀ r ∈ rs, maskRowHolds r (NativeDepthPatterns.fill pat (v ∘ name))) ↔
+        (∀ r ∈ rs, literalRecord r.1 (NativeDepthPatterns.fill pat (v ∘ name)) = r.2) := by
+      constructor <;> intro h r hr
+      · exact (mask_row_exact r _).mp (h r hr)
+      · exact (mask_row_exact r _).mpr (h r hr)
+    exact (and_congr rows Iff.rfl).trans
+      ((complete_row_elimination p (NativeHistoryCells.patternTerm pat name) rs extra v).2
+        d pat name rfl freecuts bound)
 
 end D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeMaskRowElimination
