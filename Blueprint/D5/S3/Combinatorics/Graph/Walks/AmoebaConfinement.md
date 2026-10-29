@@ -66,7 +66,7 @@ $$\forall V \in \mathrm{Type},\; \forall H \in \mathrm{SimpleGraph}\left(V\right
 
 *Commentary.*
 
-The current host itself competes in the total-edge minimum. A minimizing containing tree therefore has at most as many edges. A finite tree has one fewer edge than vertices, so the containing map must be surjective. Its injective map on undirected edge sets is also surjective, which supplies adjacency reflection. This proves the assertion for every minimizer, including the zero-length and zero-multiplicity cases.
+The current host itself competes in the total-edge minimum. A minimizing containing tree therefore has at most as many edges. A finite tree has one fewer edge than vertices, so the containing map must be surjective. Its injective map on undirected edge sets is also surjective, which supplies adjacency reflection. This proves the assertion for every minimizer, including the zero-length and zero-multiplicity cases. The bridge is bind-only and is consumed by total_confinement in AmoebaHost. Its private coincides_of_edge_count helper is also bind-only and is consumed by dead_of_hasExtension: upstream tree cardinality, injectivity and nonsurjectivity facts supply the surjectivity witnesses, followed by logical recombination and normalization. This helper chain supplies no separate escape witness or admission basis.
 
 **Theorem 1.6 (A degree outside every demand interval).**
 
