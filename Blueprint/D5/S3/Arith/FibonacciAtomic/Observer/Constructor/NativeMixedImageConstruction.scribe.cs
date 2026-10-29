@@ -40,7 +40,8 @@ internal sealed class NativeMixedImageConstructionDocument : IScribeDocumentDefi
         )));
 
     private static DocumentBlock Def(string name, string title, string text) =>
-        Entry(name, title, text, DescribeRole.Definition);
+        name.Contains('.') ? Paragraph(Text(title + ". " + text)) :
+            Entry(name, title, text, DescribeRole.Definition);
     private static DocumentBlock Thm(string name, string title, string text) =>
         Entry(name, title, text, DescribeRole.Theorem);
     private static DocumentBlock Entry(string name, string title, string text, DescribeRole role) =>
