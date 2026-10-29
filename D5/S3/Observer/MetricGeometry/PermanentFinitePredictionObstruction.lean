@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Observer/MetricGeometry/PermanentFinitePredictionObstruction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: No finite autonomous orbit maintains a fixed subunit error forever on an irrational rotation. -/
 
 import D5.S3.Observer.MetricGeometry.ArithmeticHorizon
