@@ -48,7 +48,7 @@ private theorem inner_axis (x : Space) (i : Fin 6) :
     inner ℝ x (axis i) =
       ![x 0 + 2*x 1, x 0 - 2*x 1, x 1 + 2*x 2,
         x 1 - 2*x 2, x 2 + 2*x 0, x 2 - 2*x 0] i := by
-  fin_cases i <;> simp [axis, PiLp.inner_apply, Fin.sum_univ_succ, real_inner] <;> ring
+  fin_cases i <;> simp [axis, PiLp.inner_apply, Fin.sum_univ_succ, RCLike.inner_apply] <;> ring
 
 private theorem axis_norm_sq (i : Fin 6) : ‖axis i‖ ^ 2 = 5 := by
   fin_cases i <;> norm_num [axis, EuclideanSpace.real_norm_sq_eq, Fin.sum_univ_succ]

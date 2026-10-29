@@ -12,6 +12,8 @@ internal sealed class RationalSixAxisCoverDocument : IScribeDocumentDefinition
         "Six explicit rational axes cover the real unit two-sphere by relatively open orthogonality-free sets.",
         H("A rational six-axis open cover"),
         Blocks(
+            Node("ambient-space", "Space", "Real Euclidean three-space",
+                "The ambient space is EuclideanSpace over the reals indexed by Fin 3, with its standard Euclidean norm and inner product.", DescribeRole.Definition),
             Node("unit-sphere", "UnitSphere", "The standard unit two-sphere",
                 "The carrier is Metric.sphere zero one in EuclideanSpace over the reals indexed by Fin 3. It has the ordinary subspace topology and the standard real inner product.", DescribeRole.Definition),
             Node("axes", "axis", "The six rational axes",

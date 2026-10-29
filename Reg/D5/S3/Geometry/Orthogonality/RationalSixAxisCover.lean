@@ -41,7 +41,7 @@ private def pole : UnitSphere :=
       Fin.sum_univ_succ]⟩
 
 private theorem pole_color : pole ∈ color 4 := by
-  norm_num [color, pole, axis, PiLp.inner_apply, Fin.sum_univ_succ, real_inner]
+  norm_num [color, pole, axis, PiLp.inner_apply, Fin.sum_univ_succ, RCLike.inner_apply]
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -57,7 +57,7 @@ private theorem dependence : ObservationalDependence signature actual := by
   refine ⟨(0, pole), pole, south, ?_⟩
   change inner ℝ (pole : Space) (pole : Space) ≠
     inner ℝ (-(pole : Space)) (pole : Space)
-  norm_num [pole, PiLp.inner_apply, Fin.sum_univ_succ, real_inner]
+  norm_num [pole, PiLp.inner_apply, Fin.sum_univ_succ, RCLike.inner_apply]
 
 def family : Registration arena (type_of% (@rational_six_axis_open_cover)) where
   actual := actual
