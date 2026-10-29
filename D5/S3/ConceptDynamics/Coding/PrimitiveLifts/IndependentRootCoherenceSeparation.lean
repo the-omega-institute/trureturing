@@ -220,8 +220,10 @@ theorem infinite_root_fiber (m : ℕ) (hm : 1 < m) : Infinite {x : G // m • x 
   have he := congrArg (fun x : {x : G // m • x = c} => projection x.val (i n)) h
   change projection ((n + 1) • root (i n)) (i n) =
     projection ((k + 1) • root (i k)) (i n) at he
-  simp only [map_nsmul, hproj, DFinsupp.nsmul_apply, DirectSum.of_eq_same,
-    DirectSum.of_eq_of_ne _ _ _ hik, nsmul_zero, nsmul_eq_mul, mul_one] at he
+  rw [map_nsmul, map_nsmul, hproj, hproj, DFinsupp.nsmul_apply,
+    DFinsupp.nsmul_apply, DirectSum.of_eq_same,
+    DirectSum.of_eq_of_ne _ _ _ hik] at he
+  simp only [nsmul_eq_mul, mul_one, mul_zero] at he
   have hlt : n + 1 < i n + 1 := by rw [hi]; nlinarith
   have hv := congrArg ZMod.val he
   rw [ZMod.val_natCast_of_lt hlt, ZMod.val_zero] at hv

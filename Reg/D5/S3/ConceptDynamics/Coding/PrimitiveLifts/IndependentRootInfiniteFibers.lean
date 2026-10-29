@@ -54,9 +54,11 @@ private def family : Registration arena (type_of% infinite_root_fiber) where
       exact nomatch e
   dependence := by
     intro i
-    refine ⟨1, 0, c, ?_⟩
-    change (1 : ℕ) • (0 : G) ≠ (1 : ℕ) • c
-    simpa using independent_roots_without_rational_coherence.1.symm
+    obtain ⟨b, hb⟩ := independent_roots_without_rational_coherence.2.2.1 2 (by decide)
+    refine ⟨2, 0, b, ?_⟩
+    change (2 : ℕ) • (0 : G) ≠ (2 : ℕ) • b
+    rw [nsmul_zero, hb]
+    exact independent_roots_without_rational_coherence.1.symm
 
 def registration : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     infinite_root_fiber (Realization signature) Unit Unit where
