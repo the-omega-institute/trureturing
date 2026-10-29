@@ -1,0 +1,22 @@
+**Proposition 65.3 (separate randomness bills).** With Definition 62.1's
+sampler, GLOBAL uses exactly one sampler invocation and LOCAL exactly
+$L$ invocations. For $q\ne1/2$, the expected numbers of delivered fair
+bits are respectively $2$ and $2L$; for $q=1/2$, the numbers are exactly
+$1$ and $L$. Every individual terminating invocation uses its actual
+finite number of bit-service calls, finite arithmetic and delivered
+bits. Provider-call framing, acknowledgements and clearing are whatever
+that separately supplied service actually requires; they are not
+included in $I_{\rm acq},O_{\rm acq}$, which count the guard connection.
+
+Proof. Eligibility is tested from the owned path before the guard reply,
+so LOCAL samples even at an eligible branch. The count $L$ is proved in
+Proposition 65.2. The geometric stopping calculation in Definition 62.1
+and independence of fresh blocks in Theorem 62.3 give the claimed bit
+expectations. The finite denominator and remainder bound give finite
+arithmetic and bounded remainder storage per invocation. Bits may be
+consumed and cleared; retaining their transcript instead has additional
+backing and lifetime charges. GLOBAL retains its one mode through
+acquisition, whereas LOCAL may clear a mode after its visit. The two
+sampler bills therefore cannot be exchanged while retaining the claimed
+endpoint law. $\square$
+

@@ -1,0 +1,55 @@
+**Theorem 76.4 (correct installed replacement).** For every valid Ready
+state of Definition 75.2 and every enabled finite growth command under
+its completion premises, Definitions 76.2–76.3 terminate, append exactly
+the commanded actual event to $w$, and restore Definition 75.2 at the
+actual successor $t^+$. All old recall answers persist and the new last
+event is represented. No old record is discarded before sufficient
+replacement data and all additional history backing exist.
+
+Proof. Finite subtree traversals, finite parent chains and the exact
+finite arithmetic of Definition 48.1 make preflight finite. Lemma 76.1
+computes the actual endpoint sizes from current data. Reservations precede
+the edit and include all added source and record material. After the
+edit, every old branch is still identifiable by its object and relative
+preorder; only the possible new branch at the retained target is skipped.
+The subtraction prescribed in Definition 76.3 therefore recovers exactly
+the old counts, without reading a destroyed source copy.
+
+Index the old branches $1,\ldots,m$. Immediately before iteration $i$,
+the invariant is
+
+$$
+\begin{aligned}
+Q&=\sum_{j=i}^{m}r_j\prod_{i\le\ell<j}R_\ell,\\
+T&=\prod_{j<i}R_j^+,\qquad
+A=\sum_{j<i}r_j^+\prod_{\ell<j}R_\ell^+,\qquad 0\le A<T.
+\end{aligned}
+\tag{AAII.39}
+$$
+
+It holds initially by (AAII.35). Euclidean division recovers $r_i$ and
+the remaining suffix. Lemma 76.1 gives the actual appended local digit
+$r_i^+$, and $0\le r_i^+<R_i^+$. The two assignments in (AAII.38)
+extend the prefix and its product, preserving the invariant and its
+bound. At termination $Q=0$, $T=F^+$ and $A=Z(t^+,we)$. A skipped unit
+digit changes neither sum nor product. This includes the empty old
+branch list and the transition from $F=1$ to $F^+>1$.
+
+The old bits remain available until $A$ is computed; during rewriting
+$A$ remains available even when the old bits no longer do. Monotonicity
+of $G$ makes reuse plus the reserved increment exactly long enough.
+The completed list consequently has exactly the new canonical bits,
+head/tail and null termination. All source auxiliary slots other than
+the root remain null, including the old marker reused by a split.
+There are no unconsumed reservations. Finite reply construction, Print,
+End, local acknowledgement, root return and clearing restore all the
+Ready conditions. Lemma 75.3 now decodes $we$, so every earlier index
+and the new last index are correct. $\square$
+
+A radix change reweights subsequent digits in (AAII.35). Merely adding
+the local colex increment to the old global number is not (AAII.38).
+The transaction proves the full reweighting identity. It permits real
+busy states with new source and old code, and with partially rewritten
+bits and backed replacement integer. It supplies neither crash atomicity
+nor an inverse for arbitrary interrupted cuts.
+
