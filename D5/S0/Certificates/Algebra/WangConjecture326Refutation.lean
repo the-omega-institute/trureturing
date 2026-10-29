@@ -176,6 +176,8 @@ def modelE (x : Model) : Model := ⟨x.support, if x.level = 0 then 0 else 2⟩
 
 private theorem model_laws (x : Model) :
     x+x = modelE x ∧ x+modelE x = modelE x ∧ modelE x+modelE x = modelE x := by
+  change modelAdd x x = modelE x ∧ modelAdd x (modelE x) = modelE x ∧
+    modelAdd (modelE x) (modelE x) = modelE x
   obtain ⟨A, k⟩ := x
   fin_cases k <;> simp [modelE, modelAdd]
 
@@ -234,6 +236,9 @@ private theorem pair_vanish (x y : Model) : factor x (1 : ℚ) * factor y 1 = 0 
   have hy1 : y.level = 1 := by apply Fin.ext; simp only [Fin.ext_iff] at hy ⊢; omega
   have hxy : x+y = x+modelE y ∧ x+y = modelE x+y ∧
       x+y = modelE x+modelE y := by
+    change modelAdd x y = modelAdd x (modelE y) ∧
+      modelAdd x y = modelAdd (modelE x) y ∧
+      modelAdd x y = modelAdd (modelE x) (modelE y)
     obtain ⟨A,k⟩ := x; obtain ⟨B,l⟩ := y
     simp_all [modelE, modelAdd]
   simp only [factor, model_e, sub_mul, mul_sub,
