@@ -40,7 +40,7 @@ abbrev Node (n : ℕ) := ↥(vertices n)
 instance (n : ℕ) : MeasurableSpace (Node n) := ⊤
 instance (n : ℕ) : DiscreteMeasurableSpace (Node n) := ⟨fun _ => trivial⟩
 
-private theorem root_mem (n : ℕ) : [] ∈ vertices n := by
+theorem root_mem (n : ℕ) : [] ∈ vertices n := by
   unfold vertices
   cases T n <;> simp [nodes]
 
@@ -68,7 +68,7 @@ theorem cardinality (n : ℕ) : N n = 2 * Nat.fib (n+1) - 1 := by
   have h := SourceCoordinates.NativeRotationDepthGap.iterate_length (.of true) n
   simpa [T, GenealogicalFiberTransport.composition] using congrArg (fun k => 2*k-1) h
 
-private theorem N_pos (n : ℕ) : 0 < N n :=
+theorem N_pos (n : ℕ) : 0 < N n :=
   Finset.card_pos.mpr ⟨[], root_mem n⟩
 
 theorem node_iff (S : Source) (x : Address) :

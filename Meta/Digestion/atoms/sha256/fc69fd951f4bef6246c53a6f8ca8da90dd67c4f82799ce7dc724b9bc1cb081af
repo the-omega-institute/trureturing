@@ -1,0 +1,10 @@
+## 8. Mathematical citations
+
+[Universal][U], *FIB 合法边调和负载：普适后验缺陷与有限隐藏维数分离*: Convention 1.3 and Lemma 2.1 supply the original optimizer and growth interfaces; Definition 4.1 and Proposition 4.2 supply the entire exact-real domain and its joint law; (1.5) supplies the density/posterior identity; Theorem 3.1 supplies the necessary attained-law band; Theorem 6.2 supplies the compact separation alternative; Proposition 7.1 supplies the elementary two-state family and the strict lower comparison for $c_\star$.
+
+**[Guarded]** *FIB harmonic-edge load: guarded replacement, attainment and conditional-rank obstruction*: Definition 1.1 supplies the ceiling for $c_\star$; Definitions 2.1 and 2.3 and Lemma 2.2 supply the additional endpoint premises; Lemmas 3.2–3.3, Definition 6.3 and Theorems 7.1 and 8.2 supply the conditional score, compact rank families, slicing and minor bounds; Theorem 5.1 and Corollary 6.4 supply the sufficient endpoint and its finite budget. The guarded replacement identity and its rank machinery retain this source's attribution.
+
+**[Azuma]** Kazuoki Azuma, *Weighted sums of certain dependent random variables*, Tohoku Mathematical Journal, Second Series, 19(3), 357–367, [doi:10.2748/tmj/1178243286](https://doi.org/10.2748/tmj/1178243286). The bounded-martingale exponential method is classical; Lemma 4.3 contains the full estimate needed here. Conditional least squares, the law of total variance, elementary Markov conditioning, rank-one row factorization and the Vandermonde identity are the other classical ingredients in the displayed proofs.
+
+[U]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
+

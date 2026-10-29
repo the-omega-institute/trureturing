@@ -1,0 +1,9 @@
+Using $0\le a\le\tfrac14$:
+
+- $t=3$: $\lvert H_2\rvert=6a$, equality.
+- $t=4$: $\lvert H_3\rvert=a(8a^2+24a)\le a\bigl(\tfrac12+6\bigr)<12a$.
+- $t=5$: $H_4=4a^2(9-6a-4a^2)$ with $0\le9-6a-4a^2\le9$, so $\lvert H_4\rvert\le36a^2\le9a<20a$.
+- $t=6$: $\lvert H_5\rvert=a(96a^3+216a^2)\le a\bigl(\tfrac32+\tfrac{27}{2}\bigr)=15a<30a$.
+- $t=7$: $\lvert H_6\rvert\le a(64a^5+384a^4+432a^3+216a^2)\le a\bigl(\tfrac1{16}+\tfrac32+\tfrac{27}{4}+\tfrac{27}{2}\bigr)=\tfrac{349}{16}a<42a$.
+- $t\ge8$: by the bound of Convention 2.2 and $r\le1$, $\lvert H_{t-1}\rvert\le t\,r^{t-1}\le t\,r^2=t(4a+6)\,a\le7t\,a\le t(t-1)\,a$.
+

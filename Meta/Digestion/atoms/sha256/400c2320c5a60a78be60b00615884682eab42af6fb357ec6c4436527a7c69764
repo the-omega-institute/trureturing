@@ -1,0 +1,18 @@
+**定理 20.1（原位点有限观察的指数上界）.** 对每个整数 $r\ge1$，置
+$$
+s=\lfloor r/2\rfloor,\qquad n=\lfloor\beta r\rfloor,
+\qquad \Delta=|\delta|.
+$$
+存在一个只使用已知 $p,q,r$ 的二值函数
+$$
+f_r:\{0,1\}^{2r}\longrightarrow\{0,1\},
+$$
+其定义见第 23 节，在每个保留词上都有输出，并且
+$$
+E_r(P_{t,t+\delta})
+\le P_{t,t+\delta}\bigl(f_r(Y_r)\ne X_0\bigr)
+\le \mathcal C\,e^{-\gamma r\delta^2}.
+\tag{20.2}
+$$
+这里 $Y_r=(X_{-r},\ldots,X_{-1},X_1,\ldots,X_r)$ 是原整数位点观察；不使用中心位、隐藏状态或窗口外的补全。
+

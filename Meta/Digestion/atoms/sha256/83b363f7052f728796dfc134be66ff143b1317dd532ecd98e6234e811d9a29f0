@@ -1,0 +1,10 @@
+**约定 8.1（供应结果与经典归属）。** 原 no11 目标、原位点密度桥、一般有限非负表示、有限可见记忆非达到供应及全维数问题的紧分离形式，均按 [Universal 卷][U] 的明确接口使用。其中有限可见记忆非达到的原项目出处是 [非达到卷][N] 定理 1.5。本卷的结论以这些供应命题的所述范围为前提。
+
+几何等待分布、占据位 Palm 条件化、交替更新的条件乘积记账、Kolmogorov 独立同分布强大数律、Markov 柱条件化、$L^2$ 条件投影、上半连续及紧性均属经典概率与分析方法；条件投影与遍历背景见 [Gray][Gray]。式（5.2）–（5.3）的 Markov 公式明确复用 [Universal 卷][U] 式（7.3）–（7.4）。
+
+本卷在指定原矩阵上给出完整推导的内容是：带正确出向标记的两侧间隔乘积律、在每个实际占据位成立后才选择锚点的可见解码、对角线同律识别，以及该精确族的窗口连续性、非一致性与极限次序比较。这些是本族的数学推导，不承担一般更新理论的新定理或文献优先权判断。所有结论保留各自的参数范围、实际概率律和几乎处处约定。
+
+[U]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
+[N]: FIB_LEGAL_EDGE_LOAD_FINITE_VISIBLE_MEMORY_NONATTAINMENT.md
+[Gray]: https://www-ee.stanford.edu/~gray/arp.pdf "Robert M. Gray, Probability, Random Processes, and Ergodic Properties; §5.9 and the ergodic-theorem chapters"
+

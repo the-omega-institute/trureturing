@@ -14,6 +14,16 @@ internal sealed class ErrorDisturbanceEndpointRefutationDocument : IScribeDocume
         "A rational three-dimensional measurement has overall error below both endpoint quantities.",
         H("Error and disturbance below the endpoint minimum"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("sum-projectors"),
+                DeclarationHandle.Create(Prefix + "sum_projectors"),
+                H("Unitary basis projectors resolve the identity"),
+                StatementSource.FromAuthor(Disp(All("d", Naturals(), All("a", UnitaryType(),
+                    Equal(Seq(new Formula.Subscript(Sum, Typed(X("i"), FinType())), Sp,
+                        Projector(X("a"), X("i"))), Typed(D(1), MatrixType())))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The rank-one projectors onto the columns of any unitary matrix sum to the identity."))),
+                DescribeRole.Theorem),
             Definition("error-at", "errorAt", "State-dependent labeled error", ErrorAtFormula(),
                 "For a complex matrix ρ, take the supremum over the labeled outcomes i of the absolute real part "
                     + "of the trace against the difference of the two rank-one projectors. For a density matrix "

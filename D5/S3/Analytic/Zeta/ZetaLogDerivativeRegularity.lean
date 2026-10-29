@@ -121,7 +121,7 @@ theorem normalized_zeta_eventually_ne_zero {rho : ℂ} (hρ : IsNontrivialZero r
 /-- At every nontrivial zero, the translated principal term has residue equal
 to minus one half of its positive integer multiplicity. -/
 theorem regularizedPrincipal_zero_residue {rho : ℂ} (hρ : IsNontrivialZero rho) :
-    ∃ m : ℕ, 0 < m ∧
+    ∃ m : ℕ, 0 < m ∧ D5.S3.Weil.ZeroSum.HasZetaZeroMultiplicity rho m ∧
       Tendsto (fun s : ℂ => (s - (rho - 1 / 2)) * regularizedPrincipal s)
         (𝓝[≠] (rho - 1 / 2)) (𝓝 (-(m : ℂ) / 2)) := by
   obtain ⟨m, hm⟩ :=
@@ -166,7 +166,7 @@ theorem regularizedPrincipal_zero_residue {rho : ℂ} (hρ : IsNontrivialZero rh
         (𝓝 (rho - 1 / 2)) (𝓝 (rho - 1 / 2))).sub_const (rho - 1 / 2))
     simpa only [zero_mul] using (hid.mul hc.tendsto).mono_left nhdsWithin_le_nhds
   have hlim := ((htrace.comp (shift_half_tendsto rho)).const_mul (1 / 2 : ℂ)).sub hscalar
-  refine ⟨m, hm.1, ?_⟩
+  refine ⟨m, hm.1, hm, ?_⟩
   have hlim' : Tendsto (fun s : ℂ =>
       (1 / 2 : ℂ) * ((s + 1 / 2 - rho) * continuedEulerTrace (s + 1 / 2)) -
         (s - (rho - 1 / 2)) * (1 / (2 * (s - 1 / 2))))
