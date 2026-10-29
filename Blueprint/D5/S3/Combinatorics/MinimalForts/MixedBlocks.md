@@ -44,7 +44,7 @@ Lean statement: `D5/S3/Combinatorics/MinimalForts/MixedBlocks.mixed_graph_count`
 
 *Commentary.*
 
-For all nonnegative natural x,y,z,r, the actual graph has order six times the sum x+y+z, plus r plus three, is connected, and its entire minimal-fort count equals (r+2) times 6 to x times 9 to y times 12 to z, plus 15x plus 6y plus 11z plus the binomial coefficient choose(r+2,2). All actual inclusion-minimal nonempty forts are counted. Root-free counts add across components, while root-containing counts multiply. The proof includes arbitrary repeated blocks and zero-copy cases. The exponential root-containing term is used for asymptotic normalization; the root-free term grows at most linearly in the total block multiplicity.
+For all nonnegative natural x,y,z,r, the actual graph has order six times the sum x+y+z, plus r plus three, is connected, and its entire minimal-fort count equals (r+2) times 6 to x times 9 to y times 12 to z, plus 15x plus 6y plus 11z plus the binomial coefficient choose(r+2,2). The octahedral numbers 11 and 12 come from the general whole-part and transversal classification for m two-vertex parts, specialized at m=3; its order is six. All actual inclusion-minimal nonempty forts are counted. Root-free counts add across components, while root-containing counts multiply. The proof includes arbitrary repeated blocks and zero-copy cases. The exponential root-containing term is used for asymptotic normalization; the root-free term grows at most linearly in the total block multiplicity.
 
 ## References
 
