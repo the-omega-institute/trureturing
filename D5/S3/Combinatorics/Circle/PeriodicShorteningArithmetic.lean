@@ -364,11 +364,16 @@ theorem native_charge_alignment (d a h : ℕ) (hd : 2 ≤ d) (ha : 1 ≤ a)
     have hu : 0 ≤ (2 : ℤ) ^ j.val * a := by positivity
     have hhalf : modulus d / 2 = (2 : ℤ) ^ (d - 1) - 1 := by
       unfold modulus
-      rw [show d = (d - 1) + 1 by omega, pow_succ]
+      have hp : (2 : ℤ) ^ d = 2 * (2 : ℤ) ^ (d - 1) := by
+        conv_lhs => rw [show d = (d - 1) + 1 by omega, pow_succ]
+        ring
+      rw [hp]
       omega
     have huB : (2 : ℤ) ^ j.val * a ≤ modulus d / 2 := by
       rw [hhalf]
-      exact_mod_cast (show 2 ^ j.val * a + 1 ≤ 2 ^ (d - 1) by omega)
+      have ht : (2 : ℤ) ^ j.val * a + 1 ≤ (2 : ℤ) ^ (d - 1) := by
+        exact_mod_cast (show 2 ^ j.val * a + 1 ≤ 2 ^ (d - 1) by omega)
+      omega
     have hva : actualSource d a j = (2 : ℤ) ^ j.val * a := by
       exact centered_unique hM ho (centered_bounds hM ho _) ⟨by omega, huB⟩
         (centered_mod _ _)
@@ -384,9 +389,10 @@ theorem native_charge_alignment (d a h : ℕ) (hd : 2 ≤ d) (ha : 1 ≤ a)
           (2 : ℤ) ^ j.val * a + ((2 : ℤ) ^ j.val * a) * modulus d := by
         unfold modulus
         ring
-      apply (centered_congr (by rw [he', Int.add_mul_emod_self_right])).trans
-      exact centered_unique hM ho (centered_bounds hM ho _) ⟨by omega, huB⟩
-        (centered_mod _ _)
+      calc
+        _ = centered (modulus d) ((2 : ℤ) ^ j.val * a) :=
+          centered_congr (by rw [he', Int.add_mul_emod_self_right])
+        _ = _ := hva
     have hqa : charge d a j = 0 := by
       have ea := da.2.1
       rw [hva] at ea

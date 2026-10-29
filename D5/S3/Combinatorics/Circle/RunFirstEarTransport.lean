@@ -66,7 +66,7 @@ private theorem ear_perm (d : ℕ) (sigma : List (Fin d)) (r : ℕ)
     (earWord d sigma r).Perm (List.finRange (d + 1)) := by
   have he : (earWord d sigma r).Perm (sigma.map Fin.castSucc ++ [Fin.last d]) := by
     unfold earWord
-    rw [← List.map_take, ← List.map_drop]
+    rw [List.map_take, List.map_drop]
     simpa [List.append_assoc, List.take_append_drop] using
       (List.perm_append_comm : ([Fin.last d] ++ (sigma.map Fin.castSucc).drop r).Perm
         ((sigma.map Fin.castSucc).drop r ++ [Fin.last d])).append_left
@@ -153,7 +153,18 @@ theorem native_dyadic_joint_transport (d a h : ℕ) (hd : 2 ≤ d) (ha : 1 ≤ a
     earWord d sigmaA r = (earWord d sigma r).map (earRelabel d h) ∧
     (∀ j : Fin (d + 1), (C j).val =
       if h = 0 then j.val else if j.val = d then 0 else if j.val + 1 < h then j.val + 1
-      else if j.val + 1 = h then d else j.val) := by
+      else if j.val + 1 = h then d else j.val) ∧
+    (∀ j : Fin (d + 1), actualSource (d + 1) (2 * (2 ^ h * a)) j =
+      actualSource (d + 1) (2 * a) (rho j)) ∧
+    actualSource (d + 1) (2 * a) (Fin.last d) = (a : ℤ) ∧
+    (∀ j : Fin (d + 1), j.val < h →
+      actualSource (d + 1) (2 * a) j = (2 : ℤ) ^ (j.val + 1) * a ∧
+      0 < actualSource (d + 1) (2 * a) j ∧
+      actualSource (d + 1) (2 * a) j < (2 : ℤ) ^ (d - 1)) ∧
+    (Odd a →
+      actualSource (d + 1) (2 * a) ⟨d - 1, by omega⟩ =
+        -(modulus (d + 1) - (a : ℤ)) / 2 ∧
+      actualSource (d + 1) (2 * a) ⟨d - 1, by omega⟩ ≤ -(2 : ℤ) ^ (d - 1)) := by
   classical
   let tau := (finRotate d : Equiv.Perm (Fin d)) ^ h
   let sigmaA := sigma.map tau
@@ -284,7 +295,89 @@ theorem native_dyadic_joint_transport (d a h : ℕ) (hd : 2 ≤ d) (ha : 1 ≤ a
     rw [((ear_perm d sigmaA r hperm).map (actualSource (d + 1) (2 * a))).sum_eq]
     rw [← List.sum_toFinset _ (List.nodup_finRange _), List.toFinset_finRange]
     exact (ZeroSumSubsets.source_cycle (by omega : 0 < d + 1) (2 * a)).2.1
-  refine ⟨oldA, newA, heights, ?_, common_cycle d h hh⟩
+
+  have normalized (j : Fin (d + 1)) :
+      actualSource (d + 1) (2 * (2 ^ h * a)) j =
+        actualSource (d + 1) (2 * a)
+          (((finRotate (d + 1) : Equiv.Perm (Fin (d + 1))) ^ h) j) := by
+    let jj := (((finRotate (d + 1) : Equiv.Perm (Fin (d + 1))) ^ h) j)
+    have he := congrFun (finCycle_eq_finRotate_iterate
+      (k := (⟨h, by omega⟩ : Fin (d + 1)))) j
+    have hv : jj.val = (j.val + h) % (d + 1) := by
+      simpa [jj, Equiv.Perm.coe_pow, finCycle, Fin.val_add] using (congrArg Fin.val he).symm
+    change centered (modulus (d + 1)) ((2 : ℤ) ^ j.val * (2 * (2 ^ h * a) : ℕ)) =
+      centered (modulus (d + 1)) ((2 : ℤ) ^ jj.val * (2 * a : ℕ))
+    by_cases hj : j.val + h < d + 1
+    · have hidx : jj.val = j.val + h := by rw [hv, Nat.mod_eq_of_lt hj]
+      congr 1
+      simp only [hidx, pow_add, Nat.cast_mul, Nat.cast_pow, Nat.cast_ofNat]
+      ring
+    · have hidx : jj.val = j.val + h - (d + 1) := by
+        rw [hv, Nat.mod_eq_sub_mod (by omega), Nat.mod_eq_of_lt (by omega)]
+      apply centered_congr
+      have heq : (2 : ℤ) ^ j.val * (2 * (2 ^ h * a) : ℕ) =
+          (2 : ℤ) ^ jj.val * (2 * a : ℕ) +
+            ((2 : ℤ) ^ jj.val * (2 * a : ℕ)) * modulus (d + 1) := by
+        simp only [Nat.cast_mul, Nat.cast_pow, Nat.cast_ofNat, modulus]
+        have hexp : j.val + h = d + 1 + jj.val := by omega
+        have hp : (2 : ℤ) ^ j.val * 2 ^ h = (2 : ℤ) ^ (d + 1) * 2 ^ jj.val := by
+          rw [← pow_add, hexp, pow_add]
+        nlinarith
+      rw [heq, Int.add_mul_emod_self_right]
+  have small_values (j : Fin (d + 1)) (hj : j.val < h) :
+      actualSource (d + 1) (2 * a) j = (2 : ℤ) ^ (j.val + 1) * a ∧
+      0 < actualSource (d + 1) (2 * a) j ∧
+      actualSource (d + 1) (2 * a) j < (2 : ℤ) ^ (d - 1) := by
+    have hu : 2 ^ (j.val + 1) * a ≤ 2 ^ h * a :=
+      Nat.mul_le_mul_right a (Nat.pow_le_pow_right (by omega) (by omega))
+    have hub : (2 : ℤ) ^ (j.val + 1) * a < (2 : ℤ) ^ (d - 1) := by
+      exact_mod_cast (show 2 ^ (j.val + 1) * a < 2 ^ (d - 1) by omega)
+    have hup : 0 < (2 : ℤ) ^ (j.val + 1) * a :=
+      mul_pos (by positivity) (by exact_mod_cast (show 0 < a by omega))
+    have hpow := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) (show d - 1 ≤ d by omega)
+    have hhalf : modulus (d + 1) / 2 = (2 : ℤ) ^ d - 1 := by
+      unfold modulus; rw [pow_succ]; omega
+    obtain ⟨hN, ho⟩ := TwoRunSource.modulus_positive_odd (d + 1) (by omega)
+    have heq : actualSource (d + 1) (2 * a) j = (2 : ℤ) ^ (j.val + 1) * a := by
+      apply centered_unique hN ho (centered_bounds hN ho _) (by rw [hhalf]; constructor <;> omega)
+      rw [centered_mod]
+      congr 1
+      simp only [Nat.cast_mul, Nat.cast_ofNat, pow_succ]
+      ring
+    exact ⟨heq, by rw [heq]; exact hup, by rw [heq]; exact hub⟩
+  have odd_predecessor (ho : Odd a) :
+      actualSource (d + 1) (2 * a) ⟨d - 1, by omega⟩ =
+        -(modulus (d + 1) - (a : ℤ)) / 2 ∧
+      actualSource (d + 1) (2 * a) ⟨d - 1, by omega⟩ ≤ -(2 : ℤ) ^ (d - 1) := by
+    obtain ⟨t, ht⟩ := ho
+    have hat : (a : ℤ) = (t : ℤ) + t + 1 := by exact_mod_cast ht
+    have hp : (a : ℤ) < (2 : ℤ) ^ (d - 1) := by
+      exact_mod_cast (show a < 2 ^ (d - 1) by omega)
+    have hpow : (2 : ℤ) ^ d = 2 * (2 : ℤ) ^ (d - 1) := by
+      conv_lhs => rw [show d = d - 1 + 1 by omega, pow_succ]
+      ring
+    have hhalf : modulus (d + 1) / 2 = (2 : ℤ) ^ d - 1 := by
+      unfold modulus; rw [pow_succ]; omega
+    obtain ⟨hN, hno⟩ := TwoRunSource.modulus_positive_odd (d + 1) (by omega)
+    have hv : actualSource (d + 1) (2 * a) ⟨d - 1, by omega⟩ =
+        (t : ℤ) + 1 - (2 : ℤ) ^ d := by
+      apply centered_unique hN hno (centered_bounds hN hno _)
+        (by rw [hhalf]; constructor <;> omega)
+      rw [centered_mod]
+      have heq : (2 : ℤ) ^ (d - 1) * (2 * a : ℕ) =
+          (t : ℤ) + 1 - (2 : ℤ) ^ d + modulus (d + 1) * ((t : ℤ) + 1) := by
+        simp only [Nat.cast_mul, Nat.cast_ofNat, modulus, pow_succ]
+        rw [hat, hpow]
+        ring
+      change ((2 : ℤ) ^ (d - 1) * (2 * a : ℕ)) % _ = _
+      rw [heq, Int.add_mul_emod_self_left]
+    rw [hv]
+    unfold modulus
+    rw [pow_succ]
+    constructor <;> omega
+
+  refine ⟨oldA, newA, heights, ?_, common_cycle d h hh, normalized, va.2,
+    small_values, odd_predecessor⟩
   simp [earWord, sigmaA, ← List.map_take, ← List.map_drop, List.map_append, List.map_map, earRelabel]
 
 
