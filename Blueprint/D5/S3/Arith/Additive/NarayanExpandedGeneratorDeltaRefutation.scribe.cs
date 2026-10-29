@@ -50,14 +50,16 @@ internal sealed class NarayanExpandedGeneratorDeltaRefutationDocument : IScribeD
                 "Take (a,h,d,k)=(3,2,2,2), whose expanded tuple is (3,6,8,10). For every positive a coprime to 2, the tuple (a,2a,2a+2,…,4a−2) has delta set {1}. "
                     + "Replacing 2a by two copies of a, and replacing two other occurrences according to their index sum, preserves value and increases length by one. Strong induction on value minus length reaches a terminal factorization. Coprimality makes that endpoint unique by its residue modulo a; induction on a rewrite trace supplies every intervening length. "
                     + "Thus no larger consecutive gap occurs. Lengths 1 and 2 both occur at value 2a. At a=3 this contradicts the initial Euclidean value 2 ∈ E(1,2). The equality for the tuple omitting ah and the catenary conjectures are separate assertions.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))),
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("narayan-delta-set"), ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("narayan-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] args) => Apply(Named(name), args);
