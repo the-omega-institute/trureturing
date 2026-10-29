@@ -112,7 +112,7 @@ private theorem distance_lt_iff {a b : Sigma X} {s : ℝ≥0∞} :
     G.distance a b < s ↔ ∃ t, G.Chain a b t ∧ t < s := by
   simp only [distance, iInf_lt_iff, exists_prop]
 
-private theorem finite_fiber (a : Sigma X)
+theorem finite_fiber (a : Sigma X)
     (hf : Set.Finite {b : Sigma X | G.Rel a b}) (i : I) :
     Set.Finite {x : X i | G.Rel a ⟨i, x⟩} := by
   exact Set.Finite.preimage sigma_mk_injective.injOn hf
