@@ -99,7 +99,7 @@ section Family
 variable {H : Type u} [Group H] {ι : Type w} {X : ι → Type v}
   (A : ∀ i, ReturnAtlas H (X i))
 
-private theorem isotypic_refl (i : ι) : Isotypic A i i := ⟨rfl,1,by simp⟩
+theorem isotypic_refl (i : ι) : Isotypic A i i := ⟨rfl,1,by simp⟩
 
 def atlasSetoid : Setoid ι :=
   ⟨Isotypic A,⟨isotypic_refl A, isotypic_symm A, isotypic_trans A⟩⟩

@@ -1,0 +1,483 @@
+/- GID: D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryCylinderEnergy
+   generality: I
+   mirror-B: D5/B/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryCylinderEnergy
+   mirror-E: none(waiver:unbounded-symbolic-proof)
+   anchors: []
+   utility: none
+   digest: Constant-trace variational minimization on the original biased binary boundary. -/
+
+import D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryFreeRootForm
+import Mathlib.Tactic.Module
+
+/-! Variational splitting in the original square-summable edge space. -/
+
+set_option autoImplicit false
+set_option relaxedAutoImplicit false
+
+noncomputable section
+namespace D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryCylinderEnergy
+
+open ActualTreeReadoutAcquisition (Address)
+open FiniteSourceHardy (H Edge)
+open BiasedBoundaryTrace (G J M Omega cylinder indicator J_single)
+open BiasedBoundaryPathSplit (S descendant constG prefixSum prefixes boundary_path_split)
+open BiasedBoundaryConditionalLaw (pullback)
+open BiasedBoundaryCentering (mean Pi C centered_suffix_residual pullback_const)
+open BiasedBoundaryFreeRootForm (D K Sigma lift form energy free_root_least_energy)
+open MeasureTheory InnerProductSpace
+open D5.S0.Computability.Coding.PrefixFreeCode (IsPrefixFree)
+open scoped BigOperators
+
+def rootEdge (c : Bool) : Edge := ⟨[c], by simp⟩
+private def E (c : Bool) : H →L[ℝ] H := (S [c]).adjoint
+
+private theorem suffix_root (c d : Bool) (a : ℝ) :
+    S [c] (lp.single 2 (rootEdge d) a) = 0 := by
+  by_cases h : c = d
+  · subst d
+    exact BiasedBoundaryPathSplit.suffix_single_prefix [c] (rootEdge c) a (by rfl)
+  · exact BiasedBoundaryPathSplit.suffix_single_of_not_prefix [c] (rootEdge d) a (by
+      simpa [rootEdge] using h)
+
+private theorem suffix_branch (c d : Bool) (u : Edge) (a : ℝ) :
+    S [c] (lp.single 2 (descendant [d] u) a) =
+      if c = d then lp.single 2 u a else 0 := by
+  by_cases h : c = d
+  · subst d
+    simpa using BiasedBoundaryPathSplit.suffix_single_descendant [c] u a
+  · rw [ite_eq_right h]
+    exact BiasedBoundaryPathSplit.suffix_single_of_not_prefix [c] (descendant [d] u) a
+      (by simpa [descendant] using h)
+
+private theorem E_root (c d : Bool) (z : H) : E c z (rootEdge d) = 0 := by
+  classical
+  have h := (S [c]).adjoint_inner_right (lp.single 2 (rootEdge d) (1 : ℝ)) z
+  rw [suffix_root, inner_zero_left, lp.inner_single_left] at h
+  simpa [E, Real.inner_apply] using h
+
+private theorem E_branch (c d : Bool) (z : H) (u : Edge) :
+    E c z (descendant [d] u) = if c = d then z u else 0 := by
+  classical
+  have h := (S [c]).adjoint_inner_right
+    (lp.single 2 (descendant [d] u) (1 : ℝ)) z
+  rw [suffix_branch, lp.inner_single_left] at h
+  by_cases he : c = d
+  · simpa [E, he, lp.inner_single_left, Real.inner_apply] using h
+  · simpa [E, he, Real.inner_apply] using h
+
+private def graft (x y : ℝ) (z w : H) : H :=
+  lp.single 2 (rootEdge false) x + lp.single 2 (rootEdge true) y + E false z + E true w
+
+private theorem graft_root (x y : ℝ) (z w : H) (c : Bool) :
+    graft x y z w (rootEdge c) = if c then y else x := by
+  classical
+  simp only [graft, lp.coeFn_add, Pi.add_apply, E_root, add_zero]
+  cases c <;> simp [rootEdge]
+
+private theorem suffix_graft (x y : ℝ) (z w : H) (c : Bool) :
+    S [c] (graft x y z w) = if c then w else z := by
+  classical
+  ext u
+  rw [boundary_path_split.1]
+  change (lp.single 2 (rootEdge false) x : H) (descendant [c] u) +
+    (lp.single 2 (rootEdge true) y : H) (descendant [c] u) +
+    E false z (descendant [c] u) + E true w (descendant [c] u) = _
+  have hn (d : Bool) : descendant [c] u ≠ rootEdge d := by
+    intro h
+    have he : 1 + u.val.length = 1 := by
+      simpa only [descendant, rootEdge, List.length_append, List.length_singleton] using
+        congrArg (fun p : Edge => p.val.length) h
+    have hu := List.length_pos_of_ne_nil u.property
+    omega
+  simp only [lp.coeFn_single, Pi.single_apply, hn, ite_false, E_branch]
+  cases c <;> simp
+
+private theorem graft_pair (x y : ℝ) (z w v : H) :
+    inner ℝ (graft x y z w) v = x * v (rootEdge false) + y * v (rootEdge true) +
+      inner ℝ z (S [false] v) + inner ℝ w (S [true] v) := by
+  classical
+  simp only [graft, inner_add_left, lp.inner_single_left, Real.inner_apply]
+  rw [show inner ℝ (E false z) v = inner ℝ z (S [false] v) from
+      (S [false]).adjoint_inner_left v z,
+    show inner ℝ (E true w) v = inner ℝ w (S [true] v) from
+      (S [true]).adjoint_inner_left v w]
+
+private theorem graft_norm (x y : ℝ) (z w : H) :
+    ‖graft x y z w‖^2 = x^2 + y^2 + ‖z‖^2 + ‖w‖^2 := by
+  rw [← real_inner_self_eq_norm_sq, graft_pair, graft_root, graft_root,
+    suffix_graft, suffix_graft]
+  simp only [Bool.false_eq_true, ite_false, ite_true, real_inner_self_eq_norm_sq]
+  ring
+
+private theorem graft_split (z : H) :
+    graft (z (rootEdge false)) (z (rootEdge true)) (S [false] z) (S [true] z) = z := by
+  classical
+  ext p
+  obtain ⟨p,hp⟩ := p
+  cases p with
+  | nil => exact (hp rfl).elim
+  | cons c u =>
+    cases u with
+    | nil => exact graft_root _ _ _ _ c |>.trans (by cases c <;> rfl)
+    | cons d v =>
+      let q : Edge := ⟨d::v, by simp⟩
+      change (lp.single 2 (rootEdge false) (z (rootEdge false)) : H) (descendant [c] q) +
+        (lp.single 2 (rootEdge true) (z (rootEdge true)) : H) (descendant [c] q) +
+        E false (S [false] z) (descendant [c] q) +
+        E true (S [true] z) (descendant [c] q) = _
+      simp only [lp.coeFn_single, Pi.single_apply, E_branch]
+      have hn (b : Bool) : descendant [c] q ≠ rootEdge b := by
+        intro he
+        have hh := congrArg (fun p : Edge => p.val.length) he
+        simp [descendant, rootEdge, q] at hh
+      simp only [hn, ite_false, zero_add]
+      cases c <;> simp [boundary_path_split.1, descendant, q]
+
+private theorem norm_split (z : H) :
+    ‖z‖^2 = (z (rootEdge false))^2 + (z (rootEdge true))^2 +
+      ‖S [false] z‖^2 + ‖S [true] z‖^2 := by
+  conv_lhs => rw [← graft_split z]
+  exact graft_norm _ _ _ _
+
+private theorem prefix_one (c : Bool) (z : H) : prefixSum [c] z = z (rootEdge c) := by
+  classical
+  have hp : prefixes [c] = {rootEdge c} := by
+    ext q
+    simp [prefixes, List.inits, rootEdge, q.property, Subtype.ext_iff]
+  simp only [prefixSum, hp, Finset.sum_singleton]
+  rfl
+
+private theorem pullback_graft (x y : ℝ) (z w : H) (c : Bool) :
+    pullback [c] (J (graft x y z w)) =
+      constG (if c then y else x) + J (if c then w else z) := by
+  rw [boundary_path_split.2.2.2.2, prefix_one, graft_root, suffix_graft]
+
+
+private def firstLevel : Finset Edge := {rootEdge false, rootEdge true}
+
+private theorem firstLevel_prefixfree :
+    IsPrefixFree (Subtype.val '' (firstLevel : Set Edge)) := by
+  intro p hp q hq hpq
+  obtain ⟨p,hp,rfl⟩ := hp
+  obtain ⟨q,hq,rfl⟩ := hq
+  simp only [firstLevel, Finset.mem_coe, Finset.mem_insert, Finset.mem_singleton] at hp hq
+  rcases hp with rfl | rfl <;> rcases hq with rfl | rfl <;>
+    simp_all [rootEdge]
+
+private theorem firstLevel_cover (ω : Omega) :
+    ∃ p ∈ firstLevel, ω ∈ cylinder p.val := by
+  refine ⟨rootEdge (ω 0), ?_, ?_⟩
+  · cases h : ω 0 <;> simp [firstLevel]
+  · rw [BiasedBoundaryCylinderProjection.cylinder_ray]
+    simp [rootEdge, D5.S0.Computability.Coding.BiasedMassFrontier.rayPrefix]
+
+private theorem pullback_ext {F T : G}
+    (h : ∀ c : Bool, pullback [c] F = pullback [c] T) : F = T := by
+  have hn := (BiasedBoundaryCylinderProjection.partition_centered_residual
+    firstLevel firstLevel_prefixfree firstLevel_cover).2.2.1 (F-T)
+  have hz : ‖F-T‖^2 = 0 := by
+    simpa [firstLevel, rootEdge, h] using hn
+  exact sub_eq_zero.mp (norm_eq_zero.mp (sq_eq_zero_iff.mp hz))
+
+private theorem graft_constant {x y a b : ℝ} {z w : H}
+    (hz : J z = constG a) (hw : J w = constG b) (h : x + a = y + b) :
+    J (graft x y z w) = constG (x+a) := by
+  apply pullback_ext
+  intro c
+  rw [pullback_graft, pullback_const]
+  cases c
+  · simp only [Bool.false_eq_true, ite_false]
+    rw [hz, ← map_add]
+  · simp only [ite_true]
+    rw [hw, ← map_add, ← h]
+
+private def seed : H := graft 1 1 0 0
+private def fixedLift : H := J.kerᗮ.starProjection seed
+
+private theorem seed_trace : J seed = constG 1 := by
+  simpa [seed] using (graft_constant (x := 1) (y := 1)
+    (a := 0) (b := 0) (by simp) (by simp) (by ring))
+
+private theorem fixed_trace : J fixedLift = constG 1 := by
+  unfold fixedLift
+  rw [Submodule.starProjection_orthogonal_val, map_sub]
+  have hk : J (J.ker.starProjection seed) = 0 :=
+    Submodule.starProjection_apply_mem J.ker seed
+  rw [hk,sub_zero,seed_trace]
+
+private theorem scalar_trace (t : ℝ) : J (t • fixedLift) = constG t := by
+  rw [map_smul,fixed_trace]
+  simpa only [smul_eq_mul,mul_one] using (constG.map_smul t (1:ℝ)).symm
+
+private theorem fixed_pair (c : ℝ) (z : H) (hz : J z = constG c) :
+    inner ℝ fixedLift z = c * ‖fixedLift‖^2 := by
+  have hk : z-c • fixedLift ∈ J.ker := by
+    change J (z-c • fixedLift) = 0
+    rw [map_sub,hz,scalar_trace,sub_self]
+  have hm : fixedLift ∈ J.kerᗮ := Submodule.starProjection_apply_mem _ _
+  have ho := hm (z-c • fixedLift) hk
+  rw [inner_sub_left,real_inner_smul_left,real_inner_self_eq_norm_sq] at ho
+  rw [show inner ℝ z fixedLift = inner ℝ fixedLift z from real_inner_comm _ _] at ho
+  linarith
+
+private theorem fixed_bound (c : ℝ) (z : H) (hz : J z = constG c) :
+    c^2 * ‖fixedLift‖^2 ≤ ‖z‖^2 := by
+  have hn := sq_nonneg ‖z-c • fixedLift‖
+  rw [norm_sub_sq_real,norm_smul,mul_pow,Real.norm_eq_abs,sq_abs,
+    real_inner_smul_right,
+    show inner ℝ z fixedLift = inner ℝ fixedLift z from real_inner_comm _ _,fixed_pair c z hz] at hn
+  nlinarith
+
+private theorem suffix_constant (c : Bool) (a : ℝ) (z : H)
+    (hz : J z = constG a) : J (S [c] z) = constG (a-z (rootEdge c)) := by
+  have hh := congrArg (fun F : G => pullback [c] F) hz
+  rw [boundary_path_split.2.2.2.2,prefix_one,pullback_const] at hh
+  rw [map_sub]
+  calc
+    J (S [c] z) = (constG (z (rootEdge c))+J (S [c] z))-constG (z (rootEdge c)) := by abel
+    _ = constG a-constG (z (rootEdge c)) := by rw [hh]
+
+private theorem fixed_norm : ‖fixedLift‖^2 = 1 := by
+  let m : ℝ := ‖fixedLift‖^2
+  have hm : 0 < m := by
+    apply sq_pos_of_ne_zero
+    intro h
+    have hz : fixedLift = 0 := norm_eq_zero.mp h
+    have hh := congrArg mean fixed_trace
+    rw [hz,map_zero,map_zero,centered_suffix_residual.2.1] at hh
+    norm_num at hh
+  have hg : J (graft (1/2) (1/2) ((1/2:ℝ) • fixedLift)
+      ((1/2:ℝ) • fixedLift)) = constG 1 := by
+    convert graft_constant (scalar_trace (1/2)) (scalar_trace (1/2)) (by ring) using 1
+    norm_num
+  have hu := fixed_bound 1 _ hg
+  rw [graft_norm] at hu
+  simp only [norm_smul,mul_pow,Real.norm_eq_abs,sq_abs] at hu
+  have hupper : m ≤ 1 := by dsimp [m]; nlinarith
+  let x := fixedLift (rootEdge false)
+  let y := fixedLift (rootEdge true)
+  have hl := fixed_bound (1-x) (S [false] fixedLift)
+    (suffix_constant false 1 fixedLift fixed_trace)
+  have hr := fixed_bound (1-y) (S [true] fixedLift)
+    (suffix_constant true 1 fixedLift fixed_trace)
+  have hn := norm_split fixedLift
+  change m = x^2+y^2+‖S [false] fixedLift‖^2+‖S [true] fixedLift‖^2 at hn
+  change (1-x)^2*m ≤ _ at hl
+  change (1-y)^2*m ≤ _ at hr
+  have hlow : x^2+y^2+(1-x)^2*m+(1-y)^2*m ≤ m := by linarith
+  have hh := mul_le_mul_of_nonneg_left hlow (show 0 ≤ 1+m by linarith)
+  have hsqx := sq_nonneg ((1+m)*x-m)
+  have hsqy := sq_nonneg ((1+m)*y-m)
+  have hprod : m*(m-1) ≥ 0 := by nlinarith
+  have hlow' : 1 ≤ m := by nlinarith
+  exact le_antisymm hupper hlow'
+
+private theorem fixed_recursion :
+    fixedLift = graft (1/2) (1/2) ((1/2:ℝ) • fixedLift) ((1/2:ℝ) • fixedLift) := by
+  let r := graft (1/2) (1/2) ((1/2:ℝ) • fixedLift) ((1/2:ℝ) • fixedLift)
+  have ht : J r = constG 1 := by
+    convert graft_constant (scalar_trace (1/2)) (scalar_trace (1/2)) (by ring) using 1
+    norm_num
+  have hn : ‖r‖^2 = 1 := by
+    dsimp [r]
+    rw [graft_norm]
+    simp only [norm_smul,mul_pow,Real.norm_eq_abs,sq_abs,fixed_norm]
+    norm_num
+  have hp := fixed_pair 1 r ht
+  have hz : ‖fixedLift-r‖^2 = 0 := by
+    rw [norm_sub_sq_real,fixed_norm,hn,hp,fixed_norm]
+    norm_num
+  exact sub_eq_zero.mp (norm_eq_zero.mp (sq_eq_zero_iff.mp hz))
+
+/-- Constant traces on the original biased boundary have the unit fixed-root
+minimum, and its minimizer splits equally into the original two subtrees. -/
+theorem constant_trace_minimum : ∃ q : H,
+    J q = constG 1 ∧ ‖q‖^2 = 1 ∧
+    (∀ (c : ℝ) (z : H), J z = constG c → inner ℝ q z = c) ∧
+    (∀ c : Bool, q (rootEdge c) = 1/2 ∧ S [c] q = (1/2:ℝ) • q) := by
+  refine ⟨fixedLift,fixed_trace,fixed_norm,?_,?_⟩
+  · intro c z hz
+    rw [fixed_pair c z hz,fixed_norm,mul_one]
+  · intro c
+    constructor
+    · conv_lhs => rw [fixed_recursion]
+      rw [graft_root]
+      cases c <;> rfl
+    · conv_lhs => rw [fixed_recursion]
+      rw [suffix_graft]
+      cases c <;> rfl
+
+
+private def q : H := constant_trace_minimum.choose
+private theorem q_trace : J q = constG 1 := constant_trace_minimum.choose_spec.1
+private theorem q_norm : ‖q‖^2 = 1 := constant_trace_minimum.choose_spec.2.1
+private theorem q_pair (c : ℝ) (z : H) (hz : J z = constG c) :
+    inner ℝ q z = c := constant_trace_minimum.choose_spec.2.2.1 c z hz
+private theorem q_root (c : Bool) : q (rootEdge c) = 1/2 :=
+  (constant_trace_minimum.choose_spec.2.2.2 c).1
+private theorem q_suffix (c : Bool) : S [c] q = (1/2:ℝ) • q :=
+  (constant_trace_minimum.choose_spec.2.2.2 c).2
+private theorem q_scalar_trace (c : ℝ) : J (c • q) = constG c := by
+  rw [map_smul,q_trace]
+  simpa only [smul_eq_mul,mul_one] using (constG.map_smul c (1:ℝ)).symm
+
+private theorem root_pullback (c d : Bool) :
+    pullback [c] (indicator (rootEdge d)) = if c = d then constG 1 else 0 := by
+  by_cases h : c = d
+  · subst d
+    simpa using BiasedBoundaryPathSplit.pullback_indicator_prefix [c] (rootEdge c) (by rfl)
+  · rw [ite_eq_right h]
+    exact BiasedBoundaryPathSplit.pullback_indicator_incomparable [c] (rootEdge d)
+      (by simpa [rootEdge] using Ne.symm h) (by simpa [rootEdge] using h)
+
+private theorem constant_smul (c : ℝ) : c • constG 1 = constG c := by
+  simpa only [smul_eq_mul,mul_one] using (constG.map_smul c (1:ℝ)).symm
+
+private theorem graft_trace {x y a b : ℝ} {z w : H}
+    (hz : J z = constG a) (hw : J w = constG b) :
+    J (graft x y z w) = (x+a) • indicator (rootEdge false) +
+      (y+b) • indicator (rootEdge true) := by
+  apply pullback_ext
+  intro c
+  rw [pullback_graft,map_add,map_smul,map_smul,root_pullback,root_pullback]
+  cases c <;> simp only [Bool.false_eq_true, Bool.true_eq_false,
+    ite_true,ite_false,smul_zero,zero_add,add_zero]
+  · rw [hz,constant_smul,←map_add]
+  · rw [hw,constant_smul,←map_add]
+
+private theorem root_partition :
+    indicator (rootEdge false)+indicator (rootEdge true) = constG 1 := by
+  have h := graft_trace (x := 1) (y := 1) (z := 0) (w := 0)
+    (a := 0) (b := 0) (by simp) (by simp)
+  simpa [seed,seed_trace] using h.symm.trans seed_trace
+
+/-- An actual cylinder regarded as a member of the original free-root domain. -/
+def cylinderD (p : Edge) : D :=
+  ⟨indicator p,0,lp.single 2 p (1:ℝ),by simp [J_single]⟩
+
+private def aLift : H := graft (1/4) (-1/4) ((1/4:ℝ) • q) ((-1/4:ℝ) • q)
+private def bLeft : H := graft (5/16) (-3/16) ((5/16:ℝ) • q) ((-3/16:ℝ) • q)
+private def bRight : H := graft (-1/16) (-1/16) ((-1/16:ℝ) • q) ((-1/16:ℝ) • q)
+private def bLift : H := graft (1/8) (-1/8) bLeft bRight
+private def leftLeft : Edge := descendant [false] (rootEdge false)
+
+private theorem a_rep : indicator (rootEdge false) = constG (1/2)+J aLift := by
+  apply pullback_ext
+  intro c
+  rw [root_pullback,map_add,pullback_const]
+  unfold aLift
+  rw [pullback_graft]
+  cases c <;> simp only [Bool.false_eq_true, Bool.true_eq_false,
+    ite_true,ite_false,q_scalar_trace]
+  · rw [← map_add,← map_add]
+    norm_num
+  · rw [← map_add,← map_add]
+    norm_num
+
+private theorem b_rep : indicator leftLeft = constG (1/4)+J bLift := by
+  apply pullback_ext
+  intro c
+  rw [map_add,pullback_const]
+  unfold bLift
+  rw [pullback_graft]
+  cases c
+  · change pullback [false] (indicator (descendant [false] (rootEdge false))) = _
+    rw [BiasedBoundaryPathSplit.pullback_indicator_descendant]
+    simp only [Bool.false_eq_true,ite_false]
+    rw [show J bLeft = (5/8:ℝ) • indicator (rootEdge false)+
+        (-3/8:ℝ) • indicator (rootEdge true) by
+      convert graft_trace (x := (5/16)) (y := (-3/16))
+        (q_scalar_trace (5/16)) (q_scalar_trace (-3/16)) using 1 <;> norm_num [bLeft]]
+    rw [show constG (1/4) = (1/4:ℝ) • constG 1 from (constant_smul _).symm,
+      show constG (1/8) = (1/8:ℝ) • constG 1 from (constant_smul _).symm,
+      ← root_partition]
+    module
+  · rw [BiasedBoundaryPathSplit.pullback_indicator_incomparable [true] leftLeft
+      (by simp [leftLeft,descendant,rootEdge]) (by simp [leftLeft,descendant,rootEdge])]
+    simp only [ite_true]
+    have hbr : J bRight = constG (-1/8) := by
+      convert graft_constant (x := (-1/16)) (y := (-1/16))
+        (a := (-1/16)) (b := (-1/16))
+        (q_scalar_trace (-1/16)) (q_scalar_trace (-1/16)) (by ring)
+        using 1 <;> norm_num [bRight]
+    rw [hbr,←map_add,←map_add]
+    norm_num
+
+private theorem constant_of_centered_zero (w : H) (hw : C w = 0) :
+    J w = constG (mean (J w)) := by
+  change Pi (J w) = 0 at hw
+  rw [centered_suffix_residual.2.2.1] at hw
+  exact sub_eq_zero.mp hw
+
+private theorem mem_effective {z : H} (hz : ∀ w : H, C w = 0 → inner ℝ z w = 0) : z ∈ K := by
+  change ∀ w ∈ Sigma.ker, inner ℝ w z = 0
+  intro w hw
+  have hk := BiasedBoundaryFreeRootForm.actual_compact_covariance.2.2.2.2.2.2.1
+  rw [hk] at hw
+  exact (show inner ℝ w z = inner ℝ z w from real_inner_comm _ _).trans (hz w hw)
+
+private theorem a_effective : aLift ∈ K := by
+  apply mem_effective
+  intro w hw
+  let t := mean (J w)
+  have ht : J w = constG t := constant_of_centered_zero w hw
+  have hl := suffix_constant false t w ht
+  have hr := suffix_constant true t w ht
+  unfold aLift
+  rw [graft_pair,real_inner_smul_left,real_inner_smul_left,q_pair _ _ hl,q_pair _ _ hr]
+  ring
+
+private theorem b_effective : bLift ∈ K := by
+  apply mem_effective
+  intro w hw
+  let t := mean (J w)
+  have ht : J w = constG t := constant_of_centered_zero w hw
+  have hl := suffix_constant false t w ht
+  have hr := suffix_constant true t w ht
+  have hll := suffix_constant false (t-w (rootEdge false)) (S [false] w) hl
+  have hlr := suffix_constant true (t-w (rootEdge false)) (S [false] w) hl
+  have hrl := suffix_constant false (t-w (rootEdge true)) (S [true] w) hr
+  have hrr := suffix_constant true (t-w (rootEdge true)) (S [true] w) hr
+  unfold bLift bLeft bRight
+  simp only [graft_pair,real_inner_smul_left]
+  rw [q_pair _ _ hll,q_pair _ _ hlr,q_pair _ _ hrl,q_pair _ _ hrr]
+  ring
+
+private theorem lift_of_rep (F : D) (c : ℝ) (z : H)
+    (hz : z ∈ K) (he : F.val = constG c + J z) : lift F = z := by
+  apply ((free_root_least_energy F).2.2.2.2.2 z hz ?_).symm
+  change Pi (J z) = Pi F.val
+  rw [he,map_add,BiasedBoundaryCentering.Pi_const,zero_add]
+
+private theorem a_minimizer : lift (cylinderD (rootEdge false)) = aLift :=
+  lift_of_rep _ (1/2) aLift a_effective a_rep
+private theorem b_minimizer : lift (cylinderD leftLeft) = bLift :=
+  lift_of_rep _ (1/4) bLift b_effective b_rep
+
+/-- The actual depth-two and depth-one cylinder indicators have mixed energy one eighth
+in the original biased free-root form. -/
+theorem mixed_cylinder_energy :
+    form (cylinderD ⟨[false,false],by simp⟩) (cylinderD (rootEdge false)) = 1/8 := by
+  change form (cylinderD leftLeft) (cylinderD (rootEdge false)) = _
+  rw [form,a_minimizer,b_minimizer,
+    show inner ℝ bLift aLift = inner ℝ aLift bLift from real_inner_comm _ _]
+  unfold aLift bLift
+  rw [graft_pair,graft_root,graft_root,suffix_graft,suffix_graft]
+  simp only [Bool.false_eq_true,ite_false,ite_true,real_inner_smul_left]
+  have hl : inner ℝ q bLeft = 1/8 := by
+    rw [show inner ℝ q bLeft = inner ℝ bLeft q from real_inner_comm _ _]
+    unfold bLeft
+    rw [graft_pair,q_root,q_root,q_suffix,q_suffix]
+    simp only [real_inner_smul_left,real_inner_smul_right,real_inner_self_eq_norm_sq,q_norm]
+    ring
+  have hr : inner ℝ q bRight = -1/8 := by
+    rw [show inner ℝ q bRight = inner ℝ bRight q from real_inner_comm _ _]
+    unfold bRight
+    rw [graft_pair,q_root,q_root,q_suffix,q_suffix]
+    simp only [real_inner_smul_left,real_inner_smul_right,real_inner_self_eq_norm_sq,q_norm]
+    ring
+  rw [hl,hr]
+  norm_num
+
+
+end D5.S3.Arith.FibonacciAtomic.Geometry.BiasedBoundaryCylinderEnergy

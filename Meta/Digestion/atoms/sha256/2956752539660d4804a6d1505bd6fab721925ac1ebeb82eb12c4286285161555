@@ -1,0 +1,34 @@
+**Definition 129.1 (The fixed paired laws and their instrument layers).**
+Fix any allowed source $\mathfrak s$ of VI Definition 114.1. In this
+section $L_{\mathfrak s}$ always denotes the integer decoder length
+of VI Proposition 118.2, not the real comparison constant in (124.4).
+Use precisely the constants $c_{\mathfrak s},C_{\mathfrak s}$ of
+(118.18), (118.20). For $x=(\gamma,h),x'=(\gamma',h')\in\mathcal P$
+write $D_{\rm pair}(x,x')=\mathcal D(x,x')$ from (118.1), and put
+
+$$
+\begin{aligned}
+\Delta^{[k]}(x,x')
+ &=\sup_{1\le i\le9,\ k(w)=k,\ \beta\in\{0,1\}}
+       |p_{\gamma,h}(u_i,w,\beta)-p_{\gamma',h'}(u_i,w,\beta)|,\\
+\Delta^{[\le K]}(x,x')&=\max_{0\le k\le K}\Delta^{[k]}(x,x'),\\
+K_{\mathfrak s}
+ &=\max\left\{L_{\mathfrak s},0,
+       \left\lceil\log_2(C_{\mathfrak s}/c_{\mathfrak s})\right\rceil\right\}.
+\end{aligned}
+\tag{129.1}
+$$
+
+The integer $k(w)$ counts the actual $0,1$ labels in V (91.2).
+Every occurrence of the same installed deterministic $N$ contributes
+zero to that count. All histories and their clocks are still those
+of the original externally fixed schedules. The prefix $u_i$, its
+subnormalised $r_i$, both terminal outcomes, and the factor
+$a_w/2=2^{-k(w)}/2$ remain part of each coordinate. The finite vector
+$P_{\mathfrak s}$ remains exactly (118.3). Every point of $\mathcal P$
+is realised by one full ten-dimensional completion used for emission,
+the single forward return and every history within that hypothesis,
+as in VI Theorem 106.3; different hypotheses may differ. This notation
+does not change the sole original preparation, the complex retention
+disk, the installed menu, the record bases or any schedule.
+

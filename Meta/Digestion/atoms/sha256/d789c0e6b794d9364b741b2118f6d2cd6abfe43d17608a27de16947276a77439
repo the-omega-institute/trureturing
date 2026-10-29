@@ -1,0 +1,9 @@
+**Definition 53.3 (complete guard task $Q_A$).** On a current term $u$,
+the semantic reply and successor of a complete addressed request are:
+
+| Current logical target at $p$ | $P_p$ | $S_p$ |
+| --- | --- | --- |
+| absent | Refusal(absent), unchanged $u$ | Refusal(absent), unchanged $u$ |
+| branch | Refusal(branch), unchanged $u$ | Refusal(branch), unchanged $u$ |
+| $\alpha$ | Growth$(P,p)$, replace that leaf by $\beta$ | Refusal(wrong type), unchanged $u$ |
+| $\beta$ | Refusal(wrong type), unchanged $u$ | Growth$(S,p)$, replace that leaf by $\langle\beta,\alpha\rangle$ |

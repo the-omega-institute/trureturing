@@ -1,0 +1,28 @@
+**Definition 48.1 (counting and arithmetic routines).** At a bound logical
+subtree root, perform a depth-first traversal of logical source edges,
+counting alpha and beta leaves in backed binary counters. Arity tests
+recognize the material unary marker as beta and do not descend into it
+as a logical child. A previous/current reference pair, the traversal
+root reference and parent links suffice to return along the finite
+subtree: on first entry visit its left child if it is a branch, on
+return from left visit right, and on return from right go to parent;
+stop at completion of the designated root. Thus no list of all source
+addresses or leaf identities is required. Every read, reference
+comparison and counter operation is charged.
+
+For a needed $\binom uk$, return zero when $k<0$ or $k>u$. Otherwise
+replace $k$ by $\min(k,u-k)$ and compute
+
+$$
+z_0=1,\qquad z_i=z_{i-1}(u-k+i)/i\quad(1\le i\le k).
+\tag{AAII.4}
+$$
+
+These are exact divisions; induction gives $z_i=\binom{u-k+i}i$.
+A fixed finite binary-string multiplication/division routine implements
+them using charged buffers. Compute $b=\lceil\log_2 R\rceil$ as the
+least nonnegative integer with $R\le2^b$, counting its loop and buffer
+work; $R=1$ gives $b=0$. No unit-cost unbounded register or coefficient
+oracle is installed. The standard Pascal identities used here are
+also the pinned mathlib suppliers identified in Definition 52.1.
+

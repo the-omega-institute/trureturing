@@ -1,0 +1,87 @@
+**Theorem 50.3 (coexistence and finite work, without free arithmetic).**
+The driver of Theorem 49.1 can perform each transaction with the source
+and all live records retained throughout. Preflight needs no array of
+ancestor plans or persistent count cache. If $N_+$ is the event count
+after a proposed successful edit, the compressed arithmetic backend
+needs $O(N_++1)$ temporary binary bit positions and a constant number of
+reference-register roots, in addition to actual request/answer/address backing, the
+original receive/index marks, reserved fresh material and retained work
+capacity. Every such operation has finite explicitly charged work.
+No bound on arbitrary request sizes, output volume or whole-run work
+is inferred from $N_+$ alone. For a query or refusal set $N_+=N$.
+Backing objects and links for the temporary bit positions, and all
+actual reference widths, are additional charged material; the bit-position
+bound is not a bound on their complete binary encoding.
+
+Proof. Current logical depth is at most the split count and hence at
+most $N_+$. Each subtree event count and local word length is at most
+$N_+$. Every binomial queried for a local coordinate, update or valid
+peeling step is at most $2^{N_+}$. Formula (AAII.4)'s partial binomials
+are nondecreasing up to the queried coefficient, and its multiplication
+numerator is at most that coefficient times $N_++1$. A constant number
+of binary integer buffers, including schoolbook multiplication/division
+scratch, therefore has $O(N_++1)$ bits. Count, width and peeling-loop
+indices fit this bound as well. Bound $B\le\sum_v n_v=D\le N_+^2$,
+using at most $N_+$ ancestors per event, so the two preflight material
+totals need only $O(\log(N_++2))$ bits.
+
+Counting traversals use the fixed number of source reference registers
+of Definition 48.1, with no retained address enumeration. Walk the
+ancestor chain once for preflight and once for maintenance, retaining
+only the next ancestor/child references and the current local arithmetic
+work. Recompute its counts at each visit. Header/cell allocation totals
+are determined before editing. A pending pool can give each reserved
+record cell its already needed next field and each reserved header its
+head field as temporary pool links; these actual writes and roots are
+charged. As the pool is consumed, initialize each final field and attach
+its object. This requires no separate persistent pool-cell archive.
+All source, old record, fresh reservation and current arithmetic work
+coexist until their respective attachments/rewrites finish.
+
+At a rank rewrite retain a work copy of the new rank while its actual
+$b'$ bits are written into the bound cells; a work residual can emit
+these bits by a finite binary scan. Header tails and cell links are
+actual writes, not implicit arrays. At a local routing call, peeling
+needs only a constant number of these integer buffers and the acquired
+index, rather than an $n$-symbol decoded tape. Discard local buffers
+before the next ancestor or child, using the declared clearing/reuse
+operations. Global event counts used in this proof are bounds, not
+extra runtime inputs or free stored counters.
+
+For an arbitrarily large out-of-range unary request, use the bounded
+mark comparison in Theorem 48.3 before creating any in-range arithmetic
+index. Thus its original received backing can be arbitrarily large,
+while this particular additional binary-index work stays within the
+stated backend bound. In-range work indices never exceed the actual
+current event count.
+
+For a successful event at depth $d$, choose the displayed routines to
+count both child subtrees on every visit, including zero-event children.
+There are exactly $d$ preflight and $d$ maintenance ancestor visits and
+$4d$ child-counting tours. Computing old and new radices uses $4d$
+binomial queries across those visits; the append offsets add one more
+query at each ancestor whose actual side is $L$, hence at most $d$.
+Width calculations, reads of the old bit lists, writes of the new bit
+lists and material-pool operations are additional. This is a located
+contribution, not a total bit-operation tariff. Each counting tour
+traverses an actual finite subtree; no tour or coefficient query is
+replaced by a free persistent count field.
+
+There are finitely many source vertices, ancestors, bit cells and
+coefficient iterations on each completed finite request. Formula
+(AAII.4) uses at most $N_+$ exact multiplications and divisions per
+coefficient query; binary routines of finite input length terminate.
+The full Fetch descent is finite by Theorem 48.3. These facts prove
+finite work with every such operation charged; they assert neither
+unit-time arithmetic nor the original literal driver's tariff.
+
+The acquired original request, its marks and pending latch exist while
+this backend runs. Its output backing then coexists with the updated
+source/records and the retained operands needed to construct the full
+reply. Print and its cursor coexist with that backing until ACK and
+Return permit cleanup. The program, source bindings, grants and every
+reference value are present throughout. A missing right, a supplied
+incomplete input, insufficient finite material, crash or interruption
+is outside the same completion premise as AA §20, rather than an
+unpriced completed request. $\square$
+
