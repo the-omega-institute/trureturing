@@ -221,7 +221,7 @@ private theorem shift_zero (C : Code) : shiftCode 0 C = C := by
   | of n => rfl
   | mul l r hl hr => exact congrArg₂ FreeMagma.mul hl hr
 
-private theorem shift_add (a b : Nat) (C : Code) :
+theorem shift_add (a b : Nat) (C : Code) :
     shiftCode a (shiftCode b C) = shiftCode (a + b) C := by
   induction C with
   | of n => simp only [shiftCode, Nat.add_assoc, Nat.add_comm b a]
@@ -275,7 +275,7 @@ private theorem choice_complete (e : Equation X) (v : X → Source) (h : e.Holds
           refine ⟨.ordinary z x y, by simp [choices], ?_⟩
           cases hy : encode (v y) <;> simpa only [BranchEquation.Holds, hx, hy, smart] using hz
 
-private theorem branch_sound (u : X → Code) (b : BranchEquation X) (h : b.Holds u) :
+theorem branch_sound (u : X → Code) (b : BranchEquation X) (h : b.Holds u) :
     b.origin.Holds (fun x => expand (u x)) := by
   cases b with
   | primitive z n => exact congrArg expand h
@@ -290,14 +290,14 @@ private theorem branch_sound (u : X → Code) (b : BranchEquation X) (h : b.Hold
       rw [hx, hy, hz]
       exact NativeRankedEqualityCompiler.atomic_pair r
 
-private theorem choices_origin (e : Equation X) (b : BranchEquation X) (h : b ∈ choices e) :
+theorem choices_origin (e : Equation X) (b : BranchEquation X) (h : b ∈ choices e) :
     b.origin = e := by
   cases e <;> simp only [choices, List.mem_cons, List.not_mem_nil, or_false] at h
   all_goals first
     | subst b; rfl
     | rcases h with rfl | rfl <;> rfl
 
-private theorem branches_exact (E : List (Equation X)) (v : X → Source) :
+theorem branches_exact (E : List (Equation X)) (v : X → Source) :
     (∀ e ∈ E, e.Holds v) ↔
       ∃ B ∈ branches E, ∀ b ∈ B, b.Holds (fun x => encode (v x)) := by
   induction E with
