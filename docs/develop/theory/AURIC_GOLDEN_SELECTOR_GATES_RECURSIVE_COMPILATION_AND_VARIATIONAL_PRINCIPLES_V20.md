@@ -14,7 +14,7 @@
 
 本文回到固定黄金门的递归预测路线，把黎曼猜想仅保留为谱一致性的参考。我们从同一原生门的两个编码地址构造两个十次调用的组合块，证明其行列式严格为一且生成稠密的 $\operatorname{SU}(2)$，由此给出无需外供整体相位的递归编译接口。进一步定义一个固定两比特黄金选择门：在明确的端口调用与计算基辅助位条件下，它既供应单比特稠密操作，也产生纠缠，因而具有单一门型的近似量子普适性。该门与五模式原子的一处四维子空间精确交织；我们同时证明此编码不能按物理导线直接分解，避免把单原子等价误认成全局接线证明。平衡交换子给出误差递推 $\varepsilon_{n+1}\le6\varepsilon_n^{3/2}$，而带原生成本的变分问题具有有限最优字、唯一 Bellman 解与普适性极限判据。静态作用量的正确归一化排除用 $K^{10}=I$ 填充产生的假收敛。最后用后验 Choi 谱、程序记录及最新同源停止前沿，区分编译误差、关系不确定性与观察成本。全文保留 Hilbert 空间、实际门菜单、初始化、评分和读出标定等使用前提。
 
-<strong>结果身份。</strong>本文给出可逐步核查的纸面证明；不报告 Lean 编译、数值实验、最短门枚举或硬件实现。固定黄金数据、Fibonacci 编织、通用门思想、Solovay--Kitaev 递归、Bellman 方程和不可编程定理均有既有来源。本文的推进是把这些结构接成明确的 AURIC 门、相位、资源与观察接口，不主张这些经典原理的历史原创性。
+<strong>结果身份。</strong>本文给出可逐步核查的纸面证明；不报告 Lean 编译、数值实验、最短门枚举或硬件实现。固定黄金数据、Fibonacci 编织、通用门思想、Solovay–Kitaev 递归、Bellman 方程和不可编程定理均有既有来源。本文的推进是把这些结构接成明确的 AURIC 门、相位、资源与观察接口，不主张这些经典原理的历史原创性。
 
 > **转换说明（编者）。** 本文完整转换作者提供的 v20.0 XeLaTeX 稿件；各节共享陈述编号、全部纸面证明、公式、表格、引用与前提沿用源稿。关于项目快照、历史核对、研究连续性与经典结果的叙述均保留作者归属，不表示本次转换进行了独立数学认证。字体、分页与页眉由 Markdown 排版替代；数学宏显式展开，目录、陈述与文献采用独立锚点。
 
@@ -359,7 +359,7 @@ $$
 [V,W]_{\rm g}=VWV^\dagger W^\dagger.
 $$
 
-它度量两个相容候选操作交换次序后的差异。下列递归属于经典 Solovay--Kitaev 思路[[8](#ref-sk)]；我们给出在本黄金字母表中可直接使用的严格常数与完整证明。
+它度量两个相容候选操作交换次序后的差异。下列递归属于经典 Solovay–Kitaev 思路[[8](#ref-sk)]；我们给出在本黄金字母表中可直接使用的严格常数与完整证明。
 
 <a id="lem-balanced"></a>
 
@@ -542,7 +542,7 @@ $$
 置 $U_j=G_j\cdots G_1$，$Y_j=U_j^\dagger X_j$，并令
 $Y_0=I$、$Y_{L+1}=U_w^\dagger V$。酉不变性将作用量化为
 $\sum_{j=1}^{L+1}\left\lVert Y_j-Y_{j-1}\right\rVert_F^2$。
-所有增量之和固定为 $U_w^\dagger V-I$。Cauchy--Schwarz 给下界
+所有增量之和固定为 $U_w^\dagger V-I$。Cauchy–Schwarz 给下界
 $\left\lVert U_w^\dagger V-I\right\rVert_F^2/(L+1)$，等号由各增量相同达到，即
 $Y_j=I+\frac j{L+1}(U_w^\dagger V-I)$。
 
@@ -820,7 +820,7 @@ $$
 
 ∎
 
-这是 Nielsen--Chuang 的不可编程结果[[9](#ref-noprogram)]。它允许我们精确表达内生观察者的一个部分：程序、记录、边界选择也在联合空间内；忽略它们会改变可见操作。它不妨碍变长有限电路的近似通用性，也不证明任意自指过程收敛。
+这是 Nielsen–Chuang 的不可编程结果[[9](#ref-noprogram)]。它允许我们精确表达内生观察者的一个部分：程序、记录、边界选择也在联合空间内；忽略它们会改变可见操作。它不妨碍变长有限电路的近似通用性，也不证明任意自指过程收敛。
 
 <a id="sec-11"></a>
 
@@ -862,7 +862,7 @@ $$
 
 **证明。**
 
-$\langle v_j,u\rangle=\operatorname{Tr}(V_j^\dagger U)/d$，求和得等式。酉 Choi 向量只是全单位球的一个紧子集；Rayleigh 商给谱上界，其等号条件就是最大本征空间与该子集相交。若风险为零，每一个正权非负损失均为零；Hilbert--Schmidt Cauchy--Schwarz 等号要求 $V_j$ 与同一个 $U$ 成比例，即只差相位。反向显然。
+$\langle v_j,u\rangle=\operatorname{Tr}(V_j^\dagger U)/d$，求和得等式。酉 Choi 向量只是全单位球的一个紧子集；Rayleigh 商给谱上界，其等号条件就是最大本征空间与该子集相交。若风险为零，每一个正权非负损失均为零；Hilbert–Schmidt Cauchy–Schwarz 等号要求 $V_j$ 与同一个 $U$ 成比例，即只差相位。反向显然。
 
 ∎
 
@@ -992,7 +992,7 @@ $$
 <a id="ref-v15"></a>
 
 2. AURIC research continuation.
-[<em>黄金门的 NAND 式普适性与精确实现的算术边界</em>](https://github.com/the-omega-institute/trureturing/blob/837df9a7545012a9e669c61716dac078f5552d96/docs/develop/theory/AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md), v15. Author manuscript conversion; especially §§3--10.
+[<em>黄金门的 NAND 式普适性与精确实现的算术边界</em>](https://github.com/the-omega-institute/trureturing/blob/837df9a7545012a9e669c61716dac078f5552d96/docs/develop/theory/AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md), v15. Author manuscript conversion; especially §§3–10.
 
 <a id="ref-v16"></a>
 
@@ -1011,24 +1011,24 @@ $$
 
 <a id="ref-barenco"></a>
 
-6. A. Barenco. <em>A universal two-bit gate for quantum computation</em>. Proceedings of the Royal Society A 449 (1995), 679--683.
+6. A. Barenco. <em>A universal two-bit gate for quantum computation</em>. Proceedings of the Royal Society A 449 (1995), 679–683.
 [arXiv:quant-ph/9505016](https://arxiv.org/abs/quant-ph/9505016).
 
 <a id="ref-flw"></a>
 
 7. M. H. Freedman, M. J. Larsen, Z. Wang.
 <em>The two-eigenvalue problem and density of Jones representation of braid groups</em>.
-Communications in Mathematical Physics 228 (2002), 177--199. Fibonacci representations, §6, Theorem 6.2.
+Communications in Mathematical Physics 228 (2002), 177–199. Fibonacci representations, §6, Theorem 6.2.
 [arXiv:math/0103200](https://arxiv.org/pdf/math/0103200).
 
 <a id="ref-sk"></a>
 
-8. C. M. Dawson, M. A. Nielsen. <em>The Solovay--Kitaev algorithm</em>.
-Quantum Information and Computation 6 (2006), 81--95.
-[arXiv:quant-ph/0505030v2](https://arxiv.org/pdf/quant-ph/0505030), especially §§2--4.
+8. C. M. Dawson, M. A. Nielsen. <em>The Solovay–Kitaev algorithm</em>.
+Quantum Information and Computation 6 (2006), 81–95.
+[arXiv:quant-ph/0505030v2](https://arxiv.org/pdf/quant-ph/0505030), especially §§2–4.
 
 <a id="ref-noprogram"></a>
 
 9. M. A. Nielsen, I. L. Chuang. <em>Programmable quantum gate arrays</em>.
-Physical Review Letters 79 (1997), 321--324.
+Physical Review Letters 79 (1997), 321–324.
 [arXiv:quant-ph/9703032](https://arxiv.org/pdf/quant-ph/9703032).
