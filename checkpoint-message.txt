@@ -1,0 +1,1 @@
+Implement the literal original integer-source bilinear pairing with same-ring frequency retuning, finite charge lift, symmetry, normalization, and nondegeneracy.
