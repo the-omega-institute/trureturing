@@ -68,9 +68,32 @@ internal sealed class ThetaTailRobinWitnessDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "The choice x>=B+1 gives B+1<=floor(x). For n=floor(x)>=1, "
                         + "Chebyshev.choose_dvd_lcmUpto gives n dividing lcmUpto(n); positivity of "
-                        + "lcmUpto(n) then gives n<=D, hence B<D. Thus the conditional conclusion "
-                        + "concerns unbounded genuine integers, without an additional assumed tail peak. "
-                        + "It does not establish the existence of an off-line zero, RH, an actual numerical "
-                        + "Robin counterexample, or an effective cutoff or location for these witnesses."))),
+                        + "lcmUpto(n) then gives n<=D, hence B<D. Thus the selected-zero conclusion "
+                        + "concerns unbounded genuine integers, without an additional assumed tail peak.")),
+                    Paragraph(Text(
+                        "The complete contrapositive application assumes only that RiemannHypothesis is false. "
+                        + "For every natural B it yields a real x>=10000 with the same actual "
+                        + "D=lcm(1,...,floor(x)), B<D, 5040<D, sigma(D)/D>exp(gamma)*log(log(D)), "
+                        + "log(D)=psi(x), and D<=exp(x*log(x)). To prove this, suppose there is no "
+                        + "such witness for a chosen B. The selected-zero application then excludes "
+                        + "every zeta zero in 1/2<Re(rho)<1. The existing "
+                        + "RightHalfStripRiemannReduction.golden_right_half_strip_implies_rh gives RH, "
+                        + "contradicting the premise. That supplier already handles reflection and "
+                        + "trivial-zero classification; the application needs no rightmost zero, "
+                        + "assumed theta error bound, extra integrability premise or extra peak premise.")),
+                    Paragraph(Text(
+                        "Consequently, an eventual nonstrict Robin upper bound on this actual family "
+                        + "suffices for RH: if there exists a natural B such that for every real x>=10000, "
+                        + "B<lcmUpto(floor(x)) implies sigma(D)/D<=exp(gamma)*log(log(D)) at "
+                        + "D=lcmUpto(floor(x)), then RiemannHypothesis holds. For each right-half-strip "
+                        + "zero the selected-zero application at that same B supplies a strict violation "
+                        + "at a family member to which the upper bound applies, a contradiction. "
+                        + "The same right-half-strip reduction therefore gives RH.")),
+                    Paragraph(Text(
+                        "These two complete applications are compiled specializations of the named "
+                        + "theta-tail arithmetic theorem and the existing suppliers, rather than additional "
+                        + "named theorems in this module. They assert conditional implications; they do not "
+                        + "prove RH, its converse family bound, the existence of an off-line zero, an actual "
+                        + "numerical Robin counterexample, or an effective cutoff or location for the witnesses."))),
                 DescribeRole.Theorem))));
 }
