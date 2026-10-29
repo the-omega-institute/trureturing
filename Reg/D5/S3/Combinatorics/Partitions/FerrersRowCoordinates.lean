@@ -54,7 +54,7 @@ def family : Registration arena (type_of% @diagram_mem) where
     intro i
     refine ⟨⟨1,1,ones,0⟩,0,1,?_⟩
     simp [actual, realize, ones]
-def registration : Contract.Registration (@diagram_mem) (type_of% actual) Type Unit where
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@diagram_mem) (type_of% actual) Type Unit where
   unitName := `D5.S3.Combinatorics.Partitions.FerrersRowCoordinates.diagram_mem.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Partitions.FerrersRowCoordinates.diagrammem.family
   realizationSource := none
@@ -129,7 +129,7 @@ def family : Registration arena (type_of% @diagram_rowLen) where
     intro i
     refine ⟨⟨2,1,stair⟩,0,1,?_⟩
     norm_num [actual, realize, stair]
-def registration : Contract.Registration (@diagram_rowLen) (type_of% actual) (ℕ → Type) Unit where
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@diagram_rowLen) (type_of% actual) (ℕ → Type) Unit where
   unitName := `D5.S3.Combinatorics.Partitions.FerrersRowCoordinates.diagram_rowLen.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Partitions.FerrersRowCoordinates.diagramrowlen.family
   realizationSource := none
@@ -205,7 +205,7 @@ def family : Registration arena (type_of% @conjugate_involutive) where
     intro he
     have hh := congrArg (fun z : Rows 1 1 => (z.val 0).val) he
     norm_num [actual, realize, conjugate_involutive, ones] at hh
-def registration : Contract.Registration (@conjugate_involutive) (type_of% actual) (ℕ → ℕ → Type) Unit where
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@conjugate_involutive) (type_of% actual) (ℕ → ℕ → Type) Unit where
   unitName := `D5.S3.Combinatorics.Partitions.FerrersRowCoordinates.conjugate_involutive.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Partitions.FerrersRowCoordinates.conjugateinvolutive.family
   realizationSource := none
@@ -280,7 +280,7 @@ def family : Registration arena (type_of% @board_row_count) where
     intro i
     refine ⟨⟨1,2,(boardRowsEquiv 1 2).symm stair⟩,0,1,?_⟩
     norm_num [actual, realize, Equiv.apply_symm_apply, stair]
-def registration : Contract.Registration (@board_row_count) (type_of% actual) (ℕ → Type) Unit where
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@board_row_count) (type_of% actual) (ℕ → Type) Unit where
   unitName := `D5.S3.Combinatorics.Partitions.FerrersRowCoordinates.board_row_count.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Partitions.FerrersRowCoordinates.boardrowcount.family
   realizationSource := none

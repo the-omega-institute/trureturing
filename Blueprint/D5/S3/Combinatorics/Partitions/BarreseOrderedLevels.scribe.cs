@@ -5,17 +5,17 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Partitions;
 internal sealed class BarreseOrderedLevelsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Partitions/BarreseOrderedLevels.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/ArithSums/RookTheory/barrese2023levels");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGeometry/barrese2023levels");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The Gaussian recurrence counts literal fixed-slot source boards, with the published top-down order restored.",
         H("Prescribed Ordered Level Numbers"),
         Blocks(
-            Node("barreseorderedlevels-levelTotal", "Native cell total", "levelTotal",
+            Node("barreseorderedlevels-leveltotal", "Native cell total", "levelTotal",
                 "For a source board with U columns and mt rows, the p-th bottom-up level total is the sum, over j=0,...,m-1, of the number of columns whose height exceeds mp+j. This counts the actual occupied cells in that level with weight one. It places no singleton restriction on the board.", DescribeRole.Definition),
-            Node("barreseorderedlevels-NativeFiber", "The complete source fiber", "NativeFiber",
+            Node("barreseorderedlevels-nativefiber", "The complete source fiber", "NativeFiber",
                 "NativeFiber(m,U,a) contains every weakly increasing U-tuple of column heights from zero through m times length(a) with the prescribed bottom-to-top totals a. Every column slot, every empty top row and every zero entry is retained.", DescribeRole.Definition),
-            Node("barreseorderedlevels-nativeRowsEquiv", "Native boards and flat row fibers", "nativeRowsEquiv",
+            Node("barreseorderedlevels-nativerowsequiv", "Native boards and flat row fibers", "nativeRowsEquiv",
                 "The padded row-column bijection restricts to an exact bijection between NativeFiber(r+1,U,a) and the flat fiber beginning at row bound U. Each row coordinate counts literal source cells, so the restriction preserves all level totals; the inverse reconstructs every source column height.", DescribeRole.Definition),
             Node("barreseorderedlevels-native-count", "Complete bounded enumeration", "native_count",
                 "For every r,U and every finite ordered list a of nonnegative totals, the number of boards in NativeFiber(r+1,U,a) is F(a,U). Thus every positive level size m is obtained with r=m-1. Evaluate G by q-Pascal, use T_a(u,v)=[q^(a-mv)]G(u-v+m-1,m-1) when v<=u and mv<=a and zero otherwise, then use F([],u)=1 and F(a::as,u)=sum_v T_a(u,v)F(as,v). The summation states range only over 0,...,U.", DescribeRole.Theorem),

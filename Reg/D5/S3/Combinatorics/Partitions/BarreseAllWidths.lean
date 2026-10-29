@@ -59,7 +59,7 @@ def family : Registration arena (type_of% @all_width_count) where
     refine ⟨0,[],[0,1],?_⟩
     norm_num [actual, realize, count, transition, gauss, Fin.sum_univ_succ, Polynomial.coeff_one]
 
-def registration : Contract.Registration (@all_width_count) (type_of% actual) Type Unit where
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@all_width_count) (type_of% actual) Type Unit where
   unitName := `D5.S3.Combinatorics.Partitions.BarreseAllWidths.all_width_count.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Partitions.BarreseAllWidths.allwidthcount.family
   realizationSource := none
@@ -154,7 +154,7 @@ def family : Registration arena (type_of% @width_bound) where
     refine ⟨0,[],[1],?_⟩
     norm_num [actual, realize]
 
-def registration : Contract.Registration (@width_bound) (type_of% actual) Type Unit where
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@width_bound) (type_of% actual) Type Unit where
   unitName := `D5.S3.Combinatorics.Partitions.BarreseAllWidths.width_bound.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Partitions.BarreseAllWidths.widthbound.family
   realizationSource := none

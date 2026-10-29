@@ -56,7 +56,7 @@ def family : Registration arena (type_of% @source2015_count) where
     intro i
     refine ⟨⟨1,⟨by decide⟩⟩,[],[0],?_⟩
     simp [actual, realize, count]
-def registration : Contract.Registration (@source2015_count) (type_of% actual) Type Unit where
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@source2015_count) (type_of% actual) Type Unit where
   unitName := `D5.S3.Combinatorics.Partitions.BarreseSourceNormalization.source2015_count.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Partitions.BarreseSourceNormalization.source2015count.family
   realizationSource := none
@@ -133,7 +133,7 @@ def family : Registration arena (type_of% @lOperator_count) where
     intro i
     refine ⟨⟨1,⟨by decide⟩⟩,[],[0],?_⟩
     simp [actual, realize, count]
-def registration : Contract.Registration (@lOperator_count) (type_of% actual) Type Unit where
+def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@lOperator_count) (type_of% actual) Type Unit where
   unitName := `D5.S3.Combinatorics.Partitions.BarreseSourceNormalization.lOperator_count.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Partitions.BarreseSourceNormalization.loperatorcount.family
   realizationSource := none
