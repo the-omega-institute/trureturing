@@ -1,0 +1,40 @@
+**定义 57.1（同一输入合同上的一致误差）。** 固定 $n\ge1$，仍取
+$h=r=1/(5n)$、$a=b=1-h$。$X=\mathrm c$ 使用 (45.11)–(45.15)，
+$X=R$ 使用 (46.5)–(46.9)，后者仅按定义 47.1 复化。
+记其完整可分载体为 $H_X=F_X\oplus L_X$，其中 $L_X=\ell^2(T;\mathbb C)$，
+$F_{\mathrm c}=\ell^2(\operatorname{Fin}(\mathcal A);\mathbb C)$，
+$F_R=\ell^2(\mathsf E;\mathbb C)$；源向量的场部分分别记为
+$w_t^{\mathrm c}=V_h(t)$、$w_t^R=U_h(t)$。于是
+
+$$
+v_t^X=\sqrt a\,J_Xw_t^X+\sqrt r\,e_t,\qquad
+\pi_t^X=|v_t^X\rangle\langle v_t^X|,
+\tag{57.1}
+$$
+
+$J_X:F_X\hookrightarrow H_X$ 是场直和项的等距嵌入。
+下式的通道定义于相应载体的全部迹类算子，其对偶为正规映射；每条通道对全部
+$s,t\in T$ 共同作用，只可依赖公开的 $X,n$：
+
+$$
+\begin{aligned}
+E_{\rm con}^X(n)
+ &=\inf_{\Phi:H_X\otimes H_X\to H_X\ {\rm normal\ CPTP}}
+   \sup_{s,t\in T}D\bigl(\Phi(\pi_s^X\otimes\pi_t^X),
+                              \pi_{\langle s,t\rangle}^X\bigr),\\
+E_{\rm dec}^X(n)
+ &=\inf_{\Psi:H_X\to H_X\otimes H_X\ {\rm normal\ CPTP}}
+   \sup_{s,t\in T}D\bigl(\Psi(\pi_{\langle s,t\rangle}^X),
+                              \pi_s^X\otimes\pi_t^X\bigr),
+\qquad D(A,B)=\tfrac12\|A-B\|_1.
+\end{aligned}
+\tag{57.2}
+$$
+
+箭头标注通道的输入、输出 Hilbert 空间，不把通道作用于向量。
+构造方向的两个独立张量输入是明示的额外供应；$s=t$ 时仍供应两份输入。
+全部可访问辅助输入均固定且与未知来源无关，含时间、历史、长度、控制器和原始记录的
+完整约束严格取定义 51.1。源选择者的记录可在处理器外保留，但不给处理器读取。
+通道可以丢弃不可访问的扩张环境；若系统仍可被后续调用，它就属于输出，不能算作环境。
+(57.2) 比较的是所列输出载体上的态，尚不比较任何恢复环境或量子参考。
+
