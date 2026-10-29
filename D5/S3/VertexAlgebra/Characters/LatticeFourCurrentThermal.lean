@@ -688,11 +688,11 @@ def chargeMoment (D : LatticeData) (i : Four → Fin D.rank) (S : Finset Four) (
   ∑' β : Charge D, q ^ (chargeEnergy D β).toNat *
     ∏ j ∈ S, (bilinear D (unitCharge D (i j)) β : ℂ)
 
-/-- The ordinary oscillator character times the ten labeled matching
+/-- The ordinary unsigned oscillator Euler product times the ten labeled matching
 moments and edge kernels, with no occupation signs or edge symmetrization. -/
 def thermalValue (D : LatticeData) (i : Four → Fin D.rank) (z : Four → ℂ) : ℂ :=
   let q := ∏ j : Four, z j
-  (∑' d : Occ D, q ^ oscillatorEnergy d) *
+  (∏' m : ℕ, ((1 - q ^ (m + 1))⁻¹) ^ D.rank) *
     ∑ M : PM4, chargeMoment D i (unpaired M) q *
       ∏ e : edgeParam M, (D.G (i e.1.1) (i e.1.2) : ℂ) * edgeKernel z e.1
 
@@ -767,7 +767,8 @@ private theorem source_total_value (D : LatticeData)
     (fun M => matching_source_hasSum D hD i z hz M)
   rw [← hs.tsum_eq, tsum_fintype]
   dsimp [thermalValue]
-  rw [Finset.mul_sum]
+  rw [(ordinary_oscillator_hasProd D (∏ j : Four, z j)
+    (product_norm_lt_one z hz)).tprod_eq, Finset.mul_sum]
   apply Finset.sum_congr rfl
   intro M hM
   ring
