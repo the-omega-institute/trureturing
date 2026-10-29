@@ -34,7 +34,7 @@ A point has three coordinates, each with three possible values.
 
 **Definition 1.3 (Ordinary integer coordinates).**
 
-$$\forall a \in \operatorname{P}\left(\right),\; \forall i \in \operatorname{Fin}\left(3\right),\; \operatorname{coord}\left(a, i\right) = \operatorname{IntOfNat}\left(\operatorname{val}\left(\operatorname{apply}\left(a, i\right)\right)\right) + 1$$
+$$\forall a \in \operatorname{P}\left(\right),\; \forall i \in \operatorname{Fin}\left(3\right),\; \operatorname{coord}\left(a, i\right) = (\operatorname{val}\left(\operatorname{apply}\left(a, i\right)\right): \mathbb{Z}) + 1$$
 
 *Formalization.* `D5/S3/Combinatorics/Geometry/KuNearLineRefutation.coord` (`✓ std3`).
 
@@ -44,11 +44,11 @@ $$\forall a \in \operatorname{P}\left(\right),\; \forall i \in \operatorname{Fin
 
 *Commentary.*
 
-Adding one identifies coordinate labels with the integers from one through three.
+Adding one identifies coordinate labels with the integers from one through three. Throughout, val is Fin.val, apply is function application, and (n : Z), displayed with the integer symbol, denotes the canonical natural-to-integer cast.
 
 **Definition 1.4 (Full signed ordinary line).**
 
-$$\forall s \in \operatorname{Fin}\left(3\right) \to \operatorname{Int}\left(\right),\; \forall v \in \operatorname{Fin}\left(3\right) \to \operatorname{Int}\left(\right),\; \operatorname{Valid}\left(s, v\right) \Leftrightarrow \left(\left(\exists i \in \operatorname{Fin}\left(3\right),\; \operatorname{apply}\left(v, i\right) \ne 0\right) \land \left(\left(\forall i \in \operatorname{Fin}\left(3\right),\; \operatorname{apply}\left(v, i\right) = -1 \lor \left(\operatorname{apply}\left(v, i\right) = 0 \lor \operatorname{apply}\left(v, i\right) = 1\right)\right) \land \left(\forall t \in \operatorname{Fin}\left(3\right),\; \forall i \in \operatorname{Fin}\left(3\right),\; 1 \le \operatorname{apply}\left(s, i\right) + \operatorname{IntOfNat}\left(\operatorname{val}\left(t\right)\right) \cdot \operatorname{apply}\left(v, i\right) \land \operatorname{apply}\left(s, i\right) + \operatorname{IntOfNat}\left(\operatorname{val}\left(t\right)\right) \cdot \operatorname{apply}\left(v, i\right) \le \operatorname{IntOfNat}\left(3\right)\right)\right)\right)$$
+$$\forall s \in \operatorname{Fin}\left(3\right) \to \operatorname{Int}\left(\right),\; \forall v \in \operatorname{Fin}\left(3\right) \to \operatorname{Int}\left(\right),\; \operatorname{Valid}\left(s, v\right) \Leftrightarrow \left(\left(\exists i \in \operatorname{Fin}\left(3\right),\; \operatorname{apply}\left(v, i\right) \ne 0\right) \land \left(\left(\forall i \in \operatorname{Fin}\left(3\right),\; \operatorname{apply}\left(v, i\right) = -1 \lor \left(\operatorname{apply}\left(v, i\right) = 0 \lor \operatorname{apply}\left(v, i\right) = 1\right)\right) \land \left(\forall t \in \operatorname{Fin}\left(3\right),\; \forall i \in \operatorname{Fin}\left(3\right),\; 1 \le \operatorname{apply}\left(s, i\right) + (\operatorname{val}\left(t\right): \mathbb{Z}) \cdot \operatorname{apply}\left(v, i\right) \land \operatorname{apply}\left(s, i\right) + (\operatorname{val}\left(t\right): \mathbb{Z}) \cdot \operatorname{apply}\left(v, i\right) \le (3: \mathbb{Z})\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Geometry/KuNearLineRefutation.Valid` (`✓ std3`).
 
@@ -60,7 +60,7 @@ A direction is nonzero, each direction coordinate is minus one, zero or one, and
 
 **Definition 1.5 (Incidence).**
 
-$$\forall a \in \operatorname{P}\left(\right),\; \forall s \in \operatorname{Fin}\left(3\right) \to \operatorname{Int}\left(\right),\; \forall v \in \operatorname{Fin}\left(3\right) \to \operatorname{Int}\left(\right),\; \operatorname{On}\left(a, s, v\right) \Leftrightarrow \left(\exists t \in \operatorname{Fin}\left(3\right),\; \forall i \in \operatorname{Fin}\left(3\right),\; \operatorname{coord}\left(a, i\right) = \operatorname{apply}\left(s, i\right) + \operatorname{IntOfNat}\left(\operatorname{val}\left(t\right)\right) \cdot \operatorname{apply}\left(v, i\right)\right)$$
+$$\forall a \in \operatorname{P}\left(\right),\; \forall s \in \operatorname{Fin}\left(3\right) \to \operatorname{Int}\left(\right),\; \forall v \in \operatorname{Fin}\left(3\right) \to \operatorname{Int}\left(\right),\; \operatorname{On}\left(a, s, v\right) \Leftrightarrow \left(\exists t \in \operatorname{Fin}\left(3\right),\; \forall i \in \operatorname{Fin}\left(3\right),\; \operatorname{coord}\left(a, i\right) = \operatorname{apply}\left(s, i\right) + (\operatorname{val}\left(t\right): \mathbb{Z}) \cdot \operatorname{apply}\left(v, i\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Geometry/KuNearLineRefutation.On` (`✓ std3`).
 
@@ -210,7 +210,7 @@ The board has d coordinates, each labeled by Fin k and interpreted as integers b
 
 **Definition 1.16 (General full signed line).**
 
-$$\forall k \in \operatorname{Nat}\left(\right),\; \forall d \in \operatorname{Nat}\left(\right),\; \forall s \in \operatorname{Fin}\left(d\right) \to \operatorname{Int}\left(\right),\; \forall v \in \operatorname{Fin}\left(d\right) \to \operatorname{Int}\left(\right),\; \operatorname{GValid}\left(k, d, s, v\right) \Leftrightarrow \left(\left(\exists i \in \operatorname{Fin}\left(d\right),\; \operatorname{apply}\left(v, i\right) \ne 0\right) \land \left(\left(\forall i \in \operatorname{Fin}\left(d\right),\; \operatorname{apply}\left(v, i\right) = -1 \lor \left(\operatorname{apply}\left(v, i\right) = 0 \lor \operatorname{apply}\left(v, i\right) = 1\right)\right) \land \left(\forall t \in \operatorname{Fin}\left(k\right),\; \forall i \in \operatorname{Fin}\left(d\right),\; 1 \le \operatorname{apply}\left(s, i\right) + \operatorname{IntOfNat}\left(\operatorname{val}\left(t\right)\right) \cdot \operatorname{apply}\left(v, i\right) \land \operatorname{apply}\left(s, i\right) + \operatorname{IntOfNat}\left(\operatorname{val}\left(t\right)\right) \cdot \operatorname{apply}\left(v, i\right) \le \operatorname{IntOfNat}\left(k\right)\right)\right)\right)$$
+$$\forall k \in \operatorname{Nat}\left(\right),\; \forall d \in \operatorname{Nat}\left(\right),\; \forall s \in \operatorname{Fin}\left(d\right) \to \operatorname{Int}\left(\right),\; \forall v \in \operatorname{Fin}\left(d\right) \to \operatorname{Int}\left(\right),\; \operatorname{GValid}\left(k, d, s, v\right) \Leftrightarrow \left(\left(\exists i \in \operatorname{Fin}\left(d\right),\; \operatorname{apply}\left(v, i\right) \ne 0\right) \land \left(\left(\forall i \in \operatorname{Fin}\left(d\right),\; \operatorname{apply}\left(v, i\right) = -1 \lor \left(\operatorname{apply}\left(v, i\right) = 0 \lor \operatorname{apply}\left(v, i\right) = 1\right)\right) \land \left(\forall t \in \operatorname{Fin}\left(k\right),\; \forall i \in \operatorname{Fin}\left(d\right),\; 1 \le \operatorname{apply}\left(s, i\right) + (\operatorname{val}\left(t\right): \mathbb{Z}) \cdot \operatorname{apply}\left(v, i\right) \land \operatorname{apply}\left(s, i\right) + (\operatorname{val}\left(t\right): \mathbb{Z}) \cdot \operatorname{apply}\left(v, i\right) \le (k: \mathbb{Z})\right)\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Geometry/KuNearLineRefutation.GValid` (`✓ std3`).
 
@@ -222,7 +222,7 @@ Every signed nonzero direction and every parameter from zero through k minus one
 
 **Definition 1.17 (General incidence).**
 
-$$\forall k \in \operatorname{Nat}\left(\right),\; \forall d \in \operatorname{Nat}\left(\right),\; \forall a \in \operatorname{Board}\left(k, d\right),\; \forall s \in \operatorname{Fin}\left(d\right) \to \operatorname{Int}\left(\right),\; \forall v \in \operatorname{Fin}\left(d\right) \to \operatorname{Int}\left(\right),\; \operatorname{GOn}\left(a, s, v\right) \Leftrightarrow \left(\exists t \in \operatorname{Fin}\left(k\right),\; \forall i \in \operatorname{Fin}\left(d\right),\; \operatorname{IntOfNat}\left(\operatorname{val}\left(\operatorname{apply}\left(a, i\right)\right)\right) + 1 = \operatorname{apply}\left(s, i\right) + \operatorname{IntOfNat}\left(\operatorname{val}\left(t\right)\right) \cdot \operatorname{apply}\left(v, i\right)\right)$$
+$$\forall k \in \operatorname{Nat}\left(\right),\; \forall d \in \operatorname{Nat}\left(\right),\; \forall a \in \operatorname{Board}\left(k, d\right),\; \forall s \in \operatorname{Fin}\left(d\right) \to \operatorname{Int}\left(\right),\; \forall v \in \operatorname{Fin}\left(d\right) \to \operatorname{Int}\left(\right),\; \operatorname{GOn}\left(a, s, v\right) \Leftrightarrow \left(\exists t \in \operatorname{Fin}\left(k\right),\; \forall i \in \operatorname{Fin}\left(d\right),\; (\operatorname{val}\left(\operatorname{apply}\left(a, i\right)\right): \mathbb{Z}) + 1 = \operatorname{apply}\left(s, i\right) + (\operatorname{val}\left(t\right): \mathbb{Z}) \cdot \operatorname{apply}\left(v, i\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Geometry/KuNearLineRefutation.GOn` (`✓ std3`).
 
@@ -316,7 +316,7 @@ The finite family of configurations is nonempty because it contains the empty se
 
 **Definition 1.24 (Chosen cardinality maximizer).**
 
-$$\forall k \in \operatorname{Nat}\left(\right),\; \forall d \in \operatorname{Nat}\left(\right),\; \operatorname{gopt}\left(k, d\right) = \operatorname{ClassicalChoose}\left(\exists S \in \operatorname{Finset}\left(\operatorname{Board}\left(k, d\right)\right),\; \operatorname{GConfig}\left(S\right) \land \left(\forall T \in \operatorname{Finset}\left(\operatorname{Board}\left(k, d\right)\right),\; \operatorname{GConfig}\left(T\right) \Rightarrow \operatorname{card}\left(T\right) \le \operatorname{card}\left(S\right)\right)\right)$$
+$$\forall k \in \operatorname{Nat}\left(\right),\; \forall d \in \operatorname{Nat}\left(\right),\; \forall h \in \left(\exists S \in \operatorname{Finset}\left(\operatorname{Board}\left(k, d\right)\right),\; \operatorname{GConfig}\left(S\right) \land \left(\forall T \in \operatorname{Finset}\left(\operatorname{Board}\left(k, d\right)\right),\; \operatorname{GConfig}\left(T\right) \Rightarrow \operatorname{card}\left(T\right) \le \operatorname{card}\left(S\right)\right)\right),\; \operatorname{gopt}\left(k, d\right) = Classical.choose\left(h\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Geometry/KuNearLineRefutation.gopt` (`✓ std3`).
 
@@ -326,7 +326,7 @@ $$\forall k \in \operatorname{Nat}\left(\right),\; \forall d \in \operatorname{N
 
 *Commentary.*
 
-Choose a maximizer from the finite nonempty configuration family.
+The proof h has exactly the existential type displayed. In the source it is gexists_opt k d; proof irrelevance identifies any proof h of that proposition with this source proof, so Classical.choose h is exactly the defining choice, not a choice applied to a proposition.
 
 **Theorem 1.25 (Maximizer specification).**
 
@@ -358,7 +358,7 @@ Any configuration containing the cardinality maximizer has equal cardinality and
 
 **Definition 1.27 (Maximum density).**
 
-$$\forall k \in \operatorname{Nat}\left(\right),\; \forall d \in \operatorname{Nat}\left(\right),\; \operatorname{density}\left(k, d\right) = \frac{\operatorname{RealOfNat}\left(\operatorname{card}\left(\operatorname{ClassicalChoose}\left(\exists S \in \operatorname{Finset}\left(\operatorname{Board}\left(k, d\right)\right),\; \operatorname{GSaturated}\left(S\right) \land \left(\forall T \in \operatorname{Finset}\left(\operatorname{Board}\left(k, d\right)\right),\; \operatorname{GSaturated}\left(T\right) \Rightarrow \operatorname{card}\left(T\right) \le \operatorname{card}\left(S\right)\right)\right)\right)\right)}{\operatorname{RealOfNat}\left(k\right)^{d}}$$
+$$\forall k \in \operatorname{Nat}\left(\right),\; \forall d \in \operatorname{Nat}\left(\right),\; \forall h \in \left(\exists S \in \operatorname{Finset}\left(\operatorname{Board}\left(k, d\right)\right),\; \operatorname{GSaturated}\left(S\right) \land \left(\forall T \in \operatorname{Finset}\left(\operatorname{Board}\left(k, d\right)\right),\; \operatorname{GSaturated}\left(T\right) \Rightarrow \operatorname{card}\left(T\right) \le \operatorname{card}\left(S\right)\right)\right),\; \operatorname{density}\left(k, d\right) = \frac{(\operatorname{card}\left(Classical.choose\left(h\right)\right): \mathbb{R})}{(k: \mathbb{R})^{d}}$$
 
 *Formalization.* `D5/S3/Combinatorics/Geometry/KuNearLineRefutation.density` (`✓ std3`).
 
@@ -366,7 +366,7 @@ $$\forall k \in \operatorname{Nat}\left(\right),\; \forall d \in \operatorname{N
 
 *Commentary.*
 
-Choose a saturated cardinality maximum and divide its size by the board cardinality k raised to d. For k at least two the denominator is positive, so this is exactly the maximum density over saturated configurations.
+The proof h has exactly the displayed saturated-maximum existential type; the source uses density_maximum_attained k d. Proof irrelevance makes Classical.choose h the same defining choice. Parenthesized type annotations with the real symbol denote canonical natural-to-real casts. Divide the selected cardinality by k raised to d; for k at least two the denominator is positive, giving exactly the maximum saturated density.
 
 **Theorem 1.28 (Attained saturated maximum).**
 
@@ -398,7 +398,7 @@ The saturated maximizer has at most eight points out of twenty-seven, strictly b
 
 **Definition 1.30 (Conjecture 5.6).**
 
-$$\operatorname{claim}\left(\right) \Leftrightarrow \left(\forall k \in \operatorname{Nat}\left(\right),\; 2 \le k \Rightarrow \left(\forall d \in \operatorname{Nat}\left(\right),\; \operatorname{density}\left(k, d\right) = 1 - \frac{2}{\operatorname{RealOfNat}\left(k\right)}\right)\right)$$
+$$\operatorname{claim}\left(\right) \Leftrightarrow \left(\forall k \in \operatorname{Nat}\left(\right),\; 2 \le k \Rightarrow \left(\forall d \in \operatorname{Nat}\left(\right),\; \operatorname{density}\left(k, d\right) = 1 - \frac{2}{(k: \mathbb{R})}\right)\right)$$
 
 *Formalization.* `D5/S3/Combinatorics/Geometry/KuNearLineRefutation.claim` (`✓ std3`).
 
@@ -406,7 +406,7 @@ $$\operatorname{claim}\left(\right) \Leftrightarrow \left(\forall k \in \operato
 
 *Commentary.*
 
-The conjecture asserts the same density formula for every k at least two and every natural dimension. The parameter pair three, three belongs to either convention for natural dimensions.
+The conjecture asserts the same density formula for every k at least two and every natural dimension. The real type annotation denotes the canonical natural-to-real cast. The parameter pair three, three belongs to either convention for natural dimensions.
 
 **Theorem 1.31 (Refutation).**
 

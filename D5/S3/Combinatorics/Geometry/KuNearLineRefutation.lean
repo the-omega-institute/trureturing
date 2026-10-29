@@ -2,9 +2,9 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Geometry/KuNearLineRefutation
    mirror-E: none(waiver:ordinary-board-refutation)
-   anchors: [mathlib/module/Mathlib.Data.Finset.Max]
+   anchors: []
    utility: kind=bounded-enumeration; basis=refutes=gid:D5/S3/Combinatorics/Geometry/KuNearLineRefutation.claim; result=D5/S3/Combinatorics/Geometry/KuNearLineRefutation.result; claim=D5/S3/Combinatorics/Geometry/KuNearLineRefutation.claim
-   digest: The ordinary three-dimensional board has maximal saturated near-line-avoiding density below one third. -/
+   digest: Ordinary three-dimensional near-line avoidance has saturated maximum density below one third. -/
 
 import D5.S3.Combinatorics.LatinEulerianDefs
 import Mathlib.Tactic
