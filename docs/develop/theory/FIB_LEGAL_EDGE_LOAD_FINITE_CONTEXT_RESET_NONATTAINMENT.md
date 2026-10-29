@@ -219,3 +219,490 @@ $$
 [V]: FIB_LEGAL_EDGE_LOAD_VISIBLE_TAIL_PHASE_RIGIDITY_AND_WINDOW_LIMITS.md
 
 ## 追加锚（本行以下为增补区）
+
+
+## 4. Past-visible resets and the actual future-measure comparison
+
+**Definition 4.1 (Past-visible finite-context class).** Let $N\ge1$ and let $\theta=(\lambda,M_0,M_1)$ range over the entire domain
+
+$$
+\lambda\ge0,\quad\lambda\mathbf1=1,\quad M_0,M_1\ge0,\quad
+A=M_0+M_1,\quad A\mathbf1=\mathbf1,\quad\lambda A=\lambda,\quad
+\lambda M_1^2\mathbf1=0.
+\tag{4.1}
+$$
+
+Use the actual stationary joint law of [R, Definition 8.1][R], with hidden states $H_i$ immediately before emission at $i$:
+
+$$
+J_\theta(H_a=h_a,\ldots,H_{b+1}=h_{b+1},X_a=x_a,\ldots,X_b=x_b)
+=\lambda_{h_a}\prod_{i=a}^bM_{x_i}(h_i,h_{i+1}).
+\tag{4.2}
+$$
+
+Write $P=P_\theta$ for its visible marginal. Structural zeros, zero stationary hidden masses, reducibility, periodicity and redundant states are allowed. The last condition in (4.1) is scalar; it does not impose $M_1^2=0$ on the whole matrix. Require $\iota=P(X_0=1)>0$, occupied anchors unbounded in both spatial directions, and a finite nonempty context set $C$. At every occupied anchor $t$, let
+
+$$
+C_t=D^-((X_{t-j})_{j\ge1})
+\tag{4.3}
+$$
+
+for one fixed measurable strict-left decoder. These marks extend (4.2) to a stationary marked law $J$. In its actual Palm law $Q=J(\,\cdot\mid X_0=1)$ enumerate anchors by $T_0=0$, $T_k<T_{k+1}$, and set $G_k=T_{k+1}-T_k\ge2$, $C_k=C_{T_k}$. Require
+
+$$
+0<\mu=\mathbb E_QG_0<\infty,\qquad
+C_{k+1}=\tau_{G_k}(C_k),\qquad
+\mathcal L_Q(H_{T_k+1}\mid\mathcal H_k)=r_{C_k},
+\quad
+\mathcal H_k=\sigma(C_j:j\le k;G_j:j<k),
+\tag{4.4}
+$$
+
+for every $k\in\mathbb Z$, where $\tau_g:C\to C$ are arbitrary maps and $r_c$ are probability rows on the original hidden state set. Conditions on a context of zero Palm mass are void. No strict-right context decoder is assumed. This class is defined by (4.1)–(4.4), separately from Definition 1.1.
+
+The objective remains the original one: for legal words $B_n=\{w\in\{0,1\}^n:w_iw_{i+1}=0\}$, let $\Gamma_n$ have all legal Hamming-one edges with open endpoints, $h(s,t)=st/(s+t)$ for $s+t>0$ and $h(0,0)=0$, and
+
+$$
+\Phi_n(\pi)=\sum_{\{u,v\}\in E(\Gamma_n)}h(\pi_u,\pi_v),\qquad
+\kappa_n=\max_{\pi\in\mathcal P(B_n)}\Phi_n(\pi),\qquad
+c_\star=\lim_n\kappa_n/n.
+\tag{4.5}
+$$
+
+For the entire exterior $\mathcal E_i=\sigma(X_j:j\ne i)$ choose a Borel version $q_0=\mathbb E_P[X_0\mid\mathcal E_0]\in[0,1]$, and put $q_i=q_0\circ T^i$ for $(Tx)_j=x_{j+1}$. The actual risk is
+
+$$
+d(P)=\mathbb E_P(X_0-q_0)^2\le c_\star.
+\tag{4.6}
+$$
+
+These are [R, §1][R] and [U, §1][U]'s same open-path objective and full-exterior risk, including zero masses and forced fibers.
+
+**Proposition 4.2 (Actual rows and recurrent conditional laws).** Suppose Definition 4.1 holds and $d(P)=c_\star$. Put $\nu_c=Q(C_0=c)$ and $C_+=\{c:\nu_c>0\}$. Every $c\in C_+$ has a normalized finite-mean row
+
+$$
+\begin{aligned}
+f_c(g)&=Q(G_0=g\mid C_0=c)=r_cM_0^{g-1}M_1\mathbf1
+\ge 2^{-(g+1)}/3\quad(g\ge2),\\
+Q(G_k=g,C_{k+1}=b\mid\mathcal H_k)
+&=f_{C_k}(g)\mathbf1_{\{b=\tau_g(C_k)\}}.
+\end{aligned}
+\tag{4.7}
+$$
+
+In particular, with $\alpha_c=r_cM_0$, $T_0=M_0$ and $b_0=M_1\mathbf1$,
+
+$$
+f_c(k+2)=\alpha_cT_0^kb_0,\qquad
+\alpha_c\mathbf1=1,\qquad T_0\mathbf1+b_0=\mathbf1.
+\tag{4.8}
+$$
+
+The positive contexts split into closed irreducible classes $D$ of
+
+$$
+K(c,b)=\sum_{g\ge2}f_c(g)\mathbf1_{\{b=\tau_g(c)\}},\qquad\nu K=\nu.
+\tag{4.9}
+$$
+
+Each class is closed under every $\tau_g$. Its label is spatially invariant and belongs to every strict-left half-line and every exterior field. Conditioning on a class preserves (4.7), (4.8), the original posterior versions and attainment.
+
+Proof. At a Palm anchor, past gaps recover every visible coordinate strictly to its left: their cumulative sums enumerate all preceding occupied sites. Conversely the strict-left decoder recovers every past mark from those coordinates. Thus $\mathcal H_0$ and the visible past at the known anchor agree modulo actual Palm null sets. The path Markov property of (4.2), followed by conditional expectation using (4.4), gives the conditional future cylinders $r_{C_0}M_w\mathbf1$. This proves (4.7) at zero; Palm event stationarity, obtained by the anchor-counting identity [R, (35.2)][R], transports it to all integer event indices. No negative-index stopping-time assertion is needed. Almost-sure next-anchor existence gives normalization. Since $\nu_c>0$ and $\mathbb E_QG_0<\infty$, each row mean is finite. The proof of Proposition 1.2 uses only (4.3) and the attained exterior comparison [U, Theorem 3.1][U], so its lower bound applies here. No11 gives $r_cM_1\mathbf1=0$, hence (4.8).
+
+Event stationarity gives (4.9). A stationary finite stochastic matrix gives zero mass to transient states; positivity of $\nu$ on $C_+$ and of every $f_c(g)$ proves the asserted closed-class decomposition. The class label is constant along anchors. It can be read from an anchor arbitrarily far to the left, so its event $E_D$ belongs to every exterior $\mathcal E_i$ and is invariant under site shifts. The actual conditional laws are stationary and their Palm laws are exactly $Q(\,\cdot\mid C_0\in D)$. Moreover $P(E_D)\ge\iota\nu(D)>0$ and $\mathbb E_{Q(\cdot\mid D)}G_0\le\mu/\nu(D)$. Conditional expectation on an $\mathcal E_i$-measurable component shows that the same $q_i$ is its posterior. Therefore
+
+$$
+d(P)=\sum_D P(E_D)d(P(\,\cdot\mid E_D)),
+\tag{4.10}
+$$
+
+and the upper bound $c_\star$ for each summand forces attainment in each positive component. The class event already belongs to $\mathcal H_k$, so the actual reset and full-history rule also survive conditioning. $\square$
+
+**Proposition 4.3 (Comparison of entire future measures).** Fix one component $D$ of Proposition 4.2 and use its conditional law. Let $F_c$ be the law on $\{2,3,\ldots\}^{\mathbb N_0}$ of the entire future gap sequence starting at a context-$c$ anchor. For $c\in D$ and $l,r\ge2$, put
+
+$$
+M=f_c(l+r),\quad B=f_c(l)f_{\tau_l(c)}(r),\quad
+ a=\tau_{l+r}(c),\quad b=\tau_r(\tau_l(c)).
+$$
+
+As measures on the entire future after the right exterior anchor,
+
+$$
+\frac M3F_a\ \le\ B F_b\ \le\ M F_a.
+\tag{4.11}
+$$
+
+Proof. Specify the nearest exterior anchors at $-l,r$, the strict-left context $c$ at $-l$, and a measurable future-gap event $E$ after $r$. Conditional independence of the full future from the full past given $c$ follows by iterating (4.7) and a monotone-class argument. The center-zero and center-one external subprobability measures, including any full-left-past test, factor respectively as
+
+$$
+\iota_D\nu^D_c M\,\kappa_c^-\otimes F_a,
+\qquad
+\iota_D\nu^D_c B\,\kappa_c^-\otimes F_b.
+\tag{4.12}
+$$
+
+Here $\kappa_c^-$ is the actual conditional left-past channel and $\iota_D,\nu^D$ are the actual conditional intensity and Palm row. Apply the exterior mass comparison (1.5) to these external tests and cancel the positive common scalar and left channel. This proves (4.11) for every measurable $E$. It gives mutual absolute continuity, not equality, of $F_a,F_b$. $\square$
+
+## 5. The spatial absolute-continuity phase and finite synchronization
+
+**Proposition 5.1 (Predictive quotient and labelled-graph phase).** In a fixed component of Proposition 4.2, first identify contexts having equal entire future laws. The resulting finite state set $S$ has distinct laws $F_s$, well-defined rows $f_s$ and maps $\tau_g$. Next identify states when $F_s$ and $F_t$ are mutually absolutely continuous. On this second quotient the labelled maps are
+
+$$
+\bar\tau_g=U^g\quad(g\ge2)
+\tag{5.1}
+$$
+
+for one cyclic permutation $U$. Thus its classes can be labelled $\mathbb Z/m\mathbb Z$ so that an edge with gap $g$ adds $g$. This quotient is a strongly connected labelled graph; it need not carry a common probability row within a phase. No lumpability of the original $K$ is asserted.
+
+Proof. Equality of future laws implies equality of their first-gap probabilities. Conditioning on any first gap $g$, whose mass is positive, then gives equality of the successor future laws. This constructs the first quotient and its rows. The same conditioning argument shows that mutual absolute continuity passes to successors, so it defines the second quotient's maps. Equation (4.11) gives
+
+$$
+\bar\tau_{l+r}=\bar\tau_r\bar\tau_l\quad(l,r\ge2).
+\tag{5.2}
+$$
+
+The quotient labelled graph is strongly connected because the original component is irreducible and every label has positive probability at every state. Relation (5.2) makes its maps commute. For each $g$, the nonempty image of $\bar\tau_g$ is invariant under all labelled maps. Strong connectivity forces this image to be the whole quotient, so every map is a permutation. Set $A_2=\bar\tau_2$, $A_3=\bar\tau_3$. Then $A_3^2=A_2^3$ and $U=A_3A_2^{-1}$ has $U^2=A_2$, $U^3=A_3$. Relation (5.2), starting with $2,3$, gives (5.1) for every $g\ge2$. Strong connectivity now makes $U$ a single cycle. This is the finite-map algebra of [V, Theorem 57.1][V], applied to labelled maps rather than to representative phase rows. $\square$
+
+**Proposition 5.2 (Two half-line decoders for phase and invariant component).** Write $A_t$ for the absolute-continuity phase at an occupied anchor $t$. For any site $i$ define
+
+$$
+S_i=A_t+i-t\pmod m
+\tag{5.3}
+$$
+
+using a preceding anchor $t<i$. This is independent of the chosen anchor and has both strict-left and strict-right visible decoders. Every invariant component label $E_D$ also belongs to both strict half-lines. These assertions concern only phase and component, not the original contexts or the predictive states inside a phase.
+
+Proof. Formula (5.1) gives anchor independence and $S_{i+1}=S_i+1$. The preceding anchor and its strict-left mark make $S_i$ strictly past measurable. On the stationary component let $\zeta=e^{2\pi\mathrm i/m}$ and $Z=e^{2\pi\mathrm i S_0/m}$. Then
+
+$$
+Z\circ T^n=\zeta^n Z.
+\tag{5.4}
+$$
+
+Finite-past conditional expectations $Z_n=\mathbb E[Z\mid X_{-n},\ldots,X_{-1}]$ tend to $Z$ in $L^2$. The functions $\zeta^{-(n+1)}Z_n\circ T^{n+1}$ depend only on $X_1,\ldots,X_n$ and their distances from $Z$ in $L^2$ equal $\|Z_n-Z\|_2$ by stationarity and (5.4). The future-measurable subspace of $L^2$ is closed; hence $Z$, and therefore $S_0$, has a Borel strict-future version. Countably many shifts give the decoder at every actual anchor. For an invariant component indicator $Z=\mathbf1_{E_D}$ the identical argument uses eigenvalue $1$ under the unconditioned law. Thus component labels are future measurable as well as past measurable. This eigenvalue-$1$ case is also valid when $m=1$. $\square$
+
+**Proposition 5.3 (A common finite word merges each phase).** For a finite normalized deterministic predictive automaton with distinct future laws and strictly positive rows on the countable gap alphabet, there is a nonempty finite word $w$ that merges every pair in each mutual-absolute-continuity class:
+
+$$
+\tau_w(s)=\tau_w(t)\quad\text{whenever }F_s\sim F_t.
+\tag{5.5}
+$$
+
+Here $\tau_v=\tau_{g_k}\cdots\tau_{g_1}$ and
+
+$$
+L_s(v)=\prod_{j=1}^k f_{\tau_{g_{j-1}}\cdots\tau_{g_1}s}(g_j)
+\quad(v=(g_1,\ldots,g_k)),\qquad L_s(\varnothing)=1.
+\tag{5.6}
+$$
+
+The conditional probability of $w$ from any state is at least $\varepsilon=\min_s L_s(w)>0$. For disjoint trials of its $k$ gaps, failure in the first $n$ trials has probability at most $(1-\varepsilon)^n$ after any actual event history.
+
+Proof. On the finite ordered unequal-pair set define the substochastic matrix
+
+$$
+W_{(s,t),(u,v)}=
+\sum_{\substack{g\ge2:\tau_gs=u,\ \tau_gt=v\\u\ne v}}
+\sqrt{f_s(g)f_t(g)}.
+\tag{5.7}
+$$
+
+Cauchy–Schwarz bounds every row sum by $1$. If $\rho(W)=1$, a finite substochastic matrix has a nonempty closed stochastic irreducible class: otherwise every final communicating class loses mass, and every state reaches such a loss, forcing a power to have row sums below $1$. At a row of a closed stochastic class equality in Cauchy–Schwarz gives $f_s(g)=f_t(g)$ for all $g$. Positivity and closure ensure that every positive-symbol successor pair remains unequal in that class. Induction gives $L_s(v)=L_t(v)$ for every finite word $v$, hence $F_s=F_t$, contrary to predictive minimality. Therefore $\rho(W)<1$.
+
+If a pair has no merging word, every word from it stays unequal, and the Hellinger affinity of its length-$n$ prefix laws is exactly $(W^n\mathbf1)_{(s,t)}$, tending to zero. To identify the full-measure limit, dominate both laws by $\eta=(F_s+F_t)/2$. The densities of their restrictions to the prefix fields are the conditional expectations $p_n=\mathbb E_\eta[dF_s/d\eta\mid\mathcal F_n]$, $q_n=\mathbb E_\eta[dF_t/d\eta\mid\mathcal F_n]$. They are bounded by $2$ and converge almost surely to the full densities because the prefix fields generate the gap space. Dominated convergence gives
+
+$$
+\lim_n\int\sqrt{p_nq_n}\,d\eta
+=\int\sqrt{(dF_s/d\eta)(dF_t/d\eta)}\,d\eta.
+\tag{5.8}
+$$
+
+Zero affinity means singularity. Consequently an equivalent pair must have a merging word.
+
+Start with an empty common word. Whenever an original same-class pair still has unequal images, those images still have equivalent future laws; append one of their merging words. Equal images cannot separate under later symbols, so each step eliminates at least one of finitely many original pairs. This terminates with (5.5). If all classes were already singletons, any one-symbol word suffices. Countable alphabet size causes no zero-word problem: every selected finite word has a finite product of positive probabilities, and there are only finitely many initial states. The conditional failure bound follows by iterating the uniform lower bound $\varepsilon$ on successive trials.
+
+The pair-graph synchronization method is related to Travers–Crutchfield, *Exact Synchronization for Finite-State Sources*, [§II.4, Definition 5; §III.1, Theorem 1; §IV.1, Definitions 11–12 and Theorem 3](https://arxiv.org/html/1008.4182). Their stated alphabet is finite. The argument (5.7)–(5.8) supplies the countable-gap, within-phase version needed here, without invoking a finite-alphabet theorem outside its hypotheses. $\square$
+
+**Proposition 5.4 (Entire-exterior posterior from a finite future prefix).** Under the attainment hypothesis of Proposition 4.2, consider a free exterior cell $F_0=\{X_{-1}=X_1=0\}$ with nearest anchors $-l,r$ and left context $c$. With $M,B,a,b$ as in Proposition 4.3, any finite observed future gap prefix $v$ after $r$ containing an intact copy of $w$ gives the original posterior
+
+$$
+q_0=\frac{B L_b(v)}{M L_a(v)+B L_b(v)}.
+\tag{5.9}
+$$
+
+On the forced complement $F_0^c$, $q_0=0$.
+
+Proof. The competing states $a,b$ have the same absolute-continuity phase by (4.11). Before the copy of $w$ their successors remain in the same phase, and after it their minimal predictive states coincide, say at $u$. On the prefix cylinder the full future laws factor as $L_a(v)F_u$ and $L_b(v)F_u$. In (4.12) both the common full-left-past channel and this common entire-future tail cancel, proving (5.9) by disintegration on the entire exterior field. This is not a quotient of point masses at infinite configurations. The geometric trial bound makes these prefix cylinders cover almost every future. Countably many prefixes, contexts, distances and spatial shifts admit a common conull formula domain. No right decoder for $c$, $a$ or $b$ is used. $\square$
+
+## 6. Physical guard tails and both original erasure fields
+
+**Proposition 6.1 (Exponential physical waiting lengths).** For each fixed component in Proposition 4.2, gaps and the physical waiting length to a completed copy of $w$ have a positive exponential moment at an anchor, uniformly over its finitely many predictive states. There are constants $C<\infty$, $\beta>0$, depending on the producer and component, such that the probability that a stationary spatial interval of length $j$ contains no complete guard is at most $Ce^{-\beta j}$. The same bound holds for negative spatial intervals.
+
+Proof. In (4.8), telescoping gives
+
+$$
+\alpha_cT_0^n\mathbf1
+=1-\sum_{k=0}^{n-1}\alpha_cT_0^kb_0\longrightarrow0.
+\tag{6.1}
+$$
+
+Restrict $T_0$ to the finite survival states reachable from $\alpha_c$. A reachable closed class with no absorption would give positive eternal-survival probability, contradicting (6.1). The restricted substochastic matrix therefore has spectral radius below $1$, so its powers decay exponentially. This proves $\sum_g e^{tg}f_c(g)<\infty$ for some $t>0$. The finite row family permits one common positive $t$; the predictive quotient uses the same rows. Neither full-matrix transience nor a reverse-time transition rule is needed.
+
+Let $k$ be the number of gaps in $w$, $Y=G_0+\cdots+G_{k-1}$ the physical trial length, and $S_k$ its final predictive state. Define
+
+$$
+D_t(s,u)=\mathbb E_s[e^{tY}\mathbf1_{\{(G_0,\ldots,G_{k-1})\ne w,\ S_k=u\}}],
+\quad
+h_t(s)=\mathbb E_s[e^{tY}\mathbf1_{\{(G_0,\ldots,G_{k-1})=w\}}].
+\tag{6.2}
+$$
+
+Iterated conditioning and the finite row moments make these finite and continuous at $t=0$ for small $t\ge0$. Since $\|D_0\|_\infty\le1-\varepsilon$, choose $t>0$ with $\|D_t\|_\infty<1$. The exponential moment of the physical length through the first successful disjoint trial is the convergent geometric sum
+
+$$
+\sum_{n\ge0}D_t^nh_t.
+\tag{6.3}
+$$
+
+A guard at a stationary origin is reached by first reaching the next anchor and then using (6.3). Palm inversion [R, (11.7)][R] weights a gap of length $g$ by $g/\mu$ and chooses its spatial offset. Its forward residual thus has an exponential moment at any smaller positive exponent, because $g e^{t'g}\le C_t e^{tg}$ when $0<t'<t$. The bound on (6.3) is uniform in the state reached there; integrating it gives an exponential stationary waiting tail. Completion within a window supplies a whole guard inside it. Translation invariance sends the event of no complete guard in a positive interval to that for a negative interval of equal length. This uses stationarity, not a reverse Markov assumption. $\square$
+
+**Proposition 6.2 (Exact retained-field estimators and root summability).** Under Definition 4.1 and $d(P)=c_\star$, use exactly
+
+$$
+\begin{aligned}
+\mathcal L_j&=\sigma(X_{-j},\ldots,X_{-1},X_1,X_2,\ldots),\\
+\mathcal R_j&=\sigma(\ldots,X_{-2},X_{-1},X_1,\ldots,X_j),\\
+p_j^L&=\mathbb E_P[X_0\mid\mathcal L_j],\quad
+p_j^R=\mathbb E_P[X_0\mid\mathcal R_j],\\
+e_L(j)&=\mathbb E_P(q_0-p_j^L)^2,\quad
+e_R(j)=\mathbb E_P(q_0-p_j^R)^2\qquad(j\ge0).
+\end{aligned}
+\tag{6.4}
+$$
+
+There are producer-dependent $K<\infty$, $\gamma>0$ such that
+
+$$
+e_L(j)+e_R(j)\le Ke^{-\gamma j},\qquad
+A_P=\sum_{j\ge0}\bigl(\sqrt{e_L(j)}+\sqrt{e_R(j)}\bigr)<\infty.
+\tag{6.5}
+$$
+
+Proof. Work first in a component. For $j\ge1$ both fields retain the two nearest neighbors, so a forced center has the exactly known posterior zero. On a free exterior, define the $\mathcal L_j$ good event by the existence of a complete guard with both endpoints in $[-j,-1]$. Choose its first such occurrence by a fixed spatial ordering. The entire retained future determines the component and spatial phase by Proposition 5.2; transport that phase to the guard's starting anchor. Proposition 5.3 makes its ending predictive state the common image of all states in that phase. All subsequent observed past gaps then transport this state to the nearest left anchor. The entire retained future supplies the nearest right anchor and a prefix containing another guard. Formula (5.9), now using the recovered left predictive state, is $\mathcal L_j$ measurable and equals $q_0$ on this event. Define $\widehat q_j^L$ by this formula on the good free event and by zero elsewhere, including forced configurations. Every selection uses countably many measurable word tests.
+
+For $\mathcal R_j$, the entire retained past directly gives the left context, component and phase. Its good free event is the existence of a complete guard with endpoints in $[1,j]$. Take the future prefix from the nearest right anchor through this guard. All of it is retained, so (5.9) defines an $\mathcal R_j$-measurable $\widehat q_j^R=q_0$ there; again set the estimator to zero off the good free event. A guard starting at the nearest right anchor is allowed. Thus both estimators are defined on their whole retained fields, with values in $[0,1]$.
+
+Because these fields are subfields of $\mathcal E_0$, the tower property gives $p_j^L=\mathbb E[q_0\mid\mathcal L_j]$ and its right analogue. Projection optimality and boundedness give
+
+$$
+e_L(j)\le\mathbb E(q_0-\widehat q_j^L)^2
+\le P(\text{no complete guard in }[-j,-1]),
+\qquad
+e_R(j)\le P(\text{no complete guard in }[1,j]).
+\tag{6.6}
+$$
+
+Proposition 6.1 bounds both terms exponentially. Enlarging the constant includes $j=0$, where each field still retains its entire opposite half-line and each defect is at most $1$.
+
+For the original finite mixture, Proposition 5.2 with eigenvalue $1$ places every $E_D$ in both retained fields, including at $j=0$. Consequently each conditional projection restricts to its component projection. With $\omega_D=P(E_D)$ the mixing identities are exactly
+
+$$
+e_L(j)=\sum_D\omega_D e_{L,D}(j),\qquad
+ e_R(j)=\sum_D\omega_D e_{R,D}(j).
+\tag{6.7}
+$$
+
+There are finitely many positive components. Taking the least of their positive rates and summing their constants proves the first assertion in (6.5). Finally,
+
+$$
+A_P\le2\sqrt K\sum_{j\ge0}e^{-\gamma j/2}
+=\frac{2\sqrt K}{1-e^{-\gamma/2}}<\infty.
+\tag{6.8}
+$$
+
+This is the original one-sided root sum, not a two-sided window error or a hidden-state recovery error. $\square$
+
+## 7. Same-law strong zero, inclusive guarded identities and a restricted exclusion
+
+**Proposition 7.1 (Saturated original-loss identities).** Under Definition 4.1 and $d(P)=c_\star$, put $\ell_i(x)=(x_i-q_i(x))^2$. There is one shift-invariant conull domain $\Omega$ saturated under all legal finite changes on which
+
+$$
+\sum_{i\in\mathbb Z}(\ell_i(x)-\ell_i(z))=0
+\tag{7.1}
+$$
+
+absolutely for every $x,z\in\Omega$ differing at finitely many sites. In a fixed component, preserve a complete guard $w$ before the changed interval, a second complete guard after it, and a third after the second. If $A$ is the first guard's starting anchor and $B$ the second guard's ending anchor, then
+
+$$
+\sum_{i=A}^{B}\left[(x_i-q_i(x))^2-(z_i-q_i(z))^2\right]=0.
+\tag{7.2}
+$$
+
+Both boundary anchors are included. Each posterior in (7.2) is expressible using finitely many row entries and the predictive state at an unchanged preceding anchor. These are necessary rational-function identities for all compatible finite guarded patterns and legal fillings having the same physical endpoint length.
+
+Proof. Proposition 6.2 proves $A_P<\infty$ for the same actual $P$. Hence [Strong-zero, Definition 1.4 and Theorem 1.5](FIB_LEGAL_EDGE_LOAD_ATTAINMENT_STRONG_ZERO_EQUIVALENCE_AND_FINITE_OPTIMIZER_COMPARISON.md) applies with the unchanged original versions $q_i$ and losses $\ell_i$. It supplies (7.1) on a saturated conull set.
+
+For completeness, one can choose this domain to carry all the preceding formulas simultaneously. Intersect the structural and formula conull sets over every integer shift, then with the strong-zero domain and with every preimage under a legal replacement of a finite word on a finite integer interval. There are countably many such maps and their finite compositions. They are nonsingular: the attained band gives positive conditional mass to every legal single-site alternative, and deleting to zero then inserting a compatible word connects every legal finite fiber; iterated exterior comparisons preserve null sets. Thus the intersection is still conull and is saturated. Past-decoded component and phase are unchanged by a finite modification, since they can be recovered arbitrarily far to its left. This defines one $\Omega$ carrying original posterior formulas at both $x$ and every modified $z$.
+
+Before $A$, the first intact guard lies wholly after a scored center. It merges the two competing-center predictive paths, so (5.9) cancels all future information beyond that guard. The intervening unchanged coordinates and original left state are the same for $x,z$; hence $q_i(x)=q_i(z)$ for $i<A$. After the changed interval, equal physical displacement gives equal phases at the start of the second guard, regardless of the possibly different predictive states there. That guard merges their actual states. For $i>B$ the same state at $B$ and the unchanged later coordinates give the same left predictive channel and the same entire future, hence equal posteriors. Since the visible bits also agree outside the changed interval, every loss difference outside $[A,B]$ vanishes. This proves (7.2) from (7.1).
+
+For a scored center in $[A,B]$, including an occupied boundary anchor, deleting that center may break either of the first two guards. The third guard is intact in both center completions and lies strictly after the scored interval. Starting from an unchanged anchor preceding $A$, propagate the two finite completions through that third guard and use (5.9); on a forced fiber use zero. This computes each original $q_i$ by finite positive likelihoods, even at $A$ and $B$, and proves that the summands are rational functions of finitely many $f_s(g)$ values.
+
+Finally choose any positive starting state and any compatible guarded finite word. Every required finite gap word has positive probability by (4.7); compatible equal-length fillings have mutually absolutely continuous future channels after the second guard, where their states agree. The preceding starting state and phase have positive actual mass. The scalar expression in (7.2) is constant on this finite pattern with that starting state, independently of the more distant exterior. Its almost-sure zero value therefore forces the same scalar identity for every such pattern and filling. This argument asserts neither unconditional locality on all legal configurations nor a Gibbs specification. $\square$
+
+**Proposition 7.2 (Singleton absolute-continuity classes).** If every absolute-continuity class in each recurrent minimal predictive component of Definition 4.1 is a singleton, then $d(P)<c_\star$.
+
+Proof. Suppose equality held. In each positive component the phase of Proposition 5.1 is now the minimal predictive state itself. Proposition 5.2 supplies both strict half-line decoders for this state; Proposition 4.2 supplies its actual normalized positive finite-mean rows, full-history rule and finite absorption representations. Equal predictive laws have equal rows, so choosing any representative of a predictive state gives the same row and a representation (4.8). Thus the same actual conditional law satisfies [R, Definitions 11.1 and 12.1][R], with actual Palm weights and spatial transport $s\mapsto s+g$. The all-cycle exclusions used in Theorem 3.1 apply: [R, Theorem 4.3][R] for one phase; Theorems 16.2, 17.2 for two and three; Corollary 18.2 and Theorems 19.1, 20.1 for four; Theorems 21.2, 30.5, 31.1 for five through seven; and Theorem 32.1 for at least eight. Every positive conditional law would have risk strictly below $c_\star$, contradicting (4.10). The restriction to singleton classes is essential to this application. $\square$
+
+## 8. A six-state diagnostic with equivalent unequal futures
+
+**Proposition 8.1 (An actual past-visible producer).** In the state order $(q_0,q_1,e_0,e_1,o_0,o_1)$ define
+
+$$
+M_0=\begin{pmatrix}
+0&0&1&0&0&0\\
+0&0&0&1&0&0\\
+0&0&0&0&297/400&0\\
+0&0&0&0&0&303/400\\
+0&0&25/33&0&0&0\\
+0&0&0&75/101&0&0
+\end{pmatrix},\qquad
+M_1=\begin{pmatrix}
+0&0&0&0&0&0\\
+0&0&0&0&0&0\\
+103/400&0&0&0&0&0\\
+97/400&0&0&0&0&0\\
+0&8/33&0&0&0&0\\
+0&26/101&0&0&0&0
+\end{pmatrix},
+\tag{8.1}
+$$
+
+and
+
+$$
+\lambda=\left(\frac{679}{5912},\frac{63}{739},\frac{194}{739},
+\frac{144}{739},\frac{28809}{147800},\frac{2727}{18475}\right).
+\tag{8.2}
+$$
+
+These parameters belong to $\Theta_6$. Their actual stationary law satisfies Definition 4.1 with contexts $c\in\{0,1\}$ equal to previous-gap parity,
+
+$$
+\tau_g(c)=g\pmod2,\qquad r_c=\delta_{q_c}.
+\tag{8.3}
+$$
+
+Its actual gap rows, Palm weights, row means and intensity are
+
+$$
+\begin{gathered}
+f_c(g)=\frac14\left(\frac34\right)^{g-2}A_{c,g\bmod2},\qquad
+(A_{c,p})_{c,p=0,1}=
+\begin{pmatrix}103/100&24/25\\97/100&26/25\end{pmatrix},\\
+\nu=(97,72)/169,\qquad
+\sum_g gf_0(g)=872/175,\qquad\sum_g gf_1(g)=878/175,\\
+\mu=5912/1183,\qquad\iota=1183/5912.
+\end{gathered}
+\tag{8.4}
+$$
+
+Proof. Every displayed entry is nonnegative and each row of $M_0+M_1$ sums to one. Direct substitution gives $\lambda\mathbf1=1$ and $\lambda(M_0+M_1)=\lambda$. Every $1$ edge ends at a $q$ state, whose $M_1$ row is zero, so $M_1^2=0$. The positive-edge graph is strongly connected: each $q_c$ reaches $e_c$, each $e_c$ reaches $q_0$ and $o_c$, and each $o_c$ reaches $e_c$ and $q_1$. Its finite stationary chain is recurrent and ergodic; positive-frequency $1$ edges therefore yield anchors unbounded in both directions.
+
+After an anchor the state is a $q_c$ and the next symbol is forced zero. Starting from $q_c$, a gap of even length ends by $e_c\to q_0$ and a gap of odd length ends by $o_c\to q_1$. The two-step zero-survival products are
+
+$$
+\frac{297}{400}\frac{25}{33}
+=\frac{303}{400}\frac{75}{101}=\frac9{16}.
+\tag{8.5}
+$$
+
+The gap-$2$ masses are $103/400,97/400$; the gap-$3$ masses are $9/50,39/200$. Equation (8.5) then proves every row formula in (8.4) by increments of two. The post-anchor state is exactly $q_{g\bmod2}$, not a hidden mixture depending on earlier history. At a current anchor the nearest strict-left anchor is at relative position $-g$, so its distance $g$ gives the previous-gap parity by a fixed strict-left visible function. The actual post-anchor hidden state is consequently $q_c$ for this visible $c$, so conditioning on the entire marked event history gives exactly the reset (8.3).
+
+Summing the even-gap probabilities gives the actual context transition matrix
+
+$$
+K=\begin{pmatrix}103/175&72/175\\97/175&78/175\end{pmatrix},
+\tag{8.6}
+$$
+
+whose stationary row is $(97,72)/169$. Geometric sums and their first derivatives at $9/16$ give normalization and the means in (8.4). Weighting those means by $\nu$ gives $\mu$; alternatively the actual intensity $\lambda M_1\mathbf1$ equals $1183/5912=1/\mu$. Thus all Palm quantities belong to this same stationary producer. $\square$
+
+**Proposition 8.2 (Full-exterior band without predictive splitting, and a strict risk bound).** For Proposition 8.1, the laws $F_0,F_1$ are distinct and mutually absolutely continuous, with
+
+$$
+f_0(2)-f_1(2)=3/200,\qquad
+\frac{dF_0}{dF_1}=\frac{f_0(G_0)}{f_1(G_0)}>0.
+\tag{8.7}
+$$
+
+There is no almost-sure strict-right decoder of the original context. Nevertheless the entire-exterior posterior lies strictly in $(1/4,1/2)$ on every positive free exterior cell and is zero on the forced cells. The split successor future laws differ whenever the left split distance $l$ is odd. The law is strictly nonattaining:
+
+$$
+d(P)\le\frac{50349663}{363522968}<\frac17<\frac{1800}{12559}\le c_\star.
+\tag{8.8}
+$$
+
+Proof. After the first future gap $g$, both starting contexts have successor $g\bmod2$. Factoring on that first-gap cylinder proves the full density ratio (8.7); distinctness follows at $g=2$. Since both actual Palm context masses are positive, a right decoder would separate two equivalent future measures into disjoint probability-one sets, which is impossible.
+
+For a free center with nearest anchors $-l,r$, left context $c$, and next future gap $h$ after $r$, the center-one and center-zero paths reach possibly different contexts at $r$, but coincide after $h$. Their full-exterior odds are therefore exactly
+
+$$
+R=\frac{f_c(l)f_{l\bmod2}(r)f_{r\bmod2}(h)}
+{f_c(l+r)f_{(l+r)\bmod2}(h)},\qquad q_0=\frac{R}{1+R}.
+\tag{8.9}
+$$
+
+The full-left channel is common, and the entire tail after $h$ cancels, as a measure factorization. All $A$ entries lie in $[24/25,26/25]$. The geometric factors in (8.9) leave $4/9$, so
+
+$$
+\frac{1536}{4225}
+=\frac49\frac{(24/25)^3}{(26/25)^2}
+\le R\le
+\frac49\frac{(26/25)^3}{(24/25)^2}
+=\frac{2197}{4050}.
+\tag{8.10}
+$$
+
+The lower bound exceeds $1/3$ and the upper bound is below $1$, proving the strict band. If $l$ is odd, $\tau_{l+r}(c)\ne\tau_r\tau_l(c)$ and (8.7) shows their future laws differ. Thus the band does not force predictive split equality.
+
+For a simple independent risk bound, let $F_0=\{X_{-1}=X_1=0\}$. The event $\{X_{-1}=X_1=1\}$ is an anchor followed by gap $2$, so inclusion-exclusion gives
+
+$$
+Q(G_0=2)=679/2704,\qquad
+P(F_0)=1-2\iota+\iota Q(G_0=2)=61489/94592.
+\tag{8.11}
+$$
+
+Because $X_0=1$ implies $F_0$, the exterior-measurable estimator
+
+$$
+\widehat q=\frac{\iota}{P(F_0)}\mathbf1_{F_0}
+=\frac{18928}{61489}\mathbf1_{F_0}
+\tag{8.12}
+$$
+
+has squared risk
+
+$$
+\mathbb E(X_0-\widehat q)^2
+=\iota-\frac{\iota^2}{P(F_0)}
+=\frac{50349663}{363522968}<1/7.
+\tag{8.13}
+$$
+
+The posterior minimizes squared risk on the full exterior, and [R, §1][R] supplies $c_\star\ge1800/12559>1/7$. This proves (8.8). The example is therefore a counterexample to the band-to-predictive-split implication, not an attaining law. $\square$
+
+## 9. The remaining finite-family exclusion
+
+**Definition 9.1 (Unresolved equality and exclusion).** For the past-visible class of Definition 4.1, exact attainment implies (4.11), the finite spatial absolute-continuity quotient, within-phase synchronization, (6.5), and all the necessary guarded original-loss identities (7.2). A remaining question is whether any actual finite phase-type deterministic predictive family can satisfy all those identities with risk $c_\star$, or whether every such family is excluded. In particular, under exact attainment the equality
+
+$$
+F_{\tau_{l+r}(c)}=F_{\tau_r\tau_l(c)}
+\quad(c\in C_+,\ l,r\ge2)
+\tag{9.1}
+$$
+
+is still unproved here. Mutual absolute continuity and a common merging word permit unequal first-gap rows within one phase; Proposition 8.2 rules out deducing (9.1) from the posterior band alone. Proposition 7.2 excludes only the singleton-class branch. The reductions do not establish nonattainment for the general past-visible class, root summability for arbitrary finite-hidden laws, uniform rates or risk gaps, or finite visible order.
+
+## 追加锚（本行以下为增补区）
