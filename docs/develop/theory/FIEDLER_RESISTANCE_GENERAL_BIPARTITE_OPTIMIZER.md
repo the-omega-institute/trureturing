@@ -100,15 +100,17 @@ original-pair convention (1.3), including the corrected $P_4$ conductances.
 Neither path result is a comparison for $K_{a,b}$.
 
 The [two-hub optimizer](FIEDLER_RESISTANCE_K2M_OPTIMIZER.md), Theorems
-2.1 and 3.1, supplies the whole $K_{2,m}$ optimization. Its two equality
+2.1 and 3.1, supplies the whole $K_{2,m}$ optimization for $m\ge3$. Its two equality
 rays are described by
 $c_{1j}=t(1+\varepsilon\sqrt{(m-2)/(m+2)})/2$ and
 $c_{2j}=t(1-\varepsilon\sqrt{(m-2)/(m+2)})/2$.
 The [three-hub optimizer](FIEDLER_RESISTANCE_K3M_OPTIMIZER.md), Lemma 2.1,
 Theorem 2.2 and Theorems 3.1–4.1, supplies the complete $K_{3,m}$ comparison,
-labelled equality class and every positive resistance level. Its three
-rows have conductances $t(m-2)/m,t/m,t/m$, with the larger row chosen
-by its label; its product constant is $m(m+3)+m^2/(m-2)$.
+labelled equality class and every positive resistance level for $m\ge3$.
+Its rows have conductances $t(m-2)/m,t/m,t/m$, with the first displayed
+row assigned to a chosen hub label. For $m=3$ all choices give the same
+uniform ray; for $m>3$ they give three distinct rays. Its product constant
+is $m(m+3)+m^2/(m-2)$.
 These whole results apply to their stated numbers of hubs. In particular,
 the three-hub theorem is not assumed for arbitrary $a$.
 Its proof supplies the one-sided Gram-area calculation, the
