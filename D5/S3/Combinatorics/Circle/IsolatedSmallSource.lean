@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Circle/IsolatedSmallSource
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/IsolatedSmallSource
    mirror-E: none(waiver:audit-open-22063)
    anchors: [mathlib/module/Mathlib.Data.List.Perm.Basic]
