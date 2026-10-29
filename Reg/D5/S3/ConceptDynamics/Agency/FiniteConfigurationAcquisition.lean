@@ -130,7 +130,7 @@ def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
   sourceSelection := some {
     owner := `D5.S3.ConceptDynamics.Agency.FiniteConfigurationAcquisition
     definition := none
-    coordinates := #[0,1,2,3,4,5,6]
+    coordinates := #[0,3,5,6]
     readouts := #[{
       path := #["body","body","body","body","body","body","body","fn","arg","fn","arg","arg","body"]
       stateBinder := 0
