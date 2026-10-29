@@ -155,9 +155,13 @@ theorem mixed_graph_count (x y z r : ℕ) :
   have ho : Fintype.card oct.V = 6 ∧ (minimalForts oct.blockGraph).card = 11 ∧
       (rootedChoices oct.blockGraph).card = 12 := by
     have h := equipartite_block 3 (by omega)
-    simpa only [show 2 * 3 = 6 by rfl, show Nat.choose 3 3 = 1 by decide,
-      Nat.mul_one, show 3 + 8 = 11 by rfl, show Nat.choose 3 2 = 3 by decide,
-      show 4 * 3 = 12 by rfl] using And.intro h.1 (And.intro h.2.1 h.2.2.1)
+    have h0 : Fintype.card (Fin 3 × Fin 2) = 6 ∧
+        (minimalForts (SimpleGraph.completeEquipartiteGraph 3 2)).card = 11 ∧
+        (rootedChoices (SimpleGraph.completeEquipartiteGraph 3 2)).card = 12 := by
+      simpa only [show 2 * 3 = 6 by rfl, show Nat.choose 3 3 = 1 by decide,
+        Nat.mul_one, show 3 + 8 = 11 by rfl, show Nat.choose 3 2 = 3 by decide,
+        show 4 * 3 = 12 by rfl] using And.intro h.1 (And.intro h.2.1 h.2.2.1)
+    convert h0 using 1 <;> congr 3
   refine ⟨?_, cone_connected _, ?_⟩
   · change Fintype.card (Option ((copies (complete 4) x).V ⊕
       ((copies (complete 1) (2 * y)).V ⊕ ((copies oct z).V ⊕ (complete r).V)))) = _

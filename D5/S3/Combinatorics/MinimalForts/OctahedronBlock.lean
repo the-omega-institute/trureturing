@@ -4,13 +4,13 @@
    mirror-E: none(waiver:structural-counting-proof)
    anchors: [mathlib/module/Mathlib.Combinatorics.SimpleGraph.CompleteMultipartite]
    utility: none
-   digest: Structural classification and counting for complete equipartite graphs with two vertices per part. -/
+   digest: Minimal forts of complete equipartite graphs with two vertices per part. -/
 
 import D5.S3.Combinatorics.MinimalForts.UniversalRoot
 import Mathlib.Combinatorics.SimpleGraph.CompleteMultipartite
 import Mathlib.Data.Fintype.BigOperators
 
-/-! Whole parts and transversals describe all minimal forts without a bound on the number of parts. -/
+/-! Whole parts and transversals classify minimal forts for arbitrarily many parts. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -40,14 +40,14 @@ private theorem card_part {m : ℕ} (i : Fin m) : (part i).card = 2 := by
 
 private theorem no_isolated (m : ℕ) (hm : 2 ≤ m) (v : Fin m × Fin 2) :
     ∃ w, (graph m).Adj v w := by
-  haveI : Nontrivial (Fin m) := Fin.nontrivial_iff_two_le.mpr hm
+  have : Nontrivial (Fin m) := Fin.nontrivial_iff_two_le.mpr hm
   obtain ⟨j,hj⟩ := exists_ne v.1
   exact ⟨(j,0), hj.symm⟩
 
 private theorem neighbors (m : ℕ) (S : Finset (Fin m × Fin 2)) (v : Fin m × Fin 2) :
     finiteNeighbors (graph m) v ∩ S = S \ part v.1 := by
   ext w
-  simp [finiteNeighbors, SimpleGraph.completeEquipartiteGraph_adj, mem_part, and_comm,
+  simp [finiteNeighbors, mem_part, and_comm,
     ne_comm]
 
 private theorem outside_fiber {m : ℕ} (S : Finset (Fin m × Fin 2))
@@ -187,7 +187,7 @@ private theorem singleton_not_dominating {m : ℕ} (a : Fin m × Fin 2) :
 private theorem dominating_contains_pair {m : ℕ} (hm : 2 ≤ m)
     (S : Finset (Fin m × Fin 2)) (hd : (graph m).IsDominating (S : Set _))
     (ht : Transversal S) : ∃ a ∈ S, ∃ b ∈ S, a.1 ≠ b.1 := by
-  haveI : Nonempty (Fin m) := ⟨⟨0,by omega⟩⟩
+  have : Nonempty (Fin m) := ⟨⟨0,by omega⟩⟩
   let v : Fin m × Fin 2 := (Classical.choice inferInstance,0)
   have hn : S.Nonempty := by
     rcases hd v with hv | ⟨w,hw,_⟩
@@ -222,7 +222,7 @@ theorem equipartite_rooted_iff (m : ℕ) (hm : 2 ≤ m) (S : Finset (Fin m × Fi
   · rintro ⟨hc,ht⟩
     obtain ⟨a,ha,b,hb,hab⟩ := Finset.one_lt_card.mp (by omega : 1 < S.card)
     have hp : ({a,b} : Finset _) ⊆ S := by simp [Finset.insert_subset_iff,ha,hb]
-    have he : S = {a,b} := (Finset.eq_of_subset_of_card_le hp (by simpa [hab] using hc.ge)).symm
+    have he : S = {a,b} := (Finset.eq_of_subset_of_card_le hp (by simp [hab,hc])).symm
     have hparts : a.1 ≠ b.1 := fun h => hab (ht ha hb h)
     refine ⟨⟨he ▸ pair_dominating a b hparts, ?_⟩, ?_⟩
     · intro T hTS hdom v hv
@@ -237,8 +237,8 @@ theorem equipartite_rooted_iff (m : ℕ) (hm : 2 ≤ m) (S : Finset (Fin m × Fi
           · rfl
         exact singleton_not_dominating b (fun w => by
           rcases hdom w with hw | ⟨u,hu,hadj⟩
-          · exact Or.inl (hsub hw)
-          · exact Or.inr ⟨u,hsub hu,hadj⟩)
+          · exact Or.inl (by simpa using hsub hw)
+          · exact Or.inr ⟨u,by simpa using hsub hu,hadj⟩)
       have hbT : b ∈ T := by
         by_contra hnb
         have hsub : T ⊆ ({a} : Set _) := by
@@ -250,8 +250,8 @@ theorem equipartite_rooted_iff (m : ℕ) (hm : 2 ≤ m) (S : Finset (Fin m × Fi
           · exact False.elim (hnb hw)
         exact singleton_not_dominating a (fun w => by
           rcases hdom w with hw | ⟨u,hu,hadj⟩
-          · exact Or.inl (hsub hw)
-          · exact Or.inr ⟨u,hsub hu,hadj⟩)
+          · exact Or.inl (by simpa using hsub hw)
+          · exact Or.inr ⟨u,by simpa using hsub hu,hadj⟩)
       have : v ∈ ({a,b} : Finset _) := he ▸ hv
       simp only [Finset.mem_insert, Finset.mem_singleton] at this
       rcases this with rfl | rfl <;> assumption
@@ -261,7 +261,7 @@ theorem equipartite_rooted_iff (m : ℕ) (hm : 2 ≤ m) (S : Finset (Fin m × Fi
       have hle := Finset.card_le_card hTS
       omega
 
-private def transversals (m k : ℕ) : Finset (Finset (Fin m × Fin 2)) :=
+private noncomputable def transversals (m k : ℕ) : Finset (Finset (Fin m × Fin 2)) :=
   by classical exact Finset.univ.filter (fun S => S.card = k ∧ Transversal S)
 
 private def selections (m k : ℕ) :=
@@ -319,7 +319,8 @@ private theorem encode_surjective {m k : ℕ} (S : Finset (Fin m × Fin 2))
     exact (Finset.card_image_of_injOn ht).trans hc
   have hex (i : I) : ∃ b : Fin 2, (i.val,b) ∈ S := by
     obtain ⟨v,hv,he⟩ := Finset.mem_image.mp i.property
-    exact ⟨v.2, by simpa [he] using hv⟩
+    change (v.1,v.2) ∈ S at hv
+    exact ⟨v.2, by simpa only [he] using hv⟩
   let f : I → Fin 2 := fun i => Classical.choose (hex i)
   refine ⟨⟨⟨I,hI⟩,f⟩, ?_⟩
   ext v
@@ -342,8 +343,8 @@ private theorem transversal_count (m k : ℕ) :
     constructor
     · rintro ⟨hc,ht⟩
       obtain ⟨p,hp⟩ := encode_surjective S hc ht
-      exact ⟨p,trivial,hp⟩
-    · rintro ⟨p,_,rfl⟩
+      exact ⟨p,hp⟩
+    · rintro ⟨p,rfl⟩
       exact ⟨encode_card p, encode_transversal p⟩
   rw [he, Finset.card_image_of_injective _ (encode_injective m k), Finset.card_univ]
   change Fintype.card (Σ I : {I : Finset (Fin m) // I ∈
