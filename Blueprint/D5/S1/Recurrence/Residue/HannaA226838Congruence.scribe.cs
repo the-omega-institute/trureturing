@@ -73,7 +73,20 @@ internal sealed class HannaA226838CongruenceDocument : IScribeDocumentDefinition
                 + "are definitions earned by result. This is an unbounded symbolic argument, not a "
                 + "bounded enumeration or a certified finite instance, so utility is none. "
                 + "The proof is repository-derived and is not attributed to OEIS. Bounded literature "
-                + "clearance certifies no global novelty; applicability of arXiv 2610.11648v2 remains unassessed.",
+                + "clearance certifies no global novelty. An independent focused reading of Yuta Nishibuchi, "
+                + "A Unified Framework for p-adic Congruences and p-adic Interpolations of Sequences, "
+                + "arXiv:2610.11648v2 (history https://arxiv.org/abs/2610.11648, v2 abstract "
+                + "https://arxiv.org/abs/2610.11648v2, HTML https://arxiv.org/html/2610.11648v2, "
+                + "PDF https://arxiv.org/pdf/2610.11648v2, source archive https://arxiv.org/src/2610.11648v2) "
+                + "established no exact implication for this series in that source. The paper supplies "
+                + "conditional p-adic criteria, but applying them here would require target-specific "
+                + "normalized coefficient valuations or a valid decomposition, the correct period, prime "
+                + "strength, and base-value links for both p=2 and p=3, all-index coverage including zero, "
+                + "and a global integrality bridge to an integer witness. These conditions remain unverified "
+                + "for this series. This reading does not claim that the conditions are false or rule out "
+                + "the method, and it does not establish a global novelty or priority claim. The paper is "
+                + "prior-work context, not the identifier of the OEIS source and not an asserted proof of "
+                + "this conjecture.",
                 DescribeRole.Theorem))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
