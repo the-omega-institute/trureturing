@@ -117,7 +117,10 @@ internal sealed class AncillaFreeTesterRobustnessEqualityDocument : IScribeDocum
                         + "with the feasible weights for the canonical POVMs when r = rank ρ. "
                         + "Composing these set equalities and taking infima proves the displayed equality. "
                         + "No minimizer or numerical robustness value is needed."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("sedlak-reitzner-chiribella-ziman-2016-ancilla-free-tester-robustness"),
+                    ResolutionKind.Proved)))));
 
     private static Formula IsTesterFormula()
     {
