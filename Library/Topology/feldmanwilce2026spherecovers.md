@@ -54,10 +54,10 @@ preserves original color multiplicities. A subordinate partition of unity
 gives a normalized sphere map homotopic to the identity. If every point
 lies in fewer components than the ambient dimension, the image lies in
 finitely many proper subspaces and misses a sphere point. Stereographic
-projection then makes the map nullhomotopic. The sphere obstruction follows
-from the existing simplex Brouwer theorem by descending a contraction along
-the compact cylinder-to-ball quotient and constructing a fixed-point-free
-simplex self-map from the resulting ball retraction.
+projection then makes the map nullhomotopic. The sphere obstruction is the
+source-ported TauCeti reduced singular homology theorem: the sphere has
+nonzero reduced singular homology with integer coefficients in its dimension,
+whereas a contractible space has zero reduced homology in every degree.
 
 For S2, restrict a cover to the perpendicular unit circle of any point x.
 Every color containing x misses that circle by orthogonality-freeness.

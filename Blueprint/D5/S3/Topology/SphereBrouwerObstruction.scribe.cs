@@ -13,13 +13,13 @@ internal sealed class SphereBrouwerObstructionDocument : IScribeDocumentDefiniti
         Blocks(Describe.Lean(
             DescribeId.Create("sphere-brouwer-obstruction"),
             DeclarationHandle.Create("D5/S3/Topology/SphereBrouwerObstruction.not_contractible_unit_sphere"),
-            H("Noncontractibility from the simplex fixed point theorem"),
+            H("Noncontractibility from reduced singular homology"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromLiterature(Source),
             Blocks(
                 Paragraph(Text("For every positive natural n, the unit sphere of real Euclidean n-space is not contractible. Ambient dimension one is included.")),
-                Paragraph(Text("Suppose a contraction existed. Reverse it and collapse the zero end of the compact cylinder consisting of the unit interval times the sphere. The map sending (t,x) to t times x is a continuous surjection onto the closed unit ball, hence a quotient map. The reversed contraction is constant on each fiber and therefore descends to a continuous retraction of the ball onto its sphere.")),
-                Paragraph(Text("Embed the sphere affinely in the standard simplex on n+1 vertices. Its n nonconstant coordinates are (x_i+1)/(2n), and the remaining coordinate is one minus their sum. The affine map with coordinates 2n times the corresponding simplex coordinate minus one is a left inverse. Radially clip its values into the ball, apply the alleged retraction, take the antipode, and return to the simplex. A fixed point supplied by the existing Brouwer theorem would have a unit vector equal to its own antipode, a contradiction.")),
-                Paragraph(Text("The endpoint is adopted from the exact TauCeti.not_contractibleSpace_sphere declaration by a source port, because the supplier and receiving Mathlib pins differ. The TauCeti copyright and complete Apache-2.0 license are retained with the port. The retraction argument and lower-six result carry no novelty claim."))),
+                Paragraph(Text("TauCeti computes the sphere's reduced singular homology with integer coefficients in degree n-1 and identifies it with the nonzero integer coefficient module. The upstream proof transports this computation from a Euclidean space of the same dimension, so its statement applies to every nontrivial finite-dimensional real normed space.")),
+                Paragraph(Text("A contraction would make reduced singular homology zero in every degree. The sphere computation would then force the integer coefficient module to be zero, contradicting the fact that zero and one are distinct.")),
+                Paragraph(Text("The endpoint is adopted from the exact TauCeti.not_contractibleSpace_sphere declaration by a source port, because the supplier and receiving Mathlib pins differ. The immutable source revision and path, TauCeti copyright, complete Apache-2.0 license, modification notices and own-pinned-Mathlib retirement condition are recorded in the linked Library note and port sources. The homology obstruction and lower-six result carry no novelty claim."))),
             DescribeRole.Theorem))));
 }
