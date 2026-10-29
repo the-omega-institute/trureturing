@@ -97,7 +97,10 @@ internal sealed class OverlapIntervalPropagationRefutationDocument : IScribeDocu
                             + "and the explicit family attains that value. Hence the feasible set is the singleton containing 1/4, whose infimum is 1/4. "
                             + "If claim held, its lower-endpoint equality at m = 4, i₀ = 2, j₀ = 3 and this r would give 0 = 1/4, a contradiction. "
                             + "This already disproves the conjunction of endpoint equalities without computing procUpper."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("galvao-brod-2020-overlap-interval-propagation"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string declaration, string title, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(
