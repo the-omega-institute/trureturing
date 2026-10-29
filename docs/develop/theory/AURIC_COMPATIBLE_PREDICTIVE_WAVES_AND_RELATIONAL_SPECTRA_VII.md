@@ -2613,9 +2613,9 @@ $$
 \tag{138.4}
 $$
 
-Consequently its common positive tangent optimum is the attained
-four-real-variable linear program, using the original columns of
-(125.4),
+Consequently its common positive tangent optimum has the attained
+linear-program epigraph below, with four transverse coordinates and
+one epigraph variable, using the original columns of (125.4):
 
 $$
  m_a=n_a=\min_{x\in\mathbb R^4,\ v\in\mathbb R}v
