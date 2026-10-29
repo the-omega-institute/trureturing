@@ -25,7 +25,7 @@ $$
 \eta(i)=p q_i,\qquad q_i=\overline{q_i},
 $$
 
-and $\eta(i)p$ is a palindromic complete return to $p$. The words $q_i$ may be empty. This is the convention of [Dvořáková–Pelantová, Definition 18](https://arxiv.org/html/2509.06104v1#Thmdefinition18), following Balková, Pelantová and Starosta, *Infinite words with finite defect*, Advances in Applied Mathematics 47 (2011), 562–574.
+and $\eta(i)p$ is a palindromic complete return to $p$. The words $q_i$ may be empty. This is the convention of [Dvořáková–Pelantová, Definition 18](https://arxiv.org/html/2509.06104v1#Thmtheorem18), following Balková, Pelantová and Starosta, *Infinite words with finite defect*, Advances in Applied Mathematics 47 (2011), 562–574.
 
 **Definition 1.3 (The fixed points and their spectral target).** For $m\ge3$, put $A_m=\{0,\ldots,m-1\}$ and define the monoid morphism $\varphi_m$ by
 
@@ -47,7 +47,7 @@ $$
 E^*(u_{2r+1})=e_r
 $$
 
-is literature-attested: [Dvořáková–Pelantová, §2, equation (3)](https://arxiv.org/html/2509.06104v1#S2.E3), recalling Dvořáková, Klouda and Pelantová, *The asymptotic repetition threshold of sequences rich in palindromes*, European Journal of Combinatorics 126 (2025), 104124. Their equation $t^{2r}(t-2)^2=1$ gives the displayed equation for $\Lambda_r$ because $\Lambda_r>2$.
+is literature-attested: [Dvořáková–Pelantová, §2, equation (4)](https://arxiv.org/html/2509.06104v1#S2.E4), recalling Dvořáková, Klouda and Pelantová, *The asymptotic repetition threshold of sequences rich in palindromes*, European Journal of Combinatorics 126 (2025), 104124. Their equation $t^{2r}(t-2)^2=1$ gives the displayed equation for $\Lambda_r$ because $\Lambda_r>2$.
 
 ## 2. A boundary obstruction for palindromic separators
 
@@ -138,7 +138,7 @@ v_{\beta_r}=
       \beta_r-2,1\bigr)^T.
 $$
 
-This is the $\beta_r$ right eigenvector in [Dvořáková–Pelantová, Appendix, P2](https://arxiv.org/html/2509.06104v1#A1). For a length row $h=(h_0,\ldots,h_{2r})$, impose explicitly both the cancellation and the lattice equations
+This is the $\beta_r$ right eigenvector in [Dvořáková–Pelantová, Appendix, P2](https://arxiv.org/html/2509.06104v1). For a length row $h=(h_0,\ldots,h_{2r})$, impose explicitly both the cancellation and the lattice equations
 
 $$
 h\cdot v_{\beta_r}=0,
@@ -168,7 +168,7 @@ $$
 
 In particular, when $r=3$ these hypotheses imply $T\ge18\ell+12$, and thus $T\ge48$ for every chosen marker of length at least two.
 
-*Proof.* Use the supplied [marker-cost inequality and its equality characterization](https://github.com/the-omega-institute/trureturing/issues/22900#issuecomment-6455260239) for injective $P_{\mathrm{ret}}$ morphisms with the stated output alphabet, chosen marker and explicit spectral cancellation. This gives $T\ge C_r(\ell)$, and equality forces
+*Proof.* The [marker-cost inequality and its equality characterization](https://github.com/the-omega-institute/trureturing/issues/22900#issuecomment-6455260239) for injective $P_{\mathrm{ret}}$ morphisms with the stated output alphabet, chosen marker and explicit spectral cancellation gives $T\ge C_r(\ell)$, and equality forces
 
 $$
 h_0=\ell,\qquad h_1=\cdots=h_r=\ell+1.
