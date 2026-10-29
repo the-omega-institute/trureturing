@@ -4045,3 +4045,227 @@ nonlinear argmin or exact optimum value nor global originality or
 a resolution of an external named open problem. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 146. An order-three certificate for the original full-history norm
+
+**Definition 146.1 (The reduced all-history family and its signed rows).**
+For the source of Definition 142.1, write every original history uniquely
+in the form
+
+$$
+w=N^{n_0}\epsilon_1N^{n_1}\cdots\epsilon_kN^{n_k},
+\qquad \epsilon_j\in\{0,1\},\quad n_j\ge0,
+$$
+
+where $k$ is the number of native instrument labels. Since $N^3=I_3$,
+replace each $n_j$ by its residue in $\{0,1,2\}$. Let
+$\mathscr W_{\le3}$ be the resulting finite family with $0\le k\le3$.
+The replacement changes the product $Q_w$ only by a scalar of modulus one,
+so it preserves every original row value and its original weight
+$a_w/2=2^{-k}/2$.
+
+Use the six real completion coordinates in the ordered basis
+$(\xi,\mathrm i\xi,f,\mathrm if,e,\mathrm ie)$ and the two real coordinates
+of $g$. In the notation of (125.4), choose the seven actual rows, in order,
+with the indicated signs:
+
+$$
+\begin{aligned}
+(\rho_j,\sigma_j)_{j=1}^7={}&((9,\varnothing),+1),
+ ((1,NN),-1), ((1,0),-1), ((9,0),+1),\\
+ &((1,NN0N),+1), ((1,N1N),+1), ((2,NN1N),+1).
+\end{aligned}
+\tag{146.1}
+$$
+
+Put $c_j=\sigma_j\beta_{\rho_j}$ and let $M$ have first row all ones and
+rows $2$ through $7$ equal to the signed six-coordinate vectors
+$\sigma_jU_{\rho_j}$.
+
+**Theorem 146.2 (Exact full-history lower certificate; repo-derived).**
+For the full-history tangent norm of (125.5),
+
+$$
+n_a>\frac{189}{4096}.
+\tag{146.2}
+$$
+
+*Proof.* Let $d_0=\det M$, and let $d_j$ replace column $j$ of $M$ by
+$(1,0,0,0,0,0,0)^{\mathsf T}$, for $1\le j\le7. Direct expansion in
+$\mathbb Q(\sqrt2,\sqrt3)$ gives
+
+$$
+\begin{aligned}
+d_0={}&\frac{148689184238033\sqrt2+210278927993446
++169606516283115\sqrt6+239860620630880\sqrt3}
+{4722366482869645213696},\\
+d_1={}&\frac{-704179540270-497912696323\sqrt2+5522995798882\sqrt3
++3905391073879\sqrt6}{1180591620717411303424},\\
+d_2={}&\frac{4431862778894+3134204531693\sqrt2+23397372993571\sqrt6
++33088950632464\sqrt3}{4722366482869645213696},\\
+d_3={}&\frac{6657713390264\sqrt2+9415871119692+7081008641242\sqrt3
++5007043628175\sqrt6}{1180591620717411303424},\\
+d_4={}&\frac{-3205241353621\sqrt6-4532858035242\sqrt3+8819173387014
++6236145086803\sqrt2}{295147905179352825856},\\
+d_5={}&\frac{-5035357134791\sqrt2-7120923894510+6089708029451\sqrt6
++8612159649921\sqrt3}{295147905179352825856},\\
+d_6={}&\frac{773296199455\sqrt3+546834469621\sqrt6+2887987934358
++2042152182645\sqrt2}{295147905179352825856},\\
+d_7={}&\frac{762660156774+539286990438\sqrt2+434832704329\sqrt6
++614953806342\sqrt3}{36893488147419103232}.
+\end{aligned}
+\tag{146.3}
+$$
+
+The rational radical bounds (143.5)–(143.6), applied by integer
+multiplication, give the following strict intervals after multiplication
+by $10^{15}$:
+
+$$
+\begin{array}{c|rrrrrrrr}
+&d_0&d_1&d_2&d_3&d_4&d_5&d_6&d_7\\ \hline
+10^{15}d_j\text{ lies in}&
+(265006410,265006411)&(15012803,15012804)&
+(26149530,26149531)&(36727914,36727915)&
+(6559653,6559654)&(52825654,52825655)&
+(28646251,28646252)&(99084602,99084603)
+\end{array}
+$$
+
+Thus all eight determinants are positive. Cramer's rule gives
+$\lambda_j=d_j/d_0>0$, $\sum_j\lambda_j=1$, and
+$\sum_j\lambda_j\sigma_jU_{\rho_j}=0$. The same exact expansion gives
+
+$$
+\sum_{j=1}^7d_j\left(c_j-\frac{189}{4096}\right)
+=\frac{-20327335451999776\sqrt3-14373489159543967\sqrt6
++35385978341760498+25021737772452819\sqrt2}
+{19342813113834066795298816}>0.
+\tag{146.4}
+$$
+
+The last positivity is certified by (143.5)–(143.6); its value times
+$10^{15}$ lies strictly in $(18423,18424)$. Hence
+$\sum_j\lambda_jc_j>189/4096$. The signed cancellation identity and
+Proposition 128.1 give $\mathcal F_a(z,0)\ge\sum_j\lambda_jc_j$ for every
+complex $z$. Taking the infimum proves (146.2). Every row in (146.1) is an
+actual original history, with its original prefix mass and native-label
+weight.
+
+**Theorem 146.3 (All-history upper certificate and strict source gap).**
+Define
+
+$$
+\begin{aligned}
+z_*={1\over10^8}\big(&(-20328269+36581420\mathrm i)\xi
+ +(95916322-29623864\mathrm i)f\\
+ &+(-1841089-2547800\mathrm i)e\big),\\
+g_*={-3298492+5963260\mathrm i\over10^8}.
+\end{aligned}
+\tag{146.5}
+$$
+
+For every $i$ and every $w\in\mathscr W_{\le3}$, direct expansion of
+(143.2) at $(z_*,g_*)$, with the radical enclosure (143.5), gives
+
+$$
+\begin{array}{c|c|c}
+k(w)&\#\{w\in\mathscr W_{\le3}:k(w)=k\}&
+\displaystyle\max_{i,\,k(w)=k}|\ell_{i,w}(z_*,g_*)|\\ \hline
+0&3&<4485/100000\\
+1&18&<4485/100000\\
+2&108&<97/2500\\
+3&648&<233/10000
+\end{array}
+\tag{146.6}
+$$
+
+The inequalities in (146.6) are finite integer comparisons after replacing
+$\sqrt2,\sqrt3,\sqrt6$ by the lower and upper rational bounds in (143.5);
+they include all nine prefixes and both terminal labels through the sign
+identity following (125.4). Moreover, for the same exact matrices,
+
+$$
+T_*:=\frac12\left(\|X_1(z_*)\|_{\rm HS}+\|Y_1(z_*)\|_{\rm HS}
++2|g_*|\|K_-\|_{\rm HS}\right)<\frac38.
+\tag{146.7}
+$$
+
+For a history with $k\ge4$, trace Cauchy–Schwarz in the original row
+(116.2), $\max_i\|r_i\|_{\rm HS}=1$, and (146.7) give
+$|\ell_{i,w}(z_*,g_*)|\le2^{-k}T_*<3/128<23/512$.
+For $k\le3$, (146.6) and $4485/100000<23/512$ give the same bound.
+Reduction modulo $N^3=I_3$ therefore covers every finite actual history, and
+
+$$
+m_a\le\mathcal F_a(z_*,g_*)<\frac{23}{512}.
+\tag{146.8}
+$$
+
+Combining (146.2) and (146.8) yields the source-specific full-history
+certificate
+
+$$
+\boxed{\quad\delta_a=n_a-m_a>\frac{189}{4096}-\frac{23}{512}
+=\frac5{4096}>\frac3{4096}.\quad}
+\tag{146.9}
+$$
+
+This is an all-history upper bound, not a finite-decoder substitution:
+the tail estimate uses the original weighted rows, and the finite part
+contains every reduced history with at most three native labels.
+
+**Theorem 146.4 (Original nonlinear full-law endpoint on a positive interval).**
+Set
+
+$$
+\Delta_a=\frac3{4096},\qquad
+\eta_a=\min\left\{\eta_0,\frac{3}{16384E}\right\},
+\tag{146.10}
+$$
+
+where $E,\eta_0$ are the explicit source constants of (144.1). Then
+$\eta_a>0$, and for every $0<\eta\le\eta_a$ the original full-history
+thresholds of Definition 126.2 satisfy
+
+$$
+\boxed{\qquad \nu_a(\eta)-\mu_a(\eta)
+\ge\frac{3}{8192}\eta>0.\qquad}
+\tag{146.11}
+$$
+
+All compact minimizers of the unchanged original $\mu_a(\eta)$ have
+
+$$
+\frac{3}{8192L}\eta\le|\gamma|
+\le\frac{M-9/16384}{\underline c}\eta\le G\eta,
+\tag{146.12}
+$$
+
+and both extremal retention radii of Definition 131.1 are attained and
+obey the same positive lower and upper bounds. Thus the original
+full-history endpoint is type III throughout this interval.
+
+*Proof.* The gap (146.9) permits the weaker certified value
+$\delta_a\ge\Delta_a$. Apply Theorem 127.1 with this $\Delta_a$.
+Its interval is exactly (146.10), its threshold gap is
+$\Delta_a\eta/2=3\eta/8192$, and its retention bounds are (146.12).
+The attainment and type-III statements are the endpoint criterion of
+Theorem 124.2 together with Definition 131.1. The construction retains
+one full ten-dimensional completion per hypothesis, shared across
+emission, the single forward return and every history; compared
+hypotheses may use different completions. All original prefix masses,
+the factors $a_w/2$, both terminal labels, clocks, schedules, sole
+preparation and installed menu remain unchanged. No normalized rows,
+extra preparation, randomization, postselection, record-phase gauge or
+new control is introduced.
+
+The certificate is source-specific and repo-derived. It does not give an
+exact optimizer or exact optimum value, and it makes no claim of global
+novelty or of resolving an external named problem. Its only literature
+intermediates are the finite-source decoder and comparison results already
+cited in §§106, 116, 118 and the Chebyshev signed-witness principle cited
+in §128. The remaining dependence is the original return premise VI
+Assumption 106.2. $\square$
+
+## 追加锚（本行以下为增补区）
