@@ -439,9 +439,10 @@ private theorem subtree_child {A : Type} (C : FreeMagma A) (q : List Bool)
     (D E : FreeMagma A) (h : subtree C q = some (.mul D E)) :
     subtree C (q ++ [false]) = some D ∧ subtree C (q ++ [true]) = some E := by
   induction q generalizing C with
-  | nil => simpa only [subtree, List.nil_append, Option.some.injEq] using h ▸
-      (show subtree (.mul D E) [false] = some D ∧
-        subtree (.mul D E) [true] = some E from ⟨rfl, rfl⟩)
+  | nil =>
+      simp only [subtree, Option.some.injEq] at h
+      subst C
+      constructor <;> simp [subtree]
   | cons b q ih =>
       cases C with
       | of a => cases h
@@ -465,7 +466,8 @@ private theorem fits_decorate (C : X → NativeFiniteNormalInversion.Code)
       | of n => cases sh
       | mul D E =>
           have hs : shape D = evaluate w A ∧ shape E = evaluate w B := by
-            exact FreeMagma.mul.inj sh
+            injection sh with hD hE
+            exact ⟨hD, hE⟩
           have hc := subtree_child (C x) q D E actual
           exact ⟨ihA _ _ hc.1 hs.1, ihB _ _ hc.2 hs.2⟩
 
@@ -480,12 +482,20 @@ private theorem fits_offsets (C : X → NativeFiniteNormalInversion.Code)
   | of b =>
       cases B with
       | of c =>
-          cases b <;> cases c <;> simp only [offsetComparisonEdges,
-            List.mem_singleton, List.not_mem_nil, false_implies, forall_eq]
-          exact ⟨rfl, by simpa only [Fits] at hA hB; simpa [hA, hB] using eq⟩
+          cases b with
+          | inl b => cases c <;> simp [offsetComparisonEdges]
+          | inr v =>
+              cases c with
+              | inl b => simp [offsetComparisonEdges]
+              | inr w =>
+                  intro e he
+                  have heq : e = ((v, w), (a : Int)) := List.mem_singleton.mp he
+                  subst e
+                  simp only [Fits] at hA hB
+                  exact ⟨rfl, by simpa only [hA, hB] using eq⟩
       | mul l r => simp [offsetComparisonEdges]
-  | mul A B ihA ihB =>
-      cases B_1 : B with
+  | mul A₁ A₂ ihA ihB =>
+      cases B with
       | of c => simp [offsetComparisonEdges]
       | mul U V =>
           cases E with
@@ -507,7 +517,7 @@ private theorem actual_source_offsets (B : List (BranchEquation X))
       occurrenceCode C e.1.1 = NativeFiniteNormalInversion.shiftCode a
         (occurrenceCode C e.1.2) := by
   have fit (x : X) : Fits C (decorate s x) (C x) :=
-    fits_decorate C (fun y => shape (C y)) x (s x) [] (C x) rfl (factor x).symm
+    fits_decorate C (fun y => shape (C y)) x (s x) [] (C x) (by simp [subtree]) (factor x).symm
   intro e he
   obtain ⟨b, hb, he⟩ := List.mem_flatMap.mp he
   have hs := sat b hb
@@ -516,14 +526,179 @@ private theorem actual_source_offsets (B : List (BranchEquation X))
   | collapse z x y => cases he
   | shift z a x => exact ⟨a, fits_offsets C _ _ _ _ a (fit z) (fit x) hs e he⟩
   | ordinary z x y =>
-      refine ⟨0, fits_offsets C _ _ _ _ 0 (fit z) ?_ ?_ e he⟩
+      refine ⟨0, fits_offsets C _ _ (C z) (.mul (C x) (C y)) 0 (fit z) ?_ ?_ e he⟩
       · exact ⟨fit x, fit y⟩
-      · simpa only [NativeFiniteNormalInversion.shiftCode] using hs
+      · simpa only [NativePositiveBranchReduction.shift_zero, BranchEquation.Holds] using hs
   | same x y =>
       refine ⟨0, fits_offsets C _ _ _ _ 0 (fit x) (fit y) ?_ e he⟩
-      simpa only [NativeFiniteNormalInversion.shiftCode] using hs
+      simpa only [NativePositiveBranchReduction.shift_zero, BranchEquation.Holds] using hs
+
+private def codeTree : NativeFiniteNormalInversion.Code → FreeMagma Unit
+  | .of _ => .of ()
+  | .mul A B => .mul (codeTree A) (codeTree B)
+
+private def groundShape : FreeMagma Unit → NativeGroundSolutionSpace.Source
+  | .of _ => .of true
+  | .mul A B => .mul (groundShape A) (groundShape B)
+
+private theorem codeTree_shape (D : NativeFiniteNormalInversion.Code) :
+    groundShape (codeTree D) = shape D := by
+  induction D with
+  | of n => rfl
+  | mul A B ihA ihB => exact congrArg₂ FreeMagma.mul ihA ihB
+
+private def readRanks : (T : FreeMagma Unit) → NativeFiniteNormalInversion.Code → Leaves T → Nat
+  | .of _, .of n => fun _ => n
+  | .mul A B, .mul D E => Sum.elim (readRanks A D) (readRanks B E)
+  | _, _ => fun _ => 0
+
+private theorem fill_readRanks (T : FreeMagma Unit) (D : NativeFiniteNormalInversion.Code)
+    (sh : shape D = groundShape T) : fill T (readRanks T D) = D := by
+  induction T generalizing D with
+  | of u => cases D with
+    | of n => rfl
+    | mul A B => cases sh
+  | mul A B ihA ihB =>
+      cases D with
+      | of n => cases sh
+      | mul D E =>
+          have hs : shape D = groundShape A ∧ shape E = groundShape B := by
+            injection sh with hD hE
+            exact ⟨hD, hE⟩
+          exact congrArg₂ FreeMagma.mul (ihA D hs.1) (ihB E hs.2)
+
+private theorem readRanks_shift (T : FreeMagma Unit) (D : NativeFiniteNormalInversion.Code)
+    (sh : shape D = groundShape T) (a : Nat) (l : Leaves T) :
+    readRanks T (NativeFiniteNormalInversion.shiftCode a D) l = readRanks T D l + a := by
+  induction T generalizing D with
+  | of u => cases D with
+    | of n => rfl
+    | mul A B => cases sh
+  | mul A B ihA ihB =>
+      cases D with
+      | of n => cases sh
+      | mul D E =>
+          have hs : shape D = groundShape A ∧ shape E = groundShape B := by
+            injection sh with hD hE
+            exact ⟨hD, hE⟩
+          cases l with
+          | inl l => exact ihA D hs.1 l
+          | inr l => exact ihB E hs.2 l
+
+private theorem code_at_residual (w : X → NativeGroundSolutionSpace.Source)
+    (t : Term X) (D : NativeFiniteNormalInversion.Code) (q : List Bool) (j : X)
+    (sh : shape D = evaluate w t)
+    (occ : subtree t q = some (.of (.inr j))) :
+    ∃ E, subtree D q = some E ∧ shape E = w j := by
+  induction q generalizing t D with
+  | nil =>
+      simp only [subtree, Option.some.injEq] at occ
+      subst t
+      exact ⟨D, by simp [subtree], sh⟩
+  | cons b q ih =>
+      cases t with
+      | of c => cases occ
+      | mul A B =>
+          cases D with
+          | of n => cases sh
+          | mul D E =>
+              have hs : shape D = evaluate w A ∧ shape E = evaluate w B := by
+                injection sh with hD hE
+                exact ⟨hD, hE⟩
+              cases b
+              · exact ih A D hs.1 occ
+              · exact ih B E hs.2 occ
+
+private theorem actual_occurrence_code (p : Presentation X) (B : List (BranchEquation X))
+    (S : SubstInfo)
+    (hok : (encodeEquations p (shapeEquations B)).unify SubstInfo.empty = .ok S)
+    (C : X → NativeFiniteNormalInversion.Code)
+    (factor : ∀ x, evaluate (fun y => shape (C y)) (action p S x) = shape (C x))
+    (v : Occurrence X) (hv : v ∈ occurrenceVertices p (action p S)) :
+    subtree (C v.1) v.2.1 = some (occurrenceCode C v) ∧
+      shape (occurrenceCode C v) = shape (C v.2.2) := by
+  have occ := (mgu_occurrence_graph_exact p (shapeEquations B) S hok).1 v |>.mp hv
+  obtain ⟨D, hD, hs⟩ := code_at_residual (fun y => shape (C y))
+    (action p S v.1) (C v.1) v.2.1 v.2.2 (factor v.1).symm occ
+  have eq : occurrenceCode C v = D := by simp only [occurrenceCode, hD, Option.getD_some]
+  exact ⟨by rw [eq]; exact hD, by rw [eq]; exact hs⟩
+
+private theorem actual_rank_blocks (p : Presentation X) (B : List (BranchEquation X))
+    (S : SubstInfo)
+    (hok : (encodeEquations p (shapeEquations B)).unify SubstInfo.empty = .ok S)
+    (C : X → NativeFiniteNormalInversion.Code)
+    (factor : ∀ x, evaluate (fun y => shape (C y)) (action p S x) = shape (C x))
+    (sat : ∀ b ∈ B, b.Holds C) (j : X) :
+    let T := codeTree (C j)
+    let u := fun v => readRanks T (occurrenceCode C v)
+    BlockSolution B (action p S) j u ∧
+      ∀ v ∈ occurrenceVertices p (action p S), v.2.2 = j →
+        subtree (C v.1) v.2.1 = some (fill T (u v)) := by
+  dsimp only
+  have valid (v : Occurrence X) (hv : v ∈ occurrenceVertices p (action p S))
+      (hj : v.2.2 = j) : shape (occurrenceCode C v) = groundShape (codeTree (C j)) := by
+    rw [(actual_occurrence_code p B S hok C factor v hv).2, hj, codeTree_shape]
+  constructor
+  · intro e he l
+    have he' := (List.mem_filter.mp he).1
+    have hj : e.1.1.2.2 = j := by
+      simpa only [beq_iff_eq] using (List.mem_filter.mp he).2
+    have spec := edge_spec p B S hok he'
+    obtain ⟨a, ha, code⟩ := actual_source_offsets B (action p S) C factor sat e he'
+    have hr := readRanks_shift (codeTree (C j)) (occurrenceCode C e.1.2)
+      (valid e.1.2 spec.2.1 (spec.2.2.symm.trans hj)) a l
+    rw [code]
+    rw [hr, ha]
+    omega
+  · intro v hv hj
+    rw [fill_readRanks _ _ (valid v hv hj)]
+    exact (actual_occurrence_code p B S hok C factor v hv).1
+
+/-- A genuine native solution supplies the block equations and literal
+occurrence subtrees automatically. Primitive and collapse scalars remain
+exactly in its selected branch, including r,r+1,r+2. -/
+theorem native_source_block_recovery (p : Presentation X) (E : List (Equation X))
+    (v : X → NativeGroundSolutionSpace.Source) (hv : ∀ e ∈ E, e.Holds v) :
+    ∃ B ∈ branches E, ∃ S : SubstInfo,
+      (encodeEquations p (shapeEquations B)).unify SubstInfo.empty = .ok S ∧
+      (∀ b ∈ B, b.Holds (fun x => NativeFiniteNormalInversion.encode (v x))) ∧
+      ∀ j, (∃ o ∈ occurrenceVertices p (action p S), o.2.2 = j) →
+        ∃ (b : Occurrence X) (a : Occurrence X → Nat),
+          b ∈ occurrenceVertices p (action p S) ∧ b.2.2 = j ∧ a b = 0 ∧
+          NativeFiniteNormalInversion.Normal
+            (occurrenceCode (fun x => NativeFiniteNormalInversion.encode (v x)) b) ∧
+          ∀ o ∈ occurrenceVertices p (action p S), o.2.2 = j →
+            occurrenceCode (fun x => NativeFiniteNormalInversion.encode (v x)) o =
+              NativeFiniteNormalInversion.shiftCode (a o)
+                (occurrenceCode (fun x => NativeFiniteNormalInversion.encode (v x)) b) := by
+  obtain ⟨B, hB, normal, sat, S, hok, factor, _, _⟩ :=
+    (native_branch_reduction p E v).mp hv
+  refine ⟨B, hB, S, hok, sat, ?_⟩
+  intro j occurs
+  let C := fun x => NativeFiniteNormalInversion.encode (v x)
+  let T := codeTree (C j)
+  let u := fun o => readRanks T (occurrenceCode C o)
+  have blocks := actual_rank_blocks p B S hok C factor sat j
+  change BlockSolution B (action p S) j u ∧ _ at blocks
+  have good : ZeroCycles B (action p S) j := by
+    let l : Leaves T := Classical.choice (leavesNonempty T)
+    exact (zeroCycles_iff B (action p S) j).mpr
+      ⟨fun o => (u o l : Int), fun e he => blocks.1 e he l⟩
+  obtain ⟨b, a, hb, hj, hab, recovery⟩ :=
+    source_canonical_block_recovery p B S hok j occurs good
+  have recovered := recovery T u C blocks.1 normal blocks.2
+  have identity (o : Occurrence X) (ho : o ∈ occurrenceVertices p (action p S))
+      (hoj : o.2.2 = j) : fill T (u o) = occurrenceCode C o := by
+    have h1 := blocks.2 o ho hoj
+    have h2 := (actual_occurrence_code p B S hok C factor o ho).1
+    exact Option.some.inj (h1.symm.trans h2)
+  refine ⟨b, a, hb, hj, hab, ?_, ?_⟩
+  · simpa only [identity b hb hj] using recovered.1
+  · intro o ho hoj
+    simpa only [identity o ho hoj, identity b hb hj] using (recovered.2 o ho hoj).1
 
 #print axioms source_sort_minimum_base
+#print axioms native_source_block_recovery
 #print axioms source_canonical_block_recovery
 
 end D5.S3.Arith.FibonacciAtomic.Observer.NativePositivePotentialCover

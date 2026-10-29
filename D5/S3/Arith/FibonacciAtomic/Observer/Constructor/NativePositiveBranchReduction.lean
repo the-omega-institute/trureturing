@@ -216,7 +216,7 @@ private theorem encode_substitution (g : Source) :
       rw [hl, hr]
       exact shift_smart 1 (encode l) (encode r)
 
-private theorem shift_zero (C : Code) : shiftCode 0 C = C := by
+theorem shift_zero (C : Code) : shiftCode 0 C = C := by
   induction C with
   | of n => rfl
   | mul l r hl hr => exact congrArg₂ FreeMagma.mul hl hr
