@@ -11,7 +11,7 @@ open _root_.D5.S3.Geometry.Orthogonality.RationalSixAxisCover
 namespace Reg.D5.S3.Geometry.Orthogonality.RationalSixAxisCover
 
 abbrev signature : Signature where
-  Params := Fin 6 × UnitSphere
+  Params := Σ _ : Fin 6, UnitSphere
   State _ := UnitSphere
   Role := Unit
   finiteRole := inferInstance
@@ -32,7 +32,7 @@ abbrev arena : Arena where
   Law R :=
     (∀ i : Fin 6, IsOpen (color i)) ∧
     (∀ (i : Fin 6) (x : UnitSphere), x ∈ color i →
-      ∀ (y : UnitSphere), y ∈ color i → R.readout () (i, x) y ≠ 0) ∧
+      ∀ (y : UnitSphere), y ∈ color i → R.readout () ⟨i, x⟩ y ≠ 0) ∧
     (⋃ i : Fin 6, color i) = Set.univ
 
 private def pole : UnitSphere :=
@@ -54,7 +54,7 @@ private theorem dependence : ObservationalDependence signature actual := by
     simpa only [Metric.mem_sphere, dist_zero_right, norm_neg] using
       (show ‖(pole : Space)‖ = 1 from by
         simpa only [Metric.mem_sphere, dist_zero_right] using pole.property)⟩
-  refine ⟨(0, pole), pole, south, ?_⟩
+  refine ⟨⟨0, pole⟩, pole, south, ?_⟩
   change inner ℝ (pole : Space) (pole : Space) ≠
     inner ℝ (pole : Space) (-(pole : Space))
   have hp : ‖(pole : Space)‖ = 1 := by
