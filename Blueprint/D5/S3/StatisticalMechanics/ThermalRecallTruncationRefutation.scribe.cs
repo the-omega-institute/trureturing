@@ -64,7 +64,10 @@ internal sealed class ThermalRecallTruncationRefutationDocument : IScribeDocumen
                         "The exact finite sums defining total variation then give the identity that the distance to the "
                             + "truncated output equals the distance to the reset output plus 1/144. Applying the claimed "
                             + "inequality to this instance contradicts that positive gap, so the universal claim is false."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("czartowski-deoliveirajunior-korzekwa-2023-thermal-recall-truncation"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(
