@@ -12,6 +12,8 @@ import Mathlib.Data.Fintype.Card
 import Mathlib.Data.List.Basic
 import Mathlib.Tactic
 
+/-! Legal insertion runs and finite-table acquisition for arbitrary configuration families. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -238,8 +240,8 @@ private theorem finite_table {F : Finset (Finset E)} (hF : F.Nonempty)
       by_contra hne
       exact hmany ⟨D, hD.trans hC.symm, Ne.symm hne⟩
   obtain ⟨policy, hp⟩ :=
-    (D5.S3.ConceptDynamics.Agency.DeterministicSafePolicyExistence.
-      deterministic_safe_policy_exists_iff s legal).mpr common
+    (D5.S3.ConceptDynamics.Agency.DeterministicSafePolicyExistence.deterministic_safe_policy_exists_iff
+      s legal).mpr common
   obtain ⟨C₀, hC₀⟩ := hF
   let fallback : Decision F := Sum.inl ⟨C₀, hC₀⟩
   let select (q : ℕ) : Decision F :=
