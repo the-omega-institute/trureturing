@@ -557,9 +557,6 @@ private theorem original_four_finite_sum (D : LatticeData)
 private theorem edges_ordered : ∀ (M : PM4) (e : Four × Four),
     e ∈ M.edges → e.1.1 < e.2.1 := by decide
 
-private theorem min4_le (n : Four → ℕ) (j : Four) : min4 n ≤ n j := by
-  fin_cases j <;> dsimp [min4] <;> omega
-
 private theorem le_max4 (n : Four → ℕ) (j : Four) : n j ≤ max4 n := by
   fin_cases j <;> dsimp [max4] <;> omega
 
@@ -578,7 +575,10 @@ private theorem matching_parameter_bounds (n : Four → ℕ) (Q t : ℕ) (M : PM
   have hterm (j : Four) :
       ell e * (k e + if sideMem (ε e) e.1 j then 1 else 0) ≤
         matchingShift M ell ε k j := by
-    exact Finset.single_le_sum (fun _ _ => Nat.zero_le _) (Finset.mem_univ e)
+    unfold matchingShift
+    exact Finset.single_le_sum
+      (fun (x : edgeParam M) _ => Nat.zero_le
+        (ell x * (k x + if sideMem (ε x) x.1 j then 1 else 0))) (Finset.mem_univ e)
   have hwind (j : Four) : k e ≤ n j := by
     have hmul : k e ≤ ell e * k e := by
       simpa using Nat.mul_le_mul_right (k e) (show 1 ≤ ell e from hpos e)
