@@ -305,6 +305,7 @@ theorem acute_cover_contractible_of_multiplicity_lt [FiniteDimensional ℝ E]
   obtain ⟨q, hq⟩ := nullhomotopic_of_misses_point g p hp
   exact (contractible_iff_id_nullhomotopic _).mpr ⟨q, hid.trans hq⟩
 
+open Classical in
 /-- An open orthogonality-free cover whose point multiplicities are below the ambient
 dimension would contract the sphere. The finite acute refinement is constructed. -/
 theorem open_cover_contractible_of_multiplicity_lt {n k : ℕ} [Fact (finrank ℝ E = n + 1)]
@@ -336,8 +337,9 @@ theorem open_cover_contractible_of_multiplicity_lt {n k : ℕ} [Fact (finrank �
     have heq : (Finset.univ.filter fun j : t => x ∈ V j).card =
         (t.filter fun j => x ∈ j.2).card := by
       change (t.attach.filter fun j : t => x ∈ j.val.2).card = _
-      rw [Finset.filter_attach]
-      simp
+      simpa only [Finset.card_map, Finset.card_attach] using
+        congrArg Finset.card (Finset.filter_attach
+          (fun j : Fin k × Set (sphere (0 : E) 1) => x ∈ j.2) t)
     rw [heq, hdim]
     omega
 
@@ -365,6 +367,7 @@ theorem sphere_open_orthogonality_free_cover_lower_bound {n k : ℕ} (hn : 2 ≤
   apply low_color_cover_contractible (n := n - 1) U hopen hcover hfree
   omega
 
+open Classical in
 /-- Restriction to the perpendicular unit circle requires at least three absent colors. -/
 theorem sphere_three_absent_colors {k : ℕ}
     (U : Fin k → Set (sphere (0 : EuclideanSpace ℝ (Fin 3)) 1))

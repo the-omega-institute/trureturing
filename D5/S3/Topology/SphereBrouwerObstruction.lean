@@ -71,7 +71,7 @@ private theorem sphere_retraction_of_contractible {E : Type*}
   let R : closedBall (0 : E) 1 → sphere (0 : E) 1 := fun y => G (invFun q y)
   have hRq : ∀ z, R (q z) = G z := by
     intro z
-    exact hfiber _ _ (Function.rightInverse_invFun q hsurj (q z))
+    exact hfiber _ _ (Function.rightInverse_invFun hsurj (q z))
   have hR : Continuous R := by
     apply (Topology.IsQuotientMap.of_surjective_continuous hsurj hq).continuous_iff.mpr
     convert G.continuous using 1
@@ -79,8 +79,8 @@ private theorem sphere_retraction_of_contractible {E : Type*}
   refine ⟨⟨R, hR⟩, ?_⟩
   intro x
   have hh := hRq (1, x)
-  rw [G.map_one_left] at hh
-  simpa [q] using hh
+  have hhx := hh.trans (G.map_one_left x)
+  simpa [q] using hhx
 
 /-- A positive-dimensional Euclidean unit sphere cannot be contractible: a contraction
 would yield a ball retraction and hence a fixed-point-free simplex self-map. -/
