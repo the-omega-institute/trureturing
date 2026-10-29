@@ -452,11 +452,11 @@ variable {V : Type*} [DecidableEq V] {G : SimpleGraph V}
     v ∈ (fun f => Finset.univ.image f) f ↔ ∃ i, f i = v := by
   simp
 
-private theorem configuration_card {n : ℕ} (f : Fin n → V) (h : Function.Injective f) :
+theorem configuration_card {n : ℕ} (f : Fin n → V) (h : Function.Injective f) :
     ((fun f => Finset.univ.image f) f).card = n := by
   rw [Finset.card_image_of_injective _ h,Finset.card_univ,Fintype.card_fin]
 
-private theorem labelled_gp {n : ℕ} (f : Fin n → V)
+theorem labelled_gp {n : ℕ} (f : Fin n → V)
     (h : ∀ i j k, i ≠ j → j ≠ k → i ≠ k → ¬ OnGeodesic G (f i) (f j) (f k)) :
     IsGeneralPosition G ((fun f => Finset.univ.image f) f) := by
   intro u hu v hv w hw huv hvw huw
@@ -466,7 +466,7 @@ private theorem labelled_gp {n : ℕ} (f : Fin n → V)
   exact h i j k (fun he => huv (congrArg f he)) (fun he => hvw (congrArg f he))
     (fun he => huw (congrArg f he))
 
-private theorem labelled_move {n : ℕ} (f g : Fin n → V) (i : Fin n)
+theorem labelled_move {n : ℕ} (f g : Fin n → V) (i : Fin n)
     (hf : Function.Injective f) (hg : Function.Injective g) (he : ∀ j, j ≠ i → f j = g j)
     (ha : G.Adj (f i) (g i)) (hgp : IsGeneralPosition G ((fun f => Finset.univ.image f) g)) :
     LegalMove G ((fun f => Finset.univ.image f) f) ((fun f => Finset.univ.image f) g) := by

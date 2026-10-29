@@ -67,3 +67,28 @@ The literature screen includes arXiv:2507.16622, arXiv:2501.19385v5,
 arXiv:2510.01294v2, arXiv:2604.15909v1 and arXiv:2412.09837v3. No prior
 settlement was found in that screen; literature completeness is
 ASSUMED-UNVERIFIED. The torus analogues are outside this settlement.
+
+## Infinite integer-lattice question
+
+Section 5, second bullet, asks whether the known static value for the
+infinite integer lattice remains the mobile general-position value in higher
+dimensions. The source-qualified resolution is recorded in
+`Problems/klavzar-et-al-2025-mobile-general-position-integer-lattices.md` and
+formalized by
+`D5/S3/Combinatorics/Graph/GeneralPosition/IntegerLatticeMobile.result`.
+
+The formal graph has vertex type `Fin k → ℤ` and signed-unit adjacency. Its
+general-position predicate is the graph shortest-path predicate, and the
+mobile predicate requires one common natural-time trajectory with an actual
+LegalMove at every step, general position throughout, and coverage of every
+lattice vertex. The result proves the universal bound and an attained witness
+of size $2^{2^{k-1}}$ for every $k\ge1$. The witness starts at the fourfold
+image of the static configuration; no reachability from the unscaled witness
+is included.
+
+The static double-exponential ingredient is attributed to arXiv:2003.12959v2,
+Theorem 1, DOI 10.1016/j.amc.2020.125664. The mobile settlement adds the
+actual lattice metric/geodesic bridge, a covering walk, serialized one-label
+moves, and the finite-configuration bridge. It does not impose a finite box,
+a traversal-time bound, simultaneous moves, or independent target-dependent
+runs.
