@@ -1,0 +1,1 @@
+WIP: D5 placement/native and mirrored Reg closure compiled successfully; proceeding to canonical emission and scoped report.
