@@ -245,7 +245,7 @@ private theorem finite_lowering_exact {d : Nat}
 
 /-- The actual finite named syntax selects branches and a total successful MGU.
 The factorization includes every name and hence every declared output component. -/
-theorem finite_expression_reduction {d : Nat}
+private theorem finite_expression_reduction {d : Nat}
     (E : List (MixedExpr (Fin d) × MixedExpr (Fin d))) (v : Fin d → Source) :
     (∀ e ∈ E, eval v e.1 = eval v e.2) ↔
       ∃ B ∈ NativePositiveBranchReduction.branches (finiteEquations E),
@@ -474,5 +474,125 @@ theorem guarded_mixed_sound {k m : Nat} (E : List (MixedExpr X × MixedExpr X))
     exact comparisons p (List.mem_flatMap.mpr ⟨b,hb,hp⟩)
   have sound := flatten_expansion_sound E B hB (fun x => (t x).code n z) branch
   simpa only [pattern_expansion] using sound
+
+/-- Addresses of all explicit primitive leaves of the actual free shape. -/
+def scalarAddresses : NativeTermUnification.Term X → List (List Bool)
+  | .of (.inl _) => [[]]
+  | .of (.inr _) => []
+  | .mul l r => (scalarAddresses l).map (false :: ·) ++
+      (scalarAddresses r).map (true :: ·)
+
+/-- Read an actual primitive rank; the fallback is excluded at extracted scalar sites. -/
+def rankAt (C : Code) (q : List Bool) : Nat :=
+  match NativePositiveImageCover.subtree C q with
+  | some (.of r) => r
+  | _ => 0
+
+private theorem scalar_site_actual (t : NativeTermUnification.Term X)
+    (v : X → Source) (C : Code)
+    (h : NativePositiveBranchReduction.shape C = NativeTermUnification.evaluate v t)
+    (q : List Bool) (hq : q ∈ scalarAddresses t) :
+    NativePositiveImageCover.subtree C q = some (.of (rankAt C q)) := by
+  induction t generalizing C q with
+  | of a =>
+      cases a with
+      | inr x => simp [scalarAddresses] at hq
+      | inl b =>
+          simp only [scalarAddresses, List.mem_singleton] at hq
+          subst q
+          cases C with
+          | of r => rfl
+          | mul l r => cases h
+  | mul l r hl hr =>
+      cases C with
+      | of n => cases h
+      | mul A B =>
+          change FreeMagma.mul (NativePositiveBranchReduction.shape A)
+            (NativePositiveBranchReduction.shape B) =
+            FreeMagma.mul (NativeTermUnification.evaluate v l)
+              (NativeTermUnification.evaluate v r) at h
+          have hh := FreeMagma.mul.inj h
+          simp only [scalarAddresses, List.mem_append, List.mem_map] at hq
+          rcases hq with ⟨q,hq,rfl⟩ | ⟨q,hq,rfl⟩
+          · exact hl A hh.1 q hq
+          · exact hr B hh.2 q hq
+
+/-- Scalar coordinates remember the name and address, or all three collapse names. -/
+inductive RankSlot (X : Type) where
+  | explicit : X → List Bool → RankSlot X
+  | collapse : X → X → X → RankSlot X
+
+/-- Enumerate every named explicit leaf and each occurrence of a collapse constraint. -/
+def rankSlots (p : NativeTermUnification.Presentation X)
+    (s : X → NativeTermUnification.Term X) (B : List (BranchEquation X)) : List (RankSlot X) :=
+  (p.enumeration.flatMap fun x => (scalarAddresses (s x)).map (RankSlot.explicit x)) ++
+    B.flatMap (fun b => match b with
+      | .collapse z x y => [.collapse z x y]
+      | _ => [])
+
+def RankSlot.value (u : X → Code) : RankSlot X → Nat
+  | .explicit x q => rankAt (u x) q
+  | .collapse _ _ y => rankAt (u y) []
+
+/-- The finite natural tuple is read from the same actual canonical assignment. -/
+def rankParameters (p : NativeTermUnification.Presentation X)
+    (s : X → NativeTermUnification.Term X) (B : List (BranchEquation X))
+    (u : X → Code) : Fin (rankSlots p s B).length → Nat :=
+  fun i => ((rankSlots p s B).get i).value u
+
+/-- A collapse coordinate retains r+1, r and r+2 simultaneously. -/
+def RankSlot.Correct (u : X → Code) : RankSlot X → Nat → Prop
+  | .explicit x q, r => NativePositiveImageCover.subtree (u x) q = some (.of r)
+  | .collapse z x y, r => u x = .of (r+1) ∧ u y = .of r ∧ u z = .of (r+2)
+
+private theorem rank_slots_actual (p : NativeTermUnification.Presentation X)
+    (s : X → NativeTermUnification.Term X) (B : List (BranchEquation X))
+    (u : X → Code)
+    (hs : ∀ x, NativeTermUnification.evaluate
+      (fun y => NativePositiveBranchReduction.shape (u y)) (s x) =
+        NativePositiveBranchReduction.shape (u x))
+    (hb : ∀ b ∈ B, b.Holds u)
+    (i : Fin (rankSlots p s B).length) :
+    ((rankSlots p s B).get i).Correct u (rankParameters p s B u i) := by
+  have hi := List.get_mem (rankSlots p s B) i
+  generalize he : (rankSlots p s B).get i = a at hi ⊢
+  change a.Correct u (a.value u)
+  simp only [rankSlots, List.mem_append, List.mem_flatMap, List.mem_map] at hi
+  rcases hi with ⟨x,hx,q,hq,rfl⟩ | ⟨b,hb',ha⟩
+  · exact scalar_site_actual (s x) _ (u x) (hs x).symm q hq
+  · cases b <;> simp only [List.not_mem_nil] at ha
+    rename_i z x y
+    simp only [List.mem_singleton] at ha
+    subst a
+    obtain ⟨r,hx,hy,hz⟩ := hb (.collapse z x y) hb'
+    simpa only [RankSlot.Correct, RankSlot.value, rankAt, hy,
+      NativePositiveImageCover.subtree] using And.intro hx (And.intro hy hz)
+
+/-- Every original solution automatically yields a finite total MGU and a natural
+coordinate for every explicit shape leaf and collapse constraint of that branch. -/
+theorem finite_rank_extraction {d : Nat}
+    (E : List (MixedExpr (Fin d) × MixedExpr (Fin d))) (v : Fin d → Source)
+    (hv : ∀ e ∈ E, eval v e.1 = eval v e.2) :
+    ∃ B ∈ NativePositiveBranchReduction.branches (finiteEquations E),
+      (∀ b ∈ B, b.Holds (fun x => encode (finiteExtend E v x))) ∧
+      ∃ S : Lambda.SubstInfo,
+        (NativeGroundSolutionSpace.encodeEquations (namePresentation E)
+          (NativePositiveBranchReduction.shapeEquations B)).unify Lambda.SubstInfo.empty = .ok S ∧
+        (∀ x, NativeTermUnification.evaluate
+          (fun y => NativePositiveBranchReduction.shape (encode (finiteExtend E v y)))
+          (NativeGroundSolutionSpace.action (namePresentation E) S x) =
+            NativePositiveBranchReduction.shape (encode (finiteExtend E v x))) ∧
+        (∀ i : Fin (rankSlots (namePresentation E)
+            (NativeGroundSolutionSpace.action (namePresentation E) S) B).length,
+          ((rankSlots (namePresentation E)
+            (NativeGroundSolutionSpace.action (namePresentation E) S) B).get i).Correct
+              (fun x => encode (finiteExtend E v x))
+              (rankParameters (namePresentation E)
+                (NativeGroundSolutionSpace.action (namePresentation E) S) B
+                (fun x => encode (finiteExtend E v x)) i)) := by
+  obtain ⟨B,hB,_,hb,S,hok,hs⟩ := (finite_expression_reduction E v).mp hv
+  exact ⟨B,hB,hb,S,hok,hs,rank_slots_actual (namePresentation E)
+    (NativeGroundSolutionSpace.action (namePresentation E) S) B
+    (fun x => encode (finiteExtend E v x)) hs hb⟩
 
 end D5.S3.Arith.FibonacciAtomic.Observer.NativeMixedImageConstruction
