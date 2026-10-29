@@ -506,4 +506,167 @@ theorem finite_isolated_small_completion {α : Type*} [Fintype α] [Nonempty α]
         omega
       exact he.trans hz
 
+
+/-- Swap precisely the negative/SMALL adjacent pairs of physical labels. -/
+private noncomputable def isolatedSwap {α : Type*} (σ : Equiv.Perm α)
+    (w : α → ℤ) (Q : ℤ) (i : α) : α :=
+  if w i < 0 ∧ |w (σ i)| < Q then σ i
+  else if |w i| < Q then σ.symm i else i
+
+/-- The correction on SMALL phases accounts for the adjacent label swap. -/
+private noncomputable def isolatedPotential {α : Type*} (σ : Equiv.Perm α)
+    (w : α → ℤ) (Q N : ℤ) (i : α) : ℤ :=
+  if |w i| < Q then 2 * w i - w (σ.symm i)
+  else w i + if w i < 0 then N else 0
+
+private theorem isolated_predecessors {α : Type*}
+    (σ : Equiv.Perm α) (w : α → ℤ) (Q : ℤ) (hQ : 0 < Q)
+    (hnz : ∀ i, w i ≠ 0)
+    (hs : ∀ i, |w i| < Q → 0 < w i ∧ Q ≤ w (σ i))
+    (hn : ∀ i, w i < 0 → 0 < w (σ i))
+    (hp : ∀ i, Q ≤ w i → w (σ i) < 0) :
+    (∀ i, w i < 0 → Q ≤ w (σ.symm i)) ∧
+    (∀ i, |w i| < Q → w (σ.symm i) < 0) := by
+  have negpred (i : α) (hi : w i < 0) : Q ≤ w (σ.symm i) := by
+    by_contra hh
+    by_cases ht : w (σ.symm i) < 0
+    · have := hn (σ.symm i) ht
+      simp only [σ.apply_symm_apply] at this
+      omega
+    · have hz := hnz (σ.symm i)
+      have hpos : 0 < w (σ.symm i) := by omega
+      have hsmall : |w (σ.symm i)| < Q := by rw [abs_of_pos hpos]; omega
+      have := (hs (σ.symm i) hsmall).2
+      simp only [σ.apply_symm_apply] at this
+      omega
+  refine ⟨negpred, ?_⟩
+  intro i hi
+  by_contra hh
+  have hz := hnz (σ.symm i)
+  have hpos : 0 < w (σ.symm i) := by omega
+  by_cases ht : Q ≤ w (σ.symm i)
+  · have := hp (σ.symm i) ht
+    simp only [σ.apply_symm_apply] at this
+    have := (hs i hi).1
+    omega
+  · have ht' : |w (σ.symm i)| < Q := by rw [abs_of_pos hpos]; omega
+    have := (hs (σ.symm i) ht').2
+    simp only [σ.apply_symm_apply] at this
+    have := abs_lt.mp hi
+    omega
+
+private theorem isolated_potential_geometry
+    {α : Type*} [Fintype α] [Nonempty α]
+    (σ : Equiv.Perm α) (w : α → ℤ) (Q N C : ℤ)
+    (hQ : 2 ≤ Q) (hN : N = 4 * Q - 1) (hC : C = 2 * Q - 1)
+    (hbound : ∀ i, -C ≤ w i ∧ w i ≤ C)
+    (hstep : ∀ i, w (σ i) = doubleStep N (w i))
+    (hsmall : ∀ i, |w i| < Q → 0 ≤ w i)
+    (hisolated : ∀ i, |w i| < Q → Q ≤ |w (σ i)|) :
+    ∃ o : α, Q ≤ w o ∧
+      (∀ i, isolatedSwap σ w Q (isolatedSwap σ w Q i) = i) ∧
+      (∀ i, isolatedPotential σ w Q N (σ i) - isolatedPotential σ w Q N i =
+        w (isolatedSwap σ w Q i)) ∧
+      (∀ i, 0 ≤ isolatedPotential σ w Q N i - w o ∧
+        28 * (isolatedPotential σ w Q N i - w o) < 13 * N) := by
+  classical
+  obtain ⟨hnz, hs, hn, hp⟩ := isolated_geometry σ w Q N C hQ hN hC
+    hbound hstep hsmall hisolated
+  have hslarge (i : α) (hi : |w i| < Q) : Q ≤ w (σ i) := by
+    have hpos := (hs i hi).1
+    have he := (hs i hi).2.1
+    have hh := hisolated i hi
+    rwa [abs_of_pos (by omega : 0 < w (σ i))] at hh
+  obtain ⟨negpred, smallpred⟩ := isolated_predecessors σ w Q (by omega) hnz
+    (fun i hi => ⟨(hs i hi).1, hslarge i hi⟩)
+    (fun i hi => (hn i hi).2.2) (fun i hi => (hp i hi).2.1)
+  have neglarge (i : α) (hi : w i < 0) : ¬|w i| < Q := by
+    have := (hn i hi).1
+    rw [abs_of_neg hi]
+    omega
+  have rootlarge (i : α) (hi : Q ≤ w i) : ¬|w i| < Q := by
+    rw [abs_of_pos (by omega : 0 < w i)]
+    omega
+  have hex : ∃ i, Q ≤ w i := by
+    let a : α := Classical.arbitrary α
+    by_cases ha : Q ≤ w a
+    · exact ⟨a, ha⟩
+    by_cases hn' : w a < 0
+    · exact ⟨σ.symm a, negpred a hn'⟩
+    · have hz := hnz a
+      have ha' : |w a| < Q := by rw [abs_of_pos (by omega : 0 < w a)]; omega
+      exact ⟨σ a, hslarge a ha'⟩
+  let roots : Finset α := Finset.univ.filter (fun i => Q ≤ w i)
+  obtain ⟨a, ha⟩ := hex
+  obtain ⟨o, ho, hmin⟩ := roots.exists_min_image w ⟨a, by simpa [roots] using ha⟩
+  have ho' : Q ≤ w o := by simpa [roots] using ho
+  have hmin' (i : α) (hi : Q ≤ w i) : w o ≤ w i :=
+    hmin i (by simpa [roots] using hi)
+  refine ⟨o, ho', ?_, ?_, ?_⟩
+  · intro i
+    by_cases hi : |w i| < Q
+    · have hipos := (hs i hi).1
+      have hin := smallpred i hi
+      have hinlarge := neglarge (σ.symm i) hin
+      simp [isolatedSwap, hi, show ¬w i < 0 by omega, hin]
+    · by_cases ht : w i < 0 ∧ |w (σ i)| < Q
+      · have hnextpos := (hs (σ i) ht.2).1
+        simp [isolatedSwap, ht, show ¬w (σ i) < 0 by omega, ht.2]
+      · simp [isolatedSwap, ht, hi]
+  · intro i
+    by_cases hi : |w i| < Q
+    · have hipos := (hs i hi).1
+      have hn' := smallpred i hi
+      have hnlarge := neglarge (σ.symm i) hn'
+      have hsnext := hslarge i hi
+      have he := (hs i hi).2.1
+      have ht := (hn (σ.symm i) hn').2.1
+      simp only [σ.apply_symm_apply] at ht
+      simp only [isolatedPotential, if_pos hi, if_neg (rootlarge (σ i) hsnext),
+        if_neg (show ¬w (σ i) < 0 by omega), add_zero, isolatedSwap,
+        if_neg (show ¬(w i < 0 ∧ |w (σ i)| < Q) by omega)]
+      rw [if_pos hi]
+      omega
+    · by_cases hn' : w i < 0
+      · have he := (hn i hn').2.1
+        have hnextpos := (hn i hn').2.2
+        by_cases ht : |w (σ i)| < Q
+        · simp [isolatedPotential, hi, ht, hn', isolatedSwap]
+          omega
+        · simp only [isolatedPotential, if_neg hi, if_neg ht, if_pos hn',
+            if_neg (show ¬w (σ i) < 0 by omega), add_zero, isolatedSwap,
+            if_neg (show ¬(w i < 0 ∧ |w (σ i)| < Q) by tauto)]
+          omega
+      · have hz := hnz i
+        have hi' : Q ≤ w i := by rw [abs_of_pos (by omega : 0 < w i)] at hi; omega
+        have hnnext := (hp i hi').2.1
+        have he := (hp i hi').1
+        simp [isolatedPotential, hi, neglarge (σ i) hnnext, hn', hnnext, isolatedSwap]
+        omega
+  · intro i
+    have horoot := hp o ho'
+    by_cases hi : |w i| < Q
+    · have hn' := smallpred i hi
+      have hr := negpred (σ.symm i) hn'
+      have hminr := hmin' (σ.symm (σ.symm i)) hr
+      have he1 := (hn (σ.symm i) hn').2.1
+      have he2 := (hp (σ.symm (σ.symm i)) hr).1
+      have hsmall' := hs i hi
+      simp only [σ.apply_symm_apply] at he1 he2
+      simp only [isolatedPotential, if_pos hi]
+      constructor <;> omega
+    · by_cases hn' : w i < 0
+      · have hr := negpred i hn'
+        have hminr := hmin' (σ.symm i) hr
+        have he := (hp (σ.symm i) hr)
+        simp only [σ.apply_symm_apply] at he
+        simp only [isolatedPotential, if_neg hi, if_pos hn']
+        constructor <;> omega
+      · have hz := hnz i
+        have hr : Q ≤ w i := by rw [abs_of_pos (by omega : 0 < w i)] at hi; omega
+        have hminr := hmin' i hr
+        have he := hp i hr
+        simp only [isolatedPotential, if_neg hi, if_neg hn', add_zero]
+        constructor <;> omega
+
 end D5.S3.Combinatorics.Circle.IsolatedSmallSource
