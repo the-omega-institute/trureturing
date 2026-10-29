@@ -297,7 +297,7 @@ theorem choices_origin (e : Equation X) (b : BranchEquation X) (h : b ∈ choice
     | subst b; rfl
     | rcases h with rfl | rfl <;> rfl
 
-private theorem branches_exact (E : List (Equation X)) (v : X → Source) :
+theorem branches_exact (E : List (Equation X)) (v : X → Source) :
     (∀ e ∈ E, e.Holds v) ↔
       ∃ B ∈ branches E, ∀ b ∈ B, b.Holds (fun x => encode (v x)) := by
   induction E with

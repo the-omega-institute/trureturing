@@ -123,6 +123,14 @@ theorem flatten_exact (E : List (MixedExpr X × MixedExpr X)) (v : X → Source)
     exact h (.same (root e.1) (root e.2))
       (List.mem_flatMap.mpr ⟨e, he, by simp⟩)
 
+/-- The actual finite branch list is constructed directly from the original expression list. -/
+theorem expression_branch_exact (E : List (MixedExpr X × MixedExpr X)) (v : X → Source) :
+    (∀ e ∈ E, eval v e.1 = eval v e.2) ↔
+      ∃ B ∈ NativePositiveBranchReduction.branches (flatten E),
+        ∀ b ∈ B, b.Holds (fun x => encode (extend v x)) := by
+  rw [flatten_exact E v]
+  exact NativePositiveBranchReduction.branches_exact (flatten E) (extend v)
+
 private theorem flatten_sound (E : List (MixedExpr X × MixedExpr X))
     (w : Name X → Source) (h : ∀ q ∈ flatten E, q.Holds w) :
     ∀ e ∈ E, eval (fun x => w (.inl x)) e.1 = eval (fun x => w (.inl x)) e.2 := by
@@ -193,7 +201,8 @@ private theorem pattern_expansion {k m : Nat} (n : Fin k → Nat) (z : Fin m →
       cases r with
       | constant c => rfl
       | parameter i a =>
-          change substitution^[n i + a] (.of true) = substitution^[a] (substitution^[n i] (.of true))
+          change substitution^[n i + a] (.of true) =
+            substitution^[a] (substitution^[n i] (.of true))
           rw [Nat.add_comm (n i) a, Function.iterate_add_apply]
   | block i a =>
       change expand (shiftCode a (encode (z i))) = substitution^[a] (z i)
@@ -304,7 +313,7 @@ private theorem collect_sound {k m : Nat} (L : List (Pattern k m × Pattern k m)
       obtain ⟨a, ha, b, hb, rfl⟩ := hg
       intro q hq
       rcases List.mem_cons.mp hq with rfl | hq
-      · exact compare_sound p.1 p.2 a ha n
+      · exact compare_sound q.1 q.2 a ha n
           (fun e he => hn e (List.mem_append_left _ he)) z
       · exact ih b hb (fun e he => hn e (List.mem_append_right _ he)) q hq
 
@@ -321,8 +330,11 @@ private theorem comparisons_branch {k m : Nat} (t : X → Pattern k m)
   | ordinary x y z => exact h _ (List.mem_singleton_self _)
   | same x y => exact h _ (List.mem_singleton_self _)
   | collapse x y w =>
-      refine ⟨n (c (.collapse x y w)), h _ (by simp [branchComparisons]), ?_,
-        h _ (by simp [branchComparisons])⟩
+      refine ⟨n (c (.collapse x y w)),
+        h (t y, .scalar (.parameter (c (.collapse x y w)) 1))
+          (by simp [branchComparisons]), ?_,
+        h (t x, .scalar (.parameter (c (.collapse x y w)) 2))
+          (by simp [branchComparisons])⟩
       simpa only [Pattern.code, Scalar.value, Nat.add_zero] using
         h (t w, .scalar (.parameter (c (.collapse x y w)) 0))
           (by simp [branchComparisons])
