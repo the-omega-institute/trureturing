@@ -1,0 +1,58 @@
+**Theorem 21.6 (constructive conditional canonical normalization).**
+Assume Definition 21.5. For $d=0$ use the original zero descriptor. For
+$d\ge1$, from an authentic $P$, first represent the fibre
+in (ACR.79) by an affine base and kernel basis using exact Gaussian
+elimination. At depth $t$, test the child prefix $u0$ by constructing
+$\operatorname{Img}(d,t+1,u0)$ and intersecting its affine image with
+the earned fibre. Retain $u0$ when the intersection is nonempty; if it
+is empty, construct and retain $u1$. At depth $d$, the retained cell is
+a singleton, and its row is exactly $\kappa_d(P)$. Append the unchanged
+seed $s_d(P)$ to obtain $\operatorname{EN}_d(P)$.
+
+At most two child images are constructed at each depth. Put
+
+$$
+ \ell_{\rm aff}=\left\lceil\log_2
+ \bigl(64(d+2)^4+2V_{\rm img}(d)+2\bigr)\right\rceil.
+$$
+
+The image routine runs on its own counted tapes; the caller keeps only
+one image at a time. Parsing its full record and copying its base and
+basis into $O(d^2)$ caller data costs
+$O((V_{\rm img}+(d+1)^2)\ell_{\rm aff}^2)$ work and cumulative
+writes. All movements through its index record are paid even though
+firstness uses the ordinal prefix, rather than an inverse-index oracle.
+The prefix $u$ itself is an explicit at-most-$d$-bit word, not a
+unit-cost ordinal register. Forming the intersection equations, including
+the product $H B$, and Gaussian elimination require $O((d+1)^3)$
+binary updates on $O((d+1)^2)$ data. The scan implementation above
+therefore costs $O((d+1)^5\ell_{\rm aff}^2)$ work and cumulative
+writes, with $O((d+1)^2+\ell_{\rm aff})$ caller backing. The bounds
+include construction of the earned fibre, every feasibility test,
+descriptor emission and the seed copy. Thus, for an absolute constant,
+
+$$
+ \begin{aligned}
+ C_{\rm aff}(d)&\le C_1\left[(d+1)\left(C_{\rm img}(d)
+    +\bigl(V_{\rm img}(d)+(d+1)^5\bigr)\ell_{\rm aff}^2\right)
+    +(d+1)^5\ell_{\rm aff}^2\right],\\
+ W_{\rm aff}(d)&\le C_1\left[(d+1)\left(W_{\rm img}(d)
+    +\bigl(V_{\rm img}(d)+(d+1)^5\bigr)\ell_{\rm aff}^2\right)
+    +(d+1)^5\ell_{\rm aff}^2\right],\\
+ V_{\rm aff}(d)&\le V_{\rm img}(d)
+    +C_1\bigl((d+1)^2+\ell_{\rm aff}\bigr).
+ \end{aligned}
+ \tag{ACR.88}
+$$
+
+These remain polynomials in $d$ under Definition 21.5; in particular the
+image's working data and its caller's counters both fit the backing.
+
+The final normalizer emits $2d$ descriptor bits and retains the original
+$2d$-bit $P$; no affine feasibility result is treated as a proof without
+its returned base and basis. The child-prefix induction proves exact
+firstness: the fibre is nonempty, its ordinal cells partition at every
+depth, and the chosen child is the first nonempty cell. This conclusion
+is conditional on the stated property; the unspecified original
+$\rho_d$ is not asserted to have it.
+
