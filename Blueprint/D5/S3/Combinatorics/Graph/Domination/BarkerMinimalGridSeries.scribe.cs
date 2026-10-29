@@ -6,7 +6,7 @@ internal sealed class BarkerMinimalGridSeriesDocument : IScribeDocumentDefinitio
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Domination/BarkerMinimalGridSeries.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/barker2017a286848");
+        LibraryNoteRef.Create("D5/L/GridDomination/barker2017a286848");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The complete Barker series for actual minimal dominating subsets", H("The complete Barker series for actual minimal dominating subsets"), Blocks(
