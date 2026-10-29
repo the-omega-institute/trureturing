@@ -275,7 +275,7 @@ private theorem choice_complete (e : Equation X) (v : X → Source) (h : e.Holds
           refine ⟨.ordinary z x y, by simp [choices], ?_⟩
           cases hy : encode (v y) <;> simpa only [BranchEquation.Holds, hx, hy, smart] using hz
 
-private theorem branch_sound (u : X → Code) (b : BranchEquation X) (h : b.Holds u) :
+theorem branch_sound (u : X → Code) (b : BranchEquation X) (h : b.Holds u) :
     b.origin.Holds (fun x => expand (u x)) := by
   cases b with
   | primitive z n => exact congrArg expand h
@@ -290,7 +290,7 @@ private theorem branch_sound (u : X → Code) (b : BranchEquation X) (h : b.Hold
       rw [hx, hy, hz]
       exact NativeRankedEqualityCompiler.atomic_pair r
 
-private theorem choices_origin (e : Equation X) (b : BranchEquation X) (h : b ∈ choices e) :
+theorem choices_origin (e : Equation X) (b : BranchEquation X) (h : b ∈ choices e) :
     b.origin = e := by
   cases e <;> simp only [choices, List.mem_cons, List.not_mem_nil, or_false] at h
   all_goals first
