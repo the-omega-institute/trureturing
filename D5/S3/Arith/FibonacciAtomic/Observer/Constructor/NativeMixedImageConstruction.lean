@@ -1102,9 +1102,14 @@ theorem finite_guard_extraction {d : Nat}
     (hv : ∀ e ∈ E, eval v e.1 = eval v e.2) :
     (∀ i : Fin d, finiteExtend E v (inputName E i) = v i) ∧
     ∃ B ∈ NativePositiveBranchReduction.branches (finiteEquations E),
+      (∀ b ∈ B, b.Holds (fun x => encode (finiteExtend E v x))) ∧
       ∃ S : Lambda.SubstInfo,
         ∃ hok : (NativeGroundSolutionSpace.encodeEquations (namePresentation E)
           (NativePositiveBranchReduction.shapeEquations B)).unify Lambda.SubstInfo.empty = .ok S,
+        (∀ x, NativeTermUnification.evaluate
+          (fun y => NativePositiveBranchReduction.shape (encode (finiteExtend E v y)))
+          (NativeGroundSolutionSpace.action (namePresentation E) S x) =
+            NativePositiveBranchReduction.shape (encode (finiteExtend E v x))) ∧
         ∀ (offsets : (o : NativePositiveImageCover.Occurrence (FiniteName E)) →
             NativePositiveImageCover.IsOccurrence
               (NativeGroundSolutionSpace.action (namePresentation E) S) o → Nat),
@@ -1118,7 +1123,7 @@ theorem finite_guard_extraction {d : Nat}
             ∀ e ∈ B.flatMap (branchComparisons t (automaticCollapse (namePresentation E) s B)),
               blockCompatible e.1 e.2) := by
   obtain ⟨B,hB,_,hb,S,hok,hs⟩ := (finite_expression_reduction E v).mp hv
-  refine ⟨fun _ => rfl,B,hB,S,hok,?_⟩
+  refine ⟨fun _ => rfl,B,hB,hb,S,hok,hs,?_⟩
   intro offsets
   let blocks := sortedBlocks (namePresentation E) B S hok offsets
   dsimp only
