@@ -1,0 +1,34 @@
+**Proposition 4.3 (entry information and necessary same-input traffic).**
+If an apparent window $[A,H]$ includes cuts below $n_0$, its effective
+candidate set is $[\max(A,n_0),H]$, if nonempty; (ACR.16)–(ACR.17)
+use that interval and its actual cardinality. They give no lower bound
+based on excluded cuts.
+
+In Definition 4.1, on every run at an interior age $A<n<H$, any exact
+deterministic controller must submit both a first-birth-$n$ literal
+and a first-birth-$(n+1)$ literal. Consequently on that very input
+
+$$
+ W(n)\ge\lceil n/2\rceil+\lceil(n+1)/2\rceil=n+1,
+ \qquad M(n)\ge\lceil(n+1)/2\rceil.
+ \tag{ACR.18}
+$$
+
+The same conclusion holds on every $n>n_0$ for an exact controller on
+the whole unbounded domain $[n_0,\infty)$. At its lower endpoint it
+must at least submit a first-birth-$(n_0+1)$ literal.
+
+Proof. The maturity promise excludes precisely the lower cuts specified
+in the first assertion; source-independent common entry supplies no
+further age information. For (ACR.18), compare the run at $n$ first
+with that at $n-1$. Until a different reply they have identical control.
+The sole threshold separating these ages is $n$, so their first
+difference requires a first-birth-$n$ query on the run at $n$.
+Comparison instead with $n+1$ forces a first-birth-$(n+1)$ query on
+that same run. These are distinct query occurrences. Proposition 2.2
+bounds their separate lengths, giving the sum and maximum. The
+unbounded domain has both neighbours of every $n>n_0$, and its endpoint
+has the upper neighbour. This is a per-input necessary bill, not a
+pointwise simultaneous optimality claim for one universal controller.
+$\square$
+

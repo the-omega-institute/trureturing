@@ -1,0 +1,2 @@
+**Open Question 12.4 (band-preserving fiberwise concentration).** Under the posterior band $\mathsf B(P)$, can a forward/canonical-reverse quotient satisfy the fiberwise weighted condition (12.7) uniformly at all shifted cuts, or can bad-word variance concentration persist? The assertions $\mathsf Q_{\rm full}$ and $\mathsf Q_{\rm band}$ remain open; no universal tail result is claimed.
+

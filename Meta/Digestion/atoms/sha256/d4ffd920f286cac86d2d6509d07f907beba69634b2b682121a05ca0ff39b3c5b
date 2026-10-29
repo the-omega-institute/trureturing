@@ -1,0 +1,29 @@
+**Definition 2.1 (full finite producer domain).** For every integer $N\ge1$, let
+
+$$
+\Theta_N=\left\{(\lambda,M_0,M_1):
+\lambda\ge0,\quad\lambda\mathbf1=1,\quad M_0,M_1\ge0,\quad
+A=M_0+M_1,\quad A\mathbf1=\mathbf1,\quad
+\lambda A=\lambda,\quad\lambda M_1^2\mathbf1=0\right\}.
+\tag{2.1}
+$$
+
+Here $M_0,M_1$ are $N$ by $N$ real matrices. The last condition is the original scalar condition, not the stronger matrix requirement $M_1^2=0$. Structural zeros, zero stationary masses, reducibility, periodicity, and redundant representations are allowed.
+
+The stationary two-sided joint law $J_\theta$ of hidden states $H_i$ and emitted bits $X_i$, $i\in\mathbb Z$, is specified by
+
+$$
+J_\theta(H_a=h_a,\ldots,H_{b+1}=h_{b+1},X_a=x_a,\ldots,X_b=x_b)
+=\lambda_{h_a}\prod_{i=a}^{b}M_{x_i}(h_i,h_{i+1}).
+\tag{2.2}
+$$
+
+Thus $X_i$ labels the edge $H_i\longrightarrow H_{i+1}$. In particular, the center variable $U=X_0$ labels $H_0\longrightarrow H_1$; it is not a state observation. Write $P=P_\theta$ for the visible marginal. For a word $w=x_1\cdots x_n$, put $M_w=M_{x_1}\cdots M_{x_n}$ and $M_\varnothing=I$. Then
+
+$$
+P(X_{a:a+n-1}=w)=\lambda M_w\mathbf1.
+\tag{2.3}
+$$
+
+The scalar condition gives $P(X_i=X_{i+1}=1)=0$ for each $i$. A countable union shows that $P$ is supported on the two-sided no11 space. Word concatenation has probability $\lambda M_uM_v\mathbf1$; its seam is never replaced by a product of word marginals.
+

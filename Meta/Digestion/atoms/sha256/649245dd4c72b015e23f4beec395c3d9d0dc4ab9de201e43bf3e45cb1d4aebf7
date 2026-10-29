@@ -1,0 +1,17 @@
+## 33. 共享规则的必要与充分半径
+
+记 $e_r(t,\delta)=P_{t,t+\delta}(\widehat f_r(Y_r)\ne X_0)$，沿用（16.3）的 $V(t),C_t,c_t$，其中
+
+$$
+c_t=\frac{V(t)^2}{2C_t}=c_t^{\rm low}.
+$$
+
+定义只用于表述充分半径的常数
+
+$$
+H_t=\frac1{a_t}\log\frac{2B_t}{V(t)}>0,
+\qquad
+\widehat r_*(t,\delta)=\min\{r\in\mathbb Z_{\ge1}:e_r(t,\delta)<V(t)/2\}.
+\tag{33.1}
+$$
+

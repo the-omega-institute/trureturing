@@ -1,0 +1,15 @@
+**Proposition 6.2 (scope under unchanged classical premises).** Fix any
+extension of the source description that leaves Definitions 1.1–1.3,
+(ACR.5)–(ACR.7) and Assumption 1.2 true with the same paid observations.
+Theorems 3.2 and 6.1 remain true for that extension's classical
+projection, irrespective of whether its additional data have an inverse.
+
+Proof. Each control choice and reply used in Theorem 3.2 depends only
+on the declared retained data and (ACR.7). Its computation and stationary
+handoff therefore produce the same numerical record. Theorem 6.1 uses
+only that record and the named GPO premises. No step refers to an
+additional clock, a Hilbert-space preparation or an inverse for those
+additional variables. Hence proving recovery of such further variables
+is an independent obligation unless the extension changes a premise
+used here. $\square$
+
