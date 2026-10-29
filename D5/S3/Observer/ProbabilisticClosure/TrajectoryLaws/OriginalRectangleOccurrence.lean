@@ -25,6 +25,7 @@ open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.PositiveRectangleLaw
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleOccurrence
 universe u
 variable {H : Type u} [Fintype H]
+variable [MeasurableSpace H] [MeasurableSingletonClass H]
 
 /-- A selected positive path in the original labelled matrices; its clock is its edge count. -/
 structure LabelledRoute (θ : Presentation H) (h r : H) where
@@ -61,8 +62,10 @@ private theorem path_entry (θ : Presentation H) (n : ℕ)
           ih (Fin.tail h) (Fin.tail v)
       _ ≤ _ := Finset.single_le_sum
         (fun j _ => mul_nonneg (θ.matrix_nonneg _ _ _)
-          (by simpa only [← product_word] using product_nonneg θ
-            (List.ofFn (Fin.tail v)) j (h (Fin.last (n+1))))) (Finset.mem_univ (h 1))
+          (by
+            have hh := product_nonneg θ (List.ofFn (Fin.tail v)) j (h (Fin.last (n+1)))
+            simpa only [product_word, List.length_ofFn, List.get_ofFn] using hh))
+        (Finset.mem_univ (h 1))
 
 private theorem route_word_mass (θ : Presentation H) (w : List Bool) (r h : H)
     (a : LabelledRoute θ h r) :
@@ -90,8 +93,8 @@ private theorem route_word_mass (θ : Presentation H) (w : List Bool) (r h : H)
       exact Finset.sum_comm
 
 private theorem success_measurable (w : List Bool) (b : ℕ) : MeasurableSet (success w b) := by
-  exact (measurable_of_finite (fun v : Fin b → Bool =>
-    w <:+: List.ofFn v)).measurableSet_preimage (by trivial)
+  change MeasurableSet (readPrefix b ⁻¹' {v : Fin b → Bool | w <:+: List.ofFn v})
+  exact (Set.toFinite _).measurableSet.preimage (by unfold readPrefix; fun_prop)
 
 private theorem prefix_success (w p : List Bool) (b : ℕ) (hb : (p++w).length ≤ b) :
     readPrefix (p++w).length ⁻¹' {(p++w).get} ⊆ success w b := by
@@ -110,7 +113,6 @@ private theorem prefix_success (w p : List Bool) (b : ℕ) (hb : (p++w).length �
   exact (show w <:+: p++w from ⟨p,[],by simp⟩).trans hp.isInfix
 
 section Law
-variable [MeasurableSpace H] [MeasurableSingletonClass H]
 
 /-- Source-selected paths imply a lower bound for the actual visible event against
 every measurable event of the complete marked past, including null hidden fibers. -/
@@ -140,7 +142,10 @@ theorem original_rectangle_occurrence (θ : Presentation H)
   have lower (t : ℤ) (h : H) (hi : 0 < θ.initial h) :
       ENNReal.ofReal ε ≤ futureLaw J t h (success w b) := by
     let p := List.ofFn (a h).labels
-    have hb : (p++w).length ≤ b := by simp only [List.length_append,List.length_ofFn]; exact Nat.add_le_add_left (ha h) _ |>.trans_eq (Nat.add_comm _ _)
+    have hb : (p++w).length ≤ b := by
+      dsimp [p,b]
+      simpa only [List.length_append, List.length_ofFn, Nat.add_comm] using
+        Nat.add_le_add_right (ha h) w.length
     have hm := futureLaw_readPrefix θ J hc t h hi (p++w).length (p++w).get
     rw [Measure.map_apply (by unfold readPrefix; fun_prop) (measurableSet_singleton _)] at hm
     calc
@@ -157,22 +162,23 @@ theorem original_rectangle_occurrence (θ : Presentation H)
   have hsum : 0 < ∑ h, θ.initial h := by rw [θ.initial_sum]; norm_num
   obtain ⟨h,_,hi⟩ := (Finset.sum_pos_iff_of_nonneg fun h _ => θ.initial_nonneg h).mp hsum
   have hε1 : ε ≤ 1 := by
-    have hh := (lower 0 h hi).trans (measure_le_one _)
+    have hh := (lower 0 h hi).trans prob_le_one
     exact (ENNReal.ofReal_le_one).mp hh
   refine ⟨hε,hε1,lower,?_⟩
   intro t h A hA
   by_cases hi : 0 < θ.initial h
   · rw [full_past_future_factor θ J hc t h hi A (success w b) hA (success_measurable w b),
       mul_comm (J _)]
-    exact mul_le_mul_right' (lower t h hi) _
+    exact mul_le_mul_left (lower t h hi) _
   · have hz : θ.initial h = 0 := le_antisymm (le_of_not_gt hi) (θ.initial_nonneg h)
     have hn : J (state t ⁻¹' {h}) = 0 := by
       apply (ENNReal.toReal_eq_zero_iff _).mp ?_ |>.resolve_right (measure_ne_top _ _)
-      simpa only [state_mass θ J hc, hz] using hz
+      change J.real (state t ⁻¹' {h}) = 0
+      rw [state_mass θ J hc, hz]
     have hn' : J ((state t ⁻¹' {h}) ∩ (past t ⁻¹' A)) = 0 :=
       measure_mono_null Set.inter_subset_left hn
     rw [hn',mul_zero]
-    exact zero_le _
+    exact zero_le
 
 end Law
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleOccurrence
