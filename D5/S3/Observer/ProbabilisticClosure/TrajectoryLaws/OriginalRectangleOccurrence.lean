@@ -62,11 +62,13 @@ private theorem path_entry (θ : Presentation H) (n : ℕ)
           ih (Fin.tail h) (Fin.tail v)
       _ ≤ ∑ j : H, θ.matrix (v 0) (h 0) j *
           wordMatrix θ.matrix n (Fin.tail v) j (h (Fin.last (n+1))) := by
+        have hnword (j : H) :
+            0 ≤ wordMatrix θ.matrix n (Fin.tail v) j (h (Fin.last (n+1))) := by
+          rw [← product_ofFn θ n (Fin.tail v)]
+          exact product_nonneg θ (List.ofFn (Fin.tail v)) j (h (Fin.last (n+1)))
         exact Finset.single_le_sum
           (fun (j : H) _ => mul_nonneg (θ.matrix_nonneg (v 0) (h 0) j)
-            (by
-              have hh := product_nonneg θ (List.ofFn (Fin.tail v)) j (h (Fin.last (n+1)))
-              rwa [product_ofFn] at hh))
+            (hnword j))
           (Finset.mem_univ (h 1))
 
 private theorem route_word_mass (θ : Presentation H) (w : List Bool) (r h : H)
