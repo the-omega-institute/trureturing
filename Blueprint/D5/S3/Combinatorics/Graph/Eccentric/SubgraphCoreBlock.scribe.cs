@@ -6,7 +6,7 @@ internal sealed class SubgraphCoreBlockDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Graph/Eccentric/SubgraphCoreBlock.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/GraphInvariants/pandeypatra2021subgraphcore");
+        LibraryNoteRef.Create("D5/L/Geometry/pandeypatra2021subgraphcore");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The entire maximizing set of actual connected-subgraph counts lies in one block.",
