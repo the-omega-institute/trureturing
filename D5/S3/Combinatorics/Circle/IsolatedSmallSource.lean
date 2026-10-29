@@ -626,7 +626,6 @@ private theorem isolated_potential_geometry
       simp only [isolatedPotential, if_pos hi, if_neg (rootlarge (σ i) hsnext),
         if_neg (show ¬w (σ i) < 0 by omega), add_zero, isolatedSwap,
         if_neg (show ¬(w i < 0 ∧ |w (σ i)| < Q) by omega)]
-      rw [if_pos hi]
       omega
     · by_cases hn' : w i < 0
       · have he := (hn i hn').2.1
@@ -815,6 +814,7 @@ private theorem isolated_positive_cycle {k : ℕ} (hk : 0 < k)
     simpa only [hφk, hP0, sub_self, L, base, List.map_map, Function.comp_def] using hh
   let e : Equiv.Perm (Fin k) := Equiv.addLeft o
   have hbase : base = List.ofFn e := by
+    change (List.range k).map φ = List.ofFn e
     rw [List.ofFn_eq_map, ← List.map_coe_finRange_eq_range]
     simp only [base, List.map_map]
     apply List.map_congr_left
