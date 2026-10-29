@@ -15,16 +15,18 @@ internal sealed class DyadicTraceCirculantDocument : IScribeDocumentDefinition
                 "D5/S3/Arith/FiniteField/DyadicTraceCirculant.dyadic_trace_circulant_det_one"),
             H("The consecutive half-size determinant equals one"),
             StatementSource.FromAuthor(Disp(Seq(
-                Forall, Sp, F.Id("k"), Comma, Sp, F.Id("t"), Comma, Sp,
+                Forall, Sp, F.Id("k"), Comma, Sp, F.Id("t"), Sp, InMacro, Sp,
+                Mathbb, Grp(F.Id("N")), Comma, Sp,
                 F.Id("k"), Geq, D(2), Sp, Land, Sp,
                 Operatorname, Grp(F.Id("gcd")), Open, F.Id("t"), Comma, Sp,
                 D(2), Caret, Grp(F.Id("k")), Minus, D(1), Close, Eq, D(1), Sp,
                 Rightarrow, Sp, Operatorname, Grp(F.Id("det")), Open,
-                F.Id("A"), Close, Eq, D(1), Dot))),
+                F.Id("A"), Open, F.Id("k"), Comma, Sp, F.Id("t"), Close,
+                Close, Eq, D(1), Dot))),
             AssessedProvenance.FromRepo(),
             Blocks(
                 Paragraph(Text(
-                    "Put N = 2^k - 1 and M = 2^(k - 1). The rows and columns of A are the consecutive residues 0 through M - 1. Its entry at x,y is the sum in F_2 of the indicators y - x = t 2^i in Z/NZ, for 0 <= i < k. Both endpoints are first mapped to Z/NZ and then subtracted, including when y < x. The parameter t is coprime to N.")),
+                    "Put N = 2^k - 1 and M = 2^(k - 1). Write A(k,t) for dyadicTraceCirculant k t. Its rows and columns are the consecutive residues 0 through M - 1. Its entry at x,y is the sum in F_2 of the indicators y - x = t 2^i in Z/NZ, for 0 <= i < k. Both endpoints are first mapped to Z/NZ and then subtracted, including when y < x. The parameter t is coprime to N.")),
                 Paragraph(Text(
                     "Translations act through the cyclic group Z/NZ. In the field K of size 2^k, Frobenius sends u to u squared and permutes the dyadic translation shifts. The finite-field trace expands as the sum of these Frobenius powers. Consequently the spectrum is exactly the units u with Tr(u^t) = 1. The coprime power map is a permutation of the units. Surjectivity of the F_2-linear trace gives equal fibers of size M; zero is absent from the trace-one fiber. The unit u = 1 is retained whenever its trace is one.")),
                 Paragraph(Text(
