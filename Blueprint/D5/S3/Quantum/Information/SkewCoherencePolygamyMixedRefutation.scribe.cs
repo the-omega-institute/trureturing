@@ -78,7 +78,10 @@ internal sealed class SkewCoherencePolygamyMixedRefutationDocument : IScribeDocu
                             + "and the witness matrix. Replacing its two partial traces by the displayed marginals would make "
                             + "the strict violation nonpositive, a contradiction. Thus result proves "
                             + "the negation of claim."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("yu-2017-skew-coherence-mixed-state-polygamy"),
+                    ResolutionKind.Refuted))
         )));
 
     private static Formula X(string name) => F.Id(name);
