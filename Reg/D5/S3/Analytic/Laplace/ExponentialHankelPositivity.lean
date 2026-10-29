@@ -29,6 +29,7 @@ def actual : Realization signature :=
 def rejected : Realization signature :=
   realize signature (fun _ _ _ _ => (-1 : ℝ)) (fun e => nomatch e)
 
+set_option maxHeartbeats 1000000 in
 def arena : Arena where
   signature := signature
   Law r := ∀ (U : ℝ) (g : ℝ → ℝ)

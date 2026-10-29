@@ -174,7 +174,7 @@ private theorem continuous_square_nonneg {U : ℝ} {g : ℝ → ℝ}
       ‖(p n).eval t‖ ≤ B + 1 := by
     have he : (1 : ℝ) / ((n : ℝ) + 1) ≤ 1 := by
       apply (div_le_one (by positivity)).2
-      linarith [Nat.cast_nonneg (R := ℝ) n]
+      linarith [show (0 : ℝ) ≤ (n : ℝ) from Nat.cast_nonneg n]
     calc
       ‖(p n).eval t‖ ≤ ‖(p n).eval t - φ t‖ + ‖φ t‖ := norm_le_norm_sub_add _ _
       _ ≤ 1 + B := add_le_add ((hnear n t ht).le.trans he) (hbound t ht)
