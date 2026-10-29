@@ -101,7 +101,7 @@ private theorem append_exact {X : Type} (v : X → Source) (left right : Program
       ProgramHolds v left ∧ ProgramHolds v right := by
   cases left <;> cases right <;>
     simp only [appendProgram, ProgramHolds, Option.some.injEq, reduceCtorEq,
-      false_and, exists_false, exists_eq_left, and_false, List.forall_mem_append]
+      false_and, exists_false, exists_eq_right, and_false, List.forall_mem_append]
 
 def compileList {X Y : Type} (compile : Y → Program X) : List Y → Program X
   | [] => some []
