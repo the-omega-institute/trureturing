@@ -2,7 +2,11 @@ fingerprints:
   raw_sha256: sha256:d2fac14b8e7fa9aa385d45040174d92e9218ffd5b7dcb0b3f54205f079bca92c
   normalized_sha256: sha256:d2fac14b8e7fa9aa385d45040174d92e9218ffd5b7dcb0b3f54205f079bca92c
 cas_ref: sha256:d2fac14b8e7fa9aa385d45040174d92e9218ffd5b7dcb0b3f54205f079bca92c
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Gluing/FiniteRunningIntersection.solve_spec
+    target_statement_id: sha256:f8eda2e3393478ad95a892645194459eb23a1045b86592e82ee681b0de610f43
+  - gid: D5/S3/Observer/Separation/ExecutableCapacityJoin.source_solver_spec
+    target_statement_id: sha256:9df676a6a1ef805aab5f7b98785c080bc185929cd9d9c97c614d4b9343e7f438
 receipts:
   unresolved_subitems: []
   chain_atoms:
