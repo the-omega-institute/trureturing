@@ -39,7 +39,52 @@ private lemma distribution_eq_iff_fiber_sums {X : Type*} [Fintype X] [DecidableE
     distribution f μ = distribution f ν ↔
       ∀ a, (∑ x ∈ Finset.univ.filter (fun x => f x = a), μ x) =
         ∑ x ∈ Finset.univ.filter (fun x => f x = a), ν x := by
-  sorry
+  classical
+  constructor
+  · intro h a
+    have ha := congrFun h ({a} : Set ℝ)
+    have hμ : distribution f μ ({a} : Set ℝ) =
+        ∑ x ∈ Finset.univ.filter (fun x => f x = a), μ x := by
+      simp [distribution, Finset.sum_filter]
+    have hν : distribution f ν ({a} : Set ℝ) =
+        ∑ x ∈ Finset.univ.filter (fun x => f x = a), ν x := by
+      simp [distribution, Finset.sum_filter]
+    rw [hμ, hν] at ha
+    exact ha
+  · intro h
+    funext Δ
+    let s : Finset X := Finset.univ.filter (fun x => f x ∈ Δ)
+    let t : Finset ℝ := s.image f
+    have hmap : ∀ x ∈ s, f x ∈ t := by
+      intro x hx
+      exact Finset.mem_image.mpr ⟨x, hx, rfl⟩
+    have hμ := Finset.sum_fiberwise_of_maps_to hmap μ
+    have hν := Finset.sum_fiberwise_of_maps_to hmap ν
+    have hfiber (a : ℝ) (ha : a ∈ t) (q : X → ℝ) :
+        (∑ x ∈ s with f x = a, q x) =
+          ∑ x ∈ Finset.univ.filter (fun x => f x = a), q x := by
+      obtain ⟨x, hx, hxa⟩ := Finset.mem_image.mp ha
+      have hΔa : f x ∈ Δ := by simpa [s] using hx
+      have hΔa' : a ∈ Δ := by simpa [hxa] using hΔa
+      apply Finset.sum_congr
+      · ext y
+        simp only [Finset.mem_filter, Finset.mem_univ, true_and, s]
+        constructor
+        · rintro ⟨hfd, hfa⟩
+          exact hfa
+        · intro hfa
+          exact ⟨by simpa [hfa] using hΔa', hfa⟩
+      · intro y hy
+        rfl
+    calc
+      distribution f μ Δ = ∑ x ∈ s, μ x := rfl
+      _ = ∑ a ∈ t, ∑ x ∈ s with f x = a, μ x := hμ.symm
+      _ = ∑ a ∈ t, ∑ x ∈ s with f x = a, ν x := by
+        apply Finset.sum_congr rfl
+        intro a ha
+        rw [hfiber a ha μ, hfiber a ha ν, h a]
+      _ = ∑ x ∈ s, ν x := hν
+      _ = distribution f ν Δ := rfl
 
 private lemma not_injective_not_ic {X : Type*} [Fintype X] [DecidableEq X] {f g : X → ℝ}
     (h : ¬ Function.Injective (fun x => (f x, g x))) : ¬ IsICPair f g := by
