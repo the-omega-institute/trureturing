@@ -151,7 +151,7 @@ internal sealed class ThermalRecallTruncationRefutationDocument : IScribeDocumen
         Formula domain = PairType(d, n), state = Arrow(domain, Real());
         Formula u = V("u"), k = V("k"), l = V("l");
         Formula inner = Lambda("u", state, Lambda("l", Fin(n),
-            App(Call("average", Pair(i, k), Pair(j, l), u))));
+            Call("average", Pair(i, k), Pair(j, l), u)));
         Formula outer = Lambda("u", state, Lambda("k", Fin(n),
             QCall("List", "foldl", inner, u, QCall("List", "finRange", n))));
         Formula folded = QCall("List", "foldl", outer, v, QCall("List", "finRange", n));
@@ -205,14 +205,15 @@ internal sealed class ThermalRecallTruncationRefutationDocument : IScribeDocumen
     {
         Formula d = V("d"), p = V("p"), w = V("w"), n = V("n"), z = V("z"), r = V("r"), c = V("c");
         Formula pair = PairType(d, d);
-        Formula current = App(Call("applySwaps", p, QCall("List", "take", n, w)));
+        Formula current = Call("applySwaps", p, QCall("List", "take", n, w));
         Formula conditions = And(Less(Fst(z), Snd(z)),
             And(Less(App(r, Snd(z)), App(r, Fst(z))),
                 All("c", Fin(d), Not(And(Less(App(r, Snd(z)), App(r, c)),
                     Less(App(r, c), App(r, Fst(z))))))));
         Formula body = All("n", Nat(), Imp(Less(n, QCall("List", "length", w)),
             Let("z", Index(w, n), Let("r", current, conditions))));
-        return All("d", Nat(), All("p", Arrow(Fin(d), Real()), All("w", ListOf(pair), body)));
+        return All("d", Nat(), All("p", Arrow(Fin(d), Real()), All("w", ListOf(pair),
+            Iff(Call("IsReducedNeighbourWord", p, w), body))));
     }
 
     private static Formula ClaimFormula()
