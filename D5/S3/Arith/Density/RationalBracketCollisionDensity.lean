@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Data.Rat.Floor, mathlib/module/Mathlib.Data.Nat.Periodic]
    utility: none
-   digest: Every finite rational-modulus bracket expression has an existing rational collision density, with arbitrary integer coefficients and distinct nonnegative image values. -/
+   digest: Finite rational bracket expressions have rational collision density. -/
 
 import D5.S3.ObserverMemory.Prediction.EventualCycleAverage
 import Mathlib.Data.Rat.Floor
