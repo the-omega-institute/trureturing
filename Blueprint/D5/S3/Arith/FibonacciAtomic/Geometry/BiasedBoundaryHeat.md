@@ -64,4 +64,4 @@ The separate operator approximation-number/singular-value correspondence, Schatt
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryCounting](BiasedBoundaryCounting.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPolar](BiasedBoundaryPolar.md)
 - Dependency: [D5/S3/HilbertOperators/RealPositiveTrace](../../../HilbertOperators/RealPositiveTrace.md)
-- Dependency: [D5/S3/Quantum/Analysis/ContractionSemigroup](../../../Quantum/Analysis/ContractionSemigroup.md)
+- Dependency: [D5/S3/Quantum/Analysis/DiagonalHeat](../../../Quantum/Analysis/DiagonalHeat.md)
