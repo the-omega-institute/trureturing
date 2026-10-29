@@ -6,10 +6,12 @@
    utility: none
    digest: The entire subgraph core lies in one maximal connected subgraph without cut vertices. -/
 import D5.S3.Combinatorics.Graph.Eccentric.DePatraCounting
+import D5.S3.Combinatorics.Graph.Eccentric.SubgraphCoreHull
 import Mathlib.Order.Preorder.Finite
 import Mathlib.Tactic
 
 set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
 
 namespace D5.S3.Combinatorics.Graph.Eccentric.SubgraphCoreBlock
 
@@ -123,7 +125,6 @@ private lemma both_card (r x : V) : Nat.card (Both G r x) = pairCount G r x := b
   apply Equiv.subtypeEquivRight
   intro K
   simp only [Set.insert_subset_iff, Set.singleton_subset_iff]
-  tauto
 
 private lemma number_partition [Finite V] (r x : V) :
     subgraphNumber G r = Nat.card (Only G r x) + pairCount G r x := by
@@ -148,7 +149,10 @@ private lemma rootless_induce [Finite V] (S : Set V) (r x : V)
     (hr : r ∈ S) (hx : x ∈ S) :
     rootlessCount G S r {x} = Nat.card (Only (G.induce S) ⟨x, hx⟩ ⟨r, hr⟩) := by
   have h₁ := within_count_partition G S {x} r
-  rw [number_induce S x hx, rooted_count_iso_induce hr x hx] at h₁
+  rw [number_induce S x hx] at h₁
+  change subgraphNumber (G.induce S) ⟨x, hx⟩ = rootlessCount G S r {x} +
+    rootedCount G S r {x} at h₁
+  rw [rooted_count_iso_induce (G := G) hr x hx] at h₁
   have h₂ := number_partition (G := G.induce S) ⟨x, hx⟩ ⟨r, hr⟩
   rw [pairCount_symm] at h₂
   omega
@@ -167,9 +171,12 @@ private lemma local_partition [Finite V] (S : Set V) (r x : V)
     (hr : r ∈ S) (hx : x ∈ S) :
     rootedCount G S r ∅ = rootlessCount G S x {r} + rootedCount G S r {x} := by
   have h := within_count_partition G S {r} x
-  rw [rooted_count_iso_induce hx r hr, pairCount_symm,
-    ← rooted_count_iso_induce hr x hx] at h
-  rw [rooted_within_count, Set.insert_empty]
+  change Nat.card (Within G S {r}) = rootlessCount G S x {r} +
+    rootedCount G S x {r} at h
+  rw [rooted_count_iso_induce (G := G) hx r hr, pairCount_symm,
+    ← rooted_count_iso_induce (G := G) hr x hx] at h
+  change Nat.card (RootedWithin G S r ∅) = _
+  rw [rooted_within_count, (show insert r (∅ : Set V) = {r} from by ext z; simp)]
   exact h
 
 private lemma side_connected (hG : G.Connected) (S : Set V) (r : V)
@@ -192,10 +199,11 @@ private lemma separation_root_number [Finite V] {S T : Set V} {r : V}
     (h : RootSeparation G S T r) :
     subgraphNumber G r = rootedCount G S r ∅ * rootedCount G T r ∅ := by
   have he : subgraphNumber G r = rootedCount G Set.univ r ∅ := by
-    rw [rooted_within_count, Set.insert_empty, within_univ_count]
+    change subgraphNumber G r = Nat.card (RootedWithin G Set.univ r ∅)
+    rw [rooted_within_count, (show insert r (∅ : Set V) = {r} from by ext z; simp), within_univ_count]
     rfl
-  rw [he, h.rooted_count]
-  simp
+  rw [he]
+  exact (h.rooted_count (∅ : Set V)).trans (by simp)
 
 private lemma separation_number [Finite V] {S T : Set V} {r : V}
     (h : RootSeparation G S T r) (x : V) (hx : x ∈ S) :
@@ -225,8 +233,8 @@ private lemma separation_not_both_max [Finite V] (hG : G.Connected)
     ← rooted_count_empty_induce h.root_right] at hey
   have hcx := local_bound S r x h.root_left hx hs
   have hcy := local_bound T r y h.root_right hy ht
-  have hax := local_partition S r x h.root_left hx
-  have hby := local_partition T r y h.root_right hy
+  have hax := local_partition (G := G) S r x h.root_left hx
+  have hby := local_partition (G := G) T r y h.root_right hy
   have hmx := hxm r
   have hmy := hym r
   rw [separation_root_number h, separation_number h x hx] at hmx
@@ -242,6 +250,69 @@ private lemma separation_not_both_max [Finite V] (hG : G.Connected)
     have hh : rootedCount G T r {y} + 1 ≤ rootedCount G S r ∅ := by omega
     nlinarith
   omega
+
+private lemma core_unseparated [Finite V] (hG : G.Connected) (r x y : V)
+    (hxr : x ≠ r) (hyr : y ≠ r) (hx : x ∈ subgraphCore G) (hy : y ∈ subgraphCore G) :
+    (G.induce ({r}ᶜ : Set V)).Reachable ⟨x, hxr⟩ ⟨y, hyr⟩ := by
+  by_contra hn
+  let D := G.induce ({r}ᶜ : Set V)
+  let S : Set V := {v | v = r ∨ ∃ hv : v ≠ r, D.Reachable ⟨x, hxr⟩ ⟨v, hv⟩}
+  let T : Set V := {v | v = r ∨ v ∉ S}
+  have hrS : r ∈ S := Or.inl rfl
+  have hrT : r ∈ T := Or.inl rfl
+  have hxS : x ∈ S := Or.inr ⟨hxr, Reachable.rfl⟩
+  have hyT : y ∈ T := Or.inr (by
+    rintro (he | ⟨hv, hv'⟩)
+    · exact hyr he
+    · exact hn hv')
+  have hclosed : ∀ a b, G.Adj a b → a ∈ S → a ≠ r → b ∈ S := by
+    intro a b hab ha har
+    by_cases hbr : b = r
+    · exact Or.inl hbr
+    · rcases ha with he | ⟨ha, ha'⟩
+      · exact False.elim (har he)
+      · exact Or.inr ⟨hbr, ha'.trans (show D.Adj ⟨a, ha⟩ ⟨b, hbr⟩ from hab).reachable⟩
+  have hs : RootSeparation G S T r := by
+    refine ⟨hrS, hrT, ?_, ?_, ?_⟩
+    · intro v
+      by_cases hv : v ∈ S
+      · exact Or.inl hv
+      · exact Or.inr (Or.inr hv)
+    · intro v hv ht
+      exact ht.resolve_right (not_not.mpr hv)
+    · intro a b hab
+      by_cases ha : a ∈ S <;> by_cases hb : b ∈ S
+      · exact Or.inl ⟨ha, hb⟩
+      · have he : a = r := by
+          by_contra hn
+          exact hb (hclosed a b hab ha hn)
+        exact Or.inr ⟨Or.inl he, Or.inr hb⟩
+      · have he : b = r := by
+          by_contra hn
+          exact ha (hclosed b a hab.symm hb hn)
+        exact Or.inr ⟨Or.inr ha, Or.inl he⟩
+      · exact Or.inr ⟨Or.inr ha, Or.inr hb⟩
+  exact separation_not_both_max hG hs hxS hyT hxr hyr hx hy
+
+/-- Pandey--Patra Conjecture 3.25, with all maximizers and the native small blocks. -/
+theorem result [Finite V] (hG : G.Connected) :
+    ∃ B : G.Subgraph, NativeBlock B ∧ subgraphCore G ⊆ B.verts := by
+  haveI : Nonempty V := hG.nonempty
+  have hcore : (subgraphCore G).Nonempty := by
+    obtain ⟨v, hv, hm⟩ :=
+      Set.Finite.exists_maximalFor (subgraphNumber G) (Set.univ : Set V)
+        (Set.toFinite _) Set.univ_nonempty
+    refine ⟨v, ?_⟩
+    intro w
+    rcases le_total (subgraphNumber G w) (subgraphNumber G v) with h | h
+    · exact h
+    · exact hm (Set.mem_univ w) h
+  obtain ⟨H, hH, hsub, hdel⟩ := SubgraphCoreHull.exists_no_cut_cover hG
+    (subgraphCore G) hcore (fun z u v hu hv hus hvs => core_unseparated hG z u v hu hv hus hvs)
+  obtain ⟨B, hHB, hB⟩ := Finite.exists_le_maximal (show NoCut H from ⟨hH, hdel⟩)
+  exact ⟨B, hB, hsub.trans hHB.1⟩
+
+#print axioms result
 
 end
 end D5.S3.Combinatorics.Graph.Eccentric.SubgraphCoreBlock
