@@ -857,5 +857,13 @@ theorem inverse_theta_fourier (D : LatticeData) (hD : (gramReal D).PosDef)
   simp only [add_neg_eq_zero]
   simp
 
+#print axioms dual_lattice_realization
+#print axioms discriminant_quadratic
+#print axioms sector_summable_representative
+#print axioms inverse_theta_dissection
+#print axioms zero_sector_S
+#print axioms sector_T
+#print axioms inverse_theta_fourier
+
 end
 end D5.S3.VertexAlgebra.LatticeDiscriminantTheta
