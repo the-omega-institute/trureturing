@@ -14,6 +14,8 @@ The carrier and parity conventions are those of Frenkel, Lepowsky and Meurman, P
 
 All-vector input translation on this same normalized coefficient is proved in MixedTranslation: I_m(L(-1)u)v equals -m I_(m-1)(u)v. The translation proof uses the original rank/16 stress and selected form, with no symmetry premise.
 
+MixedOpposite constructs the source-linear opposite action on this same full fixed restricted dual, proves its homogeneous compatibility and all-vector lower truncation, and supplies the corresponding opposite formal field. Full mixed Jacobi for the normalized two-input coefficient remains unproved.
+
 **Theorem 1.1 (Pairing with every actual fixed-grade test vector).**
 
 Lean statement: `D5/S3/VertexAlgebra/TwistedGround/MixedIntertwiner.normalizedCoefficient_pairing`
