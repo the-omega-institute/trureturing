@@ -81,8 +81,9 @@ private lemma div_denom_mem_lattice_iff (γ : SL(2, ℤ)) (τ : UpperHalfPlane) 
   constructor
   · intro h
     have he := coe_modularLatticeEquiv_symm γ τ ⟨_, h⟩
-    simp only [mul_div_cancel₀, mul_div_cancel_left₀,
-      UpperHalfPlane.denom_ne_zero] at he
+    have hjw : UpperHalfPlane.denom γ τ * (w / UpperHalfPlane.denom γ τ) = w := by
+      field_simp
+    rw [hjw] at he
     exact he ▸ ((modularLatticeEquiv γ τ).symm ⟨_, h⟩).property
   · intro h
     exact coe_modularLatticeEquiv γ τ ⟨w, h⟩ ▸ (modularLatticeEquiv γ τ ⟨w, h⟩).property
@@ -138,9 +139,7 @@ private lemma E2_transform (γ : SL(2, ℤ)) (τ : UpperHalfPlane) :
           UpperHalfPlane.denom γ τ ^ 2 := by simp [mul_assoc, hj]
     _ = _ := by
       rw [h]
-      field_simp
-      simp only [I_sq]
-      ring
+      field_simp <;> ring_nf <;> simp [I_sq] <;> ring
 
 /-- Full modular covariance with the normalized, generic lower-left-entry correction. -/
 theorem continuedKernel_modular (γ : SL(2, ℤ)) (τ : UpperHalfPlane) (w : ℂ)
@@ -158,8 +157,14 @@ private lemma strict_strip_not_mem (τ : UpperHalfPlane) (w : ℂ)
   obtain ⟨m, n, h⟩ := PeriodPair.mem_lattice.mp h
   have hi := congrArg Complex.im h
   simp [periodPair] at hi
-  have hn0 : (0 : ℝ) < n := by nlinarith [τ.im_pos]
-  have hn1 : (n : ℝ) < 1 := by nlinarith [τ.im_pos]
+  have hn0 : (0 : ℝ) < n := by
+    by_contra hn
+    have hb := mul_nonpos_of_nonpos_of_nonneg (le_of_not_gt hn) τ.im_pos.le
+    linarith
+  have hn1 : (n : ℝ) < 1 := by
+    by_contra hn
+    have hb := mul_le_mul_of_nonneg_right (le_of_not_gt hn) τ.im_pos.le
+    linarith
   have : (0 : ℤ) < n := by exact_mod_cast hn0
   have : n < (1 : ℤ) := by exact_mod_cast hn1
   omega
