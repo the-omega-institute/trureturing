@@ -24,7 +24,7 @@ internal sealed class SourcePairingLawsDocument : IScribeDocumentDefinition
         ), []));
 
     private static DocumentBlock Law(string name, string title, string prose) =>
-        Describe.Lean(DescribeId.Create("source-pairing-laws-" + name.ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create("source-pairing-laws-" + name.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 }

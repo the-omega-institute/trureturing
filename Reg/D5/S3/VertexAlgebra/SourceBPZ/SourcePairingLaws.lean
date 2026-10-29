@@ -4,7 +4,6 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.VertexAlgebra.SourceBPZ.SourcePairingLaws
 
 set_option autoImplicit false
-set_option maxHeartbeats 2000000
 set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
