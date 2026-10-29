@@ -66,8 +66,9 @@ internal sealed class QutritDivisibilityEntanglementBreakingRefutationDocument :
                             + "Their composition is T(X) = 5Tr(X)I/12 − Xᵀ/4.")),
                     Paragraph(Text(
                         "For each of these two Kraus families, the sum of K†K is I. Hence W and D are completely positive and trace preserving. "
-                            + "The products of a Kraus operator of D with one of W form a Kraus family for T, proving its complete positivity; successive trace preservation proves that T preserves trace. "
-                            + "A Kraus representation of an arbitrary completely positive map also shows that it commutes with conjugate transpose.")),
+                            + "Complete positivity is preserved by composition, so T is completely positive; successive trace preservation proves that T preserves trace. "
+                            + "Every completely positive map is 2-positive. Swapping tensor factors gives the amplification convention of twoPositive_star_preserving, "
+                            + "which shows that the map commutes with conjugate transpose.")),
                     Paragraph(Text(
                         "Unitary conjugation preserves the trace of the square of E₀₀, which equals one. "
                             + "But W(E₀₀) has diagonal (0,1/2,1/2), and D(E₀₀) has diagonal (2/3,1/6,1/6); in each case the trace of the square is 1/2. "
