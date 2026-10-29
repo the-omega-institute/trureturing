@@ -66,7 +66,55 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 sourceConnected is the equivalence closure of sourceOccurrenceEdges. Its vertices are the same total occurrenceVertices supplied by the MGU action, including isolated occurrences of unused names. It is defined from the source branch constructors and only then related to the free-shape graph.
 
-**Theorem 1.6 (Exact source-to-shape graph identification).**
+**Theorem 1.6 (Compose ambient rank translations).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction.shift_add`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction.shift_add` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Successive nonnegative translations add their offsets at every primitive leaf and preserve ordered pairing.
+
+**Theorem 1.7 (Expand every selected code equation).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction.branch_sound`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction.branch_sound` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every branch equation implies its original native equation after ambient expansion. This applies to arbitrary finite codes without a normality premise, using the native recurrence in the collapse case.
+
+**Theorem 1.8 (Every constructor choice has its original equation).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction.choices_origin`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction.choices_origin` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Each primitive, shift and equality choice keeps its original equation; both the ordinary and collapse choices have the same native pairing equation as origin.
+
+**Theorem 1.9 (Exact finite branching of named native equations).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction.branches_exact`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction.branches_exact` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A finite named native system holds at v exactly when one computed branch holds at the actual canonical encoding of v. This is the constructor-case component of native_branch_reduction, before free-shape unification.
+
+**Theorem 1.10 (Exact source-to-shape graph identification).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction.source_comparison_graph_identification`
 
@@ -78,7 +126,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 For every finite selected branch and every total term assignment, the projected source comparison carrier is definitionally traversed over the same named terms as the shape equations. The proof checks each primitive, shift, ordinary, collapse and equality constructor: shift retains its integer offset, ordinary and equality retain their corresponding leaves, and constant or collapse comparisons project to no residual edge. Therefore the source adjacency list is exactly occurrenceEdges(shapeEquations B, s), with no dropped or added occurrence.
 
-**Theorem 1.7 (Actual source connectivity has one component per residual sort).**
+**Theorem 1.11 (Actual source connectivity has one component per residual sort).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction.source_connected_iff_sort`
 
@@ -90,7 +138,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositive
 
 For an actual successful free-shape MGU, sourceConnected on the source comparison carrier is equivalent, for all total vertices, to equality of residual sort. This is an exact application of the existing MGU occurrence theorem through the proved source graph identification; the source quantifiers retain every declared name, every occurrence and the original branch scalar/rank constraints.
 
-**Theorem 1.8 (Exact canonical branching with total MGU shape reconstruction).**
+**Theorem 1.12 (Exact canonical branching with total MGU shape reconstruction).**
 
 $$\forall X: Type, (\forall p: \operatorname{Presentation}\left(X\right), (\forall E: \operatorname{List}\left(\operatorname{Equation}\left(X\right)\right), (\forall v: X \to Source, ((\forall e: \operatorname{Equation}\left(X\right), ((\operatorname{ListMem}\left(e, E\right)) \implies (\operatorname{NativeHolds}\left(v, e\right)))) \iff (\exists B: \operatorname{List}\left(\operatorname{BranchEquation}\left(X\right)\right), ((\operatorname{ListMem}\left(B, \operatorname{branches}\left(E\right)\right)) \land ((\forall x: X, (\operatorname{Normal}\left(\operatorname{encode}\left(\operatorname{v}\left(x\right)\right)\right))) \land ((\forall b: \operatorname{BranchEquation}\left(X\right), ((\operatorname{ListMem}\left(b, B\right)) \implies (\operatorname{BranchHolds}\left(\operatorname{canonicalCodes}\left(v\right), b\right)))) \land (\exists S: SubstInfo, ((\operatorname{unify}\left(\operatorname{encodeEquations}\left(p, \operatorname{shapeEquations}\left(B\right)\right), empty\right) = \operatorname{ok}\left(S\right)) \land ((\forall x: X, (\operatorname{evaluate}\left(\operatorname{canonicalShapes}\left(v\right), \operatorname{action}\left(p, S, x\right)\right) = \operatorname{shape}\left(\operatorname{encode}\left(\operatorname{v}\left(x\right)\right)\right))) \land ((\forall a: \operatorname{Occurrence}\left(X\right), (\forall b: \operatorname{Occurrence}\left(X\right), ((\operatorname{ListMem}\left(a, \operatorname{occurrenceVertices}\left(p, \operatorname{action}\left(p, S\right)\right)\right)) \implies ((\operatorname{ListMem}\left(b, \operatorname{occurrenceVertices}\left(p, \operatorname{action}\left(p, S\right)\right)\right)) \implies ((\operatorname{Connected}\left(\operatorname{shapeEquations}\left(B\right), \operatorname{action}\left(p, S\right), a, b\right)) \iff (\operatorname{sort}\left(a\right) = \operatorname{sort}\left(b\right))))))) \land (\forall a: \operatorname{Occurrence}\left(X\right), (\forall b: \operatorname{Occurrence}\left(X\right), ((\operatorname{ListMem}\left(a, \operatorname{occurrenceVertices}\left(p, \operatorname{action}\left(p, S\right)\right)\right)) \implies ((\operatorname{ListMem}\left(b, \operatorname{occurrenceVertices}\left(p, \operatorname{action}\left(p, S\right)\right)\right)) \implies ((\operatorname{sourceConnected}\left(B, \operatorname{action}\left(p, S\right), a, b\right)) \iff (\operatorname{sort}\left(a\right) = \operatorname{sort}\left(b\right)))))))))))))))))))$$
 
@@ -108,9 +156,13 @@ This is the canonical case reduction for an already named finite system. It does
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction.branch_sound`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction.branches`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction.branches_exact`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction.choices_origin`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction.native_branch_reduction`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction.shape`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction.shift_add`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction.sourceConnected`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction.sourceOccurrenceEdges`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositiveBranchReduction.sourceOffsetEdges`
