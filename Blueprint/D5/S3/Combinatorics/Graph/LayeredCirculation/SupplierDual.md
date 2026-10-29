@@ -78,7 +78,19 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.nodup
 
 Exact source telescope, in the module declared generic contexts: def nodupIncomingWeights (G : EdgeGraph V E) (weight : E → 𝕜) (vertex : V) : Set 𝕜 := {r | ∃ (start : V) (walk : G.Walk start vertex), walk.edges.Nodup ∧ walkWeight weight walk = r} omit [LinearOrder 𝕜] in
 
-**Definition 1.7 (maxIncomingWeight).**
+**Theorem 1.7 (Nonpositive cycle deletion preserves endpoints and increases weight).**
+
+Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.exists_nodup_visited_walkWeight_le`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.exists_nodup_visited_walkWeight_le` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If every closed walk has nonpositive weight, every walk of length at most a supplied natural bound has a walk with the same endpoints, no repeated visited vertex, and at least the original weight. Deleting a nonempty closed subwalk decreases length and cannot decrease weight; induction on the bound terminates. In a graph with finitely many vertices the resulting walk has fewer edges than vertices, supplying the finite bound for max-plus relaxation.
+
+**Definition 1.8 (maxIncomingWeight).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.maxIncomingWeight`
 
@@ -90,7 +102,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.maxIn
 
 Exact source telescope, in the module declared generic contexts: def maxIncomingWeight (G : EdgeGraph V E) (weight : E → 𝕜) (vertex : V) : 𝕜 := Finset.max' (Set.Finite.toFinset (finite_nodupIncomingWeights (G := G) weight vertex)) ((Set.Finite.toFinset_nonempty (finite_nodupIncomingWeights (G := G) weight vertex)).2 ⟨0, zero_mem_nodupIncomingWeights (G := G) weight vertex⟩) omit [IsOrderedAddMonoid 𝕜] in
 
-**Definition 1.8 (IsNormalizedCertificate).**
+**Definition 1.9 (IsNormalizedCertificate).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.IsNormalizedCertificate`
 
@@ -102,7 +114,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.IsNor
 
 Exact source telescope, in the module declared generic contexts: def IsNormalizedCertificate (delta : Row → State → ℝ) (coefficient : Row → ℝ) : Prop := (∀ row, 0 ≤ coefficient row) ∧ (∑ row, coefficient row = 1) ∧ ∀ state, ∑ row, coefficient row * delta row state = 0
 
-**Definition 1.9 (certificateValue).**
+**Definition 1.10 (certificateValue).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.certificateValue`
 
@@ -114,7 +126,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.certi
 
 Exact source telescope, in the module declared generic contexts: def certificateValue (base : Row → ℝ) (coefficient : Row → ℝ) : ℝ := ∑ row, coefficient row * base row
 
-**Definition 1.10 (WorstResidualAtMost).**
+**Definition 1.11 (WorstResidualAtMost).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.WorstResidualAtMost`
 
@@ -126,7 +138,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.Worst
 
 Exact source telescope, in the module declared generic contexts: def WorstResidualAtMost (delta : Row → State → ℝ) (base : Row → ℝ) (level : ℝ) : Prop := ∃ potential : State → ℝ, ∀ row, base row - dotProduct (delta row) potential ≤ level
 
-**Theorem 1.11 (worstResidualAtMost iff normalizedDual le).**
+**Theorem 1.12 (worstResidualAtMost iff normalizedDual le).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.worstResidualAtMost_iff_normalizedDual_le`
 
@@ -138,7 +150,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.worst
 
 Exact source telescope, in the module declared generic contexts: theorem worstResidualAtMost_iff_normalizedDual_le (delta : Row → State → ℝ) (base : Row → ℝ) (level : ℝ) : WorstResidualAtMost delta base level ↔ ∀ coefficient : Row → ℝ, IsNormalizedCertificate delta coefficient → certificateValue base coefficient ≤ level
 
-**Definition 1.12 (WorstDirectedResidualAtMost).**
+**Definition 1.13 (WorstDirectedResidualAtMost).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.WorstDirectedResidualAtMost`
 
@@ -150,7 +162,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.Worst
 
 Exact source telescope, in the module declared generic contexts: def WorstDirectedResidualAtMost (G : EdgeGraph V E) (weight : E → ℝ) (level : ℝ) : Prop := ∃ potential : V → ℝ, ∀ edge, MaxPlusPotential.defect G weight potential edge ≤ level
 
-**Theorem 1.13 (worstDirectedResidualAtMost iff closedWalk le).**
+**Theorem 1.14 (worstDirectedResidualAtMost iff closedWalk le).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.worstDirectedResidualAtMost_iff_closedWalk_le`
 
@@ -162,7 +174,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.worst
 
 Exact source telescope, in the module declared generic contexts: theorem worstDirectedResidualAtMost_iff_closedWalk_le [Finite E] (G : EdgeGraph V E) (weight : E → ℝ) (level : ℝ) : WorstDirectedResidualAtMost G weight level ↔ ∀ (vertex : V) (cycle : G.Walk vertex vertex), MaxPlusPotential.walkWeight weight cycle ≤ cycle.length * level
 
-**Definition 1.14 (SignedEdge).**
+**Definition 1.15 (SignedEdge).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.SignedEdge`
 
@@ -174,7 +186,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.Signe
 
 Exact source telescope, in the module declared generic contexts: abbrev SignedEdge (E : Type uE) := E × Bool
 
-**Definition 1.15 (signedDelta).**
+**Definition 1.16 (signedDelta).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.signedDelta`
 
@@ -186,7 +198,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.signe
 
 Exact source telescope, in the module declared generic contexts: def signedDelta [DecidableEq V] (G : EdgeGraph V E) : SignedEdge E → V → ℝ | (edge, false) => fun vertex => (if vertex = G.target edge then 1 else 0) - (if vertex = G.source edge then 1 else 0) | (edge, true) => fun vertex => (if vertex = G.source edge then 1 else 0) - (if vertex = G.target edge then 1 else 0)
 
-**Theorem 1.16 (dotProduct signedDelta false).**
+**Theorem 1.17 (dotProduct signedDelta false).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.dotProduct_signedDelta_false`
 
@@ -198,7 +210,7 @@ Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.dotPr
 
 Exact source telescope, in the module declared generic contexts: theorem dotProduct_signedDelta_false [Fintype V] [DecidableEq V] (G : EdgeGraph V E) (edge : E) (potential : V → ℝ) : dotProduct (signedDelta G (edge, false)) potential = potential (G.target edge) - potential (G.source edge)
 
-**Theorem 1.17 (dotProduct signedDelta true).**
+**Theorem 1.18 (dotProduct signedDelta true).**
 
 Lean statement: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.dotProduct_signedDelta_true`
 
@@ -221,6 +233,7 @@ Exact source telescope, in the module declared generic contexts: theorem dotProd
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.defect`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.dotProduct_signedDelta_false`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.dotProduct_signedDelta_true`
+- Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.exists_nodup_visited_walkWeight_le`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.maxIncomingWeight`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.nodupIncomingWeights`
 - Truth anchor: `D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.signedDelta`

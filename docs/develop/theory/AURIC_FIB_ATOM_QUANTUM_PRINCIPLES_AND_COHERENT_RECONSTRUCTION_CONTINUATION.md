@@ -360,3 +360,180 @@ Euler 局部门及 CNOT 分解沿原供应给已知量子电路的通用实现�
 - T. Rudolph、L. Grover，[quant-ph/0210187](https://arxiv.org/abs/quant-ph/0210187)，
   *A 2 rebit gate universal for quantum computing*：改用实振幅编码可模拟量子计算，
   不反驳标准 $J_m$、全零输入与给定菜单下的反酉状态下界。
+
+## 追加锚（本行以下为增补区）
+
+<a id="v10-fib-kernel-rigidity"></a>
+
+## 42. 实际全树来源核的 0/1 刚性与非正交边界
+
+本节固定实际来源域，而不把它改写成关联字、有限切片或单一轨道。令
+$T$ 是 $\alpha,\beta$ 上全部非空有限自由有序二叉树；$\langle s,t\rangle$
+是保留左右次序的内部节点，并令
+
+$$
+\rho(\alpha)=\beta,
+\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,
+\qquad
+\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle .
+$$
+
+这正是 [Genealogical Fiber Transport](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.md)
+和 [Source Transport Centralizer](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/SourceTransportCentralizer.md)
+所使用的自由有序树与替换。唯一可读性给出构造子的单射性；后者的中心化定理还给出
+$\rho$ 的单射性。下面的 $K:T\times T\to\mathbb C$ 是一个明列模型输入，满足
+
+$$
+\begin{aligned}
+&K(t,s)=\overline{K(s,t)},
+&&\sum_{j,k=1}^{m}\overline{c_j}c_kK(t_j,t_k)\ge0,
+&&K(t,t)=1,\\
+&K(\rho s,\rho t)=K(s,t),
+&&K(\langle s,t\rangle,\langle u,v\rangle)=K(s,u)K(t,v).
+\end{aligned}
+\tag{42.1}
+$$
+
+第二行的两个等式分别对所有来源对和所有来源四元组成立；最后一个等式包括全部构造交叉项，
+不是只对相同标签或相同树形成立的局部规则。正性、归一化、全比较的 $\rho$ 保留和精确乘法
+都是模型输入，不由裸不确定性、信息守恒或 Read/Apply/Stop 过程推出。
+
+**引理 42.1（只在 alpha 轨道上的二次替换恒等式）。** 对
+$u_n=\rho^n\alpha$ 有
+
+$$
+\rho^2u_n=\langle\rho u_n,u_n\rangle .
+\tag{42.2}
+$$
+
+**证明。** $n=0$ 时这是定义。若式 (42.2) 对 $u_n$ 成立，对两边再施加 $\rho$，
+并使用 $\rho\langle x,y\rangle=\langle\rho x,\rho y\rangle$，便得到对 $u_{n+1}$ 的式子。
+这里没有把 (42.2) 当作任意 $u\in T$ 的恒等式；它只在已分类的 $\alpha$ 轨道上使用。∎
+
+**定理 42.2（实际全树来源的精确 0/1 刚性）。** 若只保留 (42.1) 中的 Hermitian
+条件、全比较 $\rho$ 保留和全部四元组的精确乘法，则对任意 $s,t\in T$，
+
+$$
+K(s,t)\in\{0,1\}.
+\tag{42.3}
+$$
+
+因此定理的 0/1 结论本身不消费正性、归一化或 faithfulness；这些条件仍是原核模型的独立输入，
+在下述 Hilbert 解释和忠实特例中才被消费。
+
+**证明。** 先置
+$f_n(u):=K(\alpha,\rho^n u)$，并令 $a_n=f_n(\alpha)$。由 (42.1) 的 $\rho$ 保留两次、
+(42.2) 及精确乘法，
+
+$$
+\begin{aligned}
+a_n
+ &=K(\rho^2\alpha,\rho^{n+2}\alpha)\\
+ &=K(\langle\beta,\alpha\rangle,
+       \langle\rho^{n+1}\alpha,\rho^n\alpha\rangle)\\
+ &=K(\beta,\rho^{n+1}\alpha)K(\alpha,\rho^n\alpha)
+ =a_n^2.
+\end{aligned}
+$$
+
+复数方程 $z=z^2$ 只有 $z=0,1$ 两个解，故每个 $a_n$ 都在这两个值中。因为
+$\beta=\rho\alpha$，有 $f_n(\beta)=a_{n+1}$。若 $s,t\in T$，再次用两次 $\rho$ 保留、
+$\rho^2\alpha=\langle\beta,\alpha\rangle$ 和精确乘法，得到递推式
+
+$$
+f_n(\langle s,t\rangle)
+ =K(\beta,\rho^{n+2}s)K(\alpha,\rho^{n+2}t)
+ =f_{n+1}(s)f_{n+2}(t).
+\tag{42.4}
+$$
+
+对 $u$ 的自由树结构作归纳，(42.4) 与两个叶子的结论给出
+$f_n(u)\in\{0,1\}$ 对所有 $n,u$ 成立。因此
+$K(\alpha,u)=f_0(u)\in\{0,1\}$。
+
+还需处理首项为 $\beta$ 的比较。对叶子，Hermitian 性、$\beta=\rho\alpha$ 和上面的结论给出
+$K(\beta,\alpha),K(\beta,\beta)\in\{0,1\}$。对 $u=\langle s,t\rangle$，轨道恒等式 (42.2)
+（用于 $\beta=\rho\alpha$）和两次 $\rho$ 保留给出
+
+$$
+\begin{aligned}
+K(\beta,\langle s,t\rangle)
+ &=K(\langle\rho\beta,\beta\rangle,
+       \langle\rho^2s,\rho^2t\rangle)\\
+ &=K(\rho\beta,\rho^2s)K(\beta,\rho^2t)\\
+ &=K(\alpha,s)K(\alpha,\rho t)
+ =f_0(s)f_1(t)\in\{0,1\}.
+\end{aligned}
+\tag{42.5}
+$$
+
+最后对 $s,t$ 的总节点数作强归纳。若首项是叶子，已由 (42.4) 和 (42.5) 处理；若两者
+都是内部节点，精确乘法把比较化为两个严格更小的比较；若首项是内部节点而末项是叶子，
+Hermitian 性把它化为已处理的叶子首项并取共轭。$0,1$ 在共轭和乘法下闭合，故得到 (42.3)。∎
+
+**推论 42.3（忠实核必为 delta 核）。** 在完整输入 (42.1) 下，若核的 GNS/核商表示
+$\eta:T\to H_K$ 对来源标签忠实，即 $\eta(s)=\eta(t)$ 蕴含 $s=t$，则
+
+$$
+K(s,t)=\delta_{s,t}
+\qquad(s,t\in T).
+\tag{42.6}
+$$
+
+**证明。** 正性和 Hermitian 性按本卷 §§6、15.2 的核商构造给出
+$K(s,t)=\langle\eta(s),\eta(t)\rangle$，而归一化给 $\|\eta(s)\|=1$。由定理 42.2，
+$K(s,t)$ 只能为 $0$ 或 $1$。若它为 $1$，则
+
+$$
+\|\eta(s)-\eta(t)\|^2=2-K(s,t)-K(t,s)=0,
+$$
+
+所以忠实性迫使 $s=t$；反向由归一化得到 $K(s,s)=1$。∎
+
+**命题 42.4（精确乘法撤去后的全域边界）。** 保留全树 $T$、$\rho$、Hermitian 性、正性和
+归一化，但不要求精确乘法。则对任意 $c\in[0,1]$
+
+$$
+K_c(s,t):=c+(1-c)\delta_{s,t}
+\tag{42.7}
+$$
+
+是一个全域核，且保持 $\rho$。$c=0$ 给 delta 核，$c=1$ 给全 $1$ 核；当
+$0<c<1$ 且取 $s\ne u,t\ne v$ 时，
+
+$$
+K_c(\langle s,t\rangle,\langle u,v\rangle)=c
+\ne c^2=K_c(s,u)K_c(t,v),
+$$
+
+所以 (42.7) 正好显示取消精确构造乘法后出现的非正交连续边界。
+两个端点都仍满足精确乘法：delta 核使用构造子的单射性，全 $1$ 核使用 $1=1\cdot1$；
+全 $1$ 核不忠实。
+
+**证明。** $\rho$ 的单射性给 $\delta_{\rho s,\rho t}=\delta_{s,t}$。任意有限 Gram 矩阵可写成
+$cJ+(1-c)G_\delta$，其中 $J$ 是全 $1$ 矩阵，$G_\delta$ 是标准基向量的 Gram 矩阵；
+两者半正定，故 (42.7) 半正定，且 Hermitian、对角归一。最后的四元组取值直接代入，
+并在两个子比较都不相同时得到 $c\ne c^2$。当 $0<c<1$ 时，
+$\eta_c(s)=\sqrt c\,e_0+\sqrt{1-c}\,e_s$ 在
+$\mathbb C e_0\oplus\ell^2(T)$ 中给出 (42.7) 的忠实 Gram 表示；
+所以这确实是忠实的非正交边界，而不是标签被合并的伪例。∎
+
+**关系模型的边界。** (42.3) 约束的是明列来源核的数值。$\alpha,\beta$ 首先是树中的
+语法标签；来源相位是将 Hilbert 代表改作 $\eta(t)\mapsto e^{i\theta_t}\eta(t)$ 的规范选择，
+不由标签本身或 (42.1) 产生物理相位。Hilbert 数学叠加只表示核商中的有限复线性组合；它不授予
+原生制备这些组合的装置。原生制备权限、可用观察效果和共同参考都须另列；Born 规则、仪器
+分支、系统组合以及物理时钟的起源也不由这个 no-go 推出。一般不可克隆边界已经由原卷定理
+10.4 供应，本节不重复它，也不把 (42.3) 当作完整量子起源。
+
+**来源与适用范围。** 全树定义、$\rho$ 的递归和 $\rho$ 的单射性复用上述两个实际 D5/Blueprint
+来源；其现有结论没有覆盖本节的核刚性。核商、全部有限零关系下降、Hilbert 完成和 GNS 中间
+机制复用原卷 §§6、15.2、26.2 及其中列出的 Predictive Memory、Watrous、Weber--Li--Voigt
+和 Fewster--Rejzner 来源；一般不可克隆复用原卷定理 10.4。对仓内这些来源和相邻成熟文献的
+有限核对未找到全实际来源树的精确 0/1 供应，因此本节标为 repo-derived 的新接合，既不声称
+原创性，也不声称穷尽搜索。若要恢复忠实非正交来源，最小实质改变是撤去或改写 (42.1) 的
+精确构造乘法，或改动来源组合/运输使 (42.4) 的因子化不再成立；仅删除 faithfulness、PSD
+或把 Read/Apply/Stop 重新命名，都不会解除定理 42.2 的代数约束。这一条件性 no-go
+不否定改变关系合同后的通常量子实现。
+
+## 追加锚（本行以下为增补区）
