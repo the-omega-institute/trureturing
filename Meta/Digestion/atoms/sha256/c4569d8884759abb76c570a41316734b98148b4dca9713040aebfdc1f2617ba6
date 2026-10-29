@@ -1,0 +1,22 @@
+#### 定义 7.1（黄金活动块）
+
+令
+
+$$
+\varphi=\frac{1+\sqrt5}{2},\quad \omega=e^{3\pi i/5},\quad
+a=\varphi^{-1},\quad \delta=\varphi^{-2},\quad b=\varphi^{-3/2}.
+$$
+
+在 $H_{0,2}=\operatorname{span}\{\lvert 0\rangle ,\lvert 2\rangle \}$ 上取
+
+$$
+\mathcal P=\begin{pmatrix}a&b\\b&\delta\end{pmatrix},\qquad
+K=\omega[I+(\omega-1)\mathcal P].
+$$
+
+完整五模式上，$\mathcal P$ 在模式 $1,3$ 为零、模式 $13$ 为一。
+
+<a id="statement-7-2"></a>
+
+<a id="lem-gold"></a>
+

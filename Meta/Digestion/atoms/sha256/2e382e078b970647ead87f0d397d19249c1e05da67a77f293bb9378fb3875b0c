@@ -1,0 +1,35 @@
+### 引理 10.3（纯 $N$ 短字的任意正数据插值）
+
+若 $0\le q\le k-1$ 且 $a_0,\ldots,a_q>0$，则存在严格正的 $c,\ell$ 使
+$$
+\operatorname{tr}(N^ic\ell)=a_i\quad(0\le i\le q).
+\tag{10.14}
+$$
+
+**证明。** 令 $U=\{0,\ldots,q\}$，并取
+$$
+ B=2k,\qquad \alpha=\min_{0\le i\le q}a_i,\qquad A=\max_{0\le i\le q}a_i,\qquad
+ \varepsilon=\min\left\{\frac1{4B},\frac{\alpha}{4(k+BA)}\right\}>0.
+\tag{10.15}
+$$
+置
+$$
+ c_h=\begin{cases}1-(k-1)\varepsilon,&h=0,\\
+ \varepsilon,&1\le h<k,\end{cases}
+ \qquad
+ \ell_j=\begin{cases}y_j,&0\le j\le q,\\1,&q<j<k.\end{cases}
+\tag{10.16}
+$$
+未知量为 $y_0,\ldots,y_q$. 分离 $h+i\in U$ 的项并延拓 $c_t=0$ 于区间外，得到
+$$
+ My=a-\varepsilon D,\qquad M_{ij}=c_{j-i},\qquad
+ D_i=\#\{h:0\le h\le k-1-i,\ h+i>q\}.
+\tag{10.17}
+$$
+故 $0\le D_i\le k$. 在 $\varepsilon=0$ 时 $M=I$；写成 $I+\varepsilon K$ 后，$K_{ii}=-(k-1)$，每行至多 $q$ 个上三角非对角 $1$，所以 $\|K\|_\infty\le(k-1)+q< B$. 由 $\varepsilon B\le1/4$，同一有限维估计给出 $M$ 可逆、$\|M^{-1}\|_\infty\le2$，并且
+$$
+\|y-a\|_\infty\le2\varepsilon(k+BA)\le\frac\alpha2.
+\tag{10.18}
+$$
+所以 $y_j\ge\alpha/2>0$. 这时 (10.17) 的每个方程正是 (10.14) 的展开，故结论成立。$q=0$ 时矩阵是 $1\times1$，这同样证明了立即停止的历史；$q=k-1$ 也在同一估计中，覆盖纯 $N$ 的紧边界。∎
+

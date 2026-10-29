@@ -1,0 +1,21 @@
+#### 命题 4.4（去相干商一般不保持乘法）
+
+对带标签秩一 PVM，$\Delta:M_d(\mathbb{C} )\to M_d(\mathbb{C} )$ 是 Hilbert–Schmidt 正交投影到对角代数，且
+
+$$
+M_d(\mathbb{C} )/\ker\Delta\cong\operatorname{ran}\Delta
+$$
+
+作为向量空间成立；一般不能沿原算符乘法将其视为代数商。
+
+**证明。**
+
+PVM 完备性给 $\Delta^2=\Delta$，迹循环性给 Hilbert–Schmidt 自伴性。取 $A=\lvert 0\rangle \langle 1\rvert$、$B=\lvert 1\rangle \langle 0\rvert$，则
+$\Delta(A)=\Delta(B)=0$，却有 $\Delta(AB)=\Pi_0\ne0$。所以核不是双边理想，乘法不下降。
+
+∎
+
+完整记录的等距嵌入、丢记录的通道、选分支后归一化与共同框架商，对应不同的数学操作。将它们全部叫作“约去”，会隐藏下一次递归所需的信息。
+
+<a id="sec-5"></a>
+

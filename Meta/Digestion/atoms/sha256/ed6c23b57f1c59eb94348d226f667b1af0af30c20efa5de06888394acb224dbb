@@ -1,0 +1,18 @@
+**定义 2.1（交错互补的取得词）。** 令 $\pi_\square$ 在尚未标记时反复执行无限词
+
+$$
+w=LRRL\,LRRL\,LRRL\cdots,
+\tag{CPI.6}
+$$
+
+首次标记即停止。这个策略不读取 $U$ 或隐藏参数，不需要种子含有任何随机位。记其首次标记时间为 $T$，令 $c_s(n)$ 为 $w$ 的前 $n$ 项中侧 $s$ 的次数。置 $P=Q_LQ_R$，并对 $k\ge0$ 定义
+
+$$
+t_k=\int(xy)^k\Lambda(dx,dy),\quad
+\nu_k=\int x(xy)^k\Lambda(dx,dy),\quad
+v_k=\int y(xy)^k\Lambda(dx,dy).
+\tag{CPI.7}
+$$
+
+这些数均有限，$t_0=1$；$\nu_k$ 是数列符号，不是新的概率先验。
+

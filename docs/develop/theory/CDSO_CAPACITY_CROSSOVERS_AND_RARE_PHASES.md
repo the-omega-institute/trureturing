@@ -1983,3 +1983,682 @@ $$
 for all sufficiently large $a$, giving the same exact rare minimum and equality class. In this case the $a^{-3}$ coefficients of the rare and dense branches are $-9/4$ and $41/2$, respectively. This decides the stated fixed critical sequence without determining a general finite-$a$ transition curve. ∎
 
 ## 追加锚（本行以下为增补区）
+
+## 14. Exact finite-parameter dense minimizers
+
+**Definition 14.1 (Exact scalar parameters).** Retain the law of Definition 1.1, the notation of Definition 7.1 and the dense infimum $\mathscr D_a(\delta)$ of (11.1). In this section put
+
+$$
+\gamma=(2r-1)\delta,\qquad
+\rho=\frac{\gamma}{r^2},\qquad
+m=\frac{1-r\delta}{s},\qquad e_0=4\rho,
+\tag{14.1}
+$$
+
+and, whenever both denominators are positive, write
+
+$$
+\begin{aligned}
+u(\varepsilon)&=\mu+\varepsilon,
+&v(\varepsilon)&=\mu-\frac{2\varepsilon}{a},\\
+\mathcal H(\varepsilon)
+&=\frac{2r^2}{u(\varepsilon)}
+ +a\left[\frac{r^2}{v(\varepsilon)}
+ -\frac{\gamma}{v(\varepsilon)^2}\right].
+\end{aligned}
+\tag{14.2}
+$$
+
+Thus $\mathcal H$ is precisely the energy (7.4) of the actual family (7.2). No restriction on the cardinalities of an arbitrary law is added to (11.1).
+
+**Lemma 14.2 (A weighted certificate on every nonempty subset).** For any law of Definition 1.1 with $\delta>0$, define from its actual marginals
+
+$$
+\alpha_i=y_i^{-2},\qquad
+W_T=\sum_{i\in T}\alpha_i,\qquad
+W=\sum_{i=1}^s\alpha_i,\qquad
+M=\max_{\substack{U\subseteq[s]\\|U|=a}}W_U.
+\tag{14.3}
+$$
+
+For every nonempty $T\subseteq[s]$, put $k=|T|$ and
+
+$$
+G_y(T)=(r-k)\big[(2r-1)M-(r+k)W_T\big].
+\tag{14.4}
+$$
+
+Then $G_y(T)\ge0$, and its complete zero set is
+
+$$
+G_y(T)=0
+\quad\Longleftrightarrow\quad
+k=r\ \text{ or }\ (k=a\ \text{ and }\ W_T=M).
+\tag{14.5}
+$$
+
+For the same original law one has the exact decomposition
+
+$$
+\boxed{\quad
+H(x)=r^2\sum_{i=1}^s\frac1{y_i}-\gamma M
+       +\mathbb E_xG_y(T).
+\quad}
+\tag{14.6}
+$$
+
+In particular this certificate requires neither density nor localization of the marginals.
+
+**Proof.** If $k\le a$, extend $T$ to an $a$-subset. The positive weights give $W_T\le M$. For $k<a$ it follows that
+
+$$
+(2r-1)M-(r+k)W_T
+\ge(a-k)M>0,
+$$
+
+so $G_y(T)>0$. At $k=a$ it equals $(2r-1)(M-W_T)$, giving the second zero case of (14.5). At $k=r$ it vanishes. The only remaining cardinality is $k=s=r+1$, for which $T=[s]$ and
+
+$$
+G_y([s])=(2r+1)W-(2r-1)M\ge2M>0.
+$$
+
+This proves the inequality and every equality case on the whole allowed cardinality range. Expanding (14.4) gives
+
+$$
+G_y(T)=(k^2-r^2)W_T+(2r-1)(r-k)M.
+$$
+
+Since $\mathbb E_x(r-K)=\delta$ and
+
+$$
+\mathbb E_x W_T
+=\sum_i\alpha_i\mathbb E_x I_i
+=\sum_i\frac1{y_i},
+$$
+
+taking expectation proves (14.6). The passage from a pointwise inequality to an expectation bound is the classical weak-duality principle; see D. Bertsimas and I. Popescu, *Optimal inequalities in probability theory: A convex optimization approach*, SIAM J. Optim. 15(3), 780–804, DOI [10.1137/S1052623401399903](https://doi.org/10.1137/S1052623401399903), Theorem 2.1. The explicit expression (14.4) supplies its pointwise inequality here. All weights and expectations in (14.6) are computed from $x$. ∎
+
+**Theorem 14.3 (Exact dense minimum and all labeled equality laws).** Fix $0<L<1$ and set
+
+$$
+A(L)=\left\lceil\frac{64}{1-L}\right\rceil.
+\tag{14.7}
+$$
+
+For every integer $a\ge A(L)$ and every real $0<\delta\le L/a$, there is a unique $\varepsilon_*$ in $(0,e_0)$ satisfying
+
+$$
+r^2v(\varepsilon_*)
+ \big[u(\varepsilon_*)^2-v(\varepsilon_*)^2\big]
+=2\gamma u(\varepsilon_*)^2.
+\tag{14.8}
+$$
+
+It obeys the strict bounds
+
+$$
+0<\varepsilon_*<\frac{\rho}{\mu^3}<e_0<m.
+\tag{14.9}
+$$
+
+Write $u_*=u(\varepsilon_*)$ and $v_*=v(\varepsilon_*)$. The minimum over the entire dense domain (11.1) is exactly
+
+$$
+\boxed{\quad
+\mathscr D_a(\delta)
+=\frac{2r^2}{u_*}
+ +a\left(\frac{r^2}{v_*}-\frac{\gamma}{v_*^2}\right)
+=\mathcal H(\varepsilon_*)<H_d.
+\quad}
+\tag{14.10}
+$$
+
+An equivalent algebraic specification uses the unique real root $z_*$ in the isolating interval $(1-1/a,1)$ of
+
+$$
+r^2qz^3-(r^2q-2a\gamma)z+4\gamma=0.
+\tag{14.11}
+$$
+
+In terms of this root,
+
+$$
+\begin{aligned}
+u_*&=\frac q{2+az_*},
+&v_*&=\frac{qz_*}{2+az_*},
+&\varepsilon_*&=\frac q{2+az_*}-\mu,\\
+\mathscr D_a(\delta)
+&=\frac{r^2(2+az_*)}{q}
+  \left[2+\frac a2\left(z_*+z_*^{-1}\right)\right].
+\end{aligned}
+\tag{14.12}
+$$
+
+All labeled minimizing laws, and only those laws, are indexed by a two-element set $P\subseteq[s]$ and have masses
+
+$$
+\begin{aligned}
+x_{[s]\setminus P}&=\delta,\\
+x_{[s]\setminus\{i\}}&=m-\varepsilon_*
+&& (i\in P),\\
+x_{[s]\setminus\{j\}}&=\frac{1+\delta}{s}
+                       +\frac{2\varepsilon_*}{a}
+&& (j\notin P),\\
+x_T&=0&&\text{for every other }T.
+\end{aligned}
+\tag{14.13}
+$$
+
+Every displayed nonzero mass is strictly positive. The actual marginals are $u_*$ on $P$ and $v_*$ off $P$, with $u_*>v_*>\tau$. Consequently there are exactly $\binom{s}{2}$ labeled minimizers, and there is a unique minimizer up to relabeling. The minimum of $d(x)$ on this domain is $\mathcal H(\varepsilon_*)-B$.
+
+The quantifiers include arbitrarily small positive $\delta$ in the stated interval. The least sufficient threshold, the remaining smaller values of $a$, an exact rare/dense crossing curve, and prescribed finite-graph realization remain undetermined.
+
+**Proof.** First establish parameter bounds uniformly throughout the interval, without a lower bound on $\delta$. Put $w=1-L$. Since $aw\ge64$, $\delta\le L/a<1/a$, and $s\le2a$, one has
+
+$$
+\begin{gathered}
+1-r\delta\ge1-L-\frac La>\frac w2,
+\qquad m>\frac w{4a},\\
+0<\rho<\frac2{a^2},\qquad
+e_0<\frac8{a^2}\le\frac w{8a}<m,
+\qquad \mu\ge\frac a{a+2}\ge\frac79,\\
+0<\tau=\frac{3(2r+1)\delta}{r^2}
+ <\frac9{a^2}<\frac12.
+\end{gathered}
+\tag{14.14}
+$$
+
+For every $0\le\varepsilon\le e_0$ these imply
+
+$$
+\tau<v(\varepsilon)
+\ge\mu-\frac{2e_0}{a}
+>\frac79-\frac{16}{a^3}>\frac12,
+\qquad
+\tau<u(\varepsilon)\le\mu+e_0
+<\mu+m=1-\delta<1.
+\tag{14.15}
+$$
+
+Consider the interval of grouped dense marginals
+
+$$
+\mathcal I=
+\left[0,\min\left\{1-\mu,\frac a2(\mu-\tau)\right\}\right].
+\tag{14.16}
+$$
+
+It contains $[0,e_0]$ by (14.15); on $\mathcal I$, both $u$ and $v$ belong to $[\tau,1]$. The auxiliary functions
+
+$$
+g_0(t)=\frac{r^2}t,\qquad
+g_1(t)=\frac{r^2}t-\frac{\gamma}{t^2}
+\tag{14.17}
+$$
+
+are strictly convex on $[\tau,1]$, since
+
+$$
+g_0''(t)=\frac{2r^2}{t^3}>0,\qquad
+g_1''(t)=\frac{2(r^2t-3\gamma)}{t^4}>0,
+\qquad r^2\tau-3\gamma=6\delta>0.
+\tag{14.18}
+$$
+
+In particular direct differentiation of (14.2) gives, throughout $\mathcal I$,
+
+$$
+\begin{aligned}
+\mathcal H'(\varepsilon)
+&=2r^2(v^{-2}-u^{-2})-4\gamma v^{-3},\\
+\mathcal H''(\varepsilon)
+&=\frac{4r^2}{u^3}
+ +\frac{8(r^2v-3\gamma)}{av^4}>4r^2.
+\end{aligned}
+\tag{14.19}
+$$
+
+Here $u=u(\varepsilon)$ and $v=v(\varepsilon)$. Thus $\mathcal H'$ is strictly increasing, and
+
+$$
+\mathcal H'(0)=-\frac{4r^2\rho}{\mu^3}<0,\qquad
+\mathcal H'(e_0)
+>4r^2\rho(4-\mu^{-3})>0,
+\tag{14.20}
+$$
+
+because $\mu^{-3}\le(9/7)^3<4$. There is exactly one zero $\varepsilon_*\in(0,e_0)$; it is the unique minimizer of $\mathcal H$ on all of $\mathcal I$. Its derivative equation is (14.8). Integrating the strict second-derivative bound from zero to $\varepsilon_*$ yields $\varepsilon_*<\rho/\mu^3$, proving (14.9). Also $\mathcal H(\varepsilon_*)<\mathcal H(0)=H_d$, using the existing family identity (7.5).
+
+Now let $x$ be any dense law in the original domain, with no assumption on its support or energy. Form its weights (14.3), and choose $P$ to consist of two largest marginals, breaking ties arbitrarily. Then $[s]\setminus P$ maximizes $W_U$ over $a$-subsets, so (14.6) reads
+
+$$
+\begin{aligned}
+H(x)
+&=F_P(y)+\mathbb E_xG_y(T),\\
+F_P(y)
+&=\sum_{i\in P}g_0(y_i)
+  +\sum_{j\notin P}g_1(y_j).
+\end{aligned}
+\tag{14.21}
+$$
+
+Let $u=\frac12\sum_{i\in P}y_i$ and $v=\frac1a\sum_{j\notin P}y_j$. These are averages of the same actual marginals. The choice of $P$ gives $u\ge v$, and $2u+av=q$, hence $u=\mu+\varepsilon$, $v=\mu-2\varepsilon/a$ for some $\varepsilon\in\mathcal I$. Applying Jensen's inequality separately to the two strictly convex functions in (14.17) gives
+
+$$
+H(x)\ge F_P(y)
+\ge2g_0(u)+ag_1(v)
+=\mathcal H(\varepsilon)
+\ge\mathcal H(\varepsilon_*).
+\tag{14.22}
+$$
+
+The middle inequality is an equality exactly when the two marginals on $P$ both equal $u$ and all $a$ marginals off $P$ equal $v$. Jensen's inequality is used in its standard finite convex-combination form; see S. Boyd and L. Vandenberghe, *Convex Optimization*, Cambridge University Press, §3.1.8, pp.77–78, [author-hosted text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf). Strictness here follows from the positive second derivatives in (14.18). Convexity is asserted for $g_0,g_1$ and $\mathcal H$, without imposing convexity on $H$ as a function of the law.
+
+To prove actual attainment, fix $P$ and use (14.13). Positivity follows from (14.9), including $\delta>0$. The masses on the $r$-subsets add to
+
+$$
+2(m-\varepsilon_*)
++a\left(\frac{1+\delta}{s}
+        +\frac{2\varepsilon_*}{a}\right)=1-\delta.
+\tag{14.23}
+$$
+
+Thus the total mass is one and its cardinality mean is $a\delta+r(1-\delta)=q$. A label in $P$ is absent from the sole $a$-atom and from its own missing-one type, giving marginal
+
+$$
+1-\delta-(m-\varepsilon_*)=u_*.
+$$
+
+A label off $P$ is absent only from its own missing-one type, giving marginal
+
+$$
+1-\left(\frac{1+\delta}{s}
+       +\frac{2\varepsilon_*}{a}\right)=v_*.
+$$
+
+These actual marginals satisfy the density condition by (14.15). Moreover $w_i=r^2u_*$ on $P$ and $w_j=r^2v_*-\gamma$ off $P$. Therefore its energy is precisely $\mathcal H(\varepsilon_*)$, proving (14.10) together with the unrestricted-cardinality lower bound (14.22).
+
+For completeness, suppose any actual dense law attains this value. Every inequality in (14.22) must then be an equality. Strict convexity gives $\varepsilon=\varepsilon_*$ and constant marginals within each group. Since $\varepsilon_*>0$, the two marginals on $P$ are strictly larger than all the others. Consequently $[s]\setminus P$ is the unique $a$-subset maximizing $W_U$. By (14.5) and $\mathbb E_xG_y(T)=0$, every positive-mass atom has cardinality $r$, except possibly this one $a$-subset. The mean constraint forces the mass of that $a$-subset to be $\delta$. Each $r$-subset is a missing-one type, and its mass is forced by the actual marginal to be
+
+$$
+x_{[s]\setminus\{i\}}
+=1-y_i-\delta\,\mathbf1_{\{i\in P\}}.
+\tag{14.24}
+$$
+
+These are exactly the masses in (14.13). The construction already proves the converse. The pair $P$ is recoverable as the two largest marginals, so different pairs give different labeled laws and all are related by label permutations.
+
+Finally put $z_*=v_*/u_*$. The identity $2u_*+av_*=q$ gives the first line of (14.12), and (14.8) becomes
+
+$$
+\gamma=\frac{r^2qz_*(1-z_*^2)}{2(2+az_*)},
+\tag{14.25}
+$$
+
+which is equivalent to (14.11). Also
+
+$$
+1-z_* =\frac{s\varepsilon_*}{au_*}
+<\frac{se_0}{a\mu}<\frac1a,
+\qquad se_0<\frac{16}a\le\frac14<\mu.
+\tag{14.26}
+$$
+
+Thus $z_*\in(1-1/a,1)$. The derivative of the polynomial in (14.11) is
+
+$$
+r^2q(3z^2-1)+2a\gamma>0
+\quad\text{for }1-1/a\le z\le1,
+$$
+
+since $a\ge64$. Its root in this interval is therefore unique. Substitute (14.25) into (14.2) to obtain
+
+$$
+\mathcal H(\varepsilon_*)
+=\frac{r^2(2+az_*)}{q}
+ \left[2+\frac a{z_*}
+       -\frac{a(1-z_*^2)}{2z_*}\right],
+$$
+
+which simplifies to the second line of (14.12). This completes the exact algebraic specification and the equality classification. ∎
+
+## 追加锚（本行以下为增补区）
+
+## 15. The finite rare/dense crossing on the whole continuous window
+
+**Definition 15.1 (Crossing threshold and branch values).** Fix
+
+$$
+\frac12<L<1,
+\qquad
+A_\times(L)=\left\lceil
+\max\left\{10^4,\frac{64}{1-L},\frac{8L}{2L-1}\right\}
+\right\rceil.
+\tag{15.1}
+$$
+
+For an integer $a\ge A_\times(L)$ and $0<\delta\le L/a$, retain
+$r=a+1$, $s=a+2$, $q=r-\delta$, $C=2r-1$, and
+$
+\gamma=C\delta,
+\mu=q/s,
+\tau=3(2r+1)\delta/r^2.
+$
+Define the scalar energy
+
+$$
+h(\varepsilon,\delta)
+=\frac{2r^2}{\mu+\varepsilon}
+ +a\left[\frac{r^2}{\mu-2\varepsilon/a}
+ -\frac{C\delta}{(\mu-2\varepsilon/a)^2}\right].
+$$
+Let $\varepsilon_*(\delta)$ be the unique point supplied by Theorem 14.3, and put
+
+$$
+\begin{aligned}
+ u_*(\delta)&=\mu+\varepsilon_*(\delta),
+ &v_*(\delta)&=\mu-\frac{2\varepsilon_*(\delta)}a,\\
+ M_a(\delta)&=\frac{2r^2}{u_*(\delta)}
+ +a\left(\frac{r^2}{v_*(\delta)}-
+ \frac{C\delta}{v_*(\delta)^2}\right),\\
+ R_a(\delta)&=\frac a\delta+
+ \frac{r^3}{1-\delta/a}.
+\end{aligned}
+\tag{15.2}
+$$
+
+Thus $M_a=\mathscr D_a$ is the exact dense value from Theorem 14.3, while
+$R_a=H_r$ is the exact rare value from Theorem 9.1.
+
+**Theorem 15.2 (Unique finite crossing and the complete phase diagram).** For every
+$1/2<L<1$ and every integer $a\ge A_\times(L)$ there is a unique number
+
+$$
+\delta_c(a)\in\left(0,\frac1{2a}\right)\subset\left(0,\frac La\right)
+\tag{15.3}
+$$
+
+such that
+
+$$
+M_a(\delta_c(a))=R_a(\delta_c(a)).
+\tag{15.4}
+$$
+
+For every $0<\delta\le L/a$, on the full law domain of Definition 1.1,
+including arbitrary cardinalities, zero type masses, disconnected support and
+non-symmetric laws,
+
+$$
+\boxed{\quad
+\inf_x H(x)=\min\{M_a(\delta),R_a(\delta)\},
+\qquad
+D_a(\delta)=\min\{M_a(\delta),R_a(\delta)\}-B(\delta).
+\quad}
+\tag{15.5}
+$$
+
+The infimum is attained. Its equality laws are exactly as follows.
+
+* If $0<\delta<\delta_c(a)$, they are the $\binom{s}{2}$ laws $D_P$ indexed by
+  $P\subset[s]$, $|P|=2$, with
+
+  $$
+  x_{[s]\setminus P}=\delta,
+  \quad
+  x_{[s]\setminus\{i\}}=\frac{1-r\delta}{s}-\varepsilon_*(\delta)\ (i\in P),
+  \quad
+  x_{[s]\setminus\{j\}}=\frac{1+\delta}{s}+\frac{2\varepsilon_*(\delta)}a\ (j\notin P),
+  \tag{15.6}
+  $$
+
+  with all other masses zero.
+* If $\delta_c(a)<\delta\le L/a$, they are the $s$ laws $R_e$ indexed by
+  $e\in[s]$, with
+
+  $$
+  x_{\{e\}}=\frac\delta a,
+  \qquad
+  x_{[s]\setminus\{e\}}=1-\frac\delta a,
+  \tag{15.7}
+  $$
+
+  and all other masses zero.
+* At $\delta=\delta_c(a)$ the equality class is the disjoint union of the two
+  displayed families. There is no additional mixed equality law.
+
+Put $F_a=R_a-M_a$. Then $F_a$ is continuous on $(0,L/a]$, is $C^1$ on
+$(0,L/a)$, and
+
+$$
+F_a'(\delta)<-a^3+44a^2<0.
+\tag{15.8}
+$$
+
+Consequently $F_a>0$ before $\delta_c(a)$ and $F_a<0$ after it.
+
+**Proof.** Write $m(\delta)=(1-r\delta)/s$. Since
+$\delta\le L/a<1/a$ and $a\ge64/(1-L)$,
+
+$$
+ r\delta\le L+\frac1a
+ \le L+\frac{1-L}{64}<1,
+\tag{15.9}
+$$
+
+so $m>0$. On $0\le\varepsilon\le m$, the quantities in (14.2) obey
+
+$$
+ u=\mu+\varepsilon\le\mu+m=1-\delta<1,
+ \qquad
+ v=\mu-\frac{2\varepsilon}{a}
+ \ge\frac{a+1-3/a}{a+2}>\frac12,
+ \qquad \mu>\frac12.
+\tag{15.10}
+$$
+
+Also $0<\gamma< C/a<3$. Direct differentiation of the scalar energy in
+(14.2) gives
+
+$$
+\partial_\varepsilon h
+ =2r^2(v^{-2}-u^{-2})-4\gamma v^{-3},
+\qquad
+\partial_{\varepsilon\varepsilon}h
+ =\frac{4r^2}{u^3}
+ +\frac{8(r^2v-3\gamma)}{av^4}.
+\tag{15.11}
+$$
+
+The second expression is strictly positive, because
+$r^2v-3\gamma>a^2/2-9>0$. The point $\varepsilon_*(\delta)$ is interior by
+Theorem 14.3, so the implicit-function theorem and (15.11) make it $C^1$ in
+$\delta$; uniqueness makes the local branches agree. It is continuous at the
+right endpoint by the same interior bounds. Moreover
+$u_*>v_*>1/2$, and hence $v_*/u_*\in(1/2,1)$.
+
+The partial derivative with respect to $\delta$, at fixed $\varepsilon$, has
+the exact identity
+
+$$
+\partial_\delta h
+ =\frac{r^2}{u^2}-\frac{aC}{v^2}
+ +\frac{a}{2s}\,\partial_\varepsilon h.
+\tag{15.12}
+$$
+
+At the stationary point the last term vanishes. Therefore the envelope value
+satisfies
+
+$$
+M_a'(\delta)=\frac{r^2}{u_*^2}-\frac{aC}{v_*^2}
+ \ge-4aC\ge-12a^2,
+\tag{15.13}
+$$
+
+where $C=2a+1\le3a$. On the other hand,
+
+$$
+R_a'(\delta)=-\frac a{\delta^2}
+ +\frac{r^3}{a(1-\delta/a)^2}
+ <-a^3+32a^2.
+\tag{15.14}
+$$
+
+Indeed $\delta<1/a$ gives the first bound, while $r\le2a$ and
+$1-\delta/a>1-1/a^2\ge3/4$ give the second. Equations (15.13)–(15.14)
+prove (15.8), since $a\ge10^4$.
+
+It remains to establish opposite endpoint signs. At $\varepsilon=0$,
+$\partial_\varepsilon h=-4\gamma/\mu^3$. Using
+$\partial_{\varepsilon\varepsilon}h\ge4r^2$ and the mean-value theorem at the
+zero $\varepsilon_*$ gives
+
+$$
+0<\varepsilon_*(\delta)
+ \le\frac{\gamma}{r^2\mu^3}.
+\tag{15.15}
+$$
+
+Thus $\varepsilon_*(\delta)\to0$ as $\delta\downarrow0$ and
+$M_a(\delta)\to h(0,0)=rs^2$, whereas $R_a(\delta)\to+\infty$. Hence
+$F_a(\delta)\to+\infty$ at the left endpoint.
+
+For a finite negative value, set $\delta_0=1/(2a)$. It lies in the prescribed
+window because $L>1/2$. With
+
+$$
+ P_a=24a^6+56a^5-72a^3-38a^2+12a+9,
+ \qquad
+ Q_a=(2a^2-1)(2a^2+2a-1)^2,
+\tag{15.16}
+$$
+
+substitution into the exact rational expressions for $R_a$ and $H_d$ gives
+
+$$
+R_a(\delta_0)-H_d(\delta_0)+a=-a\frac{P_a}{Q_a}.
+\tag{15.17}
+$$
+
+Both $P_a$ and $Q_a$ are positive for $a\ge2$: group the first two negative
+terms as
+$24a^3(a^3-3)$ and $56a^5-38a^2$, with the remaining terms positive.
+The dense minimizer is dense, and at $\delta_0$ the hypothesis of Theorem 8.1
+holds because $b=(2r+1)\delta_0<2$ and $\mu>1/2$, so
+$b/(r^2\mu)<4/a^2\le1/12$. Therefore
+
+$$
+M_a(\delta_0)\ge H_d(\delta_0)-72\delta_0^2\mu^{-6}
+ >H_d(\delta_0)-\frac{1152}{a^2}.
+\tag{15.18}
+$$
+
+Equations (15.17)–(15.18) imply
+$F_a(\delta_0)<-a+1152/a^2<0$. Continuity and the intermediate value theorem
+produce a zero in $(0,\delta_0)$, and (15.8) makes it unique and fixes the
+signs on both sides.
+
+For each fixed $\delta$, Theorem 14.3 gives the exact lower bound $M_a$ and
+all dense equality laws, while Theorem 9.1 gives the exact lower bound $R_a$ and
+all rare equality laws. The conditions $\min_i y_i\ge\tau$ and
+$\min_i y_i<\tau$ partition the full original law domain, so the two attained
+bounds give (15.5) and the three equality alternatives. In particular, a law
+mixing distinct displayed minimizers cannot be an additional minimizer: it lies
+in one of the two regions and would then have to belong to that region's
+exhaustive equality class. The masses in (15.6) and (15.7) are actual laws of
+mean $q$ by the constructions in Theorems 14.3 and 9.1, so no independent
+marginal or cardinality optimization has been spliced into the comparison. ∎
+
+**Proposition 15.3 (Exact algebraic prescription without spurious roots).**
+For $a\ge A_\times(L)$, let $d$ and $z$ be real variables and define
+
+$$
+q_d=r-d,
+\qquad
+\varepsilon(d,z)=\frac{a q_d(1-z)}{s(2+az)}.
+\tag{15.19}
+$$
+
+Let $\mathcal R_a$ be the legal region
+
+$$
+\mathcal R_a=\left\{(d,z):
+0<d<\frac1{2a},\quad \frac12<z<1,\quad
+0<\varepsilon(d,z)<\frac{1-rd}{s}\right\}.
+\tag{15.20}
+$$
+
+There is exactly one pair $(d,z)\in\mathcal R_a$ satisfying the two
+integer-coefficient equations
+
+$$
+\begin{aligned}
+ r^2(r-d)z(1-z^2)-2C d(2+az)&=0,\\
+ 2a(r-d)z(a-d+r^3d)
+ -r^2d(a-d)(2+az)(az^2+4z+a)&=0.
+\end{aligned}
+\tag{15.21}
+$$
+
+Its first coordinate is $d=\delta_c(a)$. The optimizer is recovered exactly by
+
+$$
+ u=\frac{r-d}{2+az},
+ \qquad v=zu,
+ \qquad \varepsilon_*=u-\frac{r-d}{s}
+ =\varepsilon(d,z).
+\tag{15.22}
+$$
+
+**Proof.** At the crossing put $z=v_*/u_*$. The bounds in (15.10) and the
+strict positivity of $\varepsilon_*$ give $(\delta_c,z)\in\mathcal R_a$. Since
+$2u_*+av_*=q$, (15.22) follows. The stationary equation (14.8), after division
+by the positive factor $u_*^2$ and substitution of (15.22), is exactly the
+first equation in (15.21).
+
+Conversely, take any $(d,z)\in\mathcal R_a$ satisfying (15.21), and define
+$u,v,\varepsilon$ by (15.22). The first equation is equivalent, after
+multiplication only by the positive factor $2+az$, to
+
+$$
+ r^2v(u^2-v^2)=2Cd\,u^2,
+\tag{15.23}
+$$
+
+which is the stationary equation for the scalar dense energy. Strict convexity
+in (15.11) and the legal inequalities in (15.20) therefore force
+$\varepsilon=\varepsilon_*(d)$.
+
+Using the first equation to replace $Cd$ in the scalar energy gives
+
+$$
+M_a(d)=
+\frac{r^2(2+az)(az^2+4z+a)}{2z(r-d)}.
+\tag{15.24}
+$$
+
+All factors in $2z(r-d)d(a-d)$ are positive on $\mathcal R_a$, and direct
+clearing of these denominators shows that the second equation in (15.21) is
+exactly
+
+$$
+R_a(d)-M_a(d)=0.
+\tag{15.25}
+$$
+
+Thus every legal solution gives $F_a(d)=0$, hence $d=\delta_c(a)$ by (15.8).
+The crossing pair already constructed supplies existence, so the legal solution
+is unique. The positivity restrictions in (15.20) are retained throughout the
+clearing step; roots outside them are not admissible and are not counted. ∎
+
+The finite crossing uses the exact full-law results of Theorems 9.1 and 14.3.
+The envelope calculation is proved directly from the displayed scalar function;
+Milgrom and Segal, *Envelope Theorems for Arbitrary Choice Sets*,
+Econometrica 70 (2002), 583–601, provides the classical envelope background but
+is not used to supply the moving-domain regularity or the slope bound here.
+The endpoint identity (15.17) is a rational identity, and the dense estimate
+(15.18) is Theorem 8.1; no asymptotic expansion, numerical grid or convexity of
+$H$ as a function of the law is used.
+
+## 追加锚（本行以下为增补区）

@@ -1,0 +1,43 @@
+**Definition 21.1 (row, seed, and canonical descriptor).** For $d\ge1$, let
+$P=(\zeta _0,\ldots,\zeta _{2d-1})$ be the actually acquired prefix,
+with $\zeta_i=z_{i+1}$ in Definition 9.1. Put
+
+$$
+ H(P)_{ij}=\zeta_{i+j},\qquad y(P)_i=\zeta_{i+d}
+ \quad(0\le i,j<d).
+ \tag{ACR.75}
+$$
+
+Let $s_d(P)=(\zeta _0,\ldots,\zeta _{d-1})\in\mathbb F_2^d$ be the
+original first-$d$ seed, and let $\rho_d$ be the same fixed bijective
+coefficient-row enumeration used by Definition 9.1. Define the row
+projection
+
+$$
+ \kappa_d(P)=\rho_d(i_P),\qquad
+ i_P=\min\{i<2^d:H(P)\rho_d(i)=y(P)\},
+ \tag{ACR.76}
+$$
+
+and define the full descriptor
+
+$$
+ \operatorname{EN}_d(P)=\bigl(\kappa_d(P),s_d(P)\bigr)\in
+ \mathbb F_2^d\times\mathbb F_2^d.
+ \tag{ACR.77}
+$$
+
+Thus $K_d(P)$ in the original target is this full descriptor:
+$K_d(P)=\operatorname{EN}_d(P)$. Its first component is the original
+first passing row; its second component is copied from the authentic
+prefix and is never fabricated from that row. For $d=0$, set
+$\operatorname{EN}_0(\varnothing)=(\varnothing,\varnothing)$, the
+original zero descriptor.
+
+For $c\in\mathbb F_2^d$, write
+
+$$
+ p_c(E)=E^d-\sum_{j<d}c_jE^j.
+ \tag{ACR.78}
+$$
+

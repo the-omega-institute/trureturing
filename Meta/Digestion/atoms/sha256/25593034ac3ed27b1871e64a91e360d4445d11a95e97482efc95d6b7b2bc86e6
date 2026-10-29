@@ -1,0 +1,24 @@
+#### 定理 7.3（普适性等于极限变分缺陷消失）
+
+令 $\mathcal K$ 为可达有限字的闭包，则
+
+$$
+\lim_{\eta\downarrow0}F_\eta(R)
+=\min_{U\in\mathcal K}\frac1d\left\lVert U-R\right\rVert_F^2.
+$$
+
+在紧目标空间上该收敛一致。因此黄金 $\Sigma$ 的指定相位通用性等价于
+$F_\eta(R)\to0$ 对所有 $R\in\operatorname{SU}(2)$ 成立。
+
+**证明。**
+
+右侧记为 $f(R)$，紧性保证最小值存在。非负成本给 $F_\eta\ge f$。
+给定任意精度，取某有限字使其边界误差接近 $f(R)$；固定此字后令 $\eta\downarrow0$，得到另一方向。
+一致性可直接由紧性证明：对每个 $R$ 选一个有限字，使该点误差小于 $f(R)+\epsilon$；误差和 $f$ 都连续，所以同一字在某邻域内小于 $f+2\epsilon$。取有限子覆盖，所有选中字的成本有共同有限上界；令 $\eta$ 足够小即得到全空间的 $3\epsilon$ 界。
+
+∎
+
+若改用 $b_{\rm p}(R)=2-2|\operatorname{Tr} R|/d$，相同证明得到射影版本，常数四换成二。相位确定版本与射影版本不能在受控组合时混用。
+
+<a id="statement-7-4"></a>
+

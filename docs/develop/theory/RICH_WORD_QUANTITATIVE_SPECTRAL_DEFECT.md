@@ -631,3 +631,354 @@ $$
 and does not provide the upper construction required for that equality. In particular, cancellation, richness, and control of the ordinary exponent remain separate requirements for any proposed source-image route.
 
 ## 追加锚（本行以下为增补区）
+
+## 7. A necessary cone and an unbounded excluded cancellation family
+
+**Definition 7.1 (Original source and actual alphabet).** Throughout Sections 7–11, $r\ge3$ is an integer and $u$, $\varphi$, $\Lambda$, $\beta$, $v_\beta$, $e_r$, $\mathcal K_r$ and $H$ retain Definitions 1.2–1.3 and 4.1. Thus the source is exactly
+
+$$
+\varphi(i)=0(i+1)\quad(0\le i<2r),\qquad
+\varphi(2r)=0(2r)(2r),\qquad u=\varphi^\omega(0).
+$$
+
+For a nonerasing morphism $`\eta:A_r^*\to B^*`$, put $x=\eta(u)$ and $h_i=|\eta(i)|$. Its actual alphabet is the set $\operatorname{Alph}(x)$ of letters occurring in $x$, rather than an arbitrarily enlarged ambient $B$. Every letter of $A_r$ occurs in $u$: the letter $i$ occurs in $\varphi^i(0)$ for $0\le i\le2r$. Hence
+
+$$
+\operatorname{Alph}(x)=\bigcup_{i=0}^{2r}\operatorname{Alph}(\eta(i)).
+$$
+
+All exponents below are the ordinary least-period exponents of Definition 1.1. Define
+
+$$
+D_r=\Lambda^r-2^r-2,\qquad S_r=r+2^{r+1}-1.
+$$
+
+**Theorem 7.2 (Necessary cone on the full cancellation locus).** Let $r\ge3$, let $B$ be any nonempty finite alphabet and let $`\eta:A_r^*\to B^*`$ be any nonerasing morphism. If $h\in\mathcal K_r$ and $E(x)\le e_r$, then, writing $t=h_r$,
+
+$$
+D_rh_0\le2t+\sum_{i=1}^{r-1}2^{r-i}h_i.
+\tag{25}
+$$
+
+In particular, every exact attaining image satisfies (25), with no injectivity, richness or output-alphabet-size assumption and with all independent positive integer parameters in Theorem 4.2 allowed.
+
+*Proof.* The actual-factor inequality (1), using the already supplied Type I return at index $1$ in (3), gives the reused intermediate bound
+
+$$
+E(x)\ge2+\frac{h_0}{h_0+2h_{2r}}.
+\tag{26}
+$$
+
+Its input is the Type I factor $0(2r)(2r)0$ and the return $0(2r)(2r)$; the inequality certifies an output period and does not require that period to be least. The supplier is Dvořáková–Pelantová, [arXiv:2509.06104v1, §3, Lemma 9 and Type I](https://arxiv.org/pdf/2509.06104v1), journal Lemma 10 in [EJC 33(2), P2.15](https://doi.org/10.37236/14600), used in Theorem 2.1. Thus (26) is reused, rather than an additional local-period result.
+
+The equation $\Lambda^r(\Lambda-2)=1$ implies
+
+$$
+e_r=2+\frac{1}{\Lambda^r-1}.
+\tag{27}
+$$
+
+All denominators are positive. Combining (26) with $E(x)\le e_r$ and multiplying gives
+
+$$
+(\Lambda^r-2)h_0\le2h_{2r}.
+$$
+
+On the entire cancellation locus, Theorem 4.2 gives
+
+$$
+2h_{2r}=2t+2^rh_0+\sum_{i=1}^{r-1}2^{r-i}h_i.
+$$
+
+Substitution proves (25). For an exact attaining image, Corollary 3.2 supplies $h\in\mathcal K_r$, so the same calculation applies. $\square$
+
+**Theorem 7.3 (Uniform exclusion of an unbounded positive family).** For every integer $r\ge5$, one has $D_r>1/4$. For every such $r$ and every integer $N\ge2^{r+2}$, set
+
+$$
+h_0=N,\qquad h_1=\cdots=h_{r-1}=t=1,\qquad
+h_{r+j}=2^{j-1}(N+1)\quad(1\le j\le r).
+\tag{28}
+$$
+
+This is a positive cancellation row. Every nonerasing dictionary with this row into every nonempty finite alphabet satisfies
+
+$$
+E(\eta(u))\ge e_r+
+\frac{D_rN-2^r}
+ {\bigl((2^r+1)N+2^r\bigr)(\Lambda^r-1)}
+>e_r.
+\tag{29}
+$$
+
+*Proof.* Put $a=2^r$ and $y=\Lambda^r$. Since $\Lambda=2+1/y$, the binomial inequality gives
+
+$$
+y=\left(2+\frac1y\right)^r\ge a+\frac{ra}{2y}.
+$$
+
+If $y\le a+9/4$, then, since $r\ge5$ and $a\ge32$,
+
+$$
+\frac{ra}{2y}\ge\frac{ra}{2(a+9/4)}
+\ge\frac52\frac{32}{32+9/4}
+=\frac{320}{137}>\frac94.
+$$
+
+This would give $y>a+9/4$, a contradiction. Thus $D_r=y-a-2>1/4$.
+
+Theorem 4.2 applied to the independent parameters in (28) gives
+
+$$
+t+\sum_{i=0}^{j-1}2^{j-1-i}h_i
+=1+2^{j-1}N+(2^{j-1}-1)=2^{j-1}(N+1).
+$$
+
+It therefore supplies cancellation for every row (28). For this row, (26) becomes
+
+$$
+E(\eta(u))\ge2+\frac{N}{(2^r+1)N+2^r}.
+$$
+
+Subtracting (27) yields exactly the fraction in (29). Its numerator is positive because
+
+$$
+D_rN>\frac{N}{4}\ge2^r.
+$$
+
+The denominator is positive as well. This proves the exclusion for every dictionary with the prescribed lengths, including those with infinite exponent. The family is unbounded since $N$ is arbitrary above the stated threshold. This argument excludes neither all cancellation rows nor any family at $r=3$ or $r=4$. $\square$
+
+## 8. Length restrictions for the literal prefix class
+
+**Definition 8.1 (Same-morphism literal prefix class).** A pair $(\eta,p)$ belongs to $\mathcal L_r$ if $`\eta:A_r^*\to B^*`$ is an injective nonerasing morphism into a finite alphabet, $p$ is a nonempty palindrome, and for every $i\in A_r$ there is a palindrome $q_i$, possibly empty, such that
+
+$$
+\eta(i)=p q_i,\qquad \eta(i)p=pq_ip
+\text{ has exactly two occurrences of }p,
+$$
+
+at its prefix and suffix. Put $m=|p|\ge1$. An attaining pair additionally satisfies $E(\eta(u))=e_r$. This is the literal representation in Dvořáková–Pelantová, journal Definition 19, [doi:10.37236/14600](https://doi.org/10.37236/14600), arXiv Definition 18. The same $\eta$ acts on the original $u$; no conjugation, replacement by a derived sequence, or change of source is included in this definition.
+
+**Theorem 8.2 (Marker and total-length relaxations).** For every $r\ge3$ and every attaining pair $(\eta,p)\in\mathcal L_r$,
+
+$$
+h_{2r}\ge m(\Lambda^r-1),\qquad
+H\ge(m+1)S_r-2^r.
+\tag{30}
+$$
+
+Equality in the second bound can occur only with the independent parameters
+
+$$
+h_0=m,\qquad h_1=\cdots=h_{r-1}=t=m+1.
+\tag{31}
+$$
+
+For $r=3$ this gives $H\ge28$. Equality $H=28$ forces $m=1$ and the full row
+
+$$
+(h_0,\ldots,h_6)=(1,2,2,2,3,6,12).
+\tag{32}
+$$
+
+These are necessary length conditions; (31) and (32) do not assert the existence of an attaining dictionary.
+
+*Proof.* Write $c=2r$. The letter $c$ occurs in $u$, and $u=\varphi(u)$ contains $cc0$: use the suffix $cc$ of $\varphi(c)=0cc$ and the initial $0$ of the following letter image. Since $\eta(0)$ begins with $p$, the word
+
+$$
+z=\eta(c)\eta(c)p
+$$
+
+is an actual factor of $\eta(u)$. The word $p$ is a prefix of $\eta(c)$, so $|\eta(c)|=h_c$ is a period of $z$. Consequently
+
+$$
+E(\eta(u))\ge2+\frac{m}{h_c}.
+$$
+
+For an attaining pair, (27) now gives the first bound in (30).
+
+Every length $h_i$ is at least $m$. A length equal to $m$ forces $q_i=\varepsilon$ and $\eta(i)=p$. Injectivity permits at most one such $i$. In particular, among the independent parameters $h_0,\ldots,h_{r-1},t$ at most one can equal $m$, and all others are at least $m+1$. Cancellation follows from Corollary 3.2. The exact supplied formula (23) is
+
+$$
+H=(r+1)t+\sum_{i=0}^{r-1}2^{r-i}h_i.
+\tag{33}
+$$
+
+Its coefficient sum is $S_r$. Its unique largest coefficient is $2^r$, at $h_0$, because $2^r>r+1$ for $r\ge3$. Starting with every independent parameter equal to $m+1$, at most one parameter can decrease by one; the greatest possible decrease in (33) is $2^r$. This proves the second inequality in (30). Equality requires the decrease to occur at $h_0$ and requires every other parameter to remain $m+1$, giving (31).
+
+When $r=3$, $S_3=18$, so $H\ge18(m+1)-8$. As $m\ge1$, equality $H=28$ forces $m=1$, $h_0=1$ and $h_1=h_2=t=2$. Formula (19) then gives $h_4=3$, $h_5=6$, $h_6=12$, proving (32).
+
+For comparison, the larger-alphabet attaining supplier in Theorem 4.4 already supplies members of this literal class. Reuse its weighted morphism $\pi_r$ and put $\widehat\eta=\pi_r\circ\varphi$. Its output is the very same supplied word, since $\varphi(u)=u$:
+
+$$
+\widehat\eta(u)=\pi_r(u),\qquad
+E(\widehat\eta(u))=e_r,\qquad
+\#\operatorname{Alph}(\widehat\eta(u))=r+2^r.
+$$
+
+Indeed $\pi_r(0)$ is a single letter $a$ occurring in no other letter image. With $p=a$, the palindromes in the literal representation are
+
+$$
+q_i=\pi_r(i+1)\quad(i<2r),\qquad
+q_{2r}=\pi_r(2r)\pi_r(2r).
+$$
+
+Each $aq_i a$ has exactly two occurrences of $a$. The substitution $\varphi$ is injective, and so is $\pi_r$: its disjoint nonempty image alphabets identify each maximal run of source letters, with the run length determined by the length of its image. Thus $\widehat\eta$ is injective. The richness and exact ordinary exponent are the complete reused conclusions of journal Proposition 14 and Theorem 2, rather than another proof of that construction. Its row is
+
+$$
+\widehat h_i=1+h^*_{i+1}\quad(i<2r),\qquad
+\widehat h_{2r}=1+2h^*_{2r}.
+$$
+
+For $r=3$ it is $(2,2,2,3,5,9,17)$, of total length $40$, on $11$ actual letters. In particular, the length relaxation does not leave all larger-alphabet literal-prefix attainment without a supplied example. $\square$
+
+## 9. A strengthened boundary on the actual small alphabet
+
+**Theorem 9.1 (The minimal relaxed row forces an ordinary fifth power).** Let $r\ge3$ and $(\eta,p)\in\mathcal L_r$. Suppose that $\eta(u)$ is rich, that its actual alphabet has exactly $r+1$ letters, and that its row is
+
+$$
+h_0=1,\qquad h_i=2\quad(1\le i\le r),\qquad
+h_{r+j}=3\cdot2^{j-1}\quad(1\le j\le r).
+\tag{34}
+$$
+
+Then $\eta(u)$ contains a one-letter fifth power, and hence $E(\eta(u))\ge5$.
+
+*Proof.* Since $1=h_0\ge|p|\ge1$, the marker is a single letter, say $p=a$, and $\eta(0)=a$. For $1\le i\le r$, the literal representation and $h_i=2$ give
+
+$$
+\eta(i)=a b_i
+$$
+
+for a letter $b_i$. The complete-return condition says that $ab_i a$ has exactly two occurrences of $a$, so $b_i\ne a$. Injectivity says that $b_1,\ldots,b_r$ are pairwise distinct. These $r+1$ letters already occur in the output by Definition 7.1. The actual-alphabet hypothesis therefore gives
+
+$$
+\operatorname{Alph}(\eta(u))=\{a,b_1,\ldots,b_r\}.
+\tag{35}
+$$
+
+Set $k=r+2\le2r$. Formula (34) gives $h_k=6$, so $\eta(k)=a q_k$ with $|q_k|=5$. Since $a q_k a$ is a complete return to $a$, the word $q_k$ contains no $a$. By (35), its letters are among $b_1,\ldots,b_r$.
+
+We locate a suitable occurrence in the original source. For $0\le n\le2r$, put $T_n=\varphi^n(0)$. Only the length-two rules are used before constructing $T_{2r}$, and induction on $n$ gives
+
+$$
+|T_n|=2^n,\qquad T_n[j]=\nu_2(j+1)\quad(0\le j<2^n),
+\tag{36}
+$$
+
+where $\nu_2$ is the exponent of $2$ in a positive integer. In the induction step, the even positions become $0$ and the odd positions increase the old letter by one; these are precisely the two corresponding valuation identities. Let $F_{r+1}$ be $T_{r+1}$ with its last letter $r+1$ removed. The last $2^{r+1}$ letters of $T_{r+2}$ are $F_{r+1}(r+2)$ by (36). The word $F_{r+1}$ uses only $0,\ldots,r$, contains every one of those letters, and ends in $0$.
+
+Thus an actual output factor is
+
+$$
+\eta(F_{r+1})a q_k.
+\tag{37}
+$$
+
+In the part $\eta(F_{r+1})a$, each $b_i$ occurs, and every occurrence of a $b_i$ is immediately followed by $a$. This follows from $\eta(0)=a$, $\eta(i)=ab_i$ for $1\le i\le r$, and the final appended $a$.
+
+Let $b$ be the first letter of $q_k$. Suppose that some different letter $d$ occurs in $q_k$, and take its first occurrence there. It is not the first position of $q_k$, and its preceding letter is different from $a$. Take the last occurrence of $d$ in $\eta(F_{r+1})a$. The factor from that occurrence to the chosen first $d$ in $q_k$ contains exactly two $d$'s. It starts with $da$ and ends with $ed$ for a letter $e\ne a$. It cannot be a palindrome, since its second and penultimate letters differ.
+
+But a single letter is a palindrome, and every complete return to a palindromic factor in a rich word is a palindrome. This is exactly Glen–Justin–Widmer–Zamboni, [*Palindromic richness*, arXiv:0801.1656v1, Theorem 2.14 and Remark 2.15](https://arxiv.org/pdf/0801.1656v1), [doi:10.1016/j.ejc.2008.04.006](https://doi.org/10.1016/j.ejc.2008.04.006). That criterion applies to finite and infinite words, without a recurrence or reversal-closure hypothesis. It contradicts the complete return just found. Hence every letter of $q_k$ is $b$, so $q_k=b^5$. This factor has least period one and exponent five, proving the claim. $\square$
+
+**Corollary 9.2 (Length boundary for every nonempty marker).** Let $r\ge3$. Every attaining pair $(\eta,p)\in\mathcal L_r$ whose output is rich on exactly $r+1$ actual letters satisfies
+
+$$
+H\ge2r+3\cdot2^r-2+\gcd(2,r+1).
+\tag{38}
+$$
+
+In particular, for $r=3$ and four actual letters, $H\ge30$. This is a necessary condition in $\mathcal L_r$, with no assertion of feasibility or sharpness at the lower bound.
+
+*Proof.* Write $H_0=2S_r-2^r=2r+3\cdot2^r-2$. If $m\ge2$, Theorem 8.2 gives $H\ge H_0+(m-1)S_r>H_0$. If $m=1$, the same theorem gives $H\ge H_0$, with equality possible only at $h_0=1$, $h_1=\cdots=h_{r-1}=t=2$. The complete supplied family (19) then gives exactly (34). Theorem 9.1 would force $E(\eta(u))\ge5$, whereas (27) and $\Lambda^r>2^r\ge8$ give $e_r<2+1/7<5$. Hence equality is impossible, and $H>H_0$ for every marker length.
+
+Put $g=\gcd(2,r+1)$. Formula (33) shows that $g$ divides $H$. The same formula at the positive cancellation row (34) shows that $g$ divides $H_0$. Therefore the strict integer inequality $H>H_0$ implies $H\ge H_0+g$, proving (38). For $r=3$, $H_0=28$ and $g=2$. The distinction between $m=1$ and $m\ge2$ was only a proof by cases; the corollary imposes no global minimum-marker assumption. $\square$
+
+## 10. An arithmetic size corollary of the spectral defect
+
+**Corollary 10.1 (Classical norm specialization and near-attainment size).** Let $r\ge3$, let $`\eta:A_r^*\to B^*`$ be any nonerasing morphism into any nonempty finite alphabet, and suppose $hv_\beta\ne0$. With exactly $v_\beta$, $\kappa_r$ and $c_r$ of Definitions 1.3 and Theorem 2.1,
+
+$$
+E(\eta(u))\ge e_r+
+ c_r3^{-(r-1)\kappa_r}H^{-r\kappa_r}
+\ge e_r+\frac{c_r}{27^{r-1}}H^{-3r}.
+\tag{39}
+$$
+
+Consequently, for every $\varepsilon>0$, a noncancelling image satisfying $E(\eta(u))\le e_r+\varepsilon$ must satisfy both
+
+$$
+H\ge3^{-(r-1)/r}\left(\frac{c_r}{\varepsilon}\right)^{1/(r\kappa_r)},
+\qquad
+H\ge\left(\frac{c_r}{27^{r-1}\varepsilon}\right)^{1/(3r)}.
+\tag{40}
+$$
+
+The norm step is classical; (39) is its arithmetic corollary combined with the repo-derived ordinary-factor Theorem 2.1, rather than a new algebraic-norm theorem.
+
+*Proof.* The supplied polynomial $g_r(X)=X^r-\sum_{j=0}^{r-1}X^j$ is the monic minimal polynomial of $\beta$, of degree $r$, as specified in Definition 4.1. Its other complex roots $\zeta_2,\ldots,\zeta_r$ have modulus strictly less than one. The latter fact is supplied both by Appendix P1 of Dvořáková–Pelantová and by the existing $q=r$ statement `dbonacci_complex_root_location` in [DBonacci irreducibility](../../../D5/S0/Tower/DBonacci/Irreducibility.lean); that source also contains its proof-local root-equation argument and the monic integer factor argument used by `dbonacci_irreducible`. The root is the same one fixed by `eq_dbonacciPerronRoot_iff` in [DBonacci Perron root](../../../D5/S0/Tower/DBonacci/PerronRoot.lean). No rescaling of the eigenvector or replacement of the degree is made here.
+
+Define the integer polynomial
+
+$$
+P_h(X)=(X-2)\sum_{i=0}^{2r-1}h_iX^{2r-1-i}+h_{2r},
+$$
+
+so that $\alpha=P_h(\beta)=hv_\beta$. Because $\beta$ is an algebraic integer, $\alpha$ is an algebraic integer in $K=\mathbb Q(\beta)$. The classical norm formulas give
+
+$$
+N_{K/\mathbb Q}(\alpha)
+=P_h(\beta)\prod_{j=2}^{r}P_h(\zeta_j)\in\mathbb Z\setminus\{0\}.
+\tag{41}
+$$
+
+Here the product is over all $r$ embeddings of $K$, even if $\alpha$ generates a proper subfield. These are the standard integrality and conjugate-product norm statements; see J. S. Milne, [*Algebraic Number Theory*, version 3.08, Theorem 2.1, Corollaries 2.20–2.21 and Aside 2.22](https://www.jmilne.org/math/CourseNotes/ANT.pdf).
+
+For $j\ge2$, $|\zeta_j|<1$ and $|\zeta_j-2|<3$, whence
+
+$$
+|P_h(\zeta_j)|
+\le |\zeta_j-2|\sum_{i=0}^{2r-1}h_i|\zeta_j|^{2r-1-i}+h_{2r}
+\le3H.
+$$
+
+Taking absolute values in (41), using its nonzero integer value, gives
+
+$$
+1\le|\alpha|(3H)^{r-1},\qquad
+\rho=\frac{|\alpha|}{H}\ge3^{-(r-1)}H^{-r}.
+\tag{42}
+$$
+
+The last lower bound lies in $(0,1]$, since $H\ge1$. Thus
+
+$$
+\min(1,\rho)\ge3^{-(r-1)}H^{-r}.
+$$
+
+Applying Theorem 2.1 proves the first inequality in (39). Its proof already supplies $0<\kappa_r<3$. Since $3^{r-1}H^r\ge1$, raising its reciprocal to $\kappa_r$ gives a value at least its third power, proving the second inequality. Combining each of these positive excess bounds with $E(\eta(u))-e_r\le\varepsilon$ and taking the respective positive roots proves (40).
+
+If $hv_\beta=0$, the integer norm in (41) is zero and the lower bound (42) does not follow. Thus this corollary gives no positive gap on cancellation and no existence of approaching images. $\square$
+
+## 11. Separate mathematical targets and representation boundaries
+
+**Definition 11.1 (Exact, approaching and unrestricted targets).** For each $r\ge3$, the exact original-source small-alphabet question asks for a nonerasing morphism $\eta$ for which
+
+$$
+\#\operatorname{Alph}(\eta(u_{2r+1}))=r+1,\qquad
+\eta(u_{2r+1})\text{ is rich},\qquad
+E(\eta(u_{2r+1}))=e_r,
+$$
+
+allowing every positive length row and arbitrary morphisms. The distinct approaching question asks for a family with the same actual alphabet size and richness whose ordinary exponents tend to $e_r$. The unrestricted threshold target remains Definition 3.3:
+
+$$
+RT(\mathcal C_d)=E^*(u_{2d-1})\quad(d\ge2),
+$$
+
+where $\mathcal C_d$ contains all infinite rich words on $d$ actual letters, without a recurrence or morphic restriction. Its lower inequality quantifies over every word in that class. The cone, the excluded family and (38) supply necessary restrictions, leaving these existence and unrestricted lower-bound obligations unresolved here, already for the exact original $u_7$ question on four letters. In particular, (38) is not an impossibility assertion for arbitrary morphisms or a construction at $H=30$.
+
+The representation in Definition 8.1 is narrower than the complete-return formulation in Balková–Pelantová–Starosta, [*Infinite words with finite defect*, arXiv:1009.5105v1, Definition 5.1, Proposition 5.4 and Theorem 5.5](https://arxiv.org/pdf/1009.5105v1), [doi:10.1016/j.aam.2010.11.006](https://doi.org/10.1016/j.aam.2010.11.006). That formulation allows a return word shorter than its marker and uses conjugation and derived words. A literal factorization $\eta(i)=p q_i$ for the same morphism on the same $u$ is an additional condition. Neither the derived-word representation nor conjugacy alone supplies that condition while preserving this length row. The marker and length conclusions (30) and (38) are restricted to Definition 8.1; they impose no condition on the broader overlapping-return class or on arbitrary rich morphisms without such a bridge.
+
+For the source/exponent distinction, Dvořáková–Klouda–Pelantová, [*The asymptotic repetition threshold of sequences rich in palindromes*, arXiv:2409.06849v1, Theorems 24–25 and Corollary 29](https://arxiv.org/pdf/2409.06849v1), [doi:10.1016/j.ejc.2025.104124](https://doi.org/10.1016/j.ejc.2025.104124), supplies a rich binary projection $i\mapsto ab^i$ preserving the asymptotic exponent. This is an asymptotic supplier, not an ordinary-exponent upper bound. Currie–Mol–Peltomäki, [*The repetition threshold for ternary rich words*, EJC 32(2), P2.55, Theorems 1.1–1.2](https://doi.org/10.37236/13499), supplies the ternary ordinary threshold and its transducer construction. Dvořáková–Pelantová, [*Symmetries of rich sequences with minimum critical exponent*, arXiv:2501.15135v1, Proposition 2](https://arxiv.org/pdf/2501.15135v1), supplies its original-source morphic representation on $u_5$. These are exact supplied results in their respective ranges, rather than solutions of the original $u_{2r+1}$ problem for $r\ge3$. A finite rich word, including a long word with a controlled exponent, is also distinct from the infinite-word existence required in Definition 3.3.
+
+## 追加锚（本行以下为增补区）

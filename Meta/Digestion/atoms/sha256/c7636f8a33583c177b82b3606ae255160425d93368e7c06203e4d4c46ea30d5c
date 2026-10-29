@@ -1,0 +1,21 @@
+#### 定义 4.1（固定黄金选择门）
+
+在两个普通逻辑比特上定义
+
+<a id="eq-selector"></a>
+
+$$
+\boxed{G=\lvert 0\rangle\langle 0\rvert\otimes A+\lvert 1\rangle\langle 1\rvert\otimes B.}
+$$
+
+第一个端口为选择端口，第二个为数据端口。它仍具有黄金投影形式：
+
+$$
+G=\omega[I+(\omega-1)\Pi],\qquad
+\Pi=\lvert 0\rangle\langle 0\rvert\otimes P+\lvert 1\rangle\langle 1\rvert\otimes Q.
+$$
+
+因此 $G$ 酉，$G^{10}=I$，$G^{-1}=G^9$。
+
+<a id="thm-selector"></a>
+

@@ -2805,3 +2805,736 @@ $\square$
 [MAS]: https://www.isiweb.ee.ethz.ch/archive/massey_pub/pdf/BI411.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 22. Paid certificates for the authentic cut and chronological prefix
+
+**Definition 22.1 (same-root certificate relation).** Retain Definition
+9.1 in its entirety. In particular the authentic all-index bound is
+$d$, the actual cut is mature, and the only source replies used here
+are paid total physical-literal presence bits at the one surviving
+stationary root. Earn $h,H=2h+1$ by Proposition 9.2. A proposed answer
+is $(\nu,A)$ with $n_0\le\nu\le H$ and
+$A=(a_1,\ldots,a_{2d})\in\{0,1\}^{2d}$; a malformed answer is
+rejected before source interaction. Letters $a,b$ below remain the
+physical ports; a numerical bit $a_j$ is not a port name.
+
+For a present cone $p$ and a proposed rank $\nu\ge2$, a rank
+certificate consists of physical suffixes $x,y$. Require
+$|x|=\nu-1$ and $\operatorname{Read}(px)=1$. The additional tests are
+
+$$
+\begin{array}{c|c|c}
+\nu&|y|&\text{required paid replies}\\
+2k+1&k&\operatorname{Read}(pya)=0\\
+2k&k-1&\operatorname{Read}(pyaa)=\operatorname{Read}(pyba)=0.
+\end{array}
+\tag{ACR.94}
+$$
+
+The checker does not assume that the supplied $y$ is present, and
+does not consult a supplied rank or an estimated mean. All displayed
+words are submitted literally to the original root. The root uses
+$p=\varepsilon$. Thus it needs at most three certificate Reads.
+
+After this root test, check the proposed prefix in increasing birth
+order. For birth $j$ compute
+$\tau_j=\min\{u\ge2:j\le F_{u+1}-1\}$ and reconstruct the old
+labelled tree at cut $\tau_j-1$ using the proposed first
+$B_{\tau_j-1}<j$ bits. Select its
+$(j-B_{\tau_j-1})$th beta leaf in physical lexicographic order;
+call its address $p_j(A)$. Put $t_j=\nu-\tau_j\ge1$ and
+$c_j=a$ for proposed bit one, $c_j=b$ for proposed bit zero.
+The birth witness is a suffix $v_j$ of length $t_j$, with required
+reply
+
+$$
+\operatorname{Read}\bigl(p_j(A)c_jv_j\bigr)=1.
+\tag{ACR.95}
+$$
+
+Accept exactly when every length, maturity, rank and birth test passes.
+A transcript records the actual paid replies to these tests, rather
+than predictions of them. Witness construction is outside this
+checking relation and has its own work, writes, backing and any
+discovery Reads.
+
+**Theorem 22.2 (soundness, completeness and the terminal boundary).**
+For every actual source and cut of Definition 9.1, the relation in
+Definition 22.1 has an accepting certificate for $(\nu,A)$ exactly
+when
+
+$$
+\nu=n,\qquad A=P=z_1\cdots z_{2d}.
+\tag{ACR.96}
+$$
+
+Checking a supplied certificate uses at most $2d+3$ source Reads,
+maximum literal length at most $\nu$, and literal traffic
+$O((d+1)(\nu+1))$. A certificate has $O((d+1)(\nu+1))$ bits.
+Checking has uniform polynomial local bit work, cumulative writes
+and backing in $d+H+2$, including parsing and old-tree construction.
+These statements include $d=0$, singular and nonminimal laws, and
+finite transients in the all-index class. They do not distinguish
+the two terminal ranks zero and one of a general present cone.
+
+Proof. Definition 10.1 implies that a cone of rank $q\ge1$ has
+maximum present suffix depth $q-1$, whereas rank zero has depth zero.
+For $q\ge2$, following a rank-$(q-1)$ child until the final branch
+attains depth $q-1$; either child of the final rank-two branch is
+adequate. Every descent subtracts either one or two before it reaches
+a terminal rank. In particular every word of length $\ell$ is
+present whenever $q\ge2\ell$.
+
+The positive length $\nu-1$ witness forces $q\ge\nu$. If
+$\nu=2k+1$ and $q\ge\nu+1=2k+2$, every word of length $k+1$
+would be present, contradicting the odd test in (ACR.94). If
+$\nu=2k$ and $q\ge\nu+1=2k+1$, every length-$(k-1)$ prefix $y$
+would be present with residual rank at least three. At least one of
+its two children then has rank at least two, so at least one of
+$yaa,yba$ is present. This contradicts the even tests. Thus a passing
+rank certificate forces $q=\nu$ even when the supplied short prefix
+was not separately queried. Conversely, at $q=\nu$, a longest path
+supplies $x$. Repeatedly choose a rank-$(q-2)$ child for $y$: the
+odd case ends at rank one after $k$ steps; the even case ends at
+rank two after $k-1$ steps. The required absences follow. At $\nu=2$
+the even prefix is empty and the tests are $aa,ba$ absent. Ranks
+zero and one cannot pass any $\nu\ge2$ test and have identical
+singleton presence supports. No terminal-rank sensor is inferred.
+
+Applied to the root, this proves $\nu=n$. Suppose inductively that
+the bits before $j$ have been authenticated. The old tree used in
+Definition 22.1 is then the actual $X_{\tau_j-1}$. GPO Proposition
+39.2 and the actual chronological rule make $p_j(A)$ the actual
+birth parent, independently of every later bit. This old tree has
+$2B_{\tau_j-1}+1\le2j-1$ nodes. Maturity gives
+$\tau_j\le n_0-1\le n-1$, and $|p_j|\le\tau_j-2$.
+At cut $n$ the original beta child has rank $t_j+1$, and the original
+alpha child has rank $t_j$, where $t_j=n-\tau_j\ge1$. A wrong
+proposed orientation therefore has no present suffix of length $t_j$;
+a correct orientation has one. Hence (ACR.95) authenticates the
+proposed bit. Conversely, for the authentic prefix, choose a longest
+path in the larger child for each $v_j$. Induction proves (ACR.96)
+and completeness. The birth literal has length at most
+$\tau_j-2+1+n-\tau_j=n-1$.
+
+Only the rank tests can require length $\nu$, at the endpoint
+$\nu=2$. The number and lengths of the supplied words give the
+Read, traffic and certificate-size bounds. Constructing each small
+old tree, sorting or traversing its leaves in physical order, and
+copying its literal are polynomial operations on explicitly stored
+finite words. Sequential scans as in §21 pay for every index,
+marker, intermediate copy and head return, so they retain polynomial
+work and writes without a unit-cost address assumption. No recurrence
+needs to be synthesized to check the relation. At $d=0$, the birth
+loop and prefix are empty and the root certificate still identifies
+every allowed $n\ge2$. All source-law qualifications follow because
+the proof uses actual chronological replacement and maturity, not
+invertibility or a minimal presentation. $\square$
+
+**Corollary 22.3 (proper-candidate verification).** With $h,H$ already
+earned as in Definition 22.1, let a candidate stream be explicitly
+supplied by any homogeneous all-index recurrence
+of presented order $r\le d$, with its seed, and a proposed mature
+cut $\nu\in[n_0,H]$. There is a deterministic verifier using at most
+$d+r+3$ paid Reads. Its witnesses can be constructed from this
+candidate with polynomial local work, writes and backing in
+$d+\nu+2$, without discovery Reads. It accepts exactly when the
+candidate behavior and cut are the actual behavior and cut.
+
+Proof. Construct the root witnesses in the candidate and check them
+on the actual root. Then construct and check (ACR.95) for only the
+first $d+r$ candidate bits. Length and maturity are valid because
+$d+r\le2d$. A successful root test proves the actual cut; successful
+birth tests authenticate these candidate bits by Theorem 22.2's
+induction. The product of an actual monic annihilator of degree at
+most $d$ and the candidate's monic degree-$r$ annihilator annihilates
+their difference. Agreement on $d+r$ initial positions forces the
+difference to vanish by forward induction, exactly as in GPO Lemma
+29.2. Degree zero is allowed, and no shift is inverted.
+
+For construction, candidate descriptors, chronological indices and
+orientation bits along each longest or shortest witness are computed
+by GPO (GPO.93)--(GPO.98) and forward companion powers. There are
+$O((d+1)(\nu+1))$ edges to construct, indices have $O(\nu+1)$
+bits, and Proposition 39.5 bounds their local evaluation polynomially.
+Only the early old trees are expanded, never the whole cut-$\nu$
+tree. A correct candidate supplies all the required witnesses.
+An incorrect candidate cannot pass the authenticated-prefix argument.
+Witness construction and the final certificate checks are separate
+bills. This is a verifier for a supplied proper candidate, not an
+equivalence oracle or a polynomial way to find that candidate. In the
+general certificate relation a missing witness may also accompany a
+correct answer: a failed test alone certifies neither a wrong bit nor
+the position of a first disagreement. $\square$
+
+## 23. Guarded acquisition with independent controller coins
+
+**Definition 23.1 (supplemental coin entrance and bounded search).**
+Keep all premises and source actions of Definition 9.1. Add a paid
+observer-owned stream of independent fair local bits, independent of
+the actual source, cut and prior controller state. Charge generated
+and consumed bits, buffering, scratch and control writes. The coins
+neither observe nor advance the source. The original entrance alone
+does not assert this coin grant. The stationary interval covers every
+realized operation through normalization, retained writes and the
+actual completed handoff; an expected operation count supplies no
+fixed-duration lease.
+
+After earning $H$, put
+
+$$
+S=d+H+2,\quad L=2d+1,\quad m=256H,\quad
+R=\min\{r\text{ odd}:r\ge\lceil\log_2(64(H+2))\rceil\}.
+\tag{ACR.97}
+$$
+
+An estimate of a present cone is the median of $R$ block means,
+each containing $m$ independent physical depth walks of Definition
+13.1. Every walk uses fresh fair directions and includes its terminal
+absence Read. Store integer block sums; division by the common $m$
+is just a comparison convention. Only $R$ sums need be retained.
+
+All search operations have the following guards. Every Read operand
+is materialized as a complete original-root literal of length at most
+$H$. A depth walk stops at its first absent-child test; it may never
+submit a longer word or execute more than $H$ tests. Before estimating
+a proposed child, test its presence and reject an absent start.
+Before taking a search edge, test both child literals and reject unless
+both are present. Compare fresh child estimates to choose a larger
+or smaller child, with a fixed tie rule. If a required search edge
+cannot be taken within these length and iteration bounds, return FAIL.
+Each requested search path has its prescribed finite length; a guessed
+rank never changes these bounds.
+
+A cut attempt estimates the root, rounds $3\widehat\mu/2+2/3$
+to the nearest integer with a fixed tie rule, and rejects a proposed
+$\nu\notin[n_0,H]$. It constructs $x$ by $\nu-1$ successive
+larger-child choices. It constructs $y$ by $k$ smaller-child choices
+if $\nu=2k+1$, or $k-1$ such choices if $\nu=2k$. Finally it
+executes the actual root certificate (ACR.94), including its positive
+test. The cut is certified only if that certificate passes.
+
+Once the cut and first $j-1$ bits are certified, a birth attempt
+constructs the actual early parent as in Definition 22.1, estimates
+its two children, and proposes the orientation of the larger estimate.
+Starting at that proposed child, it constructs a suffix of exactly
+$t_j=n-\tau_j$ edges by successive larger-child choices. It then
+executes (ACR.95). Only a passing reply appends a certified bit. FAIL
+leaves the certified cut and prefix unchanged. In particular a rejected
+proposal creates no first-disagreement claim.
+
+**Theorem 23.2 (uniform guarded-attempt success and its charges).**
+For each fixed actual source and cut, condition on any past controller
+history whose retained cut and prefix are certified. A fresh cut or
+next-birth attempt in Definition 23.1 has success probability at least
+$3/4$. Every accepted answer is exact on every coin tape, including
+tapes on which estimates are inaccurate. Every attempt terminates,
+including wrong-cut and incomplete-path branches. With absolute
+constants, a single attempt has bounds
+
+$$
+\begin{aligned}
+Q_A&\le C(H+2)^3R,&
+J_A&\le C(H+2)^4R,& M_A&\le H,\\
+\mathsf{coins}_A&\le C(H+2)^3R,&
+C_A,W_A&\le CS^{12},&V_A&\le CS^3.
+\end{aligned}
+\tag{ACR.98}
+$$
+
+Here $Q$ counts actual Reads, $J$ counts literal traffic, $C$ counts
+local bit work, $W$ counts every cumulative local bit write and $V$
+counts peak visited backing, including coin buffers. These are
+acquisition-control bounds in §21's sequential tape model; actual
+coin service, physical Read, allocation and retention tariffs remain
+separate charges.
+
+Proof. Reuse the exact means (ACR.45). The variance $v_q$ of a fair
+depth walk satisfies
+
+$$
+v_0=v_1=0,\qquad
+v_q=\frac{v_{q-1}+v_{q-2}}2+
+       \frac{(\mu_{q-1}-\mu_{q-2})^2}{4}\le\frac q6.
+\tag{ACR.99}
+$$
+
+Indeed adjacent mean differences lie in $[0,1]$, including the
+terminal pair; induction bounds the right side by
+$(2q-3)/12+1/4=q/6$. At every queried present cone $q\le H$.
+Chebyshev's inequality for the mean of $m=256H$ independent walks
+gives probability at most $1/24$ for an error exceeding $1/8$.
+If the odd median has error exceeding $1/8$, at least $R/2$ blocks
+do. Independence of the blocks and a union bound over subsets give
+
+$$
+\Pr\{|\widehat\mu-\mu_q|>1/8\}
+\le 2^R(1/24)^{R/2}\le2^{-R}
+\le\frac1{64(H+2)}.
+\tag{ACR.100}
+$$
+
+This uses the non-strict good event $|\widehat\mu-\mu_q|\le1/8$.
+It does not replace a presence reply by a probabilistic assertion.
+
+There are fewer than $4(H+2)$ estimates in one attempt. The cut
+attempt uses one root estimate and at most two per edge of its long
+and short searches; a birth attempt uses two initial estimates and
+at most two per suffix edge. Condition on the history before the
+first inaccurate estimate. Its cone is present and fixed by that
+history, and its fresh block directions have the law just analysed.
+Summing these conditional first-error probabilities shows that all
+estimates are accurate with probability at least $15/16$. This
+adaptive argument needs no independence between the chosen cones.
+
+On that event root rounding is correct, since the non-strict version
+of (ACR.47) still gives
+$|3\widehat\mu/2+2/3-n|\le17/48<1/2$. At a branch of rank
+at least three, the child ranks are distinct by at least one above
+the terminal pair, and their mean gap is at least $1/2$. Two errors
+of at most $1/8$ leave the correct sign. At rank two the child
+means coincide, but either child completes a longest path's final
+edge. A shortest path used here only selects children at ranks at
+least three: its odd endpoint is rank one and its even endpoint is
+rank two. Thus the correct cut supplies exactly the witnesses in
+Theorem 22.2. For a birth attempt the initial ranks $t_j+1,t_j$ have
+a mean gap at least $1/2$, even when $t_j=1$. The correct larger
+child and a longest suffix pass (ACR.95). All relevant full words
+have length at most $n$ and the guards never abort a good search.
+Consequently success probability is at least $15/16$, hence at least
+$3/4$. Off that event the guards still terminate the attempt, and
+Theorem 22.2 makes every acceptance sound.
+
+Each estimate has $mR$ walks, each at most $H$ Reads and $H$ coin
+bits. There are $O(H+2)$ estimates. Child-start and search-edge
+tests and final certificate tests add only $O(H+2)$ Reads; the
+literal bound gives (ACR.98)'s traffic bound. Fair bits may be
+generated one walk at a time and their buffer overwritten; no history
+of the random walks is retained. Even an inaccurate estimate at an
+arbitrary reached cone obeys these same limits.
+
+For explicit local accounting, store the early tree using at most
+$O((d+1)^2)$ bits, two $H$-letter search buffers, walk/literal
+buffers, $R$ integer block sums, counters, the certified prefix and
+the binary cut. Their total data is $O(S^2)$; $O(\log(S+2))$-bit
+counters suffice for every polynomially bounded loop. An elementary
+description uses at most $O(S^6)$ binary array operations: this
+includes all $O(H^3R)$ walk tests and coin generations, full-literal
+copying, child comparisons, sorting the $R$ block sums by explicit
+integer comparisons, rounding, and rebuilding early trees. Replace
+each array operation by an actual scan of at most $O(S^2)$ cells
+with the paid counters of §21. Initialization, head returns, all
+scratch, buffer, counter, marker and output writes then fit
+$CS^{12}$ work and cumulative writes and $CS^3$ visited cells.
+The loose exponents absorb $R=O(\log(H+2))$ and every counter scan.
+No source history or unbounded address register is stored. $\square$
+
+**Theorem 23.3 (zero error and the limit of uncapped retries).** Retry
+a failed attempt with fresh coins until it succeeds, through the cut
+and the $2d$ birth phases. Under Definition 23.1, no execution returns
+an incorrect $(n,P)$, termination is almost sure, and the expected
+attempt count is at most $4L/3$. Expected acquisition work, cumulative
+writes, Reads, literal traffic and coin consumption are polynomial in
+$d+H+2$; reusable backing is polynomial on every execution. This
+uncapped protocol has no every-execution termination guarantee.
+
+Proof. Conditioned on any failed attempts of a pending certified
+phase, its next failure probability is at most $1/4$. Its tail after
+$u$ attempts is therefore at most $4^{-u}$, and summing tails gives
+mean at most $4/3$. There are $L$ phases. The bounds in (ACR.98)
+apply to every failed as well as successful attempt, so multiplying
+them by $4L/3$ proves the expected bounds. A finite-state retry flag
+and overwritable buffers suffice; no ever-growing attempt counter or
+retry archive is needed. Every finite return is exact by the
+certificate induction.
+
+For a concrete nontermination tape, take the admitted zero stream
+with public bound $d=1$ and cut $n=6$. The physical $a$-spine has
+$h=3$, hence $H=7$. On an all-zero controller tape every walk follows
+physical $a$, the smaller child at each zero-law birth, and each root
+walk has depth three. Every root estimate is three, so the proposed
+cut is the rounded value of $31/6$, namely five. It cannot pass a
+rank certificate on the actual rank-six root. Hence every root
+attempt fails on that tape. Arbitrarily many such failures are also
+forced by sufficiently long finite zero prefixes, each of positive
+probability. This is a counterexample to a uniform bound for this
+uncapped procedure, not to deterministic acquisition in general.
+$\square$
+
+## 24. Every-tape return with an exponentially priced rare fallback
+
+**Theorem 24.1 (total supplemental acquisition with polynomial expected
+local cost).** Set
+
+$$
+K=d+\left\lceil\log_4(4L)\right\rceil.
+\tag{ACR.101}
+$$
+
+Allow at most $K$ attempts in each certified phase of Definition
+23.1. If one phase exhausts its attempts, abandon the fast acquisition
+and run the deterministic acquisition of Theorems 14.2 and 13.2 on
+the same unchanged root, using the already earned $h,H$. Stop that
+supplier after acquiring $P,n$, before any canonical normalization.
+After either route returns, execute the original normalization and
+writeback specified in §26 exactly once.
+
+For every actual source and cut, this supplemented acquisition returns
+the authentic $P,n$ on every coin tape. For absolute constants and
+with $S=d+H+2$, before normalization and its output arithmetic,
+
+$$
+\begin{aligned}
+Q_{\rm acq}&\le CS^6,&J_{\rm acq}&\le CS^7,&M_{\rm acq}&\le H,\\
+\mathsf{coins}_{\rm acq}&\le CS^6,&V_{\rm acq}&\le CS^8,\\
+\mathbb E C_{\rm acq},\ \mathbb E W_{\rm acq}&\le CS^{24},&
+C_{\rm acq},W_{\rm acq}&\le C4^dS^{24}.
+\end{aligned}
+\tag{ACR.102}
+$$
+
+The first line and the coin/backing bounds hold on every execution,
+including fallback executions. Expectations are only over the added
+fair coins, uniformly for each fixed source and cut. The last bound
+honestly retains exponential worst-case local work and writes.
+Source updates, resets, cloning and source-generator advances are zero.
+No polynomial bound on physical tariffs or elapsed service duration
+is asserted.
+
+Proof. Every failed phase preserves a certified state. Conditional
+failure bounds from Theorem 23.2 give
+
+$$
+\Pr\{\text{fallback}\}\le L4^{-K}\le\frac14\,4^{-d}.
+\tag{ACR.103}
+$$
+
+This is a union bound over exhausted phases, including the possibility
+that later phases are never reached. The fast part has at most $LK$
+attempts, whether or not it falls back. Its local work and writes
+are $O(S^{14})$ by (ACR.98), since $L,K=O(S)$.
+Its Reads and coins are $O(LK(H+2)^3R)=O(S^6)$ and its traffic
+is $O(S^7)$. These bounds include all failed attempts and their
+buffer, coin and counter writes. A bounded binary counter now records
+the at-most-$K$ attempts; it is part of the stated storage and writes.
+
+The fallback constructs and verifies the original common list, then
+measures the actual root and early child cones. Theorems 14.2--15.1
+give its complete acquisition work and writes at most
+$C4^dS^{24}$, acquisition backing $CS^8$, polynomially many Reads
+$O((4d+1)TH)$, and polynomial traffic $O((4d+1)TH^2)$, with
+$T$ exactly (ACR.48). Thus these interaction terms are at most
+$CS^5,CS^6$. Its catalogue preparation is still paid on every
+fallback run. The retained partial fast prefix is unnecessary to the
+fallback, but nothing is reset, cloned, advanced or replaced: only
+the local inference is restarted against the same stationary source.
+The already acquired spine remains valid.
+
+Keep the fallback's supplied bit-operation model and operand/backing
+costs; no free sequential simulation is presumed. Transfer its explicit
+earned $P,n$ into the local controller by §21.7's charged rule.
+With $O(S^8)$ supplier backing and $O(S)$ returned bits, the extra
+work and writes are $O(S^{17})$ and backing $O(S^8)$. These are
+included in the displayed fallback envelope, not in a repeated
+normalization. The pure fast part is already in the sequential model.
+Clearing fast buffers and initializing fallback buffers are paid writes.
+
+Multiplying the acquisition-only fallback work/write bound by
+(ACR.103) gives at most $CS^{24}/4$ in expectation; adding all fast
+work and the spine proves the expected terms of (ACR.102). No
+operation is erased from a realized fallback bill. The deterministic
+fallback terminates and returns authentic data on every source;
+all fast paths are finitely capped. Every coin tape therefore returns,
+including the all-zero tape of Theorem 23.3. Finite progress and
+completion premises are the original ones, and the stationary interval
+must cover the full realized exponential fallback when it occurs.
+This is stronger than almost-sure return but still weaker than the
+original every-execution polynomial TOTAL requirement. $\square$
+
+## 25. Native accepting transcripts and deterministic hitting
+
+**Definition 25.1 (bounded finder and its source-specific acceptance
+functions).** Put $K_0=\lceil\log_4(4L)\rceil$. Let
+$\mathcal B_{d,H}$ be the guarded finder of §23 capped at $K_0$
+attempts per phase, returning either a certified $(n,P)$ or FAIL,
+with no deterministic fallback. The local inputs include the earned
+$h,H$; they are not treated as an upper bound supplied at entrance.
+Fix slots for every potential estimate, block, walk and direction bit
+in every potential attempt, even when an earlier success makes a slot
+unused. With $E=4(H+2)$ estimate slots per attempt, a sufficient
+fixed tape length is
+
+$$
+b(d,H)=LK_0EmRH.
+\tag{ACR.104}
+$$
+
+Unused slots are ignored. On independent fair tapes this gives the
+same distribution as fresh streaming coins. In an actual streaming
+run only generated bits are charged; in a deterministic tape-list
+implementation all generated list bits, including unused slots, are
+charged. A short or malformed supplied tape returns FAIL rather than
+accessing an unowned cell.
+
+For a hypothetical properly presented source $s\in\mathscr R_d$
+and mature cut $n\le H$ whose actual $a$-spine is the fixed $h$,
+define $C_{s,n}(u)=1$ exactly when $\mathcal B_{d,H}$ returns a
+certified answer using tape $u\in\{0,1\}^{b(d,H)}$ against that
+source's literal presence replies. Presentations which denote the
+same source have the same function. This definition supplies no hidden
+law, cut, reply or advice to the actual acquisition controller.
+
+**Theorem 25.2 (polynomial native simulation and circuit correspondence).**
+Every function $C_{s,n}$ of Definition 25.1 has a Boolean circuit of
+size polynomial in $S=d+H+2$, with
+
+$$
+\Pr_{u\ \mathrm{fair}}\{C_{s,n}(u)=1\}\ge3/4.
+\tag{ACR.105}
+$$
+
+One uniform polynomial-work procedure constructs such a circuit from
+the explicit hypothetical recurrence, seed, cut and $d,H$. This is
+a representation theorem for the actual source-specific functions,
+not an actual-root simulation granted to the law-erased controller.
+
+Proof. Certificates make the bounded finder zero error. Its failure
+probability is at most $L4^{-K_0}\le1/4$, by the same conditional
+phase argument as (ACR.103). Its step, literal, index, tape and backing
+bounds are polynomial on every input tape, including FAIL branches.
+
+For a supplied hypothetical source only, replace each Read by GPO
+Definition 39.3's forward physical evaluator, using that source's
+presented order at most $d$. Its proof of literal correctness is an
+induction on the actual chronological descriptor relations, not a
+minimality or invertibility argument, so any such presentation works.
+No supplied actual-law presentation is needed by the physical finder.
+Every literal has length at most $H$, and its required birth-bit
+indices are at most $F_{2H+1}-1$, with $O(H+1)$ binary digits.
+Forward companion powers, Fibonacci sibling masses and comparisons
+with the supplied cut implement each reply in polynomial bit work
+and backing, by GPO Proposition 39.5. They never iterate over the
+possibly exponentially many birth indices or expand the whole tree.
+All arrays here have polynomial length. Implementing their accesses
+by paid sequential scans as in §21 increases the operation count by
+only a polynomial factor, including every operand, counter and copy.
+Composing with the bounded finder gives a deterministic sequential
+machine of some fixed polynomial time $t(S)$, with tape $u$ as its
+only varying input and all the supplied source data as constants.
+
+For completeness, encode the finite control, tape symbols and head
+positions of that machine on the at-most-$t(S)$ visited cells.
+At each of $t(S)$ steps a fixed finite Boolean local rule computes
+the next symbol/head/control flags; copy unchanged cells as well.
+Unrolling the steps gives $O(t(S)^2)$ bounded-fan-in gates, plus
+polynomial initialization and output gates. The accepting flag equals
+the physical finder's flag because each simulated reply equals that
+same source's literal reply. The uniform compiler can emit these
+gates in polynomial work and writes with explicit binary wire indices.
+Conversely, evaluating this compiled circuit on $u$ yields exactly
+the finder's success flag on that hypothetical source; its satisfying
+tape is not a source certificate without the actual paid checks.
+This proves the claimed correspondence, including singular laws,
+finite transients and $d=0$. It asserts no converse representation of
+arbitrary circuits by actual FIB sources. $\square$
+
+**Theorem 25.3 (sufficient uniform accepting-transcript hitting).**
+Suppose a single source-blind algorithm, given $d,H$, constructs a
+list $\mathcal U_{d,H}\subseteq\{0,1\}^{b(d,H)}$ of polynomially
+many explicit tapes in polynomial TOTAL work, cumulative writes and
+backing. Assume that for every admitted source and mature cut with
+the earned spine $h=(H-1)/2$, some list member satisfies
+$C_{s,n}(u)=1$. Then the original coin-free entrance admits
+deterministic acquisition of $P,n$ with polynomial every-execution
+preparation, local work, writes, Reads, literal traffic and backing.
+
+Proof. Earn the spine, construct the list and run the bounded finder
+on its members against the actual root. Failed runs leave their
+certified prefixes unused and may be overwritten; each run remains
+on the same stationary source and uses no updates. The assumed
+hitting member returns an authentic answer by Theorem 22.2.
+Polynomial list length times polynomial per-run bounds, plus full
+list construction and copying, proves every charged acquisition
+coordinate polynomial. No membership test for the hidden source or
+enumeration of its law is used. This condition hits an accepting
+adaptive transcript; it requires neither pointwise approximation of
+every depth function nor a small Walsh norm. Canonical normalization
+and the physical tariffs still have their separate bills. $\square$
+
+**Theorem 25.4 (short common lists exist without a uniform constructor).**
+For each $d,H$ in Definition 25.1 there is a polynomial-total-length
+list hitting all its source-specific acceptance functions. This
+existence does not supply the algorithm assumed in Theorem 25.3.
+
+Proof. Pad every order-at-most-$d$ all-index source to order $d$ by
+multiplying its annihilator by $E^{d-r}$. At most
+$M=4^d(H+1)$ row/seed/cut presentations must be covered, including
+all singular, nonminimal and finite-transient sources. Restricting
+to the fixed earned spine only decreases this number. Independently
+sample $m_* =\lceil\log_4(2M)\rceil$ tapes of length $b(d,H)$.
+By (ACR.105), a particular function misses them all with probability
+at most $4^{-m_*}$. A union bound over the at-most-$M$ functions
+is at most $1/2$. Hence some list hits them all, and its length
+$m_*b(d,H)$ is polynomial in $d+H+2$.
+
+This proof neither identifies the list nor tests its universality in
+polynomial work. Exhaustively checking it over these presentations
+retains the source catalogue. ACR §14 already supplies common lists
+with charged exponential construction for the stronger pointwise
+measurement requirement; the new sufficient condition concerns
+successful certified transcripts. No generic derandomization lower
+bound, arbitrary-circuit encoding, hardness-based generator corollary
+or space-generator resource bound follows from the one-direction
+source-to-circuit correspondence proved here. The unresolved step is
+a uniform polynomial-total constructor for this native hitting
+condition, or another source-faithful polynomial-total acquisition
+method. $\square$
+
+## 26. Original canonical output and same-source recovery after acquisition
+
+**Theorem 26.1 (undiscounted normalization and completed handoff).**
+Use Theorem 24.1, or Theorem 25.3 when its hypothesis is established,
+only through its authentic $P,n$. At every rank, normalize that actual
+prefix exactly as in Definitions 9.1 and 21.1 and Corollary 21.3.
+For $d>0$ form the actual Hankel system and retain
+
+$$
+\begin{aligned}
+i_P&=\min\{i<2^d:H(P)\rho_d(i)=y(P)\},\\
+K_d(P)&=\operatorname{EN}_d(P)
+ =\bigl(\rho_d(i_P),(\zeta_0,\ldots,\zeta_{d-1})\bigr),
+\qquad \zeta_i=z_{i+1}.
+\end{aligned}
+\tag{ACR.106}
+$$
+
+On full rank solve the unique system; on deficient rank run the
+original first-passing $\rho_d$ enumeration. For $d=0$ use the
+original empty row/seed zero descriptor. Compute and install the
+exact original tuple
+
+$$
+\boxed{\bigl(P,K_d(P),n,B_n\bigr),\qquad
+P=z_1\cdots z_{2d},\quad B_n=F_{n+1}-1.}
+\tag{ACR.107}
+$$
+
+This is an all-input output obligation after either acquisition route,
+including every fast success and every fallback success. In
+particular the normalizer is never multiplied by a fallback
+probability.
+
+Proof. The acquisition theorems return the actual prefix and cut,
+not a constructed normalization input. Theorem 21.2 identifies the
+exact passing fibre, and Corollary 21.3 returns precisely the original
+first row and authentic first-$d$ seed. A deficient zero-stream fibre
+at positive $d$ still returns $(\rho_d(0),0^d)$, which need not have
+zero coefficient row. No equivalent minimal descriptor replaces it.
+Definition 21.5's affine-prefix property for the unspecified original
+enumeration remains an unproved additional condition; Theorem 21.6
+may be used only when that condition is actually supplied.
+
+Write $C_{\rm norm}(P),W_{\rm norm}(P),V_{\rm norm}(P)$ for the
+full original normalization bill. On full rank these are exactly
+bounded as in (ACR.89); on deficient rank retain all terms in
+(ACR.90), including original $e_d,\omega_d,v_d$, every tested-row
+transfer and every row-test write. Its initial rank computation is
+part of that bill on both branches. At $d=0$ normalization is
+constant. The bound chosen for a fixed actual $P$ is incurred on
+every coin tape, regardless of which acquisition branch earned it.
+
+The acquisition result is exported explicitly when needed using the
+already charged transfer of §24; in the wholly sequential fast route
+its output tapes are already the input tapes here. Now perform the
+binary Fibonacci construction and final retained copy of §21.7.
+With $\ell_n=\lceil\log_2(64(n+2)^4)\rceil$, its actual arithmetic
+has
+
+$$
+C_B,W_B=O((n+2)^2\ell_n^2),\qquad
+V_B=O(n+1+\ell_n).
+\tag{ACR.108}
+$$
+
+These are tape operations on the explicit binary integer $B_n$,
+including all growing-buffer, carry and counter writes; the output
+has $\Theta(n)$ bits as $n$ grows. With $L_{d,n}$ as in §21.7,
+the final payload and ready-control copy costs
+$O((d+n+1)L_{d,n}^2)$ work and cumulative writes and
+$O(d+n+1+L_{d,n})$ backing. Set ready only when every data field is
+installed in granted readable backing. If an explicit forward phase
+is requested, add exactly the $C_\phi,W_\phi,V_\phi$ terms of
+§21.7, once; its forward powering uses the selected original row
+and seed and never recovers a private state.
+
+Thus for either acquisition supplier, after all its needed output
+transfers are included in its acquisition terms, the disjoint bills are
+
+$$
+\begin{aligned}
+C_{\rm total}&\le C_{\rm acq}+C_{\rm norm}(P)+C_B+C_\phi
+                    +O((d+n+1)L_{d,n}^2),\\
+W_{\rm total}&\le W_{\rm acq}+W_{\rm norm}(P)+W_B+W_\phi
+                    +O((d+n+1)L_{d,n}^2),\\
+V_{\rm total}&\le V_{\rm acq}+V_{\rm norm}(P)+V_B+V_\phi
+                    +O(d+n+1+L_{d,n}).
+\end{aligned}
+\tag{ACR.109}
+$$
+
+For Theorem 24.1, taking expectations changes only the acquisition
+terms and any actually randomized acquisition service charge; the
+fixed authentic-prefix normalization and output terms remain in full.
+Physical service and initialization, coin grant, binding, code,
+allocation, intermediate and retained physical writes, retention and
+completed handoff keep their actual tariffs and durations on every
+execution. No displayed bit-work bound infers a duration or grants a
+right. Stationarity and sufficient backing extend through the actual
+last write and completed handoff, including the deterministic
+fallback and normalization when present.
+
+Once the tuple is installed with its separately surviving actual
+binding and grants, GPO Theorems 34.2--34.3 and 39.4 give the same
+spatial incidence, boundary, actual birth chronology and synchronized
+memory views and their finite same-source continuation. GPO
+Proposition 39.5 retains request-sized literal evaluation; whole-tree,
+whole-boundary or full chronological output pays its own potentially
+exponential output length. No arbitrary observer journal, erased
+private register, source-origin receipt, capability or physical
+duration is reconstructed. These consumers are reused on the earned
+same source, not on a merely compatible hypothetical realization.
+
+The new repository-derived implications are the paid certificate
+relation, its bounded fair-coin witness search, total rare-fallback
+composition and native accepting-transcript sufficient condition.
+The depth mean, authentic early-parent construction, source law,
+finite monic separation, deterministic catalogue supplier, exact
+canonical fibres and recovery consumers are the cited ACR/GPO
+suppliers. Chebyshev, median amplification, finite union bounds and
+bounded-computation circuit unrolling are established intermediate
+methods, not novelty claims. Massey's [MAS] supplies finite-prefix
+recurrence synthesis after authentic bits; it does not acquire these
+bits or choose $\rho_d$'s first passing row. Zuckerman's bounded
+function sampling setup [RRO-ZUC] uses an independent random seed;
+it supplies neither a deterministic seed for this adaptive native
+class nor a physical sample oracle. The present proof derives its
+sampling bounds directly from the actual paid depth-walk law.
+The existing declaration `atomic_navigation` concerns fixed semantic
+orientation,
+`NativeBirthVectorDecoder` a recursive complete-level code,
+`actual_fibonacci_support_chain` bounded native support agreement,
+and `native_source_producer` full acquisition from richer replies.
+These distinct mathematical domains do not supply the new
+certificate/acquisition composition.
+
+Uniform polynomial-total deterministic acquisition for general $d$
+on the original entrance remains open. Theorem 24.1 adds fair coins
+and retains exponential worst-case local computation; Theorem 25.3
+has an unestablished uniform hitting premise. Independent of those
+acquisition gaps, the original deficient-rank enumeration and the
+unspecified enumeration's affine-prefix property remain their stated
+normalization boundary. The full original every-execution polynomial
+TOTAL task, with its exact $K_d$ and physical charges, is therefore
+not settled. $\square$
+
+## 追加锚（本行以下为增补区）

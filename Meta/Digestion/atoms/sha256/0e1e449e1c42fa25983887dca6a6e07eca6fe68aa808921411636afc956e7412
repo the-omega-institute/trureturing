@@ -1,0 +1,73 @@
+**Theorem 8.2 (The surplus between the square-root and transition scales).** For every integer sequence with
+
+$$
+\frac{h}{\sqrt a}\longrightarrow\infty,
+\qquad \frac{h}{a^{3/2}}\longrightarrow0,
+$$
+
+one has
+
+$$
+\frac{M(a,h)-B_0(a)}{a^{3/2}h}\longrightarrow4.
+\tag{8.2}
+$$
+
+**Proof.** Theorem 2.1 is a lower bound for every original law, so
+
+$$
+M(a,h)-B_0(a)
+\ge\beta_a(h+1)-2a^2-a.
+$$
+
+Here $\beta_a/a^{3/2}\to4$, $h\to\infty$ and $\sqrt a/h\to0$. Division by $a^{3/2}h$ gives the lower limit at least $4$.
+
+For a matching upper bound choose
+
+$$
+j=\left\lceil\frac{h}{2\sqrt a}\right\rceil.
+$$
+
+Then $j\to\infty$, $j/a\to0$, $j/h\to0$ and $j\sqrt a/h\to1/2$. In particular $1\le j\le h$ eventually. Use the exact law of Theorem 3.1 at this varying integer $j$, rather than its fixed-$j$ asymptotic formula. Its feasibility for each such integer can also be read directly: with $m=a+j$, $n=h+1-j$ and $p=j/(m-1)$, the core mass $1-p=(a-1)/(m-1)$ and the $n$ singleton masses $p/n$ sum to one, their actual marginals are respectively $1-p>0$ and $p/n>0$, and
+
+$$
+\mathbb E K=(1-p)m+p=m-p(m-1)=a.
+$$
+
+Thus, for every $1\le j\le h$, not just fixed $j$, the unrestricted infimum is at most the exact energy
+
+$$
+H_j(a,h)=\frac{(a+j)^3(a+j-1)}{a-1}
+       +\frac{(h+1-j)^2(a+j-1)}j.
+\tag{8.3}
+$$
+
+For $1\le j\le a/2$, expansion of its first term has a uniform remainder:
+
+$$
+\begin{aligned}
+\frac{(a+j)^3(a+j-1)}{a-1}
+ &=a^3+4a^2j+R_{a,j},\\
+R_{a,j}
+ &=\frac{a^2j+3a(2a-1)j^2+(4a-1)j^3+j^4}{a-1}
+ =O(aj^2+aj).
+\end{aligned}
+\tag{8.4}
+$$
+
+The constant is absolute, as follows by bounding $j/a\le1/2$ in the displayed expression. Our choice of $j$ eventually lies in this range. The contribution of $4a^2j$ divided by $a^{3/2}h$ tends to $2$, while the remainder divided by the same quantity is
+
+$$
+O\!\left(\frac{h}{a^{3/2}}+\frac1a\right)=o(1).
+$$
+
+For the other term of (8.3), the exact normalized expression is
+
+$$
+\frac{(h+1-j)^2(a+j-1)}{j a^{3/2}h}
+=\left(\frac{h+1-j}{h}\right)^2
+ \frac{a+j-1}{a}\,\frac{h}{j\sqrt a}
+\longrightarrow2.
+$$
+
+Finally $(B_0(a)-a^3)/(a^{3/2}h)=(2a^2+a)/(a^{3/2}h)\to0$. This actual law gives the upper limit at most $4$, proving (8.2). No law attaining $M$ was used. ∎
+

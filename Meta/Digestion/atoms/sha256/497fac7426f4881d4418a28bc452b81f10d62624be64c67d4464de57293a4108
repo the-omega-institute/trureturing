@@ -1,0 +1,36 @@
+**Definition 21.5 (uniform affine ordinal-prefix access).** Interpret a
+binary word $u\in\{0,1\}^t$ as its integer value $[u]_2$. The original
+enumeration has the affine prefix-image property if a single uniform
+procedure $\operatorname{Img}(d,t,u)$, for every $0\le t\le d$,
+constructs an exact record
+
+$$
+ \operatorname{Img}(d,t,u)=(a_{d,t,u},B_{d,t,u},\mathsf{idx}_{d,t,u}),
+ \quad
+ A_{d,t,u}=a_{d,t,u}+\operatorname{im}B_{d,t,u},
+ \tag{ACR.86}
+$$
+
+where
+
+$$
+ A_{d,t,u}=\left\{\rho_d(i):0\le i<2^d,
+ \left\lfloor i/2^{d-t}\right\rfloor=[u]_2\right\}.
+ \tag{ACR.87}
+$$
+
+The base $a$, an explicit basis matrix $B$ over $\mathbb F_2$, and the
+ordinal index record $\mathsf{idx}$ are all returned, with exact
+feasibility and no free feasibility bit. Let $C_{\rm img}(d)$,
+$W_{\rm img}(d)$, and $V_{\rm img}(d)$ be uniform upper bounds over
+$t,u$ for bit work including address generation, cumulative bits written
+including retained output, and peak reusable backing, respectively.
+These are costs of a uniform implementation in the serial local model
+just specified, including every working and output tape, explicit record
+encoding, index data, counter write and head return. The property
+requires all three bounds to be fixed polynomials in $d$; all
+source-independent index preparation is included in them. In particular,
+$V_{\rm img}$ includes the returned record, whose length is no greater
+than its visited backing. The record is delimited and explicitly parsed;
+a large index record cannot be treated as a free constant-size object.
+

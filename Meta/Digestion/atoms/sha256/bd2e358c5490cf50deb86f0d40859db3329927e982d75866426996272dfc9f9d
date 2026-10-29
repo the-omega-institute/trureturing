@@ -1,0 +1,115 @@
+**定理 4.1（全参数最终符号与严格可容许下界）。** 对每个整数 $d\ge1$、$\boldsymbol{k}\in\mathbb Z_{\ge1}^d$ 与整数 $\ell\ge1$，存在整数 $N_0(\boldsymbol{k},\ell)\ge0$ 使
+
+$$
+C_n^{0;\boldsymbol{k};\ell}<0\qquad(n\ge N_0).
+$$
+
+对每个进一步固定的整数 $j\ge1$，存在整数 $N_j(\boldsymbol{k},\ell,j)\ge0$ 使
+
+$$
+C_n^{j;\boldsymbol{k};\ell}>0\qquad(n\ge N_j).
+$$
+
+若 $k_1>1$，同样可取 $N_j$ 使
+
+$$
+C_n^{j;\boldsymbol{k};\ell}
+ >Z^{-\ell}\binom{n+j-1}{n}\qquad(n\ge N_j).
+$$
+
+每个有限前导一块都在量词之内；阈值只针对各组固定参数。
+
+证明。沿用 $a_n$ 与 $\lambda$，取定理 3.1 的 $N\ge1$。先证明绝对收敛及总和，不能仅从径向极限推断它们。置 $P(r)=\sum_{m<N}a_mr^m$、$q_m=-a_m>0$（$m\ge N$）。对 $0\le r<1$，
+
+$$
+\sum_{m\ge N}q_mr^m=P(r)-A(r).
+$$
+
+当 $r\uparrow1$，右侧趋于有限值 $P(1)-\lambda$。左侧各项非负并单调增加，单调收敛定理给出 $\sum_{m\ge N}q_m=P(1)-\lambda<\infty$。有限前缀可取绝对值，故
+
+$$
+\sum_{m\ge0}|a_m|<\infty,\qquad
+\sum_{m\ge0}a_m=\lambda.
+$$
+
+令 $b_n=C_n^{1;\boldsymbol{k};\ell}=\sum_{m=0}^na_m$，$e_n=b_n-\lambda$。对 $n\ge N$，
+
+$$
+e_n=-\sum_{m>n}a_m=\sum_{m>n}q_m>0.
+$$
+
+因而 $b_n>\lambda\ge0$，已得 $j=1$ 的全部结论。注意 $e_n\to0$，所以仅有最终严格正性还不足以控制下一次求和的有限带符号前缀。
+
+由于 $e_n$ 的负项只可能在有限前缀内，其总和 $T=\sum_{n\ge0}e_n$ 在 $\mathbb R\cup\{+\infty\}$ 中存在。对 $0\le r<1$，绝对收敛的卷积给出
+
+$$
+\sum_{n\ge0}e_nr^n=\frac{A(r)-\lambda}{1-r}.
+$$
+
+这里绝对收敛也可由 $b_n$ 有界直接推出。对 $n\ge N$ 的非负尾部再用单调收敛，有限前缀按多项式取极限，得到扩展实数意义的精确等式
+
+$$
+T=\lim_{r\uparrow1}\frac{A(r)-\lambda}{1-r}.
+$$
+
+若 $k_1>1$，`CompositionBoundary.result head tail` 给出 $\sum f_m=Z$。因此对 $0\le r<1$，
+
+$$
+0<F_{\boldsymbol{k}}(r)\le Z,\qquad
+Z-F_{\boldsymbol{k}}(r)
+ =\sum_{m\ge1}f_m(1-r^m)\ge f_1(1-r).
+$$
+
+函数 $x\mapsto x^{-\ell}$ 在正实轴凸，其在 $Z$ 处的切线界给出
+
+$$
+\frac{A(r)-Z^{-\ell}}{1-r}
+ \ge\ell Z^{-\ell-1}\frac{Z-F_{\boldsymbol{k}}(r)}{1-r}
+ \ge\ell Z^{-\ell-1}f_1>0.
+$$
+
+于是 $T\ge\ell Z^{-\ell-1}f_1>0$，允许 $T=+\infty$；不需要假设 $F'(1)$ 有限。
+
+若 $k_1=1$，则 $\lambda=0$。取定理 2.3 的 $D\ge1$ 与 $M$，保留深度归一化，得到
+
+$$
+\frac{A(r)}{1-r}
+ \ge\frac{r^{d\ell}}{D^\ell(1-r)(1+|\log(1-r)|)^{M\ell}}
+ \longrightarrow+\infty\qquad(r\uparrow1).
+$$
+
+确实 $r^{d\ell}\to1$，而对每个固定整数 $p\ge0$ 有 $t(1+|\log t|)^p\to0$（置 $t=e^{-u}$ 即为指数胜过多项式）。因此前导一情形 $T=+\infty$，没有以可容许边界总和代替这里的发散证明。
+
+现在 $T>0$ 在两种情形都已成立。因此
+
+$$
+d_n^{(2)}:=\sum_{m=0}^n e_m\longrightarrow T
+$$
+
+并存在 $\delta>0$、整数 $M_2$，使 $d_n^{(2)}\ge\delta$ 对 $n\ge M_2$ 成立。若 $T$ 有限，可取 $\delta=T/2$；若 $T=+\infty$，可取 $\delta=1$。这已经包含 $e_0,\ldots,e_{N-1}$ 的全部符号贡献。
+
+设 $d^{(1)}=e$，递归定义 $d_n^{(j+1)}=\sum_{m=0}^n d_m^{(j)}$。每次求和保留有限前缀：若 $d_m^{(j)}\ge\delta_j>0$ 对 $m\ge M_j$ 成立，则
+
+$$
+d_n^{(j+1)}
+ \ge-\sum_{m<M_j}|d_m^{(j)}|
+       +\delta_j(n-M_j+1)\longrightarrow+\infty.
+$$
+
+从 $j=2$ 起该式归纳给出每个固定 $j\ge2$ 的最终严格正性，并为下一次求和提供正的常数下界；$j=1$ 则由正尾和给出。没有把最终正性直接当成正总和或发散。
+
+最后，定理 2.2 的重复求和式与二项恒等式
+
+$$
+\sum_{m=0}^n\binom{m+j-1}{m}=\binom{n+j}{n}
+$$
+
+给出对所有 $n\ge0,j\ge1$ 的恒等式
+
+$$
+d_n^{(j)}=C_n^{j;\boldsymbol{k};\ell}
+                -\lambda\binom{n+j-1}{n}.
+$$
+
+因而当 $\lambda=0$ 时得到最终正性；当 $\lambda=Z^{-\ell}>0$ 时得到所述严格下界以及正性。取相应的有限阈值并与 $0$ 比较，即完成全部量词。
+
