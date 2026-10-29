@@ -438,8 +438,9 @@ private theorem three_blocks (A B D : ℕ) (hA : 0 < A) (hB : 0 < B) (hD : 0 < D
   change 2 * F * d = N + e at hXY
   change 2 * G * e = N + z at hYZ
   change 2 * H * z = N + d at hZX
-  have hF : 4 ≤ F := by simpa only [F, pow_one] using
-    pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 4) hA
+  have hF : 4 ≤ F := by
+    simpa only [F, pow_one] using
+      pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 4) hA
   have hFd : F * d < N := by omega
   have hGe : G * e < N := by omega
   have hHz : H * z < N := by omega
@@ -747,7 +748,11 @@ private theorem three_coordinates {k : ℕ} (hk : 0 < k) (P : Fin k → Prop)
   have hpr : p ≠ r := by
     intro h
     have hh : b - a = c - a := Fin.ext h
-    exact hbc (sub_right_cancel hh)
+    apply hbc
+    calc
+      b = (b - a) + a := (sub_add_cancel b a).symm
+      _ = (c - a) + a := by rw [hh]
+      _ = c := sub_add_cancel c a
   have hchar (j : ℕ) (hj : j < k) : P (phase hk a j) ↔ j = 0 ∨ j = p ∨ j = r := by
     rw [hP, heq a j hj, heq b j hj, heq c j hj]
     simp only [sub_self, Fin.val_zero, p, r]
@@ -783,7 +788,11 @@ theorem actualSource_three_small_same_sign_full_completion {k : ℕ} (hk : 3 ≤
       simp only [sub_self, finCycle_apply, add_zero] at hh
       omega
     have hm (L : List (Fin k)) : mass (actualSource k t) L = 0 := by
-      simp [mass, hall]
+      unfold mass
+      apply List.sum_eq_zero
+      intro x hx
+      obtain ⟨j, _, rfl⟩ := List.mem_map.mp hx
+      exact hall j
     let L := List.finRange k
     have hpL : L.Perm (List.ofFn (fun q : Fin k => q)) := by
       change (List.finRange k).Perm (List.finRange k)
@@ -905,8 +914,9 @@ theorem actualSource_three_small_same_sign_full_completion {k : ℕ} (hk : 3 ≤
     intro hB0
     have hEY : 2 * e = N + z := by simpa only [G, hB0, pow_zero, mul_one, one_mul] using hYZ
     by_contra hn
-    have hF4 : 4 ≤ F := by simpa only [F, pow_one] using
-      pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 4) (show 1 ≤ A by omega)
+    have hF4 : 4 ≤ F := by
+      simpa only [F, pow_one] using
+        pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 4) (show 1 ≤ A by omega)
     nlinarith only [hXY, hEY, hF4, hd, hde, heN, hzz]
   let f := fun j => 6 * w j
   let q := fun j => decide (j ≠ 0 ∧ j ≠ p ∧ j ≠ r)

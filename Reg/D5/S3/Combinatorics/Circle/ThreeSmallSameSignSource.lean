@@ -70,8 +70,8 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro r
   cases r
-  refine ⟨(3, 1), 0, 1, ?_⟩
-  change actualSource 3 1 (0 : Fin 3) ≠ actualSource 3 1 (1 : Fin 3)
+  refine ⟨(5, 1), 0, 1, ?_⟩
+  change actualSource 5 1 (0 : Fin 5) ≠ actualSource 5 1 (1 : Fin 5)
   decide
 
 def source_registration : Registration arena
@@ -82,7 +82,7 @@ def source_registration : Registration arena
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity _ _ _ rejected_law
   dependence := actual_dependence
 
-def audit : Contract.Registration
+def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@_root_.D5.S3.Combinatorics.Circle.ThreeSmallSameSignSource.actualSource_three_small_same_sign_full_completion)
     (type_of% (realize signature (fun _ p i => actualSource p.1 p.2 i) (fun e => nomatch e)))
     Nat Unit where
