@@ -139,28 +139,17 @@ Unresolved here: which additional uniform structural hypotheses restore
 the implication, exact individual relative constants, and the independent
 status of Conjecture 5.3. No new successor is preregistered by this unit.
 
-The natural content owner is `D5/S0/Certificates/Algebra`, alongside the
-existing semigroup-algebra refutations. Ordinary convolution and congruence
-quotients are reused from pinned Mathlib. The positive cyclic closure is
-the native subsemigroup closure, allowing pointwise finite cyclic sets
-inside infinite S. The related sealed Conjecture 5.3 implementation uses
-globally finite cyclic-idempotent interfaces and field-only factor
-definitions, which do not establish this unrestricted implication. This
-unit does not import that pending source or copy its private lemmas. Its
-shared paper note retains the separate 5.3 source statement and six-label
-argument.
-
-Only `result` is a newly authored public theorem. It is the designated
-literal utility refutation and is exempt from four-slot escape registration.
-All mathematical helper theorems are private and consumed on its live path.
-Admission uses the named external open-problem-resolution basis, rather
-than a novelty claim about elementary supporting identities.
+Ordinary convolution and congruence quotients are reused from pinned
+Mathlib. The positive cyclic closure is the native subsemigroup closure,
+allowing pointwise finite cyclic sets inside infinite S. The proof uses
+neither globally finite cyclic-idempotent interfaces nor field-only
+definitions in its universal claim. The shared paper note retains the
+separate Conjecture 5.3 statement and six-label mathematical argument.
 
 ## ASSUMED-UNVERIFIED
 
 The bounded literature context is the source and preregistration. Novelty,
 priority and exhaustive later-literature absence are not established.
-The related 5.3 source and shared note are pending in another canonical
-unit; integration must preserve both source expositions and their distinct
-problem bindings. This unit makes no publication, freeze or merged-status
-assertion about that dependency or about Conjecture 3.26.
+The formal theorem concerns Conjecture 3.26 only. The shared note's
+separate six-label argument about Conjecture 5.3 is not an additional
+formal conclusion of this theorem.

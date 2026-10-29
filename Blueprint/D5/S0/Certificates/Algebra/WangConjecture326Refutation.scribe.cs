@@ -128,7 +128,7 @@ internal sealed class WangConjecture326RefutationDocument : IScribeDocumentDefin
     private static Formula Instance(string name, Formula carrier, Formula body) =>
         Seq(OpenBracket, Call(name, carrier), CloseBracket, Sp, body);
     private static Formula LtTop(Formula x) =>
-        new Formula.Relation(x, FormulaRelationOperator.LessThan, Named("top"));
+        new Formula.Relation(x, FormulaRelationOperator.LessThan, Infty);
     private static Formula Imp(Formula a, Formula b) =>
         new Formula.Logic(Par(a), FormulaLogicOperator.Implies, Par(b));
     private static Formula ClaimFormula()

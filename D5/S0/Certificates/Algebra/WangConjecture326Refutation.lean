@@ -50,7 +50,7 @@ private theorem periodic_idempotent {S : Type*} [AddSemigroup S]
     (fun _ : S => continuous_of_discreteTopology) (cyclic a : Set S)
     ⟨a, ha⟩ (hp a).isCompact (fun _ hx _ hy => (cyclic a).add_mem hx hy)
   have h : ∃ e, IsCyclicIdempotent a e := ⟨e, he, hee⟩
-  simpa [cyclicIdempotent, dif_pos h] using h.choose_spec
+  simpa [cyclicIdempotent, h] using h.choose_spec
 
 /-- A group identity may be any element of the positive cyclic subsemigroup. -/
 def CyclicIsGroup {S : Type*} [AddSemigroup S] (a : S) : Prop :=
@@ -189,7 +189,8 @@ private theorem model_cyclic (x : Model) :
       add_mem' := by
         intro a b ha hb
         simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at ha hb ⊢
-        rcases ha with rfl | rfl <;> rcases hb with rfl | rfl
+        rcases ha with ha | ha <;> rcases hb with hb | hb
+        all_goals rw [ha,hb]
         · exact Or.inr (model_laws x).1
         · exact Or.inr (model_laws x).2.1
         · exact Or.inr (by rw [add_comm]; exact (model_laws x).2.1)
@@ -319,7 +320,7 @@ private theorem sequence_facts (n : ℕ) :
     refine ⟨by simp [witnessSequence,ih.1], ?_, ?_⟩
     · rw [witnessSequence,List.sum_cons,ih.2.1]
       apply model_ext
-      · simp [target,Finset.range_succ,Finset.union_comm]
+      · simp [target,Finset.range_add_one,Finset.union_comm]
       · rfl
     · intro x hx
       simp only [witnessSequence,List.mem_cons] at hx
