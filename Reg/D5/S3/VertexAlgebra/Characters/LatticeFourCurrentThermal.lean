@@ -44,13 +44,13 @@ private theorem dependence : ObservationalDependence signature actual := by
     (fun _ => 0), ![0, 1, 0, 1], ?_⟩
   have hz : actualFourCurrentCycleTrace probe probePositive (fun _ => 0) (fun _ => 0) = 0 := by
     rw [original_four_zero_charge_trace]
-    simp [cutoff_zero, LatticeAllStateField.bilinear]
+    simp [cutoff_zero, bilinear]
   have h4 : actualFourCurrentCycleTrace probe probePositive (fun _ => 0) ![0, 1, 0, 1] = 4 := by
     rw [actual_four_current_grade_trace, bounded_coefficient_ordered,
       ordered_positive_channels probe probePositive (fun _ => 0) ![0, 1, 0, 1] (by decide)]
     norm_num [Fin.sum_univ_succ, channelEnergyCoefficient, channelMate, channelRest,
       currentMode, contraction, pairEnergyCoefficient, cutoff_zero, multiplicity_zero,
-      LatticeAllStateField.bilinear, probe, Finset.filter_singleton,
+      bilinear, probe, Finset.filter_singleton,
       LatticePositiveEnergy.chargeEnergy_zero]
   change (∏ j : Fin 4, (1/2 : ℂ) ^ (0 : ℕ)) * _ ≠
     (∏ j : Fin 4, (1/2 : ℂ) ^ (![0,1,0,1] : Fin 4 → ℕ) j) * _
@@ -197,7 +197,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   rw [hv] at hs
   change HasProd (fun _ : ℕ => (0 : ℂ)) 1 at hs
   have hzero : HasProd (fun _ : ℕ => (0 : ℂ)) 0 := by
-    exact hasProd_zero (i := 0) rfl
+    exact hasProd_zero_zero
   exact zero_ne_one (hzero.unique hs)
 private theorem dependence : ObservationalDependence signature actual := by
   intro role

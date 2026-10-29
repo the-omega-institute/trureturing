@@ -380,13 +380,17 @@ private theorem matching_fiber_coefficient (D : LatticeData)
     ← Nat.card_eq_fintype_card]
   rw [← tsum_fintype (L := SummationFilter.unconditional (BoundedSourceData D hD n M)),
     ← (boundedRawEquiv D hD n M).symm.tsum_eq]
-  change (∑' c : {b : RawBounded D hD n M // RawBounded.valid D hD n M b},
-    (Nat.card (IntegerFiber D c.1.2.2.2.2.1) : ℂ) *
-      ((∏ j ∈ unpaired M, (bilinear D (unitCharge D (i j)) c.1.1.1 : ℂ)) *
-        ∏ e : edgeParam M, ((c.1.2.1 e).1 : ℂ) *
-          (D.G (i e.1.1) (i e.1.2) : ℂ))) = _
-  erw [tsum_subtype, tsum_fintype]
-  simp only [Set.indicator, Set.mem_setOf_eq, RawBounded.valid]
+  let f : RawBounded D hD n M → ℂ := fun b =>
+    (Nat.card (IntegerFiber D b.2.2.2.2.1) : ℂ) *
+      ((∏ j ∈ unpaired M, (bilinear D (unitCharge D (i j)) b.1.1 : ℂ)) *
+        ∏ e : edgeParam M, ((b.2.1 e).1 : ℂ) *
+          (D.G (i e.1.1) (i e.1.2) : ℂ))
+  change (∑' c : {b : RawBounded D hD n M // RawBounded.valid D hD n M b}, f c.1) = _
+  trans ∑' b : RawBounded D hD n M,
+    Set.indicator {b | RawBounded.valid D hD n M b} f b
+  · exact tsum_subtype {b | RawBounded.valid D hD n M b} f
+  rw [tsum_fintype]
+  simp only [Set.indicator, Set.mem_setOf_eq, RawBounded.valid, f]
   simp only [Fintype.sum_prod_type]
   apply Finset.sum_congr rfl
   intro β hβ
@@ -612,7 +616,12 @@ private theorem grade_fiber_sum (D : LatticeData)
   simp_rw [matching_fiber_coefficient D hD i n]
   unfold boundedFourCurrentCoefficient
   rw [Finset.sum_comm]
-  simp only [Finset.sum_coe_sort]
+  exact (Finset.sum_subtype (positiveChargeCutoff D hD ((min4 n : ℕ) : ℤ))
+    (fun _ => Iff.rfl) (fun β => ∑ M : PM4,
+      ∑ ell : edgeParam M → Fin (max4 n + 1),
+        ∑ ε : edgeParam M → Fin 2,
+          ∑ k : edgeParam M → Fin (min4 n + 1),
+            ∑ t : Fin (min4 n + 1), chargeWeight D i n β M ell ε k t)).symm
 
 /-- Absolute summability of the original full-grade four-current thermal
 family on every face of the open coordinate polydisk. -/
