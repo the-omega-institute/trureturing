@@ -39,7 +39,7 @@
 
 本轮固定公开 `dev` 快照
 `a5a8bcdf56019e58c398f6f6d27a3620b896d001`。
-提交时间为 2026-10-30 03:17:38（Asia/Singapore），标题为“theory: separate C12 from invariant fixed-resistance weights”（#23827）。相对 v18 的 `23a4ae6\ldots`，理论目录有七条变化：五新增、两修改；当前目录共 1015 个文件。审计中分支继续推进，本稿以以上最后核对的不可变快照为准，不把移动分支视为固定证据。
+提交时间为 2026-10-30 03:17:38（Asia/Singapore），标题为“theory: separate C12 from invariant fixed-resistance weights”（#23827）。相对 v18 的 `23a4ae6…`，理论目录有七条变化：五新增、两修改；当前目录共 1015 个文件。审计中分支继续推进，本稿以以上最后核对的不可变快照为准，不把移动分支视为固定证据。
 
 本题最直接的项目来源大多是*本轮深入阅读的已有结果*，而非这次提交新增的 RH 突破：
 
@@ -1220,7 +1220,7 @@ Clay 官方问题说明；本文不将该历史文献中的旧计算范围当作
 
 <a id="ref-choie"></a>
 
-**[6]** Y.-J. Choie, N. Lichiardopol, P. Moree, P. Sol\'e.
+**[6]** Y.-J. Choie, N. Lichiardopol, P. Moree, P. Solé.
 [On Robin's criterion for the Riemann Hypothesis](https://arxiv.org/pdf/math/0604314).
 arXiv:math/0604314v2, 2006。原始 Robin 定理归于
 G. Robin, J. Math. Pures Appl. 63 (1984), 187–213；
