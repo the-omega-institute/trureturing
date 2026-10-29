@@ -143,7 +143,7 @@ private theorem P_zero : P 0 = 0 := by
   change (if p.val.length ≤ 0 then z p else 0) = 0
   simp [Nat.not_le.mpr hp]
 
-private theorem prefix_vertex (n : ℕ) (p : Address) (x : FiniteSourceMass.Node n)
+theorem prefix_vertex (n : ℕ) (p : Address) (x : FiniteSourceMass.Node n)
     (hp : p.IsPrefix x.val) : p ∈ FiniteSourceMass.vertices n := by
   obtain ⟨r, hr⟩ := hp
   obtain ⟨U, hU⟩ := (FiniteSourceMass.node_iff _ _).mp
@@ -315,7 +315,7 @@ private theorem finite_bound (n : ℕ) : ‖FiniteSourceHardy.J n‖ ≤ dK 0 :=
 private theorem boundary_bound : ‖BiasedBoundaryTrace.J‖ ≤ d1 0 := by
   simpa [P_zero] using boundary_tail 0
 
-private theorem one_norm (n : ℕ) : ‖one n‖ = 1 := by
+theorem one_norm (n : ℕ) : ‖one n‖ = 1 := by
   change ‖Lp.const 2 (FiniteSourceMass.μ n) (1 : ℝ)‖ = 1
   simpa using Lp.norm_const (μ := FiniteSourceMass.μ n) (p := 2) (c := (1 : ℝ)) (by norm_num)
 
