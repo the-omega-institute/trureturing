@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:fcbf5f0750412d38433feebe1b3c7e15c84608a348205f0c92800b9e80e1e018
   normalized_sha256: sha256:fcbf5f0750412d38433feebe1b3c7e15c84608a348205f0c92800b9e80e1e018
 cas_ref: sha256:fcbf5f0750412d38433feebe1b3c7e15c84608a348205f0c92800b9e80e1e018
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleRoutes.irreducible_rectangle_occurrence
+    target_statement_id: sha256:f14f7abcd2eb01ef3eb158177ba18497df82e4165cd669f5585aba31cb0a1574
 receipts:
   unresolved_subitems: []
