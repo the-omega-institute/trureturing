@@ -1,0 +1,116 @@
+**定理 45.4（实际移动三源的非零 Bargmann 相位与一致非零模长）。** 定义实际树
+
+$$
+C_0=\langle\alpha,\beta\rangle,\qquad
+C_1=\langle\alpha,\alpha\rangle,\qquad
+C_2=\langle C_1,C_1\rangle,
+\qquad
+W_{j,0}=\beta,\quad W_{j,m+1}=\langle W_{j,m},C_j\rangle.
+\tag{45.17}
+$$
+
+对 $k=5n$，三棵 $W_{0,k},W_{1,k},W_{2,k}$ 两两不同。有向闭路积为
+
+$$
+\begin{aligned}
+\mathcal B_n
+&=K_n^{\mathrm c}(W_{0,k},W_{1,k})
+ K_n^{\mathrm c}(W_{1,k},W_{2,k})
+ K_n^{\mathrm c}(W_{2,k},W_{0,k})\\
+&=a_n^3\bigl[b_n^3(b_n+ih_n)\bigr]^{5n}.
+\end{aligned}
+\tag{45.18}
+$$
+
+其主辐角及模长满足
+
+$$
+1<\theta_n:=\arg\mathcal B_n
+=5n\arctan\frac1{5n-1}<\frac54<\pi,
+\qquad
+|\mathcal B_n|\ge\left(\frac45\right)^{23}>0.
+\tag{45.19}
+$$
+
+任意顶点重相位保持 $\mathcal B_n$；反转环方向则取共轭。因此这不是可用顶点相位
+消去的边相角，而是在统一缺陷趋零的同一全域核族中不趋零的闭路相位。
+
+**证明。** 三棵装饰树的计数为 $q(C_0)=0,q(C_1)=1,q(C_2)=3$。
+它们的非零场依次为空、$\{\epsilon:1\}$、$\{\epsilon:2,0:1,1:1\}$。
+$W_{j,0}$ 是叶，不能等于内部树 $C_j$。若 $m\ge1$ 而 $W_{j,m}=C_j$，比较右子树
+会迫使 $C_j$ 等于自身的真右子树，与有限树节点数矛盾。因此每个梳脊根的左右子树不等，
+标签都是零。由递推，装饰场出现在地址块 $0^d1\mathcal A$，$0\le d<m$；
+这些词 $0^d1$ 两两前缀不可比，地址块不交。
+
+故对所有 $m\ge0$ 和 $j,l\in\{0,1,2\}$，
+
+$$
+q(W_{j,m})=m q(C_j),\qquad
+P_h^{\mathrm c}(W_{j,m},W_{l,m})
+=\bigl[P_h^{\mathrm c}(C_j,C_l)\bigr]^m.
+\tag{45.20}
+$$
+
+$m\ge1$ 时右子树 $C_j$ 两两不同，便给三棵梳树两两不同；也可由计数 $0,m,3m$ 分离。
+对装饰树的有限地址直接应用 (45.9)，得到
+
+$$
+\begin{aligned}
+P_h^{\mathrm c}(C_0,C_1)&=\sqrt b,\\
+P_h^{\mathrm c}(C_1,C_2)&=b(b+ih),\\
+P_h^{\mathrm c}(C_2,C_0)&=b^{3/2}.
+\end{aligned}
+\tag{45.21}
+$$
+
+第二式中根的贡献为 $b+ih$，地址 $0,1$ 各贡献 $\sqrt b$。
+三式的积为 $b^3(b+ih)$。在互异的三棵 $W_{j,k}$ 上 delta 项均消失，
+(45.20) 遂给 (45.18)。
+
+令 $x=1/(k-1)>0$。积分 $\arctan x=\int_0^x(1+t^2)^{-1}dt$ 给严格界
+$x/(1+x^2)<\arctan x<x$。因此对 $k\ge5$，
+
+$$
+1<\frac{k(k-1)}{(k-1)^2+1}
+<k\arctan\frac1{k-1}
+<\frac{k}{k-1}\le\frac54.
+\tag{45.22}
+$$
+
+这个总相角已经在 $(0,\pi)$ 中，故就是主辐角，没有模 $2\pi$ 的绕回。
+特别地
+$|\mathcal B_n/|\mathcal B_n|-1|=2\sin(\theta_n/2)>2\sin(1/2)$。
+
+由于 $a=b=1-1/k$，$|b+ih|\ge b$，
+
+$$
+|\mathcal B_n|
+=b^{3k+3}(b^2+h^2)^{k/2}\ge b^{4k+3}.
+\tag{45.23}
+$$
+
+为给出解析的一致下界，对实数 $y>1$ 微分：
+
+$$
+\frac{d}{dy}\bigl[y\log(1-1/y)\bigr]
+=\frac1{y-1}-\log\left(1+\frac1{y-1}\right)>0,
+$$
+
+最后一步由 $\log(1+u)<u$。故 $k\ge5$ 时
+$(1-1/k)^k\ge(4/5)^5$，而 $b^3\ge(4/5)^3$，所以
+$b^{4k+3}=(b^k)^4b^3\ge(4/5)^{23}$，证明 (45.19)。
+
+按同一内积约定，$\eta(t)\mapsto e^{i\chi_t}\eta(t)$ 使核变为
+$e^{i(\chi_t-\chi_s)}K(s,t)$。沿三条边的指数和为零，闭路积精确不变；
+Hermitian 性使反向积为共轭。这是通常 Bargmann 规范不变机制的直接应用。
+非零闭路相位还排除将整个见证三元组同时变为实 Gram 数据的可能性：
+若三条边都为实数，其积也为实数，与 (45.19) 矛盾。
+
+标准 Bargmann 积及其关系信息背景复用
+[Hidden Relations §§9–11、27.1、27.5](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md)，
+以及其中引用的 Oszmaniec、Brod、Galvão，
+[*Measuring relational information between quantum states, and applications*](https://arxiv.org/abs/2109.10006v1)。
+此处的规范相消已直接证明，不借用文献的实验比较权限。
+新的承重接合是 (45.17) 的实际三源、(45.18) 的精确积及同时成立的全域缺陷界和
+(45.19)，不把一般复 Gram 数据或非实 Bargmann 积本身作为新原则，也不作优先权主张。∎
+

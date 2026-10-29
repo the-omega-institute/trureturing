@@ -1,0 +1,28 @@
+**定义 76.1（全 qutrit 的 flagged instrument 与可见信息）。** 固定有限 $n\ge0$ 和实角 $\theta$，取 [Environment record memory §26](AURIC_FIB_ENVIRONMENT_RECORD_MEMORY.md) 的整个 $H_q=\mathbb C^3$：
+
+$$
+U_0=(23),\quad W=(12),\quad a=U_0e^{i\theta W},\quad b=aW,
+\qquad Q_h=V_{h_n}\cdots V_{h_1},\quad (V_0,V_1)=(a,b).
+$$
+
+$h_1$ 最先作用，$Q_\varnothing=I_3$。实际 fresh measured instrument 的每步 outcome 在所有 qutrit 输入上条件公平，因此 $p_h=2^{-n}$。以下终端判据也允许同一 word matrices 上另行声明的任意 input-independent full-support law $p_h>0$，不声称公平 apparatus 产生其他律。
+
+设 $t(m\mid h)$ 为 input-independent stochastic kernel，$M$ 为有限终端 alphabet。其**实际传给解码器的量子—经典系统**为
+
+$$
+\mathcal F_t(X)=\sum_{m\in M}|m\rangle\langle m|\otimes
+ \sum_h p_ht(m\mid h)Q_hXQ_h^\dagger.
+$$
+
+解码器只能获得该 qutrit 与完整 counted view $m$，并知道固定的 $\theta,n,p,t$、预先指定的有限 projection family $\mathscr E=(E_1,\ldots,E_k)$（$k\ge1$）及固定控制描述。没有其他未计入的 history-dependent clock、archive、program selection 或 seed，没有 input-dependent side information、reference access、postselection 或较小输入 code。丢弃的 private randomness 已平均进 $t$；可见且 history-dependent 的随机变量计入 $m$。允许每个 $m$ 选一个 qutrit CPTP map $\mathcal D_m$，但同一个 $\mathcal D_m$ 必须同时服务全部 $E_j$。目标是在所有 density matrices 上使 averaged corrected channel
+
+$$
+\mathcal T=\sum_m w_m\mathcal D_m\mathcal N_m,
+\quad w_m=\sum_hp_ht(m\mid h),\quad
+H_m=\{h:p_ht(m\mid h)>0\},\quad
+\mathcal N_m=\sum_{h\in H_m}\frac{p_ht(m\mid h)}{w_m}
+                  \operatorname{Ad}_{Q_h}
+$$
+
+满足 $\mathcal T^\dagger(E_j)=E_j$；只定义 $w_m>0$ 的条件分支。这里的 dagger 是 trace adjoint。目标是同时恢复这些 sharp Born probabilities，不是将不同未知输入或不同任务的最优 decoder 拼接。
+

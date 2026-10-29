@@ -1,0 +1,4 @@
+# FIB legal-edge load: observable quotients, conditional variance, and erasure summability
+
+This volume proves a sufficient theorem for the actual output law of a stationary finite edge-emitting chain. Two labeled lumpability identities and two uniform bounds over feasible observed blocks imply summable square roots of one-sided output erasure errors. The proof uses classical stochastic-kernel strong data processing and an averaged conditional-variance identity. A triangular example satisfies these hypotheses while violating the proposed pathwise filter bound. It also fails the posterior band, so it is not a counterexample to any band-restricted assertion.
+

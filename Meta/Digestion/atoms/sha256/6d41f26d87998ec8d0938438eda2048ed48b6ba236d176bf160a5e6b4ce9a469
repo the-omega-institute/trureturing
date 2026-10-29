@@ -1,0 +1,9 @@
+**Definition 8.1 (Analytic hub contribution).** For $x>0$, $k\in\{1,2\}$ and an integer $b\ge2$, put
+
+$$
+f_k(x)=\sqrt{1+\frac{k^2}{x^2}}-1,\qquad
+M_b(x)=(x-b)f_1(x)+bf_2(x).
+$$
+
+In a graph consisting of $K_{2,b}$ and leaves attached only to its two hubs, a hub of degree $D\ge b$ has $D-b$ incident leaf edges and $b$ incident edges to degree-two vertices. Its contribution to $E$ is therefore $M_b(D)$. Stance: repo-derived.
+

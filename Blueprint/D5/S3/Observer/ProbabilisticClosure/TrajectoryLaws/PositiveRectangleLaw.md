@@ -40,7 +40,19 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRect
 
 For every presentation theta and binary list w, the ordered list product equals wordMatrix(theta.matrix,length(w),w.get) on the same original hidden state type.
 
-**Theorem 1.4 (Concatenation splits the actual cylinder).**
+**Theorem 1.4 (Finite-coordinate words retain their original matrix product).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.product_ofFn`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.product_ofFn` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite stationary binary presentation theta, natural n and word w indexed by Fin n, product(theta,List.ofFn(w)) equals wordMatrix(theta.matrix,n,w), as matrices on the same hidden state type. This includes n equal to zero.
+
+**Theorem 1.5 (Concatenation splits the actual cylinder).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.block_append`
 
@@ -52,7 +64,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRect
 
 For every integer t and binary lists u and v, block(t,u appended to v) is exactly the intersection of block(t,u) and block(t+length(u),v). The identity includes empty words.
 
-**Theorem 1.5 (All original word entries are nonnegative).**
+**Theorem 1.6 (All original word entries are nonnegative).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.product_nonneg`
 
@@ -64,7 +76,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRect
 
 For every stationary nonnegative binary presentation theta, every binary list w and every original state pair i,j, product(theta,w)(i,j) is nonnegative. Structural zeros and zero-length products are retained.
 
-**Theorem 1.6 (General same-law supported-word exclusion).**
+**Theorem 1.7 (General same-law supported-word exclusion).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.supported_word_obstruction`
 
@@ -76,7 +88,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRect
 
 For every stationary finite marked presentation, suppose every legal output cylinder is positive and the native complete-exterior posterior is the actual bit almost surely. Every positive word product has no nonempty exact positive rectangular support. The no11 condition of Presentation makes every positive word legal. Protected words w0x0w for both x are legal and positive; arbitrary nonnegative farther messages give a uniform two-sided posterior interval on the positive guard. Native finite exterior conditional expectations converge to the complete exterior on this same law, contradicting the binary full posterior. Zero-total atoms require no normalization, and the matrix support need not have rank one.
 
-**Theorem 1.7 (The complete-law positive trimming boundary).**
+**Theorem 1.8 (The complete-law positive trimming boundary).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.actual_trimmed_obstruction`
 
@@ -88,7 +100,19 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRect
 
 For every stationary finite presentation θ of the actual P, positive-mass trimming has complete visible law equal to θ and every trimmed word product excludes nonempty exact positive rectangular support. The original same-law trimming cylinder identity and complete bilateral cylinder uniqueness identify the canonical trimmed law. Strict positivity of every retained initial mass makes a rectangular product a positive-probability word. The empty word, structural zeros and original zero-mass states stay within the stated scope.
 
-**Theorem 1.8 (Every irreducible same-law presentation is excluded).**
+**Theorem 1.9 (Every state of the irreducible stationary presentation has positive mass).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.irreducible_initial_positive`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.irreducible_initial_positive` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every finite stationary binary presentation theta, assume that for each state pair i,j some nonnegative natural power of the original sum matrix M0 plus M1 has a strictly positive entry at i,j. Then theta.initial(j) is strictly positive at every state j. No aperiodicity or entrywise positivity of either emission matrix is required.
+
+**Theorem 1.10 (Every irreducible same-law presentation is excluded).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.actual_irreducible_obstruction`
 
@@ -100,7 +124,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRect
 
 For every finite stationary marked presentation of the original twelve-state visible law, assume that each ordered hidden-state pair has a strictly positive transition-power entry at some natural time. Then no original word matrix at any length has nonempty exact positive rectangular support. Stationarity and this reachability first imply strictly positive stationary mass at every state, so any such word would have positive occurrence probability and contradict actual_every_presentation. No aperiodicity or rank-one hypothesis is used.
 
-**Definition 1.9 (The protected exterior event).**
+**Definition 1.11 (The protected exterior event).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.guard`
 
@@ -112,7 +136,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRect
 
 guard(w) fixes the finite word w followed by zero on coordinates -(length(w)+1) through -1, and zero followed by w on coordinates one through length(w)+1. The missing center is unconstrained.
 
-**Theorem 1.10 (Every presentation of the same output law is excluded).**
+**Theorem 1.12 (Every presentation of the same output law is excluded).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.actual_every_presentation`
 
@@ -132,8 +156,10 @@ For every finite hidden type with measurable singletons, every stationary marked
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.block`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.block_append`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.guard`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.irreducible_initial_positive`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.product`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.product_nonneg`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.product_ofFn`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.product_word`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.supported_word_obstruction`
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/ErasedExteriorFiltration](ErasedExteriorFiltration.md)

@@ -1,0 +1,8 @@
+**约定 87.2（承重来源与未解范围）。** §§85–86 的 actual effect image 固定使用 [Environment §27][F81ENV27] 的原 pin；单任务 admissible branch、residual 与 phase-image separation 使用本卷定理 81.4、83.1，不重建其 owning proofs。§85 新增的 common local certificate 在 CP/subunital Choi relaxation 中比较所有 complex maps，并以一个全 qutrit Kraus map 达到；§86 新增的 quantitative stability、共同 map separation 与 quadratic actual decoder neighbourhood 共同支撑 fixed-$q$ dictionary law。§87.1 是该 law 在独立 no-$11$ naming contract 下的应用，而不是另一个一般 classical coding theorem。
+
+trace/operator-norm support duality、CP positivity、Kraus/Choi representation、positive-unital norm contraction、analytic implicit functions 和 circle packing/covering 均为成熟中间工具；量子 map 的规范沿 §82.1 所引 [Watrous 条目](../../../Library/Quantum/watrous2018theory.md)，observable correction 的对应沿 §81.6 所引 [Bény–Kempf–Kribs 条目](../../../Library/Quantum/benykempfkribs2007observables.md)。这些 standard results 本身不供应 (85.2)、$15/8$ 系数或 (86.2) 的 model-specific constants。这里的内容是相对于上述供应结果的组合推导，不作 worldwide novelty 或文献优先权主张。
+
+定理 85.2 不确定局部 branch 外的 finite-$q$ common optimum，(85.18) 不扩大 exact interval。定理 86.4 不交换 $q\downarrow0$ 与 $\delta\downarrow0$，不推广到其他 horizons、其他 task directions 或另一种 input-dependent law。静态 task labels 的上述结论也不供应 erased-history causal control。
+
+定义 80.2 与 84.6 的 native acquisition、reverse kernels、maintenance/current-at-return recovery、chronology supplement 与资源、general quantitative tasks、动态 controller optimum 继续保留。§78.3 的 actual subexponential pair-energy、finite cutoff、collision entropy 及其有条件 causal-memory programme，和 §79.4、84.5 的 strict-real global joint incidence、same-child lifting 与 ancestor obligations，均未由这两个固定 horizon 的论文结论结算。这些 fixed-horizon 结论不结算原无界 horizon 目标。
+

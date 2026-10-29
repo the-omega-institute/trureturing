@@ -1,0 +1,21 @@
+**Definition 2.3 (positive comparison graphs).** Traverse the identical
+shape terms in every required positive comparison. As supplied by
+[NSF, Lemma 3.2][NSF], the resulting equations have only the forms
+
+$$
+r=r'+d,\qquad r=d,\qquad U=V+d,\qquad d\in\mathbb Z.
+\tag{NIC.9}
+$$
+
+The last equation compares entire blocks of the same residual sort,
+with pointwise rank offset. No comparison joins a block to a scalar or
+blocks of different residual sorts. Constant and collapse equations
+retain their actual natural scalars. In particular the $r$ introduced
+in (NIC.8) is retained as a natural scalar.
+
+For each residual sort form the undirected graph on all its block
+occurrences, including isolated vertices, with one oriented offset edge
+for every equation $U=V+d$. Traversing an edge backwards reverses its
+offset. All occurrences in all named terms are included, not only
+those visible in an eventual output.
+

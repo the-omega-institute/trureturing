@@ -1,0 +1,32 @@
+**Definition 10.1 (Integer terminal resultant circuit).** Use $z$ for a
+formal terminal $M$ value and write $a_7=A_7+B_7d$, where
+
+$$
+\begin{aligned}
+A_7&=72x^3+(192-6p+4v)x^2+(72-12p+4v)x-48,\\
+B_7&=-4x^3-9x^2+3x+2,\\
+q&=D+(2x+3)B_7=-8x^4-29x^3-18x^2+15x+6,\\
+t&=zD-(2x+3)A_7.
+\end{aligned}
+\tag{10.1}
+$$
+
+For $A=\sum_{i=0}^n A_id^i$ define its denominator-cleared substitution
+$A[t:q]=\sum_{i=0}^n A_it^iq^{n-i}$, retaining its displayed generic
+$d$-degree. Set
+
+$$
+\begin{gathered}
+f_M=\frac{f[t:q]}{2D^2},\qquad K_M=\frac{K[t:q]}{4D^4},\\
+Q=\frac{\operatorname{Res}_x(q,t)}{1152},\qquad
+L=\frac{\operatorname{Res}_x(F_0,t)}{2592pv},\\
+P_M=\frac{\operatorname{Res}_x(f_M,K_M)}{82944Q^8L^2}.
+\end{gathered}
+\tag{10.2}
+$$
+
+Every quotient here is an exact integer polynomial quotient. No content
+or sign adjustment is made to $P_M$. Resultants have their displayed
+operand order and generic degrees. They use the convention
+$\operatorname{Res}_x(A,B)=a_n^{\deg B}\prod_{A(\xi)=0}B(\xi)$.
+

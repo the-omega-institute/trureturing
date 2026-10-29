@@ -98,7 +98,7 @@ def phasedFailure (c a : ℝ) (k chi : ℝ → ℝ) (t : ℝ) (i : Fin 5)
     (by rw [← phased_failure_actual c a k chi t i rho hpos]
         exact TraceClass.isTraceClass_coe _)
 
-private theorem phasedFailure_eq (c a : ℝ) (k chi : ℝ → ℝ) (t : ℝ) (i : Fin 5)
+theorem phasedFailure_eq (c a : ℝ) (k chi : ℝ → ℝ) (t : ℝ) (i : Fin 5)
     (rho : TraceClass (Blocks (Fin 5) H)) (hpos : 0 ≤ rho.1) :
     phasedFailure c a k chi t i rho hpos = liveFailure c a k i rho hpos t :=
   Subtype.ext (phased_failure_actual c a k chi t i rho hpos).symm
@@ -290,7 +290,7 @@ def completeOperationalDistance (c a T : ℝ) (k chi l psi : ℝ → ℝ) : ℝ 
   sSup {x : ℝ | ∃ s : JointState.{v} 5,
     x = completeDistance c a T k chi l psi s.rho s.positive}
 
-private def normalizedLive : JointState.{v} 5 := by
+def normalizedLive : JointState.{v} 5 := by
   let rho : TraceClass (Blocks (Fin 5) witnessReference.{v}) :=
     TraceClass.ofOperator (embedding witnessBase.{v}.1 (0 : Fin 5))
       (embedding_traceClass (TraceClass.isTraceClass_coe _) witnessBase_pos _)

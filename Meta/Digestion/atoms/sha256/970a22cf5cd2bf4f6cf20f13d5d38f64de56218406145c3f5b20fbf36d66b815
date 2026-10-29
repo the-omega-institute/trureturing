@@ -1,0 +1,24 @@
+## 39. Mathematical attribution for the two response geometries
+
+The model, full-parent converse and literal response circuit are reused
+from Sections 1–2 and 19 and
+[Common Parent Geometry](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+Theorem 2.1. The actual-source fold geometry is the model-specific result
+of *An actual source fold with separated terminal responses*; Sections
+32–38 retain its exact determinant, isolated algebraic source, full-box
+differential inequalities, actual inverse branches and terminal bounds.
+The four-world J geometry is the model-specific result of *A four-world
+acquired child with a genuine terminal-J collision*, retained in Sections
+40–41 with its exact incidence and interval proof.
+
+Fixed-node interpolation and finite differences are classical; see
+Berrut and Trefethen, *Barycentric Lagrange Interpolation*, SIAM Review 46
+(2004), 501–517. The contraction, intermediate, analytic inverse and
+implicit function theorems, Taylor's integral formula and interval
+inclusion arithmetic are standard. The analytic fold normal form belongs
+to Whitney's theory of plane-to-plane mappings; (35.1)–(35.3) also give
+the required form directly for this map. Real-algebraic projection and
+singleton algebraicity follow from real quantifier elimination; see
+Basu, Pollack and Roy, *Algorithms in Real Algebraic Geometry*. Neither the general fold theorem nor the general contraction
+principle is an additional model-specific result.
+

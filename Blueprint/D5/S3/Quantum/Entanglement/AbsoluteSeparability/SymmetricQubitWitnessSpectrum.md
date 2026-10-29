@@ -4,7 +4,19 @@
 
 The spectra of symmetric two-qubit entanglement witnesses are characterized by two sharp inequalities on their three ordered eigenvalues.
 
-**Definition 1.1 (Coherent vectors in Dicke coordinates).**
+**Definition 1.1 (The matrix quadratic form).**
+
+$$\forall (n:\mathbb{N}), \forall (A:\operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right)), \forall (x:\operatorname{Fin}\left(n\right) \to \mathbb{C}), \operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricQubitWitnessSpectrum.qform}\left(A, x\right) = \operatorname{dotProduct}\left(x, \operatorname{Matrix.mulVec}\left(A, x\right)\right)$$
+
+*Formalization.* `D5/S3/Quantum/Entanglement/AbsoluteSeparability/SymmetricQubitWitnessSpectrum.qform` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The matrix quadratic form evaluates a complex bilinear form twice on the same vector, without complex conjugation.
+
+**Definition 1.2 (Coherent vectors in Dicke coordinates).**
 
 $$\forall (v:\operatorname{Fin}\left(2\right) \to \mathbb{C}), \operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricQubitWitnessSpectrum.coherent}\left(v\right) = ![v\left(0\right)^{2}, (\operatorname{Real.sqrt}\left(2\right):\mathbb{C}) \cdot v\left(0\right) \cdot v\left(1\right), v\left(1\right)^{2}]$$
 
@@ -18,7 +30,7 @@ $$\forall (v:\operatorname{Fin}\left(2\right) \to \mathbb{C}), \operatorname{D5.
 
 In the orthonormal Dicke basis e00, (e01 + e10)/sqrt(2), e11 of the symmetric subspace of C2 tensor C2, the vector v tensor v has these three coordinates. The factor sqrt(2) comes from the normalization of the middle basis vector.
 
-**Definition 1.2 (Nonnegative expectation on coherent vectors).**
+**Definition 1.3 (Nonnegative expectation on coherent vectors).**
 
 $$\forall (W:\operatorname{Matrix}\left(\operatorname{Fin}\left(3\right), \operatorname{Fin}\left(3\right), \mathbb{C}\right)), (\operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricQubitWitnessSpectrum.IsSymmetricWitness}\left(W\right)) \Leftrightarrow ((\operatorname{Matrix.IsHermitian}\left(W\right)) \land (\forall (v:\operatorname{Fin}\left(2\right) \to \mathbb{C}), 0 \le \operatorname{Complex.re}\left(\operatorname{dotProduct}\left(\operatorname{star}\left(\operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricQubitWitnessSpectrum.coherent}\left(v\right)\right), \operatorname{Matrix.mulVec}\left(W, \operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricQubitWitnessSpectrum.coherent}\left(v\right)\right)\right)\right)))$$
 
@@ -32,7 +44,7 @@ $$\forall (W:\operatorname{Matrix}\left(\operatorname{Fin}\left(3\right), \opera
 
 A symmetric witness is a Hermitian operator on this three-dimensional space whose expectation on every coherent vector is nonnegative, as in Section 2.3. Hermiticity makes the expectation real, so taking its real part preserves the inequality.
 
-**Definition 1.3 (The spectral characterization).**
+**Definition 1.4 (The spectral characterization).**
 
 $$(\operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricQubitWitnessSpectrum.claim}) \Leftrightarrow (\forall (\mu_{1}:\mathbb{R}), \forall (\mu_{2}:\mathbb{R}), \forall (\mu_{3}:\mathbb{R}), (\mu_{2} \le \mu_{1}) \Rightarrow ((\mu_{3} \le \mu_{2}) \Rightarrow ((\exists W \in \operatorname{Matrix}\left(\operatorname{Fin}\left(3\right), \operatorname{Fin}\left(3\right), \mathbb{C}\right),\; (\operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricQubitWitnessSpectrum.IsSymmetricWitness}\left(W\right)) \land (\operatorname{Matrix.charpoly}\left(W\right) = (\operatorname{Polynomial.X} - \operatorname{Polynomial.C}\left((\mu_{1}:\mathbb{C})\right)) \cdot (\operatorname{Polynomial.X} - \operatorname{Polynomial.C}\left((\mu_{2}:\mathbb{C})\right)) \cdot (\operatorname{Polynomial.X} - \operatorname{Polynomial.C}\left((\mu_{3}:\mathbb{C})\right)))) \Leftrightarrow ((0 \le \mu_{2}) \land (-\operatorname{Real.sqrt}\left(\mu_{1} \cdot \mu_{2}\right) \le \mu_{3})))))$$
 
@@ -44,7 +56,7 @@ $$(\operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricQubitW
 
 The conjecture following Theorem 3 and in Section 6(c) asks whether mu2 >= 0 and mu3 >= -sqrt(mu1 mu2) characterize all symmetric witness spectra. Here eigenvalues mu1 >= mu2 >= mu3 mean that the characteristic polynomial is the displayed product over C, so multiplicities, repeated eigenvalues and zero eigenvalues are included. Positive semidefinite witnesses are included, as stipulated in footnote 1.
 
-**Theorem 1.4 (The exact spectrum theorem).**
+**Theorem 1.5 (The exact spectrum theorem).**
 
 $$\operatorname{D5.S3.Quantum.Entanglement.AbsoluteSeparability.SymmetricQubitWitnessSpectrum.claim}$$
 
@@ -73,6 +85,7 @@ For sufficiency, the diagonal matrix diag(mu1,mu3,mu2) in the Dicke basis has th
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/SymmetricQubitWitnessSpectrum.IsSymmetricWitness`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/SymmetricQubitWitnessSpectrum.claim`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/SymmetricQubitWitnessSpectrum.coherent`
+- Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/SymmetricQubitWitnessSpectrum.qform`
 - Truth anchor: `D5/S3/Quantum/Entanglement/AbsoluteSeparability/SymmetricQubitWitnessSpectrum.result`
 - Dependency: [D5/S3/Quantum/Divergence/CanonicalRelativeModularModel](../../Divergence/CanonicalRelativeModularModel.md)
 - Dependency: [D5/S3/Zeros/PochhammerDeformation/QuadraticRadii](../../../Zeros/PochhammerDeformation/QuadraticRadii.md)

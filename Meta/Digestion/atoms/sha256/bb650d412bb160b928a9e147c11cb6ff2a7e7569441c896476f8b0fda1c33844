@@ -1,0 +1,28 @@
+**Theorem 49.2 (exact task relation, including semantic successors).**
+At fixed initialization, source binding and current rights, relate a
+literal-tape Ready state $(t,\mathcal W)$ of AA §20 to the compressed
+Ready state $(t,\mathcal R)$ precisely when every local rank of
+$\mathcal R$ encodes that actual $W_v$. This relation is total in both
+directions on their actual semantic images. Each original framed request
+has the same legality/refusal and reply in related states, and its
+settled successors are related. Consequently the full $Q_g$ task kernel
+for the compressed record is exactly equality of the complete successful
+word $w$, with its source interpretation. The relation preserves complete
+finite continuations, including actual Next successors.
+
+Proof. AA Theorem 19.2 and Theorem 47.3 give inverse coordinate maps
+on every fixed reachable source, hence the image relation is total and
+single-valued on contents. Theorem 49.1 proves each request case, with
+its actual resulting source and updated represented word. This includes
+the source edit chosen by the acquired old event during Next. Induction
+composes the relation for any finite legal request sequence.
+
+Equal represented words give the same source, guards, indexed events
+and current Next leaves. Conversely two different words differ at a
+first indexed event, or one is a proper prefix. FetchGrowth returns
+distinct literal events at that index, or an event versus OutOfRange.
+It therefore separates those states by an original request. This is the
+existing full-task kernel argument of AA Theorem 21.2, now with its
+concrete acquired compressed operands and maintained successors.
+$\square$
+

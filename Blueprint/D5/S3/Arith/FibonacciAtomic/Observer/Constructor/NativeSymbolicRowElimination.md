@@ -1,0 +1,43 @@
+# Complete raw rows and shared source reconstruction
+
+## Abstract
+
+Complete raw row elimination over one original variable family
+
+**Theorem 1.1 (A symbolic exterior matches exactly when its finite bindings hold).**
+
+$$\forall X: Type, (\forall p: \operatorname{SymbolicExterior}\left(X\right), (\forall u: HoleExterior, (\forall v: X \to Source, ((\operatorname{exteriorFill}\left(v, p\right) = u) \iff (\exists bs: \operatorname{List}\left(\operatorname{Prod}\left(X, \operatorname{Term}\left(X\right)\right)\right), ((\operatorname{matchExterior}\left(p, u\right) = \operatorname{some}\left(bs\right)) \land (\operatorname{bindingHolds}\left(v, bs\right))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeSymbolicRowElimination.exterior_match_exact` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A symbolic exterior has Boolean leaves, residual variables and literal address holes. The matcher descends through ordered pair constructors, rejects constructor and hole mismatches, and decodes a target subtree into a source term only when that subtree contains no address hole. Every successful variable match contributes an explicit binding to a finite list; repeated variables are retained as repeated bindings.
+
+For every valuation, the theorem equates the filled symbolic exterior with an arbitrary concrete hole exterior exactly with the existence of the matcher output whose bindings all evaluate to the valuation. Constructor and address-hole mismatches are rejected. Literal holes with the same address match exactly, while residual variables expand only to hole-free source subtrees and retain every returned binding. The full row compiler combines these bindings with every sign of the reached partition. Interpreted positive history equations remain separate.
+
+**Theorem 1.2 (All raw rows and free signed comparisons share one exact reconstruction).**
+
+$$\forall X: Type, (\forall p: \operatorname{Presentation}\left(X\right), (\forall t: \operatorname{Term}\left(X\right), (\forall rs: \operatorname{List}\left(RawRow\right), (\forall extra: \operatorname{SignedConstraints}\left(X\right), (\forall v: X \to Source, ((((\forall r: RawRow, ((r \in rs) \implies (\operatorname{symbolicRecord}\left(\operatorname{fst}\left(r\right), t, v\right) = \operatorname{snd}\left(r\right)))) \land ((\forall c: \operatorname{Prod}\left(\operatorname{Term}\left(X\right), \operatorname{Term}\left(X\right)\right), ((c \in \operatorname{fst}\left(extra\right)) \implies (\operatorname{evaluate}\left(v, \operatorname{fst}\left(c\right)\right) = \operatorname{evaluate}\left(v, \operatorname{snd}\left(c\right)\right)))) \land (\forall e: \operatorname{Prod}\left(\operatorname{Term}\left(X\right), \operatorname{Term}\left(X\right)\right), ((e \in \operatorname{snd}\left(extra\right)) \implies (\operatorname{evaluate}\left(v, \operatorname{fst}\left(e\right)\right) \neq \operatorname{evaluate}\left(v, \operatorname{snd}\left(e\right)\right)))))) \iff (\exists o: \operatorname{RowOutput}\left(X\right), ((\operatorname{eliminateRows}\left(p, t, rs, extra\right) = \operatorname{some}\left(o\right)) \land (\exists z: \operatorname{free}\left(o\right) \to Source, ((\forall x: X, (\operatorname{evaluate}\left(z, \operatorname{theta}\left(o, x\right)\right) = \operatorname{v}\left(x\right))) \land (\forall e: \operatorname{Prod}\left(\operatorname{Term}\left(\operatorname{free}\left(o\right)\right), \operatorname{Term}\left(\operatorname{free}\left(o\right)\right)\right), ((e \in \operatorname{delta}\left(o\right)) \implies (\operatorname{evaluate}\left(z, \operatorname{fst}\left(e\right)\right) \neq \operatorname{evaluate}\left(z, \operatorname{snd}\left(e\right)\right))))))))) \land (\forall d: Nat, (\forall pat: \operatorname{Pattern}\left(d\right), (\forall name: \operatorname{Frontier}\left(pat\right) \to X, ((t = \operatorname{patternTerm}\left(pat, name\right)) \implies ((\forall r: RawRow, ((r \in rs) \implies (\operatorname{CutPrefixFree}\left(\operatorname{fst}\left(r\right)\right)))) \implies ((\forall r: RawRow, ((r \in rs) \implies (\forall q: Address, ((q \in \operatorname{fst}\left(r\right)) \implies (\operatorname{length}\left(q\right) < d))))) \implies (((\forall r: RawRow, ((r \in rs) \implies (\operatorname{literalRecord}\left(\operatorname{fst}\left(r\right), \operatorname{fill}\left(pat, \operatorname{composition}\left(v, name\right)\right)\right) = \operatorname{snd}\left(r\right)))) \land ((\forall c: \operatorname{Prod}\left(\operatorname{Term}\left(X\right), \operatorname{Term}\left(X\right)\right), ((c \in \operatorname{fst}\left(extra\right)) \implies (\operatorname{evaluate}\left(v, \operatorname{fst}\left(c\right)\right) = \operatorname{evaluate}\left(v, \operatorname{snd}\left(c\right)\right)))) \land (\forall e: \operatorname{Prod}\left(\operatorname{Term}\left(X\right), \operatorname{Term}\left(X\right)\right), ((e \in \operatorname{snd}\left(extra\right)) \implies (\operatorname{evaluate}\left(v, \operatorname{fst}\left(e\right)\right) \neq \operatorname{evaluate}\left(v, \operatorname{snd}\left(e\right)\right)))))) \iff (\exists o: \operatorname{RowOutput}\left(X\right), ((\operatorname{eliminateRows}\left(p, t, rs, extra\right) = \operatorname{some}\left(o\right)) \land (\exists z: \operatorname{free}\left(o\right) \to Source, ((\forall x: X, (\operatorname{evaluate}\left(z, \operatorname{theta}\left(o, x\right)\right) = \operatorname{v}\left(x\right))) \land (\forall e: \operatorname{Prod}\left(\operatorname{Term}\left(\operatorname{free}\left(o\right)\right), \operatorname{Term}\left(\operatorname{free}\left(o\right)\right)\right), ((e \in \operatorname{delta}\left(o\right)) \implies (\operatorname{evaluate}\left(z, \operatorname{fst}\left(e\right)\right) \neq \operatorname{evaluate}\left(z, \operatorname{snd}\left(e\right)\right)))))))))))))))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeSymbolicRowElimination.complete_row_elimination` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A raw row is a cut set paired with an arbitrary concrete hole exterior and an arbitrary finite relation on addresses. No attained-row or partition-validity premise is supplied. The compiler fixes the ordered reached list from the source term, rejects relation pairs outside it, and retains every ordered reached pair: membership gives an equation, and nonmembership gives a disequality. This includes diagonals, both orders, repeated class occurrences, every cross-class pair and empty reached sets. The exterior matcher also retains uncut frontier variables and literal address holes.
+
+The finite extra argument contains arbitrary additional free-term equations and disequalities over the same original type. All rows, exterior bindings and extra equations enter one existing native unifier. Its total action reconstructs every original variable, including repeated and unused coordinates. The output explicitly enumerates its free subtype of the original finite presentation. Its domain consists only of arbitrary finite native trees satisfying the substituted disequalities; no positive row equation, shape restriction or normality condition remains. Failure means that no assignment satisfies the positive constraints. Success may still have an empty disequality domain.
+
+For every sufficiently deep prefix pattern, filling the same named frontiers gives the actual original source. The existing symbolic recutting theorem identifies its complete literal row with the symbolic row, preserving the concrete exterior and every partition bit. The second conjunct states that exact actual-source consequence for all prefix-free cuts whose addresses lie above the frontier. Taking the naming map to be the identity gives the original pattern and its literal original frontier tuple.
+
+In the formula, fst and snd are pair projections, free and theta and delta are output fields, and composition(v,name) is the valuation x mapped to v(name(x)). Evaluation after simultaneous substitution reconstructs the same source term because it reconstructs every original coordinate. The result eliminates free row equalities only; equations involving the interpreted substitution history and the general mixed image and cofinality conclusions remain outside its scope.
+
+## References
+
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeSymbolicRowElimination.complete_row_elimination`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeSymbolicRowElimination.exterior_match_exact`
+- Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/NativeWholeRowPlan](../NativeWholeRowPlan.md)

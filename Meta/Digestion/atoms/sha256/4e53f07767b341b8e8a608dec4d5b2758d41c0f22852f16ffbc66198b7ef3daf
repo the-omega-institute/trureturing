@@ -1,0 +1,14 @@
+### 6.1 Global output white-noise proxy
+
+For \(d=d_A d_B d_C\), define
+
+\[
+P^{\mathrm{glob}}_v
+=
+vP+(1-v)U_d,\qquad
+U_d(a,b,c)=1/d.
+\tag{6.1}
+\]
+
+This is an affine radial path in the observed probability simplex. It is useful for exact certificate studies, but it is not generally the same as independently replacing each source by a Werner state or applying detector noise.
+

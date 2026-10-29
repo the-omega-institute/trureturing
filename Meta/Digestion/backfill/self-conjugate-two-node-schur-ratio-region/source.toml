@@ -1,0 +1,5 @@
+source_id = "self-conjugate-two-node-schur-ratio-region"
+path = "docs/develop/theory/SELF_CONJUGATE_TWO_NODE_SCHUR_RATIO_REGION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

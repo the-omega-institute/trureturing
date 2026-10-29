@@ -1,0 +1,23 @@
+**Proposition 40.3 (Positive mismatch does not define a glued variable).**
+When (40.4) is positive, its attaining coupling retains two
+different separator variables on the mismatch event. It is a
+relaxation of common-source realization, not an actual gluing.
+For fixed full laws, zero mismatch is exactly the condition that
+the two induced separator laws agree. For total fibres and any
+number of branches, (39.4) remains the existence criterion.
+
+Proof. A genuine global independent set has one restriction to
+$H$, so the two branch restrictions must agree with probability
+one. Positive mismatch contradicts that requirement on an event
+of positive mass. When the laws agree, the diagonal construction
+and conditional extension above give a common separator and a
+legal rowwise union, because there are no cross edges. The
+two-branch optimal mismatch formula does not assert a formula
+for a many-branch mismatch objective. In particular selecting
+one incompatible histogram on each branch cannot disprove the
+intersection of their attainable histogram sets. $\square$
+
+[Rota40]: https://doi.org/10.1007/BF00531932
+[Hidden40]: AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md
+[Griffeath40]: https://doi.org/10.1007/BF00539434
+

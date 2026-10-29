@@ -1,0 +1,18 @@
+#### 定义 7.1（完全正映射的支撑像）
+
+令 $\Phi:\mathcal L(\mathcal H)\to\mathcal L(\mathcal K)$ 完全正，取任一 Kraus 表示
+
+$$
+\Phi(X)=\sum_aK_aXK_a^\dagger.
+$$
+
+对线性子空间 $S\subseteq\mathcal H$ 定义
+
+$$
+\mathsf F_\Phi(S)=\operatorname{span}_a K_aS.
+$$
+
+子空间的并生成 $S\vee T$ 指 $\operatorname{span}(S\cup T)$。有限维中正算子的支撑为其像空间。
+
+<a id="thm-cpsupport"></a>
+

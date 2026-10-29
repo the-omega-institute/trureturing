@@ -10,6 +10,16 @@ internal sealed class NativeFiniteNormalInversionDocument : IScribeDocumentDefin
         "Finite normal native inverses and symbolic values on an original Presburger partition.",
         H("Finite original values of a passing mode"), Blocks(
             Paragraph(Text("Code is the finite free ordered binary tree with natural ranks at its leaves. expand replaces rank n by the native atom T(n) and preserves pairs. A normal code has no pair of primitive children with ranks n+1 and n, at any node. smart collapses exactly this pattern to rank n+2. encode recursively applies smart to the arbitrary finite Source input, including all mixed and repeated subtrees. It computes a normal code whose expansion is the original source.")),
+            Describe.Lean(DescribeId.Create("native-normal-encoding-law"), DeclarationHandle.Create(Prefix + "encode_law"),
+                H("Canonical encoding is normal and expands to the same source"),
+                StatementSource.FromAuthor(Disp(All("g", V("Source"),
+                    And(Normal(C("encode", V("g"))), EqOf(Expand(C("encode", V("g"))), V("g")))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The recursive smart constructor preserves normality and expansion. Induction over the entire finite source therefore retains its value, including every mixed and repeated subtree."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("native-rank-shift-expansion-law"), DeclarationHandle.Create(Prefix + "shift_expand"),
+                H("Rank translation expands to the actual native power"),
+                StatementSource.FromAuthor(Disp(All("t", Nat, All("C", V("Code"),
+                    EqOf(Expand(C("shiftCode", V("t"), V("C"))), C("substitutionPower", V("t"), Expand(V("C")))))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("Adding the same natural t to every primitive rank expands to t iterations of the native substitution. Primitive ranks use addition of iterates, and pairs use preservation of pairing. The equation holds for every finite code, including nonnormal codes."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("finite-normal-native-inverse"), DeclarationHandle.Create(Prefix + "finite_normal_inverse"),
                 H("Unique finite normal inversion on the actual image"), StatementSource.FromAuthor(Disp(FiniteInverse())),
                 AssessedProvenance.FromRepo(), Blocks(

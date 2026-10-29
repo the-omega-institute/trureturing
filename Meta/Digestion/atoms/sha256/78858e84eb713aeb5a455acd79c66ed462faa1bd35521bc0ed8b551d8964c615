@@ -1,0 +1,16 @@
+**Lemma 7.4.1 (Small-box inclusions at the two anchors).** At each named parameter in the following table, perform five rounded Newton corrections as in (7.2.3), starting from the centre $c_i$ of a containing parameter cell; use $i=0$ at $t=0$ and $i=7$ at $t=10^{-6}$. Recompute the preconditioner there. With radius
+
+$$
+\rho^{\mathrm{tight}}=10^{-38}(1,1,200,10,300),
+\tag{7.4.1}
+$$
+
+the resulting boxes lie strictly inside the corresponding $X_i$ and have a unique zero. Their rational centres are:
+
+| Coordinate | $t=0$ | $t=1/1000000$ |
+|---|---|---|
+| $R$ | $0.899531674121598268409726976420781980350411105$ | $0.899530919795779879028677658291656578654896203$ |
+| $B$ | $0.128566730308264757217243801879783944149492431$ | $0.128566482008496858677308365111163394715205371$ |
+| $E$ | $6.805704635534469639189632374509777994071045443$ | $6.805816643366348228487842227674526738692718910$ |
+| $k$ | $-1.218947509008715401675263421889754639362546698$ | $-1.218941298820345919523723807358533335069648080$ |
+| $\ell$ | $-40.433124883610480451982746582403325602528193723$ | $-40.433314353357228754415347410117133065899974444$ |

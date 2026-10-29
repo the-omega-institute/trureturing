@@ -1,0 +1,72 @@
+**Corollary 77.1 (same-class sharp entropy coefficient).** Under exactly
+Definition 75.1, let
+
+$$
+I_r(T)=\inf_{\mathsf V\in\mathcal C_{\mathrm{crit},r}}
+                       D(\mathsf V_T\Vert\mathbb P_T).
+\tag{77.1}
+$$
+
+Then the class is nonempty and
+
+$$
+\lim_{T\to\infty}\frac{I_r(T)-\lambda T}{\log(1+T)}
+=\nu(m,r).
+\tag{77.2}
+$$
+
+In addition,
+
+$$
+\begin{aligned}
+\inf_{\mathsf V\in\mathcal C_{\mathrm{crit},r}}
+ \liminf_{T\to\infty}
+ \frac{D(\mathsf V_T\Vert\mathbb P_T)-\lambda T}{\log(1+T)}
+ &=\nu(m,r),\\
+\inf_{\mathsf V\in\mathcal C_{\mathrm{crit},r}}
+ \limsup_{T\to\infty}
+ \frac{D(\mathsf V_T\Vert\mathbb P_T)-\lambda T}{\log(1+T)}
+ &=\nu(m,r).
+\end{aligned}
+\tag{77.3}
+$$
+
+Proof. Put $E_T=\{\zeta>T\}\cap
+\{|X_t|<r\sqrt{1+t}\text{ for every real }0\le t\le T\}$,
+exactly as in Q Corollary 74.2. For every
+$\mathsf V\in\mathcal C_{\mathrm{crit},r}$,
+$\mathsf V_T(E_T)=1$. The pointwise support entropy inequality used
+in that corollary gives, for each finite $T$ and every such law,
+
+$$
+D(\mathsf V_T\Vert\mathbb P_T)\ge-\log\mathbb P(E_T).
+\tag{77.4}
+$$
+
+For completeness its support form follows by writing
+$\mathbb P_T(\,\cdot\mid E_T)$ on $E_T$: divergence relative to
+$\mathbb P_T$ is divergence relative to this conditional law minus
+$\log\mathbb P(E_T)$, and the first divergence is nonnegative.
+Here $\mathbb P(E_T)>0$ follows also from the finite-prefix absolute
+continuity of the supported law in Theorem 76.1.
+Taking the infimum in the finite-$T$ inequality, and bounding above
+by this same single law $\mathsf V_\star$, yields
+
+$$
+-\log\mathbb P(E_T)\le I_r(T)
+ \le D((\mathsf V_\star)_T\Vert\mathbb P_T).
+\tag{77.5}
+$$
+
+Q (74.10) evaluates the normalized limit of the left side, and
+Theorem 76.1 evaluates that of the right side. Subtracting
+$\lambda T$, dividing by $\log(1+T)>0$ and squeezing proves (77.2).
+No infimum-limit interchange is used. Q (74.11) bounds every member's
+liminf from below by $\nu$, hence also its limsup. The law
+$\mathsf V_\star$ has a limit equal to $\nu$, proving both equalities
+in (77.3). All infima are over Definition 75.2's same class of
+consistent infinite laws. The constructed member conditions its height
+on $G$; neither (77.2) nor (77.3) asserts attainment in a class with an
+extra requirement that the height marginal remain unconditioned
+$\mathbb Q$. $\square$
+

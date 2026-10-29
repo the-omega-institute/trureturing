@@ -1,0 +1,28 @@
+## 30. 六相位任意相位尺度的完整能量非达到
+
+本节继续使用定义 12.1 的同一实际对象 $J,P,Q,(f_a)_{a\in\mathbb Z/6\mathbb Z}$、实际 Palm 行
+$\nu K=\nu$、实际均值 $\mu$、完整外部 Brier 风险和两个严格半线解码器。 这里 $\mu=\sum_a\nu_a\sum_{n\ge2}n f_a(n)$，且 $\nu$ 是同一实际占据链的平稳行。所有相位下标均模六。
+不要求 $\kappa_a$ 相等；它们只受实际后验带给出的 $1/3\le\kappa_a\le1$ 约束。
+为避免重复波浪号，以下写 $W_a(n)=\widetilde W_a(n)$，即保留完整内部和端点项的能量
+
+$$
+\begin{aligned}
+V_a(n)&=\sum_{j=2}^{n-2}\mathcal P\!\left(\kappa_{a+j}
+ \frac{z_a(j)z_{a+j}(n-j)}{z_a(n)}\right),\\
+W_a(n)&=V_a(n)+\beta(\kappa_a z_a(n))
+       +\beta(\kappa_{a+n}z_a(n))-s_{a+n},
+\qquad s_b=\beta(\kappa_b).
+\end{aligned}
+\tag{30.1}
+$$
+
+在取得反设下，命题 12.4 的完整余边界式仍是
+
+$$
+W_a(n)=c n+H_{a+n}-H_a,
+\qquad c=\frac16\sum_{b=0}^{5}\mathcal P(\kappa_b),
+\tag{30.2}
+$$
+
+并且全部有向恒等式（12.24）、全部后验带以及完整归一化（12.21）同时成立。式（30.1）中的每一个内部项、两个端点项和式（30.2）的相位势差都在下述推导中保留。
+

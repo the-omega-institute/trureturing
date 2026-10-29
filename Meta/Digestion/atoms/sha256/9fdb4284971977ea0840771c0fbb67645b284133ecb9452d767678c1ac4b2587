@@ -1,0 +1,27 @@
+### 定义 4.1（调度约束超图与连接树）
+
+令 $\mathcal B$ 是组件指标集 $\{1,\ldots,m\}$ 上的有限、无重复非空作用域族。每个作用域 $B\in\mathcal B$ 给出一个局部调度关系
+
+$$
+R_B\subseteq\prod_{i\in B}E_i^*.
+$$
+
+约定空分隔的投影只有一个空词元组；其全局连接为
+
+$$
+W=\Join_{B\in\mathcal B}R_B
+=\left\{
+\mathbf w:\pi_B(\mathbf w)\in R_B\ \text{for all }B\in\mathcal B
+\right\}.
+$$
+
+若存在一棵以 $\mathcal B$ 为节点的树 $T$，使包含任意固定组件 $i$ 的所有作用域在 $T$ 中形成连通子树，则称 $T$ 为连接树，$\mathcal B$ 为树形调度约束。
+
+对相邻作用域 $B,C$，其分隔为 $B\cap C$。称关系族满足分隔一致性，若
+
+$$
+\pi_{B\cap C}(R_B)=\pi_{B\cap C}(R_C)
+$$
+
+对每条树边都成立，并且每个 $R_B$ 非空。
+

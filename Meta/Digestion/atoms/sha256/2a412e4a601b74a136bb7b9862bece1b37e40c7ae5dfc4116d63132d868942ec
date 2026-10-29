@@ -1,0 +1,16 @@
+**Proposition 64.1 (deterministic weighted benchmark).** With the same
+entry family and exact output/retained-use requirements, deterministic
+competitors have weighted minimax price $mc_P$. The all-$P$ traversal
+of Definition 54.1 attains this price at endpoint $\nu(t)$.
+
+Proof. The delayed assignment proof of Theorem 57.3 applies unchanged:
+choose original alpha when a variable leaf's first direct kind is $P$,
+and original beta when it is $S$. It defines one fixed admitted entry
+and forces one success per variable leaf. Its fee is at least $c_P$,
+because $c_S\ge c_P$. The finite-completion argument in that proof
+ensures the constructed entry really reaches every such first target;
+no infinitely postponed assignment is used. Later fees cannot subtract
+from these fees. Conversely the all-$P$ traversal promotes each original
+alpha once and changes no other leaf. Its fee is $c_Pa\le c_Pm$, and
+the all-alpha assignment on $V_K$ attains equality. $\square$
+

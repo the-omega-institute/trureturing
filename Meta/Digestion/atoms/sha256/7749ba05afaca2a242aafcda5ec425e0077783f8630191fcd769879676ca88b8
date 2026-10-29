@@ -1,0 +1,26 @@
+**命题 85.3（独立的 finite-range fallback）。** 不论定理 85.2 的 existential interval 取多小，对每个 $0<q\le1/1000$，$t=\sqrt q$、$k=\sqrt{1-q}$，都有
+
+$$
+\frac{t(k-1/2)}2\le c_2(q)\le\frac t4+4t^3.
+\tag{85.18}
+$$
+
+**证明。** 下界是定理 82.2 的全 complex common-map bound。对上界仍使用 (85.4)，但固定 $a=-\theta/2$，不要求满足 (85.2)。由 (85.7)，
+
+$$
+y_P=\frac{q}{2(1+k)},\quad b_P=t/4,\qquad
+y_E=\frac{q(1+2k)^2}{2(1+k)},\quad
+b_E=-t[1/4+k(1-k)].
+$$
+
+这里 $y_P\le q/2$、$q\le y_E\le9q/4$，所以 $|\delta_E|\le5q/4$；又 $k(1-k)=qk/(1+k)\le q/2$，故 $t/4\le|b_E|\le t/4+t^3/2$。用 $\sqrt{b^2+v^2}\le|b|+v^2/(2|b|)$，
+
+$$
+p\le t/4+t^3/2,\qquad
+ e\le t/4+(29/8)t^3.
+$$
+
+$f$ spectator residual 为 $y_E\le9t^2/4\le t/4$，因为 $t\le1/\sqrt{1000}<1/9$；$y_P\le p$。故 full residuals 的最大值不超过 $t/4+4t^3$。∎
+
+(85.18) 的显式 interval 属于这组较弱 inequalities；它不为 (85.2) 的 exact optimum 指定数值 endpoint。一般 finite-$q$ 的 common optimum、可能的 branch changes 与 spectator activation 仍未确定。
+

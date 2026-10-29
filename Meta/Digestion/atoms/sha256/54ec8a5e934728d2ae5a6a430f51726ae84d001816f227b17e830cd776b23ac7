@@ -1,0 +1,25 @@
+**Theorem 49.1 (causal installation and complete returned-service
+correspondence).** Under AA Assumption 20.1 with Definition 47.2's one
+local layout, Definitions 48.1–48.4 give one source-independent finite
+driver with the following properties for every finite supplied sequence
+of complete request frames.
+
+1. At each returned Ready the actual successful word $w$, the actual
+   bound source $t$ and the compressed record satisfy Definition 47.2
+   and Theorem 47.3, beginning with the allocated alpha and empty record.
+   Every finite legal LAB generation word is attainable.
+2. All seven original request kinds retain their complete guards,
+   refusal and OutOfRange behavior, request framing, reply tags and
+   payloads. Every completed request has real finite output, End,
+   local acknowledgement and Return to that same bound root. A proper
+   unsupplied frame prefix waits with its actual acquired pending data.
+3. In-range FetchGrowth returns the same complete old event as the
+   original service. In-range Next consumes that actual acquired result,
+   performs its original current left descent on the same live source,
+   executes the resulting genuinely enabled $P/S$, and returns the
+   original two-event payload. Its settled source and full-history
+   successor correspond to the original service's successors.
+4. The correspondence holds after every prefix of any finite request
+   sequence, including refused operations, arbitrary mixtures of all
+   seven kinds and requests chosen from already returned replies.
+

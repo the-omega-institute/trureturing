@@ -91,7 +91,7 @@ private theorem smart_normal {A B : Code} (ha : Normal A) (hb : Normal B) :
   | mul C D =>
       cases B <;> exact ⟨ha, hb, by rintro ⟨n, bad, _⟩; cases bad⟩
 
-private theorem encode_law (g : Source) : Normal (encode g) ∧ expand (encode g) = g := by
+theorem encode_law (g : Source) : Normal (encode g) ∧ expand (encode g) = g := by
   induction g with
   | of b => cases b <;> exact ⟨trivial, rfl⟩
   | mul A B ihA ihB =>
@@ -168,7 +168,7 @@ private theorem shift_normal_iff (t : Nat) (C : Code) : Normal (shiftCode t C) �
           | mul C D => simp [shiftCode]
       | mul C D => simp [shiftCode]
 
-private theorem shift_expand (t : Nat) (C : Code) :
+theorem shift_expand (t : Nat) (C : Code) :
     expand (shiftCode t C) = substitution^[t] (expand C) := by
   induction C with
   | of n =>

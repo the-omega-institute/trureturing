@@ -1,0 +1,22 @@
+Proof. Put $s=\lambda_r(B)$. The case $s=0$ is immediate. If $s>0$, choose
+
+$$
+t=\frac{ps}{4},\qquad
+\delta=\frac{p}{8nD^{3/2}},\qquad
+C=\left(\frac D\delta\right)^{D-r}
+=\left(\frac{8nD^{5/2}}p\right)^{D-r}.
+\tag{3.8}
+$$
+
+Since $B$ is an effect, $0<s\le1$, so $0<t\le p/4$ and $0<\delta<1$. Let $B_+$ retain, with their original values, all eigenvalues of $B$ at least $t$, and put $B_-=B-B_+$. For an orthonormal eigenbasis of its support,
+
+$$
+r'\ge r,\qquad
+B_+=\sum_{b=1}^{r'}\lambda_b'|\eta_b\rangle\langle\eta_b|,
+\quad t\le\lambda_b'\le1,\qquad 0\le B_-\le tI.
+\tag{3.9}
+$$
+
+The cutoff is chosen inside the proof, with no spectral-gap premise.
+
+Use Lemma 3.2 to write $T(X)=\sum_{a=1}^M A_aXA_a^\dagger$, $M\le D^2$. For $w=(a_1,\ldots,a_k)$ put $A_w=A_{a_k}\cdots A_{a_1}$, including the identity for the empty word. 

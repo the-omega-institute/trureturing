@@ -1,0 +1,15 @@
+## 4. 取得充分边界与动态更新
+
+令 $\eta:S\sqcup F_a\to B$ 是一个实际边界摘要，并约定失败终端的边界值是合同中声明的终端值。称它对取得核动态充分，如果存在边界上的合法性、档案核和后继核，使
+
+$$
+\begin{aligned}
+\operatorname{Leg}(s,a)&=\overline{\operatorname{Leg}}(\eta(s),a),\\
+(\operatorname{id},\eta)_\#K_a(\,\cdot\,,\,\cdot\mid s)&=\overline K_a(\,\cdot\,,\,\cdot\mid\eta(s)),\\
+\eta(s')&=\overline T_a(\eta(s),y)
+\end{aligned}
+\tag{4.1}
+$$
+
+在相应的成功分支成立；失败标签也必须由 $\eta(s)$ 与 $a$ 决定。
+

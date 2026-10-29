@@ -1,0 +1,97 @@
+**Theorem 57.2 (Exact reconstruction at every positive width).** Fix
+any real $p\ne24,v,w$. At each $b>0$, the complete worlds in (54.1)
+of width $b$ are in bijection with the retained candidates of
+Definition 57.1. The exhaustive candidate list is as follows.
+
+1. If $\kappa_{\rm rec}\ne0$, there is just one possible candidate,
+   $E=-\eta_{\rm rec}/\kappa_{\rm rec}$. It is retained exactly when
+   $Q_{\rm rec}(E)=0$ and all of (57.2) hold.
+2. If $\kappa_{\rm rec}=0$ and $\eta_{\rm rec}\ne0$, there are no
+   candidates and hence no worlds of this width in (54.1).
+3. If $\kappa_{\rm rec}=\eta_{\rm rec}=0$, define
+
+$$
+\Delta_{\rm rec}=(X-\beta_{\rm w})^2+4\alpha_{\rm w}Y.
+\tag{57.3}
+$$
+
+   If $\Delta_{\rm rec}<0$, there are no candidates. If
+   $\Delta_{\rm rec}\ge0$, the candidates are exactly
+
+$$
+E=\frac{\beta_{\rm w}-X\pm\sqrt{\Delta_{\rm rec}}}
+          {2\alpha_{\rm w}}.
+\tag{57.4}
+$$
+
+   A repeated root is counted once; each real root is retained
+   exactly when (57.2) holds. Lemma 56.3 guarantees that the
+   denominator $2\alpha_{\rm w}$ in this case is nonzero.
+
+Every retained candidate determines the entire world, not just its
+source or its sampled responses. Its drift is $d=24+E$, its source
+is $P(r,b)$, and its one whole gain is exactly
+
+$$
+\begin{gathered}
+z_0=-24-E,\quad z_1=-E/j,\quad
+z_2=(27/5-E)/T,\quad z_3=-E/n,\\
+g(s)=\sum_{i=0}^3z_i\ell_i(s),
+\qquad\ell_i\text{ as in (48.3)}.
+\end{gathered}
+\tag{57.5}
+$$
+
+The criterion applies at arbitrary widths independently, including
+widths different from those of any other reconstructed world.
+It has no hypothesis $\Lambda\ne0$.
+
+**Proof.** Let $W$ be an actual world in (54.1). Lemma 48.2 supplies
+$\epsilon\ne0$, and Lemmas 55.2 and 56.2 give (56.2) with
+$E=\epsilon$ and $t=\epsilon/n$. The parent equation (48.2) gives
+
+$$
+q_{\rm s}=\mathcal A_{\rm par}\epsilon+D_{\rm par}
+             -4\epsilon/n=4\epsilon/j\ne0.
+\tag{57.6}
+$$
+
+Therefore (57.1) recovers precisely the world's $j$ and $r$.
+The actual strict source has $n>0$, $j>b$ and
+$b(j-b)=r(1-r)$, so it passes every test in (57.2).
+
+Conversely, take any retained candidate. By Lemma 56.2,
+$t=E/n$ and $En=Y+\beta_{\rm w}E$. Its definition of $j$ gives
+$4E/j=q_{\rm s}$, with no division by a zero quantity, and hence
+
+$$
+\begin{aligned}
+E(\mathcal A_{\rm par}-4/j-4/n)+D_{\rm par}
+&=\mathcal A_{\rm par}E-q_{\rm s}-4t+D_{\rm par}\\
+&=0.
+\end{aligned}
+\tag{57.7}
+$$
+
+The last equation in (57.2), together with $b>0$, gives exactly
+$j=b+r(1-r)/b$. Also $n=j+r$ by (57.1), and $0<r<1$ is strict.
+Thus the reconstructed source is an original legal source, and
+(57.7) is exactly its full parent equation (48.2).
+
+Lemma 48.1 applied to this source and $E$ supplies the whole gain
+(57.5), of degree at most three, with the first five prescribed
+readings. Lemma 56.2 gives all three equalities in (55.5), so
+Lemma 55.2, now on this full parent, gives precisely $p,v,w$ at
+clocks five, six and terminal seven with M. The gain cannot be
+identically zero, because then clocks zero and one would both read
+$d$, contrary to their readings $0$ and $24$. This constructs a
+complete world in the entire $C(p,v)$ with $m=w$.
+
+For a fixed candidate, $b,E,n,j,r$ are fixed, so (57.5) determines
+its unique gain and drift. Conversely an actual world recovers its
+own $E$ by (57.6). This proves the bijection. Finally the three cases
+are the exhaustive solution of a quadratic and a linear equation
+(56.2); Lemma 56.3 supplies the nonzero quadratic leading coefficient
+in case 3. No fourth case or infinite exceptional family is omitted.
+$\square$
+

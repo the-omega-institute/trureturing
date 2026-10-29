@@ -1,0 +1,34 @@
+**Corollary 4.2 (necessary copy count for a per-source error target).**
+Let $0<\varepsilon<1/2$.  If a simulator's output on the promised pair
+$\{U_n,V_n\}$ has Read error at most $\varepsilon$ for each source, then
+
+$$
+m\ge
+\left\lceil
+\frac{\log\!\bigl(1/[4\varepsilon(1-\varepsilon)]\bigr)}
+{-2\log(1-\delta/w_n)}
+\right\rceil.
+\tag{4.2}
+$$
+
+For every finite $m$, $p_m(n)>0$.  For fixed $m$,
+
+$$
+\lim_{n\to\infty}p_m(n)=\frac12,
+\qquad
+\lim_{n\to\infty}\frac{m_{\min}(n,\varepsilon)}{w_n}
+=\frac{\log\!\bigl(1/[4\varepsilon(1-\varepsilon)]\bigr)}{2\delta},
+\tag{4.3}
+$$
+
+where $m_{\min}$ denotes the real-valued threshold in (4.2) before the
+ceiling.
+
+Proof. Per-source error at most $\varepsilon$ implies average error at most
+$\varepsilon$, so (4.1) gives
+$\sqrt{1-(1-\delta/w_n)^{2m}}\ge1-2\varepsilon$.  Squaring and rearranging
+gives $(1-\delta/w_n)^{2m}\le4\varepsilon(1-\varepsilon)$, which is
+(4.2).  Positivity of $\delta$ gives strict positive error at every finite
+$m$.  The first limit follows from $w_n\to\infty$; the second uses
+$-\log(1-x)\sim x$. $\square$
+

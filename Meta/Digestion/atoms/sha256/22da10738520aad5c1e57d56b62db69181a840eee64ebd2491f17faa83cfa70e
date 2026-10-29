@@ -1,0 +1,14 @@
+**定理 9.1（未来效果的线性充分判据）。** 在固定 $d$ 维 Hilbert 空间，已测效果为 $E_1,\ldots,E_s$，令
+
+<a id="eq-9-u01"></a>
+
+$$
+W=\operatorname{span}_{\mathbb R}\{I,E_1,\ldots,E_s\}.
+$$
+
+全部测试概率对所有密度态唯一确定未来效果 $F$ 的期望，当且仅当 $F\in W$。
+
+**证明。** 若 $F=\alpha_0I+\sum_j\alpha_jE_j$，其期望由同一线性组合给出。若 $F\notin W$，以 Hilbert--Schmidt 投影定义 $\Delta=F-P_WF\ne0$。则 $\operatorname{Tr}\Delta=0$、$\operatorname{Tr}(E_j\Delta)=0$，但 $\operatorname{Tr}(F\Delta)=\|\Delta\|_{\mathrm{HS}}^2>0$。取 $0<s_0<1/(d\|\Delta\|_{\operatorname{op}})$，则 $\rho_\pm=I/d\pm s_0\Delta$ 都正定、迹一；它们已测概率相同而未来期望不同。
+
+<a id="sec-9-2"></a>
+

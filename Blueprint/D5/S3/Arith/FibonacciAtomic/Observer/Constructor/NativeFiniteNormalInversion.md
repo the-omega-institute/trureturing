@@ -6,7 +6,31 @@ Finite normal native inverses and symbolic values on an original Presburger part
 
 Code is the finite free ordered binary tree with natural ranks at its leaves. expand replaces rank n by the native atom T(n) and preserves pairs. A normal code has no pair of primitive children with ranks n+1 and n, at any node. smart collapses exactly this pattern to rank n+2. encode recursively applies smart to the arbitrary finite Source input, including all mixed and repeated subtrees. It computes a normal code whose expansion is the original source.
 
-**Theorem 1.1 (Unique finite normal inversion on the actual image).**
+**Theorem 1.1 (Canonical encoding is normal and expands to the same source).**
+
+$$\forall g: Source, ((\operatorname{Normal}\left(\operatorname{encode}\left(g\right)\right)) \land (\operatorname{expand}\left(\operatorname{encode}\left(g\right)\right) = g))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeFiniteNormalInversion.encode_law` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The recursive smart constructor preserves normality and expansion. Induction over the entire finite source therefore retains its value, including every mixed and repeated subtree.
+
+**Theorem 1.2 (Rank translation expands to the actual native power).**
+
+$$\forall t: Nat, (\forall C: Code, (\operatorname{expand}\left(\operatorname{shiftCode}\left(t, C\right)\right) = \operatorname{substitutionPower}\left(t, \operatorname{expand}\left(C\right)\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeFiniteNormalInversion.shift_expand` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Adding the same natural t to every primitive rank expands to t iterations of the native substitution. Primitive ranks use addition of iterates, and pairs use preservation of pairing. The equation holds for every finite code, including nonnormal codes.
+
+**Theorem 1.3 (Unique finite normal inversion on the actual image).**
 
 $$\forall t: Nat, (\forall g: Source, ((\operatorname{NativeImage}\left(t, \operatorname{embed}\left(g\right)\right)) \implies ((\operatorname{Normal}\left(\operatorname{encode}\left(g\right)\right)) \land ((\operatorname{expand}\left(\operatorname{encode}\left(g\right)\right) = g) \land (\exists D: Code, (((\operatorname{inverseCode}\left(t, \operatorname{encode}\left(g\right)\right) = \operatorname{some}\left(D\right)) \land ((\operatorname{Normal}\left(D\right)) \land (\operatorname{substitutionPower}\left(t, \operatorname{expand}\left(D\right)\right) = g))) \land (\forall E: Code, (((\operatorname{inverseCode}\left(t, \operatorname{encode}\left(g\right)\right) = \operatorname{some}\left(E\right)) \land ((\operatorname{Normal}\left(E\right)) \land (\operatorname{substitutionPower}\left(t, \operatorname{expand}\left(E\right)\right) = g))) \implies (E = D)))))))))$$
 
@@ -20,7 +44,7 @@ inverseCode visits every finite code leaf and applies rankInverse, propagating f
 
 For a normal primitive image, the existing actual atomic predecessor theorem supplies its natural inverse rank. For a normal pair image, the existing exact image grammar applies. A terminal alternative would force the normal pair to be primitive, a contradiction; the recursive alternative gives both child images. Induction constructs the successful inverse. Its expansion is the unique finite original. No inverse is applied outside an actual image.
 
-**Theorem 1.2 (Exact natural inverse indices, including every boundary).**
+**Theorem 1.4 (Exact natural inverse indices, including every boundary).**
 
 $$\forall t: Nat, (\forall n: Nat, ((\forall q: Nat, ((\operatorname{rankInverse}\left(t, n\right) = \operatorname{some}\left(q\right)) \iff (q+t = n))) \land (((\exists q: Nat, (\operatorname{rankInverse}\left(t, n\right) = \operatorname{some}\left(q\right))) \iff (t\le n)) \land (\forall q: Nat, (\forall r: Nat, ((q+t = n) \implies ((r+t = n) \implies (q = r))))))))$$
 
@@ -32,7 +56,7 @@ $$\forall t: Nat, (\forall n: Nat, ((\forall q: Nat, ((\operatorname{rankInverse
 
 rankInverse(0,n) returns n. At a positive requested shift it rejects rank zero and cancels one successor from both inputs otherwise. Induction proves success with q exactly when q+t=n. A successful q exists exactly when t is at most n, and the natural equation has at most one q. This covers n=0, t=0, n=t and n<t without natural truncated subtraction.
 
-**Theorem 1.3 (A finite disjoint Presburger partition computes symbolic normal inverses).**
+**Theorem 1.5 (A finite disjoint Presburger partition computes symbolic normal inverses).**
 
 $$\forall T: Template, (\forall t: Nat, (\forall xs: \operatorname{List}\left(Int\right), ((\operatorname{Nonnegative}\left(xs, T\right)) \implies ((\operatorname{NativeImage}\left(t, \operatorname{embed}\left(\operatorname{expand}\left(\operatorname{templateCode}\left(xs, T\right)\right)\right)\right)) \implies ((\exists l: \operatorname{Leaf}\left(\operatorname{normalPartition}\left(T\right)\right), ((\operatorname{qfEval}\left(\operatorname{guard}\left(\operatorname{normalPartition}\left(T\right), l\right), xs\right) = true) \land (\forall other: \operatorname{Leaf}\left(\operatorname{normalPartition}\left(T\right)\right), ((\operatorname{qfEval}\left(\operatorname{guard}\left(\operatorname{normalPartition}\left(T\right), other\right), xs\right) = true) \implies (other = l))))) \land (\forall l: \operatorname{Leaf}\left(\operatorname{normalPartition}\left(T\right)\right), ((\operatorname{qfEval}\left(\operatorname{guard}\left(\operatorname{normalPartition}\left(T\right), l\right), xs\right) = true) \implies ((\operatorname{Nonnegative}\left(xs, \operatorname{inverseTemplate}\left(t, \operatorname{output}\left(\operatorname{normalPartition}\left(T\right), l\right)\right)\right)) \land ((\operatorname{Normal}\left(\operatorname{templateCode}\left(xs, \operatorname{inverseTemplate}\left(t, \operatorname{output}\left(\operatorname{normalPartition}\left(T\right), l\right)\right)\right)\right)) \land ((\operatorname{substitutionPower}\left(t, \operatorname{expand}\left(\operatorname{templateCode}\left(xs, \operatorname{inverseTemplate}\left(t, \operatorname{output}\left(\operatorname{normalPartition}\left(T\right), l\right)\right)\right)\right)\right) = \operatorname{expand}\left(\operatorname{templateCode}\left(xs, T\right)\right)) \land (\forall n: Nat, (\forall q: Nat, ((\operatorname{rankInverse}\left(t, n\right) = \operatorname{some}\left(q\right)) \iff (q+t = n))))))))))))))$$
 
@@ -46,7 +70,7 @@ Template is a finite binary code with integer affine expressions at its primitiv
 
 Partition.Leaf is a finite type of branch histories. It preserves distinct paths even when their outputs coincide. Exactly one path guard is true at each xs. Induction proves that its output is nonnegative, normal, and expands to the input value. Actual-image membership then supplies the successful finite inverse. inverseTemplate subtracts t in integer affine syntax, and the proof establishes nonnegativity of each resulting natural index. Its evaluated code is exactly the successful inverseCode result. The natural inverse relation is explicitly q+t=n; no natural clipped subtraction defines an inverse.
 
-**Theorem 1.4 (The symbolic original finite value is shared in every admissible solution).**
+**Theorem 1.6 (The symbolic original finite value is shared in every admissible solution).**
 
 $$\forall n: Nat, (\forall k: Nat, (\forall m: Nat, (\forall r: Nat, (\forall I: \operatorname{EpochInput}\left(n, k, m\right), (\forall s: \operatorname{Fin}\left(m\right) \to Nat, (\forall valid: \operatorname{Potential}\left(I, s\right), (\forall mode: \operatorname{EffectiveMode}\left(\operatorname{functionalInput}\left(I, s\right)\right), (\forall R: \operatorname{Fin}\left(r\right) \to \operatorname{Expression}\left(k, m\right), (\forall i: \operatorname{Fin}\left(r\right), (\forall f: \operatorname{FiniteExpression}\left(k+1\right), ((\operatorname{finiteImageExpressions}\left(I, s, mode, R, i\right) = \operatorname{some}\left(f\right)) \implies (\forall p: \operatorname{Fin}\left(n\right) \to Nat, (\forall passing: \operatorname{holds}\left(\operatorname{originalImageGuard}\left(\operatorname{functionalInput}\left(I, s\right), mode\right), \operatorname{environment}\left(p\right)\right), ((\exists l: \operatorname{Leaf}\left(\operatorname{normalPartition}\left(\operatorname{finiteTemplate}\left(\operatorname{base}\left(I\right), f\right)\right)\right), ((\operatorname{qfEval}\left(\operatorname{guard}\left(\operatorname{normalPartition}\left(\operatorname{finiteTemplate}\left(\operatorname{base}\left(I\right), f\right)\right), l\right), \operatorname{environment}\left(p\right)\right) = true) \land (\forall other: \operatorname{Leaf}\left(\operatorname{normalPartition}\left(\operatorname{finiteTemplate}\left(\operatorname{base}\left(I\right), f\right)\right)\right), ((\operatorname{qfEval}\left(\operatorname{guard}\left(\operatorname{normalPartition}\left(\operatorname{finiteTemplate}\left(\operatorname{base}\left(I\right), f\right)\right), other\right), \operatorname{environment}\left(p\right)\right) = true) \implies (other = l))))) \land (\forall l: \operatorname{Leaf}\left(\operatorname{normalPartition}\left(\operatorname{finiteTemplate}\left(\operatorname{base}\left(I\right), f\right)\right)\right), ((\operatorname{qfEval}\left(\operatorname{guard}\left(\operatorname{normalPartition}\left(\operatorname{finiteTemplate}\left(\operatorname{base}\left(I\right), f\right)\right), l\right), \operatorname{environment}\left(p\right)\right) = true) \implies ((\operatorname{Nonnegative}\left(\operatorname{environment}\left(p\right), \operatorname{inverseTemplate}\left(\operatorname{commonShift}\left(s\right), \operatorname{output}\left(\operatorname{normalPartition}\left(\operatorname{finiteTemplate}\left(\operatorname{base}\left(I\right), f\right)\right), l\right)\right)\right)) \land ((\operatorname{Normal}\left(\operatorname{templateCode}\left(\operatorname{environment}\left(p\right), \operatorname{inverseTemplate}\left(\operatorname{commonShift}\left(s\right), \operatorname{output}\left(\operatorname{normalPartition}\left(\operatorname{finiteTemplate}\left(\operatorname{base}\left(I\right), f\right)\right), l\right)\right)\right)\right)) \land ((\operatorname{evaluate}\left(\operatorname{ranks}\left(\operatorname{base}\left(I\right), p\right), \operatorname{canonicalOriginal}\left(I, s, valid, mode, p, passing\right), \operatorname{R}\left(i\right)\right) = \operatorname{embed}\left(\operatorname{expand}\left(\operatorname{templateCode}\left(\operatorname{environment}\left(p\right), \operatorname{inverseTemplate}\left(\operatorname{commonShift}\left(s\right), \operatorname{output}\left(\operatorname{normalPartition}\left(\operatorname{finiteTemplate}\left(\operatorname{base}\left(I\right), f\right)\right), l\right)\right)\right)\right)\right)) \land ((\forall v: \operatorname{Fin}\left(m\right) \to CompletionTree, ((\operatorname{OriginalAdmissible}\left(I, p, v\right)) \implies ((\operatorname{EffectiveInMode}\left(\operatorname{functionalInput}\left(I, s\right), mode, p, \operatorname{imageValues}\left(s, v\right)\right)) \implies (\operatorname{evaluate}\left(\operatorname{ranks}\left(\operatorname{base}\left(I\right), p\right), v, \operatorname{R}\left(i\right)\right) = \operatorname{embed}\left(\operatorname{expand}\left(\operatorname{templateCode}\left(\operatorname{environment}\left(p\right), \operatorname{inverseTemplate}\left(\operatorname{commonShift}\left(s\right), \operatorname{output}\left(\operatorname{normalPartition}\left(\operatorname{finiteTemplate}\left(\operatorname{base}\left(I\right), f\right)\right), l\right)\right)\right)\right)\right))))) \land (\forall nrank: Nat, (\forall q: Nat, ((\operatorname{rankInverse}\left(\operatorname{commonShift}\left(s\right), nrank\right) = \operatorname{some}\left(q\right)) \iff (q+\operatorname{commonShift}\left(s\right) = nrank))))))))))))))))))))))))$$
 
@@ -64,8 +88,10 @@ Together with original_classification_rigidity_prefix this supplies the canonica
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeFiniteNormalInversion.encode_law`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeFiniteNormalInversion.exact_natural_rank_inverse`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeFiniteNormalInversion.finite_normal_inverse`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeFiniteNormalInversion.original_symbolic_finite_value`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeFiniteNormalInversion.shift_expand`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeFiniteNormalInversion.symbolic_presburger_inverse`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeOriginalReconstructionBridge](NativeOriginalReconstructionBridge.md)

@@ -52,7 +52,7 @@ private theorem closed (θ : Presentation H) (i : Positive θ) (j : H)
   le_antisymm (le_of_not_gt (fun hm => hj (next_positive θ i.property hm)))
     (θ.matrix_nonneg _ _ _)
 
-private theorem weighted_no11 (θ : Presentation H) (i : Positive θ) (j : H) :
+theorem weighted_no11 (θ : Presentation H) (i : Positive θ) (j : H) :
     (θ.matrix true * θ.matrix true) i.val j = 0 := by
   have hn (i j : H) : 0 ≤ (θ.matrix true * θ.matrix true) i j :=
     Finset.sum_nonneg (fun k _ => mul_nonneg (θ.matrix_nonneg true i k)

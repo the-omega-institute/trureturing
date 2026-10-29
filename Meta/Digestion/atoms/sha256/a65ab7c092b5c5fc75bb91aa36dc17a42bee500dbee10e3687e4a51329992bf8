@@ -1,0 +1,33 @@
+**Definition 47.1 (An equal-width M pair).** Retain exactly the complete
+worlds and entire children of Definitions 1.1–1.2. In particular the
+literal acquired word is $J,M,J,M,M,M$, its clocks are $0,\ldots,6$,
+its readings are $(0,24,147/5,24,18,p,v)$, and both alternatives use
+clock seven. For $p\ne24$, an equal-width M pair consists of
+
+$$
+W_1,W_2\in C(p,v),\quad W_1\ne W_2,\qquad m(W_1)=m(W_2),\qquad
+b(W_1)=b(W_2)=b>0.
+\tag{47.1}
+$$
+
+Equality of widths is a condition on these two worlds, not on every
+world of the entire child. Write $r_i,j_i,n_i,d_i,\epsilon_i$ for their
+coordinates, where $\epsilon_i=d_i-24$. Throughout the following
+sections $T=1+b$ and $U=1+2b$ at a common width. Define
+
+$$
+\begin{aligned}
+H_0(b)&=50b^4-1137b^3-842b^2-1442b-1262,\\
+H_1(b)&=2000b^4-13092b^3-74938b^2-88421b-33300,\\
+H_2(b)&=11209b+37242,\\
+H_3(b)&=1289b^3-12511b^2-66211b-38698,\\
+\mathcal B_b(x,y)&=H_3(b)xy+TUH_2(b)(x+y)+UH_1(b),\\
+F_{\rm w}(b)&=5289b^5+8141b^4-12957b^3
+                  -44608b^2-80537b-33300.
+\end{aligned}
+\tag{47.2}
+$$
+
+The polynomials $H_i$ here are distinct from the circuit denominator
+$H=b\widehat D$ of Definition 2.1.
+

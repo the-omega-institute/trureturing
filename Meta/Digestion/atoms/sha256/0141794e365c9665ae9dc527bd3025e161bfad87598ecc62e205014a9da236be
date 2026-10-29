@@ -1,0 +1,42 @@
+**Lemma 50.1 (Rank and kernel at every positive width).** For every
+$b>0$, $L_{\rm w}(b)$ has rank three, and
+
+$$
+\ker L_{\rm w}(b)=\mathbb R K_{\rm w}(b),\qquad
+K_{\rm w}(b)=
+\begin{pmatrix}
+-5UH_0(b)\\3UH_1(b)\\-3TUH_2(b)\\3H_3(b)
+\end{pmatrix}.
+\tag{50.1}
+$$
+
+**Proof.** The determinant of the three columns numbered one, two and
+four of (49.2) is
+
+$$
+-\frac{3H_2(b)}{10T}\ne0,
+\tag{50.2}
+$$
+
+since $H_2(b)=11209b+37242>0$. More explicitly, delete column $i$
+and multiply its maximal minor by $(-1)^{i+1}$. In column order the
+four signed minors are
+
+$$
+\left(
+-\frac{H_0}{2T^2},\quad
+\frac{3H_1}{10T^2},\quad
+-\frac{3H_2}{10T},\quad
+\frac{3H_3}{10T^2U}
+\right).
+\tag{50.3}
+$$
+
+These equalities follow by substituting (49.1) into (49.2) and
+expanding the three-by-three determinants. Each row annihilates this
+cofactor vector, by expansion of the determinant with that row
+repeated. Multiplication of (50.3) by the positive scalar $10T^2U$
+gives $K_{\rm w}$. The nonzero minor proves rank three, so this
+nonzero kernel vector spans the entire kernel. No width at which
+$H_0$, $H_1$ or $H_3$ vanishes is deleted. $\square$
+

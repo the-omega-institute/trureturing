@@ -1,0 +1,17 @@
+**定义 2.1（有限均值悬挂）。** 间隙 $g_i\in\mathbb N_{\ge1}$ 是相邻两个 $1$ 之间的零数。设 $\nu$ 是 $(\mathbb N_{\ge1})^{\mathbb Z}$ 上一个移位 $S$ 不变概率律，$\mu=\mathbb E_\nu(g_0+1)<\infty$。在
+
+$$
+\Omega_\nu=\{(g,j):0\le j\le g_0\},\qquad
+\widehat\nu(dg,j)=\mu^{-1}\nu(dg)
+$$
+
+上定义 $U(g,j)=(g,j+1)$（$j<g_0$），$U(g,g_0)=(Sg,0)$。可见位 $x_i(g,j)$ 等于 $U^i(g,j)$ 的相位为零的示性值。其推前律记 $P_\nu$。若 $\nu=w^{\mathbb Z}$，其中
+
+$$
+w_n\ge0\ (n\ge1),\qquad \sum_{n\ge1}w_n=1,\qquad
+\mu=\sum_{n\ge1}(n+1)w_n<\infty,
+\tag{2.1}
+$$
+
+则记 $P_w=P_\nu$，称为平衡 iid 零间隙更新律。iid 指在已观测事件处重新编号的间隙序列，不指平稳时钟上的可见位独立。
+

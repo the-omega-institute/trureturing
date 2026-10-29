@@ -452,7 +452,7 @@ private theorem egfSeries_injective : Function.Injective egfSeries := by
   rw [PowerSeries.coeff_C_mul]; simp [egfSeries, mul_div_assoc]
 @[simp] private theorem egfSeries_smul_q (q : ℚ) (f : Nat → ℚ) :
     egfSeries (fun n => q * f n) = PowerSeries.C q * egfSeries f := by ext n; rw [PowerSeries.coeff_C_mul]; simp [egfSeries, mul_div_assoc]
-private theorem egfSeries_mul (f g : Nat → ℚ) : egfSeries (egfMul f g) = egfSeries f * egfSeries g := by
+theorem egfSeries_mul (f g : Nat → ℚ) : egfSeries (egfMul f g) = egfSeries f * egfSeries g := by
   ext n
   rw [coeff_egfSeries, PowerSeries.coeff_mul,
     Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
@@ -467,7 +467,7 @@ private theorem egfSeries_pow (f : Nat → ℚ) (m : Nat) : egfSeries (egfPow f 
   | zero =>
       ext n; cases n <;> simp [egfPow, egfOne, egfSeries]
   | succ m ih => rw [egfPow, egfSeries_mul, ih, pow_succ']
-private theorem derivative_egfSeries (f : Nat → ℚ) : PowerSeries.derivative (R := ℚ) (egfSeries f) = egfSeries (fun n => f (n + 1)) := by
+theorem derivative_egfSeries (f : Nat → ℚ) : PowerSeries.derivative (R := ℚ) (egfSeries f) = egfSeries (fun n => f (n + 1)) := by
   ext n; rw [PowerSeries.coeff_derivative]; simp only [coeff_egfSeries]
   rw [Nat.factorial_succ]; push_cast; field_simp
 /-- The equation in OEIS A392208 (2026-01-24) forces the first coefficient to be one. -/
@@ -750,39 +750,56 @@ theorem parity_conjecture_of_oeisDefines {s : Nat → Int} (h : OEISDefines s) :
 theorem a392208_parity_conjecture (n : Nat) (hn : 1 ≤ n) : Even (a n) ↔ 3 ∣ n := by
   exact parity_conjecture_of_oeisDefines a_oeisDefines n hn
 set_option maxHeartbeats 2000000 in
-example : table 17 =
-    [0, 1, 1, 8, 129, 3171, 105252, 4408983, 223281351, 13270085748,
-      905661982179, 69812320196385, 5999337450957816, 568724629221848817,
-      58959671016467593233, 6635892489298476577488, 805834151277899880194361,
-      105021896272478014882848507, 14621423624844610787449584876] := by
-  decide +kernel
-set_option maxHeartbeats 2000000 in
-example : a 11 = 69812320196385 := by decide +kernel
-set_option maxHeartbeats 2000000 in
-example : a 12 = 5999337450957816 := by decide +kernel
-set_option maxHeartbeats 2000000 in
-example : a 13 = 568724629221848817 := by decide +kernel
-set_option maxHeartbeats 2000000 in
-example : a 14 = 58959671016467593233 := by decide +kernel
-set_option maxHeartbeats 2000000 in
-example : a 15 = 6635892489298476577488 := by decide +kernel
-set_option maxHeartbeats 2000000 in
-example : a 16 = 805834151277899880194361 := by decide +kernel
-set_option maxHeartbeats 2000000 in
-example : a 17 = 105021896272478014882848507 := by decide +kernel
-set_option maxHeartbeats 2000000 in
-example : a 18 = 14621423624844610787449584876 := by decide +kernel
+example : table 17 = [0, 1, 1, 8, 129, 3171, 105252, 4408983, 223281351, 13270085748, 905661982179, 69812320196385, 5999337450957816, 568724629221848817, 58959671016467593233, 6635892489298476577488, 805834151277899880194361, 105021896272478014882848507, 14621423624844610787449584876] ∧
+    a 11 = 69812320196385 ∧
+    a 12 = 5999337450957816 ∧
+    a 13 = 568724629221848817 ∧
+    a 14 = 58959671016467593233 ∧
+    a 15 = 6635892489298476577488 ∧
+    a 16 = 805834151277899880194361 ∧
+    a 17 = 105021896272478014882848507 ∧
+    a 18 = 14621423624844610787449584876 := by
+  have h0 : table 0 = [0, 1] := by
+    rfl
+  have h1 : table 1 = [0, 1, 1] := by
+    rw [table, h0]; decide +kernel
+  have h2 : table 2 = [0, 1, 1, 8] := by
+    rw [table, h1]; decide +kernel
+  have h3 : table 3 = [0, 1, 1, 8, 129] := by
+    rw [table, h2]; decide +kernel
+  have h4 : table 4 = [0, 1, 1, 8, 129, 3171] := by
+    rw [table, h3]; decide +kernel
+  have h5 : table 5 = [0, 1, 1, 8, 129, 3171, 105252] := by
+    rw [table, h4]; decide +kernel
+  have h6 : table 6 = [0, 1, 1, 8, 129, 3171, 105252, 4408983] := by
+    rw [table, h5]; decide +kernel
+  have h7 : table 7 = [0, 1, 1, 8, 129, 3171, 105252, 4408983, 223281351] := by
+    rw [table, h6]; decide +kernel
+  have h8 : table 8 = [0, 1, 1, 8, 129, 3171, 105252, 4408983, 223281351, 13270085748] := by
+    rw [table, h7]; decide +kernel
+  have h9 : table 9 = [0, 1, 1, 8, 129, 3171, 105252, 4408983, 223281351, 13270085748, 905661982179] := by
+    rw [table, h8]; decide +kernel
+  have h10 : table 10 = [0, 1, 1, 8, 129, 3171, 105252, 4408983, 223281351, 13270085748, 905661982179, 69812320196385] := by
+    rw [table, h9]; decide +kernel
+  have h11 : table 11 = [0, 1, 1, 8, 129, 3171, 105252, 4408983, 223281351, 13270085748, 905661982179, 69812320196385, 5999337450957816] := by
+    rw [table, h10]; decide +kernel
+  have h12 : table 12 = [0, 1, 1, 8, 129, 3171, 105252, 4408983, 223281351, 13270085748, 905661982179, 69812320196385, 5999337450957816, 568724629221848817] := by
+    rw [table, h11]; decide +kernel
+  have h13 : table 13 = [0, 1, 1, 8, 129, 3171, 105252, 4408983, 223281351, 13270085748, 905661982179, 69812320196385, 5999337450957816, 568724629221848817, 58959671016467593233] := by
+    rw [table, h12]; decide +kernel
+  have h14 : table 14 = [0, 1, 1, 8, 129, 3171, 105252, 4408983, 223281351, 13270085748, 905661982179, 69812320196385, 5999337450957816, 568724629221848817, 58959671016467593233, 6635892489298476577488] := by
+    rw [table, h13]; decide +kernel
+  have h15 : table 15 = [0, 1, 1, 8, 129, 3171, 105252, 4408983, 223281351, 13270085748, 905661982179, 69812320196385, 5999337450957816, 568724629221848817, 58959671016467593233, 6635892489298476577488, 805834151277899880194361] := by
+    rw [table, h14]; decide +kernel
+  have h16 : table 16 = [0, 1, 1, 8, 129, 3171, 105252, 4408983, 223281351, 13270085748, 905661982179, 69812320196385, 5999337450957816, 568724629221848817, 58959671016467593233, 6635892489298476577488, 805834151277899880194361, 105021896272478014882848507] := by
+    rw [table, h15]; decide +kernel
+  have h17 : table 17 = [0, 1, 1, 8, 129, 3171, 105252, 4408983, 223281351, 13270085748, 905661982179, 69812320196385, 5999337450957816, 568724629221848817, 58959671016467593233, 6635892489298476577488, 805834151277899880194361, 105021896272478014882848507, 14621423624844610787449584876] := by
+    rw [table, h16]; decide +kernel
+  refine ⟨h17, ?_⟩
+  repeat' apply And.intro
+  all_goals
+    rw [← table_getD_eq_a (n := 17) (by decide), h17]
+    decide
 -- Fidelity witnesses: the sequence domain is inhabited, and the OEIS hypothesis is satisfiable.
 example : Nat → Int := a
 end D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.initial_residues_mod_two
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.a_recurrence
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.recurrence_coefficient_period_three
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.exp_definition_implies_ode
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.exp_definition_derivative_zero
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.egfOde_unique
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.a_oeisDefines
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.oeis_defined_eq_recurrence
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.oeis_coefficient_period_three
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.parity_conjecture_of_oeisDefines
-#print axioms D5.S1.Recurrence.Parity.ExponentialImplicitParityPeriodThree.a392208_parity_conjecture

@@ -1,0 +1,68 @@
+## 5. 原子树上的权限延迟
+
+取自由有序树
+
+$$
+t::=\alpha\mid\beta\mid\langle t,t\rangle,
+$$
+
+并采用 Fibonacci 原子替换
+
+$$
+\rho(\alpha)=\beta,
+\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,
+\qquad
+\rho\langle s,t\rangle=\langle\rho(s),\rho(t)\rangle.
+$$
+
+记 $c(t)$ 为组成向量，$w(t)$ 为叶词，$r_\varepsilon(t)$ 为根标签，$r_L(t)$ 为左端口根标签。取权限 $p\in\{\mathsf{locked},\mathsf{open}\}$，配置为 $(t,p)$，当前读出包括
+
+$$
+o(t,p)=\bigl(c(t),w(t),r_\varepsilon(t),p\bigr).
+\tag{5.1}
+$$
+
+动作菜单含：
+
+1. **Unlock**：在 locked 状态合法，记录“unlock”，后继为 $(t,\mathsf{open})$；在 open 状态记录固定的“already-open”或合同指定的拒绝标签。
+2. **Read_L**：仅在 open 且左端口存在时合法，记录左子树根标签；locked 时记录统一的“locked”失败标签。
+3. 固定树 $v$ 的 **Graft_v**：仅在 open 时合法，记录“graft(v)”，后继为 $(\langle t,v\rangle,\mathsf{open})$。它满足
+
+$$
+c(\langle t,v\rangle)=c(t)+c(v),
+\qquad
+w(\langle t,v\rangle)=w(t)w(v).
+\tag{5.2}
+$$
+
+动作标签、权限和接口类型都属于档案；若 graft 位置、授权来源或失败原因依赖未保留地址，式 (5.2) 不能单独构成闭合边界。
+
+取两棵树
+
+$$
+t=\langle\langle\alpha,\beta\rangle,\alpha\rangle,
+\qquad
+u=\langle\alpha,\langle\beta,\alpha\rangle\rangle.
+$$
+
+它们满足
+
+$$
+c(t)=c(u)=(2,1),
+\qquad
+w(t)=w(u)=\alpha\beta\alpha,
+\qquad
+r_\varepsilon(t)=r_\varepsilon(u)=\mathsf{branch},
+$$
+
+但
+
+$$
+r_L(t)=\mathsf{branch},
+\qquad
+r_L(u)=\alpha.
+$$
+
+令 $s=(t,\mathsf{locked})$、$q=(u,\mathsf{locked})$。两者的当前读出相同，所以 $(s,q)\in A_0$。
+

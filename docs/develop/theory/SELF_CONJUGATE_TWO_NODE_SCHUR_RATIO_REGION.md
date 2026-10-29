@@ -241,3 +241,180 @@ This proves the inequality on the arc for every $t\ge3$, and hence on $H$. $\squ
 <!-- 追加区自下一行的「追加锚」开始。每批增补写在锚之后,并以一行新的、逐字相同的追加锚结尾。 -->
 
 ## 追加锚（本行以下为增补区）
+## 8. Analytic endpoint separation on the nonreal sector boundary
+
+**Definition 8.1 (Actual interpolation grid and entire target class).** Let $\mathbb D=\{z\in\mathbb C:|z|\le1\}$ and $I=[-1,1]$. For every real $d$ with $0<d\le\tfrac12$, put
+
+$$
+w_d=1-d+i\sqrt3\,d,\qquad W_d=(w_d,\overline{w_d}),\qquad
+p_d(z)=(z-w_d)(z-\overline{w_d}).
+$$
+
+For every entire function $g:\mathbb C\to\mathbb C$, let $I_dg$ be the unique polynomial of degree at most one with the same values as $g$ at the two nodes of $W_d$, and define
+
+$$
+L_d(g)=g'(1)-(I_dg)'(1)
+=g'(1)-\frac{g(w_d)-g(\overline{w_d})}{w_d-\overline{w_d}}.
+$$
+
+Write $\|h\|_{\mathbb D}=\sup_{z\in\mathbb D}|h(z)|$, and set
+
+$$
+\mathscr E_2(\mathbb D)=
+\{g:\mathbb C\to\mathbb C:\ g\text{ is entire and }\|g''\|_{\mathbb D}\le1\},
+$$
+
+$$
+\mathcal K_d=
+\left\{x\in I:\
+\sup_{g\in\mathscr E_2(\mathbb D)}
+|g'(x)-(I_dg)'(x)|=\frac{|p_d'(x)|}{2}\right\}.
+$$
+
+Thus $\mathcal K_d$ is exactly the analytic Kallioniemi set $\mathcal I^{\mathbb D}_{2,1}(W_d)$ in equation (35) of [Ostrovskii–Shcherbakov, arXiv:2508.13554v2, Section 6.2](https://arxiv.org/html/2508.13554v2#S6.SS2). The class is the entire complex-valued class specified there, without a real-coefficient restriction. For integers $t\ge2$ write $m_t(z)=z^t/[t(t-1)]$; these are the source's normalized monomials $(t-2)!z^t/t!$, and $\|m_t''\|_{\mathbb D}=\|z^{t-2}\|_{\mathbb D}=1$.
+
+**Proposition 8.2 (Reflection correspondence and all monomial degrees).** For every real $0<d\le\tfrac12$, the actual grid $W_d$ is simple and self-conjugate in $\mathbb D^2$, and
+
+$$
+\frac{|p_d'(1)|}{2}=d,\qquad
+\frac{L_d(m_t)}d
+=Q_{t,2,1}(1-w_d,1-\overline{w_d})\quad(t\in\mathbb Z,\ t\ge2).
+$$
+
+The reflected supplier grid in Theorem 4.1 is $Z_d=(-w_d,-\overline{w_d})$, so the argument of $Q$ here is $Z_d+(1,1)$, not $W_d+(1,1)$. Moreover,
+
+$$
+\sup_{t\in\mathbb Z,\ t\ge2}|L_d(m_t)|=d,
+\qquad L_d(m_2)=L_d(m_3)=d.
+$$
+
+Stance: repo-derived; the all-degree bound is reused from the whole applicable Theorem 4.1, with the correspondence below.
+
+**Proof.** The imaginary part $\sqrt3\,d$ is positive and
+
+$$
+|w_d|^2=(1-d)^2+3d^2=1-2d+4d^2\le1.
+$$
+
+Hence the nodes are distinct nonreal conjugates in $\mathbb D$, and have a real characteristic polynomial with no real roots. Also
+
+$$
+p_d'(1)=2-w_d-\overline{w_d}=2d>0.
+$$
+
+For every integer $t\ge2$, the two-variable identity in cited fact (b) gives
+
+$$
+(I_dm_t)'(1)
+=\frac{h_{t-1}(w_d,\overline{w_d})}{t(t-1)},\qquad
+L_d(m_t)=\frac{t-h_{t-1}(w_d,\overline{w_d})}{t(t-1)}.
+$$
+
+Lemma 3.1 identifies the quotient of the last expression by $d=1-\operatorname{Re}w_d$ with $Q_{t,2,1}(Z_d+(1,1))$. This is also the specialization of the source's Corollary 6.1, equation (30), to test point $z=1$, $(n,k)=(2,1)$ and actual nodes $W_d$: its argument is $1_2-z^{-1}W_d=(1-w_d,1-\overline{w_d})$. Its denominator is nonzero, since $p_d'(1)=2d$, and its interpolation premises hold for this simple disk grid (one may take both radius bounds equal to one). This verifies the sign and the normalization directly, without the reduction in the source's Proposition 6.2.
+
+Now $a=1-d$, $b=\sqrt3\,d$ satisfy $a^2+b^2\le1$, $w_d\ne1$, and $b^2=3(1-a)^2$. Theorem 4.1 therefore gives $|Q_{t,2,1}(Z_d+(1,1))|\le1$ for every integer $t\ge2$. Thus $|L_d(m_t)|\le d$ for all such $t$. Finally,
+
+$$
+h_1(w_d,\overline{w_d})=2(1-d),\qquad
+h_2(w_d,\overline{w_d})=3(1-d)^2-3d^2=3-6d,
+$$
+
+so the displayed formula for $L_d(m_t)$ gives $L_d(m_2)=L_d(m_3)=d$. Both degrees attain the supremum. $\square$
+
+**Theorem 8.3 (An entire quartic exceeding every normalized monomial).** For every real $0<d\le\tfrac12$, define
+
+$$
+e=\frac{d^2}{6},\qquad N=\sqrt{1+4e^2},\qquad
+G_d(z)=\frac{z^3/6+e(z^2/2-z^4/12)}{N}.
+$$
+
+Then $G_d$ has real coefficients and degree exactly four, belongs to $\mathscr E_2(\mathbb D)$ with $\|G_d''\|_{\mathbb D}=1$, and satisfies
+
+$$
+L_d(G_d)=d\sqrt{1+\frac{d^4}{9}}>d
+=\sup_{t\in\mathbb Z,\ t\ge2}|L_d(m_t)|.
+$$
+
+Stance: repo-derived.
+
+**Proof.** Since $e>0$ and $N>0$, the coefficient of $z^4$ is $-e/(12N)\ne0$. Differentiating twice gives
+
+$$
+G_d''(z)=\frac{z+e(1-z^2)}N.
+$$
+
+For $z=e^{i\theta}$ on the unit circle,
+
+$$
+z+e(1-z^2)=z\bigl(1-2ie\sin\theta\bigr),\qquad
+|z+e(1-z^2)|^2=1+4e^2\sin^2\theta\le N^2,
+$$
+
+with equality at $z=i$ and $z=-i$. The classical maximum modulus principle, applied to this polynomial on the closed unit disk, gives $\|G_d''\|_{\mathbb D}=1$. Thus the polynomial is an admissible entire input to the exact class of Definition 8.1.
+
+To calculate its error, set $a=1-d$ and $b=\sqrt3\,d$. The two-variable identity $h_3(a+ib,a-ib)=4a(a^2-b^2)$ gives
+
+$$
+h_3(w_d,\overline{w_d})
+=4(1-d)(1-2d-2d^2)=4-12d+8d^3,
+$$
+
+and hence, by the monomial error formula in Proposition 8.2,
+
+$$
+L_d(m_4)=d-\frac23d^3,\qquad
+L_d(m_2-m_4)=\frac23d^3=4de.
+$$
+
+The functional $L_d$ is complex-linear and $G_d=[m_3+e(m_2-m_4)]/N$. Using Proposition 8.2 at degrees two and three therefore gives
+
+$$
+L_d(G_d)=\frac{d+4de^2}{N}=dN
+=d\sqrt{1+\frac{d^4}{9}}>d.
+$$
+
+The final comparison uses $d>0$ and Proposition 8.2 for every degree $t\ge2$. $\square$
+
+**Proposition 8.4 (Minimum polynomial degree of a violation).** For every real $0<d\le\tfrac12$ and every polynomial $P\in\mathbb C[z]$ of degree at most three with $\|P''\|_{\mathbb D}\le1$,
+
+$$
+|L_d(P)|\le d.
+$$
+
+The bound is attained by $m_2$ and $m_3$. Consequently the minimum degree of a polynomial in $\mathscr E_2(\mathbb D)$ with $|L_d(P)|>d$ is exactly four, for each grid $W_d$. Stance: repo-derived.
+
+**Proof.** Write $P''(z)=A+Bz$ with $A,B\in\mathbb C$. Then $P=A m_2+B m_3+R$ for some affine polynomial $R$. Interpolation reproduces $R$, so $L_d(R)=0$, and Proposition 8.2 yields $L_d(P)=d(A+B)$. For complex $A,B$,
+
+$$
+\|A+Bz\|_{\mathbb D}=|A|+|B|.
+$$
+
+The upper bound is the triangle inequality. If $A$ and $B$ are both nonzero, equality is attained at $z=(A/|A|)(\overline B/|B|)$, which has modulus one and makes $Bz$ a nonnegative real multiple of $A$. If either coefficient is zero, equality is immediate. Therefore
+
+$$
+|L_d(P)|=d|A+B|\le d(|A|+|B|)
+=d\|P''\|_{\mathbb D}\le d.
+$$
+
+Theorem 8.3 provides a violating polynomial of degree four, and the preceding bound excludes every lower degree, including all complex coefficient choices. $\square$
+
+**Corollary 8.5 (Analytic endpoint exclusion and pointwise failure of monomial maximization).** For every real $0<d\le\tfrac12$,
+
+$$
+\sup_{g\in\mathscr E_2(\mathbb D)}|L_d(g)|
+\ \ge\ d\sqrt{1+\frac{d^4}{9}}
+\ >\ \frac{|p_d'(1)|}{2}=d,
+\qquad 1\notin\mathcal K_d.
+$$
+
+Thus on each identical actual interpolation grid $W_d$, every normalized-monomial test at $1$ passes, but the analytic equality at $1$ fails. In particular the pointwise normalized-monomial maximization assertion of [Ostrovskii–Shcherbakov, arXiv:2508.13554v2, Proposition 6.2, Section 6.3](https://arxiv.org/html/2508.13554v2#S6.SS3) fails for $(n,k)=(2,1)$, test point $1$, and these simple grids. Stance: repo-derived, with the target class, Kallioniemi-set definition and disputed assertion cited from the source.
+
+**Proof.** Theorem 8.3 supplies an entire member of the supremum class whose error strictly exceeds $|p_d'(1)|/2$, so Definition 8.1 excludes $1$. Proposition 8.2 bounds all normalized monomials at that same grid and test point by $d$. Multiplying a monomial by a unimodular constant, or adding an affine polynomial, does not change its absolute error, so neither enlargement repairs the maximization assertion.
+
+The correspondence is pointwise between the analytic test on $W_d$ and the Schur test on $Z_d=-W_d$ established in Proposition 8.2. The reflection is a bijection of the class of self-conjugate disk grids, but $W_d$ and $Z_d$ are distinct grids. The separation does not assign different truth values to the two globally universal Conjectures 6.1 and 6.2: the former fails by the quartic above, and the latter already fails by the distinct $73/60$ example of Remark 4.4. That example and the all-monomial region of Theorem 4.1 are preserved as separate mathematical facts. The conclusion here concerns the asserted pointwise supplier reduction, not the source's separate amplitude-maximization theorems.
+
+The parameter range includes $d=\tfrac12$, when $|w_d|=1$, and has $|w_d|<1$ for $0<d<\tfrac12$. At $d=0$ the two nodes coalesce at $1$, the divided difference defining $L_d$ is undefined, and the strict gap in the displayed formula vanishes; no confluent statement follows. For $d>\tfrac12$ the nodes leave $\mathbb D$. Reversing the sign of $\operatorname{Im}w_d$ only interchanges the nodes and leaves interpolation unchanged.
+
+The displayed quartic supplies a strict lower bound, without identifying the exact supremum over all entire functions or over all quartics. These statements impose no conclusion on the rest of the sector interior, arbitrary grids, $n\ge3$, or $k=0$. The real-grid result of Kallioniemi reported in Remark 4.2 is not a premise of this argument. $\square$
+
+## 追加锚（本行以下为增补区）

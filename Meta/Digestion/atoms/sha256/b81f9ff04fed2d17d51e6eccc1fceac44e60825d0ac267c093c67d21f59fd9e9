@@ -1,0 +1,9 @@
+**Scope 17.4 (the original all-dimension alternative).** The result is for exactly $\mathcal C_m$ for each finite $m$, not for all of $\Theta_{2m}$. No reduction of an arbitrary finite-hidden law to this emitted-bit-clock class has been established. In particular, the original alternative in Statement 9.3 remains open. A fixed-period compact margin in (17.24) is not a margin uniform over periods. The theorem supplies no parameter-uniform erasure rate, minimal hidden dimension, numerical separation or finite-observation resource guarantee.
+
+[ClockUniversal]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
+[ClockAttainment]: FIB_LEGAL_EDGE_LOAD_ATTAINMENT_STRONG_ZERO_EQUIVALENCE_AND_FINITE_OPTIMIZER_COMPARISON.md
+[ClockExterior]: FIB_LEGAL_EDGE_LOAD_EXTERIOR_LOCALIZATION_AND_ACTUAL_LOSS_COCYCLE_BALANCE.md
+[ClockVisible]: FIB_LEGAL_EDGE_LOAD_FINITE_VISIBLE_MEMORY_NONATTAINMENT.md
+[ClockRenewal]: FIB_LEGAL_EDGE_LOAD_UNIFORM_RENEWAL_NONATTAINMENT_AND_THREE_STATE_SEPARATION.md
+[ClockGap]: FIB_LEGAL_EDGE_LOAD_VISIBLE_TAIL_PHASE_RIGIDITY_AND_WINDOW_LIMITS.md
+

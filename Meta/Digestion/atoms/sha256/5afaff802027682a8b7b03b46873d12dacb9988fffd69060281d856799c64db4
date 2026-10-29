@@ -1,0 +1,54 @@
+**Theorem 70.2 (full successor correspondence and continued use).**
+Starting at any Ready cut satisfying Definition 69.3, Definition 70.1
+implements the complete $Q_A$ table on $v$ through $Q_J$. It returns
+exactly the displayed outer replies and preserves the invariant with
+$v$ replaced by the displayed represented successor. The same assertion
+holds for every finite common adaptive continuation of full frames,
+including refusals and unsupported tags, and for finite extensions of
+pending prefixes. Enabledness is conditional on the same current rights,
+serialized phase, backing and acknowledgement assumptions as above.
+
+Proof. At any logical position of $v$ above its leaves, $J$ retains the
+same branch context and address. Thus a represented alpha at $p$ is an
+actual alpha there. The first real call promotes it to beta; the second
+splits that beta. The net replacement is $J(\beta)$, so, writing $P_pv$
+for the represented successful successor,
+
+$$
+S_p(P_p(J(v)))=J(P_pv).
+$$
+
+At a represented beta at $p$, the physical cone is
+$\langle\beta,\alpha\rangle$. Splitting its actual left logical beta
+gives $\langle\langle\beta,\alpha\rangle,\alpha\rangle$, which is
+$J(\langle\beta,\alpha\rangle)$. Consequently
+
+$$
+S_{pL}(J(v))=J(S_pv).
+$$
+
+In both equations the operations are real legal source changes at the
+stated original-root addresses. Context replacement outside that cone
+commutes with $J$ by its branch clause. These arguments prove actual
+success and the proposed code update; they assume neither a raw read
+port nor an inverse source edit.
+
+For every negative case, finite lookup in the already earned exact word
+gives precisely the represented absent, branch or wrong-type case.
+Returning that reason with no inner edit preserves $J(v)$. The fixed
+unsupported reply and the unchanged source are also exact. Both parsers
+use the stated finite prefix grammar, so a proper partial frame has the
+same waiting condition and every completed extension enters the proper
+case. Actual input backing, full answer construction, End, acknowledgement,
+return and cleanup ensure that equality concerns whole replies and settled
+successors, rather than just an initial response bit. Missing rights or
+wrong phase disable a call; they are not reclassified as a leaf refusal.
+
+Induct on complete outer transactions. The induction hypothesis supplies
+the word/source invariant for the next chosen frame; the one-step argument
+returns the same whole reply and the next invariant. An adaptive client
+therefore makes the same next selection from the same replies. Finite
+prefix extensions follow the same parser transition rule. This proves
+all claimed finite continuations and actual retained callable use.
+$\square$
+

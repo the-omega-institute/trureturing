@@ -1,0 +1,78 @@
+**定理 82.2（fixed-horizon common law）。** 对每个固定整数 $n\ge2$，
+
+$$
+c_n(q)=\frac{1-t}{2}\sqrt q+O_n(q),\qquad q\downarrow0.
+$$
+
+$n=1$ 时 $c_1(q)=0$ 对所有 $q\in[0,1]$ 成立。特别在 $n=2$，对全部 $q\in[0,1]$ 有
+
+$$
+\frac{\sqrt q}{2}\left(\sqrt{1-q}-\frac12\right)
+ \le c_2(q)\le\frac{\sqrt q}{4}+\frac{13q}{4},
+\qquad c_2(q)=\frac{\sqrt q}{4}+O(q).
+$$
+
+后一个 lower bound 在 $q\ge3/4$ 时不提供正信息。
+
+**证明。** 对 Hermitian $X$，unital positive maps 保持 order interval $[-\|X\|I,\|X\|I]$，所以 contract operator norm。由 supplier 的 linear $G_s$ formula，
+
+$$
+\left|\big((F^n)^\dagger\mathcal D^\dagger(X)\big)_{\xi e}\right|
+ \le t\|X\|_{\rm op}.
+$$
+
+令 $H_q=E(q)-P$，则 $H_q^2=q(P+|e\rangle\langle e|)$，所以 $\|H_q\|_{\rm op}=\sqrt q$。写两个 residuals 为 $R_P,R_E$，由同一 map 的线性性，
+
+$$
+2\max(\|R_P\|,\|R_E\|)
+ \ge|(R_E-R_P)_{\xi e}|
+ \ge\sqrt{q(1-q)}-t\sqrt q.
+$$
+
+这给出所有 complex decoders 的 lower bound。
+
+对 fixed-$n$ upper bound，令 $\theta_q=\arcsin\sqrt q$、$\sigma=\operatorname{sgn}(s)$、$b=(1-t)/(2s)$、$\phi=b\theta_q$，在 $(\xi,e)$ plane 取
+
+$$
+V=\begin{pmatrix}\cos\phi&-\sigma\sin\phi\\
+\sin\phi&\sigma\cos\phi\end{pmatrix}\oplus1,
+\qquad \mathcal D=\operatorname{Ad}_{V^\dagger U_0^\dagger}.
+$$
+
+这是两个任务共用的一个 unitary CPTP decoder。其 adjoint 为 $\operatorname{Ad}_{U_0V}$，因此 supplier 中的 $K$ 分别为 $VPV^\dagger$ 与 $VE(q)V^\dagger$；它们均与 $W$ 交换，且 $d=0$。两个 rank-one directions 的角度为 $\gamma_P=b\theta_q$ 与 $\gamma_E=(b+\sigma)\theta_q$。恢复后的 $\xi e$ entry 是 $s\sin\gamma\cos\gamma$，对角为 $(\cos^2\gamma,\alpha\sin^2\gamma,\beta\sin^2\gamma)$。由于
+
+$$
+s\gamma_P=\frac{1-t}{2}\theta_q,\qquad
+s\gamma_E-\theta_q=-\frac{1-t}{2}\theta_q,
+$$
+
+且 $|\sin\gamma|\le|\gamma|$、$|\sin\gamma\cos\gamma-\gamma|\le2|\gamma|^3/3$，两个全 qutrit residual norms 分别不超过
+
+$$
+\begin{aligned}
+&\frac{1-t}{2}\theta_q+b^2\theta_q^2+\frac{2t|b|^3}{3}\theta_q^3,\\
+&\frac{1-t}{2}\theta_q+[1+(b+\sigma)^2]\theta_q^2
+ +\frac23[t|b+\sigma|^3+1]\theta_q^3.
+\end{aligned}
+$$
+
+固定 $n$ 后这些常数有限，$\theta_q=\sqrt q+O(q^{3/2})$，得 matching upper asymptotic。$n=1$ 时取 $V=I$；两个 tasks 与 $W$ 交换，$\mathcal D=\operatorname{Ad}_{U_0^\dagger}$ 同时精确恢复它们。
+
+在 $n=2$ 可给出上述全区间 sandwich。此时 $V$ 的 $2\times2$ block 为
+$\left(\begin{smallmatrix}\cos a&\sin a\\\sin a&-\cos a\end{smallmatrix}\right)$，$a=-\theta_q/2$。置 $k=\sqrt{1-q}$，
+
+$$
+y_0=\frac{q}{2(1+k)},\qquad
+y_3=\frac{q(1+2k)^2}{2(1+k)}\le\frac94q.
+$$
+
+同一个 decoder 的两个 residuals 恰为
+
+$$
+R_P=\begin{pmatrix}-y_0&\sqrt q/4&0\\\sqrt q/4&y_0/4&0\\0&0&3y_0/4\end{pmatrix},\quad
+R_E=\begin{pmatrix}q-y_3&b_q&0\\b_q&y_3/4-q&0\\0&0&3y_3/4\end{pmatrix},
+\quad b_q=-\sqrt q\,[1/4+k(1-k)].
+$$
+
+$9q/4-y_3=q(1-k)(8k+7)/[4(1+k)]\ge0$，且 $k(1-k)\le q$。因此 $\|R_P\|\le\sqrt q/4+q/2$，$\|R_E\|\le\sqrt q/4+q^{3/2}+9q/4\le\sqrt q/4+13q/4$。lower bound 由前式置 $t=1/2$ 得到。∎
+

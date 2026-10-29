@@ -1,0 +1,8 @@
+**Definition 2.4 (seed actually prepared).** At the acquired alpha execute
+Reset, Add$(1,1)$, the specified verifying Read, and Hold, consuming each
+complete reply and lifecycle. In A the verifying exact Read returns $1$.
+In C it is Read$(1,1)$ with the digital interpretation in §8 and returns
+$2$ or $3$. Both prepare the nominal seed $1$ under the known installed
+law. This is paid preparation on a known alpha, not the recovery of an
+unknown seed, an unknown law or an unknown previous source.
+

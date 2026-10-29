@@ -1,0 +1,91 @@
+**Theorem 58.2 (Exact rational-branch width criterion).** Fix real
+$p\ne24,v,w$. A width $b>0$ with $\kappa_{\rm rec}\ne0$ supports a
+complete world in (54.1) if and only if
+
+$$
+\boxed{\begin{gathered}
+F_{\rm rec}=G_{\rm rec}=0,\qquad
+\eta_{\rm rec}\ne0,\qquad\omega\ne0,\\
+\frac{\nu}{\kappa_{\rm rec}}>0,\qquad
+-\frac{4\eta_{\rm rec}}{\omega}>b,\qquad
+0<\frac{\chi_{\rm src}}{\kappa_{\rm rec}\omega}<1.
+\end{gathered}}
+\tag{58.2}
+$$
+
+All rational expressions in these tests are evaluated with the
+stated nonzero denominators. The unique resulting world at that
+width has
+
+$$
+\begin{gathered}
+\epsilon=-\eta_{\rm rec}/\kappa_{\rm rec},\qquad
+n=\nu/\kappa_{\rm rec},\qquad t=\theta/\kappa_{\rm rec},\\
+q_{\rm s}=\omega/\kappa_{\rm rec},\qquad
+j=-4\eta_{\rm rec}/\omega,\qquad
+r=\chi_{\rm src}/(\kappa_{\rm rec}\omega),
+\end{gathered}
+\tag{58.3}
+$$
+
+and the gain and drift in (57.5). For each fixed $b>0$,
+$F_{\rm rec}$ has total degree at most three in $(p,v,w)$.
+
+**Proof.** Substitute $E=-\eta_{\rm rec}/\kappa_{\rm rec}$ into
+(57.1). Its first two affine expressions give $n=\nu/\kappa_{\rm rec}$
+and $t=\theta/\kappa_{\rm rec}$. Its third gives
+$q_{\rm s}=\omega/\kappa_{\rm rec}$. If $\omega\ne0$, the definitions
+of $j$ and $r=n-j$ give exactly the last two formulas in (58.3).
+These formulas yield the exact identities
+
+$$
+\begin{aligned}
+\kappa_{\rm rec}^2
+ Q_{\rm rec}(-\eta_{\rm rec}/\kappa_{\rm rec})&=F_{\rm rec},\\
+\kappa_{\rm rec}^2\omega^2
+ \{b(j-b)-r(1-r)\}&=G_{\rm rec}.
+\end{aligned}
+\tag{58.4}
+$$
+
+Thus the equations in (58.2) are exactly the quadratic consistency
+and original source relation, with only nonzero factors cleared.
+The guard $E\ne0$ becomes $\eta_{\rm rec}\ne0$, and
+$q_{\rm s}\ne0$ becomes $\omega\ne0$. The other tests in (57.2)
+become exactly the three inequalities in (58.2). Both directions,
+including the full gain and all original readings, now follow from
+Theorem 57.2.
+
+For the degree assertion, $X,Y,Z$ are affine in $(p,v,w)$, whereas
+the width slopes are constants at fixed $b$. The apparently
+fourth-degree contributions in
+$\alpha_{\rm w}\eta_{\rm rec}^2-X\eta_{\rm rec}\kappa_{\rm rec}$
+are $\alpha_{\rm w}X^2Z^2$ with opposite signs, and cancel.
+An exact expression displaying the remaining degree bound is
+
+$$
+\begin{aligned}
+F_{\rm rec}={}&(XZ+\gamma_{\rm w}Y)
+ \bigl[(1-\gamma_{\rm w}\beta_{\rm w})(X-\beta_{\rm w})
+       +\alpha_{\rm w}\gamma_{\rm w}Y
+       +\alpha_{\rm w}\beta_{\rm w}Z\bigr]\\
+&-Y(\alpha_{\rm w}Z+\gamma_{\rm w}\beta_{\rm w}-1)^2.
+\end{aligned}
+\tag{58.5}
+$$
+
+The first factor has degree at most two and its bracket at most one;
+the last term has degree at most three. Affine substitution preserves
+this bound. Finally the positive defining denominators noted in
+Definition 58.1 justify numerator clearing on $b>0$. $\square$
+
+Theorem 58.2 treats the rational branch only. To obtain the complete
+width reconstruction one must also retain the exceptional quadratic
+case 3 of Theorem 57.2; case 2 contributes no world. Even on the
+rational branch, common numerator roots of $F_{\rm rec},G_{\rm rec}$
+are not worlds until $b>0$, $\kappa_{\rm rec}\ne0$, both remaining
+nonzero guards and all strict inequalities in (58.2) have been checked.
+A projected eliminant can lose these guards or contain roots from an
+exceptional branch, so an eliminant root alone is never a sufficient
+world criterion.
+

@@ -1,0 +1,5 @@
+source_id = "rich-word-quantitative-spectral-defect"
+path = "docs/develop/theory/RICH_WORD_QUANTITATIVE_SPECTRAL_DEFECT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

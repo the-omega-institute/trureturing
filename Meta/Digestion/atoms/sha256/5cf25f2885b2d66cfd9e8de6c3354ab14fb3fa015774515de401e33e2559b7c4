@@ -1,0 +1,46 @@
+## 61. Exceptional reconstruction in the existing whole-world coordinates
+
+Keep the complete original domain of Definitions 1.1–1.2 and the full parent of Lemma 48.1. All statements below use the chronological left-product word $J,M,J,M,M,M$, clocks $0,\ldots,6$ with record $(0,24,147/5,24,18,p,v)$, and both alternatives at clock seven. The source is strictly $P(r,b)$ with $0<r<1,b>0$; each world retains its single whole nonzero real gain of degree at most three and its fixed real drift. No regular-chart or gain-genericity assumption is added.
+
+Use $T,U,j,n,\epsilon,\Lambda,D_{\rm par}$ from Section 48, $\mathsf C_i,\mathsf A_i$ from Section 49, $H_i$ from (47.2), and $\alpha_{\rm w},\beta_{\rm w},\gamma_{\rm w},X,Y,Z,\kappa_{\rm rec},\eta_{\rm rec}$ from Sections 55–56. Introduce only the following source-polynomial notation:
+
+$$
+\begin{gathered}
+\mathcal J=b^2+r(1-r)=bj,\qquad \mathcal N=\mathcal J+rb=bn,\\
+S=(8b-1)(2+5b),\qquad
+\Pi=(b^2+8b+4)\mathcal J\mathcal N-2TUb(\mathcal J+\mathcal N).
+\end{gathered}
+\tag{61.1}
+$$
+
+Here $\mathcal N$ is the source polynomial called $N$ in Sections 31–38; the degree-ten polynomial below is instead $N_{\rm exc}$. Precisely, $\Pi=\widehat D/5=D_\Lambda$, where $\widehat D$ is Definition 2.1's circuit denominator and $D_\Lambda$ is Section 13's denominator. Thus the local scalar alias $D$ in Section 31 is $5\Pi$, and its $H=bD$ is $5b\Pi$. None of these is $D_{\rm par}$. The parameter $\beta_{\rm w}$ is a width slope, not the parent parameter $\beta=1/8$.
+
+Multiplying the already proved parent equation (48.2) by positive source factors gives, without cancelling $\Pi$,
+
+$$
+\Lambda=\frac{2\Pi}{TU\mathcal J\mathcal N},\qquad
+D_{\rm par}=\frac{6S}{5TU},\qquad
+\epsilon\Pi=-\frac35S\mathcal J\mathcal N.
+\tag{61.2}
+$$
+
+Its converse and the entire gain remain exactly (48.3), including $\Pi=0$. For an actual parent world, take the response transform (55.3) with $(p,v,w)=(p(W),v(W),m(W))$ and set
+
+$$
+K(W)=\alpha_{\rm w}\epsilon(1/n-\gamma_{\rm w})
+       +\gamma_{\rm w}\beta_{\rm w}-1.
+\tag{61.3}
+$$
+
+This scalar is unrelated to the kernel vector $K_{\rm w}$ of Section 50 or the source alias $K=S$ of Section 31. Under the notation of *Two width graphs for the actual exceptional terminal-M reconstruction*, its $(e,\alpha,\beta,\gamma,V,C_i,A_i,\kappa,\eta)$ are respectively $(\epsilon,\alpha_{\rm w},\beta_{\rm w},\gamma_{\rm w},\mathsf V,\mathsf C_i,\mathsf A_i,\kappa_{\rm rec},\eta_{\rm rec})$ here. Lemma 55.2 gives
+
+$$
+X=n-\alpha_{\rm w}\epsilon,\quad
+Y=\epsilon n-\beta_{\rm w}\epsilon,\quad
+Z=\epsilon/n-\gamma_{\rm w}\epsilon;\qquad
+\kappa_{\rm rec}=K(W),\quad \eta_{\rm rec}=-\epsilon K(W).
+\tag{61.4}
+$$
+
+The last equality follows by expanding $XZ+\gamma_{\rm w}Y$. Thus an actual world is in the exceptional reconstruction case $\kappa_{\rm rec}=\eta_{\rm rec}=0$ exactly when $K(W)=0$. These identities reuse Sections 48–56; they do not introduce another parent or response transform. In particular the definition of $K$ makes sense also when $p=24$ or $\epsilon=0$.
+

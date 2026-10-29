@@ -1,0 +1,10 @@
+### 8.4 Noise interfaces
+
+Use three separate structures:
+
+- GlobalVisibility with \(P,U,v\);
+- IndependentSourceNoise with the eight tables \(P_S\);
+- LocalOutputChannel with stochastic matrices.
+
+The post-processing monotonicity theorem is the easiest first admission. The multi-affine source expansion (6.2) and certificate evaluation (6.5) follow by finite distributivity.
+

@@ -620,3 +620,366 @@ An attainment construction must use one actual stationary common-matrix law acro
 [U]: FIB_LEGAL_EDGE_LOAD_UNIVERSAL_POSTERIOR_DEFECT_AND_FINITE_HIDDEN_SEPARATION.md
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Shared complete contexts and a spectral discrepancy bound
+
+**Definition 9.1 (Unnormalized context weights and spectral tails).** Retain exactly $B_n$, $K_m^{a,b}$, $\mathcal D_K$, $\mathscr F_{N,n}^{0,0}$ and $\mathscr R_{N,n}$ from Definitions 1.1–1.3. Let $p$ be band-compatible on $B_n$, and let $C=[c,d]$ be an interior interval, so $1<c\le d<n$ and $m=d-c+1$. A complete complement is $\eta=(u,v)$ with $u=W_{[1,c-1]}$ and $v=W_{[d+1,n]}$. For each extendible $\eta$ write
+
+$$
+p_\eta=p(W_{C^c}=\eta)>0,\qquad
+p_C^\eta(w)=p(W_C=w\mid W_{C^c}=\eta),\qquad
+a=u_{c-1},\quad b=v_1.
+\tag{9.1}
+$$
+
+Here and below $C^c$ in a finite-word conditional means $[1,n]\setminus C$. Let $S_C^{a,b}(p)$ have one row for every extendible complete complement with these adjacent bits, one column for every $w\in K_m^{a,b}$, and entries
+
+$$
+S_C^{a,b}(p)(\eta,w)=\sqrt{p_\eta}\,p_C^\eta(w).
+\tag{9.2}
+$$
+
+The mass $p_\eta$ is not divided by $p(W_{c-1}=a,W_{d+1}=b)$. In particular, the four matrices retain their original relative weights. A type without rows gives the zero matrix. For a finite real matrix $S$ and integer $q\ge0$ put
+
+$$
+\operatorname{tail}_q(S)=\sum_{j>q}\sigma_j(S)^2,\qquad
+c_m=\frac{6^{-4m}}{2m},
+\tag{9.3}
+$$
+
+where singular values are decreasing and continued by zeros.
+
+**Theorem 9.2 (Weighted shared-context lower bound).** For every $N\ge1$, every band-compatible $p$ on $B_n$, and every deterministic family of disjoint nonempty interior intervals $C_j$,
+
+$$
+\mathscr R_{N,n}(p)\ge
+\sum_j c_{|C_j|}\sum_{a,b\in\{0,1\}}
+\operatorname{tail}_{N^2}\bigl(S_{C_j}^{a,b}(p)\bigr).
+\tag{9.4}
+$$
+
+Every comparison in the minimum on the left is one global $r\in\mathscr F_{N,n}^{0,0}$. All conditionals and weights on the right belong to the same $p$.
+
+Proof. Fix such an $r$ and one interval $C=[c,d]$. Extend its word probabilities by zero to the whole binary cube, as in (1.7). The ordinary ranks at the cuts $c-1$ and $d$ are at most $N$, since ordinary rank is at most nonnegative rank. At the first cut choose $h\le N$ prefix rows indexed by $u_\alpha$ spanning all prefix rows. There are real coefficients $A_\alpha(u)$, independent of $w,v$, such that
+
+$$
+r(uwv)=\sum_{\alpha=1}^h A_\alpha(u)r(u_\alpha wv).
+\tag{9.5}
+$$
+
+At the second cut choose a basis $D_\beta(v)$, $1\le\beta\le e\le N$, for the row space of the prefix/suffix matrix. For each $\alpha,w$ there are coefficients $H_{\alpha\beta}(w)$ with
+
+$$
+r(u_\alpha wv)=\sum_{\beta=1}^e H_{\alpha\beta}(w)D_\beta(v),\qquad
+r(uwv)=\sum_{\alpha,\beta}A_\alpha(u)D_\beta(v)H_{\alpha\beta}(w).
+\tag{9.6}
+$$
+
+Thus the matrix with rows $(u,v)$, columns $w$ and entries $r(uwv)$ has ordinary rank at most $he\le N^2$. These equalities hold on the full binary cube, including every illegal entry. The auxiliary real coefficients need not be nonnegative. This is the two-cut linear-factorization mechanism also underlying the context rank in [Intrinsic, §2][SC-I]; it is used only as a necessary condition on the given global $r$.
+
+Both $p$ and $r$ are positive on $B_n$ by Definition 1.3. Hence every extendible complement has $r_\eta=r(W_{C^c}=\eta)>0$. For a fixed adjacent-bit type define
+
+$$
+T_C^{a,b}(\eta,w)=\sqrt{p_\eta}\,r_C^\eta(w),\qquad
+r_C^\eta(w)=\frac{r(uwv)}{r_\eta}.
+\tag{9.7}
+$$
+
+Restricting the matrix in (9.6) to those rows and to $K_m^{a,b}$, then scaling row $\eta$ by $\sqrt{p_\eta}/r_\eta$, gives $T_C^{a,b}$. Consequently its ordinary rank is at most $N^2$. For every such row, $p_C^\eta$ and $r_C^\eta$ are band-compatible on exactly the same $K_m^{a,b}$: each insertion inequality is an original inequality divided by the corresponding fixed positive complement mass.
+
+The global single-site predictors at sites in $C$, after the entire complement is fixed, are exactly the single-site predictors of these conditional block laws. Disintegration, [Guarded, Lemma 8.1][SC-G] and $\|x\|_1\ge\|x\|_2$ give
+
+$$
+\begin{aligned}
+\sum_{i\in C}\mathbb E_p(p_i(W_{-i})-r_i(W_{-i}))^2
+&=\sum_\eta p_\eta\mathcal D_{K_m^{a,b}}(p_C^\eta\Vert r_C^\eta)\\
+&\ge c_m\sum_\eta p_\eta\|p_C^\eta-r_C^\eta\|_1^2\\
+&\ge c_m\sum_{a,b}\|S_C^{a,b}(p)-T_C^{a,b}\|_F^2.
+\end{aligned}
+\tag{9.8}
+$$
+
+In the first two sums $a,b$ are the adjacent bits of that $\eta$. Forced fibers have zero single-site discrepancy; singleton completion sets satisfy the same inequality. Nonextendible complements contribute zero and require no denominator.
+
+The needed low-rank approximation inequality is the classical orthogonal-projection bound [Eckart–Young][SC-EY], also used in [Whitebox, Theorem 43.5][SC-W]. Explicitly, if $T$ has rank at most $q$ and $Q$ is the orthogonal projection onto its column space, then
+
+$$
+\|S-T\|_F^2\ge\|(I-Q)S\|_F^2
+=\operatorname{tr}(SS^{\mathsf T})-\operatorname{tr}(QSS^{\mathsf T})
+\ge\sum_{j>q}\sigma_j(S)^2.
+\tag{9.9}
+$$
+
+To obtain the last inequality, diagonalize $SS^{\mathsf T}$. The diagonal entries of $Q$ in that basis lie in $[0,1]$ and sum to at most $q$, so their pairing with the decreasing nonnegative eigenvalues is at most the sum of the first $q$. Apply (9.9) to each term of (9.8) with $q=N^2$. The site sums for disjoint $C_j$ are distinct summands of $\mathcal D_{B_n}(p\Vert r)$, even if their complements or adjacent bits overlap. They can therefore be added without independence. Minimize over this single global $r$. If the family is empty its value is $+\infty$, so (9.4) still holds. $\square$
+
+## 10. All finite comparison ranks admit a global/local separation
+
+**Theorem 10.1 (One common stationary law at every comparison rank).** For every integer $N\ge2$, set
+
+$$
+k=N^2+1,\qquad m=2N^2=2(k-1),\qquad
+ a_\ell=\frac13+\frac{\ell-1}{24N^2},\qquad w_\ell=\frac1k,
+\quad 1\le\ell\le k.
+\tag{10.1}
+$$
+
+Use the two-state $A_\ell,\lambda_\ell,D_x$ of (3.2) with these parameters, and define
+
+$$
+M_x^{(N)}=\bigoplus_{\ell=1}^kD_xA_\ell,\qquad
+\lambda^{(N)}=(w_1\lambda_1,\ldots,w_k\lambda_k).
+\tag{10.2}
+$$
+
+This is one element of the original $\Theta_{2k}$. Its actual stationary law is
+
+$$
+P^{(N)}=\sum_{\ell=1}^kw_\ell R^{a_\ell},\qquad
+\mu_n=P^{(N)}_{[1,n]},\qquad
+\mu_n(w)=\lambda^{(N)}M_{w_1}^{(N)}\cdots M_{w_n}^{(N)}\mathbf1
+\quad\text{for every }n.
+\tag{10.3}
+$$
+
+All legal words have positive mass and every $\mu_n$ is band-compatible. Define
+
+$$
+\begin{aligned}
+z_\ell&=\frac{a_\ell}{(1-a_\ell)^2},&
+\rho_\ell&=\frac{a_\ell}{1+a_\ell},&
+\Delta&=\min_{\ell\ne h}|\rho_\ell-\rho_h|>0,\\
+Z_\ell&=\sum_{w\in B_m}z_\ell^{k(w)},&
+v_\ell(w)&=\frac{z_\ell^{k(w)}}{Z_\ell},&
+b_\ell&=\lambda_{\ell,0}(A_\ell^{m+1})_{00}>0,\\
+G&=\sum_{\ell=1}^kw_\ell b_\ell v_\ell v_\ell^{\mathsf T},&
+\gamma&=\lambda_k(G)>0.
+\end{aligned}
+\tag{10.4}
+$$
+
+The $v_\ell$ are column probability vectors on $B_m$; $\lambda_{\ell,0}=1/(1+a_\ell)$, and eigenvalues are decreasing. For every $n>m$ with $(n-m)\Delta\ge8$,
+
+$$
+\mathscr R_{N,n}(\mu_n)\ge
+c_m\left\lfloor\frac{n-2}{m}\right\rfloor
+\left[\gamma-4\exp\left(-\frac{(n-m)\Delta^2}{64}\right)\right]_+,
+\qquad [x]_+=\max(x,0).
+\tag{10.5}
+$$
+
+In particular,
+
+$$
+\liminf_{n\to\infty}\frac{\mathscr R_{N,n}(\mu_n)}n
+\ge\frac{c_m\gamma}{m}>0.
+\tag{10.6}
+$$
+
+In contrast, for every fixed $t\ge1$, every $n>t$ with $(n-t)\Delta\ge8$, and every deterministic family of disjoint length-$t$ intervals $C_j\subseteq[1,n]$,
+
+$$
+\sum_j\mathbb E_{\mu_n}\delta_{N,t}^{a_j,b_j}
+\bigl(\mu_n(W_{C_j}=\cdot\mid W_{C_j^c})\bigr)
+\le2n\exp\left(-\frac{(n-t)\Delta^2}{64}\right)\longrightarrow0.
+\tag{10.7}
+$$
+
+The adjacent bits in (10.7) are the actual observed adjacent bits, with zero at an open endpoint as in (1.10).
+
+Proof. The parameters in (10.1) lie in $[1/3,3/8]$ and are distinct. The persistent-mixture construction of Propositions 3.2–3.3 applies to any finite number of positive-weight components: their proofs use only the displayed parameter range, positive weights and block-diagonal matrices. Equivalently, apply those propositions with their component-count parameter equal to $k-1$, then compare against the rank $N$ used here. Each $A_\ell$ is stochastic, $\lambda_\ell A_\ell=\lambda_\ell$ and $(D_1A_\ell)^2=0$. Thus (10.2) directly satisfies every condition in (1.3). The joint law (1.4) has a persistent label $L\in\{1,\ldots,k\}$, and conditional on $L=\ell$ its visible law is $R^{a_\ell}$. All expectations involving $L$ below are under this one joint law, denoted $J^{(N)}$.
+
+The component insertion ratios, including $n=1$ and open endpoints, are exactly (3.4), and their linear inequalities survive the mixture. Each component whole-word marginal and each actual component block conditional has all nonnegative cut ranks at most two. Thus $\mathscr F_{N,n}^{0,0}$ is nonempty for $N\ge2$, and the component conditional is feasible in $\mathscr F_{N,t}^{a,b}$, including endpoint blocks and singleton completion sets. No conversion from real rank to a stationary realization is being made; (10.2) already supplies the actual nonnegative realization and all seams.
+
+The $z_\ell$ are distinct because $a/(1-a)^2$ is strictly increasing on $(0,1)$. For $0\le j\le k-1$ the legal word
+
+$$
+w_j=(10)^j0^{m-2j}\in B_m
+\tag{10.8}
+$$
+
+has $j$ ones, also at $j=k-1$ when the final zero string is empty. The matrix with rows $j$ and columns $\ell$ given by $v_\ell(w_j)=z_\ell^j/Z_\ell$ has determinant
+
+$$
+\left(\prod_{\ell=1}^kZ_\ell^{-1}\right)
+\prod_{\ell<h}(z_h-z_\ell)\ne0.
+\tag{10.9}
+$$
+
+Hence the vectors $v_\ell$ are linearly independent. The coefficient $b_\ell$ is the stationary probability, under component $\ell$, that the two endpoints of a segment of $m+1$ transitions are both zero. It is positive, for example because the all-zero path has positive probability. Therefore $G$ has rank $k$ and $\gamma=\lambda_k(G)>0$.
+
+Fix any interior length-$m$ interval $C=[c,d]$ and put
+
+$$
+\mathcal H=\sigma(W_{C^c}),\qquad
+\theta_\ell=J^{(N)}(L=\ell\mid\mathcal H),\qquad
+E=\{W_{c-1}=W_{d+1}=0\}\in\mathcal H.
+\tag{10.10}
+$$
+
+These are the posterior weights given the entire finite complement, not just its adjacent bits. On $E$, Proposition 3.3 gives the exact identity
+
+$$
+\mu_n(W_C=\cdot\mid\mathcal H)=\sum_{\ell=1}^k\theta_\ell v_\ell
+=\mathbb E_{J^{(N)}}[v_L\mid\mathcal H].
+\tag{10.11}
+$$
+
+Stationarity and the actual component transition law give
+
+$$
+J^{(N)}(L=\ell,E)=w_\ell b_\ell.
+\tag{10.12}
+$$
+
+In particular these weights are not replaced by the prior $w_\ell$ or normalized by $J^{(N)}(E)$.
+
+The complement contains a contiguous observed segment of length $s\ge(n-m)/2$. Lemma 4.3 applies under every component because $s\Delta\ge4$, including equality. Its nearest-mean classifier uses only that segment and has error at most
+
+$$
+\varepsilon_n=2\exp\left(-\frac{(n-m)\Delta^2}{64}\right).
+\tag{10.13}
+$$
+
+Given $\mathcal H$, the least conditional error of a label guess is $1-\max_\ell\theta_\ell$. A guess using the whole complement can use this segment classifier, so
+
+$$
+\mathbb E_{J^{(N)}}(1-\max_\ell\theta_\ell)\le\varepsilon_n.
+\tag{10.14}
+$$
+
+The bound is uniform in the position of $C$ for this fixed law. The constants depend on its separated means; there is no parameter-uniform rate.
+
+Let $V=v_L$ as a random column vector, and put
+
+$$
+G_{n,C}=\bigl(S_C^{0,0}(\mu_n)\bigr)^{\mathsf T}S_C^{0,0}(\mu_n).
+$$
+
+Equations (9.2), (10.11) and (10.12), with the original complement masses in (9.2), yield
+
+$$
+\begin{aligned}
+G&=\mathbb E_{J^{(N)}}[\mathbf1_EVV^{\mathsf T}],\\
+G_{n,C}&=\mathbb E_{J^{(N)}}\left[\mathbf1_E
+\mathbb E[V\mid\mathcal H]\mathbb E[V\mid\mathcal H]^{\mathsf T}\right],\\
+G-G_{n,C}&=\mathbb E_{J^{(N)}}[\mathbf1_E\operatorname{Cov}(V\mid\mathcal H)]\succeq0.
+\end{aligned}
+\tag{10.15}
+$$
+
+At a given complement choose an index $h$ of largest $\theta_h$. Conditional means minimize squared Euclidean error. Since probability vectors have squared Euclidean distance at most two,
+
+$$
+\begin{aligned}
+\operatorname{tr}\operatorname{Cov}(V\mid\mathcal H)
+&\le\sum_\ell\theta_\ell\|v_\ell-v_h\|_2^2
+\le2(1-\theta_h),\\
+\|G-G_{n,C}\|_{\mathrm{op}}
+&\le\operatorname{tr}(G-G_{n,C})
+\le2\varepsilon_n.
+\end{aligned}
+\tag{10.16}
+$$
+
+For the second line, positivity in (10.15) bounds the operator norm by the trace, and dropping $\mathbf1_E$ enlarges a nonnegative expectation. The eigenvalue variational principle gives
+
+$$
+\lambda_k(G_{n,C})\ge\gamma-2\varepsilon_n,\qquad
+\operatorname{tail}_{N^2}(S_C^{0,0}(\mu_n))
+\ge[\gamma-2\varepsilon_n]_+,
+\tag{10.17}
+$$
+
+because $k=N^2+1$. Choose $\lfloor(n-2)/m\rfloor$ consecutive disjoint length-$m$ intervals in $[2,n-1]$. Apply Theorem 9.2, retaining only their $00$ types. Equations (10.13) and (10.17) prove (10.5), and division by $n$ gives (10.6). The contexts of neighboring chosen blocks may overlap; Theorem 9.2 requires only disjoint site sets.
+
+For (10.7), fix $t$ and a block $C_j$ of that length. Under the same $J^{(N)}$ define $\theta_{\ell,j}=J^{(N)}(L=\ell\mid W_{C_j^c})$. Its actual conditional is the mixture of its actual component conditionals with these weights, as in (3.5). Lemma 4.2, with comparison rank $N\ge2$, gives
+
+$$
+\delta_{N,t}^{a_j,b_j}\bigl(\mu_n(W_{C_j}=\cdot\mid W_{C_j^c})\bigr)
+\le t(1-\max_\ell\theta_{\ell,j}).
+\tag{10.18}
+$$
+
+Indeed, its proof compares with a largest-weight feasible rank-two component, using convexity in the first argument of $\mathcal D_K$ and the bound $t$ on that discrepancy. It does not require an interior block. A complement segment has length at least $(n-t)/2$, so the same application of Lemma 4.3 and Bayes comparison gives
+
+$$
+\mathbb E_{J^{(N)}}(1-\max_\ell\theta_{\ell,j})
+\le2\exp\left(-\frac{(n-t)\Delta^2}{64}\right).
+\tag{10.19}
+$$
+
+There are at most $n/t$ disjoint blocks, proving (10.7). At an endpoint the component law in (10.18) is its true conditional; (3.6) is not used there. Thus the statement retains open endpoints, all original legal words, the same common matrices at every length and the entire complement in every predictor. $\square$
+
+## 11. The actual-optimizer consumer and its spectral premise
+
+**Corollary 11.1 (Shared-context sufficient inequality on the original optimizer).** For fixed $N\ge1$, $n\ge1$ and disjoint nonempty interior intervals $C_j$, define
+
+$$
+\Lambda_{N,n}(\pi_n;\{C_j\})=
+\sum_jc_{|C_j|}\sum_{a,b\in\{0,1\}}
+\operatorname{tail}_{N^2}\bigl(S_{C_j}^{a,b}(\pi_n)\bigr).
+\tag{11.1}
+$$
+
+If
+
+$$
+\Lambda_{N,n}(\pi_n;\{C_j\})>
+\tau=2(3-2\sqrt2)-\frac1{24},
+\tag{11.2}
+$$
+
+then $C_N<c_\star$ on the entire original $\Theta_N$ of (1.3).
+
+Proof. The fixed-producer geometric entropy-tail bound of [Stripping, Theorems 3.1, 5.1 and 6.5][SC-S], together with the same-law whole-half-line comparison of [Entropy erasure, Theorem 3.1][SC-H], supplies $A_{P_\theta}<\infty$ for every fixed finite $\theta\in\Theta_N$. Specifically, the comparison bounds each $e_L(j),e_R(j)$ by half the geometrically decreasing $R_j$ of Stripping; their square roots are summable. The zero-tail case has the same conclusion. This reuse needs no band, identifiability, irreducibility, aperiodicity or uniformity over $\Theta_N$.
+
+Suppose a single $\theta\in\Theta_N$ attained $d(P_\theta)=c_\star$. Its band follows from [Universal, Theorem 3.1][U]. The just cited root sum and [Attainment, Theorem 1.5 and Corollary 9.1][SC-A] give strong zero for that same actual law and its original full-exterior predictors. [Guarded, Corollary 6.4][SC-G] therefore applies to that $J_\theta/P_\theta$ and gives
+
+$$
+\mathcal R_{N,n}\le(n+2)c_\star-\kappa_n-\frac1{24}\le\tau.
+\tag{11.3}
+$$
+
+Its guarded kernels are the actual conditional laws supplied by [Guarded, Theorem 6.2][SC-G], not laws inferred from a rank converse. Theorem 9.2 with $p=\pi_n$ gives $\mathcal R_{N,n}\ge\Lambda_{N,n}(\pi_n;\{C_j\})$, contradicting (11.2). Thus no $\theta\in\Theta_N$ attains $c_\star$. The fixed-dimension maximum theorem [Universal, Theorem 6.2][U] then makes the gap strict: $C_N=\max_{\theta\in\Theta_N}d(P_\theta)<c_\star$. All implications apply to the entire original domain, including stationary mixtures, structural zeros, zero stationary masses, reducibility, periodicity and redundant presentations. $\square$
+
+**Proposition 11.2 (Scope of the compatibility separation).** For every $N\ge2$, Theorem 10.1 disproves the implication from vanishing sums of independently minimized fixed-block discrepancies, for every fixed block length, to $\mathscr R_{N,n}(\mu_n)=o(n)$, even among marginals of one actual stationary finite producer with the band at every length. The law in that theorem satisfies
+
+$$
+A_{P^{(N)}}\le2,\qquad d(P^{(N)})\le\frac17<c_\star,
+\qquad\neg\mathsf Z_\Delta(P^{(N)}).
+\tag{11.4}
+$$
+
+It supplies no instance of (11.2). A sufficient unresolved optimizer inequality for each intended $N$ is precisely
+
+$$
+\exists n,\ \exists\{C_j\}\text{ disjoint interior intervals}:\quad
+\sum_j\frac{6^{-4|C_j|}}{2|C_j|}
+\sum_{a,b}\operatorname{tail}_{N^2}\bigl(S_{C_j}^{a,b}(\pi_n)\bigr)>\tau.
+\tag{11.5}
+$$
+
+Proof. The two limits (10.6)–(10.7) contradict that implication for the same law $P^{(N)}$. Proposition 6.3 applies to its finite persistent mixture, proving (11.4) with the original entire-exterior density. Its exhibited hidden dimension is $2(N^2+1)$, whereas the comparison rank is $N$; it is not an $N$-state attainer. Every matrix in (11.5) instead uses the conditionals and weights of the actual full optimizer $\pi_n$. Theorems 9.2 and 10.1 establish neither a positive lower bound for those tails nor a coupling that transfers (10.17) to them. The implication from (11.5) is Corollary 11.1, whose strict spectral premise remains additional. In particular, no all-$N$ strict-gap conclusion or finite attainer follows from this comparison construction. $\square$
+
+## 12. Mathematical citations for the shared-context criterion
+
+[Guarded][SC-G], *FIB harmonic-edge load: guarded replacement, attainment and conditional-rank obstruction*, Lemma 8.1 supplies the constant $c_m$ on the hard legal completion graph, including singleton and forcing cases. Definition 6.3 supplies the all-cut nonnegative-rank family; Theorem 6.2 and Corollary 6.4 supply the actual-law guarded conditional and its budget. Propositions 3.2–3.3 and Lemmas 4.2–4.3 of the present volume supply the stationary mixture, actual conditional weights, independent-fit bound and classifier; Theorem 5.1 is its rank-two global/local separation. These remain the suppliers for Theorems 9.2 and 10.1.
+
+[Intrinsic][SC-I], *FIB harmonic-edge load: intrinsic-null kernels, dual residuals and presentation obstruction*, §2 supplies the finite-realization context-rank mechanism. [Whitebox][SC-W], *FIB atom machine-learning whitebox*, Theorem 43.5 supplies the weighted projection/spectral-tail mechanism in a different readout problem. [Product-upper and phase-cut rank][SC-P], §23 concerns upper Schmidt-tail bounds for coherent square-root probability amplitudes. Those matrices and upper bounds are different from the weighted conditional probability tables and lower Brier-discrepancy bound in (9.2)–(9.4).
+
+[Dawid–Lauritzen–Parry][SC-DLP], *Proper local scoring rules on discrete sample spaces*, §4.2, Example 4.4 and (14), gives the conditional Brier/ratio-matching background. Its everywhere-positive product-space hypotheses are not a substitute for the hard no11 graph coercivity cited above. [Balle–Panangaden–Precup][SC-BPP], *A Canonical Form for Weighted Automata and Applications to Approximate Minimization*, §2.2, treats real weighted realizations and Hankel rank factorization. No positive stationary realization converse is used here. [Eckart–Young][SC-EY], *The Approximation of One Matrix by Another of Lower Rank*, is the classical matrix approximation reference; the full lower-bound argument needed here is (9.9). The discrepancy application and its common-law comparison in §§9–11 are a synthesis of these tools, without a literature-priority assertion.
+
+[Stripping][SC-S], *Equivalent-mass stripping and exponential terminal information*, Theorems 3.1, 5.1 and 6.5, gives fixed-producer geometric entropy tails on the original full domain. [Entropy erasure][SC-H], *Entropy gaps and actual erased-center influence*, Theorem 3.1, compares those tails with both actual complete-half-line erasure defects. [Attainment][SC-A], *Attainment, strong-zero equivalence and finite-optimizer comparison*, Theorem 1.5 and Corollary 9.1, supplies the attainment-to-strong-zero bridge under the resulting root sum. The constants remain law-dependent, and the common-law spectral premise (11.5) is separate from every one of these suppliers.
+
+[SC-G]: FIB_LEGAL_EDGE_LOAD_GUARDED_REPLACEMENT_ATTAINMENT_AND_CONDITIONAL_RANK_OBSTRUCTION.md
+[SC-I]: FIB_LEGAL_EDGE_LOAD_INTRINSIC_NULL_KERNEL_DUAL_RESIDUAL_AND_PRESENTATION_OBSTRUCTION.md
+[SC-W]: FIB_ATOM_MACHINE_LEARNING_WHITEBOX.md
+[SC-P]: FIB_LEGAL_EDGE_LOAD_PRODUCT_UPPER_EDGE_FIELD_STABILITY_AND_PHASE_CUT_RANK.md
+[SC-S]: FIB_LEGAL_EDGE_LOAD_EQUIVALENT_MASS_STRIPPING_EXPONENTIAL_TERMINAL_INFORMATION.md
+[SC-H]: FIB_LEGAL_EDGE_LOAD_ENTROPY_ERASURE_INFLUENCE_WEIGHTED_MOMENT.md
+[SC-A]: FIB_LEGAL_EDGE_LOAD_ATTAINMENT_STRONG_ZERO_EQUIVALENCE_AND_FINITE_OPTIMIZER_COMPARISON.md
+[SC-DLP]: https://arxiv.org/html/1104.2224v2
+[SC-BPP]: https://arxiv.org/html/1501.06841v3
+[SC-EY]: https://doi.org/10.1007/BF02288367
+
+## 追加锚（本行以下为增补区）

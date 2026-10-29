@@ -1,0 +1,30 @@
+**Proposition 37.3 (the zero and one-order cases, and a pointwise limit).**
+The zero-order class has mature attainable coordinates $(Q,U)=(0,2)$.
+For $d=1$ the exact class is
+$\{0^\infty,10^\infty,1^\infty\}$, and the uniform Read minimum
+is two, attained together with $U=4$. Nevertheless a correct uniform
+preparation can return on $0^\infty$ with one Read at cut three.
+Thus Theorem 37.2 does not assert $Q\ge2d$ separately on every
+actual source run.
+
+Proof. Order zero fixes all bits to zero, so the first assertion is
+the final case of Theorem 37.2. In order one, the coefficient is zero
+or one and the seed is zero or one. The zero seed always gives zero;
+the other choices give exactly the impulse and the constant-one stream.
+Their first two bits are respectively $00,10,11$. The first birth
+has parent the root and is read by $aa$ at cut three. For a second
+Read, its earned bit determines the parent $p_2$ of birth two:
+$p_2=b$ if $z_1=0$, and $p_2=a$ if $z_1=1$. At cut four the
+legal query $p_2aa$ gives $z_2$ by (GPO.83). These are paid
+presence queries, with real updates between them. Since $v_3=1$
+and $v_4=2$, $N(2)=4$. Three distinct streams exceed a one-bit
+tree's capacity, establishing the worst-case two-Read requirement.
+
+A variant terminates after the first query if its bit is zero, because
+only $0^\infty$ is then compatible in this class. It installs that
+known continuation by finite local computation at cut three. On a one
+reply it performs the second query and returns at cut four. This is
+uniformly correct with worst-case two Reads, yet uses only one on the
+zero source. The example also distinguishes earned information about
+an actual behavior from a fixed presentation bound. $\square$
+

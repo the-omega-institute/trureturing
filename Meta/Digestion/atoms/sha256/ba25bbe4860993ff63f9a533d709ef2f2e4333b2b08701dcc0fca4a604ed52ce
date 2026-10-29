@@ -1,0 +1,63 @@
+**定义 46.1（逐址的实局部完成）。** 对 $0<h<1$ 置 $b=1-h$，并令
+
+$$
+c=\sqrt{b^2+h^2},\qquad
+\gamma=\frac{c-b}{\sqrt h},\qquad
+\varphi=\sqrt{h-\gamma^2}.
+\tag{46.1}
+$$
+
+由 $b<c<b+h=1$ 得 $0<\gamma<\sqrt h$，所以 $\varphi>0$。在实三维空间取
+正交单位基 $e_0,e_1,e_2$，定义
+
+$$
+u_0=e_0,\qquad
+u_1=\sqrt b\,e_0+\sqrt h\,e_1,\qquad
+u_2=\sqrt b\,e_0+\gamma e_1+\varphi e_2.
+\tag{46.2}
+$$
+
+三个向量都是单位向量，且其 Gram 矩阵为
+
+$$
+H_h=
+\begin{pmatrix}
+1&\sqrt b&\sqrt b\\
+\sqrt b&1&c\\
+\sqrt b&c&1
+\end{pmatrix}.
+\tag{46.3}
+$$
+
+事实上 $\langle u_1,u_2\rangle=b+\sqrt h\,\gamma=c$。由 (45.9)，
+
+$$
+H_h(j,l)=\left|G_h(j,l)\right|\qquad(j,l\in\{0,1,2\}).
+\tag{46.4}
+$$
+
+令 $\mathsf E$ 为所有有限支撑映射 $\sigma:\mathcal A\to\{0,1,2\}$ 的集合，
+并以 $e_\sigma$ 为 $\ell^2(\mathsf E;\mathbb R)$ 的标准基。若
+$u_j=\sum_{q=0}^2u_{j,q}e_q$，对每棵树定义有限支撑向量
+
+$$
+U_h(t)=
+\sum_{\substack{\sigma:\mathcal A\to\{0,1,2\}\\
+                 \sigma(p)=0\ (p\notin S(t))}}
+\left(\prod_{p\in S(t)}u_{\lambda_t(p),\sigma(p)}\right)e_\sigma.
+\tag{46.5}
+$$
+
+至多有 $3^{|S(t)|}$ 个非零坐标。有限分配律和 (46.3) 给出
+
+$$
+\|U_h(t)\|=1,\qquad
+Q_h(s,t):=\langle U_h(s),U_h(t)\rangle
+ =\prod_{p\in\mathcal A}H_h(\lambda_s(p),\lambda_t(p))
+ =\left|P_h^{\mathrm c}(s,t)\right|.
+\tag{46.6}
+$$
+
+最后一个等式可逐因子取模，因为所有 $H_h(j,l)$ 都是非负实数。这个构造只使用
+每棵树的有限位置集；它不要求一个抽象的无限张量积，也不把地址坐标宣称为物理子系统。
+

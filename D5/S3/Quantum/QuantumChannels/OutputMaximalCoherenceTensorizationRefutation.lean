@@ -92,7 +92,7 @@ private theorem coherence_psd_le_one {n : Type*} [Fintype n]
   simpa only [Complex.normSq_eq_norm_sq] using
     D5.S3.Quantum.Matrix.CartesianVariance.psd_entry_bound hρ i j
 
-private theorem kraus_psd {a b κ : Type*} [Fintype a] [DecidableEq a]
+theorem kraus_psd {a b κ : Type*} [Fintype a] [DecidableEq a]
     [Finite b] [Fintype κ] (K : κ → Matrix b a ℂ)
     (ρ : Matrix a a ℂ) (hρ : ρ.PosSemidef) : (krausApply K ρ).PosSemidef := by
   classical

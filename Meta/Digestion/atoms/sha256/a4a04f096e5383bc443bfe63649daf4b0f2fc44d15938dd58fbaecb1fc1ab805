@@ -1,0 +1,14 @@
+## 2. The odd family
+
+For $r\geq1$, put $m=2r+1$, $n=2r+2$, and define
+
+$$
+ x_r=0\,1^{\,2r-1}0,
+ \qquad
+ y_r=0^{\,r}1 0^{\,r}.
+ \tag{2.1}
+$$
+
+At these parameters $\binom{n}{m}=n$, so the mask is exactly one uniformly
+chosen deletion position. Put $f(t)=t\log_2 t$ for $t>0$.
+

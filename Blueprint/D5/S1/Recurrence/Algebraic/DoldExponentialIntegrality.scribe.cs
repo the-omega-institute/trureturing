@@ -23,6 +23,10 @@ internal sealed class DoldExponentialIntegralityDocument : IScribeDocumentDefini
             Node("expSeries_nsmul", "Scaling the input takes powers", All("f", PS(Q()), Imp(Eqn(Call("constantCoeff", V("f")), D(0)), All("n", N(), Eqn(Exponential(QualifiedCall("HSMul", "hSMul", V("n"), V("f"))), Pow(Exponential(V("f")), V("n")))))),
                 "Substitution into PowerSeries.exp_pow_eq_rescale_exp gives the natural-scaling identity.", DescribeRole.Theorem,
                 AssessedProvenance.FromRepo(Source)),
+            Node("expSeries_add", "Exponential of a sum", ExponentialAdditionFormula(),
+                "For two rational formal series with zero constant coefficients, substituting their sum "
+                    + "into the exponential gives the product of the two substituted exponentials.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("integral_exp_of_dold", "Dold congruences imply integrality", All("c", Seq(N(), Sp, To, Sp, Z()), Imp(Call("Dold", V("c")), All("n", N(), Ex("z", Z(), Eqn(Coeff(V("n"), Exponential(Call("logInput", V("c")))), Cast(V("z"), Q())))))),
                 "Apply the sufficient Dieudonne-Dwork criterion at each prime. The Dold congruences make the logarithmic difference locally integral; a rational coefficient integral at every prime has denominator one. The local-integrality induction is adapted from AINTLIB.", DescribeRole.Theorem,
                 AssessedProvenance.FromLiterature(Source)))));
@@ -68,5 +72,13 @@ internal sealed class DoldExponentialIntegralityDocument : IScribeDocumentDefini
     private static Formula QualifiedCall(string owner, string name, params Formula[] args) =>
         new Formula.Apply(Seq(Operatorname, Grp(V(owner), Dot, V(name))), [.. args]);
     private static Formula Exponential(Formula input) => Call("subst", input, Call("exp", Q()));
+    private static Formula ExponentialAdditionFormula()
+    {
+        var f = V("f"); var g = V("g");
+        return All("f", PS(Q()), All("g", PS(Q()),
+            Imp(Eqn(Call("constantCoeff", f), D(0)),
+                Imp(Eqn(Call("constantCoeff", g), D(0)),
+                    Eqn(Exponential(Add(f, g)), Mul(Exponential(f), Exponential(g)))))));
+    }
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
 }

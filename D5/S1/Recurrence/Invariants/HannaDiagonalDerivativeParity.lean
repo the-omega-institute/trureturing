@@ -63,6 +63,7 @@ proof_shape: result: bind-only; settles A375449.
 escape_witness: none
 admission_basis: open-problem-resolution (#18827; Proved)
 Direct frozen dependency identities are provided in the handover.
+Escape audit unfinished for the published step definition: https://github.com/the-omega-institute/trureturing/issues/21518.
 Escape audit unfinished for HannaDiagonalDerivativeParity.diagonal_integral_parity, HannaDiagonalDerivativeParity.result, HannaDiagonalDerivativeParityA375452.result, UnitReversionSquareParity.mersenne_zero, UnitReversionSquareParity.mersenne_step, LinearExponentDyadicSupport.square_odd and LinearExponentDyadicSupport.derivative_map: https://github.com/the-omega-institute/trureturing/issues/19834.
 The definitions state Hanna's generating equation and parity conjecture.
 The strict contraction is instantiated through PowerSeriesNormalizedContraction.exists_unique_fixed.
@@ -88,7 +89,7 @@ section General
 variable {R : Type*} [CommRing R]
 private noncomputable def euler (f : PowerSeries R) : PowerSeries R := X * derivative (R := R) f
 private noncomputable def nonlinear (c : R) (f : PowerSeries R) : PowerSeries R := euler f * f * (invOfUnit (1 - C c * f) 1)
-private noncomputable def step (t : ℕ → R) (f : PowerSeries R) : PowerSeries R :=
+noncomputable def step (t : ℕ → R) (f : PowerSeries R) : PowerSeries R :=
   mk fun n => if n = 0 then 0 else t n - coeff n (nonlinear (n : R) f)
 
 private theorem euler_coeff (f : PowerSeries R) (n : ℕ) : coeff n (euler f) = (n : R) * coeff n f := by

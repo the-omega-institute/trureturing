@@ -1,0 +1,22 @@
+**Proposition 12.3 (time-only failure and the exact logical task).** Even
+with exact $n$, advice and known $\pi$, $T_o$ alone does not determine
+$u$ or its complete logical Read/applyRho behavior. For common source-free
+logical control and initialization, the equivalence of originals under
+all finite logical Read/applyRho/stop tests is exactly equality of $u$.
+The present target contains additional realization coordinates; this does
+not prove a minimal complete-memory encoding for every consumer.
+
+Proof. Choose any $n\in[A,B]$ and an $n$-leaf ordered shape. Its all-alpha
+and all-beta labellings at the same $k$ and orientation have equal counts,
+advice and $T_o$, but a logical Read at any original leaf address has
+different replies. More generally distinct finite ordered labelled trees
+have different four-valued replies at some literal address: descend through
+common branch roots until the first unequal node type or label. One Read
+and stop at that address distinguishes them. Equal originals have equal
+successor trees under every logical update and equal replies at every
+request; induction on the common logical controller gives equal choices
+and outputs. This proves exactly the stated task equivalence. The target's
+$k$ and $\pi$ also specify the authentic entrance and physical adapter;
+no lower bound here makes each such field necessary for every restricted
+consumer or every alternative memory representation. $\square$
+

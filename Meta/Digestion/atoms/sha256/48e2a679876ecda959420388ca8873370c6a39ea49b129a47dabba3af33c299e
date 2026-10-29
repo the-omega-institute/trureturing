@@ -1,0 +1,10 @@
+### Definition 61.1 (destructive calibrated reader)
+
+The initial source is \((i,z)\) with \(i\in\{1,2,3\}\) and \(z\in\{0,1\}\). The
+target is \(z\). The three actions have responses
+
+| calibration class | \(a\) | \(b\) | \(c\) |
+|---|---:|---:|---:|
+| \(i=1\) | \(z\) | \(z\) | \(\star\) |
+| \(i=2\) | \(\star\) | \(z\) | \(z\) |
+| \(i=3\) | \(z\) | \(\star\) | \(z\) |

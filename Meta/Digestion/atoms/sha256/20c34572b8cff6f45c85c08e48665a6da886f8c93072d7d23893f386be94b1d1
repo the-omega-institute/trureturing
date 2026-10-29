@@ -1,0 +1,61 @@
+**Theorem 24.2 (complete current fibers and their exact sizes).** With
+$F_0=0,F_1=1$, for every attained $n\ge2$ and every attained $S$,
+the current labelled fiber over $S$ consists of exactly the independent
+choices of $(\chi_p)_{p\in C(S)}$, and
+
+$$
+\begin{aligned}
+ |C(S)|&=F_{n-1}=:c,\\
+ \#\{X_n\text{ over this }S\}&=2^c,\\
+ \#\{S\text{ attained at }n\}&=2^{F_n-1},\\
+ \#\{X_n\text{ attained at }n\}&=2^{F_{n+1}-1}.
+\end{aligned}
+\tag{GPO.68}
+$$
+
+The $2^c$ states have pairwise different $\mathcal Q_1$ maps.
+
+Proof. The supplied recurrence is $T_0=\alpha,T_1=\beta$ and
+$T_m=\langle T_{m-1},T_{m-2}\rangle$ for $m\ge2$, with
+$\ell(T_m)=F_{m+1}$. Every branch therefore has a unique rank
+$m\ge2$, determined by its leaf count, since these counts are
+strictly increasing from rank one onward. At rank $m\ge3$ its
+child leaf counts $F_m,F_{m-1}$ are unequal. The physical shape
+therefore identifies which child has which rank. Rank two is the
+sole exception: both children are leaves, one beta and one alpha.
+These are precisely $C(S)$. A rank-zero leaf can only arise as
+the child of rank two; every other leaf is known beta. It follows
+recursively that all remaining ranks, labels and nonterminal local
+orientations are determined by $S,n$, and the displayed terminal
+choices describe the whole fiber.
+
+The number $c_m$ of rank-two occurrences has
+$c_0=c_1=0,c_2=1$ and $c_m=c_{m-1}+c_{m-2}$ for $m\ge3$.
+Thus $c_n=F_{n-1}$. There are $F_{n+1}-1$ actual branches, each
+born with one wiring bit. A fully labelled physical tree recovers
+every one of those bits: unequal-size child subtrees identify the
+nonterminal bits, and the beta position identifies each terminal bit.
+Conversely every assignment is realized at the corresponding actual
+births. Hence there are $2^{F_{n+1}-1}$ labelled trees, without
+identifications. Each shape has exactly the $2^{F_{n-1}}$ states
+already described, yielding $2^{F_n-1}$ shapes. These counts concern
+one joint tree realization per assignment, rather than products of
+separately attainable marginals.
+
+For $p\in C(S)$, after one real update,
+
+$$
+ P_{\rm next}(paa)=\chi_p,\qquad
+ S_{\rm next}=S\ \cup\
+   \{qa,qb:q\text{ is a current beta leaf}\}.
+ \tag{GPO.69}
+$$
+
+Beta becomes a branch and alpha becomes the leaf beta. The new
+branch's orientation permutes only its two new leaves, so neither
+identity depends on that new bit. The reconstructed current labels
+from $(S,\chi)$ give the entire successor set in (GPO.69), hence
+all replies, with no missing absent-word cases. Distinct $\chi$
+give different replies at some $paa$. This proves both exact
+distinction and sufficiency for the full task. $\square$
+

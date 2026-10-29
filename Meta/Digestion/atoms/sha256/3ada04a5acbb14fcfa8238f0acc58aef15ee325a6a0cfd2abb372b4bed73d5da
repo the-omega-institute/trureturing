@@ -1,0 +1,19 @@
+**Definition 87.1 (earned geometry and a finite sampling horizon).** At the end of a pure encoding word let $t=t(w)$, $x_h=v_w$ in $+$ or $x_h=u_w$ in $-$. The observer's current terminal-address antichain $B_0$ is earned from the actual origin and Growth replies of Definition 84.1. Its prefix closure is exactly $V_t$. Arity parses that rooted support into alpha, unary beta and binary branch, as in AA Definition 17.3. Thus $B_0$ supplies the current geometry without any old serial-order annotation. Put $J=[e_{\ell_1},\ldots,e_{\ell_b}]$ in its actual current order, and choose the distinct canonical horizons
+
+$$
+d_+=I=N-b=n,\qquad d_-=N-1.
+\tag{87.1}
+$$
+
+The second convention is deliberately the full finite-order horizon. Its account below is not replaced by the first horizon's shorter account.
+
+For $d\ge I$ define the rational observation matrix
+
+$$
+O_d=
+\begin{bmatrix}J^{\mathsf T}\\J^{\mathsf T}T_t\\ \vdots\\J^{\mathsf T}T_t^d\end{bmatrix}.
+\tag{87.2}
+$$
+
+The following use of leaf forcing is an application of the mature tree-infection construction, including [Native Leaf Boundary Acquisition, §3](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_LEAF_BOUNDARY_ACQUISITION.md). Its rooted-terminal version below includes alpha, beta and a unary root, instead of importing that supplier's $b\ge3$ root-recognition hypotheses.
+

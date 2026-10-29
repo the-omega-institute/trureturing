@@ -1,0 +1,22 @@
+**命题 84.2（scalar fibre 不决定扩域后的 fixed-task answer）。** 对 finite $n\ge3$ 及 $n=\infty$，令 $\tau=2^{1-n}$，在 infinity 取 $\tau=0$。采用 [Purity Theorem 92.2][F84PA92] 的 normalized Choi partner $\sigma_n$ 及其 EB channel $\Psi_n$。它与实际 normalized Choi state $\omega_n$ 的两个 marginals 均为 $I_3/3$；对每一组独立 local SIC choices 与每一组 independent complete local MUB choices，二者对应 table norms 同时相等：
+
+$$
+\|\mathbf P\|_*=(5+3\tau)/36,\qquad
+\|\mathbf Q\|_*=5/3+\tau.
+$$
+
+SIC 使用 effects $\Pi_i/3$，MUB 使用 literal projectors；不添加 basis-sampling factor。对同一 fixed task $P_0=P=|\xi\rangle\langle\xi|$，全部 input densities 上、分别允许一个 input-independent terminal CPTP decoder 的 optima 却为
+
+$$
+\eta_{P_0}(F^n)=0,\qquad
+\eta_{P_0}(\Psi_n)=\frac{2(1-3\tau)}{7-3\tau}>0.
+$$
+
+因此在包含这两类 channels 的 comparison domain 上，任何仅使用上述 marginals 与 scalar norms 的函数都不能决定该 task optimum。
+
+**证明。** scalar equality、separable partner 与 channel correspondence 直接使用 Purity Theorem 92.2；exact unrestricted task values、attaining decoder 和 lower certificate 直接使用 Environment Theorem 28.2，不在此重建。两个 channels 在同一 retained scalar fibre 内，但该 task answer 不同，所以 answer 不能通过此 observation map factor。把相同读数代入任意 nonlinear postprocessing 仍相同，故后处理亦不能补回区别。∎
+
+有限 $n\ge3$ 时 $\omega_n$ 是 NPT 而 $\sigma_n$ separable；infinity 时二者 channels 都是 EB，仍有 gap $2/7$（$n=3$ 时为 $2/25$）。这个任务差异因而也不等同于 EB/non-EB 二分。在 promised actual family 上，$\|\mathbf Q\|_*-5/3=\tau$ 仍恢复参数；反例使用的是 enlarged domain，未否定该受限辨识。固定同一 local frames 的 full tables 仍 informationally complete，故会区分 partners；二者 output on $P_0$ 已不同。
+
+量词严格为 $\forall n\in\{3,4,\ldots,\infty\}\ \exists\Psi_n$，各 channel/task/horizon 有各自允许的 decoder。这里没有一个 channel 其 powers 同时等于全部 $\Psi_n$ 的结论，没有一个 decoder 同时实现全部 optima 的结论，也没有 partners 与 actual FIB histories 相同的结论。frame identities、entanglement bounds、product-state construction 的成熟先例与适用规范均沿 Purity §§89、92 所引文献，不把供应证书重复计作本批新的 witness。
+

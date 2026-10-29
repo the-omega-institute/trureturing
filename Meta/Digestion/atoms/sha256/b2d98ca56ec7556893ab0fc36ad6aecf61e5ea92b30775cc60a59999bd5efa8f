@@ -1,0 +1,40 @@
+**Corollary 4.3 (same physical presence service, different actual originals).**
+No passive controller satisfying Assumption 1.2 can uniformly recover
+the joint target on the full $k=1$ subdomain, for any nonempty sharp
+interval. In particular the sharp advice $A=B=3$ admits two histories
+with exactly the same physical presence service and different ordered
+authentic originals.
+
+Proof. For any $n\in[A,B]$ choose an all-alpha original. The two members
+of its fiber in Theorem 4.2 already prevent uniform recovery of the
+orientation coordinate. To witness different originals take
+
+$$
+ u=\langle\langle\alpha,\alpha\rangle,\alpha\rangle,
+ \qquad u'=\mu u=\langle\alpha,\langle\alpha,\alpha\rangle\rangle.
+ \tag{GPO.17}
+$$
+
+Use $k=1$, $\pi(a)=L,\pi(b)=R$ for the first realization and the reversed
+bijection for $u'$. The same all-alpha cherry replacement proves that
+$P^\pi_{\rho^2u}(w)=P^{\bar\pi}_{\rho^2u'}(w)$ for every physical word.
+Both have exact original count three and advice $[3,3]$.
+
+Choose identical accessible bindings, grants, initial control and backing,
+with the same admissible allocation and completion behavior. Induction on
+accessible transitions shows identical local choices and physical queries,
+identical returned presence bits, and hence identical stopping and retained
+outputs. They cannot equal both targets. This induction concerns every
+passive adaptive controller on this service, not just the proposed protocol.
+It is the standard observation-fiber indistinguishability argument used in
+ABT39.2 and [Joint Moment Fibers][JM], §§36–39.
+
+The service equated here is the installed presence projection. The hidden
+full physical replies need not agree: at a replacement cherry the alpha
+and beta labels occupy opposite physical children. The inaccessible raw
+writer may therefore differ, even when its epochs agree. Giving that
+writer or full labels to control changes the observation contract. The
+counterexample does not assert failure for every individual $k=1$ source,
+as Theorem 4.2's beta-containing domain shows. It also makes no assertion
+against protocols that actually mutate the register. $\square$
+

@@ -8,7 +8,7 @@ internal sealed class BonettoSignatureDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/SpectralGraph/BonettoSignature.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/bonetto2024mixed");
+        LibraryNoteRef.Create("D5/L/QuadraticForms/bonetto2024mixed");
 
     public DocumentDefinition Create()
     {

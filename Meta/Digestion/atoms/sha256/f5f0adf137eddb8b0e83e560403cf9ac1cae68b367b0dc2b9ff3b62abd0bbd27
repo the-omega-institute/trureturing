@@ -1,0 +1,37 @@
+### 6.2 Independent source Werner or white noise
+
+For each edge \(e\in\{\alpha,\beta,\gamma\}\), let
+
+\[
+\rho_e(w_e)
+=
+w_e\rho_e+(1-w_e)\frac{I_e}{d_e}.
+\]
+
+With fixed local measurements \(M_A,M_B,M_C\),
+
+\[
+P_{\mathbf w}
+=
+\operatorname{Born}\!\left(
+\rho_\alpha(w_\alpha)\otimes
+\rho_\beta(w_\beta)\otimes
+\rho_\gamma(w_\gamma);
+M_A,M_B,M_C
+\right).
+\]
+
+Expanding the tensor product gives
+
+\[
+P_{\mathbf w}
+=
+\sum_{S\subseteq\{\alpha,\beta,\gamma\}}
+\left(\prod_{e\in S}w_e\right)
+\left(\prod_{e\notin S}(1-w_e)\right)
+P_S,
+\tag{6.2}
+\]
+
+where \(P_S\) is the distribution with ideal state on edges in \(S\) and maximally mixed state on the other edges. This is a multi-affine polynomial in the three source visibilities. It is a mixture of eight quantum distributions, not generally the one-dimensional global line (6.1).
+

@@ -1,0 +1,50 @@
+**Definition 37.1 (native preparation and completed future readiness).**
+Fix the entire class $\mathscr R_d$ of Definition 29.1, with public
+$d\ge0$, and the actual source and service of Definition 27.1.
+The source starts at its actual known alpha leaf. Its one autonomous
+stream is fixed before the first birth, satisfies (GPO.75) at every
+nonnegative index, and is aligned by $z_j=s_{j-1}$. Its actual birth
+order is update order followed by physical lexicographic parent order.
+No minimality, nonsingularity, positive order or periodicity is added.
+
+A preparation has common initially source-blind code and accessible
+initial data at fixed public inputs. It may use arbitrary legal finite
+physical-word presence Reads, adaptive serial update schedules, and
+arbitrary finite source-free local computation and retention. It must
+return after finitely many actual operations on every promised source,
+at a completed mature cut $n\ge2$. Write $Q$ for its paid binary
+Read count and $U=n$ for its actual updates from alpha. There is no
+bound here on finite literal lengths or local work. All requested
+words, addresses and schedules must be computed from genuinely
+accessible inputs and acquired replies.
+
+Read alone exposes a source-dependent bit. Updates expose only the
+common acknowledgement. Labels, generator data, hidden writer,
+allocator identities, source backing, work, durations and waiting are
+not observation channels. Actual source/root binding, live Read/update
+grants, exclusive serialization, completion, persistent physical links,
+and sufficient owned growing backing are retained premises, with their
+own charges. No reset, clone, historical root, reroot or richer sensor
+is allowed. An independently supplied local input or random tape has
+no source-dependent advice.
+
+Complete-future readiness means that the returned accessible data and
+installed source-free evaluation procedure already determine exactly
+the whole task of Definition 31.1 on this same actual source: every
+finite presence/update continuation, all its replies, and its physical
+support and labelled-tree successors, including absent-word replies.
+Each supplied finite request must be evaluable by terminating finite
+local work. A finite adaptive request may use actual supplied selector
+inputs as in Theorem 34.3. The evaluator does not obtain new source
+data while predicting a hypothetical request. A returned handle that
+will learn the law by later source calls is not completed readiness.
+Actual execution of a requested call is a separate paid operation.
+
+The joint task additionally asks for the current labelled $X_n$ and
+the current $\mathcal Q_1$ answer at that same returned cut. Only
+these full-future and joint tasks are compared below. A uniform cap
+$q$ means $Q\le q$ on every promised source. For independently
+randomized preparations the requirements are zero error, almost-sure
+finite return, and an almost-sure cap on each source; expected cost
+is a different comparison.
+

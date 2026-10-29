@@ -1,0 +1,16 @@
+**Theorem 4.4 (Vanishing fixed-block defects for one stationary law).** Fix the single stationary law (3.3). For any fixed $m\ge1$, any $n>m$ with $(n-m)\Delta\ge8$, and any deterministic family of $B$ disjoint length-$m$ intervals in $[1,n]$,
+
+$$
+\sum_{j=1}^B\mathbb E_{\mu_n}
+\delta_{N,m}^{a_j,b_j}\bigl(\mu_n(W_{C_j}=\cdot\mid W_{[1,n]\setminus C_j})\bigr)
+\le2mB\exp(-(n-m)\Delta^2/64)
+\le2n\exp(-(n-m)\Delta^2/64).
+\tag{4.10}
+$$
+
+Hence the sum tends to zero as $n\to\infty$ for every fixed $m$, uniformly over these families. At $m=m_0$, every interior-block term is nevertheless strictly positive for each supported finite complement.
+
+Proof. The complement of any length-$m$ interval contains a contiguous segment of length $s\ge(n-m)/2$. Classifying from its empirical mean uses only the observed complement. Lemma 4.3 bounds its error by $2\exp(-(n-m)\Delta^2/64)$. Given that complement, the minimum conditional error among label guesses is $1-\max_\ell\theta_\ell$: guessing $k$ is correct with probability $\theta_k$. Its expectation, the Bayes error using the full complement, is no greater than the error of the segment classifier. Taking expectations in (4.3) proves the first bound after summing. Disjointness gives $mB\le n$, proving the second. The exponential bound tends to zero for fixed $m,\Delta>0$. The positivity assertion is Lemma 4.1.
+
+For lengths not satisfying the displayed size condition, (4.3) still gives the finite bound $mB$. The construction and its band have not excluded $n=1$, forced fibers, open endpoints or whole-interval blocks; only the concentration estimate needs a sufficiently long observed segment. All $\mu_n$ here are marginals of the same matrices and the same stationary $P$, not distributions selected independently with $n$. $\square$
+

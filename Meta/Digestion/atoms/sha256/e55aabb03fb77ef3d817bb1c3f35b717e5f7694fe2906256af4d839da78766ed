@@ -1,0 +1,18 @@
+### 7.1 归一化 Choi 约定
+
+[Choi 文献](#ref-9)与[Watrous 第三章](#ref-10)提供本节标准操作框架的背景。
+
+对 $\Phi:\mathcal L(\mathbb C^d)\to\mathcal L(\mathbb C^m)$，令
+
+<a id="eq-7-u01"></a>
+
+$$
+|\Omega_d\rangle=d^{-1/2}\sum_{j=1}^d|j,j\rangle,
+\qquad
+J_\Phi=(\Phi\otimes\operatorname{id})(|\Omega_d\rangle\langle\Omega_d|).
+$$
+
+输出因子在前、输入参考在后；保迹等价于 $\operatorname{Tr}_{\rm out}J_\Phi=I_d/d$，完全正等价于 $J_\Phi\succeq0$。若 $J_\Phi=\sum_\ell|v_\ell\rangle\langle v_\ell|$，则 $\operatorname{vec}(K_\ell)=\sqrt d\,v_\ell$ 给出 Kraus 表示；反向由 Kraus 展开直接得到正性。在这个约定中，单个 Kraus 的输出偏迹带转置，但对目标 $I_d/d$ 不改变保迹条件。
+
+<a id="lem-7-1"></a>
+

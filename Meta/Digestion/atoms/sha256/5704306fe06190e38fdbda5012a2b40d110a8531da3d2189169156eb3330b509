@@ -1,0 +1,20 @@
+**定理 47.1（任意规则的确定截断界）。** 在任一给定的 $P_\delta$ 下，$\delta\ne0$、$t+\delta\in(0,1)$，设规则满足（44.5）及该律下的有限终止错误界 $\epsilon$。则对每个确定整数 $r\ge1$，
+
+$$
+\mathbb E_\delta\tau
+\ge r\left[b_t-\epsilon-|\delta|\sqrt{C_t r/2}\right]_+,
+\qquad [x]_+=\max(x,0).
+\tag{47.1}
+$$
+
+这一结论允许规则按被评估的参数分别选择，也不需要几乎处处终止。
+
+**证明。** 定义二值 $\mathcal F_r$ 可测函数 $g_r$：在 $\{\tau\le r\}$ 上取终止标签 $D$，其余处取零。其在 $P_\delta$ 下的错误至多为 $\epsilon+P_\delta(\tau>r)$。把已选定的同一个有限词函数放到 $P_0$ 下，引理 46.1 给出错误至少为 $b_t$。引理 45.1 的确定时域有界损失比较因此给出
+
+$$
+P_\delta(\tau>r)
+\ge b_t-\epsilon-|\delta|\sqrt{C_t r/2}.
+$$
+
+逐路径有 $\tau\ge r\mathbf1_{\{\tau>r\}}$；取扩展期望并用非负性得到（47.1）。这里只转移一个截断后的决策，不要求其他参数使用这个规则。$\square$
+

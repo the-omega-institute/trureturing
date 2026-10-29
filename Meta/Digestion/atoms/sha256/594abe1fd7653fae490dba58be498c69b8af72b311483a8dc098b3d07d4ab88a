@@ -1,0 +1,12 @@
+**Correspondence 10.2 (Raginsky Theorem 3.1).** Raginsky's channel $K(\cdot\mid x)$ is the row $K(x,\cdot)$ of Lemma 4.1. His Dobrushin coefficient is
+
+$$
+\vartheta(K)=\max_{x,x'}\operatorname{TV}(K(\cdot\mid x),K(\cdot\mid x'))=d_K.
+$$
+
+His distribution-uniform coefficient $\eta_\Phi(K)$ is the supremum of output/input $\Phi$-divergence ratios over admissible reference and input laws. His reference law $\mu$ corresponds to $b$ and the competing law $\nu$ to $a$. Taking $\Phi(u)=(u-1)^2$ gives $D_\Phi(a\Vert b)=\chi^2(a\Vert b)$. Theorem 3.1 states $\eta_\Phi(K)\le\vartheta(K)$; hence its specialization is exactly (4.1), with coefficient $d_K$, not $d_K^2$. In the block application, $K=K_w$, so $d_K=\delta(B_w)$.
+
+Raginsky's positive-reference formulation is matched by restricting to the support of $b$ and then to the support of $bK$. Removing zero coordinates preserves the divergence and can only decrease the row-diameter bound. Lemma 4.1 also proves this extension directly. The binary identity (4.7) transfers that classical inequality to predictive variance. Lemma 5.1 then accounts for the observation's likelihood reweighting by the exact averaged budget (5.5), and Lemma 3.3 plus Theorem 6.1 place it on the original-law channel. This application and its explicit original-clock correspondence are the synthesis retained in this volume; they are not a new classical SDPI.
+
+The proof uses the explicit $h_t$ identity (4.3) throughout. It imports no statistical-information normalization formula from the primary text, so the half-$L^1$ convention is fixed without ambiguity. Nested references are not independently certified here. Evidence for the displayed matrix products and rational values is limited to the handwritten proofs given here.
+

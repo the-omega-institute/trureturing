@@ -1,0 +1,95 @@
+**Theorem 3.2 (finite zero-update reinstatement with logarithmic Reads).**
+Under Definition 1.1 and Assumption 1.2, Definition 3.1 is exact, finite,
+uniform and initially source-blind except for its declared earned input.
+Put
+
+$$
+ h=n-n_0,\qquad k=\lceil\log_2(h+1)\rceil.
+ \tag{ACR.12}
+$$
+
+Its achieved paid Read and literal coordinates on that same input are
+
+$$
+ \begin{aligned}
+ U_{\rm source}&=0,&
+ Q(n)&=\begin{cases}1,&k=0,\\2k,&k\ge1,\end{cases}\\
+ M(n)&=\left\lceil\frac{n_0+2^k}{2}\right\rceil\le n+1,&
+ W(n)&=\sum_{i=0}^{k}\left\lceil\frac{n_0+2^i}{2}\right\rceil
+       +\sum_{j=1}^{\max(k-1,0)}\left\lceil\frac{t_j}{2}\right\rceil
+       \le Q(n)M(n),
+ \end{aligned}
+ \tag{ACR.13}
+$$
+
+where $t_j$ are the actual subsequent bisection thresholds on that run.
+Thus $Q=O(1+\log(h+1))$, $M=O(n+1)$ and
+$W=O((n+1)(1+\log(h+1)))$.
+
+Including arithmetic, literal construction, computation of $B_n$,
+behavioral phase and writeback, one realization has local work
+
+$$
+ O\bigl(m+d+(d+1)^3(n+2)^3(1+\log(n+2))\bigr)
+ \tag{ACR.14}
+$$
+
+and peak owned data backing
+
+$$
+ O\bigl(m+(d+1)^2+(d+1)(n+2)+(n+2)^2\bigr)
+ \tag{ACR.15}
+$$
+
+bits for its data. In addition charge the actual fixed recovery and
+receiver code, its installation and entry initialization, the surviving
+service apparatus and the actual handoff; none of these supplied
+resources encodes the later unknown $n$. Installation includes $O(m+d+n+1)$ binary data writes for the returned
+record and phase, its finite ready-control writes, and the actual binding
+handoff; their native service and lifetime prices remain additional.
+For fixed $d$ this gives polynomial local work and backing. It does not
+specify a bound on physical Read duration, installation latency or a
+weighted sum of all resources.
+
+Proof. By Proposition 2.2, every reply in (ACR.10) is exactly the
+comparison $n\ge n_0+2^i$. A finite $n$ gives a first false comparison.
+For $h=0$ it is the first one. Otherwise its index is exactly the
+positive $k$ in (ACR.12), with $2^{k-1}\le h<2^k$. The candidate
+interval (ACR.11) contains exactly $2^{k-1}$ integers. Ordinary balanced
+binary search therefore takes exactly $k-1$ more comparisons, giving
+(ACR.13)'s $Q$. This is the doubling-plus-bisection supplier, not a new
+unbounded-search theorem: Bentley–Yao, *An Almost Optimal Algorithm for
+Unbounded Searching*, [SLAC-PUB-1679][BY], pp. 2–5, defines the monotone
+comparison problem, its prefix decision tree, and Algorithm B1. Here the
+new correspondence supplies each comparison as a physical literal with
+its actual price and actual source alignment.
+
+The largest threshold is $n_0+2^k$, attained in the first phase, and
+every later threshold is smaller. Proposition 2.2 gives the exact $M$
+and $W$ in (ACR.13). For $h>0$, $2^k\le2h$, and for $h=0$ the
+largest threshold is $n_0+1$; both imply $M\le n+1$.
+
+All thresholds are $O(n+1)$, although no such upper bound is given to
+the controller beforehand. Sum (ACR.9) over the achieved number of calls.
+Simple forward Fibonacci addition computes $F_{n+1}-1$ using $O(n^2)$
+bit operations and $O(n+1)$ bits. The binary encoding of $n$ needs only
+$O(\log(n+2))$ bits, whereas the explicit binary encoding of $B_n$ has
+$\Theta(n)$ bits as $n$ grows. Writing that field is charged accordingly.
+If a phase is wanted for $r>0$, apply the forward companion matrix
+$C^{B_n}$ to the seed vector. It returns
+$(s_{B_n},\ldots,s_{B_n+r-1})$, the behavioral register whose next
+output is $z_{B_n+1}$. Binary exponentiation uses $O(d^3(n+1))$
+bit operations. No private generator presentation is inverted.
+These bounds, including the finite calculation of $n_0$, fit
+(ACR.14)–(ACR.15). The retained input takes $O(m+d+1)$ bits and the
+optional phase takes $O(d+1)$; copying them and the numerical fields
+gives the stated data-write bound. Scratch may be reused between calls.
+
+The instruction scheme is fixed; loops, integers, scratch, operands and
+retained fields grow as paid ordinary data. Neither an age-dependent
+control table nor an optimal strategy oracle is installed. Finite local
+progress and completed Reads give termination. Presence calls and local
+work consume no births, and the entire interval through the real writes
+and handoff is stationary. Thus the installed $n,B_n$ are the actual
+current values at handoff. $\square$
+

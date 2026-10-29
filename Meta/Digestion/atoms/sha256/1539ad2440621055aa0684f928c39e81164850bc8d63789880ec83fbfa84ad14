@@ -1,0 +1,29 @@
+**Definition 148.1 (Common phase constants).**
+On $[-\rho,\rho]$, use the phase minor $T_t$ of (147.3) and define
+
+$$
+\begin{gathered}
+\Lambda_*=\max_{|t|\le\rho}
+ \frac{\sum_{j,k}|\operatorname{cof}_{jk}(T_t)|}{|\det T_t|},
+\quad p=1+\sqrt3,\quad B_*=(8/b+13p)\Lambda_*,\\
+m_*=5/8-b,\quad \kappa_*={\sqrt2(2+b)B_*\over m_*},\quad
+K_*=\tau+\tfrac12(\sqrt{34}/8+b),\\
+R_*=pK_*,\quad Z_*={[1+\tfrac p2(1+b)]B_*+\kappa_*R_*\over\tau},\quad
+c_*={1\over2(\kappa_*+B_*+Z_*)},\\
+C_*={1\over2}\max\{2K_*,2b,1,2\tau\},\quad
+J_*=1+{5\over2\tau},\quad M_*=\sqrt2 C_*,\quad G_*={M_*\over c_*},\\
+R_*'=1+{2J_*M_*\over c_*},\qquad
+E_*={1\over2}\left[b((R_*')^2+1)+2G_*\{(\tau+b/2)R_*'+(b/2)(R_*')^2\}\right],\\
+\eta_*=\min\left\{1,{1\over4R_*'},{1\over2G_*},{1\over40000E_*}\right\},\\
+G_{\rm ref}=2\sqrt2\,C_*/c_*,\quad R_{\rm ref}=1+J_*G_{\rm ref},\\
+\kappa_{\rm ref}=\tau+|s_\theta c_\theta|(\|D\|_{\rm HS}+b),\\
+C_{\rm ref,*}=R_{\mathfrak s}\left[(b+2|s_\theta c_\theta|\tau)(R_{\rm ref}+1)+\kappa_{\rm ref}G_{\rm ref}\right].
+\end{gathered}
+\tag{148.1}
+$$
+
+All maxima are over the compact phase interval and all entries are the
+literal rows with the original subnormalised masses. Hence these are
+finite, strictly positive, source-only constants; they contain no optimum
+value.
+

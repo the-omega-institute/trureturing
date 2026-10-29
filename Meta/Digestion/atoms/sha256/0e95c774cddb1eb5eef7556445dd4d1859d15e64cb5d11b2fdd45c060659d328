@@ -1,0 +1,20 @@
+**Definition 84.3 (the entire word domain).** Let $\mathcal W$ be all finite legal successful addressed LAB words from this alpha, including $\varepsilon$. Write $t(w)$ for their current term. For each fixed law (84.1), define the pre- and post-clock endpoint fields by their actual recurrences
+
+$$
+u_\varepsilon=v_\varepsilon=1,\qquad
+u_{wg}=\iota_gT_{t(w)}u_w,\qquad
+v_{wg}=T_{t(wg)}\iota_gv_w .
+\tag{84.2}
+$$
+
+The seed $1$ is earned by Definition 84.2, not unknown advice. A pure encoding run executes precisely its seed preparation and its chosen paired growth convention; no extra Reset, Add or unpaired Tick occurs. Reads, Holds, refusals and waiting are not letters of $w$. Canonical resource accounts below omit such extra activity except for an explicitly counted number of refused probes.
+
+If $w$ has $p$ promotions and $s$ splits, put $n=p+s$, $N=|V_{t(w)}|$, $b=$ number of rooted childless material vertices, and $I=N-b$. The persistent templates give
+
+$$
+N=1+p+2s,\qquad b=1+s,\qquad I=p+s=n.
+\tag{84.3}
+$$
+
+These identities apply to every finite word, with no fixed final tree or a priori bound on its length. The root itself is a rooted terminal for alpha; the beta marker is a terminal for beta. Neither case requires three unrooted leaves or an unearned root-recognition procedure.
+

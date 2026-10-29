@@ -1,0 +1,60 @@
+**Proposition 9.2 (a physical spine gives two ages per behavior).** Define
+
+$$
+ h=\max\{\ell\ge1:a^\ell\in S_n\},\qquad
+ k=\lceil\log_2(h+1)\rceil.
+ \tag{ACR.26}
+$$
+
+There is a source-blind paid procedure acquiring $h$: query
+$a,a^2,a^4,\ldots,a^{2^k}$ through the first absence, then bisect the
+remaining integer interval of possible maximum lengths. On this actual
+input it uses exactly $2k$ Reads, peak literal $2^k\le2h$ and traffic
+at most $2k\,2^k$. No law, semantic-port choice or age is used to form
+these words. Moreover
+
+$$
+ 1\le h\le n-1,\qquad h+1\le n\le2h+1.
+ \tag{ACR.27}
+$$
+
+For any proposed behavior $s\in\mathscr C_d$, compute its origin-orbit
+birth times by (ACR.5)--(ACR.6). Its cuts compatible with this acquired
+spine are precisely
+
+$$
+ I_s(h)=[b_s(a^h),\ b_s(a^{h+1})-1]\cap[n_0,\infty).
+ \tag{ACR.28}
+$$
+
+This interval has at most two integers, all at most $2h+1$. Thus the
+unbounded entrance has been reduced by actual Reads to at most $2D_d$
+distinct mature law/cut data, including its actual $(s,n)$.
+
+Proof. The root has branched by every allowed cut, so $a$ is present.
+By (ACR.7), a length-$\ell$ nonempty word is born in $[\ell+1,2\ell]$.
+Hence the spine is finite, and presence along it is a prefix predicate.
+The first absent power has exponent $k\ge1$, with
+$2^{k-1}\le h<2^k$. Its preceding present power and the absent power
+leave $2^{k-1}$ possible maxima; balanced bisection takes $k-1$ further
+calls. Including the $k+1$ power calls gives $2k$, and every submitted
+length is at most $2^k\le2h$.
+
+Presence of $a^h$ gives $n\ge h+1$. Absence of $a^{h+1}$ gives
+$n<b_s(a^{h+1})\le2h+2$, proving (ACR.27). For each hypothetical law,
+those two same replies say exactly (ACR.28). Consecutive nonempty spine
+births obey
+
+$$
+ b_s(a^{h+1})-b_s(a^h)=\delta(\sigma_{a^h})\in\{1,2\}.
+ \tag{ACR.29}
+$$
+
+They leave at most two cuts, before the maturity intersection. The actual
+law obeys both acquired replies and maturity, so its actual cut remains.
+Computing these hypothetical birth times uses forward descriptors, not
+an observation of the hypothetical or actual whole tree. Doubling and
+bisection are the classical unbounded-search supplier [BY]; the additional
+source correspondence is the bounded age fiber (ACR.28)--(ACR.29) for a
+single actually acquired physical spine. $\square$
+

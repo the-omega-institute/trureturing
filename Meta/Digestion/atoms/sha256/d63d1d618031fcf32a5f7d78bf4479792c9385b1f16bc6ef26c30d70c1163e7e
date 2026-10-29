@@ -1,0 +1,50 @@
+**Theorem 4.2 (Unique balanced minimizer with an absolute sufficient threshold).** For all integers $n\ge729$ and $1\le\ell\le n-3$, the unique minimizing isomorphism class of $\Phi$ in $\mathcal G(n,\ell)$ is $H_{n,\ell}$. Its minimum excess is exactly
+
+$$
+E^\ast(n,\ell)=M_{\ell+1}\left(\left\lfloor\frac{n-1+\ell}{2}\right\rfloor\right)
++M_{\ell+1}\left(\left\lceil\frac{n-1+\ell}{2}\right\rceil\right).
+$$
+
+The number 729 is a sufficient threshold, with no assertion that it is least.
+
+**Proof.** Definition 4.1 and Lemma 4.2 of the preceding volume supply an actual member $H_{n,\ell}\in\mathcal G(n,\ell)$ and the bound
+
+$$
+E(H_{n,\ell})\le\frac{2(n+7\ell+5)}{(n+\ell-2)^2}.
+$$
+
+The polynomial identity
+
+$$
+49(n+\ell-2)^2-4(6n-19)(n+7\ell+5)
+=(7\ell-5n+24)^2
+$$
+
+implies
+
+$$
+nE(H_{n,\ell})\le\frac{49n}{12n-38}<\frac{17}{4}
+$$
+
+for $n\ge729$; the last strict inequality already holds for $n\ge81$. Thus every minimizer, and every graph tying $H_{n,\ell}$, satisfies the budget in Theorem 4.1 and belongs to $\mathcal B(n,\ell)$.
+
+For this family use the threshold-independent strict convexity established inside the proof of Theorem 8.2 of the preceding volume. Namely, for every $b\ge2$ and $x>0$,
+
+$$
+M_b''(x)=\frac1{(x^2+1)^{3/2}}+b\bigl(f_2''(x)-f_1''(x)\bigr)>0.
+$$
+
+The inequality there follows by differentiating $t(3x^2+2t)/(x^2+t)^{3/2}$, whose derivative is $(6x^4+5x^2t+2t^2)/(2(x^2+t)^{5/2})>0$. It uses no bound involving $n$ or $\ell$.
+
+If $D_2\ge D_1+2$, then $D_2>b$, so hub 2 has a leaf. Moving that leaf to hub 1 preserves simplicity, connectedness, $n$, $m$ and $\ell$, and changes the excess by
+
+$$
+M_b(D_1+1)-M_b(D_1)-M_b(D_2)+M_b(D_2-1)<0
+$$
+
+by strict convexity. Exchanging the hubs gives the other imbalance case. The only minimizing unordered integer degree pair is therefore $\{\lfloor m/2\rfloor,\lceil m/2\rceil\}$, which is feasible since $m\ge2b$. Subtracting $b$ gives the balanced leaf counts, determining $H_{n,\ell}$ up to isomorphism. Graphs above the budget have strictly larger excess than $H_{n,\ell}$. Since $\Phi=m+E$ at the same $m$, this proves the global claim and its equality statement.
+
+The prior unicyclic comparison with universal-vertex graphs holds for every $n\ge7$ in A. Ali, K. C. Das and A. A. Attiya, *Bond incident degree indices of fixed-order unicyclic graphs*, Discrete Math. Lett. 16 (2025), 135–142, DOI [10.47443/dml.2025.192](https://doi.org/10.47443/dml.2025.192), Remark 2.3; its reported all-graph computations cover $4\le n\le10$. The specialization of the two-hub construction to $n=5\ell+7$, with $2(\ell+1)$ leaves at each hub, is also in A. M. Albalahi, *On Two Conjectures Concerning the Hyperbolic Sombor Index and Its Counterpart*, Discrete Math. Lett. 18 (2026), 122–128, DOI [10.47443/dml.2026.217](https://doi.org/10.47443/dml.2026.217), Proposition 2.1 and its proof. That proposition compares with universal-vertex graphs; its Theorem 2.2 concerns maxima. The construction and those comparisons are the cited intermediate results, whereas the conclusion here compares with every graph in $\mathcal G(n,\ell)$.
+
+The coordinate-increasing property $P$ used by H. Liu, Z. Du, Y. Huang, H. Chen and S. Elumalai, *Note on the Minimum Bond Incident Degree Indices of k-Cyclic Graphs*, MATCH Commun. Math. Comput. Chem. 91 (2024), 255–266, DOI [10.46793/match.91-1.255L](https://doi.org/10.46793/match.91-1.255L), §1 and Theorem 2.1, fails for this weight: at fixed $y>0$, $\sqrt{1+(y/x)^2}$ strictly decreases for $x>y$. Likewise condition P2 in M. Bašić, *A general algebraic characterization of extremal $\Delta$-trees and $k$-cyclic graphs for degree-homogeneous VDB indices*, [arXiv:2610.34361v1](https://arxiv.org/abs/2610.34361v1), §2.1, requires $f(x,\Delta)>f(\Delta,\Delta)$ for $x<\Delta$, whereas CDSO has $f(x,\Delta)<\sqrt2=f(\Delta,\Delta)$. Neither hypothesis supplies the minimum asserted here. ∎
+

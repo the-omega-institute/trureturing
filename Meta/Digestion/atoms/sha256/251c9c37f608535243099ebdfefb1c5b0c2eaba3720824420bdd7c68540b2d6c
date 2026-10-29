@@ -1,0 +1,42 @@
+**定理 18.1（有限风险相对对角线的全局模量）。** 对每个固定精确 $t\in(0,1)$、每个 $q\in(0,1)$ 及每个整数 $r\ge1$，
+
+$$
+\boxed{\quad
+|E_r(P_{t,q})-V(t)|\le |q-t|\sqrt{\frac{C_t r}{2}}.
+\quad}
+\tag{18.1}
+$$
+
+更具体地，任意实值 $\mathcal F_r$ 可测预测器，包括按 $(t,q,r)$ 分别选择的预测器，均满足
+
+$$
+R_{t,q,r}(g)\ge V(t)-|q-t|\sqrt{\frac{C_t r}{2}}.
+\tag{18.2}
+$$
+
+**证明。** 将（17.7）的全部隐藏状态求和，再将全部 $2r+1$ 个可见位重排为 $(X_0,Y_r)$。由原联合柱式（2.4），这个确定映射的像律恰为 $\mu_{t,q}^r,\mu_{t,t}^r$。因而（17.3）与（17.9）给出
+
+$$
+\begin{aligned}
+\operatorname{TV}(\mu_{t,q}^r,\mu_{t,t}^r)
+&\le\sqrt{\frac{D(\mu_{t,q}^r\Vert\mu_{t,t}^r)}2}\\
+&\le\sqrt{\frac{D(J_\delta^r\Vert J_0^r)}2}
+\le |\delta|\sqrt{\frac{C_t r}{2}}.
+\end{aligned}
+\tag{18.3}
+$$
+
+这里只用隐藏路径取得联合可见律的上界，预测器的字段仍为 $\mathcal F_r$。由引理 16.2 和定理 5.1 的 $E_r(P_{t,t})=V(t)$，立即得到（18.1）。
+
+对一个给定实值 $g$，令 $\bar g$ 为其 $[0,1]$ 截断。用（16.7）对同一个 $\bar g$ 比较两律，得到
+
+$$
+\begin{aligned}
+R_{t,q,r}(g)&\ge R_{t,q,r}(\bar g)\\
+&\ge R_{t,t,r}(\bar g)-\operatorname{TV}(\mu_{t,q}^r,\mu_{t,t}^r)\\
+&\ge V(t)-|\delta|\sqrt{C_t r/2}.
+\end{aligned}
+$$
+
+这证明（18.2）。即使 $g$ 随参数选择，选定之后它仍是共同有限外部字母表上的一个函数；上述比较对所有这样的函数统一成立。不要求两律的最优预测器相同，也不要求预测器不知道参数。$\square$
+

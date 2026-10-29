@@ -1,0 +1,39 @@
+**Theorem 5.2 (all positive entrance lags with paid preparation).** Under
+Assumptions 1.2,5.1, every member of $\mathcal E_{[A,B]}$, including every
+$k=1$ source, admits actual acquisition and retention of $(\pi,u,k,n)$
+after those two updates. It uses no reset, replacement original or clone.
+The acquisition costs are (GPO.9)–(GPO.13) with $j=k+1$ and the heights
+of $v^+$, and its source updates during that stationary acquisition are
+zero. The complete preparation/acquisition interval has exactly two
+source updates, $Q$ Reads and $J+J_p$ controller localSteps, where
+$J_p=O(1)$ for the fixed two-call phase control. One additional retained
+phase bit suffices to distinguish its cut from the passive cut.
+
+Proof. Execute the two permitted calls and wait for their actual serial
+completion. By the actuator relation their successive registers are
+$\rho v$ and $\rho^2v$, with old update epochs $2k,2k+1$ in the writer.
+Neither acknowledgement supplies their unknown numeric values.
+Equation (GPO.18) follows from actual composition of these substitutions.
+In particular $j=k+1\ge2$, although entrance $k$ remains unchanged.
+
+Theorem 3.1 applies to the new stationary register with authentic original
+$u$ and the same interval. Its acquired lag is the lag at that cut,
+namely $j$. It returns $u$ and $n$ without changing them to a predecessor
+chosen for convenience. Subtract the known one from the acquired $j$ by
+paid binary local work to retain the entrance $k$. Include this subtraction
+and output copying in $J$; the proof of its bound permits another
+$O(\Lambda^2)$ routine. Retain $\varepsilon=1$ so that current offset
+$2(k+1)$ is computable from the entrance record. The target payload is
+at most $3n+1+b(k)+b(n)$ bits, excluding framing, advice and capabilities.
+
+The two-call phase needs only fixed phase tags; its finitely many controller
+transitions give $J_p=O(1)$ independently of source size. This does not
+make either global update an elementary material operation: Proposition
+5.3 prices them. The raw writer has $Q+J+J_p+2$ new native events, in their
+actual order, with no omitted preparation events. Its acquisition Read
+epochs are the current $2j=2(k+1)$; its preparation updates retain the
+entrance-relative old epochs $2k,2k+1$. The known phase count
+has not relabelled the entrance lag, supplied an unknown clock or provided
+a history archive. No optimum for preparation count or material work is
+claimed. $\square$
+

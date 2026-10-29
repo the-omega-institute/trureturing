@@ -1,0 +1,42 @@
+**Theorem 37.2 (exact worst-case native Read minimum).** Under all
+the premises of Definition 37.1, for each integer $d>0$ the minimum
+uniform paid Read cap is exactly $2d$, both for complete-future
+readiness and for the joint task. In particular every correct such
+preparation has a lawful run requiring at least $2d$ Reads, even
+when it may use more updates, longer finite words and more finite local
+work. The same minimum cap holds with the independent zero-error
+randomization specified there. At $d=0$ the minimum is zero.
+
+Proof. First connect distinct streams to this native task, without
+assuming that a full incidence has already been acquired. Fix public
+inputs and, for the moment, a deterministic preparation. At any reached
+Read or return boundary, its entire accessible state is a function of
+the preceding binary reply word. Indeed its next local operations,
+literal and update choices are source-free functions of that state;
+updates return the same acknowledgement and stationary local operations
+reveal no source data. Induction on the actual finite operations gives
+the assertion. Thus the return cut $n$, output and retained evaluator
+are identical whenever the preceding reply word is identical. Physical
+differences in the unobserved source cannot be used as an extra branch
+of this accessible computation.
+
+Suppose two different streams $s,s'\in\mathscr R_d$ reached the
+same return reply word. They then return at the same $n$. Choose a
+birth $j$ at which their bits differ, and a finite $e\ge n$ with
+$v_e=F_e-1\ge j$. Such an $e$ exists. By Theorem 28.2 their
+actual physical supports at cut $e$ differ, since their first $v_e$
+birth bits differ. Choose one physical word in the symmetric difference
+of those two finite supports. The continuation consisting of $e-n$
+updates followed by a Read of that word has different replies on the
+two sources. This is one finite legal request at their common return
+cut. Their identical retained local evaluator would have to predict
+both values from the same accessible data and same request, which is
+impossible. Every distinct stream must therefore occupy a different
+return leaf. This argument also applies to the joint task, which
+contains the complete-future requirement. It does not require equality
+of the two current full incidences.
+
+The number of leaves required here is a classical supplier. Rainer A.
+Rueppel, [*Linear Complexity and Random Sequences*](https://link.springer.com/content/pdf/10.1007/3-540-39805-8_21.pdf),
+in *Advances in Cryptology — EUROCRYPT '85*, LNCS 219, pp. 167–188
+(1986), p. 174, equations (5)–(6), explicitly counts distinct binary

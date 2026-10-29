@@ -469,6 +469,20 @@ class NativePublicationConsumerTests:
         self.assertEqual(before, self.stamps())
 
 
+    def test_compiler_stage_covers_native_readers_without_warming_projects(self):
+        for package in (self.root, self.root / 'Reg'):
+            self.assertFalse((package / '.lake/build').exists())
+        self.assertFalse((self.root / 'public.json').exists())
+        built = self.build()
+        output = built.stdout + built.stderr
+        self.assertNotIn('Built LeanInformationAudit.Contract.InputDiscovery (', output,
+                         '[FAIL] compiler_stage_must_restore_input_discovery_module')
+        self.assertNotIn('Built inputDiscovery:exe (', output,
+                         '[FAIL] compiler_stage_must_restore_input_discovery_executable')
+        for program in ('reportInspector', 'inputDiscovery'):
+            self.assertTrue((self.root / '.lake/build/lean-inspector/producer/bin' / program).is_file())
+
+
 class NativeArtifactConsumerTests:
     """Consumers of a valid report; subsequent mutations stay private."""
 

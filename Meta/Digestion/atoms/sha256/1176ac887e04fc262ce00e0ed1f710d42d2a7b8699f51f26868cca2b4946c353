@@ -1,0 +1,86 @@
+## 21. 原律上的选定锚柱集
+
+定义 2.2 的六条非零发射边为
+$$
+1\xrightarrow{0,1-p}1,\quad
+1\xrightarrow{1,p}3,\quad
+3\xrightarrow{0,1}2,\quad
+2\xrightarrow{0,1-q}2,\quad
+2\xrightarrow{1,q}4,\quad
+4\xrightarrow{0,1}1.
+\tag{21.1}
+$$
+在占据位 $z$ 定义辅助标记
+$$
+C_z=q\quad\text{若 }H_z=1,\qquad
+C_z=p\quad\text{若 }H_z=2,
+\qquad \overline p=q,\quad\overline q=p.
+$$
+它只用于证明，不是观察输入。由式（2.3），两个带标记占据边的原联合质量相同：
+$$
+J(X_z=1,C_z=p)=\lambda_2q=\frac1Z,\qquad
+J(X_z=1,C_z=q)=\lambda_1p=\frac1Z.
+\tag{21.2}
+$$
+相邻占据位的标记交替。若出向标记为 $a\in\{p,q\}$，相邻占据位的整数距离 $g\ge2$ 的路径包含一个强制零、$g-2$ 个准备状态零回路和末端的一发射，故
+$$
+f_a(g)=a(1-a)^{g-2},\qquad g\ge2.
+\tag{21.3}
+$$
+其和为一。
+
+固定一个确定的占据位 $z$，列出左右所有占据位为 $\cdots<T_{-1}<T_0=z<T_1<\cdots$，并写 $G_j=T_{j+1}-T_j$。由原联合柱式（2.4），对任意 $m,n\ge0$、$g_j\ge2$（$-m\le j<n$）及 $a=C_z$，有
+$$
+J\bigl(X_z=1,C_z=a,G_j=g_j\ (-m\le j<n)\bigr)
+=\frac1Z\prod_{j=-m}^{n-1}f_{a_j}(g_j),
+\qquad
+ a_j=\begin{cases}a,&j\text{ 偶},\\\overline a,&j\text{ 奇}.
+\end{cases}
+\tag{21.4}
+$$
+事实上，所给长度固定最左占据位，中央标记确定其交替相位；第一条带标记占据边的质量是（21.2），随后每一段隐藏路径唯一，贡献（21.3）。反向地，这些路径恰好产生所给长度，没有其他隐藏路径或端点因子。故（21.4）同时包括负指标和空乘积，并由非负项边缘化得到任意有限的间隔子集乘积律。
+
+在两侧选定最近锚
+$$
+R=\min\{j>0:X_j=1\},\qquad L=\max\{j<0:X_j=1\}
+$$
+的事件上，令 $D_j^+$ 为从 $R$ 向右的连续间隔，令 $D_j^-$ 为从 $L$ 向左的连续间隔。定义
+$$
+T_b(s)=\sum_{g\ge\max(2,s)}f_b(g)=(1-b)^{\max(0,s-2)},\qquad s\ge1.
+\tag{21.5}
+$$
+对任意 $k\ge0$ 和 $g_0,\ldots,g_{k-1}\ge2$，两种方向的原律柱集分别满足
+$$
+J(R=s,C_R=a,D_j^+=g_j\ (0\le j<k))
+=\frac1Z T_{\overline a}(s)\prod_{j=0}^{k-1}f_{b_j}(g_j),
+\quad b_j=\begin{cases}a,&j\text{ 偶},\\\overline a,&j\text{ 奇},\end{cases}
+\tag{21.6}
+$$
+以及
+$$
+J(L=-s,C_L=a,D_j^-=g_j\ (0\le j<k))
+=\frac1Z T_a(s)\prod_{j=0}^{k-1}f_{e_j}(g_j),
+\quad e_j=\begin{cases}\overline a,&j\text{ 偶},\\a,&j\text{ 奇}.
+\end{cases}
+\tag{21.7}
+$$
+在（21.6）中，$R=s$ 等价于该占据位的前一占据位不大于零；其入向间隔参数为 $\overline a$，长度允许等于 $s$，因为前一占据位可以正好是零。式（21.7）同理，$L=-s$ 要求其后一占据位不小于零，长度同样允许等于 $s$，而该出向间隔参数为 $a$。两式都是原律下不交柱集的可数求和，没有条件于 $X_0$ 或人为补入边界状态。
+
+取 $k=0$ 得选定锚及标记的真实权重
+$$
+w_+(s,a)=Z^{-1}T_{\overline a}(s),\qquad
+w_-(s,a)=Z^{-1}T_a(s).
+\tag{21.8}
+$$
+分别除以这些权重后，右侧间隔参数按 $a,\overline a,a,\ldots$ 独立交替，左侧按 $\overline a,a,\overline a,\ldots$ 独立交替。权重一般不均匀，但确实归一：
+$$
+\sum_{s\ge1}T_b(s)=\sum_{g\ge2}g f_b(g)=1+\frac1b,
+$$
+从而
+$$
+\sum_{s\ge1}\sum_{a\in\{p,q\}}w_+(s,a)
+=\sum_{s\ge1}\sum_{a\in\{p,q\}}w_-(s,a)=1.
+\tag{21.9}
+$$
+这保留了原平稳行的 $1/Z$ 因子，也没有用占据位 Palm 律替换原位点律。
+

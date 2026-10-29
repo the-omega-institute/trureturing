@@ -1,0 +1,23 @@
+**Definition 22.1 (block Time).** Let $\mathcal H_{\rm blk}$ consist
+of the actual block/gap histories
+
+$$
+h=K^{q_0}B_1K^{q_1}\cdots B_mK^{q_m},
+\qquad m\ge1,
+\tag{22.1}
+$$
+
+where each $B_i$ is an independent block on its actual predecessor,
+$q_0,q_m\ge0$, and $q_i\ge1$ for $1\le i<m$.
+Also admit $h=K^{q_0}$ for $m=0$. Each block records its addressed
+typed set and forgets the chosen internal permutation. Put
+$n=\sum_i|B_i|$ and $Q=\sum_iq_i$; then $I(t)=n$, the number of
+individual births, rather than $m$.
+
+Starting at the paid scalar seed one, actually execute the block
+members and Ticks. Write $F_{\rm blk}(h)=(t(h),x_h)$.
+Theorem 21.2 makes this independent of block enumeration.
+As in Definition 3.2, Reads, Holds, refusals, framing and waiting
+are not letters of this Time. Their actual costs remain if present.
+No chosen serial shuffle or old word is handed to the decoder.
+

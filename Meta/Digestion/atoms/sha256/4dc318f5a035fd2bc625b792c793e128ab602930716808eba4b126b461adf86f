@@ -1,0 +1,21 @@
+**Definition 58.1 (parameters and literal backing).** On the actual
+entry $t$, put
+
+$$
+a=\#\{\alpha\text{ leaves of }t\},\quad
+b=\#\{\beta\text{ leaves of }t\},\quad L=a+b,\quad n=2L-1,
+\qquad
+D=\sum_{p\in\mathcal L(t)}|p|,\quad
+D_\alpha=\sum_{\substack{p\in F(t)\\t|_p=\alpha}}|p|.
+\tag{AAII.16}
+$$
+
+The two acquired words use distinct owned backing with a two-bit
+constructor payload per logical node. Their list links, headers,
+references, result slots and authority representations are additional.
+One current address and ancestor continuation flags suffice for preorder
+scheduling; source-side request and answer words have their own actual
+backing until consumed. No archived copy of every request or hypothetical
+successor is required. If such copies or external report copies are
+retained, their actual material is additional.
+

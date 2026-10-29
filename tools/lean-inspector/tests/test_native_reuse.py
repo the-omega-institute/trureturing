@@ -19,6 +19,18 @@ class NativeLocalReportConsumerTests:
         for name in ('lean_cache_release.py', 'cache_material.py'):
             self.copy('tools/scripts/worktree/' + name)
         # Make owns the real native report build; only Release transport is replaced.
+        compiler_seed = self.compiler_seed
+        self.ensure()
+        self.restore_compiler()
+        if compiler_seed is not None:
+            for material in Path(compiler_seed).iterdir():
+                if material.name == 'outputs.jsonl':
+                    continue
+                private = self.root / '.lake/artifact-cache/artifacts' / material.name
+                self.assertTrue(private.is_file(), '[FAIL] local_entry_must_restore_supplied_compiler')
+                self.assertEqual(publication.digest(private), publication.digest(material))
+                self.assertFalse(os.path.samestat(material.stat(), private.stat()))
+        self.check_cold_project(self)
         first = self.guarded_command(['make', 'lean-report', 'REBUILD_REPORT_CACHE=1'],
             env=dict(self.env, STRATALINT_ACCEPT_COLD_BUILD='1'))
         self.assertEqual(first.returncode, 0, first.stdout + first.stderr)

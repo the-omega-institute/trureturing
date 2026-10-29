@@ -1,0 +1,23 @@
+**定义 1.1（实际树及其动力学）。** 设 $k\ge2$、$\ell\ge1$ 为整数。树 $T(k,\ell)$ 的顶点集为
+
+$$
+V=\{r\}\sqcup\{h_i:1\le i\le k\}
+\sqcup\{x_{ij}:1\le i\le k,\ 1\le j\le\ell\},
+$$
+
+边恰为 $rh_i$ 与 $h_ix_{ij}$。记
+
+$$
+n=|V|=1+k(\ell+1),\qquad L=D-A,\qquad U(t)=\exp(itL),\quad t\in\mathbb R,
+$$
+
+其中 $A$ 为 $V$ 上的邻接矩阵，$D$ 为度数对角矩阵。对实际 $n$ 阶矩阵 $L$ 的每个互异特征值 $\theta$，令 $E_\theta$ 为其完整特征空间上的正交投影。固定任意叶子 $x=x_{ij}$，定义
+
+$$
+P_{k,\ell}(t)=|U(t)_{x,r}|^2,\qquad
+B_{k,\ell}=\sum_{\theta\in\operatorname{spec}(L)}|(E_\theta)_{x,r}|.
+\tag{1.1}
+$$
+
+求和按互异特征值进行。置换分支及分支内叶子的自同构固定 $r$，故这两个量与所选叶子无关。这里的 $B_{k,\ell}$ 是 Coutinho–Guo–Schmeits，*Peak state transfer in continuous quantum walks*，[arXiv:2505.11986v4](https://arxiv.org/abs/2505.11986v4)，§3，p. 5 的 bounding matrix 的一个条目；该文同节的谱展开与三角不等式给出 $P_{k,\ell}(t)\le B_{k,\ell}^2$。
+

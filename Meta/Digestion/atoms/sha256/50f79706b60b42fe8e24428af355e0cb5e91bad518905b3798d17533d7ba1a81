@@ -1,0 +1,55 @@
+**Corollary 98.2 (Nearoptimal forbidden-direction budget).** Let
+$\varepsilon\ge0$ and let $\mathcal R$ be any legal decoder with
+$e(\mathcal R)\le L+\varepsilon$. Define
+
+$$
+\delta=e(\mathcal R)-L,\qquad
+m=\operatorname{Tr}(QJ_{\mathcal R}),\qquad
+q=\operatorname{Tr}(Q\omega_{\mathcal R})=m/3 .
+\tag{98.3}
+$$
+
+Then
+
+$$
+\begin{gathered}
+0\le\gamma_S m\le\operatorname{Tr}(SJ_{\mathcal R})
+                         \le\delta\le\varepsilon,\\
+0\le m\le\min\{3,\varepsilon/\gamma_S\}
+          \le\min\{3,\varepsilon/\gamma_0\},\\
+0\le q\le\min\{1,\varepsilon/(3\gamma_S)\}
+          \le\min\{1,\varepsilon/(3\gamma_0)\}.
+\end{gathered}
+\tag{98.4}
+$$
+
+*Proof.* The exact minimum in (96.5) gives $\delta\ge0$.
+Equation (97.1) gives $\operatorname{Tr}(SJ_{\mathcal R})\le\delta$.
+By (97.7), $S-\gamma_SQ\succeq0$, and pairing this positive
+matrix with $J_{\mathcal R}\succeq0$ yields
+$\operatorname{Tr}(SJ_{\mathcal R})\ge\gamma_Sm\ge0$.
+Also $0\preceq Q\preceq I_9$ implies
+$m\le\operatorname{Tr}J_{\mathcal R}=3$. Division by the positive
+$\gamma_S$, followed by division by three, proves the two mass
+bounds. Finally $\gamma_0<\gamma_S$ weakens each upper bound in
+the displayed direction. $\square$
+
+Equivalently, the retained residual is the weighted forbidden mass:
+
+$$
+\begin{aligned}
+\operatorname{Tr}(SJ_{\mathcal R})
+={}&\tau A\langle u|J_{\mathcal R}|u\rangle
+ +s_{10}\langle10|J_{\mathcal R}|10\rangle\\
+&+s_{01}\langle01|J_{\mathcal R}|01\rangle
+ +s_{02}\langle02|J_{\mathcal R}|02\rangle
+\le\varepsilon .
+\end{aligned}
+\tag{98.5}
+$$
+
+Thus excessive forbidden mass rules out the proposed error tolerance.
+The bound on $q$ concerns the normalized Choi state; omitting its factor
+of three would change the normalization of the statement. These are
+leakage bounds, not distances to a legal optimal decoder.
+

@@ -1,0 +1,20 @@
+## 4. 五模式的实际半环接口与隐藏关系参数
+
+本节核公式取交换半环，概率实例取非负实数。项目的高到低三位置扫描使用
+
+$$
+B(t)=\begin{pmatrix}1&t\\1&0\end{pmatrix},\qquad
+K_{\mathrm{HL}}=B(c)B(b)B(a)
+=\begin{pmatrix}1+b+c&a(1+c)\\1+b&a\end{pmatrix}.
+$$
+
+初末权为 $\lambda,\omega$ 时，完整合法路径权为
+
+$$
+Z=\lambda^{\mathsf T}K_1\cdots K_L\omega.
+$$
+
+局部核输入与输出的接缝位必须实际共享；该权重因子化是模型前提。非负权且 $Z>0$ 后才能归一化。项目的实际提议概率核还可能为次随机矩阵，其缺失行质量是拒绝结果，不能删去后悄然重新归一化（[1](#ref-reposelection)，§10）。
+
+<a id="prop-odds"></a>
+

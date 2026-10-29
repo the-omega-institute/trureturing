@@ -1,0 +1,59 @@
+**定理 90.2（双参数 uniform static-dictionary law）。** 对定义 88.1 中每个实数 $0<q\le1/1000$ 与每个实数 $\delta>0$，令
+
+$$
+x(q,\delta)=\min\{\delta^{-1/2},\sqrt q/\delta\}.
+$$
+
+则
+
+$$
+\boxed{\quad
+\frac{1+x(q,\delta)}{257}\le M_q(\delta)
+ \le1+2\pi x(q,\delta).
+\quad}
+\tag{90.4}
+$$
+
+因此 $M_q(\delta)=\Theta(1+x(q,\delta))$，比较常数同时独立于 $q,\delta$。这一统一结论补充定理 86.4 的 fixed-$q$ law，不改变其 $A_q,B_q$ 或 lower-$\delta$ interval。
+
+**证明。** 对任意正整数 $M$，取 $M$ 个等间隔 centers 和 (90.1) 的 maps。每个 phase 距某 center 的 short-arc distance 至多 $\pi/M$，其 chord 也至多 $\pi/M$。命题 90.1 分别给出两个可行 finite dictionary sizes
+
+$$
+\left\lceil\frac\pi{\sqrt\delta}\right\rceil,
+\qquad
+\left\lceil\frac{2\pi\sqrt q}{\delta}\right\rceil.
+$$
+
+两者对所有正参数都是正整数；取较小者，
+
+$$
+M_q(\delta)
+ \le\min\left\{\left\lceil\frac\pi{\sqrt\delta}\right\rceil,
+         \left\lceil\frac{2\pi\sqrt q}{\delta}\right\rceil\right\}
+ \le1+2\pi x(q,\delta).
+$$
+
+特别，每个正 $\delta$ 都有 finite dictionary。
+
+反向，取任一成功的 $M\ge1$ map dictionary。在 $M+1$ 个等间隔 phases 中为每个 phase 选择一个 successful entry；有限 pigeonhole 给两个 phases 共用一个 entry。它们的 chord 至少为
+
+$$
+2\sin\frac\pi{M+1}\ge\frac4{M+1}.
+$$
+
+这里 $\pi/(M+1)\in(0,\pi/2]$，concavity 给 $\sin t\ge2t/\pi$。在所共用的同一个 map 上使用 (89.3)，
+
+$$
+\frac4{M+1}
+ \le512\max\{\sqrt\delta,\delta/\sqrt q\}
+ =\frac{512}{x(q,\delta)}.
+$$
+
+所以 $x\le128(M+1)$，从而
+
+$$
+1+x\le128M+129\le257M.
+$$
+
+该下界对任一成功 dictionary 成立，也对其最小正整数 size 成立。只用有限 packing 与选择，不要求 selector fibres 的任何 regularity。∎
+

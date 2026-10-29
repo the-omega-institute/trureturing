@@ -1,0 +1,87 @@
+**Lemma 13.2 (Uniform finite root inventory).** Put $e=10^{-22}$ and
+$I_i=[c_i-e,c_i+e]$ with the following centers. For every
+$(p,v)\in\mathcal U$, $R(r,p,v)$ has exactly one simple root in each
+$I_i$ and has no other root in $(0,1)$.
+
+| $i$ | $c_i$ | Uniform Bernstein signs |
+| --- | --- | --- |
+| 1 | $0.4$ | `+++++++++?---------` |
+| 2 | $0.6375033978214738667594335994587431421677$ | `---------?+++++++++` |
+| 3 | $0.6761493960676857788415044796582458167041$ | `+++++++++?---------` |
+| 4 | $0.8634273078193894254581303621214043355746$ | `---------?+++++++++` |
+| 5 | $0.9092947326986637649117323875453000752997$ | `+++++++++?---------` |
+
+Proof. Expand the specified integer polynomial at the rational
+parameter center:
+
+$$
+R(r,p_c+x,v_c+y)=\sum_{i,j,k}A_{ijk}r^ix^jy^k,\qquad
+E=\sum_i\sum_{j+k>0}|A_{ijk}|h^{j+k}.
+$$
+
+In terms of its integer coefficients $c_{iuv}$, every coefficient is
+explicitly
+
+$$
+A_{ijk}=\sum_{u\ge j,\,v\ge k}
+ c_{iuv}\binom uj\binom vk p_c^{u-j}v_c^{v-k}.
+$$
+
+For $[a,b]\subseteq[0,1]$, define
+
+$$
+\begin{aligned}
+t_\ell&=\sum_{i=\ell}^{18}A_{i00}\binom i\ell
+                 a^{i-\ell}(b-a)^\ell,\\
+\beta_k&=\sum_{\ell=0}^k t_\ell
+                 \frac{\binom k\ell}{\binom{18}\ell},
+                 \qquad 0\le k\le18.
+\end{aligned}
+$$
+
+The degree-eighteen Bernstein coefficients of $r^i$ on such an
+interval lie in $[0,1]$: under $r=a+(b-a)t$, the coefficients can
+also be written as the averages of products of $i$ entries chosen
+from $18-k$ copies of $a$ and $k$ copies of $b$. Hence the full
+parameter-dependent coefficient lies in $[\beta_k-E,\beta_k+E]$.
+This bound retains all mixed parameter terms.
+
+The finite rational comparisons from these formulas give
+
+$$
+\frac{10098}{10^8}<E<\frac{10099}{10^8}.
+$$
+
+For additional explicit margins, the following integers $m$ satisfy
+$|\beta_k|>mE$ for every indicated sign in the corresponding row.
+The coefficient with index nine is omitted only in the five root
+rows. The other eighteen coefficients have exactly the displayed
+signs.
+
+| Interval | $m$ | Signs |
+| --- | ---: | --- |
+| $I_1$ | $43180449$ | `+++++++++?---------` |
+| $I_2$ | $5746247$ | `---------?+++++++++` |
+| $I_3$ | $5696077$ | `+++++++++?---------` |
+| $I_4$ | $22570264$ | `---------?+++++++++` |
+| $I_5$ | $42371792$ | `+++++++++?---------` |
+| $[0,c_1-e]$ | $388624041$ | $+^{19}$ |
+| $[c_1+e,c_2-e]$ | $51716227$ | $-^{19}$ |
+| $[c_2+e,c_3-e]$ | $51264701$ | $+^{19}$ |
+| $[c_3+e,c_4-e]$ | $51264701$ | $-^{19}$ |
+| $[c_4+e,c_5-e]$ | $203132376$ | $+^{19}$ |
+| $[c_5+e,1]$ | $381346130$ | $-^{19}$ |
+
+These are comparisons of the rational numbers defined above; in
+particular every listed margin exceeds $10^4E$. In each root row,
+any sign or zero for the middle coefficient leaves variation one.
+The endpoint signs are opposite. Substitution
+$r=(a+bt)/(1+t)$ and multiplication by $(1+t)^{18}$ turn the
+Bernstein coefficients into ordinary coefficients multiplied by
+positive binomial factors. Descartes' rule therefore bounds the
+number of roots, counting multiplicity, by one. The intermediate
+value theorem supplies a root, which is consequently unique and
+simple. Every gap row has variation zero and nonzero endpoints.
+The five intervals and six gaps cover $[0,1]$. This proves the
+inventory uniformly on the entire closed response rectangle. ∎
+

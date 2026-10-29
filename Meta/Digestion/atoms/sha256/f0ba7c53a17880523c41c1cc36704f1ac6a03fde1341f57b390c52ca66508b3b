@@ -1,0 +1,21 @@
+**Proposition 66.3 (current representation, archive and provenance).**
+The current inverse supplies neither the immutable entry archive nor
+unobserved old serial history in general. Already entry alpha followed
+by its successful $P$, and entry beta followed by a refused $P$, have
+the same actual current beta content. Both occur in GLOBAL's mode one
+and in the corresponding positive-probability LOCAL mode. Their entry
+codes and acquisition responses differ. Therefore no function of these
+current contents alone recovers the entry archive on that image.
+
+The actual archive is nevertheless earned and retained by Theorem 62.3.
+Likewise an actual current causal view, a representation computed from
+that archive/current word, and an observed record of old provenance are
+three different access claims. The supplied conversion computes the
+selected current content; it adds no raw Space, Time or Boundary read
+port and no observation of old serialization, routing ranks, refusals,
+provider state, private references or full authority bytes. Authority
+and binding remain common supplied context in Theorem 66.2. If an
+observer is additionally allowed to inspect the entry archive, RNG
+transcript or private work, that enlarges the task and requires views
+supplemented with the newly selected information. $\square$
+

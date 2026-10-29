@@ -1,0 +1,78 @@
+**Theorem 63.1 (randomized weighted source price).** For every finite
+skeleton $K$ and every pair of weights in Definition 61.2, the randomized
+competitors of Definition 61.1 satisfy
+
+$$
+\inf_A\ \max_{t\in\mathcal F_K}
+\mathbb E\bigl[uG_A(t)+v\Delta_A(t)\bigr]
+=m\kappa
+=\frac{m(u+v)(u+2v)}{2u+3v}.
+\tag{AAII.27}
+$$
+
+The input and its compatible old producer word are fixed before the
+randomness is drawn. The lower bound holds even with $K$ supplied, and
+even if the competitor may stop at any legally changed endpoint. Both
+GLOBAL and LOCAL attain it, together with exact entry/current output
+and retained full $Q_A$ use as proved in §66. Neither needs $K$.
+
+Proof. First fix any competitor. Over the finite family
+$\mathcal F_K$, intersect its probability-one sets of correct terminating
+tapes, using a fixed compatible old preparation for each entry. The
+intersection still has probability one. On every tape in it, Lemma 61.3
+forces a first direct request at each $p\in V_K$. All coupled traces
+use the same tape; no independence between different adaptive requests
+is being assumed.
+
+For a proof-only distribution, independently assign alpha probability
+$q$ and beta probability $1-q$ to each variable entry leaf, independently
+of the tape. This is a distribution over fixed admitted inputs, not an
+observable prior supplied to the competitor. Fix a good tape and all
+entry types other than the one at $p$. The two paired runs have the
+same first direct kind at $p$. That target is still its unedited original
+leaf. If the kind is $P$, its first request succeeds precisely in the
+alpha variant, and its expected first-success fee under this one bit is
+$qc_P=\kappa$. If the kind is $S$, it succeeds precisely in the beta
+variant, and that expected fee is $(1-q)c_S=\kappa$.
+
+Different original variable leaves yield distinct first-target requests
+and distinct source successes whenever those requests succeed. All other
+success fees are nonnegative, and the source has no deletion or rollback.
+Thus the total weighted fee is at least the sum of these first-target
+fees on each run. Average first over the paired entry bits, then the
+other entry bits and the tape. Finite sums of nonnegative variables give
+
+$$
+\sum_{t\in\mathcal F_K}\mu_q(t)
+\mathbb E[uG_A(t)+v\Delta_A(t)]\ \ge\ m\kappa.
+\tag{AAII.28}
+$$
+
+The same statement holds with infinite expectations. Since the left side
+is a convex combination of fixed-input expectations, some fixed entry
+has expectation at least $m\kappa$. The maximizing entry is not selected
+after observing a realized tape. Compatible old histories affect none
+of the paired observations under Assumption 53.2; the argument works
+for every such choice of histories.
+
+For the upper bound let $a$ be the number of original alpha leaves and
+$b_V$ the number of eligible original beta leaves. On
+$\mathcal F_K$, $a+b_V=m$. In either attaining construction an original
+alpha is promoted with probability $q$, an eligible original beta is
+split with probability $1-q$, and an $L$-ending original beta is unchanged.
+Theorem 62.3 excludes every other success. Linearity of expectation,
+which requires no independence between leaves, gives
+
+$$
+\mathbb E P_+=qa,\qquad \mathbb E S_+=(1-q)b_V,
+\qquad
+\mathbb E[uG+v\Delta]=qac_P+(1-q)b_Vc_S=m\kappa.
+\tag{AAII.29}
+$$
+
+This holds for every fixed entry and every compatible old history. The
+sampler and acquisition satisfy the zero-error, almost-sure finiteness
+and paid-backing contract; §66 establishes the full retained service.
+They are therefore admitted competitors. Together the bounds prove
+(AAII.27). $\square$
+

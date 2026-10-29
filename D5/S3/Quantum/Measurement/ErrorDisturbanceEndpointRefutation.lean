@@ -306,7 +306,7 @@ private lemma projector_psd {d : ℕ} (a : unitaryGroup (Fin d) ℂ) (i : Fin d)
     (measurementProjector a i).PosSemidef :=
   Matrix.posSemidef_vecMulVec_self_star _
 
-private lemma sum_projectors {d : ℕ} (a : unitaryGroup (Fin d) ℂ) :
+lemma sum_projectors {d : ℕ} (a : unitaryGroup (Fin d) ℂ) :
     ∑ i, measurementProjector a i = 1 := by
   have hh : a.val * a.valᴴ = 1 := Matrix.mem_unitaryGroup_iff.mp a.property
   ext j k

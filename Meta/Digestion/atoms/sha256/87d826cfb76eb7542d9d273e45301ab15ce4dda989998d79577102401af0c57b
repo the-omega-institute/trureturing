@@ -1,0 +1,127 @@
+### 14.5. The exact continuation lies in the strip
+
+The simultaneous enclosure needed for the entire selected family uses
+the common parameter of the exact secant zero, rather than separate
+marginal bounds for $p,v$. Set
+
+$$
+\bar q=\frac{229545252522}{10^{14}},\qquad
+G=10^{40},\qquad \rho=10^{-12},\qquad
+q_{i,l}=i/5000,\quad q_{i,u}=\min\{(i+1)/5000,\bar q\}
+\quad(0\le i\le11).
+\tag{14.23}
+$$
+
+The rational comparison with (13.23) gives
+$11/5000<\bar q<12/5000$ and $q_*<\bar q$.
+For each cell let
+
+$$
+\ell_i=\left\lfloor\sqrt{G^2q_{i,l}}\right\rfloor,\quad
+u_i=\left\lceil\sqrt{G^2q_{i,u}}\right\rceil,\quad
+h_i(z)=\frac{\ell_i+u_i+(u_i-\ell_i)z}{2G},\quad -1\le z\le1.
+\tag{14.24}
+$$
+
+Both radicands are integers, and these definitions enclose the full
+square-root interval, including zero and all cell seams. Use the
+same predictor row $i$ of IX (25.2), including its factor $10^{-55}$,
+and substitute $q=h_i(z)^2$ before forming
+
+$$
+\widehat t_i=\widehat X_i(h_i^2)+h_i\widehat K_i(h_i^2),\qquad
+\widehat b_i=\widehat Y_i(h_i^2)+h_i.
+\tag{14.25}
+$$
+
+Compose the whole polynomial circuit (13.14) at these two
+polynomials, and denote its entries by
+$\widehat D_i,\widehat N_{p,i},\widehat N_{v,i}$. The following
+four polynomials have degree 86:
+
+$$
+\begin{aligned}
+L_{i1}&=\widehat N_{p,i}+534\widehat D_i,\\
+L_{i2}&=-457\widehat D_i-\widehat N_{p,i},\\
+L_{i3}&=\widehat N_{v,i}-\tfrac{46}{25}\widehat N_{p,i}
+                                  +\tfrac{1877}{50}\widehat D_i,\\
+L_{i4}&=-\widehat N_{v,i}+\tfrac{46}{25}\widehat N_{p,i}
+                                  -\tfrac{3749}{100}\widehat D_i.
+\end{aligned}
+\tag{14.26}
+$$
+
+All these compositions have exact rational coefficients; no rounding
+convention is needed. For the actual exact zero in the cell, use the
+full $\rho$ tube in IX Theorem 26.1. The segment from the predictor
+to the zero lies in the rectangle of (13.20). Its derivative guards,
+with the same plus-source convention as (14.25), are
+
+$$
+\Gamma(D_s)=\frac{7667254617}{20000000}<384,\quad
+\Gamma(N_p)=\frac{13033889043873}{1250000000}<10428,\quad
+\Gamma(N_v)=\frac{97107509878563}{2000000000}<48554.
+\tag{14.27}
+$$
+
+The mean value bound therefore changes the four actual numerators
+from (14.26) by at most, respectively,
+
+$$
+\begin{aligned}
+E_1&=\rho(10428+534\cdot384),\\
+E_2&=\rho(10428+457\cdot384),\\
+E_3&=\rho(48554+\tfrac{46}{25}10428+\tfrac{1877}{50}384),\\
+E_4&=\rho(48554+\tfrac{46}{25}10428+\tfrac{3749}{100}384).
+\end{aligned}
+\tag{14.28}
+$$
+
+The exact sums (14.2), now in one variable on $[-1,1]$, give
+
+$$
+\mathfrak b_{[-1,1]}(L_{ij})-E_j>10^{-9}T_{ij}>0
+\tag{14.29}
+$$
+
+with the following integer matrix. The bounds already include the
+entire predictor error; they are not values only at the predictor.
+
+| Cell $i$ | $T_{i1}$ | $T_{i2}$ | $T_{i3}$ | $T_{i4}$ |
+| --- | --- | --- | --- | --- |
+| 0 | 3845018 | 472161935 | 121273 | 193512 |
+| 1 | 54582059 | 395340711 | 78509 | 220604 |
+| 2 | 97899078 | 331027273 | 52215 | 241612 |
+| 3 | 135869861 | 274693506 | 38795 | 249333 |
+| 4 | 169277191 | 224467569 | 35761 | 238572 |
+| 5 | 198565733 | 179335539 | 35960 | 219833 |
+| 6 | 224028329 | 138666027 | 41926 | 194369 |
+| 7 | 245873927 | 102030520 | 55167 | 163375 |
+| 8 | 264259324 | 69120749 | 74311 | 127999 |
+| 9 | 279306283 | 39705479 | 98087 | 89354 |
+| 10 | 291111694 | 13605778 | 125297 | 48522 |
+| 11 | 299754035 | 2275769 | 154793 | 28572 |
+
+These finite inequalities use precisely the inherited rational arrays,
+the integer square-root brackets (14.24), the displayed source
+circuit and (14.2); all 87 coefficients in each univariate comparison
+are included. The same coefficient bound also gives
+$\mathfrak b_{[-1,1]}(\widehat D_i)-384\rho>0$ for every cell,
+in agreement with the full-tube denominator bounds (13.21).
+Thus division by the actual positive denominator turns the four
+positive numerators into
+
+$$
+-534<p(q)<-457,\qquad
+-1877/50<v(q)-(46/25)p(q)<-3749/100
+\quad(0\le q\le q_*).
+\tag{14.30}
+$$
+
+These are readings of the plus endpoint at the same exact parameter.
+The secant equalities make them the minus endpoint's readings as
+well wherever it is a strict world. IX Theorem 26.1 identifies the
+seam solutions and attaches the exact first negative-$J$ germ, so
+this enclosure covers the specified continuation throughout, rather
+than an independent selection of zeros in successive cells.
+

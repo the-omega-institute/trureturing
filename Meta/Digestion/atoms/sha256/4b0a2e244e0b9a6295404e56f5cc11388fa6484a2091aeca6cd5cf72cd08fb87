@@ -1,0 +1,16 @@
+**Proposition 4.3 (the same promise is natively exact).** Under the
+original source service, a Read at $RRL$ distinguishes the promised pair
+with zero error, zero Applies and literal address length $3$.  If the retained
+entry root is counted together with this post-entry event, the chronology has
+two raw Read events and two distinct addresses; if only post-entry calls are
+charged, it has one raw event and one fresh address.  These are the declared
+cache scopes of (112.20a), not a new tariff.
+
+The proposition compares an actual native event with a finite-specimen
+quantum benchmark.  It does not claim that the quantum copies have a native
+preparation cost, a source-dependent oracle, a reset, cloning, a backward
+action, or a conversion from specimen number to the original bill.  It also
+does not turn the binary promise into equality recovery on all of
+$\mathcal T$: a two-source separation is weaker than a complete-domain
+Read algorithm.
+

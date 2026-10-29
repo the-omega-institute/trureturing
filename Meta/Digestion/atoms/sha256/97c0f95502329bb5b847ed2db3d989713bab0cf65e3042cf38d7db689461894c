@@ -1,0 +1,29 @@
+**约定 78.2（供应的实际下界和被排除的窗口）。** supplier Theorem 30.3、Corollaries 30.4–30.5 供应，对每个有限整数 $r\ge1$、每个上述 finite $\Pi$，
+
+$$
+\|B_\Pi^r\|^2\ge(1+r/2)2^{-r}>2^{-r}.
+$$
+
+这里是原完整复空间中的实际子表示见证，不是离散正则模型的范数替代。令 $E=E_C|_{\mathcal H_{J,\Pi}}$，同一实际缺陷给出
+
+$$
+G_r=\sum_{j=0}^{r-1}(B_\Pi^\dagger)^j(I-E)B_\Pi^j
+ =\tfrac43\bigl[I-(B_\Pi^r)^\dagger B_\Pi^r\bigr].
+$$
+
+因此若 $G_r\ge cI$、$a_r=1-3c/4$，必有
+
+$$
+a_r\ge(1+r/2)2^{-r},\qquad
+c\le\tfrac43\bigl[1-(1+r/2)2^{-r}\bigr]
+ <\tfrac43(1-2^{-r}).
+$$
+
+被排除的是 supplier (24.4) 的 exact fast-window requirement $a_r\le2^{-r}$，对每个 finite window 都被排除，即使 $r$ 和 finite removal 依 horizon 改选。较弱正耗散常数是否存在未由此判定；增长窗口允许 subexponential excess 的路线也未被排除。相应统一供应若写成
+
+$$
+\|B_\Pi^{n-1}\|^2\le2^{-n}s_n\quad(n\ge1),
+$$
+
+则必要 $s_n\ge n+1$，但并未证明这个 prefactor 足够，也没有反驳 $\log s_n=o(n)$。全部供应证明见 §30，不在此重复其矩或自旋 certificates。
+

@@ -1,0 +1,23 @@
+**Assumption 5.1 (early actuation and changed acquisition cut).** Replace
+only Assumption 1.2's restriction on first actuator use by current permission
+to execute two completed, serial applyRho calls before any acquisition
+Read. Their sole accessible result is the common completion acknowledgement;
+there is no source, epoch or orientation reply. All other installation
+conditions, authentic entrance original $u$, entrance lag $2k$, advice,
+binding and physical names remain as in Definition 1.1. The actuator
+preserves the same global $\pi$ on old and new nodes. After these two
+actual updates, acquisition is stationary on
+
+$$
+ v^+=\rho^2v=\rho^{2(k+1)}u.
+ \tag{GPO.18}
+$$
+
+No other writer intervenes. The new cut is after preparation, not the
+entrance cut. A public phase bit $\varepsilon$ is zero for the passive
+mode and one for this two-update mode. It records the controller's two
+completed acts, not an unknown source clock. At the acquisition cut put
+$j=k+\varepsilon$, so the actual register is $\rho^{2j}u$.
+Preparation material and internal actuator work are additional to the
+acquisition coordinates of Section 3.
+

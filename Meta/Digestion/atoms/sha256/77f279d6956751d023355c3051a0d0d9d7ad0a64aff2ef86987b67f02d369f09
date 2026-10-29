@@ -1,0 +1,10 @@
+**约定 61.2（完整原域仍未决）。** （58.5）是定义 58.1 的整个循环独立间隔类的一致上界，包括其常数更新分支及第 59 节的有限实现。它没有被延伸到一般空间时钟核 $T_g=U^g$、其他相位依赖律或整个 $\Theta_N$。这里没有统一的有限解码半径、速率、任意有限块擦除恢复、最小隐藏维数或对所有参数共用零集的结论。任意有限均值分布也没有被声称为相位型。
+
+一般有限隐藏达到候选是否具有假设 55.2 的同律标记、双侧解码及确定更新，仍缺证明。即使这些假设成立且得到（57.2），其概率核也未被迫为几何；在（56.13）下的标量乘积带约束仍仅为必要条件。故原二择一（54.1）保持原样，包含零平稳坐标、结构零、可约性、周期性及冗余表示的一切 $\Theta_N$ 仍未被本增补决定。上述结论为所列供应与假设下的普通数学证明。
+
+[CG-R]: FIB_LEGAL_EDGE_LOAD_RENEWAL_CLOSURE_SEPARATION_AND_OBSERVABLE_DEPENDENCE.md
+[CG-F]: FIB_LEGAL_EDGE_LOAD_UNIFORM_RENEWAL_NONATTAINMENT_AND_THREE_STATE_SEPARATION.md
+[CG-MC]: https://arxiv.org/html/1408.6876v2 "Sarah Marzen and James P. Crutchfield, Informational and Causal Architecture of Discrete-Time Renewal Processes, §§II.1, III, V and Appendix A"
+[CG-EMC]: https://arxiv.org/html/0905.3587v1 "Christopher J. Ellison, John R. Mahoney and James P. Crutchfield, Prediction, Retrodiction, and The Amount of Information Stored in the Present, §§II, V, VII"
+[CG-DLP]: https://arxiv.org/html/1104.2224v2 "A. Philip Dawid, Steffen Lauritzen and Matthew Parry, Proper Local Scoring Rules on Discrete Sample Spaces, §4.2, Example 4.4, equation (14)"
+

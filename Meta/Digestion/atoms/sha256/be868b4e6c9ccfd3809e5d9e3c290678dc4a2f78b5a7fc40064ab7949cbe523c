@@ -1,0 +1,23 @@
+**Proposition 6.3 (time-only failure and task equivalence).** Even with
+authentic exact $n$, interval, mode and known $\pi$, the count $T$ does
+not determine the original or its complete logical Read/ApplyRho behavior.
+For originals viewed through that logical menu at epoch zero, equality
+of all finite source-free observations is exactly equality of $u$.
+No minimal complete-memory or optimal orientation-cost assertion follows.
+
+Proof. Fix any $n\in[A,B]$, an $n$-leaf ordered shape, one allowed $k$
+and one orientation. Give its leaves all-alpha labels in one realization
+and all-beta labels in the other. Both have the same $n$, advice, mode
+and $T=2(k+\varepsilon)$, but different originals. A Read at any one
+original leaf address distinguishes their logical replies. More generally
+different ordered labelled finite trees have different four-valued
+responses at some semantic address: descend through equal branch roots
+until the first unequal node type or leaf label. The one-Read-and-stop
+logical program at that literal address distinguishes them. Equal originals
+give equal future trees under each logical substitution and equal replies
+at each request. Induction on an adaptive source-free controller's finite
+steps then gives equal logical observations. Thus the behavioral equivalence
+is exactly tree equality. Orientation and lag are additional acquisition
+and realization coordinates; this argument does not prove their necessity
+in every memory encoding or for each restricted consumer. $\square$
+

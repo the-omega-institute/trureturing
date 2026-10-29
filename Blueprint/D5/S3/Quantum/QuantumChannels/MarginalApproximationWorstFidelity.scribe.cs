@@ -57,6 +57,16 @@ internal sealed class MarginalApproximationWorstFidelityDocument : IScribeDocume
                     + "These coefficients specify the pure process matrix used to attain the bound."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("product-matrix-diagonal"),
+                DeclarationHandle.Create(Module + ".productMatrix_diagonal"),
+                H("Tensor products of diagonal matrices"),
+                StatementSource.FromAuthor(Disp(ProductMatrixDiagonalFormula())),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "For any finite index type, the tensor product of four-dimensional diagonal matrices "
+                    + "is diagonal, and its entry at a word is the product of the selected local entries."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("worst-fidelity-claim"),
                 DeclarationHandle.Create(Module + ".claim"),
                 H("The universal lower bound and cyclic-shift attainment"),
@@ -223,6 +233,23 @@ internal sealed class MarginalApproximationWorstFidelityDocument : IScribeDocume
         Equal(Typed(Call("shiftCoeff", N, F.Id("a")), Complexes),
             Mul(App(Qualified("Inv", "inv"), Power(Typed(D(2), Complexes), N)),
                 App(Qualified("Matrix", "trace"), Mul(PauliString(F.Id("a")), Shift))))));
+
+    private static Formula ProductMatrixDiagonalFormula()
+    {
+        Formula index = F.Id("iota");
+        Formula data = F.Id("d");
+        Formula word = new Formula.TypeArrow(index, Fin(D(4)));
+        Formula entries = new Formula.TypeArrow(index, new Formula.TypeArrow(Fin(D(4)), Complexes));
+        Formula product = Seq(new Formula.Subscript(Prod, Typed(F.Id("k"), index)), Sp,
+            Parenthesized(App(data, F.Id("k"), App(F.Id("a"), F.Id("k")))));
+        Formula localMatrices = LambdaOf(F.Id("k"), index,
+            App(Qualified("Matrix", "diagonal"), App(data, F.Id("k"))));
+        Formula identity = Equal(Call("productMap", App(Qualified("Function", "const"), index, Fin(D(4))), localMatrices),
+            App(Qualified("Matrix", "diagonal"), LambdaOf(F.Id("a"), word, product)));
+        return All(index, Call("Type"), new Formula.TypeArrow(Parenthesized(Call("Fintype", index)),
+            Parenthesized(new Formula.TypeArrow(Parenthesized(Call("DecidableEq", index)),
+                Parenthesized(All(data, entries, identity))))));
+    }
 
     private static Formula ClaimFormula()
     {

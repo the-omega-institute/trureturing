@@ -1,0 +1,82 @@
+**定理 48.1（移动三源的保留拒绝间隙）。** 在定义 47.1 的对应载体上，对 $k=5n$ 使用 (45.17) 的三棵源
+$W_{0,k},W_{1,k},W_{2,k}$。在每个模型 $X\in\{\mathrm c,R\}$ 中置
+$P_j^X=|v_{W_{j,k}}^X\rangle\langle v_{W_{j,k}}^X|$。
+首先明确制备 $Y_{0,X}=|v_{W_{0,k}}^X\rangle\langle v_{W_{0,k}}^X|$，质量为 $1$，
+再施加另行供给的、保留负支的
+Lüders 二元仪器
+
+$$
+L_{1,X}^{+}(Y)=P_1^XYP_1^X,\qquad
+L_{1,X}^{-}(Y)=(I-P_1^X)Y(I-P_1^X),
+\tag{48.1}
+$$
+
+第一步在各自的源载体上施加；第二步将其输出自然嵌入定义 47.1 的带失败标记空间，
+以 $\widetilde P_{W_{2,k}}^X$ 作破坏性查询，记录正负，最后对每条记录 Stop。
+等价地，可从开始就在扩张空间上使用 $P_j^X\oplus0$，且 $I$ 取扩张空间的恒等算子。
+初态没有失败标记分量，两种写法的四条记录律一致。若
+$x=|K_n^{\mathrm c}(W_{1,k},W_{0,k})|^2$、
+$y=|K_n^{\mathrm c}(W_{2,k},W_{1,k})|^2$、
+$z=|K_n^{\mathrm c}(W_{2,k},W_{0,k})|^2$，则复模型完整四记录律按
+$(++,+-,-+,--)$ 排列为
+
+$$
+\begin{aligned}
+(p(++),p(+-),p(-+),p(--))
+=\bigl(&xy,\ x(1-y),\ z+xy-2\operatorname{Re}\mathcal B_n,\\
+       &1-x-z-xy+2\operatorname{Re}\mathcal B_n\bigr).
+\end{aligned}
+\tag{48.2}
+$$
+
+实模型将其中的 $\operatorname{Re}\mathcal B_n$ 替换为 $|\mathcal B_n|$。因此
+
+$$
+p_{\mathrm c}(-,+)-p_R(-,+)
+=2\bigl(|\mathcal B_n|-\operatorname{Re}\mathcal B_n\bigr)
+=2|\mathcal B_n|(1-\cos\theta_n)
+\ge \Delta_*:=2\left(\frac45\right)^{23}(1-\cos1)>0.
+\tag{48.3}
+$$
+
+**证明。** 负后正分支的未归一振幅为
+
+$$
+P_2^X(I-P_1^X)v_{W_{0,k}}^X,
+$$
+
+故其质量为 $|K_{20}-K_{21}K_{10}|^2$；这里 $K_{ij}=\langle v_{W_{i,k}},v_{W_{j,k}}\rangle$，并且不除以
+第一次负支的质量。对复模型，Hermitian 性把交叉项写成
+$\mathcal B_n=K_{01}K_{12}K_{20}$，所以负后正质量是
+$z+xy-2\operatorname{Re}\mathcal B_n$。实模型的三条边分别是复边的模，闭路积为
+$|\mathcal B_n|$，得到 (48.2) 和 (48.3)。式 (45.19) 给
+$\theta_n\in(1,5/4)\subset(0,\pi)$ 与
+$|\mathcal B_n|\ge(4/5)^{23}$；在该区间 $1-\cos\theta_n\ge1-\cos1$。
+前两项的和为 $x$；后两项的和为 $1-x$，来自未归一的第一负支。
+各项均非负：第二次查询的正支为投影范数平方，负支为其补效果的平方范数
+（等于破坏性负支的迹）。四项和为 $1$，每项均含最终 Stop；零质量项也保留。
+两模型的完整律之差为 $(0,0,\Delta_n,-\Delta_n)$，其中 $\Delta_n$ 是 (48.3) 的左边，
+故这是未归一原始概率的差异，没有选取成功子样本。∎
+
+共轭整个复模型会把 $\mathcal B_n$ 换成其共轭，但 (48.3) 只读取 $\cos\theta_n$，
+因此不决定相位方向。对所列制备及整个菜单同时共轭保持所有原始概率。
+标准的 doubled-realification
+
+$$
+F(A)=\begin{pmatrix}\operatorname{Re}A&-\operatorname{Im}A\\
+\operatorname{Im}A&\operatorname{Re}A\end{pmatrix}
+\tag{48.4}
+$$
+
+满足 $F(AB)=F(A)F(B)$、$F(A^*)=F(A)^T$。对应规则是实密度
+$\rho_{\mathbb R}=F(\rho)/2$、效果 $E_{\mathbb R}=F(E)$、Kraus 算子 $F(A_j)$。
+因为对迹类 $B$ 有 $\operatorname{Tr}_{\mathbb R}F(B)=2\operatorname{Re}\operatorname{Tr}_{\mathbb C}B$，
+密度迹为 $1$ 且效果概率与每条分支质量保持；$\sum_jA_j^*A_j=I$ 也被保持。
+对有限秩算子 $\operatorname{rank}_{\mathbb R}F(A)=2\operatorname{rank}_{\mathbb C}A$，
+所以复秩一源纯态变成实秩二密度，复秩一投影变成实秩二投影。
+这不是 (46.9) 的实秩一源射线模型；它允许更大的实载体模拟复菜单。
+在上述可分无限空间也可按实部、虚部作同一实化；正迹类密度仍按 $1/2$ 缩放。
+因此本比较不排除更大的实模拟，也不选择物理复标量。
+Lüders 保留负支是额外的仪器资源；在下节五模菜单中，读完全部模式再把四个负标签
+作经典合并也不会保留四维块内的相干性。
+

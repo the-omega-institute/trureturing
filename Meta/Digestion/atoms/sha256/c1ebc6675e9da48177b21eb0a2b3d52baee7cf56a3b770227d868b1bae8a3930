@@ -1,0 +1,93 @@
+**Definition 35.2 (the prescribed full consumer).** The consumer is the
+fixed installation of [Waves VI, Definitions 101.1 and 106.1,
+Theorem 109.1](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_VI.md#109-a-completely-specified-return-with-an-original-state-witness).
+Write $H_5=\mathbb C^5$ with basis $e_0,\ldots,e_4$, and let
+$E_2=\mathbb C^2$ have basis $f_0,f_1$. Put
+
+$$
+\begin{gathered}
+u_H=(e_0+e_3)/\sqrt2,\quad v_H=(e_1+e_4)/\sqrt2,\quad z_H=e_2,\\
+B(x_0,x_1,x_2)=x_0u_H+x_1v_H+x_2z_H,\qquad R=BH_3,
+\quad H_3=\mathbb C^3,\\
+u_-=(e_0-e_3)/\sqrt2,\quad v_-=(e_1-e_4)/\sqrt2,\quad
+\zeta=v_H\otimes(f_0-f_1)/\sqrt2.
+\end{gathered}
+\tag{35.2}
+$$
+
+The five ready columns and complementary columns are exactly
+
+$$
+\begin{aligned}
+\mathcal Ve_0&=u_Hf_0,&\mathcal Ve_1&=u_Hf_1,&
+\mathcal Ve_2&=v_H(f_0+f_1)/\sqrt2,\\
+\mathcal Ve_3&=z_Hf_1,&\mathcal Ve_4&=z_Hf_0,\\
+Tu_H&=u_-f_0,&Tv_H&=u_-f_1,&Tz_H&=v_-f_0,\\
+Tu_-&=\zeta,&Tv_-&=v_-f_1,
+\end{aligned}
+\tag{35.3}
+$$
+
+where juxtaposition denotes a tensor product. Thus the prescribed map
+is the full ten-dimensional unitary
+
+$$
+\mathsf J(xf_0+yf_1)=\mathcal Vx+Ty\qquad(x,y\in H_5).
+\tag{35.4}
+$$
+
+These are the supplier's complete columns, including its complementary
+five-dimensional domain and all off-code outputs. In particular
+$\mathsf J$ and $\operatorname{Ad}_{\mathsf J}$ have algebraic entries.
+
+The original system menu and sole preparation are retained, not enlarged.
+In qutrit coordinates set
+
+$$
+\begin{gathered}
+\xi=(1,1,1)/\sqrt3,\quad a=(1,1,-2)/\sqrt6,\quad
+f=(1,-1,0)/\sqrt2,\quad q=(\xi+a)/\sqrt2,\\
+U(x_0,x_1,x_2)=(x_0,x_2,x_1),\qquad
+W_{\rm sys}(x_0,x_1,x_2)=(x_1,x_0,x_2),\\
+\psi=\sqrt d\,Uq+i\sqrt{1-d}\,Uf,\quad
+\rho_0=\psi\psi^\dagger,\quad 0<d<1,\\
+V_0=Ue^{i\pi W_{\rm sys}/4},\quad V_1=V_0W_{\rm sys},\quad
+A_j=\tfrac12\operatorname{Ad}_{V_j}\ (j=0,1).
+\end{gathered}
+\tag{35.5}
+$$
+
+Here $a$ is the vector denoted $e$ in the qutrit supplier. The one installed
+$N\in U(3)$ satisfies $[N,\xi\xi^\dagger]\ne0$ and acts on $H_5$ as
+$BNB^\dagger+(I_5-BB^\dagger)$. The sole preparation on $H_5$ is
+$B\rho_0B^\dagger$; the record starts in $f_0$. The original terminal is
+effects-only, with
+$F_1=(Bqq^\dagger B^\dagger)\otimes I_2$ and $F_0=I_{10}-F_1$.
+No selected label, new preparation, extra terminal setting or instrument
+inverse is supplied.
+
+The actual emitted record, in the original basis
+$g_0=(f_0-if_1)/\sqrt2$, $g_1=(-if_0+f_1)/\sqrt2$, is retained with the
+fixed Schur parameter $|\gamma|\le1$ and returned once to the same
+forward $\mathsf J$, as in VI Assumption 106.2. Old system operations act
+as identity on that record and every untouched reference. For example
+the prescribed full no-prefix, no-intermediate-operation successor is
+
+$$
+\begin{gathered}
+L_0=(\mathcal VBV_0-iTBV_0)/\sqrt2,\qquad
+L_1=(-i\mathcal VBV_1+TBV_1)/\sqrt2,\\
+\mathcal R_\gamma(X)=\tfrac12\bigl(L_0XL_0^\dagger+L_1XL_1^\dagger
+              +\gamma L_0XL_1^\dagger+\bar\gamma L_1XL_0^\dagger\bigr),
+\qquad X\in M_3.
+\end{gathered}
+\tag{35.6}
+$$
+
+Its output is retained as an operator on the full $H_5\otimes E_2$,
+and the map tensors with identity on untouched references. Full
+realization of this specified device
+requires (35.4), not merely matching two numbers obtained by applying
+$F_0,F_1$ to (35.6). No algebraicity of $d$, $N$ or $\gamma$ is assumed;
+the algebraic target used below is the interaction (35.4) itself.
+

@@ -1,0 +1,14 @@
+**Corollary 40.2.** A local real analytic family of four-world incidences
+as in Proposition 40.1 exists when $r_A$ varies through an open interval
+containing $1/4$. Every member has $p\ne24$, a distinct-world J pair,
+and the same strict ordering of the four listed M responses.
+
+**Proof.** The responses are rational without poles in neighborhoods
+of the four source boxes. Inequality (40.8) implies that $D_xF_{\rm J}(x_*)$
+is invertible. Regard $r_A$ as an additional free parameter in (40.1).
+The classical analytic implicit-function theorem supplies the local
+family. All source, distinctness, $p\ne24$ and M-ordering inequalities
+are strict, so continuity preserves them on a smaller open interval.
+Each family member lifts by (31.4) to its own one entire gain and fixed
+drift. $\square$
+

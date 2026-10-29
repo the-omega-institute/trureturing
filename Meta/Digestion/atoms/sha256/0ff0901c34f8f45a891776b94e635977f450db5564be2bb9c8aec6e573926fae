@@ -1,0 +1,20 @@
+**约定 75.1（实际端口与两个目标）。** 本节只使用 [Arithmetic acquisition and behavior return §9](RECURSIVE_RELATIONAL_OBSERVATION_ARITHMETIC_ACQUISITION_RETURN.md) 的独立 pair apparatus。公开 $H\ge1$，唯一实际 source $u=(a,b)^{\mathsf T}\in\mathbb N^2$，包括零坐标，入口为 $v_0$。只有
+
+$$
+R(u)=Mu,\quad G(u)=u+\alpha,\quad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad
+\alpha=\binom10,\quad q=(2,3),\qquad
+\operatorname{Read}_H(u)=\gcd(qu,H)
+$$
+
+是 source 服务；read 是明确供应的、付费无损**当前**读口，$\gcd(0,H)=H$。执行串行且绑定唯一，没有 reset、clone、saved entry source、物理 inverse、坐标读或额外 source-dependent reply。隐藏 source 大小、service tariff 和 backing 不是控制器判别口。每个声称的有限运行有足够有限 backing、合法绑定/权限和服务完成；这不假定一个固定有限容量覆盖所有无界入口或未来长度。
+
+安装的两个寄存器分别为
+
+$$
+e=v_0\bmod H\quad\text{（immutable entry）},\qquad
+c=u_*\bmod H\quad\text{（mutable reached state）}.
+$$
+
+$c$ 随同一实际绑定的后续 $R/G$ acknowledgement 同步更新；$e$ 不变。二者均不是未取得的源坐标或原 source 的恢复。
+

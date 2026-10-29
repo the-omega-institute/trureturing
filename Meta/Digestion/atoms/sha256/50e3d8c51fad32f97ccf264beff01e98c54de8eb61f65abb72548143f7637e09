@@ -1,0 +1,163 @@
+**定理 21.2（实际五相位有限相型律的逐成员严格非取得）。** 对定义 12.1 的任一实际有限相型律，若相位集为 $E=\mathbb Z/5\mathbb Z$，则其完整外部 Brier 风险满足
+
+$$
+d(P)<c_\star.
+\tag{21.8}
+$$
+
+这里保留定义 11.1、12.1 的同一实际 $J,P,Q,f$，每行 $f_a$ 严格正、归一化且有限均值。实际平稳 Palm 行及均值为
+
+$$
+K(a,b)=\sum_{\substack{g\ge2\\a+g=b}}f_a(g),\qquad
+\nu_a=Q(A_0=a),\qquad \nu K=\nu,\qquad
+\mu=\sum_a\nu_a\sum_{g\ge2}g f_a(g).
+\tag{21.9}
+$$
+
+每个实际占据锚 $t$ 的完整标记 $C_t$，仍分别由严格左半线 $(X_{t-j})_{j\ge1}$ 与严格右半线 $(X_{t+j})_{j\ge1}$ 的两个固定可测函数解码，$J$-几乎处处成立。原风险始终是
+
+$$
+d(P)=\mathbb E_P\!\left[
+\left(X_0-\mathbb E_P[X_0\mid\sigma(X_j:j\ne0)]\right)^2
+\right].
+\tag{21.10}
+$$
+
+证明。反设 $d(P)=c_\star$。定理 11.5、定理 12.2 与命题 12.4 供应同一实际律的正的最终中性表示（12.18）、完整归一化（12.21）、全部后验带（12.22）–（12.23）、全部长度的有向恒等式（12.24）及完整能量（12.26）–（12.28）。引理 21.1 适用，故 $z_a(5)=1$，且全部 $n\ge7$ 中性。若记实际最大非中性长度为
+
+$$
+M=\max\{n\ge2:\text{存在 }a\in E\text{ 使 }z_a(n)\ne1\},
+$$
+
+则边界 12.6 保证该集合非空且 $M\ge3$，剪枝给 $M\in\{3,4,6\}$。以下论证同时处理这些终端长度，且不预设长度四、六的修正为一。
+
+置
+
+$$
+\begin{gathered}
+x_a=z_a(2),\qquad y_a=z_a(3),\qquad
+s_a=\beta(\kappa_a),\qquad e_a=\mathcal P(\kappa_a)=\Xi(s_a),\\
+c=\frac15\sum_{a\in E}e_a=d(P)=c_\star>0.
+\end{gathered}
+\tag{21.11}
+$$
+
+下文 $W_a(n)$ 专指（12.26）的完整规范能量 $\widetilde W_a(n)$。由（12.28）有 $W_a(n)=cn+H_{a+n}-H_a$，所以长度五的两种合法拆分都必须成立：
+
+$$
+W_a(5)=W_a(2)+W_{a+2}(3)
+       =W_a(3)+W_{a+3}(2)=5c.
+\tag{21.12}
+$$
+
+这里 $a+5=a$，故势差 $H_{a+5}-H_a$ 精确为零。记
+
+$$
+D_r(v,w)=\beta(rv)+\beta(rw)-\beta(r).
+\tag{21.13}
+$$
+
+由于 $z_a(5)=1$，起点 $a$ 的 $(2,3)$ 与 $(3,2)$ 分别在相位 $a+2$、$a+3$ 分割，（12.24）给出
+
+$$
+\begin{aligned}
+t_a&:=\beta(\kappa_{a+2}x_a y_{a+2})
+ =\beta(\kappa_{a+2}x_a)+\beta(\kappa_{a+2}y_{a+2})-s_{a+2}
+ =D_{\kappa_{a+2}}(x_a,y_{a+2}),\\
+u_a&:=\beta(\kappa_{a+3}y_a x_{a+3})
+ =\beta(\kappa_{a+3}y_a)+\beta(\kappa_{a+3}x_{a+3})-s_{a+3}
+ =D_{\kappa_{a+3}}(y_a,x_{a+3}).
+\end{aligned}
+\tag{21.14}
+$$
+
+长度二、三没有内部零损失项，但各自两个端点项都须保留。将（12.26）在这两个长度展开并按（21.12）相加，恰得到
+
+$$
+5c=t_a+D_{\kappa_a}(x_a,y_{a+2})
+   =u_a+D_{\kappa_a}(y_a,x_{a+3}).
+\tag{21.15}
+$$
+
+另一方面，长度五的内部恰有 $j=2,3$ 两项，分别为 $\mathcal P(\kappa_{a+2}x_a y_{a+2})=\Xi(t_a)$ 与 $\mathcal P(\kappa_{a+3}y_a x_{a+3})=\Xi(u_a)$。两个端点相位均为 $a$，端点及规范减项精确合为
+
+$$
+\beta(\kappa_a)+\beta(\kappa_a)-s_a=s_a.
+$$
+
+因此完整长度五能量是
+
+$$
+5c=s_a+\Xi(t_a)+\Xi(u_a).
+\tag{21.16}
+$$
+
+现在选择 $\kappa_a=\max_{b\in E}\kappa_b$ 的相位 $a$。对固定的一对 $(v,w)=(x_a,y_{a+2})$，带（12.23）同时给出
+
+$$
+\kappa_a v,\ \kappa_{a+2}v,\
+\kappa_a w,\ \kappa_{a+2}w,\
+\kappa_a,\ \kappa_{a+2}\ \in[1/3,1].
+\tag{21.17}
+$$
+
+其中 $v=z_a(2)$ 的两端相位为 $a,a+2$，$w=z_{a+2}(3)$ 的两端相位为 $a+2,a+5=a$。同理，对 $(v,w)=(y_a,x_{a+3})$，对应两端尺度为 $\kappa_a,\kappa_{a+3}$；$y_a=z_a(3)$ 与 $x_{a+3}=z_{a+3}(2)$ 的端点也正是这两个相位。因而对每一对固定的 $v,w$，当 $r$ 位于其两端尺度之间时，$rv,rw,r$ 始终属于 $[1/3,1]$。
+
+令 $h(q)=q/(1+q)^3$。由 $h'(q)=(1-2q)/(1+q)^4$，在 $[1/3,1]$ 上有
+
+$$
+\frac18\le h(q)\le\frac4{27}.
+$$
+
+于是沿上述每个完整尺度区间，
+
+$$
+\frac{d}{dr}D_r(v,w)
+=-\frac2r\bigl[h(rv)+h(rw)-h(r)\bigr]
+\le-\frac2r\left(\frac14-\frac4{27}\right)<0.
+\tag{21.18}
+$$
+
+由所选相位的最大性及（21.14），
+
+$$
+\begin{aligned}
+D_{\kappa_a}(x_a,y_{a+2})&\le t_a,\\
+D_{\kappa_a}(y_a,x_{a+3})&\le u_a.
+\end{aligned}
+$$
+
+结合（21.15），得到两个同时成立的下界
+
+$$
+t_a\ge\frac{5c}{2},\qquad u_a\ge\frac{5c}{2}.
+\tag{21.19}
+$$
+
+由于 $\mathcal P$ 严格递增，所选相位还有 $e_a\ge c$。恒等式 $s_a=\Xi(e_a)$ 及 $\Xi$ 在 $[0,1]$ 上递减给 $s_a\le\Xi(c)$。全部 $\kappa_b\le1$ 给 $e_b\le1/4$，故 $0<c\le1/4$；而完整拆分带给 $t_a,u_a\in[1/4,9/16]$。特别地，$5c/2\le5/8<1$，可以在（21.19）中使用同一递减区间。由（21.16）得
+
+$$
+5c\le\Xi(c)+2\Xi(5c/2).
+\tag{21.20}
+$$
+
+在 $0<c\le1/4$ 上，将全部一次项保留，定义
+
+$$
+\begin{aligned}
+G(c)&:=5c-\Xi(c)-2\Xi(5c/2)
+     =2(1+\sqrt{10})\sqrt c-c-3,\\
+G'(c)&=\frac{1+\sqrt{10}}{\sqrt c}-1>0.
+\end{aligned}
+\tag{21.21}
+$$
+
+本卷 §1 供应 $c_\star\ge1800/12559>1/7$。又有精确根式比较
+
+$$
+G(1/7)=\frac{2(\sqrt7+\sqrt{70})-22}{7}>0,
+\tag{21.22}
+$$
+
+因为 $(\sqrt7+\sqrt{70})^2=77+2\sqrt{490}>121$，最后的严格性等价于 $490>484$。在取得反设下 $c=c_\star\le1/4$，故（21.21）–（21.22）给 $G(c)=G(c_\star)>0$；这与（21.20）给出的 $G(c)\le0$ 矛盾。于是取得反设不成立，结合原普适上界 $d(P)\le c_\star$，得到（21.8）。$\square$
+

@@ -1,0 +1,93 @@
+**Theorem 15.1 (one-run interaction and local-computation bills).** On
+every input of Definition 9.1, earn $h,k,H$ as in Definition 13.1,
+construct and verify Theorem 14.2's common list, and execute Theorem
+13.2's root and early-child measurements. Run exactly the original fixed
+$K_d(P)$ of Definition 9.1, compute $B_n$ explicitly, and install
+$(P,K_d(P),n,B_n)$ before the same-source completed handoff. This
+terminates with the authentic canonical record, under the full
+stationarity and completion premises. On that same run,
+
+$$
+ \begin{aligned}
+ U_{\rm source}&=0,\\
+ Q_{\rm Read}&\le2k+(4d+1)TH,\\
+ M&\le H,\\
+ W_{\rm literal}&\le W_{\rm spine}+(4d+1)TH^2,
+ \qquad W_{\rm spine}\le2k\,2^k.
+ \end{aligned}
+ \tag{ACR.54}
+$$
+
+Local bit work and cumulative bit writes are at most
+$e_d+C4^d(d+H+2)^{24}$, and reusable data backing at most
+$v_d+C(d+H+2)^8$ bits, with $e_d,v_d$ exactly as in Definition
+9.1. The installed record has $O(d+n+1)$ data bits, including an
+explicit $\Theta(n)$-bit $B_n$ field. Binding/grants, fixed code,
+service, allocation, retention and completed handoff keep their actual
+charges and durations. These bounds assert neither polynomial total
+work in $d+n$ nor a bound on those physical tariffs.
+
+Proof. The actual law has a padded catalogue presentation, and its
+actual cut is at most the earned $H$. The common guarantee therefore
+applies to every adaptively selected authentic cone. Theorem 13.2
+earns $P,n$; at $d=0$ only the root is measured. Its proof charges
+each walk through its terminal absence, with at most $H$ Reads and
+literal length at most $H$. Adding the actual spine calls gives
+(ACR.54). For each such Read the operand is materialized as a complete
+physical word on the surviving root. There is no rank query,
+equivalence query, clone, reset or source update.
+
+The small old trees, depth counters, exact means, root rounding and
+literal buffers have polynomial bit cost in $d+H$. Fibonacci addition
+computes $B_n=F_{n+1}-1$ in $O((n+2)^2)$ bit work and cumulative
+writes and $O(n+1)$ backing. Canonical synthesis generates rows by
+the original enumerator, costing its actual $e_d,v_d$, and tests at
+most $2^d$ rows in $O(2^d(d+1)^2)$ additional work. All of these
+terms and the final writes fit the displayed local bounds. The
+constructor's binary-counter catalogue is a different intermediate
+computation: its rows do not replace the fixed first-passing canonical
+row. In particular a zero stream at $d>0$ still receives precisely
+$K_d(P)$, not a conveniently chosen minimal zero presentation.
+Write the ready control only after the retained data writes finish.
+
+Upon completed installation, GPO Definition 34.1 and Theorems
+34.2--34.3 apply to this authentic synchronized memory and its separately
+surviving binding/grants. They supply the same four mathematical views
+and finite serial continuation; GPO Theorem 39.4 supplies the same-source
+literal evaluator, including absent words. No arbitrary observer
+journal, private register, rights or durations are recovered. The
+stationary interval must extend through the entire catalogue work,
+verification, canonical normalization and installation, not merely
+through the last source Read.
+
+Since $H\le2n-1$, (ACR.54) is polynomial in $d+n$ in its Read and
+literal coordinates, while preparation retains $4^d$. Theorem 11.2
+already has $O(\log(n+2)+4^d)$ Reads, $M\le2n-2$ and the sharper
+local bound (ACR.39). The present list has a polynomial Read bound
+but a larger polynomial dependence on $n$ and a charged exponential
+catalogue. These are coordinate comparisons on the identical entrance;
+they prove no all-input dominance or weighted optimum. Neither route
+reduces the exact canonical enumerator's $e_d,v_d$ obligation.
+
+The supplier subtraction is as follows. GPO §§27--29 provide the actual
+source and mature-prefix separation; GPO §§34,39 provide synchronized
+recovery and given-law physical addressing. ACR §§9--12 already provide
+erased-law/cut acquisition, implicit separators and fixed-family
+saturation. Native `atomic_navigation` and its private realization
+lemmas in `NativeRankedNavigationCompiler` concern a fixed semantic
+orientation, not the local physical beta child. `NativeBirthVectorDecoder`
+concerns recursive complete-level codes, `ActualFibonacciSupportChain`
+bounded native support agreement, and `NativeFullSourceProducer`'s
+private traversal uses richer native replies to acquire the full tree.
+Their owning Blueprint narratives preserve those domains. They provide
+no substitute for the actual cone statistic and its priced construction
+here. Classical concentration and conditional expectations are
+intermediate suppliers in Theorem 14.2, not new generic results.
+[Zuckerman][RRO-ZUC], Definitions 1.1--1.2, instead samples bounded
+functions using a uniformly random seed. With domain length $H$ and
+normalized function $f/H$, the needed error is $1/(8H)$; a per-function
+random-seed guarantee alone selects no deterministic seed valid for
+this whole catalogue. The additional mathematical content here is
+repo-derived: the physical conditional-moment correspondence, its
+finite exact construction and bill, and the obstruction below. $\square$
+

@@ -1,0 +1,70 @@
+**Definition 96.3 (Choi normalization and fixed supporting data).**
+Write $E_{jk}=|j\rangle\langle k|$ and
+$|ij\rangle=|i\rangle_{\rm out}\otimes|j\rangle_{\rm in}$. Use
+output-first, unnormalized Choi matrices:
+
+$$
+J_{\mathcal R}=\sum_{j,k=0}^2\mathcal R(E_{jk})\otimes E_{jk},
+\qquad
+J_{\mathcal R}\succeq0,\quad
+\operatorname{Tr}_{\rm out}J_{\mathcal R}=I_3,\quad
+\operatorname{Tr}J_{\mathcal R}=3,\qquad
+\omega_{\mathcal R}=J_{\mathcal R}/3.
+\tag{96.8}
+$$
+
+The last three conditions hold for every legal $\mathcal R$.
+The input tensor factor in this representation does not grant a
+physical reference input to (96.3).
+
+The fixed input/effect pairs $P_{r,k\ell},T_{r,k\ell}$ and positive
+weights $\lambda_r/9$, for $r=e,i$ and $k,\ell=0,1,2$, are exactly
+Terminal (123.1)–(123.5). The effects obey $0\preceq T_{r,k\ell}
+\preceq I_3$ and $\lambda_e+\lambda_i=1$. They are constructed
+from the contacts (96.6); no test depends on the unknown decoder.
+Their supporting operator and constant, including tensor orientation,
+are
+
+$$
+\begin{aligned}
+W&=\sum_{r=e,i}\sum_{k,\ell=0}^2\frac{\lambda_r}{9}
+ T_{r,k\ell}\otimes\Phi(P_{r,k\ell})^{\mathsf T},\\
+b_{\rm test}&=\sum_{r=e,i}\lambda_r\operatorname{Tr}(T_rP_r),
+\qquad S=I_{\rm out}\otimes Y-W .
+\end{aligned}
+\tag{96.9}
+$$
+
+Here $P_r,T_r,\lambda_r$ are the unphased contact objects of Terminal
+(123.1)–(123.2); $\mathsf T$ means ordinary transpose, also for complex
+matrices. The source equations (124.9), (124.14), (125.3) and
+(125.6) give the following precise premises:
+
+$$
+\begin{gathered}
+S=\tau|v\rangle\langle v|
+ +s_{10}|10\rangle\langle10|
+ +s_{01}|01\rangle\langle01|
+ +s_{02}|02\rangle\langle02|,\qquad
+v=\sqrt b\,|00\rangle+\sqrt a\,|11\rangle,\\
+S\succeq0,\qquad SJ_*=0,\qquad J_*=J_{\mathcal R_*},\\
+e(\mathcal R)\ge b_{\rm test}-\operatorname{Tr}(WJ_{\mathcal R})
+\quad\hbox{for every complex CPTP }\mathcal R,\qquad
+b_{\rm test}-\operatorname{Tr}Y=L .
+\end{gathered}
+\tag{96.10}
+$$
+
+The physical-test inequality already uses the half trace norm in
+(96.3). The source's all-density upper certificate for $\mathcal R_*$
+is the separate premise establishing attainment in (96.5); a finite
+test optimum alone would not establish it.
+
+The premise correspondence is consequently specific: Terminal §§119–120
+fix the exact point and its signs; §§123–124 fix the physical tests,
+$W,Y,S$ and their coefficients; (125.3),(125.6) supply the supporting
+inequality and matching constant; Theorem 118.2 and §121 supply the
+original all-density optimum and attaining legal map. The following
+proofs use these results without an additional root or global-minimax
+claim.
+

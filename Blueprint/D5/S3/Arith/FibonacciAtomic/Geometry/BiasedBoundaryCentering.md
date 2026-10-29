@@ -40,7 +40,19 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryCentering.C`
 
 The centered trace is C=Pi composed with the original J. Its values are included in the original ambient G when conditional pullbacks are applied.
 
-**Theorem 1.4 (Constants Are Removed by Centering).**
+**Theorem 1.4 (The Boundary Constant Has Unit Norm).**
+
+$$\Vert \operatorname{constG}\left(1\right) \Vert=1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryCentering.constG_norm_one` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The original Bernoulli boundary law is a probability measure, so its constant one has L2 norm one.
+
+**Theorem 1.5 (Constants Are Removed by Centering).**
 
 $$\forall c: \mathbb{R}, (\operatorname{Pi}\left(\operatorname{constG}\left(c\right)\right)=0)$$
 
@@ -52,7 +64,7 @@ $$\forall c: \mathbb{R}, (\operatorname{Pi}\left(\operatorname{constG}\left(c\ri
 
 For every real c, the original mean of constG(c) is c. The formula for Pi subtracts that same constant and gives zero. This identity removes constants in the centered suffix, free-root form and boundary operator.
 
-**Theorem 1.5 (The Actual Centered Suffix).**
+**Theorem 1.6 (The Actual Centered Suffix).**
 
 $$(\forall F: \operatorname{G}\left(\right), (\operatorname{mean}\left(F\right)=\operatorname{integral}\left(M, F\right)))\land(\forall c: \mathbb{R}, (\operatorname{mean}\left(\operatorname{constG}\left(c\right)\right)=c))\land(\forall F: \operatorname{G}\left(\right), (\operatorname{Pi}\left(F\right)=F-\operatorname{constG}\left(\operatorname{mean}\left(F\right)\right)))\land(\forall F: \operatorname{G}\left(\right), (\Vert \operatorname{Pi}\left(F\right) \Vert\leq\Vert F \Vert))\land(\forall p: \operatorname{Address}\left(\right), (\forall z: \operatorname{H}\left(\right), (\operatorname{Pi}\left(\operatorname{pullback}\left(p, \operatorname{C}\left(z\right)\right)\right)=\operatorname{C}\left(\operatorname{S}\left(p, z\right)\right))))\land(\forall p: \operatorname{Address}\left(\right), (\forall z: \operatorname{H}\left(\right), ((\Vert \operatorname{Pi}\left(\operatorname{pullback}\left(p, \operatorname{C}\left(z\right)\right)\right) \Vert)^{2}\leq(\operatorname{goldenRatio}\left(\right)) \cdot ((\Vert \operatorname{S}\left(p, z\right) \Vert)^{2}))))$$
 
@@ -76,5 +88,6 @@ This statement concerns centering in a fixed conditional suffix space for each p
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryCentering.Pi`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryCentering.Pi_const`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryCentering.centered_suffix_residual`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryCentering.constG_norm_one`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryCentering.mean`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryPathSplit](BiasedBoundaryPathSplit.md)

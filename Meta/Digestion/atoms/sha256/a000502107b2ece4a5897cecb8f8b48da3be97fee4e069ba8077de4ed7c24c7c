@@ -1,0 +1,15 @@
+**定义 121.3（完整有限鞍点）。** 对 $\alpha>0$，取
+
+$$
+K_\alpha(t)=-\frac12\sum_j\log(1-2tv_j/\alpha)
+ +\sum_j\frac{te_j^2}{1-2tv_j/\alpha}
+ +\frac{\delta\sigma^2t^2}{2\alpha},\qquad
+K_\alpha'(t_\alpha)=V,\qquad W_\alpha=K_\alpha''(t_\alpha).
+\tag{121.10}
+$$
+
+若 $v_*:=\max_jv_j>0$，实定义域为 $t<\alpha/(2v_*)$；全零时为 $\mathbb R$。
+正噪声使 $K''>0$，且 $K'$ 在定义域两端分别趋于负、正无穷，故根唯一。
+全部 $\alpha$ 导数固定实际纤维、所有整数、组集合、$p_j,\mu_j,V$ 和噪声。
+系数中的求和始终包含全部原组。
+

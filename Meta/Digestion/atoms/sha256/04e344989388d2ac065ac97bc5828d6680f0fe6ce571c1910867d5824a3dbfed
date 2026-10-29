@@ -1,0 +1,20 @@
+**Definition 6.2 (coordinate projections).** With an additional output
+constant $\bot$, define the homomorphism $\pi_i$ for $i=1,2$ by taking
+$a_i$ to be coordinate $i$ of a symbol $\gamma$. On a rank-two symbol
+set
+
+$$
+\pi_i(\gamma(x_1,x_2))=
+\begin{cases}
+\mathsf b(\pi_i x_1,\pi_i x_2),&a_i=\mathsf b,\\
+a_i,&a_i\in\{\alpha,\beta,\bot\},
+\end{cases}
+\tag{NIC.26}
+$$
+
+and on a rank-zero symbol set $\pi_i(\gamma)=a_i$. Erasing two children
+when a coordinate is a leaf or absent is intentional. Each input child
+occurs at most once in the homomorphism pattern. On $W$, $\pi_1$ and
+$\pi_2$ recover precisely the two original native trees and contain no
+output $\bot$.
+

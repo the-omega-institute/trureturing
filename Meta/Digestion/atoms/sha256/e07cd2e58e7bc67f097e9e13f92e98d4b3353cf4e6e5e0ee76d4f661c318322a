@@ -1,0 +1,15 @@
+**Definition 126.2 (Zero-retention minimum on the same reflection side).**
+Keep $\mu_j$ exactly as in (124.1)–(124.2), and only abbreviate
+$\mu_j(\eta)=\mu_j(h_0(\eta))$. Define its zero-retention restriction
+by
+
+$$
+\nu_j(\eta)=\min_{h\in\mathcal B_{h_0(\eta)}}
+                        d_j(0,h;h_0(\eta)),\qquad j=f,a.
+\tag{126.6}
+$$
+
+In particular the compact threshold $\mu_j$ still minimises the
+original nonlinear raw-law error over the full complex retention disk;
+it has not been replaced by $D_0$, $T$, or a tangent norm.
+

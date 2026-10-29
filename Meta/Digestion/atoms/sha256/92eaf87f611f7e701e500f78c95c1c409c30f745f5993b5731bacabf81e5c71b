@@ -1,0 +1,11 @@
+**Definition 3.1 (complete raw service).** Installation A exposes raw
+growth: a successful $g:t\to t'$ sends $x$ to $\iota_gx$ and returns
+Growth$(g,p)$, with no attached Tick. Its field menu is Reset, Add$(j,q)$,
+Tick, Read$(j)$ and Hold, for integer $j$ and rational $q$.
+Reset writes zero everywhere; a valid Add changes the actual current
+terminal coordinate by $q$; Tick applies (2.2); Read returns the literal
+current rational terminal field; Hold is the identity. Reset, Add, Tick
+and Hold return their fixed acknowledgements. The remaining complete
+branches and lifecycle are specified in §7 and apply on all rational
+fields, including fields outside the historical image.
+

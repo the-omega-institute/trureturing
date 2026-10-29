@@ -1,0 +1,70 @@
+**Assumption 1.2 (installed physical service).** The following specifies
+the changes to ABT Assumptions 33.2,38.2 and retains their other duties.
+
+1. There is one actual source register $v$, one bound original root, and
+   distinguishable stable physical names $a,b$. Known semantic $L/R$
+   references are replaced by the unknown global $\pi$ of Definition 1.1.
+   There are neither arbitrary independent local swaps nor an unnamed
+   unordered sibling relation. No root or source binding is acquired here.
+2. The sole source observation during acquisition is a currently authorized
+   total paid absolute-word Read. A request $w\in\{a,b\}^*$ is accepted
+   whether or not it reaches a node. A projection delivers exactly
+   $P^\pi_v(w)$ to acquisition control. Each invocation, including absence
+   and repetition, is paid. Full replies $r^\pi_v(w)$ go only to the writer.
+3. The only numerical entrance input is a canonical encoding of authentic
+   $(A,B)$, with the relation (GPO.3). Authentication provides no $k,n,u$
+   or $\pi$ operand. At fixed advice all other initially accessible fields
+   are common across candidates: code, control, physical names, identifiers,
+   grant encodings, initial backing contents and observable capacity.
+   Padding, allocation identities, completion acknowledgements, errors and
+   scheduling choices provide no additional orientation or source channel.
+4. The actual append writer records every native localStep, every physical
+   Read with its whole word and full reply, and every actual update with
+   its old semantic epoch. Acquisition has no writer-read capability,
+   no readable pre-entry archive, no epoch field, no timing observation,
+   and no direct label or subtree inspection. Its own acquired bits and
+   computation counters may be retained. They arise from the paid run.
+5. Accessible owned backing supports advice, scratch, literal construction
+   and the acquired output. It grows on actual finite requests, without
+   initialization or preallocation from unknown parameters. Retention
+   includes the right to read the acquired bytes and preserve their source
+   binding. Every finite calculation, allocation and paid request used by
+   the controller completes. This is variable storage, not bounded memory.
+6. During passive acquisition the register is stationary through output
+   formation and handoff. There is no concurrent substitution, source swap,
+   reroot, clone or reset. The scheduling grant supplies progress of finite
+   work, without a bound on physical delay. Reference and port stability
+   also hold throughout subsequent lawful use.
+7. At continuation the same binding has current rights for absolute Read,
+   localStep, applyRho and stop, exactly ABT15's menu. The forward actuator
+   substitutes on this same register and realizes (GPO.1), planting new
+   children in accordance with the same $\pi$. Its internal wiring does
+   not return $\pi$ to the controller. Direct cursor, graft, comparison,
+   guard, archive and revocation operations are not supplied.
+8. Installation, advice authentication and delivery, root and port
+   maintenance, current grants, storage access and retention, scheduling,
+   actual source material, preparation and writer services have their own
+   prices. A mathematical decoder creates none of these services. The
+   passive theorem uses no actuator; Section 5 explicitly changes when
+   that actuator may first be used.
+
+In particular every acquired address and stopping decision depends only
+on public input, current control and already paid presence bits. A trusted
+projection may receive a full reply internally, but exposes only its
+presence bit, with no observable branch-dependent auxiliary field.
+
+For comparison, child numbers and ordered child relations are part of
+the navigation interface in Engelfriet–Hoogeboom–Samwel,
+[*XML Navigation and Transformation by Tree-Walking Automata and
+Transducers with Visible and Invisible Pebbles*, arXiv:1809.05730v1][XML],
+§2, pp. 7–10. Label and child-number tests, walking and regular
+look-around are supplied in Engelfriet–Inaba–Maneth,
+[*Linear Bounded Composition of Tree-Walking Tree Transducers: Linear
+Size Increase and Complexity*, arXiv:1904.09203v3][TWT], §§2–3.
+Those literature-attested interfaces are different assumptions: no
+child-number test, pebble, look-around, free walk or source copy is
+included here. Centered representations in Berthé–Steiner–Thuswaldner–
+Yassawi, [*Recognizability for sequences of morphisms*,
+arXiv:1705.00167v2][REC], §2, concern bi-infinite words and word
+morphisms, rather than this finite physical-port service.
+

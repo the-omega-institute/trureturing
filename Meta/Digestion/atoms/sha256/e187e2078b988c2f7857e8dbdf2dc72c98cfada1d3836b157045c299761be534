@@ -1,0 +1,19 @@
+**Proposition 90.3 (source arithmetic and restricted precision).** Write $N_k=|V_{t(w_{\le k})}|$, $N_0=1$. A direct two-buffer Tick on a current $M$-vertex tree uses exactly $3M-2$ rational multiplications and $2M-2$ additions, including diagonal terms. Hence the attained source Tick work is
+
+$$
+\begin{array}{c|c|c}
+ &\text{multiplications}&\text{additions}\\ \hline
++&\displaystyle\sum_{k=1}^n(3N_k-2)+I(3N-2)
+ &\displaystyle\sum_{k=1}^n(2N_k-2)+I(2N-2)\\
+-&\displaystyle\sum_{k=1}^n(3N_{k-1}-2)+(N-1)(3N-2)
+ &\displaystyle\sum_{k=1}^n(2N_{k-1}-2)+(N-1)(2N-2).
+\end{array}
+\tag{90.3}
+$$
+
+Each run also has its seed Add's scalar addition, fresh-cell zero initialization and growth/roster work; $+$ has its actual seed Reset write. The selected $+$ successor adds a new-tree Tick of this same size formula; the selected raw $-$ successor adds no field arithmetic beyond its zero extension. Predictor arithmetic is separate local work and is not included in these source counts.
+
+Let $Q$ be the number of Ticks actually completed so far on a pure encoding/assay run. In $+$ every field coordinate has denominator dividing $8^Q$ and a representation with common-denominator numerator between zero and $7^Q$. At completed positive endpoints each positive coordinate is at least $8^{-Q}$, and the maximum field magnitude is at most $(7/8)^Q$. In $-$ denominators divide $2^Q$ and common-denominator numerators lie between zero and $7^Q$, so the maximum is at most $(7/2)^Q$; newest encoding coordinates can be zero. Consequently each actual source scalar and rational reply on these runs has $O(Q+1)$ bits in the reduced codec, not a constant number of bits.
+
+Proof. The sparse matrix has $M+2(M-1)=3M-2$ diagonal/directed-edge products; summing each row from its first term takes $2M-2$ additions. Sum over the actual pre- or post-edit sizes and the actual assay Ticks. For precision, multiplication by $T^+$ multiplies the common denominator by eight and its nonnegative integer numerator vector by $4\mathrm{Id}+A$; its maximum row sum is at most seven. For $T^-$ the corresponding factors are two and $\mathrm{Id}+2A$, again with maximum row sum seven. Zero extension preserves these bounds, and the seed has numerator one. Induction proves every bound, including the lower bound for a nonzero integer numerator. Taking reduced fractions cannot increase these representation widths. Arbitrary later rational Adds, other seeds or extra noncanonical inputs do not fall under this restricted width estimate; the complete predictor still handles them with their actual widths charged. $\square$
+

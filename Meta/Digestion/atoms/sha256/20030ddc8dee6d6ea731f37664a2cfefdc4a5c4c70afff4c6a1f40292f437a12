@@ -1,0 +1,8 @@
+## 46. 全树复核模的实 Gram 完成与统一缺陷
+
+沿用 §§42–45 的整个 $T=\mathrm{FreeMagma}(\mathrm{Bool})$，不取商、不限树高、
+不只取单条轨道。运输仍严格为 $\rho(\alpha)=\beta$、
+$\rho(\beta)=\langle\beta,\alpha\rangle$、
+$\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle$。
+下面的取模正性由这个明确来源族的局部完成证明；不宣称任意正定核逐项取模仍正定。
+

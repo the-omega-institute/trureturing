@@ -1,0 +1,44 @@
+### 定义 1.2（逐词共同支持）
+
+对根对 $x,x'\in H_{i,\circ}$ 和局部词 $u\in E_i^*$，定义
+
+$$
+S_i^u(x,x')
+$$
+
+当且仅当存在 $r\in R_i$，使得
+
+$$
+(\delta_{i,u}(x),r),\quad(\delta_{i,u}(x'),r)
+\in\operatorname{Term}_i.
+$$
+
+它表示同一公开词和同一终端记录能够同时合法地继续两个根。若存在这样的记录且
+
+$$
+ t_i(\delta_{i,u}(x),r)
+\ne t_i(\delta_{i,u}(x'),r),
+$$
+
+则定义逐词冲突关系 $C_i^u(x,x')$ 成立。
+
+显然
+
+$$
+C_i^u(x,x')\Longrightarrow S_i^u(x,x').
+$$
+
+支持与冲突都绑定同一个根对、同一个词和同一个终端记录；不能把不同见证的存在分别拼成一个见证。
+
+对长度 $n$ 的层级关系，记
+
+$$
+S_i^n(x,x')\;:\Longleftrightarrow\;\exists u\in E_i^n\;S_i^u(x,x'),
+$$
+
+$$
+C_i^n(x,x')\;:\Longleftrightarrow\;\exists u\in E_i^n\;C_i^u(x,x').
+$$
+
+这里 $E_i^n$ 是长度为 $n$ 的公开词集合；上标 $n$ 与逐词上标 $u$ 的量词不能混同。
+

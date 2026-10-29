@@ -1,0 +1,24 @@
+**Definition 44.1 (The actual edge-family mode presentation).**
+Let $\mathcal B^e_{k,b}=\operatorname{Ind}(G^e_{k,b})$ and use
+one variable for every global independent set, including the
+empty set. Put
+
+$$
+\begin{aligned}
+S^e_{k,b}&=\mathbb C[z_I:I\in\mathcal B^e_{k,b}],&
+z_I&\longmapsto X^{\gamma_I},&\gamma_I&=(1,\mathbf1_I),\\
+D^e_{k,b}&=|\mathcal B^e_{k,b}|,&
+\Sigma^e_{k,b}&=\sum_{I\in\mathcal B^e_{k,b}}\gamma_I.
+\end{aligned}
+\tag{44.1}
+$$
+
+The map onto $R^e_{k,b}$ is surjective by Theorem 41.2;
+its kernel is the toric ideal of these actual modes.
+Ordinary shifts mean $S(-h)_m=S_{m-h}$, with the analogous
+convention for full exponent degrees. Write $\mathcal F_i$
+for free-resolution modules and $F_n$ for Fibonacci numbers,
+where $F_0=0$, $F_1=1$ and $F_{n+2}=F_{n+1}+F_n$.
+Let $\mathcal G^e_{k,b,j}$ be the complete set of basic tuples
+at boundary $(2j+1,j,j)$ described in Theorem 42.2.
+

@@ -1,0 +1,57 @@
+**Proposition 135.3 (the necessary parent consequence and the remaining quantifiers).** Under Definition 135.1, if a full pointwise Borel partition $D$ attains all $64$ prescribed coordinates,
+
+$$
+\mathcal C(\mathbf1_{D_y},\mathbf1_{D_z},\mathbf1_{D_w})
+=\mathcal C(f_y,f_z,f_w)
+\qquad(y,z,w\in\mathcal L),
+$$
+
+then $D\in\mathscr D_{12}(a,\eta,d,b)$, $A^D=A^f$, and $\operatorname{rank}A^D=2$. For fixed $a,\eta,d$, changing only the allowed null-set representative $b$ leaves this marginal-feasible class, every actual matrix $A^D$, and the prescribed $64$ coordinates unchanged.
+
+Let $\Theta$ denote all tuples $(a,\eta,d,b)$ allowed by Definition 135.1. The all-partition rank obstruction is precisely the following unresolved statement, equivalently written using Proposition 135.2:
+
+$$
+\begin{aligned}
+&\exists\theta\in\Theta\ \forall D\in\mathscr D_{12}(\theta),
+&&\operatorname{rank}A^D\ge3,\\
+\Longleftrightarrow\quad
+&\exists\theta\in\Theta\ \forall D\in\mathscr D_{12}(\theta),
+&&\dim_{\mathbb R}\ker(I_4+F_D)\le1.
+\end{aligned}
+$$
+
+Its negation requires the fully quantified alternative
+
+$$
+\begin{aligned}
+&\forall\theta\in\Theta\ \exists D\in\mathscr D_{12}(\theta),
+&&\operatorname{rank}A^D\le2,\\
+\Longleftrightarrow\quad
+&\forall\theta\in\Theta\ \exists D\in\mathscr D_{12}(\theta),
+&&\dim_{\mathbb R}\ker(I_4+F_D)\ge2.
+\end{aligned}
+$$
+
+The obstruction, if established, excludes full $64$-coordinate attainment for its tuple. Neither quantified alternative, nor full $64$-coordinate attainment, is established by Proposition 135.2. Its marginal feasibility, terminal sign and moment identities, nonconstant ratio and positive comparison matrix supply no bound excluding the required cancellation for all feasible partitions. The forward necessary condition above supplies no converse from rank two to equality with $A^f$ or to attainment of the full law; a low-rank construction would still have to satisfy those additional equalities.
+
+*Proof.* For either common simplex tuple $u=f$ or $u_y=\mathbf1_{D_y}$, summation over the other two labels, conservation and self-adjoint propagation give the three slot marginals:
+
+$$
+\begin{aligned}
+\sum_{z,w\in\mathcal L}\mathcal C(u_y,u_z,u_w)
+&=\mathcal C(u_y,1,1)=\langle g_{2d},u_y\rangle_m,\\
+\sum_{y,w\in\mathcal L}\mathcal C(u_y,u_z,u_w)
+&=\mathcal C(1,u_z,1)=\langle Pg_{2d},u_z\rangle_m
+=\langle g_{3d},u_z\rangle_m,\\
+\sum_{y,z\in\mathcal L}\mathcal C(u_y,u_z,u_w)
+&=\mathcal C(1,1,u_w)=\langle P^2g_{2d},u_w\rangle_m
+=\langle g_{4d},u_w\rangle_m.
+\end{aligned}
+$$
+
+Equality of the two full laws therefore implies all twelve marginal equations. Fixing the third label to $3$ gives $A^D=A^f$, and Proposition 135.2 then gives rank two. Consequently a tuple for which every marginal-feasible partition has rank at least three cannot have a partition attaining the full law.
+
+For representative invariance, the essential norm defining $M$ and $c$ is unchanged. Any two allowed $b$ differ only on an $m$-null set, so their $f_y$ are the same bounded $m$-classes, their marginal targets agree, and $\mathcal C$ has the same values. The actual formula for $A^D$ contains no chosen representative $b$. Likewise any Borel null-set alteration of a finite partition, if kept disjoint and exhaustive, preserves its indicator classes, its marginal integrals and its actual coefficients. If one begins with completed-measurable partition classes, take finitely many Borel representatives, contain their exceptional overlaps and missing points in a Borel null set, and assign that set to one label after removing it from the other cells. This gives a full Borel partition with the same classes. All three observation epochs are positive and their laws are absolutely continuous with respect to $m$; no assertion about a time-zero read or its value at $e$ follows from this invariance.
+
+Finally $\operatorname{rank}A^D$ is an integer between zero and four. Thus the negation of rank at least three is rank at most two, and Proposition 135.2 identifies these alternatives with the respective nullity conditions. Negating the existential universal statement interchanges its two quantifiers and gives exactly the displayed universal existential alternative. The marginal-feasibility argument proves nonemptiness of each partition class; it yields no bound on this nullity. Representative invariance removes only the null-set choice of $b$, retaining the quantifiers over the original $a,\eta,d$. The compact-fiber and approximation statements of §123, the factorization statements of §124, the conditional constructions of §125, the scalar marginal result of §133 and the joint-pencil result of §134 retain their stated scopes. The full common-readout attainment problem and any native or physical realization remain unresolved here. $\square$
+

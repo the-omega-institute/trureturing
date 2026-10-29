@@ -1,0 +1,27 @@
+### 17.7. The credited fixed-period compactness consequence
+
+For fixed $m$, the set
+
+$$
+\{(a,\lambda)\in[0,1]^m\times\mathcal P(\{1,\ldots,2m\}):
+       \lambda A(a)=\lambda\}
+\tag{17.23}
+$$
+
+is nonempty and compact, and its continuous matrix image is $\mathcal C_m$. Every finite cylinder probability is continuous in $(a,\lambda)$ by (17.7). The supplied harmonic formula for $D_r$, including $h(0,0)=0$, makes $D_r$ continuous even at zero cylinder masses. Applying the compactness argument of [Universal, Theorem 6.2][ClockUniversal] on this closed subclass gives
+
+$$
+\max_{\theta\in\mathcal C_m}d(P_\theta)
+=\inf_{r\ge1}\max_{\theta\in\mathcal C_m}D_r(P_\theta)<c_\star.
+\tag{17.24}
+$$
+
+The strict inequality follows because the maximum is attained and every member is excluded by Theorem 17.2. The same supplier's finite-separation argument, using $\kappa_n/(n+1)\to c_\star$, then gives finite integers $r,n\ge1$ with
+
+$$
+\max_{\theta\in\mathcal C_m}D_r(P_\theta)<\frac{\kappa_n}{n+1}.
+\tag{17.25}
+$$
+
+These are applications of the existing compactness theorem, not additional compactness results. The margin and both integers may depend on $m$. The finite-energy constants in (17.15) also depend on the actual interior parameter and can deteriorate at the boundary.
+

@@ -1,0 +1,48 @@
+**Lemma 7.2.2 (Uniform rational inequalities).** The recurrence and enclosures (7.2.1)–(7.2.6) have the following bounds:
+
+| Quantity | Rational upper bound | Sufficient strict bound |
+|---|---:|---:|
+| $\max_i q_i$ | $110094427447/250000000000$ | $441/1000$ |
+| $\max_i\beta_i$ | $263610622981/1000000000000$ | $264/1000$ |
+| $\max_i\widetilde q_i$ | $47763641509/200000000000$ | $239/1000$ |
+| $\max_i\rho_BD_i$ | $247533043797/100000000000$ | $5/2$ |
+| $\max_i\rho_kD_i$ | $247533043797/10000000000$ | $25$ |
+
+In particular $q_i+\beta_i<141/200<1$. All inverses in these enclosures are defined. On all tubes, $B>0.1285$ and $k<-1.2188$. For both scalar endpoints (7.1.6), the following larger rational intervals contain the enclosures, uniformly over the cells and $0\le h\le1/250$, $h^2\in T_i$:
+
+| Quantity | Lower endpoint | Upper endpoint |
+|---|---:|---:|
+| $r_\pm$ | $447759700931/500000000000$ | $903519901863/1000000000000$ |
+| $b_\pm$ | $3092177973/25000000000$ | $8339901701/62500000000$ |
+| $e_\pm$ | $1661423734033/250000000000$ | $3484642346261/500000000000$ |
+| $d_\pm$ | $7661423734033/250000000000$ | $15484642346261/500000000000$ |
+| $p_\pm$ | $-13368909895949/1000000000000$ | $-4212208536209/500000000000$ |
+| $x_{\mathrm{sec}}$ | $1426727197703/500000000000$ | $2853937651871/1000000000000$ |
+
+Consequently the simpler strict bounds are
+
+$$
+\begin{gathered}
+0.8955<r_\pm<0.9036,\qquad
+0.1236<b_\pm<0.1335,\\
+6<e_\pm,\qquad30<d_\pm<32,\qquad
+-13.37<p_\pm<-8.42,\qquad2.85<x_{\mathrm{sec}}<2.86.
+\end{gathered}
+\tag{7.2.7}
+$$
+
+Proof. The two finite index ranges in this lemma are $0\le i<128$ and $0\le i<127$; the centres for every index are fixed by (7.2.2)–(7.2.3). Apply (7.2.4) to (7.1.1)–(7.1.5), enclose the inverse and the five successive rounded corrections at each $t_i$, and substitute the resulting $c_i,C_i$ into (7.2.5). The maximum row sums and weighted residual sums give the first two rows of the first table. The same derivative enclosure on (7.2.6), weighted now by $\widetilde\rho_i$, gives its third row. Substituting the full-tube $G_t$ and the first row in the last line of (7.2.5) gives its last two rows. Every number in these comparisons is rational, with the outward rounding specified above. The first two sufficient bounds sum to $141/200$.
+
+For the endpoint rows use scalar evaluations of (7.1.1)–(7.1.2), independently of the coefficient evaluation (7.1.3). More explicitly, set $M_0=10^{60}$ and enclose $h$ in cell $i$ by
+
+$$
+\frac{\lfloor M_0\sqrt{i/8000000}\rfloor}{M_0}
+\le h\le
+\frac{\lceil M_0\sqrt{(i+1)/8000000}\rceil}{M_0}.
+\tag{7.2.8}
+$$
+
+The integers here are characterized solely by integer square comparisons. Insert this interval and $X_i$ into (7.1.6), followed by the scalar circuit. The minimum lower and maximum upper endpoints are enclosed by the first five rows of the second table. The sixth row instead comes from the second coefficient of $x$ in (7.1.3). The centre intervals for $B,k$ give the two asserted uniform inequalities directly. The strict positive source bounds also show $j,n,T,U>0$. For a pair inverse its exact denominator is the product of its two scalar endpoint values. The outward enclosures in the prescription exclude zero for those denominators as well as for the matrix pivots. Thus no source or matrix inverse in the two tables presupposes the existence of a zero. These explicit rational recurrences, enclosure rules and scalar comparison bounds constitute the finite inequalities of the lemma. ∎
+
+The interval step is the classical preconditioned interval contraction, as in R. Krawczyk, *Newton-Algorithmen zur Bestimmung von Nullstellen mit Fehlerschranken*, Computing 4, 187–201, [doi:10.1007/BF02234767](https://doi.org/10.1007/BF02234767). Its use here concerns the particular five-equation source circuit; it is not a new general interval theorem.
+

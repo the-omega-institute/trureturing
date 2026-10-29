@@ -1,0 +1,18 @@
+**Theorem 3.3 (Quantitative rank-horizon estimate without a conditioning hypothesis).** Let $D\ge2$, $2\le r\le D$ and $n\ge1$ be integers. Let $T:M_D(\mathbb C)\to M_D(\mathbb C)$ be subunital and CP, $B$ an effect, and $\sigma$ a density. If $\epsilon\ge0$, $0<p\le1$ and
+
+$$
+\operatorname{Tr}[\sigma T^k(B)]\le\epsilon\quad(0\le k\le D-r),
+\qquad \operatorname{Tr}[\sigma T^n(B)]\ge p,
+\tag{3.6}
+$$
+
+then
+
+$$
+\begin{aligned}
+\lambda_r(B)&\le A_{D,r,n}(p)\epsilon,\\
+A_{D,r,n}(p)&=\frac{8D}{p^2}
+\left(\frac{8nD^{5/2}}p\right)^{2(D-r)}.
+\end{aligned} \tag{3.7}
+$$
+

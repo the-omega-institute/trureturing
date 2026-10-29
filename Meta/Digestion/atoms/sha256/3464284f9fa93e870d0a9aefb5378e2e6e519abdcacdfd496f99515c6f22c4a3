@@ -1,0 +1,41 @@
+**Proposition 35.3 (continued-use addition on the same run).** For any
+actual finite continuation after the returned cut, let $Q_c,U_c,J_c$
+and $W_c$ count its real Reads, updates, local work and literal traffic,
+including computations and writes of Theorem 34.3. The combined
+coordinates are
+
+$$
+ Q+Q_c,\qquad U+U_c,\qquad J+J_c,\qquad
+ W+W_c,\qquad
+ \max(M_{\rm addr},M_{{\rm addr},c}).
+ \tag{GPO.87}
+$$
+
+The source reaches cut $N+U_c$ and has the material count (GPO.86)
+there, having generated $B_{N+U_c}$ bits in total. The law predictor
+adds no learning Reads, but its computation, scratch and outputs are
+included in $J_c$ and their storage. A hypothetical evaluation executes
+no source update and creates no actual source Read receipt. Its costs
+are its input, local computation and output, not the cost of a second
+physical trajectory.
+
+Proof. Concatenate the actual serial event words; each actual call and
+literal is counted once in its segment. The maintained source invariant
+in Theorem 34.3 gives the final update count and hence the actual material
+and generator totals. Simultaneously retained outputs, trees, candidate
+records and archives require combined backing; serial scratch may be
+reused only after its old contents are no longer needed. Further receipts
+and retention intervals add their own material and lifetime charges.
+These statements are direct one-run accounts and do not combine separately
+attaining optima. $\square$
+
+The sharp coordinate here is the class-uniform mature update deadline,
+not a physical completion time: $J$ can be large while the source is
+held stationary. The $m$-Read construction does not establish a lower
+bound on Read count when one is allowed more updates, longer queries or
+a different decoding protocol for the bounded law. The seed-only visible
+prefix threshold is likewise an information threshold, not an unproved
+unknown-coefficient Read minimum. There is no total price scalar or
+minimum over apparatus, storage, computation, energy and lifetime in
+these theorems.
+

@@ -1,0 +1,73 @@
+**Definition 54.1 (Notation and reused identities).** Use exactly
+$T,U,j,n,\epsilon,D_{\rm par},\Lambda$ from (48.1), and put
+
+$$
+\mathcal A_{\rm par}=1+6/T+1/U,\qquad
+\Lambda=\mathcal A_{\rm par}-4/j-4/n.
+\tag{54.2}
+$$
+
+The parent and full-world reconstruction are Lemma 48.1, with
+$\epsilon=d-24$, $D_{\rm par}=\frac{24}{5}(b-1/8)B_{\rm par}$ and
+the four samples (48.3). The affine identity to be used is precisely
+(49.3), with the coefficients $\mathsf C_i,\mathsf A_i$ of (49.1)
+and matrix $L_{\rm w}$ of (49.2). The rank and cofactor line are
+Lemma 50.1. None of these results requires $\Lambda\ne0$.
+
+For explicit correspondence with *Exact cross-width reconstruction of
+a terminal-M response triple*, its symbols have the following meanings
+in the present volume:
+
+$$
+\begin{array}{c|c}
+\text{cross-width notation}&\text{present notation}\\ \hline
+e&\epsilon=d-24\\
+\mathcal A&\mathcal A_{\rm par}\\
+D&D_{\rm par}\\
+C_i,A_i&\mathsf C_i,\mathsf A_i\quad(i=5,6,7)\\
+L,V&L_{\rm w},\mathsf V\\
+\alpha,\beta,\gamma&\alpha_{\rm w},\beta_{\rm w},\gamma_{\rm w}\\
+\kappa,\eta&\kappa_{\rm rec},\eta_{\rm rec}\\
+Q,R,\Delta&Q_{\rm rec},R_{\rm rec},\Delta_{\rm rec}\\
+q,q_0,\varrho&q_{\rm rec},q_{\rm s},\chi_{\rm src}\\
+F,G&F_{\rm rec},G_{\rm rec}.
+\end{array}
+\tag{54.3}
+$$
+
+The width slope $\alpha_{\rm w}$ is unrelated to the isolated fold
+coordinate $\alpha_{\rm f}$ or the gain coefficients $\alpha_i$.
+The slope $\beta_{\rm w}$ is not the parent parameter $\beta=1/8$.
+The scalar $D_{\rm par}$ is neither the chart denominator
+$\widehat D$ nor the local alias $D$ of Section 31.
+The symbols $\kappa_{\rm rec},\eta_{\rm rec}$ below are response
+consistency coefficients, not the fold curvature or a chart radius.
+In Sections 55–60, $X,Y,Z$ denote transformed response coordinates,
+not the source polynomial $X=\mathcal J$ used in Sections 32–38.
+Finally $\chi_{\rm src}$ is a reconstruction numerator, not the
+positive width cutoff $\rho$ of Theorem 47.2; and $Q_{\rm rec}$ is a
+scalar polynomial, not an action product $Q_i$.
+
+The full-parent literal formulas needed below, directly from
+(48.4), (49.3) and (49.5), are
+
+$$
+\begin{aligned}
+g(5)&=\mathsf C_5+\mathsf A_5\epsilon+5\epsilon/n,\\
+g(6)&=\mathsf C_6+\mathsf A_6\epsilon+16\epsilon/n,\\
+g(7)&=\mathsf C_7+\mathsf A_7\epsilon+35\epsilon/n,\\
+p(W)&=24+\epsilon+(U+n)g(5),\\
+v(W)&=24+\epsilon+(2U+n)g(6),\\
+m(W)&=24+\epsilon+(3U+2n)g(7),\\
+a(W)&=24+\epsilon+(T+2j+4r)g(7).
+\end{aligned}
+\tag{54.4}
+$$
+
+These are responses of the same complete world at the specified
+literal clocks. Lemma 48.2 gives $\epsilon\ne0$ whenever $p\ne24$.
+This is a consequence of the prescribed base, not a prohibition on
+zero drift: $d=0$ means $\epsilon=-24$ and remains admitted whenever
+the original equations hold. The parent, interpolation and cofactor
+proofs in Sections 48–50 are reused with this exact correspondence.
+

@@ -1,0 +1,16 @@
+**Lemma 3.1 (Defect identity).** For every $X\in M_d(\mathbb C)$ and $c\in\mathbb C$ one has $S(X+cI)=S(X)$. If $\mathrm{tr}X=0$, then
+
+$$
+S(X)=dq(1-dq)\,D^\ast D+\lambda dq\,(D^\ast Y+Y^\ast D)+\lambda(1-\lambda)\,Y^\ast Y+\mu\,\mathrm{diag}(Y^\ast Y)+q\|X\|^2 I .
+$$
+
+Stance: repo-derived.
+
+**Proof.** Since $\Phi$ is Hermiticity-preserving, $\Phi(X^\ast)=\Phi(X)^\ast$, and $\Phi(I)=I$. Expanding, $\Phi\big((X+cI)^\ast(X+cI)\big)=\Phi(X^\ast X)+\bar c\,\Phi(X)+c\,\Phi(X)^\ast+|c|^2I$ and $\Phi(X+cI)^\ast\Phi(X+cI)=\Phi(X)^\ast\Phi(X)+\bar c\,\Phi(X)+c\,\Phi(X)^\ast+|c|^2I$; the difference is $S(X)$. Now let $\mathrm{tr}X=0$ and put $a=1-dq=\lambda+\mu$. Then $\Phi(X)=aD+\lambda Y$, so $\Phi(X)^\ast\Phi(X)=a^2D^\ast D+a\lambda(D^\ast Y+Y^\ast D)+\lambda^2Y^\ast Y$. The matrices $D^\ast Y$ and $Y^\ast D$ have zero diagonal, hence $\mathrm{diag}(X^\ast X)=D^\ast D+\mathrm{diag}(Y^\ast Y)$ and
+
+$$
+\Phi(X^\ast X)=aD^\ast D+\lambda(D^\ast Y+Y^\ast D)+\lambda Y^\ast Y+\mu\,\mathrm{diag}(Y^\ast Y)+q\|X\|^2I .
+$$
+
+Subtracting and using $a-a^2=dq(1-dq)$ and $\lambda-a\lambda=\lambda dq$ gives the stated identity. ∎
+

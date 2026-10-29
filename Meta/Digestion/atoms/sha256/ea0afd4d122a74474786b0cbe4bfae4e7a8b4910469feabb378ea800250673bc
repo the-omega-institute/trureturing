@@ -1,0 +1,46 @@
+**定理 81.5（单任务的 joint cubic profile）。** 令 $t_n=2^{1-n}$。对每个固定 $\kappa\ge0$，在 $q_n=\kappa t_n^4\le1$ 的最终整数尾段上，两个 parity subsequences 均满足
+
+$$
+\frac{\eta_n(q_n)}{t_n^2}\longrightarrow
+\mathcal L(\kappa)=\min_{z\ge0}\sqrt{z^4+(z-\sqrt\kappa)^2}
+ =z_\kappa^2\sqrt{1+4z_\kappa^2},\qquad
+2z_\kappa^3+z_\kappa=\sqrt\kappa.
+$$
+
+对固定 $K\ge0$、$n\ge2$ 且 $Kt_n^2\le1$，还有 compact-$\kappa$ bound
+
+$$
+\sup_{0\le\kappa\le K}
+\left|\frac{\eta_n(\kappa t_n^4)}{t_n^2}-\mathcal L(\kappa)\right|
+ \le(K+2K^{3/2})t_n^2.
+$$
+
+**证明。** 写 $t=t_n$、$a=\sqrt\kappa$。对任意 feasible complex $K_2=\left(\begin{smallmatrix}x&w\\\overline w&y\end{smallmatrix}\right)$，置 $A_0=(1-x)/t^2$、$Z=\operatorname{sgn}(s)w/t$。由 $I-K_2\ge0$ 得 $|Z|^2\le A_0(1-y)\le A_0$。scaled residual 的第一列是
+
+$$
+(-A_0+\kappa t^2,\ \overline Z-a\sqrt{1-\kappa t^4},\ 0)^{\mathsf T}.
+$$
+
+矩阵 norm 至少为列 norm，所以其不小于
+$\sqrt{A_0^2+|Z-a|^2}-\delta_n\ge\mathcal L(\kappa)-\delta_n$，其中
+
+$$
+\delta_n=\sqrt{\kappa^2t^4+\kappa(1-\sqrt{1-\kappa t^4})^2}.
+$$
+
+这里用 $|Z-a|\ge||Z|-a|$，没有限制 complex optimizer。
+
+对上界，任取 $z\ge0$ 且 $u=z^2t^2\le1$，令
+
+$$
+K_2=\begin{pmatrix}1-u&\operatorname{sgn}(s)zt\sqrt{1-u}\\
+\operatorname{sgn}(s)zt\sqrt{1-u}&u\end{pmatrix},\qquad d=u.
+$$
+
+这是 rank-one block 加合法 scalar effect。scaled residual 对角为
+$(-z^2+\kappa t^2,z^2-\kappa t^2,z^2)$，off-diagonal 为
+$z\sqrt{1-z^2t^2}-a\sqrt{1-\kappa t^4}$。其 norm 趋向 $\sqrt{z^4+(z-a)^2}$，并经 supplier 的一个单任务 decoder 达到。函数 $z^4+(z-a)^2$ 的二阶导数为 $12z^2+2>0$，所以唯一非负 minimizer 满足所列 cubic；在根上 $a-z=2z^3$，得 $\mathcal L$ 的闭式。
+
+为得 quantitative bound，$z_\kappa\le\sqrt\kappa$，故当 $Kt^2\le1$ 时所有这些 upper effects 都 feasible。用 $1-\sqrt{1-v}\le v$，lower perturbation 不超过 $(K+K^{3/2})t^2$；upper diagonal perturbation 不超过 $Kt^2$，off-diagonal perturbation 不超过
+$z_\kappa^3t^2+\kappa^{3/2}t^4\le2K^{3/2}t^2$。两侧取较大常数即得结论。$\kappa=0$ 时全部值恰为零。∎
+

@@ -1,0 +1,45 @@
+## 66. Behaviour kernels and chronology fibres from the latest dev boundary
+
+The current native joint-state result supplies a concrete instance of the
+task-relative quotient used above. On its authentic finite-history domain,
+the current-continuation kernel, the complete raw-state kernel, the extracted
+key kernel, and the partial-time kernel coincide:
+
+$$
+z\equiv_{\mathrm{now}}w
+\iff
+\mathcal K(z)=\mathcal K(w)
+\iff
+X^+(z)=X^+(w)
+\iff
+T_{\mathrm{cut}}(z)=T_{\mathrm{cut}}(w).
+$$
+
+This is a behaviour quotient: equal representatives have the same legal
+trials, responses, guards, charges, successors, and finite future experiment
+trees. It is not an exact-history quotient. For a captured key, write
+
+$$
+p=n-\kappa,\qquad q=m-1.
+$$
+
+The same current state has exactly
+
+$$
+L(\mathcal K)=\binom{p+q}{p}
+$$
+
+lawful owner-order chronologies. If \(p,q>0\), this number is greater than
+one, so no function of the current raw state alone can recover the executed
+total chronology. The post-capture cross-owner order is therefore
+chronology-only memory for the continuation task, while the capture frontier
+\(\kappa\) remains behaviour-bearing memory.
+
+The distinction is operational. Two histories obtained from the same Armed cut can have the same visible
+input and row counts but different capture ranks; a later lawful acquisition
+and public return separates them. Dropping the captured read boundary
+therefore breaks a future-use task even when it preserves the present target
+candidate set. Conversely, retaining the owner chains and the capture bracket
+is sufficient for the stated partial-time task on the authentic image; it does
+not install a universal chronology logger or a decoder for fabricated keys.
+

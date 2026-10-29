@@ -1,0 +1,18 @@
+**Proposition 90.1 (canonical actual calls, including the empty word).** Let an encoding have $n$ successes and $f$ raw refused probes, and then execute exactly its designated assay, with no other optional calls. The attained call counts are
+
+| Coordinate through the completed assay | $+$, $d_+=I$ | $-$, $d_-=N-1$ |
+| --- | --- | --- |
+| Reset | $1$ | $0$ |
+| Add | $1$ | $1$ |
+| scalar Read | $1+b(I+1)$ | $bN$ |
+| Tick | $n+I$ | $n+N-1$ |
+| Hold | $I+2$ | $N$ |
+| growth attempts | $n+f$ outward and $n+f$ inner raw attempts | $n+f$ raw attempts |
+| field acknowledgement payloads | $n+2I+4$ | $n+2N$ |
+
+Here field acknowledgements count the fixed replies to Reset/Add/Tick/Hold, not the additional End/local-acknowledgement/Return lifecycle of a completed frame. The $+$ Tick count includes its $n$ actual inner clock Ticks; a refused probe has none. The $-$ Tick count includes its $n$ actual pre-edit encoding Ticks, but its exposed raw growth attempts have none. Every one of the $+$ inner Growth/refusal replies and every outward Growth/refusal reply is consumed/transmitted; they are not a single reply counted twice in place of two real transactions.
+
+Proof. Each assay has $d$ Ticks and $d+1$ Holds and samples all $b$ terminals at each of its $d+1$ epochs. Add the seed calls of Definition 84.2 and one phase-prescribed Tick per success. In $+$ the acknowledgement total is $1+1+(n+I)+(I+2)$. In $-$ it is $1+(n+N-1)+N$. Substitution gives the table. At $n=0$, $t=\alpha$, $N=b=1$, $I=0$; the post preparation's verifying Read and Hold remain distinct from the assay's one Read and Hold, whereas the pre preparation has neither extra call. Thus the table includes the degenerate origin rather than assuming a nontrivial final tree. $\square$
+
+To perform Construction 89.3 after this cut, $+$ adds one outward and one inner successful growth transaction and one actual Tick/acknowledgement on its new tree. The selected raw $-$ call adds one growth transaction and no Tick or field acknowledgement. The explicitly paired pre-clock alternative adds one Tick/acknowledgement on the old tree. These deltas are alternative actual runs; they are not combined with one another's cheaper coordinates. Extra Holds, Reads, refusals, input/output of the decoded word, or a requested verification Read add their literal actual costs.
+

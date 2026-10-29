@@ -1,0 +1,8 @@
+For every 1-Lipschitz map $\chi:\mathbb R\to\mathbb R$,
+
+$$
+\chi\circ F\in\mathcal D,\qquad
+\mathcal E(\chi\circ F)\le\mathcal E(F).
+\tag{111.4}
+$$
+

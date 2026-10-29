@@ -1,0 +1,67 @@
+## 34. A quantitative fixed-response chart
+
+Let
+$$
+ \eta=10^{-6},\qquad R=1/(2\cdot10^6),\qquad
+ I_p=(p_{\rm f}-\eta,p_{\rm f}+\eta),\qquad I_r=(\alpha_{\rm f}-R,\alpha_{\rm f}+R).
+ \tag{34.1}
+$$
+For every $(q,r)\in I_p\times I_r$ there is a unique
+$\beta_{\rm f}(q,r)\in(1-10^{-6},1+10^{-6})$ satisfying
+$$
+ p(r,\beta_{\rm f}(q,r))=q.
+ \tag{34.2}
+$$
+The function $\beta_{\rm f}$ is real analytic. Its two-variable notation
+distinguishes it from the fixed parent parameter $\beta=1/8$.
+
+**Proof.** At $b=1$, integration of $7<p_r<8$ gives
+$|p(r,1)-p_{\rm f}|<8R=4\cdot10^{-6}$. Integrating $p_b>96$ from
+$b=1$ to either horizontal box edge shows that the corresponding
+endpoint responses lie below $p_{\rm f}-92\cdot10^{-6}$ and above
+$p_{\rm f}+92\cdot10^{-6}$. They bracket all of $I_p$.
+Strict increase in $b$, the intermediate value theorem and the
+analytic implicit function theorem give existence, uniqueness and
+analyticity. The relevant segments stay in $\mathcal B_{\rm f}$; (32.4) and (33.1)
+put the whole closed $r$-strip inside its vertical extent. ∎
+
+Write
+$$
+ h(q,r)=v(r,\beta_{\rm f}(q,r)),\quad
+ a_q(r)=a(r,\beta_{\rm f}(q,r)),\quad m_q(r)=m(r,\beta_{\rm f}(q,r)).
+$$
+Implicit differentiation of (34.2) gives
+$$
+ \beta_{\rm f}_r=-p_r/p_b=t,\qquad \beta_{\rm f}_q=1/p_b,
+ \qquad h_r=v_r-v_b p_r/p_b=-\det DA/p_b.
+$$
+A second differentiation at fixed $q$, using
+$\beta_{\rm f}_{rr}=-T_p/p_b$, gives
+$$
+ h_{rr}=\kappa,\qquad h_{rq}=\zeta,
+ \qquad a_q'(r)=\mathcal{L}a,\qquad m_q'(r)=\mathcal{L}m.
+ \tag{34.3}
+$$
+Consequently the exact bounds
+$$
+ 110<h_{rr}<131,\quad -1<h_{rq}<0,\quad
+ 556<a_q'<561,\quad133<m_q'<141
+ \tag{34.4}
+$$
+hold on this whole chart. Also
+$h_r(p_{\rm f},\alpha_{\rm f})=0$ by (32.3).
+
+For each $q\in I_p$, there is a unique critical point
+$\chi_{\rm f}(q)\in I_r$ of $r\mapsto h(q,r)$. It is analytic and
+$$
+ \chi_{\rm f}(p_{\rm f})=\alpha_{\rm f},\qquad
+ |\chi_{\rm f}(q)-\alpha_{\rm f}|\le|q-p_{\rm f}|/110<\eta/110<R/2.
+ \tag{34.5}
+$$
+The first comparison in (34.5) is strict when $q\ne p_{\rm f}$. Indeed $|h_r(q,\alpha_{\rm f})|\le|q-p_{\rm f}|$, while increasing $r$ changes
+$h_r$ at rate greater than 110. Its signs at the two ends of $I_r$
+are opposite because $110R>\eta$. Strict increase gives a unique
+zero, the implicit function theorem gives analyticity, and integration
+of the derivative lower bound gives (34.5). This also proves
+$0<\chi_{\rm f}'(q)<1/110$.
+

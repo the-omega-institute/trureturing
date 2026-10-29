@@ -1,0 +1,52 @@
+**Definition 47.1 (The finite mixed retained-edge family).**
+Fix a finite list
+$\mathbf k=(k_1,\ldots,k_t)$ with $t\ge2$, every
+$k_i\ge2$, and at least two distinct values. Let $G_{\mathbf k}$
+be the graph whose labelled cycles $C_i$ have length $2k_i+1$,
+whose common vertices are $a,b$, and whose common edge is the
+retained edge $ab$. The private vertices of $C_i$ are
+$x_{i,1},\ldots,x_{i,2k_i-1}$ in the cyclic order
+$a,b,x_{i,1},\ldots,x_{i,2k_i-1},a$. There are no cross-edges
+between private vertices of different cycles. Put
+$K=\max_i k_i$. For the actual independent-set presentation set
+
+$$
+\begin{aligned}
+\mathcal I&=\operatorname{Ind}(G_{\mathbf k}),
+&\gamma_I&=(1,\mathbf 1_I),\\
+S&=\mathbb N\{\gamma_I:I\in\mathcal I\},
+&R=\mathbb C[S],\\
+P&=\mathbb C[z_I:I\in\mathcal I],
+&z_I&\longmapsto X^{\gamma_I},
+\end{aligned}
+\tag{47.1}
+$$
+
+where the empty independent set is included and every $z_I$ has
+ordinary degree one. For $p=(m,c)$, write $\alpha=c_a$, $\beta=c_b$,
+$p_i=(m,c|_{C_i})$, and
+$\delta_i(p)=k_i m-\sum_{v\in C_i}c_v$. The strict interior set is
+
+$$
+T=\left\{p\in\mathbb Z^{1+|V(G_{\mathbf k})|}:
+\begin{array}{l}
+ c_v\ge1,\\
+ c_v+c_w\le m-1\quad(\{v,w\}\in E(G_{\mathbf k})),\\
+ \delta_i(p)\ge1\quad(1\le i\le t)
+\end{array}\right\}.
+\tag{47.2}
+$$
+
+A point of $T$ is basic when no positive-degree element of $S$ can
+be subtracted while staying in $T$. On the $i$-th cycle write
+
+$$
+\nu_{i,j}=(2j+1;\,j\mathbf 1_{C_i}),
+\qquad 1\le j<k_i .
+\tag{47.3}
+$$
+
+The local single-cycle classification and the common-edge semigroup
+decomposition are the supplied results of §§41–42 and §45; the point of
+this section is to make their mixed, unequal-length consequence exact.
+

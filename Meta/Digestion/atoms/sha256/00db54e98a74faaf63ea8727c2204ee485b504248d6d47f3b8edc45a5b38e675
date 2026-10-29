@@ -1,0 +1,38 @@
+## 7. 从 $K_n$ 到 law 残余的有限比较
+
+若另有嵌套 law 残余
+
+$$
+A_{n+1}^{\mathrm{law}}\subseteq A_n^{\mathrm{law}},
+$$
+
+并且在第1、2节继承的 UJLB 定义及闭合条件下有
+$K_n\subseteq A_n^{\mathrm{law}}$，才有商比较映射
+
+$$
+\phi_n:Q_n=Z/K_n\longrightarrow Z/A_n^{\mathrm{law}},
+\qquad
+\phi_n([z]_{K_n})=[z]_{A_n^{\mathrm{law}}}.
+$$
+
+它在每个有限阶段是满射，因为目标类仍由同一个 $z\in Z$ 代表；这只是有限商的
+比较，不是 law 递归等价，也不改变 $K_n\subseteq A_n^{\mathrm{law}}$ 的方向。
+令 $s_n:Z/A_{n+1}^{\mathrm{law}}\to Z/A_n^{\mathrm{law}}$ 为自然投影；
+极限映射使用交换式 $s_n\phi_{n+1}=\phi_np_n$，其在这些同源商上成立：
+
+$$
+\varprojlim Q_n\longrightarrow\varprojlim(Z/A_n^{\mathrm{law}}).
+$$
+
+逐层满射本身只给出单层 lift；极限满射还须有相容提升的依据。例如，对每个
+law 线程 $t=(t_n)_n$，令 $H_n(t)=\phi_n^{-1}(t_n)$，可要求逐前缀提升合同
+
+$$
+H_0(t)\ne\varnothing,\qquad p_n[H_{n+1}(t)]=H_n(t)\quad\forall n.
+$$
+
+这保证每个已提升前缀可继续。也可改用紧乘积中相容前缀约束的非空闭有限交性质，
+或足以保证非空逆极限的 Mittag--Leffler 假设。$Q_n$ 有限可用于紧性路线，
+但须明确采用该紧性／有限交性质论证，不能只把各层满射或有限性写成已获相容
+lift。有限 law 覆盖与全局 law 边界覆盖因此是不同层次的结论。
+

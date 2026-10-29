@@ -1,0 +1,50 @@
+### 2.1 在精确预测商上工作
+
+项目 VI §§118–119 的源特定结果提供了这里采用的正常形式与双 Lipschitz 夹逼；本文把它作为固定源合同下的应用前提，不重演其完整核计算（见[文献 1](#ref-1)）。
+
+固定源码允许的源 $\mathfrak s$ 取 $0<d<1$、$\sin(2\theta)\ne0$、同一个已安装 mixing $N$、九个实际带权前缀和完整十维返回合同。配对参数为
+
+<a id="eq-2-u01"></a>
+
+$$
+\Theta=\{(\gamma,h)\in\mathbb C\times\mathbb C^3:|\gamma|\le1,\ \|h\|\le1\}.
+$$
+
+源码正常形式为
+
+<a id="eq-2-1"></a>
+
+$$
+\mathcal N(\gamma,h)
+=\bigl(\gamma,\ hh^\dagger,\ \mathrm i(ht^\dagger-th^\dagger),\ \gamma h\bigr),
+\qquad t\ne0.
+\tag{2.1}
+$$
+
+这里 $t\ne0$ 是源固定向量。每个假设使用一个固定的完整补全，并贯穿该假设的所有历史；它不是每次观测后可重新选择的自由参数。令 $d_{\mathcal N}$ 为四个坐标差的范数之和：标量绝对值、两个矩阵的 Hilbert--Schmidt 范数和向量 Euclidean 范数，即
+
+$$
+\begin{aligned}
+d_{\mathcal N}((\gamma,h),(\gamma',h'))={}&|\gamma-\gamma'|
++\|hh^\dagger-h'h'^{\dagger}\|_{\mathrm{HS}}\\
+&+\|\mathrm i(ht^\dagger-th^\dagger-h't^\dagger+th'^{\dagger})\|_{\mathrm{HS}}
++\|\gamma h-\gamma'h'\|.
+\end{aligned}
+$$
+
+对固定源，存在有限原始概率向量 $P_{\mathfrak s}$ 和正数 $c_{\mathfrak s},C_{\mathfrak s}$，满足
+
+<a id="eq-2-2"></a>
+
+$$
+\frac{c_{\mathfrak s}}2d_{\mathcal N}
+\le \Delta_f
+\le \Delta_{\rm all}
+\le 2C_{\mathfrak s}d_{\mathcal N}.
+\tag{2.2}
+$$
+
+这里 $\Delta_f$ 是有限原始概率向量的最大坐标差，$\Delta_{\rm all}$ 是源码规定的所有原始历史终端概率坐标差的上确界。该式不是所有自适应协议的 TV，也不是完整仪器的 diamond 距离。
+
+<a id="sec-2-2"></a>
+

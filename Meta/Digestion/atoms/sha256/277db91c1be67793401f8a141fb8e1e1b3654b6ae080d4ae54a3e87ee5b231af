@@ -1,0 +1,23 @@
+**定义 9.1（单次新增配置模型）。** 固定有限的具名事件集合 $E$ 和非空族
+$\mathcal F\subseteq\mathcal P(E)$。每个 $C\in\mathcal F$ 都是允许的初始配置；
+不另给初始大小、可达根或隐藏的入口限制。动作名就是 $e\in E$，其合法性和后继为
+
+$$
+\operatorname{En}(C)=\{e\in E\setminus C:C\cup\{e\}\in\mathcal F\},
+\qquad
+C\xrightarrow{e}C\cup\{e\}\quad(e\in\operatorname{En}(C)).
+\tag{MPC.27}
+$$
+
+定义操作汇点族和非汇点族
+
+$$
+T=\{C\in\mathcal F:\operatorname{En}(C)=\varnothing\},
+\qquad N=\mathcal F\setminus T.
+\tag{MPC.28}
+$$
+
+这里只按单个事件的实际合法新增定义汇点；$\mathcal F$ 不必是下闭族、理想族或
+从某个根逐步可达的族。来源在一次运行中只通过 (MPC.27) 改变，没有未记录的
+来源切换或自主更新。
+

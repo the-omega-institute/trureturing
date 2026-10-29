@@ -1,0 +1,25 @@
+**定理 12.1（Lüders 原子的条件实现）。** 设 $P$ 为非零真投影、$Q=I-P$。另供一比特辅助载体 $A$、初态 $|0\rangle_A$、联合酉
+
+<a id="eq-12-u01"></a>
+
+$$
+U=P\otimes X_A+Q\otimes I_A.
+$$
+
+读取 $A$ 的结果 $1,0$ 分别实现 $X\mapsto PXP$、$X\mapsto QXQ$。忘记旗标后的通道
+$\mathcal L(X)=PXP+QXQ$ 在“固定纯辅助态、联合酉、最后丢弃辅助系统”的实现类中最小环境维数恰为二。
+
+**证明。** $P,Q$ 正交且和为 $I$，故 $U$ 酉。对任意参考，
+
+<a id="eq-12-u02"></a>
+
+$$
+|\psi\rangle|0\rangle_A\mapsto
+(P\otimes I_R)|\psi\rangle|1\rangle_A+
+(Q\otimes I_R)|\psi\rangle|0\rangle_A.
+$$
+
+读出辅助比特即得两个未归一化分支。归一化 Choi 是 $\operatorname{vec}(P)$ 与 $\operatorname{vec}(Q)$ 的两个正交秩一项，Choi 秩为二；任意纯环境实现的维数至少为 Choi 秩，上面的实现达到二。
+
+<a id="sec-12-2"></a>
+

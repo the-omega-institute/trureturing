@@ -1,0 +1,69 @@
+**Proposition 8.1 (same-task complete-scan supplier and its expanded bill).**
+The complete physical presence scan used in GPO Theorem 23.1 and
+Proposition 25.2 is already a finite zero-update numerical reinstatement
+supplier under §1. On the actual input $L,n$ it has exact Read and
+literal coordinates
+
+$$
+ \begin{aligned}
+ Q_{\rm scan}&=|S_n|=2F_{n+1}-1,\\
+ M_{\rm scan}&=n,\\
+ W_{\rm scan}&=\sum_{p\in S_n}(|p|+1),\\
+ (\lfloor n/2\rfloor+1)F_{n+1}
+ &\le W_{\rm scan}\le n(2F_{n+1}-1).
+ \end{aligned}
+ \tag{ACR.22}
+$$
+
+Its full expanded support has $\Theta(F_{n+1})$ nodes, and its literal
+traffic is $\Theta(nF_{n+1})$. With the same retained $P,L$ and actual
+binding, it can install the same (ACR.4) and reach Theorem 6.1's same
+consumers. The new recovery construction replaces this exponential
+scan segment by logarithmic paid Reads and polynomial local work for
+fixed $d$, rather than proving finite recoverability for the first time.
+
+Proof. The root is known present. At each confirmed node $p$, submit
+Read$(pa)$. The physical tree is full binary, so reply one identifies
+a branch and justifies scheduling both $pa,pb$; reply zero identifies
+a terminal node. Stack exhaustion terminates on the finite current tree
+without an initial height, size or age bound. This pays exactly one
+query per actual node and reconstructs its support and boundary.
+Its leaf count is $F_{n+1}$, strictly increasing on $n\ge2$, so finite
+integer search recovers $n$, then $B_n$. This is precisely the complete
+scan supplier, specialized to the same task and same erasure assumptions.
+Its final retained writes and handoff remain paid and stationary. The
+native results `NativeFullSourceProducer`, `NativeFibonacciStaticScan`
+and `NativeSerialMachine`, in the same D5 Observer directory and their
+Blueprint sources, supply full traversal and paid serial execution in
+their declared native domains; no hidden full-source port is imported.
+`ActualFibonacciSupportChain` supplies a native bounded-address comparison;
+the physical depth bounds needed here follow directly from (ACR.7).
+
+For $n\ge2$ the maximum physical depth is $n-1$: following successive
+initial-beta children gives a node born at every successive update,
+whereas (ACR.7) forbids a present word of length exceeding $n-1$.
+Hence the scan peak is exactly $n$. A terminal node of depth $\ell$
+branches no later than update $2\ell+2$ by (ACR.5)–(ACR.7).
+Being terminal at cut $n$ therefore forces
+$n<2\ell+2$, equivalently $\ell\ge\lfloor n/2\rfloor$.
+Its $F_{n+1}$ terminal queries give the lower traffic bound. All queries
+have length at most $n$, giving the upper bound and (ACR.22).
+The full binary node count proves the expanded output size. Encoding
+all output addresses separately may cost still more than node count.
+
+Combining (ACR.13)–(ACR.15) with (ACR.22) compares the two procedures on
+the identical input. The ratio of scan Reads to reinstatement Reads and
+the ratio of scan traffic to reinstatement traffic grow without bound
+as $n\to\infty$ at fixed $d$. The full source still has exponentially
+many material nodes, and expanding it after either recovery still costs
+that output. The comparison does not erase the earlier earning of
+$P,L$, bound every installation apparatus, or imply all-parameter
+or total-latency dominance. If $d$ varies, the explicit polynomial
+$d$-factors in local work must be compared; neither a reply count nor
+a bit-operation count alone determines physical completion time.
+$\square$
+
+[GPO]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GLOBAL_PORT_ORIENTATION.md
+[CAB]: RECURSIVE_RELATIONAL_OBSERVATION_CONCURRENT_ACQUIRED_CLOCK_BRIDGES.md
+[BY]: https://www.slac.stanford.edu/pubs/slacpubs/1500/slac-pub-1679.pdf
+

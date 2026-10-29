@@ -1,0 +1,18 @@
+**Proposition 80.2 (persistent selected fields).** At a returned state
+reached after $P_0$ successful promotions and $S_0'$ successful splits,
+put $V=1+P_0+2S_0'$ and $\eta=\mathbf1_{\{F>1\}}$. The layout has
+exactly $V$ source vertices, $3V$ source-edge reference fields, $V$
+auxiliary-reference fields, $\eta$ live history headers, $G$ history
+cells and $G$ history data bits. The live history headers/cells contain
+exactly $2\eta+G$ reference-field occurrences, including null fields.
+These counts exclude neither source markers nor the installed root
+binding; the latter, other driver references and cleared work capacity
+are additional coordinates, rather than members of $2\eta+G$.
+
+Proof. The actual source starts with one vertex; the material templates
+add one for each $P$ and two for each $S$, without deleting any. Definition
+75.2 gives exactly the asserted header/cell objects and fields, with no
+persistent local bank. $F=1$ implies $G=0$. Theorem 76.4 preserves this
+shape on every successful growth; other requests preserve it outright.
+$\square$
+

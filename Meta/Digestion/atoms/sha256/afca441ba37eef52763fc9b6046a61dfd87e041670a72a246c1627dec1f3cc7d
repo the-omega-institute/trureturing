@@ -1,0 +1,11 @@
+**Corollary 8.2 (The remaining full-support criterion).** Put $\Delta_3^\circ=\{t\in\Delta_3:t_1t_2t_3>0\}$. For the family of Theorem 8.1,
+
+$$
+\mathcal S_3=
+\left\{(\lambda,q)\in K_3:\ \text{conditions (A) and (B) of Theorem 3.2 hold for every }t\in\Delta_3^\circ\right\}.
+$$
+
+In particular, if $(\lambda,q)\in K_3$ and $v^\ast S(X)v<0$ for some complex $X$ and $v$, then all three coordinates of $v$ are nonzero. The implication from membership in $K_3$ to the displayed interior conditions is the remaining $d=3$ part of Open question 6.2; no assertion of that implication is made here. Stance: repo-derived.
+
+**Proof.** Theorem 4.1 gives $\mathcal S_3\subseteq K_3$. For parameters in $K_3$, Theorem 8.1 supplies (A) and (B) on $\partial\Delta_3$, and Theorem 3.2 requires them on the union $\Delta_3=\partial\Delta_3\cup\Delta_3^\circ$. This proves the equality. The assertion about a negative probe follows directly from Theorem 8.1. ∎
+

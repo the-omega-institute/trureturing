@@ -1,0 +1,23 @@
+**Lemma 93.2 (All-complex lower bound at the endpoint).** For every whole
+complex CPTP decoder $D$ and every phase $\varphi$,
+
+$$
+\left\|\Phi_0^\dagger D^\dagger(E_\varphi)-E_\varphi\right\|_{\rm op}
+\ge h.
+\tag{93.2}
+$$
+
+*Proof.* For $K=D^\dagger(E_\varphi)$, the adjoint of (93.1) is
+
+$$
+\Phi_0^\dagger(K)=\operatorname{diag}
+ \left(K_{00},\frac{K_{11}+K_{22}}2,
+                    \frac{K_{11}+K_{22}}2\right).
+\tag{93.3}
+$$
+
+Thus the recovered effect has zero $01$ entry, even when the competing
+CPTP map and its effect are fully complex. The residual has $01$ entry
+$-h e^{-i\varphi}$, and compression to the unit vectors $|0\rangle$ and
+$|1\rangle$ gives the lower bound in (93.2). $\square$
+

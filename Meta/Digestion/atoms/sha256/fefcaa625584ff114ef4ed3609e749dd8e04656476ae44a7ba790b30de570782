@@ -1,0 +1,23 @@
+**Definition 2.1 (two ordered source constructors).** Put
+
+$$
+A=\langle\alpha,\beta\rangle,
+\qquad B=\langle\beta,\alpha\rangle,
+\qquad C_1=\alpha,
+\qquad C_{n+1}=\langle C_n,\alpha\rangle,
+\tag{2.1}
+$$
+
+and, for $n\ge1$,
+
+$$
+X_n=\langle C_n,A\rangle,
+\quad Y_n=\langle C_n,B\rangle,
+\quad U_n=\langle X_n,X_n\rangle,
+\quad V_n=\langle X_n,Y_n\rangle.
+\tag{2.2}
+$$
+
+These are actual members of the full branch domain of Definition 112.1.
+They are not a replacement domain and do not add an equality query.
+

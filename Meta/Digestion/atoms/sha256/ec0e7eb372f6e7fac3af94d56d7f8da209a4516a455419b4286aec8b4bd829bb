@@ -1,0 +1,26 @@
+**Definition 273.1 (path translation and the common time-zero embedding).**
+Let $\mathscr P_{\mathbb C}=L^2(\mathcal W,\mathbb P;\mathbb C)$ be the
+complexification of the path space in Definition 271.1, and write
+
+$$
+(I_0F)(\omega)=F(X_0(\omega)),\qquad
+(\mathcal R_tG)(\omega)=G(\omega(\,\cdot+t)),\quad t\in\mathbb R.
+\tag{273.1}
+$$
+
+Stationarity makes $(\mathcal R_t)_{t\in\mathbb R}$ a unitary group.  Its
+strong continuity follows first on bounded finite-coordinate cylinders from
+the continuity of the supplied $T(s)$ and the Markov cylinder formula, and
+then on $\mathscr P_{\mathbb C}$ by density.  Let $K$ be its self-adjoint
+generator, so that $\mathcal R_t=e^{-itK}$.  The map $I_0$ is the same
+time-zero map that appears in the reflection quotient: in the notation of
+(271.2),
+
+$$
+q(I_0F)\ \xmapsto{\ \mathcal U\ }\ F.
+\tag{273.2}
+$$
+
+Thus $K$ acts on the complete reversible history carrier, whereas $H$ acts
+on the reflection quotient of that carrier.
+

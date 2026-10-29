@@ -1,0 +1,39 @@
+**Definition 60.1 (conditional history content at the original Ready cut).**
+Use exactly AA §§17,19–23's LAB, its actually allocated known-alpha
+root, and Definitions 47.2 and 50.1's full seven-request $Q_g$ service
+and local-rank layout. The domain consists of its finite returned Ready
+cuts, with the same source binding, current rights and backing. It is
+not the guard-only unknown-entry task of §§53–59. For the actual reachable
+term $t$, let $\mathcal H(t)$ be its complete successful $P/S$ histories
+from that alpha. In this section write
+
+$$
+\begin{aligned}
+F(t)&=|\mathcal H(t)|=F_{PS}(t)=\prod_{v\in I(t)}R_v,
+& R_v&=\binom{x_v+y_v}{x_v},\\
+x_v&=e_\beta(t_{vL}),&y_v&=e_\alpha(t_{vR}),\\
+h(t)&=|\{v\in I(t):x_v>0,\ y_v>0\}|=H(t),\\
+B(t)&=\sum_{v\in I(t)}\lceil\log_2R_v\rceil,
+&G(t)&=\lceil\log_2F(t)\rceil.
+\end{aligned}
+\tag{AAII.16}
+$$
+
+Thus $F$ here counts histories, not the leaf antichain denoted by $F$
+in §53; $h$ is exactly the number of live local headers. The born-type
+event count is AA (AA.73): a subtree $u$ born $b$, with $a$ alpha and
+$c$ beta leaves, has $e_b(u)=a+2c-1-\mathbf1_{\{b=\beta\}}$.
+All logarithms here have base two; an empty product is one and $0!=1$.
+
+$G$ is conditional fixed-width history content: fix the bare source
+$t$, known initialization, binding/rights and returned phase, and supply
+no other history-dependent side information. A $g$-bit supplement for
+all these histories has at most $2^g$ conditional values. Any additional
+history-bearing allocation pattern, occupancy, pointer, header or control
+state must be included in that supplement's information; it cannot be
+silently treated as fixed context. The common bare source itself is
+conditioned on, rather than charged as a history supplement. This is
+neither a variable-length average-code claim nor a total-resource bit
+count. $B$ is the bit payload of the already installed local layout;
+$G$ does not name an installed global packing algorithm.
+

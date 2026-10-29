@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3dbcddc701574e4994ee19a525561becb7359d3bf49831b98ffea7ce39c2098b
+  normalized_sha256: sha256:3dbcddc701574e4994ee19a525561becb7359d3bf49831b98ffea7ce39c2098b
+cas_ref: sha256:3dbcddc701574e4994ee19a525561becb7359d3bf49831b98ffea7ce39c2098b
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeComputedEpochPotential.cycleCondition_gives_epoch_transport
+    target_statement_id: sha256:a44350095529275af4a04410192ec69cea0ef8e2cd88c397d8f7690649be8c97
+  - gid: D5/S3/Combinatorics/Graph/LayeredCirculation/SupplierDual.exists_nodup_visited_walkWeight_le
+    target_statement_id: sha256:5d22be6b8c06ab1f11da30a4479854c61fe9f11bf39b42995f4a8c455c1fa0fa
+receipts:
+  unresolved_subitems: []

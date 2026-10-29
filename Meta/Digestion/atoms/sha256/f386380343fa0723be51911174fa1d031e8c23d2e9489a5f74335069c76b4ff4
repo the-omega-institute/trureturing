@@ -1,0 +1,2 @@
+支付成功概率时，使用原联合律的时间顺序。对块起点 $d$ 置 $\mathcal F_d=\sigma(H_i:i\le d;\ X_i:i<d)$。给定 $\mathcal F_d$ 且 $H_d=h$，沿定理所选长度 $t_h\le n_C$ 的带标签路径到 $r$，再发射 $w_C$；$h=r$ 时取空前缀，$t_r=0,d_r=1$。这段事件的条件概率为 $d_h(B_C\mathbf1)(r)\ge\varepsilon$。余下 $b-t_h-m$ 位任意求和为一，因为 $A\mathbf1=\mathbf1$。该隐藏事件包含于同一个 $S_D$，因为 $t_h+m\le b$；隐藏起点只选择了证明下界的子事件，未改变所计数的可见成功事件。
+

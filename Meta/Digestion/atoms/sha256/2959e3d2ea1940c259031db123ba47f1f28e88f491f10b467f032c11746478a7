@@ -1,0 +1,12 @@
+**Definition 274.1 (the first-layer label process).**
+On the same law $\mathbb P$, put
+
+$$
+Y_t=\mathbf1_{[L]}(X_t),\qquad A=F_L=\mathbf1_{[L]},\qquad B=F_{LL}.
+\tag{274.1}
+$$
+
+The question whether the labels close as a stationary two-state Markov
+process is a question about the finite-dimensional law of $Y$, not about a
+new deterministic source or a quantum operation.
+

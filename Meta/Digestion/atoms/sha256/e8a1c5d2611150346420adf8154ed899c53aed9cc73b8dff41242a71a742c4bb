@@ -1,0 +1,14 @@
+### 定义 1.2（递归层与失败边）
+
+对每个层 $n\ge1$，给定有限候选顶点集 $V_n$ 和失败边族 $\mathscr E_n$，记
+
+$$
+\mathscr H_n=(V_n,\mathscr E_n),
+\qquad
+\nu_n=\nu(\mathscr H_n),
+\qquad
+\tau_n=\tau(\mathscr H_n).
+$$
+
+若失败边来自有限状态集 $S_n$，写成 $\mathscr E_n(s)$。这时 $s$ 可以是 FIB 递归状态，边可以是该状态下仍未被排除的候选观察集合。本文静态定理逐个固定 $s$；动态定理另行加入状态更新合同。
+

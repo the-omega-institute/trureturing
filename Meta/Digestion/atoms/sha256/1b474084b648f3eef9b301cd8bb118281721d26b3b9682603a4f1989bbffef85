@@ -1,0 +1,20 @@
+**命题 5.1（一个权限门的精确延迟）。** 在上述菜单下，
+
+$$
+(s,q)\in A_1,
+\qquad
+(s,q)\notin A_2.
+$$
+
+**证明。** 在 locked 状态，Read_L 和 Graft_v 都产生同一失败标签；Unlock 在两边都产生“unlock”，并把后继送到 $(t,\mathsf{open})$ 与 $(u,\mathsf{open})$。这两个后继具有相同的 $A_0$ 当前读出，因此原 pair 属于 $A_1$。深度二的自适应实验先执行 Unlock，再执行 Read_L；第二步在两边均合法，但输出分别为 $\mathsf{branch}$ 与 $\alpha$，故档案轨迹分布不同，pair 不属于 $A_2$。
+
+这不是“解锁本身没有发生变化”：它改变了可访问动作集合，并把潜在关系保留到下一层。一般地，若基础 open 状态的残余为 $R_n^{\mathsf{open}}$，锁定层除 Unlock 外的动作都统一失败，且 Unlock 的标签相同，则
+
+$$
+(s,\mathsf{locked})\ A_{n+1}\ (t,\mathsf{locked})
+\iff
+(s,\mathsf{open})\ R_n^{\mathsf{open}}\ (t,\mathsf{open}).
+$$
+
+证明只需对式 (2.2) 归纳：所有被门挡住的动作自动满足相同失败分支，唯一非平凡后继是 Unlock。串联 $k$ 个统一权限门会把首次可见分离层数平移 $k$；权限是实验深度的一部分，而不是外加的时间坐标。
+

@@ -1,0 +1,63 @@
+**Theorem 31.2 (individual criteria and sharp class-wide thresholds).**
+The individual current-label and $\mathcal Q_1$ criteria are both
+agreement of all streams in $\mathscr C[w]$ through $B_n$. The
+individual complete-future criterion is that $\mathscr C[w]$ contain
+only one infinite output stream. For the class-wide questions, each of
+the three tasks in Definition 31.1 is uniformly ready exactly under
+its separately stated condition
+
+$$
+\begin{array}{c|c}
+ \text{authentic source class}&\text{necessary and sufficient condition at }n\ge2\\\hline
+ \mathscr R_d&F_n-1\ge2d\\
+ \mathscr M_K&F_n-1\ge2K-1.
+\end{array}
+ \tag{GPO.78}
+$$
+
+The $d=0$ condition is zero and holds at every such cut. At a
+shorter prefix the failure is a uniform class failure; particular
+fibers may be ready earlier. These statements assert neither minimum
+paid Read count with unknown coefficients nor total-resource minima.
+
+Proof. Theorem 28.2 identifies the current-label fiber with its prefix
+through $B_n$. Once $S_n$ is fixed, Theorem 24.2 and (GPO.69)
+identify the $\mathcal Q_1$ classes with those very current labels:
+a change of a newest terminal bit changes the reply at $paa$ for
+that cherry. This proves both individual criteria.
+
+If a compatible fiber has one infinite stream, finite forward replacement
+computes every finite continuation in Definition 31.1. Conversely suppose
+two compatible streams first differ at a birth $j>v_n$. Before this
+birth their physical labelled histories agree, hence its actual parent
+address and chronological position agree. If the birth is among the
+newest batch, its difference is still invisible now but becomes a
+presence difference after one more update at a word $paa$ in its
+parent cone. If it is later, perform enough updates to reach its
+birth and then one further update. Such an update exists since
+$B_e\to\infty$. The same argument makes a finite presence query
+distinguish the continuations. Differences in other later birth bits
+cannot change that witness: the immediate successor support of a cherry
+does not depend on the new orientations. Thus equality of complete
+future behavior is exactly equality of the infinite stream within
+this fixed current-incidence fiber. The labelled successor coordinate
+in the task is consistent with this same criterion.
+
+If $v_n\ge2d$ or $v_n\ge2K-1$, apply respectively Lemma 29.2
+or 30.2 to its initial required prefix. Every compatible stream is the
+same behavior. The finite synthesis and physical simulation therefore
+solve all three questions. The incidence-to-prefix map of Theorem 28.2
+provides a finite effective recovery on the attained incidence image.
+
+For necessity, let $v=v_n$ be below the relevant threshold. Use
+Lemma 29.3 or 30.3 to choose two lawful streams agreeing in the first
+$v$ bits but differing in the next one. They give exactly the same
+$S_n$ by Theorem 28.2. Birth $v+1$ is the first birth of the
+newest batch, which is nonempty for $n\ge2$. Its differing bit
+gives different current labels and different $\mathcal Q_1$ replies
+by (GPO.69), and hence different finite future behavior. A single
+recovery rule from this incidence cannot work for both. When $d=0$
+there is only the zero stream and no such lower-bound case.
+This proves the exact class-wide conditions, separately for each task.
+$\square$
+

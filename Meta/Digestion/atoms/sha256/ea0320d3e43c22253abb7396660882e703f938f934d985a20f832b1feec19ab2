@@ -1,0 +1,49 @@
+**Definition 23.1 (Dyadic enclosures).** Put $N=2^{160}$. Represent
+a dyadic interval by an integer pair $[l,u]$, denoting
+$[l/N,u/N]$. A rational number $a/b$, with $b>0$, has enclosure
+
+$$
+\left[\left\lfloor\frac{Na}{b}\right\rfloor,
+      \left\lceil\frac{Na}{b}\right\rceil\right].
+\tag{23.1}
+$$
+
+A rational interval is enclosed by rounding its lower endpoint down
+and its upper endpoint up. Negation sends $[l,u]$ to $[-u,-l]$;
+addition is $[l,u]+[l',u']=[l+l',u+u']$. For multiplication let
+$m,M$ be the minimum and maximum of $ll',lu',ul',uu'$ and use
+$[\lfloor m/N\rfloor,\lceil M/N\rceil]$. If $lu>0$, the reciprocal
+is $[\lfloor N^2/u\rfloor,\lceil N^2/l\rceil]$; otherwise division
+is not defined. Division is multiplication by this reciprocal.
+For $0\le l\le u$, the square-root interval is
+
+$$
+\left[\left\lfloor\sqrt{lN}\right\rfloor,
+      \left\lceil\sqrt{uN}\right\rceil\right].
+\tag{23.2}
+$$
+
+The integer square roots in (23.2) are uniquely specified by
+$m^2\le lN<(m+1)^2$ and $(n-1)^2<uN\le n^2$, respectively;
+for $u=0$ take the upper endpoint zero. Multiplication and division
+by a rational constant mean enclosing that constant by (23.1) and
+using the stated operations. Thus even division by two has a fixed
+meaning. There is no rounding to nearest.
+
+For each rational function in the ordered list
+
+$$
+\mathcal H=(U_t,T_t,b_t,\Delta_t,a,h,w_0,w_1),
+\tag{23.3}
+$$
+
+cancel its rational-function gcd. Choose its numerator and denominator
+in $\mathbb Z[t]$ with joint integer content one and positive leading
+denominator coefficient. This fixes the pair uniquely. Substitute
+$t=y+1/2$ into each polynomial and expand exactly in powers of $y$.
+Enclose every resulting rational coefficient by (23.1), evaluate
+numerator and denominator by descending Horner in the same interval
+$y$, then divide. In particular $\Delta_t$ is cancelled as a rational
+function before interval evaluation; it is not evaluated by subtracting
+two interval expressions for $T_t^2$ and $4q_t$.
+

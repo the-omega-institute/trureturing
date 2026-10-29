@@ -1,0 +1,21 @@
+**Corollary 57.3 (Multiplicity at one width).** For a fixed
+$(p,v,w)$ with $p\ne24$ and a fixed $b>0$, there are at most two
+complete worlds in (54.1). There are two distinct worlds exactly
+when $\kappa_{\rm rec}=\eta_{\rm rec}=0$,
+$\Delta_{\rm rec}>0$ and both roots in (57.4) pass (57.2).
+
+**Proof.** The rational case has at most one world, the inconsistent
+linear case has none, and case 3 has at most two roots. Two distinct
+roots that pass the filter give different $E$, hence different
+drifts and complete worlds. A repeated root gives only one world.
+$\square$
+
+The construction includes the parent singularity $\Lambda=0$:
+(48.2) then forces $D_{\rm par}=0$ and $b=1/8$, but neither (57.1)
+nor (57.5) divides by $D_{\rm par}$ or $\Lambda$. Vanishing sampled
+gains, a vanishing cubic coefficient, lower gain degrees and repeated
+gain roots are preserved wherever the original rows permit them.
+No gain sample, leading coefficient or gain-root difference has been
+cancelled. The necessary $E\ne0$ in (57.2) is exactly the consequence
+of $p\ne24$ from Lemma 48.2; in particular $E=-24$ is not removed.
+

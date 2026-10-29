@@ -1,0 +1,4 @@
+**Lemma 3.2 (Reduction of the first inequality).** Let $t\ge2$, $w=a+ib$ with $a^2+b^2\le1$, $w\ne1$, and $z=(-w,-\overline{w})$. Then $\lvert Q_t(z_1+1,z_2+1)\rvert\le1$ if and only if $F_t(a,b)\ge0$. Stance: suspected-novel (see Section 7).
+
+**Proof.** By Lemma 3.1, $Q_t(z+1)$ is real and its denominator $t(t-1)(1-a)$ is positive. By the bound of Convention 2.2, $h_{t-1}(w,\overline{w})\le t$, so the numerator $t-h_{t-1}(w,\overline{w})$ is nonnegative. Hence $\lvert Q_t(z+1)\rvert\le1$ is equivalent to $t-h_{t-1}(w,\overline{w})\le t(t-1)(1-a)$, which is $F_t(a,b)\ge0$. $\square$
+

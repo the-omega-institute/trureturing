@@ -1,0 +1,12 @@
+**Theorem 57.2 (Exact reconstruction at every positive width).** Fix
+any real $p\ne24,v,w$. At each $b>0$, the complete worlds in (54.1)
+of width $b$ are in bijection with the retained candidates of
+Definition 57.1. The exhaustive candidate list is as follows.
+
+1. If $\kappa_{\rm rec}\ne0$, there is just one possible candidate,
+   $E=-\eta_{\rm rec}/\kappa_{\rm rec}$. It is retained exactly when
+   $Q_{\rm rec}(E)=0$ and all of (57.2) hold.
+2. If $\kappa_{\rm rec}=0$ and $\eta_{\rm rec}\ne0$, there are no
+   candidates and hence no worlds of this width in (54.1).
+3. If $\kappa_{\rm rec}=\eta_{\rm rec}=0$, define
+

@@ -1,0 +1,41 @@
+**命题 81.3（trace balance 会删去更好的实际 effects）。** 在 $n=2$ 令 $\ell=(y+3d)/4$，并把 $x+\ell=1$ 强加于 supplier 的 feasible effects；记该受限最优值为 $\eta_{\rm tb}(q)$。对每个 $0<q\le1/10000$，
+
+$$
+\eta_2(q)\le\frac{199}{66}q<\frac{10}{3}q<\eta_{\rm tb}(q),
+\qquad \eta_{\rm tb}(q)-\eta_2(q)>\frac7{22}q.
+$$
+
+**证明。** 取 $d=0$，
+
+$$
+K_2=\begin{pmatrix}
+1-4q&-2\sqrt{q(1-4q)}\\
+-2\sqrt{q(1-4q)}&4q
+\end{pmatrix}.
+$$
+
+它是 rank-one projection。$G_{-1/2}(K)-E(q)$ 为
+$\left(\begin{smallmatrix}-3q&-w\\-w&0\end{smallmatrix}\right)\oplus3q$，其中
+
+$$
+w=\frac{3q\sqrt q}{\sqrt{1-q}+\sqrt{1-4q}}<\frac q{66}.
+$$
+
+最后一步用 $\sqrt q\le1/100$ 且分母两项均大于 $99/100$。故 unrestricted error 小于 $199q/66$。
+
+反之对任何满足 trace balance 的 complex effect，positivity 给出
+
+$$
+|z|^2\le\min\{(1-\ell)y,\ell(1-y)\}\le\min(y,\ell).
+$$
+
+$f$ residual 为 $c=(3y+d)/4=(2y+\ell)/3\ge\min(y,\ell)$。若其误差不超过 $\delta=10q/3$，则 $c\le\delta$，且
+$h\le\delta+|z|/2\le\delta+\sqrt\delta/2$。除以 $\sqrt q$ 得
+
+$$
+\sqrt{1-q}\le\frac{10}{3}\sqrt q+\sqrt{5/6}
+ \le\frac1{30}+\frac{11}{12}=\frac{19}{20},
+$$
+
+与 $\sqrt{1-q}>99/100$ 矛盾。受限 effect set 非空（含 $I_3/2$）且 compact，故最小值严格大于 $\delta$。系数差为 $7/22$。∎
+

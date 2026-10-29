@@ -1,0 +1,21 @@
+#### 定理 10.1（有限正核的最小实现）
+
+给定 Hermitian 正半定矩阵 $D\in\mathbb{C}^{M\times M}$，定义
+
+$$
+\mathcal H_D=\mathbb{C}^M/\ker D,\qquad
+\langle[c],[d]\rangle=c^\dagger Dd.
+$$
+
+这是维数 $\operatorname{rank} D$ 的 Hilbert 空间。$v_h=[e_h]$ 满足 $\langle v_h,v_k\rangle=D_{hk}$ 并张成该空间。任意另一个张成的 Gram 实现与它唯一酉等价。
+
+**证明。**
+
+正半定性给 $c^\dagger Dc=0\iff D^{1/2}c=0\iff Dc=0$，所以商上的内积良定义且正定。有限维保证完备。将 $[e_h]$ 映到另一组同 Gram 向量，保全部内积、核恰相同、由张成性满射，故给唯一酉映射。
+
+∎
+
+直接和核对应正交替代项；张量核的最小实现满足 $\mathcal H_{D\otimes E}\simeq\mathcal H_D\otimes\mathcal H_E$，由标准基向量对的内积相乘直接验证。这给“静态谱关系构成 Hilbert 空间”一个精确有限版本，但所给对象必须是正相干核，裸图的邻接与存在关系没有决定该核。
+
+<a id="thm-square"></a>
+

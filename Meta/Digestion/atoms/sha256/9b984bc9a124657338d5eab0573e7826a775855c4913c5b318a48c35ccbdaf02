@@ -1,0 +1,41 @@
+**Theorem 72.2 (source-resident recovery with the correct new predictor).**
+For every $t\in\mathcal D$ in the experiment of Definition 72.1, a second
+split sweep earns an owned word $w=J(t)$ and leaves the same actual source
+at $J^2(t)$. One subsequent paid application of $K$ to $w$ returns the
+original entry $t$, without using any cleared word or transcript. The
+legitimate live predictor for further ordinary $Q_J$ use is $w=J(t)$.
+When $t$ has a beta, the separately decoded $t$ cannot be used directly
+as that live word. For the degenerate entry alpha the two words coincide.
+
+Proof. Lemma 68.3 places $J(t)$ in $\mathcal D$. The new receiver has
+exactly the empty-source-dependent-record entrance required by Theorem
+69.2, now with actual entry $J(t)$ and the same genuine attachment.
+That theorem therefore earns its exact entry $w=J(t)$ and changes the
+source to $J(J(t))$. Lemma 68.3 gives $K(w)=t$ by a finite computation on
+this newly earned word. The computation has no access to cleared data.
+Injectivity of $J$ identifies the original entry in this declared image;
+the distinction survived in the source rather than in an assumed archive.
+
+At the new returned cut the invariant of Definition 69.3 is physical
+source $J(w)$ with live word $w$. Using $t$ directly in that same predictor
+would instead represent source $J(t)$. If $t$ has a beta, encoding strictly
+increases its node count, so $J(t)\ne t$ and injectivity gives
+$J^2(t)\ne J(t)$: the proposed direct use has the wrong invariant.
+For the reachable entry with no beta, namely alpha, both words coincide.
+One may instead compute $J(t)$ anew from the decoded result, paying the
+computation and backing to restore the correct live word. Keeping $w$
+while constructing a separate result $t$ uses both words concurrently;
+that retention and the decode are paid. The reference and current rights
+are never inferred from either word and remain the authentic retained
+ones. $\square$
+
+This is a one-reaccess source-transforming experiment: both sweeps split
+each beta present at their respective entry. When the original entry
+has a beta, the second sweep strictly adds source material. The reachable
+degenerate entry alpha has no beta and is fixed by $J$. The result is
+neither stationary retrieval nor source restoration. If represented
+continuation precedes the clearing, the same construction recovers that
+then-current represented word $v$ from $J(v)$; it does not identify the
+original $t$ without a separately justified version record. No arbitrary
+old-history recovery or indefinite immutable archive service is asserted.
+

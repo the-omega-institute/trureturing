@@ -1,0 +1,14 @@
+## 1. 项目接口与逻辑范围
+
+本轮固定核对 `dev` 分支提交 [`9ccde90c0c0d10b50d8ebcd55a8499b357c787d1`](https://github.com/the-omega-institute/trureturing/commit/9ccde90c0c0d10b50d8ebcd55a8499b357c787d1)。已有接口包括：
+
+| 项目已有结果 | 本文如何使用 |
+| --- | --- |
+| 合法词与 Fibonacci 融合路径对应；带权路径投影满足 Temperley--Lieb 关系 | 在路径坐标中定义黄金投影，并逐个对应编织生成元。 |
+| 在可独立选择各位置的 $X$ 控制、另供一个固定位置的 $Y$ 控制及任意实角条件下，整个有限合法空间可控 | 说明固定局部门的实现接口，但不把有限实例可控性升级为统一原生成本定理。 |
+| 最新续卷区分源树嫁接、独立组合与联合相干拒绝 | 保留结果概率、后态和联合记录之间的区别。 |
+
+对应项目来源为[《融合自旋链与 QCA 切面》 §§12--16](https://github.com/the-omega-institute/trureturing/blob/9ccde90c0c0d10b50d8ebcd55a8499b357c787d1/docs/develop/theory/FUSION_SPIN_CHAIN_QCA_CUT_OBSTRUCTIONS.md)、[《合法门、状态机与 Shor 读出》定理 11.2](https://github.com/the-omega-institute/trureturing/blob/9ccde90c0c0d10b50d8ebcd55a8499b357c787d1/docs/develop/theory/FIB_LEGAL_GATES_STATE_MACHINES_AND_SHOR_READOUT.md)，以及[《相干重构续卷》 §§51--56](https://github.com/the-omega-institute/trureturing/blob/9ccde90c0c0d10b50d8ebcd55a8499b357c787d1/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md)。
+
+项目结果提供接口和前提；本稿的固定门、相位方程、边界对应和编码误差链是本文的组织与纸面证明。它们仍然需要明确的复 Hilbert 空间、操作合同、制备、控制和读出。
+

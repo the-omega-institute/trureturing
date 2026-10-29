@@ -24,6 +24,36 @@ open scoped Topology Chebyshev
 
 noncomputable section
 
+/-- The logarithm splits into the first prime layer and the naturally truncated
+mass of all remaining layers. The subtraction is used only on occupied support. -/
+theorem log_factorization_split {U : ℕ} (hU : 0 < U) :
+    Real.log U = (∑ q ∈ U.primeFactors, Real.log q) +
+      ∑ q ∈ U.primeFactors, ((U.factorization q - 1 : ℕ) : ℝ) * Real.log q := by
+  rw [Real.log_nat_eq_sum_factorization, Finsupp.sum, Nat.support_factorization,
+    ← sum_add_distrib]
+  apply sum_congr rfl
+  intro q hq
+  have ha : 1 ≤ U.factorization q :=
+    (Nat.prime_of_mem_primeFactors hq).factorization_pos_of_dvd (by omega)
+      (Nat.dvd_of_mem_primeFactors hq)
+  rw [Nat.cast_sub ha]
+  ring
+
+/-- Positive divisibility increases the full higher-layer mass. Missing primes
+contribute zero through natural truncated subtraction. -/
+theorem higher_layer_mass_mono {A B : ℕ} (hA : 0 < A) (hB : 0 < B) (hAB : A ∣ B) :
+    (∑ p ∈ A.primeFactors, ((A.factorization p - 1 : ℕ) : ℝ) * Real.log p) ≤
+      ∑ p ∈ B.primeFactors, ((B.factorization p - 1 : ℕ) : ℝ) * Real.log p := by
+  have hval := (Nat.factorization_le_iff_dvd hA.ne' hB.ne').mpr hAB
+  calc
+    _ ≤ ∑ p ∈ A.primeFactors, ((B.factorization p - 1 : ℕ) : ℝ) * Real.log p := by
+      apply sum_le_sum
+      intro p _
+      exact mul_le_mul_of_nonneg_right
+        (by exact_mod_cast Nat.sub_le_sub_right (hval p) 1) (Real.log_natCast_nonneg p)
+    _ ≤ _ := sum_le_sum_of_subset_of_nonneg (Nat.primeFactors_mono hAB hB.ne')
+      (fun p _ _ => mul_nonneg (Nat.cast_nonneg _) (Real.log_natCast_nonneg p))
+
 private theorem layer_active {t : ℝ} (ht : 1 < t) {U q k : ℕ}
     (hstrict : ∀ q : ℕ, q.Prime →
       U.factorization q = optimalLayerCount (1 / (t * Real.log t)) q)
@@ -208,17 +238,7 @@ theorem strict_inventory_chebyshev_bounds {t : ℝ} (ht : 2 ≤ t) {U : ℕ} (hU
         θ (t * Real.log t / Real.log 2) := by
   have hfirst := first_layer_comparison ht hU hstrict
   have hhigher := higher_layer_comparison ht hU hstrict
-  have hsplit : Real.log U = (∑ q ∈ U.primeFactors, Real.log q) +
-      ∑ q ∈ U.primeFactors, ((U.factorization q - 1 : ℕ) : ℝ) * Real.log q := by
-    rw [Real.log_nat_eq_sum_factorization, Finsupp.sum, Nat.support_factorization,
-      ← sum_add_distrib]
-    apply sum_congr rfl
-    intro q hq
-    have ha : 1 ≤ U.factorization q :=
-      (Nat.prime_of_mem_primeFactors hq).factorization_pos_of_dvd (by omega)
-        (Nat.dvd_of_mem_primeFactors hq)
-    rw [Nat.cast_sub ha]
-    ring
+  have hsplit := log_factorization_split hU
   have hnonneg : 0 ≤ ∑ q ∈ U.primeFactors,
       ((U.factorization q - 1 : ℕ) : ℝ) * Real.log q :=
     sum_nonneg fun q _ => mul_nonneg (Nat.cast_nonneg _) (Real.log_natCast_nonneg q)
@@ -375,17 +395,7 @@ theorem strict_inventory_sqrt_discrepancy :
   have ht0 : 0 ≤ t := by linarith
   have hfirst := first_layer_comparison ht hU hstrict
   have hhigher := strict_inventory_higher_layer_bound ht hU hstrict
-  have hsplit : Real.log U = (∑ q ∈ U.primeFactors, Real.log q) +
-      ∑ q ∈ U.primeFactors, ((U.factorization q - 1 : ℕ) : ℝ) * Real.log q := by
-    rw [Real.log_nat_eq_sum_factorization, Finsupp.sum, Nat.support_factorization,
-      ← sum_add_distrib]
-    apply sum_congr rfl
-    intro q hq
-    have ha : 1 ≤ U.factorization q :=
-      (Nat.prime_of_mem_primeFactors hq).factorization_pos_of_dvd (by omega)
-        (Nat.dvd_of_mem_primeFactors hq)
-    rw [Nat.cast_sub ha]
-    ring
+  have hsplit := log_factorization_split hU
   have hnonneg : 0 ≤ ∑ q ∈ U.primeFactors,
       ((U.factorization q - 1 : ℕ) : ℝ) * Real.log q :=
     sum_nonneg fun q _ => mul_nonneg (Nat.cast_nonneg _) (Real.log_natCast_nonneg q)

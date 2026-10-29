@@ -1,0 +1,115 @@
+**引理 124.1（同一补集的二次选择势）。** 在约定 123.1 的纤维上置
+
+$$
+c_0=\frac12\log(d_a/d_c),\qquad
+\eta=\frac{B^2}{2d_c},\qquad
+\ell_2(m)=c_0-\eta\mathcal D(m)^2.
+\tag{124.1}
+$$
+
+则 $0\le c_0\le C\delta^5$，$0<\eta\le C\delta^5$，并在整个可行盒上有
+
+$$
+|\ell(m)-\ell_2(m)|\le Cq^{-1/2}(1+|\mathcal D(m)|^3).
+\tag{124.2}
+$$
+
+令 $q_j$ 为原二项组质量，$S_j=-\log(q_j/\max q_j)$，$S_Q=\sum_jS_j$，
+$A_y=S_Q+\lambda_y$，并定义三个有限配分函数
+
+$$
+J_P(\alpha,y)=\sum_m e^{-\alpha(A_y(m)-\ell(m))},\quad
+J_2(\alpha,y)=\sum_m e^{-\alpha(A_y(m)-\ell_2(m))},\quad
+J_0(\alpha,y)=\sum_m e^{-\alpha A_y(m)}.
+\tag{124.3}
+$$
+
+则对某个 $b_1>0$，
+
+$$
+\left\|\log\frac{J_P}{J_2}\right\|_{3,R}
+ \le\operatorname{poly}(Q)e^{-b_1Q^3}.
+\tag{124.4}
+$$
+
+**证明。** 对补集 Bernoulli 和写
+$H(t)=\sum_{i\notin J}\log(1-p_i+p_ie^t)$，$m_c=H'(0)$。
+全局校准给 $m_c=q-\sum_j C_jp_j$，故目标整数 $q-\sum_jm_j=m_c-D(m)$。
+logistic 方差满足 $e^{-|t|}d_c\le H''(t)\le e^{|t|}d_c$。
+因为 $|D|\le N_J\le Cq\delta^5$，唯一实倾斜根 $u$ 满足
+$H'(u)=m_c-D$，且 $|u|\le C|D|/q\le C\delta^5$。
+在该区间所有固定阶 $H^{(k)}$，$k\ge2$，均由 $C_kq$ 控制。
+Taylor 展开及均值方程给
+
+$$
+u=-D/d_c+O(D^2/q^2),\quad
+I:=u(m_c-D)-H(u)=D^2/(2d_c)+O(|D|^3/q^2),\quad
+|\log(H''(u)/d_c)|\le C|D|/q.
+\tag{124.5}
+$$
+
+这里 $H(0)=0$。这些界在完整盒上一致，允许其右侧在极端元组处很大。
+
+所需经典中心局部估计对任意 Bernoulli 数组，只要求方差 $d\to\infty$ 和均值为整数：
+中心质量为 $(2\pi d)^{-1/2}(1+O(d^{-1/2}))$，常数对数组一致。
+为说明其在本处的范围，中心特征乘积满足
+$|\Phi(t)|\le e^{-2d\sin^2(t/2)}$，$|t|\le\pi$。
+在 $t=\xi/\sqrt d$、$|\xi|\le d^{1/12}$ 上，
+$\log\Phi(t)=-\xi^2/2+O(|\xi|^3/\sqrt d)$；
+三阶对数导数由 $Cd$ 控制，因为单项的相应界为 $Cp_i(1-p_i)$。
+积分与 Gaussian 积分之差至多 $C/\sqrt d$；余下标准化频率由
+$e^{-c\xi^2}$ 支付。反演再乘 $d^{-1/2}$ 就得上述相对估计。
+相同证明适用于倾斜后的参数，其方差 $H''(u)\asymp q$。
+这是 Bernoulli 局部展开的经典步骤，参见 Boistard–Lopuhaä–Ruiz-Gazen，
+*Approximation of rejective sampling inclusion probabilities and application to high order correlations*，
+[arXiv:1207.5654v1](https://arxiv.org/html/1207.5654v1)，式 (2.1)、(2.5) 及 §4.1。
+该引用中的固定阶包含概率展开不作为输出条件下的相关界。
+
+在补集的倾斜均值及全体的原整数均值处分别使用该估计，撤销补集倾斜，得到
+
+$$
+\ell=c_0-\frac{D^2}{2d_c}
+ +O\left(q^{-1/2}+|D|/q+|D|^3/q^2\right).
+\tag{124.6}
+$$
+
+代入 $D=B\mathcal D$、$B^2/q=\delta^5$ 即得 (124.2)。
+$d_a-d_c=B^2V$ 给 $c_0,\eta$ 的界。
+没有删去任何总偏差元组。
+
+为证明三次配分比较，令 $\mu_{\alpha,y}(m)=e^{-\alpha A_y(m)}/J_0(\alpha,y)$。
+原式 (117.33) 对每个固定 $k$ 给
+
+$$
+\mathbb E_\mu|\mathcal D|^{2k}\le C_k,\quad
+\mathbb E_\mu S_Q^k\le C_k(1+m_Q)^k,\quad
+\mathbb E_\mu\lambda_y^k\le C_k\delta^{-k}.
+\tag{124.7}
+$$
+
+因此所有固定混合矩均为 $\operatorname{poly}(Q)$，由 Hölder 不等式可见。
+$\ell,\ell_2\le C\delta^5$，且两者绝对值均由 $C\delta^5(1+\mathcal D^2)$ 控制。
+若 $a,b\le C\delta^5$，对 $0\le k\le3$ 的函数
+$e^{\alpha a}[-(A-a)]^k$ 用均值定理，有
+
+$$
+\left|e^{\alpha a}(A-a)^k-e^{\alpha b}(A-b)^k\right|
+ \le C_k|a-b|(1+|A|^k+|a|^k+|b|^k).
+\tag{124.8}
+$$
+
+区间内指数有统一上界。取 $a=\ell,b=\ell_2,A=A_y$，
+利用 (124.2)、(124.7) 并逐项求导原有限和，得
+
+$$
+|\partial_\alpha^kJ_P-\partial_\alpha^kJ_2|/J_0
+ \le q^{-1/2}\operatorname{poly}(Q),\qquad0\le k\le3.
+\tag{124.9}
+$$
+
+又 $J_2/J_0=e^{\alpha c_0}\mathbb E_\mu e^{-\alpha\eta\mathcal D^2}
+\ge1-C\eta\mathbb E_\mu\mathcal D^2\ge1/2$，
+$|\partial_\alpha^kJ_2|/J_0\le\operatorname{poly}(Q)$。
+使用对数的前三次导数公式并代入 (124.9)，得到 (124.4)。
+这一估计在同一输出条件律内完成；它没有以未条件化概率尾界除以稀有输出概率。∎
+

@@ -1,0 +1,16 @@
+**Proposition 86.1 (admissibility of the two actual laws).** Both laws of Definition 84.2 satisfy Definition 84.1 on every reachable finite material tree. The $+$ law is a positive definite strict contraction. The $-$ law is invertible over $\mathbb Q$; no positive-definiteness or contraction conclusion is asserted for it.
+
+Proof. Every material tree has maximum undirected degree three. For a real vector $z$,
+
+$$
+|z^{\mathsf T}A_tz|
+ \le\sum_{\{r,s\}\in E_t}2|z_rz_s|
+ \le\sum_r\deg(r)z_r^2
+ \le3\|z\|_2^2 .
+\tag{86.1}
+$$
+
+Consequently $\mathrm{Id}/8\le T_t^+\le7\mathrm{Id}/8$. This is precisely the already supplied uniform contracting choice in [Recovery Geometry II, Corollary 79.2 and (79.2)](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY_II.md); its use here does not claim a new contraction theorem. In particular its determinant is nonzero and its rational matrix has a rational inverse.
+
+For $T_t^-$ the integer matrix $2T_t^-=\mathrm{Id}+2A_t$ reduces to the identity modulo two. Its determinant is therefore an odd integer, hence nonzero. Its inverse over $\mathbb Q$ follows by the adjugate formula. Both laws have positive diagonal and positive adjacent entries, with no other off-diagonal entries, as the support proofs require. A beta already has an adjacency eigenvalue $-1$, so $T_\beta^-$ has eigenvalue $-1/2$; positivity of its entries is not positive definiteness. $\square$
+

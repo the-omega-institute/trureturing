@@ -1,0 +1,9 @@
+**Counterexample 4.4 (conditioning can destroy Markov separation).** An unconditional Markov chain does not suffice for conditioning on an arbitrary $V$. Let $U,Y$ be independent fair bits, $Z$ constant, and $V=U\mathbin{\mathrm{xor}}Y$. Unconditionally $U\longrightarrow Z\longrightarrow Y$ has row diameter zero. Conditional on $V$, $Y$ determines $U$, while $Z$ supplies no information. Thus
+
+$$
+\mathcal D(U;Y\mid V)=\frac14,
+\qquad\mathcal D(U;Z\mid V)=0.
+$$
+
+The conditional kernel of $Y$ given $U,Z,V$ depends on $U$, violating (4.6). In the application below, Lemma 3.3 proves the stronger separation needed for every conditioning step.
+

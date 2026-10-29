@@ -1,0 +1,26 @@
+**Lemma 4.1 (Explicit minor at every interior complement).** For the law (3.3), set $m_0=4N+2$. Every interior length-$m_0$ conditional in Proposition 3.3 has a nonzero $(N+1)\times(N+1)$ minor and therefore has $\delta_{N,m_0}^{a,b}(p_C^\eta)>0$.
+
+Proof. Cut the block after $2N+1$ bits. For $0\le j\le N$ choose the rows and columns
+
+$$
+s_j=t_j=0(10)^j0^{2(N-j)}.
+\tag{4.1}
+$$
+
+Each has length $2N+1$, begins and ends in zero, and contains $j$ ones. All selected concatenations are legal for either value of each exterior bit. By (3.5)–(3.6), their matrix $H$ has entries
+
+$$
+H_{ij}=\sum_{\ell=1}^{N+1}c_\ell z_\ell^{i+j},\qquad
+c_\ell=\frac{\theta_\ell(\eta)}{Z_{\ell,m_0}^{a,b}}>0.
+$$
+
+Thus $H=V\operatorname{diag}(c_\ell)V^{\mathsf T}$ with $V_{i\ell}=z_\ell^i$. The parameters $z_\ell$ are strictly increasing, since $a/(1-a)^2$ is strictly increasing on $(0,1)$. The Vandermonde identity gives
+
+$$
+\det H=\left(\prod_{\ell=1}^{N+1}c_\ell\right)
+\prod_{\ell<k}(z_k-z_\ell)^2>0.
+\tag{4.2}
+$$
+
+For completeness, the Vandermonde determinant is an alternating polynomial in its nodes, hence divisible by every node difference; their product has the same total degree. Comparing the coefficient obtained by taking exponents $0,1,\ldots,N$ in column order makes the remaining constant one. This proves the identity used here. Ordinary rank exceeds $N$, and ordinary rank never exceeds nonnegative rank. The minimizing family is nonempty by Proposition 3.2 and $N\ge2$. Compactness and strict equality in Premise 1.4, or (1.11), give the asserted positive discrepancy. $\square$
+

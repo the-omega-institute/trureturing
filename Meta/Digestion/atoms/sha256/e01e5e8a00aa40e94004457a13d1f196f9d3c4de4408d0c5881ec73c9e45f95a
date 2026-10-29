@@ -1,0 +1,116 @@
+## 71. Finite geometric fibres and the promotion boundary
+
+The newest common-parent geometry gives a sharper separation between a finite
+semantic fibre and an executable observation protocol. Write
+
+$$
+\mathcal F_{p,v}=\mathcal F(H_4,M,p,M,v),\qquad
+\mathcal F^{\mathrm{reg}}_{p,v}
+ =\{W\in\mathcal F_{p,v}:\Lambda(W)\ne0\}.
+$$
+
+For every real \(p\) in the certified interval \(\mathcal P\), and every
+real \(v\), the all-response elimination gives
+
+$$
+|\mathcal F_{p,v}|\le49,
+\qquad
+|\mathcal F^{\mathrm{reg}}_{p,v}|\le18.
+$$
+
+The first number comes from the nonzero resultant and affine Bézout after the
+zero-safe singular lift is included. The second allocates the fixed
+resultant multiplicity with the exceptional base factors removed. At the
+original exact \(p_J\), the distinct regular terminal \(M\) collision locus
+is also globally finite:
+
+$$
+|\mathcal T_M^{\mathrm{ord}}|\le4802,
+\qquad
+|\mathcal T_M^{\mathrm{un}}|\le2401,
+$$
+
+where the pairs range over all real acquired responses. These are bounds on
+the complete mathematical world model; they do not say that a reader has
+acquired \(v\), or that a controller can enumerate the worlds.
+
+The same geometry now settles the exact \(p_J\) child question. Its global
+two-branch parametrization and branch-order certificates imply
+
+$$
+f_{MM}\!\restriction_{\mathcal F_{p_J,v}}\text{ is injective}
+\qquad(v\in\mathbb R).
+$$
+
+Thus no exact acquired \(M\) child contains two different worlds with the
+same terminal \(M\) response. In particular, a child cannot contain both the
+terminal \(J\) collision pair and the terminal \(M\) collision pair required
+by the earlier \(L_1/L_2\) predicate. This is
+an actual exclusion of that exact geometric predicate, not merely a finite
+candidate list.
+
+There is nevertheless a nontrivial observation fibre. At the exact \(p_J\),
+there exist two distinct regular worlds with the same acquired response
+
+$$
+u_M(W_0)=u_M(W_1)=v_{\mathrm{loc}},
+\qquad
+\frac{15145}{100}<v_{\mathrm{loc}}<\frac{15147}{100},
+$$
+
+while \(f_{MM}(W_0)\ne f_{MM}(W_1)\). The current response therefore leaves
+two candidates, but one permitted terminal \(M\) read separates them. This is
+the concrete pattern
+
+$$
+\text{nontrivial observation fibre}
+\;+
+\text{injective future readout}
+\;\Longrightarrow\;
+\text{recoverable task fibre}.
+$$
+
+The promotion rule is now precise:
+
+$$
+\text{finite geometric fibre}
+\not\Rightarrow
+\text{finite acquisition},
+\qquad
+\text{response collision}
+\not\Rightarrow
+\text{irrecoverability}.
+$$
+
+To turn the injective terminal read into a controller theorem, the source
+contract must still declare that \(v\) has actually been acquired, that the
+terminal \(M\) action is legal, that its response is recorded, and that its cost and
+successor update are available. Under those clauses, the child-specific
+target \(f_{MM}\) has a one-step recovery certificate; without them, the
+geometry remains a semantic result only.
+
+The latest quantum recovery volume supplies a parallel quantitative result.
+For the fixed six-cell horizon-three partition, the exact terminal-channel
+optimum is
+
+$$
+\varepsilon_{\mathcal P}
+ =\frac{793-88\sqrt{13}}{1508}
+ <\frac{11}{32},
+$$
+
+where \(11/32\) is the sum of the two separate ambiguous-record optima.
+The strict improvement comes from a common tester and a joint decoder family;
+it cannot be obtained by adding recordwise minima. The global peak-six online
+threshold \(E^*\) of Section 70 is a separate optimization over the whole
+declared contract and satisfies
+
+$$
+\varepsilon_{\mathrm{op}}(6,3)=E^*
+\le\varepsilon_{\mathcal P}.
+$$
+
+Both statements are contract-relative and ordinary mathematical results. They
+do not provide a universal \(W_n\) law, a physical register cost, or Lean/
+kernel certification.
+

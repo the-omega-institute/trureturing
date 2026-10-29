@@ -1,0 +1,20 @@
+**Definition 6.1 (four observations of the attained process).** Fix authentic
+advice and mode $\varepsilon\in\{0,1\}$. The positive domains are passive
+$k\ge2$ when $\varepsilon=0$, and all entrance $k\ge1$ after the actual
+preparation when $\varepsilon=1$. At their successful acquisition cut let
+$v_\varepsilon=\rho^{2(k+\varepsilon)}u$, $j=k+\varepsilon$, and define:
+
+* $S$ is the actual rooted physical incidence, represented by the finite
+  prefix-closed set $\{w:P^\pi_{v_\varepsilon}(w)=1\}$. Its edges retain
+  physical names $a,b$, but no leaf labels or semantic orientation bit.
+* $\partial$ is the actual physical terminal-address antichain: those
+  $w\in S$ with neither $wa$ nor $wb$ in $S$. It has no leaf labels.
+* $T=2j$ is the number of actual substitutions from the authentic original
+  to this cut. The entrance count is $T_{\rm ent}=T-2\varepsilon=2k$.
+  Neither observation includes duration, labels, shape, acquired queries
+  or a writer archive. This mathematical count is not an acquisition input.
+* $\mathsf M$ consists of the acquired readable record
+  $(\pi,u,k,n,\varepsilon)$ with its retained backing, same root binding
+  and current continuation grants. Its data payload is denoted $R$.
+  Scratch and the inaccessible raw writer are separate resources.
+

@@ -1,0 +1,27 @@
+**定理 6.2（有限网与递归误差）。** 固定 $d$ 维密度态集，对每个 $\eta>0$ 存在有限迹距离 $\eta$ 网，基数可取
+
+<a id="eq-6-u04"></a>
+
+$$
+M\le(1+2/\eta)^{d^2-1}.
+$$
+
+若 $D(Q_k\omega,\omega)\le\eta_k$，真实与估计 CPTP 更新 half-diamond 距离不超过 $\varepsilon_k$，则
+
+$$
+\rho_{k+1}=T_k(\rho_k),
+\qquad
+\widehat\rho_{k+1}=Q_{k+1}(\widetilde T_k(\widehat\rho_k)).
+$$
+
+<a id="eq-6-2"></a>
+
+$$
+D(\rho_N,\widehat\rho_N)
+\le D(\rho_0,\widehat\rho_0)+
+\sum_{k=0}^{N-1}(\varepsilon_k+\eta_{k+1}).
+\tag{6.2}
+$$
+
+**证明。** 迹一 Hermitian 仿射空间的实维数为 $d^2-1$；状态集位于以 $I/d$ 为中心、迹距离半径一的球内。取极大的 $\eta$ 分离集，半径 $\eta/2$ 的开球互不相交且落在半径 $1+\eta/2$ 的球内，体积比给出 $M\le(1+2/\eta)^{d^2-1}$，极大性给出覆盖。递归式中依次插入 $T_k(\widehat\rho_k)$ 和 $\widetilde T_k(\widehat\rho_k)$，应用 CPTP 收缩、更新误差和代表误差，再归纳得到（6.2）。
+

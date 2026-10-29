@@ -1,0 +1,27 @@
+**命题 28.1（终端七的完整能量与常尺度排除）。** 在定义 12.1 的同一实际六相位律中，
+若反设取得且实际终端为 $M=7$，则定理 22.1 给出 $z_a(6)=1$ 及 $z_a(n)=1$ 于 $n\ge8$。
+在常尺度 $\kappa_a=k$ 下，置 $x_a=z_a(2)$、$y_a=z_a(3)$、$q_a=z_a(4)$、
+$w_a=z_a(5)$、$\omega_a=z_a(7)$，则完整长度七方程为
+
+$$
+\begin{aligned}
+7e+H_{a+1}-H_a={}&\beta(k\omega_a)+\beta(k\omega_a)-s\\
+&+\mathcal P\!\left(k\frac{x_aw_{a+2}}{\omega_a}\right)
+ +\mathcal P\!\left(k\frac{y_aq_{a+3}}{\omega_a}\right)\\
+&+\mathcal P\!\left(k\frac{q_ay_{a+4}}{\omega_a}\right)
+ +\mathcal P\!\left(k\frac{w_ax_{a+5}}{\omega_a}\right),
+\qquad s=\beta(k),\quad e=\mathcal P(k).
+\end{aligned}
+\tag{28.1}
+$$
+
+证明。将（12.26）–（12.28）在 $n=7$ 展开，内部位置恰为 $j=2,3,4,5$，
+每项分母都是原 $z_a(7)=\omega_a$；两个端点项分别为
+$\beta(\kappa_a\omega_a)$、$\beta(\kappa_{a+7}\omega_a)$，共同尺度下如上式。
+相位终点为 $a+1$，故势差为 $H_{a+1}-H_a$。
+它只有对全部六相位求和时自动消去，不能逐相位删除。
+终端支持 $\{a:\omega_a\ne1\}$ 由推论 13.2 是步长七的六循环独立集，至多三个元素。
+无论该支持如何，定理 22.1 同时供应实际中性的六和八，
+所以引理 26.0、定理 26.1 和定理 27.1 已使共同短长度系统矛盾。
+因此常尺度的实际 $M=7$ 取得反设不成立；不必求解或消去（28.1）。$\square$
+

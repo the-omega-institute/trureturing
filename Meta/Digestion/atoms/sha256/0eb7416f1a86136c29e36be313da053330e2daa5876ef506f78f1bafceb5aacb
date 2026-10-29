@@ -1,0 +1,36 @@
+**Definition 50.5 (meaning of the retention comparison).** The word
+“material” in Theorem 50.4 counts the explicitly displayed objects,
+bit payload positions and located reference-field occurrences. It is
+not a fixed-width encoding convention for reference values. For an
+actual implementation let $\lambda(f)$ be the number of bits used by
+each retained reference field $f$, and include the corresponding sums
+$\sum_f\lambda(f)$, object descriptors, rights, allocator and work-arena
+metadata in its full storage. Neither those widths nor an implementation's
+address space are set to one bit here. In particular choosing reference
+widths of logarithmic order can add another logarithmic factor to the
+compressed bit count; (AAII.10) does not assert a global
+$\Theta(m\log m)$ bit bound.
+
+On the finite path (AAII.11), every local radix at every preflight,
+maintenance or valid peeling stage is at most $2m+1$: completed sources
+have $y=1$, and the intervening newly split branch has $y=0$ until its
+right promotion; the ancestors still have their single right promotion.
+The arithmetic buffers of (AAII.4) can consequently use
+$O(\log(m+2))$ bits on these paths, since their numerators are at most
+$(2m+1)(2m+2)$. The maximum addressed request and Growth payload have
+$O(m+1)$ bits, as do their explicit length marks. This identifies
+concrete simultaneously charged work/output contributions on the
+witness paths; it does not bound an arbitrary later request with an
+unbounded unary index or a long sequence of repeated queries.
+
+Global mixed-radix packing remains a valid finite storage/work alternative
+for the product in AA (AA.74), as already observed after AA Theorem 19.2.
+It is not installed in Definitions 47.2 and 48.4. A global implementation
+would have to supply its actual backing, source-dependent radix
+calculations, update/unpacking work, bindings, output and return. Its
+material comparison can involve header placement, reference fields,
+working versions and traversal as well as integer rounding; it is not
+settled by subtracting two rounded payload lengths. No impossibility,
+dominance or optimum for that alternative follows from the local
+construction or the comb family.
+

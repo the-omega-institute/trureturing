@@ -186,7 +186,7 @@ private theorem heat_continuous {ι H : Type*} [NormedAddCommGroup H]
     _ = ε := by ring
 
 
-private theorem scalar_derivative {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
+theorem scalar_derivative {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
   (a : ℝ) (z : V) :
     Tendsto (fun t : ℝ≥0 => (t : ℝ)⁻¹ • ((Real.exp (-(t : ℝ)*a)) • z-z))
       (𝓝[>] 0) (𝓝 ((-a) • z)) := by

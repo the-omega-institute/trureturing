@@ -1,0 +1,62 @@
+**Proposition 12.1 (finite-window capacity and correctly indexed bills).**
+Fix common entry resources as in Definition 9.1 and a public window
+$[A,H]$. Its effective window is $[A',H]$, where $A'=\max(A,n_0)$.
+If this window is nonempty, put $N_w=H-A'+1$. Any exact terminating
+zero-update controller on all its $D_dN_w$ mature behavioral data has
+
+$$
+ \max_{s,n}Q(s,n)\ge\lceil\log_2(D_dN_w)\rceil.
+ \tag{ACR.41}
+$$
+
+If $N_w\ge2$, it also has the **separate worst-case-coordinate** bounds
+
+$$
+ \begin{aligned}
+ \max_{s,n}M(s,n)&\ge\lceil H/2\rceil,\\
+ \max_{s,n}W(s,n)&\ge
+ \lceil(A'+1)/2\rceil\,\lceil\log_2N_w\rceil.
+ \end{aligned}
+ \tag{ACR.42}
+$$
+
+For each fixed behavior, the traffic inequality is witnessed on one
+actual path containing at least $\lceil\log_2N_w\rceil$ informative
+age queries, each with length at least $\lceil(A'+1)/2\rceil$.
+The peak is forced on the runs at $H-1,H$. These witnesses need not
+be the same input as each other or the capacity witness in (ACR.41).
+Every fixed-behavior restriction also obeys Proposition 4.3's existing
+pointwise interior and lower-endpoint conditions, on exactly its stated
+age domain. For $N_w=1$ there is no age-query or age-literal lower
+bound; (ACR.41) reduces to the behavioral capacity. At $d=0,N_w=1$
+it is zero, attained by returning the known cut and zero behavior
+without a Read. An empty effective window supplies no instance.
+
+Proof. Distinct behaviors have distinct length-$2d$ prefixes by GPO
+Lemma 29.2; differing cuts also require different returned records.
+Thus the finite common-entry reply tree needs $D_dN_w$ distinct return
+leaves. A binary tree of depth at most $q$ has at most $2^q$ leaves,
+giving (ACR.41), using the classical decision-tree capacity argument
+already used by GPO Theorem 37.2.
+
+Fix one behavior and restrict the same controller to its $N_w$ ages.
+Each physical word is its first-presence threshold (ACR.7). Contract
+constant-reply queries in that restricted reply tree. Some remaining
+path has at least $\lceil\log_2N_w\rceil$ queries; every such query
+has threshold in $[A'+1,H]$ and hence the stated minimum length.
+Multiplication of these lengths and their count is therefore a traffic
+bill on that one input. Separately, the adjacent ages $H-1,H$ have a
+first different reply on their common prefix, and its threshold is
+exactly $H$, forcing the peak on both runs. These are the arguments
+and costs of Theorem 4.2, applied with the correct effective endpoints;
+Proposition 4.3 supplies its sharper pointwise restrictions without a
+new all-input optimality claim. The path-cost convention agrees with
+[Cicalese--Laber--Saettler][CLS], §1, which defines cost of one object
+as the sum on its root-to-leaf path, then maximizes over objects. It
+does not combine separately attained maxima into a joint witness.
+For independent zero-error randomness with almost-sure finite return,
+intersect the finitely many probability-one correctness/termination
+events; each tape in their intersection satisfies the deterministic
+argument. This gives the same worst-case uniform-budget restrictions,
+not an expected-cost optimum. $\square$
+

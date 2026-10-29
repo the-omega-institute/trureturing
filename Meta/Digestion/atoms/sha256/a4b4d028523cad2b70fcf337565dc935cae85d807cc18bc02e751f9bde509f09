@@ -1,0 +1,28 @@
+**Definition 2.2 (original-law erasure fields).** Under this same $P$, define
+
+$$
+\begin{aligned}
+\mathcal E_0&=\sigma(X_i:i\ne0),&q_0&=\mathbb E_P[X_0\mid\mathcal E_0],\\
+\mathcal L_j&=\sigma(X_{-j},\ldots,X_{-1},X_1,X_2,\ldots),&
+p_j^L&=\mathbb E_P[X_0\mid\mathcal L_j],\\
+\mathcal R_j&=\sigma(X_i:i\le-1,\ X_1,\ldots,X_j),&
+p_j^R&=\mathbb E_P[X_0\mid\mathcal R_j],\\
+e_L^P(j)&=\mathbb E_P[(q_0-p_j^L)^2],&
+e_R^P(j)&=\mathbb E_P[(q_0-p_j^R)^2],\\
+A_P(r)&=\sum_{j\ge r}\left(\sqrt{e_L^P(j)}+\sqrt{e_R^P(j)}\right),&
+\tau_P(r)&=\sum_{j\ge r}\left(e_L^P(j)+e_R^P(j)\right).
+\end{aligned}
+\tag{2.4}
+$$
+
+Here $j,r$ are nonnegative integers. At $j=0$, $\mathcal L_0$ retains the entire right half-line and $\mathcal R_0$ retains the entire left half-line. Both omit the center. No posterior is recomputed under an altered visible law. On zero-probability conditioning fibers versions are arbitrary and have zero weight in every displayed expectation. Conditional projection shows that each $e_d^P(j)$ decreases to zero, but gives no summability rate by itself.
+
+Explicitly, for finite exterior words $u=X_{-k:-1}$ and $v=X_{1:\ell}$ with positive joint probability, (2.2) gives
+
+$$
+\mathbb P(X_0=1\mid X_{-k:-1}=u,X_{1:\ell}=v)
+=\frac{\lambda M_uM_1M_v\mathbf1}{\lambda M_u A M_v\mathbf1}.
+$$
+
+Thus the unobserved center edge is integrated by $A=M_0+M_1$, not deleted or replaced by an independent bit. Empty words are allowed, and the infinite-field posteriors are the corresponding bounded conditional-expectation limits.
+

@@ -1,0 +1,41 @@
+**Proposition 13.1 (attained call vectors).** For A, execute exactly the
+paid seed, $h\in\mathcal H_A$ with $n$ growths and $Q$ Ticks, and the
+assay of length $I=n$. For C, execute exactly the paid seed, a word of
+length $n$, and Construction 10.1. With final $b,N,I$ as in (2.1), the
+same-run counts are:
+
+| Coordinate through the completed assay | A | C |
+| --- | --- | --- |
+| Reset | $1$ | $1$ |
+| Add | $1$ | $1$ |
+| Read | $1+b(I+1)$ exact calls | $1+b(n+1)$ digital calls |
+| Tick, including actual inner clocks | $Q+I$ | $2n$ |
+| Hold | $I+2$ | $n+2$ |
+| successful growth transactions | $n$ raw | $n$ inner raw and $n$ outward |
+| fixed field acknowledgement payloads | $Q+2I+4$ | $3n+4$ |
+| actual nuisance bits for valid Reads | none | $1+b(n+1)$ |
+
+Every complete transaction also has its actual End, local acknowledgement,
+Return and cleanup. These are not included in the field-acknowledgement
+row. The total number of A semantic calls, counting one raw growth as
+one call, is $n+Q+2I+b(I+1)+5$.
+
+For each actual refused probe, add one raw transaction in A and one
+inner plus one outward transaction in C, with no Tick. Optional Reads,
+Holds, waits, extra controls and record exports add their literal costs.
+An A sliding operation adds one Tick, one Hold and $b$ Reads. An A
+growth/reassay on a new tree with $I'=I+1$ adds one raw growth, $I'$
+Ticks, $I'+1$ Holds and $b'(I'+1)$ Reads. The selected immediate C
+growth adds one inner and one outward growth transaction and one
+new-tree Tick/acknowledgement. These are distinct actual continuations;
+one cannot use a cheaper coordinate from a different one.
+
+**Proof.** The seed contributes one Reset, Add, verifying Read and Hold.
+An assay of length $d$ contributes $d$ Ticks, $d+1$ Holds and $b(d+1)$
+Reads. A has its actual $Q$ historical Ticks and $n$ raw growths; C has
+one real inner Tick and two actual growth transactions per successful
+letter. Summing gives every table row, including the empty history with
+$N=b=1$ and $I=n=0$. The acknowledgements are exactly Reset, Add,
+Tick and Hold replies. The stated deltas follow by the same count on
+the actual successor trees and the operations in §§6 and 12. $\square$
+

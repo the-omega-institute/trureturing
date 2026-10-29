@@ -1,0 +1,42 @@
+### 定理 3.1（精确取消边际）
+
+令 $i\notin A$。把 $A\cup\{i\}$ 的子纤维写成 $(u,v)$，其中 $u\in X_A$、$v\in X_i$。则
+
+$$
+\boxed{
+ e_d(A)-e_d(A\cup\{i\})
+ =\frac12\sum_{u\in X_A}
+ \left(
+ \sum_{v\in X_i}|\sigma_{d,A\cup\{i\}}(u,v)|
+ -|\sigma_{d,A}(u)|
+ \right).
+}
+$$
+
+每一项非负。对总加权风险，令
+
+$$
+G_i(A)=\mathsf E_\omega(A)-\mathsf E_\omega(A\cup\{i\}),
+$$
+
+则 $G_i(A)\ge0$。
+
+#### 证明
+
+每个父纤维的签名质量是子纤维签名质量之和：
+
+$$
+\sigma_{d,A}(u)=\sum_{v\in X_i}\sigma_{d,A\cup\{i\}}(u,v).
+$$
+
+将定理 2.1 的 $L^1$ 公式相减，得到所示等式。三角不等式给出
+
+$$
+\left|\sum_v\sigma_{d,A\cup\{i\}}(u,v)\right|
+\le\sum_v|\sigma_{d,A\cup\{i\}}(u,v)|.
+$$
+
+再乘以非负的 $\omega(d)$ 并求和即可。\(\square\)
+
+这个边际不是“特征含有多少比特”，而是它在旧纤维中消除了多少相反符号的质量。
+

@@ -1,0 +1,21 @@
+**命题 38.2（三只固定 qubit involution 足够稠密）。**
+取 $\alpha/\pi$ 无理，并固定
+
+$$
+R_0=Z,\quad R_1=\cos\alpha Z+\sin\alpha X,\quad
+R_2=\cos\alpha Z+\sin\alpha Y.
+$$
+
+三者自伴、平方为一，所生成群在 $PU(2)$ 中稠密。
+
+证明。Pauli 反交换给 involution 性，且
+$R_1R_0=e^{-i\alpha Y}$、$R_2R_0=e^{i\alpha X}$。
+无理角的整数倍在圆上稠密，故闭包含全部连续 $X,Y$ 旋转。
+Euler 分解给 $SU(2)$，因此投影闭包为 $PU(2)$。∎
+
+由定理 38.1，“三”只是在固定单 qubit、固定位置、无额外控制／辅助资源、
+以 involution 为生成元的*稠密*通用合同中的最小数；可数有限字不精确覆盖全部门。
+若另供各数据 qubit 上的这些门和连通线路上的可放置 $CZ$，
+局部逼近加既有局部门／CNOT 电路分解给通常多 qubit 逼近通用性。
+这是额外的放置与纠缠资源，不由三只单 qubit 门推出。
+

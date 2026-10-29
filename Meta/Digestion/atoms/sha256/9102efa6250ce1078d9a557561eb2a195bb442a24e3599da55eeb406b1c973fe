@@ -1,0 +1,39 @@
+**定义 43.1（全域误差与所问的一致模）。** 沿用 §42 的整个自由有序二叉树代数
+$T$，不施加结合律、不截断树高，也不合并来源。叶标签 $\alpha\ne\beta$，构造子为
+$\langle s,t\rangle$，运输仍严格取
+
+$$
+\rho\alpha=\beta,\qquad \rho\beta=\langle\beta,\alpha\rangle,
+\qquad \rho\langle s,t\rangle=\langle\rho s,\rho t\rangle.
+$$
+
+记 $\delta_{s,t}=\mathbf1_{\{s=t\}}$。对 $\varepsilon>0$，令
+$\mathcal C_\varepsilon$ 是所有 $K:T\times T\to\mathbb C$ 中满足下列条件的核：
+Hermitian 性、对角归一化、全部有限 Gram 矩阵半正定、精确运输不变性、忠实性，以及
+全四元组的绝对乘法缺陷界。明确地，条件是
+
+$$
+\begin{aligned}
+K(t,s)&=\overline{K(s,t)},&K(t,t)&=1,\\
+\sum_{j,k=1}^{M}\overline{c_j}c_kK(t_j,t_k)&\ge0,
+&K(\rho s,\rho t)&=K(s,t),\\
+K(s,t)=1&\Longleftrightarrow s=t,
+&\sup_{s,t,u,v\in T}|D_K(s,t,u,v)|&\le\varepsilon,\\
+D_K(s,t,u,v)&:=K(\langle s,t\rangle,\langle u,v\rangle)-K(s,u)K(t,v).
+\end{aligned}
+\tag{43.1}
+$$
+
+正性中的 $M\ge1$ 任意，$t_1,\ldots,t_M$ 可以重复，$c_j\in\mathbb C$ 任意；
+正性不只指某些诊断树列。这里仅把 §42 的精确乘法改为误差界，其余条件保持精确。
+所问的一致模是一个 $\omega:(0,\infty)\to[0,\infty)$，满足
+$\lim_{\varepsilon\downarrow0}\omega(\varepsilon)=0$，且
+
+$$
+\forall\varepsilon>0\ \forall K\in\mathcal C_\varepsilon,\qquad
+\sup_{s,t\in T}\min\{|K(s,t)|,|K(s,t)-1|\}\le\omega(\varepsilon).
+\tag{43.2}
+$$
+
+式 (43.2) 测量实际复核值到 $\{0,1\}$ 的距离，不先取模，也不先作来源依赖的重相位。
+

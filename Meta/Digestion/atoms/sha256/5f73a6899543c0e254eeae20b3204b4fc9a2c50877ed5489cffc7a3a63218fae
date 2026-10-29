@@ -1,0 +1,57 @@
+**Definition 78.1 (the full-height constrained class).** Retain Definition
+75.1 in its entirety, including all conditional G/C/N/F premises of
+[D Definition 35.1](FIB_NATIVE_LONG_TIME_PHASE_DIFFUSION.md) and
+[Q Definitions 41.1 and 49.1](FIB_NATIVE_LONG_TIME_PHASE_QUANTITATIVE_BOUNDS.md).
+Thus $0<Z<1$, $H=(1-Z)/2$, $I=(l,u)\Subset(0,H)$ and $\varepsilon>0$
+are fixed. The compact two-sided parameter interval and its slightly
+larger height interval are exactly those of D Definition 35.1. Fix a
+signed nonzero $\kappa\in\mathcal K_\times$, a deterministic
+$k_0\in E\Subset I$ and the prescribed deterministic initial phase
+lift $q_0$. INITIAL is not randomized. The five probabilities remain
+$(k-2\kappa,H+\kappa-k,Z,H+\kappa-k,k)$, with the immutable preparation
+phases, negative amplitude convention, $h_2=0$ and $h_1=h_3=v$ of G
+Definition 25.1. The coefficient $c_\kappa=(A_\kappa,B_\kappa,b_\kappa)$
+is precisely G (25.4), without a replacement or fitted coefficient.
+
+Use the all-real winding cover $I\times\mathbb R^3$, $q=(\theta,v,x)$,
+and the signed original coordinates $y=J_\kappa q$, where
+$J_\kappa=\operatorname{diag}(1,1,\kappa)$ and $D=\kappa x$.
+The original reference $\mathbb P$ is Q (41.1), with original time,
+raw cover measure $dk\,dq$, control covariance
+$\operatorname{diag}(\varepsilon^2,1)$, two independent Brownian drivers
+and killing at both endpoints of $I$. Every prefix below is the literal
+full killed-history prefix, including its cemetery record. The sine
+$\phi$, $\lambda$ and $\pi$ are (75.1), and $\mathbb Q$ is the
+conservative ground-state law of Q Definition 41.1. Its height generator
+is $\varepsilon^2\partial_{kk}+2\varepsilon^2(\phi'/\phi)\partial_k$;
+conditional on its entire height path, its phase equation is
+$dq_t=\sqrt2c_\kappa(K_t)dW_t^2$ with independent standard $W^2$.
+Let $\mathsf Q_K$ denote the probability measure of that entire infinite
+height path on $C([0,\infty),I)$, with its Borel sigma-field.
+
+Fix a Euclidean unit normal $e$ before the history and $r>0$. Retain
+$h=J_\kappa^{\mathsf T}e$, the actual $a=h\cdot c_\kappa$,
+$m=\int_I a^2d\pi>0$, $A=\|a\|_\infty^2\ge m$ and
+$X_t=e\cdot(y_t-y_0)$ from (75.2). Write
+$V_K(t)=2\int_0^t a(K_s)^2ds$ for the actual clock.
+The smooth bounded $a$ may vanish; no positive lower bound on $a^2$
+is assumed. The number $\nu=\nu(m,r)>0$ has exactly the principal
+Dirichlet OU normalization in Q (74.4), with generator
+$m\partial_{zz}-(z/2)\partial_z$ on $(-r,r)$.
+Define
+
+$$
+\mathcal C^{\mathsf Q_K}_{\mathrm{crit},r}
+=\{\mathsf V\in\mathcal C_{\mathrm{crit},r}:
+          K_\#\mathsf V=\mathsf Q_K\}.
+\tag{78.1}
+$$
+
+Here $K_\#\mathsf V$ is the pushforward by the entire infinite height
+path, not just by any single-time evaluation. Membership retains all
+conditions (75.3)--(75.4): strict confinement at every real time,
+height survival forever, the prescribed deterministic initial state,
+and finite relative entropy with respect to $\mathbb P_T$ on every
+full finite prefix. There is no requirement of an infinite-horizon
+density relative to $\mathbb P$.
+

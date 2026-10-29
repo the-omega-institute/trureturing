@@ -1,0 +1,29 @@
+**Lemma 6.6 (bounded discrepancy on every regular subset of $E^*$).**
+For every regular $L\subseteq E^*$, the cost $c$ is bounded on $L$.
+
+Proof. By Lemma 6.3 both coordinate projections $H_1=\pi_1(L)$ and
+$H_2=\pi_2(L)$ are regular native languages contained in $D^*$.
+Lemma 6.5 gives finite $Y_{H_1},Y_{H_2}$. Let $Y$ be their union and
+form the finite native set
+
+$$
+S=\{U(y,y),U(F(y),y):y\in Y\}.
+\tag{NIC.34}
+$$
+
+In every different-row pair at least one row has label $r_0$ or $r_1$,
+since a pair with both rows $r_2$ is not different-row. That member of
+the pair belongs to $S$, by the exact strata (NIC.32). This uses the
+entire three-label relation, not its two special strata alone.
+
+For a fixed finite native tree $s$ of height $H_s$, any different tree
+$t$ has a disagreement at depth at most $H_s$. Indeed, agreement on
+all labels at the reached nodes of $s$ would force the same branch
+children and same terminal leaves in $t$, reconstructing $s$ completely
+by finite induction. If replies agree through $H_s$, that reconstruction
+applies and $t=s$, a contradiction. Therefore $\delta(s,t)\le H_s$.
+Symmetry gives the same bound if $s$ is the second coordinate. The cost
+on $L$ is consequently at most
+$\max(\{0\}\cup\{H_s+1:s\in S\})$. If $L$ is empty this is a valid
+vacuous bound. $\square$
+

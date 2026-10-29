@@ -1,0 +1,112 @@
+**Theorem 271.2 (the original joint histories in their same-law quotient).**
+For the law that is the uniform joint-history limit of the original
+$T_n$ chains in Theorem 270.4, the quotient above has the identification
+
+$$
+\begin{gathered}
+[G,K]_{\rm OS}=\langle rG,rK\rangle_M,
+\qquad \mathcal N=\ker r,\qquad
+\mathcal U:qG\longmapsto rG\text{ is onto and isometric},\\
+\mathcal Uq\mathbf1=\mathbf1,\qquad
+\mathcal U\widehat{\mathsf M}_F\mathcal U^{-1}=\mathsf M_F,\qquad
+\mathcal U\widehat V_s\mathcal U^{-1}=T(s).
+\end{gathered}
+\tag{271.2}
+$$
+
+Here the hats denote the induced bounded operators on the quotient;
+$\|\widehat{\mathsf M}_F\|=\|F\|_{L^\infty(M)}$, and
+$\widehat V_s$ is a strongly continuous symmetric contraction
+semigroup with nonnegative self-adjoint generator unitarily identified
+with the original $H$. In particular, for the original fixed fields
+of Theorem 270.4,
+
+$$
+\sup_{\delta\in[0,\infty)^k}
+\left|Q_n(\delta)-
+\left\langle q\mathbf1,
+\widehat{\mathsf M}_{F_0}\widehat V_{\delta_1}
+ \widehat{\mathsf M}_{F_1}\cdots
+ \widehat V_{\delta_k}\widehat{\mathsf M}_{F_k}q\mathbf1
+\right\rangle_{\rm OS}\right|\longrightarrow0.
+\tag{271.3}
+$$
+
+The operator and form domains, under $\mathcal U$, are precisely
+
+$$
+\begin{aligned}
+\operatorname{Dom}(H)
+ &=\mathbb R\mathbf1\oplus W\operatorname{ran}\Sigma_{\mathscr K},\\
+\operatorname{Dom}(H^{1/2})=\mathcal D
+ &=\mathbb R\mathbf1\oplus W\operatorname{ran}\Sigma_{\mathscr K}^{1/2},\\
+H\mathbf1&=0,\qquad
+ H|_{\mathbf1^\perp}=W\Sigma_{\mathscr K}^{-1}W^*,\qquad
+\mathcal E(F)=\|H^{1/2}F\|_2^2,
+\end{aligned}
+\tag{271.4}
+$$
+
+where $\Sigma_{\mathscr K}=\Sigma|_{\mathscr K}$. No additional modes
+are obtained from $\ker\Sigma$.
+
+*Proof.* The reconstruction and Markov quotient facts used here are
+attributed intermediate applications of Jorgensen–Neeb–Ólafsson,
+Proposition 3.3, Lemma 3.16(a–f), Theorem 3.22 and Remark 3.23, in the
+version and exact parameter correspondence specified in Theorem 270.4.
+They are not a new general reconstruction theorem. Their identification
+with the joint limit of these original finite sources is (271.3).
+For completeness the conditional-expectation computation fixes which
+law, null space and state occur in this application.
+
+Under $\mathbb P$, past and future are conditionally independent given
+$X_0$. This follows first from its ordered Markov cylinder integrals
+and then by the monotone class theorem. Time reflection preserves
+$\mathbb P$ and fixes $X_0$, by reversibility. For $G,K\in\mathscr E_+$,
+conditioning the past factor $\Theta G$ and future factor $K$ at
+$X_0$ therefore gives
+$\mathbb E[(\Theta G)K]=\mathbb E[(rG)(X_0)(rK)(X_0)]$.
+First use bounded cylinder functions; conditional expectation is an
+$L^2$ contraction and Cauchy–Schwarz extends the identity to all such
+$G,K$. It proves reflection positivity and the null-space identity.
+Every $F\in L^2(M;\mathbb R)$ is $r(F(X_0))$, so the quotient is
+already complete after this identification and $\mathcal U$ is onto.
+As $M$ is a probability, $\|q\mathbf1\|_{\rm OS}=1$.
+
+Conditional expectation gives
+$r(F(X_0)G)=F\,rG$ for bounded $F$, proving descent and the
+multiplication identity. Its operator norm is exactly the essential
+supremum, tested on time-zero functions. Similarly the same Markov
+law gives $rV_sG=T(s)rG$: condition at time $s$ and then at time zero,
+first for future cylinders and then by $L^2$ approximation.
+Thus shifts preserve $\mathcal N$ and induce exactly the supplied
+$T(s)$, with its positivity, symmetry, conservativity and continuity.
+The full path shifts form a measure-preserving orthogonal group; its
+strong continuity follows on bounded one-time functions from
+
+$$
+\|F(X_{t+h})-F(X_t)\|_{L^2(\mathbb P)}^2
+ =2\|F\|_2^2-2\langle F,T(|h|)F\rangle_M\longrightarrow0.
+\tag{271.5}
+$$
+
+For bounded products use telescoping and their uniform bounds;
+finite cylinder functions are dense in the path $L^2$ space.
+This also checks the time-action continuity required in the cited
+reconstruction, without postulating sample-path continuity.
+
+The time-zero algebra, state and positive shifts now give exactly
+$Q(\delta)$ by (271.2). Substituting (270.15) proves (271.3), including
+coincident times and the original shallow finite-node fields.
+Finally (271.4) is the existing domain and polar description of IV,
+Theorem 111.3. The actual free-root form and operator are also supplied
+in `BiasedBoundaryFreeRootForm.free_root_least_energy`,
+`BiasedBoundaryFreeRootForm.free_root_variational_graph`,
+`BiasedBoundaryOperator.actual_self_adjoint_realization`,
+`actual_compact_resolvent` and `actual_positive_spectral_exhaustion`,
+under `D5/S3/Arith/FibonacciAtomic/Geometry/`.
+The complete positive spectrum and its source-specific counting are
+supplied by [*Biased boundary spectral counting*, Theorem 2.1](FIB_ATOM_BIASED_BOUNDARY_SPECTRAL_COUNTING.md).
+Only the existing operator is identified here; neither its form nor
+its spectral/counting results are reproved. $\square$
+

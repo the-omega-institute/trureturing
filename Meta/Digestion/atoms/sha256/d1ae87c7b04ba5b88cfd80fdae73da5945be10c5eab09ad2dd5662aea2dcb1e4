@@ -1,0 +1,60 @@
+**定理 59.1（有限实现与同律风险）。** 对定义 58.1 的每个相位 $j$，取一个有限非负次随机矩阵 $B_j$、概率行 $\alpha_j$，满足
+
+$$
+\rho(B_j)<1,\qquad b_j=\mathbf1-B_j\mathbf1\ge0,\qquad
+\alpha_jb_j=0,
+\qquad f_j(g)=\alpha_jB_j^{g-1}b_j\quad(g\ge2).
+\tag{59.1}
+$$
+
+令 $R_j=(I-B_j)^{-1}$，$N=\sum_j\dim B_j$，并在模 $m$ 的块上定义
+
+$$
+M_0=\operatorname{diag}(B_j),\qquad
+M_1(j,j+1)=b_j\alpha_{j+1},\qquad
+M_1(j,k)=0\ (k\ne j+1),
+\tag{59.2}
+$$
+
+$$
+z=\sum_j\alpha_jR_j\mathbf1,\qquad
+\lambda_j=\frac{\alpha_jR_j}{z}.
+\tag{59.3}
+$$
+
+则 $\theta=(\lambda,M_0,M_1)$ 属于定义 2.1 的原完整 $\Theta_N$，其同一平稳矩阵律在所有长度上恰为 $P_f$。因此该有限隐藏子类满足定理 58.2 的二分及（58.5），包含非几何、非 iid 更新的可见律。有限相位型吸收表示本身是经典工具；本定理将它用于这个非 iid 循环 Palm 消费者，而不把任意有限均值 $f_j$ 都声称为有限隐藏。
+
+**证明。** $R_j=\sum_{n\ge0}B_j^n\ge0$，且 $R_jb_j=\mathbf1$。因而
+
+$$
+\sum_{g\ge1}\alpha_jB_j^{g-1}b_j=1,\qquad
+\mathbb E_{f_j}G=\alpha_jR_j\mathbf1<\infty.
+\tag{59.4}
+$$
+
+第一式中距离一的项由 $\alpha_jb_j=0$ 消失。第二式由吸收尾概率 $\Pr(G>n)=\alpha_jB_j^n\mathbf1$ 的非负尾和得到。因此（59.1）确实提供定义 58.1 的概率质量函数，$z=m\bar\mu$。
+
+$\lambda$ 非负且归一化。（59.2）的每个块行总和为 $B_j\mathbf1+b_j=\mathbf1$。又
+
+$$
+\lambda_jb_j=1/z,\qquad
+\lambda_jB_j+\alpha_j/z=\lambda_j.
+\tag{59.5}
+$$
+
+第二式的 $\alpha_j/z$ 恰为从前一块经一边进入本块的平稳流，所以 $\lambda(M_0+M_1)=\lambda$。任何两条连续一边的乘积含有标量 $\alpha_{j+1}b_{j+1}=0$，故 $M_1^2=0$，包括 $m=1$。全部原 $\Theta_N$ 条件已验证，不要求内部块不可约，也不删除零平稳坐标。
+
+按 [Universal 卷][U] 命题 4.2，使用这些同一矩阵及同一 $\lambda$ 的两侧边发射联合律 $J_\theta$，每个可见柱均为 $\lambda M_w\mathbf1$。标记一个占据边为 $j$，当且仅当该边进入块 $j$。该事件的平稳质量是 $\lambda_{j-1}b_{j-1}=1/z$；其边后隐藏行重置为 $\alpha_j$。从此边后到下一个占据边，距离 $g$ 包含 $g-1$ 条零边，再有一条一边，其因子为 $\alpha_jB_j^{g-1}b_j=f_j(g)$，终点标记为 $j+1$。
+
+为核对完整两侧 Palm 律，给定 $-u\le k<v$ 的所有 $g_k$ 和中央标记 $j$。它们固定最左事件位置 $-\sum_{k=-u}^{-1}g_k$ 及其标记 $j-u$。从这个确定位置的平稳占据边开始，它只计一次通量 $1/z$；以后各段零边及秩一出口依次贡献 $f_{j+k}(g_k)$。求和内部隐藏路径，直接得到
+
+$$
+J_\theta(X_0=1,C_0=j,G_k=g_k\ (-u\le k<v))
+=\frac1z\prod_{k=-u}^{v-1}f_{j+k}(g_k).
+\tag{59.6}
+$$
+
+这个最左锚方法同时支付负指标，不使用反向重置假设。空乘积给 $J_\theta(X_0=1,C_0=j)=1/z$，故 $\iota=m/z=1/\bar\mu$；除以强度即为（58.1）。
+
+由 $\rho(B_j)<1$，有 $\lambda M_0^n\mathbf1\to0$，所以任意固定起点之后永远无事件的概率为零；对起点取可数并，排除未来仅有限事件。平稳性把同一有限全零区间界转到过去，也排除过去有限事件。于是定理 56.1 证明中的原位点分割（56.7）适用。将（59.6）的实际 Palm 律及 $\iota=1/\bar\mu$ 代入该式，恰得（58.2）的悬挂推前律。因此实际矩阵输出与 $P_f$ 相同，所有长度、首尾及乘积接缝均由一个 $\theta$ 给出；定理 58.2 的风险结论随同律传递。$\square$
+

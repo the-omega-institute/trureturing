@@ -1,0 +1,20 @@
+**Definition 10.1 (one finite incident realization).** Let $\Omega_\alpha,\Omega_\beta,\Omega_\gamma$ and $\mathcal O$ be nonempty finite sets. Let $\nu$ be any probability law on the source product, with no independence or full-support assumption. For every incident input pair let $K_A(\cdot\mid\beta,\gamma)$, $K_B(\cdot\mid\gamma,\alpha)$ and $K_C(\cdot\mid\alpha,\beta)$ be nonnegative probability vectors on $\mathcal O$. All random variables in §§10–12 have the single joint law
+
+$$
+\mathbb P(\alpha,\beta,\gamma,a,b,c)
+=\nu(\alpha,\beta,\gamma)
+ K_A(a\mid\beta,\gamma)K_B(b\mid\gamma,\alpha)K_C(c\mid\alpha,\beta).
+\tag{10.1}
+$$
+
+Thus output draws are independent conditional on all three sources, and their private randomness supplies no extra common selector. Write $P$ for the output marginal. With natural logarithms, $0\log0=0$, and zero-probability conditioning values omitted, use the usual finite Shannon entropy $H$, mutual information $I(U;V)$, conditional mutual information $I(U;V\mid W)$, and relative entropy $D$. The hidden source budget is the source-independence defect of Definition 4.1:
+
+$$
+C_{\rm src}
+:=D(\nu\Vert\nu_\alpha\otimes\nu_\beta\otimes\nu_\gamma)
+=H(\alpha)+H(\beta)+H(\gamma)-H(\alpha,\beta,\gamma).
+\tag{10.2}
+$$
+
+Every positive cell of $\nu$ has three positive one-source marginals, so this relative entropy is finite, even with structural zeros. It is the classical total correlation of the actual hidden law. It vanishes exactly when that law is the full product of its three marginals; pairwise independence alone does not suffice.
+

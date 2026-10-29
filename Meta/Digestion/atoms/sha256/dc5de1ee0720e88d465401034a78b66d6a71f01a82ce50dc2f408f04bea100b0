@@ -1,0 +1,43 @@
+**引理 17.1（精确平稳初始卡方代价）。** 写
+
+$$
+S=t+(1+2t)q,\qquad S_0=2t(1+t),\qquad \delta=q-t.
+\tag{17.4}
+$$
+
+原四状态律 $J_{t,q}$ 与 $J_{t,t}$ 的平稳初始行分别为
+
+$$
+\lambda^\delta=\frac{(q,t,tq,tq)}S,\qquad
+\lambda^0=\frac{(t,t,t^2,t^2)}{S_0}.
+\tag{17.5}
+$$
+
+其精确差异及卡方散度为
+
+$$
+\lambda^\delta-\lambda^0
+=\frac{\delta}{SS_0}\bigl(t,-t(1+2t),t^2,t^2\bigr),
+\qquad
+\chi^2(\lambda^\delta\Vert\lambda^0)
+=\frac{(1+2t)\delta^2}{S^2}.
+\tag{17.6}
+$$
+
+**证明。** 将原式（2.3）的分子分母同乘 $tq$，得到（17.5）；特别地，改变发射行的原平稳占用质量恰为 $\lambda^\delta_2=t/S$。逐项通分时，第一项分子为 $qS_0-tS=t\delta$，第二项为 $tS_0-tS=-t(1+2t)\delta$，末两项各为 $tqS_0-t^2S=t^2\delta$。这些差的分子相加为零，与归一化一致。
+
+在卡方和式中提出因子 $\delta^2/(S^2S_0)$，四项剩余系数依次为
+
+$$
+t,\qquad t(1+2t)^2,\qquad t^2,\qquad t^2.
+$$
+
+它们之和为
+
+$$
+t+t(1+2t)^2+2t^2
+=2t(1+t)(1+2t)=S_0(1+2t),
+$$
+
+故得到（17.6）。这保留了随 $q$ 改变的平稳初始分布；初始相对熵由（17.2）受该精确卡方量控制。$\square$
+
