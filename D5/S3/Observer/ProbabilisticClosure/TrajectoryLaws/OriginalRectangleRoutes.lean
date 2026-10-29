@@ -73,14 +73,16 @@ private def append_label (θ : Presentation H) (h s r : H) (a : LabelledRoute θ
 
 private theorem route_of_positive_path (θ : Presentation H) {h r : H}
     (p : @Quiver.Path H (Matrix.toQuiver (θ.matrix false+θ.matrix true)) h r) :
-    ∃ a : LabelledRoute θ h r, a.length = p.length := by
+    ∃ a : LabelledRoute θ h r,
+      a.length = @Quiver.Path.length H (Matrix.toQuiver (θ.matrix false+θ.matrix true)) h r p := by
+  letI := Matrix.toQuiver (θ.matrix false+θ.matrix true)
   induction p with
   | nil => exact ⟨emptyRoute θ h,rfl⟩
-  | cons p e ih =>
+  | @cons s t p e ih =>
     obtain ⟨a,ha⟩ := ih
-    have hs : 0 < θ.matrix false _ _ + θ.matrix true _ _ := e.down
-    obtain ⟨x,hx⟩ : ∃ x : Bool, 0 < θ.matrix x _ _ := by
-      by_cases hf : 0 < θ.matrix false _ _
+    have hs : 0 < θ.matrix false s t + θ.matrix true s t := e.down
+    obtain ⟨x,hx⟩ : ∃ x : Bool, 0 < θ.matrix x s t := by
+      by_cases hf : 0 < θ.matrix false s t
       · exact ⟨false,hf⟩
       · exact ⟨true,by linarith [le_of_not_gt hf]⟩
     exact ⟨append_label θ _ _ _ a x hx, congrArg Nat.succ ha⟩
@@ -138,7 +140,7 @@ private theorem first_one_outgoing (θ : Presentation H) (w : List Bool)
   rw [Matrix.mul_apply] at hp
   obtain ⟨k,_,hk⟩ := (Finset.sum_pos_iff_of_nonneg (fun k _ =>
     mul_nonneg (θ.matrix_nonneg _ _ _) (product_nonneg θ xs k j))).mp hp
-  exact ⟨k,pos_of_mul_pos_right hk (product_nonneg θ xs k j)⟩
+  exact ⟨k,pos_of_mul_pos_left hk (product_nonneg θ xs k j)⟩
 
 /-- Bounded positive original routes, with the first-one seam paid by a final zero
 edge, give the actual visible success-event bound on an irreducible class. -/
@@ -179,7 +181,7 @@ theorem irreducible_rectangle_occurrence (θ : Presentation H)
           cases hf
         · intro _ _
           simp only [append_zero, append_label, List.ofFn_succ', Fin.snoc_castSucc, Fin.snoc_last,
-            List.getLast?_concat]
+            List.concat_eq_append, List.getLast?_concat]
       · obtain ⟨a,ha⟩ := short_route θ hirr h r
         exact ⟨a,ha.le,fun hh => (he hh).elim,fun _ => ha,fun _ hh => (ht hh).elim⟩
   choose a ha using routes
