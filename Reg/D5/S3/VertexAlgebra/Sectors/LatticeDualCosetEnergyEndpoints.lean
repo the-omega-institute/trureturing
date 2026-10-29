@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
-import D5.S3.VertexAlgebra.LatticeDualCosetEnergyEndpoints
+import D5.S3.VertexAlgebra.Sectors.LatticeDualCosetEnergyEndpoints
 
 set_option autoImplicit false
 namespace Reg.D5.S3.VertexAlgebra.LatticeDualCosetEnergyEndpoints

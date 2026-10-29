@@ -1,12 +1,12 @@
-/- GID: D5/S3/VertexAlgebra/LatticeDualCosetGrading
+/- GID: D5/S3/VertexAlgebra/Sectors/LatticeDualCosetGrading
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/LatticeDualCosetGrading
+   mirror-B: D5/B/S3/VertexAlgebra/Sectors/LatticeDualCosetGrading
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Actual dual-coset modules decompose into finite-dimensional energy eigenspaces and obey all-state mode grading. -/
 
-import D5.S3.VertexAlgebra.LatticeDualCosetPositiveEnergy
+import D5.S3.VertexAlgebra.Sectors.LatticeDualCosetPositiveEnergy
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

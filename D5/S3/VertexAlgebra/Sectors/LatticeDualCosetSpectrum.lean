@@ -1,13 +1,13 @@
-/- GID: D5/S3/VertexAlgebra/LatticeDualCosetSpectrum
+/- GID: D5/S3/VertexAlgebra/Sectors/LatticeDualCosetSpectrum
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/LatticeDualCosetSpectrum
+   mirror-B: D5/B/S3/VertexAlgebra/Sectors/LatticeDualCosetSpectrum
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Algebraic point spectrum and bottom spaces of the actual original-omega dual-coset action. -/
 
-import D5.S3.VertexAlgebra.LatticeDualCosetGrading
-import D5.S3.VertexAlgebra.LatticeDualCosetVirasoroLaw
+import D5.S3.VertexAlgebra.Sectors.LatticeDualCosetGrading
+import D5.S3.VertexAlgebra.Sectors.LatticeDualCosetVirasoroLaw
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

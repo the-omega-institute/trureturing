@@ -1,12 +1,12 @@
-/- GID: D5/S3/VertexAlgebra/LatticeDualCosetConformal
+/- GID: D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/LatticeDualCosetConformal
+   mirror-B: D5/B/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Original lattice conformal modes on dual-coset modules and their state-field calculus. -/
 
-import D5.S3.VertexAlgebra.LatticeDualCosetModule
+import D5.S3.VertexAlgebra.Sectors.LatticeDualCosetModule
 import D5.S3.VertexAlgebra.LatticeActualLZeroGrading
 import D5.S3.VertexAlgebra.LatticeSugawaraVirasoro
 

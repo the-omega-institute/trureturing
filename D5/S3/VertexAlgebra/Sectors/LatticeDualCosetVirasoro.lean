@@ -1,12 +1,12 @@
-/- GID: D5/S3/VertexAlgebra/LatticeDualCosetVirasoro
+/- GID: D5/S3/VertexAlgebra/Sectors/LatticeDualCosetVirasoro
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/LatticeDualCosetVirasoro
+   mirror-B: D5/B/S3/VertexAlgebra/Sectors/LatticeDualCosetVirasoro
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Actual original-omega dual-coset modes satisfy Virasoro with the original rank central charge. -/
 
-import D5.S3.VertexAlgebra.LatticeDualCosetConformalShift
+import D5.S3.VertexAlgebra.Sectors.LatticeDualCosetConformalShift
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

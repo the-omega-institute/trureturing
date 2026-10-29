@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
-import D5.S3.VertexAlgebra.LatticeDualCosetVirasoro
+import D5.S3.VertexAlgebra.Sectors.LatticeDualCosetVirasoro
 
 set_option autoImplicit false
 

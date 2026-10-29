@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
-import D5.S3.VertexAlgebra.LatticeDualCosetGrading
+import D5.S3.VertexAlgebra.Sectors.LatticeDualCosetGrading
 
 set_option autoImplicit false
 

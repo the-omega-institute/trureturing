@@ -1,13 +1,13 @@
-/- GID: D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy
+/- GID: D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy
+   mirror-B: D5/B/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Rational dual shifts give actual original-omega eigenspaces with finite energy fibers. -/
 
-import D5.S3.VertexAlgebra.LatticeDualCosetVirasoro
-import D5.S3.VertexAlgebra.LatticeDualCosetEnergy
+import D5.S3.VertexAlgebra.Sectors.LatticeDualCosetVirasoro
+import D5.S3.VertexAlgebra.Sectors.LatticeDualCosetEnergy
 import D5.S1.Eigenstructure.DiagonalTensorEigenspace
 
 set_option autoImplicit false

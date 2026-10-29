@@ -1,12 +1,12 @@
-/- GID: D5/S3/VertexAlgebra/LatticeDualCosetConformalShift
+/- GID: D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformalShift
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/LatticeDualCosetConformalShift
+   mirror-B: D5/B/S3/VertexAlgebra/Sectors/LatticeDualCosetConformalShift
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Finite normal-mode expansion and inverse-Gram contraction of the actual original-omega action. -/
 
-import D5.S3.VertexAlgebra.LatticeDualCosetConformal
+import D5.S3.VertexAlgebra.Sectors.LatticeDualCosetConformal
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

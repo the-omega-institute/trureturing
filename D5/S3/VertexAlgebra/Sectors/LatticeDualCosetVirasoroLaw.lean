@@ -1,12 +1,12 @@
-/- GID: D5/S3/VertexAlgebra/LatticeDualCosetVirasoroLaw
+/- GID: D5/S3/VertexAlgebra/Sectors/LatticeDualCosetVirasoroLaw
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/LatticeDualCosetVirasoroLaw
+   mirror-B: D5/B/S3/VertexAlgebra/Sectors/LatticeDualCosetVirasoroLaw
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: The actual original conformal vector has rank-central-charge Virasoro modes on every dual-coset module. -/
 
-import D5.S3.VertexAlgebra.LatticeDualCosetVirasoro
+import D5.S3.VertexAlgebra.Sectors.LatticeDualCosetVirasoro
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

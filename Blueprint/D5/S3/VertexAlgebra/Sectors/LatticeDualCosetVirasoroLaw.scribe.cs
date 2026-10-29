@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra;
+namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Sectors;
 
 internal sealed class LatticeDualCosetVirasoroLawDocument : IScribeDocumentDefinition
 {
@@ -12,7 +12,7 @@ internal sealed class LatticeDualCosetVirasoroLawDocument : IScribeDocumentDefin
             Paragraph(Text("Classical construction context: Bakalov-Kac, math/0402315v1, section 4.1. The imported Sugawara architecture retains Kalle Kytola's Apache-2.0 attribution and VirasoroProject revision 5ff4245383b2cdd4eea7a0524bc1274c32041eb4. The finite reductions and actual-action connections are native mathematical proofs; no external novelty is asserted.")),
             Describe.Lean(
                 DescribeId.Create("latticedualcosetvirasorolaw-modulel-virasoro"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeDualCosetVirasoroLaw.moduleL_virasoro"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/Sectors/LatticeDualCosetVirasoroLaw.moduleL_virasoro"),
                 H("moduleL virasoro"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("All integer actual original-omega modes obey Virasoro with central charge rank(D), including rank zero, under the two original inverse equations alone."))),

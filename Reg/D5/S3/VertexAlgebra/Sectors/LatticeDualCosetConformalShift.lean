@@ -1,6 +1,6 @@
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
-import D5.S3.VertexAlgebra.LatticeDualCosetConformalShift
+import D5.S3.VertexAlgebra.Sectors.LatticeDualCosetConformalShift
 
 set_option autoImplicit false
 

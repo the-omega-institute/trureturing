@@ -1,12 +1,12 @@
-/- GID: D5/S3/VertexAlgebra/LatticeDualCosetEnergyEndpoints
+/- GID: D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergyEndpoints
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/LatticeDualCosetEnergyEndpoints
+   mirror-B: D5/B/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergyEndpoints
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: The constructed bottom is an actual eigenvalue in every rank and every complex eigenspace is finite dimensional. -/
 
-import D5.S3.VertexAlgebra.LatticeDualCosetSpectrum
+import D5.S3.VertexAlgebra.Sectors.LatticeDualCosetSpectrum
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

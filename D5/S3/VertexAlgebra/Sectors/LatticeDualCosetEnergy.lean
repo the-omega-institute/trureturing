@@ -1,12 +1,12 @@
-/- GID: D5/S3/VertexAlgebra/LatticeDualCosetEnergy
+/- GID: D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy
    generality: I
-   mirror-B: D5/B/S3/VertexAlgebra/LatticeDualCosetEnergy
+   mirror-B: D5/B/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Rational lattice-coset energies have finite sublevels and an attained global minimum. -/
 
-import D5.S3.VertexAlgebra.LatticeDualCosetModule
+import D5.S3.VertexAlgebra.Sectors.LatticeDualCosetModule
 import D5.S3.VertexAlgebra.LatticeEnergyGrading
 import Mathlib.Data.Rat.Floor
 
