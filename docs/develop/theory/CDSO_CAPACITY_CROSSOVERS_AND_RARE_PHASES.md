@@ -946,3 +946,526 @@ while $2\lambda a=a-2+2\omega/a$ and $2\lambda=1-2/a+O_\omega(a^{-2})$; their co
 The parent volume's Theorems 10.1 and 12.5–12.6 supply, respectively, the integer-endpoint upper family and its eventual exact classification and expansion. The moving-mean remainder, the uniform envelope (3.9), the interior extension, and the crossover and competition conclusions here are repo-derived deductions from the common law specified in Definition 1.1. Jensen and Cauchy–Schwarz are classical intermediate inequalities. These statements concern laws on nonempty subsets; they do not assert exact realization or optimality at a prescribed finite graph budget. Their full-text overlap with K. Zhao and X. Zhao, DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), is not determined here, and no literature-priority claim is made. Exact global minimizers in the boundary window, the least interior threshold $A(\delta_0)$, and an exact finite-$a$ transition remain unspecified.
 
 ## 追加锚（本行以下为增补区）
+
+## 7. Actual symmetry breaking in the adjacent-cardinality family
+
+**Definition 7.1 (Secondary-window notation).** Retain the entire law domain of Definition 1.1. In §§7–10 suppose $0<\delta\le1$ and write
+
+$$
+\begin{aligned}
+w_i&=\mathbb E[K^2I_i],\qquad \mu=\frac qs,\qquad
+H_d=H_{\rm dense}=\frac Z{\mu^2},\\
+T_0&=\frac\delta a,\qquad
+H_r=\frac1{T_0}+\frac{r^3}{1-T_0},\\
+b&=(2r+1)\delta,\qquad \tau=\frac{3b}{r^2},\\
+\mathcal A&=3r^2-3r+1,\qquad
+\mathcal C=r(r-1)(2r-1).
+\end{aligned}\tag{7.1}
+$$
+
+Here $T_0$ is a real number, whereas $T$ remains the random nonempty subset. The letter $\mu$ in these sections denotes the common marginal average $q/s$. The quantities $H_d,H_r$ are the two actual trial energies already specified in Lemma 1.2 and (6.1); no assertion of exact dense optimality is part of this notation. Zero atom masses, disconnected support, every possible cardinality $1\le K\le s$, and arbitrarily small positive marginals remain admissible.
+
+**Theorem 7.2 (A feasible descent from equal marginals).** For every $a\ge7$ and $0<\delta<1/r$, there is an actual law supported on cardinalities $a,r$ with $H<H_d$. Its marginals can be chosen arbitrarily close to $\mu$. More explicitly, let $P=\{1,2\}$ and define
+
+$$
+\begin{aligned}
+x_{[s]\setminus P}&=\delta,\\
+x_{[s]\setminus\{i\}}
+ &=\frac{1+\delta}{s}-\delta-\varepsilon
+ &&(i=1,2),\\
+x_{[s]\setminus\{j\}}
+ &=\frac{1+\delta}{s}+\frac{2\varepsilon}{a}
+ &&(3\le j\le s),
+\end{aligned}\tag{7.2}
+$$
+
+with all other masses zero. For
+
+$$
+0\le\varepsilon<\frac{1-r\delta}{s},\qquad
+v:=\mu-\frac{2\varepsilon}{a}>0,\tag{7.3}
+$$
+
+this law has mean $q$, marginals $u=\mu+\varepsilon$ on $P$ and $v$ off $P$, and exact energy
+
+$$
+\mathcal H(\varepsilon)
+=\frac{2r^2}{\mu+\varepsilon}
+ +a\left[
+ \frac{r^2}{\mu-2\varepsilon/a}
+ -\frac{(2r-1)\delta}{(\mu-2\varepsilon/a)^2}
+ \right].\tag{7.4}
+$$
+
+In particular,
+
+$$
+\mathcal H(0)=H_d,\qquad
+\mathcal H'(0)=-\frac{4(2r-1)\delta}{\mu^3}<0.\tag{7.5}
+$$
+
+**Proof.** The two masses indexed by $P$ equal $(1-r\delta)/s-\varepsilon$, and all the other displayed masses are positive under (7.3). Their total at cardinality $r$ is
+
+$$
+2\left(\frac{1+\delta}{s}-\delta-\varepsilon\right)
+ +a\left(\frac{1+\delta}{s}+\frac{2\varepsilon}{a}\right)
+=1-\delta.
+$$
+
+Adding the cardinality-$a$ mass $\delta$ gives total mass one and mean $a\delta+r(1-\delta)=q$. A label in $P$ is missing from both the mass $\delta$ and its own missing-one type; hence its marginal is $u$. A label outside $P$ is missing only from its own missing-one type; hence its marginal is $v$. These are marginals of (7.2), rather than independent choices. Positive masses and total mass one also give $u,v\le1$.
+
+For $i\in P$ the cardinality-$a$ atom avoids $i$, so $w_i=r^2u$. For $j\notin P$ it contains $j$, giving
+
+$$
+w_j=r^2v-(r^2-a^2)\delta
+=r^2v-(2r-1)\delta.
+$$
+
+Summing $w_i/y_i^2$ gives precisely the sum in (7.4). At $\varepsilon=0$ all marginals equal $\mu$ and $\mathbb E K^3=Z$, proving its value in (7.5). Differentiating that rational sum proves its derivative. Both upper bounds on a sufficiently small positive $\varepsilon$ in (7.3) have positive length, so (7.5) supplies a strict descent with arbitrarily small marginal perturbations. ∎
+
+**Proposition 7.3 (An explicit counterlaw for every $a\ge7$).** At
+
+$$
+\delta=\frac1{2a},\qquad
+\varepsilon=\frac{(2r-1)\delta}{r^2},\tag{7.6}
+$$
+
+the law (7.2) is feasible and satisfies
+
+$$
+H_d-\mathcal H(\varepsilon)
+\ge\frac{(2r-1)^2\delta^2}{r^2\mu^3}>0.\tag{7.7}
+$$
+
+**Proof.** The strict mass inequality in (7.3) is equivalent to
+
+$$
+(2a+1)(a+2)<(a-1)(a+1)^2.
+$$
+
+The difference is $a^3-a^2-6a-3$, positive for $a\ge7$ since it is at least $6a^2-6a-3$. Also $\varepsilon<1/(ar)$ and $\mu\ge7/9$. For every $0\le z\le\varepsilon$ these imply
+
+$$
+\mu-\frac{2z}{a}\ge\frac9{10}\mu>0,
+$$
+
+because $2/(a^2r)\le2/(7^2\cdot8)<7/90\le\mu/10$. Direct differentiation of (7.4) gives
+
+$$
+\mathcal H''(z)
+=\frac{4r^2}{(\mu+z)^3}
+ +\frac{8r^2}{a(\mu-2z/a)^3}
+ -\frac{24(2r-1)\delta}{a(\mu-2z/a)^4}
+\le\frac{6r^2}{\mu^3}.
+$$
+
+The last step uses $8/[a(9/10)^3]\le2$ for $a\ge7$. Taylor's theorem and (7.5) now yield
+
+$$
+\begin{aligned}
+\mathcal H(\varepsilon)-H_d
+&\le-\frac{4(2r-1)\delta\varepsilon}{\mu^3}
+ +\frac{3r^2\varepsilon^2}{\mu^3}\\
+&=-\frac{(2r-1)^2\delta^2}{r^2\mu^3}.
+\end{aligned}
+$$
+
+This proves both feasibility and strict improvement. ∎
+
+**Theorem 7.4 (Quadratic descent and failure of convex symmetrization).** If $\delta=\lambda/a$ with fixed $0<\lambda<1$, then for all sufficiently large $a$ the choice $\varepsilon=(2r-1)\delta/r^2$ in (7.2) is feasible and
+
+$$
+\mathcal H(\varepsilon)
+=H_d-\frac{8\lambda^2}{a^2}+O_\lambda(a^{-3}).\tag{7.8}
+$$
+
+The remainder and feasibility threshold can be taken uniformly on each compact interval $0<\lambda_-\le\lambda\le\lambda_+<1$. The nonlinear functional $H$ on the full law domain is not convex for any $0<\delta<1/r$.
+
+**Proof.** On each such compact interval the mass upper bound in (7.3) is $(1-\lambda)/a+O(a^{-2})$, whereas $\varepsilon=2\lambda/a^2+O(a^{-3})$ and $\mu=1+O(a^{-1})$. Thus (7.3) holds uniformly eventually. In addition to (7.5), the exact second derivative at zero is
+
+$$
+\mathcal H''(0)
+=4r^2(1+2/a)\mu^{-3}
+ -\frac{24(2r-1)\delta}{a\mu^4}.
+$$
+
+On $0\le z\le\varepsilon$, all denominators in the first three derivatives stay bounded away from zero. Differentiating (7.4) three times therefore gives $\mathcal H'''(z)=O(a^2)$ uniformly on the compact parameter interval. The linear Taylor term at $\varepsilon$ is
+$-16\lambda^2/a^2+O(a^{-3})$, the quadratic term is
+$8\lambda^2/a^2+O(a^{-3})$, and the third-order remainder is $O(a^2\varepsilon^3)=O(a^{-4})$. This proves (7.8).
+
+For the convexity assertion choose any strict descent from Theorem 7.2 and average its law over every label permutation. This average is the fully symmetric mixture of $a$- and $r$-subsets from Lemma 1.2 and has energy $H_d$. Every law being averaged has the same smaller energy $\mathcal H(\varepsilon)$. A convex functional would give $H_d\le\mathcal H(\varepsilon)$, a contradiction. This argument uses actual feasible laws and does not treat the $w_i$ and $y_i$ as independent variables. ∎
+
+## 8. A centered residual estimate on the full law domain
+
+**Theorem 8.1 (Dense lower bound with quadratic error).** For any law of Definition 1.1 with $0<\delta\le1$, suppose
+
+$$
+t:=\min_i y_i\ge\tau,\qquad
+\frac b{r^2\mu}\le\frac1{12}.
+\tag{8.1}
+$$
+
+Then, without any restriction on the cardinalities in its support,
+
+$$
+H(x)\ge H_d-72\delta^2\mu^{-6}.\tag{8.2}
+$$
+
+**Proof.** Use the full-label residuals of Lemma 3.1, writing $R_i=\widehat R_i=w_i-r^2y_i+b$ and $\tau=t_{\rm conv}$. That lemma, on exactly the full law domain used here, gives
+
+$$
+R_i\ge0,\qquad S:=\sum_iR_i
+=\mathbb E K^3-r^2q+sb\ge6r\delta=:S_0.
+\tag{8.5}
+$$
+
+Put $f(y)=r^2/y-b/y^2$. The exact energy decomposition and the centered rational identity are
+
+$$
+H=\sum_i f(y_i)+\sum_i\frac{R_i}{y_i^2},\tag{8.6}
+$$
+
+$$
+f(y)-f(\mu)-f'(\mu)(y-\mu)
+=\frac{(y-\mu)^2}{\mu^2y^2}
+ \left[r^2y-b\left(1+\frac{2y}{\mu}\right)\right].
+\tag{8.7}
+$$
+
+This is an identity after bringing its two sides to a common denominator. If $y\ge\tau=3b/r^2$, then $b\le r^2y/3$, while the other condition in (8.1) gives $2by/\mu\le r^2y/6$. Thus the bracket in (8.7) is at least $r^2y/2$. Using $\mu,y_i\le1$ and $\sum_i(y_i-\mu)=0$, obtain
+
+$$
+\sum_i f(y_i)\ge sf(\mu)+\frac{r^2}{2}V,
+\qquad V=\sum_i(y_i-\mu)^2.
+\tag{8.8}
+$$
+
+To retain the residual's dependence on the marginals, let $M=\max_i y_i\ge\mu$. Nonnegativity of $R_i$, (8.5), and the elementary tangent inequality for the inverse square give
+
+$$
+\begin{aligned}
+\sum_i\frac{R_i}{y_i^2}
+&\ge\frac{S_0}{M^2}\\
+&\ge\frac{S_0}{\mu^2}
+ -\frac{2S_0}{\mu^3}(M-\mu)\\
+&\ge\frac{S_0}{\mu^2}
+ -\frac{2S_0}{\mu^3}\sqrt V.
+\end{aligned}\tag{8.9}
+$$
+
+The middle inequality can also be read directly from
+
+$$
+\frac1{M^2}-\frac1{\mu^2}+\frac{2(M-\mu)}{\mu^3}
+=\frac{(M-\mu)^2(2M+\mu)}{\mu^3M^2}\ge0.
+$$
+
+Finally, (8.5) gives $sf(\mu)+S_0/\mu^2=H_d$. Substitution of (8.8)–(8.9) into (8.6), followed by completion of the square in $\sqrt V$, yields
+
+$$
+\begin{aligned}
+H-H_d
+&\ge\frac{r^2}{2}V-\frac{2S_0}{\mu^3}\sqrt V\\
+&\ge-\frac{2S_0^2}{r^2\mu^6}
+=-72\delta^2\mu^{-6}.
+\end{aligned}
+$$
+
+Only the auxiliary rational expression has been centered; no convexity of $H$ has been assumed. ∎
+
+## 9. The exact rare bound from an actual deleted-label core
+
+**Theorem 9.1 (Rare lower bound and all its equality laws).** Fix $L>0$ and suppose
+
+$$
+a\ge N(L):=\left\lceil10^4\max(1,L^2)\right\rceil,
+\qquad 0<\delta\le\frac La.
+\tag{9.1}
+$$
+
+Every law of Definition 1.1 with $t=\min_i y_i<\tau$ satisfies $H(x)\ge H_r$. Equality holds if and only if, for some label $e$,
+
+$$
+x_{\{e\}}=T_0,\qquad
+x_{[s]\setminus\{e\}}=1-T_0,
+\qquad x_T=0\text{ otherwise}.
+\tag{9.2}
+$$
+
+In particular, the equality class consists of these laws under arbitrary relabeling.
+
+**Proof.** First (9.1) gives $a\ge10000$, $L^2/a\le10^{-4}$ and $\delta\le10^{-4}$. The latter follows separately from $L\le1$ and $L\ge1$. Direct calculation gives
+
+$$
+1<\frac\tau{T_0}
+=\frac{3a(2r+1)}{r^2}<6,
+\qquad \delta+\tau<1.
+\tag{9.3}
+$$
+
+The left strict inequality follows from $5a^2+7a-1>0$, the right from $3a(2a+3)<6(a+1)^2$, and $\delta+\tau<1$ from $\tau<6\delta/a$.
+
+Choose a least-marginal label $e$ and define, from the original law,
+
+$$
+\begin{aligned}
+t&=y_e,\qquad z=x_{\{e\}},\qquad \eta=t-z,\\
+\xi&=\mathbb E[(K-1)I_e],\qquad m=q-t.
+\end{aligned}
+$$
+
+On each nonsingleton atom containing $e$ there is at least one further label; hence $0\le\eta\le\xi$. Since an atom avoiding $e$ contains at most $r$ labels, its actual capacity gives
+
+$$
+q\le r(1-t)+t+\xi=r-at+\xi,
+\qquad \xi\ge at-\delta.
+\tag{9.4}
+$$
+
+For integer $k\ge1$, $k^2-1-3(k-1)=(k-1)(k-2)\ge0$. Thus the contribution at $e$ satisfies
+
+$$
+\frac{w_e}{t^2}\ge\frac1t+\frac{3\xi}{t^2}.
+\tag{9.5}
+$$
+
+Delete $e$ from this same random set, obtaining $T'=T\setminus\{e\}$. The probability of $T'=\varnothing$ is exactly $z$ and $\mathbb E|T'|=m$. For each $j\ne e$ its marginal is still $y_j>0$, and $K^2\ge|T'|^2$. Since $t<\tau$ and $\delta+\tau<1$, one has $r-1<m=q-t\le r$. Conditional on $T'\ne\varnothing$, the actual core law therefore has mean
+
+$$
+r-1\le u:=\frac{m}{1-z}\le r.
+\tag{9.6}
+$$
+
+The upper bound in (9.6) is its capacity $|T'|\le r$, not an independent constraint on moments. All its conditional marginals are positive. Apply [*CDSO incidence moments and capacity phases*, Theorem 3.1](CDSO_INCIDENCE_MOMENTS_AND_CAPACITY_PHASES.md) directly to this conditional law: in the normalization $H=2J$, that existing result is $H_{\rm core}\ge r^2(\mathcal A u-\mathcal C)/u^2$. The probability scaling is
+
+$$
+\sum_{j\ne e}\frac{\mathbb E[|T'|^2I_j]}{y_j^2}
+=\frac{H_{\rm core}}{1-z}.
+$$
+
+It follows that
+
+$$
+\begin{aligned}
+\sum_{j\ne e}\frac{w_j}{y_j^2}
+&\ge\frac{r^2[\mathcal A(q-t)-\mathcal C(1-z)]}{(q-t)^2}\\
+&=G(t)-A(t)\eta,
+\end{aligned}\tag{9.7}
+$$
+
+where
+
+$$
+G(t)=\frac{r^2[\mathcal A(q-t)-\mathcal C(1-t)]}{(q-t)^2},
+\qquad A(t)=\frac{r^2\mathcal C}{(q-t)^2}.
+$$
+
+Combining (9.5), (9.7), $A(t)>0$ and $\eta\le\xi$ yields
+
+$$
+H\ge F(t)+C(t)\xi,
+\qquad F(t)=\frac1t+G(t),\qquad
+C(t)=\frac3{t^2}-A(t).
+\tag{9.8}
+$$
+
+We next bound this scalar expression on the whole interval $0<t<\tau$. There $q-t\ge r-2\ge3r/4$, and
+
+$$
+A(t)\le4r^3,\qquad |G'(t)|\le10r^3.
+\tag{9.9}
+$$
+
+For completeness put $N_t=\mathcal A(q-t)-\mathcal C(1-t)$. Since $q-t>r-1$ and $0<t<1$, $0<N_t\le3r^3$, in particular $|N_t|\le5r^3$. Moreover $0\le\mathcal C-\mathcal A\le2r^3$ for $r\ge8$. Differentiation gives
+
+$$
+G'(t)=r^2\left[
+\frac{\mathcal C-\mathcal A}{(q-t)^2}
+ +\frac{2N_t}{(q-t)^3}\right].
+$$
+
+The two terms are bounded in absolute value by $(32/9)r^3$ and $(640/27)r^2$. Their sum is less than $7r^3$ for $r\ge8$, proving the second inequality of (9.9). The first follows from
+$A(t)\le(16/9)\mathcal C<4r^3$.
+
+Using $r\le2a$, $T_0\le L/a^2$ and (9.3), the explicit threshold (9.1) also gives
+
+$$
+\begin{aligned}
+4r^3\tau^2&\le\frac{1152L^2}{a}<1,\\
+10r^3T_0^2&\le\frac{80L^2}{a}<1,\\
+\frac a{18}&>1+10r^3T_0^2.
+\end{aligned}\tag{9.10}
+$$
+
+Indeed the first two upper bounds are at most $0.1152$ and $0.008$, whereas $a/18\ge10000/18>1.008$. Equations (9.9)–(9.10) imply $C(t)\ge2/t^2>0$, so the capacity (9.4) makes (9.8) into
+
+$$
+H\ge F(t)+C(t)\max\{0,a(t-T_0)\}.
+\tag{9.11}
+$$
+
+For $0<t\le T_0$,
+
+$$
+F'(t)\le-T_0^{-2}+10r^3<0.
+$$
+
+Thus $F(t)\ge F(T_0)$, strictly unless $t=T_0$. For $T_0\le t<\tau$, integrate the bound on $G'$ and use $1/t-1/T_0\ge-(t-T_0)/T_0^2$ to obtain
+
+$$
+F(t)-F(T_0)\ge-(T_0^{-2}+10r^3)(t-T_0).
+$$
+
+On the other hand,
+
+$$
+C(t)a(t-T_0)
+\ge\frac{2a}{\tau^2}(t-T_0)
+\ge\frac{a}{18T_0^2}(t-T_0).
+$$
+
+By the third inequality of (9.10), their sum is strictly positive when $t>T_0$. Finally $q-T_0=r(1-T_0)$ and $\mathcal A r-\mathcal C=r^3$, whence
+
+$$
+G(T_0)=\frac{r^3}{1-T_0},\qquad F(T_0)=H_r.
+$$
+
+This proves the lower bound for every law in the rare region, without an energy sublevel assumption.
+
+If $H=H_r$, the strict scalar comparisons force $t=T_0$. Returning to (9.8), where $C(t)>0$, then forces $\xi=0$. Thus every occurrence of $e$ is its singleton, so $z=t=T_0$. On the complementary event the conditional core mean is
+$(q-T_0)/(1-T_0)=r$, its maximal capacity. Therefore the core is the full set of the $r$ remaining labels with probability one. This proves the necessity of (9.2) from the same realized law. Conversely (9.2) has the prescribed mean, marginals $T_0$ and $1-T_0$, and energy $H_r$. Here $T_0<\tau$ and $T_0<1/2$, so its least marginal is indeed in the asserted rare region. ∎
+
+## 10. A global quadratic squeeze and the fifth competition scale
+
+**Theorem 10.1 (Global $O(a^{-2})$ squeeze without a lower window cutoff).** Under (9.1), the infimum over exactly the full domain of Definition 1.1 satisfies
+
+$$
+\boxed{\quad
+\min\{H_d-72\delta^2\mu^{-6},H_r\}
+\le\inf_xH(x)\le\min\{H_d,H_r\}.
+\quad}\tag{10.1}
+$$
+
+In particular,
+
+$$
+0\le\min\{H_d,H_r\}-\inf_xH(x)
+\le72\delta^2\mu^{-6}=O_L(a^{-2}).
+\tag{10.2}
+$$
+
+No positive lower bound on $a\delta$ is required. The infimum is attained by an admissible law.
+
+**Proof.** The threshold implies $\mu\ge1/2$ and
+
+$$
+\frac b{r^2\mu}\le\frac{6\delta}{r}
+\le\frac{6L}{a^2}<\frac1{12}.
+$$
+
+For example $L/a\le10^{-4}$ and $a\ge10000$ already make the final strict inequality immediate. Every actual law either has $\min_i y_i\ge\tau$, when Theorem 8.1 applies, or has $\min_i y_i<\tau$, when Theorem 9.1 applies. This exhaustive partition proves the lower bound in (10.1). The upper bound consists of the actual symmetric law in Lemma 1.2 and the actual two-atom law (9.2). The difference between the two lower and upper minima is at most $72\delta^2\mu^{-6}$. Since $\mu\ge1/2$ and $\delta\le L/a$, this proves (10.2), including arbitrarily small positive $a\delta$.
+
+For attainment choose a minimizing sequence with energy bounded by some finite $M$, possible because the symmetric trial law has finite energy. Since $K\ge1$, one has $w_i\ge y_i$ and hence $H\ge1/y_i$ for every label. Thus each marginal along this sequence is at least $1/M$. The probability simplex on the finite set of nonempty subsets of $[s]$ is compact. A convergent subsequence has a limit with total mass one, mean $q$ and all marginals at least $1/M$. Energy is continuous there, so the limit attains the infimum. The lower bound $1/M$ is a consequence for this sequence, not a restriction of the original domain. ∎
+
+**Corollary 10.2 (The quadratic error order is necessary).** Fix $0<\lambda<1/2$ and put $\delta=\lambda/a$. Then $H_d<H_r$ eventually and
+
+$$
+H_d-\inf_xH(x)
+\ge\frac{8\lambda^2}{a^2}+O_\lambda(a^{-3}).
+\tag{10.3}
+$$
+
+Consequently the $O_L(a^{-2})$ gap in (10.2) cannot be replaced throughout this region by $o(a^{-2})$. This is a lower bound on the global improvement furnished by one actual family; it does not identify the optimal quadratic coefficient.
+
+**Proof.** Substitution in the exact rational formulas gives
+
+$$
+\frac{H_r-H_d}{a^2}\longrightarrow\lambda^{-1}-2>0.
+$$
+
+The actual law of Theorem 7.4 has energy $H_d-8\lambda^2/a^2+O_\lambda(a^{-3})$, so the global infimum is at most this value. This proves (10.3) and the failure of an $o(a^{-2})$ bound even along any such fixed $\lambda$. ∎
+
+**Theorem 10.3 (The fifth scale and exact noncritical rare minimizers).** For fixed $\zeta\in\mathbb R$, set
+
+$$
+\delta_a=\frac1{2a}-\frac1{a^2}
+ +\frac5{4a^3}+\frac\zeta{a^4}.
+\tag{10.4}
+$$
+
+These parameters are eventually positive and admissible, and
+
+$$
+\boxed{\quad
+\lim_{a\to\infty}a\,[D_a(\delta_a)-2a^2-5a-2]
+=\min\left\{\frac72,-\frac32-4\zeta\right\}.
+\quad}\tag{10.5}
+$$
+
+The two fifth-scale coefficients meet at $\zeta=-5/4$. If $\zeta>-5/4$ is fixed, then for all sufficiently large $a$ the global minimum is exactly $H_r$, and all minimizing laws are (9.2), up to relabeling. If $\zeta<-5/4$ is fixed, every minimizing law has $\min_i y_i\ge\tau$ eventually, and $\inf H<H_d<H_r$; no exact dense minimizing law is asserted.
+
+The optimal dense improvement coefficient at order $a^{-2}$, an exact finite-$a$ crossing, and the next scale at $\zeta=-5/4$ remain unspecified. The law (7.2) is an improvement family and is not asserted to attain the global minimum. The threshold $N(L)$ is sufficient and is not asserted to be least. These statements concern the subset-law problem and assert no prescribed finite-graph realization or graph-budget optimality.
+
+**Proof.** For fixed $\zeta$, (10.4) eventually satisfies (9.1) with $L=1$. Subtracting the same parameter-dependent $B$ in (10.1) gives
+
+$$
+D_a(\delta_a)
+=\min\{H_d-B,H_r-B\}+O_\zeta(a^{-2}).
+\tag{10.6}
+$$
+
+Here is a direct expansion of the exact rational energies. Put $h=1/a$, write $\delta=\delta_a$, and set
+
+$$
+Q=1+h-h\delta,\qquad
+P=(1+h)^3-\delta(3h+3h^2+h^3),\qquad
+F=\frac P{Q^2}.
+$$
+
+Then $q=aQ$, $Z=a^3P$, and exactly
+
+$$
+\begin{aligned}
+B&=h^{-3}(1+h)^2F,\\
+H_d-B&=h^{-2}(2+3h)F,\\
+H_r-B&=\frac1{h\delta}
+ +h^{-3}\left[\frac{(1+h)^3}{1-h\delta}-(1+h)^2F\right].
+\end{aligned}\tag{10.7}
+$$
+
+Substitute $\delta=h/2-h^2+5h^3/4+\zeta h^4$. Multiplication of the Taylor series for the displayed polynomial numerators and inverse denominators yields
+
+$$
+\begin{aligned}
+F&=1+h-\frac12h^2+\frac52h^3-7h^4
+ +O_\zeta(h^5),\\
+\frac1{h\delta}
+ &=\frac2{h^2}+\frac4h+3+(-4-4\zeta)h
+ +O_\zeta(h^2),\\
+\frac{(1+h)^3}{1-h\delta}-(1+h)^2F
+ &=h^2-h^3+\frac52h^4+O_\zeta(h^5).
+\end{aligned}\tag{10.8}
+$$
+
+All remainders here are ordinary Taylor remainders of analytic rational functions near $h=0$: $Q(0)=1$, $1-h\delta=1$ there, and $\delta/h$ tends to $1/2$. Thus the inverse factors are defined with bounded derivatives in a neighborhood depending only on the fixed $\zeta$. Equations (10.7)–(10.8) give
+
+$$
+\begin{aligned}
+H_d-B&=2a^2+5a+2+\frac7{2a}+O_\zeta(a^{-2}),\\
+H_r-B&=2a^2+5a+2
+ +\frac{-3/2-4\zeta}{a}+O_\zeta(a^{-2}).
+\end{aligned}\tag{10.9}
+$$
+
+Taking the smaller expansion in (10.6), multiplying by $a$, and letting $a\to\infty$ proves (10.5). Equality of the two limiting coefficients is $7/2=-3/2-4\zeta$, namely $\zeta=-5/4$.
+
+If $\zeta>-5/4$, then (10.9) gives
+
+$$
+H_d-H_r=\frac{5+4\zeta}{a}+O_\zeta(a^{-2})
+>72\delta_a^2\mu^{-6}
+$$
+
+eventually. Theorem 8.1 then puts every law with least marginal at least $\tau$ strictly above $H_r$. Theorem 9.1 bounds the complementary region by $H_r$ and classifies all equality laws, proving the exact global rare assertion. If $\zeta<-5/4$, (10.9) instead gives $H_d<H_r$ eventually. The symmetric trial law therefore excludes every rare-region law from global minimization. Also $\delta_a<1/r$ eventually, so Theorem 7.2 supplies $\inf H<H_d$. This proves precisely the stated dense-side conclusions. ∎
+
+## 追加锚（本行以下为增补区）
