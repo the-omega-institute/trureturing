@@ -28,14 +28,19 @@ choose(n,k) > choose(n,k−1). Conjecture 3.3 states:
 
 > For any graph G, ρ₁(G) ≤ ρ₂(G) ≤ ⋯ ≤ ρ⌊n/2⌋(G).
 
-The journal version retains Definition 3.1 and Conjecture 3.3.
+Primary source: [arXiv:2310.16929v1](https://arxiv.org/html/2310.16929v1),
+Section 3, Definition 3.1 and Conjecture 3.3;
+[versioned PDF](https://arxiv.org/pdf/2310.16929v1).
+The [journal article](https://doi.org/10.1007/s40590-023-00583-3),
+*São Paulo Journal of Mathematical Sciences* (2024), Section 3, retains
+Definition 3.1 and Conjecture 3.3.
 The neighboring Conjecture 3.2 concerns minima, and is a different claim.
 The full-sector spectral radii in equation (7) are different quantities
 from these new-layer maxima.
 
 Dongsheng Wei, *Generators of stability-preserving semigroups, spectral
-gaps, and classical ground-state computation*, arXiv:2609.26802v1 §4.6
-and v2 §7, supplies prior star K₁,₃ / two-token C₆ and full-sector spectral
+gaps, and classical ground-state computation*, [arXiv:2609.26802v1](https://arxiv.org/html/2609.26802v1) §4.6
+and [v2](https://arxiv.org/html/2609.26802v2) §7, supplies prior star K₁,₃ / two-token C₆ and full-sector spectral
 interpolation ingredients. The inspected passages distinguish full-sector
 and new-layer quantities; no novelty of these ingredients or of the
 spectral method is asserted. The residual-layer conjecture is the target
