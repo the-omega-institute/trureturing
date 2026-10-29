@@ -498,7 +498,15 @@ class HostReclaimTests(unittest.TestCase):
         scripts = self.main / "tools/scripts"
         scripts.mkdir(parents=True)
         shutil.copyfile(ROOT / "tools/Makefile", self.main / "tools/Makefile")
-        shutil.copyfile(ROOT / "tools/scripts/host-cleanup.py", scripts / "host-cleanup.py")
+        source = (ROOT / "tools/scripts/host-cleanup.py").read_text()
+        entry = '\nif __name__ == "__main__":\n    sys.exit(main())\n'
+        self.assertTrue(source.endswith(entry))
+        (scripts / "host-cleanup.py").write_text(source[:-len(entry)] + '''
+if __name__ == "__main__":
+    from unittest.mock import patch
+    with patch("__main__.active_paths", return_value=set()):
+        sys.exit(main())
+''')
         shutil.copytree(ROOT / "tools/scripts/worktree", scripts / "worktree",
                         ignore=shutil.ignore_patterns("__pycache__"))
         shutil.copytree(ROOT / "tools/scripts/report", scripts / "report",
