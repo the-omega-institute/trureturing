@@ -22,9 +22,7 @@ internal sealed class BinghamCaterpillarUniquenessRefutationDocument : IScribeDo
                 "The base pair displayed in Remark 3.11."),
             Node("base-b", "The second base member", "baseB", Eq(Call("baseB"), Tuple(4,5,3)),
                 "Both base compositions have three spine vertices."),
-            Node("listed", "All listed exceptions", "listed", All("a", Call("Parts", Id("la")), All("b", Call("Parts", Id("lb")),
-                Iff(Call("listed",Id("a"),Id("b")), Or(Call("pairIso",Id("a"),Id("b"),Call("baseA"),Call("baseB")),
-                    Exists("j", Positive(), Call("pairIso",Id("a"),Id("b"),Call("alpha",Id("j")),Call("beta",Id("j")))))))),
+            Node("listed", "All listed exceptions", "listed", Listed(),
                 "The positive natural j has no upper bound; alpha(j)=(5,j,j,4,3) and beta(j)=(4,j,j,5,3) are reused from the first-question module. In particular j=1 remains included. Pair isomorphism takes the full unordered isomorphism closure of the base and every family pair."),
             Node("claim", "Remark 3.11, the whole second assertion", "claim", Iff(Id("claim"), ClaimBody()),
                 "n ranges over every natural number at least one; la and lb are arbitrary natural lengths. The two compositions are source-admissible and each has total size n. If their ordinary second polynomials differ and third polynomials agree identically, the assertion says their unordered graph-isomorphism pair is listed. The base exception and every positive-j family are included. This is an assertion over all sizes, not a finite search bound."),
@@ -74,8 +72,24 @@ internal sealed class BinghamCaterpillarUniquenessRefutationDocument : IScribeDo
             Seq(new Formula.Subscript(F.Sum,Seq(Id("c"),Colon,Call("Coloring",Id("G"),Call("Fin",Id("k"))))),Sp,
                 new Formula.Power(Id("X"),Seq(new Formula.Subscript(F.Sum,Seq(Id("v"),Colon,Id("V"))),Sp,Call("val",Call("c",Id("v")))))))))));
     private static Formula Iso(string a, string b) => Call("Iso",Id(a),Id(b));
-    private static Formula PairIso() => Iff(Call("pairIso",Id("a"),Id("b"),Id("c"),Id("d")),
-        Or(And(Iso("a","c"),Iso("b","d")),And(Iso("a","d"),Iso("b","c"))));
+    private static Formula PairIso()
+    {
+        Formula body = Iff(Call("pairIso",Id("a"),Id("b"),Id("c"),Id("d")),
+            Or(And(Iso("a","c"),Iso("b","d")),And(Iso("a","d"),Iso("b","c"))));
+        body = All("d",Call("Parts",Id("ld")),body);
+        body = All("c",Call("Parts",Id("lc")),body);
+        body = All("b",Call("Parts",Id("lb")),body);
+        body = All("a",Call("Parts",Id("la")),body);
+        foreach (var length in new[] { "ld", "lc", "lb", "la" }) body = All(length,Nat(),body);
+        return body;
+    }
+    private static Formula Listed()
+    {
+        Formula body = Iff(Call("listed",Id("a"),Id("b")),
+            Or(Call("pairIso",Id("a"),Id("b"),Call("baseA"),Call("baseB")),
+                Exists("j",Positive(),Call("pairIso",Id("a"),Id("b"),Call("alpha",Id("j")),Call("beta",Id("j"))))));
+        return All("la",Nat(),All("lb",Nat(),All("a",Call("Parts",Id("la")),All("b",Call("Parts",Id("lb")),body))));
+    }
     private static Formula Size(string a) => Seq(new Formula.Subscript(F.Sum,Id("i")),Sp,Call("val",Call(a,Id("i"))));
     private static Formula Ps(string a, byte k) => Call("ordinary",Call("caterpillar",Id(a)),D(k));
     private static Formula ClaimBody() => All("n",Nat(),Implies(Le(D(1),Id("n")),All("la",Nat(),All("lb",Nat(),

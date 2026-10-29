@@ -93,8 +93,9 @@ on j and no numerical specialization of X.
   This is the uniform mechanism for all positive j; it asserts no general endpoint replacement.
 - Proved on that result's live proof path: `ps2_alpha` and `ps2_beta` give the displayed exact
   two-color monomials, and `ps2_ne` separates their coefficients at degree j+5.
-- Open here: whether these are the only composition pairs exhibiting the phenomenon, the
-  separate second question of Remark 3.11. The family proof supplies no classification.
+- Separate result: the exhaustive-pairs assertion in the second question is refuted by
+  `BinghamCaterpillarUniquenessRefutation.result`; its distinct problem dossier gives the
+  eighteen-vertex witness. The first-question family proof supplies no classification.
 - Open here: the source's four-color questions and any analogous t-refined statement. This
   resolution supplies no settlement of those questions or additional source results.
 
