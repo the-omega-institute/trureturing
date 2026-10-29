@@ -44,7 +44,7 @@ internal sealed class NativeMixedImageConstructionDocument : IScribeDocumentDefi
     private static DocumentBlock Thm(string name, string title, string text) =>
         Entry(name, title, text, DescribeRole.Theorem);
     private static DocumentBlock Entry(string name, string title, string text, DescribeRole role) =>
-        Describe.Lean(DescribeId.Create("mixed-native-" + name.Replace('.', '-').ToLowerInvariant()),
+        Describe.Lean(DescribeId.Create("mixed-native-" + name.Replace('.', '-').Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(text))), role);
 }
