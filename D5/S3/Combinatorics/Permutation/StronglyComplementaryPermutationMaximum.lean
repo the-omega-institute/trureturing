@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Permutation/StronglyComplementaryPermutationMaximum
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Permutation/StronglyComplementaryPermutationMaximum
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
@@ -8,7 +8,7 @@
 
 import Mathlib.LinearAlgebra.Matrix.Permutation
 import Mathlib.GroupTheory.PGroup
-import Mathlib.NumberTheory.Padics.PadicVal.Basic
+import D5.S3.Combinatorics.Games.DivisorNimBoundOutcome
 
 /-! The matrix convention is `σ.permMatrix ℕ i j = 1 ↔ σ i = j`.
 The definitions are Definitions 4.1 and 4.3 of Rajchel–Gąsiorowski–Życzkowski,
@@ -299,18 +299,6 @@ private lemma matrix_family_upper {n : ℕ} (hn : 1 ≤ n)
   · rw [← ht]; exact Finset.mem_image_of_mem _ hτ
   · exact fun h => hne (matrix_injective h)
 
-private lemma two_adic_decomposition {n : ℕ} (hn : 1 ≤ n) :
-    ∃ m : ℕ, 0 < m ∧ Odd m ∧ n = 2 ^ padicValNat 2 n * m := by
-  refine ⟨n.divMaxPow 2, ?_, ?_, (Nat.pow_padicValNat_mul_divMaxPow 2 n).symm⟩
-  · have h := Nat.pow_padicValNat_mul_divMaxPow 2 n
-    by_contra hm
-    have hz : n.divMaxPow 2 = 0 := by omega
-    rw [hz, mul_zero] at h
-    omega
-  · apply Nat.not_even_iff_odd.mp
-    intro hm
-    exact Nat.not_dvd_divMaxPow (by omega) (by omega) hm.two_dvd
-
 private lemma elementary_translation_family {n a m : ℕ} (hm : 0 < m)
     (e : Fin n ≃ ((Fin a → ZMod 2) × Fin m)) :
     ∃ s : Finset (Equiv.Perm (Fin n)), s.card = 2 ^ a ∧
@@ -372,7 +360,9 @@ private lemma matrix_family_lower {n : ℕ} (hn : 1 ≤ n) :
       (s : Set (Matrix (Fin n) (Fin n) ℕ)).Pairwise IsStronglyComplementary ∧
         s.card = 2 ^ padicValNat 2 n := by
   classical
-  obtain ⟨m, hm, _, hnfac⟩ := two_adic_decomposition hn
+  obtain ⟨m, hm, _, hnfac⟩ :=
+    (show ∃ m : ℕ, 0 < m ∧ Odd m ∧ n = 2 ^ padicValNat 2 n * m from
+      D5.S3.Combinatorics.Games.DivisorNimGrundy.valuation_decomposition (by omega))
   have hcard : Fintype.card (Fin n) =
       Fintype.card ((Fin (padicValNat 2 n) → ZMod 2) × Fin m) := by
     simpa only [Fintype.card_prod, Fintype.card_fun, ZMod.card, Fintype.card_fin]
