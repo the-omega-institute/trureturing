@@ -2014,4 +2014,4 @@ the exact value of $B_n$ and the complete equality set remain unresolved; none o
 the statements here supplies a general-$n$ bound, a kernel result, or a resolution
 of the original all-$n$ problem.
 
-## 18. 追加锚（本行以下为增补区）
+## 追加锚（本行以下为增补区）
