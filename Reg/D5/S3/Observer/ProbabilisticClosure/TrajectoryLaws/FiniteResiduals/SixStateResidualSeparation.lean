@@ -11,7 +11,7 @@ open D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.FiniteResiduals.SixState
 open D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 namespace Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.FiniteResiduals.SixStateResidualSeparation
 
-def signature : Signature where
+abbrev signature : Signature where
   Params := Unit
   State _ := List Bool
   Role := Bool
@@ -21,7 +21,7 @@ def signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R :=
 
@@ -35,11 +35,11 @@ def arena : Arena where
     ¬ (∀ n, residual kernel n 0 1) ∧ StochasticQuotient ∧
     (∀ update, 1/2 ≤ updateFailure update 0)
 
-def actual : Realization signature :=
+abbrev actual : Realization signature :=
   realize signature (fun i _ w => if i then wordProb kernel 1 w else wordProb kernel 0 w)
     (fun e => nomatch e)
 
-def intervention (i : Bool) : Realization signature :=
+abbrev intervention (i : Bool) : Realization signature :=
   realize signature (fun j _ w => if j = i then 0 else actual.readout j () w)
     (fun e => nomatch e)
 
