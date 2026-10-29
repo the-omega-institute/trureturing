@@ -136,9 +136,9 @@ private theorem normalizeMap_ker : LinearMap.ker normalizeMap = ⊥ := by
     have hstar : IsUnit normalizerᴴ.det := by
       rw [Matrix.det_conjTranspose]
       exact normalizer_unit.star
-    have hright := Matrix.mul_left_injective_of_inv normalizerᴴ (normalizerᴴ)⁻¹
+    have hright := Matrix.mul_left_injective_of_inv (l := Fin 7) normalizerᴴ (normalizerᴴ)⁻¹
       (Matrix.mul_nonsing_inv normalizerᴴ hstar)
-    have hleft := Matrix.mul_right_injective_of_inv normalizer⁻¹ normalizer
+    have hleft := Matrix.mul_right_injective_of_inv (l := Fin 7) normalizer⁻¹ normalizer
       (Matrix.nonsing_inv_mul normalizer normalizer_unit)
     apply hleft
     apply hright
