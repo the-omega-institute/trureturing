@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Dynamics.OdometerCyclicFactor
 import Reg.Support.DependentFamily
 
+/-! Full-telescope reconstruction readout for the canonical odometer factor. -/
+
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S1.Dynamics.OdometerCyclicFactor
@@ -57,7 +59,6 @@ private theorem actual_law : arena.{u}.Law actual := by
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  letI : Fact (Nat.Prime 2) := ⟨by decide⟩
   obtain ⟨N, w, hw⟩ := @h 2 inferInstance (ULift.{u} Unit) inferInstance inferInstance
     (fun _ _ => ⟨()⟩) continuous_const (by intros; rfl)
   have hf := hw 0 0
@@ -81,14 +82,14 @@ def family : Registration arena.{u}
     intro i
     let P : Parameters.{u} := ⟨2, by decide, ULift.{u} Bool, fun _ _ => ⟨false⟩, 0, 0⟩
     refine ⟨P, ULift.up false, ULift.up true, ?_⟩
-    change decide ((ULift.up false : ULift.{u} Bool) = ULift.up false) ≠
-      decide ((ULift.up false : ULift.{u} Bool) = ULift.up true)
-    decide
+    simp [actual, realize, equalityReadout, P]
+    intro h
+    cases h
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@exists_cyclic_factor_of_shift_equivariant.{u})
     (Realization signature.{u}) Unit Unit where
-  unitName := `D5.S1.Dynamics.OdometerCyclicFactor.exists_cyclic_factor_of_shift_equivariant.__information_unit
+  unitName := `Reg.D5.S1.Dynamics.OdometerCyclicFactor.cyclicFactorUnit
   realizationName := `Reg.D5.S1.Dynamics.OdometerCyclicFactor.family
   realizationSource := none
   generated := false
