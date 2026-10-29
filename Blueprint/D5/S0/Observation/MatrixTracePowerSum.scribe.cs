@@ -14,6 +14,15 @@ internal sealed class MatrixTracePowerSumDocument : IScribeDocumentDefinition
         H("Power Traces from Trace and Determinant in Size Two"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("matrix-square-cayley-hamilton"),
+                DeclarationHandle.Create("D5/S0/Observation/MatrixTracePowerSum.sq_eq"),
+                H("The Cayley-Hamilton identity in size two"),
+                StatementSource.FromAuthor(SquareFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Over a commutative ring, the square of a two-by-two matrix is its trace times the matrix minus its determinant times the identity matrix."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("matrix-pow-add-two"),
                 DeclarationHandle.Create("D5/S0/Observation/MatrixTracePowerSum.pow_add_two"),
                 H("The matrix power recurrence in size two"),
@@ -65,6 +74,19 @@ internal sealed class MatrixTracePowerSumDocument : IScribeDocumentDefinition
                         + "the closed form and removes the field hypothesis, and that file is "
                         + "neither restated nor amended."))),
             DescribeRole.Theorem))));
+
+    private static Formula SquareFormula()
+    {
+        Formula r = F.Id("R"), m = F.Id("M");
+        return Disp(new Formula.Aligned([
+            Seq(Forall, Sp, r, Colon, Sp, TypeUniverse(), Comma, Sp,
+                TypeClass(Call("CommRing", r)), Comma),
+            Seq(Forall, Sp, m, Colon, Sp, MatrixSpace(r), Comma),
+            Seq(MatrixPower(m, Num(2)), Sp, Eq, Sp,
+                MatrixTrace(m), Sp, Cdot, Sp, m, Sp, Minus, Sp,
+                MatrixDeterminant(m), Sp, Cdot, Sp, Num(1))
+        ]));
+    }
 
     private static Formula TraceRecurrenceFormula()
     {
