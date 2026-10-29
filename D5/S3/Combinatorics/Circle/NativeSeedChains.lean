@@ -92,6 +92,17 @@ private theorem phase_add {k : ℕ} (hk : 0 < k) (a : Fin k) (i j : ℕ) :
   simp only [phase]
   rw [Nat.mod_add_mod, Nat.add_assoc]
 
+private theorem path_nodup {k : ℕ} (hk : 0 < k) (a : Fin k) (m : ℕ)
+    (hm : m ≤ k) : (path hk a m).Nodup := by
+  unfold path
+  apply (List.nodup_range m).map_on
+  intro i hi j hj he
+  have hi' : i < k := lt_of_lt_of_le (List.mem_range.mp hi) hm
+  have hj' : j < k := lt_of_lt_of_le (List.mem_range.mp hj) hm
+  have hh : Nat.ModEq k (a.val + i) (a.val + j) := congrArg Fin.val he
+  have hc := Nat.ModEq.add_left_cancel' a.val hh
+  simpa only [Nat.ModEq, Nat.mod_eq_of_lt hi', Nat.mod_eq_of_lt hj'] using hc
+
 private theorem first_root {k t : ℕ} (hk : 3 ≤ k)
     (a : Fin k) (ha : 0 < actualSource k t a) :
     ∃ r : ℕ, quarter k ≤ actualSource k t (phase (by omega) a r) ∧
@@ -158,6 +169,7 @@ theorem native_chain_extraction {k t : ℕ} (hk : 3 ≤ k)
       let neg := phase (by omega) a (r + 1)
       let next := phase (by omega) a (r + 2)
       let s := path (by omega) a r
+      r + 2 ≤ k ∧ (s ++ [root, neg]).Nodup ∧
       0 < actualSource k t a ∧ actualSource k t a % 4 = 1 ∧
       (∀ j < r, 0 < actualSource k t (phase (by omega) a j) ∧
         actualSource k t (phase (by omega) a j) < quarter k) ∧
@@ -183,6 +195,24 @@ theorem native_chain_extraction {k t : ℕ} (hk : 3 ≤ k)
   let root := phase (by omega : 0 < k) a r
   let neg := phase (by omega : 0 < k) a (r + 1)
   let next := phase (by omega : 0 < k) a (r + 2)
+  have hback : phase (by omega) a (k - 1) = n := by
+    dsimp [a]
+    rw [phase_add]
+    apply Fin.ext
+    simp [phase, show 1 + (k - 1) = k by omega, Nat.mod_eq_of_lt n.isLt]
+  have hlen : r + 2 ≤ k := by
+    by_contra hh
+    have ht := hpow (k - 1) (by omega)
+    rw [hback] at ht
+    have hp : 0 < (2 : ℤ) ^ (k - 1) := pow_pos (by norm_num) _
+    nlinarith [mul_pos hp ha]
+  have hinv : path (by omega) a r ++ [root, neg] = path (by omega) a (r + 2) := by
+    unfold path
+    rw [List.range_add, List.map_append]
+    norm_num [List.map_map, Function.comp_def, root, neg]
+  have hnodup : (path (by omega) a r ++ [root, neg]).Nodup := by
+    rw [hinv]
+    exact path_nodup (by omega) a (r + 2) hlen
   have hroot : quarter k ≤ actualSource k t root := hr
   have hrootpos : 0 < actualSource k t root := by omega
   have hu := hupper root hrootpos
@@ -216,6 +246,9 @@ theorem native_chain_extraction {k t : ℕ} (hk : 3 ≤ k)
       have hh : n.val + k - 1 + 1 = n.val + k := by omega
       rw [hh, Nat.add_mod_right, Nat.mod_eq_of_lt n.isLt]
     have hp : quarter k ≤ actualSource k t pred := by
+      have hbpred := centered_bounds hNpos hodd ((2 : ℤ) ^ pred.val * t)
+      change -half k ≤ actualSource k t pred ∧ actualSource k t pred ≤ half k at hbpred
+      rw [hC] at hbpred
       have ht := phase_step hk t pred 0
       simp only [phase_zero, zero_add, he] at ht
       unfold doubleStep at ht
@@ -256,7 +289,7 @@ theorem native_chain_extraction {k t : ℕ} (hk : 3 ≤ k)
     rw [path_length] at hsum
     rw [hsum, hrootpow]
     ring
-  refine ⟨r, ha, hseedmod, hpre, hdyadic, hrootpow, hroot, hu,
+  refine ⟨r, hlen, hnodup, ha, hseedmod, hpre, hdyadic, hrootpow, hroot, hu,
     hrootstep, hnegval, hnextstep, hnextpos, ?_, hmass, ?_, ?_⟩ <;> omega
 
 end D5.S3.Combinatorics.Circle.NativeSeedChains
