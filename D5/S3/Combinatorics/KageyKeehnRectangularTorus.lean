@@ -4,8 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: A rectangular-torus plane lift fixed by any of the four transposing right actions descends to the gcd square torus.
--/
+   digest: A rectangular-torus plane lift fixed by any of the four transposing right actions descends to the gcd square torus. -/
 
 import Mathlib
 
