@@ -406,7 +406,7 @@ private lemma violation_gap :
     (congrArg₂ (fun a b : ℝ => a * b) value_tau value_beta)
   refine he.trans ?_
   have hs := Real.sq_sqrt (show (0 : ℝ) ≤ 145 by norm_num)
-  nlinarith
+  nlinarith only [hs]
 
 private lemma strict_violation :
     (1 - skewCoherence tau) * (1 - skewCoherence beta) < 1 - skewCoherence rho := by
