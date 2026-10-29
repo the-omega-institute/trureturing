@@ -68,6 +68,10 @@ $$\forall n:\mathbb{N}, \exists k:\mathbb{Z}, \operatorname{natval}\left(n!\righ
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Residue/HannaA226839Congruence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a226839-triangular-egf-mod-three` (proved) by `D5/S1/Recurrence/Residue/HannaA226839Congruence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a226839-triangular-egf-mod-three","declaration_gid":"D5/S1/Recurrence/Residue/HannaA226839Congruence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2013). *OEIS A226839: triangular-exponent exponential generating function*. URL: <https://oeis.org/A226839>.
