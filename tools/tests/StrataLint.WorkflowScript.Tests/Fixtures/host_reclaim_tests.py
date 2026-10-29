@@ -361,6 +361,16 @@ class HostReclaimTests(unittest.TestCase):
             self.assertEqual("removed" if delete else "would_remove", item["action"], rows)
             self.assertEqual(not delete, target.exists())
 
+    def test_remnant_main_checkout_name_preserves_trailing_spaces(self):
+        renamed = self.main.with_name("main with trailing space ")
+        self.main.rename(renamed)
+        self.main = renamed
+        target = self.remnant(blueprint=False)
+        rows = self.run_sweep(artifact_root=self.root / "tmp")
+        self.assertIn((str(target), "removed"),
+                      {(row.get("path"), row.get("action")) for row in rows})
+        self.assertFalse(target.exists())
+
     def test_case_inventory_lists_every_case_without_running_git(self):
         environment = dict(os.environ, PATH="")
         result = subprocess.run([sys.executable, "-B", __file__, str(ROOT), "--list-tests"],

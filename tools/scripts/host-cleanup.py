@@ -520,7 +520,7 @@ def remnant_candidates(repository, inventory):
         return
     preservation, _ = worktree_modules()
     try:
-        top = preservation.git(main, "rev-parse", "--show-toplevel").stdout.strip()
+        top = preservation.git(main, "rev-parse", "--show-toplevel").stdout.removesuffix(b"\n")
         if (Path(os.fsdecode(top)).resolve() != main or not (main / ".git").is_dir()
                 or preservation.common(main) != (main / ".git").resolve()
                 or preservation.common(repository) != preservation.common(main)):
