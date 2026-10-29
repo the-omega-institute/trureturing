@@ -41,7 +41,36 @@ internal sealed class ThetaTailRobinWitnessDocument : IScribeDocumentDefinition
                         "The resulting integer is exactly D=lcm(1,...,floor(x)). It satisfies "
                         + "D>5040, sigma(D)/D>exp(gamma)*log(log(D)), log(D)=psi(x), and "
                         + "D<=exp(x*log(x)), where gamma is the real Euler constant. "
-                        + "The implication requires the stated actual tail peak; no existence of such a peak "
-                        + "or conclusion about zeros of the zeta function is asserted."))),
+                        + "This theorem takes the stated actual tail peak as a premise; the following "
+                        + "application supplies it conditionally from a genuine zeta zero.")),
+                    Paragraph(Text(
+                        "Suppose rho is a complex number with zeta(rho)=0 and 1/2<beta=Re(rho)<1. "
+                        + "Then for every natural number B there is a real x>=10000 such that the actual "
+                        + "integer D=lcm(1,...,floor(x)) satisfies B<D, 5040<D, "
+                        + "sigma(D)/D>exp(gamma)*log(log(D)), log(D)=psi(x), and D<=exp(x*log(x)). "
+                        + "This is an application of CriticalThetaTailPeak.critical_theta_tail_peak, "
+                        + "ActualThetaTailLaplace.actual_theta_tail_laplace_ode and the arithmetic theorem above, "
+                        + "with the same actual theta tail and the same prefix-lcm integer throughout.")),
+                    Paragraph(Text(
+                        "To derive the application, let m be analyticOrderNatAt(zeta,rho) and "
+                        + "A=m/(norm(rho)*norm(rho-1)). The critical peak theorem gives m>0; "
+                        + "the real-part bounds exclude rho=0 and rho=1, so A>0. Set c=A/2 and delta=beta-1/2>0. "
+                        + "The Mathlib limit tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero at exponent one "
+                        + "gives 7*u*exp(-delta*u) tending to zero. Choose a threshold beyond which this "
+                        + "quantity is less than c, and choose U also beyond 1, log(10000) and log(B+1). "
+                        + "The genuine-zero critical peak theorem supplies u>max(U,log(2)) with "
+                        + "c<u*exp((1-beta)*u)*f(u). Since u*exp((1-beta)*u)>0 and its product "
+                        + "with 7*exp(-u/2) is exactly 7*u*exp(-delta*u), this forces "
+                        + "f(u)>7*exp(-u/2). The actual change-of-variables identity f(u)=F(exp(u)), "
+                        + "where F is the negative weighted theta integral, and sqrt(exp(u))=exp(u/2) "
+                        + "give F(x)>7/sqrt(x) at x=exp(u)>=10000. The theorem above now gives "
+                        + "the strict Robin inequality, exact logarithm and original size bound at this x.")),
+                    Paragraph(Text(
+                        "The choice x>=B+1 gives B+1<=floor(x). For n=floor(x)>=1, "
+                        + "Chebyshev.choose_dvd_lcmUpto gives n dividing lcmUpto(n); positivity of "
+                        + "lcmUpto(n) then gives n<=D, hence B<D. Thus the conditional conclusion "
+                        + "concerns unbounded genuine integers, without an additional assumed tail peak. "
+                        + "It does not establish the existence of an off-line zero, RH, an actual numerical "
+                        + "Robin counterexample, or an effective cutoff or location for these witnesses."))),
                 DescribeRole.Theorem))));
 }
