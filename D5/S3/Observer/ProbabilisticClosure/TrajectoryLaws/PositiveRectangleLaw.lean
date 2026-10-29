@@ -345,7 +345,7 @@ private theorem exclusion (θ : Presentation H)
   obtain ⟨ε,hε,hguard⟩ := actual_finite_guard θ w R hp
   exact no_uniform_exterior_guard θ hfull (guard w) hG ε hε (w.length+1) hguard
 
-private theorem product_ofFn (θ : Presentation H) (n : ℕ) (w : Fin n → Bool) :
+theorem product_ofFn (θ : Presentation H) (n : ℕ) (w : Fin n → Bool) :
     product θ (List.ofFn w) = wordMatrix θ.matrix n w := by
   induction n with
   | zero => simp [product,wordMatrix]
