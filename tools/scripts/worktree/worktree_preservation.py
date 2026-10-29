@@ -100,6 +100,25 @@ def remove_payload(target):
         raise Refused("worktree_payload_changed_during_removal")
 
 
+@contextmanager
+def payload_removal_budget(force):
+    """Bound interruptible payload deletion and share its deadline with Git."""
+    if force:
+        yield None
+        return
+    deadline = time.monotonic() + 300
+    def expired(signum, frame):
+        raise subprocess.TimeoutExpired(["worktree", "remove"], 300,
+                                        stderr=b"payload removal deadline expired")
+    handler = signal.signal(signal.SIGALRM, expired)
+    previous = signal.setitimer(signal.ITIMER_REAL, 300)
+    try:
+        yield deadline
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, *previous)
+        signal.signal(signal.SIGALRM, handler)
+
+
 def ignored_by_snapshot(target, metadata, commit, paths):
     """Evaluate untracked paths against the checkpoint's tracked ignore files."""
     with tempfile.TemporaryDirectory(prefix="worktree-removal-ignore-") as directory:
@@ -394,9 +413,13 @@ def remove(options):
                                    native_locks=checkpoint.get("native_locks", []))
                 flags = ["--force", "--force"] if "locked" in refreshed else ["--force"]
                 removing = True
-                remove_payload(target)
+                with payload_removal_budget(options.force) as deadline:
+                    remove_payload(target)
+                remaining = None if deadline is None else deadline - time.monotonic()
+                if remaining is not None and remaining <= 0:
+                    raise subprocess.TimeoutExpired(["worktree", "remove"], 300)
                 git(source, "worktree", "remove", *flags, "--", target,
-                    timeout=None if options.force else 300)
+                    timeout=remaining)
                 outcomes.append(dict(path=str(target), outcome="removed", checkpoint=checkpoint,
                                      recovery_branch=recovery_branch,
                                      recovery_roots=getattr(stack, "recovery_roots", [])))
