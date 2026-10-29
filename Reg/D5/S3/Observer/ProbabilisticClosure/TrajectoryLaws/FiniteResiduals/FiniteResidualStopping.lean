@@ -18,7 +18,7 @@ structure System where
   Letter : Type v
   states : Fintype State
   letters : Fintype Letter
-  joint : @FiniteMarkovKernel State (Letter × State) (@Prod.fintype Letter State letters states)
+  joint : @FiniteMarkovKernel State (Letter × State) (@instFintypeProd Letter State letters states)
 
 attribute [instance] System.states System.letters
 

@@ -61,7 +61,7 @@ def stableClass (x : Fin 6) : Fin 5 :=
 private theorem first_partition (x x' : Fin 6) :
     residual kernel 1 x x' ↔ firstClass x = firstClass x' := by
   fin_cases x <;> fin_cases x' <;>
-    norm_num [residual, classMass, kernel, row, firstClass, Fin.sum_univ_succ,
+    norm_num [FiniteResidualStopping.residual, classMass, kernel, row, firstClass, Fin.sum_univ_succ,
       Fin.forall_fin_succ, Bool.forall_bool]
 
 private theorem second_partition (x x' : Fin 6) :
@@ -115,7 +115,9 @@ private theorem absorbing_word (w : List Bool) :
   induction w with
   | nil => simp [wordProb]
   | cons y w ih =>
-    cases y <;> simp [wordProb,kernel,row,Fin.sum_univ_succ,ih]
+    have hz : wordProb ⟨row,row_stochastic⟩ 5 w =
+        (if w.all (fun b => !b) then 1 else 0) := ih
+    cases y <;> simp [wordProb,kernel,row,Fin.sum_univ_succ,hz]
 
 /-- The common law has first bit zero, a fair second bit and zero thereafter. -/
 def profile : List Bool → ℝ
@@ -132,8 +134,10 @@ private theorem common_word (w : List Bool) :
     cases w with
     | nil => cases y <;> norm_num [wordProb,kernel,row,Fin.sum_univ_succ,profile]
     | cons b w =>
+      have hz : wordProb ⟨row,row_stochastic⟩ 5 w =
+          (if w.all (fun b => !b) then 1 else 0) := absorbing_word w
       cases y <;> cases b <;>
-        simp [wordProb,kernel,row,Fin.sum_univ_succ,profile,absorbing_word]
+        simp [wordProb,kernel,row,Fin.sum_univ_succ,profile,hz]
 
 /-- Canonical representatives of precisely the five stable classes. -/
 def representative (q : Fin 5) : Fin 6 := ⟨q.val, by omega⟩

@@ -13,6 +13,7 @@ import Mathlib.Data.Finset.Union
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
+attribute [local instance] Classical.propDecidable
 open scoped BigOperators
 open D5.S3.Estimation.DecisionRisk.DescentDefectBounds
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.FiniteResiduals.FiniteResidualStopping
@@ -112,9 +113,9 @@ theorem residual_sound (K : FiniteMarkovKernel S (Y × S)) (n : ℕ) (x x' : S)
   induction n generalizing x x' with
   | zero =>
     intro w hw
-    have : w = [] := List.length_eq_zero.mp (Nat.eq_zero_of_le_zero hw)
-    subst w
-    rfl
+    cases w with
+    | nil => rfl
+    | cons y w => simp at hw
   | succ n ih =>
     intro w hw
     cases w with
@@ -137,6 +138,7 @@ private theorem archive_word (K : FiniteMarkovKernel S (Y × S))
       simp only [archiveProb, accepts, ih]
       by_cases h : accepts (f y) w <;> simp [h, wordProb]
 
+omit [Fintype Y] in
 private theorem accepts_length {n : ℕ} (E : Experiment Y n) (w : List Y)
     (h : accepts E w) : w.length ≤ n := by
   induction E generalizing w with
@@ -153,6 +155,7 @@ private def full : (k : ℕ) → Experiment Y k
   | 0 => .stop
   | k+1 => .step (fun _ => full k)
 
+omit [Fintype Y] in
 private theorem full_accepts (w : List Y) : accepts (full w.length) w := by
   induction w with
   | nil => rfl
@@ -222,9 +225,8 @@ theorem archive_probability_law (K : FiniteMarkovKernel S (Y × S))
   classical
   refine ⟨archive_nonneg K E x, ?_, archive_total K E x⟩
   intro w hw
-  rw [archive_word, if_neg]
-  intro ha
-  exact (Nat.not_le_of_lt hw) (accepts_length E w ha)
+  rw [archive_word]
+  exact if_neg (fun ha => (Nat.not_le_of_lt hw) (accepts_length E w ha))
 
 #print axioms residual_sound
 #print axioms trace_iff_stopping
