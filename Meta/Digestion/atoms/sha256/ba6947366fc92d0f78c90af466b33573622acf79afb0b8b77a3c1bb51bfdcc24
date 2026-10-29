@@ -1,0 +1,30 @@
+**定理 9.3（有限 DAG 的稳健切面不变性）。** 设有限事件偏序的每个事件对应共同载体上的 CPTP 映射 $\mathcal E_e$，含结果寄存器和观察者记忆；不可比事件满足
+
+<a id="eq-9-u04"></a>
+
+$$
+\tfrac12\|\mathcal E_e\mathcal E_f-\mathcal E_f\mathcal E_e\|_\diamond
+\le\kappa_{ef}.
+$$
+
+若两个线性扩张由 $K$ 次相邻不可比事件交换连接，则完整组合通道距离满足
+
+<a id="eq-9-2"></a>
+
+$$
+\tfrac12\|\mathcal C_\sigma-\mathcal C_\tau\|_\diamond
+\le\sum_{\text{交换路径}}\kappa_{ef}
+\le K\kappa.
+\tag{9.2}
+$$
+
+**证明。** 先证明两个线性扩张可由相邻不可比事件交换连接：取目标次序的首事件，把它在当前次序中向前移动；它前面的事件都与它不可比，否则某个次序违反偏序。逐个相邻交换后固定该事件，再对剩余事件归纳。单次交换的整个组合差是
+
+$$
+\mathcal S\circ(\mathcal E_e\mathcal E_f-\mathcal E_f\mathcal E_e)\circ\mathcal P,
+$$
+
+其中前、后缀是 CPTP，故不放大 diamond 缺陷；对全部交换应用三角不等式得到（9.2）。若记录分别追加 $A$ 与 $B$，即使系统端恒等，完整输出也可能因 $AB$ 与 $BA$ 不同而距离一。
+
+<a id="sec-10"></a>
+
