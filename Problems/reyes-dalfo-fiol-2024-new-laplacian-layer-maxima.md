@@ -14,8 +14,9 @@ motivation_gids:
 
 M. A. Reyes, C. Dalfó and M. À. Fiol, *On the spectra and spectral radii
 of token graphs*, arXiv:2310.16929v1, Section 3, Definition 3.1 and
-Conjecture 3.3; journal version, *São Paulo Journal of Mathematical
-Sciences* (2024), DOI 10.1007/s40590-023-00583-3, Section 3:
+Conjecture 3.3; journal version, *Boletín de la Sociedad Matemática
+Mexicana*, volume 30, article 11 (2024), DOI
+10.1007/s40590-023-00583-3, Section 3:
 
 > Conjecture 3.3. For any graph G, ρ₁(G) ≤ ρ₂(G) ≤ ⋯ ≤ ρ⌊n/2⌋(G).
 
@@ -109,6 +110,27 @@ method or positive-instance theorem is packaged. The designated utility
 refutation is exempt from four-slot registration; there are no other
 new public theorem audit targets. The utility is `certified-instance`
 with basis `refutes`, bound to this module's literal `claim` and `result`.
+
+Source fact: immediately after Conjecture 3.3, the source observes from its
+equation (7) that, if the conjecture holds, then
+ρ_k(G) = ρ(F_k(G)) for k ≤ n/2. This is a conditional consequence of the
+source conjecture, not an additional unconditional premise of the refuted
+claim.
+
+Compiled consequence: the K₁,₃ witness removes the inherited top eigenvalue
+4 when forming the second new layer. Thus its residual layer is {3, 3} and
+has maximum 3, while the full two-token Laplacian spectrum still has radius
+4. The full-spectrum positive-level radii therefore remain monotone in this
+witness (4 = 4); the decrease is specific to the new-layer maxima.
+
+Source fact: neighboring Conjecture 3.2 concerns the minima α_k and is not
+settled by this counterexample. The refutation also does not settle the
+source's conditional equality consequence or any separate full-radius claim.
+
+Open repair boundary: no condition restoring successive new-layer monotonicity
+has been proved here. Restricted graph classes, a different comparison of
+full-sector and residual spectra, and hypotheses under which the source's
+conditional equality can be established remain open questions for later work.
 
 ## ASSUMED-UNVERIFIED
 

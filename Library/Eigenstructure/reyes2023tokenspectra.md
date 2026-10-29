@@ -32,8 +32,16 @@ Primary source: [arXiv:2310.16929v1](https://arxiv.org/html/2310.16929v1),
 Section 3, Definition 3.1 and Conjecture 3.3;
 [versioned PDF](https://arxiv.org/pdf/2310.16929v1).
 The [journal article](https://doi.org/10.1007/s40590-023-00583-3),
-*São Paulo Journal of Mathematical Sciences* (2024), Section 3, retains
+*Boletín de la Sociedad Matemática Mexicana*, volume 30, article 11 (2024),
+Section 3, retains
 Definition 3.1 and Conjecture 3.3.
+
+## Verified locator
+
+- DOI: https://doi.org/10.1007/s40590-023-00583-3, *Boletín de la Sociedad Matemática Mexicana* 30, article 11 (2024).
+- arXiv HTML: https://arxiv.org/html/2310.16929v1, Section 3, Definition 3.1 and Conjecture 3.3.
+- The DOI article is the journal version of the arXiv source; both locators identify the consecutive spectral-multiset definition and the successive-maxima conjecture used here.
+
 The neighboring Conjecture 3.2 concerns minima, and is a different claim.
 The full-sector spectral radii in equation (7) are different quantities
 from these new-layer maxima.
