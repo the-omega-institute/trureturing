@@ -8,7 +8,6 @@
 
 import D5.S3.Quantum.TensorNetworks.UniformMPSExpectedDimensionRefutation
 import D5.S0.Observation.MatrixTracePowerSum
-import Mathlib.Algebra.Lie.Classical
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
