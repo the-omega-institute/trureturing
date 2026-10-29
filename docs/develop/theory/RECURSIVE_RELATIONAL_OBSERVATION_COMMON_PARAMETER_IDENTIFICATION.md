@@ -71,7 +71,7 @@ $$
 
 $$
 t_k=\int(xy)^k\Lambda(dx,dy),\quad
-u_k=\int x(xy)^k\Lambda(dx,dy),\quad
+\nu_k=\int x(xy)^k\Lambda(dx,dy),\quad
 v_k=\int y(xy)^k\Lambda(dx,dy).
 \tag{CPI.7}
 $$
