@@ -56,19 +56,48 @@ private def effect (j : Fin 8) : Matrix (Fin 7) (Fin 7) ℂ :=
 
 private def frame : Matrix (Fin 7) (Fin 7) ℂ := ∑ j, effect j
 
-private theorem frame_posDef : frame.PosDef := by sorry
+set_option maxHeartbeats 2000000 in
+private theorem frame_posDef : frame.PosDef := by
+  classical
+  have hpsd : frame.PosSemidef := by
+    apply Matrix.posSemidef_sum Finset.univ
+    intro j hj
+    apply Matrix.posSemidef_sum Finset.univ
+    intro b hb
+    exact Matrix.posSemidef_vecMulVec_self_star b.1
+  have hframe : frame =
+      !![!![5, 0, 0, 2 - 2 * Complex.I, 0, 0, 2];
+        !![0, 5, 0, 0, 2 - 2 * Complex.I, 0, 2];
+        !![0, 0, 5, 0, 0, 2 - 2 * Complex.I, 2];
+        !![2 + 2 * Complex.I, 0, 0, 5, 0, 0, 1 + Complex.I];
+        !![0, 2 + 2 * Complex.I, 0, 0, 5, 0, 1 + Complex.I];
+        !![0, 0, 2 + 2 * Complex.I, 0, 0, 5, 1 + Complex.I];
+        !![2, 2, 2, 1 - Complex.I, 1 - Complex.I, 1 - Complex.I, 6]] := by
+    ext i j
+    fin_cases i <;> fin_cases j <;>
+      norm_num [frame, effect, blocks, vector, Matrix.sum_apply,
+        Matrix.vecMulVec_apply, Pi.star_apply, Fin.sum_univ_succ]
+  apply hpsd.posDef_iff_det_ne_zero.mpr
+  rw [hframe]
+  norm_num [Matrix.det_apply]
 
 private theorem normalizer_exists :
     ∃ R : Matrix (Fin 7) (Fin 7) ℂ, IsUnit R.det ∧ R * frame * Rᴴ = 1 := by
   rcases (CStarAlgebra.isStrictlyPositive_iff_eq_mul_star_self.mp
     frame_posDef.isStrictlyPositive) with ⟨b, hb, hframe⟩
+  have hdet : IsUnit b.det := (Matrix.isUnit_iff_isUnit_det b).mp hb
+  have hstardet : IsUnit bᴴ.det := by
+    rw [Matrix.det_conjTranspose]
+    exact hdet.star
   refine ⟨b⁻¹, ?_, ?_⟩
   · exact Matrix.isUnit_iff_isUnit_det _ |>.mp (Matrix.isUnit_nonsing_inv_iff.mpr hb)
   · rw [hframe, Matrix.conjTranspose_nonsing_inv]
-    rw [Matrix.mul_assoc, Matrix.mul_assoc, Matrix.nonsing_inv_mul_cancel_left]
-    · rw [Matrix.mul_assoc, Matrix.mul_nonsing_inv]
-      exact Matrix.one_mul _
-    · exact hb.det.isUnit
+    calc
+      b⁻¹ * (b * bᴴ) * bᴴ⁻¹ = (b⁻¹ * b) * (bᴴ * bᴴ⁻¹) := by
+        simp only [Matrix.mul_assoc]
+      _ = 1 := by
+        rw [Matrix.nonsing_inv_mul b hdet, Matrix.mul_nonsing_inv bᴴ hstardet]
+        simp
 
 private def normalizer : Matrix (Fin 7) (Fin 7) ℂ :=
   Classical.choose normalizer_exists
