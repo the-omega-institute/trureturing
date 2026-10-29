@@ -4,7 +4,7 @@
    mirror-E: none(waiver:symbolic-structural-theorems)
    anchors: []
    utility: none
-   digest: Bounded exponent forces trivial return data in finite rootable isotypic classes. -/
+   digest: Finite actual isotypic classes have period one and every positive holonomy root. -/
 
 import D5.S3.ConceptDynamics.Coding.PrimitiveLifts.FiniteOrbitRootCriterion
 import Mathlib.Data.Nat.Factorial.Basic

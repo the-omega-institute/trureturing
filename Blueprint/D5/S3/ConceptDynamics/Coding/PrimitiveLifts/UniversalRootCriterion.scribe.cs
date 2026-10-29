@@ -31,10 +31,11 @@ internal sealed class UniversalRootCriterionDocument : IScribeDocumentDefinition
         And(Equal(Call("period",Ai(I("i"))),D(1)),HolonomyRoots)),
         B("i",I("iota")));
     private static Formula Scope(Formula f) => Q(
-        Q(Seq(OpenBracket,Call("Group",I("H")),CloseBracket,Sp,f),
-            B("iota",Call("TypeAt",I("w"))),
-            B("X",Call("Map",I("iota"),Call("TypeAt",I("v")))),
-            B("A",Call("DependentReturnAtlases",I("H"),I("X")))),
+        Seq(OpenBracket,Call("Group",I("H")),CloseBracket,
+            Q(f,
+                B("iota",Call("TypeAt",I("w"))),
+                B("X",Call("Map",I("iota"),Call("TypeAt",I("v")))),
+                B("A",Call("DependentReturnAtlases",I("H"),I("X"))))),
         B("u",I("Universe")),B("v",I("Universe")),B("w",I("Universe")),
         B("H",Call("TypeAt",I("u"))));
 
