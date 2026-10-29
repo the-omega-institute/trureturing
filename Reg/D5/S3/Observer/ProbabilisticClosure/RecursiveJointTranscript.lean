@@ -37,7 +37,7 @@ end Parameters
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := PMF (List (Token p.interface))
+  Output _ p := PMF (Transcript p.interface p.Archive)
   Anchor := Empty
   finiteAnchor := inferInstance
 
@@ -57,9 +57,9 @@ relation, action contracts and every other operand fixed. -/
 def rejected : Realization signature.{u} :=
   realize signature (fun _ p z =>
     if ht : Nonempty (p.interface.State p.i) then
-      if z = Classical.choice ht then PMF.pure [Token.horizon p.i]
-      else PMF.pure [Token.stopped p.i]
-    else PMF.pure [Token.horizon p.i]) Empty.elim
+      if z = Classical.choice ht then PMF.pure ([Token.horizon p.i], [p.archive])
+      else PMF.pure ([Token.stopped p.i], [p.archive])
+    else PMF.pure ([Token.horizon p.i], [p.archive])) Empty.elim
 
 def toyInterface (visible : Bool) : Interface.{u} where
   Ty := ULift Unit
@@ -100,7 +100,10 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   have hh := law p.interface p.source p.Archive 0 related 0 le_rfl p.policy p.archive []
   have hz : z = Classical.choice (show Nonempty (p.interface.State p.i) from ht) := rfl
   change rejected.readout () p z = rejected.readout () p w at hh
-  simp only [rejected, realize, dif_pos ht, if_pos hz, if_neg hw] at hh
+  simp only [rejected, realize, dite_eq_left ht] at hh
+  change (if z = z then PMF.pure ([Token.horizon p.i], [p.archive]) else PMF.pure ([Token.stopped p.i], [p.archive])) =
+    (if w = z then PMF.pure ([Token.horizon p.i], [p.archive]) else PMF.pure ([Token.stopped p.i], [p.archive])) at hh
+  rw [ite_eq_left rfl, ite_eq_right hw] at hh
   have bad := congrArg PMF.support hh
   simp only [PMF.support_pure, Set.singleton_eq_singleton_iff] at bad
   cases bad
@@ -109,10 +112,10 @@ private theorem actual_dependence : ObservationalDependence signature.{u} actual
   intro _
   refine ⟨toyParameter.{u} true, ⟨false⟩, ⟨true⟩, ?_⟩
   intro eq
-  change PMF.pure [Token.observed (⟨()⟩ : (toyInterface true).Ty) (⟨false⟩ : ULift Bool),
-      Token.horizon ⟨()⟩] =
-    PMF.pure [Token.observed (⟨()⟩ : (toyInterface true).Ty) (⟨true⟩ : ULift Bool),
-      Token.horizon ⟨()⟩] at eq
+  change PMF.pure ([Token.observed (T := toyInterface.{u} true) ⟨()⟩ ⟨false⟩,
+      Token.horizon (T := toyInterface.{u} true) ⟨()⟩], [⟨()⟩, ⟨()⟩, ⟨()⟩]) =
+    PMF.pure ([Token.observed (T := toyInterface.{u} true) ⟨()⟩ ⟨true⟩,
+      Token.horizon (T := toyInterface.{u} true) ⟨()⟩], [⟨()⟩, ⟨()⟩, ⟨()⟩]) at eq
   have bad := congrArg PMF.support eq
   simp only [PMF.support_pure, Set.singleton_eq_singleton_iff] at bad
   cases bad

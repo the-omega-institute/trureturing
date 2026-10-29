@@ -33,7 +33,9 @@ internal sealed class RecursiveJointTranscriptDocument : IScribeDocumentDefiniti
                 + "complete source row is sampled. The event and record are appended and written into the archive before "
                 + "a successful successor continues. A fixed terminal ends execution and is recorded distinctly. "
                 + "Stopping and exhaustion have separate tags. Thus run is an independently constructed probability mass "
-                + "function on full ordered histories, rather than a supplied transcript-law table.")),
+                + "function on full ordered histories jointly with chronological archive snapshots, including the initial archive "
+                + "and every update after observations, chosen actions, event-record blocks and terminal, stop or horizon tags. "
+                + "The archive writer may leave any such block unchanged. This is constructed execution, rather than a supplied transcript-law table.")),
             Describe.Lean(
                 DescribeId.Create("recursive-residual-preserves-adaptive-law"),
                 DeclarationHandle.Create("D5/S3/Observer/ProbabilisticClosure/RecursiveJointTranscript."

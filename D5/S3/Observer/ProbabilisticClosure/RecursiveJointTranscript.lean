@@ -92,32 +92,43 @@ structure Policy (T : Interface) (Archive : Type u) where
   selects_permitted : ∀ n i o c h a, some a ∈ (select n i o c h).support →
     permitted i o c h a
 
+abbrev Transcript (T : Interface) (Archive : Type u) :=
+  List (Token T) × List Archive
+
 /-- Consume one complete source output, writing its event and record before
 continuing, or retaining the source's fixed terminal without continuation. -/
 def respond {T : Interface} {Archive : Type u} (P : Policy T Archive)
-    {i j : T.Ty} (next : T.State j → Archive → List (Token T) → PMF (List (Token T)))
+    {i j : T.Ty} (next : T.State j → Archive → List (Token T) → PMF (Transcript T Archive))
     (a : T.Action i j) (c : Archive) (h : List (Token T))
-    (x : Output T a) : PMF (List (Token T)) :=
+    (x : Output T a) : PMF (Transcript T Archive) :=
   let block := [Token.event a x.1, Token.recorded a x.2.2]
+  let c' := P.write c h block
+  let h' := h ++ block
   match x.2.1 with
-  | .inl z => next z (P.write c h block) (h ++ block)
-  | .inr f => PMF.pure (h ++ block ++ [Token.terminal a f])
+  | .inl z => (next z c' h').map fun out => (out.1, c :: out.2)
+  | .inr f => PMF.pure (h' ++ [Token.terminal a f],
+      [c, c', P.write c' h' [Token.terminal a f]])
 
 /-- Executed laws are constructed from source rows, never supplied as a law table.
-The returned list is the entire ordered acquired history. -/
+The result retains the entire ordered acquired history jointly with the initial
+archive and each chronological archive update. -/
 def run {T : Interface} (S : Source T) {Archive : Type u} (P : Policy T Archive) :
-    ℕ → (i : T.Ty) → T.State i → Archive → List (Token T) → PMF (List (Token T))
-  | 0, i, z, _, h => PMF.pure (h ++ [Token.observed i (S.observe z), Token.horizon i])
+    ℕ → (i : T.Ty) → T.State i → Archive → List (Token T) → PMF (Transcript T Archive)
+  | 0, i, z, c, h =>
+      let obs := [Token.observed i (S.observe z)]
+      let c' := P.write c h obs
+      PMF.pure (h ++ obs ++ [Token.horizon i], [c, c', P.write c' (h ++ obs) [Token.horizon i]])
   | n + 1, i, z, c, h =>
       let o := S.observe z
       let h' := h ++ [Token.observed i o]
       let c' := P.write c h [Token.observed i o]
       (P.select n i o c' h').bind fun decision =>
         match decision with
-        | none => PMF.pure (h' ++ [Token.stopped i])
+        | none => PMF.pure (h' ++ [Token.stopped i], [c, c', P.write c' h' [Token.stopped i]])
         | some ⟨j, a⟩ =>
-            (S.total a z).bind (respond P (run S P n j) a
-              (P.write c' h' [Token.chosen a]) (h' ++ [Token.chosen a]))
+            ((S.total a z).bind (respond P (run S P n j) a
+              (P.write c' h' [Token.chosen a]) (h' ++ [Token.chosen a]))).map
+                fun out => (out.1, [c, c'] ++ out.2)
 
 private theorem residual_observe {T : Interface} (S : Source T) (n : ℕ)
     {i : T.Ty} {z w : T.State i} (h : residual S n i z w) :
@@ -159,6 +170,7 @@ theorem recursive_residual_preserves_adaptive_law {T : Interface} (S : Source T)
               let h' := (h ++ [Token.observed i (S.observe w)]) ++ [Token.chosen a]
               let f := respond P (run S P d j) a c' h'
               let q := jointView (residual S n) a
+              apply congrArg (PMF.map _)
               change (S.total a z).bind f = (S.total a w).bind f
               have hfiber : Setoid.ker q ≤ Setoid.ker f := by
                 intro x y hxy
@@ -174,7 +186,7 @@ theorem recursive_residual_preserves_adaptive_law {T : Interface} (S : Source T)
                 | inl x =>
                     cases y with
                     | inl y =>
-                        exact ih (Quotient.exact (Sum.inl.inj hnext)) d hd' P _ _
+                        exact congrArg (PMF.map _) (ih (Quotient.exact (Sum.inl.inj hnext)) d hd' P _ _)
                     | inr y => cases hnext
                 | inr x =>
                     cases y with
@@ -185,7 +197,7 @@ theorem recursive_residual_preserves_adaptive_law {T : Interface} (S : Source T)
                         rfl
               obtain ⟨factor, factor_eq, _⟩ :=
                 (realized_image_unique_factorization_iff_reverse_kernel f q).mpr hfiber
-              let g : Set.range q → PMF (List (Token T)) := fun v => (factor v).val
+              let g : Set.range q → PMF (Transcript T Archive) := fun v => (factor v).val
               have hf : f = g ∘ Set.rangeFactorization q := by
                 funext x
                 exact congrArg Subtype.val (congrFun factor_eq x)
