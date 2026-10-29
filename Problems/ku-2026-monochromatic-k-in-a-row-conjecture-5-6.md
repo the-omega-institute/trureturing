@@ -119,8 +119,8 @@ proved in `KuGeometry.latin_diagonal`.
 - **Open:** the exact value of $D(3,[3]^3)$ and a size-eight saturated attainer.
   The source retained here proves an upper bound and strict inequality only;
   it does not prove $D(3,[3]^3)=8/27$.
-- **Open:** determine $D(k,[k]^d)$ for every integer $k\geq2$ and $d\geq1$, or
-  equivalently classify the pairs where the source's upper bound is attained.
+- **Open:** determine $D(k,[k]^d)$ for every integer $k\geq2$ and $d\geq1$; in
+  particular, classify the pairs where the source's upper bound is attained.
   Restrictions to larger $k$ or $d$, or other repaired equalities, are not
   established by this one refuting pair.
 - **Proved in the cited paper, not newly kernel-checked here:** section 5.1.2

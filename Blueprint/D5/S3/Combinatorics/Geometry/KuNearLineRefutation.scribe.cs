@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Geometry;
 internal sealed class KuNearLineRefutationDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/Geometry/KuNearLineRefutation.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/ku2026monochromatic");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/FiniteGeometry/ku2026monochromatic");
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Ordinary integer-board line avoidance forces a strict upper bound on maximal saturated density.",
         H("Near-Line Avoidance on the Three-Dimensional Board"),
