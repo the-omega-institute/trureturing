@@ -1012,3 +1012,366 @@ $e^{i(\chi_{t_{j+1}}-\chi_{t_j})}$，闭环中相消。因此本族的模长不�
 非零规范不变闭路相位；这与 §43 原秩一相位族的可移除相位也须区分。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 45. 位置与子树奇偶的复核：消失缺陷下不消失的闭路相位
+
+**定义 45.1（同一位置集的奇偶着色）。** 仍用全部 $T$、原有 $\rho$ 和 (43.3) 的 $q$。
+对每个地址 $p\in\mathcal A$ 定义 $\lambda_t(p)\in\{0,1,2\}$：若 $p$ 是 $t$ 中
+内部节点 $\langle u,u\rangle$ 的地址，$q(u)$ 为偶数时取 $1$，奇数时取 $2$；
+其余地址一律取 $0$，包括不存在的地址、叶和不等子树节点。记
+
+$$
+S_j(t)=\{p:\lambda_t(p)=j\}\quad(j=1,2),\qquad
+S(t)=S_1(t)\sqcup S_2(t).
+\tag{45.1}
+$$
+
+因此非零着色支撑就是定义 44.1 的位置集，不引入另一个来源商。
+对一对树的新增根标签，记
+
+$$
+\ell(s,t)=
+\begin{cases}
+0,&s\ne t,\\
+1,&s=t\text{ 且 }q(s)\text{ 为偶数},\\
+2,&s=t\text{ 且 }q(s)\text{ 为奇数}.
+\end{cases}
+\tag{45.2}
+$$
+
+**假设 45.2（另供的复局部 Gram 选择）。** 在 $\mathbb C^2$ 中给定正交单位向量
+$e_0,e_1$，内积第一项共轭线性，且对 $0<h<1$ 取 $b=1-h$ 和
+
+$$
+z_0=e_0,\qquad z_1=\sqrt b\,e_0+\sqrt h\,e_1,
+\qquad z_2=\sqrt b\,e_0+i\sqrt h\,e_1.
+\tag{45.3}
+$$
+
+这些向量、复标量域及其中的 $i$ 都是给定的模型选择，不由树名或奇偶递推推出。
+记 $G_h(j,k)=\langle z_j,z_k\rangle$，定义全来源核
+
+$$
+P_h^{\mathrm c}(s,t)=\prod_{p\in\mathcal A}
+ G_h(\lambda_s(p),\lambda_t(p)).
+\tag{45.4}
+$$
+
+非单位因子只在有限集 $S(s)\cup S(t)$ 中出现，故乘积定义无穷序列的选择无关。
+
+**定理 45.3（着色的来源对应、全局复 Gram 实现与统一缺陷）。** 对所有实际来源树，
+
+$$
+\lambda_{\rho t}(p)=\lambda_t(p)\quad(p\in\mathcal A).
+\tag{45.5}
+$$
+
+整个 $\lambda_t$ 已由 $S(t)$ 决定：对每个 $p\in S(t)$，着色的奇偶数恰是
+
+$$
+\bigl|\{w\in\mathcal A:p0w\in S(t)\}\bigr|\pmod2.
+\tag{45.6}
+$$
+
+对每个整数 $n\ge1$，令
+
+$$
+k_n=5n,\qquad h_n=r_n=\frac1{k_n},\qquad
+b_n=a_n=1-\frac1{k_n},\qquad
+K_n^{\mathrm c}=a_nP_{h_n}^{\mathrm c}+r_n\delta.
+\tag{45.7}
+$$
+
+则 $K_n^{\mathrm c}$ 满足定义 43.1 的所有精确侧条件，并且
+
+$$
+\sup_{s,t,u,v\in T}|D_{K_n^{\mathrm c}}(s,t,u,v)|
+\le a_n(2h_n+r_n)=\frac{3a_n}{5n}<\frac1n.
+\tag{45.8}
+$$
+
+这里包括任意重复来源标签和任意复系数的 Gram 正性，且有单一载体上的归一化、
+有限支撑、忠实来源提升。
+
+**证明。** 若 $p$ 上的子树为 $\langle u,u\rangle$，则 $p0w\in S(t)$ 当且仅当
+$w\in S(u)$，故 (45.6) 的基数为 $|S(u)|=q(u)$。这对所有 $p\in S(t)$ 同时成立；
+不在 $S(t)$ 中的地址必标零，因而 $S(t)$ 确定整个着色场。此对应只恢复所定义的标签，
+不选择 (45.3) 的复向量，也不从位置集产生 $i$。
+
+对 $t$ 作结构归纳证明 (45.5)。叶 $\alpha$ 的像仍是叶，$\beta$ 的像
+$\langle\beta,\alpha\rangle$ 只新增一个不等子树根，其标签为零。
+内部节点使用 $\rho$ 单射保留子树相等性，使用 (43.7) 保留相等子树的 $q$ 奇偶，
+再由归纳假设保留左右两个地址场。新增根和两个子场分别相同，覆盖全部地址。
+也可从 (44.2) 与 (45.6) 直接得到同一结论。
+
+局部向量给出的矩阵为
+
+$$
+G_h=
+\begin{pmatrix}
+1&\sqrt b&\sqrt b\\
+\sqrt b&1&b+ih\\
+\sqrt b&b-ih&1
+\end{pmatrix}.
+\tag{45.9}
+$$
+
+各向量范数一，所以 $|G_h(j,k)|\le1$。
+又 $1-\sqrt b=h/(1+\sqrt b)\le h$，
+$|(b\pm ih)-1|=\sqrt2h$，故所有 $j,k$ 都满足
+
+$$
+|G_h(j,k)-1|\le\sqrt2h\le2h.
+\tag{45.10}
+$$
+
+在与 §44 相同的 $H_0=\ell^2(\operatorname{Fin}(\mathcal A))$ 中定义
+
+$$
+V_h(t)=b^{|S(t)|/2}\sum_{B\subseteq S(t)}
+ \left(\frac h b\right)^{|B|/2}
+ i^{|B\cap S_2(t)|}e_B.
+\tag{45.11}
+$$
+
+每个向量有有限支撑，而且
+$\|V_h(t)\|^2=b^{|S(t)|}(1+h/b)^{|S(t)|}=1$。
+为核对内积，不需假定一个抽象无限张量积：在有限集
+$U=S(s)\cup S(t)$ 上展开 (45.11)。每个地址不选入 $B$ 时，对标签非零的每一侧贡献
+$\sqrt b$；选入时，该侧贡献 $\sqrt h$ 并在标签 $2$ 时贡献 $i$，第一侧取共轭。
+两侧都为零时只有不选项，贡献一。逐地址的两项和正是 (45.9) 中的对应项。
+有限分配律遂给
+
+$$
+\langle V_h(s),V_h(t)\rangle
+=\prod_{p\in U}G_h(\lambda_s(p),\lambda_t(p))
+=P_h^{\mathrm c}(s,t).
+\tag{45.12}
+$$
+
+这是通常局部 Gram 张量正性的直接展开，作为本来源构造的中间供应使用。
+在同一 $H=H_0\oplus\ell^2(T)$ 中，忠实提升为
+
+$$
+\eta_n^{\mathrm c}(t)=\sqrt{a_n}\,V_{h_n}(t)\oplus\sqrt{r_n}\,e_t.
+\tag{45.13}
+$$
+
+它归一化且实现 $K_n^{\mathrm c}$。任意 $M\ge1$、任意可重复的 $t_i\in T$ 及
+任意 $c_i\in\mathbb C$，严格有
+
+$$
+\sum_{i,j=1}^M\overline{c_i}c_jK_n^{\mathrm c}(t_i,t_j)
+=a_n\left\|\sum_i c_iV_{h_n}(t_i)\right\|^2
+ +r_n\sum_{x\in\{t_1,\ldots,t_M\}}
+       \left|\sum_{i:t_i=x}c_i\right|^2\ge0.
+\tag{45.14}
+$$
+
+Hermitian 性随 Gram 表示成立；$s\ne t$ 时
+$|K_n^{\mathrm c}(s,t)|=a_n|P_{h_n}^{\mathrm c}(s,t)|\le a_n<1$，
+故 $K_n^{\mathrm c}(s,t)=1$ 当且仅当 $s=t$。
+非零 $e_t$ 分量也直接给 (45.13) 的单射性。式 (45.5) 保持 $P_h^{\mathrm c}$，
+运输单射性保持 delta，所以全部来源对的运输不变性精确成立。
+
+对任意四棵树，配对后的地址分成根、$0\mathcal A$、$1\mathcal A$，因此
+
+$$
+P_h^{\mathrm c}(\langle s,t\rangle,\langle u,v\rangle)
+=P_h^{\mathrm c}(s,u)P_h^{\mathrm c}(t,v)
+ G_h(\ell(s,t),\ell(u,v)).
+\tag{45.15}
+$$
+
+该式不要求四树互异或同形。简记 $a,r,h,P^{\mathrm c},K^{\mathrm c}$ 并置
+$A=P^{\mathrm c}(s,u)$、$B=P^{\mathrm c}(t,v)$、$d=\delta_{s,u}$、
+$e=\delta_{t,v}$、$G=G_h(\ell(s,t),\ell(u,v))$。与 (44.10) 相同的代数展开给
+
+$$
+D_{K^{\mathrm c}}(s,t,u,v)
+=aAB(G-1)+ra(A-d)(B-e).
+\tag{45.16}
+$$
+
+这是复数恒等式。$|A|,|B|\le1$；$d=1$ 时 $A=1$，$d=0$ 时
+$|A-d|=|A|\le1$，故总有 $|A-d|\le1$，同理 $|B-e|\le1$。
+结合 (45.10) 得 $|D_{K^{\mathrm c}}|\le a(2h+r)$，对整个 $T^4$ 取上确界给 (45.8)。
+更紧的同一估计为 $a(\sqrt2h+r)$；两者均不依赖树高。
+
+本定理的来源特定内容是相等子树的逐址奇偶对应及其全域运输、(45.15) 与 (45.16)；
+一般 Gram 正性沿用原卷 §§6、15.2、26.2，不作为新的正性定理。∎
+
+**定理 45.4（实际移动三源的非零 Bargmann 相位与一致非零模长）。** 定义实际树
+
+$$
+C_0=\langle\alpha,\beta\rangle,\qquad
+C_1=\langle\alpha,\alpha\rangle,\qquad
+C_2=\langle C_1,C_1\rangle,
+\qquad
+W_{j,0}=\beta,\quad W_{j,m+1}=\langle W_{j,m},C_j\rangle.
+\tag{45.17}
+$$
+
+对 $k=5n$，三棵 $W_{0,k},W_{1,k},W_{2,k}$ 两两不同。有向闭路积为
+
+$$
+\begin{aligned}
+\mathcal B_n
+&=K_n^{\mathrm c}(W_{0,k},W_{1,k})
+ K_n^{\mathrm c}(W_{1,k},W_{2,k})
+ K_n^{\mathrm c}(W_{2,k},W_{0,k})\\
+&=a_n^3\bigl[b_n^3(b_n+ih_n)\bigr]^{5n}.
+\end{aligned}
+\tag{45.18}
+$$
+
+其主辐角及模长满足
+
+$$
+1<\theta_n:=\arg\mathcal B_n
+=5n\arctan\frac1{5n-1}<\frac54<\pi,
+\qquad
+|\mathcal B_n|\ge\left(\frac45\right)^{23}>0.
+\tag{45.19}
+$$
+
+任意顶点重相位保持 $\mathcal B_n$；反转环方向则取共轭。因此这不是可用顶点相位
+消去的边相角，而是在统一缺陷趋零的同一全域核族中不趋零的闭路相位。
+
+**证明。** 三棵装饰树的计数为 $q(C_0)=0,q(C_1)=1,q(C_2)=3$。
+它们的非零场依次为空、$\{\epsilon:1\}$、$\{\epsilon:2,0:1,1:1\}$。
+$W_{j,0}$ 是叶，不能等于内部树 $C_j$。若 $m\ge1$ 而 $W_{j,m}=C_j$，比较右子树
+会迫使 $C_j$ 等于自身的真右子树，与有限树节点数矛盾。因此每个梳脊根的左右子树不等，
+标签都是零。由递推，装饰场出现在地址块 $0^d1\mathcal A$，$0\le d<m$；
+这些词 $0^d1$ 两两前缀不可比，地址块不交。
+
+故对所有 $m\ge0$ 和 $j,l\in\{0,1,2\}$，
+
+$$
+q(W_{j,m})=m q(C_j),\qquad
+P_h^{\mathrm c}(W_{j,m},W_{l,m})
+=\bigl[P_h^{\mathrm c}(C_j,C_l)\bigr]^m.
+\tag{45.20}
+$$
+
+$m\ge1$ 时右子树 $C_j$ 两两不同，便给三棵梳树两两不同；也可由计数 $0,m,3m$ 分离。
+对装饰树的有限地址直接应用 (45.9)，得到
+
+$$
+\begin{aligned}
+P_h^{\mathrm c}(C_0,C_1)&=\sqrt b,\\
+P_h^{\mathrm c}(C_1,C_2)&=b(b+ih),\\
+P_h^{\mathrm c}(C_2,C_0)&=b^{3/2}.
+\end{aligned}
+\tag{45.21}
+$$
+
+第二式中根的贡献为 $b+ih$，地址 $0,1$ 各贡献 $\sqrt b$。
+三式的积为 $b^3(b+ih)$。在互异的三棵 $W_{j,k}$ 上 delta 项均消失，
+(45.20) 遂给 (45.18)。
+
+令 $x=1/(k-1)>0$。积分 $\arctan x=\int_0^x(1+t^2)^{-1}dt$ 给严格界
+$x/(1+x^2)<\arctan x<x$。因此对 $k\ge5$，
+
+$$
+1<\frac{k(k-1)}{(k-1)^2+1}
+<k\arctan\frac1{k-1}
+<\frac{k}{k-1}\le\frac54.
+\tag{45.22}
+$$
+
+这个总相角已经在 $(0,\pi)$ 中，故就是主辐角，没有模 $2\pi$ 的绕回。
+特别地
+$|\mathcal B_n/|\mathcal B_n|-1|=2\sin(\theta_n/2)>2\sin(1/2)$。
+
+由于 $a=b=1-1/k$，$|b+ih|\ge b$，
+
+$$
+|\mathcal B_n|
+=b^{3k+3}(b^2+h^2)^{k/2}\ge b^{4k+3}.
+\tag{45.23}
+$$
+
+为给出解析的一致下界，对实数 $y>1$ 微分：
+
+$$
+\frac{d}{dy}\bigl[y\log(1-1/y)\bigr]
+=\frac1{y-1}-\log\left(1+\frac1{y-1}\right)>0,
+$$
+
+最后一步由 $\log(1+u)<u$。故 $k\ge5$ 时
+$(1-1/k)^k\ge(4/5)^5$，而 $b^3\ge(4/5)^3$，所以
+$b^{4k+3}=(b^k)^4b^3\ge(4/5)^{23}$，证明 (45.19)。
+
+按同一内积约定，$\eta(t)\mapsto e^{i\chi_t}\eta(t)$ 使核变为
+$e^{i(\chi_t-\chi_s)}K(s,t)$。沿三条边的指数和为零，闭路积精确不变；
+Hermitian 性使反向积为共轭。这是通常 Bargmann 规范不变机制的直接应用。
+非零闭路相位还排除将整个见证三元组同时变为实 Gram 数据的可能性：
+若三条边都为实数，其积也为实数，与 (45.19) 矛盾。
+
+标准 Bargmann 积及其关系信息背景复用
+[Hidden Relations §§9–11、27.1、27.5](AURIC_FIB_ATOM_HIDDEN_RELATIONS_STATISTICS_PHASE_AND_SEAMS.md)，
+以及其中引用的 Oszmaniec、Brod、Galvão，
+[*Measuring relational information between quantum states, and applications*](https://arxiv.org/abs/2109.10006v1)。
+此处的规范相消已直接证明，不借用文献的实验比较权限。
+新的承重接合是 (45.17) 的实际三源、(45.18) 的精确积及同时成立的全域缺陷界和
+(45.19)，不把一般复 Gram 数据或非实 Bargmann 积本身作为新原则，也不作优先权主张。∎
+
+**命题 45.5（固定来源极限、精确刚性与两族的区别）。** 对固定 $s,t\in T$，令
+$M(s,t)=|S(s)\cup S(t)|$，则
+
+$$
+|K_n^{\mathrm c}(s,t)-1|\le2h_nM(s,t)+r_n\longrightarrow0.
+\tag{45.24}
+$$
+
+收敛在每个固定有限来源集合上一致；逐对极限仍是非忠实的全 $1$ 核。
+每个有限 $n$ 的 $K_n^{\mathrm c}$ 均不满足精确乘法。固定三源的闭路积趋于一，
+而定理 45.4 的移动三源有 $\mathcal B_n\to e^{-4+i}$。
+(45.19) 只对所列移动闭路给正下界，没有全来源两两重叠的统一正下界。
+§44 的实模长族仍是零闭路相位族，不能用本节的结论回改它。
+
+**证明。** 对有限乘积作望远镜展开；各因子模长至多一且满足 (45.10)，故
+$|P_{h_n}^{\mathrm c}(s,t)-1|\le2h_nM(s,t)$。
+又 $K_n^{\mathrm c}-1=a_n(P_{h_n}^{\mathrm c}-1)+r_n(\delta-1)$，即得 (45.24)。
+有限集合上 $M$ 有有限最大值，得一致收敛；不同来源在全 $1$ 极限中的代表相同。
+在四元组 $(\alpha,\beta,\beta,\alpha)$ 上，四棵叶及两个不等子树根的场都为空，
+所以 $A=B=G=1,d=e=0$，(45.16) 给 $D_{K_n^{\mathrm c}}=r_na_n>0$。
+因此定理 42.2 所要求的精确乘法条件并不成立。
+
+固定三源的三条边各趋一，故积趋一。对于移动环，令 $k=5n$；在一的邻域取连续复对数，
+则由 (45.18) 有
+
+$$
+\log\mathcal B_n
+=(3k+3)\log(1-1/k)+k\log\bigl(1+(-1+i)/k\bigr)
+\longrightarrow-3+(-1+i)=-4+i,
+\tag{45.25}
+$$
+
+其中使用 $\log(1+z)=z+O(|z|^2)$；这也可由该对数在零点的导数一得到。
+指数连续性给所称极限，移动见证的复杂度随 $n$ 增长，因而不与固定来源收敛冲突。
+反之，固定 $n$ 并让 $m\to\infty$，(45.20)–(45.21) 给
+
+$$
+|K_n^{\mathrm c}(W_{0,m},W_{1,m})|=a_nb_n^{m/2}\longrightarrow0
+\quad(m\ge1).
+\tag{45.26}
+$$
+
+所以所证一致下界是一个移动闭路的下界，不能提升为全部来源对的下界。
+§44 每项严格为正，其闭路积始终为正实数；本节则通过 (45.3) 的另供复局部选择，
+在由同一 $S$ 决定的着色上得到非实闭路积。信息记录的确定性对应并不强制两种 Gram
+选择相同，也不把原实核族变成复闭路族。∎
+
+**假设 45.6（数学关系与原生物理解释的接口）。** 若将上述核或闭路积用于物理解释，
+另须给出实际来源的原生制备映射、可制备相干组合的范围、允许的效果或仪器、共同操作
+相位参考与相位敏感比较、其精度和资源成本，以及物理系统组合、动力学和时钟的对应。
+将模长平方解释为概率还须独立的 Born 与测量标定。
+树地址索引的 Hilbert 张量坐标不自动是可独立组合的物理子系统；运输不变的 Gram
+表示不自动是一扇原生可调用的物理门。假设 45.2 的两个非平凡局部向量及其 $i$ 仍是
+模型输入，(45.6) 的奇偶可恢复性不消去这些输入。
+因此 §§44–45 给出的是所列全来源核的数学不稳定性与规范不变闭路结构，
+没有由裸 FIB 标签推出复数域、相干制备、Born 规则或量子起源；这些接口条件仍须另行建立。
+
+## 追加锚（本行以下为增补区）
