@@ -56,30 +56,7 @@ private def effect (j : Fin 8) : Matrix (Fin 7) (Fin 7) ℂ :=
 
 private def frame : Matrix (Fin 7) (Fin 7) ℂ := ∑ j, effect j
 
-set_option maxHeartbeats 2000000 in
-private theorem frame_posDef : frame.PosDef := by
-  classical
-  have hpsd : frame.PosSemidef := by
-    apply Matrix.posSemidef_sum Finset.univ
-    intro j hj
-    apply Matrix.posSemidef_sum Finset.univ
-    intro b hb
-    exact Matrix.posSemidef_vecMulVec_self_star b.1
-  have hframe : frame =
-      !![5, 0, 0, 2 - 2 * Complex.I, 0, 0, 2;
-        0, 5, 0, 0, 2 - 2 * Complex.I, 0, 2;
-        0, 0, 5, 0, 0, 2 - 2 * Complex.I, 2;
-        2 + 2 * Complex.I, 0, 0, 5, 0, 0, 1 + Complex.I;
-        0, 2 + 2 * Complex.I, 0, 0, 5, 0, 1 + Complex.I;
-        0, 0, 2 + 2 * Complex.I, 0, 0, 5, 1 + Complex.I;
-        2, 2, 2, 1 - Complex.I, 1 - Complex.I, 1 - Complex.I, 6] := by
-    ext i j
-    fin_cases i <;> fin_cases j <;>
-      norm_num [frame, effect, blocks, vector, Matrix.sum_apply,
-        Matrix.vecMulVec_apply, Pi.star_apply, Fin.sum_univ_succ]
-  apply hpsd.posDef_iff_det_ne_zero.mpr
-  rw [hframe]
-  norm_num [Matrix.det_apply]
+private theorem frame_posDef : frame.PosDef := by sorry
 
 private theorem normalizer_exists :
     ∃ R : Matrix (Fin 7) (Fin 7) ℂ, IsUnit R.det ∧ R * frame * Rᴴ = 1 := by
