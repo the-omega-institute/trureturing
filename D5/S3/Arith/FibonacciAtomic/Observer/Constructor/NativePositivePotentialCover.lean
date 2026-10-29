@@ -554,7 +554,7 @@ private def readRanks : (T : FreeMagma Unit) → NativeFiniteNormalInversion.Cod
 
 private theorem fill_readRanks (T : FreeMagma Unit) (D : NativeFiniteNormalInversion.Code)
     (sh : shape D = groundShape T) : fill T (readRanks T D) = D := by
-  induction T generalizing D with
+  induction T using FreeMagma.rec generalizing D with
   | of u => cases D with
     | of n => rfl
     | mul A B => cases sh
@@ -570,7 +570,7 @@ private theorem fill_readRanks (T : FreeMagma Unit) (D : NativeFiniteNormalInver
 private theorem readRanks_shift (T : FreeMagma Unit) (D : NativeFiniteNormalInversion.Code)
     (sh : shape D = groundShape T) (a : Nat) (l : Leaves T) :
     readRanks T (NativeFiniteNormalInversion.shiftCode a D) l = readRanks T D l + a := by
-  induction T generalizing D with
+  induction T using FreeMagma.rec generalizing D with
   | of u => cases D with
     | of n => rfl
     | mul A B => cases sh
@@ -647,8 +647,9 @@ private theorem actual_rank_blocks (p : Presentation X) (B : List (BranchEquatio
     obtain ⟨a, ha, code⟩ := actual_source_offsets B (action p S) C factor sat e he'
     have hr := readRanks_shift (codeTree (C j)) (occurrenceCode C e.1.2)
       (valid e.1.2 spec.2.1 (spec.2.2.symm.trans hj)) a l
-    rw [code]
-    rw [hr, ha]
+    change (readRanks (codeTree (C j)) (occurrenceCode C e.1.1) l : Int) =
+      (readRanks (codeTree (C j)) (occurrenceCode C e.1.2) l : Int) + e.2
+    rw [code, hr, ha]
     omega
   · intro v hv hj
     rw [fill_readRanks _ _ (valid v hv hj)]
@@ -670,7 +671,12 @@ theorem native_source_block_recovery (p : Presentation X) (E : List (Equation X)
           ∀ o ∈ occurrenceVertices p (action p S), o.2.2 = j →
             occurrenceCode (fun x => NativeFiniteNormalInversion.encode (v x)) o =
               NativeFiniteNormalInversion.shiftCode (a o)
-                (occurrenceCode (fun x => NativeFiniteNormalInversion.encode (v x)) b) := by
+                (occurrenceCode (fun x => NativeFiniteNormalInversion.encode (v x)) b) ∧
+            NativeFiniteNormalInversion.expand
+              (occurrenceCode (fun x => NativeFiniteNormalInversion.encode (v x)) o) =
+              GenealogicalFiberTransport.substitution^[a o]
+                (NativeFiniteNormalInversion.expand
+                  (occurrenceCode (fun x => NativeFiniteNormalInversion.encode (v x)) b)) := by
   obtain ⟨B, hB, normal, sat, S, hok, factor, _, _⟩ :=
     (native_branch_reduction p E v).mp hv
   refine ⟨B, hB, S, hok, sat, ?_⟩
@@ -695,7 +701,9 @@ theorem native_source_block_recovery (p : Presentation X) (E : List (Equation X)
   refine ⟨b, a, hb, hj, hab, ?_, ?_⟩
   · simpa only [identity b hb hj] using recovered.1
   · intro o ho hoj
-    simpa only [identity o ho hoj, identity b hb hj] using (recovered.2 o ho hoj).1
+    constructor
+    · simpa only [identity o ho hoj, identity b hb hj] using (recovered.2 o ho hoj).1
+    · simpa only [identity o ho hoj, identity b hb hj] using (recovered.2 o ho hoj).2.1
 
 #print axioms source_sort_minimum_base
 #print axioms native_source_block_recovery
