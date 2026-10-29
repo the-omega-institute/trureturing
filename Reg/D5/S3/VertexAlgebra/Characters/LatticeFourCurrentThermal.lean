@@ -40,7 +40,8 @@ def rejected : Realization signature := realize signature
 private theorem dependence : ObservationalDependence signature actual := by
   classical
   intro role
-  refine ⟨⟨probe, probePositive, fun _ => 0, fun _ => 1/2, by intro j; norm_num⟩,
+  refine ⟨⟨probe, probePositive, fun _ => 0, ![0,1/2,0,1/2],
+    by intro j; fin_cases j <;> norm_num⟩,
     (fun _ => 0), ![0, 1, 0, 1], ?_⟩
   have hz : actualFourCurrentCycleTrace probe probePositive (fun _ => 0) (fun _ => 0) = 0 := by
     rw [original_four_zero_charge_trace]
@@ -52,8 +53,8 @@ private theorem dependence : ObservationalDependence signature actual := by
       currentMode, contraction, pairEnergyCoefficient, cutoff_zero, multiplicity_zero,
       bilinear, probe, Finset.filter_singleton,
       LatticePositiveEnergy.chargeEnergy_zero]
-  change (∏ j : Fin 4, (1/2 : ℂ) ^ (0 : ℕ)) * _ ≠
-    (∏ j : Fin 4, (1/2 : ℂ) ^ (![0,1,0,1] : Fin 4 → ℕ) j) * _
+  change (∏ j : Fin 4, (![0,1/2,0,1/2] : Fin 4 → ℂ) j ^ (0 : ℕ)) * _ ≠
+    (∏ j : Fin 4, (![0,1/2,0,1/2] : Fin 4 → ℂ) j ^ (![0,1,0,1] : Fin 4 → ℕ) j) * _
   rw [hz, h4]
   norm_num [Fin.prod_univ_succ]
 
