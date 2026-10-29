@@ -204,7 +204,7 @@ private lemma symmetricDet_ne_zero : symmetricDet ≠ 0 := by
       change (if min i j = max i j then (1 : ℂ) else 0) = _
       rw [Matrix.one_apply]
       have hc : ∀ a b : Fin 5, min a b = max a b ↔ a = b := by decide
-      rw [hc]
+      simp only [hc]
     change Matrix.det (Matrix.of fun i j => e (MvPolynomial.X (orderedPair i j))) = 1
     rw [hm, Matrix.det_one]
   intro h
@@ -245,7 +245,8 @@ private lemma actual_dimension_upper : varietyDim (uMPS 2 5 2) ≤ 14 := by
   change ringKrullDim
     (MvPolynomial (Fin 2 → Fin 5) ℂ ⧸ MvPolynomial.vanishingIdeal ℂ (uMPS 2 5 2)) ≤ 14
   apply ENat.WithBot.add_le_add_one_right_iff.mp
-  convert hd using 1 <;> norm_num
+  convert hd using 1
+  norm_num
 
 /-- At bond dimension two, five physical symbols and two sites, dimension is at most fourteen
 while the conjectured dimension is at least fifteen. -/
