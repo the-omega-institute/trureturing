@@ -3,6 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/KageyKeehnRectangularTorus
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: A rectangular-torus plane lift fixed by any of the four transposing right actions descends to the gcd square torus.
 -/
 
@@ -12,9 +13,25 @@ namespace D5.S3.Combinatorics.KageyKeehnRectangularTorus
 
 set_option autoImplicit false
 
-/- The four right actions in the source.  The maps below are the linear parts of
-the source's affine cell maps; the arbitrary translation records both the cyclic
-shift and the center constants used by finite rectangular representatives. -/
+/- Public theorem admission:
+   proof_shape: bind-only
+   escape_witness: none
+   admission_basis: open-problem-resolution (#23394; Proved)
+   utility: none
+
+The source-action bridge is explicit in the owning Blueprint Scribe and source
+note: source r uses internal .r3, source r^3 uses .r, and rf/r^3f retain .rf/.r3f.
+The source graph fixedness, translation representative, affine center and
+identical-plane readout are part of that exposition. The escape audit remains
+unfinished under #23394; no declared_validated registration is claimed.
+-/
+
+/- The constructors are internal coordinate maps, so their labels are kept
+distinct from the source's right-action names.  The source's operational maps
+are r ↦ (-y,x) (internal .r3), r^3 ↦ (y,-x) (internal .r),
+rf ↦ (y,x) (internal .rf), and r^3f ↦ (-y,-x) (internal .r3f).
+The arbitrary translation records both the cyclic shift and the center constants
+used by finite rectangular representatives. -/
 inductive RightAction
   | r
   | r3
