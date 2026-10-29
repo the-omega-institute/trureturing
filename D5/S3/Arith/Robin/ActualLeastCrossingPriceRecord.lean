@@ -7,7 +7,7 @@
    digest: Uniform least crossings have positive-price records and occupied-layer confinement. -/
 
 import D5.S3.Arith.Robin.ActualLeastCrossing5040
-import D5.S3.Arith.Robin.ActualTwoPriceDefect
+import D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure
 
 /-! The threshold precedes eta, including eta=1/2. All positive predecessors are
 compared. Only occupied layers are confined; no crossing existence or signed Robin
@@ -261,38 +261,14 @@ theorem uniform_actual_least_crossing_price_record :
     rw [golden_resource_sigma_identity lam0 (by omega : 1 ≤ n),
       golden_resource_sigma_identity lam0 (by omega : 1 ≤ m)]
     nlinarith [mul_nonneg (sub_nonneg.mpr hlamLower) (sub_pos.mpr hYX).le]
-  have hlast (p : ℕ) (hp : p.Prime) (ha : 1 ≤ m.factorization p) :
-      lam0 < goldenLayerMarginal p (m.factorization p) := by
-    have hd : p ∣ m := (hp.dvd_iff_one_le_factorization hm0.ne').mpr ha
-    have hn : 0 < m / p := Nat.div_pos (Nat.le_of_dvd hm0 hd) hp.pos
-    have hproper : m / p < m := Nat.div_lt_self hm0 hp.one_lt
-    have heq : m / p * p = m := Nat.div_mul_cancel hd
-    have hfac : (m / p).factorization p + 1 = m.factorization p := by
-      have h := congrArg (fun n : ℕ => n.factorization p) heq
-      simpa [Nat.factorization_mul hn.ne' hp.ne_zero, hp.factorization] using h
-    have hdelta := golden_resource_objective_single_layer_delta lam0 (by omega : 1 ≤ m / p) hp
-    rw [heq, hfac] at hdelta
-    have hrec := sub_pos.mpr (hrecord0 (m / p) hn hproper)
-    rw [hdelta] at hrec
-    exact sub_pos.mp ((mul_pos_iff_of_pos_right
-      (Real.log_pos (by exact_mod_cast hp.one_lt))).mp hrec)
-  have hdvd : m ∣ ActualTwoPriceDefect.strictInteger lam0 := by
-    apply (Nat.factorization_le_iff_dvd hm0.ne'
-      (by have := ActualTwoPriceDefect.strictInteger_pos hlam0; omega)).mp
-    intro p
-    by_cases hp : p.Prime
-    · by_cases hz : m.factorization p = 0
-      · rw [hz]; exact Nat.zero_le _
-      · have ha : 1 ≤ m.factorization p := by omega
-        exact (ActualTwoPriceDefect.strict_layer_iff hlam0 hp ha).mpr (hlast p hp ha)
-    · rw [Nat.factorization_eq_zero_of_not_prime _ hp]
-      exact Nat.zero_le _
+  have hdvd : m ∣ ActualTwoPriceDefect.strictInteger lam0 :=
+    ActualPriceRecordPrimeStructure.price_record_divides_strictInteger hm0 hlam0 hrecord0
   have hcut : ∀ p j : ℕ, p.Prime → 1 ≤ j → j ≤ m.factorization p →
       (p : ℝ) ^ j * Real.log p < 40 * X * L := by
     intro p j hp hj hja
-    have ha : 1 ≤ m.factorization p := hj.trans hja
-    have hcount := (ActualTwoPriceDefect.strict_layer_iff hlam0 hp ha).mpr (hlast p hp ha)
-    have hprofit := (ActualTwoPriceDefect.strict_layer_iff hlam0 hp hj).mp (hja.trans hcount)
+    have hcount := (Nat.factorization_le_iff_dvd hm0.ne'
+      (by have := ActualTwoPriceDefect.strictInteger_pos hlam0; omega)).mpr hdvd
+    have hprofit := (ActualTwoPriceDefect.strict_layer_iff hlam0 hp hj).mp (hja.trans (hcount p))
     have hbound := hprofit.trans_le (golden_layer_marginal_le_inv_pow hp hj)
     have hp0 : (0 : ℝ) < p := by exact_mod_cast hp.pos
     have hplog : 0 < Real.log (p : ℝ) := Real.log_pos (by exact_mod_cast hp.one_lt)
