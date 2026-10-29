@@ -32,12 +32,25 @@ Under precisely k>=3, arbitrary natural t and exactly two physical SMALL labels,
 
 The native profile supplies every premise of the even-gap or odd-gap placement theorem, including all cut and seam bounds. Applying the physical phase map sends the natural-position permutation to an actual permutation of Fin(k). Positive orientation uses this word directly. Negative orientation first negates the word and cuts at an attained minimum prefix; ZeroSumWordCount.nonnegative_rotate_of_minimum supplies the lower bound, and its prefix_segment_sum together with the original strip supplies the upper bound C. Deleting the two SMALL ears in each normalized placement leaves the consecutive first and second LARGE arcs in forward order. Filtering commutes with the physical phase map; that map is the rotation of List.finRange(k) by the origin label. Filtering the minimum-prefix rotation preserves List.IsRotated. This establishes the final LARGE cyclic-order conjunct for the same completion witness. The scaled arithmetic is divided by three inside the integer strip predicate. The native Legal predicate then follows from Nodup and all prefixes. Equal odd gaps already have an opposite pair and fall within AntipodalSourceCompletion; they provide no separate extension of that source domain. The new two-defect placement allows unequal even gaps, unequal odd gaps and zero gaps.
 
+**Theorem 1.3 (Restoring signs by a cyclic cut).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/TwoSmallSource.negate_rotation`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/TwoSmallSource.negate_rotation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any integer-valued label word L in [0,C] with total zero, there is a cyclic cut j such that every natural prefix of L.rotate(j), evaluated with the negated weights, is again in [0,C]. Choose an attained minimum of the negated prefix sums. The existing nonnegative_rotate_of_minimum theorem gives the lower bound, while prefix_segment_sum and the original strip give the upper bound. The operation changes only the cyclic starting point and preserves every physical occurrence. Both the two-SMALL completion and the arbitrary-count isolated same-sign SMALL construction consume this same sign-restoration theorem.
+
 The mathematical source context is Damasdi, Frankl, Pach and Palvolgyi, Monochromatic configurations on a circle, arXiv:2504.10687v2, Conjecture 3.1, DOI 10.5070/C6.68671. This result treats exactly two physical SMALL labels. Arbitrary-defect completion and the full global strict lexicographic exchange remain open.
 
 ## References
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/TwoSmallSource.actualSource_two_small_full_completion`
 - Truth anchor: `D5/S3/Combinatorics/Circle/TwoSmallSource.actual_two_gap_profile`
+- Truth anchor: `D5/S3/Combinatorics/Circle/TwoSmallSource.negate_rotation`
 - Dependency: [D5/S1/Words/Compositions/ZeroSumWordCount](../../../S1/Words/Compositions/ZeroSumWordCount.md)
 - Dependency: [D5/S3/Combinatorics/Circle/AntipodalSourceCompletion](AntipodalSourceCompletion.md)
 - Dependency: [D5/S3/Combinatorics/Circle/TwoSmallPlacement](TwoSmallPlacement.md)

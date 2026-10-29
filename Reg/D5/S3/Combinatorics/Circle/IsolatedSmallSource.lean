@@ -82,9 +82,9 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
 
 private theorem actual_dependence : ObservationalDependence signature.{u} actual := by
   intro i
-  refine ⟨⟨ULift.{u} (Fin 2), fun j => (j.down.val : ℤ)⟩,
+  refine ⟨⟨ULift.{u} (Fin 2), sampleWeight⟩,
     ULift.up (0 : Fin 2), ULift.up (1 : Fin 2), ?_⟩
-  norm_num [actual, realize]
+  norm_num [actual, realize, sampleWeight]
 
 def source_registration : Registration arena.{u}
     (type_of% (@finite_isolated_small_completion.{u})) where
@@ -103,22 +103,22 @@ def source_registration : Registration arena.{u}
 
 /-- Source selection addresses the weight operand inside the existential
 word's InStrip conjunct, preserving every other source occurrence. -/
-def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@_root_.D5.S3.Combinatorics.Circle.IsolatedSmallSource.finite_isolated_small_completion.{u})
-    (type_of% (realize signature.{u} (fun _ p i => p.2 i) (fun e => nomatch e)))
+def audit.{u_1} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Combinatorics.Circle.IsolatedSmallSource.finite_isolated_small_completion.{u_1})
+    (type_of% (realize signature.{u_1} (fun _ p i => p.2 i) (fun e => nomatch e)))
     Nat Unit where
   unitName := `D5.S3.Combinatorics.Circle.IsolatedSmallSource.finite_isolated_small_completion.__information_unit
   realizationName := `Reg.D5.S3.Combinatorics.Circle.IsolatedSmallSource.source_registration
   realizationSource := none
   generated := false
-  arena := .source ⟨arena.{u}⟩
-  objectArena := .source ⟨arena.{u}⟩
+  arena := .source ⟨arena.{u_1}⟩
+  objectArena := .source ⟨arena.{u_1}⟩
   catalog := Lean.Name.anonymous
   localNames := false
-  realization := .source arena.{u} ⟨source_registration.{u}⟩
+  realization := .source arena.{u_1} ⟨source_registration.{u_1}⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{u} (fun _ p i => p.2 i) (fun e => nomatch e))
+  readout := some (realize signature.{u_1} (fun _ p i => p.2 i) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
