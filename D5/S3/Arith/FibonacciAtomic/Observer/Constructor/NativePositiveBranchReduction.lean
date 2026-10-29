@@ -221,7 +221,7 @@ private theorem shift_zero (C : Code) : shiftCode 0 C = C := by
   | of n => rfl
   | mul l r hl hr => exact congrArg₂ FreeMagma.mul hl hr
 
-private theorem shift_add (a b : Nat) (C : Code) :
+theorem shift_add (a b : Nat) (C : Code) :
     shiftCode a (shiftCode b C) = shiftCode (a + b) C := by
   induction C with
   | of n => simp only [shiftCode, Nat.add_assoc, Nat.add_comm b a]

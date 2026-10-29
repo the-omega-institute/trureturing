@@ -9,6 +9,8 @@
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativePositiveBranchReduction
 import D5.S3.Arith.FibonacciAtomic.Observer.NativeUniformResidualRealization
 
+/-! Native expression lowering and unrestricted ambient template comparison. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -49,7 +51,10 @@ def extend (v : X → Source) : Name X → Source := Sum.elim v (eval v)
 private theorem ground_value (w : Name X → Source) (g : Source)
     (h : ∀ e ∈ groundDefinitions g, e.Holds w) : w (root (.ground g)) = g := by
   induction g with
-  | of b => cases b <;> exact h _ (by simp [groundDefinitions])
+  | of b =>
+      cases b with
+      | false => exact h (.primitive (root (.ground (.of false))) 1) (by simp [groundDefinitions])
+      | true => exact h (.primitive (root (.ground (.of true))) 0) (by simp [groundDefinitions])
   | mul l r hl hr =>
       have left := hl (fun e he => h e (by simp [groundDefinitions, he]))
       have right := hr (fun e he => h e (by simp [groundDefinitions, he]))
@@ -63,7 +68,7 @@ private theorem definition_value (w : Name X → Source) (e : MixedExpr X)
     w (root e) = eval (fun x => w (.inl x)) e := by
   induction e with
   | ground g => exact ground_value w g h
-  | residual a x => exact h _ (by simp [definitions])
+  | residual a x => exact h (.shift (root (.residual a x)) a (.inl x)) (by simp [definitions])
   | pair l r hl hr =>
       have left := hl (fun q hq => h q (by simp [definitions, hq]))
       have right := hr (fun q hq => h q (by simp [definitions, hq]))
@@ -89,7 +94,11 @@ private theorem definitions_hold (v : X → Source) (e : MixedExpr X) :
     ∀ q ∈ definitions e, q.Holds (extend v) := by
   induction e with
   | ground g => exact ground_definitions_hold v g
-  | residual a x => intro q hq; simpa only [definitions, List.mem_singleton] using hq ▸ (rfl : Equation.Holds (extend v) (.shift (root (.residual a x)) a (.inl x)))
+  | residual a x =>
+      intro q hq
+      simp only [definitions, List.mem_singleton] at hq
+      subst q
+      rfl
   | pair l r hl hr =>
       intro q hq
       simp only [definitions, List.mem_append, List.mem_singleton] at hq
@@ -128,7 +137,10 @@ private theorem flatten_sound (E : List (MixedExpr X × MixedExpr X))
 private theorem origins (E : List (Equation X)) (B : List (BranchEquation X))
     (h : B ∈ NativePositiveBranchReduction.branches E) : B.map BranchEquation.origin = E := by
   induction E generalizing B with
-  | nil => simpa only [NativePositiveBranchReduction.branches, List.mem_singleton] using h
+  | nil =>
+      simp only [NativePositiveBranchReduction.branches, List.mem_singleton] at h
+      subst B
+      rfl
   | cons e E ih =>
       obtain ⟨b, hb, rest⟩ := List.mem_flatMap.mp h
       obtain ⟨B, hB, rfl⟩ := List.mem_map.mp rest
@@ -222,21 +234,116 @@ private theorem compare_sound {k m : Nat} (A C : Pattern k m) (g : Guard k)
       | scalar c => cases hg
       | pair l r => cases hg
       | block j b =>
-          simp only [compare] at hg
-          split_ifs at hg with h
+          by_cases h : i = j ∧ a = b
           · rcases h with ⟨rfl,rfl⟩; rfl
-          · cases hg
+          · simp [compare, h] at hg
   | pair l r hl hr =>
       cases C with
       | scalar c => cases hg
       | block j b => cases hg
       | pair s t =>
-          simp only [compare, Option.bind_eq_some_iff, Option.pure_def] at hg
+          change ((compare l s).bind fun a =>
+            (compare r t).bind fun b => some (a ++ b)) = some g at hg
+          simp only [Option.bind_eq_some_iff, Option.some.injEq] at hg
           obtain ⟨a, ha, b, hb, eq⟩ := hg
-          have eq : a ++ b = g := Option.some.inj eq
           subst g
           exact congrArg₂ FreeMagma.mul
             (hl s a ha (fun e he => hn e (List.mem_append_left _ he)))
             (hr t b hb (fun e he => hn e (List.mem_append_right _ he)))
+
+/-- Translation is performed on the finite syntax, before native parameters are filled. -/
+def Scalar.shift {k : Nat} (a : Nat) : Scalar k → Scalar k
+  | .constant c => .constant (c + a)
+  | .parameter i c => .parameter i (c + a)
+
+def Pattern.shift {k m : Nat} (a : Nat) : Pattern k m → Pattern k m
+  | .scalar r => .scalar (r.shift a)
+  | .block i b => .block i (a + b)
+  | .pair l r => .pair (l.shift a) (r.shift a)
+
+private theorem shift_code {k m : Nat} (a : Nat) (t : Pattern k m)
+    (n : Fin k → Nat) (z : Fin m → Source) :
+    (t.shift a).code n z = shiftCode a (t.code n z) := by
+  induction t with
+  | scalar r => cases r <;> simp [Pattern.shift, Scalar.shift, Pattern.code,
+      Scalar.value, shiftCode, Nat.add_assoc]
+  | block i b =>
+      exact (NativePositiveBranchReduction.shift_add a b (encode (z i))).symm
+  | pair l r hl hr => exact congrArg₂ FreeMagma.mul hl hr
+
+/-- Collapse ranks are explicit natural parameters, shared across its three comparisons. -/
+def branchComparisons {k m : Nat} (t : X → Pattern k m)
+    (c : BranchEquation X → Fin k) (b : BranchEquation X) :
+    List (Pattern k m × Pattern k m) :=
+  match b with
+  | .primitive x a => [(t x, .scalar (.constant a))]
+  | .shift x a y => [(t x, (t y).shift a)]
+  | .ordinary x y z => [(t x, .pair (t y) (t z))]
+  | .same x y => [(t x, t y)]
+  | .collapse x y z =>
+      [(t y, .scalar (.parameter (c b) 1)),
+       (t z, .scalar (.parameter (c b) 0)),
+       (t x, .scalar (.parameter (c b) 2))]
+
+def collect {k m : Nat} : List (Pattern k m × Pattern k m) → Option (Guard k)
+  | [] => some []
+  | (a,b) :: rest => do
+      let g ← compare a b
+      let h ← collect rest
+      pure (g ++ h)
+
+private theorem collect_sound {k m : Nat} (L : List (Pattern k m × Pattern k m))
+    (g : Guard k) (hg : collect L = some g) (n : Fin k → Nat) (hn : g.Holds n)
+    (z : Fin m → Source) : ∀ p ∈ L, p.1.code n z = p.2.code n z := by
+  induction L generalizing g with
+  | nil => intro p hp; cases hp
+  | cons p L ih =>
+      change ((compare p.1 p.2).bind fun a =>
+        (collect L).bind fun b => some (a ++ b)) = some g at hg
+      simp only [Option.bind_eq_some_iff, Option.some.injEq] at hg
+      obtain ⟨a, ha, b, hb, rfl⟩ := hg
+      intro q hq
+      rcases List.mem_cons.mp hq with rfl | hq
+      · exact compare_sound p.1 p.2 a ha n
+          (fun e he => hn e (List.mem_append_left _ he)) z
+      · exact ih b hb (fun e he => hn e (List.mem_append_right _ he)) q hq
+
+private theorem comparisons_branch {k m : Nat} (t : X → Pattern k m)
+    (c : BranchEquation X → Fin k) (b : BranchEquation X)
+    (n : Fin k → Nat) (z : Fin m → Source)
+    (h : ∀ p ∈ branchComparisons t c b, p.1.code n z = p.2.code n z) :
+    b.Holds (fun x => (t x).code n z) := by
+  cases b with
+  | primitive x a => exact h _ (List.mem_singleton_self _)
+  | shift x a y =>
+      have eq := h _ (List.mem_singleton_self _)
+      exact eq.trans (shift_code a (t y) n z)
+  | ordinary x y z => exact h _ (List.mem_singleton_self _)
+  | same x y => exact h _ (List.mem_singleton_self _)
+  | collapse x y w =>
+      refine ⟨n (c (.collapse x y w)), h _ (by simp [branchComparisons]), ?_,
+        h _ (by simp [branchComparisons])⟩
+      simpa only [Pattern.code, Scalar.value, Nat.add_zero] using
+        h (t w, .scalar (.parameter (c (.collapse x y w)) 0))
+          (by simp [branchComparisons])
+
+/-- Successful finite comparison extraction yields an image sound for every native filling.
+The arithmetic domain depends only on natural scalar parameters. -/
+theorem guarded_mixed_sound {k m : Nat} (E : List (MixedExpr X × MixedExpr X))
+    (B : List (BranchEquation (Name X)))
+    (hB : B ∈ NativePositiveBranchReduction.branches (flatten E))
+    (t : Name X → Pattern k m) (c : BranchEquation (Name X) → Fin k)
+    (g : Guard k) (hg : collect (B.flatMap (branchComparisons t c)) = some g)
+    (n : Fin k → Nat) (hn : g.Holds n) (z : Fin m → Source) :
+    ∀ e ∈ E, eval (fun x => rankedEval n z (t (.inl x)).template) e.1 =
+      eval (fun x => rankedEval n z (t (.inl x)).template) e.2 := by
+  have comparisons := collect_sound _ g hg n hn z
+  have branch : ∀ b ∈ B, b.Holds (fun x => (t x).code n z) := by
+    intro b hb
+    apply comparisons_branch t c b n z
+    intro p hp
+    exact comparisons p (List.mem_flatMap.mpr ⟨b,hb,hp⟩)
+  have sound := flatten_expansion_sound E B hB (fun x => (t x).code n z) branch
+  simpa only [pattern_expansion] using sound
 
 end D5.S3.Arith.FibonacciAtomic.Observer.NativeMixedImageConstruction
