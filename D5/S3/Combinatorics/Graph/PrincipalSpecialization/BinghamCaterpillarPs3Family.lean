@@ -117,7 +117,7 @@ private def root {l : ℕ} (a : Parts l) (i : Fin l) : Fin (a i).val :=
 private abbrev Leaf {l : ℕ} (a : Parts l) (i : Fin l) :=
   {r : Fin (a i).val // r ≠ root a i}
 
-private def SpineGood {l k : ℕ} (c : Fin l → Fin k) : Prop :=
+def SpineGood {l k : ℕ} (c : Fin l → Fin k) : Prop :=
   ∀ i j, i.val + 1 = j.val → c i ≠ c j
 
 private abbrev Spine (l k : ℕ) := {c : Fin l → Fin k // SpineGood c}
@@ -204,10 +204,10 @@ private def coloringEquiv {l k : ℕ} (a : Parts l) :
 
 attribute [local instance] Classical.propDecidable
 
-private noncomputable def leafSum {k : ℕ} (c : Fin k) : Polynomial ℤ :=
+noncomputable def leafSum {k : ℕ} (c : Fin k) : Polynomial ℤ :=
   ∑ d : {d : Fin k // d ≠ c}, Polynomial.X ^ d.val.val
 
-private noncomputable def blockWeight {k : ℕ} (m : ℕ+) (c : Fin k) : Polynomial ℤ :=
+noncomputable def blockWeight {k : ℕ} (m : ℕ+) (c : Fin k) : Polynomial ℤ :=
   Polynomial.X ^ c.val * leafSum c ^ (m.val - 1)
 
 private lemma assemble_weight {l k : ℕ} (a : Parts l) (c : Spine l k)
@@ -265,13 +265,13 @@ private lemma subtype_sum {A : Type*} [Fintype A] (p : A → Prop)
   classical
   rw [← Finset.sum_subtype (Finset.univ.filter p) (by simp), Finset.sum_filter]
 
-private lemma ps_spine_sum {l k : ℕ} (a : Parts l) :
+lemma ps_spine_sum {l k : ℕ} (a : Parts l) :
     ps (caterpillar a) k =
       ∑ c : Fin l → Fin k, if SpineGood c then ∏ i, blockWeight (a i) (c i) else 0 := by
   rw [coloring_factorization]
   exact subtype_sum (SpineGood (l:=l) (k:=k)) (fun c => ∏ i, blockWeight (a i) (c i))
 
-private lemma sum_finfun_succ {A : Type*} [Fintype A] {n : ℕ}
+lemma sum_finfun_succ {A : Type*} [Fintype A] {n : ℕ}
     (f : (Fin (n+1) → A) → Polynomial ℤ) :
     ∑ c, f c = ∑ x, ∑ c : Fin n → A, f (Fin.cons x c) := by
   calc
@@ -317,7 +317,7 @@ private lemma ps_five {k : ℕ} (a : Parts 5) :
   rfl
 
 
-private lemma leafSum_eq {k : ℕ} (c : Fin k) :
+lemma leafSum_eq {k : ℕ} (c : Fin k) :
     leafSum c = ∑ d : Fin k, if d ≠ c then Polynomial.X ^ d.val else 0 := by
   unfold leafSum
   convert subtype_sum (fun d : Fin k => d ≠ c) (fun d => Polynomial.X ^ d.val) using 1
