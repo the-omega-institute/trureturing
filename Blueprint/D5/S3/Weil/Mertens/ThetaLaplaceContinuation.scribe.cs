@@ -7,7 +7,7 @@ internal sealed class ThetaLaplaceContinuationDocument : IScribeDocumentDefiniti
     private const string Prefix = "D5/S3/Weil/Mertens/ThetaLaplaceContinuation.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The actual cutoff theta transform continues meromorphically and detects every zeta zero with its full multiplicity.",
+        "The actual cutoff theta transform continues meromorphically and detects every zeta zero with real part greater than one half with its full multiplicity.",
         H("Chebyshev theta Laplace continuation"),
         Blocks(
             Describe.Lean(
