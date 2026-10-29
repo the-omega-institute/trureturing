@@ -204,7 +204,7 @@ theorem strict_inventory_third_layer_vanishing :
   have hT' := hT t ((le_max_left T 2).trans ht)
   exact hratio.trans_lt (hT'.2.trans_lt hT'.1)
 
-private theorem prime_number_limits :
+theorem prime_number_limits :
     Tendsto (fun t : ℝ => ψ t / t) atTop (𝓝 1) ∧
       Tendsto (fun t : ℝ => θ t / t) atTop (𝓝 1) := by
   obtain ⟨c, hc, hpnt⟩ := MediumPNT
