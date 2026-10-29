@@ -3,6 +3,8 @@ import D5.S3.Combinatorics.Circle.ThreeSmallSameSignSource
 import Reg.Support.DependentFamily
 import Reg.Support.SingleDependentReadout
 
+/-! # Source-faithful audit for the three-SMALL physical completion -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -10,6 +12,7 @@ open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.Combinatorics.Circle.SourceWidth
 open _root_.D5.S3.Combinatorics.Circle.ExpandingSourcePath
+open _root_.D5.S3.Combinatorics.Circle.MixedSuffixEnergy
 open _root_.D5.S3.Combinatorics.Circle.TwoOppositeLargeExchange
 open _root_.D5.S3.Combinatorics.Circle.ThreeSmallSameSignSource
 
