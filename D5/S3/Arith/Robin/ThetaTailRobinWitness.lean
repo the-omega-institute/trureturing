@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The actual improper theta tail equals the second Mertens error and a peak yields a strict Robin witness. -/
+   digest: The actual theta tail equals a Mertens error and yields a strict Robin witness. -/
 
 import D5.S3.Arith.Robin.MertensCumulativePeak
 import D5.S3.Weil.Mertens.ActualThetaTailLaplace
@@ -56,7 +56,8 @@ private theorem theta_tail_representation {u : ℝ} (hu : 2 ≤ u) :
     dsimp [reciprocal, ActualRobinClockCovariance.g]
     field_simp
   have hfi : IntegrableOn (deriv reciprocal) (Icc (2 : ℝ) u) := by
-    refine ((weight_continuous (by norm_num : (1 : ℝ) < 2)).neg.integrableOn_Icc (μ := volume)).congr_fun
+    refine ((weight_continuous (by norm_num : (1 : ℝ) < 2)).neg.integrableOn_Icc
+      (μ := volume)).congr_fun
       (fun t ht => (reciprocal_deriv ht.1).symm) measurableSet_Icc
   have ha := sum_mul_eq_sub_integral_mul₁ c (by simp [c]) (by simp [c]) u
     (fun t ht => (ActualRobinClockCovariance.g_has_deriv_at
@@ -76,8 +77,7 @@ private theorem theta_tail_representation {u : ℝ} (hu : 2 ≤ u) :
   have hu0 : u ≠ 0 := by linarith
   have hl0 : log u ≠ 0 := (log_pos (by linarith : 1 < u)).ne'
   rw [ha]
-  field_simp
-  <;> ring
+  field_simp; ring
 
 private theorem k_hasDerivAt {t : ℝ} (ht : 2 ≤ t) :
     HasDerivAt k (t * w t) t := by
@@ -86,10 +86,9 @@ private theorem k_hasDerivAt {t : ℝ} (ht : 2 ≤ t) :
   have hd := ((Real.hasDerivAt_log hl0).comp t (Real.hasDerivAt_log ht0)).sub
     ((hasDerivAt_const t (1 : ℝ)).div (Real.hasDerivAt_log ht0) hl0)
   refine hd.congr_deriv ?_
-  simp only [w, ActualRobinClockCovariance.activationDensity, Function.comp_apply,
+  simp only [w, ActualRobinClockCovariance.activationDensity,
     one_mul, zero_mul, zero_sub]
-  field_simp [ht0, hl0]
-  <;> ring
+  field_simp [ht0, hl0]; ring
 
 private theorem theta_tail_finite {a u : ℝ} (ha : 2 ≤ a) (hau : a ≤ u) :
     I u = I a - ∫ t in a..u, g t := by
@@ -99,15 +98,19 @@ private theorem theta_tail_finite {a u : ℝ} (ha : 2 ≤ a) (hau : a ≤ u) :
     · intro t ht
       rw [uIcc_of_le hau] at ht
       exact k_hasDerivAt (ha.trans ht.1)
-    · exact (continuousOn_id.mul (weight_continuous (by linarith : 1 < a))).intervalIntegrable_of_Icc hau
+    · exact (continuousOn_id.mul
+        (weight_continuous (by linarith : 1 < a))).intervalIntegrable_of_Icc hau
   have htheta : IntervalIntegrable (fun t => Chebyshev.theta t * w t) volume (2 : ℝ) u := by
     rw [intervalIntegrable_iff_integrableOn_Icc_of_le hu]
     simpa only [mul_comm, MellinWeightedVariation.weight, w,
       ActualRobinClockCovariance.activationDensity] using
       theta_mul_integrable (by norm_num : (2 : ℝ) ≤ 2)
       ((weight_continuous (by norm_num : (1 : ℝ) < 2)).integrableOn_Icc (μ := volume))
-  have htheta_a : IntervalIntegrable (fun t => Chebyshev.theta t * w t) volume (2 : ℝ) a := htheta.mono_set (by rw [uIcc_of_le hu, uIcc_of_le ha]; exact Icc_subset_Icc_right hau)
-  have htheta_au : IntervalIntegrable (fun t => Chebyshev.theta t * w t) volume a u := htheta.mono_set
+  have htheta_a : IntervalIntegrable (fun t => Chebyshev.theta t * w t)
+      volume (2 : ℝ) a := htheta.mono_set
+    (by rw [uIcc_of_le hu, uIcc_of_le ha]; exact Icc_subset_Icc_right hau)
+  have htheta_au : IntervalIntegrable (fun t => Chebyshev.theta t * w t) volume a u :=
+    htheta.mono_set
     (by rw [uIcc_of_le hu, uIcc_of_le hau]; exact Icc_subset_Icc_left ha)
   have hsplit := intervalIntegral.integral_add_adjacent_intervals htheta_a htheta_au
   have hg : (∫ t in a..u, g t) =
@@ -230,18 +233,3 @@ theorem theta_tail_mertens_robin (x : ℝ) (hx : 2 ≤ x) :
 
 #print axioms theta_tail_mertens_robin
 end D5.S3.Arith.Robin.ThetaTailRobinWitness
-
-open Lean in
-run_cmd do
-  let env ← getEnv
-  let some info := env.find? `D5.S3.Arith.Robin.ThetaTailRobinWitness.theta_tail_mertens_robin
-    | throwError "Missing theta-tail theorem"
-  let mut e := info.type
-  for step in ["body", "body", "arg", "fn", "arg", "fn", "arg", "arg", "arg"] do
-    match step, e with
-    | "body", .forallE _ _ b _ => e := b
-    | "body", .lam _ _ b _ => e := b
-    | "arg", .app _ a => e := a
-    | "fn", .app f _ => e := f
-    | _, _ => throwError "Invalid source observation path at {step}: {e}"
-  logInfo m!"SELECTED_THETA_OBSERVATION: {e}"

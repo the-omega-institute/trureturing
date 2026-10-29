@@ -2,6 +2,9 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Robin.ThetaTailRobinWitness
 import Reg.Support.SingleDependentReadout
 
+/-! The full actual theta-tail law is tested by adding a reciprocal-square tail
+to its equality observation. -/
+
 namespace Reg.D5.S3.Arith.Robin.ThetaTailRobinWitness
 open Set MeasureTheory Real
 open _root_.D5.S3.Arith.Robin
@@ -35,7 +38,7 @@ abbrev arena : Arena where
 
 private theorem reciprocal_square_integrable :
     IntegrableOn (fun t : ℝ => 1 / t ^ 2) (Ioi (2 : ℝ)) := by
-  simpa only [Real.rpow_neg, Real.rpow_two, one_div] using
+  simpa only [Real.rpow_neg_ofNat, zpow_neg, zpow_ofNat, one_div] using
     (integrableOn_Ioi_rpow_of_lt (a := (-2 : ℝ)) (by norm_num) (by norm_num : (0 : ℝ) < 2))
 
 private theorem reciprocal_square_integral :
@@ -74,6 +77,7 @@ private theorem actual_dependence : kernel (9 / 4) ≠ kernel 16 := by
     nlinarith
   have hl16 : 2 < log (16 : ℝ) := by
     rw [show (16 : ℝ) = 2 ^ 4 by norm_num, log_pow]
+    norm_num
     linarith [Real.log_two_gt_d9]
   have hright : -1 / 4 < kernel 16 := by
     unfold kernel ActualRobinClockCovariance.activationDensity
