@@ -87,7 +87,10 @@ internal sealed class HannaA352700CatalanCongruencesDocument : IScribeDocumentDe
                 + "B(X) ≡ (1+X)^(-1) + 2*X (mod 3), so A(X) ≡ C(X)^(-1) + 2*(C(X) - 1) = (2 - X)*C(X) - 1 "
                 + "= C(X) + X^2*C(X)^3 (mod 3), establishing (2), (1) by prime_power_subst, and (4)-(5) by "
                 + "coefficient extraction. Global literature novelty is unverified.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("oeis-a352700-hanna-catalan-congruences"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,

@@ -128,6 +128,10 @@ $$((\operatorname{seriesMod}\left(3\right))^{3} = \operatorname{PowerSeries}.\op
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/PowerSeries/HannaA352700CatalanCongruences.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/oeis-a352700-hanna-catalan-congruences` (proved) by `D5/S3/Combinatorics/PowerSeries/HannaA352700CatalanCongruences.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"oeis-a352700-hanna-catalan-congruences","declaration_gid":"D5/S3/Combinatorics/PowerSeries/HannaA352700CatalanCongruences.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2022). *OEIS A352700: Catalan inverse-power binomial series and modulo 2 and 3 congruences*. URL: <https://oeis.org/A352700>.
