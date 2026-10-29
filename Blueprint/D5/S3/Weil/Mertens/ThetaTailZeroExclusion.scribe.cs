@@ -28,8 +28,10 @@ internal sealed class ThetaTailZeroExclusionDocument : IScribeDocumentDefinition
                         "For X=id, the genuine complex moment generating function of mu splits on Re(s)>0 as "
                         + "G(s)=K(s)-L(U,s), where K(s)=C*exp(-(s+b)U)/(s+b) is the elementary exponential "
                         + "integral and L(U,s) is the actual cutoff Laplace transform of f. The actual theta-tail "
-                        + "ODE and the continuation identity Q(U,s)=M(U,s) give the Euler forcing equation for G, "
-                        + "including the positive cutoff term U^2*f(U)*exp(-sU).")),
+                        + "ODE and the continuation identity Q(U,s)=M(U,s) give, with "
+                        + "B=U^2*f(U)*exp(-sU), the signed equation Euler(L)=-M'+M+B. The cutoff term has a "
+                        + "plus sign in the L equation; B need not be a positive number. Since G=K-L, "
+                        + "Euler(G)=Euler(K)-(-M'+M)-B.")),
                     Paragraph(Text(
                         "The positive Euler continuation theorem extends G holomorphically to Re(s)>-b without "
                         + "assuming a target-cut integrability hypothesis. Since K is holomorphic there, H=K-G is "
