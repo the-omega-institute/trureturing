@@ -3,7 +3,7 @@ bibkey: klausen2025spectragenerators
 authors: Frederik Ravn Klausen
 year: 2025
 title: "Spectra of generators of Markovian evolution in the thermodynamic limit: From non-Hermitian to full evolution via tridiagonal Laurent matrices"
-doi: null
+doi: 10.48550/arXiv.2206.09879
 url: https://arxiv.org/abs/2206.09879v3
 claim: "A single-particle Lindbladian on the Hilbert-Schmidt operators over ℓ²(ℤ), with finite-range translation-invariant Hamiltonian and Lindblad operators, is a bounded operator and decomposes as a direct integral of finite-range Laurent operators with finite-range perturbations. Under the additional rank-one hypothesis the paper proves that if 0 lies in the spectrum then the Lindbladian is gapless or has an infinite-dimensional kernel, and lists as a further question whether 0 always lies in the spectrum."
 strata_touched:
@@ -29,7 +29,8 @@ Theorem `thm:no_gap` (`section03.tex`): if $\mathcal L$ satisfies (Finite Range)
 ## Verified locator
 
 Source: https://arxiv.org/abs/2206.09879v3
-- URL: https://arxiv.org/abs/2206.09879v3. The arXiv record has no journal reference. The e-print members `section02.tex` (258 lines, md5 `b5b553f1c8203d16c63a5b9330242407`), `section03.tex` (757 lines, md5 `a16eacc51b1bb4e77ceafb39b96fbb18`) and `section04.tex` (597 lines, md5 `227274cfa5a97ad104ecfdde8c5d4562`). Locations:
+- DOI: https://doi.org/10.48550/arXiv.2206.09879 (arXiv-issued DataCite DOI; the arXiv record has no journal reference).
+- URL: https://arxiv.org/abs/2206.09879v3. The e-print members `section02.tex` (258 lines, md5 `b5b553f1c8203d16c63a5b9330242407`), `section03.tex` (757 lines, md5 `a16eacc51b1bb4e77ceafb39b96fbb18`) and `section04.tex` (597 lines, md5 `227274cfa5a97ad104ecfdde8c5d4562`). Locations:
   - the Lindblad form, `section02.tex` l. 6–13; the effective Hamiltonian, l. 22;
   - the assumptions, l. 39–50; boundedness on the Hilbert-Schmidt operators, l. 54–57;
   - the vectorization, `section03.tex` l. 162–182; Theorem `thm:no_gap`, l. 506–509;
