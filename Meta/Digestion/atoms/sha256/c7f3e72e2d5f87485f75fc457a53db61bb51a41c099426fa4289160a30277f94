@@ -1,0 +1,79 @@
+## 26. Actual inverse roots and quantitative recovery
+
+**Theorem 26.1.** Each $q\in\mathcal V$ has exactly one inverse
+$x_i(q)\in B_i$ under $\mathcal R$. It is interior and real analytic, with
+
+$$
+\|x_i(q)-z_i\|_\infty<1.1\cdot10^{-35}.
+$$
+
+The constructed worlds $W_i(q)$ are lawful members of $C(q)$. On the
+closed rectangle the complete statement is
+
+$$
+C(q)=\{W_1(q),W_2(q)\},\quad W_1(q)\ne W_2(q),
+\qquad q\in\mathcal U.
+$$
+
+The labels are the disjoint source boxes, equivalently increasing $r$.
+For $q,q'\in\mathcal U$ and $\varepsilon=\|q-q'\|_\infty$,
+
+$$
+\begin{gathered}
+\|x_i(q)-x_i(q')\|_\infty\le .054\varepsilon,\qquad
+\|\Theta_i(q)-\Theta_i(q')\|_\infty\le .17\varepsilon,\\
+|d_i(q)-d_i(q')|\le .007\varepsilon,\qquad
+\|\alpha_i(q)-\alpha_i(q')\|_\infty\le .008\varepsilon,\\
+\max_{k,l}|(P_i(q)-P_i(q'))_{kl}|\le .17\varepsilon,\qquad
+\|P_i(q)-P_i(q')\|_\infty\le .223\varepsilon,\\
+\sup_{0\le s\le7}|g_i(q;s)-g_i(q';s)|\le3.2\varepsilon,\\
+|a_i(q)-a_i(q')|\le17\varepsilon,\qquad
+|m_i(q)-m_i(q')|\le14\varepsilon.
+\end{gathered}
+$$
+
+**Proof.** Define $T_{i,q}(x)=x-K_i(\mathcal R(x)-q)$.
+Its derivative norm is less than $\kappa=10^{-15}$. On the complete,
+convex box $B_i$ it is therefore a contraction, and
+
+$$
+\|T_{i,q}(x)-z_i\|_\infty
+<3\cdot10^{-41}+.054(2\cdot10^{-34})+10^{-15}10^{-30}
+<10^{-30}.
+$$
+
+The last comparison is strict even with the closed source box and
+all $q$ in the specified open record square. Thus it maps $B_i$ into
+its interior. Banach's theorem gives a unique fixed point. Since
+$\|I-K_iD\mathcal R\|<1$, its geometric series proves $K_iD\mathcal R$
+invertible, hence $K_i$ invertible. A fixed point is exactly a zero
+of $\mathcal R(x)-q$. Its displacement is bounded by
+
+$$
+\frac{3\cdot10^{-41}+.054(2\cdot10^{-34})}{1-10^{-15}}
+<1.1\cdot10^{-35}.
+$$
+
+Lemma 2.2 proves lawful whole-world realization and all acquired rows.
+Disjoint boxes make the two worlds distinct. The entire-child
+bound of Theorem 12.2 and Sections 13–16 then proves equality of the complete sets on
+$\mathcal U$, including every original world stratum.
+
+The analytic inverse theorem applies because the rational circuit is
+pole-free and its Jacobian nonsingular. Local analytic inverses agree
+by uniqueness in $B_i$, defining analytic branches on $\mathcal V$.
+Implicit differentiation gives $Dx_i=(D\mathcal R)^{-1}$ and
+$D\Theta_i=D\Theta(D\mathcal R)^{-1}$. Integrating on the straight segment
+in the convex $\mathcal U$ proves all the coordinate bounds and the
+terminal bounds of Lemma 25.1.
+
+The matrix entries are $r,b,c_{\rm src},1-r$; this proves the stated
+maximum-entry bound. For the induced matrix norm the first row is
+bounded by $(.053160+.002675)\varepsilon$ and the second by
+$(.169790+.053160)\varepsilon<.223\varepsilon$ on branch one.
+The corresponding branch-two sums are $.053100\varepsilon$ and
+$.180190\varepsilon$. This proves the induced norm assertion, without
+confusing it with the maximum-entry estimate. Finally
+$1+7+49+343=400$, so the gain coefficient bound gives
+$.008\cdot400\varepsilon=3.2\varepsilon$. ∎
+

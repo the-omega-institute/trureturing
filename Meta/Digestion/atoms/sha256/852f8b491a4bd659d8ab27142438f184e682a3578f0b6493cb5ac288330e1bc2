@@ -1,0 +1,51 @@
+**约定 84.3（delayed joint retention 的实际 necessity）。** [RRO Definition 9.2 与 Theorem 9.3][F84RRO] 使用其实际 double-wall source、known height $1/8$、所有未知 normalized live inputs $\rho_{\beta,m}$，先实际收到 command $j\in\{1,\ldots,N\}$，再 joint encoding、retention，之后才收到 wait/execute bit $b$。其 unassisted CPTP restrictions 与两个 fixed common endpoint decoders 为
+
+$$
+\mathcal E_j:M_3\to\mathcal B,\qquad
+\mathcal B=\bigoplus_\alpha M_{d_\alpha},\qquad
+\mathcal D_b:\mathcal B\to M_3,
+\qquad
+U_j=\operatorname{diag}(e^{-iC_j/4},e^{iC_j/4},1),\quad C_j=j/(N+1).
+$$
+
+$U_j$ 的 basis 是该来源的 $(U_+,U_-,e_2)$，不是本批的 $(\xi,e,f)$。两 endpoint identities 是
+$\mathcal D_0\mathcal E_j(\rho_{\beta,m})=\rho_{\beta,m}$ 与
+$\mathcal D_1\mathcal E_j(\rho_{\beta,m})=U_j\rho_{\beta,m}U_j^\dagger$。
+所有 retention 后可用信息必须通过 $\mathcal B$；不存在 encoder 另行读取的 history-correlated helper、accessible archive、specimen bypass、surviving command dial 或 assisting receiver share。输入独立 ancillas 归入 maps，真正 spectator reference 不可访问。仅把一个 archive 列入资源账不证明输入具有 $\mathcal E_j(\rho_{\beta,m})$ 这一 unassisted form。
+
+该来源的 exact necessary-and-sufficient condition 为
+
+$$
+N\le\sum_\alpha\lfloor d_\alpha/3\rfloor.
+$$
+
+这是其原 delayed task 的 theorem，不是 §83 的 label count。RRO §11 的 approximation 则要求在原 endpoint 对全部 $j,b,\beta,m$ uniform：
+
+$$
+\sup_{j,b,\beta,m}\frac12
+\|\mathcal D_b\mathcal E_j(\rho_{\beta,m})
+       -U_j^b\rho_{\beta,m}(U_j^b)^\dagger\|_1\le\epsilon.
+$$
+
+这是 normalized-live endpoint half-trace metric，包含每个 encoding outcome；没有 postselection、abort 或额外失败。若 $N\ge2$，令
+
+$$
+\begin{gathered}
+\kappa_R=(2-\sqrt2)/8,\quad r_\epsilon=\sqrt{\epsilon/\kappa_R},\quad
+u_\epsilon=2r_\epsilon+r_\epsilon^2,\\
+s_N=\sqrt{1-\left(\frac{1+2\cos(1/[4(N+1)])}{3}\right)^2},\qquad
+D=\sum_\alpha d_\alpha.
+\end{gathered}
+$$
+
+RRO Theorem 11.2 供应 necessity
+
+$$
+D\ge\frac{9N}{(\sqrt3+u_\epsilon)^2
+ +(N-1)u_\epsilon^2(1+2/s_N)^2}.
+$$
+
+此处 $D$ 不是 $\sum d_\alpha^2$。该界不是 sufficient 或 optimal approximate capacity，不决定给定 blocks 的可行性；即使 $\epsilon=0$，$D\ge3N$ 也不能替代 exact sum-of-floors condition。该来源还明确允许 positive-error command supports overlap。
+
+terminal projection-probability loss 仅限制指定 effects，不能反推此 uniform half-trace premise；static supplied labels 亦没有 joint retention factorization。若 execute 在 encoding 前就不可撤回地选定，原 late wait option 已改变，也不是该 theorem 的任务。supplier 的 complete-continuation extension 还要求同一实际 joint endpoint ports、law、reference、archives、clocks、permissions 与 selection/update kernel，不能从 specimen marginal 近似直接推出。
+

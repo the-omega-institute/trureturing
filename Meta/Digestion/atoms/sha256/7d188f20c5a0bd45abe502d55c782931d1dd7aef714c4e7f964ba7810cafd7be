@@ -1,0 +1,33 @@
+**Lemma 66.5 (Whole-source filters and separated J answers).** Over $\mathcal B_*$, only the $R$ roots with indices 12 and 13 can represent original worlds. Each determines at most one entire world. The possible terminal-J values at these two roots satisfy
+
+$$
+\begin{aligned} 994.82015996&\le a_{12}\le994.82015997,\\ 964.05127114&\le a_{13}\le964.05127115,\\ -30.76889&\le a_{13}-a_{12}\le-30.76888<0. \end{aligned} \tag{66.10}
+$$
+
+Proof. The first eight $R$ rectangles and first two $F_0$ rectangles have negative real roots. The last four $R$ rectangles are nonreal, since their imaginary coordinate intervals exclude zero. The remaining seven real roots have positive $x$.
+
+At every one of these positive-root boxes, evaluation gives the uniform pole separations
+
+$$
+|\alpha|>10^{14},\qquad \chi>40,\qquad |H_1|>1/25,\qquad |U|>1/10. \tag{66.11}
+$$
+
+Here, with $d=-\zeta/\alpha$, use exactly the zero-safe inverse of Support X, (12.8)–(12.9):
+
+$$
+\begin{gathered} h_3=(24-d)/x,\quad h_4=18-d,\quad h_5=(p-d)/(x+1),\quad h_6=(v-d)/(x+2),\\ H_0=20h_3-45h_4+36h_5-10h_6,\\ H_1=10h_3-20h_4+15h_5-4h_6,\\ H_2=4h_3-6h_4+4h_5-h_6,\quad H_7=-h_3+4h_4-6h_5+4h_6,\\ B_0=294/5-2d-H_2,\qquad \chi=d^2+B_0^2,\\ U=(-dH_0+B_0H_2)/\chi,\quad b=(U-1)/2,\\ j=U(24-d)/H_1,\qquad r=xU-j,\\ a=d+\left(\frac{1+1/U}{2}+2x+\frac{2r}{U}\right)H_7. \end{gathered} \tag{66.12}
+$$
+
+The last expression is the actual terminal J response because $H_7=Ug(7)$. In particular it uses the same whole gain as the acquired rows.
+
+All following endpoints are exact rationals and enclose the entire smaller root boxes of Lemma 66.4, uniformly over $\mathcal B_*$. The strict source tests eliminate every positive candidate except indices 12 and 13:
+
+| Polynomial | Index | $b$ enclosure | $r$ enclosure | Source test |
+| --- | --- | --- | --- | --- |
+| $R$ | 8 | $[27.49075770,27.49075771]$ | $[34.55368867,34.55368868]$ | r>1 |
+| $R$ | 9 | $[-3.17686801,-3.17686800]$ | $[0.67614939,0.67614940]$ | b<0 |
+| $R$ | 10 | $[-0.43583281,-0.43583280]$ | $[0.86342730,0.86342731]$ | b<0 |
+| $R$ | 11 | $[-0.55207424,-0.55207423]$ | $[-0.29745094,-0.29745093]$ | b<0 |
+| $R$ | 12 | $[0.04091698,0.04091699]$ | $[0.63750339,0.63750340]$ | retained |
+| $R$ | 13 | $[0.04078295,0.04078296]$ | $[0.39999999,0.40000001]$ | retained |
+| $F0$ | 2 | $[-1.45169779,-1.45169778]$ | $[-0.21103470,-0.21103469]$ | b<0 |

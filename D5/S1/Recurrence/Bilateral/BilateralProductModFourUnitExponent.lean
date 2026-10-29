@@ -9,10 +9,18 @@
 /-
 The public definitions quote the OEIS convention literally; the frozen owner is used only inside
 private correspondence and proof steps.  All proof helpers are private and consumed by the
-settling result.  The direct frozen owner is BilateralProductModFour.
-proof_shape: result = content
-escape_witness: UnitExponent.approximation_stable
-The induction stabilizes the approximations for every c >= 1.
+settling result. The frozen suppliers are BilateralProductModFour and
+PowerSeriesNormalizedContraction.exists_unique_fixed.
+proof_shape: result = bind-only
+escape_witness: result = none
+The stabilization induction proves facts about the specified approximations and diagonal
+series for every c >= 1. It is not an escape witness for the existential result: the
+frozen contraction theorem supplies a normalized fixed point without that construction.
+The generic uniqueness application uses R = Z and step c; step_zero supplies normalized
+preservation and step_agree supplies strict contraction. The two Agree predicates are
+definitionally equal. polynomial_unique identifies both normalized fixed points with
+the generic witness. Its conclusion still names the specified diagonal generatingSeries,
+whose fixed-point property is supplied by the stabilization construction.
 
 | declaration | proof_shape | escape_witness | direct consumers |
 | --- | --- | --- | --- |
@@ -22,13 +30,13 @@ The induction stabilizes the approximations for every c >= 1.
 | UnitExponent.sum_zero | bind-only | none | UnitExponent.step_agree, UnitExponent.step_zero |
 | UnitExponent.term_agree | bind-only | none | UnitExponent.sum_agree |
 | UnitExponent.sum_agree | bind-only | none | UnitExponent.step_agree |
-| UnitExponent.step_zero | bind-only | none | UnitExponent.polynomial_form |
+| UnitExponent.step_zero | bind-only | none | UnitExponent.polynomial_form, UnitExponent.polynomial_unique |
 | UnitExponent.step_agree | bind-only | none | UnitExponent.approximation_stable, UnitExponent.generating_fixed, UnitExponent.polynomial_unique |
 | UnitExponent.approximation_stable | content | UnitExponent.approximation_stable | UnitExponent.generating_agree |
 | UnitExponent.generating_agree | content | UnitExponent.approximation_stable | UnitExponent.generating_fixed |
 | UnitExponent.generating_fixed | content | UnitExponent.approximation_stable | UnitExponent.coefficient_four_dvd, UnitExponent.polynomial_form, UnitExponent.polynomial_unique |
 | UnitExponent.polynomial_form | content | UnitExponent.approximation_stable | UnitExponent.generating_equation, UnitExponent.laurent_identity |
-| UnitExponent.polynomial_unique | content | UnitExponent.polynomial_unique | UnitExponent.generating_unique |
+| UnitExponent.polynomial_unique | content | UnitExponent.approximation_stable | UnitExponent.generating_unique |
 | UnitExponent.laurent_normalization | bind-only | none | UnitExponent.laurent_window |
 | UnitExponent.laurent_window | bind-only | none | UnitExponent.equation_of_laurent, UnitExponent.generating_equation |
 | UnitExponent.laurent_identity | content | UnitExponent.approximation_stable | UnitExponent.generating_equation |
@@ -37,24 +45,23 @@ The induction stabilizes the approximations for every c >= 1.
 | UnitExponent.generating_unique | content | UnitExponent.approximation_stable | result |
 | UnitExponent.coefficient_four_dvd | content | UnitExponent.approximation_stable | UnitExponent.hanna_conjecture_general |
 | UnitExponent.hanna_conjecture_general | content | UnitExponent.approximation_stable | result |
-| result | content | UnitExponent.approximation_stable |  |
-admission_basis: open-problem-resolution (#18805; Proved)
+| result | bind-only | none | none |
+admission_basis: pending external open-problem-resolution (#18805; Proved).
+The preregistration specifies the literal claim and tier before the original delivery.
+Its literature screen remains incomplete (ASSUMED-UNVERIFIED), so the bind-only terminal
+result has no verified admission exception. The module remains mathematical WIP for
+admission; its candidate pin and the linked audit issue supply no exception.
 Escape audit: result — https://github.com/the-omega-institute/trureturing/issues/20261.
-Direct frozen dependencies: BilateralProductModFour.laurentTerm (sha256:376c1a862fdd901131b6ce6b839a230a385199b6d8908eaa9acad48868601e0e), bilateralTerm (sha256:93ca9c7b68470ac5db5c4e197fdaacc6a38e37e6bade38df4244ecb4ea20e3fc), nonzeroSum (sha256:5b27d604826938f9c12ad4ca71d8aff5c710b2525327b2788e3ac851619ec203), generatingSeries (sha256:84e4cc046d08d9d34c19ab24cfec587a6c179c2d641c9330f6ec9a7e7aa04728), a (sha256:d1fd34c260df28d6a8ffbb60cb1faaeefb4bdb43c652c75cb58f984c2ed8270b); private owners Agree (sha256:81371ab5f236f52665c836befe987abe2c238c2ad1a09929b2d932b14b557be7), approximation (sha256:21e66904f2406378d82aa3d96245aaa1fa1c25f26cdd0b90556a2af7e370beea), step (sha256:e594efea638591ca1b1fbf09182ee696f5716f038d13b0ec28cfb3ca9fcbb3d3), geometric (sha256:081a25f95093c6453bbdc2a20f9a009701ce2c16e67d86a2b9079c74b0f24c57), embed (sha256:0bd1c43f5ed3ac3be778ebc90be3618a8ef3cb5984dd6a924907e8d8f5c06f1d), positiveTerm (sha256:606cb881803cd3edf13172330b742224520692d1e67eafd8cb73578af5fe8871), negativeTerm (sha256:81daea39837d82b596ea5e7718e28850912c0edac89daae681d548e5025d1dc5), and their consumed lemmas are accessed with OpenPrivate.
+Direct frozen dependencies: PowerSeriesNormalizedContraction.exists_unique_fixed (protected-baseline module statement_id sha256:6fde09331cce748985c92e44cd8bb294c09eb2f01eeea1d646183f03ab04baf4); BilateralProductModFour.laurentTerm (sha256:376c1a862fdd901131b6ce6b839a230a385199b6d8908eaa9acad48868601e0e), bilateralTerm (sha256:93ca9c7b68470ac5db5c4e197fdaacc6a38e37e6bade38df4244ecb4ea20e3fc), nonzeroSum (sha256:5b27d604826938f9c12ad4ca71d8aff5c710b2525327b2788e3ac851619ec203), generatingSeries (sha256:84e4cc046d08d9d34c19ab24cfec587a6c179c2d641c9330f6ec9a7e7aa04728), a (sha256:d1fd34c260df28d6a8ffbb60cb1faaeefb4bdb43c652c75cb58f984c2ed8270b); published owners Agree (sha256:81371ab5f236f52665c836befe987abe2c238c2ad1a09929b2d932b14b557be7), approximation (sha256:21e66904f2406378d82aa3d96245aaa1fa1c25f26cdd0b90556a2af7e370beea), step (sha256:e594efea638591ca1b1fbf09182ee696f5716f038d13b0ec28cfb3ca9fcbb3d3), geometric (sha256:081a25f95093c6453bbdc2a20f9a009701ce2c16e67d86a2b9079c74b0f24c57), embed (sha256:0bd1c43f5ed3ac3be778ebc90be3618a8ef3cb5984dd6a924907e8d8f5c06f1d), positiveTerm (sha256:606cb881803cd3edf13172330b742224520692d1e67eafd8cb73578af5fe8871), negativeTerm (sha256:81daea39837d82b596ea5e7718e28850912c0edac89daae681d548e5025d1dc5), and their consumed lemmas are public at the original owner and applied directly.
 -/
 
-import Batteries.Tactic.OpenPrivate
 import D5.S1.Recurrence.Bilateral.BilateralProductModFour
+import D5.S1.Recurrence.Invariants.PowerSeriesNormalizedContraction
 
 set_option autoImplicit false
 
 /-! The unit-exponent bilateral product has a normalized integral fixed series. -/
 
-open private Agree agree_iff agree_refl agree_add agree_mul agree_pow agree_inverse agree_shift
-  geometric geometric_spec geometric_coeff step approximation
-  equation_iff embed embed_coeff embed_injective embed_inverse negative_factorization
-  laurent_zero zeroTerm_series positiveTerm negativeTerm
-  from D5.S1.Recurrence.Bilateral.BilateralProductModFour
 
 namespace D5.S1.Recurrence.Bilateral.BilateralProductModFourUnitExponent
 
@@ -200,17 +207,16 @@ private theorem polynomial_form (c : ℕ) (hc : 1 ≤ c) :
   rw [generating_fixed c hc, step_zero c hc]
 
 private theorem polynomial_unique (c : ℕ) (hc : 1 ≤ c) (B : PowerSeries ℤ)
-    (_h0 : constantCoeff B = 1)
+    (h0 : constantCoeff B = 1)
     (hB : (1 + X) * (1 + B) * (1 - 2 * nonzeroSum c B) = 2) :
     B = generatingSeries c := by
-  have hb := (equation_iff c B).mp hB
-  have ha : ∀ d, Agree d B (generatingSeries c) := by
-    intro d
-    induction d with
-    | zero => intro n hn; omega
-    | succ d ih => simpa only [← hb, ← generating_fixed c hc] using step_agree c hc ih
-  ext n
-  exact ha (n + 1) n (by omega)
+  obtain ⟨F, _, _, unique⟩ :=
+    D5.S1.Recurrence.Invariants.PowerSeriesNormalizedContraction.exists_unique_fixed
+      (step c) (fun A _ => step_zero c hc A)
+      (fun _ _ _ h => step_agree c hc h)
+  exact (unique B h0 ((equation_iff c B).mp hB)).trans
+    (unique (generatingSeries c) (polynomial_form c hc).1
+      (generating_fixed c hc)).symm
 
 private theorem laurent_normalization (c : ℕ) (hc : 1 ≤ c)
     (A : PowerSeries ℤ) (hA : constantCoeff A = 1) (j : ℤ) (hj : j ≠ 0) :

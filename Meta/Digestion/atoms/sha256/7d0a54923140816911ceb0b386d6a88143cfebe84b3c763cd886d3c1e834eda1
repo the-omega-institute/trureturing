@@ -1,0 +1,6 @@
+**推论 77.3（同一 spectator population 不决定误差）。** 在同一实际 fair instrument、同一 finite horizon，取 $v=e_q$ 和 $v=(e_q+f_q)/\sqrt2$。二者均有 $p=0$，但误差分别为 $(1-\tau)/2$ 和 $1/2$；在 $n=3$ 恰为 $3/8$ 与 $1/2$。
+
+**证明。** 将 $(q,r)=(1,0)$ 与 $(1/2,1/2)$ 代入已引用的 $p=0$ 边界值。这也是 supplier Corollary 27.6 的两个 actual tasks；差为 $\tau/2>0$。∎
+
+因而仅保留 task 的 spectator population $p$ 会合并不同的 quantitative answers，必须保留相对于 erased $W$ sectors 的方向。反之 $r$ 单独在 $n\ge2$ 也不够：$v=\xi$ 与 $v=e_q$ 都有 $r=0$，但误差为零与 $(1-\tau)/2$。
+

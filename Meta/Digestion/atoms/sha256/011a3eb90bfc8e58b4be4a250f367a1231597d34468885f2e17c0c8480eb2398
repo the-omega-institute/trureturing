@@ -1,0 +1,35 @@
+**推论 33.1（固定阈值的共享逆平方阶）。** 对固定 $t\in(0,1)$ 和 $0<|\delta|<d$，上述最小元存在，且
+
+$$
+\begin{aligned}
+r\delta^2\le c_t&\ \Longrightarrow\ e_r(t,\delta)\ge E_r(P_{t,t+\delta})\ge V(t)/2,\\
+r\delta^2>H_t&\ \Longrightarrow\ e_r(t,\delta)<V(t)/2.
+\end{aligned}
+\tag{33.2}
+$$
+
+若 $r_*(t,\delta)$ 为（18.5）的最小平方风险越阈半径，则
+
+$$
+\boxed{\quad
+\left\lfloor\frac{c_t}{\delta^2}\right\rfloor+1
+\le r_*(t,\delta)
+\le\widehat r_*(t,\delta)
+\le\left\lfloor\frac{H_t}{\delta^2}\right\rfloor+1.
+\quad}
+\tag{33.3}
+$$
+
+特别地 $\widehat r_*\delta^2>c_t$ 且 $\widehat r_*\delta^2\le H_t+\delta^2$。因此在固定 $t$、固定半方差阈值下，$|\delta|^{-2}$ 阶既是任何有限外部平方损失估计器的必要阶，也由同一参数盲二值规则达到。
+
+**证明。** 必要方向直接复用定理 18.2：该定理的参数是同一 $p=t,q=t+\delta$，其 $\delta_t=d$，风险和字段均相同。把其（18.4）与（32.8）串联，即得（33.2）的第一行，包含 $r\delta^2=c_t$。无需重作路径相对熵比较。
+
+若 $r\delta^2>H_t$，定理 29.2 给出
+
+$$
+e_r(t,\delta)\le B_t e^{-a_t r\delta^2}
+<B_t e^{-a_t H_t}=V(t)/2.
+$$
+
+取 $R=\lfloor H_t/\delta^2\rfloor+1$，则 $R\delta^2>H_t$，所以定义（33.1）的集合非空。整数良序给出 $\widehat r_*$，并有 $\widehat r_*\le R$。在 $\widehat r_*$ 处由 $E_r\le e_r$ 得 $r_*\le\widehat r_*$，再由定理 18.2 得最左界。严格下界与 $\lfloor x\rfloor+1\le x+1$ 分别给出两个乘积界。该证明不要求 $e_r$ 随 $r$ 单调；（33.2）的充分条件保证每个满足它的半径，而非仅某个被选半径。常数没有尖锐性断言，也未给出 $r_*\delta^2$ 或 $\widehat r_*\delta^2$ 的极限值。$\square$
+

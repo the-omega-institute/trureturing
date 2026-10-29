@@ -46,7 +46,7 @@ $$(\exists A \in (\operatorname{PowerSeries}\left(\mathbb{Z}\right)),\; (\operat
 
 *Commentary.*
 
-The contraction of the coefficientwise bilateral remainder gives a normalized integral fixed series and identifies every normalized integral solution with it. The fixed point identity makes the difference from twice the geometric series minus one divisible by four, yielding the stated congruence. The same argument works for every exponent parameter at least one.
+The contraction of the coefficientwise bilateral remainder gives a normalized integral fixed series. The general normalized contraction theorem identifies every normalized integral solution with that constructed series. The fixed point identity makes the difference from twice the geometric series minus one divisible by four, yielding the stated congruence. The same argument works for every exponent parameter at least one.
 
 ## References
 
@@ -54,3 +54,4 @@ The contraction of the coefficientwise bilateral remainder gives a normalized in
 - Truth anchor: `D5/S1/Recurrence/Bilateral/BilateralProductModFourUnitExponent.claim`
 - Truth anchor: `D5/S1/Recurrence/Bilateral/BilateralProductModFourUnitExponent.result`
 - Dependency: [D5/S1/Recurrence/Bilateral/BilateralProductModFour](BilateralProductModFour.md)
+- Dependency: [D5/S1/Recurrence/Invariants/PowerSeriesNormalizedContraction](../Invariants/PowerSeriesNormalizedContraction.md)

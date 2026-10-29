@@ -1,0 +1,43 @@
+**定理 18.2（半方差阈值的逆平方必要半径）。** 固定 $t\in(0,1)$。若 $0<|\delta|<\delta_t$，$q=t+\delta$，则对每个整数 $r\ge1$，
+
+$$
+r\delta^2\le c_t\quad\Longrightarrow\quad
+E_r(P_{t,t+\delta})\ge\frac{V(t)}2.
+\tag{18.4}
+$$
+
+对每个这样的固定非零 $\delta$，首次严格越过阈值的半径
+
+$$
+r_*(t,\delta)=\min\left\{r\in\mathbb Z_{\ge1}:
+E_r(P_{t,t+\delta})<\frac{V(t)}2\right\}
+\tag{18.5}
+$$
+
+存在且有限，并满足
+
+$$
+\boxed{\quad
+r_*(t,\delta)\delta^2>c_t,\qquad
+r_*(t,\delta)>\frac{c_t}{|\delta|^2},\qquad
+r_*(t,\delta)\ge\left\lfloor\frac{c_t}{|\delta|^2}\right\rfloor+1.
+\quad}
+\tag{18.6}
+$$
+
+任意实值外部预测器若在半径 $r$ 达到 $R_{t,t+\delta,r}(g)<V(t)/2$，也必须满足 $r\delta^2>c_t$。
+
+**证明。** $0<|\delta|<\delta_t$ 保证 $q\in(0,1)$ 且 $q\ne t$。若 $r\delta^2\le c_t$，定理 18.1 的误差项至多为
+
+$$
+\sqrt{\frac{C_t r\delta^2}{2}}
+\le\sqrt{\frac{C_t c_t}{2}}=\frac{V(t)}2,
+\tag{18.7}
+$$
+
+所以得到（18.4），包括 $r\delta^2=c_t$ 的情形。
+
+对这一固定非对角线参数，定理 4.2 与引理 1.4 已给出 $E_r(P_{t,t+\delta})\downarrow0$。由于 $V(t)/2>0$，（18.5）的集合非空，整数良序给出有限最小元。若 $r_*\delta^2\le c_t$，则（18.4）与定义中的严格不等式矛盾。因此 $r_*\delta^2>c_t$；除以正数 $\delta^2$ 并使用整数性，得到（18.6）的另外两式。
+
+最后，任何预测器的风险不小于（16.4）的下确界；若它已严格低于阈值，则相应 $E_r$ 也严格低于阈值，故同样必须有 $r\delta^2>c_t$。在 $\delta=0$ 时，定理 5.1 给出所有有限半径及完整外部风险均为 $V(t)$，因而不定义上述有限越阈半径。$\square$
+

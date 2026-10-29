@@ -82,6 +82,24 @@ internal static partial class LeanCacheEnsureCommand
                 receipt,
                 "cold-build guard did not receive a cache state from ensure\n");
         }
+        try
+        {
+            // Standalone additive recovery preserves outputs. Native writer admission
+            // must retire former owners before deciding whether the project is warm.
+            if (RetireRootJudgeOutputs(root, guard))
+            {
+                cacheState = cacheState with
+                {
+                    Project = stateProbe.ProbeOleans(ProjectOleanRoot(Path.Combine(root, ".lake"))),
+                };
+                receipt = RecordCacheState(receipt, cacheState);
+            }
+        }
+        catch (OperationCanceledException) { throw; }
+        catch (Exception exception)
+        {
+            return new CommandResult(false, receipt, exception.Message + "\n");
+        }
         if (cacheState.HasProbeFailure)
         {
             return new CommandResult(

@@ -1,0 +1,39 @@
+**Lemma 17.1 (Containment of the algebraic seed).** The exact base
+$(p_*,v_*)$ of Theorem 1.3 belongs to $\operatorname{int}\mathcal U$.
+
+Proof. Let $c_b=c_1$ be the first rational coordinate of Definition
+3.1; it is distinct from the root-interval centers of Lemma 13.2.
+Exact rational evaluation of Definition 2.1 at $(2/5,c_b)$ gives
+
+$$
+|p(2/5,c_b)-p_c|<10^{-65},\qquad
+|v(2/5,c_b)-v_c|<10^{-65}.
+$$
+
+Theorem 4.3 supplies $|b_{0*}-c_b|\le10^{-38}$.
+The whole segment between them lies in Definition 9.2's $I_b$,
+since its printed rational endpoints strictly enclose
+$[c_b-10^{-38},c_b+10^{-38}]$. Lemma 9.3 gives on that entire
+segment
+
+$$
+|p_b|<726,\qquad |v_b|<1674.
+$$
+
+These bounds can also be obtained directly by interval
+differentiation of Definition 2.1 on $S_0$: the resulting intervals
+lie strictly inside
+$[725498392,725498393]/10^6$ and
+$[-1673536106,-1673536105]/10^6$, respectively. The mean value
+theorem therefore yields
+
+$$
+\begin{aligned}
+|p_*-p_c|&<726\cdot10^{-38}+10^{-65}<10^{-34},\\
+|v_*-v_c|&<1674\cdot10^{-38}+10^{-65}<10^{-34}.
+\end{aligned}
+$$
+
+This proves strict containment for the actual algebraic base,
+rather than for its rational approximation. ∎
+

@@ -22,6 +22,10 @@ For q=a/d define F(q)=b_d^a, with integer exponent. To prove F(q+r)=F(q)F(r), us
 
 The theorem asserts existence only. Finite fibers do not imply uniqueness of the resulting homomorphism.
 
+The same root system and rational_action_of_coherent_roots also apply to a Hausdorff topological group H when every actual root set R_n(h)={x in H | x^n=h} is compact for every n>0. Roots exist in all positive degrees if and only if an algebraic monoid homomorphism phi:Multiplicative Q -> H sends Multiplicative.ofAdd(1:Q) to h. Give each root set its subspace topology and use the continuous power maps R_m(h) -> R_n(h), x -> x^(m/n), for n dividing m. Under the root-existence hypothesis these form a cofiltered system of nonempty compact Hausdorff spaces. Mathlib's TopCat.nonempty_limitCone_of_compact_t2_cofiltered_system supplies compatible roots without requiring onto transition maps. The common cyclic denominator calculation above proves the homomorphism law even for noncommutative H; the converse again uses map_pow.
+
+This composition of existing results connects the finite theorem to CompactRootCoherence.exists_all_positive_roots_iff_exists_rat_hom: finite fibers are compact in the discrete group topology, while in a compact Hausdorff group each R_n(h) is closed as the inverse image of {h} under a continuous power map, and hence compact. The compact-root application requires neither finite root sets nor a compact ambient group. Its conclusion is algebraic existence only; it asserts no continuity or uniqueness of the homomorphism, no necessity of root-set compactness, and no literature novelty.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Coding/PrimitiveLifts/FiniteRootFiberCoherence.finite_root_fibers_rational_coherence`
