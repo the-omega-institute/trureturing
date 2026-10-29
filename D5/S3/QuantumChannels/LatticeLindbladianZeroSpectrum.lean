@@ -48,13 +48,13 @@ private lemma h_difference (h : ℤ → ℤ → ℂ) (ℓ : ℤ → ℤ → ℤ 
       calc
         h (z + 1) y = h z (y - 1) := by simpa only [sub_add_cancel] using ht.1 z (y - 1)
         _ = h 0 (y - 1 - z) := ih _
-        _ = h 0 (y - (z + 1)) := by congr 1 <;> omega
+        _ = h 0 (y - (z + 1)) := by congr 1; omega
     · intro z _ ih y
       calc
         h (z - 1) y = h z (y + 1) := by
           simpa only [sub_add_cancel] using (ht.1 (z - 1) y).symm
         _ = h 0 (y + 1 - z) := ih _
-        _ = h 0 (y - (z - 1)) := by congr 1 <;> omega
+        _ = h 0 (y - (z - 1)) := by congr 1; omega
   exact hh x y
 
 private lemma jump_difference (h : ℤ → ℤ → ℂ) (ℓ : ℤ → ℤ → ℤ → ℂ)
@@ -198,7 +198,7 @@ private lemma entry_finite (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ)
   have hhright : (∑' z, ρ (x, z) * h z y) =
       ∑ z ∈ Finset.Icc (y - r) (y + r), ρ (x, z) * h z y :=
     tsum_interval r y _ fun z hz => by rw [hf.1 z y hz, mul_zero]
-  unfold lindbladEntry finiteEntry
+  rw [lindbladEntry.eq_1, finiteEntry.eq_1]
   rw [hhleft, hhright]
   congr 2
   rw [tsum_eq_sum (s := Finset.Icc (x - r) (x + r) ∪ Finset.Icc (y - r) (y + r))]
@@ -261,7 +261,8 @@ private lemma entryLinear_apply (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ)
     (ρ : ℤ × ℤ → ℂ) (x y : ℤ) :
     entryLinear r g h ℓ x y ρ = lindbladEntry g h ℓ ρ x y := by
   rw [entry_finite r g h ℓ hf]
-  simp only [entryLinear, finiteEntry, LinearMap.add_apply, LinearMap.sub_apply,
+  rw [entryLinear.eq_1, finiteEntry.eq_1]
+  simp only [LinearMap.add_apply, LinearMap.sub_apply,
     LinearMap.smul_apply, LinearMap.sum_apply, LinearMap.proj_apply, smul_eq_mul]
   simp only [mul_comm, mul_left_comm, mul_assoc]
 
@@ -365,7 +366,7 @@ private lemma finite_window (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ)
         have hh1 := congrArg Prod.fst hh
         have hh2 := congrArg Prod.snd hh
         apply Prod.ext <;> dsimp at * <;> omega
-      simp only [if_neg hn, mul_zero]
+      simp only [ite_eq_right hn, mul_zero]
     · exact fun hn => (hn hw).elim
   rw [he, ← entryLinear_apply r g h ℓ hf σ]
   change entryLinear r g h ℓ p.1 p.2 (∑ w ∈ s, ρ (p + w) • Pi.single (p + w) 1) = _
@@ -502,7 +503,7 @@ private lemma bounded_operator (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ)
     Finset.Icc (-(2 * r : ℤ)) (2 * r)), t w, ?_⟩
   intro ρ x y
   rw [finite_window r g h ℓ hf ρ (x, y)]
-  simp only [ContinuousLinearMap.sum_apply, lp.coeFn_sum, Finset.sum_apply, he]
+  simp only [sum_apply, lp.coeFn_sum, Finset.sum_apply, he]
 
 private def projection (n : ℕ) : Kernel :=
   ∑ x ∈ Finset.Icc (-(n : ℤ)) n, lp.single 2 (x, x) 1
@@ -569,13 +570,13 @@ private lemma entry_single_formula (g : ℝ) (h : ℤ → ℤ → ℂ)
     · rw [tsum_eq_single v]
       · simp only [Pi.single_eq_same, mul_one]
       · intro b hb
-        simp [Pi.single_apply, Prod.mk.injEq, hb]
+        simp [Prod.mk.injEq, hb]
     · intro a ha
-      simp [Pi.single_apply, Prod.mk.injEq, ha]
+      simp [Prod.mk.injEq, ha]
   unfold lindbladEntry
   simp only [hg]
   by_cases hx : x = u <;> by_cases hy : y = v <;>
-    simp [Pi.single_apply, Prod.mk.injEq, ite_and, hx, hy, mul_ite, ite_mul]
+    simp [Pi.single_apply, Prod.mk.injEq, hx, hy, mul_ite, ite_mul]
 
 private lemma trace_single_zero (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ)
     (ℓ : ℤ → ℤ → ℤ → ℂ) (hf : IsFiniteRange r h ℓ) (u v : ℤ) :
@@ -655,7 +656,7 @@ private lemma boundary_estimate (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ)
   have he_bound (q : ℤ × ℤ) (x : ℤ) :
       ‖lindbladEntry g h ℓ (Pi.single q 1) x x‖ ≤ m := by
     have he : (x, x) + (q - (x, x)) = q := by abel
-    simpa only [coefficient, he] using hc (q - (x, x)) (x, x)
+    simpa only [coefficient.eq_1, he] using hc (q - (x, x)) (x, x)
   refine ⟨(c : ℝ) * b, mul_nonneg (Nat.cast_nonneg _) hb, ?_⟩
   intro n ρ
   let i := Finset.Icc (-(n : ℤ)) n
@@ -693,7 +694,7 @@ private lemma boundary_estimate (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ)
       intro x hx
       apply entry_single_support r g h ℓ hf
       by_contra hn
-      push_neg at hn
+      push Not at hn
       have h1 := abs_le.mp hn.1
       have h2 := abs_le.mp hn.2
       rw [lt_abs] at hd
@@ -788,7 +789,8 @@ private lemma boundary_estimate (r : ℕ) (g : ℝ) (h : ℤ → ℤ → ℂ)
       rw [norm_mul]
       exact mul_le_mul (hκ_bound q) (lp.norm_apply_le_norm (by norm_num) ρ q) (norm_nonneg _) hb
     _ ≤ (c : ℝ) * (b * ‖ρ‖) := mul_le_mul_of_nonneg_right (by
-      exact_mod_cast (Finset.card_le_card Finset.inter_subset_right).trans hcard_edge) (by positivity)
+      exact_mod_cast (Finset.card_le_card Finset.inter_subset_right).trans hcard_edge)
+      (by positivity)
     _ = (c : ℝ) * b * ‖ρ‖ := by ring
 
 private lemma nonunit_from_boundary (t : Kernel →L[ℂ] Kernel)
