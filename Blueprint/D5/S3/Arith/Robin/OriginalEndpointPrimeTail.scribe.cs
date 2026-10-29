@@ -49,5 +49,37 @@ internal sealed class OriginalEndpointPrimeTailDocument : IScribeDocumentDefinit
                     Paragraph(Text("The existing Mertens E2p bound and Chebyshev estimate theta(X)<=log(4)*X give |J_X-((s-u)/(u log(u))-E2p(u))|<=C/log(X), where C=log(4)+7+E1. This also gives a genuine improper limit of the truncated interval integrals; it does not assert absolute Lebesgue integrability on an unbounded interval. For any s,u>1, the two ordinary logarithm defects at s/u and log(s)/log(u) give 0<=Q<=B, with Q=log(log(u))+(s-u)/(u log(u))-log(log(s)) and B=(s-u)^2/(s*u*log(u))+(log(s)-log(u))^2/(log(s)*log(u)). These are direct applications and algebraic consequences of existing results, rather than additional canonical theorem bindings.")),
                     Paragraph(Text("Combining the exact original margin decomposition, E3(u)>=-E2p(u), the preceding cancellation and the existing tangent inequality yields J_X+T+D/(A log(A))-C/log(X)-B<=robinLogMargin(N). The theta endpoint discrepancy enters through the quadratic penalty B; the actual higher-layer inventory remains a favorable gain, and T is still the same integer's complete Euler tail. The complete finite-window statement was checked as a transient Lean calculation with only the standard classical axioms. This does not prove that its lower bound is positive, does not control the remaining theta or psi oscillation, and does not resolve RH. No new named Lean declaration is retained solely for these applications.")),
                     Paragraph(Text("These are the original lower-control and equivalent prime-log derivations, not new canonical theorem bindings. Their exact original statements and Lean proof bodies remain transient. The remaining original obligation is strict positivity of E3(u)+T+log(log A)-log(log u) at both endpoints for every q>0 with strictInteger(q)>5040. J>=0 or a local strict gain does not prove that sign. Positivity of E3(u)+B+log(log A)-log(log u) would be sufficient, but is neither necessary nor proved here. The sharp upper-tail estimate cannot supply a lower sign."))),
-                DescribeRole.Lemma))));
+                DescribeRole.Lemma),
+            Describe.Lean(
+                DescribeId.Create("finite-same-integer-min-tail-robin-bound"),
+                DeclarationHandle.Create(Prefix + "finite_min_tail_robin_bound"),
+                H("Finite same-integer min-cost correction and Robin decomposition"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For a positive natural m, put X=log(m) and P=largestPrime(m). "
+                        + "Under the explicit support equality m.primeFactors=Nat.primesLE(P) "
+                        + "and the real domain condition 1<theta(P), the theorem sums, over "
+                        + "every active prime including exponent-one primes, the minimum of "
+                        + "log(p)/(X*log(X)) and -log(1-p^-2). It bounds this finite cost by "
+                        + "the complete same-integer Euler tail plus the exact log-log clock "
+                        + "difference log(log(X))-log(log(theta(P))).")),
+                    Paragraph(Text(
+                        "The proof uses the canonical logarithm factorization log(m)=theta(P)+Q, "
+                        + "where Q is the full sum of (factorization(p)-1)*log(p) with natural "
+                        + "truncated subtraction on the actual support. The existing strict "
+                        + "log-log tangent at X reverses to Q/(X*log(X))<=the clock difference. "
+                        + "For valuation one the minimum is charged exactly to layerTail; for "
+                        + "valuation at least two the first minimum argument is charged to its "
+                        + "positive Q-term and layerTail is nonnegative. No exponent, prime, "
+                        + "product, or optimizer endpoint is replaced by a cutoff.")),
+                    Paragraph(Text(
+                        "The same declaration then consumes the canonical Mertens.E3 prefix "
+                        + "identity and the shared general log-sigma/Euler helper to obtain "
+                        + "V+E3(P)+log(log(theta(P)))-log(log(P))<=robinLogMargin(m). "
+                        + "The support and theta hypotheses are finite theorem premises only; "
+                        + "they do not assert actual-record structure, 5040 divisibility, RH, "
+                        + "or the unresolved analytic 2*sqrt(2)-epsilon continuation."))),
+                DescribeRole.Theorem))));
 }
