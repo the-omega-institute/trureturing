@@ -1,0 +1,77 @@
+#### 定理 9.2（临界线、隐藏关联与条件纠缠）
+
+上述编码满足
+
+<a id="eq-eta"></a>
+
+$$
+\begin{aligned}\Omega&=z,\qquad \eta_\square=2\log|z|, \tag{15}\end{aligned}
+$$
+
+$$
+\begin{aligned}X=Y&=\frac{1+r}{D},\quad  Z=\frac{\lambda}{D},\quad
+R=\frac{3+r}{D},\quad \kappa=\frac rD,\end{aligned}
+$$
+
+<a id="eq-hiddenrho"></a>
+
+$$
+\begin{aligned}R\kappa-XY
+&=\frac{r-1}{D^2}
+=\frac{1-2\operatorname{Re}\rho}{|\rho|^2D^2}. \tag{16}\end{aligned}
+$$
+
+所以
+
+$$
+\operatorname{Re}\rho=\frac12
+\quad \Longleftrightarrow\quad
+\eta_\square=0
+\quad \Longleftrightarrow\quad
+\kappa=\frac{XY}{R}.
+$$
+
+在中间位为零的条件分支中，纯两比特态的 concurrence 为
+
+$$
+\mathcal C=\frac{2|z-1|}{3+|z|^2}.
+$$
+
+若 $\rho=1/2+it$，则
+
+<a id="eq-concurrence"></a>
+
+$$
+\mathcal C=\frac1{\sqrt{1+4t^2}}>0. \tag{17}
+$$
+
+**证明。**
+
+振幅比与概率比直接消去 $D$。均值由五模式定义读取；
+$(3+r)r-(1+r)^2=r-1$，再用定理 [8.2](#thm-cayley) 得式
+[(16)](#eq-hiddenrho)。
+中间位为零时，归一化的两比特系数矩阵为
+
+$$
+M=\frac1{\sqrt{3+r}}
+\begin{pmatrix}1&1\\1&z\end{pmatrix}.
+$$
+
+纯态 concurrence 定义为 $2|\det M|$，给出第一式。
+临界线上 $r=1$，又 $z-1=-1/\rho$，故
+$\mathcal C=1/(2|\rho|)=1/\sqrt{1+4t^2}$。
+
+∎
+
+这给出一个具体而可核查的联系：在此编码中，临界线等于经典四角关联消失；但是相位仍可保留量子纠缠。三角剖分选择概率纤维端点、最大熵完成 $\kappa=XY/R$、相干态的相位关系，是三种不同操作。
+
+**为何这还不是 RH 证明。**
+
+定义 $\lvert{\Psi_z}\rangle{}$ 时已经把 $\rho$ 当作输入。它对任意非零非一复数成立，离线点也会得到完全合法的态，只是 $\eta_\square\ne0$。因此不能从“成功编码”推出“全部零点的编码必在 $\eta_\square=0$”。真正需要的是：从独立的素数或门结构构造对应，并证明它自动落在该子流形。
+
+还应避免同名变量混淆。项目管线 II §63.1 的镜像法向量是
+$\eta_{\rm mir}=\frac12\log(p_2/p_5)$，交换数值标签 $2,5$ 时变号；
+本篇的 $\eta_\square$ 是四角 log-odds。二者不是同一个坐标，本文的显式编码也没有自动继承原文的 $\tau$ 等变条件。
+
+<a id="section-10"></a>
+
