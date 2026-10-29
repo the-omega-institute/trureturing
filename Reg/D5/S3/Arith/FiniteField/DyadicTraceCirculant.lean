@@ -58,9 +58,9 @@ def registration : Registration arena
     change dyadicTraceCirculant 2 0 ≠ dyadicTraceCirculant 2 1
     decide
 
-noncomputable def registration_1 : Contract.Registration
+noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@_root_.D5.S3.Arith.FiniteField.DyadicTraceCirculant.dyadic_trace_circulant_det_one)
-    (type_of% (realize signature (fun _ k t => dyadicTraceCirculant k t)
+    (type_of% (realize.{0,0,0,0,0} signature (fun _ k t => dyadicTraceCirculant k t)
       (fun e => nomatch e))) Unit Unit := {
   unitName := `Reg.D5.S3.Arith.FiniteField.DyadicTraceCirculant.determinant_information_unit,
   realizationName := `Reg.D5.S3.Arith.FiniteField.DyadicTraceCirculant.registration,
@@ -73,7 +73,7 @@ noncomputable def registration_1 : Contract.Registration
   realization := .source arena ⟨registration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize signature (fun _ k t => dyadicTraceCirculant k t)
+  readout := some (realize.{0,0,0,0,0} signature (fun _ k t => dyadicTraceCirculant k t)
     (fun e => nomatch e)),
   variation := .absent,
   sensitivity := .absent,
