@@ -1,0 +1,77 @@
+**Definition 122.1 (Fixed source, axial coordinates and scalar profile).**
+Fix an allowed source $\mathfrak s$ of Definition 114.1 in
+[volume VI](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_VI.md).
+Retain exactly its finite vector $P_{\mathfrak s}$ from Proposition
+118.2, its parameter set $\mathcal P$ from (114.1), and both original
+anchored moduli $\omega_{\mathfrak s,h_0}$ and
+$\omega^{\rm all}_{\mathfrak s,h_0}$ from Definition 120.1.
+In particular, alternatives still have $0<|\gamma|\le1$ and
+$\|h\|\le1$. Put
+
+$$
+\begin{gathered}
+\tau=\|t\|>0,\qquad e=t/\tau,\qquad \Pi=I_3-ee^\dagger,\\
+h_0=(a+\mathrm i\beta)e+v_0,\qquad
+a,\beta\in\mathbb R,\quad v_0\perp e,\\
+A=|a|,\qquad \eta=\|v_0\|,\qquad A^2+\beta^2+\eta^2\le1,\\
+q_{A,\eta}(r)=r\bigl(\eta+|r-2A|\bigr),\qquad 0\le r\le2,\\
+R(\delta;A,\eta)
+ =\max\{r\in[0,2]:q_{A,\eta}(r)\le\delta\},\qquad \delta\ge0.
+\end{gathered}
+\tag{122.1}
+$$
+
+The maximum exists since its feasible set is a nonempty closed subset
+of $[0,2]$. Define the two actual law errors, including at auxiliary
+zero-retention alternatives, by
+
+$$
+\begin{aligned}
+d_f(\gamma,h;h_0)
+ &=\|P_{\mathfrak s}(\gamma,h)-P_{\mathfrak s}(0,h_0)\|_\infty,\\
+d_a(\gamma,h;h_0)
+ &=\Delta_{\rm all}((\gamma,h),(0,h_0)).
+\end{aligned}
+\tag{122.2}
+$$
+
+These are the original raw probabilities, with the nine original
+subnormalised prefix events, actual histories, labels, clocks, installed
+menu and externally fixed schedules of Definitions 114.1 and 118.1.
+Each hypothesis has one full ten-dimensional completion for emission,
+the single forward return and every history, as in §106; the two
+hypotheses may have different completions. In particular, (122.2)
+does not add a preparation, repetition or selection operation.
+
+Write $c=c_{\mathfrak s}>0$ and $C=C_{\mathfrak s}>0$ for the fixed
+constants of Theorem 118.3, choosing (118.18) and (118.20), and use
+its already established consequence (120.3). With the matrices of
+Definition 118.1, abbreviate
+
+$$
+\begin{aligned}
+Q(h;h_0)
+ &=\|hh^\dagger-h_0h_0^\dagger\|_{\rm HS}
+       +\|\mathsf S_h-\mathsf S_{h_0}\|_{\rm HS},\\
+D_0(\gamma,h;h_0)
+ &=Q(h;h_0)+|\gamma|(1+\|h-h_0\|).
+\end{aligned}
+\tag{122.3}
+$$
+
+Thus the mathematical premises used below are exactly
+
+$$
+cD_0\le d_f\le d_a\le CD_0.
+\tag{122.4}
+$$
+
+The rank-one lifting intermediate is Balan–Zou,
+[*On Lipschitz Analysis and Lipschitz Synthesis for the Phase Retrieval
+Problem*, arXiv:1506.02092v1, §2.2, Theorems 2.3–2.4](https://arxiv.org/pdf/1506.02092v1).
+Its frame-intensity comparison uses a phase-retrievable frame on a
+global-phase quotient. The local spectral bounds in its Theorem 2.6
+also assume such a frame. Here $\mathsf S_h$ is source-fixed and
+phase-sensitive, and (122.4) is the source-specific comparison already
+proved in §118, rather than a new frame-injectivity assumption.
+

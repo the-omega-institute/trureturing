@@ -1,0 +1,41 @@
+**Assumption 4.2 (paid complete handoff and actual actions).** In service
+applications impose [ARH, Assumption 1.3][ARH]. All retained records and
+the old row were acquired by paid legal operations and comparisons.
+The same original-root physical register has authentically reached
+$\rho^N u$, where $N$ is common and at least all recorded epochs. The
+complete accessible state is a common recoverable encoding of the
+retained input and common parameters, with exact original-source fiber
+$D$. Every accessible source-bearing cache, address, count, length,
+program position, timing field, output, archive, permission and handle
+belongs to that retained state. Pre-cut acquisition need only terminate
+on each actual source; no common pre-cut cost bound is imposed.
+
+A legal service is deterministic and effective, correct and terminating
+on every $u\in D$. Its source actions are paid original-root
+$\mathsf{Read}(p)$ for any finite physical word $p$, forward
+same-register $\mathsf{ApplyRho}$, and variable absorbing
+$\mathsf{Halt}$. Halt may depend on acquired replies and local state.
+No reset, clone, reroot, source cutoff, rank, equality, chart-membership,
+source identity or unknown-parameter port is present. Local computation
+and updates add no source-dependent information. The mathematical
+arguments of an image cover are not service observations.
+
+For a service $A$ define, on each actual run,
+
+$$
+\begin{aligned}
+v_A(u)&=(q_A(u),a_A(u),\ell_A(u)),&
+\ell_A(u)&=\sum_{\text{actual reads at }p}|p|,\\
+b(A)&=(\sup_D q_A,\sup_D a_A,\sup_D\ell_A),&
+W_\lambda(A)&=\sup_{u\in D}\lambda\cdot v_A(u),\quad
+\lambda\in\mathbb Q_{\ge0}^3.
+\end{aligned}
+\tag{NIC.18}
+$$
+
+Every raw read counts, including absent and repeated reads. A root read
+has one call and zero address length. The coordinate-worst vector and
+the same-run weighted value remain separate; zero weights are allowed.
+Other acquisition, computation, retention and installation charges remain
+separate from these coordinates.
+
