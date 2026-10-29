@@ -83,6 +83,7 @@ private theorem shell_scale {d e : ℝ} (hd : 0 < d) (he : 0 < e) :
     rw [mul_pow, Real.sq_sqrt (by linarith : 0 ≤ X)]
     field_simp
     <;> rw [Real.sq_sqrt (by linarith : 0 ≤ X)]
+    <;> ring
 
 
 private def shellLower (a b r : ℝ) (N : ℕ) (X : ℝ) : ℝ :=
@@ -187,7 +188,7 @@ private theorem shell_lower_scale {a b r : ℝ} (ha : 0 < a) (hb : 0 < b)
     have hs0 : Real.sqrt X ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr (by linarith))
     field_simp [ne_of_gt (Real.log_pos hX), ne_of_gt (show 0 < X by linarith), hs0]
     rw [hs]
-  have hsum := tendsto_finsetSum (range N) (fun k _ =>
+    ring  have hsum := tendsto_finsetSum (range N) (fun k _ =>
     shell_scale (mul_pos hb (pow_pos hr (k + 1))) (mul_pos hb (pow_pos hr k)))
   convert hhead.add hsum using 1
   ext X
@@ -308,7 +309,8 @@ private theorem uniform_prime_min {ε c : ℝ} (hε : 0 < ε) (hc : 0 < c) :
     have h := (cutoff_denominator_scale hd).eventually_const_lt
       (show 1 < (b * r ^ (k + 1)) ^ 2 / 2 by linarith)
     filter_upwards [h, eventually_gt_atTop (1 : ℝ)] with X h hX
-    exact ((lt_div_iff₀ (mul_pos (by linarith) (Real.log_pos hX))).mp h).le
+    simpa only [one_mul] using
+      ((lt_div_iff₀ (mul_pos (by linarith) (Real.log_pos hX))).mp h).le
   have hcut : ∀ᶠ X : ℝ in atTop, b * r ^ N * Real.sqrt X ≤ c * X := by
     have h := Real.tendsto_sqrt_atTop.eventually (eventually_ge_atTop (b * r ^ N / c))
     filter_upwards [h, eventually_gt_atTop (0 : ℝ)] with X h hX
