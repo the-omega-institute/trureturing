@@ -581,10 +581,10 @@ private theorem attainable_twice_le_cube_card {n k : Nat} (hn : 2 ≤ n)
   rw [← hcolors]
   omega
 
-private def cubeParity {n : Nat} (x : Fin n -> Bool) : Bool :=
+def cubeParity {n : Nat} (x : Fin n -> Bool) : Bool :=
   ∑ i, x i
 
-private theorem cubeParity_ne_of_adj {n : Nat} {x y : Fin n -> Bool}
+theorem cubeParity_ne_of_adj {n : Nat} {x y : Fin n -> Bool}
     (hxy : (hypercube n).Adj x y) : cubeParity x ≠ cubeParity y := by
   change (Finset.univ.filter (fun i => x i ≠ y i)).card = 1 at hxy
   obtain ⟨i, hi⟩ := Finset.card_eq_one.mp hxy

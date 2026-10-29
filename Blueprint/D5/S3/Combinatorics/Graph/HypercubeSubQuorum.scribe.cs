@@ -14,6 +14,29 @@ internal sealed class HypercubeSubQuorumDocument : IScribeDocumentDefinition
         H("Sahbi's hypercube sub-quorum conjecture"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("cube-parity"),
+                DeclarationHandle.Create(Prefix + "cubeParity"),
+                H("Binary vertex parity"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The parity of a Boolean vertex is the sum of its coordinates in the "
+                        + "two-element Boolean ring. It is false for even weight and true for "
+                        + "odd weight. This same parity distinguishes the two parts of the cube."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("adjacent-parities-differ"),
+                DeclarationHandle.Create(Prefix + "cubeParity_ne_of_adj"),
+                H("Adjacency reverses parity"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Adjacent vertices differ at exactly one coordinate. Separate that "
+                        + "coordinate from the sum. The remaining coordinate sums agree, while "
+                        + "the two Boolean values at the exceptional coordinate differ; "
+                        + "cancellation shows that the total parities differ."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("sub-quorum-coloring"),
                 DeclarationHandle.Create(Prefix + "IsSubQuorumColoring"),
                 H("Source-faithful partial colorings"),
