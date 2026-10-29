@@ -710,7 +710,9 @@ private theorem choose_sectors (n d m : ℕ) [NeZero n] [NeZero d]
 private theorem root_character (d : ℕ) [NeZero d] (i : ZMod d) :
     windowRoot d ^ i.val = ZMod.stdAddChar i := by
   have h : windowRoot d = ZMod.stdAddChar (1 : ZMod d) := by
-    simpa [windowRoot] using (ZMod.stdAddChar_coe (N := d) (1 : ℤ)).symm
+    change Complex.exp (2 * Real.pi * Complex.I / d) = _
+    simpa only [Int.cast_one, mul_one, Complex.ofReal_mul, Complex.ofReal_ofNat] using
+      (ZMod.stdAddChar_coe (N := d) (1 : ℤ)).symm
   rw [h, ← AddChar.map_nsmul_eq_pow]
   congr 1
   simp only [nsmul_eq_mul, mul_one, ZMod.natCast_zmod_val]
@@ -734,12 +736,11 @@ private theorem encoding_entry (n d : ℕ) [NeZero d] (k : Fin n) (x y i j : ZMo
     congr 1
     rw [nsmul_eq_mul, ZMod.natCast_zmod_val]
   change (clockMatrix d ^ x.val * shiftMatrix d ^ y.val) i j = _
-  rw [hc, hs, Matrix.diagonal_mul]
-  simp only [Equiv.Perm.permMatrix, PEquiv.toMatrix_apply, Equiv.toPEquiv_apply,
-    Option.mem_def, Option.some.injEq, shiftPerm_pow_apply, ZMod.natCast_zmod_val]
+  rw [hc, hs, Matrix.diagonal_mul, Equiv.Perm.permMatrix, PEquiv.toMatrix_apply,
+    Equiv.toPEquiv_apply, shiftPerm_pow_apply, ZMod.natCast_zmod_val]
   by_cases h : j = i - y
-  · rw [ite_eq_left h, ite_eq_left h.symm, mul_one]
-  · rw [ite_eq_right h, ite_eq_right (Ne.symm h), mul_zero]
+  · rw [ite_eq_left h, ite_eq_left (Option.mem_some.mpr h.symm), mul_one]
+  · rw [ite_eq_right h, ite_eq_right (fun q => h (Option.mem_some.mp q).symm), mul_zero]
 
 private theorem encoded_ghz (n d : ℕ) [NeZero n] [NeZero d]
     (_hn : 2 ≤ n) (_hd : 2 ≤ d) (x y : jointIndex n d) :
@@ -810,8 +811,7 @@ private theorem encoded_ghz (n d : ℕ) [NeZero n] [NeZero d]
         rw [Finset.sum_mul, ← Finset.sum_add_distrib]
         apply Finset.sum_congr rfl
         intro k _
-        have hk := congrFun hi k
-        change i k = i 0 + (y k - y 0) at hk
+        have hk : i k = i 0 + (y k - y 0) := congrFun hi k
         rw [hk]; ring
       rw [hphase, AddChar.map_add_eq_mul]
       ring
