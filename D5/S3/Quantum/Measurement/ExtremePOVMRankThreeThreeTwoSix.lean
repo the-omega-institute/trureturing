@@ -11,8 +11,11 @@ import Mathlib.Analysis.Matrix.Order
 import Mathlib.LinearAlgebra.Matrix.Bilinear
 import Mathlib.LinearAlgebra.Matrix.Rank
 
+/-! An extreme POVM on complex seven-space with two rank-three and six rank-two effects. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+set_option linter.style.longLine false
 
 noncomputable section
 
@@ -58,6 +61,7 @@ private def effect (j : Fin 8) : Matrix (Fin 7) (Fin 7) ℂ :=
 private def frame : Matrix (Fin 7) (Fin 7) ℂ := ∑ j, effect j
 
 set_option maxHeartbeats 2000000 in
+-- The seven-coordinate kernel elimination uses exact complex arithmetic.
 private theorem frame_posDef : frame.PosDef := by
   classical
   have hpsd : frame.PosSemidef := by
@@ -210,6 +214,7 @@ private def left (j : Fin 8) : Matrix (blocks j) (Fin 7) ℂ :=
   fun b i => if (if j = 1 then 3 ≤ i.val else i.val < 3) then star (b.1 i) else 0
 
 set_option maxHeartbeats 2000000 in
+-- The eight block cases reduce to explicit coordinate products.
 private theorem left_columns (j : Fin 8) : left j * columns j = 1 := by
   classical
   ext ⟨b, hb⟩ ⟨c, hc⟩
@@ -256,6 +261,7 @@ private theorem witness_bigRanks :
 
 set_option maxRecDepth 4000 in
 set_option maxHeartbeats 8000000 in
+-- Exact entry elimination certifies all 42 complex product coefficients.
 private theorem within_block_product_independent :
     LinearIndependent ℂ
       (fun p : Σ j : Fin 8, (blocks j × blocks j) =>
@@ -331,10 +337,18 @@ private theorem within_block_product_independent :
   have h54 := congr_fun (congr_fun hs 5) 4
   have h55 := congr_fun (congr_fun hs 5) 5
   have h56 := congr_fun (congr_fun hs 5) 6
-  norm_num [blocks, vector, Fin.sum_univ_succ, Matrix.sum_apply,
-    Matrix.smul_apply, Matrix.vecMulVec_apply, Pi.star_apply, smul_eq_mul] at
-    h00 h01 h02 h03 h04 h05 h06 h10 h11 h12 h13 h14 h15 h16 h20 h21 h22 h23 h24 h25 h26 h30 h31
-    h32 h33 h34 h35 h36 h40 h41 h42 h43 h44 h45 h46 h50 h51 h52 h53 h54 h55 h56
+  norm_num [blocks, vector, Fin.sum_univ_succ, Matrix.sum_apply, Matrix.smul_apply,
+    Matrix.vecMulVec_apply, Pi.star_apply, smul_eq_mul] at h00 h01 h02 h03 h04 h05 h06
+  norm_num [blocks, vector, Fin.sum_univ_succ, Matrix.sum_apply, Matrix.smul_apply,
+    Matrix.vecMulVec_apply, Pi.star_apply, smul_eq_mul] at h10 h11 h12 h13 h14 h15 h16
+  norm_num [blocks, vector, Fin.sum_univ_succ, Matrix.sum_apply, Matrix.smul_apply,
+    Matrix.vecMulVec_apply, Pi.star_apply, smul_eq_mul] at h20 h21 h22 h23 h24 h25 h26
+  norm_num [blocks, vector, Fin.sum_univ_succ, Matrix.sum_apply, Matrix.smul_apply,
+    Matrix.vecMulVec_apply, Pi.star_apply, smul_eq_mul] at h30 h31 h32 h33 h34 h35 h36
+  norm_num [blocks, vector, Fin.sum_univ_succ, Matrix.sum_apply, Matrix.smul_apply,
+    Matrix.vecMulVec_apply, Pi.star_apply, smul_eq_mul] at h40 h41 h42 h43 h44 h45 h46
+  norm_num [blocks, vector, Fin.sum_univ_succ, Matrix.sum_apply, Matrix.smul_apply,
+    Matrix.vecMulVec_apply, Pi.star_apply, smul_eq_mul] at h50 h51 h52 h53 h54 h55 h56
   rcases p with ⟨j, u, v⟩
   rw [← hd j u v]
   rcases u with ⟨u, hu⟩
