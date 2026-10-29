@@ -23,13 +23,15 @@ internal sealed class HemmerStraubWestremWeightedAverageDocument : IScribeDocume
             Node("hsww-claim", "Conjecture 6.1", "claim", Disp(IffFormula(Call("claim"), ClaimBody())),
                 SourceClaim, DescribeRole.Definition, AssessedProvenance.FromLiterature(Source())),
             Node("hsww-result", "The weighted identity and closed form", "result", Disp(ClaimBody()),
-                "The per-partition equality gives the equality of averages. Removing a marked part of size k multiplies the centralizer factor by k times its new multiplicity, which gives the cycle-index recurrence over any commutative Rat-algebra. Coefficient induction determines the solution of its first-order formal differential equation. For part input 2 times (z^k+1+z^(−k)), the solution is the product of the squares of three geometric series. Subtracting the adjacent Laurent coefficient cancels the (1−t)^2 factor and leaves (1−t²)^(−3). Its even coefficients are the stated binomial values, and its odd coefficients vanish.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source()))),
+                "The per-partition equality gives the equality of averages. Removing a marked part of size k multiplies the centralizer factor by k times its new multiplicity, which gives the cycle-index recurrence over any commutative Rat-algebra. Coefficient induction determines the solution of its first-order formal differential equation. For part input 2 times (z^k+1+z^(−k)), the solution is the product of the squares of three geometric series. Subtracting the adjacent Laurent coefficient cancels the (1−t)^2 factor and leaves (1−t²)^(−3). Its even coefficients are the stated binomial values, and its odd coefficients vanish.", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source()),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hsw17"), ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+            StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula X(string name) => F.Id(name);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
