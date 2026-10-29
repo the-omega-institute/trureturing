@@ -69,7 +69,7 @@ A_3=\tfrac35E_{20},\qquad
 The source-to-formalization boundary matters in three places:
 
 - `u1Rep` accepts arbitrary real charges and a real parameter; its definition does not impose periodicity. The witness has integer charges, so its exponentials are $2\pi$-periodic and define an actual circle action by the elementary exponential identities. This periodicity observation is not a separate Lean declaration. The spectrum is not the usual spin-$3/2$ spectrum.
-- Normalization here is the Kraus identity $\sum_kA_kA_k^\dagger=I_D$, not unit norm of every finite-chain vector. `IsSymmetric` does not require $\Psi_N\ne0$ at every positive length. The finite calculations below distinguish the zero length-one vector from nonzero vectors at lengths two and three.
+- Normalization here is the Kraus identity $\sum_kA_kA_k^\dagger=I_D$, not unit norm of every finite-chain vector. `IsSymmetric` does not require $\Psi_N\ne0$ at every positive length.
 - `IsInjective` quantifies over all natural block lengths, including zero. The proof supplies the positive block length two, and uses the source's boundary trace map rather than injectivity of a transfer operator or of a single local matrix.
 
 Thus the formal counterexample answers the preregistered general-charge obstruction. A claim specifically requiring the usual spin generator, full $SU(2)$ symmetry, or nonzero periodic vectors at every positive length has additional hypotheses and is not this `claim`.
