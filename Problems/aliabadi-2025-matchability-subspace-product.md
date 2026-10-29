@@ -157,6 +157,8 @@ the bounded source/literature screen in #23409 found no prior settlement
 in its searched scope. This is not an exhaustive literature or priority
 certificate. Aliabadi–Zerbib's matroid Question 2.7 is a different problem.
 
+### What the settlement shows
+
 | Conclusion or boundary | Evidence status |
 | --- | --- |
 | Whole uncapped Conjecture 5.1 / Conjecture 38 | Proved in Lean: `result : ¬ claim`. |

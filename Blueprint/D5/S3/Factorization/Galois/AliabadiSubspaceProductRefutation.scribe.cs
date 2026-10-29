@@ -36,7 +36,10 @@ internal sealed class AliabadiSubspaceProductRefutationDocument : IScribeDocumen
                 StatementSource.FromAuthor(Disp(new Formula.Not(F.Id("claim")))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Applying the conjectured conclusion to the realized field and the selected subspaces would give a product-span dimension at least 5+5-1=9. The ambient field bounds that same dimension above by seven, a contradiction. The premise excludes the full intermediate field L and has no other intermediate field to test in prime degree. The refutation therefore concerns the whole original conjecture, including its full intermediate-field premise. It also uses strict proper subspaces, so replacing the ordinary containment symbols by strict containment does not remove this counterexample."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("aliabadi-2025-matchability-subspace-product"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
