@@ -20,6 +20,7 @@ noncomputable section
 open scoped BigOperators ComplexOrder MatrixOrder
 open Matrix
 open D5.S3.Quantum.Information.SLDSpectralEnergy
+open D5.S3.Observer.WindowRegister
 
 namespace D5.S3.Quantum.Measurement.MultipartiteEntangledMeasurementPartialTightness
 
@@ -131,7 +132,7 @@ private def localEncoding (n d : ℕ) [NeZero d] :
 private theorem sectorLabel_zero {n d : ℕ} [NeZero n] (b : jointIndex n d) :
     sectorLabel b 0 = 0 := by
   change (if (0 : Fin n) = 0 then (0 : ZMod d) else b 0) = 0
-  exact if_pos rfl
+  exact ite_eq_left rfl
 
 private theorem sector_coordinates {n d : ℕ} [NeZero n] (i : jointIndex n d) :
     sectorCoordinate i 0 = 0 ∧ sectorPoint (i 0) (sectorCoordinate i) = i := by
@@ -191,7 +192,7 @@ private theorem computational_projector_separable {n d : ℕ} [NeZero d]
         obtain ⟨k, hk⟩ := hjk
         change (if i = sectorPoint t r then (1 : ℂ) else 0) *
           star (if j = sectorPoint t r then (1 : ℂ) else 0) = _
-        rw [if_neg hj, star_zero, mul_zero]
+        rw [ite_eq_right hj, star_zero, mul_zero]
         symm
         apply Finset.prod_eq_zero (Finset.mem_univ k)
         change (Pi.single (t + r k) 1 : ZMod d → ℂ) (i k) *
@@ -205,7 +206,7 @@ private theorem computational_projector_separable {n d : ℕ} [NeZero d]
       obtain ⟨k, hk⟩ := hik
       change (if i = sectorPoint t r then (1 : ℂ) else 0) *
         star (if j = sectorPoint t r then (1 : ℂ) else 0) = _
-      rw [if_neg hi, zero_mul]
+      rw [ite_eq_right hi, zero_mul]
       symm
       apply Finset.prod_eq_zero (Finset.mem_univ k)
       change (Pi.single (t + r k) 1 : ZMod d → ℂ) (i k) *
@@ -233,13 +234,13 @@ private theorem fourier_at_point {n d : ℕ} [NeZero n] [NeZero d]
   classical
   change (if sectorPoint t r = sectorPoint (t + r 0) r then
     (Real.sqrt d : ℂ)⁻¹ * ZMod.stdAddChar (a * (t + r 0)) else 0) = _
-  rw [hr, add_zero, if_pos rfl]
+  rw [hr, add_zero, ite_eq_left rfl]
 
 private theorem fourier_off_sector {n d : ℕ} [NeZero n] [NeZero d]
     (a : ZMod d) (r i : jointIndex n d) (hi : i ≠ sectorPoint (i 0) r) :
     fourierVector a r i = 0 := by
   classical
-  exact if_neg hi
+  exact ite_eq_right hi
 
 private theorem sector_sum {n d : ℕ} [NeZero n] [NeZero d]
     (r : jointIndex n d) (hr : r 0 = 0) (f : jointIndex n d → ℂ)
@@ -257,7 +258,7 @@ private theorem sector_sum {n d : ℕ} [NeZero n] [NeZero d]
     rfl
 
 private theorem sector_basis (n d : ℕ) [NeZero n] [NeZero d]
-    (hn : 2 ≤ n) (hd : 2 ≤ d) (a c : ZMod d) (r s : jointIndex n d)
+    (_hn : 2 ≤ n) (hd : 2 ≤ d) (a c : ZMod d) (r s : jointIndex n d)
     (hr : r 0 = 0) (hs : s 0 = 0) :
     star (fourierVector a r) ⬝ᵥ fourierVector c s =
       if a = c ∧ r = s then 1 else 0 := by
@@ -289,7 +290,7 @@ private theorem sector_basis (n d : ℕ) [NeZero n] [NeZero d]
           rw [← AddChar.map_add_eq_mul]
           congr 2
           ring
-    simp_rw [heach]
+    rw [Finset.sum_congr rfl (fun t _ => heach t)]
     rw [← Finset.mul_sum,
       AddChar.sum_mulShift (c - a) (ZMod.isPrimitive_stdAddChar d), ZMod.card]
     by_cases hac : a = c
@@ -303,9 +304,9 @@ private theorem sector_basis (n d : ℕ) [NeZero n] [NeZero d]
         exact_mod_cast Real.mul_self_sqrt (Nat.cast_nonneg d : (0 : ℝ) ≤ d)
       rw [← hsq]
       field_simp [hsqrt]
-    · rw [if_neg (sub_ne_zero.mpr (Ne.symm hac)), if_neg (by tauto)]
+    · rw [ite_eq_right (sub_ne_zero.mpr (Ne.symm hac)), ite_eq_right (by tauto)]
       simp only [Nat.cast_zero, mul_zero]
-  · rw [if_neg (fun h => hrs h.2)]
+  · rw [ite_eq_right (fun h => hrs h.2)]
     change (∑ i, star (fourierVector a r i) * fourierVector c s i) = 0
     apply Finset.sum_eq_zero
     intro i _
@@ -323,8 +324,8 @@ private theorem ghz_density (n d : ℕ) [NeZero n] [NeZero d]
     (star (fourierVector 0 (0 : jointIndex n d)))) = 1
   rw [Matrix.trace_vecMulVec]
   have h := sector_basis n d hn hd 0 0 0 0 rfl rfl
-  rw [if_pos ⟨rfl, rfl⟩] at h
-  simpa only [dotProduct_comm] using h
+  rw [ite_eq_left ⟨rfl, rfl⟩] at h
+  exact (dotProduct_comm _ _).trans h
 
 private theorem outcome_pair_injective {n d : ℕ} [NeZero n]
     (b c : jointIndex n d) (hhead : b 0 = c 0) (hlabel : sectorLabel b = sectorLabel c) :
@@ -335,7 +336,7 @@ private theorem outcome_pair_injective {n d : ℕ} [NeZero n]
     exact hhead
   · have h := congrFun hlabel k
     change (if k = 0 then 0 else b k) = (if k = 0 then 0 else c k) at h
-    simpa only [if_neg hk] using h
+    simpa only [ite_eq_right hk] using h
 
 private theorem computational_dot {n d : ℕ} [NeZero n] [NeZero d]
     (t : ZMod d) (s : jointIndex n d) (v : jointIndex n d → ℂ) :
@@ -363,10 +364,10 @@ private theorem selected_orthonormal (n d : ℕ) [NeZero n] [NeZero d]
   classical
   have hcomp (b c : jointIndex n d) (hb : sectorLabel b ∈ r) :
       star (selectedVector r b) ⬝ᵥ selectedVector r c = if b = c then 1 else 0 := by
-    have hbvec : selectedVector r b = computationalVector (b 0) (sectorLabel b) := if_pos hb
+    have hbvec : selectedVector r b = computationalVector (b 0) (sectorLabel b) := ite_eq_left hb
     rw [hbvec, computational_dot]
     by_cases hc : sectorLabel c ∈ r
-    · have hcvec : selectedVector r c = computationalVector (c 0) (sectorLabel c) := if_pos hc
+    · have hcvec : selectedVector r c = computationalVector (c 0) (sectorLabel c) := ite_eq_left hc
       rw [hcvec]
       change (if sectorPoint (b 0) (sectorLabel b) = sectorPoint (c 0) (sectorLabel c)
         then (1 : ℂ) else 0) = _
@@ -379,14 +380,14 @@ private theorem selected_orthonormal (n d : ℕ) [NeZero n] [NeZero d]
         · intro h
           subst c
           rfl
-      simp only [heq]
-    · have hcvec : selectedVector r c = fourierVector (c 0) (sectorLabel c) := if_neg hc
+      exact ite_cond_congr (propext heq)
+    · have hcvec : selectedVector r c = fourierVector (c 0) (sectorLabel c) := ite_eq_right hc
       rw [hcvec]
       have hlabels : sectorLabel b ≠ sectorLabel c := by
         intro h
         exact hc (h ▸ hb)
       rw [fourier_other_sector _ _ _ _ (sectorLabel_zero b) (sectorLabel_zero c) hlabels]
-      exact (if_neg (fun h : b = c => hlabels (congrArg sectorLabel h))).symm
+      exact (ite_eq_right (fun h : b = c => hlabels (congrArg sectorLabel h))).symm
   by_cases hb : sectorLabel b ∈ r
   · exact hcomp b c hb
   · by_cases hc : sectorLabel c ∈ r
@@ -394,13 +395,13 @@ private theorem selected_orthonormal (n d : ℕ) [NeZero n] [NeZero d]
       by_cases hbc : b = c
       · subst c
         exact (hb hc).elim
-      · rw [if_neg (Ne.symm hbc), if_neg hbc, star_zero]
-    · have hbvec : selectedVector r b = fourierVector (b 0) (sectorLabel b) := if_neg hb
-      have hcvec : selectedVector r c = fourierVector (c 0) (sectorLabel c) := if_neg hc
+      · rw [ite_eq_right (Ne.symm hbc), ite_eq_right hbc, star_zero]
+    · have hbvec : selectedVector r b = fourierVector (b 0) (sectorLabel b) := ite_eq_right hb
+      have hcvec : selectedVector r c = fourierVector (c 0) (sectorLabel c) := ite_eq_right hc
       rw [hbvec, hcvec, sector_basis n d hn hd _ _ _ _ (sectorLabel_zero b) (sectorLabel_zero c)]
       have heq : b 0 = c 0 ∧ sectorLabel b = sectorLabel c ↔ b = c :=
         ⟨fun h => outcome_pair_injective b c h.1 h.2, fun h => by subst c; exact ⟨rfl, rfl⟩⟩
-      simp only [heq]
+      exact ite_cond_congr (propext heq)
 
 private theorem sector_measurement (n d : ℕ) [NeZero n] [NeZero d]
     (hn : 2 ≤ n) (hd : 2 ≤ d) (r : Finset (jointIndex n d)) :
@@ -414,7 +415,7 @@ private theorem sector_measurement (n d : ℕ) [NeZero n] [NeZero d]
   · intro b
     refine ⟨Matrix.posSemidef_vecMulVec_self_star _, ?_⟩
     have hnorm := horth b b
-    rw [if_pos rfl] at hnorm
+    rw [ite_eq_left rfl] at hnorm
     change Matrix.vecMulVec (selectedVector r b) (star (selectedVector r b)) *
       Matrix.vecMulVec (selectedVector r b) (star (selectedVector r b)) = _
     rw [Matrix.vecMulVec_mul_vecMulVec, hnorm, one_smul]
@@ -528,7 +529,7 @@ private theorem rankOne_separable_product (n d : ℕ) [NeZero n] [NeZero d]
     _ = z⁻¹ * (z * v k) := by
       rw [congrFun hz k]
       rfl
-    _ = v k := by field_simp [hz0]
+    _ = v k := inv_mul_cancel_left₀ hz0 (v k)
 
 private theorem fourier_not_product (n d : ℕ) [NeZero n] [NeZero d]
     (hn : 2 ≤ n) (hd : 2 ≤ d) (a : ZMod d) (r : jointIndex n d)
@@ -574,7 +575,7 @@ private theorem fourier_not_product (n d : ℕ) [NeZero n] [NeZero d]
     intro t ht
     change (if t = sectorPoint (t 0) r then
       (Real.sqrt d : ℂ)⁻¹ * ZMod.stdAddChar (a * t 0) else 0) ≠ 0
-    rw [if_pos ht, ZMod.stdAddChar_apply]
+    rw [ite_eq_left ht, ZMod.stdAddChar_apply]
     exact mul_ne_zero (inv_ne_zero hsqrt) (Circle.coe_ne_zero _)
   have hminor : fourierVector a r i * fourierVector a r j =
       fourierVector a r q * fourierVector a r p := by
@@ -592,7 +593,7 @@ private theorem fourier_not_product (n d : ℕ) [NeZero n] [NeZero d]
       rw [Function.update_of_ne hk, Function.update_of_ne hk]
   have hqzero : fourierVector a r q = 0 := by
     change (if q = sectorPoint (q 0) r then _ else 0) = 0
-    exact if_neg hq
+    exact ite_eq_right hq
   rw [hqzero, zero_mul] at hminor
   exact mul_ne_zero (hnonzero i hi) (hnonzero j hj) hminor
 
@@ -604,16 +605,16 @@ private theorem selected_separable_iff (n d : ℕ) [NeZero n] [NeZero d]
   · refine ⟨fun _ => hb, fun _ => ?_⟩
     change IsFullySeparable (Matrix.vecMulVec (selectedVector r b) (star (selectedVector r b)))
     have hvec : selectedVector r b = computationalVector (b 0) (sectorLabel b) :=
-      if_pos hb
+      ite_eq_left hb
     rw [hvec]
     exact computational_projector_separable _ _
   · refine ⟨fun hsep => ?_, fun h => (hb h).elim⟩
-    have hvec : selectedVector r b = fourierVector (b 0) (sectorLabel b) := if_neg hb
+    have hvec : selectedVector r b = fourierVector (b 0) (sectorLabel b) := ite_eq_right hb
     change IsFullySeparable (Matrix.vecMulVec (selectedVector r b) (star (selectedVector r b))) at hsep
     rw [hvec] at hsep
     have hv := sector_basis n d hn hd (b 0) (b 0) (sectorLabel b) (sectorLabel b)
       (sectorLabel_zero b) (sectorLabel_zero b)
-    rw [if_pos ⟨rfl, rfl⟩] at hv
+    rw [ite_eq_left ⟨rfl, rfl⟩] at hv
     exact (fourier_not_product n d hn hd (b 0) (sectorLabel b) (sectorLabel_zero b)
       (rankOne_separable_product n d _ hv hsep)).elim
 
@@ -625,7 +626,7 @@ private theorem sectorLabel_replace {n d : ℕ} [NeZero n] (s : jointIndex n d)
   · subst k
     exact (sectorLabel_zero _).trans hs.symm
   · change (if k = 0 then 0 else Function.update s 0 a k) = s k
-    rw [if_neg hk, Function.update_of_ne hk]
+    rw [ite_eq_right hk, Function.update_of_ne hk]
 
 private theorem replace_sectorLabel {n d : ℕ} [NeZero n] (b : jointIndex n d) :
     Function.update (sectorLabel b) 0 (b 0) = b := by
@@ -636,10 +637,10 @@ private theorem replace_sectorLabel {n d : ℕ} [NeZero n] (b : jointIndex n d) 
     exact Function.update_self _ _ _
   · rw [Function.update_of_ne hk]
     change (if k = 0 then 0 else b k) = b k
-    exact if_neg hk
+    exact ite_eq_right hk
 
 private theorem sector_count (n d : ℕ) [NeZero n] [NeZero d]
-    (hn : 2 ≤ n) (hd : 2 ≤ d) (r : Finset (jointIndex n d))
+    (_hn : 2 ≤ n) (_hd : 2 ≤ d) (r : Finset (jointIndex n d))
     (hr : ∀ s ∈ r, s 0 = 0) :
     (Finset.univ.filter (fun b => sectorLabel b ∈ r)).card = d * r.card := by
   classical
@@ -659,7 +660,8 @@ private theorem sector_count (n d : ℕ) [NeZero n] [NeZero d]
         · apply Subtype.ext
           exact sectorLabel_replace q.2.1 (hr q.2.1 q.2.2) q.1 }
   have h := Fintype.card_congr e
-  simpa only [Fintype.card_coe, Fintype.card_prod, ZMod.card] using h
+  rw [Fintype.card_coe, Fintype.card_prod, ZMod.card, Fintype.card_coe] at h
+  exact h
 
 private theorem sector_separability_count (n d : ℕ) [NeZero n] [NeZero d]
     (hn : 2 ≤ n) (hd : 2 ≤ d) (r : Finset (jointIndex n d))
@@ -669,14 +671,12 @@ private theorem sector_separability_count (n d : ℕ) [NeZero n] [NeZero d]
   classical
   have heq : (Finset.univ.filter (fun b => IsFullySeparable (selectedMeasurement r b))) =
       Finset.univ.filter (fun b => sectorLabel b ∈ r) := by
-    ext b
-    simp only [Finset.mem_filter, Finset.mem_univ, true_and,
-      selected_separable_iff n d hn hd r b]
+    exact Finset.filter_congr (fun b _ => selected_separable_iff n d hn hd r b)
   rw [heq]
   exact sector_count n d hn hd r hr
 
 private theorem choose_sectors (n d m : ℕ) [NeZero n] [NeZero d]
-    (hn : 2 ≤ n) (hm : m ≤ d ^ (n - 1)) :
+    (_hn : 2 ≤ n) (hm : m ≤ d ^ (n - 1)) :
     ∃ r : Finset (jointIndex n d), r.card = m ∧ ∀ s ∈ r, s 0 = 0 := by
   classical
   let s : Finset (jointIndex n d) := Finset.univ.filter (fun r => r 0 = 0)
@@ -684,34 +684,138 @@ private theorem choose_sectors (n d m : ℕ) [NeZero n] [NeZero d]
     { toFun := fun r k => r.1 k.1
       invFun := fun f => ⟨fun k => if h : k = 0 then 0 else f ⟨k, h⟩, by
         apply Finset.mem_filter.mpr
-        exact ⟨Finset.mem_univ _, dif_pos rfl⟩⟩
+        exact ⟨Finset.mem_univ _, dite_eq_left rfl⟩⟩
       left_inv := fun r => by
         apply Subtype.ext
         funext k
         by_cases hk : k = 0
         · subst k
           change (if h : (0 : Fin n) = 0 then (0 : ZMod d) else r.1 0) = r.1 0
-          rw [dif_pos rfl]
+          rw [dite_eq_left rfl]
           exact (Finset.mem_filter.mp r.2).2.symm
-        · exact dif_neg hk
+        · exact dite_eq_right hk
       right_inv := fun f => by
         funext k
-        exact dif_neg k.2 }
+        exact dite_eq_right k.2 }
   have hc : Fintype.card {k : Fin n // k ≠ 0} = n - 1 := by
     simpa only [Fintype.card_fin, Fintype.card_subtype_eq] using
       Fintype.card_subtype_compl (fun k : Fin n => k = 0)
   have hs : s.card = d ^ (n - 1) := by
     have h := Fintype.card_congr e
-    simpa only [Fintype.card_coe, Fintype.card_fun, ZMod.card, hc] using h
+    rw [Fintype.card_coe, Fintype.card_fun, ZMod.card, hc] at h
+    exact h
   obtain ⟨r, hrs, hcard⟩ := Finset.exists_subset_card_eq (s := s) (hs.symm ▸ hm)
   exact ⟨r, hcard, fun t ht => (Finset.mem_filter.mp (hrs ht)).2⟩
 
+private theorem root_character (d : ℕ) [NeZero d] (i : ZMod d) :
+    windowRoot d ^ i.val = ZMod.stdAddChar i := by
+  have h : windowRoot d = ZMod.stdAddChar (1 : ZMod d) := by
+    simpa [windowRoot] using (ZMod.stdAddChar_coe (N := d) (1 : ℤ)).symm
+  rw [h, ← AddChar.map_nsmul_eq_pow]
+  congr 1
+  simp only [nsmul_eq_mul, mul_one, ZMod.natCast_zmod_val]
+
+private theorem encoding_entry (n d : ℕ) [NeZero d] (k : Fin n) (x y i j : ZMod d) :
+    localEncoding n d k x y i j =
+      if j = i - y then ZMod.stdAddChar (x * i) else 0 := by
+  classical
+  have hs (a : ℕ) : shiftMatrix d ^ a = (shiftPerm d ^ a).permMatrix ℂ := by
+    induction a with
+    | zero => rw [pow_zero, pow_zero, Matrix.permMatrix_one]
+    | succ a ih =>
+      rw [pow_succ, ih, shiftMatrix_eq_permMatrix, ← Matrix.permMatrix_mul, ← pow_succ']
+  have hc : clockMatrix d ^ x.val =
+      Matrix.diagonal (fun i : ZMod d => ZMod.stdAddChar (x * i)) := by
+    rw [clockMatrix, Matrix.diagonal_pow]
+    congr 1
+    funext i
+    change (windowRoot d ^ i.val) ^ x.val = _
+    rw [root_character, ← AddChar.map_nsmul_eq_pow]
+    congr 1
+    rw [nsmul_eq_mul, ZMod.natCast_zmod_val]
+  change (clockMatrix d ^ x.val * shiftMatrix d ^ y.val) i j = _
+  rw [hc, hs, Matrix.diagonal_mul]
+  simp only [Equiv.Perm.permMatrix, PEquiv.toMatrix_apply, Equiv.toPEquiv_apply,
+    Option.mem_def, Option.some.injEq, shiftPerm_pow_apply, ZMod.natCast_zmod_val]
+  by_cases h : j = i - y
+  · rw [ite_eq_left h, ite_eq_left h.symm, mul_one]
+  · rw [ite_eq_right h, ite_eq_right (Ne.symm h), mul_zero]
+
 private theorem encoded_ghz (n d : ℕ) [NeZero n] [NeZero d]
-    (hn : 2 ≤ n) (hd : 2 ≤ d) (x y : jointIndex n d) :
+    (_hn : 2 ≤ n) (_hd : 2 ≤ d) (x y : jointIndex n d) :
     ∃ z : ℂ, Complex.normSq z = 1 ∧
       tensorMatrix (localEncoding n d) x y *ᵥ fourierVector 0 (0 : jointIndex n d) =
         z • fourierVector (∑ k, x k) (sectorCoordinate y) := by
-  sorry
+  classical
+  have htensor (i j : jointIndex n d) :
+      tensorMatrix (localEncoding n d) x y i j =
+        if j = (fun k => i k - y k) then ZMod.stdAddChar (∑ k, x k * i k) else 0 := by
+    change (∏ k, localEncoding n d k (x k) (y k) (i k) (j k)) = _
+    by_cases hj : j = (fun k => i k - y k)
+    · rw [ite_eq_left hj]
+      subst j
+      calc
+        _ = ∏ k, ZMod.stdAddChar (x k * i k) := by
+          apply Finset.prod_congr rfl
+          intro k _
+          rw [encoding_entry, ite_eq_left rfl]
+        _ = _ := (congrArg Additive.toMul
+          (map_sum (ZMod.stdAddChar (N := d)).toAddMonoidHom
+            (fun k => x k * i k) Finset.univ)).symm
+    · rw [ite_eq_right hj]
+      obtain ⟨k, hk⟩ : ∃ k, j k ≠ i k - y k := by
+        by_contra! h
+        exact hj (funext h)
+      apply Finset.prod_eq_zero (Finset.mem_univ k)
+      rw [encoding_entry, ite_eq_right hk]
+  refine ⟨ZMod.stdAddChar (∑ k, x k * (y k - y 0)), ?_, ?_⟩
+  · rw [ZMod.stdAddChar_apply]
+    exact Circle.normSq_coe _
+  · funext i
+    have hact : (tensorMatrix (localEncoding n d) x y *ᵥ
+        fourierVector 0 (0 : jointIndex n d)) i =
+        ZMod.stdAddChar (∑ k, x k * i k) *
+          fourierVector 0 (0 : jointIndex n d) (fun k => i k - y k) := by
+      change (∑ j, tensorMatrix (localEncoding n d) x y i j *
+        fourierVector 0 (0 : jointIndex n d) j) = _
+      rw [Finset.sum_eq_single (fun k => i k - y k)]
+      · rw [htensor, ite_eq_left rfl]
+      · intro j _ hj
+        rw [htensor, ite_eq_right hj, zero_mul]
+      · exact fun h => (h (Finset.mem_univ _)).elim
+    rw [hact]
+    change _ = ZMod.stdAddChar (∑ k, x k * (y k - y 0)) *
+      (if i = sectorPoint (i 0) (sectorCoordinate y) then
+        (Real.sqrt d : ℂ)⁻¹ * ZMod.stdAddChar ((∑ k, x k) * i 0) else 0)
+    have hsector : (fun k => i k - y k) =
+        sectorPoint ((fun k => i k - y k) 0) (0 : jointIndex n d) ↔
+        i = sectorPoint (i 0) (sectorCoordinate y) := by
+      constructor <;> intro h <;> funext k
+      · have hk := congrFun h k
+        change i k - y k = i 0 - y 0 + 0 at hk
+        change i k = i 0 + (y k - y 0)
+        linear_combination hk
+      · have hk := congrFun h k
+        change i k = i 0 + (y k - y 0) at hk
+        change i k - y k = i 0 - y 0 + 0
+        linear_combination hk
+    change ZMod.stdAddChar (∑ k, x k * i k) *
+      (if (fun k => i k - y k) = sectorPoint (i 0 - y 0) (0 : jointIndex n d) then
+        (Real.sqrt d : ℂ)⁻¹ * ZMod.stdAddChar (0 * (i 0 - y 0)) else 0) = _
+    by_cases hi : i = sectorPoint (i 0) (sectorCoordinate y)
+    · rw [ite_eq_left hi, ite_eq_left (hsector.mpr hi), zero_mul,
+        AddChar.map_zero_eq_one, mul_one]
+      have hphase : (∑ k, x k * i k) =
+          (∑ k, x k * (y k - y 0)) + (∑ k, x k) * i 0 := by
+        rw [Finset.sum_mul, ← Finset.sum_add_distrib]
+        apply Finset.sum_congr rfl
+        intro k _
+        have hk := congrFun hi k
+        change i k = i 0 + (y k - y 0) at hk
+        rw [hk]; ring
+      rw [hphase, AddChar.map_add_eq_mul]
+      ring
+    · rw [ite_eq_right hi, ite_eq_right (fun h => hi (hsector.mp h)), mul_zero, mul_zero]
 
 private theorem winning_probability (n d : ℕ) [NeZero n] [NeZero d]
     (hn : 2 ≤ n) (hd : 2 ≤ d) (r : Finset (jointIndex n d))
@@ -724,7 +828,7 @@ private theorem winning_probability (n d : ℕ) [NeZero n] [NeZero d]
   obtain ⟨z, hz, hencoded⟩ := encoded_ghz n d hn hd x y
   have horth := sector_basis n d hn hd (∑ k, x k) (∑ k, x k)
     (sectorCoordinate y) (sectorCoordinate y) (sector_coordinates y).1 (sector_coordinates y).1
-  rw [if_pos ⟨rfl, rfl⟩] at horth
+  rw [ite_eq_left ⟨rfl, rfl⟩] at horth
   have hzprod : z * star z = 1 := by
     calc
       _ = (Complex.normSq z : ℂ) := by
@@ -744,13 +848,13 @@ private theorem winning_probability (n d : ℕ) [NeZero n] [NeZero d]
     ext i j
     change (z * fourierVector (∑ k, x k) (sectorCoordinate y) i) *
       star (z * fourierVector (∑ k, x k) (sectorCoordinate y) j) = _
-    simp only [star_mul]
+    rw [star_mul]
     calc
       _ = (z * star z) * (fourierVector (∑ k, x k) (sectorCoordinate y) i *
           star (fourierVector (∑ k, x k) (sectorCoordinate y) j)) := by ring
       _ = _ := by rw [hzprod, one_mul]; rfl
   have hhead : winningOutcome x y 0 = ∑ k, x k := by
-    exact if_pos rfl
+    exact ite_eq_left rfl
   have hlabel : sectorLabel (winningOutcome x y) = sectorCoordinate y := by
     funext k
     by_cases hk : k = 0
@@ -759,7 +863,7 @@ private theorem winning_probability (n d : ℕ) [NeZero n] [NeZero d]
       exact (sector_coordinates y).1.symm
     · change (if k = 0 then 0 else
         (if k = 0 then ∑ t, x t else y k - y 0)) = y k - y 0
-      rw [if_neg hk, if_neg hk]
+      rw [ite_eq_right hk, ite_eq_right hk]
   have htrace (v : jointIndex n d → ℂ) :
       Matrix.trace (Matrix.vecMulVec (fourierVector (∑ k, x k) (sectorCoordinate y))
         (star (fourierVector (∑ k, x k) (sectorCoordinate y))) *
@@ -778,10 +882,10 @@ private theorem winning_probability (n d : ℕ) [NeZero n] [NeZero d]
     change (if sectorLabel (winningOutcome x y) ∈ r then
       computationalVector (winningOutcome x y 0) (sectorLabel (winningOutcome x y))
       else fourierVector (winningOutcome x y 0) (sectorLabel (winningOutcome x y))) = _
-    simp only [hhead, hlabel]
+    rw [hhead, hlabel]
   rw [hvec]
   by_cases hy : sectorCoordinate y ∈ r
-  · rw [if_pos hy, if_pos hy, star_dotProduct, computational_dot,
+  · rw [ite_eq_left hy, ite_eq_left hy, star_dotProduct, computational_dot,
       fourier_at_point _ _ _ (sector_coordinates y).1]
     have hchar : star (ZMod.stdAddChar ((∑ k, x k) * (∑ k, x k))) *
         ZMod.stdAddChar ((∑ k, x k) * (∑ k, x k)) = 1 := by
@@ -804,8 +908,8 @@ private theorem winning_probability (n d : ℕ) [NeZero n] [NeZero d]
               ZMod.stdAddChar ((∑ k, x k) * (∑ k, x k))) := by ring
         _ = _ := by rw [hchar, mul_one, ← _root_.mul_inv_rev, hsq]
     rw [hamp]
-    simp only [← Complex.ofReal_natCast, ← Complex.ofReal_inv, Complex.ofReal_re]
-  · rw [if_neg hy, if_neg hy, horth, one_mul]
+    exact congrArg Complex.re (Complex.ofReal_inv (d : ℝ)).symm
+  · rw [ite_eq_right hy, ite_eq_right hy, horth, one_mul]
     rfl
 
 private theorem sector_score (n d : ℕ) [NeZero n] [NeZero d]
@@ -832,7 +936,7 @@ private theorem sector_score (n d : ℕ) [NeZero n] [NeZero d]
           change (b 0 + sectorLabel b k) - (b 0 + sectorLabel b 0) = b k
           rw [sectorLabel_zero, add_zero]
           change (b 0 + (if k = 0 then 0 else b k)) - b 0 = b k
-          rw [if_neg hk]
+          rw [ite_eq_right hk]
           abel
       right_inv := fun i => by
         funext k
@@ -844,7 +948,7 @@ private theorem sector_score (n d : ℕ) [NeZero n] [NeZero d]
           rw [sectorLabel_zero, add_zero]
         · change i 0 + (if k = 0 then 0 else
             Function.update (sectorCoordinate i) 0 (i 0) k) = i k
-          rw [if_neg hk, Function.update_of_ne hk]
+          rw [ite_eq_right hk, Function.update_of_ne hk]
           change i 0 + (i k - i 0) = i k
           abel }
   have hcoordinate (b : jointIndex n d) : sectorCoordinate (e b) = sectorLabel b := by
@@ -868,31 +972,29 @@ private theorem sector_score (n d : ℕ) [NeZero n] [NeZero d]
         (d : ℝ) ^ n - d * r.card := by
     have h := congrArg (fun k : ℕ => (k : ℝ)) hcomplement
     rw [Nat.cast_add, hcount, Nat.cast_mul, hc] at h
-    linarith
+    exact eq_sub_iff_add_eq.mpr ((add_comm _ _).trans h)
   have hsum : (∑ y, if sectorCoordinate y ∈ r then (d : ℝ)⁻¹ else 1) =
       d * r.card * (d : ℝ)⁻¹ + ((d : ℝ) ^ n - d * r.card) := by
     rw [hreindex, Finset.sum_ite]
-    simp only [Finset.sum_const, nsmul_eq_mul, mul_one, hcount, Nat.cast_mul,
-      hcomplementReal]
+    rw [Finset.sum_const, Finset.sum_const, nsmul_eq_mul, nsmul_eq_mul,
+      mul_one, hcount, Nat.cast_mul, hcomplementReal]
   change ((d : ℝ) ^ (2 * n))⁻¹ * ∑ x, ∑ y, _ = _
-  simp_rw [hprob]
+  rw [Finset.sum_congr rfl (fun x _ => Finset.sum_congr rfl (fun y _ => hprob x y))]
   rw [hsum, Finset.sum_const, nsmul_eq_mul, hc]
   have hd0 : (d : ℝ) ≠ 0 := by exact_mod_cast (show d ≠ 0 by omega)
   rw [show 2 * n = n + n by omega, pow_add]
   field_simp [hd0]
-  <;> ring
+  ring
 
 theorem result : claim := by
   intro n d m hn hd hm
-  letI : NeZero n := neZeroOfTwo n hn
-  letI : NeZero d := neZeroOfTwo d hd
+  let : NeZero n := neZeroOfTwo n hn
+  let : NeZero d := neZeroOfTwo d hd
   obtain ⟨r, hcard, hr⟩ := choose_sectors n d m hn hm
   refine ⟨ghzDensity n d, localEncoding n d, selectedMeasurement r,
     ghz_density n d hn hd, encodings_unitary n d,
     sector_measurement n d hn hd r, ?_, ?_⟩
-  · have h := sector_separability_count n d hn hd r hr
-    simpa only [hcard] using h
-  · have h := sector_score n d hn hd r hr
-    simpa only [hcard] using h
+  · exact hcard ▸ sector_separability_count n d hn hd r hr
+  · exact hcard ▸ sector_score n d hn hd r hr
 
 end D5.S3.Quantum.Measurement.MultipartiteEntangledMeasurementPartialTightness
