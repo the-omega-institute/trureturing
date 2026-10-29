@@ -1,0 +1,93 @@
+## 31. Common whole-world coordinates for the fold and J incidence
+
+Retain Definitions 1.1–1.2 without restricting their domain or pair predicate.
+In particular the two distinct-world pairs may overlap, and their common
+terminal values need not agree. All gains are entire nonzero polynomials
+of degree at most three, each with its own one fixed real drift and the
+literal acquired and alternative clocks already specified.
+
+The full-parent bijection is (19.1)–(19.2), inherited from
+[Common Parent Geometry](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+Theorem 2.1. Its parameters are $\beta=1/8$ and $a_{\rm parent}=24/5$;
+the latter is unrelated to the terminal reading $a(W)$. That bijection includes its $\Lambda=0$ branch; Lemma 2.2 supplies the
+complete original-world realization on the pole-free source chart.
+
+For Sections 32–38 use the following local aliases for exactly the
+polynomials and map of Definition 2.1 and Definition 19.1:
+
+$$
+\begin{gathered}
+X=\mathcal J,\quad N=\mathcal N,\quad K=S,\quad D=\widehat D,\quad
+C_i=\widehat C_i\ (0\le i\le4),\quad B_i=\widehat B_i\ (i=5,6,7),\\
+(N_p,N_v,N_a,N_m)=(P_p,P_v,P_a,P_m),\quad H=bD,\quad
+A=(p,v)=\mathcal R.
+\end{gathered}
+\tag{31.1}
+$$
+
+Thus $D$ is a scalar source denominator, not the critical-value set
+$D_{\rm crit}$ of (23.1). The polynomial $N$ in this correspondence is
+not the whole-world neighborhood $\mathcal N_{\rm f}$ below. The source
+box $\mathcal B_{\rm f}$ and fixed-response chart below are new local
+domains; neither is the record rectangle $\mathcal U$ of Definition 12.1
+or the record neighborhood $\mathcal V$ of Definition 24.1. In all charts
+$\Lambda$ remains the scalar coefficient of $\epsilon$ in (19.1).
+
+The correspondence includes the same entire gain, drift and responses:
+
+$$
+W(r,b)\text{ is Definition 2.1's complete world},\qquad
+(p,v,a,m)=(N_p,N_v,N_a,N_m)/H.
+\tag{31.2}
+$$
+
+In particular the regular-source identities are
+
+$$
+j=X/b,\quad n=N/b,\quad
+\Lambda=2D/(5TUXN),\qquad \epsilon=-3KXN/D.
+\tag{31.3}
+$$
+
+The fold arithmetic uses Definition 2.1's displayed factored expressions
+with the aliases and assignment order specified here. For reproducibility
+compute $X=b\cdot b+(r-r\cdot r)$, then $N=X+rb$, then $T,U,K,D$,
+then $C_0,C_1,C_2,C_3,C_4,B_5,B_6,B_7,H,N_p,N_v,N_a,N_m$.
+This specifies the interval expression as well as its exact polynomial.
+The first five rows, entire gain, and four literal response meanings are
+already proved by Lemma 2.2. Only $b,D$ and the positive parent traces
+are divided by; no gain sample, leading coefficient, root difference or
+drift is cancelled.
+
+For the J-incidence arithmetic in Section 40 use a second expression
+for the same rational responses, denoted $R_p=p,R_v=v,R_a=a,R_m=m$.
+In the displayed order set
+
+$$
+\begin{gathered}
+c_{\rm src}=r(1-r)/b,\quad j=b+c_{\rm src},\quad n=j+r,\quad
+T=1+b,\quad U=1+2b,\\
+\Lambda=1+6/T+1/U-4/j-4/n,\quad B_{\rm par}=6/T-2/U,\quad
+\epsilon=-\frac{24}{5}(b-1/8)B_{\rm par}/\Lambda,\\
+z_0=-24-\epsilon,\quad z_1=-\epsilon/j,\quad
+z_2=(27/5-\epsilon)/T,\quad z_3=-\epsilon/n,\quad d=24+\epsilon,\\
+t_5=-4z_0+15z_1-20z_2+10z_3,\quad
+t_6=-10z_0+36z_1-45z_2+20z_3,\\
+t_7=-20z_0+70z_1-84z_2+35z_3,\\
+R_p=d+(U+n)t_5,\quad R_v=d+(2U+n)t_6,\\
+R_a=d+(T+2j+4r)t_7,\quad R_m=d+(3U+2n)t_7.
+\end{gathered}
+\tag{31.4}
+$$
+
+Here $z_i=g(i)$ are exactly (19.2), and $t_i=g(i)$ by Lemma 2.2's
+fixed-node interpolation rows. Hence (31.4) and (31.1)–(31.3) are the
+same complete-world chart wherever $\Lambda\ne0$, rather than merely
+numerically matching response lists. This second expression fixes the
+arithmetic order for the seven-variable interval proof. The zero-safe
+parent itself is still $F_{\rm par}=0$: at $b\ne1/8$ it forces
+$\Lambda\ne0$; at $b=1/8,\Lambda\ne0$ it forces $\epsilon=0$; and at
+$b=1/8,\Lambda=0$ every real $\epsilon$ remains allowed with its own
+whole gain from (19.2). No chart assertion removes those exceptional
+worlds from any entire child.
+

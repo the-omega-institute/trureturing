@@ -1,0 +1,18 @@
+## 53. Independent-pair scope and comparison with the parent results
+
+The original question of Definition 1.2 retains the full predicate
+
+$$
+\begin{gathered}
+\exists p,v\in\mathbb R,\quad p\ne24,\quad
+\exists W_{J0},W_{J1},W_{M0},W_{M1}\in C(p,v):\\
+W_{J0}\ne W_{J1},\qquad a(W_{J0})=a(W_{J1}),\\
+W_{M0}\ne W_{M1},\qquad m(W_{M0})=m(W_{M1}).
+\end{gathered}
+\tag{53.1}
+$$
+
+The two pairs may overlap, and their common terminal readings may
+differ. No source coordinate or gain direction is an acquired
+observation.
+

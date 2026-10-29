@@ -1,0 +1,28 @@
+### 定理 5.2（高阶奇偶族的兼容阶达到性）
+
+取每个有效词集 $\mathcal A_i=\{0,1\}$，令
+
+$$
+W_m^{\mathrm{par}}
+=\left\{
+\mathbf w\in\{0,1\}^m:
+\sum_iw_i\equiv0\pmod2
+\right\}
+$$
+
+或其奇偶互补类，且 $m\ge3$。则
+
+$$
+\boxed{\alpha(W_m^{\mathrm{par}})=m.}
+$$
+
+#### 证明
+
+对任意真子集 $J\subsetneq\{1,\ldots,m\}$，至少有一个坐标未被 $J$ 包含；给定 $J$ 上任意赋值，选择该未包含坐标使总和达到指定奇偶，故
+
+$$
+\pi_J(W_m^{\mathrm{par}})=\{0,1\}^{J}.
+$$
+
+所以对每个 $r<m$，$\operatorname{cl}_r(W_m^{\mathrm{par}})=\{0,1\}^m\ne W_m^{\mathrm{par}}$。当 $r=m$ 时，$\operatorname{cl}_m(W)=W$，故最小阶数为 $m$。证毕。
+

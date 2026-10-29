@@ -1,0 +1,70 @@
+## 35. The actual fold and its inverse branches
+
+Put
+$$
+ h_0(q)=h(q,\chi_{\rm f}(q)),\qquad
+ w(q,r)=\int_0^1(1-u)h_{rr}(q,\chi_{\rm f}(q)+u(r-\chi_{\rm f}(q)))\,du.
+$$
+Taylor's integral identity gives
+$$
+ h(q,r)-h_0(q)=(r-\chi_{\rm f}(q))^2w(q,r),\qquad
+ 55<w(q,r)<131/2.
+ \tag{35.1}
+$$
+Define a source coordinate
+$$
+ z(q,r)=(r-\chi_{\rm f}(q))\sqrt{w(q,r)}.
+ \tag{35.2}
+$$
+It is real analytic, and $z_r>0$. Away from the critical point,
+$2zz_r=h_r$, with $z$ and $h_r$ of the same sign; at the
+critical point $z_r=\sqrt{h_{rr}/2}>0$. Therefore
+$(q,r)\mapsto(q,z)$ is an analytic coordinate change onto its image.
+The target change $(q,v)\mapsto(q,v-h_0(q))$ is also analytic and
+invertible. Together with (34.2) these give the **actual** response map
+in the form
+$$
+ (q,z)\longmapsto(q,z^2).
+ \tag{35.3}
+$$
+This proves a nondegenerate fold of the given whole-world source map;
+no realization hypothesis about a generic fold is being inserted.
+
+For clarity, let $\mathcal N_{\rm f}$ be the set of whole worlds
+$$
+ \mathcal N_{\rm f}=\{W(r,\beta_{\rm f}(q,r)):q\in I_p,\ r\in I_r\}.
+ \tag{35.4}
+$$
+It is an open parent neighborhood. Distinct source points give distinct
+whole worlds because their matrices retain both $r$ and $b$.
+Conversely the zero-safe parent equations and $D\ne0$ show that this
+chart has the entire whole-world lift of every source in its image.
+
+The fixed-response functions extend to the closed $r$-interval by the
+same endpoint-bracketing and strict derivative inequalities of Section 34.
+At either $r$-endpoint, (34.5)–(35.1) give
+$$
+ h(q,r)-h_0(q)>55(R/2)^2
+ =\frac{55}{16\cdot10^{12}}>2\cdot10^{-12}.
+ \tag{35.5}
+$$
+Thus, for every $q\in I_p$ and
+$0<\nu<2\cdot10^{-12}$, the base $(q,h_0(q)+\nu)$ has exactly
+two worlds in $\mathcal N_{\rm f}$. They are defined without a numerical
+solver by the two inverse branches
+$$
+ \begin{aligned}
+ r_\pm(q,\nu)&=z_q^{-1}(\pm\sqrt\nu),\\
+ b_\pm(q,\nu)&=\beta_{\rm f}(q,r_\pm(q,\nu)),\\
+ W_\pm(q,\nu)&=W(r_\pm(q,\nu),b_\pm(q,\nu)),
+ \end{aligned}
+ \tag{35.6}
+$$
+where $z_q$ is the strictly increasing function (35.2). Both branches
+are analytic for $\nu>0$; in the coordinate $s=\sqrt\nu$ they
+extend analytically through the common fold world. At $\nu=0$ the
+local child has one world. At negative $\nu$ it has none. These are
+counts in $\mathcal N_{\rm f}$ only. The entire child may contain additional
+worlds, including sources on other charts or on the singular parent
+branch of (19.1).
+

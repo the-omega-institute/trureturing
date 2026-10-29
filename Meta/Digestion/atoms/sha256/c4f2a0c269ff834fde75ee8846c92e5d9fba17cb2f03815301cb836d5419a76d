@@ -1,0 +1,93 @@
+**Lemma 9.3 (Whole-segment derivative separation).** The response
+circuit is pole-free on $S_0$. With columns ordered as $(r,b)$, its
+ambient partial derivatives have the following rational enclosures
+throughout $S_0$. Every endpoint numerator in the table is divided
+by $10^6$.
+
+| Derivative | Lower endpoint numerator | Upper endpoint numerator |
+| --- | ---: | ---: |
+| $p_r$ | $-17691121$ | $-17691120$ |
+| $p_b$ | $725498392$ | $725498393$ |
+| $v_r$ | $103013504$ | $103013505$ |
+| $v_b$ | $-1673536106$ | $-1673536105$ |
+
+In particular
+
+$$
+-45130<\Delta(r,b):=\det D\Phi(r,b)<-45129
+\qquad ((r,b)\in S_0).
+$$
+
+Proof. The enclosing-segment comparisons in Definition 9.2 are
+exact rational comparisons using
+the printed value of $c_1$ and $\rho=10^{-38}$. The following finite
+integer prescription gives the derivative table directly from
+Definition 2.1.
+
+Put $\sigma=10^{80}$ and enclose a rational $t$ by
+$[\lfloor\sigma t\rfloor,\lceil\sigma t\rceil]/\sigma$.
+Addition and negation use exact integer endpoints. Use the outward
+operations
+
+$$
+\begin{aligned}
+([L,U]/\sigma)([V,W]/\sigma)
+&\subseteq\frac1\sigma\left[
+\left\lfloor\frac{\min(LV,LW,UV,UW)}\sigma\right\rfloor,
+\left\lceil\frac{\max(LV,LW,UV,UW)}\sigma\right\rceil\right],\\
+([L,U]/\sigma)^{-1}
+&\subseteq\frac1\sigma\left[
+\left\lfloor\frac{\sigma^2}{U}\right\rfloor,
+\left\lceil\frac{\sigma^2}{L}\right\rceil\right]
+\qquad(LU>0).
+\end{aligned}
+$$
+
+Attach derivatives $(1,0)$ to the value interval $[2/5,2/5]$ for
+$r$, derivatives $(0,1)$ to $I_b$ for $b$, and zero derivatives to
+constants. Propagate values and both derivative components by these
+interval operations and
+
+$$
+D(f+h)=Df+Dh,\qquad D(fh)=hDf+fDh,\qquad
+D(f^{-1})=-Df/(ff).
+$$
+
+Evaluate Definition 2.1 in its displayed factored order, from left to
+right in unparenthesized sums and products. In $\mathcal J$ use
+$b^2=bb$ and $r(1-r)$, and evaluate $p=P_pH^{-1}$ and $v=P_vH^{-1}$.
+The value interval for $r$ is a singleton, but its derivative vector
+still computes both ambient partial derivatives.
+
+The denominator value enclosures, rounded outward to the
+$10^{-6}$ grid, are
+
+$$
+\widehat D(S_0)\subseteq[1119712,1119713]/10^6,\qquad
+H(S_0)\subseteq[45665,45666]/10^6.
+$$
+
+They are positive, as is $b$. Also $r(1-r)=6/25>0$, so
+$\mathcal J,\mathcal N,T,U$ are positive there. Thus the displayed
+circuit and the world lift have no pole on this segment. Rounding
+the four derivative intervals outward to the same grid gives the
+table. The value and derivative inclusions follow inductively from
+the interval operations and the differentiation rules. They cover
+the whole segment, including the exact algebraic root, rather than
+just a rational approximation to that root.
+
+Finally the derivative signs give the integer bounds
+
+$$
+\begin{aligned}
+10^{12}\Delta
+&\ge17691120\cdot1673536105-725498393\cdot103013505\\
+&=-45129404276909865>-45130\cdot10^{12},\\
+10^{12}\Delta
+&\le17691121\cdot1673536106-725498392\cdot103013504\\
+&=-45129401757170742<-45129\cdot10^{12}.
+\end{aligned}
+$$
+
+This proves the strict determinant separation. ∎
+
