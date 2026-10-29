@@ -197,9 +197,9 @@ def relation (N : Nat) (full : Bool) : Set (List Bool) := Set.range (@code N ful
 def Admissible {N : Nat} (full : Bool) (i j : Option (Fin N)) : Prop :=
   (i ≠ none ∨ j ≠ none) ∧ (full = true → i ≠ none ∧ j ≠ none)
 
-private theorem word_length {N : Nat} (i : Option (Fin N)) : (word i).length = N := by
+theorem word_length {N : Nat} (i : Option (Fin N)) : (word i).length = N := by
   simp [word]
-private theorem word_injective (N : Nat) : Function.Injective (@word N) := by
+theorem word_injective (N : Nat) : Function.Injective (@word N) := by
   intro i j h
   have he := List.ofFn_injective h
   cases i with
