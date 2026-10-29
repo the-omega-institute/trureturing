@@ -46,6 +46,10 @@ $$\neg (\exists n \in \mathbb{N},\; \exists hn \in 0 < n,\; \exists s \in Matrix
 
 *Proof.* Machine-checked in Lean as `D5/S3/Fourier/CuntzZeroFreeColumnRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/cuntz2009` (refuted) by `D5/S3/Fourier/CuntzZeroFreeColumnRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"cuntz2009","declaration_gid":"D5/S3/Fourier/CuntzZeroFreeColumnRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Michael Cuntz (2009). *Integral modular data and congruences*. DOI: [10.1007/s10801-008-0139-y](https://doi.org/10.1007/s10801-008-0139-y). URL: <https://arxiv.org/abs/math/0611233v2>.

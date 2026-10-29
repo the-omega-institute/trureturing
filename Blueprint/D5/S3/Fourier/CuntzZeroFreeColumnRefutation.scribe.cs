@@ -49,7 +49,10 @@ internal sealed class CuntzZeroFreeColumnRefutationDocument : IScribeDocumentDef
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "For the real matrix A obtained from s, A A.transpose = Matrix.diagonal d implies that A.transpose times the inverse diagonal times A is one. Its diagonal entries give ∑ᵢ sᵢₖ²/dᵢ = 1. The first column gives ∑ᵢ 1/dᵢ = 1. Every nonzero integer square is at least one, and positivity of all reciprocal norms forces equality term by term. Thus every entry in a zero-free column is 1 or −1. The argument applies to any square integer matrix with first column one and positive orthogonal row norms; determinant, symmetrization and fusion integrality are unnecessary."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("cuntz2009"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula Id(string name) => F.Id(name);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
