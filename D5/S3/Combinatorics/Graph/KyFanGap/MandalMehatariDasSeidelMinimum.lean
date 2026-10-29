@@ -10,6 +10,7 @@ escape_witness: none; admission_basis: open-problem-resolution (#21681; Proved).
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/22032.
 The literal binary-string and Seidel expressions define claim; the proof uses shared spectral owners. -/
 import D5.S3.Observer.Hankel.BalancedHankelSchmidt
+import D5.S3.Weil.ZetaLinear.PosIndex
 import D5.S3.Weil.ZetaLinear.RankTrace
 import D5.S3.Weil.ZetaLinear.FullRankInertiaPullback
 import Mathlib.LinearAlgebra.Matrix.Gershgorin
