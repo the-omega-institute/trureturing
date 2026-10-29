@@ -131,6 +131,7 @@ theorem irreducible_rectangle_occurrence (θ : Presentation H)
       (∀ h, h ≠ r → w.head? = some true →
         (List.ofFn (a h).labels).getLast? = some false) ∧
       (∀ h, Function.Injective (a h).states) ∧
+      (w.head? = some true → ∀ s, θ.matrix true s r = 0) ∧
       (let ε := selectedEpsilon θ w r a
        let b := w.length + Fintype.card H
        0 < ε ∧ ε ≤ 1 ∧
@@ -171,7 +172,8 @@ theorem irreducible_rectangle_occurrence (θ : Presentation H)
   choose a ha using routes
   have hb (h : H) := (ha h).2
   refine ⟨a,(hb r).2.1 rfl,(fun h => (hb h).1),(fun h => (hb h).2.2.1),
-    (fun h => (hb h).2.2.2),(fun h => (ha h).1),?_⟩
+    (fun h => (hb h).2.2.2),(fun h => (ha h).1),
+    (fun hw => one_incoming_zero θ hpos r (first_one_outgoing θ w R r hr hw)),?_⟩
   exact original_rectangle_occurrence θ J hc w R r hr a (fun h => (hb h).1)
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalRectangleRoutes

@@ -16,6 +16,7 @@ import Mathlib.MeasureTheory.Measure.MeasuredSets
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
+set_option backward.isDefEq.respectTransparency.types false
 noncomputable section
 open MeasureTheory ProbabilityTheory Matrix
 open scoped BigOperators ENNReal Classical symmDiff
@@ -323,6 +324,7 @@ private theorem window_domination {S : Type*} [Fintype S] [MeasurableSpace S]
   intro F hF
   apply (ENNReal.toReal_le_toReal (measure_ne_top _ _) (measure_ne_top _ _)).mp
   by_contra! hm
+  change ν.real F < μ.real F at hm
   let δ : ℝ := (μ.real F-ν.real F)/3
   have hδ : 0 < δ := by dsimp [δ]; linarith
   have hcover : ∃ D : Set (Set (ℤ → S)), D.Countable ∧
@@ -392,6 +394,37 @@ private theorem marked_domination (μ ν : Measure (PathSpace H))
   simpa only [Measure.map_map e.symm.measurable e.measurable,
     e.symm_comp_self,Measure.map_id] using hh
 
+
+private theorem component_product (θ : Presentation H) (C : Finset H)
+    (κ : Presentation C)
+    (hmat : ∀ x (i j : C), κ.matrix x i j = θ.matrix x i.val j.val) :
+    ∀ w (i j : C), product κ w i j = product θ w i.val j.val := by
+  have hclosed (i : C) (j : H) (hj : j ∉ C) (x : Bool) : θ.matrix x i.val j = 0 := by
+    have hs : ∑ k ∈ C, (θ.matrix false i.val k+θ.matrix true i.val k) = 1 := by
+      rw [←Finset.sum_coe_sort]
+      simp_rw [←hmat]
+      exact κ.stochastic i
+    have hl : θ.matrix false i.val j+θ.matrix true i.val j +
+        (∑ k ∈ C, (θ.matrix false i.val k+θ.matrix true i.val k)) ≤
+        ∑ k, (θ.matrix false i.val k+θ.matrix true i.val k) := by
+      rw [←Finset.sum_insert hj]
+      exact Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ _) fun k _ _ =>
+        add_nonneg (θ.matrix_nonneg _ _ _) (θ.matrix_nonneg _ _ _)
+    rw [hs,θ.stochastic] at hl
+    cases x <;> linarith [θ.matrix_nonneg false i.val j,θ.matrix_nonneg true i.val j]
+  intro w
+  induction w with
+  | nil => intro i j; simp [product,Matrix.one_apply,Subtype.val_inj]
+  | cons x w ih =>
+    intro i j
+    change (κ.matrix x*product κ w) i j = (θ.matrix x*product θ w) i.val j.val
+    rw [Matrix.mul_apply,Matrix.mul_apply]
+    simp_rw [hmat,ih]
+    rw [Finset.sum_coe_sort]
+    apply Finset.sum_subset (Finset.subset_univ _)
+    intro k _ hk
+    rw [hclosed i k hk x,zero_mul]
+
 /-- A native positive stationary component is exactly the original marked law
 restricted to that component, with its actual stationary weight. -/
 theorem component_restriction (θ : Presentation H) (C : Finset H)
@@ -402,7 +435,9 @@ theorem component_restriction (θ : Presentation H) (C : Finset H)
     (K : Measure (PathSpace C)) [IsProbabilityMeasure K] (hK : HasOriginalCylinders K κ)
     (t : ℤ) :
     ENNReal.ofReal c • K.map (componentInclusion C) =
-      J.restrict (state t ⁻¹' (C : Set H)) := by
+      J.restrict (state t ⁻¹' (C : Set H)) ∧
+      (∀ w (i j : C), product κ w i j = product θ w i.val j.val) := by
+  refine ⟨?_, component_product θ C κ hmat⟩
   let f := componentInclusion (H := H) C
   have hf : Measurable f := componentInclusion_measurable C
   let μ := ENNReal.ofReal c • K.map f
@@ -458,9 +493,12 @@ theorem component_restriction (θ : Presentation H) (C : Finset H)
       rw [←Finset.sum_coe_sort]
       simp_rw [←hinit]
       rw [←Finset.mul_sum,κ.initial_sum,mul_one]
-    rw [← ENNReal.ofReal_toReal (measure_ne_top J _),he]
+    rw [← ENNReal.ofReal_toReal (measure_ne_top J _)]
+    change ENNReal.ofReal (J.real _) = _
+    rw [he]
   apply Measure.eq_of_le_of_measure_univ_eq
-  · rw [←hμ]
+  · change μ ≤ J.restrict (state t ⁻¹' (C : Set H))
+    rw [←hμ]
     exact Measure.restrict_mono le_rfl hdom
   · rw [Measure.restrict_apply_univ,hmass]
     simp [μ,Measure.map_apply hf MeasurableSet.univ]
