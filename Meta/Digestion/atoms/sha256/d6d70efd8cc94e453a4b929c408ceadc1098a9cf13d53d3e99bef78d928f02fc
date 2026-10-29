@@ -1,0 +1,6 @@
+For any sequence $G_n\in\mathcal A_r(n,\ell_n)$, the following are equivalent:
+
+1. $E(G_n)-E_r^{\min}(n,\ell_n)=o(1/n)$;
+2. $nE(G_n)\to F_r(1+\alpha)$;
+3. eventually $G_n$ is an actual two-layer graph with exactly $r$ degree-oriented sinks, and, for its source counts and hub degrees with $N=n-r$,
+

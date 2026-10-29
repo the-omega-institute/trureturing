@@ -1,0 +1,14 @@
+**Definition 9.1 (Distribution-dependent scalar relaxation).** For a positive integer $s$ and a real $q$, consider finite probability laws on pairs $(K,U)$ such that
+
+$$
+K\in\{1,\ldots,s\},\qquad
+\mathbb E K=q,\qquad \mathbb E U=s,\qquad
+m_k=\mathbb E\min(k,K)\quad(k\in\mathbb Z_{\ge1}),
+$$
+
+$$
+U\ge\max\{K,K^2/m_K\}\quad\text{almost surely}.
+$$
+
+The surrogate objective is $V=\mathbb E(KU^2)$. The same $K$ law is used to compute every $m_k$; these values are not independent variables. By (2.2) and the incidence identity, every actual array supplies a feasible law with $V\le2J_s(x)$. Sufficiency of these scalar constraints for an actual array is not part of this definition.
+
