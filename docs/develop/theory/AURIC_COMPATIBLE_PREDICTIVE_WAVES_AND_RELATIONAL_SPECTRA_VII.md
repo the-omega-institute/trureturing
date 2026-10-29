@@ -3289,3 +3289,759 @@ and return premises and make no assertion of global originality
 or resolution of an external named open problem. $\square$
 
 ## 追加锚（本行以下为增补区）
+## 142. An order-three source and its literal length-two decoder
+
+**Definition 142.1 (The order-three member).**
+Use the original source of V Definition 91.1, with the sole preparation
+$\psi=2^{-1/2}Uq+\mathrm i2^{-1/2}Ue$, where the present
+$e=(1,-1,0)^{\mathsf T}/\sqrt2$ is V's vector $f$. In the ordered
+orthonormal basis $(\xi,v_+,e)$ of (141.1), fix
+
+$$
+\begin{gathered}
+d=\tfrac12,\quad\theta=\tfrac\pi4,\quad W=\operatorname{diag}(1,1,-1),\qquad
+N=\begin{pmatrix}-1/2&\mathrm i\sqrt3/2&0\\
+\mathrm i\sqrt3/2&-1/2&0\\0&0&1\end{pmatrix},\\
+\psi=\begin{pmatrix}1/2\\(-1+\mathrm i\sqrt6)/4\\
+(\sqrt3+\mathrm i\sqrt2)/4\end{pmatrix},\qquad
+V=\begin{pmatrix}1&0&0\\0&-1/2&-\mathrm i\sqrt3/2\\
+0&\sqrt3/2&-\mathrm i/2\end{pmatrix},\\
+U_0=V,\quad U_1=VW,\quad U_N=N,\qquad
+U_{b_1\cdots b_k}=U_{b_k}\cdots U_{b_1},\quad U_\varnothing=I_3,\\
+(u_1,\ldots,u_9)=(\varnothing,0,1,00,10,000,010,100,N),\\
+\kappa(u)=\#\{j:u_j\in\{0,1\}\},\qquad
+r_i=2^{-\kappa(u_i)}U_{u_i}\psi\psi^\dagger U_{u_i}^\dagger,\\
+\mathcal W_2=(\varnothing,0,1,N,00,01,0N,10,11,1N,N0,N1,NN),\\
+a_w=2^{-\kappa(w)},\qquad Q_w=U_wV,\qquad
+\rho(i,w)=13(i-1)+\operatorname{pos}_{\mathcal W_2}(w).
+\end{gathered}
+\tag{142.1}
+$$
+
+Here $V=e^{-\mathrm i\pi/4}V_0$ is used only inside system
+conjugations. This common scalar cancels from every original
+probability, including mixed histories containing $N$; it is not
+a rotation of the retained record. Keep all original schedules,
+clocks, labels and installed operations. Every occurrence of $0$ or
+$1$ denotes its original random label, with no label selection.
+In the present coordinates the original return constants are
+
+$$
+\begin{gathered}
+b=\frac{3+2\sqrt2}{12},\qquad t=\tau e,\qquad
+\tau=\frac{2+\sqrt2}{8},\\
+D=\begin{pmatrix}1/2&-1/4&0\\-1/4&1/8&0\\0&0&3/8\end{pmatrix},
+\qquad \|D\|_{\rm HS}=\frac{\sqrt{34}}8,\\
+A=\tfrac12,\qquad f=(\xi+\mathrm i v_+)/\sqrt2,\qquad
+h_0(\eta)=Ae+\eta f.
+\end{gathered}
+\tag{142.2}
+$$
+
+**Theorem 142.2 (Nine actual columns and the complete scalar kernel; repo-derived).**
+The source (142.1) is allowed by VI Definition 114.1. Its ninth
+prefix is the required escape from $\mathscr S_{1/4}$. With the
+coordinate map $\mathbf c$ in (141.4), its weighted source determinant is
+
+$$
+\det(\mathbf c(r_1),\ldots,\mathbf c(r_9))
+ =\frac{34263+45684\sqrt2+103680\sqrt3+38880\sqrt6}{2^{43}}>0.
+\tag{142.3}
+$$
+
+The 117 literal rows $q_{i,w}$ of VI (116.2), with $w\in\mathcal W_2$,
+have real rank 34 on the full 36-dimensional lift
+$\operatorname{Herm}_3\oplus\operatorname{Herm}_3\oplus M_3(\mathbb C)$.
+Their kernel is precisely
+
+$$
+\mathscr K=\{(xI_3,-xI_3,\mathrm i yI_3):x,y\in\mathbb R\}.
+\tag{142.4}
+$$
+
+Thus $L_{\mathfrak s}=2$ is a valid choice for VI Proposition 118.2.
+For this choice $d_f$ is exactly the maximum of the absolute 117
+original outcome-$1$ differences; each corresponding outcome-$0$
+difference is its negative.
+
+*Proof.* The first two coordinates of $N$ have eigenvalues
+$e^{2\pi\mathrm i/3}$ and $e^{-2\pi\mathrm i/3}$, while $Ne=e$.
+Consequently $N$ is unitary of order three, and $N^2\ne W$, since
+$N^2e=e$ and $We=-e$. Also $[N,P_\xi]\ne0$. The assumptions
+$0<d<1$ and $\sin(2\theta)\ne0$ hold. V Proposition 91.3 gives
+the sole preparation's original five-dimensional source and full
+matrix response. Multiplying the matrices in (142.1) gives (142.3)
+and
+
+$$
+\operatorname{Tr}(P_\xi r_1)=\tfrac14,\qquad
+\operatorname{Tr}(P_\xi r_9)=\frac{25+12\sqrt2}{64}>\tfrac14,
+\qquad\operatorname{Tr}r_9=1.
+\tag{142.5}
+$$
+
+The first eight columns lie in $\mathscr S_{1/4}$ by V Theorem 92.1;
+(142.3) makes them independent, and (142.5) proves the escape of the
+literal prefix $N$. Their masses are $2^{-|u_i|}$ for $i\le8$ and
+$1$ for $i=9$, without normalization. These are the suppliers in
+V §§92–93 and VI Definition 114.1. Applying VI (106.3), with
+$a_+=(1/\sqrt2,-1/(2\sqrt2),0)^{\mathsf T}$, gives (142.2).
+
+Here is an exact rank certificate. Let $E_{ab}$ be the matrix units,
+and order the real Hermitian basis as
+
+$$
+\mathcal H=(E_{11},E_{22},E_{33},E_{12}+E_{21},
+ \mathrm i(E_{12}-E_{21}),E_{13}+E_{31},
+ \mathrm i(E_{13}-E_{31}),E_{23}+E_{32},\mathrm i(E_{23}-E_{32})).
+\tag{142.6}
+$$
+
+Order the complex-matrix real basis as
+$\mathcal Z=(E_{11},\mathrm iE_{11},E_{12},\mathrm iE_{12},\ldots,
+E_{33},\mathrm iE_{33})$, with matrix units in row order. Let
+$\mathcal L$ have row $\rho(i,w)$ equal to
+
+$$
+\bigl((q_{i,w}(H,0,0))_{H\in\mathcal H},
+(q_{i,w}(0,H,0))_{H\in\mathcal H},
+(q_{i,w}(0,0,Z))_{Z\in\mathcal Z}\bigr).
+\tag{142.7}
+$$
+
+Let $T$ be the submatrix in the first 34 rows and all columns except
+columns 3 and 36. All entries of $\mathcal L$ lie in
+$\mathbb Z[1/2,\sqrt2,\sqrt3]$. Reduce this ring to $\mathbb F_{97}$
+by $\sqrt2\mapsto14$, $\sqrt3\mapsto10$; their squares are $2,3$
+modulo 97. In forming complex matrices one can equivalently use
+$\mathrm i\mapsto22$, whose square is $-1$. Gaussian elimination
+on $T$ uses the successive row swaps
+$(22,23),(23,24),(24,25),(25,26)$ and gives the following pivot residues:
+
+$$
+\begin{aligned}
+(&85,37,16,57,36,37,54,37,42,38,83,31,16,50,34,38,53,\\
+ &30,11,93,53,10,22,78,38,32,80,92,36,7,83,21,88,32).
+\end{aligned}
+\tag{142.8}
+$$
+
+For precision, at step $j$ swap the indicated rows if there is a
+swap with first coordinate $j$, retain the pivot row unscaled, and
+replace every subsequent entry by
+$T_{kl}-T_{kj}T_{jj}^{-1}T_{jl}$ for $k,l>j$.
+The product of (142.8) is $3$ modulo 97; the four swaps have positive
+combined sign. Thus $\det T\not=0$. This calculation uses the
+original factors $a_w/2$ and original $r_i$ in (142.7).
+Every row annihilates (142.4) directly, so the rank is at most 34;
+the minor proves equality and the exact kernel claim. The maps
+VI (118.8), as well as the retention functionals VI (116.11),
+annihilate this kernel. They therefore factor through these 117 rows,
+which proves the asserted decoder length. The coordinate minor proves
+rank only: neither it nor an inverse-coordinate norm replaces $d_f$.
+The two-label assertion follows from VI (114.3). $\square$
+
+## 143. Exact algebraic witnesses for a strict finite tangent gap
+
+**Definition 143.1 (Coefficients in all complex tangent directions).**
+Use Definition 125.1 with (142.1)–(142.2) and $L_{\mathfrak s}=2$.
+For $z=(x_1+\mathrm i x_2)\xi+(x_3+\mathrm i x_4)v_+
+ +(x_5+\mathrm i x_6)e$ and $g=y_1+\mathrm i y_2$, write
+
+$$
+\ell_{i,w}(z,g)=\beta_{i,w}+U_{i,w}x+V_{i,w}y.
+\tag{143.1}
+$$
+
+All eight real coordinates are unrestricted. This is a change of
+coordinates for (125.4), not a restriction to real completions.
+For a fully specified algebraic evaluation of these coefficients put
+
+$$
+\begin{aligned}
+H(z)&=-\tfrac12(ez^\dagger+ze^\dagger),&
+S(z)&=\mathrm i\tau(ze^\dagger-ez^\dagger),\\
+X_1(z)&=\tfrac12\{b[H(z)+H(f)]+S(z)-S(f)\},&
+Y_1(z)&=\tfrac12\{b[H(z)+H(f)]-S(z)+S(f)\},\\
+K_-&=-\tfrac12\tau ee^\dagger+\tfrac{\mathrm i}2(D-\tfrac14bee^\dagger),\\
+\ell_{i,w}(z,g)&=\frac{a_w}{2}\operatorname{Tr}r_i
+ \{Q_w^\dagger X_1(z)Q_w+WQ_w^\dagger Y_1(z)Q_wW\\
+ &\hspace{42mm}+WQ_w^\dagger gK_-Q_w
+                      +Q_w^\dagger\bar gK_-^\dagger Q_wW\}.
+\end{aligned}
+\tag{143.2}
+$$
+
+Set $\mathcal F_f(z,g)=\max_{1\le i\le9,\ w\in\mathcal W_2}|\ell_{i,w}(z,g)|$,
+$m_f=\min_{z,g}\mathcal F_f(z,g)$ and
+$n_f=\min_z\mathcal F_f(z,0)$, as in (125.5).
+For an integer quadruple $a$ abbreviate
+$[a]=a_0+a_1\sqrt2+a_2\sqrt3+a_3\sqrt6$.
+
+**Theorem 143.2 (A seven-row lower certificate; repo-derived).**
+On the entire complex tangent domain, $n_f\ge163/4000$.
+
+*Proof.* Choose the following seven literal signed rows, in the given order:
+
+$$
+((i_j,w_j,\sigma_j))_{j=1}^7
+ =((1,N0,+1),(1,N1,-1),(1,NN,-1),(3,1N,+1),
+   (5,NN,+1),(9,0,+1),(9,NN,-1)).
+\tag{143.3}
+$$
+
+Let $M$ be the $7\times7$ matrix whose first row is all ones and
+whose entry in row $r+1$, column $j$ is $\sigma_jU_{i_j,w_j,r}$,
+$1\le r\le6$. Put $c_j=\sigma_j\beta_{i_j,w_j}$,
+$d_0=\det M$, and $d_j=\det M^{(j)}$, where $M^{(j)}$ replaces
+column $j$ by $(1,0,0,0,0,0,0)^{\mathsf T}$.
+The following integer quadruples give the exact determinants:
+$d_j=[p_j]/(3\cdot2^{69})$.
+
+| $j$ | $p_j$ |
+|---|---|
+| 0 | $(-31220053431162,-22073591298906,100293003605827,70917713152081)$ |
+| 1 | $(-45484145366184,-32162113122336,28572580689496,20203972682396)$ |
+| 2 | $(-1558616643432,-1101578522784,21070201204248,14898880792756)$ |
+| 3 | $(1422651311326,1005908484762,4148583120107,2933487112869)$ |
+| 4 | $(-65894129011488,-46593623215968,60314417694432,42648266573880)$ |
+| 5 | $(52680843320784,37252123958808,-18757220296288,-13263213464480)$ |
+| 6 | $(39364427549952,27834693731904,-8967243112384,-6340716360072)$ |
+| 7 | $(-11751084592120,-8309002613292,13911684306216,9837035814732)$ |
+
+The other required exact identity is
+
+$$
+\begin{aligned}
+\mathscr H&:=\sum_{j=1}^7d_j(c_j-163/4000)\\
+ &=\frac{[123146034328974498,87074386961004549,
+             -71087808719360658,-50266456519073999]}
+ {56668397794435742564352000}.
+\end{aligned}
+\tag{143.4}
+$$
+
+These identities can be expanded entirely in the four-dimensional
+ring basis $(1,\sqrt2,\sqrt3,\sqrt6)$: multiply using
+$(\sqrt2)^2=2$, $(\sqrt3)^2=3$ and
+$\sqrt2\sqrt3=\sqrt6$, and use
+$\det A=\sum_{\pi\in S_7}\operatorname{sgn}(\pi)
+\prod_{r=1}^7A_{r,\pi(r)}$. In particular all columns in these
+identities are the six columns of (143.2), with their original weights.
+Here are rational enclosures, including the small positive remainder
+in (143.4):
+
+| Quantity | Strict lower bound times $10^{15}$ | Strict upper bound times $10^{15}$ |
+|---|---:|---:|
+| $d_0$ | 160929462 | 160929463 |
+| $d_1$ | 4523349 | 4523350 |
+| $d_2$ | 39456393 | 39456394 |
+| $d_3$ | 9721862 | 9721863 |
+| $d_4$ | 43563844 | 43563845 |
+| $d_5$ | 22805932 | 22805933 |
+| $d_6$ | 26916103 | 26916104 |
+| $d_7$ | 13941977 | 13941978 |
+| $\mathscr H$ | 581 | 582 |
+
+To specify and verify the rational inequalities without decimal
+assumptions, put $B_0=10^{40}$ and
+
+$$
+\begin{aligned}
+b_2&=14142135623730950488016887242096980785696,\\
+b_3&=17320508075688772935274463415058723669428,\\
+b_6&=24494897427831780981972840747058913919659.
+\end{aligned}
+\tag{143.5}
+$$
+
+For $n=2,3,6$ the integer inequalities
+$b_n^2<nB_0^2<(b_n+1)^2$ hold. Thus
+$b_n/B_0<\sqrt n<(b_n+1)/B_0$. For any integer quadruple $a$ define
+
+$$
+\begin{aligned}
+\mathscr L(a)&=a_0B_0+\sum_{n=2,3,6}
+ \bigl(a_n^+b_n+a_n^-(b_n+1)\bigr),\\
+\mathscr U(a)&=a_0B_0+\sum_{n=2,3,6}
+ \bigl(a_n^+(b_n+1)+a_n^-b_n\bigr),
+\end{aligned}
+\tag{143.6}
+$$
+
+where in these sums $a_2,a_3,a_6$ mean the coefficients of
+$\sqrt2,\sqrt3,\sqrt6$, respectively, and
+$a_n^+=\max(a_n,0)$, $a_n^-=\min(a_n,0)$.
+Then $\mathscr L(a)\le B_0[a]\le\mathscr U(a)$.
+Substitution of each displayed quadruple and its positive denominator
+in (143.6) gives the enclosure table by integer comparisons alone.
+Hence $d_j>0$ for every $0\le j\le7$ and $\mathscr H>0$.
+
+Define $\lambda_j=d_j/d_0$. Cramer's rule gives
+$M\lambda=(1,0,\ldots,0)^{\mathsf T}$, so
+$\lambda_j>0$, $\sum_j\lambda_j=1$ and
+$\sum_j\lambda_j\sigma_jU_{i_j,w_j}=0$ in all six real columns.
+Furthermore
+
+$$
+\sum_j\lambda_jc_j
+ =\frac{163}{4000}+\frac{\mathscr H}{d_0}>\frac{163}{4000}.
+\tag{143.7}
+$$
+
+Apply Proposition 128.1's lower-witness argument to get
+$\mathcal F_f(z,0)\ge\sum_j\lambda_jc_j$ for every
+$z\in\mathbb C^3$, proving the claim. The classical intermediate is
+weak duality for Chebyshev approximation, as in Boyd–Vandenberghe,
+[*Convex Optimization*, §6.1.1 and Exercise 5.6, equation (5.104)](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf).
+The new assertion here is the concrete original-source certificate
+(143.3)–(143.7), rather than that general duality. $\square$
+
+**Theorem 143.3 (A rational complex trial for every finite row; repo-derived).**
+The unrestricted coefficient satisfies $m_f\le813/20000$.
+Together with Theorem 143.2 this gives
+
+$$
+\boxed{\qquad \delta_f=n_f-m_f\ge\frac1{10000}>0.\qquad}
+\tag{143.8}
+$$
+
+*Proof.* In the coordinates of Definition 143.1 take
+
+$$
+10^8(\bar x_1,\ldots,\bar x_6,\bar y_1,\bar y_2)
+ =(50771868,-2991479,28578480,59147508,
+   -8123372,-8052542,4897427,-3873175).
+\tag{143.9}
+$$
+
+The following exact residual table uses the common denominator
+$D_R=629145600000000=3\cdot2^{21}\cdot10^8$:
+
+$$
+\ell_{i,w}(\bar z,\bar g)=\frac{[A_{i,w}]}{D_R}.
+\tag{143.10}
+$$
+
+Each entry below is an integer quadruple $A_{i,w}$; all prefix
+masses and all $a_w/2$ occur in the expansion (143.2).
+
+| $i$ | $w$ | $A_{i,w}$ |
+|---:|---|---|
+| 1 | $\varnothing$ | $(-5677751998464,2855897604096,2157988216832,-818022383616)$ |
+| 1 | $0$ | $(-7298773894656,1258290075648,-2936920829952,-3259541929984)$ |
+| 1 | $1$ | $(678611532288,3666403891200,604992696320,-1873113890816)$ |
+| 1 | $N$ | $(16075727010816,4220700524544,-19152535552,-2744002510848)$ |
+| 1 | $00$ | $(-1477289837952,188462529024,-473598027776,793984789504)$ |
+| 1 | $01$ | $(-5243839406976,-6949713765888,498882076672,1167777846272)$ |
+| 1 | $0N$ | $(7333274204928,-3167026046976,3638553765888,1069877190656)$ |
+| 1 | $10$ | $(11630955560064,6071287319040,1737684115456,958003489792)$ |
+| 1 | $11$ | $(4416921295488,395164494336,-597004097536,-353438215168)$ |
+| 1 | $1N$ | $(337876876032,-4781991438336,9485512988672,5730581045248)$ |
+| 1 | $N0$ | $(460276060224,-366751880448,7403515336704,5229070229504)$ |
+| 1 | $N1$ | $(-3987551309760,978430151424,-5969400788992,-5156290850816)$ |
+| 1 | $NN$ | $(-5835705099264,-3463213547520,-6888418213888,-1187557638144)$ |
+| 2 | $\varnothing$ | $(1244862927360,1788336986112,-1216402665472,428909905920)$ |
+| 2 | $0$ | $(-6070168957824,-2280114479616,933029799936,1816202870272)$ |
+| 2 | $1$ | $(7778219266176,4524558841344,-1064515096576,423886218752)$ |
+| 2 | $N$ | $(467686116096,-416593416192,-1896720111616,-626349315072)$ |
+| 2 | $00$ | $(2087679972384,2929520552832,220320269824,102489994112)$ |
+| 2 | $01$ | $(-1592232503136,-819954496128,1425382774272,735887436160)$ |
+| 2 | $0N$ | $(4873379410368,2522512189440,4273893596160,3126580740352)$ |
+| 2 | $10$ | $(82855228320,-1105358631552,-1660886129152,-1313836797568)$ |
+| 2 | $11$ | $(1472014087968,-871556583552,-375338913280,-505930143872)$ |
+| 2 | $1N$ | $(-5418470156352,-3391058525184,-2610562453504,-1253114184448)$ |
+| 2 | $N0$ | $(1212435676368,346711220544,-3586088533248,-1816645906496)$ |
+| 2 | $N1$ | $(2326500483792,1916639310144,2953288236800,2535813371840)$ |
+| 2 | $NN$ | $(4835118772992,1182381379584,2833951164416,1140934118400)$ |
+| 3 | $\varnothing$ | $(3603490558464,-17617545216,-654188531712,-811495802880)$ |
+| 3 | $0$ | $(9182908715136,5578075928064,788397314048,-43794441728)$ |
+| 3 | $1$ | $(-6624228832128,-5315910910464,904850593792,765831807488)$ |
+| 3 | $N$ | $(-3603146519808,357065895936,6343739332608,3978193523712)$ |
+| 3 | $00$ | $(-2213821536480,-1303771887744,-145712566784,-814630139776)$ |
+| 3 | $01$ | $(5618793268128,3186260555136,-1639115851264,-1075947340160)$ |
+| 3 | $0N$ | $(-4099485440064,-1119951756288,-2995933179904,-1424415333632)$ |
+| 3 | $10$ | $(-2386657773408,-931801678464,855285746176,689955669632)$ |
+| 3 | $11$ | $(606688039968,173103524736,539183364608,700948094080)$ |
+| 3 | $1N$ | $(8675091096000,7043729958912,3009927267328,703678267136)$ |
+| 3 | $N0$ | $(-1878094272816,148690258752,-1265381039872,-811033605056)$ |
+| 3 | $N1$ | $(-595821457200,536195091264,2156257287424,-549211052992)$ |
+| 3 | $NN$ | $(2985136878336,433583149056,-5410379188224,-4110192430080)$ |
+| 4 | $\varnothing$ | $(-3902886179712,-172181521920,431445100544,-102971751936)$ |
+| 4 | $0$ | $(947303585568,2806231608192,-321682397696,-108727802752)$ |
+| 4 | $1$ | $(-2300680836576,-636923017344,-4467272192,-293896720256)$ |
+| 4 | $N$ | $(3559191298752,1448763271680,-2902694324224,-2149199916288)$ |
+| 4 | $00$ | $(662227030536,354339450336,-437980001280,-113993282912)$ |
+| 4 | $01$ | $(-342454403544,-366852145056,-248424931584,-100835962336)$ |
+| 4 | $0N$ | $(-2157520476816,-2538833348352,-39734155520,-483641952832)$ |
+| 4 | $10$ | $(616147349352,-669914219424,738293447936,446258709280)$ |
+| 4 | $11$ | $(1166941800264,267983940576,225252481536,-64780960864)$ |
+| 4 | $1N$ | $(2721555449328,1725764804352,663754761472,1213747957696)$ |
+| 4 | $N0$ | $(2570545406388,1445063093328,913582080448,295742419088)$ |
+| 4 | $N1$ | $(309540368436,707831388240,-1847256703040,-817727926640)$ |
+| 4 | $NN$ | $(1334856852672,-579306124800,1782142029824,719324191488)$ |
+| 5 | $\varnothing$ | $(-5975059163520,-6028708406784,130227630080,-108517157376)$ |
+| 5 | $0$ | $(775379570592,-1240225477248,-346216149504,-864401021056)$ |
+| 5 | $1$ | $(4623260449440,3177037772160,533240445440,214825494400)$ |
+| 5 | $N$ | $(3788293505472,2696356339200,-3940120554496,-1901733916416)$ |
+| 5 | $00$ | $(570753603624,-412581113760,267780985600,98053557856)$ |
+| 5 | $01$ | $(-856671864120,-842218692384,-417601912832,-235235575072)$ |
+| 5 | $0N$ | $(2463135171888,1862976851712,638723341056,1399200762944)$ |
+| 5 | $10$ | $(-398456947704,484164134112,89339341312,193057052128)$ |
+| 5 | $11$ | $(-484780375704,301341603936,-147096723712,303576486752)$ |
+| 5 | $1N$ | $(-1032061255248,-1176397896960,-471695355136,-241170951104)$ |
+| 5 | $N0$ | $(3164726889924,1719966157584,244928631744,827297087216)$ |
+| 5 | $N1$ | $(1404676295748,52383110928,-184477372480,-471716860688)$ |
+| 5 | $NN$ | $(3828911623104,3924938337792,4499000118272,3429824473344)$ |
+| 6 | $\varnothing$ | $(2556959140896,2226589072512,9394583040,354555386496)$ |
+| 6 | $0$ | $(-1474244785656,-545813193888,-276338868736,172139114272)$ |
+| 6 | $1$ | $(-997027966008,-108207539616,76855574272,313162820384)$ |
+| 6 | $N$ | $(461290788912,-180386881920,1571856648960,586125100992)$ |
+| 6 | $00$ | $(1291048826322,706643554680,30199763392,-112462026424)$ |
+| 6 | $01$ | $(818194105626,148068986328,163959255488,60677102824)$ |
+| 6 | $0N$ | $(1823619605436,938797465344,798778716800,291834652528)$ |
+| 6 | $10$ | $(538919373354,212990923224,-43075313600,-75078925144)$ |
+| 6 | $11$ | $(-653943171102,-480443355144,-136891679296,-89789299832)$ |
+| 6 | $1N$ | $(132829765980,-63148128000,-1092548758016,-1061864957584)$ |
+| 6 | $N0$ | $(-1571716211019,-812316085020,-932363981056,-745831168652)$ |
+| 6 | $N1$ | $(-297430214187,181753442340,883537046848,541411819508)$ |
+| 6 | $NN$ | $(-1064873836368,-1449582405504,-2037568701696,-1275719200320)$ |
+| 7 | $\varnothing$ | $(-1199648658144,-1235955510144,1226950862336,973488120960)$ |
+| 7 | $0$ | $(1856935407816,1059681462624,319545897216,219893462176)$ |
+| 7 | $1$ | $(-323133233784,-175713619872,-789784284160,-581143210336)$ |
+| 7 | $N$ | $(2852220113328,2521064751744,-54824548096,-674678112576)$ |
+| 7 | $00$ | $(23219126850,105511354680,-12688845248,-66994670488)$ |
+| 7 | $01$ | $(567723366858,-13138660584,328196339136,213944769544)$ |
+| 7 | $0N$ | $(-1585397914020,-805901153664,652694537472,104381384368)$ |
+| 7 | $10$ | $(-105717347814,53950519320,-40654025152,20899674056)$ |
+| 7 | $11$ | $(-545539112046,-242507771208,-11217734848,4109161384)$ |
+| 7 | $1N$ | $(157825657980,92437583232,1418092772480,212551814576)$ |
+| 7 | $N0$ | $(-1550232248931,-185158345500,-786134652000,-779139837116)$ |
+| 7 | $N1$ | $(407597169981,725260898724,753741543776,-19756412476)$ |
+| 7 | $NN$ | $(-1225748052432,-920732315520,-1558650880768,-384743190336)$ |
+| 8 | $\varnothing$ | $(2267139154848,1401325670016,-339968332288,-736207251072)$ |
+| 8 | $0$ | $(795748991208,410982785760,427080609024,-18446802464)$ |
+| 8 | $1$ | $(-1060103547480,-979190986272,49936200704,-66305879584)$ |
+| 8 | $N$ | $(-2200428579984,-1687334911872,1101335290112,1449149083200)$ |
+| 8 | $00$ | $(-454322598582,-334503424872,203100881344,133309494200)$ |
+| 8 | $01$ | $(892687715442,842233094904,-20491164096,-32440092776)$ |
+| 8 | $0N$ | $(400614503244,202749075072,-1676441421312,-566682852848)$ |
+| 8 | $10$ | $(-400040872254,-278853607176,-340480184128,-165656689960)$ |
+| 8 | $11$ | $(826437973146,358252590360,4911683264,81165810808)$ |
+| 8 | $1N$ | $(1153180344684,430707196800,-175500959872,382821273104)$ |
+| 8 | $N0$ | $(-238869489567,-739134609036,-123005921952,352893273868)$ |
+| 8 | $N1$ | $(1011243826689,-14459012556,17926164512,141976372364)$ |
+| 8 | $NN$ | $(437903268336,624213829248,-305049488128,-862882327488)$ |
+| 9 | $\varnothing$ | $(8891799945984,-990884066304,7280751755264,2234064715776)$ |
+| 9 | $0$ | $(8810895403200,-1085980602624,7516298059776,2155441577984)$ |
+| 9 | $1$ | $(2696133458112,-4173613175040,-2256251797504,-2058085302272)$ |
+| 9 | $N$ | $(14032299824256,11086684571136,-7851953299456,330156539904)$ |
+| 9 | $00$ | $(2841516597168,1821726513600,-1575267813632,-1568885920256)$ |
+| 9 | $01$ | $(199821786480,2736114487488,1941976667392,902522432000)$ |
+| 9 | $0N$ | $(-5412703059168,-1975650093696,-5747840661504,234855443456)$ |
+| 9 | $10$ | $(-1533234922128,420965554368,-1112030313728,485339356672)$ |
+| 9 | $11$ | $(-1303139805264,233002951104,-1884701671168,132345993728)$ |
+| 9 | $1N$ | $(8119107924768,2216869291392,-3241256237056,240034862080)$ |
+| 9 | $N0$ | $(1427441902008,-2979045738528,-7709933368320,-2113644464128)$ |
+| 9 | $N1$ | $(9868233543096,-389192292384,259926812672,1133694770176)$ |
+| 9 | $NN$ | $(-14994901824384,-3312421212672,-616194088960,-1970523439104)$ |
+
+For each history in the order $\mathcal W_2$, the following integer
+$C_w$ bounds all nine absolute residuals after multiplication by $10^8$:
+
+| $w$ | $C_w$ |
+|---|---:|
+| $\varnothing$ | 4064788 |
+| $0$ | 4064788 |
+| $1$ | 2125331 |
+| $N$ | 2802856 |
+| $00$ | 1090893 |
+| $01$ | 1803664 |
+| $0N$ | 3735524 |
+| $10$ | 4064788 |
+| $11$ | 622089 |
+| $1N$ | 4064788 |
+| $N0$ | 4064788 |
+| $N1$ | 4064788 |
+| $NN$ | 4064788 |
+
+More explicitly, applying (143.6) to each exact quadruple in (143.10)
+gives the following integer inequalities, which specify the whole
+upper certificate:
+
+$$
+-C_wD_RB_0\le10^8\mathscr L(A_{i,w})
+ \le10^8\mathscr U(A_{i,w})\le C_wD_RB_0
+ \qquad(1\le i\le9,\ w\in\mathcal W_2).
+\tag{143.11}
+$$
+
+Thus all 117 absolute residuals are at most $4064788/10^8$, and
+
+$$
+\mathcal F_f(\bar z,\bar g)
+ \le\frac{4064788}{10^8}
+ <\frac{4065000}{10^8}=\frac{813}{20000}.
+\tag{143.12}
+$$
+
+Every number in (143.11) is specified by (143.5), (143.10) and the
+$C_w$ table. The comparisons require only integer multiplication
+and addition; in particular they neither round a radical nor presume
+an optimum. Applying the trial upper bound in Proposition 128.1 and
+subtracting $813/20000$ from $163/4000$ proves (143.8). $\square$
+
+## 144. Fully specified decoder and nonlinear comparison constants
+
+**Definition 144.1 (Positive constants from the same finite rows).**
+Let $T$ be exactly the $34\times34$ minor in (142.7)–(142.8), and put
+
+$$
+\begin{gathered}
+\Lambda=\frac{\displaystyle\sum_{j,k=1}^{34}
+                         |\operatorname{cof}_{jk}(T)|}{|\det T|},
+\qquad p=1+\sqrt3,\qquad B=(8/b+13p)\Lambda,\\
+m_0=\frac58-b=\frac{9-4\sqrt2}{24},\qquad
+\kappa=\frac{\sqrt2(2+b)B}{m_0},\\
+K=\tau+\tfrac12(\sqrt{34}/8+b),\qquad R_*=pK,\\
+Z_*=\frac{[1+\tfrac p2(1+b)]B+\kappa R_*}{\tau},\qquad
+c=\frac1{2(\kappa+B+Z_*)},\\
+C=\tfrac12\max\{2K,2b,1,2\tau\},\qquad
+J=1+\frac5{2\tau},\qquad M=\sqrt2 C,\\
+R=1+\frac{2JM}{c},\qquad G=\frac M c,\\
+E=\tfrac12\left[b(R^2+1)
+       +2G\{(\tau+b/2)R+(b/2)R^2\}\right],\\
+\eta_0=\min\left\{1,\frac1{4R},\frac1{2G},\frac1{40000E}\right\},
+\qquad a_- =\frac1{20000K},\qquad a_+=G.
+\end{gathered}
+\tag{144.1}
+$$
+
+Cofactors here mean their finite determinant sums with entries given
+by (142.1), (142.6) and (142.7). Thus (144.1) consists solely of
+specified finite arithmetic, absolute values, radicals and finite
+maxima or minima; it contains no optimization over hypotheses.
+
+**Theorem 144.2 (Source-only positive constants on the entire paired domain; repo-derived).**
+Every quantity in (144.1) is finite and strictly positive. In particular
+$\eta_0>0$. The constants $B,\kappa,c,C$ are valid decoder, retention
+and comparison constants in VI (118.7), VI (116.8) and VI (118.12),
+respectively, with $L_{\mathfrak s}=2$. For every original anchor and
+every admissible competing hypothesis, including the whole complex
+retention disk and the boundary of the completion ball,
+
+$$
+cD_0(\gamma,h;h_0)\le d_f(\gamma,h;h_0)
+ \le d_a(\gamma,h;h_0)\le CD_0(\gamma,h;h_0).
+\tag{144.2}
+$$
+
+*Proof.* The minor certificate gives $\det T\ne0$. At least one
+cofactor is nonzero, since an invertible matrix has nonzero inverse.
+Hence $\Lambda>0$ and is finite. Also $b,\tau>0$ and
+$m_0>0$, since $9>4\sqrt2$. These facts prove positivity of all
+successive constants in (144.1), including the finite minimum $\eta_0$.
+
+To check the decoder bound directly, choose the representative of a
+lift modulo (142.4) whose $X_{33}$ and $\operatorname{Im}Z_{33}$
+coordinates vanish. Its 34 remaining coordinates form a vector $v$;
+the first 34 row values form $Tv$. If the maximum absolute original
+row value is $d$, Cramer's rule gives $|v_l|\le\Lambda d$ for every
+$l$. The bases (142.6)–(142.7) consequently give
+
+$$
+\|X\|_{\rm HS}\le4\Lambda d,\quad
+\|Y\|_{\rm HS}\le4\Lambda d,\quad
+\|Z\|_{\rm HS}\le5\Lambda d.
+\tag{144.3}
+$$
+
+Indeed the squared Hermitian norm has at most three squared diagonal
+coordinates and twelve squared off-diagonal real coordinates; the
+squared complex-matrix norm has eighteen squared real coordinates.
+The gauge conditions only reduce these bounds. Set
+$v_0=(1,2,0)^{\mathsf T}/\sqrt5$ and
+$\Pi_{v_0}M=M-(v_0^\dagger Mv_0)I_3$.
+Then $v_0\perp a_+,t$ and
+$\|\Pi_{v_0}M\|_{\rm HS}\le p\|M\|_{\rm HS}$.
+The kernel-invariant maps VI (118.8) are here
+$(X+Y)/b$, $\Pi_{v_0}(X-Y)$ and $\Pi_{v_0}Z$.
+Their three output norms sum to at most $B d$ by (144.3).
+For physical paired lifts they are exactly
+$H_\delta,S_\delta,\Pi_{v_0}Z$, so this proves VI (118.7).
+
+For the retention bound use
+
+$$
+F=\begin{pmatrix}3/5&-4/5&0\\-4/5&-3/5&0\\0&0&0\end{pmatrix},
+\qquad \ell_F(M)=\operatorname{Tr}(FM).
+\tag{144.4}
+$$
+
+This is VI (116.6) with normalized $a_+$ and the vector $v_0$.
+It has trace zero and Hilbert–Schmidt norm $\sqrt2$, annihilates $t$,
+and satisfies $\ell_F(D)=5/8$. For the whole completion ball,
+$q_h=5/8-b\ell_F(hh^\dagger)\ge m_0$.
+The exact identity VI (116.14) and scalar invariance give
+
+$$
+q_h|\gamma-\gamma'|
+ \le2\sqrt2\|\Pi_{v_0}Z\|_{\rm HS}
+             +b\sqrt2\|H_\delta\|_{\rm HS}
+ \le\sqrt2(2+b)B d.
+\tag{144.5}
+$$
+
+Thus $\kappa$ is a valid retention constant for these same finite rows.
+Substituting $B,\kappa$ in VI (118.15)–(118.18), using
+$s_\theta^2=c_\theta^2=s_\theta c_\theta=1/2$, gives exactly
+$R_*,Z_*,c$ in (144.1). The upper estimate VI (118.19)–(118.21)
+gives $C$, because $\max_i\|r_i\|_{\rm HS}=1$ and
+$\|D\|_{\rm HS}=\sqrt{34}/8$. These estimates apply to any two
+points of the full closed parameter domain. Specializing one of them
+to $(0,h_0)$ proves (144.2).
+
+Finally (125.6) with $A=1/2$ gives the displayed $E$, and (126.3)
+gives exactly $R,G$. The number $\eta_0$ is at most the interval
+bound in (126.7) and at most $\Delta/(4E)$ for
+$\Delta=1/10000$. These are explicit source constants, not an
+unevaluated minimum over the completion or retention domains.
+The observability intermediate in VI §118 is D'Alessandro,
+[*On Quantum State Observability and Measurement*, §2, Theorem 1](https://arxiv.org/html/quant-ph/0307127v1),
+which identifies indistinguishability with annihilation of an
+observable linear span. The finite raw-row minor and all constants
+above belong to this particular source. $\square$
+
+## 145. A finite nonlinear type III interval for the original hypotheses
+
+**Theorem 145.1 (Every compact minimizer is physically punctured; repo-derived).**
+For the source (142.1), for every $0<\eta\le\eta_0$, retain the
+anchor $h_0(\eta)=e/2+\eta f$ and exactly the nonlinear reflection-side
+minima $\mu_f(\eta),\nu_f(\eta)$ of Definitions 124.1 and 126.2.
+These minima are positive and attained, with
+
+$$
+\begin{gathered}
+\frac{c}{2(1+2/\tau)}\eta
+ \le\mu_f(\eta)\le\nu_f(\eta)\le M\eta,\\
+\boxed{\quad\nu_f(\eta)-\mu_f(\eta)\ge\frac{\eta}{20000}>0.\quad}
+\end{gathered}
+\tag{145.1}
+$$
+
+Every compact $\mu_f$ minimizer $(\gamma,h)$ obeys
+
+$$
+\boxed{\qquad a_-\eta\le|\gamma|\le a_+\eta,\qquad}
+\tag{145.2}
+$$
+
+with the strictly positive source constants in (144.1). Both extremal
+retention radii of Definition 131.1 are attained and satisfy
+
+$$
+0<a_-\eta\le r_f^-(\eta)\le r_f^+(\eta)\le a_+\eta.
+\tag{145.3}
+$$
+
+For the original punctured reflection side there is no alternative
+at error $\varepsilon<\mu_f(\eta)$, an alternative exists at
+$\varepsilon=\mu_f(\eta)$, and alternatives exist for every
+$\varepsilon>\mu_f(\eta)$. Thus its exact endpoint has type III of
+Theorem 132.1 throughout this interval. In particular the original
+finite anchored modulus satisfies
+$\omega_{\mathfrak s,h_0(\eta)}(\mu_f(\eta))\ge1/2$.
+
+*Proof.* Since $R>1$, $\eta_0\le1/(4R)<1/4$, so the anchor is
+strictly inside the original ball:
+$\|h_0(\eta)\|^2=1/4+\eta^2<1$.
+Theorem 126.3 applies with the explicit constants of §144 and gives
+positive attained minima, the first line of (145.1), and
+
+$$
+|\mu_f(\eta)-\eta m_f|\le E\eta^2,\qquad
+|\nu_f(\eta)-\eta n_f|\le E\eta^2.
+\tag{145.4}
+$$
+
+The strictly positive lower bound follows there from (124.3);
+compactness includes the full complex disk and full closed completion
+ball on the original half-ball
+$\operatorname{Re}(e^\dagger h)\le0$.
+By (143.8) and $\eta\le1/(40000E)$,
+
+$$
+\nu_f-\mu_f
+ \ge\eta\left(\frac1{10000}-2E\eta\right)
+ \ge\frac{\eta}{20000}.
+\tag{145.5}
+$$
+
+For every fixed admissible $h$, the only paired lift in changing
+retention from $0$ to $\gamma$ is $(0,0,\gamma K_h)$.
+Since $\|K_h\|_{\rm HS}\le K$ on the whole ball and
+$\|r_i\|_{\rm HS}\le1$, the original weighted-row triangle inequality
+in (127.4) is
+$d_f(0,h;h_0)\le d_f(\gamma,h;h_0)+K|\gamma|$.
+At every compact minimizer this implies
+$K|\gamma|\ge\nu_f-\mu_f\ge\eta/20000$.
+The localization (126.9), valid for every minimizer, gives
+$|\gamma|\le G\eta$. This proves (145.2); compactness of the
+nonempty minimizer fiber then proves (145.3).
+
+All compact minimizers consequently have nonzero retention. The exact
+endpoint criterion of Theorem 124.2 proves the assertions at and on
+either side of $\mu_f$. Equivalently $r_f^->0$ and
+$\nu_f>\mu_f$, which is precisely type III in Theorem 132.1.
+Every reflected point has
+$\|h-h_0\|\ge|\operatorname{Re}(e^\dagger(h-h_0))|\ge A=1/2$;
+using a punctured minimizer in the original modulus proves its stated
+lower bound at equality. This deduction uses the actual nonlinear
+minima and every compact minimizer; the rational trial in (143.9)
+is neither asserted to minimize nor substituted for an actual law.
+
+For completeness, all lifted tangent witnesses used by Theorem 126.3
+are admissible on this same interval, since
+
+$$
+\|-Ae+\eta z\|\le\tfrac12+\eta R\le\tfrac34,
+\quad\operatorname{Re}(e^\dagger(-Ae+\eta z))\le-\tfrac14,
+\quad|\eta g|\le\tfrac12
+\quad(\|z\|\le R,\ |g|\le G).
+\tag{145.6}
+$$
+
+VI Theorem 106.3 realizes each actual pair by one full ten-dimensional
+completion with its five prescribed ready columns, shared over
+emission, the single forward return and all of that hypothesis's
+histories. A competing hypothesis may use a different such completion.
+The anchor's particular complex direction imposes no restriction on
+competitors. All raw prefix masses, both terminal labels, the factors
+$a_w/2$, the sole preparation, original menus, clocks and schedules
+are retained. No extra preparation, lottery, randomization, repetition,
+postselection, record phase, normalized replacement state or selected
+outcome enters these conclusions. $\square$
+
+**Proposition 145.2 (The finite certificate's remaining norm boundary).**
+Theorems 143.2–145.1 supply the strict gap and physical endpoint for
+$d_f$ with its literal 117-row maximum. They supply no strict gap
+$\delta_a$, no strict nonlinear inequality $\nu_a>\mu_a$ and no
+determined endpoint type for the separate full-history norm $d_a$.
+
+*Proof.* The lower witness (143.3) uses actual histories and therefore
+also gives $n_a\ge163/4000$. The upper certificate (143.10)–(143.12)
+contains exactly the histories of length at most two. It has no
+inequality for another history and gives no bound $m_a\le813/20000$.
+The already valid inequalities $m_f\le m_a$ and $n_f\le n_a$ do not
+bound $n_a-m_a$ from below by $n_f-m_f$. Likewise (144.2) compares
+norms, not their respective nonlinear optimum differences or their
+endpoint types. Thus no identification of the two norms is involved.
+The unresolved additional requirement is an original all-history
+upper certificate paired with an appropriate lower witness, or a
+separate exact nonlinear argument for the full-history minima.
+The finite nonlinear conclusion is conditional on the original
+return premises VI Assumption 106.2. It asserts neither an explicit
+nonlinear argmin or exact optimum value nor global originality or
+a resolution of an external named open problem. $\square$
+
+## 追加锚（本行以下为增补区）
