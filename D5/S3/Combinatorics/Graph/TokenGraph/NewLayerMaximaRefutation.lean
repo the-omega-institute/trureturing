@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/Graph/TokenGraph/NewLayerMaximaRefutation.claim; result=D5/S3/Combinatorics/Graph/TokenGraph/NewLayerMaximaRefutation.result; claim=D5/S3/Combinatorics/Graph/TokenGraph/NewLayerMaximaRefutation.claim
-   digest: The connected four-vertex star refutes successive new-Laplacian-layer maxima monotonicity. -/
+   digest: Connected K1,3 refutes successive new Laplacian layer maxima monotonicity. -/
 
 /-
 proof_shape: all new theorems are bind-only; finite exact matrix identities,
@@ -96,12 +96,19 @@ private def subsets0 : Fin 1 → Set.powersetCard (Fin 4) 0 :=
   ![⟨∅, by change (∅ : Finset (Fin 4)).card = 0; decide⟩]
 
 private def subsets1 : Fin 4 → Set.powersetCard (Fin 4) 1 :=
-  ![⟨{0}, by change ({0} : Finset (Fin 4)).card = 1; decide⟩, ⟨{1}, by change ({1} : Finset (Fin 4)).card = 1; decide⟩, ⟨{2}, by change ({2} : Finset (Fin 4)).card = 1; decide⟩, ⟨{3}, by change ({3} : Finset (Fin 4)).card = 1; decide⟩]
+  ![⟨{0}, by change ({0} : Finset (Fin 4)).card = 1; decide⟩,
+    ⟨{1}, by change ({1} : Finset (Fin 4)).card = 1; decide⟩,
+    ⟨{2}, by change ({2} : Finset (Fin 4)).card = 1; decide⟩,
+    ⟨{3}, by change ({3} : Finset (Fin 4)).card = 1; decide⟩]
 
 /-- The actual two-subsets in six-cycle order 01,12,02,23,03,13. -/
 private def subsets2 : Fin 6 → Set.powersetCard (Fin 4) 2 :=
-  ![⟨{0,1}, by change ({0,1} : Finset (Fin 4)).card = 2; decide⟩, ⟨{1,2}, by change ({1,2} : Finset (Fin 4)).card = 2; decide⟩, ⟨{0,2}, by change ({0,2} : Finset (Fin 4)).card = 2; decide⟩,
-    ⟨{2,3}, by change ({2,3} : Finset (Fin 4)).card = 2; decide⟩, ⟨{0,3}, by change ({0,3} : Finset (Fin 4)).card = 2; decide⟩, ⟨{1,3}, by change ({1,3} : Finset (Fin 4)).card = 2; decide⟩]
+  ![⟨{0,1}, by change ({0,1} : Finset (Fin 4)).card = 2; decide⟩,
+    ⟨{1,2}, by change ({1,2} : Finset (Fin 4)).card = 2; decide⟩,
+    ⟨{0,2}, by change ({0,2} : Finset (Fin 4)).card = 2; decide⟩,
+    ⟨{2,3}, by change ({2,3} : Finset (Fin 4)).card = 2; decide⟩,
+    ⟨{0,3}, by change ({0,3} : Finset (Fin 4)).card = 2; decide⟩,
+    ⟨{1,3}, by change ({1,3} : Finset (Fin 4)).card = 2; decide⟩]
 
 private noncomputable def e0 : Fin 1 ≃ Set.powersetCard (Fin 4) 0 :=
   Equiv.ofBijective subsets0 (by
@@ -195,6 +202,7 @@ private lemma spectrum0 : spectrum (tokenGraph star 0) = {0} := by
   simpa [Fin.univ_val_map, List.ofFn_succ] using h
 
 private lemma spectrum1 : spectrum (tokenGraph star 1) = {0, 1, 1, 4} := by
+  change spectrum (tokenGraph star 1) = (([0, 1, 1, 4] : List ℝ) : Multiset ℝ)
   let P : Matrix (Fin 4) (Fin 4) ℝ :=
     !![1,0,0,3; 1,1,1,-1; 1,-1,1,-1; 1,0,-2,-1]
   let Q : Matrix (Fin 4) (Fin 4) ℝ :=
@@ -214,6 +222,7 @@ private lemma spectrum1 : spectrum (tokenGraph star 1) = {0, 1, 1, 4} := by
   simpa [d, Fin.univ_val_map, List.ofFn_succ] using h
 
 private lemma spectrum2 : spectrum (tokenGraph star 2) = {0, 1, 1, 3, 3, 4} := by
+  change spectrum (tokenGraph star 2) = (([0, 1, 1, 3, 3, 4] : List ℝ) : Multiset ℝ)
   let P : Matrix (Fin 6) (Fin 6) ℝ :=
     !![1,2,0,2,0,1; 1,1,1,-1,1,-1; 1,-1,1,-1,-1,1;
        1,-2,0,2,0,-1; 1,-1,-1,-1,1,1; 1,1,-1,-1,-1,-1]
