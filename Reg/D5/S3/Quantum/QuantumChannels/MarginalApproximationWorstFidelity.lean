@@ -134,11 +134,11 @@ open scoped BigOperators
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
-universe u
+universe u_1
 
 /-- Observe equality of the product-indexed matrices for every index type. -/
 abbrev signature : Signature where
-  Params := Type u
+  Params := Type u_1
   State ι := Matrix (ι → Fin 4) (ι → Fin 4) ℂ
   Role := Unit
   finiteRole := inferInstance
@@ -147,34 +147,34 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u} :=
+def actual : Realization signature.{u_1} :=
   realize signature (fun _ _ X Y => X = Y) (fun e => nomatch e)
 
-def rejected : Realization signature.{u} :=
+def rejected : Realization signature.{u_1} :=
   realize signature (fun _ _ X Y => X ≠ Y) (fun e => nomatch e)
 
 /-- Retain the finite index dictionaries and the arbitrary diagonal family. -/
 abbrev arena : Arena where
-  signature := signature.{u}
-  Law R := ∀ {ι : Type u} [Fintype ι] [DecidableEq ι] (d : ι → Fin 4 → ℂ),
+  signature := signature.{u_1}
+  Law R := ∀ {ι : Type u_1} [Fintype ι] [DecidableEq ι] (d : ι → Fin 4 → ℂ),
     R.readout () ι (productMap (fun _ => Fin 4) (fun k => Matrix.diagonal (d k)))
       (Matrix.diagonal (fun a => ∏ k, d k (a k)))
 
-private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+private theorem rejected_law : ¬ arena.{u_1}.Law rejected := by
   intro h
-  exact h (ι := ULift.{u} Unit) 0 (productMatrix_diagonal 0)
+  exact h (ι := ULift.{u_1} Unit) 0 (productMatrix_diagonal 0)
 
-private theorem dependence : ObservationalDependence signature.{u} actual := by
+private theorem dependence : ObservationalDependence signature.{u_1} actual := by
   intro i
-  let M := Matrix (ULift.{u} Unit → Fin 4) (ULift.{u} Unit → Fin 4) ℂ
-  refine ⟨ULift.{u} Unit, 0, (fun _ _ => 1), ?_⟩
+  let M := Matrix (ULift.{u_1} Unit → Fin 4) (ULift.{u_1} Unit → Fin 4) ℂ
+  refine ⟨ULift.{u_1} Unit, 0, (fun _ _ => 1), ?_⟩
   intro h
   have he : ((0 : M) = 0) = ((fun _ _ => (1 : ℂ) : M) = 0) := congrFun h 0
   have hz := Eq.mp he rfl
   have hentry := congrFun (congrFun hz (fun _ => 0)) (fun _ => 0)
   norm_num at hentry
 
-def source_registration : Registration arena.{u} (type_of% @productMatrix_diagonal.{u}) where
+def source_registration : Registration arena.{u_1} (type_of% @productMatrix_diagonal.{u_1}) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨@productMatrix_diagonal, rejected, rejected_law⟩
@@ -188,7 +188,7 @@ def source_registration : Registration arena.{u} (type_of% @productMatrix_diagon
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@productMatrix_diagonal.{u}) (Realization signature.{u}) Unit Unit := {
+      (@productMatrix_diagonal.{u_1}) (Realization signature.{u_1}) Unit Unit := {
   unitName := .str
     `D5.S3.Quantum.QuantumChannels.MarginalApproximationWorstFidelity.productMatrix_diagonal
     "__information_unit"
