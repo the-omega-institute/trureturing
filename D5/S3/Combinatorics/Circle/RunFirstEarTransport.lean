@@ -8,6 +8,8 @@
 import D5.S3.Combinatorics.Circle.PeriodicShortening
 import Mathlib.Logic.Equiv.Fin.Rotate
 
+/-! # Same-cut transport of native joint source completions -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -45,7 +47,7 @@ private theorem ear_prefix (d : ℕ) (sigma : List (Fin d)) (r : ℕ)
     | zero =>
       cases n with
       | zero => simp [earWord]
-      | succ n => simp [earWord, List.map_map, add_comm]
+      | succ n => simp [earWord, List.map_map, Function.comp_def, add_comm]
     | succ r =>
       have hr' : r ≤ xs.length := by simpa using hr
       cases n with
@@ -67,10 +69,16 @@ private theorem ear_perm (d : ℕ) (sigma : List (Fin d)) (r : ℕ)
   have he : (earWord d sigma r).Perm (sigma.map Fin.castSucc ++ [Fin.last d]) := by
     unfold earWord
     rw [List.map_take, List.map_drop]
-    simpa [List.append_assoc, List.take_append_drop] using
-      (List.perm_append_comm : ([Fin.last d] ++ (sigma.map Fin.castSucc).drop r).Perm
-        ((sigma.map Fin.castSucc).drop r ++ [Fin.last d])).append_left
-          ((sigma.map Fin.castSucc).take r)
+    have hp := (List.perm_append_comm :
+        ([Fin.last d] ++ (sigma.map Fin.castSucc).drop r).Perm
+          ((sigma.map Fin.castSucc).drop r ++ [Fin.last d])).append_left
+            ((sigma.map Fin.castSucc).take r)
+    have hj : (sigma.map Fin.castSucc).take r ++
+        ((sigma.map Fin.castSucc).drop r ++ [Fin.last d]) =
+        sigma.map Fin.castSucc ++ [Fin.last d] := by
+      rw [← List.append_assoc, List.take_append_drop]
+    rw [hj] at hp
+    simpa only [List.append_assoc] using hp
   exact he.trans (by simpa [List.finRange_succ_last] using (hs.map Fin.castSucc).append_right [Fin.last d])
 
 
@@ -106,7 +114,8 @@ private theorem common_cycle (d h : ℕ) (hh : h < d) (j : Fin (d + 1)) :
   refine Fin.lastCases ?_ (fun i => ?_) l
   · have hr := rot (d + 1) (by omega) (Fin.last d)
     simp only [Fin.val_last] at hr
-    change d = _
+    have el : earRelabel d h (Fin.last d) = Fin.last d := by simp [earRelabel]
+    rw [el, Fin.val_last]
     by_cases h0 : h = 0
     · subst h; simp [rho]
     · have hm : (d + h) % (d + 1) = h - 1 := by
@@ -117,12 +126,14 @@ private theorem common_cycle (d h : ℕ) (hh : h < d) (j : Fin (d + 1)) :
   · have hr := rot (d + 1) (by omega) i.castSucc
     have ht := rot d hh i
     simp only [Fin.val_castSucc] at hr
-    change (((finRotate d : Equiv.Perm (Fin d)) ^ h) i).val = _
-    rw [ht]
+    have el : earRelabel d h i.castSucc =
+        (((finRotate d : Equiv.Perm (Fin d)) ^ h) i).castSucc := by simp [earRelabel]
+    rw [el, Fin.val_castSucc, ht]
     change (rho i.castSucc).val = _ at hr
     rw [hr]
     by_cases h0 : h = 0
-    · subst h; simp [Nat.mod_eq_of_lt i.isLt]
+    · subst h
+      simp [Nat.mod_eq_of_lt i.isLt, Nat.mod_eq_of_lt (by omega : i.val < d + 1)]
     · by_cases hs : i.val + h < d
       · rw [Nat.mod_eq_of_lt hs, Nat.mod_eq_of_lt (by omega : i.val + h < d + 1)]
         split_ifs <;> omega
@@ -219,7 +230,7 @@ theorem native_dyadic_joint_transport (d a h : ℕ) (hd : 2 ≤ d) (ha : 1 ≤ a
   have heights (n : ℕ) :
       ((sigmaA.take n).map (actualSource d a)).sum = ((sigma.take n).map v).sum := by
     apply congrArg List.sum
-    simp only [sigmaA, ← List.map_take, List.map_map]
+    simp only [sigmaA, ← List.map_take, List.map_map, Function.comp_def]
     apply List.map_congr_left
     intro i _
     exact (align i).1.symm
@@ -232,8 +243,10 @@ theorem native_dyadic_joint_transport (d a h : ℕ) (hd : 2 ≤ d) (ha : 1 ≤ a
       rw [heights]
       exact hold.2.2 n
   have tota : (sigma.map alpha).sum = (a : ℤ) := by
-    change (sigma.map (fun i => charge d a (tau i))).sum = _
-    rw [← List.map_map, (hperm.map (charge d a)).sum_eq]
+    have he : (sigma.map alpha).sum = ((List.finRange d).map (charge d a)).sum := by
+      simpa [sigmaA, List.map_map, alpha, Function.comp_def] using
+        (hperm.map (charge d a)).sum_eq
+    rw [he]
     rw [← List.sum_toFinset _ (List.nodup_finRange _), List.toFinset_finRange]
     exact charge_sum d a hd hwa
   have totb : (sigma.map beta).sum = (2 ^ h * a : ℕ) := by
@@ -248,18 +261,17 @@ theorem native_dyadic_joint_transport (d a h : ℕ) (hd : 2 ≤ d) (ha : 1 ≤ a
           ((sigma.take (if n ≤ r then n else n - 1)).map alpha).sum +
           (if n ≤ r then 0 else (a : ℤ)) := by
     rw [ear_prefix d sigmaA r (by simpa [sigmaA] using hcut)]
-    simp only [sigmaA, ← List.map_take, List.map_map]
+    simp only [sigmaA, ← List.map_take, List.map_map, Function.comp_def]
     have he : (fun i => actualSource (d + 1) (2 * a) (tau i).castSucc) =
         (fun i => 2 * v i - alpha i) := by
       funext i
       rw [va.1, ← (align i).1]
-      rfl
     rw [he, sum_linear, va.2]
   have prefixB (n : ℕ) :
       (((earWord d sigma r).take n).map (actualSource (d + 1) (2 * (2 ^ h * a)))).sum =
         2 * ((sigma.take (if n ≤ r then n else n - 1)).map v).sum -
           ((sigma.take (if n ≤ r then n else n - 1)).map beta).sum +
-          (if n ≤ r then 0 else (2 ^ h * a : ℕ)) := by
+          (if n ≤ r then 0 else ((2 ^ h * a : ℕ) : ℤ)) := by
     rw [ear_prefix d sigma r hcut]
     have he : (fun i : Fin d => actualSource (d + 1) (2 * (2 ^ h * a)) i.castSucc) =
         (fun i => 2 * v i - beta i) := by funext i; exact vb.1 i
@@ -277,8 +289,11 @@ theorem native_dyadic_joint_transport (d a h : ℕ) (hd : 2 ≤ d) (ha : 1 ≤ a
       have cn := charge_comparison (sigma.take n) alpha beta hnonneg hdom
       have hB : 2 * (modulus d / 2) ≤ modulus (d + 1) / 2 := by
         unfold modulus; rw [pow_succ]; omega
-      change 0 ≤ ((sigma.take n).map v).sum ∧ _ at vn
-      constructor <;> linarith [vn.2]
+      change 0 ≤ ((sigma.take n).map v).sum ∧
+        ((sigma.take n).map v).sum ≤ modulus d / 2 at vn
+      constructor
+      · linarith only [bn.1, cn.2]
+      · linarith only [vn.2, cn.1, hB]
     · simp only [if_neg hn] at bn ⊢
       have vn := hold.2.2 (n - 1)
       change 0 ≤ ((sigma.take (n - 1)).map v).sum ∧ _ at vn
@@ -289,7 +304,9 @@ theorem native_dyadic_joint_transport (d a h : ℕ) (hd : 2 ≤ d) (ha : 1 ≤ a
       have bsplit : ((sigma.take (n - 1)).map beta).sum +
           ((sigma.drop (n - 1)).map beta).sum = (2 ^ h * a : ℕ) := by
         rw [← List.sum_append, ← List.map_append, List.take_append_drop, totb]
-      constructor <;> linarith [vn.1]
+      constructor
+      · linarith only [vn.1, cd.1, asplit]
+      · linarith only [bn.2, cd.2, asplit, bsplit]
   have newA : OriginalOrder (d + 1) (2 * a) (earWord d sigmaA r) := by
     refine ⟨ear_perm d sigmaA r hperm, ?_, hstrip⟩
     rw [((ear_perm d sigmaA r hperm).map (actualSource (d + 1) (2 * a))).sum_eq]
@@ -350,7 +367,7 @@ theorem native_dyadic_joint_transport (d a h : ℕ) (hd : 2 ≤ d) (ha : 1 ≤ a
         -(modulus (d + 1) - (a : ℤ)) / 2 ∧
       actualSource (d + 1) (2 * a) ⟨d - 1, by omega⟩ ≤ -(2 : ℤ) ^ (d - 1) := by
     obtain ⟨t, ht⟩ := ho
-    have hat : (a : ℤ) = (t : ℤ) + t + 1 := by exact_mod_cast ht
+    have hat : (a : ℤ) = 2 * (t : ℤ) + 1 := by exact_mod_cast ht
     have hp : (a : ℤ) < (2 : ℤ) ^ (d - 1) := by
       exact_mod_cast (show a < 2 ^ (d - 1) by omega)
     have hpow : (2 : ℤ) ^ d = 2 * (2 : ℤ) ^ (d - 1) := by
@@ -378,7 +395,7 @@ theorem native_dyadic_joint_transport (d a h : ℕ) (hd : 2 ≤ d) (ha : 1 ≤ a
 
   refine ⟨oldA, newA, heights, ?_, common_cycle d h hh, normalized, va.2,
     small_values, odd_predecessor⟩
-  simp [earWord, sigmaA, ← List.map_take, ← List.map_drop, List.map_append, List.map_map, earRelabel]
+  simp [earWord, sigmaA, ← List.map_take, ← List.map_drop, List.map_append, List.map_map, earRelabel, Function.comp_def]
 
 
 end D5.S3.Combinatorics.Circle.RunFirstEarTransport
