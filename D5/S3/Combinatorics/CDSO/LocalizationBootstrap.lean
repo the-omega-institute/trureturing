@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: [mathlib/module/Mathlib.Algebra.Order.BigOperators.Ring.Finset]
    utility: none
-   digest: Actual-array definitions and the faithful full statement of CDSO Lemma 13.5.
+   digest: Uniform actual-array localization and two-stage bootstrap for fixed surplus hubs.
 -/
 
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
@@ -148,10 +148,6 @@ private theorem sum_y : (∑ i, y x i) = (a : ℝ) := by
 private theorem tailCount_le (D : TailChoice x) (T : NonemptyType a h) :
     tailCount x D T ≤ h := by
   exact (Finset.card_le_card Finset.inter_subset_right).trans_eq D.card_eq
-
-private theorem count_split (D : TailChoice x) (T : NonemptyType a h) :
-    tailCount x D T + coreCount x D T = T.1.card := by
-  exact Finset.card_inter_add_card_sdiff T.1 D.D
 
 private theorem core_card (D : TailChoice x) :
     (Finset.univ \ D.D).card = a + 1 := by
@@ -530,7 +526,7 @@ private theorem core_energy_lower (D : TailChoice x) :
   rw [Finset.sum_add_distrib, hR] at hl
   exact hl.trans (hwi.symm.le.trans hmono)
 
-theorem core_certificate (D : TailChoice x)
+private theorem core_certificate (D : TailChoice x)
     (ha : 3 * (h : ℝ) * (2 * a + 1) ≤ (a : ℝ)^2) :
     0 ≤ jensenGap x D ∧
     0 ≤ expect x (fun T => Q (a := a) (coreCount x D T)) ∧
@@ -582,7 +578,7 @@ private theorem tailV_sq (D : TailChoice x) (T : NonemptyType a h) :
   exact hh.trans (mul_le_mul_of_nonneg_right hbk
     (Finset.sum_nonneg fun j _ => sq_nonneg _))
 
-theorem tail_cauchy (D : TailChoice x) :
+private theorem tail_cauchy (D : TailChoice x) :
     0 < tailEventMass x D ∧ (h : ℝ)^2 / tailEventMass x D ≤ tailEnergy x D ∧
       eventK2 x D ≤ (delta x D)^2 * tailEnergy x D := by
   classical
@@ -797,7 +793,7 @@ private theorem energy_excess_lower (S : Finset (Label a h)) (V : ℝ)
   rw [expect_add] at hmain
   linarith
 
-theorem rank_cutoff_localization (D : TailChoice x) (M ε : ℝ)
+private theorem rank_cutoff_localization (D : TailChoice x) (M ε : ℝ)
     (hM : 0 < M) (hε : 0 < ε) (ha : 4 ≤ a)
     (hd : d x ≤ M * ((a : ℝ) * Real.sqrt a))
     (hlarge : (M + 4 * ((h : ℝ) + 1) / ε^2 * Real.sqrt (M + 3) + 2)^2 ≤ (a : ℝ)) :
@@ -1014,9 +1010,9 @@ private theorem first_bootstrap (D : TailChoice x) (M : ℝ) (hM : 0 < M) (ha : 
     exact (y_pos x j).le.trans (Finset.le_sup' (fun j => y x j) hj)
   have hden : 0 < 100 * (M + κ + 1) := by positivity
   have hδsmall : (100 * (M + κ + 1)) * δ ≤ 1 := by
-    exact (le_div_iff₀ hden).mp hsmall
-  have hδ1 : δ ≤ 1 := by nlinarith
-  have hδprod : (M + κ) * δ ≤ 1 / 100 := by nlinarith
+    simpa [δ, mul_comm] using (le_div_iff₀ hden).mp hsmall
+  have hδ1 : δ ≤ 1 := by nlinarith only [hδsmall, hδ, mul_nonneg hM.le hδ, mul_nonneg hκ hδ]
+  have hδprod : (M + κ) * δ ≤ 1 / 100 := by nlinarith only [hδsmall, hδ]
   have hsqrt := Real.sq_sqrt (Nat.cast_nonneg a : (0 : ℝ) ≤ a)
   have hsnon := Real.sqrt_nonneg (a : ℝ)
   have hsqle : Real.sqrt (a : ℝ) ≤ a := by nlinarith
@@ -1047,22 +1043,25 @@ private theorem first_bootstrap (D : TailChoice x) (M : ℝ) (hM : 0 < M) (ha : 
       L^2 ≤ p * eventK2 x D := onTail_core_square x D
       _ ≤ p * ((a : ℝ)^2 * p / 100) := mul_le_mul_of_nonneg_left hK hp.le
       _ = _ := by ring
-  have hL : L ≤ (a : ℝ) * p / 10 := by nlinarith
-  have hβ : 3 * (a : ℝ)^2 + 3 * a + 1 ≤ 7 * (a : ℝ)^2 := by nlinarith
+  have hL : L ≤ (a : ℝ) * p / 10 := by
+    have hn : 0 ≤ (a : ℝ) * p / 10 := by positivity
+    nlinarith only [hLsq, hL0, hn]
+  have hβ : 3 * (a : ℝ)^2 + 3 * a + 1 ≤ 7 * (a : ℝ)^2 := by nlinarith only [har]
   have hβL : (3 * (a : ℝ)^2 + 3 * a + 1) * L ≤
       7 * (a : ℝ)^2 * ((a : ℝ) * p / 10) :=
     mul_le_mul hβ hL hL0 (by positivity)
-  have hκa : κ ≤ (a : ℝ) / 100 := by dsimp [κ]; linarith
+  have hκa : κ ≤ (a : ℝ) / 100 := by dsimp [κ]; linarith only [hlarge]
   have hcost : κ * (a : ℝ)^2 * p ≤ (a : ℝ)^3 * p / 100 := by
     have hh := mul_le_mul_of_nonneg_right hκa (by positivity : 0 ≤ (a : ℝ)^2 * p)
-    nlinarith
+    nlinarith only [hh]
   have hα : 2 * (a : ℝ)^3 * p ≤ (a : ℝ) * (a + 1) * (2 * a + 1) * p := by
     have hh := mul_le_mul_of_nonneg_right
-      (show 2 * (a : ℝ)^3 ≤ (a : ℝ) * (a + 1) * (2 * a + 1) by nlinarith) hp.le
+      (show 2 * (a : ℝ)^3 ≤ (a : ℝ) * (a + 1) * (2 * a + 1) by nlinarith only [har, sq_nonneg (a : ℝ)]) hp.le
     exact hh
   have hQ := Q_tail_lower x D
   dsimp [L, p, κ, E] at *
-  nlinarith [hc.2.2, hc.1, ht]
+  have hAp : 0 ≤ (a : ℝ)^3 * tailEventMass x D := by positivity
+  nlinarith only [hc.2.2, hc.1, ht, hQ, hcost, hβL, hα, hAp]
 
 private theorem refined_bootstrap (D : TailChoice x) (M : ℝ) (hM : 0 < M) (ha : 4 ≤ a)
     (hcond : 3 * (h : ℝ) * (2 * a + 1) ≤ (a : ℝ)^2)
@@ -1091,10 +1090,9 @@ private theorem refined_bootstrap (D : TailChoice x) (M : ℝ) (hM : 0 < M) (ha 
   have hqp : p * q ≤ M := by
     apply (mul_le_mul_iff_left₀ hq).mp
     calc
-      q * (p * q) = (a : ℝ)^3 * p := by rw [← hq2]; ring
+      (p * q) * q = (a : ℝ)^3 * p := by rw [← hq2]; ring
       _ ≤ d x := by linarith
       _ ≤ M * q := hd
-      _ = q * M := mul_comm _ _
   have huq : tailSum x D.D * q ≤ (h : ℝ) * M := by
     have hu := (tail_bounds x D).2.2.1
     calc
@@ -1122,12 +1120,13 @@ private theorem refined_bootstrap (D : TailChoice x) (M : ℝ) (hM : 0 < M) (ha 
       _ ≤ p * eventK2 x D := onTail_core_square x D
       _ ≤ p * (M^2 * p) := mul_le_mul_of_nonneg_left hK hp.le
       _ ≤ _ := by
-        nlinarith [mul_nonneg (sq_nonneg (M^2 + 1)) (sq_nonneg p),
-          mul_nonneg (by nlinarith [sq_nonneg (M^2)] : 0 ≤ (M^2 + 1)^2 - M^2) (sq_nonneg p)]
+        have hh := mul_le_mul_of_nonneg_right
+          (show M^2 ≤ (M^2 + 1)^2 by nlinarith only [sq_nonneg (M^2)]) (sq_nonneg p)
+        nlinarith only [hh]
   have hL : L ≤ (M^2 + 1) * p := by
     have hn : 0 ≤ (M^2 + 1) * p := by positivity
-    nlinarith
-  have hβ : 3 * (a : ℝ)^2 + 3 * a + 1 ≤ 7 * (a : ℝ)^2 := by nlinarith
+    nlinarith only [hLsq, hn]
+  have hβ : 3 * (a : ℝ)^2 + 3 * a + 1 ≤ 7 * (a : ℝ)^2 := by nlinarith only [har]
   have hβL := mul_le_mul hβ hL hL0 (by positivity : 0 ≤ 7 * (a : ℝ)^2)
   have hah : 2 * (h : ℝ) ≤ (a : ℝ) := by linarith
   have hc := core_certificate x D hcond
@@ -1135,10 +1134,10 @@ private theorem refined_bootstrap (D : TailChoice x) (M : ℝ) (hM : 0 < M) (ha 
   have hQ := Q_tail_lower x D
   have hα : 2 * (a : ℝ)^3 * p ≤ (a : ℝ) * (a + 1) * (2 * a + 1) * p :=
     mul_le_mul_of_nonneg_right
-      (show 2 * (a : ℝ)^3 ≤ (a : ℝ) * (a + 1) * (2 * a + 1) by nlinarith) hp.le
+      (show 2 * (a : ℝ)^3 ≤ (a : ℝ) * (a + 1) * (2 * a + 1) by nlinarith only [har, sq_nonneg (a : ℝ)]) hp.le
   refine ⟨hqp, huq, hEq, ?_⟩
   dsimp [p, E, L] at *
-  nlinarith [hc.2.2, hc.1, ht]
+  nlinarith only [hc.2.2, hc.1, ht, hQ, hβL, hα]
 
 #print axioms core_certificate
 #print axioms tail_cauchy
@@ -1157,43 +1156,132 @@ def EventuallyAtLeast (P : IndexAtLeast4 → Prop) : Prop := ∀ᶠ a in atTop, 
 def EventuallyAfter (N : ℝ) (P : IndexAtLeast4 → Prop) : Prop :=
   ∀ᶠ (a : IndexAtLeast4) in atTop, N ≤ (a : ℝ) → P a
 
-def FullLowerChain (h : ℕ) (M : ℝ)
-    (x : ∀ a : IndexAtLeast4, JointArray a h)
-    (D : ∀ a : IndexAtLeast4, (x a).TailChoice) : Prop :=
-  ∃ C : ℝ, 0 < C ∧ ∃ N : ℝ, 0 < N ∧ EventuallyAfter N (fun a =>
-    JointArray.d (x a) ≥
-        JointArray.tailEnergy (x a) (D a) +
-          (2 * (a : ℝ)^3 - C * (a : ℝ)^2) *
-            JointArray.tailEventMass (x a) (D a) ∧
-    JointArray.tailEnergy (x a) (D a) +
-          (2 * (a : ℝ)^3 - C * (a : ℝ)^2) *
-            JointArray.tailEventMass (x a) (D a) ≥
-        ((h : ℝ)^2) / JointArray.tailEventMass (x a) (D a) +
-          (2 * (a : ℝ)^3 - C * (a : ℝ)^2) *
-            JointArray.tailEventMass (x a) (D a))
+
+def FullLowerChain (C : ℝ) {a h : ℕ} (x : JointArray a h) (D : x.TailChoice) : Prop :=
+  JointArray.tailEnergy x D + (2 * (a : ℝ)^3 - C * (a : ℝ)^2) *
+      JointArray.tailEventMass x D ≤ JointArray.d x ∧
+  (h : ℝ)^2 / JointArray.tailEventMass x D +
+      (2 * (a : ℝ)^3 - C * (a : ℝ)^2) * JointArray.tailEventMass x D ≤
+    JointArray.tailEnergy x D +
+      (2 * (a : ℝ)^3 - C * (a : ℝ)^2) * JointArray.tailEventMass x D
+
+def UniformEstimate (Cp Cu CH C : ℝ) {a h : ℕ}
+    (x : JointArray a h) (D : x.TailChoice) : Prop :=
+  0 < JointArray.tailEventMass x D ∧
+  JointArray.tailEventMass x D ≤ Cp * (a : ℝ)^(-3 / 2 : ℝ) ∧
+  JointArray.tailSum x D.D ≤ Cu * (a : ℝ)^(-3 / 2 : ℝ) ∧
+  JointArray.tailEnergy x D ≤ CH * (a : ℝ)^(3 / 2 : ℝ) ∧ FullLowerChain C x D
+
+def UniformLocalization (h : ℕ) (M : ℝ) : Prop :=
+  ∀ ε : ℝ, 0 < ε → ∃ N : ℕ, ∀ a : ℕ, 4 ≤ a → N ≤ a →
+    ∀ (x : JointArray a h) (D : x.TailChoice),
+      JointArray.d x ≤ M * (a : ℝ)^(3 / 2 : ℝ) → JointArray.delta x D < ε
 
 def Lemma135Statement (h : ℕ) (M : ℝ) : Prop :=
   2 ≤ h ∧ 0 < M →
-  ∀ (x : ∀ a : IndexAtLeast4, JointArray a h)
-    (D : ∀ a : IndexAtLeast4, (x a).TailChoice),
-    EventuallyAtLeast (fun a => JointArray.d (x a) ≤ M * scale a (3 / 2 : ℝ)) →
+  ∃ Cp Cu CH C : ℝ, 0 < Cp ∧ 0 < Cu ∧ 0 < CH ∧ 0 < C ∧ ∃ N : ℕ,
+    (∀ a : ℕ, 4 ≤ a → N ≤ a → ∀ (x : JointArray a h) (D : x.TailChoice),
+      JointArray.d x ≤ M * (a : ℝ)^(3 / 2 : ℝ) → UniformEstimate Cp Cu CH C x D) ∧
+    UniformLocalization h M ∧
+    (∀ (x : ∀ a : IndexAtLeast4, JointArray a h)
+      (D : ∀ a : IndexAtLeast4, (x a).TailChoice),
+      EventuallyAtLeast (fun a => JointArray.d (x a) ≤ M * scale a (3 / 2 : ℝ)) →
       Tendsto (fun a => JointArray.delta (x a) (D a)) atTop (𝓝 0) ∧
-      (∃ Cp Cu CH N : ℝ, 0 < Cp ∧ 0 < Cu ∧ 0 < CH ∧ 0 < N ∧
-        EventuallyAfter N (fun a =>
-          JointArray.tailEventMass (x a) (D a) ≤ Cp * scale a (-3 / 2 : ℝ) ∧
-          JointArray.tailSum (x a) (D a).D ≤ Cu * scale a (-3 / 2 : ℝ) ∧
-          JointArray.tailEnergy (x a) (D a) ≤ CH * scale a (3 / 2 : ℝ))) ∧
-      FullLowerChain h M x D
+        EventuallyAtLeast (fun a => UniformEstimate Cp Cu CH C (x a) (D a)))
 
 def Lemma134ProducerStatement (a h : ℕ) : Prop :=
-  4 ≤ a → 2 ≤ h → ∀ (x : JointArray a h)
-    (D : (x).TailChoice),
-      let C := Finset.univ \ D.D
+  4 ≤ a → 2 ≤ h → 3 * (h : ℝ) * (2 * a + 1) ≤ (a : ℝ)^2 →
+    ∀ (x : JointArray a h) (D : x.TailChoice),
+      let C := JointArray.coreSet x D
       let u := JointArray.tailSum x D.D
       let δ := JointArray.delta x D
       δ ≤ JointArray.tailEventMass x D ∧
       JointArray.tailEventMass x D ≤ u ∧ u ≤ h * JointArray.tailEventMass x D ∧
-      (∀ i ∈ C, δ ≤ JointArray.y x i) ∧ u / (h : ℝ) ≤ δ
+      (∀ i ∈ C, δ ≤ JointArray.y x i) ∧ u / (h : ℝ) ≤ δ ∧
+      0 ≤ JointArray.jensenGap x D ∧
+      0 ≤ JointArray.expect x (fun T => JointArray.Q (a := a) (JointArray.coreCount x D T)) ∧
+      JointArray.tailEnergy x D - u * JointArray.correction x D +
+        JointArray.expect x (fun T => JointArray.Q (a := a) (JointArray.coreCount x D T)) +
+          JointArray.jensenGap x D ≤ JointArray.d x
+
+private theorem rpow_three_halves (a : ℕ) (ha : 0 < a) :
+    (a : ℝ)^(3 / 2 : ℝ) = (a : ℝ) * Real.sqrt a := by
+  rw [show (3 / 2 : ℝ) = 1 + 1 / 2 by norm_num,
+    Real.rpow_add (Nat.cast_pos.mpr ha), Real.rpow_one, ← Real.sqrt_eq_rpow]
+
+private theorem rpow_neg_three_halves (a : ℕ) (ha : 0 < a) :
+    (a : ℝ)^(-3 / 2 : ℝ) = ((a : ℝ) * Real.sqrt a)⁻¹ := by
+  rw [show (-3 / 2 : ℝ) = -(3 / 2) by ring,
+    Real.rpow_neg (Nat.cast_nonneg a), rpow_three_halves a ha]
+
+private theorem uniform_localization (h : ℕ) (M : ℝ) (hM : 0 < M) :
+    UniformLocalization h M := by
+  intro ε hε
+  obtain ⟨N, hN⟩ := exists_nat_ge
+    ((M + 4 * ((h : ℝ) + 1) / ε^2 * Real.sqrt (M + 3) + 2)^2)
+  refine ⟨N, ?_⟩
+  intro a ha hNa x D hd
+  apply JointArray.rank_cutoff_localization x D M ε hM hε ha
+  · simpa [rpow_three_halves a (by omega)] using hd
+  · exact hN.trans (Nat.cast_le.mpr hNa)
+
+private theorem uniform_bootstrap (h : ℕ) (M : ℝ) (hM : 0 < M) :
+    ∃ N : ℕ, ∀ a : ℕ, 4 ≤ a → N ≤ a → ∀ (x : JointArray a h) (D : x.TailChoice),
+      JointArray.d x ≤ M * (a : ℝ)^(3 / 2 : ℝ) →
+      UniformEstimate M ((h : ℝ) * M) M (64 * h + 7 * (M^2 + 1)) x D := by
+  let ε := 1 / (100 * (M + 64 * (h : ℝ) + 1))
+  have hε : 0 < ε := by dsimp [ε]; positivity
+  obtain ⟨Nδ, hNδ⟩ := uniform_localization h M hM ε hε
+  obtain ⟨Nb, hNb⟩ := exists_nat_ge (100 * (64 * (h : ℝ) + 1))
+  refine ⟨max Nδ Nb, ?_⟩
+  intro a ha hNa x D hd
+  have hlarge : 100 * (64 * (h : ℝ) + 1) ≤ (a : ℝ) :=
+    hNb.trans (Nat.cast_le.mpr ((le_max_right Nδ Nb).trans hNa))
+  have har : (4 : ℝ) ≤ a := by exact_mod_cast ha
+  have h10 : 10 * ((h : ℝ) + 1) ≤ (a : ℝ) := by nlinarith only [hlarge, (Nat.cast_nonneg h : (0 : ℝ) ≤ h)]
+  have hcond : 3 * (h : ℝ) * (2 * a + 1) ≤ (a : ℝ)^2 := by
+    nlinarith only [h10, (Nat.cast_nonneg h : (0 : ℝ) ≤ h),
+      mul_nonneg (Nat.cast_nonneg a : (0 : ℝ) ≤ a) (sub_nonneg.mpr h10),
+      mul_nonneg (Nat.cast_nonneg h : (0 : ℝ) ≤ h) (by linarith : 0 ≤ (a : ℝ) - 1)]
+  have hsmall := (hNδ a ha ((le_max_left Nδ Nb).trans hNa) x D hd).le
+  have hd' : JointArray.d x ≤ M * ((a : ℝ) * Real.sqrt a) := by
+    simpa [rpow_three_halves a (by omega)] using hd
+  have hb := JointArray.refined_bootstrap x D M hM ha hcond hlarge hd' hsmall
+  have hq : 0 < (a : ℝ) * Real.sqrt a := by positivity
+  have hp := JointArray.tail_cauchy x D
+  refine ⟨hp.1, ?_, ?_, ?_, hb.2.2.2, ?_⟩
+  · rw [rpow_neg_three_halves a (by omega), ← div_eq_mul_inv]
+    exact (le_div_iff₀ hq).mpr hb.1
+  · rw [rpow_neg_three_halves a (by omega), ← div_eq_mul_inv]
+    exact (le_div_iff₀ hq).mpr hb.2.1
+  · simpa [rpow_three_halves a (by omega)] using hb.2.2.1
+  · linarith only [hp.2.1]
+
+theorem lemma135 (h : ℕ) (M : ℝ) : Lemma135Statement h M := by
+  rintro ⟨hh, hM⟩
+  have hh0 : (0 : ℝ) < h := by exact_mod_cast (show 0 < h by omega)
+  obtain ⟨N, hN⟩ := uniform_bootstrap h M hM
+  have hloc := uniform_localization h M hM
+  refine ⟨M, (h : ℝ) * M, M, 64 * h + 7 * (M^2 + 1),
+    hM, mul_pos hh0 hM, hM, by positivity, N, hN, hloc, ?_⟩
+  intro x D hd
+  have hthreshold (n : ℕ) : ∀ᶠ a : IndexAtLeast4 in atTop, n ≤ a.val := by
+    refine (eventually_ge_atTop (⟨max n 4, le_max_right n 4⟩ : IndexAtLeast4)).mono ?_
+    intro a ha
+    exact (le_max_left n 4).trans ha
+  constructor
+  · apply Metric.tendsto_nhds.mpr
+    intro ε hε
+    obtain ⟨n, hn⟩ := hloc ε hε
+    filter_upwards [hd, hthreshold n] with a hda hna
+    rw [Real.dist_eq, sub_zero, abs_of_nonneg]
+    · exact hn a.val a.property hna (x a) (D a) hda
+    · obtain ⟨j, hj⟩ := (D a).nonempty
+      exact (JointArray.y_pos (x a) j).le.trans (Finset.le_sup' (fun j => JointArray.y (x a) j) hj)
+  · filter_upwards [hd, hthreshold N] with a hda hna
+    exact hN a.val a.property hna (x a) (D a) hda
+
+#print axioms lemma135
 
 end
 
