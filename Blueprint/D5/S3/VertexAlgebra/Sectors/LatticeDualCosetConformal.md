@@ -10,9 +10,9 @@ Classical construction context: Bakalov-Kac, math/0402315v1, section 4.1. The im
 
 **Definition 1.1 (moduleL).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.moduleL`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.moduleL`
 
-*Formalization.* `D5/S3/VertexAlgebra/LatticeDualCosetConformal.moduleL` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.moduleL` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -22,9 +22,9 @@ L_m is exactly action_D,beta(omega_D(H)) at normalized mode m+1 on the actual fu
 
 **Definition 1.2 (commutatorTerm).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.commutatorTerm`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.commutatorTerm`
 
-*Formalization.* `D5/S3/VertexAlgebra/LatticeDualCosetConformal.commutatorTerm` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.commutatorTerm` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -34,9 +34,9 @@ The j term is binom(p,j) times the module mode p+q-j of the ORIGINAL state produ
 
 **Theorem 1.3 (commutator terms finite).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.commutator_terms_finite`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.commutator_terms_finite`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetConformal.commutator_terms_finite` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.commutator_terms_finite` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -46,9 +46,9 @@ Original nonnegative state products have finite support before binomial weightin
 
 **Theorem 1.4 (mode commutator).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.mode_commutator`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.mode_commutator`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetConformal.mode_commutator` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.mode_commutator` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -58,9 +58,9 @@ For arbitrary original a,b and all integer p,q, the commutator of their actual m
 
 **Theorem 1.5 (one mode commutator).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.one_mode_commutator`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.one_mode_commutator`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetConformal.one_mode_commutator` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.one_mode_commutator` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -70,9 +70,9 @@ The mode-one commutator contains exactly the original products a_0 b and a_1 b, 
 
 **Theorem 1.6 (minus one product field).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.minus_one_product_field`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.minus_one_product_field`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetConformal.minus_one_product_field` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.minus_one_product_field` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -82,9 +82,9 @@ The actual field of the original minus-one product equals the normal product of 
 
 **Theorem 1.7 (action current).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.action_current`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.action_current`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetConformal.action_current` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.action_current` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -94,9 +94,9 @@ For every integer m, the actual module current is the original neutral current p
 
 **Theorem 1.8 (moduleL normal).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.moduleL_normal`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.moduleL_normal`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetConformal.moduleL_normal` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.moduleL_normal` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -106,9 +106,9 @@ The actual original omega mode is one half of the H-weighted sum of normal produ
 
 **Theorem 1.9 (energy covariance).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.energy_covariance`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.energy_covariance`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetConformal.energy_covariance` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.energy_covariance` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -118,9 +118,9 @@ For every original state a and integer q, [L_0,action(a)_q]=action(L_0_original 
 
 **Theorem 1.10 (ward commutator).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.ward_commutator`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.ward_commutator`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetConformal.ward_commutator` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.ward_commutator` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -130,9 +130,9 @@ For every integer conformal mode m and original input mode q, the full Ward sum 
 
 **Theorem 1.11 (translation covariance).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.translation_covariance`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.translation_covariance`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetConformal.translation_covariance` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.translation_covariance` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -142,17 +142,17 @@ The ACTUAL original-omega mode L_-1 satisfies [L_-1,action(a)_q]=-q action(a)_(q
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.action_current`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.commutatorTerm`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.commutator_terms_finite`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.energy_covariance`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.minus_one_product_field`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.mode_commutator`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.moduleL`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.moduleL_normal`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.one_mode_commutator`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.translation_covariance`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetConformal.ward_commutator`
-- Dependency: [D5/S3/VertexAlgebra/LatticeActualLZeroGrading](LatticeActualLZeroGrading.md)
-- Dependency: [D5/S3/VertexAlgebra/LatticeDualCosetModule](LatticeDualCosetModule.md)
-- Dependency: [D5/S3/VertexAlgebra/LatticeSugawaraVirasoro](LatticeSugawaraVirasoro.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.action_current`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.commutatorTerm`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.commutator_terms_finite`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.energy_covariance`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.minus_one_product_field`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.mode_commutator`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.moduleL`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.moduleL_normal`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.one_mode_commutator`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.translation_covariance`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal.ward_commutator`
+- Dependency: [D5/S3/VertexAlgebra/LatticeActualLZeroGrading](../LatticeActualLZeroGrading.md)
+- Dependency: [D5/S3/VertexAlgebra/LatticeSugawaraVirasoro](../LatticeSugawaraVirasoro.md)
+- Dependency: [D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule](LatticeDualCosetModule.md)

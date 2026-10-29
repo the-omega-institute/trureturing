@@ -10,9 +10,9 @@ Classical construction context: Bakalov-Kac, math/0402315v1, section 4.1. The im
 
 **Definition 1.1 (pairing).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.pairing`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.pairing`
 
-*Formalization.* `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.pairing` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.pairing` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -22,9 +22,9 @@ The rational bilinear form is the finite sum x_i G_ij y_j.
 
 **Definition 1.2 (chargeWeight).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.chargeWeight`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.chargeWeight`
 
-*Formalization.* `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.chargeWeight` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.chargeWeight` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -34,9 +34,9 @@ q_mu(gamma) is one half of the ORIGINAL rational Gram norm of gamma+mu.
 
 **Definition 1.3 (weight).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.weight`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.weight`
 
-*Formalization.* `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.weight` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.weight` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -46,9 +46,9 @@ A complete carrier label has rational weight oscillatorEnergy(d)+q_mu(gamma).
 
 **Theorem 1.4 (common denominator).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.common_denominator`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.common_denominator`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.common_denominator` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.common_denominator` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -58,9 +58,9 @@ There exist s>0 and integral nu with s mu_i=nu_i in every coordinate. The empty 
 
 **Definition 1.5 (clearedCharge).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.clearedCharge`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.clearedCharge`
 
-*Formalization.* `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.clearedCharge` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.clearedCharge` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -70,9 +70,9 @@ The integral charge map is phi(gamma)=s gamma+nu.
 
 **Theorem 1.6 (clearedCharge injective).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.clearedCharge_injective`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.clearedCharge_injective`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.clearedCharge_injective` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.clearedCharge_injective` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -82,9 +82,9 @@ A positive common denominator makes phi injective on the entire integral charge 
 
 **Theorem 1.7 (chargeWeight cleared).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.chargeWeight_cleared`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.chargeWeight_cleared`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.chargeWeight_cleared` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.chargeWeight_cleared` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -94,9 +94,9 @@ Exact denominator clearing gives q_mu(gamma)=chargeEnergy(phi(gamma))/s^2, with 
 
 **Theorem 1.8 (chargeWeight nonneg).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.chargeWeight_nonneg`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.chargeWeight_nonneg`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.chargeWeight_nonneg` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.chargeWeight_nonneg` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -106,9 +106,9 @@ Positive definiteness of the ORIGINAL real Gram matrix makes every rational shif
 
 **Theorem 1.9 (charge sublevel finite).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.charge_sublevel_finite`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.charge_sublevel_finite`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.charge_sublevel_finite` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.charge_sublevel_finite` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -118,9 +118,9 @@ Every rational charge sublevel is finite by injection into an existing integral 
 
 **Theorem 1.10 (sublevel finite).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.sublevel_finite`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.sublevel_finite`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.sublevel_finite` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.sublevel_finite` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -130,9 +130,9 @@ Every rational total-energy sublevel is finite by the product of a charge sublev
 
 **Theorem 1.11 (attained minimum).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.attained_minimum`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.attained_minimum`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.attained_minimum` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.attained_minimum` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -142,9 +142,9 @@ There exists an actual charge attaining a nonnegative GLOBAL rational minimum. I
 
 **Theorem 1.12 (fiber finite).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.fiber_finite`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.fiber_finite`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.fiber_finite` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.fiber_finite` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -154,17 +154,17 @@ Every exact rational energy fiber of the full charge/oscillator label set is fin
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.attained_minimum`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.chargeWeight`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.chargeWeight_cleared`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.chargeWeight_nonneg`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.charge_sublevel_finite`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.clearedCharge`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.clearedCharge_injective`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.common_denominator`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.fiber_finite`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.pairing`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.sublevel_finite`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetEnergy.weight`
-- Dependency: [D5/S3/VertexAlgebra/LatticeDualCosetModule](LatticeDualCosetModule.md)
-- Dependency: [D5/S3/VertexAlgebra/LatticeEnergyGrading](LatticeEnergyGrading.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.attained_minimum`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.chargeWeight`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.chargeWeight_cleared`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.chargeWeight_nonneg`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.charge_sublevel_finite`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.clearedCharge`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.clearedCharge_injective`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.common_denominator`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.fiber_finite`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.pairing`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.sublevel_finite`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy.weight`
+- Dependency: [D5/S3/VertexAlgebra/LatticeEnergyGrading](../LatticeEnergyGrading.md)
+- Dependency: [D5/S3/VertexAlgebra/Sectors/LatticeDualCosetModule](LatticeDualCosetModule.md)

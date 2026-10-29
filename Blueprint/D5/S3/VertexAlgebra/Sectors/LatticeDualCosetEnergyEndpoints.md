@@ -8,9 +8,9 @@ Under positive original real Gram, original two-sided complex inverse H, integra
 
 **Theorem 1.1 (bottom eigenvector).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetEnergyEndpoints.bottom_eigenvector`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergyEndpoints.bottom_eigenvector`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetEnergyEndpoints.bottom_eigenvector` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergyEndpoints.bottom_eigenvector` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -20,9 +20,9 @@ The constructed nonnegative attained minimum has a nonzero actual eigenvector in
 
 **Theorem 1.2 (all eigenspaces finite dimensional).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetEnergyEndpoints.all_eigenspaces_finiteDimensional`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergyEndpoints.all_eigenspaces_finiteDimensional`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetEnergyEndpoints.all_eigenspaces_finiteDimensional` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergyEndpoints.all_eigenspaces_finiteDimensional` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -32,9 +32,9 @@ For EVERY complex lambda, the actual original-omega L_0 eigenspace is finite dim
 
 **Theorem 1.3 (half shift actual bottom multiplicity).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetEnergyEndpoints.half_shift_actual_bottom_multiplicity`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergyEndpoints.half_shift_actual_bottom_multiplicity`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetEnergyEndpoints.half_shift_actual_bottom_multiplicity` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergyEndpoints.half_shift_actual_bottom_multiplicity` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -44,7 +44,7 @@ For Gram [2] and mu=1/2, every charge weight is at least 1/4, and the ACTUAL ori
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetEnergyEndpoints.all_eigenspaces_finiteDimensional`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetEnergyEndpoints.bottom_eigenvector`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetEnergyEndpoints.half_shift_actual_bottom_multiplicity`
-- Dependency: [D5/S3/VertexAlgebra/LatticeDualCosetSpectrum](LatticeDualCosetSpectrum.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergyEndpoints.all_eigenspaces_finiteDimensional`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergyEndpoints.bottom_eigenvector`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergyEndpoints.half_shift_actual_bottom_multiplicity`
+- Dependency: [D5/S3/VertexAlgebra/Sectors/LatticeDualCosetSpectrum](LatticeDualCosetSpectrum.md)

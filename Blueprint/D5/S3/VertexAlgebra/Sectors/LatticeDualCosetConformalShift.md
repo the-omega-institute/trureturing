@@ -10,9 +10,9 @@ Classical construction context: Bakalov-Kac, math/0402315v1, section 4.1. The im
 
 **Theorem 1.1 (normal current shift).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetConformalShift.normal_current_shift`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformalShift.normal_current_shift`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetConformalShift.normal_current_shift` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformalShift.normal_current_shift` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,5 +22,5 @@ The normal coefficient at m+1 equals its unshifted value plus beta_j H_i(m), bet
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetConformalShift.normal_current_shift`
-- Dependency: [D5/S3/VertexAlgebra/LatticeDualCosetConformal](LatticeDualCosetConformal.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformalShift.normal_current_shift`
+- Dependency: [D5/S3/VertexAlgebra/Sectors/LatticeDualCosetConformal](LatticeDualCosetConformal.md)

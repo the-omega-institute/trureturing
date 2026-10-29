@@ -10,9 +10,9 @@ Classical construction context: Bakalov-Kac, math/0402315v1, section 4.1. The im
 
 **Theorem 1.1 (moduleL virasoro).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetVirasoroLaw.moduleL_virasoro`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetVirasoroLaw.moduleL_virasoro`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetVirasoroLaw.moduleL_virasoro` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetVirasoroLaw.moduleL_virasoro` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,5 +22,5 @@ All integer actual original-omega modes obey Virasoro with central charge rank(D
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetVirasoroLaw.moduleL_virasoro`
-- Dependency: [D5/S3/VertexAlgebra/LatticeDualCosetVirasoro](LatticeDualCosetVirasoro.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetVirasoroLaw.moduleL_virasoro`
+- Dependency: [D5/S3/VertexAlgebra/Sectors/LatticeDualCosetVirasoro](LatticeDualCosetVirasoro.md)

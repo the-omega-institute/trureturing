@@ -10,9 +10,9 @@ Classical construction context: Bakalov-Kac, math/0402315v1, section 4.1. The im
 
 **Theorem 1.1 (chargeWeight expansion).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.chargeWeight_expansion`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.chargeWeight_expansion`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.chargeWeight_expansion` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.chargeWeight_expansion` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -22,9 +22,9 @@ Exact rational duality G mu=beta gives q_mu(gamma)=q_mu(0)+chargeEnergy(gamma)+g
 
 **Theorem 1.2 (weight levels).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.weight_levels`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.weight_levels`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.weight_levels` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.weight_levels` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -34,9 +34,9 @@ For a globally minimizing charge gamma_0, every basis weight is q_mu(gamma_0)+n 
 
 **Theorem 1.3 (moduleL basis zero).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.moduleL_basis_zero`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.moduleL_basis_zero`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.moduleL_basis_zero` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.moduleL_basis_zero` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -46,9 +46,9 @@ Under both original inverse equations and exact rational duality, ACTUAL L_0 of 
 
 **Definition 1.4 (rationalGrade).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.rationalGrade`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.rationalGrade`
 
-*Formalization.* `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.rationalGrade` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.rationalGrade` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -58,9 +58,9 @@ The grade at rational e is exactly the submodule supported on all actual labels 
 
 **Theorem 1.5 (moduleL coeff).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.moduleL_coeff`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.moduleL_coeff`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.moduleL_coeff` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.moduleL_coeff` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -70,9 +70,9 @@ For arbitrary actual v and every label a, coeff(L_0 v,a)=cast(weight(a)) coeff(v
 
 **Theorem 1.6 (moduleL eigen iff).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.moduleL_eigen_iff`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.moduleL_eigen_iff`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.moduleL_eigen_iff` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.moduleL_eigen_iff` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -82,9 +82,9 @@ For every mixed or homogeneous actual v, L_0 v=cast(e)v if and only if v belongs
 
 **Definition 1.7 (gradeCoeffEquiv).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.gradeCoeffEquiv`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.gradeCoeffEquiv`
 
-*Formalization.* `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.gradeCoeffEquiv` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.gradeCoeffEquiv` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -94,9 +94,9 @@ The entire exact rational energy fiber parametrizes the grade by finitely suppor
 
 **Theorem 1.8 (eigenspace finiteDimensional).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.eigenspace_finiteDimensional`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.eigenspace_finiteDimensional`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.eigenspace_finiteDimensional` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.eigenspace_finiteDimensional` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -106,14 +106,14 @@ Positive original Gram makes every actual L_0 eigenspace at a rational eigenvalu
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.chargeWeight_expansion`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.eigenspace_finiteDimensional`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.gradeCoeffEquiv`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.moduleL_basis_zero`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.moduleL_coeff`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.moduleL_eigen_iff`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.rationalGrade`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy.weight_levels`
-- Dependency: [D5/S1/Eigenstructure/DiagonalTensorEigenspace](../../S1/Eigenstructure/DiagonalTensorEigenspace.md)
-- Dependency: [D5/S3/VertexAlgebra/LatticeDualCosetEnergy](LatticeDualCosetEnergy.md)
-- Dependency: [D5/S3/VertexAlgebra/LatticeDualCosetVirasoro](LatticeDualCosetVirasoro.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.chargeWeight_expansion`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.eigenspace_finiteDimensional`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.gradeCoeffEquiv`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.moduleL_basis_zero`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.moduleL_coeff`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.moduleL_eigen_iff`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.rationalGrade`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy.weight_levels`
+- Dependency: [D5/S1/Eigenstructure/DiagonalTensorEigenspace](../../../S1/Eigenstructure/DiagonalTensorEigenspace.md)
+- Dependency: [D5/S3/VertexAlgebra/Sectors/LatticeDualCosetEnergy](LatticeDualCosetEnergy.md)
+- Dependency: [D5/S3/VertexAlgebra/Sectors/LatticeDualCosetVirasoro](LatticeDualCosetVirasoro.md)

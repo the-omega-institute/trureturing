@@ -10,9 +10,9 @@ Classical construction context: Bakalov-Kac, math/0402315v1, section 4.1. The im
 
 **Definition 1.1 (minimizingCharge).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetGrading.minimizingCharge`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetGrading.minimizingCharge`
 
-*Formalization.* `D5/S3/VertexAlgebra/LatticeDualCosetGrading.minimizingCharge` (`✓ std3`).
+*Formalization.* `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetGrading.minimizingCharge` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -22,9 +22,9 @@ Choose the charge whose existence and global minimality were proved using finite
 
 **Theorem 1.2 (actual mode grade).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetGrading.actual_mode_grade`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetGrading.actual_mode_grade`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetGrading.actual_mode_grade` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetGrading.actual_mode_grade` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -34,9 +34,9 @@ If an ORIGINAL state has integer weight k and a module vector has rational weigh
 
 **Theorem 1.3 (positive energy).**
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeDualCosetGrading.positive_energy`
+Lean statement: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetGrading.positive_energy`
 
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeDualCosetGrading.positive_energy` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetGrading.positive_energy` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -46,7 +46,7 @@ There is a constructed nonnegative attained minimum h; all basis weights are h+n
 
 ## References
 
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetGrading.actual_mode_grade`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetGrading.minimizingCharge`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeDualCosetGrading.positive_energy`
-- Dependency: [D5/S3/VertexAlgebra/LatticeDualCosetPositiveEnergy](LatticeDualCosetPositiveEnergy.md)
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetGrading.actual_mode_grade`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetGrading.minimizingCharge`
+- Truth anchor: `D5/S3/VertexAlgebra/Sectors/LatticeDualCosetGrading.positive_energy`
+- Dependency: [D5/S3/VertexAlgebra/Sectors/LatticeDualCosetPositiveEnergy](LatticeDualCosetPositiveEnergy.md)
