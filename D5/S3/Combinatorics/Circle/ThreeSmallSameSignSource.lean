@@ -152,10 +152,11 @@ private theorem one_block (D : ℕ) (hD : 0 < D) (f : ℕ → ℤ)
     congr 1
     omega
 
+-- The two insertion schedules check each intermediate prefix separately.
 set_option maxHeartbeats 800000 in
 private theorem two_blocks (B D : ℕ) (hB : 0 < B) (hD : 0 < D)
     (N d e z : ℤ) (hd : 0 < d) (he : 0 < e) (hz : 0 < z)
-    (hdN : d < N) (heN : e < N) (hzN : z < N)
+    (hdN : d < N) (hzN : z < N)
     (hde : 2 * d = N + e)
     (hez : 2 * (4 : ℤ) ^ B * e = N + z)
     (hzd : 2 * (4 : ℤ) ^ D * z = N + d)
@@ -340,6 +341,72 @@ private theorem two_blocks (B D : ℕ) (hB : 0 < B) (hD : 0 < D)
     simp only [List.filter_cons, List.filter_nil, hp1, hp0, hpg, hpl, hpl',
       Bool.false_eq_true, ↓reduceIte, List.nil_append, List.append_nil]
     rw [hYjoin, List.append_assoc, hZjoin]
+
+private theorem aligned_power (A B D : ℕ) (hD : 0 < D)
+    (d e z : ℤ)
+    (hd : d = 4 * (4 : ℤ) ^ B * 4 ^ D + 2 * 4 ^ D + 1)
+    (he : e = 4 * (4 : ℤ) ^ D * 4 ^ A + 2 * 4 ^ A + 1)
+    (hz : z = 4 * (4 : ℤ) ^ A * 4 ^ B + 2 * 4 ^ B + 1)
+    (hde : e ≤ d) (hdz : z ≤ d) :
+    ∃ j : ℕ, 1 ≤ j ∧ j ≤ D ∧
+      d ≤ (4 : ℤ) ^ j * z ∧ (4 : ℤ) ^ j * z ≤ 2 * (d + z) := by
+  let F : ℤ := (4 : ℤ) ^ A
+  let G : ℤ := (4 : ℤ) ^ B
+  let H : ℤ := (4 : ℤ) ^ D
+  change d = 4 * G * H + 2 * H + 1 at hd
+  change e = 4 * H * F + 2 * F + 1 at he
+  change z = 4 * F * G + 2 * G + 1 at hz
+  have hF : 1 ≤ F := one_le_pow₀ (by norm_num)
+  have hG : 1 ≤ G := one_le_pow₀ (by norm_num)
+  have hH : 1 ≤ H := one_le_pow₀ (by norm_num)
+  have hAB : A ≤ B := by
+    by_contra h
+    have h4 : 4 * G ≤ F := by
+      have hh := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 4) (show B + 1 ≤ A by omega)
+      simpa only [pow_succ, G, F, mul_comm] using hh
+    have hprod := mul_le_mul_of_nonneg_left (show (3 : ℤ) ≤ F - G by omega)
+      (show 0 ≤ H by omega)
+    nlinarith only [hd, he, hde, hprod, hF, hH]
+  have hAD : A ≤ D := by
+    by_contra h
+    have h4 : 4 * H ≤ F := by
+      have hh := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 4) (show D + 1 ≤ A by omega)
+      simpa only [pow_succ, H, F, mul_comm] using hh
+    have hprod := mul_le_mul_of_nonneg_right hG (show 0 ≤ F - H by omega)
+    nlinarith only [hd, hz, hdz, hprod, h4, hG, hH]
+  have hFG : F ≤ G := pow_le_pow_right₀ (by norm_num) hAB
+  by_cases hAD' : A = D
+  · have hFH : F = H := by simp only [F, H, hAD']
+    have hd' := hd
+    rw [← hFH] at hd'
+    have hGF : G = F := by nlinarith only [hd', hz, hdz, hFG]
+    have hdz' : d = z := by rw [hd, hz, ← hFH, hGF]
+    refine ⟨1, by omega, hD, ?_, ?_⟩
+    rw [pow_one, ← hdz']
+    · nlinarith only [hd, hG, hH, mul_nonneg (show 0 ≤ G by omega) (show 0 ≤ H by omega)]
+    · rw [pow_one, ← hdz']; omega
+  · let j := D - A
+    let q : ℤ := (4 : ℤ) ^ j
+    have hj : 1 ≤ j := by dsimp [j]; omega
+    have hq : 1 ≤ q := one_le_pow₀ (by norm_num)
+    have hFq : F * q = H := by
+      dsimp [F, q, H, j]
+      rw [← pow_add, Nat.add_sub_of_le hAD]
+    have hqH : q ≤ H := by
+      exact pow_le_pow_right₀ (by norm_num) (show j ≤ D by dsimp [j]; omega)
+    have hqz : q * z = 4 * G * H + q * (2 * G + 1) := by
+      rw [hz, ← hFq]
+      ring
+    have hlow := mul_le_mul_of_nonneg_left (show (1 : ℤ) ≤ 2 * G + 1 - 2 * F by omega)
+      (show 0 ≤ q by omega)
+    have hupp := mul_le_mul_of_nonneg_right hqH (show 0 ≤ 2 * G + 1 by omega)
+    refine ⟨j, hj, by dsimp [j]; omega, ?_, ?_⟩
+    · change d ≤ q * z
+      nlinarith only [hd, hqz, hlow, hFq, hq]
+    · change q * z ≤ 2 * (d + z)
+      have hGH := mul_nonneg (show 0 ≤ G by omega) (show 0 ≤ H by omega)
+      have hz0 : 0 ≤ z := by nlinarith only [hz, hF, hG, mul_nonneg (show 0 ≤ F by omega) (show 0 ≤ G by omega)]
+      nlinarith only [hd, hqz, hupp, hGH, hH, hz0]
 
 
 end D5.S3.Combinatorics.Circle.ThreeSmallSameSignSource
