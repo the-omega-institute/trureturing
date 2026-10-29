@@ -294,10 +294,12 @@ def weight (x : Model) : ℕ := x.support.card + if x.level = 0 then 0 else 1
 private theorem weight_add (x y : Model) : weight (x+y) ≤ weight x + weight y := by
   have hc := Finset.card_union_le x.support y.support
   unfold weight
-  change (x.support ∪ y.support).card + (if (x+y).level = 0 then 0 else 1) ≤ _
+  rw [support_add]
   by_cases hx : x.level = 0 <;> by_cases hy : y.level = 0
   · have hxy : (x+y).level = 0 := by
-      apply Fin.ext; change min 2 (_+_) = 0; simp [hx,hy]
+      apply Fin.ext
+      rw [level_add_val]
+      simp [hx,hy]
     simp only [hx,hy,hxy,ite_true,add_zero]; exact hc
   · simp only [hx,hy,ite_true,ite_false,add_zero]; split_ifs <;> omega
   · simp only [hx,hy,ite_true,ite_false,add_zero]; split_ifs <;> omega
