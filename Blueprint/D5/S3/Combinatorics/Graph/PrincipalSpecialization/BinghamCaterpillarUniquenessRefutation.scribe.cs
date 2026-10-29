@@ -24,7 +24,7 @@ internal sealed class BinghamCaterpillarUniquenessRefutationDocument : IScribeDo
                 "Both base compositions have three spine vertices."),
             Node("listed", "All listed exceptions", "listed", All("a", Call("Parts", Id("la")), All("b", Call("Parts", Id("lb")),
                 Iff(Call("listed",Id("a"),Id("b")), Or(Call("pairIso",Id("a"),Id("b"),Call("baseA"),Call("baseB")),
-                    Exists("j", Positive(), Call("pairIso",Id("a"),Id("b"),Call("alpha",Id("j")),Call("beta",Id("j"))))))),
+                    Exists("j", Positive(), Call("pairIso",Id("a"),Id("b"),Call("alpha",Id("j")),Call("beta",Id("j")))))))),
                 "The positive natural j has no upper bound; alpha(j)=(5,j,j,4,3) and beta(j)=(4,j,j,5,3) are reused from the first-question module. In particular j=1 remains included. Pair isomorphism takes the full unordered isomorphism closure of the base and every family pair."),
             Node("claim", "Remark 3.11, the whole second assertion", "claim", Iff(Id("claim"), ClaimBody()),
                 "n ranges over every natural number at least one; la and lb are arbitrary natural lengths. The two compositions are source-admissible and each has total size n. If their ordinary second polynomials differ and third polynomials agree identically, the assertion says their unordered graph-isomorphism pair is listed. The base exception and every positive-j family are included. This is an assertion over all sizes, not a finite search bound."),
@@ -72,7 +72,7 @@ internal sealed class BinghamCaterpillarUniquenessRefutationDocument : IScribeDo
     private static Formula Ordinary() => All("V",Seq(Id("Type"),Star),Seq(OpenBracket,Call("Fintype",Id("V")),CloseBracket,Sp,
         All("G",Call("SimpleGraph",Id("V")),All("k",Nat(),Eq(Call("ordinary",Id("G"),Id("k")),
             Seq(new Formula.Subscript(F.Sum,Seq(Id("c"),Colon,Call("Coloring",Id("G"),Call("Fin",Id("k"))))),Sp,
-                new Formula.Power(Id("X"),Seq(new Formula.Subscript(F.Sum,Seq(Id("v"),Colon,Id("V"))),Sp,Call("val",Call("c",Id("v"))))))))));
+                new Formula.Power(Id("X"),Seq(new Formula.Subscript(F.Sum,Seq(Id("v"),Colon,Id("V"))),Sp,Call("val",Call("c",Id("v")))))))))));
     private static Formula Iso(string a, string b) => Call("Iso",Id(a),Id(b));
     private static Formula PairIso() => Iff(Call("pairIso",Id("a"),Id("b"),Id("c"),Id("d")),
         Or(And(Iso("a","c"),Iso("b","d")),And(Iso("a","d"),Iso("b","c"))));
