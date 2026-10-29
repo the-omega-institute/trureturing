@@ -74,7 +74,7 @@ def toySource (visible : Bool) : Source (toyInterface.{u} visible) where
   observe z := ⟨if visible then z.down else false⟩
   legal _ _ := False
   kernel _ _ h := h.elim
-  refusal _ _ := (⟨()⟩, ⟨()⟩, ⟨()⟩)
+  refusal _ _ _ := (⟨()⟩, ⟨()⟩, ⟨()⟩)
 
 def toyPolicy (visible : Bool) : Policy (toyInterface.{u} visible) (ULift.{u} Unit) where
   write c _ _ := c

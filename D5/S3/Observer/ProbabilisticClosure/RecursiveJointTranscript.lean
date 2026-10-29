@@ -43,14 +43,14 @@ structure Source (T : Interface.{u}) where
   legal : {i j : T.Ty} → (a : T.Action i j) → T.State i → Prop
   kernel : {i j : T.Ty} → (a : T.Action i j) → (z : T.State i) →
     legal a z → PMF (Output T a)
-  refusal : {i j : T.Ty} → (a : T.Action i j) → T.State i →
-    T.Event a × T.Terminal a × T.Record a
+  refusal : {i j : T.Ty} → (a : T.Action i j) → (z : T.State i) →
+    ¬ legal a z → T.Event a × T.Terminal a × T.Record a
 
 open Classical in
 def Source.total {T : Interface.{u}} (S : Source T) {i j : T.Ty}
     (a : T.Action i j) (z : T.State i) : PMF (Output T a) :=
   if h : S.legal a z then S.kernel a z h else
-    PMF.pure (S.refusal a z |>.1, Sum.inr (S.refusal a z).2.1, (S.refusal a z).2.2)
+    PMF.pure ((S.refusal a z h).1, Sum.inr (S.refusal a z h).2.1, (S.refusal a z h).2.2)
 
 /-- Only successful successors are quotiented; every event, record and terminal
 is retained exactly. The realized image changes no output equality. -/
