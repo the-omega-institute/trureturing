@@ -18,7 +18,11 @@ and [TeX](https://math.berkeley.edu/~reb/papers/aut/aut.tex), author-hosted
 corrected version containing the 2018-02-23 correction remarks.
 The locators below use this version's printed pages, rather than journal pagination.
 
-**Locators.** Section 4, p. 13, defines the two Weil generators and their central
+## Verified locator
+
+DOI: 10.1007/s002220050232.
+
+Section 4, p. 13, defines the two Weil generators and their central
 relation on the entire group ring. Theorem 4.1 and its S-generator calculation,
 p. 14, give the theta transformation. Corollary 4.2 (Milgram), p. 15, states
 $\sum_{a\in M'/M} e(a^2/2)=\sqrt{|M'/M|}\,e((b^+-b^-)/8)$;
