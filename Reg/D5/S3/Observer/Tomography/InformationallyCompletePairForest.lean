@@ -70,7 +70,7 @@ private theorem dependence : ObservationalDependence signature.{u} actual := by
 
 def source_registration : Registration arena.{u} (type_of% (@result.{u})) where
   actual := actual
-  bridge := by simp [arena, actual, realize]
+  bridge := by simp [actual, realize]
   variation := ⟨by intro α _ _ f g; simpa [actual, realize] using result f g,
     rejected, rejected_law⟩
   sensitivity := by
@@ -99,9 +99,7 @@ def registration :
   realization := .source arena.{u} ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some (realize signature.{u}
-    (fun _ _ h => @decide (Function.Injective h) (Classical.propDecidable _))
-    (fun e => nomatch e))
+  readout := some (realize signature.{u} actual.readout actual.anchor)
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
