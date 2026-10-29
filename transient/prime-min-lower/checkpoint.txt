@@ -1,0 +1,1 @@
+WIP: implement finite geometric prime-shell uniform lower correction
