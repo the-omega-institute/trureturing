@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:7ebf05720fc7b3c5d460ce9e44972127dc8f3d364a2f50c4d4299704ff9ae51f
   normalized_sha256: sha256:7ebf05720fc7b3c5d460ce9e44972127dc8f3d364a2f50c4d4299704ff9ae51f
 cas_ref: sha256:7ebf05720fc7b3c5d460ce9e44972127dc8f3d364a2f50c4d4299704ff9ae51f
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Agency/MinimumInstalledReadout.installed_readout_optimum
+    target_statement_id: sha256:901812a953b86f59533463157d1027936bccf7de3fca2f4fdb1d38401d19eb0a
 receipts:
   unresolved_subitems: []
