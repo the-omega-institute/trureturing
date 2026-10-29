@@ -3161,8 +3161,9 @@ $\mathscr R_t$ 包括已知源语法、公开 $X,D,n$、所选门／脉冲字、
 后续消费者若要仅取得 (61.4) 的态，必须实际限制其访问权限如定义 51.1：
 所有可读辅助输入固定且与未知来源无关，制备语法和选择者记录保留在消费者之外。
 若语法可读，输入任务已经改变。
-特别，若 $\mathscr R_t$ 含可分辨的完整树标签，不同来源的经典记录正交，
-总制备向量的内积还须乘 $\langle\mathscr R_s|\mathscr R_t\rangle$，
+特别，若完整记录含可分辨的完整树标签，不同来源的经典记录可分辨。
+对两个固定的纯经典记录值 $\mathscr R_s,\mathscr R_t$，总制备向量的内积还须乘
+$\langle\mathscr R_s|\mathscr R_t\rangle$；若记录随机，则须保留其实际律，不能任选纯记录替代，
 不能把 (61.5) 或 (62.9) 称为包含这些可读记录后的总 Gram。
 这些等式严格指指定量子载体，包括其内部的场与标签两个相干扇区。
 
@@ -3179,7 +3180,7 @@ V_{s,t}J_{2m}|0^{2m}\rangle
 $$
 
 其逻辑门数至多 $2g_{X,D}$，脉冲数至多
-$[42(2m-1)+5],2g_{X,D}$，所有分隔位最终为零。
+$[42(2m-1)+5]\times2g_{X,D}$，所有分隔位最终为零。
 任意四个已知来源的量子输出 Gram 为
 
 $$
@@ -3191,20 +3192,44 @@ $$
 
 对高度不同的来源可取公开共同 $D\ge\max(\operatorname{ht}s,\operatorname{ht}t)$；
 随后增加 $D$ 只按 $P_{X,D}\otimes P_{X,D}$ 填充。
-若选择者以任意实际联合律 $\mu(s,t)$ 随机选择，量子边缘与完整经典—量子输出分别为
+若选择者以任意实际联合律 $\mu(s,t)$ 随机选择，全部实际经典记录仍取值于其原有
+可测空间 $(\mathcal R,\Sigma)$，不限制为有限或离散记录。记随机来源对为 $(S,T)$，
+完整记录为 $\mathsf R$；记录包括完整源语法，故 $(S,T)$ 可由记录读出。
+对任意 $B\in\Sigma$，记实际联合律的分量测度
+$\nu_{s,t}(B)=\Pr\{S=s,T=t,\mathsf R\in B\}$，于是
+$\nu_{s,t}(\mathcal R)=\mu(s,t)$。量子边缘与完整经典—量子输出为
 
 $$
 \begin{aligned}
-\rho_\mu&=\sum_{s,t\in T_D}\mu(s,t)\,widetilde\pi_s\otimes\widetilde\pi_t,\\
-\Omega_\mu&=\sum_{s,t\in T_D}\mu(s,t)
- |\mathscr R_{s,t}\rangle\langle\mathscr R_{s,t}|
- \otimes\widetilde\pi_s\otimes\widetilde\pi_t,
-\quad\widetilde\pi_t=|\psi_{X,D,n}(t)\rangle\langle\psi_{X,D,n}(t)|.
+\rho_\mu&=\sum_{s,t\in T_D}\mu(s,t)\,\widetilde\pi_s\otimes\widetilde\pi_t,\\
+\Omega_\nu(B)&=\sum_{s,t\in T_D}\nu_{s,t}(B)
+ \,\widetilde\pi_s\otimes\widetilde\pi_t,\qquad B\in\Sigma,\\
+\widetilde\pi_t&=|\psi_{X,D,n}(t)\rangle\langle\psi_{X,D,n}(t)|,
+\qquad\Omega_\nu(\mathcal R)=\rho_\mu.
 \end{aligned}
 \tag{63.3}
 $$
 
-这里完整记录包括两条制备字及共同选择记录；额外的选择者随机种子按其实际条件律保留。
+这里 $\Omega_\nu$ 是经典记录空间上的正算子值可数可加测度，
+$\operatorname{Tr}\Omega_\nu(B)=\Pr\{\mathsf R\in B\}$，总迹为一；
+它同时给出记录事件与指定量子载体的联合状态，不是测量仪器的效果算子。
+若实际记录域可数，可等价写成密度算子
+
+$$
+\Omega_\nu=\sum_{s,t\in T_D}\sum_{r\in\mathcal R}
+ \nu_{s,t}(\{r\})\,|r\rangle\langle r|
+ \otimes\widetilde\pi_s\otimes\widetilde\pi_t.
+$$
+
+连续记录仍用 (63.3)，不为每个连续值假设一个归一正交向量或丢弃该记录。
+完整记录包括两条制备字及共同选择记录，所有实际种子、时间和随机化读数均按
+$\nu$ 的实际联合律保留；同一 $(s,t)$ 可对应多个记录值。
+对每个 $\mu(s,t)>0$，实际条件记录律就是 $\nu_{s,t}/\mu(s,t)$；
+零概率来源对的分量测度为零，不须人为指定其条件记录。
+将每个来源对的记录写成单个纯经典投影的充分条件是：存在实际记录值
+$r_{s,t}$，使所有 $B\in\Sigma$ 均满足
+$\nu_{s,t}(B)=\mu(s,t)\mathbf1_B(r_{s,t})$，即该对的条件记录律为 Dirac 质量。
+这不是本定理对随机选择者的假设；固定来源对也不保证其记录纯。
 仅给两个边缘选择律不能据此把 $\rho_\mu$ 改写成两个边缘态的独立乘积。
 
 证明。在两个固定的逻辑块上依次执行定理 62.2 的相位已修正门字，
@@ -3216,7 +3241,18 @@ $$
 两份相同已知语法只是对两个空白块各做一次制备，不调用未知态克隆。
 共同深度与其增加的相容性由 (61.6) 的张量积给出，不附加来源相关高度位。
 
-条件在实际选择 $(s,t)$ 上，量子结果就是 (63.1)，故保留选择律及全部记录得到 (63.3)。
+对每次满足上述制备合同的实际实现，指定量子结果由所选 $(s,t)$ 按 (63.1) 决定，
+控制记录不读取相干分支；额外种子或时间读数不会改变该对的量子密度算子。
+因此在任意记录事件 $B$ 上，按实际联合律积分得到
+$\sum_{s,t}\nu_{s,t}(B)\widetilde\pi_s\otimes\widetilde\pi_t$，即 (63.3)。
+每项为正且来源对有限，故该测度可数可加；各量子因子的迹均为一，给出所列记录概率。
+取 $B=\mathcal R$ 得原量子边缘，可数记录时逐单点展开给出上述块对角密度算子。
+若满足所列 Dirac 条件，记录测度才可按该条件替换为每对的一个纯经典投影。
+例如 $D=0,n=1,X=\mathrm c$，一个公平种子 $z\in\{0,1\}$ 的两个值均选择
+$(\alpha,\alpha)$，但保留两个不同完整记录 $r_0,r_1$。完整输出为
+$(|r_0\rangle\langle r_0|+|r_1\rangle\langle r_1|)/2
+\otimes\widetilde\pi_\alpha\otimes\widetilde\pi_\alpha$，秩二且纯度 $1/2$；
+其量子边缘仍为纯乘积，故用一个纯记录会改变完整输出。
 若另外供应 $\mu(s,t)=\mu_1(s)\mu_2(t)$，有限分配律才直接给
 $\rho_\mu=(\sum_s\mu_1(s)\widetilde\pi_s)\otimes(\sum_t\mu_2(t)\widetilde\pi_t)$。
 例如同一公平标签在 $(\alpha,\alpha),(\beta,\beta)$ 中选择，两边边缘相同，
