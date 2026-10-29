@@ -16,11 +16,7 @@ namespace Reg.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy
 noncomputable section
 universe u
 
-structure Parameters where
-  V : Type u
-  fintypeV : Fintype V
-  topologyV : TopologicalSpace V
-  discreteV : @DiscreteTopology V topologyV
+abbrev Parameters := _root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.Parameters
 
 abbrev signature : Signature where
   Params := Parameters.{u}
@@ -73,21 +69,6 @@ private theorem compact_actual_law : compactArena.{u}.Law actual := by
   exact @_root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_isCompact_isClosed
     P.V P.fintypeV P.topologyV P.discreteV edge
 
-/- The source declaration quantifies its carrier and instances implicitly.
-   Expose the same law through the explicit parameter record used by the
-   registration so telescope reconstruction sees the parameter binders in the
-   source shape, while the proof still comes from the original theorem. -/
-theorem compact_source_statement :
-    ∀ (P : Parameters.{u}) (edge : P.V → P.V → Prop),
-      letI := P.topologyV
-      letI := P.discreteV
-      actual.readout () P edge = edgeLanguage edge ∧
-        IsCompact (actual.readout () P edge) ∧ IsClosed (actual.readout () P edge) := by
-  intro P edge
-  refine ⟨rfl, ?_⟩
-  exact @_root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_isCompact_isClosed
-    P.V P.fintypeV P.topologyV P.discreteV edge
-
 private theorem compact_rejected_law : ¬ compactArena.{u}.Law rejected := by
   intro h
   have hzero := (h sampleParameters sampleEdgeTrue).1
@@ -99,16 +80,22 @@ private theorem compact_rejected_law : ¬ compactArena.{u}.Law rejected := by
   exact hmem
 
 theorem compact_source_bridge :
-    (type_of% (@compact_source_statement.{u})) ↔
+    (type_of% (@_root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_isCompact_isClosed.{u})) ↔
       compactArena.{u}.Law actual := by
   constructor
   · intro h P edge
-    exact h P edge
-  · intro h P edge
-    exact h P edge
+    refine ⟨rfl, ?_⟩
+    exact @h P.V P.fintypeV P.topologyV P.discreteV edge
+  · intro h V fintypeV topologyV discreteV edge
+    let P : Parameters.{u} := {
+      V := V
+      fintypeV := fintypeV
+      topologyV := topologyV
+      discreteV := discreteV }
+    exact (h P edge).2
 
 def compactFamily : Registration compactArena.{u}
-    (type_of% (@compact_source_statement.{u})) where
+    (type_of% (@_root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_isCompact_isClosed.{u})) where
   actual := actual
   bridge := compact_source_bridge
   variation := ⟨compact_actual_law, rejected, compact_rejected_law⟩
@@ -127,16 +114,17 @@ def compactFamily : Registration compactArena.{u}
     cases i
     refine ⟨sampleParameters, sampleEdgeTrue, sampleEdgeFalse, ?_⟩
     intro heq
-    change edgeLanguage sampleEdgeTrue = edgeLanguage sampleEdgeFalse at heq
+    have hset : edgeLanguage sampleEdgeTrue = edgeLanguage sampleEdgeFalse := by
+      simpa only [actual] using heq
     have hmem : (fun _ : ℕ => (ULift.up () : sampleParameters.V)) ∈
         edgeLanguage sampleEdgeFalse := by
-      rw [← heq]
+      rw [← hset]
       exact sampleLanguage_nonempty.some_mem
     rcases hmem with ⟨path, hpath, _⟩
     exact hpath 0
 
 noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@compact_source_statement.{u})
+    (@_root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_isCompact_isClosed.{u})
     (Realization signature.{u}) Type Unit where
   unitName := `Reg.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_isCompact_isClosed.__information_unit
   realizationName := `Reg.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.compactFamily
@@ -156,7 +144,7 @@ noncomputable def registration_1 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `Reg.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy
+    owner := `D5.S1.Dynamics.Symbolic.FiniteGraphEntropy
     definition := none
     coordinates := #[0]
     readouts := #[{
@@ -183,17 +171,6 @@ private theorem shift_actual_law : shiftArena.{u}.Law actual := by
   exact @_root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_shift_invariant
     P.V P.fintypeV P.topologyV P.discreteV edge
 
-theorem shift_source_statement :
-    ∀ (P : Parameters.{u}) (edge : P.V → P.V → Prop),
-      letI := P.topologyV
-      letI := P.discreteV
-      actual.readout () P edge = edgeLanguage edge ∧
-        MapsTo (FullShift.shift (1 : ℕ)) (actual.readout () P edge) (actual.readout () P edge) := by
-  intro P edge
-  refine ⟨rfl, ?_⟩
-  exact @_root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_shift_invariant
-    P.V P.fintypeV P.topologyV P.discreteV edge
-
 private theorem shift_rejected_law : ¬ shiftArena.{u}.Law rejected := by
   intro h
   have hzero := (h sampleParameters sampleEdgeTrue).1
@@ -205,16 +182,22 @@ private theorem shift_rejected_law : ¬ shiftArena.{u}.Law rejected := by
   exact hmem
 
 theorem shift_source_bridge :
-    (type_of% (@shift_source_statement.{u})) ↔
+    (type_of% (@_root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_shift_invariant.{u})) ↔
       shiftArena.{u}.Law actual := by
   constructor
   · intro h P edge
-    exact h P edge
-  · intro h P edge
-    exact h P edge
+    refine ⟨rfl, ?_⟩
+    exact @h P.V P.fintypeV P.topologyV P.discreteV edge
+  · intro h V fintypeV topologyV discreteV edge
+    let P : Parameters.{u} := {
+      V := V
+      fintypeV := fintypeV
+      topologyV := topologyV
+      discreteV := discreteV }
+    exact (h P edge).2
 
 def shiftFamily : Registration shiftArena.{u}
-    (type_of% (@shift_source_statement.{u})) where
+    (type_of% (@_root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_shift_invariant.{u})) where
   actual := actual
   bridge := shift_source_bridge
   variation := ⟨shift_actual_law, rejected, shift_rejected_law⟩
@@ -233,16 +216,17 @@ def shiftFamily : Registration shiftArena.{u}
     cases i
     refine ⟨sampleParameters, sampleEdgeTrue, sampleEdgeFalse, ?_⟩
     intro heq
-    change edgeLanguage sampleEdgeTrue = edgeLanguage sampleEdgeFalse at heq
+    have hset : edgeLanguage sampleEdgeTrue = edgeLanguage sampleEdgeFalse := by
+      simpa only [actual] using heq
     have hmem : (fun _ : ℕ => (ULift.up () : sampleParameters.V)) ∈
         edgeLanguage sampleEdgeFalse := by
-      rw [← heq]
+      rw [← hset]
       exact sampleLanguage_nonempty.some_mem
     rcases hmem with ⟨path, hpath, _⟩
     exact hpath 0
 
 noncomputable def registration_2 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@shift_source_statement.{u})
+    (@_root_.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_shift_invariant.{u})
     (Realization signature.{u}) Type Unit where
   unitName := `Reg.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.edgeLanguage_shift_invariant.__information_unit
   realizationName := `Reg.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy.shiftFamily
@@ -262,7 +246,7 @@ noncomputable def registration_2 : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `Reg.D5.S1.Dynamics.Symbolic.FiniteGraphEntropy
+    owner := `D5.S1.Dynamics.Symbolic.FiniteGraphEntropy
     definition := none
     coordinates := #[0]
     readouts := #[{
