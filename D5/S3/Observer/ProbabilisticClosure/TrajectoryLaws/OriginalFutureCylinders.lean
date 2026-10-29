@@ -148,6 +148,70 @@ theorem past_future_mass (θ : Presentation H) (J : Measure (PathSpace H))
   simp_rw [hmass, mul_assoc]
   rw [← Finset.mul_sum, ← Finset.mul_sum, sum_path_tails]
 
+/-- A prescribed hidden path after the cut, followed by an arbitrary output word,
+retains its exact path weight in the original marked-cylinder law. -/
+theorem past_route_future_mass (θ : Presentation H) (J : Measure (PathSpace H))
+    [IsProbabilityMeasure J] (hc : HasOriginalCylinders J θ) (t : ℤ) (m n l : ℕ)
+    (h : Fin (m+1) → H) (w : Fin m → Bool) (k : Fin (n+1) → H)
+    (v : Fin n → Bool) (u : Fin l → Bool) (hk : k 0 = h (Fin.last m)) :
+    J.real (MarkedPredictiveQuotient.cylinder (t-m) m h w ∩
+      MarkedPredictiveQuotient.cylinder t n k v ∩
+      Prod.snd ⁻¹' visibleCylinder (t+n) l u) =
+      θ.initial (h 0) * pathMass θ.matrix m h w *
+        (pathMass θ.matrix n k v * futureMass θ.matrix (k (Fin.last n)) l u) := by
+  let g := joinHidden m n h (Fin.tail k)
+  have hg (i : Fin (n+1)) :
+      g ⟨m+i.val, by omega⟩ = k i := by
+    rw [show g = joinHidden m n h (Fin.tail k) from rfl, join_right, ← hk]
+    simp only [Fin.cons_self_tail]
+  have he : MarkedPredictiveQuotient.cylinder (t-m) m h w ∩
+      MarkedPredictiveQuotient.cylinder t n k v =
+      MarkedPredictiveQuotient.cylinder (t-m) (m+n) g (Fin.append w v) := by
+    ext z
+    constructor
+    · rintro ⟨⟨hh,hw⟩,⟨hh',hv⟩⟩
+      constructor
+      · intro i
+        by_cases hi : i.val ≤ m
+        · exact (hh ⟨i.val, by omega⟩).trans (join_left m n h (Fin.tail k) ⟨i.val, by omega⟩).symm
+        · let j : Fin (n+1) := ⟨i.val-m, by omega⟩
+          have ht : t-(m:ℤ)+i.val = t+j.val := by dsimp [j]; omega
+          have hi' : i = ⟨m+j.val, by omega⟩ := by ext; dsimp [j]; omega
+          rw [ht,hi',hg]
+          exact hh' j
+      · intro i
+        refine Fin.addCases (fun j => ?_) (fun j => ?_) i
+        · simpa only [Fin.append_left, Fin.val_castAdd] using hw j
+        · rw [Fin.append_right]
+          convert hv j using 1 <;> simp only [Fin.val_natAdd, Nat.cast_add] <;> congr 1 <;> omega
+    · rintro ⟨hh,hw⟩
+      constructor
+      · constructor
+        · intro i
+          exact (hh ⟨i.val, by omega⟩).trans (join_left m n h (Fin.tail k) i)
+        · intro i
+          simpa only [Fin.append_left, Fin.val_castAdd] using hw (Fin.castAdd n i)
+      · constructor
+        · intro i
+          have hh' := (hh ⟨m+i.val, by omega⟩).trans (hg i)
+          convert hh' using 1 <;> push_cast <;> congr 1 <;> omega
+        · intro i
+          have hw' := hw (Fin.natAdd m i)
+          rw [Fin.append_right] at hw'
+          convert hw' using 1 <;> simp only [Fin.val_natAdd, Nat.cast_add] <;> congr 1 <;> omega
+  rw [he]
+  have hm := past_future_mass θ J hc (t+n) (m+n) l g (Fin.append w v) u
+  have ht : t+(n:ℤ)-(m+n:ℕ) = t-m := by push_cast; omega
+  rw [ht] at hm
+  have h0 : g 0 = h 0 := join_left m n h (Fin.tail k) 0
+  have hn : g (Fin.last (m+n)) = k (Fin.last n) := by
+    convert hg (Fin.last n) using 1
+  have hp : pathMass θ.matrix (m+n) g (Fin.append w v) =
+      pathMass θ.matrix m h w * pathMass θ.matrix n k v := by
+    rw [show g = joinHidden m n h (Fin.tail k) from rfl, path_concat, ← hk, Fin.cons_self_tail]
+  rw [h0,hn,hp] at hm
+  simpa only [mul_assoc] using hm
+
 #print axioms past_future_mass
 
 end D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.OriginalFutureCylinders

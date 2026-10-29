@@ -189,6 +189,80 @@ theorem original_rectangle_occurrence (θ : Presentation H)
     exact zero_le
 
 
+/-- The particular selected hidden route followed by the specified visible word.
+All later coordinates, including the unused suffix of the block, are unrestricted. -/
+def routeWord (θ : Presentation H) (t : ℤ) {h r : H}
+    (a : LabelledRoute θ h r) (w : List Bool) : Set (PathSpace H) :=
+  MarkedPredictiveQuotient.cylinder t a.length a.states a.labels ∩
+    Prod.snd ⁻¹' visibleCylinder (t+a.length) w.length w.get
+
+private theorem routeWord_measurable (θ : Presentation H) (t : ℤ) {h r : H}
+    (a : LabelledRoute θ h r) (w : List Bool) : MeasurableSet (routeWord θ t a w) :=
+  (cylinder_measurable _ _ _ _).inter (by
+    unfold visibleCylinder
+    simp only [Set.setOf_forall]
+    exact MeasurableSet.iInter fun i => (measurableSet_singleton _).preimage (by fun_prop))
+
+/-- Exact probability of the prescribed hidden route and word, tested against
+EVERY measurable complete marked-past event, rather than just finite cylinders. -/
+theorem route_word_past_factor (θ : Presentation H) (J : Measure (PathSpace H))
+    [IsProbabilityMeasure J] (hc : HasOriginalCylinders J θ) (t : ℤ) (h r : H)
+    (a : LabelledRoute θ h r) (w : List Bool)
+    (A : Set (ℕ → H × Bool)) (hA : MeasurableSet A) :
+    J ((past t ⁻¹' A) ∩ routeWord θ t a w) =
+      J ((state t ⁻¹' {h}) ∩ (past t ⁻¹' A)) *
+        ENNReal.ofReal (pathMass θ.matrix a.length a.states a.labels * ∑ j, product θ w r j) := by
+  let c := ENNReal.ofReal (pathMass θ.matrix a.length a.states a.labels * ∑ j, product θ w r j)
+  have hp : Measurable (past (H := H) t) := by unfold past; fun_prop
+  have hs : Measurable (state (H := H) t) := by unfold state; fun_prop
+  let μ := (J.restrict (routeWord θ t a w)).map (past t)
+  let ν := c • (J.restrict (state t ⁻¹' {h})).map (past t)
+  haveI : IsFiniteMeasure ν := Measure.smul_finite _ ENNReal.ofReal_ne_top
+  have he : μ = ν := by
+    apply NativeBorelCEvent.measure_eq_of_prefix
+    intro n
+    apply Measure.ext_of_singleton
+    intro p
+    let k : Fin (n+1+1) → H := Fin.snoc (fun i => (p i.rev).1) h
+    let v : Fin (n+1) → Bool := fun i => (p i.rev).2
+    let E := MarkedPredictiveQuotient.cylinder (t-(n+1:ℕ)) (n+1) k v
+    have hr : Measurable (readPrefix (S := H × Bool) (n+1)) := by unfold readPrefix; fun_prop
+    change μ.map (readPrefix (n+1)) {p} = ν.map (readPrefix (n+1)) {p}
+    dsimp [μ,ν]
+    rw [Measure.map_map hr hp, Measure.map_apply (hr.comp hp) (measurableSet_singleton p),
+      Measure.restrict_apply ((measurableSet_singleton p).preimage (hr.comp hp)),
+      Measure.map_smul _ hr.aemeasurable, Measure.smul_apply, smul_eq_mul,
+      Measure.map_map hr hp, Measure.map_apply (hr.comp hp) (measurableSet_singleton p),
+      Measure.restrict_apply ((measurableSet_singleton p).preimage (hr.comp hp))]
+    have hsub : routeWord θ t a w ⊆ state t ⁻¹' {h} := by
+      intro z hz
+      change z.1 t = h
+      simpa only [Nat.cast_zero, add_zero, a.first] using hz.1.1 0
+    have hi : (past t ⁻¹' (readPrefix (n+1) ⁻¹' {p})) ∩ routeWord θ t a w =
+        E ∩ routeWord θ t a w := by
+      rw [show E = (past t ⁻¹' (readPrefix (n+1) ⁻¹' {p})) ∩ (state t ⁻¹' {h}) from
+        (past_prefix_cylinder t (n+1) p h).symm]
+      exact (Set.inter_assoc _ _ _).symm.trans (congrArg _ (Set.inter_eq_right.mpr hsub)).symm.symm
+    rw [hi, past_prefix_cylinder]
+    rw [← ENNReal.ofReal_toReal (measure_ne_top J _)]
+    change ENNReal.ofReal (J.real _) = _
+    have hm := past_route_future_mass θ J hc t (n+1) a.length w.length k v a.states a.labels w.get
+      (by simpa [k] using a.first)
+    rw [show E ∩ routeWord θ t a w =
+      (MarkedPredictiveQuotient.cylinder (t-(n+1:ℕ)) (n+1) k v ∩
+        MarkedPredictiveQuotient.cylinder t a.length a.states a.labels) ∩
+        Prod.snd ⁻¹' visibleCylinder (t+a.length) w.length w.get from Set.inter_assoc _ _ _ |>.symm]
+    rw [hm, a.last, ← product_word]
+    rw [ENNReal.ofReal_mul (mul_nonneg (θ.initial_nonneg _) (path_nonneg θ _ _ _))]
+    rw [← hc (t-(n+1:ℕ)) (n+1) k v]
+    change ENNReal.ofReal (J.real E) * c = c * J E
+    rw [ENNReal.ofReal_toReal (measure_ne_top J _), mul_comm]
+  have ha := congrArg (fun ζ : Measure (ℕ → H × Bool) => ζ A) he
+  dsimp [μ,ν] at ha
+  simp only [Measure.map_apply hp hA, Measure.restrict_apply (hp hA),
+    Measure.smul_apply, smul_eq_mul] at ha
+  simpa only [Set.inter_comm, mul_comm, c] using ha
+
 private theorem closed_stationary (θ : Presentation H) (C : Finset H)
     (hclosed : ∀ (i : C) j, j ∉ C → ∀ x, θ.matrix x i.val j = 0) :
     ∀ j : C, ∑ i : C, θ.initial i.val *
