@@ -239,7 +239,10 @@ private lemma tail_zero_exclusion {b C : ℝ} (hb : 0 < b) (hb2 : b < 1 / 2)
             (C * Real.exp (-b * u) : ℂ)) (Ioi U) := by
         have hbase : IntegrableOn (fun u : ℝ => (C * Real.exp (-b * u) : ℂ))
             (Ioi U) := by
-          simpa only [Complex.ofReal_mul, Complex.ofReal_exp] using he.ofReal
+          convert (IntegrableOn.ofReal (𝕜 := ℂ) he) using 1
+          funext u
+          rw [← Complex.ofReal_mul]
+          rfl
         have hexp : AEStronglyMeasurable
             (fun u : ℝ => Complex.exp (-s * (u : ℂ)))
             (volume.restrict (Ioi U)) := by fun_prop
@@ -318,10 +321,33 @@ private lemma tail_zero_exclusion {b C : ℝ} (hb : 0 < b) (hb2 : b < 1 / 2)
     have hMder := hQM.2.2.2.congr_of_eventuallyEq hEqQM.symm
     have hderQM : deriv (Q U) z = deriv (M U) z := by
       rw [hQM.2.2.2.deriv, hMder.deriv]
+    have hodeM : z * deriv (deriv (L U)) z + 2 * deriv (L U) z =
+        -deriv (M U) z + M U z +
+          (U : ℂ) ^ 2 * (f U : ℂ) * Complex.exp (-z * (U : ℂ)) := by
+      calc
+        _ = -deriv (Q U) z + Q U z +
+            (U : ℂ) ^ 2 * (f U : ℂ) * Complex.exp (-z * (U : ℂ)) := hLode
+        _ = _ := by rw [hderQM, hQM.2.1]
     rw [deriv_fun_sub hK.differentiableAt hL.differentiableAt]
-    rw [deriv_fun_sub hK.deriv.differentiableAt hL.deriv.differentiableAt]
-    rw [hderQM, hQM.2.1]
-    linear_combination hLode
+    have hsecond :
+        deriv (deriv (fun w => K U b C w - L U w)) z =
+          deriv (deriv (K U b C)) z - deriv (deriv (L U)) z := by
+      have heq : deriv (fun w => K U b C w - L U w) =ᶠ[𝓝 z]
+          (fun w => deriv (K U b C) w - deriv (L U) w) := by
+        filter_upwards [isOpen_lt continuous_const Complex.continuous_re |>.mem_nhds hz]
+          with w hw
+        exact deriv_fun_sub
+          (K_analytic (U := U) (b := b) (C := C) hb w (by change -b < w.re; linarith)
+            |>.differentiableAt)
+          (hQU.1 w hw |>.differentiableAt)
+      calc
+        _ = deriv (fun w => deriv (K U b C) w - deriv (L U) w) z := heq.deriv_eq
+        _ = _ := deriv_fun_sub hK.deriv.differentiableAt hL.deriv.differentiableAt
+    rw [hsecond]
+    calc
+      _ = z * deriv (deriv (K U b C)) z + 2 * deriv (K U b C) z -
+          (z * deriv (deriv (L U)) z + 2 * deriv (L U) z) := by ring
+      _ = _ := by rw [hodeM]; ring
   have hcont := integrable_and_analytic_of_euler hX hXnonneg (show -b < 0 by linarith)
     (forcing_meromorphic hb hb2 hU) (forcing_real_analytic hb hb2 hU) hode
   have hGanalytic : AnalyticOnNhd ℂ (fun z => complexMGF id μ (-z))
@@ -355,40 +381,47 @@ private lemma tail_zero_exclusion {b C : ℝ} (hb : 0 < b) (hb2 : b < 1 / 2)
   have hzero_one : meromorphicOrderAt
       (fun z => E z - (-deriv (M U) z + M U z)) (1 : ℂ) = ⊤ := by
     apply meromorphicOrderAt_eq_top_iff.mpr
-    have h1 : (1 : ℂ) ∈ {z : ℂ | -b < z.re} := by
-      change -b < (1 : ℝ)
-      linarith
-    filter_upwards [(isOpen_lt continuous_const Complex.continuous_re |>.mem_nhds h1).filter_mono
-      nhdsWithin_le_nhds]
-      with z hz
-    have hzpos : 0 < z.re := by linarith
+    have h1 : (1 : ℂ) ∈ {z : ℂ | 0 < z.re} := by norm_num
+    have hEv : ∀ᶠ z : ℂ in 𝓝 (1 : ℂ), z ∈ {z : ℂ | 0 < z.re} :=
+      isOpen_lt continuous_const Complex.continuous_re |>.mem_nhds h1
+    filter_upwards [hEv.filter_mono nhdsWithin_le_nhds]
+      with z hzpos
+    have hz : -b < z.re := by linarith
     have hQ := (hLaplace U hU).2 z hzpos
     have hM :=
       (ThetaLaplaceContinuation.theta_laplace_continuation U hU0).2.2.2.1 z hzpos
     have hEqH : (fun w : ℂ => K U b C w - complexMGF id μ (-w)) =ᶠ[𝓝 z]
         (fun w => L U w) := by
-      filter_upwards [isOpen_lt continuous_const Complex.continuous_re |>.mem_nhds hz]
+      filter_upwards [isOpen_lt continuous_const Complex.continuous_re |>.mem_nhds hzpos]
         with w hw
       rw [hGid w hw]
       ring
     have hL1 := hQ.2.1
     have hH1 : HasDerivAt (fun w : ℂ => K U b C w - complexMGF id μ (-w))
         (deriv (L U) z) z := by
-      exact hL1.congr_of_eventuallyEq hEqH.symm
+      exact (hL1.congr_of_eventuallyEq hEqH).congr_deriv hQ.2.1.deriv.symm
     have hH2 : HasDerivAt
         (deriv (fun w : ℂ => K U b C w - complexMGF id μ (-w)))
         (deriv (deriv (L U)) z) z := by
-      exact hQ.2.2.1.congr_of_eventuallyEq hEqH.deriv
+      exact (hQ.2.2.1.congr_of_eventuallyEq hEqH.deriv).congr_deriv
+        hQ.2.2.1.deriv.symm
     have hEqQM : Q U =ᶠ[𝓝 z] M U := by
-      filter_upwards [isOpen_lt continuous_const Complex.continuous_re |>.mem_nhds hz]
+      filter_upwards [isOpen_lt continuous_const Complex.continuous_re |>.mem_nhds hzpos]
         with w hw
       exact (ThetaLaplaceContinuation.theta_laplace_continuation U hU0).2.2.2.1 w hw |>.2.1
     have hMder := hM.2.2.2.congr_of_eventuallyEq hEqQM.symm
     have hderQM : deriv (Q U) z = deriv (M U) z := by
       rw [hM.2.2.2.deriv, hMder.deriv]
+    have hodeM : z * deriv (deriv (L U)) z + 2 * deriv (L U) z =
+        -deriv (M U) z + M U z +
+          (U : ℂ) ^ 2 * (f U : ℂ) * Complex.exp (-z * (U : ℂ)) := by
+      calc
+        _ = -deriv (Q U) z + Q U z +
+            (U : ℂ) ^ 2 * (f U : ℂ) * Complex.exp (-z * (U : ℂ)) := hQ.2.2.2
+        _ = _ := by rw [hderQM, hM.2.1]
     dsimp [E, forcing, euler]
-    rw [hH1.deriv, hH2.deriv, hderQM, hM.2.1]
-    linear_combination hQ.2.2.2
+    rw [hH1.deriv, hH2.deriv]
+    linear_combination hodeM
   have hdompre : IsPreconnected {z : ℂ | -b < z.re} :=
     (convex_halfSpace_re_gt (-b)).isPreconnected
   have ha : 1 - b < ρ.re := hρ
@@ -415,7 +448,8 @@ private lemma tail_zero_exclusion {b C : ℝ} (hb : 0 < b) (hb2 : b < 1 / 2)
     meromorphicOrderAt_congr hEqgerm
   rw [hForder] at horderEq
   rw [horderEq] at hEorder
-  norm_num at hEorder
+  have hbad' : (0 : ℤ) ≤ (-2 : ℤ) := WithTop.coe_le_coe.mp hEorder
+  omega
 
 theorem actual_theta_tail_exponential_zero_exclusion {b C : ℝ}
     (hb : 0 < b) (hb2 : b < 1 / 2) (hC : 0 ≤ C)
