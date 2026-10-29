@@ -170,6 +170,208 @@ The latter sign follows from $h\le a$. Concavity bounds $Q$ below by its endpoin
 
 Apply (2.1) to each actual pair $(K,U_T)$, integrate, and use $\mathbb E K=q$, $\mathbb E U_T=s$. Combining with the incidence identity gives the stated exact decomposition. Types of mass zero contribute zero, with no division by $x_T$. ∎
 
+**Theorem 2.2 (Shared-budget certificate on the nine-hub interval).** Let $s$ be finite and let $x$ be one profile of Definition 1.1. For each positive integer $k$ put
+
+$$
+m_k=\mathbb E\min(k,K).
+$$
+
+For every nonempty fixed $T\subseteq[s]$, writing $k=|T|$ and $b_T=\sum_{i\in T}y_i$, one has
+
+$$
+0<b_T\le m_k\le\min(k,q),\qquad
+U_T\ge\frac{k^2}{b_T}\ge\frac{k^2}{m_k}
+\ge\max\{k,k^2/q\}.\tag{2.2}
+$$
+
+In particular the following necessary overlap bound holds for this actual array:
+
+$$
+2J_s(x)\ge\mathbb E\frac{K^5}{m_K^2}.\tag{2.3}
+$$
+
+If $8\le q\le9$, then
+
+$$
+2J_s(x)\ge105q+84s-1000,\tag{2.4}
+$$
+
+with equality if and only if $s=8$, $q=8$ and $x_{[8]}=1$.
+
+**Proof.** Take an independent copy $T'$ drawn from this same array. For a fixed $T$,
+
+$$
+b_T=\sum_{i\in T}\mathbb P(i\in T')=\mathbb E|T\cap T'|
+\le\mathbb E\min(k,|T'|)=m_k\le\min(k,q).
+$$
+
+The inequalities $b_T>0$ and $m_k>0$ follow from the positive marginals and nonempty types. Cauchy–Schwarz applied within this one $T$ gives
+
+$$
+k^2=\left(\sum_{i\in T}\sqrt{y_i}\,y_i^{-1/2}\right)^2
+\le b_TU_T.
+$$
+
+This proves (2.2). A second application gives
+
+$$
+U_T^2\le k\sum_{i\in T}y_i^{-2},\qquad
+k^2\sum_{i\in T}y_i^{-2}\ge kU_T^2\ge\frac{k^5}{m_k^2}.
+$$
+
+Taking expectation proves (2.3) and also
+
+$$
+2J_s(x)\ge\mathbb E(KU_T^2).
+$$
+
+The bound $U_T\ge k^2/q$ retains the shared marginal budget $\sum_i y_i=q$ for every realized type; the two moment identities alone do not impose it. All copies, marginals and expectations above come from $x$.
+
+To prove (2.4), the needed integer-support certificate is
+
+$$
+G_q(k,u):=ku^2-230k-84u+125q+1000\ge0
+\quad\left(\begin{array}{l}8\le q\le9,\ k\in\mathbb Z_{\ge1},\\
+u\ge\max\{k,k^2/q\}\end{array}\right).\tag{2.5}
+$$
+
+Its equality class is exactly $q=8$, $k=8$, $u=8$. Here is a proof covering every positive integer $k$. Write $t=q-8\in[0,1]$.
+
+For $1\le k\le6$, complete the square:
+
+$$
+G_q(k,u)=k(u-42/k)^2+2000-230k-1764/k+125t.
+$$
+
+The constants after the square, before $125t$, for $k=1,\ldots,6$ are respectively
+
+$$
+6,\quad658,\quad722,\quad639,\quad2486/5,\quad326.
+$$
+
+They are all strictly positive, even without a restriction on $u$.
+
+For $k=7,8$, use $u\ge k$ and
+
+$$
+G_q(k,u)-G_q(k,k)=(u-k)\bigl[k(u+k)-84\bigr]\ge0.
+$$
+
+The bracket is positive because $2k^2-84>0$. The two endpoint values are
+
+$$
+G_q(7,7)=145+125t,\qquad G_q(8,8)=125t.
+$$
+
+Thus equality in these two cases requires exactly $t=0$, $k=8$, $u=8$.
+
+For $k=9$, put $v=81/q\ge9$. Since $u\ge v$,
+
+$$
+G_q(9,u)-G_q(9,v)=(u-v)\bigl[9(u+v)-84\bigr]\ge0.
+$$
+
+The bracket is positive. Direct expansion gives
+
+$$
+\begin{aligned}
+q^2G_q(9,v)
+&=125q^3-1070q^2-6804q+59049\\
+&=137+76t+1930t^2+125t^3>0.
+\end{aligned}\tag{2.6}
+$$
+
+For every integer $k\ge10$, set $v=k^2/q$. Again $u\ge v$ and
+
+$$
+G_q(k,u)-G_q(k,v)=(u-v)\bigl[k(u+v)-84\bigr]\ge0,
+$$
+
+since the bracket is at least $2k^3/q-84\ge2000/9-84>0$. Put $z=1/q\ge1/9$. Then
+
+$$
+\begin{aligned}
+&k^5z^2-84k^2z-\bigl[k^5/81-(28/3)k^2\bigr]\\
+&\hspace{1em}=(z-1/9)k^2\bigl[k^3(z+1/9)-84\bigr]\ge0,
+\end{aligned}
+$$
+
+because the last bracket is at least $2000/9-84>0$. Also $125q+1000\ge2000$. Therefore
+
+$$
+G_q(k,u)\ge\frac{k^5-756k^2-18630k+162000}{81}.
+$$
+
+Writing $v_0=k-10\ge0$, the numerator equals
+
+$$
+100+16250v_0+9244v_0^2+1000v_0^3+50v_0^4+v_0^5>0.\tag{2.7}
+$$
+
+This proves (2.5) and its full equality classification, without an upper bound on $k$.
+
+Apply (2.5) to the actual pairs $(K,U_T)$ using (2.2). Since $\mathbb E K=q$ and $\mathbb E U_T=s$,
+
+$$
+2J_s(x)\ge\mathbb E(KU_T^2)
+\ge230q+84s-125q-1000=105q+84s-1000.
+$$
+
+If the final bound is an equality, the two nonnegative gaps in this chain have expectation zero. In particular $G_q(K,U_T)=0$ for every positive-mass type. The equality classification forces $q=8$ and $K=U_T=8$ on every such type. Since every $y_i\le1$, the eight summands $y_i^{-1}$ in any such type must all equal one. These eight marginals use the entire budget $\sum_i y_i=8$. The strict positivity of every marginal excludes any further hub. Thus $s=8$ and the only possible type is $[8]$. Conversely the profile $x_{[8]}=1$ gives $2J_8=512=105\cdot8+84\cdot8-1000$.
+
+In particular (2.4) is strict for every $s\ge10$. The coefficient $84$ belongs to the new constrained certificate (2.5), whose domain includes $u\ge k^2/q$. It is not a choice of $\beta$ in (2.1), which has the different domain $u\ge k$ and requires $\beta\le\kappa_r$. No sufficiency of (2.2)–(2.3) for joint realizability is asserted. Zero type masses and positive marginals with no uniform lower bound are allowed throughout. Indeed $K\ge1$ implies $w_i\ge y_i$, hence
+
+$$
+2J_s(x)\ge\sum_i y_i^{-1}.
+$$
+
+For fixed finite $s$, an individual marginal tending to zero therefore forces the energy to infinity. Neither a limiting zero type mass nor a rare type alters the pointwise inequalities used above. ∎
+
+**Theorem 2.3 (Strict nine-hub comparison and quantitative compensation).** Let $s\ge10$ be finite and $8\le q\le9$. For every actual profile of mean $q$, with $t=q-8\in[0,1]$,
+
+$$
+\begin{aligned}
+2J_s(x)-2F_9(q)
+&>\frac{2048+23t+2360t^2+105t^3}{q^2}+84(s-10)\\
+&\ge\frac{2048}{81}+84(s-10)>0.
+\end{aligned}\tag{2.8}
+$$
+
+At $q=8$ this gives $2J_s(x)>680+84(s-10)$. In particular no actual profile on $[10]$ has $2J_{10}=648$ at that mean. For $s=10$, $q=8$, and the remainders of Theorem 2.1 with $r=9$, $\beta=\kappa_9=2+8\sqrt{63}$,
+
+$$
+R_{\mathrm{inc}}+R_{\mathrm{sc}}
+>164-16\sqrt{63}=32+(132-16\sqrt{63}).\tag{2.9}
+$$
+
+**Proof.** Here $2F_9(q)=81(217q-1224)/q^2$. The strict case of (2.4) gives
+
+$$
+2J_s(x)>105q-160+84(s-10).
+$$
+
+The exact difference is
+
+$$
+\begin{aligned}
+q^2\bigl[105q-160-2F_9(q)\bigr]
+&=105q^3-160q^2-17577q+99144\\
+&=2048+23t+2360t^2+105t^3.
+\end{aligned}
+$$
+
+All coefficients are positive and $q^2\le81$, proving (2.8) at both endpoints and throughout the interval. At $q=8$, (2.4) gives the claimed $680+84(s-10)$ bound directly. For the remainder assertion, the incidence identity in Theorem 2.1 gives exactly
+
+$$
+\begin{aligned}
+R_{\mathrm{inc}}+R_{\mathrm{sc}}
+&=2J_{10}-\bigl[(217-\kappa_9)8+10\kappa_9-1224\bigr]\\
+&=2J_{10}-516-16\sqrt{63}.
+\end{aligned}
+$$
+
+Subtract this constant from $2J_{10}>680$ to obtain (2.9). These bounds do not identify the true minimum at $q=8$, $s=10$, or an attaining array; in particular $680$ is not asserted to be optimal. ∎
+
 ## 3. Fixed hub count, strict equality and stability
 
 **Theorem 3.1 (The fixed-$r$ remainder as a stability estimate).** For every integer $r\ge5$, every profile on $[r]$ with $q\in[r-1,r]$ satisfies $J_r(x)\ge F_r(q)$. Write
@@ -261,7 +463,7 @@ $$
 
 Combining (3.4) with (3.1) gives (3.2). Finally $\Delta=0$ forces $p=0$ and every $y_i=q/r$. The displayed identities then give exactly $x^*(q)$. Conversely that candidate attains $F_r(q)$ by Definition 1.2. The proof did not require either $\theta$ or $1-\theta$ to be positive. ∎
 
-**Theorem 3.2 (Unrestricted profiles for $r=5,6,7,8$).** Let $r\in\{5,6,7,8\}$, $q\in[r-1,r]$, and let $x$ be any profile on any finite $[s]$ with $s\ge r$. Then
+**Theorem 3.2 (Unrestricted profiles for $r=5,6,7,8,9$).** Let $r\in\{5,6,7,8,9\}$, $q\in[r-1,r]$, and let $x$ be any profile on any finite $[s]$ with $s\ge r$. Then
 
 $$
 J_s(x)\ge F_r(q),
@@ -271,23 +473,23 @@ with equality exactly when $s=r$ and $x=x^*(q)$, up to relabeling. For $s\ge r+1
 
 $$
 J_s(x)-F_r(q)\ge\frac12+\frac{\beta_r}{2}(s-r-1),\qquad
-(\beta_5,\beta_6,\beta_7,\beta_8)=(23,32,42,53).\tag{3.5}
+(\beta_5,\beta_6,\beta_7,\beta_8,\beta_9)=(23,32,42,53,\kappa_9).\tag{3.5}
 $$
 
-For these same four values of $r$, every profile with $s\ge r+1$ and $q\ge r$ satisfies
+For these same five values of $r$, every profile with $s\ge r+1$ and $q\ge r$ satisfies
 
 $$
 2J_s(x)\ge r^3+\beta_r(s-r)+(D-\beta_r)(q-r)
 \ge r^3+\beta_r.\tag{3.6}
 $$
 
-**Proof.** The four choices of $\beta$ lie in $[2,\kappa_r]$: the comparisons $(\beta-2)^2\le8a(a^2-1)$ are respectively
+**Proof.** For $r=5,6,7,8$, the four choices of $\beta$ lie in $[2,\kappa_r]$: the comparisons $(\beta-2)^2\le8a(a^2-1)$ are respectively
 
 $$
 441\le480,\quad900\le960,\quad1600\le1680,\quad2601\le2688.
 $$
 
-Put $t=q-a\in[0,1]$ and $L_r(q)=f_r(q)+\beta_r(r+1-q)$. The following are exact polynomial identities:
+For these four values, put $t=q-a\in[0,1]$ and $L_r(q)=f_r(q)+\beta_r(r+1-q)$. The following are exact polynomial identities:
 
 $$
 \begin{array}{c|l}
@@ -305,7 +507,13 @@ $$
 2J_s(x)\ge L_r(q)+\beta_r(s-r-1),
 $$
 
-proving (3.5). For $s=r$, Theorem 3.1 gives the inequality and the complete equality class. Thus no assumption on the cardinalities in the support is needed.
+proving (3.5) for $r=5,6,7,8$. For $r=9$, Theorem 2.3 gives the stronger strict bound (2.8). Since
+
+$$
+\kappa_9=2+8\sqrt{63}<66<84,\qquad 2048/81>1,
+$$
+
+that bound implies (3.5) with $\beta_9=\kappa_9$ for every finite $s\ge10$ and $q\in[8,9]$. It uses no restriction on source cardinalities or positive type masses. For $s=r$, Theorem 3.1 gives the inequality and the complete equality class. Thus no assumption on the cardinalities in the support is needed.
 
 For (3.6), use Theorem 2.1 outside the candidate interval as allowed there. Since $f_r(r)=r^3$,
 
@@ -558,7 +766,7 @@ Here $N\ge n/2$. All the cost estimates hold for $n\ge2r$; the stronger $n\ge3r$
 
 **Theorem 6.1 (Uniform sufficient threshold and unique finite minimum).** Fix $r\ge5$. Let the admissible class $\mathcal A_r(n,\ell)$ be either of the following:
 
-1. for $r\in\{5,6,7,8\}$, all of $\mathcal G(n,\ell)$;
+1. for $r\in\{5,6,7,8,9\}$, all of $\mathcal G(n,\ell)$;
 2. for any $r\ge5$, the members of $\mathcal G(n,\ell)$ whose minimum degree is at least $r-2$.
 
 Define
@@ -596,7 +804,7 @@ E_r^{\min}(n,\ell):=\min_{G\in\mathcal A_r(n,\ell)}E(G)
 =\sum_{i=1}^rM_c(N-b_i),\tag{6.2}
 $$
 
-with $N,c,b_i$ as in Definition 5.1; the minimum of $\Phi$ is $m$ plus (6.2). The threshold is sufficient; it is not asserted to be least. For $r\ge9$, the second class here is a material minimum-degree restriction.
+with $N,c,b_i$ as in Definition 5.1; the minimum of $\Phi$ is $m$ plus (6.2). The threshold is sufficient; it is not asserted to be least. For $r\ge10$, the second class here is a material minimum-degree restriction; for $r=9$ the unrestricted conclusion holds throughout the interval $[L_9(n),U_9(n)]=[7n-62,8n-80]$.
 
 **Proof.** The candidate belongs to either stated class, has source degrees $r-1,r$, and its hub degrees exceed $r$ at this threshold. It has $E(H_r)\le C_0/n$ by Theorem 5.2. A graph with larger excess is already strictly worse than the candidate. It suffices to consider actual graphs $G$ with $E(G)\le C_0/n$.
 
@@ -652,7 +860,13 @@ $$
 J_s(x)\ge r^3/2+\beta_r/2\ge F_r(q_r)+\widehat\gamma,
 $$
 
-whereas (4.2) gives the same conclusion in the restricted class. This is the upper-capacity bridge: a graph with more hubs and $q_s>r$ is still separated by a fixed positive amount. Both cases therefore imply, using $F_r(q_r)>0$, $N_s\le n-r$ and (6.3)–(6.4),
+whereas (4.2) gives the same conclusion in the restricted class. In particular, for $r=9$ and an actual $s\ge10$, (3.6) is precisely
+
+$$
+2J_s(x)\ge729+\kappa_9(s-9)+(217-\kappa_9)(q_s-9)\qquad(q_s\ge9).
+$$
+
+Here $217-\kappa_9>0$, so the gap is at least $\kappa_9/2>1/2$, even when $q_s>9$. If instead $q_s\le9$, the same graph has $8<q_s\le9$, and (2.8) gives $J_s-F_9(q_s)>1024/81+42(s-10)>1/2$. These two cases cover the actual budget $q_s=m/(n-s)$ without substituting $q_r$ for it. Thus $\widehat\gamma=1/2$ is a common gap in both cases, with $C_0,A,K_0,R,B,H$ as defined in the statement. This is the upper-capacity bridge: a graph with more hubs and $q_s>r$ is still separated by a fixed positive amount. Both cases therefore imply, using $F_r(q_r)>0$, $N_s\le n-r$ and (6.3)–(6.4),
 
 $$
 E(G)-E(H_r)\ge\frac{\widehat\gamma}{n}-\frac H{n^3}>0.\tag{6.5}
@@ -800,7 +1014,7 @@ $$
 \|x^{(n)}-x^*(q_r)\|_1\longrightarrow0.\tag{7.3}
 $$
 
-Labels of the $r$ sinks may be chosen separately at each order; the limiting candidate is permutation invariant. In particular every hub degree divided by $n$ tends to $(1+\alpha)/r$. These conclusions allow $o(n)$ low-cardinality sources and unbounded sublinear hub imbalances. They do not assert finite disappearance of exceptional sources or a bounded difference of hub degrees.
+In the unrestricted class this includes $r=9$ and every $\alpha\in[7,8]$; for general $r\ge5$ the second class retains its minimum-degree hypothesis. Labels of the $r$ sinks may be chosen separately at each order; the limiting candidate is permutation invariant. In particular every hub degree divided by $n$ tends to $(1+\alpha)/r$. These conclusions allow $o(n)$ low-cardinality sources and unbounded sublinear hub imbalances. They do not assert finite disappearance of exceptional sources or a bounded difference of hub degrees.
 
 **Proof.** Theorem 6.1 gives the exact minimum at every sufficiently large order. For its balanced graph, $q_r\to1+\alpha$, $y_i=q_r/r+O(1/N)$, and the actual-edge error (6.3) together with (5.2) gives
 
@@ -836,7 +1050,7 @@ This proves 2 and completes all equivalences.
 
 The endpoint capacity hypotheses cannot be replaced by their density limits: $\alpha$ alone does not specify the least feasible integer hub count. At $\alpha=r-2$ the candidate full mass tends to zero, but its exact count is still $c\ge r$ at every finite order, connecting the entire construction. At $\alpha=r-1$ the missing-one masses may vanish, and $b=0$ gives an actual complete bipartite graph. All proofs above allow these zero-mass limits. ∎
 
-## 8. An unconditional upper interval and the remaining self-consistency gap
+## 8. An unconditional upper interval and the boundary of moment relaxation
 
 **Theorem 8.1 (An explicit unconditional upper-density interval for all $r$).** For every integer $r\ge5$, put
 
@@ -947,26 +1161,18 @@ $$
 8=U_T=\sum_{i\in T}y_i^{-1},\qquad y_i^{-1}\ge1.
 $$
 
-Every one of these eight marginals would equal one. Every positive-mass type would then contain all these eight elements, forcing $K\ge8$ almost surely. This contradicts the positive mass at $K=1$. Thus the laws disprove the sufficiency of the relaxed moment constraints, not the genuine-array target. ∎
+Every one of these eight marginals would equal one. Every positive-mass type would then contain all these eight elements, forcing $K\ge8$ almost surely. This contradicts the positive mass at $K=1$. The positive mass at $(K,U)=(9,9)$ also violates (2.2), since $q=8$ requires $U\ge81/8>9$ on every nine-element type of any actual array. Thus both laws exhibit the insufficiency of the relaxed moment constraints. They provide no genuine-array counterexample, and the exact relaxed optimum (8.3) coexists with the strictly larger actual-array bound of Theorem 2.3. ∎
 
-**Definition 8.3 (Remaining unconditional comparison).** For $r\ge9$ outside the unconditional region of Theorem 8.1, and without the support hypothesis of Theorem 4.1, the question is whether every genuine profile of mean $q\in[r-1,r]$ and finite $s\ge r$ satisfies
+**Definition 8.3 (Remaining comparison and its method boundary).** For $r\ge10$ outside the unconditional region of Theorem 8.1, and without the support hypothesis of Theorem 4.1, the remaining comparison asks whether every genuine profile of mean $q\in[r-1,r]$ and finite $s\ge r$ satisfies
 
 $$
 J_s(x)\ge F_r(q).
 $$
 
-Theorem 4.2 specifies a necessary weighted low-cardinality defect for any counterexample, and (8.2) already excludes sufficiently large $s$. At the concrete point $r=9$, $q=8$, $s=10$, the exact decomposition of Theorem 2.1 becomes
+Theorem 4.2 specifies a necessary weighted low-cardinality defect for any counterexample, and (8.2) already excludes sufficiently large $s$. This unrestricted comparison for $r\ge10$ remains open in that range; the conditional graph minimum of Theorem 6.1 does not settle it.
 
-$$
-2J_{10}(x)=516+16\sqrt{63}+R_{\mathrm{inc}}+R_{\mathrm{sc}}.
-$$
+For $r=9$, the full interval $q\in[8,9]$ is covered by Theorem 3.2. At $q=8$, $s=10$, (2.9) supplies the quantitative compensation above the moment-relaxation optimum $516+16\sqrt{63}$, with a strict margin greater than $32$ beyond the $132-16\sqrt{63}$ needed to reach $2F_9(8)=648$. The exact actual-array minimum and all minimizing arrays at that point are not determined here. The overlap constraints (2.2)–(2.3) are necessary, with no claim that they characterize every realizable joint law; the certificate (2.5) is asserted only for $q\in[8,9]$.
 
-Hence the missing inequality there is precisely
-
-$$
-R_{\mathrm{inc}}+R_{\mathrm{sc}}\ge132-16\sqrt{63},
-$$
-
-or else a genuine-array counterexample to it. The nonrealizability in Theorem 8.2 does not establish this positive quantitative compensation. The unrestricted comparison in this remaining range is open; the conditional graph minimum of Theorem 6.1 does not settle it.
+The shared-budget certificate and its nine-hub graph consequences are repo-derived for the array and graph classes defined here. The fixed-cost reduction, the actual-edge expansion and the two-hub convexity argument are supplied by the two cited repository volumes with the scope specified above; the original CDSO papers supply the definition and historical comparisons, not these higher-capacity minima. No new literature priority claim is made. The full text of the Zhao–Zhao work has not been obtained here, so its hypotheses, conclusions and possible overlap are not assessed and it is not used as an input theorem.
 
 ## 追加锚（本行以下为增补区）
