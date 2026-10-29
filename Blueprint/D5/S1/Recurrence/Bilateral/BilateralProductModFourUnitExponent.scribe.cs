@@ -34,7 +34,8 @@ internal sealed class BilateralProductModFourUnitExponentDocument : IScribeDocum
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The proved A380066 congruence", ResultFormula(),
                 "The contraction of the coefficientwise bilateral remainder gives a normalized "
-                + "integral fixed series and identifies every normalized integral solution with it. "
+                + "integral fixed series. The general normalized contraction theorem identifies "
+                + "every normalized integral solution with that constructed series. "
                 + "The fixed point identity makes the difference from twice the geometric series "
                 + "minus one divisible by four, yielding the stated congruence. The same argument "
                 + "works for every exponent parameter at least one.",
