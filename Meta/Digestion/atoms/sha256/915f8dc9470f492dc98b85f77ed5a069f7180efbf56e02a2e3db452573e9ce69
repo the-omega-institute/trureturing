@@ -1,0 +1,9 @@
+and, on the specified common edge space,
+
+$$
+v_n\longrightarrow v\text{ in }\ell^2,\qquad
+B_n\longrightarrow B,\quad \Sigma_n\longrightarrow\Sigma
+       \text{ in operator norm}.
+\tag{98.6}
+$$
+
