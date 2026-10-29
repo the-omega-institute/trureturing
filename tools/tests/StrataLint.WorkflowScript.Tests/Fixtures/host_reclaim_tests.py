@@ -344,6 +344,10 @@ class HostReclaimTests(unittest.TestCase):
                     process.stdin.flush()
                     self.assertEqual(b"saved\n", process.stdout.readline())
                     self.assertGreater(path.stat().st_mtime, self.cutoff)
+                    oid = run(["git", "-C", str(self.main), "hash-object", "--stdin"],
+                              input=unique, capture_output=True, check=True).stdout.strip()
+                    self.assertNotEqual(0, run(["git", "-C", str(self.main), "cat-file", "-e", oid],
+                                              capture_output=True).returncode)
             return result
         def activity():
             observed = cleanup.active_paths(self.root / "codex", scopes=[target])
@@ -357,13 +361,32 @@ class HostReclaimTests(unittest.TestCase):
             self.assertEqual(2, reads)
             self.assertEqual(("kept", "changed"), (result["action"], result["reason"]), result)
             self.assertEqual(unique, path.read_bytes())
-            oid = run(
-                ["git", "-C", str(self.main), "hash-object", "--stdin"],
-                input=unique, capture_output=True, check=True).stdout.strip()
-            self.assertNotEqual(0, run(["git", "-C", str(self.main), "cat-file", "-e", oid],
-                                      capture_output=True).returncode)
         finally:
             process.communicate(timeout=10)
+
+    def test_remnant_build_changes_during_final_recovery_read_are_retained(self):
+        for change in ("content", "metadata"):
+            with self.subTest(change=change):
+                target = self.remnant(change)
+                path = target / ".lake/build/object"
+                run = subprocess.run
+                reads = 0
+                def raced(arguments, **kwargs):
+                    nonlocal reads
+                    result = run(arguments, **kwargs)
+                    if arguments[-2:] == ["cat-file", "--batch"]:
+                        reads += 1
+                        if reads == 2:
+                            if change == "content":
+                                path.write_bytes(b"ordinary concurrent build save")
+                            else:
+                                path.chmod(path.stat().st_mode ^ stat.S_IXUSR)
+                    return result
+                with patch.object(cleanup.subprocess, "run", side_effect=raced):
+                    result = self.clean_remnant(target)
+                self.assertEqual(2, reads)
+                self.assertEqual(("kept", "changed"), (result["action"], result["reason"]), result)
+                self.assertTrue(path.exists())
 
     def test_remnant_sweep_uses_main_inventory_and_reports_without_verbose(self):
         target = self.remnant()

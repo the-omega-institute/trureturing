@@ -171,7 +171,8 @@ class RefRecovery:
         return missing
 
 
-def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, remnant=False, recovery=None):
+def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, remnant=False, recovery=None,
+                      verify_recovery=True):
     """Fingerprint owned, inactive trees without following links or crossing mounts."""
     path = Path(path).absolute()
     if path.name == ".git" and not reclaim:
@@ -255,10 +256,15 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, re
     if shape_reason:
         return dict(reason=shape_reason)
     result = dict(reason=None, fingerprint=digest.hexdigest(), apparent_bytes=apparent_bytes, lakes=lakes)
-    if remnant and blueprint:
+    if remnant and blueprint and verify_recovery:
         missing = recovery.check(blueprint)
         if missing:
             return dict(reason="blueprint_unrecoverable")
+        current = inspect_candidate(path, cutoff, protected, repository=repository, reclaim=reclaim,
+                                    remnant=True, recovery=recovery, verify_recovery=False)
+        if current != result:
+            return dict(reason="changed")
+        return current
     return result
 
 
