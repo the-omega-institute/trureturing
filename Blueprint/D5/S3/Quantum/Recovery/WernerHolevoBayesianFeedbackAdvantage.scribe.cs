@@ -71,7 +71,7 @@ internal sealed class WernerHolevoBayesianFeedbackAdvantageDocument : IScribeDoc
                             + "vanishes. Coordinate vectors give zero diagonal entries, and sums of two distinct "
                             + "coordinate vectors give opposite off-diagonal entries. Thus every K a is antisymmetric.")),
                     Paragraph(Text(
-                        "Taking traces of the channel identity on matrix units gives the trace-preservation identity "
+                        "The channel preserves traces, so Kraus normalization gives the identity "
                             + "Σₐ(K a)ᴴ(K a) = I. Write A(z) for the matrix of the linear map y ↦ z × y. "
                             + "The antisymmetry gives K a = A(z a)/√2, with z a = √2((K a)₂₁,(K a)₀₂,(K a)₁₀). "
                             + "Substituting the cross-product matrices and comparing diagonal and "
@@ -99,8 +99,10 @@ internal sealed class WernerHolevoBayesianFeedbackAdvantageDocument : IScribeDoc
                         "For the existential assertion choose l₁ i = A(eᵢ)/√2 and l₂ j = A(wⱼ)/√2, "
                             + "where eᵢ are the three coordinate vectors and "
                             + "w₀ = (2,2,−1)/3, w₁ = (−1,2,2)/3, w₂ = (2,−1,2)/3. "
-                            + "Expanding all matrix entries of the two operator sums shows that each equals "
-                            + "the Werner–Holevo map. Both chosen families therefore satisfy IsKrausDecomposition.")),
+                            + "The coordinate family's operator sum is the Werner–Holevo map. "
+                            + "The rotation vectors form the rows of an orthogonal matrix, so invariance under "
+                            + "unitary Kraus mixing gives the same map for the rotated family. "
+                            + "Both chosen families therefore satisfy IsKrausDecomposition.")),
                     Paragraph(Text(
                         "The first family's absolute values are (I − eᵢeᵢᴴ)/√2. For each i,j set "
                             + "p = I − eᵢeᵢᴴ, b = A(wⱼ)p and s = |Re(wⱼ)ᵢ|. The matrix "
