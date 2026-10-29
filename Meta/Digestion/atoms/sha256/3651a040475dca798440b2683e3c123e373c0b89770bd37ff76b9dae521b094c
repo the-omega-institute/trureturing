@@ -1,0 +1,5 @@
+**Reference 8.4 (boundedness convention).** Michael Vanden Boom,
+*Weak Cost Automata over Infinite Trees*, doctoral thesis,
+University of Oxford, 2012, §1.2, pp. 6–7. The relation used here is
+boundedness equivalence on every subset as defined in (NIC.37).
+
