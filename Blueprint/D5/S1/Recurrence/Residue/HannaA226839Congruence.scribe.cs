@@ -73,7 +73,7 @@ internal sealed class HannaA226839CongruenceDocument : IScribeDocumentDefinition
                 + "from QuarticEGFModFour, give the conclusion. Only integers are reduced to "
                 + "ZMod(3); there is no rational-to-residue-field homomorphism. "
                 + "The source's finite-check report supplies no universal proof. "
-                + "The proof is derived in this repository; bounded literature nonhits certify no priority.",
+                + "The proof is derived in this repository; the bounded literature screen found no settlement in its stated scope, and establishes neither priority nor the absence of prior work.",
                 DescribeRole.Theorem, new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("oeis-a226839-triangular-egf-mod-three"), ResolutionKind.Proved)))));
 
