@@ -108,7 +108,7 @@ internal sealed class StarGraphEvolutionMapsUnitarilySimilarDocument : IScribeDo
     {
         Formula n = X("n"), k = X("k"), ell = X("ℓ"), p = X("p");
         Formula phase = Call("Complex.exp",
-            Mul(Mul(Call("Complex.I"), Call("Complex.ofReal", k)),
+            Mul(Mul(Qualified("Complex", "I"), Call("Complex.ofReal", k)),
                 Call("Complex.ofReal", At(ell, At(Qualified("Prod", "fst"), p)))));
         Formula diagonal = At(Qualified("Matrix", "diagonal"),
             LambdaOf("p", IndexType(n), phase));
