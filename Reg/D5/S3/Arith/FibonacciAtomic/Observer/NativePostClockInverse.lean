@@ -125,11 +125,11 @@ noncomputable def postclockInverseRegistration :
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.Observer.NativePostClockInverse
     definition := none
-    coordinates := #[1]
+    coordinates := #[0]
     readouts := #[{
       path := #["body", "body", "body", "body", "body", "fn", "arg",
         "body", "body", "body", "arg", "body", "fn", "arg", "fn", "arg", "fn"]
-      stateBinder := 1, functionOperand := false, stateOperand := some #["arg"]
+      stateBinder := 1, functionOperand := false, stateOperand := none
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none

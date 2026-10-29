@@ -229,8 +229,9 @@ private theorem fresh_unique (b d : Bool) (p q : Address)
   · have hr : p ++ [true] ∈ (fresh false q).toFinset := by
       rw [← h]
       simp [fresh]
-    simp [fresh] at hr
-    rcases hr with hr | hr
+    have hr' : p ++ [true] = q ++ [false, false] ∨ p = q := by
+      simpa [fresh] using hr
+    rcases hr' with hr | hr
     · exact False.elim (suffix_ne (q ++ [false]) p (by simpa [List.append_assoc] using hr.symm))
     · exact ⟨rfl, hr⟩
   · have hr : p ++ [true] ∈ (fresh true q).toFinset := by rw [← h]; simp [fresh]
@@ -282,10 +283,11 @@ private theorem last_event (t : Source) (g : Call)
   | some g' =>
       have he' := he
       unfold lastEvent at he'
+      have hp' := List.find?_some he'
       have hh : zeros (edited t g) (zeroInclude t (edited t g) x) =
           (fresh (kind g') (address g')).toFinset ∧
           subtree (address g') (edited t g) = some (replacement (kind g')) :=
-        of_decide_eq_true (List.find?_some he')
+        of_decide_eq_true hp'
       have heq : g = g' := call_unique g g' (hz.symm.trans hh.1)
       simpa [heq] using he
 
@@ -395,7 +397,7 @@ private theorem replay_term (a c : ℚ) (e : Endpoint) (w : List Call) :
               cases t with
               | of b => cases b <;>
                   simp [replay, forward, kind, address, hs, run, ih, appendEndpoint,
-                    edited, replacement, hab, hba]
+                    edited, replacement, hab]
               | mul l r => simp [replay, forward, kind, address, hs, run]
       | split p =>
           cases hs : subtree p e.1 with
@@ -404,7 +406,7 @@ private theorem replay_term (a c : ℚ) (e : Endpoint) (w : List Call) :
               cases t with
               | of b => cases b <;>
                   simp [replay, forward, kind, address, hs, run, ih, appendEndpoint,
-                    edited, replacement, hab, hba]
+                    edited, replacement, hba]
               | mul l r => simp [replay, forward, kind, address, hs, run]
 
 private theorem encoded_trace (a c : ℚ) {w : List Call} {e : Endpoint}
@@ -429,7 +431,8 @@ private theorem edit_growth (t : Source) (ht : D t) (g : Call)
   refine ⟨hd, ?_⟩
   cases g <;>
     simp [Geometry.NativeGuardedLeafRepair.pairCost,
-      Geometry.NativeGuardedLeafRepair.promotions, Geometry.NativeGuardedLeafRepair.splits] at hh <;>
+      Geometry.NativeGuardedLeafRepair.promotions,
+      Geometry.NativeGuardedLeafRepair.splits] at hh <;>
     omega
 
 private theorem encoded_invariants (a c : ℚ) (ha : 0 < a) (hc : 0 < c)
