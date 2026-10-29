@@ -8,7 +8,7 @@ internal sealed class A397436GeneralSupercongruenceRefutationDocument : IScribeD
 {
     private const string Prefix = "D5/S3/ArithSums/A397436GeneralSupercongruenceRefutation.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/ArithSums/oeis2026a397436");
+        LibraryNoteRef.Create("D5/L/Certificates/oeis2026a397436");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A one-factor positive instance refutes the unrestricted signed product congruence.",

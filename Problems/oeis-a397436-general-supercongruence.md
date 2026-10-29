@@ -13,7 +13,7 @@ motivation_gids:
 ## Problem
 
 The selected external assertion is OEIS A397436 revision 44, Conjecture 3,
-quoted in Library/ArithSums/oeis2026a397436.md. It asserts the following
+quoted in Library/Certificates/oeis2026a397436.md. It asserts the following
 complete same-r event, with arbitrary signed m and inclusive endpoints:
 
 ```lean
