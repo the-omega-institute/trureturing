@@ -59,12 +59,11 @@ private lemma coe_modularLatticeEquiv (γ : SL(2, ℤ)) (τ : UpperHalfPlane)
   simp only [coordinates, periodPair, mul_one, Int.cast_sub, Int.cast_mul, Int.cast_neg,
     Int.cast_add]
   rw [UpperHalfPlane.coe_specialLinearGroup_apply]
-  simp only [Int.cast_ofNat, Int.cast_zero, Int.cast_one, Int.cast_neg,
-    Int.cast_intCast, Complex.ofReal_intCast]
+  push_cast
   rw [ModularGroup.denom_apply]
   have hd : (γ 0 0 : ℂ) * γ 1 1 - (γ 0 1 : ℂ) * γ 1 0 = 1 := by
     exact_mod_cast det_one γ
-  have hj := UpperHalfPlane.denom_ne_zero (γ : Matrix.GL (Fin 2) ℝ) τ
+  have hj := UpperHalfPlane.denom_ne_zero (γ : Matrix.GeneralLinearGroup (Fin 2) ℝ) τ
   rw [ModularGroup.denom_apply] at hj
   field_simp
   linear_combination hd * ((p.1 : ℂ) + p.2 * (τ : ℂ))
@@ -131,10 +130,17 @@ private lemma E2_transform (γ : SL(2, ℤ)) (τ : UpperHalfPlane) :
   simp only [ModularForm.SL_slash_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul,
     EisensteinSeries.D2, zpow_neg, zpow_ofNat] at h
   rw [riemannZeta_two] at h
-  have hj := UpperHalfPlane.denom_ne_zero (γ : Matrix.GL (Fin 2) ℝ) τ
+  have hj := UpperHalfPlane.denom_ne_zero (γ : Matrix.GeneralLinearGroup (Fin 2) ℝ) τ
   have hp : (π : ℂ) ≠ 0 := by exact_mod_cast Real.pi_ne_zero
-  field_simp at h ⊢
-  linear_combination (norm := ring_nf) -h
+  calc
+    EisensteinSeries.E2 (γ • τ) =
+        (EisensteinSeries.E2 (γ • τ) * (UpperHalfPlane.denom γ τ ^ 2)⁻¹) *
+          UpperHalfPlane.denom γ τ ^ 2 := by simp [mul_assoc, hj]
+    _ = _ := by
+      rw [h]
+      field_simp
+      simp only [I_sq]
+      ring
 
 /-- Full modular covariance with the normalized, generic lower-left-entry correction. -/
 theorem continuedKernel_modular (γ : SL(2, ℤ)) (τ : UpperHalfPlane) (w : ℂ)
