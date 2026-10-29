@@ -1,0 +1,36 @@
+#### 推论 3.3（原生二维闭包与相位边界）
+
+令 $\mu_{10}$ 为十次单位根集，则
+
+$$
+\overline{\langle A,B\rangle}=G_{10}:=\{U\in\operatorname{U}(2):\det U\in\mu_{10}\}.
+$$
+
+对任意 $U\in\operatorname{U}(2)$，若
+$\delta(U)=\min_{\eta\in\mu_{10}}|\operatorname{Arg}(\eta/\det U)|$，则
+
+$$
+\operatorname{dist}_{\rm op}(U,G_{10})=2\sin\frac{\delta(U)}4.
+$$
+
+**证明。**
+
+定理[3.2](#thm-dense)给闭包包含 $\operatorname{SU}(2)$；$\det A=\omega^3$ 生成 $\mu_{10}$，所以全部十个陪集均出现，且行列式连续性排除其他陪集。
+若 $U^\dagger W$ 的主值特征角为 $\theta_1,\theta_2$，则
+$|\operatorname{Arg}\det(U^\dagger W)|\le|\theta_1|+|\theta_2|$。
+若 $\left\lVert U-W\right\rVert_{\rm op}=r$，则 $|\theta_j|\le2\arcsin(r/2)$，所以 $r\ge2\sin(\delta/4)$。取最近行列式相差的有符号角 $\alpha$，令 $W=e^{i\alpha/2}U$，即达到下界。
+
+∎
+
+例如 $T=\operatorname{diag}(1,e^{i\pi/4})$ 在此码内的指定相位距离为
+$2\sin(\pi/80)>0$，尽管它的射影操作可以任意逼近。对任意非零投影 $P_0$，受控提升
+
+$$
+\mathcal C_{P_0}(U)=(I-P_0)\otimes I+P_0\otimes U
+$$
+
+满足 $\left\lVert \mathcal C_{P_0}(U)-\mathcal C_{P_0}(V)\right\rVert_{\rm op}=\left\lVert U-V\right\rVert_{\rm op}$。
+因此射影误差为零不保证受控误差为零。这个恒等式是误差传播结论，不赠送一个可调用的受控未知门；本文的字母表在实际 $\operatorname{SU}(2)$ 矩阵层面编译。
+
+<a id="sec-4"></a>
+

@@ -1,0 +1,12 @@
+## 9. 与 NAND 的关系：读出、可逆性与资源
+
+经典 NAND 为 $f(a,b)=1\oplus ab$。其相干可逆扩展是
+
+$$
+V_f\lvert a,b,t\rangle=\lvert a,b,t\oplus f(a,b)\rangle,\qquad V_f^2=I.
+$$
+
+第三位初置零时给 NAND 值。这个三比特置换还规定叠加输入的相位与相干性，比四个经典输入的正确输出要求更强。
+
+<a id="statement-9-1"></a>
+

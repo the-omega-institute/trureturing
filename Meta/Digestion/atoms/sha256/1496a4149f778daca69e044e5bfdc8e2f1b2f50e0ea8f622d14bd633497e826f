@@ -1,0 +1,33 @@
+#### 定理 4.2（投影的线性商）
+
+对正交投影 $P$，映射
+
+$$
+H/\ker P\longrightarrow\operatorname{ran}P,
+\qquad [\psi]\longmapsto P\psi
+$$
+
+是 Hilbert 空间的等距同构，其中商范数为
+
+$$
+\left\lVert [\psi]\right\rVert =\inf_{\eta\in\ker P}\left\lVert \psi+\eta\right\rVert =\left\lVert P\psi\right\rVert .
+$$
+
+**证明。**
+
+正交分解 $\psi=P\psi+(I-P)\psi$ 表明每个商类的唯一最短代表为 $P\psi$。投影的核恰为被商去的子空间，且其像为 $\operatorname{ran}P$，给出良定义、单射与满射。
+
+∎
+
+所以“投影是一种商”在线性输出上严格成立。但对归一化输入 $\psi$，一次有标签的选择性测量还包含
+
+$$
+p=\left\lVert P\psi\right\rVert ^2,\qquad \psi_{\mathrm{cond}}=\frac{P\psi}{\sqrt p}\quad(p>0).
+$$
+
+条件化不是线性商。只留条件态会丢发生率：取 $P=\Pi_0$，输入 $\lvert 0\rangle$ 与 $\lvert +\rangle$ 的肯定条件态相同，概率却分别是一与 $1/2$。
+
+<a id="statement-4-3"></a>
+
+<a id="prop-record"></a>
+

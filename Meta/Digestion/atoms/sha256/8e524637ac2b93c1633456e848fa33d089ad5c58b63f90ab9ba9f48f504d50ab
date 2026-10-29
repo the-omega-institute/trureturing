@@ -1,0 +1,19 @@
+**约定 4.2（完整路径定理的参数对应）。** 置
+
+$$
+s_0=s_n=0,\qquad s_i=\sqrt{i(n-i)},\qquad
+ d_i=2s_i-s_{i-1}-s_{i+1},\qquad
+A_n=\sum_{j=1}^n(s_j-s_{j-1})^2=\sum_{i=1}^{n-1}s_id_i.
+$$
+
+这里的 $s_i$ 带下标，与定义 4.1 的总边电阻 $s$ 不同。
+直接使用[完整路径优化定理](https://github.com/the-omega-institute/trureturing/blob/48474969a064d134fa7bb9c78d5919922d48faf9/docs/develop/theory/FIEDLER_RESISTANCE_PATH_OPTIMIZER.md)
+定理 2.1、推论 3.1 的全部结论：$d_i>0$，普通计数测度路径 $P_n$
+的任意正电导满足 $\lambda_2R\le A_n$，等号恰为
+$c_i=\kappa s_i/d_i$、$\kappa>0$；此时 $\lambda_2=\kappa$，
+特征向量为 $(s_j-s_{j-1})_{j=1}^n$；固定 $R_0>0$ 时唯一最优电导为
+$(A_n/R_0)s_i/d_i$。被引定理记作 $C_n$ 的常数在这里记作 $A_n$。
+删去实际环的 $e_0$ 后，顶点仍为 $1,\ldots,n$，每个顶点质量仍为 $1$，
+第 $i$ 条路径边就是 $e_i$，所以这是真正的参数对应。
+含零边电阻的边界不直接当作普通单位质量的缩点路径。
+

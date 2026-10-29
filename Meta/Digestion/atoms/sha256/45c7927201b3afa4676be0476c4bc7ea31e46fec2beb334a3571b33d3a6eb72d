@@ -1,0 +1,40 @@
+**定理 128.2（完整计数的同时有限喷射与绝对累积量误差）。** 在每个约定 123.1
+的原好纤维常数类上，存在固定 $c,C,\rho>0$，使最终
+
+$$
+\begin{aligned}
+F(\alpha,y)&=\Xi_\alpha(y)+\sqrt\delta\,t_\alpha y+
+                       \frac{\delta y^2}{2W_\alpha},\\
+N_p(F)&\le C Q^{-1/4}
+ +\exp\{-c\sqrt Q+C(p+1)\log[Q(p+2)]\}\\
+&\quad+\exp\{-\mu Q^3/64+CQ^2+C(p+1)\log[Q(p+2)]\}\\
+&\quad+\exp\{-cQ^4+L+CQ^2+C(p+1)\log[Q(p+2)]\}.
+\end{aligned}
+\tag{128.4}
+$$
+
+常数不依赖导数指标，也没有未列出的逆噪声幂。起始层级可依赖固定参数、
+$R$、原好纤维常数类、严格噪声余量及所选序列。特别地，最终
+
+$$
+\max_{2\le r\le p(Q)}\sup_{|y|\le R}
+\left|\Delta\kappa_r(y)-(-1)^{r+1}
+ \left[\sqrt\delta\,t_r y+\frac\delta2u_r y^2\right]\right|
+\le Q^{-1/8}.
+\tag{128.5}
+$$
+
+对每个 $\varepsilon>0$，原两个实验分别且共同满足
+
+$$
+\max_{\mathcal E\in\{\mathrm{pair},\mathrm{path}\}}\sup_{|S|=q_n}
+\mathbb P_S^{\mathcal E}\left\{
+\max_{2\le r\le p(Q_n)}\sup_{|y|\le R}
+\left|\Delta\kappa_r(y)-(-1)^{r+1}
+ \left[\sqrt{\delta_n}\,t_r y+\frac{\delta_n}2u_r y^2\right]\right|
+>\varepsilon\right\}\longrightarrow0.
+\tag{128.6}
+$$
+
+证明见第 129–131 节。式 (128.4) 的对数阶成本采用 $\log[Q(p+2)]$。
+

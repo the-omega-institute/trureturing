@@ -1,0 +1,25 @@
+#### 命题 7.3（数据周期与实际计数时钟不同）
+
+原生门满足 $K^{10}=I$。令双向计数时钟上的酉移位为
+$S\lvert n\rangle =\lvert n+1\rangle$，$n\in\mathbb Z$，定义一次带记录的门
+$\widetilde K=S\otimes K$。则
+
+$$
+\boxed{\widetilde K^{10}=S^{10}\otimes I\ne I.}
+$$
+
+有限循环时钟维数 $N>10$ 时，十步结论也成立。
+
+**证明。**
+
+$\mathcal P$ 的零、一两个扇区上 $K$ 的本征值分别为 $\omega,\omega^2$；因 $\omega^{10}=1$，故 $K^{10}=I$。双向移位把正交基双射到自身，故酉。不同因子相乘给
+$(S\otimes K)^{10}=S^{10}\otimes K^{10}$，而 $\lvert n+10\rangle \ne\lvert n\rangle$。循环时钟中 $10\not\equiv0\pmod N$，同样不为单位。
+
+∎
+
+对只读数据边界的任务，插入 $K^{10}$ 不改变边界通道；每次门实际留下计数时，十次插入却产生不同观察者记录。纯粹增加无可读记录的数学切面又是第三种情形。数据变换、事件计数和物理单位必须分别指定。
+
+<a id="statement-7-4"></a>
+
+<a id="prop-clockpotential"></a>
+

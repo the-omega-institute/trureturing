@@ -1,0 +1,81 @@
+## 文献与固定项目来源
+
+<a id="ref-clay"></a>
+
+**[1]** Clay Mathematics Institute.
+[Riemann Hypothesis](https://www.claymath.org/millennium/Riemann-Hypothesis/).
+本轮检索仍标示 Unsolved，2026-10-30。
+
+<a id="ref-bombieri"></a>
+
+**[2]** E. Bombieri.
+[Problems of the Millennium: The Riemann Hypothesis](https://www.claymath.org/wp-content/uploads/2022/05/riemann.pdf).
+Clay 官方问题说明；本文不将该历史文献中的旧计算范围当作当前进展。
+
+<a id="ref-dlmfeuler"></a>
+
+**[3]** NIST Digital Library of Mathematical Functions.
+[§25.2: Definition and Expansions](https://dlmf.nist.gov/25.2);
+[§27.4: Euler Products and Dirichlet Series](https://dlmf.nist.gov/27.4).
+使用收敛域、Euler 积、Möbius 逆与对数导数。
+
+<a id="ref-dlmfxi"></a>
+
+**[4]** NIST DLMF.
+[§25.4: Reflection Formulas](https://dlmf.nist.gov/25.4).
+标准 $\xi$ 定义与函数方程。
+
+<a id="ref-dlmfzeros"></a>
+
+**[5]** NIST DLMF.
+[§25.10: Zeros](https://dlmf.nist.gov/25.10).
+临界带、对称性与非平凡零点。
+
+<a id="ref-choie"></a>
+
+**[6]** Y.-J. Choie, N. Lichiardopol, P. Moree, P. Solé.
+[On Robin's criterion for the Riemann Hypothesis](https://arxiv.org/pdf/math/0604314).
+arXiv:math/0604314v2, 2006。原始 Robin 定理归于
+G. Robin, J. Math. Pures Appl. 63 (1984), 187–213；
+本稿通过该作者论文的摘要及 §1 核对等价陈述。
+
+<a id="ref-hedenmalm"></a>
+
+**[7]** H. Hedenmalm, P. Lindqvist, K. Seip.
+[A Hilbert space of Dirichlet series and systems of dilated functions in $L^2(0,1)$](https://arxiv.org/pdf/math/9512211).
+预印本 1995；Duke Math. J. 86 (1997), 1–37。
+本文使用引言及 §2 的字符空间与 Hilbert 接口，未借几乎处处结论证明 RH。
+
+<a id="ref-bowenlanford"></a>
+
+**[8]** R. Bowen, O. E. Lanford III.
+[Zeta functions of restrictions of the shift transformation](https://people.math.harvard.edu/~knill/history/lanford/papers/BowenLanford.pdf).
+Proc. Sympos. Pure Math. 14 (1970), 43–49。
+有限型闭轨方法的背景；正文的块算子公式自足证明。
+
+<a id="ref-zerocount"></a>
+
+**[9]** E. Hasanalizade, Q. Shen, P.-J. Wong.
+[Counting zeros of the Riemann zeta function](https://arxiv.org/pdf/2107.06506).
+arXiv:2107.06506, 2021；Journal of Number Theory 235 (2022), 219–241。
+本文只使用摘要及引言给出的无条件零点计数主项与误差阶。
+
+<a id="ref-reporobin"></a>
+
+**[10]** 项目固定快照：
+[FIB-ATOM 与 Robin 的约数尺度几何](https://github.com/the-omega-institute/trureturing/blob/a5a8bcdf56019e58c398f6f6d27a3620b896d001/docs/develop/theory/AURIC_FIB_ROBIN_DIVISOR_SCALE_GEOMETRY.md)。
+重点 §§1–6、9、12；四素数安全性按该稿的来源供应陈述。
+
+<a id="ref-reporh"></a>
+
+**[11]** 项目固定快照：
+[算术三角与 RH 管线续篇 II](https://github.com/the-omega-institute/trureturing/blob/a5a8bcdf56019e58c398f6f6d27a3620b896d001/docs/develop/theory/AURIC_FIB_ATOM_TYPED_BRIDGES_AND_ARITHMETIC_TRIANGLE_RH_PIPELINE_CONTINUATION_II.md) §63；
+[RH 离线零点与横向谱相变](https://github.com/the-omega-institute/trureturing/blob/a5a8bcdf56019e58c398f6f6d27a3620b896d001/docs/develop/theory/RH_OFFLINE_ZERO_LEE_YANG_INSTANTANEOUS_PHASE_TRANSITION_THEORY.md)增订一 A3–A4、增订二 B6–B7。
+前者的 Cayley 尺度笔误在本稿正文更正；两稿均保留全局完成条件。
+
+<a id="ref-repogate"></a>
+
+**[12]** 项目固定快照：
+[固定黄金门与编织相容](https://github.com/the-omega-institute/trureturing/blob/a5a8bcdf56019e58c398f6f6d27a3620b896d001/docs/develop/theory/AURIC_FIXED_GOLDEN_GATE_AND_BRAID_COMPATIBILITY_ZH.md)；
+[量子原则与相干重构续篇](https://github.com/the-omega-institute/trureturing/blob/a5a8bcdf56019e58c398f6f6d27a3620b896d001/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION.md) §68。
+门递归的直接延续采用本会话 v18 已证明的 $C_P,L_P$ 模型。
