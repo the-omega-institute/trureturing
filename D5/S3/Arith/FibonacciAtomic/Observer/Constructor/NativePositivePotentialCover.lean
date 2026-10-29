@@ -3,57 +3,48 @@
    mirror-B: none(waiver:unbounded-symbolic-proof)
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativePositivePotentialCover.source_sort_minimum_base; instance=D5/S3/Arith/FibonacciAtomic/Observer/Constructor/NativeSourceParallelRefutation.result
    digest: Signed source occurrence cycles and minimum natural block bases. -/
 
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativePositiveBranchReduction
 import D5.S3.Combinatorics.Graph.LayeredCirculation.SupplierDual
+import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativeComputedEpochPotential
 
 /-! Integer consistency and minimum natural ranks on the actual source graph. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
 namespace D5.S3.Arith.FibonacciAtomic.Observer.NativePositivePotentialCover
 
 open NativePositiveBranchReduction NativePositiveImageCover NativeTermUnification
 open NativeGroundSolutionSpace Maths Maths.MaxPlusPotential
 open Lambda Strata.Util
-
 variable {X : Type} [DecidableEq X]
-
 /-- Select one residual sort without identifying repeated or parallel edges. -/
 def sortEdges (B : List (BranchEquation X)) (s : X → Term X) (j : X) :=
   (sourceOffsetEdges B s).filter (fun e => e.1.1.2.2 == j)
-
 abbrev Edge (B : List (BranchEquation X)) (s : X → Term X) (j : X) :=
   Fin (sortEdges B s j).length × Bool
-
 def signedGraph (B : List (BranchEquation X)) (s : X → Term X) (j : X) :
     EdgeGraph (Occurrence X) (Edge B s j) where
   source e := if e.2 then ((sortEdges B s j).get e.1).1.1
     else ((sortEdges B s j).get e.1).1.2
   target e := if e.2 then ((sortEdges B s j).get e.1).1.2
     else ((sortEdges B s j).get e.1).1.1
-
 def signedWeight (B : List (BranchEquation X)) (s : X → Term X) (j : X)
     (e : Edge B s j) : Int :=
   if e.2 then -((sortEdges B s j).get e.1).2 else ((sortEdges B s j).get e.1).2
-
 def ZeroCycles (B : List (BranchEquation X)) (s : X → Term X) (j : X) : Prop :=
   ∀ (v : Occurrence X) (c : (signedGraph B s j).Walk v v),
     walkWeight (signedWeight B s j) c = 0
-
 def Potential (B : List (BranchEquation X)) (s : X → Term X) (j : X)
     (δ : Occurrence X → Int) : Prop :=
   ∀ e ∈ sortEdges B s j, δ e.1.1 = δ e.1.2 + e.2
-
 /-- The leaf carrier is arbitrary; nonemptiness is needed only to detect
 inconsistent cycles. No shape or rank bound is imposed. -/
 def BlockSolution (B : List (BranchEquation X)) (s : X → Term X) (j : X)
     {L : Type} (u : Occurrence X → L → Nat) : Prop :=
   ∀ e ∈ sortEdges B s j, ∀ l, (u e.1.1 l : Int) = (u e.1.2 l : Int) + e.2
-
 private theorem potential_iff (B : List (BranchEquation X)) (s : X → Term X) (j : X)
     (δ : Occurrence X → Int) :
     Potential B s j δ ↔ IsPotential (signedGraph B s j) (signedWeight B s j) δ := by
@@ -67,7 +58,6 @@ private theorem potential_iff (B : List (BranchEquation X)) (s : X → Term X) (
     have hb := h (i, true)
     simp only [signedGraph, signedWeight, Bool.false_eq_true, ↓reduceIte] at hf hb
     omega
-
 private theorem walk_exact {B : List (BranchEquation X)} {s : X → Term X} {j : X}
     {δ : Occurrence X → Int} (h : Potential B s j δ)
     {v w : Occurrence X} (c : (signedGraph B s j).Walk v w) :
@@ -79,8 +69,7 @@ private theorem walk_exact {B : List (BranchEquation X)} {s : X → Term X} {j :
       rw [walkWeight_concat, ih]
       subst legal
       cases e with | mk i b => cases b <;> simp_all [signedGraph, signedWeight] <;> omega
-
-private theorem zeroCycles_iff (B : List (BranchEquation X)) (s : X → Term X) (j : X) :
+theorem zeroCycles_iff (B : List (BranchEquation X)) (s : X → Term X) (j : X) :
     ZeroCycles B s j ↔ ∃ δ, Potential B s j δ := by
   constructor
   · intro h
@@ -90,20 +79,17 @@ private theorem zeroCycles_iff (B : List (BranchEquation X)) (s : X → Term X) 
     exact ⟨δ, (potential_iff B s j δ).mpr hδ⟩
   · rintro ⟨δ, hδ⟩ v c
     simpa using walk_exact hδ c
-
 /-- Enumerate the two signed orientations of every actual source edge.
 The list retains separate indices for repeated and parallel comparisons. -/
 def signedEdges (B : List (BranchEquation X)) (s : X → Term X) (j : X) :
     List (Edge B s j) :=
   (List.finRange (sortEdges B s j).length).flatMap fun i => [(i, false), (i, true)]
-
 private theorem signedEdges_complete (B : List (BranchEquation X))
     (s : X → Term X) (j : X) (e : Edge B s j) : e ∈ signedEdges B s j := by
   rcases e with ⟨i, b⟩
   apply List.mem_flatMap.mpr
   refine ⟨i, List.mem_finRange i, ?_⟩
   cases b <;> simp
-
 /-- Finite max-plus relaxation on the original source occurrence graph.
 Zero is a lower bound at every vertex, including isolated occurrences. -/
 def sourceRelaxation (B : List (BranchEquation X)) (s : X → Term X) (j : X) :
@@ -114,38 +100,18 @@ def sourceRelaxation (B : List (BranchEquation X)) (s : X → Term X) (j : X) :
         if (signedGraph B s j).target e = v then
           sourceRelaxation B s j t ((signedGraph B s j).source e) + signedWeight B s j e
         else 0).foldr max 0
-
 /-- An executable integer potential candidate, with no solution, potential,
 path, cycle decision or classical choice supplied as input. The number of
 rounds is the number of signed indexed source edges. -/
 def computedSourcePotential (B : List (BranchEquation X)) (s : X → Term X) (j : X) :
     Occurrence X → Int :=
   sourceRelaxation B s j (2 * (sortEdges B s j).length)
-
-private theorem fold_max_base (l : List Int) : 0 ≤ l.foldr max 0 := by
-  induction l with
-  | nil => exact le_rfl
-  | cons a l ih => exact ih.trans (le_max_right _ _)
-
-private theorem fold_max_witness {P : Int → Prop} (l : List Int)
-    (hb : P 0) (hl : ∀ a ∈ l, P a) : P (l.foldr max 0) := by
-  induction l with
-  | nil => exact hb
-  | cons a l ih =>
-      simp only [List.foldr_cons]
-      rcases le_total a (l.foldr max 0) with h | h
-      · rw [max_eq_right h]
-        exact ih (fun x hx => hl x (List.mem_cons_of_mem a hx))
-      · rw [max_eq_left h]
-        exact hl a (List.mem_cons_self)
-
 private theorem sourceRelaxation_nonneg (B : List (BranchEquation X))
     (s : X → Term X) (j : X) (t : Nat) (v : Occurrence X) :
     0 ≤ sourceRelaxation B s j t v := by
   cases t with
   | zero => exact le_rfl
-  | succ t => exact fold_max_base _
-
+  | succ t => exact NativeComputedEpochPotential.base_le_fold_max _ 0
 private theorem sourceRelaxation_edge (B : List (BranchEquation X))
     (s : X → Term X) (j : X) (t : Nat) (e : Edge B s j) :
     sourceRelaxation B s j t ((signedGraph B s j).source e) + signedWeight B s j e ≤
@@ -154,7 +120,6 @@ private theorem sourceRelaxation_edge (B : List (BranchEquation X))
   · exact List.mem_map.mpr ⟨e, signedEdges_complete B s j e, rfl⟩
   · simp only [ite_true]
     exact le_rfl
-
 private theorem source_walk_le_relaxation (B : List (BranchEquation X))
     (s : X → Term X) (j : X) (t : Nat) {v w : Occurrence X}
     (c : (signedGraph B s j).Walk v w) (hlen : c.length ≤ t) :
@@ -174,7 +139,6 @@ private theorem source_walk_le_relaxation (B : List (BranchEquation X))
           rw [legal] at he
           rw [walkWeight_concat]
           omega
-
 private theorem sourceRelaxation_attained (B : List (BranchEquation X))
     (s : X → Term X) (j : X) (t : Nat) (v : Occurrence X) :
     ∃ (start : Occurrence X) (c : (signedGraph B s j).Walk start v),
@@ -182,7 +146,7 @@ private theorem sourceRelaxation_attained (B : List (BranchEquation X))
   induction t generalizing v with
   | zero => exact ⟨v, .nil, le_rfl, by simp [sourceRelaxation, walkWeight, EdgeGraph.Walk.edges]⟩
   | succ t ih =>
-      apply fold_max_witness
+      apply NativeComputedEpochPotential.fold_max_property (b := 0)
         (P := fun z => ∃ (start : Occurrence X) (c : (signedGraph B s j).Walk start v),
           c.length ≤ t + 1 ∧ z = walkWeight (signedWeight B s j) c)
       · exact ⟨v, .nil, Nat.zero_le _, by simp [walkWeight, EdgeGraph.Walk.edges]⟩
@@ -196,7 +160,6 @@ private theorem sourceRelaxation_attained (B : List (BranchEquation X))
           · rw [walkWeight_castFinish, walkWeight_concat, hvalue]
         · simp only [if_neg he]
           exact ⟨v, .nil, Nat.zero_le _, by simp [walkWeight, EdgeGraph.Walk.edges]⟩
-
 private theorem computed_source_potential (B : List (BranchEquation X))
     (s : X → Term X) (j : X) (good : ZeroCycles B s j) :
     Potential B s j (computedSourcePotential B s j) := by
@@ -215,19 +178,16 @@ private theorem computed_source_potential (B : List (BranchEquation X))
   change sourceRelaxation B s j _ ((signedGraph B s j).source e) + signedWeight B s j e ≤
     sourceRelaxation B s j _ ((signedGraph B s j).target e)
   omega
-
 /-- Check every original indexed source equation against the finite relaxation
 candidate. Empty edge lists are accepted, and no vertex or integer bound is
 assumed. All arithmetic and equality tests are executable. -/
 def checkSourceConsistency (B : List (BranchEquation X)) (s : X → Term X) (j : X) : Bool :=
   (sortEdges B s j).all fun e => decide
     (computedSourcePotential B s j e.1.1 = computedSourcePotential B s j e.1.2 + e.2)
-
 private theorem check_source_consistency_iff_potential
     (B : List (BranchEquation X)) (s : X → Term X) (j : X) :
     checkSourceConsistency B s j = true ↔ Potential B s j (computedSourcePotential B s j) := by
   simp only [checkSourceConsistency, List.all_eq_true, decide_eq_true_eq, Potential]
-
 /-- The finite executable check is sound and complete for the original
 condition on all closed walks of the labelled signed source graph. -/
 theorem source_consistency_iff (B : List (BranchEquation X)) (s : X → Term X) (j : X) :
@@ -237,7 +197,6 @@ theorem source_consistency_iff (B : List (BranchEquation X)) (s : X → Term X) 
   · intro h
     exact (zeroCycles_iff B s j).mpr ⟨computedSourcePotential B s j, h⟩
   · exact computed_source_potential B s j
-
 /-- Return a certified computed potential precisely when the finite check
 accepts. The certificate is erased during execution; rejection returns none. -/
 def effectiveSourcePotential (B : List (BranchEquation X)) (s : X → Term X) (j : X) :
@@ -246,7 +205,6 @@ def effectiveSourcePotential (B : List (BranchEquation X)) (s : X → Term X) (j
     some ⟨computedSourcePotential B s j,
       (check_source_consistency_iff_potential B s j).mp h⟩
   else none
-
 private theorem edge_spec (p : Presentation X) (B : List (BranchEquation X))
     (S : SubstInfo)
     (hok : (encodeEquations p (shapeEquations B)).unify SubstInfo.empty = .ok S)
@@ -257,7 +215,6 @@ private theorem edge_spec (p : Presentation X) (B : List (BranchEquation X))
   apply (mgu_occurrence_graph_exact p (shapeEquations B) S hok).2.1
   rw [← source_comparison_graph_identification]
   exact List.mem_map.mpr ⟨e, he, rfl⟩
-
 private theorem connected_sort (p : Presentation X) (B : List (BranchEquation X))
     (S : SubstInfo)
     (hok : (encodeEquations p (shapeEquations B)).unify SubstInfo.empty = .ok S)
@@ -271,7 +228,6 @@ private theorem connected_sort (p : Presentation X) (B : List (BranchEquation X)
   | refl => rfl
   | symm _ _ _ ih => exact ih.symm
   | trans _ _ _ _ _ ih1 ih2 => exact ih1.trans ih2
-
 private theorem common_difference (p : Presentation X) (B : List (BranchEquation X))
     (S : SubstInfo)
     (hok : (encodeEquations p (shapeEquations B)).unify SubstInfo.empty = .ok S)
@@ -300,7 +256,6 @@ private theorem common_difference (p : Presentation X) (B : List (BranchEquation
       intro hv
       have hw : w.2.2 = j := (connected_sort p B S hok h1).symm.trans hv
       exact (ih1 hv).trans (ih2 hw)
-
 /-- The actual source comparison graph admits one minimum natural base per
 occurring sort. Nonzero cycles exclude solutions on every inhabited leaf
 carrier; zero cycles classify all natural solutions, including a singleton
@@ -373,7 +328,6 @@ theorem source_sort_minimum_base (p : Presentation X) (B : List (BranchEquation 
         have ha2 := (ha e.1.2 spec.2.1 (spec.2.2.symm.trans hj)).2
         have hed := hδ e he
         omega
-
 /-- Leaves retain their ordered positions even when all ranks coincide. -/
 def Leaves : FreeMagma Unit → Type
   | .of _ => Unit
@@ -384,18 +338,15 @@ instance leavesNonempty : (T : FreeMagma Unit) → Nonempty (Leaves T)
   | .mul A B =>
       letI := leavesNonempty A
       inferInstanceAs (Nonempty (Leaves A ⊕ Leaves B))
-
 def fill : (T : FreeMagma Unit) → (Leaves T → Nat) → NativeFiniteNormalInversion.Code
   | .of _, r => .of (r ())
   | .mul A B, r => .mul (fill A (fun l => r (.inl l))) (fill B (fun l => r (.inr l)))
-
 private theorem fill_shift (T : FreeMagma Unit) (r : Leaves T → Nat) (a : Nat) :
     fill T (fun l => r l + a) = NativeFiniteNormalInversion.shiftCode a (fill T r) := by
   induction T using FreeMagma.rec with
   | of => rfl
   | mul A B ihA ihB =>
       exact congrArg₂ FreeMagma.mul (ihA _) (ihB _)
-
 private theorem normal_subtree (C : NativeFiniteNormalInversion.Code) (q : List Bool)
     (D : NativeFiniteNormalInversion.Code) (hC : NativeFiniteNormalInversion.Normal C)
     (h : subtree C q = some D) : NativeFiniteNormalInversion.Normal D := by
@@ -410,7 +361,6 @@ private theorem normal_subtree (C : NativeFiniteNormalInversion.Code) (q : List 
           cases b
           · exact ih A hC.1 h
           · exact ih B hC.2.1 h
-
 /-- Actual occurrence subtrees turn the minimum rank base into a normal
 native block. Rank inverses and expansion recover the identical blocks. -/
 theorem source_canonical_block_recovery (p : Presentation X)
@@ -455,13 +405,11 @@ theorem source_canonical_block_recovery (p : Presentation X)
   · intro l
     exact ((NativeFiniteNormalInversion.exact_natural_rank_inverse (a v) (u v l)).1
       (u b l)).mpr (ranks v hv hvj l).symm
-
 /-- The actual code at an occurrence address. Invalid addresses have a
 fixed default; all results below prove validity before using a block. -/
 def occurrenceCode (C : X → NativeFiniteNormalInversion.Code) (v : Occurrence X) :
     NativeFiniteNormalInversion.Code :=
   (subtree (C v.1) v.2.1).getD (.of 0)
-
 private def Fits (C : X → NativeFiniteNormalInversion.Code) :
     Term (Occurrence X) → NativeFiniteNormalInversion.Code → Prop
   | .of (.inl _), .of _ => True
@@ -469,7 +417,6 @@ private def Fits (C : X → NativeFiniteNormalInversion.Code) :
   | .of (.inr v), D => D = occurrenceCode C v
   | .mul A B, .mul D E => Fits C A D ∧ Fits C B E
   | .mul _ _, .of _ => False
-
 private theorem subtree_child {A : Type} (C : FreeMagma A) (q : List Bool)
     (D E : FreeMagma A) (h : subtree C q = some (.mul D E)) :
     subtree C (q ++ [false]) = some D ∧ subtree C (q ++ [true]) = some E := by
@@ -482,7 +429,6 @@ private theorem subtree_child {A : Type} (C : FreeMagma A) (q : List Bool)
       cases C with
       | of a => cases h
       | mul A B => cases b <;> exact ih _ h
-
 private theorem fits_decorate (C : X → NativeFiniteNormalInversion.Code)
     (w : X → NativeGroundSolutionSpace.Source) (x : X) (t : Term X)
     (q : List Bool) (D : NativeFiniteNormalInversion.Code)
@@ -505,7 +451,6 @@ private theorem fits_decorate (C : X → NativeFiniteNormalInversion.Code)
             exact ⟨hD, hE⟩
           have hc := subtree_child (C x) q D E actual
           exact ⟨ihA _ _ hc.1 hs.1, ihB _ _ hc.2 hs.2⟩
-
 private theorem fits_offsets (C : X → NativeFiniteNormalInversion.Code)
     (A B : Term (Occurrence X)) (D E : NativeFiniteNormalInversion.Code)
     (a : Nat) (hA : Fits C A D) (hB : Fits C B E)
@@ -543,7 +488,6 @@ private theorem fits_offsets (C : X → NativeFiniteNormalInversion.Code)
               rcases List.mem_append.mp he with he | he
               · exact ihA _ _ _ hD hU rfl e he
               · exact ihB _ _ _ hE hV rfl e he
-
 private theorem actual_source_offsets (B : List (BranchEquation X))
     (s : X → Term X) (C : X → NativeFiniteNormalInversion.Code)
     (factor : ∀ x, evaluate (fun y => shape (C y)) (s x) = shape (C x))
@@ -567,26 +511,21 @@ private theorem actual_source_offsets (B : List (BranchEquation X))
   | same x y =>
       refine ⟨0, fits_offsets C _ _ _ _ 0 (fit x) (fit y) ?_ e he⟩
       simpa only [NativePositiveBranchReduction.shift_zero, BranchEquation.Holds] using hs
-
 private def codeTree : NativeFiniteNormalInversion.Code → FreeMagma Unit
   | .of _ => .of ()
   | .mul A B => .mul (codeTree A) (codeTree B)
-
 private def groundShape : FreeMagma Unit → NativeGroundSolutionSpace.Source
   | .of _ => .of true
   | .mul A B => .mul (groundShape A) (groundShape B)
-
 private theorem codeTree_shape (D : NativeFiniteNormalInversion.Code) :
     groundShape (codeTree D) = shape D := by
   induction D with
   | of n => rfl
   | mul A B ihA ihB => exact congrArg₂ FreeMagma.mul ihA ihB
-
 private def readRanks : (T : FreeMagma Unit) → NativeFiniteNormalInversion.Code → Leaves T → Nat
   | .of _, .of n => fun _ => n
   | .mul A B, .mul D E => Sum.elim (readRanks A D) (readRanks B E)
   | _, _ => fun _ => 0
-
 private theorem fill_readRanks (T : FreeMagma Unit) (D : NativeFiniteNormalInversion.Code)
     (sh : shape D = groundShape T) : fill T (readRanks T D) = D := by
   induction T using FreeMagma.rec generalizing D with
@@ -601,7 +540,6 @@ private theorem fill_readRanks (T : FreeMagma Unit) (D : NativeFiniteNormalInver
             injection sh with hD hE
             exact ⟨hD, hE⟩
           exact congrArg₂ FreeMagma.mul (ihA D hs.1) (ihB E hs.2)
-
 private theorem readRanks_shift (T : FreeMagma Unit) (D : NativeFiniteNormalInversion.Code)
     (sh : shape D = groundShape T) (a : Nat) (l : Leaves T) :
     readRanks T (NativeFiniteNormalInversion.shiftCode a D) l = readRanks T D l + a := by
@@ -619,7 +557,6 @@ private theorem readRanks_shift (T : FreeMagma Unit) (D : NativeFiniteNormalInve
           cases l with
           | inl l => exact ihA D hs.1 l
           | inr l => exact ihB E hs.2 l
-
 private theorem code_at_residual (w : X → NativeGroundSolutionSpace.Source)
     (t : Term X) (D : NativeFiniteNormalInversion.Code) (q : List Bool) (j : X)
     (sh : shape D = evaluate w t)
@@ -643,7 +580,6 @@ private theorem code_at_residual (w : X → NativeGroundSolutionSpace.Source)
               cases b
               · exact ih A D hs.1 occ
               · exact ih B E hs.2 occ
-
 private theorem actual_occurrence_code (p : Presentation X) (B : List (BranchEquation X))
     (S : SubstInfo)
     (hok : (encodeEquations p (shapeEquations B)).unify SubstInfo.empty = .ok S)
@@ -657,7 +593,6 @@ private theorem actual_occurrence_code (p : Presentation X) (B : List (BranchEqu
     (action p S v.1) (C v.1) v.2.1 v.2.2 (factor v.1).symm occ
   have eq : occurrenceCode C v = D := by simp only [occurrenceCode, hD, Option.getD_some]
   exact ⟨by rw [eq]; exact hD, by rw [eq]; exact hs⟩
-
 private theorem actual_rank_blocks (p : Presentation X) (B : List (BranchEquation X))
     (S : SubstInfo)
     (hok : (encodeEquations p (shapeEquations B)).unify SubstInfo.empty = .ok S)
@@ -689,44 +624,35 @@ private theorem actual_rank_blocks (p : Presentation X) (B : List (BranchEquatio
   · intro v hv hj
     rw [fill_readRanks _ _ (valid v hv hj)]
     exact (actual_occurrence_code p B S hok C factor v hv).1
-
 /-- Explicit primitive positions and residual positions have separate labels. -/
 abbrev ScalarPosition (X : Type) := X × List Bool
-
 inductive RankExpression (X : Type) where
   | scalar : ScalarPosition X → RankExpression X
   | constant : Nat → RankExpression X
-
 inductive DecoratedTerm (X : Type) where
   | scalar : Bool → RankExpression X → DecoratedTerm X
   | block : Occurrence X → DecoratedTerm X
   | pair : DecoratedTerm X → DecoratedTerm X → DecoratedTerm X
-
 def RankExpression.value (r : ScalarPosition X → Nat) : RankExpression X → Nat
   | .scalar q => r q
   | .constant n => n
-
 def DecoratedTerm.erase : DecoratedTerm X → Term X
   | .scalar b _ => .of (.inl b)
   | .block o => .of (.inr o.2.2)
   | .pair A B => .mul A.erase B.erase
-
 def DecoratedTerm.value (r : ScalarPosition X → Nat)
     (u : Occurrence X → NativeFiniteNormalInversion.Code) :
     DecoratedTerm X → NativeFiniteNormalInversion.Code
   | .scalar _ n => .of (n.value r)
   | .block o => u o
   | .pair A B => .mul (A.value r u) (B.value r u)
-
 def scalarDecorateFrom (x : X) (q : List Bool) : Term X → DecoratedTerm X
   | .of (.inl b) => .scalar b (.scalar (x,q))
   | .of (.inr j) => .block (x,q,j)
   | .mul A B => .pair (scalarDecorateFrom x (q ++ [false]) A)
       (scalarDecorateFrom x (q ++ [true]) B)
-
 def scalarDecorate (s : X → Term X) (x : X) : DecoratedTerm X :=
   scalarDecorateFrom x [] (s x)
-
 /-- A finite structural inventory. Every leaf equation is scalar or block;
 there is no mixed scalar/block equation. -/
 inductive ComparisonInventory (X : Type) where
@@ -734,14 +660,12 @@ inductive ComparisonInventory (X : Type) where
   | block : Occurrence X → Occurrence X → Nat → ComparisonInventory X
   | both : ComparisonInventory X → ComparisonInventory X → ComparisonInventory X
   | incompatible : ComparisonInventory X
-
 def ComparisonInventory.Holds (r : ScalarPosition X → Nat)
     (u : Occurrence X → NativeFiniteNormalInversion.Code) : ComparisonInventory X → Prop
   | .scalar n m a => (n.value r : Int) = (m.value r : Int) + (a : Int)
   | .block v w a => u v = NativeFiniteNormalInversion.shiftCode a (u w)
   | .both I J => I.Holds r u ∧ J.Holds r u
   | .incompatible => False
-
 def comparisonInventory (a : Nat) : DecoratedTerm X → DecoratedTerm X →
     ComparisonInventory X
   | .scalar _ n, .scalar _ m => .scalar n m a
@@ -749,18 +673,15 @@ def comparisonInventory (a : Nat) : DecoratedTerm X → DecoratedTerm X →
   | .pair A B, .pair C D =>
       .both (comparisonInventory a A C) (comparisonInventory a B D)
   | _, _ => .incompatible
-
 private theorem scalar_decorate_erase (x : X) (q : List Bool) (t : Term X) :
     (scalarDecorateFrom x q t).erase = t := by
   induction t generalizing q with
   | of b => cases b <;> rfl
   | mul A B ihA ihB => exact congrArg₂ FreeMagma.mul (ihA _) (ihB _)
-
 private def comparisonProjection : DecoratedTerm X → Term (Occurrence X)
   | .scalar b _ => .of (.inl b)
   | .block o => .of (.inr o)
   | .pair A B => .mul (comparisonProjection A) (comparisonProjection B)
-
 /-- Project exactly the original indexed block equations, preserving repetitions. -/
 def ComparisonInventory.blockEdges : ComparisonInventory X →
     List ((Occurrence X × Occurrence X) × Int)
@@ -768,7 +689,6 @@ def ComparisonInventory.blockEdges : ComparisonInventory X →
   | .block v w a => [((v,w),(a : Int))]
   | .both I J => I.blockEdges ++ J.blockEdges
   | .incompatible => []
-
 private theorem comparison_inventory_edges (a : Nat) (A B : DecoratedTerm X) :
     (comparisonInventory a A B).blockEdges =
       offsetComparisonEdges (a : Int) (comparisonProjection A) (comparisonProjection B) := by
@@ -781,13 +701,11 @@ private theorem comparison_inventory_edges (a : Nat) (A B : DecoratedTerm X) :
       | block w => rfl
       | pair C D => simp only [comparisonInventory, ComparisonInventory.blockEdges,
           comparisonProjection, offsetComparisonEdges, ihA, ihB]
-
 private theorem scalar_decorate_projection (x : X) (q : List Bool) (t : Term X) :
     comparisonProjection (scalarDecorateFrom x q t) = decorateFrom x q t := by
   induction t generalizing q with
   | of a => cases a <;> rfl
   | mul A B ihA ihB => exact congrArg₂ FreeMagma.mul (ihA _) (ihB _)
-
 /-- Equality of the erased terms is the actual shape-unifier invariant.
 The two valuations are otherwise arbitrary and independent. -/
 private theorem comparison_inventory_iff (a : Nat) (A B : DecoratedTerm X)
@@ -834,17 +752,14 @@ private theorem comparison_inventory_iff (a : Nat) (A B : DecoratedTerm X)
               injection h with h₁ h₂
               exact ⟨h₁,h₂⟩
             exact ⟨(ihA C parts.1).mpr hc.1, (ihB D parts.2).mpr hc.2⟩
-
 /-- Each collapse has one natural witness shared by all three comparisons. -/
 inductive BranchInventory (X : Type) where
   | comparison : ComparisonInventory X → BranchInventory X
   | collapse : (Nat → ComparisonInventory X) → BranchInventory X
-
 def BranchInventory.Holds (r : ScalarPosition X → Nat)
     (u : Occurrence X → NativeFiniteNormalInversion.Code) : BranchInventory X → Prop
   | .comparison I => I.Holds r u
   | .collapse I => ∃ n : Nat, (I n).Holds r u
-
 def branchInventory (s : X → Term X) : BranchEquation X → BranchInventory X
   | .primitive z n => .comparison
       (comparisonInventory 0 (scalarDecorate s z) (.scalar true (.constant n)))
@@ -859,12 +774,10 @@ def branchInventory (s : X → Term X) : BranchEquation X → BranchInventory X
       (comparisonInventory 0 (scalarDecorate s x) (.scalar true (.constant (n+1))))
       (.both (comparisonInventory 0 (scalarDecorate s y) (.scalar true (.constant n)))
         (comparisonInventory 0 (scalarDecorate s z) (.scalar true (.constant (n+2)))))
-
 def BranchInventory.blockEdges : BranchInventory X →
     List ((Occurrence X × Occurrence X) × Int)
   | .comparison I => I.blockEdges
   | .collapse _ => []
-
 private theorem branch_inventory_edges (s : X → Term X) (b : BranchEquation X) :
     (branchInventory s b).blockEdges = sourceOffsetEdges [b] s := by
   have proj (x : X) : comparisonProjection (scalarDecorate s x) = decorate s x :=
@@ -893,7 +806,6 @@ private theorem branch_inventory_edges (s : X → Term X) (b : BranchEquation X)
         offsetComparisonEdges 0 (decorate s x) (decorate s y) ++ []
       simp only [comparison_inventory_edges, proj, List.append_nil]
       norm_num
-
 /-- Complete normalization of one original comparison, including its natural
 collapse witness. No scalar constraint is an external hypothesis. -/
 private theorem branch_inventory_iff (s : X → Term X) (b : BranchEquation X)
@@ -947,7 +859,6 @@ private theorem branch_inventory_iff (s : X → Term X) (b : BranchEquation X)
         (by simpa only [DecoratedTerm.erase, er] using hz)
       simpa only [DecoratedTerm.value, RankExpression.value,
         NativePositiveBranchReduction.shift_zero] using and_congr cx (and_congr cy cz)
-
 private theorem source_inventory_edges (B : List (BranchEquation X)) (s : X → Term X) :
     B.flatMap (fun b => (branchInventory s b).blockEdges) = sourceOffsetEdges B s := by
   induction B with
@@ -957,7 +868,6 @@ private theorem source_inventory_edges (B : List (BranchEquation X)) (s : X → 
         B.flatMap (fun c => (branchInventory s c).blockEdges) = _
       rw [branch_inventory_edges, ih]
       simp [sourceOffsetEdges]
-
 /-- The complete separately decorated system is equivalent to the same
 original branch system, for every scalar and block assignment. -/
 theorem source_decorated_comparison_equivalence (p : Presentation X)
@@ -980,14 +890,12 @@ theorem source_decorated_comparison_equivalence (p : Presentation X)
   exact forall_congr' fun b => forall_congr' fun hb =>
     branch_inventory_iff (action p S) b r u
       (fun e he => sh e (List.mem_flatMap.mpr ⟨b,hb,he⟩))
-
 /-- Read the natural rank at an explicit primitive address. -/
 def sourceScalarRanks (C : X → NativeFiniteNormalInversion.Code)
     (q : ScalarPosition X) : Nat :=
   match subtree (C q.1) q.2 with
   | some (.of n) => n
   | _ => 0
-
 private theorem scalar_decorate_actual (C : X → NativeFiniteNormalInversion.Code)
     (w : X → NativeGroundSolutionSpace.Source) (x : X) (t : Term X)
     (q : List Bool) (D : NativeFiniteNormalInversion.Code)
@@ -1014,7 +922,6 @@ private theorem scalar_decorate_actual (C : X → NativeFiniteNormalInversion.Co
             exact ⟨hD,hE⟩
           have hc := subtree_child (C x) q D E actual
           exact congrArg₂ FreeMagma.mul (ihA _ _ hc.1 hs.1) (ihB _ _ hc.2 hs.2)
-
 /-- A genuine native solution supplies the block equations and literal
 occurrence subtrees automatically. Primitive and collapse scalars remain
 exactly in its selected branch, including r,r+1,r+2. -/
@@ -1085,7 +992,6 @@ theorem native_source_block_recovery (p : Presentation X) (E : List (Equation X)
     · simpa only [identity o ho hoj, identity b hb hj] using (recovered.2 o ho hoj).2.1
 
 #print axioms source_sort_minimum_base
-
 
 #print axioms source_decorated_comparison_equivalence
 #print axioms native_source_block_recovery
