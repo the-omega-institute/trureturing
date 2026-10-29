@@ -115,7 +115,10 @@ internal sealed class WernerHolevoBayesianFeedbackAdvantageDocument : IScribeDoc
                             + "The universal Markovian bound and these two three-operator decompositions give the two "
                             + "conjuncts of the assertion. This supplies a channel with a strict Bayesian advantage "
                             + "as requested in EffOfBayesianFB.tex, lines 910–911."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("rexiti-oskouei-mancini-2024-werner-holevo-bayesian-feedback"),
+                    ResolutionKind.Proved)))));
 
     private static Formula KrausFormula()
     {
