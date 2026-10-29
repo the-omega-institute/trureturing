@@ -1,0 +1,34 @@
+**定义 78.3（原目标的保留量词）。** 原 finite upper-frequency target 仍为
+
+$$
+L_n=\left\lfloor2^{n/3}/4\right\rfloor,\quad
+\rho_\ell(g)=(\det g)^\ell\operatorname{Sym}^{2\ell}(g),\quad
+Q_\ell=(I+\rho_\ell(J))/2,\quad M_\ell=\rho_\ell(A)Q_\ell,
+$$
+
+$$
+\mathcal S_n=\sum_{\ell=0}^{L_n}(2\ell+1)\|M_\ell^n\|_{\rm HS}^2,
+\qquad \log\mathcal S_n=o(n).
+$$
+
+finite removal 后的无限尾空间与仅保留 $\ell\le L_n$ 的窗口不同。§30 的下界先固定 $r$ 再取充分大自旋；其方便的充分见证阈值在 $r=n-1$ 时为 $\ell\ge2^{10n-8}$，不能据此将见证放入 $L_n$。这个充分阈值也不排除窗口内另有见证。故快速率障碍既不证明也不反驳 $\mathcal S_n$ 的原目标。
+
+令 $g_0=A,g_1=AJ$，并保留原 actual chronological products
+
+$$
+G_h=g_{h_n}\cdots g_{h_1},\quad
+F_h=e^{-in\pi/6}G_h,\qquad
+E_n(r)=4^{-n}\sum_{h,g\in\{0,1\}^n}
+\mathbf 1_{\{\|F_h-F_g\|_F\le r\}}.
+$$
+
+这里 $\|\cdot\|_F$ 是未归一化 Frobenius norm。按 supplier §§19、23、30.8，仍需原 actual fair ordered pair quantity $Q_n^{\rm pair}=2^nE_n(2^{-n/3})$ 的 subexponential upper bound；它与该 finite-cutoff target、原分辨地址碰撞熵 $H_{\rm col}(Z_n)=n-o(n)$ 的接口保持不变。$E_n$ 保留闭有序 pairs、diagonal histories、actual multiplicities 和共同时间相位。在另外供应的 same-controller recovery necessity (7.3) 下，仅有条件界
+
+$$
+\varepsilon_n=2^{-2n/3}/36,\qquad
+W_n^{\rm peak}(\varepsilon_n)\ge\frac{2^n}{4Q_n^{\rm pair}},\qquad
+\log_2W_n^{\rm peak}(\varepsilon_n)\ge n-\log_2Q_n^{\rm pair}-2.
+$$
+
+$W_n^{\rm peak}$ 是该 supplier 完整 causal controller 的 peak width，与 §60 的 acquisition layer $\mathcal W_n$ 不同；误差是原 full-$H$、reference-inaccessible、平均不减半 diamond norm。缺少 $Q_n^{\rm pair}$ 的目标上界就不能得到 $n-o(n)$ memory conclusion。该 full-state approximate programme 不由 §76 的有限 exact sharp alphabets 或 §77 的单任务 probability errors 结算。
+

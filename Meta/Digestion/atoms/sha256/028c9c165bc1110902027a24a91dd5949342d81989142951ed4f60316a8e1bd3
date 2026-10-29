@@ -1,0 +1,44 @@
+**Corollary 92.6 (Exact one-label excess threshold and positive slack).**
+For a tolerance $\delta\ge0$, a one-label dictionary of fixed whole maps satisfies
+
+$$
+ e_{\mathcal R}(\varphi)\le\eta_{(q,n)}+\delta
+ \quad\text{for every }\varphi
+\tag{92.18}
+$$
+
+if and only if $\delta\ge\Delta_1(q,n)$. The threshold is exact even
+though $\eta_{(q,n)}$ is generally not explicitly evaluated for $n\ge3$.
+
+For every $\delta>0$ there is a finite positive-slack dictionary. If
+$\mathcal R_0$ attains $\eta_{(q,n)}$ at phase zero, rotate it by
+$\mathcal R_\theta=\mathcal G_\theta\circ\mathcal R_0\circ\mathcal G_{-\theta}$.
+Then $e_{\mathcal R_\theta}(\theta)=\eta_{(q,n)}$. Since
+$\Phi_s^\dagger\circ\mathcal R_\theta^\dagger$ is unital completely
+positive and therefore contracts Hermitian operator norm,
+
+$$
+ e_{\mathcal R_\theta}(\varphi)
+ \le \eta_{(q,n)}+4c\left|
+ \sin\frac{\varphi-\theta}{2}\right|.
+\tag{92.19}
+$$
+
+Indeed $\|E_\varphi-E_\theta\|_{\rm op}=2c|\sin((\varphi-\theta)/2)|$.
+An equally spaced $M$-point phase grid is consequently sufficient when
+
+$$
+M\ge\frac{\pi}{2\arcsin(\min\{1,\delta/(4c)\})},
+\qquad
+M_0:=\max\left\{1,\left\lceil\frac{2\pi c}{\delta}\right\rceil\right\}
+\tag{92.20}
+$$
+
+Taking $M=M_0$ is one convenient sufficient integer choice. Transporting every rotated
+map by $D_\theta=\mathcal R_\theta\circ\operatorname{Ad}_{U_0^\dagger}$
+gives whole actual terminal CPTP maps. This is only an upper certificate:
+it gives no sharp multi-label rate, and it does not prove that finite
+zero-excess dictionaries are infinite for any $n\ge3$. The known $n=2$
+zero-slack obstruction and the unresolved $n\ge3$ question retain their
+separate scopes.
+

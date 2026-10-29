@@ -1,0 +1,11 @@
+**约定 74.3（不同 $A_R$ 的 pre-Pin historical inverse）。** native §12 的 $A_R$ 增加 disjoint scaffold、十五槽构造、atomic two-meter Pin、受限 cursor/read grants、canonical code/seed loader 和实际进入的 startup。令 $\mathcal D_R$ 为所有实际 reached、R 仍 Armed 的 pre-Pin 状态，允许旧 P/C 处于各个声明阶段。令 $\pi$ 为保持旧身份的投影，$K_R(x)=K(\pi(x))$。native (AIF.46)、Theorems 12.21、12.23 供应
+
+$$
+\mathcal L_RK_R=\operatorname{id}_{\mathcal D_R},\qquad
+K_R\mathcal L_R=\operatorname{id}_{K_R(\mathcal D_R)}.
+$$
+
+其中 target $x$ 是实际 Pin 的**前驱状态**。在每个已调用程序的 pointwise R-progress、足够 backing 和声明权限下，程序逐 bit demand 已达到的输入，实际取得、seal、copy、print、ACK 并返回该历史记录；每次有限调用终止，不提供统一 scheduling-delay、elapsed-time 或总资源上界。Pin 离开 $\mathcal D_R$，不是 Armed key 的域内更新。打印历史 token/permission/grant 不恢复 live capability。
+
+这一 actual-image inverse 包含目标时刻的 R 初始化材料，却不反演后来的 R acquisition/maintenance 状态，不恢复 current-at-return 的整个联合状态，也不是 unchanged $A^+$ 的全域 collector。固定 R startup 的插入点不分开旧的非单点 shuffle 纤维，因此它不推翻命题 74.2。没有 supplement 的全域 endpoint-only exact chronology 已被排除；可继续研究的是另外声明的历史记录合同及其取得成本。
+
