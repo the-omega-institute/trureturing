@@ -320,6 +320,51 @@ class HostReclaimTests(unittest.TestCase):
         self.assertEqual("kept", result["action"], result)
         self.assertTrue(target.exists())
 
+    def test_remnant_concurrent_save_during_final_recovery_read_is_retained(self):
+        target = self.remnant()
+        path = target / "Blueprint/Retained.md"
+        unique = b"unique ordinary concurrent save\n"
+        program = ("import pathlib, sys; print('ready', flush=True); "
+                   "sys.stdin.readline(); pathlib.Path(sys.argv[1]).write_bytes(" + repr(unique) + "); "
+                   "print('saved', flush=True)")
+        environment = dict(os.environ, CLEAN_TMP_ROOT=str(self.root / "tmp"),
+                           CODEX_HOME=str(self.root / "codex"), SSHX_HOME=str(self.root / "sshx"))
+        process = subprocess.Popen([sys.executable, "-u", "-c", program,
+                                    str(path.relative_to(self.root))], cwd=self.root,
+                                   stdin=subprocess.PIPE, stdout=subprocess.PIPE, env=environment)
+        run = subprocess.run
+        reads = 0
+        def raced(arguments, **kwargs):
+            nonlocal reads
+            result = run(arguments, **kwargs)
+            if arguments[-2:] == ["cat-file", "--batch"]:
+                reads += 1
+                if reads == 2:
+                    process.stdin.write(b"save\n")
+                    process.stdin.flush()
+                    self.assertEqual(b"saved\n", process.stdout.readline())
+                    self.assertGreater(path.stat().st_mtime, self.cutoff)
+            return result
+        def activity():
+            observed = cleanup.active_paths(self.root / "codex", scopes=[target])
+            self.assertNotIn(target, cleanup.ProtectedPaths(observed))
+            return observed
+        try:
+            self.assertEqual(b"ready\n", process.stdout.readline())
+            with patch.dict(os.environ, environment), patch.object(cleanup.subprocess, "run", side_effect=raced):
+                result = cleanup.clean_candidate(target, self.cutoff, activity(), delete=True,
+                                                 repository=self.main, remnant=True, activity=activity)
+            self.assertEqual(2, reads)
+            self.assertEqual(("kept", "changed"), (result["action"], result["reason"]), result)
+            self.assertEqual(unique, path.read_bytes())
+            oid = run(
+                ["git", "-C", str(self.main), "hash-object", "--stdin"],
+                input=unique, capture_output=True, check=True).stdout.strip()
+            self.assertNotEqual(0, run(["git", "-C", str(self.main), "cat-file", "-e", oid],
+                                      capture_output=True).returncode)
+        finally:
+            process.communicate(timeout=10)
+
     def test_remnant_sweep_uses_main_inventory_and_reports_without_verbose(self):
         target = self.remnant()
         clone = self.root / (self.main.name + "-clone")
