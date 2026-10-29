@@ -1,3 +1,0 @@
-WIP: strengthen open sphere cover endpoint to lower six
-
-Construct perpendicular-circle restriction and three absent colors; reuse the general dimension-two estimate on the live path to lower6. Repair saved Brouwer endpoint API calls. Lean verification remains in progress.

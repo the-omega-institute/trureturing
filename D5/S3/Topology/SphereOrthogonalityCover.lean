@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Topology.PartitionOfUnity, mathlib/module/Mathlib.Geometry.Manifold.Instances.Sphere]
    utility: none
-   digest: Connected components of orthogonality-free sphere covers are acute and preserve the color multiplicity bound. -/
+   digest: Perpendicular-circle restriction and the finite acute-cover obstruction force at least six open orthogonality-free colors on the two-sphere. -/
 
 import D5.S3.Topology.SphereBrouwerObstruction
 import Mathlib.Geometry.Manifold.Instances.Sphere
