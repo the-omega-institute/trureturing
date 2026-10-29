@@ -887,13 +887,13 @@ theorem actualSource_three_small_same_sign_full_completion {k : ℕ} (hk : 3 ≤
   have hde : e ≤ d := by
     have hm := hmin (phase (by omega : 0 < k) o p)
       (Finset.mem_filter.mpr ⟨Finset.mem_univ _, (hchar p (by omega)).mpr (by omega)⟩)
-    change w 0 ≤ w p at hm
+    have hm' : w 0 ≤ w p := by simpa only [w, phase_zero] using hm
     dsimp [e, d]
     omega
   have hdz : z ≤ d := by
     have hm := hmin (phase (by omega : 0 < k) o r)
       (Finset.mem_filter.mpr ⟨Finset.mem_univ _, (hchar r hr).mpr (by omega)⟩)
-    change w 0 ≤ w r at hm
+    have hm' : w 0 ≤ w r := by simpa only [w, phase_zero] using hm
     dsimp [z, d]
     omega
   have hD : 0 < D := by
