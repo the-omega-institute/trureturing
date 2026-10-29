@@ -326,3 +326,339 @@ In particular, if $(\lambda,q)\in K_3$ and $v^\ast S(X)v<0$ for some complex $X$
 **Proof.** Theorem 4.1 gives $\mathcal S_3\subseteq K_3$. For parameters in $K_3$, Theorem 8.1 supplies (A) and (B) on $\partial\Delta_3$, and Theorem 3.2 requires them on the union $\Delta_3=\partial\Delta_3\cup\Delta_3^\circ$. This proves the equality. The assertion about a negative probe follows directly from Theorem 8.1. ∎
 
 ## 追加锚（本行以下为增补区）
+## 9. A sufficient region for unrestricted complex matrices
+
+**Theorem 9.1 (Pair compression and the Schwarz inequality).** For every integer $d\ge3$ and every pair of real numbers $\lambda,q$, put $p=1-(d-1)q$. If
+
+$$
+0\le q\le\frac1{d-1},\qquad (d-1)^2\lambda^2\le p,
+$$
+
+then the original map
+
+$$
+\Phi_{\lambda,q}(X)=\lambda X+(1-dq-\lambda)\operatorname{diag}(X)
++q\operatorname{tr}(X)I_d
+$$
+
+satisfies
+
+$$
+\forall X\in M_d(\mathbb C)\ \forall v\in\mathbb C^d,\qquad
+v^\ast\bigl(\Phi_{\lambda,q}(X^\ast X)
+-\Phi_{\lambda,q}(X)^\ast\Phi_{\lambda,q}(X)\bigr)v\ge0.
+$$
+
+All inequalities in the hypotheses are weak. In particular $q=0$, $p=0$, $p=1$, equality in $(d-1)^2\lambda^2\le p$, singular defects and probes with zero coordinates are included. In Eq. (6) of Bera, Bhattacharya and Chruściński, arXiv:2604.18600v1, the coordinates are exactly $\alpha=dq$, $\beta=1-dq-\lambda$. This is a sufficient condition for the Schwarz property, without an assumption of complete positivity or $2$-positivity. Stance: repo-derived; the qubit input used below is the cited Proposition 3 of arXiv:2404.10895v1, not a new qubit criterion.
+
+**Proof.** Set $m=d-1$ and $\rho=m\lambda$. The hypotheses give $0\le p\le1$ and $\rho^2\le p$. Consider the unital, Hermiticity-preserving map
+
+$$
+T_{p,\rho}\begin{pmatrix}a&b\\c&e\end{pmatrix}
+=\begin{pmatrix}pa+(1-p)e&\rho b\\\rho c&(1-p)a+pe\end{pmatrix}
+\quad\text{on }M_2(\mathbb C).
+$$
+
+The phase-covariant qubit criterion of Chruściński and Bhattacharya, arXiv:2404.10895v1, Proposition 3, Eq. (27), with their $a=b=p$, says that $T_{p,\rho}$ is Schwarz for $\rho^2\le p$. Its special case needed here also has the following direct proof. For a unital Hermiticity-preserving map the defect is unchanged by adding a scalar matrix, as in Lemma 3.1. Multiplication of the input by a scalar $c$ multiplies the defect by $|c|^2$. Thus every qubit input reduces to
+
+$$
+A=\begin{pmatrix}f&b\\c&-f\end{pmatrix},\qquad f\in\mathbb R,\quad b,c\in\mathbb C:
+$$
+
+subtract half the trace and, if the remaining first diagonal entry is nonzero, multiply by a complex number of modulus one to make it real. At $\rho=\varepsilon\sqrt p$, $\varepsilon\in\{-1,1\}$, multiplication gives
+
+$$
+\begin{aligned}
+T_{p,\rho}(A^\ast A)-T_{p,\rho}(A)^\ast T_{p,\rho}(A)
+&=(1-p)\begin{pmatrix}
+4pf^2+|b|^2&2\varepsilon\sqrt p\,f(b-\bar c)\\
+2\varepsilon\sqrt p\,f(\bar b-c)&4pf^2+|c|^2
+\end{pmatrix},\\
+\det\bigl(T_{p,\rho}(A^\ast A)-T_{p,\rho}(A)^\ast T_{p,\rho}(A)\bigr)
+&=(1-p)^2|4pf^2+bc|^2.
+\end{aligned}
+$$
+
+Both diagonal entries and the determinant are nonnegative, so this Hermitian $2\times2$ matrix is positive semidefinite. These formulas also hold at $p=0$ and $p=1$. If $p>0$, every $\rho\in[-\sqrt p,\sqrt p]$ is a convex combination of the two displayed endpoint multipliers. The convexity identity of Remark 4.4, applied on $M_2$, shows that a convex combination of Schwarz maps is Schwarz: its defect is the same convex combination of the two defects plus $\theta(1-\theta)(T_1(A)-T_2(A))^\ast(T_1(A)-T_2(A))$. If $p=0$, the only allowed multiplier is $\rho=0$, already included. Hence $T=T_{p,\rho}$ is Schwarz throughout the required closed region. It is also positive: if $B\ge0$, write $B=A^\ast A$ and use $T(B)\ge T(A)^\ast T(A)\ge0$.
+
+For $i<j$, let $V_{ij}:\mathbb C^2\to\mathbb C^d$ be the coordinate isometry with columns $e_i,e_j$, put $P_{ij}=V_{ij}V_{ij}^\ast$, and define
+
+$$
+B_{ij}(X)=V_{ij}\,T(V_{ij}^\ast XV_{ij})\,V_{ij}^\ast.
+$$
+
+These maps have output supported on the $\{i,j\}$ coordinate subspace. For every complex $X$, the exact compression identity is
+
+$$
+V_{ij}^\ast X^\ast XV_{ij}
+-(V_{ij}^\ast XV_{ij})^\ast(V_{ij}^\ast XV_{ij})
+=V_{ij}^\ast X^\ast(I_d-P_{ij})XV_{ij}\ge0.
+$$
+
+Applying the positive map $T$, followed by its Schwarz inequality on $V_{ij}^\ast XV_{ij}$, and then embedding back, yields
+
+$$
+B_{ij}(X^\ast X)\ge B_{ij}(X)^\ast B_{ij}(X).
+$$
+
+Define $F(X)=m^{-1}\sum_{i<j}B_{ij}(X)$. Its entries are
+
+$$
+[F(X)]_{ii}=pX_{ii}+\frac{1-p}{m}\sum_{j\ne i}X_{jj},\qquad
+[F(X)]_{ij}=\frac\rho m X_{ij}\quad(i\ne j).
+$$
+
+Since $(1-p)/m=q$ and $\rho/m=\lambda$, these formulas identify $F=\Phi_{\lambda,q}$ on every matrix entry. In particular the source and target algebra is still $M_d(\mathbb C)$.
+
+Fix any $v\in\mathbb C^d$ and abbreviate $w_{ij}=B_{ij}(X)v$, with $w_{ji}=w_{ij}$ when $j<i$. Each coordinate $i$ of the sum $\sum_{i<j}w_{ij}$ receives contributions from exactly the $m$ pairs containing $i$. Complex Cauchy–Schwarz therefore gives
+
+$$
+\begin{aligned}
+\|F(X)v\|^2
+&=\frac1{m^2}\sum_i\left|\sum_{j\ne i}(w_{ij})_i\right|^2\\
+&\le\frac1m\sum_i\sum_{j\ne i}|(w_{ij})_i|^2
+=\frac1m\sum_{i<j}\|B_{ij}(X)v\|^2.
+\end{aligned}
+$$
+
+The last equality uses the support of $w_{ij}$ on $\{i,j\}$. Consequently
+
+$$
+\begin{aligned}
+v^\ast F(X^\ast X)v
+&=\frac1m\sum_{i<j}v^\ast B_{ij}(X^\ast X)v\\
+&\ge\frac1m\sum_{i<j}\|B_{ij}(X)v\|^2
+\ge\|F(X)v\|^2.
+\end{aligned}
+$$
+
+This holds for every complex $X$ and $v$. There is no division by $p$, $q$, a coordinate of $v$, or an eigenvalue of a defect. Thus all zero, singular and equality cases in the statement follow from the same argument. ∎
+
+## 10. Square-root sections and the actual Schwarz set
+
+**Theorem 10.1 (Local failure of a finite affine description).** Fix any integer $d\ge3$, and let $\mathcal S_d$ denote the actual Schwarz parameter set of the original map of Convention 2.1. Use the affine coordinates $(\lambda,p)$, $p=1-(d-1)q$, and write
+
+$$
+\widehat{\mathcal S}_d
+=\{(\lambda,p):(\lambda,(1-p)/(d-1))\in\mathcal S_d\}.
+$$
+
+For every $0\le p\le1$ one has
+
+$$
+\left[-\frac{\sqrt p}{d-1},\frac{\sqrt p}{d-1}\right]
+\subseteq\{\lambda:(\lambda,p)\in\widehat{\mathcal S}_d\}
+\subseteq[-\sqrt p,\sqrt p].
+$$
+
+For no open neighborhood $U$ of $(0,1/(d-1))$ in the original $(\lambda,q)$ plane do there exist finitely many closed affine half-planes $H_1,\ldots,H_N$ such that
+
+$$
+\mathcal S_d\cap U=U\cap\bigcap_{j=1}^NH_j.
+$$
+
+The same assertion holds at $(0,0)$ in $(\lambda,p)$ coordinates. The displayed inclusions demonstrate square-root order of the two signed section widths; they do not determine their optimal coefficient or a finite nonlinear description of $\mathcal S_d$. Stance: repo-derived; the necessary inequality in the second inclusion is Theorem 4.1(ii), also literature-attested as specified there.
+
+**Proof.** The first inclusion is Theorem 9.1. The second follows from the established necessary condition $\lambda^2\le p$, obtained with $X=E_{12}$ and probe $e_2$. In particular $\widehat{\mathcal S}_d\cap\{p=0\}=\{(0,0)\}$. For every $r\in[0,1]$, the first inclusion supplies both points
+
+$$
+z_+(r)=\left(\frac r{d-1},r^2\right),\qquad
+z_-(r)=\left(-\frac r{d-1},r^2\right).
+$$
+
+Suppose there were such a finite half-plane representation in an open neighborhood $W$ of $(0,0)$. Orient each half-plane as $a_j\lambda+b_jp\ge c_j$. Because the origin belongs to the represented set, $c_j\le0$. If $c_j<0$, its inequality holds strictly throughout some ball about the origin. The finitely many such inequalities therefore impose no restriction in a sufficiently small common ball contained in $W$.
+
+For an active inequality $c_j=0$, both $z_+(r)$ and $z_-(r)$ belong to $W$ for all sufficiently small positive $r$. Hence
+
+$$
+\frac{a_j}{d-1}+b_jr\ge0,\qquad
+-\frac{a_j}{d-1}+b_jr\ge0.
+$$
+
+Taking $r\downarrow0$ shows $a_j=0$, and the inequalities then imply $b_j\ge0$. Every active half-plane thus contains the whole line $p=0$. Choose a nonzero $\lambda$ sufficiently small that $(\lambda,0)$ is in the common ball. It satisfies every inactive inequality strictly and every active inequality weakly, so the assumed representation puts it in $\widehat{\mathcal S}_d$. This contradicts $\lambda^2\le p=0$.
+
+The transformation $(\lambda,q)\mapsto(\lambda,1-(d-1)q)$ is an invertible affine map; it takes open neighborhoods to open neighborhoods and closed affine half-planes to closed affine half-planes. Thus the contradiction proves the assertion in both coordinate systems. Only the necessary upper bound and the two included curves were used. In particular no assertion $\mathcal S_d=K_d$, no exclusion of semialgebraic descriptions, and no optimal cusp coefficient is part of this conclusion. ∎
+
+## 11. Comparison with specified sufficient constructions
+
+**Definition 11.1 (Coordinates and a fixed supplier class).** In this section $m=d-1$, $d\ge3$, and all displayed parameter pairs are $(\lambda,p)$ pairs, with $q=(1-p)/m$. Let
+
+$$
+\begin{aligned}
+\widehat{\mathcal T}_d
+&=\{(\lambda,p):0\le p\le1,\ -p/m\le\lambda\le p\},\\
+\mathcal D_d
+&=\{(t,(1+mt)/d):-1/d\le t\le1\},\\
+G_d&=\left(\frac1{dm},\frac1{d^2}\right),\\
+\mathcal H_d&=\operatorname{conv}\bigl(\widehat{\mathcal T}_d\cup\mathcal D_d\cup\{G_d\}\bigr).
+\end{aligned}
+$$
+
+Here $\widehat{\mathcal T}_d$ is the known completely positive triangle (Remark 4.4 and arXiv:2604.18600v1, Proposition 2.1(2)); $\mathcal D_d$ is the exact Schwarz interval for the depolarizing maps $X\mapsto tX+(1-t)\operatorname{tr}(X)I_d/d$; and $G_d$ is the generalized-reduction supplier specified in the proof below. The exact $q=0$ Schwarz interval remains $-1/m\le\lambda\le1$ by Proposition 4.2. The existing $k$-positive characterization, for each $2\le k\le d$, is the quadrilateral of arXiv:2604.18600v1, Conjecture 2.4, proved in the repository's [k-positive-region result](../../../Blueprint/D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity.md). In these coordinates it reads
+
+$$
+0\le p\le1,\qquad
+\max\left\{-\frac p{k-1},-\frac{d-k+d(k-1)p}{km^2}\right\}\le\lambda\le p.
+$$
+
+These known regions, and every valid convex combination of their Schwarz members, are retained as sufficient regions independently of Theorem 9.1. The class $\mathcal H_d$ is precisely the convex hull displayed above; it does not mean the class of all known Schwarz constructions or all possible generalized reductions. The cited depolarizing and reduction facts are used only as intermediate suppliers in the following comparison.
+
+**Proposition 11.2 (Curves, positivity separation and scoped comparison).** Write $z_\pm(r)=(\pm r/m,r^2)$. For every $0<r<1$, both points belong to $\widehat{\mathcal S}_d$. Moreover:
+
+- $z_+(r)$ is not $2$-positive for $0<r<1/m$;
+- $z_-(r)$ is not $2$-positive for $(d-2)/d<r<1$;
+- for $0<r\le1$, $z_+(r)\in\mathcal H_d$ if and only if $r\ge1/d$;
+- the entire interval $(d-2)/d<r<1$ of the negative curve is already contained in $\operatorname{conv}(\widehat{\mathcal T}_d\cup\mathcal D_d)$.
+
+Thus the stated negative continuum and the positive continuum for $r\ge1/d$ are supplied by the cited constructions and their convex combinations. They are not additional independent content beyond those suppliers. The strict comparison at $0<r<1/d$ is only with the explicitly defined class $\mathcal H_d$.
+
+**Proof.** Membership of both curves follows from Theorem 9.1, since $m^2\lambda^2=r^2=p$. For clarity, the classical suppliers in Definition 11.1 can be justified without the invalid intervals discussed in §12. Let $\Psi$ be a unital, trace-preserving positive map which contracts the Hilbert–Schmidt norm, and put
+
+$$
+R_{a,\Psi}(X)=\frac{\operatorname{tr}(X)I_d-a\Psi(X)}{d-a},
+\qquad 0\le a\le\frac d{d+1}.
+$$
+
+This is the $k=1$ sufficient construction of Mukhamedov and Chruściński, arXiv:2603.11204v1, Theorem 3.2, Eqs. (2.8), (3.2)–(3.3), where their $\Delta$ is $\operatorname{tr}(X)I_d/d$. For $k=1$ their condition (2.8) is precisely Hilbert–Schmidt contraction. An elementary proof in this range is as follows. For a traceless complex $X$, define
+
+$$
+Z=a(d-a)\Psi(X^\ast X)+a^2\Psi(X)^\ast\Psi(X)\ge0.
+$$
+
+Trace preservation and contraction give $\operatorname{tr}Z\le ad\|X\|_F^2$. Since every positive matrix satisfies $Z\le\operatorname{tr}(Z)I_d$, one obtains
+
+$$
+\begin{aligned}
+(d-a)^2\bigl(R_{a,\Psi}(X^\ast X)-R_{a,\Psi}(X)^\ast R_{a,\Psi}(X)\bigr)
+&=(d-a)\|X\|_F^2I_d-Z\\
+&\ge\bigl(d-(d+1)a\bigr)\|X\|_F^2I_d\ge0.
+\end{aligned}
+$$
+
+Unitality and Hermiticity preservation give scalar-shift invariance of the defect, so the same conclusion holds for every complex input. This proves the stated supplier range including both endpoints.
+
+Taking $\Psi=\operatorname{id}$ supplies the depolarizing interval $-1/d\le t\le0$, with $t=-a/(d-a)$. The interval $0\le t\le1$ is completely positive. Conversely Theorem 4.1(ii) on the depolarizing line gives
+
+$$
+dt^2\le1+mt\quad\Longleftrightarrow\quad (t-1)(dt+1)\le0,
+$$
+
+so $-1/d\le t\le1$ is exact. This agrees with the Tomiyama identity-map case cited in arXiv:2603.11204v1, Remark 3.3; no larger printed interval is used.
+
+For $G_d$, take the completely positive, unital and trace-preserving Schur map
+
+$$
+\Psi(X)=-\frac1mX+\frac d m\operatorname{diag}(X).
+$$
+
+Its complete positivity is the $q=0$ endpoint of Proposition 4.2. Choi's Schwarz inequality and trace preservation give its Hilbert–Schmidt contraction. At $a=d/(d+1)$ the preceding reduction is exactly
+
+$$
+R_{a,\Psi}(X)=\frac1{dm}X-\frac1m\operatorname{diag}(X)
++\frac{d+1}{d^2}\operatorname{tr}(X)I_d,
+$$
+
+whose parameters are $G_d$. Thus the CP triangle, the depolarizing interval and this generalized reduction are valid Schwarz suppliers. Convexity is Remark 4.4.
+
+The non-$2$-positive assertions can be read from the existing quadrilateral. Their underlying witnesses also identify the exact strict intervals. Its standard quadratic form is
+
+$$
+Q(A)=q\|A\|_F^2+(1-dq-\lambda)\sum_i|A_{ii}|^2
++\lambda|\operatorname{tr}A|^2;
+$$
+
+$2$-positivity requires $Q(A)\ge0$ for every matrix of rank at most two, as in the cited quadrilateral proof. The rank-two matrix $E_{11}-E_{22}$ gives $Q=2(p-\lambda)$. At $z_+(r)$ this is $2r(r-1/m)<0$ exactly on the stated positive interval. For the negative curve let $A$ be the rank-two orthogonal projection onto two columns of the normalized discrete Fourier matrix. Then $\operatorname{tr}A=\|A\|_F^2=2$ and every diagonal entry is $2/d$. Thus
+
+$$
+Q(A)=\frac2{dm}\bigl(d-2+dp+2m^2\lambda\bigr).
+$$
+
+At $z_-(r)$ the expression in parentheses is
+
+$$
+dr^2-2mr+d-2=d(r-1)\left(r-\frac{d-2}{d}\right)<0
+$$
+
+for $(d-2)/d<r<1$. These are witnesses for failure of $2$-positivity, not witnesses against the Schwarz conclusion. No non-$2$-positive assertion at the endpoints of either stated open interval is inferred.
+
+To compare the positive curve with $\mathcal H_d$, every generating point of $\mathcal H_d$ has $p\ge0$ and satisfies
+
+$$
+\lambda\le\frac d m p.
+$$
+
+For the CP triangle this follows from $\lambda\le p$; on the depolarizing interval it is equivalent to $mt\le1+mt$; and it is an equality at $G_d$. The inequality survives convex combinations. At $z_+(r)$ it requires $r\ge1/d$, so $0<r<1/d$ lies outside this particular supplier hull.
+
+Conversely, for $1/d\le r\le1$, put
+
+$$
+\theta=\frac{d^2(1-r^2)}{d^2-1},\qquad
+c=\frac{r+d}{m(dr+1)}.
+$$
+
+Here $0\le\theta\le1$ and $0<c\le1$: indeed
+
+$$
+m(dr+1)-(r+d)=(d^2-d-1)r-1\ge\frac{d^2-d-1}{d}-1\ge0
+$$
+
+for $d\ge3$. Therefore $(c,1)$ is a completely positive $q=0$ parameter. Direct substitution gives the exact convex decomposition
+
+$$
+z_+(r)=\theta G_d+(1-\theta)(c,1).
+$$
+
+It is valid also at $r=1/d$, when $\theta=1$. This proves the asserted threshold for the declared hull.
+
+Finally let $N_d=(-1/d,1/d^2)\in\mathcal D_d$, $C_d=(0,0)\in\widehat{\mathcal T}_d$, and $B_d=(-1/m,1)\in\widehat{\mathcal T}_d$. For $0\le r\le1$, the polygon $\operatorname{conv}\{C_d,N_d,B_d\}$ contains the point $(-r/m,L(r))$, where
+
+$$
+L(r)=\begin{cases}
+r/(dm),&0\le r\le m/d,\\
+\bigl((d^2-1)r-(d^2-d-1)\bigr)/d,&m/d\le r\le1.
+\end{cases}
+$$
+
+The first point lies on $C_dN_d$, with weight $dr/m$ at $N_d$; the second lies on $N_dB_d$, obtained by linear interpolation at the specified first coordinate. The point $(-r/m,1)$ is in the CP triangle for every $r\in[0,1]$. If $r>(d-2)/d$ and $r\le m/d$, then $r\ge1/(dm)$ and hence $r^2\ge L(r)$. If $r\ge m/d$, then
+
+$$
+r^2-L(r)=(1-r)\left(\frac{d^2-d-1}{d}-r\right)\ge0,
+$$
+
+since $(d^2-d-1)/d>1$. In both cases $L(r)\le r^2\le1$, so interpolation between these two points at the same first coordinate puts $z_-(r)$ in $\operatorname{conv}(\widehat{\mathcal T}_d\cup\mathcal D_d)$. This accounts for the whole stated negative continuum using the existing suppliers. ∎
+
+## 12. Limits of the cited criteria and the remaining implication
+
+**Convention 12.1 (Scope of external inputs).** The family and its Schwarz question are Eq. (6) and §4 of Bera, Bhattacharya and Chruściński, arXiv:2604.18600v1. The exact qubit criterion used as an intermediate step of Theorem 9.1 is Chruściński and Bhattacharya, arXiv:2404.10895v1, Proposition 3, Eq. (27), specialized to $a=b=p$, $\mu=0$ and real off-diagonal multiplier $\rho$. Theorem 9.1 combines that criterion with pair compressions and the coordinatewise Cauchy–Schwarz estimate; Theorem 10.1 applies its two signed curves to the actual Schwarz set. Neither statement asserts priority or worldwide absence of another proof. Tomiyama, *On the geometry of positive maps in matrix algebras. II*, Linear Algebra Appl. 69, 169–177, DOI 10.1016/0024-3795(85)90074-6, and Sun and Li, *k Positivity and Schwarz inequality for two linear maps*, Positivity 26, 16, DOI 10.1007/s11117-022-00863-8, are cited through the exact accessible results identified above. Overlap with their unavailable original full texts is not determined.
+
+The generalized-reduction range in §11 uses only the hypotheses and $k=1$ range of arXiv:2603.11204v1, Theorem 3.2, with the proof given there inline. Its Theorem 3.4 cannot supply its whole printed interval (3.10). In fact, take $d=3$, $k=1$, the identity as its input map and $a=3/2$. The identity is unital, trace-preserving, positive and satisfies its condition (2.8); moreover
+
+$$
+1-\frac{\sqrt{13}-1}{6}\le\frac32\le1+\frac{\sqrt{13}+1}{6}.
+$$
+
+Nevertheless its construction (3.9) is
+
+$$
+\Omega(X)=\frac12\bigl(\operatorname{tr}(X)I_3-X\bigr)
+=\Phi_{-1/2,\,1/2}(X),
+$$
+
+and the existing matrix-unit necessary test of Theorem 4.1 gives
+
+$$
+e_2^\ast\bigl(\Omega(E_{12}^\ast E_{12})
+-\Omega(E_{12})^\ast\Omega(E_{12})\bigr)e_2=-\frac14.
+$$
+
+This source limitation also prevents using a negative depolarizing interval larger than the exact interval in Definition 11.1.
+
+For Rutkowski, arXiv:2512.18900v3, Theorem 1, the general diagonal Gell–Mann hypothesis does contain the $d=3$ original family: its six off-diagonal eigenvalues are $\lambda$ and its two diagonal traceless eigenvalues are $1-3q$. The displayed illustrative family (19), with seven equal eigenvalues and one distinct one, intersects this permutation-symmetric family on $\lambda=1-3q$; that intersection alone does not describe the scope of its general theorem. Its whole printed sufficient criterion is not used here. Indeed, the same $\Omega$ is a positive unital map: for $X\ge0$, $\operatorname{tr}(X)I_3-X\ge0$. It has isotropic Gell–Mann eigenvalues $\mu_i=-1/2$ and hence zero spectral spread. Under the definition (14), $c_3(\mu)=0$: the scalar coefficient of the defect is one third of its trace, is nonnegative by the Hilbert–Schmidt contraction of $\Omega$, and vanishes on $X=I_3$. Thus its printed condition (15) is met, while the displayed matrix-unit defect is negative. This excludes that full printed criterion as a supplier, without making any statement about other corrected estimates. Since $p=0$ and $\lambda=-1/2$, this example is outside $K_3$ and cannot refute the sufficiency of $K_3$.
+
+For García-Velo and Ibort, arXiv:2601.02282v1, only the necessary tests of Theorem V.4 are used, as in Theorem 4.1. Their Proposition V.4 is not a Schwarz or CP supplier here. The identity and the parameter $(\lambda,q)=(-1/2,1/4)$ in the existing Remark 5.1 already refute the two directions of its printed Schwarz criterion; those counterexamples and the complete boundary theorem 8.1 are reused in their entirety. These are limitations of the specified source statements, not independent additional refutations or new classification claims.
+
+**Question 12.2 (The unsupplied full classification).** For every $d\ge3$, does $K_d\subseteq\mathcal S_d$ hold? Since Theorem 4.1 gives the converse inclusion, a negative answer requires a parameter in $K_d$ and genuine complex $X\in M_d(\mathbb C)$, $v\in\mathbb C^d$ with $v^\ast S(X)v<0$. Theorem 9.1 supplies a subset of $\mathcal S_d$ and leaves this implication unresolved. Its complement is not declared pointwise unknown: the CP, exact $q=0$, exact depolarizing, $2$-positive and other valid sufficient constructions in §11 and their convex combinations remain available.
+
+For $d=3$, Theorem 8.1 already supplies all boundary points of the probe simplex. By Corollary 8.2 the remaining condition is exactly that (A) and (B) of Theorem 3.2 hold for every full-support $t\in\Delta_3^\circ$, with their singular-block range conditions, zero coefficients and equality cases unchanged. Theorem 10.1 excludes a finite affine half-plane description near the cusp; it neither settles this full-support condition nor excludes a finite nonlinear or semialgebraic description. The separate Schwarz classification of the transposition family $\Lambda_{\mu,\nu}$ in arXiv:2604.18600v1 is also unresolved here.
+
+## 追加锚（本行以下为增补区）
