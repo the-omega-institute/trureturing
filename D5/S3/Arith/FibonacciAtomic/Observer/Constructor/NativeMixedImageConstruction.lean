@@ -8,6 +8,7 @@
 
 import D5.S3.Arith.FibonacciAtomic.Observer.Constructor.NativePositiveBranchReduction
 import D5.S3.Arith.FibonacciAtomic.Observer.NativeUniformResidualRealization
+import Mathlib.Data.List.NodupEquivFin
 
 /-! Native expression lowering and unrestricted ambient template comparison. -/
 
@@ -167,6 +168,105 @@ theorem flatten_expansion_sound (E : List (MixedExpr X × MixedExpr X))
   rw [← origins _ _ hB] at hq
   obtain ⟨b, hb, rfl⟩ := List.mem_map.mp hq
   exact NativePositiveBranchReduction.branch_sound u b (hu b hb)
+
+deriving instance DecidableEq for NativePrefixIdentityReflection.MixedExpr
+
+/-- Every name read by a lowered equation, with repetitions retained. -/
+def equationNames : Equation X → List X
+  | .primitive x _ => [x]
+  | .shift x _ y | .same x y => [x,y]
+  | .pair x y z => [x,y,z]
+
+/-- Include the entire declared tuple before adding auxiliary equation names. -/
+def nameSupport {d : Nat} (E : List (MixedExpr (Fin d) × MixedExpr (Fin d))) :
+    List (Name (Fin d)) :=
+  ((List.finRange d).map Sum.inl ++ (flatten E).flatMap equationNames).dedup
+
+abbrev FiniteName {d : Nat} (E : List (MixedExpr (Fin d) × MixedExpr (Fin d))) :=
+  {x : Name (Fin d) // x ∈ nameSupport E}
+
+/-- The original tuple embeds even when its components never occur in E. -/
+def inputName {d : Nat} (E : List (MixedExpr (Fin d) × MixedExpr (Fin d)))
+    (i : Fin d) : FiniteName E :=
+  ⟨.inl i, by simp [nameSupport]⟩
+
+/-- A computable presentation obtained from the actual deduplicated finite list. -/
+def namePresentation {d : Nat} (E : List (MixedExpr (Fin d) × MixedExpr (Fin d))) :
+    NativeTermUnification.Presentation (FiniteName E) :=
+  (NativeTermUnification.finPresentation (nameSupport E).length).transport
+    (List.Nodup.getEquiv (nameSupport E) (List.nodup_dedup _)).symm
+
+private theorem equation_supported {d : Nat}
+    (E : List (MixedExpr (Fin d) × MixedExpr (Fin d)))
+    (e : Equation (Name (Fin d))) (he : e ∈ flatten E)
+    (x : Name (Fin d)) (hx : x ∈ equationNames e) : x ∈ nameSupport E := by
+  simp only [nameSupport, List.mem_dedup, List.mem_append]
+  exact Or.inr (List.mem_flatMap.mpr ⟨e,he,hx⟩)
+
+private def restrictEquation {d : Nat}
+    (E : List (MixedExpr (Fin d) × MixedExpr (Fin d))) :
+    (e : Equation (Name (Fin d))) →
+      (∀ x ∈ equationNames e, x ∈ nameSupport E) → Equation (FiniteName E)
+  | .primitive x a, h => .primitive ⟨x,h x (by simp [equationNames])⟩ a
+  | .shift x a y, h => .shift ⟨x,h x (by simp [equationNames])⟩ a
+      ⟨y,h y (by simp [equationNames])⟩
+  | .pair x y z, h => .pair ⟨x,h x (by simp [equationNames])⟩
+      ⟨y,h y (by simp [equationNames])⟩ ⟨z,h z (by simp [equationNames])⟩
+  | .same x y, h => .same ⟨x,h x (by simp [equationNames])⟩
+      ⟨y,h y (by simp [equationNames])⟩
+
+/-- Reindex every actual lowered equation, retaining all repetitions. -/
+def finiteEquations {d : Nat} (E : List (MixedExpr (Fin d) × MixedExpr (Fin d))) :
+    List (Equation (FiniteName E)) :=
+  (flatten E).attach.map fun e => restrictEquation E e.val (equation_supported E e.val e.property)
+
+def finiteExtend {d : Nat} (E : List (MixedExpr (Fin d) × MixedExpr (Fin d)))
+    (v : Fin d → Source) : FiniteName E → Source := fun x => extend v x.val
+
+private theorem restrictEquation_holds {d : Nat}
+    (E : List (MixedExpr (Fin d) × MixedExpr (Fin d)))
+    (e : Equation (Name (Fin d))) (h : ∀ x ∈ equationNames e, x ∈ nameSupport E)
+    (w : Name (Fin d) → Source) :
+    (restrictEquation E e h).Holds (fun x => w x.val) ↔ e.Holds w := by
+  cases e <;> rfl
+
+private theorem finite_lowering_exact {d : Nat}
+    (E : List (MixedExpr (Fin d) × MixedExpr (Fin d))) (v : Fin d → Source) :
+    (∀ e ∈ E, eval v e.1 = eval v e.2) ↔
+      ∀ q ∈ finiteEquations E, q.Holds (finiteExtend E v) := by
+  rw [flatten_exact E v]
+  constructor
+  · intro h q hq
+    obtain ⟨e,he,rfl⟩ := List.mem_map.mp hq
+    exact (restrictEquation_holds E e.val _ (extend v)).mpr (h e.val e.property)
+  · intro h e he
+    exact (restrictEquation_holds E e _ (extend v)).mp
+      (h _ (List.mem_map.mpr ⟨⟨e,he⟩,by simp,rfl⟩))
+
+/-- The actual finite named syntax selects branches and a total successful MGU.
+The factorization includes every name and hence every declared output component. -/
+theorem finite_expression_reduction {d : Nat}
+    (E : List (MixedExpr (Fin d) × MixedExpr (Fin d))) (v : Fin d → Source) :
+    (∀ e ∈ E, eval v e.1 = eval v e.2) ↔
+      ∃ B ∈ NativePositiveBranchReduction.branches (finiteEquations E),
+        (∀ x, NativeFiniteNormalInversion.Normal (encode (finiteExtend E v x))) ∧
+        (∀ b ∈ B, b.Holds (fun x => encode (finiteExtend E v x))) ∧
+        ∃ S : Lambda.SubstInfo,
+          (NativeGroundSolutionSpace.encodeEquations (namePresentation E)
+            (NativePositiveBranchReduction.shapeEquations B)).unify Lambda.SubstInfo.empty = .ok S ∧
+          (∀ x, NativeTermUnification.evaluate
+            (fun y => NativePositiveBranchReduction.shape (encode (finiteExtend E v y)))
+            (NativeGroundSolutionSpace.action (namePresentation E) S x) =
+              NativePositiveBranchReduction.shape (encode (finiteExtend E v x))) := by
+  rw [finite_lowering_exact E v]
+  constructor
+  · intro h
+    obtain ⟨B,hB,hn,hb,S,hok,hfactor,_,_⟩ :=
+      (NativePositiveBranchReduction.native_branch_reduction
+        (namePresentation E) (finiteEquations E) (finiteExtend E v)).mp h
+    exact ⟨B,hB,hn,hb,S,hok,hfactor⟩
+  · rintro ⟨B,hB,_,hb,S,hok,hfactor⟩
+    exact (NativePositiveBranchReduction.branches_exact _ _).mpr ⟨B,hB,hb⟩
 
 /-- Finite affine rank atoms; all coefficients are integral. -/
 inductive Scalar (k : Nat) where
