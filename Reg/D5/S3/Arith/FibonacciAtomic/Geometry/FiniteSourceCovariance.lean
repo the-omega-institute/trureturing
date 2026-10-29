@@ -66,7 +66,7 @@ private theorem J_zero : FiniteSourceHardy.J 0 = 0 := by
   have he : FiniteSourceHardy.edges 0 = ∅ := by
     ext p
     simp [FiniteSourceHardy.edges, FiniteSourceMass.vertices,
-      ActualTreeReadoutAcquisition.nodes, AncestorAreaInstability.T, p.property]
+      _root_.D5.S3.Arith.FibonacciAtomic.ActualTreeReadoutAcquisition.nodes, AncestorAreaInstability.T, p.property]
   simp [FiniteSourceHardy.value, FiniteSourceHardy.path, he]
 
 private theorem boundary_mean_ne_zero : BiasedBoundaryFreeRootForm.v ≠ 0 := by
