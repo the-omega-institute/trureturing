@@ -1,0 +1,91 @@
+import LeanInformationAuditInterface.Contract.Registration
+import D5.S3.Combinatorics.Graph.HypercubeSubQuorum
+import Reg.Support.DependentFamily
+import Reg.Support.SingleDependentReadout
+
+open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
+open _root_.D5.S3.Combinatorics.Graph.HypercubeSubQuorum
+open _root_.D5.S3.Combinatorics.Graph.Hypercube
+open LeanInformationAudit
+
+noncomputable section
+namespace Reg.D5.S3.Combinatorics.Graph.HypercubeSubQuorum
+
+abbrev paritySignature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature ℕ (fun n => Fin n → Bool) (fun _ => Bool)
+
+def parityActual : Realization paritySignature :=
+  realize paritySignature (fun _ _ x => cubeParity x) (fun e => nomatch e)
+
+def parityRejected : Realization paritySignature :=
+  realize paritySignature (fun _ _ _ => false) (fun e => nomatch e)
+
+def parityArena : Arena where
+  signature := paritySignature
+  Law R := ∀ {n : ℕ} {x y : Fin n → Bool}, (hypercube n).Adj x y →
+    R.readout () n x ≠ R.readout () n y
+
+private theorem parity_rejected_law : ¬ parityArena.Law parityRejected := by
+  intro h
+  have ha : (hypercube 1).Adj (fun _ => false) (fun _ => true) := by
+    change (Finset.univ.filter (fun _ : Fin 1 => (false : Bool) ≠ true)).card = 1
+    simp
+  exact h ha rfl
+
+def parityRecord : Registration parityArena (type_of% (@cubeParity_ne_of_adj)) where
+  actual := parityActual
+  bridge := Iff.rfl
+  variation := ⟨@cubeParity_ne_of_adj, parityRejected, parity_rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    parityArena.Law parityActual parityRejected parity_rejected_law
+  dependence := by
+    intro i
+    refine ⟨1, (fun _ => false), (fun _ => true), ?_⟩
+    change cubeParity (fun _ : Fin 1 => false) ≠ cubeParity (fun _ : Fin 1 => true)
+    simp [cubeParity, Fin.sum_univ_succ]
+
+noncomputable def parity_registration :
+    Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@_root_.D5.S3.Combinatorics.Graph.HypercubeSubQuorum.cubeParity_ne_of_adj)
+    (type_of% (realize paritySignature
+      (fun _ _ x => cubeParity x) (fun e => nomatch e))) Unit Unit := {
+  unitName := `Reg.D5.S3.Combinatorics.Graph.HypercubeSubQuorum.parity_information_unit
+  realizationName := `Reg.D5.S3.Combinatorics.Graph.HypercubeSubQuorum.parityRecord
+  realizationSource := none
+  generated := false
+  arena := .source ⟨parityArena⟩
+  objectArena := .source ⟨parityArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source parityArena ⟨parityRecord⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize paritySignature
+    (fun _ _ x => cubeParity x) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.Graph.HypercubeSubQuorum
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }, {
+      path := #["body", "body", "body", "body", "arg"]
+      stateBinder := 2
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms parityRecord
+#print axioms parity_registration
+
+end Reg.D5.S3.Combinatorics.Graph.HypercubeSubQuorum
