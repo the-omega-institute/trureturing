@@ -1104,9 +1104,9 @@ $$
 \operatorname{tr}(N^jL_0N^qc\ell)=b_j\quad(0\le j\le m).
 \tag{10.6}
 $$
-因此 $S=c\ell$ 是一个固定的、严格正的普通秩一来源。列因子的和在构造中被置为 $1$，这只是伴随来源的因子规范，不是对实际 $R$ 的归一化。
+因此 $S=c\ell$ 是一个固定的、严格正的普通秩一来源。构造的伴随来源的列因子满足部分和 $\sum_{h=0}^{k-q-1}c_h=1$，这不是对实际 $R$ 的归一化。
 
-**证明。** 令 $r=m+1$，$U=\{r,r+1,\ldots,r+q\}$。由 $q+m\le k-2$，有 $r+q\le k-1$，且 $U$ 与 $\{0,\ldots,m\}$ 不交。置
+**证明。** 令 $p=k-q$，$r=m+1$，$U=\{r,r+1,\ldots,r+q\}$。由 $q+m\le k-2$，有 $r+q\le k-1$，且 $U$ 与 $\{0,\ldots,m\}$ 不交。置
 $$
  B=2k,\qquad L=\max(1,b_0,\ldots,b_m),\qquad
  \alpha=\min_{0\le i\le q}a_i,\qquad A=\max_{0\le i\le q}a_i,
@@ -1209,7 +1209,7 @@ $\operatorname{tr}(N^iR)$（$0\le i\le q$）或 $\operatorname{tr}(N^jL_0N^qR)$�
 
 ### 定义 10.5（达到的秩二证书最小读数）
 
-对固定 $k\ge2$，令 $C_k$ 为集合
+对固定 $k\ge2$，令 $\mathcal A_k$ 为集合
 $$
 \begin{aligned}
 \{\,n\in\mathbb N:\ &\exists R\in\mathcal M_k,\ \operatorname{rank}(R)=2,
@@ -1222,7 +1222,7 @@ $$
 $$
 其中 $n$ 是包含初读的实际读数数，$\Pi$ 只须在该实际历史上停止；不要求对所有其他来源有共同截止时间。定义
 $$
- C_k=\min\{n:n\in\text{上式集合}\},
+ C_k=\min\mathcal A_k,
 \tag{10.20}
 $$
 一旦证明该集合非空。这样定义的证书是非空的实际秩二来源上的历史纤维性质，既不把“每个来源均可认证”当作目标，也不把混合项数当作矩阵秩。
