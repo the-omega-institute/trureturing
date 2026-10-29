@@ -14,43 +14,43 @@ is tracked at https://github.com/the-omega-institute/trureturing/issues/23724.
 
 namespace Reg.D5.S3.Topology.SphereOrthogonalityCover
 
-abbrev component_inner_pos_scope := type_of%
-  (@_root_.D5.S3.Topology.SphereOrthogonalityCover.component_inner_pos)
+abbrev component_inner_pos_scope.{u} := type_of%
+  (@_root_.D5.S3.Topology.SphereOrthogonalityCover.component_inner_pos.{u})
 theorem component_inner_pos_source : component_inner_pos_scope :=
   @_root_.D5.S3.Topology.SphereOrthogonalityCover.component_inner_pos
 
-abbrev cover_color_multiplicity_scope := type_of%
-  (@_root_.D5.S3.Topology.SphereOrthogonalityCover.cover_color_multiplicity)
+abbrev cover_color_multiplicity_scope.{u} := type_of%
+  (@_root_.D5.S3.Topology.SphereOrthogonalityCover.cover_color_multiplicity.{u})
 theorem cover_color_multiplicity_source : cover_color_multiplicity_scope :=
   @_root_.D5.S3.Topology.SphereOrthogonalityCover.cover_color_multiplicity
 
-abbrev exists_finite_acute_refinement_scope := type_of%
-  (@_root_.D5.S3.Topology.SphereOrthogonalityCover.exists_finite_acute_refinement)
+abbrev exists_finite_acute_refinement_scope.{u} := type_of%
+  (@_root_.D5.S3.Topology.SphereOrthogonalityCover.exists_finite_acute_refinement.{u})
 theorem exists_finite_acute_refinement_source : exists_finite_acute_refinement_scope :=
   @_root_.D5.S3.Topology.SphereOrthogonalityCover.exists_finite_acute_refinement
 
-abbrev acute_cover_normalized_map_scope := type_of%
-  (@_root_.D5.S3.Topology.SphereOrthogonalityCover.acute_cover_normalized_map)
+abbrev acute_cover_normalized_map_scope.{u, v} := type_of%
+  (@_root_.D5.S3.Topology.SphereOrthogonalityCover.acute_cover_normalized_map.{u, v})
 theorem acute_cover_normalized_map_source : acute_cover_normalized_map_scope :=
   @_root_.D5.S3.Topology.SphereOrthogonalityCover.acute_cover_normalized_map
 
-abbrev map_omits_point_of_small_spans_scope := type_of%
-  (@_root_.D5.S3.Topology.SphereOrthogonalityCover.map_omits_point_of_small_spans)
+abbrev map_omits_point_of_small_spans_scope.{u, v} := type_of%
+  (@_root_.D5.S3.Topology.SphereOrthogonalityCover.map_omits_point_of_small_spans.{u, v})
 theorem map_omits_point_of_small_spans_source : map_omits_point_of_small_spans_scope :=
   @_root_.D5.S3.Topology.SphereOrthogonalityCover.map_omits_point_of_small_spans
 
-abbrev acute_cover_contractible_of_multiplicity_lt_scope := type_of%
-  (@_root_.D5.S3.Topology.SphereOrthogonalityCover.acute_cover_contractible_of_multiplicity_lt)
+abbrev acute_cover_contractible_of_multiplicity_lt_scope.{u, v} := type_of%
+  (@_root_.D5.S3.Topology.SphereOrthogonalityCover.acute_cover_contractible_of_multiplicity_lt.{u, v})
 theorem acute_cover_contractible_of_multiplicity_lt_source : acute_cover_contractible_of_multiplicity_lt_scope :=
   @_root_.D5.S3.Topology.SphereOrthogonalityCover.acute_cover_contractible_of_multiplicity_lt
 
-abbrev open_cover_contractible_of_multiplicity_lt_scope := type_of%
-  (@_root_.D5.S3.Topology.SphereOrthogonalityCover.open_cover_contractible_of_multiplicity_lt)
+abbrev open_cover_contractible_of_multiplicity_lt_scope.{u} := type_of%
+  (@_root_.D5.S3.Topology.SphereOrthogonalityCover.open_cover_contractible_of_multiplicity_lt.{u})
 theorem open_cover_contractible_of_multiplicity_lt_source : open_cover_contractible_of_multiplicity_lt_scope :=
   @_root_.D5.S3.Topology.SphereOrthogonalityCover.open_cover_contractible_of_multiplicity_lt
 
-abbrev low_color_cover_contractible_scope := type_of%
-  (@_root_.D5.S3.Topology.SphereOrthogonalityCover.low_color_cover_contractible)
+abbrev low_color_cover_contractible_scope.{u} := type_of%
+  (@_root_.D5.S3.Topology.SphereOrthogonalityCover.low_color_cover_contractible.{u})
 theorem low_color_cover_contractible_source : low_color_cover_contractible_scope :=
   @_root_.D5.S3.Topology.SphereOrthogonalityCover.low_color_cover_contractible
 
