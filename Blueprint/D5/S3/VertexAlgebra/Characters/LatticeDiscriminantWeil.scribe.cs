@@ -4,10 +4,14 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.VertexAlgebra.Characters;
 
 internal sealed class LatticeDiscriminantWeilDocument : IScribeDocumentDefinition
 {
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/VertexAlgebra/borcherds1998automorphic");
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The literal shifted theta series of every positive even integral lattice transforms by its actual discriminant pairing. Negative Fourier operators on all functions satisfy the phased Weil relations, and the original positive Gaussian fixes the Milgram phase. All natural ranks are included. No fusion, Monster, sewing, CFT, string or AdS realization is asserted.",
         H("Original lattice discriminant S, Weil and Milgram laws"),
         Blocks(
+            Paragraph(Text("The three theorem statements are classical: Borcherds, Section 4, Theorem 4.1 and Corollary 4.2. The cited Library note maps the original Gram cokernel to the lattice discriminant and checks the signs and principal branch. His finite S operator is exp(-pi i rank/4) times the unphased S defined here, while his T has the same positive quadratic sign. The repository authors the Lean derivations, including the theta-orbit proof of Milgram; it does not claim authorship of these statements.")),
             Describe.Lean(
                 DescribeId.Create("latticediscriminantweil-rho"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Characters/LatticeDiscriminantWeil.rho"),
@@ -41,16 +45,16 @@ internal sealed class LatticeDiscriminantWeilDocument : IScribeDocumentDefinitio
             Describe.Lean(
                 DescribeId.Create("latticediscriminantweil-sector-s"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Characters/LatticeDiscriminantWeil.sector_S"),
-                H("All original shifted sectors under inversion"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                H("All original shifted sectors under inversion"), StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("For every original LatticeData D with positive real Gram matrix, every discriminant class a and every tau with positive imaginary part, Theta_a(-1/tau) equals (-i tau) to the principal power rank/2, divided by sqrt(det G), times the sum over c of exp(-2 pi i B(a,c)) Theta_c(tau). Coordinate Poisson summation applies to the literal translated Gaussian. Translation has a positive Fourier phase; integer negation converts the absolutely convergent dual sum to the existing negative inverse coefficient. Compact normal convergence is transported through the translated compact set, including empty sets and rank zero."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticediscriminantweil-finite-weil-relations"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Characters/LatticeDiscriminantWeil.finite_weil_relations"),
-                H("Full function-space Weil identities"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                H("Full function-space Weil identities"), StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("For every original positive even integral lattice, rho is nonzero and rho squared is the discriminant cardinality. On the whole complex function space, S squared equals C, S to the fourth equals the identity, and both products S Splus and Splus S equal the identity. With composition S after T, (S T) cubed equals gamma C. Character orthogonality and a finite completed-square identity prove these relations independently of theta values. These are phased relations; they do not assert an unphased modular representation or isometry for the supremum norm."))), DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticediscriminantweil-milgram"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Characters/LatticeDiscriminantWeil.milgram"),
-                H("Milgram phase of the original positive even lattice"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                H("Milgram phase of the original positive even lattice"), StatementSource.WithoutFormula(), AssessedProvenance.FromLiterature(Source),
                 Blocks(Paragraph(Text("For every natural rank, the positive normalized Gauss sum of the original positive even integral Gram lattice equals exp(pi i rank/4). The actual theta S and T transformations along i, (-1+i)/2, -1+i and i combine with the full-space cubic relation. The principal logs of 1-i and (1-i)/2 add to Log(-i), giving exp(-pi i rank/4) for the product of weight factors. Representative independence identifies the original zero sector at i with a convergent positive real Gaussian sum; its zero-vector term is one, so its real part is at least one. Cancelling this nonzero original theta value fixes the positive phase. No positive-rank, even-rank or diagonal restriction is imposed."))), DescribeRole.Theorem))));
 }
