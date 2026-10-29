@@ -33,12 +33,12 @@ structure Interface where
   Record : {i j : Ty} → Action i j → Type u
   Terminal : {i j : Ty} → Action i j → Type u
 
-abbrev Output (T : Interface) {i j : T.Ty} (a : T.Action i j) :=
+abbrev Output (T : Interface.{u}) {i j : T.Ty} (a : T.Action i j) :=
   T.Event a × (T.State j ⊕ T.Terminal a) × T.Record a
 
 /-- The source supplies legal rows and the complete normalized refusal triple.
 Fields affecting future legality or responses belong to the source or records. -/
-structure Source (T : Interface) where
+structure Source (T : Interface.{u}) where
   observe : {i : T.Ty} → T.State i → T.Observation i
   legal : {i j : T.Ty} → (a : T.Action i j) → T.State i → Prop
   kernel : {i j : T.Ty} → (a : T.Action i j) → (z : T.State i) →
@@ -47,21 +47,21 @@ structure Source (T : Interface) where
     T.Event a × T.Terminal a × T.Record a
 
 open Classical in
-def Source.total {T : Interface} (S : Source T) {i j : T.Ty}
+def Source.total {T : Interface.{u}} (S : Source T) {i j : T.Ty}
     (a : T.Action i j) (z : T.State i) : PMF (Output T a) :=
   if h : S.legal a z then S.kernel a z h else
     PMF.pure (S.refusal a z |>.1, Sum.inr (S.refusal a z).2.1, (S.refusal a z).2.2)
 
 /-- Only successful successors are quotiented; every event, record and terminal
 is retained exactly. The realized image changes no output equality. -/
-def jointView {T : Interface} (R : (i : T.Ty) → Setoid (T.State i))
+def jointView {T : Interface.{u}} (R : (i : T.Ty) → Setoid (T.State i))
     {i j : T.Ty} (a : T.Action i j) (x : Output T a) :
     T.Event a × (Quotient (R j) ⊕ T.Terminal a) × T.Record a :=
   (x.1, Sum.map (Quotient.mk (R j)) id x.2.1, x.2.2)
 
 /-- The actual closed joint recursion starts at the current observation kernel
 and retains the preceding relation at every refinement. -/
-def residual {T : Interface} (S : Source T) :
+def residual {T : Interface.{u}} (S : Source T) :
     ℕ → (i : T.Ty) → Setoid (T.State i)
   | 0, _ => Setoid.ker S.observe
   | n + 1, i => residual S n i ⊓ Setoid.ker (fun z =>
@@ -71,7 +71,7 @@ def residual {T : Interface} (S : Source T) :
 
 /-- The ordered acquired alphabet contains observations, selected parameterized
 actions, joint events and records, and distinct stop, horizon and terminal tags. -/
-inductive Token (T : Interface) where
+inductive Token (T : Interface.{u}) where
   | observed (i : T.Ty) (o : T.Observation i)
   | chosen {i j : T.Ty} (a : T.Action i j)
   | event {i j : T.Ty} (a : T.Action i j) (e : T.Event a)
@@ -83,7 +83,7 @@ inductive Token (T : Interface) where
 /-- Selectors and archive updates receive only declared acquired data. Permission
 checks may use the full acquired prefix and archive; source legality is separate.
 Randomized stopping is the `none` decision. -/
-structure Policy (T : Interface) (Archive : Type u) where
+structure Policy (T : Interface.{u}) (Archive : Type u) where
   write : Archive → List (Token T) → List (Token T) → Archive
   permitted : (i : T.Ty) → T.Observation i → Archive → List (Token T) →
     ((j : T.Ty) × T.Action i j) → Prop
@@ -92,12 +92,12 @@ structure Policy (T : Interface) (Archive : Type u) where
   selects_permitted : ∀ n i o c h a, some a ∈ (select n i o c h).support →
     permitted i o c h a
 
-abbrev Transcript (T : Interface) (Archive : Type u) :=
+abbrev Transcript (T : Interface.{u}) (Archive : Type u) :=
   List (Token T) × List Archive
 
 /-- Consume one complete source output, writing its event and record before
 continuing, or retaining the source's fixed terminal without continuation. -/
-def respond {T : Interface} {Archive : Type u} (P : Policy T Archive)
+def respond {T : Interface.{u}} {Archive : Type u} (P : Policy T Archive)
     {i j : T.Ty} (next : T.State j → Archive → List (Token T) → PMF (Transcript T Archive))
     (a : T.Action i j) (c : Archive) (h : List (Token T))
     (x : Output T a) : PMF (Transcript T Archive) :=
@@ -112,7 +112,7 @@ def respond {T : Interface} {Archive : Type u} (P : Policy T Archive)
 /-- Executed laws are constructed from source rows, never supplied as a law table.
 The result retains the entire ordered acquired history jointly with the initial
 archive and each chronological archive update. -/
-def run {T : Interface} (S : Source T) {Archive : Type u} (P : Policy T Archive) :
+def run {T : Interface.{u}} (S : Source T) {Archive : Type u} (P : Policy T Archive) :
     ℕ → (i : T.Ty) → T.State i → Archive → List (Token T) → PMF (Transcript T Archive)
   | 0, i, z, c, h =>
       let obs := [Token.observed i (S.observe z)]
@@ -130,7 +130,7 @@ def run {T : Interface} (S : Source T) {Archive : Type u} (P : Policy T Archive)
               (P.write c' h' [Token.chosen a]) (h' ++ [Token.chosen a]))).map
                 fun out => (out.1, [c, c'] ++ out.2)
 
-private theorem residual_observe {T : Interface} (S : Source T) (n : ℕ)
+private theorem residual_observe {T : Interface.{u}} (S : Source T) (n : ℕ)
     {i : T.Ty} {z w : T.State i} (h : residual S n i z w) :
     S.observe z = S.observe w := by
   induction n with
@@ -140,7 +140,7 @@ private theorem residual_observe {T : Interface} (S : Source T) (n : ℕ)
 /-- At every smaller finite depth, the recursively generated joint residual
 preserves the complete ordered law of every acquired-history-only policy on
 matching archives. No continuation-law invariance is assumed. -/
-theorem recursive_residual_preserves_adaptive_law {T : Interface} (S : Source T)
+theorem recursive_residual_preserves_adaptive_law {T : Interface.{u}} (S : Source T)
     (Archive : Type u) (n : ℕ) {i : T.Ty} {z w : T.State i}
     (related : residual S n i z w) :
     ∀ d ≤ n, ∀ (P : Policy T Archive) (c : Archive) (h : List (Token T)),
