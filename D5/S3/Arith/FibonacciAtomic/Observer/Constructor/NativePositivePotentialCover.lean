@@ -390,6 +390,10 @@ theorem source_canonical_block_recovery (p : Presentation X)
     (good : ZeroCycles B (action p S) j) :
     ∃ (b : Occurrence X) (a : Occurrence X → Nat),
       b ∈ occurrenceVertices p (action p S) ∧ b.2.2 = j ∧ a b = 0 ∧
+      (∀ o ∈ occurrenceVertices p (action p S), o.2.2 = j →
+        computedSourcePotential B (action p S) j b ≤ computedSourcePotential B (action p S) j o ∧
+        (a o : Int) = computedSourcePotential B (action p S) j o -
+          computedSourcePotential B (action p S) j b) ∧
       ∀ (T : FreeMagma Unit) (u : Occurrence X → Leaves T → Nat)
         (C : X → NativeFiniteNormalInversion.Code),
         BlockSolution B (action p S) j u →
@@ -403,9 +407,10 @@ theorem source_canonical_block_recovery (p : Presentation X)
             GenealogicalFiberTransport.substitution^[a v]
               (NativeFiniteNormalInversion.expand (fill T (u b))) ∧
           (∀ l, NativeFiniteNormalInversion.rankInverse (a v) (u v l) = some (u b l)) := by
-  obtain ⟨δ, b, a, _, hδ, hb, hj, hab, hmin, law⟩ :=
+  obtain ⟨δ, b, a, hcomp, hδ, hb, hj, hab, hmin, law⟩ :=
     (source_sort_minimum_base p B S hok j occurs).2 good
-  refine ⟨b, a, hb, hj, hab, ?_⟩
+  subst δ
+  refine ⟨b, a, hb, hj, hab, hmin, ?_⟩
   intro T u C hu hC actual
   have ranks := (law (Leaves T) u).mp hu
   refine ⟨normal_subtree (C b.1) b.2.1 _ (hC b.1) (actual b hb hj), ?_⟩
@@ -666,6 +671,10 @@ theorem native_source_block_recovery (p : Presentation X) (E : List (Equation X)
       ∀ j, (∃ o ∈ occurrenceVertices p (action p S), o.2.2 = j) →
         ∃ (b : Occurrence X) (a : Occurrence X → Nat),
           b ∈ occurrenceVertices p (action p S) ∧ b.2.2 = j ∧ a b = 0 ∧
+          (∀ o ∈ occurrenceVertices p (action p S), o.2.2 = j →
+            computedSourcePotential B (action p S) j b ≤ computedSourcePotential B (action p S) j o ∧
+            (a o : Int) = computedSourcePotential B (action p S) j o -
+              computedSourcePotential B (action p S) j b) ∧
           NativeFiniteNormalInversion.Normal
             (occurrenceCode (fun x => NativeFiniteNormalInversion.encode (v x)) b) ∧
           ∀ o ∈ occurrenceVertices p (action p S), o.2.2 = j →
@@ -690,7 +699,7 @@ theorem native_source_block_recovery (p : Presentation X) (E : List (Equation X)
     let l : Leaves T := Classical.choice (leavesNonempty T)
     exact (zeroCycles_iff B (action p S) j).mpr
       ⟨fun o => (u o l : Int), fun e he => blocks.1 e he l⟩
-  obtain ⟨b, a, hb, hj, hab, recovery⟩ :=
+  obtain ⟨b, a, hb, hj, hab, hmin, recovery⟩ :=
     source_canonical_block_recovery p B S hok j occurs good
   have recovered := recovery T u C blocks.1 normal blocks.2
   have identity (o : Occurrence X) (ho : o ∈ occurrenceVertices p (action p S))
@@ -698,7 +707,7 @@ theorem native_source_block_recovery (p : Presentation X) (E : List (Equation X)
     have h1 := blocks.2 o ho hoj
     have h2 := (actual_occurrence_code p B S hok C factor o ho).1
     exact Option.some.inj (h1.symm.trans h2)
-  refine ⟨b, a, hb, hj, hab, ?_, ?_⟩
+  refine ⟨b, a, hb, hj, hab, hmin, ?_, ?_⟩
   · simpa only [identity b hb hj] using recovered.1
   · intro o ho hoj
     constructor
