@@ -1494,8 +1494,6 @@ private theorem short_forward_attaining {n : ℕ} (alpha : Fin (n + 1) → ℝ)
       0 - (cyclicWidth alpha p.1 m + angularCoordinate q.2.val - angularCoordinate p.2.val)
     ring
   rw [hd] at h
-  change (cyclicDatum alpha ha hapi).Chain
-    ⟨p.1, _⟩ ⟨cyclicTag p.1 m, _⟩ _ at h
   -- Transport the whole tagged endpoint so its membership proof follows the tag.
   have hendpoint {i j : Fin (n + 1)}
       (x : sector (alpha i)) (y : sector (alpha j))
@@ -1507,7 +1505,7 @@ private theorem short_forward_attaining {n : ℕ} (alpha : Fin (n + 1) → ℝ)
     (⟨cylindricalPoint (radialCoordinate q.2.val) (axialCoordinate q.2.val)
         (angularCoordinate q.2.val),
       cylindrical_mem_sector _ _ _ _ hq.le (hapi _) hqangle⟩ :
-        sector (alpha (cyclicTag p.1 m)))
+        sector (alpha ((finRotate (n + 1))^[m] p.1)))
     q.2 htag (cylindrical_reconstruct q.2.val)
   rw [htarget] at h
   simpa only [cylindrical_reconstruct] using h
