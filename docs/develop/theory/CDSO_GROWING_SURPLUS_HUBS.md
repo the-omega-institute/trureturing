@@ -853,3 +853,336 @@ Equations (7.26)–(7.28) prove (7.20). The adjacent branch comparison in Propos
 The CDSO normalization is the one cited in Definition 1.1 through the parent volume: A. M. Albalahi, S. Das, A. Ali, J. Barman and A. E. Hamza, *On the hyperbolic Sombor index and its counterpart*, Discrete Math. Lett. 16 (2025), 108–115, DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176), p.109. No finite-graph extremal assertion from that source is a premise of Lemma 7.1 or Theorem 7.2. Their lower certificate is a deduction for the common-law domain (1.1), using the existing constructions solely for the matching upper bound. The relation to K. Zhao and X. Zhao, *Extremal values with respect to vertex-degree-based topological indices in unicyclic and bicyclic graphs*, DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), is undetermined without its full text; its metadata and abstract supply no mathematical premise here.
 
 ## 追加锚（本行以下为增补区）
+
+## 8. Diverging surplus ratios and the transition scale
+
+**Definition 8.1 (Scale and error conventions).** In this section $a\ge4$ and $h\ge1$ are integers, $s=a+1+h$, and $M(a,h)$ and $B_0(a)$ retain Definition 1.1. In particular, the infimum is over all laws in $\mathcal X(a,h)$, with arbitrary nonempty cardinalities, zero type masses, arbitrarily small positive actual marginals and possibly disconnected support. Put
+
+$$
+\rho_a=\frac{h}{a^{3/2}}.
+\tag{8.1}
+$$
+
+Every sequential limit below is asserted for every sequence of these integers with $a\to\infty$ and the displayed scale assumptions. For a fixed compact interval $I=[\rho_-,\rho_+]\subset(0,\infty)$, an error $O_I(a^{-1})$ has a constant and a starting value of $a$ depending only on $I$, uniformly over all integers $h$ with $\rho_a\in I$.
+
+**Theorem 8.2 (The surplus between the square-root and transition scales).** For every integer sequence with
+
+$$
+\frac{h}{\sqrt a}\longrightarrow\infty,
+\qquad \frac{h}{a^{3/2}}\longrightarrow0,
+$$
+
+one has
+
+$$
+\frac{M(a,h)-B_0(a)}{a^{3/2}h}\longrightarrow4.
+\tag{8.2}
+$$
+
+**Proof.** Theorem 2.1 is a lower bound for every original law, so
+
+$$
+M(a,h)-B_0(a)
+\ge\beta_a(h+1)-2a^2-a.
+$$
+
+Here $\beta_a/a^{3/2}\to4$, $h\to\infty$ and $\sqrt a/h\to0$. Division by $a^{3/2}h$ gives the lower limit at least $4$.
+
+For a matching upper bound choose
+
+$$
+j=\left\lceil\frac{h}{2\sqrt a}\right\rceil.
+$$
+
+Then $j\to\infty$, $j/a\to0$, $j/h\to0$ and $j\sqrt a/h\to1/2$. In particular $1\le j\le h$ eventually. Use the exact law of Theorem 3.1 at this varying integer $j$, rather than its fixed-$j$ asymptotic formula. Its feasibility for each such integer can also be read directly: with $m=a+j$, $n=h+1-j$ and $p=j/(m-1)$, the core mass $1-p=(a-1)/(m-1)$ and the $n$ singleton masses $p/n$ sum to one, their actual marginals are respectively $1-p>0$ and $p/n>0$, and
+
+$$
+\mathbb E K=(1-p)m+p=m-p(m-1)=a.
+$$
+
+Thus, for every $1\le j\le h$, not just fixed $j$, the unrestricted infimum is at most the exact energy
+
+$$
+H_j(a,h)=\frac{(a+j)^3(a+j-1)}{a-1}
+       +\frac{(h+1-j)^2(a+j-1)}j.
+\tag{8.3}
+$$
+
+For $1\le j\le a/2$, expansion of its first term has a uniform remainder:
+
+$$
+\begin{aligned}
+\frac{(a+j)^3(a+j-1)}{a-1}
+ &=a^3+4a^2j+R_{a,j},\\
+R_{a,j}
+ &=\frac{a^2j+3a(2a-1)j^2+(4a-1)j^3+j^4}{a-1}
+ =O(aj^2+aj).
+\end{aligned}
+\tag{8.4}
+$$
+
+The constant is absolute, as follows by bounding $j/a\le1/2$ in the displayed expression. Our choice of $j$ eventually lies in this range. The contribution of $4a^2j$ divided by $a^{3/2}h$ tends to $2$, while the remainder divided by the same quantity is
+
+$$
+O\!\left(\frac{h}{a^{3/2}}+\frac1a\right)=o(1).
+$$
+
+For the other term of (8.3), the exact normalized expression is
+
+$$
+\frac{(h+1-j)^2(a+j-1)}{j a^{3/2}h}
+=\left(\frac{h+1-j}{h}\right)^2
+ \frac{a+j-1}{a}\,\frac{h}{j\sqrt a}
+\longrightarrow2.
+$$
+
+Finally $(B_0(a)-a^3)/(a^{3/2}h)=(2a^2+a)/(a^{3/2}h)\to0$. This actual law gives the upper limit at most $4$, proving (8.2). No law attaining $M$ was used. ∎
+
+**Definition 8.3 (Transition profile).** For $\rho>0$, let $t(\rho)>1$ be the unique solution of
+
+$$
+\rho=2(t-1)t^{3/2},
+\qquad F(\rho)=t(\rho)^4\bigl(4t(\rho)-3\bigr).
+\tag{8.5}
+$$
+
+Uniqueness and existence follow because $t\mapsto2(t-1)t^{3/2}$ is continuous on $(1,\infty)$, has derivative $\sqrt t(5t-3)>0$, and has endpoint limits $0$ and $\infty$.
+
+**Theorem 8.4 (Full-law transition value and uniform first correction).** For every $I=[\rho_-,\rho_+]\subset(0,\infty)$ there are constants $C_I<\infty$ and $A_I$ such that all integers $a\ge A_I$, $h\ge1$ with $\rho_a=h/a^{3/2}\in I$ satisfy
+
+$$
+\left|\frac{M(a,h)}{a^3}-F(\rho_a)
+           +\frac{2\rho_a t(\rho_a)}{\sqrt a}\right|
+\le\frac{C_I}{a}.
+\tag{8.6}
+$$
+
+The profile also has the variational representation
+
+$$
+F(\rho)=\min_{0<p<1}\left\{(1-p)^{-4}+\frac{\rho^2}{p}\right\}.
+\tag{8.7}
+$$
+
+Consequently every integer sequence with $\rho_a\to\rho\in(0,\infty)$ has $M(a,h)/a^3\to F(\rho)$. The normalization in (8.6) uses $h$, with $s=a+1+h$ still exact.
+
+**Proof.** First, under $t=(1-p)^{-1}$ the objective in (8.7) becomes
+
+$$
+f_\rho(t)=t^4+\rho^2\frac{t}{t-1},\qquad t>1.
+$$
+
+It diverges at both endpoints, and
+
+$$
+f_\rho'(t)=4t^3-\frac{\rho^2}{(t-1)^2},\qquad
+f_\rho''(t)=12t^2+\frac{2\rho^2}{(t-1)^3}>0.
+$$
+
+Its unique minimum is at the solution of (8.5); substitution gives $f_\rho(t)=t^4(4t-3)$. This proves (8.7). The inverse defining $t(\rho)$ is continuous. Thus, for $\rho\in I$, its values lie in an interval $[1+\delta,T]$ with $\delta>0$ and $T<\infty$ depending only on $I$.
+
+For the full-law lower bound, reuse the pointwise certificate underlying Theorem 2.1 with a movable real contact parameter. The necessary scaled calculation is as follows. For any real $c\ge2$, put
+
+$$
+\begin{aligned}
+b(c)&=4c(c-1)\sqrt{c+1}-2c^2+4c,\\
+L_c&=5c^4-2b(c)c,\qquad N_c=4c^5-b(c)c^2,\\
+W_c(k,v)&=kv^2-L_ck-b(c)v+N_c.
+\end{aligned}
+\tag{8.8}
+$$
+
+We claim $W_c(k,v)\ge0$ for all real $k\ge1$, $v\ge k^2$. Write $b=b(c)$. The inequalities
+
+$$
+\begin{aligned}
+b-2c^2&=4c(c-1)(\sqrt{c+1}-1)\ge0,\\
+2c^3-b&=2c(c-1)(c+2-2\sqrt{c+1})\ge0
+\end{aligned}
+$$
+
+follow from $c\ge2$ and $(c+2)^2-4(c+1)=c^2\ge0$. In particular $2c^2\le b\le2c^3$, $L_c\ge c^4>0$, and $k_0=(b/2)^{1/3}$ lies in $[1,c]$.
+
+If $k\ge k_0$, then $\partial_vW_c=2kv-b\ge2k^3-b\ge0$ on $v\ge k^2$. Its minimum there is at $v=k^2$, and the exact factorization is
+
+$$
+W_c(k,k^2)
+=(k-c)^2\bigl(k^3+2ck^2+3c^2k+4c^3-b\bigr)\ge0,
+\tag{8.9}
+$$
+
+since the factor in parentheses is at least $2c^3$.
+
+If $1\le k\le k_0$, the unconstrained minimizer $v=b/(2k)$ is feasible. Its value multiplied by $4k$ equals the concave quadratic
+
+$$
+Q_c(k)=4N_ck-4L_ck^2-b^2.
+$$
+
+The formula for $b$ gives the exact identity
+
+$$
+b^2+4(c^2-2c)b=16c^5-20c^4,
+$$
+
+and hence $Q_c(1)=0$. At $k=k_0$ the minimizing $v$ is $k_0^2$, so (8.9) gives $Q_c(k_0)\ge0$. A concave quadratic lies above the chord between these two endpoint values. It follows that $Q_c\ge0$ throughout $[1,k_0]$, proving the claim on the remaining interval as well.
+
+For any law in Definition 1.1, the common-law identities (2.3) give
+
+$$
+\mathbb E K=a,\qquad \mathbb E U=s,\qquad
+ aU\ge K^2,\qquad H\ge\mathbb E(KU^2).
+$$
+
+They are necessary relations for that same law, with no assumption on the shape of its support. Taking the expectation of $W_c(K,aU)\ge0$ therefore gives
+
+$$
+H(x)\ge G_c(a,s):=\frac{aL_c+ab(c)s-N_c}{a^2}.
+\tag{8.10}
+$$
+
+One can retain the full nonnegative remainder in this step:
+
+$$
+\begin{aligned}
+H(x)-G_c(a,s)
+ &=\mathcal D(x)+\frac1{a^2}\mathbb E W_c(K,aU),\\
+\mathcal D(x)
+ &=\mathbb E\left[K\sum_{\substack{i<j\\i,j\in T}}
+                  (y_i^{-1}-y_j^{-1})^2\right]\ge0.
+\end{aligned}
+\tag{8.11}
+$$
+
+Indeed $K\sum_{i\in T}y_i^{-2}-U^2=\sum_{i<j,\,i,j\in T}(y_i^{-1}-y_j^{-1})^2$, and multiplying by $K$ proves the identity. For a proposed energy bound $E_0$, any actual law with $H(x)\le E_0$ must consequently satisfy
+
+$$
+\mathcal D(x)+a^{-2}\mathbb E W_c(K,aU)
+\le E_0-G_c(a,s)\qquad(c\ge2).
+\tag{8.12}
+$$
+
+These are necessary residual constraints, not a sufficiency statement for realizability or an equality classification. All expectations are finite because $[s]$ is finite and the actual marginals are positive. At $c=a$, $b(a)/a=\beta_a$ and (8.10) is exactly Theorem 2.1. Thus the certificate is its continuous-contact version, used here to obtain the moving-scale lower bound. Taking expectations of a pointwise bound is the weak-duality principle in D. Bertsimas and I. Popescu, *Optimal inequalities in probability theory: A convex optimization approach*, SIAM J. Optim. 15(3) (2005), 780–804, Theorem 2.1, pp.784–785, DOI [10.1137/S1052623401399903](https://doi.org/10.1137/S1052623401399903) ([author-hosted text](https://www.mit.edu/~dbertsim/papers/MomentProblems/Optimal-inequalities-in-probability-theory-A-convex-optimization-approach-SIAM15.pdf)). Only this elementary direction is used; neither strong duality nor a reduction of the actual-law domain to finitely many cardinalities is required.
+
+Now set $t=t(\rho_a)$ and choose $c=at$ in (8.10). Keeping the exact relation $s=a+1+h$, elementary rearrangement yields
+
+$$
+\frac{G_{at}(a,s)}{a^3}
+=t^4(5-4t)+\frac{b(at)}{a^{5/2}}
+ \left(\rho_a+\frac{(t-1)^2}{\sqrt a}+\frac1{a^{3/2}}\right).
+\tag{8.13}
+$$
+
+Uniformly for $t\in[1+\delta,T]$, the formula for $b$ gives
+
+$$
+\frac{b(at)}{a^{5/2}}
+=4t^{5/2}-\frac{2t^2}{\sqrt a}+O_I(a^{-1}).
+\tag{8.14}
+$$
+
+For example, write the radical part as $4(at)^{5/2}(1-(at)^{-1})\sqrt{1+(at)^{-1}}$; its difference from $4(at)^{5/2}$ is $O_I(a^{3/2})$, while the remaining terms are $-2a^2t^2+4at$. This proves (8.14) with a uniform bound. Multiplying (8.13) out gives
+
+$$
+\begin{aligned}
+\frac{G_{at}(a,s)}{a^3}
+={}&t^4(5-4t)+4\rho_a t^{5/2}\\
+ &+\frac{-2\rho_a t^2+4t^{5/2}(t-1)^2}{\sqrt a}
+ +O_I(a^{-1})\\
+={}&F(\rho_a)-\frac{2\rho_a t}{\sqrt a}+O_I(a^{-1}).
+\end{aligned}
+\tag{8.15}
+$$
+
+The last equality uses $\rho_a=2(t-1)t^{3/2}$ separately in the leading term and in the coefficient of $a^{-1/2}$. Since (8.10) holds for every original law, (8.15) bounds their infimum from below, uniformly on $I$ and without attainment.
+
+For the upper bound, choose the integer
+
+$$
+j=\lfloor a(t-1)\rfloor,\qquad z=\frac{a+j}{a}.
+$$
+
+Uniformly on $I$, for all sufficiently large $a$ one has $j\ge1$, $j\le a(T-1)\le h$, $|z-t|\le a^{-1}$ and $z-1\ge\delta/2$. Thus the actual law in (8.3) is admissible. Its energy has the exact normalized expression
+
+$$
+\frac{H_j(a,h)}{a^3}
+=\frac{z^3(z-a^{-1})}{1-a^{-1}}
+ +\left(\rho_a-\frac{z-1}{\sqrt a}+\frac1{a^{3/2}}\right)^2
+       \frac{z-a^{-1}}{z-1}.
+\tag{8.16}
+$$
+
+The second factor retains the full number $h+1-j$ of singleton labels. On $\rho_a\in I$, $z\in[1+\delta/2,T+1]$, all denominators in (8.16) stay uniformly away from zero, and expansion gives
+
+$$
+\frac{H_j(a,h)}{a^3}
+=f_{\rho_a}(z)-\frac{2\rho_a z}{\sqrt a}+O_I(a^{-1}).
+\tag{8.17}
+$$
+
+Explicitly, the first term in (8.16) is $z^4+O_I(a^{-1})$, and the other is $\rho_a^2z/(z-1)-2\rho_a z/\sqrt a+O_I(a^{-1})$. The derivatives of $f_{\rho_a}$ on the displayed compact set are uniformly bounded, so $|z-t|\le a^{-1}$ gives $f_{\rho_a}(z)=F(\rho_a)+O_I(a^{-1})$. Also $2\rho_a(z-t)/\sqrt a=O_I(a^{-3/2})$. Hence the actual-law upper bound is
+
+$$
+\frac{M(a,h)}{a^3}\le\frac{H_j(a,h)}{a^3}
+=F(\rho_a)-\frac{2\rho_a t(\rho_a)}{\sqrt a}
+ +O_I(a^{-1}).
+$$
+
+Together with (8.15) this proves (8.6). All upper bounds use actual probabilities, their own actual marginals and the exact mean $a$; the scalar minimum (8.7) supplies no substitute for the full-law lower bound. Continuity of $F$ gives the sequential limit asserted in the theorem. ∎
+
+**Theorem 8.5 (The supercritical label-square value).** For every integer sequence with $a\to\infty$ and $h/a^{3/2}\to\infty$,
+
+$$
+\frac{M(a,h)}{(a+1+h)^2}\longrightarrow1.
+\tag{8.18}
+$$
+
+**Proof.** For every actual law, the identities (2.3), $K\ge1$ and Cauchy–Schwarz give the elementary lower bound
+
+$$
+H(x)\ge\mathbb E(KU^2)\ge\mathbb E U^2
+       \ge(\mathbb E U)^2=s^2.
+\tag{8.19}
+$$
+
+This uses the same actual marginals and puts no restriction on their positive values or on the cardinality layers. Thus $M(a,h)/s^2\ge1$.
+
+For the matching upper bound put $\rho=h/a^{3/2}$ and choose
+
+$$
+j=\lceil a\rho^{2/5}\rceil.
+$$
+
+Then $j/(a\rho^{2/5})\to1$, $j/a\to\infty$, and
+
+$$
+\frac jh=O\!\left(a^{-1/2}\rho^{-3/5}+h^{-1}\right)\longrightarrow0.
+$$
+
+Consequently $1\le j\le h$ eventually, so (8.3) again is the energy of an actual admissible law. With $m=a+j$ and $n=h+1-j$, one has $m=O(a\rho^{2/5})$, and its core contribution satisfies
+
+$$
+\frac{m^3(m-1)}{(a-1)h^2}
+=O(\rho^{-2/5})\longrightarrow0.
+$$
+
+Its singleton contribution satisfies
+
+$$
+\frac{n^2(m-1)}{jh^2}
+=\left(\frac nh\right)^2\left(1+\frac{a-1}{j}\right)
+\longrightarrow1.
+$$
+
+Here $n/h\to1$, while $s/h=1+(a+1)/h\to1$. Therefore $H_j(a,h)/s^2\to1$, supplying the matching upper bound for the unrestricted infimum. Combining it with (8.19) proves (8.18). ∎
+
+**Open problem 8.6 (Finite values, residual regimes and realizations).** Theorems 8.2, 8.4 and 8.5 resolve the following parts of the diverging-ratio request in Open problem 7.3: the leading surplus for $\sqrt a\ll h\ll a^{3/2}$, the leading value and uniform first correction for $h/a^{3/2}$ in any fixed compact positive interval, and the leading value for $h\gg a^{3/2}$. Theorem 7.2 already determines all fixed positive limits of $h/\sqrt a$. The remaining mathematical questions include:
+
+1. Determine the exact finite values $M(a,h)$, whether they are attained, and any least thresholds for eventual exact formulas.
+2. Classify equality and near-equality laws, and establish quantitative stability in the relevant scales. The necessary residual constraints (8.11)–(8.12) do not establish such a classification or stability theorem.
+3. Obtain sharp uniform estimates when $h/\sqrt a\to0$, and sharper remainders or uniform matching estimates in the moving regimes not specified by (7.20), (8.2), (8.6) or (8.18). In particular, the constant in (8.6) is not asserted to remain bounded when its compact interval approaches $0$ or $\infty$.
+4. Determine which optimizing or asymptotically optimizing laws admit connected finite-graph realizations at prescribed budgets, and the corresponding graph extremal values. The array-law upper bounds above do not impose the graph realization constraints.
+
+The graph normalization remains the one in Definition 1.1 and the Albalahi–Das–Ali–Barman–Hamza source cited after Open problem 7.3. It does not transfer (8.2), (8.6) or (8.18) to graph extrema. The relation of these array-law statements to the Zhao–Zhao article cited there remains undetermined without its full text; no literature-priority assertion is attached to them.
+
+## 追加锚（本行以下为增补区）
