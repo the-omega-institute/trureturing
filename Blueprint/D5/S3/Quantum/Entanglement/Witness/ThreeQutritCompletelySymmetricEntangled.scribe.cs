@@ -22,7 +22,7 @@ internal sealed class ThreeQutritCompletelySymmetricEntangledDocument : IScribeD
                 Blocks(Paragraph(Text(
                     "A word is a function from Fin d to Fin 3. The two copies of Fin d label the ket and bra positions. "
                     + "Every permutation of their disjoint union rearranges all twice d positions, including permutations that mix the ket and bra. "
-                    + "The matrix entry must remain unchanged. This is Definition 1 of the source, arXiv:1812.04182v4, main.tex lines 360–391, with local dimension three. "
+                    + "The matrix entry must remain unchanged. This is Definition 1 of the source, arXiv:1812.04182v4, CSv2.tex lines 360–391, with local dimension three. "
                     + "The predicate is defined for every complex matrix and every natural d; positivity and trace one are separate conditions."))),
                 DescribeRole.Definition),
             Describe.Lean(
@@ -36,7 +36,7 @@ internal sealed class ThreeQutritCompletelySymmetricEntangledDocument : IScribeD
                     + "The sum of squared complex norms of each local vector is one. The multilinear product map forms the product vector, and its outer product with its pointwise conjugate forms its rank-one projector. "
                     + "The real weight is included in the complex scalars before scalar multiplication of that projector. "
                     + "The constant family of multiplication maps is indexed by the word type. "
-                    + "This specializes the source's convex-mixture definition at main.tex lines 244–252 and its multipartite definition of full separability at lines 444–452."))),
+                    + "This specializes the source's convex-mixture definition at CSv2.tex lines 244–252 and its multipartite definition of full separability at lines 444–452."))),
                 DescribeRole.Definition),
             Describe.Lean(
                 DescribeId.Create("claim"),
@@ -46,7 +46,7 @@ internal sealed class ThreeQutritCompletelySymmetricEntangledDocument : IScribeD
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "For every natural d at least three, every positive semidefinite complex matrix of trace one on d qutrits is fully separable whenever it is completely symmetric. "
-                    + "This is the universal assertion associated with the source's question, ‘Are multi-qutrit CS states separable?’, at main.tex line 1857. "
+                    + "This is the universal assertion associated with the source's question, ‘Are multi-qutrit CS states separable?’, at CSv2.tex line 1857. "
                     + "The quantifier starts at three subsystems; it makes no assertion about two qutrits."))),
                 DescribeRole.Definition),
             Describe.Lean(

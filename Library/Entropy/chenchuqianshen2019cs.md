@@ -24,6 +24,6 @@ A state is separable if it is a convex combination of pure product states. Writi
 
 Source: https://arxiv.org/abs/1812.04182v4
 - DOI: https://doi.org/10.1103/PhysRevA.99.032312 (Physical Review A 99(3), article 032312; title, authors, journal, volume, issue and article number from Crossref).
-- URL: https://arxiv.org/abs/1812.04182v4. The e-print member `main.tex` has 2357 lines and md5 `52f01e75f543a97d43fc560e5af4a8d8`. Locations:
+- URL: https://arxiv.org/abs/1812.04182v4. The e-print, a single gzip-compressed file `CSv2.tex`, has 2357 lines and md5 `52f01e75f543a97d43fc560e5af4a8d8`. Locations:
   - separability, l. 244–252; complete symmetry, l. 360–391; full separability, l. 444–452;
   - the question, l. 1857.
