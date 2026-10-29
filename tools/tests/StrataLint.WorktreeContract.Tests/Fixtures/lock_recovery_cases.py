@@ -25,6 +25,82 @@ class LockRecoveryCases:
             self.root, phase="native-removal-baseline", timeout=30, check=False,
             env=protocol.git_environment())
 
+    def cooperative_lock_and_write(self, target):
+        import worktree_protocol as protocol
+        script = Path(protocol.__file__)
+        code = ('import pathlib, subprocess, sys; '
+                'subprocess.run(["git", "-C", sys.argv[1], "worktree", "lock", '
+                '"--reason", "active ordinary work", sys.argv[2]], check=True); '
+                'pathlib.Path(sys.argv[2], "late-ordinary").write_bytes(b"late unique bytes\\n")')
+        return self.run_owned_command(
+            [sys.executable, "-B", script, "--source", self.main, "with", "--path", target,
+             "--write", "late-ordinary", "--", sys.executable, "-c", code, self.main, target],
+            self.root, phase="cooperative-lock-and-write", timeout=30,
+            env=protocol.git_environment())
+
+    def assert_scan_lock_retained(self, scan):
+        import worktree_preservation as preservation
+        baseline = self.root / "baseline"
+        self.g(self.main, "worktree", "add", "-b", "baseline", baseline, "HEAD")
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        record = metadata / preservation.REMOVAL_RECORD
+        actors = []
+        native_walk, native_iterdir = os.walk, Path.iterdir
+
+        def lock_during_scan(path):
+            if Path(path) == self.tree and record.exists() and not actors:
+                actors.append(self.cooperative_lock_and_write(self.tree).returncode)
+
+        def walking(path, *args, **kwargs):
+            for entry in native_walk(path, *args, **kwargs):
+                lock_during_scan(path)
+                yield entry
+
+        def listing(path):
+            lock_during_scan(path)
+            yield from native_iterdir(path)
+
+        observer = patch.object(os, "walk", walking) if scan == "nested_git" else patch.object(Path, "iterdir", listing)
+        with observer:
+            current = preservation.remove(self.removal_options())["items"][0]
+        actors.append(self.cooperative_lock_and_write(baseline).returncode)
+        native = self.native_remove_baseline(baseline)
+        current_late, baseline_late = self.tree / "late-ordinary", baseline / "late-ordinary"
+        current_bytes = current_late.read_bytes() if current_late.exists() else None
+        baseline_bytes = baseline_late.read_bytes() if baseline_late.exists() else None
+        self.note("scan_lock_comparison", scan=scan, flags=["--force"], actor_exits=actors,
+                  current_outcome=current["outcome"], current_error=current.get("error"),
+                  current_bytes=current_bytes.hex() if current_bytes is not None else None,
+                  baseline_exit=native.returncode, baseline_error=native.stderr,
+                  baseline_bytes=baseline_bytes.hex() if baseline_bytes is not None else None,
+                  git_version=self.g(self.main, "--version").strip())
+        self.assertEqual([0, 0], actors)
+        self.assertNotEqual(0, native.returncode)
+        self.assertEqual(b"late unique bytes\n", baseline_bytes)
+        self.assertEqual(b"late unique bytes\n", current_bytes)
+        self.assertEqual("refused", current["outcome"])
+        self.assertIn("locked_recent", current["reason"])
+
+    def test_removal_rechecks_lock_after_nested_git_scan(self):
+        self.assert_scan_lock_retained("nested_git")
+
+    def test_removal_rechecks_lock_after_payload_planning(self):
+        self.assert_scan_lock_retained("payload")
+
+    def test_final_qualification_reuses_owned_initializer_scope(self):
+        import worktree_preservation as preservation
+        self.g(self.main, "worktree", "lock", "--reason", "worktree-init:dead", self.tree)
+        with ExitStack() as stack:
+            initial = preservation.qualify(self.main, self.tree, stack)
+            repeated = preservation.qualify(self.main, self.tree, stack)
+            self.assertEqual(initial, repeated)
+            self.assertEqual(1, sum(not handle.closed and handle.scope_exclusive
+                                   for handle in stack.scope_handles))
+        self.hold("--exclusive")
+        with ExitStack() as stack:
+            with self.assertRaisesRegex(preservation.Refused, "initialization_in_progress"):
+                preservation.qualify(self.main, self.tree, stack)
+
     def test_removal_rechecks_native_lock_after_checkpoint_before_payload(self):
         import worktree_preservation as preservation
         baseline = self.root / "baseline"
