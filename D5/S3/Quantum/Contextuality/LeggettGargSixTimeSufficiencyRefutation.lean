@@ -4,14 +4,8 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Contextuality/LeggettGargSixTimeSufficiencyRefutation.claim; result=D5/S3/Quantum/Contextuality/LeggettGargSixTimeSufficiencyRefutation.result; claim=D5/S3/Quantum/Contextuality/LeggettGargSixTimeSufficiencyRefutation.claim
-   digest: A six-time Leggett-Garg family satisfies all polygon inequalities but has no joint law. -/
+   digest: Six-time polygon and three-time LG inequalities need not give a joint law. -/
 
-import Mathlib.Basic.Real.Basic
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Linarith
 import D5.S3.Combinatorics.IsingUniquenessSets
 
 /-! The six-time counterexample to polygon-plus-three-time sufficiency. -/
