@@ -1,0 +1,34 @@
+**Lemma 2.5 (one nonnegatively shifted base per sort).** A sort's block
+equations are either inconsistent on every nonempty finite leaf set,
+or have computable integer potentials $\delta_U$ such that all its
+solutions satisfy
+
+$$
+U=U_0+a_U,\qquad a_U=\delta_U-\delta_{U_0}\ge0,
+\tag{NIC.10}
+$$
+
+where $U_0$ is a vertex of minimum potential. In the consistent case,
+every natural-valued base function $U_0$ on any nonempty finite shape
+gives a solution by (NIC.10). If an actual canonical solution is given,
+its block $U_0$ is a normal subcode and all its blocks are the
+translations $\tau_{a_U}U_0$.
+
+Proof. By Lemma 2.4 there is one connected component. Give one vertex
+potential zero and propagate integer differences along edges. If a
+cycle has nonzero signed sum, any function solution would at each leaf
+satisfy $t=t+d$ with $d\ne0$, a contradiction. There is at least one
+leaf, since every ground finite shape over $c,f$ is nonempty. Conversely,
+if every cycle has zero sum, path sums are independent of the chosen
+path and give potentials satisfying all edges. Every solution differs
+from these potentials by one common function, by following paths.
+Choosing a minimum-potential vertex gives (NIC.10), including $a_{U_0}=0$.
+All $a_U$ are nonnegative, so any natural base remains natural and all
+edges hold. These are finite graph operations.
+
+In a canonical solution each occurrence is an actual subtree of a
+normal code, hence normal. All blocks of the sort have the same ground
+shape. Their pointwise differences in (NIC.10) therefore say exactly
+that the codes are $\tau_{a_U}U_0$. Nonnegative translation of a normal
+code is normal by Assumption 2.1. $\square$
+

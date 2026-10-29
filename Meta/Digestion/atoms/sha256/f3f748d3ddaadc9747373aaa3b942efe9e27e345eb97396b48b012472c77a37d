@@ -1,0 +1,123 @@
+**Theorem 15.3.1 (Uniform source-factor exclusion).** For every real
+$p\ne24,v$ and every two distinct complete worlds $W,W'\in C(p,v)$
+with $m(W)=m(W')$, define
+
+$$
+\alpha_W=\frac{1-r}{b}=\frac cr,\qquad
+\beta_W=\frac br.
+\tag{15.18}
+$$
+
+Then $\alpha_W\ne\alpha_{W'}$ and $\beta_W\ne\beta_{W'}$.
+Equivalently, the source difference has nonzero determinant:
+
+$$
+\det(P-P')=-rr'(\alpha_W-\alpha_{W'})(\beta_W-\beta_{W'})\ne0.
+\tag{15.19}
+$$
+
+This is a statement about the entire $C(p,v)$ for every such base;
+no source box, gain stratum or condition $\Lambda\ne0$ is imposed.
+
+Proof. The fixed-source/fixed-$p$ uniqueness in O, Theorem 12.3,
+first implies that the sources are different. If the two positive
+$\alpha$ values coincide, write their common value as $z>0$.
+Their sources are exactly family $\mathrm a$ in (15.6), with distinct
+$t,t'$. If the positive $\beta$ values coincide, they are exactly
+family $\mathrm b$, again with distinct $t,t'$. Thus it suffices to
+exclude these two cases without dividing by a gain sample or offset.
+
+Use $g,g'$ for the two whole polynomials, and set
+
+$$
+H=g-g',\qquad K=tg-t'g',\qquad S=t+t',\quad T=tt'.
+\tag{15.20}
+$$
+
+The offsets are $-g(0)$ and $-g'(0)$, with no equality assumption.
+Equality of all six acquired noninitial reads and of terminal $M$
+becomes exactly
+
+$$
+A_iH(i)+B_iK(i)-\kappa H(0)=0\quad(1\le i\le7).
+\tag{15.21}
+$$
+
+Thus the padded coefficient vector of $(H,K)$ belongs to $\ker F(z)$.
+It is nonzero: if $H=K=0$, then $g=g'$ and
+$(t-t')g=0$, contradicting $t\ne t'$ and $g\ne0$.
+Theorem 15.2.2 now gives
+$(H,K)=\lambda(H_*,K_*)$ for a nonzero real $\lambda$.
+This statement includes all degree drops of $H$ or $K$.
+
+Let $y_i$ denote the common actual read. The polynomial identity
+$g=(K-t'H)/(t-t')$, followed by (15.21), gives
+
+$$
+\begin{aligned}
+\kappa y_i
+ &=\frac{A_iK(i)-\kappa K(0)+S B_iK(i)-T B_iH(i)}{t-t'}\\
+ &=\sigma\{A_iK_*(i)-\kappa K_*(0)
+                +S B_iK_*(i)-T B_iH_*(i)\},\qquad
+\sigma=\frac\lambda{t-t'}\ne0.
+\end{aligned}
+\tag{15.22}
+$$
+
+In particular the four absolute parent reads impose
+
+$$
+C(z)(\sigma,\sigma S,\sigma T)^{\mathsf T}=Y(z).
+\tag{15.23}
+$$
+
+They are all used, with their original numerical values.
+
+For family $\mathrm a$, $z^2+3z+1>0$, so the necessary compatibility
+$\det[C\mid Y]=0$ forces $Q_{\mathrm a}(z)=0$.
+For family $\mathrm b$ it forces either $Q_{\mathrm b}(z)=0$ or
+$z^2-z-1=0$, because $z>0$.
+At a $Q$ root, (15.11) gives $D\ne0$, and Cramer's rule on the first
+three rows of (15.23) gives
+
+$$
+\sigma=\frac{N_0}{D},\qquad
+\sigma S=\frac{N_1}{D},\qquad
+\sigma T=\frac{N_2}{D};\qquad
+S=\frac{N_1}{N_0},\quad T=\frac{N_2}{N_0}.
+\tag{15.24}
+$$
+
+The replacement determinants and $N_k$ agree at the root by their
+remainder definition. The denominator $N_0$ is nonzero there by
+(15.11), and its sign on each entire isolating interval is (15.16).
+Two legal parameters in family $\mathrm a$ require $0<S<2/z$, $T>0$;
+in family $\mathrm b$ they require $0<S<2$, $T>0$.
+Theorem 15.2.2 contradicts these requirements at every positive $Q$
+root, not just at some numerical choices of $z$.
+
+The only remaining value is the unique positive root
+$z=(1+\sqrt5)/2$ of $z^2-z-1=0$ in family $\mathrm b$.
+With $b=zt$, $r=t$, its source has
+
+$$
+j=1/z+t,\qquad n=1/z+2t,\qquad U=1+2zt,\qquad n/U=1/z.
+\tag{15.25}
+$$
+
+This is precisely the entire golden layer of Theorem 10.1, with its
+coordinate $\alpha=1/z=(\sqrt5-1)/2$ and its full legal interval
+$0<b<z$. That theorem makes the fifth response injective on the
+whole layer. Our two worlds have the same $p$, so they coincide,
+a contradiction. No local monotonicity assertion is substituted for
+that entire-layer result.
+
+Finally $P=r(1,\alpha_W)^{\mathsf T}(1,\beta_W)$, so the mixed
+determinant identity gives (15.19). This is the same two-factor
+rank-one-line algebra used in O, Theorem 3.1; the new exclusion is
+(15.21)–(15.25) for this literal history. The only divisions above are
+by $b,r,z,t-t'$, the displayed nonzero cofactor normalization and
+Cramer denominators. No gain value, leading coefficient, offset,
+root difference of a gain or singular-source coefficient is divided
+out. Thus all original gain and strict-source strata are retained. ∎
+

@@ -1,0 +1,56 @@
+**Theorem 129.2 (Exact full-domain instrument cutoff; repo-derived).**
+For every fixed allowed source and every $x,x'\in\mathcal P$, the
+integer in (129.1) satisfies
+
+$$
+2^{-(K_{\mathfrak s}+1)}C_{\mathfrak s}<c_{\mathfrak s},\qquad
+\boxed{\ \Delta_{\rm all}(x,x')
+                   =\Delta^{[\le K_{\mathfrak s}]}(x,x').\ }
+\tag{129.2}
+$$
+
+Any integer $K\ge L_{\mathfrak s}$ satisfying the displayed strict
+inequality can replace $K_{\mathfrak s}$. This is equality for the
+original raw-law error on the full paired closed domain, including
+both retention boundaries and both completion-ball boundaries. If
+$D_{\rm pair}=0$, every probability difference and both sides of
+(129.2) are zero. If $D_{\rm pair}>0$, all discarded layers together
+have supremum strictly smaller than $\Delta_{L_{\mathfrak s}}$.
+No maximum over a finite set of actual histories is asserted here.
+
+*Proof.* Retain the factor $a_w$ in the first line of (118.21).
+The bounds (118.19) and the choice (118.20) give, for every actual
+coordinate separately,
+
+$$
+|\Delta p_{i,w,\beta}|
+ \le 2^{-k(w)}C_{\mathfrak s}D_{\rm pair},
+                   \qquad \beta=0,1.
+\tag{129.3}
+$$
+
+For outcome $0$ use the unchanged total mass
+$a_w\operatorname{Tr}r_i$, so its difference is the negative of the
+outcome-$1$ difference. If $D_{\rm pair}=0$, (129.3) proves all
+zero assertions without division. Otherwise the decoder rows, whose
+ordinary lengths are at most $L_{\mathfrak s}$, are included among
+$k(w)\le K$, since $k(w)\le|w|$. Thus (118.12) gives
+
+$$
+\begin{aligned}
+\sup_{k(w)>K,\ i,\beta}|\Delta p_{i,w,\beta}|
+ &\le2^{-(K+1)}C_{\mathfrak s}D_{\rm pair}\\
+ &<c_{\mathfrak s}D_{\rm pair}
+ \le\Delta_{L_{\mathfrak s}}
+ \le\Delta^{[\le K]}.
+\end{aligned}
+\tag{129.4}
+$$
+
+The full supremum is the larger of the retained and discarded
+suprema, proving equality. The explicit $K_{\mathfrak s}$ obeys
+$2^{-K_{\mathfrak s}}C_{\mathfrak s}\le c_{\mathfrak s}$, so it
+has the required strict inequality after the extra factor $1/2$.
+This deduction uses the source-specific decoder and row estimates
+of VI §118; it does not replace their finite vector. $\square$
+
