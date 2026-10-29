@@ -421,6 +421,108 @@ theorem source_canonical_block_recovery (p : Presentation X)
     exact ((NativeFiniteNormalInversion.exact_natural_rank_inverse (a v) (u v l)).1
       (u b l)).mpr (ranks v hv hvj l).symm
 
+/-- The actual code at an occurrence address. Invalid addresses have a
+fixed default; all results below prove validity before using a block. -/
+def occurrenceCode (C : X → NativeFiniteNormalInversion.Code) (v : Occurrence X) :
+    NativeFiniteNormalInversion.Code :=
+  (subtree (C v.1) v.2.1).getD (.of 0)
+
+private def Fits (C : X → NativeFiniteNormalInversion.Code) :
+    Term (Occurrence X) → NativeFiniteNormalInversion.Code → Prop
+  | .of (.inl _), .of _ => True
+  | .of (.inl _), .mul _ _ => False
+  | .of (.inr v), D => D = occurrenceCode C v
+  | .mul A B, .mul D E => Fits C A D ∧ Fits C B E
+  | .mul _ _, .of _ => False
+
+private theorem subtree_child {A : Type} (C : FreeMagma A) (q : List Bool)
+    (D E : FreeMagma A) (h : subtree C q = some (.mul D E)) :
+    subtree C (q ++ [false]) = some D ∧ subtree C (q ++ [true]) = some E := by
+  induction q generalizing C with
+  | nil => simpa only [subtree, List.nil_append, Option.some.injEq] using h ▸
+      (show subtree (.mul D E) [false] = some D ∧
+        subtree (.mul D E) [true] = some E from ⟨rfl, rfl⟩)
+  | cons b q ih =>
+      cases C with
+      | of a => cases h
+      | mul A B => cases b <;> exact ih _ h
+
+private theorem fits_decorate (C : X → NativeFiniteNormalInversion.Code)
+    (w : X → NativeGroundSolutionSpace.Source) (x : X) (t : Term X)
+    (q : List Bool) (D : NativeFiniteNormalInversion.Code)
+    (actual : subtree (C x) q = some D)
+    (sh : shape D = evaluate w t) : Fits C (decorateFrom x q t) D := by
+  induction t generalizing q D with
+  | of a =>
+      cases a with
+      | inl b => cases D <;> simp_all [shape, evaluate, Fits, decorateFrom]
+      | inr j =>
+          change D = (subtree (C x) q).getD (.of 0)
+          rw [actual]
+          rfl
+  | mul A B ihA ihB =>
+      cases D with
+      | of n => cases sh
+      | mul D E =>
+          have hs : shape D = evaluate w A ∧ shape E = evaluate w B := by
+            exact FreeMagma.mul.inj sh
+          have hc := subtree_child (C x) q D E actual
+          exact ⟨ihA _ _ hc.1 hs.1, ihB _ _ hc.2 hs.2⟩
+
+private theorem fits_offsets (C : X → NativeFiniteNormalInversion.Code)
+    (A B : Term (Occurrence X)) (D E : NativeFiniteNormalInversion.Code)
+    (a : Nat) (hA : Fits C A D) (hB : Fits C B E)
+    (eq : D = NativeFiniteNormalInversion.shiftCode a E) :
+    ∀ e ∈ offsetComparisonEdges (a : Int) A B,
+      e.2 = (a : Int) ∧ occurrenceCode C e.1.1 =
+        NativeFiniteNormalInversion.shiftCode a (occurrenceCode C e.1.2) := by
+  induction A generalizing B D E with
+  | of b =>
+      cases B with
+      | of c =>
+          cases b <;> cases c <;> simp only [offsetComparisonEdges,
+            List.mem_singleton, List.not_mem_nil, false_implies, forall_eq]
+          exact ⟨rfl, by simpa only [Fits] at hA hB; simpa [hA, hB] using eq⟩
+      | mul l r => simp [offsetComparisonEdges]
+  | mul A B ihA ihB =>
+      cases B_1 : B with
+      | of c => simp [offsetComparisonEdges]
+      | mul U V =>
+          cases E with
+          | of n => cases hB
+          | mul E F =>
+              subst D
+              rcases hA with ⟨hD, hE⟩
+              rcases hB with ⟨hU, hV⟩
+              intro e he
+              rcases List.mem_append.mp he with he | he
+              · exact ihA _ _ _ hD hU rfl e he
+              · exact ihB _ _ _ hE hV rfl e he
+
+private theorem actual_source_offsets (B : List (BranchEquation X))
+    (s : X → Term X) (C : X → NativeFiniteNormalInversion.Code)
+    (factor : ∀ x, evaluate (fun y => shape (C y)) (s x) = shape (C x))
+    (sat : ∀ b ∈ B, b.Holds C) :
+    ∀ e ∈ sourceOffsetEdges B s, ∃ a : Nat, e.2 = (a : Int) ∧
+      occurrenceCode C e.1.1 = NativeFiniteNormalInversion.shiftCode a
+        (occurrenceCode C e.1.2) := by
+  have fit (x : X) : Fits C (decorate s x) (C x) :=
+    fits_decorate C (fun y => shape (C y)) x (s x) [] (C x) rfl (factor x).symm
+  intro e he
+  obtain ⟨b, hb, he⟩ := List.mem_flatMap.mp he
+  have hs := sat b hb
+  cases b with
+  | primitive z n => cases he
+  | collapse z x y => cases he
+  | shift z a x => exact ⟨a, fits_offsets C _ _ _ _ a (fit z) (fit x) hs e he⟩
+  | ordinary z x y =>
+      refine ⟨0, fits_offsets C _ _ _ _ 0 (fit z) ?_ ?_ e he⟩
+      · exact ⟨fit x, fit y⟩
+      · simpa only [NativeFiniteNormalInversion.shiftCode] using hs
+  | same x y =>
+      refine ⟨0, fits_offsets C _ _ _ _ 0 (fit x) (fit y) ?_ e he⟩
+      simpa only [NativeFiniteNormalInversion.shiftCode] using hs
+
 #print axioms source_sort_minimum_base
 #print axioms source_canonical_block_recovery
 
