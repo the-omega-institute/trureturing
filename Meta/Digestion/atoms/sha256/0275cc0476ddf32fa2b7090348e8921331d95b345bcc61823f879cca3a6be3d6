@@ -1,0 +1,47 @@
+**Lemma 12.1 (conditional variance-weighted block contraction).** Use the setup of Lemma 5.1: $U$ is binary, $Z,Z'$ are finite, $V$ is conditioning data, $W$ ranges over a finite family of words, and the matrices $B_w$ satisfy (5.1) and $\sum_wB_w\mathbf1=\mathbf1$. For almost every $V=v$, put
+
+$$
+p_v(w)=\mathbb P(W=w\mid V=v),\qquad
+\Delta_w(v)=\mathcal D(U;Z\mid V=v,W=w)\quad(p_v(w)>0),
+\qquad
+\Delta(v)=\sum_{w:p_v(w)>0} p_v(w)\Delta_w(v).
+\tag{12.1}
+$$
+
+Assume $0\le\delta(B_w)\le1$ for every $w$ with $p_v(w)>0$, and that, for some $0\le\kappa<1$,
+
+$$
+\sum_{w:p_v(w)>0} p_v(w)\,\delta(B_w)\,\Delta_w(v)
+\le \kappa\,\Delta(v)
+\tag{12.2}
+$$
+
+for almost every $v$ with $\Delta(v)>0$. All sums involving $\Delta_w(v)$ range over positive-probability words; zero-probability conditional versions are omitted. No diameter or conditional variance is assigned to a null word; in particular, the zero matrix remains excluded as in Definition 3.4. Fibers with $\Delta(v)=0$ are vacuous: every $\Delta_w(v)$ with positive $p_v(w)$ is then zero. Under these assumptions,
+
+$$
+\mathcal D(U;Z'\mid V,W)
+\le
+\kappa\bigl[\mathcal D(U;Z\mid V)-\mathcal D(U;W\mid V)\bigr]
+\le
+\kappa\,\mathcal D(U;Z\mid V).
+\tag{12.3}
+$$
+
+The hypothesis (12.2) is fiberwise in the posterior variances. It is not a stationary word average.
+
+**Proof.** Fix a $V=v$ fiber and a word $w$ of positive conditional probability. The conditional kernel in (5.4) has row diameter $\delta(B_w)$, so the conditional form of Lemma 4.3, applied on this $(v,w)$-fiber, gives
+
+$$
+\mathcal D(U;Z'\mid V=v,W=w)
+\le \delta(B_w)\Delta_w(v).
+$$
+
+Multiply by $p_v(w)$, sum over $w$, and use (12.2). Integrating over $v$ gives
+
+$$
+\mathcal D(U;Z'\mid V,W)\le\kappa\,\mathcal D(U;Z\mid V,W).
+$$
+
+The variance identity (5.5) rewrites the last factor as
+$\mathcal D(U;Z\mid V)-\mathcal D(U;W\mid V)$, and dropping the nonnegative term $\mathcal D(U;W\mid V)$ gives (12.3). No comparison of the reweighted priors in (5.3) is used. $\square$
+
