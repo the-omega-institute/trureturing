@@ -58,7 +58,7 @@ private theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
   have ht := h e (0 : E →L[ℝ] E) (fun _ => 0) (fun _ => le_rfl)
     (by intro x i; exact i.down.elim)
   have hz : (⊤ : ℝ≥0∞) = 0 := by simpa [rejected,realize] using ht.2
-  exact top_ne_zero hz
+  exact ENNReal.top_ne_zero hz
 
 def familyRegistration : Registration arena.{u,v} (type_of% (@positive_trace_diagonal.{u,v})) where
   actual := actual

@@ -18,7 +18,7 @@ open BiasedBoundaryOperator (boundaryOperator)
 open MarkovProcess.Semigroup Filter
 open _root_.D5.S3.HilbertOperators.RealPositiveTrace (positiveTrace)
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open scoped Topology ENNReal InnerProductSpace
+open scoped Topology ENNReal NNReal InnerProductSpace
 
 abbrev signature : Signature where
   Params := Unit
