@@ -41,7 +41,7 @@ def family : Registration arena (type_of% @theta_tail_lipschitz) where
     arena.Law actual rejected rejected_law
   dependence := by
     intro i
-    refine ⟨0, 0, 1, ?_⟩
+    refine ⟨1, 1, 2, ?_⟩
     norm_num [actual, realize]
 
 def registration : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}

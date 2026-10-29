@@ -11,14 +11,16 @@ import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 
 namespace D5.S3.Weil.Mertens.ThetaTailRegularity
 
-open Real Set MeasureTheory
+open Real Set MeasureTheory Filter
 open ActualThetaTailLaplace
 open ThetaLaplaceContinuation (q)
 
 noncomputable section
 
 private lemma threshold_le_one : u₀ ≤ 1 := by
-  simpa [u₀] using (Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2))
+  have h := Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
+  dsimp [u₀]
+  linarith
 
 private lemma kernel_bound {u : ℝ} (hu : 1 ≤ u) : ‖k u‖ ≤ 2 := by
   have he : 0 < Real.exp u := Real.exp_pos u
