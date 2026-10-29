@@ -37,7 +37,7 @@ abbrev arena : Arena where
 
 private def pole : UnitSphere :=
   ⟨WithLp.toLp 2 ![1, 0, 0], by
-    simp [Metric.mem_sphere, dist_zero_right, EuclideanSpace.norm_eq,
+    simp [EuclideanSpace.norm_eq,
       Fin.sum_univ_succ]⟩
 
 private theorem pole_color : pole ∈ color 4 := by
@@ -57,7 +57,9 @@ private theorem dependence : ObservationalDependence signature actual := by
   refine ⟨(0, pole), pole, south, ?_⟩
   change inner ℝ (pole : Space) (pole : Space) ≠
     inner ℝ (-(pole : Space)) (pole : Space)
-  norm_num [pole, PiLp.inner_apply, Fin.sum_univ_succ, RCLike.inner_apply]
+  have hp : ‖(pole : Space)‖ = 1 := by
+    simpa only [Metric.mem_sphere, dist_zero_right] using pole.property
+  simp [inner_neg_left, real_inner_self_eq_norm_sq, hp]
 
 def family : Registration arena (type_of% (@rational_six_axis_open_cover)) where
   actual := actual
@@ -69,7 +71,7 @@ def family : Registration arena (type_of% (@rational_six_axis_open_cover)) where
   dependence := dependence
 
 def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
-    (@rational_six_axis_open_cover) (Realization signature) Unit Unit where
+    (@rational_six_axis_open_cover) (Realization signature) Type Unit where
   unitName := `Reg.D5.S3.Geometry.Orthogonality.RationalSixAxisCover.__information_unit
   realizationName := `Reg.D5.S3.Geometry.Orthogonality.RationalSixAxisCover.family
   realizationSource := none
@@ -86,7 +88,7 @@ def registration : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some UnitSphere
+  escapeFrom := some (↥UnitSphere)
   sourceSelection := some {
     owner := `D5.S3.Geometry.Orthogonality.RationalSixAxisCover
     definition := none
