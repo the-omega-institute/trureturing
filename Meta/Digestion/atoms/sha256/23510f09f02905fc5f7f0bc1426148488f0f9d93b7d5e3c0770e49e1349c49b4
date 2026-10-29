@@ -1,0 +1,50 @@
+**Proposition 98.3 (Unitary transport to the original $D$).** Define
+
+$$
+\begin{aligned}
+G&=I_{\rm out}\otimes U_0^{\mathsf T},&
+S_D&=G^\dagger SG,&K_D&=G^\dagger K,\\
+P_D&=G^\dagger PG,&Q_D&=G^\dagger QG,&
+\omega_D&=J_D/3 .
+\end{aligned}
+\tag{98.6}
+$$
+
+Then every original legal decoder satisfies
+
+$$
+J_{\mathcal R}=GJ_DG^\dagger,\qquad
+\omega_{\mathcal R}=G\omega_DG^\dagger,\qquad
+e_2(D)\ge L+\operatorname{Tr}(S_DJ_D)
+            =L+3\operatorname{Tr}(S_D\omega_D).
+\tag{98.7}
+$$
+
+In particular, an original optimizer has
+$J_D=P_DJ_DP_D$, range contained in $K_D$, and rank at most five.
+If $e_2(D)\le L+\varepsilon$, its masses
+$m_D=\operatorname{Tr}(Q_DJ_D)$ and
+$q_D=\operatorname{Tr}(Q_D\omega_D)$ satisfy exactly (98.4).
+
+*Proof.* For a matrix $B$ define output-first vectorization by
+$|B\rangle\rangle=\sum_{i,j}B_{ij}|ij\rangle$. Directly from its
+coefficients,
+
+$$
+|BU_0\rangle\rangle=(I_{\rm out}\otimes U_0^{\mathsf T})
+                         |B\rangle\rangle=G|B\rangle\rangle .
+\tag{98.8}
+$$
+
+If $B_\nu$ are Kraus matrices for $D$, then $B_\nu U_0$ are Kraus
+matrices for $\mathcal R=D\circ\operatorname{Ad}_{U_0}$. Summing
+their vector outer products proves the first identity in (98.7).
+The matrix $G$ is unitary. Cyclicity of trace therefore gives
+$\operatorname{Tr}(SJ_{\mathcal R})=\operatorname{Tr}(S_DJ_D)$
+and likewise $m_D=m$, $q_D=q$. Unitary conjugation carries the
+kernel, projections and spectrum of $S$ to those of $S_D$, so
+$\dim K_D=5$ and the gap is still $\gamma_S$.
+Combine this with $e_2(D)=e(\mathcal R)$ and (98.1)–(98.4).
+This conjugation changes decoder input coordinates; the identity
+target in (96.3) is unchanged. $\square$
+
