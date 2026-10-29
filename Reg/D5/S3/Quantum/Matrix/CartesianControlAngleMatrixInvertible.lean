@@ -8,7 +8,6 @@ namespace Reg.D5.S3.Quantum.Matrix.CartesianControlAngleMatrixInvertible
 
 open _root_.D5.S3.Quantum.Matrix.CartesianControlAngleMatrixInvertible
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open Classical
 open scoped BigOperators
 
 set_option autoImplicit false
@@ -26,6 +25,7 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
+open Classical in
 def actual : Realization signature :=
   realize signature (fun _ _ M => decide (IsUnit M)) (fun e => nomatch e)
 
@@ -47,6 +47,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   exact Bool.false_ne_true (h 0 d e e)
 
 private theorem dependence : ObservationalDependence signature actual := by
+  classical
   intro i
   refine ⟨⟨0, Fin.elim0⟩, 0, 1, ?_⟩
   change decide (IsUnit (0 : Matrix (Fin (∏ l : Fin 0, (Fin.elim0 l : ℕ)))
@@ -57,12 +58,14 @@ private theorem dependence : ObservationalDependence signature actual := by
 def source_registration : Registration arena claim where
   actual := actual
   bridge := by
+    classical
     constructor
     · intro h k d b g
       exact decide_eq_true (h k d b g)
     · intro h k d b g
       exact of_decide_eq_true (h k d b g)
   variation := ⟨by
+    classical
     intro k d b g
     exact decide_eq_true (result k d b g), rejected, rejected_law⟩
   sensitivity := by
@@ -73,6 +76,7 @@ def source_registration : Registration arena claim where
       exact nomatch e
   dependence := dependence
 
+open Classical in
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@_root_.D5.S3.Quantum.Matrix.CartesianControlAngleMatrixInvertible.result)
