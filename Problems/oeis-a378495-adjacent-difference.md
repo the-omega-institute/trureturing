@@ -72,8 +72,10 @@ formula, an unexplained table, or a search over a finite range.
 ## Falsifier
 
 The equality at five would force $20=6$. To challenge the refutation's
-source fidelity, one must identify a different source cycle convention
-or sequence offset; both are fixed explicitly above. Replacing $n-4$
+source fidelity on its relevant columns, one must identify a different
+source no-$k$-cycle convention for $k\ge2$ or sequence offset; both are
+fixed explicitly above. The separately disclosed $k=1$ source exception is
+outside the $n=5$ columns $4$ and $3$. Replacing $n-4$
 by another shift defines another question and cannot repair the original
 assertion's counterexample.
 

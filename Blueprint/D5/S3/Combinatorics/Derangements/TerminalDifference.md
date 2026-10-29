@@ -26,7 +26,7 @@ $$\forall n \in \mathrm{Nat},\; \forall k \in \mathrm{Nat},\; \operatorname{T}\l
 
 *Commentary.*
 
-For natural n and k, T(n,k) is the cardinality of the subset of D(n) in which every cycle factor has support cardinality different from k. On the source range 1 <= k <= n this counts exactly the derangements with no k-cycle. Cycle factors omit fixed points, which D already excludes, so forbidding a 1-cycle imposes no additional restriction. The definition is total also at zero and outside the triangular range; the identity below uses only source-range columns.
+For natural n and k, T(n,k) is the cardinality of the subset of D(n) in which every cycle factor has support cardinality different from k. On the source-agreeing columns 2 <= k <= n this counts exactly the derangements with no k-cycle. The source entry separately sets its k=1 column to zero, whereas this total formal extension has T(n,1)=card(D(n)) because derangements have no fixed points. The definition is total also at zero and outside the triangular range; the two registered identities use only source-agreeing columns: n-2 and n are at least three for n >= 5, while n-1 and n-2 are at least two for n >= 4.
 
 **Definition 1.3 (Derangements containing a forbidden cycle).**
 
