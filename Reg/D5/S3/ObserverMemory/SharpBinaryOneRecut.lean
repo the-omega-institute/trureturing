@@ -248,8 +248,8 @@ end Encoding
 
 namespace CoordinateCardinality
 abbrev signature : Signature where
-  Params := Bool
-  State _ := Nat
+  Params := Nat
+  State _ := Bool
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
@@ -258,20 +258,20 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 def actualReadout : Realization signature :=
-  realize signature (fun _ full N => Nat.card (Spare N full)) (fun e => nomatch e)
+  realize signature (fun _ N full => Nat.card (Spare N full)) (fun e => nomatch e)
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ (N : Nat) (full : Bool), R.readout () full N = N + if full then 0 else 1
+  Law R := ∀ (N : Nat) (full : Bool), R.readout () N full = N + if full then 0 else 1
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hh := h 1 true
   simp [rejected,realize] at hh
 private theorem dependence : ObservationalDependence signature actualReadout := by
   intro i
-  refine ⟨true,1,2,?_⟩
-  change Nat.card (Spare 1 true) ≠ Nat.card (Spare 2 true)
+  refine ⟨0,true,false,?_⟩
+  change Nat.card (Spare 0 true) ≠ Nat.card (Spare 0 false)
   rw [spare_card,spare_card]
   decide
 
@@ -289,7 +289,7 @@ def source : Registration arena (type_of% spare_card) where
 
 def registration : LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0,0,0,0}
     (@_root_.D5.S3.ObserverMemory.SharpBinaryOneRecut.spare_card)
-    (type_of% (realize signature (fun _ full N => Nat.card (Spare N full))
+    (type_of% (realize signature (fun _ N full => Nat.card (Spare N full))
       (fun e => nomatch e))) Unit Unit := {
   unitName := `Reg.D5.S3.ObserverMemory.SharpBinaryOneRecut.spare_card.__information_unit
   realizationName := `Reg.D5.S3.ObserverMemory.SharpBinaryOneRecut.CoordinateCardinality.source
@@ -302,7 +302,7 @@ def registration : LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0
   realization := .source arena ⟨source⟩
   correspondence := {stage := .evidence,objectStage := .evidence}
   bundleNonempty := .absent
-  readout := some (realize signature (fun _ full N => Nat.card (Spare N full)) (fun e => nomatch e))
+  readout := some (realize signature (fun _ N full => Nat.card (Spare N full)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -310,10 +310,10 @@ def registration : LeanInformationAudit.Contract.Registration.{0,0,1,0,0,0,0,0,0
   sourceSelection := some {
     owner := `D5.S3.ObserverMemory.SharpBinaryOneRecut
     definition := none
-    coordinates := #[1]
+    coordinates := #[0]
     readouts := #[{
       path := #["body","body","fn","arg"]
-      stateBinder := 0
+      stateBinder := 1
       functionOperand := false
       stateOperand := none
       booleanPredicate := false}] }
