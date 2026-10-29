@@ -8,6 +8,7 @@
 
 import D5.S3.Quantum.Entanglement.OccupancyWordSectors
 import D5.S3.Quantum.Information.SLDSpectralEnergy
+import D5.S3.Combinatorics.Graph.KyFanGap.MandalMehatariDasSeidelMinimum
 
 /-! A count-invariant density matrix separated from pure product mixtures. -/
 
@@ -19,7 +20,9 @@ noncomputable section
 
 namespace D5.S3.Quantum.Entanglement.Witness.ThreeQutritCompletelySymmetricEntangled
 
-open Matrix
+open Matrix MultilinearMap
+open D5.S3.Combinatorics.Graph.KyFanGap.MandalMehatariDasSeidelMinimum.MMDCounts
+  (count_ofFn)
 open D5.S3.Quantum.Entanglement.OccupancyWordSectors (Word occupation)
 open D5.S3.Quantum.Information.SLDSpectralEnergy (IsDensity)
 open scoped BigOperators ComplexOrder
@@ -30,16 +33,14 @@ def IsCompletelySymmetric {d : ℕ} (ρ : Matrix (Word (Fin 3) d) (Word (Fin 3) 
     ρ (fun k => Sum.elim i j (π (Sum.inl k)))
       (fun k => Sum.elim i j (π (Sum.inr k))) = ρ i j
 
-/-- Coordinates of the tensor product of the local vectors. -/
-def productVector {d : ℕ} (v : Fin d → Fin 3 → ℂ) : Word (Fin 3) d → ℂ :=
-  fun w => ∏ k, v k (w k)
-
 /-- A finite convex combination of projectors onto unit pure product vectors. -/
 def IsFullySeparable {d : ℕ} (ρ : Matrix (Word (Fin 3) d) (Word (Fin 3) d) ℂ) : Prop :=
   ∃ (n : ℕ) (wt : Fin n → ℝ) (v : Fin n → Fin d → Fin 3 → ℂ),
     (∀ i, 0 < wt i) ∧ (∑ i, wt i) = 1 ∧
     (∀ i k, ∑ j, Complex.normSq (v i k j) = 1) ∧
-    ρ = ∑ i, (wt i : ℂ) • vecMulVec (productVector (v i)) (star (productVector (v i)))
+    ρ = ∑ i, (wt i : ℂ) •
+      vecMulVec (piFamily (R := ℂ) (fun _ => .mkPiAlgebra ℂ (Fin d) ℂ) (v i))
+        (star (piFamily (R := ℂ) (fun _ => .mkPiAlgebra ℂ (Fin d) ℂ) (v i)))
 
 /-- Every completely symmetric state of at least three qutrits is fully separable. -/
 def claim : Prop :=
@@ -79,22 +80,12 @@ private def witness (w : Word (Fin 3) 3) : ℝ :=
   else if counts w = ![0, 0, 3] then 1
   else if counts w = ![1, 1, 1] then -1 / 2
   else 0
-private theorem productVector_three (v : Fin 3 → Fin 3 → ℂ) (w : Word (Fin 3) 3) :
-    productVector v w = v 0 (w 0) * v 1 (w 1) * v 2 (w 2) :=
-  Fin.prod_univ_three _
-
-private theorem counts_sum (w : Word (Fin 3) 3) (j : Fin 3) :
-    counts w j = ∑ k : Fin 3, if w k = j then 1 else 0 := by
-  rw [Fin.sum_univ_three]
-  change (↑[w 0, w 1, w 2] : Multiset (Fin 3)).count j = _
-  rw [Multiset.coe_count]
-  simp only [List.count_cons, List.count_nil, beq_iff_eq]
-  omega
 
 private theorem counts_three (w : Word (Fin 3) 3) (j : Fin 3) :
     counts w j = (if w 0 = j then 1 else 0) + (if w 1 = j then 1 else 0) +
       (if w 2 = j then 1 else 0) := by
-  rw [counts_sum, Fin.sum_univ_three]
+  change (occupation w).count j = _
+  simpa only [occupation, Multiset.coe_count, Fin.sum_univ_three] using count_ofFn w j
 
 private theorem sum_words (f : Word (Fin 3) 3 → ℝ) :
     ∑ w, f w = ∑ a : Fin 3, ∑ b : Fin 3, ∑ c : Fin 3, f ![a, b, c] := by
@@ -132,7 +123,10 @@ private theorem state_cs : IsCompletelySymmetric state := by
       counts (fun k => Sum.elim a b (π (Sum.inr k))) j) =
       (fun j => counts a j + counts b j) := by
     funext j
-    simp only [counts_sum]
+    change (occupation (fun k => Sum.elim a b (π (Sum.inl k)))).count j +
+        (occupation (fun k => Sum.elim a b (π (Sum.inr k)))).count j =
+      (occupation a).count j + (occupation b).count j
+    simp only [occupation, Multiset.coe_count, count_ofFn]
     let f : Fin 3 ⊕ Fin 3 → ℕ := fun k => if Sum.elim a b k = j then 1 else 0
     calc
       _ = ∑ k : Fin 3 ⊕ Fin 3, f (π k) := by rw [Fintype.sum_sum_type]
@@ -162,7 +156,7 @@ private theorem state_psd : state.PosSemidef := by
       delta gramWeight
       fin_cases k <;> norm_num
     exact_mod_cast hw
-  exact Finset.sum_induction _ _ (fun a b ha hb => ha.add hb) .zero (fun k _ => hp k)
+  exact Matrix.posSemidef_sum _ (fun k _ => hp k)
 
 private theorem state_trace : trace state = 1 := by
   apply Complex.ext
@@ -200,9 +194,9 @@ private theorem decomposition_support (n : ℕ) (wt : Fin n → ℝ)
           ← Finset.sum_sub_distrib, Complex.re_sum]
         apply Finset.sum_congr rfl
         intro j _
-        simp only [Complex.normSq_apply, Complex.sub_re, Complex.sub_im,
-          Complex.add_re, Complex.mul_re, Complex.mul_im, Complex.star_def,
-          Complex.conj_re, Complex.conj_im, Complex.ofReal_re, Complex.ofReal_im]
+        simp only [Complex.normSq_sub, Complex.add_re, Complex.sub_re,
+          Complex.star_def, Complex.mul_conj, Complex.ofReal_re, Complex.ofReal_im,
+          Complex.mul_re, Complex.conj_re, Complex.conj_im]
         ring
       _ = 0 := by rw [hzero]; rfl
   have hterm := (Finset.sum_eq_zero_iff_of_nonneg
@@ -211,17 +205,21 @@ private theorem decomposition_support (n : ℕ) (wt : Fin n → ℝ)
     ((mul_eq_zero.mp hterm).resolve_left (ne_of_gt (hwt i))))
 
 private theorem symmetric_product_power (v : Fin 3 → Fin 3 → ℂ)
-    (hs : ∀ a b, counts a = counts b → productVector v a = productVector v b) :
+    (hs : ∀ a b, counts a = counts b →
+      piFamily (R := ℂ) (fun _ => .mkPiAlgebra ℂ (Fin 3) ℂ) v a =
+        piFamily (R := ℂ) (fun _ => .mkPiAlgebra ℂ (Fin 3) ℂ) v b) :
     ∃ (c : ℂ) (x : Fin 3 → ℂ),
-      ∀ w, productVector v w = c * ∏ k : Fin 3, x (w k) := by
+      ∀ w, piFamily (R := ℂ) (fun _ => .mkPiAlgebra ℂ (Fin 3) ℂ) v w = c * ∏ k : Fin 3, x (w k) := by
   classical
-  by_cases hz : ∀ w, productVector v w = 0
+  by_cases hz : ∀ w, piFamily (R := ℂ) (fun _ => .mkPiAlgebra ℂ (Fin 3) ℂ) v w = 0
   · refine ⟨0, fun _ => 0, ?_⟩
     intro w
     rw [hz w, zero_mul]
   obtain ⟨w, hw⟩ := not_forall.mp hz
-  have hp : productVector v w = v 0 (w 0) * v 1 (w 1) * v 2 (w 2) :=
-    productVector_three v w
+  have hp : piFamily (R := ℂ) (fun _ => .mkPiAlgebra ℂ (Fin 3) ℂ) v w =
+      v 0 (w 0) * v 1 (w 1) * v 2 (w 2) := by
+    change (∏ k : Fin 3, v k (w k)) = _
+    exact Fin.prod_univ_three _
   rw [hp] at hw
   have h0 : v 0 (w 0) ≠ 0 := fun h => hw (by rw [h, zero_mul, zero_mul])
   have h1 : v 1 (w 1) ≠ 0 := fun h => hw (by rw [h, mul_zero, zero_mul])
@@ -237,8 +235,9 @@ private theorem symmetric_product_power (v : Fin 3 → Fin 3 → ℂ)
           (if c = j then 1 else 0)
       omega
     have h := hs _ _ hc
-    simpa only [productVector_three, Matrix.cons_val_zero, Matrix.cons_val_one,
-      Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons] using h
+    simpa only [piFamily_apply, MultilinearMap.mkPiAlgebra_apply, Fin.prod_univ_three,
+      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+      Matrix.head_cons, Matrix.tail_cons] using h
   have hs02 (a b c : Fin 3) :
       v 0 a * v 1 b * v 2 c = v 0 c * v 1 b * v 2 a := by
     have hc : counts ![a, b, c] = counts ![c, b, a] := by
@@ -250,8 +249,9 @@ private theorem symmetric_product_power (v : Fin 3 → Fin 3 → ℂ)
           (if a = j then 1 else 0)
       omega
     have h := hs _ _ hc
-    simpa only [productVector_three, Matrix.cons_val_zero, Matrix.cons_val_one,
-      Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons] using h
+    simpa only [piFamily_apply, MultilinearMap.mkPiAlgebra_apply, Fin.prod_univ_three,
+      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+      Matrix.head_cons, Matrix.tail_cons] using h
   have hb (z : Fin 3) : v 1 z = (v 1 (w 0) / v 0 (w 0)) * v 0 z := by
     have h := mul_right_cancel₀ h2 (hs01 (w 0) z (w 2))
     apply mul_left_cancel₀ h0
@@ -310,8 +310,11 @@ private theorem power_witness_nonneg (c : ℂ) (x : Fin 3 → ℂ) :
     (Complex.normSq_nonneg _) (Complex.normSq_nonneg _) (Complex.normSq_nonneg _))
 
 private theorem symmetric_product_witness_nonneg (v : Fin 3 → Fin 3 → ℂ)
-    (hs : ∀ a b, counts a = counts b → productVector v a = productVector v b) :
-    0 ≤ ∑ w : Word (Fin 3) 3, witness w * Complex.normSq (productVector v w) := by
+    (hs : ∀ a b, counts a = counts b →
+      piFamily (R := ℂ) (fun _ => .mkPiAlgebra ℂ (Fin 3) ℂ) v a =
+        piFamily (R := ℂ) (fun _ => .mkPiAlgebra ℂ (Fin 3) ℂ) v b) :
+    0 ≤ ∑ w : Word (Fin 3) 3, witness w *
+      Complex.normSq (piFamily (R := ℂ) (fun _ => .mkPiAlgebra ℂ (Fin 3) ℂ) v w) := by
   obtain ⟨c, x, hx⟩ := symmetric_product_power v hs
   simp_rw [hx]
   exact power_witness_nonneg c x
@@ -326,10 +329,13 @@ private theorem state_witness_value :
 private theorem state_entangled : ¬ IsFullySeparable state := by
   intro h
   obtain ⟨n, wt, v, hwt, _, _, he⟩ := h
-  have hs := decomposition_support n wt (fun i => productVector (v i)) hwt he
+  have hs := decomposition_support n wt
+    (fun i => piFamily (R := ℂ) (M := fun (_ : Fin 3) (_ : Fin 3) => ℂ)
+      (N := fun _ => ℂ) (fun _ => .mkPiAlgebra ℂ (Fin 3) ℂ) (v i)) hwt he
   have hp (i : Fin n) := symmetric_product_witness_nonneg (v i) (hs i)
   have hd (w : Word (Fin 3) 3) :
-      (state w w).re = ∑ i, wt i * Complex.normSq (productVector (v i) w) := by
+      (state w w).re = ∑ i, wt i *
+        Complex.normSq (piFamily (R := ℂ) (fun _ => .mkPiAlgebra ℂ (Fin 3) ℂ) (v i) w) := by
     have hew := congrArg
       (fun m : Matrix (Word (Fin 3) 3) (Word (Fin 3) 3) ℂ => m w w) he
     rw [hew]
@@ -337,10 +343,7 @@ private theorem state_entangled : ¬ IsFullySeparable state := by
       Matrix.vecMulVec_apply, Pi.star_apply, Complex.re_sum]
     apply Finset.sum_congr rfl
     intro i _
-    simp only [Complex.normSq_apply, Complex.mul_re, Complex.mul_im,
-      Complex.star_def, Complex.conj_re, Complex.conj_im,
-      Complex.ofReal_re, Complex.ofReal_im]
-    ring
+    simp only [Complex.star_def, Complex.mul_conj, Complex.re_ofReal_mul, Complex.ofReal_re]
   have hn : 0 ≤ ∑ w : Word (Fin 3) 3, witness w * (state w w).re := by
     simp_rw [hd, Finset.mul_sum]
     rw [Finset.sum_comm]
