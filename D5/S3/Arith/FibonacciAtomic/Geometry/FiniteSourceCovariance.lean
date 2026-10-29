@@ -347,7 +347,7 @@ private theorem gram_expansion {G : Type*} [NormedAddCommGroup G] [InnerProductS
   simp only [ContinuousLinearMap.comp_apply, P_expand, map_sum, map_smul,
     inner_sum, sum_inner, inner_smul_left, inner_smul_right, rankOne_apply,
     inner_e, inner_e_right, Finset.mul_sum, Finset.sum_mul]
-  simp only [conj_trivial]
+  simp only [RCLike.conj_to_real]
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro p hp
