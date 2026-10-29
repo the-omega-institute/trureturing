@@ -457,7 +457,7 @@ private theorem fixed_fiber_range {N : Nat} (full : Bool) (s : Fin N) (b : Bool)
   · rintro ⟨t,rfl⟩
     exact ⟨by rw [current_fiber_range]; exact ⟨(b,t),rfl⟩,rfl⟩
 
-private theorem spare_card (N : Nat) (full : Bool) :
+theorem spare_card (N : Nat) (full : Bool) :
     Nat.card (Spare N full) = N + if full then 0 else 1 := by
   cases full with
   | false =>
