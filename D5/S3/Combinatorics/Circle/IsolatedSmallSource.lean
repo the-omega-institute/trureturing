@@ -887,49 +887,6 @@ private theorem isolated_positive_cycle {k : ℕ} (hk : 0 < k)
     rw [hsmallorder, hbaserot]
     exact TwoSmallSource.filter_rotate _ _ _
 
-/-- Negating a zero-sum path and cutting at a minimum preserves every strict
-upper bound on its original nonnegative prefix heights. -/
-private theorem isolated_negate_rotation {α : Type*}
-    (w : α → ℤ) (C N : ℤ) (L : List α)
-    (hs : InStrip w C 0 L) (hz : (L.map w).sum = 0)
-    (hm : ∀ n, 28 * ((L.take n).map w).sum < 13 * N) :
-    ∃ j ≤ L.length, ∀ n : ℕ,
-      0 ≤ (((L.rotate j).take n).map (fun i => -w i)).sum ∧
-      (((L.rotate j).take n).map (fun i => -w i)).sum ≤ C ∧
-      28 * (((L.rotate j).take n).map (fun i => -w i)).sum < 13 * N := by
-  obtain ⟨j, hj, hrot⟩ := TwoSmallSource.negate_rotation w C L hs hz
-  let v := L.map (fun i => -w i)
-  have hv : v.sum = 0 := by dsimp [v]; rw [sum_neg_map, hz]; omega
-  have hb (n : ℕ) : (v.take n).sum ≤ 0 := by
-    have hh := (inStrip_prefix hs n).1
-    have he : (v.take n).sum = -((L.take n).map w).sum := by
-      dsimp [v]; rw [← List.map_take, sum_neg_map]
-    omega
-  have hj' : j ≤ v.length := by simpa [v] using hj
-  refine ⟨j, hj, ?_⟩
-  intro n
-  have hupper : ((v.rotate j).take n).sum ≤ -(v.take j).sum := by
-    have hsplit := congrArg List.sum (List.take_append_drop j v)
-    simp only [List.sum_append] at hsplit
-    rw [List.rotate_eq_drop_append_take hj', List.take_append, List.sum_append]
-    by_cases hn : n ≤ v.length - j
-    · have he : n - (v.drop j).length = 0 := by simp only [List.length_drop]; omega
-      rw [he, List.take_zero, List.sum_nil, add_zero]
-      have hseg := D5.S1.Words.Compositions.ZeroSumWordCount.prefix_segment_sum v j n
-      have hnonpos := hb (j + n)
-      omega
-    · have hd : (v.drop j).length ≤ n := by simp only [List.length_drop]; omega
-      rw [List.take_of_length_le hd, List.take_take]
-      have hnonpos := hb (min (n - (v.drop j).length) j)
-      omega
-  have hneg : (v.take j).sum = -((L.take j).map w).sum := by
-    dsimp [v]; rw [← List.map_take, sum_neg_map]
-  have hwide := hm j
-  have hstrict : 28 * ((v.rotate j).take n).sum < 13 * N := by omega
-  refine ⟨(hrot n).1, (hrot n).2, ?_⟩
-  simpa only [v, List.map_rotate, List.map_take] using hstrict
-
-
 /-- Isolated native SMALL labels of one weak sign admit a full physical
 half-strip word with strict 13/28 margin and both forward cyclic filters.
 No assumption on the source's numerical period or SMALL cardinality is used. -/
@@ -985,14 +942,21 @@ theorem actualSource_isolated_same_sign_cyclic_completion
       have hs : InStrip (fun i => -actualSource k t i) (half k) 0 L :=
         MixedSuffixEnergy.strip_of_all_prefixes L (fun n => by
           simpa only [MixedSuffixEnergy.mass, zero_add] using ⟨(hb n).1, (hb n).2.1⟩)
-      obtain ⟨j, _, hj⟩ := isolated_negate_rotation (fun i => -actualSource k t i)
-        (half k) (modulus k) L hs hz (fun n => (hb n).2.2)
+      obtain ⟨j, _, hj⟩ := TwoSmallSource.negate_rotation_prefix_bound
+        (fun i => -actualSource k t i) (half k) L hs hz
       have htotal : (L.map (actualSource k t)).sum = 0 := by
         rw [sum_neg_map] at hz
         omega
       refine ⟨L.rotate j, (List.rotate_perm L j).trans hp, ?_, ?_, ?_, ?_⟩
       · intro n
-        simpa only [neg_neg] using hj n
+        have hprefix := hj n
+        have hmargin := (hb j).2.2
+        refine ⟨?_, ?_, ?_⟩
+        · simpa only [neg_neg] using hprefix.1
+        · simpa only [neg_neg] using hprefix.2.1
+        · have hstrict : 28 * (((L.rotate j).take n).map
+              (fun i => - -actualSource k t i)).sum < 13 * modulus k := by omega
+          simpa only [neg_neg] using hstrict
       · exact ((List.rotate_perm L j).map (actualSource k t)).sum_eq.trans htotal
       · exact (TwoSmallSource.filter_rotate _ L j).trans (by simpa only [abs_neg] using hlarge)
       · exact (TwoSmallSource.filter_rotate _ L j).trans (by simpa only [abs_neg] using hsmallorder)
