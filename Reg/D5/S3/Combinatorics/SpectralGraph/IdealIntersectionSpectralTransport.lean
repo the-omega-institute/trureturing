@@ -4,7 +4,8 @@ import D5.S3.Combinatorics.SpectralGraph.IdealIntersectionSpectralTransport
 
 /-! Candidate source-bound observations of actual adjacency and ideal-fiber sizes.
 The source selectors and all proof terms require current native validation.
-No registration for the parameterized `SpectralRealization` result is claimed here. -/
+The whole spectral record has a faithful Boolean attempt below; its observation
+dependence fails, so no completed registration for it is claimed here. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -354,6 +355,42 @@ def fullRegistration :
   continuation := .unknown
   familyRecord := none
   options := #[]
+
+
+/-- A faithful direct proposition readout for the whole spectral record.  This
+attempt preserves the exact theorem and demonstrates why its Boolean readout
+cannot supply observation dependence.  It is not a valid four-slot registration. -/
+private structure PositiveExponents where
+  k : Fin 3 → ℕ
+  hk : ∀ i, 0 < k i
+
+private abbrev spectralBooleanSignature : Signature where
+  Params := PrimeData
+  State _ := PositiveExponents
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+private def spectralBooleanAttempt : Realization spectralBooleanSignature :=
+  realize spectralBooleanSignature (fun _ d s =>
+    @decide (SpectralRealization d.p s.k d.hp d.hi) (Classical.propDecidable _))
+    (fun e => nomatch e)
+
+private theorem spectralBooleanAttempt_true (d : PrimeData) (s : PositiveExponents) :
+    spectralBooleanAttempt.readout () d s = true := by
+  simp only [spectralBooleanAttempt, realize, decide_eq_true_eq]
+  exact spectral_realization d.p s.k d.hp d.hi s.hk
+
+private theorem spectralBooleanAttempt_no_dependence :
+    ¬ ObservationalDependence spectralBooleanSignature spectralBooleanAttempt := by
+  intro h
+  obtain ⟨d, s, t, hst⟩ := h ()
+  exact hst ((spectralBooleanAttempt_true d s).trans
+    (spectralBooleanAttempt_true d t).symm)
+
 
 #print axioms adjacencySource
 #print axioms properSource

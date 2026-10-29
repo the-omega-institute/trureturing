@@ -489,7 +489,7 @@ def complementQuotient (k : Fin 3 → ℕ) : Matrix (Fin 6) (Fin 6) ℝ :=
 /-- The proper-support intersection Laplacian quotient `B`. -/
 def intersectionQuotient (k : Fin 3 → ℕ) : Matrix (Fin 6) (Fin 6) ℝ :=
   (properOrder k : ℝ) • (1 : Matrix (Fin 6) (Fin 6) ℝ) -
-    ((fun _ j => (cellSizes k j : ℝ)) : Matrix (Fin 6) (Fin 6) ℝ) - complementQuotient k
+    (Matrix.of (fun (_ : Fin 6) j => (cellSizes k j : ℝ))) - complementQuotient k
 
 private lemma complementQuotient_action (k : Fin 3 → ℕ) (v : Fin 6 → ℝ) (i : Fin 6) :
     (complementQuotient k *ᵥ v) i =
@@ -526,7 +526,7 @@ private lemma intersectionQuotient_action (k : Fin 3 → ℕ) (v : Fin 6 → ℝ
 private lemma quotient_reflection (k : Fin 3 → ℕ) :
     intersectionQuotient k + complementQuotient k =
       (properOrder k : ℝ) • (1 : Matrix (Fin 6) (Fin 6) ℝ) -
-        ((fun _ j => (cellSizes k j : ℝ)) : Matrix (Fin 6) (Fin 6) ℝ) := by
+        (Matrix.of (fun (_ : Fin 6) j => (cellSizes k j : ℝ))) := by
   simp [intersectionQuotient]
 
 private lemma laplacian_sum {X : Type*} [Fintype X] [DecidableEq X]
@@ -1031,7 +1031,10 @@ private lemma actual_eigenpair (hk : ∀ i, 0 < k i) (mu : ℝ) (v : Fin 6 → �
     have h := join_action_full p k hp hi hk v J
     rw [hz, neg_zero] at h
     change _ = 0 at h
-    simpa only [Pi.smul_apply, smul_eq_mul, extend_full p k hp hi v J, mul_zero] using h
+    have hzero : extendByZero p k hp hi v I = 0 := extend_full p k hp hi v J
+    change ((idealGraph (primeProduct p k)).lapMatrix ℝ *ᵥ
+      extendByZero p k hp hi v) I = 0 at h
+    simpa only [Pi.smul_apply, smul_eq_mul, hzero, mul_zero] using h
 
 /-- A nonintegral quotient eigenpair gives a nonintegral eigenpair on actual ideals. -/
 private lemma actual_nonintegral_eigenpair (hk : ∀ i, 0 < k i) (mu : ℝ) (v : Fin 6 → ℝ) (hv : v ≠ 0)
@@ -1090,7 +1093,7 @@ structure SpectralRealization : Prop where
       cellEmbedding p k hp hi (complementQuotient k *ᵥ v)
   reflection : intersectionQuotient k + complementQuotient k =
     (properOrder k : ℝ) • (1 : Matrix (Fin 6) (Fin 6) ℝ) -
-      ((fun _ j => (cellSizes k j : ℝ)) : Matrix (Fin 6) (Fin 6) ℝ)
+      (Matrix.of (fun (_ : Fin 6) j => (cellSizes k j : ℝ)))
   hEigenpair : ∀ (mu : ℝ) (v : Fin 6 → ℝ), v ≠ 0 → mu ≠ 0 →
     mu ≠ (properOrder k : ℝ) → complementQuotient k *ᵥ v = mu • v →
     cellEmbedding p k hp hi v ≠ 0 ∧ ((properOrder k : ℝ) - mu ≠ 0) ∧
