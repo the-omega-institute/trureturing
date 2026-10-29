@@ -45,12 +45,17 @@ internal sealed class RationalBracketCollisionDensityDocument : IScribeDocumentD
                 + "Shifting the count to N+1 and multiplying by (N+1)/N gives exactly the displayed "
                 + "normalization. This argument includes the empty expression and zero drift. "
                 + "The proof is repository-derived; the paper supplies the question and definitions.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("larsson-manabe-2026-rational-bracket-collision-density"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-        StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+        StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role,
+        openProblemResolutionClaim: resolution);
 
     private static Formula BracketFormula()
     {
