@@ -143,7 +143,10 @@ internal sealed class InformationallyCompletePairForestDocument : IScribeDocumen
                         + "the identical argument uses its g-level set and forces equality "
                         + "of the f-values. Both possibilities contradict w(y) being "
                         + "nonzero. Consequently w = 0, so μ = ν and the pair is IC."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gudder-2019-informationally-complete-pairs"),
+                    ResolutionKind.Proved)))));
 
     private static Formula DistributionFormula() => FiniteBinders(
         All("f", RealWeights, All("μ", RealWeights, All("δ", At(Qualified("Set"), Reals),
