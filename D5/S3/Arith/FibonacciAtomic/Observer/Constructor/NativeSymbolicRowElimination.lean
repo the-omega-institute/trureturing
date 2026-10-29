@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Complete raw row elimination and shared original-source reconstruction by the native MGU. -/
+   digest: Complete raw row elimination with shared original-source reconstruction. -/
 
 import D5.S3.Arith.FibonacciAtomic.Observer.NativeWholeRowPlan
 
@@ -509,7 +509,6 @@ private theorem symbolic_rows_elimination {X : Type} (p : Presentation X) (t : T
   | some rows =>
       simp only [Option.some.injEq, exists_eq_left']
       rw [← constraints_merge_exact]
-      dsimp only
       split
       · rename_i e hu
         have no : ¬ constraintsHold (mergeConstraints rows extra) v := by
