@@ -424,6 +424,8 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("removal_refuses_submodule_before_any_payload")]
     [InlineData("removal_refuses_foreign_worktree_before_any_payload")]
     [InlineData("removal_refuses_bare_repository_before_any_payload")]
+    [InlineData("removal_rechecks_native_lock_after_checkpoint_before_payload")]
+    [InlineData("removal_rechecks_target_identity_after_checkpoint_before_payload")]
     [InlineData("removal_resumes_after_worktree_ignore_is_deleted")]
     [InlineData("removal_with_deleted_ignore_retains_new_ordinary_file")]
     [InlineData("removal_native_timeout_uses_remaining_payload_budget")]

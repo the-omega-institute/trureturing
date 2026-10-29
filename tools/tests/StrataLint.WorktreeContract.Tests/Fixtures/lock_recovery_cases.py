@@ -18,6 +18,77 @@ class LockRecoveryCases:
         return argparse.Namespace(source=self.main, names="tree", path=[], force=False,
                                   preview=False, expected=[])
 
+    def native_remove_baseline(self, target):
+        import worktree_protocol as protocol
+        return self.run_owned_command(
+            ["git", "-C", str(self.main), "worktree", "remove", "--force", "--", str(target)],
+            self.root, phase="native-removal-baseline", timeout=30, check=False,
+            env=protocol.git_environment())
+
+    def test_removal_rechecks_native_lock_after_checkpoint_before_payload(self):
+        import worktree_preservation as preservation
+        baseline = self.root / "baseline"
+        self.g(self.main, "worktree", "add", "-b", "baseline", baseline, "HEAD")
+
+        current_late = self.tree / "late-ordinary"
+        baseline_late = baseline / "late-ordinary"
+        native_record = preservation.record_removal
+
+        def record_then_lock(metadata, commit, recovery_branch, predecessors=None, native_locks=None):
+            result = native_record(metadata, commit, recovery_branch, predecessors, native_locks)
+            self.g(self.main, "worktree", "lock", "--reason", "active work", self.tree)
+            current_late.write_bytes(b"current late bytes\n")
+            return result
+
+        with patch.object(preservation, "record_removal", side_effect=record_then_lock):
+            current = preservation.remove(self.removal_options())["items"][0]
+
+        self.g(self.main, "worktree", "lock", "--reason", "active work", baseline)
+        baseline_late.write_bytes(b"baseline late bytes\n")
+        native = self.native_remove_baseline(baseline)
+
+        self.assertEqual("refused", current["outcome"])
+        self.assertIn("locked_recent", current["reason"])
+        self.assertNotEqual(0, native.returncode)
+        self.assertEqual(b"current late bytes\n", current_late.read_bytes())
+        self.assertEqual(b"baseline late bytes\n", baseline_late.read_bytes())
+        self.assertTrue(self.tree.is_dir())
+        self.assertTrue(baseline.is_dir())
+
+    def test_removal_rechecks_target_identity_after_checkpoint_before_payload(self):
+        import worktree_preservation as preservation
+        baseline = self.root / "baseline"
+        self.g(self.main, "worktree", "add", "-b", "baseline", baseline, "HEAD")
+
+        moved = self.root / "moved-current"
+        baseline_moved = self.root / "moved-baseline"
+        current_unique = self.tree / "current-unique"
+        baseline_unique = baseline / "baseline-unique"
+        native_record = preservation.record_removal
+
+        def record_then_replace(metadata, commit, recovery_branch, predecessors=None, native_locks=None):
+            result = native_record(metadata, commit, recovery_branch, predecessors, native_locks)
+            self.tree.rename(moved)
+            self.g(self.root, "clone", self.main, self.tree)
+            current_unique.write_bytes(b"current clone bytes\n")
+            return result
+
+        with patch.object(preservation, "record_removal", side_effect=record_then_replace):
+            current = preservation.remove(self.removal_options())["items"][0]
+
+        baseline.rename(baseline_moved)
+        self.g(self.root, "clone", self.main, baseline)
+        baseline_unique.write_bytes(b"baseline clone bytes\n")
+        native = self.native_remove_baseline(baseline)
+
+        self.assertEqual("refused", current["outcome"])
+        self.assertIn("repository_identity", current["reason"])
+        self.assertNotEqual(0, native.returncode)
+        self.assertEqual(b"current clone bytes\n", current_unique.read_bytes())
+        self.assertEqual(b"baseline clone bytes\n", baseline_unique.read_bytes())
+        self.assertTrue(self.tree.is_dir())
+        self.assertTrue(baseline.is_dir())
+
     def assert_payload_boundary_retained(self, boundary):
         import worktree_protocol as protocol
         (self.tree / "owned").write_text("uncheckpointed outer bytes\n")
