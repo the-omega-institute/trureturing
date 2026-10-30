@@ -1,0 +1,61 @@
+### 2.2 All coefficients and the retained boundary
+
+For $0\le\ell\le2m+N$, polynomial multiplication gives the exact formula
+
+$$
+[z^\ell](QS)=
+\sum_{k=\max(0,N-\ell)}^{\min(N,\,2m+N-\ell)}
+c_k b_{\ell-N+k},
+\tag{2.5}
+$$
+
+where an empty range means zero. Define
+
+$$
+P(z)=\sum_{\ell=0}^{N-1}
+\left(\sum_{k=N-\ell}^{N}c_kb_{\ell-N+k}\right)z^\ell
+\tag{2.6}
+$$
+
+and
+
+$$
+\mathscr E(z)=
+\sum_{p=m+1}^{2m}
+\left(\sum_{k=0}^{\min(N,\,2m-p)}c_kb_{p+k}\right)z^{N+p}.
+\tag{2.7}
+$$
+
+For $\ell=N+p$ with $0\le p\le m$, the full range $0\le k\le N$
+is available, because $p+k\le m+N\le2m$. Its coefficient vanishes
+by (2.3). Consequently
+
+$$
+Q(z)S(z)=P(z)+\mathscr E(z)
+\tag{2.8}
+$$
+
+is an exact identity. The low coefficients have degrees $0$ through
+$N-1$; those from $N$ through $N+m$ vanish; all remaining possible
+coefficients have degrees $m+N+1$ through $2m+N$ and are precisely
+(2.7). If $P$ is nonzero its degree is at most $N-1$. These statements
+remain valid when either polynomial loses degree. There are no
+coefficients outside the displayed total range.
+
+Every coefficient in (2.5) has absolute value at most
+$b\sqrt{2m+1}$, using $|b_j|\le b\sqrt{2m+1}$ and (2.3).
+For $z=1-t$ with $0<t\le1/4$, a finite geometric-sum estimate gives
+
+$$
+\begin{aligned}
+|\mathscr E(1-t)|
+&\le b\sqrt{2m+1}\,\frac{(1-t)^{m+N+1}}{t}\\
+&\le 2b\sqrt m\,\frac{\exp(-mt)}t.
+\end{aligned}
+\tag{2.9}
+$$
+
+Indeed $2m+1\le4m$ and $1-t\le\exp(-t)$. The tail in (2.7)
+has not been set equal to zero. No scalar beyond $b_{2m}$ has been
+introduced.
+

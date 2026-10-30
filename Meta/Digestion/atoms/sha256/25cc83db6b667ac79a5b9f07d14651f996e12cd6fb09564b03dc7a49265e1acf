@@ -1,0 +1,46 @@
+**Lemma 4.3 (First-zero subtree, opposite-parity second call).** If
+$t_0$ has parity $\beta$, then
+
+$$
+B_0\le\frac{a^2}{2}+a\eta
+<\frac a2+a^2\eta.
+\tag{4.7}
+$$
+
+Proof. The second address is a separator in phase $\alpha$ and an
+active edge $f$ in phase $\beta$. On $C_{00}$ the phase-$\alpha$
+section imposes only $e=0$, whereas the phase-$\beta$ section imposes
+only $f=0$. Apply Lemma 3.1 to each phase using its actual target
+vertex $v_\alpha$ or $v_\beta$. In a phase whose edge meets its
+target the largest full-law state mass is $a^2/2$; otherwise it is
+$ac/2<a^2/2$. The phase state sets are disjoint, so the largest
+state mass over their union is a maximum over these alternatives.
+It follows that
+
+$$
+m(C_{00})\le\frac{a^2}{2}.
+\tag{4.8}
+$$
+
+The leaf $C_{01}$ certifies phase $\beta$ and imposes just $f=1$;
+the first read was its automatic separator. Its maximal state mass
+is $\eta/2$ if $f$ meets $v_\beta$, and $a\eta$ otherwise. Hence
+$m(C_{01})\le a\eta$, proving the first inequality in (4.7).
+
+The difference between the same-parity bound and this bound is
+
+$$
+\begin{aligned}
+\left(\frac a2+a^2\eta\right)
+-\left(\frac{a^2}{2}+a\eta\right)
+&=\frac\eta2-\eta^2\\
+&=\frac{\eta c}{2}>0,
+\end{aligned}
+\tag{4.9}
+$$
+
+using $a(1-a)=ab=\eta$ and $c=1-2\eta$. No relation between
+two hypothetical target locations was assumed: each mass was
+computed inside its own phase section of the one original law.
+$\square$
+
