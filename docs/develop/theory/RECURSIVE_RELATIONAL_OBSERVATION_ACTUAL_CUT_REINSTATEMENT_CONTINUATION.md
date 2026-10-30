@@ -171,8 +171,10 @@ $$
 
 The second alternative occurs: on the zero source at cut four, $j=1$,
 the correct child is $b$ and $t_1=2$, but $baa$ is absent whereas $bba$
-is present. An unqualified negative literal therefore does not by itself
-identify an erroneous bit or refute a candidate source.
+is present. Thus this negative reply alone does not imply $a_j\ne z_j$.
+A single negative literal does refute a full candidate when that candidate
+has a separately established prediction that the literal is present;
+(ACRC.2) alone supplies no such prediction.
 
 **Proposition 33.4 (paid complete native construction and its bills).**
 After checking a supplied accepting root certificate, choose a trial bit at
@@ -383,6 +385,16 @@ S_B\setminus S_A=\{baa,bab\}.
 \tag{ACRC.6}
 $$
 
+At the first full-law mature cut for public $d=11$, namely $n=9$, these
+same sources instead have
+
+$$
+(h_a,h_b)_A=(5,6),\qquad (h_a,h_b)_B=(4,7).
+$$
+
+Thus this pair's equal extremal heights at cut four do not extend to that
+mature cut.
+
 Proof. Write $c(1)=a,c(0)=b$, and let $\bar c$ be the other port.
 At update two the root splits: its beta child is $c(z_1)$ and its alpha
 child is $\bar c(z_1)$. At update three the former splits using $z_2$,
@@ -395,7 +407,35 @@ For prefixes $1000$ and $0100$, $u$ is respectively $ab$ and $ba$.
 This gives both full supports. Each contains $aa,bb$ and neither contains
 $aaa,bbb$, giving heights two. Set subtraction gives all separators.
 The new bits consumed at update four determine the labels of its newborn
-children, not which of those children are present. $\square$
+children, not which of those children are present.
+
+For the mature-cut calculation, a beta leaf on the all-$a$ spine is first
+in physical order, so its birth index at split update $t$ is $F_t$.
+One on the all-$b$ spine is last, so its birth index is $B_t$.
+At a split, both children are created; the selected child's next split is
+one update later for a beta child and two for an alpha child. Apply these
+rules and the stated eleven-cycles. The successive first-presence times
+of the constant-port words, starting with depth one and continuing through
+the first absent word at cut nine, are
+
+$$
+\begin{array}{c|c|l}
+\text{law}&\text{port}&\text{first-presence times}\\
+A&a&2,3,5,7,9,10\\
+A&b&2,4,5,6,8,9,10\\
+B&a&2,4,6,8,10\\
+B&b&2,3,5,6,7,8,9,10.
+\end{array}
+$$
+
+For example the successive splitting indices on the $A$ all-$a$ spine
+are $2,5,13,34,55$; the bit at $34$ is one and the bits at the other
+displayed indices are zero. On its all-$b$ spine they are $4,7,12,33,54,88$, with the
+bit at $12$ one and the others zero. For $B$ they are respectively
+$3,8,21,55$, all zero, and $2,7,12,20,33,54,88$, with only the bit at
+$2$ one. Together with the root bit these determine every entry of the
+table. Counting entries at most nine gives the asserted mature heights.
+$\square$
 
 **Proposition 35.3 (invisible newest bits and a common disagreement).**
 Let $W_2=\{\varepsilon,a,aa,ab,b,ba,bb\}$ and, for a consumed
