@@ -7,7 +7,7 @@
    digest: Closed-disk trace bounds for arbitrary complex common positive lower matrices. -/
 
 import D5.S3.Quantum.Information.QubitNormalFormState
-import D5.S3.Quantum.Hiai.CommonLowerHarmonicBound
+import D5.S3.Quantum.Hiai.ParallelSumVariational
 import Mathlib.Tactic
 
 noncomputable section
@@ -16,7 +16,44 @@ open _root_.Matrix
 open scoped MatrixOrder ComplexOrder Kronecker
 open D5.S3.Quantum.Information.QubitNormalFormState
 open D5.S3.Quantum.Hiai.ParallelSumVariational
-open D5.S3.Quantum.Hiai.CommonLowerHarmonicBound
+
+
+variable {d : Type*} [Fintype d] [DecidableEq d]
+
+private lemma split_energy_mono {P Q K : Matrix d d ℂ}
+    (hKP : K ≤ P) (hKQ : K ≤ Q) (W : Matrix d d ℂ × Matrix d d ℂ) :
+    splitEnergy K K W ≤ splitEnergy P Q W := by
+  have hu : W.1ᴴ * K * W.1 ≤ W.1ᴴ * P * W.1 := by
+    apply Matrix.le_iff.mpr
+    convert (Matrix.le_iff.mp hKP).conjTranspose_mul_mul_same W.1 using 1
+    simp only [mul_sub, sub_mul]
+  have hv : W.2ᴴ * K * W.2 ≤ W.2ᴴ * Q * W.2 := by
+    apply Matrix.le_iff.mpr
+    convert (Matrix.le_iff.mp hKQ).conjTranspose_mul_mul_same W.2 using 1
+    simp only [mul_sub, sub_mul]
+  exact add_le_add hu hv
+
+private lemma split_energy_common_floor {K U V : Matrix d d ℂ}
+    (hK : K.PosSemidef) (hUV : U + V = 1) :
+    K ≤ (2 : ℝ) • (Uᴴ * K * U + Vᴴ * K * V) := by
+  have he : (U + V)ᴴ * K * (U + V) = K := by rw [hUV]; simp
+  apply Matrix.le_iff.mpr
+  convert hK.conjTranspose_mul_mul_same (U - V) using 1
+  calc
+    (2 : ℝ) • (Uᴴ * K * U + Vᴴ * K * V) - K =
+        (2 : ℝ) • (Uᴴ * K * U + Vᴴ * K * V) - (U + V)ᴴ * K * (U + V) := by rw [he]
+    _ = (U - V)ᴴ * K * (U - V) := by
+      simp only [Matrix.conjTranspose_add, Matrix.conjTranspose_sub, add_mul, mul_add, sub_mul, mul_sub]
+      module
+
+/-- Any complex split of the identity gives an upper bound for a common PSD lower matrix.
+The inputs themselves may be singular. -/
+theorem common_lower_split_bound {P Q K : Matrix d d ℂ}
+    (hK : K.PosSemidef) (hKP : K ≤ P) (hKQ : K ≤ Q)
+    (W : Matrix d d ℂ × Matrix d d ℂ) (hW : W.1 + W.2 = 1) :
+    K ≤ (2 : ℝ) • splitEnergy P Q W := by
+  exact (split_energy_common_floor hK hW).trans
+    (smul_le_smul_of_nonneg_left (split_energy_mono hKP hKQ W) (by norm_num))
 
 private def pureSplit (x z : ℝ) : Matrix (Fin 2) (Fin 2) ℂ :=
   !![(1 - (z : ℂ) / (1 - (x : ℂ) ^ 2)) / 2, -(x : ℂ) * z / (2 * (1 - (x : ℂ) ^ 2));

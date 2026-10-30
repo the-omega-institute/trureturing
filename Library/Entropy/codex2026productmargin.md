@@ -11,13 +11,19 @@ strata_touched:
   - D5/S3/Quantum/Information/QubitNormalFormState
   - D5/S3/Quantum/Information/QubitEntropyContraction
   - D5/S3/Quantum/Information/ProductMarginQubitOrder
-  - D5/S3/Quantum/Hiai/CommonLowerHarmonicBound
   - D5/S3/Quantum/Foundation/FinitePreparationChannel
 license: citation-only
 triage: anchor
 ---
 
 # Equal-spectrum local-qubit product margins
+
+## Locator
+
+https://github.com/the-omega-institute/trureturing is the implementation locator only.
+The supplied manuscript is unpublished, local and fallible; this URL is not its publication locator.
+
+## Scope
 
 The HTTPS locator identifies the repository implementation, not a public copy
 of the manuscript. The statement source is a local unpublished ordinary-mathematics manuscript,
