@@ -293,7 +293,7 @@ private lemma pauli_xy_products (s : Fin 3) (hs : s ≠ 2) (o : Fin 2) :
   fin_cases o <;> by_cases h : s = 0 <;> norm_num [h, Complex.star_def]
   all_goals repeat' constructor
   all_goals ring_nf
-  all_goals try simp only [← inv_pow, Complex.I_sq]
+  all_goals try simp only [Complex.I_sq]
   all_goals norm_num
   all_goals first
     | rw [Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
@@ -537,3 +537,46 @@ theorem result : ¬ claim := by
   linarith
 
 end D5.S3.Quantum.Tomography.PauliFisherGHZRefutation
+
+open Lean in
+run_cmd do
+  let env ← getEnv
+  let root := `D5.S3.Quantum.Tomography.PauliFisherGHZRefutation.result
+  let mut pending := #[root]
+  let mut seen : NameSet := {}
+  while !pending.isEmpty do
+    let name := pending.back!
+    pending := pending.pop
+    if seen.contains name then continue
+    seen := seen.insert name
+    if let some info := env.find? name then
+      pending := pending ++ info.type.getUsedConstants
+      if let some value := info.value? (allowOpaque := true) then
+        pending := pending ++ value.getUsedConstants
+  let own := env.constants.toList.filter fun (name, _) =>
+    (env.getModuleIdxFor? name).isNone
+  let unused := own.filter fun (name, _) => !seen.contains name
+  let some resultInfo := env.find? root | throwError "result missing"
+  unless resultInfo.type == mkApp (mkConst ``Not)
+      (mkConst `D5.S3.Quantum.Tomography.PauliFisherGHZRefutation.claim) do
+    throwError "result type is not literally Not claim"
+  let some claimInfo := env.find? `D5.S3.Quantum.Tomography.PauliFisherGHZRefutation.claim
+    | throwError "claim missing"
+  unless claimInfo.type == Expr.sort Level.zero do
+    throwError "claim type is not literally Prop"
+  let axioms ← collectAxioms root
+  unless axioms.all (#[`propext, `Classical.choice, `Quot.sound].contains ·) do
+    throwError "nonstandard axiom closure: {axioms}"
+  logInfo m!"RESULT_TYPE {resultInfo.type}"
+  logInfo m!"RESULT_AXIOMS {← collectAxioms root}"
+  logInfo m!"MODULE_CLOSURE total={own.length} unused={unused.map Prod.fst}"
+  let entries := own.map fun (name, info) =>
+    let deps := info.type.getUsedConstants ++
+      ((info.value? (allowOpaque := true)).map Expr.getUsedConstants).getD #[]
+    Json.mkObj [("name", toJson name.toString),
+      ("used", toJson (seen.contains name)),
+      ("dependencies", toJson ((deps.filter fun d => (env.getModuleIdxFor? d).isNone).map Name.toString))]
+  logInfo m!"MODULE_DECLARATIONS {(toJson entries).compress}"
+
+  unless unused.isEmpty do
+    throwError "unconsumed module constants: {unused.map Prod.fst}"
