@@ -342,6 +342,7 @@ theorem mixed_first_input_reindexed_pairing (D : LatticeData) (hu : IsUnit D.G.d
         dsimp only [f, mixedSourceSecond]
         rw [phase, zpow_add₀ (by norm_num : (-1 : ℂ) ≠ 0), zpow_natCast,
           leftExponent, rightExponent, parameter]
+        simp only [div_eq_mul_inv, mul_inv_rev]
         ring
       _ = ∑ p ∈ Finset.range (K-1), ∑ q ∈ Finset.range N,
           ∑ i ∈ Finset.range (q+1), ∑ L ∈ Finset.range (q-i+1), f p i L (q-i-L) := by
