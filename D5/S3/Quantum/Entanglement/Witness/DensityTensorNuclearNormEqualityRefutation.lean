@@ -6,16 +6,11 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/Witness/DensityTensorNuclearNormEqualityRefutation.claim; result=D5/S3/Quantum/Entanglement/Witness/DensityTensorNuclearNormEqualityRefutation.result; claim=D5/S3/Quantum/Entanglement/Witness/DensityTensorNuclearNormEqualityRefutation.claim
    digest: A flagged Bell mixture refutes the pure-state nuclear-norm equality case. -/
 
-module
 
-public import Mathlib.Analysis.InnerProductSpace.PiL2
-public import Mathlib.LinearAlgebra.Matrix.PosDef
-public import Mathlib.Analysis.Normed.Module.PiTensorProduct.ProjectiveSeminorm
-public import Mathlib.LinearAlgebra.PiTensorProduct.Basis
+import D5.S3.Quantum.PureState.PureStateHandshake
+import Mathlib.LinearAlgebra.PiTensorProduct.Basis
 
 /-! Complex nuclear norms of coefficient tensors and a mixed equality-case counterexample. -/
-
-@[expose] public section
 
 set_option linter.style.longLine false
 
@@ -206,9 +201,15 @@ private lemma pure_idempotent {ι : Type*} [Fintype ι] (t : ι → ℂ)
     vecMulVec t (star t) * vecMulVec t (star t) = vecMulVec t (star t) := by
   have hd : star t ⬝ᵥ t = (1 : ℂ) := by
     rw [dotProduct_comm]
-    simpa only [EuclideanSpace.inner_toLp_toLp, ht, RCLike.ofReal_one, one_pow] using
-      inner_self_eq_norm_sq_to_K (𝕜 := ℂ) (WithLp.toLp 2 t)
-  rw [vecMulVec_mul_vecMulVec, hd, one_smul]
+    have hnorm : ∑ i, ‖t i‖ ^ 2 = 1 := by
+      simpa only [ht, PiLp.toLp_apply, one_pow] using
+        (PiLp.norm_sq_eq_of_L2 (fun _ : ι => ℂ) (WithLp.toLp 2 t)).symm
+    simpa only [EuclideanSpace.inner_toLp_toLp, ← RCLike.ofReal_pow,
+      PiLp.norm_sq_eq_of_L2, PiLp.toLp_apply, hnorm, RCLike.ofReal_one] using
+        inner_self_eq_norm_sq_to_K (𝕜 := ℂ) (WithLp.toLp 2 t)
+  have h := (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake t hd 0).1
+  change vecMulVec t (star t) * vecMulVec t (star t) = vecMulVec t (star t) at h
+  exact h
 
 set_option maxHeartbeats 2000000 in
 -- The finite counterexample expands eight rank-one terms across four tensor modes.
