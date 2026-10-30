@@ -97,7 +97,7 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Geometry.Rauzy.Interior
     definition := none
-    coordinates := #[0]
+    coordinates := #[]
     readouts := #[{
       path := #["body", "arg"]
       stateBinder := 0

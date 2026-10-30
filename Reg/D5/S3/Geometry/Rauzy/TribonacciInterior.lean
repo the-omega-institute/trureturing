@@ -68,7 +68,7 @@ def registration :
   sourceSelection := some {
     owner := `D5.S3.Geometry.Rauzy.TribonacciInterior
     definition := none
-    coordinates := #[0]
+    coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "arg"]
       stateBinder := 0

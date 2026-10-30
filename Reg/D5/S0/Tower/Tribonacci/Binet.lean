@@ -88,7 +88,7 @@ def registration :
   sourceSelection := some {
     owner := `D5.S0.Tower.Tribonacci.Binet
     definition := none
-    coordinates := #[0]
+    coordinates := #[]
     readouts := #[{
       path := #["body", "body", "body", "arg", "arg", "fn", "arg", "arg", "fn", "arg"]
       stateBinder := 0
