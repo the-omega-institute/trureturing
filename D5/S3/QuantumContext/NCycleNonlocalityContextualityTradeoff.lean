@@ -8,6 +8,7 @@
 
 import D5.S3.Combinatorics.Graph.LayeredCirculation.PositiveCircuitSupplier
 import Mathlib.Logic.Equiv.Fin.Rotate
+import Mathlib.Algebra.Ring.BooleanRing
 
 /-! The binary generalized Bell scenario of Porto–Ruffolo–Rabelo–Terra Cunha–Kurzyński,
 arXiv:2405.02964v2. Context `i` consists of measurements `i` and `finRotate n i`.
@@ -139,10 +140,127 @@ private lemma cycle_generators {n : ℕ} (hn : 3 ≤ n)
     (r : BobBehavior n) (hr : IsND r) : r ∈ convexHull ℝ (generators n) := by
   sorry
 
-private lemma midpoint_noncontextual {n : ℕ} (hn : 3 ≤ n)
+private lemma bool_sign_sum {ι : Type} (s : Finset ι) (γ : ι → Bool) :
+    (∏ i ∈ s, if γ i then (-1 : ℝ) else 1) = if ∑ i ∈ s, γ i then -1 else 1 := by
+  classical
+  induction s using Finset.induction with
+  | empty => simp [Bool.zero_eq_false]
+  | @insert i s hi ih =>
+    rw [prod_insert hi, sum_insert hi, ih]
+    cases γ i <;> cases (∑ j ∈ s, γ j) <;> norm_num [Bool.add_eq_xor]
+
+private lemma even_signs_assignment {n : ℕ} (γ : Fin n → Bool) (hγ : ∑ i, γ i = false) :
+    ∃ s : Fin n → Bool, ∀ i, Bool.xor (s i) (s (finRotate n i)) = γ i := by
+  classical
+  cases n with
+  | zero => exact ⟨fun i => Fin.elim0 i, fun i => Fin.elim0 i⟩
+  | succ k =>
+    let s : Fin (k + 1) → Bool := fun i => ∑ j ∈ univ.filter (fun j => j.val < i.val), γ j
+    refine ⟨s, ?_⟩
+    intro i
+    by_cases hi : i.val < k
+    · have hrot : finRotate (k + 1) i = ⟨i.val + 1, by omega⟩ := by
+        simpa only [Fin.eta] using finRotate_of_lt hi
+      have hfilter : univ.filter (fun j : Fin (k + 1) => j.val < i.val + 1) =
+          insert i (univ.filter (fun j : Fin (k + 1) => j.val < i.val)) := by
+        ext j
+        simp only [mem_filter, mem_univ, true_and, mem_insert, Fin.ext_iff]
+        omega
+      have hnmem : i ∉ univ.filter (fun j : Fin (k + 1) => j.val < i.val) := by simp
+      rw [hrot]
+      change Bool.xor (s i) (∑ j ∈ univ.filter (fun j => j.val < i.val + 1), γ j) = γ i
+      rw [hfilter, sum_insert hnmem]
+      change Bool.xor (s i) (γ i + s i) = γ i
+      cases s i <;> cases γ i <;> rfl
+    · have hilast : i = Fin.last k := Fin.ext (by simp only [Fin.val_last]; omega)
+      subst i
+      rw [finRotate_last]
+      have hfilter : univ = insert (Fin.last k)
+          (univ.filter (fun j : Fin (k + 1) => j.val < k)) := by
+        ext j
+        constructor
+        · intro _
+          by_cases hj : j.val = k
+          · exact mem_insert.mpr (Or.inl (Fin.ext hj))
+          · apply mem_insert.mpr
+            right
+            exact mem_filter.mpr ⟨mem_univ _, lt_of_le_of_ne
+              (Nat.le_of_lt_succ j.isLt) hj⟩
+        · intro _
+          exact mem_univ _
+      have hnmem : Fin.last k ∉ univ.filter (fun j : Fin (k + 1) => j.val < k) := by simp
+      have ht := hγ
+      rw [hfilter, sum_insert hnmem] at ht
+      have hs0 : s 0 = false := by simp [s, Bool.zero_eq_false]
+      rw [hs0, Bool.xor_false]
+      change γ (Fin.last k) + s (Fin.last k) = false at ht
+      cases h₁ : γ (Fin.last k) <;> cases h₂ : s (Fin.last k) <;>
+        simp only [h₁, h₂, Bool.add_eq_xor, Bool.false_xor, Bool.true_xor,
+          Bool.not_true, Bool.not_false, Bool.false_eq_true, Bool.true_eq_false] at ht ⊢
+
+private lemma even_vertex_noncontextual {n : ℕ} (γ : Fin n → Bool)
+    (hγ : ∑ i, γ i = false) : IsNoncontextual (vertex γ) := by
+  obtain ⟨s, hs⟩ := even_signs_assignment γ hγ
+  change vertex γ ∈ convexHull ℝ (Set.range (deterministic : (Fin n → Bool) → BobBehavior n))
+  have heq : vertex γ = (1 / 2 : ℝ) • deterministic s +
+      (1 / 2 : ℝ) • deterministic (fun i => !(s i)) := by
+    ext i b c
+    change vertex γ i b c = (1 / 2 : ℝ) * deterministic s i b c +
+      (1 / 2 : ℝ) * deterministic (fun j => !(s j)) i b c
+    simp only [vertex, deterministic, ← hs i]
+    have hbinary (u v b c : Bool) :
+        (if Bool.xor b c = Bool.xor u v then (1 / 2 : ℝ) else 0) =
+          (1 / 2 : ℝ) * (if u = b ∧ v = c then 1 else 0) +
+          (1 / 2 : ℝ) * (if (!u) = b ∧ (!v) = c then 1 else 0) := by
+      cases u <;> cases v <;> cases b <;> cases c <;> norm_num
+    exact hbinary (s i) (s (finRotate n i)) b c
+  rw [heq]
+  exact (convex_convexHull ℝ (Set.range (deterministic : (Fin n → Bool) → BobBehavior n)))
+    (subset_convexHull ℝ _ ⟨s, rfl⟩)
+    (subset_convexHull ℝ _ ⟨fun i => !(s i), rfl⟩)
+    (by norm_num) (by norm_num) (by norm_num)
+
+private lemma midpoint_noncontextual {n : ℕ}
     (γ η : Fin n → Bool) (hγ : oddSigns γ) (hη : oddSigns η) (hne : γ ≠ η) :
     IsNoncontextual ((1 / 2 : ℝ) • vertex γ + (1 / 2 : ℝ) • vertex η) := by
-  sorry
+  classical
+  have hsum (δ : Fin n → Bool) (hδ : oddSigns δ) : ∑ i, δ i = true := by
+    have h := hδ
+    unfold oddSigns at h
+    rw [bool_sign_sum] at h
+    cases he : (∑ i, δ i) with
+    | false => rw [he] at h; norm_num at h
+    | true => rfl
+  have hex : ∃ j, γ j ≠ η j := by
+    by_contra h
+    push Not at h
+    exact hne (funext h)
+  obtain ⟨j, hj⟩ := hex
+  let δ := Function.update γ j (!(γ j))
+  let ε := Function.update η j (!(η j))
+  have hflip (ζ : Fin n → Bool) (hζ : ∑ i, ζ i = true) :
+      ∑ i, Function.update ζ j (!(ζ j)) i = false := by
+    have hold : (∑ i ∈ univ \ {j}, ζ i) + ζ j = true := by
+      simpa only [sum_singleton, hζ] using
+        (sum_sdiff (f := ζ) (by simp : ({j} : Finset (Fin n)) ⊆ univ))
+    rw [sum_update_of_mem (mem_univ j)]
+    cases h₁ : ζ j <;> cases h₂ : (∑ i ∈ univ \ {j}, ζ i) <;>
+      simp only [h₁, h₂, Bool.add_eq_xor, Bool.false_xor, Bool.true_xor,
+        Bool.not_true, Bool.not_false, Bool.false_eq_true, Bool.true_eq_false] at hold ⊢
+  have hδ := even_vertex_noncontextual δ (hflip γ (hsum γ hγ))
+  have hε := even_vertex_noncontextual ε (hflip η (hsum η hη))
+  have heq : (1 / 2 : ℝ) • vertex γ + (1 / 2 : ℝ) • vertex η =
+      (1 / 2 : ℝ) • vertex δ + (1 / 2 : ℝ) • vertex ε := by
+    ext i b c
+    change (1 / 2 : ℝ) * vertex γ i b c + (1 / 2 : ℝ) * vertex η i b c =
+      (1 / 2 : ℝ) * vertex δ i b c + (1 / 2 : ℝ) * vertex ε i b c
+    by_cases hi : i = j
+    · subst i
+      cases h₁ : γ j <;> cases h₂ : η j <;> cases b <;> cases c <;>
+        simp_all [vertex, δ, ε, Function.update]
+    · simp only [vertex, δ, ε, Function.update_of_ne hi]
+  rw [heq]
+  exact (convex_convexHull ℝ _) hδ hε (by norm_num) (by norm_num) (by norm_num)
 
 private lemma unique_positive_generator {n : ℕ}
     (hgen : ∀ r : BobBehavior n, IsND r → r ∈ convexHull ℝ (generators n))
@@ -398,7 +516,7 @@ theorem result : claim := by
   · linarith [hf.2.1 p hp]
   · have hcpos : 0 < t.1 (bobMarginal p) + t.2 := lt_of_not_ge hc
     obtain ⟨γ, _, hmax, hother⟩ := unique_positive_generator
-      (cycle_generators hn) (midpoint_noncontextual hn) t ht
+      (cycle_generators hn) midpoint_noncontextual t ht
     obtain ⟨α, hα, hdom⟩ := common_local_part hn
       (cycle_generators hn) p hp t ht hcpos γ hmax hother
     have hlocal : IsGeneralizedLocal (productBehavior α (vertex γ)) :=
