@@ -1186,3 +1186,346 @@ Here $n/h\to1$, while $s/h=1+(a+1)/h\to1$. Therefore $H_j(a,h)/s^2\to1$, supplyi
 The graph normalization remains the one in Definition 1.1 and the Albalahi–Das–Ali–Barman–Hamza source cited after Open problem 7.3. It does not transfer (8.2), (8.6) or (8.18) to graph extrema. The relation of these array-law statements to the Zhao–Zhao article cited there remains undetermined without its full text; no literature-priority assertion is attached to them.
 
 ## 追加锚（本行以下为增补区）
+
+## 9. Finite actual two-layer graphs at square-root surplus
+
+The preceding sections optimize the common incidence law. This section keeps the
+same law on the same finite graph and records the finite-budget interface. The
+only new issue is that a law with a core and singleton tail must be rounded to
+integer source counts while the graph remains simple, connected, and strictly
+degree-oriented.
+
+**Definition 9.1 (The finite graph class).** Fix integers $a\ge4$, $h\ge1$ and
+put $s=a+1+h$. For $N\ge1$, let $\mathfrak G_N(a,h)$ be the class of finite
+simple connected graphs $G=(S\mathbin{\dot\cup}T,E)$ with
+
+$$
+|S|=N,\qquad |T|=s,\qquad |E|=m=aN,\qquad |V(G)|=N+s,\qquad
+\ell=m-|V(G)|+1=(a-1)N-s+1,
+$$
+
+such that both sides are independent, every edge joins $S$ to $T$, and
+
+$$
+ d_G(u)<d_G(v)\qquad(uv\in E,\ u\in S,\ v\in T).
+\tag{9.1}
+$$
+
+Thus the vertices in $S$ and $T$ are the actual degree-oriented sources and
+sinks. Define
+
+$$
+V_N(a,h)=\inf_{G\in\mathfrak G_N(a,h)}2N E(G),\qquad
+E(G)=\sum_{uv\in E}\left(\sqrt{1+\left(\frac{d_G(u)}{d_G(v)}\right)^2}-1\right).
+\tag{9.2}
+$$
+
+The infimum is a minimum whenever the class is nonempty, since the class has
+only finitely many labelled simple graphs.
+
+**Lemma 9.2 (The common-law quadratic bridge).** Let $G\in\mathfrak G_N(a,h)$,
+write $k_u=d_G(u)$ for $u\in S$, $d_i=d_G(i)$ for $i\in T$, and let $x_T$ be
+the law which assigns mass $1/N$ to the neighborhood of each source. Put
+$y_i=d_i/N$. Then $x$ belongs to $\mathcal X(a,h)$, its mean is $a$, and
+
+$$
+H(x)=N\sum_{ui\in E}\left(\frac{k_u}{d_i}\right)^2.
+\tag{9.3}
+$$
+
+For $0\le t<1$,
+
+$$
+ t^2-\frac{t^4}{4}\le2(\sqrt{1+t^2}-1)\le t^2.
+\tag{9.4}
+$$
+
+Consequently, with $Q(G)=H(x)$,
+
+$$
+Q(G)-\frac N4\sum_{ui\in E}\left(\frac{k_u}{d_i}\right)^4
+ \le 2NE(G)\le Q(G).
+\tag{9.5}
+$$
+
+**Proof.** The neighborhood of a source is a nonempty subset of $[s]$,
+$\sum_Tx_T=1$, and
+$\mathbb E_xK=N^{-1}\sum_{u\in S}d_G(u)=m/N=a$. Its actual marginal at
+sink $i$ is $y_i=d_i/N>0$. Substitution into Definition 1.1 gives (9.3).
+The orientation condition gives $t=k_u/d_i<1$. The function
+$\sqrt{1+z}$ has the alternating Taylor bounds
+$1+z/2-z^2/8\le\sqrt{1+z}\le1+z/2$ for $0\le z\le1$;
+putting $z=t^2$ and multiplying by $2$ proves (9.4), and summing proves
+(9.5). Every quantity in (9.3) uses the degrees of this same graph. ∎
+
+**Lemma 9.3 (Integer balanced realization with one connecting source).** Put
+
+$$
+J=\left\lceil\frac{R^2+4}{2}\right\rceil,\qquad
+v_0=\min\left\{1,\frac L{\sqrt2}\right\},\qquad
+K_0=1+R+J+v_0^{-1}.
+\tag{9.6}
+$$
+
+There is an absolute numerical constant $c_0=2^{12}K_0^6$ with the following
+property. If $a$ is sufficiently large in terms of $L,R$, $L\le
+k=h/\sqrt a\le R$, and $(j,v)$ satisfies
+
+$$
+1\le j\le J,\qquad v_0\le v\le j,\qquad \ell=\lfloor v\rfloor,\qquad
+p=\frac v{a+v-1},\qquad\theta=v-\ell,
+\tag{9.7}
+$$
+
+then for every integer $N\ge c_0a^5$ there is a graph
+$G=G(a,h,N;j,v)$ in $\mathfrak G_N(a,h)$ with
+
+$$
+2NE(G)\le H_{j,v}(a,h)+c_0\left(a^{3/2}+\frac{a^6}{N}\right),
+\tag{9.8}
+$$
+
+where $H_{j,v}$ is the exact law energy in (3.4). The construction remains
+valid when $\theta=0$ or when one of the two core type masses is zero.
+
+**Proof.** Set $M=N-1$, $r=a+j$, and $n=h+1-j$. The target law of
+Proposition 3.2 has core sizes $a+\ell$ and $a+\ell+1$, and $n$ singleton
+types in the tail. Choose an integer $T$ nearest to
+$vM/(a+v-1)$ in the interval
+
+$$
+\frac{\ell M}{a+\ell-1}\le T\le
+\frac{(\ell+1)M}{a+\ell}.
+\tag{9.9}
+$$
+
+The real target lies in this interval. Its length is
+$M(a-1)/((a+\ell-1)(a+\ell))$, which is greater than $2$ under
+$N\ge c_0a^5$. Hence such an integer exists and differs from the target by at
+most one. Put
+
+$$
+Q=M-T,\qquad q_1=(a+\ell-1)T-\ell M,\qquad
+q_0=Q-q_1.
+\tag{9.10}
+$$
+
+The two inequalities in (9.9) are exactly $0\le q_1\le Q$, so $q_0,q_1$
+are nonnegative and $q_0+q_1+T=M$. Give $q_b$ sources a neighborhood of size
+$a+\ell+b$ in a core set $C$ of size $r$, where $b=0,1$. Give the $T$ tail
+sources singleton neighborhoods in $D=[s]\setminus C$, distributing them as
+$ t_d\in\{\lfloor T/n\rfloor,\lceil T/n\rceil\}$ with $\sum_dt_d=T$.
+The edge count of these $M$ sources is exactly
+
+$$
+(a+\ell)q_0+(a+\ell+1)q_1+T=aM,
+\tag{9.11}
+$$
+
+because (9.10) is equivalent to $\ell q_0+(\ell+1)q_1=(a-1)T$.
+
+For definiteness, order $C$ cyclically. For each of the two core sizes, assign
+successive sources successive cyclic intervals of that size. Thus each core
+sink receives, from the core sources of one size, either the lower or upper
+integer nearest to the corresponding uniform incidence count. This is a
+simple bipartite incidence construction: a source is a set, and repeated sets
+are carried by different source vertices, so no edge is repeated. The resulting
+core incidence degrees differ from the ideal values by at most $4a$ in total,
+while each is at least $M/3$ for all sufficiently large $a$; here we use
+$Q/M\ge1-2J/a$ and $r\le a+J$. The balanced singleton assignment gives
+
+$$
+ t_d\ge \frac{v_0M}{4a(h+1)}-1
+       \ge \frac{v_0M}{8(R+1)a^{3/2}}
+\tag{9.12}
+$$
+
+for large $a$. The same estimates hold if $q_0=0$ or $q_1=0$; the nonzero
+branch alone is cycled. This proves the integer boundary and zero-type claims.
+
+Choose one core source (there is one because $Q\ge M/2$) and delete from its
+neighborhood exactly $h+1$ core memberships. Since
+$h+1\le R\sqrt a+1<a/2$ for the chosen threshold on $a$, its neighborhood
+remains nonempty. Finally add one new source adjacent to all $s$ sinks. The
+edge count is
+
+$$
+[a(N-1)-(h+1)]+s=aN.
+\tag{9.13}
+$$
+
+The universal source makes the graph connected, and both sides remain
+independent. The deletion changes at most $h+1$ core sink degrees by one. By
+(9.12), every tail sink has degree at least
+$v_0M/(8(R+1)a^{3/2})$, and every core sink has degree at least $M/4$.
+Since $M\ge c_0a^5$, these degrees are greater than
+$s\le2a$ for large $a$. Therefore every sink degree is greater than every
+source degree, including the universal source of degree $s$; (9.1) holds and
+all vertices are actual sources or actual sinks.
+
+It remains to compare the energy on this one graph with the ideal law. Let
+$d_i^*=My_i^*$ denote the ideal sink degrees from Proposition 3.2. The cyclic
+rounding, the balanced tail counts, the deletion, and the universal source give
+
+$$
+|d_i-d_i^*|\le 8K_0^2a\quad(i\in[s]),\qquad
+\min_i d_i^*\ge\frac{v_0M}{4(R+1)a^{3/2}}.
+\tag{9.14}
+$$
+
+The integer choice (9.9) also gives
+
+$$
+\sum_{\text{core types}}\left|q_b/M-(1-p)
+       \begin{cases}1-\theta,&b=0,\\ \theta,&b=1\end{cases}\right|
+ +\sum_{d\in D}\left|t_d/M-p/n\right|
+ \le\frac{8K_0^2a}{M}.
+\tag{9.15}
+$$
+
+For positive $z$ and $|\delta|\le z/2$,
+$|(z+\delta)^{-2}-z^{-2}|\le6|\delta|z^{-3}$. Apply this with
+$z=d_i^*$ and (9.14), split the core and tail sums, and use
+$k_u\le s\le2a$, $n\le(R+1)\sqrt a$. The three resulting contributions are,
+respectively, bounded by
+
+$$
+64K_0^6\frac{a^6}{M},\qquad
+128K_0^6\frac{a^{11/2}}{M},\qquad
+64K_0^6\left(a^{1/2}+\frac{a^{11/2}}{M}\right).
+\tag{9.16}
+$$
+
+The first is the type-count rounding error, the second is the change of the
+actual sink denominators, and the third is the deleted memberships together
+with the universal source. These estimates are obtained by summing first over
+core incidences (where $d_i^*\ge M/5$) and then over tail incidences (where
+$d_i^*\ge v_0M/(4(R+1)a^{3/2})$); no independent marginal is introduced.
+Since $M\ge N/2$ and $a^{11/2}/M\le a^6/N$ after enlarging $c_0$, (9.16)
+gives
+
+$$
+N\sum_{ui\in E(G)}(k_u/d_i)^2
+ \le H_{j,v}(a,h)+2^{11}K_0^6\left(a^{3/2}+\frac{a^6}{N}\right).
+\tag{9.17}
+$$
+
+The upper inequality in (9.5) now proves (9.8). Notice that the upper bound
+uses the actual degrees of the constructed graph on every edge; it is not a
+bound for a comparison support. ∎
+
+**Theorem 9.4 (Uniform finite-budget graph interface).** Let
+$A_7=A_{L,R}$ and $C_7=C_{L,R}$ be the constants supplied by Theorem 7.2,
+and define the explicit quantities
+
+$$
+\Gamma_{L,R}=R^2+2+2\sqrt2\,R,\qquad
+K=1+R+J+v_0^{-1}+A_7+C_7+\Gamma_{L,R},
+\tag{9.18}
+$$
+
+$$
+A=\max\{A_7,\,64K^2,\,4C_7^2,\,16\Gamma_{L,R}^2\},\qquad
+D=2^{20}K^{12},\qquad C=2^{22}K^{12}.
+\tag{9.19}
+$$
+
+For every integer $a\ge A$, every integer $h\ge1$ with
+$L\le h/\sqrt a\le R$, and every integer
+
+$$
+N\ge\left\lceil Da^5\right\rceil,
+\tag{9.20}
+$$
+
+$\mathfrak G_N(a,h)$ is nonempty and
+
+$$
+\left|\frac{V_N(a,h)-a(a+1)^2}{a^2}
+       -U\!\left(\frac h{\sqrt a}\right)\right|
+ \le C\left(a^{-1/2}+\frac{a^4}{N}\right).
+\tag{9.21}
+$$
+
+The constants are deliberately nonminimal and depend only on $L,R$. In
+particular, (9.20) is one explicit sufficient polynomial condition; no claim
+is made about the least exponent or the least coefficient.
+
+**Proof.** Write $k=h/\sqrt a$ and $B_0=a(a+1)^2$. By (7.23)--(7.28), a
+minimizing pair $(j,v)$ for the scalar envelope satisfies (9.7), and the
+bounds in (7.27) give
+
+$$
+H_{j,v}(a,h)\le B_0+a^2U(k)+C_7a^{3/2}.\tag{9.22}
+$$
+
+Theorem 9.3 therefore supplies an actual graph, proving nonemptiness and
+
+$$
+V_N(a,h)\le B_0+a^2U(k)+2^{13}K^{12}
+       \left(a^{3/2}+\frac{a^6}{N}\right).\tag{9.23}
+$$
+
+For the lower bound, let $G\in\mathfrak G_N(a,h)$ and let $Q(G)$ be (9.3).
+Theorem 7.2 applied to its actual profile gives
+
+$$
+Q(G)\ge M(a,h)\ge B_0+a^2U(k)-C_7a^{3/2}.\tag{9.24}
+$$
+
+If $2NE(G)$ already exceeds the right side of (9.23), the desired lower
+bound follows. Otherwise (9.18)--(9.20) imply $2NE(G)\le4a^3$. Put
+
+$$
+\gamma=\frac2{\sqrt2+1}.
+$$
+
+Since $2g(t)\ge\gamma t^2$ for $0\le t<1$, (9.3) gives $2NE(G)\ge\gamma Q(G)$.
+If an edge had $t^2>a^{-3/2}$, then
+$2NE(G)>\gamma N a^{-3/2}/1\ge\gamma Da^{7/2}$, contradicting
+$2NE(G)\le4a^3$ once $a\ge A$. Hence every edge has $t^2\le a^{-3/2}$. By
+(9.5),
+
+$$
+2NE(G)\ge Q(G)-\frac{a^{-3/2}}4Q(G)
+ \ge Q(G)-2K^4a^{3/2}.\tag{9.25}
+$$
+
+Here $Q(G)\le\gamma^{-1}2NE(G)\le4\gamma^{-1}a^3$ was used in the last
+step. Combining (9.24) and (9.25), and enlarging $C$ as in (9.19), yields
+
+$$
+V_N(a,h)\ge B_0+a^2U(k)-C\left(a^{3/2}+\frac{a^6}{N}\right).\tag{9.26}
+$$
+
+Together with (9.23), division by $a^2$ proves (9.21). The lower estimate used
+all graphs in $\mathfrak G_N(a,h)$ through their own actual profiles and made
+no support, symmetry, minimum-marginal, or cardinality restriction. ∎
+
+**Corollary 9.5 (Common realized normalized limits).** Let
+$a_r,h_r,N_r$ be integers with $a_r\to\infty$,
+$h_r/\sqrt{a_r}\to\kappa\in(0,\infty)$, and
+$N_r\ge D_{L,R}a_r^5$ eventually for some $0<L<\kappa<R<\infty$. Then
+
+$$
+\frac{V_{N_r}(a_r,h_r)-a_r(a_r+1)^2}{a_r^2}\longrightarrow U(\kappa).\tag{9.27}
+$$
+
+Every quantity in (9.27) is taken from the same finite graph class at the same
+$(a_r,h_r,N_r)$; the conclusion does not pass through a fixed profile or a
+convenient divisibility subsequence. The universal source in the proof is only
+a connectivity device and contributes within the displayed error. The result
+also covers the endpoint cases $\theta=0$ and $\theta=1$ through the
+zero-mass convention of Proposition 3.2.
+
+This theorem resolves the square-root-surplus finite graph interface requested
+in Open problems 7.3 and 8.6. It does not determine finite equality cases,
+least thresholds, graph isomorphism classes, other sink counts, other edge
+budgets, moving intervals with $h/\sqrt a\to0$ or $\infty$, or global extrema
+outside the two-layer class. The normalization is the CDSO normalization of
+Definition 1.3 in *CDSO incidence moments and capacity phases* and of
+Albalahi--Das--Ali--Barman--Hamza, DOI 10.47443/dml.2025.176, p.109. No
+priority claim is made for the Zhao--Zhao article cited in Open problem 7.3;
+its full text was not used.
+
+## 追加锚（本行以下为增补区）
