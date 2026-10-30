@@ -42,7 +42,7 @@ private theorem a_two_far (q h : ℤ) (hq : 1≤q) (hh : 32*q≤h) :
   have hs2 : 2*h/2=h := by omega
   have ht8 : 8*q/8=q := by omega
   have hcon : constructor 4 (2*h) (8*q)=makePlan 11 .bga .q ⟨q,0,1⟩ ⟨0,v,0⟩ := by
-    simp (disch := omega) only [constructor, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, ht8]
+    simp (disch := omega) only [constructor, ite_true, ite_false, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, ht8] <;> rfl
   rw [hcon]
   refine ⟨?_,?_,?_,?_⟩
   · dsimp [Bounded,makePlan]; rw [ht2,hs2]; omega
@@ -74,7 +74,7 @@ private theorem c_two_far_s (q h : ℤ) (hq : 1≤q) (hh : 64*q≤h) :
   have hs2 : 4*h/2=2*h := by omega
   have hw : 25*(64*q)/64=25*q := by omega
   have hcon : constructor (64*q) (4*h) 4=makePlan 29 .bga .q ⟨1,y,0⟩ ⟨0,0,25*q⟩ := by
-    simp (disch := omega) only [constructor, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hw]
+    simp (disch := omega) only [constructor, ite_true, ite_false, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hw] <;> rfl
   rw [hcon]
   refine ⟨?_,?_,?_,?_⟩
   · dsimp [Bounded,makePlan]; rw [hr2,hs2]; omega
@@ -133,7 +133,7 @@ private theorem c_two_far_r (e : ℕ) (h : ℤ)
     dsimp [m,n,d]
     congr 2 <;> ring
   have hcon : constructor (64*q) (4*h) 4=makePlan 28 .agb .q ⟨1,h-1,m⟩ ⟨0,0,25*q⟩ := by
-    simp (disch := omega) only [constructor, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hmform,hsv,hw]
+    simp (disch := omega) only [constructor, ite_true, ite_false, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hmform,hsv,hw]
   change Certificate (64*q) (4*h) 4 (constructor (64*q) (4*h) 4)
   rw [hcon]
   refine ⟨?_,?_,?_,?_⟩
@@ -174,7 +174,7 @@ private theorem b_two_diagonal (q : ℤ) (hq : 1≤q) :
     apply Int.ediv_lt_of_lt_mul (by rw [hd]; omega)
     rw [hn,hd]; nlinarith [sq_nonneg q]
   have hcon : constructor (16*q) 4 (16*q)=makePlan 13 .bag .p ⟨0,0,8*q-1⟩ ⟨v,0,0⟩ := by
-    simp (disch := omega) only [constructor, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hr2]
+    simp (disch := omega) only [constructor, ite_true, ite_false, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hr2] <;> rfl
   rw [hcon]
   refine ⟨?_,?_,?_,?_⟩
   · dsimp [Bounded,makePlan]; rw [hr2]; omega
@@ -204,7 +204,7 @@ private theorem b_two_tall (h w : ℤ) (hh : 4≤h) (hw : 4*h≤w) :
     apply Int.ediv_lt_of_lt_mul (by rw [hd]; omega)
     rw [hn,hd]; nlinarith
   have hcon : constructor (2*h) 4 (2*w)=makePlan 12 .bag .q ⟨v,0,0⟩ ⟨0,0,h-1⟩ := by
-    simp (disch := omega) only [constructor, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hr2]
+    simp (disch := omega) only [constructor, ite_true, ite_false, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hr2] <;> rfl
   rw [hcon]
   refine ⟨?_,?_,?_,?_⟩
   · dsimp [Bounded,makePlan]; rw [hr2,ht2]; omega
@@ -252,7 +252,7 @@ private theorem b_two_next_arithmetic (h : ℤ) (hh : 4≤h) (hnodiv : ¬(5:ℤ)
       (show 0≤8*h-5*z-1 by omega),
       mul_nonneg (show 0≤h by omega) (show 0≤4-(8*h-5*z) by omega)]
   have hcon : constructor (2*h) 4 (4*h)=makePlan 12 .bag .q ⟨v,0,0⟩ ⟨0,0,h-1⟩ := by
-    simp (disch := omega) only [constructor, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hr2]
+    simp (disch := omega) only [constructor, ite_true, ite_false, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hr2] <;> rfl
   rw [hcon]
   refine ⟨?_,?_,?_,?_⟩
   · dsimp [Bounded,makePlan]; rw [hr2,ht2]; omega
@@ -315,7 +315,7 @@ private theorem b_two_far (h q : ℤ) (hq : 1≤q) (hh : 16*q≤h)
     dsimp [z,n,d]
     congr 1 <;> ring
   have hcon : constructor (2*h) 4 (8*q)=makePlan 16 .agb .t ⟨3*q,0,0⟩ ⟨0,0,z⟩ := by
-    simp (disch := omega) only [constructor, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hp,hzform]
+    simp (disch := omega) only [constructor, ite_true, ite_false, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hp,hzform]
   rw [hcon]
   refine ⟨?_,?_,?_,?_⟩
   · dsimp [Bounded,makePlan]; rw [hr2,ht2]; omega
@@ -336,8 +336,9 @@ private theorem a_two_ordered_small (q : ℤ) (hq : 2≤q) :
   have hv : (8*(8*q)-3*8-4)/(5*(8*q)+1)=1 := by
     apply (Int.ediv_eq_iff_of_pos (by omega)).mpr
     constructor <;> nlinarith
+  have hv' : (8*(8*q)-24-4)/(5*(8*q)+1)=1 := by simpa using hv
   have hcon : constructor 4 8 (8*q)=chooseEar 4 8 (8*q) 7 ⟨3*q,0,0⟩ ⟨0,1,1⟩ := by
-    simp [constructor,show 8*q≠4 by omega,show 8≤8*q by omega,hq',hv]
+    simp [constructor,show 8*q≠4 by omega,show 8≤8*q by omega,hq',hv']
     all_goals simp only [show q*3=3*q by ring]
   rw [hcon]
   unfold chooseEar
@@ -372,9 +373,13 @@ private theorem a_two_ordered (h q : ℤ) (hh : 8≤h) (hq : 1≤q) :
   have hs2 : 2*h/2=h := by omega
   have ht2 : 2*h*q/2=h*q := Int.ediv_eq_of_eq_mul_right (by norm_num) (by ring)
   have htq : 2*h*q/(2*h)=q := Int.ediv_eq_of_eq_mul_right (by omega) rfl
+  have hs4 : 2*h≠4 := by omega
+  have ht4 : 2*h*q≠4 := by nlinarith
+  have hst : 2*h≤2*h*q := by nlinarith
   have hcon : constructor 4 (2*h) (2*h*q)=chooseEar 4 (2*h) (2*h*q) 7
       ⟨q*(h-1),0,0⟩ ⟨0,v,1⟩ := by
-    simp (disch := nlinarith) only [constructor, ite_eq_left, ite_eq_right, and_true, true_and, true_or, or_true, hs2,htq]
+    simp only [constructor, hs4,ht4,hst, and_false,false_and,and_true,true_and,
+      ite_false,ite_true, hs2,htq] <;> rfl
   rw [hcon]
   have htail : n-d*v≤h*(2*h*q+1) := by
     have hc := mul_nonneg (show 0≤h-8 by omega) (show 0≤h*q by nlinarith)
@@ -384,8 +389,13 @@ private theorem a_two_ordered (h q : ℤ) (hh : 8≤h) (hq : 1≤q) :
   split_ifs with he
   all_goals
     refine ⟨?_,?_,?_,?_⟩
-    · dsimp [Bounded,makePlan]; rw [hs2,ht2]; repeat' constructor <;> nlinarith
-    · dsimp [Bounded,makePlan]; rw [hs2,ht2]; repeat' constructor <;> nlinarith
+    · dsimp [Bounded,makePlan]
+      rw [hs2,ht2]
+      exact ⟨mul_nonneg (by omega) (by omega), by nlinarith,
+        by omega, by omega, by omega, by omega⟩
+    · dsimp [Bounded,makePlan]
+      rw [hs2,ht2]
+      exact ⟨by omega, mul_pos (by omega) (by omega), hv0, hvc, by omega, by omega⟩
     · simp [Separate,makePlan]
     · dsimp [Seams,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
         Order.first,Order.middle,Order.last,atNegative]

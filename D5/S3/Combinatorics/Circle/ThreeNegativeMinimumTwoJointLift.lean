@@ -5,9 +5,10 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Complete physical mask construction and literal ear for minimum gap two. -/
+import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Circle.ThreeBitSource
-import all D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoMasks
-import all D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoFloors
+import D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoMasks
+import D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoFloors
 import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 /-! The minimum - gap - two base of the three - negative joint lift. -/
@@ -18,6 +19,18 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoJointLift
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open scoped BigOperators
+
+open private Mask Mask.u Mask.v Mask.w Negative Negative.alpha Negative.beta Negative.gamma
+  Order Ear Ear.p Ear.q Ear.t Plan.p Plan.t Plan.order Plan.ear atNegative Order.first Order.middle Order.last oldMass
+  newMass cap oldHeight newHeight Plan constructor Bounded Seams Certificate axes_zero axes_one
+  axes_four axes_five axes_two axes_three axes_six exceptionalTriples finite_rows a_two_twice
+  c_two_small_s_eight c_two_small_s_sixteen c_two_small_r_eight c_two_small_r_sixteen
+  c_two_small_r_thirtytwo a_two_four_times b_two_twice c_two_equal c_two_double_s
+  c_two_double_r
+  from D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoMasks
+open private a_two_far c_two_far_s c_two_far_r b_two_diagonal b_two_tall b_two_next b_two_far
+  a_two_ordered_small a_two_ordered
+  from D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoFloors
 
 private theorem paired_chains (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) :
     let r : ℤ := 2 ^ a
@@ -192,7 +205,7 @@ private theorem support_disjoint (a b c : ℕ) (p z : PhysicalMask a b c)
 private theorem order_labels (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c)
     (o : Order) :
     let n := atNegative (c - 1) (c + b - 1) (a + b + c - 1)
-    n o.first ≠ n o.middle ∧ n o.first ≠ n o.last ∧ n o.middle ≠ n o.last ∧ n o.first < a + b + c ∧ n o.middle < a + b + c ∧ n o.last < a + b + c := by
+    n (Order.first o) ≠ n (Order.middle o) ∧ n (Order.first o) ≠ n (Order.last o) ∧ n (Order.middle o) ≠ n (Order.last o) ∧ n (Order.first o) < a + b + c ∧ n (Order.middle o) < a + b + c ∧ n (Order.last o) < a + b + c := by
   cases o <;> simp only [Order.first, Order.middle, Order.last, atNegative] <;> omega
 
 private theorem assemble (k n1 n2 n3 : ℕ) (P T : Finset ℕ)
@@ -280,33 +293,33 @@ private theorem realize (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ 
   change g (c + b - 1) = -((2 * N + 1) - (2 * L - s - 1)) / 2 at hgB
   change g (k - 1) = -((2 * N + 1) - u) / 2 at hgG
   change g k = u at hfresh
-  have hHA : 2 * H .alpha = N - B := by
+  have hHA : 2 * H Negative.alpha = N - B := by
     change 2 * (C - (r + 1) * (t / 2)) = N - B
     rw [hN]
     dsimp [B]
     have he : t = 2 * (t / 2) := by omega
     nlinarith only [congrArg (fun z : ℤ => (r + 1) * z) he]
-  have hHB : 2 * H .beta = N - L := by
+  have hHB : 2 * H Negative.beta = N - L := by
     change 2 * (C - (t + 1) * (s / 2)) = N - L
     rw [hN]
     dsimp [L]
     have he : s = 2 * (s / 2) := by omega
     nlinarith only [congrArg (fun z : ℤ => (t + 1) * z) he]
-  have hHG : 2 * H .gamma = N - u := by
+  have hHG : 2 * H Negative.gamma = N - u := by
     change 2 * (C - (s + 1) * (r / 2)) = N - u
     rw [hN]
     dsimp [u]
     have he : r = 2 * (r / 2) := by omega
     nlinarith only [congrArg (fun z : ℤ => (s + 1) * z) he]
-  have hKA : 2 * K .alpha = (2 * N + 1) - (2 * B - 1) := by
-    change 2 * (2 * H .alpha + 1) = _
+  have hKA : 2 * K Negative.alpha = (2 * N + 1) - (2 * B - 1) := by
+    change 2 * (2 * H Negative.alpha + 1) = _
     omega
-  have hKB : 2 * K .beta = (2 * N + 1) - (2 * L - s - 1) := by
-    change 2 * (2 * H .beta + (s / 2 + 1)) = _
+  have hKB : 2 * K Negative.beta = (2 * N + 1) - (2 * L - s - 1) := by
+    change 2 * (2 * H Negative.beta + (s / 2 + 1)) = _
     have he : s = 2 * (s / 2) := by omega
     omega
-  have hKG : 2 * K .gamma = (2 * N + 1) - u := by
-    change 2 * (2 * H .gamma + ((s + 1) * (r / 2) + 1)) = _
+  have hKG : 2 * K Negative.gamma = (2 * N + 1) - u := by
+    change 2 * (2 * H Negative.gamma + ((s + 1) * (r / 2) + 1)) = _
     have he : 2 * ((s + 1) * (r / 2)) = u - 1 := by
       dsimp [u]
       have he : r = 2 * (r / 2) := by omega
@@ -326,14 +339,14 @@ private theorem realize (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ 
     rw [hgneg] at hbnd
     have hnonneg : 0 ≤ K d := by
       cases d
-      · change 0 ≤ 2 * H .alpha + 1
-        have := (hH .alpha).1
+      · change 0 ≤ 2 * H Negative.alpha + 1
+        have := (hH Negative.alpha).1
         omega
-      · change 0 ≤ 2 * H .beta + (s / 2 + 1)
-        have := (hH .beta).1
+      · change 0 ≤ 2 * H Negative.beta + (s / 2 + 1)
+        have := (hH Negative.beta).1
         omega
-      · change 0 ≤ 2 * H .gamma + ((s + 1) * (r / 2) + 1)
-        have := (hH .gamma).1
+      · change 0 ≤ 2 * H Negative.gamma + ((s + 1) * (r / 2) + 1)
+        have := (hH Negative.gamma).1
         have : 0 ≤ (s + 1) * (r / 2) := mul_nonneg (by omega) (by omega)
         omega
     exact ⟨hnonneg, by omega⟩
@@ -354,8 +367,8 @@ private theorem realize (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ 
         rw [hie] at hf hg
         rw [hf,hg]; constructor <;> positivity
   obtain ⟨hpB,htB,hsep,hseams⟩ := cert
-  change Bounded r s t plan.p at hpB
-  change Bounded r s t plan.t at htB
+  change Bounded r s t (Plan.p plan) at hpB
+  change Bounded r s t (Plan.t plan) at htB
   have convertU (m : ℤ) (hm0 : 0 ≤ m) (hm : m < t / 2) : m.toNat < 2 ^ (c - 1) := by
     have he : (m.toNat : ℤ) = m := Int.toNat_of_nonneg hm0
     rw [hthalf] at hm
@@ -369,33 +382,33 @@ private theorem realize (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ 
     rw [hrhalf] at hm
     exact_mod_cast (show (m.toNat : ℤ) < (2 : ℤ) ^ (a - 1) by omega)
   let pm : PhysicalMask a b c :=
-    (⟨plan.p.u.toNat,convertU _ hpB.1 hpB.2.1⟩,
-     ⟨plan.p.v.toNat,convertV _ hpB.2.2.1 hpB.2.2.2.1⟩,
-     ⟨plan.p.w.toNat,convertW _ hpB.2.2.2.2.1 hpB.2.2.2.2.2⟩)
+    (⟨(Mask.u (Plan.p plan)).toNat,convertU _ hpB.1 hpB.2.1⟩,
+     ⟨(Mask.v (Plan.p plan)).toNat,convertV _ hpB.2.2.1 hpB.2.2.2.1⟩,
+     ⟨(Mask.w (Plan.p plan)).toNat,convertW _ hpB.2.2.2.2.1 hpB.2.2.2.2.2⟩)
   let tm : PhysicalMask a b c :=
-    (⟨plan.t.u.toNat,convertU _ htB.1 htB.2.1⟩,
-     ⟨plan.t.v.toNat,convertV _ htB.2.2.1 htB.2.2.2.1⟩,
-     ⟨plan.t.w.toNat,convertW _ htB.2.2.2.2.1 htB.2.2.2.2.2⟩)
+    (⟨(Mask.u (Plan.t plan)).toNat,convertU _ htB.1 htB.2.1⟩,
+     ⟨(Mask.v (Plan.t plan)).toNat,convertV _ htB.2.2.1 htB.2.2.2.1⟩,
+     ⟨(Mask.w (Plan.t plan)).toNat,convertW _ htB.2.2.2.2.1 htB.2.2.2.2.2⟩)
   let PS := support a b c pm
   let TS := support a b c tm
-  let QS := Finset.range k \ (PS∪TS∪{n plan.order.first,n plan.order.last,n plan.order.middle})
+  let QS := Finset.range k \ (PS∪TS∪{n (Order.first (Plan.order plan)),n (Order.last (Plan.order plan)),n (Order.middle (Plan.order plan))})
   let P := PS.toList
   let Q := QS.toList
   let T := TS.toList
-  let word := P ++ n plan.order.first :: Q ++ n plan.order.middle :: T ++ [n plan.order.last]
+  let word := P ++ n (Order.first (Plan.order plan)) :: Q ++ n (Order.middle (Plan.order plan)) :: T ++ [n (Order.last (Plan.order plan))]
   have hgood (m : PhysicalMask a b c) (i : ℕ) (hi : i ∈ support a b c m) :
-      i < k ∧ i ≠ n plan.order.first ∧ i ≠ n plan.order.middle ∧ i ≠ n plan.order.last := by
+      i < k ∧ i ≠ n (Order.first (Plan.order plan)) ∧ i ≠ n (Order.middle (Plan.order plan)) ∧ i ≠ n (Order.last (Plan.order plan)) := by
     have h := support_good a b c ha hb hc m i hi
-    cases plan.order <;> simp only [n,Order.first,Order.middle,Order.last,atNegative,k] <;> omega
+    cases (Plan.order plan) <;> simp only [n,Order.first,Order.middle,Order.last,atNegative,k] <;> omega
   have hperm : word.Perm (List.range k) := assemble k _ _ _ PS TS
     (hgood pm) (hgood tm) (support_disjoint a b c pm tm hsep.1 hsep.2.1 hsep.2.2)
-    (order_labels a b c ha hb hc plan.order)
+    (order_labels a b c ha hb hc (Plan.order plan))
   have hQpos (i : ℕ) (hi : i ∈ Q) : 0 ≤ f i ∧ 0 ≤ g i := by
     have hq := Finset.mem_sdiff.mp (Finset.mem_toList.mp hi)
-    have hnot : i∉{n plan.order.first,n plan.order.last,n plan.order.middle} :=
+    have hnot : i∉{n (Order.first (Plan.order plan)),n (Order.last (Plan.order plan)),n (Order.middle (Plan.order plan))} :=
       fun hh => hq.2 (Finset.mem_union_right _ hh)
     have hn : i ≠ c - 1 ∧ i ≠ c + b - 1 ∧ i ≠ k - 1 := by
-      cases he : plan.order <;> simp only [he,n,Order.first,Order.middle,Order.last,atNegative,
+      cases he : (Plan.order plan) <;> simp only [he,n,Order.first,Order.middle,Order.last,atNegative,
         Finset.mem_insert,Finset.mem_singleton,not_or] at hnot <;> omega
     exact hpositive i (Finset.mem_range.mp hq.1) hn.1 hn.2.1 hn.2.2
   have hPpos (i : ℕ) (hi : i ∈ P) : 0 ≤ f i ∧ 0 ≤ g i := by
@@ -405,7 +418,7 @@ private theorem realize (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ 
     have hh := support_good a b c ha hb hc tm i (Finset.mem_toList.mp hi)
     exact hpositive i hh.1 hh.2.1 hh.2.2.1 hh.2.2.2
   have sums (m : Mask) (mB : Bounded r s t m) (fm : PhysicalMask a b c)
-      (he : fm.1.val = m.u.toNat ∧ fm.2.1.val = m.v.toNat ∧ fm.2.2.val = m.w.toNat) :
+      (he : fm.1.val = (Mask.u m).toNat ∧ fm.2.1.val = (Mask.v m).toNat ∧ fm.2.2.val = (Mask.w m).toNat) :
       ((support a b c fm).toList.map f).sum = oldMass r s t m ∧ ((support a b c fm).toList.map g).sum = newMass r s t m := by
     have ho := support_sum a b c fm f u B L
       (fun i hi => (hU i hi).1) (fun i hi => (hV i hi).1) (fun i hi => (hW i hi).1)
@@ -415,8 +428,8 @@ private theorem realize (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ 
       Int.toNat_of_nonneg mB.2.2.1,Int.toNat_of_nonneg mB.2.2.2.2.1] at ho hn
     exact ⟨by rw [ho]; dsimp [oldMass,u,B,L]; ring,
       by rw [hn]; dsimp [newMass,u,B,L]; ring⟩
-  have hPs := sums plan.p hpB pm ⟨rfl,rfl,rfl⟩
-  have hTs := sums plan.t htB tm ⟨rfl,rfl,rfl⟩
+  have hPs := sums (Plan.p plan) hpB pm ⟨rfl,rfl,rfl⟩
+  have hTs := sums (Plan.t plan) htB tm ⟨rfl,rfl,rfl⟩
   change (P.map f).sum = _ ∧ (P.map g).sum = _ at hPs
   change (T.map f).sum = _ ∧ (T.map g).sum = _ at hTs
   have hseed : ((1 + 2 ^ a + 2 ^ (a + b) : ℕ) : ℤ) = u := by push_cast; dsimp [u,r,s]; rw [pow_add]
@@ -432,57 +445,57 @@ private theorem realize (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ 
       (fun i hi => (hPpos i hi).1) (fun i hi => (hQpos i hi).1) (fun i hi => (hTpos i hi).1)
       (by rw [hPs.1]; exact ⟨hseams.1,hseams.2.1⟩)
       (by rw [hTs.1]; exact ⟨hseams.2.2.1,hseams.2.2.2.1⟩) hz
-  let PN := if plan.ear = .p then k::P else P
-  let QN := if plan.ear = .q then k::Q else Q
-  let TN := if plan.ear = .t then k::T else T
-  let plus := PN ++ n plan.order.first :: QN ++ n plan.order.middle :: TN ++ [n plan.order.last]
+  let PN := if (Plan.ear plan) = Ear.p then k::P else P
+  let QN := if (Plan.ear plan) = Ear.q then k::Q else Q
+  let TN := if (Plan.ear plan) = Ear.t then k::T else T
+  let plus := PN ++ n (Order.first (Plan.order plan)) :: QN ++ n (Order.middle (Plan.order plan)) :: TN ++ [n (Order.last (Plan.order plan))]
   have hplus : plus.Perm (List.range (k + 1)) := by
     have hp : plus.Perm (word ++ [k]) := by
-      cases he : plan.ear <;> simp only [plus,word,PN,QN,TN,he,ite_true,ite_false,
+      cases he : (Plan.ear plan) <;> simp only [plus,word,PN,QN,TN,he,ite_true,ite_false,
         reduceCtorEq,List.cons_append] <;>
         apply Multiset.coe_eq_coe.mp <;>
         simp only [← Multiset.coe_add,← Multiset.cons_coe, ← Multiset.singleton_add,Multiset.coe_singleton] <;> ac_rfl
     exact hp.trans (by simpa only [List.range_succ] using hperm.append_right [k])
   have hnpos (S : List ℕ) (e : Ear) (hS : ∀ i ∈ S,0 ≤ g i) :
-      ∀ i ∈ (if plan.ear = e then k::S else S),0 ≤ g i := by
+      ∀ i ∈ (if (Plan.ear plan) = e then k::S else S),0 ≤ g i := by
     split_ifs
     · intro i hi
       rcases List.mem_cons.mp hi with rfl|hi
       · rw [hfresh]; omega
       · exact hS i hi
     · exact hS
-  have hPN : (PN.map g).sum = newMass r s t plan.p + (if plan.ear = .p then u else 0) := by
+  have hPN : (PN.map g).sum = newMass r s t (Plan.p plan) + (if (Plan.ear plan) = Ear.p then u else 0) := by
     dsimp only [PN]; split_ifs <;> simp_all only [List.map_cons,List.sum_cons,hfresh,hPs.2] <;> ring
-  have hTN : (TN.map g).sum = newMass r s t plan.t + (if plan.ear = .t then u else 0) := by
+  have hTN : (TN.map g).sum = newMass r s t (Plan.t plan) + (if (Plan.ear plan) = Ear.t then u else 0) := by
     dsimp only [TN]; split_ifs <;> simp_all only [List.map_cons,List.sum_cons,hfresh,hTs.2] <;> ring
   have hnew : InStrip g N 0 plus :=
     ThreeNegativeEqualOuterJointLift.schedule_from_tail g (List.range (k + 1)) PN QN TN _ _ _ _ _ _ N
       hplus (hgneg _) (hgneg _) (hgneg _) (hK _).1 (hK _).1 (hK _)
-      (hnpos P .p (fun i hi => (hPpos i hi).2))
-      (hnpos Q .q (fun i hi => (hQpos i hi).2))
-      (hnpos T .t (fun i hi => (hTpos i hi).2))
-      (by rw [hPN]; change K plan.order.first ≤ _ ∧ _ ≤ N; rw [hN]; exact ⟨hseams.2.2.2.2.1,hseams.2.2.2.2.2.1⟩)
+      (hnpos P Ear.p (fun i hi => (hPpos i hi).2))
+      (hnpos Q Ear.q (fun i hi => (hQpos i hi).2))
+      (hnpos T Ear.t (fun i hi => (hTpos i hi).2))
+      (by rw [hPN]; change K (Order.first (Plan.order plan)) ≤ _ ∧ _ ≤ N; rw [hN]; exact ⟨hseams.2.2.2.2.1,hseams.2.2.2.2.2.1⟩)
       (by rw [hTN]; rw [hN]; exact ⟨hseams.2.2.2.2.2.2.1,hseams.2.2.2.2.2.2.2⟩) hzn
-  let cut := match plan.ear with
-    | .p => 0 | .q => P.length + 1 | .t => P.length + 1 + Q.length + 1
+  let cut := match (Plan.ear plan) with
+    | Ear.p => 0 | Ear.q => P.length + 1 | Ear.t => P.length + 1 + Q.length + 1
   have hcut : cut ≤ k := by
     have hl := hperm.length_eq
     simp only [word,List.length_append,List.length_cons,List.length_singleton,List.length_range] at hl
-    cases he : plan.ear <;> simp only [cut,he] <;> omega
+    cases he : (Plan.ear plan) <;> simp only [cut,he] <;> omega
   have hear : earWord k (word.map (ThreeNegativeEqualOuterJointLift.label k (by dsimp [k]; omega))) cut =
       plus.map (ThreeNegativeEqualOuterJointLift.label (k + 1) (by dsimp [k]; omega)) := by
-    cases he : plan.ear
+    cases he : (Plan.ear plan)
     · simpa only [cut,he,plus,PN,QN,TN,word,ite_true,ite_false,reduceCtorEq,List.nil_append,List.cons_append,List.append_assoc] using
         ThreeNegativeEqualOuterJointLift.marked_word k 0 (by dsimp [k]; omega) [] word rfl hperm
-    · let pre := P ++ [n plan.order.first]
-      let post := Q ++ n plan.order.middle::T ++ [n plan.order.last]
+    · let pre := P ++ [n (Order.first (Plan.order plan))]
+      let post := Q ++ n (Order.middle (Plan.order plan))::T ++ [n (Order.last (Plan.order plan))]
       have hw : pre ++ post = word := by simp [pre,post,word,List.append_assoc]
       simpa only [cut,he,plus,PN,QN,TN,ite_true,ite_false,reduceCtorEq,pre,post,word,
         List.append_assoc,List.singleton_append,List.cons_append,List.nil_append] using
         ThreeNegativeEqualOuterJointLift.marked_word k (P.length + 1) (by dsimp [k]; omega)
           pre post (by simp [pre]) (by rw [hw]; exact hperm)
-    · let pre := P ++ n plan.order.first::Q ++ [n plan.order.middle]
-      let post := T ++ [n plan.order.last]
+    · let pre := P ++ n (Order.first (Plan.order plan))::Q ++ [n (Order.middle (Plan.order plan))]
+      let post := T ++ [n (Order.last (Plan.order plan))]
       have hw : pre ++ post = word := by simp [pre,post,word,List.append_assoc]
       simpa only [cut,he,plus,PN,QN,TN,ite_true,ite_false,reduceCtorEq,pre,post,word,
         List.append_assoc,List.singleton_append,List.cons_append,List.nil_append] using
