@@ -253,9 +253,11 @@ def checkCycle (n : ℕ) (c : List (List ℕ)) : Bool :=
 /-- Successful arbitrary-input checking reconstructs the original probability graph. -/
 theorem checkCycle_sound (n : ℕ) (hn : 3 ≤ n) (c : List (List ℕ))
     (h : checkCycle n c = true) : HasCycle n c.length := by
-  simp only [checkCycle, Bool.and_eq_true, Bool.not_eq_true, List.isEmpty_eq_false,
+  simp only [checkCycle, Bool.and_eq_true,
     beq_iff_eq, List.all_eq_true] at h
-  have hne : c ≠ [] := h.1.1.1
+  have hne : c ≠ [] := by
+    intro he
+    simp [he] at h
   have hnd : c.Nodup := List.nodup_iff_length_dedup_eq.mpr h.1.1.2
   have hvalid (d : List ℕ) (hd : d ∈ c) : IsDie n d := checkDie_sound n d (h.1.2 d hd)
   have hhead : c.head! ∈ c := by cases c with | nil => contradiction | cons a l => simp
