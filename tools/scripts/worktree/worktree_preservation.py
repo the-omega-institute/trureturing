@@ -98,11 +98,18 @@ def reject_lake_local_content(path, target, package):
     try:
         status = git(path, "status", "--porcelain=v1", "-z", "--untracked-files=all",
                      "--ignore-submodules=none").stdout
-        manifest_commit = git(path, "rev-parse", "--verify", revision + "^{commit}").stdout.strip()
+        manifest_type = git(path, "cat-file", "--batch-check=%(objecttype)",
+                            input=(revision + "\n").encode("ascii")).stdout.strip()
+        if manifest_type == b"commit":
+            manifest_commits = [revision]
+        elif manifest_type == revision.encode("ascii") + b" missing":
+            manifest_commits = []
+        else:
+            raise Refused("manifest_revision_object")
         # A metacharacter keeps Git from appending /* to the exact stash ref.
         local_history = git(path, "rev-list", "--max-count=1", "HEAD", "--branches",
                             "--glob=refs/stas[h]", "--not", "--remotes", "--tags",
-                            manifest_commit.decode("ascii"), "--").stdout
+                            *manifest_commits, "--").stdout
     except (Refused, OSError, subprocess.SubprocessError, UnicodeError) as error:
         raise Refused("lake_dependency_check_failed:" + relative + ":" + str(error)) from error
     if status:
