@@ -25,7 +25,7 @@ private theorem base_source (d : ℕ) (hd : 2 ≤ d) (i : Fin d) :
     actualSource d 1 i = baseValue d i.val := by
   obtain ⟨hN, hodd⟩ := TwoRunSource.modulus_positive_odd d (by omega)
   have hpow : (2 : ℤ) ^ d = 2 * (2 : ℤ) ^ (d - 1) := by
-    rw [show d = (d - 1) + 1 by omega, pow_succ]
+    conv_lhs => rw [show d = (d - 1) + 1 by omega, pow_succ]
     ring
   have hhalf : modulus d / 2 = (2 : ℤ) ^ (d - 1) - 1 := by
     unfold modulus
@@ -43,7 +43,7 @@ private theorem base_source (d : ℕ) (hd : 2 ≤ d) (i : Fin d) :
       have hle : (2 : ℤ) ^ i.val ≤ (2 : ℤ) ^ (d - 2) :=
         pow_le_pow_right₀ (by norm_num) hi'
       have hstep : (2 : ℤ) ^ (d - 1) = 2 * (2 : ℤ) ^ (d - 2) := by
-        rw [show d - 1 = (d - 2) + 1 by omega, pow_succ]
+        conv_lhs => rw [show d - 1 = (d - 2) + 1 by omega, pow_succ]
         ring
       constructor <;> omega
   · rw [centered_mod]
@@ -69,13 +69,9 @@ private theorem quotient_bounds (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) :
     0 < k ∧ t < 2 ^ (k - 1) ∧ t ≤ 2 ^ (k - 1) - 1 := by
   dsimp only
   have hk : 2 ≤ d * m := by nlinarith
-  have hden : (3 : ℕ) ≤ 2 ^ d - 1 := by
-    have hp : 4 ≤ (2 : ℕ) ^ d := by
-      exact pow_le_pow_right₀ (by decide) hd
-    omega
   have hrel := quotient_relation d m hd hm
   have hpow : (2 : ℤ) ^ (d * m) = 2 * (2 : ℤ) ^ (d * m - 1) := by
-    rw [show d * m = (d * m - 1) + 1 by omega, pow_succ]
+    conv_lhs => rw [show d * m = (d * m - 1) + 1 by omega, pow_succ]
     ring
   have hT : 0 ≤ (((2 ^ (d * m) - 1) / (2 ^ d - 1) : ℕ) : ℤ) :=
     Int.natCast_nonneg _
@@ -83,7 +79,10 @@ private theorem quotient_bounds (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) :
   have hltZ : (((2 ^ (d * m) - 1) / (2 ^ d - 1) : ℕ) : ℤ) <
       (2 : ℤ) ^ (d * m - 1) := by
     rw [hpow] at hrel
-    have hdZ : (3 : ℤ) ≤ (2 : ℤ) ^ d - 1 := by exact_mod_cast hden
+    have hdZ : (3 : ℤ) ≤ (2 : ℤ) ^ d - 1 := by
+      have hp : (4 : ℤ) ≤ (2 : ℤ)^d :=
+        pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hd
+      omega
     have hmul := mul_le_mul_of_nonneg_right hdZ hT
     nlinarith
   have hlt : (2 ^ (d * m) - 1) / (2 ^ d - 1) < 2 ^ (d * m - 1) := by
@@ -103,7 +102,7 @@ private theorem old_source (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m)
     obtain ⟨_, hh, _⟩ := quotient_bounds d m hd hm
     have hp : 1 ≤ (2 : ℕ) ^ (d * m - 1) := Nat.one_le_two_pow
     have hpow : 2 ^ (d * m) = 2 * 2 ^ (d * m - 1) := by
-      rw [show d * m = (d * m - 1) + 1 by omega, pow_succ]
+      conv_lhs => rw [show d * m = (d * m - 1) + 1 by omega, pow_succ]
     rw [Nat.mul_comm m d]
     omega
   have hquot' : multiplier d m = (2 ^ (d * m) - 1) / (2 ^ d - 1) := by
@@ -134,6 +133,8 @@ private theorem prefix_formula (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) (n : �
   dsimp only
   let k := d * m
   let t := (2 ^ (d * m) - 1) / (2 ^ d - 1)
+  change (((List.finRange k).take n).map (actualSource k t)).sum =
+    if n ≤ k then (t : ℤ)*((2 : ℤ)^(n % d)-1) else 0
   induction n with
   | zero => simp
   | succ n ih =>
@@ -169,7 +170,12 @@ private theorem prefix_bounds (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) (n : ℕ
   dsimp only
   let k := d * m
   let t := (2 ^ (d * m) - 1) / (2 ^ d - 1)
-  rw [prefix_formula d m hd hm n]
+  change 0 ≤ (((List.finRange k).take n).map (actualSource k t)).sum ∧
+    2 * (((List.finRange k).take n).map (actualSource k t)).sum + (t : ℤ) ≤ modulus k
+  have hf := prefix_formula d m hd hm n
+  change (((List.finRange k).take n).map (actualSource k t)).sum =
+    (if n ≤ k then (t : ℤ) * ((2 : ℤ) ^ (n % d) - 1) else 0) at hf
+  rw [hf]
   by_cases hn : n ≤ k
   · simp only [if_pos hn]
     have hj : n % d ≤ d - 1 := Nat.le_pred_of_lt (Nat.mod_lt _ (by omega))
@@ -178,7 +184,7 @@ private theorem prefix_bounds (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) (n : ℕ
     have hrel := quotient_relation d m hd hm
     change ((2 : ℤ)^d-1)*(t : ℤ) = (2 : ℤ)^k-1 at hrel
     have hpow : (2 : ℤ) ^ d = 2 * (2 : ℤ) ^ (d - 1) := by
-      rw [show d = (d - 1) + 1 by omega, pow_succ]
+      conv_lhs => rw [show d = (d - 1) + 1 by omega, pow_succ]
       ring
     have ht0 : 0 ≤ (t : ℤ) := Int.natCast_nonneg _
     constructor
@@ -294,7 +300,7 @@ public theorem periodic_first_ear_joint_lift (d m : ℕ) (hd : 2 ≤ d) (hm : 1 
   have hdigits := fun i : Fin k => digit_data k t hk (by exact hq.2.2) i
   have hnew : OriginalOrder (k + 1) (2 * t) (earWord k (List.finRange k) 0) := by
     refine ⟨hnewperm, ?_, ?_⟩
-    · rw [hnewperm.map (actualSource (k + 1) (2 * t)).sum_eq]
+    · rw [(hnewperm.map (actualSource (k + 1) (2 * t))).sum_eq]
       exact source_sum (k+1) (2*t) (by omega)
     · intro n
       cases n with
