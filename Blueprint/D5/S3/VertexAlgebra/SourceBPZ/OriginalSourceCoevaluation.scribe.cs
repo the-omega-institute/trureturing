@@ -34,7 +34,7 @@ internal sealed class OriginalSourceCoevaluationDocument : IScribeDocumentDefini
         ), []));
 
     private static DocumentBlock Law(string name, string title, string prose) =>
-        Describe.Lean(DescribeId.Create("original-source-coevaluation-" + name.Replace('_', '-')),
+        Describe.Lean(DescribeId.Create("original-source-coevaluation-" + name.ToLowerInvariant().Replace('_', '-')),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 }
