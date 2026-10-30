@@ -14,8 +14,8 @@ internal sealed class TribonacciRauzyFractalDocument : IScribeDocumentDefinition
                     "The construction starts from the existing bounded internal window at a "
                     + "non-Perron Tribonacci root. It proves nonemptiness, compactness, an "
                     + "explicit closed-ball bound, and invariance of the closure under the "
-                    + "0, 10, and 110 prefix maps. Exact attractor equality is left open for "
-                    + "a later unit.")),
+                    + "0, 10, and 110 prefix maps. The finite-word split and compactness "
+                    + "argument then establish exact equality with the three-image union.")),
                 Describe.Lean(
                     DescribeId.Create("tribonacci-rauzy-closure"),
                     DeclarationHandle.Create("D5/S0/Tower/Tribonacci/RauzyFractal.rauzyFractal"),
@@ -55,7 +55,18 @@ internal sealed class TribonacciRauzyFractalDocument : IScribeDocumentDefinition
                     AssessedProvenance.FromRepo(),
                     Blocks(Paragraph(Text(
                         "Admissibility transport is proved for each prefix, and continuity "
-                        + "transports the inclusions through closure."))), DescribeRole.Theorem)),
+                        + "transports the inclusions through closure."))), DescribeRole.Theorem),
+                Describe.Lean(
+                    DescribeId.Create("tribonacci-rauzy-attractor-equality"),
+                    DeclarationHandle.Create("D5/S0/Tower/Tribonacci/RauzyFractal.rauzyFractal_eq_prefix_union"),
+                    H("Exact attractor equality"), StatementSource.WithoutFormula(),
+                    AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text(
+                        "Every finite admissible name begins with 0, 10, or 110, including "
+                        + "the short layers by explicit representatives. Compactness of the "
+                        + "three image sets lets this finite decomposition pass to the Rauzy "
+                        + "closure, yielding equality with the prefix-image union."))),
+                    DescribeRole.Theorem)),
             [
                 DocumentEdge.Dependency.Create(
                     GidRef.Create("D5/S0/Tower/Tribonacci/ModelSet")),

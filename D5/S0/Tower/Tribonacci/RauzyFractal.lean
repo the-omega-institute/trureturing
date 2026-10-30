@@ -57,6 +57,34 @@ private theorem conjugateCoordinate_cons
     ring
   · simp [htail]
 
+private theorem conjugateCoordinate_head_tail
+    (Q : Nat) (z : Complex)
+    (name : TribonacciName (Q + 1)) :
+    conjugateCoordinate z name =
+      (if name.1 0 then 1 else 0) +
+        z * conjugateCoordinate z
+          ⟨Fin.tail name.1, admissible_tail Q name.2⟩ := by
+  let tail : TribonacciName Q :=
+    ⟨Fin.tail name.1, admissible_tail Q name.2⟩
+  have hname : Fin.cons (name.1 0) tail.1 = name.1 := by
+    dsimp [tail]
+    exact Fin.cons_self_tail name.1
+  have hcons : TribonacciAdmissible (Q + 1) (Fin.cons (name.1 0) tail.1) := by
+    rw [hname]
+    exact name.2
+  have hcoord := conjugateCoordinate_cons Q z (name.1 0) tail hcons
+  have hsub :
+      (⟨Fin.cons (name.1 0) tail.1, hcons⟩ : TribonacciName (Q + 1)) = name := by
+    apply Subtype.ext
+    exact hname
+  rw [hsub] at hcoord
+  simpa [tail] using hcoord
+
+private theorem zero_mem_internal_window (z : Complex) :
+    0 ∈ tribonacciInternalWindow z := by
+  refine ⟨0, ⟨fun i => Fin.elim0 i, trivial⟩, ?_⟩
+  simp [conjugateCoordinate]
+
 private theorem zero_prefix_mem_window {z : Complex} (w : Complex)
     (hw : w ∈ tribonacciInternalWindow z) :
     zeroPrefixMap z w ∈ tribonacciInternalWindow z := by
@@ -100,6 +128,118 @@ private theorem one_one_zero_prefix_mem_window {z : Complex} (w : Complex)
     conjugateCoordinate_cons Q z false name]
   simp [oneOneZeroPrefixMap]
   ring_nf
+
+private theorem tribonacciInternalWindow_subset_prefix_union (z : Complex) :
+    tribonacciInternalWindow z ⊆
+      zeroPrefixMap z '' tribonacciInternalWindow z ∪
+        oneZeroPrefixMap z '' tribonacciInternalWindow z ∪
+          oneOneZeroPrefixMap z '' tribonacciInternalWindow z := by
+  intro w hw
+  obtain ⟨Q, name, rfl⟩ := hw
+  match Q with
+  | 0 =>
+      left
+      refine ⟨0, zero_mem_internal_window z, ?_⟩
+      simp [zeroPrefixMap, conjugateCoordinate]
+  | 1 =>
+      cases hd : name.1 0 with
+      | false =>
+          left
+          refine ⟨0, zero_mem_internal_window z, ?_⟩
+          simp [zeroPrefixMap, conjugateCoordinate, hd]
+      | true =>
+          right
+          left
+          refine ⟨0, zero_mem_internal_window z, ?_⟩
+          simp [oneZeroPrefixMap, conjugateCoordinate, hd]
+  | 2 =>
+      cases h0 : name.1 0 with
+      | false =>
+          let tail : TribonacciName 1 :=
+            ⟨Fin.tail name.1, admissible_tail 1 name.2⟩
+          left
+          refine ⟨conjugateCoordinate z tail, ⟨1, tail, rfl⟩, ?_⟩
+          have hcoord := conjugateCoordinate_head_tail 1 z name
+          simpa [tail, zeroPrefixMap, h0] using hcoord.symm
+      | true =>
+          cases h1 : name.1 1 with
+          | false =>
+              right
+              left
+              refine ⟨0, zero_mem_internal_window z, ?_⟩
+              simp [oneZeroPrefixMap, conjugateCoordinate, h0, h1]
+          | true =>
+              right
+              right
+              refine ⟨0, zero_mem_internal_window z, ?_⟩
+              simp [oneOneZeroPrefixMap, conjugateCoordinate, h0, h1]
+  | n + 3 =>
+      let tail₁ : TribonacciName (n + 2) :=
+        ⟨Fin.tail name.1, admissible_tail (n + 2) name.2⟩
+      let tail₂ : TribonacciName (n + 1) :=
+        ⟨Fin.tail tail₁.1, admissible_tail (n + 1) tail₁.2⟩
+      let tail₃ : TribonacciName n :=
+        ⟨Fin.tail tail₂.1, admissible_tail n tail₂.2⟩
+      cases h0 : name.1 0 with
+      | false =>
+          left
+          refine ⟨conjugateCoordinate z tail₁, ⟨n + 2, tail₁, rfl⟩, ?_⟩
+          have hcoord := conjugateCoordinate_head_tail (n + 2) z name
+          simpa [tail₁, zeroPrefixMap, h0] using hcoord.symm
+      | true =>
+          cases h1 : tail₁.1 0 with
+          | false =>
+              right
+              left
+              refine ⟨conjugateCoordinate z tail₂, ⟨n + 1, tail₂, rfl⟩, ?_⟩
+              have hcoord₀ := conjugateCoordinate_head_tail (n + 2) z name
+              have hcoord₁ := conjugateCoordinate_head_tail (n + 1) z tail₁
+              have hcoord₁' :
+                  conjugateCoordinate z tail₁ =
+                    z * conjugateCoordinate z tail₂ := by
+                simpa [tail₂, h1] using hcoord₁
+              calc
+                oneZeroPrefixMap z (conjugateCoordinate z tail₂) =
+                    1 + z ^ 2 * conjugateCoordinate z tail₂ := by
+                      rfl
+                _ = 1 + z * conjugateCoordinate z tail₁ := by
+                      rw [hcoord₁']
+                      ring
+                _ = conjugateCoordinate z name := by
+                      simpa [tail₁, h0] using hcoord₀.symm
+          | true =>
+              cases h2 : tail₂.1 0 with
+              | false =>
+                  right
+                  right
+                  refine ⟨conjugateCoordinate z tail₃, ⟨n, tail₃, rfl⟩, ?_⟩
+                  have hcoord₀ := conjugateCoordinate_head_tail (n + 2) z name
+                  have hcoord₁ := conjugateCoordinate_head_tail (n + 1) z tail₁
+                  have hcoord₂ := conjugateCoordinate_head_tail n z tail₂
+                  have hcoord₁' :
+                      conjugateCoordinate z tail₁ =
+                        1 + z * conjugateCoordinate z tail₂ := by
+                    simpa [tail₂, h1] using hcoord₁
+                  have hcoord₂' :
+                      conjugateCoordinate z tail₂ =
+                        z * conjugateCoordinate z tail₃ := by
+                    simpa [tail₃, h2] using hcoord₂
+                  calc
+                    oneOneZeroPrefixMap z (conjugateCoordinate z tail₃) =
+                        1 + z + z ^ 3 * conjugateCoordinate z tail₃ := by
+                          rfl
+                    _ = 1 + z * (1 + z * conjugateCoordinate z tail₂) := by
+                          rw [hcoord₂']
+                          ring
+                    _ = 1 + z * conjugateCoordinate z tail₁ := by
+                          rw [hcoord₁']
+                    _ = conjugateCoordinate z name := by
+                          simpa [tail₁, h0] using hcoord₀.symm
+              | true =>
+                  exfalso
+                  have hforbidden :=
+                    (admissible_add_three_iff n name.1).1 name.2 |>.1
+                  simp [tail₁, tail₂, h0, h1, h2, Fin.tail] at hforbidden
 
 theorem rauzyFractal_nonempty (z : Complex) : (rauzyFractal z).Nonempty := by
   refine ⟨0, subset_closure ?_⟩
@@ -172,5 +312,48 @@ theorem rauzyFractal_prefix_invariant (z : Complex) :
       exact oneZeroPrefixMap_mapsTo_rauzyFractal z hu
   · rcases hw with ⟨u, hu, rfl⟩
     exact oneOneZeroPrefixMap_mapsTo_rauzyFractal z hu
+
+theorem rauzyFractal_eq_prefix_union {z : Complex}
+    (hz : z ∈ D5.S0.Tower.Tribonacci.Binet.tribonacciCharacteristicPolynomial.roots)
+    (hz_ne : z ≠
+      (D5.S0.Tower.Tribonacci.Values.tribonacciConstant : Complex)) :
+    rauzyFractal z =
+      zeroPrefixMap z '' rauzyFractal z ∪
+        oneZeroPrefixMap z '' rauzyFractal z ∪
+          oneOneZeroPrefixMap z '' rauzyFractal z := by
+  apply subset_antisymm
+  · change closure (tribonacciInternalWindow z) ⊆
+      zeroPrefixMap z '' rauzyFractal z ∪
+        oneZeroPrefixMap z '' rauzyFractal z ∪
+          oneOneZeroPrefixMap z '' rauzyFractal z
+    have hcompact : IsCompact (rauzyFractal z) :=
+      rauzyFractal_isCompact hz hz_ne
+    have hzero : IsCompact (zeroPrefixMap z '' rauzyFractal z) := by
+      apply hcompact.image
+      change Continuous (fun w : Complex => z * w)
+      exact continuous_const_mul z
+    have hone : IsCompact (oneZeroPrefixMap z '' rauzyFractal z) := by
+      apply hcompact.image
+      change Continuous (fun w : Complex => 1 + z ^ 2 * w)
+      fun_prop
+    have honeone : IsCompact (oneOneZeroPrefixMap z '' rauzyFractal z) := by
+      apply hcompact.image
+      change Continuous (fun w : Complex => 1 + z + z ^ 3 * w)
+      fun_prop
+    have hclosed :
+        IsClosed
+          (zeroPrefixMap z '' rauzyFractal z ∪
+            oneZeroPrefixMap z '' rauzyFractal z ∪
+              oneOneZeroPrefixMap z '' rauzyFractal z) := by
+      exact ((hzero.union hone).union honeone).isClosed
+    apply closure_minimal _ hclosed
+    intro w hw
+    have hsubset := tribonacciInternalWindow_subset_prefix_union z hw
+    rcases hsubset with hsubset | hsubset
+    · exact Or.inl (image_mono subset_closure hsubset)
+    · rcases hsubset with hsubset | hsubset
+      · exact Or.inl (image_mono subset_closure hsubset)
+      · exact Or.inr (image_mono subset_closure hsubset)
+  · exact rauzyFractal_prefix_invariant z
 
 end D5.S0.Tower.Tribonacci.RauzyFractal
