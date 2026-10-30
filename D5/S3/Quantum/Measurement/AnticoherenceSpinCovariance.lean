@@ -27,6 +27,7 @@ def pauliAxes : Fin 3 → Matrix (Fin 2) (Fin 2) ℂ :=
   ![pauliMatrix Pauli.X, pauliMatrix Pauli.Y, pauliMatrix Pauli.Z]
 
 private lemma pauli_hermitian (a : Fin 3) : (pauliAxes a).IsHermitian := by
+  rw [pauliAxes]
   apply Matrix.IsHermitian.ext
   intro i j
   fin_cases a <;> fin_cases i <;> fin_cases j <;>
@@ -183,6 +184,7 @@ theorem collective_tensor_rotation (n : ℕ)
     tensorOp (fun _ : Fin n => u.val) * collectiveSpin n a *
       (tensorOp (fun _ : Fin n => u.val))ᴴ =
         ∑ c : Fin 3, (r a c : ℂ) • collectiveSpin n c := by
+  rw [collectiveSpin]
   have hu : u.val * u.valᴴ = 1 := Matrix.mem_unitaryGroup_iff.mp u.property.1
   have ht : (tensorOp (fun _ : Fin n => u.val))ᴴ =
       tensorOp (fun _ : Fin n => u.valᴴ) := by

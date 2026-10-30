@@ -69,6 +69,7 @@ private lemma kraus_entry (q : Fin 5) (i r : Fin 9) :
     witnessKraus q i r =
       if (i.val : ℤ) = (r.val : ℤ) + krausShift q then (krausAmplitude q r : ℂ)
       else 0 := by
+  rw [witnessKraus, krausShift, krausAmplitude]
   fin_cases q <;> fin_cases i <;> fin_cases r <;>
     norm_num [witnessKraus, krausShift, krausAmplitude, Jplus, Jz, Matrix.mul_apply,
       Fin.sum_univ_succ, Matrix.conjTranspose_apply, Complex.star_def,
@@ -76,6 +77,7 @@ private lemma kraus_entry (q : Fin 5) (i r : Fin 9) :
 
 private lemma kraus_amplitude_sq (q : Fin 5) (r : Fin 9) :
     krausAmplitude q r ^ 2 = krausWeight q r := by
+  rw [krausWeight]
   fin_cases q <;> fin_cases r <;>
     norm_num [krausAmplitude, krausWeight, mul_pow, div_pow, Real.sq_sqrt]
 
@@ -105,6 +107,7 @@ theorem kraus_complete : ∑ q, (witnessKraus q)ᴴ * witnessKraus q = 1 := by
 
 
 theorem witness_state : witnessState.PosSemidef ∧ witnessState.trace = 1 := by
+  rw [witnessState]
   constructor
   · apply posSemidef_diagonal_iff.mpr
     intro i
@@ -129,6 +132,7 @@ private lemma kraus_row_product (q : Fin 5) (i j r : Fin 9) :
 private lemma channel_diagonal_entry (p : Fin 9 → ℂ) (i j : Fin 9) :
     witnessChannel (diagonal p) i j = ∑ q : Fin 5, ∑ r : Fin 9,
       p r * (witnessKraus q i r * star (witnessKraus q j r)) := by
+  rw [witnessChannel]
   simp only [witnessChannel, MatrixMap.of_kraus, LinearMap.coe_sum,
     LinearMap.coe_mk, AddHom.coe_mk, Finset.sum_apply, Matrix.sum_apply]
   apply Finset.sum_congr rfl
@@ -142,6 +146,7 @@ private lemma channel_diagonal_entry (p : Fin 9 → ℂ) (i j : Fin 9) :
 set_option maxHeartbeats 1000000 in
 -- Nine diagonal entries each sum the five Kraus contributions.
 theorem witness_output : witnessChannel witnessState = witnessOutput := by
+  rw [witnessOutput]
   ext i j
   change witnessChannel (diagonal (fun r =>
     (![209, 92, 560, 0, 441, 0, 294, 168, 0] r : ℂ) / 1764)) i j = witnessOutput i j

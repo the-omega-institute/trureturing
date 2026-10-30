@@ -119,6 +119,7 @@ private lemma dicke_isometry (n : ℕ) : (dickeIsometry n)ᴴ * dickeIsometry n 
         star (dickeIsometry n x r) * dickeIsometry n x r =
           (if (∑ i, (x i).val) = r.val then (1 : ℂ) else 0) /
             (n.choose r.val : ℂ) := by
+      rw [dickeIsometry]
       by_cases hx : (∑ i, (x i).val) = r.val
       · simp only [dickeIsometry, hx, ite_true, Complex.star_def, map_inv₀,
           Complex.conj_ofReal]
@@ -247,7 +248,8 @@ private lemma tensor_preserves_symmetric (n : ℕ)
     have hn : (n.choose (∑ i, (x i).val) : ℂ) ≠ 0 := by
       exact_mod_cast (Nat.choose_pos (weight_le n x)).ne'
     rw [← mul_assoc, mul_inv_cancel₀ hn, one_mul]
-  simpa only [spinAction, Matrix.mul_assoc] using hp.symm
+  rw [spinAction]
+  simpa only [Matrix.mul_assoc] using hp.symm
 
 private def dickeSplitSum (t s : ℕ) :
     Matrix (Fin (t + 1) × Fin (s + 1)) (Fin (t + s + 1)) ℂ :=
@@ -266,7 +268,8 @@ private lemma dicke_split_factor (t s : ℕ) :
     rw [Fin.sum_univ_add]
     simp [k, l]
   rw [Matrix.mul_apply, Finset.sum_eq_single (k, l)]
-  · simp only [Matrix.submatrix_apply, id_eq, Matrix.kronecker, Matrix.kroneckerMap,
+  · rw [dickeSplitSum]
+    simp only [Matrix.submatrix_apply, id_eq, Matrix.kronecker, Matrix.kroneckerMap,
       Matrix.of_apply, dickeIsometry,
       hw, show (∑ i, (x i).val) = k.val from rfl,
       show (∑ i, (y i).val) = l.val from rfl, ite_true, dickeSplitSum,
@@ -278,7 +281,7 @@ private lemma dicke_split_factor (t s : ℕ) :
       have hl : Real.sqrt (s.choose l.val : ℝ) ≠ 0 :=
         (Real.sqrt_pos.2 (by exact_mod_cast Nat.choose_pos (by omega : l.val ≤ s))).ne'
       push_cast
-      field_simp [hk, hl]
+      field_simp (disch := first | exact_mod_cast hk | exact_mod_cast hl | norm_num | (norm_cast <;> positivity))
     · simp [h]
   · rintro ⟨a, b⟩ _ hab
     by_cases ha : a = k
@@ -386,6 +389,7 @@ private lemma ladder_casimir :
 
 private lemma quadrupole_tracefree :
     quadrupole 0 0 + quadrupole 1 1 = -quadrupole 2 2 := by
+  rw [quadrupole]
   simp only [quadrupole, Matrix.cons_val_zero, Matrix.cons_val_one,
     Matrix.cons_val, Matrix.head_cons, Fin.isValue, ite_true, Jx, Jy]
   norm_num [div_eq_mul_inv]
@@ -551,6 +555,7 @@ private lemma dicke_collective (a : Fin 3) :
     Matrix.sum_apply, smul_eq_mul]
   simp_rw [he]
   rw [dicke_site_sum]
+  rw [dickeCoefficient]
   have hwle := weight_le 8 x
   generalize hw : (∑ k, (x k).val) = w at *
   fin_cases a <;> fin_cases r <;> interval_cases w <;>
@@ -560,7 +565,7 @@ private lemma dicke_collective (a : Fin 3) :
       dickeCoefficient, dickeIsometry, hw, Matrix.mul_apply, Fin.sum_univ_succ, Nat.choose,
       Jx, Jy, Jplus, Jz, Matrix.conjTranspose_apply, Complex.star_def,
       Complex.conj_ofReal, h8, h14, h18, h20, h28, h56, h70] <;>
-    field_simp <;> (try ring_nf) <;>
+    field_simp (disch := first | norm_num | (norm_cast <;> positivity)) <;> (try ring_nf) <;>
     norm_num [← Complex.ofReal_pow, Real.sq_sqrt] <;> (try ring) <;>
     norm_num [starRingEnd_apply]
 
@@ -665,6 +670,7 @@ private lemma split_product (n t : ℕ) (k m : Fin (t + 1))
       if k = m ∧ k.val + l.val = r.val then
         (((t.choose k.val : ℝ) * ((n - t).choose l.val : ℝ) /
           (n.choose r.val : ℝ) : ℝ) : ℂ) else 0 := by
+  rw [dickeSplit]
   by_cases hk : k.val + l.val = r.val
   · by_cases hm : m.val + l.val = r.val
     · have hkm : k = m := Fin.ext (by omega)
@@ -830,6 +836,7 @@ private lemma output_distance :
 private lemma normalizer_positive : 0 < normalizer 7 := by
   have hm : (mixedState 7).PosSemidef ∧ (mixedState 7).trace = 1 := by
     have he : mixedState 7 = diagonal (fun _ : Fin 8 => (1 / 8 : ℂ)) := by
+      rw [mixedState]
       ext i j
       by_cases hij : i = j <;> norm_num [mixedState, diagonal_apply, hij]
     rw [he]
@@ -884,4 +891,3 @@ theorem result : ¬ claim := by
   linarith
 
 end D5.S3.Quantum.Measurement.AnticoherenceTraceDistanceRefutation
-
