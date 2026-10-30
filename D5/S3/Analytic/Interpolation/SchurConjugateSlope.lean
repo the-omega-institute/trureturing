@@ -285,7 +285,7 @@ private theorem nodal_derivative_norm (a b x : ℝ) :
     have hd' : HasDerivAt (nodalPolynomial a b)
         (1 * ((x : ℂ) - ((a : ℂ) - b * I)) +
           ((x : ℂ) - ((a : ℂ) + b * I)) * 1) (x : ℂ) := by
-      simpa only [nodalPolynomial, Pi.mul_apply, id_eq] using hd
+      exact hd
     rw [hd'.deriv]
     ring
   rw [he, norm_mul]

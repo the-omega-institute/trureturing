@@ -22,7 +22,7 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 open Set Filter MeasureTheory
-open scoped Topology BigOperators
+open scoped Topology BigOperators ComplexConjugate
 
 namespace D5.S3.Analytic.Interpolation.SchurBoundaryKernel
 
@@ -553,6 +553,75 @@ private theorem rational_zero_mean (h : ℂ → ℂ) (hh : Differentiable ℂ h)
         (fun z hz => rationalKernel_den_ne hr z (by simpa using hz))).mul
         hh.continuous.continuousOn
   simpa [F, rationalKernel] using hF.circleAverage
+
+private theorem rational_real_average (h : ℂ → ℂ) (hh : Differentiable ℂ h)
+    (r : ℝ) (hr : |r| < 1) (hr0 : r ≠ 0) :
+    Real.circleAverage (fun z => ((rationalKernel r z).re : ℂ) * h z) 0 1 =
+      (h ((r : ℂ) * Complex.I) - h (-(r : ℂ) * Complex.I)) /
+        (4 * (r : ℂ) * Complex.I) := by
+  have hnorm : ‖(r : ℂ) * Complex.I‖ < 1 := by simpa using hr
+  have hnorm' : ‖-(r : ℂ) * Complex.I‖ < 1 := by simpa using hr
+  have hrI : (r : ℂ) * Complex.I ≠ 0 :=
+    mul_ne_zero (Complex.ofReal_ne_zero.mpr hr0) Complex.I_ne_zero
+  have hrI' : -(r : ℂ) * Complex.I ≠ 0 :=
+    mul_ne_zero (neg_ne_zero.mpr (Complex.ofReal_ne_zero.mpr hr0)) Complex.I_ne_zero
+  have hden (w : ℂ) (hw : ‖w‖ < 1) (z : ℂ)
+      (hz : z ∈ Metric.sphere (0 : ℂ) |(1 : ℝ)|) : z - w ≠ 0 := by
+    intro he
+    have hz' : ‖z‖ = 1 := by simpa using hz
+    rw [sub_eq_zero.mp he] at hz'
+    exact (ne_of_lt hw) hz'
+  have hc (w : ℂ) (hw : ‖w‖ < 1) :
+      ContinuousOn (fun z => h z / (z - w)) (Metric.sphere (0 : ℂ) |(1 : ℝ)|) :=
+    hh.continuous.continuousOn.div (continuousOn_id.sub continuousOn_const) (hden w hw)
+  have hψ : ContinuousOn (fun z => rationalKernel r z * h z)
+      (Metric.sphere (0 : ℂ) |(1 : ℝ)|) := by
+    exact (continuousOn_id.div
+      (continuousOn_const.add (continuousOn_const.mul (continuousOn_id.pow 2)))
+      (fun z hz => rationalKernel_den_ne hr z (by
+        have he : ‖z‖ = 1 := by simpa using hz
+        exact he.le))).mul hh.continuous.continuousOn
+  have hpoint : Set.EqOn (fun z => ((rationalKernel r z).re : ℂ) * h z)
+      (fun z => (1 / 2 : ℂ) * (rationalKernel r z * h z) +
+        (1 / 4 : ℂ) * (h z / (z - (r : ℂ) * Complex.I)) +
+        (1 / 4 : ℂ) * (h z / (z - -(r : ℂ) * Complex.I)))
+      (Metric.sphere (0 : ℂ) |(1 : ℝ)|) := by
+    intro z hz
+    have hz' : ‖z‖ = 1 := by simpa using hz
+    have hz0 : z ≠ 0 := norm_ne_zero_iff.mp (by rw [hz']; norm_num)
+    have hd : z ^ 2 + (r : ℂ) ^ 2 ≠ 0 := by
+      have he : z ^ 2 + (r : ℂ) ^ 2 =
+          (z - (r : ℂ) * Complex.I) * (z - -(r : ℂ) * Complex.I) := by
+        ring_nf
+        simp [Complex.I_sq]
+      rw [he]
+      exact mul_ne_zero (hden _ hnorm z hz) (hden _ hnorm' z hz)
+    rw [RCLike.re_eq_add_conj]
+    dsimp [rationalKernel]
+    simp only [map_div, map_add, map_one, map_mul, map_pow, RCLike.conj_ofReal,
+      ← RCLike.inv_eq_conj hz']
+    field_simp [hz0, hd, rationalKernel_den_ne hr z hz'.le,
+      hden _ hnorm z hz, hden _ hnorm' z hz]
+    <;> simp [Complex.I_sq] <;> ring
+  have hsum := Real.circleAverage_congr_sphere hpoint
+  have hhalf : CircleIntegrable (fun z => (1 / 2 : ℂ) * (rationalKernel r z * h z)) 0 1 :=
+    (continuousOn_const.mul hψ).circleIntegrable'
+  have hp : CircleIntegrable (fun z => (1 / 4 : ℂ) *
+      (h z / (z - (r : ℂ) * Complex.I))) 0 1 :=
+    (continuousOn_const.mul (hc _ hnorm)).circleIntegrable'
+  have hm : CircleIntegrable (fun z => (1 / 4 : ℂ) *
+      (h z / (z - -(r : ℂ) * Complex.I))) 0 1 :=
+    (continuousOn_const.mul (hc _ hnorm')).circleIntegrable'
+  rw [Real.circleAverage_fun_add (hhalf.add hp) hm,
+    Real.circleAverage_fun_add hhalf hp] at hsum
+  simp_rw [← smul_eq_mul, Real.circleAverage_fun_smul] at hsum
+  simp only [smul_eq_mul] at hsum
+  rw [rational_zero_mean h hh r hr,
+    divided_cauchy_average h hh _ hnorm hrI,
+    divided_cauchy_average h hh _ hnorm' hrI'] at hsum
+  rw [hsum]
+  field_simp
+  <;> ring
 
 /-- Uniform convergence, continuity, reflection, and the sign of the actual source kernel,
 including the entire closed parameter edge `b = 1`. -/
