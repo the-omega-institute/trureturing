@@ -6,14 +6,7 @@
    utility: none
    digest: The nonnegative higher-order EPR bound is tight at every positive order. -/
 
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.Analysis.Complex.Basic
 import Mathlib.NumberTheory.Harmonic.Bounds
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Push
 
 /-! Finite occupation-basis states for the tightness clause of (nS:2) in
 Shchukin and van Loock, arXiv:1511.08444v1. The harmonic taper gives arbitrarily
@@ -96,7 +89,7 @@ private lemma sqrt_factorial (r t : ℕ) (hr : 1 ≤ r) :
     rw [Nat.sub_add_cancel hr] at h
     exact_mod_cast h
   rw [hf]
-  field_simp
+  field_simp (disch := positivity)
 
 private lemma lower_chain (n k : ℕ) (hn : 1 ≤ n) :
     annihilateA n (Finsupp.single (n * (k + 1) + n - 1, n * (k + 1))
@@ -208,20 +201,19 @@ private lemma dirichlet_energy (n m : ℕ) (hm : 1 ≤ m) :
   have hd (k : ℕ) : taper m (k + 1) - taper m k =
       -1 / (((k : ℝ) + 1) * (harmonic m : ℝ)) := by
     have hr : (harmonic (k + 1) : ℝ) = (harmonic k : ℝ) + ((k : ℝ) + 1)⁻¹ := by
-      rw [harmonic_succ]
-      push_cast
-      rfl
+      rw [harmonic_succ, Rat.cast_add, Rat.cast_inv, Rat.cast_natCast,
+        Nat.cast_add, Nat.cast_one]
     change (1 - (harmonic (k + 1) : ℝ) / harmonic m) -
       (1 - (harmonic k : ℝ) / harmonic m) = _
     rw [hr]
-    field_simp
+    field_simp (disch := positivity)
     ring
   have ht (k : ℕ) : (Real.sqrt (n * (k + 1) : ℝ) *
       (taper m (k + 1) - taper m k)) ^ 2 =
       ((n : ℝ) / (harmonic m : ℝ) ^ 2) * ((k : ℝ) + 1)⁻¹ := by
     rw [mul_pow, Real.sq_sqrt (by positivity), hd]
     have hk : (k : ℝ) + 1 ≠ 0 := by positivity
-    field_simp
+    field_simp (disch := positivity)
   have he : (∑ k ∈ range m, (Real.sqrt (n * (k + 1) : ℝ) *
       (taper m (k + 1) - taper m k)) ^ 2) =
       ∑ k ∈ range m, ((n : ℝ) / (harmonic m : ℝ) ^ 2) * ((k : ℝ) + 1)⁻¹ :=
@@ -229,10 +221,12 @@ private lemma dirichlet_energy (n m : ℕ) (hm : 1 ≤ m) :
   rw [he, ← Finset.mul_sum]
   have hs : (harmonic m : ℝ) = ∑ k ∈ range m, ((k : ℝ) + 1)⁻¹ := by
     change ((∑ k ∈ range m, ((k + 1 : ℕ) : ℚ)⁻¹ : ℚ) : ℝ) = _
-    simp only [Rat.cast_sum, Rat.cast_inv, Rat.cast_add, Rat.cast_one,
-      Rat.cast_natCast, Nat.cast_add, Nat.cast_one]
+    rw [Rat.cast_sum]
+    apply Finset.sum_congr rfl
+    intro k _
+    rw [Rat.cast_inv, Rat.cast_natCast, Nat.cast_add, Nat.cast_one]
   rw [← hs]
-  field_simp
+  field_simp (disch := positivity)
 
 private lemma taper_norm_bound (n m : ℕ) (hn : 1 ≤ n) (σ : ℂ) :
     1 / ((n - 1).factorial : ℝ) ≤ normSq (vector n σ m) := by
