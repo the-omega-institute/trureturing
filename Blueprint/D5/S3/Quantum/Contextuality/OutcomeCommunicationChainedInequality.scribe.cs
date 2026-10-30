@@ -28,6 +28,7 @@ internal sealed class OutcomeCommunicationChainedInequalityDocument : IScribeDoc
                 AssessedProvenance.FromLiterature(Source)),
             Node("relabel", "Alice's every-second-input relabelling", "relabel", RelabelFormula(),
                 "The binary output is unchanged when the natural index of x is even and is reversed otherwise. "
+                    + "Nat.mod denotes natural-number remainder, and the source input number is Fin.val(x)+1. "
                     + "Thus the displayed inequality reads Alice's output with the flip on every second input, as specified in TeX line 325.",
                 AssessedProvenance.FromLiterature(Source)),
             Node("chained-value", "The relabelled chained expression", "chainedValue", ChainedValueFormula(),
@@ -77,12 +78,12 @@ internal sealed class OutcomeCommunicationChainedInequalityDocument : IScribeDoc
 
     private static Formula IsCODModelFormula()
     {
-        Formula weights = All("l", X("α"), GE(Real(D(0)), At(X("w"), X("l"))));
+        Formula weights = All("l", X("α"), LE(Real(D(0)), At(X("w"), X("l"))));
         Formula weightSum = Equal(SumOver("l", X("α"), At(X("w"), X("l"))), Real(D(1)));
         Formula aliceNonnegative = All("x", FinOf(X("n")),
             All("l", X("α"),
                 All("a", Binary(),
-                    GE(Real(D(0)), At(X("alice"), X("x"), X("l"), X("a"))))));
+                    LE(Real(D(0)), At(X("alice"), X("x"), X("l"), X("a"))))));
         Formula aliceNormalized = All("x", FinOf(X("n")),
             All("l", X("α"),
                 Equal(SumOver("a", Binary(), At(X("alice"), X("x"), X("l"), X("a"))), Real(D(1)))));
@@ -90,7 +91,7 @@ internal sealed class OutcomeCommunicationChainedInequalityDocument : IScribeDoc
             All("l", X("α"),
                 All("a", Binary(),
                     All("b", Binary(),
-                        GE(Real(D(0)), At(X("bob"), X("y"), X("l"), X("a"), X("b")))))));
+                        LE(Real(D(0)), At(X("bob"), X("y"), X("l"), X("a"), X("b")))))));
         Formula bobNormalized = All("y", FinOf(X("n")),
             All("l", X("α"),
                 All("a", Binary(),
@@ -123,7 +124,7 @@ internal sealed class OutcomeCommunicationChainedInequalityDocument : IScribeDoc
     private static Formula RelabelFormula()
     {
         Formula body = Equal(LocalCall("relabel", X("x"), X("a")),
-            If(Equal(Val(X("x")), D(0)), X("a"), At(Qualified("Fin", "rev"), X("a"))));
+            If(Equal(At(Qualified("Nat", "mod"), Val(X("x")), D(2)), D(0)), X("a"), At(Qualified("Fin", "rev"), X("a"))));
         return All("n", Naturals(), All("x", FinOf(X("n")), All("a", Binary(), body)));
     }
 
@@ -204,8 +205,6 @@ internal sealed class OutcomeCommunicationChainedInequalityDocument : IScribeDoc
         new Formula.Relation(left, FormulaRelationOperator.Equal, right);
     private static Formula Ne(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.NotEqual, right);
-    private static Formula GE(Formula left, Formula right) =>
-        new Formula.Relation(left, FormulaRelationOperator.GreaterThanOrEqual, right);
     private static Formula LE(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
     private static Formula Add(Formula left, Formula right) =>
