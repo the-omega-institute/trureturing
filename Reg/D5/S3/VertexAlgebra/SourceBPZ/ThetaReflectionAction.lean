@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.VertexAlgebra.SourceBPZ.ThetaReflectionAction
 import Reg.Support.SingleDependentReadout
 
+/-! Source-bound registration for the order-two theta reflection action. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -9,7 +11,9 @@ namespace Reg.D5.S3.VertexAlgebra.SourceBPZ.ThetaReflectionAction
 
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.VertexAlgebra
+open _root_.D5.S3.VertexAlgebra.LatticeGeneratingFieldLocality
 open _root_.D5.S3.VertexAlgebra.SourceBPZ
+open _root_.D5.S3.VertexAlgebra.SourceBPZ.OriginalSourcePairing
 open _root_.D5.S3.VertexAlgebra.SourceBPZ.ThetaReflectionAction
 open LeanInformationAudit
 
