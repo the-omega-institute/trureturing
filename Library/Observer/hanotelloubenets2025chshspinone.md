@@ -27,7 +27,7 @@ It then treats spin 1 and conjectures that no two-qutrit state violates the CHSH
 Source: https://arxiv.org/abs/2503.05172v2
 - DOI: https://doi.org/10.1088/1402-4896/adcc66 (Physica Scripta 100(5), 055115, 2025; title, authors, journal, volume, issue and article number from Crossref).
 - URL: https://arxiv.org/abs/2503.05172v2. The e-print member `Final_Revision_Hanotel_Loubenets.tex` has 1200 lines and md5 `1ee1518c0b95e586819f229b14c4e079`. Locations:
-  - the CHSH expectation (0.1), l. 108–113;
+  - the CHSH expectation and operator (0.1), l. 108–115;
   - the open problem for high spin $s\ge1$, l. 201;
   - the spin-1 conjecture, l. 209 and 902–918.
-- Companion paper: https://arxiv.org/abs/2412.03470v2, member `main.tex` (1011 lines, md5 `589158d190960a369b504a4aa9566d18`): the spin projections and the matrices $S_1,S_2,S_3$, l. 210–237; the CHSH operator for spin observables, l. 253–258; the bound $2s^2$, l. 348–356.
+- Companion paper: https://arxiv.org/abs/2412.03470v2, member `main.tex` (1011 lines, md5 `589158d190960a369b504a4aa9566d18`): the spin projections and the matrices $S_1,S_2,S_3$, l. 210–237; the CHSH operator for spin observables, l. 253–261; the bound $2s^2$, l. 348–356.
