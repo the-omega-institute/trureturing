@@ -1,0 +1,76 @@
+#### 定理 5.5（态与未知读尺的联合可辨识商）
+
+<a id="thm:jointcalibration"></a>
+
+设 $D\ge2$、$\rho$ 为密度矩阵。
+在全部内部控制下，采用同一组固定 $c,d$ 的模型族
+
+$$
+G_w(U;\rho,c,d)=c\,\operatorname{Tr}(E_wU\rho U^*)+d_w,
+ \quad 0<c\le1,\quad d_w\ge0,\quad\sum_wd_w=1-c,
+$$
+
+其中合法 $E_w$ 是 $D$ 个秩一基投影，非法 $E_w=0$。
+定义
+
+$$
+X=c(\rho-I/D),\qquad
+ \beta_w=
+ \begin{cases}c/D+d_w,&w\text{ 合法},\\d_w,&w\text{ 非法}.\end{cases}
+ \tag{20}
+$$
+
+两个三元组给出全部相同的控制读出，当且仅当 $X=X'$、$\beta=\beta'$。
+若所有候选已由额外内部依据限制为局部纯态，则可恢复
+
+$$
+c=\sqrt{\frac{D}{D-1}\operatorname{Tr}X^2},\qquad
+ \rho=I/D+X/c.
+ \tag{21}
+$$
+
+**证明。**
+
+对酉群取归一 Haar 平均，平均态与所有酉对易，且迹为一，故为 $I/D$。
+因此每个平均输出恰是 $\beta_w$。
+减去平均后，合法输出为 $\operatorname{Tr}(E_wUXU^*)$；
+秩一投影轨道分离所有自伴矩阵，故其相等迫使 $X=X'$。
+反向直接代入。
+若 $\rho$ 纯，则 $\operatorname{Tr}(\rho-I/D)^2=(D-1)/D$，
+代入 $X$ 得式 (21)，再由 $c>0$ 恢复 $\rho$。
+
+∎
+
+一般确实存在不能区分的态与读尺。
+取只在合法标签上的均匀噪声 $d_j=(1-c)/D$。
+对任意 $c'\in[c,1]$，令
+
+$$
+\rho'=\frac c{c'}\rho+\left(1-\frac c{c'}\right)\frac ID,\qquad
+ d_j'=\frac{1-c'}D.
+$$
+
+二者给相同的 $X,\beta$，且 $\rho'$ 仍正归一。
+所以所有控制统计只能恢复可观测组合，不能一般将态的不纯与读尺对比度独立拆开。
+两项内部校准、可信的局部纯性或其它供应关系可以进一步解除自由；
+整体 $\Omega$ 纯并不自动保证这个内部限制态纯。
+这正是“量与尺子都需要预测”的一个精确可辨识版本。
+
+更具体地，给定一个可实现的 $(X,\beta)$，其全部剩余参数恰由
+
+$$
+0<c'\le1,\qquad
+ -D\lambda_{\min}(X)\le c'\le
+D\min_{j\text{ 合法}}\beta_j                              \tag{22}
+$$
+
+参数化，其中
+$\rho'=I/D+X/c'$、
+$d_j'=\beta_j-c'/D$（合法）、
+$d_w'=\beta_w$（非法）。
+证明分别检查 $\rho'\ge0$、$d'\ge0$；
+迹及质量归一自动成立，故这些条件同时必要且充分。
+此处内部预测剩余的是一个明确的可行纤维，而不是任意无约束的猜测。
+
+<a id="sec-6"></a>
+

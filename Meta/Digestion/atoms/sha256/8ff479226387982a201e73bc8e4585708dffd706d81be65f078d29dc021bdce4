@@ -1,0 +1,10 @@
+## 4. 预测、变分与正性：精确的内部相容条件
+
+本节在正态读出层工作。取同一整体内的矩阵角色 $M_D(\mathbb{C})$，
+$\rho\ge0$、$\operatorname{Tr}\rho=1$，记录投影 $P_h$ 满足
+$\sum_hP_h=I$、$P_hP_k=0$（$h\ne k$）、
+$p_h=\operatorname{Tr}\rho P_h>0$。令 $\mathcal{D}=\operatorname{span}\{P_h\}$。
+这里大写 $D$ 仅表示矩阵维数，不是第 2 节的相位门。
+
+<a id="statement-4-1"></a>
+
