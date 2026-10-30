@@ -76,8 +76,8 @@ theorem actual_finite_euler_deficit {m : ℕ} (hm : 2 ≤ m) {lambda : ℝ}
       exact mem_filter.mpr ⟨mem_Ioc.mpr ⟨hpQ, hpP⟩, hpp⟩
     · intro hp
       have hpS := mem_filter.mp hp
-      have hpI := mem_Ioc.mp (mem_filter.mp hpS.1).1
-      have hpp := mem_filter.mp hpS.1 |>.2
+      have hpI := mem_Ioc.mp hpS.1
+      have hpp := hpS.2
       have hpmem : p ∈ m.primeFactors := by
         rw [hsupport]
         exact Nat.mem_primesLE.mpr ⟨hpI.2, hpp⟩
@@ -92,8 +92,18 @@ theorem actual_finite_euler_deficit {m : ℕ} (hm : 2 ≤ m) {lambda : ℝ}
     rw [tail]
     have hsplit := sum_filter_add_sum_filter_not m.primeFactors
       (fun p : ℕ => 2 ≤ m.factorization p) (layerTail m)
-    rw [← hsplit]
-    rw [hS_eq]
+    have hnot_eq : m.primeFactors.filter (fun p => ¬ 2 ≤ m.factorization p) =
+        m.primeFactors.filter (fun p => m.factorization p = 1) := by
+      ext p
+      by_cases hp : p ∈ m.primeFactors
+      · have hpp := Nat.prime_of_mem_primeFactors hp
+        have hvpos : 1 ≤ m.factorization p :=
+          hpp.factorization_pos_of_dvd (by omega) (Nat.dvd_of_mem_primeFactors hp)
+        simp only [mem_filter, hp, true_and]
+        omega
+      · simp [hp]
+    dsimp [H]
+    rw [← hsplit, hnot_eq, hS_eq]
   have hpoint_low (p : ℕ) (hp : p ∈ S) :
       0 ≤ layerTail m p - 1 / (p : ℝ) ^ 2 := by
     have hpp := mem_filter.mp hp |>.2
@@ -116,29 +126,46 @@ theorem actual_finite_euler_deficit {m : ℕ} (hm : 2 ≤ m) {lambda : ℝ}
     have hxhalf : (p : ℝ)⁻¹ ^ 2 ≤ 1 / 2 := by
       have hp2 : (2 : ℝ) ≤ p := by exact_mod_cast hpp.two_le
       have hi : (p : ℝ)⁻¹ ≤ (2 : ℝ)⁻¹ := by
-        exact one_div_le_one_div_of_le (by norm_num) hp2
+        simpa only [one_div] using (one_div_le_one_div_of_le (by norm_num) hp2)
       have hsquare := mul_self_le_mul_self (by positivity : 0 ≤ (p : ℝ)⁻¹) hi
-      norm_num at hsquare ⊢
-      nlinarith
+      have hsquare' : (p : ℝ)⁻¹ ^ 2 ≤ ((2 : ℝ)⁻¹ ^ 2) := by
+        simpa only [pow_two] using hsquare
+      exact hsquare'.trans (by norm_num)
     have hquad := neg_log_one_sub_le (by positivity : 0 ≤ (p : ℝ)⁻¹ ^ 2) hxhalf
     have hv : m.factorization p = 1 := by
       have := hS_eq ▸ hp
       exact mem_filter.mp this |>.2
     have hexcess : layerTail m p - 1 / (p : ℝ) ^ 2 ≤
-        1 / (p : ℝ) ^ 4 := by
-      simpa [layerTail, hv, one_div, pow_two] using (show
-        -Real.log (1 - (p : ℝ)⁻¹ ^ 2) - (p : ℝ)⁻¹ ^ 2 ≤
-          ((p : ℝ)⁻¹ ^ 2) ^ 2 by linarith [hquad])
+        (p : ℝ)⁻¹ ^ 4 := by
+      have hraw : -Real.log (1 - (p : ℝ)⁻¹ ^ 2) - (p : ℝ)⁻¹ ^ 2 ≤
+          (p : ℝ)⁻¹ ^ 4 := by
+        have := (show -Real.log (1 - (p : ℝ)⁻¹ ^ 2) - (p : ℝ)⁻¹ ^ 2 ≤
+            ((p : ℝ)⁻¹ ^ 2) ^ 2 by linarith [hquad])
+        convert this using 1 <;> ring
+      have hlayer : layerTail m p = -Real.log (1 - (p : ℝ)⁻¹ ^ 2) := by
+        simp [layerTail, hv]
+      have hp2eq : 1 / (p : ℝ) ^ 2 = (p : ℝ)⁻¹ ^ 2 := by
+        rw [one_div, inv_pow]
+      rw [hlayer, hp2eq]
+      exact hraw
     have hpQ : Q < p := (mem_Ioc.mp (mem_filter.mp hp).1).1
     have hQp : (Q : ℝ) ≤ p := by exact_mod_cast hpQ.le
-    have hinv : (p : ℝ)⁻¹ ≤ (Q : ℝ)⁻¹ :=
-      one_div_le_one_div_of_le hQ0 hQp
+    have hinv : (p : ℝ)⁻¹ ≤ (Q : ℝ)⁻¹ := by
+      simpa only [one_div] using (one_div_le_one_div_of_le hQ0 hQp)
     have hpow := mul_le_mul_of_nonneg_right hinv (by positivity : 0 ≤ (p : ℝ)⁻¹ ^ 3)
-    have hrewrite : 1 / (p : ℝ) ^ 4 = (p : ℝ)⁻¹ * (1 / (p : ℝ) ^ 3) := by
-      simp only [one_div, inv_pow]
-      ring
-    rw [hrewrite]
-    exact hexcess.trans hpow
+    have hp3eq : 1 / (p : ℝ) ^ 3 = (p : ℝ)⁻¹ ^ 3 := by
+      rw [one_div, inv_pow]
+    have hpow' : (p : ℝ)⁻¹ * (1 / (p : ℝ) ^ 3) ≤
+        (Q : ℝ)⁻¹ * (1 / (p : ℝ) ^ 3) := by
+      rw [hp3eq]
+      exact hpow
+    calc
+      _ ≤ (p : ℝ)⁻¹ ^ 4 := hexcess
+      _ = (p : ℝ)⁻¹ * (1 / (p : ℝ) ^ 3) := by
+        rw [show 1 / (p : ℝ) ^ 3 = (p : ℝ)⁻¹ ^ 3 by
+          rw [one_div, inv_pow]]
+        ring
+      _ ≤ (Q : ℝ)⁻¹ * (1 / (p : ℝ) ^ 3) := hpow'
   have hE_low : 0 ≤ ∑ p ∈ S, (layerTail m p - 1 / (p : ℝ) ^ 2) :=
     sum_nonneg (fun p hp => hpoint_low p hp)
   have hE_up : (∑ p ∈ S, (layerTail m p - 1 / (p : ℝ) ^ 2)) ≤
@@ -155,18 +182,20 @@ theorem actual_finite_euler_deficit {m : ℕ} (hm : 2 ≤ m) {lambda : ℝ}
         exact_mod_cast (mem_Ioc.mp (mem_filter.mp hp).1).1
       _ = 2 / (Q : ℝ) ^ 3 := by
         field_simp
-        ring
   have hE_id : tail m - finitePrimeSquareSum m = H +
       ∑ p ∈ S, (layerTail m p - 1 / (p : ℝ) ^ 2) := by
     rw [htail_split]
     dsimp [finitePrimeSquareSum, S]
+    rw [sum_sub_distrib]
     ring
   have hH : H ≤ 6 / (P : ℝ) ^ (2 / 3 : ℝ) := by
-    simpa [H, P] using (higher_valuation_tail hm hlambda hrecord)
+    simpa [H, P] using
+      (D5.S3.Arith.Robin.PriceRecord.HigherValuationTail.higher_valuation_tail
+        hm hlambda hrecord)
   have hnonneg : 0 ≤ tail m - finitePrimeSquareSum m := by
     rw [hE_id]
     exact add_nonneg (sum_nonneg (fun p hp => layer_tail_nonneg m
-      (Nat.prime_of_mem_primeFactors hp))) hE_low
+      (Nat.prime_of_mem_primeFactors (mem_filter.mp hp).1))) hE_low
   have hupper : tail m - finitePrimeSquareSum m ≤
       6 / (P : ℝ) ^ (2 / 3 : ℝ) + 2 / (Q : ℝ) ^ 3 := by
     rw [hE_id]
