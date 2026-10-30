@@ -189,7 +189,7 @@ private def reindexState {a b : Type*} [Fintype a] [DecidableEq a]
 private theorem entropy_reindex {a b : Type*} [Fintype a] [DecidableEq a]
     [Fintype b] [DecidableEq b] (e : b ≃ a) (rho : DensityState a) :
     vonNeumannEntropy (reindexState e rho) = vonNeumannEntropy rho := by
-  rw [entropy_eq_spectral, entropy_eq_spectral]
+  rw [InputInformationBalance.entropy_eq_sum, InputInformationBalance.entropy_eq_sum]
   let M := CStarMatrix.ofMatrix.symm rho.1
   let hM := (density_posSemidef rho).isHermitian
   have hc : (M.submatrix e e).charpoly =
