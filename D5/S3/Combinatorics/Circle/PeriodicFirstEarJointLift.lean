@@ -103,6 +103,7 @@ private theorem old_source (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m)
     have hp : 1 ≤ (2 : ℕ) ^ (d * m - 1) := Nat.one_le_two_pow
     have hpow : 2 ^ (d * m) = 2 * 2 ^ (d * m - 1) := by
       conv_lhs => rw [show d * m = (d * m - 1) + 1 by omega, pow_succ]
+      ring
     rw [Nat.mul_comm m d]
     omega
   have hquot' : multiplier d m = (2 ^ (d * m) - 1) / (2 ^ d - 1) := by
@@ -197,8 +198,8 @@ private theorem prefix_bounds (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) (n : ℕ
     change ((2 : ℤ)^d-1)*(t : ℤ) = (2 : ℤ)^k-1 at hrel
     have ht0 : 0 ≤ (t : ℤ) := Int.natCast_nonneg _
     have hdZ : (1 : ℤ) ≤ (2 : ℤ) ^ d - 1 := by
-      have hp : (4 : ℤ) ≤ 2 ^ d := by
-        exact pow_le_pow_right₀ (by norm_num) hd
+      have hp : (4 : ℤ) ≤ 2 ^ d :=
+        pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hd
       omega
     simp only [if_neg hn, mul_zero, add_zero, zero_add]
     constructor
