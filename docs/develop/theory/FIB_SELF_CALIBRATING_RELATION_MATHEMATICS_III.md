@@ -3754,3 +3754,297 @@ Definition 11、Definition 16、Theorem 6.1](https://arxiv.org/html/1907.11034v2
 两篇文献都不承担 (17.20) 的覆盖定理。∎
 
 ## 追加锚（本行以下为增补区）
+
+## 18. 额外正误差余量下的来源扰动与有界有限覆盖
+
+本节固定 $k\ge2$ 及有限实数 $\varepsilon,\delta>0$，记
+$\gamma=\varepsilon+\delta$。沿用定义 9.1、13.1、14.1 的完整
+$\mathcal M_k$、普通初始实秩、$N/L_0$ 单条不可复制不可复位轨迹、
+初读与每个原子后必读的收费合同，以及闭的、任意相关且可依赖历史的绝对误差。
+输入协议仍为任意确定性完整历史规则，不附加正则性或共同停止预算。
+来源子族只限定成功覆盖的目标，协议可靠性始终比较完整 $\mathcal M_k$。
+
+### 定义 18.1（有限真值坐标与操作距离）
+
+沿用定义 12.1 的 $a_i,b_j^{(q)}$，令
+
+$$
+ \begin{aligned}
+ \Phi_k(R)&=\bigl((a_i(R))_{0\le i\le k-2},
+                   (b_j^{(q)}(R))_{0\le q,j<k}\bigr)
+               \in\mathbb R^{k^2+k-1},\\
+ d_{\mathrm{op}}(R,S)&=\|\Phi_k(R)-\Phi_k(S)\|_\infty,\\
+ \|H\|_{\max}&=\max_{0\le h,j<k}|H_{hj}|.
+ \end{aligned}
+\tag{18.1}
+$$
+
+省去的 $a_{k-1}(R)=b_{k-1}^{(k-1)}(R)=R_{0,k-1}$ 是重复真值坐标。
+$\Phi_k$ 是数学上比较来源的坐标，不是一条运行已经取得的报告向量；
+不同 $q$ 的坐标没有被赋予共同取得的操作。
+有界性分别指既有幅度 (13.27) 满足 $M(R)\le B$，或逐项幅度满足
+$\|R\|_{\max}\le B$，其中 $0<B<\infty$。
+
+### 引理 18.2（全部原子字的精确距离及矩阵范数比较）
+
+对任意 $R,S\in\mathcal M_k$，若 $A_w$ 表示有限原子字
+$w\in\{N,L_0\}^{\ast}$ 的累计矩阵，空字对应 $I$，则
+
+$$
+ \begin{aligned}
+ d_{\mathrm{op}}(R,S)
+ &=\sup_{w\in\{N,L_0\}^{\ast}}
+       |\operatorname{tr}(A_wR)-\operatorname{tr}(A_wS)|,\\
+ \tfrac12\|R-S\|_{\max}
+ &\le d_{\mathrm{op}}(R,S)\le k\|R-S\|_{\max},\\
+ \|\Phi_k(R)\|_\infty&=M(R).
+ \end{aligned}
+\tag{18.2}
+$$
+
+特别地，$d_{\mathrm{op}}$ 是 $\mathcal M_k$ 上的有限距离，与逐项最大范数
+诱导同一拓扑。上确界比较的是同一字在两个固定来源上的真值，不把这些字联合执行。
+
+**证明。** 引理 10.1 把任意原子字的真值穷尽为零、某个 $a_i$ 或某个
+$b_j^{(q)}$，其中 $0\le i,q,j<k$。反过来，$a_i$ 可由 $i$ 次 $N$
+取得，$b_j^{(q)}$ 可由先 $q$ 次 $N$、一次 $L_0$、再 $j$ 次 $N$ 取得。
+这些是分别可执行的字；省去的 $a_{k-1}$ 已由重复坐标保留。
+因此全部字的真值差的上确界恰为 (18.1) 的有限最大值。
+严格正来源的这些坐标均为正，故同一最大值也给出 (13.27) 的 $M(R)$。
+
+每个 $a_i(R)-a_i(S)$ 或 $b_j^{(q)}(R)-b_j^{(q)}(S)$
+都是 $R-S$ 的至多 $k$ 个条目之和，给出右侧不等式。
+另一方面，所有矩阵条目可由列前缀和恢复：
+
+$$
+ R_{0j}=b_j^{(k-1)}(R),\qquad
+ R_{hj}=b_j^{(k-1-h)}(R)-b_j^{(k-h)}(R)
+       \quad(1\le h<k).
+\tag{18.3}
+$$
+
+对两来源作差，首行条目差至多 $d_{\mathrm{op}}$，其余条目差至多
+$2d_{\mathrm{op}}$。这证明左侧不等式，也证明 $\Phi_k$ 单射。
+有限向量最大范数的对称性和三角不等式因而使 $d_{\mathrm{op}}$ 成为距离；
+两个范数比较给出所述拓扑等价。∎
+
+### 定理 18.3（保留同一协议及末端规则的闭余量转移）
+
+设 $\Pi$ 在完整 $\mathcal M_k$ 上 $\gamma$-可靠，且
+$R\in\operatorname{Succ}_{\gamma}(\Pi)$。则同一个协议 $\Pi$，包括
+其全部动作、停止及末端输出规则，在完整 $\mathcal M_k$ 上也
+$\varepsilon$-可靠，并满足
+
+$$
+ \{S\in\mathcal M_k:d_{\mathrm{op}}(R,S)\le\delta\}
+       \subseteq\operatorname{Succ}_{\varepsilon}(\Pi).
+\tag{18.4}
+$$
+
+这里没有更换末端认证容限或增强输出规则，也不要求 $\Pi$ 有共同停止预算。
+
+**证明。** 全域 $\varepsilon$-可靠性直接来自每条
+$\varepsilon$-误差历史也是同一来源上的 $\gamma$-误差历史。
+固定满足距离条件的一个实际来源 $S$，取 $\Pi$ 在 $S$ 上的任意一条完整
+$\varepsilon$-误差运行，报告为 $y_i$，累计矩阵为 $A_i$。
+在同一个固定来源 $R$ 上逐前缀使用完全相同的报告，并令误差为
+
+$$
+ \eta_i^R=y_i-\operatorname{tr}(A_iR)
+      =\eta_i^S+\operatorname{tr}(A_i(S-R)).
+\tag{18.5}
+$$
+
+初读包括在内。由引理 18.2，每个已执行字均满足
+$|\operatorname{tr}(A_i(S-R))|\le\delta$，故
+$|\eta_i^R|\le\varepsilon+\delta=\gamma$。
+相同完整父历史强迫相同下一动作、停止及输出，归纳保证两运行始终使用同一个
+$A_i$。因此 (18.5) 给出在 $R$ 上合法的同一完整报告历史；若原运行无限，
+这个构造对每个前缀同时成立，也给出合法的无限运行。
+任意相关、依赖历史的误差合同允许这样的误差选择，不需要两来源有相同误差值。
+
+由于 $R\in\operatorname{Succ}_{\gamma}(\Pi)$，该运行必在有限处输出 $2$。
+$S$ 上的同一运行遂在同一处输出 $2$。$S$ 的允许误差运行任意，得到 (18.4)。
+三角不等式允许 $d_{\mathrm{op}}=\delta$ 及所有误差端点。
+证明沿一条实际报告历史始终固定 $R,S$，不以不同分支或逐次更换的来源补足相容性。∎
+
+### 定理 18.4（有界增强成功域的有限预选协议及定量界）
+
+对任意有限 $B>0$ 和任意子集
+
+$$
+ \begin{aligned}
+ D&\subseteq\{R\in\mathcal I_k(\gamma):M(R)\le B\},
+       &&\text{或}\\
+ D&\subseteq\{R\in\mathcal I_k(\gamma):\|R\|_{\max}\le B\},
+ \end{aligned}
+\tag{18.6}
+$$
+
+均存在一个预先选定的有限协议族 $F$，使
+$D\subseteq\bigcup_{\Pi\in F}\operatorname{Succ}_{\varepsilon}(\Pi)$。
+每个成员都在完整 $\mathcal M_k$ 上保持 $\gamma$-可靠，因而也
+$\varepsilon$-可靠；每个成员在每个来源的每条 $\gamma$-允许误差历史上
+至多 $2k-1$ 次初始计入报告即停止。两种情形分别有充分上界
+
+$$
+ \begin{aligned}
+ \nu_{k,\varepsilon}(D)&\le |F|
+       \le\left\lceil\frac B\delta\right\rceil^{k^2+k-1}
+       &&\text{若 }M(R)\le B\text{ 于 }D,\\
+ \nu_{k,\varepsilon}(D)&\le |F|
+       \le\left\lceil\frac{kB}\delta\right\rceil^{k^2}
+       &&\text{若 }\|R\|_{\max}\le B\text{ 于 }D.
+ \end{aligned}
+\tag{18.7}
+$$
+
+特别地，$k=3$ 时两界分别为
+$\lceil B/\delta\rceil^{11}$、$\lceil3B/\delta\rceil^9$，
+且每个成员至多五报告停止。
+
+**证明。** 空 $D$ 取空族。先证明第一种有界性。置
+$m=k^2+k-1$、$n=\lceil B/\delta\rceil\ge1$，把 $(0,B]$ 分为
+
+$$
+ I_r=((r-1)B/n,rB/n]\quad(1\le r\le n).
+\tag{18.8}
+$$
+
+由引理 18.2，$\Phi_k(D)\subseteq(0,B]^m$，故它至多占据 $n^m$
+个乘积格。对每个被占据的格，选一个实际来源 $R_C\in D$，其坐标落在该格。
+同格内任意 $S\in D$ 满足
+$d_{\mathrm{op}}(R_C,S)\le B/n\le\delta$。
+中心属于 $D$，故每个 $R_C\in\mathcal I_k(\gamma)$。
+按定义 14.1 选取一个全域 $\gamma$-可靠、在 $R_C$ 上全误差成功的协议，
+再在同一容限 $\gamma$ 下应用定理 14.2，得到 $\widehat\Pi_C$。
+它仍在 $R_C$ 上全误差成功，并在完整 $\mathcal M_k$ 上
+$\gamma$-可靠，所有 $\gamma$-允许历史均至多 $2k-1$ 读停止。
+
+此后保持 $\widehat\Pi_C$ 的全部规则不变，包括容限 $\gamma$ 的
+(13.5) 末端判定。定理 18.3 保证它在同格内每个 $S$ 的全部
+$\varepsilon$-误差历史上成功。所有这些协议组成 $F$；格数给出第一界。
+此处正规形只在选定中心协议时应用一次，邻近来源的转移使用的确为同一协议。
+
+对第二种有界性，置 $n=\lceil kB/\delta\rceil\ge1$，以 (18.8) 对全部
+$k^2$ 个矩阵条目分格。严格正来源的条目均落在 $(0,B]$。
+每个被占据的矩阵格选取 $R_C\in D$；同格 $S$ 满足
+$\|R_C-S\|_{\max}\le B/n\le\delta/k$。
+引理 18.2 遂给出 $d_{\mathrm{op}}(R_C,S)\le\delta$。
+重复同一中心协议选择、正规形和转移步骤，至多需要 $n^{k^2}$ 个成员。
+两种构造都只在有限个非空格中取中心，不要求 $D$ 闭或紧，也不把来源
+替换为可能不在 $\mathcal M_k$ 中的格点或极限来源。
+
+这里使用的集合内中心、闭半径有限网是通常的度量覆盖工具，见
+Roman Vershynin，[*High-Dimensional Probability*，第一版，§4.2，
+Definition 4.2.1--4.2.2](https://www.math.uci.edu/~rvershyn/papers/HDP-book/HDP-1.pdf)。
+格数计算是本证明的中间步骤；该文献不承担单轨迹的 (18.4) 或协议结论 (18.7)。
+后两者复用本模型的原子归约和定理 14.2，是本模型上的推导（repo-derived），
+不作外部首创性断言。
+
+(18.7) 只是充分的存在性上界，不主张最小值达到这些界。
+选中心和协议的存在性不提供格占据的判定算法、有限位实现或未知来源上的在线
+选择器，也不赋予运行者 $\Phi_k(R)$ 或完整矩阵。覆盖量词仍是每个来源至少
+有一个成功成员；不同成员没有合成一条实际运行。
+若把目标扩大到整个 $\mathcal I_k(\varepsilon)$，或只保留有界性而去掉
+$\mathcal I_k(\gamma)$ 前提，本证明不给出有限覆盖。∎
+
+### 命题 18.5（第 17 节实际来源的精确噪声范围与紧致边界）
+
+对每个固定有限 $\varepsilon>0$ 和每个 $s\in[0,1/2]$，有
+
+$$
+ \{\beta>0:R_{\varepsilon,s}\in\mathcal I_3(\beta)\}
+       =(0,\varepsilon].
+\tag{18.9}
+$$
+
+同一族 $K_\varepsilon=\{R_{\varepsilon,s}:0\le s\le1/2\}$
+是 $d_{\mathrm{op}}$ 下的紧集，满足
+$\|R\|_{\max}\le19\varepsilon$、$M(R)\le57\varepsilon$，但
+$\nu_{3,\varepsilon}(K_\varepsilon)=\infty$。
+因此有界性甚至紧致性都不能替代定理 18.4 的额外正容限前提；事实上，
+对每个 $\delta>0$，有 $K_\varepsilon\cap\mathcal I_3(\varepsilon+\delta)=\varnothing$。
+
+**证明。** 命题 17.3 给出在 $R_{\varepsilon,s}$ 上全
+$\varepsilon$-误差成功的全域可靠协议。对任意 $0<\beta\le\varepsilon$，
+同一协议在完整 $\mathcal M_3$ 上仍 $\beta$-可靠，且全 $\beta$-误差成功，
+证明 (18.9) 的一个包含，包括右端点。
+
+排除更大容限只需在单位来源 $R_s$ 上排除任意 $\alpha>1$。
+下文的 $\mathsf C_q$ 和 $P_\alpha$ 均取容限 $\alpha$，沿用
+(17.3) 的 $\tau_s,L_s,M,\rho_s$；这里标量 $M=39/2$ 仍是第 17 节
+的常数，与幅度函数 $M(R)$ 按有无自变量区分。
+固定同一个纯 $N$ 报告向量
+
+$$
+ p=(16,\tau_s,2)\in P_\alpha(R_s).
+\tag{18.10}
+$$
+
+事实上，真实纯 $N$ 向量为 $(15,18,1)$，各报告误差绝对值均至多 $1$。
+将证明 (14.7) 的全部三个共同来源系统均有严格正解。
+
+$q=0$ 时，取 $v=b^{(0)}(R_s)$。由 (17.11)，
+$v_2\le10<16<v_1$。故存在全部坐标严格正、和为 $1$ 的 $x$ 使
+$A_0(x,v)=16$，正如引理 17.4 的同一凸组合构造。
+未来坐标与 $R_s$ 完全相同，因而这是容限 $\alpha$ 下的
+$\mathsf C_0(R_s,16)$ 的严格正解。
+
+对其余两个切口，取 $0<t<(\alpha-1)/7$。
+$q=1$ 时置
+
+$$
+ \begin{aligned}
+ v&=(L_s,M,7),&x&=(\rho_s,1-\rho_s,t),\\
+ A_0(x,v)&=17+7t,&A_1(x,v)&=\tau_s+1,\\
+ v-b^{(1)}(R_s)&=(-2,-2,-2).
+ \end{aligned}
+\tag{18.11}
+$$
+
+由 $0<\rho_s<1$ 和 $L_s>0$，这组参数全部严格正且 $x_0+x_1=1$。
+两个旧报告误差的绝对值为 $1+7t<\alpha$、$1<\alpha$；
+未来真值差均为 $2<2\alpha$。所以 $\mathsf C_1(R_s,(16,\tau_s))$ 成立。
+
+$q=2$ 时置
+
+$$
+ \begin{aligned}
+ v&=(1-s,12,3),&x&=\left(1,\frac{\tau_s-13}{3},t\right),\\
+ (A_0,A_1,A_2)&=(17+3t,\tau_s-1,3),\\
+ (v_0-b_0^{(2)}(R_s),v_1-b_1^{(2)}(R_s))&=(-2,2).
+ \end{aligned}
+\tag{18.12}
+$$
+
+这些参数同样全部严格正，且 $x_0=1$。
+三个旧报告误差的绝对值为 $1+3t<\alpha$、$1$、$1$，未来两个真值差绝对值为
+$2<2\alpha$，故 $\mathsf C_2(R_s,p)$ 成立。
+这里 $A_2=v_2=3$ 始终使用旧报告 $p_2=2$，不再为 $b_2^{(2)}$ 选新报告。
+
+上述每组正解各给出一个实际严格正秩一来源 $S=xv^{\mathsf T}$。
+引理 14.4 在所选切口使用该同一个 $S$ 和全部旧报告，并以未来两个真值的
+中点给出共同补全。切口不同可有不同伴随；一条实际历史在选定切口后只使用
+其中一个固定来源。因而 (18.10)--(18.12) 正是 (14.7)，
+定理 14.5 排除 $R_s\in\mathcal I_3(\alpha)$，包括原先任意长的完整历史协议。
+
+若 $\beta>\varepsilon$ 时 $R_{\varepsilon,s}$ 有全域 $\beta$-可靠的成功协议，
+把单位来源的每份报告乘以 $\varepsilon$ 后交给该协议，便在 $R_s$ 上得到
+全 $\alpha$-误差成功协议，其中 $\alpha=\beta/\varepsilon>1$。
+正比例缩放是完整 $\mathcal M_3$ 上的保秩双射，故其全域
+$\alpha$-可靠性也保留，与刚证的排除矛盾。这完成 (18.9)。
+
+最后，(17.2) 的矩阵关于闭区间参数 $s$ 连续，分母 $44+s$ 不为零；
+引理 17.2 确保其每个值都是实际严格正两项、秩恰为二的来源。
+由闭区间的紧性及引理 18.2，像集 $K_\varepsilon$ 在所述距离下紧致。
+引理 17.2 的 $d_s<19$、$\lambda_s\le1$ 及其余显式条目给出
+$\|R_{\varepsilon,s}\|_{\max}\le19\varepsilon$，每个真值坐标至多是三个条目
+之和，故 $M(R_{\varepsilon,s})\le57\varepsilon$。
+引理 17.4 使任何一个全域 $\varepsilon$-可靠协议至多覆盖该族的一个成员，
+而 $s$ 由条目 $(R_{\varepsilon,s})_{00}=\varepsilon(3-s)$ 唯一确定，
+所以该无限族没有有限同容限覆盖。这个结论保留定理 17.5 的无条件障碍；
+(18.9) 则精确说明该实际族为何不满足 (18.6) 的增强前提。
+这是复用第 17 节实际来源和第 14 节共同来源判据的模型内推导（repo-derived）。∎
+
+## 追加锚（本行以下为增补区）
