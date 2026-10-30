@@ -51,15 +51,15 @@ commuting positive definite quadruple in dimension $2^{k+1}$ which has equal
 sum power traces at orders $1,\ldots,k+1$ and reverses the norm inequality at
 every $p\in(k,k+1)$.
 
-*Proof.*  The positive-integer implication is proved in Proposition 1.2
-below.  The quadruples in Sections 2 and 3 disprove $U(p)$ on every open
-interval $(k,k+1)$, and every noninteger $p\geq1$ lies in exactly one such
-interval. $\square$
-
-**Proposition 1.2 (positive integer orders).**  If $k\in\mathbb Z_{>0}$,
-then $U(k)$ holds.
-
-*Proof.*  Put $C=A_0+A_1$ and $D=B_0+B_1$.  The sums are positive
+*Proof.*  For the positive-integer direction, we reuse the ordered-word
+expansion argument in
+[the Alhejji--Knill problem dossier](../../../Problems/alhejji-knill-2024-fractional-schatten-alignment.md),
+Triage, “A weaker conclusion survives.”  The related argument in
+Alhejji--Knill, Theorem IV.7, proves integer-order spin alignment within
+their tensor-product family using Corollary IV.6; the dossier gives the
+general all-word implication used here.  Let $k\in\mathbb Z_{>0}$ and take
+any quadruple in the assertion $U(k)$.  Put $C=A_0+A_1$ and $D=B_0+B_1$.
+The sums are positive
 semidefinite.  Expanding the noncommutative product gives
 
 $$
@@ -81,7 +81,11 @@ $$
 
 For a positive semidefinite operator, $\lVert C\rVert_k^k=\operatorname{tr}(C^k)$.
 The map $x\mapsto x^{1/k}$ is increasing on $[0,\infty)$, so
-$\lVert D\rVert_k\leq\lVert C\rVert_k$. $\square$
+$\lVert D\rVert_k\leq\lVert C\rVert_k$, proving $U(k)$.
+
+The quadruples in Sections 2 and 3 disprove $U(p)$ on every open interval
+$(k,k+1)$, and every noninteger $p\geq1$ lies in exactly one such interval.
+$\square$
 
 ## 2. A parity-split construction
 
@@ -163,7 +167,7 @@ $$
 \Delta^q f(u)=\int_{[0,1]^q}f^{(q)}(u+t_1+\cdots+t_q)\,dt_1\cdots dt_q,
 $$
 
-and $f^{(q)}(x)=m!/(m-q)!,x^{m-q}\geq0$.
+and $f^{(q)}(x)=m!/(m-q)!\,x^{m-q}\geq0$.
 
 **Theorem 2.1 (all words and the higher interval).**  The quadruple (2.1)
 has equal individual spectra, satisfies the all-ordered-word hypotheses of
