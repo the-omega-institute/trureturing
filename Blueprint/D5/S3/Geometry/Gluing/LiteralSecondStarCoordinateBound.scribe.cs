@@ -57,5 +57,16 @@ internal sealed class LiteralSecondStarCoordinateBoundDocument : IScribeDocument
                             + "rank k is exactly 1/(k+1), so the resulting weighted expression "
                             + "is the i-th coordinate of x."))),
                 DescribeRole.Theorem)),
+            Describe.Lean(
+                DescribeId.Create("literal-second-star-coordinate-bound-sharp"),
+                DeclarationHandle.Create(Root + "literal_standard_closed_star_coordinate_bound_sharp"),
+                H("The 25/48 lower bound is attained"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For each original vertex, the equal-weight barycenter of the four "
+                        + "parent-flag vertices lies in the corresponding closed star and "
+                        + "has first coordinate exactly 25/48."))),
+                DescribeRole.Theorem)),
         []));
 }

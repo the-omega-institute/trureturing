@@ -44,9 +44,22 @@ If x belongs to the literal second closed star at the standard vertex i, then it
 
 The literal-to-parent-star correspondence supplies a permutation whose first flag entry is i. A convex-hull representation of x is expanded into coefficients on the four parent flag vertices. The parent-star characterization makes the zeroth coefficient maximal, and the parent linear estimate then gives the stated lower bound. The first coordinate of the parent flag vertex of rank k is exactly 1/(k+1), so the resulting weighted expression is the i-th coordinate of x.
 
+**Theorem 1.4 (The lower bound is attained).**
+
+Lean statement: `D5/S3/Geometry/Gluing/LiteralSecondStarCoordinateBound.literal_standard_closed_star_coordinate_bound_sharp`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Geometry/Gluing/LiteralSecondStarCoordinateBound.literal_standard_closed_star_coordinate_bound_sharp` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For each original vertex, take the equal-weight barycenter of the four vertices in a parent flag whose first entry is that original vertex. Equal parent weights place the point in the closed parent star; the literal-to-parent bridge places it in the literal second star. The first coordinate is the average of $1,1/2,1/3,1/4$, namely $25/48$.
+
 ## References
 
 - Truth anchor: `D5/S3/Geometry/Gluing/LiteralSecondStarCoordinateBound.literal_standard_closed_star_coordinate_bound`
+- Truth anchor: `D5/S3/Geometry/Gluing/LiteralSecondStarCoordinateBound.literal_standard_closed_star_coordinate_bound_sharp`
 - Truth anchor: `D5/S3/Geometry/Gluing/LiteralSecondStarCoordinateBound.standardVertices`
 - Truth anchor: `D5/S3/Geometry/Gluing/LiteralSecondStarCoordinateBound.standardVertices_affineIndependent`
 - Dependency: [D5/S3/Geometry/Gluing/LiteralBarycentricSubdivisionStar](LiteralBarycentricSubdivisionStar.md)

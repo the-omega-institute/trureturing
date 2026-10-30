@@ -158,4 +158,51 @@ theorem literal_standard_closed_star_coordinate_bound (i : Fin 4) (x : Fin 4 →
   norm_num [Fin.sum_univ_succ] at hxi
   linarith
 
+/-- The lower bound is attained at the barycenter of the four parent-flag
+vertices. Equal coefficients put this point in the closed parent star, and
+the full flag has coordinate average `25 / 48` at its first vertex. -/
+theorem literal_standard_closed_star_coordinate_bound_sharp (i : Fin 4) :
+    ∃ x ∈ literalClosedStar standardVertices i, x i = (25 : ℝ) / 48 := by
+  let π : Equiv.Perm (Fin 4) := Equiv.swap 0 i
+  have hπ : π 0 = i := by
+    simp [π, Equiv.swap_apply_def]
+  let q : Fin 4 → (Fin 4 → ℝ) :=
+    fun k => barycenter standardVertices (prefixFace π k)
+  let β : Fin 4 → ℝ := fun _ => (1 / 4 : ℝ)
+  let x : Fin 4 → ℝ := barycenter q (Finset.univ : Finset (Fin 4))
+  have hβnonneg : ∀ j, 0 ≤ β j := by
+    intro j
+    simp [β]
+  have hβsum : ∑ j, β j = 1 := by
+    norm_num [β, Fin.sum_univ_succ]
+  have hxrepr : x = ∑ j, β j • q j := by
+    calc
+      x = ∑ j, faceWeight (Finset.univ : Finset (Fin 4)) j • q j := by
+        simpa [x] using
+          (barycenter_eq_sum q (Finset.univ : Finset (Fin 4)))
+      _ = ∑ j, β j • q j := by
+        apply Finset.sum_congr rfl
+        intro j hj
+        congr 1
+        simp [β, faceWeight]
+  have hqaff : AffineIndependent ℝ q := by
+    simpa [q] using parent_flag_affineIndependent π
+  have hqstar : x ∈ closedStar q := by
+    apply ((actual_closed_and_open_star_iff q hqaff β hβnonneg hβsum x hxrepr).1).2
+    intro j hj
+    simp [β]
+  have hliteral : x ∈ literalClosedStar standardVertices i := by
+    exact ((literal_second_closed_and_open_star_iff
+      standardVertices standardVertices_affineIndependent i x).1).2
+      ⟨π, hπ, hqstar⟩
+  refine ⟨x, hliteral, ?_⟩
+  have hxi := congrArg (fun v => v i) hxrepr
+  simp only [Finset.sum_apply, Pi.smul_apply] at hxi
+  have hqcoord : ∀ k, q k i = (((k.val + 1 : ℕ) : ℝ)⁻¹) := by
+    intro k
+    exact prefix_coordinate π i hπ k
+  simp_rw [hqcoord] at hxi
+  norm_num [β, Fin.sum_univ_succ] at hxi ⊢
+  linarith
+
 end D5.S3.Geometry.Gluing.LiteralSecondStarCoordinateBound
