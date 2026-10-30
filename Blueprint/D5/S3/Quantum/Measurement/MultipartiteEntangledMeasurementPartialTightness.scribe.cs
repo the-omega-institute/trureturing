@@ -163,7 +163,10 @@ internal sealed class MultipartiteEntangledMeasurementPartialTightnessDocument :
                         + "d|R|/d + dⁿ − d|R|, independently of x. Summing over the dⁿ choices of x and dividing "
                         + "by d²ⁿ gives (dⁿ − d|R| + |R|)/dⁿ. With |R| = m, the GHZ density matrix, the clock-shift "
                         + "encodings and the selected projectors satisfy all five conclusions."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("tavakoli-abbott-renou-gisin-brunner-2018-multipartite-partial-tightness"),
+                    ResolutionKind.Proved)))));
 
     private static Formula JointIndexFormula() => Dimensions(Equal(
         LocalCall("jointIndex", X("n"), X("d")), Arrow(FinOf(X("n")), Residues())));
