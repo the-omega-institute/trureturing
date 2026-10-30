@@ -566,7 +566,7 @@ $H(b)=0$, then $H'(b)<0$.
 
 $$
 \nu=b-1,\qquad r=\sqrt{T_b}=j_{\nu,1},\qquad
-u_0=\frac{\nu}{r}.
+\rho=\frac{\nu}{r}.
 $$
 
 The identity
@@ -576,17 +576,17 @@ T_b-(b-1)^2=\frac{b^3+16b^2+9b-2}{3b+2}>0
 \tag{6.3}
 $$
 
-shows that $0<\nu_0<1$.  Moreover,
+shows that $0<\rho<1$.  Moreover,
 
 $$
-\frac{d}{db}\nu_0^2
+\frac{d}{db}\rho^2
  =\frac{(b-1)(13b^3+27b^2+16b+4)}
  {4b^2(b+1)^2(b+2)^2}>0,
 \tag{6.4}
 $$
 
-and $\nu_0^2|_{b=9}=232/495>7/15$.  Thus
-$\nu_0^2\ge7/15$ for every $b\ge9$.
+and $\rho^2|_{b=9}=232/495>7/15$.  Thus
+$\rho^2\ge7/15$ for every $b\ge9$.
 
 For $0<\vartheta<\pi/2$, the function
 $\vartheta/\sin\vartheta$ is strictly increasing.  We claim that
@@ -620,7 +620,7 @@ $$
 
 for the final comparison, $(41/50)^2(15/8)=5043/4000<81/64$.
 This proves (6.5).  Applying it to
-$\vartheta=\arccos\nu_0$ gives
+$\vartheta=\arccos\rho$ gives
 
 $$
 \frac{\arccos(\nu/r)}{\sqrt{r^2-\nu^2}}
@@ -664,7 +664,8 @@ $$
 \tag{6.11}
 $$
 
-Thus $r'(b)>23/20>9/8$.  At a zero of $H$, (6.10) and
+Since $T_b'>0$ for $b>0$, also $r'(b)>0$; hence
+$r'(b)>23/20>9/8$.  At a zero of $H$, (6.10) and
 $T_b'=2r r'$ imply
 
 $$
@@ -700,11 +701,12 @@ in $(9,31)$.
 
 Lemma 6.2 says that every zero in this interval has strictly negative
 derivative, so each is isolated and the function is positive immediately
-before it and negative immediately after it.  If two zeros existed, the
-finitely many zeros in the compact interval between the first and last
-would have two consecutive members; the sign just after the first and
-just before the second would then force another zero between them, a
-contradiction.  Therefore the zero is unique.  Since $H$ has no zero on
+before it and negative immediately after it.  The zero set in $[9,31]$ is
+compact, the endpoints are not zeros, and every interior point is isolated;
+therefore it is finite.  If two zeros
+existed, two consecutive members would therefore exist; the sign just
+after the first and just before the second would then force another zero
+between them, a contradiction.  Therefore the zero is unique.  Since $H$ has no zero on
 either side of $b_*$ and has the signs at $9$ and $31$ just proved, its
 signs are exactly (6.13). ∎
 
