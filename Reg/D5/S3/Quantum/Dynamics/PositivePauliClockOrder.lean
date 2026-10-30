@@ -212,7 +212,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have hz := h 0
   change star (Complex.exp (-Complex.I * (0 : ℂ))) * 0 = 1 at hz
-  simpa using hz
+  simp at hz
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
