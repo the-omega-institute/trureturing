@@ -1479,8 +1479,8 @@ $k\le\sqrt2$ choose $j=1$, $v=k/\sqrt2$, and otherwise a minimizing integer
 branch has $v=j$. The bound on $j$ is (7.24). The threshold $A$ in (9.19)
 is at least $A_0$, and $D\ge c_0$.
 
-For completeness the ideal-law upper error can be bounded with the same
-printed constants. Put $\mu=a+v$ and $\theta=v-\lfloor v\rfloor$. Its
+With $r=a+j$, $p=v/(a+v-1)$, and the core and tail energies $H_C,H_D$
+as in Lemma 9.3, put $\mu=a+v$ and $\theta=v-\lfloor v\rfloor$. The
 interpolated third moment is
 $f(\mu)=\mu^3+3\mu\theta(1-\theta)+\theta(1-\theta)(1-2\theta)$, so
 $0\le f(\mu)-\mu^3\le\mu$. Since $r\le2a$, $p\le1/4$,
@@ -1536,8 +1536,8 @@ W\ge Q(G)-\frac{Q(G)^2}{4N}
 \tag{9.25}
 $$
 
-The last inequality uses $4/\gamma^2=3+2\sqrt2<6$. This argument imposes
-no edgewise cutoff and makes no inference from the error term in (9.23).
+The last inequality uses $4/\gamma^2=3+2\sqrt2<6$. The estimate depends
+only on the energy sublevel and the ratios of this graph.
 Combining (9.24) with either case, and $C\ge C_7+6$, gives for every graph
 in the original class, and hence for its infimum,
 
