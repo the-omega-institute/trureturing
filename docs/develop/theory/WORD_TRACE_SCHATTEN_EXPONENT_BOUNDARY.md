@@ -2,8 +2,8 @@
 
 ## 1. The quantified assertion
 
-For a finite dimension $d$, let $mathcal H_d=mathbb C^d$.  If
-$A_0,A_1,B_0,B_1$ are positive semidefinite operators on $mathcal H_d$,
+For a finite dimension $d$, let $\mathcal H_d=\mathbb C^d$.  If
+$A_0,A_1,B_0,B_1$ are positive semidefinite operators on $\mathcal H_d$,
 write
 
 $$
