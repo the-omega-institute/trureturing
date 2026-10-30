@@ -101,10 +101,8 @@ private lemma back_substitution (n : ℕ) (a : Matrix (Fin n) (Fin n) ℝ)
     let p : Fin n := ⟨k + 1, hk⟩
     let r : Fin n := ⟨k, by omega⟩
     let c : ℝ := b r / a r p
-    let e : Fin n → ℝ := fun i => if i = p then c else 0
-    have he : a *ᵥ e = fun i => a i p * c := by
-      ext i
-      simp [Matrix.mulVec, dotProduct, e]
+    let e : Fin n → ℝ := Pi.single p c
+    have he : a *ᵥ e = fun i => a i p * c := Matrix.mulVec_single a p c
     have hp : a r p ≠ 0 := hs r p rfl
     have hr : ∀ i : Fin n, k ≤ i.val → (b - a *ᵥ e) i = 0 := by
       intro i hi
@@ -125,12 +123,12 @@ private lemma back_substitution (n : ℕ) (a : Matrix (Fin n) (Fin n) ℝ)
       have hip : i ≠ p := by intro h; have := congrArg Fin.val h; dsimp only [p] at this; omega
       change u i + e i = 0
       rw [hu0 i hi]
-      simp only [e, ite_eq_right hip, add_zero]
+      simp only [e, Pi.single_eq_of_ne hip, add_zero]
     · intro i hi
       have hip : i ≠ p := by intro h; subst i; exact (lt_irrefl _ hi)
       change u i + e i = 0
       rw [hus i (by omega)]
-      simp only [e, ite_eq_right hip, add_zero]
+      simp only [e, Pi.single_eq_of_ne hip, add_zero]
     · rw [Matrix.mulVec_add, hu, sub_add_cancel]
 
 private lemma chain_exists (α : ℕ → ℝ) (n : ℕ) (hn : 0 < n)
@@ -160,14 +158,13 @@ private lemma chain_exists (α : ℕ → ℝ) (n : ℕ) (hn : 0 < n)
         by_cases ht0 : t = 0
         · refine ⟨fun i => if i.val = 0 then 1 else 0, ?_, ?_, ?_⟩
           · rw [dite_eq_left ht0]
-            ext i
-            change (∑ l, a i l * (if l.val = 0 then 1 else 0)) = 0
-            apply Finset.sum_eq_zero
-            intro l _
-            by_cases hl : l.val = 0
-            · rw [ite_eq_left hl, mul_one]
-              exact ha i l (by change l.val ≤ i.val; omega)
-            · rw [ite_eq_right hl, mul_zero]
+            have he : (fun i : Fin n => if i.val = 0 then (1 : ℝ) else 0) =
+                Pi.single ⟨0, hn⟩ 1 := by
+              funext i
+              simp only [Pi.single_apply, Fin.ext_iff]
+            rw [he, Matrix.mulVec_single_one]
+            funext i
+            exact ha i ⟨0, hn⟩ (Nat.zero_le _)
           · intro i hi
             change (if i.val = 0 then 1 else 0) = _
             rw [ite_eq_left hi, ite_eq_left ht0]
