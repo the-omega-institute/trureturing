@@ -67,8 +67,7 @@ def choiceCoefficient (D : LatticeData) (α : Charge D) :
        else ((x.2 + 1).choose c.1.val : ℂ)) * choiceCoefficient D α c.2
 
 def transposeReadout (D : LatticeData) (B : LinearMap.BilinForm ℂ (Carrier D))
-    (α : Charge D) : (w : List (Index D)) → ℤ → Carrier D → Carrier D → ℂ
-  | w, m, u, v =>
+    (α : Charge D) (w : List (Index D)) (m : ℤ) (u v : Carrier D) : ℂ :=
       ∑ c ∈ (Finset.univ : Finset (WordChoice D w)),
         choiceCoefficient D α c *
           B u (((wordField D α (choiceLower D c))[[
@@ -195,11 +194,10 @@ private theorem transposeReadout_cons (D : LatticeData)
   rw [choice_cons_sum]
   apply Finset.sum_congr rfl
   intro c hc
+  have hw : wordWeight D (x :: w) = x.2 + 1 + wordWeight D w := rfl
   simp only [choiceCoefficient, choiceLower, choiceRetained, Fin.val_zero,
     Fin.val_succ, Nat.succ_ne_zero, if_pos, if_false, Nat.add_sub_cancel,
-    zero_add, wordWeight, List.map_cons, List.sum_cons, sourceWeight,
-    Nat.cast_add, Nat.cast_one, Nat.cast_zero]
-  rw [Fin.sum_univ_eq_sum_range]
+    zero_add, hw, Nat.cast_add, Nat.cast_one, Nat.cast_zero]
   have hm (s : ℕ) :
       2 * chargeEnergy D α + ((x.2 : ℤ) + 1 + (wordWeight D w : ℤ)) +
           ((s : ℤ) + 1 + (choiceRetained D c : ℤ)) - m - 2 =
@@ -209,14 +207,23 @@ private theorem transposeReadout_cons (D : LatticeData)
       (choiceRetained D c : ℤ) - m - 2 =
         (2 * chargeEnergy D α + (wordWeight D w : ℤ) +
           (choiceRetained D c : ℤ) - 2) + x.2 + 1 - m := by ring
-  simp only [hm, hz, wordField, insertion]
   rw [mul_add, Finset.mul_sum]
   conv_rhs => rw [add_comm]
   congr 1
-  · ring
-  · apply Finset.sum_congr rfl
-    intro s hs
+  · rw [hz]
     ring
+  · apply Finset.sum_bij (fun (r : Fin (x.2 + 1)) _ => r.val)
+    · intro r hr
+      exact Finset.mem_range.mpr r.isLt
+    · intro r hr t ht he
+      exact Fin.ext he
+    · intro r hr
+      exact ⟨⟨r, Finset.mem_range.mp hr⟩, Finset.mem_univ _, rfl⟩
+    · intro r hr
+      rw [hm]
+      change _ * _ * B u (((insertion D x.1 r.val
+        (wordField D α (choiceLower D c)))[[_]]) v) = _
+      ring
 
 theorem actual_word_transpose (D : LatticeData)
     (B : LinearMap.BilinForm ℂ (Carrier D)) (α : Charge D)
@@ -280,6 +287,7 @@ theorem actual_word_transpose (D : LatticeData)
       simp only [S, G, K, Finset.mul_sum]
       apply Finset.sum_congr rfl
       intro c hc
+      simp only [wordWeight]
       ring
 
 
@@ -649,11 +657,15 @@ private theorem choice_bounds (D : LatticeData) {w : List (Index D)}
       rcases c with ⟨r, c⟩
       obtain ⟨hle, heq⟩ := ih c
       have hr := r.isLt
-      simp only [choiceRetained, choiceLower, wordWeight, List.map_cons,
-        List.sum_cons, sourceWeight]
+      have hw : wordWeight D (x :: w) = x.2 + 1 + wordWeight D w := rfl
+      simp only [choiceRetained, choiceLower, hw]
       split_ifs with hz
-      · simp [hz, heq, hle]
-      · simp only [List.map_cons, List.sum_cons, sourceWeight, heq]
+      · simp only [hz, zero_add]
+        exact ⟨by omega, heq⟩
+      · change r.val + choiceRetained D c ≤ x.2 + 1 + wordWeight D w ∧
+          (r.val - 1 + 1 + wordWeight D (choiceLower D c)) =
+            r.val + choiceRetained D c
+        rw [heq]
         constructor <;> omega
 
 private theorem flow_X_polynomial (D : LatticeData) (α : Charge D)
@@ -715,12 +727,13 @@ private theorem flow_word_choices (D : LatticeData) (α : Charge D)
       apply Finset.sum_congr rfl
       intro c hc
       have hb := (choice_bounds D c).1
+      have hw : wordWeight D (x :: w) = x.2 + 1 + wordWeight D w := rfl
+      have hpoly (z : List (Index D)) : wordPolynomial D (x :: z) =
+          MvPolynomial.X x * wordPolynomial D z := rfl
       simp only [choiceRetained, choiceCoefficient, choiceLower, Fin.val_zero,
         Fin.val_succ, Nat.succ_ne_zero, if_pos, if_false, Nat.add_sub_cancel,
-        wordPolynomial, List.map_cons, List.prod_cons, wordWeight,
-        List.map_cons, List.sum_cons, sourceWeight, zero_add]
-      rw [Fin.sum_univ_eq_sum_range, add_mul, Finset.sum_mul]
-      rw [add_comm]
+        hpoly, hw, zero_add]
+      rw [add_mul, Finset.sum_mul, add_comm]
       congr 1
       · have he : x.2 + 1 + (wordWeight D w) - choiceRetained D c =
             (x.2 + 1) + (wordWeight D w - choiceRetained D c) := by omega
@@ -728,15 +741,23 @@ private theorem flow_word_choices (D : LatticeData) (α : Charge D)
         congr 1
         simp only [MvPolynomial.smul_eq_C_mul, map_mul]
         ring
-      · apply Finset.sum_congr rfl
-        intro r hr
-        have hr' := Finset.mem_range.mp hr
-        have he : x.2 + 1 + wordWeight D w - (r+1+choiceRetained D c) =
-            (x.2-r) + (wordWeight D w - choiceRetained D c) := by omega
-        rw [he, Polynomial.monomial_mul_monomial]
-        congr 1
-        simp only [MvPolynomial.smul_eq_C_mul, map_mul]
-        ring
+      · symm
+        apply Finset.sum_bij (fun (r : Fin (x.2 + 1)) _ => r.val)
+        · intro r hr
+          exact Finset.mem_range.mpr r.isLt
+        · intro r hr t ht he
+          exact Fin.ext he
+        · intro r hr
+          exact ⟨⟨r, Finset.mem_range.mp hr⟩, Finset.mem_univ _, rfl⟩
+        · intro r hr
+          have hr' := r.isLt
+          have he : x.2 + 1 + wordWeight D w - (r.val+1+choiceRetained D c) =
+              (x.2-r.val) + (wordWeight D w - choiceRetained D c) := by omega
+          rw [he, Polynomial.monomial_mul_monomial]
+          congr 1
+          simp only [wordPolynomial, List.map_cons, List.prod_cons,
+            MvPolynomial.smul_eq_C_mul, map_mul]
+          ring
 
 private theorem choice_divided_power (D : LatticeData) (hu : IsUnit D.G.det)
     (α : Charge D) (w : List (Index D)) (l : ℕ) :
@@ -764,9 +785,15 @@ private theorem parity_weight (q : ℤ) (R : ℕ) :
   | succ R ih =>
       rw [pow_succ, ← mul_assoc, ih]
       have he : Even (q + ((R+1 : ℕ) : ℤ)) ↔ ¬ Even (q + (R : ℤ)) := by
-        rw [Nat.cast_add, Nat.cast_one, Int.even_add_one]
+        rw [Nat.cast_add, Nat.cast_one, ← add_assoc, Int.even_add_one]
       unfold paritySign
-      split_ifs <;> simp_all
+      by_cases hq : Even (q + (R : ℤ))
+      · have hn : ¬ Even (q + ((R+1 : ℕ) : ℤ)) := fun h => he.mp h hq
+        rw [if_pos hq, if_neg hn]
+        norm_num
+      · have hn : Even (q + ((R+1 : ℕ) : ℤ)) := he.mpr hq
+        rw [if_neg hq, if_pos hn]
+        norm_num
 
 private def rightReadout (D : LatticeData) (B : LinearMap.BilinForm ℂ (Carrier D))
     (m : ℤ) (u v : Carrier D) : Carrier D →ₗ[ℂ] ℂ where
@@ -807,17 +834,19 @@ private theorem word_bpz (D : LatticeData) (hu : IsUnit D.G.det)
     change (l.factorial : ℂ)⁻¹ • rightReadout D B t u v
       ((sugawaraMode D (gramComplex D)⁻¹ 1 ^ l)
         (Finsupp.single α (wordPolynomial D w))) = _
-    rw [← map_smul, choice_divided_power, map_sum]
+    rw [← map_smul, choice_divided_power D hu, map_sum]
     apply Finset.sum_congr rfl
     intro c hc'
     split_ifs with he
     · rw [map_smul]
       change _ * B u (((Y D (Finsupp.single α (wordPolynomial D (choiceLower D c))))[[t]]) v) = _
       rw [← right_word_Y D B α hc]
-      congr 3
-      have hb := (choice_bounds D c).1
-      dsimp [t]
-      omega
+      have ht : t = 2 * chargeEnergy D α + (wordWeight D w : ℤ) +
+          (choiceRetained D c : ℤ) - m - 2 := by
+        have hb := (choice_bounds D c).1
+        dsimp [t]
+        omega
+      rw [ht]
     · simp
   simp_rw [term]
   rw [Finset.sum_comm]
@@ -875,7 +904,7 @@ private theorem basis_bpz_bound (D : LatticeData) (hu : IsUnit D.G.det)
   have hk := Module.End.pow_map_zero_of_le hlow
     (actual_sugawara_one_monomial_bound D hu α e (1 : ℂ))
   simp only [LinearMap.smul_apply, LinearMap.comp_apply, rightReadout, hk,
-    map_zero, mul_zero]
+    map_zero, Pi.zero_apply, LinearMap.zero_apply, mul_zero]
 
 /-- The existing original-carrier nilpotence cutoff, including the zero source. -/
 def sourceBound (D : LatticeData) (a : Carrier D) : ℕ :=
@@ -903,7 +932,7 @@ theorem actual_homogeneous_source_transpose (D : LatticeData) (hu : IsUnit D.G.d
   suffices h : F a = G a by
     simpa only [F, G, oppositeReadout, rightReadout, LinearMap.smul_apply,
       LinearMap.sum_apply, LinearMap.comp_apply, smul_eq_mul,
-      LinearMap.BilinForm.flip_apply] using h
+      LinearMap.BilinForm.flip_apply, LinearMap.coe_mk, AddHom.coe_mk] using h
   have singles : (∑ α ∈ a.support, Finsupp.single α (a α)) = a := Finsupp.sum_single a
   rw [← singles, map_sum, map_sum]
   apply Finset.sum_congr rfl
@@ -950,7 +979,7 @@ private theorem projection_bound (D : LatticeData) (a : Carrier D) (d : ℤ) :
       MvPolynomial.weightedTotalDegree (sourceWeight D) (a α) := Finset.sup_mono hs
   apply hdeg.trans
   by_cases hz : a α = 0
-  · simp [hz]
+  · simp [hz, MvPolynomial.weightedTotalDegree_zero]
   · exact Finset.le_sup (f := fun α =>
       MvPolynomial.weightedTotalDegree (sourceWeight D) (a α))
         (Finsupp.mem_support_iff.mpr hz)
@@ -986,6 +1015,6 @@ theorem actual_source_transpose (D : LatticeData) (hu : IsUnit D.G.det)
     simpa only [Finset.mem_range, not_lt] using hnot
   have hk := Module.End.pow_map_zero_of_le hlow
     (actual_sugawara_one_bound D hu (gradeProjection D d a))
-  simp only [hk, map_zero, mul_zero]
+  simp only [hk, map_zero, Pi.zero_apply, LinearMap.zero_apply, mul_zero]
 
 end D5.S3.VertexAlgebra.SourceBPZ
