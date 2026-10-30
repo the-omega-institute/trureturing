@@ -10,10 +10,6 @@ module
 
 public import Mathlib.Analysis.InnerProductSpace.PiL2
 public import Mathlib.LinearAlgebra.Matrix.PosDef
-public import Mathlib.LinearAlgebra.Matrix.Trace
-public import Mathlib.Tactic.FinCases
-public import Mathlib.Tactic.LinearCombination
-public import Mathlib.Tactic.NormNum
 public import Mathlib.Analysis.Normed.Module.PiTensorProduct.ProjectiveSeminorm
 public import Mathlib.LinearAlgebra.PiTensorProduct.Basis
 
