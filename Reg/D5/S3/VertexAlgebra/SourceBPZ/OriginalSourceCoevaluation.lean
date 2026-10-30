@@ -23,6 +23,23 @@ private def emptyLattice : LatticeData where
 private theorem emptyUnit : IsUnit emptyLattice.G.det := by
   simp [emptyLattice]
 
+private theorem emptyPositive : Matrix.PosDef (emptyLattice.G.map (Int.cast : ℤ → ℝ)) := by
+  constructor
+  · ext i j
+    exact Fin.elim0 i
+  · intro x hx
+    exact (hx (Subsingleton.elim x 0)).elim
+
+private def vacuumTest (D : LatticeData) : Module.Dual ℂ (Carrier D) :=
+  sourcePairing D (vacuum D)
+
+private def fixedVacuumTest (D : LatticeData) :
+    Module.Dual ℂ ↥(grade D 0 ⊓ fixedSpace D) :=
+  (vacuumTest D).comp (grade D 0 ⊓ fixedSpace D).subtype
+
+private theorem fixedVacuumTest_one (D : LatticeData) :
+    fixedVacuumTest D (gradeVacuum D) = 1 := sourcePairing_vacuum D
+
 namespace Coefficient
 structure Params where
   D : LatticeData
@@ -185,12 +202,33 @@ theorem sourceBridge : (type_of% (@coevaluation_pairing)) ↔ arena.Law actual :
 
 theorem source_actual : arena.Law actual := sourceBridge.mp (@coevaluation_pairing)
 
-/-- The original telescope and readout are retained. Variation, sensitivity,
-actual observational dependence and native binding remain required. -/
-theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena actual →
-    ObservationalDependence signature actual → Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
-      (@coevaluation_pairing) (Realization signature) Params Unit) :=
-  ⟨fun variation sensitivity dependence => {
+
+def bad : Realization signature := realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+private theorem rejectedLaw : ¬ arena.Law bad := by
+  intro h
+  have he := h emptyLattice emptyUnit emptyPositive 0 0 0
+  exact one_ne_zero he
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨emptyLattice, emptyUnit, emptyPositive, 0, fixedVacuumTest emptyLattice⟩,
+    0, gradeVacuum emptyLattice, ?_⟩
+  change sourcePairing _ (coevaluation _ _ _).val (0 : Carrier _) ≠
+    sourcePairing _ (coevaluation _ _ _).val (gradeVacuum _).val
+  rw [coevaluation_pairing _ emptyUnit emptyPositive, coevaluation_pairing _ emptyUnit emptyPositive]
+  simp only [map_zero, fixedVacuumTest_one]
+  exact zero_ne_one
+
+def family : Registration arena (type_of% (@coevaluation_pairing)) where
+  actual := actual
+  bridge := sourceBridge
+  variation := ⟨source_actual, bad, rejectedLaw⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual bad rejectedLaw
+  dependence := dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+    (@coevaluation_pairing) (type_of% (realize signature actual.readout actual.anchor)) Params Unit where
     unitName := `D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation.coevaluation_pairing.__information_unit
     realizationName := `Reg.D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation.Evaluation.family
     realizationSource := none
@@ -199,12 +237,7 @@ theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena a
     objectArena := .source ⟨arena⟩
     catalog := Lean.Name.anonymous
     localNames := false
-    realization := .source arena ⟨{
-      actual := actual
-      bridge := sourceBridge
-      variation := variation
-      sensitivity := sensitivity
-      dependence := dependence }⟩
+    realization := .source arena ⟨family⟩
     correspondence := { stage := .evidence, objectStage := .evidence }
     bundleNonempty := .absent
     readout := some (realize signature actual.readout actual.anchor)
@@ -215,9 +248,10 @@ theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena a
     sourceSelection := none
     continuation := .unknown
     familyRecord := none
-    options := #[] }⟩
+    options := #[]
 
-#print axioms sourceBridge
+
+#print axioms family
 end Evaluation
 
 namespace Contraction
@@ -251,12 +285,32 @@ theorem sourceBridge : (type_of% (@inverse_contraction)) ↔ arena.Law actual :=
 
 theorem source_actual : arena.Law actual := sourceBridge.mp (@inverse_contraction)
 
-/-- The original telescope and readout are retained. Variation, sensitivity,
-actual observational dependence and native binding remain required. -/
-theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena actual →
-    ObservationalDependence signature actual → Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
-      (@inverse_contraction) (Realization signature) Params Unit) :=
-  ⟨fun variation sensitivity dependence => {
+
+def bad : Realization signature := realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+private theorem rejectedLaw : ¬ arena.Law bad := by
+  intro h
+  have he := h emptyLattice emptyUnit emptyPositive 0 0 0 0 (by intro y; simp)
+  have ht := inverse_contraction emptyLattice emptyUnit emptyPositive 0 0 0 0 (by intro y; simp)
+  exact one_ne_zero (he.trans ht.symm)
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨emptyLattice, emptyUnit, emptyPositive, 0, fixedVacuumTest emptyLattice,
+    gradeVacuum emptyLattice, fun _ => rfl⟩, 0, fixedVacuumTest emptyLattice, ?_⟩
+  change (0 : ℂ) ≠ fixedVacuumTest emptyLattice (gradeVacuum emptyLattice)
+  rw [fixedVacuumTest_one]
+  exact zero_ne_one
+
+def family : Registration arena (type_of% (@inverse_contraction)) where
+  actual := actual
+  bridge := sourceBridge
+  variation := ⟨source_actual, bad, rejectedLaw⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual bad rejectedLaw
+  dependence := dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+    (@inverse_contraction) (type_of% (realize signature actual.readout actual.anchor)) Params Unit where
     unitName := `D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation.inverse_contraction.__information_unit
     realizationName := `Reg.D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation.Contraction.family
     realizationSource := none
@@ -265,12 +319,7 @@ theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena a
     objectArena := .source ⟨arena⟩
     catalog := Lean.Name.anonymous
     localNames := false
-    realization := .source arena ⟨{
-      actual := actual
-      bridge := sourceBridge
-      variation := variation
-      sensitivity := sensitivity
-      dependence := dependence }⟩
+    realization := .source arena ⟨family⟩
     correspondence := { stage := .evidence, objectStage := .evidence }
     bundleNonempty := .absent
     readout := some (realize signature actual.readout actual.anchor)
@@ -281,9 +330,10 @@ theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena a
     sourceSelection := none
     continuation := .unknown
     familyRecord := none
-    options := #[] }⟩
+    options := #[]
 
-#print axioms sourceBridge
+
+#print axioms family
 end Contraction
 
 namespace HalfAverage
@@ -318,12 +368,32 @@ theorem sourceBridge : (type_of% (@inverse_contraction_half_average)) ↔ arena.
 
 theorem source_actual : arena.Law actual := sourceBridge.mp (@inverse_contraction_half_average)
 
-/-- The original telescope and readout are retained. Variation, sensitivity,
-actual observational dependence and native binding remain required. -/
-theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena actual →
-    ObservationalDependence signature actual → Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
-      (@inverse_contraction_half_average) (Realization signature) Params Unit) :=
-  ⟨fun variation sensitivity dependence => {
+
+def bad : Realization signature := realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+private theorem rejectedLaw : ¬ arena.Law bad := by
+  intro h
+  have he := h emptyLattice emptyUnit emptyPositive 0 0 0 0 (by intro y; simp)
+  have ht := inverse_contraction_half_average emptyLattice emptyUnit emptyPositive 0 0 0 0 (by intro y; simp)
+  exact one_ne_zero (he.trans ht.symm)
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨emptyLattice, emptyUnit, emptyPositive, 0, vacuumTest emptyLattice,
+    gradeVacuum emptyLattice, fun _ => rfl⟩, 0, vacuumTest emptyLattice, ?_⟩
+  change (0 : ℂ) ≠ sourcePairing emptyLattice (vacuum emptyLattice) (vacuum emptyLattice)
+  rw [sourcePairing_vacuum]
+  exact zero_ne_one
+
+def family : Registration arena (type_of% (@inverse_contraction_half_average)) where
+  actual := actual
+  bridge := sourceBridge
+  variation := ⟨source_actual, bad, rejectedLaw⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual bad rejectedLaw
+  dependence := dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+    (@inverse_contraction_half_average) (type_of% (realize signature actual.readout actual.anchor)) Params Unit where
     unitName := `D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation.inverse_contraction_half_average.__information_unit
     realizationName := `Reg.D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation.HalfAverage.family
     realizationSource := none
@@ -332,12 +402,7 @@ theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena a
     objectArena := .source ⟨arena⟩
     catalog := Lean.Name.anonymous
     localNames := false
-    realization := .source arena ⟨{
-      actual := actual
-      bridge := sourceBridge
-      variation := variation
-      sensitivity := sensitivity
-      dependence := dependence }⟩
+    realization := .source arena ⟨family⟩
     correspondence := { stage := .evidence, objectStage := .evidence }
     bundleNonempty := .absent
     readout := some (realize signature actual.readout actual.anchor)
@@ -348,9 +413,10 @@ theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena a
     sourceSelection := none
     continuation := .unknown
     familyRecord := none
-    options := #[] }⟩
+    options := #[]
 
-#print axioms sourceBridge
+
+#print axioms family
 end HalfAverage
 
 namespace Negative
@@ -434,12 +500,38 @@ theorem sourceBridge : (type_of% (@coevaluation_vacuum)) ↔ arena.Law actual :=
 
 theorem source_actual : arena.Law actual := sourceBridge.mp (@coevaluation_vacuum)
 
-/-- The original telescope and readout are retained. Variation, sensitivity,
-actual observational dependence and native binding remain required. -/
-theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena actual →
-    ObservationalDependence signature actual → Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
-      (@coevaluation_vacuum) (Realization signature) Params Unit) :=
-  ⟨fun variation sensitivity dependence => {
+
+def bad : Realization signature := realize signature (fun _ p _ => gradeVacuum p.D) (fun e => nomatch e)
+
+private theorem rejectedLaw : ¬ arena.Law bad := by
+  intro h
+  have he := h emptyLattice emptyPositive 0
+  change gradeVacuum emptyLattice = (0 : ℂ) • gradeVacuum emptyLattice at he
+  rw [zero_smul] at he
+  have hc := congrArg (fixedVacuumTest emptyLattice) he
+  rw [fixedVacuumTest_one, map_zero] at hc
+  exact one_ne_zero hc
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨emptyLattice, emptyPositive⟩, 0, fixedVacuumTest emptyLattice, ?_⟩
+  change coevaluation _ 0 0 ≠ coevaluation _ 0 (fixedVacuumTest emptyLattice)
+  rw [coevaluation_vacuum _ emptyPositive, coevaluation_vacuum _ emptyPositive,
+    map_zero, zero_smul, fixedVacuumTest_one, one_smul]
+  intro he
+  have hc := congrArg (fixedVacuumTest emptyLattice) he
+  rw [map_zero, fixedVacuumTest_one] at hc
+  exact zero_ne_one hc
+
+def family : Registration arena (type_of% (@coevaluation_vacuum)) where
+  actual := actual
+  bridge := sourceBridge
+  variation := ⟨source_actual, bad, rejectedLaw⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual bad rejectedLaw
+  dependence := dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+    (@coevaluation_vacuum) (type_of% (realize signature actual.readout actual.anchor)) Params Unit where
     unitName := `D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation.coevaluation_vacuum.__information_unit
     realizationName := `Reg.D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation.Vacuum.family
     realizationSource := none
@@ -448,12 +540,7 @@ theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena a
     objectArena := .source ⟨arena⟩
     catalog := Lean.Name.anonymous
     localNames := false
-    realization := .source arena ⟨{
-      actual := actual
-      bridge := sourceBridge
-      variation := variation
-      sensitivity := sensitivity
-      dependence := dependence }⟩
+    realization := .source arena ⟨family⟩
     correspondence := { stage := .evidence, objectStage := .evidence }
     bundleNonempty := .absent
     readout := some (realize signature actual.readout actual.anchor)
@@ -464,9 +551,10 @@ theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena a
     sourceSelection := none
     continuation := .unknown
     familyRecord := none
-    options := #[] }⟩
+    options := #[]
 
-#print axioms sourceBridge
+
+#print axioms family
 end Vacuum
 
 namespace Signed
@@ -503,12 +591,32 @@ theorem sourceBridge : (type_of% (@inverse_contraction_signed)) ↔ arena.Law ac
 
 theorem source_actual : arena.Law actual := sourceBridge.mp (@inverse_contraction_signed)
 
-/-- The original telescope and readout are retained. Variation, sensitivity,
-actual observational dependence and native binding remain required. -/
-theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena actual →
-    ObservationalDependence signature actual → Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
-      (@inverse_contraction_signed) (Realization signature) Params Unit) :=
-  ⟨fun variation sensitivity dependence => {
+
+def bad : Realization signature := realize signature (fun _ _ _ => 1) (fun e => nomatch e)
+
+private theorem rejectedLaw : ¬ arena.Law bad := by
+  intro h
+  have he := h emptyLattice emptyUnit emptyPositive 0 0 0 0 (by intro y; simp)
+  have ht := inverse_contraction_signed emptyLattice emptyUnit emptyPositive 0 0 0 0 (by intro y; simp)
+  exact one_ne_zero (he.trans ht.symm)
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨⟨emptyLattice, emptyUnit, emptyPositive, 0, fixedVacuumTest emptyLattice,
+    gradeVacuum emptyLattice, fun _ => rfl⟩, 0, vacuumTest emptyLattice, ?_⟩
+  change (0 : ℂ) ≠ sourcePairing emptyLattice (vacuum emptyLattice) (vacuum emptyLattice)
+  rw [sourcePairing_vacuum]
+  exact zero_ne_one
+
+def family : Registration arena (type_of% (@inverse_contraction_signed)) where
+  actual := actual
+  bridge := sourceBridge
+  variation := ⟨source_actual, bad, rejectedLaw⟩
+  sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual bad rejectedLaw
+  dependence := dependence
+
+def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
+    (@inverse_contraction_signed) (type_of% (realize signature actual.readout actual.anchor)) Params Unit where
     unitName := `D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation.inverse_contraction_signed.__information_unit
     realizationName := `Reg.D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation.Signed.family
     realizationSource := none
@@ -517,12 +625,7 @@ theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena a
     objectArena := .source ⟨arena⟩
     catalog := Lean.Name.anonymous
     localNames := false
-    realization := .source arena ⟨{
-      actual := actual
-      bridge := sourceBridge
-      variation := variation
-      sensitivity := sensitivity
-      dependence := dependence }⟩
+    realization := .source arena ⟨family⟩
     correspondence := { stage := .evidence, objectStage := .evidence }
     bundleNonempty := .absent
     readout := some (realize signature actual.readout actual.anchor)
@@ -533,9 +636,10 @@ theorem auditAssembly : Nonempty (Variation arena actual → Sensitivity arena a
     sourceSelection := none
     continuation := .unknown
     familyRecord := none
-    options := #[] }⟩
+    options := #[]
 
-#print axioms sourceBridge
+
+#print axioms family
 end Signed
 
 end Reg.D5.S3.VertexAlgebra.SourceBPZ.OriginalSourceCoevaluation
