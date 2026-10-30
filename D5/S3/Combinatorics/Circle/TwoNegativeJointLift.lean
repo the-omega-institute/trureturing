@@ -5,14 +5,11 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange, mathlib/module/Mathlib.Data.Int.ModEq]
    utility: none
    digest: Native common-cut two-negative lift for the asymmetric dyadic source. -/
-module
-public import D5.S3.Combinatorics.Circle.RunFirstEarTransport
-public import D5.S3.Combinatorics.Circle.DyadicPrefix
+import D5.S3.Combinatorics.Circle.RunFirstEarTransport
+import D5.S3.Combinatorics.Circle.DyadicPrefix
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-
-@[expose] public section
 
 namespace D5.S3.Combinatorics.Circle.TwoNegativeJointLift
 open SourceWidth PeriodicShortening RunFirstEarTransport
