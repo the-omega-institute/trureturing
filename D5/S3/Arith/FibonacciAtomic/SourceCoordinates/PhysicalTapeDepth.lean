@@ -163,7 +163,9 @@ private theorem blank_shape (T : Source) : (decompose (blank T)).1 = (decompose 
 private theorem blank_leaves (T : Source) : leaves (blank T) = leaves T := by
   induction T with
   | of b => rfl
-  | mul a b iha ihb => change _ ++ _ = _; simp only [leaves, iha, ihb]
+  | mul a b iha ihb =>
+      change (leaves (blank a)).map (false :: ·) ++ (leaves (blank b)).map (true :: ·) = _
+      rw [iha, ihb]
 
 private theorem frontier_from_depth (V U : Source) (L : Nat)
     (hv : height V ≤ L) (hu : height U ≤ L)
