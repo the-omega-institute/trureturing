@@ -49,7 +49,7 @@ theorem sourceBridge :
 private def emptyLattice : LatticeData where
   rank := 0
   G := 0
-  symmetric := by intro i j; exact Fin.elim0 i
+  symmetric := by intro i j; rfl
   even_diagonal := by intro i; exact Fin.elim0 i
 
 private theorem rejectedLaw : ¬ arena.Law rejected := by
