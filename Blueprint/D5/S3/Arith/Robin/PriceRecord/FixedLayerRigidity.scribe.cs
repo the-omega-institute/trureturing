@@ -1,8 +1,8 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.Robin.PriceRecord;
 
-internal sealed class PriceRecordFixedLayerRigidityDocument : IScribeDocumentDefinition
+internal sealed class FixedLayerRigidityDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Ratios of fixed prime layers of actual positive-price predecessor records converge uniformly to their layer index.",
