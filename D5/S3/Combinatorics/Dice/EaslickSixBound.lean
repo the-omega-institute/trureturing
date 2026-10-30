@@ -74,7 +74,7 @@ private theorem generic_cycle_edge {α : Type} [Inhabited α] (E : α → α →
     (c : List α) (hc : (c ++ [c.head!]).IsChain (fun a b => E a b = true))
     (hk : 0 < c.length) (i : Fin c.length) :
     E c[i.val] (getElem c ((i.val+1)%c.length) (Nat.mod_lt _ hk)) = true := by
-  have h := (List.isChain_iff_getElem.mp hc) i.val (by simp; omega)
+  have h := (List.isChain_iff_getElem.mp hc) i.val (by simpa using i.isLt)
   by_cases hn : i.val+1 < c.length
   · simpa [List.getElem_append, i.isLt, hn, Nat.mod_eq_of_lt hn] using h
   · have heq : i.val+1 = c.length := by omega
@@ -106,7 +106,7 @@ theorem checkRank_sound {α : Type} [DecidableEq α] [Inhabited α]
     rcases List.mem_append.mp hx with hx | hx
     · exact hsub hx
     · have : x = c.head! := by simpa using hx
-      exact this ▸ hsub hh
+      simpa [this] using hsub hh
   let R := fun d e : α => r e ≤ r d
   letI : Trans R R R := ⟨fun h₁ h₂ => le_trans h₂ h₁⟩
   have hp : (c ++ [c.head!]).Pairwise R :=
@@ -149,7 +149,8 @@ theorem checkRank_sound {α : Type} [DecidableEq α] [Inhabited α]
   let z := (W (r c.head!)).2.2
   obtain ⟨i,hi,hia⟩ := List.mem_iff_getElem.mp ((hfull a).mpr hcut.1)
   obtain ⟨j,hj,hjd⟩ := List.mem_iff_getElem.mp ((hfull d).mpr hcut.2.1)
-  have hk : 0<c.length := List.length_pos_iff.mpr hne
+  have hk : 0<c.length := by
+    cases c with | nil => contradiction | cons a l => simp
   have hsi : getElem c ((i+1)%c.length) (Nat.mod_lt _ hk) = z :=
     (hcut.2.2.2 _ ((hfull _).mp (List.getElem_mem _))).1 (by
       simpa [a, hia] using generic_cycle_edge E c hc hk ⟨i,hi⟩)
