@@ -47,32 +47,37 @@ private theorem inventory (a b : ℕ) (ha : 2 ≤ a) (hab : a < b) :
   let P := List.range' (b - 1) a
   let Q := List.range' (a + b) (a - 1)
   have hU : U ++ [a - 1] = List.range a := by
-    simpa only [U, show a = (a - 1) + 1 by omega] using List.range_succ (a - 1)
+    simpa only [U, show a = (a - 1) + 1 by omega] using (List.range_succ (a - 1)).symm
   have hV : V ++ P = List.range' a (b - 1) := by
     dsimp [V, P]
-    convert List.range'_append_1 (s := a) (m := b - a - 1) (n := a) using 1 <;> congr 1 <;> omega
+    simpa only [show a + (b - a - 1) = b - 1 by omega,
+      show b - a - 1 + a = b - 1 by omega] using
+      List.range'_append_1 (s := a) (m := b - a - 1) (n := a)
   have hUV : (U ++ [a - 1]) ++ (V ++ P) = List.range (a + b - 1) := by
-    rw [hU, hV, List.range_eq_range']
+    rw [hU, hV]
+    simp only [List.range_eq_range']
     simpa only [Nat.zero_add, show a + (b - 1) = a + b - 1 by omega] using
       List.range'_append_1 (s := 0) (m := a) (n := b - 1)
   have hB : List.range (a + b - 1) ++ [a + b - 1] = List.range (a + b) := by
-    simpa only [show a + b = (a + b - 1) + 1 by omega] using List.range_succ (a + b - 1)
+    simpa only [show a + b = (a + b - 1) + 1 by omega] using (List.range_succ (a + b - 1)).symm
   have hQ : List.range (a + b) ++ Q = List.range (a + b + a - 1) := by
     dsimp [Q]
-    rw [List.range_eq_range']
+    simp only [List.range_eq_range']
     simpa only [Nat.zero_add, show a + b + (a - 1) = a + b + a - 1 by omega] using
       List.range'_append_1 (s := 0) (m := a + b) (n := a - 1)
   have hG : List.range (a + b + a - 1) ++ [a + b + a - 1] = List.range (a + b + a) := by
-    simpa only [show a + b + a = (a + b + a - 1) + 1 by omega] using List.range_succ (a + b + a - 1)
+    simpa only [show a + b + a = (a + b + a - 1) + 1 by omega] using (List.range_succ (a + b + a - 1)).symm
   have hall : (((U ++ [a - 1]) ++ (V ++ P)) ++ [a + b - 1]) ++ Q ++
       [a + b + a - 1] = List.range (a + b + a) := by
     rw [hUV, hB, hQ, hG]
-  rw [← hall]
-  apply Multiset.coe_eq_coe.mp
-  change ((P ++ (a + b + a - 1) :: Q ++ (a + b - 1) ::
-    (U ++ V) ++ [a - 1] : List ℕ) : Multiset ℕ) = _
-  simp only [List.coe_append, List.coe_cons, List.coe_singleton]
-  ac_rfl
+  have hx : (P ++ [a + b + a - 1] ++ Q ++ [a + b - 1] ++ U ++ V ++ [a - 1]).Perm
+      ((((U ++ [a - 1]) ++ (V ++ P)) ++ [a + b - 1]) ++ Q ++ [a + b + a - 1]) := by
+    apply Multiset.coe_eq_coe.mp
+    simp only [List.coe_append]
+    ac_rfl
+  rw [hall] at hx
+  simpa only [P, Q, U, V, List.append_assoc, List.singleton_append] using hx
+
 
 private def label (k : ℕ) (hk : 0 < k) (i : ℕ) : Fin k :=
   ⟨i % k, Nat.mod_lt i hk⟩
@@ -80,7 +85,8 @@ private def label (k : ℕ) (hk : 0 < k) (i : ℕ) : Fin k :=
 private theorem lift_order (k t : ℕ) (hk : 0 < k) (l : List ℕ)
     (hp : l.Perm (List.range k))
     (hs : InStrip (fun i => centered (modulus k) ((2 : ℤ) ^ i * t))
-      (modulus k / 2) 0 l) :
+      (modulus k / 2) 0 l)
+    (hz : ((List.range k).map (fun i => centered (modulus k) ((2 : ℤ) ^ i * t))).sum = 0) :
     OriginalOrder k t (l.map (label k hk)) := by
   let f := fun i : ℕ => centered (modulus k) ((2 : ℤ) ^ i * t)
   have hbase : (List.range k).map (label k hk) = List.finRange k := by
@@ -98,17 +104,14 @@ private theorem lift_order (k t : ℕ) (hk : 0 < k) (l : List ℕ)
     rw [List.map_map]
     exact List.map_congr_left hvalue
   refine ⟨by rw [← hbase]; exact hp.map _, ?_, ?_⟩
-  · have ht := (ZeroSumSubsets.source_cycle hk t).2.1
-    rw [← List.sum_finRange] at ht
-    have hp' := ((hp.map (label k hk)).map (actualSource k t)).sum_eq
-    rw [hbase] at hp'
-    exact hp'.trans ht
+  · rw [hm]
+    exact (hp.map f).sum_eq.trans hz
   · intro n
     have hv : ∀ i ∈ l.take n, actualSource k t (label k hk i) = f i :=
       fun i hi => hvalue i (List.mem_of_mem_take hi)
     have hm' := List.map_congr_left hv
     have hn := inStrip_prefix hs n
-    simpa only [← List.map_take, List.map_map, hm', zero_add, Set.mem_Icc] using hn
+    simpa only [← List.map_take, List.map_map, Function.comp_def, hm', zero_add, Set.mem_Icc] using hn
 
 private theorem marked_word (k cut : ℕ) (hk : 0 < k) (P R : List ℕ)
     (hlen : P.length = cut) (hp : (P ++ R).Perm (List.range k)) :
@@ -127,12 +130,12 @@ private theorem marked_word (k cut : ℕ) (hk : 0 < k) (P R : List ℕ)
   have hP := hcast P (fun i hi => hb i (List.mem_append_left R hi))
   have hR := hcast R (fun i hi => hb i (List.mem_append_right P hi))
   have hl : (P.map (label k hk)).length = cut := by simpa using hlen
+  have hlast : label (k + 1) (by omega) k = Fin.last k := by
+    apply Fin.ext
+    simp [label, Nat.mod_eq_of_lt (show k < k + 1 by omega)]
   simp only [earWord, List.map_append, ← hl, List.take_left, List.drop_left, hP, hR,
-    List.map_cons, List.map_append]
-  congr 1
-  congr 1
-  apply Fin.ext
-  simp [label, Nat.mod_eq_of_lt (show k < k + 1 by omega)]
+    List.map_cons, List.map_append, hlast, List.append_assoc, List.singleton_append]
+
 
 private theorem paired_chains (a b : ℕ) (ha : 2 ≤ a) (hab : a < b) :
     let r : ℤ := 2 ^ a
@@ -285,7 +288,9 @@ theorem actualSource_three_negative_equal_outer_joint_lift (a b : ℕ)
     rw [show a = (a - 1) + 1 by omega, pow_succ]
     ring
   have hq0 : 2 ≤ q := by omega
-  have htau : 1 ≤ tau := by dsimp [tau]; exact one_le_pow₀ (by norm_num)
+  have htau : 1 ≤ tau := by
+    dsimp [tau]
+    simpa using pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) (Nat.zero_le m)
   have hs : s = 2 * r * tau := by
     dsimp [s, r, tau]
     rw [show b = a + 1 + m by dsimp [m]; omega, pow_add, pow_add]
@@ -393,7 +398,11 @@ theorem actualSource_three_negative_equal_outer_joint_lift (a b : ℕ)
     have hi' := List.mem_range'.mp hi
     have he : i = a + b + (i - (a + b)) := by omega
     obtain ⟨hf, hg⟩ := hW (i - (a + b)) (by omega)
-    have hbase : 0 ≤ 2 * L - s - 1 := by dsimp [L]; nlinarith only [hL.1, hr, hs, htau]
+    have hbase : 0 ≤ 2 * L - s - 1 := by
+      have heq : 2 * L - s - 1 = s * (2 * r + 1) + 1 := by dsimp [L]; ring
+      rw [heq]
+      have hs0 : 0 ≤ s := by dsimp [s]; positivity
+      positivity
     rw [he, hf, hg]
     constructor <;> positivity
   have hTpos : ∀ i ∈ T, 0 ≤ f i ∧ 0 ≤ g i := by
@@ -432,10 +441,13 @@ theorem actualSource_three_negative_equal_outer_joint_lift (a b : ℕ)
   have hp : word.Perm (List.range k) := inventory a b ha hab
   have hplus : plus.Perm (List.range (k + 1)) := by
     have he : plus.Perm (word ++ [k]) := by
-      apply Multiset.coe_eq_coe.mp
-      dsimp [plus, word]
-      simp only [List.coe_append, List.coe_cons, List.coe_singleton]
-      ac_rfl
+      have he' : (P ++ [k - 1] ++ [k] ++ Q ++ [a + b - 1] ++ T ++ [a - 1]).Perm
+          ((P ++ [k - 1] ++ Q ++ [a + b - 1] ++ T ++ [a - 1]) ++ [k]) := by
+        apply Multiset.coe_eq_coe.mp
+        simp only [List.coe_append]
+        ac_rfl
+      simpa only [plus, word, List.append_assoc, List.singleton_append] using he'
+
     exact he.trans (by simpa only [List.range_succ] using hp.append_right [k])
   have hseed : ((1 + 2 ^ a + 2 ^ (a + b) : ℕ) : ℤ) = v := by
     push_cast; dsimp [v, r, s]; rw [pow_add]
@@ -460,8 +472,9 @@ theorem actualSource_three_negative_equal_outer_joint_lift (a b : ℕ)
     (by simpa only [hPsum.2] using hpnfirst) (by simpa only [hTsum.2] using htnlast) hzero'
   have hk : 0 < k := by dsimp [k]; omega
   refine ⟨word.map (label k hk), ?_, ?_⟩
-  · apply lift_order k (1 + 2 ^ a + 2 ^ (a + b)) hk word hp
-    simpa only [hseed, hhalf] using hold
+  · refine lift_order k (1 + 2 ^ a + 2 ^ (a + b)) hk word hp ?_ ?_
+    · simpa only [hseed, hhalf] using hold
+    · simpa only [hseed] using hzero
   · have he : earWord k (word.map (label k hk)) (a + 1) =
         plus.map (label (k + 1) (by omega)) := by
       have hpre : (P ++ [k - 1]).length = a + 1 := by simp [P]
@@ -472,8 +485,9 @@ theorem actualSource_three_negative_equal_outer_joint_lift (a b : ℕ)
       simpa only [hword, hplusword] using marked_word k (a + 1) hk
         (P ++ [k - 1]) (Q ++ (a + b - 1) :: T ++ [a - 1]) hpre (by rw [hword]; exact hp)
     rw [he]
-    apply lift_order (k + 1) (2 * (1 + 2 ^ a + 2 ^ (a + b))) (by omega) plus hplus
-    simpa only [Nat.cast_mul, Nat.cast_ofNat, hseed, hnewhalf] using hnew
+    refine lift_order (k + 1) (2 * (1 + 2 ^ a + 2 ^ (a + b))) (by omega) plus hplus ?_ ?_
+    · simpa only [Nat.cast_mul, Nat.cast_ofNat, hseed, hnewhalf] using hnew
+    · simpa only [Nat.cast_mul, Nat.cast_ofNat, hseed] using hzero'
 
 #print axioms actualSource_three_negative_equal_outer_joint_lift
 
