@@ -162,7 +162,7 @@ private theorem secondary_root_relations {z : ℂ}
     linear_combination hc - ht
   have hq := (mul_eq_zero.mp hf).resolve_left (sub_ne_zero.mpr hz_ne)
   have hi : β ^ 2 - β - 1 = β⁻¹ := by
-    apply (eq_inv_iff_mul_eq_one₀ tribonacciConstant_ne_zero).mpr
+    field_simp [tribonacciConstant_ne_zero]
     nlinarith [tribonacciConstant_cubic]
   have hquad : z ^ 2 + ((β - 1 : ℝ) : ℂ) * z + ((β⁻¹ : ℝ) : ℂ) = 0 := by
     rw [← hi]
@@ -228,11 +228,14 @@ private theorem resultant_three_embeddings {z : ℂ}
   have h123 := resultant_mul_left ((X - C (β : ℂ)) * (X - C z))
     (X - C (star z)) pc p.natDegree hn
   simp only [natDegree_X_sub_C, htwo, Nat.reduceAdd,
-    resultant_X_sub_C_left _ _ _ hn] at h12 h123
+    resultant_X_sub_C_left, hn] at h12 h123
   rw [h12] at h123
   have hmap := resultant_map_map cubic p cubic.natDegree p.natDegree (Int.castRingHom ℂ)
-  rw [hd, cubic_factorization hz hz_ne] at hmap
-  rw [← hmap, h123]
+  have hemb : (cubic.resultant p : ℂ) =
+      (cubic.map (Int.castRingHom ℂ)).resultant pc 3 p.natDegree := by
+    rw [← hd]
+    exact hmap.symm
+  rw [hemb, cubic_factorization hz hz_ne, h123]
   simp only [pc, eval_map]
   have hreal := hom_eval₂ (Int.castRingHom ℝ) Complex.ofRealHom p β
   have hconj := hom_eval₂ (Int.castRingHom ℂ) (starRingEnd ℂ) p z
