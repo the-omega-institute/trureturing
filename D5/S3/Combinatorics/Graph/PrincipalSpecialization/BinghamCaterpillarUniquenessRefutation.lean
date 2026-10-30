@@ -143,6 +143,7 @@ set_option maxHeartbeats 1600000 in
 -- Eight or seven successive finite-function sum expansions occur here.
 private lemma ps_eight {k : ℕ} (a : Parts 8) :
     ps (caterpillar a) k = eightSum (k:=k) (fun i c => blockWeight (a i) c) := by
+  classical
   rw [ps_spine_sum]
   simp_rw [eight_good]
   unfold eightSum
@@ -157,6 +158,7 @@ set_option maxHeartbeats 1600000 in
 -- Eight or seven successive finite-function sum expansions occur here.
 private lemma ps_seven {k : ℕ} (a : Parts 7) :
     ps (caterpillar a) k = sevenSum (k:=k) (fun i c => blockWeight (a i) c) := by
+  classical
   rw [ps_spine_sum]
   simp_rw [seven_good]
   unfold sevenSum
