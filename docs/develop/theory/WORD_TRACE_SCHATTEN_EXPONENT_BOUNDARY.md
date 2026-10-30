@@ -45,7 +45,8 @@ $$
 U(p)\quad\Longleftrightarrow\quad p\in\mathbb Z_{>0}.
 $$
 
-The reverse implication is witnessed, for every integer $k\geq1$, by one
+The failure of the noninteger direction is witnessed, for every integer
+$k\geq1$, by one
 commuting positive definite quadruple in dimension $2^{k+1}$ which has equal
 sum power traces at orders $1,\ldots,k+1$ and reverses the norm inequality at
 every $p\in(k,k+1)$.
