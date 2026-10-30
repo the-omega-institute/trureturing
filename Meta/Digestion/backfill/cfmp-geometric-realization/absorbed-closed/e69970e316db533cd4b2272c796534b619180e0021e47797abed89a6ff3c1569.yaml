@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:e69970e316db533cd4b2272c796534b619180e0021e47797abed89a6ff3c1569
+  normalized_sha256: sha256:e69970e316db533cd4b2272c796534b619180e0021e47797abed89a6ff3c1569
+cas_ref: sha256:e69970e316db533cd4b2272c796534b619180e0021e47797abed89a6ff3c1569
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/LocalMismatchCertificate.result
+    target_statement_id: sha256:ddc76dc8bbaf76f3f6b09d175d003bbe94f2e3e4ec5f30588da648568618f557
+receipts:
+  unresolved_subitems: []
