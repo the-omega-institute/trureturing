@@ -60,7 +60,7 @@ def thetaRepHom (D : LatticeData) :
       all_goals
         apply Equiv.ext
         intro v
-        simp [thetaPerm, theta_apply_involutive] }
+        norm_num [thetaPerm, theta_apply_involutive] }
 
 @[simp] theorem thetaRep_zero (D : LatticeData) :
     thetaRep D 0 = LinearEquiv.refl ℂ (Carrier D) := by
