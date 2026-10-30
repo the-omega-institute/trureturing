@@ -38,11 +38,6 @@ def WordChoice (D : LatticeData) : List (Index D) → Type
   | [] => PUnit
   | x :: w => Fin (x.2 + 2) × WordChoice D w
 
-instance wordChoiceFinite (D : LatticeData) (w : List (Index D)) : Finite (WordChoice D w) := by
-  induction w with
-  | nil => change Finite PUnit; infer_instance
-  | cons x w ih => change Finite (Fin (x.2 + 2) × WordChoice D w); infer_instance
-
 instance wordChoiceFintype (D : LatticeData) (w : List (Index D)) : Fintype (WordChoice D w) :=
   by
     induction w with
@@ -74,75 +69,6 @@ def transposeReadout (D : LatticeData) (B : LinearMap.BilinForm ℂ (Carrier D))
             2 * chargeEnergy D α + (wordWeight D w : ℤ) +
               (choiceRetained D c : ℤ) - m - 2]]) v)
 
-theorem word_choice_charge (D : LatticeData) (α β : Charge D)
-    (w : List (Index D)) (n : ℤ) (v : Oscillator D) :
-    ∃ p : Oscillator D,
-      ((wordField D α w)[[n]]) (Finsupp.single β v) = Finsupp.single (α + β) p := by
-  classical
-  have neutral (x : Index D) (m : ℤ) (δ : Charge D) (p : Oscillator D) :
-      ∃ q : Oscillator D,
-        ((dividedDerivative x.2 (neutralField D x.1))[[m]])
-            (Finsupp.single δ p) = Finsupp.single δ q := by
-    refine ⟨((Ring.choose (-m - 1 + x.2) x.2 : ℤ) : ℂ) •
-        neutralPolynomialMode D x.1 δ (m - x.2) p, ?_⟩
-    change Ring.choose (-m - 1 + x.2) x.2 •
-      HVertexOperator.coeff (neutralField D x.1) (-m - 1 + x.2)
-        (Finsupp.single δ p) = _
-    rw [VertexOperator.coeff_eq_ncoeff, neutralField_ncoeff, neutralMode_single,
-      show -(-m - 1 + x.2) - 1 = m - x.2 by omega]
-    simp only [LinearMap.smul_apply, ← Finsupp.smul_single, Int.cast_smul_eq_zsmul]
-  induction w generalizing n β v with
-  | nil =>
-      rw [wordField, actualField, VertexOperator.ncoeff_of_coeff,
-        (actual_creation_coefficient_transport D α α).2.2.1]
-      refine ⟨epsilon D α β • ∑ d ∈ (translatedPolynomial D α v).support,
-        (translatedPolynomial D α v).coeff d •
-          creationCoeff D α (-n - 1 - bilinear D α β + d), ?_⟩
-      simp [rawSingle]
-  | cons x tail ih =>
-      rw [wordField, (normalMinusOne _ _).2]
-      have left : ∃ p : Oscillator D,
-          (∑ᶠ j : ℕ,
-            ((dividedDerivative x.2 (neutralField D x.1))[[ -(j : ℤ) - 1]])
-              (((wordField D α tail)[[n + j]]) (Finsupp.single β v))) =
-            Finsupp.single (α + β) p := by
-        refine finsum_induction (fun z => ∃ p : Oscillator D,
-            z = Finsupp.single (α + β) p) ?_ ?_ ?_
-        · exact ⟨0, by simp⟩
-        · intro a b ha hb
-          obtain ⟨p, hp⟩ := ha
-          obtain ⟨q, hq⟩ := hb
-          refine ⟨p + q, ?_⟩
-          rw [hp, hq, ← Finsupp.single_add]
-        · intro j
-          obtain ⟨r, hr⟩ := ih (n := n + j) (β := β) v
-          obtain ⟨s, hs⟩ := neutral x (-(j : ℤ) - 1) (α + β) r
-          refine ⟨s, ?_⟩
-          rw [hr, hs]
-      have right : ∃ p : Oscillator D,
-          (∑ᶠ j : ℕ,
-            ((wordField D α tail)[[n - j - 1]])
-              (((dividedDerivative x.2 (neutralField D x.1))[[j]])
-                (Finsupp.single β v))) =
-            Finsupp.single (α + β) p := by
-        refine finsum_induction (fun z => ∃ p : Oscillator D,
-            z = Finsupp.single (α + β) p) ?_ ?_ ?_
-        · exact ⟨0, by simp⟩
-        · intro a b ha hb
-          obtain ⟨p, hp⟩ := ha
-          obtain ⟨q, hq⟩ := hb
-          refine ⟨p + q, ?_⟩
-          rw [hp, hq, ← Finsupp.single_add]
-        · intro j
-          obtain ⟨r, hr⟩ := neutral x j β v
-          obtain ⟨s, hs⟩ := ih (n := n - j - 1) (β := β) r
-          refine ⟨s, ?_⟩
-          rw [hr, hs]
-      obtain ⟨p, hp⟩ := left
-      obtain ⟨q, hq⟩ := right
-      refine ⟨p + q, ?_⟩
-      rw [hp, hq, ← Finsupp.single_add]
-
 private theorem zero_single (D : LatticeData) (i : Fin D.rank)
     (β : Charge D) (p : Oscillator D) :
     neutralMode D i 0 (Finsupp.single β p) =
@@ -158,7 +84,9 @@ private theorem word_zero (D : LatticeData) (α : Charge D)
   induction z using Finsupp.induction with
   | zero => simp
   | single_add β p z absent nonzero ih =>
-      obtain ⟨q, hq⟩ := word_choice_charge D α β w t p
+      obtain ⟨q, hq⟩ := LatticeSectorIntertwiner.word_charge D α β w t p
+      change Finsupp.single (α + β) q = _ at hq
+      have hq := hq.symm
       have hb : (bilinear D (unitCharge D i) (α + β) : ℂ) =
           (bilinear D (unitCharge D i) α : ℂ) +
             (bilinear D (unitCharge D i) β : ℂ) := by
@@ -316,52 +244,6 @@ private theorem cutoff_current (D : LatticeData) (U : ℕ) (u : Carrier D)
     WordCutoff D U (neutralMode D i k u) := by
   intro j l hl
   rw [current_same_sign D j i l k (Or.inr ⟨by omega, hk⟩), hu j l hl, map_zero]
-
-private def coefficient (p : ℕ) (k : ℤ) : ℂ :=
-  ((Ring.choose (-k-1) p : ℤ) : ℂ)
-
-private theorem derivative_mode (D : LatticeData) (i : Fin D.rank) (p : ℕ) (m : ℤ) :
-    ((dividedDerivative p (neutralField D i))[[m]]) =
-      coefficient p (m-p) • neutralMode D i (m-p) := by
-  apply LinearMap.ext
-  intro v
-  change Ring.choose (-m-1+p) p •
-    HVertexOperator.coeff (neutralField D i) (-m-1+p) v = _
-  rw [VertexOperator.coeff_eq_ncoeff, neutralField_ncoeff]
-  rw [show -(-m-1+p)-1 = m-p by omega]
-  simp only [coefficient, LinearMap.smul_apply, Int.cast_smul_eq_zsmul]
-  congr 2; omega
-
-private theorem coefficient_zero_band (p : ℕ) (k : ℤ)
-    (hk : -(p : ℤ) ≤ k) (hn : k < 0) : coefficient p k = 0 := by
-  have ha : 0 ≤ -k-1 := by omega
-  obtain ⟨a, he⟩ := Int.eq_ofNat_of_zero_le ha
-  have hb : a < p := by omega
-  simp [coefficient, he, Ring.choose_natCast, Nat.choose_eq_zero_of_lt hb]
-
-private theorem forward_finite (D : LatticeData) (L F : VertexOperator ℂ (Carrier D))
-    (m : ℤ) (u : Carrier D) :
-    Function.HasFiniteSupport (fun t : ℕ => (L[[-(t : ℤ)-1]]) ((F[[m+t]]) u)) := by
-  refine BddAbove.finite (bddAbove_def.mpr ?_)
-  refine ⟨(-((HahnModule.of ℂ).symm (F u)).order-m).toNat, ?_⟩
-  intro t ht
-  contrapose! ht
-  have hz : (F[[m+t]]) u = 0 := by
-    apply VertexOperator.ncoeff_eq_zero_of_lt_order
-    omega
-  simp [hz]
-
-private theorem reverse_finite (D : LatticeData) (L F : VertexOperator ℂ (Carrier D))
-    (m : ℤ) (u : Carrier D) :
-    Function.HasFiniteSupport (fun t : ℕ => (F[[m-t-1]]) ((L[[t]]) u)) := by
-  refine BddAbove.finite (bddAbove_def.mpr ?_)
-  refine ⟨(-((HahnModule.of ℂ).symm (L u)).order-1).toNat, ?_⟩
-  intro t ht
-  contrapose! ht
-  have hz : (L[[t]]) u = 0 := by
-    apply VertexOperator.ncoeff_eq_zero_of_lt_order
-    omega
-  simp [hz]
 
 private theorem scalar_offsets (D : LatticeData) (B : LinearMap.BilinForm ℂ (Carrier D))
     (i : Fin D.rank)

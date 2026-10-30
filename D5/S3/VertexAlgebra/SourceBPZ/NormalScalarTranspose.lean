@@ -37,10 +37,10 @@ def insertion (D : LatticeData) (i : Fin D.rank) (p : ℕ)
     (F : VertexOperator ℂ (Carrier D)) : VertexOperator ℂ (Carrier D) :=
   (normalMinusOne (dividedDerivative p (neutralField D i)) F).1
 
-private def coefficient (p : ℕ) (k : ℤ) : ℂ :=
+def coefficient (p : ℕ) (k : ℤ) : ℂ :=
   ((Ring.choose (-k-1) p : ℤ) : ℂ)
 
-private theorem derivative_mode (D : LatticeData) (i : Fin D.rank) (p : ℕ) (m : ℤ) :
+theorem derivative_mode (D : LatticeData) (i : Fin D.rank) (p : ℕ) (m : ℤ) :
     ((dividedDerivative p (neutralField D i))[[m]]) =
       coefficient p (m-p) • neutralMode D i (m-p) := by
   apply LinearMap.ext
@@ -52,7 +52,7 @@ private theorem derivative_mode (D : LatticeData) (i : Fin D.rank) (p : ℕ) (m 
   simp only [coefficient, LinearMap.smul_apply, Int.cast_smul_eq_zsmul]
   congr 2; omega
 
-private theorem coefficient_zero_band (p : ℕ) (k : ℤ)
+theorem coefficient_zero_band (p : ℕ) (k : ℤ)
     (hk : -(p : ℤ) ≤ k) (hn : k < 0) : coefficient p k = 0 := by
   have ha : 0 ≤ -k-1 := by omega
   obtain ⟨a, he⟩ := Int.eq_ofNat_of_zero_le ha
@@ -88,7 +88,7 @@ private theorem coefficient_at_zero (p : ℕ) :
   rw [show (-1 : ℤ) = -(1 : ℤ) by rfl, Ring.choose_neg]
   simp [Units.smul_def, Ring.choose_natCast]
 
-private theorem forward_finite (D : LatticeData) (L F : VertexOperator ℂ (Carrier D))
+theorem forward_finite (D : LatticeData) (L F : VertexOperator ℂ (Carrier D))
     (m : ℤ) (u : Carrier D) :
     Function.HasFiniteSupport (fun t : ℕ => (L[[-(t : ℤ)-1]]) ((F[[m+t]]) u)) := by
   refine BddAbove.finite (bddAbove_def.mpr ?_)
@@ -100,7 +100,7 @@ private theorem forward_finite (D : LatticeData) (L F : VertexOperator ℂ (Carr
     omega
   simp [hz]
 
-private theorem reverse_finite (D : LatticeData) (L F : VertexOperator ℂ (Carrier D))
+theorem reverse_finite (D : LatticeData) (L F : VertexOperator ℂ (Carrier D))
     (m : ℤ) (u : Carrier D) :
     Function.HasFiniteSupport (fun t : ℕ => (F[[m-t-1]]) ((L[[t]]) u)) := by
   refine BddAbove.finite (bddAbove_def.mpr ?_)
