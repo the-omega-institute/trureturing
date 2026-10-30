@@ -4,8 +4,8 @@ import Reg.Support.DependentFamily
 
 /-! The source-equivalence bridge retains the complete native telescope and the
 literal joint candidate. The law is an existential constructor; a lawful enrolled
-readout, whole-family variation/sensitivity, sourceSelection and current binding
-remain unresolved under issue #22063. This is not a Contract.Registration. -/
+readout selection and current source binding remain unresolved under issue
+#22063. The semantic variation, sensitivity and dependence are retained below. This is not a Contract.Registration. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -64,7 +64,41 @@ theorem bridge : sourceScope ↔ arena.Law actual := by
 theorem actual_law : arena.Law actual :=
   bridge.mp (@native_three_negative_common_cut)
 
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  obtain ⟨w, hw⟩ := h ⟨3, 2⟩ ⟨by decide, by decide⟩
+  exact hw
+
+private theorem actual_dependence : ObservationalDependence signature actual := by
+  intro i
+  let q : Source := ⟨3, 2⟩
+  obtain ⟨w, hw⟩ := actual_law q ⟨by decide, by decide⟩
+  refine ⟨q, w, (w.1, length q + 1), ?_⟩
+  change candidate q w ≠ candidate q (w.1, length q + 1)
+  intro he
+  have hbad : candidate q (w.1, length q + 1) := he ▸ hw
+  have hh := hbad.1
+  omega
+
+def source_registration : Registration arena sourceScope where
+  actual := actual
+  bridge := bridge
+  variation := ⟨actual_law, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact False.elim (hji (Subsingleton.elim _ _))
+    · intro e
+      exact nomatch e
+  dependence := actual_dependence
+
 #print axioms bridge
 #print axioms actual_law
+#print axioms source_registration
 
 end Reg.D5.S3.Combinatorics.Circle.ThreeNegativeCommonCut
