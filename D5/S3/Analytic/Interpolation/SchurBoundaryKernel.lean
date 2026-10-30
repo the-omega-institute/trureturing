@@ -604,7 +604,7 @@ private theorem rational_real_average (h : ℂ → ℂ) (hh : Differentiable ℂ
     have hzconj : conj z = z⁻¹ := (RCLike.inv_eq_conj hz').symm
     have hcj : conj (rationalKernel r z) =
         conj z / (1 + (r : ℂ) ^ 2 * conj z ^ 2) := by
-      simp only [rationalKernel, _root_.map_div, _root_.map_add, _root_.map_one,
+      simp only [rationalKernel, _root_.map_div₀, _root_.map_add, _root_.map_one,
         _root_.map_mul, _root_.map_pow, RCLike.conj_ofReal]
     have hcj' : conj (rationalKernel r z) = z / (z ^ 2 + (r : ℂ) ^ 2) := by
       rw [hcj, hzconj]
