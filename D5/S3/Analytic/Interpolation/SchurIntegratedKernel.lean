@@ -194,7 +194,7 @@ private theorem density_mean {t : ℝ} (ht : |t| < 1) :
     have hfun : poissonKernel 0 (t : ℂ) • (fun _ : ℂ => (1 : ℂ)) =
         (fun z : ℂ => poissonKernel 0 (t : ℂ) z • (1 : ℂ)) := by
       funext z
-      exact Pi.smul_apply' _ _
+      rfl
     rwa [hfun] at hp
   have hh := Complex.reCLM.circleAverage_comp_comm hi
   rw [hp'] at hh
