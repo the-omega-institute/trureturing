@@ -37,18 +37,21 @@ abbrev ReflectionGroup := ZMod 2
 def thetaRep (D : LatticeData) (g : ReflectionGroup) : Carrier D ≃ₗ[ℂ] Carrier D :=
   if g = 0 then LinearEquiv.refl ℂ (Carrier D) else theta D
 
+private def thetaPerm (D : LatticeData) (g : ReflectionGroup) : Equiv.Perm (Carrier D) :=
+  if g = 0 then Equiv.refl _ else (theta D).toEquiv
+
 /-- The cyclic order-two representation, with the additive `ZMod 2` law made
-multiplicative by the standard `Additive` type tag. -/
+visible through the standard `Additive` type tag on permutations. -/
 def thetaRepHom (D : LatticeData) :
-    ReflectionGroup →+ Additive (Carrier D ≃ₗ[ℂ] Carrier D) :=
-  { toFun := fun g => Additive.ofMul (thetaRep D g)
-    map_zero' := by simp [thetaRep]
+    ReflectionGroup →+ Additive (Equiv.Perm (Carrier D)) :=
+  { toFun := fun g => Additive.ofMul (thetaPerm D g)
+    map_zero' := by simp [thetaPerm]
     map_add' := by
       intro g h
       fin_cases g <;> fin_cases h <;>
         apply Additive.ext
         ext v
-        simp [thetaRep, theta_involutive] }
+        simp [thetaPerm, theta_involutive] }
 
 @[simp] theorem thetaRep_zero (D : LatticeData) :
     thetaRep D 0 = LinearEquiv.refl ℂ (Carrier D) := by
