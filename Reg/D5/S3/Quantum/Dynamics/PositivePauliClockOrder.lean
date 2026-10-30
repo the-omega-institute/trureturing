@@ -231,9 +231,9 @@ def source_registration : Registration arena (type_of% @phase_unit) where
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@D5.S3.Quantum.Dynamics.PositivePauliClockOrder.phase_unit) (Realization signature) Unit Unit := {
-  unitName := `D5.S3.Quantum.Dynamics.PositivePauliClockOrder.phase_unit.__information_unit
-  realizationName := `Reg.D5.S3.Quantum.Dynamics.PositivePauliClockOrder.PhaseUnit.source_registration
+      (@phase_unit) (Realization signature) Unit Unit := {
+  unitName := .str ``phase_unit "__information_unit"
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩

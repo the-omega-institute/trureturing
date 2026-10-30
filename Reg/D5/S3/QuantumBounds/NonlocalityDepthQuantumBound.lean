@@ -314,7 +314,7 @@ end
 end Reg.D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.ExpectationUpper
 
 namespace Reg.D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.AttainmentZeroNeOne
-open _root_.D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.Attainment (zero_ne_one)
+open _root_.D5.S3.QuantumBounds.NonlocalityDepthQuantumBound
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 set_option autoImplicit false
@@ -345,22 +345,22 @@ private theorem dependence : ObservationalDependence signature actual := by
   intro i
   refine ⟨1, (fun _ => 0), (fun _ => 1), ?_⟩
   intro h
-  have he := Eq.mp (congrFun h (fun _ => 1)) (zero_ne_one 1 (by decide))
+  have he := Eq.mp (congrFun h (fun _ => 1)) (Attainment.zero_ne_one 1 (by decide))
   exact he rfl
 
-def source_registration : Registration arena (type_of% @zero_ne_one) where
+def source_registration : Registration arena (type_of% @Attainment.zero_ne_one) where
   actual := actual
   bridge := Iff.rfl
-  variation := ⟨zero_ne_one, rejected, rejected_law⟩
+  variation := ⟨Attainment.zero_ne_one, rejected, rejected_law⟩
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected
     rejected_law
   dependence := dependence
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.Attainment.zero_ne_one) (Realization signature) Unit Unit := {
-  unitName := `D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.Attainment.zero_ne_one.__information_unit
-  realizationName := `Reg.D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.AttainmentZeroNeOne.source_registration
+      (@Attainment.zero_ne_one) (Realization signature) Unit Unit := {
+  unitName := .str ``Attainment.zero_ne_one "__information_unit"
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩

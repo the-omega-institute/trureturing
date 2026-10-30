@@ -31,7 +31,7 @@ abbrev arena : Arena where
 
 private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   intro h
-  exact h (fun _ : ULift.{u} Unit => (1 : ℂ)) (by simp [Matrix.trace])
+  exact h (fun _ : ULift.{u} Unit => (1 : ℂ)) (by simp [Matrix.trace, Matrix.vecMulVec_apply])
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -49,9 +49,9 @@ def source_registration : Registration arena.{u} (type_of% @vecPure_rank_one.{u}
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@D5.S3.Quantum.Information.LiTheilHarrowChuangPurifyCloneRefutation.vecPure_rank_one.{u}) (Realization signature) Unit Unit := {
-  unitName := `D5.S3.Quantum.Information.LiTheilHarrowChuangPurifyCloneRefutation.vecPure_rank_one.__information_unit
-  realizationName := `Reg.D5.S3.Quantum.Information.LiTheilHarrowChuangPurifyCloneRefutation.VecPureRankOne.source_registration
+      (@vecPure_rank_one.{u}) (Realization signature) Unit Unit := {
+  unitName := .str ``vecPure_rank_one "__information_unit"
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
