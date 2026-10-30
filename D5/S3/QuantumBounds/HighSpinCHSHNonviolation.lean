@@ -7,6 +7,7 @@
    digest: Local spin components satisfy the CHSH bound for every spin at least one. -/
 
 import D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment
+import D5.S3.Quantum.Dynamics.SpinCoupledEvenHypercubeGroverFixedPoint
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.QuantumBounds.LandauCommutingCollapse
 
@@ -104,14 +105,6 @@ private lemma slot_entry (n : ℕ) (r : Fin n) (u : Fin 3 → ℝ)
       (if y = x ∆ {r} then
         (u 0 : ℂ) + (if r ∈ x then I * (u 1 : ℂ) else -I * (u 1 : ℂ)) else 0) := rfl
 
-private lemma flip_ne (n : ℕ) (r : Fin n) (x : Finset (Fin n)) : x ∆ {r} ≠ x := by
-  intro h
-  exact Finset.singleton_ne_empty r (Finset.bot_eq_empty ▸ symmDiff_eq_left.mp h)
-
-private lemma flip_eq (n : ℕ) (r : Fin n) (x y : Finset (Fin n)) :
-    x = y ∆ {r} ↔ y = x ∆ {r} := by
-  exact eq_comm.trans (symmDiff_left_involutive {r}).eq_iff
-
 private lemma slot_left_mul {κ : Type*} (n : ℕ) (r : Fin n) (u : Fin 3 → ℝ)
     (m : Matrix (Finset (Fin n)) κ ℂ) (x : Finset (Fin n)) (y : κ) :
     (slotPauli n r u * m) x y =
@@ -129,15 +122,18 @@ private lemma slot_hermitian (n : ℕ) (r : Fin n) (u : Fin 3 → ℝ) :
   change star (slotPauli n r u y x) = slotPauli n r u x y
   by_cases hxy : x = y
   · subst y
-    have hf := flip_ne n r x
+    have hf : x ∆ {r} ≠ x := by
+      simpa only [ne_eq, symmDiff_eq_left, Finset.bot_eq_empty] using Finset.singleton_ne_empty r
     by_cases hr : r ∈ x <;> simp [slot_entry, hf.symm, hr]
   · by_cases hy : y = x ∆ {r}
     · subst y
-      have hf := flip_ne n r x
+      have hf : x ∆ {r} ≠ x := by
+        simpa only [ne_eq, symmDiff_eq_left, Finset.bot_eq_empty] using Finset.singleton_ne_empty r
       by_cases hr : r ∈ x <;>
         simp [slot_entry, hf, hf.symm, symmDiff_symmDiff_cancel_right,
           Finset.mem_symmDiff, hr]
-    · have hx : x ≠ y ∆ {r} := fun h => hy ((flip_eq n r x y).mp h)
+    · have hx : x ≠ y ∆ {r} :=
+        fun h => hy ((eq_comm.trans (symmDiff_left_involutive {r}).eq_iff).mp h)
       simp [slot_entry, hxy, Ne.symm hxy, hy, hx]
 
 private lemma slot_square (n : ℕ) (r : Fin n) (u : Fin 3 → ℝ) (hu : unit u) :
@@ -146,7 +142,8 @@ private lemma slot_square (n : ℕ) (r : Fin n) (u : Fin 3 → ℝ) (hu : unit u
     exact_mod_cast hu
   ext x y
   rw [slot_left_mul, slot_entry, slot_entry, symmDiff_symmDiff_cancel_right]
-  have hf := flip_ne n r x
+  have hf : x ∆ {r} ≠ x := by
+    simpa only [ne_eq, symmDiff_eq_left, Finset.bot_eq_empty] using Finset.singleton_ne_empty r
   by_cases hxy : x = y
   · subst y
     by_cases hr : r ∈ x <;>
@@ -182,18 +179,12 @@ private lemma absent_count (n k : ℕ) (r : Fin n) :
   rw [hf, Finset.card_powersetCard, Finset.card_erase_of_mem (Finset.mem_univ r),
     Finset.card_univ, Fintype.card_fin]
 
-private lemma flip_card_absent (n : ℕ) (r : Fin n) (x : Finset (Fin n)) (hr : r ∉ x) :
-    (x ∆ {r}).card = x.card + 1 := by
-  rw [Finset.symmDiff_eq_union (Finset.disjoint_singleton_right.mpr hr),
-    Finset.card_union_of_disjoint (Finset.disjoint_singleton_right.mpr hr),
-    Finset.card_singleton]
-
 private lemma absent_choose_identity (n k : ℕ) (hn : 0 < n) (hk : k ≤ n) :
     (n : ℝ) * ((n - 1).choose k : ℝ) = ((n : ℝ) - k) * (n.choose k : ℝ) := by
   have h := congrArg (fun m : ℕ => (m : ℝ)) (Nat.choose_mul_succ_eq (n - 1) k)
   rw [Nat.sub_add_cancel (by omega : 1 ≤ n)] at h
   push_cast [Nat.cast_sub hk] at h
-  nlinarith
+  simpa only [mul_comm] using h
 
 private lemma raising_coefficient (n k : ℕ) (hk : k < n) :
     ((n - 1).choose k : ℝ) * (1 / Real.sqrt (n.choose k : ℝ)) *
@@ -220,7 +211,7 @@ private lemma raising_coefficient (n k : ℕ) (hk : k < n) :
     have h := congrArg (fun m : ℕ => (m : ℝ)) (Nat.add_one_mul_choose_eq (n - 1) k)
     rw [Nat.sub_add_cancel (by omega : 1 ≤ n)] at h
     push_cast at h
-    nlinarith
+    simpa only [mul_comm] using h
   have hroot : (n : ℝ) * a = Real.sqrt q * Real.sqrt b * Real.sqrt c := by
     apply (sq_eq_sq₀ (by positivity) (by positivity)).mp
     calc
@@ -278,7 +269,8 @@ private lemma raising_compression (n : ℕ) (r : Fin n) :
     rw [raising_action, conjTranspose_apply]
     by_cases hr : r ∈ x
     · simp [hr]
-    · have hf := flip_card_absent n r x hr
+    · have hf :=
+        D5.S3.Quantum.Dynamics.SpinCoupledEvenHypercubeGroverFixedPoint.flip_card_not_mem x r hr
       by_cases hi : x.card = i.val <;> by_cases hij : i.val + 1 = j.val <;>
         simp [hd, hr, hf, hi, hij]
   simp_rw [he]
@@ -376,15 +368,18 @@ private lemma slot_decomposition (n : ℕ) (r : Fin n) (u : Fin 3 → ℝ) :
     he, hz]
   by_cases hxy : x = y
   · subst y
-    have hf := flip_ne n r x
+    have hf : x ∆ {r} ≠ x := by
+      simpa only [ne_eq, symmDiff_eq_left, Finset.bot_eq_empty] using Finset.singleton_ne_empty r
     by_cases hr : r ∈ x <;> simp [hr, Ne.symm hf]
   · by_cases hy : y = x ∆ {r}
     · subst y
-      have hf := flip_ne n r x
+      have hf : x ∆ {r} ≠ x := by
+        simpa only [ne_eq, symmDiff_eq_left, Finset.bot_eq_empty] using Finset.singleton_ne_empty r
       by_cases hr : r ∈ x <;>
         simp [Ne.symm hf, symmDiff_symmDiff_cancel_right, Finset.mem_symmDiff, hr,
           sub_eq_add_neg]
-    · have hx : x ≠ y ∆ {r} := fun h => hy ((flip_eq n r x y).mp h)
+    · have hx : x ≠ y ∆ {r} :=
+        fun h => hy ((eq_comm.trans (symmDiff_left_involutive {r}).eq_iff).mp h)
       simp [hxy, hy, hx]
 
 private lemma slot_compression (n : ℕ) (r : Fin n) (u : Fin 3 → ℝ) :
@@ -435,7 +430,8 @@ private lemma chsh_dilation (n : ℕ) (hn : 2 ≤ n) (a c b d : Fin 3 → ℝ) :
       ← pow_two]
   have hn0 : (n : ℂ) ≠ 0 := by exact_mod_cast (show n ≠ 0 by omega)
   have hscale : ((n : ℂ) / 2) ^ 2 * (2 / n : ℂ) ^ 2 = 1 := by
-    field_simp
+    rw [← mul_pow, div_mul_div_cancel₀ (by norm_num : (2 : ℂ) ≠ 0),
+      div_self hn0, one_pow]
   rw [lifted_expansion n hn a c b d]
   simp only [Matrix.mul_add, Matrix.mul_sub, Matrix.add_mul, Matrix.sub_mul,
     hk, ← smul_add, ← smul_sub,

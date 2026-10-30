@@ -160,7 +160,7 @@ private theorem flip_card_mem {d : ℕ} (σ : Finset (Fin d)) (k : Fin d) (h : k
   rw [he,card_erase_of_mem h]
   exact Nat.sub_add_cancel (card_pos.mpr ⟨k,h⟩)
 
-private theorem flip_card_not_mem {d : ℕ} (σ : Finset (Fin d)) (k : Fin d) (h : k ∉ σ) :
+theorem flip_card_not_mem {d : ℕ} (σ : Finset (Fin d)) (k : Fin d) (h : k ∉ σ) :
     ((symmDiff σ {k})).card = σ.card+1 := by
   have he : (symmDiff σ {k}) = insert k σ := by
     ext l
