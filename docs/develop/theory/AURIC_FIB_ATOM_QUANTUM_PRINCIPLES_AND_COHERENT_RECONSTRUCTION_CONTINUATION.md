@@ -4175,3 +4175,258 @@ $$
 [VI](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_VI.md) 定理 85.1 的可数群及连续纯投影空间模型只承诺其唯一制备、原菜单的全词终端律与逐分支可逆性；VI §§95–99 的停止取得和 [VII](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_VII.md) 的原完整历史／返回结论也保留各自来源、菜单和权重。这里没有给那些隐藏实现新增同一参考上的量子复合合同，故不能用 (71.1) 排除它们。类似地，[V18](AURIC_TRIANGULATION_COLLAPSE_AND_RECURSIVE_UNITARY_GATES_V18.md) 的三谱记录需要其自己的谱准备、相位和仪器；终端径向响应刚性不供应这些可读后继。复数域、线性酉振幅、固定 $K$、欧氏范数、站点因子化与初始化始终是本定理的输入。结论约束其中的概率响应接口，没有把完整量子起源或标准量子组合宣告为由原始关系单独导出。∎
 
 ## 追加锚（本行以下为增补区）
+## 73. 活跃代码交换下的联合 Born 刚性与全扇区泄漏边界
+
+**定义 73.1（完整响应与活跃代码合同）。** 保留定义 70.1 的十站点合法路径扇区 $H$、初态 $J|0,0\rangle=|1000100010\rangle$、地址字母表 $K_0,\ldots,K_6$、正向有限制备字 $W$、完整输出集
+
+$$
+\Omega_{10}=\{0,1\}^{10},\qquad \psi_W=WJ|0,0\rangle .
+$$
+
+令
+$P:S(H)\to\Delta(\Omega_{10})$
+为一个连续、全局相位不变且支撑保持的响应：
+
+$$
+P_w(e^{i\gamma}\psi)=P_w(\psi),\qquad
+\psi_w=0\Longrightarrow P_w(\psi)=0 .
+\tag{73.1}
+$$
+
+这里的单纯形假设只是普通的非负、归一化终端概率；它不解释概率为何存在。对每个有限 $W$ 假设原定义 70.1 的 Alice-$b_1$ 无信号条件
+
+$$
+\sum_{w:b_1=0}P_w(\psi_W)
+ =\sum_{w:b_1=0}P_w(K_5\psi_W).
+\tag{73.2}
+$$
+
+在代码坐标 $1=00,2=01,3=10,4=11$ 上定义
+
+$$
+p_i(\xi)=P_{J i}(J\xi),\qquad \xi\in\mathbb C^4,\quad \|\xi\|_2=1 .
+$$
+
+另加一个明确的活跃校准假设：对每个 $\pi\in S_4$ 和每个归一代码向量，
+
+$$
+p(\pi\xi)=\pi p(\xi).
+\tag{73.3}
+$$
+
+这里的 $\pi$ 是固定探测器标签上的响应函数等式，不是把被动标签重命名冒充为物理上已经执行的幅度交换门。假设 (73.3) 只在 $J(\mathbb C^4)$ 上量化。
+
+**定理 73.2（K5 加活跃 $S_4$ 的代码域联合响应刚性）。** 在定义 73.1 的条件下，(73.2) 与 (73.3) 蕴含
+
+$$
+p_i(\xi)=|\xi_i|^2\qquad(i=1,2,3,4)
+\tag{73.4}
+$$
+
+对每个归一 $\xi\in\mathbb C^4$ 成立。结论只涉及代码内四个输出；它不蕴含 $P$ 在其余 $1020$ 个输出或整个可达扇区上是 Born 响应。证明只使用 Bob 的 $I$ 与 $K_5$ 两个终端设置；$K_4$ 仍是制备字母表中的地址，但不需要另加为终端设置。
+
+**证明。** 写 $\xi=(u,v)\in\mathbb C^2\oplus\mathbb C^2$，其中 $u=(\xi_1,\xi_2)$ 是 $b_1=0$ 行，$v=(\xi_3,\xi_4)$ 是 $b_1=1$ 行，并置
+
+$$
+F(\xi)=p_1(\xi)+p_2(\xi),\qquad q_i=|\xi_i|^2 .
+$$
+
+由 (70.3)，任意代码向量 $J\xi$ 都有定义 70.1 的有限字列 $\psi_{W_n}$ 以整体相位收敛到它。连续性、(73.1) 以及 $K_5$ 的酉性把 (73.2) 延伸为
+
+$$
+F(T\xi)=F(\xi),\qquad T=K_Q\oplus K_Q,
+\tag{73.5}
+$$
+
+其中 $K_Q$ 是 (70.4) 的实际原生二维块。这个极限保留完整的 $1024$ 个输出；没有丢弃码外振幅，也没有把剩余概率重新归一。支撑保持只在理想代码向量上使码外概率为零，故此处 $\sum_{i=1}^4p_i=1$。更具体地，令完整事件差为
+
+$$
+D(\psi)=\sum_{w:b_1=0}P_w(K_5\psi)-\sum_{w:b_1=0}P_w(\psi).
+$$
+
+若 $\Delta=D(J\xi)=F(T\xi)-F(\xi)\ne0$，连续性给出 $J\xi$ 的邻域，使 $|D(\psi)-\Delta|<|\Delta|/2$。因此该邻域内 $D(\psi)$ 与 $\Delta$ 同号，且 $|D(\psi)|>|\Delta|/2$。由全局相位不变性和 (70.3)，某个实际有限正向字 $W$ 落入此相位对齐的邻域，给出同号严格差值。这只使用 $P$ 的连续性，不使用未知响应的 Born 误差界。
+
+令 $X=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$，并令
+
+$$
+A=X\oplus I_2,\qquad B=I_2\oplus X .
+$$
+
+由 (73.3) 的换位 $(12)$、$(34)$，分别有 $F(A\xi)=F(\xi)$ 与 $F(B\xi)=F(\xi)$。把块对 $(g,h)$ 与 $g\oplus h$ 识别，取实际矩阵生成的闭群
+
+$$
+\mathcal H=\overline{\langle (K_Q,K_Q),(X,I_2),(I_2,X)\rangle}
+ \ \subseteq U(2)\times U(2).
+$$
+
+这里 $\det X=-1$，所以两个换位确实属于所写的 $U(2)$ 因子。$F$ 对每个生成元不变；在任意单位向量上代入其逆像，便得对逆的不变性；逐次应用及连续性给出对整个 $\mathcal H$ 的不变性。
+
+以下直接在该群内取得独立的行作用。记 $\sigma_x=X$、$\sigma_y=\left(\begin{smallmatrix}0&-i\\i&0\end{smallmatrix}\right)$、$\sigma_z=\operatorname{diag}(1,-1)$。由实际原生块 (70.4) 及 $\zeta^5=-1$、$\zeta^{10}=1$，
+
+$$
+\begin{aligned}
+E:=K_Q^5&=2Q-I_2=n_x\sigma_x+n_z\sigma_z,\\
+n_x&=2x^{3/2},\qquad n_z=2x-1,\qquad x=\varphi^{-1},\\
+n_x^2+n_z^2&=1,\qquad n_xn_z\ne0.
+\end{aligned}
+\tag{73.6}
+$$
+
+因此 $E^2=I_2$，$E$ 为酉反射且 $\det E=-1$。置 $C=EXEX=(EX)^2$。因为 $EX$ 酉且行列式为一，$C\in SU(2)$；并有精确群字
+
+$$
+T^5AT^{-5}A=C\oplus I_2,\qquad
+T^5BT^{-5}B=I_2\oplus C .
+$$
+
+这是同一 $T=K_Q\oplus K_Q$ 的五次幂与 (73.3) 所给代码坐标换位的组合，没有单独把任何一行的 $X$ 换成 $iX$。令
+
+$$
+N_1=\{g\in SU(2):g\oplus I_2\in\mathcal H\}.
+$$
+
+它是闭子群，且含有 $C$。由 $EX=n_xI_2+i n_z\sigma_y$ 和 $x^2+x=1$，
+
+$$
+\begin{aligned}
+C&=(n_x^2-n_z^2)I_2+2i n_xn_z\sigma_y,\\
+\operatorname{tr}C&=4n_x^2-2=16x^3-2=32x-18=16\sqrt5-34.
+\end{aligned}
+$$
+
+该迹的代数共轭为 $-16\sqrt5-34<-2$。v15 引理 4.1 因而给出 $C$ 无限阶；其两个本征值的本征轴由上式及 $n_xn_z\ne0$ 确定，所以
+
+$$
+\overline{\langle C\rangle}
+ =\{\exp(it\sigma_y):t\in\mathbb R\}\subseteq N_1 .
+$$
+
+用 $T\in\mathcal H$ 共轭第一行的这个圆，仍在 $N_1$ 中。设 $\alpha=3\pi/5$；从 $K_Q=\zeta[I+(\zeta-1)Q]$ 直接相乘得到
+
+$$
+K_Q\sigma_yK_Q^*
+ =\cos\alpha\,\sigma_y
+   +\sin\alpha\,(n_z\sigma_x-n_x\sigma_z).
+$$
+
+因为 $\sin\alpha\ne0$ 且 $n_x^2+n_z^2=1$，$i\sigma_y$ 与 $iK_Q\sigma_yK_Q^*$ 在 $\mathfrak{su}(2)$ 中实线性无关。v15 引理 4.2 遂给出 $N_1=SU(2)$：这两个圆的生成元及其非零交换子张成 $\mathfrak{su}(2)$。对第二个精确群字使用相同论证，得到 $N_2=\{g\in SU(2):I_2\oplus g\in\mathcal H\}=SU(2)$；两个块作用相乘，故 $SU(2)\times SU(2)\subseteq\mathcal H$。
+
+因此 $F$ 在两行上分别具有独立的 $SU(2)$ 不变性。具体地，对单位列 $h=(h_0,h_1)^T$，矩阵 $U_h=\left(\begin{smallmatrix}h_0&-\overline h_1\\h_1&\overline h_0\end{smallmatrix}\right)\in SU(2)$ 把 $(1,0)^T$ 送到 $h$；这证明每个固定范数的复二维球面上传递，包括两向量只差相位的情形。零行无需选择方向。于是定义连续函数 $f:[0,1]\to[0,1]$ 为 $f(t)=F(\sqrt t,0,\sqrt{1-t},0)$，支撑保持及归一化给出
+
+$$
+F(\xi)=f(q_1+q_2),\qquad f(0)=0,\quad f(1)=1 .
+\tag{73.7}
+$$
+
+最后用 (73.3) 把同一式传到任意二元子集：对任意不同的 $i,j$，
+
+$$
+p_i(\xi)+p_j(\xi)=f(q_i+q_j).
+\tag{73.8}
+$$
+
+取 $\xi=(\sqrt a,\sqrt b,\sqrt{1-a-b},0)$，其中 $a,b\ge0$ 且 $a+b\le1$。支撑保持给出 $p_4=0$，所以 (73.8) 的子集 $\{1,4\}$、$\{2,4\}$ 和 $\{1,2\}$ 分别给出
+
+$$
+ p_1=f(a),\qquad p_2=f(b),\qquad f(a+b)=f(a)+f(b).
+\tag{73.9}
+$$
+
+非负性使 $f$ 单调；有理等分给出 $f(m/n)=m/n$，连续性再给 $f(t)=t$。于是所有二元和为 $q_i+q_j$，并对互异的 $i,j,k$ 有
+
+$$
+2p_i=(p_i+p_j)+(p_i+p_k)-(p_j+p_k)=2q_i .
+$$
+这就得到 (73.4)，也包括零坐标和单位端点。证毕。
+
+**推论 73.3（非 Born 代码响应的实际有限见证）。** 取定义 73.1 中除 (73.2) 外的全部响应、来源及菜单假设，特别保留连续性、全局相位不变性、支撑保持、完整 $1024$ 输出，以及对每个 $\pi\in S_4$ 和每个归一复代码向量成立的活跃协变 (73.3)。若代码上存在 $\xi$ 和 $i$ 使 $p_i(\xi)\ne|\xi_i|^2$，则存在字母表 $\{K_0,\ldots,K_6\}$ 上的实际有限正向制备字 $W$（允许空字），使
+
+$$
+\sum_{w:b_1=0}P_w(K_5\psi_W)
+ \ne\sum_{w:b_1=0}P_w(\psi_W).
+$$
+
+见证的字、长度和边缘间隙可依赖于 $P$；不存在由本推论给出的统一字长、统一间隙或有限样本认证。证明是定理 73.2 对“每个有限正向字 $W$ 均满足 (73.2)”的逆否命题。等价地，若所有理想代码向量的 $D(J\xi)$ 都为零，上述群论与可加性论证就给出代码 Born 律；故非 Born 响应必有某个 $\Delta=D(J\xi)\ne0$，再由 (73.5) 后的连续性论证返回同号、绝对值大于 $|\Delta|/2$ 的实际有限见证。
+
+**命题 73.4（既有 72.1 扰动不满足活跃交换）。** §72.1 的矩阵扰动在其余假设下保持边缘，但不满足 (73.3)。取
+
+$$
+M=\frac12\begin{pmatrix}1&1\\1&-1\end{pmatrix},\qquad
+q_{ab}=\frac14,\qquad |\det M|^2=\frac14,\qquad
+\tau=\frac{\lambda}{1024}>0 .
+$$
+
+交换代码坐标 $00$ 与 $01$ 时，振幅向量本身不变，而 (72.1) 的两个响应值为
+
+$$
+\widetilde P_{00}=\frac14+\tau,\qquad
+\widetilde P_{01}=\frac14-\tau .
+$$
+
+因此左侧 $p((12)\xi)=p(\xi)$，右侧 $(12)p(\xi)$ 却交换了两个不等值分量，活跃协变式失败。这个检验也说明被动标签重命名不能替代固定探测器上的主动幅度交换假设。
+
+**命题 73.5（较弱的行分块对称边界）。** 令
+
+$$
+G_{\rm row}=\{\pi\in S_4:\pi(\{1,2\})\in\{\{1,2\},\{3,4\}\}\},
+$$
+
+这是保留行分块 $\{1,2\}|\{3,4\}$ 的八元素群。对 $0<\lambda<1$，在每一行的无序对 $\{i,j\}$ 上定义
+
+$$
+ p_i=q_i+\lambda q_iq_j(q_i-q_j),\qquad
+ p_j=q_j-\lambda q_iq_j(q_i-q_j).
+\tag{73.10}
+$$
+
+两行分别使用同一公式。该响应连续、归一化、支撑保持、$G_{\rm row}$-协变，并保持两行和 $p_1+p_2=q_1+q_2$、$p_3+p_4=q_3+q_4$；但一般不等于 $q$。非负性来自
+$p_j\ge q_j(1-\lambda q_i)\ge0$
+及对称情形。故行分块稳定子不足以得到联合刚性；这里给出的是一个精确较弱对称边界，不主张任何普遍的最小子群结论。
+
+**命题 73.6（完整 $1024$ 输出的代码外反例）。** 在同一合法路径扇区上取两个输出字
+
+$$
+ u=1000000010,\qquad v=1000100010=J|0,0\rangle,
+$$
+
+它们均有 Alice 位 $b_1=0$，且 $u$ 在代码外。对任意归一 $\psi\in S(H)$ 写 $q_w(\psi)=|\psi_w|^2$，固定 $0<\lambda<1$，令
+
+$$
+ h(\psi)=\lambda q_u(\psi)q_v(\psi),
+$$
+
+并定义完整的 $1024$ 输出响应
+
+$$
+ P_u=q_u+h,\qquad P_v=q_v-h,\qquad P_w=q_w\quad(w\ne u,v).
+\tag{73.11}
+$$
+
+因为 $0\le h\le\lambda q_v$，所有分量非负且总和为一；(73.11) 连续、全局相位不变并支撑保持。修正项在同一 Alice 行内相消，所以 Alice 的完整边缘等于 Born 边缘；因而它满足 (73.2)，事实上对任意保持 $b_1$ 的 Bob 局部酉都满足同一行边缘恒等式。代码向量上 $q_u=0$，故 (73.11) 限制为 $p_i=q_i$，自动满足全 $S_4$ 代码协变。
+
+这个反例在实际有限原生字上已经偏离 Born。对单字 $W=K_3$，v15 的原生 $010$ 块给出
+
+$$
+K_3J|0,0\rangle=\alpha|1000000010\rangle+\beta|1000100010\rangle,
+\qquad |\alpha|^2=x=\varphi^{-1},\quad |\beta|^2=x^2=\varphi^{-2},
+\tag{73.12}
+$$
+
+其中 $\alpha=\zeta(\zeta-1)\varphi^{-3/2}$，$\beta=\zeta[1+(\zeta-1)\varphi^{-2}]$；这是同一实际三站点矩阵的两个块系数，且 $x+x^2=1$。因此 (73.11) 在此实际输出上给
+
+$$
+P_u=x+\lambda x^3,\qquad P_v=x^2-\lambda x^3,
+\tag{73.13}
+$$
+
+而其余 $1022$ 个原始输出仍按 (73.11) 保留。这是一个实际可达的全输出偏离，且不改变任何 Alice 行边缘；它证明代码上的主动协变不能推出整个可达扇区的响应刚性。
+
+**推论 73.7（范围、文献对应与未解决边界）。** 定理 73.2 比定理 71.1 使用更宽的响应类：不再假设一个共同的逐坐标径向函数，也不预设联合响应的形式；它只在代码上加入全归一复向量的活跃 $S_4$ 功能方程。相应结论更窄，只是 $J(\mathbb C^4)$ 上的四个联合 Born 概率。定理 71.1 的共同径向类仍给出其声明范围内全部有限制备字的必要充分条件；本节不替换它，也不把代码结论外推为全寄存器等价。
+
+证明消费 (70.3)–(70.4) 的原生十站点密度、(70.2) 的完整 $1024$ 输出事件和 v15 引理 4.1–4.2；只把 K5 的 $K_Q$ 用作无信号设置，未把 K4 当作额外终端设置。群论中只用实际的 $K_Q$、$K_Q^5$ 和换位；共轭时标量相位自行抵消，没有射影提升或额外的独立行相位不变性前提。独立 $SU(2)$ 行不变性及其对给定行向量相位的作用均是这些响应恒等式的推论，不把闭包中的矩阵供应为实际可执行控制。
+
+Freedman–Larsen–Wang，*The two-eigenvalue problem and density of Jones representation of braid groups*，arXiv:math/0103200，DOI 10.1007/s002200200636，第 6 节定理 6.2，供应 (70.3) 所复用的同一 Fibonacci 码逼近；不使用未知 $P$ 的 Born 误差估计。Busch，*Quantum states and generalized observables: a simple proof of Gleason’s theorem*, Phys. Rev. Lett. **91** (2003), 120403，DOI 10.1103/PhysRevLett.91.120403，讨论全效果域的可加概率；本节只使用一个完整终端响应的有限事件和普通单纯形。Zurek，*Probabilities from Entanglement, Born’s Rule from Envariance*, Phys. Rev. A **71** (2005), 052105，arXiv:quant-ph/0405161；Barnum，*No-signalling-based version of Zurek’s derivation of quantum probabilities: A note on “Environment-assisted invariance, entanglement, and probabilities in quantum physics”*, arXiv:quant-ph/0312150v1；以及 Schlosshauer–Fine，*On Zurek’s derivation of the Born rule*, arXiv:quant-ph/0312058v3，分别提供交换、对称性与其附加前提的成熟比较。Galley–Masanes，*Any modification of the Born rule leads to a violation of the purification and local tomography principles*, arXiv:1801.06414v4，第 5.2 节；Masanes–Galley–Müller，*The measurement postulates of quantum mechanics are operationally redundant*, arXiv:1811.11060v2，第 II.4 节，说明无信号与更一般联合／组合响应之间仍有余量；本节不借入它们的组合公理。
+
+全 $S_4$ 与行分块 $G_{\rm row}$ 是不同的校准目标；没有证明哪一个是普遍最小目标，也没有取得实际主动交换。连续响应、原生有限菜单、完整终端事件和代码极限的条件边界均保留；有限套件不能认证全代码功能方程，鲁棒误差、编译长度、有限样本和物理相位参考仍未给出。VI §§85、95–99 的全词经典表示也未被排除。复数振幅、欧氏归一化、固定 $K$、初始化、局部性以及概率响应的存在仍是输入；本节没有声称量子起源、概率来源或任何 Lean/kernel 结论。∎
+
+## 追加锚（本行以下为增补区）
