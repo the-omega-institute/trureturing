@@ -419,7 +419,7 @@ Its fourth-order observable is the standardized fourth central moment of
 a cycle-completion time, $\mathbb E[(T-\mathbb ET)^4]/\operatorname{Var}(T)^2$,
 not the fourth-to-second ratio of winding-count cumulant rates.
 
-[W] J. Wampler and A. C. Barato, *Skewness and Kurtosis in Stochastic
+[W] Taylor Wampler and A. C. Barato, *Skewness and Kurtosis in Stochastic
 Thermodynamics*, [arXiv:2110.14540v1](https://arxiv.org/abs/2110.14540v1),
 Sections II B, III and IV C;
 [DOI 10.1088/1751-8121/ac3b0c](https://doi.org/10.1088/1751-8121/ac3b0c).
