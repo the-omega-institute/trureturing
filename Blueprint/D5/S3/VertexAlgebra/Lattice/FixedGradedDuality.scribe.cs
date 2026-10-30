@@ -29,7 +29,8 @@ internal sealed class FixedGradedDualityDocument : IScribeDocumentDefinition
                 + "then theta averaging supplies fixed-space membership.")),
             Paragraph(Text("With the existing positive-Gram finite-grade supplier, every fixed grade is finite-dimensional. The proved restriction is "
                 + "nondegenerate in both slots, so BilinForm.toDual gives the actual grade dual equivalence. The dependent direct sum of these "
-                + "algebraic duals and its evaluation through the genuine fixed-energy decomposition are defined explicitly.")),
+                + "algebraic duals and its evaluation through the genuine fixed-energy decomposition are defined explicitly. For arbitrary fixed vectors x and y, including mixed finite energy support, evaluation of fixedRestrictedDualEquiv(x) at y equals B(x,y) on their original Carrier inclusions. The proof uses the existing internal direct sum: same-grade terms use the finite-grade pairing and all cross-grade terms vanish by the explicit orthogonality hypothesis.")),
+            Paragraph(Text("Consequently the actual inverse represents every finitely supported grade functional f by the unique fixed vector x = fixedRestrictedDualEquiv.symm(f), with B(x,y) = fixedRestrictedDualEvaluation(f)(y) for every fixed y. This follows by applying the global identity to the inverse and using LinearEquiv.apply_symm_apply; it does not identify the restricted dual with the unrestricted algebraic dual of the full carrier.")),
             Paragraph(Text("This is a conditional algebraic supplier. It does not instantiate the live P1 pairing, prove module equivariance, all-source BPZ, "
                 + "Hilbert or analytic CFT, fusion, full string theory, anomaly cancellation, or AdS-CFT.")),
             Definition("fixedgradedduality-fixedgrade", "FixedGrade", "The actual fixed grade, represented as grade D h comapped along the subtype inclusion into FixedCarrier D."),
@@ -53,5 +54,6 @@ internal sealed class FixedGradedDualityDocument : IScribeDocumentDefinition
             Definition("fixedgradedduality-fixedrestricteddual", "FixedRestrictedDual", "The dependent direct sum of the full algebraic duals of all actual fixed grades."),
             Definition("fixedgradedduality-fixedrestricteddual-evaluation", "fixedRestrictedDualEvaluation", "Evaluation of an algebraic restricted-dual vector through the genuine fixed-energy decomposition."),
             Definition("fixedgradedduality-fixedrestricteddual-equiv", "fixedRestrictedDualEquiv", "The actual algebraic graded restricted-dual equivalence assembled from the finite-grade equivalences and the fixed-energy decomposition."),
+            Theorem("fixedgradedduality-global-ambient-evaluation", "fixedRestrictedDualEquiv_ambient_evaluation", "For every pair of actual FixedCarrier vectors, evaluation of the constructed restricted-dual equivalence equals ambient B on the original Carrier inclusions, under ambient nondegeneracy, theta isometry, grade commutation, distinct-grade orthogonality and positive Gram."),
             Theorem("fixedgradedduality-fixedgrade-dual-evaluation", "fixedGrade_dual_evaluation", "The restricted form evaluates the inverse of toDual exactly as the given grade functional."))));
 }

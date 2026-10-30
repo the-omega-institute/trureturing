@@ -85,13 +85,6 @@ def fixedGradeProjection (D : LatticeData)
     apply Subtype.ext
     simp [map_smul]
 
-@[simp] theorem fixedGradeProjection_val (D : LatticeData)
-    (hgrade : ∀ (n : ℤ) (v : Carrier D),
-      theta D (gradeProjection D n v) = gradeProjection D n (theta D v))
-    (h : ℤ) (v : FixedCarrier D) :
-    fixedGradeToCarrier D h (fixedGradeProjection D hgrade h v) =
-      gradeProjection D h (v : Carrier D) := rfl
-
 theorem fixedGradeProjection_sum (D : LatticeData)
     (hgrade : ∀ (n : ℤ) (v : Carrier D),
       theta D (gradeProjection D n v) = gradeProjection D n (theta D v))
@@ -439,18 +432,6 @@ noncomputable def fixedGradeNondegenerate (D : LatticeData)
     (fixedGradeForm D B h).Nondegenerate :=
   (fixedGrade_dualEquiv D B hB hgrade htheta horth hD h).choose
 
-theorem fixedGradeNondegenerate_spec (D : LatticeData)
-    (B : LinearMap.BilinForm ℂ (Carrier D))
-    (hB : B.Nondegenerate)
-    (hgrade : ∀ (n : ℤ) (v : Carrier D),
-      theta D (gradeProjection D n v) = gradeProjection D n (theta D v))
-    (htheta : ∀ (x y : Carrier D), B (theta D x) (theta D y) = B x y)
-    (horth : ∀ (m n : ℤ) (x y : Carrier D), x ∈ grade D m → y ∈ grade D n →
-      m ≠ n → B x y = 0)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (h : ℤ) :
-    fixedGradeNondegenerate D B hB hgrade htheta horth hD h =
-      (fixedGrade_dualEquiv D B hB hgrade htheta horth hD h).choose := rfl
-
 /-- The actual finite-grade dual equivalence supplied by the restricted pairing. -/
 noncomputable def fixedGradeDualEquiv (D : LatticeData)
     (B : LinearMap.BilinForm ℂ (Carrier D))
@@ -513,5 +494,73 @@ noncomputable def fixedRestrictedDualEquiv (D : LatticeData)
   (fixedEnergyDecomposition D hgrade).trans
     (DirectSum.congrLinearEquiv (fun h =>
       fixedGradeDualEquiv D B hB hgrade htheta horth hD h))
+
+/-- Evaluation of the restricted dual equivalence is the original ambient form
+on arbitrary fixed vectors, including vectors supported in several grades. -/
+theorem fixedRestrictedDualEquiv_ambient_evaluation (D : LatticeData)
+    (B : LinearMap.BilinForm ℂ (Carrier D))
+    (hB : B.Nondegenerate)
+    (hgrade : ∀ (n : ℤ) (v : Carrier D),
+      theta D (gradeProjection D n v) = gradeProjection D n (theta D v))
+    (htheta : ∀ (x y : Carrier D), B (theta D x) (theta D y) = B x y)
+    (horth : ∀ (m n : ℤ) (x y : Carrier D), x ∈ grade D m → y ∈ grade D n →
+      m ≠ n → B x y = 0)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (x y : FixedCarrier D) :
+    fixedRestrictedDualEvaluation D hgrade
+        (fixedRestrictedDualEquiv D B hB hgrade htheta horth hD x) y =
+      B (x : Carrier D) (y : Carrier D) := by
+  classical
+  let e := fixedEnergyDecomposition D hgrade
+  let F := DirectSum.congrLinearEquiv (fun h =>
+    fixedGradeDualEquiv D B hB hgrade htheta horth hD h)
+  let E : FixedRestrictedDual D →ₗ[ℂ] Module.Dual ℂ (⨁ h : ℤ, FixedGrade D h) :=
+    (DFinsupp.lsum ℂ).comp (DirectSum.coeFnLinearMap ℂ)
+  let c := DirectSum.coeLinearMap (fixedGradeSubmodule D)
+  have pairing (u v : ⨁ h : ℤ, FixedGrade D h) :
+      E (F u) v = B (c u : Carrier D) (c v : Carrier D) := by
+    induction v using DirectSum.induction_on with
+    | zero => simp
+    | add v w hv hw =>
+        simp only [map_add, hv, hw, Submodule.coe_add]
+    | of h yh =>
+        change (fixedGradeDualEquiv D B hB hgrade htheta horth hD h (u h)) yh =
+          B (c u : Carrier D) (yh : FixedCarrier D)
+        induction u using DirectSum.induction_on with
+        | zero => simp
+        | add u v hu hv =>
+            simp only [DFinsupp.add_apply, map_add, LinearMap.add_apply,
+              hu, hv, Submodule.coe_add]
+        | of j xj =>
+            by_cases hj : j = h
+            · subst j
+              have localPair := fixedGradeDualEquiv_ambient_evaluation D B
+                hB hgrade htheta horth hD h
+                (fixedGradeDualEquiv D B hB hgrade htheta horth hD h xj) yh
+              simpa [c, fixedGradeToCarrier] using localPair.symm
+            · have orth := horth j h (fixedGradeToCarrier D j xj)
+                (fixedGradeToCarrier D h yh) xj.property yh.property hj
+              simpa [c, DirectSum.of_eq_of_ne, hj, hj.symm,
+                fixedGradeToCarrier] using orth.symm
+  have reconstruct (z : FixedCarrier D) : c (e z) = z := by
+    exact (fixedEnergyDecomposition D hgrade).symm_apply_apply z
+  change E (F (e x)) (e y) = _
+  rw [pairing, reconstruct, reconstruct]
+
+example (D : LatticeData)
+    (B : LinearMap.BilinForm ℂ (Carrier D))
+    (hB : B.Nondegenerate)
+    (hgrade : ∀ (n : ℤ) (v : Carrier D),
+      theta D (gradeProjection D n v) = gradeProjection D n (theta D v))
+    (htheta : ∀ (x y : Carrier D), B (theta D x) (theta D y) = B x y)
+    (horth : ∀ (m n : ℤ) (x y : Carrier D), x ∈ grade D m → y ∈ grade D n →
+      m ≠ n → B x y = 0)
+    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ)))
+    (f : FixedRestrictedDual D) (y : FixedCarrier D) :
+    B ((fixedRestrictedDualEquiv D B hB hgrade htheta horth hD).symm f : Carrier D)
+        (y : Carrier D) = fixedRestrictedDualEvaluation D hgrade f y := by
+  simpa only [LinearEquiv.apply_symm_apply] using
+    (fixedRestrictedDualEquiv_ambient_evaluation D B hB hgrade htheta horth hD
+      ((fixedRestrictedDualEquiv D B hB hgrade htheta horth hD).symm f) y).symm
 
 end D5.S3.VertexAlgebra.FixedGradedDuality
