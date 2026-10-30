@@ -1,6 +1,6 @@
 /- GID: D5/S3/Combinatorics/TorusTilings/KageyKeehnRectangularTorus
    generality: I
-   mirror-B: D5/B/S3/Combinatorics/KageyKeehnRectangularTorus
+   mirror-B: D5/B/S3/Combinatorics/TorusTilings/KageyKeehnRectangularTorus
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
