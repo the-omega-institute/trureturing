@@ -36,10 +36,10 @@ theorem price_record_third_layer_mass_bound {m : ℕ} (hm : 2 ≤ m)
   let S := m.primeFactors.filter (fun p => 3 ≤ m.factorization p)
   let B := Real.log (4 * (largestPrime m : ℝ) ^ 2)
   have hP : 2 ≤ largestPrime m := by
-    obtain ⟨p, hp⟩ := Nat.nonempty_primeFactors.mpr (by omega : m ≠ 0 ∧ m ≠ 1)
+    obtain ⟨p, hp⟩ := Nat.nonempty_primeFactors.mpr (by omega : 1 < m)
     exact (Nat.prime_of_mem_primeFactors hp).two_le.trans (Finset.le_sup (f := id) hp)
   have hPR : (2 : ℝ) ≤ (largestPrime m : ℝ) := by exact_mod_cast hP
-  have hB : 0 ≤ B := Real.log_nonneg (by dsimp [B]; nlinarith)
+  have hB : 0 ≤ B := Real.log_nonneg (by nlinarith)
   have hcard : S.card ≤ layerPrime m 3 := by
     have hsub : S ⊆ Finset.Icc 1 (layerPrime m 3) := by
       intro p hp
@@ -101,7 +101,7 @@ theorem price_record_third_layer_mass_vanishing :
       norm_num
     have hinverse : (P ^ (1 / 6 : ℝ))⁻¹ = P ^ (-(1 / 6 : ℝ)) :=
       (Real.rpow_neg hP.le _).symm
-    simp only [div_eq_mul_inv] at hpowers ⊢
+    simp only [div_eq_mul_inv] at hinverse hpowers ⊢
     rw [hinverse]
     calc
       _ = 2 * Real.log 4 * (P ^ (1 / 3 : ℝ) * (P ^ (1 / 2 : ℝ))⁻¹) +
