@@ -53,9 +53,13 @@ private theorem creation_constant (D : LatticeData) (a : Charge D) (t : ℤ) :
     simp [creationCoeff, LatticeSugawaraConformal.exponential_constant]
   rw [ite_eq_right hz]
   apply ((actual_creation_coefficient_transport D a a).1 t).coeff_eq_zero
-  simpa only [map_zero] using Ne.symm hz
+  simp only [map_zero]
+  intro h
+  have hnonpos : t ≤ 0 := Int.toNat_eq_zero.mp h.symm
+  omega
 
 set_option maxHeartbeats 2000000 in
+-- Budget for expanding the actual lattice exponential and Wick coefficient.
 private theorem ground_coefficient (D : LatticeData) (a d g : Charge D) (k : ℤ) :
     sourcePairing D (rawCoeff D a k (Finsupp.single d 1)) (Finsupp.single g 1) =
       if g = -(a+d) then epsilon D a d * (if k = bilinear D a d then 1 else 0)
@@ -76,6 +80,7 @@ private theorem ground_coefficient (D : LatticeData) (a d g : Charge D) (k : ℤ
   split_ifs <;> simp_all
 
 set_option maxHeartbeats 2000000 in
+-- Budget for normalizing the charge cocycle and parity identities.
 private theorem reflected_epsilon (D : LatticeData) (a d : Charge D) :
     epsilon D a d = paritySign (chargeEnergy D a) * epsilon D a (-(a+d)) := by
   have hs : epsilon D a a = paritySign (chargeEnergy D a) := by
@@ -83,6 +88,7 @@ private theorem reflected_epsilon (D : LatticeData) (a d : Charge D) :
   rw [epsilon_neg_right, epsilon_add_right, hs, ← mul_assoc, paritySign_square, one_mul]
 
 set_option maxHeartbeats 2000000 in
+-- Budget for the opposite-charge cases and reflected-index normalization.
 private theorem ground_transpose (D : LatticeData) (a d g : Charge D) (k : ℤ) :
     sourcePairing D (rawCoeff D a k (Finsupp.single d 1)) (Finsupp.single g 1) =
       paritySign (chargeEnergy D a) * sourcePairing D (Finsupp.single d 1)
@@ -107,6 +113,7 @@ private theorem ground_transpose (D : LatticeData) (a d g : Charge D) (k : ℤ) 
     rw [ite_eq_right hg, ite_eq_right hd, mul_zero]
 
 set_option maxHeartbeats 2000000 in
+-- Budget for elaborating the original all-integer current/raw commutator.
 private theorem current_raw_apply (D : LatticeData) (i : Fin D.rank) (m : ℤ)
     (a : Charge D) (k : ℤ) (u : Carrier D) :
     neutralMode D i m (rawCoeff D a k u) =
