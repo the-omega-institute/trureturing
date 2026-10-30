@@ -43,7 +43,6 @@ internal sealed class UniformLocalGlobalPastingDocument : IScribeDocumentDefinit
                             + "field, proving uniqueness, and analyzing asymptotic behavior "
                             + "require separate arguments."))),
                 DescribeRole.Theorem),
-            H("Application to the actual extended CFMP length field"),
             Paragraph(Text(
                 "Fix the finite ideal triangulation of a compact connected orientable "
                     + "three-manifold with nonempty boundary, whose components are closed "
