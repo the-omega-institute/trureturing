@@ -2,7 +2,7 @@
 
 ## Abstract
 
-The original general-parameter Mills target, regularity, origin asymptotic, strict remainder moment bounds and closed kernel ranges.
+The original general-parameter Mills target, regularity, Gamma coefficients, sharp origin obstruction, strict remainder moment bounds and closed kernel ranges.
 
 **Definition 1.1 (Original signed remainder normalization).**
 
@@ -28,7 +28,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.theorem21`
 
 For every n >= 2 and real a, the positive global-sign predicate is equivalent to complete monotonicity and to a <= theta (n-2); the negative global-sign predicate is equivalent to complete monotonicity of -F and to a >= theta (n-1), with both endpoints included. The proposition is retained as the exact source target.
 
-The proposition states two separate equivalences in each chain: global sign iff complete monotonicity, and complete monotonicity iff the sharp parameter bound. It is a target definition, not an asserted theorem. The general-a coefficient identity, exact Laplace representation, infinity asymptotic and both classification chains remain open.
+The proposition states two separate equivalences in each chain: global sign iff complete monotonicity, and complete monotonicity iff the sharp parameter bound. It is a target definition, not an asserted theorem. The exact Laplace representation, infinity asymptotic and both classification chains remain open.
 
 **Theorem 1.3 (Gaussian regularity and the original origin asymptotic).**
 
@@ -42,7 +42,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.regularity
 
 For every n >= 2 and every real a, the original F n a is C-infinity on x > 0, and x^(2n) F n a x tends to -u n a (a-2) as x decreases to zero. The Gaussian tail equals its value at zero minus its interval primitive. The fundamental theorem of calculus gives smoothness of that primitive. After multiplying the finite remainder by x^(2n), every lower truncation term vanishes at zero and only the original nth Gamma coefficient remains.
 
-**Theorem 1.4 (Necessary coefficient sign for the positive branch).**
+**Theorem 1.4 (Sharp necessary threshold for the positive branch).**
 
 Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.positive_cm_necessary`
 
@@ -52,7 +52,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.positive_c
 
 *Commentary.*
 
-For every n >= 2 and real a, if the original F n a is completely monotone, then u n a (a-2) <= 0. The proof consumes the zeroth derivative sign and the concrete origin limit. The hypothesis that F is globally nonnegative alone suffices, as established by positive_sign_necessary. Translating this coefficient sign to a <= theta (n-2) still requires the general-a coefficient identity.
+For every n >= 2 and real a, if the original F n a is completely monotone, then a <= theta (n-2). The proof consumes the zeroth derivative sign and the concrete origin limit. The hypothesis that F is globally nonnegative alone suffices, as established by positive_sign_necessary. The exact general-a Gamma coefficient identity and positivity of B_(n-2) translate u_n <= 0 into the threshold bound.
 
 **Theorem 1.5 (Origin obstruction for the negative branch).**
 
@@ -64,7 +64,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.negative_c
 
 *Commentary.*
 
-For every n >= 2 and real a, if -F n a is completely monotone, or merely globally nonnegative, then u n a (a-2) >= 0. This is the obstruction at the origin; it does not establish the required infinity obstruction u (n+1) a (a-2) >= 0 or the sharp negative-branch threshold theta (n-1).
+For every n >= 2 and real a, if -F n a is completely monotone, or merely globally nonnegative, then a >= theta (n-2). This is the obstruction at the origin; it does not establish the required infinity obstruction u (n+1) a (a-2) >= 0 or the sharp negative-branch threshold theta (n-1).
 
 **Theorem 1.6 (Strictly decreasing upper normalized remainder).**
 
@@ -126,7 +126,19 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.kernel_clo
 
 For source truncation n=r+2 and every t>0, the kernel L from (2.5) is strictly positive when a <= theta_r and strictly negative when a >= theta_(r+1). Its inner integral is exactly 2 M2 times the difference between the inner threshold and a. The strict inner bounds include both parameter endpoints. This proves the kernel sign ranges; equality of its Laplace integral with the original F, all derivative signs and the complete classification remain open.
 
-**Theorem 1.11 (General-parameter Gaussian convolution kernel identity).**
+**Theorem 1.11 (Exact general-parameter Gamma coefficient correspondence).**
+
+Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.coefficient_identity`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.coefficient_identity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every r >= 0 and real a, the original u_(r+2)(a,a-2) equals (2r+3)! / (4^(r+1) r!) times (I_r+(2a-1)B_r). The proof directly consumes Result.coeff_sum, Result.intPow_rec and Result.coeff_factorial at their original owner. The same original identities give u_1(a,a-2)=0 for every real a; this removes the first term from the rescaled finite sum. Linearity of the polynomial moment gives B_r=I_(r+1)-I_r. The coefficient is a strictly positive factor times a-theta_r. Both coefficient-sign equivalences include the zero endpoint.
+
+**Theorem 1.12 (General-parameter Gaussian convolution kernel identity).**
 
 Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.gaussian_kernel_identity`
 
@@ -141,6 +153,7 @@ For every real a and t, the source kernel G_a(t) equals t^3/4 times the integral
 ## References
 
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.F`
+- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.coefficient_identity`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strict_anti`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strict_mono`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.gaussian_kernel_identity`
