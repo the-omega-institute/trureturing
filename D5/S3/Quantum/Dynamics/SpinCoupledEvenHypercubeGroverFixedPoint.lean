@@ -14,7 +14,6 @@ Direct frozen dependency: D5/S3/Quantum/Dynamics/PositivePauliClockOrder.scalarP
   declaration statement_id: sha256:ad00aa5b981da63c8cd690c8d16f88472173b2bb73ff94386201e1774678da4d.
 The imported phase supplies the construction parameter; casts and multiplication order
 are normalized inside phase_pow and z_re.
-Information-escape registration is paused under CLAUDE.md section 3.9.
 proof_shape: pair_ne: bind-only; consumers: pair_cancel.
 proof_shape: pair_distinct: bind-only; consumers: pair_cancel.
 proof_shape: mem_flip: bind-only; consumers: bit_flip_self, bit_flip_other, flip_card_mem, flip_card_not_mem, edge_identity.
