@@ -46,7 +46,9 @@ internal sealed class FiniteBandSwitchDocument : IScribeDocumentDefinition
                     + "The statement makes the state-space and actual matching-transport assumptions explicit. "
                     + "It does not identify an unspecified distribution on unlabelled embeddings, prove surface realization, "
                     + "or imply exact thirds for any category."))), DescribeRole.Theorem),
-            H("Application to Independent Signed Rotations"),
+            new DocumentBlock.Section(
+                H("Application to Independent Signed Rotations"),
+                Blocks(
             Paragraph(Text("Let G be a finite simple cubic graph, with vertex set V, edge set E, "
                 + "and dart set D consisting of ordered adjacent vertex pairs. At each vertex choose a "
                 + "labelling of its three neighbours. The forward and inverse 3-cycles are its two cyclic "
@@ -86,7 +88,7 @@ internal sealed class FiniteBandSwitchDocument : IScribeDocumentDefinition
                 + "These finite averages are exactly the expectations under the stated uniform law. "
                 + "There is no connectedness, bridgelessness, orientability or edge-transitivity premise. "
                 + "The empty graph has vacuous edge assertions and all three counts zero. "
-                + "The conclusion imposes no exact-thirds identity.")))));
+                + "The conclusion imposes no exact-thirds identity.")))))));
 
     private static Formula V(string x) => F.Id(x);
     private static Formula All(string x, Formula domain, Formula body) =>
