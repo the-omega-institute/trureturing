@@ -1,0 +1,112 @@
+**定理 104.3（不预给数值记录权重的旧 Born 结论及剩余自由）。** 在 104.1–104.2 和独立旧基底标定 79.1 下，对全部单位 $\psi\in H$ 及全部 $w\in\Omega_{10}$，必有
+
+$$
+ \begin{gathered}
+ F_w(\psi)=q_w(\psi),\qquad a_0=a_1=a\in(0,x],\\
+ G_w(\psi)=c q_w(\psi)+d_w,\qquad
+ c=\frac{ax}{1-a}\in(0,1],\qquad
+ d_w\ge0,\quad\sum_{w\in\Omega_{10}}d_w=1-c.
+ \end{gathered}
+ \tag{104.3}
+$$
+
+特别地，旧原程序的全部概率是 $P_w(K_fK_pv)=q_w(K_fK_pv)$，同时覆盖全部原有限 $p,f$。对指定制备 $p_*$ 的理想记录质量，有精确等价
+
+$$
+ G=F\quad\Longleftrightarrow\quad c=1
+ \quad\Longleftrightarrow\quad a=x
+ \quad\Longleftrightarrow\quad (a,1-a)=(x,x^2).
+ \tag{104.4}
+$$
+
+最后一项只指该制备和这两个设置的记录质量；不是对任意输入、任意记录读口的 Born 定律。结论不分类其它制备的实际记录质量，也不假设有限预测秩、响应的有限调和展开、混态仿射性或独立复合。
+
+证明。令 $\eta=K_1v$。由字面局部块 (77.1)，
+
+$$
+ \eta=\zeta[1+(\zeta-1)x]e_{00100}
+       +\zeta(\zeta-1)xy\,e_{10100}.
+ \tag{104.5}
+$$
+
+两个系数均非零：第二个由 $x,y>0$、$\zeta\ne1$ 给出；第一个的括号虚部为 $x\operatorname{Im}\zeta\ne0$。两项分别在 $\ker\Pi$ 和 $\operatorname{ran}\Pi$。普通全概率公式应用于互斥的实际记录及细档案，给每个 $f,w$ 的关系
+
+$$
+ \begin{aligned}
+ a_0F_w(K_f\eta)+(1-a_0)G_w(K_fD\eta)
+  =a_1F_w(K_fD^4\eta)+(1-a_1)G_w(K_fD^3\eta).
+ \end{aligned}
+ \tag{104.6}
+$$
+
+这一步没有把密度矩阵分解当作概率混合公理；求和权重是实际历史的质量。因果前提保证四个系数不随 $f$ 改变。77.2 的接续射影密度和这两个固定函数的连续性，将 (104.6) 延拓为把每个 $K_f$ 同时替换为任意数学酉 $U$ 的恒等式。没有把 $U$ 增加到可执行菜单。下文其实只需 (104.6) 在 $p_*$ 对全部 $f,w$ 成立，其余制备的质量不参与推断。
+
+固定一个标签并暂记其函数为 $F,G$。令 $X=\mathbb P(H)$，在 $C(X,\mathbb C)^2$ 中取满足上述所有 $U$ 关系的闭复线性子空间 $\mathcal N$。它是有界点值泛函的核的交。对同时拉回 $\rho(V)(h,k)=(h\circ V^{-1},k\circ V^{-1})$，关系中的 $U$ 变为 $V^{-1}U$，故 $\mathcal N$ 不变。
+
+复用 86.3–86.4 的无重数、不可约、完备分解 $L^2(X,\mu)=\widehat\bigoplus_{j\ge0}\mathcal H_j^{\mathbb C}$。为避免把无限 $L^2$ 级数代入点值，先在连续函数空间上写第 $j$ 个特征投影：
+
+$$
+ Q_j=d_j\int_{SU(13)}\overline{\chi_j(V)}\,\rho(V)\,dV,
+ \qquad d_j=\dim\mathcal H_j^{\mathbb C}.
+ \tag{104.7}
+$$
+
+紧群作用在 $C(X)$ 上强连续，故这是有界 Bochner 积分；不可约特征正交性使它与 86.4 的 $L^2$ 投影一致。由于 $\mathcal N$ 闭且拉回不变，$(Q_jF,Q_jG)\in\mathcal N$。这补足固定点值约束下的投影步骤，而不要求未知响应具有有限展开。
+
+令 $W_j$ 为该函数对的同时拉回轨道的复线性包络。它是有限维酉表示 $\mathcal H_j^{\mathbb C}\oplus\mathcal H_j^{\mathbb C}$ 的不变子空间且包含于 $\mathcal N$。与 99.2 的双副本方法相同，$W_j$ 的正交投影的四个块均与不可约群作用交换，Schur 引理使各块为标量恒等。因此存在 $L_j\subset\mathbb C^2$，使
+
+$$
+ W_j=\mathcal H_j^{\mathbb C}\otimes L_j.
+ \tag{104.8}
+$$
+
+对任意 $(\alpha,\beta)\in L_j$、任意 $h\in\mathcal H_j^{\mathbb C}$，函数对 $(\alpha h,\beta h)$ 均满足固定 $\eta$ 上的关系。
+
+选择 $D$ 的正交本征坐标 $A,B,C$，使 $A\in\operatorname{ran}\Pi$，$B,C\in\ker\Pi$ 互异且 $\eta_A\eta_B\eta_C\ne0$。例如 $A=e_{10100}$，可在 $\ker\Pi$ 中把 $e_{00100}$ 与 $e_{00000}$ 作和差正交基，得到这样的 $B,C$。这是数学坐标选择，不是新制备。对每个 $j\ge2$，
+
+$$
+ h_{jk}(z)=z_A^kz_B^{j-k}\overline{z_C}^{\,j},\qquad k=0,1,2,
+ \tag{104.9}
+$$
+
+及其共轭都是双次数 $(j,j)$ 的调和多项式：没有坐标同时出现在全纯与反全纯部分，故收缩为零。消费 85.2 的收缩核描述，它们属于 $\mathcal H_j^{\mathbb C}$；在 $\eta$ 非零，$D$ 权分别为 $0,1,2$ 及其负值。将这些函数对代入 $\mathcal N$ 的 $U=I$ 关系并除以非零点值，得到
+
+$$
+ \begin{gathered}
+ Q(\zeta^k)=0\quad(k=-2,-1,0,1,2),\\
+ Q(z)=a_0\alpha+(1-a_0)\beta z
+       -(1-a_1)\beta z^3-a_1\alpha z^4.
+ \end{gathered}
+ \tag{104.10}
+$$
+
+$\zeta$ 的阶为十，上述五根互异，而 $\deg Q\le4$，所以 $Q$ 恒零。常数项和一次项分别给 $a_0\alpha=0$、$(1-a_0)\beta=0$；正质量使 $\alpha=\beta=0$。于是所有 $j\ge2$ 的 $W_j$ 均零。
+
+由 86.4 的完备性，$F,G$ 在 $L^2$ 中属于 $\mathcal H_0^{\mathbb C}\oplus\mathcal H_1^{\mathbb C}$。连续性及 $\mu$ 全支撑使等式逐点成立，实值性给两个 Hermitian 二次型。逐射线非负性使其效果正半定。对 $F$ 复用 79.2、86.1 的校准步骤：79.1 固定每个效果在全部十三个基向量上的零／一对角元，而
+$|E_{ab}|^2\le E_{aa}E_{bb}$ 消去每个零对角元的整行列。因此合法标签的效果正是相应基投影，所有非法标签的效果为零，即 $F=q$。此步骤没有使用 $G$ 的校准。
+
+还须确定一次调和分量上的两个系数和两个质量。在 $j=1$ 中取非零点值的权 $0,1,-1$ 调和单项式，例如 $z_B\overline z_C$、$z_A\overline z_C$ 及后者的共轭。权零关系给
+
+$$
+ (a_0-a_1)(\alpha-\beta)=0\qquad((\alpha,\beta)\in L_1).
+ \tag{104.11}
+$$
+
+若 $a_0\ne a_1$，每个这样的向量均满足 $\alpha=\beta$。某个已校准合法 $F_w=q_w$ 非恒定，故其 $L_1$ 含 $\alpha\ne0$ 的向量。权一关系除以 $\alpha(1-\zeta)$ 后成为
+
+$$
+ a_0+a_1\zeta^3=-\zeta-\zeta^2.
+ \tag{104.12}
+$$
+
+$\operatorname{Im}\zeta^3\ne0$，所以此复等式对实未知量有至多一个解。由 $x=-(\zeta+\zeta^{-1})$ 和 $\Phi_{10}(\zeta)=0$，直接得到 $x(1+\zeta^3)=-\zeta-\zeta^2$；唯一实解便是 $a_0=a_1=x$，与不等假设矛盾。因此 $a_0=a_1=a$。
+
+再以同样的两个代数恒等式化简，有
+
+$$
+ \frac{1-\zeta^4}{\zeta-\zeta^3}=-x.
+ \tag{104.13}
+$$
+
+权一关系于是给 $\beta=c\alpha$，其中 $c=ax/(1-a)>0$。对每个标签，一次分量满足 $Q_1G_w=cQ_1F_w$；高次均已消失，故 $G_w-cF_w=d_w$ 为实常数。对每个合法 $w$，存在 $q_w=0$ 的单位射线；对每个非法 $w$，$q_w$ 恒零。由 $G_w\ge0$ 得每个 $d_w\ge0$。完整归一化给 $\sum_wd_w=1-c$，因而 $c\le1$，等价于 $a\le1/(1+x)=x$。若 $a=x$，则 $c=1$ 且所有 $d_w=0$。反之若 $G=F$，一个非恒定 $q_w$ 使 $(1-c)q_w=d_w$ 只能在 $c=1$ 时成立。这给 (104.3)–(104.4)。∎
+
