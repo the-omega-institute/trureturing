@@ -1,0 +1,98 @@
+**Proposition 20.1 (The exact four-root residual on each residue).** Let $h\in\mathcal K_4$. Define
+
+$$
+f(X)=X^5-2X^4-1,\qquad
+ g(X)=X^4-X^3-X^2-X-1,
+$$
+
+and let $\mathcal T$ be the four roots of $f$ other than $\Lambda$. There are nonzero coefficients $d_\lambda\in\mathbb C$, one for every $\lambda\in\mathcal T$, such that the real sequence
+
+$$
+S(n)=\sum_{\lambda\in\mathcal T}d_\lambda\lambda^n
+\tag{90}
+$$
+
+satisfies $S(n)\to0$ and
+
+$$
+h(f_n+M^n b_8)-LhM^n b_8=S(n)-J_{n\bmod8}
+\quad(n\ge0).
+\tag{91}
+$$
+
+For every $i\in\{0,\ldots,7\}$, the stride sequence
+
+$$
+S_i(k)=S(i+8k)\quad(k\ge0)
+\tag{92}
+$$
+
+is a real nonzero linear recurrence sequence. Its exact characteristic support consists of the four distinct numbers $\lambda^8$, $\lambda\in\mathcal T$, and none of these numbers is positive real. In particular it has no positive dominating characteristic root.
+
+*Proof.* We reuse the whole simple-spectrum description, minimal-polynomial statements and eigenvector normalization of Dvořáková–Pelantová, [arXiv:2509.06104v1, Appendix P1–P3 and Lemma 20](https://arxiv.org/pdf/2509.06104v1), journal Appendix P1–P3 and Lemma 21 in [EJC 33(2), P2.15](https://doi.org/10.37236/14600). They give
+
+$$
+\chi_M=fg,
+$$
+
+with both $f$ and $g$ irreducible over $\mathbb Q$, all nine roots simple, and every root of $f$ other than $\Lambda$ of modulus strictly less than one. The minimal-polynomial assertion for the literal $g$ is also the $q=4$ case of the existing `dbonacci_irreducible` in [DBonacci irreducibility](../../../D5/S0/Tower/DBonacci/Irreducibility.lean), with root identification in [DBonacci Perron root](../../../D5/S0/Tower/DBonacci/PerronRoot.lean). We use these suppliers rather than another irreducibility or root-location theorem.
+
+For this integer row define the nonzero rational polynomial
+
+$$
+F_h(X)=(X-2)\sum_{j=0}^7h_jX^{7-j}+h_8.
+\tag{93}
+$$
+
+It has degree exactly eight, with leading coefficient $h_0>0$, and $F_h(\lambda)=hv_\lambda$ for the original eigenvectors. Cancellation says $F_h(\beta)=0$. The minimal polynomial $g$ therefore divides $F_h$, so $hv_\gamma=0$ for every one of the four conjugates $\gamma$ of $\beta$. This discharges the entire $g$-spectrum, not just its real expanding root.
+
+If $hv_\lambda=0$ for any root $\lambda$ of $f$, its minimal polynomial $f$ would also divide $F_h$. Since the distinct irreducible polynomials $f$ and $g$ are coprime, the degree-nine polynomial $fg$ would divide the nonzero degree-eight polynomial $F_h$, a contradiction. Hence
+
+$$
+hv_\lambda\ne0\quad\text{for every root }\lambda\text{ of }f.
+\tag{94}
+$$
+
+This uses the actual integral row and its exact cancellation; no assertion about arbitrary real rows is required.
+
+Let $P_\lambda$ denote the spectral projectors of Theorem 2.1, and put $a_\lambda=hP_\lambda b_8$. The supplied left eigenvector $\ell_\lambda$ has $\ell_\lambda b_8=\lambda^4$ for a root of $f$. Thus
+
+$$
+a_\lambda=\frac{\lambda^4}{\ell_\lambda v_\lambda}\,hv_\lambda\ne0.
+\tag{95}
+$$
+
+The denominator is nonzero because the eigenvalue is simple, and $\lambda\ne0$. At roots of $g$ the coefficient is zero by the whole-conjugate cancellation just proved. The rational function $g_{\mathrm I}$ from (6) is
+
+$$
+g_{\mathrm I}(z)=\frac{z-\Lambda}{(3-z)(3-\Lambda)}.
+$$
+
+Its value vanishes at $\Lambda$ and is nonzero at every $\lambda\in\mathcal T$. Hence set
+
+$$
+d_\lambda=g_{\mathrm I}(\lambda)a_\lambda\ne0.
+\tag{96}
+$$
+
+Applying the supplied spectral decomposition to (5) proves exactly (90)–(91). Complex conjugates have conjugate coefficients, so $S(n)$ is real. Since every $|\lambda|<1$, its limit is zero.
+
+It remains to check every stride, including possible collisions of powers. A root of $f$ satisfies
+
+$$
+\lambda^4(\lambda-2)=1.
+\tag{97}
+$$
+
+The polynomial $f$ has just one real root. Indeed $f(t)<0$ for $t\le2$, while $f'(t)=t^3(5t-8)>0$ for $t>2$, where its unique zero is $\Lambda$. Thus all members of $\mathcal T$ are nonreal. If $\lambda^8$ were positive real, then $\lambda^4$ would be nonzero real; (97) would force $\lambda-2=1/\lambda^4$ to be real, a contradiction. There is consequently no positive real eighth power in this support.
+
+If $\lambda^8=\mu^8$ for $\lambda,\mu\in\mathcal T$, then $\mu^4=\lambda^4$ or $\mu^4=-\lambda^4$. Equation (97) makes the first case imply $\mu=\lambda$. In the second case it gives $\lambda+\mu=4$, impossible because $|\lambda|+|\mu|<2$. The four eighth powers are therefore distinct. For any fixed residue $i$, (90) reads
+
+$$
+S_i(k)=\sum_{\lambda\in\mathcal T}
+ (d_\lambda\lambda^i)(\lambda^8)^k.
+\tag{98}
+$$
+
+Every coefficient is nonzero. The Vandermonde matrix at $k=0,1,2,3$ is invertible, so (98) cannot vanish identically; the same independence shows that all four roots belong to its exact support. The polynomial $\prod_{\lambda\in\mathcal T}(X-\lambda^8)$ has real coefficients, since the support is conjugation invariant, and annihilates the sequence. This verifies a real constant-coefficient linear recurrence for each of the eight residues. In particular no positive root is present among its dominating roots. The removal of the whole $g$-spectrum, the nonvanishing in (94)–(98) and the stride assertions are the additional deductions needed beyond the supplied spectral formula. $\square$
+
