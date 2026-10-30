@@ -7,6 +7,7 @@
    digest: A decaying one-sided history law has an attained sharp total-update state minimum. -/
 
 import D5.S3.ObserverMemory.Prediction.ControlledBehaviorUniversality
+import Mathlib.Data.Fintype.Pigeonhole
 import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Tactic
 
@@ -95,7 +96,7 @@ private theorem reset_ne_ones {S : Type*} (M : Predictor S) (x ε : ℝ) (p : �
     rw [hr] at h1
     linarith [h1.1, h2.2]
   have hl : Tendsto (fun k => p (i+k)+2*ε) atTop (𝓝 (2*ε)) := by
-    simpa using (hp.comp (tendsto_add_atTop_nat i)).add_const (2*ε)
+    simpa using (hp.comp (by simpa [Nat.add_comm] using tendsto_add_atTop_nat i)).add_const (2*ε)
   exact (not_le_of_gt hsmall) (ge_of_tendsto hl (Eventually.of_forall hbound))
 
 private def encode (N : ℕ) : Option ℕ → Fin (N+1) ⊕ Unit
@@ -207,6 +208,20 @@ theorem sharp_predictor_minimum (x ε : ℝ) (p : ℕ → ℝ) (N : ℕ)
         | inr v => exact congrArg Sum.inr (Subsingleton.elim u v)
     simpa using Fintype.card_le_of_injective f hf
 
+/-- A strictly positive decaying age law cannot be predicted exactly by finitely many total-update states. -/
+theorem exact_prediction_impossible (x : ℝ) (p : ℕ → ℝ)
+    (hpos : ∀ n, 0 < p n) (hlim : Tendsto p atTop (𝓝 0))
+    {S : Type*} [Fintype S] (M : Predictor S) : ¬ Correct M x p 0 := by
+  intro hM
+  obtain ⟨i,j,hne,he⟩ := Fintype.exists_ne_map_eq_of_card_lt
+    (fun i : Fin (Fintype.card S+1) => M.run (List.replicate i.val true)) (by simp)
+  rcases lt_or_gt_of_ne hne with h | h
+  · have hh := recurrent_output M x 0 p hlim hM i.val j.val h he
+    linarith [hpos i.val]
+  · have hh := recurrent_output M x 0 p hlim hM j.val i.val h he.symm
+    linarith [hpos j.val]
+
 #print axioms sharp_predictor_minimum
+#print axioms exact_prediction_impossible
 
 end D5.S3.ObserverMemory.Prediction.OneSidedPredictorMinimum
