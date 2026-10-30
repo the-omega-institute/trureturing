@@ -10,7 +10,7 @@ noncomputable section
 set_option autoImplicit false
 
 abbrev signature := Reg.Support.SingleDependentReadout.signature
-  (ℝ × ℝ) (fun _ => ℝ) (fun _ => ℝ)
+  (Σ _ : ℝ, ℝ) (fun _ => ℝ) (fun _ => ℝ)
 
 def actual : Realization signature :=
   realize signature (fun _ p s => productLogKernel p.1 p.2 s) (fun e => nomatch e)
@@ -21,10 +21,10 @@ def rejected : Realization signature :=
 abbrev arena : Arena where
   signature := signature
   Law R := ∀ {u v : ℝ}, u ∈ Ioo (0 : ℝ) 1 → v ∈ Ioo (0 : ℝ) 1 →
-    (∀ s ∈ Ioi (0 : ℝ), 0 ≤ R.readout () (u, v) s) ∨
-      ∃ r ∈ Ioi (0 : ℝ), R.readout () (u, v) r = 0 ∧
-        (∀ s ∈ Ioo (0 : ℝ) r, 0 < R.readout () (u, v) s) ∧
-        (∀ s ∈ Ioi r, R.readout () (u, v) s < 0)
+    (∀ s ∈ Ioi (0 : ℝ), 0 ≤ R.readout () ⟨u, v⟩ s) ∨
+      ∃ r ∈ Ioi (0 : ℝ), R.readout () ⟨u, v⟩ r = 0 ∧
+        (∀ s ∈ Ioo (0 : ℝ) r, 0 < R.readout () ⟨u, v⟩ s) ∧
+        (∀ s ∈ Ioi r, R.readout () ⟨u, v⟩ s < 0)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
@@ -36,7 +36,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
-  refine ⟨(1 / 2, 1 / 2), 1 / 4, 1, ?_⟩
+  refine ⟨⟨1 / 2, 1 / 2⟩, 1 / 4, 1, ?_⟩
   have hlog1 : Real.log ((405 : ℝ) / 256) =
       4 * Real.log 3 + Real.log 5 - 4 * Real.log 4 := by
     rw [show (405 : ℝ) / 256 = 3 ^ 4 * 5 / 4 ^ 4 by norm_num,
@@ -89,21 +89,6 @@ def audit : Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     readouts := #[{
       path := #["body", "body", "body", "body", "fn", "arg", "body", "body", "arg"]
       stateBinder := 4
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "arg", "arg", "body", "arg", "body", "fn", "arg", "fn", "arg"]
-      stateBinder := 4
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "arg", "arg", "body", "arg", "body", "arg", "fn", "arg", "body", "body", "arg"]
-      stateBinder := 6
-      functionOperand := false
-      stateOperand := none
-      booleanPredicate := false }, {
-      path := #["body", "body", "body", "body", "arg", "arg", "body", "arg", "body", "arg", "arg", "body", "body", "fn", "arg"]
-      stateBinder := 6
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }] }
