@@ -537,3 +537,312 @@ The matrix supplier [WordNodesAreReduced](../../../D5/S3/PrimeForms/SternBrocot/
 The contract is a deterministic mathematical acquisition model with finite rational reports, specified errors and permitted forward operations. The precision index, finite computation, output representation and source identity remain distinct obligations. The section asserts no physical spacetime interpretation, universally optimal algorithm or impossibility for observers with other measurements, priors, joint-error relations or source access.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Exact predictive cuts for an installed deterministic floor
+
+**Assumption 11.1 (fixed floor, original cut and one source).** Retain the positive rational chronological source of Definition 6.1 and the original pre-probe word of Definition 10.1. Fix a supplied integer $M\ge1$. Replace the rectangular error channel by the separately installed, nondisturbing read
+
+$$
+q_M(x)=\lfloor Mx\rfloor,\qquad x\in\mathbb Q_{>0}.
+\tag{11.1}
+$$
+
+The report is the entire nonnegative integer, finitely encoded without clipping. Its value is deterministic, including at grid endpoints. Each named forward action remains $L(x)=x/(1+x)$ or $R(x)=x+1$, with its name-only label. Reads, actions and the retained transcript concern the same source and epoch. The only source-dependent inputs to a deterministic controller are its actual reports; its known actions and finite computations may also be retained. There is no reset, copy, inverse source action, unknown-history archive or access to the outcomes of unperformed tests. Installation of (11.1) is a premise, not a consequence of the source dynamics. An integer report's finite encoding does not impose a uniform payload, working-memory or time bound.
+
+For a chronological word $u$, use $f_u$ and its matrix convention from Definition 10.1. Define the semantic predictive equivalence
+
+$$
+x\equiv_M y
+\quad\Longleftrightarrow\quad
+q_M(f_u(x))=q_M(f_u(y))\text{ for every finite }u.
+\tag{11.2}
+$$
+
+All actions are total and their labels are source-independent, so (11.2) also equates every finite response profile of §4. It compares possible tests from the original cut; it does not assert that all those tests have been performed on the one source. The targets of acquisition below are always functions of the original $x$, rather than of the post-probe state.
+
+**Theorem 11.2 (complete cut classification and finite arithmetic core).** Put
+
+$$
+\begin{aligned}
+\mathcal G_M&=\{k/M:k\in\mathbb Z_{>0}\},\\
+P(z)&=\begin{cases}z/(1-z),&0<z<1,\\z-1,&z>1,\end{cases}\\
+\mathcal A_M&=\bigcup_{r=1}^{M-1}
+ \{P^i(r/M):i\ge0\text{ and all }i\text{ parent steps are defined}\},\\
+\mathcal C_M&=\mathcal G_M\cup\mathcal A_M.
+\end{aligned}
+\tag{11.3}
+$$
+
+Here $P$ is undefined at $1$, and the union defining $\mathcal A_1$ is empty. For every $0<x<y$ in the entire positive rational carrier,
+
+$$
+x\equiv_M y
+\quad\Longleftrightarrow\quad
+\mathcal C_M\cap(x,y]=\varnothing.
+\tag{11.4}
+$$
+
+The nongrid part has the exact description
+
+$$
+\mathcal K_M:=\mathcal C_M\setminus\mathcal G_M
+ =\left\{\frac ab:
+ \begin{array}{l}
+a,b\in\mathbb Z_{>0},\ \gcd(a,b)=1,\ b\nmid M,\\
+\exists h,j\in\mathbb Z_{>0},\quad ah+bj=M
+\end{array}\right\}.
+\tag{11.5}
+$$
+
+In particular $a+b\le M$ for every member of $\mathcal K_M$, so this core is finite. The cuts are locally finite and have minimum $1/M$. If they are ordered as $c_1<c_2<\cdots$, the predictive cells are exactly
+
+$$
+(0,c_1)\cap\mathbb Q,\qquad
+[c_i,c_{i+1})\cap\mathbb Q\quad(i\ge1),\qquad c_1=1/M.
+\tag{11.6}
+$$
+
+A canonical integer naming these cells on their actual image is
+
+$$
+\kappa_M(x)=\lfloor Mx\rfloor+
+ \#\{z\in\mathcal K_M:z\le x\},\qquad
+\kappa_M(x)=\kappa_M(y)\Longleftrightarrow x\equiv_M y.
+\tag{11.7}
+$$
+
+Proof. Every $f_u$ is strictly increasing on positive inputs. Two of its floor reports differ precisely when a grid threshold $k/M$ lies in $(f_u(x),f_u(y)]$. Such a threshold has a unique preimage in $(x,y]$. Let $\mathcal D_M$ be the union of all these positive threshold preimages over all words, including the empty word. This proves (11.4) with $\mathcal D_M$ in place of $\mathcal C_M$; the right endpoint is included because floor takes its upper value at a threshold.
+
+The image of $L$ is $(0,1)$ and that of $R$ is $(1,\infty)$. A positive threshold can therefore be pulled back through a last action in exactly one way: through $L$ by the first branch of $P$, or through $R$ by the second. The threshold $1$ has no positive preimage through either action. Conversely every finite legal parent chain reverses to a forward word whose final response is its starting threshold. Thus $\mathcal D_M$ is exactly the legal parent closure of $\mathcal G_M$.
+
+In reduced coordinates $z=p/q$, a parent replaces $(p,q)$ by $(p,q-p)$ or $(p-q,q)$. Positivity and coprimality are preserved, and $p+q$ decreases strictly until $(1,1)$. Each chain is finite. Starting at $k/M>1$, the successive parents are subtractions of $1$, still on the same grid, until reaching $1$ or some $r/M$ with $1\le r<M$. Hence this closure is exactly (11.3), and $\mathcal A_M$ is finite.
+
+For (11.5), let reduced $a/b$ be a nongrid threshold preimage. For some word matrix
+
+$$
+G_u=\begin{pmatrix}\alpha&\beta\\c&d\end{pmatrix},\qquad
+\alpha d-\beta c=1,\quad d\ge1,
+$$
+
+its image is $(\alpha a+\beta b)/(ca+db)$. The numerator and denominator are coprime: a common divisor divides both $a$ and $b$ after multiplication by the integer inverse matrix. Since the image is on $\mathcal G_M$, its reduced denominator $ca+db$ divides $M$. If $c=0$, the determinant forces $\alpha=d=1$, so $b\mid M$, contrary to being nongrid. Thus $c\ge1$. With $t=M/(ca+db)$, take $h=tc$ and $j=td$ to obtain $ah+bj=M$ with both integers positive.
+
+Conversely suppose the conditions on the right of (11.5) hold. Let $g=\gcd(h,j)$ and $(c,d)=(h/g,j/g)$, so $c,d\ge1$ are coprime. Choose $1\le\alpha\le c$ with $\alpha d\equiv1\pmod c$; for $c=1$ take $\alpha=1$. Then $\beta=(\alpha d-1)/c$ is a nonnegative integer. The nonnegative matrix with rows $(\alpha,\beta)$ and $(c,d)$ has determinant one. The supplier `unimodular_iff_wordMatrix` cited in §14 gives its generator factorization; reversing that supplier's word gives the chronological $u$. Consequently
+
+$$
+M f_u(a/b)
+ =M\frac{\alpha a+\beta b}{ca+db}
+ =g(\alpha a+\beta b)\in\mathbb Z_{>0},
+$$
+
+since $ca+db=M/g$. Thus $a/b\in\mathcal D_M$, and $b\nmid M$ excludes the initial grid. This proves (11.5).
+
+Every parent in a chain from $r/M$ has reduced denominator at most $M$: subtraction either decreases that denominator or leaves it fixed. Its positive value is therefore at least $1/M$. The grid attains this minimum. A finite extra set together with a positive uniform grid is locally finite, unbounded, and has a successor for each cut. The no-cut condition now gives precisely (11.6), including the exceptional open initial cell. As $x$ crosses a grid cut, the first term of (11.7) increases by one; as it crosses a nongrid cut, the second does. Both terms are constant between cuts and take the upper value at a cut. Their sum therefore names exactly the cells, proving (11.7). $\square$
+
+**Corollary 11.3 (a future quotient loses literal histories).** The relation $\equiv_M$ is a forward congruence for the declared readout and actions. Every one of its cells contains infinitely many distinct original histories, of unbounded original depth. No fixed $M$ predictive profile, even the complete family (11.2), recovers the original word on the full carrier.
+
+Proof. The empty test gives equality of current readouts. If $x\equiv_M y$, then for every $u$ the test $au$ gives $q_M(f_u(f_a(x)))=q_M(f_u(f_a(y)))$. Hence $f_a(x)\equiv_M f_a(y)$, and total enabledness and name-only labels supply the remaining congruence data. Each cell in (11.6) contains a nonempty open real interval and hence infinitely many positive rationals. Theorem 6.2 bijects those rationals with original words. Only finitely many words have depth at most any fixed integer, proving unbounded depth inside each cell. Distinct words in one cell have identical complete predictive profiles, proving the nonrecovery assertion. Congruence alone therefore supplies no injective predecessor on this quotient. $\square$
+
+## 12. A finite horizon on the infinite carrier and exact scale refinement
+
+**Theorem 12.1 (finite test horizon and stronger single-path stabilization).** Under Assumption 11.1 set
+
+$$
+H_M=\max(0,M-2).
+\tag{12.1}
+$$
+
+First, for every positive rational $x,y$,
+
+$$
+x\equiv_M y
+\quad\Longleftrightarrow\quad
+q_M(f_u(x))=q_M(f_u(y))\text{ for all }|u|\le H_M.
+\tag{12.2}
+$$
+
+Second, fix any chronological path $u_1\cdots u_t$ with $t\ge H_M$, and read at its initial cut and after every action. If two original candidates have the same reports through action $H_M$, they have the same reports through action $t$. More generally they remain indistinguishable under every further common continuation, with a read at every cut, and under every deterministic continuation policy using only that transcript. Thus after $H_M$ actual actions a fully read path cannot gain any new distinctions between original candidates. No optimality of $H_M$ is asserted.
+
+Proof. Write $\delta(p/q)$ for the unique chronological depth of a reduced positive rational. Each parent decreases $\max(p,q)$ by at least one until it becomes $1$. Therefore
+
+$$
+\delta(p/q)\le\max(p,q)-1.
+\tag{12.3}
+$$
+
+In particular $\delta(r/M)\le M-1$ for $1\le r<M$, after reduction. A nongrid ancestor $P^i(r/M)$ cannot be the final root $1$, since $1\in\mathcal G_M$. Thus $i\le\delta(r/M)-1\le M-2$. Every nongrid cut has a witnessing word of length at most $M-2$, and every grid cut is witnessed by the empty word. For $M=1,2$ there are no nongrid cuts: (11.5) would require $a+b\le M$ and $b\nmid M$, which is impossible. Theorem 11.2 now proves (12.2) in all cases. This establishes a hypothetical finite test family; the following argument additionally concerns a single acquired path.
+
+Consider a prefix $v$ of length $n>H_M$ ending in $L$. Since its final image lies in $(0,1)$, a threshold preimage must satisfy $f_v(z)=r/M$ for some $1\le r<M$. Forced parent peeling then gives
+
+$$
+P^n(r/M)=z,\qquad n\le\delta(r/M)\le M-1.
+$$
+
+For $M\ge2$, the simultaneous inequalities $n>H_M$ and $n\le M-1$ force $n=M-1=\delta(r/M)$, hence $z=1$. For $M=1$ there is no such $r$. Thus every threshold cut of $q_M\circ f_v$ lies in $\{1\}$. The initial report $q_M(x)$ already separates $x<1$ from $x\ge1$, so equality of initial reports implies equality of this later $L$ report. Endpoint equality at $1$ is included in this conclusion. If instead a prefix ends in $R$, then
+
+$$
+q_M(R(z))=q_M(z)+M,
+\tag{12.4}
+$$
+
+so its report is determined by the preceding report. Inductively, no prefix after length $H_M$ refines the transcript partition already obtained. The same induction covers arbitrarily long common continuations. For an adaptive controller, identical reports and known actions give identical next choices; another induction therefore preserves the same reports, local computations and stopping decisions. Repeated nondisturbing reads do not change this argument. $\square$
+
+**Theorem 12.2 (whole-carrier scale refinement is divisibility).** For positive integers $M,N$, the following conditions are equivalent:
+
+$$
+\begin{aligned}
+&\text{for all }x,y\in\mathbb Q_{>0},\quad
+ x\equiv_N y\Longrightarrow x\equiv_M y;\\
+&\mathcal C_M\subseteq\mathcal C_N;\\
+&M\mid N.
+\end{aligned}
+\tag{12.5}
+$$
+
+In particular a numerically larger fixed scale need not refine a smaller scale on this source.
+
+Proof. Cut inclusion implies the first condition by (11.4). Conversely let $z\in\mathcal C_M\setminus\mathcal C_N$. Local finiteness permits a positive rational $x<z$ so close to $z$ that $\mathcal C_N\cap(x,z]=\varnothing$. Then $x\equiv_N z$ but $x\not\equiv_M z$, contradicting the first condition.
+
+If $M\mid N$, then $\mathcal G_M\subseteq\mathcal G_N$; taking the same legal parent closure gives $\mathcal C_M\subseteq\mathcal C_N$. For necessity suppose that cut inclusion holds. Every nongrid cut $a/b\in\mathcal K_N$ satisfies $a+b\le N$, so its value is at most $N-1$. Choose an integer $s>N$ and put $z=s+1/M$. This lies in $\mathcal G_M$ and hence $\mathcal C_N$, but exceeds every member of $\mathcal K_N$. Therefore $z\in\mathcal G_N$, giving $Ns+N/M\in\mathbb Z$ and hence $M\mid N$.
+
+For the direct observation correspondence when $N=tM$, one also has $q_M(z)=\lfloor q_N(z)/t\rfloor$ at every actual cut: writing $Nz=t k+r+\theta$ with $0\le r<t$ integral and $0\le\theta<1$ gives $Mz=k+(r+\theta)/t$ with $0\le(r+\theta)/t<1$. This is a computation from an acquired finer-scale report when that port is installed; (12.5) by itself does not install a second port. $\square$
+
+## 13. Exact finite-prior acquisition and an injective-source obstruction
+
+**Definition 13.1 (finite prior and finite decision predicate).** Supply a finite list $A\subset\mathbb Q_{>0}$ of possible original responses and a target function $\tau$ on this list with finitely encoded, decidably comparable values. This is public side information independent of which listed source is actual. The list and the action formulas permit exact computation of hypothetical candidate responses; only actual reads enter the acquired transcript. Original-word recovery uses $\tau(x)=\operatorname{dec}(x)$; original predictive-class recovery may use $\tau(x)=\kappa_M(x)$ from (11.7).
+
+At an already read node let $u$ be the actual probe prefix and let $A'$ be the subset of original candidates compatible with all reports so far. For $a\in\{L,R\}$ and an integer $j$ define
+
+$$
+A'_{a,j}=\{x\in A':q_M(f_{ua}(x))=j\}.
+\tag{13.1}
+$$
+
+Define $D_0(A',u)$ to mean that $\tau$ is constant on $A'$, with the empty case vacuous. Recursively $D_{k+1}(A',u)$ holds when $\tau$ is constant on $A'$, or when there is an $a\in\{L,R\}$ for which $D_k(A'_{a,j},ua)$ holds for every nonempty block $A'_{a,j}$. The finite list gives only finitely many such blocks. This predicate refers to the original target values throughout, including when different current predictive classes have merged.
+
+**Theorem 13.2 (necessary and sufficient finite single-path criterion).** Under Assumption 11.1 and Definition 13.1, a deterministic no-reset policy that always stops finitely and recovers $\tau$ exists if and only if
+
+$$
+D_{H_M}(A_j,\varepsilon)\text{ holds for every nonempty }
+A_j=\{x\in A:q_M(x)=j\}.
+\tag{13.2}
+$$
+
+Whenever it exists, a policy with at most $H_M$ actions and $H_M+1$ reads exists. Condition (13.2) is decidable by finite exact integer/rational computation from the supplied list. Neither the horizon nor the finite computation asserts a fixed memory or bit-cost bound.
+
+Proof. Induction on $k$ shows that $D_k(A',u)$ is exactly the existence of a decision tree with at most $k$ further actions, reading immediately after each action and returning the original target. A homogeneous block stops. Otherwise the first action is one common $a$, its actual read selects exactly one of the nonempty blocks (13.1), and each block must admit the remaining tree. This proves both directions of the induction, including $k=0$. The initial read gives the blocks in (13.2), so the criterion is sufficient and has the stated resource bound.
+
+For necessity take any successful policy. Insert a read at the initial cut and after every action; these nondisturbing reads can be retained while the old policy is simulated using only the reports it requested. Redundant requested reads can reuse the actual current report. This normalization does not add an action or any unacquired source-dependent input. On the finite prior there is one deterministic terminating run for each original candidate, so the normalized tree has finitely many reachable nodes, although no common bound was initially assumed.
+
+At a node reached after $H_M$ actions, take any two original candidates compatible with its entire fully read transcript. Theorem 12.1 implies identical future reports along every common continuation. The normalized policy therefore has identical further decisions and final output for this pair. Its correctness forces equal original targets. Every such node is consequently homogeneous and can be replaced by an immediate output. Earlier stopped nodes are homogeneous by the same correctness argument. The truncated tree has depth at most $H_M$, so the induction gives (13.2). Empty priors need no reads. Finally the recursion is finite, its action alphabet has size two, and all candidate transformations, floor comparisons and target comparisons are effective on the supplied finite encodings. This proves decidability.
+
+The elementary decision-tree induction is the usual adaptive distinguishing-experiment construction; the new source-specific content enabling its finite completeness here is Theorem 12.1 on the infinite rational carrier. The distinction between separately evaluated tests and one adaptive experiment is already explicit in van den Bos–Vaandrager, [arXiv:1907.11034v2](https://arxiv.org/html/1907.11034v2), §4, Definitions 10–11 and Figure 3, and in [Transport Memory Completion §§31.4–31.5 and 52](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md). No finite-automaton complexity or homing bound from that literature is used. $\square$
+
+**Proposition 13.3 (depth two: attainable at scale three, obstructed at scale four).** For the original prior $Q_2$ of Definition 10.1,
+
+$$
+\mathcal C_3=\mathcal G_3\cup\{1/2\},\qquad
+\mathcal C_4=\mathcal G_4\cup\{1/3\}.
+\tag{13.3}
+$$
+
+At $M=3$ the exact original word is acquirable with at most two reads and one action. At $M=4$ the two originals $L$ and $RL$ are forever indistinguishable, so no policy recovers the original word over $Q_2$.
+
+Proof. In (11.5), $M=3$ permits only the nongrid reduced pair $(a,b)=(1,2)$; $M=4$ permits only $(1,3)$. Both satisfy $a+b=M$ with $h=j=1$. All other positive coprime pairs with $a+b\le M$ have denominator dividing $M$. This gives (13.3).
+
+Here are all actual original candidates and their initial scale-three reports:
+
+| Original word | Original response | $q_3$ |
+| --- | --- | --- |
+| $\varepsilon$ | $1$ | $3$ |
+| $L$ | $1/2$ | $1$ |
+| $R$ | $2$ | $6$ |
+| $LL$ | $1/3$ | $1$ |
+| $LR$ | $3/2$ | $4$ |
+| $RL$ | $2/3$ | $2$ |
+| $RR$ | $3$ | $9$ |
+
+Read first. Every report except $1$ identifies its original word. On report $1$, execute $L$ on the same source and read again: the originals $1/2$ and $1/3$ become $1/3$ and $1/4$, with reports $1$ and $0$. This supplies the claimed actual policy. At scale four, $(1/2,2/3]$ contains neither a quarter-grid cut nor the extra cut $1/3$. Thus $1/2\equiv_4 2/3$ by (11.4). Congruence and identical transcript decisions preserve their equality of all future reports, proving the impossibility. $\square$
+
+**Theorem 13.4 (three distinct original classes with no one-path acquisition at scale sixteen).** At $M=16$ take the three original sources
+
+$$
+(x_1,x_2,x_3)=(1/4,2/7,3/10),\qquad
+(w_1,w_2,w_3)=(LLL,RLLL,RRLLL).
+\tag{13.4}
+$$
+
+Their original predictive classes are pairwise distinct. Nevertheless no deterministic policy under Assumption 11.1 can recover their original predictive class, or their original word, for every member of this three-source prior. This obstruction allows arbitrarily many reads, arbitrary finite computation and an unbounded number of forward actions. The physical maps remain injective.
+
+Proof. Direct chronological execution from $1$ gives (13.4). The exact candidate responses for two possible test words are
+
+$$
+\begin{array}{c|ccc|ccc}
+ u&f_u(x_1)&f_u(x_2)&f_u(x_3)&q_{16}(f_u(x_1))&q_{16}(f_u(x_2))&q_{16}(f_u(x_3))\\ \hline
+ \varepsilon&1/4&2/7&3/10&4&4&4\\
+ LL&1/6&2/11&3/16&2&2&3\\
+ RL&5/9&9/16&13/23&8&9&9
+\end{array}
+\tag{13.5}
+$$
+
+The $RL$ test separates the first original from the second; the $LL$ test separates the third from each of the first two. Hence all three original classes are different. These are two counterfactual tests starting at the same original cut. Their combined rows are not a transcript obtainable by performing both tests successively.
+
+For an exact all-continuation analysis of the first action, (11.5) gives the following complete nongrid core. Each row lists the allowed reduced numerators for its denominator:
+
+| $b$ | $a$ with $a/b\in\mathcal K_{16}$ |
+| --- | --- |
+| $3$ | $1,2,4,5,7,10,13$ |
+| $5$ | $1,2,3,6,11$ |
+| $6$ | $1,5$ |
+| $7$ | $1,2,3,9$ |
+| $9$ | $1,7$ |
+| $10$ | $1,3$ |
+| $11$ | $1,5$ |
+| $12$ | $1$ |
+| $13$ | $1,3$ |
+| $14$ | $1$ |
+| $15$ | $1$ |
+
+This finite enumeration follows directly by taking $1\le b\le15$ with $b\nmid16$, then $1\le j\le\lfloor15/b\rfloor$, and the positive divisors $a$ of $16-bj$ with $\gcd(a,b)=1$; $h=(16-bj)/a$. These ranges are exhaustive because $ah\ge1$ and $a+b\le16$, and every listed divisor supplies positive $h,j$. Thus the table proves both inclusion directions without a bound on future test length.
+
+If the first action is $L$, the first two states become $1/5$ and $2/9$. The table and the sixteenth grid show they belong to the one cell
+
+$$
+1/5\le 2/9<3/13,\qquad
+[1/5,3/13)\cap\mathbb Q.
+\tag{13.6}
+$$
+
+Indeed the neighboring grid points are $3/16<1/5<2/9<4/16$, and the table has no intervening nongrid cut before $3/13$. Hence $L(x_1)\equiv_{16}L(x_2)$. If the first action is $R$, the last two states become $9/7$ and $13/10$, both in the cell
+
+$$
+9/7\le13/10<21/16,\qquad
+[9/7,21/16)\cap\mathbb Q.
+\tag{13.7}
+$$
+
+The neighboring grid points are $20/16<9/7<13/10<21/16$, and the next nongrid cut above $9/7$ is $4/3>21/16$. Thus $R(x_2)\equiv_{16}R(x_3)$. The cell criterion proves equality under every finite continuation in both cases, not only agreement for a finite sample of test words.
+
+Before the first action, every read returns $4$. If the controller stops there, one common output cannot identify all three originals. If it never acts or stops, it fails finite acquisition. Otherwise its first action is common to all three executions. The choice $L$ makes the first pair forever indistinguishable; the choice $R$ does so for the last pair. Their previous transcripts were identical, and congruence supplies identical future reports under identical choices. Induction therefore gives the same full acquired transcript and stopping decision for that pair. Its two different original class labels, and its two different original words, cannot both be correct outputs. This proves the impossibility for every such policy.
+
+Finally $R(y)-R(x)=y-x>0$ and $L(y)-L(x)=(y-x)/((1+x)(1+y))>0$ whenever $0<x<y$. Both source maps and all their compositions remain injective. What merges in (13.6)–(13.7) is the predictive quotient, not the physical rational states. $\square$
+
+**Corollary 13.5 (original four-view recovery follows actual acquisition).** Under the same source and access contracts, replace original-word recovery by recovery of any one of the original exact rational boundary, original rooted named-incidence path, original literal chronology, or original indexed prefix-memory table of §§5–6. The policy of Proposition 13.3 at scale three computes each of these targets. Its scale-four impossibility, Theorem 13.4's scale-sixteen impossibility, and Corollary 11.3's full-carrier impossibility hold for each target.
+
+Proof. Each listed exact original expression determines the original word by Theorem 6.2 and Definition 5.4; the word constructs every listed expression. Compose these existing decoders with the actual successful policy to obtain attainability, or with a hypothetical successful policy to contradict the respective original-word obstruction. The original cut and source identity are retained throughout. These computations neither undo a source action nor assert that an indexed archive had been physically stored. A predictive class remains a coarser target and does not itself become a literal-history decoder. $\square$
+
+## 14. Mathematical antecedents and scope of the fixed-floor contract
+
+**Definition 14.1 (antecedents and supplied hypotheses).** The source-specific cut formula (11.3), arithmetic core (11.5), same-path horizon, divisibility criterion and rational acquisition/obstruction results are `repo-derived` ordinary mathematical consequences for Assumption 11.1. This classification makes no claim of worldwide novelty. Classical Calkin–Wilf enumeration, Farey adjacency and unimodular arithmetic are supporting antecedents; Glasby, *Enumerating the rationals from left to right*, [arXiv:1011.2823v1](https://arxiv.org/abs/1011.2823v1), introduction and pp. 1–2, explicitly distinguishes the mediant and chronological child conventions. Their correspondence remains Definition 6.3's reversal convention.
+
+The actual matrix suppliers are [WordNodesAreReduced](../../../D5/S3/PrimeForms/SternBrocot/WordNodesAreReduced.lean), `unimodular_wordMatrix` and `wordMatrix_lower_right_pos`, and [UnimodularGeneration](../../../D5/S3/PrimeForms/SternBrocot/UnimodularGeneration.lean), `unimodular_iff_wordMatrix`. The first supplies the nonnegative determinant-one matrices and positive lower-right entry for the specified generators. Its `word_node_is_reduced` concerns the matrix's lower row; it is not substituted for reducedness of the column-action response. The second states that every nonnegative integer determinant-one matrix has such a word factorization, which is precisely the existence used in the converse of (11.5). Coprimality of the transformed response in that proof follows from the integer inverse matrix and the original reduced pair.
+
+[FiniteDistinguishingCertificate](../../../D5/S3/ObserverMemory/PredictionCertificates/FiniteDistinguishingCertificate.lean), `finite_distinguishing_certificate`, assumes a supplied surjective finite classification exact for all available evaluations and selects a finite set of separately evaluated protocols. It does not execute those protocols successively on one unreset source. The whole-carrier quotient (11.6) has infinitely many classes; finiteness of its extra cut core is a different assertion. [QuantizedWordApproximation](../../../D5/S3/ObserverMemory/Prediction/QuantizedWordApproximation.lean), `quantized_word_approximation`, assumes a supplied finite codebook and quantizer with a global state-error bound and Lipschitz transition/readout bounds. Such an approximate codebook and those hypotheses are not an exact original-word acquisition contract for (11.1).
+
+The distinct floor and total-error ports of [Affine Finite Reply Recovery, Definition 4.3](RECURSIVE_RELATIONAL_OBSERVATION_AFFINE_FINITE_REPLY_RECOVERY.md), the dense-entrance floor obstructions and lattice assumptions of [Atomic Generation Acquisition III §§28–33](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION_III.md), and the supplied-versus-acquired resource coordinates of [Stationary-Q Endpoint Sensors §22.8](RECURSIVE_RELATIONAL_OBSERVATION_STATIONARY_Q_ENDPOINT_SENSORS.md) retain their own sources and operations. Their distinctions between a specified sensor, an actual report, a computed result and a retained record apply here as hypothesis accounting, without transferring their physical or numerical conclusions. The one-history acquisition distinction is also already developed in [Effective Resolution Continuation §§12–14](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION_CONTINUATION.md); the present cut arithmetic and horizon are for this rational $L/R$ source.
+
+Dubbini–Piccoli–Bicchi, *Left invertibility of discrete-time output-quantized systems: the linear case with finite inputs*, [arXiv:1103.4039v1](https://arxiv.org/abs/1103.4039v1), §§1–4, studies recovery of an unknown input sequence under known linear dynamics. Here the forward actions are known, the original state is unknown, and $L$ is nonlinear. Their left-invertibility results therefore do not supply any of Theorems 11.2–13.4. Likewise the adaptive-test antecedent cited in Theorem 13.2 supplies the experiment distinction, not this source's arithmetic horizon or a reset permission.
+
+This fixed-floor contract has exact deterministic grid endpoints and no freely selectable radius. Section 10's adversarial positive-error reports cannot replace it, and a change from one contract to the other changes the available joint observations. The finite bounds above count actions and reads as stated; report widths, arithmetic, candidate descriptions, output size, retention and physical installation remain separate quantities. The four recovered expressions have §§5–6's mathematical meanings, with no additional metric spacetime, physical clock or apparatus realization assumed.
+
+## 追加锚（本行以下为增补区）
