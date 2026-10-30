@@ -171,11 +171,3 @@ varying-semigroup family is used. An exact formula for each relative
 constant, a minimal counterexample, and a novelty or priority claim are
 not asserted. The later-literature screen is bounded by the source and
 preregistration [23896](https://github.com/the-omega-institute/trureturing/issues/23896).
-
-The authored 3.26 theorems have `proof_shape: bind-only`. The designated
-`result` is admitted under the named external Tier1 open-problem-resolution
-basis in issue 23896; its consumed private theorems organize the derivation
-and supply no escape witness. The `Infinite Model` instance separately
-certifies infinitude of the fixed witness. It is not consumed by `result`
-and is neither a result helper nor an escape witness. Only `result` is a
-public authored theorem and the designated refutation is audit-exempt.

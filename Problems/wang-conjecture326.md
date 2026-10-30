@@ -106,8 +106,7 @@ A globally finite carrier, modular level addition, contracted convolution,
 a shared coefficient for equal labels, or a family of different finite
 semigroups would fail to match the source. Failure to preserve proper
 subsequences or the actual principal-ideal quotient would also invalidate
-the refutation. An earlier exact settlement would affect the named
-open-problem admission basis, without changing the mathematical negation.
+the refutation.
 
 ## Evidence
 
@@ -118,14 +117,6 @@ injectivity and the unbounded irreducible family form its proof path.
 The primary versioned HTML supplies the whole source statement. The
 related source note records the versioned author-source hashes and the
 separate 5.3 statement.
-
-All authored theorems have `proof_shape: bind-only`. The named external
-Tier1 admission basis is `open-problem-resolution` under issue 23896.
-The private theorems are consumed in the result's derivation and are not
-escape witnesses. The `Infinite Model` instance is a separate certificate
-of the fixed witness's infinitude, not a consumed result helper or escape
-witness. The only public authored theorem is the designated literal
-refutation `result`, exempt from the four-slot escape audit.
 
 ## Triage
 
