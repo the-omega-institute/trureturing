@@ -9,7 +9,6 @@
 import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Data.List.Sections
-import Mathlib.Tactic.NormNum
 
 /-! The stopped-word expectation for the complex reset counterexample to Remark 5.3. -/
 
