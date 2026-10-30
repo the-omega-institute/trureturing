@@ -625,9 +625,6 @@ private theorem refined_bootstrap (D : TailChoice x) (M : ℝ) (hM : 0 < M) (ha 
   dsimp [p, E, L] at *
   nlinarith only [hc.2.2, hc.1, ht, hQ, hβL, hα]
 
-#print axioms tail_cauchy
-#print axioms rank_cutoff_localization
-#print axioms refined_bootstrap
 
 
 end JointArray

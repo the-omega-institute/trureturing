@@ -6,17 +6,21 @@
    utility: none
    digest: Actual incidence arrays and the common-tail core remainder certificate. -/
 
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Algebra.Order.BigOperators.Ring.Finset
-import Mathlib.Data.Finset.Max
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.GCongr
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+public import Mathlib.Data.Finset.Max
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.GCongr
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
+public section
 
 open scoped BigOperators
 open Filter Topology
@@ -555,7 +559,6 @@ def Lemma134ProducerStatement (a h : ℕ) : Prop :=
         JointArray.expect x (fun T => JointArray.Q (a := a) (JointArray.coreCount x D T)) +
           JointArray.jensenGap x D ≤ JointArray.d x
 
-#print axioms JointArray.core_certificate
 
 end
 
