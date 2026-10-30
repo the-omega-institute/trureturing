@@ -436,6 +436,7 @@ theorem twice_signed_supported_factorial_contraction (R : ℕ) (F : ℕ → ℕ 
   intro L hL
   apply Finset.sum_congr rfl
   intro ell hell
+  dsimp only [g]
   by_cases hout : R ≤ ell ∨ R ≤ L-ell
   · have hz : F ell (L-ell) = 0 := tail ell (L-ell) hout
     simp [hz]
@@ -447,6 +448,7 @@ theorem twice_signed_supported_factorial_contraction (R : ℕ) (F : ℕ → ℕ 
         (Nat.choose_mul_factorial_mul_factorial hle)
     have hfacC : (Ring.choose (L : ℂ) ell) * (ell.factorial : ℂ) *
         ((L-ell).factorial : ℂ) = (L.factorial : ℂ) := by
+      rw [Ring.choose_natCast]
       exact_mod_cast hfac
     have hellfac : (ell.factorial : ℂ) ≠ 0 := by
       exact_mod_cast Nat.factorial_ne_zero ell
@@ -454,9 +456,10 @@ theorem twice_signed_supported_factorial_contraction (R : ℕ) (F : ℕ → ℕ 
       exact_mod_cast Nat.factorial_ne_zero (L-ell)
     have hLfac : (L.factorial : ℂ) ≠ 0 := by
       exact_mod_cast Nat.factorial_ne_zero L
-    rw [div_eq_mul_inv]
-    field_simp [hellfac, hzfac, hLfac]
-    simpa [mul_assoc, mul_left_comm, mul_comm] using hfacC
+    congr 1
+    apply (eq_div_iff hLfac).2
+    rw [← hfacC]
+    field_simp
 
 private def orderedCutoff (D : LatticeData) (hu : IsUnit D.G.det)
     (a : Carrier D) (e : ℤ) (u : ActualTensor D hu) : ℕ :=
@@ -800,7 +803,7 @@ theorem mixed_first_input_zero_of_negative (D : LatticeData) (hu : IsUnit D.G.de
       (((fixedParitySlice D hu (-1)
         (⟨a.val,a.property.2⟩ : FixedCarrier D))[[l]]) u) v = 0 := by
   rw [fixed_mode_zero_of_negative D hu h24 H d l a u huH hw]
-  exact LinearMap.map_zero (normalizedCoefficient D hu k)
+  simp only [map_zero, LinearMap.zero_apply]
 
 set_option backward.isDefEq.respectTransparency true in
 /-- The normalized coefficient with an actual fixed-source mode acting in
@@ -947,10 +950,13 @@ theorem mixed_first_input_signed_support (D : LatticeData) (hu : IsUnit D.G.det)
             (⟨a.val,a.property.2⟩ : FixedCarrier D))[[l]]) u) v E b = expanded W := by
   dsimp
   by_cases hw : (H : ℤ) + d - l - 1 < 0
-  · exact Or.inl ⟨hw, mixed_first_input_zero_of_negative D hu h24 H d k l a u v huH hw⟩
+  · refine Or.inl ⟨hw, ?_⟩
+    rw [mixed_first_input_zero_of_negative D hu h24 H d k l a u v huH hw]
+    rfl
   · right
     have hnonneg : 0 ≤ (H : ℤ) + d - l - 1 := by omega
     obtain ⟨W, hW⟩ := Int.eq_ofNat_of_zero_le hnonneg
+    replace hW := hW.symm
     refine ⟨W, hW, ?_⟩
     simpa [hW] using
       (mixed_first_input_pairing D hu h24 H K W d k l E a u v huH hvK hW b)
@@ -987,10 +993,13 @@ theorem mixed_second_input_signed_support (D : LatticeData) (hu : IsUnit D.G.det
             (⟨a.val,a.property.2⟩ : FixedCarrier D))[[l]]) v) E b = expanded W := by
   dsimp
   by_cases hw : (K : ℤ) + d - l - 1 < 0
-  · exact Or.inl ⟨hw, mixed_second_input_zero_of_negative D hu h24 K d k l a u v hvK hw⟩
+  · refine Or.inl ⟨hw, ?_⟩
+    rw [mixed_second_input_zero_of_negative D hu h24 K d k l a u v hvK hw]
+    rfl
   · right
     have hnonneg : 0 ≤ (K : ℤ) + d - l - 1 := by omega
     obtain ⟨W, hW⟩ := Int.eq_ofNat_of_zero_le hnonneg
+    replace hW := hW.symm
     refine ⟨W, hW, ?_⟩
     simpa [hW] using
       (mixed_second_input_pairing D hu h24 H K W d k l E a u v huH hvK hW b)
