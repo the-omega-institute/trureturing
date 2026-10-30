@@ -597,8 +597,8 @@ $$
 In particular $a+b\le M$ for every member of $\mathcal K_M$, so this core is finite. The cuts are locally finite and have minimum $1/M$. If they are ordered as $c_1<c_2<\cdots$, the predictive cells are exactly
 
 $$
-(0,c_1)\cap\mathbb Q,qquad
-[c_i,c_{i+1})\cap\mathbb Q\quad(i\ge1),qquad c_1=1/M.
+(0,c_1)\cap\mathbb Q,\qquad
+[c_i,c_{i+1})\cap\mathbb Q\quad(i\ge1),\qquad c_1=1/M.
 \tag{11.6}
 $$
 
@@ -606,7 +606,7 @@ A canonical integer naming these cells on their actual image is
 
 $$
 \kappa_M(x)=\lfloor Mx\rfloor+
- \#\{z\in\mathcal K_M:z\le x\},qquad
+ \#\{z\in\mathcal K_M:z\le x\},\qquad
 \kappa_M(x)=\kappa_M(y)\Longleftrightarrow x\equiv_M y.
 \tag{11.7}
 $$
@@ -620,7 +620,7 @@ In reduced coordinates $z=p/q$, a parent replaces $(p,q)$ by $(p,q-p)$ or $(p-q,
 For (11.5), let reduced $a/b$ be a nongrid threshold preimage. For some word matrix
 
 $$
-G_u=\begin{pmatrix}\alpha&\beta\\c&d\end{pmatrix},qquad
+G_u=\begin{pmatrix}\alpha&\beta\\c&d\end{pmatrix},\qquad
 \alpha d-\beta c=1,\quad d\ge1,
 $$
 
@@ -674,7 +674,7 @@ In particular $\delta(r/M)\le M-1$ for $1\le r<M$, after reduction. A nongrid an
 Consider a prefix $v$ of length $n>H_M$ ending in $L$. Since its final image lies in $(0,1)$, a threshold preimage must satisfy $f_v(z)=r/M$ for some $1\le r<M$. Forced parent peeling then gives
 
 $$
-P^n(r/M)=z,qquad n\le\delta(r/M)\le M-1.
+P^n(r/M)=z,\qquad n\le\delta(r/M)\le M-1.
 $$
 
 For $M\ge2$, the simultaneous inequalities $n>H_M$ and $n\le M-1$ force $n=M-1=\delta(r/M)$, hence $z=1$. For $M=1$ there is no such $r$. Thus every threshold cut of $q_M\circ f_v$ lies in $\{1\}$. The initial report $q_M(x)$ already separates $x<1$ from $x\ge1$, so equality of initial reports implies equality of this later $L$ report. Endpoint equality at $1$ is included in this conclusion. If instead a prefix ends in $R$, then
@@ -740,7 +740,7 @@ The elementary decision-tree induction is the usual adaptive distinguishing-expe
 **Proposition 13.3 (depth two: attainable at scale three, obstructed at scale four).** For the original prior $Q_2$ of Definition 10.1,
 
 $$
-\mathcal C_3=\mathcal G_3\cup\{1/2\},qquad
+\mathcal C_3=\mathcal G_3\cup\{1/2\},\qquad
 \mathcal C_4=\mathcal G_4\cup\{1/3\}.
 \tag{13.3}
 $$
@@ -766,7 +766,7 @@ Read first. Every report except $1$ identifies its original word. On report $1$,
 **Theorem 13.4 (three distinct original classes with no one-path acquisition at scale sixteen).** At $M=16$ take the three original sources
 
 $$
-(x_1,x_2,x_3)=(1/4,2/7,3/10),qquad
+(x_1,x_2,x_3)=(1/4,2/7,3/10),\qquad
 (w_1,w_2,w_3)=(LLL,RLLL,RRLLL).
 \tag{13.4}
 $$
@@ -808,7 +808,7 @@ This finite enumeration follows directly by taking $1\le b\le15$ with $b\nmid16$
 If the first action is $L$, the first two states become $1/5$ and $2/9$. The table and the sixteenth grid show they belong to the one cell
 
 $$
-1/5\le 2/9<3/13,qquad
+1/5\le 2/9<3/13,\qquad
 [1/5,3/13)\cap\mathbb Q.
 \tag{13.6}
 $$
@@ -816,7 +816,7 @@ $$
 Indeed the neighboring grid points are $3/16<1/5<2/9<4/16$, and the table has no intervening nongrid cut before $3/13$. Hence $L(x_1)\equiv_{16}L(x_2)$. If the first action is $R$, the last two states become $9/7$ and $13/10$, both in the cell
 
 $$
-9/7\le13/10<21/16,qquad
+9/7\le13/10<21/16,\qquad
 [9/7,21/16)\cap\mathbb Q.
 \tag{13.7}
 $$
