@@ -4,13 +4,13 @@
    mirror-E: none
    anchors: [D5/S3/Analytic/XuYangMillsRemainder/Result]
    utility: none
-   digest: Original Mills regularity, strict remainder moment bounds and closed kernel ranges.
+   digest: Original Mills Gamma coefficients, origin obstruction and closed kernel ranges.
 
-This module is an unfrozen checkpoint for the general-parameter Mills
-classification.  It keeps the original normalization from `Result.D` and
-records both complete equivalence chains as a proposition.  The
-general-parameter coefficient representation, Laplace identity,
-infinity asymptotic and classification proof remain open here.
+The general-parameter Mills definitions retain the original normalization from
+`Result.D`. Both complete equivalence chains are recorded as a proposition.
+The Gamma coefficient correspondence identifies the sharp positive-branch
+origin obstruction. The Laplace identity, infinity asymptotic and complete
+classification proof remain open here.
 -/
 
 import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
@@ -96,8 +96,9 @@ private theorem coefficient_one_zero (a : ℝ) : u 1 a (a - 2) = 0 := by
     rw [show (1 : ℝ) + 1 / 2 = 1 / 2 + 1 by ring,
       Gamma_add_one (by norm_num)]
   have hz : Gamma (1 / 2) ≠ 0 := ne_of_gt (Gamma_pos_of_pos (by norm_num))
+  norm_num at hg
   norm_num [u, Finset.sum_range_succ, hg]
-  field_simp
+  field_simp [hz]
   <;> ring
 
 private theorem rescaled_f (n : ℕ) (a : ℝ) {x : ℝ} (hx : x ≠ 0) :
@@ -536,6 +537,7 @@ private theorem moment_difference (r : ℕ) : B r = I (r + 1) - I r := by
     (by apply Continuous.intervalIntegrable; fun_prop)]
   apply intervalIntegral.integral_congr
   intro v _
+  dsimp only
   rw [pow_succ]
   ring
 
@@ -543,41 +545,55 @@ private theorem coefficient_identity (r : ℕ) (a : ℝ) :
     u (r + 2) a (a - 2) =
       (2 * r + 3).factorial / ((4 : ℝ) ^ (r + 1) * r.factorial) *
         (I r + (2 * a - 1) * B r) := by
-  have hs := coeff_sum (r + 1)
-  have hr := intPow_rec r
-  have hf := coeff_factorial (r + 1)
+  have hs : (∑ j ∈ Finset.range (r + 2), coeff j / j.factorial) =
+      coeff (r + 2) / ((2 : ℝ) ^ (r + 1) * (r + 1).factorial) * I (r + 1) := by
+    simpa only [I, intPow, Nat.add_assoc] using coeff_sum (r + 1)
+  have hr : (2 * (r : ℝ) + 3) * I (r + 1) - 2 * (r + 1) * I r =
+      (2 : ℝ) ^ (r + 1) := intPow_rec r
   have hd : (2 : ℝ) ^ (r + 1) ≠ 0 := by positivity
   have hfac : ((r + 1).factorial : ℝ) ≠ 0 := by positivity
   have hfr : (r.factorial : ℝ) ≠ 0 := by positivity
+  have hfa : ((r + 1).factorial : ℝ) = ((r : ℝ) + 1) * r.factorial := by
+    rw [Nat.factorial_succ]; push_cast; rfl
   have hu : u (r + 2) a (a - 2) = (a - 1) * coeff (r + 2) +
       ((r : ℝ) + 2 - a) * (r + 1).factorial *
         (coeff (r + 2) / ((2 : ℝ) ^ (r + 1) * (r + 1).factorial) * I (r + 1)) := by
-    unfold u
-    simp only [show r + 2 - 1 = r + 1 by omega, Nat.cast_add, Nat.cast_ofNat]
     have hsum : (∑ j ∈ Finset.range (r + 2),
         (2 : ℝ) ^ j * Gamma (j + 1 / 2) / (Gamma (1 / 2) * j.factorial)) =
-        coeff (r + 2) / ((2 : ℝ) ^ (r + 1) * (r + 1).factorial) * I (r + 1) := by
-      convert hs using 1
+        ∑ j ∈ Finset.range (r + 2), coeff j / j.factorial := by
       apply Finset.sum_congr rfl
       intro j _
       dsimp [coeff]
       ring
-    rw [hsum]
+    unfold u
+    rw [hsum, hs]
+    simp only [show r + 2 - 1 = r + 1 by omega]
     dsimp [coeff]
+    push_cast
     ring
   have hc : coeff (r + 2) =
       (2 * r + 3).factorial / ((2 : ℝ) ^ (r + 1) * (r + 1).factorial) := by
     apply (eq_div_iff (mul_ne_zero hd hfac)).mpr
-    convert hf using 1 <;> congr 2 <;> omega
-  change (2 * (r : ℝ) + 3) * I (r + 1) - 2 * (r + 1) * I r =
-    (2 : ℝ) ^ (r + 1) at hr
-  rw [hu, hc, moment_difference, Nat.factorial_succ]
+    convert coeff_factorial (r + 1) using 1 <;> congr 2 <;> omega
+  have hbr : (a - 1) * (2 : ℝ) ^ (r + 1) + ((r : ℝ) + 2 - a) * I (r + 1) =
+      ((r : ℝ) + 1) * (I r + (2 * a - 1) * B r) := by
+    rw [moment_difference]
+    linear_combination (1 - a) * hr
   have hp : (4 : ℝ) ^ (r + 1) = (2 : ℝ) ^ (r + 1) * 2 ^ (r + 1) := by
     rw [← mul_pow]; norm_num
-  rw [hp]
-  push_cast
-  field_simp
-  linear_combination (2 * r + 3).factorial * (a - 1) * hr
+  calc
+    _ = coeff (r + 2) / (2 : ℝ) ^ (r + 1) *
+        ((a - 1) * 2 ^ (r + 1) + ((r : ℝ) + 2 - a) * I (r + 1)) := by
+      rw [hu]
+      field_simp [hd, hfac]
+      <;> ring
+    _ = coeff (r + 2) / (2 : ℝ) ^ (r + 1) *
+        (((r : ℝ) + 1) * (I r + (2 * a - 1) * B r)) := by rw [hbr]
+    _ = _ := by
+      rw [hc, hp]
+      simp only [hfa]
+      field_simp
+      <;> ring
 
 private theorem coefficient_threshold_signs (r : ℕ) (a : ℝ) :
     (u (r + 2) a (a - 2) ≤ 0 ↔ a ≤ theta r) ∧
@@ -588,12 +604,19 @@ private theorem coefficient_threshold_signs (r : ℕ) (a : ℝ) :
   rw [coefficient_identity]
   have hi : I r + (2 * a - 1) * B r = 2 * B r * (a - theta r) := by
     dsimp [theta]
-    field_simp
+    field_simp [ne_of_gt hB]
     <;> ring
   rw [hi]
   constructor
-  · rw [mul_nonpos_iff_of_pos_left hc, mul_nonpos_iff_of_pos_left (by positivity)]
-    exact sub_nonpos
+  · constructor
+    · intro h
+      by_contra H
+      have hp := mul_pos hc (mul_pos (show 0 < 2 * B r by positivity)
+        (sub_pos.mpr (lt_of_not_ge H)))
+      linarith
+    · intro h
+      exact mul_nonpos_of_nonneg_of_nonpos hc.le
+        (mul_nonpos_of_nonneg_of_nonpos (by positivity) (sub_nonpos.mpr h))
   · rw [mul_nonneg_iff_of_pos_left hc, mul_nonneg_iff_of_pos_left (by positivity)]
     exact sub_nonneg
 

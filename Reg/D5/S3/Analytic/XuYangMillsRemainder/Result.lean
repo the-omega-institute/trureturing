@@ -128,13 +128,17 @@ def rejected : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 def arena : Arena where
   signature := signature
-  Law R := ∀ m : ℕ, (2 * (m : ℝ) + 3) * R.readout () () (m + 1) -
+  Law R := ∀ m : ℕ, (2 * (m : ℝ) + 3) * intPow (m + 1) -
     2 * (m + 1) * R.readout () () m = 2 ^ (m + 1)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have H := h 0
+  have H0 := intPow_rec 0
+  have hi0 : intPow 0 = 1 := by norm_num [intPow]
   norm_num [rejected, realize] at H
+  norm_num [hi0] at H0
+  linarith
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro i
@@ -177,15 +181,10 @@ def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Analytic.XuYangMillsRemainder.Result
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "fn", "arg", "fn", "arg", "arg"]
+    readouts := #[{ path := #["body", "fn", "arg", "arg", "arg"]
         stateBinder := 0
         functionOperand := false
-        stateOperand := some #["arg"]
-        booleanPredicate := false },
-      { path := #["body", "fn", "arg", "arg", "arg"]
-        stateBinder := 0
-        functionOperand := false
-        stateOperand := some #["arg"]
+        stateOperand := none
         booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
