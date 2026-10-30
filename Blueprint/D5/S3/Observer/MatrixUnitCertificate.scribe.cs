@@ -11,6 +11,18 @@ internal sealed class MatrixUnitCertificateDocument : IScribeDocumentDefinition
         H("Exact Matrix Units from a Finite Weyl Pair"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("clock-phase-powers-are-cyclic-characters"),
+                DeclarationHandle.Create(
+                    "D5/S3/Observer/MatrixUnitCertificate.clock_phase_pow_eq_character"),
+                H("Clock phase powers are cyclic characters"),
+                StatementSource.FromAuthor(ClockPhaseFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every nonzero window cardinality M and cyclic indices r and k, "
+                        + "raising the rth clock phase to the representative of k gives "
+                        + "the standard cyclic character with frequency k evaluated at r."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("cyclic-shift-power-entries"),
                 DeclarationHandle.Create(
                     "D5/S3/Observer/MatrixUnitCertificate.shift_matrix_pow_apply"),
@@ -75,6 +87,22 @@ internal sealed class MatrixUnitCertificateDocument : IScribeDocumentDefinition
                                     "relation for the same Weyl-generated family."))),
                 DescribeRole.Theorem
             ))));
+
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+
+    private static Formula ClockPhaseFormula() => Disp(Seq(
+        Forall, Sp, F.Id("M"), Sp, InMacro, Sp, Mathbb, Grp(F.Id("N")), Sp,
+        OpenBracket, Operatorname, Grp(F.Id("NeZero")), Sp, F.Id("M"), CloseBracket, Comma, Sp,
+        Forall, Sp, F.Id("r"), Comma, Sp, F.Id("k"), Sp, InMacro, Sp,
+        Mathbb, Grp(F.Id("Z")), Slash, F.Id("M"), Mathbb, Grp(F.Id("Z")), Comma, Esc,
+        new Formula.Relation(
+            new Formula.Power(
+                Parenthesized(new Formula.Power(Call("windowRoot", F.Id("M")), Call("val", F.Id("r")))),
+                Call("val", F.Id("k"))),
+            FormulaRelationOperator.Equal,
+            new Formula.Apply(
+                new Formula.Subscript(Seq(Operatorname, Grp(F.Id("character"))), F.Id("M")),
+                [F.Id("k"), F.Id("r")]))));
 
     private static Formula ShiftPowerFormula() => Disp(Seq(
         Begin, Grp(F.Id("gathered")),
