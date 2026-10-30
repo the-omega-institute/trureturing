@@ -5,13 +5,13 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Complementary equal-outer physical orders with literal fresh-first insertion. -/
-module
 import Mathlib.Data.Nat.Bitwise
 import Mathlib.Combinatorics.Colex
-import all D5.S3.Combinatorics.Circle.ThreeBitSource
-import all D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
-public import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterSourceBridge
-public import D5.S3.Combinatorics.Circle.RunFirstEarTransport
+import Batteries.Tactic.OpenPrivate
+import D5.S3.Combinatorics.Circle.ThreeBitSource
+import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
+import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterSourceBridge
+import D5.S3.Combinatorics.Circle.RunFirstEarTransport
 
 /-! One common permutation for the two actual centered source tables. -/
 
@@ -19,6 +19,10 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterFirstEarJointLift
+
+open private mask_complement mask_labels mask_labels_bound mask_labels_disjoint
+  mask_labels_sum labelled_permutation from D5.S3.Combinatorics.Circle.ThreeBitSource
+open private label lift_order marked_word from D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open scoped BigOperators
@@ -175,7 +179,7 @@ private theorem complementary_bits (len : ℕ) (R p t : ℤ) (hR : R = 2 ^ len)
   have hpow : (((2 : ℕ) ^ len : ℕ) : ℤ) = R := by push_cast; exact hR.symm
   have hpos : 0 < (2 : ℕ) ^ len := by positivity
   have hsum : p.toNat + t.toNat = 2 ^ len - 1 := by omega
-  exact (_root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_complement len p.toNat t.toNat hsum).1
+  exact (mask_complement len p.toNat t.toNat hsum).1
 
 private theorem high_bit_disjoint (len : ℕ) (S t : ℤ) (hS : S = 2 ^ len)
     (ht : 0 ≤ t) (hlt : t < S) :
@@ -373,9 +377,9 @@ private def small_choice (R : ℤ) (hR : 16 ≤ R) : Choice R 2 := by
 
 private def packet (a b u v w : ℕ) (hu : u < 2 ^ (a - 1))
     (hv : v < 2 ^ (b - 1)) (hw : w < 2 ^ (a - 1)) : Finset ℕ :=
-  _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels (a - 1) 0 u hu ∪
-    _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels (b - 1) a v hv ∪
-    _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels (a - 1) (a + b) w hw
+  mask_labels (a - 1) 0 u hu ∪
+    mask_labels (b - 1) a v hv ∪
+    mask_labels (a - 1) (a + b) w hw
 
 private theorem packet_bound (a b u v w : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
     (hu : u < 2 ^ (a - 1)) (hv : v < 2 ^ (b - 1)) (hw : w < 2 ^ (a - 1))
@@ -383,7 +387,7 @@ private theorem packet_bound (a b u v w : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
     i < a + b + a ∧ i ≠ a - 1 ∧ i ≠ a + b - 1 ∧ i ≠ a + b + a - 1 := by
   simp only [packet, Finset.mem_union] at hi
   rcases hi with (hi | hi) | hi <;>
-    have hi' := _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_bound hi <;> omega
+    have hi' := mask_labels_bound hi <;> omega
 
 private theorem packet_sum (a b u v w : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
     (hu : u < 2 ^ (a - 1)) (hv : v < 2 ^ (b - 1)) (hw : w < 2 ^ (a - 1))
@@ -392,33 +396,33 @@ private theorem packet_sum (a b u v w : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
     (hV : ∀ i < b - 1, f (a + i) = (2 : ℤ) ^ i * V)
     (hW : ∀ i < a - 1, f (a + b + i) = (2 : ℤ) ^ i * W) :
     ∑ i ∈ packet a b u v w hu hv hw, f i = u * U + v * V + w * W := by
-  have hUV : Disjoint (_root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels (a - 1) 0 u hu)
-      (_root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels (b - 1) a v hv) := by
+  have hUV : Disjoint (mask_labels (a - 1) 0 u hu)
+      (mask_labels (b - 1) a v hv) := by
     apply Finset.disjoint_left.mpr
     intro i hi hj
-    have hi' := _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_bound hi
-    have hj' := _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_bound hj
+    have hi' := mask_labels_bound hi
+    have hj' := mask_labels_bound hj
     omega
-  have hUW : Disjoint (_root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels (a - 1) 0 u hu)
-      (_root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels (a - 1) (a + b) w hw) := by
+  have hUW : Disjoint (mask_labels (a - 1) 0 u hu)
+      (mask_labels (a - 1) (a + b) w hw) := by
     apply Finset.disjoint_left.mpr
     intro i hi hj
-    have hi' := _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_bound hi
-    have hj' := _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_bound hj
+    have hi' := mask_labels_bound hi
+    have hj' := mask_labels_bound hj
     omega
-  have hVW : Disjoint (_root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels (b - 1) a v hv)
-      (_root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels (a - 1) (a + b) w hw) := by
+  have hVW : Disjoint (mask_labels (b - 1) a v hv)
+      (mask_labels (a - 1) (a + b) w hw) := by
     apply Finset.disjoint_left.mpr
     intro i hi hj
-    have hi' := _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_bound hi
-    have hj' := _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_bound hj
+    have hi' := mask_labels_bound hi
+    have hj' := mask_labels_bound hj
     omega
   unfold packet
   rw [Finset.sum_union (Finset.disjoint_union_left.mpr ⟨hUW, hVW⟩),
     Finset.sum_union hUV]
-  rw [_root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_sum (a - 1) 0 u hu f U (by simpa using hU),
-    _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_sum (b - 1) a v hv f V hV,
-    _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_sum (a - 1) (a + b) w hw f W hW]
+  rw [mask_labels_sum (a - 1) 0 u hu f U (by simpa using hU),
+    mask_labels_sum (b - 1) a v hv f V hV,
+    mask_labels_sum (a - 1) (a + b) w hw f W hW]
 
 private theorem packet_disjoint (a b u v w x y z : ℕ)
     (hu : u < 2 ^ (a - 1)) (hv : v < 2 ^ (b - 1)) (hw : w < 2 ^ (a - 1))
@@ -431,27 +435,27 @@ private theorem packet_disjoint (a b u v w x y z : ℕ)
   intro i hi hj
   simp only [packet, Finset.mem_union] at hi hj
   rcases hi with (hi | hi) | hi <;> rcases hj with (hj | hj) | hj
-  · exact Finset.disjoint_left.mp (_root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_disjoint hbits.1) hi hj
-  · have hi' := _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_bound hi
-    have hj' := _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_bound hj
+  · exact Finset.disjoint_left.mp (mask_labels_disjoint hbits.1) hi hj
+  · have hi' := mask_labels_bound hi
+    have hj' := mask_labels_bound hj
     omega
-  · have hi' := _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_bound hi
-    have hj' := _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_bound hj
+  · have hi' := mask_labels_bound hi
+    have hj' := mask_labels_bound hj
     omega
-  · have hi' := _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_bound hi
-    have hj' := _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_bound hj
+  · have hi' := mask_labels_bound hi
+    have hj' := mask_labels_bound hj
     omega
-  · exact Finset.disjoint_left.mp (_root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_disjoint hbits.2.1) hi hj
-  · have hi' := _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_bound hi
-    have hj' := _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_bound hj
+  · exact Finset.disjoint_left.mp (mask_labels_disjoint hbits.2.1) hi hj
+  · have hi' := mask_labels_bound hi
+    have hj' := mask_labels_bound hj
     omega
-  · have hi' := _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_bound hi
-    have hj' := _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_bound hj
+  · have hi' := mask_labels_bound hi
+    have hj' := mask_labels_bound hj
     omega
-  · have hi' := _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_bound hi
-    have hj' := _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_bound hj
+  · have hi' := mask_labels_bound hi
+    have hj' := mask_labels_bound hj
     omega
-  · exact Finset.disjoint_left.mp (_root_.D5.S3.Combinatorics.Circle.ThreeBitSource.mask_labels_disjoint hbits.2.2) hi hj
+  · exact Finset.disjoint_left.mp (mask_labels_disjoint hbits.2.2) hi hj
 
 set_option maxHeartbeats 4000000 in
 -- The paired integer source and mask expressions require a larger elaboration budget.
@@ -573,7 +577,7 @@ private theorem realize_choice (a b : ℕ) (hb : 2 ≤ b) (hab : b ≤ a)
   have hTbound (i : ℕ) (hi : i ∈ T) :
       i < k ∧ i ≠ a - 1 ∧ i ≠ a + b - 1 ∧ i ≠ k - 1 :=
     packet_bound a b _ _ _ ha hb _ _ _ hi
-  have hp0 := _root_.D5.S3.Combinatorics.Circle.ThreeBitSource.labelled_permutation k (a + b - 1) (a - 1) (k - 1) P T
+  have hp0 := labelled_permutation k (a + b - 1) (a - 1) (k - 1) P T
     (fun i hi => Finset.mem_range.mpr (hPbound i hi).1)
     (fun i hi => Finset.mem_range.mpr (hTbound i hi).1) hPT
     (by dsimp [k]; omega) (by dsimp [k]; omega)
@@ -687,15 +691,15 @@ private theorem realize_choice (a b : ℕ) (hb : 2 ≤ b) (hab : b ≤ a)
     · simp only [List.map_cons, List.sum_cons, hgear]
       exact ⟨by omega, by omega⟩
     · exact hgzero
-  let sigma := word.map (_root_.D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift.label k (by dsimp [k]; omega))
+  let sigma := word.map (label k (by dsimp [k]; omega))
   refine ⟨sigma, ?_, ?_⟩
-  · apply _root_.D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift.lift_order k _ (by dsimp [k]; omega) word hp
+  · apply lift_order k _ (by dsimp [k]; omega) word hp
     · simpa only [hvNat, hhalf] using oldStrip
     · simpa only [hvNat] using hfzero
-  · have hear := _root_.D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift.marked_word k 0 (by dsimp [k]; omega) [] word (by simp) (by simpa using hp)
+  · have hear := marked_word k 0 (by dsimp [k]; omega) [] word (by simp) (by simpa using hp)
     simp only [List.nil_append] at hear
     rw [hear]
-    apply _root_.D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift.lift_order (k + 1) _ (by omega) (k :: word) hpnew
+    apply lift_order (k + 1) _ (by omega) (k :: word) hpnew
     · simpa only [Nat.cast_mul, Nat.cast_ofNat, hvNat, hnewhalf] using newStrip
     · simpa only [Nat.cast_mul, Nat.cast_ofNat, hvNat] using hgzero
 
@@ -716,7 +720,7 @@ set_option maxHeartbeats 4000000 in
 -- The paired integer source and mask expressions require a larger elaboration budget.
 /-- A complete physical permutation and its literal fresh-first ear for every
 complementary equal-outer pair, including nonunit and repeated source values. -/
-public theorem actualSource_three_negative_equal_outer_first_ear_joint_lift (a b : ℕ)
+theorem actualSource_three_negative_equal_outer_first_ear_joint_lift (a b : ℕ)
     (hb : 2 ≤ b) (hab : b ≤ a) :
     ∃ sigma : List (Fin (a + b + a)),
       OriginalOrder (a + b + a) (1 + 2 ^ a + 2 ^ (a + b)) sigma ∧
