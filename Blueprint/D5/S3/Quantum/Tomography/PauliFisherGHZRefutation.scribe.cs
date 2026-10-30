@@ -44,8 +44,7 @@ internal sealed class PauliFisherGHZRefutationDocument : IScribeDocumentDefiniti
                 "Take the uniform finite average over every setting s : Fin n → Fin 3. "
                     + "There are 3^n settings, including one empty setting when n is zero. "
                     + "Finite expectation divides the sum by the real cast of the cardinality of the setting set. "
-                    + "The averaging convention is given in Efficient-Ion-Tomography.tex, lines 178–180; "
-                    + "line 360 specifies the average over all Pauli settings."),
+                    + "The average over all Pauli settings is given in Efficient-Ion-Tomography.tex, line 335."),
             Definition("is-rank-tangent", "IsRankTangent", "Tangents represented by curves of fixed rank", IsRankTangentFormula(),
                 AssessedProvenance.FromRepo(Source),
                 "A matrix v is a rank-r tangent at ρ if a curve γ of complex matrices passes through ρ at zero, "
