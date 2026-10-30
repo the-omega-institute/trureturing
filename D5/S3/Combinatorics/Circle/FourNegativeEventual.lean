@@ -348,7 +348,7 @@ private theorem interval_half_phase (p a b : ℤ) (hp : 0 < p)
   let n := a / (2 * p) + 1
   have hmod := Int.emod_nonneg a (show 2 * p ≠ 0 by omega)
   have hmod' := Int.emod_lt_of_pos a (show 0 < 2 * p by omega)
-  have hdiv := Int.ediv_add_emod a (2 * p)
+  have hdiv := Int.emod_add_mul_ediv a (2 * p)
   have hn : 1 ≤ n := by
     dsimp [n]
     have := Int.ediv_nonneg ha (show 0 ≤ 2 * p by omega)
@@ -409,7 +409,7 @@ private theorem wide_half_phase (p q r : ℤ) (hp : 0 < p) (hpq : p ≤ q)
     omega
   have hmod := Int.emod_nonneg r (show 2 * q ≠ 0 by omega)
   have hmod' := Int.emod_lt_of_pos r (show 0 < 2 * q by omega)
-  have hdiv := Int.ediv_add_emod r (2 * q)
+  have hdiv := Int.emod_add_mul_ediv r (2 * q)
   have hfloor : 2 * (n - 1) * q ≤ r ∧ r < 2 * n * q := by
     dsimp [n]
     constructor <;> nlinarith
@@ -469,7 +469,7 @@ private theorem sorted_half_phase (p q r : ℤ) (i j k : ℕ)
     · subst j
       have hlt : r < 2 * p := by omega
       exact phase_meet p q r 1 1 (2 * p) (by norm_num) (by norm_num)
-        (by nlinarith) (by nlinarith) hlt (by ring_nf) (by nlinarith) (by nlinarith)
+        (by nlinarith) (by nlinarith) hlt (by nlinarith) (by nlinarith) (by nlinarith)
     · have hpow : 2 * (2 : ℤ) ^ i ≤ (2 : ℤ) ^ j := by
         have := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) (show i + 1 ≤ j by omega)
         simpa [pow_succ, mul_comm] using this
@@ -489,14 +489,14 @@ private theorem sorted_half_phase (p q r : ℤ) (i j k : ℕ)
       · have hJ' : (2 : ℤ) ^ j = 2 * (2 : ℤ) ^ i := by rw [hstep', pow_succ]; ring
         by_cases hqp : q < 2 * p
         · exact phase_meet p q r 3 2 (6 * p) (by norm_num) (by norm_num)
-            (by nlinarith) (by nlinarith) (by nlinarith) (by ring_nf)
+            (by nlinarith) (by nlinarith) (by nlinarith) (by nlinarith)
             (by nlinarith) (by nlinarith)
         · by_cases hrp : r < 4 * p
           · exact phase_meet p q r 2 1 (4 * p) (by norm_num) (by norm_num)
-              (by nlinarith) (by nlinarith) hrp (by ring_nf)
+              (by nlinarith) (by nlinarith) hrp (by nlinarith)
               (by nlinarith) (by nlinarith)
           · exact phase_meet p q r 4 2 (8 * p) (by norm_num) (by norm_num)
-              (by nlinarith) (by nlinarith) (by nlinarith) (by ring_nf)
+              (by nlinarith) (by nlinarith) (by nlinarith) (by nlinarith)
               (by nlinarith) (by nlinarith)
       · have hpow : 4 * (2 : ℤ) ^ i ≤ (2 : ℤ) ^ j := by
           have := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) (show i + 2 ≤ j by omega)
@@ -652,7 +652,7 @@ private theorem quarter_ceiling (A t R : ℤ) (hA : 0 < A) (ht : 0 < t)
   have hprod : 0 < t * R := mul_pos ht hR
   have hmod := Int.emod_nonneg (t * R - 1) (show 4 * A ≠ 0 by omega)
   have hmod' := Int.emod_lt_of_pos (t * R - 1) (show 0 < 4 * A by omega)
-  have hdiv := Int.ediv_add_emod (t * R - 1) (4 * A)
+  have hdiv := Int.emod_add_mul_ediv (t * R - 1) (4 * A)
   have hq : 1 ≤ q := by
     dsimp [q]
     have := Int.ediv_nonneg (show 0 ≤ t * R - 1 by omega) (show 0 ≤ 4 * A by omega)
@@ -682,5 +682,99 @@ private theorem rounded_phase_seam (P A D rho t R n q : ℤ)
   have hmul := mul_le_mul_of_nonneg_left hlo ht0.le
   have hmul' := mul_le_mul_of_nonneg_left hhi ht0.le
   constructor <;> nlinarith
+
+private theorem four_mask_parameters (a b c d : ℕ)
+    (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hd : a + b + c + 3 ≤ d) :
+    let x : ℤ := 2 ^ a
+    let y : ℤ := 2 ^ b
+    let z : ℤ := 2 ^ c
+    let t : ℤ := 2 ^ d
+    let P := x * y * z
+    let A := P + (1 + x + x * y)
+    let B := t * (1 + x + x * y) + 1
+    let L := t * (z * (1 + x)) + 1 + z
+    let M := t * (y * z) + 1 + y + y * z
+    ∃ nB nL nM q : ℤ,
+      (1 ≤ q ∧ 2 * q ≤ t) ∧
+      (1 ≤ nB ∧ 2 * nB < z) ∧ (1 ≤ nL ∧ 2 * nL < y) ∧ (1 ≤ nM ∧ 2 * nM < x) ∧
+      (nB < nB * B - A * q ∧ 2 * (nB * B - A * q) < B - 1) ∧
+      (nL * (1 + z) < nL * L - A * q ∧ 2 * (nL * L - A * q) < L - 1) ∧
+      (nM * (1 + y + y * z) < nM * M - A * q ∧ 2 * (nM * M - A * q) < M - 1) := by
+  dsimp only
+  let x : ℤ := 2 ^ a
+  let y : ℤ := 2 ^ b
+  let z : ℤ := 2 ^ c
+  let t : ℤ := 2 ^ d
+  let P := x * y * z
+  let DB := 1 + x + x * y
+  let DL := z * (1 + x)
+  let DM := y * z
+  let A := P + DB
+  have hx : 4 ≤ x := by
+    have := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) ha
+    simpa [x] using this
+  have hy : 4 ≤ y := by
+    have := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hb
+    simpa [y] using this
+  have hz : 4 ≤ z := by
+    have := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hc
+    simpa [z] using this
+  have hxy : 0 < x * y := mul_pos (by omega) (by omega)
+  have hyz : 0 < y * z := mul_pos (by omega) (by omega)
+  have hP : 0 < P := mul_pos hxy (by omega)
+  have hDB : 0 < DB := by dsimp [DB]; nlinarith
+  have hDBP : DB < P := by
+    have hxy' : 4 * x ≤ x * y := by nlinarith
+    have hP' : 4 * (x * y) ≤ P := by dsimp [P]; nlinarith
+    dsimp [DB]; nlinarith
+  have hA : 0 < A := by dsimp [A]; omega
+  have hAP : A < 2 * P := by dsimp [A]; omega
+  have ht : 8 * P ≤ t := by
+    have := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hd
+    have he : (2 : ℤ) ^ (a + b + c + 3) = 8 * P := by
+      dsimp [P, x, y, z]; ring
+    simpa only [he] using this
+  have ht0 : 0 < t := by omega
+  have hte : t % 2 = 0 := by
+    have he : t = 2 * (2 : ℤ) ^ (d - 1) := by
+      dsimp [t]
+      rw [show d = (d - 1) + 1 by omega, pow_succ]
+      ring
+    rw [he]; omega
+  obtain ⟨R, nB, nL, nM, hR, hRP, hB, hL, hM⟩ := four_phase_selector a b c ha hb hc
+  change 3 * R < 4 * P at hRP
+  change 1 ≤ nB ∧ 2 * nB < z ∧ 1 ≤ 4 * nB * DB - R ∧
+    1 ≤ R - (4 * nB - 2) * DB at hB
+  change 1 ≤ nL ∧ 2 * nL < y ∧ 1 ≤ 4 * nL * DL - R ∧
+    1 ≤ R - (4 * nL - 2) * DL at hL
+  change 1 ≤ nM ∧ 2 * nM < x ∧ 1 ≤ 4 * nM * DM - R ∧
+    1 ≤ R - (4 * nM - 2) * DM at hM
+  obtain ⟨q, hq, hqt, heps, heps'⟩ := quarter_ceiling A t R hA ht0 hR
+    (by dsimp [A]; omega) hte
+  have hchargeB : nB * 1 < A := by
+    have hxy' : 1 ≤ x * y := by omega
+    have hzP : z ≤ P := by dsimp [P]; nlinarith
+    dsimp [A]; nlinarith [hB.2.1]
+  have hchargeL : nL * (1 + z) < A := by
+    have hmul := mul_lt_mul_of_pos_right hL.2.1 (show 0 < 1 + z by omega)
+    have hP' : 4 * (y * z) ≤ P := by dsimp [P]; nlinarith
+    have hy' : y ≤ y * z := by nlinarith
+    dsimp [A]; nlinarith
+  have hchargeM : nM * (1 + y + y * z) < A := by
+    have hmul := mul_lt_mul_of_pos_right hM.2.1 (show 0 < 1 + y + y * z by nlinarith)
+    have he : x * (1 + y + y * z) = A - 1 := by dsimp [A, P, DB]; ring
+    have hpos : 0 < nM * (1 + y + y * z) := mul_pos (by omega) (by nlinarith)
+    nlinarith
+  have hseamB := rounded_phase_seam P A DB 1 t R nB q hP hA hAP ht
+    (by norm_num) hchargeB hB.2.2.1 hB.2.2.2 heps heps'
+  have hseamL := rounded_phase_seam P A DL (1 + z) t R nL q hP hA hAP ht
+    (by omega) hchargeL hL.2.2.1 hL.2.2.2 heps heps'
+  have hseamM := rounded_phase_seam P A DM (1 + y + y * z) t R nM q hP hA hAP ht
+    (by nlinarith) hchargeM hM.2.2.1 hM.2.2.2 heps heps'
+  refine ⟨nB, nL, nM, q, ⟨hq, hqt⟩, ⟨hB.1, hB.2.1⟩, ⟨hL.1, hL.2.1⟩,
+    ⟨hM.1, hM.2.1⟩, ?_, ?_, ?_⟩
+  · simpa [A, P, DB] using hseamB
+  · simpa [A, P, DB, DL, mul_add, add_assoc] using hseamL
+  · simpa [A, P, DB, DM, add_assoc] using hseamM
 
 end D5.S3.Combinatorics.Circle.FourNegativeEventual
