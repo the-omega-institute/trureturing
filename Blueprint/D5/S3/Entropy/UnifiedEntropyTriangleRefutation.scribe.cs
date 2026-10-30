@@ -106,10 +106,10 @@ internal sealed class UnifiedEntropyTriangleRefutationDocument : IScribeDocument
                             + "conjugating the Hermitian state by it preserves Hermiticity, and finite sums preserve Hermiticity.")),
                     Paragraph(Text(
                         "Expand the unread measurements as finite sums of projector–state–projector products. "
-                            + "The squared traces of the first and second measured states are respectively "
+                            + "The traces of the squares (the purities) of the first and second measured states are respectively "
                             + "(1 + 1/16 + n(0)²/16 + n(2)²/4)/4 and "
                             + "(1 + 1/16 + m(0)²/16 + m(2)²/4)/4. "
-                            + "For the bilocal measurement the squared trace is "
+                            + "For the bilocal measurement the trace of the square is "
                             + "(1 + (n(0)²+m(0)²)/16 + n(2)²m(2)²/4)/4. "
                             + "These identities follow by expanding the two outcomes on each factor and using "
                             + "n(2)² = 1-n(0)²-n(1)² and m(2)² = 1-m(0)²-m(1)².")),
