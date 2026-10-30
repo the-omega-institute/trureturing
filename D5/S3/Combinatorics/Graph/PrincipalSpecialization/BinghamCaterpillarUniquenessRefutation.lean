@@ -51,9 +51,11 @@ asserts no new mathematics or completion of the first module's audit (#23845).
 -/
 
 import D5.S3.Combinatorics.Graph.PrincipalSpecialization.BinghamCaterpillarPs3Family
-import Mathlib.Data.Complex.Basic
+import Mathlib.Basic.Complex.Basic
 import Mathlib.Algebra.Polynomial.Eval.Coeff
 import Mathlib.Combinatorics.SimpleGraph.Finite
+
+/-! # The second caterpillar question in Remark 3.11 -/
 
 namespace Trureturing.OpenProblems.BinghamCaterpillarUniquenessRefutation
 
@@ -138,8 +140,9 @@ private lemma seven_good {k : ℕ} (c : Fin 7 → Fin k) :
     fin_cases i <;> fin_cases j <;> simp_all
 
 set_option maxHeartbeats 1600000 in
+-- Eight or seven successive finite-function sum expansions occur here.
 private lemma ps_eight {k : ℕ} (a : Parts 8) :
-    ps (caterpillar a) k = eightSum (fun i c => blockWeight (a i) c) := by
+    ps (caterpillar a) k = eightSum (k:=k) (fun i c => blockWeight (a i) c) := by
   rw [ps_spine_sum]
   simp_rw [eight_good]
   unfold eightSum
@@ -151,8 +154,9 @@ private lemma ps_eight {k : ℕ} (a : Parts 8) :
   rfl
 
 set_option maxHeartbeats 1600000 in
+-- Eight or seven successive finite-function sum expansions occur here.
 private lemma ps_seven {k : ℕ} (a : Parts 7) :
-    ps (caterpillar a) k = sevenSum (fun i c => blockWeight (a i) c) := by
+    ps (caterpillar a) k = sevenSum (k:=k) (fun i c => blockWeight (a i) c) := by
   rw [ps_spine_sum]
   simp_rw [seven_good]
   unfold sevenSum
@@ -164,6 +168,7 @@ private lemma ps_seven {k : ℕ} (a : Parts 7) :
   rfl
 
 set_option maxHeartbeats 12000000 in
+-- The complete sums contain 3^8 and 3^7 spine assignments.
 private lemma ps3_equal : ps (caterpillar witnessA) 3 = ps (caterpillar witnessB) 3 := by
   rw [ps_eight, ps_seven]
   norm_num [eightSum, sevenSum, Fin.sum_univ_succ, witnessA, witnessB,
@@ -171,12 +176,14 @@ private lemma ps3_equal : ps (caterpillar witnessA) 3 = ps (caterpillar witnessB
   ring
 
 set_option maxHeartbeats 4000000 in
+-- The complete two-color spine sum is normalized as a polynomial.
 private lemma ps2_a : ps (caterpillar witnessA) 2 = Polynomial.X ^ 8 + Polynomial.X ^ 10 := by
   rw [ps_eight]
   norm_num [eightSum, Fin.sum_univ_succ, witnessA, blockWeight, leafSum_eq, Fin.cons]
   ring
 
 set_option maxHeartbeats 4000000 in
+-- The complete two-color spine sum is normalized as a polynomial.
 private lemma ps2_b : ps (caterpillar witnessB) 2 = 2 * Polynomial.X ^ 9 := by
   rw [ps_seven]
   norm_num [sevenSum, Fin.sum_univ_succ, witnessB, blockWeight, leafSum_eq, Fin.cons]
@@ -226,6 +233,7 @@ private instance {l : ℕ} (a : Parts l) : DecidableRel (caterpillar a).Adj :=
 
 private lemma witness_roots : ∀ i : Fin 8,
     twoNeighbors (caterpillar witnessA) ⟨i,⟨0,(witnessA i).pos⟩⟩ := by
+  unfold twoNeighbors
   decide
 
 private lemma no_iso_short {l : ℕ} (a : Parts l) (hl : l < 8) :
