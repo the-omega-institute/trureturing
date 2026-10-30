@@ -269,6 +269,13 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("recovery_published_prior_commit_message_is_reconstructable")]
     [InlineData("recovery_local_repository_is_not_a_remote")]
     [InlineData("recovery_checkpoint_protects_message_reads")]
+    [InlineData("removal_owner_boundary_before_checkpoint")]
+    [InlineData("removal_device_boundary_before_checkpoint")]
+    [InlineData("removal_boundary_batch_preflight_preserves_all_targets")]
+    [InlineData("removal_rechecks_owner_boundary_after_checkpoint")]
+    [InlineData("removal_rechecks_device_boundary_after_checkpoint")]
+    [InlineData("removal_boundary_scan_does_not_follow_directory_links")]
+    [InlineData("removal_boundaries_share_the_nested_git_walk")]
     public void RecoveryQualificationUsesActualIndexAndCommitObjects(string probe)
     {
         if (OperatingSystem.IsWindows()) return;
