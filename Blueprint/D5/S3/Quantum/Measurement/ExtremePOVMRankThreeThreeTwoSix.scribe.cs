@@ -77,8 +77,9 @@ internal sealed class ExtremePOVMRankThreeThreeTwoSixDocument : IScribeDocumentD
                             + "separated by the two phase choices, the apex coordinates, and the coordinate blocks.")),
                     Paragraph(Text(
                         "For a midpoint decomposition of witness into POVMs A and B, positivity and the midpoint equation imply "
-                            + "that each A j is supported on the column space of the corresponding block. The left inverse gives a "
-                            + "coefficient matrix for A j − witness j, and the normalized expansion expresses the difference as a linear "
+                            + "that each difference A j − witness j lies in the span of the outer products of the normalized columns "
+                            + "(the normalizer applied to the columns of block j). The left inverse gives a coefficient matrix for this "
+                            + "difference, and the normalized expansion expresses it as a linear "
                             + "combination of the independent 42 conjugated within-block products. Summing over j gives zero because "
                             + "both families sum to the identity, so every coefficient vanishes. Thus A = witness, and the midpoint equation "
                             + "then gives B = witness. Hence witness is extreme and its target big-rank multiset contradicts claim at n = 8."))),
