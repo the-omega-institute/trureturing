@@ -43,7 +43,8 @@ theorem sigma_5040_mul_of_coprime {n : ℕ} (hn : n.Coprime 210) :
       (coprime_5040_of_coprime_210 hn)
   calc
     ArithmeticFunction.sigma 1 (5040 * n) =
-        ArithmeticFunction.sigma 1 (n * 5040) := by rw [Nat.mul_comm]
+        ArithmeticFunction.sigma 1 (n * 5040) := by
+          exact congrArg (ArithmeticFunction.sigma 1) (Nat.mul_comm 5040 n)
     _ = ArithmeticFunction.sigma 1 n * ArithmeticFunction.sigma 1 5040 := hmul
     _ = 19344 * ArithmeticFunction.sigma 1 n := by rw [sigma_5040]; ring
 
@@ -58,8 +59,8 @@ theorem normalized_sigma_5040_mul_of_coprime {n : ℕ} (hn0 : n ≠ 0)
   have h5040 : (ArithmeticFunction.sigma 1 5040 : ℝ) / 5040 = 403 / 105 := by
     norm_num [sigma_5040]
   calc
-    (ArithmeticFunction.sigma 1 (5040 * n) : ℝ) / (5040 * (n : ℝ)) =
-        (ArithmeticFunction.sigma 1 (n * 5040) : ℝ) / ((n : ℝ) * 5040) := by
+    (ArithmeticFunction.sigma 1 (5040 * n) : ℝ) / ((5040 : ℝ) * (n : ℝ)) =
+        (ArithmeticFunction.sigma 1 (n * 5040) : ℝ) / ((n : ℝ) * (5040 : ℝ)) := by
           rw [Nat.mul_comm 5040 n, mul_comm (5040 : ℝ) (n : ℝ)]
     _ = ((ArithmeticFunction.sigma 1 n : ℝ) / n) *
         ((ArithmeticFunction.sigma 1 5040 : ℝ) / 5040) := by
