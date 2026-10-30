@@ -37,8 +37,7 @@ private theorem finite_theta_abel_lower {y z rho : ℝ} (hy : 1 < y) (hyz : y �
   have hd (t : ℝ) (ht : t ∈ Set.Icc y z) : HasDerivAt f (-2 / t ^ 3) t := by
     have ht0 : t ≠ 0 := (hy0.trans_le ht.1).ne'
     convert (hasDerivAt_const t (1 : ℝ)).fun_div ((hasDerivAt_id t).pow 2)
-      (pow_ne_zero 2 ht0) using 1
-    dsimp [f]
+      (pow_ne_zero 2 ht0) using 1 <;> dsimp [f]
     field_simp
     ring
   have hcont : ContinuousOn (fun t : ℝ => -2 / t ^ 3) (Set.Icc y z) :=
@@ -221,7 +220,8 @@ theorem prime_square_tail_uniform (epsilon : ℝ) (hepsilon : 0 < epsilon) :
             (1 : ℝ) / (p : ℝ) ^ 2)) =
         y * Real.log y *
           (∑ p ∈ (Ioc ⌊y⌋₊ ⌊C * y⌋₊).filter Nat.Prime,
-            (1 : ℝ) / (p : ℝ) ^ 2) := by field_simp [hlogCy.ne']
+            (1 : ℝ) / (p : ℝ) ^ 2) := by
+      rw [← mul_assoc, div_mul_cancel₀ _ hlogCy.ne']
     rw [heq, heq'] at hf
     have hmono := mul_le_mul_of_nonneg_left hsub (mul_pos hy0 hlogy).le
     have hprod : 1 - 5 * eta ≤ (1 - 4 * eta) * (1 - eta) := by nlinarith [sq_nonneg eta]
