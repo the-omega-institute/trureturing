@@ -9,7 +9,6 @@
 import D5.S3.Combinatorics.Circle.RunFirstEarTransport
 import D5.S3.Combinatorics.Circle.PeriodicShorteningArithmetic
 import D5.S3.Combinatorics.Circle.ThreeRowSource
-import D5.S3.Combinatorics.Circle.DyadicResetSource
 import D5.S3.Combinatorics.Circle.ZeroSumSubsets
 
 set_option autoImplicit false
@@ -26,44 +25,37 @@ private def baseValue (d a : ℕ) : ℤ :=
 private theorem base_source (d : ℕ) (hd : 2 ≤ d) (i : Fin d) :
     actualSource d 1 i = baseValue d i.val := by
   obtain ⟨hN, hodd⟩ := TwoRunSource.modulus_positive_odd d (by omega)
-  by_cases hi : i.val = d - 1
-  · have hpow : (2 : ℤ) ^ d = 2 * (2 : ℤ) ^ (d - 1) := by
-      rw [show d = (d - 1) + 1 by omega, pow_succ]
-      ring
-    have hhalf : modulus d / 2 = (2 : ℤ) ^ (d - 1) - 1 := by
-      unfold modulus
-      rw [hpow]
-      omega
-    unfold actualSource baseValue
-    simp only [hi, if_pos]
-    apply centered_unique hN hodd
-    · rw [hhalf]
+  have hpow : (2 : ℤ) ^ d = 2 * (2 : ℤ) ^ (d - 1) := by
+    rw [show d = (d - 1) + 1 by omega, pow_succ]
+    ring
+  have hhalf : modulus d / 2 = (2 : ℤ) ^ (d - 1) - 1 := by
+    unfold modulus
+    rw [hpow]
+    omega
+  unfold actualSource baseValue
+  simp only [Nat.cast_one, mul_one]
+  apply centered_unique hN hodd (centered_bounds hN hodd _)
+  · rw [hhalf]
+    split_ifs with hi
+    · have hp : 1 ≤ (2 : ℤ) ^ (d - 1) := one_le_pow₀ (by norm_num)
       constructor <;> omega
-    · exact centered_bounds hN hodd _
-    rw [centered_mod]
-    have he : -((2 : ℤ) ^ (d - 1) - 1) + modulus d = (2 : ℤ) ^ (d - 1) := by
-      unfold modulus
-      rw [hpow]
-      ring
-    rw [← he, Int.add_emod_right]
-  · have hi' : i.val ≤ d - 2 := by omega
-    have hhalf : modulus d / 2 = (2 : ℤ) ^ (d - 1) - 1 := by
-      unfold modulus
-      have hpow : (2 : ℤ) ^ d = 2 * (2 : ℤ) ^ (d - 1) := by
-        rw [show d = (d - 1) + 1 by omega, pow_succ]
+    · have hi' : i.val ≤ d - 2 := by omega
+      have hp : 1 ≤ (2 : ℤ) ^ i.val := one_le_pow₀ (by norm_num)
+      have hle : (2 : ℤ) ^ i.val ≤ (2 : ℤ) ^ (d - 2) :=
+        pow_le_pow_right₀ (by norm_num) hi'
+      have hstep : (2 : ℤ) ^ (d - 1) = 2 * (2 : ℤ) ^ (d - 2) := by
+        rw [show d - 1 = (d - 2) + 1 by omega, pow_succ]
         ring
-      rw [hpow]
-      omega
-    unfold actualSource baseValue
-    simp only [hi, if_neg]
-    apply centered_unique hN hodd
-    · exact centered_bounds hN hodd _
-    · rw [hhalf]
-      have hp : 0 < (2 : ℤ) ^ i.val := by positivity
-      have hle : (2 : ℤ) ^ i.val ≤ (2 : ℤ) ^ (d - 2) := by
-        exact pow_le_pow_right₀ (by norm_num) hi'
       constructor <;> omega
-    rfl
+  · rw [centered_mod]
+    split_ifs with hi
+    · rw [hi]
+      have he : -((2 : ℤ) ^ (d - 1) - 1) + modulus d = (2 : ℤ) ^ (d - 1) := by
+        unfold modulus
+        rw [hpow]
+        ring
+      exact (congrArg (· % modulus d) he).symm.trans (Int.add_emod_right _ _)
+    · rfl
 
 private theorem quotient_relation (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) :
     ((2 : ℤ) ^ d - 1) *
@@ -103,34 +95,23 @@ private theorem old_source (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m)
     actualSource (d * m) ((2 ^ (d * m) - 1) / (2 ^ d - 1)) i =
       (((2 ^ (d * m) - 1) / (2 ^ d - 1) : ℕ) : ℤ) *
         baseValue d (i.val % d) := by
-  by_cases h3 : 3 ≤ d
-  · have hs := DyadicResetSource.source_values d m h3 (by omega) i
-    have hheight : (DyadicResetSource.height d : ℤ) =
-        (2 : ℤ) ^ (d - 1) - 1 := by
-      dsimp [DyadicResetSource.height, DyadicResetSource.top]
-      rw [Nat.cast_sub (by have := Nat.one_le_two_pow (n := d - 2); omega)]
-      push_cast
-      rw [show d - 2 + 1 = d - 1 by omega, pow_succ]
-      ring
-    simpa [DyadicResetSource.unit, DyadicResetSource.value, baseValue, hheight]
-      using hs
-  · have hd2 : d = 2 := by omega
-    subst d
-    have hrep := repeated_source 2 m 1 (by omega) (by omega)
-      (⟨i.val, by simpa [Nat.mul_comm] using i.isLt⟩ : Fin (m * 2))
-    have hquot := multiplier_quotient 2 m (by omega)
-    have hlt : (2 ^ (2 * m) - 1) / (2 ^ 2 - 1) < 2 ^ (2 * m) - 1 := by
-      obtain ⟨_, hh, _⟩ := quotient_bounds 2 m (by omega) hm
-      have hp : 0 < (2 : ℕ) ^ (2 * m - 1) := pow_pos (by decide) _
-      have hpow : 2 ^ (2 * m) = 2 * 2 ^ (2 * m - 1) := by
-        rw [show 2 * m = (2 * m - 1) + 1 by omega, pow_succ]
-      omega
-    rw [hquot] at hrep
-    rw [Nat.mul_one, Nat.mod_eq_of_lt hlt] at hrep
-    have hbase := base_source 2 (by omega) ⟨i.val % 2, Nat.mod_lt _ (by omega)⟩
-    simpa [Nat.mul_comm] using hrep.trans
-      (congrArg (fun z : ℤ =>
-        (((2 ^ (2 * m) - 1) / (2 ^ 2 - 1) : ℕ) : ℤ) * z) hbase)
+  have hd0 : 0 < d := by omega
+  have hrep := repeated_source d m 1 hd0 hm (i.cast (Nat.mul_comm d m))
+  have hquot := multiplier_quotient d m hd0
+  have hlt : (2 ^ (d * m) - 1) / (2 ^ d - 1) < 2 ^ (m * d) - 1 := by
+    obtain ⟨_, hh, _⟩ := quotient_bounds d m hd hm
+    have hp : 1 ≤ (2 : ℕ) ^ (d * m - 1) := Nat.one_le_two_pow
+    have hpow : 2 ^ (d * m) = 2 * 2 ^ (d * m - 1) := by
+      rw [show d * m = (d * m - 1) + 1 by nlinarith, pow_succ]
+    rw [Nat.mul_comm m d]
+    omega
+  have hquot' : multiplier d m = (2 ^ (d * m) - 1) / (2 ^ d - 1) := by
+    simpa [Nat.mul_comm] using hquot
+  simp only [mul_one, hquot', Nat.mod_eq_of_lt hlt] at hrep
+  have hbase := base_source d hd ⟨i.val % d, Nat.mod_lt _ hd0⟩
+  simpa only [Nat.mul_comm, Fin.val_cast] using hrep.trans
+    (congrArg (fun z : ℤ =>
+      (((2 ^ (d * m) - 1) / (2 ^ d - 1) : ℕ) : ℤ) * z) hbase)
 
 private theorem sum_linear {α : Type*} (l : List α) (f g : α → ℤ) (u v : ℤ) :
     (l.map (fun x => u * f x + v * g x)).sum =
@@ -138,6 +119,11 @@ private theorem sum_linear {α : Type*} (l : List α) (f g : α → ℤ) (u v : 
   induction l with
   | nil => simp
   | cons x xs ih => simp only [List.map_cons, List.sum_cons, ih]; ring
+
+private theorem source_sum (k t : ℕ) (hk : 0 < k) :
+    ((List.finRange k).map (actualSource k t)).sum = 0 := by
+  rw [← List.sum_toFinset _ (List.nodup_finRange _), List.toFinset_finRange]
+  exact (source_cycle hk t).2.1
 
 private theorem prefix_formula (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) (n : ℕ) :
     let k := d * m
@@ -151,26 +137,24 @@ private theorem prefix_formula (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) (n : �
   | zero => simp
   | succ n ih =>
     by_cases hn : n < k
-    · have ht := List.take_append_getElem (List.finRange k) n (by simp; omega)
+    · have ht := List.take_append_getElem (l := List.finRange k) (i := n)
+        (by simpa using hn)
       rw [← ht, List.map_append, List.sum_append]
+      simp only [List.map_singleton, List.sum_singleton, List.getElem_finRange]
       have hi := old_source d m hd hm ⟨n, hn⟩
-      rw [ih, if_pos (by omega), hi]
+      rw [ih, if_pos (show n ≤ d*m by omega), hi,
+        if_pos (show n+1 ≤ d*m by omega)]
       by_cases hwrap : n % d = d - 1
       · have hnext : (n + 1) % d = 0 := by omega
         simp [hwrap, hnext, baseValue]
       · have hlt : n % d < d - 1 := by omega
         have hnext : (n + 1) % d = n % d + 1 := by omega
-        simp [hwrap, hnext, baseValue]
-        rw [pow_succ]
+        simp only [hnext, baseValue, if_neg hwrap, pow_succ]
         ring
-    · have hnk : k ≤ n := by omega
-      have htake : (List.finRange k).take n = List.finRange k :=
+    · have htake : (List.finRange k).take (n + 1) = List.finRange k :=
         List.take_of_length_le (by simp; omega)
-      have htake' : (List.finRange k).take (n + 1) = List.finRange k :=
-        List.take_of_length_le (by simp; omega)
-      rw [htake, htake', if_neg (by omega)] at ih ⊢
-      rw [source_cycle (by omega) t |>.2.1]
-      exact ih
+      rw [htake, if_neg (show ¬ n+1 ≤ d*m by omega)]
+      exact source_sum k t (by nlinarith)
 
 private theorem prefix_bounds (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) (n : ℕ) :
     let k := d * m
@@ -187,29 +171,36 @@ private theorem prefix_bounds (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) (n : ℕ
     have hp : (2 : ℤ) ^ (n % d) ≤ (2 : ℤ) ^ (d - 1) :=
       pow_le_pow_right₀ (by norm_num) hj
     have hrel := quotient_relation d m hd hm
+    change ((2 : ℤ)^d-1)*(t : ℤ) = (2 : ℤ)^k-1 at hrel
     have hpow : (2 : ℤ) ^ d = 2 * (2 : ℤ) ^ (d - 1) := by
       rw [show d = (d - 1) + 1 by omega, pow_succ]
       ring
     have ht0 : 0 ≤ (t : ℤ) := Int.natCast_nonneg _
     constructor
-    · positivity
+    · exact mul_nonneg ht0 (sub_nonneg.mpr (one_le_pow₀ (by norm_num)))
     · unfold modulus
       rw [hpow] at hrel
       nlinarith
   · have hrel := quotient_relation d m hd hm
+    change ((2 : ℤ)^d-1)*(t : ℤ) = (2 : ℤ)^k-1 at hrel
     have ht0 : 0 ≤ (t : ℤ) := Int.natCast_nonneg _
-    have hN : 0 ≤ modulus k := by
-      unfold modulus
-      have : 1 ≤ (2 : ℤ) ^ k := by positivity
+    have hdZ : (1 : ℤ) ≤ (2 : ℤ) ^ d - 1 := by
+      have hp : (4 : ℤ) ≤ 2 ^ d := by
+        exact pow_le_pow_right₀ (by norm_num) hd
       omega
-    simp only [if_neg hn]
-    constructor <;> nlinarith
+    simp only [if_neg hn, mul_zero, add_zero, zero_add]
+    constructor
+    · rfl
+    · unfold modulus
+      nlinarith
 
 private theorem charge_prefix_bound (k t : ℕ) (hk : 2 ≤ k)
     (ht : t ≤ 2 ^ (k - 1) - 1) (n : ℕ) :
     0 ≤ (((List.finRange k).take n).map (charge k t)).sum ∧
       (((List.finRange k).take n).map (charge k t)).sum ≤ (t : ℤ) := by
-  have hq := charge_sum k t hk ht
+  have hq : ((List.finRange k).map (charge k t)).sum = (t : ℤ) := by
+    rw [← List.sum_toFinset _ (List.nodup_finRange _), List.toFinset_finRange]
+    exact charge_sum k t hk ht
   have hnonneg : ∀ i : Fin k, 0 ≤ charge k t i :=
     fun i => (digit_data k t hk ht i).1
   have hp : 0 ≤ (((List.finRange k).take n).map (charge k t)).sum := by
@@ -247,7 +238,10 @@ private theorem fresh_value (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) :
     rw [hhalf]
     constructor
     · exact Int.natCast_nonneg _
-    · exact_mod_cast (show t ≤ 2 ^ (k - 1) - 1 by exact hq.2.2)
+    · have hp := pow_le_pow_right₀ (by decide : (1 : ℕ) ≤ 2) (Nat.sub_le k 1)
+      have ht : t ≤ 2^k-1 := by have := hq.2.2; omega
+      unfold modulus
+      exact_mod_cast ht
   change centered (modulus (k + 1))
       ((2 : ℤ) ^ k * ((2 * t : ℕ) : ℤ)) = (t : ℤ)
   calc
@@ -257,8 +251,9 @@ private theorem fresh_value (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) :
       ring
     _ = centered (modulus (k + 1)) (t : ℤ) := centered_full_period (k + 1) t
     _ = (t : ℤ) := by
-      apply centered_unique hN hodd htN (centered_bounds hN hodd _)
-      rfl
+      apply centered_unique hN hodd (centered_bounds hN hodd _)
+        ⟨by omega, htN.2⟩
+      exact centered_mod _ _
 
 set_option maxHeartbeats 2000000 in
 public theorem periodic_first_ear_joint_lift (d m : ℕ) (hd : 2 ≤ d) (hm : 1 ≤ m) :
@@ -272,7 +267,7 @@ public theorem periodic_first_ear_joint_lift (d m : ℕ) (hd : 2 ≤ d) (hm : 1 
   have hq := quotient_bounds d m hd hm
   have hk : 2 ≤ k := by omega
   have hsum : ((List.finRange k).map (actualSource k t)).sum = 0 :=
-    (source_cycle (by omega) t).2.1
+    source_sum k t (by omega)
   have hold : OriginalOrder k t (List.finRange k) := by
     refine ⟨List.Perm.refl _, hsum, ?_⟩
     intro n
@@ -281,16 +276,19 @@ public theorem periodic_first_ear_joint_lift (d m : ℕ) (hd : 2 ≤ d) (hm : 1 
       (((List.finRange k).take n).map (actualSource k t)).sum ≤ modulus k / 2
     constructor
     · exact hh.1
-    · nlinarith [hh.2]
+    · have ht0 : 0 ≤ (t : ℤ) := Int.natCast_nonneg _
+      omega
   have hnewperm : (earWord k (List.finRange k) 0).Perm (List.finRange (k + 1)) := by
     have hp := (List.Perm.refl (List.finRange k)).map Fin.castSucc
     have hp' := hp.append_right [Fin.last k]
-    simpa [earWord, List.finRange_succ_last] using hp'
+    have hs : ([Fin.last k] ++ (List.finRange k).map Fin.castSucc).Perm
+        ((List.finRange k).map Fin.castSucc ++ [Fin.last k]) := List.perm_append_comm
+    simpa [earWord, List.finRange_succ_last] using hs.trans hp'
   have hdigits := fun i : Fin k => digit_data k t hk (by exact hq.3) i
   have hnew : OriginalOrder (k + 1) (2 * t) (earWord k (List.finRange k) 0) := by
     refine ⟨hnewperm, ?_, ?_⟩
     · rw [hnewperm.map (actualSource (k + 1) (2 * t)).sum_eq]
-      exact (source_cycle (by omega) (2 * t)).2.1
+      exact source_sum (k+1) (2*t) (by omega)
     · intro n
       cases n with
       | zero => simp [earWord]
@@ -302,15 +300,24 @@ public theorem periodic_first_ear_joint_lift (d m : ℕ) (hd : 2 ≤ d) (hm : 1 
               (fun i => actualSource (k + 1) (2 * t) i.castSucc)).sum) =
               2 * (((List.finRange k).take n).map (actualSource k t)).sum -
                 (((List.finRange k).take n).map (charge k t)).sum := by
-          rw [← List.map_take, List.map_map]
-          have hmapp := List.map_congr_left (l := List.finRange k)
-            (fun i hi => (hdigits i).2.2)
-          rw [hmapp]
+          have hpoint (i : Fin k) :
+              actualSource (k + 1) (2 * t) i.castSucc =
+                2 * actualSource k t i - charge k t i := by
+            rw [show actualSource (k + 1) (2 * t) i.castSucc =
+                actualSource (k + 1) t ⟨i.val + 1, Nat.succ_lt_succ i.isLt⟩ by
+              unfold actualSource
+              congr 1
+              simp only [Fin.val_castSucc, Fin.val_mk, Nat.cast_mul, Nat.cast_ofNat,
+                pow_succ]
+              ring]
+            exact (hdigits i).2.2
+          simp_rw [hpoint]
           have hs := sum_linear ((List.finRange k).take n)
             (actualSource k t) (charge k t) 2 (-1)
           simpa [sub_eq_add_neg] using hs
-        simp only [earWord, List.map_nil, List.nil_append, List.take_succ_cons,
-          List.map_cons, List.sum_cons, List.map_take]
+        simp only [earWord, List.take_zero, List.drop_zero, List.map_nil,
+          List.nil_append, List.singleton_append, List.take_succ_cons,
+          List.map_cons, List.sum_cons, List.map_take, List.map_map, Function.comp_def]
         rw [hrel]
         have hf := fresh_value d m hd hm
         rw [hf]
