@@ -242,12 +242,14 @@ theorem original_right_skew_finite
           rw [← zpow_add₀ (by norm_num : (-1 : ℂ) ≠ 0), hs]
           congr 1
           ring
-        have scaled := congrArg (fun z : ℂ =>
-          Ring.choose (r : ℂ) j * (ell.factorial : ℂ)⁻¹ *
-            actualForm D hu
-              ((tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D)
-                1 ^ ell) d) (raw ell).val * z) sign
-        simpa only [raw, mixedMode, mul_assoc, mul_left_comm, mul_comm] using scaled
+        let b : ℂ := actualForm D hu
+          ((tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D)
+            1 ^ ell) d) (raw ell).val
+        change ((-1 : ℂ)^(j : ℤ) * Ring.choose (r : ℂ) j) *
+          (((-1 : ℂ)^(s+(ell : ℤ)+1) * (ell.factorial : ℂ)⁻¹) * b) =
+            Ring.choose (r : ℂ) j * (-1 : ℂ)^(m+r+(ell : ℤ)+1) *
+              (ell.factorial : ℂ)⁻¹ * b
+        linear_combination (Ring.choose (r : ℂ) j * (ell.factorial : ℂ)⁻¹ * b) * sign
       · intro n r j hs
         rw [pairing, Finset.mul_sum]
         apply Finset.sum_congr rfl
@@ -257,11 +259,13 @@ theorem original_right_skew_finite
           rw [← zpow_add₀ (by norm_num : (-1 : ℂ) ≠ 0), hs,
             show ((j : ℤ)+r)+(n+r-(j : ℤ)+(ell : ℤ)+1) =
               (n+(ell : ℤ)+1)+2*r by ring, phase_even_shift]
-        have scaled := congrArg (fun z : ℂ =>
-          Ring.choose (r : ℂ) j * (ell.factorial : ℂ)⁻¹ *
-            actualForm D hu
-              ((tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D)
-                1 ^ ell) d) (raw ell).val * z) sign
-        simpa only [raw, mixedMode, mul_assoc, mul_left_comm, mul_comm] using scaled
+        let b : ℂ := actualForm D hu
+          ((tensorL D (ActualGround D hu) (HalfFockSpectralFiberSource.actualInverse D)
+            1 ^ ell) d) (raw ell).val
+        change ((-1 : ℂ)^((j : ℤ)+r) * Ring.choose (r : ℂ) j) *
+          (((-1 : ℂ)^(s+(ell : ℤ)+1) * (ell.factorial : ℂ)⁻¹) * b) =
+            Ring.choose (r : ℂ) j * (-1 : ℂ)^(n+(ell : ℤ)+1) *
+              (ell.factorial : ℂ)⁻¹ * b
+        linear_combination (Ring.choose (r : ℂ) j * (ell.factorial : ℂ)⁻¹ * b) * sign
 
 end D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner
