@@ -106,14 +106,16 @@ private lemma ordinary_eq_iff {V W : Type*} [Fintype V] [Fintype W]
   rw [ordinary_eq_map, ordinary_eq_map]
   exact (Polynomial.map_injective (Int.castRingHom ℂ) Int.cast_injective).eq_iff
 
-private noncomputable def eightSum {k : ℕ} (w : Fin 8 → Fin k → Polynomial ℤ) :=
-  ∑ c0 : Fin k, ∑ c1 : Fin k, ∑ c2 : Fin k, ∑ c3 : Fin k,
+private noncomputable def eightSum {k : ℕ} (w : Fin 8 → Fin k → Polynomial ℤ) : Polynomial ℤ := by
+  classical
+  exact ∑ c0 : Fin k, ∑ c1 : Fin k, ∑ c2 : Fin k, ∑ c3 : Fin k,
   ∑ c4 : Fin k, ∑ c5 : Fin k, ∑ c6 : Fin k, ∑ c7 : Fin k,
     if c0 ≠ c1 ∧ c1 ≠ c2 ∧ c2 ≠ c3 ∧ c3 ≠ c4 ∧ c4 ≠ c5 ∧ c5 ≠ c6 ∧ c6 ≠ c7 then
       w 0 c0 * w 1 c1 * w 2 c2 * w 3 c3 * w 4 c4 * w 5 c5 * w 6 c6 * w 7 c7 else 0
 
-private noncomputable def sevenSum {k : ℕ} (w : Fin 7 → Fin k → Polynomial ℤ) :=
-  ∑ c0 : Fin k, ∑ c1 : Fin k, ∑ c2 : Fin k, ∑ c3 : Fin k,
+private noncomputable def sevenSum {k : ℕ} (w : Fin 7 → Fin k → Polynomial ℤ) : Polynomial ℤ := by
+  classical
+  exact ∑ c0 : Fin k, ∑ c1 : Fin k, ∑ c2 : Fin k, ∑ c3 : Fin k,
   ∑ c4 : Fin k, ∑ c5 : Fin k, ∑ c6 : Fin k,
     if c0 ≠ c1 ∧ c1 ≠ c2 ∧ c2 ≠ c3 ∧ c3 ≠ c4 ∧ c4 ≠ c5 ∧ c5 ≠ c6 then
       w 0 c0 * w 1 c1 * w 2 c2 * w 3 c3 * w 4 c4 * w 5 c5 * w 6 c6 else 0
