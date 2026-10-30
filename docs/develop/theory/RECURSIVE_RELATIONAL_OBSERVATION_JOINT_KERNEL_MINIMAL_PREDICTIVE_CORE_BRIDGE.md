@@ -1866,3 +1866,188 @@ $K_d$ 的精确规范化仍保留其原量词、动作、来源身份和目标�
 达到的有限任务边界，不能替代这些原来源义务。
 
 ## 追加锚（本行以下为增补区）
+
+## 23. 高度至多二时全部历史边界的结构最小性
+
+**定义 23.4（高度限制与实际边界代价）。** 固定定义 18.1 的任意一个已安装
+接口 $P=([n],\le_P)$，$n\ge0$，自然标号可以是它的任意线性扩张。另要求
+
+$$
+\nexists x,y,z\in P:\quad x<_P y<_P z.
+\tag{MPC.85}
+$$
+
+这里称此条件为高度至多二；孤立事件、空偏序和任意严格前驱集合的交叠均允许。
+记全部实际可达规范值的像及其大小为
+
+$$
+\mathcal V(P)=\{(A_h,t_h):h\in\mathcal H(P)\},\qquad
+N(P)=|\mathcal V(P)|,\qquad
+C(P)=\min_b |b(\mathcal H(P))|.
+\tag{MPC.86}
+$$
+
+最小值量化定义 19.1 的所有合格边界，包括任意依赖完整历史的编码
+$b:\mathcal H(P)\to B$；不预设 $b$ 是 $(A,t)$ 的函数。来源仍允许每个理想
+作为未知入口，唯一端口仍为 (MPC.58)。$\mathcal H(P)$ 包含零动作前缀、每个
+停止位置，以及每次均匀安全事件后的每个实际新读数；请求在与整条旧记录相容的
+所有当前配置上合法。边界从实际 $q_0$ 初始化，解码当前读数与完整安全菜单，
+仅由旧边界、成功事件和实际新读数更新，并在饱和时恢复同次入口。以后仍可读的
+旧读数、档案、控制、计数器和种子都计入 $b$。此处的菜单是边界须计算的输出，
+没有添加来源菜单端口、非法请求或失败探测。
+
+单次新鲜新增使历史长度至多为 $n$，故实际前缀族及 $\mathcal V(P)$ 有限。
+定理 19.2 已供应合格的规范边界，因而 (MPC.86) 的最小值存在，并已有
+$C(P)\le N(P)$。由定理 18.3，$N(P)$ 也正是全部实际关系 $\mathcal R_h$
+的不同值数。以下只补高度条件下反向不等式所需的结构推断。
+
+**定理 23.5（同读数同菜单的共同当前理想）。** 在定义 23.4 下，任取
+$h,g\in\mathcal H(P)$，写 $A=A_h$、$A'=A_g$。若二者当前读数同为 $t$，且
+$\mathsf{Safe}(h)=\mathsf{Safe}(g)$，则理想
+
+$$
+D=L_t\cup A\cup A'
+\quad\text{满足}\quad
+D\in\operatorname{pr}_2\mathcal R_h\cap
+       \operatorname{pr}_2\mathcal R_g.
+\tag{MPC.87}
+$$
+
+证明。先取任一可达 $(F,t)$。若 $y$ 是 $P$ 的极小元且 $y\in F$，则
+$y\in\operatorname{Min}_P(F)$，故 (MPC.64) 给出 $y<t$。再取
+$x\in F\setminus L_t$。对每个 $y<_P x$，高度条件使 $y$ 必为 $P$ 的极小元：
+否则某个 $z<_P y$ 与 $y<_P x$ 构成被排除的严格三元链。
+由 $J(F,t)=L_t\cup F$ 的理想性，$y\in L_t\cup F$；若它属于 $F$，刚证出的
+极小元性质也使它属于 $L_t$。因此
+
+$$
+\operatorname{Pred}(x)\subseteq L_t
+\qquad\bigl(x\in F\setminus L_t,\ (F,t)\in\mathcal V(P)\bigr).
+\tag{MPC.88}
+$$
+
+此推断只对实际新增集使用 (MPC.64)，没有要求传感次序把全部极小元排在全部
+非极小元之前。
+
+令 $K_h=M(A,t)\cup A$、$K_g=M(A',t)\cup A'$。
+定理 18.2 给出 $J_h=L_t\cup A$、$J_g=L_t\cup A'$ 都是理想，且
+$J_h\subseteq K_h$、$J_g\subseteq K_g$。理想的并仍为理想，故
+$D=J_h\cup J_g$ 是理想。
+
+为证 $D\subseteq K_h$，假设存在 $x\in D\setminus K_h$。
+因 $J_h\subseteq K_h$，必有 $x\in A'\setminus L_t$，且
+$x\notin K_h$。对 $(A',t)$ 应用 (MPC.88)，得到
+$\operatorname{Pred}(x)\subseteq L_t\subseteq J_h$。
+于是完整菜单公式 (MPC.62) 迫使 $x\in\mathsf{Safe}(h)$。
+另一方面 $x\in A'\subseteq K_g$，所以同一公式给出
+$x\notin\mathsf{Safe}(g)$，与菜单相同矛盾。故 $D\subseteq K_h$。
+交换 $h,g$ 得 $D\subseteq K_g$。现在
+
+$$
+J_h\subseteq D\subseteq K_h,\qquad
+J_g\subseteq D\subseteq K_g.
+\tag{MPC.89}
+$$
+
+由精确当前区间 (MPC.61)，这正证明 (MPC.87)。尤其，(MPC.60) 中确实存在
+$(D\setminus A,D)$ 和 $(D\setminus A',D)$ 这两条各自完整记录的同次来源对。
+共同当前理想因而同时满足两条完整旧记录的约束，不是分别可达的读数边缘拼接。
+若 $t=\top$，$L_t=P$，上述共同理想就是 $P$；证明不需排除这一情形。
+$\square$
+
+**定理 23.6（高度至多二的全历史、全边界等式；repo-derived）。** 对定义
+23.4 的每个有限偏序及其每个已安装线性扩张次序，
+
+$$
+\boxed{C(P)=N(P).}
+\tag{MPC.90}
+$$
+
+更具体地，对每个任意历史依赖的合格边界 $b$，均有
+
+$$
+b(h)=b(g)\ \Longrightarrow\
+(A_h,t_h)=(A_g,t_g)
+\qquad(h,g\in\mathcal H(P)).
+\tag{MPC.91}
+$$
+
+因此其实际值域上有唯一满射
+$\gamma_b:b(\mathcal H(P))\to\mathcal V(P)$，满足
+$\gamma_b(b(h))=(A_h,t_h)$，进而可以恢复整个已获关系 $\mathcal R_h$。
+
+证明。固定任意合格 $b$，再固定任意满足 $b(h)=b(g)$ 的完整实际前缀。
+边界的读数及完整菜单解码使 $t_h=t_g=t$，且
+$\mathsf{Safe}(h)=\mathsf{Safe}(g)$。定理 23.5 给出实际共同当前理想。
+若 $A_h\ne A_g$，定理 19.2 的共同当前分离判据便要求 $b(h)\ne b(g)$，矛盾。
+故新增集也相同，证明 (MPC.91)。这里直接对任意两个实际前缀及任意 $b$ 使用
+解码、实际分支更新和饱和恢复合同，没有先把竞争边界限制为规范值的商。
+
+此处应用定理 19.2 的共同当前点取 (MPC.87) 的 $D$，两个入口分别取
+$D\setminus A_h$、$D\setminus A_g$；因为 $A_h,A_g\subseteq D$，不同新增集
+确实给出不同入口。该定理已保证只请求当前最小缺失事件的共同续接在各自整条
+记录上均匀安全，收到相同实际新读数，并以饱和解码分离入口；$D=P$ 时直接
+使用终端分离。因此没有要求旧边界预测新响应支持，也没有删去任何其他安全事件
+或实际响应分支。
+
+由 (MPC.91)，$\gamma_b$ 在实际像上良定义；每个规范值来自某条实际前缀，
+所以它满射，且上述等式使它唯一。有限满射的基数不等式给出
+$N(P)\le|b(\mathcal H(P))|$。因为 $b$ 任意，得到 $N(P)\le C(P)$；
+与定理 19.2 已有的规范边界上界合并即得 (MPC.90)。
+$\gamma_b$ 的关系恢复结论直接复用定理 18.3。
+当 $n=0$ 时，唯一历史是 $(\top)$，唯一关系为
+$\{(\varnothing,\varnothing)\}$，故两边都为一；一般论证也覆盖此情形。
+$\square$
+
+**约定 23.7（供应对应与恢复范围）。** 定理 23.5 的承重增量是 (MPC.88)
+及其经完整菜单得到的共同当前理想；定理 23.6 将它接到已证的定理 19.2。
+关系和菜单分别复用 (MPC.60)–(MPC.62)，可达约束复用 (MPC.64)，规范边界的
+入口、每次响应更新和饱和逆码复用 (MPC.67)。共同当前的两个入口分别为
+$D\setminus A_h$、$D\setminus A_g$；同次来源和全部旧读数的相容性由
+(MPC.60)–(MPC.61) 承担，而非添加隐藏当前配置访问。
+
+事件对应仍是
+[EnabledPathSwapConnectivity 的 `Enabled`、`Exec` 和 `result`](../../../D5/S3/ConceptDynamics/PartialIdentification/EnabledPathSwapConnectivity.lean)：
+载体取 $[n]$，其偏序取 $\le_P$，下闭集取本卷理想，新鲜性及全部严格前驱条件
+逐项相同；该结果供应合法新增路径及线性扩张结构。
+[ConfigurationPathTransport 的 `Configuration` 与 `exec_exists_iff_subset`](../../../D5/S3/ConceptDynamics/Fibers/ConfigurationPathTransport.lean)
+取有限子集相容条件恒真，配置即本卷理想，有限端点下的包含对应执行存在。
+这些结果及各自 Blueprint 叙述不把基于整条观察纤维的均匀安全性当成单点合法性。
+
+项目 manifest 所钉 mathlib 修订
+[`56a005855ea17e0b0958f73ec801ae140b0a1679`](https://github.com/leanprover-community/mathlib4/tree/56a005855ea17e0b0958f73ec801ae140b0a1679)
+中，[`Order/UpperLower/Basic.lean` 的 `IsLowerSet.union`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Order/UpperLower/Basic.lean)
+供应 $D=J_h\cup J_g$ 的下闭性；
+[`Data/Fintype/Card.lean` 的 `Fintype.card_le_of_surjective`](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Data/Fintype/Card.lean)
+对应最后的有限基数步骤，定义域取 $b(\mathcal H(P))$，值域取
+$\mathcal V(P)$，满射取 $\gamma_b$。这两个背景步骤不供应 (MPC.88) 或
+(MPC.87)。总确定行为商的
+[`controlled_behavior_universal_property`](../../../D5/S3/ObserverMemory/Prediction/ControlledBehaviorUniversality.lean)
+没有这里的部分合法域与实际新读数馈入合同，故不作为 (MPC.91) 的前提。
+
+[Larrauri–Bloem，第 5 节的相容定义、引理 3 与定理 4](https://arxiv.org/html/2105.10292v2)
+只在共同已定义输入词上比较输出，其闭相容覆盖还要求逐输入的后继闭合。
+这说明不能只凭静态配对或任意部分机的商断言本结论；这里没有调用其最小实现
+定理，也没有把不同响应域强行认同。
+[van den Bos–Vaandrager，定义 9、16、引理 11 与定理 6.1](https://arxiv.org/html/1907.11034v2)
+提供合法输入及覆盖全部允许输出的测试背景。对应到本卷，输入是完整安全菜单
+里的新鲜事件，输出是该事件后的实际新读数；其定义 9 的两种包含方向对应所有
+相容当前点上的合法请求与所有实际响应分支。其引理 11 和定理 6.1 另要求不同
+状态对均不相容，本节不借用该前提或其算法结论。实际共同续接及入口区别已由
+本卷关系公式与定理 19.2 给出，不需另一个通用机器极小化定理。
+
+(MPC.91) 只给出从任意合格边界到规范关系的恢复；同一规范值的不同有序历史
+仍可被某个边界额外区分，未要求反向因子分解。即使高度至多二，定义 20.1 的
+$m=3$ 实例仍有 $123$ 与 $132$ 两条不同安全历史通向同一 $(A,t)$，如定理
+20.3、22.1 所述；本结论不要求恢复它们的顺序。定理 20.2 的特定族最优性保持
+原范围。定理 21.1 的压缩例包含 $2<_P4<_P5$，不满足 (MPC.85)；其中高标签
+新增五的前驱四尚不在 $L_3$，正不能使用 (MPC.88)。本节不分类更高偏序，也不
+把高度条件称为等式成立的必要条件。
+
+计数继续只指固定已安装接口上全部实际前缀的持久状态有效值数，包括以后仍可读
+的档案、旧读数、原始种子与控制字段；固定模型、解码器描述和执行工作量沿用
+定义 16.3 的口径。它没有给出一般 $N(P)$ 的求和公式、传感器制造、物理时间或
+空间实现，也没有满足约定 23.3 中未知 law、未知 cut、一般阶 $d$ 的 TOTAL 取得
+及原始 $K_d$ 规范化义务。原来源运输仍需假设 23.1 的实际接口数据。
+
+## 追加锚（本行以下为增补区）
