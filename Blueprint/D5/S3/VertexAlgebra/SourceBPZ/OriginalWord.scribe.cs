@@ -11,14 +11,14 @@ internal sealed class OriginalWordDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("original-word-choice-charge"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceBPZ/OriginalWord.word_choice_charge"),
-                H("Actual charge-sector support"), StatementSource.FromLean(),
+                H("Actual charge-sector support"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every lattice D, charges alpha and beta, actual oscillator word w, integer mode n and oscillator polynomial v, there exists an oscillator polynomial p such that wordField(alpha,w)[n] applied to single(beta,v) is single(alpha+beta,p). The proof propagates this property through both actual statewise finite normal-product sums. The neutral zero mode on single(beta,v) is bilinear(unitCharge i,beta) times that vector; charge additivity therefore derives the actual word zero-mode commutator, rather than requiring it as a supplier."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("original-word-transpose"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceBPZ/OriginalWord.actual_word_transpose"),
-                H("Labelled transpose of every actual word"), StatementSource.FromLean(),
+                H("Labelled transpose of every actual word"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Fix D, a complex bilinear B and charge alpha. Assume B(h_i(k)x,y)=-B(x,h_i(-k)y) for every i, signed integer k and x,y. Assume the charged-primary transpose B(actualField(alpha)[t]x,y)=paritySign(q(alpha)) B(x,actualField(alpha)[2*q(alpha)-t-2]y) for every integer t and inputs. Then for every actual word w, integer m and original u,v, its left matrix coefficient equals paritySign(q(alpha)) times (-1) raised to R times the finite sum over all WordChoice(w) of C(rho) B(u,wordField(alpha,w_rho)[2*q(alpha)+R+R_rho-m-2]v). Here R is wordWeight(w), R_rho is choiceRetained and C(rho) is choiceCoefficient.")),
@@ -29,7 +29,7 @@ internal sealed class OriginalWordDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("original-homogeneous-source-transpose"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceBPZ/OriginalWord.actual_homogeneous_source_transpose"),
-                H("BPZ for every actual homogeneous source"), StatementSource.FromLean(),
+                H("BPZ for every actual homogeneous source"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("For arbitrary D with IsUnit(D.G.det), B satisfying the original current and all charged-primary transpose suppliers above, arbitrary actual source a in the existing integer grade d, integer m and original u,v, B(Y(a)[m]u,v) equals paritySign(d) times the sum over 0<=l<N(a) of (l!)^(-1) B(u,Y(L1^l a)[2*d-l-m-2]v). L1 is sugawaraMode D (gramComplex D)^(-1) 1. N(a)=sourceBound D a is exactly one plus the supremum, over the actual finite charge support of a, of the oscillator weighted total degree.")),
@@ -38,7 +38,7 @@ internal sealed class OriginalWordDocument : IScribeDocumentDefinition
             Describe.Lean(
                 DescribeId.Create("original-all-source-transpose"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceBPZ/OriginalWord.actual_source_transpose"),
-                H("Finite extension to every original source"), StatementSource.FromLean(),
+                H("Finite extension to every original source"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
                 Blocks(
                     Paragraph(Text("Under exactly the same determinant-unit, current and charged-primary premises, every original source a and every integer mode m satisfy the finite sum over d in stateEnergies D a of paritySign(d) times the sum over 0<=l<N(a) of (l!)^(-1) B(u,Y(L1^l(gradeProjection D d a))[2*d-l-m-2]v). This equals B(Y(a)[m]u,v). The existing sum_gradeProjections decomposes every actual finite source. Projection coefficient support proves sourceBound(projection)<=sourceBound(a), and actual_sugawara_one_bound permits the common original cutoff N(a).")),
