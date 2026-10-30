@@ -9,7 +9,6 @@
 import Mathlib.InformationTheory.Hamming
 import Mathlib.Algebra.Field.ZMod
 import Mathlib.LinearAlgebra.BilinearForm.Orthogonal
-import Mathlib.Tactic.Ring
 
 /-!
 Hastings, arXiv:1703.00612v1, `c.tex` lines 86–117 and 272–273.
