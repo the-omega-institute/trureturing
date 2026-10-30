@@ -2834,6 +2834,13 @@ q(s)=2\sqrt2(\sqrt s-\sqrt{s-1})
 \qquad(s\ge1).
 $$
 
+由引理 10.2 及 (10.2) 有 $0<Y_m<1$；直接由 (10.6) 计算得
+
+$$
+\sqrt{\theta_m}=\frac{\sqrt2}{Y_m}+\frac{Y_m}{4\sqrt2},
+\qquad q(\theta_m)=Y_m.
+$$
+
 由
 
 $$
