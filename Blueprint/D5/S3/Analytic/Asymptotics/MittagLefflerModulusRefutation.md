@@ -46,6 +46,10 @@ $$\neg (\left(\exists E \in Real \to \left(Real \to \left(Complex \to Complex\ri
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/Asymptotics/MittagLefflerModulusRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ggps2025` (refuted) by `D5/S3/Analytic/Asymptotics/MittagLefflerModulusRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ggps2025","declaration_gid":"D5/S3/Analytic/Asymptotics/MittagLefflerModulusRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Roberto Garrappa, Stefan Gerhold, Marina Popolizio, Thomas Simon (2025). *On some inequalities for the two-parameter Mittag-Leffler function in the complex plane*. URL: <https://arxiv.org/abs/2410.11852v4>.

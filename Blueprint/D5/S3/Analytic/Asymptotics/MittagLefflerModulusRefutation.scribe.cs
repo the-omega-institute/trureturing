@@ -35,7 +35,10 @@ internal sealed class MittagLefflerModulusRefutationDocument : IScribeDocumentDe
         Describe.Lean(DescribeId.Create(id),
             DeclarationHandle.Create("D5/S3/Analytic/Asymptotics/MittagLefflerModulusRefutation." + name),
             H(title), StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role,
+            openProblemResolutionClaim: name == "result"
+                ? new OpenProblemResolutionClaim(ProblemSlugRef.Create("ggps2025"), ResolutionKind.Refuted)
+                : null);
 
     private static Formula SeriesFormula()
     {
