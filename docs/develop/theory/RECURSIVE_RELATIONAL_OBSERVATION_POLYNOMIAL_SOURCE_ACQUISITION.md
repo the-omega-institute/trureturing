@@ -296,7 +296,7 @@ parameter correspondence and source-alignment cancellation; it does
 not claim a new generic recurrence theorem.
 
 Every shift of the periodic $y$ has the same least monic annihilator
-$g$, of degree $r\le d$ and constant coefficient one when $r>0$.
+$g$, of degree $r_0\le d$ and constant coefficient one when $r_0>0$.
 Indeed, shifts preserve annihilators, and shift is injective on
 periodic streams, giving the reverse inclusion of their annihilator
 ideals. Form, entirely from acquired entries,
@@ -305,13 +305,13 @@ $$
 H_d(w)=(w_{i+j})_{0\le i,j<d},\qquad r=\operatorname{rank}H_d(w).
 $$
 
-To justify that the computed rank is the least degree, an order-$r$
-recurrence bounds the rank above by $r$. If the leading $r$ by $r$
+To justify that the computed rank is the least degree, an order-$r_0$
+recurrence bounds the rank above by $r_0$. If the leading $r_0$ by $r_0$
 block had a nonzero column relation, the resulting nonzero polynomial
-$f$ of degree less than $r$ would make $f(E)w$ zero at its first $r$
-positions. It satisfies the same order-$r$ recurrence, so forward
+$f$ of degree less than $r_0$ would make $f(E)w$ zero at its first $r_0$
+positions. It satisfies the same order-$r_0$ recurrence, so forward
 induction makes it zero everywhere, contradicting minimality. This
-proves the rank equality, exactly the intermediate Hankel argument in
+proves $r=r_0$, exactly the intermediate Hankel argument in
 ACR Theorem 21.2 and Shoup Exercise 18.3. It does not assume that the
 observer already knew $r$.
 
@@ -637,7 +637,7 @@ the larger branch, and each record has $O(S)$ bits including its address
 and represented indices. The three prefixes and their rank/matrix
 scratch have polynomial size. Decode by bottom-up finite scans and
 sort parent records by update and physical address, using pairwise
-comparisons if desired. There are at most quadraticly many record
+comparisons if desired. There are at most quadratically many record
 comparisons and at most $H$ scans to propagate heights; allowing even
 $O(S^{12})$ indexed bit operations covers traversal, sorting, Fibonacci
 comparisons, all matrix operations and output copies. No suffix-support
