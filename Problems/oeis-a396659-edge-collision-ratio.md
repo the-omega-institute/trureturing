@@ -37,7 +37,6 @@ euler_nonempty constructs an Euler walk for each fixed start;
 long_count_positive proves the denominator positive, and collision_ratio
 states the exact rational identity for every n at least two.
 
-These mathematical declarations require the current scoped axiom report.
 Independent source/form review, public-theorem audit completion or disclosed
 issue exceptions, canonical freeze, required CI and delivery to dev remain
 separate obligations. No delivered external-resolution count is asserted here.
