@@ -3,7 +3,7 @@ bibkey: abate2013conditionalprobabilities
 authors: Alessandro Abate; Frank Redig; Ilya Tkachev
 year: 2013
 title: On the effect of perturbation of conditional probabilities in total variation
-doi: null
+doi: 10.1016/j.spl.2014.01.009
 url: https://arxiv.org/abs/1311.3066v1
 claim: The common-part and residual-product maximal coupling, including measurable kernel families in Section 3.2.
 strata_touched: []
@@ -12,6 +12,20 @@ triage: anchor
 ---
 
 # Measurable maximal coupling
+
+## Verified locator
+
+- URL: https://arxiv.org/abs/1311.3066v1
+- DOI: 10.1016/j.spl.2014.01.009
+- Version: arXiv:1311.3066v1, math.PR.
+- Title: On the effect of perturbation of conditional probabilities in total variation.
+- Authors: Alessandro Abate, Frank Redig and Ilya Tkachev.
+- Mathematical locator: Section 3.2, Definition 1 and the proof of Lemma 2.
+
+The arXiv abstract page identifies this title, these authors and this version.
+The versioned full text supplies the construction and the measurable-family step.
+
+## Coupling construction and convention
 
 Section 3.2, Definition 1 gives the coupling consisting of the diagonal image of
 the common part and the normalized product of the two residual measures. The
