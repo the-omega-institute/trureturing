@@ -125,7 +125,7 @@ theorem orthogonal_sandwich {k n : Type*} [Fintype k] [Fintype n]
   intro c _
   rw [Finset.sum_comm]
   simp_rw [← Finset.sum_smul, he]
-  simp only [ite_smul, one_smul, zero_smul, Finset.sum_ite_eq', Finset.mem_univ,
+  simp only [ite_smul, one_smul, zero_smul, Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ,
     ite_true]
 
 theorem tensor_unitary (n : ℕ) (u : Matrix.specialUnitaryGroup (Fin 2) ℂ) :
@@ -151,12 +151,77 @@ theorem local_action {n : ℕ} (k : Fin n) (a : Matrix (Fin 2) (Fin 2) ℂ)
         a (x k) b * (if (fun i : {i : Fin n // i ≠ k} => x i.val) = z then 1 else 0) := by
     unfold localOp tensorOp
     rw [Matrix.of_apply, Fintype.prod_eq_mul_prod_subtype_ne _ k]
-    simp [e, Equiv.funSplitAt, Equiv.piSplitAt, Matrix.one_apply,
-      Fintype.prod_boole, funext_iff]
+    have hy (i : {i : Fin n // i ≠ k}) : e.symm (b, z) i.val = z i := by
+      simp [e, Equiv.funSplitAt, Equiv.piSplitAt, i.property]
+    have hp : (∏ i : {i : Fin n // i ≠ k},
+        Function.update (fun _ : Fin n => (1 : Matrix (Fin 2) (Fin 2) ℂ)) k a i.val
+          (x i.val) (e.symm (b, z) i.val)) =
+        if (fun i : {i : Fin n // i ≠ k} => x i.val) = z then 1 else 0 := by
+      calc
+        _ = ∏ i : {i : Fin n // i ≠ k},
+            if x i.val = z i then (1 : ℂ) else 0 := by
+          apply Finset.prod_congr rfl
+          intro i _
+          rw [Function.update_of_ne i.property, hy]
+          rfl
+        _ = _ := by simp [Fintype.prod_boole, funext_iff]
+    rw [hp, Function.update_self]
+    simp [e, Equiv.funSplitAt, Equiv.piSplitAt]
   change (∑ y : Fin n → Fin 2, localOp k a x y * f y) = _
   rw [← e.symm.sum_comp]
   simp only [Fintype.sum_prod_type, hk, ite_mul, mul_ite, one_mul, zero_mul,
     mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, ite_true, he]
+
+def collectiveSpin (n : ℕ) (a : Fin 3) :
+    Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ :=
+  (1 / 2 : ℂ) • ∑ k : Fin n, localOp k (pauliAxes a)
+
+theorem collective_tensor_rotation (n : ℕ)
+    (u : Matrix.specialUnitaryGroup (Fin 2) ℂ) (r : Matrix (Fin 3) (Fin 3) ℝ)
+    (hr : ∀ a, u.val * pauliAxes a * u.valᴴ =
+      ∑ c : Fin 3, (r a c : ℂ) • pauliAxes c) (a : Fin 3) :
+    tensorOp (fun _ : Fin n => u.val) * collectiveSpin n a *
+      (tensorOp (fun _ : Fin n => u.val))ᴴ =
+        ∑ c : Fin 3, (r a c : ℂ) • collectiveSpin n c := by
+  have hu : u.val * u.valᴴ = 1 := Matrix.mem_unitaryGroup_iff.mp u.property.1
+  have ht : (tensorOp (fun _ : Fin n => u.val))ᴴ =
+      tensorOp (fun _ : Fin n => u.valᴴ) := by
+    ext x y
+    simp [tensorOp, Matrix.conjTranspose_apply]
+  have hc (k : Fin n) : tensorOp (fun _ : Fin n => u.val) *
+      localOp k (pauliAxes a) * (tensorOp (fun _ : Fin n => u.val))ᴴ =
+        localOp k (u.val * pauliAxes a * u.valᴴ) := by
+    unfold localOp
+    rw [ht, tensor_mul, tensor_mul]
+    congr 1
+    funext i
+    by_cases hi : i = k
+    · subst i; simp
+    · simp [Function.update_of_ne hi, hu]
+  have hm (k : Fin n) (b : Matrix (Fin 2) (Fin 2) ℂ) (x y : Fin n → Fin 2) :
+      localOp k b x y = ∑ z : Fin 2, b (x k) z *
+        (if Function.update x k z = y then 1 else 0) := by
+    simpa only [Matrix.mulVec, dotProduct, mul_ite, mul_one, mul_zero,
+      Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, ite_true] using
+      local_action k b (fun z => if z = y then 1 else 0) x
+  simp only [collectiveSpin, Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_sum,
+    Matrix.sum_mul, hc, hr a]
+  ext x y
+  simp only [Matrix.smul_apply, Matrix.sum_apply, smul_eq_mul, hm]
+  simp_rw [Finset.mul_sum, Finset.sum_mul]
+  simp_rw [Finset.mul_sum]
+  conv_lhs =>
+    arg 2
+    ext k
+    rw [Finset.sum_comm]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro c _
+  apply Finset.sum_congr rfl
+  intro k _
+  apply Finset.sum_congr rfl
+  intro b _
+  ring
 
 theorem quadratic_rotation {n : Type*} [Fintype n] [DecidableEq n]
     (d : Matrix n n ℂ) (hd : dᴴ * d = 1) (r : Matrix (Fin 3) (Fin 3) ℝ)
@@ -179,7 +244,9 @@ theorem quadratic_rotation {n : Type*} [Fintype n] [DecidableEq n]
     have hrr : r * rᵀ = 1 := mul_eq_one_comm.mp hr
     have h := congrArg (fun m : Matrix (Fin 3) (Fin 3) ℝ => m a b) hrr
     simp only [Matrix.mul_apply, Matrix.transpose_apply, Matrix.one_apply] at h
-    exact_mod_cast h
+    have hh := congrArg Complex.ofReal h
+    push_cast at hh
+    simpa only [apply_ite, Complex.ofReal_one, Complex.ofReal_zero] using hh
   have hδ : (if a = b then (20 / 3 : ℂ) else 0) =
       (20 / 3 : ℂ) * ∑ c : Fin 3, (r a c : ℂ) * (r b c : ℂ) := by
     rw [hrow]
