@@ -63,7 +63,7 @@ private theorem layer_prime_mem {m j : ℕ} (hQ : 1 < layerPrime m j) :
   rw [hmax]
   exact Finset.mem_filter.mp hq
 
-private theorem valuation_below_layer_prime {m j q : ℕ} (hq : q.Prime)
+theorem valuation_below_layer_prime {m j q : ℕ} (hq : q.Prime)
     (hanti : ∀ p r : ℕ, p.Prime → r.Prime → p < r →
       m.factorization r ≤ m.factorization p)
     (hqQ : q ≤ layerPrime m j) : j ≤ m.factorization q := by
@@ -74,7 +74,7 @@ private theorem valuation_below_layer_prime {m j q : ℕ} (hq : q.Prime)
   · exact hjQ.trans (hanti q (layerPrime m j) hq
       (Nat.prime_of_mem_primeFactors hmem) (lt_of_le_of_ne hqQ heq))
 
-private theorem valuation_above_layer_prime {m j q : ℕ} (hm : 0 < m)
+theorem valuation_above_layer_prime {m j q : ℕ} (hm : 0 < m)
     (hj : 1 ≤ j) (hq : q.Prime) (hQq : layerPrime m j < q) : m.factorization q < j := by
   classical
   by_contra! hval
