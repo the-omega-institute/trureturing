@@ -224,6 +224,9 @@ private theorem adjacent_certificate (b d : ℕ) (hb : 3 ≤ b) (hd : 1 ≤ d) :
       nlinarith only [show q*(2*(s/2)-s)=0 by rw [hs2]; ring]
     rw [he]; omega
   have hr2 : (2*t)/2=t := by omega
+  have hqt : q<t := by
+    dsimp [t]
+    nlinarith only [mul_pos (show 0<s-1 by omega) (show 0<q by omega)]
   have hz : 0≤z ∧ z<t := by
     dsimp [z,h,t]
     split_ifs with he
@@ -269,9 +272,9 @@ private theorem adjacent_certificate (b d : ℕ) (hb : 3 ≤ b) (hd : 1 ≤ d) :
   change ∃ plan : Plan, Certificate (2*t) s t plan
   refine ⟨makePlan 0 Order.bag Ear.q (Mask.mk p 0 w) (Mask.mk 0 0 z),?_,?_,?_,?_⟩
   · dsimp [Bounded,makePlan]; rw [hr2]
-    exact ⟨hp0,hpt,by omega,by omega,hw0,by dsimp [t]; nlinarith only [hwq,ht,hq,hs]⟩
+    exact ⟨hp0,hpt,by omega,by omega,hw0,lt_trans hwq hqt⟩
   · dsimp [Bounded,makePlan]; rw [hr2]
-    exact ⟨by omega,by omega,by omega,by omega,hz.1,hz.2⟩
+    exact ⟨by omega,by change 0<t/2; omega,by omega,by omega,hz.1,hz.2⟩
   · simpa [Separate,makePlan] using hdis
   · dsimp [Seams,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
       Order.first,Order.middle,Order.last,atNegative]
