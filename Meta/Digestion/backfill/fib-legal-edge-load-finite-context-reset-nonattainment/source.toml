@@ -1,0 +1,5 @@
+source_id = "fib-legal-edge-load-finite-context-reset-nonattainment"
+path = "docs/develop/theory/FIB_LEGAL_EDGE_LOAD_FINITE_CONTEXT_RESET_NONATTAINMENT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,184 @@
+**引理 129.2（同输出 Fourier 导数、密度喷射与秩一插入）。** 沿用 (123.9) 的
+实特征函数与 $z_y=(\sqrt\delta y+\epsilon_H)/\sqrt{W_H}$，记
+
+$$
+I(\alpha,y,\xi)=e^{-i\xi z_y}\psi_\alpha(\xi),\qquad
+E_Q(\xi)=(1+c\delta\xi^2)^{-c'/\delta}.
+$$
+
+对所有 $0\le k\le p(Q)$ 及实 $\alpha\in[1-2h,2+2h]$，有
+
+$$
+\frac{|\partial_\alpha^k I|}{k!}
+ \le C^{k+1}(1+|\xi|)^{2k}E_Q(\xi),
+\quad
+\frac{|\partial_\alpha^k\{I(\mathcal R_\alpha-1)\}|}{k!}
+ \le\eta C^{k+1}(1+|\xi|)^{2k}E_Q(\xi).
+\tag{129.3}
+$$
+
+$\mathcal R$ 是同一条件积分的精确因子 (125.6)，$\eta$ 是 (124.1) 的原数。
+设 $q_\alpha$ 为标准化倾斜密度，则
+
+$$
+N_p\left(q_\alpha(z_y)-\varphi(z_y)\right)
+ \le C\sqrt\delta+\exp\{-c/\delta+C(p+1)\log[Q(p+2)]\},
+\tag{129.4}
+$$
+
+$$
+N_p\left(\log\frac{\mathcal J_\eta(\alpha,y)}{\mathcal J_0(\alpha,y)}\right)
+ \le C\eta+\exp\{-c/\delta+C(p+1)\log[Q(p+2)]\}.
+\tag{129.5}
+$$
+
+同一个输出条件律、同一个完整根下，还对 $1\le k\le p(Q)$ 有
+
+$$
+\mathbb E_{\alpha,y,s}\left[
+ |\mathcal D_G|^{2k}+\left(\frac{S_G}{1+m_Q}\right)^k
+                         +\delta^k|U_y|^{2k}\right]
+ \le [C(k+1)]^{C(k+1)},\qquad s\in\{0,\eta\}.
+\tag{129.6}
+$$
+
+常数不含逆噪声幂。这些估计也对相对宽度变化为
+$\operatorname{poly}(Q)e^{-\mu Q^3/4}$ 的邻近正噪声成立。
+
+**证明。** 引理 129.1 给各实点周围的解析系数界
+$|[a_j]_k|\le C^{k+1}a_j$，
+$|[\beta_j]_k|\le C^{k+1}|\beta_j|$，
+$|[\beta_G]_k|\le C^{k+1}|\beta_G|$，及 $|[z_y]_k|\le C_R^{k+1}$。
+当 $e_j=0$ 或 $\beta_G=0$，相应的全系列也为零。
+在这些圆盘上，实频率分母保持
+
+$$
+|1-2i\xi a_j(z)|\ge c(1+|\xi|a_j(a)).
+\tag{129.7}
+$$
+
+这是 $|a_j(z)-a_j(a)|\le C|z-a|a_j(a)$ 及反三角不等式的直接结果。
+对单个中心对数 $-i\xi a_j-\tfrac12\log(1-2i\xi a_j)$，
+围绕实点展开分母；一阶线性项的抵消使每个正阶系数至多
+$C^{k+1}\xi^2a_j^2$。具体地，线性变差为
+$i\xi\{(1-2i\xi a_j)^{-1}-1\}\Delta a_j$；
+二次及以后项使用 $|\xi a_j|/|1-2i\xi a_j|\le1/2$。
+非中心对数每个正阶系数相应至多 $C^{k+1}\xi^2\beta_j^2$；
+噪声项至多 $C^{k+1}\xi^2\beta_G^2$。
+因 $2\sum a_j^2+\sum\beta_j^2+\beta_G^2=1$，求和后为
+$C^{k+1}\xi^2$。相位的正阶系数至多 $C_R^{k+1}|\xi|$。
+
+为把对数系数转成指数系数，使用正系数主级数
+$\exp\{A v/(1-v)\}$，其中 $A=C(\xi^2+|\xi|)$。
+在 $|v|=[2(1+A)]^{-1}$ 上该函数至多 $e$，所以第 $k$ 系数至多
+$e[2(1+A)]^k$。乘回实点的模 $|I|=|\psi|\le E_Q$，即得第一条 (129.3)。
+这给出了显式阶数成本，未把 $C_k$ 当作共同常数。
+
+对秩一因子，令 $u=\xi/\sqrt{W_H}$。
+引理 129.1 与 (129.7) 使 (125.3)–(125.4) 的整个系数系列满足
+
+$$
+\sum_{k\ge0}\rho^k|[S_\alpha(\xi)]_{k,a}|\le C\sum_Hw_j\le C,
+\qquad
+\sum_{k\ge0}\rho^k|[M_\alpha(\xi)]_{k,a}|\le C\sum_H|e_j|\le C\delta^3.
+\tag{129.8}
+$$
+
+这些界对全部实频率一致。因 $\eta\le C\delta^5$，
+$|2z\eta S_z|\le1/2$ 在同一固定圆盘成立。
+(125.6) 的平方根与指数的幂级数因此给
+
+$$
+\sum_{k\ge0}\rho^k|[\mathcal R-1]_{k,a}|\le C\eta.
+\tag{129.9}
+$$
+
+与第一条 (129.3) 卷积并缩小一次共同半径，就得第二条。
+这里的 $S_\alpha(\xi)$ 仍是复协方差，不是支持集合。
+
+下面分开低频解析估计与实轴高频导数。固定足够小的 $b>0$，置
+$T=b/\sqrt\delta$。在 $|\xi|\le T$ 和共同复圆盘内，
+对精确变换 (123.9) 展开。方差恒等式在解析延拓中仍成立，故
+
+$$
+\log\psi_z(\xi)=-\xi^2/2+R_z(\xi),\qquad
+|R_z(\xi)|\le C\sqrt\delta|\xi|^3,\qquad
+|\psi_z(\xi)|\le e^{-c\xi^2}.
+\tag{129.10}
+$$
+
+最后一界先选 $b$ 使 $C\sqrt\delta|\xi|\le1/4$。
+非中心项的余项由
+$\max a_j\sum\beta_j^2\le C\sqrt\delta$ 控制；噪声项没有三次余项。
+同时 $|e^{-i\xi z_y(z)}|\le e^{C_R|\xi|}$。因此在该固定圆盘上
+
+$$
+\left|e^{-i\xi z_y(z)}(\psi_z(\xi)-e^{-\xi^2/2})\right|
+ \le C_R\sqrt\delta |\xi|^3 e^{-c\xi^2+C_R|\xi|}.
+\tag{129.11}
+$$
+
+Cauchy 系数估计在较大固定圆盘施于右侧可积主函数，再在 $\rho$ 求和，
+给低频积分的 $C\sqrt\delta$ 范数界。Gaussian 的被删频率部分也按此法估计。
+这个步骤只解析延拓截断的低频积分。
+
+对实际高频积分只在实轴逐次求导，使用 (129.3)。对 $k\le p$，
+
+$$
+\int_{|\xi|>T}(1+|\xi|)^{2k}E_Q(\xi)\,d\xi
+ \le \exp\{-c/\delta+C(k+1)\log[Q(k+2)]\}.
+\tag{129.12}
+$$
+
+为核对范围，在 $T<|\xi|\le\delta^{-1/2}$ 上
+$E_Q\le e^{-c_1\xi^2}$，其带幂尾积分至多
+$e^{-c_2/\delta}C^{k+1}\delta^{-k-1}$，因为
+$k\log(k+2)=o(1/\delta)$。
+外侧置 $v=\sqrt\delta|\xi|\ge1$，把
+$(1+cv^2)^{-c'/\delta}$ 的一半保留为 $e^{-c_3/\delta}$，另一半积分
+$v^{2k}(1+cv^2)^{-c'/(2\delta)}$；$2k+2<c'/(4\delta)$ 最终成立。
+该积分至多 $C^{k+1}$，另有尺度因子 $\delta^{-k-1}$。
+这证明 (129.12)，也证明每一实际导数的反演与积分交换合法。
+合并低频与高频即得 (129.4)。
+
+为证明 (129.6)，在同一倾斜 Fourier 积分中插入多项式。
+频率 $u$ 下坐标的复均值、协方差正是 (125.3)，其模不超过 $|m_j|,w_j$。
+$\mathcal D_G$ 的复均值和协方差的模至多 $C\delta^3,C$。
+复 Gaussian 的 $2k$ 次矩公式含至多 $(2k)!$ 个配对项，因而该插入的模至多
+$[C(k+1)]^{2k}$ 倍 $|\psi|$。
+对 $S_G^k$ 展开有序的 $k$ 个坐标指标；
+$w_j/v_j\le C$、$e_j^2/v_j\le Ce_M^2$ 使其配对和至多
+$[C(k+1)]^{2k}(1+m_Q)^k|\psi|$。
+这些估计也覆盖非常小但为正的 $v_j$。
+
+能量噪声在倾斜下的均值是 $t_\alpha\delta\sigma^2/\alpha$、方差是
+$\delta\sigma^2/\alpha$；再作 Fourier 插入并除以 $\sqrt\delta\sigma$，
+复均值的模至多 $C(\sigma/\sqrt\delta+|\xi|\sigma)$、复方差的模至多 $C$。
+条件于总能量等于 $V+\sqrt\delta y$ 时，它的负值正是 $U_y$。
+因此 $U_y^{2k}$ 的插入至多
+$[C(k+1)]^{2k}\delta^{-k}(1+|\xi|)^{2k}|\psi|$。
+没有使用 $\sigma^{-2k}$ 来界这个条件插入。
+全频积分的相应矩至多 $[C(k+1)]^{C(k+1)}$：低频用 Gaussian 矩，
+高频用 (129.12)。分母 $q_\alpha(z_y)\ge c_R$ 由 (129.4) 的零阶部分给出。
+这证明 $s=0$ 的 (129.6)。
+
+由精确公式 (125.8)，$\mathcal J_\eta/\mathcal J_0=1+O(\eta)$；
+分子是同一个条件 Fourier 积分，并由 (129.9) 控制。
+带选择的非负多项式分子不超过无选择的分子，而分母至少保留一半，
+故 (129.6) 对 $s=\eta$ 也成立。
+
+在截断 Taylor 代数中，(128.2) 的加权系数和次乘性成立。
+$\varphi(z_y)$ 及其倒数在共同系数圆盘上有 $C_R$ 上界，
+故它们的 $\rho$ 系数和也有此界。
+(129.4) 使 $q_\alpha(z_y)/\varphi(z_y)-1$ 的 $p$ 喷射范数趋零；
+对 $\log(1+v)$ 和 $(1+v)^{-1}$ 使用绝对收敛幂级数即可控制对数与倒数喷射。
+同理，对 (125.8) 的分子使用 (129.9)、(129.11)–(129.12)，再乘这个倒数喷射，
+得到 (129.5)。这个代数论证只需有限阶真实导数和实点正密度。
+
+最后，若 $\sigma'^2/\sigma^2=1+\omega$ 且 $|\omega|$ 为所列指数小量，
+在同一个 $t_\alpha$ 处，$K_H,K'_H,W_H$ 的精确变化由 (126.6) 给出。
+其系数加权和至多 $\operatorname{poly}(Q)|\omega|$。
+新的标准化输出位置仍在原固定紧集，新的密度仍有正下界，
+反倾斜前因子的对数变化也是 $\operatorname{poly}(Q)|\omega|$。
+所以邻近宽度的核积分之比有固定上下界，上述插入界不变。∎
+

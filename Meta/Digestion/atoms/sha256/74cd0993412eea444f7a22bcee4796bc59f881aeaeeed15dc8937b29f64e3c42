@@ -1,0 +1,20 @@
+#### 定义 9.1（显式五模式编码）
+
+固定 $\lambda>0$，对 $\rho\in\mathbb{C}\setminus\{0,1\}$ 令
+$z=1-1/\rho$、$r=|z|^2$、$D=3+\lambda+r$，定义
+
+$$
+\lvert{\Psi_z}\rangle{}=\frac{\lvert{0}\rangle{}+\lvert{1}\rangle{}+\sqrt\lambda\lvert{2}\rangle{}+\lvert{3}\rangle{}+z\lvert{13}\rangle{}}{\sqrt D}.
+$$
+
+其模式概率为 $p=(1,1,\lambda,1,r)/D$。定义四角振幅比与经典对数关联
+
+$$
+\Omega=\frac{\alpha_0\alpha_{13}}{\alpha_1\alpha_3},\qquad
+\eta_\square=\log\frac{p_0p_{13}}{p_1p_3}.
+$$
+
+所有分母在本定义中非零。
+
+<a id="thm-encoding"></a>
+

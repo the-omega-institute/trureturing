@@ -755,7 +755,11 @@ CI、非 dev 和 detached 主检出不进行可选刷新。相符的种子按原
 **长任务走宿主后台作业机制,不 shell 甩后台**:Claude Code 用 Bash `run_in_background:true`,其他宿主用等价作业/会话句柄。预期超前台预算或时长未知的 本地检查/gate/lean-report/worktree/全量 dotnet test/codex/sshx/CI 等待均适用;Bash 前台 timeout 上限 600s,更大值截断并在 10m 以 143 杀任务。
 一条宿主调用承载真实长任务,内部 wait 全子进程,真实退出码落哨兵,判绿只认它。禁 `nohup … &`、`(…) &`、`setsid … &` 让 launcher 先返回:其 exit 0 不代表任务完成,宿主可能清整进程组;脱离生命周期/通知后 pgrep 也不能判完成。并行开多个宿主作业。
 **例外**:脚本内部并发 `&` 后 wait 收拢合法,但 **& 与 wait 必须在同一条命令**,启动器返回前等完全部子进程,不能事后补 wait。写命令时核“返回时真实任务结束了吗”;对象是程序实际行为,非对 detach 的印象。`seat.sh dispatch` 等席位全生命周期才返回。无宿主完成信号易衍生 sleep 轮询,第 8.7、8.8 条仍适用。
-〔守护:**软+硬投影**·shell 文本可搜,意图不可 lint;完成须给真实哨兵退出码。转录自审须同时判①尾随 & 且同命令无 wait;②已知长任务在前台且无后台选项。已知类含 `seat.sh dispatch`、`nyx.py ask`、`make {lean,lean-report,本地检查,gate,worktree,pr-open,cover,cover-batch,deposit,emit,ingest,test}`、`dotnet test`。只查①会漏②,运行输出/判词绿也不能证明未违规。匹配限定命令位置(行首、`;`、`&&`、`|`、`$(` 后),先剥 heredoc 体,不整命令豁免,避免散文/源码假阳与体外漏检。`tools/scripts/agent/selfaudit.sh` 可数违规/合法形及按用户指令行号分窗的挂钟,并查第 8.3 条裸 lake;每次反思必跑,只留有用结果不存转录副本(第 2.10 条)〕
+**进程终止归属**:只终止本任务自己创建、并持有其 pid 或进程组句柄的进程,如自己的子进程、`start_new_session` 创建的组或宿主作业句柄所指进程。
+禁止按命令名、参数或路径模式跨进程终止,包括 `pkill -f`、`killall`、按 `ps | grep` 结果批量 `kill`;同机多个驱动者与席位共享 runner 名、`codex exec` 参数、`claude` 参数及 `<主检出父目录>/trureturing-*` 路径前缀,按模式匹配会终止其他会话的工作。
+本树 cwd 只用于列出遗留进程候选,不单独构成终止依据;终止须凭本任务自己创建并持有的 pid/进程组句柄或宿主作业句柄确认归属,无法证明就不动,只报告。操作要求见 `tools/scripts/agent/implementation-brief-note.txt`。
+“看起来像旧 lane 自动重生”的进程不属于本任务,除非本任务记录的 pid/pgid 能证明归属;无法证明就不动。
+〔守护:**软+硬投影**·shell 文本可搜,意图不可 lint;进程终止归属为软约束,靠评审;完成须给真实哨兵退出码。转录自审须同时判①尾随 & 且同命令无 wait;②已知长任务在前台且无后台选项。已知类含 `seat.sh dispatch`、`nyx.py ask`、`make {lean,lean-report,本地检查,gate,worktree,pr-open,cover,cover-batch,deposit,emit,ingest,test}`、`dotnet test`。只查①会漏②,运行输出/判词绿也不能证明未违规。匹配限定命令位置(行首、`;`、`&&`、`|`、`$(` 后),先剥 heredoc 体,不整命令豁免,避免散文/源码假阳与体外漏检。`tools/scripts/agent/selfaudit.sh` 可数违规/合法形及按用户指令行号分窗的挂钟,并查第 8.3 条裸 lake;每次反思必跑,只留有用结果不存转录副本(第 2.10 条)〕
 
 ### 8.7 原生同步等待与外部轮询边界
 

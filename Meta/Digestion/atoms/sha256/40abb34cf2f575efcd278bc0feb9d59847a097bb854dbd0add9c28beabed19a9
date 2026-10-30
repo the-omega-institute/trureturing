@@ -1,0 +1,31 @@
+#### 定理 6.2（乘法字符的勾股定理）
+
+不同 $\chi_n$ 正交归一。因此，对实数 $a$，
+
+$$
+F_{a,N}=\sum_{n\le N}n^{-a}\chi_n,\qquad
+\left\lVert{F_{a,N}}\right\rVert_2^2=\sum_{n\le N}n^{-2a}.
+$$
+
+当且仅当 $a>1/2$，$F_{a,N}$ 存在 $L^2$ 极限，且
+
+<a id="eq-half"></a>
+
+$$
+\left\lVert{F_a}\right\rVert_2^2=\zeta(2a). \tag{11}
+$$
+
+**证明。**
+
+若 $m\ne n$，至少一个素数指数不同；对该圆周积分使
+$\chi_m\overline{\chi_n}$ 的积分为零。相同字符的平方积分为 $1$。
+于是任意部分和差的平方范数等于相应数项级数的尾和；
+Hilbert 完备性和正项级数判据给出充要条件。
+
+∎
+
+这一结构属于 Bohr 字符空间与 Dirichlet Hilbert 空间的经典背景
+[7](#ref-hedenmalm)。此处 $1/2$ 不是任意填入：平方把指数 $a$ 变成 $2a$，普通级数的边界为 $2a=1$。
+
+<a id="prop-pointeval"></a>
+

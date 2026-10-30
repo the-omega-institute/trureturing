@@ -1,0 +1,14 @@
+#### 命题 10.2（丢掉程序通常不能得到一个新酉门）
+
+上述通道是酉通道，当且仅当所有正权 $U_w$ 仅差整体相位。
+
+**证明。**
+
+设 $\lvert u_w\rangle=(I\otimes U_w)\lvert \Phi_d\rangle$，其中
+$\lvert \Phi_d\rangle=d^{-1/2}\sum_j\lvert j,j\rangle$。通道的归一化 Choi 矩阵为
+$\sum_w|c_w|^2\lvert u_w\rangle\langle u_w\rvert$。酉通道对应秩一 Choi 矩阵；正半定秩一和仍为秩一，当且仅当全部正权向量共线。这恰等价于 $U_w$ 只差相位。可数和的情形可由非负二次型及其正交补同样证明。
+
+∎
+
+<a id="thm-noprogram"></a>
+

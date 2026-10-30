@@ -1,0 +1,9 @@
+**定义 8.1（保留正规形的策略回放映射）。** 对两等待策略 $\pi,\sigma$，定义
+
+$$
+K_{\pi\sigma}=G_\sigma\circ F_\pi:\mathcal A_\pi\longrightarrow\mathcal A_\sigma.
+\tag{CPI.42}
+$$
+
+这是参数无关的可测双射，保留档案提取出的 $U,X_0,R$，逆为 $K_{\sigma\pi}$。记 $\mathsf P_\Lambda^\pi$ 为完整档案律，$\mathsf J_\Lambda^\pi$ 为参数对与完整档案的联合律。以下“运输”专指此映射的推送相等，不预先声称所有其他随机化核或决策问题也只能用此映射。
+

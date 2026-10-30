@@ -1,0 +1,72 @@
+**命题 91.3（这一制备的原五维提升及完整矩映射）。** (91.1) 只用一个原相容纯后继；其原域 CPTP 提升可以取 (55.5)、(88.1) 在 $A=\rho_0,D=0$ 时的构造。该提升保留第一卷 (35.3) 的完整源矩映射，并与 $S_{\rho_0}$ 在全部复矩阵及任意有限未触动参考上一致。
+
+证明。$a,g$ 正交归一，$U\xi=\xi$，且
+
+$$
+\langle \xi,a\rangle=1/\sqrt2,\quad
+\langle \xi,g\rangle=0,\quad
+\langle q,a\rangle=1/4,\quad
+\langle q,g\rangle=\sqrt6/4.
+$$
+
+所以 $\rho_0$ 纯且迹一，$a^\dagger\rho_0a=d$，并有
+
+$$
+\operatorname{Tr}(P_\xi\rho_0)=c,\qquad
+\operatorname{Tr}(C\rho_0)=d,\qquad
+\operatorname{Tr}(E\rho_0)=\frac{6-5d}{16}=e_d,
+\quad C=2P_\xi.
+\tag{91.6}
+$$
+
+最后一个等式使用实重叠与 $\mathrm i$ 的相对相位，交叉实部为零。故 $A=\rho_0,D=0$ 满足 (54.2) 的全部条件；这仅证明这一点有原域来源。
+
+令 $D_+$ 为 (55.5) 的原 $3\times5$ 余等距，置
+
+$$
+\eta=D_+^\dagger\psi,\qquad
+\omega=\eta\eta^\dagger,\qquad
+\mathcal T_0(X)=BP_+XP_+B^\dagger+(f^\dagger Xf)\omega.
+\tag{91.7}
+$$
+
+$D_+D_+^\dagger=I_3$ 使 $\|\eta\|=1$。两项的 Kraus 算子 $BP_+$、$\eta f^\dagger$ 的伴随平方和为 $P_++ff^\dagger=I_3$，因此 $\mathcal T_0$ 是原 $M_3\to M_5$ CPTP 映射。(88.2) 的假设正是本处的正分解及 (91.6)，所以在输入基 $(q,r,f)$ 中，其原完整响应是
+
+$$
+\begin{aligned}
+\mathcal T_0^*(J_0)&=\operatorname{diag}(1,0,d),\\
+\mathcal T_0^*(J_1)&=\frac1{16}
+ \begin{pmatrix}1&3&0\\3&9&0\\0&0&6-5d\end{pmatrix},\\
+\mathcal T_0^*(J_2)&=\frac1{32}
+ \begin{pmatrix}17&3&0\\3&9&0\\0&0&6+11d\end{pmatrix}.
+\end{aligned}
+\tag{91.8}
+$$
+
+这里 $J_0=P=BEB^\dagger$，$J_j=(\mathcal G^*)^j(P)$，$\mathcal G(Y)=\sum_{j=0}^1K_jYK_j^\dagger$；$K_j$ 是 (54.1) 的原 Kraus 算子。原递推 $J_{j+2}=(J_j+J_{j+1})/2$、$j\ge1$ 使 (91.8) 延伸到全部原深度。因此没有用单个输入的三个标量替代源的完整矩映射。
+
+由 $D_+B=UP_+$、$D_-B=UP_-$、$D_-D_+^\dagger=0$，直接对任意 $X\in M_3(\mathbb C)$ 得
+
+$$
+\mathcal G\mathcal T_0(X)
+=B[UP_+XP_+U^\dagger+(f^\dagger Xf)\rho_0]B^\dagger
+=S_{\rho_0}(X).
+\tag{91.9}
+$$
+
+对任意 $r\ge1$ 和 $X\in M_r\otimes M_3$，令
+$X_{ff}=(I_r\otimes f^\dagger)X(I_r\otimes f)$。其完整参考形式为
+
+$$
+\begin{aligned}
+(\mathrm{id}_{M_r}\otimes S_{\rho_0})(X)
+={}&(I_r\otimes BUP_+)X(I_r\otimes P_+U^\dagger B^\dagger)\\
+&+X_{ff}\otimes B\rho_0B^\dagger .
+\end{aligned}
+\tag{91.10}
+$$
+
+这是所有复矩阵上的恒等式，故包括纠缠参考，不要求参考为独立副本。第二卷 (39.5) 给
+$\widehat K_{\theta,h}B=2^{-|h|/2}BV_h$。对于给定 $N$，数学上的五维角块延伸
+$\widetilde N=BNB^\dagger+(I_5-BB^\dagger)$ 是酉且满足 $\widetilde NB=BN$。逐次复合于是保留 (91.2) 的两种终端结果、联合权重及未触动参考对应。这个延伸公式只说明给定控制的表示相容性；它不从原无控制菜单推出 $N$ 已被取得。后面的辨识只使用合同所给的一个 $\rho_0$、原随机仪器及已安装 $N$，不使用整个 $\mathcal K_d$ 的制备或仿射编码。∎
+

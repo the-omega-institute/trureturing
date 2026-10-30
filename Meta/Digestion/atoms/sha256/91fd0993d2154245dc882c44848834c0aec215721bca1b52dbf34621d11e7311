@@ -1,0 +1,119 @@
+**Theorem 11.4 (Uniform sharp dense infimum with no lower window cutoff).** For every fixed $0<L<1$ there are constants $a_0(L),C_L$ such that, for all integers $a\ge a_0(L)$ and all $0<\delta\le L/a$,
+
+$$
+\boxed{\quad
+\left|\mathscr D_a(\delta)-H_d+Q_*\right|
+\le C_L\frac{\delta^3}{r}.
+\quad}\tag{11.9}
+$$
+
+The dense infimum is attained. In particular, for every compact interval $J\subset(0,1)$, uniformly for $\lambda\in J$,
+
+$$
+\mathscr D_a(\lambda/a)
+=H_d-\frac{8\lambda^2}{a^2}+O_J(a^{-4}).
+\tag{11.10}
+$$
+
+The lower bound in (11.9) holds on the entire dense part of Definition 1.1, including laws with arbitrary positive cardinalities and disconnected support.
+
+**Proof.** First consider a dense law with $H\le H_d$. Lemma 11.3 gives uniform lower bounds on all $y_i$ and $\mu$, as well as $\|d\|=O_L(\delta/r)$. Expand the exact identity
+
+$$
+H=\sum_i\left(\frac{r^2}{y_i}+\frac{c_i}{y_i^2}\right).
+$$
+
+The constant term is $(r^2q+\sum_i c_i)/\mu^2=H_d+\Delta/\mu^2$. The $r^2$ linear term vanishes because $\sum_i d_i=0$, and $\langle c,d\rangle=\langle c^\circ,d\rangle$. Thus
+
+$$
+H-H_d=\frac{\Delta}{\mu^2}
+ +\mu^{-3}\left(r^2\|d\|^2-2\langle c^\circ,d\rangle\right)
+ +E,\qquad |E|\le C_L\frac{\delta^3}{r}.
+\tag{11.11}
+$$
+
+To justify the error without a factor depending on the number of labels, use the exact scalar identities
+
+$$
+\begin{aligned}
+\frac1{\mu+d}-\frac1\mu+\frac d{\mu^2}-\frac{d^2}{\mu^3}
+ &=-\frac{d^3}{\mu^3(\mu+d)},\\
+\frac1{(\mu+d)^2}-\frac1{\mu^2}+\frac{2d}{\mu^3}
+ &=\frac{d^2(3\mu+2d)}{\mu^3(\mu+d)^2}.
+\end{aligned}
+$$
+
+They imply
+
+$$
+|E|\le C\left[r^2\sum_i|d_i|^3
+ +(\max_i|c_i|)V\right]
+\le C_L\left(r^2V^{3/2}+r\delta V\right)
+\le C_L\frac{\delta^3}{r}.
+$$
+
+Complete the square in (11.11):
+
+$$
+H-H_d+Q_*
+=\frac{r^2}{\mu^3}\left\|d-\frac{c^\circ}{r^2}\right\|^2
+ +\frac{\Delta}{\mu^2}
+ +\frac{A^2-\|c^\circ\|^2}{r^2\mu^3}+E.
+$$
+
+By Proposition 11.2 the possibly negative norm gap is at least
+$-(6A\Delta+9\Delta^2)/(r^2\mu^3)$. Since
+$A=O(r\delta)$ and $\Delta=O_L(\delta^2)$, uniformly on the stated window and for large $a$,
+
+$$
+\mu^{-2}-\frac{6A+9\Delta}{r^2\mu^3}\ge\frac12.
+$$
+
+We obtain the stronger sublevel stability estimate
+
+$$
+\boxed{\quad
+H-H_d+Q_*\ge\frac\Delta2
+ +\frac{r^2}{\mu^3}\left\|d-\frac{c^\circ}{r^2}\right\|^2
+ -C_L\frac{\delta^3}{r}.
+\quad}\tag{11.12}
+$$
+
+Dropping its nonnegative terms proves the required lower bound for $H\le H_d$; laws with $H>H_d$ satisfy that lower bound automatically.
+
+For a matching actual upper law, fix a pair $P\subset[s]$ and use (7.2), with its labels relabeled to $P$, at
+
+$$
+\varepsilon_*=
+\frac as\frac{(2r-1)\delta}{r^2}.
+\tag{11.13}
+$$
+
+The two missing-one masses on $P$ are $(1-r\delta)/s-\varepsilon_*$, and each missing-one mass off $P$ is $(1+\delta)/s+2\varepsilon_*/a$. For large $a$, the former are positive uniformly over the whole window: $1-r\delta\ge(1-L)/2$, while $\varepsilon_*=O_L(\delta/r)=O_L(a^{-2})$. The masses of cardinality $r$ add to $1-\delta$, and the sole cardinality-$a$ mass is $\delta$ on $[s]\setminus P$. Hence this is an actual probability law of mean $q$. Its marginals are $\mu+\varepsilon_*$ on $P$ and $\mu-2\varepsilon_*/a$ off $P$, so it is dense for all sufficiently large $a$.
+
+For this one law, directly,
+
+$$
+\begin{aligned}
+\Delta&=0,\qquad
+c_i=0\ (i\in P),\qquad
+c_j=-(2r-1)\delta\ (j\notin P),\\
+c^\circ&=(2r-1)\delta
+ \left(\mathbf1_P-\frac2s\mathbf1\right),\qquad
+\|c^\circ\|^2=A^2,\qquad d=\frac{c^\circ}{r^2}.
+\end{aligned}\tag{11.14}
+$$
+
+Its explicit vectors satisfy $\|d\|=O_L(\delta/r)$ and $\max_i|c_i|=O(r\delta)$, so the scalar identities proving (11.11) apply to it directly, without assuming its energy lies in a sublevel. Equations (11.11) and (11.14) give $H=H_d-Q_*+O_L(\delta^3/r)$, proving the upper bound. No exact finite-$a$ minimizing property of this family is needed. The feasible dense laws form a nonempty compact subset of the finite probability simplex with $y_i\ge\tau>0$. Continuity of $H$ proves attainment.
+
+Finally put $h=1/a$ and $\delta=\lambda h$. The exact expression (11.2) becomes
+
+$$
+Q_*=\frac{2\lambda^2h^2(2+h)^2(1+2h)^2}
+ {(1+h)^2(1+h-\lambda h^2)^3}.
+\tag{11.15}
+$$
+
+The rational factor multiplying $\lambda^2h^2$ has constant coefficient $8$ and linear coefficient zero: the relative linear coefficient of both its numerator and denominator is $5$. Taylor expansion with denominators bounded away from zero uniformly on $J$ gives
+$Q_*=8\lambda^2h^2+O_J(h^4)$. Also $\delta^3/r=O_J(h^4)$. Substitution in (11.9) proves (11.10). ∎
+

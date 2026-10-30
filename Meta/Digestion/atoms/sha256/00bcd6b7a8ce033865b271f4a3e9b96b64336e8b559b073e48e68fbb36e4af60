@@ -1,0 +1,31 @@
+#### 定理 5.2（射线与基底的相对双商）
+
+将态历史中不改种子射线的右作用、基底历史中不改每个投影的右作用也识别后，有集合双射
+
+$$
+G\backslash\bigl((G/H_{\psi_0})\times(G/T)\bigr)
+\cong T\backslash G/H_{\psi_0}.
+$$
+
+当 $G=\operatorname{U} (d)$ 时，该双商又与概率单纯形
+
+$$
+\Delta_{d-1}=\{(p_s):p_s\ge0,\ \sum_sp_s=1\}
+$$
+
+一一对应，具体对应为 $R\mapsto(|\langle s\rvert R\lvert \psi_0\rangle |^2)_s$。
+
+**证明。**
+
+改变代表 $U\mapsto Uh$、$V\mapsto Vt$ 使相对门变为 $t^\dagger Rh$；共同左作用仍消去。这给出双商描述，反向可取代表 $(R,I)$。
+
+满酉群时，任意概率向量对应单位向量 $z_s=\sqrt{p_s}$，可将 $\psi_0$ 酉送到 $z$，故满射。若 $R\psi_0=z$、$R'\psi_0=z'$ 模长逐项相同，可选对角相位 $D$ 使 $z'=Dz$，零分量处相位任意。于是 $h=R^\dagger D^\dagger R'$ 固定 $\psi_0$，且 $R'=DRh$。所以同概率恰为同双商类。
+
+∎
+
+这是*一个纯态相对于一套完整带标签基底的当前读出*之分类。它不是一切未来干涉任务的分类。限制到原生黄金字群时，允许的 $D,h$ 未必在该群，以上到完整单纯形的单射和满射都不能直接照搬。
+
+<a id="statement-5-3"></a>
+
+<a id="thm-hellinger"></a>
+

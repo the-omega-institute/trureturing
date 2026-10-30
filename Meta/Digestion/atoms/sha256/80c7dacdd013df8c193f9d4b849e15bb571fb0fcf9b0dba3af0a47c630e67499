@@ -1,0 +1,90 @@
+**定理 8.5（每一个最大联盟的联合计数）。** 设 $C$ 是任意实际最大赤字联盟，记
+
+$$
+ i=a-k,\quad j=b-l,\quad x=\frac ka,\quad y=\frac lb,\quad q=x-y.
+$$
+
+令
+
+$$
+\vartheta(a)=\frac{432}{L},\qquad
+\sigma(a)=\mathcal E_D(a)+2\vartheta(a)+\vartheta(a)^2.
+$$
+
+在 $\sigma(a)<1/4$ 的范围内，所有这样的最大联盟同时满足
+
+$$
+\frac ia\ge1-\frac{4\sigma(a)}{(1-\sqrt{\sigma(a)})^2},
+\qquad
+\frac jb\ge1-\frac{4\sigma(a)}{(1-\sqrt{\sigma(a)})^2}.
+\tag{8.12}
+$$
+
+$$
+\left|q-4H\right|\le4H\sqrt{\sigma(a)}.
+\tag{8.13}
+$$
+
+$$
+\left|\frac{q}{\delta L/4}-1\right|
+\le Q(a):=\frac{432}{L}+(1+\vartheta(a))\sqrt{\sigma(a)}.
+\tag{8.14}
+$$
+
+因此 $i/a,j/b\to1$，并且
+
+$$
+\frac jb-\frac ia\sim4H,
+\qquad
+\frac ka-\frac lb\sim\frac{\delta L}{4}.
+\tag{8.15}
+$$
+
+等价的联合缺失计数关系保留比率因子：
+
+$$
+\left|
+ \frac{k-(a/b)l}{(1-a/b)L/4}-1
+\right|\le Q(a).
+$$
+
+这些式子对所有并列最大联盟同时成立；它们没有分别给出 $k$ 和 $l$ 的无约束比率律。
+
+**证明。** 由 (8.6) 的同一平方根恒等式，对任意 $x,y$ 有
+
+$$
+\frac{\Delta(C;\phi)}{2\sqrt{ab}}
+=Hq-\frac12(\sqrt{1-x}-\sqrt{1-y})^2.
+\tag{8.16}
+$$
+
+由 (7.19)、(7.23)，最大赤字严格为正，故 (8.16) 蕴含 $q>0$。
+因此 $S=\sqrt{1-x}+\sqrt{1-y}>0$，则第二项为 $q^2/(2S^2)$，且 $S^2\le4$。所以
+
+$$
+2H^2-\mathfrak d_H(1-x,1-y)
+\ge\frac{(q-4H)^2}{8}.
+\tag{8.17}
+$$
+
+此外 $4-S^2\ge x+y$、$S^2\le4$，故
+
+$$
+2H^2-\mathfrak d_H(1-x,1-y)
+\ge\frac{(q-4H)^2}{8}+\frac{q^2(x+y)}{32}.
+\tag{8.18}
+$$
+
+由 (8.7)、(8.2)，最大联盟的归一化赤字至少为
+$2H^2(1-\sigma(a))$；这里使用
+$(1-\mathcal E_D)/(1+\vartheta)^2\ge1-\sigma$。于是 (8.17) 给出 (8.13)，并给出
+$q\ge4H(1-\sqrt\sigma)$。再代入 (8.18)，得到
+$x+y\le4\sigma/(1-\sqrt\sigma)^2$，即 (8.12)。最后
+
+$$
+|q-\delta L/4|\le|q-4H|+4|H-\delta L/16|
+\le4H\sqrt\sigma+108\delta,
+$$
+
+再用 $16H/(\delta L)\le1+\vartheta$，即得 (8.14)。因为 $\mathcal E_D(a),\vartheta(a)\to0$，(8.15) 随即成立。∎
+

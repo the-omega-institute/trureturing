@@ -1,0 +1,44 @@
+**定理 14.3（每次删除必须属于同一个环）。** 对一个固定的正电导环 $c$，
+对每条边 $e_i$ 删边得到路径 $P^{(i)}$，
+令 $A_i,\lambda_{i,j},\gamma_{i,j},S_{i,3},K_i,v_i,\ell_i$
+为定理 14.1–14.2 在此路径及其原始端点差上的数据。
+则以下条件等价：
+环是双 Fiedler；某一次删除满足 (14.1) 且 $h=c_i$；
+每一次删除都满足 (14.1) 且 $h=c_i$。
+在等价条件成立时，所有 $\lambda_{i,3}$ 都等于同一个环 Fiedler 值 $\Lambda$，且
+
+$$
+L(c)|_H=A_i+c_i e_ie_i^{\mathsf T},\qquad
+L(c)^+|_H=K_i-\tau_i v_iv_i^{\mathsf T},\qquad
+R(c)=R(P^{(i)})-n\tau_i\|v_i\|^2,\quad
+\tau_i=\frac{c_i}{1+c_i\ell_i}. \tag{14.5}
+$$
+
+这里 $e_i$ 在矩阵式中表示原边的端点差向量。
+对每个删除路径还须同时保留约定 4.2 引用的完整路径定理：
+
+$$
+\lambda_{i,2}R(P^{(i)})\le A_n,
+$$
+
+等号当且仅当按该次路径次序
+$c_j=\kappa_i\sqrt{j(n-j)}/[\,2\sqrt{j(n-j)}
+-\sqrt{(j-1)(n-j+1)}-\sqrt{(j+1)(n-j-1)}\,]$
+对同一个 $\kappa_i>0$ 成立。
+每条路径的 $n-1$ 条保留边必须采用原环中相同的电导坐标；
+不同删除路径的共同边共有 $n-2$ 条，并在这些边上逐一相容。
+不能把分别取得的路径最优值同时赋给它们。
+
+证明。若环正谱在最低处二重为 $\Lambda$，
+秩一交错在每次删边给出
+$\lambda_{i,2}\le\Lambda\le\lambda_{i,3}\le\Lambda$，
+故 $\lambda_{i,3}=\Lambda$。
+于是定理 14.1 的必要条件对每条边成立，闭合电导恰为 $c_i$。
+反向只需任一次删除的充分条件；“每次”蕴含“某次”。
+(14.5) 是同一矩阵恢复及 (14.3)，所以它强制全部删除数据相容。
+最后直接应用
+[完整路径定理及全部等号类](https://github.com/the-omega-institute/trureturing/blob/48474969a064d134fa7bb9c78d5919922d48faf9/docs/develop/theory/FIEDLER_RESISTANCE_PATH_OPTIMIZER.md)
+定理 2.1、推论 3.1，其中该文的 $C_n$ 是这里的 $A_n$；
+原顶点质量仍全部为一，路径电阻仍为全部 $\binom n2$ 个点对之和。
+这使用整个路径定理，不重新推导其特例。∎
+

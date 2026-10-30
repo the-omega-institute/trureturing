@@ -1,0 +1,122 @@
+/- GID: D5/S3/Topology/TauCeti/Geometry/Convex/ConvexSpace/Topology
+   generality: G
+   mirror-B: none(waiver:upstream-support-documented-in-module)
+   mirror-E: none(waiver:abstract-support-without-experimental-evidence)
+   anchors: []
+   utility: none
+   digest: TauCeti port: Continuous affine maps and simplex homeomorphisms; sphere support. -/
+
+import Mathlib.Geometry.Convex.ConvexSpace.AffineMap
+import Mathlib.Geometry.Convex.ConvexSpace.Topology
+
+/-!
+This file is a source port adapted from TauCetiProject/TauCeti at immutable
+revision `5a01f5fe3621126cccf9ba22e700493cbc7b7156`, source path
+`TauCeti/Geometry/Convex/ConvexSpace/Topology.lean`. Changes: import paths are namespaced under
+`D5.S3.Topology.TauCeti` for this repository's pinned Mathlib. The original
+Tau Ceti copyright and Apache-2.0 terms are retained in
+`docs/reports/licenses/tauceti-sphere-port-LICENSE.txt`. Retire this port only
+when this repository's own pinned Mathlib provides an equivalent declaration
+at the full telescope and all live consumers compile with direct replacement.
+-/
+
+/-
+Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: The Tau Ceti contributors
+-/
+
+
+/-!
+# Maps and homeomorphisms between standard simplices
+
+An equivalence of vertex types induces `Equiv.stdSimplexHomeomorph`, preserving
+barycentric weights under reindexing. No finiteness assumption on the vertex types is needed.
+
+An affine map `Convexity.StdSimplex.affineMapMk v` out of a standard simplex is determined by the
+images `v m` of the vertices. When the target is a standard simplex on a finite type, its
+weights are the bilinear expressions `∑ m, w.weights m * (v m).weights n`, so the map is
+continuous; `Convexity.StdSimplex.continuousAffineMapMk` bundles it as a continuous map. This
+makes affine simplices, such as the simplices of a barycentric subdivision,
+available as continuous maps between topological standard simplices.
+
+A standard simplex on a finite type is Hausdorff (`Convexity.StdSimplex.t2Space`), so continuous
+surjections onto it from compact spaces are quotient maps.
+-/
+
+public section
+
+namespace Convexity.StdSimplex
+
+variable {R : Type*} [PartialOrder R] {M N : Type*}
+
+section Semiring
+
+variable [Semiring R] [IsStrictOrderedRing R]
+
+/-- The weights of the affine map with vertices `v`, evaluated at a point with finitely many
+vertices, are the corresponding convex combinations of the weights of the vertices. -/
+@[simp]
+lemma weights_affineMapMk_apply [Fintype M] (v : M → StdSimplex R N) (w : StdSimplex R M)
+    (n : N) :
+    (affineMapMk v w).weights n = ∑ m, w.weights m * (v m).weights n := by
+  simp [affineMapMk_apply, iConvexComb, Finsupp.sum_mapDomain_index, add_smul,
+    Finsupp.sum_fintype]
+
+end Semiring
+
+variable [Ring R] [IsStrictOrderedRing R] [TopologicalSpace R] [IsTopologicalRing R]
+
+/-- An equivalence of vertex types induces a homeomorphism of standard simplices,
+with inverse induced by the inverse equivalence. -/
+noncomputable def _root_.Equiv.stdSimplexHomeomorph (e : M ≃ N) :
+    StdSimplex R M ≃ₜ StdSimplex R N where
+  toFun := map e
+  invFun := map e.symm
+  left_inv x := by
+    rw [← map_comp, Equiv.symm_comp_self, map_id]
+  right_inv x := by
+    rw [← map_comp, Equiv.self_comp_symm, map_id]
+  continuous_toFun := continuous_map R e
+  continuous_invFun := continuous_map R e.symm
+
+/-- The simplex reindexing homeomorphism acts by Mathlib's standard simplex map. -/
+@[simp]
+lemma _root_.Equiv.coe_stdSimplexHomeomorph (e : M ≃ N) :
+    ⇑(e.stdSimplexHomeomorph (R := R)) = map e := (rfl)
+
+/-- Inverting the simplex reindexing homeomorphism inverts the vertex equivalence. -/
+@[simp]
+lemma _root_.Equiv.stdSimplexHomeomorph_symm (e : M ≃ N) :
+    (e.stdSimplexHomeomorph (R := R)).symm = e.symm.stdSimplexHomeomorph := (rfl)
+
+/-- An affine map from a standard simplex to a standard simplex on a finite type is
+continuous. -/
+lemma continuous_affineMapMk [Finite N] (v : M → StdSimplex R N) :
+    Continuous (affineMapMk (R := R) v) := by
+  rw [continuous_iff]
+  intro ι _ g
+  have := Fintype.ofFinite ι
+  have hcomp : ⇑(affineMapMk (R := R) v) ∘ map g = affineMapMk (v ∘ g) := by
+    funext w
+    simp [affineMapMk_apply]
+  rw [hcomp, (isEmbedding_toFun_comp_weights R N).continuous_iff, continuous_pi_iff]
+  intro n
+  simp only [Function.comp_def, weights_affineMapMk_apply]
+  fun_prop
+
+/-- The affine map with vertices `v` from a standard simplex to a standard simplex on a finite
+type, as a continuous map. -/
+noncomputable def continuousAffineMapMk [Finite N] (v : M → StdSimplex R N) :
+    C(StdSimplex R M, StdSimplex R N) :=
+  ⟨affineMapMk v, continuous_affineMapMk v⟩
+
+@[simp]
+lemma continuousAffineMapMk_apply [Finite N] (v : M → StdSimplex R N) (w : StdSimplex R M) :
+    continuousAffineMapMk v w = affineMapMk v w := (rfl)
+
+/-- A standard simplex on a finite type is Hausdorff, being embedded in `N → R` by its weights. -/
+instance t2Space [T2Space R] [Finite N] : T2Space (StdSimplex R N) :=
+  (isEmbedding_toFun_comp_weights R N).t2Space
+
+end Convexity.StdSimplex

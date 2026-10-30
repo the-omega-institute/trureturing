@@ -1,0 +1,16 @@
+#### 定义 7.3（有向闭路关系量）
+
+对单位向量历史 $\psi_i$，记 $K_{ij}=\langle\psi_i,\psi_j\rangle$、$p_{ij}=|K_{ij}|^2$。定义
+
+$$
+B(i_1,\ldots,i_m)=K_{i_1i_2}\cdots K_{i_mi_1}.
+$$
+
+三标签情形为 Bargmann 不变量。共同酉和单个标签的相位重选都保持 $B$。
+
+这类闭路量与几何相位的联系，以及无零锚定边时用三点量分解更长闭路，已有标准文献 [[9](#ref-bargmann)]。本节的内容是黄金原生历史中的精确实例。
+
+<a id="statement-7-4"></a>
+
+<a id="thm-goldbarg"></a>
+

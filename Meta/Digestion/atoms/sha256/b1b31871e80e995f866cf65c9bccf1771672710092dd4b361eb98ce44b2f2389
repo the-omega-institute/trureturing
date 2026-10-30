@@ -1,0 +1,81 @@
+**定理 6.1（实际正环严格超过完整路径常数）。** 对每个整数 $n\ge5$，
+存在全部 $n$ 条边电导均有限且严格为正的实际 $C_n$，满足
+$\lambda_2R>A_n$。因此 $B_n>A_n$。
+
+证明。仅调用约定 4.2 的完整路径最优点，取
+$c_i=s_i/d_i$、$1\le i<n$。
+令 $K=L_{P_n}^+|_H$、$T=\operatorname{tr}K$、
+$r_i=d_i/s_i$。被引定理给出
+
+$$
+\lambda_{\max}(K)=1,\qquad T=\frac{A_n}{n},\qquad
+u_j=\frac{s_j-s_{j-1}}{\sqrt{A_n}},\qquad K\nu=\nu,
+\quad\|\nu\|=1.
+$$
+
+此最大特征值单重：路径 Laplacian 的任一特征向量由其第一个坐标
+通过首行及后继行唯一递推确定，若第一个坐标为零便全为零；
+实对称性使几何重数与代数重数相同。
+
+令 $b=\delta_1-\delta_n$、$v=Kb$、$\ell=b^{\mathsf T}Kb=\sum_i r_i$。
+给缺失的实际边 $e_0$ 添加电导 $h>0$，在 $H$ 上直接相乘验证逆矩阵为
+
+$$
+K_h=(L_{P_n}|_H+hbb^{\mathsf T})^{-1}
+=K-\tau vv^{\mathsf T},\qquad
+\tau=\frac{h}{1+h\ell}>0.
+\tag{6.1}
+$$
+
+为计算严格增益，$\langle a_i,b\rangle=1$ 给出
+$v=\sum_i r_i a_i$，且
+
+$$
+\langle\nu,a_i\rangle=\frac{s_i}{\sqrt{A_n}},\qquad
+\langle\nu,v\rangle=\frac{\sum_i d_i}{\sqrt{A_n}}
+=\frac{2\sqrt{n-1}}{\sqrt{A_n}}.
+\tag{6.2}
+$$
+
+对 $1\le i\le j<n$，
+
+$$
+\langle a_i,a_j\rangle=\frac{i(n-j)}n
+\le\frac{s_is_j}{n},
+$$
+
+其中 $i<j$ 时严格，因为 $i(n-j)<j(n-i)$。
+所有 $r_i>0$，且有至少两个不同的路径边指标，所以
+
+$$
+\|v\|^2=\sum_{i,j}r_ir_j\langle a_i,a_j\rangle
+<\frac1n\left(\sum_i r_i s_i\right)^2
+=\frac{4(n-1)}n.
+\tag{6.3}
+$$
+
+使用有限维简单特征值的一阶展开，
+
+$$
+\lambda_{\max}(K-\tau vv^{\mathsf T})
+=1-\tau\langle\nu,v\rangle^2+O(\tau^2).
+\tag{6.4}
+$$
+
+这里的余项可直接由谱隙得到：在
+$\mathbb R\nu\oplus\nu^\perp$ 中，右下块的最大特征值与 $1$ 有严格间隙，
+交叉块为 $O(\tau)$。Rayleigh 下界取 $\nu$；上界对交叉项配方，
+便与左上标量相差 $O(\tau^2)$。
+于是 (5.5)、(6.1)–(6.4) 给出
+
+$$
+\begin{aligned}
+\lambda_2(L_{P_n}+hbb^{\mathsf T})R
+&=\frac{n(T-\tau\|v\|^2)}{\lambda_{\max}(K-\tau vv^{\mathsf T})}\\
+&=A_n+\tau\bigl(4(n-1)-n\|v\|^2\bigr)+O(\tau^2)>A_n
+\end{aligned}
+$$
+
+对所有充分小的 $h>0$ 成立。式 (6.3) 保证一阶系数严格为正，
+因此选择的是有限正电导，并非只在删边极限取值。∎
+
