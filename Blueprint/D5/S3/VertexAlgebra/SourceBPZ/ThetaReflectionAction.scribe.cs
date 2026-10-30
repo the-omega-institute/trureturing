@@ -11,7 +11,7 @@ internal sealed class ThetaReflectionActionDocument : IScribeDocumentDefinition
         H("Theta Reflection Action"),
         Blocks(
             Paragraph(Text(
-                "D is the existing arbitrary integral even lattice datum. Carrier D is the original finite-charge oscillator carrier, theta D is the literal charge-and-oscillator reflection, sourcePairing D is the original complex bilinear form, and grade D h intersect fixedSpace D is the existing finite-energy theta-fixed submodule. ReflectionGroup is ZMod 2, so its nontrivial element is represented by -1 = 1.")),
+                "D is the existing arbitrary integral even lattice datum. Carrier D is the original finite-charge oscillator carrier, theta D is the literal charge-and-oscillator reflection, sourcePairing D is the original complex bilinear form, and grade D h intersect fixedSpace D is the existing finite-energy theta-fixed submodule. ReflectionGroup is the additive group ZMod 2. thetaRepHom packages thetaRep as an additive homomorphism into the multiplicative monoid of linear equivalences, so its nonzero element is the reflection.")),
             Law("thetaRep_zero", "Identity element acts trivially",
                 "For every D, thetaRep D 0 is the identity linear equivalence of Carrier D."),
             Law("thetaRep_one", "Generator is the lattice theta involution",
