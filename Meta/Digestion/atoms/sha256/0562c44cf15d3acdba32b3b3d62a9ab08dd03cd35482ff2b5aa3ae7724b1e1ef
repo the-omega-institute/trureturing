@@ -1,0 +1,70 @@
+**定理 66.1（互异实际来源的逐字无交叉与信号所在扇区）。** 固定两两不同的
+$s_0,s_1,s_2\in T_D$。称块字 $(0,y,0^{b_D})$ 为场字；
+称 $(1,0^{2N_D},c_D(t))$ 为标签字。对这三棵树的任一有非零质量终端字，
+每块必为这两类之一；标签可以来自任一循环支，不预先指定归属于哪一输入块。
+若至少一块是标签字，则逐字严格有
+
+$$
+ \overline{A_{\mathbf s}^X(\mathbf x)}A_{\mathbf s,\epsilon}^X(\mathbf x)=0,
+ \qquad
+ p_{\mathbf s,\epsilon,o}^X(z,\mathbf x)
+   =\frac{|A_{\mathbf s}^X(\mathbf x)|^2+|A_{\mathbf s,\epsilon}^X(\mathbf x)|^2}{4}.
+\tag{66.1}
+$$
+
+因此这些字的两种比较位结果等概率，逐字不依赖 $o$。
+对任意指定标签位置集 $J\subseteq\{0,1,2\}$，$j=|J|\ge1$，保留恰为这些位置的标签字，
+则两比较位总质量及各自质量为
+
+$$
+ \Pr\{J\}=a^{3-j}r^j,\qquad
+ \Pr\{z,J\}=\tfrac12a^{3-j}r^j.
+\tag{66.2}
+$$
+
+恰有 $j$ 个标签的总质量是 $\binom3j a^{3-j}r^j$，全部含标签字总质量为 $1-a^3$。
+
+全场字取 $x_j=(0,y_j,0^{b_D})$。其逐字律与两个比较位总质量为
+
+$$
+\begin{aligned}
+ p_{\mathbf s,\epsilon,o}^X(z,\mathbf y;\mathrm F)
+ &=\frac{a^3}{4}\left|\prod_jF_{s_j}^X(y_j)
+        +(-1)^ze^{i\phi_o}\prod_jF_{s_{j+\epsilon}}^X(y_j)\right|^2,\\
+ \Pr\{z,\mathrm F\}
+ &=\frac{a^3+(-1)^z\operatorname{Re}(e^{i\phi_o}\mathcal B_X^\epsilon)}2,
+ \qquad \Pr\{\mathrm F\}=a^3,\\
+ \mathcal B_X^+&=\mathcal K_X(s_0,s_1)\mathcal K_X(s_1,s_2)\mathcal K_X(s_2,s_0),
+ \qquad \mathcal B_X^-=\overline{\mathcal B_X^+}.
+\end{aligned}
+\tag{66.3}
+$$
+
+故不丢弃任何记录时，比较位奇偶均值是
+$\operatorname{Re}(e^{i\phi_o}\mathcal B_X^\epsilon)$；全场条件均值才是它的 $a^{-3}$ 倍。
+$(66.1)$–$(66.3)$ 可在任一实际记录事件中按 (65.4) 加权，不要求选择者独立。
+
+证明。若两振幅同时非零，某个标签位置 $j$ 的完整节点字既为 $c_D(s_j)$，
+又为 $c_D(s_{j+\epsilon})$。定义 61.1 的单射性迫使这两个来源相等，与两两不同矛盾。
+这证明逐字结论，不仅是求和后的相位消失；即使两个来源场相同，完整标签仍阻断该交叉项。
+在单个乘积分支中，每个场扇区的范数平方为 $a$，每个标签扇区为 $r$；
+指定 $J$ 的质量为 $a^{3-j}r^j$。循环后的分支只重排来源，具有同一扇区质量。
+代入 (66.1) 给每个 $z$ 的一半质量，求和给所有标签层。
+
+全场支中的两振幅为 (66.3) 第一式括号内两项，
+其交叉项对全部 $\mathbf y$ 求和是
+
+$$
+ a^3\prod_j\sum_{y_j}\overline{F_{s_j}^X(y_j)}F_{s_{j+\epsilon}}^X(y_j)
+ =a^3\prod_j\langle w_{s_j}^X,w_{s_{j+\epsilon}}^X\rangle
+ =\mathcal B_X^\epsilon.
+\tag{66.4}
+$$
+
+最后一步恰用三个来源互异，故每个完整源内积的 $r\delta$ 项为零。
+两对角和各为 $a^3$，得到 (66.3)。它们与标签质量之和为一，
+比较位均值中的标签贡献逐字为零。所有条件化都只用于解释已有正质量 $a^3$；
+实际联合律仍为未条件化的 (65.4)，没有将该信号放大当成原始信号。
+Bargmann／cycle-test 的边缘恒等式在此仅作为 (65.3) 求和的已知中间机制；
+新增关系是本实际场—忠实标签实现的逐字零交叉、完整层质量及其记录测度接续。∎
+

@@ -1,0 +1,81 @@
+### 定理 13.6（固定扫描的全误差阈值及闭端点）
+
+固定 $R\in\mathcal M_k$，扫描数据为 $d=(t,s_0,\ldots,s_{k-1})$，并令
+
+$$
+ g(R)=\max\{\min_js_j-t,\quad t-\max_js_j,\quad0\}.
+\tag{13.20}
+$$
+
+对任意 $\varepsilon>0$，存在一个在完整 $\mathcal M_k$ 上 $\varepsilon$-可靠、
+执行完整固定扫描 $L_0N^{k-1}$ 后即作断言的规则，使 $R$ 的全部允许报告均输出
+$2$，当且仅当
+
+$$
+ g(R)>4\varepsilon,
+ \qquad\text{或}\qquad
+ g(R)=4\varepsilon>0\text{ 且 }s_0,\ldots,s_{k-1}\text{ 不全相等}.
+\tag{13.21}
+$$
+
+这是该固定扫描的阈值，不是任意自适应策略的固定 $\varepsilon$ 最优判据。
+
+**证明。** 命题 9.6 给出的严格正秩一扫描像为
+
+$$
+ \mathcal V=\{(T,U):U_j>0,\quad
+      T=\sum_jp_jU_j,\quad p_j>0,\quad\sum_jp_j=1\}.
+\tag{13.22}
+$$
+
+在固定扫描上，$R$ 的每份允许报告都能排除秩一，当且仅当不存在
+$(T,U)\in\mathcal V$ 满足 $\|d-(T,U)\|_\infty\le2\varepsilon$。
+事实上，若存在，逐坐标中点报告距两来源均至多 $\varepsilon$，任何可靠规则都
+不能在该报告输出 $2$；反之，没有这样的秩一数据时，规则 (13.5) 在每份允许报告
+上均无解，因而可靠成功。这只用了完整闭误差立方体的共同报告性质，不假设两个
+来源共享同一误差向量或存在随机独立误差。
+
+现在直接计算本模型的距离。若 $g=0$，$\min_js_j\le t\le\max_js_j$，
+故 $t$ 为列和的非负凸组合。引理 13.2 在 $q=0$ 的情形说明
+$d\in\overline{\mathcal V}$，所以到 $\mathcal V$ 的距离为零；任何
+$\varepsilon>0$ 都有距 $d$ 小于 $2\varepsilon$ 的实际秩一数据。
+
+若 $t<a=\min_js_j$，则 $g=a-t>0$。设某个 $(T,U)\in\mathcal V$ 距 $d$
+至多 $\rho$。由 $T\ge\min_jU_j\ge a-\rho$ 和 $T\le t+\rho$，有
+$\rho\ge g/2$。置 $d_0=g/2$ 及 $v_j=s_j-d_0>0$，则
+$\min_jv_j=t+d_0$。选达到最小值的 $j_0$，令
+$p^{(\delta)}=(1-\delta)e_{j_0}+\delta\mathbf1/k>0$。
+严格正秩一来源 $p^{(\delta)}v^{\mathsf T}$ 的列和为 $v$、迹趋于
+$t+d_0$，故其扫描数据到 $d$ 的距离趋于 $d_0$。
+
+若 $t>A=\max_js_j$，对偶地由
+$T\le\max_jU_j\le A+\rho$ 和 $T\ge t-\rho$ 得
+$\rho\ge(t-A)/2=g/2$。取 $v_j=s_j+g/2>0$，权重集中逼近一个最大值指标，
+同样有严格正秩一来源的扫描距离趋于 $g/2$。因此总有
+
+$$
+ \inf_{(T,U)\in\mathcal V}\|d-(T,U)\|_\infty=g/2.
+\tag{13.23}
+$$
+
+还须判断这个下确界何时达到。$g>0$ 且 $t<a$ 时，若距离恰为 $d_0$，则
+
+$$
+ U_j\ge a-d_0=t+d_0,\qquad
+ T\le t+d_0,\qquad T=\sum_jp_jU_j,
+\tag{13.24}
+$$
+
+其中所有 $p_j>0$。所以全部 $U_j=T=t+d_0$；再由
+$U_j\ge s_j-d_0$ 得全部 $s_j\le t+2d_0=a$，故全部 $s_j=a$。
+反过来，若全部 $s_j=a$，取所有 $U_j=T=(t+a)/2>0$ 就由任意严格正概率权重
+实际达到距离 $d_0$。$t>A$ 时同理：必须全部 $U_j=T=t-d_0$，进而全部
+$s_j=A$；全相等时也由该共同中点实际达到。
+所以在 $g>0$ 的情形，最短距离由合法严格正秩一来源达到，当且仅当列和全相等。
+
+若 $g>4\varepsilon$，(13.23) 排除所有距离至多 $2\varepsilon$ 的秩一数据；
+若 $g<4\varepsilon$，下确界性质提供距离小于 $2\varepsilon$ 的秩一数据。
+等号时则恰由上述达到性决定是否存在共同报告，得到 (13.21)。
+特别地，$g=0$ 的精确边界证书不能由本扫描获得任何正的全误差容限；
+$\varepsilon=0$ 的精确条件仍是命题 9.6，并不由 (13.21) 代替。∎
+
