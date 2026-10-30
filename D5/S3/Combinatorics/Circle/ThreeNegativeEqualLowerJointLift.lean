@@ -8,6 +8,8 @@
 import Batteries.Tactic.OpenPrivate
 import D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoJointLift
 
+/-! Two exhaustive dyadic physical-mask constructions for the equal lower gaps. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -15,19 +17,19 @@ namespace D5.S3.Combinatorics.Circle.ThreeNegativeEqualLowerJointLift
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open ThreeNegativeMinimumTwoJointLift
 
-open private Mask Mask.u Mask.v Mask.w Negative Negative.alpha Negative.beta Negative.gamma
-  Order Ear Ear.p Ear.q Ear.t Plan Plan.p Plan.t Plan.order Plan.ear
+open private Mask Mask.mk Mask.u Mask.v Mask.w Negative Negative.alpha Negative.beta Negative.gamma
+  Order Order.bga Order.agb Ear Ear.p Ear.q Ear.t Plan Plan.p Plan.t Plan.order Plan.ear
   Order.first Order.middle Order.last atNegative oldMass newMass cap oldHeight newHeight
   makePlan Bounded Separate Seams Certificate disjoint_low_bits
   from D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoMasks
-open private ThreeNegativeMinimumTwoJointLift.realize
+open private realize
   from D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoJointLift
 
 private theorem near_certificate (m h : ℤ) (hm : 4 ≤ m) (hh : 2 ≤ h) (hhm : h ≤ m) :
     Certificate (2*h*m) (2*m) (2*m)
-      (makePlan 0 .bga .q ⟨0,m-1,h-1⟩ ⟨m-1,0,0⟩) := by
+      (makePlan 0 Order.bga Ear.q (Mask.mk 0 (m-1) (h-1)) (Mask.mk (m-1) 0 0)) := by
   have hs : 2*m/2=m := by omega
-  have hr : 2*h*m/2=h*m := by omega
+  have hr : 2*h*m/2=h*m := by rw [mul_assoc]; omega
   have hm4 : 0 ≤ m-4 := by omega
   have hh2 : 0 ≤ h-2 := by omega
   have hmh : 0 ≤ m-h := by omega
@@ -42,7 +44,7 @@ private theorem near_certificate (m h : ℤ) (hm : 4 ≤ m) (hh : 2 ≤ h) (hhm 
   · dsimp [Seams,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
       Order.first,Order.middle,Order.last,atNegative]
     simp only [hs,hr]
-    norm_num
+    simp only [reduceCtorEq, ite_false, add_zero, zero_mul, mul_zero, zero_add, mul_one, one_mul]
     refine ⟨?_,?_,?_,?_,?_,?_,?_,?_⟩
     · apply sub_nonneg.mp
       convert (show (0 : ℤ) ≤ 2*(m-4)*(h-2)+2*(m-4)+9*(h-2)+9 by positivity) using 1 <;> ring
@@ -66,17 +68,18 @@ private theorem far_certificate (e d : ℕ) (he : 2 ≤ e)
     let m : ℤ := 2^e
     let H : ℤ := 2^d
     Certificate (4*H*m) (2*m) (2*m)
-      (makePlan 1 .agb .q ⟨1,m-2,H-1⟩ ⟨m-2,1,H⟩) := by
+      (makePlan 1 Order.agb Ear.q (Mask.mk 1 (m-2) (H-1)) (Mask.mk (m-2) 1 H)) := by
   dsimp only
   let m : ℤ := 2^e
   let H : ℤ := 2^d
   change Certificate (4*H*m) (2*m) (2*m)
-    (makePlan 1 .agb .q ⟨1,m-2,H-1⟩ ⟨m-2,1,H⟩)
+    (makePlan 1 Order.agb Ear.q (Mask.mk 1 (m-2) (H-1)) (Mask.mk (m-2) 1 H))
   have hm : 4 ≤ m := by
     simpa [m] using pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) he
   have hH : m ≤ H := hmd
   have hs : 2*m/2=m := by omega
-  have hr : 4*H*m/2=2*H*m := by omega
+  have hr : 4*H*m/2=2*H*m := by
+    rw [show 4*H*m=2*(2*H*m) by ring]; omega
   have hm4 : 0 ≤ m-4 := by omega
   have hHm : 0 ≤ H-m := by omega
   have hbits : Disjoint (1 : ℕ).bitIndices.toFinset (m-2).toNat.bitIndices.toFinset := by
@@ -112,7 +115,7 @@ private theorem far_certificate (e d : ℕ) (he : 2 ≤ e)
   · dsimp [Seams,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
       Order.first,Order.middle,Order.last,atNegative]
     simp only [hs,hr]
-    norm_num
+    simp only [reduceCtorEq, ite_false, add_zero, zero_mul, mul_zero, zero_add, mul_one, one_mul]
     refine ⟨?_,?_,?_,?_,?_,?_,?_,?_⟩
     · apply sub_nonneg.mp
       convert (show (0 : ℤ) ≤ 4*(m-4)^2+6*(m-4)*(H-m)+29*(m-4)+25*(H-m)+51 by positivity) using 1 <;> ring
@@ -133,7 +136,7 @@ private theorem far_certificate (e d : ℕ) (he : 2 ≤ e)
 
 /-- Every equal lower pair admits one complete physical order and its literal ear. -/
 theorem actualSource_three_negative_equal_lower_joint_lift (a b c : ℕ)
-    (hb : 2 ≤ b) (hbc : b=c) (hba : b<a) :
+    (hb : 2 ≤ b) (hbc : b = c) (hba : b < a) :
     ∃ sigma : List (Fin (a+b+c)), ∃ j : ℕ, j≤a+b+c ∧
       OriginalOrder (a+b+c) (1+2^a+2^(a+b)) sigma ∧
       OriginalOrder (a+b+c+1) (2*(1+2^a+2^(a+b))) (earWord (a+b+c) sigma j) := by
@@ -160,7 +163,8 @@ theorem actualSource_three_negative_equal_lower_joint_lift (a b c : ℕ)
       calc
         (2 : ℤ)^a=2^((a-b)+(b-1)+1) := by congr 1; omega
         _ = 2*2^(a-b)*2^(b-1) := by rw [pow_succ,pow_add]; ring
-    apply realize a b b (by omega) hb hb (makePlan 0 .bga .q ⟨0,m-1,h-1⟩ ⟨m-1,0,0⟩)
+    apply realize a b b (by omega) hb hb
+      (makePlan 0 Order.bga Ear.q (Mask.mk 0 (m-1) (h-1)) (Mask.mk (m-1) 0 0))
     rw [hr,hs]
     exact near_certificate m h hm hh hhm
   · let H : ℤ := 2^(a-b-1)
@@ -172,7 +176,8 @@ theorem actualSource_three_negative_equal_lower_joint_lift (a b c : ℕ)
       calc
         (2 : ℤ)^a=2^((a-b-1)+(b-1)+2) := by congr 1; omega
         _ = 4*2^(a-b-1)*2^(b-1) := by rw [pow_add,pow_add]; norm_num; ring
-    apply realize a b b (by omega) hb hb (makePlan 1 .agb .q ⟨1,m-2,H-1⟩ ⟨m-2,1,H⟩)
+    apply realize a b b (by omega) hb hb
+      (makePlan 1 Order.agb Ear.q (Mask.mk 1 (m-2) (H-1)) (Mask.mk (m-2) 1 H))
     rw [hr,hs]
     exact far_certificate (b-1) (a-b-1) (by omega) hmd
 
