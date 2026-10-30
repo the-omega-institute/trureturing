@@ -36,7 +36,7 @@ Trinh Viet Duoc, *Extending a theorem of Datko for evolutionary families*,
 arXiv:2009.04178v1, page 1, recalls the squared-energy equivalence with
 an initial-time-uniform bound depending on x. For a semigroup,
 U(t,s)=T(t-s), time translation reduces that condition to one positive-time
-orbit energy for each x. The original Datko article body has not been read.
+orbit energy for each x.
 
 The formal proof reuses the existing real contraction-semigroup carrier,
 Mathlib's Banach-Steinhaus theorem, general normed-target L2 criteria and

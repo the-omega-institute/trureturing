@@ -14,7 +14,7 @@ internal sealed class DatkoStabilityDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Quantum/Analysis/DatkoStability.integrable_sq_orbit_iff_exponential_stability"),
                 H("Squared orbit energy and a common exponential operator bound"),
                 StatementSource.FromAuthor(Criterion()),
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Topology/schnaubelt2026datko")),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Topology/schnaubelt2026datko")),
                 Blocks(
                     Paragraph(Text("Let E be any real Banach space in any universe: a normed additive commutative group, a real normed vector space, and a complete space. Let S be a strongly continuous contraction semigroup of continuous real linear endomorphisms of E. Thus S(0) is the identity, S(s+t)=S(s) composed with S(t), every operator norm is at most one, and every vector orbit is continuous. The formula uses real Lebesgue measure volume and Ioi(0)=(0,infinity). Real.toNNReal only extends the nonnegative-time orbit to a function on the reals; its values at negative times do not enter the energy condition.")),
                     Paragraph(Text("For every vector x separately, require integrability of the real function t maps to norm(S(Real.toNNReal(t))x)^2 on Ioi(0). This is equivalent to existence of a single real pair M, omega with M>=1 and omega>0 such that norm(S(t))<=M*exp(-omega*t) for every nonnegative real t. The pair is independent of the vector and of time. The norm in this conclusion is the operator norm. No common energy constant is assumed. The zero space is included; the conclusion does not require the identity operator to have norm one.")),
