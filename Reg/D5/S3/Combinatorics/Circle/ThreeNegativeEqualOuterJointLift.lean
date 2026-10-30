@@ -32,9 +32,10 @@ abbrev signature : Signature where
   finiteAnchor := inferInstance
 
 private def orderPredicate (side : Bool) (p : Params) (seed : ℕ) : Prop :=
-  if side then OriginalOrder (p.1 + p.2.1 + p.1 + 1) seed
-    (earWord (p.1 + p.2.1 + p.1) p.2.2 (p.1 + 1))
-  else OriginalOrder (p.1 + p.2.1 + p.1) seed p.2.2
+  match side with
+  | false => OriginalOrder (p.1 + p.2.1 + p.1) seed p.2.2
+  | true => OriginalOrder (p.1 + p.2.1 + p.1 + 1) seed
+      (earWord (p.1 + p.2.1 + p.1) p.2.2 (p.1 + 1))
 
 def actual : Realization signature :=
   realize signature (fun side p seed =>
