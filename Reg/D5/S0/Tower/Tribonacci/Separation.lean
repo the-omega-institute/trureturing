@@ -3,6 +3,8 @@ import Reg.Support.DependentFamily
 import D5.S0.Tower.Tribonacci.Separation
 import D5.S3.Constants.Irrationality.TribonacciTraceLattice
 
+/-! Coordinate observations on finite Tribonacci name layers. -/
+
 set_option autoImplicit false
 noncomputable section
 
@@ -35,7 +37,7 @@ def erasedAt (i : Fin 2) : Realization signature :=
     (fun j p u => if j = i then 0 else conjugateCoordinate p.1 u)
     (fun e => nomatch e)
 
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ {z : ℂ}, z ∈ tribonacciCharacteristicPolynomial.roots →
     z ≠ (tribonacciConstant : ℂ) → ∀ (Q : ℕ) (u v : TribonacciName Q), u ≠ v →
@@ -70,14 +72,16 @@ private theorem positive_scale :
     (pow_pos (norm_pos_iff.mpr hz) 1)
 
 theorem erased_fails (i : Fin 2) : ¬ arena.Law (erasedAt i) := by
+  have hne : oneName ≠ zeroName := fun h =>
+    Bool.true_ne_false (congrArg (fun u : TribonacciName 1 => u.1 0) h)
   intro h
   fin_cases i
-  · have hb := h root_mem tribonacciSecondaryRoot.2.2.1 1 oneName zeroName (by decide)
+  · have hb := h root_mem tribonacciSecondaryRoot.2.2.1 1 oneName zeroName hne
     have hn : ¬ Real.sqrt (tribonacciConstant - 1) * ‖tribonacciSecondaryRoot.1‖ ^ 1 ≤ 0 :=
       not_le.mpr positive_scale
     apply hn
     simpa [erasedAt, realize, conjugateCoordinate, oneName, zeroName] using hb
-  · have hb := h root_mem tribonacciSecondaryRoot.2.2.1 1 zeroName oneName (by decide)
+  · have hb := h root_mem tribonacciSecondaryRoot.2.2.1 1 zeroName oneName (Ne.symm hne)
     have hn : ¬ Real.sqrt (tribonacciConstant - 1) * ‖tribonacciSecondaryRoot.1‖ ^ 1 ≤ 0 :=
       not_le.mpr positive_scale
     apply hn
@@ -93,13 +97,14 @@ def family : Registration arena sourceScope where
       refine ⟨erasedAt i, ?_, rfl, erased_fails i⟩
       intro j hj
       funext p u
-      simp [actual, erasedAt, realize, hj]
+      change conjugateCoordinate p.1 u = if j = i then 0 else conjugateCoordinate p.1 u
+      rw [if_neg hj]
     · intro e
       exact nomatch e
   dependence := by
     intro i
     refine ⟨⟨tribonacciSecondaryRoot.1, 1⟩, zeroName, oneName, ?_⟩
-    simp [actual, realize, conjugateCoordinate, zeroName, oneName]
+    norm_num [actual, realize, conjugateCoordinate, zeroName, oneName]
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}

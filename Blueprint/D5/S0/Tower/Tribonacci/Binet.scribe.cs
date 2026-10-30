@@ -97,7 +97,7 @@ internal sealed class TribonacciBinetDocument : IScribeDocumentDefinition
                         + "of a secondary root and its conjugate, their product, and "
                         + "beta times the squared root norm equal to one. These identities "
                         + "are consumed by the resultant separation and positive-area "
-                        + "packing on the live path to nonempty Rauzy interior."))),
+                        + "packing in the proof of nonempty Rauzy interior."))),
                     DescribeRole.Theorem)),
             [
                 DocumentEdge.Dependency.Create(

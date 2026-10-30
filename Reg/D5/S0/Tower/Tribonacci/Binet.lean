@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 import Reg.D5.S3.Geometry.Rauzy.Interior
 
+/-! Norm observations of the two secondary Tribonacci roots. -/
+
 set_option autoImplicit false
 noncomputable section
 
@@ -29,7 +31,7 @@ def actual : Realization signature :=
 def erased : Realization signature :=
   realize signature (fun _ _ _ => 0) (fun e => nomatch e)
 
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ {z : ℂ}, z ∈ tribonacciCharacteristicPolynomial.roots →
     z ≠ (tribonacciConstant : ℂ) →
@@ -94,5 +96,6 @@ def registration :
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
+  options := #[]
 
 end Reg.D5.S0.Tower.Tribonacci.Binet

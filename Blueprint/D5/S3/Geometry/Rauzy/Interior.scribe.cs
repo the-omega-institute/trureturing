@@ -40,7 +40,7 @@ internal sealed class SeparatedCylinderInteriorDocument : IScribeDocumentDefinit
                         Paragraph(Text(
                             "Choose one density point. The relevant normalized centers lie "
                             + "in a fixed compact disk and are c-separated. A finite c/3-net "
-                            + "assigns every center to a unique occupied slot; unused slots "
+                            + "represents every center, with at most one center per slot; unused slots "
                             + "contain zero. Compactness of the finite product gives one "
                             + "subsequence on which all slots converge simultaneously.")),
                         Paragraph(Text(

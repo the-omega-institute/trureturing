@@ -19,7 +19,7 @@ The exact application target is
   theorem rauzyFractal_interior_nonempty {z : Complex}
     (hz : z ∈ Binet.tribonacciCharacteristicPolynomial.roots)
     (hz_ne : z ≠ (Values.tribonacciConstant : Complex)) :
-    (Set.interior (RauzyFractal.rauzyFractal z)).Nonempty
+    (interior (RauzyFractal.rauzyFractal z)).Nonempty
 
 Here K is exactly the closure of all finite no-111 Boolean digit sums at
 exponents starting with zero. Both non-Perron roots are included; the final

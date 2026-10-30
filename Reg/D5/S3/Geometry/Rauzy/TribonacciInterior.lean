@@ -1,5 +1,7 @@
 import Reg.D5.S3.Geometry.Rauzy.Interior
 
+/-! Interior observations for the exact Tribonacci Rauzy closure. -/
+
 set_option autoImplicit false
 noncomputable section
 
@@ -12,7 +14,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open LeanInformationAudit Set
 open Reg.D5.S3.Geometry.Rauzy.Interior
 
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ {z : ℂ}, z ∈ Binet.tribonacciCharacteristicPolynomial.roots →
     z ≠ (Values.tribonacciConstant : ℂ) →
@@ -74,5 +76,6 @@ def registration :
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
+  options := #[]
 
 end Reg.D5.S3.Geometry.Rauzy.TribonacciInterior

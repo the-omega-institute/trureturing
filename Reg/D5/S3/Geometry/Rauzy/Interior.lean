@@ -3,6 +3,8 @@ import Reg.Support.DependentFamily
 import D5.S3.Geometry.Rauzy.TribonacciInterior
 import D5.S3.Constants.Irrationality.TribonacciTraceLattice
 
+/-! Interior observations for compact separated-cylinder systems. -/
+
 set_option autoImplicit false
 noncomputable section
 
@@ -42,7 +44,7 @@ theorem root_mem : tribonacciSecondaryRoot.1 ∈ tribonacciCharacteristicPolynom
 def system : SeparatedCylinderSystem :=
   tribonacciCylinderSystem root_mem tribonacciSecondaryRoot.2.2.1
 
-def arena : Arena where
+abbrev arena : Arena where
   signature := signature
   Law R := ∀ S : SeparatedCylinderSystem, (R.readout () () S.carrier).Nonempty
 
@@ -103,5 +105,6 @@ def registration :
       booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
+  options := #[]
 
 end Reg.D5.S3.Geometry.Rauzy.Interior

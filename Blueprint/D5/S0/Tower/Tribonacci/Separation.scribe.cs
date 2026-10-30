@@ -42,8 +42,7 @@ internal sealed class TribonacciSeparationDocument : IScribeDocumentDefinition
                         Paragraph(Text(
                             "This is an infinite-family arithmetic estimate for every length "
                             + "and every admissible pair. It is consumed by the positive-area "
-                            + "packing and synchronized-cluster proof of Tribonacci interior; "
-                            + "it is not a standalone admission endpoint."))),
+                            + "packing and synchronized-cluster proof of Tribonacci interior."))),
                     DescribeRole.Theorem)),
             [
                 DocumentEdge.Dependency.Create(GidRef.Create("D5/S0/Tower/Tribonacci/ModelSet")),
