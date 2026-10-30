@@ -22,6 +22,69 @@ internal sealed class FiveModeMixedCoordinatesDocument : IScribeDocumentDefiniti
                     + "chi = log(p_O p_J / (p_L p_R)), and the base loop is "
                     + "d = (1, -1, 0, -1, 1). The Fisher inner product at p is the sum over "
                     + "modes of u_s v_s / p_s.")),
+            Paragraph(Text("Arbitrary responses on the closed five-mode simplex.")),
+            Paragraph(Text(
+                "The affine coordinates also describe every nonnegative real law of total one, "
+                    + "including zero cells. Use Fin 5 order (0,2,3,5,25) = (O,L,T,R,J), "
+                    + "and fix one arbitrary real response f on these same five modes. Source "
+                    + "occupancy coordinates are (x,y,z); printed sites are (x,z,y), and native "
+                    + "window input is (y,z,x). Thus X=p2+p25, Y=p5+p25, Z=p3. Put r=1-Z, "
+                    + "kappa=p25, Delta=p0*p25-p2*p5, and Jf=f25-f2-f5+f0. Here r denotes "
+                    + "the whole base mass. It differs from the auxiliary 1-X-Y-Z used in "
+                    + "the positive-chart root calculation below.")),
+            Paragraph(Text(
+                "Normalization gives p=(r-X-Y+kappa,X-kappa,Z,Y-kappa,kappa), with "
+                    + "0<=X,Y<=r and r>=0. This is the unrestricted affine probability "
+                    + "formula already defined in FiniteRectangleTransport.probability; "
+                    + "FiveModeMixedCoordinates.visible is exactly (X,Y,Z). The two-by-two "
+                    + "matrix with rows (p0,p5) and (p2,p25) has determinant Delta, and expanding "
+                    + "it gives Delta=r*kappa-X*Y. Finite-sum linearity therefore gives "
+                    + "E_p f=f0+(f2-f0)*X+(f5-f0)*Y+(f3-f0)*Z+Jf*kappa. These calculations "
+                    + "use normalization alone and retain the closed simplex, whereas the "
+                    + "logarithmic chart theorem below has its stated positive domain.")),
+            Paragraph(Text(
+                "For r>0 select the conditional-base product completion p* in Fin 5 order as "
+                    + "((r-X)*(r-Y)/r,X*(r-Y)/r,Z,Y*(r-X)/r,X*Y/r). Each entry is "
+                    + "nonnegative, their sum is one, and visible(p*)=visible(p). Its "
+                    + "conditional endpoint marginals given z=0 are X/r and Y/r, and the four "
+                    + "conditional cells are their Bernoulli products. Conditional independence "
+                    + "here concerns this positive-mass conditioning event. For the actual "
+                    + "law it holds exactly when Delta=0, equivalently kappa=X*Y/r and p=p*. "
+                    + "The selection of p* adds no independence hypothesis to p.")),
+            Paragraph(Text(
+                "Write fhat=E_(p*) f for r>0. Substituting the selected joint mass into the "
+                    + "same affine response formula gives E_p f-fhat=Jf*(kappa-X*Y/r)="
+                    + "Jf*Delta/r. Consequently E_p f=fhat if and only if Jf*Delta=0, "
+                    + "equivalently Jf=0 or Delta=0. The first alternative permits any "
+                    + "feasible Delta; the second permits any real response f. This equality "
+                    + "compares the one actual law and the one selected completion for that "
+                    + "same law's simultaneous projections. It supplies no whole-fiber "
+                    + "constancy claim.")),
+            Paragraph(Text(
+                "The pinned scalar inequality four_mul_le_sq_add applied to each pair of "
+                    + "opposite base cells gives 4*p0*p25<=(p0+p25)^2<=r^2 and "
+                    + "4*p2*p5<=(p2+p5)^2<=r^2. Nonnegativity then yields "
+                    + "absolute(Delta)<=r^2/4. Using abs_mul and abs_div in the residual "
+                    + "identity gives absolute(E_p f-fhat)<=absolute(Jf)*r/4. For every "
+                    + "0<=Z<=1 the two laws (r/2,0,Z,0,r/2) and (0,r/2,Z,r/2,0) "
+                    + "have total one and the same X=Y=r/2. Their determinants are "
+                    + "respectively r^2/4 and -r^2/4. For every fixed f and r>0 both "
+                    + "therefore attain the error bound, including its zero value when Jf=0. "
+                    + "These are probability-table realizations.")),
+            Paragraph(Text(
+                "At r=0, nonnegativity and normalization force p3=1 and all four base "
+                    + "cells to vanish. Thus X=Y=kappa=Delta=0 and E_p f=f3; define fhat=f3 "
+                    + "there without conditional division. The apex convention is continuous: "
+                    + "for any fixed f put C=sum_s absolute(f_s-f3). Every nonnegative "
+                    + "normalized law q with q3=Z satisfies absolute(E_q f-f3)<=r*C, "
+                    + "by finite-sum triangle inequality and q_s<=r off the apex. Apply this "
+                    + "to p and p*, and use the squeeze theorem as Z tends to one. This "
+                    + "includes endpoint marginals and every zero-cell face. All formulas "
+                    + "concern one real law and one response; acquisition, physical resources, "
+                    + "and the separate whole-fiber and guarded-continuation questions require "
+                    + "their own source contracts. The application reuses affine coordinates, "
+                    + "finite-sum algebra, Matrix.det_fin_two, the scalar product inequality "
+                    + "and the squeeze theorem, with no additional mathematical declaration.")),
             Paragraph(Text(
                 "Fix the correspondence (O,L,T,R,J) = (2,3,5,7,83). For a positive "
                     + "integer n, give each sampled prime the weight 1 plus its exponent "
