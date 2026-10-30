@@ -1258,7 +1258,8 @@ $1+z/2-z^2/8\le\sqrt{1+z}\le1+z/2$ for $0\le z\le1$;
 putting $z=t^2$ and multiplying by $2$ proves (9.4), and summing proves
 (9.5). Every quantity in (9.3) uses the degrees of this same graph. ∎
 
-**Lemma 9.3 (Integer balanced realization with one connecting source).** Put
+**Lemma 9.3 (Integer balanced realization with one connecting source).** Fix
+$0<L\le R<\infty$ and put
 
 $$
 J=\left\lceil\frac{R^2+4}{2}\right\rceil,\qquad
@@ -1267,13 +1268,13 @@ K_0=1+R+J+v_0^{-1}.
 \tag{9.6}
 $$
 
-There is a constant $c_0=2^{12}K_0^6$, depending only on $L,R$, with the following
-property. If $a$ is sufficiently large in terms of $L,R$, $L\le
-k=h/\sqrt a\le R$, and $(j,v)$ satisfies
+Set $c_0=2^{12}K_0^6$ and
+$A_0=\max\{4,64K_0^2,16(J+1)^2/L^2\}$. If $a\ge A_0$,
+$L\le k=h/\sqrt a\le R$, and $(j,v)$ satisfies
 
 $$
-1\le j\le J,\qquad v_0\le v\le j,\qquad \ell=\lfloor v\rfloor,\qquad
-p=\frac v{a+v-1},\qquad\theta=v-\ell,
+j\in\mathbb Z,\qquad 1\le j\le J,\qquad v_0\le v\le j,\qquad
+p=\frac v{a+v-1},\qquad \theta=v-\lfloor v\rfloor,
 \tag{9.7}
 $$
 
@@ -1285,154 +1286,158 @@ $$
 \tag{9.8}
 $$
 
-where $H_{j,v}$ is the exact law energy in (3.4). The construction remains
-valid when $\theta=0$ or when one of the two core type masses is zero.
+where $H_{j,v}$ is the exact law energy in (3.4). This includes integer $v$
+and $v=j$.
 
-**Proof.** Set $M=N-1$, $r=a+j$, and $n=h+1-j$. The target law of
-Proposition 3.2 has core sizes $a+\ell$ and $a+\ell+1$, and $n$ singleton
-types in the tail. Choose an integer $T$ nearest to
-$vM/(a+v-1)$ in the interval
+**Proof.** Set $M=N-1$, $r=a+j$, and $n=h+1-j$. The threshold gives
+$h\ge4(J+1)$, so $n\ge1$. Partition the sinks into a core $C$ of size $r$
+and a tail $D$ of size $n$. Throughout the proof,
 
 $$
-\frac{\ell M}{a+\ell-1}\le T\le
-\frac{(\ell+1)M}{a+\ell}.
+r\le2a,\quad s\le2a,\quad n\le K_0\sqrt a,\quad
+\frac1{2K_0a}\le p\le\frac14,\quad M\ge N/2.
+$$
+
+First choose the number of singleton sources, and then choose their
+complement's degrees from the exact remaining edge budget. Specifically put
+
+$$
+T=\lfloor pM\rfloor,\qquad Q=M-T,\qquad
+w=\frac{(a-1)T}{Q},\qquad b=\lfloor w\rfloor.
 \tag{9.9}
 $$
 
-The real target lies in this interval. Its length is
-$M(a-1)/((a+\ell-1)(a+\ell))$, which is greater than $2$ under
-$N\ge c_0a^5$. Hence such an integer exists and differs from the target by at
-most one. Put
+Here $Q\ge3M/4$ and $T\ge pM/2\ge M/(4K_0a)>0$. Since
+$v=(a-1)p/(1-p)$, one has
 
 $$
-Q=M-T,\qquad q_1=(a+\ell-1)T-\ell M,\qquad
-q_0=Q-q_1.
+0\le w\le v\le j,\qquad
+0\le v-w=\frac{(a-1)(p-T/M)}{(1-p)(1-T/M)}\le\frac{2a}{M}.
+$$
+
+Define integer source counts
+
+$$
+q_1=(a-1)T-bQ,\qquad q_0=Q-q_1.
 \tag{9.10}
 $$
 
-The two inequalities in (9.9) are exactly $0\le q_1\le Q$, so $q_0,q_1$
-are nonnegative and $q_0+q_1+T=M$. Give $q_b$ sources a neighborhood of size
-$a+\ell+b$ in a core set $C$ of size $r$, where $b=0,1$. Give the $T$ tail
-sources singleton neighborhoods in $D=[s]\setminus C$, distributing them as
-$ t_d\in\{\lfloor T/n\rfloor,\lceil T/n\rceil\}$ with $\sum_dt_d=T$.
-The edge count of these $M$ sources is exactly
+Then $0\le q_1<Q$ and $q_0+q_1=Q$. Give $q_0$ core sources degree
+$a+b$ and $q_1$ core sources degree $a+b+1$, omitting a zero-count branch.
+If $b=j$, then $w=j$ and $q_1=0$; otherwise $b+1\le j$.
+Thus every positive count requests at most $r$ distinct neighbors, including
+at $v=j$. The core memberships and the total memberships are exactly
 
 $$
-(a+\ell)q_0+(a+\ell+1)q_1+T=aM,
+(a+b)q_0+(a+b+1)q_1=aM-T,\qquad
+(a+b)q_0+(a+b+1)q_1+T=aM.
 \tag{9.11}
 $$
 
-because (9.10) is equivalent to $\ell q_0+(\ell+1)q_1=(a-1)T$.
-
-For definiteness, order $C$ cyclically. For each of the two core sizes, assign
-successive sources successive cyclic intervals of that size. Thus each core
-sink receives, from the core sources of one size, either the lower or upper
-integer nearest to the corresponding uniform incidence count. This is a
-simple bipartite incidence construction: a source is a set, and repeated sets
-are carried by different source vertices, so no edge is repeated. The resulting
-core incidence degrees differ from the ideal values by at most $4a$ in total.
-Indeed, if $D_i^{C}$ is the degree at a core sink and
-$\mu_b=q_b(a+\ell+b)/r$, the cyclic intervals give
-$|D_i^{C}-(\mu_0+\mu_1)|\le2$, while (9.9)--(9.10) give
-$|\mu_0+\mu_1-M(1-p)(a+v)/r|\le4a$. Moreover
-$Q/M\ge1-2J/a$ and $r\le a+J$, so every core degree is at least $M/3$
-for all sufficiently large $a$. The balanced singleton assignment gives
+For a balanced core assignment, label $C$ cyclically and write an infinite
+periodic word containing these $r$ labels in order. Read a consecutive block
+of length $a+b$ or $a+b+1$ for each core source, continuing immediately after
+the preceding block. Each positive-count block has length at most $r$, so its
+labels are distinct. In the resulting prefix of length $aM-T$, each label
+occurs either $\lfloor(aM-T)/r\rfloor$ or
+$\lceil(aM-T)/r\rceil$ times. These are the actual core incidence degrees
+$D_i^C$. Give the $T$ singleton sources balanced tail neighborhoods, with
+counts $t_d\in\{\lfloor T/n\rfloor,\lceil T/n\rceil\}$ and
+$\sum_dt_d=T$. In particular,
 
 $$
- t_d\ge \frac{v_0M}{4a(h+1)}-1
-       \ge \frac{v_0M}{8(R+1)a^{3/2}}
+t_d+1\ge\frac Tn\ge\frac{M}{4K_0^2a^{3/2}}.
 \tag{9.12}
 $$
 
-for large $a$. The same estimates hold if $q_0=0$ or $q_1=0$; the nonzero
-branch alone is cycled. This proves the integer boundary and zero-type claims.
+These assignments are simple: each source uses distinct labels, and sources
+with repeated neighborhoods are different vertices.
 
-Choose one core source (there is one because $Q\ge M/2$) and delete from its
-neighborhood exactly $h+1$ core memberships. Since
-$h+1\le R\sqrt a+1<a/2$ for the chosen threshold on $a$, its neighborhood
-remains nonempty. Finally add one new source adjacent to all $s$ sinks. The
-edge count is
+Choose one core source and delete $h+1$ of its core memberships. Its degree
+before deletion is at least $a$, and $h+1<a/2$ under $a\ge A_0$, so its
+neighborhood remains nonempty. Add one new source adjacent to all $s$ sinks.
+There are now exactly $N$ sources and
 
 $$
-[a(N-1)-(h+1)]+s=aN.
+[a(N-1)-(h+1)]+s=aN
 \tag{9.13}
 $$
 
-The universal source makes the graph connected, and both sides remain
-independent. The deletion changes at most $h+1$ core sink degrees by one. By
-(9.12), every tail sink has degree at least
-$v_0M/(8(R+1)a^{3/2})$, and every core sink has degree at least $M/4$.
-Since $M\ge c_0a^5$, these degrees are greater than
-$s\le2a$ for large $a$. Therefore every sink degree is greater than every
-source degree, including the universal source of degree $s$; (9.1) holds and
-all vertices are actual sources or actual sinks.
+edges. The new source makes the graph connected. Both sides are independent
+and the graph is simple. At a core sink the deletion subtracts at most one
+and the new source adds one; hence its final degree satisfies
+$d_i\ge D_i^C\ge M/2-1\ge M/3$. At a tail sink the final degree is $t_d+1$.
+By (9.12) and $M\ge c_0a^5/2$, every sink has degree strictly greater than
+$2a\ge s$. Every source has degree at most $s$, so (9.1) holds with these
+actual degrees. This proves membership in the full graph class.
 
-It remains to compare the energy on this one graph with the ideal law. Let
-$d_i^*=My_i^*$ denote the ideal sink degrees from Proposition 3.2. The cyclic
-rounding, the balanced tail counts, the deletion, and the universal source give
+For the energy estimate let $f(z)$ be the piecewise linear interpolation of
+the integer cubes on $[a,r]$. For $a\le z\le r$ it satisfies
+$0<f(z)\le8a^3$ and has Lipschitz constant at most $12a^2$. The ideal law in
+Proposition 3.2 has core marginal $y_C=(a-p)/r\ge1/2$. Write
 
 $$
-|d_i-d_i^*|\le 8K_0^2a\quad(i\in[s]),\qquad
-\min_i d_i^*\ge\frac{v_0M}{4(R+1)a^{3/2}}.
+\mu^*=My_C,\qquad S^*=M(1-p)f(a+v),\qquad
+S=q_0(a+b)^3+q_1(a+b+1)^3=Qf(a+w).
 \tag{9.14}
 $$
 
-The integer choice (9.9) also gives
+The ideal core and tail energies are
+$H_C=M S^*/(\mu^*)^2\le32a^3$ and $H_D=n^2/p\le2K_0^3a^2$,
+so $H_{j,v}=H_C+H_D$. Since $|Q-M(1-p)|<1$ and $|w-v|\le2a/M$,
 
 $$
-\sum_{b=0}^{1}\left|q_b/M-(1-p)
-       \begin{cases}1-\theta,&b=0,\\ \theta,&b=1\end{cases}\right|
- +\sum_{d\in D}\left|t_d/M-p/n\right|
- \le\frac{8K_0^2a}{M}.
+|S-S^*|\le32a^3,\qquad
+\frac{aM-T}{r}\ge\mu^*\ge M/2,\qquad d_i\ge\mu^*-1\quad(i\in C).
 \tag{9.15}
 $$
 
-For positive $z$ and $|\delta|\le z/2$,
-$|(z+\delta)^{-2}-z^{-2}|\le6|\delta|z^{-3}$. Apply this with
-$z=d_i^*$ and (9.14), split the core and tail sums, and use
-$k_u\le s\le2a$, $n\le(R+1)\sqrt a$. The three resulting contributions are,
-respectively, bounded by
+Deleting memberships only lowers the chosen source's squared degree and
+removes nonnegative summands. The contribution to $Q(G)$ of the original
+core sources is therefore at most $NS/(\mu^*-1)^2$. Using
+$(1-1/\mu^*)^{-2}\le1+16/M$ and $M\ge16$ gives
 
 $$
-64K_0^6\frac{a^6}{M},\qquad
-128K_0^6\frac{a^{11/2}}{M},\qquad
-64K_0^6\left(a^{1/2}+\frac{a^{11/2}}{M}\right).
+\begin{aligned}
+\frac{NS}{(\mu^*-1)^2}
+&\le\frac NM\left(1+\frac{16}{M}\right)H_C
+       +\frac{32Na^3}{(\mu^*-1)^2}
+ \le H_C+2^{11}\frac{a^3}{M},\\
+N\sum_{d\in D}\frac{t_d}{(t_d+1)^2}
+&\le\frac{Nn^2}{T}
+ \le H_D+20K_0^4\frac{a^3}{M},\\
+Ns^2\sum_{i\in C\cup D}\frac1{d_i^2}
+&\le\frac{N}{M^2}\left(72a^3+64K_0^5a^{11/2}\right)
+ \le272K_0^5\frac{a^{11/2}}{M}.
+\end{aligned}
 \tag{9.16}
 $$
 
-The first is the type-count rounding error, the second is the change of the
-actual sink denominators, and the third is the deleted memberships together
-with the universal source. These estimates are obtained by summing first over
-core incidences (where $d_i^*\ge M/5$) and then over tail incidences (where
-$d_i^*\ge v_0M/(4(R+1)a^{3/2})$); no independent marginal is introduced.
-More explicitly, with the ideal denominators held fixed, a core source
-contributes at most $8K_0^2a^3$ and a tail singleton at most $8K_0^2a^3$
-after the common $1/M$ normalization. Multiplying these bounds by (9.15)
-gives the first term of (9.16). The denominator inequality gives a relative
-factor at most $48K_0^2a/M$ on core incidences and at most
-$48K_0^2a^{5/2}/M$ on tail incidences; multiplying by the ideal core and tail
-energies (bounded by $8K_0^2a^3$ and $8K_0^2a^2$, respectively) gives the
-second term. Finally, the at most $h+1$ changed core incidences and the $s$
-universal incidences are bounded directly by
-$N(2a)^2(d_i^*)^{-2}$, using the two displayed lower bounds on $d_i^*$;
-this gives the third term. These are sums over the actual edge set, so the
-estimate also covers a zero type mass.
-Since $M\ge N/2$ and $a^{11/2}/M\le a^6/N$ after enlarging $c_0$, (9.16)
-gives
+For the first line, $\mu^*-1\ge M/4$, $N/M=1+1/M$, and the multiplicative
+factor on $H_C$ is at most $1+20/M$; the additive term is at most
+$1024a^3/M$. For the second, $t_d+1\ge T/n$ gives the first inequality,
+and $pM-T<1$, $T\ge pM/2$ give
+$N p/T\le1+5/(pM)$. Multiplication by
+$H_D\le2K_0^3a^2$ and $p^{-1}\le2K_0a$ gives the stated error.
+The last line is the new source's contribution, using $d_i\ge M/3$ on the
+$r\le2a$ core labels and (9.12) on the $n\le K_0\sqrt a$ tail labels.
+Thus all three lines concern this single graph with its final degrees.
+
+Since $K_0\ge4$, $a\ge1$ and $M\ge N/2$, their sum gives
 
 $$
-N\sum_{ui\in E(G)}(k_u/d_i)^2
- \le H_{j,v}(a,h)+2^{11}K_0^6\left(a^{3/2}+\frac{a^6}{N}\right).
+Q(G)=N\sum_{ui\in E(G)}(k_u/d_i)^2
+ \le H_{j,v}(a,h)+2^{12}K_0^6\frac{a^6}{N}.
 \tag{9.17}
 $$
 
-The upper inequality in (9.5) now proves (9.8). Notice that the upper bound
-uses the actual degrees of the constructed graph on every edge; it is not a
-bound for a comparison support. ∎
+Indeed $2(2^{11}+20K_0^4+272K_0^5)\le2^{12}K_0^6$.
+The upper inequality of (9.5) proves (9.8). No divisibility condition on $N$
+or positive lower bound on either ideal core type mass was used. ∎
 
-**Theorem 9.4 (Uniform finite-budget graph interface).** Let
-$A_7=A_{L,R}$ and $C_7=C_{L,R}$ be the constants supplied by Theorem 7.2,
-and define the explicit quantities
+**Theorem 9.4 (Uniform finite-budget graph interface).** Fix
+$0<L\le R<\infty$. Choose constants $A_7\ge4$, $C_7\ge0$ supplied by
+Theorem 7.2, enlarging $C_7$ so that $C_7\ge2^8K_0^6$, and define
 
 $$
 \Gamma_{L,R}=R^2+2+2\sqrt2\,R,\qquad
@@ -1469,14 +1474,34 @@ particular, (9.20) is one explicit sufficient polynomial condition; no claim
 is made about the least exponent or the least coefficient.
 
 **Proof.** Write $k=h/\sqrt a$ and $B_0=a(a+1)^2$. By (7.23)--(7.28), a
-minimizing pair $(j,v)$ for the scalar envelope satisfies (9.7), and the
-bounds in (7.27) give
+minimizing pair $(j,v)$ for the scalar envelope satisfies (9.7): if
+$k\le\sqrt2$ choose $j=1$, $v=k/\sqrt2$, and otherwise a minimizing integer
+branch has $v=j$. The bound on $j$ is (7.24). The threshold $A$ in (9.19)
+is at least $A_0$, and $D\ge c_0$.
+
+For completeness the ideal-law upper error can be bounded with the same
+printed constants. Put $\mu=a+v$ and $\theta=v-\lfloor v\rfloor$. Its
+interpolated third moment is
+$f(\mu)=\mu^3+3\mu\theta(1-\theta)+\theta(1-\theta)(1-2\theta)$, so
+$0\le f(\mu)-\mu^3\le\mu$. Since $r\le2a$, $p\le1/4$,
+$1/(1-p)=1+v/(a-1)$ and $j,v,v^{-1},R\le K_0$, expansion of the two
+terms of (3.4) gives the explicit bounds
+
+$$
+0\le H_C-[a^3+(2j+2v)a^2]\le64K_0^4a,\qquad
+\left|H_D-\frac{k^2}{v}a^2\right|\le8K_0^3a^{3/2}.
+$$
+
+For the first bound expand $(a+j)^2(a+v)(1+v/(a-1))$; the interpolation
+adds at most $6a$. For the second expand
+$(h+1-j)^2(a+v-1)/v$ and use $|1-j|\le K_0$ and $h\le K_0\sqrt a$.
+Consequently $C_7\ge2^8K_0^6$ and the scalar minimizing identity give
 
 $$
 H_{j,v}(a,h)\le B_0+a^2U(k)+C_7a^{3/2}.\tag{9.22}
 $$
 
-Theorem 9.3 therefore supplies an actual graph, proving nonemptiness and
+Lemma 9.3 therefore supplies an actual graph, proving nonemptiness and
 
 $$
 V_N(a,h)\le B_0+a^2U(k)+2^{13}K^{12}
@@ -1490,26 +1515,31 @@ $$
 Q(G)\ge M(a,h)\ge B_0+a^2U(k)-C_7a^{3/2}.\tag{9.24}
 $$
 
-If $2NE(G)$ already exceeds the right side of (9.23), the desired lower
-bound follows. Otherwise (9.18)--(9.20) imply $2NE(G)\le4a^3$. Put
+Set $W=2NE(G)$ and $\gamma=2/(\sqrt2+1)$. For every edge ratio
+$0\le t<1$,
+$2(\sqrt{1+t^2}-1)=2t^2/(\sqrt{1+t^2}+1)\ge\gamma t^2$.
+Thus $W\ge\gamma Q(G)$. The fixed threshold $4a^3$ separates all comparison
+graphs into two cases. Since $U(k)\le\Gamma_{L,R}$ and $a\ge64K^2$,
 
 $$
-\gamma=\frac2{\sqrt2+1}.
+B_0+a^2U(k)\le a^3\left((1+1/a)^2+\Gamma_{L,R}/a\right)<2a^3.
 $$
 
-Since $2g(t)\ge\gamma t^2$ for $0\le t<1$, (9.3) gives $2NE(G)\ge\gamma Q(G)$.
-If an edge had $t^2>a^{-3/2}$, then
-$2NE(G)>\gamma N a^{-3/2}/1\ge\gamma Da^{7/2}$, contradicting
-$2NE(G)\le4a^3$ once $a\ge A$. Hence every edge has $t^2\le a^{-3/2}$. By
-(9.5),
+If $W\ge4a^3$, the required lower bound follows immediately. If $W<4a^3$,
+then $Q(G)\le4a^3/\gamma$. The elementary inequality
+$\sum_e t_e^4\le(\sum_e t_e^2)^2$ and (9.5) now give
 
 $$
-2NE(G)\ge Q(G)-\frac{a^{-3/2}}4Q(G)
- \ge Q(G)-2K^4a^{3/2}.\tag{9.25}
+W\ge Q(G)-\frac{Q(G)^2}{4N}
+ \ge Q(G)-\frac{4a^6}{\gamma^2N}
+ \ge Q(G)-\frac{6a^6}{N}.
+\tag{9.25}
 $$
 
-Here $Q(G)\le\gamma^{-1}2NE(G)\le4\gamma^{-1}a^3$ was used in the last
-step. Combining (9.24) and (9.25), and enlarging $C$ as in (9.19), yields
+The last inequality uses $4/\gamma^2=3+2\sqrt2<6$. This argument imposes
+no edgewise cutoff and makes no inference from the error term in (9.23).
+Combining (9.24) with either case, and $C\ge C_7+6$, gives for every graph
+in the original class, and hence for its infimum,
 
 $$
 V_N(a,h)\ge B_0+a^2U(k)-C\left(a^{3/2}+\frac{a^6}{N}\right).\tag{9.26}
@@ -1529,12 +1559,13 @@ $$
 \frac{V_{N_r}(a_r,h_r)-a_r(a_r+1)^2}{a_r^2}\longrightarrow U(\kappa).\tag{9.27}
 $$
 
-Every quantity in (9.27) is taken from the same finite graph class at the same
-$(a_r,h_r,N_r)$; the conclusion does not pass through a fixed profile or a
-convenient divisibility subsequence. The universal source in the proof is only
-a connectivity device and contributes within the displayed error. The result
-also covers the endpoint cases $\theta=0$ and $\theta=1$ through the
-zero-mass convention of Proposition 3.2.
+**Proof.** Eventually $L\le h_r/\sqrt{a_r}\le R$ and $a_r\ge A$.
+The graph class is then nonempty by Theorem 9.4, and its error bound tends
+to zero because $a_r^4/N_r\le1/(Da_r)$. Continuity of $U$, proved in
+Theorem 7.2, gives (9.27). Every quantity is taken from the finite graph
+class at that same $(a_r,h_r,N_r)$, with no divisibility subsequence.
+The construction includes integer $v$ and $v=j$, since a branch that would
+exceed the core capacity has zero count. ∎
 
 This theorem resolves the square-root-surplus finite graph interface requested
 in Open problems 7.3 and 8.6. It does not determine finite equality cases,
