@@ -536,3 +536,195 @@ sign set would determine the remaining orders through (2.1), without
 altering its argument quantifiers or its exponent.
 
 ## 追加锚（本行以下为增补区）
+## 6. The unique order threshold
+
+**Definition 6.1 (Critical parameter).** Continue to write
+
+$$
+H(b)=j_{b-1,1}^{\,2}-T_b,\qquad
+T_b=\frac{4b(b+1)(b+2)}{3b+2}\quad(b>0).
+\tag{6.1}
+$$
+
+The first-zero dependence on the order is continuous, and is continuously
+differentiable wherever the zero is simple.  For positive order the order
+variation formula for a positive cylinder-function zero is
+
+$$
+\frac{d}{d\nu}j_{\nu,1}
+ =2j_{\nu,1}\int_0^\infty
+ K_0\!\left(2j_{\nu,1}\sinh t\right)e^{-2\nu t}\,dt .
+\tag{6.2}
+$$
+
+This is the first-zero specialization of DLMF [§10.21(iv), (10.21.17)](https://dlmf.nist.gov/10.21#E17); the positivity and integral representation of $K_0$ used below are the classical formulas in DLMF [§10.32(i), (10.32.9)](https://dlmf.nist.gov/10.32#E9).
+
+**Lemma 6.2 (Every zero of $H$ is a downward crossing).** If $b>9$ and
+$H(b)=0$, then $H'(b)<0$.
+
+**Proof.** Put
+
+$$
+\nu=b-1,\qquad r=\sqrt{T_b}=j_{\nu,1},\qquad
+\rho=\frac{\nu}{r}.
+$$
+
+The identity
+
+$$
+T_b-(b-1)^2=\frac{b^3+16b^2+9b-2}{3b+2}>0
+\tag{6.3}
+$$
+
+shows that $0<\rho<1$.  Moreover,
+
+$$
+\frac{d}{db}\rho^2
+ =\frac{(b-1)(13b^3+27b^2+16b+4)}
+ {4b^2(b+1)^2(b+2)^2}>0,
+\tag{6.4}
+$$
+
+and $\rho^2|_{b=9}=232/495>7/15$.  Thus
+$\rho^2\ge7/15$ for every $b\ge9$.
+
+For $0<\vartheta<\pi/2$, the function
+$\vartheta/\sin\vartheta$ is strictly increasing.  We claim that
+
+$$
+\frac{\vartheta}{\sin\vartheta}<\frac98
+\quad\text{whenever}\quad
+\cos^2\vartheta\ge\frac7{15}.
+\tag{6.5}
+$$
+
+Indeed, let $a=41/50$.  The alternating Taylor bound on $0<a<1$ gives
+
+$$
+\cos a
+ <1-\frac{a^2}{2}+\frac{a^4}{24}-\frac{a^6}{720}+\frac{a^8}{40320}
+ <\frac{683}{1000}<\sqrt{\frac7{15}},
+\tag{6.6}
+$$
+
+where the last two rational inequalities follow by clearing positive
+denominators.  Hence
+$\arccos\sqrt{7/15}<41/50$, and, using
+$\sin(\arccos\sqrt{7/15})=\sqrt{8/15}$,
+
+$$
+\frac{\vartheta}{\sin\vartheta}
+ \le\frac{41}{50}\sqrt{\frac{15}{8}}<\frac98;
+\tag{6.7}
+$$
+
+for the final comparison, $(41/50)^2(15/8)=5043/4000<81/64$.
+This proves (6.5).  Applying it to
+$\vartheta=\arccos\rho$ gives
+
+$$
+\frac{\arccos(\nu/r)}{\sqrt{r^2-\nu^2}}
+ =\frac1r\frac{\vartheta}{\sin\vartheta}<\frac9{8r}.
+\tag{6.8}
+$$
+
+For $z>0$, $K_0(z)=\int_0^\infty e^{-z\cosh u}\,du$ is positive and
+strictly decreasing.  Since $\sinh t>t$ for $t>0$, (6.2) and Tonelli's
+theorem give the strict estimate
+
+$$
+\begin{aligned}
+\frac{1}{2}\frac{d}{d\nu}\log j_{\nu,1}
+&<\int_0^\infty K_0(2rt)e^{-2\nu t}\,dt\\
+&=\int_0^\infty\!\int_0^\infty
+ e^{-2\nu t-2rt\cosh u}\,du\,dt\\
+&=\int_0^\infty\frac{du}{2\nu+2r\cosh u}\\
+&=\frac{\arccos(\nu/r)}{2\sqrt{r^2-\nu^2}}.
+\end{aligned}
+\tag{6.9}
+$$
+
+The last equality follows from $y=\tanh(u/2)$ and
+$\arctan\sqrt{(r-\nu)/(r+\nu)}=\tfrac12\arccos(\nu/r)$.
+Consequently, (6.8) yields
+
+$$
+\frac{d}{d\nu}\log j_{\nu,1}<\frac9{8r}.
+\tag{6.10}
+$$
+
+It remains to compare this with the derivative of the proposed crossing
+curve.  With $r(b)=\sqrt{T_b}$, direct differentiation gives
+
+$$
+\left(r'(b)\right)^2-\left(\frac{23}{20}\right)^2
+=\frac{
+117b^6+585b^5+14292b^4+44704b^3+54816b^2+29936b+6400
+}{400b(b+1)(b+2)(3b+2)^3}>0.
+\tag{6.11}
+$$
+
+Since $T_b'>0$ for $b>0$, also $r'(b)>0$; hence
+$r'(b)>23/20>9/8$.  At a zero of $H$, (6.10) and
+$T_b'=2r r'$ imply
+
+$$
+H'(b)=2r^2\frac{d}{d\nu}\log j_{\nu,1}-2rr'
+ <2r\left(\frac98-r'\right)<0.
+\tag{6.12}
+$$
+This proves the lemma. ∎
+
+**Theorem 6.3 (Complete sign classification).** There is exactly one
+$b_*\in(9,31)$ such that $H(b_*)=0$, and, for every $b>0$,
+
+$$
+H(b)>0\iff b<b_*,\qquad
+H(b)=0\iff b=b_*,\qquad
+H(b)<0\iff b>b_*.
+\tag{6.13}
+$$
+
+**Proof.** The continuous first-zero dependence noted in Definition 6.1
+makes $H$ continuous.  The already established range $0<b\le9$ gives
+$H(9)>0$.  The inherited energy estimate at order $\nu\ge30$ gives
+
+$$
+J\le\frac65b(b+6)<T_b\qquad(b\ge31),
+\tag{6.14}
+$$
+
+because
+$T_b-\frac65b(b+6)=2b(b^2-30b-16)/(5(3b+2))>0$ there; hence
+$H(31)<0$.  The intermediate value theorem supplies at least one zero
+in $(9,31)$.
+
+Lemma 6.2 says that every zero in this interval has strictly negative
+derivative, so each is isolated and the function is positive immediately
+before it and negative immediately after it.  The zero set in $[9,31]$ is
+compact, the endpoints are not zeros, and every interior point is isolated;
+therefore it is finite.  If two zeros
+existed, two consecutive members would therefore exist; the sign just
+after the first and just before the second would then force another zero
+between them, a contradiction.  Therefore the zero is unique.  Since $H$ has no zero on
+either side of $b_*$ and has the signs at $9$ and $31$ just proved, its
+signs are exactly (6.13). ∎
+
+**Corollary 6.4 (The original order range).** Let
+$\nu_*=b_*-1$.  For every real $\nu>-1$, with the actual first positive
+zero $j_{\nu,1}$ and the unchanged definitions (1.2)–(1.3),
+
+$$
+\left[\forall x\in\mathbb R,\ |x|<j_{\nu,1}
+ \Longrightarrow L_\nu(x)\le R_\nu(x)\right]
+\quad\Longleftrightarrow\quad
+-1<\nu\le\nu_* .
+\tag{6.15}
+$$
+
+At the critical order $\nu=\nu_*$ equality is attained exactly at $x=0$.
+For every $\nu>\nu_*$, the inequality fails strictly at every sufficiently
+small positive $x$, by the inherited local-obstruction direction of
+Theorem 2.1. ∎
+
+## 追加锚（本行以下为增补区）
