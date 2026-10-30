@@ -75,7 +75,8 @@ def registration.{u} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Information.ProductMarginQubitOrder
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn"]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
@@ -113,7 +114,7 @@ private theorem bad_law : ¬ arena.Law bad := by
     exact (density_posSemidef (productState (qubitState 0 0 (by norm_num))
       (qubitState 0 0 (by norm_num)))).nonneg
   exact @h 0 0 0 0 (by norm_num) (by norm_num) (by norm_num) (by norm_num)
-    (by norm_num) (by norm_num) 0 Matrix.PosSemidef.zero hp hp
+    (by norm_num) (by norm_num) 0 Matrix.PosSemidef.zero hp (by simpa only [neg_zero] using hp)
 def family : Registration arena (type_of% (@common_lower_trace_bound)) where
   actual := readout
   bridge := Iff.rfl
@@ -143,7 +144,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Information.ProductMarginQubitOrder
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn"]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

@@ -53,7 +53,10 @@ and accounts for its conversion from bits to nats.
 The preparation map uses columns of each density matrix positive square
 root as Kraus operators. Its action on arbitrary complex input matrices is
 the sum of their diagonal entries times the selected actual density states.
-This retains zero probabilities and singular prepared states.
+This retains zero probabilities and singular prepared states. Tensoring the Kraus
+operators with an arbitrary finite spectator identity gives the local channel
+on the complete joint matrix algebra. Its entry formula preserves every
+spectator coherence and supplies the physical operation for data processing.
 
 These ingredients do not by themselves prove the whole four-party
 Zhang–Yeung endpoint, its coordinate-free corollary, or any inequality for

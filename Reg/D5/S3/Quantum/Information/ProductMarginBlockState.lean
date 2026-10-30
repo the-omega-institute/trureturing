@@ -77,7 +77,8 @@ def registration.{u} : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Information.ProductMarginBlockState
     definition := none
     coordinates := #[0]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "fn"]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]

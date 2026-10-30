@@ -56,7 +56,8 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     owner := `D5.S3.Quantum.Information.QubitEntropyContraction
     definition := none
     coordinates := #[]
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg", "fn"]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "arg", "fn"]
       stateBinder := 0
       functionOperand := false
       stateOperand := some #["arg"]
