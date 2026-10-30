@@ -286,11 +286,10 @@ private theorem integrated_neg (x θ : ℝ) :
     integratedPoisson (-x) θ = -integratedPoisson x (θ + Real.pi) := by
   have hh := intervalIntegral.integral_comp_neg (fun t => poissonDensity t θ) (a := 0) (b := x)
   simp only [neg_zero] at hh
-  rw [intervalIntegral.integral_symm] at hh
   calc
     integratedPoisson (-x) θ = -(∫ t in (0 : ℝ)..x, poissonDensity (-t) θ) := by
       rw [hh]
-      simp [integratedPoisson]
+      exact intervalIntegral.integral_symm 0 (-x)
     _ = _ := by simp_rw [density_neg]; rfl
 
 private theorem l1_periodic (b x : ℝ) (hb : b ∈ Icc (0 : ℝ) 1) :
