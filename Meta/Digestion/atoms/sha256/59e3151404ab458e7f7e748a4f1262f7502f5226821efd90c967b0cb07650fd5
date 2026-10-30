@@ -1,0 +1,43 @@
+**定理 11.1（相同内部静止钟率不能确定曲率）。**
+
+<a id="thm-gravitycounter"></a>
+
+在没有流形边界的 $\mathbb R\times T^3$ 上，
+取周期坐标 $x,y,z$，比较
+
+<a id="eq-metrics"></a>
+
+$$
+g_0=-dt^2+dx^2+dy^2+dz^2,
+\qquad
+g_1=-dt^2+dx^2+a(x)^2dy^2+dz^2,\quad a(x)=2+\cos x.
+\tag{9}
+$$
+
+全部静止空间世界线在两者中均有 $d\tau=dt$，
+但 $g_0$ 平坦，$g_1$ 非平坦。
+$t$ 在这个比较中可由一个内部参考钟校准。
+
+**证明。**
+
+沿静止线令 $dx=dy=dz=0$，两度量都给固有时增量 $d\tau=dt$。
+二维因子 $dx^2+a^2dy^2$ 的相关 Christoffel 符号为
+$\Gamma^x_{yy}=-aa'$、
+$\Gamma^y_{xy}=\Gamma^y_{yx}=a'/a$。
+按 $R^\rho{}_{\sigma\mu\nu} =\partial_\mu\Gamma^\rho_{\nu\sigma} -\partial_\nu\Gamma^\rho_{\mu\sigma} +\Gamma^\rho_{\mu\lambda}\Gamma^\lambda_{\nu\sigma} -\Gamma^\rho_{\nu\lambda}\Gamma^\lambda_{\mu\sigma}$ 的约定，
+
+$$
+R^x{}_{yxy}
+=\partial_x(-aa')-(-aa')\,a'/a
+=-aa''=a(x)\cos x.
+$$
+
+它在 $x=0$ 非零，乘积的另两个方向不消除此分量。
+
+□
+
+该反例精确排除的是“所有静止内部钟率已经决定全部几何”的推断。
+运动钟、光传播、距离及回路运输可以区分这两个模型；
+因此下一步要把这些内部关系一并纳入约束。
+单一整体性允许这样做，但不会自动选出某个特定动力学。
+
