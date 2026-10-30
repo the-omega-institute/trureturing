@@ -191,7 +191,8 @@ private lemma local_channel_formula (x : Matrix (Fin 16) (Fin 16) ℂ) :
     change (2 * l.val + z.val) % 2 = z.val
     omega
   simp only [hsector, hbit, Matrix.one_apply]
-  split_ifs <;> simp_all only [hsector, hbit, mul_one, mul_zero, zero_mul]
+  split_ifs <;> simp_all only [hsector, hbit, mul_one, mul_zero, zero_mul,
+    true_and, and_true, not_true_eq_false, not_false_eq_true]
 
 private lemma local_channel_add (x y : Matrix (Fin 16) (Fin 16) ℂ) :
     localChannel (x + y) = localChannel x + localChannel y := by
@@ -291,7 +292,8 @@ private lemma conjugate_matrix_unit (u v : Fin 4 → Fin 2) :
           (pack ![v 0 + v 3, v 0 + v 1, v 0 + v 2, v 0]) 1 := by
   ext r s
   simp [Matrix.mul_apply, Matrix.single_apply, Matrix.conjTranspose_apply,
-    signed_permutation_action, eq_comm, mul_ite, ite_mul, ite_and, map_ite]
+    signed_permutation_action, eq_comm, mul_ite, ite_mul, ite_and]
+  split_ifs <;> simp_all
 
 private lemma block16_components (l : Fin 2) (m : Fin 4) (z : Fin 2) :
     sector16 (block16 l m z) = l ∧ multiplicity16 (block16 l m z) = m ∧
@@ -327,6 +329,8 @@ private lemma pinching_single (p q : Fin 16) :
           Matrix.single (block16 (sector16 p) m (bit16 p))
             (block16 (sector16 q) m (bit16 q)) 1
       else 0 := by
+  have hsum (f : Fin 4 → Fin 16 → Fin 16 → ℂ) (r s : Fin 16) :
+      (∑ m, f m) r s = ∑ m, f m r s := Matrix.sum_apply r s Finset.univ f
   have hd (r : Fin 16) : r = block16 (sector16 r) (multiplicity16 r) (bit16 r) := by
     apply Fin.ext
     change r.val = 8 * (r.val / 8) + 2 * (r.val % 8 / 2) + r.val % 2
@@ -341,8 +345,10 @@ private lemma pinching_single (p q : Fin 16) :
   simp only [pinching, (block16_components ..).1, (block16_components ..).2.1,
     (block16_components ..).2.2, Matrix.single_apply, Matrix.smul_apply, Matrix.sum_apply,
     block16_eq, smul_eq_mul]
-  split_ifs <;> simp_all [Finset.sum_apply, Matrix.single_apply, block16_eq,
-    ite_and, Finset.sum_ite_irrel, eq_comm]
+  split_ifs <;>
+    (try simp only [hsum]
+     clear hsum
+     simp_all [Matrix.single_apply, block16_eq, ite_and, Finset.sum_ite_irrel, eq_comm])
 
 set_option maxHeartbeats 2400000 in
 private lemma local_matrix_unit (v d : Fin 4 → Fin 2) :
@@ -383,7 +389,7 @@ private lemma local_matrix_unit (v d : Fin 4 → Fin 2) :
     fin_cases g <;> fin_cases h <;> fin_cases j <;> fin_cases k <;>
       norm_num [pack, pathPhase, sector16, multiplicity16, bit16, block16,
         Fin.sum_univ_succ, Function.update_apply, Fin.forall_fin_succ] <;>
-      simp only [← Matrix.single_neg] <;> module
+      (try simp only [← Matrix.single_neg]) <;> module
 
 private def gauge (n : ℕ) (e : Fin 2) (x : Fin n → Fin 2) : ℂ :=
   (-1 : ℂ) ^ (e.val * ∑ j : Fin n, (x j).val * (x (site j 1)).val)
@@ -444,13 +450,16 @@ private lemma window_update_update (n : ℕ) (i : Fin n) (x : Fin n → Fin 2)
 
 private lemma window_update_code (n : ℕ) (i : Fin n) (x : Fin n → Fin 2) :
     windowUpdate i x (windowCode i x) = x := by
+  have he (a b c d : Fin 2) (k : Fin 4) :
+      digit (pack ![a, b, c, d]) (3 - k.val) = ![a, b, c, d] k := by
+    fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
+      fin_cases k <;> rfl
+  let v := ![x (site i 0), x (site i 1), x (site i 2), x (site i 3)]
+  have hv (k : Fin 4) : v k = x (site i k.val) := by fin_cases k <;> rfl
+  have hc : windowCode i x = pack v := rfl
   have hd (k : Fin 4) : digit (windowCode i x) (3 - k.val) = x (site i k.val) := by
-    apply Fin.ext
-    have h0 := (x (site i 0)).isLt
-    have h1 := (x (site i 1)).isLt
-    have h2 := (x (site i 2)).isLt
-    have h3 := (x (site i 3)).isLt
-    fin_cases k <;> norm_num [digit, windowCode] <;> omega
+    rw [hc, ← hv k]
+    exact he _ _ _ _ k
   have h0 := hd 0
   have h1 := hd 1
   have h2 := hd 2
@@ -501,8 +510,7 @@ private lemma window_single (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
       Matrix.single u v 1 (windowUpdate i x p) (windowUpdate i y q)) = _
   simp only [Matrix.single_apply, hi, Matrix.sum_apply, Matrix.smul_apply,
     smul_eq_mul, hri, hrj]
-  simp only [hsu, hsv, ite_and, mul_ite, mul_one, mul_zero,
-    Finset.sum_ite_irrel, Finset.sum_ite_eq, Finset.sum_ite_eq']
+  simp [hsu, hsv, ite_and, mul_ite, Finset.sum_ite_irrel]
 
 private lemma gauged_window (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
     (e : Fin 2) (x : Fin n → Fin 2) :
@@ -571,7 +579,9 @@ private lemma window_superoperator_action (n : ℕ) (i : Fin n)
     conv_lhs => rw [Matrix.matrix_eq_sum_single a]
     simp only [map_sum, hs, map_smul]
   have hv := congrArg (fun z : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ => z x y) ha
-  dsimp only [f] at hv
+  have hf (b : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) :
+      f b = windowChannel n i b := rfl
+  simp only [hf] at hv
   change (∑ p, windowSuperoperator n i (x, y) p * a p.1 p.2) = _
   simp only [windowSuperoperator]
   rw [Fintype.sum_prod_type]
@@ -764,11 +774,11 @@ private lemma transfer_path (h : Matrix (Fin 2) (Fin 2) ℂ) (m : ℕ) (a b : Fi
     (h ^ (m + 1)) a b = ∑ x : Fin m → Fin 2, ∏ j : Fin (m + 1),
       h (Fin.cons (α := fun _ => Fin 2) a x j) (Fin.snoc (α := fun _ => Fin 2) x b j) := by
   induction m generalizing b with
-  | zero => simp
+  | zero => simp <;> rfl
   | succ m ih =>
     rw [pow_succ, Matrix.mul_apply]
     simp_rw [ih, Finset.sum_mul]
-    rw [← Fintype.sum_prod_type]
+    rw [← Fintype.sum_prod_type']
     apply Fintype.sum_equiv (Fin.snocEquiv (fun _ : Fin (m + 1) => Fin 2))
     intro p
     change (∏ j : Fin (m + 1), h (Fin.cons (α := fun _ => Fin 2) a p.2 j) (Fin.snoc (α := fun _ => Fin 2) p.2 p.1 j)) * h p.1 b =
