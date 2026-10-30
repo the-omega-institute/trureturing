@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.XuYangMillsRemainder;
 internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The original general-parameter Mills target, regularity, Gamma coefficients, sharp origin obstruction, strict remainder moment bounds and closed kernel ranges.",
+        "The original general-parameter Mills target, regularity, Gamma coefficients, sharp origin obstruction, strict remainder moment bounds, closed kernel ranges and absolute Laplace control.",
         H("General-parameter Mills remainder classification"),
         Blocks(
             Describe.Lean(
@@ -110,6 +110,26 @@ internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
                 + "Linearity of the polynomial moment gives B_r=I_(r+1)-I_r. "
                 + "The coefficient is a strictly positive factor times a-theta_r. "
                 + "Both coefficient-sign equivalences include the zero endpoint."),
+            Proof("kernel-polynomial-bound", "kernel_polynomial_bound",
+                "Absolute polynomial bound for the signed kernel",
+                "For every r >= 0, every real a and t >= 0, the absolute value of L r a t "
+                + "is at most (abs(1-2a)+1) t^(2r+5). The source remainder order is r+1. "
+                + "The proof consumes the exact original Result.expRemainderBounds through "
+                + "E r y = Result.expRemainder (r+1) y. The coefficient weight is bounded "
+                + "in absolute value on [0,1], so this estimate holds without a sign restriction on a."),
+            Proof("kernel-exponential-moments", "kernel_exponential_moments",
+                "Every absolute exponential moment of the signed kernel",
+                "For every pair of natural orders r,m, every real a and every x>0, "
+                + "t^m exp(-xt) L r a t is absolutely integrable on t>0. "
+                + "The polynomial estimate is dominated by the existing exact exponential "
+                + "moment of order m+2r+5. The kernel is continuous for all real t."),
+            Proof("kernel-laplace-rec", "kernel_laplace_rec",
+                "Exact original Gamma coefficient in the Laplace recurrence",
+                "For every r>=0, real a and x>0, the Laplace integral of L (r+1) a "
+                + "equals -u_(r+3)(a,a-2)/x^(2r+6) minus the Laplace integral of L r a. "
+                + "The exact original exponential-remainder recurrence gives the polynomial "
+                + "kernel difference. Absolute integrability permits integral subtraction, "
+                + "and the original coefficient_identity identifies the polynomial moment."),
             Proof("gaussian-kernel-identity", "gaussian_kernel_identity",
                 "General-parameter Gaussian convolution kernel identity",
                 "For every real a and t, the source kernel G_a(t) equals "

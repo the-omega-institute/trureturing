@@ -337,5 +337,213 @@ def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
 
 end CoefficientFactorial
 
+namespace ExponentialRemainderIdentity
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature ℕ (fun _ => ℝ) (fun _ => ℝ)
+def actual : Realization signature :=
+  realize signature (fun _ r v => expRemainder r v) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ r : ℕ, ∀ v : ℝ, R.readout () r v = (-1:ℝ)^r *
+    (exp (-v) - ∑ j ∈ Finset.range r, (-v)^j / j.factorial)
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have H := h 0 0
+  norm_num [rejected, realize] at H
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨0, 0, 1, ?_⟩
+  change expRemainder 0 0 ≠ expRemainder 0 1
+  simp only [expRemainder_eq]
+  norm_num
+  exact fun h => (exp_injective h).elim (by norm_num)
+
+def family : Registration arena (type_of% @expRemainder_eq) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@expRemainder_eq, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@expRemainder_eq) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.XuYangMillsRemainder.Result.ExponentialRemainderIdentity.unit
+  realizationName := `Reg.D5.S3.Analytic.XuYangMillsRemainder.Result.ExponentialRemainderIdentity.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ r v => expRemainder r v)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.XuYangMillsRemainder.Result
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end ExponentialRemainderIdentity
+
+namespace ExponentialRemainderBound
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature ℕ (fun _ => ℝ) (fun _ => ℝ)
+def actual : Realization signature :=
+  realize signature (fun _ r v => expRemainder r v) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ r : ℕ, ∀ v : ℝ, 0 ≤ v →
+    0 ≤ R.readout () r v ∧ expRemainder r v ≤ v^r / r.factorial
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have H := (h 0 0 (by norm_num)).1
+  norm_num [rejected, realize] at H
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨0, 0, 1, ?_⟩
+  change expRemainder 0 0 ≠ expRemainder 0 1
+  simp only [expRemainder_eq]
+  norm_num
+  exact fun h => (exp_injective h).elim (by norm_num)
+
+def family : Registration arena (type_of% @expRemainderBounds) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@expRemainderBounds, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@expRemainderBounds) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.XuYangMillsRemainder.Result.ExponentialRemainderBound.unit
+  realizationName := `Reg.D5.S3.Analytic.XuYangMillsRemainder.Result.ExponentialRemainderBound.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ r v => expRemainder r v)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.XuYangMillsRemainder.Result
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "fn", "arg", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end ExponentialRemainderBound
+
+namespace ExponentialRemainderRecurrence
+
+abbrev signature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature ℕ (fun _ => ℝ) (fun _ => ℝ)
+def actual : Realization signature :=
+  realize signature (fun _ r v => expRemainder (r+1) v) (fun e => nomatch e)
+def rejected : Realization signature :=
+  realize signature (fun _ _ _ => -1) (fun e => nomatch e)
+def arena : Arena where
+  signature := signature
+  Law R := ∀ r : ℕ, ∀ v : ℝ, R.readout () r v =
+    v^r / r.factorial - expRemainder r v
+
+private theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have H := h 0 0
+  norm_num [rejected, realize, expRemainder_eq] at H
+
+private theorem dependence : ObservationalDependence signature actual := by
+  intro i
+  refine ⟨0, 0, 1, ?_⟩
+  change expRemainder 1 0 ≠ expRemainder 1 1
+  simp only [expRemainder_eq]
+  norm_num
+  have he := exp_pos (-1 : ℝ)
+  linarith
+
+def family : Registration arena (type_of% @expRemainderRec) where
+  actual := actual
+  bridge := Iff.rfl
+  variation := ⟨@expRemainderRec, rejected, rejected_law⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    arena.Law actual rejected rejected_law
+  dependence := dependence
+
+def audit : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@expRemainderRec) (Realization signature) Unit Unit where
+  unitName := `Reg.D5.S3.Analytic.XuYangMillsRemainder.Result.ExponentialRemainderRecurrence.unit
+  realizationName := `Reg.D5.S3.Analytic.XuYangMillsRemainder.Result.ExponentialRemainderRecurrence.family
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨family⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize signature (fun _ r v => expRemainder (r+1) v)
+    (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.XuYangMillsRemainder.Result
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "fn", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+end ExponentialRemainderRecurrence
+
 end
 end Reg.D5.S3.Analytic.XuYangMillsRemainder.Result

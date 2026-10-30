@@ -684,4 +684,225 @@ private theorem gaussian_kernel_identity (a t : ℝ) :
   intro v _
   ring
 
+/-! Absolute Laplace control and exact finite subtraction for every real parameter. -/
+
+private theorem e_original (r : ℕ) (y : ℝ) : E r y = expRemainder (r + 1) y := by
+  rw [expRemainder_eq]
+  rfl
+
+private theorem kernel_continuous (r : ℕ) (a : ℝ) : Continuous (L r a) := by
+  have hc : Continuous (fun p : ℝ × ℝ =>
+      ((1 - 2 * a) * p.2 ^ 2 - 1) * E r (p.1 ^ 2 / 4 * (1 + p.2 ^ 2))) :=
+    (by fun_prop : Continuous (fun p : ℝ × ℝ => (1 - 2 * a) * p.2 ^ 2 - 1)).mul
+      ((e_continuous r).comp (by fun_prop))
+  have hi := continuous_parametric_integral_of_continuous (μ := volume)
+    (f := fun t v : ℝ => ((1 - 2 * a) * v ^ 2 - 1) *
+      E r (t ^ 2 / 4 * (1 + v ^ 2))) hc (s := Icc (0 : ℝ) 1) isCompact_Icc
+  simp_rw [integral_Icc_eq_integral_Ioc,
+    ← intervalIntegral.integral_of_le (by norm_num : (0 : ℝ) ≤ 1)] at hi
+  exact (by fun_prop : Continuous (fun t : ℝ => t ^ 3 / 4)).mul hi
+
+private theorem kernel_polynomial_bound (r : ℕ) (a : ℝ) {t : ℝ} (ht : 0 ≤ t) :
+    ‖L r a t‖ ≤ (|1 - 2 * a| + 1) * t ^ (2 * r + 5) := by
+  have hb (v : ℝ) (hv : v ∈ Icc (0 : ℝ) 1) :
+      ‖((1 - 2 * a) * v ^ 2 - 1) * E r (t ^ 2 / 4 * (1 + v ^ 2))‖ ≤
+        (|1 - 2 * a| + 1) * t ^ (2 * (r + 1)) := by
+    have hv2 : v ^ 2 ≤ 1 := by nlinarith [hv.1, hv.2]
+    have hy : 0 ≤ t ^ 2 / 4 * (1 + v ^ 2) := by positivity
+    have hyt : t ^ 2 / 4 * (1 + v ^ 2) ≤ t ^ 2 := by nlinarith [sq_nonneg t]
+    have he := expRemainderBounds (r + 1) hy
+    rw [← e_original] at he
+    have he' : E r (t ^ 2 / 4 * (1 + v ^ 2)) ≤ t ^ (2 * (r + 1)) := by
+      calc
+        _ ≤ (t ^ 2 / 4 * (1 + v ^ 2)) ^ (r + 1) / (r + 1).factorial := he.2
+        _ ≤ (t ^ 2) ^ (r + 1) :=
+          (div_le_self (by positivity)
+            (by exact_mod_cast Nat.succ_le_of_lt (Nat.factorial_pos (r + 1)))).trans
+              (pow_le_pow_left₀ hy hyt _)
+        _ = _ := by rw [← pow_mul]
+    have hw : ‖(1 - 2 * a) * v ^ 2 - 1‖ ≤ |1 - 2 * a| + 1 := by
+      calc
+        _ ≤ ‖(1 - 2 * a) * v ^ 2‖ + ‖(1 : ℝ)‖ := norm_sub_le _ _
+        _ ≤ _ := by
+          rw [norm_mul, Real.norm_of_nonneg (sq_nonneg v), norm_one, Real.norm_eq_abs]
+          nlinarith [mul_le_of_le_one_right (abs_nonneg (1 - 2 * a)) hv2]
+    rw [norm_mul, Real.norm_of_nonneg he.1]
+    exact mul_le_mul hw he' he.1 (by positivity)
+  have hi := intervalIntegral.norm_integral_le_of_norm_le_const
+    (a := (0 : ℝ)) (b := 1) (C := (|1 - 2 * a| + 1) * t ^ (2 * (r + 1)))
+    (fun v hv => hb v (Ioc_subset_Icc_self
+      (by simpa only [uIoc_of_le zero_le_one] using hv)))
+  simp only [sub_zero, abs_one, mul_one] at hi
+  unfold L
+  rw [norm_mul, Real.norm_of_nonneg (by positivity : 0 ≤ t ^ 3 / 4)]
+  calc
+    _ ≤ t ^ 3 / 4 * ((|1 - 2 * a| + 1) * t ^ (2 * (r + 1))) :=
+      mul_le_mul_of_nonneg_left hi (by positivity)
+    _ ≤ (|1 - 2 * a| + 1) * t ^ (2 * r + 5) := by
+      rw [show 2 * r + 5 = 3 + 2 * (r + 1) by omega, pow_add]
+      nlinarith [mul_nonneg (pow_nonneg ht 3)
+        (mul_nonneg (by positivity : 0 ≤ |1 - 2 * a| + 1)
+          (pow_nonneg ht (2 * (r + 1))))]
+
+private theorem kernel_exponential_moments (r m : ℕ) (a : ℝ) {x : ℝ} (hx : 0 < x) :
+    IntegrableOn (fun t : ℝ => t ^ m * exp (-x * t) * L r a t) (Ioi 0) := by
+  have he := (TwoScaleEndpointMoments.exponential_moment x hx (m + 2 * r + 5)).1
+  simp only [← neg_mul] at he
+  apply (he.const_mul (|1 - 2 * a| + 1)).mono'
+    (((by fun_prop : Continuous (fun t : ℝ => t ^ m * exp (-x * t))).mul
+      (kernel_continuous r a)).aestronglyMeasurable)
+  filter_upwards [ae_restrict_mem measurableSet_Ioi] with t ht
+  change ‖t ^ m * exp (-x * t) * L r a t‖ ≤ _
+  rw [norm_mul, Real.norm_of_nonneg (mul_nonneg (pow_nonneg ht.le _) (exp_nonneg _))]
+  calc
+    _ ≤ t ^ m * exp (-x * t) * ((|1 - 2 * a| + 1) * t ^ (2 * r + 5)) :=
+      mul_le_mul_of_nonneg_left (kernel_polynomial_bound r a ht.le)
+        (mul_nonneg (pow_nonneg ht.le _) (exp_nonneg _))
+    _ = _ := by
+      rw [show m + 2 * r + 5 = m + (2 * r + 5) by omega, pow_add]
+      ring
+
+private theorem kernel_rec (r : ℕ) (a t : ℝ) :
+    L (r + 1) a t =
+      -(t ^ (2 * r + 5) / ((4 : ℝ) ^ (r + 2) * (r + 1).factorial) *
+        (I (r + 1) + (2 * a - 1) * B (r + 1))) - L r a t := by
+  have he (y : ℝ) : E (r + 1) y = y ^ (r + 1) / (r + 1).factorial - E r y := by
+    simpa only [e_original] using expRemainderRec (r + 1) y
+  have hc : Continuous (fun v : ℝ => ((1 - 2 * a) * v ^ 2 - 1) *
+      E r (t ^ 2 / 4 * (1 + v ^ 2))) :=
+    (by fun_prop : Continuous (fun v : ℝ => (1 - 2 * a) * v ^ 2 - 1)).mul
+      ((e_continuous r).comp (by fun_prop))
+  have hid (v : ℝ) : ((1 - 2 * a) * v ^ 2 - 1) *
+      E (r + 1) (t ^ 2 / 4 * (1 + v ^ 2)) =
+      -(t ^ (2 * (r + 1)) / ((4 : ℝ) ^ (r + 1) * (r + 1).factorial)) *
+        ((1 + v ^ 2) ^ (r + 1) + (2 * a - 1) * (v ^ 2 * (1 + v ^ 2) ^ (r + 1))) -
+      ((1 - 2 * a) * v ^ 2 - 1) * E r (t ^ 2 / 4 * (1 + v ^ 2)) := by
+    rw [he, mul_pow, div_pow, ← pow_mul]
+    ring
+  unfold L
+  simp_rw [hid]
+  rw [intervalIntegral.integral_sub (by apply Continuous.intervalIntegrable; fun_prop)
+      (hc.intervalIntegrable _ _), intervalIntegral.integral_const_mul,
+    intervalIntegral.integral_add (by apply Continuous.intervalIntegrable; fun_prop)
+      (by apply Continuous.intervalIntegrable; fun_prop), intervalIntegral.integral_const_mul]
+  change t ^ 3 / 4 * (_ * (I (r + 1) + (2 * a - 1) * B (r + 1)) - _) = _
+  rw [show 2 * r + 5 = 3 + 2 * (r + 1) by omega, pow_add,
+    show r + 2 = (r + 1) + 1 by omega, pow_succ (4 : ℝ)]
+  ring
+
+private theorem kernel_laplace_rec (r : ℕ) (a : ℝ) {x : ℝ} (hx : 0 < x) :
+    (∫ t in Ioi (0 : ℝ), exp (-x * t) * L (r + 1) a t) =
+      -u (r + 3) a (a - 2) / x ^ (2 * r + 6) -
+        ∫ t in Ioi (0 : ℝ), exp (-x * t) * L r a t := by
+  have hk : IntegrableOn (fun t : ℝ => exp (-x * t) * L r a t) (Ioi 0) := by
+    simpa only [pow_zero, one_mul] using kernel_exponential_moments r 0 a hx
+  have hm := TwoScaleEndpointMoments.exponential_moment x hx (2 * r + 5)
+  simp only [← neg_mul] at hm
+  let c := -(I (r + 1) + (2 * a - 1) * B (r + 1)) /
+    ((4 : ℝ) ^ (r + 2) * (r + 1).factorial)
+  calc
+    _ = ∫ t in Ioi (0 : ℝ), (t ^ (2 * r + 5) * exp (-x * t)) * c -
+        exp (-x * t) * L r a t := by
+      apply integral_congr_ae
+      filter_upwards with t
+      rw [kernel_rec]
+      dsimp [c]
+      ring
+    _ = (∫ t in Ioi (0 : ℝ), t ^ (2 * r + 5) * exp (-x * t)) * c -
+        ∫ t in Ioi (0 : ℝ), exp (-x * t) * L r a t := by
+      rw [integral_sub (hm.1.mul_const c) hk, integral_mul_const]
+    _ = _ := by
+      rw [hm.2, show r + 3 = (r + 1) + 2 by omega, coefficient_identity]
+      dsimp [c]
+      simp only [show 2 * (r + 1) + 3 = 2 * r + 5 by omega,
+        show 2 * r + 5 + 1 = 2 * r + 6 by omega,
+        show r + 1 + 1 = r + 2 by omega]
+      ring
+
+private theorem kernel_zero (a t : ℝ) :
+    L 0 a t = G a t - t ^ 3 / 4 * (I 0 + (2 * a - 1) * B 0) := by
+  have he (y : ℝ) : E 0 y = 1 - exp (-y) := by
+    rw [e_original, expRemainder_eq]
+    norm_num
+    ring
+  rw [gaussian_kernel_identity]
+  unfold L
+  simp_rw [he]
+  have hi : (∫ v in (0 : ℝ)..1, ((1 - 2 * a) * v ^ 2 - 1) *
+      (1 - exp (-(t ^ 2 / 4 * (1 + v ^ 2)))) ) =
+      (∫ v in (0 : ℝ)..1, (1 + (2 * a - 1) * v ^ 2) *
+        exp (-(1 + v ^ 2) * t ^ 2 / 4)) - (I 0 + (2 * a - 1) * B 0) := by
+    rw [show I 0 + (2 * a - 1) * B 0 =
+        ∫ v in (0 : ℝ)..1, 1 + (2 * a - 1) * v ^ 2 by
+      simp only [I, B, pow_zero, mul_one]
+      rw [intervalIntegral.integral_add (by apply Continuous.intervalIntegrable; fun_prop)
+        (by apply Continuous.intervalIntegrable; fun_prop), intervalIntegral.integral_const_mul]]
+    rw [← intervalIntegral.integral_sub (by apply Continuous.intervalIntegrable; fun_prop)
+      (by apply Continuous.intervalIntegrable; fun_prop)]
+    apply intervalIntegral.integral_congr
+    intro v _
+    rw [show -(t ^ 2 / 4 * (1 + v ^ 2)) = -(1 + v ^ 2) * t ^ 2 / 4 by ring]
+    ring
+  rw [hi]
+  ring
+
+private theorem gaussian_exponential_integrable (a : ℝ) {x : ℝ} (hx : 0 < x) :
+    IntegrableOn (fun t : ℝ => exp (-x * t) * G a t) (Ioi 0) := by
+  have hk : IntegrableOn (fun t : ℝ => exp (-x * t) * L 0 a t) (Ioi 0) := by
+    simpa only [pow_zero, one_mul] using kernel_exponential_moments 0 0 a hx
+  have hm := (TwoScaleEndpointMoments.exponential_moment x hx 3).1
+  simp only [← neg_mul] at hm
+  apply (hk.add (hm.mul_const ((I 0 + (2 * a - 1) * B 0) / 4))).congr
+  filter_upwards with t
+  rw [kernel_zero]
+  ring
+
+private theorem kernel_laplace_zero (a : ℝ) {x : ℝ} (hx : 0 < x) :
+    (∫ t in Ioi (0 : ℝ), exp (-x * t) * L 0 a t) =
+      (∫ t in Ioi (0 : ℝ), exp (-x * t) * G a t) - u 2 a (a - 2) / x ^ 4 := by
+  have hm := TwoScaleEndpointMoments.exponential_moment x hx 3
+  simp only [← neg_mul] at hm
+  calc
+    _ = ∫ t in Ioi (0 : ℝ), exp (-x * t) * G a t -
+        (t ^ 3 * exp (-x * t)) * ((I 0 + (2 * a - 1) * B 0) / 4) := by
+      apply integral_congr_ae
+      filter_upwards with t
+      rw [kernel_zero]
+      ring
+    _ = _ := by
+      rw [integral_sub (gaussian_exponential_integrable a hx) (hm.1.mul_const _),
+        integral_mul_const, hm.2]
+      have hu := coefficient_identity 0 a
+      norm_num at hu
+      rw [hu]
+      ring
+
+private theorem laplace_finite_subtraction (r : ℕ) (a : ℝ) {x : ℝ} (hx : 0 < x) :
+    (∫ t in Ioi (0 : ℝ), exp (-x * t) * L r a t) =
+      (-1 : ℝ) ^ (r + 2) *
+        ((∫ t in Ioi (0 : ℝ), exp (-x * t) * G a t) -
+          ∑ k ∈ Finset.Icc 1 (r + 2), (-1 : ℝ) ^ k * u k a (a - 2) / x ^ (2 * k)) := by
+  induction r with
+  | zero =>
+    simpa [show Finset.Icc 1 2 = {1, 2} by decide, coefficient_one_zero]
+      using kernel_laplace_zero a hx
+  | succ r ih =>
+    rw [kernel_laplace_rec, ih,
+      show r + 1 + 2 = (r + 2) + 1 by omega,
+      Finset.sum_Icc_succ_top (by omega : 1 ≤ (r + 2) + 1), pow_succ]
+    have hs : (-1 : ℝ) ^ (r + 2) * (-1 : ℝ) ^ (r + 2) = 1 := by
+      rw [← mul_pow]
+      norm_num
+    have hp : 2 * (r + 2 + 1) = 2 * r + 6 := by omega
+    simp only [pow_succ, hp]
+    linear_combination -(u (r + 3) a (a - 2) / x ^ (2 * r + 6)) * hs
+
+private theorem f_laplace_defect (r : ℕ) (a : ℝ) {x : ℝ} (hx : 0 < x) :
+    F (r + 2) a x - (∫ t in Ioi (0 : ℝ), exp (-x * t) * L r a t) =
+      (-1 : ℝ) ^ (r + 2) *
+        (Y a (a - 2) x - (a - 1) - ∫ t in Ioi (0 : ℝ), exp (-x * t) * G a t) := by
+  rw [laplace_finite_subtraction r a hx]
+  unfold F D
+  ring
+
 end D5.S3.Analytic.XuYangMillsRemainder.GeneralParameter

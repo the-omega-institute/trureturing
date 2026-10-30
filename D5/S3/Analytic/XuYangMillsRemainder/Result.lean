@@ -616,13 +616,13 @@ private lemma kernelLaplace {x : ℝ} (hx : 0 < x) (r : ℝ)
   rw [hk, ib1, ib0, ← hr2, ibh, ← hr]
   ring
 
-private def expRemainder (r : ℕ) (v : ℝ) : ℝ :=
+def expRemainder (r : ℕ) (v : ℝ) : ℝ :=
   (-1:ℝ)^r * (D5.S3.Analytic.ExpRemainderDifferences.R r (-v) + (-v)^r/r.factorial)
-private lemma expRemainder_eq (r : ℕ) (v : ℝ) :
+lemma expRemainder_eq (r : ℕ) (v : ℝ) :
     expRemainder r v = (-1:ℝ)^r * (exp (-v) - ∑ j ∈ Finset.range r, (-v)^j / j.factorial) := by
   simp only [expRemainder, D5.S3.Analytic.ExpRemainderDifferences.R, Finset.sum_range_succ]
   ring
-private lemma expRemainderBounds (r : ℕ) {v : ℝ} (hv : 0 ≤ v) :
+lemma expRemainderBounds (r : ℕ) {v : ℝ} (hv : 0 ≤ v) :
     0 ≤ expRemainder r v ∧ expRemainder r v ≤ v^r / r.factorial := by
   cases r with
   | zero => simpa [expRemainder_eq] using And.intro (exp_nonneg (-v)) (exp_le_one_iff.mpr (neg_nonpos.mpr hv))
@@ -667,7 +667,7 @@ private lemma expRemainderBounds (r : ℕ) {v : ℝ} (hv : 0 ≤ v) :
 private lemma expRemainderContinuous (r : ℕ) : Continuous (expRemainder r) := by
   unfold expRemainder D5.S3.Analytic.ExpRemainderDifferences.R
   fun_prop
-private lemma expRemainderRec (r : ℕ) (v : ℝ) :
+lemma expRemainderRec (r : ℕ) (v : ℝ) :
     expRemainder (r+1) v = v^r / r.factorial - expRemainder r v := by
   have hs : (-1:ℝ)^r * (-v)^r = v^r := by rw [← mul_pow]; congr 1; ring
   simp only [expRemainder_eq, Finset.sum_range_succ, pow_succ]
