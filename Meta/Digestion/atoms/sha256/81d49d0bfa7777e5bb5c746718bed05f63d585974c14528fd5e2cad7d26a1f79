@@ -1,0 +1,22 @@
+**Theorem 20.5 (Whole-child J injectivity on both open rectangles).**
+For every $(p,v)\in\mathcal B_6\cup\mathcal B_{10}$, the
+terminal function $a$ is injective on the entire actual $C(p,v)$.
+Thus $(\mathcal B_6\cup\mathcal B_{10})\cap D_J=\varnothing$.
+
+Proof. Take any actual world, including a singular $J$ label or an
+unused singular world, zero drift, $F_0=0$, a degree drop, or a gain
+with sampled or repeated roots. S, Theorem 4.1, first puts its
+$x>0$ on $R=0$. Lemma 20.3 puts it in one of the listed positive
+discs. Lemma 17.3 gives $f=K_{\rm s}=0$. The $\alpha_d$ table
+excludes zero throughout each positive real disc, so (20.5) fixes
+its drift uniquely. F, Lemma 30.2, fixes at most one complete world
+at that $(x,d)$. Two distinct worlds must therefore come from
+different discs. Their necessary $a$ intervals in Definition 20.4
+are pairwise disjoint within each rectangle, so they cannot have equal
+terminal $J$ values.
+
+This even retains the disc whose reconstruction is near $U=1,r=0$;
+its legality need not be decided. All positive carrier roots were
+covered before any source filtering, so the conclusion quantifies
+over the whole actual child. ∎
+

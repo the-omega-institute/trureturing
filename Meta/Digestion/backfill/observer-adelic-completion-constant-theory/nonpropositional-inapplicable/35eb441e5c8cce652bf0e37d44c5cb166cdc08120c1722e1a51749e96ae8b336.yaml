@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:35eb441e5c8cce652bf0e37d44c5cb166cdc08120c1722e1a51749e96ae8b336
+  normalized_sha256: sha256:35eb441e5c8cce652bf0e37d44c5cb166cdc08120c1722e1a51749e96ae8b336
+cas_ref: sha256:35eb441e5c8cce652bf0e37d44c5cb166cdc08120c1722e1a51749e96ae8b336
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列举完成参数 tau 的一种候选解释（观察记忆深度），没有提出关于该参数的数学断言。
+    previous_atom_id: fdcc09f1db3046aacf510695e5889e366bf4f394b95363b373af9170f7bb797c
+    next_atom_id: e6e6865a9960f71b8d3141918dff68b4fff24e5d457ece34136b11a94a31ec18

@@ -1,0 +1,34 @@
+**Proposition 85.3 (selected use and fresh measured-Time dynamics).** At
+least one initially readable terminal $s$ survives unchanged by the chosen
+omitted-cone repair, since $b\ge3$. Acquire the old physical value
+$q=x_a$ from the restored predictor and actually execute Add$(s,q)$;
+Hold; Read$(s)$. Its real field is $EFx$, where
+
+$$
+F=I+e_s e_a^{\mathsf T},\qquad
+\operatorname{reply}=x_s+x_a.
+\tag{85.1}
+$$
+
+This adds one Add, Hold and Read and two field ACKs, and is selected from
+the acquired state, not an external field-dependent selector.
+
+To obtain a **fresh measured** Time expression in Definition 85.1, actually
+rerun the entry assay and restoration on this same graph and old inclusion
+$E$, without another repair. Its new records and restored endpoint are
+
+$$
+y_{\rm new}=R_e F R_e^{-1}y,\qquad EFx.
+\tag{85.2}
+$$
+
+The rerun adds $N$ Reads, $M$ Adds, $H_e+L$ Ticks and
+$H_e+L+2$ Holds, in addition to the use call. Equation (85.2) follows
+from (84.2) with entrance $Fx$ and from the executed restoration. Each
+view inverse therefore transports this actually executed dynamics to every
+other view, and the corresponding squares commute by their common $x$.
+Algebraically computing (85.2) alone would be a computed record image,
+not newly performed measurements. Arbitrary controls may leave
+$\mathcal R$; full service continues, but the restricted historical
+inverse is then not asserted.
+

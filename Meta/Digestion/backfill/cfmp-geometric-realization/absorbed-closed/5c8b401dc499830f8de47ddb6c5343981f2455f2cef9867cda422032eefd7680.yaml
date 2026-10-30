@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5c8b401dc499830f8de47ddb6c5343981f2455f2cef9867cda422032eefd7680
+  normalized_sha256: sha256:5c8b401dc499830f8de47ddb6c5343981f2455f2cef9867cda422032eefd7680
+cas_ref: sha256:5c8b401dc499830f8de47ddb6c5343981f2455f2cef9867cda422032eefd7680
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/FourCycleEnvelopes.cosine_mixed_comparison
+    target_statement_id: sha256:9ae6c6f09583ef38991175c195a9144d82d81e75de4d3848e1f84cf8e1de53c5
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,23 @@
+**Proposition 8.4 (Minimum polynomial degree of a violation).** For every real $0<d\le\tfrac12$ and every polynomial $P\in\mathbb C[z]$ of degree at most three with $\|P''\|_{\mathbb D}\le1$,
+
+$$
+|L_d(P)|\le d.
+$$
+
+The bound is attained by $m_2$ and $m_3$. Consequently the minimum degree of a polynomial in $\mathscr E_2(\mathbb D)$ with $|L_d(P)|>d$ is exactly four, for each grid $W_d$. Stance: repo-derived.
+
+**Proof.** Write $P''(z)=A+Bz$ with $A,B\in\mathbb C$. Then $P=A m_2+B m_3+R$ for some affine polynomial $R$. Interpolation reproduces $R$, so $L_d(R)=0$, and Proposition 8.2 yields $L_d(P)=d(A+B)$. For complex $A,B$,
+
+$$
+\|A+Bz\|_{\mathbb D}=|A|+|B|.
+$$
+
+The upper bound is the triangle inequality. If $A$ and $B$ are both nonzero, equality is attained at $z=(A/|A|)(\overline B/|B|)$, which has modulus one and makes $Bz$ a nonnegative real multiple of $A$. If either coefficient is zero, equality is immediate. Therefore
+
+$$
+|L_d(P)|=d|A+B|\le d(|A|+|B|)
+=d\|P''\|_{\mathbb D}\le d.
+$$
+
+Theorem 8.3 provides a violating polynomial of degree four, and the preceding bound excludes every lower degree, including all complex coefficient choices. $\square$
+

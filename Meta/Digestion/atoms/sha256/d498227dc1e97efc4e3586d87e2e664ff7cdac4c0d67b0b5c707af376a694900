@@ -1,0 +1,23 @@
+# Hidden-coordinate recovery from original-source records
+
+This is a continuation of the original-source observation problem in
+[Free diffusion quotient rigidity, §§7, 11–12, 18 and 24–28][F].
+It concerns that source's actual hidden $z$-coordinate, not an additional
+native control or a proposed physical dimension. There are two different
+results. A causal stopped visible record has a Lebesgue-equivalent hidden
+coordinate law away from contact. Separately, reflection of the entire
+non-Friedrichs endpoint gives an exact sign-risk statement even when the
+whole held output history is supplied. The proofs have different
+information and time domains.
+
+The arguments are ordinary mathematics relative to the named analytic
+suppliers. They are `repo-derived` source-specific deductions, with no
+claim of Lean verification or worldwide priority. This continuation has
+only appendable numbered sections; subsequent additions belong after its
+final append anchor.
+
+[F]: FIB_NATIVE_FREE_DIFFUSION_QUOTIENT_RIGIDITY.md
+[E]: FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX.md
+[S]: FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III_APPENDIX_II.md
+[G]: FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_III.md
+

@@ -1,0 +1,40 @@
+**Proposition 141.2 (Scope of the separation and the remaining optimization question).**
+The source-image distances in (140.8) do not supply a lower bound
+on the nonlinear optimum difference $\nu_a-\mu_a$ of §126.
+They supply no nonlinear minimizer, equality of nonlinear minima,
+positive physical optimum gap, or endpoint type from §132.
+For the sources considered here the applicable bound on that
+optimum difference remains (138.7), on its stated interval.
+An actual source-specific global nonlinear argmin and active-row
+certificate, or a concrete positive-gap source outside this
+reflection obstruction, is a separate unresolved mathematical
+requirement.
+
+*Proof.* The infima in $\mu_a,\nu_a$ are norms of actual residuals
+in their respective physical parameter sets. In contrast, (140.8)
+is the distance of a specified interior vector $Y_\zeta$ from all
+physical residuals, and Theorem 140.1 excludes that vector from
+the feasible image. There is no minimizing or active-row identity
+in (139.5), (140.2) or (140.8) relating this external distance to
+either physical infimum. The available comparison of those two
+infima is precisely Corollary 138.2. The classification in
+Theorem 139.2 describes feasibility of numerical averages and
+does not change either optimization domain.
+
+The relevant convexity intermediary is Gatermann–Parrilo,
+[*Symmetry groups, semidefinite programs, and sums of squares*,
+arXiv:math/0211450v1, §3, Definition 3.1 and Theorem
+3.3](https://arxiv.org/pdf/math/0211450v1). Their theorem assumes
+invariance of the feasible semidefinite set and objective under
+a finite orthogonal group representation; convexity makes the
+Reynolds average feasible. The paragraph following the proof
+explicitly distinguishes the nonconvex case, where symmetric
+minimizers need not exist. Here Theorem 140.1 gives the exact
+source-specific rank-two obstruction, and Theorem 139.2 classifies
+all feasible numerical averages, beyond a general nonconvexity
+caveat. The literature supplies these intermediate ideas, not a
+global nonlinear certificate for the present original source.
+All theorems above are conditional on their stated original source
+and return premises and make no assertion of global originality
+or resolution of an external named open problem. $\square$
+

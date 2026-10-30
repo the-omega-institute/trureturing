@@ -1,0 +1,54 @@
+**Proposition 11.1 (what the noncompact conclusion observes).** The
+covering law and localization of Theorem 10.1 retain the native
+current-observation distinction, and add no physical spatial directions
+or acquisition procedure.
+
+Proof. Every original present-ray observable pulls back to a
+$2\pi\mathbb Z^2$-invariant function. Distinct deck translates therefore
+give identical original current observations. A supplied entire continuous
+wrapped path and initial representatives determine its unique lift;
+for original numerical histories (9.3) computes that lift already.
+These assertions require path information, not just its terminal ray.
+Neither assertion provides an observer with freely acquired unwrapped
+phases. The analytic diffusion (10.9) remains additional stochastic
+structure, not an absolutely continuous native command.
+
+A nonzero periodic amplitude cannot belong to $L^2(\widetilde\Omega)$:
+its identical nonzero squared mass would repeat over infinitely many
+fundamental cells. The attained nonperiodic amplitude is consequently
+an analytic state on the added cover, not a prepared five-mode ray or an
+original current-ray observable. A single lifted source is also
+additional information: its positive field tends to zero at phase
+infinity and so is not deck invariant. Only the periodized sum (10.2)
+recovers the original torus source. In particular the single-source
+attractive operator does not descend as the original periodic attraction.
+The free law does descend, with exactly the same killing and clock.
+
+The strict range compares the attractive bottom with its own actual
+essential bottom, both for that single full field. It gives positive
+absolute energy and a strictly positive gap below $\lambda_D$, without
+a sharp coupling, gap asymptotic or estimate uniform as
+$\varepsilon\downarrow0$. The state dimension three, two primitive
+controls, two lifted phase directions, local homogeneous dimension four
+and physical axes remain different quantities. This conclusion supplies
+the specified noncompact analytic bridge to §§7.2--7.3; it selects no
+means or physical realization and completes no why-three claim.
+$\square$
+
+**Mathematical citation 11.2 (scope and exact supplier correspondence).**
+The native inputs [N, §§8--9],
+[Observation quotient, Definitions 1.1--1.3](FIB_NATIVE_OBSERVATION_QUOTIENT_GREEN_ESCAPE.md),
+and the guarded-lift source cited in Definition 9.1 are used at immutable
+revision $\mathtt{8464cb20c1ef0954d4561a3d5c4855de289c0e5a}$.
+They supply the actual torus, arbitrary preparation, numerical histories,
+whole-height guards and distinction between current state and path.
+Definitions 4.1--4.2 supply the exact fields and normalization; Theorem
+5.1 supplies compact-domain stability, not the noncompact conclusion.
+
+| Primary supplier | Applied scope and remaining native work |
+| --- | --- |
+| [R] Ciatti--Cowling--Ricci, arXiv:1308.2373v1, §2 and Corollary 3.2 | The full-group unit-source heat integral and unweighted Hardy inequality are reused with $U,V$, Haar measure, $Q_{\rm vol}=4$, $p=2,\alpha=1$. The global slab map has density $j$, producing precisely $j^{-1}C_H=2rC_H/\varepsilon^2$. |
+| [H] Colin de Verdière--Hillairet--Trélat, DOI 10.5802/ahl.93, §3.1.2 and Theorem 3.2 | Smooth bracket-generating fields, zero drift and potential, identical local density and selfadjoint contraction realizations give the heat setting and local comparison. Domination, integrability and tails here also use the actual global slab and height law. |
+| [T] Teschl, 2009 edition, Theorems 6.24 and 4.10 | The verified relative form bound is $g/g_*<1$ with additive bound zero; KLMN preserves precisely $\widetilde{\mathcal F}$. Form min-max is used with the disjoint native product tests after the exterior lower bound is proved. |
+| Lenz--Stollmann--Wingert, *Compactness of Schrödinger semigroups*, [arXiv:0903.0280v2](https://arxiv.org/pdf/0903.0280v2), Theorem 1.3 | For bounded $\mathbf1_E$ and nonnegative selfadjoint $\widetilde L$, the verified localized Hilbert--Schmidt heat estimate gives compact restriction of the free form domain. It does not assert compactness of the full Green multiplier. |
+| Hoang--Hundertmark--Richter--Vugalter, *Quantitative bounds versus existence of weakly coupled bound states for Schrödinger type operators*, [arXiv:1610.09891v2](https://arxiv.org/pdf/1610.09891v2), Theorem 1.1 and Remarks 1.2 | These are established weak-binding context for scalar Fourier kinetic symbols, with relative form compactness among their hypotheses. Those hypotheses are not imported for the singular native multiplier. The actual height-mode trial and essential-threshold/no-escape estimates are (10.11)--(10.17). |

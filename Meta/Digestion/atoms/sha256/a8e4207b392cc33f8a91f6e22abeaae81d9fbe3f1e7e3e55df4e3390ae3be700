@@ -1,0 +1,20 @@
+**定义 7.1（历史 Hilbert 空间与长度算子）。** 对有限非空字母表 $\Sigma$，令 $\mathcal H_{\mathrm{hist}}=\ell^2(\Sigma^*)$，正交基为 $|w\rangle$。右追加 $S_g|w\rangle=|wg\rangle$，长度乘法算子为 $N|w\rangle=|w||w\rangle$，其自然定义域是
+
+$$
+\mathcal D(N)=\left\{\sum_w a_w|w\rangle:\sum_w|w|^2|a_w|^2<\infty\right\}.
+$$
+
+这是自由半群的标准右移表示；它用于把第 3 节的历史箭头与系统算子逆分开。$S_g$ 是等距，$S_g^\dagger$ 删除末尾 $g$，在其他基向量上取零。因此
+
+$$
+S_g^\dagger S_g=I,\qquad
+S_gS_g^\dagger=P_{\text{末尾为 }g}\ne I.
+$$
+
+有限支撑向量构成 $N,S_g,S_g^\dagger$ 的共同不变稠密定义域，在这个域上直接算基向量得 $NS_g-S_gN=S_g$。这是无界算子恒等式的定义域陈述，不能写成全空间有界算子等式。即使系统门 $U_{\bar g}=U_g^{-1}$，历史追加也有
+
+$$
+S_{\bar g}S_g|w\rangle=|wg\bar g\rangle\ne|w\rangle,
+\qquad S_{\bar g}\ne S_g^\dagger.
+$$
+

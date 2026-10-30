@@ -1,0 +1,76 @@
+**Convention 17.3 (resources, suppliers and remaining scope).** The
+retained variable numerical fields are four reals before the extension
+and six after it, with their displayed constraints; action/channel
+labels and the fixed model are public. Exact $p,v$ remain potentially
+infinite-precision references, as do the declared real substitutes
+and radii. These field and action/read counts are not bounded-bit
+memory, arithmetic, execution-time or optimality claims. In particular
+a compatible set is not an acquired list, a partial mathematical
+inverse is not a finite-input decoder, and response evaluation in
+(15.3) is not an authorized future call. Neither the inverse Lipschitz
+estimate nor the noise relation installs source acquisition, selection,
+retained accessibility or continued callable use. No future rights
+are added to the original one-step port.
+
+The new quantitative deductions are (13.1), their last-retention
+consequences on the same $S_R$, the full-preimage estimate (15.4),
+the uniform clocked response estimate (15.7), and the actual
+noncancelling common-record witnesses (16.2)–(16.10). They are
+`repo-derived` ordinary mathematics. The exact germ and its derivatives,
+compact exhaustion, center inventory, remote analytic branch, original
+eighth responses and their tangent/response bands are reused from
+§§3 and 9 and the pinned VI. Closed intervals and their midpoint
+criterion are reused from Lemma 5.3. The inverse-function theorem,
+convex mean value inequality, polynomial interpolation, spectral
+decomposition and domination of polynomials by exponentials are
+classical tools, not additional source-specific discoveries.
+
+For the calculus suppliers, the repository's pinned mathlib revision
+`56a005855ea17e0b0958f73ec801ae140b0a1679` contains
+`HasStrictFDerivAt.to_localInverse` in
+`Mathlib/Analysis/Calculus/InverseFunctionTheorem/FDeriv.lean`,
+`ApproximatesLinearOn.antilipschitzWith` in its
+`ApproximatesLinearOn.lean` companion, and
+`Convex.norm_image_sub_le_of_norm_fderiv_le` in
+`Mathlib/Analysis/Calculus/MeanValue.lean`. Their inverse-derivative and
+convex derivative-bound hypotheses are met here by the displayed
+nonzero Jacobians and the analytic lifts on neighborhoods of compact
+rectangles. The kernel/effective-image and predictive-memory
+suppliers of Convention 7.2 remain general factorization tools;
+they supply neither these source-specific estimates nor an acquisition
+or update implementation. The distinct-node interpolation attribution
+in §11 is unchanged, as are the unavailable book contexts in §8.3.
+These deductions assert no literature-wide priority.
+
+The later VII, §§36–39, and VIII, §§30–34, at
+`c8ae6f747aeb40c61f9d135f171011de99a12c99` retain their own exact
+source contracts. VII's fixed-drift exclusion does not identify the
+clock-eight response or impose a calibrated drift on this domain.
+VIII's distinguished H/L arc has $10\le p\le34$, whereas this domain
+has $p$ near $7.283036$. Its endpoint classification does not restrict
+the entire children here to that arc or remove the remote companion.
+The moving-trace recovery and polynomial-gain shear-calibration
+volumes at `e1a5759d74d7b8f1b6faad61f47a85859b385fd1` likewise
+have their stated calibration histories and, for the latter, a different
+read-clock/compound-word contract. Their recovery constructions are
+not a retention or future-sensitivity theorem for this fixed prefix.
+The finite-start predictive-memory volume at that revision uses a
+passive five-mode stochastic source and future-law distance; its
+exact ambiguous-branch metric is not the numerical-response metric
+of (15.3).
+
+The precise gain over NCR/PVC/PR57/PG/Atlas in Convention 7.3 is this
+source-specific quantitative boundary/retention/dynamics bridge under
+the original clock law, not an additional installation or serialization
+service. A clock word alone is not a source identifier. Under positive
+retention errors the common record of Theorem 16.2 does not determine
+the future responses; at a safe record the proved reconstruction is
+only the stated conditional mathematical one. Thus no four isolated
+view kernels are asserted equal, and no four-way mutual recovery or
+universal alpha/beta generation of this process follows. All earlier
+fixed-$G_{gc}$, original-$Q$, parked-consumer, initialization-specific
+and global incidence questions keep their original scopes and
+settlements. Unknown-source acquisition, finite-input recovery,
+installed lawful continuation and the full four-expression objective
+remain unresolved.
+

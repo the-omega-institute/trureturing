@@ -1,0 +1,73 @@
+## 25. Mathematical suppliers, comparison and remaining scope
+
+The exact strict arcs, their response signs, the exclusion of
+zero-drift negative-response sources and the uniqueness at fixed
+F0 tail ratio are supplied by the proof of S, Theorem 3.2. Its
+M-injectivity theorem concerns the exceptional subfamily; it does not
+assert that every other companion is absent. S, Theorem 4.1, supplies
+the carrier for every actual companion. F, Lemma 30.2 and Sections
+31, 34–36, supply its normalization and faithful original-world
+meaning. X, (14.8)–(14.10), supplies the undivided quadratic; the
+new sign domains (21.4)–(21.8) consume that same quadratic.
+The new conclusion is the entire-child singleton assertion on the
+whole negative nonzero-drift F0 component, obtained from the explicit
+closed-interval response and root-variation bounds above.
+
+S, Theorem 7.4, gives a singleton neighborhood of its limiting base,
+without a radius covering this component. Support VII, Theorems
+25.1–25.2 and Sections 28–30, give the two exact critical singleton
+children and M-injectivity on unspecified open base neighborhoods.
+Support XI, Sections 7–8, gives the attached finite second-J arc,
+its singular passage and its closed-rectangle entire-child M
+exclusion. X, Section 14, already classifies its first negative-J
+family. None of those source assertions is rederived or identified
+with the F0 component here. The known exact $p_J$ conclusion remains
+F, Theorems 24.2–24.3.
+
+The algebra in (20.4) is ordinary quadratic-algebra arithmetic.
+The Bernstein identity (21.3), positivity of its basis and
+Descartes' multiplicity bound are classical. For the latter two
+methods and their fractional-linear relation, see B. Mourrain,
+F. Rouillier and M.-F. Roy, *Bernstein's basis and real root isolation*,
+INRIA RR-5149, Theorem 1.1 and Propositions 2.3–2.4,
+[primary text](https://inria.hal.science/inria-00071434/document).
+The tensor positivity used here follows directly by multiplying the
+one-variable identity displayed after (21.3). The fixed resultant
+construction is the Sylvester determinant; see M. Moreno Maza,
+*The resultant*, Definition 4 and Propositions 5–7,
+[primary text](https://www.csd.uwo.ca/~mmorenom/AM583/Lectures/ResultantGcd.html/node3.html).
+It is used only through the owning polynomial and all-world theorem,
+without a converse from resultant vanishing. These standard methods
+supply no FIB-specific singleton theorem. The source comparison is
+with the named published results; no worldwide priority assertion
+is made.
+
+The decided class is inhabited: the exact $t=1/2$ world in the proof
+of S, Theorem 3.2, has $b=7$, $r=4-(5/2)\sqrt2$, nonzero drift,
+negative fifth response
+
+$$
+p_0=\frac{10179984-26282025\sqrt2}{292969},\qquad
+v_0=6p_0+75/2,
+$$
+
+and $F_0(1/2,p_0,v_0)=0$. That published world supplies nonvacuity;
+the uniform conclusion is not inferred from this one point.
+
+The positive-response nonzero-drift F0 component, Q24 points without
+an actual locator, and every other actual or retained T24 stratum
+retain their original lifting questions. Regular–regular terminal-M
+joint incidence outside the decided locus is unaffected. No bases
+from different responses or branches have been pooled. Every world
+used in a child has the actual common history (19.2), hence its
+actual ancestor under the original actions; a projected compatibility
+condition has not been substituted for that history.
+The fixed48 assertion V(18.12)(i), rootQ, genuine common-parent and
+ancestor obligations, the other child at a given fifth response, and
+the full original deterministic history-dependent eight/nine-read
+problem, including early stopping and complete-target answers, retain
+their original quantifiers. The result introduces no reset, copy,
+idle or skipped read, unread composite action, extra port or clock
+renumbering. It is an ordinary mathematical conclusion in the stated
+world model, with no additional recovery or physical-realization claim.
+

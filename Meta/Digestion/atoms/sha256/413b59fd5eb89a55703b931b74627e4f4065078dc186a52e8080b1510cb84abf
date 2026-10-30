@@ -1,0 +1,58 @@
+**Lemma 117.3 (bounded averaged displacement of serial ingress).**
+For every $n\ge0$, finite $m\ge n$ and final field $z$, with
+$g=z|_{V_n}$,
+
+$$
+\|T_{n,m}z-g\|_{\mu_n}
+ \le\sqrt{\frac2{7N_n}}\sqrt{\mathfrak a_m(z,z)}.
+\tag{117.11}
+$$
+
+The estimate concerns the literal chronological $P_{n,m}$, even when
+its raw Hilbert norm is large.
+
+Proof. After cancelling the global factors $r_j$, the counting kernel
+$Q_{n,m}$ is the chronological product of $r_j^{-1}C_j$.
+At an actual beta split its mass is divided equally among the retained
+parent and its two born children. At an alpha-to-beta step or an
+internal vertex it remains at that very address. Once a parent has
+become internal its retained third stays there in all later factors.
+Every column is therefore a probability supported in its actual
+ancestry fibre. An old internal vertex has its point-mass column.
+
+Fix an old leaf $x$. For every actual descendant edge $e$ in its final
+fibre, let $d(e)\ge1$ be the depth of its child below $x$. Exactly
+$d(e)$ genuine branch splits are needed along that path. Each sends
+one third of the incoming mass to the selected child, and no subsequent
+split moves mass out of that child's subtree. Hence the total final
+column mass below $e$ is exactly $3^{-d(e)}$. Waiting at an alpha
+changes the birth epoch but not this coefficient. Finite path summation
+therefore gives
+
+$$
+(T_{n,m}z)(x)-z(x)
+ =\sum_{e\text{ strictly below }x}3^{-d(e)}\nabla_ez,
+\qquad
+\sum_{e\text{ strictly below }x}3^{-2d(e)}
+ \le\sum_{d\ge1}2^d3^{-2d}=\frac27.
+\tag{117.12}
+$$
+
+The edge sum on the left is finite. The convergent geometric series
+only bounds it; no infinite or completed source is introduced.
+Cauchy--Schwarz bounds the square of the first expression by
+$\frac27\sum_{e\text{ below }x}|\nabla_ez|^2$.
+The descendant edge sets of different old leaves are disjoint, while
+the difference vanishes at every old internal vertex. Sum over all
+old vertices and divide by $N_n$ to obtain (117.11). This also handles
+an empty born set and an unchanged singleton. $\square$
+
+For example, start from the beta singleton and take two accepted steps.
+The final five addresses are $\varepsilon,L,R,LL,LR$. The one counting
+column has weights $1/3,1/9,1/3,1/9,1/9$ in that order. They sum to one
+and are not the uniform final-fibre weights $1/5$. Thus (117.12) has
+not replaced serial ingress by final-fibre redistribution. At a permanent
+old internal root the known raw amplification
+$\sqrt{N_m/N_n}$ is compatible with (117.11), which bounds its
+energy-tested adjoint rather than the raw ingress norm.
+

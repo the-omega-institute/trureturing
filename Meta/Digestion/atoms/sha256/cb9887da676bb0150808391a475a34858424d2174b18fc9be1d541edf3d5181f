@@ -1,0 +1,40 @@
+## 2. law 商塔与真实来源像
+
+每个 $A_n^{\mathrm{law}}$ 都是保持类型的等价关系。定义
+
+$$
+C_n^A=Z/A_n^{\mathrm{law}},
+\qquad
+a_n:Z\longrightarrow C_n^A,\quad a_n(z)=[z]_{A_n^{\mathrm{law}}}.
+$$
+
+由于 $A_{n+1}^{\mathrm{law}}\subseteq A_n^{\mathrm{law}}$，有 bonding 映射
+
+$$
+s_n:C_{n+1}^A\longrightarrow C_n^A,
+\qquad
+s_n([z]_{A_{n+1}^{\mathrm{law}}})
+=[z]_{A_n^{\mathrm{law}}},
+\tag{MPC.4}
+$$
+
+且 $s_n a_{n+1}=a_n$。令
+
+$$
+L_A=\varprojlim C_n^A
+$$
+
+为 law 完成空间，并定义
+
+$$
+\theta:C_{\mathscr T}\longrightarrow L_A,
+\qquad
+C_{\mathscr T}:=Z/\sim_{\mathscr T},
+\qquad
+\theta([z]_{\sim_{\mathscr T}})
+=(a_0(z),a_1(z),\ldots).
+\tag{MPC.5}
+$$
+
+令 $B_A=\theta[C_{\mathscr T}]$，称为真实 law 来源像。
+

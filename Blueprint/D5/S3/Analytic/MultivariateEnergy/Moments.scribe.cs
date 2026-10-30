@@ -1,0 +1,58 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.MultivariateEnergy;
+
+internal sealed class MomentsDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Orthogonal invariance and second moments of normalized spherical measure.",
+        H("Spherical moments"), Blocks(
+            Describe.Lean(DescribeId.Create("multivariate-energy-orthogonal-surface-invariance"),
+                DeclarationHandle.Create("D5/S3/Analytic/MultivariateEnergy/Moments.measurePreserving_sphereAction"),
+                H("Orthogonal invariance of surface measure"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every real linear isometric equivalence preserves normalized surface measure. The radial cones of transformed spherical sets are the corresponding transformed radial cones. Volume preservation therefore implies preservation of the spherical measure and its normalization."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("multivariate-energy-feature-continuity"),
+                DeclarationHandle.Create("D5/S3/Analytic/MultivariateEnergy/Moments.continuous_A"),
+                H("Continuity of the centered matrix feature"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Each entry of the centered rank-one matrix is a product of two coordinates minus a constant, so the matrix feature is continuous."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("multivariate-energy-feature-integrability"),
+                DeclarationHandle.Create("D5/S3/Analytic/MultivariateEnergy/Moments.integrable_A"),
+                H("Integrability for finite measures"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The unit sphere is compact. Every entry of the continuous matrix feature is consequently integrable against any finite Borel measure, and coordinatewise integrability gives matrix integrability."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("multivariate-energy-spherical-covariance"),
+                DeclarationHandle.Create("D5/S3/Analytic/MultivariateEnergy/Moments.integral_coord_mul_coord"),
+                H("The exact spherical second moment"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every positive dimension d, the integral of x(i)x(j) against normalized surface measure is zero for distinct coordinates and is 1/d for equal coordinates. Reflection in one coordinate gives the vanishing off-diagonal entries. Coordinate transpositions make all diagonal entries equal, while their sum is the integral of the squared norm, hence one."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("multivariate-energy-centered-feature-mean"),
+                DeclarationHandle.Create("D5/S3/Analytic/MultivariateEnergy/Moments.integral_A_eq_zero"),
+                H("The centered feature has zero average"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The integral of xx transpose is I/d. Subtracting I/d entrywise therefore gives zero matrix average for the centered feature A."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("multivariate-energy-pair-trace-polynomial"),
+                DeclarationHandle.Create("D5/S3/Analytic/MultivariateEnergy/Moments.L_eq"),
+                H("The pair trace polynomial"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The pair trace is the square of the Euclidean inner product minus 1/d."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("multivariate-energy-triple-trace-polynomial"),
+                DeclarationHandle.Create("D5/S3/Analytic/MultivariateEnergy/Moments.T_eq"),
+                H("The triple trace polynomial"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The triple trace is the product of the three pairwise inner products, minus the sum of their squares divided by d, plus 2 divided by d squared. The polynomial exhibits full symmetry and orthogonal invariance."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("multivariate-energy-three-input-admissibility"),
+                DeclarationHandle.Create("D5/S3/Analytic/MultivariateEnergy/Moments.isAdmissible_familyKernel_three"),
+                H("Admissibility of the three-input family"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("In every positive dimension and for every real beta, the three-input family is continuous, invariant under all permutations of its inputs, and invariant under every orthogonal transformation. Orthogonal invariance also implies invariance under the special orthogonal group."))),
+                DescribeRole.Theorem))));
+}

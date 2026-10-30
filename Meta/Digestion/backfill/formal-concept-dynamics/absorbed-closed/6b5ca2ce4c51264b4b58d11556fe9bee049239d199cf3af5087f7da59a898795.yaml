@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6b5ca2ce4c51264b4b58d11556fe9bee049239d199cf3af5087f7da59a898795
+  normalized_sha256: sha256:6b5ca2ce4c51264b4b58d11556fe9bee049239d199cf3af5087f7da59a898795
+cas_ref: sha256:6b5ca2ce4c51264b4b58d11556fe9bee049239d199cf3af5087f7da59a898795
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/MoralLuck/MoralLuckDescent.ControlPrinciple
+    target_statement_id: sha256:ab6780a7c0bac1e654cba0e15d76dcac92429e818cf18b2d14341573647ca1b6
+receipts:
+  unresolved_subitems: []

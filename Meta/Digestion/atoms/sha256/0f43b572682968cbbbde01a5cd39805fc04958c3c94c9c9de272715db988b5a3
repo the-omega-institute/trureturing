@@ -1,0 +1,31 @@
+**Proposition 72.3 (precise gain over destructive normalization).**
+The source-resident distinction of Theorem 72.2 is absent from the
+normalization $\nu$ of §54 on each of its nontrivial fixed-skeleton leaf
+fibres. If all other accessible distinctions are genuinely cleared, a
+common deterministic future guard controller cannot recover every entry
+in such a fibre from the normalized source. This comparison concerns
+entry recovery after clearing, not the full resource optimality of either
+procedure.
+
+Proof. On a fixed ordered skeleton, fix all forced left-ending beta
+leaves and vary $m$ eligible root/right-ending leaf labels. These give
+$2^m$ reachable entries and the same actual normalized term: $\nu$ makes
+every leaf beta. With common attachment, authority, cleared accessible
+state and future input, the next actual guard reply is the same in all
+these worlds. The resulting source and receiver states remain equal
+modulo opaque fresh-name spelling. Induction gives the same complete
+finite future, so an exact different entry answer in every world is
+impossible. This is the fibre/pigeonhole obstruction already used in
+§§57 and 59; in particular a fixed-width accessible supplement resolving
+this fibre would require at least $m$ bits. No new general information
+lower bound is needed here.
+
+In contrast $J$ is injective on this fibre and Theorem 72.2 supplies an
+actual guard-only second acquisition and decoder. Merely deleting the
+second of two private words from the normalization procedure would not
+supply this property: an uncleared entry word already computes its
+normalized endpoint, whereas the stated comparison clears that word as
+well. Neither procedure's distinct endpoint or continuation interface
+can be substituted into a fixed-endpoint/original-interface optimum.
+$\square$
+

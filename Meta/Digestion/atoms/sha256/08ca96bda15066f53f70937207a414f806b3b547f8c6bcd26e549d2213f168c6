@@ -1,0 +1,24 @@
+**Lemma 129.2 (deterministic-fibre identity and its source indices).**
+For every $u\in\mathcal T$ and every compatible step, let
+$\pi_e:V_{e+1}\to V_e$ fix old vertices and send each child to its actual
+parent. Then, for all $x\in V_{e+1}$ and $y\in V_e$,
+
+$$
+\sum_{z:\pi_e(z)=y}Q_{e+1}(x,z)=Q_e(\pi_e(x),y).
+\tag{129.2}
+$$
+
+This identity holds also for nonzero $q_e$ and for empty births. For
+$j\ge0$ write
+$\pi_{e,e+j}=\pi_e\circ\cdots\circ\pi_{e+j-1}$, with the identity for
+$j=0$. Iterating (129.2) gives the corresponding identity over each
+composite fibre.
+
+**Proof.** The matrix of $T_e$ has entry
+$T_e(z,y)=\mathbf1_{\{\pi_e(z)=y\}}$. Therefore the $(x,y)$ entry of
+$Q_{e+1}T_e=T_eQ_e$, which is exactly signed generator intertwining,
+is (129.2). Applying this to the product of the successive $T_e$ gives
+the composite identity; the product is the pullback along
+$\pi_{e,e+j}$. This derives the fibre formula directly, rather than
+assuming a probabilistic interpretation of the chart. $\square$
+

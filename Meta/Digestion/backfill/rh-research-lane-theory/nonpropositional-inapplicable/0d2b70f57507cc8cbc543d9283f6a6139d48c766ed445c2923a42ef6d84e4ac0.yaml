@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0d2b70f57507cc8cbc543d9283f6a6139d48c766ed445c2923a42ef6d84e4ac0
+  normalized_sha256: sha256:0d2b70f57507cc8cbc543d9283f6a6139d48c766ed445c2923a42ef6d84e4ac0
+cas_ref: sha256:0d2b70f57507cc8cbc543d9283f6a6139d48c766ed445c2923a42ef6d84e4ac0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅有“应复用的数学真源”标题和空表头；各结果在后续行中。
+    previous_atom_id: d118259c01cbaba029f751c0011a8ff19ec82493f74228aaaf45ee50e3b84d49
+    next_atom_id: cb23c3723967d0e892c8c5dc61eb95e194c6dfd876d9818c6831b05084d68544

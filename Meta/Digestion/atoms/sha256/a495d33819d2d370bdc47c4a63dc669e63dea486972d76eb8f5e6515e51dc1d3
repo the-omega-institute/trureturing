@@ -1,0 +1,40 @@
+### 定理 2.2（任务族的最小充分摘要）
+
+摘要 $q:S\to Q$ 能准确支持任务族 $\Gamma$ 的全部读数，当且仅当
+
+$$
+\ker q\subseteq R_\Gamma.
+\tag{2.1}
+$$
+
+在此条件下，每个 $f\in\Gamma$ 都唯一下降为
+
+$$
+\overline f:q(S)\to O_f,
+\qquad
+f=\overline f\circ q.
+$$
+
+并且存在唯一满射
+
+$$
+ h:q(S)\twoheadrightarrow S/R_\Gamma
+$$
+
+满足
+
+$$
+ h(q(s))=\eta_\Gamma(s).
+$$
+
+因此
+
+$$
+\boxed{|q(S)|\ge |S/R_\Gamma|.}
+\tag{2.2}
+$$
+
+商 $\eta_\Gamma$ 达到下界。
+
+**证明。** 若 $q(s)=q(s')$，由 (2.1) 得 $f(s)=f(s')$，所以在每个摘要纤维上任选代表元即可定义 $\overline f$，且定义与代表元无关。相同论证定义 $h(q(s))=[s]_{R_\Gamma}$；它良定义并满射。基数不等式来自满射。反过来，$\eta_\Gamma$ 本身使每个 $f\in\Gamma$ 在等价类上恒定，所以达到下界。证毕。
+

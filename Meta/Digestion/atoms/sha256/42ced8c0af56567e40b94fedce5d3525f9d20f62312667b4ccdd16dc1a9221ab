@@ -1,0 +1,42 @@
+**Definition 1.3 (full continuation task and a finite boundary).** Fix the
+original finite action alphabet $\mathcal A$ with declared durations
+$s_a\geq0$. A completed action $a$ advances this same specimen for $s_a$
+active time, holds its successor, and returns its nondisturbing endpoint
+read, together with its complete fixed control/return framing:
+
+$$
+z' = E(s_a)z,\qquad \operatorname{reply}(a,z)=Cz'.
+\tag{1.5}
+$$
+
+An endpoint read without an advance is also permitted; Hold is state
+preserving. These controls have state-independent legal framing in the
+fixed installed context. The task includes every sufficiently backed finite
+word over this alphabet and every adaptive choice based on already acquired
+replies, the declared public input and a common external random tape if one
+is used. It includes actual source calls and successors, not only forecasts.
+No non-timing actuator, unknown law change or additional sensor is added.
+An actual selector supplies its code, retained working state, operand packets
+and completed local decision computation; these are receiver resources.
+The trace theorem does not acquire a selector or compute an unprovided
+policy. In the real model its conformance assertion is pointwise for actual
+choices; the finite rational implementation covers effective decisions
+whose local computation terminates.
+
+Let $\mathcal W\subset\mathcal A^*$ be any fixed finite prefix-closed family
+containing the empty word, with a fixed enumeration and reference. Put
+$s(w)=\sum_{a\text{ in }w}s_a$. Its endpoint Boundary is the response family
+
+$$
+R_{\mathcal W}z=(CE(s(w))z)_{w\in\mathcal W}.
+\tag{1.6}
+$$
+
+These are lawful responses of the current specimen. The family describes
+alternative experiments; it does not assert that all its branches were
+performed on this run. Forecasting a branch does not append a read to Time.
+The actual hidden successor in (1.5) is part of the common realization.
+Its literal full coordinate vector is not an extra disclosed output port.
+If that vector is itself made part of the requested output, the full-Space
+criterion of §4 applies, rather than a nontrivial behavior quotient.
+

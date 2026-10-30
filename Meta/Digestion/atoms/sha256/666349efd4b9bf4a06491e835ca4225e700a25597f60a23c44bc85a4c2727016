@@ -1,0 +1,43 @@
+**Corollary 93.4 (Restricted common-optimum horizon set).** Fix
+$0<q\le10^{-3}$ and consider the same restricted $0/1$ phase family at
+actual horizons $n\in\{0,1,2,\ldots,\infty\}$. A single whole terminal
+CPTP decoder attains the individual minimum for every phase exactly at
+
+$$
+\boxed{\{0,1,\infty\}.}
+\tag{93.8}
+$$
+
+*Proof.* At $n=0$ the identity decoder is exact. At $n=1$,
+Proposition 103.2 of the owning actual-channel source supplies
+$D=\operatorname{Ad}_{U_0^\dagger}$. Here $\Phi_1=\Delta_W$ fixes each
+$E_\varphi$, which is supported on $\operatorname{span}\{|0\rangle,|1\rangle\}$,
+so this decoder has zero loss for the whole phase family. For each
+finite $n\ge2$, Proposition 92.5 gives the same individual minimum
+$\eta_{(q,n)}$ at every phase and
+$\eta_{(q,n)}<\varepsilon_{\circ}(q,n)$. A map attaining all those minima
+would have supremum loss $\eta_{(q,n)}$, contradicting Theorem 92.4.
+Theorem 93.3 supplies $D_*$ at the limiting channel.
+The all-rank-one obstruction at the limit has a different task family:
+it contains $P_0,P_2$ and the $0/2$ task $Q$, not the fixed-population
+$0/1$ circle. Therefore that obstruction does not remove $\infty$ from
+(93.8). At $q=0$ all phases coincide with $P_0$; this degenerate case is
+separate and the identity already attains the task exactly at every
+actual horizon, including the limit. $\square$
+
+The statement (93.8) is a restricted task-family result. It does not
+extend to all rank-one tasks, to arbitrary phase directions, or to
+whole-channel inversion. For $0<q\le1/2$, the endpoint task error $h$ is
+positive. The normalized unit vectors
+$|\psi_\pm\rangle=(|0\rangle\pm e^{i\varphi}|1\rangle)/\sqrt2$
+give density inputs $\rho_\pm=|\psi_\pm\rangle\langle\psi_\pm|$ with
+
+$$
+\Phi_0(\rho_+)=\Phi_0(\rho_-)
+ =\tfrac12P_0+\tfrac14(P_1+P_2),\qquad
+\operatorname{Tr}(E_\varphi\rho_\pm)=\tfrac12\pm h.
+$$
+
+The probabilities are distinct, with opposite deviations from $1/2$.
+Thus even this common optimum is not recovery of the input state.
+

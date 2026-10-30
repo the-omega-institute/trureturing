@@ -1,0 +1,73 @@
+**Proposition 5.2 (Same-source leaf masses and simultaneous equality).**
+For the rule in Definition 5.1 the four correct masses are
+
+$$
+\begin{array}{c|c|c}
+(x,y)&\text{output}&\mathbb P_p(x,y,A=H_j)\\ \hline
+(0,0)&h_1(\sigma)&a/2\\
+(0,1)&h_0(\sigma)&a^2\eta\\
+(1,0)&h_0(1-\sigma)&a\eta/2\\
+(1,1)&h_0(\sigma)&a\eta/2
+\end{array}
+\tag{5.2}
+$$
+
+Consequently its correct probability is $S_2$ for either fixed
+endpoint $j$ and every unchanged independent auxiliary law.
+
+Proof. For the leaf $00$, the output is a phase-one state. In phase
+one both paid replies are automatically zero, and by (1.3) the actual
+target spin is $S_0$ for both choices of $j$. Success on this leaf is
+exactly the phase-one event $S_0=\sigma$, of mass $a/2$. Any phase-zero
+sources reaching the same leaf give a different endpoint state and
+are errors for this output.
+
+For $01$, the second paid reply one certifies phase zero. The
+constraints are
+
+$$
+S_j\oplus S_{j+1}=0,\qquad
+S_{j+2}\oplus S_{j+3}=1.
+\tag{5.3}
+$$
+
+These two pairs of spins are disjoint in the same realization.
+The actual phase-zero target is $S_j$, also when $j=1$, where its
+state label is $b_{S_1}$. The prescribed output is correct exactly
+when $S_j=S_{j+1}=\sigma$. Therefore its correct mass is
+
+$$
+\frac12 a^2(2ab)=a^2\eta.
+\tag{5.4}
+$$
+
+For the first-one branch phase zero has been certified by that paid
+reply. The two actual edges are $Y_j$ and $Y_{j+1}$. On $10$ their
+larger-mass completion is
+
+$$
+(S_j,S_{j+1},S_{j+2})=(1-\sigma,\sigma,\sigma),
+\tag{5.5}
+$$
+
+whose target is exactly the output $h_0(1-\sigma)$ and whose spin
+mass is $a^2b$. The other completion has mass $ab^2$ and the opposite
+target spin. On $11$ the larger completion is
+
+$$
+(S_j,S_{j+1},S_{j+2})=(\sigma,1-\sigma,\sigma),
+\tag{5.6}
+$$
+
+whose target gives $h_0(\sigma)$ and whose mass is again $a^2b$.
+The complementary completion again has mass $ab^2$. Multiplying by
+the phase factor makes each correct leaf mass $a^2b/2=a\eta/2$.
+This proves every row of (5.2).
+
+The first-zero branch thus attains $a/2+a^2\eta$, while the
+first-one branch attains $a\eta$, using the same first address and
+the same original source. Their extremal masses are simultaneously
+realized by one admissible policy. The rule ignores $u$, so the
+calculation applies without any atomlessness, event availability or
+additional random coin on the auxiliary space. $\square$
+

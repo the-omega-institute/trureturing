@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d1d98df2484d8f20b58477749c087fa97395160e75e97d88dae961581c038466
+  normalized_sha256: sha256:d1d98df2484d8f20b58477749c087fa97395160e75e97d88dae961581c038466
+cas_ref: sha256:d1d98df2484d8f20b58477749c087fa97395160e75e97d88dae961581c038466
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 区分约定成立与独立自性的否定目标，未给出集合模型或数学存在性主张。
+    previous_atom_id: 402a6ba6d37a6fa82aa552627778968ebe7ad74736fd50bd63928a09efaa55f1
+    next_atom_id: 85750b96fc06bfbf106dd1d0c65ae13a175a0c10a1a7ced3d61ffbc5cf09cfac

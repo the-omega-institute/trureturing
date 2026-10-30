@@ -1,0 +1,26 @@
+**定理 12.3（全部来源、全部嫁接词的精确六维最小性）。** 取目标 $f(a,b)=(2a+3b)^2$。全部有限词的响应函数在 $D$ 上张成的最小实线性函数空间为
+
+$$
+\mathcal V=\operatorname{span}_{\mathbb R}\{1,a,b,a^2,ab,b^2\},\qquad \dim\mathcal V=6.
+$$
+
+若要求对所有 $c\in D$ 同时成立的线性状态编码 $E:D\to\mathbb R^d$、固定线性操作矩阵 $B_M,B_G$ 与线性输出 $r^T$，满足 $E(Mc)=B_ME(c)$、$E(Gc)=B_GE(c)$、$f(c)=r^TE(c)$，则最小 $d$ 为 $6$。
+
+证明。令响应空间为 $\mathcal W=\operatorname{span}\{f\circ T_w\}$。它对操作拉回封闭：在时间词前加 $M$ 或 $G$，就分别得到 $(f\circ T_w)\circ M$ 或 $(f\circ T_w)\circ G$。纯 $M$ 的前三个响应正是定理 5.2 的三个二次多项式，其系数行列式为 $-2$，故 $a^2,ab,b^2\in\mathcal W$。作嫁接差分 $\Delta_Gq=q\circ G-q$，有
+
+$$
+\Delta_Ga^2=2a+1,\qquad \Delta_G^2a^2=2.
+$$
+
+因此 $1,a\in\mathcal W$，再由 $a\circ M=b$ 得 $b\in\mathcal W$。仿射代入不增加多项式次数，故所有响应均属于 $\mathcal V$，从而两空间相等。
+
+为证明独立性，设
+
+$$
+\alpha+\beta a+\gamma b+\delta a^2+\eta ab+\theta b^2=0
+$$
+
+在 $D$ 上恒成立。固定任意正整数 $b$，让 $a$ 遍历全部正整数，得到一元多项式有无限多个根；于是 $\delta=0$、$\beta+\eta b=0$、$\alpha+\gamma b+\theta b^2=0$。再让 $b$ 遍历全部正整数，得其余五个系数也为零。这用的是域中完整的正整数网格，而非仅凭“来源无限”推独立性。
+
+取 $E(c)=(1,a,b,a^2,ab,b^2)^T$，仿射代入给固定六维线性操作，实现上界。任何所声明的 $d$ 维编码使每个响应成为 $E$ 的坐标函数的线性组合，故 $6=\dim\mathcal W\le d$。该下界是全部来源通用响应的下界，不等同于某个固定初态的词 Hankel 秩；后者须另证。确定组成仍可用二维非线性更新和平方输出编码。$\square$
+

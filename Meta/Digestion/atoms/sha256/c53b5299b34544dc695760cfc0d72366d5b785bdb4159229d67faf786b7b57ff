@@ -1,0 +1,23 @@
+### 定理 230.1　欧氏分离集的 packing 上界
+
+若 $S_n\subseteq\mathbb R^d$ 满足
+
+$$
+S_n\subseteq\overline B(0,R_n),
+\qquad
+\|x-y\|\ge\delta_n\quad(x\ne y),
+$$
+
+则
+
+$$
+\boxed{
+|S_n|
+\le
+\left(1+\frac{2R_n}{\delta_n}\right)^d.
+}
+\tag{230.1}
+$$
+
+**证明。** 以每个 $x\in S_n$ 为中心取半径 $\delta_n/2$ 的闭球。它们的内部两两不交，并且都包含在半径 $R_n+\delta_n/2$ 的球中。比较 $d$ 维 Lebesgue 体积，消去单位球体积后得到 (230.1)。\quad$\square$
+

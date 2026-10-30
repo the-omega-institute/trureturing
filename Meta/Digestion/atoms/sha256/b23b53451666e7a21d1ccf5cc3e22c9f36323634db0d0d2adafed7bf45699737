@@ -1,0 +1,10 @@
+**Lemma 77.2 (digit extraction is finite and faithful).** Definition
+77.1 returns $r_v$ of the actual $w$ with finite acquired work and no
+source or persistent-record change.
+
+Proof. The finite preorder reaches $v$, the retained actual branch
+reference. Lemma 75.3 identifies each remainder, including those at unit
+radices. Counting uses actual source edges, not encoded future data.
+Finite widths and nonzero finite divisors give finite binary arithmetic.
+The copy, not the live list, is divided. $\square$
+

@@ -1,0 +1,56 @@
+**Lemma 22.5 (actual-law overlap).** For $t>0$ and $r\in(0,\delta]$, put
+
+$$
+I_\eta=I-\alpha_\eta,\qquad
+E_\eta=\{u\in C([0,t]):u_a\in I_\eta\text{ for all }a\leq t\}.
+\tag{22.10}
+$$
+
+Let $\Lambda_t$ be the common Lebesgue-start Brownian-height reference with
+variance rate $\sigma^2$, and let $\Gamma_r(dv\mid u)$ be the common
+conditional law of the lifted record $V$ from (22.6). Its pushforward to
+wrapped records is the common phase kernel of L Theorem 64.1. Wrapping and
+continuous lifting with the prescribed initial representative are Borel
+inverses, so the same density applies in either representation. The joint
+$(U,V)$ law under sign $\eta$ has density
+
+$$
+f_\eta(u)=e^{\lambda t}
+ \phi(u_0+\alpha_\eta)\phi(u_t+\alpha_\eta)\mathbf1_{E_\eta}(u)
+\tag{22.11}
+$$
+
+with respect to $\Lambda_t(du)\Gamma_r(dv\mid u)$, for the same positive
+constant factor $e^{\lambda t}$. Thus the two laws are mutually absolutely
+continuous on $E_+\cap E_-$, which has positive reference and positive mass
+under both signs. Each sign also has a positive-probability singleton branch
+where the other shifted height is inadmissible.
+
+**Proof.** The stationary Doob-transform density from L Theorem 64.1,
+translated by $\alpha_\eta$, is (22.11). The coefficient identity (22.6)
+makes the conditional phase kernel identical, including all wrapped
+windings. A compact interval in the nonempty intersection
+$I_+\cap I_-$ has positive Brownian survival probability on every finite
+horizon, and both endpoint factors in (22.11) are positive there. This
+proves positive overlap. Its interval width is $w-2r\geq3w/4>0$.
+Initial shifted points $U_0\in I_\eta\setminus I_{-\eta}$ give singleton
+branches. Explicitly, under the plus law $K_0\in(\ell,\ell+2r)$
+excludes the minus candidate, and under the minus law
+$K_0\in(u-2r,u)$ excludes the plus candidate. Each interval has positive
+$\pi$ mass. $\square$
+
+For later use, the recovered candidate set at $a>0$ is precisely
+
+$$
+\mathcal C_a=\{\eta\in\{+1,-1\}:U_s+\alpha_\eta\in I
+                     \text{ for every }0\leq s\leq a\}.
+$$
+
+For nonzero $r$ it is nonempty on actual good records, decreases with $a$,
+and has either one or two elements. Membership is the strict lower and upper
+bound on the minimum and maximum of the continuous candidate path on the
+compact prefix, hence is a Borel prefix test. For $r=0$ the candidate
+parameter is simply zero. These candidate tests use no supplied sign or
+hidden height.
+
+

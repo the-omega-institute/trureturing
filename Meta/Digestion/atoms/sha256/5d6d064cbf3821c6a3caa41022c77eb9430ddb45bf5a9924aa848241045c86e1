@@ -1,0 +1,34 @@
+**Proposition 2.3 (effective compilation price and its domain).** In a
+binary bit-operation model, the compiler of Proposition 2.2 can be
+realized with work
+
+$$
+ O\bigl((d+1)^3(t+1)^2+(t+1)^3\bigr)
+ \tag{ACR.9}
+$$
+
+and scratch $O((d+1)^2+(d+1)(t+1)+(t+1)^2)$ bits, including its
+physical literal buffer but excluding the retained input. In particular
+compilation needs neither $X_n$ nor $n$ nor traversal of all earlier
+births. The shortestness in (ACR.8) concerns the specified first-birth
+time, equivalently threshold equality on the entire origin-cut orbit.
+It is not shortestness of a predicate restricted to $n\ge n_0$.
+
+Proof. Apply GPO Proposition 39.5's forward companion powers and physical
+rank recurrence to the prefixes being generated. There are $O(t)$
+prefixes and at most one needed law bit per proper prefix. Its index has
+$O(t)$ bits, even though its numerical value can be exponential in $t$.
+Binary companion powers cost $O(d^3t)$ per bit; rank sums, Fibonacci
+integers and prefix storage have the polynomial costs counted there.
+Taking the hypothetical cut $t$ in that arithmetic calculation gives
+(ACR.9); retaining all prefix descriptors and rank scratch fits the
+stated larger quadratic workspace. A zero-order descriptor returns zero
+without a matrix operation. All powers are forward, so singular laws
+are included.
+
+For example, on the allowed zero-order domain $n\ge2$, the threshold
+$t=2$ is constant true, and the empty literal already returns one.
+Its length zero is smaller than $|C_L(2)|=1$. This does not change the
+first-birth minimum, since the empty literal was present at cut zero.
+$\square$
+

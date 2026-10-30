@@ -1,0 +1,124 @@
+**定理 12.2（pointwise exact prefactor）。** Under Definition 12.1,
+
+$$
+ \boxed{B(q,b)\sim C(q)b^4E_b,\qquad
+ C(q)=\frac{e^{c(q)/2}}{5\sqrt{2\pi}\,q\,c(q)^{5/2}}>0.}
+\tag{12.2}
+$$
+
+Thus the power $\alpha=4$ is common to every fixed $q$ in the stated open interval. The equivalence is pointwise in $q$; it asserts no endpoint, joint-$q$ limit, uniform remainder or explicit finite-$b$ cutoff.
+
+Proof. Reuse the signed density $D_b$ of (11.3) and its positive-part Bayes identity (11.2). For a scalar $\ell>0$, put
+
+$$
+\begin{aligned}
+ t_b(\ell)&=\frac{\ell+b^2/2}{b},\\
+ J_b(\ell)&=\int_{\mathbb R}\phi(v)
+       [e^{bv-b^2/2}-e^\ell]_+\,dv\\
+ &=\overline\Phi(t_b(\ell)-b)
+       -e^\ell\overline\Phi(t_b(\ell)),\\
+ B(q,b)&=\frac15\int_{\mathbb R}\phi(u)J_b(L(u))\,du.
+\end{aligned}
+\tag{12.3}
+$$
+
+Indeed, the bracket is positive exactly when $v>t_b(\ell)$, and $\phi(v)e^{bv-b^2/2}=\phi(v-b)$. Tonelli's theorem applies to the nonnegative integrand. This integrates the signed excess itself, including the cancellation between its two tails; the probability of the positive region would not determine its prefactor.
+
+For $x>0$, let $R(x)=\overline\Phi(x)/\phi(x)$. The complementary-error-function expansion and real-positive remainder bound in [NIST DLMF §7.12(i), equation (7.12.1)](https://dlmf.nist.gov/7.12#i), with $\overline\Phi(x)=\tfrac12\operatorname{erfc}(x/\sqrt2)$, give
+
+$$
+ R(x)=x^{-1}-x^{-3}+O(x^{-5}).
+$$
+
+Its exact derivative identity, obtained by differentiating the defining quotient, gives
+
+$$
+ R'(x)=xR(x)-1=-x^{-2}+O(x^{-4}).
+\tag{12.4}
+$$
+
+No differentiation of an asymptotic remainder is used. Fix $0<a<A<\infty$. Uniformly for $\ell\in[a,A]$ and $x\in[t_b(\ell)-b,t_b(\ell)]$, we have $x=\ell/b+O(b)$ and $x\ge a/(2b)$ for all sufficiently small $b$. The real-positive remainder estimate in (12.4) therefore gives, uniformly on these intervals,
+
+$$
+ -R'(x)=\frac{b^2}{\ell^2}(1+O(b^2)),\qquad
+ R(t_b(\ell)-b)-R(t_b(\ell))
+ =\int_{t_b(\ell)-b}^{t_b(\ell)}-R'(x)\,dx
+ =\frac{b^3}{\ell^2}(1+O(b^2)).
+\tag{12.5}
+$$
+
+The constants may depend on $a,A$, not on $\ell$ or $b$. Since
+
+$$
+ \phi(t_b(\ell)-b)=e^\ell\phi(t_b(\ell)),\qquad
+ e^\ell\phi(t_b(\ell))
+ =\frac1{\sqrt{2\pi}}
+   \exp\!\left(-\frac{\ell^2}{2b^2}+\frac\ell2-\frac{b^2}{8}\right),
+$$
+
+(12.3) and (12.5) imply the compact-uniform estimate
+
+$$
+ J_b(\ell)=\frac{b^3}{\sqrt{2\pi}\,\ell^2}
+       \exp\!\left(-\frac{\ell^2}{2b^2}+\frac\ell2\right)
+       (1+O(b^2)),\qquad \ell\in[a,A].
+\tag{12.6}
+$$
+
+In particular, the displacement $b/2$ in the threshold contributes the factor $e^{\ell/2}$.
+
+To control the noncompact $u$-integral, choose a sufficiently small fixed $\delta>0$. The function $L$ is even, has its unique minimum $c$ at zero and is strictly increasing on $(0,\infty)$. Thus, with $m=L(\delta)>c$, we have $L(u)\ge m$ for $|u|\ge\delta$. The integral definition of $J_b$ shows it is nonincreasing in $\ell$. Consequently
+
+$$
+ 0\le\int_{|u|\ge\delta}\phi(u)J_b(L(u))\,du
+ \le J_b(m)
+ \le\overline\Phi(m/b-b/2)
+ =O\!\left(b\exp\!\left[-\frac{m^2}{2b^2}\right]\right).
+\tag{12.7}
+$$
+
+For the last bound, $m/b-b/2>0$ for small $b$, and
+$\overline\Phi(x)\le\phi(x)/x$ for $x>0$; this inequality follows by bounding $1\le v/x$ inside the tail integral. The factor $\exp(m/2-b^2/8)$ is bounded with $m$ fixed. Dividing (12.7) by $b^4E_b$ gives an upper bound of order $b^{-3}\exp(-(m^2-c^2)/(2b^2))$, which tends to zero. No compact-uniform Mills estimate is being applied to unbounded $L(u)$.
+
+On $|u|\le\delta$, Taylor expansion gives
+
+$$
+ L(u)=c+\frac{q^2u^2}{2}+O(u^4).
+\tag{12.8}
+$$
+
+Because $q>0$, shrink $\delta$ so that $L(u)-c\ge\kappa u^2$ there for some $\kappa>0$. On this interval $L$ lies in the compact positive interval $[c,L(\delta)]$, so (12.6) applies uniformly. After extracting $E_b$, its remaining local integral is
+
+$$
+ H_b=\int_{|u|\le\delta}\phi(u)L(u)^{-2}
+       \exp\!\left(-\frac{L(u)^2-c^2}{2b^2}+\frac{L(u)}2\right)du.
+$$
+
+Set $u=by$, and extend the resulting integrand by zero outside $|y|\le\delta/b$. For each fixed $y$, (12.8) gives
+
+$$
+ \frac{L(by)^2-c^2}{2b^2}\longrightarrow\frac{cq^2y^2}{2}.
+$$
+
+The other factors converge to $\phi(0)c^{-2}e^{c/2}$. Moreover,
+
+$$
+ \frac{L(u)^2-c^2}{2b^2}
+ =\frac{(L(u)-c)(L(u)+c)}{2b^2}
+ \ge\frac{c\kappa u^2}{b^2}.
+$$
+
+The prefactor $\phi(u)L(u)^{-2}e^{L(u)/2}$ is bounded on $[-\delta,\delta]$. Hence a fixed constant times $e^{-c\kappa y^2}$ dominates the scaled integrand. Dominated convergence now yields
+
+$$
+\begin{aligned}
+ \frac{H_b}{b}
+ &\longrightarrow\phi(0)c^{-2}e^{c/2}
+      \int_{\mathbb R}e^{-cq^2y^2/2}\,dy\\
+ &=\frac{e^{c/2}}{q\,c^{5/2}}.
+\end{aligned}
+\tag{12.9}
+$$
+
+This is the local Gaussian scaling underlying the mature Watson and Laplace methods in [NIST DLMF §2.3(ii)](https://dlmf.nist.gov/2.3#ii) and [§2.3(iii)](https://dlmf.nist.gov/2.3#iii); the domination above supplies the needed integral justification in this experiment. By positivity and the uniform relative error in (12.6), the local contribution to (12.3) equals $b^3E_bH_b(1+O(b^2))/(5\sqrt{2\pi})$. Combining (12.7) and (12.9) proves (12.2), including the prior factor $1/5$. The factors $b^3$ from the signed tail difference and $b$ from localization in $u$ give the power four. These classical asymptotic tools are mature intermediates; their explicit prefactor for the specified five-label law is repo-derived application exposition, with no global-priority assertion. $\square$
+

@@ -1,0 +1,69 @@
+**Definition 32.1 (auxiliary local tasks and their input provenance).**
+Let $\mathcal A_d$ be the length-$2d$ prefixes realizable by
+$\mathscr R_d$, and retain $\mathcal M_d$ of Theorem 21.4.
+For $d>0$ define
+
+$$
+\begin{aligned}
+\widehat{\operatorname{FM}}^V_d &: \mathcal M_d\longrightarrow\mathbb F_2^d,
+&m&\longmapsto\widehat\rho^V_d
+ \left(\min\{i:m\mid p_{\widehat\rho^V_d(i)}\}\right),\\
+\widehat{\operatorname{EN}}^V_d &: \mathcal A_d\longrightarrow
+                      \mathbb F_2^d\times\mathbb F_2^d,
+&P&\longmapsto(\widehat\kappa^V_d(P),s_d(P)),\\
+\widehat\kappa^V_d(P)&=\widehat\rho^V_d
+ \left(\min\{i:H(P)\widehat\rho^V_d(i)=y(P)\}\right).
+\end{aligned}
+$$
+
+All minima range over $0\le i<2^d$. At $d=0$, the row task on
+$m=1$ returns the empty row and the descriptor is the empty pair.
+Inputs contain an explicit dimension and delimited coefficient words;
+$m$ is padded to $d+1$ coefficients with its degree recorded in binary.
+Both input encodings have length $O(d+1)$, and outputs have exactly
+$d$ or $2d$ data bits. There is no compressed exponential dimension.
+
+With $P_m,\sigma_{m,d}$ exactly as in Theorem 21.4, the typed
+one-call reductions are
+
+$$
+\begin{aligned}
+P&\longmapsto m_P\longmapsto
+ (\widehat{\operatorname{FM}}^V_d(m_P),s_d(P))
+       =\widehat{\operatorname{EN}}^V_d(P),\\
+m&\longmapsto P_m\longmapsto
+ \pi_1\widehat{\operatorname{EN}}^V_d(P_m)
+       =\widehat{\operatorname{FM}}^V_d(m),\\
+\widehat{\operatorname{EN}}^V_d(P_m)
+ &= (\widehat{\operatorname{FM}}^V_d(m),\sigma_{m,d}).
+\end{aligned}
+$$
+
+Theorem 21.4's synthesis, impulse realization and fibre proof apply
+unchanged to any fixed bijective order. In particular $P_m$ has least
+annihilator $m$, including $m=1$ and zero constant taps. Its seed is
+generated data; in the other direction $s_d(P)$ is copied from the
+given authentic prefix. Neither reduction acquires a physical prefix.
+
+For completeness, put $L(d)=O((d+1)^3\ell_d^2)$. The synthesis or
+prefix generation, polynomial/seed encoding, task-input copy and
+retained output copy cost at most $L(d)$ work and cumulative writes,
+with $O(d+1+\ell_d)$ local backing, by (ACR.85). If the called
+task $T$ has its own costs $(C_T,W_T,V_T)$, retain them in full.
+Exporting its $O(d+1)$ output bits to the caller uses §21.7's
+explicit transfer rule, costing additionally
+
+$$
+X_T(d)=O((d+1)(V_T+d+2)^2)
+$$
+
+work and cumulative writes and $O(V_T+d+1)$ transfer scratch.
+Its address operands are part of $V_T$, not free machine integers.
+Thus either reduction has $C\le C_T+L+X_T$,
+$W\le W_T+L+X_T$ and
+$V\le V_T+O(V_T+d+1+\ell_d)$. Sequential output permits a smaller
+transfer. These bounds include counters, markers, head moves,
+intermediate writes, row/seed projection and retention; they are
+polynomial when the called task's own three bounds are polynomial.
+No unit-cost normalization oracle or free output installation is assumed.
+

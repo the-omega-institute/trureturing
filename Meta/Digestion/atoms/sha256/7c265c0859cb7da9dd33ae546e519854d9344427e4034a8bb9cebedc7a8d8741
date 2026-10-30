@@ -1,0 +1,36 @@
+**Corollary 13.2 (local boundary, global data and the native dimensions).**
+For the original both-wall model, the sharp semiboundedness boundary and
+the failure of original-domain closedness and attainment at equality are
+fixed by the source data in (10.6). Source position enters this boundary
+only through $\rho(o)\det A(o)$; the anisotropy orientation and all
+coefficient derivatives do not enter it. Two smooth models with identical
+$r,\rho(o),\det A(o)$ have the same boundary even if their densities,
+covariances, cylinder endpoints and full Green fields differ away from
+the source. Their completed lowest energies are the variational minima
+of their respective global forms (12.3); the equal-boundary assertion
+does not identify those forms. Outside the both-wall row, every positive
+coupling still
+collapses as in the original volume's Theorem 3.1. Thus this classification
+retains current-ray dimension three, direct rank two, growth $(2,3)$ and
+homogeneous volume exponent four as distinct quantities, and makes no
+physical Euclidean-dimension assertion.
+
+**Proof.** The boundary and endpoint-domain conclusions are Theorem 13.1
+and (10.6). The global Green correction enters $W$ in (12.2), and the
+global kinetic form and killed boundary remain in $\mathcal E_H$; they
+are not removed by fixing the leading singular coefficient. The local
+comparison (11.3) puts all coefficient derivatives into lower-order errors,
+while (10.2) puts the source anisotropy into an exact graded coordinate
+change whose volume factor is $\det A(o)$. The constants in the remainder
+and lower bound are fixed-model constants, with no assertion of uniformity
+as the source approaches a height face or the coefficients vary. The original
+single-wall and neither-wall collapse witnesses, with homogeneous volume
+exponents seven and eleven, are unchanged and are reused from Theorem
+7.1. The dimension and control statements follow from (2.1)--(2.2), with
+no new control or phase operation. The repo-derived content is the exact
+native unit-source/angular/full-Green correspondence and its critical
+form-domain and minimum classification. The cited Hardy, heat, compactness
+and KLMN inputs are attributed intermediate results; no exhaustive
+literature or priority assertion is needed for these conclusions.
+$\square$
+

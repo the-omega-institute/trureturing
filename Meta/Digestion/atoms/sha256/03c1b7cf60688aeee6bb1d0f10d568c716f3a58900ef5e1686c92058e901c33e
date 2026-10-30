@@ -1,0 +1,20 @@
+**Proposition 22.3 (finite arithmetic and the value-oracle contract).**
+Put $q_i=\sin^2\theta_i$. If $q_i$ are supplied as binary rationals, the objective and its $q$-gradient are computable exactly in time polynomial
+in the formula length and total rational encoding length. More generally, an approximation to the global optimum with guaranteed additive error
+at most a fixed $\delta<1/2$, output as a finite binary rational by one deterministic polynomial-time classical algorithm for every input formula,
+would imply $\mathrm P=\mathrm{NP}$.
+
+Proof. For a positive literal $z_i$, its falsifying probability is $1-q_i$; for a negative literal it is $q_i$.
+A clause contributes the product of at most three such factors. Summing $M$ terms evaluates the energy;
+differentiating these products evaluates the gradient without division, including $q_i=0,1$.
+Each product and the sum use polynomially many rational operations with polynomial bit length.
+The cube $[0,1]^n$ is covered by $q_i=\sin^2\theta_i$, so it has the same optimum as Theorem 22.2.
+An optimum estimate is below $1/2$ on satisfiable inputs and above $1/2$ on unsatisfiable inputs.
+This decides SAT, yielding the complexity conclusion. QED.
+
+If an algorithm returns angle parameters instead of a value, their finite representation and energy evaluation accuracy must meet the same separation contract;
+arbitrary real angles are not free input data. In angle coordinates the analytic chain rule gives
+$\partial_{\theta_i}E=\sin(2\theta_i)\partial_{q_i}E$; numerical evaluation has its own precision cost.
+Replacing $H_\varphi$ by $H_\varphi/M$ changes the promise gap to $1/M$ and the sufficient approximation tolerance to less than $1/(2M)$.
+The ideal exact corner pulses establish the variational equality; a physical finite-precision preparation needs an additional error bound.
+

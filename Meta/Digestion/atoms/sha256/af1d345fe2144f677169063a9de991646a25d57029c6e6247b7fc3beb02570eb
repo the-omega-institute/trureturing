@@ -1,0 +1,15 @@
+**Definition 19.2 (predecessor charge).** Put
+
+$$
+H(b)=\sum_{i=1}^{b}i=\frac{b(b+1)}2,
+\qquad
+\Lambda=L_C+L_P+L_I+\sum_{j=0}^{4}L_j,
+$$
+
+where the $L$'s are the eight actual full publication lengths of Definition
+8.5. Let $A(z)$ be the cumulative number of constructed nonmeter cells at
+native cut $z$, including retired banks, scratch and descriptors. The
+predecessor charge is the collection of the $b$ completed unary-tally bank
+emissions during `Boundary`; it is distinct from the represented `Step`
+count and from the final meter receipts.
+

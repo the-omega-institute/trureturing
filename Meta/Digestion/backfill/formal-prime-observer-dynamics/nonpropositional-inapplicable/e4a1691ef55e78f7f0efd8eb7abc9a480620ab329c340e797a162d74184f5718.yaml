@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e4a1691ef55e78f7f0efd8eb7abc9a480620ab329c340e797a162d74184f5718
+  normalized_sha256: sha256:e4a1691ef55e78f7f0efd8eb7abc9a480620ab329c340e797a162d74184f5718
+cas_ref: sha256:e4a1691ef55e78f7f0efd8eb7abc9a480620ab329c340e797a162d74184f5718
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Development checklist naming finite-prime tasks, not a theorem asserting the listed results.
+    previous_atom_id: 9eafe279168f512dca4233b8fa718ccabf8740f9d441186dfc0c2eef07ebf4b4
+    next_atom_id: 73ada61d5bbb175025858f1089616191efcb352249d28ab795035667b9632f03

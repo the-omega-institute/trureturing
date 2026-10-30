@@ -1,0 +1,22 @@
+**Proposition 4.2 (what the order theorem reconstructs).** Theorem 4.1
+identifies the aligned infinite core and its two local clock residues
+from the stipulated equality comparison. It neither changes the original
+source class to period at most $d$, nor recovers the original stream's
+transient, integer clocks, global cut, private recurrence presentation,
+exterior forest, or the original deficient-rank normal form $K_d$.
+The horizon is a sufficient semantic identification threshold and does
+not supply a polynomial acquisition or decoding procedure.
+
+Proof. The proof uses only $r+r'\le2d$, hence preserves every periodic
+core arising from the original all-index class. Invertible binary
+order-$r$ dynamics can have least period $2^r-1$, as witnessed by a
+nonzero primitive recurrence; NRW Theorem 2.4 states the same supplier.
+In particular period can exceed $d$ even with zero transient and order
+$d$. Phase equality in the proof concerns only $y$, and all clock
+conclusions are modulo its least period. No step observes erased early
+births or the exterior. If the core period is exponential in $d$, merely
+writing its period word need not have polynomial size. Finally complete
+support in the hypothesis remains a mathematical observation until it
+is actually acquired; Theorem 2.1 did not give a small Read menu.
+$\square$
+

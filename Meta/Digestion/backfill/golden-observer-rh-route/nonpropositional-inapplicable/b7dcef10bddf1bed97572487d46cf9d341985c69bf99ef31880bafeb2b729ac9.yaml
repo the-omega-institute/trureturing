@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b7dcef10bddf1bed97572487d46cf9d341985c69bf99ef31880bafeb2b729ac9
+  normalized_sha256: sha256:b7dcef10bddf1bed97572487d46cf9d341985c69bf99ef31880bafeb2b729ac9
+cas_ref: sha256:b7dcef10bddf1bed97572487d46cf9d341985c69bf99ef31880bafeb2b729ac9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只记录席位、模块、依赖次序与结账安排；未提出需要证明的数学断言。文本定位：## 二 预算与结算 一席位轮(codex-cli,独立 worktree,绑 CosinePacket / ArchimedeanDivergence / WindowZero 三冻结模块与 `zetaZeroConfig_local_count`;同 PR deposit(绑 Z-7 atom)
+    previous_atom_id: 7e8c4fd4012e509ca98b44001be3d1ba58e36d956acebfb8e243d5fd4207bfee
+    next_atom_id: null

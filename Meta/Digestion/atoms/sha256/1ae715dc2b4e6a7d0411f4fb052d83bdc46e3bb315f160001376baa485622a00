@@ -1,0 +1,98 @@
+**Proposition 134.2 (an actual positive joint coefficient after every exact first-order constraint).** For every original finite $a,\eta,d>0$, the readout of Definition 134.1 has an infinite-dimensional exact linear kernel $V$, and its actual coefficient $q_{003}$ satisfies
+
+$$
+q_{003}(v)=c\langle gv,P(gv)\rangle_m
+=c\|T_{d/2}(gv)\|_{L^2(m)}^2>0
+\qquad\bigl(0\ne v\in L^\infty(G,m;\mathbb R)\bigr).
+\tag{134.13}
+$$
+
+In particular,
+
+$$
+0\ne q_{003}|_V\in\mathcal Q_E,\qquad
+n_-(q_{003}|_V)=0.
+\tag{134.14}
+$$
+
+The negative index is the supremum of the dimensions of subspaces on which the form is negative definite. Consequently, the requirement that every nonzero member of the actual restricted span $\mathcal Q_E$ have negative-definite subspaces of arbitrarily large dimension fails for this readout and its prescribed overlap. No coercive or parameter-uniform lower bound is asserted.
+
+**Proof.** First propagate the actual source density, without changing the first observation law. Equations (134.4) and (134.6) give, as $m$-classes,
+
+$$
+Pf_3=cT_dg_d=cg_{2d}=cg.
+\tag{134.15}
+$$
+
+This is the original source propagation identity (117.3). The function $g_d$ defines only the fixed terminal readout component $f_3$; the first observation density in every coefficient is still $g=g_{2d}$.
+
+For the ordered triple $(0,0,3)$, both terms of (134.11) containing $\sigma_3$ vanish and $\sigma_0^2=1$. Hence this is the actual coefficient
+
+$$
+\begin{aligned}
+q_{003}(v)
+&=\mathcal C(v,v,f_3)\\
+&=\int_Gg\,v\,P(vPf_3)\,dm\\
+&=c\int_Gg\,v\,P(gv)\,dm
+=c\langle gv,P(gv)\rangle_m.
+\end{aligned}
+\tag{134.16}
+$$
+
+Every expression is finite: $g\in L^2(m)$ and $v\in L^\infty(m)$ imply $gv\in L^2(m)$, and $P$ is an $L^2$ contraction. Since the original semigroup is self-adjoint,
+
+$$
+\langle u,Pu\rangle_m
+=\langle T_{d/2}u,T_{d/2}u\rangle_m
+=\|T_{d/2}u\|_2^2
+\qquad(u\in L^2(m;\mathbb R)).
+\tag{134.17}
+$$
+
+Strict positivity uses the same spectral-calculus mechanism as Proposition 124.1. If $E_K$ denotes the spectral resolution of the full nonnegative self-adjoint $K$, then
+
+$$
+\|T_{d/2}u\|_2^2
+=\int_{[0,\infty)}e^{-d\lambda}
+\,d\langle u,E_K(\lambda)u\rangle_m.
+\tag{134.18}
+$$
+
+The spectral measure has total mass $\|u\|_2^2$, and its multiplier $e^{-d\lambda}$ is strictly positive at every finite $\lambda\ge0$. Therefore the integral is strictly positive for every nonzero $u$. For a nonzero bounded $m$-class $v$, strict positivity of $g$ almost everywhere implies $gv\ne0$ in $L^2(m)$. Together with $c>0$, (134.16)–(134.18) prove (134.13) on the entire real $L^\infty$ space. The symmetric polar form is explicitly
+
+$$
+B_{003}(u,v)
+=c\langle T_{d/2}(gu),T_{d/2}(gv)\rangle_m.
+\tag{134.19}
+$$
+
+Next retain every first-order equation exactly. The Markov contractions and $\int g\,dm=1$ give, for all real bounded inputs,
+
+$$
+|\mathcal C(u,v,w)|
+\le\|u\|_\infty\|v\|_\infty\|w\|_\infty.
+\tag{134.20}
+$$
+
+Thus each of the 64 components of $\Lambda$ is a finite real linear functional on $L^\infty(m)$. In particular, (134.12) is an exact system of at most 64 independent linear constraints; no rank optimization is needed.
+
+Fix any integer $N\ge1$. Nonatomicity of the Borel probability $m$ supplies $N+64$ pairwise disjoint positive-measure Borel subsets $A_1,\ldots,A_{N+64}$ of $E=G$. Their indicators are linearly independent as $m$-classes. On their span
+
+$$
+F_N=\operatorname{span}_{\mathbb R}
+\{\mathbf1_{A_1},\ldots,\mathbf1_{A_{N+64}}\},
+\qquad \dim F_N=N+64,
+$$
+
+apply finite-dimensional rank-nullity to the full map $\Lambda|_{F_N}:F_N\to\mathbb R^{64}$. It gives
+
+$$
+\dim(F_N\cap V)
+=N+64-\operatorname{rank}(\Lambda|_{F_N})\ge N.
+\tag{134.21}
+$$
+
+All 64 equations are imposed in this intersection, not merely a selection of slotwise or marginal constraints. Since $N$ was arbitrary, $V$ is infinite-dimensional. These finite-dimensional subspaces consist of bounded real Borel classes; in particular $V$ contains a nonzero such class. More generally a bounded class can be represented by a bounded Borel function after repairing its exceptional null set. Such repairs leave all coefficients unchanged, since the positive-time source laws are absolutely continuous with respect to $m$ and the semigroup acts on $m$-classes.
+
+Finally, strict positivity in (134.13) survives restriction to $V$. Choosing any nonzero $v\in V$ shows that $q_{003}|_V$ is not the zero form, so it is a nonzero actual member of $\mathcal Q_E$. No nonzero vector in $V$ has negative value under this form. There is therefore no positive-dimensional negative-definite subspace, and its negative index is exactly zero. This proves (134.14) and contradicts the stated all-nonzero-pencil requirement for this actual readout. $\square$
+

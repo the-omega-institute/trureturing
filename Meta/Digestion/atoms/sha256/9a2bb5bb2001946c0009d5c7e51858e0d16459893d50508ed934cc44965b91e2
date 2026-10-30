@@ -1,0 +1,28 @@
+**Proposition 113.2 (conditional noisy-law service).** A current native
+predictor plus a genuinely retained noise state $\zeta$, an installed
+scale evaluator $\widehat\sigma(\zeta)$ and an update rule sufficient for
+the chosen future interface supplies its next noisy kernel
+
+$$
+\mathcal N\bigl(x_f,\widehat\sigma(\zeta)^2\bigr).
+\tag{113.1}
+$$
+
+Updating $\zeta$ from each actual completed event and the native state
+from each actual native action supplies the whole conditional hybrid
+service. This is a sufficient condition, not a finite-memory theorem for
+arbitrary measurable $\sigma(h)$.
+
+**Proof and necessity of the extra qualification.** Evaluate the terminal
+mean from the synchronized field and the scale from $\zeta$. Formula
+(111.2) gives (113.1); induction using the two actual updates gives the
+successive kernels. A rule that sets the next scale to 1 after a negative
+previous noisy sample and to 2 otherwise gives different next variances
+at the same unchanged native field. Thus native state alone need not
+supply the kernel. If this sign has already been encoded by a performed
+action, the resulting field can contain it; the general unchanged-field
+counterexample still shows why such encoding must be established.
+An arbitrary measurable rule need not have any finite effective sufficient
+state. For constant scale 1 the additional rule state is trivial. None
+of these laws determine a future realized sample. $\square$
+

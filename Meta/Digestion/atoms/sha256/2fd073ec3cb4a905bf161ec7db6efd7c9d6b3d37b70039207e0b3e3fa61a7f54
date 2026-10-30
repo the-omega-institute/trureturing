@@ -1,0 +1,19 @@
+**Proposition 86.2 (same-law phase identity and its limit).** For one fixed law (84.1) and the same seed $1$, the two mathematical recurrences in (84.2) satisfy, for every $w\in\mathcal W$,
+
+$$
+v_w=a^{-1}T_{t(w)}u_w .
+\tag{86.2}
+$$
+
+Thus the two fresh-support arguments are phase variants of the same mechanism. Equation (86.2) is not a conjugacy between $T^+$ and $T^-$ and is not an equivalence of their complete literal services.
+
+Proof. At alpha, $T_\alpha=a$, so the identity gives $1=a^{-1}a$. If it holds at $w$ and $g:t\to t'$, then
+
+$$
+v_{wg}
+ =T_{t'}\iota_g(a^{-1}T_tu_w)
+ =a^{-1}T_{t'}u_{wg}.
+$$
+
+This proves the all-word identity. It also intertwines the two mathematical paired-growth recurrences for that same law. At a fixed tree it commutes with an additional autonomous Tick, since both sides are powers of $T_t$. It does not generally preserve terminal Add: $a^{-1}T_t(x+qe_\ell)$ differs from $a^{-1}T_tx+qe_\ell$ by the nonzero adjacent contribution when $\ell$ has a neighbor and $q\ne0$. Nor does its terminal Read generally equal the original terminal scalar. The actual two installations also choose different $c$ and expose different growth clocks. Their origins, traces, retained contexts and costs must therefore remain separate. $\square$
+

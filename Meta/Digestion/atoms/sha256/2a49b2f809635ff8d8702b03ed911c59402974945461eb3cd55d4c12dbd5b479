@@ -1,0 +1,36 @@
+## 24. 缺锚与完整计数的原位点概率
+
+假设 $n\ge1$。某一侧内区间没有锚，意味着该侧长度 $s$ 的区间全为零。由（22.1）和
+$$
+\left\lfloor\frac{\lfloor r/2\rfloor}{2}\right\rfloor=\left\lfloor\frac r4\right\rfloor
+$$
+可得一个指定侧缺锚的概率不超过
+$$
+(1-\alpha)^{\lfloor r/4\rfloor}
+=e^{-2\vartheta\lfloor r/4\rfloor}
+\le e^{2\vartheta}e^{-\vartheta r/2}.
+\tag{24.1}
+$$
+两侧并集的代价至多是 $2e^{2\vartheta}e^{-\vartheta r/2}$，不需要两侧独立。
+
+在内锚存在时，步骤 2 选出的就是原律的真正最近锚。条件于 $R=h,C_R=a$（$1\le h\le s$），令
+$$
+S_+=\sum_{j=0}^{2n-1}D_j^+.
+$$
+由（21.6）及（22.2），$\mathbb E[e^{\vartheta S_+}\mid R=h,C_R=a]\le M^{2n}$。右列表少于 $2n+1$ 个条目恰是 $R_{2n}=h+S_+>r$，而 $h\le s$ 给出 $S_+>r-s\ge r/2$。指数 Markov 不等式于是给出
+$$
+J(R_{2n}>r\mid R=h,C_R=a)
+\le e^{-\vartheta r/2}M^{2n}
+\le\exp\{-\vartheta r/2+2\beta r\log M\}
+\le e^{-\vartheta r/4}.
+\tag{24.2}
+$$
+最后一步使用（20.1）中的 $\beta\le\vartheta/(8\log M)$。对 $h,a$ 按（21.8）平均时只乘以其权重总和（不超过一），不产生锚位置数因子。
+
+左侧完全相同。条件于 $L=-h,C_L=a$，令 $S_-=\sum_{j=0}^{2n-1}D_j^-$；由（21.7）得到同一矩界，且 $-L_{2n}=h+S_-$。因此在两个内锚成功事件上，计数失败总概率不超过
+$$
+2e^{-\vartheta r/4}.
+\tag{24.3}
+$$
+这里的距离始终是原整数位点距离，且支付了包括未用于统计的最后一个间隔在内的全部 $2n$ 个间隔。
+

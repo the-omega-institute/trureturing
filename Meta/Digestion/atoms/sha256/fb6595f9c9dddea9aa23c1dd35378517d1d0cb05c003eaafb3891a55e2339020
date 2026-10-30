@@ -1,0 +1,39 @@
+**定理 8.8（全酉探针轨道与不可压缩性的独立性）。**
+设 $d\ge2$，$P$ 是秩 $k$ 的正交投影，$1\le k<d$。若实际菜单允许任意 $U\in U(d)$ 后测量二值效果 $P$，则效果族
+
+$$
+\{U^\dagger P U:U\in U(d)\}
+$$
+
+实线性张成整个 $V$，从而其统计区分全部密度态。
+
+反过来，预测效果空间维数小于 $d^2$，并不保证能用一个共同 CPTP 通道删除其隐藏方向。具体地，在量子位上取
+
+$$
+W=\operatorname{span}_{\mathbb R}\{I,X,Z\}.
+$$
+
+虽然 $W^\perp=\mathbb R Y$ 非零，任何对全部输入精确保留 $X,Z$ 期望的 CPTP 通道都必为恒等通道。因此该读出商不能由一个非平凡的统一 CPTP 遗忘操作实现。
+
+**证明。**
+
+先证明轨道张成。若 $D\in V$ 与所有 $U^\dagger P U$ 正交，将 $D$ 对角化，特征值记为 $\lambda_1,\ldots,\lambda_d$。轨道恰包含所有秩 $k$ 正交投影，特别地包含每个由 $k$ 个该特征向量张成的子空间的投影。因此对每个大小为 $k$ 的指标集合 $J$，
+
+$$
+\sum_{j\in J}\lambda_j=0.
+$$
+
+给定 $i\ne j$，可在其余 $d-2$ 个指标中选择大小 $k-1$ 的集合 $T$。比较 $T\cup\{i\}$ 与 $T\cup\{j\}$，得 $\lambda_i=\lambda_j$。全部特征值相等，再由一个 $k$ 项和为零得全部为零。因此正交补为零，轨道张成 $V$。概率分离由迹对偶得到。这里任意酉的可调用性是本命题的假设，不由探针的存在提供。
+
+再证明量子位例。设 $\mathcal T(\rho)=\sum_\alpha K_\alpha\rho K_\alpha^\dagger$ 是该 CPTP 通道。保留 $Z$ 期望使输入 $|0\rangle\langle0|$ 的输出具有 $Z$ 期望一，只能仍为 $|0\rangle\langle0|$；同理 $|1\rangle\langle1|$ 被固定。正半定秩一输出的 Kraus 求和迫使每个向量 $K_\alpha|0\rangle$ 平行于 $|0\rangle$，每个 $K_\alpha|1\rangle$ 平行于 $|1\rangle$。故
+
+$$
+K_\alpha=\operatorname{diag}(a_\alpha,b_\alpha).
+$$
+
+保留 $X$ 期望又使 $|+\rangle\langle+|$ 被固定。同样的秩一理由给 $K_\alpha|+\rangle$ 平行于 $|+\rangle$，所以 $a_\alpha=b_\alpha$。于是每个 $K_\alpha=a_\alpha I$，保迹条件给 $\sum_\alpha|a_\alpha|^2=1$，从而 $\mathcal T=\operatorname{id}$。
+
+若再要求通过较小 Hilbert 空间编码再解码，则恒等通道还强制载体维数不减。事实上，若 $\mathcal D\circ\mathcal E=\operatorname{id}_d$ 且中间维数为 $q$，组合 Kraus 算子 $D_\beta E_\alpha$ 每个秩至多 $q$。恒等通道的任意 Kraus 算子必为恒等矩阵的标量倍数：它须把每个纯态射线送回自身，再比较基向量及其两两和即可得标量性。至少一个组合 Kraus 算子非零，因而秩为 $d$，所以 $q\ge d$。这说明线性预测坐标的减少与物理量子存储压缩是不同的定理问题。
+
+证毕。
+

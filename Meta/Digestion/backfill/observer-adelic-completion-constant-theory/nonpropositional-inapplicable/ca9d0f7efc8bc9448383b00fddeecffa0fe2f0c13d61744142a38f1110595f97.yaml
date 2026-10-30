@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ca9d0f7efc8bc9448383b00fddeecffa0fe2f0c13d61744142a38f1110595f97
+  normalized_sha256: sha256:ca9d0f7efc8bc9448383b00fddeecffa0fe2f0c13d61744142a38f1110595f97
+cas_ref: sha256:ca9d0f7efc8bc9448383b00fddeecffa0fe2f0c13d61744142a38f1110595f97
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 规定非交换候选状态的忠实性和不变性要求；未断言忠实不变态存在。'
+    previous_atom_id: 73dc5b36b95e5fe86e5505d329e186cfe4a3d1d4a39553553a873cbc865018bb
+    next_atom_id: c374477fa36a2e944a09955c902b4ea3bc377ba5907613e2c601428ce87bcad1

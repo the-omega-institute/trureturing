@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:50c1eb034de24d380cd919d1f8ecbde4df7aadde45c8a0fbb45d790103ffbdc7
+  normalized_sha256: sha256:50c1eb034de24d380cd919d1f8ecbde4df7aadde45c8a0fbb45d790103ffbdc7
+cas_ref: sha256:50c1eb034de24d380cd919d1f8ecbde4df7aadde45c8a0fbb45d790103ffbdc7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Chapter heading, expressly stipulated manifold/bundle regularity hypotheses and references to background material; no gluing or connection theorem is asserted here.
+    previous_atom_id: 1f70fc667f20dcabd7bf3f72c282b1f071d5b5ca7ccdbb2ec7f25c32ca7783db
+    next_atom_id: b5437b879058b0f6b0fe957f1f2c492c51649313c0d8b3ed39c5943f8e8d026a

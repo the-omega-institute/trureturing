@@ -1,0 +1,15 @@
+**定义 46.1（One common numerical all-M task）。** For every complete
+world in (45.1) define
+
+$$
+Y_N(W)=d+g(7+N)\operatorname{tr}(M^NQ_7P),\qquad N\in\mathbb N.
+\tag{46.1}
+$$
+
+In particular $Y_0(W)=a(W)$. This is mathematical numerical response
+evaluation from the seventh-$J$ boundary. It performs no post-seven
+action or read and grants no later port, invocation right, reset, copy,
+skip or clock shift. Each world keeps the same $P,g,d$, and both worlds
+are compared on the same word $M^N$ and the same absolute clock $7+N$.
+No polynomial is fitted anew to a later segment.
+

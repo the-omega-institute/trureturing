@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7024b73912e3108c5435f8f69ac058edac1f7c327bfc183350308315136049d0
+  normalized_sha256: sha256:7024b73912e3108c5435f8f69ac058edac1f7c327bfc183350308315136049d0
+cas_ref: sha256:7024b73912e3108c5435f8f69ac058edac1f7c327bfc183350308315136049d0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 要求全局实现并开始列举不足的证据种类，不声称实现已经存在。
+    previous_atom_id: 3d02651a081bfbe2d7ac3565a6f40f4aec9d537457331e0e8a50fa7a2bdbcd82
+    next_atom_id: 2958e80a09274816e0f32050098eca1990a25dc49d1b7d676e2807a07016f319

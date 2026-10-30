@@ -1,0 +1,11 @@
+## 167. An exact finite certificate for the full density-input value
+
+Let $\mathcal P_3=\{P\in\mathsf D_3:P^2=P\}$ be the compact pure-state
+set and write
+
+$$
+f_P(T)=\tfrac12\|T(P)-P\|_1,\qquad
+\mu(s)=\min_{T\in K_s}\max_{\rho\in\mathsf D_3}
+ \tfrac12\|T(\rho)-\rho\|_1.
+$$
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8a4148967a51d8f65c683d039650875a0a0fe050f5d755ca64fe1c130ed87f9f
+  normalized_sha256: sha256:8a4148967a51d8f65c683d039650875a0a0fe050f5d755ca64fe1c130ed87f9f
+cas_ref: sha256:8a4148967a51d8f65c683d039650875a0a0fe050f5d755ca64fe1c130ed87f9f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 仅介绍后续条件表的组织方式，没有给出或证明一个数学命题。
+    previous_atom_id: 4de4b7e321683f930c177f87c594dfcd6bdd10276392bf2e7fba38a284e8a815
+    next_atom_id: a4bcd2c8ae2876c073eec5a7aa368b53ec8a643dade9d133b254b4cc10c0fc7d

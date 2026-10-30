@@ -1,0 +1,17 @@
+**Proposition 80.5 (separate same-run accounts).** Current acquisition from the stated earned arbitrary-field entrance has $r$ Reads, $H+1$ Tick and $H+1$ Hold, zero Add, growth or Reset. The different original-entry experiment has $N$ Reads, $H_e$ Tick and $H_e+1$ Hold. No call from one experiment finances the other.
+
+When an actual provider is included, reuse §62.3 on this same $u$: from allocated known-zero alpha build it using $c_u$ promotions and $b-1$ splits, creating $N-1$ fresh cells; receive an owned arbitrary $x$; prepare it with $b(I+1)$ terminal Adds and $I=N-b$ Ticks; Hold. Clear or isolate all dependent input, controls, predictors, reply/transport copies and archives from the receiver, retaining the earned map/access and field-independent context. Through the **current** acquisition the joined counts are
+
+$$
+\begin{aligned}
+P&=c_u,&S&=b-1,&\operatorname{Read}&=r,\\
+\operatorname{Add}&=b(I+1),&\operatorname{Tick}&=I+H+1,\\
+\operatorname{Hold}&=H+2,&\operatorname{Reset}&=0.
+\end{aligned}
+\tag{80.10}
+$$
+
+For the separate original-entry run, replace the acquisition part by its $N,H_e,H_e+1$ counts; joined Tick and Hold become $I+H_e$ and $H_e+2$. Initial allocation, owned-input ingress, grants, references, clearing/isolation and output work are additional in both accounts. Provider buffers retained behind isolation remain paid physical storage. A previous predictor accessible at the new entrance would violate the cleared-field premise.
+
+The new restriction can increase the observation horizon from the all-leaf $H\le I$ of §62 to $H\le N-1$. It removes no installed port and reduces no already optimal unrestricted Read count below $r$. Its gain is the exact condition for keeping two available labels unused during acquisition, together with the precise entry/current distinction.
+

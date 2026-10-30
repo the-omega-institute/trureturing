@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:aa5a76f8df8e2498db2030bf3b06efa2e67047f0f2a4e90dcaf14f58ab23da46
+  normalized_sha256: sha256:aa5a76f8df8e2498db2030bf3b06efa2e67047f0f2a4e90dcaf14f58ab23da46
+cas_ref: sha256:aa5a76f8df8e2498db2030bf3b06efa2e67047f0f2a4e90dcaf14f58ab23da46
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Section heading only: it names the topic of the following section and contains no quantified statement, equation, existence assertion or mathematical conclusion.'
+    previous_atom_id: f64356670045c5684c18b5afc293b037d072146218ad6a88aa28587270520f2d
+    next_atom_id: c652dd82622ccc2ec96eb39a9038c34177f176136a9a5dcb3fd9ce3b5114153d

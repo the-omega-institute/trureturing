@@ -1,0 +1,14 @@
+**定义 1.2（实际历史上的失败）。** Write $\mathcal F(H)$ for all complete targets realizing every action and every read of the literal history $H$. For $\mathcal K\subseteq\mathcal F(H)$, use the failure predicate of II, Definition 56.1:
+
+$$
+\begin{aligned}
+L_0(\mathcal K,H)&\ \Longleftrightarrow\ |\mathcal K|\ge2,\\
+L_s(\mathcal K,H)&\ \Longleftrightarrow\ L_0(\mathcal K,H)\ \land\
+\bigwedge_{E\in\{M,J\}}\exists z\in\mathbb R:
+L_{s-1}(\mathcal K\cap\mathcal F(H,E,z),(H,E,z)).
+\end{aligned}
+\tag{1.3}
+$$
+
+Here $s$ never exceeds the remaining original-clock budget. This is failure of every strategy with at most $s$ further reads, including early stopping. Its elementary recursion also gives upward monotonicity under inclusion of compatible target families. A response on an unchosen branch is a mathematical function of a fixed world, not an extra acquired read. In particular, a different pair for each terminal word is useful only when those pairs realize the common responses at all their shared ancestors.
+

@@ -1,0 +1,79 @@
+**定理 23.4（固定比值高次单例与全次数细化）。** 固定任意正比值 $q=r/b$。当
+$q\notin\{2,q_0\}$ 时，对任意实数 $z,Y,p,\mu,a$，一个实际 $JMJMJMJ$ 叶若含有该比值的二次或三次增益世界，则该叶中此比值的整个允许次数类恰含一个世界。因此第六个 $M$ 后选最终 $J$，解码整个预先固定比值的增益次数至少二类，允许候选族任意基数和任意低次数竞争者。$q=1$ 时，同一结论对所有允许次数成立。
+
+证明及显式逆。秩一条件给
+
+$$
+r=qb,\qquad c=q(1-qb),\qquad j=q+(1-q^2)b,\qquad 0<b<1/q.
+$$
+
+实际偶、奇迹分别为 $e(t)=1+bt/2$、$o(t)=j-r/2+rt/2$。本定理置
+
+$$
+\eta_q={2-q-2q^2\over2},\qquad s={2\over b},\qquad H={g\over s}={b\over2}g,
+$$
+
+于是 $o-qe=b\eta_q$，两个完整响应多项式满足
+
+$$
+\mathcal E=d+(t+s)H,\qquad
+\mathcal O-q\mathcal E=(1-q)d+2\eta_qH.
+$$
+
+令 $\overline E=\sum_{i=0}^3e_it^i$、$\overline O=\sum_{i=0}^3o_it^i$ 为定义 22.1 的偶、奇三次插值，$e_0=0$。它们由实际 $MJ$ 八读确定。置
+
+$$
+Q_e=R=t^4-12t^3+44t^2-48t,\qquad
+Q_o=S=t^4-16t^3+86t^2-176t+105.
+$$
+
+写 $\Lambda=H_3$，插值余项必须保留为
+
+$$
+\mathcal E=\overline E+\Lambda Q_e,\qquad
+\mathcal O=\overline O+q\Lambda Q_o.
+$$
+
+由 $[t^3](Q_o-Q_e)=-4$ 和完整响应恒等式得到
+
+$$
+o_3-qe_3=(4q+2\eta_q)\Lambda=(2-q)(2q+1)\Lambda.
+$$
+
+$q>0,q\ne2$ 因而唯一给出
+
+$$
+\Lambda={o_3-qe_3\over(2-q)(2q+1)},\qquad
+\mathcal E=\overline E+\Lambda R,\qquad
+\mathcal O=\overline O+q\Lambda S.
+$$
+
+至此才恢复非恒系数
+
+$$
+H_i={[t^i](\mathcal O-q\mathcal E)\over2\eta_q}\quad(i=1,2,3).
+$$
+
+若一个世界的增益次数为 $m\ge2$，则 $\deg\mathcal E=m+1$，强制所有同数据竞争世界也有相同次数 $m$。$H_m\ne0$ 且 $H_{m-1}$ 已知，故依次恢复
+
+$$
+s={[t^m]\mathcal E-H_{m-1}\over H_m},\qquad
+H_0=[t]\mathcal E-sH_1,\qquad d=\mathcal E(0)-sH_0,
+$$
+$$
+b={2\over s},\quad r={2q\over s},\quad c=q(1-r),\qquad g=sH.
+$$
+
+真三次时 $\Lambda\ne0$，而二次增益时 $\Lambda=0$、$\deg\mathcal E=3$，同一公式仍有效。次数由已恢复的完整 $\mathcal E$ 决定，低次竞争者不能共享它。
+
+任意给定数据的逆都要检查 $s>2q$，$0\ne g$、$\deg g\le3$、相应次数和首项，严格正源、迹一、秩一、实漂移，以及两个完整响应恒等式和全部八个原时钟读数。不满足任何一项就舍去；满足全部过滤即构造一个原模型完整世界。恒等式和唯一系数恢复同时证明逆的充分性和单例性，没有除以增益样本或排除重根。
+
+最后单独看 $q=1$。此时 $\eta_q=-1/2$，已经恢复的完整多项式直接给
+$H=\mathcal E-\mathcal O$，包括 $H_0$。若 $H$ 非常数，选任一 $i\ge1$ 使 $H_i\ne0$，由 $\mathcal E-tH=d+sH$ 唯一恢复
+
+$$
+s={[t^i](\mathcal E-tH)\over H_i},\qquad d=\mathcal E(0)-sH_0,
+$$
+
+并检验其余系数及上述全部过滤。这也覆盖线性增益。$H=0$ 是禁用的零增益；若 $H$ 是非零常数，则 $g=sH$ 也是常数，而 $q=1$ 强制 $j=b+c=1$，时钟零和一的读数都为 $d+g$，与 $0,24$ 矛盾。故没有遗漏常数竞争者。此证明比较的始终是同一实际 $MJ$ 八读，不涉及 $MM$ 数据；它与比值倒数表述的奇偶刚性是同一个高次碰撞切断，只计一次。$\square$
+

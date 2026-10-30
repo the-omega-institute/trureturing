@@ -1,0 +1,48 @@
+**共同端口的中间容量估计（36）。** 必须选取与编码—解码分解相适配的 Kraus 表示：编码的第 $f$ 块算子为 $E_{f\alpha}:\mathbb C^d\to\mathbb C^q$，解码在该块上的算子为 $D_{f\beta}:\mathbb C^q\to\mathbb C^d$，于是可取
+
+$$
+C_{f\beta\alpha}=D_{f\beta}E_{f\alpha},\qquad
+T(X)=\sum_aC_aXC_a^\dagger,\qquad\operatorname{rank}C_a\leq q.
+$$
+
+这是存在这种表示，不是断言任意 Kraus 表示都逐项满足该秩界。TP 与奇异值的 Cauchy–Schwarz 界给
+
+$$
+\sum_a\|C_a\|_{\mathrm{HS}}^2=d,\qquad
+|\operatorname{tr}C_a|^2\leq q\|C_a\|_{\mathrm{HS}}^2.
+$$
+
+将 (35.1) 求和，得 $\sum_a\langle C_a,\mathcal L(C_a)\rangle\geq\gamma(d-q)$。另一方面，输入 $P_i$ 在基底 $\mathcal E$ 中的原分布集中于 $i$，其 TV 损失为 $1-\operatorname{tr}(P_iT(P_i))$；$Q_j$ 也一样。这 $2d$ 项之和恰为上述 Kraus 和，每项不超过 $e_{\mathcal E,\mathcal V}(T)$。所以
+
+$$
+e_{\mathcal E,\mathcal V}(T)\geq\frac\gamma2\left(1-\frac qd\right),
+\qquad
+\varepsilon_{\mathcal E,\mathcal V}(q)\geq\frac{\gamma(d-q)}{2d}.
+\tag{36.1}
+$$
+
+无须秩约束时，同一求和给出纠缠保真度的中间结论：
+
+$$
+F_{\mathrm e}(T)=\frac1{d^2}\sum_a|\operatorname{tr}C_a|^2
+\geq1-\frac{2e_{\mathcal E,\mathcal V}(T)}\gamma,
+\qquad\gamma>0.
+\tag{36.2}
+$$
+
+为明确与文献的参数对应，置 $|\Phi_d\rangle=d^{-1/2}\sum_i e_i\otimes e_i$、$\chi_T=(T\otimes\operatorname{id})(|\Phi_d\rangle\langle\Phi_d|)$。平衡探针族取两个完整基底、每个探针权重 $1/(2d)$，验证算子为
+
+$$
+\Theta=\tfrac12\sum_i P_i\otimes\overline{P_i}
++\tfrac12\sum_j Q_j\otimes\overline{Q_j}.
+$$
+
+向量化后它对应 $(\mathcal P+\mathcal Q)/2$，故过程验证谱隙为 $\nu=\gamma/2$。平均通过率为 $p_{\mathrm{pass}}=\operatorname{tr}(\Theta\chi_T)$，满足
+
+$$
+1-p_{\mathrm{pass}}\leq e_{\mathcal E,\mathcal V}(T),\qquad
+1-p_{\mathrm{pass}}\geq\frac\gamma2(1-F_{\mathrm e}(T)).
+$$
+
+适配 Kraus 的秩—迹界给 $F_{\mathrm e}(T)\leq q/d$，与 (36.1) 一致；该秩—重叠步骤也是第 13.4 条所引 Terhal–Horodecki 的标准供应。若 $\gamma>0$ 且误差为零，(35.1) 迫使每个 $C_a$ 为标量恒等，TP 随即给 $T=\operatorname{id}$，而适配秩界要求 $q\geq d$。$q=d$ 的恒等端口可行。若另考虑 $q>d$，等距嵌入及全块 CPTP 补全也给误差零；(37.2) 的系数比较只在 $q\leq5$ 使用。
+

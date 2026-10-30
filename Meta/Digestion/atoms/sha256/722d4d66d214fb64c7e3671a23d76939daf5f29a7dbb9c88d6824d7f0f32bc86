@@ -1,0 +1,93 @@
+**定理 29.2 的证明。** 仅为证明定义
+
+$$
+s=\lfloor r/2\rfloor,\qquad m=\lfloor\beta r\rfloor.
+\tag{32.1}
+$$
+
+解码器始终使用（29.1）的实际 $N_\pm$，不以 $m$ 截断统计，也不要求它知道内区间 $s$。先设 $m\ge1$。令 $\mathcal A_+$ 为 $[1,s]$ 无占据位的事件，$\mathcal A_-$ 为 $[-s,-1]$ 无占据位的事件。
+
+第 24 节的尾界可逐项直接使用：其 $n=\lfloor\beta r\rfloor$ 在这里就是 $m$，其 $s,\alpha,\vartheta,M,\beta$ 与（32.1）、（29.4）完全相同。于是（24.1）及恒等式 $\lfloor\lfloor r/2\rfloor/2\rfloor=\lfloor r/4\rfloor$ 给出
+
+$$
+J(\mathcal A_+\cup\mathcal A_-)
+\le2e^{2\vartheta}e^{-\vartheta r/2}.
+\tag{32.2}
+$$
+
+为核对完整计数的接口，条件于 $R=h,C_R=b$ 且 $h\le s$，有精确等价
+
+$$
+N_+\ge m\ \Longleftrightarrow\ K_+\ge2m+1
+\ \Longleftrightarrow\quad
+R_{2m}=h+\sum_{j=0}^{2m-1}D_j^+\le r.
+\tag{32.3}
+$$
+
+左侧对应的是 $-L_{2m}=h+\sum_{j=0}^{2m-1}D_j^-\le r$。所以一对的两个间隔均须完整可见；$m$ 对恰需 $2m$ 个间隔和含锚在内的 $2m+1$ 个占据位，末位恰在窗口边界时仍算成功。这与（24.2）–（24.3）支付的全部间隔完全一致。其证明已用（22.2）的矩界和（21.8）的真实权重，且 $2\beta\log M\le\vartheta/4$。直接代入 $n=m$ 得
+
+$$
+J(\mathcal A_+^c\cap\{N_+<m\})\le e^{-\vartheta r/4},\qquad
+J(\mathcal A_-^c\cap\{N_-<m\})\le e^{-\vartheta r/4}.
+\tag{32.4}
+$$
+
+这里同时支付了两个锚的距离和各侧全部 $2m$ 个原整数间隔；未将时钟换成占据次数。
+
+在（32.2）、（32.4）及（31.7）的坏事件之外，$N_\pm\ge m$，由（31.2）和（30.2）得到
+
+$$
+\sigma_-T_-(Y_r)>0,\qquad \sigma_+T_+(Y_r)>0.
+$$
+
+引理 30.1 因而保证判决正确；邻位为一的分支也正确。缺列表或配对数不足的默认值已计入锚或计数失败，配对数足够时的所有平局已计入 $\mathcal B_\pm(m)$。至多一个未配对间隔不进入统计，也不改变（32.3）。整个步骤只把数据所选的计数代入同时成立的符号界，没有对固定 $n$ 的集中不等式条件化于窗口容纳、邻位、中心或另一侧事件。
+
+解码错误只涉及可见变量，其 $J$ 概率等于 $P$ 概率。并集界给出
+
+$$
+P(\widehat f_r(Y_r)\ne X_0)
+\le2e^{2\vartheta}e^{-\vartheta r/2}
+   +2e^{-\vartheta r/4}+2e^{-m\delta^2}
+\quad(m\ge1).
+\tag{32.5}
+$$
+
+因为 $m\ge\beta r-1$、$\delta^2<d^2$，
+
+$$
+2e^{-m\delta^2}\le2e^{d^2}e^{-\beta r\delta^2}.
+$$
+
+又由 $a_t\le\beta$ 和 $a_t\delta^2\le\vartheta/4$，式（32.5）至多为
+
+$$
+(2e^{2\vartheta}+2+2e^{d^2})e^{-a_t r\delta^2}.
+\tag{32.6}
+$$
+
+若 $m=0$，则 $\beta r<1$、$r\delta^2<d^2/\beta$，故
+
+$$
+P(\widehat f_r(Y_r)\ne X_0)\le1
+\le e^{a_t d^2/\beta}e^{-a_t r\delta^2}.
+\tag{32.7}
+$$
+
+此时解码器仍照（29.3）运行，没有参数依赖的分支。把（32.6）、（32.7）的系数相加恰为（29.4）的 $B_t$，证明上界对所有整数 $r\ge1$ 成立，包含 $r=1$、空内区间、全部地板效应及任意小的正 $r\delta^2$。
+
+最后，在这一份 $P$ 下令 $\eta_r=\mathbb E_P[X_0\mid\mathcal F_r]$。二值性与条件期望正交投影给出
+
+$$
+\begin{aligned}
+P(\widehat f_r(Y_r)\ne X_0)
+&=\mathbb E_P[(X_0-\widehat f_r(Y_r))^2]\\
+&=\mathbb E_P[(X_0-\eta_r)^2]
+ +\mathbb E_P[(\eta_r-\widehat f_r(Y_r))^2]\\
+&=E_r(P)+\mathbb E_P[(\eta_r-\widehat f_r(Y_r))^2]
+\ge E_r(P).
+\end{aligned}
+\tag{32.8}
+$$
+
+交叉项为零，因为 $\eta_r-\widehat f_r(Y_r)$ 为 $\mathcal F_r$ 可测，且 $\mathbb E_P[X_0-\eta_r\mid\mathcal F_r]=0$。这是同律、同字段、同损失的投影；后验本身无需二值。与上界合并即为（29.5）。$\square$
+

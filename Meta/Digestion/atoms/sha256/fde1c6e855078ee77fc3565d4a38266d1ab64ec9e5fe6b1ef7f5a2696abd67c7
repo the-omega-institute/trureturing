@@ -1,0 +1,15 @@
+**Assumption 272.1 (one operational candidate).** Work on exactly the
+complexification of Definition 271.3, with the same $H_{\mathbb C}$,
+state $\psi=\mathbf1$, and the two orthogonal cylinder projections
+$P_L=\mathsf M_{F_L}$, $P_R=\mathsf M_{F_R}$, where
+$F_L=\mathbf1_{[L]}$, $F_R=\mathbf1_{[R]}$.
+Thus $P_L+P_R=I$, $P_RP_L=0$, and $\|\psi\|=1$.
+Supply, as candidate mathematical operations, the unitary wait
+$U(\tau)=e^{-i\tau H_{\mathbb C}}$ and the complete two-outcome
+Lüders instrument $\rho\mapsto(P_L\rho P_L,P_R\rho P_R)$.
+This instrument and the initial pure state are assumptions for testing
+the candidate, not operations inferred from the original native menu.
+Compare its unconditional recorded event “first $L$, then $R$” with
+the same event of the boundary Markov law, using exactly
+$\tau=\kappa s$ for one fixed finite real $\kappa\ne0$.
+

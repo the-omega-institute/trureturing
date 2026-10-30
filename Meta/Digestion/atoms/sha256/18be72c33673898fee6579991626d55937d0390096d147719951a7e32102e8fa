@@ -1,0 +1,108 @@
+**定理 54.2（完整原始律、相对方向间隙及其退化）。** 对尺度 $l\in\{n,m\}$，令
+$k_l=5l$，并记实际三源的
+
+$$
+\begin{aligned}
+x_l&=|\langle v_{W_{1,k_l}},v_{W_{0,k_l}}\rangle|^2
+     =a_l^2b_l^{k_l},\\
+y_l&=|\langle v_{W_{2,k_l}},v_{W_{1,k_l}}\rangle|^2
+     =a_l^2b_l^{2k_l}(b_l^2+h_l^2)^{k_l},\\
+z_l&=|\langle v_{W_{2,k_l}},v_{W_{0,k_l}}\rangle|^2
+     =a_l^2b_l^{3k_l},\\
+B_l&=\mathcal B_l=a_l^3[b_l^3(b_l+ih_l)]^{k_l}.
+\end{aligned}
+\tag{54.2}
+$$
+
+向量均取各自尺度，内积第一项共轭线性。令
+$x=x_n,y=y_n,z=z_n$、$x'=x_m,y'=y_m,z'=z_m$、$X=xx'$，
+$B=B_n$，同向模型取 $D=B_m$，反向模型取 $D=\overline{B_m}$。
+则八记录完整律为下表，各行末尾都有 Stop：
+
+| $(\sigma,\tau,\upsilon)$ | 未归一原始概率 |
+| --- | --- |
+| $(+,+,+)$ | $Xyy'$ |
+| $(+,+,-)$ | $Xy(1-y')$ |
+| $(+,-,+)$ | $X(1-y)y'$ |
+| $(+,-,-)$ | $X(1-y)(1-y')$ |
+| $(-,+,+)$ | $zz'+Xyy'-2\operatorname{Re}(BD)$ |
+| $(-,+,-)$ | $z(1-z')+Xy(1-y')-2\operatorname{Re}[B(x'-D)]$ |
+| $(-,-,+)$ | $(1-z)z'+X(1-y)y'-2\operatorname{Re}[(x-B)D]$ |
+| $(-,-,-)$ | $(1-z)(1-z')+X(1-y)(1-y')-2\operatorname{Re}[(x-B)(x'-D)]$ |
+
+各项非负，前四项和为 $X$，后四项和为 $1-X$，总和为一。两方向律的差在前四项为零，
+在后四项按表中顺序为 $(\delta_{n,m},-\delta_{n,m},-\delta_{n,m},\delta_{n,m})$，其中
+
+$$
+\begin{aligned}
+\delta_{n,m}
+&=p_{+}(-,+,+)-p_{-}(-,+,+)
+ =4\operatorname{Im}B_n\operatorname{Im}B_m\\
+&\ge4\left(\frac45\right)^{46}\sin^2 1>0,\qquad
+\lim_{\substack{n\to\infty\\m\to\infty}}\delta_{n,m}
+ =4e^{-8}\sin^2 1.
+\end{aligned}
+\tag{54.3}
+$$
+
+结论同时包含相同尺度 $n=m$ 和任意不同尺度 $n\ne m$。完整记录的总变差距离为
+$2\delta_{n,m}$。若遗忘任何一侧的局域结果，只保留 $\sigma$ 与另一侧结果，则所得
+四记录边缘律在两方向下相同。
+
+证明。记 $c=\langle u_1,u_0\rangle$、$d=\langle w_1^\varepsilon,w_0^\varepsilon\rangle$。
+联合正支向量为 $cd\,u_1\otimes w_1^\varepsilon$，给前四项。
+联合负支向量为
+
+$$
+\Xi^\varepsilon=u_0\otimes w_0^\varepsilon
+ -cd\,u_1\otimes w_1^\varepsilon.
+\tag{54.4}
+$$
+
+令局域效果 $E_+=|u_2\rangle\langle u_2|$、$E_-=I-E_+$，第二侧对应为 $E'_\pm$。
+破坏性仪器的迹效果就是它们，故负后两查询的质量为
+$\langle\Xi^\varepsilon,(E_\tau\otimes E'_\upsilon)\Xi^\varepsilon\rangle$。
+定义局域的三个数列
+
+$$
+\begin{array}{c|cc}
+ &+&-\\ \hline
+q_\tau&z&1-z\\
+t_\tau&y&1-y\\
+\kappa_\tau&B&x-B
+\end{array}
+\qquad
+\begin{array}{c|cc}
+ &+&-\\ \hline
+q'_\upsilon&z'&1-z'\\
+t'_\upsilon&y'&1-y'\\
+\kappa'_\upsilon&D&x'-D.
+\end{array}
+\tag{54.5}
+$$
+
+由闭路积的方向约定，
+$c\langle u_0,E_+u_1\rangle=\overline B$，而对补效果该数为 $x-\overline B$；
+第二侧分别为 $\overline D,x'-\overline D$。
+展开 (54.4) 的二次型即得统一公式
+
+$$
+p(+,\tau,\upsilon)=X t_\tau t'_\upsilon,\qquad
+p(-,\tau,\upsilon)=q_\tau q'_\upsilon
+ +Xt_\tau t'_\upsilon-2\operatorname{Re}(\kappa_\tau\kappa'_\upsilon).
+\tag{54.6}
+$$
+
+这是表中全部八项。每项是正效果上的二次型，故非负；
+$\sum q=\sum t=1$、$\sum\kappa=x$ 及其第二侧对应式给两个旗标质量
+$X$ 与 $1+X-2X=1-X$。计算始终使用未归一向量；零历史、零质量正负支均保留，
+不定义零支条件态。式 (54.2) 由 (45.20)–(45.21) 和 delta 项在互异三源上的消失给出。
+
+写 $B=p+iq$、$B_m=s+it$，则
+$\operatorname{Re}(BB_m)-\operatorname{Re}(B\overline{B_m})=-2qt$，
+给 (54.3) 的第一式。补效果的 $\kappa_-$ 虚部反号，所以差呈所列交错排列。
+绝对值之和为 $4\delta_{n,m}$，得到总变差距离；沿任一局域结果求和则相消。
+由 (45.19)，$1<\arg B_l<5/4<\pi/2$，且
+$|B_l|\ge(4/5)^{23}$，所以 $\operatorname{Im}B_l\ge(4/5)^{23}\sin1>0$。
+由 (45.25) 的 $B_l\to e^{-4+i}$ 得双尺度极限。∎
+

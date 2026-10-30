@@ -1,0 +1,42 @@
+**Theorem 88.2 (a separate current-only acquisition).** On a new run
+from Definition 87.1's original $x$, let $r=\operatorname{rank}A$,
+and let $U_0$ be a rational basis matrix of $\operatorname{im}A$.
+First Tick on the old graph, then perform the same chosen repair, then
+Tick on the grown graph and Hold. Write
+
+$$
+Ax=U_0c,\qquad U=BEU_0.
+\tag{88.5}
+$$
+
+Choose $r$ independent rows of $O_FU$, forming $R_c$ with largest
+epoch $H_c\le F$. Perform their selected assay at this held field,
+with the epoch-zero Reads and then $H_c$ Tick; Hold rounds. The
+actual replies and endpoint are
+
+$$
+y_c=R_c c,\qquad
+w=D_c c,\qquad D_c=B^{H_c}U,
+\qquad w=B^{H_c+1}EAx.
+\tag{88.6}
+$$
+
+Both $R_c$ and $D_c$ have column rank $r$. This run uses $r$ Reads,
+$H_c+2$ Ticks and $H_c+1$ Holds, zero Adds, and its own repair.
+Its entry kernel is exactly $\ker A$. Its $r$-Read coordinate is the
+existing arbitrary-current minimum, not an original-entry inverse.
+
+**Proof.** If $z\in\operatorname{im}A$ and $BEz=0$, (87.2) gives
+$Az=0$. For $z=Av$, symmetry gives
+$z^{\mathsf T}z=v^{\mathsf T}Az=0$, hence $z=0$. Thus $U$ has
+rank $r$, and lies in $\operatorname{im}B$. Full rank of $O_F$
+gives the selected $R_c$. Symmetric $B$ is injective on its image,
+by the same sum-of-squares argument, so every $B^{H_c}U$ still has
+rank $r$. Actual sampling proves (88.6). The only discarded old
+differences are those killed by the first real old-graph Tick.
+NLBAII Theorems 60.2 and 61.2 supply the $r$ lower bound even for
+adaptive growth. The present permitted-policy protocol attains it.
+Its first Tick costs an old-size update; all later Ticks cost grown-size
+updates. Neither its endpoint nor its call savings replace (88.1) or
+(88.4). $\square$
+

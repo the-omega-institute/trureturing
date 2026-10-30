@@ -1,0 +1,96 @@
+**Theorem 26.4 (Complete equal-ratio collision classification).**
+Let $W,W'\in\mathcal F(H_4)$ be any complete worlds. If
+
+$$
+\chi(W)=\chi(W'),\qquad
+(p,u,m)(W)=(p,u,m)(W'),
+\tag{26.18}
+$$
+
+then either $W=W'$, or they are a legal distinct reflected pair
+$A_r,A_{9/8-r}$ of Theorem 25.3. Conversely every such reflected
+pair satisfies (26.18). Hence the map
+$W\mapsto(\chi(W),p(W),u(W),m(W))$ has fibres of size at most
+two, and every two-point fibre is one of these known mirror pairs.
+
+Proof. Write $x=\chi(W)=\chi(W')$, $H=Ug$,
+$H'=U'g'$ and $\delta=d-d'$. Equality of the original readings
+at clocks $3,4$ and of the three actual later readings gives
+
+$$
+(H-H')(i)=-\delta/f_i,\qquad
+(f_3,f_4,f_5,f_6,f_7)=(x,1,x+1,x+2,2x+3).
+\tag{26.19}
+$$
+
+The fourth difference of the degree-at-most-three polynomial
+$H-H'$ vanishes. The reciprocal difference is exactly
+
+$$
+\frac1x-4+\frac6{x+1}-\frac4{x+2}+\frac1{2x+3}
+ =-\frac{\mathfrak p(x)}{x(x+1)(x+2)(2x+3)}.
+\tag{26.20}
+$$
+
+All denominator factors are positive. Thus
+$\delta\mathfrak p(x)=0$.
+
+First suppose $x\ne\alpha$. Then $\delta=0$, so $H-H'$ has
+five distinct zeros and is identically zero. The common
+clock-zero equation $g(0)=g'(0)=-d$ now gives
+$d(U-U')=0$. At clock two, $T=(U+1)/2$, and the common
+response $C=147/5$ gives
+
+$$
+ H(2)=\frac{2U(C-d)}{U+1}
+     =\frac{2U'(C-d)}{U'+1}.
+$$
+
+Consequently $(C-d)(U-U')=0$. Since $C\ne0$, these two
+equations force $U=U'$. Therefore $b=b'$, $n=n'$ and
+$g=g'$, with $d=d'$. If $r=r'$ these are the identical
+complete world. Otherwise $j=n-r\ne n-r'=j'$, and the
+clock-one equations force $g(1)=0$, hence $d=24$.
+O, Theorem 2.2, gives $b=1/8$, $g=h$. The common-source
+quadratic, or (25.13), gives $r+r'=9/8$.
+
+Now suppose $x=\alpha$. Let $q_x$ be the unique cubic with
+values $(1/x,1,1/(x+1),1/(x+2))$ at nodes $3,4,5,6$.
+Its explicitly reproducible Lagrange formula is
+
+$$
+q_x(s)=\sum_{i=3}^6\frac1{f_i}
+ \prod_{\substack{3\le j\le6\\j\ne i}}\frac{s-j}{i-j}.
+\tag{26.21}
+$$
+
+Evaluation gives $q_x(0)=q_0(x)$ of (26.5), and
+
+$$
+ q_x(7)-\frac1{2x+3}
+ =\frac{\mathfrak p(x)}{x(x+1)(x+2)(2x+3)}=0.
+$$
+
+The four nodes $3,4,5,6$ in (26.19) imply the identity of whole
+polynomials $H-H'=-\delta q_x$. At clock zero this gives
+
+$$
+ d(q_0-U)=d'(q_0-U').
+\tag{26.22}
+$$
+
+Theorem 26.3 parametrizes both entire sources by $z,z'\in(0,1)$
+and gives their unique reconstructed drifts. Thus (26.22) is
+$K_\alpha(z)=K_\alpha(z')$. The strict derivative (26.9) forces
+$z=z'$. Sources coincide, and the unique full-parent lift in
+Theorem 26.3 gives $W=W'$.
+
+Finally (25.13) shows that every legal reflected pair has equal
+$p,u,m$ and equal $n$. It also has common $U=5/4$, hence equal
+$\chi$. For a fixed world its distinct reflected partner, when
+legal, is unique, proving the fibre bound. The proof nowhere
+requires a nonzero gain sample, exact degree, simple roots or
+nonzero drift. This is classification within an equal unobserved
+source ratio, with arbitrary real acquired responses; it supplies
+no acquisition of $\chi$ and no assertion about unequal ratios. ∎
+

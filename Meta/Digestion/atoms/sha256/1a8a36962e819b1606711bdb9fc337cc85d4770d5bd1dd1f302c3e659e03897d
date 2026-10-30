@@ -1,0 +1,126 @@
+## 35. A guarded rational chart derived from the four forced samples
+
+Before simplification, the four forced values of the same entire gain
+are exactly
+
+$$
+ z_0=-24-e,\qquad z_1=-e/j,\qquad
+ z_2=(27/5-e)/T,\qquad z_3=-e/n.
+ \tag{35.1}
+$$
+
+Their degree-at-most-three interpolant gives all future values:
+
+$$
+\begin{split}
+ g(4)&=-z_0+4z_1-6z_2+4z_3,\\
+ g(5)&=-4z_0+15z_1-20z_2+10z_3,\\
+ g(6)&=-10z_0+36z_1-45z_2+20z_3,\\
+ g(7)&=-20z_0+70z_1-84z_2+35z_3.
+\end{split}\tag{35.2}
+$$
+
+The inherited literal trace factors at clocks five and six and the two
+terminal alternatives are, respectively,
+
+$$
+ U+n,\qquad 2U+n,\qquad T+2j+4r=T+2n+2r,
+ \qquad 3U+2n.
+ \tag{35.3}
+$$
+
+Consequently the actual responses, before any simplification, are
+
+$$
+ V=d+(2U+n)g(6),\quad
+ A=d+(T+2n+2r)g(7),\quad M=d+(3U+2n)g(7).
+ \tag{35.4}
+$$
+
+Here $A=a(W)$ and $M=m(W)$; the symbol $M$ in (35.4) denotes a
+response, whereas the matrix was specified in Section 33.
+
+Introduce the following polynomials, which are different from the
+parent denominator $D$ and from the source sextic in the common-parent
+volume:
+
+$$
+\begin{split}
+ H={}&(b^2-16b-12)n^2+b(2b^2-7b-4)n+10(1+2b)^2(1+b),\\
+ C={}&16b^3+70b^2+59b+14+(8b^2+15b-2)n,\\
+ B={}&160b^2+240b+80-(143b+94)n,\\
+ N_6={}&320b^3-118b^2n-960b^2-139bn^2+1801bn
+          -2180b-542n^2+1350n-810,\\
+ N_7={}&1200b^3-392b^2n-190b^2-496bn^2+3619bn
+          -3015b-1728n^2+2870n-1310.
+\end{split}\tag{35.5}
+$$
+
+First prove the denominator guard. On $0<b<h$, the coefficients
+$b^2-16b-12$ and $b(2b^2-7b-4)$ are strictly negative.
+Thus $H$ strictly decreases with $n>0$. Exact substitution gives
+
+$$
+ H(b,q(b))=
+ (b^6+24b^5-100b^4-672b^3-640b^2-384b-128)/64<0.
+ \tag{35.6}
+$$
+
+Indeed its first three terms are
+$b^4(b^2+24b-100)<0$ for $b<h$, and the others are negative.
+Since both arcs have $n>q(b)>0$, we obtain the strict whole-arc guard
+
+$$
+ H<0.\tag{35.7}
+$$
+
+This guard is not the already known inequality $-Z<0$.
+
+The two original scalar equations for $e$ give the polynomial
+elimination identity
+
+$$
+\begin{split}
+ K&:=4A_5-15(U+n)\Lambda=2H/(nTU),\\
+ E&:=-4p_c-15(U+n)R=-6C/(TU),\qquad eK=E.
+\end{split}\tag{35.8}
+$$
+
+Every denominator in (35.8) is positive except the explicitly guarded
+$H$. We may therefore solve, everywhere on both arcs,
+
+$$
+ e=-3nC/H,\qquad d=3(U+n)B/H.\tag{35.9}
+$$
+
+To obtain future samples directly from (35.1)–(35.2), eliminate $z_1$
+using the original clock-four relation in the division-free form
+
+$$
+ 4z_1=R-e(1+6/T+1/U-4/n).
+ \tag{35.10}
+$$
+
+Substituting (35.9)–(35.10) into (35.2), by polynomial expansion, gives
+
+$$
+ g(5)=-3B/H,\qquad g(6)=3N_6/(5H),\qquad
+ g(7)=3N_7/(5H).
+ \tag{35.11}
+$$
+
+For example $8H-nC=(U+n)B$ verifies the identity for $d$, and
+(35.11) also yields $d+(U+n)g(5)=0$, the actual fifth reading.
+The rational response chart is (35.4) with (35.9) and (35.11).
+It was derived from the one common interpolant, not by assigning
+independent gains to future rows.
+
+All guards are now explicit. The strict source implies
+$b,j,n,T,U,U+n>0$, while (35.7) gives $5H\ne0$.
+The earlier zero-safe lift uses only $Z>0$. At either singular
+source $b=1/8$, with $D=\Lambda=0$, bounds (33.5) and (35.7) still
+hold; (35.8) then has $K=4A_5\ne0$. There is no division by
+$D,\Lambda,e$, a gain sample, a leading coefficient, a discriminant
+or a gain-root difference in this derivation. Thus neither singular
+world nor any compatible gain degeneracy has been removed.
+

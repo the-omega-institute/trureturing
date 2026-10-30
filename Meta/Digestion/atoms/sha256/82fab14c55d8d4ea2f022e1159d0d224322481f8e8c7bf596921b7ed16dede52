@@ -1,0 +1,12 @@
+#### 定义 11.6.1（学习合同的根纤维）
+
+令 $\Theta$ 是有限的底层隐藏参数化集，$\Theta_\circ\subseteq\Theta$ 是非空、在模型进入训练、干预或推理协议之前已经存在的根参数化集。另给一个有限的许可 occurrence-labelled 历史域 $H_{\mathrm{ML}}$、根集 $H_{\circ,\mathrm{ML}}$ 以及投影 $p:H_{\mathrm{ML}}\to\Theta$，其中 $p(H_{\circ,\mathrm{ML}})\subseteq\Theta_\circ$；不同 occurrence 可以投影到同一个参数状态。要求 $H_{\mathrm{ML}}$ 及其许可转移满足定义 11.1.1 的可达性、根树不相交和唯一公开词条件，或显式给出一个满足这些条件的有限 history unfolding。有限的 $\Theta$ 只保证底层参数种类有限，不替代这个 occurrence 域假设。
+
+$q_0$ 是实际接口使用的固定初始摘要，并对应 $H_{\circ,\mathrm{ML}}$ 的共同根状态。允许动作形成有限公开事件词，训练或认证目标作为终端记录后的目标值。由这些数据得到有限协议
+
+$$
+\mathcal P_\mathrm{ML}=(H_{\mathrm{ML}},H_{\circ,\mathrm{ML}},E,\delta,\ell,R,\operatorname{Term},t).
+$$
+
+如果两个根 occurrence $h,h'\in H_{\circ,\mathrm{ML}}$ 具有相同的固定初始摘要，却存在相同的合法动作/读数词和相同的终端记录，且目标不同，则称为**初始化逃逸证书**；其底层参数 $p(h),p(h')$ 可以相同或不同。
+

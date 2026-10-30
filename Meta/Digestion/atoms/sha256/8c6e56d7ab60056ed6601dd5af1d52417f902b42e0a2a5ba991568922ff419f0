@@ -1,0 +1,61 @@
+## 7. Reused suppliers, exact delta and remaining obligations
+
+VI149–150 and 152 already supply the base $\kappa=1$ CAR block, singlet
+mixture, effective success probability, partial-transpose spectrum,
+number-twirled negativity and thermal thresholds used in (QSSR.12),
+(QSSR.15)–(QSSR.18) and (QSSR.21). VI147 and 154, together with Joint
+Relations and Clocks §§2.1.6 and 2.2.6, supply the common-versus-independent
+reference distinction and the joint-access distinction from a single-copy
+twirl. Those results are reused, without independent new-content credit.
+
+The `repo-derived` contribution relative to these suppliers is the
+source-specific preparation-to-retained-use relation of Theorems 3.1,
+4.1 and 5.2: for an arbitrary supplied joint phase law, the surviving
+coherence is $-\kappa z^2$, its exact entanglement criterion is
+$|\kappa|z^2>ad$, and the complete nine-outcome flagged instrument is
+installed in isolated memory with every declared finite legal continuation.
+Proposition 2.3 supplies the finite known-setting producer at $\log7$;
+general-temperature preparation and arbitrary phase-law production remain
+conditional inputs. Corollary 4.2 is the corresponding thermal-memory
+instance of the existing common-versus-independent-source mechanism.
+The explicit separable branches, transfers, storage, witness menu and
+same-run resource account complete this conditional operational synthesis.
+Generic activation, pinching, pointers, dual rails, storage and branch
+induction are reused mechanisms.
+
+| Supplier and evidence class | Exact correspondence and retained limit |
+| --- | --- |
+| VI127.1, 127.2, 128.3 and 139–146, `repo-derived` supplier | The actual stopped singleton birth, two interior metrics, principal-root normalization, full eight-dimensional Gibbs inputs, B-local factorization, ordinary PPT boundary and single-copy SSR limit. No physical quantum preparation or storage follows from the native metric transport. |
+| VI147–150, 152 and 155–156 at the separately specified revision, `repo-derived` supplier | Same-setting full Gibbs copies with compatible references; (148.1)–(148.3) give the coefficients and $bc=ad+z^2$; (149.1), (149.4), (149.6), (150.1)–(150.5) and (152.1)–(152.4) give the base CAR block, singlet mixture, effective probability, PPT spectrum, total effective number-twirl negativity, thresholds and $\log7$ values. VI148.4 and 156[M] credit the mixed-state SSR method to Schuch–Verstraete–Cirac, quant-ph/0404079v1, §IV.D.1–2. These supply the $\kappa=1$ algebra here; the arbitrary joint phase law and complete preparation-to-retained-use interface are the extension. |
+| VI151 and 153–154 at the separately specified revision, `repo-derived` supplier | VI151's spectator-inclusive common filter has probability $343/2048$ at model $b$, $\log7$; it differs from our aligned, spectator-discarded instrument with central probability $11/64$. VI153's total-parity twirl has additional even-sector coherence and a different total negativity; it is not (QSSR.15). VI154's source-versus-single-copy-twirl joint readout is credited; Corollary 4.2 specializes the reference distinction to the retained-memory task. |
+| Joint Relations and Clocks §2.1.3–2.1.6, equations TM.120–132; §2.2.6, TM.152, `repo-derived` supplier | Explicit pointer resource contracts, branchwise rather than averaged descent, and common versus independently randomized sources. The local qutrit gate and the thermal branch calculation above instantiate these mechanisms; no unrestricted effect implementation is presumed. |
+| `D5/S3/Quantum/FockSpace/FiniteOccupationPartitionFunctions.lean` and its owning Scribe, existing source | Its finite diagonal binary occupation sum is credited. Here the three eigenvalues are $(0,1,1)$; the finite exterior-basis proof supplies the exact preparation correspondence. Its bosonic cutoff statement is not substituted for a full bosonic Gibbs state with a zero mode. |
+| `D5/S3/Quantum/Fibers/FiveModeTwoCopyPhase.lean` and its owning Scribe, existing source | `two_copy_bell_readout` concerns a different five-coordinate mixture, a specified real Bell effect, and probability $(1+(1-2q)^2)/4$. Its scalar parameter is not this residual vector $q$; it supplies neither the thermal producer nor our local charge instrument or retained task. |
+| `D5/S3/Quantum/Fermionic/PhysicalSiteProducts.lean` and its owning Scribe, existing source | Physicality is parity commutation; actual site partial traces preserve it, and physical product states obey its inter-site cancellation theorem. Ordinary occupation notation here does not make odd B fields local or make a nonphysical product decomposition a free fermionic preparation. Our surviving block decompositions use fixed local charge states. |
+| Recovery Geometry §§10–14, Process Geometry §§12,17,19 and Native Paid View Conversion §§1,6–10, existing ordinary suppliers | Acquired records, task-relative future response, installed paid calls, ownership and return retain their own premises. PVC's fixed-H entrance and added converter do not install quantum source, phase or memory primitives; no native compiler or four-view inverse is inferred from the present finite isometry. |
+| Jan Dereziński, *qft-lectures*, §§5.7,5.9, Theorem 5.3, `literature-attested` | Second quantization and the Fock direct-sum/exponential law support the finite occupation model. The retrieved unversioned edition is the supplied source identity, without a historical byte-equivalence claim. Its printed odd-field typography is not used to remove CAR parity strings: the ordered creation-word argument above supplies all signs. [Primary PDF](https://www.fuw.edu.pl/~derezins/qft-lectures.pdf). |
+| M., P., and R. Horodecki, *Separability of Mixed States: Necessary and Sufficient Conditions*, quant-ph/9605038v2, Theorem 3, PDF p.8, `literature-attested` | PPT sufficiency in $2\times2$ or $2\times3$ supports VI's effective two-qubit criterion. We use no arbitrary $2\times4$ PPT sufficiency; (QSSR.20) proves separability of our block and its flags directly. [Primary PDF](https://arxiv.org/pdf/quant-ph/9605038v2). |
+| H. M. Wiseman and J. A. Vaccaro, quant-ph/0210002v2, equations (12)–(14), Table I, `literature-attested` | Pure fixed-total-number SSR resource context, including two-copy benefit. Its pure-state average is not a formula for our full mixed Gibbs state's negativity or an ebit yield. [Primary PDF](https://arxiv.org/pdf/quant-ph/0210002v2). |
+| S. D. Bartlett, T. Rudolph and R. W. Spekkens, quant-ph/0610030v3, II.B, III.C.2–3, equations (2.9),(3.32),(3.33), `literature-attested` | Local number pinching, allowed dual-rail controls, two-copy pure-state activation and mixed-state local-twirl/register context are already established. Equation (3.33)'s maximization uses its stipulated freely controlled registers and LOCC resources; our explicit finite consumer and ordinary flagged negativity claim no such optimum. The fermionic application discussed in III.C.4 does not dispense with the CAR sign calculation. [Primary PDF](https://arxiv.org/pdf/quant-ph/0610030v3). |
+
+These correspondences are limited to the stated immutable sources and
+parameter maps; they assert neither exhaustive literature priority nor a
+classification of other apparatus. The finite-matrix, exterior-word and
+branch proofs establish conditional QSSR2 conclusions. Availability of
+their exact preparations, phase controls, instruments, transfers and
+isolation remains an explicit apparatus premise.
+
+**Open obligations 7.1 (unchanged full programme).** An unknown native source
+is not identified here: $q$ is a known preparation input, and an actual
+charge flag occurs under both settings and throughout the thermal domain.
+Original alpha/beta operations have not been shown to prepare, align,
+transfer or isolate these fermionic modes or implement the neutral-pointer
+interaction. Physical space, physical time and their independent recovery
+from boundary or memory have not been constructed. The common realized
+growing observer, all four independent view kernels, every claimed reverse
+direction, route agreement and native dynamics compatibility remain to be
+proved on their original domains. The original fixed-$G_{\rm gc}$,
+original-Q, parked-consumer, unchanged-initialization and common-runtime
+obligations and all earlier settlements are preserved. No conditional
+finite apparatus closes those obligations or the sustained full objective.
+

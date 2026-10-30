@@ -1,0 +1,47 @@
+**Theorem 23.1 (Exact four-world child with one final-J pair).** At the
+inherited exact algebraic $p_J$ of (8.4), let $v_\star$ be the actual
+response (18.8) at the unique eight-equation zero of Theorem 18.2.
+Then the entire complete-world child is
+
+$$
+\mathcal F(H_4,M,p_J,M,v_\star)=\{A,B,C,D\}.
+\tag{23.1}
+$$
+
+The four worlds are different, their $r$ projections occur in the
+order $C,B,A,D$ in $I_1,I_2,I_3,I_4$, and each is the unique
+complete lift of its corresponding source. The only unordered pair
+of different worlds with equal actual final-J response is $\{A,B\}$.
+There is no distinct final-M collision pair. Consequently, for every
+finite or infinite support $S$ inside this entire child,
+
+$$
+\neg L_1(S,(H_4,M,p_J,M,v_\star)).
+\tag{23.2}
+$$
+
+Proof. Theorem 18.2 supplies four actual, distinct complete worlds
+with the same acquired fifth and sixth responses. Theorem 19.1 puts
+this actual $v_\star$ in $\mathcal V$, while the inherited definition
+puts $p_J\in\mathcal P$. Thus the independent upper bound (22.1)
+applies to their full child and permits at most four worlds. These
+four already exist, proving (23.1). The upper-bound proof uses no
+local existence premise; existence comes from the original eight
+equations, and it discharges the premise needed for exact cardinality.
+
+The precise coordinate association has the following sharper
+certificate. From the component version of (19.3) at the fixed point,
+
+$$
+|z_i(p_J)-m_i|\le\eta_i+q_i\rho.
+\tag{23.3}
+$$
+
+For the four $r$ coordinates the bounds are
+
+| World | Coordinate index | $10^{24}(\eta_i+q_i\rho)$ | Assigned interval |
+| --- | --- | --- | --- |
+| $C$ | $5$ | $296419530456129$ | $I_1$ |
+| $B$ | $3$ | $117712740203950$ | $I_2$ |
+| $A$ | $1$ | $436698210487845$ | $I_3$ |
+| $D$ | $7$ | $540609050271175$ | $I_4$ |

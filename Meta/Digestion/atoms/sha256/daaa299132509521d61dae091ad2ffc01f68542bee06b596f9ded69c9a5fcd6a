@@ -1,0 +1,5 @@
+Let $0<\varepsilon<1/2$. A balanced binary task observed through
+
+- a BSC with crossover probability $\varepsilon$, and
+- a BEC with erasure probability $\lambda=h_2(\varepsilon)$
+

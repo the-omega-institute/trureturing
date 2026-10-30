@@ -421,3 +421,165 @@ avoid every flag of edge $1$ and are untouched. The remaining four nonendpoint f
 The vertex switch and binary cycle criterion are established mathematics. The application here identifies the exact normalized conditional sampler supplied to simultaneous actual graph cuts and to their complete weighted-return inventory. Proposition 11.1 gives an explicit inventory separation with the untouched term retained. The original all-edge fair-sign sampler remains uniform after normalization; this obstruction concerns omitting some of its independent signs. No graph-independent inventory probabilities, exact-thirds statement, cycle-double-cover conclusion, or external priority for the standard ingredients is asserted.
 
 Mathematical references: [Ghanbari–Šámal, *Facial diagrams and cycle double cover*, Lemma 2.1](https://arxiv.org/html/2605.01410v1#S2); [Archdeacon, *Topological Graph Theory: A Survey*, §2.5](https://www.math.u-szeged.hu/~hajnal/courses/PhD_Specialis/Archdeacon.pdf); [Zaslavsky, *Glossary of Signed and Gain Graphs and Allied Areas*, “balance”, “Harary bipartition”, and “potential function”](https://people.math.binghamton.edu/zaslav/Bsg/glossary.html). These supply the standard switching and balance background. The conditional-inventory formula combines the switching, cycle-space and first-return ingredients on the same labelled flag carrier.
+
+## 12. Diamond necklaces with a linear bad-singular excess
+
+**Definition 12.1 (The diamond necklace and its sampling law).** For an integer $k\ge1$, take disjoint labelled copies $D_i$ of $K_4-01$, indexed by $i\in\mathbb Z/k\mathbb Z$. The vertices of $D_i$ are $0_i,1_i,2_i,3_i$, its five internal edges are $02,03,12,13,23$, and its terminals are $0_i,1_i$. Add the $k$ connector edges $1_i0_{i+1}$ and denote the resulting graph by $N_k$. Sample cyclic orders independently and uniformly at every vertex and sample every band sign independently and fairly, independently of the orders. Use the actual flags, corner and band involutions of Definition 10.1. In particular sign zero reverses side, the complement of the author-notebook lambda convention.
+
+Let $G_k,B_k,R_k$ count physical good singular, bad singular and regular edges, respectively. Thus $B_k$ counts edges whose two traversals belong to one physical facial boundary and have opposite directions; it does not count oriented boundary cycles or all singular edges. This is the same probability law and classification as Sections 3–7 and the author notebook's `random_pi`, `random_lambda` and `count_good_bad_regular` functions, [pinned at commit 0d4404941894d3ef8dd9f27f1e61829bec2bcde5](https://github.com/babakghanbari993/cdc-random-embeddings/blob/0d4404941894d3ef8dd9f27f1e61829bec2bcde5/notebooks/random_embedding_experiment.ipynb).
+
+**Theorem 12.2 (Exact necklace means).** Every $N_k$ is a finite simple connected bridgeless cubic graph, with $4k$ vertices and $6k$ edges. Under Definition 12.1, put $a=23/32$. Then
+
+$$
+ \frac{\mathbb E B_k}{6k}
+   =\frac38-\frac{3}{32}a^{k-1},
+ \qquad
+ \mathbb E G_k=\mathbb E R_k=\frac{6k-\mathbb E B_k}{2}.
+ \tag{12.1}
+$$
+
+In particular,
+
+$$
+ \mathbb E B_k>\frac{|E(N_k)|}{3}\quad\Longleftrightarrow\quad k\ge4,
+ \qquad
+ \lim_{k\to\infty}\frac{\mathbb E B_k}{|E(N_k)|}=\frac38.
+ \tag{12.2}
+$$
+
+The excess over one third is
+
+$$
+ \mathbb E B_k-\frac{|E(N_k)|}{3}
+   =\frac{k}{4}-\frac{9k}{16}a^{k-1}.
+ \tag{12.3}
+$$
+
+For the simple bridgeless cubic graph $N_4$, which has sixteen vertices and twenty-four edges,
+
+$$
+ (\mathbb E G_4,\mathbb E B_4,\mathbb E R_4)
+ =\left(\frac{2075583}{262144},\frac{1070145}{131072},
+              \frac{2075583}{262144}\right)
+ =\left(8-\frac{21569}{262144},\ 8+\frac{21569}{131072},\
+              8-\frac{21569}{262144}\right).
+ \tag{12.4}
+$$
+
+*Proof.* First check the graph hypotheses. Each terminal has internal degree two and receives exactly one connector; the other vertices have degree three. For $k=1$, the connector is the missing edge $10$, so $N_1=K_4$. For $k\ge2$, connectors join different copies, with distinct unordered pairs of endpoints, even when $k=2$. Thus the graph is simple and cubic. It is connected. Every internal edge lies in one of the triangles $0_i2_i3_i0_i$ and $1_i2_i3_i1_i$. Every connector lies on the cycle obtained by using the terminal-to-terminal path $0_i2_i1_i$ in every copy. Hence every edge lies on a cycle and none is a bridge. No assertion of three-edge-connectivity is needed.
+
+We next reduce to fixed reference cyclic orders. At a cubic vertex there are exactly two cyclic orders. For any sampled choice, the vertex switch (10.13) conjugates its actual corner/band system to the chosen reference orders and translates the sign vector by a fixed coboundary. Since every sign is independently fair, this translation preserves the full uniform sign law. The conjugacy preserves physical facial boundaries and agreement or opposition of repeated directed traversals. Therefore the law of every edge category can be computed with fixed reference orders and independent fair signs. This uses the standard vertex switch of [Ghanbari–Šámal, Lemma 2.1](https://arxiv.org/html/2605.01410v1#S2); the actual flag identity and its all-edge fair-sign consequence are established in Sections 6 and 10.
+
+Cut the connector band or bands incident to a diamond, retaining its two port half-edges and their four side flags. The finite alternating corner/band paths pair the four port flags. Components missing all four flags are untouched. Write $D$ for the pairing of the two flags at each terminal separately, and $T_0,T_1$ for the two pairings joining each terminal's flags to the other terminal. Call these the *dead* and *through* cases. These pairings are actual first-positive-return pairings as in Section 10, not independently supplied connection data. Contracting each alternating path segment gives the same marked oriented-orbit relations before and after reattachment. In particular, after a distinguished band is cut, its dead pairing is exactly the bad-singular case in the four-endpoint calculation of Section 7.
+
+Here is the complete local diamond calculation. Identify a diamond's port flags with the four flags of the deleted edge $01$ in the edge order $01,02,03,12,13,23$. Number flags by $4e+2j+b$, where $j\in\{0,1\}$ is the labelled end and $b\in\{0,1\}$ is its side. Choose the reference corner involution
+
+$$
+ s=(0\ 9)(1\ 4)(2\ 17)(3\ 12)(5\ 8)(6\ 21)
+       (7\ 14)(10\ 23)(11\ 18)(13\ 16)(15\ 20)(19\ 22).
+ \tag{12.5}
+$$
+
+For signs on the five internal edges, let $r$ fix $0,1,2,3$ and, for $e\ne0$, act by
+
+$$
+ r(4e+2j+b)=4e+2(1-j)+(b+1+t_e\bmod2).
+ \tag{12.6}
+$$
+
+The port pairing $P(x)$ is $(sr)^{n_x}x$ at the first positive time $n_x$ when the orbit returns to $\{0,1,2,3\}$. Thus
+
+$$
+ D=(0\ 1)(2\ 3),\qquad T_0=(0\ 2)(1\ 3),\qquad T_1=(0\ 3)(1\ 2).
+ \tag{12.7}
+$$
+
+Put $u=t_{02}+2t_{03}$ and $v=t_{12}+2t_{13}$. Following (12.5)–(12.6) to the first positive return gives these two tables, with row $u$ and column $v$:
+
+$$
+ \begin{array}{c|cccc}
+ t_{23}=0&v=0&v=1&v=2&v=3\\\hline
+ u=0&T_1&T_0&T_1&T_0\\
+ u=1&T_1&D&T_1&T_1\\
+ u=2&T_0&T_0&D&T_0\\
+ u=3&T_0&T_0&T_1&T_1
+ \end{array}
+ \qquad
+ \begin{array}{c|cccc}
+ t_{23}=1&v=0&v=1&v=2&v=3\\\hline
+ u=0&T_0&T_0&D&T_0\\
+ u=1&D&D&D&D\\
+ u=2&T_0&T_0&D&T_0\\
+ u=3&T_0&T_0&D&T_0.
+ \end{array}
+$$
+
+The table accounts for all $2^5$ internal sign choices, with counts
+
+$$
+ \#D=9,\qquad \#T_0=16,\qquad \#T_1=7.
+ \tag{12.8}
+$$
+
+Consequently a diamond is through with probability $a=23/32$. Closing its two ports by an additional fair band gives the actual uniform-sign $K_4$ model. For each through pairing the two choices of that band's sign give one good and one regular state; the dead pairing gives a bad state under both signs. The bad marginal of the closing edge is therefore $9/32$. Every other edge of $K_4$ has the same marginal: relabel the vertices to map that edge to the closing edge, then apply the vertex normalization above. These operations preserve the uniform sign law and the physical category. Thus
+
+$$
+ \mathbb P_{K_4}(e\text{ bad})=\frac9{32}\quad\text{for every edge }e.
+ \tag{12.9}
+$$
+
+We use the elementary series-composition rule for these actual pairings. A chain of two-terminal modules is through if every module is through: concatenate the two-point bijections from one end to the other. Conversely, if a module is dead, choose the first dead module reached from the left. All earlier modules are through, so the two paths entering from the left return to that end instead of reaching the right. Repeating from the right gives the dead pairing at the two chain ends. Any closed components between dead modules miss the chain's endpoints and do not affect this conclusion. Thus a chain is through if and only if all of its modules are through.
+
+Diamonds have disjoint internal sign sets. A chain containing $j$ diamonds is therefore through with probability $a^j$, regardless of connector signs. Conditional on being through, a chain containing at least one fair connector has a fair effective pairing between $T_0,T_1$. Indeed, holding its internal signs and all other connectors fixed, toggling that connector swaps the two effective through pairings. The conditioning concerns only the diamond-internal signs and does not condition on the connector sign.
+
+Cut a connector of $N_k$. The remainder is a chain of all $k$ diamonds and the other $k-1$ connectors. Its dead pairing is exactly the event that the cut connector is bad. Hence every connector has bad probability
+
+$$
+ p_{\mathrm{connector}}=1-a^k.
+ \tag{12.10}
+$$
+
+Now fix one diamond and expose its two ports. The exterior consists of $k-1$ diamonds and all $k$ connectors, independently of the five internal signs of the chosen diamond. With probability $a^{k-1}$ it is through, and its effective band is fair. This includes $k=1$, whose exterior is just the single closing connector. Replacing the outside paths by that band gives uniform-sign $K_4$ and preserves each internal edge's physical category. By (12.9), each such edge has conditional bad probability $9/32$.
+
+If instead the exterior is dead, it pairs the two port flags separately at each terminal. Suppress the resulting degree-two terminals. The remaining graph is the theta multigraph with branch vertices $2_i,3_i$ and three branches: $23$, $2_i0_i3_i$, and $2_i1_i3_i$. This is only an intermediate path-compression graph; $N_k$ itself is simple. Each effective branch sign is the sum modulo two of the signs along that branch, up to a fixed convention-dependent constant. The three branches have disjoint edge sets, so their effective signs are independent fair bits. Suppressing degree-two vertices preserves boundary membership and the agreement or opposition of the two traversals along a branch. In particular every edge on a branch has the category of that branch.
+
+For completeness, take the same cyclic order of the three branches at both theta vertices. The actual face map is (11.2). Its type counts $(G,B,R)$, grouped by the number $w$ of one-signs, are
+
+$$
+ \begin{array}{c|c|c}
+ w&\text{number of sign vectors}&(G,B,R)\\\hline
+ 0&1&(0,3,0)\\
+ 1&3&(2,1,0)\\
+ 2&3&(1,0,2)\\
+ 3&1&(0,0,3).
+ \end{array}
+ \tag{12.11}
+$$
+
+In a weight-one vector, its unique one-signed branch is the bad one. These entries follow by following (11.2): weight zero has two opposite directed traversals of every branch; toggling one sign preserves that branch's bad category, and the other two are good; a second toggle splits the boundary and makes its two one-signed branches regular; at weight three every branch is regular. Equivalently these are the same eight actual theta states whose complete inventories appear in Proposition 11.1. The total bad incidence count is $3+3=6$ over eight states; symmetry gives marginal $1/4$ for every branch. Vertex normalization gives the same law for the other reference orders. Therefore every internal edge of the capped diamond, including both edges of either two-edge branch, has bad probability $1/4$.
+
+Combining the two exterior cases gives, for each of the five internal edges,
+
+$$
+ p_{\mathrm{internal}}
+   =\frac9{32}a^{k-1}+\frac14(1-a^{k-1})
+   =\frac14+\frac1{32}a^{k-1}.
+ \tag{12.12}
+$$
+
+There are $k$ connectors and $5k$ internal edges. Linearity of expectation, without independence of edge categories, now yields
+
+$$
+ \mathbb E B_k
+   =k(1-a^k)+5k\left(\frac14+\frac1{32}a^{k-1}\right)
+   =\frac{9k}{4}-\frac{9k}{16}a^{k-1}.
+ \tag{12.13}
+$$
+
+This proves the first identity in (12.1). It exceeds $2k$ precisely when $a^{k-1}<4/9$. Since $a^2=529/1024>4/9$ and $a^3=12167/32768<4/9$, the threshold is exactly $k\ge4$. The limit, linear excess and rational values follow. Finally each edge's own sign is fair, so the actual twist exchange of Section 7 gives equal good and regular marginals and hence the second identity in (12.1). ∎
+
+**Corollary 12.3 (Failure of a one-sided weakening under the same law).** In the uniform independent signed-rotation law of Definition 12.1, the assertion that every finite simple connected bridgeless cubic graph has expected bad-singular count at most one third of its edges is false. Moreover the deviation from one third need not tend to zero along growing graphs.
+
+*Proof.* Apply (12.2) to $N_k$ for $k\ge4$. Its limiting bad density is $3/8=1/3+1/24$. Its good and regular densities tend to $5/16=1/3-1/48$. ∎
+
+The corollary concerns a possible weakening of the exact-thirds assertion, not an additional conjecture attributed to the source authors. The graph family has two-edge cuts; no conclusion for three-edge-connected graphs follows. The standard vertex gauge, local band switch and first-return segmentation are inherited ingredients. The necklace application combines their actual port pairings, the capped-theta law and independent connector signs to obtain (12.1); it is distinct from the transitive dyadic obstruction and the partial-sign conditional law. The sampling law is essential throughout, and no conclusion about a different measure on unlabelled embeddings or about the cycle-double-cover conjecture is asserted. The source terminology and switching statements are recorded in [the existing Ghanbari–Šámal Library note](../../../Library/RibbonEmbeddings/ghanbarisamal2026facial.md); the four-endpoint construction and its oriented-orbit bridge are described in [FiniteEndpointPairing](../../../Blueprint/D5/S3/Combinatorics/PerfectMatchings/FiniteEndpointPairing.md) and [FiniteBandSwitch](../../../Blueprint/D5/S3/Combinatorics/PerfectMatchings/FiniteBandSwitch.md).

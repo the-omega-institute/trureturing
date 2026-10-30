@@ -1,0 +1,80 @@
+**Lemma 11.3 (Carrier degree at most 199).** The total parameter degree
+of $E$ is at most $199$.
+
+Proof. Put $R_i=[x^i]R$ and use $[A]_j$ for the homogeneous degree-$j$
+part of a parameter polynomial. Coefficient collection from (9.1) gives
+
+$$
+\deg R_i=6\ (0\le i\le16),\qquad \deg R_{17}=5,
+\qquad\deg R_{18}=4.
+\tag{11.6}
+$$
+
+The following small homogeneous identities specify the cancellation at
+infinity. Set
+
+$$
+\begin{gathered}
+A=[R_{18}]_4,\quad B_\infty=[R_{17}]_5,\quad C=[R_{16}]_6,\\
+N=-975p^2+720pv-128v^2,\qquad D_\infty=8460p-3840v,\\
+F_3(y)=\sum_{i=15}^{18}[R_i]_{21-i}y^{i-15},\qquad
+F_4(y)=\sum_{i=14}^{18}[R_i]_{20-i}y^{i-14},\qquad
+\ell=N/D_\infty.
+\end{gathered}
+\tag{11.7}
+$$
+
+$A,N,D_\infty$ are nonzero, and exact coefficient arithmetic gives
+
+$$
+B_\infty^2=4AC,\quad 2AN+B_\infty D_\infty=0,\quad
+F_3(\ell)=0,\quad F_3'(\ell)^2=4AF_4(\ell).
+\tag{11.8}
+$$
+
+These tests require only the indicated homogeneous coefficient parts of
+the $512$-term $R$. For completely polynomial tests, multiply the third
+identity by $D_\infty^3$ and the fourth by $D_\infty^4$; expansion and
+coefficient subtraction give zero. Thus no resultant expansion is used
+for this upper bound.
+
+Take algebraically independent $P,V$ and substitute $p=tP,v=tV$.
+Work over an algebraic Puiseux extension of $\mathbb Q(P,V)((t^{-1}))$.
+The Newton polygon from (11.6) gives sixteen bounded roots and two roots
+of order $t$; the nonzero coefficients $C,A$ give these multiplicities.
+The leading equation of the latter two roots $x=ty$ is
+$y^{16}(Ay^2+B_\infty y+C)=Ay^{16}(y-\ell)^2$.
+Here and in the rest of this argument the homogeneous quantities are
+evaluated at $(P,V)$, and $\ell\ne0$.
+
+Substitute $x=t\ell+z$. At the first nonzero order, the equation for
+$z$ is, up to the nonzero factor $\ell^{14}$,
+
+$$
+A\ell^2z^2+\ell F_3'(\ell)z+F_4(\ell)=0.
+\tag{11.9}
+$$
+
+The missing order follows from $F_3(\ell)=0$ in (11.8). The
+quadratic's discriminant vanishes by the last identity there.
+Consequently both roots have the expansion
+
+$$
+x=t\ell-\frac{F_3'(\ell)}{2A\ell}+O(t^{-1/2}).
+\tag{11.10}
+$$
+
+This order estimate also follows by translating the double root in
+(11.9): the next coefficients are of order $t^{-1}$, so the Newton
+polygon places the translated roots at order at most $t^{-1/2}$.
+The difference of the two large roots is therefore $O(t^{-1/2})$.
+
+Use $\operatorname{Disc}(R)=\rho^{34}\prod_{i<j}(x_i-x_j)^2$.
+The leading coefficient contributes $34\cdot4=136$. The $32$
+large/bounded pairs contribute at most $64$. Bounded/bounded differences
+contribute at most $0$, even if some bounded limiting roots coincide.
+The large/large difference contributes at most $-1$. Thus the total
+exponent is at most $136+64-1=199$. Algebraic independence of $P,V$
+identifies that exponent with total parameter degree, proving the bound.
+This is a characteristic-zero argument. ∎
+

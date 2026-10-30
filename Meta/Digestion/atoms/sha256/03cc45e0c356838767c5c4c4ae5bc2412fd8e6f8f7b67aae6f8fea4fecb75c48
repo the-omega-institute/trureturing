@@ -1,0 +1,8 @@
+本卷使用的关系如下：
+
+- ADAPTIVE_ACTION_MENU_BRANCHING_RESIDUAL 给出确定性语义残余 $R_n$；
+- LAW_IMAGE_ACQUISITION_INTERFACE 区分语义 law-image 与一次运行档案，并给出共同支持障碍；
+- ACQUIRED_ADAPTIVE_RESIDUAL 的 $A_n$ 在本卷中沿用“所有声明自适应实验的档案 law 相等”这一轨迹定义；只有在式 (1.3a)–(1.3b) 的联合核闭合和可观测类条件下，才可使用相应的递归判据；
+- SERIAL_ACQUISITION_COMPOSITION 给出在共同来源和条件核闭合下的串行解码复合；
+- Fibonacci 原子生成与权限例子提供确定性 Dirac 档案的特例。
+

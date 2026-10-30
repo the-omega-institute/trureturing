@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5eceeae6f2d65c081cc59f499d5d4a41bf67304ea32910a33e912e4bfb003e08
+  normalized_sha256: sha256:5eceeae6f2d65c081cc59f499d5d4a41bf67304ea32910a33e912e4bfb003e08
+cas_ref: sha256:5eceeae6f2d65c081cc59f499d5d4a41bf67304ea32910a33e912e4bfb003e08
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Manuscript introduction, predecessor citation and finite deterministic scope only; no persistence or repair-width theorem is asserted.
+    previous_atom_id: null
+    next_atom_id: 584947fa7e353ae8cd4d381822e5de9cfab2bdb6889567ee07ff4d39be52d3b6

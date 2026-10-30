@@ -1,0 +1,11 @@
+## 1. The effective consumer and the source contract
+
+[Predictive Waves VI, Definition 99.3](AURIC_COMPATIBLE_PREDICTIVE_WAVES_AND_RELATIONAL_SPECTRA_VI.md#99-全词经典表示标定及预测商的保留边界)
+separates existence of stopping advice, supply of that advice, effective
+production from computable inputs, and acquisition of an unknown model.
+The result here supplies the third item on an explicit promised input domain.
+It uses the stopping interface of VI Definition 95.1, rather than adding
+stopping permission to the earlier fixed-terminal interface retroactively.
+Its timetable remains independent of both the target and the preparation
+parameter. Compiling the timetable and table precedes the sole preparation.
+

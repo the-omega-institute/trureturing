@@ -40,7 +40,7 @@ abbrev depthNoGapArena : PrimitiveLawArena where
   toArena := Arena.ofFintype (Fin 2)
   signature := cutSignature (Fin 2) (Fin 2)
   Law realization :=
-    ∀ (α : Type) [Finite α]
+    ∀ (α : Type)
       (A B : D5.S1.Words.HughesIterationDepthNoGap.Language α) (r : Nat),
       r ∈ iterationDepthSpectrumAt
           (realization.readout () closedSourceZero) A B →

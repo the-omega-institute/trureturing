@@ -1,0 +1,124 @@
+**Lemma 9.2 (nonzero response tangents at $W_3$).** At the exact algebraic
+world $W_3$ of VI Definition 13.1, both $Kf_J$ and $Kf_M$ are nonzero,
+where $K$ is the VI tangent in the independent $(t,b)$ chart with
+$t=r/b$, $Kp=Kv=Km=0$, $Kt=1$, and $p_b(W_3)\ne0$.
+
+**Proof.** All partial derivatives below hold $p,v,m$ fixed. Differentiating
+(9.4) gives
+
+$$
+\begin{aligned}
+F_d&=-\frac1\theta+4-\frac6{1+\theta}+\frac4{2+\theta}-\frac1{3+2\theta},\\
+F_\theta&=-\frac{24-d}{\theta^2}-\frac{6(p-d)}{(1+\theta)^2}
+ +\frac{4(v-d)}{(2+\theta)^2}-\frac{2(m-d)}{(3+2\theta)^2},\\
+(q_8)_d&=1-\frac4{1+\theta}+\frac6{2+\theta}-\frac4{3+2\theta},\\
+(q_8)_\theta&=-\frac{4(p-d)}{(1+\theta)^2}+\frac{6(v-d)}{(2+\theta)^2}
+ -\frac{8(m-d)}{(3+2\theta)^2},\\
+(q_0)_d&=-35+\frac{84}{1+\theta}-\frac{70}{2+\theta}+\frac{20}{3+2\theta},\\
+(q_0)_\theta&=\frac{84(p-d)}{(1+\theta)^2}-\frac{70(v-d)}{(2+\theta)^2}
+ +\frac{40(m-d)}{(3+2\theta)^2}.
+\end{aligned}
+\tag{9.7}
+$$
+
+The exact VI boxes imply the following weaker rational box:
+
+$$
+\begin{gathered}
+1.3785\le\theta\le1.3787,\quad 1.25516\le U\le1.25517,
+\quad27.2631\le d\le27.2632,\\
+7.2830\le p\le7.2831,\quad61.4943\le v\le61.4944,
+\quad351.0575\le m\le351.0576.
+\end{gathered}
+\tag{9.8}
+$$
+
+Every terminating decimal in (9.8) and below denotes the corresponding
+exact rational. Since all denominators in (9.7) are positive, signed
+endpoint products give
+
+$$
+\begin{array}{c|c@{\qquad}c|c}
+F_d&[1.761,1.764]&F_\theta&[15.34,15.39]\\
+(q_8)_d&[.399,.400]&(q_8)_\theta&[-46.1,-45.9]\\
+(q_0)_d&[-16.94,-16.91]&(q_0)_\theta&[-116.1,-115.4]\\
+q_8&[139.8,139.9]&&
+\end{array}
+\tag{9.9}
+$$
+
+For example, the two $q_8$ endpoint inequalities are
+
+$$
+9.2631-\frac{4(19.9802)}{2.3785}-\frac{6(34.2313)}{3.3785}
+ +\frac{4(323.7943)}{5.7574}>139.8,
+$$
+
+and
+
+$$
+9.2632-\frac{4(19.9800)}{2.3787}-\frac{6(34.2311)}{3.3787}
+ +\frac{4(323.7945)}{5.7570}<139.9.
+$$
+
+The analogous signed endpoint expressions in (9.7) give (9.9); no floating
+point evaluation is used. In particular
+
+$$
+ d':=\frac{Kd}{K\theta}=-\frac{F_\theta}{F_d}\in[-8.75,-8.69].
+\tag{9.10}
+$$
+
+Here $K\theta\ne0$. Indeed, if $K\theta=0$, then $F_d>0$ and
+$KF=0$ give $Kd=0$. Differentiating $q_0=-Ud$, using $d>0$, gives
+$KU=0$, hence $Kb=0$. Differentiating $n=b+c+r$ then gives $Kn=0$;
+with $n_r=1+(1-2r)/b\in[-5.29,-5.27]$, this forces $Kr=0$, contradicting
+$Kt=1$.
+
+Set $q_8'=(q_8)_\theta+(q_8)_d d'$. From (9.9)–(9.10),
+
+$$
+q_8'\in[-49.7,-49.3],\qquad
+U':=\frac{KU}{K\theta}\in[-.81,-.72].
+\tag{9.11}
+$$
+
+The second bound follows by differentiating $q_0=-Ud$. Further source
+identities give
+
+$$
+\begin{gathered}
+ n_r\in[-5.29,-5.27],\quad n_b=1-c/b\in[-4.51,-4.50],
+ \quad r'\in[.25,.33],\\
+ H:=3+8b+c\in[4.722,4.724],\quad H'\in[-3.04,-2.50],\\
+ g_8:=q_8/U\in[111,112],\quad g_8'\in[24,34].
+\end{gathered}
+\tag{9.12}
+$$
+
+For clarity, $n'=U+\theta U'$, $b'=U'/2$,
+$r'=(n'-n_b b')/n_r$, and
+$H=(7/2+\theta)U-r-1/2$. These formulas, together with the signed
+endpoint convention, prove (9.12).
+
+Finally, (9.5), (9.11), and (9.12) give
+
+$$
+-38<\frac{Kf_J}{K\theta}=d'+q_8+(2+\theta)q_8'<-34,
+\tag{9.13}
+$$
+
+and
+
+$$
+-240<\frac{Kf_M}{K\theta}=d'+Hg_8'+g_8H'<-120.
+\tag{9.14}
+$$
+
+For instance the $J$ bounds use
+$-8.75+139.8-3.3787(49.7)>-38$ and
+$-8.69+139.9-3.3785(49.3)<-34$; the $M$ bounds use
+$-8.75+4.722(24)-112(3.04)>-240$ and
+$-8.69+4.724(34)-111(2.50)<-120$.
+Since $K\theta\ne0$, both response tangents are nonzero. $\square$
+

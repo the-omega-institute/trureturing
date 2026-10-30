@@ -1,0 +1,67 @@
+**Theorem 20.1 (exact traffic under the minimum-call constraint).** For
+every finite nonempty scaffold, $K=2^r$ and $r\ge1$, without a lower
+bound on $n$ beyond $n\ge1$,
+
+$$
+ W_{\rm call}(S,K)=L+2Kn+r\delta+2Kr-K+1.
+ \tag{GPO.60}
+$$
+
+The call allowance $n+r$ is already the exact minimum worst $Q$ in
+Theorem 16.2. The additional assertion is the optimal literal price
+within that allowance, including updating competitors.
+
+Proof. Let $D=n+r$ and take a correct competitor with worst $Q\le D$.
+Its finite binary reply tree has $K2^n=2^D$ distinct terminal leaves,
+as in Theorem 15.2. A binary tree of height at most $D$ with $2^D$
+leaves is perfect: each child must attain its own capacity $2^{D-1}$,
+and the same argument recurses. Equivalently, suppressing a one-child
+paid Read would leave every terminal at branching depth $D$ and still
+charge that extra Read, violating $Q\le D$. Thus every Read branches;
+at depth $d$ each child has exactly half of the compatible candidates.
+Deterministic local work and actual updates may occur between these
+Reads and remain real paid actions.
+
+Inductively, before the $(j+1)$st Read, $0\le j<r$, the compatible
+set is $I\times\{0,1\}^n$, where $I=[a,a+m-1]$ has
+$m=2^{r-j}\ge2$ lags. By Lemma 14.1 and (GPO.56), a branching
+Read has a cone suffix and tests $2k+x_i\ge t$, with
+$t=\vartheta(q)-e_H$. If $t=2s$ it selects whole lag layers and
+reveals no label. If $t=2s+1$ is nonconstant, its positive side
+contains whole layers plus exactly half of the layer $k=s$.
+Each whole layer has $2^n$ members, whereas a perfect split requires
+$(m/2)2^n$ members on each side. The half-layer case cannot supply
+that integer multiple of $2^n$. Hence $t$ is even and its unique
+balanced split is $s=a+m/2$. The successor set is again a lag interval
+times the unrestricted label cube. This proves that the first $r$
+Reads must acquire the lag by balanced thresholds before learning any
+label. It is a conclusion about this tight budget, not an assumption
+on all protocols.
+
+On the fixed high-lag input $k=b$, their thresholds are
+$s_j=2K-K/2^j$, $1\le j\le r$. At a reached such Read,
+$\vartheta(q)=2s_j+e_H$, so its length is at least
+$\delta+\lceil(2s_j+e_H)/2\rceil\ge\delta+s_j$.
+Their total literal cost is at least
+
+$$
+ r\delta+\sum_{j=1}^r(2K-K/2^j)
+          =r\delta+2Kr-K+1.
+ \tag{GPO.61}
+$$
+
+After this clock prefix, all $n$ labels are still free. On the same
+input, say $x=0^n$, the $n$ first-difference label occurrences of
+Theorem 15.1 must occur afterwards, and cost at least
+$L+n(b+1)=L+2Kn$. Adding these disjoint occurrences proves the
+lower bound in (GPO.60).
+
+Use the already installed zero-update midpoint comparator of Definition
+16.1 for the upper. Its $j$th clock threshold on any path is at most
+$2K-K/2^j$; equality holds on the high-lag path. This follows by
+induction on the successive equal-size upper subintervals. Use $p_*$
+for every clock word. Their costs are therefore bounded by (GPO.61),
+and the label phase costs $L+n(k+1)\le L+2Kn$. On $k=b$ equality
+holds in both phases, independently of $x$. Its worst $Q$ is $n+r$.
+This proves attainment of (GPO.60). $\square$
+

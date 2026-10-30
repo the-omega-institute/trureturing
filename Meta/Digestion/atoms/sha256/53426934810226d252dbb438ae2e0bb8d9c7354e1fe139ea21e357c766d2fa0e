@@ -1,0 +1,15 @@
+**Theorem 85.2 (pre-clock inverse on its full reached image).** Under the same hypotheses,
+
+$$
+w\longmapsto(t(w),u_w),\qquad w\in\mathcal W,
+\tag{85.2}
+$$
+
+is injective. At a noninitial pair its field has zeros exactly at the last fresh support. Identify and collapse the last event as in Theorem 85.1, restrict the field to the predecessor support, and only then apply the inverse of the predecessor-tree law. Repeating and reversing the recovered list is the full inverse on the image.
+
+Proof. The required induction invariant differs from strict positivity. At the seed every coordinate is positive. At every nonempty completed pre-clock endpoint all old coordinates are positive, its zeros are exactly its newest fresh vertices, and each such zero vertex has a positive old neighbor. Suppose this is true before the next encoding event. Applying $T_t$ makes every coordinate strictly positive: a previously positive coordinate keeps its positive diagonal contribution, and a zero coordinate receives its positive neighbor's contribution along its positive edge. The edit then zero-extends this positive field. The fresh vertices have the old positive neighbors specified in the preceding proof. This establishes the invariant for every word.
+
+The zero support therefore determines exactly the last event by the same singleton/pair and literal-subterm tests. If its predecessor term is $t'$, restriction gives $T_{t'}u_{w'}$, not $u_{w'}$. Multiplication by $T_{t'}^{-1}$ recovers $u_{w'}$; this field may have zeros from its own last edit. It need not be strictly positive. The predecessor material identity, decreasing $N$, forced last letter and induction now prove termination, uniqueness and both inverse identities exactly as above. Applying $T_t^{-1}$ before restriction would be a different procedure and is not justified by this recurrence. $\square$
+
+The inverses are local rational computations on an acquired field description. They execute no physical inverse Tick, deletion, field read at an internal vertex or rollback of the growing source. They recover successful serial order even when the final syntax alone admits several linear extensions. The numerical field, rather than an additional stored shuffle rank, distinguishes those orders on this restricted image.
+

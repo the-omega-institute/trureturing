@@ -1,0 +1,30 @@
+**定理 9.1（次数与留数补偿）。** 在 $\mathbb P^1$ 上以
+$e_\infty=z^n e_0$ 粘合 $\mathcal O(n)$，令 $w=z^{-1}$。对 $a\in\mathbb C$，设置
+
+$$
+\nabla e_0=e_0\,a\frac{dz}{z},\qquad
+\nabla e_\infty=-e_\infty(a+n)\frac{dw}{w}.
+$$
+
+这给出只在 $0,\infty$ 有对数极点的联络，且
+
+$$
+\deg L+\operatorname{Res}_0\nabla+\operatorname{Res}_\infty\nabla=0.
+$$
+
+在 $\mathbb C^\times$ 上它平坦，单值为 $e^{-2\pi ia}$。
+
+**证明。** 框架变换要求
+$A_\infty=A_0+d\log z^n=(a+n)dz/z=-(a+n)dw/w$。两个留数和为 $-n$，
+而穿孔曲线上 $d(dz/z)=0$。水平解为 $z^{-a}$，绕原点得到单值。$□$
+
+一般紧曲线上，若 $s$ 是线丛的非零亚纯截面且 $\nabla s=s\alpha$，则留数定理给
+
+$$
+\sum_p\operatorname{Res}_p\nabla+\deg L=0.
+$$
+
+所以不同整数延拓可以由奇点留数补偿；穿孔单值只记录指数，不记录延拓的整数部分。
+
+### 9.1 三个独立控制的稠密性
+

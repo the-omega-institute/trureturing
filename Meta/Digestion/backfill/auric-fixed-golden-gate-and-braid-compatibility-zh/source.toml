@@ -1,0 +1,5 @@
+source_id = "auric-fixed-golden-gate-and-braid-compatibility-zh"
+path = "docs/develop/theory/AURIC_FIXED_GOLDEN_GATE_AND_BRAID_COMPATIBILITY_ZH.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

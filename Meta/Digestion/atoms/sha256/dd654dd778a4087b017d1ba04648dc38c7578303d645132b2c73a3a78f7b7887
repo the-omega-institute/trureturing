@@ -1,0 +1,58 @@
+**推论 4.2（Occupancy, permutation defects and tuple leakage）。** Under Theorem 4.1, let $\mu_i=\langle n_i\rangle_\psi$ and $\operatorname{Var}_\psi(n_i)=\langle n_i^2\rangle_\psi-\mu_i^2$. Then the following quantities share the single budget (4.2):
+
+$$
+T_\psi=
+\sum_i\operatorname{Var}_\psi(n_i)
++\sum_i\left(\mu_i-\frac rm\right)^2
++\sum_i\langle D_i\rangle_\psi.
+\tag{4.4}
+$$
+
+Moreover,
+
+$$
+\|(I-P_{\mathrm{sym}})\psi\|^2
+\leq\frac1s\sum_i\langle D_i\rangle_\psi
+\leq\frac{h_{s,k}+\delta/|\lambda|}{s}.
+\tag{4.5}
+$$
+
+When $bN/(N-1)-\delta/|\lambda|>0$, the normalized tuple satisfies
+
+$$
+\frac{\ell_\psi}{\|F\|^2}
+\leq
+\frac{B_{s,k,\delta}}
+{\gamma\bigl(bN/(N-1)-\delta/|\lambda|\bigr)}.
+\tag{4.6}
+$$
+
+In particular, for fixed $H$ satisfying (3.1), every sequence of these states with $s\to\infty$ and $\delta_s=o(s^2)$ has $T_{\psi_s}/s^2\to0$ and $\ell_{\psi_s}/s^2\to0$. If also $k_s/(ms)\to\rho\in(0,1)$, then $\ell_{\psi_s}/\|F_s\|^2\to0$. These conclusions do not assert vanishing nonsymmetric-state mass for general density sequences.
+
+Proof. Expand $\langle(n_i-r/m)^2\rangle_\psi$ around the real mean $\mu_i$ to obtain the variance plus squared mean imbalance; sum over $i$ to get (4.4). Every variance is a squared norm, $\|(n_i-\mu_i)\psi\|^2$. The third sum is exactly the collection of within-block Dirichlet forms (2.6), hence measures failure of permutation invariance, including phases of coefficients and not just their probabilities.
+
+The commuting projections $P_i$ have joint eigenvalues in $\{0,1\}^m$, on which $1-\prod_i p_i\leq\sum_i(1-p_i)$. Thus $I-P_{\mathrm{sym}}\preceq\sum_i(I-P_i)$; (2.2) and (4.3) give (4.5). From (2.8) and (4.3),
+
+$$
+\|F\|^2\geq b+r-h_{s,k}-\frac\delta{|\lambda|}
+=\frac{bN}{N-1}-\frac\delta{|\lambda|}.
+$$
+
+Under its stated positivity condition division of (4.3) by this lower bound proves (4.6). The leakage is therefore a statement about the lowering tuple $F$ in the base eigenbasis, with target space $\mathcal H_{r-1}$ left untouched. It is not a projection of $\psi$ onto one many-body eigenvector.
+
+Finally $0\leq h_{s,k}\leq r\leq ms/2$. The right side of (4.2) is $O(s)+\delta_s$, proving both estimates divided by $s^2$. At an interior limiting density, $b/s^2\to m\rho(1-\rho)>0$, so (4.6) applies for sufficiently large $s$ and tends to zero. For any sequence with $\rho_s=k_s/(ms)\to\rho\in(0,1)$, the exact budget gives
+
+$$
+\begin{aligned}
+\frac{h_{s,k_s}}s
+&=m\min(\rho_s,1-\rho_s)
+-\frac{ms}{ms-1}\rho_s(1-\rho_s)\\
+&\longrightarrow m\min(\rho,1-\rho)-\rho(1-\rho).
+\end{aligned}
+\tag{4.7}
+$$
+
+Writing $t=\min(\rho,1-\rho)>0$, this limit is $t(m-1+t)>0$ because $m\geq2$. Hence even for $\delta=0$, (4.5) supplies no conclusion that the nonsymmetric mass tends to zero in this regime. The spectral and occupancy/Johnson allowances also cannot each be spent independently at their individual maxima: (4.2) is the joint constraint.
+
+For $k>N/2$, $n_i$ in these formulas counts holes. Original particle occupancy is $sI-n_i$, so its variance is identical and its mean deviation from $k/m$ is the negative of the hole deviation from $r/m$. Complementation preserves the Johnson Laplacian in (2.5) and commutes with block symmetrization. The same interpretations therefore apply to the original state. At $r=0$, $F=T_\psi=\ell_\psi=0$; no relative tuple quotient is asserted. At $s=1$, every block permutation is trivial and $D_i=0$, as required by (2.2) and (4.5). $\square$
+

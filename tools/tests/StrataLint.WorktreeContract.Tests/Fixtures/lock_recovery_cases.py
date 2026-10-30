@@ -1,0 +1,998 @@
+"""Native lock, initialization and removal recovery behavior with real Git objects."""
+
+import argparse
+from contextlib import ExitStack
+import json
+import os
+import select
+import signal
+import shutil
+import sys
+import subprocess
+from pathlib import Path
+from unittest.mock import patch
+
+
+class LockRecoveryCases:
+    def removal_options(self):
+        return argparse.Namespace(source=self.main, names="tree", path=[], force=False,
+                                  preview=False, expected=[])
+
+    def native_remove_baseline(self, target):
+        import worktree_protocol as protocol
+        return self.run_owned_command(
+            ["git", "-C", str(self.main), "worktree", "remove", "--force", "--", str(target)],
+            self.root, phase="native-removal-baseline", timeout=30, check=False,
+            env=protocol.git_environment())
+
+    def cooperative_lock_and_write(self, target):
+        import worktree_protocol as protocol
+        script = Path(protocol.__file__)
+        code = ('import pathlib, subprocess, sys; '
+                'subprocess.run(["git", "-C", sys.argv[1], "worktree", "lock", '
+                '"--reason", "active ordinary work", sys.argv[2]], check=True); '
+                'pathlib.Path(sys.argv[2], "late-ordinary").write_bytes(b"late unique bytes\\n")')
+        return self.run_owned_command(
+            [sys.executable, "-B", script, "--source", self.main, "with", "--path", target,
+             "--write", "late-ordinary", "--", sys.executable, "-c", code, self.main, target],
+            self.root, phase="cooperative-lock-and-write", timeout=30,
+            env=protocol.git_environment())
+
+    def assert_scan_lock_retained(self, scan):
+        import worktree_preservation as preservation
+        baseline = self.root / "baseline"
+        self.g(self.main, "worktree", "add", "-b", "baseline", baseline, "HEAD")
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        record = metadata / preservation.REMOVAL_RECORD
+        actors = []
+        native_walk, native_iterdir = os.walk, Path.iterdir
+
+        def lock_during_scan(path):
+            if Path(path) == self.tree and record.exists() and not actors:
+                actors.append(self.cooperative_lock_and_write(self.tree).returncode)
+
+        def walking(path, *args, **kwargs):
+            for entry in native_walk(path, *args, **kwargs):
+                lock_during_scan(path)
+                yield entry
+
+        def listing(path):
+            lock_during_scan(path)
+            yield from native_iterdir(path)
+
+        observer = patch.object(os, "walk", walking) if scan == "nested_git" else patch.object(Path, "iterdir", listing)
+        with observer:
+            current = preservation.remove(self.removal_options())["items"][0]
+        actors.append(self.cooperative_lock_and_write(baseline).returncode)
+        native = self.native_remove_baseline(baseline)
+        current_late, baseline_late = self.tree / "late-ordinary", baseline / "late-ordinary"
+        current_bytes = current_late.read_bytes() if current_late.exists() else None
+        baseline_bytes = baseline_late.read_bytes() if baseline_late.exists() else None
+        checkpoint = json.loads(record.read_text())
+        late_in_checkpoint = preservation.git(self.main, "cat-file", "-e",
+            checkpoint["commit"] + ":late-ordinary", check=False).returncode == 0
+        registered = any(Path(item["worktree"]) == self.tree for item in preservation.inventory(self.main))
+        self.note("scan_lock_comparison", scan=scan, flags=["--force"], actor_exits=actors,
+                  current_late_in_checkpoint=late_in_checkpoint, current_registered=registered,
+                  removal_record_readable=True,
+                  current_outcome=current["outcome"], current_error=current.get("error"),
+                  current_bytes=current_bytes.hex() if current_bytes is not None else None,
+                  baseline_exit=native.returncode, baseline_error=native.stderr,
+                  baseline_bytes=baseline_bytes.hex() if baseline_bytes is not None else None,
+                  git_version=self.g(self.main, "--version").strip())
+        self.assertEqual([0, 0], actors)
+        self.assertFalse(late_in_checkpoint)
+        self.assertTrue(registered)
+        self.assertNotEqual(0, native.returncode)
+        self.assertEqual(b"late unique bytes\n", baseline_bytes)
+        self.assertEqual(b"late unique bytes\n", current_bytes)
+        self.assertEqual("refused", current["outcome"])
+        self.assertIn("locked_recent", current["reason"])
+
+    def test_removal_rechecks_lock_after_nested_git_scan(self):
+        self.assert_scan_lock_retained("nested_git")
+
+    def test_removal_rechecks_lock_after_payload_planning(self):
+        self.assert_scan_lock_retained("payload")
+
+    def assert_final_refusal_is_last_observation(self, empty):
+        import worktree_protocol as protocol
+        if empty:
+            self.g(self.tree, "rm", "-r", "--", ".")
+            self.g(self.tree, "commit", "-m", "empty payload")
+        import worktree_preservation as preservation
+        original_preflight = preservation.native_removal_preflight
+        original_git = preservation.git
+        state = dict(final=False, destructive=False, observations=[], empty=empty)
+
+        def preflight(*args, **kwargs):
+            result = original_preflight(*args, **kwargs)
+            state["final"] = True
+            return result
+
+        def observed(name, operation):
+            def invoke(*args, **kwargs):
+                if state["final"] and not state["destructive"]:
+                    state["observations"].append(name)
+                    raise preservation.Refused("observation_after_final_refusal:" + name)
+                return operation(*args, **kwargs)
+            return invoke
+
+        def destructive(operation):
+            def invoke(*args, **kwargs):
+                if state["final"]:
+                    state["destructive"] = True
+                return operation(*args, **kwargs)
+            return invoke
+
+        def native_git(path, *args, **kwargs):
+            if args[:2] == ("worktree", "remove") and state["final"]:
+                state["destructive"] = True
+            return observed("git", original_git)(path, *args, **kwargs)
+
+        # Intercept Path resolve/iterdir/is_dir/is_symlink/read_bytes/read_text/open;
+        # os walk/listdir/scandir/stat/lstat/open/fstat; DirEntry
+        # is_dir/is_file/is_symlink/stat/inode; both Git helpers; and Popen.
+        # Green proves ordering only for these entry points, not every observation.
+        with ExitStack() as patches:
+            patches.enter_context(patch.object(preservation, "native_removal_preflight", side_effect=preflight))
+            for owner, name in ((Path, "resolve"), (Path, "iterdir"), (Path, "is_dir"),
+                                (Path, "is_symlink"), (Path, "read_bytes"),
+                                (Path, "read_text"), (Path, "open"), (os, "walk"), (os, "listdir"),
+                                (os, "scandir"), (os, "stat"), (os, "lstat"),
+                                (os, "open"), (os, "fstat"), (os.DirEntry, "is_dir"),
+                                (os.DirEntry, "is_file"), (os.DirEntry, "is_symlink"),
+                                (os.DirEntry, "stat"), (os.DirEntry, "inode"),
+                                (subprocess, "Popen")):
+                original = getattr(owner, name)
+                patches.enter_context(patch.object(owner, name, observed(name, original)))
+            patches.enter_context(patch.object(preservation, "git", side_effect=native_git))
+            patches.enter_context(patch.object(protocol, "git", observed("protocol.git", protocol.git)))
+            patches.enter_context(patch.object(Path, "unlink", destructive(Path.unlink)))
+            patches.enter_context(patch.object(os, "unlink", destructive(os.unlink)))
+            patches.enter_context(patch.object(preservation.shutil, "rmtree", destructive(preservation.shutil.rmtree)))
+            result = preservation.remove(self.removal_options())["items"][0]
+        self.note("final_observation_order", **state, outcome=result["outcome"], error=result.get("error"))
+        self.assertEqual([], state["observations"])
+        self.assertTrue(state["destructive"])
+        self.assertEqual("removed", result["outcome"])
+
+    def test_final_refusal_evaluation_immediately_precedes_payload_action(self):
+        self.assert_final_refusal_is_last_observation(False)
+
+    def test_final_refusal_evaluation_immediately_precedes_empty_unregistration(self):
+        self.assert_final_refusal_is_last_observation(True)
+
+    def test_final_preflight_owns_initializer_scope_until_payload_and_unregistration(self):
+        self.assert_initializer_scope_until_removal(late=True)
+
+    def test_removal_rechecks_gitlinks_after_nested_git_scan(self):
+        import worktree_preservation as preservation
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        record = metadata / preservation.REMOVAL_RECORD
+        native_walk = os.walk
+        changed = []
+        late = self.tree / "dir/late-ordinary"
+
+        def walking(path, *args, **kwargs):
+            for entry in native_walk(path, *args, **kwargs):
+                if Path(path) == self.tree and record.exists() and not changed:
+                    changed.append(True)
+                    self.g(self.tree, "update-index", "--force-remove", "dir/child")
+                    self.g(self.tree, "update-index", "--add", "--cacheinfo", "160000," + self.base + ",dir")
+                    late.write_bytes(b"late unique bytes\n")
+                yield entry
+
+        with patch.object(os, "walk", walking):
+            current = preservation.remove(self.removal_options())["items"][0]
+        current_bytes = late.read_bytes() if late.exists() else None
+        self.note("scan_gitlink_refusal", changed=changed, outcome=current["outcome"],
+                  error=current.get("error"), current_bytes=current_bytes.hex() if current_bytes is not None else None)
+        self.assertEqual([True], changed)
+        self.assertEqual(b"late unique bytes\n", current_bytes)
+        self.assertEqual("refused", current["outcome"])
+        self.assertIn("nested_git_boundary:dir", current["reason"])
+        self.assertIn(str(self.tree), [item["worktree"] for item in preservation.inventory(self.main)])
+
+    def test_final_qualification_reuses_owned_initializer_scope(self):
+        import worktree_preservation as preservation
+        self.g(self.main, "worktree", "lock", "--reason", "worktree-init:dead", self.tree)
+        with ExitStack() as stack:
+            initial = preservation.qualify(self.main, self.tree, stack)
+            repeated = preservation.qualify(self.main, self.tree, stack)
+            self.assertEqual(initial, repeated)
+            self.assertEqual(1, sum(not handle.closed and handle.scope_exclusive
+                                   for handle in stack.scope_handles))
+        self.hold("--exclusive")
+        with ExitStack() as stack:
+            with self.assertRaisesRegex(preservation.Refused, "initialization_in_progress"):
+                preservation.qualify(self.main, self.tree, stack)
+
+    def test_removal_rechecks_native_lock_after_checkpoint_before_payload(self):
+        import worktree_preservation as preservation
+        baseline = self.root / "baseline"
+        self.g(self.main, "worktree", "add", "-b", "baseline", baseline, "HEAD")
+
+        current_late = self.tree / "late-ordinary"
+        baseline_late = baseline / "late-ordinary"
+        native_record = preservation.record_removal
+
+        def record_then_lock(metadata, commit, recovery_branch, predecessors=None, native_locks=None):
+            result = native_record(metadata, commit, recovery_branch, predecessors, native_locks)
+            self.g(self.main, "worktree", "lock", "--reason", "active work", self.tree)
+            current_late.write_bytes(b"current late bytes\n")
+            return result
+
+        with patch.object(preservation, "record_removal", side_effect=record_then_lock):
+            current = preservation.remove(self.removal_options())["items"][0]
+
+        self.g(self.main, "worktree", "lock", "--reason", "active work", baseline)
+        baseline_late.write_bytes(b"baseline late bytes\n")
+        native = self.native_remove_baseline(baseline)
+
+        self.assertEqual("refused", current["outcome"])
+        self.assertIn("locked_recent", current["reason"])
+        self.assertNotEqual(0, native.returncode)
+        self.assertEqual(b"current late bytes\n", current_late.read_bytes())
+        self.assertEqual(b"baseline late bytes\n", baseline_late.read_bytes())
+        self.assertTrue(self.tree.is_dir())
+        self.assertTrue(baseline.is_dir())
+
+    def test_removal_rechecks_target_identity_after_checkpoint_before_payload(self):
+        import worktree_preservation as preservation
+        baseline = self.root / "baseline"
+        self.g(self.main, "worktree", "add", "-b", "baseline", baseline, "HEAD")
+
+        moved = self.root / "moved-current"
+        baseline_moved = self.root / "moved-baseline"
+        current_unique = self.tree / "current-unique"
+        baseline_unique = baseline / "baseline-unique"
+        native_record = preservation.record_removal
+
+        def record_then_replace(metadata, commit, recovery_branch, predecessors=None, native_locks=None):
+            result = native_record(metadata, commit, recovery_branch, predecessors, native_locks)
+            self.tree.rename(moved)
+            self.g(self.root, "clone", self.main, self.tree)
+            current_unique.write_bytes(b"current clone bytes\n")
+            return result
+
+        with patch.object(preservation, "record_removal", side_effect=record_then_replace):
+            current = preservation.remove(self.removal_options())["items"][0]
+
+        baseline.rename(baseline_moved)
+        self.g(self.root, "clone", self.main, baseline)
+        baseline_unique.write_bytes(b"baseline clone bytes\n")
+        native = self.native_remove_baseline(baseline)
+
+        self.assertEqual("refused", current["outcome"])
+        self.assertIn("repository_identity", current["reason"])
+        self.assertNotEqual(0, native.returncode)
+        self.assertEqual(b"current clone bytes\n", current_unique.read_bytes())
+        self.assertEqual(b"baseline clone bytes\n", baseline_unique.read_bytes())
+        self.assertTrue(self.tree.is_dir())
+        self.assertTrue(baseline.is_dir())
+
+    def assert_payload_boundary_retained(self, boundary):
+        import worktree_protocol as protocol
+        (self.tree / "owned").write_text("uncheckpointed outer bytes\n")
+        (boundary / "unique").write_text("nested local bytes\n")
+        second = self.root / "second"
+        self.g(self.main, "worktree", "add", "-b", "second", second, self.base)
+        result = self.run_protocol("remove", "--names", "second tree", expect=73)
+        self.assertIn("nested_git_boundary:", result.stderr)
+        self.assertTrue(second.is_dir(), "batch preflight must precede all deletion")
+        self.assertEqual("uncheckpointed outer bytes\n", (self.tree / "owned").read_text())
+        self.assertEqual("nested local bytes\n", (boundary / "unique").read_text())
+        self.assertEqual(self.base, self.g(self.main, "rev-parse", self.branch).strip())
+        self.assertIn(str(self.tree), [row["worktree"] for row in protocol.inventory(self.main)])
+
+    def test_removal_refuses_nested_repository_before_any_payload(self):
+        boundary = self.tree / ".lake/vendor"
+        boundary.mkdir(parents=True)
+        self.g(boundary, "init")
+        (self.tree / ".gitignore").write_text(".lake/\n")
+        self.assert_payload_boundary_retained(boundary)
+
+    def test_qualification_keeps_nonremoval_nested_cache_eligibility(self):
+        import worktree_preservation as preservation
+        boundary = self.tree / ".lake/vendor"
+        boundary.mkdir(parents=True)
+        self.g(boundary, "init")
+        (boundary / "unique").write_text("cached repository bytes\n")
+        item = preservation.qualify(self.main, self.tree)
+        self.assertEqual("refs/heads/" + self.branch, item["branch"])
+        self.assertEqual("cached repository bytes\n", (boundary / "unique").read_text())
+
+    def test_removal_refuses_gitlink_before_any_payload(self):
+        boundary = self.tree / "module"
+        boundary.mkdir()
+        self.g(self.tree, "update-index", "--add", "--cacheinfo", "160000," + self.base + ",module")
+        self.assert_payload_boundary_retained(boundary)
+
+    def test_removal_refuses_submodule_before_any_payload(self):
+        self.g(self.tree, "-c", "protocol.file.allow=always", "submodule", "add", self.main, "module")
+        self.assert_payload_boundary_retained(self.tree / "module")
+
+    def test_removal_refuses_foreign_worktree_before_any_payload(self):
+        foreign = self.root / "foreign"
+        self.g(self.root, "clone", self.main, foreign)
+        boundary = self.tree / "foreign-tree"
+        self.g(foreign, "worktree", "add", "-b", "nested", boundary)
+        self.assert_payload_boundary_retained(boundary)
+
+    def test_removal_refuses_bare_repository_before_any_payload(self):
+        boundary = self.tree / "inner.git"
+        self.g(self.root, "clone", "--bare", self.main, boundary)
+        self.assert_payload_boundary_retained(boundary)
+
+    def assert_removal_recoverable(self, metadata):
+        import worktree_preservation as preservation
+        import worktree_protocol as protocol
+        self.assertIn(str(self.tree), [row["worktree"] for row in protocol.inventory(self.main)])
+        record = json.loads((metadata / preservation.REMOVAL_RECORD).read_text())
+        self.assertEqual(record["commit"], self.g(self.main, "rev-parse", self.branch).strip())
+        self.assertEqual("snapshot before deletion\n", self.g(self.main, "show", self.branch + ":owned"))
+        return record
+
+    def interrupt_after_ignore_deletion(self):
+        import worktree_preservation as preservation
+        (self.tree / "owned").write_text("snapshot before deletion\n")
+        (self.tree / ".gitignore").write_text(".lake/\n")
+        cache = self.tree / ".lake/build"
+        cache.mkdir(parents=True)
+        (cache / "output").write_text("ignored build output\n")
+        native_iterdir, native_unlink = Path.iterdir, Path.unlink
+        def ignore_first(path):
+            children = list(native_iterdir(path))
+            return iter(sorted(children, key=lambda child: child.name != ".gitignore"))
+        def interrupted_unlink(path, *args, **kwargs):
+            result = native_unlink(path, *args, **kwargs)
+            if path == self.tree / ".gitignore":
+                raise OSError("interrupted after ignore deletion")
+            return result
+        with patch.object(Path, "iterdir", ignore_first), patch.object(Path, "unlink", interrupted_unlink):
+            item = preservation.remove(self.removal_options())["items"][0]
+        self.assertEqual("partial_or_indeterminate", item["outcome"])
+        self.assertIn("interrupted after ignore deletion", item["error"])
+        self.assertFalse((self.tree / ".gitignore").exists())
+        self.assertTrue((cache / "output").is_file())
+        return item["checkpoint"]["commit"]
+
+    def test_removal_resumes_after_worktree_ignore_is_deleted(self):
+        snapshot = self.interrupt_after_ignore_deletion()
+        item = json.loads(self.remove().stdout)["items"][0]
+        self.assertEqual(("removed", "resumed"), (item["outcome"], item["checkpoint"]["status"]))
+        self.assertFalse(self.tree.exists())
+        self.assertEqual(snapshot, self.g(self.main, "rev-parse", self.branch).strip())
+        self.assertEqual(".lake/\n", self.g(self.main, "show", self.branch + ":.gitignore"))
+
+    def test_removal_with_deleted_ignore_retains_new_ordinary_file(self):
+        snapshot = self.interrupt_after_ignore_deletion()
+        late = self.tree / "late\nordinary"
+        late.write_text("new ordinary bytes\n")
+        item = json.loads(self.remove(expect=74).stdout)["items"][0]
+        self.assertEqual("checkpoint_failed", item["outcome"])
+        self.assertIn("interrupted_removal_tree_changed", item["error"])
+        self.assertEqual("new ordinary bytes\n", late.read_text())
+        self.assertTrue((self.tree / ".lake/build/output").is_file())
+        self.assertEqual(snapshot, self.g(self.main, "rev-parse", self.branch).strip())
+
+    def test_removal_native_timeout_uses_remaining_payload_budget(self):
+        import worktree_preservation as preservation
+        clock = [1000.0]
+        native_payload, native_git = preservation.remove_payload, preservation.git
+        observed = []
+        def consume_budget(target):
+            native_payload(target)
+            clock[0] += 125
+        def observe_native(path, *args, **kwargs):
+            if args[:2] == ("worktree", "remove"):
+                observed.append(kwargs["timeout"])
+            return native_git(path, *args, **kwargs)
+        with patch.object(preservation.time, "monotonic", side_effect=lambda: clock[0]), \
+                patch.object(preservation.signal, "setitimer", return_value=(0, 0)) as timer, \
+                patch.object(preservation, "remove_payload", side_effect=consume_budget), \
+                patch.object(preservation, "git", side_effect=observe_native):
+            item = preservation.remove(self.removal_options())["items"][0]
+        self.assertEqual("removed", item["outcome"])
+        self.assertEqual([175], observed)
+        self.assertEqual((signal.ITIMER_REAL, 300), timer.call_args_list[0].args)
+        self.assertEqual((signal.ITIMER_REAL, 0, 0), timer.call_args_list[-1].args)
+
+    def test_removal_expired_budget_never_starts_native_unregistration(self):
+        import worktree_preservation as preservation
+        (self.tree / "owned").write_text("snapshot before deletion\n")
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        clock = [1000.0]
+        native_payload, native_git = preservation.remove_payload, preservation.git
+        def exhaust_budget(target):
+            native_payload(target)
+            clock[0] += 300
+        def no_native(path, *args, **kwargs):
+            self.assertNotEqual(("worktree", "remove"), args[:2])
+            return native_git(path, *args, **kwargs)
+        with patch.object(preservation.time, "monotonic", side_effect=lambda: clock[0]), \
+                patch.object(preservation.signal, "setitimer", return_value=(0, 0)), \
+                patch.object(preservation, "remove_payload", side_effect=exhaust_budget), \
+                patch.object(preservation, "git", side_effect=no_native):
+            item = preservation.remove(self.removal_options())["items"][0]
+        self.assertEqual("partial_or_indeterminate", item["outcome"])
+        self.assertIn("timed out", item["error"])
+        self.assert_removal_recoverable(metadata)
+        self.assertEqual("resumed", json.loads(self.remove().stdout)["items"][0]["checkpoint"]["status"])
+        self.assertFalse(self.tree.exists())
+
+    def test_removal_payload_alarm_keeps_record_and_can_resume(self):
+        import worktree_preservation as preservation
+        (self.tree / "owned").write_text("snapshot before deletion\n")
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        previous = signal.getsignal(signal.SIGALRM)
+        native_unlink = os.unlink
+        def expire_during_unlink(path, *args, **kwargs):
+            native_unlink(path, *args, **kwargs)
+            handler = signal.getsignal(signal.SIGALRM)
+            self.assertTrue(callable(handler), "payload needs an interruptible deadline")
+            handler(signal.SIGALRM, None)
+        with patch.object(preservation.signal, "setitimer", return_value=(0, 0)) as timer, \
+                patch.object(os, "unlink", side_effect=expire_during_unlink):
+            item = preservation.remove(self.removal_options())["items"][0]
+        self.assertEqual("partial_or_indeterminate", item["outcome"])
+        self.assertIn("timed out after 300 seconds", item["error"])
+        self.assertEqual(previous, signal.getsignal(signal.SIGALRM))
+        self.assertEqual((signal.ITIMER_REAL, 300), timer.call_args_list[0].args)
+        self.assert_removal_recoverable(metadata)
+        self.remove()
+        self.assertFalse(self.tree.exists())
+
+    def test_force_removal_disables_only_the_removal_budget(self):
+        import worktree_preservation as preservation
+        options = self.removal_options()
+        options.force = True
+        native_git = preservation.git
+        observed = []
+        def observe_native(path, *args, **kwargs):
+            if args[:2] == ("worktree", "remove"):
+                observed.append(kwargs["timeout"])
+            return native_git(path, *args, **kwargs)
+        with patch.object(preservation.signal, "setitimer", side_effect=AssertionError("force armed deadline")), \
+                patch.object(preservation, "git", side_effect=observe_native):
+            item = preservation.remove(options)["items"][0]
+        self.assertEqual("removed", item["outcome"])
+        self.assertEqual([None], observed)
+
+    def test_removal_payload_failure_retains_registration_and_resumes(self):
+        import worktree_preservation as preservation
+        (self.tree / "owned").write_text("snapshot before deletion\n")
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        native_unlink = os.unlink
+        native_git = preservation.git
+        deleted = []
+        def fail_during_payload(path, *args, **kwargs):
+            result = native_unlink(path, *args, **kwargs)
+            deleted.append(os.fsdecode(path))
+            raise OSError("payload deletion interrupted")
+        def observe_git(path, *args, **kwargs):
+            self.assertNotEqual(("worktree", "remove"), args[:2], "payload remains registered")
+            return native_git(path, *args, **kwargs)
+        with patch.object(os, "unlink", side_effect=fail_during_payload), \
+                patch.object(preservation, "git", side_effect=observe_git):
+            item = preservation.remove(self.removal_options())["items"][0]
+        self.assertEqual("partial_or_indeterminate", item["outcome"])
+        self.assertIn("payload deletion interrupted", item["error"])
+        self.assertTrue(deleted)
+        record = self.assert_removal_recoverable(metadata)
+        resumed = json.loads(self.remove().stdout)["items"][0]
+        self.assertEqual(("removed", "resumed"), (resumed["outcome"], resumed["checkpoint"]["status"]))
+        self.assertFalse(self.tree.exists())
+        self.assertEqual(record["commit"], self.g(self.main, "rev-parse", self.branch).strip())
+
+    def test_removal_payload_process_death_retains_registration_and_resumes(self):
+        (self.tree / "owned").write_text("snapshot before deletion\n")
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        code = f'''import argparse,os,signal,sys
+from pathlib import Path
+sys.path.insert(0, {str(self.source_root / "tools/scripts/worktree")!r})
+import worktree_preservation as preservation
+native_unlink = os.unlink
+def die_during_payload(path, *args, **kwargs):
+    native_unlink(path, *args, **kwargs)
+    os.kill(os.getpid(), signal.SIGKILL)
+os.unlink = die_during_payload
+preservation.remove(argparse.Namespace(source=Path({str(self.main)!r}), names="tree",
+    path=[], force=False, preview=False, expected=[]))
+'''
+        result = self.run_owned_command([sys.executable, "-B", "-c", code], self.root,
+                                        phase="payload-death", timeout=30, check=False)
+        self.assertEqual(-signal.SIGKILL, result.returncode)
+        record = self.assert_removal_recoverable(metadata)
+        resumed = json.loads(self.remove().stdout)["items"][0]
+        self.assertEqual("resumed", resumed["checkpoint"]["status"])
+        self.assertFalse(self.tree.exists())
+        self.assertEqual(record["commit"], self.g(self.main, "rev-parse", self.branch).strip())
+
+    def test_native_unregistration_failure_leaves_only_git_link(self):
+        import worktree_preservation as preservation
+        (self.tree / "owned").write_text("snapshot before deletion\n")
+        cache = self.tree / ".lake/build"
+        cache.mkdir(parents=True)
+        (cache / "output").write_text("ignored build output\n")
+        (self.main / ".git/info/exclude").write_text(".lake/\n")
+        outside = self.root / "outside"
+        outside.mkdir()
+        (outside / "keep").write_text("external bytes\n")
+        (self.tree / "outside-link").symlink_to(outside, target_is_directory=True)
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        native_git = preservation.git
+        def fail_unregistration(path, *args, **kwargs):
+            if args[:2] == ("worktree", "remove"):
+                raise OSError("native unregistration interrupted")
+            return native_git(path, *args, **kwargs)
+        with patch.object(preservation, "git", side_effect=fail_unregistration):
+            item = preservation.remove(self.removal_options())["items"][0]
+        self.assertEqual("partial_or_indeterminate", item["outcome"])
+        self.assertEqual([".git"], sorted(path.name for path in self.tree.iterdir()))
+        self.assertEqual("external bytes\n", (outside / "keep").read_text())
+        record = self.assert_removal_recoverable(metadata)
+        self.remove()
+        self.assertFalse(self.tree.exists())
+        self.assertEqual(record["commit"], self.g(self.main, "rev-parse", self.branch).strip())
+
+    def test_holderless_native_locks_checkpoint_once(self):
+        import worktree_protocol as protocol
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        for lock in (metadata / "index.lock", self.main / (".git/refs/heads/" + self.branch + ".lock")):
+            with self.subTest(lock=str(lock)):
+                lock.parent.mkdir(parents=True, exist_ok=True)
+                lock.write_text("residual\n")
+                (self.tree / "owned").write_text(str(lock) + "\n")
+                result = self.checkpoint()
+                self.assertIn("native_lock_cleared", result.stdout)
+                self.assertFalse(lock.exists())
+                self.assertEqual(str(lock) + "\n", self.g(self.tree, "show", "HEAD:owned"))
+        with ExitStack() as stack:
+            protocol.tree_scope(stack, self.main, self.tree, True)
+
+    def test_detached_head_native_lock_can_recover_snapshot(self):
+        self.g(self.tree, "checkout", "--detach")
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        (metadata / "HEAD.lock").write_text("residual head transaction\n")
+        (self.tree / "owned").write_text("detached recovered bytes\n")
+        result = json.loads(self.remove().stdout)["items"][0]
+        self.assertEqual("detached recovered bytes\n", self.g(self.main, "show", result["recovery_branch"] + ":owned"))
+        self.assertEqual(str(metadata / "HEAD.lock"), result["checkpoint"]["native_locks"][0]["path"])
+
+    def test_held_native_lock_retains_exact_blocker(self):
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        lock = metadata / "index.lock"
+        with lock.open("w") as holder:
+            holder.write("live\n")
+            holder.flush()
+            result = self.checkpoint(expect=73)
+            self.assertIn("native_lock_held:" + str(lock), result.stderr)
+            self.assertTrue(lock.exists())
+
+    def test_unverifiable_and_replaced_native_lock_retained(self):
+        import worktree_protocol as protocol
+        import worktree_publication as publication
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        lock = metadata / "index.lock"
+        options = argparse.Namespace(source=self.main, path=self.tree, message_file=None)
+        lock.write_text("residual\n")
+        with patch.object(protocol, "native_lock_holders", side_effect=OSError("inspection denied")):
+            with self.assertRaisesRegex(protocol.Refused, "native_lock_unverifiable:"):
+                publication.checkpoint(options)
+        def replaced(path):
+            replacement = path.with_name("replacement")
+            replacement.write_text("replacement bytes\n")
+            replacement.replace(path)
+            return []
+        with patch.object(protocol, "native_lock_holders", side_effect=replaced):
+            with self.assertRaisesRegex(protocol.Refused, "native_lock_changed:"):
+                publication.checkpoint(options)
+        self.assertEqual("replacement bytes\n", lock.read_text())
+
+    def test_native_lock_failure_receipts_keep_lock_observations(self):
+        import worktree_protocol as protocol
+        import worktree_preservation as preservation
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        lock = metadata / "index.lock"
+        lock.write_text("residual\n")
+        options = argparse.Namespace(source=self.main, names="tree", path=[], force=False,
+                                     preview=False, expected=[])
+        for inspection in (["holder"], OSError("inspection denied")):
+            with patch.object(protocol, "native_lock_holders", side_effect=(
+                    inspection if isinstance(inspection, Exception) else lambda _: inspection)):
+                result = preservation.remove(options)
+            item = result["items"][0]
+            self.assertEqual("checkpoint_failed", item["outcome"])
+            evidence = item["native_locks"][0]
+            self.assertEqual(str(lock), evidence["path"])
+            self.assertEqual(len("residual\n"), evidence["size"])
+            self.assertIsInstance(evidence["age_seconds"], float)
+            self.assertTrue(lock.exists())
+            self.assertTrue(self.tree.exists())
+
+    def test_native_clearance_requires_exclusive_tree(self):
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        lock = metadata / "index.lock"
+        lock.write_text("residual\n")
+        self.hold()
+        self.checkpoint(expect=73)
+        self.assertTrue(lock.exists())
+
+    def test_native_clearance_survives_failed_checkpoint_retry(self):
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        lock = metadata / "index.lock"
+        hooks = self.root / "rejecting-hooks"
+        hooks.mkdir()
+        hook = hooks / "pre-commit"
+        hook.write_text("#!/bin/sh\nexit 1\n")
+        hook.chmod(0o755)
+        self.g(self.tree, "config", "core.hooksPath", hooks)
+        (self.tree / "owned").write_text("checkpoint retry bytes\n")
+        for action in ("checkpoint", "remove"):
+            with self.subTest(action=action):
+                lock.write_text("cleared before failed retry\n")
+                result = self.checkpoint(expect=73) if action == "checkpoint" else self.remove(expect=74)
+                receipt = json.loads(result.stdout)
+                if action == "remove":
+                    receipt = receipt["items"][0]
+                observation = receipt["native_locks"][0]
+                self.assertEqual("native_lock_cleared", observation["status"])
+                self.assertEqual(str(lock), observation["path"])
+                self.assertEqual(len("cleared before failed retry\n"), observation["size"])
+                self.assertIsInstance(observation["age_seconds"], float)
+                self.assertFalse(lock.exists())
+                self.assertTrue(self.tree.exists())
+
+    def test_reconvergence_receipt_retains_native_clearance(self):
+        self.interrupted_removal()
+        self.g(self.tree, "commit", "--allow-empty", "-m", "moved snapshot")
+        (self.tree / "owned").write_text("current bytes\n")
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        lock = metadata / "index.lock"
+        lock.write_text("reconvergence lock\n")
+        receipt = json.loads(self.remove().stdout)["items"][0]
+        self.assertEqual("reconverged", receipt["checkpoint"]["status"])
+        observation = receipt["checkpoint"]["native_locks"][0]
+        self.assertEqual("native_lock_cleared", observation["status"])
+        self.assertEqual(str(lock), observation["path"])
+        self.assertEqual(len("reconvergence lock\n"), observation["size"])
+        self.assertIsInstance(observation["age_seconds"], float)
+
+    def test_dead_initializer_is_removable_without_lock_age(self):
+        self.g(self.main, "worktree", "lock", "--reason", "worktree-init:dead", self.tree)
+        self.remove()
+        self.assertFalse(self.tree.exists())
+
+    def test_live_initializer_is_retained(self):
+        self.g(self.main, "worktree", "lock", "--reason", "worktree-init:alive", self.tree)
+        self.hold("--exclusive")
+        result = self.remove(expect=73)
+        self.assertIn("initialization_in_progress", result.stderr)
+        self.assertTrue(self.tree.exists())
+
+    def test_native_clearance_keeps_dead_initializer_exclusive_until_removal(self):
+        self.assert_initializer_scope_until_removal(late=False)
+
+    def assert_initializer_scope_until_removal(self, late):
+        import worktree_protocol as protocol
+        import worktree_preservation as preservation
+        reason = "expired ordinary lock" if late else "worktree-init:dead"
+        self.g(self.main, "worktree", "lock", "--reason", reason, self.tree)
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        if late:
+            os.utime(metadata / "locked", (1, 1))
+        else:
+            (metadata / "index.lock").write_text("residual\n")
+        (self.tree / "owned").write_text("recover before removal\n")
+        original_git, original_preflight = preservation.git, preservation.native_removal_preflight
+        checked = []
+        def preflight(source, target, flags, stack=None):
+            if late:
+                self.assertEqual(["--force", "--force"], flags)
+                self.g(self.main, "worktree", "unlock", target)
+                self.g(self.main, "worktree", "lock", "--reason", "worktree-init:dead", target)
+            return original_preflight(source, target, flags, stack)
+        def busy(boundary):
+            with ExitStack() as contender:
+                with self.assertRaisesRegex(protocol.Refused, "busy_scope:tree:"):
+                    protocol.tree_scope(contender, self.main, self.tree)
+            checked.append(boundary)
+        def guarded(operation, phase):
+            def invoke(*args, **kwargs):
+                busy(phase + "_entry")
+                result = operation(*args, **kwargs)
+                busy(phase + "_return")
+                return result
+            return invoke
+        def guarded_git(path, *arguments, **options):
+            if arguments[:2] == ("worktree", "remove"):
+                return guarded(original_git, "native")(path, *arguments, **options)
+            return original_git(path, *arguments, **options)
+        with patch.object(preservation, "native_removal_preflight", side_effect=preflight), \
+                patch.object(preservation, "remove_payload", guarded(preservation.remove_payload, "payload")), \
+                patch.object(preservation, "git", side_effect=guarded_git):
+            result = preservation.remove(self.removal_options())
+        self.assertEqual("succeeded", result["status"], result)
+        self.assertEqual("removed", result["items"][0]["outcome"])
+        self.assertEqual(["payload_entry", "payload_return", "native_entry", "native_return"], checked)
+        self.assertFalse(self.tree.exists())
+        with ExitStack() as contender:
+            protocol.tree_scope(contender, self.main, self.tree, True)
+        self.note("initializer_scope_lifetime", late=late, boundaries=checked, reacquired=True)
+
+    def owned_initialization(self, registered=True):
+        import worktree_protocol as protocol
+        token = "worktree-init:" + "a" * 32
+        branch = "lane/governance/owned-init"
+        target = self.root / "initializing"
+        self.g(self.main, "update-ref", "--create-reflog", "-m", token,
+               "refs/heads/" + branch, self.base, "0" * len(self.base))
+        if registered:
+            self.g(self.main, "worktree", "add", "--no-checkout", "--lock", "--reason", token, target, branch)
+        return target, branch, token
+
+    def test_failed_initialization_recovers_in_place_idempotently(self):
+        target, branch, token = self.owned_initialization()
+        (target / "owned").write_text("bytes from interrupted checkout\n")
+        for attempt in range(2):
+            self.run_protocol("recover-init", "--path", target, "--branch", branch,
+                              "--base", self.base, "--skip-restore")
+            self.assertEqual("bytes from interrupted checkout\n", (target / "owned").read_text())
+            self.assertTrue((target / "other").is_file())
+        references = self.g(self.main, "for-each-ref", "--format=%(refname)",
+                            "refs/heads/lane/governance/recovery-*").splitlines()
+        self.assertTrue(references)
+        self.assertTrue(any(self.g(self.main, "show", ref + ":owned") ==
+                            "bytes from interrupted checkout\n" for ref in references))
+
+    def test_large_initialization_checkout_preserves_partial_bytes(self):
+        import worktree_protocol as protocol
+        import worktree_publication as publication
+        # A package-free SDK project exercises the real restore stage offline.
+        tools = self.main / "tools"
+        tools.mkdir()
+        (self.main / "global.json").write_bytes((self.source_root / "global.json").read_bytes())
+        (self.main / ".gitignore").write_text("**/obj/\n**/bin/\n")
+        (self.main / "NuGet.Config").write_text(
+            "<configuration><packageSources><clear /></packageSources></configuration>")
+        (tools / "Fixture.csproj").write_text(
+            '<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup>'
+            '<TargetFramework>net10.0</TargetFramework>'
+            '<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile></PropertyGroup></Project>')
+        (tools / "packages.lock.json").write_text('{"version":1,"dependencies":{"net10.0":{}}}\n')
+        project = "{11111111-1111-1111-1111-111111111111}"
+        (tools / "StrataLint.sln").write_text(
+            'Microsoft Visual Studio Solution File, Format Version 12.00\n'
+            'Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = '
+            '"Fixture", "Fixture.csproj", "' + project + '"\nEndProject\n'
+            'Global\nGlobalSection(SolutionConfigurationPlatforms) = preSolution\n'
+            'Debug|Any CPU = Debug|Any CPU\nEndGlobalSection\n'
+            'GlobalSection(ProjectConfigurationPlatforms) = postSolution\n'
+            + project + '.Debug|Any CPU.ActiveCfg = Debug|Any CPU\n'
+            + project + '.Debug|Any CPU.Build.0 = Debug|Any CPU\nEndGlobalSection\nEndGlobal\n')
+        self.g(self.main, "add", ".")
+        self.g(self.main, "commit", "-m", "offline initialization restore fixture")
+        self.base = self.g(self.main, "rev-parse", "HEAD").strip()
+        target, branch, token = self.owned_initialization()
+        payload = b"interrupted checkout bytes\x00\xff\n"
+        (target / "owned").write_bytes(payload)
+        metadata = Path(self.g(target, "rev-parse", "--absolute-git-dir").strip())
+        witness = self.main / (".git/logs/refs/heads/" + branch)
+        creation_record = witness.read_bytes()
+        (metadata / "index.lock").write_text("dead initializer\n")
+
+        binary = self.root / "delayed-git"
+        binary.mkdir()
+        ready, release = self.root / "git.ready", self.root / "git.release"
+        os.mkfifo(ready)
+        os.mkfifo(release)
+        real_git = shutil.which("git")
+        shim = binary / "git"
+        shim.write_text(f'''#!{sys.executable}
+import os,sys
+if len(sys.argv) > 3 and sys.argv[2] == {str(target)!r} and sys.argv[3] in ("add", "checkout-index", "update-index"):
+    with open({str(ready)!r}, "w") as output: output.write(sys.argv[3] + "\\n")
+    with open({str(release)!r}) as input: input.readline()
+os.execv({real_git!r}, [{real_git!r}] + sys.argv[1:])
+''')
+        shim.chmod(0o755)
+        reader = os.open(ready, os.O_RDONLY | os.O_NONBLOCK)
+        self.addCleanup(os.close, reader)
+        # Keep a writer open so successive readiness reads cannot observe FIFO EOF.
+        writer = os.open(ready, os.O_WRONLY | os.O_NONBLOCK)
+        self.addCleanup(os.close, writer)
+        native_communicate = subprocess.Popen.communicate
+        completed = []
+
+        def delayed_communicate(process, input=None, timeout=None):
+            args = process.args
+            if (len(args) < 4 or args[0] != "git" or args[2] != str(target)
+                    or args[3] not in ("add", "checkout-index", "update-index")):
+                return native_communicate(process, input, timeout)
+            self.assertTrue(select.select([reader], [], [], 10)[0], "delayed Git readiness timeout")
+            self.assertEqual((args[3] + "\n").encode(), os.read(reader, 100))
+            self.assertEqual(token, (metadata / "locked").read_text().strip())
+            self.assertEqual(creation_record, witness.read_bytes())
+            with ExitStack() as contender:
+                with self.assertRaisesRegex(protocol.Refused, "busy_scope"):
+                    protocol.tree_scope(contender, self.main, target, True)
+            # Compress any finite production deadline while Git is deterministically
+            # blocked. The host releases supervised operations; no long wait is needed.
+            if timeout is not None:
+                return native_communicate(process, input, timeout=0.05)
+            with release.open("w") as output:
+                output.write("host release\n")
+            result = native_communicate(process, input, timeout=10)
+            completed.append((args[3], process.returncode))
+            return result
+
+        options = argparse.Namespace(source=self.main, path=target, branch=branch,
+                                     base=self.base, skip_restore=False)
+        with patch.dict(os.environ, PATH=str(binary) + os.pathsep + os.environ["PATH"]), \
+                patch.object(subprocess.Popen, "communicate", delayed_communicate):
+            result = publication.recover_initialization(options)
+        self.assertEqual([("add", 0), ("checkout-index", 0), ("update-index", 1)], completed)
+        self.assertEqual("recovered", result["status"])
+        self.assertEqual("native_lock_cleared", result["native_locks"][0]["status"])
+        self.assertEqual(creation_record, witness.read_bytes())
+        self.assertEqual(payload, (target / "owned").read_bytes())
+        recovery = result["recovery_branch"]
+        self.assertTrue(recovery)
+        self.assertEqual(payload, protocol.git(self.main, "show", recovery + ":owned").stdout)
+        self.assertTrue((target / "other").is_file())
+        self.assertTrue((target / "tools/obj/project.assets.json").is_file())
+        self.assertEqual(self.base, self.g(target, "rev-parse", "HEAD").strip())
+        self.assertEqual(self.g(target, "rev-parse", "HEAD^{tree}"), self.g(target, "write-tree"))
+        self.assertFalse((metadata / "locked").exists())
+        self.assertFalse((metadata / "index.lock").exists())
+        self.assertEqual([], list(metadata.glob("initialization-index-*")))
+        self.assertIn("worktree-recovered:" + token.removeprefix("worktree-init:"),
+                      self.g(target, "reflog", "show", "--format=%gs", "HEAD"))
+        # The preserved working edit is expected; returning it to the base leaves
+        # a clean checkout while the recovery ref still retains the exact bytes.
+        self.g(target, "restore", "--worktree", "--", "owned")
+        self.assertEqual("", self.g(target, "status", "--porcelain"))
+        self.assertEqual(payload, protocol.git(self.main, "show", recovery + ":owned").stdout)
+
+    def test_owned_unregistered_branch_can_resume(self):
+        target, branch, token = self.owned_initialization(registered=False)
+        (self.main / "lean-toolchain").write_text("leanprover/lean4:v4.34.2\n")
+        self.g(self.main, "add", "lean-toolchain")
+        self.g(self.main, "commit", "--allow-empty", "-m", "advance requested base")
+        advanced = self.g(self.main, "rev-parse", "HEAD").strip()
+        for attempt in range(2):
+            self.run_protocol("recover-init", "--path", target, "--branch", branch,
+                              "--base", advanced, "--skip-restore")
+            self.assertEqual("original\n" if attempt == 0 else "ordinary bytes\n",
+                             (target / "owned").read_text())
+            self.assertEqual(self.base, self.g(target, "rev-parse", "HEAD").strip())
+            self.assertEqual("leanprover/lean4:v4.34.1\n", (target / "lean-toolchain").read_text())
+            (target / "owned").write_text("ordinary bytes\n")
+
+    def test_ordinary_recovery_routing_keeps_shared_reuse_and_base_protection(self):
+        self.hold("--write", "other")
+        (self.tree / "owned").write_text("ordinary bytes\n")
+        self.run_protocol("recover-init", "--path", self.tree, "--branch", self.branch,
+                          "--base", self.base, "--skip-restore")
+        self.g(self.main, "commit", "--allow-empty", "-m", "advance ordinary base")
+        advanced = self.g(self.main, "rev-parse", "HEAD").strip()
+        refused = self.run_protocol("recover-init", "--path", self.tree, "--branch", self.branch,
+                                    "--base", advanced, "--skip-restore", expect=73)
+        self.assertIn("incompatible_base", refused.stderr)
+        self.assertEqual("ordinary bytes\n", (self.tree / "owned").read_text())
+
+    def test_partial_registration_repairs_worktree_head_in_its_own_ref_store(self):
+        import worktree_publication as publication
+        target, branch, token = self.owned_initialization()
+        metadata = Path(self.g(target, "rev-parse", "--absolute-git-dir").strip())
+        (metadata / "HEAD").unlink()
+        native_git = publication.git
+        def strict_git(path, *arguments, **options):
+            if "symbolic-ref" in arguments and "-m" in arguments:
+                reference = arguments[arguments.index("symbolic-ref") + 3]
+                self.assertEqual("HEAD", reference)
+            return native_git(path, *arguments, **options)
+        def interrupt_reattachment(path, *arguments, **options):
+            result = strict_git(path, *arguments, **options)
+            if arguments[:2] == ("update-ref", "--no-deref") and arguments[2].startswith("worktrees/"):
+                raise OSError("HEAD reattachment interrupted")
+            return result
+        options = argparse.Namespace(source=self.main, path=target, branch=branch,
+                                     base=self.base, skip_restore=True)
+        with patch.object(publication, "git", side_effect=interrupt_reattachment):
+            with self.assertRaisesRegex(OSError, "HEAD reattachment interrupted"):
+                publication.recover_initialization(options)
+        self.assertEqual(token, (metadata / "locked").read_text().strip())
+        with patch.object(publication, "git", side_effect=strict_git):
+            publication.recover_initialization(options)
+        self.assertEqual("refs/heads/" + branch, self.g(target, "symbolic-ref", "HEAD").strip())
+        self.assertFalse((metadata / "locked").exists())
+
+    def test_initialization_identity_changes_refuse_recovery(self):
+        target, branch, token = self.owned_initialization()
+        metadata = Path(self.g(target, "rev-parse", "--absolute-git-dir").strip())
+        for failure in ("token", "branch", "backlink", "tip"):
+            with self.subTest(failure=failure):
+                saved = (metadata / "gitdir").read_text()
+                if failure == "token":
+                    (metadata / "locked").write_text("worktree-init:foreign\n")
+                elif failure == "branch":
+                    self.g(target, "symbolic-ref", "HEAD", "refs/heads/" + self.branch)
+                elif failure == "backlink":
+                    (metadata / "gitdir").write_text(str(self.tree / ".git") + "\n")
+                else:
+                    self.g(target, "read-tree", "HEAD")
+                    self.g(target, "commit", "--allow-empty", "-m", "changed creation branch")
+                self.run_protocol("recover-init", "--path", target, "--branch", branch,
+                                  "--base", self.base, "--skip-restore", expect=73)
+                (metadata / "locked").write_text(token + "\n")
+                (metadata / "gitdir").write_text(saved)
+                self.g(target, "symbolic-ref", "HEAD", "refs/heads/" + branch)
+                self.g(self.main, "update-ref", "refs/heads/" + branch, self.base)
+        self.assertFalse((target / "owned").exists())
+
+    def test_removal_record_mismatch_reconverges_and_keeps_both_roots(self):
+        original = self.interrupted_removal()["checkpoint"]["commit"]
+        self.g(self.tree, "commit", "--allow-empty", "-m", "later head")
+        (self.tree / "owned").write_text("current bytes\n")
+        result = json.loads(self.remove().stdout)["items"][0]
+        self.assertEqual("reconverged", result["checkpoint"]["status"])
+        self.assertEqual("current bytes\n", self.g(self.main, "show", result["recovery_branch"] + ":owned"))
+        refs = self.g(self.main, "for-each-ref", "--format=%(objectname)",
+                      "refs/heads/lane/governance/recovery-*").splitlines()
+        self.assertIn(original, refs)
+
+    def test_reconvergence_interruption_retains_record_and_recovery_objects(self):
+        import worktree_preservation as preservation
+        original = self.interrupted_removal()["checkpoint"]["commit"]
+        self.g(self.tree, "commit", "--allow-empty", "-m", "moved snapshot")
+        (self.tree / "owned").write_text("new bytes\n")
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        options = argparse.Namespace(source=self.main, names="tree", path=[], force=False,
+                                     preview=False, expected=[])
+        with patch.object(preservation, "record_removal", side_effect=OSError("record interrupted")):
+            result = preservation.remove(options)
+        self.assertEqual("failed", result["status"])
+        self.assertEqual(original, json.loads((metadata / "worktree-removal").read_text())["commit"])
+        refs = self.g(self.main, "for-each-ref", "--format=%(objectname)",
+                      "refs/heads/lane/governance/recovery-*").splitlines()
+        self.assertIn(original, refs)
+        self.assertIn(self.g(self.tree, "rev-parse", "HEAD").strip(), refs)
+        self.remove()
+
+    def test_resume_validates_and_coordinates_recorded_predecessors(self):
+        import worktree_protocol as protocol
+        import worktree_preservation as preservation
+        self.interrupted_removal()
+        self.g(self.tree, "commit", "--allow-empty", "-m", "moved snapshot")
+        (self.tree / "owned").write_text("new bytes\n")
+        metadata = Path(self.g(self.tree, "rev-parse", "--absolute-git-dir").strip())
+        native_git = preservation.git
+        def interrupt(path, *arguments, **options):
+            if arguments[:2] == ("worktree", "remove"):
+                raise subprocess.TimeoutExpired(["git", *arguments], 300)
+            return native_git(path, *arguments, **options)
+        options = argparse.Namespace(source=self.main, names="tree", path=[], force=False,
+                                     preview=False, expected=[])
+        with patch.object(preservation, "git", side_effect=interrupt):
+            result = preservation.remove(options)
+        self.assertEqual("failed", result["status"])
+        predecessor = json.loads((metadata / "worktree-removal").read_text())["predecessors"][0]
+        reference = predecessor["recovery_branch"]
+        with ExitStack() as holder:
+            protocol.acquire(holder, self.main, "ref:" + reference, True)
+            failed = preservation.remove(options)["items"][0]
+            self.assertEqual("checkpoint_failed", failed["outcome"])
+            self.assertIn("busy_scope:ref:" + reference, failed["error"])
+        self.g(self.main, "update-ref", reference, "HEAD")
+        # Use a distinct commit so the recorded predecessor cannot validate.
+        self.g(self.main, "commit", "--allow-empty", "-m", "foreign predecessor")
+        self.g(self.main, "update-ref", reference, "HEAD")
+        failed = preservation.remove(options)["items"][0]
+        self.assertEqual("checkpoint_failed", failed["outcome"])
+        self.assertIn("interrupted_removal_recovery_root_changed", failed["error"])
+        self.g(self.main, "update-ref", reference, predecessor["commit"])
+        resumed = json.loads(self.remove().stdout)["items"][0]
+        self.assertIn(reference, resumed["recovery_roots"])

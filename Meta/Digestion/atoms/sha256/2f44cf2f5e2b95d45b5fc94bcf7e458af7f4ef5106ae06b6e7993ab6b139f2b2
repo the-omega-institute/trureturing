@@ -1,0 +1,11 @@
+**Theorem 32.1 (all-base terminal-J restriction).** Let $p,v\in\mathbb R$ and
+let $W_0\ne W_1$ lie in one entire child $C(p,v)$ with
+$a(W_0)=a(W_1)$. Then at least one of the two worlds has $b<1$. More
+specifically:
+
+1. If $p<0$, this is Corollary 12.1.
+2. If $p=0$, every world in the child is one of the two arcs of Theorem
+   25.1 and therefore has $b<1/2$.
+3. If $p>0$, Theorem 22.1 gives the member with $b<1$; when
+   $p\ge p_0=1587/25$, it gives the stronger bound $b<3/4$.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f66698da9aceb129de1acf9fa92556c21f0b01c896c746e1ddbb8620a69d550d
+  normalized_sha256: sha256:f66698da9aceb129de1acf9fa92556c21f0b01c896c746e1ddbb8620a69d550d
+cas_ref: sha256:f66698da9aceb129de1acf9fa92556c21f0b01c896c746e1ddbb8620a69d550d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 以观察等价蕴含关系定义精化；没有附带偏序、残差或可见空间定理。
+    previous_atom_id: 9b6e803989925643f1fa932c30c8d35480da470fe565d46f9ae8bb3e2b6584bb
+    next_atom_id: 430d4a1fb29389c0081999d05b8801bd234108d80aeefe2dafe87531a66487ff

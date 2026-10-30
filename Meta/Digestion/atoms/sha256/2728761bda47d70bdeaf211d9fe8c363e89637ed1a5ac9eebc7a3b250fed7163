@@ -1,0 +1,35 @@
+**Proposition 23.1 (Exhaustive root inventory).** At every real base in
+$B$, $R(\,\cdot\,,p,v)$ has exactly one root, counted with multiplicity, in
+each open disk $|x-c_i|<\rho_i$ and no roots elsewhere. Indices
+$0,\ldots,7$ give eight negative real roots; indices $10,11$ give two
+nonreal roots; indices $8,9,12,13,14,15,16,17$ give eight positive real
+roots. All eighteen roots are simple.
+
+Proof. On the boundary of a listed disk, separate the linear term
+$T_{100}(R;c_i)(x-c_i)$ from the rest of (23.1). By (23.3) the modulus
+of the rest is strictly less than the modulus of this linear term.
+Both are holomorphic on a neighborhood of the closed disk because they
+are polynomials in $x$ after fixing the real base. Rouché's theorem
+therefore gives exactly one zero with multiplicity inside.
+
+The exact centres and radii satisfy, for every $i<j$,
+
+$$
+|c_i-c_j|^2>(\rho_i+\rho_j)^2.
+\tag{23.4}
+$$
+
+For $i\le7$, $\Re c_i+\rho_i<0$; for the eight positive indices,
+$c_i-\rho_i>0$; and for $i=10,11$,
+$|\Im c_i|>\rho_i$. The real-centred disks are invariant under
+conjugation. Since the specialization has real coefficients, uniqueness
+makes their roots real. The other two disks miss the real axis.
+
+A specialization has degree at most eighteen by (22.4). The eighteen
+disjoint disks already account for eighteen roots with multiplicity, so
+the degree is exactly eighteen and there are no further roots or
+multiplicities. An identically zero specialization also contradicts
+(23.3): the sum of the rest would then have boundary modulus equal to
+the linear term. Thus neither a degree drop nor a zero polynomial
+specialization leaves an omitted root stratum on $B$. ∎
+

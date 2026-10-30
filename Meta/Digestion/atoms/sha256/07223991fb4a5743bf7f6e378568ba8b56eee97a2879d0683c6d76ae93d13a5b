@@ -1,0 +1,55 @@
+**Proposition 6.3 (one trace does not guarantee recovery).** Equality
+classes of the law experiments in Theorems 2.1--2.2 and the
+existence of static codes in Theorem 3.2 do not imply
+recovery from one random trace. More precisely, there is
+no measurable decoder that, given only one observed trace
+and the current $O$, returns the starting address almost
+surely for every deterministic start. This holds on every
+fixed finite window $T>0$ and on the complete infinite
+future; no auxiliary code is supplied to this decoder.
+
+**Proof.** For a finite window, use the distinct same-$O$
+nonroot starts $a=LLR,b=RRL$ of V Proposition 121.2.
+Their common constant observation path on $[0,T]$ has
+probability $e^{-3T}>0$ from each, because every actual
+jump changes depth and each initial escape rate is three.
+A decoder must give the same output on that identical
+input trace; it cannot be almost surely correct for
+both starts. Extra randomness cannot help: on that
+common atom its conditional output distribution would
+have to assign probability one to each of two different
+addresses.
+
+For an infinite future, the no-jump event has probability
+zero and is not evidence for the assertion. Instead use
+V Theorem 121.6 at $r=0$. Its distinct same-$O$ starts
+$p_0,p'_0$ satisfy
+
+$$
+\|\mathsf L_{p_0}^\infty-
+       \mathsf L_{p'_0}^\infty\|_{\mathrm{TV}}\le\tfrac12<1.
+\tag{6.5}
+$$
+
+If a measurable decoder were almost surely correct at both
+starts, its event of returning $p_0$ would have probability
+one under the first law and zero under the second. Their
+TV would be one, contradicting (6.5). For a randomized
+decoder, adjoining independent randomness cannot increase
+TV: for each event its conditional indicator is a
+measurable function taking values in $[0,1]$, and the
+layer-cake identity bounds its expectation difference
+by the original sup-event TV. The same contradiction
+therefore applies.
+
+This argument gives the finite and infinite law evidence
+separately. It claims neither that every starting pair
+is impossible to distinguish from one trace nor a
+uniform positive error floor, acquisition tariff or
+sample-complexity bound. In particular, exact law
+identifiability from V 121.3 and all-variable-time
+terminal identifiability from V 121.4 are different
+inputs from one random observed path. The specific
+prescribed-time terminal question left open there is
+not settled by Theorem 2.2. $\square$
+

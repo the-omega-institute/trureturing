@@ -291,7 +291,7 @@ private theorem centered_readout_injective_of_visible_injective (d : Nat) [NeZer
     exact hmatrixZero
   exact sub_eq_zero.mp hdifferenceZero
 
-private theorem density_matrix_set_compact_convex (d : Nat) [NeZero d] : IsCompact
+theorem density_matrix_set_compact_convex (d : Nat) [NeZero d] : IsCompact
     {matrix : Matrix (Fin d) (Fin d) ℂ | matrix.PosSemidef ∧ Matrix.trace matrix = 1} ∧
     Convex ℝ {matrix : Matrix (Fin d) (Fin d) ℂ | matrix.PosSemidef ∧
       Matrix.trace matrix = 1} := by

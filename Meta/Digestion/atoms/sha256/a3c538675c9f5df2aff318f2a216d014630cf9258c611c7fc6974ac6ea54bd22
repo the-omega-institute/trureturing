@@ -1,0 +1,28 @@
+**Corollary 8.1 (Bounded bases and complete worlds over $D_J$).** There
+are finite $V_J,C_J>0$ such that every $(p,v)\in D_J$ satisfies
+
+$$
+|p|\le P_J,\qquad |v|\le V_J,
+\tag{8.1}
+$$
+
+and every actual $W=(P,g,d)\in C(p,v)$ satisfies
+
+$$
+0<b,c\le C_J,\qquad |d|\le C_J,\qquad
+\max_{0\le k\le3}|[s^k]g|\le C_J.
+\tag{8.2}
+$$
+
+The same bound can be enlarged to bound $|a(W)|,|m(W)|$ for every
+companion. In particular these conclusions hold over $D_J\cap D_M$,
+including all worlds unused by either selected pair.
+
+Proof. Theorem 7.1 bounds $p$ using only the selected actual $J$ pair.
+S, Corollary 11.4, bounds $b$ for every world of its entire child.
+Only now apply S, Theorem 12.1, with $(L,P_*)=(B,P_J)$. Its
+complete-world coercivity bounds $c,d$, every padded whole-gain
+coefficient and $v,a,m$ at all those companions, not just the selected
+endpoints. Enlarge the common bound and choose $V_J$ accordingly.
+No individual positive lower bound for $b$ or $c$ is inferred. ∎
+

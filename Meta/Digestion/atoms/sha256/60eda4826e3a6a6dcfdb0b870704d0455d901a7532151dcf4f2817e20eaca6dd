@@ -1,0 +1,21 @@
+**Definition 19.1 (entrance tasks in C).** Fix an earned reachable
+$t$, its current roster, known law and authentic context. Use exactly
+the complete post-clock digital C of §§7–8, on a declared entrance
+class $S\subseteq\mathbb Q^{V_t}$. An entrance task is a function
+$f:S\to\mathcal L$, where $\mathcal L$ has exact finite encodings and
+equality of encodings specifies the output value. A robust policy is
+source independent and causal as in Definition 8.2. It must return
+$f(x)$ after finitely many actual operations and output bits for each
+$x\in S$ and every legal nuisance sequence. Precision and call counts
+need not have common finite bounds.
+
+Context and accessible initial side data are fixed independently of
+$x$. In particular no source-dependent program, input archive,
+allocation-name, timing, capacity, exhaustion, digitizer-work or
+provider-state channel distinguishes entrances. Each asserted finite
+execution has sufficient actual backing and current authority, without
+making its size an observed entrance label. This task concerns settled
+service records, including complete frames and returns; the backend's
+private arithmetic duration is not a response. Fix any optional random
+tape for pathwise statements.
+

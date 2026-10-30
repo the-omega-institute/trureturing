@@ -20,15 +20,33 @@ internal sealed class CoherenceL1RelativeEntropyBoundDocument : IScribeDocumentD
                 "Section II, Eq. (3b), p. 2 gives Cl1(X) as the sum of |Xij| over i different from j. The complex norm is that absolute value; both indices run through Fin n.", true),
             Entry("coherenceRel", "Relative entropy coherence", Relative(),
                 "Section III, after Eq. (13), p. 4: “The minimization could be solved analytically [2], leading to Cr(ρ) = S(ρdiag)−S(ρ), where S(ρ) = − Tr(ρ log₂ ρ) is the von Neuman entropy.” The scalar functional calculus uses base-two logarithms.", true),
+            Entry("reflection", "Reflection associated with a matrix", Reflection(),
+                "The reflection associated with P is twice P minus the identity matrix.", false),
+            Entry("reflection_hermitian", "Hermitian reflections", ReflectionHermitian(),
+                "The reflection associated with a Hermitian matrix is Hermitian.", false),
+            Entry("reflection_unitary", "Unitary reflections", ReflectionUnitary(),
+                "The reflection associated with a Hermitian idempotent matrix is unitary.", false),
+            Describe.Lean(DescribeId.Create("rpl-coherence-upper-triangle"),
+                DeclarationHandle.Create(Prefix + "coherenceL1_eq_twice_upper"),
+                H("Hermitian coherence from the upper triangle"),
+                StatementSource.FromAuthor(CoherenceUpperTriangle()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a Hermitian matrix, the l1 coherence equals twice the sum of the l1 norms of the strict upper rows."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("rpl-vector-dot-star"),
+                DeclarationHandle.Create(Prefix + "vector_dot_star"),
+                H("Squared norm as a dot product"),
+                StatementSource.FromAuthor(VectorDotStar()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The dot product of a complex vector with its entrywise conjugate is the complex embedding of the sum of its squared coordinate norms."))),
+                DescribeRole.Theorem),
             Entry("claim", "Conjecture 7", Claim(),
                 "Section III.2, printed p. 5, verbatim: “Conjecture 7. For all states ρ, C_{l1}(ρ) ≥ C_r(ρ).” Here n ranges over every natural number and rho over every complex n by n matrix. The state predicate imposes positive semidefiniteness and unit trace, including singular states.", true),
             Entry("result", "The coherence inequality", Disp(ClaimBody()),
                 "A binary pinching is the average of a state and its conjugate by the unitary reflection 2P minus the identity. The binary Holevo inequality bounds its entropy increase by twice the trace norm of the off-diagonal block. Sequential coordinate pinchings preserve positivity and trace and end at the diagonal matrix. Each block has one nonzero row, so its trace norm is the square root of the sum of squared absolute values in that row above the diagonal. Summing the entropy increments gives Cᵣ(rho) ≤ 2 sum over k of the upper-row l2 norms. Each row l2 norm is at most its l1 norm, and Hermitian symmetry makes twice the upper-triangular sum equal l1Coherence.", false))));
     private static DocumentBlock Entry(string name, string title, Formula formula, string prose, bool literature) => Describe.Lean(
-        DescribeId.Create("rpl-" + name.ToLowerInvariant()), DeclarationHandle.Create(name == "l1Coherence"
+        DescribeId.Create("rpl-" + name.ToLowerInvariant().Replace('_', '-')), DeclarationHandle.Create(name == "l1Coherence"
             ? "D5/S3/Quantum/Information/CorrelatedCoherenceMonogamyRefutation.l1Coherence" : Prefix + name), H(title),
         StatementSource.FromAuthor(formula), literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-        Blocks(Paragraph(Text(prose))), name == "result" ? DescribeRole.Theorem : DescribeRole.Definition,
+        Blocks(Paragraph(Text(prose))), name is "result" or "reflection_hermitian" or "reflection_unitary" ? DescribeRole.Theorem : DescribeRole.Definition,
         name == "result" ? new OpenProblemResolutionClaim(
             ProblemSlugRef.Create("rana-parashar-lewenstein-2016-l1-relative-entropy-coherence"),
             ResolutionKind.Proved) : null);
@@ -73,10 +91,34 @@ internal sealed class CoherenceL1RelativeEntropyBoundDocument : IScribeDocumentD
         var body = Eq(App(L1Owner, Rho), Sum("i", Fin, Sum("j", Fin, term)));
         return Disp(All("n", Nat, All("rho", Mat, body)));
     }
+    private static Formula Reflection() => Disp(All("n", Nat, All("P", Mat,
+        Eq(Call("reflection", V("P")), Sub(Seq(D(2), Sp, F.Cdot, Sp, V("P")), D(1))))));
+    private static Formula ReflectionHermitian() => Disp(All("n", Nat, All("P", Mat,
+        Imp(Call("IsHermitian", V("P")), Call("IsHermitian", Call("reflection", V("P")))))));
+    private static Formula ReflectionUnitary() => Disp(All("n", Nat, All("P", Mat,
+        Imp(Call("IsHermitian", V("P")), Imp(Eq(Mul(V("P"), V("P")), V("P")),
+            new Formula.Relation(Call("reflection", V("P")), FormulaRelationOperator.MemberOf,
+                Call("unitaryGroup", Fin, Complex)))))));
     private static Formula Relative() => Disp(All("n", Nat, All("rho", Mat,
         Eq(Call("coherenceRel", Rho), Sub(Call("vonNeumann2", App(Q("Matrix", "diagonal"),
             Lam("i", Fin, App(Rho, V("i"), V("i"))))), Call("vonNeumann2", Rho))))));
+    private static Formula CoherenceUpperTriangle()
+    {
+        var entry = Seq(Operatorname, Grp(V("if")), Sp,
+            new Formula.Relation(V("k"), FormulaRelationOperator.LessThan, V("j")), Sp,
+            Operatorname, Grp(V("then")), Sp, App(Rho, V("k"), V("j")), Sp,
+            Operatorname, Grp(V("else")), Sp, D(0));
+        var row = App(Q("WithLp", "toLp"), D(1), Lam("j", Fin, entry));
+        var norm = Call("norm", row);
+        return Disp(All("n", Nat, All("rho", Mat, Imp(App(Q("Matrix", "IsHermitian"), Rho),
+            Eq(App(L1Owner, Rho), Mul(D(2), Sum("k", Fin, norm)))))));
+    }
     private static Formula ClaimBody() => All("n", Nat, All("rho", Mat, Imp(Call("IsState", Rho),
         Le(Call("coherenceRel", Rho), App(L1Owner, Rho)))));
+    private static Formula VectorDotStar() => Disp(All("n", Nat,
+        All("v", new Formula.TypeArrow(Fin, Complex),
+            Eq(Call("dotProduct", V("v"), Call("star", V("v"))),
+                Call("ofReal", Sum("j", Fin,
+                    new Formula.Power(Call("norm", App(V("v"), V("j"))), D(2))))))));
     private static Formula Claim() => Disp(new Formula.Logic(V("claim"), FormulaLogicOperator.Iff, ClaimBody()));
 }

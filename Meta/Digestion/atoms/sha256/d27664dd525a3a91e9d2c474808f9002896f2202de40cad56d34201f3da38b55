@@ -1,0 +1,25 @@
+**引理 4.1（全方向驻定所强制的分数平衡）。** 若全正 $w$ 的每个引理 3.2 方向都满足 $L_\Delta=0$，则对某个数列 $u_n>0$，
+
+$$
+B_{kl}=u_k+u_l,\qquad A_n+2u_n=c(n+1),\qquad u_n=B_{nn}/2,
+\tag{4.1}
+$$
+
+特别地
+
+$$
+u_1=c,\quad u_2=3c/2,\quad
+u_3=c-1/2+\sqrt{2c},\quad u_4=-1+2\sqrt{5c/2}.
+\tag{4.2}
+$$
+
+证明。对 $k\ne l$ 取 $\Delta_{kk}=\Delta_{ll}=1$、$\Delta_{kl}=\Delta_{lk}=-1$，其他为零，行列边缘皆零。$B$ 对称，驻定使 $B_{kk}+B_{ll}-2B_{kl}=0$，给第一式（对角亦成立）。全正概率使 $0<B_{kl}<1$，故 $u_n>0$。
+
+取单环差 $\Delta_{nn}=1$、$\Delta_{mm}=-1$，得到 $G_n:=A_n+B_{nn}-c(n+1)$ 不依赖 $n$。由于 $A_n\le n$ 且均值有限，$G_n$ 可积。第一式及 $\sum w_n=1$ 给
+
+$$
+\sum_{k,l}w_kw_lB_{kl}=2\sum_nw_nu_n=\sum_nw_nB_{nn}.
+$$
+
+结合（3.3）可知 $\sum_nw_nG_n=0$，所以常数为零。$A_1=A_2=0$；又 $p_{kl}=1-\sqrt{u_k+u_l}$，因 $1-p_{kl}>0$。因此 $A_3=(1-\sqrt{2c})^2$、$A_4=2(1-\sqrt{5c/2})^2$。代入（4.1）便得（4.2）。$\square$
+

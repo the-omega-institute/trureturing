@@ -1,0 +1,24 @@
+**定理 19.3（完整单位来源域的必要像维数）。** For a complete legal unit-signature tuple as in Definition 19.1, simultaneous satisfaction of every original gain guard and every applicable full same-source guard of Theorem 13.3 implies
+
+$$
+1\le\operatorname{rank}\mathscr H\le2,\qquad
+\operatorname{rank}(G_{j_e}|_V)=1+\operatorname{rank}\mathscr H
+\quad(e=0,1).
+\tag{19.19}
+$$
+
+
+If the rank is two, $\Delta\ne0$, and $E=\gamma\Delta$ for a real scalar $\gamma$, then necessarily
+
+$$
+E=\frac{13}{4}\Delta.
+\tag{19.20}
+$$
+
+
+In particular rank two with $E=0$ is excluded. These are derived exclusions on the original source domain, with no additional rank promise.
+
+Proof. Theorem 19.2 excludes rank three by exhibiting an applicable full $D$ guard that vanishes on the entire original $V$. The rank cannot exceed three because $\mathcal C_3$ has dimension three. If every required restriction is nonzero, Theorem 13.3's finite-subspace argument supplies one vector in this same $V$ satisfying all guards simultaneously. [J-signature, Theorem 7.1](FIB_ORIGINAL_ROOT_J_SIGNATURE_COUPLING_AND_HISTORY_FIBER_DECODER.md) makes its common nonconstant part nonzero, excluding rank zero.
+
+The projection from $G_{j_e}(V)$ to the nonconstant coefficients has image $\mathscr H(V)$. Its kernel consists of constant polynomials and has dimension at most one; [J-signature, Proposition 7.3](FIB_ORIGINAL_ROOT_J_SIGNATURE_COUPLING_AND_HISTORY_FIBER_DECODER.md) supplies the nonzero localized constant direction at this same slot, so its dimension is exactly one. Rank-nullity proves the second identity in (19.19). If rank two and $\Delta\ne0$, Theorem 19.2 excludes every proportionality except (19.20). If rank two and $E=0$, $\Delta=0$ would make $(m,E,\Delta)$, hence $\mathscr H$, have rank at most one; otherwise $E=0\Delta$ is the excluded proportional case. ∎
+

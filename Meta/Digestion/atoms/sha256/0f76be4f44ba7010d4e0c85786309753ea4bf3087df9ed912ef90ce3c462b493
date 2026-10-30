@@ -1,0 +1,31 @@
+**Theorem 4.4 (Exact minimum over actual morphic images).** Fix an integer $r\ge3$. For every finite nonempty alphabet $B$ and every nonerasing monoid morphism $`\eta:A_r^*\to B^*`$ satisfying the ordinary critical-exponent equality
+
+$$
+E(\eta(u))=e_r=1+\frac{1}{3-\Lambda},
+$$
+
+its length row $h_i=|\eta(i)|$ has the full parameterization (19), dominates $h^*$ coordinatewise and satisfies (23), in particular $|\eta(2r)|\ge2^r$.
+
+Let $\mathcal M_r$ consist of all such pairs $(B,\eta)$, allowing $B$ to range over finite nonempty alphabets, and let $\mathcal R_r\subseteq\mathcal M_r$ consist of the pairs whose image $\eta(u)$ is rich. Then both classes are nonempty and
+
+$$
+\min_{(B,\eta)\in\mathcal M_r}\sum_{i=0}^{2r}|\eta(i)|
+ =\min_{(B,\eta)\in\mathcal R_r}\sum_{i=0}^{2r}|\eta(i)|
+ =r+2^{r+1}-1.
+\tag{24}
+$$
+
+A pair in either class attains the minimum exactly when its length row is $h^*$. This is uniqueness of the minimizing row, with no assertion of uniqueness of the morphism.
+
+*Proof.* Nonerasure makes $h$ a positive integer row. Corollary 3.2 applies to every such morphism into every finite nonempty $B$ and gives $hv_\beta=0$. Theorem 4.2 and Corollary 4.3 prove all the necessary row conditions and the lower bound in (24). This step uses Corollary 3.2 in full; it does not impose the finite-boundary premise of source Proposition 18 (arXiv Proposition 17), injectivity, richness or any restriction on the output alphabet size.
+
+For attainment, reuse the weighted morphism of Dvořáková–Pelantová with their parameter $d=r$, as specified by journal Definition 12 and proved in Proposition 14 and Theorem 2, with equation (4) for the asymptotic exponent of the source. These complete supplied results give a finite alphabet $B_r$ of size $r+2^r$ and a nonerasing morphism $`\pi_r:A_r^*\to B_r^*`$ for which
+
+$$
+\bigl(|\pi_r(0)|,\ldots,|\pi_r(2r)|\bigr)=h^*,\qquad
+\pi_r(u)\text{ is rich},\qquad
+E(\pi_r(u))=E^*(u)=e_r.
+$$
+
+The corresponding arXiv numbers are Definition 11, Proposition 13 and Theorem 2; the supplied spectral computation for this row is journal Appendix Lemma 22, arXiv Lemma 21. The [journal proof in §§5–6 and Appendix](https://www.combinatorics.org/ojs/index.php/eljc/article/download/v33i2p15/pdf/) supplies the word construction, richness and exact ordinary exponent together. Thus this is an actual member of $\mathcal R_r$, and hence of $\mathcal M_r$, with total length $r+2^{r+1}-1$. This proves both equalities in (24). The equality characterization follows from Corollary 4.3 for members of these classes. $\square$
+

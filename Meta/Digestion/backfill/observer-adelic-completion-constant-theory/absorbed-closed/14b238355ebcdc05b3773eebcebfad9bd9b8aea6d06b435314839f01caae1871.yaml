@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:14b238355ebcdc05b3773eebcebfad9bd9b8aea6d06b435314839f01caae1871
+  normalized_sha256: sha256:14b238355ebcdc05b3773eebcebfad9bd9b8aea6d06b435314839f01caae1871
+cas_ref: sha256:14b238355ebcdc05b3773eebcebfad9bd9b8aea6d06b435314839f01caae1871
+coverage_gids:
+  - gid: D5/S3/Weil/Separator/ArchimedeanConvergence.archimedeanConvergent_of_weilTestFunction
+    target_statement_id: sha256:686b2d2ac8ec9c3bc18656b5965808c78e0fcc2e8aa1d7569d93b6a7dd352aee
+  - gid: D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.archimedean_jump_decomposition
+    target_statement_id: sha256:ea82ee67fd0ea0b68effb6c26225e50ad1d16ae8ab91fe789a339b2cca6e1c4b
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,26 @@
+**Boundary 114.2 (full advice and the read frontier).** If $d=k$, the
+retained advice already determines $H\theta$: its information need is
+zero new calls, with computation and installation still paid. If the
+task nevertheless mandates occurrence and actual use of **both** new
+read types, take $j=1$, perform the same Tick;Hold and noisy read, and
+perform the one sign-selected exact read of step 3. Use that exact reply
+in $q$ and perform step 5, solving the remaining coordinates from advice.
+The exact read is informationally redundant but actually acquired and
+used. The endpoint is again (114.1).
+
+Consequently the sharp successful-read coordinates for complete native
+service with mandatory mixed occurrence and the displayed actual use are
+
+$$
+(m_0,m_+)=(\max\{1,k-d\},1).
+\tag{114.2}
+$$
+
+Necessity is Theorem 112.2 plus the literal occurrence requirements;
+attainment is Theorem 114.1 and the full-advice construction just stated.
+If noisy calls are merely permitted, the existing exact repair attains
+$(k-d,0)$ for $d<k$, and full advice needs $(0,0)$ at its original cut.
+There is no noise-based saving of exact reads or claim of lower total
+cost. Warming, readiness, performed use and optional export have different
+tasks and endpoints.
+

@@ -1,0 +1,27 @@
+**命题 8.5（平均更新闭合不足以保持输出未来）。**
+即使平均更新保持当前效果空间，也不能推出该空间对完整输出记录未来充分。这个失败已经发生在两个经典状态、一个动作和两个输出上。
+
+**证明。**
+
+取状态 $\{0,1\}$，令
+
+$$
+M_0=\begin{pmatrix}1&0\\0&0\end{pmatrix},\qquad
+ M_1=\begin{pmatrix}0&0\\0&1\end{pmatrix},\qquad
+ \mathcal B=\operatorname{span}\{(1,1)^{\mathsf T}\}.
+$$
+
+平均更新 $M_0+M_1=I_2$ 保持 $\mathcal B$。当前常数读口不能区分 $p=(1,0)$ 与 $q=(0,1)$，且任意次平均更新后仍不能区分。然而
+
+$$
+pM_0\mathbf1=1,\qquad qM_0\mathbf1=0.
+$$
+
+实际一次输出就区分这两个来源。原因是 $M_0\mathbf1=(1,0)^{\mathsf T}\notin\mathcal B$；两个分支之和隐藏了分支各自携带的信息。
+
+同一例的量子实现是 $\Phi_o(\rho)=|o\rangle\langle o|\rho|o\rangle\langle o|$。平均 Heisenberg 通道保持 $\operatorname{span}\{I\}$，但单个分支将 $I$ 送到 $|o\rangle\langle o|$。因此问题不是经典模型独有的记号现象。
+
+证毕。
+
+<a id="obs-thm-bundle"></a>
+

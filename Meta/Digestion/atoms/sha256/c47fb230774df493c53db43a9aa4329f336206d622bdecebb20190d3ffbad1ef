@@ -1,0 +1,91 @@
+**定理 82.4（same-decoder joint profile 与 $\kappa=2$ 分支）。** 对固定 $\kappa\ge0$，$a=\sqrt\kappa$，在 $q_n=\kappa t_n^4\le1$ 的最终尾段上，
+
+$$
+\frac{c_n(q_n)}{t_n^2}\longrightarrow\mathcal H(\kappa)
+ =\min_{z\ge0}\sqrt{z^4+\max\{z^2,(z-a)^2\}}.
+$$
+
+两个 parity subsequences 具有同一 limit，唯一 scalar minimizer 为
+$z_* =\min\{a/2,z_\kappa\}$，且
+
+$$
+\mathcal H(\kappa)=
+\begin{cases}
+\dfrac{\sqrt\kappa}{2}\sqrt{1+\kappa/4},&0\le\kappa\le2,\\
+\mathcal L(\kappa),&\kappa\ge2.
+\end{cases}
+$$
+
+特别 $\mathcal H(0)=0$，$\mathcal H(2)=\sqrt3/2$。第二分支仅是 leading-profile equality，不是 finite-$n$ simultaneous individual optimality。
+
+**证明。** $a=0$ 时 $E=P$，identity decoder 精确恢复，故以下设 $a>0$。用 identity decoder 与 norm contraction 得
+$c_n(q)\le2\|E(q)-P\|=2at^2$。取达到 minimum 的同一个 $\mathcal D$，记 $\epsilon=c_n(q)$、$\Psi=\operatorname{Ad}_{U_0^\dagger}\circ\mathcal D^\dagger$、$B=\Psi(P)$。$P$ loss 不超过 $\epsilon$ 意味着
+
+$$
+1-B_{\xi\xi}\le\epsilon,\qquad B_{ee}+B_{ff}\le2\epsilon.
+$$
+
+对各 basis vector $i$，$\omega_i(X)=\langle i|\Psi(X)|i\rangle$ 是 positive unital functional。令 $A=|\xi\rangle\langle e|$、$P_e=|e\rangle\langle e|$。其 Cauchy–Schwarz inequality 及 $P+P_e\le I$ 给出
+
+$$
+|\Psi(A)_{ii}|^2\le\omega_i(P)\omega_i(P_e)
+ \le B_{ii}(1-B_{ii})\le2\epsilon.
+$$
+
+因此 $\Psi(H_q)$ 的每个 diagonal 绝对值不超过
+$q+2h\sqrt{2\epsilon}$。$G_s$ 仅 convexly 混合 $e,f$ diagonals，保留的 off-diagonal 由 norm contraction 不超过 $t\sqrt q$。对于这个同一个 map，
+
+$$
+\begin{aligned}
+\Delta&=(F^n)^\dagger\mathcal D^\dagger(H_q),\\
+\|\Delta\|&\le q+2h\sqrt{2\epsilon}+t\sqrt q
+ \le a^2t^4+(4a^{3/2}+a)t^3=o(t^2).
+\end{aligned}
+$$
+
+所以 $C_E=C_P+\Delta=C_P+o(t^2)$；这一步不是两个独立 effects 的拼合。
+
+写 $\Delta_W B=\left(\begin{smallmatrix}x&w\\\overline w&y\end{smallmatrix}\right)\oplus d$，置 $A_0=(1-x)/t^2$、$Z=\operatorname{sgn}(s)w/t$，则 $|Z|^2\le A_0$。两个 scaled residuals 的第一列分别为
+$(-A_0,\overline Z,0)^{\mathsf T}$ 与
+$(-A_0,\overline Z-a,0)^{\mathsf T}$ 加上 norm 不超过
+
+$$
+\delta_n=\|\Delta\|/t^2+a^2t^2+a(1-\sqrt{1-a^2t^4})\longrightarrow0
+$$
+
+的扰动。故
+
+$$
+\frac\epsilon{t^2}\ge
+\sqrt{A_0^2+\max\{|Z|^2,|Z-a|^2\}}-\delta_n
+ \ge\mathcal H(\kappa)-\delta_n.
+$$
+
+此界对 chosen minimizers uniform，未假设它们收敛，亦未限制 complex phases。
+
+为实现 matching upper，给定 $z\ge0$，取定理 81.5 的 $K_2$ 与 $d=u=z^2t^2$，令 $B=U_0KU_0^\dagger$，但现在固定 prepared states 为 $P$ 与 $(I-P)/2$：
+
+$$
+\mathcal D_B(X)=\operatorname{Tr}(BX)P
+       +\operatorname{Tr}((I-B)X)(I-P)/2.
+$$
+
+这是供两个 tasks 共用的一个 CPTP decoder。其 adjoint 同时满足
+
+$$
+\mathcal D_B^\dagger(P)=B,\qquad
+\mathcal D_B^\dagger(E(q))=(1-3q/2)B+(q/2)I.
+$$
+
+于是 $C_E=(1-3q/2)C_P+(q/2)I$，$\|C_E-C_P\|\le q$，两个 scaled residuals 分别趋向
+
+$$
+\begin{pmatrix}-z^2&z\\z&z^2\end{pmatrix}\oplus z^2,
+\qquad
+\begin{pmatrix}-z^2&z-a\\z-a&z^2\end{pmatrix}\oplus z^2.
+$$
+
+取两者 norm 的最大值并置 $z=z_*$ 即给 matching limsup。
+
+最后在 $z\ge a/2$ 上 squared objective 为严格递增的 $z^4+z^2$；在 $[0,a/2]$ 上为严格凸的 $z^4+(z-a)^2$。故唯一 minimizer 是 $\min(a/2,z_\kappa)$。条件 $z_\kappa\ge a/2$ 等价于 $a^2\le2$；在 $a^2=2$ 两式均为 $\sqrt3/2$。∎
+

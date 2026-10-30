@@ -1,0 +1,23 @@
+**定义 36.1（全输入共同端口）。** 令 $1\leq q\leq d$ 为整数，$F$ 为任意非空有限经典标签集。一个端口由在后来选择测量设置前就固定的 CPTP 映射组成：
+
+$$
+\operatorname{Enc}:M_d\longrightarrow\bigoplus_{f\in F}M_q,
+\qquad
+\operatorname{Dec}:\bigoplus_{f\in F}M_q\longrightarrow M_d,
+\qquad T=\operatorname{Dec}\circ\operatorname{Enc}.
+$$
+
+全部输入为复密度矩阵；不保留输入副本、参考纠缠或任何未计入的量子旁路。经典标签的分布可以依赖输入。令
+
+$$
+\begin{aligned}
+p_{\mathcal E}(\rho)&=(\operatorname{tr}(P_i\rho))_i,
+&p_{\mathcal V}(\rho)&=(\operatorname{tr}(Q_j\rho))_j,\\
+\operatorname{TV}(p,p')&=\tfrac12\sum_i|p_i-p'_i|,
+&e_{\mathcal E,\mathcal V}(T)&=\sup_\rho\max_{\mathcal B\in\{\mathcal E,\mathcal V\}}
+\operatorname{TV}(p_{\mathcal B}(\rho),p_{\mathcal B}(T(\rho))).
+\end{aligned}
+$$
+
+$\varepsilon_{\mathcal E,\mathcal V}(q)$ 是对全部这种共同端口及任意有限 $F$ 的误差下确界。这是第 1、10 节所用的 Bluhm–Rauber–Wolf Definition 4.1 合同。五模式记号 $\varepsilon_{0,t}$ 指设置 $0,t$，对应 $v_j(t)=O(t)^{\mathsf T}e_j$，故 $B_{ij}(t)=O_{ji}(t)^2$。
+

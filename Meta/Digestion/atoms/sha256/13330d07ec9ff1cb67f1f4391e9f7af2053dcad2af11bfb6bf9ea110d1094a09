@@ -1,0 +1,79 @@
+**Theorem 34.2 (All-specialization presentation and exact length).**
+For every complex base $(p,v)$ there is an isomorphism of
+$\mathbb C[x,D^{-1}]$-modules
+
+$$
+\mathcal A_{p,v}\cong
+\bigl(\operatorname{coker}_{\mathbb C[x]}S^{\mathsf T}\bigr)[D^{-1}],
+\tag{34.4}
+$$
+
+and its complex algebra length is exactly
+
+$$
+\ell(p,v):=\dim_{\mathbb C}\mathcal A_{p,v}
+=\deg\operatorname{strip}_D\bigl(F_0(x,p,v)^2R(x,p,v)\bigr)
+\le24.
+\tag{34.5}
+$$
+
+This counts all local algebra lengths, including nonreduced factors.
+No unchanged drift degree, simple projected root, reduced carrier or
+nonzero linear pseudo-remainder coefficient is assumed.
+
+Proof. Fix the base, write $B=\mathbb C[x]$, and set
+$M=B[d]/(f,K)$. Let $P_5$ be the free $B$-module of polynomials
+in $d$ of degree at most five, with ordered basis $d^5,\ldots,1$.
+The rows of $S$ belong to $(f,K)\cap P_5$, so their coefficient
+columns define a natural map
+
+$$
+\operatorname{coker}S^{\mathsf T}\longrightarrow M.
+\tag{34.6}
+$$
+
+By (34.2), there are $u,w\in B$ with $uL_f+wL_K=1$.
+The polynomial $ud^2f+wK$ is therefore monic of degree four in $d$.
+Consequently $M$ is generated over $B$ by $1,d,d^2,d^3$, and
+(34.6) is surjective.
+
+For injectivity, work first over $B[L_f^{-1}]$. If
+$h=af+bK\in P_5$, division of $b$ by $f$ and absorption of the
+quotient into $a$ give $h=a'f+b'K$ with $\deg_db'<2$.
+As $\deg_dK\le4$, the second summand has degree at most five.
+Thus $a'f$ has degree at most five; the invertible quadratic leading
+coefficient of $f$ gives $\deg_da'\le3$. Hence $h$ is in the
+span of precisely the six rows in (34.1).
+
+Next work over $B[L_K^{-1}]$. Divide $a$ by $K$ and absorb
+the quotient into $b$. Now $h=a'f+b'K$ with $\deg_da'<4$.
+Since $\deg_df\le2$, the first summand has degree at most five;
+the invertible quartic leading coefficient of $K$ then gives
+$\deg_db'\le1$. Again $h$ is in the span of those six rows.
+Zero summands cause no difficulty in either degree estimate. On each
+open the other polynomial is allowed to lose degree. Coprimality in
+(34.2) makes these two principal opens cover $\operatorname{Spec}B$.
+The kernel of (34.6) vanishes on this cover, so
+$M\cong\operatorname{coker}S^{\mathsf T}$.
+
+At the fixed base, $\det S$ is nonzero: $F_0$ has constant leading
+$x$-coefficient $405$, and $R$ is nonzero by Lemma 31.3.
+Smith normal form over the PID $B$ expresses the cokernel as a direct
+sum of $B/(s_i)$, with nonzero invariant factors whose product is
+$\det S$ up to a nonzero scalar. Localization at $D$ removes exactly
+the local summands supported at $0,-1,-2$. Therefore
+
+$$
+\begin{aligned}
+\dim_{\mathbb C}M[D^{-1}]
+&=\sum_i\deg\operatorname{strip}_D(s_i)\\
+&=\deg\operatorname{strip}_D(\det S)\\
+&=\deg\operatorname{strip}_D(F_0^2R)\le2\cdot3+18.
+\end{aligned}
+\tag{34.7}
+$$
+
+Localization is exact, so the module isomorphism localizes as well.
+This proves (34.4)–(34.5), without inferring algebra length from a
+count of real points. ∎
+

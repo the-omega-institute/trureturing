@@ -1,0 +1,142 @@
+**Theorem 14.2 (uniform finite deterministic construction).** One
+deterministic construction from $d,H$ alone outputs an ordered list
+of exactly $T$ length-$H$ tapes, counting repetitions, satisfying
+Theorem 13.2's strict $1/8$ guarantee. For an absolute constant $C$,
+construction and complete finite-catalogue verification together use
+at most
+
+$$
+ C4^d(d+H+2)^{24}
+ \tag{ACR.49}
+$$
+
+binary operations and cumulative binary writes, with reusable scratch
+at most $C(d+H+2)^8$ bits and exactly $TH$ output bits. All catalogue
+generation and arithmetic are included; neither an expectation oracle
+nor a precomputed good seed is supplied.
+
+Proof. Define rational polynomials
+$G_0(x)=G_1(x)=1$ and
+$G_q(x)=x(G_{q-1}(x)+G_{q-2}(x))/2$ for $q\ge2$. The rank
+recursion gives $G_q(x)=\mathbb E x^{D_q}$ for fair directions.
+After fixing a tape prefix, if the walk is terminal at depth $a$ its
+conditional moment is $x^a$; otherwise, at depth $a$ and residual
+rank $q$, it is $x^aG_q(x)$. Unused directions remain independent
+and fair. This identity holds despite all the prefix-dependent physical
+orientations and is the computable source-specific conditional moment.
+
+Temporarily let $U_1,\ldots,U_T$ be independent fair tapes. For each
+constraint $f$ with mean $\mu_f=\mu_{\kappa_e(p)}$, put
+
+$$
+ \begin{aligned}
+ S_f&=\sum_{t=1}^T f(U_t),&
+ u_f&=\lfloor T(\mu_f+1/8)\rfloor,&
+ \ell_f&=\lceil T(\mu_f-1/8)\rceil,\\
+ \Psi&=\sum_f\left(\eta^{S_f-u_f}+\eta^{\ell_f-S_f}\right).
+ \end{aligned}
+ \tag{ACR.50}
+$$
+
+An error at least $1/8$ makes a summand at least one, so $\Psi<1$
+implies every desired strict inequality. The exponential-moment step
+is the classical bounded-variable concentration supplier, here with
+its constants explicit: if $X\in[0,H]$, then
+$g(\lambda)=\log\mathbb E e^{\lambda X}$ has
+$g''(\lambda)=\operatorname{Var}_\lambda X\le H^2/4$.
+The variance bound follows from $X^2\le HX$ under the tilted law.
+Integrating twice gives
+$\mathbb E e^{\lambda(X-\mathbb EX)}\le e^{\lambda^2H^2/8}$
+for either sign of $\lambda$. For $\lambda=\log\eta$,
+$1/(5H^2)\le\lambda\le1/(4H^2)$; independence of whole tapes
+and the floor/ceiling errors give
+
+$$
+ \mathbb E\Psi
+ \le2K_0\eta\exp\!\left(-\frac{11T}{640H^2}\right)
+ \le\frac5{16}\exp\bigl((\log2-11/10)L\bigr)<1,
+ \tag{ACR.51}
+$$
+
+where $K_0\le2^{L-3}$ and $\eta\le5/4$ were used. This is only
+the starting bound, not yet a construction.
+
+Fix all $TH$ tape bits, row by row. For each next bit compute both
+conditional expectations of $\Psi$, and choose the smaller, with zero
+breaking ties. Their average is the current conditional expectation.
+For each $f$, independence between tapes factors each sign's moment
+into $T$ terms. Each factor is obtained from the residual-rank identity
+above at $x=\eta$ or $\eta^{-1}$, or from the completed depth. Hence
+both choices are exactly computable rational numbers by streaming the
+entire constraint catalogue. The final value remains below one by
+(ACR.51). This applies the classical conditional-expectation and
+pessimistic estimator method of [Raghavan, §§6.3--6.3.1][RRO-RAG]
+to these particular physical functions. The generic method is an
+intermediate supplier.
+
+Here are explicit arithmetic and backing bounds. For a proposed row,
+cut and physical path, use GPO (GPO.93)--(GPO.98) and Proposition
+39.5's forward companion powers. At most $H$ path edges are needed;
+their branch indices have $O(H+1)$ bits. A bound
+$E=C_1(d+H+2)^5$ covers one prefix walk and its residual rank,
+including its literal, descriptors, Fibonacci masses and initialization.
+Presence filtering and the initial cone descriptor fit the same bound.
+This uses a supplied hypothetical row only, never a hypothetical
+prediction as an actual reply.
+
+At $x=\eta$, store $G_q(x)$ with denominator $(2Q_0)^q$; at
+$x=\eta^{-1}$ use $(2(Q_0+1))^q$. The recurrence computes their
+integer numerators by scaling the two predecessor denominators, for
+$0\le q\le H$. In a conditional factor, $a+q\le H$ when residual
+rank is positive; completed depths are at most $H$. Thus every
+conditional value in (ACR.50), for every bit assignment, has denominator
+dividing the single known integer
+
+$$
+ \mathcal D=2^{TH}Q_0^{2T(H+1)}(Q_0+1)^{2T(H+1)}.
+ \tag{ACR.52}
+$$
+
+The integer thresholds have magnitude at most $T(H+1)$. Both scaled
+conditional sums fit within the explicit bit bound
+
+$$
+ J=8+TH+8T(H+1)\lceil\log_2(Q_0+1)\rceil
+       +2\lceil\log_2(K_0+1)\rceil.
+$$
+
+Indeed the denominator's logarithm is at most
+$TH+4T(H+1)\lceil\log_2(Q_0+1)\rceil$, and each unscaled
+summand is at most $\eta^{T(H+1)}\le2^{T(H+1)}$.
+Thus $J=O(TH\log(H+2)+\log(K_0+1)+1)$. Accumulate the sums as
+integers over denominator $\mathcal D$, rather than multiplying
+denominators across catalogue entries. Means, thresholds, powers,
+scalings and comparisons are exact integer/rational operations. No
+real logarithm or exponential needs to be computed: those occur only
+in (ACR.51)'s proof.
+
+With schoolbook arithmetic and repeated squaring, a conservative work
+bound for the two choices over all bits is
+
+$$
+ C_3K_0TH\left[TE+(T+H+1)J^2\log_2(TH+2)\right].
+ \tag{ACR.53}
+$$
+
+The first term recomputes every fixed tape prefix for each catalogue
+entry. The second covers the rational tables, products, powers,
+denominator scalings and streamed sums. Only the partial output list,
+one candidate, rational tables and running sums need be resident;
+their space is $O(TH+HJ+J+(d+H+2)^3)$. The row/seed counters and
+all words are generated anew within this bill. Writing and initializing
+every work bit is counted as an operation. Direct final verification
+streams the same catalogue, evaluates all $T$ completed tapes for
+each entry and compares their integer depth sum with the exact mean;
+it costs $O(K_0T(E+J^2))$ further operations and no source Read.
+Writing $s=d+H+2$, (ACR.48) gives $L=O(s)$, $T=O(s^3)$,
+$K_0=O(4^d s^3)$ and $J=O(s^5)$. Substitution into (ACR.53)
+and the verification bound gives (ACR.49); the displayed workspace
+fits $O(s^8)$, with exponents independent of $d,H$. Output, scratch,
+cumulative writes and verification are consequently all priced.
+$\square$
+

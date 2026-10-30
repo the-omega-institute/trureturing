@@ -1,0 +1,5 @@
+**定理 9.2（同一实际 H4 的具体十六槽系统）。** Introduce a real $Y$, a response variable $z_v$ for each nonempty chronological word $v\in\{M,J\}^{\le3}$, and two slots $\theta_{w,0},\theta_{w,1}$ for each $w\in\{M,J\}^3$. For a nonempty prefix $v=E_1\cdots E_k$, let $A_v=E_k\cdots E_1D$. Impose the following simultaneous conditions:
+
+1. Every slot satisfies (9.1), and each leaf pair has $\Delta(\theta_{w,0},\theta_{w,1})>0$.
+2. Every slot satisfies
+

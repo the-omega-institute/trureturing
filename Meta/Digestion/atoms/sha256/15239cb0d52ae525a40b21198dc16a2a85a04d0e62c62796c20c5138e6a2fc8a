@@ -1,0 +1,52 @@
+## 3. 移位的有限随机塔
+
+为避免把不存在的同层动力学偷偷加入模型，随机扩展采用移位核。假设：
+
+* $Z$ 是可数的带类型来源；
+* 每个 $Q_n$ 是有限的残余阶段；
+* 每个动作的事件字母表 $E_a$、实际记录字母表 $R_a$ 和终端字母表 $F_a$
+  都是有限的；
+* 测试只使用有限前缀、显式权限和已取得记录。
+
+对输入 $x_{n+1}\in Q_{n+1,\tau}$，定义从输入阶段 $n+1$ 到输出阶段 $n$ 的核
+
+$$
+\overline J_{a,n}
+  (e,y,r\mid x_{n+1}),
+\qquad
+ y\in Q_{n,\upsilon}\sqcup F_a.
+\tag{JKT.2}
+$$
+
+其完整输出空间为 $E_a\times(Q_{n,\upsilon}\sqcup F_a)\times R_a$。
+任取 $z\in x_{n+1}$，按 $q^\sharp_{a,n}$ 的输出纤维对
+$J_a^{\mathrm{tot}}(z;\cdot)$ 求和；
+不在输入纤维上求和或另选先验。(JKT.1) 保证该行与输入代表无关。
+
+对 $n\ge1$，明确输出限制为带类型不交并上的映射
+
+$$
+\rho_{a,n-1}
+ =p_{n-1}|_{Q_{n,\upsilon}}\sqcup\operatorname{id}_{F_a}:
+ Q_{n,\upsilon}\sqcup F_a\longrightarrow Q_{n-1,\upsilon}\sqcup F_a.
+$$
+
+它在成功类上取 $p_{n-1}$，在每个终端 $f$ 上固定 $f$ 及其类型标签。若
+$\bar D_{a,n}\subseteq Q_{n+1,\tau}$ 是下降后的合法域，还要求
+$\bar D_{a,n}=p_n^{-1}(\bar D_{a,n-1})$。有限 law 一致性要求
+
+$$
+ (\operatorname{id}_{E_a}\times\rho_{a,n-1}\times
+  \operatorname{id}_{R_a})_*
+ \overline J_{a,n}(\,\cdot\mid x_{n+1})
+=
+ \overline J_{a,n-1}(\,\cdot\mid p_nx_{n+1}).
+ \qquad(n\ge1)
+\tag{JKT.3}
+$$
+
+这里的输入和输出层刻意错开一层。不能以 (JKT.3) 替换同层递推，也不能从
+“每层 law 相同”推出跨层核存在。对有限前缀闭合策略，(JKT.3) 逐层给出一致
+的有限观察 law；它仍只涉及声明的事件、记录、终端和后继，不提供未执行未来的
+完整表格。
+

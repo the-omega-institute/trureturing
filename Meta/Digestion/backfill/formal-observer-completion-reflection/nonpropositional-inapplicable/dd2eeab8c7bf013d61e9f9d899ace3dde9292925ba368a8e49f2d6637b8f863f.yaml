@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dd2eeab8c7bf013d61e9f9d899ace3dde9292925ba368a8e49f2d6637b8f863f
+  normalized_sha256: sha256:dd2eeab8c7bf013d61e9f9d899ace3dde9292925ba368a8e49f2d6637b8f863f
+cas_ref: sha256:dd2eeab8c7bf013d61e9f9d899ace3dde9292925ba368a8e49f2d6637b8f863f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：以 Sigma_X 单射定义状态外延性。
+    previous_atom_id: 69cd8ff41aff9fb1088f03e6530b48495d54ba79302fe85d5a3f352cef0c1c7a
+    next_atom_id: 17186848a22fdaca9d16c0d14f1a71bd2dd1589e2f2bb4cb099385f6b6f5a124

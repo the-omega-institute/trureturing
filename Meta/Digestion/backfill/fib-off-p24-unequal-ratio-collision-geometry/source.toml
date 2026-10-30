@@ -1,0 +1,5 @@
+source_id = "fib-off-p24-unequal-ratio-collision-geometry"
+path = "docs/develop/theory/FIB_OFF_P24_UNEQUAL_RATIO_COLLISION_GEOMETRY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

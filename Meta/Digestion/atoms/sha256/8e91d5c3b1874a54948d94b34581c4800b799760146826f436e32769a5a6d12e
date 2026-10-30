@@ -1,0 +1,58 @@
+**定理 31.3（指定五面编码的完整对偶、压缩与交换补足）。** 记
+$\star_V=(\Lambda I)^{-1}\star_g\Lambda I$，沿用定义 22.2 的 $Q$，并置
+
+$$
+T=\Theta_{\mathbb C}^{-1}Q_{\mathbb C}\star_V\Theta_{\mathbb C}.
+$$
+
+则 $S_{\mathbb C}$ 的最小 $\star_V$-不变线性扩张为整个
+$\Lambda V\otimes_{\mathbb R}\mathbb C$，复维数八；这只是表示空间的扩张。
+五维压缩满足
+
+$$
+\begin{aligned}
+Te_2&=e_{13},\qquad Te_{13}=e_2,\\
+Te_0&=Te_1=Te_3=0,\qquad T^2=\Pi_2+\Pi_{13},\\
+\|T\psi\|^2&=|\psi_2|^2+|\psi_{13}|^2,
+\qquad \psi=\sum_s\psi_se_s.
+\end{aligned}
+\tag{31.4}
+$$
+
+它不是幺正门。另行指定的五态算子
+
+$$
+U_{\rm rel}=T+\Pi_0+|e_3\rangle\langle e_1|+|e_1\rangle\langle e_3|
+\tag{31.5}
+$$
+
+在同一表中固定 $0$、交换 $1\leftrightarrow3$ 及 $2\leftrightarrow13$，
+满足 $U_{\rm rel}^\dagger U_{\rm rel}=I$、$U_{\rm rel}^2=I$ 和
+$\det U_{\rm rel}=1$。它在 $\operatorname{span}(e_2,e_{13})$ 上与压缩对偶相同，
+但并非完整 Hodge，也不是由压缩唯一决定的幺正补足。
+
+证明。[Conrad，定理 4.2、10.2、例 10.3](../../../Library/Geometry/conrad2026exterior.md)
+给完整三生成元外代数的基和秩。将上述 Bouchard 星号公式运输到 (31.2)，得
+
+$$
+\begin{array}{c|ccccc}
+\omega&1&u_1&u_2&u_3&u_{13}\\\hline
+\star_V\omega&-u_{123}&-u_{23}&u_{13}&-u_{12}&u_2
+\end{array}
+\tag{31.6}
+$$
+
+且 $\star_V^2=I$。表中的三个新基元与原五基元组成外代数的八基，
+故任何包含 $S_{\mathbb C}$ 的不变空间都包含整个空间。
+$Q$ 恰删除这三个新基元，得到 (31.4)。这并未将缺失外幂定义成可制备物理模式。
+两个互不相交的换位各有行列式负一，给 (31.5) 的所有幺正、平方及行列式结论。
+若只规定在 $\operatorname{span}(e_2,e_{13})$ 上等于 $T$，
+则任何作用于其三维正交补的幺正算子都给另一补足；(31.5) 另选了固定空态和端点交换。
+
+定义 22.2 中 Boolean 函数与外积的区别仍有效：无序占据 $13$
+不携带 $u\wedge v=-v\wedge u$ 的符号。
+例如保持 $n$ 并交换 $u,v$ 的反定向线性映射在二向量上送
+$u\wedge v$ 到 $-u\wedge v$；(31.5) 却把该模式送到 $n$。
+而 $U_{\rm rel}$ 还把一次模式 $n$ 送到二次模式，故也不是某个三维线性映射的外延拓。
+每个算子的类型与作用均须按 (31.3)–(31.6) 区分。∎
+

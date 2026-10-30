@@ -1,0 +1,25 @@
+**接口 III（预算分辨率与收缩的充分条件）。** 在共同来源域上固定同一个非空合法协议族 $\Pi_R$，令
+
+$$
+d_R(x,y)=\sup_{\pi\in\Pi_R}\operatorname{TV}(P_x^\pi,P_y^\pi).
+\tag{WR1.7}
+$$
+
+逐协议的对称性、三角不等式在取上确界后保持，故 $d_R$ 是伪度量；不同来源可有零距离，在零距离商上得到度量。预算嵌套须显式要求 $R\le R'\Rightarrow\Pi_R\subseteq\Pi_{R'}$，这时才有 $d_R\le d_{R'}$。固定 $R,\varepsilon>0$ 的尾部稳定指 $\sup_{m,k\ge n}d_R(x_m,x_k)\le\varepsilon$，不能换成无预算限制的永久不可区分。
+
+若另有非空完备度量空间 $(X,d)$、自映射 $T:X\to X$、$0\le q<1$，且 $d(Tx,Ty)\le qd(x,y)$、$d_R\le d$，则 Banach 不动点定理及其几何级数估计供应唯一固定点 $x_*$，并对 $x_{n+1}=Tx_n$、$r_0=d(x_1,x_0)$ 给出
+
+$$
+d(x_n,x_*)\le\frac{q^nr_0}{1-q},\qquad
+\sup_{m,k\ge n}d_R(x_m,x_k)\le\frac{q^nr_0}{1-q}.
+$$
+
+后一估计直接对 $m>k\ge n$ 的相邻增量 $d(x_{j+1},x_j)\le q^jr_0$ 求和。仅当 $0<q<1$、$r_0>0$ 时，用对数选深度为
+
+$$
+N_\varepsilon=\max\left\{0,
+\left\lceil\frac{\log(r_0/((1-q)\varepsilon))}{-\log q}\right\rceil\right\}.
+$$
+
+$q=0$ 时一步到固定点；$r_0=0$ 时起点已固定。若只把状态量化成标签，还须有 $a>0$ 使 $B_d(x_*,a)$ 位于同一量化单元，才由最终误差小于 $a$ 推出标签不变；极限在单元边界时不成立。该条件不是随机读数 $I_k$ 的定格条件。幺正共轭对迹距离等距，本身没有这种严格收缩；等距轨道若收敛，其恒定相邻距离 $d(Tx_0,x_0)$ 必为零，故起点已固定。本应用的收缩来自实际非选择读出及其边缘转移。
+

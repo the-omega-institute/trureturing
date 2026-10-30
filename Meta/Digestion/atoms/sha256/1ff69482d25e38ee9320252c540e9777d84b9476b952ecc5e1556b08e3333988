@@ -1,0 +1,24 @@
+**定理 9.4（辛四维到正交五维）。** $V_5$ 维数为 5，$q$ 非退化，实符号为 $(3,2)$。原始外幂作用给出
+
+$$
+\varpi:\operatorname{Sp}_4(\mathbb R)\longrightarrow\operatorname{SO}(3,2),
+\qquad
+\ker\varpi=\{\pm I_4\}.
+$$
+
+复化后 $\varpi:\operatorname{Sp}_4(\mathbb C)\twoheadrightarrow\operatorname{SO}_5(\mathbb C)$ 满射。
+
+**证明。** $\Omega\wedge\Omega=2\nu$，故 $\Lambda^2U=\mathbb R\Omega\oplus V_5$。用基
+
+$$
+ e_1\wedge f_1-e_2\wedge f_2,\quad
+ e_1\wedge e_2,\ f_1\wedge f_2,\quad
+ e_1\wedge f_2,\ e_2\wedge f_1
+$$
+
+计算：第一项的 $q$ 值为 2，其余四项构成两组非退化双曲平面，故符号为 $(3,2)$。辛作用保持 $\Omega,\nu$ 和楔积，故保持 $q$；而 $\det(\Lambda^2g)=(\det g)^3=1$，在 $\mathbb R\Omega$ 上为恒等，所以五维行列式也是 1。
+
+若五维作用为恒等，则全部 $\Lambda^2U$ 上作用恒等。于是每个二维平面均保持；固定一条直线，取所有包含它的二维平面的交，可知每条直线保持。故 $g$ 是标量，且外平方恒等要求标量为 $\pm1$。反向显然，复数上同理。核有限，所以导出 Lie 映射单射；两边 Lie 维数同为 10，故为同构。复 $\operatorname{SO}_5$ 连通，像含单位邻域，从而满射。$□$
+
+实形式是非紧的 $\operatorname{SO}(3,2)$，不是紧的 $\operatorname{SO}(5)$。二者复化后使用同一个 $\operatorname{SO}_5(\mathbb C)$，但物理范数、可执行操作和概率解释不同。所有中心信息在进入五维表示时已发生一次明确的二重压缩。
+

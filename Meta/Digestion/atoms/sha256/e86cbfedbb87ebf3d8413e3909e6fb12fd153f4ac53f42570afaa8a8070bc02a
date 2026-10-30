@@ -1,0 +1,64 @@
+### 4.1. 有理系数界与隔离盒内的零点
+
+对 $P\in\mathbb Q[x,y,t]$，令 $\|P\|_{\rm coeff}$ 为合并同类项后所有系数的绝对值之和，并令
+
+$$
+H_i=\sum_{j=1}^3\sum_{k=1}^3
+\|\partial_j\partial_k\mathscr F_i\|_{\rm coeff},
+\qquad (\partial_1,\partial_2,\partial_3)=(\partial_x,\partial_y,\partial_t).
+\tag{4.8}
+$$
+
+式 (4.1)–(4.5) 的有理运算给下列界；$J_{\mathscr F}$ 的行次序为 $5,6,7$，列次序为 $x,y,t$：
+
+$$
+\begin{aligned}
+\|C_{\rm pre}\|_\infty
+ &=\frac{12514578567}{25000000000000}<\frac1{1000},\\
+\|I-C_{\rm pre}J_{\mathscr F}(m)\|_\infty
+ &\le\frac{1166992}{10^{14}}<\frac1{10^6},\\
+\|\mathscr F(m)\|_\infty
+ &\le\frac{47251031}{10^{22}}<\frac1{10^{13}},\\
+\|C_{\rm pre}\mathscr F(m)\|_\infty
+ &\le\frac{4715}{10^{24}}<\frac1{10^{16}},\\
+(H_5,H_6,H_7)
+ &=\left(\frac{2596965156059808}{78125},
+ \frac{2727311991107856}{78125},
+ \frac{699741400200432}{3125}\right),\\
+\max_i H_i&<3\cdot10^{11}.
+\end{aligned}
+\tag{4.9}
+$$
+
+这些是有限有理表达式的不等式：第一项直接取式 (4.5) 的最大绝对行和；第二项把式 (4.3) 微分后在有理点 $m$ 代入，计算 $I-C_{\rm pre}J_{\mathscr F}(m)$ 的最大绝对行和；第三、四项分别对 $\mathscr F(m)$、$C_{\rm pre}\mathscr F(m)$ 取最大绝对坐标。式 (4.8) 对九个有序二阶偏导分别合并系数后求和。所有数据均由式 (4.1)–(4.5) 指定，不涉及任何零点近似。
+
+由式 (4.4) 直接有 $\mathcal K\subset(0,1)^3$，而且在整个盒上 $x>89/100$、$y<2/25$。每个单项式在盒上的绝对值至多为一。因此沿 $m$ 到 $u\in\mathcal K$ 的线段，对每个 Jacobian 行先求各列绝对值之和，再用式 (4.8)，得到
+
+$$
+\begin{aligned}
+\|J_{\mathscr F}(u)-J_{\mathscr F}(m)\|_\infty
+ &\le\rho\max_iH_i
+ =\frac{43733837512527}{195312500000000}<\frac3{10}.
+\end{aligned}
+\tag{4.10}
+$$
+
+令 $\mathcal T(u)=u-C_{\rm pre}\mathscr F(u)$。式 (4.9)–(4.10) 给整个盒上的
+
+$$
+\begin{aligned}
+\|D\mathcal T(u)\|_\infty
+ &<\frac1{10^6}+\frac1{1000}\frac3{10}
+ =\frac{301}{10^6}<\frac1{1000},\\
+\|\mathcal T(m)-m\|_\infty&<\frac1{10^{16}},\\
+\|\mathcal T(u)-m\|_\infty
+ &<\frac1{10^{16}}+\frac{\rho}{1000}
+ =\frac{11}{10^{16}}<\rho.
+\end{aligned}
+\tag{4.11}
+$$
+
+$\mathcal K$ 是完备的闭凸盒，故 Banach 压缩映像定理给其中唯一的 $\mathcal T$ 不动点。为从不动点回到原方程，式 (4.9) 的第二行使 $C_{\rm pre}J_{\mathscr F}(m)$ 由 Neumann 级数可逆；两个因子均为方阵，故 $C_{\rm pre}$ 可逆。这个平方近似逆论证参见 Rump，《[Verified bounds for singular values, in particular for the spectral norm of a matrix and its inverse](https://www.tuhh.de/ti3/paper/rump/Ru10a.pdf)》，§2；这里所需的是式 (4.9) 的诱导无穷范数有理界。因此 $\mathcal T(u)=u$ 当且仅当 $\mathscr F(u)=0$。式 (4.11) 还使该零点的 $C_{\rm pre}J_{\mathscr F}$ 可逆，故零点非奇异且孤立。
+
+闭盒由有理不等式定义，其中的零集恰为一个点。由实闭域的投影定理，这个单点的每个坐标投影都是在 $\mathbb Q$ 上半代数的单点，因而是实代数数。这只用标准的实代数消元性质；它不分类盒外的零点。
+

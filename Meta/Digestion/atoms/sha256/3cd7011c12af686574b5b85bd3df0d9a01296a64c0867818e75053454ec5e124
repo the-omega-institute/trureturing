@@ -1,0 +1,11 @@
+**定义 4.2（全部未来与非法延拓）。** 设 $L\subseteq\Sigma^*$ 前缀闭，$q:L\to Y$，取 $\bot\notin Y$，把 $q$ 扩为 $\widetilde q:\Sigma^*\to Y\sqcup\{\bot\}$，非法字一律取 $\bot$。令
+
+$$
+w\equiv w'\quad\Longleftrightarrow\quad
+\forall v\in\Sigma^*,\ \widetilde q(wv)=\widetilde q(w'v).
+$$
+
+在 Myhill–Nerode 的未来不可区分原理中取多值输出，便得到这里的确定观察者。关系右稳定，因为对任意 $g$，测试 $(wg)v$ 就是测试 $w(gv)$。因此商载体是全部 $\Sigma^*/{\equiv}$，更新 $[w]\mapsto[wg]$ 与输出 $[w]\mapsto\widetilde q(w)$ 良定义。载体不能只取 $L$ 而仍宣称每个 $g$ 给总更新。非法字的任意延拓仍非法，由前缀闭性可知它们属于同一个吸收类。
+
+若某确定内部状态 $m(w)$ 经当前状态解码能精确保留每个未来输出，则 $m(w)=m(w')$ 使任意共同后缀后的状态仍相同，因而 $w\equiv w'$。这给最小性，而不承诺商必有限。精确输出无界合法字长时，选取长度两两不同的合法词，其当前输出已经两两不同，所以有限状态观察者不可能完成该任务；若任务域含长度 $0,\ldots,N$ 且须区分它们，至少需要 $N+1$ 个状态及 $\lceil\log_2(N+1)\rceil$ 位。给观察者一个外部时钟、可读日志或未计入的接口会改变状态模型；这些信息必须与 $m$ 一起计算。这里使用 Kozen 的 Myhill–Nerode 论证，不把该最小性改称新的自动机定理。
+

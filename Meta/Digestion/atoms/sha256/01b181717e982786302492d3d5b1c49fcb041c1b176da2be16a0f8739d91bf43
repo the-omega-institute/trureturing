@@ -1,0 +1,35 @@
+### 定理 4.2（十三基输入决定已分类响应的全域误差）
+
+有精确公式与锐界
+
+$$
+\boxed{\Delta=\max_{j\in J}\operatorname{TV}(G(e_j),\delta_j)
+              =t-\min_{j\in J}d_j,}
+ \tag{2}
+$$
+
+$$
+\boxed{\frac{12}{13}t\le\Delta\le t.}
+ \tag{3}
+$$
+
+**证明。**
+
+$q(\psi)$遍历合法十三标签的概率单纯形，因为可取$\psi=\sum_j\sqrt{p_j}e_j$实现任意概率向量$p$。
+故目标为凸函数$p\mapsto\frac12\|d-tp\|_1$在该单纯形上的最大值。
+任意$p=\sum_jp_j\delta_j$，凸性给该值不超过各顶点值的最大值；顶点本身可取。
+在顶点$j$，用$0\le d_j\le t$和$\sum_wd_w=t$得
+
+$$
+\frac12\|d-t\delta_j\|_1
+ =\frac12\left(t-d_j+\sum_{w\ne j}d_w\right)=t-d_j.
+$$
+
+这证明精确式。又合法标签上的最小$d_j$不超过$t/13$，给下界；
+非负性给上界。
+将全部$t$均匀分配到合法标签达到下界；
+使任一合法$d_j=0$达到上界。非法标签的质量在证明中始终计入。
+
+∎
+
+<a id="cor:goldmass"></a><a id="eq:goldmass"></a><a id="eq:goldinterval"></a>

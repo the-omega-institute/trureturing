@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:773da597fa1025b7c303ed907ddec9b0228b63b589af9b945a427f822df92c8f
+  normalized_sha256: sha256:773da597fa1025b7c303ed907ddec9b0228b63b589af9b945a427f822df92c8f
+cas_ref: sha256:773da597fa1025b7c303ed907ddec9b0228b63b589af9b945a427f822df92c8f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Fixes the stabilized input-test convention and terminal decoder permissions and gives bibliographic context; no comparison inequality or recovery value is asserted.
+    previous_atom_id: 9ad05e6c91f5f629d0002b73b9b2527aa605be7c6977561c519c243cff881461
+    next_atom_id: ffe68f9ce736a1b1ac1a48d2e613aebf78da4ce197112a5cf84dceb8059b7e21

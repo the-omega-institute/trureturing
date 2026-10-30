@@ -1,0 +1,16 @@
+**Definition 121.1 (notation for the weighted comparison).** Retain the complete domain and the actual quantities of (U.1), including both squared traces in $\tau$. In Sections 121–129 use
+
+$$
+\begin{gathered}
+\alpha=\sqrt p,\quad\beta=\sqrt q,\quad g=\sqrt{pq},\quad h=\alpha+\beta,
+\quad Q=V^TV=G,\\
+A=D(I_4-VV^T)D=F_{\text{(U.1)}},\quad
+B=\sqrt P(I_2-Q)\sqrt P,\quad\lambda=\lambda_{\min}(B),\\
+H=\operatorname{Tr}(DVV^T)=\sum_{i=0}^1\operatorname{Tr}(V_i^T\sqrt P V_i),
+\qquad Z=H+\frac{4\tau}{h},\qquad S=\mathcal S=N^2+\frac R4.
+\end{gathered}
+\tag{U.62}
+$$
+
+The local letter $\beta=\sqrt q$ is unrelated to the fixed physical half-beta parameter in Definition 109.2. In particular $R=1-\lambda-\tau$ and $\Theta=N+\sqrt R/2$ always use this same $P,V$. Congruence gives $0\preceq B\preceq P$, hence $0\leq\lambda\leq q$. Proposition 109.3 proves $R\geq0$ throughout this domain by its attained one-row projected-norm representation. Thus nonnegativity of $R$ is a consequence of the common domain, including singular $P$, rather than an extra independently chosen residual constraint. Unrestricted rank here means exactly $\operatorname{rank}V\in\{0,1,2\}$ in the fixed real $4\times2$ dimensions.
+

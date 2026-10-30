@@ -30,6 +30,8 @@ internal sealed class AbsoluteReciprocalSquareShiftParityDocument : IScribeDocum
                 + "integer generatingSeries from StripThreeTernaryCatalanParity. "
                 + "The map pi is Int.castRingHom(ZMod(2)); map(pi,B) applies it to "
                 + "each coefficient. The operator expand(2,B) substitutes X^2 for X.")),
+            Node("reduced_cubic", "The cubic equation modulo two", PublishedReducedCubic(),
+                "The reduction of generatingSeries modulo two satisfies its cubic equation."),
             Node("a", "The stabilized coefficient sequence", SequenceFormula(),
                 "Multiplication by X makes the reciprocal-square step increase "
                 + "coefficient agreement by one degree. The diagonal coefficients "
@@ -172,5 +174,11 @@ internal sealed class AbsoluteReciprocalSquareShiftParityDocument : IScribeDocum
         return Disp(Seq(Bound("n", Naturals()), Implication(Seq(D(1), Sp, Le, Sp, n),
             Equal(new Formula.Modulo(Call("a", n), D(2)),
                 new Formula.Modulo(Call("int", Quotient(top, n, top)), D(2))))));
+    }
+    private static Formula PublishedReducedCubic()
+    {
+        var hom = new Formula.Apply(Seq(Named("Int"), Dot, Named("castRingHom")), [Call("ZMod", D(2))]);
+        var f = Call("map", hom, Named("generatingSeries"));
+        return Disp(Equal(Power(Parenthesized(f), D(3)), Add(Power(Parenthesized(f), D(2)), F.Id("X"))));
     }
 }

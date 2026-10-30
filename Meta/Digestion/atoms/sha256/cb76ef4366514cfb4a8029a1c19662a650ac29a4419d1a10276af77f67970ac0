@@ -1,0 +1,40 @@
+**Definition 24.1 (actual-width and simultaneous resource model).**
+Use Definition 13.2's literal codec for every run above.
+An enabled digital Read$(j,p)$ has request length
+$7+2\ell(|j|)+2\ell(p)$ and integer-reply length $5+2\ell(|k|)$.
+An exact Read has request length $5+2\ell(|j|)$ and rational-reply
+length $3+\rho(q)$. A successful raw growth at address $a$ pays
+$4|a|+9$ request/reply payload bits. C pays its real inner and
+outward growth channels and actual inner Tick separately; AD and
+raw block A do not acquire this adapter.
+
+Sum these lengths over the actual selected schedule, with every
+End, local acknowledgement, Return/navigation, dispatch, fresh
+reference/grant transfer, provider input, copy, clearing and requested
+export added. Precision sums in §17 are not binary precision-code
+traffic. On the nonnegative unit-history runs a safe reply bound is
+$2p+9$ also at $p=0$; for $p\ge1$, $2p+7$ suffices by
+Proposition 13.4. Arbitrary rational C entrances and later Adds use
+their actual signed integer lengths, without that unit-field bound.
+
+Let $W$ be the largest actual numerator, denominator, integer, counter,
+solver or digitizer width over the chosen finite run, including
+intermediates. Rational-operation counts multiply by the chosen
+exact arithmetic/reduction cost $\mathcal A(W)$; numerical slots
+multiply by their actual widths. Add all digitization, frame,
+address, allocation and copy work. No source-width bound is silently
+a bound on elimination intermediates or arbitrary input numerators.
+
+Simultaneous material includes the actual tree, links and grants;
+old/new field Tick buffers; genuine root/dispatch/return/input/output
+and provider bindings; finite installed code; earned term, ordinal/
+material maps and roster; actual raw and nominal acquisition arrays
+when both live; reconstructed old/current fields, present predictions,
+$O,D$, inverse/forcing/solve scratch; changing reverse syntax, gap/
+block/word records and selector state; parser/pending/request/target/
+sealed-reply/adapter stores; producer ingress and pulse records;
+every live copy, exported or isolated archive, and cleared retained
+arena capacity. Genuine sharing counts once; distinct simultaneous
+copies count separately. Clearing pays writes and removes access,
+without retrospectively removing constructed capacity.
+

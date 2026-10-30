@@ -29,3 +29,6 @@ This result is algebraic and kernel-checked. Corrected normal-word locality, sou
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeHalfFockPhysicalLocality.charged_coefficient_physical_locality`
+- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockClearedKernel](LatticeHalfFockClearedKernel.md)
+- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockGroundProducts](LatticeHalfFockGroundProducts.md)
+- Dependency: [D5/S3/VertexAlgebra/LatticeHalfFockOrderedProducts](LatticeHalfFockOrderedProducts.md)

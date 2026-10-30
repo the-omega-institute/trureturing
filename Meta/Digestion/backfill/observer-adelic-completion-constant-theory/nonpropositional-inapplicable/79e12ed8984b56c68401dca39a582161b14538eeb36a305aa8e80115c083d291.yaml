@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:79e12ed8984b56c68401dca39a582161b14538eeb36a305aa8e80115c083d291
+  normalized_sha256: sha256:79e12ed8984b56c68401dca39a582161b14538eeb36a305aa8e80115c083d291
+cas_ref: sha256:79e12ed8984b56c68401dca39a582161b14538eeb36a305aa8e80115c083d291
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：明确列出迁移到 RH 证明仍须补证的桥，并说明本节没有该桥；不是宣称桥成立。
+    previous_atom_id: af53ade9ca08c54c5409c34e829491d2adfdeb949e2c11e59d68beb0d7d8470a
+    next_atom_id: dfc5cb1b7af8bc10102f899245cb5c8fe59c0f8fbc04b7f3d2f50aa0061c9644

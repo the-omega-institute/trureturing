@@ -45,6 +45,15 @@ internal sealed class CubicFifteenSubstitutionParityDocument : IScribeDocumentDe
                 + "u and v with zero constant coefficients satisfy "
                 + "(u-v)(1+u+v)=0. The second factor has constant coefficient one, "
                 + "so absence of zero divisors forces u=v. Here C denotes powerTwoSeries."),
+            Node("power_two_one", "The power-of-two series has linear coefficient one",
+                Disp(Equal(Call("coeff", D(1), PowerTwo()), D(1))),
+                "One is the zeroth power of two, so the linear coefficient is one."),
+            Node("agree_iff", "Coefficient agreement as divisibility", PubAgreeIff(),
+                "Two series agree below degree n exactly when their difference is divisible by X to the power n."),
+            Node("agree_pow", "Powers preserve coefficient agreement", PubAgreePow(),
+                "Divisibility of a difference implies divisibility of the corresponding power difference."),
+            Node("agree_subst_order", "Substitution with a prescribed order", PubAgreeSubstitution(),
+                "Outer agreement below n and inner divisibility by X to the power d imply agreement of the substitutions below m whenever m is at most d times n and the two inner series agree below m."),
             Node("power_two_zero", "The power-of-two series has zero constant coefficient", PowerTwoZeroFormula(),
                 "Zero is not a power of two, so the constant coefficient of powerTwoSeries vanishes."),
             Node("generatingSeries", "The normalized integer solution", GeneratingFormula(),
@@ -159,4 +168,35 @@ internal sealed class CubicFifteenSubstitutionParityDocument : IScribeDocumentDe
     private static Formula PowerTwoZeroFormula() =>
         Disp(Equal(Call("constantCoeff", PowerTwo()), D(0)));
 
+
+    private static Formula PubV(string name) => F.Id(name);
+    private static Formula PubSeries() => Call("PowerSeries", PubV("R"));
+    private static Formula PubAll(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, PubV(name), Colon, Sp, type, Comma, Sp, body);
+    private static Formula PubRel(Formula a, Formula op, Formula b) => Seq(a, Sp, op, Sp, b);
+    private static Formula PubImp(Formula a, Formula b) => Seq(Parenthesized(a), Sp, Implies, Sp, Parenthesized(b));
+    private static Formula PubEq(Formula a, Formula b) => PubRel(a, Eq, b);
+    private static Formula PubRing(Formula body) => PubAll("R", Named("Type"),
+        Seq(OpenBracket, Call("CommRing", PubV("R")), CloseBracket, Comma, Sp, body));
+    private static Formula PubAgree(Formula n, Formula f, Formula g) => PubAll("k", Naturals(),
+        PubImp(PubRel(PubV("k"), Lt, n), PubEq(Call("coeff", PubV("k"), f), Call("coeff", PubV("k"), g))));
+    private static Formula PubFG(Formula body) => PubAll("f", PubSeries(), PubAll("g", PubSeries(), body));
+    private static Formula PubAgreeIff() => Disp(PubRing(PubAll("n", Naturals(), PubFG(
+        Seq(Parenthesized(PubAgree(PubV("n"), PubV("f"), PubV("g"))), Sp, Iff, Sp,
+            Parenthesized(PubRel(Power(X(), PubV("n")), Mid,
+                new Formula.Binary(PubV("f"), FormulaBinaryOperator.Subtract, PubV("g")))))))));
+    private static Formula PubAgreePow() => Disp(PubRing(PubAll("n", Naturals(), PubFG(
+        PubImp(PubAgree(PubV("n"), PubV("f"), PubV("g")), PubAll("j", Naturals(),
+            PubAgree(PubV("n"), Power(PubV("f"), PubV("j")), Power(PubV("g"), PubV("j")))))))));
+    private static Formula PubAgreeSubstitution() => Disp(PubRing(PubAll("n", Naturals(),
+        PubAll("m", Naturals(), PubAll("d", Naturals(), PubFG(PubAll("u", PubSeries(), PubAll("v", PubSeries(),
+            PubImp(PubEq(Call("constantCoeff", PubV("u")), D(0)),
+            PubImp(PubEq(Call("constantCoeff", PubV("v")), D(0)),
+            PubImp(PubRel(Power(X(), PubV("d")), Mid, PubV("u")),
+            PubImp(PubRel(Power(X(), PubV("d")), Mid, PubV("v")),
+            PubImp(PubRel(PubV("m"), Le, Mul(PubV("d"), PubV("n"))),
+            PubImp(PubAgree(PubV("n"), PubV("f"), PubV("g")),
+            PubImp(PubAgree(PubV("m"), PubV("u"), PubV("v")),
+                PubAgree(PubV("m"), new Formula.Apply(Seq(Named("PowerSeries"), Dot, Named("subst")), [PubV("u"), PubV("f")]),
+                    new Formula.Apply(Seq(Named("PowerSeries"), Dot, Named("subst")), [PubV("v"), PubV("g")])))))))))))))))));
 }

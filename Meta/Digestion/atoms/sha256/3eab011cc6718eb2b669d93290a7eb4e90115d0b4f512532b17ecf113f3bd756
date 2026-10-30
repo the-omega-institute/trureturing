@@ -1,0 +1,50 @@
+**Theorem 270.2 (exact address products and shallow discrepancies).**
+For fixed pairs $u=(c,z)$ and $u'=(d,y)$, define the finite increment
+vector $w$ by
+
+$$
+w_r=cy_r+dz_r+
+ \sum_{\substack{p,q\text{ comparable by prefix}\\
+                  \max_{\preceq}(p,q)=r}}z_py_q.
+\tag{270.3}
+$$
+
+Then, for every $n$, including $n=0,1$,
+
+$$
+f_{u,n}f_{u',n}=cd\mathbf1+J_nw,\qquad
+F_uF_{u'}=cd\mathbf1+Jw.
+\tag{270.4}
+$$
+
+If instead $F_u=F_{u'}$ in $L^2(M)$, and both increment supports have
+depth at most $h$, the corresponding finite fields agree on every
+actual node of depth at least $h$, but may differ on shallower nodes.
+With $D_{u,u'}=|c-d|+\sum_p|z_p-y_p|$,
+
+$$
+\|f_{u,n}-f_{u',n}\|_{L^2(\mu_n)}
+ \le D_{u,u'}\sqrt{\frac{2^h-1}{N_n}}\longrightarrow0.
+\tag{270.5}
+$$
+
+*Proof.* On each actual finite tree, the intersection of two descendant
+sets is empty for incomparable addresses and is the deeper descendant
+set otherwise. This is also the intersection rule for boundary
+cylinders, including $p=q$. Expanding the product proves (270.3)–(270.4)
+without using a partition identity at a finite branching node.
+For the second assertion, both boundary functions are constant on
+length-$h$ cylinders. Every such cylinder has positive $M$-mass, so
+almost-everywhere equality is equality on each of them. The finite
+value at depth at least $h$ is the value on its length-$h$ prefix
+cylinder. Thus only the at most $2^h-1$ shallower actual nodes can
+differ, each with mass $1/N_n$ and discrepancy at most $D_{u,u'}$.
+This proves (270.5).
+
+For example, $\chi_L+\chi_R=\mathbf1$ on the boundary, whereas
+$\chi_{n,L}+\chi_{n,R}=\mathbf1-\mathbf1_{\{\varnothing\}}$
+on every finite source. The discrepancy has norm $N_n^{-1/2}$;
+for the two singleton sources its value is the entire constant one.
+These are retained actual root values, not an exact finite partition
+of the source into its two child cylinders. $\square$
+

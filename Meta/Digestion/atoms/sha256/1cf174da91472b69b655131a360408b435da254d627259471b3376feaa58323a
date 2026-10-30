@@ -1,0 +1,13 @@
+**Definition 4.1 (a complete common-entry window).** Fix one retained
+$(P,L,d)$, same actual root and entry resources as in §1. Let public
+integers $A,H$ satisfy $n_0\le A\le H$, and allow every cut
+$n\in[A,H]$. Put $N=H-A+1$ and
+$q=\lceil\log_2N\rceil$. Competitors may perform arbitrary finite
+adaptive local work and arbitrary paid physical-word presence queries,
+but no source update or extra observation. They must identify $n$
+exactly and terminate on every cut of the window. Fixed-entry resources
+are the same at all these cuts. Define $Q_*$ and $M_*$ as the minima
+of worst-case Read count and peak literal length respectively; set the
+peak and traffic of a no-query execution to zero. Define $W_*$ as the
+minimum worst-case sum of submitted literal lengths.
+

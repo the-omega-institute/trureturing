@@ -1,0 +1,95 @@
+**Corollary 47.4 (Length generating function, spectrum, and growth).**
+For fixed $j$, the exact boundary counts have the rational length series
+
+$$
+\sum_{k\ge2}A_{k,j}w^{k-2}
+=u_j^{\mathsf T}H_j^2(I-wH_j^2)^{-1}u_j
+ -\sum_{k=2}^{j}\left(\sum_{q=0}^{j-k}
+ \binom{q+k-1}{k-1}^{\!2}\right)w^{k-2}.
+\tag{47.15}
+$$
+
+Let $N=2j-1$, and for $1\le\ell\le N$ put
+
+$$
+\theta_\ell=\frac{(2\ell-1)\pi}{2N+1},\qquad
+\lambda_\ell=\frac{(-1)^{\ell+1}}{2\sin(\theta_\ell/2)},\qquad
+w_\ell=\frac{\sin^2(j\theta_\ell)}{(2N+1)\sin^2(\theta_\ell/2)}.
+\tag{47.16}
+$$
+
+Then
+
+$$
+ A_{k,j}=\sum_{\ell=1}^{N}w_\ell\lambda_\ell^{\,2k-2}
+ -\sum_{q=0}^{j-k}\binom{q+k-1}{k-1}^{\!2}.
+\tag{47.17}
+$$
+
+The visible denominator of the first term in (47.15) is
+
+$$
+Q_N(w)=\det(I-wH_j^2)
+ =\sum_{r=0}^{N}(-1)^r\binom{N+r}{2r}w^r.
+\tag{47.18}
+$$
+
+No factor in (47.18) cancels in the boundary series: all $w_\ell>0$,
+so the least constant-coefficient recurrence for the infinite tail
+$k>j$ has order $N=2j-1$. For $j=1$, $A_{k,1}=1$. For
+$j\ge2$, with $\rho_\ell=\lambda_\ell^2$,
+
+$$
+0\le A_{k,j}-w_1\rho_1^{k-1}
+\le (j-w_1)\rho_2^{k-1}\quad(k>j),
+\qquad
+\frac{A_{k+1,j}}{A_{k,j}}\longrightarrow
+\rho_1=\left(2\sin\frac{\pi}{8j-2}\right)^{-2}.
+\tag{47.19}
+$$
+
+If all other branches are fixed and one eligible branch length $k>j$
+varies, write
+$C_j=\prod_{i<t}A_{k_i,j}$ and
+$E_j=\prod_{i<t}(A_{k_i,j}-\varepsilon_{k_i,j})$. Then
+
+$$
+M_j(k)=(C_j-E_j)A_{k,j}+E_j.
+\tag{47.20}
+$$
+
+Thus this layer is constant in $k$ when no other branch is eligible,
+and has ratio limit $\rho_1$ when at least one other branch is eligible.
+
+*Proof.* The finite correction in (47.15) is just the correction in
+Theorem 47.3, so the geometric matrix series gives the first identity.
+For the spectral form, take
+$v_\ell[x]=\cos((x-\tfrac12)\theta_\ell)$. The finite cosine sum gives
+
+$$
+(H_jv_\ell)[x]
+=\frac{\sin((N+1-x)\theta_\ell)}{2\sin(\theta_\ell/2)}
+=\lambda_\ell v_\ell[x],
+$$
+
+because $(N+\tfrac12)\theta_\ell=(2\ell-1)\pi/2$. Moreover
+$\|v_\ell\|^2=(2N+1)/4$ and
+$u_j^{\mathsf T}v_\ell=\sin(j\theta_\ell)/(2\sin(\theta_\ell/2))$,
+which proves (47.17) by orthogonal projection. For the general
+transfer-matrix, determinant, and rationality framework, see
+Bóna–Ju–Yoshida [BJY47] and Jiang–Yang–Zhong [JYZ47]. The
+trigonometric eigensystem and the boundary projection in
+(47.16)–(47.17) follow from the calculation above; the finite
+total-cap correction is supplied by Theorem 47.3.
+
+After reversing one index, the standard continuant for $H_j^2$ has
+$Q_0=1$, $Q_1=1-w$, and
+$Q_N=(2-w)Q_{N-1}-Q_{N-2}$. Induction gives the binomial expression
+(47.18). Since $\gcd(j,2N+1)=\gcd(j,4j-1)=1$,
+$\sin(j\theta_\ell)\ne0$: otherwise $2N+1$ would divide
+$(2\ell-1)j$, impossible for $1\le2\ell-1<2N+1$. The numbers
+$\rho_\ell$ are distinct and the weights sum to $\|u_j\|^2=j$,
+so every pole remains. The largest is $\rho_1$, and the remaining
+positive terms are bounded by $(j-w_1)\rho_2^{k-1}$, proving (47.19).
+Substitution of (47.19) into (47.8) gives (47.20). $\square$
+

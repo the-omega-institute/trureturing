@@ -4,7 +4,19 @@
 
 Integer exponent heights realize every unimodal coefficient ordering strictly.
 
-**Theorem 1.1 (Every unimodal permutation has a strict realization).**
+**Theorem 1.1 (A product of integer powers).**
+
+$$\forall I \in \operatorname{Type},\; \forall S \in \operatorname{Finset}\left(I\right),\; \forall b \in I \to \mathbb{Z},\; \forall T \in \mathbb{R},\; T \ne 0 \Rightarrow \prod_{i\in S} T^{b\left(i\right)} = T^{\sum_{i\in S} b\left(i\right)}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/RealRootedPermutations/Realization.product_zpow` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For a nonzero real base, multiplying integer powers over a finite set adds their exponents. This identity combines the individual site factors in the reciprocal-weight calculation.
+
+**Theorem 1.2 (Every unimodal permutation has a strict realization).**
 
 Lean statement: `D5/S3/Combinatorics/RealRootedPermutations/Realization.realize_strict`
 
@@ -24,5 +36,6 @@ Each subset product is positive and at most T^H(k), while the initial segment co
 
 ## References
 
+- Truth anchor: `D5/S3/Combinatorics/RealRootedPermutations/Realization.product_zpow`
 - Truth anchor: `D5/S3/Combinatorics/RealRootedPermutations/Realization.realize_strict`
 - Dependency: [D5/S3/Combinatorics/RealRootedPermutations/Defs](Defs.md)

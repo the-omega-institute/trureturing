@@ -1,0 +1,15 @@
+#### 定义 4.1（内部平方预测）
+
+对 $A=A^*$ 和经典记录预测 $X=\sum_hx_hP_h$，$x_h\in\mathbb{R}$，
+定义
+
+$$
+R_\rho(A,X)=\operatorname{Tr}\rho(A-X)^2,\qquad
+ \left\lVert A\right\rVert_\rho^2=\operatorname{Tr}\rho A^2.
+$$
+
+半内积取 $(A,B)_\rho=\operatorname{Re}\operatorname{Tr}\rho AB$；
+零范数方向按等价类处理。
+
+<a id="statement-4-2"></a>
+

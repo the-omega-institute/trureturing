@@ -1,0 +1,15 @@
+**Corollary 13.6 (Every sublinear moving-width first strip).** Let
+$W:\mathbb N\to[0,\infty)$ satisfy $W(a)/a\to0$. There is an integer
+$A_W$ such that for every integer $a\ge A_W$ and every integer $h\ge1$
+with $|h^2-2a|\le W(a)$, the value, attainment and exhaustive equality
+classification (13.18)--(13.20) hold.
+
+**Proof.** Eventually $W(a)\le a$, so every such pair satisfies
+$h^2\le3a$ and therefore $1\le h\le\sqrt3\sqrt a$. Apply Theorem 13.5
+with the one fixed ratio bound $R=\sqrt3<2\sqrt2$, and take the maximum
+of its threshold and the threshold for $W(a)\le a$. This covers all
+pairs at each sufficiently large $a$, not just a chosen sequence.
+No monotonicity, integrality or boundedness of $W$ is needed. In
+particular the assertion is not obtained by varying the constant
+$W$ inside Theorem 12.5. ∎
+

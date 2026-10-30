@@ -1,0 +1,36 @@
+**Theorem 47.2 (Fixed-width necessary identities and exclusion).** Every
+pair in (47.1) satisfies the two exact necessary identities
+
+$$
+\boxed{H_3(b)n_1n_2+TUH_2(b)(n_1+n_2)+UH_1(b)=0}
+\tag{47.3}
+$$
+
+and
+
+$$
+\boxed{3T H_2(b)(n_1-n_2)=5H_0(b)(d_1-d_2)}.
+\tag{47.4}
+$$
+
+Both distinctions
+
+$$
+d_1\ne d_2,\qquad n_1\ne n_2
+\tag{47.5}
+$$
+
+are consequences of (47.1), rather than extra hypotheses. The
+polynomial $F_{\rm w}$ has a unique positive real root $\rho$, with
+$2<\rho<3$. Every such pair has $b<\rho$; equivalently, no pair in
+(47.1) has common width $b\ge\rho$. Moreover
+
+$$
+(n_1-n_2)(d_1-d_2)<0.
+\tag{47.6}
+$$
+
+These are necessary conditions at equal widths. The bound $b<\rho$
+is not an existence assertion for any common width below $\rho$.
+The proof occupies Sections 48–52.
+

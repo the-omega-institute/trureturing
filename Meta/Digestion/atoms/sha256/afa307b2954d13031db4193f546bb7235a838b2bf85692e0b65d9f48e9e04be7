@@ -1,0 +1,32 @@
+**Definition 2.3 (Fine brackets for the two singular sources).** For
+the following integers $n_\sigma$ put
+
+$$
+J_\sigma=[n_\sigma/10^{45},(n_\sigma+1)/10^{45}].
+\tag{2.3}
+$$
+
+| $\sigma$ | $n_\sigma$ | Signs of $\Phi$ at the lower and upper endpoints |
+| --- | --- | --- |
+| $-$ | $134815875067638653367017716061081265110899687$ | $-,+$ |
+| $+$ | $902449681772056265377872651296542856186276499$ | $+,-$ |
+
+Each interval lies inside its corresponding designated interval in
+O (4.6). For $t\in J_\sigma$, $p\in K$, define in this order
+
+$$
+\begin{aligned}
+j(t)&=1/8+8t(1-t),&n(t)&=j(t)+t,\\
+A_5(t)&=1+(n(t)+5/4)(4+160/9-15/j(t)-10/n(t)),\\
+e(t,p)&=(p-24)/A_5(t),\\
+a_6(t)&=50-36/j(t)-20/n(t),\\
+s(t,p)&=24+24(5/2+n(t))
+        +e(t,p)\{1+(5/2+n(t))a_6(t)\}.
+\end{aligned}
+\tag{2.4}
+$$
+
+The positive $j,n$ and the nonzero $A_5$ guards in Lemma 2.4 precede
+their reciprocals. At $t=r_\sigma$, (2.4) is exactly O (29.1), since
+$T=9/8$ and $10+45/T=50$.
+

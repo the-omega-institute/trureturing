@@ -1,0 +1,21 @@
+**定理 29.8（端点精确未来与有限边界第一次返回）。** 定义 29.7 的
+$K_\infty$ 是有界自伴算子，$I\le K_\infty\le5I$，
+$\|e^{-tK_\infty}\|\le e^{-t}$。对每个 $s\ge0$，$sI+K_\infty$
+有有界逆，因此局部可积输入的零初态响应存在，且
+
+$$
+\begin{aligned}
+M_\infty(t)&=\langle e_1,e^{-tK_\infty}e_1\rangle,\\
+r(s)=R_\infty(s)&=\langle e_1,(sI+K_\infty)^{-1}e_1\rangle
+ =\frac{s+3-\sqrt{(s+3)^2-4}}2.
+\end{aligned}
+$$
+
+若 $F_0=0,F_1=1,F_{k+2}=F_{k+1}+F_k$，
+$\varphi=(1+\sqrt5)/2$，则有限响应及其极限满足
+
+$$
+R_n(0)=\frac{F_{2n}}{F_{2n+2}}\longrightarrow r(0)=\varphi^{-2},
+\qquad M_n(t)\uparrow M_\infty(t),\quad R_n(s)\uparrow r(s).
+$$
+

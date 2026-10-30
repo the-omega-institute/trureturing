@@ -1,0 +1,65 @@
+**Theorem 114.1 (sign-selected exact acquisition and performed use).**
+Let $\delta_i$ denote the $i$th standard coordinate vector of
+$\mathbb Q^k$, distinct from the material vectors in (103.3). Let $d<k$.
+From $R$ alone choose an ordered coordinate complement $J$ of size $k-d$
+as in Theorem 107.1, and let $j$ be its first index. Continue
+the actual prepared and cleared specimen as follows, with constant noisy
+scale 1 and with the commissioned service genuinely callable.
+
+1. Perform Tick;Hold. The actual field is $BH\theta$.
+2. Perform $\mathrm{Read}_+$ at the genuine fresh terminal $p_jR$.
+   Its actual reply is $Y=\theta_j/2+\xi$. Compute and retain
+   $\varepsilon=\mathbf1_{\{Y\ge0\}}$.
+3. For index $j$, perform $\mathrm{Read}_0$ at $p_jR$ if
+   $\varepsilon=0$, and at the moved inherited $p_jLLL$ if
+   $\varepsilon=1$. From its literal reply $z_j$ obtain
+   $\theta_j=2(1-2\varepsilon)z_j$. For each other $i\in J$, in the
+   fixed order, actually read $p_iR$ and obtain $\theta_i/2$.
+4. Solve with the genuinely retained $R\theta$, install the native
+   predictor at this actual $BH\theta$, and retain the sign until use.
+   This is the **readiness cut**. There have been exactly $k-d$ new
+   successful exact reads and one new noisy read.
+5. Compute $q=\theta_j/2+\varepsilon$, using the value acquired in
+   step 3 and the acquired sign. Actually submit
+   Add$(p_jLR,q)$;Hold and consume its complete acknowledgements and
+   return. Update the predictor to the actual successor. This is the
+   **used cut**, with no additional read.
+
+If a literal output/export of the new designated value is also owed,
+perform an additional $\mathrm{Read}_0(p_jLR)$; its reply is $q$.
+This is a third, separately charged cut. The used cut already includes
+a real legal native continuation; a numerical forecast or an unused
+ready predictor is not being counted as that continuation.
+
+**Proof.** All port and value identities are from (111.1), with the actual
+raw-label correspondence; no address creates authority. The complement
+makes $[R;(\delta_i^{\mathsf T})_{i\in J}]$ full rank, so the actual exact
+replies recover $\theta$ and Proposition 113.1 installs its current
+service. The noisy sign selects different actual exact ports even when
+$|J|=1$. Each sign has strictly positive probability for every rational
+$\theta_j$; its probability also varies with the source mean. Since
+$\delta_j^{\mathsf T}$ is outside the row space of $R$, this is a genuine
+source measurement along a missing coordinate, not independent free seed
+advice. The sign is actually used again in the submitted rational operand.
+The exact returned value is used in that operand too, including when the
+inherited port was selected.
+
+Let $f=p_jR$ and $g=p_jLR$. At readiness $x_f=\theta_j/2$ and $x_g=0$.
+After the performed Add the actual field is
+
+$$
+F=BH\theta+(\theta_j/2+\varepsilon)e_g
+  =G BH\theta+\varepsilon e_g,
+\qquad
+G=I+e_g e_f^{\mathsf T},\quad G^{-1}=I-e_g e_f^{\mathsf T}.
+\tag{114.1}
+$$
+
+Distinct $f,g$ make the rank-one part square to zero. All the fresh
+$p_iR$ coordinates remain $\theta_i/2$. Updating the retained predictor
+with this actual Add gives $F$, not $H\theta$ or the unmodified
+$BH\theta$. It therefore serves the original subsequent native menu
+at the used cut, by Theorem 64.1. The optional read really returns $q$.
+The matrix inverse in (114.1) is a coordinate inverse; it does not perform
+a physical undo or a return Tick. $\square$
+

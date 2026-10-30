@@ -1,0 +1,29 @@
+**Theorem 81.2 (exact selected persistent differences).** Compare the
+installed local layout of §§47–50 and this global layout at the same
+reachable endpoint, along the same successful LAB word and original
+request schedule, with each layout's own paid work. Their common source
+coordinates are $V,3V,V$. Their live history coordinates are
+
+| Selected coordinate | Local layout | Global layout | Local minus global |
+| --- | --- | --- | --- |
+| Headers | $h$ | $\eta$ | $h-\eta$ |
+| Bit/next cells | $B$ | $G$ | $B-G$ |
+| History data bits | $B$ | $G$ | $B-G$ |
+| Header/cell reference-field occurrences | $2h+B$ | $2\eta+G$ | $2(h-\eta)+(B-G)$ |
+
+Here $\eta=0$ if $h=0$ and $\eta=1$ otherwise. The exact widths and
+locations of these reference fields are charged on their respective
+runs; the last row is a field-occurrence difference, not a subtraction
+of physical reference bits at unequal widths. No total-runtime or
+peak-memory dominance follows.
+
+Proof. The supplied local material theorem 50.2 gives its $h$ headers
+and $B$ cells. Proposition 80.2 gives the global coordinates. The common
+source templates give the same actual endpoint source counts. Definition
+60.1 gives $F=1$ exactly when $h=0$; otherwise $F>1$. The table follows
+by subtraction. The supplied Corollary 60.4 gives $0\le B-G\le h-1$
+for $h\ge1$, and both vanish at $h=0$. Thus for $h=1$ the payloads and
+header counts coincide; for $h\ge2$ the header difference is exactly
+$h-1>0$, whether or not the payload rounding difference is positive.
+$\square$
+

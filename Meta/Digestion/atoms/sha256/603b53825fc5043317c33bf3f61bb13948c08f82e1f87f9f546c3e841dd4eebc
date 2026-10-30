@@ -1,0 +1,76 @@
+**Theorem 26.1 (The evaluated polynomial-secant continuation).**
+There is a real analytic map
+
+$$
+x(q)=(X(q),Y(q),K(q)),\qquad0\le q\le3/1250,
+\tag{26.1}
+$$
+
+with $H(x(q),q)=0$, lying within infinity distance $\rho$ of
+$\widehat x_i(q)$ for $q\in I_i$. It is unique in each corresponding
+radius-$2\rho$ tube. Analyticity on the closed interval means
+analyticity on a neighborhood of each of its points. This is a
+uniqueness assertion in the specified tubes, not an inventory of all
+zeros of the polynomial equations.
+
+The continuation is exactly the germ in Theorem 21.1 after changing
+its parameter to the squared half-separation of the two $b$ coordinates.
+
+*Proof.* For fixed $q\in I_i$ put $C(q)=J_i(\nu)^{-1}$.
+The determinant bound in (25.4) makes this inverse legitimate.
+Consider $T_q(x)=x-C(q)H(x,q)$ on the radius-$2\rho$ ball about
+$\widehat x_i(q)$. Its derivative at the center is zero. On the
+whole ball the fundamental theorem of calculus, (25.5), (25.7) and
+(25.8) give
+
+$$
+\|I-C(q)H_x(x,q)\|_\infty\le\lambda_i<1.
+\tag{26.2}
+$$
+
+The center displacement is at most $\eta_i$. By (25.9), $T_q$
+maps the closed radius-$\rho$ ball strictly inside itself. The Banach
+fixed-point theorem supplies a zero in its interior. Invertibility of
+$C(q)$ makes fixed points exactly zeros of $H$.
+The same derivative estimate implies uniqueness in the larger convex
+radius-$2\rho$ ball. It also makes $C(q)H_x$ invertible by the Neumann
+series, so the analytic implicit-function theorem applies at every zero.
+
+Within a cell, continuity of the predictor and local uniqueness identify
+these local analytic solutions. At a seam the predictor centers differ
+by at most $2\cdot10^{-55}<\rho$. A root in one radius-$\rho$ ball
+therefore lies in the other radius-$2\rho$ uniqueness ball. The two
+roots agree; the same local implicit-function theorem identifies their
+analytic extensions. This proves (26.1) on all twelve cells.
+
+It remains to identify the zero at $q=0$ with the supplied source,
+rather than merely a nearby rational point. Let $K_0$ be the exact
+source cube (19.1)–(19.2) and use the exact tangent coefficient $k_0$
+of (19.3). The interval $0.950504247445018<k_0<0.950504247445019$
+in (19.7) suffices. Direct interval substitution on this **whole** cube
+and tangent interval gives
+
+$$
+\left\|
+\left(\frac{r_0}{b_0},\ b_0,
+ \frac{b_0-r_0k_0}{b_0^2k_0}\right)
+ -\widehat x_0(0)\right\|_\infty<2\cdot10^{-14}<\rho.
+\tag{26.3}
+$$
+
+The only divisors here are the positive $b_0,k_0$ intervals.
+The rank-one differential in Section 19 gives $H=0$ at this exact
+triple and $q=0$. Uniqueness therefore identifies it with $x(0)$.
+The exact point is not replaced by the center of $K_0$.
+
+To identify the entire germ, let $s$ denote the old parameter $h$ in
+(21.1). Its signed $b$ half-separation is $h=s\,k(s)$, an odd analytic
+function with derivative $k_0>0$. It has a local odd analytic inverse.
+In the new $h$ parameter, take the midpoint of the two $t=r/b$
+coordinates as $X$, their $b$ midpoint as $Y$, and their $t$
+half-separation divided by $h$ as $K$. The last quotient has a removable
+analytic extension at zero. All three functions are even in $h$,
+hence analytic in $q=h^2$, and their initial values are exactly the
+triple in (26.3). Equal $p,v,a$ gives $H=0$. Local uniqueness now
+identifies this reparameterized supplied germ with (26.1). ∎
+

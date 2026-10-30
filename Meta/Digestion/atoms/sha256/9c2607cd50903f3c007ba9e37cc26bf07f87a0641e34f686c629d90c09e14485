@@ -1,0 +1,49 @@
+**Lemma 14.2 (Response formulas on the two actual singular lines).**
+Put
+
+$$
+D(n)=716n^2+31n-900,
+$$
+
+and, for $n>0$, put
+
+$$
+\begin{aligned}
+A(n)&=-\frac{D(n)}{144n},\\
+B(n)&=-\frac{142n^2+185n-400}{10n},\\
+C(n)&=-\frac{1448n^2+1011n-3150}{24n}.
+\end{aligned}
+\tag{14.3}
+$$
+
+On a singular line, $U=5/4$, and interpolation of the one whole gain
+at the original nodes gives
+
+$$
+\begin{aligned}
+g(5)&=e\left(\frac5n-\frac{179}{36}\right),\\
+g(6)&=24+e\left(\frac{16}{n}-\frac{71}{5}\right),\\
+g(7)&=\frac{384}{5}+e\left(\frac{35}{n}-\frac{181}{6}\right).
+\end{aligned}
+\tag{14.4}
+$$
+
+Consequently the three original responses are
+
+$$
+\begin{aligned}
+p&=24+eA(n),\\
+v&=84+24n+eB(n),\\
+m&=312+\frac{768}{5}n+eC(n).
+\end{aligned}
+\tag{14.5}
+$$
+
+Proof. On $\mathcal S$, Proposition 11.1 gives $b=1/8$, hence
+$T=9/8$, $U=5/4$, $j=1/8+8r-8r^2$, and
+$n=1/8+9r-8r^2$.  Equation (10.7) gives
+$g(4)=(-6-e)/U$; applying the fixed-node interpolation formula to the
+four values at $0,1,2,3$ gives (14.4).  Substitution into (1.10)
+gives (14.5).  No gain coefficient, gain sample, drift, or source
+factor is divided out. ∎
+

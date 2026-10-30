@@ -16,6 +16,9 @@ internal sealed class CartesianVarianceDocument : IScribeDocumentDefinition
         Formula var=Sub(ReF(Trace(Mul(rho,Parenthesized(cart)))),Apply(Qualified("Complex","normSq"),Trace(Mul(rho,a))));
         Formula pq=Pure(v);
         return DocumentDefinition.Create(ScribeNode.Create("A pure vector maximizes the Cartesian matrix variance.",H("Cartesian variance"),Blocks(
+            Item("density_nonempty", "Density matrices exist in positive dimension",
+                All([B("n",N)],Imp(Lt(Num(0),n),Ex([B("rho",Mat(n))],Density(rho)))),
+                "Every positive finite dimension has a positive semidefinite matrix of trace one."),
             Item("psd_entry_bound", "Positive semidefinite entry bound",
                 All([B("n",F.Id("Type"))], Seq(OpenBracket,Call("Fintype",n),CloseBracket,Sp,
                     OpenBracket,Call("DecidableEq",n),CloseBracket,Sp,Comma,Sp,
@@ -24,6 +27,11 @@ internal sealed class CartesianVarianceDocument : IScribeDocumentDefinition
                             LeqF(Apply(Qualified("Complex","normSq"),Apply(F.Id("P"),i,j)),
                                 Mul(ReF(Apply(F.Id("P"),i,i)),ReF(Apply(F.Id("P"),j,j)))))))),
                 "A two-by-two principal minor bounds each squared entry modulus by the product of its diagonal entries. The estimate bounds the entries of density matrices and controls positive semidefinite summands in the incoherent cone."),
+            Item("hermitian_spectral_sum", "Spectral expansion into rank-one matrices",
+                All([B("n",N),B("rho",Mat(n)),B("h",Apply(Qualified("Matrix","IsHermitian"),rho))],
+                    Eqn(rho,Sum("i",Fin(n),Smul(Call("eigenvalues",F.Id("h"),i),
+                        Pure(Call("eigenvectorBasis",F.Id("h"),i)))))),
+                "Every finite Hermitian complex matrix is the sum of its eigenvalues times the rank-one projections onto its orthonormal eigenvectors."),
             Item("density_eigenvalues_sum", "A density spectrum sums to one",
                 All([B("n",N),B("rho",Mat(n)),B("h",Density(rho))],
                     Eqn(Sum("i",Fin(n),Apply(

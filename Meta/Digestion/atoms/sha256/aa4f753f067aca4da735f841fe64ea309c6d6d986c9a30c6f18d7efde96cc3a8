@@ -1,0 +1,79 @@
+**Theorem 28.2 (off-wall unrestricted-CP necessity and sharpness).** Let
+$\mathcal S:M_5\to M_5$ be any fixed trace-nonincreasing CP success map with
+no phase-correlated accessible input.  Suppose that, for all $t\in\mathbb T^3$,
+
+$$
+ \mathcal S\bigl(|\psi_k(t)\rangle\langle\psi_k(t)|\bigr)
+ =s(t)\,|\psi_l(t;\Delta)\rangle\langle\psi_l(t;\Delta)|,
+ \qquad s(t)\ge0,                                      \tag{OC.87}
+$$
+
+where $\psi_l(t;\Delta)=U_\Delta\psi_l(t)$ and
+$U_\Delta=\operatorname{diag}(e^{-i\Delta_i})$ is the known prescribed
+intermediate phase increment.  Put
+
+$$
+ A_{lk}=\operatorname{diag}_i\sqrt{p_l{}_i/p_k{}_i},\qquad
+ \tau_* =\min_i p_k{}_i/p_l{}_i .                         \tag{OC.88}
+$$
+
+Then every Kraus operator $B_j$ of $\mathcal S$ is
+$B_j=c_jU_\Delta A_{lk}$ on all of $\mathbb C^5$, and
+
+$$
+ \mathcal S(R)=\tau\,U_\Delta A_{lk}R A_{lk}^{*}U_\Delta^{*},
+ \qquad \tau=\sum_j|c_j|^2,\qquad 0\le\tau\le\tau_* .   \tag{OC.89}
+$$
+
+Consequently $s(t)=\tau$ is constant.  Conversely, every
+$0\le\tau\le\tau_*$ is attained by the displayed successful Kraus operator
+$\sqrt\tau\,U_\Delta A_{lk}$ and the complementary failure operator
+$(I-\tau A_{lk}^{*}A_{lk})^{1/2}$.  If $k\ne l$, then $0<\tau_*<1$; if
+$k=l$, then $A_{lk}=I$ and $\tau_*=1$.
+
+The endpoint phase/holonomy of a returned rectangle is already implementable by
+known phase operations.  The new assertion is the unrestricted-CP necessity
+and the exact intermediate-cut correspondence, not an endpoint-only capability
+or a cost advantage.
+
+Chiribella--Yang,
+*Optimal energy-preserving conversions of quantum coherence*,
+arXiv:1502.00259v1 Corollary 2 and v5 Proposition 5, concern
+energy-preserving transformations and do not prove this unrestricted-CP
+necessity.
+
+**Proof.** Take a finite Kraus representation $\mathcal S(R)=\sum_jB_jRB_j^*$.
+The right side of (OC.87) has rank one.  Positivity therefore gives
+$B_j\psi_k(t)=\lambda_j(t)U_\Delta\psi_l(t)$ for every $j,t$, including
+zero-success points.  Set
+$C_j=A_{lk}^{-1}U_\Delta^*B_j$.  Since every entry of $p_k$ is positive,
+$A_{lk}$ is invertible and
+$C_j\psi_k(t)=\lambda_j(t)\psi_k(t)$.  The middle component is nonzero and
+independent of $t$, so $\lambda_j(t)$ is continuous.  It belongs to the
+finite spectrum of $C_j$; connectedness of $\mathbb T^3$ makes it a constant
+$c_j$.
+
+Write $z_1=e^{-ia},z_2=e^{-ib},z_3=e^{-ic}$.  Apart from fixed nonzero
+coefficients, the five components of $\psi_k(t)$ have the distinct characters
+$z_1z_2z_3^{-1},z_1,1,z_2,z_3$.  If a linear functional annihilates the whole
+family, multiplying its character expansion by each inverse character and
+integrating over the three circles makes every coefficient zero.  Hence the
+family spans $\mathbb C^5$, and $C_j=c_jI$; this proves the Kraus assertion.
+Summing the Kraus terms gives (OC.89).  Trace nonincrease is
+$\tau A_{lk}^{*}A_{lk}\le I$, exactly the bound in (OC.88).  The single
+Kraus construction is therefore sufficient and its complement makes a
+complete binary instrument.  Equality of the sums of the two probability
+vectors shows that $\tau_*<1$ when $k\ne l$: otherwise every
+$p_k{}_i\ge p_l{}_i$, forcing equality coordinatewise and hence $k=l$.
+
+For a retained successful dilation, purify the fixed helper and expand the
+success output in an orthonormal backing basis.  Each system component obeys
+the preceding argument, so the successful state factors as
+$U_\Delta\psi_l(t)\otimes\xi$ with a fixed positive backing state
+(independent of $t$), up to its total weight $\tau$.  Thus a successful flag,
+record, or coherent controller output is not a recovered phase, winding,
+original history, or substitute for the live specimen.  Tensoring every branch
+with $I_R$ proves the same correspondence for any passive reference.  An
+adaptive finite accepted event is already one CP success map, so it cannot
+exceed (OC.88).  $\square$
+

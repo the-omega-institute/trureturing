@@ -6,41 +6,13 @@
 
 在仓库根目录运行；`<…>` 换成实际值。完整参数以 `make help`、`make -C tools help` 和脚本用法为准；有 make 目标就用目标（第 8.1 条），长任务用宿主后台作业（第 8.6 条）。
 
-| 用途 | 命令 |
-|---|---|
-| 创建会话 worktree（已有则复用） | `make worktree KIND=<kind> NAME=<任务码> DEST=../trureturing-<session-id>` |
-| 编译指定 Lean 模块及依赖 | `make lean LEAN_TARGETS="<点分模块名>"`（省略 `LEAN_TARGETS` 为全项目） |
-| 核对指定 Lean 模块、utility 输入及 imports / 发射所选 Scribe | `make lean-report-scoped LEAN_TARGETS="<点分模块名>"` / `make emit [PATHS=<NUL分隔路径文件>]` |
-| 显式整库 Lean 报告（CI / 整库核验） | `make lean-report` |
-| 摄入指定理论源 | `make ingest SOURCE="<source-id 或源文件路径>"` |
-| 查看 atom / 连读上下文 | `make show-atom ATOM_ID=<id>` / `make atom-context ATOM_ID=<id>` |
-| 搜索指定理论的 atom | `make search-atoms SOURCE=<源ID或理论路径> [TEXT=<关键词>] [STATE=<目录状态>] [LIMIT=<上限>]` |
-| 构建、冻结并覆盖锚点 atom | `make deposit ATOM_ID=<id> GID=<gid>` |
-| 构建并冻结无 atom 的形式化 | `make deposit-uncovered GID=<gid>` |
-| 用既有冻结声明覆盖 atom | `make cover ATOM_ID=<id> GID=<gid>`；批量用 `make cover-batch ATOMS=<TSV文件>` |
-| 预览 atom 子句拆分 | `make decompose ATOM_ID=<id> DRY_RUN=1` |
-| 按请求结算 atom（先连读上下文） | `make settle REQUEST=<请求文件>`（适用范围见第 3.2 条） |
-| 快速 .NET 结构检查 | `make -C tools check-fast`（不验证 Lean 或完整准入） |
-| 基线到当前工作树的完整增量检查 | `make gate BASE=<40位commit-SHA>` |
-| .NET 构建 / 全量测试 | `make -C tools dotnet` / `make -C tools test` |
-| 数学门 / 本地 CI 准入流程 | `make test` / `make gate` |
-| 建 PR | `make pr HEAD=<分支> MESSAGE=<消息文件>`（首行为标题；默认自动合并并等 required CI；`AUTO_MERGE=0` 关闭自动合并；`DRAFT=1` 创建草稿后直接返回；`pr-open` 同义） |
-| 等指定 PR 提交的 CI | `make pr-watch PR=<编号> HEAD_SHA=<40位commit-SHA>` |
-| 预览可回收 worktree | `make -C tools clean-lanes`（加 `FORCE=1` 执行；已合并到 dev、干净且满 3 小时无 Git 更新可回收；未合并或不干净的须同时满 24 小时无 Git 更新及落后 BASE 300 提交；未知保留，删除按锁时长与身份核验） |
-| 清理本任务完成后的 worktree | `make worktree-remove NAMES="<目录名>"`（第 6.1 条） |
-| 磁盘可用空间低于 5% 时回收 | `make -C tools clean-all FORCE=1`（AI 可直接执行，第 6.1 条） |
+**Python 版本**：仓库脚本及构建、测试、gate 使用 **Python 3.12 或更新版本**。执行前用 `python3 -c 'import sys; assert sys.version_info >= (3, 12), sys.version; import tomllib; print(sys.executable, sys.version)'` 核对实际解释器。版本不符时，先选择已安装的合规 Python，将其 `python3` 所在目录放在本次命令的 `PATH` 最前，并让 Make、Shell、Lean 子进程继承该环境；macOS 可使用 Homebrew 安装或升级的 Python。本条为 agent 执行约定，自动版本检查以现役脚本为准。
 
-常用独立脚本（以下 `bash tools/scripts/agent/…` 均在仓库根运行）：
+仓库修改先复用兼容 linked worktree，需隔离时创建；只读与 issue 操作复用现有检出（第 6.1 条）。常用命令速查表见 SPEC §11.28（CLAUDE.md 常用命令速查）。
 
-| 用途 | 命令 |
-|---|---|
-| 查指定修订的工具文件 / 目录容量余量 | `bash tools/scripts/agent/headroom.sh HEAD` |
-| 提取定理前的节级假设 | `bash tools/scripts/agent/section-context.sh <源文件.md> <定理号>` |
-| Nyx 提问(oracle broker 单次流式调用) | `python3 tools/scripts/agent/nyx/nyx.py ask <brief文件> <输出文件>` |
-| 查看 Nyx 可用池 | `python3 tools/scripts/agent/nyx/nyx.py pools` |
-| 抓取网页或 PDF(可选 NyxID Firecrawl；文献读取路线见第 5.11 条) | `nyxid proxy request api-firecrawl v1/scrape -m POST -H "Content-Type:application/json" -d '{"url":"<地址>","formats":["markdown"]}' --output json` |
+常用独立脚本速查见 SPEC §11.28（CLAUDE.md 常用独立脚本）；其中 `bash tools/scripts/agent/…` 均在仓库根运行。
 
-**Nyx 调用禁令**：禁止执行旧 `nyxid oracle` CLI 及其子命令，包括脚本封装、sshx 席位和失败回退中的间接调用。独立提问统一用上述 `nyx.py ask`，sshx 的 oracle 席统一用其 broker runner；具体契约见第 5.11 条。
+
 
 ## 1. 权威、本体与不可逆真值 DAG
 
@@ -64,7 +36,7 @@
 
 本款优先于第 5.6、5.7 条与第 6.1 条对独立评审的要求。只要交付新增或首冻 D5 声明，就是实质形式化，判形、准入、探针、冻结前判形与三席评审照旧。
 
-**形式化直接写 Lean 与 Scribe。** 形式化交付的必需面是 D5 Lean 与对应的 Blueprint Scribe，不以理论卷或摄入为前置。开工前用 `make show-atom`/`make atom-context` 查所处理内容是否已有 atom：已有就在同一交付中经 `make deposit ATOM_ID=… GID=…` 冻结并覆盖，或对既有冻结声明 `make cover`；尚无 atom 时直接写 D5 Lean 与 Scribe，经 `make deposit-uncovered GID=…` 冻结，不要求先补 `docs/develop/theory/**` 正文或运行 `make ingest`。理论卷可按第 3.8 条另写，用于散文推理、地形图或日后消化，不是形式化的前置。无 atom 不豁免第 3.2 条判形与准入依据、第 3.3 条用途规则及第 3.7 条文献表态。
+**形式化直接写 Lean 与 Scribe。** 形式化交付的必需面是 D5 Lean 与对应的 Blueprint Scribe，不以先写理论卷为前置。所形式化的内容**已有理论卷**(`docs/develop/theory/**` 中存在对应 markdown)时，必须经消化系统入链：该卷尚未摄入就先 `make ingest`，再用 `make show-atom`/`make atom-context` 定位对应 atom，在同一交付中经 `make deposit ATOM_ID=… GID=…` 冻结并覆盖，或对既有冻结声明 `make cover`；不得绕过已有理论卷直接 `deposit-uncovered`。**只有不存在对应理论卷**时，才直接写 D5 Lean 与 Scribe，经 `make deposit-uncovered GID=…` 冻结，不要求先补 `docs/develop/theory/**` 正文或运行 `make ingest`。理论卷可按第 3.8 条另写，用于散文推理、地形图或日后消化，不是这类形式化的前置。无 atom 不豁免第 3.2 条判形与准入依据、第 3.3 条用途规则及第 3.7 条文献表态。
 **形式化不改判官**(τ=0 owner 2026-09-29,原话「形式化过程中, 不要改判官, 如果信息逃逸无法登记也不要改判官」):形式化 lane 与形式化交付只改内容面(D5、Blueprint、Reg 声明源码与内容模板、消化账本、理论卷),不得修改判官——`tools/**`(含 StrataLint、lean-inspector、报告生成与调度脚本)、判官 Interface/Impl 包、`.github/**` 及其它准入面。判官缺陷或判官阻塞形式化时,新建或复用 issue 写明阻塞判词与读数,继续其余数学工作;判官修复归判官所有者线,不在形式化交付中夹带。本款对形式化 lane 优先于第 5.5 条的当场 hotfix 要求。
 〔守护：**工作优先级与软纪律**；本条不把消化收据升级为证明，也不宣称既有机器检查已随文字修改。〕
 
@@ -76,8 +48,7 @@ docs/theory(参考输入)──(可选)摄入机器──► Lean(唯一真源)�
 ```
 
 - **Lean**:真值=声明+证明项+axiom 闭包,注释零参与。X_Frontier 的 `TASK D5-Tnnnn` 是冻结门与目标处理命令读取的治理地址;其余工单散文非数学承重。SL-013 为 deferred `NoFindings`,不执法散文形状。
-- **C# harness**:程序集只许程序(类型/逻辑/loader/writer);声明性实例住程序目录外(TOML/scribe.cs/Evidence/D5)或测试 fixture(第 4.2 条)。
-- **docs/theory**:理论卷是参考输入；需要进入消化账本时，经 atomizer+消化账本摄入，Lean/C# 对其零知识零定位(TheoryIsolation)。新增理论 PR 可以只提交正文，不以 `make ingest`、atom CAS 或 backfill 作为合并前置；形式化交付也不以理论卷或摄入为前置(第 1.2 条「形式化直接写 Lean 与 Scribe」)；卷与 atoms 不删属建设者纪律。已形式化者不重复形式化,勘误追加散文与新 atom。只增不减的账本是 git,机器只保证数据当下正确,改删历史由 git 查证,无历史单调判官。实现层无既有 CAS blob 删除面;失败回滚只删本次新建且尚未入账的 blob。
+- **docs/theory**:理论卷是参考输入；需要进入消化账本时，经 atomizer+消化账本摄入，Lean/C# 对其零知识零定位(TheoryIsolation)。新增理论 PR 可以只提交正文，不以 `make ingest`、atom CAS 或 backfill 作为合并前置；形式化交付不以先写理论卷为前置，但内容已有理论卷时须先摄入并经 deposit/cover 入链(第 1.2 条「形式化直接写 Lean 与 Scribe」)；卷与 atoms 不删属建设者纪律。已形式化者不重复形式化,勘误追加散文与新 atom。只增不减的账本是 git,机器只保证数据当下正确,改删历史由 git 查证,无历史单调判官。实现层无既有 CAS blob 删除面;失败回滚只删本次新建且尚未入账的 blob。
 
 ### 1.3 真值图、冻结与两个偏序
 
@@ -242,14 +213,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 
 **用途样本(仅限 2026-09-05 采样)**:全库读数来自 dev `a030e0dc6e`;枚举族/反例/证书三行在 `5aa818b070` 复算一致(该树全库 3361 模块/512,850 行)。五坐标不外推为当前全库保证:
 
-| 样本 | 模块 | 行数 | 有下游 import | 闭合 atom | 两者皆无 |
-| --- | --- | --- | --- | --- | --- |
-| 全库 D5 | 3360 | 512,608 | 45% | 58% | 19% |
-| 枚举族(S0/Tower 周期 6–12) | 80 | 31,971 | 96%(族内互引) | 1% | 2% |
-| 反例 | 23 | 2,913 | 13% | 83% | 13% |
-| 数值证书(去概念桶) | 27 | 3,523 | 33% | 56% | 26% |
-同窗口枚举族 78 模块有 import 或 coverage,77 有 importer,仅 5 有族外 importer(被 6 模块引);4 个数学消费者只用周期 ≤5 底层生成器(`ASSUMED-UNVERIFIED`:未复算声明闭包)。周期 6–12 塔只汇入两个子句打包模块各闭 1 atom,源句报告枚举本身。3 个反例模块两类边皆无,故按边数设用途门会误判。`TribonacciPermanentSurvivors` 声明枚举未用于一般定理。`LeanCacheBudgetPolicy.cs` 注 S0/Tower 81 模块 6305 s@ARM、最贵单子图 1656 s;与本表 80 模块集合是否相同未核对,`ASSUMED-UNVERIFIED`。
-**同窗口的未履行用途**:LRAT 链至 `GoldenDFAOMinimalityTargets` M07–M16 均是假设 `refutation` 的条件定理,仓内 `lrat_proof`/`.lrat`/`.cnf` 皆 0;`FiniteExhaustion`→`FiniteBranchAtlas` 无 importer/coverage/具体实例。`germ_zero_of_center_jet` 三前提仅曲率由 `g60_curvature_le_118` 履行,值界缺,导数只到 g 1(阈值 1 非 1.87),唯一应用仍带假设。`DedekindBhkCertificates` 四实例零引用而定义被用;7 个数值证书无 importer/coverage(详 #5515)。
+用途样本表、同窗口读数与未履行用途读数见 SPEC §11.28（CLAUDE.md §3.5）。
 **仍有用的区别**:`GapEndpoints` 两枚举器周期九相差的 3 词正是 gap 边界周期 3 环;保留探针发现及其证明链,无需保留整塔。既有 `clause_depth_sixty_claim_is_false` 是一般定理在 60 的实例化,仍判 bind-only;新同形 atom 走消化,反驳用途不豁免包装禁令。
 **黎曼路线样本(2026-09-04,增订二十五至二十九 W-10…W-21)**:W-12 阿基米德可积性提供主要分析逃逸。W-14/W-15 的 `exists_supportRadius`、W-18 的 `activePrimePowers_eq_empty_of_exp_lt_two` 须按第 3.2 条四项检查见证,不能使其 bind-only 主声明取得资格;W-10/11/13/16/17/19/20/21 是去假设化、投影、存在见证绑定或冻结 iff 复合,亦为 bind-only。既有冻结保留,同形新增直接消化,同模块 content helper 不豁免。席位空闲不得在边际收益触底后继续派同形任务。
 *成熟锚*:旧数据可推出的信息不算新信息、数学新颖性/拒绝平凡包装、预算包络与第二次同症状停手、需求到验收的 traceability、真实实例端到端交付、YAGNI、Popper、Goodhart。理论卷的“无明确下游 theorem 消费者按 DECT 平凡病淘汰”“C8 禁枚举完备”按各自范围理解,用途例外以第 3.3 条为准。
@@ -364,14 +328,14 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 ### 4.7 生产链、冻结与消化状态
 
 **理论产出是一条单向链:什么源产什么、什么 PR 落哪几个面、冻结与消化是两个正交状态。**
-本款描述实际执行消化与冻结时的次序、PR 形态与状态语义；纯理论新增 PR 可以停在正文，不要求先进入这条消化链；形式化交付可以不经理论卷与 ingest，直接从 `D5/<GID 路径>.lean` 入链：内容已有 atom 时同一交付 deposit 并 cover，尚无 atom 时经 `make deposit-uncovered` 冻结，不产 coverage 边(第 1.2 条)；消化偏差的投入优先级服从第 1.2 条。路径→kind→producer→verifier 唯一映射在 `Meta/FILEMAP.toml`,冲突以它为准(strict loader+`FileMapPolicy`,`FILEMAP-DATA-VERIFIER` 判 `verified_by` 悬空)。
+本款描述实际执行消化与冻结时的次序、PR 形态与状态语义；纯理论新增 PR 可以停在正文，不要求先进入这条消化链；内容已有理论卷的形式化交付须先经 ingest 取得 atom，再在同一交付 deposit 并 cover；只有不存在对应理论卷时，形式化交付才直接从 `D5/<GID 路径>.lean` 入链，经 `make deposit-uncovered` 冻结，不产 coverage 边(第 1.2 条)；消化偏差的投入优先级服从第 1.2 条。路径→kind→producer→verifier 唯一映射在 `Meta/FILEMAP.toml`,冲突以它为准(strict loader+`FileMapPolicy`,`FILEMAP-DATA-VERIFIER` 判 `verified_by` 悬空)。
 
 ```
 docs/develop/theory/**                       参考输入·当前正确,历史归 git,程序对其零知识
-  │ make ingest (可选；形式化不以此为前置)
+  │ make ingest (纯理论 PR 可选；形式化内容已有本卷时必经)
   ├─► Meta/Digestion/atoms/sha256/<atom_id>              atom CAS blob·一经产出不可变
   └─► Meta/Digestion/backfill/<source_id>/<态>/<atom_id>.yaml   消化账目·四态见下
-  │ 形式化(先库后证,第 3.1 条)——链上唯一一环不由 make 产出;无 atom 时从此处起步
+  │ 形式化(先库后证,第 3.1 条)——链上唯一一环不由 make 产出;仅当不存在对应理论卷时从此处起步
   ▼
 D5/<GID 路径>.lean                           数学唯一真源
   │ 手写 Scribe 定义(叙事 canonical 源)
@@ -450,15 +414,15 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 
 ### 5.4 遇题即解与实施让渡
 
-**遇题即解,立案不等于处置**：纯消化一致性偏差按第 1.2 条简注，不触发本款的立案和实施要求。其余问题在既有单更新或立案后，随即在所属 session 的独立 worktree 实施(创建与复用见第 6.1 条),用 `/sshx` 或按第 5.9 条直接实施,经 PR 落地;不得以“已提 issue/等回应”为完成态。
+**遇题即解,立案不等于处置**：纯消化一致性偏差按第 1.2 条简注，不触发本款的立案和实施要求。任务范围包含仓库修改时，其余问题在既有单更新或立案后，随即按第 6.1 条先复用适合任务的 linked worktree，仅在需要隔离时创建，用 `/sshx` 或按第 5.9 条直接实施，经 PR 落地；不得以“已提 issue/等回应”为完成态。仅阅读、调查或创建/编辑 GitHub issue 的任务按第 6.1 条使用主检出或合适的现有 worktree，不要求新建 worktree，也不据此扩张为仓库实施任务。
 **让渡仅限**①对方已认领且有实测读数或在飞 PR 证明在动;或②唯一真源明确属对方,自己动手会造第二真源。让渡仍写被堵面与恢复动作;对方停滞即在单上认领收回。默认先动手,发现上述条件再让渡,不先设等待窗。
-*成熟锚*:fix-forward、owner-until-handoff、patch 随 issue。〔守护:**全软**·及时动手靠评审/反思;硬投影=立案处置计划须有相应 worktree/PR 或让渡依据,否则属冒领〕
+*成熟锚*:fix-forward、owner-until-handoff、patch 随 issue。〔守护:**全软**·及时动手靠评审/反思;硬投影=需仓库实施的立案处置计划须有相应 worktree/PR 或让渡依据,否则属冒领〕
 
 ### 5.5 目标阻塞与最小 hotfix
 
 **目标途中遇阻及时 hotfix,不要等。** 本款对基础设施的最小修复优先于第 5.4 条立案、第 7.11 条权限外转向与第 5.9 条等灯亮;无论阻塞属谁的面,默认当场修通,立案并行。“已立案/等裁决/等对方/等定时任务”都不是完成态或停摆理由。本款不扩张内容语义裁决权,也不把缺失搜索能力说成可用。
-**四项边界**:①所属 session 的独立 worktree(按第 6.1 条创建或复用),PR 直接对 `dev`,走全部 required checks;不 admin、不改预算掩盖、不降检测。CI hotfix 的完整验证及集成条数例外见第 8.12 条,不套第 8.14 条多层流程。②先作最小可通路修复(受预算正门重建/补缺种子路径/拆一层目标),完整根因另开 lane,两个 PR(第 6.2 条)。③仅内容语义 τ=0 裁决(真值口径/冻结/axiom/spec 数学)记 open 等 owner;基础设施/缓存/脚本/CI 拓扑/工具链自己修。④同单保留修复结果与必要读数,修好结案,不保存过程。
-绕开只解决本 lane,不得称阻塞已修;未开 worktree 就写“等灯亮/只立案”、让同一阻塞反复挡别的 lane 均违规。*成熟锚*:fix-forward、owner-until-handoff、Andon 当场处理、Boy Scout Rule。〔守护:**全软**·及时修复靠评审/反思;硬投影=登记基础设施/脚本/CI/缓存阻塞时同处给 hotfix worktree 或 PR 号;τ=0 例外须点名待裁决语义,只写等 owner 不算〕
+**四项边界**:①仓库修复按第 6.1 条先复用合适的 linked worktree，仅在需要隔离时创建；只读调查按第 6.1 条使用现有检出。PR 直接对 `dev`,走全部 required checks;不 admin、不改预算掩盖、不降检测。CI hotfix 的完整验证及集成条数例外见第 8.12 条,不套第 8.14 条多层流程。②先作最小可通路修复(受预算正门重建/补缺种子路径/拆一层目标),完整根因另开 lane,两个 PR(第 6.2 条)。③仅内容语义 τ=0 裁决(真值口径/冻结/axiom/spec 数学)记 open 等 owner;基础设施/缓存/脚本/CI 拓扑/工具链自己修。④同单保留修复结果与必要读数,修好结案,不保存过程。
+绕开只解决本 lane,不得称阻塞已修;需要实施修复却只写“等灯亮/只立案”、让同一阻塞反复挡别的 lane 均违规。*成熟锚*:fix-forward、owner-until-handoff、Andon 当场处理、Boy Scout Rule。〔守护:**全软**·及时修复靠评审/反思;硬投影=需仓库修复的基础设施/脚本/CI/缓存阻塞处置同处给 hotfix worktree 或 PR 号;τ=0 例外须点名待裁决语义,只写等 owner 不算〕
 
 ### 5.6 利益回避与旗判分离
 
@@ -493,13 +457,12 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 
 ### 5.11 sshx 载体、公开证据与运行契约
 
-**多模型对抗共识**:`/sshx`(`consensus-rnd:sshx`)派 heca/codex-cli/nyxid-oracle 隔离席设计、实施、评审;载体按下列阶段约束分派,nyxid-oracle 只承担推理,不承担验证。
+**多模型对抗共识**:`/sshx`(`consensus-rnd:sshx`)派隔离席设计、实施、评审;载体按 skill 契约及下列阶段约束分派,nyxid-oracle 只承担推理,不承担验证。
 
-- **oracle 默认只用于推理,不用于验证**:nyxid-oracle(ChatGPT Pro)默认只接推理任务——思考面板、设计、研究、文献地图、搜题与证明路线推演;sshx 的 oracle 席同样只排在推理阶段。验证任务——评审与复审各席(含 architecture/quality/tests)、适用的独立终止或完成审计、判形与忠实性核对——不派 oracle,全部由 codex-cli 承担。oracle 的推理结论不算验证结果,进入验证前须由能执行的载体或 orchestrator 亲验。验证席因此同属一个模型族时,按第 5.2、5.8 条如实披露,不冒充多样性。
-- **目标迭代无总轮数上限**:覆盖 skill 的有限 `pass_budget`/耗尽停机规则,设计/修复/复审/适用独立终止审计不得因轮数停止仍可推进的目标。按证据修真实缺口,无进展须查根因换法,不原样空转。独立实施/评审、无未解 reject、适用完成审计及 PR MERGED 要求仍在;真实能力/授权/资源缺口按第 5.9 条。单次调用、有限重试、失败回退仍按各自契约,不等于目标轮数上限。
-- **默认不用 `isolated-token-subagent`**:覆盖 skill 的默认席位布局;推理多席阶段保留一 nyxid-oracle,其余席(含原 subagent 名额)及预测席在检出 heca 时派 heca,否则派 codex-cli。实施、探针与验证阶段全部 codex-cli,不得回退 nyxid-oracle 或 heca;codex-cli 不可用则该阶段 abstain。推理阶段只在 codex-cli/heca/nyxid-oracle 中按 `WorkerMode` 优先序作合规失败回退,无可用载体则 abstain;各阶段均不得回退 subagent 顶替。
-- **heca 推理席的 provider 按席机械抽签**:heca 检出、工作树放置、派发、通知、终态收集、隔离与归档沿 skill 契约。只读推理/预测席的 mode 规则优先于 skill 的 bypass-equivalent 要求:在父会话权限内选择可无人值守完成任务的兼容模式(如 codex `read-only`、claude `auto`),不得提升父会话权限;兼容模式不可用时按既有失败回退。用户/宿主显式指定的 provider/model 原样传递;未指定时,在已启用的 `codex`/`claude` provider 间按席机械抽签,可行布局须含至少一席 `claude`,使用各 provider 默认模型。派发前记录抽签结果且不得重抽;实际模型族、缺席与失败回退按第 5.2、5.8 条及 skill 披露,未取得不同模型族的完成证据不得宣称模型多样性。
-- **tests 席只能 codex-cli**:须在 `work_target` 真跑验证;nyxid-oracle 无工作树执行能力,其“跑过什么”一律 `ASSUMED-UNVERIFIED`。
+- **oracle 默认只用于推理,不用于验证**:nyxid-oracle(ChatGPT Pro)默认只接推理任务——思考面板、设计、研究、文献地图、搜题与证明路线推演;sshx 的 oracle 席同样只排在推理阶段。验证任务——评审与复审各席(含 architecture/quality/tests)、适用的独立终止或完成审计、判形与忠实性核对——不派 oracle,由能在 `work_target` 执行的载体承担。oracle 的推理结论不算验证结果,进入验证前须由能执行的载体或 orchestrator 亲验。验证席因此同属一个模型族时,按第 5.2、5.8 条如实披露,不冒充多样性。
+- **目标迭代无总轮数上限**:不记录 skill 可选的有限 `pass_budget`,设计/修复/复审/适用独立终止审计不得因轮数停止仍可推进的目标。按证据修真实缺口,无进展须查根因换法,不原样空转。独立实施/评审、无未解 reject、适用完成审计及 PR MERGED 要求仍在;真实能力/授权/资源缺口按第 5.9 条。单次调用、有限重试、失败回退仍按各自契约,不等于目标轮数上限。
+- **默认不用 `isolated-token-subagent`**:覆盖 skill 的默认席位布局;推理多席阶段保留一 nyxid-oracle,原 subagent 名额并入其余席,其余席及预测席按 skill 分派。实施、探针与验证阶段不得派或回退 nyxid-oracle,无合规载体则该阶段 abstain。失败回退按 skill 的 `WorkerMode` 优先序,无可用载体则 abstain;各阶段均不得回退 subagent 顶替。
+- **tests 席不派 nyxid-oracle**:须在 `work_target` 真跑验证;nyxid-oracle 无工作树执行能力,其“跑过什么”一律 `ASSUMED-UNVERIFIED`。
 - **推理提示词要求**:每个 nyx oracle/GPT Pro 推理提示词(含 nyxid-oracle/ChatGPT Pro brief)必须包含原文「深入思考与推理, 如数学推理按照正式定义定理证明推理」。
 - **每个 nyxid/ChatGPT Pro brief 必含 `https://github.com/the-omega-institute/trureturing`**,搜题/设计/研究等推理任务均适用;按需给 `/blob/<head-sha>/<path>`、PR/issue/checks 具体 URL,缺仓库地址即不合格。让席位独立取公开状态,不只转述状态;前提是实测仓库 `visibility=public`,私有时另测可达性,不假定。
 - **公开证据边界**:nyxid 可读已发布状态,不能核本地未推送分支/工作树。要交它推理的内容能推就先推(可用 draft PR/临时分支);不能公开须在 brief 明写,相关结论标假设,由能执行的载体或 orchestrator 亲验。
@@ -512,21 +475,29 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 
 ### 6.1 Reusable collaborative worktrees and MERGED delivery
 
-Keep the main checkout on dev for authorized synchronization/observation. Implement, stage and switch branches in linked worktrees. Inspect Git registration, repository identity, branch/commit compatibility, existing material first. `make worktree` creates or validates compatible reuse across sessions; a task can cooperatively join the same tree. Session and directory have no permanent bijection. Directory names may retain session IDs; branch creation still follows section 7.4. An immutable dispatched baseline does not require chasing later dev tips.
+Keep the main checkout on dev for authorized synchronization/observation. Implement, stage and switch branches in linked worktrees. Inspect Git registration, repository identity, branch/commit compatibility, existing material first. `make worktree` first reuses a compatible task tree or claims a compatible idle tree when DEST is omitted, and creates when none fits or the idle-pool scope is busy before claim entry; the contention fallback may leave a compatible idle tree unused; an explicit DEST keeps exact-path semantics; an attached initialization marker follows the recovery rule below before ordinary reuse; a task can cooperatively join the same tree. Session and directory have no permanent bijection. Directory names may retain session IDs; branch creation still follows section 7.4. An immutable dispatched baseline does not require chasing later dev tips.
+
+**Read/write routing.** For reading, search, statistics, diff, viewing commits/PRs/issues and creating/editing GitHub issues, use the main checkout or a suitable existing worktree by default; these tasks do not require a new worktree. For pinned-revision reads prefer `git show <commit>:<path>`. Never switch a shared checkout's branch for reading. Repository edits, worktree-mutating tests, mutation verification, checkout changes, incompatible builds and builds with write side effects first reuse a suitable linked worktree after the compatibility checks above; create one only when isolation is needed. Builds that write are not read-only. Suitability includes the required revision, pins, existing material and cooperative scopes; preserve other tasks' work.
+
+**连续任务直接复用**：只要后续工作已经确定且能在当前 linked worktree 继续，就保留这棵树；无需先执行 `worktree-return`，也不得为承接该后续工作另建第二棵树。这里的“直接”指在同一 linked worktree 内切出下一任务分支：前项有交付时先完成 PR MERGED 与首个 dev push 核验；确认没有未交付的改动或提交，join 本任务写入者与构建作业，核对工作树干净（含普通未跟踪文件）、无未完成 Git 操作及下一任务的版本与缓存兼容性后，在上述协作机制的 whole-checkout 与 index/ref 独占作用域内执行 `git fetch origin dev`，再从新鲜取得的 `origin/dev` 用 `git switch --no-track -c <下一任务分支> origin/dev` 切出新分支。保留旧任务分支、目录与兼容缓存，主检出仍在 `dev`。只有没有可兼容续接的后续工作时，才按下文归还；确需隔离时另建 linked worktree。
 
 **主检出不承载修改**：主检出只用于 dev 同步、观测与缓存预热，一切修改都在 linked worktree 中进行。主检出上的任何本地修改——已跟踪文件改动、暂存内容、未跟踪文件与本地提交——均不规范、不受保护，任何 agent 可随时用 `git reset --hard origin/dev` 与 `git clean -fd` 丢弃，无需确认、等待或交还产生者；`git clean` 不加 `-x`，被 Git 忽略的 `.lake` 等构建缓存不在丢弃范围。
 
 Enter cooperative jobs through `StrataLint worktree with`, declaring overlapping edits and actual semantic reads. Entry is shared; independent editing remains concurrent. Compound Git operations use index/ref scopes, and whole-checkout transformations exclude other entry only for that operation. No session-long whole-tree writer lease. Retain inherited OS descriptors in surviving descendants, or enter again before use. One worker exit does not terminate other users/children, remove intentional Git locks, assert publication or delete the tree. Actual host job handles own joining; no repository daemon or handoff ledger.
 
-Commit ordinary working snapshots promptly with `make worktree-checkpoint MESSAGE=FILE`, then publish through `make worktree-publish HEAD=BRANCH`. Checkpoints use native `git add -A` and `git commit` on the current branch, including tracked and ordinary untracked files under Git ignore rules. Pre-existing staging is replaced by the working snapshot; no path ownership or separate staged-version preservation exists. Unmerged entries and unfinished operations are refused before staging. A clean snapshot creates no empty commit. Index/ref operation scopes and native Git errors coordinate commits without a session writer lease. Publication resolves one push endpoint and freshly confirms required-commit equality/ancestry there; no force push. Normal finalization follows host joining of this task's writers, checkpoints and publishes. Abnormal exit does not publish. Failed publication retains the local commit and tree.
+Checkpoint with `make worktree-checkpoint MESSAGE=FILE` after every recoverable unit of work, before long checks, before hand-off and before normal end. Label unfinished snapshots WIP in the message. A checkpoint certifies saved bytes only; it does not certify tests passed, publication or merge. Use no heartbeat or empty commits. Publish through `make worktree-publish HEAD=BRANCH`. Checkpoints use native `git add -A` and `git commit` on the current branch, including tracked and ordinary untracked files under Git ignore rules. Pre-existing staging is replaced by the working snapshot; no path ownership or separate staged-version preservation exists. Unmerged entries and unfinished operations are refused before staging. A clean snapshot creates no empty commit. Index/ref operation scopes and native Git errors coordinate commits without a session writer lease. Publication resolves one push endpoint and freshly confirms required-commit equality/ancestry there; no force push. Normal finalization follows host joining of this task's writers, checkpoints and publishes. Abnormal exit does not publish. Failed publication retains the local commit and tree.
 
-形式化工具不要求先提交：`ledger-align` 按 `repository.ReadCurrent()` 的工作树读取契约，通过 `repository.ReadCurrentProjection(...)` 读取当前真值输入，不按 delta 选择；deposit/cover 只改工作树、不自动提交。完成逻辑单元后仍须按上述普通工作快照流程及时提交、推送。
+Initialization markers (`worktree-init:<token>`), native Git index/ref transaction locks, cooperative descriptor-scope lock files and intentional worktree locks are distinct. Never unlink cooperative scope files. Failed initialization runs the same recovery path as a same-KIND/NAME/DEST rerun after owned children settle; its WORKTREE_FAILED receipt identifies stage, target, retained material and recovery/reclaim action. Resume verifies the branch-creation token/OID, unchanged branch tip and registered path/backlink/common identity, preserves differing ordinary bytes under recovery refs, completes missing checkout and restore, records completed recovery in the tree's HEAD reflog, then unlocks. Only that completed-recovery entry together with the unchanged creation witness/tip and creation pins permits repeated recovery to retain the creation commit after the requested base advances; successful ordinary initialization keeps requested-base ancestry and pin compatibility checks. Marker age is irrelevant once exclusive tree entry is acquired; mirrors without the creation witness can only be reclaimed. A checkpoint blocked by a native index/current-ref lock, or an owned initialization recovery blocked while loading its native index, clears only that exact unchanged file under exclusive tree plus index/ref scopes after complete holder inspection reports no holder, then retries once. Held or unverifiable locks retain with their exact path; canonical receipts retain every lock observation, including clearances before a later failure or during reconvergence, and report size and age without using them as clearance certificates. Non-cooperative Git with a closed lock descriptor is outside the guarantee. A moved interrupted-removal snapshot is pinned under a new recovery ref before a fresh checkpoint; replace the record atomically carrying both recovery roots, never delete it to unblock.
 
-**worktree 的位置与清理**：worktree 用 `make worktree … DEST=<主检出父目录>/trureturing-<session-id>` 建立，不得放在 `/tmp`、`/private/tmp` 或 `$TMPDIR` 下。任务完成（交付按下文定义：PR MERGED 且首个 dev push 核验）后，及时用 `make worktree-remove NAMES="<目录名>"` 清理本任务创建的 worktree；已由后续任务接手的除外。磁盘可用空间低于 5%（与 `make worktree` 磁盘门同一阈值），或命令因磁盘空间不足而失败时，AI 可直接执行 `make -C tools clean-all FORCE=1`，不需另行确认；清理范围与保护条件以该目标及 spec A20 为准。
+形式化工具不要求先提交：`ledger-align` 按 `repository.ReadCurrent()` 的工作树读取契约，通过 `repository.ReadCurrentProjection(...)` 读取当前真值输入，不按 delta 选择；deposit/cover 只改工作树、不自动提交。可恢复的修改仍按上述时点及时本地 checkpoint，包括未完成的 WIP；发布前须完成当前逻辑单元的源文件、规范投影及相应检查。
 
-All registered worktree cleanup follows SPEC A20/A20.1: selected unlocked trees are eligible; locked trees require at least 24 hours since Git lock-file modification. Automatic selection pins and reports origin/dev as an immutable commit, independently of BASE. A clean tree with no unfinished Git operation is eligible when its observed tip is an ancestor of that dev commit and its last Git update was at least 3 hours ago. The last update is the maximum of all HEAD reflog timestamps and the HEAD commit time. Known unmerged trees and merged trees with outstanding work require both 24 hours without a Git update and at least 300 commits behind BASE. Unknown dev/ancestry/update readings retain the tree with a named reason. FORCE reobserves tip, branch, registration, lock and Git directory, then recomputes the selection result before removal; any changed observation or selection result retains with race_changed. Original-selector removal checkpoints ordinary changes, including changes made after selection. Named removal bypasses automatic selectors. Keep whole-batch eligibility preflight, main/nested registration and target identity protection. Before removal, checkpoint outstanding ordinary changes using the real index. Retain the current branch, or for detached HEAD create a new local recovery branch at the resulting commit without replacing an existing ref. Retain that branch through the entire cleanup, including the orphan sweep. An unmerged/unfinished operation, failed commit or failed recovery-branch creation retains the affected tree with a concrete failure; earlier completed removals remain reported. Clean trees need no empty commit. Ignored files and intermediate staged versions are outside snapshot recovery. Activity, cwd, programs, participation and cache use do not govern deletion. Remote confirmation is the separate timely-publication workflow, not a recycling prerequisite. Native branch checkout reconstructs the committed snapshot while its ref and reachable objects remain intact. Non-worktree artifacts and later orphan ref retirement retain independent policies.
+**worktree 的位置与清理**：worktree 用 `make worktree … DEST=<主检出父目录>/trureturing-<session-id>` 建立，不得放在 `/tmp`、`/private/tmp` 或 `$TMPDIR` 下。任务完成（交付按下文定义：PR MERGED 且首个 dev push 核验）且没有可兼容续接的后续工作时，join 本任务的写入者与构建作业，在任务树内用 `make worktree-return PR=<编号> WRITERS_JOINED=1` 归还：保存新增普通工作并保留任务分支，固定远端最新 dev，以新的 idle 分支同步，保留目录与兼容缓存。任务结束而无可交付内容、且没有可兼容续接的后续工作时，同样 join 写入者与构建作业后用 `make worktree-return WRITERS_JOINED=1` 归还而无需 PR：按 spec A20，以保留的首条原生分支 reflog 记录中全零 old OID 对应的 new OID 为领取或创建时的 base B，要求附着的任务分支 tip 与 HEAD 均等于 B，并新鲜核验唯一 origin push endpoint 的远端 dev 保留 B，从而没有任务分支上的 dev 外提交被遗留。工作树须干净（包括普通未跟踪文件）且无未完成 Git 操作；保留写入者 join、pool/tree/index/ref 独占作用域、登记/身份及 intentional/initialization lock 保护，任务分支留给既有 orphan 退休策略。首条创建证据缺失、不可读、为链接、畸形或已部分过期则拒绝；后续 reflog 历史不影响资格。reset 离开任务分支的提交不在此当前状态规则范围内；归还保留任务 ref、其分支 reflog 与仓库对象，本身不做任何修剪，而后续因容量或磁盘压力进行的空闲池淘汰会移除该树的 per-worktree 元数据，包括其 HEAD reflog。tip 不等于 B、脏内容或未完成操作仍走 MERGED-PR 归还或显式删除。对真正 idle 分支的无 PR 重试报 `unused_return_already_idle`；`already_idle` 仅属核验 PR 的重试。省略 DEST 优先领取兼容空闲树；显式 DEST 只作用于该路径。空闲池每克隆最多 4 棵，按 idle 分支创建记录从旧到新淘汰，低于 5% 可用空间时继续淘汰空闲树。`make worktree-remove NAMES="<目录名>"` 用于用户显式删除；低磁盘回收仍走下述入口。磁盘可用空间低于 5%（与 `make worktree` 磁盘门同一阈值），或命令因磁盘空间不足而失败时，AI 可直接执行 `make -C tools clean-all FORCE=1`，不需另行确认；清理范围与保护条件以该目标及 spec A20 为准。
 
-Delivery follows push/remote confirmation, PR, required checks, MERGED, then first dev push/affected-entrance verification. CLOSED is not MERGED; CI success, an open PR or integration qualification is not delivery completion. After delivery completes, the task removes the worktrees it created unless a later task has taken one over (see the worktree location and cleanup paragraph above). Independent review follows section 5.6, except that a pure digestion delivery has none (section 1.2), and integration follows sections 8.12-8.14.
+**只用主克隆的 linked worktree**：lane、席位、交付与研究树都由主检出所在的克隆经 `make worktree` 建立，不另建 git 克隆（含浅克隆、本地路径克隆与“独立 dev 根”）。缓存的自动 donor 只在本克隆内寻找（linked worktree 克隆其所在克隆主检出的 `.lake`）；未用 `STRATALINT_LEAN_CACHE_DONOR_REPOSITORY` 显式指定 donor 时，额外克隆的主检出会另取一份独立的 `.lake`（Release 恢复或重新构建），与主克隆不共享 clonefile 块；`clean-lanes` 与 `clean-all` 只回收本克隆登记的 worktree，额外克隆及其 worktree 不在回收范围内。需要隔离时，在主克隆上另开 linked worktree，并用 `StrataLint worktree with` 声明作用域。
+
+Idle retention and eviction use the single pool owner in SPEC A20; idle trees inside capacity bypass ordinary age selectors. All registered worktree cleanup follows SPEC A20/A20.1: selected unlocked trees are eligible; intentional locks require at least 24 hours since Git lock-file modification. A worktree-init: initialization marker instead requires an acquired exclusive tree scope; a busy initializer retains with initialization_in_progress. Automatic selection pins and reports origin/dev as an immutable commit, independently of BASE. A clean tree with no unfinished Git operation is eligible when its observed tip is an ancestor of that dev commit and both its HEAD committer age and allocation age are at least 3 hours. The last update is the observed HEAD commit's committer Unix time (`%ct`); author time, directory timestamps, reads, checkout/reset and later reflog entries do not renew it. Allocation evidence belongs to the tree across attachment changes: use the first retained HEAD record, explicit `worktree-allocation:<token>` HEAD records, and corroborated legacy branch-creation records since the latest explicit allocation. Every checkout destination that Git accepts as a local-branch name, excluding HEAD and expanded revision expressions, uses the allocation, existing-branch-checkout or bounded-ambiguity class without spelling exemptions; historical native branch-generation identity and the exact immutable record format, evidence-retention and claim-writer contracts are defined once in SPEC A20. Branch logs are checked against their own tips; detach or checkout never discards applicable allocation grace. Ordinary checkout/reset/read never emits an allocation record or renews saved-work time. Prefix expiry preserves applicable grace under ordered timestamps across related creation/checkout records and reflogs; nonmonotone clocks have no such guarantee. Known unmerged trees and merged trees with outstanding work require both ages to be at least 24 hours and at least 300 commits behind BASE. Missing, invalid or tip-mismatched allocation evidence or unreadable commit time retains with update_unknown and concrete detail; a future clock retains with age_unverifiable. Unknown dev/ancestry/update readings retain the tree with a named reason. FORCE reobserves tip, branch, registration, lock and Git directory, then recomputes the selection result before removal; any changed observation or selection result retains with race_changed. Original-selector removal checkpoints ordinary changes, including changes made after selection. Named removal bypasses automatic selectors. Keep whole-batch eligibility preflight, main/nested registration and target identity protection. Before removal, checkpoint outstanding ordinary changes using the real index. Retain the current branch, or for detached HEAD create a new local recovery branch at the resulting commit without replacing an existing ref. Retain that branch through the entire cleanup, including the orphan sweep. An unmerged/unfinished operation, failed commit or failed recovery-branch creation retains the affected tree with a concrete failure; earlier completed removals remain reported. Clean trees need no empty commit. Ignored files and intermediate staged versions are outside snapshot recovery. General activity inspection, cwd, programs, participation and cache use do not govern ordinary deletion; initialization liveness and blocked-checkpoint or initialization native-lock recovery use only the scoped checks above. Ordinary removal does not require remote confirmation; merged-task return and idle eligibility follow their specific remote-dev rules. Native branch checkout reconstructs the committed snapshot while its ref and reachable objects remain intact. Non-worktree artifacts and later orphan ref retirement retain independent policies.
+
+Delivery follows push/remote confirmation, PR, required checks, MERGED, then first dev push/affected-entrance verification. CLOSED is not MERGED; CI success, an open PR or integration qualification is not delivery completion. After delivery completes, join task writers/build jobs. For compatible follow-up work, keep the tree and start the next task branch from freshly fetched `origin/dev` under the continuation rule above; otherwise return it with `make worktree-return PR=<number> WRITERS_JOINED=1` (see the worktree location and cleanup paragraph above). `make pr` and `pr-watch` report checks only; neither is a merge certificate. Independent review follows section 5.6, except that a pure digestion delivery has none (section 1.2), and integration follows sections 8.12-8.14.
 
 ### 6.2 PR 层序、delta 门与债务收缩
 
@@ -693,7 +664,7 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 
 本地检查使用与 CI 相同的独立程序。器代码迭代用 `make -C tools check-fast` 与定向项目测试;数学迭代用非空显式目标的 `make lean LEAN_TARGETS=…`；需机器可读声明、公理与材料核对时用 `make lean-report-scoped LEAN_TARGETS=…`。`deposit`/`deposit-uncovered`/`cover` 自动选 GID 模块，`cover-batch` 选整批目标并集；覆盖同时纳入所选 atom 及其传递 chain atom 的既有覆盖目标，写前核对当前声明身份，缺报告即拒绝。`emit` 从所选 Scribe 的类型化声明引用取 Lean 输入；这些本地入口只构建目标、其准入检查点名的 utility 输入及各自 import 闭包，不需要整库报告成功收据。窄报告使用独立路径与格式，不覆盖整库报告或收据；空范围、解析失败、缺失或陈旧输入非零退出。`make test` 运行 lean-report 与 check-current;`make gate BASE=<commit> [PURPOSE=pull-request|push]` 经 `ci_checks.py` 运行与 CI 相同的适用单元、子检查、测试过滤器及 TRX 校验,只把固定 base 当数据；本地包含 staged/unstaged/untracked 与 rename 两端,不删除 remotes；`make gate-plan` 仅输出选择。单项目测试用 `make -C tools test TEST_PROJECT=tools/tests/<项目>/<项目>.csproj`。
 
-本地结果是早反馈,远端 required checks 仍是合并权威。提交即推,必要本地核验与 CI 并行;本地绿不替代远端结果,改 CI 自身仍按 §8.12 核验真实事件。
+本地结果是早反馈,远端 required checks 仍是合并权威。Local WIP checkpoints may remain unpublished; publication requires a complete, currently checked source/projection unit. 本地保存遵守 §6.1 的时点；发布边界完成后及时推送，必要的其余本地核验与 CI 并行，不以完整本地验证作为推送前置。源文件或投影输入变更后，发布前重跑受影响的生产者及检查；连续 WIP checkpoint 以明确的 publication base、publication tip 与两者间的累计 diff 标识同一完整评审单元，不要求压成一个提交，不重写已发布历史。本地绿不替代远端结果,改 CI 自身仍按 §8.12 核验真实事件。
 
 ### 8.3 worktree 与 Lean 缓存入口
 
@@ -729,7 +700,7 @@ CI、非 dev 和 detached 主检出不进行可选刷新。相符的种子按原
 
 普通 required CI 显式选择 `LEAN_REPORT_CACHE_MISS_POLICY=fetch-or-fail`。独立手动/PR producer 和 Release publisher 显式选择 `LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build`，该路径跳过报告恢复。入口策略由参数选择，不由环境变量判断本地或 CI；直接 `inspect.sh` 默认 `reuse-or-build`，可用 `--cache-miss-policy fetch-or-fail` 选择本地守护。
 
-**Start with compatible reuse**: follow section 6.1; validate an existing linked tree or create through `make worktree` with explicit DEST. Creation does not materialize Lean caches; existing cache doors remain required. **Lean 构建一律走本层门(`make lean` / `make lean-report-scoped` / `make lean-report`,内含 lean-cache ensure 走缓存;预热即 `make lean-cache-ensure`),禁止任何冷裸 `lake build`/`lake env lean`(案号 #2762)**:现行 ensure 行为以 `LeanCacheEnsureCommand` 及其测试为准。linked worktree 没有 `.lake` 时从主检出整份 clonefile;`.lake` 在位且 stamp 匹配时不再播种,项目层为冷则拒绝并给出补救;stamp 不匹配、缺失或损坏时从主检出重新播种(整份或 build 层),主检出不可用时失败并给出补救。主检出另有已登记 donor clonefile、Release 归档、`lake exe cache get` 与原地重产等路径。裸 `lake` 可能留下无 stamp 的 `.lake`,下一次 ensure 即按上述规则处理;裸 `lake` 仅允许在 stamp 在位的热树上做增量调试;凡 `.lake` 缺失或无 stamp,一律先过 `make lean-cache-ensure`。〔守护:**软 + 硬投影**·意图不可 lint;硬投影=派席 brief 的构建步骤必须写 make 目标而非裸 lake,评审席按 #2762 打回;worker 侧违律的判据即 ensure 收据 `stamp_miss:missing` + `clonefile_attempts:0` 同现〕;
+**Start with compatible reuse**: follow section 6.1; observation-only tasks need no new tree or cache preparation. For edits or builds that write, validate and reuse a suitable linked tree first; create through `make worktree` with explicit DEST only when isolation is needed. Creation does not materialize Lean caches; existing cache doors remain required. **Lean 构建一律走本层门(`make lean` / `make lean-report-scoped` / `make lean-report`,内含 lean-cache ensure 走缓存;预热即 `make lean-cache-ensure`),禁止任何冷裸 `lake build`/`lake env lean`(案号 #2762)**:现行 ensure 行为以 `LeanCacheEnsureCommand` 及其测试为准。linked worktree 没有 `.lake` 时从主检出整份 clonefile;`.lake` 在位且 stamp 匹配时不再播种,项目层为冷则拒绝并给出补救;stamp 不匹配、缺失或损坏时从主检出重新播种(整份或 build 层),主检出不可用时失败并给出补救。主检出另有已登记 donor clonefile、Release 归档、`lake exe cache get` 与原地重产等路径。裸 `lake` 可能留下无 stamp 的 `.lake`,下一次 ensure 即按上述规则处理;裸 `lake` 仅允许在 stamp 在位的热树上做增量调试;凡 `.lake` 缺失或无 stamp,一律先过 `make lean-cache-ensure`。〔守护:**软 + 硬投影**·意图不可 lint;硬投影=派席 brief 的构建步骤必须写 make 目标而非裸 lake,评审席按 #2762 打回;worker 侧违律的判据即 ensure 收据 `stamp_miss:missing` + `clonefile_attempts:0` 同现〕;
 
 ### 8.4 诊断信号与产生处的质量
 
@@ -747,7 +718,10 @@ CI、非 dev 和 detached 主检出不进行可选刷新。相符的种子按原
 **长任务走宿主后台作业机制,不 shell 甩后台**:Claude Code 用 Bash `run_in_background:true`,其他宿主用等价作业/会话句柄。预期超前台预算或时长未知的 本地检查/gate/lean-report/worktree/全量 dotnet test/codex/sshx/CI 等待均适用;Bash 前台 timeout 上限 600s,更大值截断并在 10m 以 143 杀任务。
 一条宿主调用承载真实长任务,内部 wait 全子进程,真实退出码落哨兵,判绿只认它。禁 `nohup … &`、`(…) &`、`setsid … &` 让 launcher 先返回:其 exit 0 不代表任务完成,宿主可能清整进程组;脱离生命周期/通知后 pgrep 也不能判完成。并行开多个宿主作业。
 **例外**:脚本内部并发 `&` 后 wait 收拢合法,但 **& 与 wait 必须在同一条命令**,启动器返回前等完全部子进程,不能事后补 wait。写命令时核“返回时真实任务结束了吗”;对象是程序实际行为,非对 detach 的印象。`seat.sh dispatch` 等席位全生命周期才返回。无宿主完成信号易衍生 sleep 轮询,第 8.7、8.8 条仍适用。
-〔守护:**软+硬投影**·shell 文本可搜,意图不可 lint;完成须给真实哨兵退出码。转录自审须同时判①尾随 & 且同命令无 wait;②已知长任务在前台且无后台选项。已知类含 `seat.sh dispatch`、`nyx.py ask`、`make {lean,lean-report,本地检查,gate,worktree,pr-open,cover,cover-batch,deposit,emit,ingest,test}`、`dotnet test`。只查①会漏②,运行输出/判词绿也不能证明未违规。匹配限定命令位置(行首、`;`、`&&`、`|`、`$(` 后),先剥 heredoc 体,不整命令豁免,避免散文/源码假阳与体外漏检。`tools/scripts/agent/selfaudit.sh` 可数违规/合法形及按用户指令行号分窗的挂钟,并查第 8.3 条裸 lake;每次反思必跑,只留有用结果不存转录副本(第 2.10 条)〕
+**进程终止归属**:只终止本任务自己创建、并持有其 pid 或进程组句柄的进程,如自己的子进程、`start_new_session` 创建的组或宿主作业句柄所指进程。
+禁止按命令名、参数或路径模式跨进程终止,包括 `pkill -f`、`killall`、按 `ps | grep` 结果批量 `kill`;同机多个驱动者与席位共享 runner 名、`codex exec` 参数、`claude` 参数及 `<主检出父目录>/trureturing-*` 路径前缀,按模式匹配会终止其他会话的工作。
+本树 cwd 只用于列出遗留进程候选,不单独构成终止依据;终止须凭本任务自己创建并持有的 pid/进程组句柄或宿主作业句柄确认归属,无法证明就不动,只报告。操作要求见 `tools/scripts/agent/implementation-brief-note.txt`。
+〔守护:**软+硬投影**·shell 文本可搜,意图不可 lint;进程终止归属为软约束,靠评审;完成须给真实哨兵退出码。转录自审须同时判①尾随 & 且同命令无 wait;②已知长任务在前台且无后台选项。已知类含 `seat.sh dispatch`、`nyx.py ask`、`make {lean,lean-report,本地检查,gate,worktree,pr-open,cover,cover-batch,deposit,emit,ingest,test}`、`dotnet test`。只查①会漏②,运行输出/判词绿也不能证明未违规。匹配限定命令位置(行首、`;`、`&&`、`|`、`$(` 后),先剥 heredoc 体,不整命令豁免,避免散文/源码假阳与体外漏检。`tools/scripts/agent/selfaudit.sh` 可数违规/合法形及按用户指令行号分窗的挂钟,并查第 8.3 条裸 lake;每次反思必跑,只留有用结果不存转录副本(第 2.10 条)〕
 
 ### 8.7 原生同步等待与外部轮询边界
 
@@ -763,6 +737,7 @@ CI、非 dev 和 detached 主检出不进行可选刷新。相符的种子按原
 
 **所有脚本必须通用,不得绑定本机。** 本条覆盖所有语言、目录和调用方式的脚本,包括 agent、构建、CI、运维、实验、一次性探针、搬运胶水及命令或配置内嵌脚本。禁止写死个人用户名、主机名、本机绝对路径、固定 checkout/worktree 位置、工具安装位置或个人缓存/日志目录;禁止隐式依赖个人 shell 启动文件、alias、已激活虚拟环境、私有全局配置或未声明的环境变量。
 **环境差异必须成为显式输入。** 项目内路径由脚本位置或显式指定的仓库根定位,不得假定调用者的当前目录或仓库克隆位置;外部路径、服务地址、凭据和运行选项通过参数、配置文件或有文档的环境变量传入,默认值不得夹带本机配置。启动时校验必需输入、工具及版本,缺失即明确报错,不得静默回退到作者机器的私有目录或配置。声明支持的平台与依赖及可复现的安装方式;平台差异通过明确的能力检测与适配处理,不得把当前机器环境当作通用前提。
+**Python 依赖缺失必须安装后再继续。** 若实际使用的 Python 解释器报告 `ModuleNotFoundError` 或 `ImportError`,用同一解释器的 `python -m pip` 将缺失包安装到该解释器的全局 site-packages;系统 site 不可写时使用该解释器的 user site。标准库在目标版本缺失时安装对应版本的官方 backport/兼容包。安装后立即用同一解释器验证 import,再重跑原失败入口;不得用临时 `PYTHONPATH`、仓内临时 shim、切换到另一解释器或跳过测试掩盖缺库。记录实际解释器、包名和版本,并保持脚本的声明依赖与安装方式可复现。
 **可移植性须按实际范围验证。** 交付时在不同工作目录、包含空格的路径及不加载个人 shell 配置的环境中验证适用入口;未验证的平台或条件须明确说明,本机跑通不等于跨环境验证。宿主能力配置的例外不豁免脚本通用性。〔守护:**软**·通用性与验证范围靠实施及评审,本条不宣称已有全脚本可移植性机器门〕
 
 **器住本仓,不住宿主。** 跨会话复用的自审/落地/巡检器必须 tracked:agent 器在 `tools/scripts/agent/`(已有 FILEMAP 面),harness 走 tools 正门;`agents/` 宪章封闭面由 SL-000 拒脚本。禁放 `~/.claude`、scratchpad 或其他宿主目录,以便多机共享、PR 验证、判例修复积累。
@@ -913,12 +888,7 @@ check-current 只检查候选最终树,不读 base、不消费工程阶段证据
 先经 `/usr/bin/time -l lake env lean -Dprofiler=true -Dtrace.profiler=true -Dtrace.profiler.threshold=1000 <模块>.lean` 量 checked 秒数与 maximum resident set size,按声明找主成本,每改一处重量,PR 给前后读数(第 2.8 条)。
 **三类已实测的病因与处方(2026-09-10,`CrimGrundyRefutation`,同一模块同一台机)**:①**一次性 `decide +kernel` 判一个大集合** —— 内核要把全部状态的归约中间项同时驻留,峰值即其和;处方是先 `reduce`、`simp only` 拆合取、`repeat' apply And.intro` 分解,再 `all_goals decide +kernel`,每次只驻留一项。②**证书用线性表** —— `List.lookup` 在内核归约里是二次代价(377 个位置各查一次、平均走一半);处方是换成平衡树的归纳类型,降到对数级。③**伞形 `import Mathlib.Tactic`** —— 载入整个 tactic 库的环境;处方是精确导入,并把无限制的 `simp` 换成 `simp only [具名引理]` 配 `omega`。配置比较:
 
-| 配置 | 墙钟 | `checked` | 峰值内存 |
-| --- | --- | --- | --- |
-| 原始 | 100.4 s | 87.1 s | 22.7 GB |
-| ① 拆分逐项归约 | 87.2 s | 68.0 s | 3.2 GB |
-| ② 证书换平衡树 | 29.3 s | 11.2 s | 3.0 GB |
-| ③ 精确导入 | 19.2 s | 11.6 s | 1.5 GB |
+配置比较读数见 SPEC §11.28（CLAUDE.md §10.2）。
 
 同批一个**负结果**一并入账:把证书展开成显式 `cons` 链,`checked` 72.1 s 对 68.0 s,**无改进,丢弃**。CI 侧该模块的构建由被杀变为 68 秒通过。**不冒领**:本地峰值内存由 22.7 GB 降到 1.5 GB **不证明**先前那次 SIGTERM 的成因就是内存耗尽 —— runner 侧证据未取,该归因记 `ASSUMED-UNVERIFIED`(第 2.9 条:不确定须带排除项)。已排除的替代解释在该案里是逐条有读数的:非 job timeout(限 45 min 而 job 只跑 7 min 22 s)、非并发取消(`concurrency.group` 为 `ci-<PR 号>`,不跨 PR,且该分支仅一个 run)、非该步自身 timeout(它没有 `timeout-minutes`)。
 **两条红线**:①**agent 不得擅自抬 `timeout-minutes` 或计算预算，不得靠重跑碰运气**(第 7.8 条:检测绝不降级,不以抬预算掩盖失败);普通 `current` 与 `ci-unit` 依 SPEC A22 使用 120 分钟（2 小时）累计计算预算，缓存/准备包与工具依赖下载准备不计入；外层 job 平台挂钟上限为 360 分钟，不承诺无限下载。独立长 producer 360 分钟、定时 Release 120 分钟保持各自范围；agent 不得自行抬计算预算或平台上限。②**不得为了快而削掉逃逸见证**(第 3.2 条)—— 把待判的常数直接写进定理、用 `native_decide` 把成本挪到别处、砍掉证书的完整性检查,都是把模块掏空;**一个被掏空的模块过了门也是假的过**,宁可它暂时进不去。改动只许落在 tactic 脚本、私有数据表示与 import 面上,**公开陈述的 `statement_id` 应当不变**;若确实变了,冻结 pin 须重做(SL-008 会以 `pin mismatch: stored=… actual=…` 判红,那是**先冻结后改源码**的必然后果,正序是实施 → 评审 → 修复 → deposit)。
@@ -983,38 +953,30 @@ Release 名为 `lean-cache-v2-<resolved-mathlib>-<platform>-report-<format>-env-
 古训是同一批规则的成熟锚,〔守护〕仍按各条边界。
 
 - **实事求是**——结论据可核验事实,不据记忆/权威/美感/推测;能验先验,证据在前、主张在后。
-- **知之为知之,不知为不知,是知也**——诚实标 open/ASSUMED-UNVERIFIED,不冒领(第 2.2、2.4 条)。
 - **毋意,毋必,毋固,毋我**——不臆测、武断、固执、自证,自信也交独立机器(第 5.7 条)。
-- **兼听则明,偏信则暗**——异模型破相关先验(第 5.8 条)。
-- **述而不作,信而好古**(第 3.7 条)。
 
 ### 11.2 待人
 
 - **己所不欲,勿施于人**(恕道)——交付须是下游愿收的:账平、可复现、诚实;收尾清理,不留坑。约束人=约束 AI(第 7.4 条)。〔守护:**软+硬投影**·对手官与反思守,SL 判账平,遗留问题只留有用结果(第 2.10、5.10 条)〕
-- **己欲立而立人,己欲达而达人**(忠道)——harness 服务下级程序(第 4.1 条)。
 - **君子求诸己,小人求诸人**——出错先查自身/harness,不甩锅(第 2.2 条)。
 - **言必信,行必果**——完成承诺须有新鲜验证;过而不改,是谓过矣——失败保留可复用教训,不重走死路(第 5.10 条)。
 
 ### 11.3 规矩与利器
 
 - **不以规矩,不能成方圆**(孟子·离娄上:"离娄之明,公输子之巧,不以规矩,不能成方圆")——单点再聪明也须规矩;先定义再处理(第 5.7、7.3 条)。方圆=真值 DAG,规=门(义务守恒、声明与消费分 PR),矩=器(本地检查/ingest/GID);加固规矩也付 τ 成本,无后门。〔守护:**元准则**·新类无定义标“未实例化(案号)”,不即兴〕
-- **欲速则不达**——诚实>速度,打地鼠反慢(第 2.1 条)。
 - **工欲善其事,必先利其器**——器律见第 8 章。
 
 ### 11.4 俭约与自然
 
 - **磨刀不误砍柴工**——器 bug 最高优先修,胜于赶路;修器同门、无免费捷径(第 7.2、7.8 条)。
-- **过犹不及**——只在会说谎处设门,不过度、不镀金(第 2.5、4.8 条)。
 - **大道至简**——唯一真源、规范最简、程序/数据递归(第 4.2 条)。
 - **为学日益,为道日损;损之又损,以至于无为**(老子·四十八)——harness 成熟应变小;消病因即删补偿面(第 4.2 条)。判据是净行数下降且合并与仪式耗时下降,不数新机器。〔守护:**软+硬投影**·行数/耗时可测,何时减靠评审〕*成熟锚*:奥卡姆、YAGNI、负代码量、精益。
 - **买椟还珠**(韩非子·外储说左上)——楚人卖珠,饰以木兰之椟、缀以珠玉;郑人**买其椟而还其珠**。动手先问是在做椟还是取珠,不可只建补偿/验证机器而不消病因。〔守护:**软**·对手官;硬投影=净行数判据〕
 - **因其固然**(庄子·养生主:「依乎天理,批大郤,导大窾,因其固然」)——庖丁十九年而刀刃若新发于硎,顺天然关节下刀。门设在性质可能被破坏处:确定性属生成程序,触发应为生成程序闭包变更,非每次内容变更(第 2.5、7.8 条)。〔守护:**软+硬投影**·路径闭包可判,关节选择靠评审〕*成熟锚*:Bazel/Nix 增量触发、变更影响、不变量断言。
-- **无为而治;道法自然;上善若水,利万物而不争**——稳态自主、算法定址、harness 服务下级不争特权(第 7.16、4.2、4.1 条)。
 
 ### 11.5 度身与既判力
 
-- **量腹而食,度身而衣**(第 10.1 条)。
-- **一事不再理**(第 10.3 条)。
+度身与既判力的古典引语见 SPEC §11.28（CLAUDE.md §11.5）。
 
 ### 11.6 砺与生于忧患
 

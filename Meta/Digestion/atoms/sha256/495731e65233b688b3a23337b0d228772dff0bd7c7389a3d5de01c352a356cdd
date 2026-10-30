@@ -1,0 +1,27 @@
+## 31. Mathematical provenance and limits
+
+The complete-world domain, chronological left products, literal clocks and zero-safe parent converse are those of *FIB common-parent geometry and two exact mixed children*, Definitions 1.1–1.3 and Theorem 2.1. Its Definition 12.1, Lemma 12.2 and Theorem 12.3 also give the polynomial criterion for an arbitrary fifth-M response, the nonzero drift-coefficient vector and the unique whole-world lift. Under the correspondence
+
+$$
+X=\mathcal J,\qquad N=\mathcal N,\qquad V=U+n,\qquad
+N_4=\frac{2D}{5},\qquad \mathsf S_0=6F,\qquad K_5=p_c-24,
+$$
+
+that prior lift at response zero is exactly (29.1). Thus the zero-safe reconstruction and the source polynomial criterion are reused. The additional conclusion is the exhaustive decomposition of this entire zero-base family into the two analytic arcs, with their strict width bounds and global drift sign.
+
+*Positive acquired bases force low-width terminal-J companions*, Section 2, has regular numerator $P_p=-3F$. Its Lemma 3.1 excludes response zero at $b\ge3/4$, because $P_p<0$ there, whereas an actual parent with $D=0$ has $b=1/8$. That width exclusion does not count the roots at smaller widths and does not establish a terminal collision or obstruction.
+
+The two singular parent sources and their unique lifts at a prescribed fifth response are already described in *FIB common-parent geometry and two exact mixed children*, Theorem 4.2. The singular polynomial, explicit Sturm chain, isolating intervals and strict $A_5$ bound are also the results of *Uniqueness of actual sources above width eight*, Sections 14–16. These singular data and their correspondence to the original whole worlds are reused. They do not exclude a pair containing both a singular and a regular world.
+
+*An exact unequal-diagonal pair for the original terminal M response*, Sections 54–58, gives an all-width terminal-M reconstruction for $p\ne24$, retaining its exceptional branches and strict-source conditions. Section 59 keeps the independent J and M pairs, and Section 65 gives further restrictions at nonnegative fifth responses. Those results do not classify the entire zero-base source curve into the two arcs established here.
+
+The additional conclusions relative to these named sources are the exactly-two-simple-positive-root theorem for every $0<r<1$, the strict bounds
+
+$$
+0<b_-(r)<\frac{r(1-r)}2<b_+(r)<\frac12,
+$$
+
+the resulting two analytic components of actual zero-base worlds across both parent singular points, and the global consequences $d>24$ and $g(5)<0$. Bernstein polynomial identities, Descartes' rule, the intermediate value theorem, Sylvester elimination, Sturm's theorem and the analytic implicit-function theorem are classical. No literature-priority claim is made.
+
+The original existence question remains some $p\ne24,v$ admitting an independently distinct J pair and an independently distinct M pair in one entire $C(p,v)$. The pairs may overlap and their common terminal answers are independent. Response zero is an allowed route within that question. Its exact incidence formulation is (30.3), which remains unresolved; the two-arc theorem supplies neither a joint witness nor a global exclusion. All singular sources and all gain degeneracies compatible with the original rows remain included. The acquisition, source domain, whole gain and clock convention are unchanged. The forbidden-base local intersection at $p=24$ is not a witness. These are ordinary mathematical results without a formal-kernel claim.
+

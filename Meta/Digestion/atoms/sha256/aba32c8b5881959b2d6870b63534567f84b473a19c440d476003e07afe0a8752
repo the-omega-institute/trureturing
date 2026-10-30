@@ -1,0 +1,35 @@
+## 21. Two uniform strict-source exclusions from the published quadratic
+
+Use $D_x=x(x+1)(x+2)$ and the literal quadratic $\Phi(U)$ of X,
+(14.8)–(14.10). Define its cleared multiple
+
+$$
+L(x,U,p,v)=-5D_x\Phi(U)
+           =\mathcal A(x,p,v)U^2+2\mathcal B(x,p,v)U+5\mathcal C(x,p,v),
+\tag{21.1}
+$$
+
+where the expansion needed below is
+
+$$
+\begin{aligned}
+\mathcal A={}&-20px^2-40px+5vx^2+5vx
+              +834x^3+2022x^2+228x-960,\\
+\mathcal B={}&260px^2+350px-320p-85vx^2-25vx+50v\\
+             &\quad+2835x^3+2058x^2-8409x+3120,\\
+\mathcal C={}&36px^2+4px-128p-15vx^2+9vx+20v
+              -738x^2-1050x+1872.
+\end{aligned}
+\tag{21.2}
+$$
+
+This is the supplied quadratic, with its normalization fixed by (21.1).
+Its undivided identity is a rational identity in $x,U,p,v,d$;
+the base rectangle used for estimates in X does not restrict that
+identity. Every actual world therefore satisfies $L=0$.
+In particular X, (14.10), obtains $\Phi=0$ as a polynomial combination
+of its two original clock equations $A_U=B_U=0$, with no division
+by $d$ or $U-\tau$. Thus (21.1) applies also to zero drift and
+failed drift inverses. It is a necessary equation, not a converse
+world-realization criterion.
+

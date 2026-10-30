@@ -8,6 +8,8 @@
 
 -- Escape audit unfinished for published theorems: https://github.com/the-omega-institute/trureturing/issues/19129.
 
+-- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19870.
+
 import Mathlib.RingTheory.PowerSeries.Substitution
 import Mathlib.Data.Nat.Prime.Basic
 import Mathlib.Tactic.LinearCombination
@@ -176,7 +178,7 @@ theorem C_dvd_iff_coeff (a : R) (p : PowerSeries R) :
     ext n
     simpa using hq n
 
-private theorem coeff_subst_sum {p : PowerSeries R} (hp : constantCoeff p = 0)
+theorem coeff_subst_sum {p : PowerSeries R} (hp : constantCoeff p = 0)
     (f : PowerSeries R) (n : ℕ) :
     coeff n (f.subst p) = ∑ k ∈ Finset.range (n+1), coeff k f * coeff n (p ^ k) := by
   rw [coeff_subst' (.of_constantCoeff_zero hp)]

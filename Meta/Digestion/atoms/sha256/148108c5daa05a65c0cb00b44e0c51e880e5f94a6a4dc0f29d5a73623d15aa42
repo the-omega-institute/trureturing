@@ -1,0 +1,27 @@
+**Proposition 34.3 (Ambient sharpness).** At $(p,v)=(20,100)$,
+$\ell(p,v)=24$.
+
+Proof. Specializing the exact polynomial quotient defining $R$ in
+(31.8) gives
+
+$$
+[x^{18}]R(x,20,100)=-28860568222671000000,
+\tag{34.8}
+$$
+
+and the following exact values, ordered at $x=0,-1,-2$:
+
+$$
+\begin{aligned}
+R:&\quad(5222650937344000000,\ 67115469584250000,
+                  -5181917236514558208000000),\\
+F_0:&\quad(-480,360,1000).
+\end{aligned}
+\tag{34.9}
+$$
+
+Thus $F_0^2R$ has degree $24$ and no factor supported at a zero
+of $D$. Equation (34.5) gives the assertion. This is sharpness of the
+ambient complex algebra, with no assertion of $24$ strict-real worlds
+or membership of this base in an actual $J$-pair arc. ∎
+

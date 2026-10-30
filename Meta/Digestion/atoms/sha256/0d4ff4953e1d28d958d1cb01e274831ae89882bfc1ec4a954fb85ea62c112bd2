@@ -1,0 +1,26 @@
+**Definition 7.1 (independent matrix coefficients and polynomial drift).** Fix known integers $k,\delta\ge0$. All entries of all coefficient matrices and all drift coefficients in
+
+$$
+Z(t)=\sum_{h=0}^k Z_ht^h,\qquad Z_h\in\operatorname{Mat}_2(\mathbb R),
+\qquad D(t)=\sum_{h=0}^{\delta}d_ht^h
+$$
+
+are independent unrestricted real unknowns. There is no common-source, rank, positivity, gain, trace or nonzero-coefficient hypothesis. The ambient dimension is
+
+$$
+N=4(k+1)+(\delta+1)=4k+\delta+5.
+$$
+
+The known atoms are precisely the matrices $M,J$ of Definition 1.1. Starting with $A_0=I$, every chronological atom is left multiplied, advances the local clock by one and is read. The current reading is included, and
+
+$$
+Y_i=D(i)+\operatorname{tr}(A_iZ(i)).
+$$
+
+Set
+
+$$
+q=k+1,\quad \rho=\delta+1,\quad s=2q+\rho=2k+\delta+3,
+\quad m=s-1=2k+\delta+2.
+$$
+

@@ -1,0 +1,75 @@
+**Lemma 48.1 (The zero-safe parent and its actual-world lift).** The full
+five-row parent consists exactly of $b>0$, $0<r<1$, $\epsilon\in\mathbb R$
+satisfying
+
+$$
+\epsilon\Lambda+D_{\rm par}=0.
+\tag{48.2}
+$$
+
+Its corresponding complete world has $P=P(r,b)$, $d=24+\epsilon$, and
+
+$$
+\begin{gathered}
+z_0=-24-\epsilon,\quad z_1=-\epsilon/j,\quad
+z_2=(27/5-\epsilon)/T,\quad z_3=-\epsilon/n,\\
+g(s)=\sum_{i=0}^3 z_i\ell_i(s),\qquad
+\ell_i(s)=\prod_{\substack{0\le k\le3\\ k\ne i}}\frac{s-k}{i-k}.
+\end{gathered}
+\tag{48.3}
+$$
+
+This is a bijection with complete worlds, including every source with
+$\Lambda=0$.
+
+**Proof.** All of $j,n,T,U$ are strictly positive on the source domain.
+The literal traces, already obtained in Lemma 2.2, are
+
+$$
+\begin{array}{c|rrrrrrrrr}
+\text{clock/action}&0&1,J&2,M&3,J&4,M&5,M&6,M&7,J&7,M\\ \hline
+\text{trace}&1&j&T&n&U&U+n&2U+n&T+2j+4r&3U+2n.
+\end{array}
+\tag{48.4}
+$$
+
+The first four original readings therefore force exactly the four
+samples in (48.3). A polynomial of degree at most three is uniquely
+determined by these samples. The fixed-node weights give
+
+$$
+\begin{array}{c|rrrr}
+s&\ell_0(s)&\ell_1(s)&\ell_2(s)&\ell_3(s)\\ \hline
+4&-1&4&-6&4\\
+5&-4&15&-20&10\\
+6&-10&36&-45&20\\
+7&-20&70&-84&35.
+\end{array}
+\tag{48.5}
+$$
+
+Substitution of the first row into the fifth original reading gives
+
+$$
+d+Ug(4)-18=U(\epsilon\Lambda+D_{\rm par}).
+\tag{48.6}
+$$
+
+After division of this residual by $U$, its constant term is
+$6/U+24-162/(5T)=D_{\rm par}$, and its coefficient of $\epsilon$
+is $\Lambda$. Hence (48.2) is both necessary and sufficient. The source
+matrix is legal because $b>0$, $0<r<1$, and (48.3) has degree at most
+three. Its whole gain cannot vanish identically: otherwise the first
+two readings would both be $d$, contrary to $0\ne24$. Conversely every
+parent world fixes $(b,r,\epsilon)$ and these samples, proving the
+bijection. This is the target-parent correspondence of Section 19 and
+*FIB common-parent geometry and two exact mixed children*, Theorem 2.1,
+with its reconstruction displayed in the present notation. $\square$
+
+In particular $\Lambda=0$ forces $D_{\rm par}=0$, hence $b=1/8$.
+At any source with $b=1/8$ and $\Lambda=0$, every real $\epsilon$ is
+allowed by (48.2), including $\epsilon=-24$, which gives zero drift.
+The reconstruction divides by positive source traces and fixed
+interpolation-node differences, never by $\Lambda$, a gain sample,
+a leading coefficient or a difference of gain roots.
+

@@ -1,0 +1,24 @@
+**Lemma 133.3 (Decoder-uniform lower asymptotics).** For every
+$\varepsilon>0$ there is $\delta>0$ such that, simultaneously for every CPTP
+$\mathcal R$ and $0<q<\delta$,
+
+$$
+e_{-q}(\mathcal R)\ge\frac23-\left(\frac{\sqrt2}{9}+\varepsilon\right)q.
+\tag{133.7}
+$$
+
+*Proof.* From (118.1),
+$(\Phi_s-\Phi_t)(\rho)=(s-t)\begin{psmallmatrix}0&\rho_{01}&0\\
+\rho_{10}&h&0\\0&0&-h\end{psmallmatrix}$ with
+$h=(\rho_{11}-\rho_{22})/2$. Positivity gives
+$|\rho_{01}|+|h|\le1$, and CPTP trace-norm contraction gives the uniform
+estimate $|e_s(\mathcal R)-e_t(\mathcal R)|\le|s-t|$.
+If (133.7) failed, choose $q_j\downarrow0$ and decoders violating it, and
+replace each by its phase average. The compact CPTP Choi set supplies a
+convergent subsequence; moreover
+$2/3\le e_0(\overline{\mathcal R}_j)\le
+e_{-q_j}(\overline{\mathcal R}_j)+q_j$, so continuity of $e_0$ puts its
+limit in $\mathcal Z_0$ by Theorem 115.1. But (133.5) and the violation imply
+$L(\overline{\mathcal R}_j)>\sqrt2+9\varepsilon$. Continuity of $L$ in
+Choi entries contradicts Lemma 133.2 at the limit. $\square$
+

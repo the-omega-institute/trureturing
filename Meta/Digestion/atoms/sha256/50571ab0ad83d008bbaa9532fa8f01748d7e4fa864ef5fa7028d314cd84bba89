@@ -1,0 +1,29 @@
+**命题 44.2（位置不变量与配对的精确距离分解）。** 对全部 $t\in T$，
+
+$$
+|S(t)|=q(t),\qquad S(\rho t)=S(t),
+\tag{44.2}
+$$
+
+其中 $q$ 是 (43.3) 的原有计数。$d$ 是 $T$ 上的伪度量，而且对任意
+$s,t,u,v\in T$ 有
+
+$$
+d(\langle s,t\rangle,\langle u,v\rangle)
+=d(s,u)+d(t,v)+|\delta_{s,t}-\delta_{u,v}|.
+\tag{44.3}
+$$
+
+**证明。** 三个地址区域 $\{\epsilon\},0\mathcal A,1\mathcal A$ 两两不交，
+故 (44.1) 的基数递推正是 (43.3)，结构归纳给 $|S|=q$。
+复用 §42 所列实际自由树运输的单射性，$\rho s=\rho t$ 当且仅当 $s=t$。
+两个叶子的像分别为 $\beta$ 和 $\langle\beta,\alpha\rangle$；后者的两个子树不等，
+所以两个像的 $S$ 都为空。内部节点使用运输保持构造子、上述相等关系及两个归纳假设，
+逐一保留 (44.1) 的三个区域，得到 $S(\rho t)=S(t)$。
+
+有限集的对称差非负、对称，且对角为空。包含关系
+$X\triangle Z\subseteq(X\triangle Y)\cup(Y\triangle Z)$ 给三角不等式，故 $d$ 为伪度量。
+它不必分离来源，例如 $S(\alpha)=S(\beta)$。对两个配对树在三个不交地址区域分别取
+对称差，根地址的贡献为 $|\delta_{s,t}-\delta_{u,v}|$，子地址的贡献分别为
+$d(s,u),d(t,v)$，这就证明 (44.3)。∎
+

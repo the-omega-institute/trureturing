@@ -1,0 +1,18 @@
+**Corollary 8.4 (unbounded run versus infinite source).** If an infinite
+Native command execution satisfies the reached local/input progress premises,
+the construction determines one mathematical infinite primitive execution,
+with finitely many constructed cells at every finite cut. This does not
+construct an arbitrary infinite *initial* source or finite-resource global
+acquisition of one.
+
+Proof. Theorem 8.3 produces compatible finite fragments, each containing an
+actual positive finite number of primitives. Their successive concatenation
+therefore has order type omega and its finite cuts lie inside finite
+fragments. Lemma 3.5 and Theorem 7.2 make storage finite at each such cut.
+The initial source was one finite $u$. No step adds an unknown infinite
+payload; reservation appends only zeros and genuine updates compute finite
+successors. Thus neither a new infinite initial object nor a finite end at
+which all its payload has been acquired follows. Withheld input or divergent
+local work also prevents an unconditional service-progress conclusion.
+$\square$
+

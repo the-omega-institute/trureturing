@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c84a8d136251888964777afe05eeb3e14cde090c958bf0323c5e000469392c8b
+  normalized_sha256: sha256:c84a8d136251888964777afe05eeb3e14cde090c958bf0323c5e000469392c8b
+cas_ref: sha256:c84a8d136251888964777afe05eeb3e14cde090c958bf0323c5e000469392c8b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Name of a quantity to measure in an experimental checklist; no asserted negative coefficient or bound.
+    previous_atom_id: ac05bca1709ed33b83df27a2a5067bfdc9299e3bb59f10d54437f3e283994bb0
+    next_atom_id: 85ab602feb8ec09a30db2d2eab00ec46dae8704773050f5b987bb30060fb211d

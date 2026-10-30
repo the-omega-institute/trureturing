@@ -1,0 +1,28 @@
+**Definition 56.1 (current views on the acquired process).** Consider
+the synchronized cuts after Theorem 54.2 and after finite continued use
+of Theorem 55.2. Fix the same dispatcher, root, current authority and
+service contract as common context. For the actual current term $u$ set:
+
+| View | Independently selected information |
+| --- | --- |
+| Space $S_A$ | Actual rooted oriented material-address support of $C(u)$, excluding observer record edges |
+| Boundary $B_A$ | Actual terminal-material-address antichain of that same $C(u)$, exactly AA Definition 17.3's $B_0$ |
+| Time $T_A$ | Labelled causal creation/lifecycle order $E(u)$ of AA Definition 17.1 for the actual successful source events |
+| Memory $M_A$ | Contents of the actually retained current constructor code, with the same retained callable entry and current authority |
+
+Boundary contains the terminal marker address $pL$ at a logical beta
+leaf $p$; it contains $p$ at a logical alpha leaf. It is not the antichain
+of logical growth targets. Time records the causal dependencies and
+labelled membership of successful source events, including old producer
+events and later actual successes; it chooses no total serial extension
+and includes no refusal, printing or work events. Memory selects the
+current predictor record, not every record in the joint process. The
+immutable entry archive exists in that process and is additional data.
+
+View equality and reconstruction concern their semantic contents in
+this fixed common context. Re-encoding a recovered term gives the
+description of the corresponding memory content; it is not a grant of
+authority or recovery of private backing identities. The actual retained
+memory and binding are supplied by Theorems 54.2–55.2. No additional raw
+Space, Time or Boundary exposure port is assumed.
+

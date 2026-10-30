@@ -1,0 +1,6 @@
+动作菜单含：
+
+1. **Unlock**：在 locked 状态合法，记录“unlock”，后继为 $(t,\mathsf{open})$；在 open 状态记录固定的“already-open”或合同指定的拒绝标签。
+2. **Read_L**：仅在 open 且左端口存在时合法，记录左子树根标签；locked 时记录统一的“locked”失败标签。
+3. 固定树 $v$ 的 **Graft_v**：仅在 open 时合法，记录“graft(v)”，后继为 $(\langle t,v\rangle,\mathsf{open})$。它满足
+

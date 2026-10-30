@@ -1,0 +1,101 @@
+**Lemma 8.3.2 (Exhaustive positive cover and legality filter).** The
+coefficients of (8.3.3) satisfy this table: every $t_{l00}$ has the
+indicated strict sign, and the final column is exactly
+$\lceil10^6\theta_{a,b}\rceil$.
+
+| $a$ | $b$ | Sign of all $t_{l00}$ | $\lceil10^6\theta_{a,b}\rceil$ |
+|---:|---:|:---:|---:|
+| $0$ | $0.31$ | $+$ | $590$ |
+| $0.34$ | $0.48$ | $-$ | $421$ |
+| $0.52$ | $1.07$ | $+$ | $1129$ |
+| $1.11$ | $1.21$ | $-$ | $1886$ |
+| $1.24$ | $1.295$ | $+$ | $18221$ |
+| $1.32$ | $1.36$ | $-$ | $808191$ |
+| $1.395$ | $2.13$ | $-$ | $742848$ |
+| $2.18$ | $2.80$ | $+$ | $12509$ |
+| $2.86$ | $\infty$ | $-$ | $14965$ |
+
+Define
+
+$$
+\begin{aligned}
+I_1&=[0.31,0.34],&I_2&=[0.48,0.52],&I_3&=[1.07,1.11],\\
+I_4&=[1.21,1.24],&I_5&=[1.295,1.32],&I_6&=[2.13,2.18],\\
+I_7&=[2.80,2.86],&&I_*=[1.36,1.395].
+\end{aligned}
+\tag{8.3.5}
+$$
+
+Every positive root of $\mathscr R(\cdot;p,v)$ over $\mathcal B$ lies
+in their union. All actual worlds lie in $I_*$.
+
+Here are complete finite bounds for the last assertion. Starting with
+each $[a,b]=I_k$, repeat four times the following root-retaining
+inclusion, with each new interval used in the next step:
+
+$$
+\begin{gathered}
+c=(a+b)/2,\quad\delta=(b-a)/2,\quad
+V=\mathcal E_c(\mathscr R;0),\quad
+L=\mathcal E_c(\mathscr R_x;\delta),\\
+[l,u]=[a,b]\cap\bigl(\mathcal O_{160}([c,c])-V/L\bigr),\qquad
+[a,b]_{\mathrm{new}}=
+[10^{-9}\lfloor10^9l\rfloor,10^{-9}\lceil10^9u\rceil].
+\end{gathered}
+\tag{8.3.6}
+$$
+
+All $28$ derivative intervals $L$ exclude zero. Writing their endpoints
+as $L_-,L_+$, they satisfy
+
+$$
+\max\frac{L_+-L_-}{|L_++L_-|}<570877/10^6<1.
+\tag{8.3.7}
+$$
+
+Every pair in the next table is the pair of integer endpoints of
+$10^9[a,b]_{\mathrm{new}}$ after the indicated step.
+
+| $k$ | Step 1 | Step 2 | Step 3 | Step 4 |
+|---:|:---|:---|:---|:---|
+| $1$ | $(326288597,328336555)$ | $(326892048,326919206)$ | $(326906144,326910357)$ | $(326906145,326910353)$ |
+| $2$ | $(499726399,499864488)$ | $(499808288,499824244)$ | $(499808292,499824223)$ | $(499808292,499824223)$ |
+| $3$ | $(1090257932,1090713981)$ | $(1090367550,1090414690)$ | $(1090368232,1090414432)$ | $(1090368232,1090414431)$ |
+| $4$ | $(1226585675,1228656991)$ | $(1227237557,1227302251)$ | $(1227251578,1227293002)$ | $(1227251578,1227292995)$ |
+| $5$ | $(1308630812,1309829217)$ | $(1308989261,1309089523)$ | $(1309004558,1309079111)$ | $(1309004558,1309079103)$ |
+| $6$ | $(2155241979,2156493938)$ | $(2155354138,2155758090)$ | $(2155358123,2155757478)$ | $(2155358125,2155757459)$ |
+| $7$ | $(2830771782,2834764461)$ | $(2831152307,2832052116)$ | $(2831191601,2832023839)$ | $(2831191783,2832023535)$ |
+
+On each final interval, using its midpoint $c$ and radius $\delta$,
+
+$$
+\begin{gathered}
+\sup\mathcal E_c(A;\delta)<-10^{13},\\
+\inf\{|z|:z\in\mathcal E_c(Z;\delta)\}>10^{14},\qquad
+\inf\{|z|:z\in\mathcal E_c(Z_1;\delta)\}>10^{10}.
+\end{gathered}
+\tag{8.3.8}
+$$
+
+In particular all three enclosures exclude zero. On the first final
+interval evaluate $d=-\mathcal E_c(Z;\delta)/\mathcal E_c(A;\delta)$,
+then the circuit (8.2.6), using the whole intervals for $x,p,v$. Its
+bounds are
+
+$$
+-32<H_1<-28,\qquad216<C_0<223,\qquad7<r<8.
+\tag{8.3.9}
+$$
+
+For the other six intervals the polynomial ratio
+$\mathcal E_c(B_1;\delta)/\mathcal E_c(Z_1;\delta)$ is strictly inside
+the corresponding open interval in this table.
+
+| $k$ | Strict enclosure for the forced $b$ |
+|---:|:---|
+| $2$ | $(-7,-5)$ |
+| $3$ | $(-0.09,-0.08)$ |
+| $4$ | $(-0.45,-0.43)$ |
+| $5$ | $(-0.60,-0.51)$ |
+| $6$ | $(-0.16,-0.15)$ |
+| $7$ | $(-0.27,-0.26)$ |

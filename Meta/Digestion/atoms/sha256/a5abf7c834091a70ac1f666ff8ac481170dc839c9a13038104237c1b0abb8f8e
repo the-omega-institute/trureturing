@@ -1,0 +1,98 @@
+**Proposition 2.2 (quantified finite-prefix correction).** Let
+$a:\mathbb N\to\{0,1\}$, $f:\mathbb N\to\mathbb N$, and $R\in\mathbb N$.
+Suppose that
+
+$$
+a(2q)+a(2q+1)=1\quad(q\in\mathbb N),\qquad
+\delta f(m)\geq1\quad(m\in\mathbb N,\ m\geq R).
+$$
+
+Define $g:\mathbb N\to\mathbb N$ by
+
+$$
+g(n)=\sum_{j=0}^{n}a(j)f(n-j).
+$$
+
+Then, for every integer $n\geq R$, the following identity and inequalities hold:
+
+$$
+\begin{aligned}
+\delta g(n)
+={}&a(n+1)f(0)
+  +\sum_{m=0}^{R-1}a(n-m)\delta f(m)
+  +\sum_{j=0}^{n-R}a(j)\delta f(n-j)\\
+\geq{}&a(n+1)f(0)
+  +\left\lfloor\frac{n-R+1}{2}\right\rfloor
+  -\sum_{m=0}^{R-1}a(n-m)(\delta f(m))_-\\
+\geq{}&a(n+1)f(0)
+  +\left\lfloor\frac{n-R+1}{2}\right\rfloor-V_R(f).
+\end{aligned} \tag{2.1}
+$$
+
+In particular, $\delta g(n)\geq1$ for every
+$n\geq R+2V_R(f)+1$. If in addition an integer $k\geq1$ satisfies
+
+$$
+f(m)\leq\binom{m+k-1}{k-1}\qquad(m\in\mathbb N),
+$$
+
+then
+
+$$
+V_R(f)\leq\binom{R+k-1}{k},\qquad
+\delta g(n)\geq1\quad
+\left(n\geq R+2\binom{R+k-1}{k}+1\right). \tag{2.2}
+$$
+
+Proof. Subtract the convolution at $n$ from that at $n+1$. The new summand
+$j=n+1$ must be retained, giving
+
+$$
+\delta g(n)=a(n+1)f(0)+\sum_{j=0}^{n}a(j)\delta f(n-j).
+$$
+
+For $n\geq R$, the indices with $n-j<R$ are precisely
+$j=n-R+1,\ldots,n$. Reindex these by $m=n-j$ to obtain the identity
+in (2.1). This partition includes $m=0$ in the prefix whenever $R>0$,
+and includes $m=R$ in the tail. When $R=0$ the prefix is empty and the
+tail is the whole sum, so the same identity holds.
+
+For each prefix index, $0\leq a(n-m)\leq1$ and
+$\delta f(m)\geq-(\delta f(m))_-$. Therefore its total contribution is at
+least the negative of the weighted prefix sum in (2.1). No early negative
+difference is discarded. The tail has $\delta f(n-j)\geq1$ for every
+$0\leq j\leq n-R$. If $L=n-R+1$, the integers $0,\ldots,L-1$ contain
+$\lfloor L/2\rfloor$ complete pairs $(2q,2q+1)$, and possibly one further
+even integer. Each complete pair has $a$-sum $1$, and the remaining value
+is nonnegative. Consequently
+
+$$
+\sum_{j=0}^{n-R}a(j)\geq\left\lfloor\frac{n-R+1}{2}\right\rfloor.
+$$
+
+The weighted prefix sum is at most $V_R(f)$, proving both inequalities in
+(2.1). Since $a(n+1)f(0)\geq0$, if $n\geq R+2V_R(f)+1$ then
+
+$$
+\delta g(n)\geq
+\left\lfloor\frac{2V_R(f)+2}{2}\right\rfloor-V_R(f)=1.
+$$
+
+For the additional conclusion, nonnegativity of $f(m+1)$ gives
+
+$$
+(\delta f(m))_-\leq f(m)\leq\binom{m+k-1}{k-1}.
+$$
+
+Thus the classical cumulative composition count yields
+
+$$
+V_R(f)\leq\sum_{m=0}^{R-1}\binom{m+k-1}{k-1}
+=\binom{R+k-1}{k}. \tag{2.3}
+$$
+
+For completeness, when $R=0$ both sides of the equality are $0$; increasing
+$R$ by $1$ adds $\binom{R+k-1}{k-1}$ to the sum, and Pascal's identity adds
+the same amount to $\binom{R+k-1}{k}$. This proves the equality for every
+$R\geq0$, including $k=1$. Substitution into (2.1) proves (2.2). $\square$
+

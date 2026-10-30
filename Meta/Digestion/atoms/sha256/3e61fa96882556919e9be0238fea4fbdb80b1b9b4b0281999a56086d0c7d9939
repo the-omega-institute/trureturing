@@ -1,0 +1,97 @@
+**Theorem 113.1 (Orbit value and matching decoder).** For every physical
+$s\in[-1/2,1]$, with $q=|s|$,
+
+$$
+\boxed{\displaystyle
+\nu(s)=F(q)=\frac{1-q+\sqrt{(1-q)^2+8}}6.}
+\tag{113.1}
+$$
+
+A matching CPTP decoder is
+
+$$
+\mathcal A_\varepsilon(X)
+ =K_0XK_0^\dagger+K_1XK_1^\dagger,\qquad
+K_0=E_{00}+\varepsilon E_{11},\quad K_1=E_{22},
+\tag{113.2}
+$$
+
+where $\varepsilon$ is as in Lemma 112.3. It has population matrix
+$C=I$, coherence $\xi_{01}=\varepsilon$, and all other off-diagonal
+coherence coefficients zero.
+
+*Proof.* Write
+
+$$
+r=\frac{\sqrt{(1-q)^2+8}-(1-q)}2,\qquad
+w=(1,1,r)^{\mathsf T},\qquad D_*=D(1,1).
+\tag{113.3}
+$$
+
+Because $0\le q\le1$, the positive root $r$ satisfies
+
+$$
+1\le r\le\sqrt2,\qquad r^2+(1-q)r=2,\qquad
+D_*w=F(q)w.
+\tag{113.4}
+$$
+
+For example the polynomial $r^2+(1-q)r-2$ is increasing on the
+positive axis and has opposite weak signs at $1$ and $\sqrt2$.
+For every $D(u,x)$ obtained in Lemma 112.3, its Rayleigh value differs
+from the one at $D_*$ by
+
+$$
+\frac{w^\dagger[D(u,x)-D_*]w}{w^\dagger w}
+ =\frac{2\bigl[(r^2-1)(u-1)+q(1-x)\bigr]}{3(2+r^2)}.
+\tag{113.5}
+$$
+
+If $u\ge1$, both terms in the numerator are nonnegative. If $u\le1$,
+then $x\le u$, so
+
+$$
+\begin{aligned}
+(r^2-1)(u-1)+q(1-x)
+&\ge\bigl[q-(r^2-1)\bigr](1-u)\\
+&=(1-q)(r-1)(1-u)\ge0.
+\end{aligned}
+\tag{113.6}
+$$
+
+Here the last equality follows from the root identity in (113.4).
+Thus $\lambda_{\max}(D(u,x))\ge F(q)$. Since $D(u,x)$ is Hermitian
+and traceless, its half trace norm is at least its largest eigenvalue.
+Equation (112.11) therefore yields, for every original CPTP decoder,
+
+$$
+h_s(\mathcal R)\ge\frac12\|D(u,x)\|_1\ge F(q).
+\tag{113.7}
+$$
+
+For the reverse bound, the adjoint products of the two Kraus operators
+in (113.2) sum to $I$. Equivalently, its only nonzero Choi block is
+on $|00\rangle,|11\rangle,|22\rangle$ and is
+
+$$
+\begin{pmatrix}1&\varepsilon&0\\
+                \varepsilon&1&0\\0&0&1\end{pmatrix}.
+\tag{113.8}
+$$
+
+The full Choi matrix has eigenvalues $2,1$ and seven zeros, and output
+partial trace $I$, so this is a full-qutrit CPTP decoder. At $P$ its
+target-minus-output matrix is $D_*$. The eigenvalues of $D_*$ are
+
+$$
+F(q),\qquad \frac{q-1}{3},\qquad
+\frac{1-q-\sqrt{(1-q)^2+8}}6.
+\tag{113.9}
+$$
+
+Only the first is positive. Hence $\|D_*\|_1/2=F(q)$. Both
+$\Phi_s$ and $\mathcal A_\varepsilon$ are diagonal covariant, so every
+$P\in\mathcal O$ gives a diagonal-unitary conjugate of this difference
+matrix. Thus $h_s(\mathcal A_\varepsilon)=F(q)$ on the whole orbit,
+matching (113.7). $\square$
+

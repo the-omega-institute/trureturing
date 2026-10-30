@@ -1,0 +1,14 @@
+**Proposition 18.2 (a simultaneous literal implementation account).** The call vectors (CM.18) or, separately, (CM.27), can be realized with the following additional source and observer work and retained stores. They make no lifetime bit bound or total-resource minimality assertion.
+
+| Resource | Account on the same chosen run |
+| --- | --- |
+| Source law and registry | one actual native $T$ store, up to $N^2$ rational words in a dense representation, native incidence/registry and authenticated port bindings |
+| Source field and destination | $N$ current rational words and a distinct $N$-word destination buffer when an out-of-place update is used |
+| Each source Tick | a dense implementation uses $N^2$ rational products, $N(N-1)$ additions and $N$ destination writes; zero coefficients may instead be handled by its explicitly chosen sparse representation |
+| Each source Square | $N$ native rational products, source reads, $N$ destination writes and one whole-field serial commit |
+| Each Reset/Add/Read | respectively $N$ zero writes, a genuine port addition, or source selection/serialization of the entire rational; every actual frame/ACK/End/Return remains charged |
+| General acquired data | $2Nb^2$ moment rationals; selected indices; $G,A,D,E$ and solve scratch; up to $N^3$ stored product coefficients; $N^2$ atom/conversion entries and native export buffers |
+| General current prediction | a separate $N$-vector and destination/scratch, plus actual local updates and full reply processing; these do not replace the source field or its work |
+| Measured chronology | all retained calibration windows, actual pulse operands/indices, call tags and framing, plus any latest Report or later journal that is exposed or retained |
+| Cyclic prediction | earned $C,S$, current $N$-vector in template coordinates, a separate destination vector and actual rotation/square arithmetic; any literal native-law copy is an extra store |
+| All contexts | code, pivot/root/phase counters, parser and pending/input/output buffers, source/port references, current grants and storage backing at each owner |

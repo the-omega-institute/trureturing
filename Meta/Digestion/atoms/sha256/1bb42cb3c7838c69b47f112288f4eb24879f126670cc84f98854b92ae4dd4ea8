@@ -1,0 +1,48 @@
+**Lemma 133.4 (A moving nonunital decoder and all nine compositions).** Put
+$h=1/\sqrt2$, $b_q=(1-hq)/2$, and $a_q=\sqrt{b_q}$. Define
+
+$$
+\mathcal R_q(X)=
+\begin{pmatrix}
+x_{00}&-a_qx_{01}&0\\
+-a_qx_{10}&b_q(x_{11}+x_{22})&0\\
+0&0&(1-b_q)(x_{11}+x_{22})
+\end{pmatrix}.
+\tag{133.8}
+$$
+
+It is CPTP for $0\le q\le1/2$, is nonunital for $q>0$, and
+$\Lambda_q=\mathcal R_q\Phi_{-q}$ has the following nine matrix-unit images:
+
+$$
+\begin{array}{c|ccc}
+X&E_{00}&E_{11}&E_{22}\\ \hline
+\Lambda_q(X)&E_{00}&b_qE_{11}+(1-b_q)E_{22}&b_qE_{11}+(1-b_q)E_{22}
+\end{array}
+$$
+
+$$
+\begin{aligned}
+\Lambda_q(E_{01})&=qa_qE_{01},&
+\Lambda_q(E_{10})&=qa_qE_{10},\\
+\Lambda_q(E_{02})&=\Lambda_q(E_{20})=
+\Lambda_q(E_{12})=\Lambda_q(E_{21})=0.
+\end{aligned}
+\tag{133.9}
+$$
+
+Thus (133.9) holds on all complex $M_3$, and
+$\mathcal R_q(I)=\operatorname{diag}(1,1-hq,1+hq)$.
+
+*Proof.* Kraus operators
+
+$$
+E_{00}-a_qE_{11},\quad \sqrt{1-b_q}E_{21},\quad
+\sqrt{b_q}E_{12},\quad \sqrt{1-b_q}E_{22}
+\tag{133.10}
+$$
+
+have adjoint products summing to $I$, proving complete positivity and trace
+preservation. Applying (118.1) to each matrix unit gives (133.9) directly;
+(133.8) also gives the displayed nonunital value. $\square$
+

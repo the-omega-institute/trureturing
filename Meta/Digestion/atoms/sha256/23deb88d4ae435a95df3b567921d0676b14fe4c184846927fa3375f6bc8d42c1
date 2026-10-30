@@ -1,0 +1,37 @@
+**Theorem 2.2 (classification by all bounded true-jump endpoints).**
+For the same fixed source and each $h\ge0$,
+
+$$
+S_h(p)=S_h(p')
+\quad\Longleftrightarrow\quad
+B_{j,f}(p)=B_{j,f}(p')
+\ \text{for every }0\le j\le h
+\ \text{and every bounded }f:E\to\mathbb R.
+\tag{2.5}
+$$
+
+Consequently this complete family and the complete frozen path
+experiment have the same deterministic-start equality classes.
+This assertion concerns the inclusive family of endpoints, rather
+than equality of only its last member.
+
+**Proof.** The true-jump coupling (2.2) gives equal observations at each
+$j\le h$, hence equal expectations of every bounded test. Conversely,
+$j=0$ supplies the initial $O$. If signatures still differ, choose
+$k$ as in (2.3) and let
+
+$$
+f(c,r)=\mathbf1_{\{(c,r)=(c_k(p),n-k)\}}.
+\tag{2.6}
+$$
+
+In exactly $k$ actual jumps, depth $n-k$ can be reached only by
+decreasing depth at every jump. The unique all-parent route has
+probability $3^{-k}$ from $p$, since every starting vertex along
+that route is a nonroot. Its terminal colour is $c_k(p)$. From $p'$
+the route terminates at its different $k$th ancestor colour; no
+other $k$-jump route can reach that depth. Thus the two expectations
+of (2.6) are $3^{-k}$ and zero. This contradicts equality of the
+complete response family. Root and zero-budget cases follow from
+the included initial endpoint. $\square$
+

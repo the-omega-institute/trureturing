@@ -1,0 +1,37 @@
+**Corollary 11.6 (separately fixed original-entry charts).** For each
+$\sigma$ separately, supply actual gate01 from $P_\sigma$ and fix its
+complete actual $F^A$ entry $e_\sigma$. On canonical seven-tag running
+prefixes of that one call whose next row is an unchanged original row,
+excluding the pre-row and successor of the changed final idle CTL,
+
+$$
+V(h)=V(h')\ \Longleftrightarrow\ h=h'
+\ \Longleftrightarrow\ h\sim_Q h',
+\qquad V\in\{S,B,T,M_{\rm ret}\}.
+$$
+
+Proof. Proposition 11.2 establishes ARC Definition 5.1's actual source
+dispatcher, producer/workspace authority, heads, completed ACKs and
+parked-client relation also at $P_1$. ARC Definition 5.2's paid gate01
+route therefore really enters $F^A$ before header Base. Its complete
+fixed prefix, including raw $w_\sigma$ and meter, is the common parameter.
+Within $F^A$, ARC Definitions 4.1, 5.2 and Proposition 5.5 preserve CAP
+Definition 4.6's actual guards, operands, latch5 INs, seven branches,
+records, outputs, copies, ACK, source TOK and original successors up to
+the last idle CTL. None reads the inactive first store; no bank assignment
+is inserted. The same static renumbering/parity correspondence applies.
+This proves the required original-row correspondence directly for this
+entry; it does not delete SOURCECALL Lemma 2.3's canonical-acquired premise.
+
+At any stated cut an extendible canonical Supply or its prescribed
+enabled original non-IN Advance has a successful original response.
+Equality of the partial $Q$ maps forces the same test to execute with
+equal labels, released outputs and complete original successors. From
+their original13/latch5/receipt coordinates, SOURCECALL Lemma 3.2 and
+Theorem 3.3 reconstruct the same successor suffix from the fixed full
+$e_\sigma$; deleting its last row gives $h=h'$. Their matching-write
+induction needs this actual entry and unchanged reader, not a new
+canonical boot claim. Identical histories give the entire same partial
+response map, including lawful adaptive/semantic protocols. Theorem
+11.4 supplies each view direction. No extra receipt is inserted. ∎
+

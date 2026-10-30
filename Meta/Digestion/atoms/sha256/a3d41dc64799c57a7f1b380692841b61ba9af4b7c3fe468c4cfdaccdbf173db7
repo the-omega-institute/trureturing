@@ -1,0 +1,56 @@
+**Theorem 11.1 (five strict inequalities, including zero-component kernels).** Define the linear map
+$$
+H(\xi,\nu,\zeta)=P\begin{pmatrix}0&\xi\\\nu&\zeta\end{pmatrix}P^{-1},
+\qquad
+V(\xi,\nu,\zeta)=\mathsf B_{\rm pre}H(\xi,\nu,\zeta).
+\tag{11.1}
+$$
+Then $V:\mathbb R^3\to\mathbb R^3$ is an isomorphism. Let
+$$
+\begin{split}
+\mathcal K=\{(\xi,\nu,\zeta):\;&\zeta>0,\\
+&a\xi+d\zeta>0,\quad c\zeta-b\xi>0,\\
+&c\nu+b\zeta>0,\quad a\zeta-d\nu>0\}.
+\end{split}
+\tag{11.2}
+$$
+The exact prefix quotient image at slope zero is
+$$
+\mathsf B_{\rm pre}(\mathcal A)
+=\mathsf B_{\rm pre}(\mathcal P)=V(\mathcal K).
+\tag{11.3}
+$$
+For a proposed prefix quotient $y_{\rm pre}$, compute $(\xi,\nu,\zeta)=V^{-1}y_{\rm pre}$. It is realizable by an actual source if and only if all five strict inequalities in (11.2) hold. When they hold, the unique actual source is
+$$
+S_*(\xi,\nu,\zeta)
+=P\begin{pmatrix}\xi\nu/\zeta&\xi\\\nu&\zeta\end{pmatrix}P^{-1}
+=\frac1{t\zeta}
+\binom{a\xi+d\zeta}{c\zeta-b\xi}
+(c\nu+b\zeta,\ a\zeta-d\nu).
+\tag{11.4}
+$$
+Both $\mathcal K$ and $V(\mathcal K)$ are nonempty, open, convex cones of dimension three, described by finitely many strict homogeneous linear inequalities. This is the strict-inequality meaning of an open polyhedral cone; boundary points with equality are not included.
+
+**Proof.** In the coordinates $Y=P^{-1}XP$, the kernel of $\mathsf B_{\rm pre}$ is $\mathbb RE_{11}$ by (10.3). If $V(\xi,\nu,\zeta)=0$, the matrix with upper-left entry zero in (11.1) lies in that line, so $\xi=\nu=\zeta=0$. Equal dimensions make $V$ an isomorphism.
+
+For $X\in\mathcal P$, write $Y=(\begin{smallmatrix}w&\xi\\\nu&\zeta\end{smallmatrix})$. The formulas used in Theorem 10.2 give
+$$
+\zeta=\frac{h(X)}t>0,
+\qquad Xr_K=\binom{a\xi+d\zeta}{c\zeta-b\xi},
+$$
+$$
+l_KX=(c\nu+b\zeta,\ a\zeta-d\nu).
+\tag{11.5}
+$$
+Both vectors are strictly positive. Thus these three coordinates lie in $\mathcal K$, and the $w$ coordinate has no effect on the prefix quotient. This proves $\mathsf B_{\rm pre}(\mathcal P)\subset V(\mathcal K)$.
+
+Conversely take $(\xi,\nu,\zeta)\in\mathcal K$. Formula (11.4) is a strictly positive outer product divided by $t\zeta>0$, so it is actual. To check its first expression and quotient, put $u=\xi/\zeta$, $v=\nu/\zeta$. Then
+$$
+S_* =\zeta\,[P(u,1)^{\mathsf T}]\,[(v,1)P^{-1}].
+$$
+Its conjugate by $P$ is exactly $(\begin{smallmatrix}\xi\nu/\zeta&\xi\\\nu&\zeta\end{smallmatrix})$, and its difference from $H$ lies in $\mathbb RN$. Its quotient is therefore $V(\xi,\nu,\zeta)$. This proves the opposite inclusion and actual realization. A determinant-zero matrix with these coordinates must satisfy $w\zeta=\xi\nu$. Since $\zeta>0$, its upper-left coordinate is uniquely the one in (11.4), which also proves the stated inverse directly.
+
+There is no division by $a,b,c,d$ in either the test or the inverse. If $a=0$, primitivity and $t>0$ give $b=1,d>0$; if $b=0$, they give $a=1,c>0$. Likewise $c=0$ gives $d=1,b>0$, and $d=0$ gives $c=1,a>0$. Every such case, including simultaneous permitted zeros, still has nonzero $r_K,l_K$, positive $t\zeta$, and the same two strictly positive factors in (11.4). This verifies the zero-component cases without an implicit interior assumption.
+
+Finally, each condition in (11.2) is a strict linear homogeneous inequality. Their intersection is open and convex and is closed under positive scalar multiplication. It is nonempty: any strictly positive matrix gives a point in it by (11.5). Being nonempty and open in $\mathbb R^3$, it has dimension three. The isomorphism $V$ preserves these properties and transports the five inequalities. Nothing in this argument replaces strict positivity by nonnegativity or adds the cone's boundary. ∎
+

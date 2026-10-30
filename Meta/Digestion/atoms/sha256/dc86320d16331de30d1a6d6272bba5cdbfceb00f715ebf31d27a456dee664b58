@@ -1,0 +1,22 @@
+## 1. 多组件的精确调度合同
+
+固定整数 $m\ge2$。第 $i$ 个组件是有限、非空的确定性根协议
+
+$$
+\mathcal P_i=(H_i,H_{i,\circ},E_i,\delta_i,R_i,\operatorname{Term}_i,t_i),
+$$
+
+其中 $H_i$ 是有限状态集，$H_{i,\circ}$ 是根集，$E_i$ 是有限公开事件字母表，
+
+$$
+\delta_i:H_i\times E_i\rightharpoonup H_i
+$$
+
+是部分确定性后继，$R_i$ 是有限终端记录集，
+
+$$
+\operatorname{Term}_i\subseteq H_i\times R_i
+$$
+
+是合法终端对，$t_i$ 是组件读数。局部词 $w_i\in E_i^*$ 的运行写作 $\delta_{i,w_i}(x_i)$；运行未定义时，相关支持或冲突谓词为假。
+

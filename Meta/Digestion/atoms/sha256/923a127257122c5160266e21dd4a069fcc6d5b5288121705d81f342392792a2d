@@ -1,0 +1,15 @@
+**命题 82.3（附加 exact-$P$ 条件的不同障碍）。** 若 $n\ge2$ 且同一个 decoder 满足 $(F^n)^\dagger\mathcal D^\dagger(P)=P$，则
+
+$$
+L_{n,\mathcal D}(E(q))\ge(1-t)\sqrt{q(1-q)}.
+$$
+
+这不是定义 82.1 的 minimax lower bound。
+
+**证明。** 令 $\Psi=\operatorname{Ad}_{U_0^\dagger}\circ\mathcal D^\dagger$，$B=\Psi(P)$。由 $G_s(\Delta_W B)=P$，$x=1$，且因 $\alpha,\beta>0$，$y=d=0$。$0\le B\le I$ 的零对角及单位对角迫使相应 off-diagonals 全为零，故 $B=P$。unital CP map 将 projection $P$ 映为 projection $P$ 时，$P$ 属于其 multiplicative domain：$\Psi(PX)=P\Psi(X)$、$\Psi(XP)=\Psi(X)P$。这一标准 CP equality case 也可由 Stinespring isometry $V_\Psi$ 直接看出：
+$P\otimes I$ 与 $V_\Psi$ 的 intertwining 来自两侧 complementary projection 的零 norm。
+
+于是 $\Psi(P)$ 与 $\Psi(|e\rangle\langle e|)$ 都不贡献 $\xi e$ entry。对 $X=|\xi\rangle\langle e|+|e\rangle\langle\xi|$，$\|X\|=1$，norm contraction 给出 $|\Psi(X)_{\xi e}|\le1$。因此 recovered $E(q)$ 的该 entry 的模至多 $th$，其 target entry 是 $h=\sqrt{q(1-q)}$，得结论。∎
+
+在 $n=2$，这个 conditional bound 的 leading coefficient 为 $1/2$，而定理 82.2 的 unconstrained common coefficient 为 $1/4$；后者允许 $P$ 有正误差。两者均不确定一般 finite-$q$ common optimum。
+

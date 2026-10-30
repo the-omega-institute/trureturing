@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6cc1bc0d1a969f2cc6b8111b19cc4813cb00e9a79102701f372f0268beb4d8c3
+  normalized_sha256: sha256:6cc1bc0d1a969f2cc6b8111b19cc4813cb00e9a79102701f372f0268beb4d8c3
+cas_ref: sha256:6cc1bc0d1a969f2cc6b8111b19cc4813cb00e9a79102701f372f0268beb4d8c3
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列举粗观察记录的零态这一坐标，是读出定义；不含后文有理性或谱结论。
+    previous_atom_id: 65e78857d117ab771d5ade26d6fee32ece1e02da60c5080a30a83ea79bfac1a4
+    next_atom_id: 17c434bfbfbb4e30164cbaa220350d1f2ee395b93c9bf9f7ad8069b39f611f1f

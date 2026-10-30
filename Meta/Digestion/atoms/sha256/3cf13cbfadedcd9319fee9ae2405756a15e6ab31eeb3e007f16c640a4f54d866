@@ -1,0 +1,34 @@
+**Proposition 100.1 (Unweighted normalized Choi probe is insufficient).**
+At $n=1$, for the attaining decoder $D_1=\operatorname{Ad}_{U_0^\dagger}$,
+the maximally entangled qutrit input has half trace distance
+$\sqrt2/3<1/2=\delta_1$.
+
+Proof. Here $\Phi_1=\Delta_W$ pinches the two-dimensional $+1$
+eigenspace of $W$ against its one-dimensional $-1$ eigenspace. Put
+
+$$
+|u\rangle=(|00\rangle+|11\rangle)/\sqrt2,\qquad |v\rangle=|22\rangle,
+\qquad |\Omega_3\rangle=\sqrt{2/3}|u\rangle+\sqrt{1/3}|v\rangle.
+$$
+
+The channel on the first tensor factor deletes just the cross term
+between these two components of this input. The difference between
+target and output, restricted to their span, is
+
+$$
+\begin{pmatrix}0&\sqrt2/3\\\sqrt2/3&0\end{pmatrix}.
+\tag{100.3}
+$$
+
+Its trace norm is $2\sqrt2/3$. Hence the half trace distance is
+$\sqrt2/3$, and $\sqrt2/3<1/2$ because $2/9<1/4$. By contrast the
+probe $p=(1,2,3)^{\mathsf T}/6$ in §96 attains $1/2$.
+Thus diagonal covariance does not make the unweighted normalized Choi
+probe worst-case. The weighted two-density Choi expression in
+[Watrous, Simpler semidefinite programs for completely bounded norms,
+arXiv:1207.5726v2, Theorem 6, §3.1, p.10][W12]
+([paper reference][W12L]) allows variable input densities; it imposes
+no maximally mixed-input restriction. The proof of Theorem 94.2 uses
+the explicit CP-order certificate (95.8)–(95.10) to obtain the
+full diamond bound, rather than substituting a Choi overlap for the metric.
+

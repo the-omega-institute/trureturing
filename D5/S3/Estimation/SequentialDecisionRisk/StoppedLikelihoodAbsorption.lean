@@ -323,7 +323,7 @@ private lemma finite_even_terminal_integral {f : ℕ → Ω → ℝ}
   simp only [hcross0, sum_const_zero, mul_zero, zero_add] at hbound
   exact hbound
 
-private lemma finite_even_maximal_integral {f : ℕ → Ω → ℝ}
+lemma finite_even_maximal_integral {f : ℕ → Ω → ℝ}
     (hf : Martingale f ℱ μ) (hf0 : ∀ ω, f 0 ω = 0)
     {R : ℝ} (hR : 0 ≤ R) (hbdd : ∀ i ω, |f i ω| ≤ R)
     {m : ℕ} (hm : 0 < m) (n : ℕ) :

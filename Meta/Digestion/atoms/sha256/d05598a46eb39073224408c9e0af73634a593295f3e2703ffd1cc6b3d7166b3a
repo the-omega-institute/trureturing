@@ -1,0 +1,45 @@
+**Theorem 79.2 (scoped recovery, common kernel and route agreement).**
+On the actual Ready images of Definition 79.1, each of $S_Z,B_Z,T_Z,M_Z$
+recovers the other three as semantic expressions of that same state.
+Every route agrees with the direct recovery. Each expression has exactly
+the complete original $Q_g$ task kernel, namely equality of $w$ at fixed
+installation. The recoveries commute with all its lawful returned
+operations, including Next's complete reply and actual successor.
+
+Proof. Prefix closure of the marker-inclusive $B_0$ gives $S_0$, and
+its maximal elements recover $B_0$. The arity parser of AA Definition
+17.3 recovers $t$. With that source, traverse branches, compute radices,
+and apply Lemma 75.3 and the supplied colex inverse; AA Theorem 19.2
+recovers exactly $w$. Reading $M_Z$'s bound fields gives these same data.
+In the other direction the given finite actual word from known alpha
+determines $t$, all its local event projections and the number (AAII.35),
+hence its canonical rooted annotation content, support and terminals.
+The retained callable expression uses the fixed installed driver and
+current access premises. This is recovery of its semantic description,
+not manufacture of an object binding or authority from a number.
+
+Every round trip fixes the same actual $w$ and its uniquely determined
+$t$ and annotation. Thus inverse and triangle identities hold on these
+images; no independently chosen representatives are silently joined.
+Equal words give equal arity/guards, recalls, selected Next leaves and
+returned updates by Theorem 78.2. If words differ, FetchGrowth at their
+first differing index returns different kind/address pairs; if one is
+a proper prefix, its next index is OutOfRange while the other's is not.
+Thus distinct words fail $Q_g$ equivalence. This proves each exact kernel.
+A query or refusal leaves $w$ fixed, and an actual growth changes it to
+$we$. Next chooses that same $e$ by its recalled pair and actual current
+left descent on either route. Theorem 76.4 gives the unique annotation
+of $we$. Induction proves the claimed commutation for arbitrary finite
+returned request sequences. $\square$
+
+Bare $S_0,B_0$ still recover only the source/causal data, not in general
+the chosen serial history. AA (AA.75)'s two actual words have the same
+source and split chronology and different FetchGrowth/Next answers in
+this installation too. Extra completed queries also change full
+controller chronology without changing any expression in (AAII.40).
+Busy receive, radix-rewrite and pending-output states have additional
+legality and continuation information. Neither that chronology nor an
+all-busy-cut inverse is asserted. Actual-image membership, bindings
+and rights remain hypotheses; a mathematical decoding does not certify
+them or grant physical authority.
+

@@ -130,8 +130,8 @@ private theorem spectrum_downward_closure {α : Type*}
       · exact hr
       · exact spectrum_downward_closure r hprev q (Nat.lt_succ_iff.mp hlt)
 
-/- The source's arbitrary-language iteration-depth no-gap conjecture. -/
-theorem result (α : Type) [Finite α]
+/-- The iteration-depth no-gap theorem for arbitrary languages over any alphabet. -/
+theorem result (α : Type)
     (A B : Language α) (r : Nat)
     (hr : r ∈ iterationDepthSpectrumAt closedSourceZero A B) :
     ∀ q ≤ r, q ∈ iterationDepthSpectrumAt closedSourceZero A B := by

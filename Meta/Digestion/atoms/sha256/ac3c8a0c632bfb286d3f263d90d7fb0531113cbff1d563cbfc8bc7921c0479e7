@@ -1,0 +1,35 @@
+**Theorem 6.2 (recovery-route agreement on the declared domains).** With
+the installed common references, advice and mode of Definition 6.1,
+each of $S$ and $\partial$ determines the same target
+$(\pi,u,k,n)$ as the actually acquired $R$. Their recovery routes agree.
+The data in $R$ recovers these very $S,\partial,T,T_{\rm ent}$.
+These are data inverses on the attained domains; creation of backing,
+binding and grants is still Assumption 1.2's duty. The actual procedure
+produces usable $\mathsf M$ with the Section 3 and Section 5 prices.
+
+Proof. Every node of a finite tree extends to a terminal node, so prefix
+closure of $\partial$ is precisely $S$, and its maximal words return
+precisely $\partial$. This is ABT42.2's finite-tree intermediate fact,
+now applied to physical words. Membership in this $S$ supplies exactly
+the mathematical bit answers used by Proposition 2.2. Lemma 2.1 therefore
+recovers the unique $\pi$ on either positive domain, where the current
+lag is $j\ge2$. Translating by that recovered bijection supplies the
+semantic incidence required by ABT40.2, at the same authentic original
+and interval. Its mathematical decoder returns $(u,j,n)$. Subtracting
+the known $\varepsilon$ returns the entrance $k$. Theorems 3.1,5.2 show
+that the actual paid acquisition makes exactly these inferences. Hence
+both routes return the same $R$ data, not independently chosen marginals.
+
+Conversely $R$ computes $j=k+\varepsilon$ and the finite ordered tree
+$\rho^{2j}u$. Relabel its addresses by $\tau_\pi$ to obtain the actual
+physical incidence $S$ and terminal set $\partial$, and compute $T=2j$
+and $T_{\rm ent}=2k$. Substitution and the letter map are precisely the
+realization relations, so these recovered sets equal the originals.
+The two compositions are identities on their attained data. Constructing
+an expanded copy as local data has its actual computation and storage
+price; it is not required for sparse acquisition, a source reset or a
+free additional physical register. Neither prefix closure nor a data
+inverse manufactures authority. Usable retention is supplied by the
+actual writes into owned backing and surviving grants in the proved
+run. $\square$
+

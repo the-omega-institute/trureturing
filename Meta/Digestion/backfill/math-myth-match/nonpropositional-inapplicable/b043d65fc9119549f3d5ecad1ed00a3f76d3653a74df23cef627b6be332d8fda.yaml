@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b043d65fc9119549f3d5ecad1ed00a3f76d3653a74df23cef627b6be332d8fda
+  normalized_sha256: sha256:b043d65fc9119549f3d5ecad1ed00a3f76d3653a74df23cef627b6be332d8fda
+cas_ref: sha256:b043d65fc9119549f3d5ecad1ed00a3f76d3653a74df23cef627b6be332d8fda
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题结算：列出实际实践对应中尚未验证的状态、操作、动机与神圣目标；属于未决边界。
+    previous_atom_id: 73f792716ddbac39f96f872dd29326946dd550bf9b6ce1c3079e66ba0a5f5a9a
+    next_atom_id: 525907d04440a75c2ed08b82d111b146a915c5623010dfa4727daf5037395fb8

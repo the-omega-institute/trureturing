@@ -8,7 +8,7 @@ internal sealed class DerangementRatioNonconvergenceDocument : IScribeDocumentDe
 {
     private const string Prefix = "D5/S1/Words/Patterns/DerangementRatioNonconvergence.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Words/vatter2026assortment");
+        LibraryNoteRef.Create("D5/L/PermutationPatterns/vatter2026assortment");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Av(12) has one permutation per length and a nonconvergent derangement ratio.",

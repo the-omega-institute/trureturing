@@ -1,0 +1,63 @@
+**Theorem 124.3 (finite-stage coherent SPD realization).** Choose an
+arbitrary SPD matrix $M_0$ on $\mathbb R^{V_0}$ and, for each nonempty
+$B_e$, an arbitrary SPD matrix $K_e$ on $\mathbb R^{B_e}$. Define
+
+$$
+\widehat M_m
+ =\operatorname{diag}\left(M_0,K_0^{-1},\ldots,K_{m-1}^{-1}\right),
+\qquad
+M_m=\mathcal W_m^{-\mathsf T}\widehat M_m\mathcal W_m^{-1},
+\tag{124.5}
+$$
+
+and define $M_e$ by the corresponding prefix of (124.5). Set
+
+$$
+A_e=M_e^{-1}L_e.
+\tag{124.6}
+$$
+
+Then, for every $e<m$,
+
+$$
+T_e^{\mathsf T}L_{e+1}T_e=L_e,
+\qquad
+T_e^{\mathsf T}M_{e+1}T_e=M_e,
+\qquad
+A_{e+1}T_e=T_eA_e.
+\tag{124.7}
+$$
+
+Consequently $e^{-tA_{e+1}}T_e=T_ee^{-tA_e}$ for every $t\ge0$, and the
+same comparison clock works at every accepted epoch. Every $M_e$ is SPD.
+If $B_e\ne\varnothing$, the actual-coordinate matrix $M_{e+1}$ is generally
+non-diagonal even when $M_e$ and $K_e$ are diagonal.
+
+**Proof.** The first identity is (124.3) at one stage. In residual
+coordinates the metric and generator are
+
+$$
+\widehat M_{e+1}=\operatorname{diag}(\widehat M_e,K_e^{-1}),
+\qquad
+\widehat A_{e+1}=\operatorname{diag}(A_e,K_e).
+\tag{124.8}
+$$
+
+Thus the inclusion of the old coordinates preserves both the metric and the
+generator. Conjugating (124.8) by the invertible map (124.4) gives (124.7).
+Positive definiteness is preserved by congruence. The exponential identity is
+the finite matrix power-series consequence of the last equation in (124.7).
+When $B_e\ne\varnothing$, the off-diagonal actual block is
+$-P_e^{\mathsf T}K_e^{-1}$ in the choice with zero residual cross block;
+it is nonzero because every newborn has a parent. $\square$
+
+The construction is prefix-wise and does not assert a single infinite
+operator or an infinite-dimensional SPD metric. It includes a stopped or
+capped history by taking its last finite prefix. At an empty-birth step,
+$B_e=\varnothing$, $T_e=I$, $M_{e+1}=M_e$ and $A_{e+1}=A_e$. For the
+singleton $α$, the first step is of this form. For the singleton $β$,
+$V_0$ has one coordinate and the first nonempty block has two coordinates;
+no connectedness or positive old edge form is needed in (124.3). For an
+arbitrary initial branch, the same construction starts from its actual
+occurrence set and leaves all original coordinates fixed.
+

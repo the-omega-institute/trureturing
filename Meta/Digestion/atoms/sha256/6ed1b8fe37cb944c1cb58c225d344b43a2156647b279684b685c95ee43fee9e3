@@ -1,0 +1,55 @@
+**Theorem 3.1 (a five-level joint span).** For every member of the family,
+
+$$
+\begin{aligned}
+\operatorname{span}_{\mathbb Q}\{T^k e_{\ell_j}:0\le k\le4,\ 1\le j\le b\}
+&=\mathbb Q^V,\\
+\bigcap_{k=0}^4\ker(HT^k)&=\{0\}.
+\end{aligned}
+\tag{CL.12}
+$$
+
+In particular there is no inaccessible or unobservable native subspace for the joint leaf interface.
+
+**Proof.** First use $A_0$. The span of its leaf columns through the fourth power contains every $e_{\ell_j}$ and, by (CL.2),
+
+$$
+e_c=A_0e_{\ell_1},\qquad
+e_d=A_0e_c-\sum_j e_{\ell_j}.
+$$
+
+It therefore contains
+
+$$
+v=A_0e_d-e_c=e_e+2e_f.
+$$
+
+Applying $A_0$ once more gives
+
+$$
+A_0v=5e_d+2e_e+e_f,
+\qquad
+w=A_0v-5e_d=2e_e+e_f.
+$$
+
+Here $e_c$ uses powers through one, $e_d$ through two, $v$ through three and $w$ through four. Finally,
+
+$$
+e_e=\frac{2w-v}{3},\qquad e_f=\frac{2v-w}{3}.
+$$
+
+Thus all native coordinate vectors belong to that span. Since $T_0=\tfrac12 I+\epsilon A_0$ with nonzero rational $\epsilon$, powers of $T_0$ and powers of $A_0$ through any fixed degree span the same polynomial columns. Conjugation and $Qe_{\ell_j}=e_{\ell_j}$ give
+
+$$
+T^k e_{\ell_j}=Q T_0^k e_{\ell_j}.
+$$
+
+The first equality of (CL.12) follows because $Q$ is invertible. If $HT^k v=0$ through $k=4$, symmetry gives
+
+$$
+0=e_{\ell_j}^{\mathsf T}T^k v
+=(T^k e_{\ell_j})^{\mathsf T}v
+$$
+
+for every spanning column. Hence $v=0$, proving the second equality. $\square$
+

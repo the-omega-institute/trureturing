@@ -1,0 +1,4 @@
+## 5. Countable same-path refinement
+
+Let $(\varepsilon_n,\delta_n)$ satisfy $\varepsilon_n\vee\delta_n\downarrow0$, and install the canonical services on the same $Z$. Let $V^n$ be their held last-released path.
+

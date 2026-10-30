@@ -1,0 +1,33 @@
+**Corollary 140.2 (Dimension, ranks and symmetry).** The optimal set is
+an affine closed disk of real dimension two. Every interior point has
+Choi rank three; every point on $|z|=1$ has Choi rank two. There is no
+rank-one optimal decoder. All of them commute with conjugation by
+every diagonal unitary, and all are nonunital.
+
+*Proof.* The dependence of (139.2) on $(\operatorname{Re}z,
+\operatorname{Im}z)$ is real affine and injective. Its coefficient
+matrix has eigenvalues
+
+$$
+\eta,\qquad 1+|z|,\qquad1-|z|.
+\tag{140.4}
+$$
+
+Congruence by the injective $B_r$ preserves rank, which proves all
+rank statements, including the circle. Equation (140.4) describes the
+coefficient matrix; it is not asserted to be the spectrum of the
+unnormalized Choi matrix itself. For
+$U=\operatorname{diag}(u_0,u_1,u_2)$, $|u_i|=1$, each off-diagonal
+entry in (139.3) has the same phase $u_i\overline{u_j}$ as its input
+entry, and its output populations depend only on input populations.
+Thus, even for nonreal $z$,
+
+$$
+\mathcal R_z\operatorname{Ad}_U
+=\operatorname{Ad}_U\mathcal R_z,\qquad
+\mathcal R_z(I_3)=\operatorname{diag}(1,r^2,2-r^2)\ne I_3.
+\tag{140.5}
+$$
+
+The last inequality uses $0<r<1$. $\square$
+

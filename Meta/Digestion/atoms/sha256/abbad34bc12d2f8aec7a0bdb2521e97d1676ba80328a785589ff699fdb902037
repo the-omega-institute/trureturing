@@ -1,0 +1,69 @@
+## 147. Two preparations and the local SSR resource boundary
+
+Consider the full eight-dimensional fermionic Gibbs state of §§139--146,
+with finite inverse temperature $\beta\ge0$, on the normalized cut
+$A=\mathbb C e_\ell$, $B=\operatorname{span}\{e_r,e_R\}$.
+The native choices are $q_a=(1/6,1/6)$ and $q_b=(1/3,1/3)$.
+Each choice specifies its own state $\rho_{q,\beta}$; a two-preparation
+resource below always uses the same $q$ and $\beta$ in both preparations.
+No product between different native models is substituted for that resource.
+
+The one-particle and full Fock definitions remain
+
+$$
+G_q=L_\star+\pi_q\pi_q^{\mathsf T},\quad S_q=G_q^{1/2},\quad
+V_q=S_q\mathbf1_3,\quad H_q=I_3-V_qV_q^*,\quad
+\rho_{q,\beta}=\frac{e^{-\beta d\Gamma_-(H_q)}}{2(1+e^{-\beta})^2}.
+\tag{147.1}
+$$
+
+The principal root and the normalized coordinate cut are part of the
+specified finite quantum model. The cut is not identified with orthogonal
+raw weighted occurrence spans or with established physical subsystems.
+The Fock space includes the zero mode, the vacuum, and every particle-number
+sector. There is no chemical potential or preliminary sector conditioning.
+
+Take two disjoint, independently prepared instances of this specified state.
+Their density operator is the even CAR product, written initially in
+copy-first creation order. The preparations have compatible labelled modes
+and the same coupling-phase convention. This is a preparation assumption,
+not a cloning operation or an encoder for an unknown carrier.
+The required joint local handling and coherent measurements are mathematical
+resources; their physical availability is ASSUMED-UNVERIFIED.
+The input is the untwirled product of the specified states, followed by
+one common local SSR across the preparations. Neither input factor is
+first replaced by its separate single-copy local twirl.
+
+Let $N_A^{\mathrm{tot}}$ and $N_B^{\mathrm{tot}}$ count all modes held by
+each party across both preparations. The local total-number twirl is
+
+$$
+\mathcal G_N(X)=\int_0^{2\pi}\!\int_0^{2\pi}
+U_{\theta,\phi}XU_{\theta,\phi}^*\,
+\frac{d\theta\,d\phi}{(2\pi)^2},\qquad
+U_{\theta,\phi}=e^{i\theta N_A^{\mathrm{tot}}}
+ e^{i\phi N_B^{\mathrm{tot}}}.
+\tag{147.2}
+$$
+
+There is one local SSR per party on its total charge, rather than a
+separate superselection charge for each preparation. A common unknown local
+phase offset is absorbed by (147.2). Independent unrecorded local phase
+randomization of the two preparations is a different resource: it removes
+the coherence before the preparations are combined. That loss is not repaired
+by the filtering protocol below.
+
+The allowed operations comprise joint number-preserving handling of a
+party's own modes, coherent projectors onto degenerate local total-number
+spaces, local phase operations, local discard when specified, classical
+communication and heralding. For a success projector $F$, the success map is
+$X\mapsto FXF$. Measuring the individual occupations and then forgetting the
+outcomes instead dephases the selected rails; it is a different instrument.
+
+These operations and the second preparation enlarge the single-specimen,
+no-postselection experiment. Section 145 still gives its single-copy limit:
+$\overline\rho=\mathcal D_A(\rho)$ is separable and has the same allowed
+single-copy local product-observable statistics as $\rho$.
+This appendix evaluates the enlarged, explicitly declared resource model.
+It does not supply an SSR operational advantage within the original menu.
+

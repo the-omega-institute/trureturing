@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:855176f8c4b0217fc478ded25ab032e2e4b1e1a1e55dc5eee8c4aeadd6f455a2
+  normalized_sha256: sha256:855176f8c4b0217fc478ded25ab032e2e4b1e1a1e55dc5eee8c4aeadd6f455a2
+cas_ref: sha256:855176f8c4b0217fc478ded25ab032e2e4b1e1a1e55dc5eee8c4aeadd6f455a2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'An imperative next step in that procedure: restrict to the diagonal. The resulting derivative/product identity is in the following atom and is not settled here.'
+    previous_atom_id: dbb9852de0df93532458dfc8074db7703cac948a29186fe6a8afd92a8503dd39
+    next_atom_id: b21f26234d0aecd96ff8ce010f4add9f0640cae81af296945ae30754a436ffeb

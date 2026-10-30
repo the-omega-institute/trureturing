@@ -1,0 +1,32 @@
+**Definition 13.1 (the actual finite comparison family).** Retain exactly
+Definition 1.1's free ordered source, substitution (GPO.1), physical
+alphabet, stable bound root and persistent global bijection $\pi$.
+Fix a finite nonempty ordered full binary scaffold $S$ whose $n\ge1$
+leaves, in left-to-right order, have addresses $p_1,\ldots,p_n$.
+Every leaf is a slot; there are no additional constant leaves. Put
+
+$$
+ d_i=|p_i|,\qquad \delta=\min_i d_i,\qquad
+ h=\max_i d_i,\qquad L=\sum_{i=1}^n d_i.
+ \tag{GPO.42}
+$$
+
+For $x\in\{0,1\}^n$, let $u_x=S[x_1,\ldots,x_n]$, with $0$
+meaning alpha and $1$ beta. For every integer $K\ge1$ the family is
+
+$$
+ \mathcal F(S,K)=
+ \{(x,k,v):x\in\{0,1\}^n,\quad K\le k\le2K-1,
+                       \quad v=\rho^{2k}u_x\}.
+ \tag{GPO.43}
+$$
+
+Each member is one authentic original, its actual positive even entrance
+lag and its one actual entrance register. The required output is precisely
+$(u_x,k)$, rather than some predecessor, current endpoint, or value of a
+smaller logical task. The scaffold fixes original occurrences, not a
+shared-subtree quotient. Distinct label vectors give distinct originals
+in the free algebra. Thus (GPO.43) has $K2^n$ different required outputs.
+For $n=1$ the scaffold is a single slot, its address is empty and
+$\delta=h=L=0$.
+

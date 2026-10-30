@@ -1,0 +1,43 @@
+## 1. The exact triangle-local carrier
+
+Let \(\Omega_\alpha,\Omega_\beta,\Omega_\gamma\) be standard Borel source spaces with probability measures \(\mu_\alpha,\mu_\beta,\mu_\gamma\). A classical triangle model consists of the product measure
+
+\[
+\mu=\mu_\alpha\otimes\mu_\beta\otimes\mu_\gamma
+\]
+
+and three stochastic response kernels
+
+\[
+A(a\mid\beta,\gamma),\qquad
+B(b\mid\gamma,\alpha),\qquad
+C(c\mid\alpha,\beta).
+\]
+
+For every output triple,
+
+\[
+P(a,b,c)=
+\int_{\Omega_\alpha\times\Omega_\beta\times\Omega_\gamma}
+A(a\mid\beta,\gamma)
+B(b\mid\gamma,\alpha)
+C(c\mid\alpha,\beta)\,d\mu.
+\tag{1.1}
+\]
+
+The triangle-local set \(\mathcal L_\triangle\) is the set of all finite-output distributions admitting (1.1). The response kernels may contain local private randomness. Such randomness can be represented by additional independent local seeds and absorbed into the kernels. It must not be replaced by a common selector shared by the three parties.
+
+For finite source alphabets the same object is a multilinear contraction. If the source probabilities are \(r_\alpha,r_\beta,r_\gamma\), then
+
+\[
+P(a,b,c)=
+\sum_{\alpha,\beta,\gamma}
+r_\alpha r_\beta r_\gamma
+A_{a\mid\beta\gamma}
+B_{b\mid\gamma\alpha}
+C_{c\mid\alpha\beta}.
+\tag{1.2}
+\]
+
+This tensor form explains the geometry. The source point is a product point in the three source simplices. The response map is multilinear in the three edge measures. The image is generally non-convex.
+

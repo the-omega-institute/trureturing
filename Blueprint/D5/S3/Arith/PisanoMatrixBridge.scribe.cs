@@ -9,6 +9,18 @@ internal sealed class PisanoMatrixBridgeDocument : IScribeDocumentDefinition
         H("Pisano period and Fibonacci matrix order"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("scalar-period-return"),
+                DeclarationHandle.Create("D5/S3/Arith/PisanoMatrixBridge.period_iff_return"),
+                H("Scalar periods and returns of consecutive values"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every natural modulus n and shift k, equality of all Fibonacci "
+                    + "residues at indices m+k and m is equivalent to the k-th iterate of "
+                    + "the step (x,y) mapped to (y,x+y) returning (0,1). The statement "
+                    + "includes m=0 and m=1 and imposes no positivity on k."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("pisano-period-matrix-order"),
                 DeclarationHandle.Create("D5/S3/Arith/PisanoMatrixBridge.pisanoPeriod_eq_matrix_order"),
                 H("Exact scalar-to-matrix period bridge"),

@@ -1,0 +1,14 @@
+**约定 73.3（native 供应与其边界）。** 以下各节的仓内供应引用均固定于 [源版本](https://github.com/the-omega-institute/trureturing/tree/033c1b370f2447aa20e191a6a3da609aba697e50)。其中 [Native acquired input, the unfinished-request frontier, and actual replay](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_ACQUIRED_INPUT_FRONTIER_AND_REPLAY.md) 简称 native。其 §§11.1–11.5 在固定 $A^+$ 的整个 lawful reached domain $\Omega^+$ 上给出
+
+$$
+K(h)=\bigl(\operatorname{code}(u),I(h),n(h),\kappa(h),m_C(h)\bigr),
+\qquad
+h\equiv_{\rm now}h'
+\ \Longleftrightarrow\ K(h)=K(h')
+\ \Longleftrightarrow\ X^+(h)=X^+(h').
+$$
+
+$u$ 是实际安装的 seed/source code，$I$ 是实际 IN 已消费的有序输入，$n$ 是绝对 P receipt 数，$\kappa$ 是 Capture 的实际 P 切点，$m_C=N_C-c_F(u)$ 是固定 startup 后 C 的已执行行数；未 Capture 时为 $(\kappa,m_C)=(\bot,0)$。$\equiv_{\rm now}$ 比较从当前切面开始的 partial finite-experiment maps，包括其域与完整 raw successor。native Theorems 11.9、11.11 和 Proposition 11.12 已供应该 kernel 及实际更新，不在这里重证。
+
+完整 successor 是其反向 kernel 所用的数学审计数据，不是免费公开读口。该键也不是已经由 C 取得的 package。它不提供 public-output-only rigidity、独立自然视图的逆、历史累计结构费用的因子化或全域有限控制器最小性。raw noncanonical Supply 的物理边仍存在，但其后续不再属于 $\Omega^+$；不能用一个统一 $\bot_{\rm undefined}$ 覆盖整个物理记录。
+

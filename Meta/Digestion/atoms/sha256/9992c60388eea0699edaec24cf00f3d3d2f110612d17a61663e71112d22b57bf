@@ -1,0 +1,41 @@
+**Proposition 5.1 (two logarithmic-Read controls on the same actual inputs).**
+Fix $d$, retained $P,L$ and $n_0$. Besides Definition 3.1, consider a
+control using successive thresholds
+
+$$
+ n_0+2^{2^0},\ n_0+2^{2^1},\ n_0+2^{2^2},\ldots
+ \tag{ACR.19}
+$$
+
+until its first false reply, followed by balanced bisection of the
+remaining interval, using $n_0$ as lower bound if the first reply was
+false. It is finite and exact and has $O(1+\log(n+2))$ paid Reads.
+Nevertheless, on the very same physical sources at ages
+$n=n_0+h_j$, $h_j=2^{2^j}$, $j\ge0$, this control has
+
+$$
+ M\ge\left\lceil\frac{n_0+h_j^2}{2}\right\rceil,
+ \qquad W\ge\left\lceil\frac{n_0+h_j^2}{2}\right\rceil,
+ \tag{ACR.20}
+$$
+
+whereas Definition 3.1 has $M\le n+1$ and
+$W=O((n+1)(1+\log(n+2)))$ on those same inputs. Thus logarithmic
+reply count alone permits quadratically larger single operands and a
+traffic ratio growing at least as $h_j/\log(h_j+2)$ for fixed $n_0$.
+
+Proof. Threshold correctness makes (ACR.19) an ordinary bracketing
+search. If the last true offset is $v\ge2$, its successor offset is
+$v^2$. The first false offset $T$ is therefore at most $(h+1)^2$
+for $h=n-n_0\ge2$; the smaller cases have fixed finite brackets.
+There are $O(1+\log\log(h+2))$ bracketing calls and at most
+$O(1+\log(h+2))$ subsequent bisection calls. On $h=h_j$, the offset
+$h_j$ replies true and its successor $h_j^2$ replies false. Compiling
+that actually submitted latter threshold gives (ACR.20). In contrast,
+(ACR.13) gives the stated linear peak and $O(n\log n)$ traffic.
+The lower traffic bound for one control and upper traffic bound for the
+other are evaluated on identical $L,n$, rather than on unrelated worst
+realizations. This derives a physical-word resource separation; neither
+bracketing method is claimed as a new search algorithm or as a globally
+weighted optimum. $\square$
+

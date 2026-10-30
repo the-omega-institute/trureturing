@@ -1,0 +1,71 @@
+**Proposition 17.2 (Normal product Gaussian inputs).** The integral
+in (17.1) defines a positive trace-class state of trace one. Its
+position kernel and Weyl characteristic function are
+
+$$
+\begin{aligned}
+\rho_{W,\eta}(x,y)
+&=\psi_W(x)\overline{\psi_W(y)}
+  e^{-\eta\|x-y\|^2/2},\\
+\operatorname{tr}\!\left(\rho_{W,\eta}
+e^{i(u\cdot q+v\cdot\pi)}\right)
+&=\exp\!\left(iu\cdot\mu(W)-\frac{\|u\|^2}{4}
+                    -\frac{s\|v\|^2}{2}\right).
+\end{aligned}
+\tag{17.3}
+$$
+
+Consequently it is a product of seventeen single-mode Gaussian
+states, with no initial intermode entanglement, and
+
+$$
+\mathbb E q=\mu(W),\quad \mathbb E\pi=0,\qquad
+V_{qq}=\frac12I_{17},\quad V_{\pi\pi}=sI_{17},\quad V_{q\pi}=0.
+\tag{17.4}
+$$
+
+*Proof.* Strong continuity of $U_\xi$ implies trace-norm continuity
+of $\xi\mapsto U_\xi\rho U_\xi^\dagger$ for every trace-class $\rho$;
+one can first check finite-rank operators and then use trace-norm
+approximation. Its trace norm is constant, so its probability
+integral exists in trace class. Positivity and trace one pass to
+that integral. Random-unitary averaging is completely positive
+and trace preserving; its adjoint on bounded observables is normal,
+as follows by monotone convergence in positive trace pairings.
+
+The position kernel of each integrand is
+$e^{-i\xi\cdot(x-y)}\psi_W(x)\overline{\psi_W(y)}$.
+The characteristic function of $\gamma_\eta$ gives the first line
+of (17.3), including the point-mass case. In particular its diagonal
+is unchanged:
+
+$$
+\rho_{W,\eta}(x,x)=\pi^{-17/2}e^{-\|x-\mu(W)\|^2}.
+\tag{17.5}
+$$
+
+Conjugating a Weyl operator by $U_\xi$ multiplies its original
+coherent-state expectation by $e^{-iv\cdot\xi}$. Gaussian integration
+gives the second line of (17.3) and hence (17.4). Both $\psi_W$ and
+$\gamma_\eta$ factor over the seventeen initial coordinates. Thus
+
+$$
+\rho_{W,\eta}=\bigotimes_{j=1}^{17}
+\left[\int e^{-i\xi_jq_j}
+|\psi_{\mu_j(W)}\rangle\langle\psi_{\mu_j(W)}|
+e^{i\xi_jq_j}\,\mathcal N(0,\eta)(d\xi_j)\right],
+\tag{17.6}
+$$
+
+where $\psi_a(x)=\pi^{-1/4}e^{-(x-a)^2/2}$. This proves the product
+claim. The same moments give the finite-per-world energy identity
+
+$$
+\operatorname{tr}(\rho_{W,\eta}H_{\rm osc})
+=\frac{17}{2}+\frac{\|\mu(W)\|^2}{2}+\frac{17\eta}{2}.
+\tag{17.7}
+$$
+
+It supplies no uniform bound on the unrestricted $\mathcal W$ and
+no preparation-cost comparison. $\square$
+

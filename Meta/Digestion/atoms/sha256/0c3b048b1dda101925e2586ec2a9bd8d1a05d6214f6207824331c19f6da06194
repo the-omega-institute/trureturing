@@ -1,0 +1,8 @@
+### 115.6 Bounded evidence, supplies and four expressions
+
+The bounded computation enumerates the $\binom{31}{2}=465$ balanced words extending $1^{27}$, independently orders selected pasts by colex, forms active response vectors over their compatible suffixes, and compares every accepting emitted value with its canonical rank:
+
+| Actual seed | Residual balanced words checked | Accepted | Maximum selected fiber | Maximum response image | Two-state failures |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 0 | 465 | 435 | 2 | 2 | 0 |
+| 1 | 465 | 465 | 2 | 3 | 0 |

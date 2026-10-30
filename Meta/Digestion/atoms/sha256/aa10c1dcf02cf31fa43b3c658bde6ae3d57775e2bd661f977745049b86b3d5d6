@@ -1,0 +1,13 @@
+#### 定义 2.1（有限定量量词）
+
+令 $(\Omega,\mu)$ 为有限概率空间，$R:\Omega\to\{0,1\}$ 为谓词。定义
+
+$$
+\mathsf Q_\mu R=\sum_{w\in\Omega}\mu(w)R(w),\qquad
+\Omega_+=\{w:\mu(w)>0\}.
+$$
+
+对事件 $A$，写 $\mathsf Q_\mu A=\mathsf Q_\mu\mathbf{1}_A=\mu(A)$。
+
+<a id="thm-weightedexists"></a>
+

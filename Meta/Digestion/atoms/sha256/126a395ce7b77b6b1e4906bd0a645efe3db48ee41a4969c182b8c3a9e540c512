@@ -1,0 +1,35 @@
+**Proposition 2.1 (Finite response lift by overlap stratum).** Fix
+\((p,v)\) with \(p\ne24\) and a solution of Definition 6.3. Then:
+
+1. If \(\kappa=2\), the unordered endpoint sets coincide. Consequently
+   \(m_0=m_1=m\). After fixing \((p,v,m)\), the number of ordered
+   four-endpoint realizations in this stratum is at most
+
+   $$
+   4\binom{7}{2}=2\cdot7\cdot6=84.
+   $$
+
+2. If \(\kappa=1\), there are indices \(i\in\{0,1\}\) and
+   \(j\in\{2,3\}\) with \(W_i=W_j\). Hence \(m_i=m\), while the other
+   \(J\)-terminal \(m_{1-i}\) remains independent. After fixing
+   \((p,v,m,m_{1-i})\), the number of ordered four-endpoint realizations
+   with this specified shared-slot pair is at most
+
+   $$
+   7\cdot6\cdot7=294,
+   $$
+
+   and allowing the four choices of \((i,j)\) gives the uniform bound
+
+   $$
+   4\cdot7\cdot6\cdot7=1176.
+   $$
+
+3. If \(\kappa=0\), all four endpoints are distinct. After fixing the
+   complete response tuple \((p,v,m_0,m_1,m)\), the number of ordered
+   four-endpoint realizations is at most
+
+   $$
+   7^4=2401.
+   $$
+

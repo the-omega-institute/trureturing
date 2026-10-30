@@ -47,6 +47,18 @@ internal sealed class JordanCototientRecordLimitInfinityDocument
                         + "m < n has strictly smaller Jordan cototient at the same parameter k."))),
                 DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("finite-product-union-bound"),
+                DeclarationHandle.Create(Prefix + "one_sub_prod_le_sum"),
+                H("A finite-product union bound"),
+                StatementSource.FromAuthor(FiniteProductBoundFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For a finite subset s of a linearly ordered type and real factors x(i) "
+                        + "between zero and one, one minus the product of 1-x(i) is at most "
+                        + "the sum of x(i). This bounds finite Euler products and geometric "
+                        + "partial products."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
                 DescribeId.Create("cototient-min-factor-lower-bound"),
                 DeclarationHandle.Create(Prefix + "coJ_lower_bound"),
                 H("The minimum-prime-factor lower bound"),
@@ -78,7 +90,7 @@ internal sealed class JordanCototientRecordLimitInfinityDocument
                 StatementSource.FromAuthor(PrimeValueFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
-                    "Every natural prime p has CoJ(k,p)=1 for every real k. This bind-only "
+                    "Every natural prime p has CoJ(k,p)=1 for every real k. This "
                         + "evaluation is consumed by the two-versus-three tie in "
                         + "not_strictRecord_three."))),
                 DescribeRole.Lemma),
@@ -90,7 +102,7 @@ internal sealed class JordanCototientRecordLimitInfinityDocument
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "For every real k, CoJ(k,1)=0 because primeFactors(1) is empty. This "
-                        + "bind-only evaluation supplies the m=1 predecessor case in the even "
+                        + "evaluation supplies the m=1 predecessor case in the even "
                         + "record theorem."))),
                 DescribeRole.Lemma),
             Describe.Lean(
@@ -101,7 +113,7 @@ internal sealed class JordanCototientRecordLimitInfinityDocument
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text(
                     "If n is positive and even, there is a real threshold K after which n is "
-                        + "a strict record. The proof combines the two public bounds with the "
+                        + "a strict record. The proof combines the two cototient bounds with the "
                         + "strict base gap m/minFac(m) <= m/2 < n/2 and real exponential "
                         + "domination. Each slash in this prose is real division after coercion, "
                         + "whereas the Lean bounds themselves use the named Nat.div quotient."))),
@@ -144,10 +156,30 @@ internal sealed class JordanCototientRecordLimitInfinityDocument
                     Paragraph(Text(
                         "The forward direction excludes three by the prime tie and every odd "
                             + "n >= 5 by its eventual loss to Nat.sub(n,1). The reverse direction "
-                            + "is vacuous at one and uses the live even-input theorem otherwise. "
-                            + "Thus the two-sided min-factor estimates remain on the proof path "
+                            + "is vacuous at one and uses the even-input theorem otherwise. "
+                            + "Thus the two-sided min-factor estimates remain in the derivation "
                             + "to the final characterization."))),
                 DescribeRole.Theorem))));
+
+    private static Formula FiniteProductBoundFormula()
+    {
+        Formula i = F.Id("i"), s = F.Id("s"), x = F.Id("x");
+        Formula xi = new Formula.Apply(x, [i]);
+        Formula index = new Formula.Relation(i, FormulaRelationOperator.MemberOf, s);
+        Formula allFactors = ForAllMany([Bound("i", F.Id("I"))],
+            Implies(index, new Formula.Logic(
+                LessThanOrEqual(D(0), xi), FormulaLogicOperator.And,
+                LessThanOrEqual(xi, D(1)))));
+        Formula product = Seq(new Formula.Subscript(Prod, index), Sp,
+            Parenthesized(Subtract(D(1), xi)));
+        Formula sum = Seq(new Formula.Subscript(Sum, index), Sp, xi);
+        return Disp(ForAllMany([Bound("I", F.Id("Type"))], Seq(
+            OpenBracket, Call("LinearOrder", F.Id("I")), CloseBracket, Sp,
+            ForAllMany(
+                [Bound("s", Call("Finset", F.Id("I"))),
+                    Bound("x", new Formula.TypeArrow(F.Id("I"), Reals()))],
+                Implies(allFactors, LessThanOrEqual(Subtract(D(1), product), sum))))));
+    }
 
     private static Formula JDefinitionFormula()
     {

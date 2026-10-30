@@ -90,7 +90,7 @@ def coordinates : Fin A.period × H ≃ X :=
       rw [hr]
       exact (A.reduce t z).symm)
 
-private theorem time_injective : Function.Injective A.time := by
+theorem time_injective : Function.Injective A.time := by
   intro x y h
   obtain ⟨t,z,rfl⟩ := A.covers x
   obtain ⟨s,w,rfl⟩ := A.covers y

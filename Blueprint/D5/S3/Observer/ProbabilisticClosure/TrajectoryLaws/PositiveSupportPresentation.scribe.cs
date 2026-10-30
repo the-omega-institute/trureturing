@@ -8,6 +8,10 @@ internal sealed class PositiveSupportPresentationDocument : IScribeDocumentDefin
         "Positive stationary support and original cylinders", H("Positive stationary support and original cylinders"),
         Blocks(
             Paragraph(Text("Positive theta is the subtype of original hidden states with strictly positive stationary mass. trim theta restricts lambda and both real matrices to that subtype; includePath inserts its hidden coordinates into the original hidden set and keeps every emitted integer coordinate exactly unchanged.")),
+            Describe.Lean(DescribeId.Create("weighted-no11"),
+                DeclarationHandle.Create("D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveSupportPresentation.weighted_no11"),
+                H("Original no11 entries from positive stationary states"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every original stationary Presentation theta, every retained state i with strictly positive original initial mass, and every original target state j, the (i,j) entry of the square of the original one-symbol matrix is zero. The target j ranges over the entire original hidden set, including zero-mass states. The original scalar no11 sum consists of nonnegative terms; its vanishing forces each term with positive initial multiplier to vanish. Both trim and trim_no11 use this entrywise conclusion. The weighted_no11 helper of OriginalRectangleOccurrence also applies it when the original initial mass is positive; when that mass is zero, the weighted product vanishes directly. This supplies the scalar no11 field of nativeComponent with the original matrix entries and normalized stationary masses."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("trim-no11"),
                 DeclarationHandle.Create("D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveSupportPresentation.trim_no11"),
                 H("Entrywise no11 after trimming"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

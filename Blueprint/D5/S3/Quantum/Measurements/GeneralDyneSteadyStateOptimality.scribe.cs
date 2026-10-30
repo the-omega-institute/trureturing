@@ -39,6 +39,17 @@ internal sealed class GeneralDyneSteadyStateOptimalityDocument : IScribeDocument
                 "Page 12, Section VI after Eq. (66): We have also numerically verified that non-zero phases ϑ_m lead to worse result, and we can thus conjecture that this fully characterizes the optimal steady-state general-dyne monitoring. The real parameters kappa, chi and nth are κ, χ and n_th; nu = 2 nth + 1 and r = 2 chi / kappa. The matrices M and S represent σ_m and σ. IsGaussianMeasurementCov is the existing GaussianThermometryJointMeasurementRefutation predicate at m = 1: symmetry and S + i Omega positive semidefinite. The first conjunct bounds every physical stationary solution for every physical measurement; the second gives a physical stationary solution at the aligned measurement with equality. No uniqueness of the minimizing measurement is asserted.",
                 AssessedProvenance.FromLiterature(Source)),
             Describe.Lean(
+                DescribeId.Create("general-dyne-physical-forward"), DeclarationHandle.Create(Prefix + "physical_forward"),
+                H("Physical one-mode covariances are positive definite"),
+                StatementSource.FromAuthor(Disp(All("M", Matrices(), Implies(
+                    Seq(Q("D5", "S3", "Estimation", "GaussianThermometryJointMeasurementRefutation", "IsGaussianMeasurementCov"),
+                        Sp, Parenthesized(Seq(X("m"), Sp, Colon, Eq, Sp, D(1))), Sp, Parenthesized(X("M"))),
+                    And(App(Q("Matrix", "PosDef"), X("M")), AtMost(D(1), App(Q("Matrix", "det"), X("M")))))))),
+                AssessedProvenance.FromRepo(Source),
+                Blocks(Paragraph(Text(
+                    "A real two-by-two covariance satisfying IsGaussianMeasurementCov at m = 1 is positive definite and has determinant at least one. The stationary covariance lower bound uses these properties through physical_iff; GaussianAtemporalityEntanglement uses positive definiteness to invert both local covariance blocks."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("general-dyne-result"), DeclarationHandle.Create(Prefix + "result"),
                 H("The aligned measurement achieves the global optimum"),
                 StatementSource.FromAuthor(Disp(ClaimBodyFormula())), AssessedProvenance.FromRepo(Source),

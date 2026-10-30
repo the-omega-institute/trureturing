@@ -1,0 +1,67 @@
+**Lemma 8.4.1 (Strict forced-M monotonicity).** On all of
+$I_*\times\mathcal B$, one has $A\ne0$ and
+
+$$
+-33<\frac{\Omega}{A^2}<-16.
+\tag{8.4.1}
+$$
+
+Proof. Partition $I_*$ into the $32$ closed cells
+
+$$
+J_i=\left[\frac{34}{25}+\frac{7i}{6400},
+          \frac{34}{25}+\frac{7(i+1)}{6400}\right],
+\quad c_i=\operatorname{mid}J_i,\quad
+\delta_i=7/12800,\qquad0\le i<32.
+\tag{8.4.2}
+$$
+
+These $c_i$ are used only in this lemma and are not the five-coordinate
+tube centres of (7.2.3). Evaluate (8.3.1)–(8.3.2) for $A,\Omega$ at
+each of these $32$ rational midpoints. The complete finite comparisons
+are
+
+$$
+\begin{gathered}
+\max_{0\le i<32}\sup\mathcal E_{c_i}(A;\delta_i)<-10^{13},\\
+\bigcup_{i=0}^{31}
+\frac{\mathcal E_{c_i}(\Omega;\delta_i)}
+     {\mathcal E_{c_i}(A;\delta_i)^2}
+\ \subseteq\
+\frac{[-32935095741486,-16484504306425]}{10^{12}}
+\ \subset(-33,-16).
+\end{gathered}
+\tag{8.4.3}
+$$
+
+Here the square and quotient are interval operations of Definition
+8.3.1. The first comparison excludes zero before the reciprocal.
+The second follows by substituting the binomial coefficient sums for
+the $1512$-term polynomial $\Omega$ and the $220$-term polynomial $A$,
+forming the endpoint products for the square and the guarded
+reciprocal, and taking the minimum lower and maximum upper endpoints
+over the finite range $0\le i<32$. This gives the displayed rational
+outer endpoints. The enclosure property and the exact derivative in
+(8.2.7) prove (8.4.1) on every cell and their shared boundaries. ∎
+
+Proof of the rectangle assertion in Theorem 8.1.2. Fix any
+$(p,v)\in\mathcal B$. It is off $24$. By the reused all-world carrier
+necessity, every $W\in C(p,v)$ has $x>0$, $\mathscr R(x;p,v)=0$ and
+$\alpha d+\zeta=0$. Lemma 8.3.2 puts all of these worlds in $I_*$.
+There $A$ never vanishes, so their drifts and terminal responses are
+exactly (8.2.7). At this fixed base the rational function $\mu$ is
+differentiable on the entire interval $I_*$, including between any two
+actual labels. Lemma 8.4.1 and the mean-value theorem make it strictly
+decreasing there. Equal terminal readings therefore force equal $x$.
+The same forced drift gives equal $d$. Finally the faithful reconstruction
+(8.2.6) gives equal $U,b,j,r$ and the identical interpolant $H$, hence
+the identical whole gain $g=H/U$. The complete worlds are equal.
+
+The proof has not assumed equal drifts, regular sources, source
+compactness or realizability of any particular resultant root. It has
+not divided by a gain sample, a leading coefficient, a root difference,
+$F_0$ at an actual point, or the original singular-parent factor. The
+positive $D$ and the actual guards $H_1\ne0$, $C_0>0$, $U>1$ come from
+the reused complete-world interface. Thus the rectangle assertion has
+the whole domain of (8.1.1). ∎
+

@@ -1,0 +1,15 @@
+## 482. 固定高估值部分的平均 Type-I 与全部小标记留数
+
+**约定与解析假设。** 沿用前卷 §460、[H1–H5、G7](../../../Library/Analytic/faveri2026fixedorder.md#a-prime-labelled-residue-cut-for-the-original-unsplit-convolution) 的 Eisenstein 理想、固定坏素集合 $S$、原始 primary 与 ray 约定。写 $q_a=Na$，$a^{\ge2}=\prod_{v_p(a)\ge2}p^{v_p(a)}$；单位的该乘积为单位。元素频率按原固定 unit 与 ray sectors 读取，不将元素重数另算为理想重数。
+
+本节的解析输入是 [averaged Type-I 原稿 v1](https://rstation.ai/api/v1/papers/riemann_hypothesis_8/versions/1/download) §5 的固定形式变换、Lemma 3 的固定 cusp 系数平方和、(5.9) 的核界、(6.3) 的完整四项筛，以及 H4 的原始 primitive/full 密度关系。它们在此作为条件，不由本节另行认证。固定形式、固定有限过滤和 level $M$ 均按 H2–H5 保持；所有外模数避开 $S$，$M$ 只支撑在 $S$ 上。对每个固定 cusp $k$，所需平方和是
+
+$$
+\sum_{0<q_n\le H}|t_k(n/M)|^2\ll_{f,M,\varepsilon}H^{1+\varepsilon}\qquad(H\ge1),
+\tag{482.1}
+$$
+
+而 $\mathcal H\mathcal W$ 保留小参数奇性 $x^{-1/12-\varepsilon}$ 及任意大参数衰减，连同有限阶 Euler 导数界。系数 $t$ 对应 cusp 常数指数 $5/6$；非零常数产生的 progression 主项指数为 $11/12$。负 orientation 同时共轭整个族。
+
+本节直接复用已有的有限 Gauss 恒等式、密度展开、主项 Möbius 估计和实际 Gram 界。新增 `repo-derived` 推导是：不把固定高估值乘子当成增长的自动形式 level，而在原固定 cusp 上重新组织全 Gauss 变换，再消费于 §460 的同一不拆分卷积。Dunn 的 [Metaplectic cusp forms and the large sieve, v4，(1.13)、§9、(9.26)](https://arxiv.org/html/2403.13151v4) 提供 cubic cusp 与平方自由外变量的先例；上述 sextic 原稿的 Proposition 4 与 Theorem 1 也限定平方自由外变量。这里不把这些已知结果另立为定理，也不主张文献优先权。
+

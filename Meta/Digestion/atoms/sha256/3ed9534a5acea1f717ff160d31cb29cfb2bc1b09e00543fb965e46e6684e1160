@@ -1,0 +1,16 @@
+**Corollary 104.2 (the mixed family).** For every $k\ge1$ take
+$V_0=\alpha$, $V_j=\langle\langle\beta,\beta\rangle,V_{j-1}\rangle$.
+Its sole alpha is at the right tail, so it belongs to $\mathcal D$.
+The $k$ left cherries have owners
+$p_i=R^{i-1}LL,q_i=R^{i-1}LR$. Here
+
+$$
+a=1,\ c=2k,\ b=2k+1,\ N=6k+1,\ I=4k,
+\quad M=14k+4,\quad s=6k+2.
+\tag{104.3}
+$$
+
+Its original general preparation is
+$(2k,2k,0,(2k+1)(4k+1),4k,1)$.
+Its distinct marker preparation is $(2k,2k,0,2k,1,1)$.
+

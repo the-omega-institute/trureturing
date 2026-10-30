@@ -1,0 +1,24 @@
+**Definition 6.2 (controls and terminal interface).** The controller has
+source-independent initialization, the public $d$, a fixed specimen schedule,
+labelled Bob Pauli axes on $H$, coherent local number-preserving projectors
+and the finite rotations specified below. It has fresh readout pointers,
+classical counters, actual communication and permanent discard. These are
+ideal instrument resources. The axes use a fixed relative control phase
+between Bob's labelled modes; they require no unknown source label or
+reference state breaking local total-number superselection.
+
+Its only source-dependent inputs are actual measured outcomes and reports.
+The true $x,\eta$, a calibration-error flag, hidden Kraus labels and a
+source-correlated programme are unavailable. There is no entangled ancillary
+pair, extra target attempt or returning discarded environment.
+
+Success is the communicated joint acceptance of the target tests in §7.
+After alignment, all accessible calibration outcomes, counters, selected-menu
+indices, work registers, pointer copies and control residues identifying the
+chosen direction are made permanently inaccessible. On success only two
+fixed encoded rail qubits and the common success report remain callable.
+On failure all source carriers are discarded and a failure symbol remains.
+Discard is part of the channel; no thermodynamic reset or reusable apparatus
+cycle is asserted. This explicit reduced-interface convention does not assert
+NPT for every finer calibration-conditioned history.
+

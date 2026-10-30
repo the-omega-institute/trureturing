@@ -1,0 +1,83 @@
+**Proposition 30.2 (The common chronological record law).** Write $L=L_{JM}$,
+$\Sigma_Z=LL^T/2+\sigma^2I_3$, and define
+
+$$
+\begin{aligned}
+\alpha&=c_A^2,\qquad \beta=(c_A-c_B)^2,\qquad
+\ell_c(\boldsymbol\eta)=\alpha\eta_A+\beta\eta_B,\\
+v_0(c;r,\tau)&=(1+65r)c_A^2
+-2(1/2+r)c_Ac_B+(1/2+r)c_B^2+\tau^2.
+\end{aligned}
+\tag{30.2}
+$$
+
+The entire original three-record vector $Z$ and added pointer $Y_c$ have the product law, as a
+measure on $\mathbb R^3\times\mathbb R$,
+
+$$
+\mathcal L(Z,Y_c)=
+\mathcal N_3(L\mu(W),\Sigma_Z)
+\otimes\mathcal N_1(0,v_0(c;r,\tau)+\ell_c(\boldsymbol\eta)).
+\tag{30.3}
+$$
+
+*Proof.* This joint assertion requires the full dilation, since a reduced pair covariance alone
+contains no old-record correlations. Let $u_i,\zeta_i$ be the original three probe position and
+momentum operators, $[u_i,\zeta_j]=i\delta_{ij}$. The Kraus factorization in (25.1) is obtained
+from the same deferred-pointer dilation
+
+$$
+\mathcal V=(U_{T_2}\otimes I)
+\exp\left[-i\sum_{i=0}^2(L_iq)\zeta_i\right],\qquad
+\langle z|\mathcal V|k_\sigma^{\otimes3}\rangle
+=\mathsf K_{JM}(z).
+\tag{30.4}
+$$
+
+It reproduces the whole sequential instrument, including every retained pointer and any
+subsequently appended measurement. Equivalently it follows by moving each actual coupling
+through the preceding control; the resulting initial-position shears commute.
+
+Let $H$ have rows $e_{14}^T-e_{15}^T$ and $e_{15}^T$. Pullback to the common initial
+system/probe space gives
+
+$$
+Z=u+Lq,\qquad p_{AB}^{\rm out}=H\pi-HL^T\zeta,\qquad
+-HL^T=\begin{pmatrix}0&1&-8\\0&-1&0\end{pmatrix}.
+\tag{30.5}
+$$
+
+Use the noised input state (24.4) for $\pi$. If instead one writes the original coherent momenta
+explicitly, add the classical shift $-S^{-T}\xi$ to the second formula. Both representations
+give the same law and retain the original common probes.
+
+The crucial commutation is
+
+$$
+[Z_i,(p_{AB}^{\rm out})_j]
+=i(LH^T)_{ij}-i(LH^T)_{ij}=0.
+\tag{30.6}
+$$
+
+The first term is from $Lq$ and $H\pi$; the second is from the old probe position $u_i$ and its
+momentum contribution. Concretely the pair parts of the old pointers are $u_0$, $u_1+Q_B$ and
+$u_2+8Q_A$; their system commutators cancel those probe terms. Their remaining position terms
+commute with the pair momenta. Thus the added coupling leaves every old retained pointer
+unchanged. These are commuting output observables, not an assignment of joint outcomes to
+incompatible initial $q$ and $\pi$.
+
+The input centered symmetrized $q$–$\pi$ and $u$–$\zeta$ blocks are zero, and distinct initial
+subsystems and preparation kicks are independent. Hence (30.5) also gives
+$\operatorname{Cov}(Z,p_{AB}^{\rm out})=0$. The fresh pointer contributes independent position
+noise of variance $\tau^2$, so $Y_c=Q_c+c^Tp_{AB}^{\rm out}$ has variance
+$c^T\mathsf Pc+\tau^2=v_0+\ell_c$. All these commuting linear output observables have a joint
+Gaussian law in the common Gaussian input. The zero cross block therefore establishes full
+independence and (30.3), rather than only a marginal variance identity. $\square$
+
+For example its complete characteristic function is
+$\exp(ih^TL\mu-\tfrac12h^T\Sigma_Zh) \exp[-t^2(v_0+\ell_c)/2]$ at
+$(h,t)\in\mathbb R^3\times\mathbb R$. Thus every augmented-record Borel probability is fixed by
+(30.3). All preparation-noise dependence of this scalar protocol is exactly the single number
+$\ell_c$, even when the common $W$ is unknown: $W$ changes only the old-record mean, and all
+momentum means are zero.
+

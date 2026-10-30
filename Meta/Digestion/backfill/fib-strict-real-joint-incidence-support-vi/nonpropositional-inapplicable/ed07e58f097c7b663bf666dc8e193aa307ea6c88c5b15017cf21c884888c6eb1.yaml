@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ed07e58f097c7b663bf666dc8e193aa307ea6c88c5b15017cf21c884888c6eb1
+  normalized_sha256: sha256:ed07e58f097c7b663bf666dc8e193aa307ea6c88c5b15017cf21c884888c6eb1
+cas_ref: sha256:ed07e58f097c7b663bf666dc8e193aa307ea6c88c5b15017cf21c884888c6eb1
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional source and notation specification: defines the output region Q, the scope of companion quantifiers and the cited supplier interfaces; no collar inequality is concluded here.'
+    previous_atom_id: c997e60daaf3eb68bb14db15b6063c3e6b73b721d88db3ad39335ed07f9a3a47
+    next_atom_id: 541d065ba982ce34b1c03fc5e9006eaad101675e6094c3f529d24adc90794b86

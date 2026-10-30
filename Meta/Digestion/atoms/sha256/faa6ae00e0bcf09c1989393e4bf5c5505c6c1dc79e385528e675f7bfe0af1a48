@@ -1,0 +1,2 @@
+**约定 82.5（不交换量词）。** 定理 82.2 的 constants 含 $1/s$，不统一于 $n$；定理 82.4 另由 same-map CP coupling 证明。该 joint theorem 只固定 $\kappa$，不声称 compact-$\kappa$ remainder 与定理 81.5 相同。所给 decoders 是模型内明确的 unitary 或 measure-and-prepare channels；这些数学 realizations 不证明外部装置已提供其操作，也不计算量子存储维数、online controller memory 或 paid physical ports。
+

@@ -1,0 +1,51 @@
+**Corollary 151.1 (fixed-input and full-reference consequences).** For every actual encoder in the physical $\beta_{\rm phys}=1/2$, $\lambda_{\rm phys}=1$, minimal-Kraus-rank-three S.147 family (U.208), all complex CPTP recoveries on the entire output satisfy
+
+$$
+\max_{\mathcal R:M_5(\mathbb C)\to M_3(\mathbb C)\ {\rm CPTP}}
+F_e(\rho_\star,\mathcal R N_T)=v_T^2
+\leq c-\Delta_T<c.
+\tag{U.220}
+$$
+
+With the unhalved diamond norm and every finite complex reference allowed,
+
+$$
+\begin{gathered}
+\delta_{N_T}:=\inf_{\mathcal R\ {\rm CPTP}}
+\|\mathcal R N_T-\operatorname{id}_{M_3}\|_\diamond
+\geq2(1-c+\Delta_T)
+=1-\frac1{\sqrt2}+2\Delta_T
+>1-\frac1{\sqrt2},\\
+\sup_{T\in\mathcal T_3}\max_{\mathcal R\ {\rm CPTP}}
+F_e(\rho_\star,\mathcal R N_T)=c,
+\quad\text{with no attaining }T\in\mathcal T_3.
+\end{gathered}
+\tag{U.221}
+$$
+
+Proof. Equation (U.220) is (U.212) and Theorem 150.1; it keeps the physical input fixed before the unrestricted recovery. Let
+$\omega_{\mathcal R}=(\operatorname{id}_R\otimes\mathcal R N_T)(|\psi_\star\rangle\langle\psi_\star|)$ for the single normalized purification in (U.212). Measuring the projection onto that pure target gives
+
+$$
+\begin{aligned}
+\|\mathcal R N_T-\operatorname{id}\|_\diamond
+&\geq\|\omega_{\mathcal R}-|\psi_\star\rangle\langle\psi_\star|\|_1\\
+&\geq2\left(1-\langle\psi_\star|\omega_{\mathcal R}|\psi_\star\rangle\right)
+=2(1-F_e(\rho_\star,\mathcal R N_T))\\
+&\geq2(1-c+\Delta_T).
+\end{aligned}
+\tag{U.222}
+$$
+
+A reference of dimension three provides this witness to the unrestricted supremum; it does not restrict the supremum over all finite references. Taking the recovery infimum proves the first line of (U.221), and in particular the non-strict bound $1-1/\sqrt2$. The argument is one-sided and uses no equality between fidelity and diamond distance. It asserts neither a poor-fidelity bound at every physical input nor a recovery achieving a diamond upper bound.
+
+For sharpness, the boundary calibration $T_0=he_0^T$ in (S.213) has $v_{T_0}^2\geq c$ and hence, by (U.209), equality. It is also witnessed by the environmental state $X_0=\operatorname{diag}(c,1-c,0)$, since
+
+$$
+f_{T_0}(X_0)=c\sqrt c+\frac{\sqrt2}{4}\sqrt{1-c}=r,
+\qquad c^2+\frac18=c.
+\tag{U.223}
+$$
+
+The legal rank-three lifts $T_\varepsilon=(he_0^T+\varepsilon he_2^T)/\sqrt{1+\varepsilon^2}$ satisfy (U.211), so $f_{T_\varepsilon}(X_0)\to r$ at this same auxiliary density. Their optimized squared fidelity therefore tends to $c$. The strict gap (U.214) excludes equality for every fixed $T\in\mathcal T_3$. Hence $c$ is a sharp supremum and is not a maximum on that subset. This does not identify the infimum diamond error with its lower bound. $\square$
+

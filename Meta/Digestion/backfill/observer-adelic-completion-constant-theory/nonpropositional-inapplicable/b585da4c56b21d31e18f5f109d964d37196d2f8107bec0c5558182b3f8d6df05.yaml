@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b585da4c56b21d31e18f5f109d964d37196d2f8107bec0c5558182b3f8d6df05
+  normalized_sha256: sha256:b585da4c56b21d31e18f5f109d964d37196d2f8107bec0c5558182b3f8d6df05
+cas_ref: sha256:b585da4c56b21d31e18f5f109d964d37196d2f8107bec0c5558182b3f8d6df05
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅分类 GPMO 半直积定义的模型及研究状态，不增加性质断言。
+    previous_atom_id: b94d154df554530402b9b13cfe5aec750759c35a7551579a3c6cbedc7cb22aa8
+    next_atom_id: 953c44f0dcd0fef0d490928b15fca78ad4c40948889715a7ff7c61bfeb0710f6

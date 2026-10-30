@@ -1,0 +1,70 @@
+**Proposition 203.1 (Signed 64-dimensional resource law).** For
+occupations $a_i=n_{\ell_i}$ and $k_i=n_{r_i}+n_{R_i}$, moving
+$\ell _2$ left across the occupied first-copy Bob modes gives exactly
+
+$$
+ J|a_1,j;a_2,k\rangle=(-1)^{k_1a_2}|a_1,a_2;j,k\rangle,\qquad
+ \boxed{(-1)^{(n_{r_1}+n_{R_1})n_{\ell_2}}}. \tag{203.1}
+$$
+
+Proof. Moving $\ell_2$ to the stated Alice position crosses each
+occupied first-copy Bob mode once. CAR anticommutation contributes
+one minus sign per crossing. There is no further permutation within
+either Bob copy. $J$ is a signed
+permutation of the 64 occupation kets; it is not asserted to factor across the
+Alice--Bob cut.
+
+Let $\Pi_{a,k}$ project onto total Alice number $a$ and total Bob number
+$k$. The actual normalized resource is
+
+$$
+ \Omega={1\over Z^2}
+ \sum_{a=0}^2\sum_{k=0}^4
+ \Pi_{a,k}J(R\otimes R)J^*\Pi_{a,k}. \tag{203.2}
+$$
+
+This is one common twirl. The opposing one-copy coherences are retained in
+(203.2), subject to the CAR signs in (203.1).
+
+For the $N_A=1$ rails write $p=|10\rangle$, $q=|01\rangle$, and
+
+$$
+ P=1\oplus(-I_H)\oplus1.
+$$
+
+Before restriction to a Bob charge, the $N_A=1$ block is
+
+$$
+ S=\begin{pmatrix}
+ A_1\otimes A_0&(C^*P)\otimes C\\
+ (PC)\otimes C^*&A_0\otimes A_1
+ \end{pmatrix},\qquad C^*P=-|0\rangle\langle f|+|g\rangle\langle2|. \tag{203.3}
+$$
+
+On $\mathcal H_k=\bigoplus_{i+j=k}\mathcal B_i\otimes\mathcal B_j$,
+where $\mathcal B_0=\mathbb C|0\rangle$, $\mathcal B_1=H$,
+$\mathcal B_2=\mathbb C|2\rangle$, the off-diagonal restrictions are
+
+$$
+\begin{array}{c|c}
+ k&S\text{-off-diagonal map}\\ \hline
+0&0\\
+1&-|0,f\rangle\langle f,0|\\
+2&-|0,2\rangle\langle f,g|+|g,f\rangle\langle2,0|\\
+3&|g,2\rangle\langle2,g|\\
+4&0.
+\end{array} \tag{203.4}
+$$
+
+Here $|a,b\rangle$ means $a\otimes b$, and all phases are those of the
+same source vectors $f,g$.
+
+The $N_A=0$ and $N_A=2$ blocks are, respectively,
+
+$$
+ M_{0,k}=(A_0\otimes A_0)|_{\mathcal H_k},\qquad
+ M_{2,k}=(A_1\otimes A_1)|_{\mathcal H_k}. \tag{203.5}
+$$
+
+Each has a one-dimensional Alice factor.
+

@@ -1,0 +1,27 @@
+**Theorem 77.4 (paid actual FetchGrowth).** At every valid returned
+state, every finite complete FetchGrowth request returns exactly AA
+Theorem 19.2's indexed event or OutOfRange, on the same root with the
+original framing, and returns to Ready. It reads only acquired input,
+current source and the actual bound global record.
+
+Proof. Counting supplies the actual number of events. The finite unary
+comparison gives the exact original range decision; it does not assume
+that a binary value of arbitrary input length is free. For an in-range
+index, the forced prefix is the source's actual local event list from
+AA Theorem 17.2. If not selected there, the index lies in the branch's
+shuffle of its two actual child histories. Lemma 77.2 supplies precisely
+the local rank required by the existing decoder of Definition 48.2 and
+Theorem 48.3. That decoder returns the side and the positive within-side
+index; its loop decreases $i$. The actual descent enters a strictly
+smaller logical subtree, so only finitely many such calls occur. A
+selected forced event has exactly the accumulated full address, not a
+rank in place of an address. This is AA's history inverse with its record
+access replaced by the faithful finite digit extraction.
+
+All source scans use the retained genuine root and actual parent/child
+links. Work values and the eventual finite reply are backed, with their
+reads, writes and clearing paid. The original Print/End/local-ACK/Return
+sequence therefore yields the required Ready state. No erased archive,
+future source, abstract rank oracle or unbound converter is used.
+$\square$
+

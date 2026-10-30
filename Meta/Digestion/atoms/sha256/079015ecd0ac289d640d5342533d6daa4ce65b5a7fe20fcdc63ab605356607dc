@@ -1,0 +1,88 @@
+**Theorem 124.3 (No continuous-in-error uniform multiplicative family).**
+Fix any allowed source. For either choice $j=f$ or $j=a$, there do
+not exist constants $m,M,E>0$ and functions
+
+$$
+f_{h_0}:(0,E]\longrightarrow(0,\infty),
+\quad\text{continuous in their error argument},
+\tag{124.12}
+$$
+
+one for every singleton anchor $\|h_0\|\le1$, such that
+
+$$
+mf_{h_0}(\varepsilon)
+ \le\Omega_{j,h_0}(\varepsilon)
+ \le Mf_{h_0}(\varepsilon)
+\quad(0<\varepsilon\le E)
+\tag{124.13}
+$$
+
+holds simultaneously for all these anchors. The functions may depend
+on the entire anchor, with no regularity required in that dependence.
+The conclusion therefore also excludes a single such family comparable
+to both original moduli on a common positive error range.
+
+*Proof.* Fix a unit vector $f\perp e$, set $A_0=1/2$, and choose
+any sequence $\eta_n>0$ tending to zero with
+$A_0^2+\eta_n^2\le1$. The anchors
+
+$$
+h_{0,n}=A_0 e+\eta_n f
+\tag{124.14}
+$$
+
+are singleton anchors by Proposition 120.2. For each of the two
+choices of $j$, Theorem 124.2 gives actual-law thresholds
+$0<\mu_{j,n}\le\beta_{\mathfrak s}A_0\eta_n\to0$.
+In particular, eventually $\mu_{j,n}$ lies strictly inside $(0,E)$.
+For $0<\varepsilon<\mu_{j,n}$, (124.5) and the first inequality
+in (124.13) imply
+
+$$
+f_{h_{0,n}}(\varepsilon)\le L_{\mathfrak s}\eta_n/m.
+\tag{124.15}
+$$
+
+For $\mu_{j,n}<\varepsilon\le E$, the other lines of (124.5)
+and (124.13) imply
+
+$$
+f_{h_{0,n}}(\varepsilon)\ge A_0/M.
+\tag{124.16}
+$$
+
+Continuity at the positive error $\mu_{j,n}$ forces
+$A_0/M\le L_{\mathfrak s}\eta_n/m$. This is impossible for
+large $n$. The argument uses only strict inequalities on the two
+sides of the threshold; no value or attainment assertion at the
+threshold is needed. It applies separately to the finite modulus
+and to the full raw-law modulus, with their respective thresholds.
+
+For the comparison with affine retrieval, Gao–Sun–Wang–Xu,
+[*Phase Retrieval From the Magnitudes of Affine Linear Measurements*,
+arXiv:1608.06117v1, Theorems 3.1 and 4.1](https://arxiv.org/pdf/1608.06117v1),
+assume global affine injectivity; Theorem 3.1 equivalently requires
+full real Jacobian rank everywhere in the complex signal space,
+and Theorem 4.1 gives compact-set Lipschitz comparisons under that
+hypothesis. Zhuang,
+[*On stability of generalized phase retrieval and generalized affine
+phase retrieval*, Theorem 2.3 and Theorem 3.1](https://doi.org/10.1186/s13660-019-1968-z),
+gives the real generalized quadratic product-distance comparison
+under generalized phase retrievability and the real generalized
+affine injectivity/Jacobian criterion, respectively. Those hypotheses
+do not remove the reflected zero-retention fibers (114.7) of this
+source. Balan–Zou's local bounds cited in Definition 122.1 are also
+bounds for their phase-retrievable quotient interface. Here a
+reflected fiber is approached by off-axis singleton anchors, and
+(124.15)–(124.16) concern entry of a remote component into each
+actual raw-law error ball.
+
+All conclusions keep one fixed source and concern exact laws and
+the terminal-relevant vector $h$. They assert neither a sampling
+guarantee nor identification of an entire completion unitary.
+The constants and the retained decoder length need not be uniform
+over sources. The common-error obstruction (124.13) is compatible
+with the two different horizontal error rescalings in (123.2).
+$\square$
+

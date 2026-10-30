@@ -1,0 +1,43 @@
+**定理 4.5（效果约束下的相干误差与尖锐值）。** 若负效果满足
+
+<a id="eq-4-u09"></a>
+
+$$
+\|M_-^*(I)-Q\|_{\operatorname{op}}\le\eta,\qquad 0\le\eta\le1,
+$$
+
+则
+
+<a id="eq-4-3"></a>
+
+$$
+\frac12\|\Gamma-\Lambda\|_\diamond
+\ge\max\left\{\frac{r-1}{2r-1},(1-\eta)\left(1-\frac1r\right)\right\}.
+\tag{4.3}
+$$
+
+**证明（效果约束）。** 对 $P$ 中任意归一化输入，实际负概率不超过 $\eta$，又至少为 $w$，所以 $w\le\eta$。前一证明的第二个见证给 $(1-w)(1-1/r)\ge(1-\eta)(1-1/r)$，同时保留统一下界。
+
+若效果完全正确，先作原完整基测量后合并 $Q$ 标签，得到
+
+$$
+\Gamma_{\rm fine}(X)=PXP\otimes|+\rangle\langle+|
+ +\sum_{j=1}^{r}P_jXP_j\otimes|-\rangle\langle-|,
+\qquad Q=\sum_{j=1}^{r}P_j .
+$$
+
+令 $\mathcal D_Q$ 为 $Q$ 子空间的完全去相干通道。取
+$Z_Q=\sum_{j=1}^{r}e^{2\pi\mathrm i(j-1)/r}|q_j\rangle\langle q_j|$，则
+
+$$
+\mathcal D_Q=\frac1r\sum_{k=0}^{r-1}\operatorname{Ad}_{Z_Q^k}
+=\frac1r\operatorname{id}_Q+\left(1-\frac1r\right)\mathcal R
+$$
+
+其中 $\mathcal R$ 是其余相位酉的平均通道。因此
+$\tfrac12\|\operatorname{id}_Q-\mathcal D_Q\|_\diamond\le1-1/r$，先作 $QXQ$ 过滤不增这个界。另一方面，在 $|\Omega_Q\rangle$ 上目标是纯态，实际是 $r^{-1}\sum_j|q_j,j\rangle\langle q_j,j|$；其半迹范数恰为 $1-1/r$。上下界一致，得到精确效果约束下的尖锐值 $1-1/r$，原五模为 $3/4$。有误差 $\eta>0$ 的整条下界曲线尚未证明尖锐。
+
+这里的 $3/4$ 只是在**精确二元效果约束**下的尖锐值；有误差 $\eta>0$ 时，上式给出下界，但尚未证明整条曲线尖锐。正确的概率输出也不自动提供拒绝子空间的相干后继；该后继必须作为单独的仪器能力提供和检验。
+
+<a id="sec-5"></a>
+

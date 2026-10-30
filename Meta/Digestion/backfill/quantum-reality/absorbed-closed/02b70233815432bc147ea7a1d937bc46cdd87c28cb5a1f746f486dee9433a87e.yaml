@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:02b70233815432bc147ea7a1d937bc46cdd87c28cb5a1f746f486dee9433a87e
+  normalized_sha256: sha256:02b70233815432bc147ea7a1d937bc46cdd87c28cb5a1f746f486dee9433a87e
+cas_ref: sha256:02b70233815432bc147ea7a1d937bc46cdd87c28cb5a1f746f486dee9433a87e
+coverage_gids:
+  - gid: D5/S3/Factorization/PrimeLogIndependence.prime_log_indep
+    target_statement_id: sha256:366db20aa72f96a99551b7c9454ec3da58afe689a712f11a6bc53972e20ec151
+receipts:
+  unresolved_subitems: []

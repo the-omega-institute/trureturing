@@ -1,0 +1,26 @@
+**Definition 1.3 (simultaneous cost coordinates).** For actual acquisition
+requests $w_1,\ldots,w_Q$, let
+
+$$
+ M_{\rm addr}=\max_i|w_i|,\qquad W=\sum_i|w_i|.
+ \tag{GPO.4}
+$$
+
+Each word starts at the root and is submitted literally; shared prefixes
+receive no discount. Let $J$ count actual controller localSteps, including
+advice arithmetic, projection, address construction, translation, allocation
+control, output and attachment. The writer is a separate append service:
+its internal writes do not recursively generate new controller localSteps.
+For a concrete local-work upper bound choose a fixed multitape bit machine,
+with one elementary tape transition charged as one localStep. Input and
+counter integers are binary; letters and finite phase tags have constant
+width. A node-following Read implementation additionally charges its actual
+root access and traversed edges, at most $|w_i|+1$ per invocation. Prices
+for arbitrary other backends are their actual work, not this tariff's bound.
+The localStep/update/Read event types and chronological concatenation are
+those of [NativeSerialMachine][NSM]; the writer is not readable control.
+
+For positive $t$ write $b(t)=1+\lfloor\log_2t\rfloor$. All bit bounds below
+exclude capability encodings and record framing when explicitly stated.
+The finite local machine description supplies no uniform storage bound.
+

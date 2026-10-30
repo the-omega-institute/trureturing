@@ -5,6 +5,7 @@
    anchors: []
    utility: none
    digest: The actual Baez-Duarte Newton series sums to reciprocal zeta on Re(s)>1. -/
+/- Escape audit for signed_choose unfinished: https://github.com/the-omega-institute/trureturing/issues/22862 -/
 import D5.S3.Analytic.SeriesInequalities.NormalizedPochhammerBounds
 import D5.S3.Analytic.SeriesInequalities.BaezDuarteQBounds
 import D5.S3.Weil.ZetaBridge.RieszBaezDuarte
@@ -17,7 +18,7 @@ open D5.S3.Weil.RieszBaezDuarte
 
 namespace D5.S3.Weil.Analytic.BaezDuarteNewton
 
-private theorem signed_choose (k : ℕ) (z : ℂ) :
+theorem signed_choose (k : ℕ) (z : ℂ) :
     normalizedPochhammer k z = (-1 : ℂ)^k * Ring.choose (z - 1) k := by
   rw [Ring.choose_eq_smul, Polynomial.descPochhammer_smeval_eq_ascPochhammer,
     Polynomial.ascPochhammer_smeval_eq_eval]

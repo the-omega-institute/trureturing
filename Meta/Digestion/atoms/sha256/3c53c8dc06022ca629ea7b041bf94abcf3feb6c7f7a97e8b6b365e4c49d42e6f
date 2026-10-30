@@ -1,0 +1,48 @@
+**Warning 12.3A (stationary word diameter alone does not contract).** The following is an abstract block example, not an FIB producer. Let $V$ be trivial, let $0<\varepsilon<1$, let $R\sim\operatorname{Bernoulli}(\varepsilon)$, and let $U$ be a fair bit independent of $R$. Set
+
+$$
+Z=
+\begin{cases}
+\star,&R=0,\\
+(1,U),&R=1,
+\end{cases}
+\qquad
+W=
+\begin{cases}
+g,&R=0,\\
+b,&R=1.
+\end{cases}
+$$
+
+Use endpoint alphabet $\{\mathsf c,(1,0),(1,1)\}$. Define complementary substochastic kernels by
+$$
+B_g(\star,\mathsf c)=1,\qquad B_g(i,t)=0\ \text{for every other input row }i,
+$$
+and
+$$
+B_b(\star,t)=0\ \text{for every }t,\qquad
+B_b((1,u),(1,u))=1\ (u\in\{0,1\}),
+$$
+with all other $B_b$-entries zero. Thus $\sum_wB_w\mathbf1=\mathbf1$: $B_g$ is constant on its only feasible row and $B_b$ is identity on its feasible rows. Let $Z'$ be the corresponding output. Then $W$ is determined by $Z$, so the premise (5.1) holds. The word probabilities are $1-\varepsilon,\varepsilon$, and
+
+$$
+\delta(B_g)=0,\qquad \delta(B_b)=1,
+\qquad
+(1-\varepsilon)\delta(B_g)+\varepsilon\delta(B_b)=\varepsilon.
+$$
+
+Nevertheless,
+
+$$
+\mathcal D(U;Z)=\frac{\varepsilon}{4},
+\qquad
+\mathcal D(U;Z'\mid W)=\frac{\varepsilon}{4}.
+\tag{12.11}
+$$
+
+Indeed, only the $b$-fiber reveals $U$, while the $g$-fiber is constant. Thus an unweighted stationary word-diameter average, even when equal to $\varepsilon<1$, gives no contraction. This warning concerns the abstract block lemma and is not a counterexample to any FIB statement.
+
+**Open Question 12.4 (band-preserving fiberwise concentration).** Under the posterior band $\mathsf B(P)$, can a forward/canonical-reverse quotient satisfy the fiberwise weighted condition (12.7) uniformly at all shifted cuts, or can bad-word variance concentration persist? The assertions $\mathsf Q_{\rm full}$ and $\mathsf Q_{\rm band}$ remain open; no universal tail result is claimed.
+
+**Attribution 12.5.** Lemma 12.1 is the posterior-variance refinement of Lemma 5.1, using the conditional SDPI in Lemma 4.3 and the variance identity (5.5). Theorem 12.3 reuses Lemma 3.3, Proposition 11.1, the Jensen and tail steps of Theorem 6.1, and the existing geometric sums (6.2)--(6.3). Warning 12.3A is abstract and supplies no FIB producer or resolution of either open assertion.
+

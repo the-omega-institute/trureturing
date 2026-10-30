@@ -1,0 +1,32 @@
+**Proposition 19.2 (what the new bounds change).** The admissible construction
+class is restricted in three concrete ways. First, a terminal collision repair
+must install its finite activation and return control at boot and prove its
+original verifier/consumer correspondence; an unchanged automatic CAP graph
+cannot inherit the $W_r$ or $C_{4,M}$ branches. Second, a recovery construction
+must target the actual covered preterminal domain of Theorem 17.3 or the
+strict-past domain of Proposition 17.4; a finite final drain does not make the
+last suffix cofinal. Third, a literal final-state dump cannot repair either
+obstruction under Definition 18.1; a candidate must use a properly scoped
+archive or a different, explicitly priced representation.
+
+**Proof.** The first statement is the finite-entry premise used in
+Proposition 16.3 and Proposition 16.6. The second follows from the cover
+endpoint inequality and the strict-past admission inequality. The third is
+Proposition 18.2 together with the corrected copy/handoff accounting of
+Propositions 18.3–18.4. These are restrictions on the next construction
+interface, not a proof that no task-relative four-view construction exists.
+The remaining work is to supply the common finite role/ownership graph,
+selector, both kernel inclusions for each natural view and lawful transition
+transport on its actual domain; no such common installation is asserted
+here. $\square$
+
+The external structural analogies retain their limited hypotheses: compatible
+memory-extension maps preserve old blocks only under disjoint allocation and
+map extension (Leroy and Blazy, Lemmas 65–69), and simulation results require
+an initial relation plus matched finite fragments (Lynch and Vaandrager,
+Lemma 3.8). Neither citation supplies CAP's owner token, source growth,
+terminal readout or primitive fee. The full CAP9.3(3) programme, including all
+four independent natural views and its common operational instance, therefore
+remains an open construction boundary rather than a conclusion of this
+appendix.
+

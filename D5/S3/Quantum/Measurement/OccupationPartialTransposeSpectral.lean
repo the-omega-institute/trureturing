@@ -56,6 +56,7 @@ proof_shape: GlobalBound.gap_decomposition: bind-only; consumer: GlobalBound.glo
 -/
 import D5.S3.Quantum.Measurement.FiniteDetectionDarkSpace
 import D5.S3.Quantum.Entanglement.SequentialOccupationHistory
+import D5.S3.Quantum.Entanglement.OccupancyWordSectors
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -513,7 +514,7 @@ private theorem quadratic_certificate {u v b x y : ℝ} (hu : 0 ≤ u) (hv : 0 �
   have h := two_mul_le_add_of_sq_le_mul
     (mul_nonneg hu (sq_nonneg x)) (mul_nonneg hv (sq_nonneg y)) hs
   nlinarith only [h]
-private theorem topRoot_quadratic_bound (a b c x y : ℝ) :
+theorem topRoot_quadratic_bound (a b c x y : ℝ) :
     a*x^2+2*b*x*y+c*y^2 ≤ topRoot a b c*(x^2+y^2) := by
   have h := quadratic_certificate ((topRoot_bounds a b c).1 |> sub_nonneg.mpr)
     ((topRoot_bounds a b c).2 |> sub_nonneg.mpr) (topRoot_determinant a b c).symm.le
@@ -778,7 +779,7 @@ universe u v w
 open scoped BigOperators Matrix ComplexOrder MatrixOrder
 variable {σ : Type w} {ι : Type u} {κ : Type v} [Fintype σ] [Fintype ι] [Fintype κ]
   [DecidableEq σ] [DecidableEq ι] [DecidableEq κ]
-private theorem blockDiagonal_psd (B : σ → Matrix ι ι ℂ) (hB : ∀ s, (B s).PosSemidef) :
+theorem blockDiagonal_psd (B : σ → Matrix ι ι ℂ) (hB : ∀ s, (B s).PosSemidef) :
     (Matrix.blockDiagonal B).PosSemidef := by
   have h := D5.S3.Quantum.Measurement.FiniteDetectionDarkSpace.positiveBlockDiagonal B hB
   have he : (Matrix.blockDiagonal' B).submatrix ((Equiv.sigmaEquivProd σ ι).trans (Equiv.prodComm σ ι)).symm

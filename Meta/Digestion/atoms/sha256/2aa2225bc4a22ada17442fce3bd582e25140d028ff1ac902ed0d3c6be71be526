@@ -1,0 +1,83 @@
+**定理 7.6（最小相位提升、曲率与水平截面的不存在）。**
+记
+
+$$
+I(\kappa)=\sum_s\frac{\nu_s^2}{p_s(\kappa)},\qquad
+ a_s(\kappa)=\frac{\nu_s}{p_s(\kappa)I(\kappa)}.
+$$
+
+在固定 $\kappa$、固定 $\theta_2=0$ 的相位切空间中，
+对任意给定 $\dot\chi=u$，二次相位方差代价
+
+$$
+q_p(v,v)=\sum_s p_sv_s^2-\left(\sum_s p_sv_s\right)^2,
+ \qquad v_2=0,\quad \nu^{\mathsf T}v=u,
+$$
+
+具有唯一最小值 $u^2/I$，由 $v_s=a_su$ 达到。
+在前章辛面积为 $2\pi$ 的 Fubini--Study 度量归一化下，
+相位速度平方为 $2q_p$，故其最小值是 $2u^2/I$。
+
+在局部坐标 $(\kappa,\chi)$ 上，规定最小相位水平提升为
+
+$$
+H_\kappa=\partial_\kappa,\qquad
+ H_\chi=\sum_s a_s(\kappa)\partial_{\theta_s}.
+$$
+
+令 $\mathfrak t=\{v\in\mathbb R^5:\nu^{\mathsf T}v=0,\ v_2=0\}$。
+相应的 $\mathfrak t$ 值联络形式及曲率为
+
+$$
+\beta_s=d\theta_s-a_s\,d\chi,\qquad
+ F^\beta_s=d\beta_s=-a_s'(\kappa)\,d\kappa\wedge d\chi.
+$$
+
+其中中间分量恒为零；其余分量给出三维相位环面的联络。
+该曲率在每个内部点都非零。因此，任何非空开矩形上
+都不存在同时沿两个基方向水平的 $C^2$ 截面。
+
+**证明。**
+
+先注意 $\sum_s\nu_s=0$、$\nu_2=0$，
+所以 $\nu^{\mathsf T}a=1$、$a_2=0$ 且 $\sum_sp_sa_s=0$。
+若 $q_p(v,v)=0$，所有 $v_s$ 必相等；
+由 $p_2>0$ 与 $v_2=0$ 得到 $v=0$，
+故 $q_p$ 在所用相位切空间上正定。
+
+令 $m=\sum_sp_sv_s$。带约束的驻点方程对 $s\neq2$ 为
+$p_s(v_s-m)=\lambda\nu_s$。
+把这些方程求和得到 $m=(1-Z)m$，
+故 $m=0$，再由 $\nu^{\mathsf T}v=u$ 得到
+$\lambda=u/I$。因此驻点为 $v=au$；
+正定二次型保证它是唯一极小点。
+代回得 $q_p(au,au)=u^2/I$。
+
+因为 $\nu^{\mathsf T}a=1$，
+$\nu^{\mathsf T}\beta=d\chi-d\chi=0$；
+而在竖直方向 $\nu^{\mathsf T}v=0$ 上，$\beta(v)=v$。
+故 $\beta$ 确为相位平移主丛的局部联络形式。
+结构群为阿贝尔环面，其曲率就是 $d\beta$，
+从而得到所列公式。
+
+为证明非零，微分恒等式 $\sum_sp_sa_s=0$：
+
+$$
+0=\sum_s\nu_sa_s+\sum_sp_sa_s'
+   =1+\sum_sp_sa_s'.
+$$
+
+所以 $a'(\kappa)$ 不可能为零。
+若存在水平截面 $\theta=\theta(\kappa,\chi)$，
+则必须有 $\partial_\kappa\theta_s=0$ 和
+$\partial_\chi\theta_s=a_s(\kappa)$。
+交换混合偏导会给出 $a_s'=0$ 对所有 $s$ 成立，矛盾。
+
+证毕。
+
+这里的无水平截面是相对于所指定联络的局部不可积性。
+它不表示该局部主丛在拓扑上非平凡：
+开矩形上的底丛可以平凡，而联络曲率仍不为零。
+
+<a id="thm-rectangle-holonomy"></a>
+

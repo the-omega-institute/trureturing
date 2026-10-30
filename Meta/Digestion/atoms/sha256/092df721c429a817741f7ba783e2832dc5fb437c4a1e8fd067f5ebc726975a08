@@ -1,0 +1,11 @@
+**命题 11.5（正交结构消除标量提升歧义）。** 给定
+$\rho:\Gamma\to SO_5(\mathbb C)$。若
+$q:GL_5\to PGL_5$ 且
+$q\circ\widetilde\rho=q\circ\rho$，则唯一存在字符
+$\chi:\Gamma\to\mathbb C^\times$ 使
+$\widetilde\rho(\gamma)=\chi(\gamma)\rho(\gamma)$。若还保持同一二次型和体积形式，
+则 $\chi=1$。
+
+**证明。** 逐点射影相等给出唯一标量，表示乘法使其成为字符。保持二次型给
+$\chi^2=1$，保持体积给 $\chi^5=1$，两指数互素，故 $\chi=1$。$□$
+

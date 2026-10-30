@@ -1,0 +1,22 @@
+**命题 8.4（平均乘积不能由均值乘积替代）。** 对一般合法律，不能把 $`S,T`$ 换成 $`U(U-1),UV`$。例如令
+
+```math
+\mu_A=\tfrac12\delta_{\varnothing}+\tfrac12\delta_{13},\qquad
+\mu_B=\tfrac12\delta_1+\tfrac12\delta_3.
+```
+
+两律同有 $`U=1,V=1/2`$，但
+
+```math
+(S_A,T_A)=(1,1),\qquad (S_B,T_B)=(0,1/2).
+```
+
+证明。逐模式代入表；均值产品在两律上都是 $`UV=1/2`$，且 $`U(U-1)=0`$，无法给出第一律的真实二阶平均。一般也有
+
+```math
+S=U(U-1)+\mathrm{Var}_p(\xi),\qquad
+T=UV+\mathrm{Cov}_p(\xi,\eta).
+```
+
+故被删除的方差与协方差正可承载关系。∎
+

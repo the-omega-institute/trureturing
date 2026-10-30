@@ -1,0 +1,23 @@
+**Definition 2.2 (complete first-loader table).** For each fixed
+$0\le j<e$ name rows $N_j,I_j,X_j,W_j,M_j,C_j,A_j$ in that order.
+After these name $N_e,X_e,W_e,S_e,M_e,D_e$. Assign consecutive state
+numbers in this displayed order within $H_B$. This finite unrolling
+uses no runtime natural as a PC. Let $N_{j+1}$ mean the next such row,
+with $N_e$ the end case. Every effect list not displayed is empty.
+All rows have an ordinary receipt.
+
+| Row | Opcode fields $(o,i,j,s)$ | Successor and extra finite effect |
+| --- | --- | --- |
+| $N_j$, $j<e$ | $(9,0,0,0)$, NEXT variant | $I_j$; select the existing cursor position $c_j$. |
+| $I_j$ | $(6,0,6,0)$, public boot IN | $X_j$. |
+| $X_j$ | $(4,74,0,0)$, ordinary EX | $W_j$. |
+| $W_j$ | $(1,74,6,0)$, latched-bit WR | $M_j$. |
+| $M_j$ | $(3,74,0,0)$ | $C_j$. |
+| $C_j$ | $(1,0,6,0)$, fresh first-control WR variant | $A_j$; construct exactly slot $c_j$ from latch6. |
+| $A_j$ | $(9,0,0,0)$, ADVANCE variant | $N_{j+1}$; advance this fixed cursor by one. |
+| $N_e$ | $(9,0,0,0)$, end NEXT variant | $X_e$. |
+| $X_e$ | $(4,74,0,0)$, ordinary EX | $W_e$. |
+| $W_e$ | $(1,74,0,\ulcorner\mathsf F\urcorner)$, literal WR | $S_e$. |
+| $S_e$ | $(9,0,0,0)$ | $M_e$; seal current74 marker, set sealed=1. |
+| $M_e$ | $(3,74,0,0)$ | $D_e$. |
+| $D_e$ | $(9,0,0,0)$, first DONE variant | Activate the completely written actual first store at its installed entry; set Mirror=0, Retained=1, $W_{74}=0$. |

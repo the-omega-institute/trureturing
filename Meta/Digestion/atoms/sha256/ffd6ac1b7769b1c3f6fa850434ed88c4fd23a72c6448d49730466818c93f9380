@@ -1,0 +1,17 @@
+**Corollary 5.2 (The raw M condition adds no projected restriction there).**
+On this same open set,
+
+$$
+\mathcal P_{JM}\cap\mathcal O=\mathcal P_J\cap\mathcal O.
+$$
+
+Proof. Restricting a four-world lift gives its $J$ pair. Conversely, at
+a base in $\mathcal O$, append the $M$ pair from Theorem 5.1 to any raw
+$J$ pair. The labels have no cross-pair equality, distinctness or
+terminal-value restrictions. They share only $p,v$ and its inverse, so
+the resulting four-world tuple is a raw joint lift. ∎
+
+Theorem 5.1 and Corollary 5.2 concern the complex projection of the
+specified raw equations. They imply neither a strict-real $M$ pair nor
+density of strict-real collision bases.
+

@@ -1,0 +1,67 @@
+**Proposition 109.3 (nonnegative residual and the exact uniform obligation).** On the domain (U.1), $R\geq0$. The assertion
+
+$$
+\Theta(P,V)\leq r\quad\text{for every feasible }P,V
+\tag{U.4}
+$$
+
+is equivalent to
+
+$$
+f_T(X)^2\leq c\quad
+\text{for every }T\in\mathcal T_3\text{ and every }X\in\mathsf D(\mathbb C^3).
+\tag{U.5}
+$$
+
+The fixed-input recovery normalization is
+
+$$
+\max_{\mathcal R:M_5\to M_3\ \mathrm{CPTP}}
+F_e(\rho_\star,\mathcal R N_T)
+=\max_{X\in\mathsf D(\mathbb C^3)} f_T(X)^2.
+\tag{U.6}
+$$
+
+Proof. The normalization and exact optimized equivalences are those of volume II, Propositions 85.3, 86.1–86.2, 90.2 and 91.2–91.3. Their common-variable content can be seen directly in the residual. Reorder the output as $(b_1,b_2,g_1,g_2,h)$ and write a common dual block as
+
+$$
+\mathscr B=\begin{pmatrix}V_0\\V_1\\w\end{pmatrix},\qquad
+w\in\mathbb R^{1\times2},\qquad w^Tw\preceq K.
+$$
+
+The squared Frobenius norm after projection onto the two zero-overlap constraints is
+
+$$
+\|\Pi_2(\mathscr B\sqrt P)\|_F^2
+=\operatorname{Tr}(PG)+wPw^T-\tau.
+\tag{U.7}
+$$
+
+The two normalized constraint vectors are $[I_2;0;0]/\sqrt2$ and $[0;I_2;0]/\sqrt2$, so their squared projection coefficients are exactly the two halves of the squared traces in (U.1). For singular $K$, $w^Tw\preceq K$ forces $w^T$ into its range and is equivalent to $w^T=\sqrt K z$, $\|z\|\leq1$. Hence the maximum of $wPw^T$ is $\lambda_{\max}(\sqrt K P\sqrt K)$, attained by a top eigenvector, including a zero maximum. The matrices $\sqrt K P\sqrt K$ and $B$ have the same spectrum as the two Grams of $\sqrt K\sqrt P$. Thus
+
+$$
+\max_w\|\Pi_2(\mathscr B\sqrt P)\|_F^2
+=\operatorname{Tr}(PG)+\operatorname{Tr}(PK)-\lambda_{\min}(B)-\tau=R\geq0.
+$$
+
+There is exactly one row $w$. Its contribution cannot be replaced by $\operatorname{Tr}(PK)$, which would allow a residual of larger rank. For the same $\mathscr B$, common code-row polar maximization gives $\ell/4=N$ as in (S.244)–(S.245). Support factorization and polar completion attain that maximum even when the residual has a kernel. Maximizing the boundary vector gives the projection norm in (U.7); if it vanishes, any unit vector in the eight-dimensional zero-overlap space is allowed. Consequently
+
+$$
+\max_{P,V}\Theta(P,V)
+=\max_{T\in\mathcal T_\partial,\ X\in\mathsf D(\mathbb C^3)}f_T(X)
+=\sup_{T\in\mathcal T_3,\ X\in\mathsf D(\mathbb C^3)}f_T(X).
+\tag{U.8}
+$$
+
+For the middle expression, projection onto the first two environment coordinates and normalization retains the full auxiliary $2\times2$ block. Concavity and complex-conjugation symmetry permit real averaging. Ordered diagonal $P$ then follows from the joint transformation of density, channel and common blocks in (S.246), not from removing offdiagonals at a fixed channel. Equality with the last supremum uses the full-sphere comparison (S.208) and legal lifting (S.215). More explicitly, for $T_0\in\mathcal T_\partial$,
+
+$$
+T_\varepsilon=\frac{T_0+\varepsilon he_2^T}{\sqrt{1+\varepsilon^2}}\in\mathcal T_3,\qquad
+|f_T(X)-f_{T'}(X)|\leq\frac12\|T-T'\|_F.
+\tag{U.9}
+$$
+
+The inequality follows from $\|(T-T')\sqrt X\|_*\leq\|T-T'\|_F\|\sqrt X\|_F$ and holds for every complex density. It preserves a strict boundary gap at that same $X$ for sufficiently small $\varepsilon$. The full-sphere comparison is an optimized statement; it asserts no pointwise improvement by deleting a third column. Compact boundary maxima and (U.8) prove the equivalence of (U.4) and (U.5).
+
+Finally the actual purification Gram is $L^TL$ for $L=[E_0/2\mid E_1/2\mid T/\sqrt2]$. Sandwiching by $\sqrt{\rho_\star}\otimes\sqrt X$ gives the right Gram of the rectangular matrix in (U.2). This explains its coefficients $1/4,1/4,1/2$ and gives its root fidelity. [Bény–Oreshkov, arXiv:1103.0649v3, Section IV, (133), with Corollary 5](https://arxiv.org/html/1103.0649v3) identifies its maximum with the square root of the unrestricted fixed-input entanglement fidelity. Squaring gives (U.6). Their (132) alone retains a Kraus-number restriction and is not the interface being used. $\square$
+

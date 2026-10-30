@@ -1,0 +1,21 @@
+**命题 1.1（有限残余的极限刻画）。** 在上述前缀穷尽条件下，
+
+$$
+\boxed{
+A_\infty^{\mathrm{law}}
+:=\bigcap_{n\ge0}A_n^{\mathrm{law}}
+=\sim_{\mathscr T}.
+}
+\tag{MPC.3}
+$$
+
+**证明。** 若 $(z,u)$ 属于左侧，则对任意 $E\in\mathscr T$，由
+$\mathscr T=\bigcup_n\mathscr T_{\le n}$ 可取 $n$ 使 $E\in\mathscr T_{\le n}$，
+于是两边的 law 相同。反之，若两边对所有 $E\in\mathscr T$ 的 law 相同，则对
+每个固定 $n$ 的所有 $E\in\mathscr T_{\le n}$ 都相同，故属于每个
+$A_n^{\mathrm{law}}$。$\square$
+
+若目标不是有限测试本身，而是一个无限转录 law，则还需声明输出空间的 sigma
+代数由有限柱集生成，并使用有限柱边缘唯一决定 law 的条件。没有这个条件时，
+(MPC.3) 只说明所有声明的有限实验相同，不自动说明某个更大的无限对象相同。
+

@@ -1,0 +1,36 @@
+**Corollary 7.2 (One generated suffix on all original prefix histories).**
+For a fixed valid target name, use the same compiled suffix after every
+history of each of the original prefix contexts in VI Definition 93.1,
+with a new suffix pointer at that context's end, ignoring its identity
+and labels in all suffix decisions. Let
+$r_i=A_{u_i}\rho_0$ and $m_i=\operatorname{Tr}r_i=2^{-k(u_i)}$ for its
+nine specified prefix events. Their unnormalized suffix laws satisfy
+
+$$
+\begin{gathered}
+p_i(\ell,b)=\alpha_\ell\operatorname{Tr}(E_bU_{w_\ell}r_iU_{w_\ell}^\dagger),
+\qquad q_i(\ell,b)=\alpha_\ell\operatorname{Tr}(P_b r_i),\\
+\sum_{\ell,b}p_i(\ell,b)=\sum_{\ell,b}q_i(\ell,b)=m_i,\\
+\frac12\sum_{\ell,b}|p_i(\ell,b)-q_i(\ell,b)|<m_i\varepsilon,
+\qquad |\operatorname{Tr}[(F_{\pi_P}-P)r_i]|<m_i\varepsilon.
+\end{gathered}
+\tag{7.2}
+$$
+
+**Proof.** Substitute the positive substate $r_i$ into (3.9); trace
+scaling gives the bounds. Operationally the suffix also runs after
+every other prefix history, and those histories remain in that
+context's archive. The $u_i$ event retains its original probability
+$m_i$. There is no preparation of $r_i/m_i$, selection of the prefix
+event, or cross-context preparation lottery. This is the effective
+advice application of VI Corollary 96.2. Proposition 6.1 transfers it
+to the original supported five-dimensional source. ∎
+
+The theorem does not produce the nine prefix words or a source-dependent
+target merely because their existence has been proved. In particular,
+the separating target $P_N$ of VI Theorem 92.1 can be used here only
+when an accurate computable name for that target is separately given
+or constructed with its own proof. Existence of a parameter-dependent
+witness is not a naming algorithm. No such selection is needed for
+Corollary 7.1 or for the effective-synthesis consumer in VI 99.3.
+

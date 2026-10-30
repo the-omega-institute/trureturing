@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:eff8254f53f64cf6190aae56220cc9d4b9ce46ec9a4d7c2d5cbee7c335f52e35
+  normalized_sha256: sha256:eff8254f53f64cf6190aae56220cc9d4b9ce46ec9a4d7c2d5cbee7c335f52e35
+cas_ref: sha256:eff8254f53f64cf6190aae56220cc9d4b9ce46ec9a4d7c2d5cbee7c335f52e35
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Methodological suitability for central jets and Hankel formalization, without a mathematical assertion.
+    previous_atom_id: 6c8c0be6524040b8ff5a8d0ab4a6754e4c74318e5c53bbe1c6567500fa787508
+    next_atom_id: a3c5231bbe0345c68429e8514ece9872063cad91d1ec2906de29cb00dabae869

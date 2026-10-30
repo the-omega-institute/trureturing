@@ -1,0 +1,18 @@
+**Proposition 212.5 (One complex source with three strict branches).**
+A fully complex, nonaligned joint point is
+
+$$
+ t={1\over10},\qquad v={(1,2,2)\over3},\qquad
+ w={(2,1,2i)\over3}.
+$$
+
+Proof. Here $x=1/9,y=4/9,z=20/81$, and direct substitution gives
+
+$$
+ q_0={6\over5},\qquad q_3={10\over9},\qquad q_0q_3={4\over3}.
+$$
+
+Thus both outer branches and the middle criterion are strict for one shared
+complex source. The derivation, rather than this example, supplies the
+classification.
+

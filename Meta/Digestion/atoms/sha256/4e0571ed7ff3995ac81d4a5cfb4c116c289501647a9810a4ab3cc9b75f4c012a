@@ -1,0 +1,20 @@
+**Definition 28.1 (independent incidence, boundary and birth time).**
+At a completed update cut $n\ge2$, let $S_n$ be the set of actual
+physical root-to-node words and let $\partial S_n$ be its terminal
+antichain. They discard leaf labels and generator data. Independently,
+let
+
+$$
+ \mathcal T_n^{\rm birth}
+  =\bigl(n;(t_j,p_j,z_j)_{1\le j\le B_n}\bigr)
+ \tag{GPO.74}
+$$
+
+be the ordered marked word of actual beta-split events. Its mature
+restriction $\mathcal T_n^{<}$ keeps only $j\le v_n$, namely births
+before update $n$. These are observations of the source process, not
+additional accessible read ports or unrestricted observer histories.
+There are no localSteps, query words, delays or writer events in these
+temporal observations. In particular a reconstruction of (GPO.74)
+will reconstruct this particular chronology only.
+

@@ -1,0 +1,153 @@
+**Theorem 10.2 (the native tangent normalization, all modes and sharpness).**
+The boundary problem (10.5) is operative: $\lambda_0$ is simple,
+$0<\lambda_0<2/\pi$, and $\phi$ extends smoothly and positively to
+$\overline J$. The unit-source frozen Green kernel of (3.4), in the
+original density convention and expressed in coordinates (10.1), is exactly
+
+$$
+\widehat\Gamma_o(q)=\frac{1}{2\pi m_0}R(q)^{-2}.
+\tag{10.7}
+$$
+
+For every complex $u\in C_c^\infty(\mathbb R^3\setminus\{0\})$,
+
+$$
+\int |\nabla_Hu|^2dq\ge
+\lambda_0\int R^{-2}|u|^2dq,
+\tag{10.8}
+$$
+
+and $\lambda_0$ is optimal on this full complex test class. In particular,
+(10.6) is the optimal frozen coupling for the unit source (10.7), including
+all angular and radial Fourier modes. If the angular operator is instead
+written $-(cb')'+cb/4$, its eigenvalue is $\lambda_0/4$; the coupling in
+(10.6) is unchanged by that change of notation.
+
+**Proof.** The inverse Jacobian of (2.3) is $1/(2r)$ in absolute value.
+The graded automorphism (10.1) has determinant $\det(B)^2=1/\det A(o)$;
+the first-kind central coordinate change has determinant one. Pushing
+forward the original frame gives the coefficient matrix $C$ in (10.2).
+This proves both the exact energy correspondence and the density factor
+$m_0$, without normalizing either native phase circle.
+
+The classical Heisenberg fundamental solution is the intermediate
+supplier here; its particular normalization can also be checked directly.
+Set $\Delta_H=U^2+V^2$. Direct differentiation gives
+$\Delta_HR^{-2}=0$ away from zero. Use the polar coordinates
+
+$$
+\xi=R\sqrt{\cos a}\cos\theta,\qquad
+\eta=R\sqrt{\cos a}\sin\theta,\qquad
+4\tau=R^2\sin a,
+\quad a\in J,\quad\theta\in\mathbb R/(2\pi\mathbb Z).
+\tag{10.9}
+$$
+
+Their volume element is $R^3dR\,da\,d\theta/4$ and
+$|\nabla_HR|^2=\cos a$. The outward flux of $-\nabla_HR^{-2}$ through
+$R=\varepsilon$ is therefore
+$2\varepsilon^{-3}(\varepsilon^3/4)\int_J\int_0^{2\pi}c\,d\theta da
+=2\pi$. Consequently
+$-\Delta_H((2\pi)^{-1}R^{-2})=\delta_0$ relative to Lebesgue measure.
+The full heat-integral kernel is also homogeneous of degree $-2$ and has
+the same distributional source. Its difference from this kernel is globally
+$\Delta_H$-harmonic, hence smooth by hypoellipticity. A smooth function
+homogeneous of degree $-2$ must be zero. A unit source relative to $m_0dq$
+then divides the kernel by $m_0$, proving (10.7). This also identifies the
+positive fundamental solution with the full heat-integral kernel
+in Ciatti--Cowling--Ricci, §2, equations (2.1), (2.6)--(2.7), with
+$Q=4$ and $L=-\Delta_H$; their general result is not an assertion of the
+sharp constant in (10.8).
+
+The embedding $\mathcal H_c\hookrightarrow L^2(J)$ is compact. Near an
+endpoint put $d=\pi/2-|a|$ and $s=\sqrt d$. The derivative and norm
+integrals in (10.4) are comparable to the radial $H^1$ and $L^2$ integrals
+on a two-dimensional disk, respectively. Rellich compactness on that disk,
+and ordinary one-dimensional compactness in the middle, give the claim.
+The form is positive definite; compactness rules out a zero lowest
+eigenvalue. Taking a nonnegative lowest eigenfunction, the interior
+Sturm equation makes it strictly positive and the lowest eigenvalue
+simple. Since $c$ has a simple zero at each endpoint, its regular-singular
+ODE has one smooth branch and one logarithmic branch. The latter has
+infinite $\int c|b'|^2$. Thus the eigenfunction is the smooth branch.
+The endpoint expansion is
+$\phi(\pi/2-d)=\phi(\pi/2)(1-\lambda_0d/4+O(d^2))$ and the analogous
+expansion at the other end. A zero endpoint value forces the regular
+solution to vanish identically. Hence $\min_{\overline J}\phi>0$.
+Reflection symmetry and simplicity give evenness and (10.5).
+The constant trial has quotient $2/\pi$. Equality in this trial bound
+would make that constant an eigenfunction, whereas $S1=c$ is not constant.
+This proves the strict upper bound. These observations also give the
+stated positive-solution characterization of $\lambda_0$. Integrating
+the ODE twice from zero gives (10.5a), and the final integral there is
+four times the endpoint flux $\lim_{a\uparrow\pi/2}c(a)\phi_\lambda'(a)$.
+
+For completeness, the passage from this angular problem to the entire
+unweighted test class is explicit. Put $\ell=\log R$ and
+$u=R^{-1}v(\ell,a,\theta)$. The two horizontal squared derivatives,
+including their cross terms, give
+
+$$
+\begin{aligned}
+\int|\nabla_Hu|^2dq
+&=\frac14\int_{\mathbb R\times J\times\mathbb T}
+\left\{c|v_\ell-v+\tan a\,v_\theta|^2
++4c|v_a+\tfrac12v_\theta|^2\right\}
+\,d\ell\,da\,d\theta,\\
+\int R^{-2}|u|^2dq
+&=\frac14\int|v|^2\,d\ell\,da\,d\theta.
+\end{aligned}
+\tag{10.10}
+$$
+
+Fourier transformation in $\ell$ and Fourier series in $\theta$, followed
+in the $(\sigma,n)$ fibre by the phase $e^{-ina/2}$, give the angular
+energy
+
+$$
+\int_J\left\{4c|b'|^2+
+ c\big(1+(\sigma+n\tan a)^2\big)|b|^2\right\}\,da,
+\qquad \sigma\in\mathbb R,\ n\in\mathbb Z.
+\tag{10.11}
+$$
+
+The extra term is nonnegative. Each admissible fibre belongs to the base
+form domain (10.4), so (10.11) is at least
+$\lambda_0\int_J|b|^2$. Plancherel proves (10.8). The coordinate axes
+omitted by (10.9) have measure zero; the identity for smooth tests follows
+by integration over the full polar coordinate region, and then by form
+approximation. It imposes no symmetry on $u$.
+
+For actual sharpness let $\chi\in C_c^\infty(\mathbb R)$ be nonzero and
+real, and put
+
+$$
+u_L(q)=R^{-1}\phi(a)\chi(\log R/L),\qquad L>0.
+\tag{10.12}
+$$
+
+These are smooth compact annular tests on the entire punctured group.
+Smoothness on the central axis follows from the smooth endpoint branch:
+$\pi/2-|a|$ is a smooth function of $\xi^2+\eta^2$ there, with
+$\tau\ne0$. Formula (10.10) and the angular eigenvalue equation give
+
+$$
+\frac{\int|\nabla_Hu_L|^2dq}
+ {\int R^{-2}|u_L|^2dq}
+=\lambda_0+
+\frac{\int_Jc\phi^2da}{\int_J\phi^2da}
+\frac{\int_{\mathbb R}|\chi'|^2d\ell}
+ {L^2\int_{\mathbb R}|\chi|^2d\ell}.
+\tag{10.13}
+$$
+
+Thus the lower bound is sharp through actual annular tests. Multiplying
+energy by $m_0$ and using (10.7) gives exactly (10.6).
+As an attributed quantitative check, D'Arca--Fanelli--Franceschi--Prandi,
+[arXiv:2603.04086v1](https://arxiv.org/html/2603.04086v1), Theorem 1.2(1),
+with $n=1$, $Q=4$, $p=2$, $\theta=1$, gives $\lambda_0\ge1/4$.
+Their central coordinate is $-4\tau$ and their Korányi
+norm is (10.3); the constant measure multiplier cancels in the quotient.
+That paper supplies a lower bound, not the sharp characterization or the
+native critical-domain conclusion proved here. $\square$
+

@@ -1,0 +1,33 @@
+**Theorem 6.2 (raw growth followed by a fresh actual assay).** At any such
+cut, let $g:t\to t'$ be any actually selected enabled raw growth. Execute
+it, consume Growth, earn the new roster, and run a fresh assay on $t'$ of
+length $I'=I+1$. The new history represented by that acquired cut is
+
+$$
+H=hK^Ig,
+\qquad x_H=\iota_gT_t^Ix_h,
+\qquad x'_{\rm now}=T_{t'}^{I+1}\iota_gT_t^Ix_h.
+\tag{6.1}
+$$
+
+It is a member of $\mathcal H_A$, and all routes in §5 apply to it.
+Thus any finite combination of the sliding operations of Theorem 6.1
+and these growth/reassay operations has a proved acquired-image meaning
+and an actually advanced returned state.
+
+**Proof.** The old assay has already executed $I$ real Ticks. The raw
+growth acts on that advanced field, yielding the middle expression in
+(6.1). If there was a previous growth, $n=I\ge1$, so the gap before
+the appended growth is the old final gap plus $I$ and is positive.
+If $n=0$, there is no internal gap to satisfy; a first growth after any
+number of alpha Ticks is allowed. Thus $H\in\mathcal H_A$ in both
+cases, even when the old final gap was zero. The added growth increases
+$N-b$ by one by (2.1). Its fresh assay therefore has length $I+1$ and
+the actual returned field in (6.1). Construction 5.2 now proves the new
+literal block and all routes. Each finite repetition satisfies the same
+argument on its current historical representative. $\square$
+
+The distinction between $H=hK^Ig$ and $hg$ is essential. It accounts
+for Ticks which really occurred during acquisition. This repeated-round
+closure is a result for raw-clock A, not an assertion about clocked C.
+

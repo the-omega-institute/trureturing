@@ -1,0 +1,23 @@
+**Theorem 14.1 (Exact entire-child inventory).** At $t=t_*$ let
+$W_i$ be the whole world given by $s_i(t_*)$ and (10.2). Then
+
+$$
+C(p_*,v_*)=\{W_{11},W_{12},W_{15}\}.
+\tag{14.5}
+$$
+
+All three worlds are actual and strict. Their displayed terminal
+$J$ intervals are pairwise disjoint, as are their $M$ intervals.
+The strict mixed-$J$ mate at $(r_*,b_*)$ is exactly $W_{12}$.
+Its equal-response B0 partner is auxiliary and is not in the child.
+
+Proof. The three contractions construct actual worlds with the exact
+same acquired base. Their distinct carrier boxes make them distinct.
+The all-world filter leaves only $11,12,15,16$, at most one world
+per root, and (14.3)–(14.4) reject $16$. This exhausts the child.
+The target source lies in $X_{12}$ and solves the unprimitive pair,
+so uniqueness there identifies its whole world with $W_{12}$.
+The two sets of terminal intervals give injectivity. This inventory
+is at the single exact target; the neighborhood theorem is only
+the uniform $M$ assertion, without constant cardinality. ∎
+

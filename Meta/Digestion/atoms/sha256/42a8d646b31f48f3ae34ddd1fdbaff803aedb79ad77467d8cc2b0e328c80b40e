@@ -1,0 +1,36 @@
+**Theorem 5.3.1 (Faithful guarded endpoints).** For the fixed off-24 base, (5.3.4)–(5.3.5) are in bijection with every original world in $C(p,v)$. In particular a fixed $(p,v,x,d)$ represents at most one whole world.
+
+**Proof.** Clock zero and clock two are the two equations
+
+$$
+uC_0+dD=0,\qquad uC_2+B_2=0.
+\tag{5.3.6}
+$$
+
+Their compatibility is $\Phi=0$. Their sum-of-squares solution is (5.3.5), since
+
+$$
+uC_0+dD=-\frac{C_2}{S}(C_0B_2-dDC_2),\qquad
+uC_2+B_2=\frac{C_0}{S}(C_0B_2-dDC_2).
+\tag{5.3.7}
+$$
+
+For an original world $S>0$: otherwise clock zero gives $d=0$ and clock two gives $d=147/5$. Since $p\ne24$, the reused parent saturation gives $d\ne24$, and clock one gives $C_1\ne0$. Clock one and $n=x/u$ yield
+
+$$
+j=(24-d)D/(uC_1),\qquad r=x/u-j=R/(uC_1).
+$$
+
+The source identity $bj=b^2+r(1-r)$ has precisely the cleared form
+
+$$
+4\Omega^2C_1^2\{bj-b^2-r(1-r)\}=\mathcal G.
+\tag{5.3.9}
+$$
+
+Every original world therefore satisfies (5.3.4).
+
+Conversely the guards imply $b>0$ and $0<r<1$. Equation (5.3.9) gives the original $j=b+r(1-r)/b$, and then $n=j+r=x/u$, $U_0=1/u$, $T_0=(1+u)/(2u)$. Equations (5.3.7) give clocks zero and two; the definition of j gives clock one. The four samples (5.3.1) give clocks three through six. Thus all seven original acquired rows use the same degree-at-most-three polynomial $g=uh$ and fixed d. The gain cannot be identically zero because the first two readings differ. Every reconstructed parameter is unique. This proves the converse and the bijection. ∎
+
+There is no division by drift, $C_0$, $C_2$, $g(7)$, a leading gain coefficient, a root separation, the regular-parent coefficient $\Lambda$, or X's quartic K. Hence this description includes zero drift, vanishing gain samples, degree drops, repeated roots, singular sources, the golden layer, and the exceptional $x=x_{\mathrm{exc}}$ layer. A single vanishing $C_0$ or $C_2$ is retained. Their simultaneous vanishing is impossible for an original endpoint, rather than discarded by a chart convention.
+

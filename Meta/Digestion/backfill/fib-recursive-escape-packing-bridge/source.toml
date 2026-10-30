@@ -1,0 +1,5 @@
+source_id = "fib-recursive-escape-packing-bridge"
+path = "docs/develop/theory/FIB_RECURSIVE_ESCAPE_PACKING_BRIDGE.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

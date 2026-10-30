@@ -28,3 +28,4 @@ This repository-derived auxiliary addresses the upper inequality associated with
 
 - Truth anchor: `D5/S3/Quantum/Information/ActualSpectralMixtureUpper.actual_spectral_mixture_upper`
 - Dependency: [D5/S3/Quantum/Information/ActualPureQubitGeometry](ActualPureQubitGeometry.md)
+- Dependency: [D5/S3/Quantum/Information/SLDSpectralEnergy](SLDSpectralEnergy.md)

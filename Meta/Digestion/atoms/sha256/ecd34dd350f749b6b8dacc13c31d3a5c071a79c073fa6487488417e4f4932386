@@ -1,0 +1,33 @@
+**推论 8.2（保迹残差与分支归一化）。** 若 $\widehat J$ Hermitian 但未必保迹，令
+
+$$
+B=\operatorname{Tr}_{\rm out}\widehat J-I_d/d,
+\qquad
+Y=\widehat J-(I_m/m)\otimes B.
+$$
+
+若 $\widehat J\succeq-\nu I$，则 $Y$ 保迹且
+$Y\succeq-(\nu+\|B\|_{\operatorname{op}}/m)I$。先修正为 $Y$，再使用定理 8.2，得到 CPTP 映射与原估计映射的距离上界
+
+$$
+\frac12\|\Phi^{\rm cp}-\widehat\Phi\|_\diamond
+\le\frac d2\|B\|_1+
+md^2\left(\nu+\frac{\|B\|_{\operatorname{op}}}m\right).
+$$
+
+**证明。** 对 $Y$ 取输出偏迹立即消去 $B$；修正项的迹范数为 $\|B\|_1$、算子范数为 $\|B\|_{\operatorname{op}}/m$。先用引理 7.1 估计保迹修正代价，再用定理 8.2 和三角不等式。
+
+完整仪器须整体保迹。更细地，若各分支 Choi $J_a$ 满足
+$\sum_a\operatorname{Tr}_{\rm out}J_a=I_d/d$、$J_a\succeq-\nu_aI_{m_ad}$，令
+
+$$
+t_a=m_ad\nu_a,\qquad t=\sum_at_a,\qquad
+J_a^{\rm cp}=\frac{J_a+t_aI_{m_ad}/(m_ad)}{1+t}.
+$$
+
+所有分支都正，总偏迹仍为 $I_d/d$；在直和上重复负质量证明得到完整仪器修复的 half-diamond 上界 $dt$。分母必须共同，逐支分别除以 $1+t_a$ 一般会破坏总概率归一化。
+
+上述有限网可以只是已重构模型的数学检查；若解释为物理参考测试，必须确实提供联合制备与读出。修复得到邻近的抽象 CPTP 模型，不证明它属于原五模菜单；定理 4.5 正说明即使目标完全正且保迹，原菜单仍可能有无法越过的实现误差。
+
+<a id="sec-9"></a>
+

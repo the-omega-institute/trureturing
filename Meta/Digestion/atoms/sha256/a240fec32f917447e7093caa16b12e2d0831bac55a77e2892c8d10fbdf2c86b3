@@ -1,0 +1,45 @@
+**Proposition 123.3 (Axial limits and the restricted-family consistency).**
+If $\eta=0$ and $A>0$, both original moduli obey
+
+$$
+\lim_{\varepsilon\downarrow0}
+ \omega^{\rm all}_{\mathfrak s,h_0}(\varepsilon)
+ =\lim_{\varepsilon\downarrow0}
+ \omega_{\mathfrak s,h_0}(\varepsilon)=2A.
+\tag{123.12}
+$$
+
+This includes all allowed $\beta$, either sign of $a$, and
+$A^2+\beta^2=1$. At $A=0$, the profile reduces to the positive
+inverse of $r\mapsto r(\eta+r)$, capped at $2$, so (123.2) has
+the same small-error order as the already proved Theorem 121.2.
+In particular, that theorem supplies the $F(\varepsilon,\eta)$
+specialisation, including zero, every imaginary axial anchor and its
+two sphere endpoints. Every sphere anchor with $A>0$ is covered by
+(123.2) and (123.5)–(123.7), according to its values of $A,\eta$.
+
+*Proof.* For $\eta=0$, Proposition 120.2 identifies the sole distinct
+zero-law alternative as $h_* =(-a+\mathrm i\beta)e$, at distance
+$2A$. Its outer and skew matrices agree with those of $h_0$.
+Taking any sufficiently small positive $\gamma$ gives
+$D_0(\gamma,h_*;h_0)=\gamma(1+2A)$, so (122.4) yields
+$\omega^{\rm all}(\varepsilon)\ge2A$ for every sufficiently
+small positive $\varepsilon$.
+
+For the reverse limiting inequality, if it failed for either modulus,
+there would be $\varepsilon_n\downarrow0$ and feasible alternatives
+with distances greater than $2A+u$ for some $u>0$. This uses only
+the definition of supremum, not attainment. Compactness of the
+closed parameter domain gives a subsequential limit $(\gamma_*,h_*)$.
+By (122.4), $D_0\to0$, so $\gamma_*=0$ and the two matrix
+coordinates agree with those of $h_0$. Proposition 120.2 makes
+$h_*$ either $h_0$ or its reflection, contradicting the distance
+bound. This proves (123.12).
+
+The assertion at $A=0$ follows by substituting $A=0$ in (122.6).
+The comparison with $F$ and all of its stated special cases are
+Theorem 121.2, used as a consistency consequence rather than a further
+claim of new restricted-family content. The complete sphere coverage
+follows from the anchor quantifier in Theorem 123.1 and the
+ball-preserving construction (122.16). $\square$
+

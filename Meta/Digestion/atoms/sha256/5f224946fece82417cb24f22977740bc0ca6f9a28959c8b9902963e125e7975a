@@ -1,0 +1,104 @@
+**定理 76.1（消去矩阵未知量的精确联合域）。** 定义紧凸多面体
+
+$$
+\mathcal P_z=\left\{r\in\mathbb R^4:
+\begin{array}{l}
+r_1\geq r_2\geq r_3\geq r_4\geq0,\quad \sum_{j=1}^4r_j=1,\\
+r_1\geq P,\quad r_1+r_2\geq Q,\quad r_4\leq V
+\end{array}\right\}.
+\tag{XI.14}
+$$
+
+则 $(a,b)\in\mathcal S_z$ 当且仅当 $a\geq b\geq0$，且存在同一个 $r\in\mathcal P_z$ 满足
+
+$$
+\boxed{\quad
+a^2\leq4r_1r_2,\qquad b^2\leq4r_1r_4,\qquad
+b^2\leq4r_2r_3,\qquad a^2b^2\leq16r_1r_2r_3r_4.\quad}
+\tag{XI.15}
+$$
+
+四个归一化谱标量只有三个自由坐标。
+每个合格 $r$ 都给指定 $z,a,b$ 的实际半正迹一密度态对，
+不仅是谱松弛或必要条件。
+
+**证明。** 本证明先复用 (X.11) 的经典实 Schur–Horn 接口：对降序实谱 $\lambda$ 和指定实对角 $z$，
+存在实正交 $O$ 使
+$\operatorname{diag}(O\operatorname{diag}(\lambda)O^T)=z$，
+当且仅当 $\zeta\prec\lambda$。零值和重根均允许。
+
+其必要性中，每个 $k$ 坐标子集的对角和为
+$\sum_j\lambda_j t_j$，其中 $t_j$ 是 $O$ 第 $j$ 列在该子集上的平方和，
+满足 $0\leq t_j\leq1,\sum_jt_j=k$。
+这个线性式至多为最大的 $k$ 个 $\lambda_j$ 之和；总迹相同，得到主序。
+
+充分性对维数归纳，先排序 $z$。一维只有等和条件。
+若 $\zeta_1=\lambda_1$，保留该特征轴，剩余前缀不等式直接相减后归纳。
+否则选 $k$ 使 $\lambda_k\geq\zeta_1\geq\lambda_{k+1}$；
+这样的 $k$ 存在，因为 $\lambda_1>\zeta_1$，而等和与排序给 $\zeta_1\geq\lambda_n$。
+在这两条实轴上作平面旋转，选单位向量 $v$ 使其二次型为 $\zeta_1$。
+当两谱值不同，$v$ 在第 $k$ 轴上的平方坐标取
+$(\zeta_1-\lambda_{k+1})/(\lambda_k-\lambda_{k+1})$；
+相等时直接取一条轴，无须相除。
+压缩到 $v^\perp$ 的谱 $\eta$ 是把 $\lambda_k,\lambda_{k+1}$
+替成 $q=\lambda_k+\lambda_{k+1}-\zeta_1$，保留其余项，
+且 $\lambda_k\geq q\geq\lambda_{k+1}$。
+若 $j<k$，它的前 $j$ 项和为 $\sum_{i\leq j}\lambda_i$，
+至少为 $j\zeta_1\geq\sum_{i=2}^{j+1}\zeta_i$；
+若 $j\geq k$，则为
+$\sum_{i\leq j+1}\lambda_i-\zeta_1\geq\sum_{i=2}^{j+1}\zeta_i$。
+总和也相等，故 $\eta$ 主序支配剩余目标对角。
+在 $v^\perp$ 上归纳选基；这些向量的对角二次型只取决于压缩，
+不受它们与 $v$ 的非对角耦合影响。最后逆置换恢复原 $z$，即得实正交 $O$。
+
+这就是 (X.11) 所需的经典实版本；
+Carlen–Lieb 的开篇 Horn 陈述及文内 Horn 归纳证明亦给出这个接口。
+其 Theorem 1.2 是 Mirsky 定理，不作为这里的 Horn 定理编号。
+
+现在 (XI.14) 等价于 $\zeta\prec(r_1,r_2,r_3,r_4,0)$：
+第一、第二前缀给 $P,Q$；第三前缀是 $1-r_4\geq1-V$；
+第四前缀为一，自动成立。总迹相同。它由闭线性约束给出，且每项在 $[0,1]$ 中，
+故为紧凸多面体。
+
+从任意原见证的完整共同实部谱 $\lambda$ 出发，上述实 Schur–Horn 接口给 $\zeta\prec\lambda$。
+将第五谱质量吸收到第一项，置
+
+$$
+r=(\lambda_1+\lambda_5,\lambda_2,\lambda_3,\lambda_4).
+\tag{XI.16}
+$$
+
+它仍降序非负且迹一；$(r,0)$ 的前四个前缀各比 $\lambda$ 增加 $\lambda_5$，
+故 $\zeta\prec\lambda\prec(r,0)$。
+(XI.2) 的四个乘积右端在这个同一个替换下均不减，
+于是 $r\in\mathcal P_z$ 并满足 (XI.15)。
+这一步保留两权重的存在性，不是对原输入实际实施质量转移。
+
+反向给定合格 $r$，用命题 75.1 对 $\lambda=(r,0)$ 构造 (XI.13)。
+它的 $R_0$ 谱为 $(r,0)$，由上述实 Schur–Horn 接口可选实正交 $O$ 使
+$\operatorname{diag}(OR_0O^T)=z$；分组坐标的置换已吸收入 $O$。
+定义
+
+$$
+\rho=O(R_0+iC_0)O^T,\qquad \sigma=O(R_0-iC_0)O^T=\bar\rho.
+\tag{XI.17}
+$$
+
+两者半正、迹一，共同实部为 $OR_0O^T$。
+实反对称矩阵 $OC_0O^T$ 的对角为零，所以两人口都恰为 $z$；
+实正交共轭保持差谱，得到指定的 $a,b$。
+若先按降序人口选择矩阵，再同时逆置换两态的行列，便恢复原物理人口顺序。
+最后用 $D_3$ 被动返回物理坐标，人口和差谱均保持。
+这给出充要性及每一个合格参数的完整密度构造。$\square$
+
+固定候选 $(a,b)$ 后，$r$ 的可行集是凸集：
+四条乘积界分别是二元或四元几何平均这个凹函数的闭超水平集，
+例如 $(r_1r_2r_3r_4)^{1/4}\geq\sqrt{ab}/2$；
+与 $\mathcal P_z$ 相交仍凸，包含零阈值情况。
+这不推出 $\mathcal S_z$ 在普通 $(a,b)$ 坐标中凸。
+(XI.14)–(XI.15) 也表明整个联合域只依赖 $P,Q,V$：
+在保持排序合法及这三个量时，对最小两个人口重新分配不改变它。
+任意人口置换 $\Pi$ 则由
+$(\rho,\sigma)\mapsto(\Pi\rho\Pi^T,\Pi\sigma\Pi^T)$ 给保持权重的双射；
+这是状态存在域的协变性。
+

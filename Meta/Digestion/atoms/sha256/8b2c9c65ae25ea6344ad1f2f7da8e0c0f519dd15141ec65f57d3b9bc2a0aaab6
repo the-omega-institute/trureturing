@@ -1,0 +1,6 @@
+**Definition 14.1 (Critical values of the complete-world projection).**
+Use $X,Y,\pi$ from Definition 12.2. Let $\Sigma_{\rm crit}\subset Y$
+be the image of points at which the differential of $\pi$ has rank
+less than two on the complete parent surface. This is the differential
+of the actual whole-world projection, not merely of a quotient chart.
+

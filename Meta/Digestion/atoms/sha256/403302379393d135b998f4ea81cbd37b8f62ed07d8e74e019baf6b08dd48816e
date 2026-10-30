@@ -1,0 +1,139 @@
+**Theorem 19.1 (two constant tapes separate sign recovery from norm approximation).**
+Under the entire joint entrance of Definition 9.1 with public $d=1$,
+there is a source-blind zero-update consumer of the two tapes
+$a^H,b^H$ which earns the unknown law and cut and actually installs
+exactly $(P,K_1(P),n,B_n)$. It works on all three behaviors of
+$\mathscr R_1$, at every mature cut $n\ge4$, including every source
+and cut in Theorem 18.2. It requires no uniform pointwise approximant.
+
+Proof. Reuse GPO Proposition 37.3's classification
+$\mathscr C_1=\{0^\infty,10^\infty,1^\infty\}$ and its authentic
+prefixes $00,10,11$. First acquire $h,k_\mathrm{sp}$ by Proposition
+9.2, where $k_\mathrm{sp}=\lceil\log_2(h+1)\rceil$, and set $H=2h+1$.
+Generate the two length-$H$ constant tapes, charging $2H$ data writes
+and $O(H)$ generation work. For $j=1,2$, perform the two paid walks
+in each child cone of the authentic $p_j$ and return one for a positive
+sum of depth differences, zero for a negative sum. The walks are
+exactly Definition 13.1's full-root literal procedure, including each
+terminal absent-child test. There are eight walks in total.
+
+At the first stage $p_1=\varepsilon,t_1=2$. After the first bit has
+been earned, $p_2=a$ if $z_1=1$ and $p_2=b$ otherwise, with $t_2=3$.
+This is the beta child of the actual root at update two, hence the sole
+old beta parent at update three. No current label, source-law input,
+semantic port or later bit is used to choose it. This is the $d=1$
+instance of Theorem 13.2's earned-parent construction.
+
+In each of the two descendant cones being compared, every subsequent
+branch has a common constant orientation: one for $1^\infty$, zero
+for $0^\infty$ and $10^\infty$. For the impulse, its sole exceptional
+bit is the original root's first birth, outside all these child cones.
+For a rank-$q$ cone with this constant descendant orientation, following
+the larger-rank port forever has depth $\max(q-1,0)$, and following
+the other port forever has depth $\lfloor q/2\rfloor$. The first
+formula subtracts one until rank one; the second subtracts two until
+rank zero or one. Thus for the adjacent child ranks
+$q=n-t_j+1\ge2$ and $q-1$, the two constant tapes give exactly
+
+$$
+ (2z_j-1)\bigl(g_{s,n,j}(a^H)+g_{s,n,j}(b^H)\bigr)
+ =1+\left\lfloor\frac q2\right\rfloor
+      -\left\lfloor\frac{q-1}2\right\rfloor\in\{1,2\}.
+ \tag{ACR.70}
+$$
+
+Here a physical tape written with letters denotes its zero/one encoding
+in (ACR.58). The same descendant orientation in both cones licenses the
+adjacent-rank comparison. Both tapes are long enough by $H\ge n$.
+The sums never vanish and have the actual orientation signs. Induction
+therefore earns both bits; the impulse, constant zero and constant one
+are all included, rather than only the obstruction's constant-one law.
+
+Run exactly the original fixed $K_1(P)$, retaining its original row
+ordering and seed. An equivalent minimal row is not substituted, even
+on prefix $00$, for which either order-one coefficient might pass.
+GPO Lemma 29.2 authenticates its complete behavior. The already earned
+$h$ then permits the following paid age completion, with at most one
+additional Read:
+
+$$
+ n=\begin{cases}
+ h+1,&P=11,\\
+ 2h+\operatorname{Read}(ba^h),&P=00,\\
+ 2h-1+\operatorname{Read}(ba^{h-1}),&P=10.
+ \end{cases}
+ \tag{ACR.71}
+$$
+
+To verify these literals on the original root, apply (ACR.5)--(ACR.7).
+For $00$, $b(a^\ell)=2\ell$ and $b(ba^h)=2h+1$, so the two possible
+ages are $2h,2h+1$. For $10$, $b(a)=2$ and
+$b(a^\ell)=2\ell-1$ for $\ell\ge2$; maturity gives $h\ge2$.
+The possible ages are $2h-1,2h$, and $b(ba^{h-1})=2h$: the root's
+$b$ child is initially alpha, branches at four, and each later $a$
+proper prefix is initially alpha. For $11$, the spine birth formula
+is $b(a^\ell)=\ell+1$. These computations prove (ACR.71) without an
+age oracle or a richer reply. In the $10,h=2$ endpoint maturity already
+excludes age three; the displayed paid Read remains valid and returns
+one. No update occurs in any case.
+
+Compute $B_n=F_{n+1}-1$ by forward integer addition and really write
+$(P,K_1(P),n,B_n)$, its ready control and any requested forward phase
+into the granted readable backing. Finish the actual handoff while the
+same completed cut remains stationary. The installed canonical record
+is precisely (ACR.25), so the same-source consumers of GPO §§34,39 apply
+with their original binding/grant and execution premises.
+
+The achieved same-run resource coordinates can be stated separately:
+
+$$
+ \begin{aligned}
+ U_{\rm source}&=0,&
+ Q_{\rm Read}&\le2k_\mathrm{sp}+8n+1,\\
+ M_{\rm literal}&\le2n-2,&
+ W_{\rm literal}&\le2k_\mathrm{sp}2^{k_\mathrm{sp}}+8n^2+n.
+ \end{aligned}
+ \tag{ACR.72}
+$$
+
+Every walk uses at most $n$ paid Reads and literals of length at most
+$n$, by (ACR.7), including its terminal test. The spine has its actual
+overshoot $2^{k_\mathrm{sp}}\le2h\le2n-2$ and the traffic of Proposition
+9.2. The final age literal has length at most $h+1\le n$.
+These facts give (ACR.72); computed depths never replace paid calls.
+
+In the binary-operation model, one realization including tape generation,
+all full-literal copies, counters, sums, arithmetic, initialized scratch
+and cumulative data writes has work
+$e_1+O((n+2)^2\log_2(n+2))$ and reusable owned data backing
+$v_1+O(n+1)$ bits. Here $e_1,v_1$ are the actual original canonical
+enumeration costs of Definition 9.1, not a newly ordered enumeration.
+To obtain these bounds, reuse one $O(n)$-bit literal buffer and the two
+tapes. Depth and length counters have $O(\log(n+2))$ bits; the eight
+walks and spine use the number of calls in (ACR.72), with $O(n)$ copying
+and at most $O(n\log(n+2))$ local bit work per call. Forward Fibonacci
+addition uses $O(n^2)$ work and cumulative writes with $O(n)$ resident
+bits. Testing the at most two order-one rows, computing an optional
+phase by forward powers, and actually installing the remaining fields
+fit the same bounds. The explicit $B_n$ requires $\Theta(n)$ final
+binary writes, with $O(n+1)$ final data writes overall; it is not
+replaced by a short unevaluated Fibonacci expression.
+
+Actual root/grant acquisition, source generation and material, fixed
+code and its installation, service, backing allocation and lifetime,
+retained write tariffs and completed handoff retain their separate
+actual charges. In particular (ACR.72) is not a physical-duration bound.
+The stationary interval covers tape preparation, every calculation,
+Read, intermediate write, canonical normalization, final write and
+handoff. Fresh owned growing backing, reliable completion and finite
+local progress remain the premises of Definition 9.1.
+
+This is a restricted-class separation between a strong analytic
+requirement and this sign consumer. Theorem 11.2 already acquires all
+of $\mathscr R_d$, including $d=1$, with its stated finite-enumeration
+bill; no improvement on that acquisition theorem or optimality of
+(ACR.72) is asserted. GPO Proposition 37.3 supplies the class and early
+parents, not an unknown-cut stationary acquisition at arbitrary $n$.
+The additional conclusion is that the two constant tapes suffice on
+that whole class despite (ACR.62). $\square$
+

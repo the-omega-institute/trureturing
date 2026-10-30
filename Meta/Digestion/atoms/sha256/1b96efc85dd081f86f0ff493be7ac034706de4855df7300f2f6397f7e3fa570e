@@ -1,0 +1,55 @@
+**Proposition 268.2 (variance formula and a legal contrary coefficient).** For any scalar collective partition with $R_x=1$, any real symmetric source-supported $H$, and the unit mass-normalized class vector $f_b=\mathbf1_{\{b\}}/\sqrt{n_b}$, one has
+
+$$
+\begin{aligned}
+s_b(x)&=\frac1{\sqrt{n_b}}\sum_{y\in V_b}H_{xy},\\
+\|Df_b\|^2
+&=\sum_{a\in B}\left[
+ \sum_{x\in V_a}|s_b(x)|^2
+ -\frac1{n_a}\left|\sum_{x\in V_a}s_b(x)\right|^2\right].
+\end{aligned}
+\tag{268.3}
+$$
+
+An unnormalized indicator multiplies this squared coefficient by $n_b$. On the legal source (268.1) with exactly $H_7$ and every $a_0,g>0$, take
+
+$$
+V'_a=\{LL,LR,RL,RR\},\qquad
+V'_b=\{L\},\quad V'_c=\{o\},\quad V'_d=\{R\},
+\qquad f'_b=e_b.
+\tag{268.4}
+$$
+
+Its induced masses are $N'_7=\operatorname{diag}(4,1,1,1)$. Its kinetic and potential forms are
+
+$$
+S'_7=\begin{pmatrix}
+12&-2&0&-2\\-2&3&-1&0\\0&-1&2&-1\\-2&0&-1&3
+\end{pmatrix},\qquad
+V'_7=\operatorname{diag}(1,\tfrac12,1,\tfrac12),
+\quad
+\widehat A'_7=(N'_7)^{-1/2}(a_0S'_7-gV'_7)(N'_7)^{-1/2}.
+\tag{268.5}
+$$
+
+It has a four-cycle collective support, but
+
+$$
+\|D'_7f'_b\|^2=a_0^2\ne7a_0^2/6.
+\tag{268.6}
+$$
+
+Indeed, with $h=(e_{LL}+e_{LR}-e_{RL}-e_{RR})/2$, its entire nonzero hidden row is
+
+$$
+\langle h,\widehat D'_7\,\cdot\,\rangle
+=\begin{pmatrix}0&-a_0&0&a_0\end{pmatrix}.
+\tag{268.7}
+$$
+
+Thus a partition-independent assertion of $7/6$ is false. This does not refute the same coefficient under some further, explicitly prescribed partition.
+
+Proof. The orthogonal projection replaces each scalar class by its arithmetic mean. Subtracting these means and expanding the squared norm gives (268.3), including all diagonal terms of $H$. In (268.4), the two left leaf seams, root-left seam, root-right seam and two right leaf seams give the cycle $a,b,c,d,a$ with conductances $2,1,1,2$. Its kinetic killing conductances are $(8,0,0,0)$. Expanding these four difference terms plus $8|u_a|^2$ gives $S'_7$; summing the common field gives $V'_7$.
+
+On its four leaves, $H_7e_L$ has values $(-a_0,-a_0,0,0)$ and mean $-a_0/2$. Their residual squared norm is $4(a_0/2)^2=a_0^2$. Every other class is a singleton. The potential is constant on the leaf class, and the $b$ input is supported on a singleton, so this calculation holds for all $g$. More generally the normalized $a$ input has no hidden component, the $b,d$ inputs give the opposite leaf contrasts $-a_0h,a_0h$, and the $c$ input gives zero at every leaf. The remaining two hidden directions are sibling differences and have zero rows. This proves (268.7) and all assertions. □
+

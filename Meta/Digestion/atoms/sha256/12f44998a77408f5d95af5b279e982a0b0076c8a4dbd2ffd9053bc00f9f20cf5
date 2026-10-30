@@ -1,0 +1,45 @@
+**Proposition 7.2 (what the distinction does and does not select).** Within
+the added common-operator contract, $Q_v=7,11$ force concentration collapse
+for every positive coupling, while the double-wall periodic cylinder
+admits the strictly stable attained-negative family of Theorem 6.2.
+Neither statement identifies physical spatial axes, implements analytic
+state preparation, or supplies noncompact physical localization.
+
+**Proof.** The first assertion is Theorem 3.1. The second uses both (4.7)
+and (6.2), so it is stronger than a local exponent count. The logical
+limits follow from their domains and inputs. The same native direct rank
+is two in all rows. Every $(k,h)$ used is an actual current-ray point, but
+the normalized eigenfunction belongs to the newly declared Hilbert space
+of functions on those points. The original five-mode ray lives in a
+different space and obeys the finite-variation native control law.
+No map between these state classes is part of the definitions.
+
+Moreover the finite cylinder already has compact free resolvent, so its
+free lowest eigenstate is attained even at $g=0$. The negative energy in
+Theorem 6.2 is measured relative to the specified zero of the free operator;
+it is not an energy below an essential-spectrum threshold of a noncompact
+physical Hamiltonian. Removing the height killing, extending towards
+probability endpoints, decompactifying phases or changing density requires
+new operator and Green estimates. The local lower bound (3.6) and local
+comparison (4.4) do not establish any all-scale homogeneous law.
+
+The source-to-spatial contract [C, §81.5] requires a common actual map,
+measure, domain, boundary and clock correspondence for field and kinetic
+laws. None is supplied by counting the three double-wall coordinates.
+[C, Definitions 82.1 and 83.1] assume three independent horizontal fields;
+our source has only two. Their rank-three implication $Q\ge5$ in higher
+ambient dimension therefore has no application to the double wall.
+The full-Green finite-window mechanism in [C, Theorem 83.2] is reused with
+its prerequisites explicitly rechecked in §§2--3, not with its rank-three
+conclusion.
+
+The acquired-reference source [A, Definitions 1.1--1.4 and 2.5] separates
+authentic source history, acquired records, retained resources and a passive
+decoder. Its calibration is a discrete source-update count, not a covariance,
+metric or analytic-time calibration for (1.2). The finite-affine-factor
+classification [F, §10] concerns guarded native continuations and their
+quotients; it supplies neither a diffusion nor a Green-energy state class.
+These existing results consequently add no actuator, noise direction,
+reset, free rotation, mean selection or preparation guarantee to the
+construction. $\square$
+

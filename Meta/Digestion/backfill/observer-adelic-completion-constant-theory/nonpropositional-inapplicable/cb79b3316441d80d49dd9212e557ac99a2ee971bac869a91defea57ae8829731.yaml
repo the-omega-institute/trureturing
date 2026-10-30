@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:cb79b3316441d80d49dd9212e557ac99a2ee971bac869a91defea57ae8829731
+  normalized_sha256: sha256:cb79b3316441d80d49dd9212e557ac99a2ee971bac869a91defea57ae8829731
+cas_ref: sha256:cb79b3316441d80d49dd9212e557ac99a2ee971bac869a91defea57ae8829731
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 章节标题及将后文组织为五条可证伪公理的写作说明；本 atom 不包含五条公理的数学断言。
+    previous_atom_id: 4236b580e73b58dd0ca7c1a03eb2166f9ba44e908fce161be1bc4d3e22dbb2ae
+    next_atom_id: d9388269deeaac4955ee20f994aa819d6b509e19bc93fca98c4853835b9d558e

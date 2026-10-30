@@ -1,0 +1,39 @@
+**Theorem 95.2 (an exact half-dimensional stable blind sector).**
+For this family the adjacency is invertible and
+
+$$
+\ker S_b=\{x:x_v=0\text{ at every even-depth vertex }v\},
+\qquad \dim\ker S_b=N/2.
+\tag{95.2}
+$$
+
+The equality holds for the $N$-cycle scan and every longer scan, as
+well as the infinite record. Every shorter prefix also annihilates the
+displayed sector; it need not have exactly this kernel.
+
+**Proof.** Each terminal $\ell_i$ has depth $i+2$, and $q_m$ has
+depth $m$. Thus at every read, terminal depth parity equals phase
+parity. A walk of length $bn+r$ from $s_r$ ends at an initially
+even-depth coordinate. Consequently every row in the scan annihilates
+the odd-depth coordinate sector.
+
+Match every $p_i$ with $\ell_i$, and match consecutive spine vertices
+$q_0q_1,q_2q_3,\ldots,q_{m-1}q_m$. This is a perfect matching. A
+finite tree has at most one perfect matching, since the symmetric
+difference of two would contain an alternating cycle. In the
+zero-diagonal adjacency determinant, a nonzero permutation term can
+have no fixed point. It cannot have a cycle of length at least three,
+because the tree has no cycle. Its cycles are therefore exactly the
+transpositions of a perfect matching. The displayed matching supplies
+the unique nonzero term, so $\det A=(-1)^{N/2}\ne0$.
+
+A perfect matching pairs opposite colors, so both depth-color classes
+have size $N/2$. All $\epsilon_r$ in (94.6) are plus. In (94.7) the
+$a$ variable must vanish by all-leaf forcing, while $d$ is arbitrary
+in $E_\lambda$. Thus the stable kernel has dimension
+$\sum_{\lambda>0}\dim E_\lambda=N/2$: $D$ pairs the nonzero positive
+and negative eigenspaces and there is no zero eigenspace. The already
+contained odd sector has this dimension, proving (95.2), including
+its rational form. Finite saturation proves the longer-scan claim.
+$\square$
+

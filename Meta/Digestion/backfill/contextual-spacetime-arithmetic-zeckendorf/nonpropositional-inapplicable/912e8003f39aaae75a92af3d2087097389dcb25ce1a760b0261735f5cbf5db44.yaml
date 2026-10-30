@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:912e8003f39aaae75a92af3d2087097389dcb25ce1a760b0261735f5cbf5db44
+  normalized_sha256: sha256:912e8003f39aaae75a92af3d2087097389dcb25ce1a760b0261735f5cbf5db44
+cas_ref: sha256:912e8003f39aaae75a92af3d2087097389dcb25ce1a760b0261735f5cbf5db44
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 110 规定有守卫原语、严格执行、成功及失败计费、有限无环宏字典、展开和程序描述长度的口径；所述成本是定义，无复杂度比较断言。
+    previous_atom_id: 280e698f6f7299c281625894edc6a8cd0558bb523017b1d4d1e9e0bbbdae4689
+    next_atom_id: 04d2bc6b45fd60838460a12435667a16e43d3778d1a9b91c88f81bd46daf80cd

@@ -16,7 +16,8 @@ For a finite alphabet and arbitrary languages `A` and `B`, fix a positive
 insertion degree `k` throughout each iteration history. A word has iteration
 depth `m` when `m` is the least stage at which the word occurs for some such
 degree. Hughes's Section 10 conjecture states that if depth `r` occurs, every
-depth from zero through `r` occurs.
+depth from zero through `r` occurs. The formalization also proves this statement
+over arbitrary alphabets, with no finiteness or countability assumption.
 
 This is the arbitrary-language iteration-depth conjecture on page 8. It is
 not the finite-language Theorem 8 and not the insertion-degree conjecture in
@@ -63,7 +64,7 @@ occurs at `r`. Induction on `r` supplies every smaller attained depth.
 
 ## Falsifier
 
-A finite alphabet, arbitrary languages `A,B`, and a word of minimum depth
+An alphabet, arbitrary languages `A,B`, and a word of minimum depth
 `r>0` for which no word has minimum depth `r-1` would refute the theorem. A
 failure of empty-pair padding to preserve any of the three literal source
 conditions would invalidate the proof route. A formalization using a varying
@@ -79,7 +80,7 @@ the arbitrary-language conjecture is on page 8, and the related open-question
 discussion is on page 11.
 
 `D5/S1/Words/HughesIterationDepthNoGap.result` proves the conjecture for
-every finite alphabet and arbitrary languages `A,B`: if a natural depth `r`
+every alphabet and arbitrary languages `A,B`: if a natural depth `r`
 is attained, then every natural `q ≤ r` is attained. The literal insertion
 factorization consists of `k` source factors and `k+1` base factors, each
 possibly empty, with concatenations in `A` and in the preceding stage
@@ -87,25 +88,20 @@ respectively; the output is the interleaving `x₁y₁…xₖyₖxₖ₊₁`. St
 `B`. The existential positive degree can vary
 between witnesses but is fixed throughout each witness's iteration history.
 Minimum depth means absence at every earlier stage for every positive degree.
-The proof assumes neither finite languages, epsilon membership in `A`, nor
-monotonicity in depth. Empty alphabets, empty languages and epsilon-only
-languages are included; it asserts no attained depth when the spectrum is
-empty.
+The proof requires no finiteness or countability of the alphabet, finiteness
+of the languages, epsilon membership in `A`, or monotonicity in depth. Empty
+alphabets, empty languages and epsilon-only languages are included; it asserts
+no attained depth when the spectrum is empty.
 
 The result is stated at `closedSourceZero`; its spectrum is extensionally
-equal to the published zero-based spectrum. Its frozen declaration statement
-ID is
-`sha256:f70ed374412ea1dd3c1bf1824ebbab657e78231bcbe1a2c20f1d6618a5d45075`.
-The frozen statement ID of module `D5/S1/Words/HughesIterationDepthNoGap` is
-`sha256:99025dc3bb5fb68fb04400b89fb31c63acd763d73478a6b35389d0b5e6c99bba`.
+equal to the published zero-based spectrum.
 
 The companion
 `D5/S3/ConceptDynamics/InformationEscape/HughesIterationDepthNoGapRegistration`
 registers the theorem's source depth origin through a finite two-origin arena,
 with an inline realization bridge and a shifted-origin counterfactual for
 variation and sensitivity. The arena's finiteness does not impose finiteness
-on either language. Its frozen module statement ID is
-`sha256:c22e88f8dd3d6d6d8172c48148f489a2776a2d3a94f5ebc85164b3af69ddc926`.
+on the alphabet or either language.
 Only the S1 `result` Describe node carries the typed `Proved` claim for this
 problem; the registration is not a second resolution.
 
@@ -115,8 +111,8 @@ findings and access limits below do not establish worldwide priority.
 
 ## Triage
 
-`theorem`. The frozen result supplies the universal proof for finite
-alphabets and arbitrary languages, including empty and epsilon-only cases.
+`theorem`. The result supplies the universal proof for arbitrary alphabets
+and arbitrary languages, including empty and epsilon-only cases.
 
 ## ASSUMED-UNVERIFIED
 

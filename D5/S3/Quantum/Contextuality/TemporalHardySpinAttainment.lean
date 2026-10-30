@@ -309,7 +309,7 @@ private lemma z_eigenspace (n : ℕ) (v : Fin (n + 1) → ℂ) :
         Complex.ofReal_div, Complex.ofReal_natCast, Complex.ofReal_ofNat]
     · rw [Pi.single_eq_of_ne hi]; ring
 
-private def ray (n : ℕ) (w : Fin (n + 1) → ℂ) (d : ℝ) :
+def ray (n : ℕ) (w : Fin (n + 1) → ℂ) (d : ℝ) :
     Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ :=
   (d : ℂ)⁻¹ • vecMulVec w (star w)
 

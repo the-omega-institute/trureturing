@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b98955bedd5c3c19591a78c6e5ac8effcd250c0855b5e7fbae88f444902f8830
+  normalized_sha256: sha256:b98955bedd5c3c19591a78c6e5ac8effcd250c0855b5e7fbae88f444902f8830
+cas_ref: sha256:b98955bedd5c3c19591a78c6e5ac8effcd250c0855b5e7fbae88f444902f8830
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 列出伦理学的实体、属性、样态与内在原因的文本对象及待保留关系，属于文献解释。
+    previous_atom_id: 6d043522ac9808376e44a5838708cb0b544718980e53dc462cb6044b9d373f4d
+    next_atom_id: 13053386b1c0ab512f7959a08fab31183348421d29e3e95ace1c2feea44ee468

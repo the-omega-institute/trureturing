@@ -1,0 +1,22 @@
+**Theorem 118.2 (Exact second-horizon minimax).** Let $L_*$ be the
+$L$-coordinate of the unique real solution specified in §§119–120.
+Then
+
+$$
+\boxed{\mu_2=\mu(-1/2)=L_*},
+\qquad
+0.606446991399069890043817252242
+<L_*<
+0.606446991399069890063817252242.
+\tag{118.4}
+$$
+
+The five-Kraus map $\mathcal R_*$ in §121 attains this value, and
+$D_*=\mathcal R_*\circ\operatorname{Ad}_{U_0^\dagger}$ attains the
+original terminal problem. The upper certificate holds for every
+density input. The matching lower certificate holds for every complex
+CPTP decoder, without covariance, realness or sparsity assumptions.
+Here $L_*$ denotes the isolated root coordinate, not a decimal
+approximation. The proof is given by the root isolation in §120,
+the upper inequality in §122 and the lower inequality in §125.
+

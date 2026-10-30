@@ -1,0 +1,5 @@
+source_id = "auric-omega-bosonic-excursion-return-and-phase-correction"
+path = "docs/develop/theory/AURIC_OMEGA_BOSONIC_EXCURSION_RETURN_AND_PHASE_CORRECTION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

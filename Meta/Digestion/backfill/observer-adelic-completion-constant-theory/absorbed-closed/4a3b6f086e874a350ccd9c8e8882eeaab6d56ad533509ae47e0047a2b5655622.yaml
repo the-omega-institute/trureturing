@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4a3b6f086e874a350ccd9c8e8882eeaab6d56ad533509ae47e0047a2b5655622
+  normalized_sha256: sha256:4a3b6f086e874a350ccd9c8e8882eeaab6d56ad533509ae47e0047a2b5655622
+cas_ref: sha256:4a3b6f086e874a350ccd9c8e8882eeaab6d56ad533509ae47e0047a2b5655622
+coverage_gids:
+  - gid: D5/S3/Analytic/Hardy/ClarkKernelRealization.modelSpace_finrank
+    target_statement_id: sha256:f9e1da03567a663eff7cae1d2f0ed6355e0dd03488b3321d262b7b75e5801eb4
+receipts:
+  unresolved_subitems: []

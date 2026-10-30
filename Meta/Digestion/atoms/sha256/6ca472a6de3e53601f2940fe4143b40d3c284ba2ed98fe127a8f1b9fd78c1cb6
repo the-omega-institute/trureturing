@@ -1,0 +1,50 @@
+**Lemma 2.2 (Almost-sure protocols reduce to depth-two trees).** To bound
+the correct probability of every protocol satisfying (1.6), it suffices
+to bound, uniformly over all integer choices $t,t_0,t_1$, the sum
+
+$$
+\sum_{x,y\in\{0,1\}}m(C_{xy}),\qquad
+C_{xy}=\{X_t=x,\ X_{t_x}=y\}.
+\tag{2.3}
+$$
+
+The first address is $t$ and the second address is $t_x$ after first
+reply $x$. Repeated and otherwise arbitrary addresses remain allowed.
+
+Proof. Apply Tonelli's theorem to the nonnegative indicator of
+$E_2^c$ on the independent product $J_p\otimes\nu$. Equation (1.6)
+gives a set of auxiliary values of full $\nu$-measure for which the
+source section of $E_2$ has $J_p$-mass one. This statement uses product
+sections, without requiring a regular conditional probability on
+$\mathsf U$.
+
+Fix such a value $u$. By Lemma 2.1, every positive-mass reachable
+prefix has exactly its acquired-reply cylinder as section. Indefinite
+internal continuation there, or a third call before returning, would
+exclude a positive-mass source section from $E_2$. Neither can occur
+on a positive-mass branch of this fixed-seed rule. At two calls a
+positive-mass branch must therefore return after finite internal
+waiting.
+
+If the rule returns with zero or one call, pad that return with enough
+predetermined actual calls to make two, keeping its already selected
+output on every resulting subbranch and ignoring the added replies.
+For example each padding call can use address zero. The new cylinders
+partition the old terminal cylinder, so their correct masses for that
+unchanged output sum to exactly its old correct mass. Padding here is
+an analysis of the bound, not an assertion that the original protocol
+already paid those calls. On zero-mass or inconsistent branches choose
+any finite actions and outputs. A source-null branch stays null under
+further intersections.
+
+The resulting fixed-seed tree has a first address $t$, second addresses
+$t_0,t_1$, and an output at each of four leaves. It has the same correct
+probability as the original fixed-seed protocol, and that probability
+is bounded by (2.3). Exceptional source sections and the excluded null
+set of seeds contribute no integrated mass. For completed versions,
+measurable representatives agree outside product-null sets; Tonelli
+again makes their sections agree almost everywhere. A measurable
+choice of the completed trees or of maximizing leaf outputs is
+unnecessary: the desired uniform bound is applied at each eligible
+seed, and the original correctness event is measurable. $\square$
+

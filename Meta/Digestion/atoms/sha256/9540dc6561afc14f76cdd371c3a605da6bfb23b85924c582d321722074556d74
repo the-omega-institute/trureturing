@@ -1,0 +1,152 @@
+**Theorem 15.1 (Actual strict $M$ double-point germs).** For each
+$i\in\{1,2,3,4\}$ there are real analytic complete-world maps
+$W_i^+(h),W_i^-(h)$ for $|h|<\varepsilon_i$, with
+$W_i^+(0)=W_i^-(0)=W_i$, such that for $0<|h|<\varepsilon_i$,
+
+$$
+\begin{gathered}
+W_i^+(h),W_i^-(h)\in\mathcal H,\qquad
+W_i^+(h)\ne W_i^-(h),\\
+\Psi_M(W_i^+(h))=\Psi_M(W_i^-(h)),\qquad
+p(W_i^\pm(h))\ne24.
+\end{gathered}
+\tag{15.1}
+$$
+
+The two maps exchange under $h\mapsto-h$. In particular every
+$W_i$ is an actual strict off-$24$ interior diagonal limit of
+$M$ pairs, and $\Psi_M$ is not locally injective there.
+
+*Proof.* Since $p_b(W_i)\ne0$, the real analytic inverse-function
+theorem makes
+
+$$
+x=p(t,b)-p_i,\qquad y=t-t_i
+\tag{15.2}
+$$
+
+local source coordinates. Write their analytic inverse as
+$t=t_i+y$, $b=\beta_i(x,y)$, and write
+
+$$
+f=(p_i+x,V(x,y),\mathcal M(x,y)).
+\tag{15.3}
+$$
+
+At the origin $V_y=\mathcal M_y=0$ because the $y$ direction is
+$K$. To identify the needed Jacobian exactly, put $s=p_t/p_b$ at
+the origin and differentiate (15.2):
+
+$$
+\begin{gathered}
+\beta_x=1/p_b,\qquad \beta_y=-s,\\
+\beta_{yy}=-(H_{KK})_p/p_b,
+\qquad
+\beta_{xy}=-(p_{tb}-sp_{bb})/p_b^2.
+\end{gathered}
+\tag{15.4}
+$$
+
+It follows that the vectors $f_{yy}$ and $f_{xy}$ in these new
+coordinates are respectively
+
+$$
+H_{KK}-\frac{(H_{KK})_p}{p_b}f_b,
+\qquad
+\frac1{p_b}H_{Kb}-\frac{(H_{Kb})_p}{p_b^2}f_b.
+\tag{15.5}
+$$
+
+Also $f_x=f_b/p_b$. Taking determinants of these three columns
+in the order $(f_x,f_{xy},f_{yy})$ gives
+
+$$
+\det\begin{pmatrix}V_{xy}&V_{yy}\\
+                    \mathcal M_{xy}&\mathcal M_{yy}\end{pmatrix}
+=-\frac{\Delta}{p_b^2}\ne0.
+\tag{15.6}
+$$
+
+In particular $V_{yy}=\chi\ne0$ by (14.8): the acquired projection
+$(p,v)$ has nonzero second derivative in its null direction at
+each of these worlds.
+
+For an analytic scalar function $Z(x,y)$ equal to $V$ or
+$\mathcal M$, consider
+
+$$
+\frac{Z(x,z+h)-Z(x,z-h)}{2h}.
+\tag{15.7}
+$$
+
+Its value at $h=0$ is $Z_y(x,z)$. Its analytic extension is even
+in $h$ and is an analytic function of $(x,z,q)$, where $q=h^2$.
+Indeed write the convergent power series
+$Z(x,y)=\sum_{j,k\ge0}c_{jk}x^jy^k$ on a smaller polydisc.
+For each monomial its divided difference is the polynomial
+
+$$
+\frac{(z+h)^k-(z-h)^k}{2h}
+=\sum_{\nu=0}^{\lfloor(k-1)/2\rfloor}
+  \binom{k}{2\nu+1}z^{k-2\nu-1}q^\nu
+\quad(k\ge1),
+\tag{15.8}
+$$
+
+and it is zero for $k=0$. Absolute convergence on a smaller
+polydisc justifies summation and differentiation: choose
+$|z|+\sqrt{|q|}$ smaller than the original $y$ radius, and use
+the absolutely convergent differentiated series of $Z$ to dominate
+the binomial sums. Thus (15.8) defines a real analytic function
+$\mathcal D_Z(x,z,q)$ also for small negative real $q$.
+
+At $(x,z,q)=(0,0,0)$,
+$\mathcal D_V=\mathcal D_{\mathcal M}=0$ and their Jacobian in
+$(x,z)$ is the invertible matrix in (15.6). The real analytic
+implicit-function theorem supplies analytic functions $x_i(q),\zeta_i(q)$,
+with $x_i(0)=\zeta_i(0)=0$, satisfying
+
+$$
+\mathcal D_V(x_i(q),\zeta_i(q),q)
+=\mathcal D_{\mathcal M}(x_i(q),\zeta_i(q),q)=0.
+\tag{15.9}
+$$
+
+These applications use only the classical inverse and implicit
+function theorems on analytic maps with the displayed invertible
+Jacobians; the construction of the divided differences is explicit.
+Define two source points by
+
+$$
+\begin{aligned}
+t_i^\pm(h)&=t_i+\zeta_i(h^2)\pm h,\\
+b_i^\pm(h)&=\beta_i(x_i(h^2),\zeta_i(h^2)\pm h).
+\end{aligned}
+\tag{15.10}
+$$
+
+They have the same $p=p_i+x_i(h^2)$. For $h\ne0$, equations
+(15.7)–(15.9) give exactly equal $v$ and $m$, and their $t$
+coordinates differ by $2h$. Hence they are distinct sources.
+They converge to $(t_i,b_i)$ and exchange when $h$ changes sign.
+Their source derivatives at zero are $\pm(1,-s_i)=\pm K_i$,
+so both analytic branches are nonconstant.
+
+At both points lift to a complete world by (13.3), evaluated at
+$(t_i^\pm(h),b_i^\pm(h))$ in place of $(t_i,b_i)$. The source
+inequalities $t>0$, $b>0$, $tb<1$, the nonvanishing of $D$, and
+$p\ne24$ all persist after reducing $\varepsilon_i$. This lift
+is real analytic, including all four padded coefficients of its
+one whole gain. Lemma 2.2 and O, Theorem 2.1, give every original
+clock equation (13.5) for each lifted point. The unequal original
+readings again exclude the zero gain. Each world retains its own
+single fixed real drift and degree-at-most-three real polynomial
+at clocks $0$ through $7$. The two worlds need not have the same
+drift or polynomial, as permitted by Definition 1.1.
+
+Their distinct sources imply distinct complete worlds. Both complete
+worlds converge to $W_i$, so every full-parent neighbourhood of
+$W_i$ contains a distinct actual equal-$\Psi_M$ pair. This proves
+(15.1) directly in the original real model, independently of whether
+the diffeomorphisms in the Whitney normal form are analytic. ∎
+

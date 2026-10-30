@@ -1,0 +1,33 @@
+### 定义 78.1（固定世界类、侧通道和有限签名）
+
+令 $\varnothing\ne\mathscr W\subseteq\mathscr W_{k,d}^{\mathrm{clock}}$ 对第 77.3 式的平移作用
+封闭，并令其允许的原点域为
+
+$$
+T=\{\tau\in\mathbb R:\exists R,G,D,\ (R,G,D,\tau)\in\mathscr W\}.
+$$
+
+固定一个已知的被动侧通道
+
+$$
+H:\mathbb R\longrightarrow Y,
+$$
+
+其中 $Y$ 是读数域；$H$ 不随世界 $W=(R,G,D,\tau)$ 改变，也不由主读数或
+协议选择。预先指定一个有限索引集
+
+$$
+I\subseteq\mathbb N_0.
+$$
+
+记录合同要求策略确实取得并保留 $i\in I$ 的侧读数，并规定这些读数构成策略可用的
+全部侧信息；除该有限签名外没有其它侧输出。定义有限签名
+
+$$
+S_{H,I}(\tau)=\bigl(H(i+\tau)\bigr)_{i\in I}\in Y^I.
+\tag{78.1}
+$$
+
+若策略可以在取得全部 $I$ 以前停止，则本节的签名不适用；必须把实际取得的索引
+集作为记录的一部分，见定义 78.6。
+

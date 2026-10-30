@@ -1,0 +1,19 @@
+**Proposition 18.4 (no geometry-only uniform precision cap).** For any
+fixed finite cap $C_0\ge0$, no AD policy capped at $p\le C_0$
+robustly recovers all $h\in\mathcal H_A$, even allowing arbitrary
+adaptive finite controls and later growth.
+
+Proof. On alpha choose $q\ge0$ with $q+1\ge C_0$. The histories
+$K^q,K^{q+1}$ have different Time and field difference
+$2^{-(q+1)}\le2^{-C_0}$. On a common continuation, Add cancels from
+the difference, Reset kills it, Tick contracts it, and raw growth zero
+extends it without increasing its norm. Geometry, guards and all
+fixed replies agree. Each capped Read has intersecting adjacent
+integer report pairs by Lemma 9.1's floor argument. Choosing a common
+legal report at every Read gives a complete common adaptive record.
+A common finite stop is wrong for one history, and nontermination
+violates robust pointwise finiteness. The proof fixes any random tape
+for the pathwise version. This is a cap obstruction for this source
+and task, not a per-run lower optimum or a physical impossibility.
+$\square$
+

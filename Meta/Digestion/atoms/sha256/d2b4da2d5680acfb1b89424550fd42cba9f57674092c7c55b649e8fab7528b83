@@ -1,0 +1,12 @@
+**Lemma 9.3 (Whole-segment derivative separation).** The response
+circuit is pole-free on $S_0$. With columns ordered as $(r,b)$, its
+ambient partial derivatives have the following rational enclosures
+throughout $S_0$. Every endpoint numerator in the table is divided
+by $10^6$.
+
+| Derivative | Lower endpoint numerator | Upper endpoint numerator |
+| --- | ---: | ---: |
+| $p_r$ | $-17691121$ | $-17691120$ |
+| $p_b$ | $725498392$ | $725498393$ |
+| $v_r$ | $103013504$ | $103013505$ |
+| $v_b$ | $-1673536106$ | $-1673536105$ |

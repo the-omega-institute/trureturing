@@ -1,0 +1,124 @@
+**Theorem 3.1 (unknown global ports on the whole passive domain).** Under
+Assumption 1.2, there is one deterministic effective program, independent
+of the unknown parameters, that on every
+$(u,k,\pi,v)\in\mathcal E^{\rm pass}_{[A,B]}$ acquires and retains
+$(\pi,u,k,n)$ in readable owned backing, keeps the same register equal
+to $v$, and supplies its acquired semantic-address adapter to ABT40–42.
+Only paid presence bits enter its source-dependent control.
+
+The following bounds apply simultaneously to this one actual run. Write
+$j=k$, $h=h_R(v)$, and retain $h_a,m_a$ from Section 2. Put
+
+$$
+\begin{aligned}
+ m_R&=1+\lfloor\log_2 h\rfloor,&d_B&=\lceil\log_2B\rceil,\\
+ q_I&=2m_R+(2B-1)d_B+4n-2,&
+ D_I&=\max\{2h,h+B,j+n\},\\
+ q&=2m_a+1+q_I,&D&=\max\{2h_a,D_I\}.
+\end{aligned}
+\tag{GPO.9}
+$$
+
+Then
+
+$$
+\begin{aligned}
+ Q&\le q,&M_{\rm addr}&\le D\le4(j+B),\\
+ W&\le2h_a(2m_a+1)+D_Iq_I\le Dq,\\
+ J&\le C(q+1)(j+B+1)\Lambda^2,
+ &\Lambda&=\lceil\log_2(j+B+2)\rceil,
+\end{aligned}
+\tag{GPO.10}
+$$
+
+for an absolute constant $C$ in Definition 1.3's chosen local tariff.
+Additional working storage is $O(j+B+B\Lambda)$ bits, excluding the
+retained output, advice, capabilities and writer. The retained target
+payload uses at most
+
+$$
+ 3n+b(k)+b(n)
+ \tag{GPO.11}
+$$
+
+bits before framing and capabilities. Every Read-service traversal pays
+its actual work, at most $W+Q$ root/edge steps for the node-following
+implementation. No backend-independent physical-duration bound is claimed.
+
+Proof. Run Proposition 2.2, then keep the acquired bit in control. For a
+semantic word $p$, compute the literal physical word
+$\tau_\pi(p)=(\pi^{-1})_*p$ by finite letterwise translation. The stored
+bit determines each translated letter; no further source query is needed
+to compute it. Nevertheless its copying and translation are paid local
+work. By (GPO.2), for every semantic word, including one that passes a leaf,
+
+$$
+ P^\pi_v(\tau_\pi(p))=P_v(p),\qquad
+ |\tau_\pi(p)|=|p|.
+ \tag{GPO.12}
+$$
+
+Now run the existing ABT40.1 interval controller using precisely this
+adapter. The correspondence to ABT38.2 is $u\mapsto u$, original interval
+$[A,B]\mapsto[A,B]$, positive even lag $j\mapsto k$, source $v\mapsto v$,
+and its semantic $L/R$ references are the newly acquired interpretations
+of the retained physical names. Its total paid Read capability is (GPO.12),
+on the same stationary register. Its absence, repetition, hidden-writer,
+variable-backing and current-rights hypotheses are Assumption 1.2.
+All its installation hypotheses therefore hold at this attained cut.
+
+ABT40.2 supplies acquisition of the authentic $(u,k,n)$, termination,
+stationarity, and $q_I,D_I$ in (GPO.9). In particular its trial pruning
+and strict interval separation are reused results, not new orientation
+lemmas: the final source traversal reconstructs labels only after the
+acquired lag and order are available. The initial orientation bit is
+retained alongside that target. No original tree, exact count or lag is
+passed to the code by this proof. Summing the orientation and supplier
+costs yields the first two lines of (GPO.10). Lemma 2.1 gives
+$2h_a\le4j+2n-2\le4(j+B)$, while ABT40.2 gives $D_I\le2(j+B)$.
+Translation changes no submitted length or call count. There are zero
+updates in both phases.
+
+The calibrated two-probe table is ABT12.3's semantic-address supplier,
+with its erased-support counterpart in [NativeErasedSupportKernels][NES].
+The stack traversal is the existing [NativeFullSourceProducer][NFP]
+construction, using acquired parent replies to schedule children.
+
+Here is a concrete finite local implementation supporting the remaining
+claims, rather than a zero-price selector assumption. Use separate tapes
+for binary counters, a current semantic path, a stack of phase frames,
+one reusable literal buffer, and the preorder output. A depth-first frame
+stores a phase and saved path/output lengths; it never stores an unknown
+subtree. The capped ABT comparison has at most $B$ frames, the final
+traversal at most $n\le B$. Paths and literals have length at most $D$.
+Search brackets are at most $2h_a$ or $2h$, and all branch/leaf counters
+are at most $B$ or $n$. Output positions are at most $3n-1$.
+Thus each integer field has $O(\Lambda)$ bits, and working storage is
+$O(D+B\Lambda)=O(j+B+B\Lambda)$.
+
+Binary addition, subtraction, comparison, doubling and midpoint formation
+can be performed by scans of $O(\Lambda)$ cells, with an optional return
+scan. No multiplication of unknown parameters is required. Push or pop
+one frame by copying its $O(\Lambda)$ cells at the stack head. Construct
+each literal by copying the current path and appending the specified
+repeated suffix, with a binary loop counter. Even charging
+$O(\Lambda^2)$ for every such elementary counter or frame routine, its
+cost is $O((D+1)\Lambda^2)$ per request. Letterwise physical translation
+and presence projection fit this bound. Path extension or retraction
+between successive depth-first nodes, constructor writes and label/count
+writes require only a constant number of these routines per visited node.
+The comparisons and final traversal visit at most their paid-query counts
+of nodes; the final tree has $2n-1$ nodes and already costs $4n-2$ Reads.
+There are $O(q+1)$ search, visit, stack, output and attachment routines
+in total. Advice validation and binary final parameter copying cost
+$O(\Lambda^2)$ as well, since $A\le B$. Increasing the fixed constant
+therefore proves the $J$ bound in (GPO.10). This deliberately conservative
+tariff counts finite bit work; it is not a best local-work bound.
+
+The retained encoding is ABT41.2's $2n-1$ shape bits, $n$ label bits and
+binary $k,n$, plus one orientation bit. This gives (GPO.11). Actual
+allocation uses attained lengths, counters and replies; none of these
+a posteriori bounds is an instruction to allocate from an unknown input.
+The Read traversal bound follows by charging a root access and each
+followed edge, stopping at the first failed prefix. $\square$
+

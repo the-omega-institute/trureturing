@@ -1,0 +1,18 @@
+**Definition 24.2 (A qualitative choice of the upper floor).** For
+$\mathscr Q\ne\varnothing$ put
+
+$$
+h_M=\inf\{1-r(W_i):Q\in\mathscr Q,\ i\in\{2,3\}\},\qquad
+\rho_1=\min\{1/4,h_M\}.
+\tag{24.8}
+$$
+
+Theorem 24.1 gives $h_M>0$. This choice depends only on the original
+joint domain, and not on a configuration or an endpoint label. The
+proof establishes existence from the uniform complete-coordinate
+bounds, the off-$24$ gap, the selected-pair sum floor and maximum
+anchor, S's B1 end exclusion, and Theorems 20.2–21.2 with SV,
+Theorem 1.1. It supplies no numerical value or computable modulus
+for $h_M$ or $\rho_1$. For $\mathscr Q=\varnothing$ define
+$\rho_1=1/4$.
+

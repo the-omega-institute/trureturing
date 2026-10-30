@@ -1,0 +1,178 @@
+**定理 18.3（beta 零秩二完整来源层的原守卫失败）。** For every
+complete legal source tuple satisfying (18.1), put
+
+$$
+w_A=J^4MJJ,\qquad w_B=J^4MMJ,\qquad
+q_{Ae}=(w_A,e),\quad q_{Be}=(w_B,e).
+\tag{18.6}
+$$
+
+Then
+
+$$
+D_{w_A}|_V=0,
+\tag{18.7}
+$$
+
+and at least one of the following two alternatives holds:
+
+$$
+\begin{aligned}
+&P_{q_{A0}}=P_{q_{A1}},\\
+& P_{q_{B0}}=P_{q_{B1}}\quad\hbox{and}\quad D_{w_B}|_V=0.
+\end{aligned}
+\tag{18.8}
+$$
+
+Thus an original same-source separation guard of Theorem 13.3
+fails at $w_A$ or $w_B$. In particular the source layer (18.1)
+has empty intersection with the complete guarded source locus of
+that theorem. No assumption on any other source equality, gain
+map or leaf difference is required.
+
+Proof. All calculations below are on the original whole $V$.
+Along $J^4MJJ$ the cumulative matrices at clocks $5,6,7$ are
+
+$$
+M,\qquad JM=\begin{pmatrix}1&1\\0&1\end{pmatrix},\qquad M,
+\tag{18.9}
+$$
+
+with trace factors $T_q,1+c_q,T_q$. By (18.3),
+$u(7)-u(5)=16/5$ and $v(7)-v(5)=15$. For the two slots of this
+leaf, subtracting their common clock-five read from their common
+clock-seven read and using (18.4) gives
+
+$$
+\frac{16}{5}(T_{q_{A0}}-T_{q_{A1}})\alpha
+-15\left(\frac{T_{q_{A0}}}{t_{q_{A0}}}
+        -\frac{T_{q_{A1}}}{t_{q_{A1}}}\right)\Delta=0.
+\tag{18.10}
+$$
+
+Independence of $\alpha,\Delta$ makes both fixed coefficients
+zero. Since $T_q,t_q>0$, the two slots have the same $T$, the
+same $t$ and hence the same $d=T-t$. Their nonconstant gain
+parts in (18.4) coincide. If $t\ne1$, their constant terms both
+are $-\alpha$. If $t=1$, their clock-five read difference is
+$(T-1)(k_{q_{A0}}-k_{q_{A1}})=d(k_{q_{A0}}-k_{q_{A1}})$;
+$d>0$ again makes their constant terms equal. Their entire gains
+and normalized drifts therefore coincide as maps, proving the
+full four-component identity (18.7).
+
+If these two fixed sources are equal, the first alternative in
+(18.8), together with (18.7), already gives a failing original
+guard. Suppose instead that they differ. Their common $d,t$
+then imply $c_{q_{A0}}\ne c_{q_{A1}}$, since $a=1-d$ and
+$b=t-c$. The clock-six equality, its trace factor $1+c_q$ and
+their already common gain give
+
+$$
+(c_{q_{A0}}-c_{q_{A1}})g_{q_{A0}}(6)=0
+\quad\hbox{on }V.
+\tag{18.11}
+$$
+
+Consequently their common $g(6)$ is the zero map. A nonunit
+$t$ is impossible: (18.4), $u(6)=2$ and $v(6)=8$ would give
+$g(6)=\alpha-8\Delta/t\ne0$. Thus $t=1$, and (18.4) gives
+
+$$
+k_{q_{A0}}=k_{q_{A1}}=-2\alpha+8\Delta.
+\tag{18.12}
+$$
+
+Write their common $d$ as $d_*\in(0,1)$ and introduce
+
+$$
+\kappa=\alpha-\frac{11}{2}\Delta,\qquad
+\lambda=\frac{16}{5}\alpha-15\Delta,\qquad
+Y=y-\alpha+\frac52\Delta.
+\tag{18.13}
+$$
+
+The two forms $\kappa,\lambda$ are independent, since their
+coefficient determinant relative to $\alpha,\Delta$ is
+$-15+(11/2)(16/5)=13/5\ne0$. At clock five,
+$u(5)=1$, $v(5)=5/2$ and (18.12) give $g(5)=-\kappa$.
+Its trace factor is $1+d_*$, so the common response satisfies
+
+$$
+y=\alpha-\frac52\Delta-d_*\kappa,\qquad Y=-d_*\kappa.
+\tag{18.14}
+$$
+
+This forces every one of the eight slots below $J^4M$ to have
+unit signature. Indeed, if such a slot $q$ had $t_q\ne1$,
+(18.4) would instead give
+
+$$
+y=\alpha-\frac52\left(1+\frac{d_q}{t_q}\right)\Delta.
+\tag{18.15}
+$$
+
+Its $\alpha$ coefficient is $1$, whereas the coefficient in
+(18.14) is $1-d_*$. Their equality contradicts independence
+and $d_*>0$. This uses the shared fifth response of the entire
+subtree, not separate choices of gains on different branches.
+
+For any of its now unit-signature slots, the same fifth read is
+
+$$
+y=d_qk_q+(1+d_q)\alpha-\frac52(1+d_q)\Delta.
+\tag{18.16}
+$$
+
+Solving only by the positive fixed scalar $d_q$ yields
+
+$$
+k_q=\frac{Y}{d_q}-\alpha+\frac52\Delta,\qquad
+g_q(6)=\frac{Y}{d_q}+\kappa,\qquad
+g_q(7)=\frac{Y}{d_q}+\lambda.
+\tag{18.17}
+$$
+
+These are identities for the whole original polynomials in their
+slots; no final coefficient vector has been selected.
+
+Now use the other leaf $w_B=J^4MMJ$. Its cumulative matrices
+at clocks $5,6,7$ are $M,M^2,JM^2$, with trace factors
+$1+d_q,2+d_q,2+c_q$ because $t_q=1$. Write
+$d_e=d_{q_{Be}}$. The common sixth read, (18.17) and (18.14)
+give
+
+$$
+\begin{aligned}
+0&=(d_0-d_1)\kappa+
+        \left(\frac1{d_0}-\frac1{d_1}\right)Y\\
+ &= (d_0-d_1)\left(1+\frac{d_*}{d_0d_1}\right)\kappa.
+\end{aligned}
+\tag{18.18}
+$$
+
+Here $d_*,d_0,d_1>0$ and $\kappa\ne0$, so $d_0=d_1=d$.
+Equation (18.17) makes the two entire gains and drifts equal.
+Their common final gain map is
+
+$$
+g(7)=\lambda-\frac{d_*}{d}\kappa\ne0,
+\tag{18.19}
+$$
+
+by independence of $\kappa,\lambda$. The common final read
+with trace factor $2+c_q$ therefore forces
+$c_{q_{B0}}=c_{q_{B1}}$. Together with $t=1$ and the common
+$d$, this gives the same $a,b,c$ and hence the same complete
+source. The already equal entire gains prove $D_{w_B}|_V=0$,
+which is the second alternative in (18.8).
+
+Every case has produced a same-source leaf with its full
+four-component difference zero on $V$. Equivalently its original
+rank guard has $\operatorname{rank}[B;D_w]=\operatorname{rank}B$
+by (13.15), while its source-inequality alternative is false.
+Theorem 13.3 therefore excludes a complete guarded realization
+in (18.1). All source repetitions and all other slots remain in
+the quantifier. All inversions and cancellations above involve fixed
+source scalars with the stated positive or nonzero conditions. No
+gain sample or value of a history coordinate is divided out. ∎
+

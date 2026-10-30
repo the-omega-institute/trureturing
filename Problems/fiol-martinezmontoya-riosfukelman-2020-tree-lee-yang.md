@@ -6,9 +6,10 @@ url: https://arxiv.org/abs/2006.06379v2
 triage: theorem
 motivation_gids:
   - D5/S3/Zeros/LeeYang/QuiverTreeIsingRefutation.result
+  - D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.result
 ---
 
-# Positive joint weights and the tree Lee–Yang conjecture
+# Positive joint weights and all-vertex physical weights in the tree Lee–Yang conjecture
 
 ## Problem
 
@@ -61,6 +62,10 @@ to its search producer, with no settlement of Conjecture 1 found. This is
 `not-found-in-searched-scope`, not an exhaustive novelty claim.
 The fixed-configuration Lee–Yang theorem and the one-edge result do not
 assert closure under arbitrary positive mixing of different vertex masses.
+The exact all-vertex physical claim at issue #17677 is now separately refuted
+by the kernel-checked nine-vertex/eight-edge all-total-three result below; the
+older arbitrary-joint-weight settlement does not supply that implication.
+
 
 ## Route
 
@@ -110,11 +115,21 @@ The canonical module is
 `Blueprint/D5/S3/Zeros/LeeYang/QuiverTreeIsingRefutation.scribe.cs`.
 The source note is
 `Library/StatisticalMechanics/fiolmartinezmontoyariosfukelman2020quiver.md`.
-The Scribe records exactly one `OpenProblemResolutionClaim`, `Refuted`, on
-`result`. Its axiom closure is contained in
+The Scribe is designed to record one `OpenProblemResolutionClaim`, `Refuted`,
+on the existing `result`, with
+`D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.result` as its supported
+`additionalMembers`. The authorized Mac `deposit-uncovered` run completed
+with exit 0 and `PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED`, with `reason=NO_ATOM`;
+it added the module to
+`Golden/Frozen/state/D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.lean.json`.
+The deposited `statement_id` is
+`sha256:e4a7de999321ecb7471bcc989fe84a2733afd351a1caa39ac4131053095b1e5f`,
+and the current delivery scoped report is
+`sha256:502415af958772b8c0adff34accb8ed232d6b3426572bc93db96c8fbd462e557`.
+No duplicate claim is emitted; the native axiom closure remains bounded by
 $\{\mathrm{propext},\mathrm{Classical.choice},\mathrm{Quot.sound}\}$.
 
-The positive-sequence and physical boundary arguments under Triage are prose, with reciprocal completion attributed to Lalín–Smyth Theorem 1. Their corresponding unpublished source has reported Lean 4.33 compilation evidence, but no accepted current native exact-type/axiom report. The kernel-checked result above is the arbitrary-joint-weight refutation; it supplies no physical positive theorem.
+The positive-sequence and physical boundary arguments under Triage are prose, with reciprocal completion attributed to Lalín–Smyth Theorem 1. Their corresponding unpublished source has reported Lean 4.33 compilation evidence, but no accepted current native exact-type/axiom report. The new physical e8 result is the separate current kernel-checked settlement; it does not turn those prose families into Lean theorems.
 
 Experiment entry:
 [tree Lee–Yang checks at commit 811abbf954710a5a35374d89403c2ea7ce6913eb](https://github.com/the-omega-institute/trureturing-experiments/tree/811abbf954710a5a35374d89403c2ea7ce6913eb/docs/reports/fiol-martinezmontoya-riosfukelman-2020-tree-lee-yang).
@@ -139,6 +154,44 @@ arbitrary positive joint weights by `result`. Every theorem in this module
 has `proof_shape: bind-only`; the module asserts no escape witness.
 
 ### What the settlement shows
+
+### All-vertex physical e8 settlement
+
+The canonical resolution claim remains the single claim for this dossier. Its
+existing arbitrary-joint-weight result is joined by the additional member
+`D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.result`, whose source is
+`D5/S3/Zeros/LeeYang/QuiverTreePhysicalE8.lean`. The physical result uses
+`admission_basis: open-problem-resolution` under preregistration [#17677](https://github.com/the-omega-institute/trureturing/issues/17677),
+which records the published Fiol--Martínez-Montoya--Rios Fukelman statement,
+complete quantifiers, the all-vertex (2.19) reading and a bounded literature
+screen before the probe. Its Scribe member is emitted through the existing
+`QuiverTreeIsingRefutation` document with `additionalMembers`; no duplicate
+problem slug or second resolution claim is introduced. Final freeze membership
+and the emitted current report are established only by the authorized deposit
+run below.
+
+The refutation is literal for the registered all-vertex physical proposition:
+vertices `Fin 9 = c,u,v,u1,u2,u3,v1,v2,v3`, edges
+`cu,cv,uu1,uu2,uu3,vv1,vv2,vv3`, all eight totals equal to three, and
+`tau = -1`. The proof keeps all 256 complementary splits and all 512 spins
+per split, retains the nine actual vertex factors, proves the exact
+`360^8*36/512` normalization, and uses the reciprocal/nonreal-root certificate
+to produce a root inside and its reciprocal outside the unit circle. The exact
+Lean result is a closed `Not claim` with axiom closure contained in
+`propext`, `Classical.choice`, and `Quot.sound`; its public declaration is a
+designated `refutes` utility result. The readable automorphism count
+`|Aut(T)| = 72` and source prefactor `120^8/4` remain correspondence prose,
+not separate kernel theorems.
+
+The physical settlement is scoped to the all-vertex (2.19) construction and
+this exact witness. It preserves the printed shorter (2.31) expression as a
+distinct source reading and asserts no author-approved erratum or intent. It
+does not settle arbitrary other total multisets, other trees, other tau, the
+full tree ensemble, Conjecture 2, the all-tau family, or priority. The existing
+assignment-summed m60 coefficient exposition remains a separate complete
+source-assessed calculation; it is not silently promoted to the Lean result or
+used to weaken the fixed-labelled claim.
+
 
 - **Mechanism, kernel-checked at $M=31$.** The private `path_poly` identifies
   the exact octic; `q_discr` and `q_not_splits` supply the negative-discriminant
@@ -196,9 +249,16 @@ has `proof_shape: bind-only`; the module asserts no escape witness.
   every fixed labelled two-edge pair $a,b\ge2$ with $\min(a,b)=2$ is
   covered using all three physical vertex factors. This is separate from
   the kernel-checked arbitrary-weight refutation and from the experiment.
-- **General physical-weight version, open.** Both two-edge totals at least
-  three and the full tree family with the binomial and all-vertex factors
-  of (2.31) remain open. The experiment entry has no physical-weight reading.
+- **All-vertex physical e8 result, kernel-checked.** The separate
+  `QuiverTreePhysicalE8.result` refutes the exact all-vertex physical claim at
+  the explicit nine-vertex/eight-edge all-total-three witness. It is grouped
+  with the existing resolution through `additionalMembers`, while preserving
+  the arbitrary-joint-weight result and its different witness.
+- **Residual physical-weight questions, open.** Other fixed total multisets,
+  other trees, both two-edge totals at least three, the full tree family with
+  the binomial and all-vertex factors of (2.31), the all-τ variant, and the
+  general assignment-summed family remain open. The experiment entry has no
+  physical-weight reading.
 - **Consequences for the source, source reading.** Its fixed-configuration
   result and its one-edge theorem remain outside the refutation. The
   physical planar-free-energy specialization requires its own restricted
@@ -451,7 +511,7 @@ $1/m$, and the boundary proof above uses its exact value rather than
 a general positive-mixture principle.
 
 The physical two-edge case with both totals at least three, the full
-physical-tree and all-stars families, the all-$\tau$ variant, sums over
+physical-tree and all-stars families, the all-$\tau$ variant, general sums over
 edge assignments or total multisets, Conjecture 2's sum over trees, and
 the conditional Wilson-loop assertions remain open. Neither the
 general product-weight question nor these residuals follow from the
@@ -459,149 +519,23 @@ boundary argument or from the arbitrary-joint-weight refutation.
 
 ### Uniform raw split real-stability obstruction
 
-The physical specialization has a uniform obstruction to one tempting
-intermediate route. This is a statement about the raw split generating
-polynomial, not about the Lee--Yang state sum. Keep $a,b\ge3$ fixed, put
-$N=a+b$, and use the leaf-oriented incidence $0\to1\leftarrow2$ (equivalently,
-reverse both printed arrows when reading the source convention). Set
+[Full argument, assumptions and unresolved boundaries](../Library/StatisticalMechanics/fiolmartinezmontoyariosfukelman2020quiver.md#lee-yang-split).
 
-$$
-f(t)=\frac{(2t)!}{(t-1)!\,t!},\qquad
-U_n(j)=\binom nj\binom n{j+1}.
-$$
+### One fixed tree's assignment-summed formal coefficient
 
-The source's (2.15) gives
-$\mathcal V(t_1,\ldots,t_\alpha)=\frac{(d-1)!}{(d-\alpha+2)!}
-\prod_i f(t_i)$, where $d=\sum_i t_i$. Thus the two leaves contribute
-$f(k)/(k(k+1))$ and $f(\ell)/(\ell(\ell+1))$, while the degree-two
-centre contributes $f(a-k)f(b-\ell)/(N-k-\ell)$. Including all three
-vertex factors, as required by the physical product in (2.31), gives
-
-$$
-\rho_{k\ell}=\binom{2a}{2k}\binom{2b}{2\ell}
- \frac{f(k)}{k(k+1)}
- \frac{f(a-k)f(b-\ell)}{N-k-\ell}
- \frac{f(\ell)}{\ell(\ell+1)}.
-$$
-
-For every $1\le j<n$ the factorial cancellation is exact:
-
-$$
-\binom{2n}{2j}\frac{f(j)f(n-j)}{j(j+1)}
- =\binom{2n}{n}\binom nj\binom n{j+1}.
-$$
-
-Indeed, after cancelling $(2j)!$ and $(2n-2j)!$, use
-$j!=j(j-1)!$ and $(j+1)!=(j+1)j!$; every factorial argument is
-nonnegative on the displayed split range. Consequently
-
-$$
-\rho_{k\ell}=C_{ab}\,w_{k\ell},\qquad
-C_{ab}=\binom{2a}{a}\binom{2b}{b}>0,\qquad
-w_{k\ell}=\frac{U_a(k)U_b(\ell)}{N-k-\ell}.
-$$
-
-This is the source echo and scalar bridge; it does not replace the state
-sum in (2.30). Define only the raw split polynomial
-
-$$
-K_{a,b}(u,v)=\sum_{k=1}^{a-1}\sum_{\ell=1}^{b-1}
- w_{k\ell}u^{k-1}v^{\ell-1}.
-$$
-
-At $\tau=-1$, the eight-state sum for a fixed split is
-$(1-X^k)(1+X^{N-k-\ell})(1-X^\ell)$, so the physical polynomial is
-
-$$
-P^{\mathrm{ph}}_{a,b}(-1,X)=C_{ab}\sum_{k=1}^{a-1}\sum_{\ell=1}^{b-1}
-w_{k\ell}(1-X^k)(1+X^{N-k-\ell})(1-X^\ell).
-$$
-
-The following calculation concerns $K_{a,b}$ only.
-
-It has bidegree $(a-2,b-2)$. Apply
-$\partial_u^{a-3}\partial_v^{b-3}$. Only
-$k\in\{a-2,a-1\}$ and $\ell\in\{b-2,b-1\}$ survive. Writing
-
-$$
-A_n=U_n(n-2)=\frac{n^2(n-1)}2,\qquad B_n=U_n(n-1)=n,
-$$
-
-the four undifferentiated corner coefficients are
-
-$$
-\begin{pmatrix}
-A_aA_b/4 & A_aB_b/3\\[2pt]
-B_aA_b/3 & B_aB_b/2
-\end{pmatrix};
-$$
-
-the denominators $4,3,3,2$ are respectively
-$N-(a-2)-(b-2)$, $N-(a-2)-(b-1)$,
-$N-(a-1)-(b-2)$, and $N-(a-1)-(b-1)$. Including the derivative
-factors and dividing by the positive scalar
-$(a-3)!(b-3)!A_aA_b/4$ gives exactly
-
-$$
-1+c_a u+c_b v+\frac98c_ac_buv,
-\qquad
-c_a=\frac{8(a-2)}{3a(a-1)},\quad
-c_b=\frac{8(b-2)}{3b(b-1)}.
-$$
-
-Both $c_a$ and $c_b$ are strictly positive, including the corner case
-$a=b=3$ (where no differentiation is taken). This calculation checks the
-degree, all four central denominators, and every factorial scalar.
-
-The closure step uses Borcea--Brändén--Liggett, *Negative Dependence and
-the Geometry of Polynomials*, [arXiv:0707.2340](https://ar5iv.labs.arxiv.org/html/0707.2340), Proposition 3.1(2): a
-partial derivative of a real-stable polynomial is real-stable or zero,
-and positive coordinate scaling preserves real stability. The derivative
-above is nonzero because its $uv$ coefficient is positive. After the
-positive rescaling $x=c_au$, $y=c_bv$, a real-stable $K_{a,b}$ would force
-
-$$
-G(x,y)=1+x+y+\frac98xy
-$$
-
-to be real-stable. But the exact bilinear zero
-
-$$
-x=i,\qquad
-y=-\frac{1+i}{1+9i/8}=-\frac{136}{145}+\frac{8}{145}i
-$$
-
-has both coordinates in the open upper half-plane and satisfies
-$G(x,y)=0$. Thus $G$, the differentiated polynomial, and $K_{a,b}$ are
-all non-stable. Multiplication by the positive physical scalar $C_{ab}$
-does not change this conclusion. The same paper's Theorem 4.1 gives the
-corresponding bilinear real-stability criterion; the displayed zero is a
-direct witness, so no sign convention from that criterion is being used
-implicitly here.
-
-The mechanism is the degree-two central factor. In a $2\times2$ corner,
-dividing the stable product coefficients by the successive central
-degrees produces $1/M,1/(M-1),1/(M-1),1/(M-2)$, whose bilinear minor is
-
-$$
-\frac1{(M-1)^2}-\frac1{M(M-2)}
-=-\frac1{M(M-2)(M-1)^2}<0\qquad(M\ge4).
-$$
-
-This rules out the raw split-real-stability lemma as a route for every
-interior pair $a,b\ge3$. It does not produce a zero of
-$P^{\mathrm{ph}}_{a,b}(-1,X)$ off the unit circle: that polynomial still
-contains the three spin factors from (2.30); the scalar bridge only
-relates the weights without identifying the two zero sets. The physical
-two-edge Lee--Yang question for $a,b\ge3$, the full tree problem, other
-$\tau$, assignment sums, and Conjecture 2 therefore remain open. This is
-source-grounded prose only, with no new Lean declaration, kernel claim,
-or literature-priority assertion; alternative disk-specific or
-interlacing routes remain available.
+[Full argument, assumptions and unresolved boundaries](../Library/StatisticalMechanics/fiolmartinezmontoyariosfukelman2020quiver.md#lee-yang-coefficient).
 
 ## ASSUMED-UNVERIFIED
 
 The preregistration's search producer reports its forward-citation screen;
 worldwide priority is unverified. Kernel checking establishes the encoded
-statement and axiom boundary, while correspondence to the source requires
-the stated finite-type and parameter conventions. The positive-sequence and physical $\min(a,b)=2$ statements are complete prose arguments, not newly kernel-checked public theorems. Product-weight and physical-weight generalizations remain open separately, including both totals at least three, all physical trees and stars, all-$\tau$ and edge-assignment sums, Conjecture 2 and conditional Wilson-loop claims; the numerical product-weight trials do not prove these extensions.
+statements and axiom boundaries, while correspondence to the source requires
+the stated finite-type and parameter conventions. The positive-sequence and
+physical $\min(a,b)=2$ statements are complete prose arguments, not newly
+kernel-checked public theorems. Product-weight questions and physical-weight
+generalizations outside the exact all-total-three e8 witness remain open,
+including other multisets, other trees and stars, all-$\tau$ and general
+edge-assignment sums, Conjecture 2 and conditional Wilson-loop claims; the
+numerical product-weight trials do not prove these extensions.
+
+The fixed 123-vertex tree coefficient above has a complete independently checked analytical root proof and remains separate prose evidence. The fixed-labelled all-total-three physical candidate has passed the independent prefreeze review under issue #17677 and now has the deposited state pin recorded above; the broader assignment-summed physical conjecture and all residual families remain open.

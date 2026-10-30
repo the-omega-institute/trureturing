@@ -1,0 +1,26 @@
+**Proposition 4.4 (The retained fifth-read $M$–read–$M$ identity).** Write $\mathcal U_M(\rho)=U_{A_M}\rho U_{A_M}^\dagger$. The channel from just after read four to just before read six, when the fifth and sixth actions are $M$, is
+
+$$
+\Phi=\mathcal U_M\circ\mathcal D_5\circ\mathcal U_M.
+$$
+
+For every bounded Borel $f$,
+
+$$
+\Phi^*(f(q))
+=\mathcal U_M^*\mathcal D_5^*\mathcal U_M^*(f(q))
+=f(A_M^2q).
+$$
+
+On the finite-moment extension this gives $\Phi^*(q)=A_M^2q$. Including the sixth nonselective read gives
+$(\mathcal D_6\circ\Phi)^*(q)=A_M^2q$ on the same extension.
+
+Proof. Pullback by the final $M$ first gives $f(A_Mq)$. Proposition 4.3 leaves this bounded position function fixed under $\mathcal D_5^*$, and the preceding $M$ then gives $f(A_M^2q)$. Extend each coordinate by the finite-moment argument of that proposition. In the original matrix block,
+
+$$
+M^2=\begin{pmatrix}1&1\\1&2\end{pmatrix},\qquad
+M^2Q_4=\begin{pmatrix}3&1\\5&2\end{pmatrix}=Q_6.
+$$
+
+The fifth acquisition is part of the channel and of the record. Whole-outcome integration is its nonselective marginal, not deletion of that acquisition. The identity concerns adjoint maps on observables; the selective fifth update remains the outcome-dependent update of Proposition 4.3. $\square$
+

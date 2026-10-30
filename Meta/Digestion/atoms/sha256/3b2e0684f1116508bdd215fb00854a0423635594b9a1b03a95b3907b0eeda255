@@ -1,0 +1,63 @@
+**Theorem 47.3 (full-history coordinates and their local append law).**
+For every finite actual LAB word $w$, the installed contents prescribed
+by Definition 47.2 have exactly the same full-history meaning as AA
+Definition 19.1's literal tapes. At a fixed reachable source $t$, their
+possible contents are in bijection with all $\mathcal H(t)$, with
+conditional alphabet size $F_{PS}(t)$ of AA (AA.74). No complete history,
+including a promotion, is discarded by omitting radix-one coordinates.
+
+If one actual event occurs strictly below $v$, let $x=x_v$, $y=y_v$,
+$n=x+y$, $r=r_v$ just before it, and let $d$ be its first side below $v$.
+The new coordinate is
+
+$$
+\begin{array}{c|ccc}
+d&x'&y'&r'\\ \hline
+L&x+1&y&r+\binom n{x+1}\\
+R&x&y+1&r
+\end{array}
+\tag{AAII.3}
+$$
+
+Every other existing coordinate is unchanged. A split at $p$ creates
+its own empty, radix-one coordinate, with null slot. Each existing
+coordinate's radix and bit width are nondecreasing along actual growth;
+its header, once allocated, never becomes unnecessary.
+
+Proof. The enumerative ingredient is supplied by Cover, *Enumerative
+Source Encoding*, Propositions 1–2, the inverse algorithm and the
+constant-weight Example 2, with coordinates read in reverse order.
+In the convention (AAII.2), words of length $n$ and left multiplicity
+$x$ correspond bijectively to integers $0\le r<\binom nx$.
+For completeness of the convention, the last-$R$ block has size
+$\binom{n-1}x$ and retains its shorter word's rank; the last-$L$ block
+has size $\binom{n-1}{x-1}$ and adds the preceding block size.
+Pascal's identity partitions the valid interval, with zero-size blocks
+allowed. The empty word is the unique base. This is the credited
+counted-block argument, not a new general enumeration theorem.
+
+AA Theorem 19.2 supplies the source-specific bijection between
+$\mathcal H(t)$ and the product of the constant-weight word sets.
+Composing its coordinates with this classical bijection gives exactly
+the asserted contents and alphabet. If $x=0$ or $y=0$, its word is
+forced to be $R^y$ or $L^x$, respectively. Both zero gives the empty
+word. Its absent coordinate is therefore reconstructed from the source,
+without choosing between distinct histories. Conversely a nontrivial
+coordinate cannot be suppressed while holding the source and all other
+coordinates fixed, by AA Theorem 19.2's independent product.
+
+Appending $R$ changes none of the left positions in (AAII.2). Appending
+$L$ adds its new position $n+1$ as the $(x+1)$st left occurrence and
+therefore adds $\binom n{x+1}$. The actual-event projection identity of
+AA Theorem 19.2 says that precisely these side appends occur at the
+proper logical ancestors, for either kind of event. This proves
+(AAII.3), including zero child counts and $n=0$.
+
+Appending one fixed symbol injects the old constant-weight word set
+into the new one. Equivalently Pascal gives
+$\binom{n+1}{x+1}\ge\binom nx$ and
+$\binom{n+1}x\ge\binom nx$. Thus $R'$ and $b'$ do not decrease.
+A nontrivial coordinate has both counts positive, and growth does not
+reduce either. Its header can consequently be retained permanently,
+and new cells are needed only for a positive width increment. $\square$
+

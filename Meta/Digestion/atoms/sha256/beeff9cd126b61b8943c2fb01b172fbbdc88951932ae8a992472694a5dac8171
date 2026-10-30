@@ -1,0 +1,44 @@
+**Proposition 134.1 (a direct $\Theta$ certificate).** Suppose $q>0$ and $k>0$. Define
+
+$$
+L_p=2r-\frac\beta{\sqrt2},\qquad\gamma=\frac{\alpha k}{4}>0,
+\qquad
+a_k(\lambda)=2\alpha+k(1-\lambda)-\frac{kL_p^2}{1+\gamma}.
+\tag{U.140}
+$$
+
+Then each of the following is sufficient for $\Theta\leq r$: the scalar condition $Z_k\geq a_k(\lambda)$; or, for a unit minimum eigenvector of the actual $B$, the matrix condition
+
+$$
+C_{k,u}(\lambda):=(m-\lambda)I_2-a_k(\lambda)M_{k,u}\succeq0.
+\tag{U.141}
+$$
+
+Proof. Put $x=\alpha\sqrt{1-H/(2\alpha)}/\sqrt2$ and $y=\sqrt R$. These are nonnegative. Theorem 131.1 gives
+
+$$
+2\Theta\leq\frac\beta{\sqrt2}+x+y,\qquad
+x^2+\gamma y^2=\frac p2+\gamma(1-\lambda)-\frac\alpha4 Z_k.
+\tag{U.142}
+$$
+
+Substituting $Z_k\geq a_k(\lambda)$ in the last expression makes it at most $\gamma L_p^2/(1+\gamma)$. Weighted Cauchy–Schwarz therefore gives
+
+$$
+(x+y)^2\leq(1+\gamma^{-1})(x^2+\gamma y^2)\leq L_p^2.
+\tag{U.143}
+$$
+
+Since $\beta\leq1/\sqrt2$ and $r>1/2$, $L_p>0$. Taking the nonnegative root proves the scalar implication.
+
+If $a_k(\lambda)\leq0$, then $Z_k\geq0$ already proves that condition. If $a_k(\lambda)>0$, (U.141) and $M_{k,u}\succ0$ force $m-\lambda>0$ and
+
+$$
+\mu_k\leq\frac{m-\lambda}{a_k(\lambda)},\qquad
+m-\lambda\leq\mu_k Z_k
+\leq\frac{m-\lambda}{a_k(\lambda)}Z_k.
+\tag{U.144}
+$$
+
+Division only by positive quantities yields $Z_k\geq a_k(\lambda)$. This proves the matrix implication. These are sufficient conditions; no converse is asserted. The objective here is directly $\Theta$, and the proof does not require $S\leq c/2$. $\square$
+

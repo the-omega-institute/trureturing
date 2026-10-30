@@ -1,0 +1,125 @@
+**Theorem 43.2 (The three slack groups and exact quotient dimensions).**
+For nonnegative integer $m,t,u$,
+
+$$
+E_k(m,t,u)=
+\begin{cases}
+\displaystyle\sum_{\substack{2\le j\le k-1\\j\le t,\ j\le u}}
+\binom{t-j+k-1}{k-1}\binom{u-j+k-1}{k-1},
+ &m\ge t+u+1,\\[2mm]
+0,&m<t+u+1.
+\end{cases}
+\tag{43.3}
+$$
+
+For negative parameters use the zero conventions of Definition
+43.1. At $k=2$ the sum is empty and $E_2=0$. For the global
+edge family, in every degree $m\ge0$,
+
+$$
+\begin{aligned}
+\dim_{\mathbb C}(\omega_{R^e_{k,b}})_m
+ &=\sum_{\substack{t,u\ge0\\t+u\le m}} I_k(m,t,u)^b,\\
+\dim_{\mathbb C}(X^\nu R^e_{k,b})_m
+ &=\dim_{\mathbb C}(R^e_{k,b})_{m-3}
+ =\sum_{\substack{t,u\ge0\\t+u\le m}} B_k(m,t,u)^b,\\
+\dim_{\mathbb C}(C^e_{k,b})_m
+ &=\sum_{\substack{t,u\ge0\\t+u\le m}}
+ \bigl((B_k(m,t,u)+E_k(m,t,u))^b-B_k(m,t,u)^b\bigr).
+\end{aligned}
+\tag{43.4}
+$$
+
+For two labelled branches each summand in the last line is
+$2B_k(m,t,u)E_k(m,t,u)+E_k(m,t,u)^2$.
+
+Proof. The local proof in §42 partitions interiors by deficit.
+Those of deficit at least $k-1$ are exactly $\nu_1+\mathcal S_k$.
+The other interiors have the unique form
+
+$$
+p=\nu_j+s_0,\qquad 2\le j\le k-1,\qquad
+s_0\in\mathcal S_k^0:=\{s\in\mathcal S_k:\delta(s)=0\}.
+\tag{43.5}
+$$
+
+Indeed their deficit is $k-j$, fixing $j$, and subtraction
+of $\nu_j$ fixes $s_0$. These are precisely the supplied
+free face layers of Miyazaki's Lemma 4.4 and (31.13)–(31.14).
+They are used here with both adjacent endpoint occupancies
+retained; a count resolved at only one root cannot replace this.
+
+For $s_0=(q,d)\in\mathcal S_k^0$ introduce edge slacks
+$\alpha_i=q-d_i-d_{i+1}$. The exact inverse coordinates are
+
+$$
+q=\sum_{i=0}^{2k}\alpha_i,\qquad
+d_i=B_i(\alpha)=\sum_{r=0}^{k-1}\alpha_{i+1+2r},
+\qquad \alpha\in\mathbb N^{2k+1}.
+\tag{43.6}
+$$
+
+Adjacent alternating index sets cover all indices except $i$,
+so $d_i+d_{i+1}=q-\alpha_i$. Each slack occurs in exactly
+$k$ of the $d_i$, giving $\sum_i d_i=kq$. Conversely,
+summing slacks of a face point gives $\sum_i\alpha_i=q$,
+and a solution to the cyclic adjacent-sum equations is unique:
+a difference alternates sign and returns with opposite sign
+around the odd cycle. This proves the additive bijection
+(43.6), including nonnegativity and the degree-zero case.
+The slack basis vector at $i$ gives the maximum independent
+set $\{i+2,i+4,\ldots,i+2k\}$. Thus the face algebra is
+polynomial in these $2k+1$ degree-one modes, as in §31.3.
+
+For the actual endpoints $a=0$, $b_0=1$, the groups are
+explicitly
+
+$$
+\begin{aligned}
+d_0&=\alpha_1+\alpha_3+\cdots+\alpha_{2k-1},\\
+d_1&=\alpha_2+\alpha_4+\cdots+\alpha_{2k},\\
+q-d_0-d_1&=\alpha_0.
+\end{aligned}
+\tag{43.7}
+$$
+
+They partition the indices into groups of sizes $k,k,1$.
+The last coordinate is the slack of the retained shared edge;
+this partition follows from the adjacent endpoints, not from
+an assumption that two arbitrary vertices have disjoint groups.
+In (43.5), prescribed $(m,t,u)$ gives
+
+$$
+\begin{aligned}
+q&=m-2j-1,& d_0&=t-j,& d_1&=u-j,\\
+\alpha_0&=m-t-u-1.
+\end{aligned}
+\tag{43.8}
+$$
+
+The three group sums are nonnegative exactly when
+$t\ge j$, $u\ge j$, and $m\ge t+u+1$.
+Under those conditions their total is $m-2j-1$, so the
+residual degree requirement follows automatically. Stars and
+bars on the two groups of size $k$ gives the two binomials
+in (43.3); the singleton group has one choice of its fixed
+value. Distinct $j$ have distinct deficits, so there is no
+overlap. This proves the full exceptional count, including
+the absence of any additional degree factor. For $k=2$
+the direct translation proof in §42 exhausts all interiors.
+
+A global interior is exactly a compatible tuple of local
+interiors, by (41.2)–(41.3). At fixed $(m,t,u)$ their number
+is $I_k(m,t,u)^b$. The vector $\nu$ has positive occupancies,
+all edge slacks one and all cycle deficits $k-1$, so it is
+interior. Multiplication by $X^\nu$ is injective in the domain
+$R^e_{k,b}$ and shifts the boundary by $(3,1,1)$. A global
+interior belongs to its image exactly when every local
+restriction belongs to $\nu_1+\mathcal S_k$: after subtraction,
+all boundaries are $(m-3,t-1,u-1)$ and (41.2) gives a global
+semigroup point. This proves the first two counts in (43.4).
+Subtracting monomial bases proves the quotient count. No
+splitting of modules is assumed. The two-branch cross terms
+count one ordinary and one exceptional sector, in either
+labelled order, at the same endpoints. $\square$
+

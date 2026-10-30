@@ -7,6 +7,9 @@
    digest: Quadratic power diagonals connect Hanna A397244 to Fibbinary parity. -/
 
 import Batteries.Tactic.OpenPrivate
+import D5.S1.Recurrence.Invariants.AbsoluteReciprocalSquareParity
+import D5.S1.Recurrence.Parity.FibbinarySquareSubstitutionParity
+import D5.S1.Recurrence.Parity.StripThreeTernaryCatalanParity
 import D5.S1.Recurrence.Residue.AbsoluteReciprocalSquareFibbinaryParity
 import D5.S1.Recurrence.Residue.DiagonalPowerRatioAllOdd
 
@@ -63,7 +66,7 @@ theorem a_two : a 2 = 6 := by
   rw [hc, hc]
   norm_num [Nat.choose]
 
-open private diagonal_multiplier from D5.S1.Recurrence.Residue.DiagonalPowerRatioAllOdd
+open D5.S1.Recurrence.Residue.DiagonalPowerRatioAllOdd (diagonal_multiplier)
 open private mod_two_equation from D5.S1.Recurrence.Parity.StripThreeTernaryCatalanParity
 open private coeff_square square_subst from D5.S1.Recurrence.Parity.StripThreeTernaryCatalanParity
 
@@ -223,11 +226,5 @@ theorem hanna_conjecture_a397244 (n : ℕ) (hn : 0 < n) :
   rw [← ZMod.intCast_eq_one_iff_odd, hc, ZMod.intCast_eq_one_iff_odd]
   exact AbsoluteReciprocalSquareFibbinaryParity.hanna_conjecture n hn
 
-#print axioms a_two
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms mod_two_cubic
-#print axioms mod_two_identity
-#print axioms hanna_conjecture_a397244
 
 end D5.S1.Recurrence.Residue.QuadraticPowerDiagonalFibbinaryParity

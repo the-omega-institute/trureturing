@@ -1,0 +1,31 @@
+**Assumption 53.2 (authentic guard-only attachment).** One fixed finite
+dispatcher implements those two addressed operations on this very root.
+Its actual callable reference, original root/address orientation, current
+exclusive $P/S$ authority, input/output connections and local return
+acknowledgement are supplied. The attaching observer has source-independent
+finite instruction code and initially empty source-dependent work records.
+It receives neither $t$, its size, an old generation word, old routing
+tapes, a terminal roster nor a source-dependent response table. It has no
+Tag, Native Read, membership, recall, Next, field, reset or cloning port,
+and cannot inspect the dispatcher's private source fields. Only complete
+dispatcher replies are source-dependent observations. The bound reference
+is opaque; allocation names, elapsed work and resource amounts are not
+additional readouts.
+
+Calls and observer updates are serialized. There is no concurrent writer,
+revocation, crash, interrupt or autonomous source transition. Each claimed
+finite execution has sufficient finite source material, owned code and
+work backing, and current rights to their construction and later use.
+There is no observable quota or allocation-failure branch. Acquisition,
+communication, local computation, allocation, grants, retention and clearing
+all have their actual charges; none is a free source observation. Missing
+rights or a wrong phase disable the corresponding primitive, rather than
+returning a leaf-type refusal.
+
+This is a different minimal installation from AA Assumption 20.1 and
+Definition 47.2. It does not construct or maintain their historical routing
+records. A producer has really paid for the old finite source preparation,
+but its old serial word need not be available to this observer. Removing
+those record services here makes no assertion about acquiring their full
+seven-request task.
+

@@ -1,0 +1,72 @@
+**定义 7.2（完整正系数恒等式）。** Write $B_{i,n}(w)=\binom niw^i(1-w)^{n-i}$. The polynomials in the preceding proof are defined by
+
+$$
+H_5(\lambda,x)=\sum_{i=0}^5\beta_i(x)B_{i,5}(3\lambda-2),
+\qquad
+H_7(\lambda,x)=\sum_{i=0}^7\gamma_i(x)B_{i,7}(9\lambda-8).
+\tag{7.15}
+$$
+
+The complete coefficient lists, in increasing index, are
+
+$$
+\begin{aligned}
+\beta_0&=(-2x^4+11x^3+96x^2+162x+324)/243,\\
+\beta_1&=(-3x^4+65x^3+311x^2+603x+648)/405,\\
+\beta_2&=(11x^4+128x^3+414x^2+699x+513)/270,\\
+\beta_3&=(16x^4+99x^3+257x^2+361x+201)/90,\\
+\beta_4&=(x+1)(7x^3+26x^2+48x+39)/15,\\
+\beta_5&=(x+1)^2(x^2+2x+3),
+\end{aligned}
+\tag{7.16}
+$$
+
+and
+
+$$
+\begin{aligned}
+\gamma_0&=(78336x^6+3365576x^5+6418912x^4+6365249x^3
+-1364644x^2+188284x+3536)/4782969,\\
+\gamma_1&=(47296x^6+2718705x^5+5211188x^4+5184328x^3
+-969789x^2+107015x+1266)/3720087,\\
+\gamma_2&=(11416x^6+944123x^5+1819895x^4+1814864x^3
+-287917x^2+24587x+151)/1240029,\\
+\gamma_3&=(1377x^6+182821x^5+354607x^4+354189x^3
+-45758x^2+2857x+6)/229635,\\
+\gamma_4&=x(83x^5+21333x^4+41661x^3+41648x^2-4110x+168)/25515,\\
+\gamma_5&=x(2x^5+1501x^4+2953x^3+2953x^2-198x+4)/1701,\\
+\gamma_6&=x^2(59x^3+117x^2+117x-4)/63,\\
+\gamma_7&=x^3(x^2+2x+2).
+\end{aligned}
+\tag{7.17}
+$$
+
+Expanding (7.15) with these lists gives the exact identities (7.7), (7.14). On $1/3\le x\le1/2$, every $\beta_i$ is positive: the only negative monomials, $-2x^4,-3x^4$, are smaller in magnitude than their respective positive constant terms. Thus $H_5>0$ for $2/3\le\lambda\le1$, since the Bernstein terms are nonnegative and sum to one.
+
+For $x\ge1/3$, all $\gamma_i$ are positive. In the first four, absorb each negative $x^2$ term into the positive $x^3$ term, using
+
+$$
+6365249/3>1364644,\quad 5184328/3>969789,\quad
+1814864/3>287917,\quad354189/3>45758.
+$$
+
+For $\gamma_4,\gamma_5$ use $41648/3>4110$ and $2953/3>198$; for $\gamma_6$ use $117x-4>0$. The remaining terms are positive. Hence $H_7>0$ for $8/9\le\lambda\le1$, $x\ge1/3$.
+
+Finally, putting $t=\lambda-1$,
+
+$$
+\begin{aligned}
+Q_3={}&(x^4+3x^3+4x^2+3x+1)t^3+(2x^4+3x^3+2)t^2\\
+&+(2x^4+3x^3-x^2-4x)t+x^4+2x^3+2x^2.
+\end{aligned}
+\tag{7.18}
+$$
+
+For $0\le t\le1/8$ and $x\ge1/3$,
+
+$$
+Q_3\ge x\left(x^3+2x^2+\frac{15}8x-\frac12\right)>0.
+$$
+
+The bracket is increasing for $x>0$ and equals $83/216$ at $1/3$. These coefficient identities prove the signs on full intervals, including all possible degree drops in the terminal equations.
+

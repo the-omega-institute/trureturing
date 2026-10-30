@@ -1,0 +1,54 @@
+**Theorem 13.3 (Exhaustive actual off-twenty-four critical classification).**
+For every complete strict world $W\in\mathcal H$ with $p(W)\ne24$,
+
+$$
+\operatorname{rank}D\Psi_M(W)<2
+\quad\Longleftrightarrow\quad
+W\in\{W_1,W_2,W_3,W_4\}.
+\tag{13.6}
+$$
+
+At each of the four worlds the rank is exactly one.
+
+*Proof.* First suppose $\Lambda(W)=0$. III, Theorem 13.1, already
+gives rank two on the full analytic parent at every point of both
+entire strict singular lines, for all real $e=d-24$. Thus no singular
+world is a critical world in (13.6). This uses that existing stronger
+all-drift result without a restriction to a regular chart.
+
+For a regular world, Lemma 3.2 gives criticality exactly when all three
+$E_k$ vanish. Lemma 4.3, which also covers leading-coefficient drops,
+leaves $b=1/8$ or $F(b)=0$ with the unique lift $r=-c(b)/a(b)$.
+At $b=1/8$, Lemma 6.1 gives $e=0$, $p=24$ on the regular parent,
+so the off-$24$ hypothesis excludes this branch. The factors
+
+$$
+b,\quad 2b+1,\quad 5b+2,\quad
+5b^2+2b+1,\quad b^2+8b+4
+\tag{13.7}
+$$
+
+removed in passing from the resultant gcd to $F$ have no positive
+zero. The remaining factor $8b-1$ has just been treated. The removed
+subresultant factor $h$ has no zero at a root of $F$ by (12.3).
+These are all removed factors of the necessary cover (4.3).
+
+Lemma 5.2 exhausts the positive roots of $F$: there are six, one in
+each of its six displayed intervals. The two with
+$q=5311219,6737603$ have $r<0$ under the same uniquely guarded lift
+and hence are outside the strict source domain. The other four are
+exactly (13.1). Lemma 13.2 makes all four strict and regular.
+Lemma 12.3 now supplies the converse missing from a necessary
+resultant cover: all three $E_k$ really vanish at each of these
+four lifts. Lemma 3.2 therefore makes each $W_i$ critical.
+The $p_b\ne0$ certificates of Lemma 14.2 give rank at least one,
+and the vanishing minors give rank at most one.
+
+The parent/world identification of Definition 2.1 and O, Theorem 2.1,
+means that a regular source fixes the whole gain and the drift;
+no additional critical complete world can lie over one of these
+four sources. No division by $d$, $e$, a gain sample, a leading
+gain coefficient or a gain-root difference has occurred. Thus zero
+drift, every lower degree and all sample-zero strata are retained
+in the quantified domain of (13.6). ∎
+

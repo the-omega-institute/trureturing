@@ -1,0 +1,237 @@
+**定理 85.2（局部 analytic common optimum）。** 存在 $\theta_*>0$，令 $q_* =\sin^2\theta_*>0$，使对每个 $0<q<q_*$，置 $\theta=\arcsin\sqrt q$，方程
+
+$$
+3\sin(4a-2\theta)=4\sin(2a-2\theta)
+\tag{85.2}
+$$
+
+在 $(a,\theta)=(0,0)$ 附近的唯一 analytic branch $a=a(\theta)$ 满足 $a/\theta\to-1/2$，且
+
+$$
+c_2(q)=c_*(q)
+ =\frac12\sqrt{\sin^2a\,(1+3\sin^2a)}.
+\tag{85.3}
+$$
+
+一个共同 attaining decoder 可用两个 Kraus operators 写成
+
+$$
+\begin{gathered}
+\Pi=P+|e\rangle\langle e|,\qquad
+V_a=\begin{pmatrix}\cos a&\sin a&0\\
+                     \sin a&-\cos a&0\\0&0&1\end{pmatrix},\\
+L_0=V_a^\dagger\Pi U_0^\dagger,\qquad
+L_1=V_a^\dagger|e\rangle\langle f|U_0^\dagger,\qquad
+\mathcal D_a(X)=L_0XL_0^\dagger+L_1XL_1^\dagger.
+\end{gathered}
+\tag{85.4}
+$$
+
+它在整个 $M_3(\mathbb C)$ 上为 CPTP，而不是两个 single-effect realizations。该 branch 的 expansions 为
+
+$$
+\begin{aligned}
+a(\theta)&=-\theta/2-(7/2)\theta^3+O(\theta^5),\\
+a(\arcsin\sqrt q)&=-\sqrt q/2-(43/12)q^{3/2}+O(q^{5/2}),\\
+c_2(q)&=\sqrt q/4+(15/8)q^{3/2}+O(q^{5/2}).
+\end{aligned}
+\tag{85.5}
+$$
+
+特别，$q$ 项的系数恰为零。本定理只给正邻域的存在性，不给 $q_*$ 的数值，也不把它等同于单任务定理 81.4 的 interval。
+
+**证明。** 先构造同一个 primal map，再给对全部 complex competitors 的 lower certificate。
+
+由 $V_a$ unitary、$\Pi^2=\Pi$，
+
+$$
+L_0^\dagger L_0+L_1^\dagger L_1
+ =U_0(\Pi+|f\rangle\langle f|)U_0^\dagger=I_3.
+$$
+
+故 (85.4) trace preserving；Kraus form 给 complete positivity。对 $A=P,E(q)$，令 $A_2$ 是其 $\xi,e$ block，$V=V_a|_{\operatorname{ran}\Pi}$。其 adjoint 同时给出
+
+$$
+U_0^\dagger\mathcal D_a^\dagger(A)U_0
+  =K_A\oplus y_A,\qquad K_A=VA_2V^\dagger,\qquad
+ y_A=(K_A)_{ee}.
+\tag{85.6}
+$$
+
+这里 $y_P=\sin^2a$、$y_E=\sin^2(a-\theta)$。代入 (85.1)，两个 full residuals 为
+
+$$
+R_A=\begin{pmatrix}\delta_A&b_A\\b_A&-\delta_A\end{pmatrix}\oplus y_A,
+\quad
+\begin{array}{ll}
+\delta_P=-\sin^2a,& b_P=-\sin(2a)/4,\\
+\delta_E=q-\sin^2(a-\theta),&
+ b_E=-\sin(2a-2\theta)/4-\sin\theta\cos\theta.
+\end{array}
+\tag{85.7}
+$$
+
+记
+
+$$
+p(a)=\sqrt{\delta_P^2+b_P^2}
+ =\tfrac12\sqrt{\sin^2a(1+3\sin^2a)},\qquad
+e(a,\theta)=\sqrt{\delta_E^2+b_E^2}.
+$$
+
+$p\ge y_P$，所以两个 losses 分别为 $p$ 与 $\max\{e,y_E\}$。直接展开平方差得到
+
+$$
+e^2-p^2=\frac{\sin(2\theta)}{16}
+        [3\sin(4a-2\theta)-4\sin(2a-2\theta)].
+\tag{85.8}
+$$
+
+方括号在原点对 $a$ 的偏导为 $4$，对 $\theta$ 的偏导为 $2$。解析隐函数定理给出唯一局部 branch，导数为 $-1/2$。方程在 $(a,\theta)\mapsto(-a,-\theta)$ 下变号，唯一性给出 $a$ 是 odd analytic function。将 $a=-\theta/2+c\theta^3+O(\theta^5)$ 代回 (85.2)，三次项为 $(4c+14)\theta^3$，故 $c=-7/2$。在正的充分小 $\theta$ 上，$p=e=c_*>0$，且
+
+$$
+y_E=9q/4+O(q^2)<\sqrt q/4+O(q^{3/2})=c_*.
+$$
+
+所以 (85.4) 确实达到共同值 $c_*$。还须排除所有其他 complex CPTP maps，而不只比较这条 real construction。
+
+对任意 competitor 令 $\Phi=\mathcal D^\dagger$，把 $M_2$ 元素嵌为 $X\oplus0$，定义
+
+$$
+T(X)=\left[\Pi\Delta_W\bigl(U_0^\dagger\Phi(X\oplus0)U_0\bigr)
+                    \Pi\right]_{\xi,e}.
+\tag{85.9}
+$$
+
+embedding、$\Phi$、conjugation、dephasing 与 compression 都是 CP，故 $T$ 是 CP；又因 $\Phi(I_3)=I_3$、$0\le\Pi\le I_3$，$T(I_2)\le I_2$。这个 subunital relaxation 包含每个实际 competitor。取 input-first Choi convention
+
+$$
+J_T=\sum_{i,j=1}^2|i\rangle\langle j|\otimes T(|i\rangle\langle j|),
+\qquad J_T\ge0,\qquad
+\operatorname{Tr}_{\rm input}J_T=T(I_2)\le I_2.
+\tag{85.10}
+$$
+
+以下所有 trace pairings 是 usual complex-matrix trace。对 $A=P,E(q)$，在所构造 branch 上定义 Hermitian witnesses
+
+$$
+H_A=\begin{pmatrix}\delta_A/c_*&b_A/(2c_*)\\b_A/(2c_*)&0\end{pmatrix},
+\qquad
+M_A=\begin{pmatrix}\delta_A/c_*&-b_A/(4c_*)\\-b_A/(4c_*)&0\end{pmatrix}.
+\tag{85.11}
+$$
+
+$H_A$ 的两个 eigenvalues 异号，其 trace norm 为
+$\sqrt{\delta_A^2+b_A^2}/c_*=1$，且
+$\operatorname{Tr}((H_A\oplus0)R_A)=c_*$。由 (85.1)，对任意 competitor 的 residual $R'_A$，
+
+$$
+L_{\mathcal D}(A)\ge
+\operatorname{Tr}((H_A\oplus0)R'_A)
+ =\operatorname{Tr}(M_AT(A_2))-\operatorname{Tr}(H_AA_2).
+\tag{85.12}
+$$
+
+$H_A$ 的 $ee$ entry 为零，所以这一 pairing 不含 competitor 的 $ff$ scalar，也未对其 complex off-diagonal 加 real restriction。
+
+在 $a=a(\theta)$ 处取偏导，$p'=\partial_a p$，$e_a=\partial_a e$。令
+
+$$
+\begin{gathered}
+\lambda=\frac{e_a}{e_a-p'},\qquad
+C=\lambda P_2^{\mathsf T}\otimes M_P
+       +(1-\lambda)E_2^{\mathsf T}\otimes M_E,\\
+Y=-\lambda M_PK_P-(1-\lambda)M_EK_E,\qquad
+Z=C+I_2\otimes Y,\\
+\beta=\lambda\operatorname{Tr}(H_PP_2)
+               +(1-\lambda)\operatorname{Tr}(H_EE_2).
+\end{gathered}
+\tag{85.13}
+$$
+
+这里 transpose 是 input-first Choi pairing 所需的 ordinary transpose；$P_2,E_2$ 是两个 fixed input tasks，不是另选的 effects。因 $p'\to-1/2$、$e_a\to1/2$，缩小正邻域后 $0<\lambda<1$，且 $\lambda\to1/2$。定义给出 exact stationarity
+
+$$
+\lambda p'+(1-\lambda)e_a=0.
+\tag{85.14}
+$$
+
+这一 scalar identity 同时保证 $Y$ Hermitian。具体地，令
+$J_0=\left(\begin{smallmatrix}0&-1\\1&0\end{smallmatrix}\right)$，则
+$\partial_aK_A=[J_0,K_A]$，且由 (85.7)、(85.11)，
+
+$$
+\operatorname{Tr}(M_P\partial_aK_P)=p',\qquad
+\operatorname{Tr}(M_E\partial_aK_E)=e_a.
+$$
+
+real $2\times2$ skew-symmetric space 是 $J_0$ 的一维 span，因此 (85.14) 迫使
+$\lambda[M_P,K_P]+(1-\lambda)[M_E,K_E]=0$，即 $Y=Y^\dagger$。
+
+对 input-first vectorization $\operatorname{vec}(V)=\sum_i|i\rangle\otimes V|i\rangle$，定义 (85.13) 还给出 exact kernel 与 value identities：
+
+$$
+Z\operatorname{vec}(V)=0,\qquad -\operatorname{Tr}Y-\beta=c_*.
+\tag{85.15}
+$$
+
+第一式可直接用
+$(A^{\mathsf T}\otimes M)\operatorname{vec}(V)=\operatorname{vec}(MVA)$ 验证：由 $K_A=VA_2V^\dagger$，两项之和为
+$\operatorname{vec}((\lambda M_PK_P+(1-\lambda)M_EK_E+Y)V)=0$。第二式来自 (85.12) 在共同 primal map 上对每项均为等号，即
+$\operatorname{Tr}(M_AK_A)-\operatorname{Tr}(H_AA_2)=c_*$，再取 weighted sum。
+
+为证明 exact dual feasibility，而非只给形式 stationarity，写 $t=\sqrt q\downarrow0$。由 (85.7) 与 branch expansion，
+
+$$
+\begin{gathered}
+\delta_P=-t^2/4+O(t^4),\qquad
+\delta_E=-5t^2/4+O(t^4),\\
+b_P=t/4+O(t^3),\qquad b_E=-t/4+O(t^3),\qquad
+\lambda=1/2+O(t^2).
+\end{gathered}
+$$
+
+将这些式子及 $K_P=VP_2V^\dagger$、$K_E=VE_2V^\dagger$ 代入 (85.13)，得到
+
+$$
+\frac{Y}{t}\longrightarrow\frac18
+ \begin{pmatrix}25&0\\0&1\end{pmatrix},\qquad
+\frac{Z}{t}\longrightarrow\frac18
+ \begin{pmatrix}
+1&0&0&1\\
+0&1&1&0\\
+0&1&25&0\\
+1&0&0&1
+\end{pmatrix}=:Z_0.
+\tag{85.16}
+$$
+
+这里的四维基顺序为 input-output pairs $(\xi\xi,\xi e,e\xi,ee)$。$Z_0$ 的 eigenvalues 恰为
+
+$$
+0,\quad\frac14,\quad
+\frac{13-\sqrt{145}}8,\quad\frac{13+\sqrt{145}}8.
+$$
+
+后三个严格为正，kernel 恰为 $\operatorname{span}(1,0,0,-1)$，即 limiting $\operatorname{vec}(V)$。由于 (85.15) 对每个正 $t$ 都是 exact kernel，不能因连续扰动生成负的小 kernel eigenvalue：在连续选取的 $\operatorname{vec}(V(t))^\perp$ orthonormal frame 中，$Z/t$ 的 restriction 连续趋于 strictly positive restriction of $Z_0$。故缩小邻域后 $Z\ge0$；同时 (85.16) 的第一个 positive-definite limit 给出 $Y\ge0$。这是 exact kernel 加 positive complement 的论证，没有以数值 positivity 替代之。
+
+最后对任意 complex competitor 的 $J_T$，由 (85.12)、$0<\lambda<1$、(85.10) 及 $Y,Z\ge0$，
+
+$$
+\begin{aligned}
+\max_A L_{\mathcal D}(A)
+&\ge \lambda\operatorname{Tr}((H_P\oplus0)R'_P)
+          +(1-\lambda)\operatorname{Tr}((H_E\oplus0)R'_E)\\
+&=\operatorname{Tr}(CJ_T)-\beta\\
+&\ge-\operatorname{Tr}(Y T(I_2))-\beta\\
+&\ge-\operatorname{Tr}Y-\beta=c_*.
+\end{aligned}
+\tag{85.17}
+$$
+
+这是 CP/subunital Choi cone 上的 weak-duality bound，适用于包含实际 competitor 的整个 relaxation；不要求 strong duality，也不把 independently attainable effects 当成共同 map。与 (85.4) 的全 qutrit realization 合并即证 (85.3)。所有局部条件只有有限多个，故可共同选取一个 $0<\theta_*<\pi/2$。
+
+在正邻域 $\sin a<0$，可写
+$c_*=-\tfrac12\sin a\sqrt{1+3\sin^2a}$。代入 odd analytic $a(\theta)$ 得
+$c_*=\theta/4+(11/6)\theta^3+O(\theta^5)$；再用 $\theta=\sqrt q+q^{3/2}/6+O(q^{5/2})$ 得 (85.5)。odd expansion 也直接排除 $q$ 项。∎
+

@@ -1,0 +1,20 @@
+**Proposition 114.3 (An orbit attainer can fail the full-input problem).**
+At $s=-1/2$, the decoder $\mathcal A_{-1}$ in (113.2) has error $3/4$
+on the allowed input $E_{11}$. It is therefore not a full-input minimizer
+at that parameter.
+
+*Proof.* The channel and the decoder give
+
+$$
+\Phi_{-1/2}(E_{11})=\operatorname{diag}(0,1/4,3/4),\qquad
+\mathcal A_{-1}\Phi_{-1/2}(E_{11})
+ =\operatorname{diag}(0,1/4,3/4).
+\tag{114.7}
+$$
+
+Subtracting $E_{11}$ gives eigenvalues $0,-3/4,3/4$, hence half trace
+distance $3/4$. The legal replacer has full-input error $2/3$.
+Thus exact attainment of (113.1) does not solve the full-input
+optimization, even though (114.1) remains a lower bound for it.
+$\square$
+

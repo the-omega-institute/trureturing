@@ -1,0 +1,61 @@
+**Definition 6.4 (the entire accepted three-label family).** Put
+
+$$
+F(y)=\langle\alpha,y\rangle,\qquad
+U(x,y)=\langle x,\langle y,F(y)\rangle\rangle,\qquad
+D^*=\{U(x,y):x,y\in\mathcal T\}.
+\tag{NIC.27}
+$$
+
+Here $F$ is a unary native context operation, distinct from the binary
+ambient constructor in (NIC.4) and the tuples $F_b$ in (NIC.12).
+Use exactly the acquired family of [NLC, Definition 8.1 and Lemma
+8.2][NLC]: old cut $P=\{\varepsilon\}$ with its one-hole row, literals
+
+$$
+(0,\varepsilon,\mathsf{branch}),\quad
+(0,R,\mathsf{branch}),\quad
+(0,RR,\mathsf{branch}),\quad
+(0,RRL,\alpha),
+\tag{NIC.28}
+$$
+
+and signed record $(0,RL,0,RRR,=)$. The original target is
+$Q=\{L,RL,RR\}$. Its three labels $r_0,r_1,r_2$ share the reached set
+$Q$ and the concrete exterior
+$\langle\square_1,\langle\square_2,\square_3\rangle\rangle$.
+Their partitions are, respectively,
+$\{\{1,2\},\{3\}\}$, $\{\{1,3\},\{2\}\}$ and
+$\{\{1\},\{2\},\{3\}\}$. They are the entire complete row image,
+including $r_2$; no selected two-label promise is imposed.
+
+Define the entire different-row language inside $W$ by
+
+$$
+E^*=\{\operatorname{conv}(u,v):u,v\in D^*,\ R_Q(u)\ne R_Q(v)\}.
+\tag{NIC.29}
+$$
+
+For distinct finite originals define
+
+$$
+\delta(u,v)=\min\{|p|:r_u(p)\ne r_v(p)\},
+\tag{NIC.30}
+$$
+
+using all four replies. Set $\delta(u,u)=\infty$. Distinct finite trees
+have a finite first disagreement, by recursion through their constructors.
+The raw discrepancy cost on *all* $W$ is
+
+$$
+c(\operatorname{conv}(u,v))=
+\begin{cases}
+\delta(u,v)+1,&\operatorname{conv}(u,v)\in E^*,\\
+0,&\operatorname{conv}(u,v)\in W\setminus E^*.
+\end{cases}
+\tag{NIC.31}
+$$
+
+It is a mathematical original-prefix discrepancy statistic. It is not
+an optimum over paid actions or services.
+

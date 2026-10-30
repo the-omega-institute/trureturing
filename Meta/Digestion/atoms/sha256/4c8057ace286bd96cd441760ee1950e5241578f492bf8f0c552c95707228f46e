@@ -1,0 +1,29 @@
+**定理 12.2（同父粘合与整个父纤维的条件等价）。** Fix one $y\in\mathcal I$. For every $z\in\mathbb R$ and every family $\mathcal B\subseteq\mathcal F_y^M(z)$ of arbitrary cardinality, if
+
+$$
+L_2(\mathcal B,(H_p(y),M,z)),
+$$
+
+then the family $\mathcal U=\mathcal A_y\cup\mathcal B$ consists of fixed legal targets in $\mathcal P_y$ and satisfies
+
+$$
+L_3(\mathcal U,H_p(y)).                                        \tag{12.1}
+$$
+
+More generally, for every $\mathcal A_y\subseteq K\subseteq\mathcal P_y$,
+
+$$
+\begin{aligned}
+L_3(K,H_p(y))
+\quad\Longleftrightarrow\quad
+\exists z\in\mathbb R:\quad
+L_2(K\cap\mathcal F_y^M(z),(H_p(y),M,z)).
+\end{aligned}                                                     \tag{12.2}
+$$
+
+In particular (12.2) holds for $K=\mathcal P_y$. No finiteness, common drift, common gain ray, common response under the other fifth action, or two-target losing subset is required of $\mathcal B$.
+
+Proof. All targets in $\mathcal B$ share the entire literal $H_p(y)$ by its assumed actual-child membership; those in $\mathcal A_y$ share that identical history by (11.6). Thus their union uses one and the same $y$ and never changes any target. Its fifth-$J$ response-$0$ child contains $\mathcal A_y$ with $L_2$, and its fifth-$M$ response-$z$ child contains $\mathcal B$ with $L_2$. Lemma 9.3 gives the same failure predicates on the corresponding union children. Applying (1.1) proves (12.1). The two fifth response values need not coincide.
+
+For (12.2), the forward implication is the fifth-$M$ clause of (1.1). Conversely, the stated fifth-$M$ child supplies that clause, and the fifth-$J$ response-$0$ child of $K$ contains $\mathcal A_y$, supplying the other clause by (11.8) and (9.3). This proves the equivalence without extracting a pair or triple from an arbitrary losing family. ∎
+

@@ -1,0 +1,57 @@
+### 12.2. The regular source circuit and the exact continued endpoints
+
+To specify the regular denominator and every evaluated response, put
+$t=r/b$ and use the polynomial circuit of IX (12.5) and (24.2):
+
+$$
+\begin{gathered}
+r=tb,\quad j=t+b(1-t^2),\quad n=j+tb,\quad T=1+b,\quad U=1+2b,\\
+D_s=5\{(b^2+8b+4)jn-2TU(j+n)\},\qquad S=(8b-1)(2+5b),\\
+C_0=-24D_s+3Sjn,\qquad C_1=3Sn,\\
+C_2=3(49b+34)jn-54U(j+n),\qquad C_3=3Sj,\\
+B_5=-4C_0+15C_1-20C_2+10C_3,\\
+B_6=-10C_0+36C_1-45C_2+20C_3,\\
+B_7=-20C_0+70C_1-84C_2+35C_3,\\
+N_p=-C_0+(U+n)B_5,\qquad N_v=-C_0+(2U+n)B_6,\\
+N_a=-C_0+(T+2j+4tb)B_7,\qquad N_m=-C_0+(3U+2n)B_7.
+\end{gathered}
+\tag{12.5}
+$$
+
+A world is called regular here exactly when $D_s\ne0$. Denote its
+subset of the entire child by $C_{\rm reg}(p,v)$. The supplied
+regular whole-world lift is
+
+$$
+\begin{gathered}
+d=-C_0/D_s,\qquad
+g(s)=\frac1{D_s}\sum_{i=0}^3 C_i
+ \prod_{\substack{0\le k\le3\\k\ne i}}\frac{s-k}{i-k},\\
+(p,v,a,m)=(N_p,N_v,N_a,N_m)/D_s.
+\end{gathered}
+\tag{12.6}
+$$
+
+The parent identities IX (12.7) and (28.6), with $D=D_s$ there,
+restore all five fixed parent readings in (12.1); $B_5,B_6,B_7$
+evaluate this same interpolant at clocks five, six and seven. Unequal
+readings $0,24$ ensure $g\ne0$ without a nonzero-sample assumption.
+
+Let $(X,Y,K_{\rm sec})(q)$ be precisely the exact zero of IX (24.5)
+identified in Theorem 26.1, rather than its rational predictor. Define
+
+$$
+h=\sqrt q,\qquad
+t_\pm=X\pm K_{\rm sec}h,\qquad b_\pm=Y\pm h,\qquad
+r_\pm=t_\pm b_\pm.
+\tag{12.7}
+$$
+
+IX (24.7), applied separately to $p,v,a$, gives equality of these
+three responses when both $D_{s,\pm}$ are nonzero. Theorems 27.1 and
+28.1 supply that condition and strict original worlds $W_\pm(q)$
+for $0<q<q_*$. Their distinction follows from
+$b_+-b_-=2\sqrt q>0$. In particular this construction applies on
+the entire closed $Q$, whose lower endpoint is positive and whose
+upper endpoint is less than the stated lower bound for $q_*$.
+

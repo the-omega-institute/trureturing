@@ -1,0 +1,51 @@
+**Theorem 6.4.2 (The two strict box inclusions).** With the exact prescriptions of Definition 6.4.1, the critical system satisfies
+
+$$
+\|\mathcal B_*\|_\infty<10^{-18},\qquad
+\eta_*/\rho_*+\|\mathcal B_*\|_\infty<10^{-18},
+\tag{6.4.10}
+$$
+
+and the finite system satisfies
+
+$$
+\|\mathcal B_0\|_\infty<6\cdot10^{-18},\qquad
+\eta_0/\rho_0+\|\mathcal B_0\|_\infty<6\cdot10^{-18}.
+\tag{6.4.11}
+$$
+
+Each system has a unique zero in its stated closed box. Neither assertion is a uniqueness statement outside that box.
+
+Proof. The source-box substitutions in the rational prescription first give positive b intervals and
+
+$$
+\begin{aligned}
+D(X_*)&\subset(-0.047846390145,-0.047846390144),\\
+D(z_+(X_0))&\subset(-0.031581090465,-0.031581090464),\\
+D(z_-(X_0))&\subset(-0.064012570271,-0.064012570270).
+\end{aligned}
+\tag{6.4.12}
+$$
+
+Here $z_\pm(X_0)$ are the affine endpoint boxes of (6.4.7). These are box evaluations before any zero is selected, so every rational source division used in the two inclusions is defined. For (6.4.10), substitute the exact centre (6.3.5) into (6.3.1)–(6.3.4), use (6.4.2) at the centre, and use the monomial derivative evaluation of (6.4.6) on $X_*$. Form $I-C_*DG_*(X_*)$ and its maximum absolute row sums as in (6.4.5). The rational endpoint comparisons are exactly the two strict inequalities (6.4.10). For (6.4.11), substitute the exact centre and rational matrix of Definition 6.7.1 into (6.4.3)–(6.4.5). Evaluate the source circuit at both affine endpoint boxes and use the three derivative columns (6.4.7). The same rational endpoint rules give (6.4.11). These operations specify both centre evaluations, both derivative enclosures, both preconditioners and the two scalar comparisons without an approximate root being used in place of an exact centre.
+
+For completeness, the contraction implication in these applications is direct. Let $T_G(z)=z-CG(z)$ on its box. The mean-value formula along a line segment in the box and the enclosure $DG(X)$ imply
+
+$$
+\|T_G(z)-T_G(w)\|_\infty
+\le\|\mathcal B\|_\infty\|z-w\|_\infty,
+\qquad
+T_G(X)-c\subseteq\mathscr K-c.
+\tag{6.4.13}
+$$
+
+Consequently
+
+$$
+\|T_G(z)-c\|_\infty
+\le\eta+\rho\|\mathcal B\|_\infty<\rho.
+\tag{6.4.14}
+$$
+
+Thus $T_G$ maps the closed box strictly into itself and has contraction constant less than one. Iteration is Cauchy in this complete box and yields its unique fixed point. Also $\|I-CDG(c)\|_\infty<1$, so $CDG(c)$ is invertible by the convergent Neumann series; since the matrices are square, $C$ is invertible. The fixed-point equation is therefore equivalent to $G=0$. Every zero in the box is a fixed point, proving the claimed uniqueness there. This is the classical contraction argument used as an intermediate tool for the two systems, with the strict margins (6.4.10)–(6.4.11). ∎
+

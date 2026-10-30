@@ -1,0 +1,5 @@
+This definition separates two failure modes.
+
+- **Fiber failure:** the quotient point has a legal FIB fiber, but the chosen \(\kappa\) or continuation statistic is incompatible with the claimed local model.
+- **Global gluing failure:** every retained local marginal is legal, but there is no one product-source lift satisfying all three party responses simultaneously.
+

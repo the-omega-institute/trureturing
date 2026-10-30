@@ -1,0 +1,17 @@
+The source chart, exact first critical world and germ are reused inputs:
+
+- Sections 18.1–18.8 and 19–23 of this volume supply the original-world
+  domain, regular response circuit, exact source cube, tangent,
+  nondegeneracy, local equal-$J$ germ and its initial base bounds.
+- [Common-parent geometry, Definitions 1.1–1.3 and Theorem 2.1](https://github.com/the-omega-institute/trureturing/blob/7bcb8485ed1daaa7b2a859c57e0ba8ccedc4991c/docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md)
+  supplies the complete original-world interpretation and the zero-safe
+  parent equation, including singular alternatives and arbitrary drifts.
+- [Support III, Definition 16.1](https://github.com/the-omega-institute/trureturing/blob/7bcb8485ed1daaa7b2a859c57e0ba8ccedc4991c/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md)
+  supplies the rational polynomial circuit and the whole-gain lift.
+- [Support VI, Definition 14.1 and Theorem 15.1](https://github.com/the-omega-institute/trureturing/blob/7bcb8485ed1daaa7b2a859c57e0ba8ccedc4991c/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VI.md)
+  supplies the related symmetric-secant method; this volume's
+  Theorem 21.1 supplies the particular first-$J$ germ attached here.
+- [Support VII, Sections 23–26 and 30](https://github.com/the-omega-institute/trureturing/blob/7bcb8485ed1daaa7b2a859c57e0ba8ccedc4991c/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md)
+  supplies the exact critical source, singleton limiting child and
+  local entire-child $M$ injectivity used in Corollary 22.1.
+

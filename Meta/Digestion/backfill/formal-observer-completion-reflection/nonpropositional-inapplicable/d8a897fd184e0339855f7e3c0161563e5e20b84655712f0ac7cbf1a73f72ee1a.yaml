@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d8a897fd184e0339855f7e3c0161563e5e20b84655712f0ac7cbf1a73f72ee1a
+  normalized_sha256: sha256:d8a897fd184e0339855f7e3c0161563e5e20b84655712f0ac7cbf1a73f72ee1a
+cas_ref: sha256:d8a897fd184e0339855f7e3c0161563e5e20b84655712f0ac7cbf1a73f72ee1a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines ledger append as the record-jump convention; no new append invariant is asserted.
+    previous_atom_id: 35e444d0e80e0413b19e2472b8727eae17acbb0f87b58520cd1f6957ecf7229e
+    next_atom_id: 66100ea4ab6b54f0a8b9a4005c7347ccf4b3f72f9933353ba1289a03b32db36c

@@ -1,0 +1,21 @@
+**Lemma 7.2 (a positive contracting path with any finite free prefix).** For every integer $t\ge0$ and every rational list $g_0,\ldots,g_t$, there is a rational initial field $z$ on the connected $(t+2)$-cell path
+
+$$
+S=\frac12 I+\frac18 A_{t+2},
+\tag{UFS.19}
+$$
+
+where $A_{t+2}$ is the ordinary path adjacency matrix, such that $e_0^{\mathsf T}S^jz=g_j$ for $0\le j\le t$. All links are positive and $0<S<I$.
+
+Proof. For any real vector $v$,
+
+$$
+\left|\frac14\sum_{i=0}^{t}v_iv_{i+1}\right|
+\le\frac18\sum_{i=0}^{t}(v_i^2+v_{i+1}^2)
+\le\frac14\|v\|^2.
+$$
+
+This is the offdiagonal part of $v^{\mathsf T}Sv$. Hence $\frac14I\le S\le\frac34I$, which implies both strict inequalities in the claim. The entries and links have the required rational values.
+
+For $j\le t$, the row $e_0^{\mathsf T}S^j$ is zero beyond cell $j$ and has entry $(1/8)^j\ne0$ at that cell. Therefore the square matrix formed by these $t+1$ rows and columns $0,\ldots,t$ is triangular with nonzero rational diagonal. Set the last coordinate of $z$ to zero and solve this square system for the remaining coordinates. It has a rational solution for every target list. Its signs and amplitudes are unrestricted, exactly as allowed by the task. $\square$
+

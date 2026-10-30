@@ -1,0 +1,22 @@
+**Definition 124.1 (Output-first convention).** Put $E_{jk}=|j\rangle
+\langle k|$. For any complex linear map $\mathcal R:M_3\to M_3$ use
+
+$$
+J_{\mathcal R}=\sum_{j,k=0}^2\mathcal R(E_{jk})\otimes E_{jk},\qquad
+\operatorname{Tr}[T\mathcal R(Q)]
+=\operatorname{Tr}[(T\otimes Q^{\mathsf T})J_{\mathcal R}].
+\tag{124.1}
+$$
+
+For CPTP maps $J_{\mathcal R}\succeq0$ and
+$\operatorname{Tr}_{\rm out}J_{\mathcal R}=I$.
+The transpose is the ordinary matrix transpose, including for complex
+$Q$; it is essential to the phase cancellation below. Define
+
+$$
+W=\sum_{r=e,i}\sum_{k,\ell=0}^2
+\frac{\lambda_r}{9}\,
+T_{r,k\ell}\otimes\Phi(P_{r,k\ell})^{\mathsf T}.
+\tag{124.2}
+$$
+

@@ -1,0 +1,35 @@
+**Definition 2.1 (The fixed rational-center shapes).** For a real argument $x$, fix
+
+$$
+\begin{aligned}
+H_c(x)=x^9+\frac1{35\cdot10^{24}}\bigl(&55800726477138x-224986136658885x^2
++420664314485485x^3\\
+&-540138133491075x^4+518234977000797x^5
+-254383031435085x^6\\
+&+77668004560980x^7+43377331415040x^8\bigr).
+\end{aligned}
+\tag{2.1}
+$$
+
+Write $H=H_c$, $F_0(x)=x^9$, $F_1(x)=H(x)$, and
+
+$$
+\delta=\frac{2749658638697}{10^{24}},\qquad
+B=1+\delta,\qquad
+a=\frac{43377331415040}{35\cdot10^{24}}>0.
+\tag{2.2}
+$$
+
+The credited all-integer premise is
+
+$$
+\begin{gathered}
+k^9\le F_i(k)\le Bk^9\quad(i=0,1),\\
+1\le\frac{H(k)}{k^9}\le1+\frac\delta k
+\quad(k\in\mathbb Z,\ k\ge1).
+\end{gathered}
+\tag{2.3}
+$$
+
+This is exactly the continuation's equation (23.3), with its rational-center polynomial and degree-eight coefficient $a$. It is an assumption for all positive integers, not a conclusion from finitely many evaluations. Neither a varying residual polynomial nor a limiting residual-zero vector is substituted for $H_c$.
+

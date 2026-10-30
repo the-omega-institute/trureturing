@@ -1,0 +1,31 @@
+**Theorem 13.2 (Second-region whole-child exclusion).** Every complete world
+in an entire child over $K_2$ has source in $R_2$.  On $R_2$,
+
+$$
+\Lambda>6,\qquad p_b>600,\qquad
+ a_r-a_b\frac{p_r}{p_b}>100.
+\tag{13.2}
+$$
+
+For every $r\in[.517,.522]$,
+$p(r,.04227)<1.83048$ and $p(r,.04230)>1.83049$.  Hence terminal $J$
+is injective on every entire $C(p,v)$ with $(p,v)\in K_2$, and
+
+$$
+D_J\cap K_2=\varnothing,
+\qquad (D_J\cap D_M)\cap K_2=\varnothing.
+\tag{13.3}
+$$
+
+Every actual source in $B_2$ has its acquired $(p,v)$ image in
+$\operatorname{int}K_2$.  Therefore
+no original joint configuration has a selected $M$-endpoint in $B_2$.  For the
+second critical world $W_2$ of VI, Definition 13.1, the exact sentences
+$\mathsf J_2$ and $\mathsf Q_2$ of VI, (16.7)–(16.8), are false when
+$\epsilon=10^{-10}$.  The already constructed actual $M$-collision germ at
+$W_2$ has sufficiently small nonzero endpoints in $B_2$, while their
+entire common child is $J$-injective.
+
+The proof is divided into the zero-safe source equations, the finite closed cover,
+and the quantitative response order.
+

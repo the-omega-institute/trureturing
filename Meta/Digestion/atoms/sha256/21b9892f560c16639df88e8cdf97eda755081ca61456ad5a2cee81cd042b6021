@@ -1,0 +1,12 @@
+**Lemma 14.2 (Five necessary lifts).** Each center matrix in the
+following table is nonsingular. With $Q,\eta$ as just defined, the
+table gives strict rational upper bounds on $Q$ and
+$\eta/(1-Q)$ throughout $I_i\times\mathcal U$.
+
+| $i$ | Exact $\bar b$ | $Q$ upper bound | $\eta/(1-Q)$ upper bound |
+| --- | --- | --- | --- |
+| 1 | $0.04078295904882838405264306362514449405106$ | $4\cdot10^{-18}$ | $12\cdot10^{-23}$ |
+| 2 | $0.04091698421060610059422739287384503573542$ | $2\cdot10^{-18}$ | $43\cdot10^{-24}$ |
+| 3 | $-3.176868004886463132107916325401810483894$ | $25\cdot10^{-10}$ | $309\cdot10^{-6}$ |
+| 4 | $-0.4358328034096036222134460606876310285942$ | $2\cdot10^{-15}$ | $43\cdot10^{-19}$ |
+| 5 | $-0.5819863165350697596394747517356607978584$ | $8\cdot10^{-15}$ | $128\cdot10^{-18}$ |

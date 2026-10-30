@@ -1,0 +1,9 @@
+**Construction 17.3 (paid nonlinear use on either earned endpoint).** Decode $S$, then actually issue Add$(1,S)$, Square, Hold and Read$(1)$ on that same specimen. The scalar returned is $(y_\sigma+S)^2$, and the complete native endpoint is
+
+$$
+(w_\sigma+Se_{\ell_1})\odot(w_\sigma+Se_{\ell_1}).
+\tag{CM.36}
+$$
+
+This adds exactly one Add, one Square, one Hold and one Read, three ACKs and a scalar, plus the actual operand, selector, framing, arithmetic and storage. The parameter-derived operand is computed from the actual acquired scalar. Formula (CM.34) synchronizes the whole predictor. This successor need not remain on the calibration image. In particular the general inverse after arbitrary later calls is not Proposition 17.2: Reset and Reset;Tick already have equal current zero states and different words. If a new measured chart is wanted, the invertible family qualifies for Definition 15.1, but its actual Report and its own endpoint/cost must then be supplied. No performed measurement or chart dynamics is obtained by silently computing a forecast.
+

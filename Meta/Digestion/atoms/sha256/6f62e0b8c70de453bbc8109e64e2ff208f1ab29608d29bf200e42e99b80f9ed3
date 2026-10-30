@@ -1,0 +1,38 @@
+**Corollary 10.15 (Strata and the remaining full-domain target).**
+The exceptional sets in Theorem 10.14 do not assert an independent
+M pair, a joint witness or feasibility at any listed base. The
+undecided part of the original target includes its finite exceptional
+singular-line bases and all other off-24 bases not settled by a
+separately stated result.
+
+Proof. Lemma 10.5 begins with every complete original world.
+Its only source guards are the original strict inequalities, and its
+off-24 guards are proved consequences of the original readings.
+In particular neither a golden coordinate nor a singular source
+was removed. The necessary equations of Lemma 10.7 hold at zero
+drift before any multiplication is used to eliminate it; the extra
+constraint $H=Z_0=0$ treats that layer. In Theorem 10.14 the
+$H=0$ base locus is treated before the quotient carrier is used.
+All failures of the finite nonvanishing conditions are retained in
+$E_\sigma$ rather than declared impossible.
+
+The terminal expression never divides by $N_7$, so a zero terminal
+gain is included. Fixed-node interpolation requires degree at most
+three and permits lower degree, sampled gain zeros and repeated
+gain roots. The polynomial common-root identity does not require
+the leading coefficients of the specialized $F,G$ to be nonzero.
+The two real embeddings are treated separately without choosing an
+arc or bounded source box. Thus all the original strata, including
+regular companions and unbounded positive offdiagonals, are within
+the scope of the theorem.
+
+The finite restriction (10.40) is only a necessary condition. It
+neither constructs the independently selected terminal pairs nor
+decides the real zeros of $e$ or their feasibility. Its complement
+away from the two lines is not covered by (10.39). A separately
+isolated negative-$p$ J pair supplies no M pair and no asserted
+continuation into a singular-response line. Theorem 8.1 retains
+its fixed inherited $p_J$ scope, and remains applicable there
+without an assertion that $e(p_J)\ne0$. Hence none of the earlier
+fixed-parameter conclusions is silently generalized. ∎
+

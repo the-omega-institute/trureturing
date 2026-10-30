@@ -1,0 +1,45 @@
+**Proposition 8.4 (a finite native source with exact recovery and no positive tolerance).** There is an actual finite deterministic source satisfying the typed complete response and positive native cocycle contracts for which $F_d$ is injective on *all* finite legal root words, but uniform recovery fails for every $\epsilon>0$. Its graph nevertheless satisfies Theorem 8.3 and thus admits robust designs.
+
+Proof. Take one type and the actual state set $X=\{r,u,v,z\}$, with initial state $r$ and declared current readout $q(x)=x$. The entire legal transition set is
+
+$$
+r\xrightarrow{a}u,\qquad r\xrightarrow{b}v,\qquad
+u\xrightarrow{x}u,\qquad v\xrightarrow{w}v,\qquad
+u\xrightarrow{c}z,\qquad v\xrightarrow{e}z.
+$$
+
+Each operation has the singleton source domain displayed, the displayed successor, and a fixed complete one-step record containing its name, successor and native duration. There are no other operations, failures, resets or archive fields, and $z$ is terminal. Because the empty response contains $q$, distinct states have distinct complete residuals; equal states have identical responses by determinism. Thus the complete residual graph is exactly this four-state actual source, without any fictitious combinations of fields. Set
+
+$$
+d(a)=d(b)=d(c)=d(x)=1,\qquad d(e)=\tfrac32,\qquad d(w)=\sqrt2.
+$$
+
+One-step durations are representative independent and strictly positive, and the native total is their sum. The following is the exhaustive classification by endpoint, with all indices nonnegative:
+
+| Endpoint | All legal root words | Native totals |
+| --- | --- | --- |
+| $r$ | $\varepsilon_r$ | $0$ |
+| $u$ | $ax^n$, $n\ge0$ | $1+n$ |
+| $v$ | $bw^m$, $m\ge0$ | $1+m\sqrt2$ |
+| $z$ | $ax^nc$ or $bw^me$, $n,m\ge0$ | $2+n$ or $\tfrac52+m\sqrt2$ |
+
+Indeed, after choosing $a$ or $b$ at $r$, only that branch's loop can repeat until its exit, after which no further edge is legal. Choosing to stop gives the corresponding intermediate row. This proves exhaustiveness, including the empty word and both zero-lap exits $ac,be$.
+
+Each nonconstant sequence within a row is strictly increasing. At $z$, equality between the two branches would require
+
+$$
+n-m\sqrt2=\tfrac12.
+$$
+
+For $m=0$ this would make the integer $n$ equal to one half. For $m>0$ it would express $\sqrt2=(n-1/2)/m$ as a rational number. Both are impossible. Different endpoint rows are separated by the exact endpoint, regardless of coincidences between their times. In particular $a$ and $b$ have equal total one and distinct endpoints, and the two zero-lap totals at $z$ are $2$ and $5/2$. These facts establish injectivity on the entire $\mathcal P_r$.
+
+The two time rays at $z$ have incommensurable periods $1,\sqrt2$. The irrational-rotation argument in Theorem 8.2, now with the offset one half, supplies for every $\eta>0$ some $n,m\ge0$ with
+
+$$
+\left|(2+n)-(\tfrac52+m\sqrt2)\right|<\eta.
+$$
+
+These values are never equal by the preceding calculation, but their positive gaps have infimum zero. For any $\epsilon>0$, choose $\eta<2\epsilon$; the midpoint of the resulting two totals is an allowed observation for both words. Uniform recovery fails at that tolerance.
+
+Finally, the only cyclic components are the singleton loops at $u$ and $v$, and no root condensation path visits both. Theorem 8.3 therefore supplies robust design weights on this graph at any prescribed tolerance. This last statement does not replace the displayed native durations or give this actual source a new control operation. $\square$
+

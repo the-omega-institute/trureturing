@@ -1,0 +1,15 @@
+**Definition 77.5 (Next as an actual continued consumer).** Receive
+$U(k)$ and call the indexed-selection part of Definition 77.3 internally,
+stopping before its outer Recall sealing, Print, acknowledgement or
+Return. Retain its acquired result and the Next continuation.
+OutOfRange seals the original OutOfRange reply and leaves source and
+record unchanged. Otherwise retain the acquired old event $(a,p)$,
+navigate from the actual root to the historical logical address $p$,
+and follow actual logical left children until a current leaf $q$.
+Select $P_q$ for alpha and $S_q$ for beta. Perform the reservation, source-edit and maintenance phases of
+Definitions 76.2–76.3 for that enabled event, with Next as their retained
+outer continuation, retaining $(a,p)$ and the new $(a^+,q)$. That
+continuation uses those two pairs to seal the original Next reply. There is one outer
+Print, End, local acknowledgement, root Return and cleanup. Internal
+Fetch does not create a second external reply or acknowledgement.
+

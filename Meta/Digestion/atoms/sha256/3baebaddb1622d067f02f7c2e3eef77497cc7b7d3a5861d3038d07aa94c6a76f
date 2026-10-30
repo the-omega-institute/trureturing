@@ -1,0 +1,34 @@
+**命题 36.2（实际 chronology、selected bank 与隐藏身份的恢复边界）。** 保持原控制及 §§9、32 的收费观察者合同，有以下实际区别。
+
+1. 两个活动第四段历史
+
+$$
+h_c=\alpha\alpha\,\beta\beta\,\beta\alpha\mid\beta\beta\alpha\alpha,
+\qquad
+h'_c=\beta\beta\,\alpha\alpha\,\beta\alpha\mid\beta\beta\alpha\alpha
+$$
+
+有相同活计数 $(5,5)$、相位 $p_4$、原选定字段和未来律，但 Read chronology 不同。
+
+2. 对实际声明并持有 selected count bank 的 §32观察者，令
+
+$$
+h_{\rm late}=\beta\alpha\mid\beta\beta\alpha\alpha\,\beta\alpha,
+\qquad
+h_{\rm early}=\beta\alpha\mid\beta\alpha\,\beta\beta\alpha\alpha.
+$$
+
+两者最终活计数都是 $(4,4)$，相位都是 $p_4$，原选定字段相同，原载荷返回总数都是1，未来律相同；但第三标记切面的 held counts 分别是 $(3,3)$ 和 $(4,4)$。因此活计数及未来律不恢复这个已声明持有的选定银行。
+
+3. 若固定先验有至少两个正支持点，每条有限正历史的后验在每个正支持点仍严格正；它不能零错误识别这一次抽取的隐藏 $K$。单例先验的已知身份来自安装条件。
+
+证明。第一项中两个相等对都拒绝并回到提种初相位，交换其顺序不改计数，后接接受种子1和完整第三标记前缀100，才进入本卷活动域。相同计数和相位经同一先验给相同未来律；两条原字不同，实际保持 chronology 的观察者记忆也不同。
+
+第二项在 $h_{\rm late}$ 的第三标记刚完成时先写入 $B,Q^+,Z$，锁存 selected counts $(3,3)$，然后第四段的 $\beta\alpha$ 是一次付费返回，只更新 live bank。$h_{\rm early}$ 把同一个返回放在第一段完成之前，故锁存时已经取得 $(4,4)$，随后第四段尚无 Read。两个实际控制都到达 $p_4$，完成标记前三位均100；原记录按标记序数写入，载荷返回不写记录，所以原字段和总返回数相同。两者第四段以后的 live count 都是 $(4,4)$；同一先验给相同未来律。§32合同明确要求原银行在第三次写入后保持，不能以同一 live count 覆写两个不同 selected banks。
+
+这里的 selected bank 是 §§9、32和 Spatial Records Chronology §18.1的已声明收费观察者银行；[NativeAcquiredPrefixState](../../../D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/NativeAcquiredPrefixState.lean) 的 `AcquiredNativeState` 只含活字母计数，没有 selected-count 字段。上述反例使用真实从零取得并锁存的银行，不给该 Lean 结构虚构字段，也不声称旧单次裸快照接收者已收到该银行。
+
+第三项由 $\mu(k)r_k^A s_k^B>0$ 与正归一化常数直接得到。每条有限 Read 字在每个正支持深度都可能发生，故没有有限历史把隐藏样本身份从这些深度中排除。原模型无身份、时钟或未来接受事件端口。证毕。
+
+空间记录 $B,Q^+,Z$ 表达选定标记过去，chronology 表达取得顺序，边界标签表达相位及 Stop 权限，收费记忆持有其声明的 selected、live 和过去字段。两点支持下一个精确 $q$ 恢复的是活动未来律和活计数；上面的正历史表明它仍不恢复被擦除的 chronology 或 selected counts。无物理耗时合同的来源模型不指定物理时间，也不把完整 observer memory 等同于 $A+B$。
+

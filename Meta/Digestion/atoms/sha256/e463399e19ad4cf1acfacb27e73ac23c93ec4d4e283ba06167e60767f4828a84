@@ -1,0 +1,125 @@
+**Theorem 140.2 (Quadratic separation from the entire original image; repo-derived).**
+Fix any of the finite outer-product decoders already supplied by
+VI Proposition 118.2. Write its outcome-$1$ input as
+$y_{\rm fin}$ and its map as $\mathsf D_H$; its defining identity
+and source constant are
+
+$$
+\begin{gathered}
+\mathsf D_H\bigl((q_{i,w}(X,Y,Z))_{i,\,|w|\le L_{\mathfrak s}}\bigr)
+                                      =(X+Y)/b
+                  \quad\text{for every }(X,Y,Z)\in\mathscr V,\\
+B_H=\|\mathsf D_H\|_{\ell^\infty\to\mathrm{HS}}\in(0,\infty).
+\end{gathered}
+\tag{140.6}
+$$
+
+The finitely many real coefficients of that decoder determine
+$B_H$; it depends only on the fixed source and the fixed decoder.
+For $|\zeta|\le1$ let
+
+$$
+\lambda_-(\zeta)=\frac{A^2+\eta^2-
+ \sqrt{(A^2-\eta^2)^2+4A^2\eta^2|\zeta|^2}}2,
+\qquad \delta_\zeta=\eta^2(1-|\zeta|^2).
+\tag{140.7}
+$$
+
+Under (140.1), in the original full raw-law supremum norm,
+
+$$
+\begin{aligned}
+\frac{\delta_\zeta}{2B_H}
+ &\le\frac{\lambda_-(\zeta)}{B_H}
+ \le\operatorname{dist}_\infty(Y_\zeta,\mathscr D_\eta)\\
+ &\le\operatorname{dist}_\infty(Y_\zeta,\mathscr D_\eta^-)
+ \le\frac b2\delta_\zeta.
+\end{aligned}
+\tag{140.8}
+$$
+
+At the center the stronger lower bound is
+$\operatorname{dist}_\infty(Y_0,\mathscr D_\eta)\ge\eta^2/B_H$.
+In particular every interior point has strictly positive distance
+from the entire original image, of quadratic order in $\eta$ with
+the displayed $1-|\zeta|^2$ factor. These are bounds, not a claim
+of equality of the constants or of the optimal distance.
+
+*Proof.* The full-space identity in (140.6) is the first map of
+VI (118.8) factored through finitely many actual rows. Every one
+of its matrix coordinates annihilates the common kernel, so the
+finite dual-span construction in VI Proposition 118.2 proves the
+identity on all of $\mathscr V$, before any restriction to physical
+pairs. A finite linear map has finite operator norm; it is nonzero
+by its value at $(I_3,0,0)$, so $B_H>0$.
+
+For every original $x=(\gamma,h)$, subtract the lift (140.3) from
+$L_x$ and apply this full-space identity. It gives
+
+$$
+\|hh^\dagger-M_\zeta\|_{\rm HS}
+ \le B_H\|(R_x-Y_\zeta)_{\rm fin}\|_\infty
+ \le B_H\|R_x-Y_\zeta\|_\infty.
+\tag{140.9}
+$$
+
+This directly justifies the decoder at the virtual lift. An
+estimate stated only for physical pairs would not justify (140.9).
+The two nonzero-block eigenvalues of $M_\zeta$ are
+$\lambda_+\ge\lambda_-\ge0$, with $\lambda_-$ given by (140.7).
+For any $h\in\mathbb C^3$ choose a unit $u$ in
+$\operatorname{span}_{\mathbb C}\{e,f\}$ perpendicular to $h$.
+There is such a vector since this span has complex dimension two.
+Then
+
+$$
+\|M_\zeta-hh^\dagger\|_{\rm HS}
+ \ge|u^\dagger(M_\zeta-hh^\dagger)u|
+ =u^\dagger M_\zeta u\ge\lambda_-.
+\tag{140.10}
+$$
+
+Thus (140.9) bounds every pair in the full complex domain, regardless
+of its retention. Taking the infimum gives the lower distance bound.
+Since
+$\lambda_+\lambda_-=A^2\eta^2(1-|\zeta|^2)$ and
+$0<\lambda_+\le A^2+\eta^2\le2A^2$, one obtains
+$\lambda_-\ge\delta_\zeta/2$. At $\zeta=0$, (140.1) instead gives
+$\lambda_-=\min(A^2,\eta^2)=\eta^2$, proving the sharper assertion.
+
+For the upper bound use the actual reflected-domain witness
+$x_\zeta=(0,-Ae+\eta\zeta f)$. Its vector is in the original ball.
+Its skew coordinate equals (140.2), and
+$M_\zeta-h_\zeta h_\zeta^\dagger=\delta_\zeta ff^\dagger$.
+The virtual-minus-physical lift is consequently
+$(s^2b\delta_\zeta ff^\dagger,c^2b\delta_\zeta ff^\dagger,0)$.
+Its outcome-$1$ row is exactly
+
+$$
+\frac{a_wb\delta_\zeta}{2}\operatorname{Tr}\!\left[
+ r_i\left(s^2Q_w^\dagger ff^\dagger Q_w
+       +c^2WQ_w^\dagger ff^\dagger Q_wW\right)\right].
+\tag{140.11}
+$$
+
+The matrix in parentheses lies between $0$ and $I_3$.
+Since $a_w\le1$ and $\operatorname{Tr}r_i\le1$ for every actual
+prefix, this row is between $0$ and $b\delta_\zeta/2$.
+The outcome-$0$ row is its negative, so the same bound holds in the
+full original supremum norm. Infimizing over the reflected domain
+and then using $\mathscr D_\eta^-\subseteq\mathscr D_\eta$ proves
+the rest of (140.8). Strict positivity in the interior follows
+from $A\eta>0$ and $|\zeta|<1$. $\square$
+
+The matrix-distance intermediary is also the lift in Balan–Zou,
+[*On Lipschitz Analysis and Lipschitz Synthesis for the Phase Retrieval
+Problem*, arXiv:1506.02092v1, §2.2, (9)–(11) and Theorems
+2.3–2.4](https://arxiv.org/pdf/1506.02092v1): (9)–(11) relate
+intensity data to a linear map on selfadjoint matrices and the
+rank-at-most-one positive cone. Theorem 2.3 characterizes a
+phase-retrievable frame by its kernel and a lower comparison;
+Theorem 2.4 gives an upper comparison under that frame assumption.
+Here the needed full-space decoder is (140.6), proved from the
+original source rows, and (140.10) is the direct two-dimensional
+rank obstruction. No phase-retrievable-frame assumption is imported.
+

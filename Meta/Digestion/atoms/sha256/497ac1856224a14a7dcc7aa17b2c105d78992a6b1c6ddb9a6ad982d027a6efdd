@@ -1,0 +1,48 @@
+**Step 5 (removing the fixed low-energy projection on compact oscillations).**
+Let $L=I-E$. For any fixed compact punctured coordinate neighborhood
+$U\Subset\Omega$ and every integer $j\ge0$, the local elliptic
+estimates and their iteration in (120.6)–(120.7) give
+$$
+ \|Lf\|_{H^j(U)}\le C_{j,U,\Lambda}\|f\|_2,
+ \qquad f\in\mathcal L_\ell.
+ \tag{128.11}
+$$
+Indeed $Lf$ lies in every spectral-power domain and
+$\|K^nLf\|_2\le\Lambda^n\|f\|_2$. Interior elliptic regularity on
+nested punctured neighborhoods therefore gives (128.11) at every order.
+All weighted and unweighted local norms are equivalent there. The projection $L$ is not asserted to have finite rank; the uniform local estimates, at the fixed $\Lambda$, are the property used below.
+
+For each fixed compact test amplitude $\chi$, fixed $\ell$, and
+nonzero $\zeta$, integration by parts in the
+$(r,z,\xi)$-direction $\zeta$, followed by (128.11) and duality, gives
+$$
+ \|Lu_N\|_2=O(N^{-j})\quad\text{for every }j.
+ \tag{128.12}
+$$
+For detail, write $\langle u_N,Lf\rangle_m$ in cylindrical coordinates,
+where the measure is $r h^2\,dr\,d\theta\,dz\,d\xi$. Move $j$
+derivatives from $e^{-iN\zeta\cdot(r,z,\xi)}$ onto the compact smooth
+amplitude, this smooth density, and $Lf$. The derivatives of $Lf$
+are bounded in local $L^2$ by (128.11), uniformly for $\|f\|_2\le1$.
+The resulting bound is $C_jN^{-j}$, which is precisely (128.12).
+
+The actual local expression also gives $\|K_\ell u_N\|_2=O(N^2)$,
+whereas $\|K_\ell Lu_N\|_2\le\Lambda\|Lu_N\|_2$. If
+$$
+ \mathcal D(u)=\langle K_\ell u,bu\rangle_m
+                 -\langle bu,K_\ell u\rangle_m,
+$$
+expansion of $u=Eu+Lu$ gives the bound
+$$
+ |\mathcal D(u)-\mathcal D(Eu)|
+ \le2\|b\|_\infty
+ \bigl(\|K_\ell Lu\|_2\|u\|_2
+       +\|K_\ell Eu\|_2\|Lu\|_2\bigr).
+$$
+Using (128.12), for example with $j=4$, and then (128.10), proves
+$$
+ |\mathcal D(u_N)|\le D_0\|u_N\|_2^2+o(1)=O(1).
+ \tag{128.13}
+$$
+No commutator estimate involving a low-energy inverse is needed.
+

@@ -1,0 +1,25 @@
+**Proposition 12.1 (incidence-faithful attainment of the factor two).** Let $G$ be any finite group of order $n\ge2$. Take independent uniform $U,V\in G$, and define the source law and deterministic output maps by
+
+$$
+\begin{gathered}
+\alpha=U,\qquad\beta=V,\qquad\gamma=UV,\qquad\mathcal O=G\times G,\\
+f_A(\beta,\gamma)=(\gamma\beta^{-1},\beta),\qquad
+f_B(\gamma,\alpha)=(\alpha,\alpha^{-1}\gamma),\qquad
+f_C(\alpha,\beta)=(\alpha,\beta).
+\end{gathered}
+\tag{12.1}
+$$
+
+With kernels $K_v(o\mid\cdot)=\mathbf1_{\{o=f_v(\cdot)\}}$, this is a realization of Definition 10.1 with
+
+$$
+A=B=C=X=(U,V),\qquad H(X)=2\log n,\qquad C_{\rm src}=\log n.
+\tag{12.2}
+$$
+
+Each response depends essentially on both incident source slots. Hence the universal coefficient $2$ in (10.3) cannot be decreased, and the coefficient $1/2$ in (11.2) is attained for these larger output alphabets.
+
+*Proof.* Every source is uniform. For fixed $u,g$ there is exactly one $v=u^{-1}g$, and for fixed $v,g$ exactly one $u=gv^{-1}$. Thus the pairs $(\alpha,\beta)$, $(\alpha,\gamma)$ and $(\beta,\gamma)$ are all uniform on $G^2$ and pairwise independent, whereas the triple is supported on $\gamma=\alpha\beta$. Its $n^2$ positive cells have mass $n^{-2}$; the product of its marginals has mass $n^{-3}$ on all $n^3$ cells. Therefore $C_{\rm src}=\log n$, also obtained from the three marginal entropies and triple entropy $2\log n$.
+
+Group cancellation in the specified order gives all three outputs $(U,V)$; commutativity is unnecessary. The conditional source law given $X=(u,v)$ is a point mass at $(u,v,uv)$, hence a threefold product. This verifies the equality criterion directly. For fixed $\beta$, changing $\gamma$ changes the first coordinate of $f_A$; for fixed $\gamma$, changing $\beta$ changes its second coordinate. For $f_B$, changing $\alpha$ changes its first coordinate, and changing $\gamma$ at fixed $\alpha$ changes its second coordinate. Both slots of $f_C$ are explicit coordinates. Every incident pair has positive marginal probability, so this essential dependence is not hidden in unused kernel rows. All three maps use only incident sources, proving the claimed incidence fidelity. Finally $I(A;B)+I(A;C)-H(A)=H(X)=2C_{\rm src}>0$. ∎
+

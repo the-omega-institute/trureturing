@@ -1,0 +1,4 @@
+### 2.2. Cyclic sources
+
+If $a=0$, $A$ is cyclic, of order $N=2^b m$. Let $g$ be a generator. Choose a scalar $\lambda$ and permutation $\pi$ in (1.1) at $g$. The scalar is a ratio of $N$th roots of unity, so $\lambda^N=1$. It therefore defines a character $\eta$ with $\eta(g)=\lambda$. Equality at the generator implies $\psi_i=\eta\chi_{\pi(i)}$ on all of $A$. This also handles $N=1$, and requires no faithfulness assumption. Hence cyclic sources do not support the required triples.
+

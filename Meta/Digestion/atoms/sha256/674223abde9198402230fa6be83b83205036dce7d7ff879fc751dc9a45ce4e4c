@@ -1,0 +1,42 @@
+## 5. Inflation as a discrete covering and obstruction
+
+Inflation replaces each source edge by several copies and each party by copies connected according to the incidence pattern. The resulting graph is a finite cover-like lift of the original causal incidence complex. A triangle-local model induces a distribution on the lifted parties with:
+
+- equal-copy symmetries;
+- marginal consistency whenever two lifted events descend to the same original event;
+- factorization or d-separation constraints for disjoint source copies;
+- the original \(P(a,b,c)\) as an appropriate marginal.
+
+The lifted feasible event vectors form a convex relaxation. The original triangle-local set remains non-convex because the source product structure is still imposed before the response contraction. This explains the apparently paradoxical division of labor:
+
+- the original local set is non-convex;
+- an inflation relaxation is a convex polytope or cone;
+- an infeasibility certificate is a linear separating cochain for the lifted relaxation;
+- a certificate must separate the required target from every lifted deterministic image, not merely be positive on those images.
+
+More precisely, let \(K\) map a lifted law to the coordinates constrained by inflation, and let \(T(P)\) be the target coordinates required by the observed distribution. Soundness must first establish that a triangle-local \(P\) admits a lifted probability law \(q\) with \(K(q)=T(P)\). A linear functional \(f\) certifies infeasibility when
+
+\[
+\left\langle f,K(\delta_\omega)-T(P)\right\rangle>0
+\quad\text{for every lifted deterministic event }\omega.
+\]
+
+Indeed, taking the convex combination with coefficients \(q(\omega)\) would give \(0>0\). Positivity of \(\langle f,K(\delta_\omega)\rangle\) alone is insufficient: the target value must also be compared. For rational maps and targets, clear their denominators by a common positive integer and verify the resulting strict integer inequalities. This is an exact separation certificate, not a floating-point numerical distance.
+
+The 2025 Gitton–Renner EJM result is the canonical example. The EJM distribution has four outcomes per party,
+
+\[
+P_{\mathrm{EJM}}(a,b,c)=
+\begin{cases}
+25/256,&a=b=c,\\
+5/256,&a,b,c\text{ all distinct},\\
+1/256,&\text{otherwise}.
+\end{cases}
+\tag{5.1}
+\]
+
+A symmetry-reduced inflation with source-copy size \((2,2,4)\), followed by a Frank–Wolfe search and an exact integer certificate, proves that this distribution is outside the classical triangle-local set. The proof is a global gluing obstruction in a lifted event space. It is not a Bell inequality on the original three-party table.
+
+This makes the geometry-to-network map precise: the EJM proof does not merely find a negative coordinate in the three-dimensional quotient. It shows that no globally consistent product-source lift exists after all copied-edge compatibility conditions are imposed.
+
+

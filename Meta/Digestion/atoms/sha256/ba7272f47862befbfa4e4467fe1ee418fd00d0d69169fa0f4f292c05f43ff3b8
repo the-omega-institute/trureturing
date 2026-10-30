@@ -1,0 +1,32 @@
+**Theorem 15.4 (Every acquired sixth-J child fails L1 at p24).** For
+every real acquired sixth-J response $u$ and every finite or infinite
+support $S\subseteq\mathcal F(H_4,M,24,J,u)$,
+
+$$
+\neg L_1(S,(H_4,M,24,J,u)).
+\tag{15.5}
+$$
+
+Consequently for every $S\subseteq\mathcal F(H_4,M,24)$,
+
+$$
+\neg L_2(S,(H_4,M,24)).
+\tag{15.6}
+$$
+
+Proof. An $L_1$ child must have a distinct pair in a final-J leaf and
+a distinct pair in a final-M leaf, with both pairs in that child's one
+acquired $u$ fiber. If $u\ne u_0$, Theorem 15.2 excludes even the
+final-J pair. If $u=u_0$, Lemma 15.3 says the full child has exactly
+two worlds and their final-M responses differ, so no subset has a
+final-M pair. Empty and singleton supports also fail the original
+nonsingleton guard. This proves (15.5).
+
+For fifth-M $L_2$, the sixth-J conjunct of (1.5) requires one acquired
+$u$ child with $L_1$. None exists by (15.5), proving (15.6). The proof
+allows different terminal pairs, overlapping or disjoint pairs, all
+reuse of worlds and infinite supports. It does not extract a losing
+two-world support from a nonterminal support. The uniqueness of the
+final-J pair is used together with the complete two-world child and
+the actual final-M separation; uniqueness alone would not suffice. ∎
+

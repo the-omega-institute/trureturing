@@ -1,0 +1,27 @@
+**Lemma 110.1 (Comparison and power monotonicity).** For all horizons,
+$\mu_n\le\delta_n$. For finite $n\ge0$,
+
+$$
+\delta_n\le\delta_{n+1}.
+\tag{110.1}
+$$
+
+*Proof.* For each fixed decoder, the reference tests in (93.8) include
+every no-reference density input, by taking a one-dimensional reference.
+Its stabilized error therefore dominates its error in (105.1).
+Taking decoder minima preserves this inequality.
+
+For every CPTP decoder $D$ at horizon $n+1$, $D\circ F$ is a legal
+terminal CPTP decoder at horizon $n$, and the original powers obey
+
+$$
+(D\circ F)\circ F^n=D\circ F^{n+1}.
+\tag{110.2}
+$$
+
+These recovered channels are identical also after tensoring with any
+untouched reference. Hence $\delta_n$ is at most the stabilized error
+of $D$ at horizon $n+1$. Minimize over that $D$ to obtain (110.1).
+The composition is $D\circ F$, with no operation on the reference.
+$\square$
+

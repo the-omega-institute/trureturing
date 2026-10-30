@@ -4493,3 +4493,388 @@ still be required for the corresponding $H_4$ $L_3$, root $L_7$
 or eight-versus-nine conclusion.
 
 ## 追加锚（本行以下为增补区）
+
+## 34. Exact specialized Sylvester cokernel and algebra length
+
+Retain the entire original child $C(p,v)$ of Definition 30.1, with
+$p\ne24$: the acquired word is $J,M,J,M,M,M$, its readings at clocks
+$0,\ldots,6$ are $(0,24,147/5,24,18,p,v)$, and each world has one
+whole nonzero real gain polynomial of degree at most three and one
+arbitrary fixed real drift. The coordinates $x=n/U$ and $H=Ug$ are
+(30.3). Sections 31–32 already imply finite complex solution support
+away from $D=0$, hence qualitative finite dimensionality of the algebra
+below. Theorem 32.1 already bounds the entire strict-real child by
+$24$, and Section 33 already bounds its ordered distinct candidate
+pairs by $552$. The refinement here identifies the specialized module
+and its exact length, including nilpotents.
+
+**Definition 34.1 (Fixed polynomial presentation).** Use exactly
+$D,a_0,a_1,a_2,z_*,f,k,F_0,R$ of (31.1), (31.3)–(31.4),
+(31.7)–(31.8), with the same integer normalization of $R$. Put
+
+$$
+K=4k,\qquad
+S=\operatorname{coeff}_{d^5,d^4,\ldots,1}
+       (d^3f,d^2f,df,f,dK,K).
+\tag{34.1}
+$$
+
+Thus $S$ has six rows and six columns, retained under specialization.
+Lemmas 31.2–31.3 give the following inputs:
+
+$$
+\begin{gathered}
+\det S=256D^8F_0^2R,\qquad \deg_xR\le18,\\
+R(x,p,v)\not\equiv0\quad\text{for every }(p,v)\in\mathbb C^2,\\
+L_f=[d^2]f\in\mathbb C[x],\quad
+L_K=[d^4]K\in\mathbb C[x],\quad \gcd(L_f,L_K)=1.
+\end{gathered}
+\tag{34.2}
+$$
+
+The factor $256$ follows from multiplying the last two rows of (31.6)
+by $4$. In particular, $L_K=4L_k$; its coprimality with $L_f$ is
+the same leading-coefficient coprimality certified by the residue $87$
+in Lemma 31.2. The normalization also agrees with
+[support IX, Proposition 4.2](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IX.md#4-the-fixed-finite-carrier-and-its-drift-equation).
+These determinant and global noncollapse results are inputs here.
+
+For fixed complex $(p,v)$ define
+
+$$
+\mathcal A_{p,v}=\mathbb C[x,d,D^{-1}]/(f,K),\qquad
+\operatorname{strip}_D(q)=
+\frac{q}{\displaystyle\prod_{c\in\{0,-1,-2\}}(x-c)^{\operatorname{ord}_{x=c}q}}
+\quad(0\ne q\in\mathbb C[x]).
+\tag{34.3}
+$$
+
+The strip is immaterial up to a nonzero constant; it removes all
+multiplicities at the three zeros of $D$.
+
+**Theorem 34.2 (All-specialization presentation and exact length).**
+For every complex base $(p,v)$ there is an isomorphism of
+$\mathbb C[x,D^{-1}]$-modules
+
+$$
+\mathcal A_{p,v}\cong
+\bigl(\operatorname{coker}_{\mathbb C[x]}S^{\mathsf T}\bigr)[D^{-1}],
+\tag{34.4}
+$$
+
+and its complex algebra length is exactly
+
+$$
+\ell(p,v):=\dim_{\mathbb C}\mathcal A_{p,v}
+=\deg\operatorname{strip}_D\bigl(F_0(x,p,v)^2R(x,p,v)\bigr)
+\le24.
+\tag{34.5}
+$$
+
+This counts all local algebra lengths, including nonreduced factors.
+No unchanged drift degree, simple projected root, reduced carrier or
+nonzero linear pseudo-remainder coefficient is assumed.
+
+Proof. Fix the base, write $B=\mathbb C[x]$, and set
+$M=B[d]/(f,K)$. Let $P_5$ be the free $B$-module of polynomials
+in $d$ of degree at most five, with ordered basis $d^5,\ldots,1$.
+The rows of $S$ belong to $(f,K)\cap P_5$, so their coefficient
+columns define a natural map
+
+$$
+\operatorname{coker}S^{\mathsf T}\longrightarrow M.
+\tag{34.6}
+$$
+
+By (34.2), there are $u,w\in B$ with $uL_f+wL_K=1$.
+The polynomial $ud^2f+wK$ is therefore monic of degree four in $d$.
+Consequently $M$ is generated over $B$ by $1,d,d^2,d^3$, and
+(34.6) is surjective.
+
+For injectivity, work first over $B[L_f^{-1}]$. If
+$h=af+bK\in P_5$, division of $b$ by $f$ and absorption of the
+quotient into $a$ give $h=a'f+b'K$ with $\deg_db'<2$.
+As $\deg_dK\le4$, the second summand has degree at most five.
+Thus $a'f$ has degree at most five; the invertible quadratic leading
+coefficient of $f$ gives $\deg_da'\le3$. Hence $h$ is in the
+span of precisely the six rows in (34.1).
+
+Next work over $B[L_K^{-1}]$. Divide $a$ by $K$ and absorb
+the quotient into $b$. Now $h=a'f+b'K$ with $\deg_da'<4$.
+Since $\deg_df\le2$, the first summand has degree at most five;
+the invertible quartic leading coefficient of $K$ then gives
+$\deg_db'\le1$. Again $h$ is in the span of those six rows.
+Zero summands cause no difficulty in either degree estimate. On each
+open the other polynomial is allowed to lose degree. Coprimality in
+(34.2) makes these two principal opens cover $\operatorname{Spec}B$.
+The kernel of (34.6) vanishes on this cover, so
+$M\cong\operatorname{coker}S^{\mathsf T}$.
+
+At the fixed base, $\det S$ is nonzero: $F_0$ has constant leading
+$x$-coefficient $405$, and $R$ is nonzero by Lemma 31.3.
+Smith normal form over the PID $B$ expresses the cokernel as a direct
+sum of $B/(s_i)$, with nonzero invariant factors whose product is
+$\det S$ up to a nonzero scalar. Localization at $D$ removes exactly
+the local summands supported at $0,-1,-2$. Therefore
+
+$$
+\begin{aligned}
+\dim_{\mathbb C}M[D^{-1}]
+&=\sum_i\deg\operatorname{strip}_D(s_i)\\
+&=\deg\operatorname{strip}_D(\det S)\\
+&=\deg\operatorname{strip}_D(F_0^2R)\le2\cdot3+18.
+\end{aligned}
+\tag{34.7}
+$$
+
+Localization is exact, so the module isomorphism localizes as well.
+This proves (34.4)–(34.5), without inferring algebra length from a
+count of real points. ∎
+
+**Proposition 34.3 (Ambient sharpness).** At $(p,v)=(20,100)$,
+$\ell(p,v)=24$.
+
+Proof. Specializing the exact polynomial quotient defining $R$ in
+(31.8) gives
+
+$$
+[x^{18}]R(x,20,100)=-28860568222671000000,
+\tag{34.8}
+$$
+
+and the following exact values, ordered at $x=0,-1,-2$:
+
+$$
+\begin{aligned}
+R:&\quad(5222650937344000000,\ 67115469584250000,
+                  -5181917236514558208000000),\\
+F_0:&\quad(-480,360,1000).
+\end{aligned}
+\tag{34.9}
+$$
+
+Thus $F_0^2R$ has degree $24$ and no factor supported at a zero
+of $D$. Equation (34.5) gives the assertion. This is sharpness of the
+ambient complex algebra, with no assertion of $24$ strict-real worlds
+or membership of this base in an actual $J$-pair arc. ∎
+
+## 35. Faithful strict-real realization of the length refinement
+
+**Definition 35.1 (The algebra carrying Lemma 30.2).** Fix real
+$p\ne24,v$ and let
+$\mathcal A^{\mathbb R}_{p,v}=\mathbb R[x,d,D^{-1}]/(f,K)$.
+In this algebra use the entire interpolant $H$ of (30.4)–(30.5),
+with $H_i=H(i)$, and put
+
+$$
+B_0=294/5-2d-H_2,\qquad q=d^2+B_0^2,\qquad
+\mathcal A'=\mathcal A^{\mathbb R}_{p,v}[((d-24)H_1q)^{-1}].
+\tag{35.1}
+$$
+
+In $\mathcal A'$ define
+
+$$
+U=\frac{-dH_0+B_0H_2}{q},\qquad
+b=\frac{U-1}{2},\qquad
+j=\frac{U(24-d)}{H_1},\qquad r=xU-j,
+\tag{35.2}
+$$
+
+and form the localization and quotient
+
+$$
+\mathcal B_{p,v}=
+\mathcal A'[(Ub)^{-1}]
+\big/\bigl(dU+H_0,\ B_0U-H_2,\ bj-b^2-r(1-r)\bigr).
+\tag{35.3}
+$$
+
+**Proposition 35.2 (Length bound and original-real points).** One has
+
+$$
+\dim_{\mathbb R}\mathcal B_{p,v}\le\ell(p,v)\le24.
+\tag{35.4}
+$$
+
+The real points of $\mathcal B_{p,v}$ with the strict guards
+
+$$
+x>0,\qquad U>1,\qquad r>0,\qquad1-r>0
+\tag{35.5}
+$$
+
+are exactly the entire original $C(p,v)$, bijectively under
+$W=(P(r,b),H/U,d)$. This is the reconstruction of Lemma 30.2
+expressed in the finite algebra of Theorem 34.2.
+
+Proof. Complexification of $\mathcal A^{\mathbb R}_{p,v}$ is
+$\mathcal A_{p,v}$, so its real dimension is $\ell(p,v)$.
+Localization of a finite-dimensional commutative algebra retains some
+of its Artin local factors and deletes the others; a quotient cannot
+increase dimension. These facts prove (35.4).
+
+For faithfulness, an actual world satisfies $f=K=0$ by Section 31,
+including when $d=0$. Lemma 30.2 gives $d\ne24$, $H_1\ne0$,
+$dU=-H_0$ and $B_0U=H_2$. The pair $(d,B_0)$ cannot be zero:
+those equations would give $H_2=0$, whereas the definition of $B_0$
+would give $H_2=294/5$. Hence $q>0$. The original source also has
+$U>1$, $b>0$ and $bj=b^2+r(1-r)$. Thus every localization and
+quotient in (35.1)–(35.3) retains the actual world and its strict guards.
+
+Conversely, a real point with (35.5) has $b>0$ and
+$j=b+r(1-r)/b$. With $n=j+r=xU$ and $T=1+b=(U+1)/2$,
+the source is literally the original $P(r,b)$. Put $g=H/U$.
+The quotient equations restore clocks zero and two; the formula for
+$j$ restores clock one. Explicitly their readings are
+
+$$
+d+g(0)=0,\qquad d+jg(1)=24,\qquad
+d+Tg(2)=147/5.
+\tag{35.6}
+$$
+
+The interpolation samples (30.4) restore clocks three through six as
+$d+ng(3)=24$, $d+Ug(4)=18$, $d+(U+n)g(5)=p$, and
+$d+(2U+n)g(6)=v$. These are exactly the chronological traces
+(30.8) at the original clocks. The unequal first two readings exclude
+$g\equiv0$. Interpolation supplies one whole polynomial of degree at
+most three. Finally the coordinates $x,d$ force all expressions
+(35.1)–(35.3) and this whole gain, so Lemma 30.2 gives injectivity. ∎
+
+For this same reconstructed world the two clock-seven alternatives are
+
+$$
+a=d+\frac{T+2j+4r}{U}H_7=f_{MJ},\qquad
+m=d+(3+2x)H_7=f_{MM},
+\tag{35.7}
+$$
+
+by (30.9). Neither is an additional acquired read. The construction
+uses no reset, copy, skipped clock, clock shift, new port or longer
+protocol. All singular sources in $C(p,v)$ are retained, as are
+realized cases with $d=0$, $F_0=0$, $\alpha=0$ or $\Lambda=0$.
+Here $\alpha$ is the pseudo-remainder coefficient of
+[support IX, (4.5)](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IX.md#4-the-fixed-finite-carrier-and-its-drift-equation).
+No localization by any of these four expressions, terminal gain
+sample, gain leading coefficient or root difference occurs. Lower
+gain degrees, repeated roots and gain samples equal to zero wherever
+the original readings permit them remain included. The nonzero $H_1$
+in (35.1) is forced by $p\ne24$ and clock one, not a new gain promise.
+There is no gain-positivity condition, source box or source bound.
+
+## 36. The independent terminal-M pair length consumer
+
+**Definition 36.1 (Distinct equal-M pair algebra).** At the same fixed
+real base write $\mathcal B=\mathcal B_{p,v}$ and use subscripts
+$1,2$ for the two tensor factors. With $m$ as in (35.7), put
+
+$$
+\Delta=(x_1-x_2)^2+(d_1-d_2)^2,\qquad
+\mathcal P_M=
+\bigl((\mathcal B\otimes_{\mathbb R}\mathcal B)/(m_1-m_2)\bigr)
+[\Delta^{-1}].
+\tag{36.1}
+$$
+
+Its real points satisfying (35.5) in both factors are exactly the
+ordered distinct equal-$M$ pairs in the entire original $C(p,v)$.
+Indeed Proposition 35.2 identifies each factor with a complete world,
+and Lemma 30.2 makes $(x,d)$ injective on such worlds. Over the reals,
+$\Delta\ne0$ is therefore exactly distinctness. The two drifts are
+independent: no equation $d_1=d_2$ is imposed, and each copy has its
+own whole gain and source.
+
+**Proposition 36.2 (Artin-block bound).** The multiplicity-sensitive
+length satisfies
+
+$$
+\dim_{\mathbb R}\mathcal P_M\le552.
+\tag{36.2}
+$$
+
+Proof. Extend scalars to $\mathbb C$ and decompose
+$\mathcal B_{\mathbb C}=\prod_i B_i$ into Artin local factors.
+Write $e_i=\dim_{\mathbb C}B_i$ and
+$n=\sum_i e_i=\dim_{\mathbb R}\mathcal B\le\ell(p,v)\le24$.
+The tensor square splits into blocks $B_i\otimes B_j$ of lengths
+$e_ie_j$. Each is Artin local with residue field $\mathbb C$.
+On a diagonal block $i=j$, both coordinate differences in (36.1)
+have zero residue. Thus $\Delta$ is nilpotent there, and inverting
+it deletes the entire block, including its nilpotents. The equality
+$m_1=m_2$ is a further quotient. Consequently
+
+$$
+\dim_{\mathbb R}\mathcal P_M
+\le n^2-\sum_i e_i^2\le n^2-n\le24\cdot23=552.
+\tag{36.3}
+$$
+
+Some complex off-diagonal blocks can also be deleted by $\Delta$:
+nonzero complex coordinate differences can have sum of squares zero.
+This is harmless for the stated real-point correspondence, since real
+sums of squares vanish only when both differences vanish. ∎
+
+Thus the numerical candidate-pair bound of Section 33 also bounds
+this algebra length; a multiple root of a terminal characteristic
+polynomial is not being interpreted as two distinct worlds. This is
+a consumer of the exact length refinement and of the already faithful
+reconstruction, not a new independent-pair criterion.
+
+## 37. The actual J-arc consumer and the reuse boundary
+
+[Support III, Theorem 16.4](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md#16-an-actual-strict-j-pair-arc)
+supplies an actual distinct equal-$J$ pair in the entire
+$C(p,v_J(p))$ for every $p\in[10,34]\setminus\{24\}$. At each
+of these exact bases Theorem 34.2 and Sections 35–36 apply. This
+includes both seams $20,30$, both endpoints $10,34$, and every
+exceptional projection, without discarding any companion in the child.
+The same-base condition of Definition 33.1 is therefore exactly
+
+$$
+(p,v_J(p))\in D_J\cap D_M
+\quad\Longleftrightarrow\quad
+\mathcal P_M\text{ has a real point satisfying (35.5) in both factors}.
+\tag{37.1}
+$$
+
+The $M$ pair is selected independently of the supplied $J$ pair;
+the pairs may overlap or be disjoint and their common terminal answers
+are independent. This is the existing faithful crossing relation of
+[support III, Definitions 18.1–18.2 and Theorem 18.3](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md#18-faithful-independent-m-crossing-interface),
+including its undivided equations (18.4)–(18.7). The finite algebra
+does not evaluate its strict-real points or assert an actual crossing.
+A zero count at one base would settle only that base. Neither absence
+on the whole arc nor completion of the full original joint problem
+follows from a length bound, and the remaining bases outside this arc
+are still part of the original target. No basis uniform in parameters
+is constructed by these pointwise specialized module isomorphisms.
+
+The only source-specific refinement asserted beyond the cited ordinary
+sources is the all-specialization specialized Sylvester-cokernel
+identity (34.4) and exact multiplicity-sensitive length (34.5), with
+the ambient sharpness arithmetic (34.8)–(34.9). Qualitative complex
+algebraic finiteness already follows from Sections 31–32; faithful
+reconstruction is Lemma 30.2 and
+[O, Theorem 12.3](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md#12-a-zero-safe-source-equation-for-every-fifth-m-response).
+The world bound $24$ and numerical pair bound $552$ are Theorem 32.1
+and Section 33. Section 8 already gives the tensor-square and
+Hermite/Tarski counting proposal.
+[Support IX, Sections 4–7](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IX.md#4-the-fixed-finite-carrier-and-its-drift-equation)
+already supplies the normalized equations, generic finite algebra,
+all-root generic reconstruction and generic terminal separation;
+[support, Theorem 4.3](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md#4-the-all-world-carrier-and-the-zero-drift-finite-outer-set)
+and [Lemma 9.9](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT.md#9-finite-outer-joint-bases-whenever-the-entire-child-meets-the-exceptional-union)
+already give finite-algebra terminal tests. These are reused inputs
+and consumers, not separate new-content claims here.
+
+Polynomial division, Smith normal form and Artin local decomposition
+are classical tools. Gaillard–Safey El Din,
+*Solving parameter-dependent semi-algebraic systems*,
+[Problem 1 and Theorem 2.4](https://arxiv.org/html/2402.07782v2),
+provides a general finite-algebra sign-counting interface. No
+dense-parameter classification theorem is used to delete an exceptional
+base in this argument. The source-specific comparison above concerns
+the cited ordinary sources and asserts no literature priority.
+
+## 追加锚（本行以下为增补区）

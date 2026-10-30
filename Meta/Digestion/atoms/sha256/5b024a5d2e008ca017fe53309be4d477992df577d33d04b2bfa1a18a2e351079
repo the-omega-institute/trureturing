@@ -1,0 +1,61 @@
+**Proposition 2.2 (exact threshold and shortest physical compiler).**
+For every nonempty physical word $w$ of length $\ell$, its first
+presence time is
+
+$$
+ b_w=2+\sum_{i=1}^{\ell-1}\delta(\sigma_{w_{\le i}}),
+ \qquad \ell+1\le b_w\le2\ell,
+ \qquad \operatorname{Read}_u(w)=\mathbf1_{u\ge b_w}
+ \quad(u\ge0).
+ \tag{ACR.7}
+$$
+
+Given $L$ and any integer $t\ge2$, one uniform effective procedure
+constructs an actual physical literal $C_L(t)$ satisfying
+
+$$
+ b_{C_L(t)}=t,\qquad
+ |C_L(t)|=\left\lceil\frac t2\right\rceil
+ =\min\{|w|:b_w=t\}.
+ \tag{ACR.8}
+$$
+
+For even $t=2k$, the shortest words have $k-1$ successive initial-alpha
+proper prefixes, followed by either final physical edge. For odd
+$t=2k+1$, they have $k$ nonempty proper prefixes with exactly one
+initial-beta prefix and all other initial labels alpha. These describe
+all shortest words; the final edge is arbitrary in both cases.
+The empty word is present from update zero. No word first appears at
+update one.
+
+Proof. Both children of $p$ appear precisely when $p$ branches and
+remain present thereafter. The root branches at update two. Induction
+on $\ell$ gives (ACR.7), since each nonroot proper prefix adds exactly
+its initial label's delay in (ACR.5). Every finite prefix eventually
+branches, so all the descriptors in this argument exist in the full
+origin orbit, including prefixes not yet born at the unknown current cut.
+
+For $t=2k$, follow the initial-alpha child $k-1$ times and append $a$.
+For $t=2k+1$, follow the initial-beta child once, then the initial-alpha
+child $k-1$ times, and append $a$. At each proper prefix compute its
+actual $j_p$ by (ACR.6), evaluate $z_{j_p}$ from the retained seeded
+recurrence, and choose $a$ or $b$ according to its actual child labels.
+Thus this is a finite algorithm producing physical letters. It does not
+submit a semantic $L/R$ word or ask which port is alpha. GPO Proposition
+39.2 proves that its chronological indices agree with the actual source.
+The two constructions have the lengths and first times in (ACR.8).
+
+Any word first born at $t$ has $t\le2|w|$, proving the length lower
+bound. Equality with the minimum length forces every summand to be two
+in the even case and exactly one summand to be one in the odd case.
+This also proves the classification. Both children have the same birth
+time, so the final edge is unrestricted. Alpha-to-beta at update one
+adds no node, proving the remaining assertion. This `repo-derived` physical
+correspondence uses GPO §39 rather than GPO §16's global-orientation
+threshold. The fixed semantic navigation and birth thresholds of
+`NativeRankedNavigationCompiler` (including its private realization
+helpers) and `NativeBirthVectorDecoder`, under
+`D5/S3/Arith/FibonacciAtomic/Observer/` with their corresponding Blueprint
+sources, concern that native semantic orbit. They supply comparisons,
+not the actual local-port chronological index (ACR.6). $\square$
+

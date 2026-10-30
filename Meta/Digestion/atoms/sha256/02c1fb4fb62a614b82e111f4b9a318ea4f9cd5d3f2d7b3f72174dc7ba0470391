@@ -1,0 +1,48 @@
+**Definition 85.1 (operation vectors, preparation and literal traffic).**
+Write operation vectors in the order $(\mathrm{Read},\mathrm{Add},
+\mathrm{Tick},\mathrm{Hold})$. The held entrance, authentic commissioning,
+initial roster/root/grants, controller installation, backing, owned-field
+input and any provider clearing/isolation have their actual bill
+$\mathcal I(u,T,x)$. It is unquantified, not zero. In particular native unit
+births do not commission arbitrary old rational coefficients for free.
+
+Put $n_R=2Rb(b+1)$, $n_T=(b+1)(2R-1)$, $n_H=2R(b+1)$ for the original
+U4 run. Through affine completion its vector is
+
+$$
+ (n_R,b+d,n_T,n_H+\mathbf1_{d>0}),\qquad
+ P=S=0,\quad\text{new source cells}=0.           \tag{85.1}
+$$
+
+The packed alternative at $d>0$ has $(n_R,b+1,n_T,n_H+1)$ instead,
+with the distinct operand bill (81.4). Either actual shear adds $(1,1,0,1)$.
+At $d=0$ neither completion adds any call.
+
+The protective run has $2b-1$ P calls, partitioned into $a$ successes,
+$c$ wrong-type and $b-1$ branch refusals, and $c$ successful S calls.
+These are $b$ successful births, $b+c$ fresh cells, $c$ fresh labels and
+no numerical prefix calls. Its current size/terminal count are $M,s$ in
+(83.2). Its subsequent acquisition vector, through counted phase $t$, is
+
+$$
+ (2Ms(s+1),\ s,\ (s+1)(2M-1)+t,\ 2M(s+1)+t).    \tag{85.2}
+$$
+
+Optional Proposition 84.4 adds $(1,1,0,1)$. Initial held attachment belongs
+to $\mathcal I$; the scan's epoch-zero Hold is included in (85.1)–(85.2).
+At coincident block endpoints the final old-block Hold/scan and initial
+new-pulse-block Hold/scan are both performed and counted. These are derived
+schedule counts on their own single specimens, not measured timings or
+coordinates pooled from different protocols.
+
+Use (65.1)–(65.2) for exact traffic with these actual transaction sets:
+every rational operand/reply including zero, raw selector, growth address,
+success/refusal, tag, ACK, inner/outward frame, End, local acknowledgement,
+Return and actual copy/export is charged. The protective guards alone have
+request payloads $\sum(2|p|+4)$, success payloads $\sum(2|p|+5)$ and five
+bits per original refusal under that codec, before remaining framing.
+The earned adapter pays traversal, lookup, rewrite, forwarding and return.
+Metric, transfer coefficients, selected row labels and germ values are
+additional literal exports; the full protective germ has $sM$ rationals.
+No entry of a computed array is credited as a source Read or a free output.
+

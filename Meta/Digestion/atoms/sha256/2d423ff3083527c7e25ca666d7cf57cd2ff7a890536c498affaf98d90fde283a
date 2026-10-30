@@ -1,0 +1,84 @@
+**Proposition 24.1 (Existence, uniqueness and all-world completeness).**
+For each real base in $B$, every root in disks $12,15,16,17$ lifts to
+one original strict complete world, and these are exactly the entire
+child.
+
+Proof. Fix one of the four retained roots and its forced drift. In
+(22.4), $R=0$ and $\alpha\ne0$ give
+
+$$
+f(-\zeta/\alpha)
+ =\frac{A\zeta^2-B_f\alpha\zeta+C_f\alpha^2}{\alpha^2}=0.
+\tag{24.3}
+$$
+
+The first identity in (22.4) then gives $A^3K=0$. The local bound
+$A\ne0$ yields $K=0$. This argument is valid even if $F_0=0$;
+there is no cancellation of that factor at the root.
+
+Equation (22.10), with $D>0$ and $d\ne0$, gives
+$dU=-H_0$ and $B_0U=H_2$ for the $U$ in (24.2). Consequently
+$d^2+B_0^2>0$ and
+
+$$
+\frac{-dH_0+B_0H_2}{d^2+B_0^2}=U.
+$$
+
+This identifies (24.2) with the zero-safe F30.2 reconstruction, not a
+new choice of source. Put $Z=xH_1-(24-d)$, so that
+$r=UZ/H_1$. Substitution of $H_0=-dU$, $b=(U-1)/2$ and $a_i=DH_i$
+in (22.2) gives the exact identity
+
+$$
+K=4D^4d^2H_1^2
+ \{r^2-(1+b)r+b(xU-b)\}.
+\tag{24.4}
+$$
+
+Its prefactor is nonzero at this root, hence the last brace vanishes.
+Since $j=xU-r$, it follows that
+
+$$
+bj=b^2+r-r^2,\qquad
+j=b+r(1-r)/b.
+$$
+
+Here $b>0$ follows from the certified $U>1$. Thus every guard of
+(22.9) holds. Set
+
+$$
+\begin{gathered}
+c_{\rm src}=r(1-r)/b,\quad n=xU=j+r,\quad T=(U+1)/2,\\
+W_i=(P(r,b),H/U,d).
+\end{gathered}
+\tag{24.5}
+$$
+
+The gains in (24.5) are whole polynomials, not independently chosen
+sample values.
+At clocks zero and two the restored equations give respectively
+$d+H_0/U=0$ and
+
+$$
+d+\frac{U+1}{2U}H_2
+ =d+\frac{H_2+B_0}{2}=147/5.
+$$
+
+Clock one gives $d+jH_1/U=24$. At clocks $3,4,5,6$, the trace row
+$(n,U,U+n,2U+n)$ and (22.1) give $24,18,p,v$ exactly. These are all
+original readings at their original unshifted clocks. The first two
+readings differ, so the one polynomial $H/U$ is nonzero. It has degree
+at most three; no sign, exact degree or root-multiplicity condition is
+needed. This constructs four strict complete worlds.
+
+Conversely take any original complete world, including any unused
+companion or specialized stratum. Lemma 22.2 places its $x>0$ among
+the eight positive roots in Proposition 23.1. The nonzero $\alpha$
+there forces exactly the drift in (24.2), so its original source must
+have the indicated forced coordinates by F30.2. Four rows violate
+strictness and cannot contain it. At each remaining root F30.2's
+injectivity gives at most one complete world, exactly the one in
+(24.5). Distinct roots have different $x=n/U$, so the four worlds are
+distinct. This proves the inventory for every base in the full closed
+rectangle. ∎
+

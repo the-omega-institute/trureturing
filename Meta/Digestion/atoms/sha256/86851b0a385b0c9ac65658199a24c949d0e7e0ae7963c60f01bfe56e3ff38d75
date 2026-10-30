@@ -1,0 +1,19 @@
+**Corollary 122.2 (hard-zero refinement).** On the exact subspace $\tau=0$, for $q>0$,
+
+$$
+\sum_i\|V_i\sqrt P u\|^2
+\leq\lambda_{\max}(M_u^0)H,\qquad
+M_u^0=mP^{-1/2}-\frac{aa^T}{h}.
+\tag{U.73}
+$$
+
+Proof. The condition is $t^Tx_i=0$ for each $i$. After $y=\mathsf F^{1/2}x$, it becomes orthogonality to $\mathsf F^{-1/2}t$, whose squared norm is $h$. The orthogonal projection onto this subspace is
+$I-\mathsf F^{-1/2}tt^T\mathsf F^{-1/2}/h$. Consequently the constrained evaluation Gram is
+
+$$
+L_u\left(\mathsf F^{-1}-\frac{zz^T}{h}\right)L_u^T
+=mP^{-1/2}-\frac{aa^T}{h}=M_u^0.
+$$
+
+The same operator-norm argument as (U.71), restricted to this subspace, proves (U.73). This is a norm calculation for an evaluation map on a linear subspace. It does not assert that projecting a feasible $V$ onto that subspace preserves its contraction constraint. $\square$
+

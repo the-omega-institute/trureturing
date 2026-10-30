@@ -1,0 +1,26 @@
+**Definition 83.1 (inherited omissions and successful-edit coordinate).**
+Use the entire earned class $u\in\mathcal D$ with $b\ge3$ material
+terminals, $N$ cells, arbitrary rational entrance $x$, and two different
+initial raw terminal labels omitted from acquisition Reads. The receiver
+has only field-independent earned context and no dependent advice. The
+omission follows each raw label's actual inherited binding after growth;
+it is not permission to Read the label after it moves. Fresh labels and
+all other initial labels are readable. Both omitted labels and all original
+future rights remain available after acquisition. Positive constructions
+below also avoid Add at the omitted labels. All calls retain Definition
+75.1's complete service and no Reset.
+
+Let the initial omitted terminals be $a=v_0,b_*=v_d$, let
+$\mathcal J$ be the positions on their unique path having an off-path
+neighbour, and put
+
+$$
+g=\gcd\bigl(d+2,\{j+1:j\in\mathcal J\}\bigr).
+\tag{83.1}
+$$
+
+Count successful original $P/S$ births, separately from all field calls,
+refusals, arithmetic and material costs. The target is either the exact
+original entry report, or the whole actual final current and self-contained
+complete future predictor. These are different tasks.
+

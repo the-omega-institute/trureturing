@@ -1,0 +1,21 @@
+**Definition 130.1 (one actual pair throughout).** Retain (U.1), (U.62) and the notation of Sections 121–129. Thus
+
+$$
+\begin{gathered}
+P=\operatorname{diag}(p,q),\quad p+q=1,\quad p\geq q\geq0,\quad
+V=[V_0;V_1]\in\mathbb R^{4\times2},\quad V^TV\preceq I_2,\\
+\alpha=\sqrt p,\quad\beta=\sqrt q,\quad h=\alpha+\beta,\quad g=\alpha\beta,
+\quad D=\operatorname{diag}(\alpha,\beta,\alpha,\beta),\\
+A=D(I_4-VV^T)D,\quad B=\sqrt P(I_2-V^TV)\sqrt P,
+\quad\lambda=\lambda_{\min}(B),\\
+\tau=\frac12\sum_{i=0}^1\bigl(\operatorname{Tr}(V_i\sqrt P)\bigr)^2,
+\quad H=\operatorname{Tr}(DVV^T),\quad
+N=\frac{\operatorname{Tr}\sqrt A}{4\sqrt2},\\
+R=1-\lambda-\tau,\quad\Theta=N+\frac{\sqrt R}{2},\quad
+S=N^2+\frac R4,\quad c=\frac{2+\sqrt2}{4},\quad r=\sqrt c.
+\end{gathered}
+\tag{U.110}
+$$
+
+All quantities in each comparison belong to this same $P,V$. In particular, the actual traces are squared after their complete singular-component sums are formed. Proposition 109.3 gives $R\geq0$, and $0\preceq B\preceq P$ gives $0\leq\lambda\leq q$. The letter $A$ here is the matrix called $F$ in (U.1); $S$ is $\mathcal S$. Auxiliary $P$ is an environmental density and is distinct from the fixed physical input $\rho_\star$ in (U.2). The rank of $V$ is at most two and is distinct from actual minimal Kraus rank.
+

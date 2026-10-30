@@ -1,0 +1,74 @@
+**Theorem 94.3 (odd periods and the exact even-period condition).**
+Let $D e_v=(-1)^{\operatorname{depth}(v)}e_v$, using actual original-root
+material depth. The spectral formulas are over $\mathbb R$, with
+rational kernels obtained by intersection with $\mathbb Q^N$.
+If $L$ is odd, then
+
+$$
+\ker S_L=\ker A\cap\ker(e_{s_0}^{\mathsf T}).
+\tag{94.5}
+$$
+
+In particular the assay always determines its actual current endpoint
+$A^M x$, though it determines $x$ itself exactly when the intersection
+in (94.5) is zero.
+
+For even $L$, put
+
+$$
+\epsilon_r=(-1)^{r+\operatorname{depth}(s_r)},
+\qquad B_\pm=\{s_r:\epsilon_r=\pm1\},
+\qquad C_Bv=(v_s)_{s\in B}.
+\tag{94.6}
+$$
+
+For each positive eigenvalue $\lambda$, its hidden subspace in
+$E_\lambda\oplus E_{-\lambda}$ is the image of
+
+$$
+\begin{aligned}
+&(E_\lambda\cap\ker C_{B_+})
+ \oplus(E_\lambda\cap\ker C_{B_-})
+ \longrightarrow E_\lambda\oplus E_{-\lambda},\\
+&(a,d)\longmapsto \tfrac12\bigl(a+d+D(a-d)\bigr),
+\end{aligned}
+\tag{94.7}
+$$
+
+and this map is an isomorphism onto that hidden subspace. Add the zero
+block $\ker A\cap\ker(e_{s_0}^{\mathsf T})$ to obtain the whole kernel.
+Consequently an even-period scan determines its complete current field
+if and only if both restricted eigenspace kernels in (94.7) vanish for
+every $\lambda>0$. Entry recovery additionally requires the zero block
+to vanish. These conditions concern the actual order and eigenspaces;
+merely counting the two parity signs is not the criterion.
+
+**Proof.** For odd $L$, the real map $\lambda\mapsto\lambda^L$ is
+injective. On $E_\lambda$ with $\lambda\ne0$,
+$H_rv=\lambda^r v_{s_r}$. Vanishing of all these rows means vanishing
+at every genuine leaf. Convention 75.2's forcing identity $KC=I_N$
+then gives $v=0$: all blocks $J^{\mathsf T}A^jv$ vanish, so their
+supplied left inverse annihilates $v$. On $E_0$, only phase zero
+remains. Equation (94.4) proves (94.5).
+
+Symmetry gives $\ker A^j=\ker A$ for all $j\ge1$, for example by
+spectral decomposition. Since $M\ge1$, (94.5) is contained in
+$\ker A^M$. Thus equal actual records give equal actual endpoints.
+An effective rational endpoint decoder solves $S_L\widetilde x=y$
+by Gaussian elimination and returns $A^M\widetilde x$. A solution exists
+on the actual image and every solution gives the same answer. This
+does not choose or certify the original entry among its null-mode
+alternatives.
+
+Every material edge changes depth parity, so $DAD=-A$ and $D$ maps
+$E_\lambda$ isomorphically to $E_{-\lambda}$. For even $L$, nonzero
+power collisions among real eigenvalues are exactly these pairs.
+Write a vector in a pair as $u+Dv$ with $u,v\in E_\lambda$. Its
+phase-$r$ row is
+$\lambda^r(u_{s_r}+\epsilon_r v_{s_r})$.
+The invertible substitution $a=u+v$, $d=u-v$ gives precisely the two
+conditions in (94.7). The zero block is as before. On each nonzero
+paired block $A^M$ is invertible, whereas on the zero block it is zero.
+Together with (94.4) this proves both endpoint and entry criteria.
+$\square$
+

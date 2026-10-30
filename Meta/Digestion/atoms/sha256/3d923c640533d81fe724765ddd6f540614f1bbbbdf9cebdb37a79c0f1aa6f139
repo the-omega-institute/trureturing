@@ -1,0 +1,55 @@
+**Definition 130.1 (Projective powers and labelled layer patterns).**
+Fix the same source and a spectral decomposition of its installed
+control,
+
+$$
+\begin{gathered}
+N=S\operatorname{diag}(\lambda_1,\lambda_2,\lambda_3)S^\dagger,
+\qquad |\lambda_j|=1,\qquad S\in U(3),\\
+\alpha=(\lambda_2/\lambda_1,\lambda_3/\lambda_1),\qquad
+\Lambda_N=\{a\in\mathbb Z^2:\alpha_1^{a_1}\alpha_2^{a_2}=1\},\\
+T_N=\{z\in(S^1)^2:z_1^{a_1}z_2^{a_2}=1
+                              \text{ for every }a\in\Lambda_N\},\\
+M(z)=S\operatorname{diag}(1,z_1,z_2)S^\dagger.
+\end{gathered}
+\tag{130.1}
+$$
+
+For $k\ge0$, a native label pattern
+$\epsilon=(\epsilon_1,\ldots,\epsilon_k)\in\{0,1\}^k$ and
+$\mathbf z=(z^{(0)},\ldots,z^{(k)})\in T_N^{k+1}$, put
+
+$$
+\begin{aligned}
+Q_{\epsilon}(\mathbf z)
+ &=M(z^{(k)})V_{\epsilon_k}M(z^{(k-1)})\cdots
+                     V_{\epsilon_1}M(z^{(0)})V_0,\\
+\bar q_{i,k,\epsilon}(\mathbf z;X,Y,Z)
+ &=\frac{2^{-k}}2\operatorname{Tr}
+                   [r_i\Phi_{Q_\epsilon(\mathbf z)}(X,Y,Z)].
+\end{aligned}
+\tag{130.2}
+$$
+
+For $k=0$ the first formula means $M(z^{(0)})V_0$. For a paired
+hypothesis let $X,Y$ be exactly (118.9) and
+$Z=\gamma K_h-\gamma'K_{h'}$. Define two outcome differences
+$F_{i,k,\epsilon,1}=\bar q_{i,k,\epsilon}$ and
+$F_{i,k,\epsilon,0}=-\bar q_{i,k,\epsilon}$, evaluated on that
+paired lift. The associated unpaired probabilities are exactly
+
+$$
+\begin{aligned}
+\bar p_{\gamma,h}(i,k,\epsilon,\mathbf z,1)
+ &=\frac{2^{-k}}2\operatorname{Tr}
+                 [r_iE_{\gamma,h}(Q_\epsilon(\mathbf z))],\\
+\bar p_{\gamma,h}(i,k,\epsilon,\mathbf z,0)
+ &=2^{-k}\operatorname{Tr}r_i
+                -\bar p_{\gamma,h}(i,k,\epsilon,\mathbf z,1).
+\end{aligned}
+\tag{130.3}
+$$
+
+These definitions extend the actual rows continuously for a
+mathematical supremum; they do not install $M(z)$ as an operation.
+

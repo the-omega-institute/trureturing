@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:98ac72658eed432a140e186c6d20df442a375e481a564bc28f3c280e47f532cf
+  normalized_sha256: sha256:98ac72658eed432a140e186c6d20df442a375e481a564bc28f3c280e47f532cf
+cas_ref: sha256:98ac72658eed432a140e186c6d20df442a375e481a564bc28f3c280e47f532cf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条仅定义N(n)的免费输入、预选时间表所能依赖的信息及空纤维取零的约定，没有给出识别表存在性、查询数等式或上下界。
+    previous_atom_id: a1cce0a05729969bfb08da878dad8270911ffdf0453f90046e608baba5af1138
+    next_atom_id: 6188c293d1a3ddaf4c35c1ad50f624eae421d8b0729963393639e3321803ddb2

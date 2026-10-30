@@ -1,0 +1,104 @@
+**Proposition 123.2 (Separated regimes and the uncollapsed window).**
+Abbreviate $\ell=\ell_{\mathfrak s}$, $k=k_{\mathfrak s}$,
+$K=K_{\mathfrak s}$, and put
+
+$$
+F(\varepsilon,\eta)=\frac{\varepsilon}{\eta+\sqrt\varepsilon},
+\qquad T(\varepsilon;A,\eta)=\min\{2,A+F(\varepsilon,\eta)\}.
+\tag{123.4}
+$$
+
+If $A\eta>0$ and
+$0<\varepsilon<2A\eta/K$, also with
+$\varepsilon\le E_{\mathfrak s}$, then
+
+$$
+\frac{\ell k\varepsilon}{\eta+2A}
+ \le\omega^{\rm all}_{\mathfrak s,h_0}(\varepsilon)
+ \le\omega_{\mathfrak s,h_0}(\varepsilon)
+ \le\frac{2K\varepsilon}{\eta+2A}.
+\tag{123.5}
+$$
+
+If $2A\eta/k\le\varepsilon\le E_{\mathfrak s}$, then
+
+$$
+\begin{aligned}
+\frac\ell2\min\{1,k,\sqrt k\}\,T(\varepsilon;A,\eta)
+ &\le\omega^{\rm all}_{\mathfrak s,h_0}(\varepsilon)\\
+ &\le\omega_{\mathfrak s,h_0}(\varepsilon)
+ \le2\max\{1,K,\sqrt K\}\,T(\varepsilon;A,\eta).
+\end{aligned}
+\tag{123.6}
+$$
+
+Thus the local and post-reflection estimates are separated by the
+explicit closed window
+
+$$
+\left[\frac{2A\eta}{K},\frac{2A\eta}{k}\right]
+ \cap(0,E_{\mathfrak s}],
+\tag{123.7}
+$$
+
+where (123.2) with the exact formula (122.6) applies. Endpoints are
+retained as written: the local assertion is strict, while the
+post-reflection assertion includes its entry endpoint. If a regime
+does not meet the common error range it makes no additional assertion.
+
+*Proof.* On $0\le\delta<2A\eta$, let $R=R(\delta;A,\eta)$.
+The smaller root in (122.6) is at most $(\eta+2A)/2$ and satisfies
+$\delta=R(\eta+2A-R)$. Therefore
+
+$$
+\frac\delta{\eta+2A}\le R
+ \le\frac{2\delta}{\eta+2A}.
+\tag{123.8}
+$$
+
+Since $K>k$, applying (123.8) at $k\varepsilon$ and
+$K\varepsilon$ in (123.2) proves (123.5).
+
+For $\delta\ge2A\eta$, let $p\ge2A$ be the uncapped root in
+the second line of (122.6), so $R=\min\{2,p\}$. Put
+$g=(\sqrt{\eta^2+4\delta}-\eta)/2$. The equation
+$\delta=p(p+\eta-2A)$ implies $p\ge g$, and also
+$p\le2A+g$, since writing $p=2A+z$ gives
+$\delta=(2A+z)(\eta+z)\ge z(\eta+z)$.
+Rationalisation of $g$ gives
+
+$$
+F(\delta,\eta)\le g\le2F(\delta,\eta).
+\tag{123.9}
+$$
+
+For the first inequality use
+$\sqrt{\eta^2+4\delta}\le\eta+2\sqrt\delta$; for the second
+use $\sqrt{\eta^2+4\delta}\ge\sqrt\delta$. Thus
+$p\ge\max\{2A,F(\delta,\eta)\}\ge(A+F(\delta,\eta))/2$ and
+$p\le2(A+F(\delta,\eta))$. Capping preserves the bounds
+
+$$
+\tfrac12 T(\delta;A,\eta)\le R(\delta;A,\eta)
+ \le2T(\delta;A,\eta).
+\tag{123.10}
+$$
+
+For any $b>0$ and $\varepsilon>0$,
+
+$$
+\min\{b,\sqrt b\}F(\varepsilon,\eta)
+ \le F(b\varepsilon,\eta)
+ \le\max\{b,\sqrt b\}F(\varepsilon,\eta).
+\tag{123.11}
+$$
+
+Indeed the ratio is
+$b(\eta+\sqrt\varepsilon)/(\eta+\sqrt b\sqrt\varepsilon)$,
+between $b$ and $\sqrt b$. Addition of $A$ and capping at $2$
+give the same comparison with factors enlarged to include $1$.
+Under the hypothesis of (123.6), both rescaled errors lie at or above
+$2A\eta$. Equations (123.2), (123.10) and (123.11) now prove (123.6).
+The interval (123.7) is precisely what these two separated
+applications leave between them. $\square$
+

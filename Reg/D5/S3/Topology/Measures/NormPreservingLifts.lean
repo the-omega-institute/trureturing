@@ -30,4 +30,27 @@ abbrev arbitraryLiftsScope := type_of% (@arbitrary_lifts_tendsto.{u,v,w})
 theorem arbitrary_lifts_actual : arbitraryLiftsScope.{u,v,w} :=
   @arbitrary_lifts_tendsto.{u,v,w}
 
+/-- Exact scopes for the finite positive-difference integration suppliers.
+These source bindings supply no four-slot realization or sensitivity evidence. -/
+theorem difference_integral_actual :
+    type_of% (@signedFunctional_sub_toSignedMeasure.{u}) :=
+  @signedFunctional_sub_toSignedMeasure.{u}
+
+theorem difference_variation_actual :
+    type_of% (@totalVariation_sub_toSignedMeasure_le.{u}) :=
+  @totalVariation_sub_toSignedMeasure_le.{u}
+
+/- Same-delivery partial source binding for the moved continuous pushforward
+supplier. A faithful role selects actual p and g pullback evaluation across
+arbitrary compact Borel carriers, including empty carriers. Replacing it by a
+constant equality or a finite nonempty carrier specialization would lose the
+source telescope. Realization equivalence, exact sourceSelection and global
+intervention/sensitivity/dependence are not established. -/
+theorem functional_map_actual : type_of% (@functional_map.{u,v}) :=
+  @functional_map.{u,v}
+
+/- The new target(s) above have an unfinished four-slot audit tracked at
+https://github.com/the-omega-institute/trureturing/issues/24319.
+The older finite-family issue 24040 is not used to cover this extension. -/
+
 end Reg.D5.S3.Topology.Measures.NormPreservingLifts

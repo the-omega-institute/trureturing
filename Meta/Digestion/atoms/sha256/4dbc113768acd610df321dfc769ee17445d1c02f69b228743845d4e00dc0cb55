@@ -1,0 +1,21 @@
+**命题 28.3（有向提升的能力与连续旋转的附加条件）。** 求值 $E$ 能保留部分次序信息，但不能恢复自由树的全部次序与括号。它只是标准附加乘法的一种提升；若进一步使用完整实四元数及其范数，单位四元数的共轭才给连续旋转结构，而这一结构不由四类型或离散 FIB 轨道免费取得。
+
+证明。$E\langle\alpha,\beta\rangle=k$、$E\langle\beta,\alpha\rangle=-k$，所以有向符号能分开这一对次序。可是结合性使不同树
+
+$$
+\langle\langle\alpha,\alpha\rangle,\beta\rangle,\qquad
+\langle\alpha,\langle\alpha,\beta\rangle\rangle
+$$
+
+都求值为 $(ii)j=i(ij)=-j$，故括号已被忘掉。仅有四类型的加法表也没有指定符号的乘法规则；$V_2$ 自身就是没有这套有向符号的闭合加法模型，因而标准提升不能称为唯一强迫。
+
+连续部分还使用 $q=q_0+q_1i+q_2j+q_3k$ 的实坐标、共轭 $\bar q$ 和范数 $|q|^2=q\bar q=\sum q_i^2$。对单位 $q$，映射 $v\mapsto qv\bar q$ 保持虚部和范数。若 $q=\cos(\theta/2)+n\sin(\theta/2)$，其中 $n$ 为单位虚向量，四元数乘法的标量积、向量积表达给
+
+$$
+qv\bar q=\cos\theta\,v
++(1-\cos\theta)(n\cdot v)n
++\sin\theta\,(n\times v).
+$$
+
+这是绕 $n$ 的角度 $\theta$ 旋转。轴角表示说明全部三维旋转可由这类实参数取得；$q$ 与 $-q$ 给相同共轭。若单位 $q$ 的共轭固定全部虚向量，它与 $i,j$ 都交换；由乘法表，其虚系数必须全零，故 $q=\pm1$。这给中心双覆盖的核。单位四元数为 $SU(2)$、双覆盖 $SO(3)$ 的经典对应见 Baez [Introduction](https://math.ucr.edu/home/baez/octonions/node1.html)，所用公式把该对应的范数与有向乘法前提写明。离散子群 $Q_8$ 和轨道三个值不包含这些连续角度；实际允许操作是否实现它们仍需新增合同。$\square$
+

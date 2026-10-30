@@ -1,0 +1,22 @@
+**Definition 11.2 (Unresolved all-real and ancestor statements).** The
+remaining all-real question retains the quantifier
+
+$$
+\exists (p,v)\in\mathbb R^2,\quad p\ne24,\quad
+(p,v)\in D_J\cap D_M,
+\tag{11.1}
+$$
+
+or its exhaustive negation. Its pairs must satisfy both strict distinctness
+guards in Definition 1.2, including the possibility of overlapping pairs.
+Only the explicitly specified box $Q_{70}$ is excluded here. The local
+curve has no asserted connection to the separate off-$24$ component of
+[B](FIB_OFF_P24_UNEQUAL_RATIO_COLLISION_GEOMETRY.md), and no classification
+of singular or unbounded sectors outside $Q_{70}$ follows.
+
+Even a solution of (11.1) would leave the same-fifth-response sixth-$J$
+child and all the ancestor conjunctions of O, Theorem 17.1. The local
+$4/3/2$ counts, whole-child $J$ injectivity and the deflated limit do not
+establish a fifth-$M$ $L_2$, an $H_4$ $L_3$, a guarded root $L_7$, an
+eight-versus-nine conclusion or an unrestricted recovery theorem.
+

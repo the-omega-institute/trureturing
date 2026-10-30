@@ -1,0 +1,42 @@
+**Corollary 60.4 (integer rounding and uniform relative overhead).**
+For every source in Definition 60.1,
+
+$$
+\begin{cases}
+F=1,\quad B=G=0,&h=0,\\
+0\le B-G\le h-1,\quad
+G\ge\lceil h+\log_2(h!)\rceil,&h\ge1.
+\end{cases}
+\tag{AAII.21}
+$$
+
+For integer $g\ge0$ set
+$K(g)=\max\{j\ge0:2^j j!\le2^g\}$. It is finite and $K(0)=0$.
+Whenever $G\ge1$,
+
+$$
+G\le B\le G+K(G)-1,\qquad
+K(g)=O\!\left(\frac{g}{\log_2(g+2)}\right)\quad(g\longrightarrow\infty).
+\tag{AAII.22}
+$$
+
+Consequently $B/G\to1$ uniformly over reachable sources as $G\to\infty$.
+This is uniform sublinear relative rounding overhead for the existing
+local bit payload, with no change to its operational installation.
+
+Proof. A local radix is one exactly when one child count is zero.
+Thus $h=0$ gives $F=1$ and $B=G=0$, and $h>0$ gives $F>1$.
+The elementary ceiling inequalities give
+$G=\lceil\sum_v\log_2R_v\rceil\le B$ and, for $h>0$,
+$B<\log_2F+h\le G+h$. Integrality yields $B-G\le h-1$.
+The factorial lower bound gives the remaining inequality in (AAII.21)
+and $h\le K(G)$, since $2^h h!\le F\le2^G$.
+
+For $j\ge2$, at least $j/2$ factors of $j!$ are at least $j/2$, so
+$\log_2(2^j j!)\ge(j/2)(1+\log_2j)$. If $2^j j!\le2^g$ and
+$j>\sqrt g$, this implies $j\le4g/\log_2g$ for $g>1$; otherwise
+$j\le\sqrt g$. These two bounds, with $j=0,1$ included, prove the
+stated asymptotic bound on $K$. Dividing (AAII.22) by $G$ gives a bound
+independent of $t$ that tends to one. The case $G=0$ is already exact,
+and no ratio with zero denominator is asserted. $\square$
+

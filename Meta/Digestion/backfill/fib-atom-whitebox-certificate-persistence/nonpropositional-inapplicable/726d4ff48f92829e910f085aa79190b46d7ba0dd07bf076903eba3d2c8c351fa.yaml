@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:726d4ff48f92829e910f085aa79190b46d7ba0dd07bf076903eba3d2c8c351fa
+  normalized_sha256: sha256:726d4ff48f92829e910f085aa79190b46d7ba0dd07bf076903eba3d2c8c351fa
+cas_ref: sha256:726d4ff48f92829e910f085aa79190b46d7ba0dd07bf076903eba3d2c8c351fa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Terminological definition: calls supplied residual candidates with nonempty pairwise disjoint failure sets a packing. The disjointness equation is an input condition; the lower bound is a separate atom.'
+    previous_atom_id: def8d9d6505f1ef47a8900274abcadf4ede7e4a81d44132efe785dc34ace97a5
+    next_atom_id: afe7c56cd399ca4fe4aba056766e7d8b875ea3f444bd7fd058c6cb620193c77d

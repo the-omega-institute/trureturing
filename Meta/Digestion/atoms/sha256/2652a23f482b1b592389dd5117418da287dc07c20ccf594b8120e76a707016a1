@@ -1,0 +1,25 @@
+## 446. Ye 短条带零密度与 FIB 相位接口
+
+Yangbo Ye 的 [*Zero density in short strips and short-interval bounds toward Hypothesis S*](../../../Library/Zeros/ye2026shortstripdensity.md)，arXiv:2610.15989v1，给出一个不同于仓内 Guth--Maynard 全局大值输入的短条带接口。其 Theorem 1.2 对 $2/3\le a\le1$ 的 zeta 零点计数给出
+
+$$
+N_\zeta(\sigma;T,T+T^a)
+\ll_{a,\varepsilon}T^{aB(\sigma)+\varepsilon},
+$$
+
+其中在 $7/10\le\sigma\le4/5$ 的分支为
+
+$$
+B(\sigma)=\frac{15(1-\sigma)}{3+5\sigma}.
+$$
+
+Theorem 1.3 进一步对
+
+$$
+\sum_n\Lambda(n)e(\alpha n^\beta)\,\varphi((n-K)/K^\delta)
+$$
+
+给出带显式频率 $m^{-1/2}$ 代价的平滑幂节省，zeta 应用的最小长度阈值为 $\delta>2/3$。
+
+这条输入目前不能接到 FIB Robin 主线：仓内五窗相位是黄金递归／双嵌入读出，尚无保持系数、平滑权重和同一实际 $N_*$ 的映射到 $e(\alpha n^\beta)$ 的定理；而短条带零密度本身也不提供全部 prime powers 的 signed Robin 余项。因此它是可运输的外部解析供应商和明确的接口缺口，不是新的 Robin 估计或 RH 证明。继续重做已有短区间素数计数不会消费这一缺口，必须先建立 FIB 相位到该振荡和的同源桥。
+

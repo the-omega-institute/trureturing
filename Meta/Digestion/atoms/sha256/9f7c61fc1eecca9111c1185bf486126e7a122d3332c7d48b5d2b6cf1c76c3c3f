@@ -1,0 +1,92 @@
+**定理 3.1（相位逼近取得最优上确界）。** 对定义 1.1 的实际矩阵与任意叶子，
+
+$$
+\sup_{\substack{k\ge2,\ \ell\ge1\text{ 整数}\\t\in\mathbb R}}
+n^{3/2}P_{k,\ell}(t)
+=\sup_{t\in\mathbb R}5^{3/2}P_{2,1}(t)=C_*.
+\tag{3.1}
+$$
+
+但对每一组有限整数参数 $k,\ell$ 与每个实数 $t$，均严格有
+
+$$
+n^{3/2}P_{k,\ell}(t)<C_*.
+\tag{3.2}
+$$
+
+一个显式逼近式（3.1）的时间列如下：令整数 $p_j,m_j$ 由
+
+$$
+p_0=2,\quad m_0=1,\qquad
+p_{j+1}=9p_j+20m_j,\quad
+m_{j+1}=4p_j+9m_j\quad(j\ge0)
+\tag{3.3}
+$$
+
+确定，并令
+
+$$
+b_*:=\frac{5+\sqrt5}{2},\qquad t_j=\frac{2\pi m_j}{b_*}.
+\tag{3.4}
+$$
+
+则 $t_j\to+\infty$ 且 $5^{3/2}P_{2,1}(t_j)\to C_*$。
+
+**证明。** 式（2.7）的三个非零谱贡献的符号为 $+,-,+$。由于常数项 $1/n$ 为正实数，三角不等式取等当且仅当另外两项也为正实数，即
+
+$$
+P_{k,\ell}(t)=B_{k,\ell}^2
+\quad\Longleftrightarrow\quad
+e^{iat}=-1\ \text{且}\ e^{ibt}=1.
+\tag{3.5}
+$$
+
+这是 Coutinho–Guo–Schmeits，上引文献 Lemma 5.2，p. 8 的相位判据在式（2.6）根列上的应用；其 Corollary 5.5，p. 11 给出整数谱支撑时相应的整除与奇偶条件。
+
+在 $(k,\ell)=(2,1)$ 处，$a_*=(5-\sqrt5)/2$，且
+
+$$
+\frac{a_*}{b_*}=\frac{3-\sqrt5}{2}\notin\mathbb Q.
+$$
+
+若式（3.5）在某实数 $t$ 成立，则 $a_*t=(2u+1)\pi$、$b_*t=2v\pi$，其中 $u,v\in\mathbb Z$。此时 $v\ne0$，否则 $t=0$ 与第一个等式矛盾；于是 $a_*/b_*=(2u+1)/(2v)\in\mathbb Q$，矛盾。故这组参数在所有有限时间均严格小于谱界；其余参数的谱界已由定理 2.1 严格小于 $C_*n^{-3/2}$，这证明式（3.2）。
+
+为证明上确界，式（3.3）等价于
+
+$$
+p_j+m_j\sqrt5=(2+\sqrt5)^{2j+1}.
+\tag{3.6}
+$$
+
+这是因为 $(2+\sqrt5)^2=9+4\sqrt5$。递推还说明每个 $p_j$ 为偶数、$m_j$ 为正奇数，且 $m_{j+1}\ge9m_j$。取共轭得
+
+$$
+\delta_j:=p_j-m_j\sqrt5=(2-\sqrt5)^{2j+1}\longrightarrow0,
+\tag{3.7}
+$$
+
+因为 $|2-\sqrt5|<1$。由式（3.4）得
+
+$$
+e^{ib_*t_j}=1,\qquad
+a_*t_j=\pi(3m_j-p_j+\delta_j).
+$$
+
+整数 $3m_j-p_j$ 为奇数，因此
+
+$$
+e^{ia_*t_j}=-e^{i\pi\delta_j}\longrightarrow-1.
+\tag{3.8}
+$$
+
+将其代入实际条目式（2.7），得到 $U(t_j)_{x,r}\to B_{2,1}$。特别地，还可直接写出误差
+
+$$
+|U(t_j)_{x,r}-B_{2,1}|
+=\frac{|e^{i\pi\delta_j}-1|}{a_*\sqrt5}
+\le\frac{\pi|2-\sqrt5|^{2j+1}}{a_*\sqrt5}.
+\tag{3.9}
+$$
+
+所以 $5^{3/2}P_{2,1}(t_j)\to5^{3/2}B_{2,1}^2=C_*$；结合定理 2.1 的全域上界即得式（3.1）。$\square$
+

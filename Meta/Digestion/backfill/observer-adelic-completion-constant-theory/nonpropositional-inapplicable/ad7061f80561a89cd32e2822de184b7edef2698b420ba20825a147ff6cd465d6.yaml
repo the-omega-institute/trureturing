@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ad7061f80561a89cd32e2822de184b7edef2698b420ba20825a147ff6cd465d6
+  normalized_sha256: sha256:ad7061f80561a89cd32e2822de184b7edef2698b420ba20825a147ff6cd465d6
+cas_ref: sha256:ad7061f80561a89cd32e2822de184b7edef2698b420ba20825a147ff6cd465d6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 检验低阶 universality 的实验指令；不是 universality 定理。'
+    previous_atom_id: 44b3c897aa0cbbe8344b1ae75a9adda7032d2f4b165aea5149ec1854e33c1842
+    next_atom_id: 8beba4e98c629f9788305d6f6b5f5c5dcdbea473d53042b192f7300c6327ced4

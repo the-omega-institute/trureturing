@@ -1,0 +1,43 @@
+#### 命题 11.1（共享来源标签的相关差）
+
+令 $\pi_\alpha\ne\pi_\beta$，以各半概率选择 $(\alpha,\alpha)$ 或 $(\beta,\beta)$。若 $\bar\pi=(\pi_\alpha+\pi_\beta)/2$，则
+
+$$
+\frac12(\pi_\alpha\otimes\pi_\alpha+\pi_\beta\otimes\pi_\beta)
+-\bar\pi\otimes\bar\pi
+=\frac14(\pi_\alpha-\pi_\beta)\otimes(\pi_\alpha-\pi_\beta)\ne0.
+$$
+
+**证明。**
+
+直接展开。非零差算子 $\Delta$ 的 Hilbert–Schmidt 范数为正，故 $\|\Delta\otimes\Delta\|_{\mathrm{HS}}=\|\Delta\|_{\mathrm{HS}}^2>0$。
+
+∎
+
+这正是项目新段中的例子（[4](#ref-repocontinuation)，§63.2）：每个条件来源对可制备为乘积态，仍不推出随机流无条件独立。
+
+完整经典记录空间记为 $(\mathcal R,\Sigma)$，定义分量测度
+
+$$
+\nu_{s,t}(B)=\Pr\{S=s,T=t,\mathsf R\in B\}.
+$$
+
+实际联合输出由状态值测度
+
+$$
+\Omega_\nu(B)=\sum_{s,t}\nu_{s,t}(B)\pi_s\otimes\pi_t
+$$
+
+表示，满足
+
+$$
+\operatorname{Tr}\Omega_\nu(B)=\Pr\{\mathsf R\in B\},\qquad
+\Omega_\nu(\mathcal R)=\rho_\mu.
+$$
+
+它是正算子值状态测度，不是 POVM 效果族：其总量是密度算子而非恒等算子。连续记录按可测事件保留，不能为每个连续值虚设一个归一正交向量。给定来源对后若还有随机种子，完整记录未必是纯记录；删掉它或把它换成固定辅助位会改变输入合同。
+
+这一进展为本稿规定了明确边界：独立乘法、实际联合律和完整记录都必须提供；Born 标定继续是原有密度算子模型的输入，正如项目命题 63.3 所明确说明。
+
+<a id="sec-12"></a>
+

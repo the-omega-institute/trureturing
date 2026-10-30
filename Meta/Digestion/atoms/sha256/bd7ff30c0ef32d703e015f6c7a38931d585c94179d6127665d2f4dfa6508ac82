@@ -1,0 +1,41 @@
+**Lemma 246.1 (Complex rank bound for the full local sum).** Let
+$\alpha\in\mathbb C$ and let $M_1,M_2,M_3\in M_2(\mathbb C)$
+be traceless. If
+
+$$
+X=\alpha I_8+M_1\otimes I_2\otimes I_2
+  +I_2\otimes M_2\otimes I_2
+  +I_2\otimes I_2\otimes M_3
+\tag{246.1}
+$$
+
+is nonzero, then $\operatorname{rank}_{\mathbb C}X\ge4$.
+
+Proof. If all $M_i$ vanish, nonzero $X=\alpha I_8$ has rank eight.
+Otherwise choose a nonzero $M_i$. A traceless scalar $2\times2$
+complex matrix is zero, so this $M_i$ is nonscalar. There is an $x$
+for which $x,M_ix$ are linearly independent. Indeed, if every nonzero
+vector were an eigenvector, applying this to a basis $e_1,e_2$ and
+to $e_1+e_2$ would force their eigenvalues to coincide and $M_i$
+to be scalar.
+
+Set $P=(M_ix,x)$. Its columns are independent, and the second column
+of $P^{-1}M_iP$ is $(1,0)^{\mathsf T}$, since $M_ix$ is the
+first column of $P$. Thus $(P^{-1}M_iP)_{12}=1$. Permute tensor
+factors to place the $i$th factor first; this is an invertible row
+and column permutation of (246.1). The other two local terms and
+$\alpha I_8$ together have the form $I_2\otimes Y$, with
+$Y\in M_4(\mathbb C)$. Applying the invertible left and right
+matrices $P^{-1}\otimes I_4$ and $P\otimes I_4$ gives
+
+$$
+I_2\otimes Y+(P^{-1}M_iP)\otimes I_4.
+\tag{246.2}
+$$
+
+Its upper-right $4\times4$ block is exactly $I_4$. This minor
+has determinant one, so the matrix has rank at least four. All the
+transformations preserve rank, proving the claim for the entire sum
+(246.1), including arbitrary cancellation among its terms. No spectral
+or Hermitian assumption has entered the proof. ∎
+

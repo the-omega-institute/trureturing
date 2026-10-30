@@ -1,0 +1,24 @@
+**Proposition 27.2 (the physical birth clock).** Write $F_0=0,F_1=1$
+and $F_{i+2}=F_{i+1}+F_i$. After $n$ completed updates from alpha,
+the number of births and the number belonging to updates strictly
+before the most recent one are, for $n\ge2$,
+
+$$
+ B_n=\sum_{t=2}^nF_{t-1}=F_{n+1}-1,\qquad
+ v_n=B_{n-1}=F_n-1,\qquad B_n-v_n=F_{n-1}.
+ \tag{GPO.73}
+$$
+
+Birth $j$, $1\le j\le B_n$, has an actual update index $t_j$
+and parent address $p_j$. The chronological list is ordered first
+by $t_j$ and then by physical lexicographic order of $p_j$.
+
+Proof. At cut $e\ge1$ the alpha and beta leaf counts are
+$F_{e-1}$ and $F_e$: replacement sends $(A,B)$ to $(B,A+B)$,
+starting with $(0,1)$ at cut one. Thus update $t\ge2$ splits
+$F_{t-1}$ old beta leaves. Summing gives the first identity; the
+last update's batch gives the other two. Definition 27.1 makes the
+displayed order the order of actual events. The update index is counted
+from the known actual initialization and completed acknowledgements;
+it is not an exposed hidden epoch or physical time coordinate. $\square$
+

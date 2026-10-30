@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:04658034a76315fc47cef4d11e4c25b9571dd1345f68d9aa66504f265e0c8e7c
+  normalized_sha256: sha256:04658034a76315fc47cef4d11e4c25b9571dd1345f68d9aa66504f265e0c8e7c
+cas_ref: sha256:04658034a76315fc47cef4d11e4c25b9571dd1345f68d9aa66504f265e0c8e7c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 只有第246.4节标题，未包含数学断言。
+    previous_atom_id: debdecdb9bfa24e19a37a153d64f7d896a76ab69670f03ed569174db04b5e316
+    next_atom_id: d41916b27f9707a2cbb09abead03acfdefa394e1d42f3d1ff83adc87d78140d4

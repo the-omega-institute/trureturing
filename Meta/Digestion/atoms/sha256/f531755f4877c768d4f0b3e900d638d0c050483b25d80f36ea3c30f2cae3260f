@@ -1,0 +1,12 @@
+**定义 2.1（非负边发射表示）。** 对整数 $N\ge1$，令 $\Theta_N$ 为所有三元组 $\theta=(\lambda,M_0,M_1)$，其中 $\lambda$ 是非负概率行向量、$M_0,M_1$ 是非负 $N\times N$ 矩阵，且
+
+$$
+A:=M_0+M_1,\qquad A\mathbf1=\mathbf1,\qquad
+\lambda A=\lambda,\qquad \lambda M_1M_1\mathbf1=0.
+\tag{2.1}
+$$
+
+零质量状态、结构零、可约性和周期性均允许。这是 [Universal 卷][U] 定义 4.1 的整个参数域，不加正转移或最小维数限制。
+
+对每个 $\theta\in\Theta_N$，以 $\lambda_{h_a}\prod_{i=a}^b M_{x_i}(h_i,h_{i+1})$ 为区间联合柱质量，按 [Universal 卷][U] 命题 4.2 得到两侧平稳联合律；记其可见边缘为 $P_\theta$。其实际柱概率是 $P_\theta([w]_a)=\lambda M_w\mathbf1$，其中 $M_w=M_{w_1}\cdots M_{w_{|w|}}$，空词的矩阵为单位阵。条件（2.1）的最后一项及平稳性使这个律支持于 $X$。
+

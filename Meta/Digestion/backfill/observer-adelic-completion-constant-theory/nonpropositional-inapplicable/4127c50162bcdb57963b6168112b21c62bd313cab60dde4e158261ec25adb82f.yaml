@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4127c50162bcdb57963b6168112b21c62bd313cab60dde4e158261ec25adb82f
+  normalized_sha256: sha256:4127c50162bcdb57963b6168112b21c62bd313cab60dde4e158261ec25adb82f
+cas_ref: sha256:4127c50162bcdb57963b6168112b21c62bd313cab60dde4e158261ec25adb82f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Question whether a positive realization exists, without asserting its existence.
+    previous_atom_id: 76da0c893b9405802112325ec7c3eced8cfed9e7df722d6d8c058692a9cfcdca
+    next_atom_id: 2938c8fd09869e3ae4751d7d5b77f80fb72f91faa74eb621fe225e735ce9f1c7

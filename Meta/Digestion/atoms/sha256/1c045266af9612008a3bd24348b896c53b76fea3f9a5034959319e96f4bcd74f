@@ -1,0 +1,25 @@
+**Construction 17.2 (one-Tick scout and constant-grid assay).** Execute
+one actual Tick and Hold, including when $n=0$. At the first earned
+terminal, request digital precisions $1,2,4,\ldots$, without changing
+the field, until the first complete report $k_*\ge2$. Let $p_*$ be
+its precision and $d$ the number of scout Reads. Compute integers
+
+$$
+L=6p_*,\qquad M=3(L+n),\qquad P=M+1.
+\tag{17.1}
+$$
+
+At that same held epoch Read all $b$ terminals at precision $P$.
+For $r=1,\ldots,n$, execute one actual Tick, Hold, and all $b$ Reads
+at the same precision $P$. Retain each actual integer $k_{r,j}$ and
+extract
+
+$$
+Y_{r,j}=2^{-M}\left\lfloor k_{r,j}/2\right\rfloor.
+\tag{17.2}
+$$
+
+Every input, integer response, provider bit, arithmetic operand and
+complete lifecycle has the actual backing of §§7–8. The scout Hold is
+also the epoch-zero Hold; no second epoch-zero Hold is inserted.
+

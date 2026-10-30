@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e3b3ef5109a0413f6176c4b1395d9338742e1fe74df2df8fe45b49b96ea6c868
+  normalized_sha256: sha256:e3b3ef5109a0413f6176c4b1395d9338742e1fe74df2df8fe45b49b96ea6c868
+cas_ref: sha256:e3b3ef5109a0413f6176c4b1395d9338742e1fe74df2df8fe45b49b96ea6c868
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: Innovation workflow choice: add a scale.'
+    previous_atom_id: 48112fadf6af78629c1ec1cbe881a52188293de1c9d3cbe9e66fd3a0f4984567
+    next_atom_id: e91c9b5d08c3ff8fca35a354b521e83e4908daf653c3fd4576e1fe91aa2cf7af

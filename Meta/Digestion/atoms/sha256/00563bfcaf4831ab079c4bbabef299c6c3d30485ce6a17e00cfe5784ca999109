@@ -1,0 +1,46 @@
+**Corollary 273.3 (the first-cylinder cusp and the domain distinction).**
+For $F,G\in\mathcal D_{\mathbb C}$, where
+$\mathcal D_{\mathbb C}=\mathcal D+i\mathcal D$ is the form domain of
+$H_{\mathbb C}$,
+
+$$
+\langle I_0F,\mathcal R_tI_0G\rangle
+ =\langle F,G\rangle-|t|\,\mathcal E_{\mathbb C}(F,G)+o(|t|)
+ \qquad(t\to0).
+\tag{273.9}
+$$
+
+In particular, with the first cylinders of (272.1),
+
+$$
+\begin{aligned}
+\langle I_0F_R,\mathcal R_tI_0F_L\rangle&=\frac{|t|}{4}+o(|t|),\\
+\langle I_0F_L,\mathcal R_tI_0F_L\rangle&=a-\frac{|t|}{4}+o(|t|).
+\end{aligned}
+\tag{273.10}
+$$
+
+Consequently $I_0F_L\notin\operatorname{Dom}(K)$: its coefficient in
+(273.10) has unequal one-sided derivatives at zero.  This does not conflict
+with $F_L\in\operatorname{Dom}(H^{1/2})$; the two generators act on
+different carriers and have different domains.
+
+*Proof.*  The form spectral measure has an integrable first moment for
+$F,G\in\mathcal D_{\mathbb C}$.  Dominated convergence in
+$(1-e^{-s\lambda})/s$ and polarization give
+$\langle F,T(s)G\rangle=\langle F,G\rangle-s\mathcal E_{\mathbb C}(F,G)+o(s)$.
+Substitute $s=|t|$ in (273.3).  Equations (273.10) use (111.17)--(111.19).
+If a vector belongs to $\operatorname{Dom}(K)$, the matrix coefficient of
+the strongly continuous unitary group is differentiable at zero; the cusp
+in (273.10) rules this out. $\square$
+
+The path translation in (273.1) therefore supplies a reversible unitary
+carrier whose time-zero correlations reproduce the heat histories, but it
+is not the optional same-carrier group $e^{-itH_{\mathbb C}}$ of
+Definition 271.3.  The latter still has the $o(|t|)$ disjoint-cylinder
+transition of Theorem 272.2, whereas (273.10) has a nonzero $|t|/4$ term.
+The earlier exclusion is consequently unchanged: the full path dilation
+uses an enlarged history carrier and the generator $K$, and does not install
+the state preparation, Born rule, coherent control, instrument, reference,
+or native-operation permissions excluded in Definition 272.3.
+

@@ -30,10 +30,10 @@ def past (t : ℤ) (z : PathSpace H) : ℕ → H × Bool :=
 
 def state (t : ℤ) (z : PathSpace H) : H := z.1 t
 
-private def joinHidden (m n : ℕ) (h : Fin (m + 1) → H) (k : Fin n → H) :
+def joinHidden (m n : ℕ) (h : Fin (m + 1) → H) (k : Fin n → H) :
     Fin (m + n + 1) → H := Fin.append (m := m) (n := n+1) (Fin.init h) (Fin.cons (h (Fin.last m)) k)
 
-private theorem join_left (m n : ℕ) (h : Fin (m + 1) → H) (k : Fin n → H)
+theorem join_left (m n : ℕ) (h : Fin (m + 1) → H) (k : Fin n → H)
     (j : Fin (m + 1)) : joinHidden m n h k ⟨j.val, by omega⟩ = h j := by
   by_cases hj : j.val < m
   · have he : (⟨j.val, by omega⟩ : Fin (m + n + 1)) =
@@ -51,13 +51,13 @@ private theorem join_left (m n : ℕ) (h : Fin (m + 1) → H) (k : Fin n → H)
     dsimp
     omega
 
-private theorem join_right (m n : ℕ) (h : Fin (m + 1) → H) (k : Fin n → H)
+theorem join_right (m n : ℕ) (h : Fin (m + 1) → H) (k : Fin n → H)
     (j : Fin (n + 1)) : joinHidden m n h k ⟨m + j.val, by omega⟩ =
       (Fin.cons (h (Fin.last m)) k : Fin (n+1) → H) j := by
   change Fin.append _ _ (Fin.natAdd m j) = _
   exact Fin.append_right _ _ j
 
-private theorem path_concat (M : Bool → Matrix H H ℝ) (m n : ℕ)
+theorem path_concat (M : Bool → Matrix H H ℝ) (m n : ℕ)
     (h : Fin (m + 1) → H) (k : Fin n → H) (w : Fin m → Bool) (v : Fin n → Bool) :
     pathMass M (m+n) (joinHidden m n h k) (Fin.append w v) =
       pathMass M m h w * pathMass M n (Fin.cons (h (Fin.last m)) k) v := by

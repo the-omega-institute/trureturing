@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9541b38a2c44d9283d1830f8741dece259148d523ebe1a23873d2296f1850d8c
+  normalized_sha256: sha256:9541b38a2c44d9283d1830f8741dece259148d523ebe1a23873d2296f1850d8c
+cas_ref: sha256:9541b38a2c44d9283d1830f8741dece259148d523ebe1a23873d2296f1850d8c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Document version/change summary; it reports topics included in the text, not a new theorem or a Lean verification result.
+    previous_atom_id: 804f5dbdd700a9252c681ffbab8255429c4df4924f25f506a73788a759c4e70f
+    next_atom_id: da326e2c4562f9b28708304f5c323634b5587b509d15de676967b80eff9ee4e6

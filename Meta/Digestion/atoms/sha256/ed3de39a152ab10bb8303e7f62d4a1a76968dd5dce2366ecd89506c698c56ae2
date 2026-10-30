@@ -1,0 +1,76 @@
+**Theorem 274.3 (the first-layer process is not a stationary two-state
+Markov process on the supplied clock).**
+The process $(Y_t)_{t\in\mathbb R}$ does not have the finite-dimensional
+law of any stationary, stochastically continuous two-state Markov process
+with stationary masses $(a,b)=(\varphi^{-1},\varphi^{-2})$ on the clock $s$.
+
+*Proof.* Put $q(s)=\langle A,T(s)A\rangle$.  Since
+$F_R=\mathbf1-A$, (111.18)--(111.19) give
+
+$$
+q(s)=a-\frac{s}{4}+o(s),\qquad
+q(s)-a^2=ab-\frac{s}{4}+o(s).
+\tag{274.8}
+$$
+
+Any Markov process having these finite-dimensional distributions inherits
+this continuity at the origin from (274.8), so the stochastic-continuity
+qualification introduces no extra model restriction.
+
+A stationary stochastically continuous two-state Markov process has a
+two-dimensional transition semigroup.  Reversibility with stationary
+masses $(a,b)$ forces its centered covariance to be
+
+$$
+q(s)-a^2=ab\,e^{-\gamma s}
+\tag{274.9}
+$$
+
+for some $\gamma\ge0$.  The right derivative in (274.8) forces
+$\gamma=1/(4ab)>0$.  If (274.9) held for the source law, uniqueness of
+Laplace transforms would make the $H_{\mathbb C}$ spectral measure of
+$A-a\mathbf1$ equal to $ab\,\delta_\gamma$, hence
+
+$$
+H(A-a\mathbf1)=\gamma(A-a\mathbf1).
+\tag{274.10}
+$$
+
+The form identity for (274.10), first with $A$ and then with $B$, would
+give
+
+$$
+\mathcal E(A,A)=\gamma\langle A,A-a\mathbf1\rangle=\gamma ab=\frac14,
+\qquad
+\mathcal E(B,A)=\gamma\langle B,A-a\mathbf1\rangle
+=\gamma a^2b=\frac a4.
+\tag{274.11}
+$$
+
+The first-cylinder energy in (111.17) and Proposition 274.2 instead give
+$\mathcal E(B,A)=1/8$.  Since $a=\varphi^{-1}\ne1/2$, this contradicts
+(274.11).  Thus the first-layer labels retain hidden predictive memory
+and do not close as the requested two-state Markov process. $\square$
+
+The full coordinate process $X_t$ remains the stationary reversible Markov
+state supplied by Theorem 270.4, and the complete addressed history is a
+closed stochastic memory.  The failure in Theorem 274.3 concerns only the
+two-label coarse graining: matching its first short-time transfer does not
+remove the deeper-cylinder memory.  It is therefore neither a deterministic
+two-state update nor evidence of quantum coherence.  The unitary path
+translation of §273 is a reversible mathematical dilation of this classical
+law; Born probabilities, coherent preparations, instruments and the native
+operation contract remain separate obligations.
+
+If one used only the first derivative in (274.8), the putative two-state
+rates would be
+
+$$
+r_{L\to R}=\frac{1}{4a}=\frac{\varphi}{4},\qquad
+r_{R\to L}=\frac{1}{4b}=\frac{\varphi^2}{4},\qquad
+r_{L\to R}+r_{R\to L}=\frac{\varphi^3}{4}.
+\tag{274.12}
+$$
+
+The depth-two identity (274.2), rather than the first derivative, is what
+rejects this otherwise uniquely determined candidate.

@@ -1,0 +1,46 @@
+**定理 86.4（fixed-$q$ positive-slack dictionary law）。** 对每个固定 $0<q\le1/1000$，在 $0<\delta\le A_q/4$ 上有
+
+$$
+\left\lceil\frac{\pi}{\arcsin\sqrt{\delta/A_q}}\right\rceil-1
+ \le M_q(\delta)
+ \le\left\lceil\pi\sqrt{B_q/\delta}\right\rceil.
+\tag{86.9}
+$$
+
+右侧对每个 $\delta>0$ 均成立。特别，
+
+$$
+\begin{gathered}
+M_q(\delta)=\Theta_q(\delta^{-1/2})\quad(\delta\downarrow0),\\
+\pi\sqrt{A_q}\le
+\liminf_{\delta\downarrow0}\sqrt\delta\,M_q(\delta)
+\le\limsup_{\delta\downarrow0}\sqrt\delta\,M_q(\delta)
+\le\pi\sqrt{B_q}.
+\end{gathered}
+\tag{86.10}
+$$
+
+对固定的 $N\ge2$ 个不同 phases，令
+$r_{\min}=\min_{i\ne j}|e^{i\varphi_i}-e^{i\varphi_j}|>0$。若
+
+$$
+0\le\delta<A_qr_{\min}^2/4,
+\tag{86.11}
+$$
+
+则该 finite catalogue 恰需 $N$ 个 dictionary labels。对于整个 circle，$M_q(0)=+\infty$；在另一个端点 $q=0$，所有 phases 都是 $P$，一个 decoder 足够。
+
+**证明。** 对 upper bound，取 $M$ 个等间隔 centers 并使用命题 86.3 的 actual maps。每个 phase 到某 center 的 circular distance 至多 $\pi/M$，所以其 chord 至多 $\pi/M$，由 (86.7) 达到 excess 不超过 $B_q\pi^2/M^2$。取 $M=\lceil\pi\sqrt{B_q/\delta}\rceil$ 即得 finite dictionary。这一 construction 给出每个 label 的完整 CPTP map，而非仅给一个希望实现的 effect。
+
+反过来，任意满足阈值的 $M$-map dictionary 在 $M+1$ 个等间隔 phases 中，至少有两个 phases 可以选择同一个 successful map。无论 selection fibres 有何形状，所选两 phases 的 chord 至少为 $2\sin(\pi/(M+1))$。由对 arbitrary common map 的 (86.4)，
+
+$$
+\delta\ge A_q\sin^2\frac{\pi}{M+1}.
+$$
+
+$M\ge1$ 使 $0<\pi/(M+1)\le\pi/2$；当 $0<\delta\le A_q/4$，反正弦的 monotonicity 给出 (86.9) 的 integer lower bound。再用 $\arcsin x/x\to1$ 与 ceiling error 有界，得到 (86.10)。这是在实际 common-map constraint 上应用有限 pigeonhole 与 circle covering；不要求 fibres regular、compact 或 measurable。
+
+对于 finite catalogue，(86.4) 与 (86.11) 排除同一个 label 含两个 tasks；逐 task 使用 (86.6) 的中心 decoder 则 $N$ labels 足够。zero-slack circle 的结论也可直接使用定理 83.1 的 pairwise optimal-image obstruction；$q=0$ 时使用保持 $P$ 的 decoder。∎
+
+定理 86.4 将推论 83.2 的 qualitative finite-catalogue margin 量化，并给出 continuum positive-slack compression。$q$ 必须先固定：$A_q,B_q$ 及 lower-bound interval 均依赖 $q$，没有 uniform joint-$(q,\delta)$ conclusion，也没有 exact finite-$\delta$ count 或 sharp leading coefficient。命题 86.2 的 stability 是 reduced image 的约束；实际 attaining maps 的 existence 不蕴含 decoder uniqueness。
+

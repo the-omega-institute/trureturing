@@ -1,0 +1,74 @@
+**Proposition 99.2 (Compression fails TP arbitrarily near the optimum).**
+For every $\varepsilon>0$ there is a legal $\mathcal R$ with
+$e(\mathcal R)\le L+\varepsilon$ for which the positive matrix
+$PJ_{\mathcal R}P$ is not the Choi matrix of a trace-preserving map.
+
+*Proof.* The replacer
+$\mathcal R_0(X)=\operatorname{Tr}(X)|0\rangle\langle0|$ is CPTP,
+with Kraus matrices $|0\rangle\langle j|$ and
+
+$$
+J_0=\sum_{j=0}^2|0j\rangle\langle0j| .
+\tag{99.3}
+$$
+
+Since $\Phi$ preserves trace, $\mathcal R_0\Phi$ sends every density
+to $|0\rangle\langle0|$. The input $|1\rangle\langle1|$ gives
+half trace distance one, and the density bound used in (99.2)
+gives $e(\mathcal R_0)=1$. The projector (97.5) acts by
+
+$$
+P|00\rangle=\sqrt{a/A}\,h,\qquad
+P|01\rangle=P|02\rangle=0,\qquad
+PJ_0P=\frac aA|h\rangle\langle h| .
+\tag{99.4}
+$$
+
+Its trace is $a/A<1$, because $b>0$. It therefore cannot have
+partial output trace $I_3$, which would require total trace three.
+Positivity of a compression has not preserved trace preservation.
+
+The same failure occurs for legal arbitrarily nearoptimal maps.
+For $0<t\le1$ put
+
+$$
+\mathcal R_t=(1-t)\mathcal R_*+t\mathcal R_0,\qquad
+J_t=(1-t)J_*+tJ_0 .
+\tag{99.5}
+$$
+
+The mixture is CPTP. For every complex density $\rho$, the triangle
+inequality applied to
+$(1-t)(\mathcal R_*\Phi(\rho)-\rho)+
+t(\mathcal R_0\Phi(\rho)-\rho)$ gives the convexity bound
+
+$$
+L\le e(\mathcal R_t)\le(1-t)e(\mathcal R_*)+
+t e(\mathcal R_0)=L+t(1-L).
+\tag{99.6}
+$$
+
+The lower bound is the exact minimum (96.5). Corollary 98.1 applied
+to $\mathcal R_*$ gives $PJ_*P=J_*$ and
+$\operatorname{Tr}J_*=3$. Consequently
+
+$$
+\operatorname{Tr}(PJ_tP)=3(1-t)+t\,a/A
+                      =3-t(3-a/A)<3\qquad(t>0).
+\tag{99.7}
+$$
+
+For a prescribed $\varepsilon>0$, choose
+$t=\min\{1,\varepsilon/(1-L)\}>0$; the denominator is positive by
+(96.5). Equations (99.6)–(99.7) give the asserted nearoptimal legal
+example with non-TP compression. Taking $t\downarrow0$ gives the
+arbitrary-nearness statement. Transporting by (98.7) yields the same
+failure for $P_DJ_{D_t}P_D$ in the original decoder coordinates.
+$\square$
+
+Rescaling a compressed matrix to restore its total trace would supply
+only one scalar equality, not the required matrix equation
+$\operatorname{Tr}_{\rm out}J=I_3$. The forbidden-mass estimate and
+positive compression thus supply neither a TP repair nor a bound on
+distance to the set of legal optimal decoders.
+

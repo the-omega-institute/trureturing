@@ -1,0 +1,59 @@
+## 3. The attained coefficient images and the original moment chart
+
+Put
+
+$$
+\mathcal O x=(CB^jx)_{0\leq j<\nu},\quad
+K=\ker\mathcal O,\quad A=\operatorname{im}\mathcal O,
+\quad a=\mathcal O x_0.
+\tag{3.1}
+$$
+
+Indices of a block vector run from zero to $\nu-1$, each block in
+$\mathbb R^p$. Scalar matrices below act on these blocks, equivalently
+by tensoring with $I_p$. Define
+
+$$
+V_{ij}=\frac{t_i^j}{j!},\qquad
+H_{kj}=\frac{T^{j+1}}{j!(k+j+1)},\qquad
+U(t)_{j\ell}=\begin{cases}
+t^{\ell-j}/(\ell-j)!,&\ell\geq j,\\
+0,&\ell<j.
+\end{cases}
+\tag{3.2}
+$$
+
+Direct expansion gives
+
+$$
+y=Va,\qquad \mu=Ha,\qquad
+\mathcal O E(t)x=U(t)\mathcal O x,\qquad W=HV^{-1}.
+\tag{3.3}
+$$
+
+The last identity holds on the whole polynomial coefficient space, not
+only on $A$: applying the interpolation formula to each monomial $t^j/j!$
+shows $WV=H$.
+
+The known Vandermonde supplier makes $V$ invertible: its determinant is
+$\prod_{i<j}(t_j-t_i)/\prod_{j<\nu}j!$. The known Hilbert-moment supplier
+makes $H$ invertible. In detail, with $G_{kj}=1/(k+j+1)$,
+
+$$
+H=G\operatorname{diag}(T^{j+1}/j!),\qquad
+q^{\mathsf T}Gq=\int_0^1\left(\sum_{j<\nu}q_js^j\right)^2ds>0
+\quad(q\ne0).
+\tag{3.4}
+$$
+
+Only $G$ is claimed positive definite here. The scaled matrix $H$ is
+generally nonsymmetric; invertibility of its factors does not assert
+positivity of $q^{\mathsf T}Hq$. Likewise $W$ is invertible, but need not
+have positive entries, preserve independent errors, or improve information.
+
+The matrices $U(t)$ obey $U(t)U(s)=U(t+s)$ and $U(-t)=U(t)^{-1}$.
+Equation (3.3), together with invertibility of $E(t)$, shows
+$U(t)A=A$ and $E(t)K=K$. These identities follow either from the finite
+exponential product or by collecting binomial coefficients. They fix
+the phase change between entrance data and current data.
+

@@ -1,0 +1,51 @@
+## 1. Source, detector, and task
+
+Fix the original parameters $a,\eta>0$. Let
+
+$$
+G=H^1\times\mathbb R,
+$$
+
+with the original coordinates $(x,y,z,w)$ and product
+
+$$
+(x,y,z,w)(x',y',z',w')=(x+x',y+y',z+z',w+w'+xy').
+$$
+
+Retain its identity $e$, Haar measure $\mu$, unit Green field $\Gamma$, selector $A(u)=\rho C(u)$, positive normalized $h$, and $m=h^2\mu$. Retain the complete complex form $V_0$ and correction $C_1$, its nonnegative self-adjoint generator $K$, and the conservative semigroup
+
+$$
+T_s=\exp(-sK)\quad(s\geq0).
+$$
+
+The actual diffusion $Z$ starts at $e$ at original time zero. At each positive deterministic read, the source law is $g_t m$, where $g_t\in L^2(m)$ and $g_t>0$ $m$-almost everywhere. The source, its clock, selector and entrance are the same in every comparison below.
+
+A detector is a fixed Borel simplex
+
+$$
+ f=(f_0,f_1,f_3,f_B),\qquad f_i:G\to[0,1],\qquad \sum_i f_i=1.
+$$
+
+Conditional on the entire source path, labels at commanded times are fresh and independent with conditional probabilities $f_i(Z_s)$. Reads are passive and do not change $Z$. The attempted deterministic replacement is one time-homogeneous Borel partition $P=(P_0,P_1,P_3,P_B)$ of $G$, installed before the timing menu is selected. It receives no hidden seed, source path, clock index, response history, or extra source state.
+
+For fixed $t>0$ write $\mu_t=g_t m$ and define
+
+$$
+\pi_i=\int g_t f_i\,dm,\quad C_{ij}=\int g_t f_i f_j\,dm,
+$$
+
+$$
+\nu_f^s(i,j)=\int g_t f_i T_s f_j\,dm,
+\quad J=1-\sum_i C_{ii}=\int g_t\left(1-\sum_i f_i^2\right)dm,
+$$
+
+and
+
+$$
+E=\int g_t(1-\max_i f_i)\,dm.
+$$
+
+For a partition put $\alpha_i=\mu_t(P_i)$ and denote its pair law by $\nu_P^s$. Total variation on a finite alphabet is half the $\ell^1$ distance. The pair law, the full label word, the joint source-label law, and the source-joint law of a finite timing policy are different targets and remain different throughout this volume.
+
+The source law supplies atomless positive-time marginals and strong $L^2$ continuity $T_su\to u$ as $s\downarrow0$. The existing fixed-pair attainment theorem supplies a partition separately for each fixed positive $(t,s)$; it does not supply one partition for a menu of gaps or an acquired installation procedure.
+

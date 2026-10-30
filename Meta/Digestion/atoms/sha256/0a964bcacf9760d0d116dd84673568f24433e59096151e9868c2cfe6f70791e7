@@ -1,0 +1,62 @@
+**定义 12.1（五顶点侧的实际有限分配）。** 对每个整数 $m\ge5$，取不交的有限标号集 $A,B$，满足 $|A|=5$、$|B|=m$，令 $G=K_{5,m}$。价值和分配采用定义 1.1–1.2 的普通邻接能量与完整阶乘 Shapley 公式。置
+
+$$
+H_m=(m+1)(m+2)(m+3)(m+4)(m+5),\qquad
+b_r=\sqrt{r+1}-\sqrt r\quad(0\le r\le4),
+$$
+
+$$
+W_{m,r}(k)=\binom4r
+\prod_{s=1}^r(k+s)\prod_{s=1}^{4-r}(m+s-k),\qquad
+P_m(k)=\sum_{r=0}^4b_rW_{m,r}(k),
+$$
+
+其中空乘积为 $1$。显式地，五个前驱类全部保留为
+
+$$
+\begin{aligned}
+P_m(k)&=(m+4-k)(m+3-k)(m+2-k)(m+1-k)\\
+&\quad+4b_1(k+1)(m+3-k)(m+2-k)(m+1-k)\\
+&\quad+6b_2(k+1)(k+2)(m+2-k)(m+1-k)\\
+&\quad+4b_3(k+1)(k+2)(k+3)(m+1-k)\\
+&\quad+b_4(k+1)(k+2)(k+3)(k+4).
+\end{aligned}
+$$
+
+每个 $A$ 顶点及每个 $B$ 顶点的实际支付分别是
+
+$$
+x_m=\frac2{H_m}\sum_{k=0}^m\sqrt k\,P_m(k),\qquad
+y_m=\frac{2\sqrt{5m}-5x_m}{m}.
+\tag{12.1}
+$$
+
+它们满足 $x_m,y_m>0$ 和 $5x_m+my_m=2\sqrt{5m}$。对每个实际联盟 $C$，若 $i=|C\cap A|$、$j=|C\cap B|$，则
+
+$$
+d_m(i,j)=2\sqrt{ij}-ix_m-jy_m,\qquad
+D_{5,m}=\max_{0\le i\le5,\ 0\le j\le m}d_m(i,j).
+\tag{12.2}
+$$
+
+每个整数计数对恰有 $\binom5i\binom mj$ 个标号实现。
+
+**证明。** 固定一个 $A$ 顶点，按其前驱中另外四个 $A$ 顶点的个数 $r$ 及 $B$ 顶点的个数 $k$ 分类。该类的完整阶乘权重和是
+
+$$
+\binom4r\binom mk\frac{(k+r)!(m+4-k-r)!}{(m+5)!}
+=\frac{W_{m,r}(k)}{H_m}.
+$$
+
+边际为 $2\sqrt k\,b_r$，故对全部 $0\le r\le4$、$0\le k\le m$ 求和就是 (12.1)，包括零边际的 $k=0$。式 (2.1)–(2.3) 的谱计算、排列平均、同侧置换与效率给出价值、对称性、正性及 $y_m$。这对任意所述标号集成立。最后逐侧选取顶点给出标号数，与 (9.2) 一致。∎
+
+以下只在同一个实际分配上比较联盟。记
+
+$$
+U_m=\frac{5x_m}{2\sqrt{5m}},\quad
+\delta_m=2U_m-1,\quad
+c_m=\sqrt m\,y_m=2\sqrt5(1-U_m),\quad
+\tau_m=\frac{1-U_m}{U_m}.
+\tag{12.3}
+$$
+

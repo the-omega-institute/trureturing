@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d571db5dde75668223040376f2878632118350f56afff97f9ee3a124e2ef0a62
+  normalized_sha256: sha256:d571db5dde75668223040376f2878632118350f56afff97f9ee3a124e2ef0a62
+cas_ref: sha256:d571db5dde75668223040376f2878632118350f56afff97f9ee3a124e2ef0a62
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 跨文本比较需保留的输入和规范内容的分类表，表中没有数学等式或结论。
+    previous_atom_id: 9b8827fb9e9c76055aa64ced6b514c72a0249df486f33683fd71b6c5333d8de0
+    next_atom_id: e6bf0e1425dfee963d056e4b767668f0d6d42d073e78d7ab43631375caf00ea0

@@ -1,0 +1,23 @@
+**Theorem 6.2 (Uniform normalized gap outside the two-hub family).** Under the assumptions of Theorem 6.1, let $I$ be any infinite set of orders for which $G_n\notin\mathcal B(n,\ell_n)$ up to relabelling. Then
+
+$$
+\liminf_{\substack{n\to\infty\\n\in I}}nE(G_n)\ge\frac92,
+$$
+
+and consequently
+
+$$
+\liminf_{\substack{n\to\infty\\n\in I}}
+ n\bigl(E(G_n)-E^\ast(n,\ell_n)\bigr)
+\ge\frac92-F(\alpha)\ge\frac5{12}.
+$$
+
+**Proof.** If the first liminf is infinite there is nothing to prove. Otherwise take a subsequence along $I$ attaining its finite liminf, and bound $nE(G_n)$ on it by a fixed $C$. Theorem 3.1 gives eventual two-layer structure with at least two sinks. Exactly two would force $\mathcal B(n,\ell_n)$ by the actual vertex and edge counts in Theorem 4.1. Thus these graphs have at least three sinks. Applying Theorem 2.1 to these same graphs with $\eta=C/n$ gives
+
+$$
+nE(G_n)\ge\frac{ns^2}{(2+C/n)(n-s)}
+\ge\frac9{2+C/n}.
+$$
+
+Taking the limit proves the first inequality. Theorem 6.1 permits subtraction of the convergent minimum, and $F(\alpha)\le49/12$ gives $9/2-F(\alpha)\ge5/12$. ∎
+

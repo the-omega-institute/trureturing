@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bcadb577c49e61df1094acd78f4acfba62aae34830b4c9d042d8019290178f5b
+  normalized_sha256: sha256:bcadb577c49e61df1094acd78f4acfba62aae34830b4c9d042d8019290178f5b
+cas_ref: sha256:bcadb577c49e61df1094acd78f4acfba62aae34830b4c9d042d8019290178f5b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 说明 prime-indexing 的用途并规定因果分解需提供证据，属于方法纪律，未断言具体机制独立。'
+    previous_atom_id: 167819581ac3cd68019a5ffb5820da4304b64d7b5556b35424e14a22e292b509
+    next_atom_id: d4c50e354b569396f9b569befb92e5172674c5d91917a8c9ee3e84e244079f4f

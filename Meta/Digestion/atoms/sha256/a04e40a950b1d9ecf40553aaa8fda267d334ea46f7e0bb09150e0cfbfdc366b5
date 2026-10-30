@@ -1,0 +1,26 @@
+**Definition 131.1 (Compact argmin fibers and extremal retention radii).**
+Fix the source, $0<A<1$ and the unit $f\perp e$ of Definition
+125.1. Choose any $0<\bar\eta<\sqrt{1-A^2}$. For
+$0\le\eta\le\bar\eta$ retain $h_0(\eta)=Ae+\eta f$, and put
+
+$$
+\begin{aligned}
+\mathcal C
+ &=\{(\gamma,h):|\gamma|\le1,\ \|h\|\le1,
+                         \operatorname{Re}(e^\dagger h)\le0\},\\
+\Gamma_j(\eta)
+ &=\{(\gamma,h)\in\mathcal C:
+                 d_j(\gamma,h;h_0(\eta))=\mu_j(\eta)\},\\
+r_j^-(\eta)&=\min_{(\gamma,h)\in\Gamma_j(\eta)}|\gamma|,
+\qquad
+r_j^+(\eta)=\max_{(\gamma,h)\in\Gamma_j(\eta)}|\gamma|,
+                         \qquad j=f,a.
+\end{aligned}
+\tag{131.1}
+$$
+
+For positive $\eta$, $\mu_j,\nu_j$ are exactly (124.2), (126.6);
+at $\eta=0$ use those same compact minimizations to extend them.
+The set $\mathcal C$ is the original reflection side with the
+auxiliary zero-retention slice included, not a tangent feasible set.
+

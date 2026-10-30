@@ -1,0 +1,37 @@
+**Theorem 26.2 (Transport of the original exact fifth response).**
+The parameter defined by Theorem 8.1 satisfies $p_J\in\mathcal K$.
+
+Proof. Use the original $F_J,m_J,C_J$ in (8.1)–(8.2), without
+rescaling or changing the root system. Exact substitution gives
+
+$$
+\|\bar z-m_J\|_\infty<10^{-18},\qquad
+\|C_JF_J(\bar z)\|_\infty<2\cdot10^{-51}.
+\tag{26.3}
+$$
+
+Theorem 8.1 supplies, on the entire original box,
+$q=115486/10^8<1$ for the contraction $z\mapsto z-C_JF_J(z)$.
+Both $\bar z$ and its inherited fixed point $z_J$ lie in that box.
+The contraction inequality therefore gives
+
+$$
+\|\bar z-z_J\|_\infty\le\frac{2\cdot10^{-51}}{1-q}
+ <3\cdot10^{-51}<2\cdot10^{-48}.
+\tag{26.4}
+$$
+
+The original expressions (1.6), (2.1), (2.3), (7.1)–(7.2), (1.7)
+on $\|z-\bar z\|_\infty\le2\cdot10^{-48}$ give the exact inclusion
+
+$$
+|p(W_0(z))-p_c|<10^{-44}.
+\tag{26.5}
+$$
+
+For (26.3) substitute the rational vector (26.2); for (26.5) the
+rational ball inclusions (30.2) below applied to those same expressions
+supply the bound. Every denominator excludes zero, already on the
+larger box by Theorem 8.1. Equations (26.4)–(26.5) imply (26.1)
+for the original exact $p_J$. ∎
+

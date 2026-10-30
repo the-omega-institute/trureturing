@@ -1,0 +1,214 @@
+**Theorem 118.3 (uniform separation from the exact original passive pair).**
+For every fixed original $a,\eta,t,\Delta>0$ and every native parameter tuple
+of Definition 118.1, the constants in Definition 118.2 satisfy
+$0<\kappa<\infty$, $\delta>0$, and
+
+$$
+\operatorname{TV}(\nu_f,\Pi_{\rm N})\ge\delta
+\quad\text{for every }f\in\mathcal F,\qquad
+\inf_{f\in\mathcal F}\operatorname{TV}(\nu_f,\Pi_{\rm N})\ge\delta>0.
+\tag{118.8}
+$$
+
+This is a source- and time-dependent existence bound, independent of every
+Borel emission tuple. It supplies no cross-source or cross-time uniform
+constant, numerical value for $\kappa$ or $d_\alpha$, computed rate or sample bound.
+The passive contract remains Definition 117.3: there is no source reset,
+postselection, event sampling, read intervention, retained controller or shared
+noise memory. No stationary initial source, global heat-kernel premise,
+logarithmic Sobolev constant, spectral gap, compactness of the full semigroup,
+extra emission regularity or stronger approximation premise is required.
+The conclusion concerns these unconditional classical records; it supplies no
+coherent operations, physical realization or native-origin correspondence and
+places no obstruction on the different operational classes in Definition 117.6.
+
+**Proof.** First identify the local part of the full form, retaining its
+original source domain. On a neighborhood of $\overline D$, Theorem 115.2
+makes $h$ smooth and strictly positive; $h,h^{-1}$ and their required derivatives
+are bounded there. The original principal matrix $A_0$ has quadratic symbol
+
+$$
+p^{\mathsf T}A_0(x)p
+ =a\bigl(p_x^2+(p_y+xp_w)^2+p_z^2\bigr)+\eta p_w^2.
+\tag{118.9}
+$$
+
+This is exactly (115.10). It is positive definite for every original
+$a,\eta>0$, and uniformly so on that compact neighborhood. Together with
+the upper and lower bounds on $h^2$, it makes the local full form norm
+equivalent to the ordinary $H^1$ norm. Consequently the part domain
+$\{v\in\mathscr V:\widetilde v=0\text{ quasi-everywhere on }G\setminus D\}$,
+identified by zero extension, is precisely the complex $H_0^1(D)$.
+Indeed, a part-domain vector is locally $H^1$ on a neighborhood of
+$\overline D$ and is zero outside $D$. Across the smooth boundary its zero
+extension has zero trace, so its restriction belongs to $H_0^1(D)$.
+Conversely, the defining $C_c^\infty(D)$ approximants to any $H_0^1(D)$ vector
+converge in the equivalent local form norm. Their zero extensions lie in
+$\mathscr V_0$ and converge in the full form norm, giving that vector in the
+part domain. These vectors vanish on a neighborhood of $e$, with source
+trace zero. Polarization of (115.15) thus gives the exact part energy
+
+$$
+\mathscr E^D[v,z]
+ =\int_D\left(a\sum_{i=1}^3\overline{X_iv}X_iz
+       +\eta\overline{\partial_wv}\partial_wz\right)dm,
+\qquad v,z\in H_0^1(D).
+\tag{118.10}
+$$
+
+This is also the $D$-part of the source-killed form in (116.9)–(116.11).
+It is obtained by taking a part of the form, not by restricting the operator
+to $D(K)\cap\mathscr V_0$, which (116.11) distinguishes from the part operator.
+
+Multiplication by the actual $h$ maps $H_0^1(D)$ bijectively onto itself
+and is unitary from $L^2(D,m)$ to $L^2(D,\mu)$.
+Apply the original ground-state identity (115.18) on $C_c^\infty(D)$ and
+then close it on this domain. It identifies the conjugated part with $H_D$,
+whose form is
+
+$$
+q_D[\phi]
+ =\int_D\left(a\sum_{i=1}^3|X_i\phi|^2
+       +\eta|\partial_w\phi|^2-g_c\Gamma|\phi|^2\right)d\mu,
+\qquad \phi\in H_0^1(D),\qquad g_c=16\sqrt{a\eta}.
+\tag{118.11}
+$$
+
+In particular the real potential is $-g_c\Gamma$, with its original sign.
+All coefficients are bounded and smooth on $\overline D$, and the principal
+matrix is uniformly elliptic there. The raw Haar measure is exactly
+Lebesgue measure in these coordinates, so no measure or time normalization
+enters this identification.
+
+For the local kernel use Arendt–ter Elst–Glück,
+[*Strict positivity for the principal eigenfunction of elliptic operators with
+various boundary conditions*, arXiv:1909.12194v3, §4.1 and Remark 4.2,
+Corollary 3.5](https://arxiv.org/pdf/1909.12194v3).
+The coefficient hypotheses are those of §4, with $\Omega=D$, principal
+coefficients $A_0$, divergence and first-order lower coefficients $b_k=c_k=0$,
+and zeroth coefficient $c_0=-g_c\Gamma$. The bounded connected smooth annulus
+is Wiener regular, as required in §4.1. Its Dirichlet form is exactly
+(118.11). Section 4.1 supplies the positive irreducible holomorphic
+strongly continuous semigroup $S_s=e^{-sH_D}$ on $L^2(D,\mu)$ and
+$S_sL^2(D,\mu)\subset C_0(D)$ for every $s>0$.
+Here $H_D$ is self-adjoint, so its adjoint has the identical smoothing property.
+The restriction of $S$ to $C_0(D)$ is a strongly continuous semigroup by the
+same section. For each $x\in D$, choose $\psi\in C_c(D)$ with $\psi(x)\ne0$;
+uniform convergence $S_s\psi\to\psi$ as $s\downarrow0$ gives a nonzero
+evaluation at $x$ for some $s>0$. Self-adjointness gives the adjoint evaluation
+condition as well. Thus all three hypotheses of Corollary 3.5 hold with
+its exponent $p=2$. That corollary gives, for every $s>0$, a jointly continuous
+spatial kernel $k_D(s,\cdot,\cdot)$, strictly positive at every pair in
+$D\times D$. Remark 4.2 also records the classical Dirichlet kernel positivity.
+
+Conjugating back by the original $h$ gives the semigroup identity below,
+and hence the identity $m$-a.e. for the properly associated process versions:
+
+$$
+\begin{aligned}
+Q_s^Dv(x)
+ &=h(x)^{-1}\int_D k_D(s,x,y)h(y)v(y)\,d\mu(y)\\
+ &=\int_D p_D(s,x,y)v(y)\,dm(y).
+\end{aligned}
+\tag{118.12}
+$$
+
+Thus $p_D(s,\cdot,\cdot)$ is continuous and strictly positive on $D\times D$.
+Compactness of $C\times C\subset D\times D$ proves $0<\kappa<\infty$.
+This application imports only the bounded-domain kernel, with no assertion
+of a global pointwise kernel for the singular-source endpoint.
+
+For the relation to the full process use Lenz–Stollmann,
+[*On the decomposition principle and a Persson type theorem for general regular
+Dirichlet forms*, arXiv:1705.10398v2, §1, equation (1)](https://arxiv.org/pdf/1705.10398v2).
+Their space, measure, regular form, operator and open set are respectively
+$G,m,\mathscr E,K,D$. Regularity and proper association are supplied by
+Theorems 115.3 and 116.3; the part form is (118.10).
+Their equation (1) identifies its semigroup with the survival expression
+(118.6) almost everywhere. Since the survival indicator is at most one,
+for every nonnegative Borel $v\in L^2(G,m)$,
+
+$$
+T_\Delta v(x)\ge Q_\Delta^D(v|_D)(x)
+\quad\text{for }m\text{-a.e. }x\in D.
+\tag{118.13}
+$$
+
+This uses only that equation's regular-form part correspondence, not the
+additional spectral hypotheses of the cited paper's later results.
+Proper association identifies the transition expectations up to null sets;
+the actual source-at-$t$ law $g_t m$ makes those null sets immaterial.
+For $v=f_3$, (118.12)–(118.13) imply
+$T_\Delta f_3(x)\ge\kappa\int_C f_3\,dm$ for $m$-a.e. $x\in C$.
+The unchanged shared-path formula (118.2) now yields
+
+$$
+\nu_f(1,3)
+ \ge\kappa\left(\int_Cg_t f_1\,dm\right)
+              \left(\int_C f_3\,dm\right).
+\tag{118.14}
+$$
+
+Only a surviving component of the full transition was bounded below.
+The process observed in $\nu_f$ remains the original conservative diffusion,
+with no killing, conditioning, reset or intervention in its law.
+
+It remains to make (118.14) uniform over every Borel $f$.
+For the exact matrix (117.10), the column sums are
+$c_{\rm N}+q_{\rm N}+p_{\rm N}+r_{\rm N}=1$,
+$a_{\rm N}+p_{\rm N}+q_{\rm N}=1$ for the next three columns, and
+$r_{\rm N}+b_{\rm N}=1$ for the last. Thus $\pi P_{\rm N}=\pi$.
+The singleton preimages $\chi^{-1}(1)=\{1\}$ and $\chi^{-1}(3)=\{3\}$ give
+
+$$
+\Pi_{\rm N}(\{1\}\times\mathcal A)=\frac15,\qquad
+\Pi_{\rm N}(\mathcal A\times\{3\})=\frac15,\qquad
+\Pi_{\rm N}(1,3)=\frac15(P_{\rm N})_{13}=0.
+\tag{118.15}
+$$
+
+These identities hold also when $p_{\rm N}=q_{\rm N}$ or
+$r_{\rm N}=s_{\rm N}$, with no native parameter exclusion.
+Write $d=d_f$. If $d\ge1/20$, then $d\ge\delta$ immediately.
+Suppose $d<1/20$. Total variation bounds the difference on every marginal
+event. Summing (118.2) over the other label, conservation and (117.2) give
+
+$$
+\int_Gg_t f_1\,dm\ge\frac15-d,\qquad
+\int_Gg_{t+\Delta}f_3\,dm\ge\frac15-d.
+\tag{118.16}
+$$
+
+Subtract the two tails in (118.5), using $0\le f_y\le1$, to obtain
+
+$$
+A_1:=\int_Cg_t f_1\,dm>\frac1{10},\qquad
+A_3:=\int_Cg_{t+\Delta}f_3\,dm>\frac1{10}.
+\tag{118.17}
+$$
+
+Cauchy–Schwarz on $(g_{t+\Delta}\sqrt{f_3})\sqrt{f_3}$ over $C$ gives
+
+$$
+A_3^2
+ \le\left(\int_Cg_{t+\Delta}^2f_3\,dm\right)
+      \left(\int_Cf_3\,dm\right)
+ \le B\int_Cf_3\,dm,
+\qquad \int_Cf_3\,dm>\frac1{100B}.
+\tag{118.18}
+$$
+
+Combining (118.14), (118.17) and (118.18), and testing total variation on
+the forbidden singleton of (118.15), proves
+
+$$
+d\ge\nu_f(1,3)>\frac{\kappa}{1000B}\ge\delta.
+\tag{118.19}
+$$
+
+Both cases establish (118.8). Positivity and finiteness of $B$ follow from
+(117.3) and $\alpha d_\alpha>0$, so $\delta>0$.
+All localization constants were fixed from the original source and times
+before $f$ was chosen. Neither a stationary replacement for $g_t m$ nor any
+regularity approximation to the Borel emissions entered the argument. $\square$
+

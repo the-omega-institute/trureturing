@@ -1,0 +1,140 @@
+**Theorem 46.1 (Mixed type and terminal shifts in the actual grading).**
+For Definition 45.1 put
+
+$$
+M=8^r(45^s-44^s),\qquad
+D=5^r13^s+2\cdot3^r8^s,\qquad d=3+3r+5s.
+\tag{46.1}
+$$
+
+Then $|\Gamma_3|=1$, $|\Gamma_5|=M$,
+$\operatorname{type}(R)=1+M$, $|\mathcal I|=D$ and
+$\dim R=d$. In any minimal standard graded $P$-free resolution
+$\mathcal F_\bullet\to R$, the projective dimension is
+$c=D-d$ and the entire final module is
+
+$$
+\mathcal F_c
+=P(-(D-3))\ \oplus\ P(-(D-5))^M.
+\tag{46.2}
+$$
+
+The convention is $P(-h)_m=P_{m-h}$, so its free generator has
+degree $h$. Equivalently the only terminal graded Betti numbers are
+$\beta_{c,D-3}=1$ and $\beta_{c,D-5}=M$.
+
+Proof. At degree five with endpoints $c_a=c_b=2$, the five-cycle
+private triple $(x_1,x_2,x_3)$ satisfies precisely
+
+$$
+x_1,x_2,x_3\ge1,\qquad x_1,x_3\le2,\qquad
+x_1+x_2\le4,\quad x_2+x_3\le4,\quad
+x_1+x_2+x_3\le5.
+\tag{46.3}
+$$
+
+The last inequality is the strict cycle bound:
+$2+2+x_1+x_2+x_3\le2\cdot5-1$. It cannot be discarded.
+If $x_2=1$, the two endpoint-private coordinates are arbitrary
+in $\{1,2\}$, giving four choices. If $x_2=2$, their sum is
+at most three, giving three choices. If $x_2=3$, the edge bounds
+force $x_1=x_3=1$, giving one. No larger $x_2$ is possible.
+There are exactly $4+3+1=8$ triples. The nine edge-feasible
+triples include $(2,2,2)$, which is excluded because its cycle
+total is ten, whereas the required bound is nine.
+
+For a seven-cycle at this same boundary, the private quintuple
+$(y_1,\ldots,y_5)$ is specified by
+
+$$
+y_i\ge1,\qquad y_1,y_5\le2,\qquad
+y_i+y_{i+1}\le4\ (1\le i<5),\qquad
+\sum_{i=1}^5y_i\le10.
+\tag{46.4}
+$$
+
+Its local count $45$, with exactly $44$ choices other than
+$(2,2,2,2,2)$, is the supplied endpoint count of Proposition
+42.4, equations (42.8)–(42.9), also recorded at $(2,2)$ in
+Proposition 43.3. These are exactly the same degree and adjacent
+endpoint parameters, with the same strict total condition. The
+single excluded choice from those $45$ is the local basic vector
+$\nu_{C,2}$ when counting nonbasic choices. Thus no new local
+seven-cycle counting theorem is needed.
+
+Every triple in (46.3) and quintuple in (46.4) specifies a local
+interior vector with the same global boundary $(5,2,2)$. Their
+private coordinates are disjoint. By (45.7) and the interior
+inequalities, arbitrary such choices give exactly one global
+interior exponent. Theorem 45.2 says it is basic precisely when
+at least one of the $s$ seven-cycle choices is all twos. Thus
+there are $8^r45^s$ candidate interiors and exactly $8^r44^s$
+with no basic branch. Their difference is $M$. The quotient-basis
+statement of that theorem, together with the unique degree-three
+class, gives type $1+M$.
+
+To count the actual variables of $P$, let $f_n$ be the number of
+independent sets in a path on $n$ vertices. Splitting on its first
+vertex gives $f_0=1$, $f_1=2$ and
+$f_n=f_{n-1}+f_{n-2}$ for $n\ge2$. In shared state $O$, a five-cycle
+leaves its three-vertex private path, giving $f_3=5$, and a
+seven-cycle leaves its five-vertex path, giving $f_5=13$.
+In state $A$, the private neighbor of $a$ is forced absent;
+the remaining paths have respectively two and four vertices,
+giving $f_2=3$ and $f_4=8$. State $B$ gives the same counts.
+These states are disjoint and exhaustive, and all private choices
+are independent conditional on the one shared state. Hence
+$D=5^r13^s+2\cdot3^r8^s$. Distinct $I$ give distinct
+$\gamma_I$, so the map $P\to R$ has no linear relation;
+this is the stated standard graded presentation on all actual
+modes. The graph has $2+3r+5s$ vertices, and the full group lattice
+and cone in Theorem 45.2 give $\dim R=1+|V(G)|=d$.
+
+For the homological conclusion use these particular $R$ and $P$.
+The polynomial ring has depth $D$ at its homogeneous maximal ideal
+$\mathfrak n=(z_I)_I$, and its nonzero finite quotient $R$ has depth
+$d$ by Cohen–Macaulayness. Hilbert syzygy gives finite projective
+dimension. Auslander–Buchsbaum, Stacks Project, Proposition
+10.111.1, tag 090U [AB44], applied at $\mathfrak n$, gives
+$\operatorname{pd}_P R=D-d=c$. A minimal graded resolution
+localizes to a minimal local one, so this is also its graded
+length. The minimal homogeneous-generator and localization
+statements are also Barile–Bruns, Theorem 3.7 [BB41].
+
+The graded polynomial canonical module is $\omega_P=P(-D)$.
+Apply the classical graded canonical-Ext formula of Barile–Bruns,
+Theorem 4.5(a) and its proof [BB41], with regular graded-local ring
+$P$ and Cohen–Macaulay residue ring $R$ of codimension $c$:
+
+$$
+\omega_R\simeq\operatorname{Ext}^{c}_P(R,P(-D)),\qquad
+\operatorname{Ext}^{i}_P(R,P(-D))=0\quad(i\ne c).
+\tag{46.5}
+$$
+
+The canonical grading on the left is the interior grading (45.4),
+by their Theorem 5.1, followed by ordinary-degree coarsening. No
+extra grading translation is introduced. Dualizing the minimal
+resolution into $P(-D)$ gives in particular the cokernel presentation
+
+$$
+\operatorname{Hom}_P(\mathcal F_{c-1},P(-D))
+\longrightarrow\operatorname{Hom}_P(\mathcal F_c,P(-D))
+\longrightarrow\omega_R\longrightarrow0.
+\tag{46.6}
+$$
+
+Minimality puts all entries of the incoming map in $\mathfrak n$.
+Modulo $\mathfrak n$, its image vanishes, so the final dual free
+module is a minimal free cover of $\omega_R$. The image of
+$\mathfrak n$ in $R$ is $R_+$, since all degree-one modes occur.
+Consequently its generator degrees and multiplicities are exactly
+those of the actual quotient $\omega_R/R_+\omega_R$, already
+proved to be one in degree three and $M$ in degree five.
+A summand $P(-b)$ in $\mathcal F_c$ dualizes to $P(b-D)$,
+whose generator has degree $D-b$. Solving $D-b=3$ or $5$
+gives precisely (46.2), including every final summand. This uses
+the canonical module of the mixed ring itself and its minimal
+cover; it does not infer a free module from an alternating Hilbert
+numerator. $\square$
+

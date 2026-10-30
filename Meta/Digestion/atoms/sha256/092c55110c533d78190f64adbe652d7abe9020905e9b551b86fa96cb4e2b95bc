@@ -1,0 +1,168 @@
+**Theorem 228.1 (unique native extrema).** On $\Delta$, the function $p$
+has a unique minimum at $q_-=(0,1)$ and a unique maximum at $q_+=(1,0)$.
+Their values are $m$ and $M$ from (226.3). In particular
+
+$$
+0<m<\frac12<M<1.
+\tag{228.1}
+$$
+
+Proof. Write $z=(V_q)_\ell$. It is positive, so extrema and strict
+comparisons for $z$ pass to $p=z^2$.
+
+For the minimum, spectral calculus gives the convergent vector integral
+
+$$
+V_q=\frac2{\pi_{\mathrm c}}\int_0^\infty
+(t^2I+G_q)^{-1}\pi_q\,dt.
+\tag{228.2}
+$$
+
+This is the standard square-root integral applied to $T$, using
+$G_qT=\pi_q$; the scalar identity follows by integrating
+$\lambda/(t^2+\lambda)$ for $\lambda>0$. For fixed $q$, positive
+definiteness makes the integrand bounded near $t=0$ and $O(t^{-2})$
+as $t\to\infty$. At $t=0$ its continuous extension is
+$G_q^{-1}\pi_q=T$, since $G_qT=\pi_q$.
+
+For $x=t^2>0$, set $N=(L+xI)^{-1}$ and $K=x(x+1)(x+3)$.
+Its $\ell$ row, in the declared coordinate order, is
+
+$$
+(N_{\ell r},N_{\ell\ell},N_{\ell R})
+=\frac{(x+1,x^2+3x+1,1)}K.
+\tag{228.3}
+$$
+
+The Sherman–Morrison identity gives
+
+$$
+(t^2I+G_q)^{-1}\pi_q
+=\frac{N\pi_q}{1+\pi_q^\top N\pi_q}.
+\tag{228.4}
+$$
+
+Since $\pi_q$ has nonnegative coordinates summing to $1$,
+$(N\pi_q)_\ell\ge N_{\ell R}>0$, strictly unless $\pi_q=e_R$.
+Convexity of the positive quadratic form gives
+
+$$
+\pi_q^\top N\pi_q\le\sum_i(\pi_q)_iN_{ii}
+\le N_{RR}=N_{\ell\ell}.
+\tag{228.5}
+$$
+
+For the last inequality, the two child diagonal entries agree and exceed
+the root diagonal entry by $x/K$. The $\ell$ component of (228.4) is
+therefore at least $N_{\ell R}/(1+N_{RR})$, its value at $\pi_q=e_R$.
+It is strictly greater for every other $\pi_q$ and every $t>0$.
+Integration proves the asserted unique minimum, with no assertion about
+$N$ at the excluded point $t=0$.
+
+For the maximum, differentiate the trace identities of §227. Subscripts
+$u,v$ denote partial derivatives of their smooth extension to a
+neighborhood of each point of $\Delta$. One obtains
+
+$$
+\begin{aligned}
+\sigma_u&=\frac{\tau(2u+v-1)+(3u-1)}H,&
+\tau_u&=\frac{\sigma(3u-1)+(2u+v-1)}H,\\
+Hz_u&=\tau+2+(1-\tau z)\sigma_u+(u-\sigma z)\tau_u.
+\tag{228.6}
+\end{aligned}
+$$
+
+Here the smooth extension exists because $G_q$ is positive definite and
+the principal square root is smooth on positive definite matrices; the
+strict scalar derivative in (227.4) also provides this extension locally.
+The uniform bounds of §227 imply
+
+$$
+\begin{gathered}
+|\sigma_u|\le\frac{92}{153},\quad
+|\tau_u|\le\frac{128}{153},\quad
+|1-\tau z|\le\frac{11}{4},\quad
+|u-\sigma z|\le\frac72,\\
+Hz_u\ge\frac{21}{4}
+-\frac{11}{4}\frac{92}{153}
+-\frac72\frac{128}{153}
+=\frac{409}{612}>0.
+\tag{228.7}
+\end{gathered}
+$$
+
+In obtaining the first two bounds use $|2u+v-1|\le1$ and
+$|3u-1|\le2$. The other two follow from $0<z<1$ and $0\le u\le1$.
+For $\delta=\partial_u-\partial_v$, direct subtraction instead gives
+
+$$
+\begin{aligned}
+\sigma_\delta&=\frac{(\tau+3)(u-v)}H,&
+\tau_\delta&=\frac{(3\sigma+1)(u-v)}H,\\
+Hz_\delta&=\tau+3+(1-\tau z)\sigma_\delta
+ +(u-\sigma z)\tau_\delta.
+\tag{228.8}
+\end{aligned}
+$$
+
+Consequently
+
+$$
+\begin{gathered}
+|\sigma_\delta|\le\frac{108}{153},\qquad
+|\tau_\delta|\le\frac{184}{153},\\
+Hz_\delta\ge\frac{25}{4}
+-\frac{11}{4}\frac{108}{153}
+-\frac72\frac{184}{153}
+=\frac{61}{612}>0.
+\tag{228.9}
+\end{gathered}
+$$
+
+From any point of $\Delta$, first increase $u$ at fixed $v$ until
+$u+v=1$, then increase $u$ and decrease $v$ equally along that edge
+toward $(1,0)$. Both segments increase $z$ whenever nontrivial, and
+at least one segment is nontrivial unless the original point is $(1,0)$.
+This proves the unique global maximum on the full asymmetric domain.
+The same argument in direction $\delta$ shows strict increase on every
+segment of constant $u+v$.
+
+At either child vertex, $G_q$ has characteristic polynomial
+$x^3-5x^2+6x-1$. Thus the trace identities give
+
+$$
+\sigma^4-10\sigma^2-8\sigma+1
+=(\sigma+1)(\sigma^3-\sigma^2-9\sigma+1)=0.
+\tag{228.10}
+$$
+
+The cubic is strictly increasing on $(13/4,7/2)$, and its signs at the
+two endpoints differ. Proposition 227.1 therefore identifies
+$\sigma=\sigma_*$, $\tau=\tau_*$. Formula (227.3) now reads
+
+$$
+V_{(1,0)}=
+\frac{(\sigma_*+1,\sigma_*+\tau_*+3,\sigma_*)^\top}{H_*},
+\qquad
+V_{(0,1)}=
+\frac{(\sigma_*+1,\sigma_*,\sigma_*+\tau_*+3)^\top}{H_*}.
+\tag{228.11}
+$$
+
+This proves the endpoint formulas. Positivity of all three coordinates
+and unit norm give $0<m$ and $M<1$. The trace bounds give
+
+$$
+\sqrt m<\frac{56}{153},\qquad
+\sqrt M>\frac{76}{97},
+\tag{228.12}
+$$
+
+because $H_*>153/16$, $H_*<97/8$ and
+$\sigma_*+\tau_*+3>19/2$. Squaring proves $m<1/2<M$.
+
+The integral and rank-one inverse identities in this proof are standard
+spectral-calculus and Sherman–Morrison tools. Their use here proves the
+extremal statement for the declared native cut; no general theorem of
+vertex extremality for matrix-function coordinates is assumed.
+

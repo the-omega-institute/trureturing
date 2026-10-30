@@ -1,0 +1,15 @@
+**命题 3.4（非交换目标不能直接套用鞅判据）。**
+
+取 $\Omega=\lvert + \rangle$、目标 $A=\lvert + \rangle\langle + \rvert$。
+从平凡记录 $\{I\}$ 细化到计算基记录
+$P_0=\lvert 0 \rangle\langle 0 \rvert,P_1=\lvert 1 \rangle\langle 1 \rvert$ 时，
+Lüders 条件值从 $1$ 变为每支 $1/2$。
+
+**证明。**
+
+$\omega(A)=1$，$\omega(P_i)=1/2$，
+而 $\omega(P_iAP_i)=1/4$。比值及其平均均为 $1/2$，
+故一般非交换目标的这些条件值不守鞅平均。
+
+□
+

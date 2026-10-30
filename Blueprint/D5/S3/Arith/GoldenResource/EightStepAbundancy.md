@@ -16,7 +16,43 @@ $$\forall p \in \mathbb{N}, k \in \mathbb{N},\; D\left(p, k\right) = \sum_{i \in
 
 D(p,k) denotes layerDenominator p k. It sums p to the powers one through k, with an empty sum at k = 0. For a prime p and a positive layer k, the multiplicative abundancy gain is 1 + 1/D(p,k).
 
-**Theorem 1.2 (The strict eighth-layer boundary).**
+**Theorem 1.2 (Monotonicity in the layer depth).**
+
+Lean statement: `D5/S3/Arith/GoldenResource/EightStepAbundancy.denominator_mono`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/EightStepAbundancy.denominator_mono` (`✓ std3`). ∎
+
+*Citation.* Xiaolong Wu (2019). *A New Type of Abundant Numbers*. DOI: [10.48550/arXiv.1906.05796](https://doi.org/10.48550/arXiv.1906.05796).
+
+*Commentary.*
+
+For every natural p and depths a<=b, B(p,a)<=B(p,b). This is finite-sum monotonicity on nested ranges and supplies the denominator comparison in an actual prime-layer exchange.
+
+**Theorem 1.3 (Positive prime-layer denominator).**
+
+Lean statement: `D5/S3/Arith/GoldenResource/EightStepAbundancy.denominator_pos`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/EightStepAbundancy.denominator_pos` (`✓ std3`). ∎
+
+*Citation.* Xiaolong Wu (2019). *A New Type of Abundant Numbers*. DOI: [10.48550/arXiv.1906.05796](https://doi.org/10.48550/arXiv.1906.05796).
+
+*Commentary.*
+
+For every prime p and positive depth k, B(p,k)>0. The first layer equals p and every later layer adds a nonnegative natural power.
+
+**Theorem 1.4 (The exact multiplicative gain).**
+
+Lean statement: `D5/S3/Arith/GoldenResource/EightStepAbundancy.layer_ratio_identity`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/GoldenResource/EightStepAbundancy.layer_ratio_identity` (`✓ std3`). ∎
+
+*Citation.* Xiaolong Wu (2019). *A New Type of Abundant Numbers*. DOI: [10.48550/arXiv.1906.05796](https://doi.org/10.48550/arXiv.1906.05796).
+
+*Commentary.*
+
+For every prime p and positive depth k, (1-p^(-(k+1)))/(1-p^(-k))=1+1/B(p,k), interpreted in the reals. The finite geometric sum gives this identity and hence the exact gain used in actual one-layer abundancy comparisons.
+
+**Theorem 1.5 (The strict eighth-layer boundary).**
 
 $$\forall p \in \mathbb{N}, k \in \mathbb{N},\; \left(Prime\left(p\right) \land 1 \le k\right) \Rightarrow \left(D\left(p, k\right) < 14 \Leftrightarrow \left(\left(k = 1 \land \left(\left(\left(\left(\left(p = 2 \lor p = 3\right) \lor p = 5\right) \lor p = 7\right) \lor p = 11\right) \lor p = 13\right)\right) \lor \left(k = 2 \land \left(p = 2 \lor p = 3\right)\right)\right)\right)$$
 
@@ -30,7 +66,7 @@ The eight events, in denominator order, are (2,1), (3,1), (5,1), (2,2), (7,1), (
 
 The equivalence quantifies over every prime and every positive layer. Every excluded event has denominator at least 14. The proof first excludes all depths at least three by comparison with 2 + 4 + 8, then classifies the remaining prime bases.
 
-**Theorem 1.3 (The unique eight-step maximizer).**
+**Theorem 1.6 (The unique eight-step maximizer).**
 
 $$\begin{aligned}Z\left(180180\right) = \frac{224}{55}\\\forall n \in \mathbb{N},\; \left(0 < n \land omega\left(n\right) = 8\right) \Rightarrow \left(Z\left(n\right) \le \frac{224}{55} \land \left(Z\left(n\right) = \frac{224}{55} \Leftrightarrow n = 180180\right)\right)\\Z\left(5040\right) = \frac{403}{105} \land Z\left(5040\right) < Z\left(180180\right)\\omega\left(180180\right) = 8 \land omega\left(5040\right) = 8\\180180 = 2^{2} \cdot 3^{2} \cdot 5 \cdot 7 \cdot 11 \cdot 13\end{aligned}$$
 
@@ -48,7 +84,11 @@ The theorem includes the exact values, both eight-step counts, and 180180 = 2^2 
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/GoldenResource/EightStepAbundancy.denominator_mono`
+- Truth anchor: `D5/S3/Arith/GoldenResource/EightStepAbundancy.denominator_pos`
 - Truth anchor: `D5/S3/Arith/GoldenResource/EightStepAbundancy.eight_step_abundancy_optimum`
 - Truth anchor: `D5/S3/Arith/GoldenResource/EightStepAbundancy.eight_step_layer_cutoff`
 - Truth anchor: `D5/S3/Arith/GoldenResource/EightStepAbundancy.layerDenominator`
+- Truth anchor: `D5/S3/Arith/GoldenResource/EightStepAbundancy.layer_ratio_identity`
+- Dependency: [D5/S3/Arith/GoldenLocalThreshold](../GoldenLocalThreshold.md)
 - Dependency: [D5/S3/Arith/GoldenResourceObjectiveFactorization](../GoldenResourceObjectiveFactorization.md)

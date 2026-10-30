@@ -1,0 +1,73 @@
+**Proposition 135.1 (trace, determinant and affine tests).** For $q>0$, finite $k\geq0$, and the quantities of (U.130), put
+
+$$
+\widetilde M_{k,u}=hM_{k,u},\qquad
+T_\nu=\frac1g+2-\nu,\quad
+E_\nu=\frac{1-\nu}{g}+2-\nu,\quad F_\nu=\nu g.
+\tag{U.145}
+$$
+
+For any real scalar threshold $a$ let $b=a/h$ and $C=(m-\lambda)I_2-aM_{k,u}$. Then
+
+$$
+\begin{gathered}
+\operatorname{Tr}\widetilde M_{k,u}=T_\nu m,\qquad
+\det\widetilde M_{k,u}=E_\nu m^2+F_\nu m,\\
+\operatorname{Tr}C=(2-bT_\nu)m-2\lambda,\qquad
+\det C=A_0m^2+B_0m+\lambda^2,\\
+A_0=1-bT_\nu+b^2E_\nu,\qquad
+B_0=\lambda(bT_\nu-2)+b^2F_\nu,\\
+B_0^2-4A_0\lambda^2
+=b^2\left[(bF_\nu+\lambda T_\nu)^2
+-4\lambda(\lambda E_\nu+F_\nu)\right].
+\end{gathered}
+\tag{U.146}
+$$
+
+Proof. The actual matrix entries are
+
+$$
+\widetilde M_{k,u}=
+\begin{pmatrix}
+hm/\alpha-\nu pu_1^2&-\nu gu_1u_2\\
+-\nu gu_1u_2&hm/\beta-\nu qu_2^2
+\end{pmatrix}.
+\tag{U.147}
+$$
+
+Its trace is $[h(1/\alpha+1/\beta)-\nu]m=(h^2/g-\nu)m=T_\nu m$. For the determinant, the square of the rank-one subtraction cancels, leaving
+
+$$
+\det\widetilde M_{k,u}
+=\frac{h^2m^2}{g}
+-\frac{\nu hm}{g}(\alpha^3u_1^2+\beta^3u_2^2).
+\tag{U.148}
+$$
+
+To simplify, use
+$h(\alpha u_1^2+\beta u_2^2)=m+g$ and
+$h(\alpha^3u_1^2+\beta^3u_2^2)=(1+g)m-g^2$.
+The latter follows by writing $\alpha^3=\alpha-\alpha\beta^2$, $\beta^3=\beta-\beta\alpha^2$, multiplying out, and using $\alpha^2+\beta^2=1$. Substitution proves $E_\nu,F_\nu$. Finally, for a $2\times2$ matrix $W$,
+$\det(tI-bW)=t^2-bt\operatorname{Tr}W+b^2\det W$.
+Use $t=m-\lambda$ and the first two identities to obtain $A_0,B_0$. Expanding their discriminant gives the last identity in (U.146). These computations include either sign of $u_1u_2$.
+
+For a real symmetric $2\times2$ matrix, nonnegative trace and determinant are equivalent to PSD, as seen from its two real eigenvalues. For every direction $m\in[q,p]$, the trace in (U.146) is affine and its minimum occurs at an endpoint. The determinant quadratic is nonnegative throughout $[q,p]$ exactly when its endpoints are nonnegative and, if $A_0>0$ with vertex $m_*=-B_0/(2A_0)$ inside that interval, also
+
+$$
+A_0m_*^2+B_0m_*+\lambda^2
+=\lambda^2-\frac{B_0^2}{4A_0}\geq0.
+\tag{U.149}
+$$
+
+If $A_0\leq0$, endpoints suffice, including the linear and constant cases. For $p>q$, each $m\in[q,p]$ is attained by a unit vector with $u_1^2=(m-q)/(p-q)$. At $p=q$, the interval is a singleton and no division by $p-q$ is needed.
+
+For fixed $p,k,u$, an affine threshold $a(\lambda)$ makes $C(\lambda)$ affine. Hence
+
+$$
+C((1-t)\lambda_1+t\lambda_2)
+=(1-t)C(\lambda_1)+tC(\lambda_2),\qquad0\leq t\leq1.
+\tag{U.150}
+$$
+
+PSD at two endpoints gives PSD on the segment for each fixed direction. If the endpoint tests hold for every real unit $u$, select an actual minimum eigenvector only after this interpolation. This does not interpolate independently chosen optimizing directions. For fixed $\lambda$, replacing $b$ by a larger upper bound subtracts an extra PSD multiple of $\widetilde M_{k,u}$, so proving PSD with that larger value proves it for the actual $b$, even when the latter is negative. $\square$
+

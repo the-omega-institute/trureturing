@@ -1,0 +1,36 @@
+**Theorem 22.4 (termination and exact recognized image).**
+Definition 22.3 terminates on every finite rational input and accepts
+exactly $\operatorname{im}F_{\rm blk}$, returning its unique block
+Time. On the corresponding serial realizations, equality of settled
+term/field is exactly equality of blocks and gaps, with only the
+within-block permutations forgotten.
+
+Proof. Every inverse exists rationally by (2.3).
+A positive nonzero inverse loop which never reaches a zero or rejects
+would stay in the unit cube, while
+$\|T^{-r}y\|_\infty\ge\lambda^{-r}\|y\|_\infty$ eventually exceeds
+one. Thus each loop terminates. Every accepted block strictly reduces
+material size, so there are finitely many collapses. The final positive
+scalar doubles until reaching or exceeding one in finitely many steps.
+All parsing, support and finite exact comparison tests terminate.
+This proves totality even for off-image rational inputs.
+
+Every actual block history passes by Theorem 22.2 and its positivity
+induction. Its inner counters are positive and its two endpoint gaps
+are permitted to be zero. For soundness, an accepting chain gives the
+alpha equation and finitely many equations (22.2). Its parsed
+comparisons define actual independent nonempty blocks on each
+predecessor. The inner-counter condition gives exactly the positive
+internal gaps of (22.1). Reading these equations forward therefore
+constructs an actual member of $\mathcal H_{\rm blk}$ with the
+accepted endpoint. Theorem 22.2 makes its certificate unique.
+
+Each serial realization has that evaluated block/gap endpoint.
+Equality of two endpoints forces the same decoded certificate.
+Conversely identical blocks and gaps with different internal
+enumerations have identical fields by Theorem 21.2.
+This proves the exact kernel claim within this declared domain.
+Literal earlier Growth replies can distinguish the two enumerations;
+their erased journals are not part of this settled endpoint task.
+$\square$
+

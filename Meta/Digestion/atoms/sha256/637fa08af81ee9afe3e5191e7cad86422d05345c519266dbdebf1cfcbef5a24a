@@ -1,0 +1,31 @@
+**Proposition 107.1 (exact primitive vector for the paid construction).**
+Include Definition 105.1's known-alpha origin, arbitrary owned input,
+preparation and held handoff, the chosen completion $(p,s)$ and
+Theorem 105.2's assay on that same specimen. Before the optional script,
+the exact successful source-call vector is
+
+$$
+\begin{aligned}
+P&=c+p,& S&=b-1+s,&\operatorname{Read}&=N,\\
+\operatorname{Add}&=b(I_0+1),&
+\operatorname{Tick}&=I_0+H,&\operatorname{Hold}&=H+2,&
+\operatorname{Reset}&=0.
+\end{aligned}
+\tag{107.1}
+$$
+
+If the performed fixed prefix contains $k$ Tick; Hold pairs and $d$
+shears, add $k$ Tick, $k+d$ Hold, $d$ Add and $d$ Read. Its actual endpoint
+is the $Lx$ of that very prefix. There are $M-1$ fresh material cells
+beyond the allocated initial alpha and $b+s$ final labels; the receiver
+completion adds exactly $p+2s$ cells and $s$ labels.
+
+**Proof.** The paid origin has $c$ P, $b-1$ S, $I_0$ Tick,
+$b(I_0+1)$ Add and one Hold by Construction 62.3. The completion adds
+exactly $(p,s)$. The assay has its initial Hold, $H$ Tick/Hold rounds
+and exactly $N$ selected Reads. Construction 106.1 and the fixed Tick
+pairs give the stated further increments. The size and label formulas
+are (103.1). Every displayed call is enabled; no failed growth probe is
+being omitted. No export or local computation is being counted as a
+free primitive call. $\square$
+

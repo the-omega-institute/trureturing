@@ -76,7 +76,7 @@ theorem B_formula (a : (EuclideanSpace ℝ (Fin 3))) :
   ext i j
   fin_cases i <;> fin_cases j <;>
     simp [B, pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two] <;> ring
-@[simp] private theorem B_zero : B (0 : (EuclideanSpace ℝ (Fin 3))) = 0 := by
+@[simp] theorem B_zero : B (0 : (EuclideanSpace ℝ (Fin 3))) = 0 := by
   simp [B]
 @[simp] private theorem B_add (a b : (EuclideanSpace ℝ (Fin 3))) : B (a + b) = B a + B b := by
   ext i j
@@ -516,7 +516,7 @@ private theorem parent_data (n : Fin 4 → (EuclideanSpace ℝ (Fin 3))) (hn : �
 end SignParent
 private def unbiased (n : Fin 4 → (EuclideanSpace ℝ (Fin 3))) : (Fin 4 → Bool → Matrix (Fin 2) (Fin 2) ℂ) := fun i b =>
   (1 / 2 : ℂ) • scalarB 1 (sgn b • n i)
-private theorem scalarB_sum {ι : Type*} (s : Finset ι) (t : ι → ℝ) (a : ι → (EuclideanSpace ℝ (Fin 3))) :
+theorem scalarB_sum {ι : Type*} (s : Finset ι) (t : ι → ℝ) (a : ι → (EuclideanSpace ℝ (Fin 3))) :
      scalarB (∑ j ∈ s, t j) (∑ j ∈ s, a j) = ∑ j ∈ s, scalarB (t j) (a j) := by
   simp only [scalarB, Complex.ofReal_sum, Finset.sum_smul, B_sum, Finset.sum_add_distrib]
 private theorem scalarB_real_smul (r t : ℝ) (a : (EuclideanSpace ℝ (Fin 3))) :

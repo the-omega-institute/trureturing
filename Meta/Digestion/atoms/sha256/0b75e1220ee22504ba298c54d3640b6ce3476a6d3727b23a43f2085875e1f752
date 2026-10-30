@@ -1,0 +1,30 @@
+**Definition 6.1 (finite rational/algebraic scope).** Restrict $B,C,x_0,T$,
+the tap nodes and action durations to rationals, still with $B^\nu=0$,
+distinct nodes and $T>0$. One admissible schedule is
+$t_i=iT/(\nu-1)$ for $\nu\geq2$. The source replies, weights, moments,
+predictors and any requested full-state left inverse are rational.
+In this finite representation scope, commission the same sensor to
+deliver its exact replies as rational packets, and supply $B,C$, nodes
+and durations in that format. This paid serializer is common to both
+compared installations; rationality of an abstract real port alone does
+not construct it. Represent each rational by a sign, reduced numerator
+and positive denominator with self-delimiting integer fields. Parsing, equality,
+addition, multiplication, division by checked nonzero entries and exact
+elimination terminate on each finite input. Coefficients are constructed
+from the supplied matrices/nodes, never private advice about $x_0$.
+
+For an explicit finite version of the original normalized record, apply
+Gram--Schmidt in order to $1,s,\ldots,s^{\nu-1}$ with inner product
+$\langle s^i,s^j\rangle=1/(i+j+1)$. At step $k$, subtract the projections
+onto the preceding normalized polynomials and divide by the positive
+square root of the resulting squared norm. The residual still has
+degree $k$ and leading coefficient one, so (3.4) makes that norm
+strictly positive. All inner products are finite coefficient sums;
+successively adjoining these finitely many square roots, and $T^{1/2}$,
+gives a finite real algebraic extension in which (3.6) is exact.
+The familiar orthonormal basis is a supplier, not new mathematics here.
+An already supplied basis with arbitrary real
+constants retains the real identity (3.6) but has no automatic finite
+encoding. The entire real domain of §§1–5 remains an exact-scalar
+mathematical model; it is not reduced to this rational subfamily.
+

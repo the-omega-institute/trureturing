@@ -1,0 +1,30 @@
+**Corollary 27.3 (Upper closure and the exact blindness range).** On $F_r\ge0$, both $x,y$ are
+positive, and for $h,k\ge0$,
+
+$$
+F_r(\eta_A+h,\eta_B+k)-F_r(\eta_A,\eta_B)=hy+kx+hk\ge0.
+\tag{27.8}
+$$
+
+Thus the separable set is coordinatewise upward closed, in agreement with (25.6). The numerical
+function $F_r$ is not an entanglement monotone: at $\eta_A=0,r=1/64$, it is $-(\eta_B+1/64)-1$,
+which decreases with additional local noise inside the entangled region.
+
+Let $r_0=(1+\sqrt{65})/64$. Zero noise has $F_r(0,0)=64r^2-2r-1<0$ exactly for $0<r<r_0$. For
+every such fixed $r$ and fixed $W$, the pair $(3,1)$ instead has $F_r(3,1)=r(64r+65)>0$. By
+(25.5), their entire original record-law families coincide. For $r\ge r_0$, zero noise is
+separable and upper closure makes every member of this specified family separable. Therefore its
+fixed-$W$ original-record fibre contains both statuses precisely for $0<r<r_0$.
+
+At $\sigma=2$, hence $r=1/16$, the sharper rational example is
+
+$$
+F_{1/16}(0,0)=-7/8,\qquad F_{1/16}(0,7/16)=0.
+\tag{27.9}
+$$
+
+Use the same $W$ and apparatus in both preparations, for instance
+$P=\frac12\begin{pmatrix}1&1\\1&1\end{pmatrix}$, $g=1$, $d=0$. The first actual pair is
+entangled and the second separable, with identical original complete laws for every allowed
+word. The example does not classify conditional outputs or full-system separability.
+

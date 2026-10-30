@@ -19,6 +19,17 @@ internal sealed class TemporalHardySpinAttainmentDocument : IScribeDocumentDefin
                     + "Fin(n+1) indexes the coordinates from zero through n. "
                     + "A matrix asterisk denotes the conjugate transpose, and a real scalar in "
                     + "a complex matrix or vector expression is included into ℂ.")),
+            Describe.Lean(
+                DescribeId.Create("temporal-hardy-spin-ray"), DeclarationHandle.Create(Prefix + "ray"),
+                H("A scaled outer product"),
+                StatementSource.FromAuthor(Disp(
+                    All(F.Id("n"), Naturals(), All(F.Id("w"), Vectors(F.Id("n")),
+                        All(F.Id("d"), Reals(), Equal(Call("ray", F.Id("n"), F.Id("w"), F.Id("d")),
+                            Seq(new Formula.Power(Typed(F.Id("d"), Complexes()), new Formula.Negate(D(1))),
+                                Sp, Cdot, Sp, Call("vecMulVec", F.Id("w"), Call("star", F.Id("w")))))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The outer product of w with its conjugate is scaled by the inverse of the real normalization parameter, included into ℂ."))),
+                DescribeRole.Definition),
             Node("spin-component", "A spin component in a real direction", "spinComponent",
                 SpinComponentFormula(),
                 "The spin component u·S is u₀Jx(n) + u₁Jy(n) + u₂Jz(n). "

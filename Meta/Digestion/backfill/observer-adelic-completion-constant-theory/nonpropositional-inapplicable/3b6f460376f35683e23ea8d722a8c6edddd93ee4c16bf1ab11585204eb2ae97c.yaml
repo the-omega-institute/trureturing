@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3b6f460376f35683e23ea8d722a8c6edddd93ee4c16bf1ab11585204eb2ae97c
+  normalized_sha256: sha256:3b6f460376f35683e23ea8d722a8c6edddd93ee4c16bf1ab11585204eb2ae97c
+cas_ref: sha256:3b6f460376f35683e23ea8d722a8c6edddd93ee4c16bf1ab11585204eb2ae97c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 说明 horizon 图表拟回答的问题，未断言 crossing 定理。'
+    previous_atom_id: 81866e3645e7d155cd34cb8b1738b0dca1da8e0d8bd4625d8f729e9fa6501829
+    next_atom_id: d0cbc0a922eb532a3e6bfd51dd002a6ce5c1b76a9d8e378422a2702302fc0c6f

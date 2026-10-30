@@ -1,0 +1,75 @@
+**Theorem 104.1 (Quantitative incompatibility of the triple).** For every
+$s\in\mathcal S_{\rm late}$,
+
+$$
+\Gamma_T(s)\ge\frac1{250}>\frac1{256}.
+\tag{104.3}
+$$
+
+*Proof.* Here $0\le\tau\le1/2$, so $1/2\le A\le3/4$ and
+$B\le A$. Suppose that a CPTP $\mathcal R$ has all three quantities in
+(104.2) at most $\gamma$, with $0\le\gamma\le1/250$. Put
+
+$$
+\sigma_i=\mathcal R(\Phi_s(P_i))\qquad(i=0,1,2).
+$$
+
+The $P_0$ bound, evaluated on inputs $P_1$ and $P_2$, gives
+$(\sigma_1)_{00},(\sigma_2)_{00}\le\gamma$. For $s\ge0$, put
+$v=\langle2|\mathcal R(P_1)|2\rangle$ and
+$w=\langle2|\mathcal R(P_2)|2\rangle$. Then
+
+$$
+(\sigma_1)_{22}=Av+Bw\le B+\gamma,
+\qquad
+(\sigma_2)_{22}=Bv+Aw\le A+\frac BA\gamma\le A+\gamma.
+\tag{104.4}
+$$
+
+The second inequality follows by writing the second expression as
+$(B/A)(Av+Bw)+(A^2-B^2)w/A$. For $s<0$ the two input populations are
+interchanged and the same calculation applies; at $s=0$ it remains valid
+with $A=B=1/2$. Thus, with
+$x=(\sigma_2)_{00}$ and $y=(\sigma_2)_{22}$,
+
+$$
+0\le x\le\gamma,\qquad 0\le y\le A+\gamma.
+$$
+
+Positivity of $\sigma_2$ gives
+$|(\sigma_2)_{02}|\le\sqrt{xy}$. Since
+$C=\Phi_s^\dagger(\mathcal R^\dagger(Q))$ has
+$C_{22}=\operatorname{Tr}(Q\sigma_2)$, we obtain
+
+$$
+C_{22}\le\frac{x+y}{2}+\sqrt{xy}
+ \le\frac38+\gamma+\sqrt{\gamma(3/4+\gamma)}.
+\tag{104.5}
+$$
+
+At $\gamma=1/250$ the last expression is
+$(379+\sqrt{3016})/1000<434/1000=217/500$; it is increasing in
+$\gamma$, so this bound holds throughout the assumed interval. The erased
+$(0,2)$ entry of every $\Phi_s^\dagger(K)$ gives
+
+$$
+(C-Q)|2\rangle=-\tfrac12|0\rangle+(C_{22}-\tfrac12)|2\rangle,
+$$
+
+and hence
+
+$$
+ e_Q(\mathcal R;s)^2
+ \ge\frac14+(C_{22}-\tfrac12)^2
+ >\frac14+\left(\frac{33}{500}\right)^2
+ =\frac{63589}{250000}
+ >\left(\frac12+\frac1{250}\right)^2.
+\tag{104.6}
+$$
+
+This contradicts the assumed third bound. Therefore every decoder has the
+maximum in (104.2) greater than $1/250$, which implies (104.3) for its
+infimum. The CPTP Choi set is compact and the three task losses are
+continuous, so the infimum is also a minimum; this observation is not
+needed for the numerical lower bound. $\square$
+

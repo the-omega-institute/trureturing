@@ -1,0 +1,33 @@
+## 23. All positive roots and their strict-world filtering
+
+Use $\operatorname{pp}(P)=P/\operatorname{cont}(P)$ for a nonzero
+integer polynomial, where its content is positive. This operation
+preserves its sign, including the sign of its leading coefficient.
+For $\deg P=m\ge n=\deg Q$, define the integer pseudo-remainder by
+
+$$
+\operatorname{prem}(P,Q)
+ =\operatorname{lc}(Q)^{m-n+1}\operatorname{rem}_Q P.
+\tag{23.1}
+$$
+
+For the displayed $F_J$ define the signed primitive Sturm chain
+
+$$
+\begin{gathered}
+S_0=F_J,\qquad S_1=\operatorname{pp}(F'_J),\\
+\delta_i=\deg S_{i-1}-\deg S_i+1,\qquad
+S_{i+1}=\operatorname{pp}\left(
+ -\operatorname{prem}(S_{i-1},S_i)
+       \operatorname{sign}(\operatorname{lc}S_i)^{\delta_i}\right).
+\end{gathered}
+\tag{23.2}
+$$
+
+Stop at the last nonzero constant. The sign multiplier makes each
+successor a positive multiple of the negative ordinary rational
+remainder, so this is a Sturm chain. For a real argument $z$ let
+$V(z)$ be the number of variations in the ordered signs of
+$S_0(z),S_1(z),\ldots$, with zeros deleted. At $+\infty$ use the
+signs of their leading coefficients.
+

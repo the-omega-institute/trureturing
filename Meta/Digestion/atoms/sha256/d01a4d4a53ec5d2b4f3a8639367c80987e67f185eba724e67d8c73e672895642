@@ -1,0 +1,4 @@
+## 8. A formalization target for trureturing
+
+The next Lean-compatible layer should avoid formalizing the full measurable theory at once. Use finite alphabets first.
+

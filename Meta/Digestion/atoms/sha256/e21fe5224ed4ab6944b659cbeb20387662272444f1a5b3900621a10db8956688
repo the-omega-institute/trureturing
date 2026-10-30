@@ -1,0 +1,19 @@
+**Definition 17.1 (four independently specified expressions).** The
+source geometry is the positive rank-one projector $P(r,b)$ on
+$\mathbb R^2$, or equivalently its image line and complementary kernel
+line with its trace-one normalization. At a clocked event its transported
+relation is $H_i=Q_iP$. These definitions use linear incidence and the
+actual left action, not an inverse of a desired observation.
+
+The ordered action/clock expression consists of the absolute clock $i$
+and the chronological action word actually executed, with its ordered
+product $Q_i$. The boundary expression at that event is the single
+actual read $d+g(i)\operatorname{tr}H_i$. The retained expression is
+exactly (12.1) before the eighth event and (12.2), or (12.4), after
+its declared retention relation. It contains its specified references
+and event labels; it does not contain the rest of the history as
+unrestricted variable data. The stipulated $H_4$, already acquired
+exact $p,v$, and the conditional one-step port are premises of this
+process. No procedure acquiring this initialization from an unknown
+source is asserted.
+

@@ -1,6 +1,8 @@
 schema_version = 6
 # Experimental materials belong to the independent experiments repository.
 files = [
-{ pattern = "docs/reports/**/*.md", kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "docs/reports/**/*.md", exclude = ["docs/reports/licenses/hilbert-approximation-minmax-third-party.md", "docs/reports/licenses/hilbert-ky-fan-third-party.md"], kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
 { pattern = "docs/reports/**/*.txt", kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "docs/reports/licenses/hilbert-approximation-minmax-third-party.md", kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
+{ pattern = "docs/reports/licenses/hilbert-ky-fan-third-party.md", kind = "data", admission_plane = "content", produced_by = "none", consumed_by = ["agent"], verified_by = ["SnapshotDecoder"], artifact_id = "none", runtime_disposition = "committed-source" },
 ]

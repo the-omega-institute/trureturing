@@ -1,0 +1,52 @@
+### 2.1. The quadratic field and two independent square classes
+
+Put $u=\alpha^2$ and $K=\mathbb Q_2(u)$, so $u^2=5$. We use the elementary square criterion for an odd unit $a\in\mathbb Z_2^\times$:
+
+$$
+a\in(\mathbb Q_2^\times)^2
+\quad\Longleftrightarrow\quad a\equiv1\pmod8.
+\tag{2.1}
+$$
+
+For completeness, a square root of a unit must have valuation zero, and the square of every odd integer is $1$ modulo $8$. Conversely, start with an odd $x_3$ satisfying $x_3^2\equiv a\pmod8$. Given odd $x_n$ with $x_n^2\equiv a\pmod{2^n}$, choose $e_n\in\{0,1\}$ and set
+
+$$
+x_{n+1}=x_n+e_n2^{n-1}.
+$$
+
+For $n\ge3$ the square changes modulo $2^{n+1}$ by $e_n2^nx_n$. Since $x_n$ is odd, one choice of $e_n$ makes the next congruence hold. The corrections tend to zero $2$-adically, so the sequence converges to a square root of $a$. This proves (2.1).
+
+Since $5\not\equiv1\pmod8$, $[K:\mathbb Q_2]=2$. Also $i\notin K$. Indeed, writing a putative square root of $-1$ as $a+bu$, with $a,b\in\mathbb Q_2$, gives
+
+$$
+a^2+5b^2+2ab\,u=-1.
+$$
+
+Thus $ab=0$. If $b=0$, then $a^2=-1$, whose residue is $7$ modulo $8$; if $a=0$, then $b^2=-1/5$, whose residue is $3$. Both contradict (2.1).
+
+Set $\beta=i\alpha$. Then $\alpha^2=u$ and $\beta^2=-u$. The two elements $u$ and $-u$ are nonsquares in $K$: each has norm $-5$ to $\mathbb Q_2$, whereas the norm of a square is a square and $-5\equiv3\pmod8$. Their product $-5$ is also a nonsquare in $K$, for a square root of $-5$ divided by $u$ would be a square root of $-1$ in $K$. Consequently their square classes are independent.
+
+Explicitly, $-u$ cannot become a square in $K(\alpha)$. If
+
+$$
+(a+b\alpha)^2=-u,\qquad a,b\in K,
+$$
+
+then $ab=0$ by the basis $1,\alpha$. The case $b=0$ makes $-u$ a square in $K$; the case $a=0$ gives $b^2=-1$. Both have been excluded. Therefore
+
+$$
+E=K(\alpha,\beta)=\mathbb Q_2(\alpha,i),
+\qquad [E:K]=4,\qquad [E:\mathbb Q_2]=8.
+\tag{2.2}
+$$
+
+Its $K$-automorphisms are the independent sign changes
+
+$$
+v_{s,t}(\alpha)=s\alpha,\qquad
+v_{s,t}(\beta)=t\beta.
+\tag{2.3}
+$$
+
+The four roots of $X^4-5$ are $\alpha,-\alpha,\beta,-\beta$. Thus $E$ is its splitting field and is Galois over $\mathbb Q_2$.
+

@@ -1,0 +1,42 @@
+**Proposition 12.2 (necessary and sufficient full five-read test at $k=0$).** Fix any legal final word, set $A_4=WA_3$, and write
+$$
+t_4=\operatorname{tr}(A_4N),\qquad
+b_4(X)=\operatorname{tr}(A_4X)-\operatorname{tr}X.
+$$
+For proposed data $\mathbf z=(z_0,\ldots,z_4)$, put $y_i=z_i-z_0$. First compute
+$$
+(\xi,\nu,\zeta)=V^{-1}(y_1,y_2,y_3)^{\mathsf T}.
+$$
+There is an actual target at slope zero if and only if (11.2) holds and
+$$
+y_4=b_4(H(\xi,\nu,\zeta))
++\frac{\xi\nu}{t\zeta}(t_4-t).
+\tag{12.3}
+$$
+If so, it is uniquely
+$$
+S=S_*(\xi,\nu,\zeta),\qquad k=0,\qquad
+D(\tau)=z_0-\operatorname{tr}S\quad(\tau\in\mathbb R).
+\tag{12.4}
+$$
+If $t_4=t$, the full zero-slope quotient image is the linear image
+$$
+\widehat V(\mathcal K),\qquad
+\widehat V=\mathsf B\circ H.
+\tag{12.5}
+$$
+It is an open convex cone relative to the three-dimensional range of the injective linear map $\widehat V$. If $t_4\ne t$, the final condition (12.3) is still required; prefix feasibility alone is insufficient. On the whole $\mathscr G$, $\mathsf B$ has rank three when $t_4=t$ and is invertible when $t_4\ne t$.
+
+**Proof.** Formula (10.3) gives $PE_{11}P^{-1}=N/t$, so (11.4) gives
+$$
+S_*=H(\xi,\nu,\zeta)+\frac{\xi\nu}{t\zeta}N.
+$$
+Applying $b_4$ proves exactly (12.3), since $b_4(N)=t_4-t$. Every actual solution of the first three zero-slope quotient equations is uniquely $S_*$ by Theorem 11.1; hence (12.3) is necessary and sufficient for the remaining quotient equation. With (12.4), the initial reading holds and each remaining original equation is
+$$
+\operatorname{tr}(A_iS)+D(i)=(\mathsf BS)_i+z_0=z_i
+\quad(i=1,2,3,4).
+$$
+This proves both directions, uniqueness and the single whole drift, with actual realization supplied by Proposition 1.2.
+
+The kernel of the first three rows of $\mathsf B$ is $\mathbb RN$. Its last row vanishes on this line exactly when $t_4=t$. This proves both rank assertions. In that case $\mathsf BN=0$, so the full quotient of $S_*$ equals $\widehat V(\xi,\nu,\zeta)$. Its first three coordinates are $V(\xi,\nu,\zeta)$, proving injectivity of $\widehat V$ and the relative dimension and openness in (12.5). If $t_4\ne t$, correction along $N$ changes the last quotient coordinate by precisely the nonzero coefficient in (12.3). There is no basis for dropping that coordinate or declaring the full image to be the linear cone (12.5). ∎
+

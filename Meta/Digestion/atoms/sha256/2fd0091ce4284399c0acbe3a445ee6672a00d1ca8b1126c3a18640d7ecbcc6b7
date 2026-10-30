@@ -1,0 +1,67 @@
+**Theorem 50.4 (quadratic literal retention versus compressed order
+$m\log m$ on genuinely ambiguous reachable sources).** Define finite
+terms by
+
+$$
+u_0=\beta,\qquad u_{m+1}=\langle u_m,\beta\rangle.
+\tag{AAII.9}
+$$
+
+For every $m\ge2$, the known-alpha installation reaches $u_m$; its
+complete-history fibre is ambiguous. Every history in that fibre has
+
+$$
+\begin{aligned}
+S&=m,&P&=m+1,&N&=2m+1,&V&=3m+2,\\
+D&=m^2,&F_{PS}(u_m)&=\prod_{j=1}^m(2j-1),\\
+H(u_m)&=m-1,&B(u_m)&=\sum_{j=2}^m\lceil\log_2(2j-1)\rceil
+                       =\Theta(m\log(m+1)).
+\end{aligned}
+\tag{AAII.10}
+$$
+
+Thus the literal local layout retains exactly $m^2$ side cells and $m$
+headers; the installed compressed layout retains $B(u_m)$ rank cells
+and $m-1$ headers. Including the common source, their selected persistent
+object counts are respectively $\Theta(m^2)$ and
+$\Theta(m\log(m+1))$. Their located-reference-field counts have those
+same orders. The saving does not depend on all coordinates being forced:
+there are $m-1$ genuinely nontrivial coordinates.
+
+Proof. A nested sequence of finite legal words is
+
+$$
+h_m=P_\varepsilon\,
+       \prod_{i=0}^{m-1}\bigl(S_{L^i}P_{L^iR}\bigr).
+\tag{AAII.11}
+$$
+
+After $P_\varepsilon$ the source is $u_0$. Its deepest left beta leaf
+is at $L^m$ in $u_m$. Splitting it and then promoting its new right
+alpha creates the next all-beta left comb $u_{m+1}$, proving the
+endpoint assertion and legality of every displayed prefix. These are
+finite actual service executions by Theorem 49.1. Their nested
+combinatorial description assumes no physically completed infinite
+supply of material or input.
+
+The branches are $L^i$, $0\le i<m$. A subtree with $j$ remaining
+branches has left subtree $u_{j-1}$ born beta and right subtree beta
+born alpha. The former has $j$ beta leaves and no alpha leaf, so AA
+(AA.73) gives $x=2j-2$. The latter gives $y=1$. Thus its local length
+is $2j-1$ and its radix is $2j-1$, including the bottom radix one.
+Summing local lengths counts each actual event once for each proper
+ancestor, exactly as in AA Proposition 22.1. Therefore
+$D=\sum_{j=1}^m(2j-1)=m^2$. Multiplying local radices gives the
+displayed $F_{PS}$ by AA Theorem 19.2, and it is greater than one for
+$m\ge2$. There is a separate conditional history choice at every
+$j\ge2$, not just one isolated witness.
+
+There are $m+1$ beta leaves and no alpha leaves. AA (AA.78) gives
+$P,S,N,V$. The nontrivial branch count and total rank width follow
+from the local lengths and radices. The width sum is at most
+$m(\log_2(2m-1)+1)$. For $m\ge4$, at least $\lfloor m/2\rfloor$
+indices have $2j-1\ge m-1$, so the sum is at least
+$\lfloor m/2\rfloor\log_2(m-1)$. This proves its order.
+The exact material theorem now gives the object and field orders,
+with the common linear source retained in both. $\square$
+

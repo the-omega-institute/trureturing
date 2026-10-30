@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4513687efc562f16593f50552039848fc367e067f1bdeb640176336d1373fbdb
+  normalized_sha256: sha256:4513687efc562f16593f50552039848fc367e067f1bdeb640176336d1373fbdb
+cas_ref: sha256:4513687efc562f16593f50552039848fc367e067f1bdeb640176336d1373fbdb
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: list label naming an object; no proposition
+    previous_atom_id: dc2a5d311f86d73d3917da7e54fbadb7f8c997b85bedb74b047fd1c7453486db
+    next_atom_id: 93584ef6a640d6a1dd726204bb8b37043d74abf007f63ce0d52784336e2003df

@@ -1,0 +1,23 @@
+**Convention 200.1 (Prerequisites and mature projection method).**
+The native geometry, Gibbs correspondence, CAR signs, common success block,
+SSR menu and original negativity threshold are reused from [N]. The mature
+mixed-state two-copy projection mechanism is due to Schuch--Verstraete--Cirac
+[M]. Their Eq. (18) parameters correspond to
+
+$$
+w_{\mathrm{svc}}=\sqrt{ad/bc},\qquad
+v_{\mathrm{svc}}=|z|/\sqrt{bc}.
+$$
+
+Their projected standard-form matrix has diagonal
+$(w_{\mathrm{svc}}^2,1,1,w_{\mathrm{svc}}^2)$ and middle coherence
+$v_{\mathrm{svc}}^2$. Up to the declared legal Alice phase, it is
+proportional to $C_-/(bc)$. Squaring preserves
+$v_{\mathrm{svc}}>w_{\mathrm{svc}}\Longleftrightarrow\mu>ad$.
+Their $w_{\mathrm{svc}}$ is not the conditional flag weight $w$ in this
+appendix, and no standard-form filtering success factor is part of $P_E,P_F$.
+
+The two-qubit supplier [R] and the direct block calculation of the full
+$2\times4$ family have distinct domains. The spontaneous-emission
+dynamics of [G] is not a premise of this finite native model.
+

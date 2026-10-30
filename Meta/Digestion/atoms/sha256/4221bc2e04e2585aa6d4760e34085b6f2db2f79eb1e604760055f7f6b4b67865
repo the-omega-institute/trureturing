@@ -1,0 +1,17 @@
+**Theorem 3.2 (exact witness overlap).** For every $n\ge1$,
+
+$$
+\langle\psi_{U_n},\psi_{V_n}\rangle
+  =1-\frac{\delta}{w_n},
+\qquad
+\|\psi_{U_n}-\psi_{V_n}\|_2^2
+  =\frac{2\delta}{w_n}.
+\tag{3.3}
+$$
+
+Proof. In (2.2) the sole changed ordered pair is the $A/B$ pair at the
+common context $q=RR$.  Apply Lemma 3.1 with the common scale (2.5).
+The vectors are positive real functions, so the inner product is the
+Hellinger affinity and the squared distance is
+$2-2\langle\psi_{U_n},\psi_{V_n}\rangle$. $\square$
+

@@ -1,0 +1,9 @@
+**定理 6.2（全零历史的三个固定单位常数世界）。** 若 $\alpha=\Delta=\beta=0$，整个 J5 全零历史有 $L_2$，包括两种第六动作、全部最终动作和提前停止。
+
+**证明。** 任取 $\lambda\ne0$，从一开始固定三个世界：
+
+| 世界 | $P$ | $g(T)$ | $\delta$ |
+| --- | --- | --- | --- |
+| $W_1$ | $\left(\begin{smallmatrix}1/3&1/3\\2/3&2/3\end{smallmatrix}\right)$ | $3\lambda$ | $-3\lambda$ |
+| $W_2$ | $\left(\begin{smallmatrix}1/2&1/2\\1/2&1/2\end{smallmatrix}\right)$ | $2\lambda$ | $-2\lambda$ |
+| $W_3$ | $\left(\begin{smallmatrix}2/3&1/3\\2/3&1/3\end{smallmatrix}\right)$ | $3\lambda$ | $-3\lambda$ |

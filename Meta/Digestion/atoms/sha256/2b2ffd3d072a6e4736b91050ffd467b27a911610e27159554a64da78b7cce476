@@ -1,0 +1,10 @@
+**Corollary 3.2 (estimator quantifier at contact).** Success equals the
+contact probability for an estimator that returns zero on the contact
+branch. It need not do so for every estimator. For example $R=0$ is a
+lawful rule with contact probability one; the constant estimate one
+has success zero, while the constant estimate zero has success one.
+
+Proof. Apply (3.2) and the actual initialization. This also includes
+the degenerate base time without extending the positive-time
+zero-success assertion to time zero. $\square$
+

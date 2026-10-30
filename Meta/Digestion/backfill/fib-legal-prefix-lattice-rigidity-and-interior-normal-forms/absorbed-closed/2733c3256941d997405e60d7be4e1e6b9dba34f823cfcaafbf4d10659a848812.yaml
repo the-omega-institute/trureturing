@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2733c3256941d997405e60d7be4e1e6b9dba34f823cfcaafbf4d10659a848812
+  normalized_sha256: sha256:2733c3256941d997405e60d7be4e1e6b9dba34f823cfcaafbf4d10659a848812
+cas_ref: sha256:2733c3256941d997405e60d7be4e1e6b9dba34f823cfcaafbf4d10659a848812
+coverage_gids:
+  - gid: D5/S3/Observer/CubicGain/PhaseRigidity.phase_rigidity
+    target_statement_id: sha256:ff6597984c3ffada2137ea3c5d928ea51d6995f0dad515faec19df1fabf6c16c
+receipts:
+  unresolved_subitems: []

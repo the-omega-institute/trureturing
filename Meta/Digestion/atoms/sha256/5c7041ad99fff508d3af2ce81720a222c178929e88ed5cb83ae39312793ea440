@@ -1,0 +1,62 @@
+**定理 17.2（整盒合法性、分离与联合排除）。** Every $\theta\in\mathcal B_i$ gives a legal complete target realizing all of $H_3$. Its actual third-$J$ response at $H_2$ is $\sigma(\theta)$, its next fourth-$M$ response along that continuation is $\zeta(\theta)$, and its fourth-$M$ response at $H_3$ is $\mu(\theta)$. Throughout each entire box,
+
+$$
+\begin{array}{c|c|c|c|c}
+i&\sigma(\mathcal B_i)&\zeta(\mathcal B_i)&
+\mu(\mathcal B_i)&d(\mathcal B_i)\\ \hline
+1&(35.488,35.489)&(29.350,29.352)&(50.787,50.789)&(2,3)\\
+2&(38.332,38.333)&(31.381,31.383)&(50.345,50.347)&(4,5)\\
+3&(35.469,35.471)&(35.566,35.569)&(48.338,48.341)&(15,16).
+\end{array}                                                       \tag{17.3}
+$$
+
+For the same joint response pair $(\sigma(\theta),\zeta(\theta))$, the strict exclusion bounds are
+
+$$
+\begin{array}{c|c}
+i&\text{quantity evaluated on }\mathcal B_i\\ \hline
+1&0.001486462<\Delta<0.001488988\\
+2&-0.015170242<\widehat C<-0.015168132<-15/1000\\
+3&-0.363958637<\widehat C<-0.363957400<-36/100.
+\end{array}                                                       \tag{17.4}
+$$
+
+In particular the first row gives $1/1000<\Delta<2/1000$ on the whole first box.
+
+Proof. The boxes have $\alpha,\beta>0$. The matrix (13.1) is therefore strictly entrywise positive, has trace one and determinant zero, and has rank one. Its positive traces at clocks $0,1,2,3$ are $(1,j,\ell,j+\ell)$. The polynomial (13.1) interpolates the four prescribed gain values there, so these readings, with the same drift $d$, are $0,24,48,312/5$. Those readings are unequal, hence the polynomial cannot be zero. This proves legality throughout the boxes without using $F=0$.
+
+At $H_2$ the cumulative matrix is $L$. Choosing third $J$ and then fourth $M$ gives
+
+$$
+JL=\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+MJL=\begin{pmatrix}1&0\\2&1\end{pmatrix}.
+                                                                  \tag{17.5}
+$$
+
+Their traces against $P(\alpha,\beta)$ are $a+j$ and $2\ell-1$. The gain values at the actual clocks are $q_3$ and $f_4$, giving $\sigma$ and $\zeta$. On the other continuation, third $M$ followed by fourth $M$ has fourth matrix
+
+$$
+D=J+2L=\begin{pmatrix}2&1\\3&2\end{pmatrix},
+                                                                  \tag{17.6}
+$$
+
+with trace $j+2\ell$, giving $\mu$. These are alternative response functions of the same fixed world. Acquiring $\sigma,\zeta$ uses just the chosen $J,M$ continuation; it does not acquire $\mu$.
+
+For completeness, all bounds (17.3)–(17.4) follow from rational endpoint operations (14.3) on the three coordinate intervals in each $\mathcal B_i$. The expressions to substitute are
+
+$$
+\begin{gathered}
+H=1+\alpha\beta,\quad
+a=H^{-1},\quad j=(\alpha+\beta)/H,\quad \ell=1+\beta/H,\\
+q_0=-d,\quad q_1=(24-d)/j,\quad
+q_2=(48-d)/\ell,\quad
+q_3=(312/5-d)/(j+\ell),\\
+f_4=-q_0+4q_1-6q_2+4q_3,\\
+\sigma=d+q_3(a+j),\quad
+\zeta=d+f_4(2\ell-1),\quad
+\mu=d+f_4(j+2\ell).
+\end{gathered}                                                     \tag{17.7}
+$$
+
+All reciprocal denominators have strictly positive interval lower endpoints. Substitute the resulting rational intervals for $\sigma,\zeta$ into (17.2), before rounding them outward to (17.3). The comparisons with the rational endpoints in (17.4) are strict. Thus (17.4) encloses the compositions $\Delta\circ(\sigma,\zeta)$ and $\widehat C\circ(\sigma,\zeta)$ on the original parameter boxes; it is not inferred from the coarser printed marginal intervals alone. In particular these are bounds for every point of the radius-$10^{-8}$ boxes, rather than only for $x_*$ or a finite sample. ∎
+

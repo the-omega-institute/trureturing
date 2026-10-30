@@ -1,0 +1,18 @@
+## 5. 自适应后继与零误差边界
+
+一次运行解码必须和动作选择共同闭合。设 $\eta:S\to B$ 是目标边界，$D_E$ 是每个有限实验的解码器。除了式 (4.1)，还需要：
+
+$$
+\begin{aligned}
+\operatorname{Leg}(s,a)
+&=\overline{\operatorname{Leg}}(\eta(s),a),\\
+\eta(s')
+&=\overline T_a(\eta(s),y),\\
+D_{E[a]}(R,y)
+&=\overline D_a(D_E(R),y)
+\end{aligned}
+\tag{5.1}
+$$
+
+在合法后继、实际档案和合同允许的下一实验上成立。第三式表示下一步解码器只使用实际取得的旧档案和新结果；它不能把完整 law 表或未知来源直接传入选择器。
+

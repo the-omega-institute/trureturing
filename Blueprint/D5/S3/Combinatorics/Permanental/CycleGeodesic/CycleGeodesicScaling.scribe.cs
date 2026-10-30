@@ -12,6 +12,10 @@ internal sealed class CycleGeodesicScalingDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The permanent rate tends to the closed cotangent expression, with the odd midpoint limit one.", H("CycleGeodesicScaling"),
         Blocks(
+            Node("continuous-left-riemann", "continuous_leftRiemann_tendsto", ContinuousRiemannStatement(),
+                Blocks(Paragraph(Text("For every real function continuous on the closed unit interval, the equally spaced left Riemann sums converge to its interval integral."))), DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+            Node("fin-fraction-unit-interval", "fin_fraction_mem_Icc", FractionInIntervalStatement(),
+                Blocks(Paragraph(Text("When n is nonzero, each left sample k/n with k in Fin n lies in the closed unit interval."))), DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("delta", "delta", Disp(All("t", Reals(), Equal(Call("delta", F.Id("t")), Call("min", F.Id("t"), Sub(D(1), F.Id("t")))))),
                 Blocks(Paragraph(Text("Reflection selects the distance to the nearer endpoint."))), DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("rate", "rate", Disp(All("n", Naturals(), All("t", Reals(), Equal(Call("rate", F.Id("n"), F.Id("t")), Mul(Negate(Frac(D(1), Cast(F.Id("n"), Reals()))), Apply(Qualified("Real", "log"), Norm(Apply(Qualified("Matrix", "permanent"), Call("gamma", F.Id("n"), F.Id("t")))))))))),
@@ -37,6 +41,29 @@ internal sealed class CycleGeodesicScalingDocument : IScribeDocumentDefinition
 
     private static Formula Call(string name, params Formula[] arguments) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
+    private static Formula ContinuousRiemannStatement()
+    {
+        var f = F.Id("f");
+        var n = F.Id("n");
+        var k = F.Id("k");
+        var unit = Apply(Qualified("Set", "Icc"), D(0), D(1));
+        var sum = Seq(Sum, Underscore, Grp(k, Colon, Call("Fin", n)), Sp,
+            Apply(f, Frac(Cast(k, Reals()), Cast(n, Reals()))));
+        var integral = Seq(Int, Underscore, Grp(F.Id("x"), InMacro, Cast(D(0), Reals()), Dot, Dot, D(1)), Sp,
+            Apply(f, F.Id("x")));
+        return Disp(All("f", new Formula.TypeArrow(Reals(), Reals()),
+            ImpliesTo(Call("ContinuousOn", f, unit),
+                Call("Tendsto", LambdaOf("n", Naturals(), Mul(Frac(D(1), Cast(n, Reals())), sum)),
+                    Qualified("Filter", "atTop"), Call("nhds", integral)))));
+    }
+    private static Formula FractionInIntervalStatement()
+    {
+        var n = F.Id("n");
+        var k = F.Id("k");
+        return Disp(All("n", Naturals(), ImpliesTo(NeqTo(n, D(0)),
+            All("k", Call("Fin", n), Seq(Frac(Cast(k, Reals()), Cast(n, Reals())), InMacro,
+                Apply(Qualified("Set", "Icc"), Cast(D(0), Reals()), D(1)))))));
+    }
     private static Formula Apply(Formula f, params Formula[] arguments) => new Formula.Apply(f, [.. arguments]);
     private static Formula Qualified(string owner, string name) =>
         Seq(Operatorname, Grp(F.Id(owner), Dot, F.Id(name)));

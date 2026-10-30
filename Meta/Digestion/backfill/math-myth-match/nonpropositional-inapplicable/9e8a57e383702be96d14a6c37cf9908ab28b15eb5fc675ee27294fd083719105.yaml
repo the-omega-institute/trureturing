@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9e8a57e383702be96d14a6c37cf9908ab28b15eb5fc675ee27294fd083719105
+  normalized_sha256: sha256:9e8a57e383702be96d14a6c37cf9908ab28b15eb5fc675ee27294fd083719105
+cas_ref: sha256:9e8a57e383702be96d14a6c37cf9908ab28b15eb5fc675ee27294fd083719105
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 提出各传统对完整或部分认识的后续比较方向，不断言共同源头已存在。
+    previous_atom_id: 3c200c93636ea490199fe4aa72ccfa3ca8c1a6fb66224174dcc8b62c1f6c0ff3
+    next_atom_id: 6dd78882838f8a0dd4bb71a8cea5f91851091c420aadd717f93484fd841cd8ef

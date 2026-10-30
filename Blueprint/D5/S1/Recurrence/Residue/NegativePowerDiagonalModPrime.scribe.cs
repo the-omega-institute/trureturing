@@ -33,6 +33,13 @@ internal sealed class NegativePowerDiagonalModPrimeDocument : IScribeDocumentDef
                 + "as proved for A(p) and assumed for B. Thus the substitution is exactly "
                 + "A(x/A(x)^e), with e=(p-1)(n-1)+1. Integer divisibility is used below; "
                 + "intCast(p) explicitly casts the natural parameter to an integer.")),
+            Node("map_inverse", "Mapping a normalized inverse", PublishedMapInverse(),
+                "A ring homomorphism commutes with the prescribed unit inverse of a series "
+                + "whose constant coefficient is one."),
+            Node("inverse_difference", "The difference of two normalized inverses", InverseDifferenceFormula(),
+                "Over a commutative ring, two power series with constant coefficient one "
+                + "have inverse difference equal to their difference multiplied by the "
+                + "negative product of their inverses. The identity preserves coefficient agreement."),
             Node("a", "The triangular coefficient construction", CoefficientDefinition(),
                 "Starting with P(p,0)=1, the update sets the first two coefficients to one "
                 + "and solves every higher diagonal equation for its leading coefficient. "
@@ -159,5 +166,35 @@ internal sealed class NegativePowerDiagonalModPrimeDocument : IScribeDocumentDef
             Implication(Equal(Coefficient(D(0), b), D(1)),
                 Implication(Equal(Coefficient(D(1), b), D(1)),
                     Implication(Equation(b), Equal(b, A()))))));
+    }
+    private static Formula PubAll(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, F.Id(name), Colon, Sp, type, Comma, Sp, Parenthesized(body));
+    private static Formula PubImp(Formula premise, Formula conclusion) =>
+        Seq(Parenthesized(premise), Sp, Implies, Sp, Parenthesized(conclusion));
+
+    private static Formula InverseDifferenceFormula()
+    {
+        var r = F.Id("R"); var a = F.Id("A"); var b = F.Id("B");
+        var ia = Call("invOfUnit", a, D(1)); var ib = Call("invOfUnit", b, D(1));
+        var conclusion = Equal(Subtract(ia, ib), Mul(Subtract(a, b),
+            Seq(Minus, Parenthesized(Mul(ia, ib)))));
+        return Disp(Seq(Bound("R", Named("Type")), OpenBracket, Call("CommRing", r), CloseBracket, Sp,
+            PubAll("A", Call("PowerSeries", r), PubAll("B", Call("PowerSeries", r),
+                PubImp(Equal(Call("constantCoeff", a), D(1)),
+                    PubImp(Equal(Call("constantCoeff", b), D(1)), conclusion))))));
+    }
+
+    private static Formula PublishedMapInverse()
+    {
+        var r = F.Id("R");
+        var s = F.Id("S");
+        var hom = F.Id("hom");
+        var a = F.Id("A");
+        return Disp(Seq(Bound("R", Named("Type")), OpenBracket, Call("CommRing", r), CloseBracket, Sp,
+            Bound("S", Named("Type")), OpenBracket, Call("CommRing", s), CloseBracket, Sp,
+            PubAll("hom", Call("RingHom", r, s), PubAll("A", Call("PowerSeries", r),
+            PubImp(Equal(Call("constantCoeff", a), D(1)),
+                Equal(Call("map", hom, Call("invOfUnit", a, D(1))),
+                    Call("invOfUnit", Call("map", hom, a), D(1))))))));
     }
 }

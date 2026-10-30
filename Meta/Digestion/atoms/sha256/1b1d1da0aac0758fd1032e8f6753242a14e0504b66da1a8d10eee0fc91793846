@@ -1,0 +1,32 @@
+**Definition 141.1 (The parameter-dependent polynomial system).**
+Substitute $y=1-p-x$ first and put
+
+$$
+\begin{aligned}
+v_1&=\frac{(1+q)x+(1-q)y}{2},&
+v_2&=x+y-v_1,\\
+k&=1-qr,& d&=x-r^2v_1,\\
+N(q;r,L,p,x)
+&=L^3-L(d^2+k^2px+py+xy)
+ -p\{d(k^2x-y)+2kxy\},\\
+F(q;r,L,p,x)&=(N,N_p,N_x,N_r)^{\mathsf T}.
+\end{aligned}
+\tag{141.3}
+$$
+
+All derivatives include the displayed substitution for $y$. Thus $F$
+is a specified polynomial map, and at $q=q_0$ it is precisely
+$\mathcal F$ of (128.1). The order of its four unknowns is
+$u=(r,L,p,x)$. Its Jacobian with respect to those unknowns is
+
+$$
+D_uF=
+\begin{pmatrix}
+N_r&N_L&N_p&N_x\\
+N_{pr}&N_{pL}&N_{pp}&N_{px}\\
+N_{xr}&N_{xL}&N_{xp}&N_{xx}\\
+N_{rr}&N_{rL}&N_{rp}&N_{rx}
+\end{pmatrix}.
+\tag{141.4}
+$$
+

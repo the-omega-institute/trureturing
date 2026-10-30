@@ -1,0 +1,63 @@
+**Theorem 83.2 (class restriction and attained edit minima).** Throughout
+this native class, $g\in\{1,2,3\}$. The worst-case minimum successful
+birth count, for each fixed earned context and arbitrary $x$, is
+
+$$
+\begin{array}{c|ccc}
+ &g=1&g=2&g=3\\ \hline
+\text{original entry report}&0&1&1\\
+\text{whole actual current/predictor}&0&0&1.
+\end{array}
+\tag{83.2}
+$$
+
+For $g=2$, promote an omitted deep alpha. For $g=3$, split the owner
+of an omitted deep beta marker. Each one-birth repair has new divisor one.
+No other resource coordinate is claimed minimal by this table.
+
+**Proof of the class restriction.** Call a terminal shallow if its logical
+leaf or beta owner is a direct child of the logical root; otherwise call
+it deep. For $b\ge3$ the root is a branch. Every nonroot logical branch
+has material degree three; the root has degree two. A beta owner has degree
+two until split, and its marker is one edge farther from its logical parent.
+An alpha has no such marker. For either omitted endpoint let $n$ be one
+plus its distance along the omitted path to the first attachment.
+
+A deep alpha meets its nonroot branch parent after one edge, so $n=2$.
+A deep beta marker meets its nonroot branch grandparent after two, so
+$n=3$. For a shallow alpha the path crosses the degree-two root and
+meets the other root child's branch after two edges, giving $n=3$.
+For a shallow beta marker it does so after three, giving $n=4$.
+In the shallow cases the other root child must be a branch: otherwise the
+whole tree would have only two terminals. There is therefore a first
+attachment in every case. The two endpoints cannot both be shallow when
+$b\ge3$.
+
+If the opposite endpoint's first attachment is at path index $j$, its
+number is $(d+2)-(j+1)$. Thus (83.1) divides both endpoint numbers.
+At least one endpoint is deep and has number two or three. Hence $g$
+is one, two or three. This is a class argument, independent of finite
+specimen enumeration.
+
+If $g=2$, a deep endpoint with even number must be a deep alpha.
+Promote its earned logical address $p$. The omitted label moves from $p$
+to $pL$ and is still unread. Its first attachment is now the old nonroot
+parent, with number three. The opposite first-attachment number remains
+even, two or four. Their gcd is one, so the new divisor is one. This
+creates one cell and no new terminal label.
+
+If $g=3$, a deep endpoint must be a beta marker with number three.
+Split its owner $p$. The omitted label moves $pL\mapsto pLL$; the
+fresh $pR$ label is readable. The path from $pLL$ has an attachment at
+$p$ with number three and another at its old nonroot parent with number
+four. Thus its divisor is one. This creates two cells and one fresh
+readable label. A deterministic choice, such as least eligible material
+address, uses earned geometry only.
+
+For zero births, NLBAIII Theorems 79.2–79.3 and 80.1 give exactly the
+entry criterion $g=1$ and current criterion $g\le2$, including arbitrary
+rational inputs and adaptive field controls. They prove the necessary
+zeros in (83.2), not just failure of one assay. The repaired divisor-one
+geometry supplies the positive assays constructed below. This proves all
+minima in the successful-birth coordinate. $\square$
+

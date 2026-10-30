@@ -1,0 +1,55 @@
+**Lemma 22.3 (one phase driver and the reflected endpoint).** Fix
+$r\in(0,\delta]$. On a common admissible shifted-height path put
+
+$$
+\alpha_\eta=\eta r+\frac{r^2}{H},\qquad
+c_a=U_a+\frac{r^2}{H},\qquad
+B_r(U_a)=-\frac{c_a^2-r^2}{2HU_a},\qquad
+g_r(U_a)=\frac{H-c_a}{HU_a},
+\tag{22.5}
+$$
+
+for $\eta\in\{+1,-1\}$. The two candidate heights are
+$K_a^\eta=U_a+\alpha_\eta=c_a+\eta r$. Direct substitution into (22.1)
+gives
+
+$$
+\begin{aligned}
+B_{\eta r}(K_a^\eta)&=B_r(U_a),&
+b_{\eta r}(K_a^\eta)&=g_r(U_a),\\
+A_{\eta r}(K_a^\eta)&=
+ \frac{(c_a-\eta r)(H-c_a)}{2HU_a}.
+\end{aligned}
+\tag{22.6}
+$$
+
+Define the record functional
+
+$$
+\Xi_a=r\int_0^a\frac{g_r(U_s)}{B_r(U_s)}\,dV_s.
+\tag{22.7}
+$$
+
+Then, on the common phase driver,
+
+$$
+d\Xi_a=\sqrt2\,r g_r(U_a)\,dW^2_a,\qquad
+D_a^\eta-D_0=\eta\Xi_a,\qquad
+\theta_a^+-\theta_a^-=-\Xi_a.
+\tag{22.8}
+$$
+
+In particular, conditional on $U$, $\Xi_t$ is centered Gaussian with
+
+$$
+\operatorname{Var}(\Xi_t\mid U)=2r^2\int_0^t g_r(U_s)^2\,ds>0.
+\tag{22.9}
+$$
+
+**Proof.** Substitute $K=c+\eta r$ and
+$K-\alpha_{\eta r}=U$ into (22.1). This gives (22.6), and division of the
+$D$ and $\theta$ equations by the nonzero $B_r$ gives (22.7)--(22.8).
+The strict positivity in (22.9) follows from the admissibility margins. The
+two signs use one and the same $W^2$ after conditioning on the common $U$;
+they are not separately optimized phase laws. $\square$
+

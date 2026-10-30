@@ -1,0 +1,68 @@
+**Theorem 84.1 (earned law, true endpoint and every phase inverse).**
+After Construction 83.1, use the earned current geometry/binding and cap
+$R'=M$ in Convention 80.2. Put
+
+$$
+ H_+=2M-1,\quad \tau_j^+=jH_+,\quad L=(s+1)H_+,
+ \qquad r_B=\sum_{j=1}^s B^{L-jH_+}J_+e_j.       \tag{84.1}
+$$
+
+The actual free/pulse acquisition on this same grown specimen earns $B,Ex$
+and installs the full predictor at $w_0=B^LEx+r_B$. After exactly $t\ge0$
+further actual Tick/Hold pairs, the true current and an entrance decoder are
+
+$$
+ \begin{aligned}
+ w_t&=B^{L+t}Ex+B^tr_B,\\
+ P_t&=B^{L+t}E,\\
+ x&=(P_t^{\mathsf T}P_t)^{-1}P_t^{\mathsf T}(w_t-B^tr_B).
+ \end{aligned}                                  \tag{84.2}
+$$
+
+All inverses in (84.2) exist over $\mathbb Q$. Current grown syntax recovers
+the old $u$ and $E$ through the existing priority parser of Lemma 59.1, and
+$T=E^{\mathsf T}BE$. Thus the current predictor can release its separate
+entrance-$x$ and startup scratch once other requested copies are accounted for.
+
+The same entry preservation also holds at every settled intermediate scan
+phase. If $h\ge0$ Ticks have completed and $A_h$ is the set of pulse indices
+already executed at that cut, including the distinction before/after a pulse
+at the same epoch, put
+
+$$
+ r_{h,A_h}=\sum_{j\in A_h}B^{h-jH_+}J_+e_j,\qquad
+ P_h=B^hE,\qquad
+ w_{h,A_h}=P_hx+r_{h,A_h}.
+                                                        \tag{84.3}
+$$
+
+Here $jH_+\le h$ for every executed pulse. The exact inverse is
+$(P_h^{\mathsf T}P_h)^{-1}P_h^{\mathsf T}
+(w_{h,A_h}-r_{h,A_h})$. This is preservation of entry distinctions during
+acquisition, not an early observer's acquisition of the still unknown $B$.
+Given that phase's field, its numerical evaluation is available once the law
+has actually been earned. Retaining an earlier whole field for this purpose
+would be an additional archive; no such measured archive or pre-acquisition
+four-view chart is supplied by (84.3).
+
+Proof. The learned cap and real canonical adapter meet every hypothesis of
+the shared acquisition proof. Its free data recover $Ex$ by coordinate
+polynomials; sequential subtraction earns the true pulse columns, not responses
+of cloned trials. It also earns $B$ by positive-tree infection. No fresh
+coordinate is assumed to stay zero during these pulses: their full contribution
+is $r_B$. Induction on the performed Ticks gives both endpoint formulas.
+Theorem 83.2 makes $P_t$ full column rank for each $t$. For nonzero
+$\eta\in\mathbb Q^N$,
+$\eta^{\mathsf T}P_t^{\mathsf T}P_t\eta=\|P_t\eta\|^2>0$, so its rational Gram
+matrix is nonsingular and has a rational inverse. Multiplication proves (84.2).
+At intermediate cuts induction on the actual pulse translations and Ticks
+gives (84.3); Theorem 83.2, including exponent zero, gives its identical
+Gram-inverse argument. The known phase includes which pulse has completed;
+it is not inferred from $w_{h,A_h}$.
+The parser is used on $\rho(\mathcal D)$ only: beta decodes to alpha, alpha
+fails, the literal pair $\langle\beta,\alpha\rangle$ decodes to beta before
+recursive pairing. No $\rho$ image has alpha root, so its special block
+cannot collide with a recursive image pair. Lemma 59.1 supplies both inverse
+directions, and persistent addresses give precisely $E$. No ambient inverse
+of $B$, physical inverse Tick or old journal is supplied. $\square$
+

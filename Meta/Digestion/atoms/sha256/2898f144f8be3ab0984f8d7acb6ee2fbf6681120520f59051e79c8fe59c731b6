@@ -1,0 +1,11 @@
+**定理 112.2（全部旋转协变的精确权重条件）。** 写 $q_x=p_2,q_y=p_3+p_{25},q_z=p_5$，Bloch 矩阵为
+
+$$
+D=\operatorname{diag}(\lambda_x,\lambda_y,\lambda_z),\qquad
+\lambda_j=2(p_0+q_j)-1.
+$$
+
+$\mathcal N$ 对全部旋转协变，当且仅当 $p_2=p_5=p_3+p_{25}$。
+
+证明（112.2）。$X,Y,Z$ 共轭分别保持自己并取反其余方向，故 $\lambda_x=p_0+q_x-q_y-q_z$，以总和一化为所列式，另两式循环得到。若三个 $q$ 相等，$D$ 为标量，故交换全部 $SO(3)$。反向若交换全部旋转，特别与绕 $z$ 轴的四分之一周旋转交换，得到 $\lambda_x=\lambda_y$；再绕 $x$ 轴得 $\lambda_y=\lambda_z$。由公式即三个 $q$ 相等。$\square$
+

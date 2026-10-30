@@ -1,0 +1,38 @@
+**Definition 103.1 (the stronger structural task).** Fix any finite original
+term $u\in\mathcal D$ of Definition 75.1, with $a$ alpha leaves, $c$ beta
+leaves, $b=a+c$, and $N=2b+c-1$ material cells. A refinement is a finite
+word of enabled original $P/S$ calls, with exactly the original addressed
+guards and persistent templates. No marker is a logical target. For this
+structural task no Tick, Add, Read, reset, deletion, rerooting, reweighting,
+self-loop, graft or replacement of an old cell is allowed. The cost pair
+$(p,s)\in\mathbb N^2$ counts successful promotions and splits. Refusals
+cannot improve the task and are unnecessary for the witnesses below.
+The logical code and actual bindings must already have been earned;
+this definition does not acquire them for free.
+
+Write $v$ for the final term and $B=A_v$ for its actual unit adjacency.
+The task is that the primitive map $w\mapsto Bw$ be injective on the
+**whole** $\mathbb Q^{V(v)}$. This ambient requirement is stronger than
+preserving information on a specified entrance image or in a controller
+archive. If $E:\mathbb Q^{V(u)}\to\mathbb Q^{V(v)}$ is the literal old-cell
+inclusion, the untouched entry $x$ becomes exactly $Ex$: every fresh
+coordinate is zero, every old coordinate, edge and root depth persists.
+In particular
+
+$$
+E^{\mathsf T}E=\mathrm{Id}_N,\qquad E^{\mathsf T}BE=A_u,\qquad
+M=|V(v)|=N+p+2s,\qquad b(v)=b+s.
+\tag{103.1}
+$$
+
+The compression identity is not $BE=EA_u$. A later Tick may move an old
+value into a fresh cell.
+
+A tree is in state $F$ if it has a perfect matching. It is in state $R$
+if it has a matching covering every cell except its root and leaving
+that root unmatched. The root in $R$ is available to an edge from its
+parent; it is not deleted. For $X=F,R$, let $\mathcal C_X(u)$ be all cost
+pairs of refinements attaining state $X$. Use the componentwise order on
+$\mathbb N^2$ and write $\operatorname{Min}$ for its undominated elements.
+A scalar cost below means $p+s$, not allocated cells or total resources.
+

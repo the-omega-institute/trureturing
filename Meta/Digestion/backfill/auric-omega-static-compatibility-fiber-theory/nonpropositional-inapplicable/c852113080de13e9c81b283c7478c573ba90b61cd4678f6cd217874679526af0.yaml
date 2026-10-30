@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:c852113080de13e9c81b283c7478c573ba90b61cd4678f6cd217874679526af0
+  normalized_sha256: sha256:c852113080de13e9c81b283c7478c573ba90b61cd4678f6cd217874679526af0
+cas_ref: sha256:c852113080de13e9c81b283c7478c573ba90b61cd4678f6cd217874679526af0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 规定记录纤维、允许动作和共同安全动作的交集；末句规定延拓到不可达记录时另加的默认动作条件。'
+    previous_atom_id: 98098cbba2e8857684f782b465137d8f2f27b71397f8160938d71d2028e08871
+    next_atom_id: b59197ea4865d716cf064f3dccc8f131d675d163fa21758013a243d91f4c0412

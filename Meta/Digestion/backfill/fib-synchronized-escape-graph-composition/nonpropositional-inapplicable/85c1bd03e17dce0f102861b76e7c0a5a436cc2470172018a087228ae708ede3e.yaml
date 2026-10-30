@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:85c1bd03e17dce0f102861b76e7c0a5a436cc2470172018a087228ae708ede3e
+  normalized_sha256: sha256:85c1bd03e17dce0f102861b76e7c0a5a436cc2470172018a087228ae708ede3e
+cas_ref: sha256:85c1bd03e17dce0f102861b76e7c0a5a436cc2470172018a087228ae708ede3e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'For finite nonempty factors, fixing either coordinate gives a graph homomorphism and hence the lower bound. Pairing minimum colorings gives the product upper bound via Fintype.card_prod. Singleton/complete graph factors witness attainability using chromaticNumber_top. The later independent-copy description is excluded from this child. Pinned mathlib revision: 56a005855ea17e0b0958f73ec801ae140b0a1679. Upstream declarations: SimpleGraph.chromaticNumber_mono_of_hom, SimpleGraph.Coloring.mk, SimpleGraph.Colorable.chromaticNumber_le, SimpleGraph.chromaticNumber_top, Fintype.card_prod. D5 searched scope: D5/**/*.lean, including private declarations; shape scan: lowerPolar/upperPolar/Galois/closure, chromaticNumber/coloring/products, convex intersection/Helly/Radon, numerical checker checked_expression_encloses and cutoff_first_nonstrict; inspected the graph-coloring, generic closure, formal-concept adapter, and quantum Foundation/Subentropy hits.'
+    previous_atom_id: db8054f201faa345098a4a4ce90d6afed968dc10eef149e38aa2ba0b9a21c502
+    next_atom_id: b18d250ddc1731c4676b3c396add113c617959f9a92dc1c4f82899b7defbb0c9

@@ -1,0 +1,18 @@
+**Lemma 2.4 (retained seal without a seal observation).** On either
+admitted initialization, from first DONE onward tape74 is $w\mathsf F$, with the final F seal track set,
+owner $A$, $R_{74}=1$, $W_{74}=0$, and head initially R. These facts
+persist through capture, second load, import, services and original00.
+
+Proof. Lemma 2.3 gives the exact symbols, mark and final seal. Enumerate
+the fixed writers: $H_B$ has the only74 EX/WR/marker rows and it has
+no re-entry; $L$ uses66–69; the second bootstrap writes its own fresh
+version; bank rebuilding uses64–68; the new importer only RD/ML/MR74;
+other source, channel, original client/verifier/consumer rows have no74
+write/effect operand. Their finite token lists have no assignment to
+$R_{74},W_{74}$ or owner74. Step applied to a represented74 list changes
+bank bytes, never the current physical74. Induction on these actual rows
+preserves all asserted tracks and rights. The importer therefore has a
+sealed immutable source under current read authority. RD reads only its
+three symbol bits; no additional seal test or imported seal bit follows
+from, or is needed for, this invariant. ∎
+

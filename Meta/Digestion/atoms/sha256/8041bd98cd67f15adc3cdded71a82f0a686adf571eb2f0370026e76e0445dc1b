@@ -1,0 +1,9 @@
+**定义 1.1（普通图能量博弈）。** 设 $G=(V,E)$ 为有限简单无向图，$A_G$ 为其邻接矩阵，邻接特征值按重数记为 $\lambda_1,\ldots,\lambda_{|V|}$。普通能量及诱导联盟价值定义为
+
+$$
+\mathcal E(G)=\sum_{\ell=1}^{|V|}|\lambda_\ell|,
+\qquad w_G(C)=\mathcal E(G[C])\quad(C\subseteq V).
+$$
+
+空图的能量为零，因而 $w_G(\varnothing)=0$。这里固定采用 Arizmendi–Arizmendi，[*The graph energy game*, arXiv:2012.14114v2](https://arxiv.org/pdf/2012.14114v2)，Definition 3.1，第 5 页的普通邻接能量定义。
+

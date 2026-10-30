@@ -1,0 +1,18 @@
+### 2.1 Three source histories at every valid base
+
+Let $b$ be `ValidBase` and let $k$ be strict interior.  Put
+
+$$
+h^{(0)}=(0,0,0,0,0),\qquad
+h^{(1)}=\frac{\pi}{2}(1,1,0,1,1).
+\tag{OC.3}
+$$
+
+The third lift is selected by the two symmetry walls.  With
+$A=X+Y-r$, use the following table.
+
+| base condition | $h^{(2)}$ | $C_x$ | $q$ |
+| --- | --- | --- | --- |
+| $A\ne0$, either sign | $(\pi,0,0,0,-\pi)$ | $2X+2Y-r-4x$ | $i$ |
+| $A=0$ and $X\ne Y$ | $(0,\pi,0,-\pi,0)$ | $4x-r$ | $i$ |
+| $A=0$ and $X=Y=r/2$ | $(\pi,0,0,0,\pi)$ | $r-4x$ | $i$ |

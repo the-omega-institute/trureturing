@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d96e6ad0e1471a8db38fa1251abbb2263ec77125d3123f738e82837d3c08ef7a
+  normalized_sha256: sha256:d96e6ad0e1471a8db38fa1251abbb2263ec77125d3123f738e82837d3c08ef7a
+cas_ref: sha256:d96e6ad0e1471a8db38fa1251abbb2263ec77125d3123f738e82837d3c08ef7a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 存在证据纪律的标题、引句和“构造项”证据类别。
+    previous_atom_id: 4aa037ef846b2d9f879359893a8453a9e6ff5c56651cfdee0fe4465cebcf3a6d
+    next_atom_id: 40c012c26d847505a04f7453c1addf69d6f1477e28d27cc5461f081ced086262

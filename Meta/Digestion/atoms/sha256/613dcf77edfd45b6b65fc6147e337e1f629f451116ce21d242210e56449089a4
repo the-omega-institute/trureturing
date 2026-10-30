@@ -1,0 +1,60 @@
+**Definition 13.1 (finite held topology and the free first-level premise).**
+Fix $T>0$, the same $I$, preparation and readout as above. Give
+
+$$
+\mathcal X_{I,T}=C([0,T],E_I),\qquad
+ d_\infty(\omega,\omega')
+       =\sup_{0\le t\le T}|\omega(t)-\omega'(t)|
+\tag{13.1}
+$$
+
+the uniform topology. It is a Polish space since $E_I$ is a compact
+subset of $\mathbb R^{10}$. In fact $\mathcal R$ restricted to
+$I\times\mathbb T^2$ is a homeomorphism onto $E_I$: (11.6) recovers
+the height, and the nonzero $01$ and $02$ pairs recover both phases.
+This topology retains the full signed ten-output path, not only its
+terminal output, a phase-unwrapped surrogate or a cemetery jump.
+
+A free first-level reference in this section means any joint law
+carrying a planar Brownian pair $(A_t,B_t)$ started at $(0,0)$ with
+
+$$
+\mathbb E\!\left[
+ \begin{pmatrix}A_t\\B_t\end{pmatrix}
+ \begin{pmatrix}A_s&B_s\end{pmatrix}\right]
+       =2\min(t,s)\,\mathsf D,\qquad
+\mathsf D=\mathsf D^{\mathsf T}>0,
+\tag{13.2}
+$$
+
+and any continuous real retained central history $J_t$ with $J_0=0$,
+possibly with arbitrary extra randomness. No independence of $J$
+from the Brownian pair is assumed; even dependence on its complete
+future is allowed for this comparison. Only the marginal law of the
+pair in (13.2) is required. Put
+
+$$
+\begin{gathered}
+\vartheta_I=\inf\{t\in[0,T]:k_0+A_t\notin(l,u)\},
+\qquad \inf\varnothing=\infty,\\
+q_t^{\rm ref}
+ =(k_0+A_t,[\alpha_0+B_t/2],
+                 [\beta_0+c_0B_t-J_t/r]),\qquad t\le\vartheta_I,\\
+O_t^{\rm ref}=\mathcal R(q_{t\wedge\vartheta_I}^{\rm ref}),
+                    \qquad 0\le t\le T.
+\end{gathered}
+\tag{13.3}
+$$
+
+Let $\mu_{I,T}$ be the law of this held output in (13.1), and let
+$\nu_{I,T}$ be the law of $(O_t^I)_{0\le t\le T}$ under the
+legitimate original source start $\mathbb P_e$.
+The reference covariance-$2$ convention of
+[Guarded lift limits, Theorem 6.1](FIB_NATIVE_GUARDED_LIFT_LIMITS_AND_DIFFUSION_SELECTION.md#6-direct-joint-convergence-including-the-chronological-coordinate)
+is $\mathsf D=I_2$. A scalar free horizontal coefficient $a$ in the
+same clock corresponds to $\mathsf D=aI_2$, not to changing $t$.
+This is an additional stochastic premise, not a consequence of
+finite-variation native syntax. The arbitrary $J$ includes the
+canonical area, area drift and continuous independent central noise
+of the separately declared native references.
+

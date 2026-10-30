@@ -1,0 +1,35 @@
+**Definition 2.1 (finite receiver and independently defined memory).** Let
+
+$$
+L_i(t)=\prod_{\substack{0\leq j<\nu\\j\ne i}}
+\frac{t-t_j}{t_i-t_j},\qquad
+W_{ki}=\int_0^T(t/T)^kL_i(t)\,dt\quad(0\leq k,i<\nu).
+\tag{2.1}
+$$
+
+The empty product for $\nu=1$ is one. The receiver constructs these known
+weights from the nodes and $T$, then, after the actual stop, writes
+
+$$
+\mu_k=\sum_{i=0}^{\nu-1}W_{ki}y_i.
+\tag{2.2}
+$$
+
+The intended Memory meaning is the weighted accumulated output
+$\int_0^T(t/T)^kCx(t)\,dt$, rather than an archive or a chosen inverse of
+Space. Equation (2.2) is its acquisition implementation using existing
+replies. No source integral command is part of the new installation.
+
+There is a finite arithmetic construction of every weight. Expand
+$L_i(t)=\sum_{r<\nu}\lambda_{ir}t^r$ by multiplying its displayed linear
+factors, dividing only by the nonzero node differences. Then
+
+$$
+W_{ki}=\sum_{r=0}^{\nu-1}
+\lambda_{ir}\frac{T^{r+1}}{k+r+1}.
+\tag{2.3}
+$$
+
+Thus the integral in the specification of a weight requires no numerical
+integration oracle. Rational nodes and $T$ give rational weights.
+

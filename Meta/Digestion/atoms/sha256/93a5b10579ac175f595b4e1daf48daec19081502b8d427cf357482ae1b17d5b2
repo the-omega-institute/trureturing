@@ -1,0 +1,69 @@
+**Lemma 10.5 (Exact correspondence with the entire off-24 child).**
+Fix arbitrary real $p\ne24,v$. The map
+
+$$
+C(p,v)\longrightarrow\mathbb R^2,\qquad W\longmapsto(x,d),
+\qquad x=n/U,
+\tag{10.13}
+$$
+
+is injective. Its image is exactly the following guarded set. Require
+$x>0$, $d\ne24$, $N_1\ne0$, and, with
+
+$$
+\begin{aligned}
+\beta&=2(147/5-d)-N_2/D,\\
+U&=\frac{-d(N_0/D)+\beta(N_2/D)}{d^2+\beta^2},\\
+b&=(U-1)/2,\qquad j=U(24-d)D/N_1,\qquad r=xU-j,
+\end{aligned}
+\tag{10.14}
+$$
+
+require all of
+
+$$
+\begin{gathered}
+d^2+\beta^2>0,\qquad U>1,\qquad 0<r<1,\qquad
+j=b+r(1-r)/b,\\
+dDU=-N_0,\qquad
+\{2(147/5-d)D-N_2\}U=N_2.
+\end{gathered}
+\tag{10.15}
+$$
+
+The corresponding world is exactly $W=(P(r,b),\mathcal H/U,d)$.
+For every such world, including zero drift,
+
+$$
+a=d+\frac{T+2j+4r}{U}\frac{N_7}{D},\qquad
+m=d+(3+2x)\frac{N_7}{D}.
+\tag{10.16}
+$$
+
+Proof. This is F, Lemma 30.2, with its parameters unchanged; the
+following verification makes the correspondence explicit. For an
+actual world, the trace list following (10.4) gives $x>0$ and the
+four samples of $Ug$ in (10.12). Hence $Ug=\mathcal H$ as entire
+polynomials. O, Theorems 2.1–2.2, show that $d=24$ in this parent
+would force $b=1/8$ and
+$g(s)=\frac85(s-1)(s-3)(s-5)$, whose fifth-M response is $24$.
+Thus $p\ne24$ gives $d\ne24$. Clock one gives
+$N_1/D=U(24-d)/j\ne0$.
+
+Clocks zero and two give $dU=-N_0/D$ and $\beta U=N_2/D$.
+The pair $(d,\beta)$ cannot vanish: otherwise $N_2/D=0$ but
+$\beta=2(147/5)\ne0$. Their scalar product with $(d,\beta)$
+therefore gives (10.14). All coordinates, and then the entire gain,
+are forced, proving injectivity without dividing by $d$.
+
+Conversely the guards construct a strict source with $n=xU$ and
+$T=(U+1)/2$. Equations (10.15) give the original readings at zero
+and two. The definition of $j$ gives reading $24$ at clock one.
+The four interpolated samples give readings $24,18,p,v$ at clocks
+three through six. The polynomial $\mathcal H/U$ is entire and
+has degree at most three. It is nonzero because the first two
+readings differ. Thus all seven original rows hold on the constructed
+complete world. The actual seventh-action traces in (10.5) give
+(10.16). No assertion that arbitrary roots of later necessary
+polynomial equations are legal worlds is used. ∎
+

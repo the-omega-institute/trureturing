@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.IndecomposableInversio
 internal sealed class FranklinInversionDefsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/IndecomposableInversion/FranklinInversionDefs.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/franklin2024inversions");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/PermutationPatterns/franklin2024inversions");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Indecomposable permutations avoiding 321 and 1342 are grouped by their number of inversions.",

@@ -1,0 +1,19 @@
+**定义 3.1（合法选择的部分合并）。** 在固定同一窗口 $`j`$ 中，若 $`I,J\in\mathcal{\text{𝒮}}`$ 满足
+
+```math
+I\cap J=\varnothing,\qquad I\cup J\in\mathcal{\text{𝒮}},
+```
+
+定义
+
+<table><tbody><tr><td>
+
+```math
+\mathsf{\text{𝖥}}_j[I]\boxplus\mathsf{\text{𝖥}}_j[J]
+=\mathsf{\text{𝖥}}_j[I\cup J].
+```
+
+</td></tr></tbody></table>
+
+其余输入对不定义。空选择是该部分运算的单位；重复占同一位置和新增相邻占位均不在定义域。该运算描述位置联合，不是原始有序树配对。
+

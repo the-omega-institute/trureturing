@@ -1,0 +1,101 @@
+**Definition 14.1 (Actual sixth-J response polynomials).** All polynomial
+expressions in this section are in $\mathbb Z[r,b]$. With (12.1), set
+
+$$
+\begin{aligned}
+D&=20XNW+T\{4XNW-b(15NW+10XW-XN)\},\\
+D_d&=24D-12(8b-1)XNW,\\
+A_6&=4XNW-b(9NW-10XW+9XN),\\
+A_7&=16XNW-b(35NW-35XW+21XN),\\
+G_6&=24D-3(8b-1)A_6,\\
+G_7&=384D-12(8b-1)A_7,\\
+U_n&=bD_d+(X+bT+2br)G_6,\\
+F_n&=5bD_d+WG_7,\\
+M_n&=5bD_d+(2bU+X)G_7.
+\end{aligned}
+\tag{14.1}
+$$
+
+On the strict $H=0$ graph, $D=20XNW E_2\ne0$ by Theorem 13.2.
+Only after this nonzero denominator is established, the complete-world
+reconstruction and its actual responses are
+
+$$
+\begin{gathered}
+\epsilon=-\frac{12(8b-1)XNW}{D},\quad d=\frac{D_d}{D},\quad
+ g(6)=\frac{G_6}{D},\quad g(7)=\frac{G_7}{5D},\\
+u:=u_J=\frac{U_n}{bD},\qquad
+f:=f_{JJ}=\frac{F_n}{5bD},\qquad
+m:=f_{JM}=\frac{M_n}{5bD}.
+\end{gathered}
+\tag{14.2}
+$$
+
+In particular $m$ is the actual seventh-M response following the
+acquired sixth J. It is not $f_{MM}$, which follows a different sixth
+action.
+
+Define $P_t$ and $G$ by the exact polynomial identities
+
+$$
+\begin{aligned}
+12bP_t&=16U_n-F_n-216bD,\\
+3(8b-1)G&=16U_nD-864bD^2-120bP_tD+3bP_t^2.
+\end{aligned}
+\tag{14.3}
+$$
+
+Both divisions are exact in $\mathbb Z[r,b]$: expansion and polynomial
+long division in $b$ over $\mathbb Q[r]$ give zero remainders and integer
+coefficients. Thus (14.3) defines polynomials even at $b=1/8$; it is not
+a rational chart deleting that stratum. The joint coordinate is
+
+$$
+t_J=\frac{P_t}{32D}
+ =\frac18+\frac{u-24}{24}-\frac5{384}(f-24).
+\tag{14.4}
+$$
+
+The exact-$h$ responses, derived from the products in (1.7), are
+
+$$
+\begin{aligned}
+u_K(t)&=54+240t-192t^2,\\
+f_K(t)&=\frac{648}{5}+\frac{3456}{5}t-\frac{3072}{5}t^2,\\
+m_K(t)&=\frac{1128}{5}+\frac{3072}{5}t-\frac{3072}{5}t^2.
+\end{aligned}
+\tag{14.5}
+$$
+
+They obey the joint inverse in (14.4), with $t_J=t$, and
+
+$$
+u-u_K(t_J)=\frac{3(8b-1)G}{16bD^2}.
+\tag{14.6}
+$$
+
+Finally define
+
+$$
+\begin{aligned}
+D_t={}&((P_t)_rD-P_tD_r)H_b-((P_t)_bD-P_tD_b)H_r,\\
+D_u={}&((U_n)_r(bD)-U_n(bD)_r)H_b\\
+ &-((U_n)_b(bD)-U_n(bD)_b)H_r,\\
+L_{63}&=U_n-63bD,\\
+A(r)&=3r^2-6r-1,\qquad C(r)=4r^2-2r-1.
+\end{aligned}
+\tag{14.7}
+$$
+
+Along $b=B_H(r)$, implicit differentiation gives
+
+$$
+\frac{dt_J}{dr}=\frac{D_t}{32D^2H_b},\qquad
+\frac{du}{dr}=\frac{D_u}{(bD)^2H_b}.
+\tag{14.8}
+$$
+
+Every denominator in (14.2), (14.4), (14.6), (14.8) is nonzero by
+$b,X,N,W>0$, $D\ne0$, $H_b>0$. These statements hold on the entire
+strict graph, including its intersections with $\mathcal K$.
+

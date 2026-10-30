@@ -1,0 +1,27 @@
+**Lemma 21.4 (lawful acquisition, preservation and finite installation).**
+For each actually supplied first word in $\{w_0,w_1\}$ and the matching
+finite subsequent supplies, this initialization reaches its actual first
+Ready. The active $L$ map is the old one, tape74 is exactly $w_\sigma
+\mathsf F$, bootWitness is exactly $w_\sigma$, and bootRef resolves its
+actual sealed backing and its immutable initial69 copy.
+
+Proof. BRN Lemmas 2.3–2.4 prove every active-loader guard, partial cut,
+raw/active separation and retained74 invariant on both actual words.
+BRN Theorem 3.2 proves the source74-specific symbol import, finite parser,
+head restoration and actual read-right join. Its Proposition 3.3 states
+the exact correspondence without extending ARC3.2's old domain.
+No physical seal observation is needed. BRN Proposition 4.4 and Theorem
+5.1 prove complete-bank preservation, measured export/staging and frozen
+ManifestPrefix lineage, including every new persistent field. Thus the
+acquired word is retained and resolved, rather than replaced by a code
+constant, and all ordinary current rights are supplied by the actual boot.
+
+All helper dependencies have Definition 2.1's order. Import/parsing use
+word primitives; literal Step uses row lookup, never a semantic decoder;
+bounded recovery and the role fold use Step; bindings, body decoders and
+channel stages follow. Static expansion therefore gives finite $r_B$ and
+finite control before metadata generation. The empty bank precedes every
+assignment; the complete prefix precedes its import. This proves finite
+construction and installation, not an instruction for a future compiler
+or an authorization still to be supplied. ∎
+

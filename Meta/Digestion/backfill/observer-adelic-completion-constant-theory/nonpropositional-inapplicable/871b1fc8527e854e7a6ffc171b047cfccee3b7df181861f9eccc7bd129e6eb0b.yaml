@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:871b1fc8527e854e7a6ffc171b047cfccee3b7df181861f9eccc7bd129e6eb0b
+  normalized_sha256: sha256:871b1fc8527e854e7a6ffc171b047cfccee3b7df181861f9eccc7bd129e6eb0b
+cas_ref: sha256:871b1fc8527e854e7a6ffc171b047cfccee3b7df181861f9eccc7bd129e6eb0b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The single word passivity is a proposed missing-condition research direction in the preceding list. It asserts neither passivity nor its sufficiency for resonance rigidity.
+    previous_atom_id: fa07e66ff8937e21b13c66c277f843201b4f08fc950e85c3050c3c20f9d8a868
+    next_atom_id: ba33255129722b738bd07784fc62f752ee3244b178708be11b42db6fff7d4d8f

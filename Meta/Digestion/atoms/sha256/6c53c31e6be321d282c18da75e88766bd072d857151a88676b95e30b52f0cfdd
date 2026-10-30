@@ -1,0 +1,70 @@
+**Definition 7.1.1 (Original worlds and selected secants).** The ambient domain is exactly (6.1.1): every source matrix is entrywise strictly positive, rank one and trace one; the gain is any nonzero real polynomial of degree at most three; and the constant drift is any real number. Signs, sampled zeros, repeated roots and degree drops have no additional ambient restriction. The acquired history is the literal history (6.1.2)–(6.1.3). In particular the initial observation counts, each action is immediately read, and the seventh J and M are alternative actions. The parameter below is a coordinate on a family of worlds, not an additional acquired observation.
+
+For a strict source $(r,b)$ and a real $e$, retain $j,n,T,U$ from (6.1.4), and set
+
+$$
+\begin{aligned}
+B_{\mathrm{coef}}&=6/T-2/U=2(2+5b)/(TU),\\
+\Lambda&=1+6/T+1/U-4/j-4/n,\\
+H(r,b,e)&=e\Lambda+\frac{24}{5}(b-1/8)B_{\mathrm{coef}},\\
+q_0&=-24-e,&q_1&=-e/j,&q_2&=(27/5-e)/T,&q_3&=-e/n,\\
+d&=24+e,&
+g_{r,b,e}(s)&=\sum_{i=0}^3q_i
+ \prod_{\substack{0\le a\le3\\a\ne i}}\frac{s-a}{i-a}.
+\end{aligned}
+\tag{7.1.1}
+$$
+
+Each endpoint uses its own polynomial in this formula. The actual response circuit is
+
+$$
+\begin{aligned}
+g_5&=-4q_0+15q_1-20q_2+10q_3,\\
+g_6&=-10q_0+36q_1-45q_2+20q_3,\\
+g_7&=-20q_0+70q_1-84q_2+35q_3,\\
+p&=24+e+(U+n)g_5,\\
+v&=24+e+(2U+n)g_6,\\
+a&=24+e+(T+2j+4r)g_7,\\
+m&=24+e+(3U+2n)g_7,\qquad x=n/U.
+\end{aligned}
+\tag{7.1.2}
+$$
+
+Use the two-coefficient algebra with elements $A+\epsilon B$ and relation $\epsilon^2=t$. Its arithmetic is
+
+$$
+\begin{aligned}
+(A,B)+(C,D)&=(A+C,B+D),\\
+(A,B)(C,D)&=(AC+tBD,AD+BC),\\
+(A,B)^{-1}&=(A,-B)/(A^2-tB^2).
+\end{aligned}
+\tag{7.1.3}
+$$
+
+For $y=(R,B,E,k,\ell)$ substitute
+
+$$
+r=(R,1),\qquad b=(B,k),\qquad e=(E,\ell)
+\tag{7.1.4}
+$$
+
+in (7.1.1)–(7.1.2). Write the two coefficients of any resulting quantity $f$ as $(f_{\mathrm{av}},f_{\mathrm{sec}})$. The five-equation system is
+
+$$
+G(y,t)=
+\bigl(H_{\mathrm{av}},H_{\mathrm{sec}},
+      p_{\mathrm{sec}},v_{\mathrm{sec}},a_{\mathrm{sec}}\bigr)=0.
+\tag{7.1.5}
+$$
+
+For $t=h^2\ge0$, evaluation at $\epsilon=\pm h$ gives the endpoints
+
+$$
+r_\pm=R\pm h,\qquad b_\pm=B\pm kh,\qquad
+ e_\pm=E\pm\ell h,\qquad
+W_\pm=(P(r_\pm,b_\pm),g_{r_\pm,b_\pm,e_\pm},24+e_\pm).
+\tag{7.1.6}
+$$
+
+The circuit divides only by fixed interpolation constants and source traces, or their products represented by (7.1.3). It has no quotient by $h$, $\Lambda$, the regular $D$ of (6.2.1), drift, a gain sample, a leading coefficient or a gain-root separation. At $t=0$ the algebra is the algebra of dual numbers: $f_{\mathrm{sec}}$ is the derivative in direction $(1,k,\ell)$. Thus (7.1.5) is defined at the coalescence point as well as at a singular-parent source.
+

@@ -99,6 +99,13 @@ import materials
 
 
 class NativeTestSupport:
+    # Process-table ownership is still sampled while a command runs, but the
+    # old 100 ms cadence made every long native build spend a material share
+    # of its wall budget in repeated `ps` scans.  Timeout enforcement remains
+    # on the waiter thread's absolute deadline; this cadence only bounds the
+    # diagnostic/settlement sampling overhead.
+    COMMAND_SAMPLE_INTERVAL = 0.5
+
     @classmethod
     def setUpClass(cls):
         cls.lake = os.environ.get('STRATALINT_NATIVE_LAKE_BIN') or subprocess.check_output(
@@ -228,9 +235,10 @@ defaultFacets = ["static"]
         for name in ['tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
                      'tools/scripts/worktree/lean-cache-input.sh', 'tools/scripts/worktree/lean_cache.py',
                      'tools/scripts/worktree/cache_material.py',
-                     'tools/scripts/worktree/lean_cache_release.py',
+                     'tools/scripts/worktree/lean_cache_release.py', 'tools/scripts/worktree/lean_cache_topology.py',
                      'lean-toolchain', 'Makefile',
                      'tools/scripts/worktree/lean-cache-ensure.sh', 'tools/scripts/worktree/lean-cache-run.sh',
+                     'tools/scripts/worktree/lean-git/git',
                      'tools/scripts/report/lean-report.sh', 'tools/scripts/report/report-supervisor.sh',
                      'tools/scripts/lib/resource-observation-lib.sh',
                      'tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs']:
@@ -482,7 +490,7 @@ defaultFacets = ["static"]
                 while True:
                     self.owned_processes(command)
                     observe_pending()
-                    if completed.wait(0.1):
+                    if completed.wait(self.COMMAND_SAMPLE_INTERVAL):
                         break
                 if isinstance(outcome.get('error'), subprocess.TimeoutExpired):
                     stdout.seek(0); stderr.seek(0)
@@ -521,7 +529,7 @@ defaultFacets = ["static"]
         shutil.copyfile(ROOT / name, target)
         if name == "tools/lean-inspector/Inspector.lean":
             target.write_text(transport_inspector(target.read_text()))
-        target.chmod(0o755 if name.endswith('.sh') else 0o644)
+        shutil.copymode(ROOT / name, target)
     def write(self, name, value):
         target = self.root / name
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -530,8 +538,8 @@ defaultFacets = ["static"]
         self.write('utility.json', json.dumps([dict(modulePath='Fixture.lean', claimGid='claim-gid', claimModule='External',
             claimSelector=claim, claimSourcePath='External.lean', claimSourceSha256='sha256:' + publication.digest(self.root / 'External.lean'),
             resultGid='result-gid', resultModule='Fixture', resultSelector='result')]))
-    def run_lake(self, *args, success=True):
-        self.ensure()
+    def restore_compiler(self):
+        """Restore supplied compiler material after dependency preparation."""
         if self.compiler_seed is not None:
             # The collection owns this read-only stage. Lake copies only its
             # registered producer outputs into this fixture's private cache;
@@ -540,6 +548,10 @@ defaultFacets = ["static"]
                 cwd=self.root, env=self.env, text=True, capture_output=True, timeout=120)
             self.assertEqual(restored.returncode, 0, restored.stdout + restored.stderr)
             self.compiler_seed = None
+
+    def run_lake(self, *args, success=True):
+        self.ensure()
+        self.restore_compiler()
         result = self.guarded_command([self.lake, *args], cwd=self.root, env=self.env, text=True, capture_output=True, timeout=120)
         if success:
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
@@ -691,9 +703,11 @@ class NativeArtifactTestSupport(NativeSharedTestSupport):
 
 
 def stage_compiler(output):
-    """Build the declared compiler target once; Lake owns its staged materials."""
+    """Build the declared compiler targets once; Lake owns their staged materials."""
     registration = json.loads((ROOT / 'tools/tests/StrataLint.Lean.Tests/Fixtures/native-compiler.json').read_text())
-    if set(registration) != {'package_directory', 'target'}:
+    if (set(registration) != {'package_directory', 'targets'}
+            or not isinstance(registration['targets'], list) or not registration['targets']
+            or any(not isinstance(target, str) or not target for target in registration['targets'])):
         raise ValueError('invalid native compiler fixture registration')
 
     class CompilerFixture(NativeTestSupport, unittest.TestCase):
@@ -706,7 +720,7 @@ def stage_compiler(output):
         fixture.compiler_seed = None
         mappings = fixture.root / 'compiler-outputs.jsonl'
         fixture.run_lake('-d', registration['package_directory'], 'build',
-                         '-o', str(mappings), registration['target'])
+                         '-o', str(mappings), *registration['targets'])
         fixture.run_lake('cache', 'stage', str(mappings), str(output))
         # Access permissions apply to the directory produced by Lake stage;
         # they do not select or discover build inputs or reusable materials.

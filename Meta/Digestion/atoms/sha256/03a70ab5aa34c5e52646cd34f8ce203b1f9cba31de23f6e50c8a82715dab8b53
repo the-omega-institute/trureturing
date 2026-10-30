@@ -1,0 +1,83 @@
+### 定理 3.1（五有理式的尖锐风险律）
+
+令 $c=2\varepsilon/m$，并定义
+
+$$
+\begin{aligned}
+d_0(c)&=c/v,\\
+d_R(c)&=\frac{c(u+v+2b)}{uv+2c},&
+e_R(c)&=\frac{c(v+2b)}{uw+2c},\\
+d_L(c)&=\frac{c(-u-2a)}{vw+2c},&
+e_L(c)&=\frac{c(-v-2a)}{uw+2c},\\
+\Psi_{u,v}(c)&=\max\{d_0(c),d_R(c),e_R(c),d_L(c),e_L(c)\}.
+\end{aligned}
+\tag{3.1}
+$$
+
+允许其中某些有理式为负；$d_0\ge0$ 保证最大值非负。则
+
+$$
+\boxed{R_{u,v}^*=\frac12\min\{L,\Psi_{u,v}(2\varepsilon/m)\}.}
+\tag{3.2}
+$$
+
+所有可取得报告的兼容原点集都是非空紧区间，其中点是最优估计。
+风险下界由有限增益、有限零位和完整原始误差立方体中的两世界取得。
+
+**证明。** 先把 (2.6) 延拓到 $d\ge0$。$M(d)\ge uw>0$，
+且其余项是非增仿射式，所以 $mQd/M(d)$ 连续、严格递增并趋于无穷。
+不等式 $F_{u,v}(d)\le mc$ 等价于以下五个不等式至少一个成立：
+
+$$
+Qd\le c\,uw,\quad Qd\le cw(u+v+2b-2d),\quad
+Qd\le cv(v+2b-2d),
+$$
+
+$$
+Qd\le cu(-u-2a-2d),\quad Qd\le cv(-v-2a-2d).
+$$
+
+各自移项后恰为 $d\le d_0,d_R,e_R,d_L,e_L$；所有分母严格为正。
+因此最大的允许 $d$ 是 $D=\min\{L,\Psi_{u,v}(c)\}$。
+
+对报告 $y$，定义
+
+$$
+C(y)=\{t\in K:\exists A\ge m,B\in\mathbb R,
+\ |y_i-A(i+t)^2-B|\le\varepsilon\ (i=0,u,v)\}.
+$$
+
+沿用 II 定理 80.3 的正分母换元
+
+$$
+\lambda=1/A,\quad \xi=2t,\quad \omega=(At^2+B)/A,
+$$
+
+得到恰好等价的线性约束
+
+$$
+0\le\lambda\le1/m,\qquad 2a\le\xi\le2b,\qquad
+|\lambda y_i-i^2-\xi i-\omega|\le\varepsilon\lambda\quad(i=0,u,v).
+\tag{3.3}
+$$
+
+这个闭多面体不含 $\lambda=0$：否则首一二次式
+$i^2+\xi i+\omega$ 在三个不同点 $0,u,v$ 同时为零，矛盾。
+它有界，因为前两变量有界，$i=0$ 的约束又界住 $\omega$。
+非空时它紧且 $\lambda$ 有正下限；逆换元
+$A=1/\lambda,t=\xi/2,B=\omega/\lambda-At^2$ 给有限合法参数。
+凸集的 $\xi/2$ 投影因此是紧区间，正是 $C(y)$。
+这里每个约束都使用原始坐标，没有替换噪声集合。
+
+若 $s,t\in C(y)$，其兼容无噪报告相距至多 $2\varepsilon$，
+所以 $F_{u,v}(|s-t|)\le2\varepsilon$，从而 $\operatorname{diam}C(y)\le D$。
+中点估计的误差至多 $D/2$；不可取得报告上任意定义即可。
+
+反向取定理 2.2 在距离 $D$ 的极值原点及定理 2.1 的有限参数，
+记两无噪报告为 $p,p'$。共同报告取 $y_*=(p+p')/2$，
+两个误差分别为 $(p'-p)/2$ 和 $(p-p')/2$。
+因 $\|p-p'\|_\infty\le2\varepsilon$，它们都属于原始闭立方体。
+同一实数答案至少在一个世界误差不小于 $D/2$，得到等号。
+$C(y_*)$ 已含相距 $D$ 的两点而直径至多 $D$，故它们就是区间两端。
+$D=0$ 时同取一世界即可。∎
+

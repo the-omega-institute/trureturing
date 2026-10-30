@@ -1,0 +1,125 @@
+**Lemma 31.2 (Source guards, coefficient signs and excluded cells).**
+On every initial tube (31.1) the source factors satisfy
+
+$$
+\begin{gathered}
+\mathcal S_H<-50,\quad\mathcal S_L<-50,\quad
+\mathcal B_H<-29,\quad\mathcal B_L>100,\\
+x_H,x_L>4/5,\qquad \mathcal D_H<0<\mathcal D_L,\\
+0<r_H,r_L<1,\qquad b_H,b_L>0.
+\end{gathered}
+\tag{31.4}
+$$
+
+The gain coefficient and drift evaluations on these tubes give
+
+$$
+1<\frac{-C_0+3C_1-3C_2+C_3}{6\mathcal D}<2,\qquad
+-\frac{C_{0,H}}{\mathcal D_H}>24,\qquad
+-\frac{C_{0,L}}{\mathcal D_L}>22.
+\tag{31.5}
+$$
+
+On L, $\mathcal T_L<0$ on every one of the $3072$ initial tubes.
+On H, the only initial tubes whose $\mathcal T_H$ enclosure contains
+zero have the following indices; in every other H tube it excludes zero.
+
+| Block | Number of H tubes excluding zero | Remaining indices $k$ |
+| --- | ---: | --- |
+| $[10,20]$ | $1012$ | $318,319,320,321,322,323,973,974,975,976,977,978$ |
+| $[20,30]$ | $1024$ | none |
+| $[30,34]$ | $1022$ | $735,1017$ |
+
+Proof. Expand (30.2)–(30.4) using the coefficient circuit, and evaluate
+by (31.2)–(31.3) on (31.1). This is a finite collection of rational
+inequalities with all coefficient and endpoint inputs specified.
+For the source signs, one may also use the larger radius-$2\cdot10^{-5}$
+tubes and their hulls in SIII (16.12):
+
+$$
+\begin{gathered}
+69/100<r_H<98/100,\quad31/100<b_H<39/100,\\
+15/1000<r_L<49/100,\quad7/1000<b_L<23/100,\\
+-6<\Lambda_H<-29/100,\qquad7/5<\Lambda_L<41/10.
+\end{gathered}
+\tag{31.6}
+$$
+
+Since $t=r/b>0$, the identities $T=1+b$, $U=1+2b$ and
+$j=b+r(1-r)/b$, $n=j+r$ make $T,U,j,n$ positive on these source
+boxes. Identity (28.7) gives the signs of $\mathcal D=5\mathcal Q$.
+In particular source response denominators are nonzero before any
+quotient derivative is evaluated.
+
+For an additional exact reduction of the coefficient checks, direct
+expansion before specialization gives
+
+$$
+F_0\left(\frac nU,\frac{N_p}{5\mathcal Q},
+                       \frac{N_v}{5\mathcal Q}\right)
+ =-\frac{3\mathcal B\mathcal S}{5U^3\mathcal Q}.
+\tag{31.7}
+$$
+
+Equivalently, multiplication by $5U^3\mathcal Q$ is the polynomial
+identity
+
+$$
+\begin{aligned}
+&405n^3(5\mathcal Q)
+ +(975(5\mathcal Q)-18N_p+5N_v)n^2U\\
+&\quad +(90(5\mathcal Q)-36N_p+5N_v)nU^2
+ -480U^3(5\mathcal Q)=-3\mathcal B\mathcal S.
+\end{aligned}
+\tag{31.8}
+$$
+
+Thus (31.4) proves $F_0>0$ on both endpoints with its denominator
+already guarded. The first expression in (31.5) is the cubic
+coefficient of the entire interpolant (28.6), because the third
+forward difference is $-C_0+3C_1-3C_2+C_3$.
+
+The coefficient extractions in (22.2) also give exactly
+
+$$
+A=-10(177x^6+724x^5+542x^4-742x^3-629x^2+196x+160)
+\tag{31.9}
+$$
+
+and
+
+$$
+\begin{aligned}
+k_4=4(&810000x^{14}+6462000x^{13}+16947800x^{12}+8105575x^{11}\\
+&-32819677x^{10}-39897876x^9+19542116x^8+43133645x^7\\
+&-598103x^6-21163284x^5-3719936x^4+5003840x^3\\
+&+1396400x^2-464000x-160000).
+\end{aligned}
+\tag{31.10}
+$$
+
+Here is a finite rational sign prescription for these univariate
+polynomials. For $P=A$ or $P=k_4$ form $S_0=P$, $S_1=P'$ and
+$S_{i+1}=-\operatorname{rem}(S_{i-1},S_i)$ over $\mathbb Q[x]$, stopping
+at a nonzero constant. No negative rescaling is made. Let $V(a)$ be
+the sign variation after zero values are removed, and at $+\infty$
+use the signs of the leading coefficients. The exact variations are
+
+$$
+\begin{array}{c|c|c|c}
+P&a&V(a)&V(+\infty)\\ \hline
+A&0&1&1\\
+k_4&4/5&2&2.
+\end{array}
+\tag{31.11}
+$$
+
+Neither polynomial vanishes at its displayed left endpoint. Sturm's
+zero count gives no positive zero of $A$ and no zero of $k_4$ above
+$4/5$. The evaluations $A(1)<0$ and $k_4(1)>0$ give the signs in
+(30.5). Thus the degrees two and four in $d$ are established on these
+source tubes, rather than postulated as model assumptions. The other
+finite inequalities in the lemma follow by the interval operations
+already specified; the table retains every tube not excluded in this
+first evaluation. ∎
+

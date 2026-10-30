@@ -1,0 +1,16 @@
+fingerprints:
+  raw_sha256: sha256:d3160efe55c8a0e94e6a134b6dd7b76503e7e6427e84b8ef7842a74b5d15ff21
+  normalized_sha256: sha256:d3160efe55c8a0e94e6a134b6dd7b76503e7e6427e84b8ef7842a74b5d15ff21
+cas_ref: sha256:d3160efe55c8a0e94e6a134b6dd7b76503e7e6427e84b8ef7842a74b5d15ff21
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/CumulativeInverse.cumulative
+    target_statement_id: sha256:43b9de2c12f914f2d37f0512f4b1c09304782bfffe0f107e5f459566853bfa21
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/CumulativeInverse.cumulative_succ
+    target_statement_id: sha256:78a1ae272c26f75390c71d2120cce1aa02120cbc6eaf63e73f745a34f0da13ad
+  - gid: D5/S3/ConceptDynamics/SpacetimeArithmetic/CumulativeInverse.profileCumulativeEquiv
+    target_statement_id: sha256:8fed972c03393f57c0264ca45c8ad6c10b283cf3f84fe0b660ee7d792b2b3249
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - b584af07607f4930503a04838f5ef0a581b60e3b9c5ba81fec8ebc7fd9a35f12
+    - 40ad3943e079c0accf4bb61cc6821bce967f05f9af84a9bcdbadd7d151629f14

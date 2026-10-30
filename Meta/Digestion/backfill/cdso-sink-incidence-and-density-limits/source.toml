@@ -1,0 +1,5 @@
+source_id = "cdso-sink-incidence-and-density-limits"
+path = "docs/develop/theory/CDSO_SINK_INCIDENCE_AND_DENSITY_LIMITS.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

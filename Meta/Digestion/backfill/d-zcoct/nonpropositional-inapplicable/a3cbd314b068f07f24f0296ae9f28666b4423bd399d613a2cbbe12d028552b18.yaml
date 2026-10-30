@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a3cbd314b068f07f24f0296ae9f28666b4423bd399d613a2cbbe12d028552b18
+  normalized_sha256: sha256:a3cbd314b068f07f24f0296ae9f28666b4423bd399d613a2cbbe12d028552b18
+cas_ref: sha256:a3cbd314b068f07f24f0296ae9f28666b4423bd399d613a2cbbe12d028552b18
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Collects already named defects into a tuple by definition, with no vanishing assertion.
+    previous_atom_id: 6ca2f31a8bf0a903f4d07de76a83767d3a72203b0e84bb3dca6cefa8763fab7b
+    next_atom_id: 50453142601b23a1b5bd3932208feed920b3a8ecc91c7de66455bbcea35aab22

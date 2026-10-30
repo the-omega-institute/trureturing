@@ -1,0 +1,122 @@
+### 3. Polynomial equations for all complete worlds
+
+The following finite polynomials specify the elimination exactly:
+
+$$
+\begin{aligned}
+\mathcal J&=b^2+r-r^2,&\mathcal N&=\mathcal J+rb,\\
+S&=(8b-1)(2+5b),\\
+D&=5\{(b^2+8b+4)\mathcal J\mathcal N
+       -2(1+b)(1+2b)b(\mathcal J+\mathcal N)\},\\
+C_0&=-24D+3S\mathcal J\mathcal N,&C_1&=3S\mathcal Nb,\\
+C_2&=3(49b+34)\mathcal J\mathcal N
+       -54(1+2b)b(\mathcal J+\mathcal N),&C_3&=3S\mathcal Jb,\\
+B_5&=-4C_0+15C_1-20C_2+10C_3,\\
+B_6&=-10C_0+36C_1-45C_2+20C_3,\\
+L&=bD,\\
+N_p&=-bC_0+\{b(1+2b)+\mathcal N\}B_5,\\
+N_v&=-bC_0+\{2b(1+2b)+\mathcal N\}B_6,\\
+F&=N_p-pL,\qquad G=N_v-vL.
+\end{aligned}
+\tag{3.1}
+$$
+
+The identities
+
+$$
+\Lambda=\frac{2D}{5TU\mathcal J\mathcal N},\qquad
+D_0=\frac{6S}{5TU}
+\tag{3.2}
+$$
+
+show that on $D\ne0$ the unique lift is
+
+$$
+d=-C_0/D,\qquad g(s)=D^{-1}\sum_{i=0}^3C_i\ell_i(s),\qquad
+(p,v)=(N_p,N_v)/L.
+\tag{3.3}
+$$
+
+The exact polynomial row identities are
+
+$$
+\begin{aligned}
+-bC_0+\mathcal JC_1&=24bD,\\
+-C_0+TC_2&=(147/5)D,\\
+-bC_0+\mathcal NC_3&=24bD,\\
+-C_0+U(-C_0+4C_1-6C_2+4C_3)&=18D.
+\end{aligned}
+\tag{3.4}
+$$
+
+Both $F,G$ have degree six in $r$, with leading coefficients
+
+$$
+\operatorname{lc}_rF=-96(8b-1),\qquad
+\operatorname{lc}_rG=-45(59b+6).
+\tag{3.5}
+$$
+
+Define $\mathcal W(b;p,v)$ by the twelve by twelve Sylvester determinant
+$\operatorname{Res}_r(F,G)$, divided exactly by
+
+$$
+186624000000\,b^{20}(b+2/5)^4(b-1/8)^4(2b+1)^2.
+\tag{3.6}
+$$
+
+This is a rational polynomial of degree eighteen in $b$, with 532
+nonzero monomials in $(b,p,v)$.
+
+For an explicit first-subresultant convention, form the ten by eleven
+coefficient matrix with rows
+
+$$
+r^4F,r^3F,r^2F,rF,F,r^4G,r^3G,r^2G,rG,G
+$$
+
+and columns indexed by $r^{10},r^9,\ldots,r,1$.
+Let $\Delta_1$ retain the first nine columns and the $r$ column;
+let $\Delta_0$ retain the first nine columns and the constant column.
+Divide $\Delta_1r+\Delta_0$ exactly by
+
+$$
+2430b^{13}(2b+1)(5b+2)^3(8b-1)^3
+\tag{3.7}
+$$
+
+and write the resulting polynomial as $A(b,p,v)r+B(b,p,v)$.
+These determinant definitions, including all exact divisions, specify
+every coefficient without rounded roots. The polynomials $A,B$ have
+336 and 315 nonzero monomials, respectively.
+
+**Lemma 3.1.** Every strict complete world with $p\ne24$ satisfies
+
+$$
+\mathcal W(b;p,v)=0,\qquad A(b,p,v)r+B(b,p,v)=0.
+\tag{3.8}
+$$
+
+**Proof.** On $\Lambda\ne0$, equations (3.2)--(3.4) give $F=G=0$.
+If $b=1/8$, the parent equation forces $e=0$, and (2.3)--(2.5) give
+$p=24$. Hence for the worlds under consideration all factors removed
+in (3.6)--(3.7) are nonzero. The resultant and first subresultant give
+(3.8).
+
+For a singular parent, $D_0=0$ forces $b=1/8$. At that width put
+
+$$
+\Phi(r)=438272r^4-931328r^3+540800r^2-50728r-853.
+$$
+
+Direct substitution gives $960jn\Lambda=\Phi(r)$, and the rational
+Euclidean algorithm gives $\gcd(\Phi,\Phi')=1$.
+Also $e\ne0$, since $e=0$ at this width would give $p=24$.
+Thus the $r$ derivative of $e\Lambda+D_0$ is nonzero at any such world.
+Keeping $e$ fixed, the implicit-function theorem continues it to strict
+parents with nearby $b\ne1/8$. There $D_0\ne0$, so their $\Lambda$ is
+nonzero. Their whole gains and readings converge to those of the
+singular world. The polynomial identities (3.8) pass to the limit.
+This retains singular parents without dividing by their zero
+$\Lambda$. $\square$
+

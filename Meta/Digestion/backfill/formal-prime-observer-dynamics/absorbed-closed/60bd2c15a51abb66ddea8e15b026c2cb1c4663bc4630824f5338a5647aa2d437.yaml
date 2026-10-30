@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:60bd2c15a51abb66ddea8e15b026c2cb1c4663bc4630824f5338a5647aa2d437
+  normalized_sha256: sha256:60bd2c15a51abb66ddea8e15b026c2cb1c4663bc4630824f5338a5647aa2d437
+cas_ref: sha256:60bd2c15a51abb66ddea8e15b026c2cb1c4663bc4630824f5338a5647aa2d437
+coverage_gids:
+  - gid: D5/S3/Factorization/IdealClassGroups/IdealIdentityPrincipalityGeneratorLayers.ideal_valuation_layer_recovers_fractional_ideal
+    target_statement_id: sha256:47eaf1259a5352cd785b496a7751d2d4ceafde3474b74e3c884a1fee6bae0ea3
+receipts:
+  unresolved_subitems: []

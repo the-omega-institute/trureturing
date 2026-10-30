@@ -1,0 +1,44 @@
+**Theorem 78.2 (initialized full-service installation).** Under Definition
+75.1's premises, initialize the actual alpha root with all auxiliary
+slots null and an empty request/work state. There is a single installed
+driver realizing Definition 75.2 and the following assertion for every
+finite adaptive sequence of complete original requests with sufficient
+finite backing and supplied finite input/output progress: each request
+has its exact original full reply, local acknowledgement, root return
+and semantic successor; every following Ready satisfies the actual-word
+global-record invariant (AAII.35). A proper finite request prefix has
+its actual acquired pending state and resumes to this conclusion if a
+finite completion is supplied. Every finite legal LAB growth word is
+admitted by this same installation.
+
+Proof. At known alpha, $N=0$, $F=1$, $Z=G=0$; no history object is
+required and the invariant holds. Induct first on received bits within
+a frame. Copy-before-release and the self-delimiting grammar retain
+exactly its acquired prefix; parser marks and counters have backing.
+An address traversal follows real logical links and halts either at
+its requested position or at its first absent edge.
+
+For Tag the arity decoder returns exactly alpha, beta, branch or absent.
+For HasPromotion and HasSplit, birth type and current arity give exactly
+the predicates in Definition 78.1. These queries leave the word and
+record unchanged. For $P/S$, an absent, branch or wrong-type target
+seals precisely the corresponding Refusal, also without change. An
+enabled command executes Theorem 76.4 and seals Growth with its actual
+kind and address. FetchGrowth is Theorem 77.4 and Next is Theorem 77.6.
+The unused tag seals BadFrame. These cases exhaust the complete grammar;
+a disabled primitive has not been recast as a completed request.
+
+Each case seals its actual finite encoded answer before traversing it
+with Print. Finite output progress emits all and only those bits, then
+End; the supplied local acknowledgement enables Return to the same
+retained root. Finite cleanup clears occupied request, pending-result,
+output and scratch contents and discharges all reservations. Thus the
+next Ready is genuine. Induction on completed requests proves the
+adaptive assertion, including preservation of earlier recall answers
+through arbitrarily many queries and finite continued growths. Given
+any finite legal addressed LAB word, supplying its original $P/S$ frames
+in that order makes every guard accept, by AA Theorem 17.2. The driver
+and initialization do not depend on the schedule. Each finite prefix
+has its own sufficient finite resources; no completed infinite physical
+run or uniform capacity bound is asserted. $\square$
+

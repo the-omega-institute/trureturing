@@ -1,0 +1,71 @@
+**Theorem 13.2 (the depth statistic's physical consumer).** At a present
+cone of rank $q=\kappa_e(p)$ from Definition 10.1, the mean over all
+fair length-$H$ tapes, whenever $e\le H$, is
+
+$$
+ \mu_q=\frac{2q}{3}-\frac49+\frac49(-1/2)^q,\qquad
+ \mu_0=\mu_1=0,\qquad
+ \mu_q-\mu_{q-1}=\frac23\bigl(1-(-1/2)^{q-1}\bigr)\ge\frac12
+ \quad(q\ge2).
+ \tag{ACR.45}
+$$
+
+Suppose a single ordered list of $T$ tapes approximates these means
+with absolute error strictly below $1/8$ for every admitted law,
+every mature cut $e\le H$, and every present $p$ with
+
+$$
+ |p|\le h_0,\qquad
+ h_0=\begin{cases}N(2d)-2,&d>0,\\0,&d=0.\end{cases}
+ \tag{ACR.46}
+$$
+
+Using this same list in the root and in at most $4d$ early child cones
+authenticates exactly $P=z_1\cdots z_{2d}$ and the actual $n$, without
+an update or an observed rank, label or semantic port.
+
+Proof. The unordered child ranks $q-1,q-2$ and the terminal cases
+$q=0,1$ are supplied by Definition 10.1, independently of orientation.
+At every reached branch, an independent fair physical direction picks
+each child with probability $1/2$. Consequently the mean satisfies
+$\mu_q=1+(\mu_{q-1}+\mu_{q-2})/2$ for $q\ge2$. Substitution and
+the two initial values give (ACR.45). No distribution uniform on leaves
+is asserted: a leaf at relative depth $r$ has probability $2^{-r}$.
+For $q\ge1$ every path traverses at most $q-1$ edges; at rank zero it
+traverses none. Thus the finite tapes suffice. On the actual source,
+each walk has $D+1\le H$ paid Reads, including its terminal test,
+and every submitted literal has length at most $n\le H$. Indeed a
+present depth is at most $n-1$ by (ACR.7).
+
+For birth $j\le2d$, compute its update
+$t_j=\min\{t\ge2:j\le B_t\}$ and its physical parent $p_j$ as
+follows. Reconstruct only the old labelled tree $X_{t_j-1}$ from the
+already authenticated first $B_{t_j-1}<j$ origin bits, and select its
+$(j-B_{t_j-1})$th beta leaf in physical lexicographic order. This is
+GPO Proposition 39.2's actual parent. There are fewer than $j$ old
+births, hence at most $2j-1$ nodes in this old tree. It uses no later
+bit and no current support. Maturity gives $t_j\le n_0-1\le n-1$;
+(ACR.7) gives $|p_j|\le t_j-2$, so both child prefixes satisfy
+(ACR.46). They are present, and their ranks at the actual cut are
+$n-t_j+1,n-t_j$, with the larger at $a$ precisely when $z_j=1$.
+Their true mean difference has magnitude at least $1/2$, including
+the endpoint pair of ranks two and one. Two errors below $1/8$ leave
+the correct sign with margin greater than $1/4$. Induction authenticates
+all $2d$ bits. At $d=0$ this loop is empty, as required by the
+singleton zero behavior.
+
+Let $m$ be the measured root mean. Return the nearest integer to
+$3m/2+2/3$. At every allowed $n\ge2$,
+
+$$
+ \left|\frac32m+\frac23-n\right|
+ <\frac3{16}+\frac23\,2^{-n}\le\frac{17}{48}<\frac12.
+ \tag{ACR.47}
+$$
+
+Thus the integer is exactly $n$. No distinction between ranks zero
+and one is used for age recovery outside its stated mature domain.
+Uniformity over all these cones and cuts licenses the adaptive parent
+choices and reuse of one list; a guarantee for just one preselected
+cone would not license that inference. $\square$
+

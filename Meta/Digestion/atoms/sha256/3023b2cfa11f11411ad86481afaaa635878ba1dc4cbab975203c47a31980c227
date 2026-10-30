@@ -1,0 +1,23 @@
+## 39. A strict negative-base singular/regular terminal-J collision
+
+In Sections 39–46, $p$ varies again and all auxiliary symbols are
+defined afresh.
+
+A complete world is a triple $(P(r,b),g,d)$, where
+
+$$
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\qquad
+0<r<1,\quad b>0,\quad d\in\mathbb R,\quad
+0\ne g\in\mathbb R[s],\quad\deg g\le3.
+$$
+
+Let $J=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$ and
+$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$.
+Products act on the left: $Q_0=I$, $Q_i=E_iQ_{i-1}$.
+The acquired word is $J,M,J,M,M,M$. At clock $i$ the reading is
+$d+g(i)\operatorname{tr}(Q_iP)$. Its prescribed acquired readings are
+$(0,24,147/5,24,18,p,v)$. The two terminal alternatives are at clock
+seven, with the same source, whole gain polynomial and drift.
+Write $a(W)$ and $m(W)$ for those J and M readings, respectively.
+The set $C(p,v)$ includes every complete world satisfying these rows.
+

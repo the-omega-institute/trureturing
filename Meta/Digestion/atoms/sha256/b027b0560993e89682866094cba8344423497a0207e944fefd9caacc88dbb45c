@@ -1,0 +1,16 @@
+## 51. Strict-source and terminal-M filters
+
+Evaluate the expanded integer polynomials $A,B$ on each narrow width
+interval and on (47.3). Exact rational interval multiplication takes the
+minimum and maximum of the four endpoint products; division is used
+only on intervals separated from zero. The following deliberately
+wider rational enclosures result:
+
+| Index | Lower bound for $\lvert A\rvert$ | Enclosure of $-B/A$ |
+| --- | --- | --- |
+| 1 | $4.924\cdot10^{18}$ | $(0.90244957,0.90244980)$ |
+| 2 | $6.391\cdot10^{18}$ | $(0.89660057,0.89660096)$ |
+| 3 | $2.300\cdot10^{18}$ | $(3.4670,3.5031)$ |
+| 4 | $1.421\cdot10^{19}$ | $(-1.7145,-1.7087)$ |
+| 5 | $6.290\cdot10^{32}$ | $(7.5288,7.5289)$ |
+| 6 | $3.082\cdot10^{37}$ | $(-10.3596,-10.3594)$ |

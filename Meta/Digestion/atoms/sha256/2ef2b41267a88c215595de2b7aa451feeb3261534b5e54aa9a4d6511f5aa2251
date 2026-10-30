@@ -1,0 +1,9 @@
+**Lemma 12.2 (Integral polynomial and degree certificate).** All three
+$F_i$ belong to $\mathbb Z[r,e]$. Their exact degrees and numbers of
+nonzero monomials are
+
+| Polynomial | $\deg_e$ | $\deg_r$ | Number of monomials in $(e,r)$ |
+| --- | --- | --- | --- |
+| $F_1$ | $2$ | $17$ | $52$ |
+| $F_2$ | $2$ | $19$ | $59$ |
+| $F_3$ | $2$ | $17$ | $52$ |

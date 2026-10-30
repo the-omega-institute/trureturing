@@ -205,7 +205,7 @@ theorem bilateralTerm_coeff_eq_zero (A : PowerSeries ℤ) (h0 : constantCoeff A 
     coeff N (bilateralTerm A n) = 0 :=
   X_pow_dvd_iff.mp (term_order A h0 n) N (hN.elim id (outside_order N n))
 
-private theorem map_inv {S : Type*} [CommRing S] (f : R →+* S)
+theorem map_inv {S : Type*} [CommRing S] (f : R →+* S)
     (F : PowerSeries R) (hF : constantCoeff F = 1) :
     (invOfUnit F 1).map f = invOfUnit (F.map f) 1 := by
   have h1 := congrArg (PowerSeries.map f) (invOfUnit_mul F 1 hF)

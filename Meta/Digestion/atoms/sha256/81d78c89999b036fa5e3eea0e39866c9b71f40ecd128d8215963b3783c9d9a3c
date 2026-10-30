@@ -1,0 +1,25 @@
+### Proposition 2.2: the fiber-blind statistic
+
+For a function \(f:\Sigma\to\mathbb R\), define
+
+\[
+J_f=f_{25}-f_2-f_5+f_0.
+\tag{2.7}
+\]
+
+Then, at fixed \((X,Y,Z)\),
+
+\[
+\mathbb E_p[f]
+=
+f_0+(f_2-f_0)X+(f_5-f_0)Y+(f_3-f_0)Z+J_f\kappa.
+\tag{2.8}
+\]
+
+Consequently, \(\mathbb E_p[f]\) is constant on every non-degenerate \(\kappa\)-fiber if and only if \(J_f=0\).
+
+**Proof.** Substitute (2.2) into \(\sum_s p_s f_s\). The coefficient of \(\kappa\) is exactly (2.7). ∎
+
+This is a fiber-blindness statement for the five-mode FIB carrier. Any statistic with \(J_f=0\) factors through the three-coordinate quotient. It cannot see the hidden joint coupling \(\kappa\), even though two laws with the same \((X,Y,Z)\) can have different full distributions and different continuation behavior. Applying this statement to a triangle distribution requires a specified readout \(\Phi\) relating its events to the FIB carrier. A triangle-locality test must retain sufficient data for the edge-incidence constraints; the FIB fiber identity alone supplies no source-independence criterion.
+
+

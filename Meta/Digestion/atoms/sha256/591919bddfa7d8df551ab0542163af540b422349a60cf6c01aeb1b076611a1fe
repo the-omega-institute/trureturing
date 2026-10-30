@@ -1,0 +1,63 @@
+**Convention 109.3 (work, coexistence and precision).** General preparation
+pays its actual forcing/control matrix construction and solve; marker
+preparation pays target reception, $2k$ operand constructions and the
+old-size Tick. Both pay constructor traversal and raw lifecycle updates,
+source/code installation, exact arithmetic, authentic references/grants
+and real clearing/isolation. Their four feedback Ticks are grown-size.
+A size-$m$ unit-tree source Tick initializes $m$ update slots and uses
+$2(m-1)$ directed neighbor additions; a maintained predictor pays its
+own separate update and buffers. For the marker schedule there is one
+size-$N$ preparation Tick and four size-$M$ receiver Ticks. General
+preparation instead has $I$ size-$N$ Ticks. Repair and passive suffixes
+have their displayed size-$M$ Ticks. Exact linear-combination formulas
+for the known local sectors require finite work; selecting and solving
+the $R$ complement, forming current fields, metrics, germs and exports
+are additional paid computations. No spectral oracle is used.
+
+One sufficient numerical receiver fills the size-$M$ field from the
+disjoint local formulas in $O(M+k)$ rational operations after acquisition.
+For partial-advice repair, ordinary elimination on $R$, followed by the
+standard coordinate rows and the consistent augmented system, uses
+$O((r+k)k^2)$ rational operations. Forming the advanced field then again
+uses $O(M+k)$. A literal designated germ can be computed by $M-1$
+sparse updates in $O(M^2)$ rational operations, in addition to its
+$bM$-word export. A subsequent $n$-pair passive suffix costs $O(nM)$
+predictor operations. These are sufficient numerical bounds, excluding
+the separately counted structural navigation, codecs, copies and clears.
+At maximum actual intermediate width $W$, multiply the arithmetic
+counts by the selected exact rational-operation cost at width $W$.
+
+For example, reserve separately $2M$ plant slots, $2M$ predictor/update
+slots and $k$ acquired parameter slots. A sufficient late solve layout
+adds $2rk+4k^2+8k+2r$ rational slots for copies of $R$, its elimination,
+coordinate-complement and augmented work, retained advice and vectors.
+The original general producer additionally uses the supplier's
+$Nb(I+1)$ integer forcing-coefficient slots, $b(I+1)$ rational control
+slots and its $N$-coordinate owned target. Its coefficient construction
+and dense multiplication are those of NLBAII Proposition 65.2. The
+marker producer uses its own target and operand buffers instead; it
+does not inherit a free general-producer solve. These sufficient
+reservations are not space minima. Any isolated preparation allocations
+still present at the repair cut remain additional capacities, and every
+literal exported germ, Time record or other copy needs its own backing.
+
+Count simultaneous source old/new fields, full predictor old/new fields
+when installed, graph and exhaustive bindings, reference/grant stores,
+parser and pending request/reply bytes, owned targets and general control
+blocks while live, the $k$ acquired rationals, control packets, literal
+$R\theta$, solve scratch, counters, requested records and output copies,
+and every inaccessible but still allocated provider capacity. Distinct
+copies count separately and actual shared allocations once. Clearing
+writes do not remove cleared backing from the resource vector. Requested
+Time is an additional real record when retained; replacing one record
+does not erase other exported copies.
+
+All rational numerators/denominators and integer phase counters have
+their actual widths. The input $\theta$ and preparation intermediates
+have no dimension-only width bound. Finite program code and termination
+per input imply neither constant memory nor uniform lifetime, finite-bit,
+energy or physical resource bounds. The displayed calls are derived
+schedule counts. No implementation, bit-traffic measurement, running-time
+measurement, backing peak or engineering cost was obtained from them;
+none of those unmeasured quantities is assigned zero.
+

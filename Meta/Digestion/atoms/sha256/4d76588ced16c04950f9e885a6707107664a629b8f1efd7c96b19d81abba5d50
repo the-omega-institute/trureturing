@@ -1,0 +1,49 @@
+**Theorem 7.1 (Single-array realization at a prescribed high-density budget).** Fix $r\ge5$, finite $s\ge r$, and $\alpha\in[r-2,r-1]$. Let $x$ be one profile on $[s]$ with $q=1+\alpha$ and all $y_i>0$. Suppose integer budgets $\ell_n$ satisfy $\ell_n/n\to\alpha$ and eventually
+
+$$
+0\le\ell_n\le s(n-s)-n+1.
+$$
+
+There are simple connected graphs with exactly $n$ vertices, $n-1+\ell_n$ edges and $s$ actual degree-oriented sinks whose type proportions converge to this same $x$, and whose energies satisfy
+
+$$
+nE(G_n)\longrightarrow J_s(x).
+$$
+
+If $x$ is supported on $K\ge d$ for some fixed $1\le d\le s$, the construction can preserve source degree at least $d$ provided additionally
+
+$$
+(d-1)(n-s-1)\le\ell_n
+$$
+
+eventually. In particular this lower inequality is automatic here for $d=r-2$. No positivity of all type masses is assumed.
+
+**Proof.** Reserve $s$ hubs and one source adjacent to all of them. Put $M=n-s-1$ for the remaining sources. Round the finitely many numbers $Mx_T$ to nonnegative integer counts summing to $M$, with bounded error in each type; floors followed by distributing the bounded deficit suffice. If a support restriction is imposed, do this entirely within that support. The initial additional-membership count of these sources is
+
+$$
+B_0=\sum_T(|T|-1)a_T=M\alpha+O_s(1),
+\qquad B_0-\ell_n=o(n).
+$$
+
+The exact possible interval for their additional memberships is $[0,(s-1)M]$, and
+
+$$
+(s-1)M=s(n-s)-n+1.
+$$
+
+If $B_0<\ell_n$, some source lacks a hub membership until the upper endpoint is reached; add one such membership. If $B_0>\ell_n$, some source has at least two neighbors until the lower endpoint is reached; remove one membership while leaving that source nonempty. Stop exactly at $B=\ell_n$. These are $|B_0-\ell_n|=o(n)$ edits. With a degree bound $d$, delete only from sources of degree greater than $d$, and stop at the lower endpoint $(d-1)M$; addition is unchanged. The assumed target lies within these two exact endpoints. For $d=r-2$, $\ell_n/M\to\alpha\ge r-2>d-1$, so the lower endpoint is eventually below the target.
+
+The reserved full source is unchanged, so it connects every hub at every finite order. Other sources retain nonempty neighborhoods. All memberships are subsets of $[s]$, hence the graph is simple, and its edge count is exactly
+
+$$
+s+M+B=n-1+\ell_n.
+$$
+
+The reserved source and the $o(n)$ edits change each limiting type mass by zero, even for a type whose limiting mass is zero. Thus $a_T/(n-s)\to x_T$, and $D_i/(n-s)\to y_i>0$. For sufficiently large $n$ the hub degrees exceed $s$, whereas source degrees are at most $s$; these are consequently the actual degree-oriented sinks. Applying the actual-edge expansion from (6.3), now with fixed $s$ and positive limiting marginals, gives
+
+$$
+E(G_n)=\frac{J_s(x^{(n)})}{n-s}+O(n^{-3}).
+$$
+
+Continuity in a neighborhood of the positive limiting marginals proves the energy limit. ∎
+

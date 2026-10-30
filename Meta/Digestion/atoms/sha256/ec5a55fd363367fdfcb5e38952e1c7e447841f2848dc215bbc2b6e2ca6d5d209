@@ -1,0 +1,52 @@
+## 11. Four exceptional neighborhoods and the entire-child theorem
+
+A complete world is one triple
+
+$$
+ W=(P(r,b),g,d),\qquad P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+ \quad 0<r<1,\ b>0,\ 0\ne g\in\mathbb R[s],\ \deg g\le3,\ d\in\mathbb R.
+$$
+
+Put $J=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)$,
+$M=\left(\begin{smallmatrix}0&1\\1&1\end{smallmatrix}\right)$,
+$Q_0=I$, $Q_i=E_iQ_{i-1}$, and $y_i=d+g(i)\operatorname{tr}(P Q_i)$.
+The acquired actions are exactly $J,M,J,M,M,M$ at clocks 1 through 6;
+the acquired readings are $(0,24,147/5,24,18,p,v)$ at clocks 0 through 6.
+Write $C(p,v)$ for the entire set of these worlds. The alternative
+clock-seven readings are $a(W)$ for J and $m(W)$ for M, on that same world.
+There is no change of polynomial, drift, source, clock, or protocol.
+
+The original joint question asks whether some $p\ne24,v$ admit two distinct
+members of $C(p,v)$ with equal $a$, and independently two distinct members
+of that same entire $C(p,v)$ with equal $m$. The two pairs can overlap or
+be disjoint and the two common terminal values are independent.
+
+Sections 11–17 use precisely the complete-world domain of
+[Definition 1.1](#1-complete-worlds-and-the-corrected-complex-incidence)
+and the independent-pair predicate of
+[Definition 10.2](#10-real-liftability-and-the-independent-pair-boundary).
+They classify strict-real lifts over four particular rectangles. The
+complex incidence and generic conclusions of Sections 1–8, and the
+actual terminal-$M$ arc of Section 9, retain their stated scopes.
+
+In these sections F, SIII and SVIII denote, respectively, the
+[finite-fibre volume](https://github.com/the-omega-institute/trureturing/blob/c8ae6f747aeb40c61f9d135f171011de99a12c99/docs/develop/theory/FIB_ALL_RESPONSE_FINITE_FIBRE_GEOMETRY.md),
+[support III](https://github.com/the-omega-institute/trureturing/blob/c8ae6f747aeb40c61f9d135f171011de99a12c99/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md)
+and [support VIII](https://github.com/the-omega-institute/trureturing/blob/c8ae6f747aeb40c61f9d135f171011de99a12c99/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VIII.md).
+Their reconstruction, carrier, actual-arc and exceptional-inventory
+results are supplied ordinary mathematical results. The full-domain
+bound $|C(p,v)|\le24$ is F, Theorem 32.1; the sharper count below
+is proved only on the four stated rectangles.
+
+Let $z_J(p)=(t_H,b_H,t_L,b_L)$ and $v_J(p)$ be the actual J-pair arc of
+SIII, Lemma 16.3 and Theorem 16.4, for $10\le p\le34$.
+The following are four explicit closed intervals $P_i=[l_i,h_i]$ and
+rational numbers $\bar v_i$. Every displayed terminating decimal is exact.
+Set $V_i=[\bar v_i-10^{-21},\bar v_i+10^{-21}]$ and $B_i=P_i\times V_i$.
+
+| $i$ | $l_i$ | $h_i$ | $\bar v_i$ |
+| --- | --- | --- | --- |
+| 1 | 13.1377186191279091547601 | 13.1377186191279091547602 | 92.7068988914092058205585586128838848015453776 |
+| 2 | 19.5319320737263986033004 | 19.5319320737263986033005 | 115.404275403438360975737925631949540742443718 |
+| 3 | 32.8725952384491631141317 | 32.8725952384491631141318 | 164.46195269706239448434692054285891728048265 |
+| 4 | 33.9742535335153124186754 | 33.9742535335153124186755 | 168.449607978859386441633184643642612890222935 |

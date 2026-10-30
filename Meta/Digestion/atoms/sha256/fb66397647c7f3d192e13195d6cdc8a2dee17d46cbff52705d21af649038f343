@@ -1,0 +1,115 @@
+**Lemma 143.1 (Physical effects and exact kernel preservation).** Put
+
+$$
+T=\frac{\operatorname{adj}(LI_3-A)}{\tau},\qquad t_i=T_{ii}.
+\tag{143.1}
+$$
+
+Then $T$ is a rank-one orthogonal projector, $AT=LT$, and
+
+$$
+\begin{aligned}
+T_{ii}&=a_i/\tau,\\
+T_{01}&=\sqrt{px}\,\beta/\tau,\\
+T_{02}&=\sqrt{py}(L-d+kx)/\tau,\\
+T_{12}&=\sqrt{xy}(L+kp)/\tau.
+\end{aligned}
+\tag{143.2}
+$$
+
+All these entries are strictly positive. With $v_0=p$, define
+
+$$
+\begin{aligned}
+W_q&=\frac19\sum_{j,\ell=0}^2
+ (U_{j\ell}TU_{j\ell}^\dagger)
+ \otimes\Phi_q(U_{j\ell}PU_{j\ell}^\dagger)^{\mathsf T}\\
+&=\sum_{i,j=0}^2 t_i v_j|ij\rangle\langle ij|
+ +w\{|00\rangle\langle11|+|11\rangle\langle00|\},\\
+Y_q&=\operatorname{diag}(pt_0+rw,\ v_1t_2,\ v_2t_2),\qquad
+S_q=I_{\rm out}\otimes Y_q-W_q.
+\end{aligned}
+\tag{143.3}
+$$
+
+The slack is PSD and its kernel is exactly
+
+$$
+\ker S_q=\operatorname{span}\{
+ |00\rangle+r(q)|11\rangle,\ |21\rangle,\ |22\rangle\}.
+\tag{143.4}
+$$
+
+*Proof.* By Proposition 142.2 and the pure-target criterion,
+$LI_3-A\succeq0$ at the contact. Its determinant is $N=0$ and its
+adjugate has positive trace $\tau=N_L>0$. Therefore it has rank two
+and its adjugate is PSD of rank one. Normalizing by its trace proves
+the projector assertion. Direct cofactor expansion is the displayed
+matrix (133.1), with the general $q$ auxiliaries (141.3). This proves
+(143.2); (141.10) gives every strict sign and every denominator.
+The adjugate identity gives $AT=LT$.
+
+The charge calculation (134.4) is unchanged by $q$: only the retained
+$01$ coherence is multiplied by $q$. Its coefficient in the averaged
+functional is now $q\sqrt{px}T_{01}=qpx\beta/\tau=w$. Thus (143.3)
+specifies all 81 entries of $W_q$, including all its zero entries.
+The transpose is the ordinary matrix transpose, as in (134.2), even
+when the input/effect pair is complex. The nine projectors and effects
+are physical and distinct, since $p,x,y>0$, by the same argument as
+Definition 134.1.
+
+Differentiate the determinant (141.3) with $d_r=-2rv_1$ and $k_r=-q$.
+The resulting exact identity, before imposing any root equation, is
+
+$$
+N_r=2rv_1(a_1-a_2)+2\omega.
+\tag{143.5}
+$$
+
+Consequently at $N_r=0$ the $00,11$ block of $S_q$ and its seven
+remaining scalar blocks are exactly
+
+$$
+S_q[00,11]=
+\begin{pmatrix}rw&-w\\-w&w/r\end{pmatrix}
+=\frac wr\begin{pmatrix}r\\-1\end{pmatrix}
+              \begin{pmatrix}r&-1\end{pmatrix},
+\tag{143.6}
+$$
+
+| Coordinate | Scalar block of $S_q$ |
+| --- | --- |
+| $01$ | $v_1(a_2-a_0)/\tau$ |
+| $02$ | $v_2(a_2-a_0)/\tau$ |
+| $10$ | $\{g+p(a_2-a_1)\}/\tau$ |
+| $12$ | $v_2(a_2-a_1)/\tau$ |
+| $20$ | $g/\tau$ |
+| $21$ | $0$ |
+| $22$ | $0$ |
+
+For clarity about exact zeros, let $S_{\rm cert}$ denote this block
+matrix even off the root, using (141.9) wherever $r\tau\ne0$.
+Subtraction from the actual $I\otimes Y_q-W_q$ gives the identity
+
+$$
+(I\otimes Y_q-W_q)-S_{\rm cert}
+=-\frac{N_r}{2r\tau}|11\rangle\langle11|,\qquad
+S_{\rm cert}B_r=0.
+\tag{143.7}
+$$
+
+Indeed its only possible discrepant entry is
+$v_1(a_2-a_1)/\tau-w/r=-N_r/(2r\tau)$ at $11,11$.
+The other entries follow by subtracting the diagonal terms in
+(143.3). Both identities in (143.7) are exact for every $q$ with
+the displayed definitions; the first remainder vanishes on the
+branch because $N_r=0$ there.
+
+The five nonzero scalar blocks are strictly positive by Lemma 141.4.
+The coupled block has one positive eigenvalue $w(r+1/r)$ and one
+zero eigenvalue, with kernel vector $(1,r)^{\mathsf T}$. Its other
+two zero blocks are exactly the $21$ and $22$ directions. This proves
+PSD and exactly (143.4). In particular the kernel identities hold
+at every $q\in I$; continuity of a singular PSD matrix alone would
+not prove them. $\square$
+

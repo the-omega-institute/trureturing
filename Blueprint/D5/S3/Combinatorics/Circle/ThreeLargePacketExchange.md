@@ -1,0 +1,68 @@
+# A physical doubling packet supplies a three-LARGE exchange
+
+## Abstract
+
+Construct a real positive SMALL return batch from an actual two-label doubling packet, retaining the entire complement and proving a strict-H exchange with exactly three later negative LARGE labels.
+
+All labels are physical Fin k, k>=3, with actualSource(k,t) for arbitrary natural t. The cyclic successor includes the seam. Set n=rho(p), x=rho(n); p is positive, n is LARGE and N<3s(p). The independent label q is positive LARGE with s(q)<s(p); it need not be the successor of any specified crossing. All p,n,q are unused in ALL the original word.
+
+**Theorem 1.1 (The shared physical exchange preserves the return selector tag).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/ThreeLargePacketExchange.actualSource_threeLarge_tagged_exchange_full`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/ThreeLargePacketExchange.actualSource_threeLarge_tagged_exchange_full` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A selector supplies an actual R.Subperm(S), a predicate tag(R), and the demanded mass interval. The empty return satisfies the tag. The physical proof retains the tag and only requires every returned label to be SMALL; returned signs are unrestricted. This is the single authoritative physical proof consumed both by the existing positive return theorem, with tag R.Subperm(Pos), and by SignedShortLargeExchange with tag True.
+
+The engine orders the complete physical complement, retains the literal prefix A, proves V=A++[p,n]++L++[z,q] from the original zero, every natural take, the full Inventory using the complete source zero sum, exact G/U/H balances, strict H/J descent and endpoint in [s(q),C]. It assumes a selector, so constructive resource supply is supplied by its packet, single-anchor or signed-short consumers. It does not assert universal resource availability or full C3.1.
+
+**Theorem 1.2 (A selector on the actual positive inventory gives the full exchange).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/ThreeLargePacketExchange.actualSource_threeLarge_return_exchange_full`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/ThreeLargePacketExchange.actualSource_threeLarge_return_exchange_full` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Use the same complete old word W=A++[x]++T0++[y]++T1++[zpen]++T2++[z]++E and S=T0++T1++T2++E, with all the source gates, LARGE signs, whole-word unusedness and Z<=s(q)<s(p) stated below. A selector acts on the entire actual positive filter Pos of S: for every positive integer low not exceeding sum(Pos), it supplies R.Subperm(Pos) with low<=sum(R)<=low+C-s(q). This hypothesis is independent of any doubling relation or particular anchor.
+
+This positive theorem specializes the single tagged physical engine with tag R.Subperm(Pos), deriving positivity from that physical filter. The native source geometry proves the inserted [p,n] gates, the prospective endpoint e0 and sufficient total positive mass. The selector is applied only when e0>C, with low=e0-C; otherwise R is empty. The entire remaining physical SMALL batch is ordered between its proved endpoints. The output is the literal Legal competitor A++[p,n]++L++[z,q], every natural zero-start prefix, (L++R).Perm(S), the full physical Inventory, equal G, exact U increase by length(R), exact sparse energy balance, strict H and J descent, and the exact endpoint e0-sum(R) in [s(q),C]. The two-label packet and the single actual anchor provide separate constructions of this selector.
+
+**Theorem 1.3 (Full exchange from the actual positive doubling packet).**
+
+Lean statement: `D5/S3/Combinatorics/Circle/ThreeLargePacketExchange.actualSource_threeLarge_packet_exchange_full`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Circle/ThreeLargePacketExchange.actualSource_threeLarge_packet_exchange_full` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The old Legal word is W=A++[x]++T0++[y]++T1++[zpen]++T2++[z]++E. Every label in the complete S=T0++T1++T2++E is SMALL. The three later LARGE labels y,zpen,z are negative, and Z=-s(z)<=s(q)=qq. The arbitrary prefix A is retained literally and may contain arbitrarily many other LARGE labels. The physical packet consists of b and rho(b), both in S, with beta=s(b)>0. The true SMALL source doubling law derives s(rho(b))=2beta and physical distinctness. Its packet resource condition concerns the actual physical word: every positive label i in S has s(i)<=3beta+B, where B=C-qq. The selector bound beta<=B follows internally from SMALL doubling and the source budget.
+
+Native source geometry gives s(p)=P, s(n)=-D, s(x)=r, Q<=D<P<r<=C, D=N-2P and r=2P-D. Old legality at x bounds the original height a0=sum(A) and a0+r by [0,C]. Hence the actual inserted pair [p,n] is legal, with departure b0=a0+P-D in [0,C-P]. Every earlier gate of A retains its original zero-start justification. The native budget is 2P<=C+Q=3Q-1, and integer qq<P gives 2qq<=3Q-3. Smallness of rho(b) and its proved doubling value give 2beta<=Q-1. Thus 2B>=Q+1>=2beta+2, proving beta<B without an additional hypothesis.
+
+Let h=sum(W), Y=-s(y), ZZ=-s(zpen) and e0=h+Y+ZZ+qq-P. Exact old-word arithmetic also gives e0=b0+sum(S)-Z+qq. Since Y+ZZ>=2Q=C+1>P, old h>=0 implies e0>qq. The mass of ALL positive SMALL labels dominates sum(S). Together with b0<=C-P and qq<P, this proves their mass is at least ell=e0-C whenever ell>0. This uses only a scalar identity; it does not presume any intermediate word legal.
+
+The constructive packet selector reserves the actual distinct labels b,rho(b), removing exactly these occurrences from the positive filter. Their four physical subsets have masses 0,beta,2beta,3beta. By the actual entry bound, every other positive entry is at most 3beta+B. If ell<=3beta, no other entry is selected; otherwise the first actual prefix reaching ell-3beta has mass M between ell-3beta and ell+B-1. If M already reaches ell, the packet contribution is empty. Otherwise one selects exactly [b], [rho(b)] or [b,rho(b)] according to the remaining gap. The result R is a Subperm of the complete original positive filter, with ell<=sum(R)<=ell+B. If ell<=0 the result is empty.
+
+Set e=e0-sum(R), eta=e-qq and c=eta+Z. The selected interval gives qq<=e<=C; therefore eta and c lie in [0,C]. Remove exactly R from S using List.diff and the actual Subperm count bounds. Its full complement Rem satisfies (Rem++R).Perm(S), and exact mass yields b0+sum(Rem)=c. SmallStepOrdering.exists_order_between orders the WHOLE Rem from b0 to c, since all SMALL opposite pairs have total magnitude at most 2Q-2<C. It supplies L with (L++R).Perm(S). Retained z takes c to eta, and q takes eta to e.
+
+The literal new word is V=A++[p,n]++L++[z,q], and the literal returned list is [x,y,zpen]++R. The proved total-word permutation, old Nodup and whole-word unusedness give the full Inventory: new Nodup, exact used and unused disjoint partitions, source/complement sums and the SMALL complement update. The output includes Legal, InStrip from zero and ALL natural take bounds, including empty and overlength takes. Equal numerical weights never merge distinct physical labels.
+
+Exactly three LARGE labels are returned and three inserted, so G(V)=G(W) and U(V)=U(W)+|R|. The exact energy balance is H(V)+3^|s(x)|+3^|s(y)|+3^|s(zpen)|=H(W)+3^|s(p)|+3^|s(n)|+3^|s(q)|. Both D and qq are below P<r. Monotonicity of powers and the identity 3^(P+1)=3*3^P imply the three inserted energies together are strictly below 3^r. The exact balance then gives H(V)<H(W), and the actual objective J=(G,H,U) strictly decreases despite the possible increase of U. The endpoint is exactly e0-sum(R), in [qq,C].
+
+The theorem covers exactly three later negative LARGE labels and an actual after-x doubling packet satisfying the stated bound on its actual positive entries. It assumes no returned subset, append blocking, minimizer or legal new endpoint. It does not prove packet availability, exchanges with more later LARGE labels, or full C3.1. Those wider conclusions remain OPEN.
+
+## References
+
+- Truth anchor: `D5/S3/Combinatorics/Circle/ThreeLargePacketExchange.actualSource_threeLarge_packet_exchange_full`
+- Truth anchor: `D5/S3/Combinatorics/Circle/ThreeLargePacketExchange.actualSource_threeLarge_return_exchange_full`
+- Truth anchor: `D5/S3/Combinatorics/Circle/ThreeLargePacketExchange.actualSource_threeLarge_tagged_exchange_full`
+- Dependency: [D5/S3/Combinatorics/Circle/PositiveSmallReturnExchange](PositiveSmallReturnExchange.md)

@@ -1,0 +1,50 @@
+**Definition 93.2 (Signed parameter and reduced channel).** For $n\ge1$ set
+
+$$
+s=s_n=(-1/2)^{n-1},\qquad t=|s|,\qquad
+a=\frac{1+s}{2},\qquad b=\frac{1-s}{2}.
+\tag{93.4}
+$$
+
+Thus $(a,b)=(\alpha,\beta)$ in Purity arithmetic (87.3); the sign of $s$
+is retained in both populations. For every complex matrix $X=(x_{ij})$,
+use precisely $\Phi_s=\Psi_s$ of Purity arithmetic (87.7):
+
+$$
+\Phi_s(X)=
+\begin{pmatrix}
+x_{00}&s x_{01}&0\\
+s x_{10}&a x_{11}+b x_{22}&0\\
+0&0&b x_{11}+a x_{22}
+\end{pmatrix},\qquad
+F^n=\operatorname{Ad}_{U_0}\circ\Phi_s.
+\tag{93.5}
+$$
+
+This identity is reused, including its action on non-Hermitian matrix
+units. The parameter domain of the terminal result is
+
+$$
+\mathcal S_{\rm actual}
+=\{(-1/2)^{n-1}:n=1,2,\ldots\}\cup\{0\}.
+\tag{93.6}
+$$
+
+For its limiting member write $s_\infty=0$, $a=b=1/2$, and
+
+$$
+\mathcal N_\infty(X)=\Phi_0(X)
+=x_{00}|0\rangle\langle0|
+ +\frac{x_{11}+x_{22}}2
+   (|1\rangle\langle1|+|2\rangle\langle2|).
+\tag{93.7}
+$$
+
+The output in (93.7) is invariant under $\operatorname{Ad}_{U_0}$.
+Consequently (93.5) tends to (93.7). The existence and the
+measure-and-prepare form of this limit are already the qutrit restriction
+of [Five-window quantum memory, Theorem 19.2, (19.4)–(19.7)][QM], under
+the intertwining isometry specified in Purity arithmetic Definition 87.1.
+The notation $\Phi_0$ means the reduced channel at parameter zero, whereas
+$\mathcal N_0$ means the empty-horizon identity channel.
+

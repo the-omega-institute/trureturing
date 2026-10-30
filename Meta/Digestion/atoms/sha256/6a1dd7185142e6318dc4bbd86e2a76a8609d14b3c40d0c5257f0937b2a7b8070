@@ -1,0 +1,30 @@
+**定理 7.1（小实际子纤维恢复与必要替代）。** At $H_J(Y)$ choose fifth $M$, and at $H_{MJ}(Y)$ choose fifth $J$. For a known family $K$ in either parent, let $K_z$ denote its entire actual response fiber under that specified fifth action.
+
+If every member of $K$ has drift $D_0$ and every $K_z$ has at most two targets, then one deterministic strategy recovers all of $K$ with at most three additional readings. The family itself may be finite or infinite, and its actual fifth and sixth values may vary.
+
+For an unrestricted family $K$ at either parent with $L_3$, at least one actual fiber $K_z$ has $L_2$, and one of the following holds for that same fiber:
+
+1. It contains at least three distinct targets.
+2. It consists of two distinct targets with one common drift $d_*\ne D_0$, both with $g(7)=0$, sharing both possible sixth readings.
+
+Proof. First consider any two distinct targets after one actual five-atom history, with last cumulative matrix $Q$. If the pair has $L_2$, its sixth readings coincide under each atom, and its four terminal readings coincide under each chronological sixth/seventh suffix. Otherwise a separating sixth atom or separating length-two suffix recovers the pair.
+
+The rank-one reconstruction of [II, Theorem 53.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md) applies here to the four terminal functions, independently of that theorem's special MMJM root-six exclusion. For clarity set $X=g(7)QP=(\begin{smallmatrix}a&b\\c&d\end{smallmatrix})$. The terminal readings are
+
+$$
+\begin{aligned}
+r_{MM}&=a+b+c+2d+\delta,&r_{MJ}&=a+c+d+\delta,\\
+r_{JM}&=a+b+d+\delta,&r_{JJ}&=a+d+\delta.
+\end{aligned}                                                     \tag{7.1}
+$$
+
+They determine $b=r_{JM}-r_{JJ}$, $c=r_{MJ}-r_{JJ}$ and $d=r_{MM}-r_{JM}-r_{MJ}+r_{JJ}$. Since $Q$ is invertible, nonnegative and has no zero row, $QP$ is strictly positive rank one. If $d\ne0$, then $a=bc/d$ and $\delta=r_{JJ}-a-d$. If $d=0$, positivity forces $g(7)=0$ and $X=0$, so all four readings equal $\delta$. Thus the four terminal functions determine $X,\delta$ in both strata.
+
+If the common $X$ of the two targets is nonzero, invertibility of $Q$ and trace normalization determine the same $P$ and $g(7)$. With the same drift, the shared ancestor readings at the four distinct original clocks $0,1,2,3$ then determine the same entire gain polynomial, since every source trace is positive. This contradicts distinctness. Therefore an $L_2$ pair at either parent has common drift and two clock-seven roots.
+
+If that drift were $D_0$, both targets would lie in the corresponding whole class (5.2). At $H_J(Y)$ they already share fifth $M$ and, by $L_2$, also sixth $M$; Theorem 5.2 would return the same complete target. At $H_{MJ}(Y)$ their common fifth $J$ and Theorem 6.1 already return the same complete target. Both are contradictions. Thus no distinct baseline-drift pair in an actual specified fifth fiber has $L_2$.
+
+For the recovery assertion, execute the specified fifth atom and read $z$. Stop at a singleton $K_z$. If $K_z$ has two targets, choose the lexicographically first length-two suffix whose sixth or seventh reading separates them; it exists because the pair is not $L_2$. Execute its sixth atom and read; stop if separated, otherwise execute its seventh atom and read. This is one policy on the whole known family, with choices determined by the actual fifth history and its entire remaining fiber. The finite choice among four suffixes requires no regularity assumption on the response-to-action function.
+
+Finally $L_3(K,H)$ requires an $L_2$ actual child for the specified fifth action. It has at least two targets. If it has exactly two, the preceding reconstruction gives the common drift and roots, and the whole-class inverses exclude drift $D_0$. Otherwise it has at least three. All ancestors and both sixth equalities in the two-target case refer to this same fixed pair. ∎
+

@@ -1,0 +1,43 @@
+**Lemma 10.3 (Whole-world singular coverage).** For every real $p$,
+the singular worlds of $\mathcal F(H_4,M,p)$ are exactly the unique
+whole-world lifts at $(\rho_-,1/8)$ and $(\rho_+,1/8)$. Their
+sixth responses are $s_-(p),s_+(p)$ respectively. Consequently
+$C(p,v)$ contains a singular source if and only if
+$v=s_-(p)$ or $v=s_+(p)$.
+
+Proof. O, Theorem 29.2, applies to every real fifth response. Its
+zero-safe parent equation forces $b=1/8$ whenever $\Lambda=0$;
+at that width $\Lambda=\phi(r)/(960jn)$. The two strict roots
+are exactly $\rho_-,\rho_+$, and O, Theorem 12.3, gives the unique
+entire gain and fixed drift at each source for every $p$.
+For the explicit response, put
+
+$$
+\begin{aligned}
+j(t)&=1/8+8t(1-t),&n(t)&=j(t)+t,\\
+F_5(t)&=j(t)n(t)+(n(t)+5/4)
+ \{(196/9)j(t)n(t)-15n(t)-10j(t)\},\\
+F_6(t)&=j(t)n(t)+(n(t)+5/2)
+ \{50j(t)n(t)-36n(t)-20j(t)\},\\
+F_0(t)&=84+24n(t).
+\end{aligned}
+\tag{10.9}
+$$
+
+The original response is $F_0+(p-24)F_6/F_5$, with $F_5\ne0$ at
+both designated roots. Reduction by
+$t^4=(931328t^3-540800t^2+50728t+853)/438272$ gives
+
+$$
+\operatorname{rem}_\phi(D_sF_6+3A_sF_5)=0,\qquad
+\operatorname{rem}_\phi\{D_s(F_0F_5-24F_6)+3B_sF_5\}=0.
+\tag{10.10}
+$$
+
+These are respectively the coefficient of $p$ and the constant
+coefficient needed for (10.8), as in Lemma 3.3 and X, Section 13.2.
+They prove the identity for every real $p$. The converse follows by
+taking the actual unique lift and its actual sixth response.
+No property of regular companions follows from this classification
+alone. ∎
+

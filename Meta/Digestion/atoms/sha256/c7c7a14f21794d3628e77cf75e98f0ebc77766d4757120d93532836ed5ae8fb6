@@ -1,0 +1,39 @@
+## 22. A closed barrier and a proper map
+
+The primitive integer implicit polynomials of (21.1), with positive
+lexicographic leading coefficient in $p,v$, are
+$$
+\begin{aligned}
+E_0={}&51072900p^3-38068700p^2v-1933224270p^2+8423500pv^2
++601454235pv+10167680250p\\
+&-581725v^3-45839880v^2-1393526691v+136430551152,\\
+E_1={}&1055100p^4-1141850p^3v-116130990p^3+416900p^2v^2
++79145580p^2v+273455568p^2\\
+&-63500pv^3-17883810pv^2-175084740pv-9069191838p
++3475v^4+1327830v^3+23513292v^2\\
+&+2292881202v-50360535,\\
+E_2={}&9000p^2-1300pv-175350p-1600v^2+225120v-6050961,\\
+E_3={}&5356125p^3-471600p^2v-197333550p^2-592800pv^2
++93450960pv-635417028p\\
+&+89600v^3-8052480v^2-277806240v+17962000344.
+\end{aligned}
+\tag{22.1}
+$$
+More precisely, write each coordinate in (21.1) as its displayed
+numerator over denominator and take the primitive positive-leading
+part of $\operatorname{Res}_z(N_p-pD_p,N_v-vD_v)$.
+Expanding the Sylvester determinant gives (22.1). Direct substitution
+and clearing denominators also give $E_i(R_i)=0$ or $E_i(\mathcal B_{i-2})=0$.
+These are polynomial identities, not converse realization assertions.
+
+Put
+$$
+\begin{gathered}
+\mathcal E_{\rm esc}=E_0E_1E_2E_3\{(5p+216)^2+(v+225)^2\},\\
+O=\{(p,v)\in\mathbb R^2:p\ne24,\ \mathcal E_{\rm esc}(p,v)\ne0\},\\
+\mathcal S=\{(r,b,\epsilon):0<r<1,b>0,F_{\rm par}=0,P_5\ne24\},
+\quad \mathscr A=(P_5,P_6),\quad\mathcal S_O=\mathscr A^{-1}(O).
+\end{gathered}
+\tag{22.2}
+$$
+

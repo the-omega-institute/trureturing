@@ -12,6 +12,8 @@ import sys
 import tarfile
 from unittest.mock import patch
 
+from lean_seed_transport_fake import FAKE_GH
+
 from lean_seed_support import OTHER, PUBLISH, REV, ROOT, PartitionFixture, digest, prepare_release_report, write
 
 sys.path.insert(0, str(PUBLISH.parent))
@@ -42,7 +44,7 @@ exit "${FAKE_BUILD_EXIT:-0}"
         helper_dir.mkdir(parents=True, exist_ok=True)
         # Exercise the production shell entry point with its declared transport
         # dependencies in the fixture repository.
-        for name in ("lean-cache-publish.sh", "cache_material.py", "lean_cache.py", "lean_cache_release.py", "lean_actions.py"):
+        for name in ("lean-cache-publish.sh", "cache_material.py", "lean_cache.py", "lean_cache_release.py", "lean_cache_topology.py", "lean_actions.py"):
             shutil.copy2(PUBLISH.with_name(name), helper_dir / name)
         prepare_release_report(self.root)
         shutil.copy2(ROOT / "Makefile", self.root / "Makefile")
@@ -244,7 +246,7 @@ make -C "$2" lean
 ''', "optional-fetch", str(self.publisher), str(self.root)], text=True, capture_output=True,
             env=self.transport_environment(**{"GITHUB_ACTIONS": "false", **extra}))
 
-    def deadline_probe(self, seconds, step=0):
+    def deadline_probe(self, seconds=None, step=0):
         # Keep subprocess's own wait clock real. Only the operation's monotonic
         # clock advances at completed gh calls, independently of machine speed.
         write(self.bin / "sitecustomize.py", '''
@@ -274,10 +276,13 @@ def run(args, *rest, **kwargs):
         if args[1] != "api" or "/releases/" in args[2]:
             clock += int(os.environ["FAKE_CLOCK_STEP"])
 subprocess.run = run
-''')
+''' + ('os.environ.pop("STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS", None)\n'
+       if seconds is None else ""))
         (self.root / "gh-budgets").unlink(missing_ok=True)
-        return {"PYTHONPATH": str(self.bin), "FAKE_CLOCK_STEP": str(step),
-                "STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS": str(seconds)}
+        environment = {"PYTHONPATH": str(self.bin), "FAKE_CLOCK_STEP": str(step)}
+        if seconds is not None:
+            environment["STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS"] = str(seconds)
+        return environment
 
     def gh_budgets(self):
         return [json.loads(line) for line in (self.root / "gh-budgets").read_text().splitlines()]
@@ -557,6 +562,20 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertIn("502-1", snapshots[0]["args"][1])
         self.assertFalse((self.root / ".lake/build").exists())
 
+    def test_default_and_extended_release_budgets_forward_and_share_expiry(self):
+        for run in (503, 504):
+            self.assertEqual(0, self.transport("publish", str(run)).returncode)
+        shutil.rmtree(self.root / ".lake/build")
+        for configured, step, expected in ((None, 1000, [1800, 800]),
+                                           (21600, 10000, [21600, 11600, 1600])):
+            with self.subTest(configured=configured):
+                (self.root / "gh-budgets").unlink(missing_ok=True)
+                result = self.fetch_then_build(**self.deadline_probe(configured, step=step),
+                    FAKE_FAIL="download")
+                self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+                self.assertIn("deadline exhausted", result.stdout)
+                self.assertEqual(expected, [call["timeout"] for call in self.gh_budgets()])
+
     def test_hanging_publication_and_prune_are_optional_after_real_build(self):
         for run, operation in enumerate(("create", "upload", "edit"), 501):
             with self.subTest(operation=operation):
@@ -593,7 +612,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertEqual(6, len(list(self.remote.glob("*/release.json"))))
 
     def test_invalid_release_budget_rejects_publication_but_optional_fetch_preserves_build_exit(self):
-        for value in ("0", "-1", "nan", "1801"):
+        for value in ("0", "-1", "nan", "1.5", "21601", "999999999999999999999"):
             with self.subTest(budget=value):
                 environment = {"STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS": value}
                 fetched = self.fetch_then_build(**environment)
@@ -606,7 +625,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
                 self.assertEqual([], list(self.remote.iterdir()))
 
     def test_release_budget_accepts_values_up_to_the_ceiling(self):
-        for value in ("1", "600", "1800"):
+        for value in ("1", "600", "1800", "1801", "21600"):
             with self.subTest(budget=value):
                 fetched = self.fetch_then_build(STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS=value)
                 self.assertEqual(0, fetched.returncode, fetched.stdout + fetched.stderr)
@@ -952,102 +971,3 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertIn('"status":"published"', result.stdout)
         self.assertIn("prune_error", result.stdout)
-
-
-
-FAKE_GH = '''#!/usr/bin/env python3
-import hashlib, json, os, pathlib, shutil, sys
-args = sys.argv[1:]
-root = pathlib.Path(os.environ["FAKE_REMOTE"])
-if "FAKE_GH_LOG" in os.environ:
-    with pathlib.Path(os.environ["FAKE_GH_LOG"]).open("a") as log:
-        log.write(json.dumps(args) + "\\n")
-verb = args[0] if args and args[0] == "api" else (args[1] if len(args) > 1 else "")
-if os.environ.get("FAKE_HANG") == verb:
-    import signal
-    signal.pause()
-def fail():
-    sys.stderr.write(os.environ.get("FAKE_FAIL_STDERR", ""))
-    sys.exit(23)
-if len(args) > 1 and os.environ.get("FAKE_FAIL") == verb and verb != "upload": fail()
-if args[:2] == ["release", "list"] and "FAKE_LIST_JSON" in os.environ:
-    print(os.environ["FAKE_LIST_JSON"]); sys.exit(0)
-if args[0] == "api" and args[1].endswith("/branches/dev"):
-    print(os.environ["FAKE_DEV_BRANCH"]); sys.exit(0)
-if args[0] == "api" and "/compare/" in args[1] and "FAKE_VERIFICATION_API" not in os.environ:
-    print(os.environ["FAKE_DEV_COMPARE"]); sys.exit(0)
-if args[0] == "api" and "FAKE_API_JSON" in os.environ:
-    print(os.environ["FAKE_API_JSON"]); sys.exit(0)
-if args[0] == "api" and "FAKE_VERIFICATION_API" in os.environ:
-    responses = json.loads(pathlib.Path(os.environ["FAKE_VERIFICATION_API"]).read_text())
-    if args[1] in responses:
-        print(json.dumps(responses[args[1]])); sys.exit(0)
-def option(name): return args[args.index(name)+1]
-def metadata(directory):
-    value = json.loads((directory / "release.json").read_text())
-    value["assets"] = [{"name": p.name, "size": p.stat().st_size, "digest": "sha256:" + hashlib.sha256(p.read_bytes()).hexdigest()}
-                       for p in directory.iterdir() if p.name != "release.json"]
-    if "FAKE_MANIFEST_DIGEST" in os.environ:
-        for asset in value["assets"]:
-            if asset["name"] == "manifest.json": asset["digest"] = os.environ["FAKE_MANIFEST_DIGEST"]
-    if "FAKE_PART_ASSET" in os.environ:
-        for asset in value["assets"]:
-            if asset["name"].startswith("lean-build.tgz"):
-                asset.update(json.loads(os.environ["FAKE_PART_ASSET"]))
-    return value
-if args[:2] == ["release", "list"]:
-    print(json.dumps([{"tagName": p.parent.name, "createdAt": p.parent.name, "isDraft": json.loads(p.read_text())["draft"]}
-                      for p in root.glob("*/release.json")]))
-elif args[0] == "api":
-    directory = root / args[1].split("/")[-1]
-    phase = "FAKE_POST_EDIT_API" if (root.parent / ("gh-edited-" + str(os.getppid()))).exists() else "FAKE_LOOKUP_API"
-    if phase + "_JSON" in os.environ:
-        print(os.environ[phase + "_JSON"])
-        sys.stderr.write(os.environ.get(phase + "_STDERR", ""))
-        sys.exit(int(os.environ.get(phase + "_EXIT", "0")))
-    if not directory.exists():
-        print(json.dumps({"message": "Not Found", "status": "404"}))
-        sys.exit(1)
-    print(json.dumps(metadata(directory)))
-else:
-    verb, tag = args[1:3]
-    directory = root / tag
-    if verb == "create":
-        directory.mkdir()
-        (directory / "release.json").write_text(json.dumps({"tag_name": tag, "target_commitish": option("--target") if "--target" in args else "a" * 40, "draft": True}))
-    elif verb == "upload":
-        for value in args[3:]:
-            if pathlib.Path(value).is_file(): shutil.copyfile(value, directory / pathlib.Path(value).name)
-        if os.environ.get("FAKE_FAIL") == "upload": fail()
-    elif verb == "edit":
-        value = json.loads((directory / "release.json").read_text()); value["draft"] = False
-        (directory / "release.json").write_text(json.dumps(value))
-        (root.parent / ("gh-edited-" + str(os.getppid()))).touch()
-        if "FAKE_MANIFEST_AFTER_EDIT" in os.environ:
-            manifest = json.loads((directory / "manifest.json").read_text())
-            manifest.update(json.loads(os.environ["FAKE_MANIFEST_AFTER_EDIT"]))
-            (directory / "manifest.json").write_text(json.dumps(manifest))
-        if os.environ.get("FAKE_DAMAGE_AFTER_EDIT") == "1":
-            (directory / "lean-build.tgz").write_bytes(b"damaged after upload")
-        if os.environ.get("FAKE_TRUNCATE_AFTER_EDIT") == "1":
-            archive = directory / "lean-build.tgz"
-            packed = archive.read_bytes()[:-8]; archive.write_bytes(packed)
-            manifest = json.loads((directory / "manifest.json").read_text())
-            digest = hashlib.sha256(packed).hexdigest()
-            manifest.update(archive_bytes=len(packed), archive_sha256=digest,
-                parts=[{"name": archive.name, "bytes": len(packed), "sha256": digest}])
-            (directory / "manifest.json").write_text(json.dumps(manifest))
-    elif verb == "download":
-        destination = pathlib.Path(option("--dir")); destination.mkdir(exist_ok=True)
-        if not directory.exists():
-            sys.exit(0)
-        patterns = [args[i + 1] for i, value in enumerate(args) if value == "--pattern" and i + 1 < len(args)]
-        for path in directory.iterdir():
-            if path.name != "release.json" and (not patterns or path.name in patterns):
-                shutil.copyfile(path, destination / path.name)
-    elif verb == "view":
-        if not directory.exists(): sys.exit(1)
-        print(json.dumps(metadata(directory)))
-    elif verb == "delete": shutil.rmtree(directory)
-    else: sys.exit(2)
-'''

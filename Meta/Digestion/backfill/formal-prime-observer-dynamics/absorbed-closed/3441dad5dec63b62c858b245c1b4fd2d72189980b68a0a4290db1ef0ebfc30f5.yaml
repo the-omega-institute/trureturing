@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:3441dad5dec63b62c858b245c1b4fd2d72189980b68a0a4290db1ef0ebfc30f5
+  normalized_sha256: sha256:3441dad5dec63b62c858b245c1b4fd2d72189980b68a0a4290db1ef0ebfc30f5
+cas_ref: sha256:3441dad5dec63b62c858b245c1b4fd2d72189980b68a0a4290db1ef0ebfc30f5
+coverage_gids:
+  - gid: D5/S3/TotalVariation/Asymptotics/FourLocalEvidenceClosedForms.bhattacharyya_closed_form
+    target_statement_id: sha256:97c88192dbf583b57a38334f177282dd9c3049f83b8101773d9857ff07e10866
+  - gid: D5/S3/TotalVariation/Asymptotics/FourLocalEvidenceClosedForms.hellinger_sq_closed_form
+    target_statement_id: sha256:a44f984638a595baa5ae88824a16c481f2511a713ea27f06e74c7e243e46c2aa
+  - gid: D5/S3/TotalVariation/Asymptotics/FourLocalEvidenceClosedForms.kl_divergence_closed_form
+    target_statement_id: sha256:f871f27e9bca1109b412a17707f30031d46b80cfe4d0d6cbcdc1933b13f6ac3d
+  - gid: D5/S3/TotalVariation/Asymptotics/FourLocalEvidenceClosedForms.total_variation_closed_form
+    target_statement_id: sha256:be0ea3164c827871fb0a54241c76e38ec0f7a71365e1dcd654b600e678cf0f13
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,5 @@
+**Theorem 5.1 (two different failures of inverse).** For every $b\ge3$:
+
+1. There is no uniform inverse from the old complete boundary behavior to the native unweighted topology on the whole family, even with $N$ and the exact complete-leaf roster supplied.
+2. Within the subfamily $S>0$, the unweighted support is fixed, but distinct parameters give distinct coefficient laws even up to a leaf-fixing permutation. Thus there is no uniform native coefficient-law inverse on that fixed-support subfamily.
+

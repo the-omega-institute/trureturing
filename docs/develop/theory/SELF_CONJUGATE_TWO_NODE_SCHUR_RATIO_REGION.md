@@ -241,3 +241,506 @@ This proves the inequality on the arc for every $t\ge3$, and hence on $H$. $\squ
 <!-- 追加区自下一行的「追加锚」开始。每批增补写在锚之后,并以一行新的、逐字相同的追加锚结尾。 -->
 
 ## 追加锚（本行以下为增补区）
+## 8. Analytic endpoint separation on the nonreal sector boundary
+
+**Definition 8.1 (Actual interpolation grid and entire target class).** Let $\mathbb D=\{z\in\mathbb C:|z|\le1\}$ and $I=[-1,1]$. For every real $d$ with $0<d\le\tfrac12$, put
+
+$$
+w_d=1-d+i\sqrt3\,d,\qquad W_d=(w_d,\overline{w_d}),\qquad
+p_d(z)=(z-w_d)(z-\overline{w_d}).
+$$
+
+For every entire function $g:\mathbb C\to\mathbb C$, let $I_dg$ be the unique polynomial of degree at most one with the same values as $g$ at the two nodes of $W_d$, and define
+
+$$
+L_d(g)=g'(1)-(I_dg)'(1)
+=g'(1)-\frac{g(w_d)-g(\overline{w_d})}{w_d-\overline{w_d}}.
+$$
+
+Write $\|h\|_{\mathbb D}=\sup_{z\in\mathbb D}|h(z)|$, and set
+
+$$
+\mathscr E_2(\mathbb D)=
+\{g:\mathbb C\to\mathbb C:\ g\text{ is entire and }\|g''\|_{\mathbb D}\le1\},
+$$
+
+$$
+\mathcal K_d=
+\left\{x\in I:\
+\sup_{g\in\mathscr E_2(\mathbb D)}
+|g'(x)-(I_dg)'(x)|=\frac{|p_d'(x)|}{2}\right\}.
+$$
+
+Thus $\mathcal K_d$ is exactly the analytic Kallioniemi set $\mathcal I^{\mathbb D}_{2,1}(W_d)$ in equation (35) of [Ostrovskii–Shcherbakov, arXiv:2508.13554v2, Section 6.2](https://arxiv.org/html/2508.13554v2#S6.SS2). The class is the entire complex-valued class specified there, without a real-coefficient restriction. For integers $t\ge2$ write $m_t(z)=z^t/[t(t-1)]$; these are the source's normalized monomials $(t-2)!z^t/t!$, and $\|m_t''\|_{\mathbb D}=\|z^{t-2}\|_{\mathbb D}=1$.
+
+**Proposition 8.2 (Reflection correspondence and all monomial degrees).** For every real $0<d\le\tfrac12$, the actual grid $W_d$ is simple and self-conjugate in $\mathbb D^2$, and
+
+$$
+\frac{|p_d'(1)|}{2}=d,\qquad
+\frac{L_d(m_t)}d
+=Q_{t,2,1}(1-w_d,1-\overline{w_d})\quad(t\in\mathbb Z,\ t\ge2).
+$$
+
+The reflected supplier grid in Theorem 4.1 is $Z_d=(-w_d,-\overline{w_d})$, so the argument of $Q$ here is $Z_d+(1,1)$, not $W_d+(1,1)$. Moreover,
+
+$$
+\sup_{t\in\mathbb Z,\ t\ge2}|L_d(m_t)|=d,
+\qquad L_d(m_2)=L_d(m_3)=d.
+$$
+
+Stance: repo-derived; the all-degree bound is reused from the whole applicable Theorem 4.1, with the correspondence below.
+
+**Proof.** The imaginary part $\sqrt3\,d$ is positive and
+
+$$
+|w_d|^2=(1-d)^2+3d^2=1-2d+4d^2\le1.
+$$
+
+Hence the nodes are distinct nonreal conjugates in $\mathbb D$, and have a real characteristic polynomial with no real roots. Also
+
+$$
+p_d'(1)=2-w_d-\overline{w_d}=2d>0.
+$$
+
+For every integer $t\ge2$, the two-variable identity in cited fact (b) gives
+
+$$
+(I_dm_t)'(1)
+=\frac{h_{t-1}(w_d,\overline{w_d})}{t(t-1)},\qquad
+L_d(m_t)=\frac{t-h_{t-1}(w_d,\overline{w_d})}{t(t-1)}.
+$$
+
+Lemma 3.1 identifies the quotient of the last expression by $d=1-\operatorname{Re}w_d$ with $Q_{t,2,1}(Z_d+(1,1))$. This is also the specialization of the source's Corollary 6.1, equation (30), to test point $z=1$, $(n,k)=(2,1)$ and actual nodes $W_d$: its argument is $1_2-z^{-1}W_d=(1-w_d,1-\overline{w_d})$. Its denominator is nonzero, since $p_d'(1)=2d$, and its interpolation premises hold for this simple disk grid (one may take both radius bounds equal to one). This verifies the sign and the normalization directly, without the reduction in the source's Proposition 6.2.
+
+Now $a=1-d$, $b=\sqrt3\,d$ satisfy $a^2+b^2\le1$, $w_d\ne1$, and $b^2=3(1-a)^2$. Theorem 4.1 therefore gives $|Q_{t,2,1}(Z_d+(1,1))|\le1$ for every integer $t\ge2$. Thus $|L_d(m_t)|\le d$ for all such $t$. Finally,
+
+$$
+h_1(w_d,\overline{w_d})=2(1-d),\qquad
+h_2(w_d,\overline{w_d})=3(1-d)^2-3d^2=3-6d,
+$$
+
+so the displayed formula for $L_d(m_t)$ gives $L_d(m_2)=L_d(m_3)=d$. Both degrees attain the supremum. $\square$
+
+**Theorem 8.3 (An entire quartic exceeding every normalized monomial).** For every real $0<d\le\tfrac12$, define
+
+$$
+e=\frac{d^2}{6},\qquad N=\sqrt{1+4e^2},\qquad
+G_d(z)=\frac{z^3/6+e(z^2/2-z^4/12)}{N}.
+$$
+
+Then $G_d$ has real coefficients and degree exactly four, belongs to $\mathscr E_2(\mathbb D)$ with $\|G_d''\|_{\mathbb D}=1$, and satisfies
+
+$$
+L_d(G_d)=d\sqrt{1+\frac{d^4}{9}}>d
+=\sup_{t\in\mathbb Z,\ t\ge2}|L_d(m_t)|.
+$$
+
+Stance: repo-derived.
+
+**Proof.** Since $e>0$ and $N>0$, the coefficient of $z^4$ is $-e/(12N)\ne0$. Differentiating twice gives
+
+$$
+G_d''(z)=\frac{z+e(1-z^2)}N.
+$$
+
+For $z=e^{i\theta}$ on the unit circle,
+
+$$
+z+e(1-z^2)=z\bigl(1-2ie\sin\theta\bigr),\qquad
+|z+e(1-z^2)|^2=1+4e^2\sin^2\theta\le N^2,
+$$
+
+with equality at $z=i$ and $z=-i$. The classical maximum modulus principle, applied to this polynomial on the closed unit disk, gives $\|G_d''\|_{\mathbb D}=1$. Thus the polynomial is an admissible entire input to the exact class of Definition 8.1.
+
+To calculate its error, set $a=1-d$ and $b=\sqrt3\,d$. The two-variable identity $h_3(a+ib,a-ib)=4a(a^2-b^2)$ gives
+
+$$
+h_3(w_d,\overline{w_d})
+=4(1-d)(1-2d-2d^2)=4-12d+8d^3,
+$$
+
+and hence, by the monomial error formula in Proposition 8.2,
+
+$$
+L_d(m_4)=d-\frac23d^3,\qquad
+L_d(m_2-m_4)=\frac23d^3=4de.
+$$
+
+The functional $L_d$ is complex-linear and $G_d=[m_3+e(m_2-m_4)]/N$. Using Proposition 8.2 at degrees two and three therefore gives
+
+$$
+L_d(G_d)=\frac{d+4de^2}{N}=dN
+=d\sqrt{1+\frac{d^4}{9}}>d.
+$$
+
+The final comparison uses $d>0$ and Proposition 8.2 for every degree $t\ge2$. $\square$
+
+**Proposition 8.4 (Minimum polynomial degree of a violation).** For every real $0<d\le\tfrac12$ and every polynomial $P\in\mathbb C[z]$ of degree at most three with $\|P''\|_{\mathbb D}\le1$,
+
+$$
+|L_d(P)|\le d.
+$$
+
+The bound is attained by $m_2$ and $m_3$. Consequently the minimum degree of a polynomial in $\mathscr E_2(\mathbb D)$ with $|L_d(P)|>d$ is exactly four, for each grid $W_d$. Stance: repo-derived.
+
+**Proof.** Write $P''(z)=A+Bz$ with $A,B\in\mathbb C$. Then $P=A m_2+B m_3+R$ for some affine polynomial $R$. Interpolation reproduces $R$, so $L_d(R)=0$, and Proposition 8.2 yields $L_d(P)=d(A+B)$. For complex $A,B$,
+
+$$
+\|A+Bz\|_{\mathbb D}=|A|+|B|.
+$$
+
+The upper bound is the triangle inequality. If $A$ and $B$ are both nonzero, equality is attained at $z=(A/|A|)(\overline B/|B|)$, which has modulus one and makes $Bz$ a nonnegative real multiple of $A$. If either coefficient is zero, equality is immediate. Therefore
+
+$$
+|L_d(P)|=d|A+B|\le d(|A|+|B|)
+=d\|P''\|_{\mathbb D}\le d.
+$$
+
+Theorem 8.3 provides a violating polynomial of degree four, and the preceding bound excludes every lower degree, including all complex coefficient choices. $\square$
+
+**Corollary 8.5 (Analytic endpoint exclusion and pointwise failure of monomial maximization).** For every real $0<d\le\tfrac12$,
+
+$$
+\sup_{g\in\mathscr E_2(\mathbb D)}|L_d(g)|
+\ \ge\ d\sqrt{1+\frac{d^4}{9}}
+\ >\ \frac{|p_d'(1)|}{2}=d,
+\qquad 1\notin\mathcal K_d.
+$$
+
+Thus on each identical actual interpolation grid $W_d$, every normalized-monomial test at $1$ passes, but the analytic equality at $1$ fails. In particular the pointwise normalized-monomial maximization assertion of [Ostrovskii–Shcherbakov, arXiv:2508.13554v2, Proposition 6.2, Section 6.3](https://arxiv.org/html/2508.13554v2#S6.SS3) fails for $(n,k)=(2,1)$, test point $1$, and these simple grids. Stance: repo-derived, with the target class, Kallioniemi-set definition and disputed assertion cited from the source.
+
+**Proof.** Theorem 8.3 supplies an entire member of the supremum class whose error strictly exceeds $|p_d'(1)|/2$, so Definition 8.1 excludes $1$. Proposition 8.2 bounds all normalized monomials at that same grid and test point by $d$. Multiplying a monomial by a unimodular constant, or adding an affine polynomial, does not change its absolute error, so neither enlargement repairs the maximization assertion.
+
+The correspondence is pointwise between the analytic test on $W_d$ and the Schur test on $Z_d=-W_d$ established in Proposition 8.2. The reflection is a bijection of the class of self-conjugate disk grids, but $W_d$ and $Z_d$ are distinct grids. The separation does not assign different truth values to the two globally universal Conjectures 6.1 and 6.2: the former fails by the quartic above, and the latter already fails by the distinct $73/60$ example of Remark 4.4. That example and the all-monomial region of Theorem 4.1 are preserved as separate mathematical facts. The conclusion here concerns the asserted pointwise supplier reduction, not the source's separate amplitude-maximization theorems.
+
+The parameter range includes $d=\tfrac12$, when $|w_d|=1$, and has $|w_d|<1$ for $0<d<\tfrac12$. At $d=0$ the two nodes coalesce at $1$, the divided difference defining $L_d$ is undefined, and the strict gap in the displayed formula vanishes; no confluent statement follows. For $d>\tfrac12$ the nodes leave $\mathbb D$. Reversing the sign of $\operatorname{Im}w_d$ only interchanges the nodes and leaves interpolation unchanged.
+
+The displayed quartic supplies a strict lower bound, without identifying the exact supremum over all entire functions or over all quartics. These statements impose no conclusion on the rest of the sector interior, arbitrary grids, $n\ge3$, or $k=0$. The real-grid result of Kallioniemi reported in Remark 4.2 is not a premise of this argument. $\square$
+
+## 追加锚（本行以下为增补区）
+## 9. The uniform analytic bound for every simple conjugate pair
+
+**Definition 9.1 (Uniform error on the original entire class).** For real $a,b$ satisfying
+
+$$
+b>0,\qquad a^2+b^2\le1,
+$$
+
+put $w=a+ib$, $W_{a,b}=(w,\overline w)$ and $p_{a,b}(z)=(z-w)(z-\overline w)$. Use the class $\mathscr E_2(\mathbb D)$ of Definition 8.1, with no restriction on the coefficients or real values of its members. The actual two-point interpolant and its slope are
+
+$$
+I_{a,b}g(z)=\frac{z-\overline w}{w-\overline w}g(w)
++\frac{w-z}{w-\overline w}g(\overline w),\qquad
+S_{a,b}(g)=\frac{g(a+ib)-g(a-ib)}{2ib}.
+$$
+
+The denominator is nonzero, and $(I_{a,b}g)'(z)=S_{a,b}(g)$ for every $z$. Define
+
+$$
+T_{a,b,x}(g)=g'(x)-S_{a,b}(g),\qquad
+E(a,b)=\sup_{g\in\mathscr E_2(\mathbb D)}\ \sup_{-1\le x\le1}|T_{a,b,x}(g)|.
+$$
+
+Here the nodes are simple nonreal conjugates, including those on the unit circle. The case $b=0$ is excluded: the displayed interpolant does not define interpolation at a repeated node.
+
+**Lemma 9.2 (A real boundary kernel for the imaginary-axis slope).** Let $0<b\le1$, let $d\mu(\theta)=d\theta/(2\pi)$ on $[0,2\pi]$, and define
+
+$$
+B_b(\theta)=2\sum_{j=0}^\infty
+\frac{(-1)^{j+1}b^{2j+2}}{(2j+2)(2j+3)}\cos((2j+1)\theta).
+$$
+
+This is a continuous real function of $\theta$ and $b\in(0,1]$, has mean zero, and satisfies
+
+$$
+B_b(\pi-\theta)=-B_b(\theta),\qquad
+\cos\theta\,B_b(\theta)\le0,\qquad
+|B_b(\theta)|\le C<\frac{19}{50}<\frac{31}{81},
+$$
+
+where arguments are interpreted modulo $2\pi$ and
+
+$$
+C=\log\frac53+2\arctan\frac13-\frac79.
+$$
+
+If $h$ is entire and $H$ is its entire primitive with $H(0)=0$, then
+
+$$
+\frac1{2b}\int_{-b}^b H(it)\,dt
+=\int_0^{2\pi}h(e^{i\theta})B_b(\theta)\,d\mu(\theta).
+$$
+
+Stance: repo-derived.
+
+**Proof.** The absolute values of the summands are bounded by $2/[(2j+2)(2j+3)]$, a summable sequence independent of $b\le1$ and $\theta$. Thus the series converges absolutely and uniformly, including at $b=1$. The mean and the reflection identity follow term by term.
+
+For the integral identity first take $h(z)=z^m$, $m\ge0$, so $H(z)=z^{m+1}/(m+1)$. Symmetric integration gives
+
+$$
+\frac1{2b}\int_{-b}^b H(it)\,dt
+=\begin{cases}
+0,&m\text{ even},\\
+\displaystyle\frac{(-1)^{j+1}b^{2j+2}}{(2j+2)(2j+3)},&m=2j+1.
+\end{cases}
+$$
+
+These are precisely the moments $\int e^{im\theta}B_b(\theta)\,d\mu(\theta)$: for positive integers $m,r$, the integral of $e^{im\theta}\cos(r\theta)$ is $1/2$ when $m=r$ and zero otherwise. The zeroth moment vanishes. For an arbitrary entire $h(z)=\sum_{m\ge0}c_mz^m$, its Taylor series converges absolutely and uniformly on the closed disk, as does the integrated series for $H$. For example, Cauchy's coefficient estimate on any circle of radius $R>1$ bounds $|c_m|$ by $\max_{|z|=R}|h(z)|R^{-m}$. Consequently both integrals pass through the series, proving the identity for all complex coefficients.
+
+To control the kernel, the geometric series and $\int_0^1t^{2j+1}(1-t)\,dt=1/[(2j+2)(2j+3)]$ give
+
+$$
+B_b(\theta)=-2b^2\int_0^1t(1-t)
+\operatorname{Re}\frac{e^{-i\theta}}{1+b^2t^2e^{-2i\theta}}\,dt
+$$
+
+$$
+=-2b^2\cos\theta\int_0^1
+\frac{t(1-t)(1+b^2t^2)}{(1-b^2t^2)^2+4b^2t^2\cos^2\theta}\,dt.
+$$
+
+The sum of the integrals of the absolute values of the expanded geometric terms is at most $2\sum_{j\ge0}1/[(2j+2)(2j+3)]<\infty$. This justifies the interchange even for $b=1$; the geometric identity is needed only for $t<1$. If $b=1$ and $\cos\theta=0$, the integrand is zero for $t<1$ and its endpoint value can be set to zero. In particular $B_b=0$ when $\cos\theta=0$, and otherwise its sign is opposite to that of $\cos\theta$.
+
+Put $c=|\cos\theta|$. For $c>0$, substituting $y=bt$ gives
+
+$$
+|B_b(\theta)|=2c\int_0^b
+\frac{y(1-y/b)(1+y^2)}{(1-y^2)^2+4c^2y^2}\,dy
+\le\int_0^1(1-t)q(t,c)\,dt,
+$$
+
+where
+
+$$
+q(t,c)=\frac{2ct(1+t^2)}{(1-t^2)^2+4c^2t^2}.
+$$
+
+Indeed $1-y/b\le1-y$ on $0\le y\le b\le1$, and the integrands are nonnegative. For $0\le t\le1/3$, differentiation with respect to $c$ shows that $q(t,c)$ is nondecreasing on $0\le c\le1$: the sign of this derivative is the sign of $(1-t^2)^2-4c^2t^2$, which is nonnegative because $1-t^2\ge2t$. Therefore
+
+$$
+q(t,c)\le q(t,1)=\frac{2t}{1+t^2}\quad(0\le t\le1/3).
+$$
+
+For $1/3\le t<1$, the inequality $(1-t^2)^2+4c^2t^2\ge4ct(1-t^2)$ instead gives
+
+$$
+(1-t)q(t,c)\le\frac{1+t^2}{2(1+t)}.
+$$
+
+The preceding bounds also apply at $c=0$ by the already established value $B_b=0$. Integration yields
+
+$$
+\begin{aligned}
+|B_b(\theta)|
+&\le\int_0^{1/3}\frac{2t(1-t)}{1+t^2}\,dt
++\int_{1/3}^1\frac{1+t^2}{2(1+t)}\,dt\\
+&=\log\frac{10}{9}-\frac23+2\arctan\frac13
++\log\frac32-\frac19=C.
+\end{aligned}
+$$
+
+For completeness, the convergent series $\log[(1+s)/(1-s)]=2\sum_{r\ge0}s^{2r+1}/(2r+1)$ at $s=1/4$ gives
+
+$$
+\log\frac53\le\frac12+\frac1{96}
++\frac{2}{5}\frac{(1/4)^5}{1-1/16}=\frac{613}{1200}.
+$$
+
+The alternating series for $\arctan(1/3)$ gives $\arctan(1/3)\le1/3-1/81+1/1215=391/1215$. Hence
+
+$$
+C\le\frac{613}{1200}-\frac{163}{1215}
+=\frac{36613}{97200}<\frac{19}{50}<\frac{31}{81}.
+$$
+
+Both series follow by integrating their geometric series on compact subintervals of $(-1,1)$; the alternating remainder has the sign of its first omitted term. Thus these bounds involve no approximation of $C$. $\square$
+
+**Lemma 9.3 (The full interval for imaginary-axis nodes).** For every $0<b\le1$, every entire complex-valued $g$, and every $x\in[-1,1]$,
+
+$$
+\left|g'(x)-\frac{g(ib)-g(-ib)}{2ib}\right|\le\|g''\|_{\mathbb D}.
+$$
+
+Stance: repo-derived.
+
+**Proof.** Write $h=g''$ and $H=g'-g'(0)$. The fundamental theorem of calculus along the vertical segment gives
+
+$$
+\frac{g(ib)-g(-ib)}{2ib}=g'(0)+\frac1{2b}\int_{-b}^b H(it)\,dt.
+$$
+
+For real $|t|<1$ let
+
+$$
+P_t(\theta)=\frac{1-t^2}{1-2t\cos\theta+t^2},\qquad
+A_x(\theta)=\int_0^xP_t(\theta)\,dt\quad(|x|<1).
+$$
+
+The classical disk Poisson identity is $h(t)=\int h(e^{i\theta})P_t(\theta)\,d\mu(\theta)$. In this setting it follows directly from
+
+$$
+P_t(\theta)=1+2\sum_{m\ge1}t^m\cos(m\theta)
+$$
+
+and the absolutely convergent Taylor series of $h$ on the circle: its $m$th analytic moment is $t^m$, including negative real $t$. Integrating on the compact segment between $0$ and $x$ is legitimate because $|t|\le|x|<1$. Together with Lemma 9.2 this gives the identity on the actual function $g$,
+
+$$
+g'(x)-\frac{g(ib)-g(-ib)}{2ib}
+=\int_0^{2\pi}h(e^{i\theta})K_{x,b}(\theta)\,d\mu(\theta),\qquad
+K_{x,b}=A_x-B_b.
+$$
+
+We prove $\int|K_{x,b}|\,d\mu\le1$ for every $|x|<1$. First let $0\le x<1$. Here $A_x\ge0$, and $\int A_x\,d\mu=x$ because each $P_t$ has mean one. By Lemma 9.2, $B_b\le0$ on the half-circle $\cos\theta\ge0$, so $K_{x,b}\ge0$ there.
+
+On the other half-circle put $c=-\cos\theta\ge0$ and define
+
+$$
+A_1(\theta)=\int_0^1\frac{1-t^2}{1+2ct+t^2}\,dt.
+$$
+
+This is finite on that half-circle. Its integrand is nonincreasing in $t$: direct differentiation for general $\theta$ gives
+
+$$
+\frac{\partial P_t(\theta)}{\partial t}
+=\frac{2[(1+t^2)\cos\theta-2t]}{(1-2t\cos\theta+t^2)^2}\le0
+\quad(0\le t<1,\ \cos\theta\le0).
+$$
+
+The average of a nonincreasing function over $[0,x]$ is at least its average over $[0,1]$, so $A_x\ge xA_1$, also at $x=0$. Moreover,
+
+$$
+A_1\ge\int_0^1\frac{1-t^2}{(1+t)^2}\,dt
+=2\log2-1\ge\frac{31}{81}>C\ge B_b\ge0.
+$$
+
+For the penultimate rational lower bound, the same logarithm series used in Lemma 9.2, now at $s=1/3$, gives $\log2\ge2(1/3+1/81)=56/81$. Therefore, writing $u_+=\max\{u,0\}$,
+
+$$
+(B_b-A_x)_+\le(1-x)B_b
+\quad\text{on }\cos\theta\le0.
+$$
+
+Since this half-circle has $\mu$-measure $1/2$ and $0\le B_b\le C$, while the negative part of $K_{x,b}$ vanishes on the other half-circle, we obtain
+
+$$
+\begin{aligned}
+\int|K_{x,b}|\,d\mu
+&=\int K_{x,b}\,d\mu+2\int(-K_{x,b})_+\,d\mu\\
+&\le x+2(1-x)\int_{\cos\theta\le0}B_b\,d\mu\\
+&\le x+(1-x)C\le1.
+\end{aligned}
+$$
+
+Here $\int K_{x,b}\,d\mu=x$ uses the zero mean of $B_b$. For $-1<x<0$, put $u=-x$. The identities $P_{-t}(\theta)=P_t(\pi-\theta)$ and $B_b(\pi-\theta)=-B_b(\theta)$ imply
+
+$$
+K_{-u,b}(\theta)=-K_{u,b}(\pi-\theta).
+$$
+
+The change of variable $\theta\mapsto\pi-\theta$ preserves circle measure, so the same integral bound follows. The integral representation and the triangle inequality now give, for every $|x|<1$,
+
+$$
+\left|g'(x)-\frac{g(ib)-g(-ib)}{2ib}\right|
+\le\sup_{|z|=1}|g''(z)|\int|K_{x,b}|\,d\mu
+\le\|g''\|_{\mathbb D}.
+$$
+
+Finally $g'$ is continuous on the closed interval, and the fixed slope is finite since $b>0$. Letting $x$ tend to either endpoint proves the assertion at $x=\pm1$. No boundary Poisson formula at $t=\pm1$ is required. The kernel of Lemma 9.2 already includes $b=1$, so this argument applies directly to the pair $(i,-i)$ as well. $\square$
+
+**Lemma 9.4 (Horizontal displacement of a conjugate-pair slope).** For every admissible $a,b$ of Definition 9.1 and every entire $g$,
+
+$$
+|S_{a,b}(g)-S_{0,b}(g)|\le|a|\,\|g''\|_{\mathbb D}.
+$$
+
+Stance: repo-derived.
+
+**Proof.** For real $s$ between $0$ and $a$, set $F(s)=[g(s+ib)-g(s-ib)]/(2ib)$. Since $g$ is entire, differentiation in $s$ and then integration on the vertical segment give
+
+$$
+F'(s)=\frac{g'(s+ib)-g'(s-ib)}{2ib}
+=\frac1{2b}\int_{-b}^b g''(s+it)\,dt.
+$$
+
+Every point of this segment lies in the closed disk: $s^2+t^2\le a^2+b^2\le1$. Thus $|F'(s)|\le\|g''\|_{\mathbb D}$. Integrating on the segment from $0$ to $a$, with its orientation when $a<0$, proves the bound. All segment endpoints are included by continuity. $\square$
+
+**Theorem 9.5 (Complete simple-conjugate-pair classification).** For every real $a,b$ with $b>0$ and $a^2+b^2\le1$, every $g\in\mathscr E_2(\mathbb D)$ and every real $x\in[-1,1]$,
+
+$$
+|g'(x)-(I_{a,b}g)'(x)|\le1+|a|.
+$$
+
+The exact original entire-function uniform supremum is
+
+$$
+E(a,b)=1+|a|=\frac12\|p_{a,b}'\|_{[-1,1]}.
+$$
+
+Consequently the equality region for equation (36) of Ostrovskii–Shcherbakov in the simple two-node case $(n,k)=(2,1)$ is the whole admissible upper closed half-disk $\{(a,b):b>0,\ a^2+b^2\le1\}$. In particular every nonreal unit-circle conjugate pair is included. Stance: repo-derived.
+
+**Proof.** Admissibility implies $0<b\le1$, so Lemmas 9.3 and 9.4 yield
+
+$$
+\begin{aligned}
+|g'(x)-S_{a,b}(g)|
+&\le|g'(x)-S_{0,b}(g)|+|S_{0,b}(g)-S_{a,b}(g)|\\
+&\le(1+|a|)\|g''\|_{\mathbb D}\le1+|a|.
+\end{aligned}
+$$
+
+This holds for each actual entire $g$ and each $x$, hence bounds the two suprema in Definition 9.1 without exchanging a limit with either supremum. For the reverse inequality take the actual entire quadratic $g_0(z)=z^2/2$. It has $g_0''=1$, and
+
+$$
+S_{a,b}(g_0)=\frac{(a+ib)^2-(a-ib)^2}{4ib}=a,\qquad
+T_{a,b,x}(g_0)=x-a.
+$$
+
+Its maximum absolute error is $1+|a|$, attained at $x=-1$ when $a\ge0$ and at $x=1$ when $a\le0$. At $a=0$ both endpoints attain it. Finally $p_{a,b}(z)=z^2-2az+a^2+b^2$, so $p_{a,b}'(x)/2=x-a$ and its half-norm has exactly that value. The proof used only $a^2+b^2\le1$ throughout, including equality, and never identified the two distinct nodes. $\square$
+
+## 10. Mathematical correspondence and remaining pointwise questions
+
+**Remark 10.1 (Inputs and the added inference).** The source correspondence is as follows.
+
+| Mathematical input | Exact role |
+| --- | --- |
+| Ostrovskii–Shcherbakov, [arXiv:2508.13554v2, Section 6.2, Conjecture 6.3, equation (36)](https://arxiv.org/html/2508.13554v2#S6.SS2) | The entire complex-valued class, the closed disk, the real interval, the actual Lagrange interpolant, and the proposed uniform identity. Definition 9.1 specializes those objects with $n=2$, $k=1$ and two distinct nodes. The right side of (36) is $\|p_{a,b}'\|_I/2=1+|a|$. |
+| The classical disk Poisson formula, equivalently the geometric Fourier expansion of $P_t$ | Only the boundary representation of $h(t)$ for $|t|<1$ in Lemma 9.3. Its needed scalar moments and convergence are derived there. The usual Poisson kernel is also the one defined in Mathlib's [Analysis/Complex/Poisson](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/Complex/Poisson.lean). |
+| The fundamental theorem of calculus for holomorphic functions along segments, Cauchy's coefficient estimate, geometric-series integration, and the integral triangle inequality | The slope identities, passage through Taylor series, elementary kernel bounds, and norm control in Lemmas 9.2–9.4. None of these classical inputs supplies the asserted interpolation bound by itself. |
+| Theorems 4.1 and 5.1, Remark 4.4, and Propositions 8.2–8.4 with Corollary 8.5 | The exact all-degree Schur-ratio regions, the $73/60$ refutation, and the quartic pointwise separation, respectively. Their existing hypotheses and conclusions are retained; they are not premises of the uniform upper bound. |
+
+The added mathematical inference is the signed boundary kernel $K_{x,b}$ with an explicitly bounded negative part on the whole real interval, combined with the displacement estimate for the actual slope. In particular Lemma 9.3 applies to the full entire-function class, with arbitrary complex coefficients. Its proof does not infer a norm estimate for that class from individual monomial estimates.
+
+**Remark 10.2 (Pointwise and uniform statements have different scopes).** For $0<d\le1/2$, the grid of Section 8 has $a=1-d$, $b=\sqrt3\,d$. Theorem 9.5 therefore gives the exact uniform value
+
+$$
+E(1-d,\sqrt3\,d)=2-d,
+$$
+
+attained by the quadratic at $x=-1$. On the identical actual grid, Proposition 8.2 and Corollary 8.5 still give
+
+$$
+\sup_{t\ge2}|L_d(m_t)|=d,
+\qquad
+\sup_{g\in\mathscr E_2(\mathbb D)}|L_d(g)|
+\ge d\sqrt{1+d^4/9}>d,
+\qquad 1\notin\mathcal K_d.
+$$
+
+This pointwise strict inequality at $x=1$ is compatible with the uniform value $2-d$; it neither supplies nor refutes the uniform upper bound. Likewise Remark 4.4 remains a refutation of Conjecture 6.2 with value $73/60$ at its stated shifted grid. The sector classification of Theorem 4.1 remains an all-monomial statement, not a characterization of the uniform equality region of Theorem 9.5.
+
+The source's Section 6.3, Proposition 6.2 asserts monomial maximization for a simple grid and a fixed point, and uses a compactness argument followed by an extreme-point assertion. The pointwise separation of Section 8 excludes that proposition on its displayed grids. Theorem 9.5 instead proves the analytic form of equation (36) directly; no compactness, extreme-point description, or asserted reduction to monomials from that section is a premise. The real-grid results of Kallioniemi, Howell and Shadrin, discussed in the source's Section 6.1 and in Remark 4.2, concern real interpolation nodes and are not premises for these nonreal pairs.
+
+**Remark 10.3 (Multiplicity and parameter boundaries).** A pair $(a+ib,a-ib)$ with $b>0$ satisfies the source's Definition 6.1 directly: each nonreal conjugate occurs once, and each real number has multiplicity zero. This fact does not identify arbitrary lists satisfying conjugate membership with lists having equal multiplicities for nonreal conjugates. Conjugate membership alone imposes no such multiplicity equality; the two-node simple case has no multiplicity ambiguity.
+
+The condition $b=0$ is outside Definition 9.1 and Theorem 9.5, irrespective of any confluent convention used for separate results on doubled real nodes. The classification includes all admissible points with $b>0$, so there is no remaining admissible subregion of simple pairs requiring negative witnesses. The cases $k=0$, larger numbers of nodes, and general grids in the original all-$n$, all-$k$ Conjecture 6.3 are not settled by this two-node derivative theorem.
+
+**Open question 10.4 (Exact pointwise analytic error).** For each admissible $a,b$ and each fixed $x\in[-1,1]$, determine
+
+$$
+\sup_{g\in\mathscr E_2(\mathbb D)}
+\left|g'(x)-\frac{g(a+ib)-g(a-ib)}{2ib}\right|,
+$$
+
+and hence the exact analytic Kallioniemi set of that pair. Theorem 9.5 determines the supremum of this quantity over the interval and supplies a quadratic attaining it at a far endpoint, but does not determine every pointwise value. In particular the exact pointwise supremum at $x=1$ on the grids $W_d$ is not identified by the quartic lower bound of Section 8.
+
+## 追加锚（本行以下为增补区）

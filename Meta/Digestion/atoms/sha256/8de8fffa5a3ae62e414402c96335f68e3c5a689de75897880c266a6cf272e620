@@ -1,0 +1,127 @@
+**Theorem 270.3 (uniform transported propagation and multiplication).**
+There are isometric embeddings
+
+$$
+\iota_n:L^2(\mu_n)\longrightarrow
+   \mathscr X:=\mathbb R\oplus\mathscr H,\qquad
+\iota:\mathscr G\longrightarrow\mathscr X,
+\tag{270.6}
+$$
+
+onto $\mathbb R\oplus\mathscr E_n$ and
+$\mathscr X_0:=\mathbb R\oplus\mathscr K$, respectively, where
+$\mathscr E_n$ is the space of actual edges extended by zero.
+They satisfy
+
+$$
+\iota_nf_{u,n}=(c+\langle v_n,z\rangle,\Sigma_n^{1/2}z)
+ \longrightarrow
+\iota F_u=(c+\langle v,z\rangle,\Sigma^{1/2}z).
+\tag{270.7}
+$$
+
+Extend operators to $\mathscr X$ by the adjoints of these embeddings:
+
+$$
+\begin{aligned}
+A_n(s)&=\iota_nS_n(s)\iota_n^*,&
+ A(s)&=\iota T(s)\iota^*,\\
+D_{u,n}&=\iota_n\mathsf M_{f_{u,n}}\iota_n^*,&
+ D_u&=\iota\mathsf M_{F_u}\iota^*.
+\end{aligned}
+\tag{270.8}
+$$
+
+For every $x\in\mathscr X_0$,
+
+$$
+\sup_{s\ge0}\|A_n(s)x-A(s)x\|\longrightarrow0,
+\qquad \|D_{u,n}x-D_ux\|\longrightarrow0.
+\tag{270.9}
+$$
+
+Both convergences are uniform as $x$ ranges over any compact subset
+of $\mathscr X_0$. They also apply to compatible vectors $x_n\to x$
+by the common contraction and multiplication bounds.
+No operator norm convergence of $A_n(0)$ on all of $\mathscr X$ is
+asserted.
+
+*Proof.* Let $\Pi_n$ subtract the $\mu_n$-mean and $\Pi$ subtract
+the $M$-mean. The polar decompositions supplied in IV, Theorems 111.3–111.4
+are $C_n=\Pi_nJ_n=W_n\Sigma_n^{1/2}$ and
+$C=\Pi J=W\Sigma^{1/2}$. Here $W_n$ is unitary from
+$\mathscr E_n$ onto the finite mean-zero node space, and $W$ is
+unitary from $\mathscr K$ onto $\mathbf1^\perp\subset\mathscr G$.
+Define
+
+$$
+\iota_nf=(\langle\mathbf1,f\rangle_{\mu_n},W_n^*\Pi_nf),\qquad
+\iota F=(\langle\mathbf1,F\rangle_M,W^*\Pi F).
+\tag{270.10}
+$$
+
+These are the claimed isometries, also when the finite centered space
+is zero. IV, Theorem 98.2 gives $v_n\to v$ and $\Sigma_n\to\Sigma$
+in norm. Continuous square-root calculus proves (270.7).
+For $s\ge0$ set
+
+$$
+g_s(x)=\begin{cases}\sqrt{x}e^{-s/x},&x>0,\\0,&x=0.\end{cases}
+\qquad g_0(x)=\sqrt{x}.
+\tag{270.11}
+$$
+
+The exact original generator correspondence in IV, (111.15) gives
+
+$$
+\begin{aligned}
+\iota_nS_n(s)f_{u,n}
+  &=(c+\langle v_n,z\rangle,g_s(\Sigma_n)z),\\
+\iota T(s)F_u
+  &=(c+\langle v,z\rangle,g_s(\Sigma)z).
+\end{aligned}
+\tag{270.12}
+$$
+
+This includes $s=0$; it does not replace the zero-time edge identity
+by a positive-time limiting projection. Choose $M_*>0$ bounding all
+$\|\Sigma_n\|$ and $\|\Sigma\|$. On $[0,M_*]$,
+
+$$
+\|g_s-g_t\|_\infty\le\sqrt{|s-t|},\qquad
+\|g_s\|_\infty\le\sqrt{M_*}e^{-s/M_*}.
+\tag{270.13}
+$$
+
+For $t=s+d$, the first bound follows from
+$\sqrt{x}e^{-s/x}(1-e^{-d/x})\le
+\min(\sqrt{x},d/\sqrt{x})\le\sqrt d$; symmetry handles $t<s$.
+The second bound follows by monotonicity in $x$.
+For each fixed $s$, continuous functional calculus and polynomial
+approximation give $g_s(\Sigma_n)\to g_s(\Sigma)$ in norm.
+A finite time net using the first bound, followed by the second bound
+for large $s$, proves this uniformly over $s\ge0$.
+
+The operators $A_n(s),A(s)$ have norm at most one. By (270.7) and
+(270.12), (270.9)'s first limit holds on the dense subset
+$\{\iota F_u:u=(c,z),\ z\text{ finite}\}$ of $\mathscr X_0$.
+Indeed replacing $\iota F_u$ by $\iota_nf_{u,n}$ in the finite
+term costs at most their norm difference, uniformly in $s$.
+Density follows from density of the cylinder functions, already
+supplied by IV, Theorem 111.2. Contraction extends the limit to every
+$x\in\mathscr X_0$.
+
+For multiplication, $\|D_{u,n}\|,\|D_u\|\le B_u$. On the same
+dense subset, (270.4) and (270.7) give
+$D_{u,n}\iota_nf_{u',n}\to D_u\iota F_{u'}$.
+Replacing the input by $\iota F_{u'}$ costs at most $B_u$ times its
+norm discrepancy. Density proves the second limit in (270.9).
+A finite norm net in a compact input set and the uniform operator
+bounds prove both compact-uniform assertions. Replacing $x$ by
+$x_n$ adds at most $\|x_n-x\|$ or $B_u\|x_n-x\|$.
+The scalar calculus and polar decomposition are mature intermediate
+tools; see Teschl, [*Mathematical Methods in Quantum Mechanics*, online 2009 edition,
+§3.1, Theorem 3.7 and the functional calculus preceding it](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf).
+Their use here keeps the exact actual-node covariance and the original
+factor $N_n$ in the clock. $\square$
+

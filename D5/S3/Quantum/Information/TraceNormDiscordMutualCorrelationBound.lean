@@ -148,13 +148,13 @@ private lemma plane_frame (O : Matrix.unitaryGroup (Fin 2) ℝ) :
     Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons, zero_mul,
     add_zero] using hh
 
-private lemma spin_hermitian (c : Fin 3 → ℝ) : (spin c).IsHermitian := by
+lemma spin_hermitian (c : Fin 3 → ℝ) : (spin c).IsHermitian := by
   change (spin c)ᴴ = spin c
   simp only [spin, sigma_succ, conjTranspose_sum, conjTranspose_smul,
     Complex.star_def, Complex.conj_ofReal,
     (D5.S3.Quantum.QuantumChannels.QubitWassersteinCouplings.pauli_hermitian _).eq]
 
-private lemma spin_anticommutator (c d : Fin 3 → ℝ) :
+lemma spin_anticommutator (c d : Fin 3 → ℝ) :
     spin c * spin d + spin d * spin c = (2 * (c ⬝ᵥ d) : ℝ) • (1 : Qubit) := by
   ext i j
   fin_cases i <;> fin_cases j
@@ -165,7 +165,7 @@ private lemma spin_anticommutator (c d : Fin 3 → ℝ) :
   all_goals simp only [Complex.I_sq]
   all_goals ring
 
-private lemma spin_square (c : Fin 3 → ℝ) :
+lemma spin_square (c : Fin 3 → ℝ) :
     spin c * spin c = (vlen c ^ 2 : ℝ) • (1 : Qubit) := by
   have hh := spin_anticommutator c c
   rw [← vlen_sq] at hh

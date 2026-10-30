@@ -1,0 +1,82 @@
+**Theorem 64.1 (Negative response for $b\ge24$).** Every complete parent world with $b\ge24$ has its literal fifth-M response $p(W)<0$.
+
+**Proof.** Positivity (63.5) justifies division by $\Pi$. Use the following explicit interpolation circuit, with local symbols $D_i^{\rm int}$ distinct from $D_{\rm par}$:
+
+$$
+\begin{aligned}
+D_0^{\rm int}&=-120\Pi+3S\mathcal J\mathcal N,&
+D_1^{\rm int}&=3S\mathcal N b,\\
+D_2^{\rm int}&=3(49b+34)\mathcal J\mathcal N-54Ub(\mathcal J+\mathcal N),&
+D_3^{\rm int}&=3S\mathcal J b,\\
+B_5^{\rm int}&=-4D_0^{\rm int}+15D_1^{\rm int}-20D_2^{\rm int}+10D_3^{\rm int},\\
+P_p^{\rm int}&=-bD_0^{\rm int}+(bU+\mathcal N)B_5^{\rm int}.
+\end{aligned}
+\tag{64.1}
+$$
+
+Precisely $D_i^{\rm int}=\widehat C_i$ for $0\le i\le3$, $B_5^{\rm int}=\widehat B_5$ and $P_p^{\rm int}=P_p$ of Definition 2.1, because $\widehat D=5\Pi$. Substituting (63.3) into the samples (48.3) yields
+
+$$
+d=-\frac{D_0^{\rm int}}{5\Pi},\qquad
+ g(i)=\frac{D_i^{\rm int}}{5\Pi}\ (0\le i\le3),\qquad
+ g(5)=\frac{B_5^{\rm int}}{5\Pi},\qquad
+ p(W)=\frac{P_p^{\rm int}}{5b\Pi}.
+\tag{64.2}
+$$
+
+The clock-five interpolation weights are literally $(-4,15,-20,10)$ from (48.5), and the trace is $U+n=(bU+\mathcal N)/b$. Thus (64.2) computes the original response of the same whole gain, rather than a shifted-clock or independently sampled model.
+
+Write $P_p^{\rm int}(24+u,r)=\sum_{k=0}^7q_k(r)u^k$. The correct uniform degree bound in $r$ is six. In fact the high-degree part of this numerator is exactly
+
+$$
+[r^5]P_p^{\rm int}=96(2b+3)(8b-1),\qquad
+[r^6]P_p^{\rm int}=-96(8b-1).
+\tag{64.3}
+$$
+
+In particular a degree-four Bernstein expansion of the full $q_0,q_1,q_2$ is unavailable. To distinguish a degree-four truncation from the full coefficient, set $\widetilde q_k=\sum_{i=0}^4[r^i]q_k\,r^i$. Expansion of (64.1) gives
+
+$$
+q_0-\widetilde q_0=935136r^5-18336r^6,\quad
+q_1-\widetilde q_1=75840r^5-768r^6,\quad
+q_2-\widetilde q_2=1536r^5;\qquad q_k=\widetilde q_k\ (k\ge3).
+\tag{64.4}
+$$
+
+Here are both the degree-four truncation maxima and the valid full degree-six Bernstein maxima, computed by (62.4):
+
+| $k$ | $\max_j B_j^{(4)}(\widetilde q_k)$ | $\max_j B_j^{(6)}(q_k)$ |
+| --- | ---: | ---: |
+| $0$ | $-1071543670080$ | $-1071542753280$ |
+| $1$ | $-308693734464$ | $-308693659392$ |
+| $2$ | $-38126986656$ | $-38126985120$ |
+| $3$ | $-2617160436$ | $-2617160436$ |
+| $4$ | $-107831886$ | $-107831886$ |
+| $5$ | $-2666766$ | $-2666766$ |
+| $6$ | $-36654$ | $-36654$ |
+| $7$ | $-216$ | $-216$ |
+
+The complete degree-six coefficient vectors, making the sign certificate explicit, are
+
+$$
+\begin{aligned}
+q_0:\quad &(-1429603540992,-1368180995904,-6536864982144/5,\\
+&-6236219379768/5,-5939280021888/5,-1129269632256,-1071542753280),\\
+q_1:\quad &(-398205517824,-382920178128,-1838838438848/5,\\
+&-1763793047784/5,-1689516284352/5,-323211681024,-308693659392),\\
+q_2:\quad &(-47450375424,-45865673021,-221462179566/5,\\
+&-427313143281/10,-41182947938,-39647965604,-38126985120),\\
+q_3:\quad &(-3135061440,-6094902039/2,-14801672339/5,\\
+&-57474591417/20,-13938269829/5,-2702125141,-2617160436),\\
+q_4:\quad &(-124013550,-242578899/2,-592879842/5,-1158732891/10,\\
+&-113181594,-221002131/2,-107831886),\\
+q_5:\quad &(-2936403,-5782471/2,-14230796/5,-28011741/10,\\
+&-13781401/5,-5422955/2,-2666766),\\
+q_6:\quad &(-38526,-38214,-37902,-37590,-37278,-36966,-36654),\\
+q_7:\quad &(-216,-216,-216,-216,-216,-216,-216).
+\end{aligned}
+\tag{64.5}
+$$
+
+To verify these entries using only the displayed circuit, expand (64.1), substitute $b=24+u$, and apply $B_j^{(6)}(q_k)=\sum_{i=0}^j\binom ji[r^iu^k]P_p^{\rm int}(24+u,r)/\binom6i$. All seven coefficients in each row are strictly negative, so each $q_k(r)<0$ on $[0,1]$. For $u\ge0$ the sum $\sum q_k(r)u^k$ is strictly negative, already because $q_0<0$. The denominator $5b\Pi$ in (64.2) is positive by (63.5). Therefore $p(W)<0$ for all $b\ge24$. $\square$
+

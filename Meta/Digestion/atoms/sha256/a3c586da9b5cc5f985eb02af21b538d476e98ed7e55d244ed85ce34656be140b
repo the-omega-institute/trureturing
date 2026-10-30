@@ -1,0 +1,66 @@
+**Definition 32.1 (Suppliers and the unresolved witness system).**
+The finite restriction (31.1) is ordinary model-specific
+repository-derived synthesis (`repo-derived`). Definitions 1.1–1.3
+and Theorem 2.1 supply the full original model and parent; Theorem
+8.1 supplies the exact algebraic $p_J$, its root box and contraction
+bounds; Theorem 12.3 supplies the zero-safe unique whole-world
+lifts. Theorem 17.1 supplies the same-child terminal-pair equivalence
+with all pair reuse permitted. Equations (20.1)–(20.6), (21.4),
+Theorems 4.2 and 22.1, and the coefficient table in Definition 24.1
+supply the source elimination, forced base-factor lifts and complete
+singular sources. Their response-rectangle conclusions are not
+extended to other responses; (31.1) uses their polynomial identities
+and singular formulas with the new certificate of Section 30.
+
+Sylvester resultants and subresultants are the standard tools cited
+in Sections 17 and 25, especially Cox–Little–O'Shea,
+*[Ideals, Varieties, and Algorithms](https://doi.org/10.1007/978-3-319-16721-3)*,
+Chapter 3. Rouché's theorem is used only within the concrete disk
+certificate (30.3). Rational univariate representation and separating
+rational images have the literature background of Fabrice Rouillier,
+*[Solving Zero-Dimensional Systems Through the Rational Univariate Representation](https://doi.org/10.1007/s002000050114)*,
+and the parameter-dependent treatment by Wang, Wei, Xiao and Zheng,
+[DOI 10.1145/3476446.3535496](https://doi.org/10.1145/3476446.3535496).
+These supply general methods, not a FIB-specific collision conclusion.
+The abstract real-closed-field decidability and algebraic-witness
+transfer of [the fourth relation volume](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md),
+Corollary 9.4, also do not imply (31.1) by themselves. No global
+priority or exhaustive literature claim is attached to this synthesis.
+
+For a candidate $v$, the remaining joint obligation is the existence
+of four labeled strict sources $W_{J0},W_{J1},W_{M0},W_{M1}$, with
+labels allowed to coincide across the two pairs, all reconstructed
+by (12.5)–(12.6), satisfying simultaneously
+
+$$
+\begin{gathered}
+0<r_{Fa}<1,\quad b_{Fa}>0,\quad
+\mathsf S_{p_J}(r_{Fa},b_{Fa})=0,\quad
+p(W_{Fa})=p_J,\quad u_M(W_{Fa})=v
+\quad(F\in\{J,M\},\ a\in\{0,1\}),\\
+f_{MJ}(W_{J0})=f_{MJ}(W_{J1}),\quad W_{J0}\ne W_{J1},\\
+f_{MM}(W_{M0})=f_{MM}(W_{M1}),\quad W_{M0}\ne W_{M1}.
+\end{gathered}
+\tag{32.1}
+$$
+
+These are equalities and legalities of complete worlds in one entire
+child, not marginal feasibility of projections. Determinant roots
+may be extraneous; no root enumeration, feasible common child,
+existence or absence of either pair is asserted for any candidate.
+Finding such a joint witness at some candidate, together with the
+inherited sixth-J child of Theorem 8.1, would give the local fifth-M
+$L_2$ at $p_J$ by Theorem 17.1. Exclusion of (32.1) at every candidate
+would exclude every sixth-M $L_1$ at that $p_J$. Both alternatives
+remain unresolved. The exact four-world child of Theorem 23.1
+retains its own response and does not classify other responses.
+
+Other fifth responses, earlier ancestors, same-parent $L_3$, root
+$L_7$, unrestricted cubic eight-versus-nine recovery or impossibility,
+and full-original-domain nine-read sufficiency remain unresolved.
+The finite necessary list implies neither minimax depth, a uniform
+decision strategy nor a global lower or upper bound. No continuity,
+measurability, computability or finite-description condition on
+witnesses or strategies is imposed, and no physical realization is
+inferred from these algebraic conditions.
+

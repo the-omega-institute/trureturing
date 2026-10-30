@@ -6,7 +6,31 @@ The same literal strict Euler inventory has a uniform square-root discrepancy fr
 
 For a real t>1, set lambda(t)=1/(t*log(t)). A positive natural integer U has the strict inventory law when, for every natural prime q, U.factorization(q)=optimalLayerCount(lambda(t),q). The count includes every positive natural exponent k for which lambda(t) is strictly less than goldenLayerMarginal(q,k). Equal prices are excluded. The integer U=1 and empty exponent prefixes remain in the domain. The simultaneous positive integer specification supplies this law for every t>1.
 
-**Theorem 1.1 (The finite first-prime and higher-valuation comparison).**
+**Theorem 1.1 (First prime layer and truncated higher mass).**
+
+Lean statement: `D5/S3/Arith/Robin/EulerLayerInventoryGrowth.log_factorization_split`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/EulerLayerInventoryGrowth.log_factorization_split` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive natural U, log(U) is the sum of log(p) over its prime factors plus Q(U), the sum of Nat(factorization(p)-1)*log(p) over the same finite support. Each occupied valuation is at least one, so natural subtraction agrees there with subtraction after casting.
+
+**Theorem 1.2 (Positive divisibility increases higher mass).**
+
+Lean statement: `D5/S3/Arith/Robin/EulerLayerInventoryGrowth.higher_layer_mass_mono`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/EulerLayerInventoryGrowth.higher_layer_mass_mono` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If positive natural A divides positive natural B, then Q(A)<=Q(B). Divisibility increases each valuation and includes the prime support of A in that of B. Natural truncated subtraction is monotone, log(p) is nonnegative, and the additional finite summands are nonnegative. A prime absent from A has Nat(0-1)=0; no negative first-layer term is introduced on extending the support.
+
+**Theorem 1.3 (The finite first-prime and higher-valuation comparison).**
 
 Lean statement: `D5/S3/Arith/Robin/EulerLayerInventoryGrowth.strict_inventory_chebyshev_bounds`
 
@@ -22,7 +46,7 @@ The first Euler marginal equals log(1+1/q)/log(q). Its upper bound excludes q>=t
 
 For every active positive exponent k, the existing geometric marginal bound gives q^k*log(q)<t*log(t), hence q^k<Y. For each prime dividing U, its full valuation a consequently satisfies a<=Nat.log(q,floor(Y)). The sum of (a-1)*log(q) is bounded by the sum of (Nat.log(q,floor(Y))-1)*log(q) over all primes up to floor(Y). The exact Chebyshev prime-log identities identify the latter with psi(Y)-theta(Y). Finally log(U) is the first-prime sum plus this full excess. Actual activation clocks are never identified with q^k.
 
-**Theorem 1.2 (The full actual higher inventory has a finite square-root envelope).**
+**Theorem 1.4 (The full actual higher inventory has a finite square-root envelope).**
 
 Lean statement: `D5/S3/Arith/Robin/EulerLayerInventoryGrowth.strict_inventory_higher_layer_bound`
 
@@ -36,7 +60,7 @@ For every real t>=2 and every positive natural U satisfying the same literal str
 
 An active exponent j satisfies q^j*log(q)<t*log(t), hence q^j<j*t. For an actual valuation a>=2, put k=floor(a/2). The actual layer 2*k is active and 2*k<=2^k<=q^k, so q^k<t. Therefore a-1<=2*Nat.log(q,floor(t)). The same prime also satisfies q^2<2*t from its actual second layer. Splitting Nat.log into Nat.log-1 and one charges the full same-prime mass to psi(t)-theta(t) and theta(sqrt(2*t)). No exponent is dropped and equality prices stay excluded.
 
-**Theorem 1.3 (A single square-root error bound for every real clock and strict integer).**
+**Theorem 1.5 (A single square-root error bound for every real clock and strict integer).**
 
 Lean statement: `D5/S3/Arith/Robin/EulerLayerInventoryGrowth.strict_inventory_sqrt_discrepancy`
 
@@ -50,7 +74,7 @@ There is one real constant C>0 such that, for every real t>=2 and every positive
 
 Reuse the existing first-layer comparison with its full width-one boundary cost log(t), and the new complete higher-layer envelope. Mathlib supplies theta(y)<=log(4)*y and psi(t)-theta(t)<=c*sqrt(t). The elementary bounds log(t)<=2*sqrt(t) and sqrt(2*t)<=2*sqrt(t) yield one choice C=3+4*log(4)+abs(c). The proof assumes no RH, phase-density estimate, short-interval drift or signed zeta-zero control, and does not assert the sharper paper asymptotic with leading coefficient sqrt(2)-1.
 
-**Theorem 1.4 (A common asymptotic threshold for every actual integer).**
+**Theorem 1.6 (A common asymptotic threshold for every actual integer).**
 
 Lean statement: `D5/S3/Arith/Robin/EulerLayerInventoryGrowth.strict_inventory_uniform_growth`
 
@@ -68,6 +92,8 @@ For a nonlinear winner in the original 5040*p source family with the same U, t=l
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/Robin/EulerLayerInventoryGrowth.higher_layer_mass_mono`
+- Truth anchor: `D5/S3/Arith/Robin/EulerLayerInventoryGrowth.log_factorization_split`
 - Truth anchor: `D5/S3/Arith/Robin/EulerLayerInventoryGrowth.strict_inventory_chebyshev_bounds`
 - Truth anchor: `D5/S3/Arith/Robin/EulerLayerInventoryGrowth.strict_inventory_higher_layer_bound`
 - Truth anchor: `D5/S3/Arith/Robin/EulerLayerInventoryGrowth.strict_inventory_sqrt_discrepancy`

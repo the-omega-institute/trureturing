@@ -1,0 +1,50 @@
+**定理 27.3（三端口完整计数与可靠增长的付费应用）。** 在引文 27.2 的固定 $k=3$ 计数供应前提下，约定 27.1 的网络可零新增变量编译成宽度至多三的 CNF $F_G$，逐完整赋值保持解。其精确计数、判空和一条无回溯完整见证的取得均有
+
+$$
+\operatorname{poly}(N)\,2^{O(\rho(v))}
+\tag{60}
+$$
+
+位时间和 $\operatorname{poly}(N)$ 空间上界。增长含最终原网络验证，满足定义 26.1 的非空保持、rank 和成功解码三个数学义务；这里取得费用是 (60)，尚未声称定义 26.1 的多项式时间前提。
+
+证明。对一个 $d$ 元局部表 $R$ 的每个禁止元组 $a$ 加入
+
+$$
+C_a=\bigvee_{i=1}^{d}\ell_{a_i}(s_i),\qquad
+\ell_0(t)=t,\quad\ell_1(t)=\neg t.
+\tag{61}
+$$
+
+在任意全局赋值上，$C_a$ 假恰当且仅当其有序端口取值等于 $a$；全取合取恰为属于 $R$。若端口重复而 $a$ 对别名不相容，(61) 是恒真式，删除即可；相容的禁止行仍精确排除该行。不能将各端口独立计数。$d=0$ 时，合法空元组不加子句，禁止空元组加空子句。钉值加单位子句。每三端口表至多八子句；总计 $m\le8q+$钉值条数，变量仍为 $V$，宽度不超过三。譬如本卷两种表给
+
+$$
+\begin{aligned}
+E(x,y,z)&\equiv(x\lor y\lor z)\land(\neg x\lor\neg y)
+ \land(\neg x\lor\neg z)\land(\neg y\lor\neg z),\\
+N(x,y,z)&\equiv(\neg x\lor\neg z)\land(\neg y\lor\neg z)
+ \land(x\lor y\lor z).
+\end{aligned}
+\tag{62}
+$$
+
+这些式子在别名代入后仍成立。由 (59)，规范长度为 $\operatorname{poly}(N)$，编译和读写也为多项式，故一次计数满足 (60)。只有在名字、钉值等也采用 $\operatorname{poly}(v+q+1)$ 长度的规范描述时，才能将前因子简写为 $(v+q+1)^{O(1)}$。一般输入必须保留 $N$。对高元 succinct 关系，禁止行最多 $2^d$，不获本定理的常数编译费用。
+
+自归约使用 [Cook 文献注 §§1–2、7–9](../../../Library/ConceptDynamics/cook2006pversusnp.md) 的既有机制；原始决定到搜索供应见 [Cook 原文 PDF 第 5 页](https://www.claymath.org/wp-content/uploads/2022/06/pvsnp.pdf)。本应用的精确对应如下。对 $|p|=t\le v$，令
+
+$$
+Z_G(p)=\#\{w\in\{0,1\}^{v-t}:pw\in\operatorname{Sol}(G)\}.
+\quad Z_G(p)=Z_G(p0)+Z_G(p1)\quad(t<v).
+\tag{63}
+$$
+
+先取得 $Z_G(\varepsilon)$；零时拒绝。有解时每步只数 $Z_G(p0)$，正则添零，否则添一。当前正计数和 (63) 保证所选子前缀仍正。把前缀钉成单位子句后仍在原 $v$ 变量上计数，钉住的位有唯一取值，所得完整计数恰为 (63)，不是多乘 $2^t$。单位子句不增宽；每次规范输入长度 $L_p\le\operatorname{poly}(N)$。
+
+取 $O=(G,p)$、$W_G(O)=\{pw\in\operatorname{Sol}(G)\}$、$\Phi=v-|p|$。每步 rank 减一，恰 $v$ 步到完整 $p$；终端 $Z_G(p)=\mathbf1_{p\in\operatorname{Sol}(G)}$，所以非空终端是单点 $\{p\}$，解码 $d(G,O)=p$ 满足 (56)。最后逐原表和钉值验证并写出 $v$ 位。总计至多 $v+1$ 次计数，包含空前缀的一次；$v=0$ 时此一次计数与空赋值验证已经终结。若 $T_* =\max_{|p|\le v}T_3(L_p,v)$，则
+
+$$
+T_{\rm grow}\le(v+1)T_*+\operatorname{poly}(N).
+\tag{64}
+$$
+
+编译、每次输入构造、计数输出读取、状态更新、解码及原验证均在右侧；所有次数和表示受 $N$ 的多项式控制。顺序调用复用工作空间，只保存前缀及常数个至多 $v+1$ 位计数，故空间仍多项式。指数多地址的语义完成表未被一次性取得。∎
+

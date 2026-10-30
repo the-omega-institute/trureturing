@@ -1,0 +1,68 @@
+**Theorem 144.1 (a common half-endpoint lemma).** For $t\in J_1$ and either
+$(\nu,\kappa)=(7/11,123/200)$ or $(2/3,31/50)$, every real unit direction satisfies
+
+$$
+C_{\nu,\kappa t/(1+t)}(q/2)\succ0.
+\tag{U.193}
+$$
+
+Proof. Set $b=\kappa t/(1+t)$ and $z=m/q\geq1$. The bounds $t\leq5/8$, $\nu\geq7/11$, $\kappa\leq31/50$ and $t/(1+t)\geq2/7$ give
+
+$$
+\begin{gathered}
+bT_\nu=\kappa\left[(1+t)-\frac{\nu t}{1+t}\right]
+\leq\frac{31}{50}\left(\frac{13}{8}-\frac2{11}\right)
+=\frac{3937}{4400}<1,\\
+A_0=1-bT_\nu+b^2E_\nu>0,\qquad
+\frac{\operatorname{Tr}C_{\nu,b}(q/2)}q
+=(2-bT_\nu)z-1\geq1-bT_\nu>0.
+\end{gathered}
+\tag{U.194}
+$$
+
+At $m=q$ use $u=\pm e_2$. The two eigenvalues divided by $q$ are
+$1/2-\kappa t$ and $1/2-\kappa[1+(1-\nu)t]/(1+t)$. The first is at least $9/80$. The second has the following exact forms:
+
+| Parameters | Second normalized eigenvalue | Numerator at $t=21/50$ |
+| --- | --- | --- |
+| $\nu=7/11,\ \kappa=123/200$ | $(608t-253)/(2200(1+t))$ | $59/25$ |
+| $\nu=2/3,\ \kappa=31/50$ | $(22t-9)/(75(1+t))$ | $6/25$ |
+
+Both numerators increase with $t$, proving strict positivity at $z=1$. Now normalize the determinant:
+
+$$
+\begin{gathered}
+\mathcal D(z)=\frac{\det C_{\nu,b}(q/2)}{q^2}
+=A_0z^2+\left[\frac{bT_\nu-2}{2}+\frac{b^2\nu}{t}\right]z+\frac14,\\
+\mathcal D'(1)=1-\frac32bT_\nu+b^2(2E_\nu+\nu/t),\qquad
+(1+t)^2\mathcal D'(1)=c_0+c_1t+c_2t^2+c_3t^3,\\
+c_0=1-\frac{3\kappa}{2},\quad
+c_1=2-\frac{3\kappa}{2}(3-\nu)+\kappa^2(2-\nu),\\
+c_2=1-\frac{3\kappa}{2}(3-\nu)+2\kappa^2(2-\nu),\quad
+c_3=-\frac{3\kappa}{2}+2\kappa^2(1-\nu).
+\end{gathered}
+\tag{U.195}
+$$
+
+The complete rational coefficient tables are
+
+| Parameters | $c_0$ | $c_1$ | $c_2$ | $c_3$ |
+| --- | --- | --- | --- | --- |
+| $\nu=7/11,\ \kappa=123/200$ | $31/400$ | $29507/88000$ | $-6553/44000$ | $-71217/110000$ |
+| $\nu=2/3,\ \kappa=31/50$ | $7/100$ | $2569/7500$ | $-1087/7500$ | $-5053/7500$ |
+| Common lower coefficients | $7/100$ | $1/3$ | $-3/20$ | $-27/40$ |
+
+Since $t\geq0$, coefficientwise comparison therefore gives
+
+$$
+\begin{gathered}
+(1+t)^2\mathcal D'(1)\geq H_0(t):=
+\frac7{100}+\frac t3-\frac{3t^2}{20}-\frac{27t^3}{40},\\
+H_0''(t)=-\frac3{10}-\frac{81t}{20}\leq0,\qquad
+H_0(0)=\frac7{100},\qquad H_0(5/8)=\frac{16879}{307200}>0.
+\end{gathered}
+\tag{U.196}
+$$
+
+Concavity on $[0,5/8]$ proves $H_0>0$ everywhere in that interval, hence $\mathcal D'(1)>0$. Since $A_0>0$, the derivative $\mathcal D'(z)$ increases for $z\geq1$. The determinant is therefore strictly increasing from its positive value at $z=1$. Its positivity and (U.194) prove (U.193) for all $m\in[q,p]$ and all signs of the direction coordinates. $\square$
+

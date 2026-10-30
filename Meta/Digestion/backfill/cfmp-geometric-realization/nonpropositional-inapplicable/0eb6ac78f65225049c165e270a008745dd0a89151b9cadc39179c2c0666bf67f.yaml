@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0eb6ac78f65225049c165e270a008745dd0a89151b9cadc39179c2c0666bf67f
+  normalized_sha256: sha256:0eb6ac78f65225049c165e270a008745dd0a89151b9cadc39179c2c0666bf67f
+cas_ref: sha256:0eb6ac78f65225049c165e270a008745dd0a89151b9cadc39179c2c0666bf67f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: Defines the four-cycle incidence condition, with repeated global labels allowed.'
+    previous_atom_id: b3f57a96a4e82d374ab05d0ecf451a5dc31436c23b929f5b1921c8194aad7791
+    next_atom_id: ed281e48d27e4bedb10ace94fa2ffbf3bceb529f59652b8f7612d7c2b2d6de31

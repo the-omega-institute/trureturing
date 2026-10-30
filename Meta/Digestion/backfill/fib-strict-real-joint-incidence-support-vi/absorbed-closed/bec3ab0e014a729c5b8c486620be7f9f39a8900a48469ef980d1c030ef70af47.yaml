@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:bec3ab0e014a729c5b8c486620be7f9f39a8900a48469ef980d1c030ef70af47
+  normalized_sha256: sha256:bec3ab0e014a729c5b8c486620be7f9f39a8900a48469ef980d1c030ef70af47
+cas_ref: sha256:bec3ab0e014a729c5b8c486620be7f9f39a8900a48469ef980d1c030ef70af47
+coverage_gids:
+  - gid: D5/S3/Observer/CubicGain/ActualMinorLift.selected_source_normalized_lift
+    target_statement_id: sha256:973e392b96d1fe166d4d994cdc958fbe1fa2f2c837e6c23c1affd6d228e63022
+receipts:
+  unresolved_subitems: []

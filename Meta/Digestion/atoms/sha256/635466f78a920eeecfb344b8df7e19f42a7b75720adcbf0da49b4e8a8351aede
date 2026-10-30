@@ -1,0 +1,241 @@
+## 3. The actual retained comparison and its lower direction
+
+Proof of Theorem 2.2. At $\lambda=0$ use Native Green stability,
+§§15–18. The estimates below retain their continuous zero limits to
+give compact-parameter uniformity, without a separate critical-case
+derivation. Put $d\nu_*=f_*^2d\mu$ and use the exact transform
+of Native Green stability, (25.6)–(25.7):
+
+$$
+\begin{gathered}
+B_\epsilon[u]=\mathscr A[u]+\int D_\epsilon|u|^2d\nu_*,
+\quad D_\epsilon=g_{\mathrm c}(\Gamma-\Gamma_\epsilon),\\
+\mathcal W_\epsilon[u]=g_{\mathrm c}\int\Gamma_\epsilon|u|^2d\nu_*,
+\qquad
+q_{\epsilon,\lambda}[f]-E_*\|f\|^2
+     =B_\epsilon[f/f_*]-\lambda\mathcal W_\epsilon[f/f_*]/L^2.
+\end{gathered}
+\tag{3.1}
+$$
+
+Its all-angular inequality (25.10) says, for every $\eta>0$,
+
+$$
+\mathcal W_\epsilon[u]\le(\alpha/\pi^2+\eta)L^2B_\epsilon[u]
+                                      +C_\eta L\|f_*u\|^2.
+\tag{3.2}
+$$
+
+On each compact subthreshold parameter set a fixed shifted
+$q_{\epsilon,\lambda}$ norm is therefore uniformly equivalent to
+
+$$
+\mathcal N_\epsilon(f)^2=B_\epsilon[f/f_*]+\|f\|_2^2.
+\tag{3.3}
+$$
+
+For negative $\lambda$ the detuning improves the lower bound; (3.2)
+also supplies the upper equivalence on bounded parameter sets.
+Bounded sublevels are bounded in the compact critical completion.
+Pair against fixed punctured-core vectors, on whose supports the cap
+defect eventually vanishes. Positivity of the shifted form on $f-z$,
+followed by the supremum over this dense core, proves the limiting lower
+inequality. Diagonal core approximation proves recovery.
+Compact min-max gives convergence of the first two actual eigenvalues
+to those of $F$ and strong $L^2$ convergence of the positive normalized
+ground to $f_*$. Its simple first eigenvalue supplies a uniform positive
+first gap. This is the compact-subthreshold argument in Native Green
+stability, §25, with its full-angular remainder estimate; no equality
+gap is used.
+
+Construct a genuine global corrector before matching the cap. Set
+$F_0=(S_{D,\max}-E_*)\zeta$. By (1.6),
+$\langle F_0,f_*\rangle=Ka_*$. Hence
+$\mathsf Kf_*-a_*F_0$ is perpendicular to $f_*$. Apply the reduced
+inverse of $F-E_*$ to it, add $a_*\zeta$, and subtract its $f_*$
+component. The real result $V$ retains the original outer walls and
+satisfies
+
+$$
+\mathcal B(V)=a_*,\qquad \langle V,f_*\rangle=0,\qquad
+(\mathcal T-E_*)V=\mathsf Kf_*,
+\quad \mathcal T=L_A-g_{\mathrm c}\Gamma.
+\tag{3.4}
+$$
+
+Its graph-minimal remainder has the weighted control of Native Green
+stability, (21.8). The forcing in its rescaled annular equation is
+$O(R^2(1+|\log R|))$. The same local barriers and interior upgrade as
+in §21 give
+
+$$
+V/h=a_*\log R+A_V+O(R^\gamma(1+|\log R|))
+\tag{3.5}
+$$
+
+with rescaled derivatives. This is the actual inhomogeneous
+inherited-wall equation, not a homogeneous scalar reduction.
+
+Use (1.8) with $z=z_L$ and write
+
+$$
+\begin{gathered}
+D_L=s_z(L)+a(z)c_z(L),\quad
+D'_L=c_z(L)-z a(z)s_z(L),\quad r_0=D'_L/D_L,\\
+c_b=A_V/a_*+\log b,\qquad
+r=\frac{r_0}{1-c_b r_0},\qquad
+C_L=\frac{a_*}{D_L(1-c_b r_0)},\\
+\Xi_\epsilon(q)=\epsilon^{-1}Z_{z_L}(\delta_{1/\epsilon}q).
+\end{gathered}
+\tag{3.6}
+$$
+
+Uniformly on compact subthreshold sets,
+
+$$
+D_L/L\longrightarrow C_\lambda^{-1},\qquad
+Lr_0\longrightarrow H_\lambda,\qquad
+LC_L\longrightarrow a_*C_\lambda.
+\tag{3.7}
+$$
+
+In $x=\log(R/b)$ the exterior $f_*+rV$ has affine coefficients
+$a_*(1+rc_b)$ and $ra_*$. They equal $C_LD_L$ and $C_LD'_L$
+exactly. Choose $r_L=L^{-p}$, with fixed $p$ sufficiently large, and
+splice $f_*+rV$ to $C_L\Xi_\epsilon$ on a fixed-width logarithmic collar
+about $r_L$. Taylor expansion here has $|x|=O(\log L)$, not $O(L)$;
+the exact sine is retained on the whole inner interval.
+The quotient-by-$h$ mismatch, with fixed annular derivatives, is
+
+$$
+O\bigl(L^{-2}(\log L)^j+r_L^\gamma(\log L)^j\bigr)
+\tag{3.8}
+$$
+
+for fixed finite $j$. The exponential complement in (1.8) is smaller.
+The inner reference is positive on this ball for large $L$, and the
+exterior differs relatively from $f_*$ there by $O(L^{-1}\log L)$.
+The splice is source-regular inside, truncated away from the source
+outside, and belongs to the original $\mathcal F_A$.
+Its squared norm is $1+O(L^{-2})$, using $\langle V,f_*\rangle=0$
+and the small norm of the replaced ball. Denote its normalization by $t_L$.
+
+Estimate its residual in the dual of (3.3), for all angular tests.
+On the exterior the residual at $E_{\rm app}=E_*+\mathsf Kr$ is
+exactly
+
+$$
+-\mathsf Kr^2V-(g_{\epsilon,\lambda}-g_{\mathrm c})\Gamma(f_*+rV).
+\tag{3.9}
+$$
+
+An arbitrary $\mathcal N_\epsilon$-unit test has logarithmic mean at
+$R$ bounded by $C\sqrt{1+|\log R|}$, from its mean derivative energy
+and a fixed outer trace. Its whole mean-zero part is controlled by
+Native Green stability, (17.10). Integration only down to $r_L$ bounds
+(3.9) by $CL^{-2}(\log L)^j$ in the form dual.
+
+In the inner piece the exact frozen capped equation cancels. The actual
+coefficient and full-Green errors leave $W_\epsilon=O(R^{-1})$, derived
+explicitly in §4 below. Here $|C_L\Xi_\epsilon/h|\le C$.
+Cauchy–Schwarz, Native Green stability, (12.7), for
+$\int R^{-1}|f|^2d\mu$, and
+$\int_{R<r_L}R^{-1}h^2d\mu=O(r_L)$ give a dual bound
+$Cr_L^\delta$ for some $\delta>0$, including the bounded energy term.
+Write all splice pairings in the exact $f_*$ transform (3.1).
+Their cost is (3.8) times a fixed logarithmic factor; no divergent free
+gradient term is bounded separately. With $p\delta>1$,
+
+$$
+\|(q_{\epsilon,\lambda}-E_{\rm app})t_L\|_{\mathcal N_\epsilon'}
+\le C\{L^{-2}(\log L)^j+r_L^\delta(\log L)^j\}
+=:\eta_L=o(L^{-1}).
+\tag{3.10}
+$$
+
+The normalization correction is included. This is a first-derivative
+form estimate, not a singular pointwise $L^2$ residual.
+
+To transfer it to the actual minimum, expand $t_L=\sum t_je_j$ in the
+actual finite-cap orthonormal eigenbasis. At its Rayleigh value $r(t_L)$
+the squared shifted-form dual residual is
+$\sum|e_j-r(t_L)|^2|t_j|^2/(e_j+\beta)$.
+The uniform first gap and $r(t_L)\to E_*$ imply, for every $j\ge2$,
+
+$$
+e_j-e_1\le C\frac{(e_j-r(t_L))^2}{e_j+\beta},\qquad
+e_j+\beta\le C\frac{(e_j-r(t_L))^2}{e_j+\beta}.
+\tag{3.11}
+$$
+
+These estimates include arbitrarily high eigenvalues. The Rayleigh
+excess over the minimum is $O(\eta_L^2)$ and the higher component has
+$\mathcal N_\epsilon$ norm $O(\eta_L)$. Since $t_L\to f_*$ in $L^2$,
+its overlap with the actual positive ground tends to one, fixing
+the first coefficient's sign. Normalization controls its remaining error.
+Consequently
+
+$$
+E_\epsilon=E_*+\mathsf KH_\lambda/L+o(L^{-1}),\qquad
+\|f_\epsilon-t_L\|_{\mathcal N_\epsilon}=o(L^{-1}).
+\tag{3.12}
+$$
+
+This supplies the lower direction for the actual minimum.
+
+The cap-deficit norm of $f_\epsilon-t_L$ is $o(L^{-1})$, because this
+nonnegative term is a summand of $B_\epsilon$. On a fixed scaled
+interior annulus the actual core theorem gives $A_\epsilon Z(1+o(1))$,
+whereas the trial core is $C_LZ_{z_L}$. Positivity of the deficit on an
+interior subannulus first gives $A_\epsilon=O(L^{-1})$ and then
+$A_\epsilon-C_L=o(L^{-1})$, since $Z_{z_L}\to Z$.
+Thus (2.3) is an amplitude law for actual positive states; no uncapped
+trace of a capped state has been assigned.
+
+The error in (3.12) has rescaled mean derivative energy bounded by
+$L\,o(L^{-2})=o(1)$. The full-angular collar inequality likewise removes
+its rescaled squared norm. Formula (1.8) and matching (3.6) give (2.5).
+For the mean of $f_\epsilon/f_*$ the exterior corrector costs a
+vanishing $H^1$ error. The trace $f_*/h=a_*+O(R^\gamma)$ transfers the
+whole angular $L^2$ profile. Rescaled interior estimates give smoothness
+on intermediate annuli, where native coefficient errors and
+$E_\epsilon R^2$ both vanish.
+
+The actual raw attraction density in the chart is
+
+$$
+\Gamma f_\epsilon^2d\mu
+=\left(\frac1{8\pi}+O(R)\right)
+                     \phi^2(f_\epsilon/h)^2dt\,da\,d\theta.
+\tag{3.13}
+$$
+
+Its profile integral is $a_*^2MLJ_\lambda/4$. Cut first at fixed small
+$d$, remove the $O(R)$ contribution by the weighted/collar estimates,
+then let $d\downarrow0$. The fixed exterior costs $O(1)$.
+The actual amplitude and normalized core give every cap constant in
+(2.6), with $m_0c_G=1/(2\pi)$ for attraction and $m_0$ for kinetic
+energy. In particular $V_{\rm raw}-V_{\rm cap}=O(L^{-2})$.
+The exact finite-domain identity
+
+$$
+T_A[f_\epsilon]=E_\epsilon+g_{\epsilon,\lambda}V_{\rm cap}[f_\epsilon]
+\tag{3.14}
+$$
+
+gives the kinetic law. Finally,
+
+$$
+\overline q_{\mathrm c}[f_\epsilon]
+=E_\epsilon+\frac{\lambda}{L^2}g_{\mathrm c}V_{\rm cap}[f_\epsilon]
+             -g_{\mathrm c}(V_{\rm raw}-V_{\rm cap})[f_\epsilon]
+\longrightarrow E_*.
+\tag{3.15}
+$$
+
+Coercivity bounds the critical form norm. Weak convergence, strong
+$L^2$ convergence and convergence of shifted norms give strong
+$\mathcal Q$ convergence. Normalized-vector convergence gives norm
+convergence of the rank-one projections. The charge follows from
+$Q_\epsilon/A_\epsilon\to a_*K$. This proves the theorem. $\square$
+

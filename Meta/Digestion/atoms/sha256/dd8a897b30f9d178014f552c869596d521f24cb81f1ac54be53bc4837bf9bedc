@@ -1,0 +1,32 @@
+**Proposition 6.1 (the fourteen-read common-source construction).** In the domain of Definition 1.1, the chronological word consisting of eight $M$ atoms, then $J$, then four $M$ atoms recovers $(P,g,d)$ in fourteen readings and thirteen atoms. The same construction recovers these original parameters after every known acquired legal prefix at known absolute time.
+
+**Proof.** At the identity, specialize [FIB self-calibrating relation mathematics, Definition 39.1 and Theorem 39.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md) to gain degree bound $k=3$ and additive-drift degree bound $0$. Its parameters are $N=9$, $m=8$, $L=14$, and its cumulative matrices are
+
+$$
+A_i=M^i\quad(0\le i\le8),\qquad
+A_{9+j}=M^jJM^8\quad(0\le j\le4).
+$$
+
+Each transition is a single read atom, so that source's recorded indices agree with the literal atomic clock along this history. Its trace-normalized source is $P$, its normalized gain is $g$, and its drift is $d$.
+
+For an acquired legal prefix $Q_0$ at clock $t_0$, put
+
+$$
+R=Q_0P,\quad a=\operatorname{tr}R>0,\quad R_0=R/a,\quad
+h(s)=g(t_0+s),\quad H=ah.
+$$
+
+Proposition 5.0 shows that $R$ is strictly positive and rank one. Hence the cited theorem recovers $(R_0,H,d)$ from those same fourteen continuation readings. Define
+
+$$
+\eta=\operatorname{tr}(Q_0^{-1}R_0)=1/a>0.
+$$
+
+Then
+
+$$
+P=Q_0^{-1}R_0/\eta,\qquad h=\eta H,\qquad g(t)=h(t-t_0).
+$$
+
+These formulas prove the claimed transport using the cited common-source result. The unrestricted affine analogue with two independent matrix coefficients and affine drift is [the same source, Definition 37.1 and Theorem 37.2](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS.md); it is a ten-dimensional observation model. ∎
+

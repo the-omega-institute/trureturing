@@ -1,0 +1,55 @@
+**Theorem 150.1 (Uniform collapse at every nonzero small phase).**
+For $0<|t|<\min\{\rho,\pi/3\}$, define
+
+$$
+q(t)=\left\lfloor {\pi\over3|t|}+{1\over2}\right\rfloor\ge1.
+\tag{150.1}
+$$
+
+Then the actual word consisting of $3q(t)$ consecutive installed calls
+$N_t$ satisfies
+
+$$
+\epsilon_{N_t}\le\|N_t^{3q(t)}-W\|_{\rm op}
+ =|e^{\mathrm i3q(t)t}+1|\le {3\over2}|t|.
+\tag{150.2}
+$$
+
+Consequently, with $C_{\rm ref,*}$ obtained from (136.1) by replacing
+the source constants by the uniform constants (148.1),
+
+$$
+0\le\delta_{a,t}\le {3\over2}C_{\rm ref,*}|t|.
+\tag{150.3}
+$$
+
+Thus the full-history tangent gap tends to zero through every nonzero
+positive or negative phase, with an explicit uniform bound. The argument
+uses only legal finite histories; the closure in (135.1) is used only to
+take the infimum after the legal-word estimate.
+
+At the exact phases
+
+$$
+t_q={\pi\over3q}\quad\text{or}\quad t_q=-{\pi\over3q},
+\qquad q\ge1,\qquad |t_q|\le\rho,
+\tag{150.4}
+$$
+
+the legal word of $3q$ installed calls gives
+
+$$
+N_{t_q}^{3q}=\Pi+e^{\pm\mathrm i\pi}P=W,
+\qquad \epsilon_{N_{t_q}}=0,\qquad \boxed{\delta_{a,t_q}=0}.
+\tag{150.5}
+$$
+
+No reflection is inserted into the menu and no closure element is treated
+as an operation. At $t=0$, by contrast, $N_0^3=I_3$, and the
+independently published source certificate (146.9) gives
+
+$$
+\delta_{a,0}>{3\over4096}.
+\tag{150.6}
+$$
+

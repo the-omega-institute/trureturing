@@ -1,0 +1,43 @@
+**命题 260.1（原生 $T_4$ 的非叶端口响应）。** 令 $T_n=\rho^n\alpha$，则
+
+$$
+T_4=\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+                   \langle\beta,\alpha\rangle\rangle.
+$$
+
+按定义 257.1 的 §55 Dirichlet 动能取 $H=L_{D_4(\alpha)}$、$z=0$，选
+
+$$
+(a,b,c,d)=(LL,LR,RL,RR).
+$$
+
+这四个都是实际顶点，且 $a=LL$ 是分支。其余五个顶点为内点，无额外接地保留端口。精确响应为
+
+$$
+S_{T_4}=\frac1{12}\begin{pmatrix}
+23&-5&-1&-1\\-5&31&-1&-1\\-1&-1&31&-5\\-1&-1&-5&31
+\end{pmatrix},
+\tag{260.1}
+$$
+
+所以同侧幅值为 $5/12$，四个交叉幅值为 $1/12$，配对乘积为 $25/144,1/144,1/144$。
+
+证明。依次替换得到 $T_1=\beta$、$T_2=\langle\beta,\alpha\rangle$、$T_3=\langle\langle\beta,\alpha\rangle,\beta\rangle$，再得所示 $T_4$。其九个实际地址为
+
+$$
+\varepsilon,\ L,\ LL,\ LLL,\ LLR,\ LR,\ R,\ RL,\ RR.
+$$
+
+$LLL,LLR$ 的标签分别为 $\beta,\alpha$，故 $LL$ 确为分支；$LR,RL,RR$ 分别为 $\beta,\beta,\alpha$。由 §55 的动能对角，根为 $2$，所有其余地址为 $3$。其二次型是实际内部边的差平方加每个当前叶的两个缺失孩子项，因而严格正定：零能量使连通树上的值为常数，叶的接地项再使常数为零。故所需内块正定。
+
+消去 $LLL,LLR$ 各减去 $LL$ 对角的 $1/3$，将其改为 $7/3$。剩余内点 $(\varepsilon,L,R)$ 的块和逆为
+
+$$
+K_0=\begin{pmatrix}2&-1&-1\\-1&3&0\\-1&0&3\end{pmatrix},\qquad
+K_0^{-1}=\begin{pmatrix}
+3/4&1/4&1/4\\1/4&5/12&1/12\\1/4&1/12&5/12
+\end{pmatrix}.
+$$
+
+端口 $a,b$ 各以 $-1$ 连接 $L$，$c,d$ 各以 $-1$ 连接 $R$。代入 (257.1)，$a$ 的对角为 $7/3-5/12=23/12$，另三项为 $3-5/12=31/12$，非对角即 (260.1)。这既给出实际来源实例，也说明叶端口限定不足以覆盖原题。□
+

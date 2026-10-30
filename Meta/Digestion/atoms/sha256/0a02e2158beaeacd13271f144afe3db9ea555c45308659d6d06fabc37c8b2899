@@ -1,0 +1,137 @@
+**Lemma 23.2 (Undivided finite upper-face identification).** Suppose a
+finite tuple $(P,g,d)$, with a degree-at-most-three whole polynomial,
+satisfies the original acquired equations and has source
+
+$$
+r=1,\qquad b,c\ge0,\qquad bc=0,\qquad b+c>0.
+\tag{23.2}
+$$
+
+Then exactly one of the following holds:
+
+1. Its source is $B_1(t)$ for a finite $t>0$, $q_B(t)\ne0$, and
+   the complete tuple is $R(t)$.
+2. Its source is $C_1(t)$ for a finite $t>0$, $q_C(t)\ne0$, and
+   the complete tuple is $\widehat W_1(t)$.
+
+In the second case its acquired base and terminal-$M$ response are
+$(p_1(t),v_1(t),m_1(t))$ of Definition 15.1, and
+
+$$
+p_1(t)=24\quad\Longleftrightarrow\quad t=1/8.
+\tag{23.3}
+$$
+
+Proof. In (23.2), exactly one of $b,c$ is positive. Denote it by
+$t$. The original traces $j,n,T,U$ are positive on either resulting
+face, so the undivided parent and first four samples of Definition
+1.2 apply. With $e=d-24$, they are
+
+$$
+\begin{gathered}
+e\Lambda=-\frac{24}{5}(b-1/8)\kappa,\qquad
+\kappa=\frac{2(2+5b)}{(1+b)(1+2b)},\\
+(g(0),g(1),g(2),g(3))
+=\left(-24-e,-\frac ej,\frac{27/5-e}{T},-\frac en\right).
+\end{gathered}
+\tag{23.4}
+$$
+
+These are necessary identities before division by $\Lambda$. They
+also hold at finite limits of actual worlds, since $j,n,T,U$ have
+positive limits there.
+
+At $B_1(t)$ the traces are $j=t,n=t+1,T=U=1$. The first equation
+of (23.4) is
+
+$$
+e\,\frac{4(2t^2-1)}{t(t+1)}=\frac{12}{5}.
+\tag{23.5}
+$$
+
+If $2t^2-1=0$ this is impossible for finite $e$. Otherwise it forces
+
+$$
+e=\frac{3t(t+1)}{q_B},\qquad
+(g(0),g(1),g(2),g(3))
+=\left(-24-e,-\frac{3(t+1)}{q_B},
+\frac{27}{5}-e,-\frac{3t}{q_B}\right).
+\tag{23.6}
+$$
+
+These are precisely the drift and four original samples of S,
+Definition 19.1. Uniqueness of degree-at-most-three interpolation at
+$0,1,2,3$ identifies the entire polynomial with $g_R$, hence the
+complete tuple with $R(t)$. All late responses are consequently
+the responses of that same label.
+
+At $C_1(t)$ the traces are $j=t,n=T=t+1,U=2t+1$, and the undivided
+parent instead reads
+
+$$
+e\,\frac{2f_C(t)}{t(t+1)(2t+1)}
+=-\frac{6(8t-1)(5t+2)}{5(t+1)(2t+1)}.
+\tag{23.7}
+$$
+
+All displayed denominators are positive. If $q_C(t)=0$, then
+$f_C(t)=0$. A finite $e$ would require $(8t-1)(5t+2)=0$.
+For $t>0$ this requires $t=1/8$, whereas
+
+$$
+f_C(1/8)=-1279/512\ne0.
+\tag{23.8}
+$$
+
+Thus no finite tuple occurs at the pole. Away from it (23.7) forces
+
+$$
+e_C=-\frac{3t(8t-1)(5t+2)}{5f_C(t)},\qquad d=24+e_C=d_1,
+\tag{23.9}
+$$
+
+and the four original samples are
+
+$$
+\left(-24-e_C,-e_C/t,
+\frac{27/5-e_C}{t+1},-\frac{e_C}{t+1}\right).
+\tag{23.10}
+$$
+
+They determine exactly $g_1$ of (15.2). In particular the late
+readings do not introduce independent samples. For these four fixed
+nodes the evaluation rows at clocks $5,6,7$ are respectively
+
+$$
+(-4,15,-20,10),\qquad
+(-10,36,-45,20),\qquad
+(-20,70,-84,35).
+\tag{23.11}
+$$
+
+Multiplying them by (23.10) and using the original trace factors
+$3t+2,5t+3,8t+5$ gives exactly $p_1,v_1,m_1$ of (15.1)–(15.2).
+This is the fixed-node Lagrange interpolation formula; see
+Berrut–Trefethen, [§2](https://doi.org/10.1137/S0036144502417715).
+
+The identity (15.5), in the present notation, is
+
+$$
+p_1(t)-24
+=-\frac{6(8t-1)(7t^3+11t^2+19t+10)}{5q_C(t)}.
+\tag{23.12}
+$$
+
+Its cubic factor is positive for $t>0$. At $t=1/8$ the parent has
+$\Lambda\ne0$ and forces $e_C=0$, giving the original samples
+$(-24,0,24/5,0)$. The first row of (23.11) then gives $g_1(5)=0$
+and hence $p_1=24$. This includes the zero-$e$ and sampled-zero
+branch rather than dividing it away, and proves (23.3).
+
+The interpolating gain in either case is nonzero: an identically
+zero gain would make the original readings at clocks zero and one
+both equal to $d$, contrary to $0\ne24$. The argument divides by
+neither drift, $e$, a gain value, a leading gain coefficient nor a
+degree condition. It therefore identifies whole gains even at degree
+drops and all allowed sampled zeros. ∎
+

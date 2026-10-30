@@ -1,0 +1,34 @@
+#### 推论 11.5.3（Boundary Dynamics continuation §116 的正确接法）
+
+[Boundary Dynamics continuation](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS_CONTINUATION.md) §116 的 Proposition 116.8 与 Theorem 116.9 已在其原合同中给出：固定种子 $\rho=\theta$、完成前半段标记并到达中点后，有
+
+$$
+W=\binom a{a/2}
+$$
+
+个中点历史由公共后续区分，并因此满足该卷所定义的
+
+$$
+W\le D_{\mathrm{blind}}(\pi_k).
+$$
+
+本增补只作切面参数对应，不重证这两个已有结果。它们属于**取得种子之后的中点切面**：寄存器已经从固定初值运行过种子取得和原始解析事件，中点历史是切面节点，而不是预种子根。
+
+若把同一批中点节点改称为初始化根，就已经改用了重置或自由标签合同；若把切面状态沿用，则使用的是携带合同。两者都不能把 $W$ 自动变成预种子根图的团或预种子容量公式。预种子边界必须另行计算 $G_\circ$；若该图有边，定理 11.2.1 给出的是固定初始化不可行，而不是有限的 $W$ 下界。
+
+因此对 §116 的资源记账应写成
+
+$$
+\boxed{
+(\text{预种子初始通道},\ \text{中点持久状态下界 }W,\ \text{终端响应种类数})
+}
+$$
+
+三项分别属于不同切面合同。已有 Boundary Dynamics continuation §115.3 的
+
+$$
+D_{\mathrm{read}}=D_{\mathrm{blind}}=2<H_{\mathrm{resp}}=3
+$$
+
+还说明响应函数数量与寄存器最小值是不同的优化问题。
+

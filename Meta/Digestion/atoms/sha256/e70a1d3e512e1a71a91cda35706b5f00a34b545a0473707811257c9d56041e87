@@ -1,0 +1,78 @@
+**定理 10.2（有限线性读出不能给出完整八读协议）。** No correct protocol on all of $\mathcal W_3$ with at most eight total original-clock reads can, on every input, obtain a nonzero gain-ray readout by selecting from a finite palette.
+
+Proof. First consider a fixed word containing both $M$ and $J$. We show that there are no fixed $C$ and nonzero linear functional $\ell$ on $\operatorname{Mat}_2(\mathbb R)$ such that
+
+$$
+CZ_w(P,g,\delta)=\ell(P)\beta
+\quad\text{for every legal }P,\ \beta\ne0,\ \delta\in\mathbb R.
+\tag{10.1}
+$$
+
+Let $V_{ik}=i^k$ for $0\le i<N,0\le k\le3$, and $a(S)=(\operatorname{tr}(A_iS))_i$. Varying the drift and coefficients in (10.1) gives
+
+$$
+C\mathbf1=0,\qquad C\operatorname{diag}(a(P))V=\ell(P)I_4.
+\tag{10.2}
+$$
+
+Legal source matrices span all of $\operatorname{Mat}_2(\mathbb R)$: take two independent positive columns and two independent positive rows; their four outer products form a basis, and normalization by their positive traces preserves independence. Hence the second identity holds for every auxiliary matrix $S$. It is a linear identity, not an assertion that these auxiliary matrices are physical sources.
+
+It forces $\operatorname{rank}C=4$. Write $\ell(S)=\operatorname{tr}(LS)$, $L\ne0$, and let $E=\ker\ell$. For $S\in E$, the image of $\operatorname{diag}(a(S))V$ lies in $\ker C$, as does $\mathbf1$. Set
+
+$$
+Q=\{i:A_i\text{ is proportional to }L\},\qquad q=|Q|.
+$$
+
+Choose $S\in E$ with $\operatorname{tr}(A_iS)\ne0$ for all $i\notin Q$. Such a choice exists: each prohibited zero is a proper linear hyperplane in $E$, and finitely many proper hyperplanes cannot cover it. At indices in $Q$ these traces are necessarily zero. Distinct original clocks make the image rank $\min(N-q,4)$ by polynomial evaluation.
+
+If $q>0$, $\mathbf1$ is independent of this image, since every image vector vanishes on $Q$. Therefore
+
+$$
+N-4=\dim\ker C\ge\min(N-q,4)+1.
+\tag{10.3}
+$$
+
+If $N-q\ge4$, this requires $N\ge9$. Otherwise it requires $q\ge5$. But adjacent cumulative matrices cannot be proportional: $A_{i+1}=cA_i$ would imply $E_{i+1}=cI$, and neither atom is scalar. Thus any one proportionality class occurs at most $\lceil N/2\rceil\le4$ times. Both alternatives contradict $N\le8$.
+
+If $q=0$, the selected $S$ has every trace nonzero, so its image has rank four and $N-4\ge4$. Consequently $N=8$ and
+
+$$
+\ker C=\operatorname{diag}(a(S))\operatorname{range}V.
+\tag{10.4}
+$$
+
+For every $T\in E$, the diagonal matrix with entries $\operatorname{tr}(A_iT)/\operatorname{tr}(A_iS)$ preserves $\operatorname{range}V$. Every diagonal matrix preserving cubic evaluation vectors at eight distinct nodes is scalar. Indeed take the monic cubic vanishing at any selected three nodes. Its diagonal image is the evaluation of a cubic vanishing at those same nodes and hence is the evaluation of a scalar multiple of the original cubic. The diagonal entries are therefore equal outside those three nodes. Given any two indices, choose the three nodes among the other six to see that their entries coincide. This includes a zero scalar.
+
+It follows that the restricted trace functionals $\operatorname{tr}(A_i\,\cdot)|_E$ span at most one dimension. The kernel of restricting a linear functional to $E$ is $\operatorname{span}\{\ell\}$, so the unrestricted trace functionals, and hence the matrices $A_i$, span at most two dimensions.
+
+Every mixed word instead has cumulative-matrix span at least three. If it starts with $M^k$ and first changes to $J$, then $I,M$ are present, while $JM^k$ is nonsymmetric: $M^k=F_{k-1}I+F_kM$, $F_k>0$, and its two off-diagonal entries differ by $F_k$. It is outside $\operatorname{span}\{I,M\}$. If the word starts with $J$'s and first changes to $M$, it contains $I,J$ and either $M$ or $MJ$; neither of the latter belongs to $\operatorname{span}\{I,J\}$. This contradiction proves the fixed-word assertion (10.1).
+
+Next, a correct full-domain protocol cannot stop after using only one atom type, including no actions. For $A=M$ or $J$, all its powers lie in $\operatorname{span}\{I,A\}$. Every legal $P$ has a different legal $P'$ with $\operatorname{tr}(AP')=\operatorname{tr}(AP)$. To see this write $P=uv^{\mathsf T}$, $u,v>0$, $v^{\mathsf T}u=1$. If $u,Au$ are independent, vary $u$ slightly to a nonproportional positive $u'$ and solve
+
+$$
+(v')^{\mathsf T}u'=1,\qquad
+(v')^{\mathsf T}Au'=\operatorname{tr}(AP).
+$$
+
+The unique solution is continuous near $u$ and remains positive there. If $Au=\lambda u$, keep $u$ and vary $v>0$ along $v^{\mathsf T}u=1$; the $A$ trace stays $\lambda$. In both cases $P'\ne P$. With the same $g,\delta$, all pure-word reads coincide. Determinism gives the same actions and stopping decision on both targets, so a common answer cannot be correct for both. With no actions, trace normalization alone makes the same argument immediate. Thus every actual terminal word of a correct full-domain protocol must contain both atoms.
+
+It remains to justify the adaptive finite-palette conclusion, which does not follow merely by applying (10.1) to a restricted terminal branch. Parametrize the full source domain by
+
+$$
+P(x,r)=\frac1{1+xr}\begin{pmatrix}1&r\\x&xr\end{pmatrix},\qquad x,r>0.
+\tag{10.5}
+$$
+
+Together with $\beta\in\mathbb R^4\setminus\{0\}$ and $\delta\in\mathbb R$, this is an open seven-dimensional parameter domain. For a terminal word $w$ and fixed map $C$, collinearity of $CZ_w$ with $\beta$ is expressed by the six equations
+
+$$
+\beta_j(CZ_w)_k-\beta_k(CZ_w)_j=0\qquad(0\le j<k\le3).
+\tag{10.6}
+$$
+
+Multiplying by $1+xr>0$ makes each a polynomial in these seven parameters.
+
+For any word-map pair actually selected on some input, these polynomials cannot all be identically zero. Otherwise collinearity holds for all legal sources, every coefficient vector and every drift. Varying $\delta$ implies $C\mathbf1=0$: a vector collinear with every nonzero $\beta\in\mathbb R^4$ must vanish. For fixed $P$, the linear map $C\operatorname{diag}(a(P))V$ then sends every $\beta$ into its own span. Applying it to basis vectors and their pairwise sums makes it a scalar matrix $\ell(P)I_4$. Its scalar is linear in $P$, for example by taking one diagonal entry. Since the readout is nonzero on a selected input, $\ell$ is nonzero. This contradicts the fixed-word assertion, because the terminal word is mixed.
+
+Choose one nonzero polynomial from (10.6) for each actually used word-map pair. There are finitely many words of length at most seven and finitely many maps per word, even if all action and selection functions are discontinuous or nonmeasurable. Every input belongs to the zero set of one selected polynomial. Their product would vanish on the open full parameter domain. A finite product of nonzero real polynomials is nonzero and cannot vanish on an open set, a contradiction. This proves the theorem for adaptive protocols with the stated finite palette. ∎
+

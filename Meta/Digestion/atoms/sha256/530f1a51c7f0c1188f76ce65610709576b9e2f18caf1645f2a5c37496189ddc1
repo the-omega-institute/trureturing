@@ -1,0 +1,108 @@
+**定理 15.1（三目标实际子历史与五目标同父障碍）。** Use the exact limit $x_*$ of Theorem 14.2, and let
+
+$$
+\begin{gathered}
+W_i=(P(\alpha_{i*},\beta_{i*}),f_i,d_{i*})\quad(1\le i\le3),
+\qquad \mathcal T=\{W_1,W_2,W_3\},\\
+y_*=Y_1(x_*),\qquad v_*=V_1(x_*),\qquad
+\mathcal K=\mathcal A_{y_*}\cup\mathcal T,
+\end{gathered}                                                     \tag{15.1}
+$$
+
+where each $f_i$ is the single polynomial (13.1) at that coordinate triple, and $\mathcal A_{y_*}$ is exactly the already bound family (11.6), with complete targets (10.3). Then $y_*\in(144/5,156/5)$, all five elements of $\mathcal K$ are distinct legal complete targets, and
+
+$$
+\begin{gathered}
+\mathcal K\subseteq\mathcal F((H_p(y_*),M,0)),\qquad
+|\mathcal K|=5,\\
+\mathcal T\subseteq\mathcal F((H_p(y_*),M,0,M,v_*)),\qquad
+L_1(\mathcal T,(H_p(y_*),M,0,M,v_*)),\\
+L_2(\mathcal K,(H_p(y_*),M,0)),\qquad
+L_3(\mathcal K,H_p(y_*)).
+\end{gathered}                                                     \tag{15.2}
+$$
+
+In the displayed $L_1$ child, the final-$J$ collision pair is exactly $\{W_1,W_2\}$, and the final-$M$ collision pair is exactly $\{W_1,W_3\}$. In particular (15.2) obstructs every deterministic policy recovering this known five-target family from the stated parent within the remaining three original-clock readings, including policies with early stopping.
+
+Proof. The source in (13.1) has four strictly positive entries, trace one and determinant zero. Its rank is therefore one, with no symmetry requirement. The exact cumulative matrices along clocks $0,\ldots,6$ for the literal word $JMMJMM$ are
+
+$$
+I,\quad J,\quad
+\begin{pmatrix}1&0\\1&1\end{pmatrix},\quad
+\begin{pmatrix}1&1\\2&1\end{pmatrix},\quad
+\begin{pmatrix}2&1\\1&1\end{pmatrix},\quad
+\begin{pmatrix}1&1\\3&2\end{pmatrix},\quad
+\begin{pmatrix}3&2\\4&3\end{pmatrix}.                           \tag{15.3}
+$$
+
+Their traces against $P(\alpha,\beta)$ are respectively
+
+$$
+1,\quad j,\quad\ell,\quad j+\ell,\quad A,\quad B,\quad A+B.
+                                                                  \tag{15.4}
+$$
+
+The two possible final matrices are, in final-$J$ and final-$M$ order,
+
+$$
+\begin{pmatrix}4&3\\3&2\end{pmatrix},\qquad
+\begin{pmatrix}4&3\\7&5\end{pmatrix},
+$$
+
+with trace factors $2A+j$ and $A+2B$. Thus the response functions (13.3) are the actual fourth-$J$, fifth-$M$, sixth-$M$ and two final responses of the same fixed target. There is no change of source or gain between them.
+
+Lagrange interpolation at original clocks $0,1,2,3$ gives (13.2); multiplying $q_i$ by the first four traces in (15.4) and adding the same drift gives exactly the readings $0,24,48,312/5$. Every $f_i$ has degree at most three and is nonzero: if it were zero, these four readings would all be its constant drift. The coordinate box gives
+
+$$
+d_{1*}\in(2,3),\qquad d_{2*}\in(4,5),\qquad d_{3*}\in(15,16),
+                                                                  \tag{15.5}
+$$
+
+so the three complete targets are distinct. The single simultaneous equality $F(x_*)=0$ now gives
+
+$$
+\begin{gathered}
+Y_1=Y_2=Y_3=y_*,\qquad Z_1=Z_2=Z_3=0,\\
+V_1=V_2=V_3=v_*,\qquad R_1=R_2,\qquad S_1=S_3.
+\end{gathered}                                                     \tag{15.6}
+$$
+
+Consequently all three worlds realize the entire history
+
+$$
+(0,J,24,M,48,M,312/5,J,y_*,M,0,M,v_*).
+                                                                  \tag{15.7}
+$$
+
+The last four rows of (14.14) separate $R_3$ from $R_1=R_2$ and $S_2$ from $S_1=S_3$. For final $J$, the actual response $R_1$ retains exactly the two distinct targets $W_1,W_2$ in $\mathcal T$; for final $M$, response $S_1$ retains exactly $W_1,W_3$. Each child has $L_0$. This proves the $L_1$ assertion by the actual recursion (1.1), with different terminal collision pairs on this same $\mathcal T$.
+
+For the complementary two worlds, (14.9) places $y_*$ in the second window of Theorem 11.1. To specify the roots more narrowly, put $t_*=5(y_*-12)/96$. Then $9/10<t_*<901/1000$. Direct endpoint operations on $t\in[9/10,901/1000]$ give the following containing intervals for the quadratic (10.1):
+
+$$
+\begin{array}{c|c}
+\ell&\text{interval containing }Q_t(\ell)\\ \hline
+4/3&[2666666/10^9,\ 9868445/10^9]\\
+3/2&[-13250000/10^9,\ -4697750/10^9]\\
+8/5&[-11200000/10^9,\ -1789440/10^9]\\
+9/5&[19000000/10^9,\ 30235240/10^9].
+\end{array}                                                       \tag{15.8}
+$$
+
+The positive leading coefficient and the two sign changes isolate one root $\ell_-$ in $(4/3,3/2)$ and the other $\ell_+$ in $(8/5,9/5)$. These are precisely the two roots used by $\mathcal A_{y_*}$ in (11.6). On both root intervals, $1<\ell<8/3$ and $0<t_*\ell-1<1$; hence the sources (10.3) are strictly positive, trace one and rank one. Their gains $8T(T-5)(T-7)/(5\ell)$ are nonzero cubics, and their drifts are zero. Their different $\ell$ values give different sources, and (15.5) separates both complete targets from $\mathcal T$. Thus $|\mathcal K|=5$.
+
+Theorem 10.1 and Proposition 11.3 give these two worlds' whole parent history $H_p(y_*)$ and their following actual responses:
+
+$$
+\begin{array}{c|c|c|c|c}
+E_5&E_6&z_5&z_6&z_7\text{ for either final atom}\\ \hline
+J&J&0&-y_*/2&0\\
+J&M&0&-126/5&0\\
+M&J&0&48/5-y_*&0\\
+M&M&0&-156/5-48/(5\ell)&0.
+\end{array}                                                       \tag{15.9}
+$$
+
+This uses exactly the same $y_*$ as (15.7). After fifth $M$, all five worlds have the actual response $0$. In this child, sixth $J$ has the response $48/5-y_*$ retaining $\mathcal A_{y_*}$ with $L_1$, whereas sixth $M$ has response $v_*$ retaining $\mathcal T$ with $L_1$. The pair alone has different sixth-$M$ responses, as is also explicit in (15.9); it is the jointly realized triple that supplies this second sixth-action clause. Lemma 9.3 and (1.1), or equivalently the finer gluing implication of Theorem 12.3, give $L_2(\mathcal K,(H_p(y_*),M,0))$.
+
+At the parent, fifth $J$ has a response-$0$ child containing the same $\mathcal A_{y_*}$ with $L_2$, and fifth $M$ has the response-$0$ child $\mathcal K$ with the just established $L_2$. Applying (1.1) gives $L_3(\mathcal K,H_p(y_*))$. All inclusions concern fixed complete targets and their entire literal histories. Arbitrary discontinuous deterministic choices and early stopping are covered by that recursion. ∎
+

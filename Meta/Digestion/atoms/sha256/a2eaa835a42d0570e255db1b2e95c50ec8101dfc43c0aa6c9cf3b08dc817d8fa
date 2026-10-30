@@ -1,0 +1,33 @@
+**Lemma 129.3 (Ordinary length does not provide the suppression).**
+For every allowed source there are two hypotheses in $\mathcal P$
+and a constant $b_0>0$ such that, for every integer $n\ge0$,
+
+$$
+\max_{1\le i\le9,\ \beta\in\{0,1\}}
+ |p_{0,h}(u_i,N^n,\beta)-p_{0,0}(u_i,N^n,\beta)|\ge b_0.
+\tag{129.5}
+$$
+
+Consequently the instrument cutoff in Theorem 129.2 supplies no
+ordinary-length decay estimate: the retained layer $k=0$ contains
+undamped runs of arbitrarily large ordinary length.
+
+*Proof.* Choose any $0<\|h\|\le1$. Since the literal $r_i$ span
+$\operatorname{Herm}_3$, choose real $d_i$ with
+$I_3=\sum_i d_i r_i$. At zero retention the paired lift against
+$(0,0)$ has $Z=0$ and, by (118.9), $X+Y=bhh^\dagger$.
+For every unitary $Q$, cyclicity of trace and $W^2=I_3$ give
+$\operatorname{Tr}\Phi_Q(X,Y,0)=b\|h\|^2$. For $w=N^n$,
+$a_w=1$, so (116.2) yields
+
+$$
+\sum_i d_i q_{i,N^n}(X,Y,0)=\tfrac12 b\|h\|^2.
+$$
+
+Taking absolute values proves (129.5) with
+$b_0=b\|h\|^2/(2\sum_i|d_i|)>0$. These are admissible
+zero-retention hypotheses with the completions supplied by VI
+Theorem 106.3. This nondecay statement alone asserts neither a
+particular maximizing history nor impossibility of additional
+source-specific coincidences between row values. $\square$
+

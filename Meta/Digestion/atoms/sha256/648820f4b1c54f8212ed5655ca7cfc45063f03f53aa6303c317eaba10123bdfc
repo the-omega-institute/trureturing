@@ -1,0 +1,8 @@
+**Convention 1.3 (probability notation).** Vectors of probabilities are rows; $\mathbf1$ is the column of ones. For finite probability vectors,
+
+$$
+\operatorname{TV}(a,b)=\frac12\sum_i|a_i-b_i|.
+$$
+
+For general probability measures, TV is $\sup_E|a(E)-b(E)|$. Conditional expectations and probability kernels are identified almost surely under the law explicitly in use. Every nonnegative series below is initially interpreted in the extended nonnegative reals. An empty observed block generates the trivial field. We use $0^0=1$ in geometric bounds.
+

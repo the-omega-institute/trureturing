@@ -1,0 +1,104 @@
+**Proposition 9.3 (Credited fallback performance with full payment).** Conditional on Assumption 9.1 and the exact source premises, the supplied table has at most $S_\alpha$ complete configurations. For every $q\in(0,1)$ it has both errors at most $\alpha_0/2\le\alpha$, both almost-sure actual stops and both finite paid means. Write
+
+$$
+A_i^{\rm sh}(q)=\sum_{k=1}^3F_i(k)q^k,\qquad
+\rho_i^{\rm sh}(q)=\frac{A_i^{\rm sh}(q)}{Z_i(q)},\qquad
+\zeta_i(q)=\frac{C_iq^4}{(A_i^{\rm sh}(q))^2}.
+\tag{9.5}
+$$
+
+Its exact supplied mean is
+
+$$
+\mathbb E_{i,q}T
+=1+\beta_i(q)
++\frac{2n_\alpha\mu_i(q)Z_i(q)A_i^{\rm sh}(q)}{C_iq^4}.
+\tag{9.6}
+$$
+
+Exposition of the supplied proof. The table has at most
+
+$$
+5\cdot4\sum_{m=0}^{n_\alpha-1}(m+1)+3
+=10n_\alpha(n_\alpha+1)+3=S_\alpha
+\tag{9.7}
+$$
+
+listed configurations, including waiting and both labels. Every table successor stays in the set or is a label; at an acceptance $v'\le m'$. The terminal label is selected on the terminal read itself. There is no separate gap, rejected-pair, elapsed-time or program-state counter.
+
+At fixed $i,q$, each raw gap is short with probability $\rho_i^{\rm sh}>0$. Its retained category has law
+
+$$
+g_i(k)=\frac{F_i(k)q^k}{A_i^{\rm sh}(q)}\quad(k=1,2,3).
+\tag{9.8}
+$$
+
+Let $W_r$ count raw gaps since the preceding retained gap, including retained gap $r$, and let $J_r$ be its category. Independence of raw gaps gives
+
+$$
+\mathsf P_i(W_r=n,J_r=k)
+=(1-\rho_i^{\rm sh})^{n-1}f_{i,q}(k)
+=(1-\rho_i^{\rm sh})^{n-1}\rho_i^{\rm sh}g_i(k).
+\tag{9.9}
+$$
+
+The same product factorization holds for each finite list of successive blocks. Thus $(W_r)$ are iid geometric counts of mean $1/\rho_i^{\rm sh}$, independent of the entire iid category sequence $(J_r)$. This is an independence statement about numbers of gaps and retained categories, not paid durations.
+
+Consecutive retained pairs are independent. Their probabilities for $(k,4-k)$ are $F_i(k)F_i(4-k)q^4/(A_i^{\rm sh})^2$, so their total acceptance probability is $\zeta_i>0$. Conditional on acceptance the $(2,2)$ probability is $\theta_i$, since the common factor $q^4$ cancels. More explicitly, the probability that the first accepted pair is pair $n$ and has mark $b\in\{0,1\}$ is
+
+$$
+(1-\zeta_i)^{n-1}\zeta_i\theta_i^b(1-\theta_i)^{1-b}
+\quad(n\ge1).
+$$
+
+The same factorization applies to every finite sequence of successive acceptance blocks, by independence of the retained pairs. Summing out their geometric waiting counts proves that successive accepted marks are iid Bernoulli$(\theta_i)$. This proves the supplied conditional mark law without any dependence on the unknown nuisance parameter in that mark probability.
+
+Let $V$ be the sum of the first $n_\alpha$ accepted marks and let $m_\theta=(\theta_0+\theta_1)/2$. Under source zero, wrong output means $V<b_{n_\alpha}$, hence $V\le b_{n_\alpha}-1<n_\alpha m_\theta$. Under source one, wrong output means $V\ge b_{n_\alpha}\ge n_\alpha m_\theta$. In either case $|V/n_\alpha-\theta_i|\ge\Delta_\theta/2$. For any variable $Y$ with finite variance, the pointwise bound $\mathbf1_{\{|Y-\mathbb EY|\ge r\}}\le(Y-\mathbb EY)^2/r^2$ gives the variance inequality. Apply it to $V/n_\alpha$ to get, for either error,
+
+$$
+\mathsf P_i(\text{wrong label})
+\le\frac{4\theta_i(1-\theta_i)}{n_\alpha\Delta_\theta^2}
+\le\frac{4V_\theta}{n_\alpha\Delta_\theta^2}
+\le\frac{\alpha_0}{2}\le\alpha.
+\tag{9.10}
+$$
+
+The ceiling in the threshold has therefore been accounted for on both sides. The calculation is valid at every interior parameter separately; these are also the supplied classifier's stronger separate full-family error bounds.
+
+Let $R$ count retained pairs through the $n_\alpha$th acceptance. Independent pair acceptances give $\mathbb E_iR=n_\alpha/\zeta_i<\infty$: each successive acceptance takes a geometric count of mean $1/\zeta_i$, obtained by summing the geometric tail probabilities. Such a finite number of acceptances occurs almost surely. The raw gap count through termination is
+
+$$
+G=\sum_{r=1}^{2R}W_r.
+\tag{9.11}
+$$
+
+The variable $R$ is determined by categories alone, independently of the whole sequence $(W_r)$. Tonelli applied to the nonnegative summands in (9.11) gives
+
+$$
+\mathbb E_iG
+=\frac{2\mathbb E_iR}{\rho_i^{\rm sh}}
+=\frac{2n_\alpha}{\rho_i^{\rm sh}\zeta_i}
+=\frac{2n_\alpha Z_iA_i^{\rm sh}}{C_iq^4}<\infty.
+\tag{9.12}
+$$
+
+Every raw gap begun by this table is fully read, including all discarded long gaps and rejected pairs. On its terminating paths,
+
+$$
+T=1+\tau+\sum_{r=1}^{G}(K_r+1).
+\tag{9.13}
+$$
+
+The event $\{G\ge r\}$ is determined by preceding raw gaps; it is independent of the next $K_r$. The same nonnegative predictable-sum argument as (7.3)–(7.4) gives an expected post-first-tick cost $\mu_i\mathbb E_iG$, not a duration/acceptance-independence assertion. Equations (2.7) and (9.12) prove (9.6). Its terms are finite at each interior $q$, under both labels, and finite $G$, finite $\tau$ and finite individual gaps give almost-sure actual stopping. This reproduces the supplied fully paid argument. $\square$
+
+For correspondence with the credited fixed-classifier benchmark, $C_0=301510$ and $A_0^{\rm sh}(1)=20196$ are supplied exact values; $A_1^{\rm sh}(1)=H(1)+H(2)+H(3)>0$. By (2.8) and (9.6), that same supplied classifier has
+
+$$
+\mathbb E_{i,e^{-s}}T\sim
+\kappa_i s^{-11},\qquad
+\kappa_i=\frac{20n_\alpha\,9!\,A_i^{\rm sh}(1)}{C_i}>0.
+\tag{9.14}
+$$
+
+Indeed $A_i^{\rm sh}(e^{-s})\to A_i^{\rm sh}(1)$, $e^{-4s}\to1$, and the acquisition term in (9.6) has the displayed leading coefficient from $\mu_i\sim10/s$ and $Z_i\sim9!s^{-10}$. Its initial term is only $O_H(s^{-1})$. This fixed-classifier order and its sufficient budget are source-owned comparisons.
+

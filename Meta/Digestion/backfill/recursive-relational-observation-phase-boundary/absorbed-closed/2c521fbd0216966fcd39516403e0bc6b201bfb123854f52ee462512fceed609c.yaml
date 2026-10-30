@@ -1,0 +1,28 @@
+fingerprints:
+  raw_sha256: sha256:2c521fbd0216966fcd39516403e0bc6b201bfb123854f52ee462512fceed609c
+  normalized_sha256: sha256:2c521fbd0216966fcd39516403e0bc6b201bfb123854f52ee462512fceed609c
+cas_ref: sha256:2c521fbd0216966fcd39516403e0bc6b201bfb123854f52ee462512fceed609c
+coverage_gids:
+  - gid: D5/S3/Analytic/SeriesInequalities/LorentzCoefficientRemainder.coefficient_sub
+    target_statement_id: sha256:d0c4309bc87e18ee27282334b11f717c580ac1e40c565389681055f3e4a25b10
+  - gid: D5/S3/Analytic/SeriesInequalities/LorentzCoefficientRemainder.lorentz_degree
+    target_statement_id: sha256:c97b43c7b071ea1182c15a0a39c47fc8e6d118c2d48021552570b4c27fbda451
+  - gid: D5/S3/Analytic/SeriesInequalities/LorentzCoefficientRemainder.low_degree_coefficient_remainder
+    target_statement_id: sha256:59b687707eedc46e2a6b7eee9e0a646b10c1f1bc7e47be87a9b35ca24fbaa0ea
+  - gid: D5/S3/Analytic/SeriesInequalities/LorentzCommonGridStability.common_grid_stability
+    target_statement_id: sha256:232c69fd267449a268b5553f6cfbaebe54ea630632cd796cc1f8ec59c01b3175
+  - gid: D5/S3/Analytic/SeriesInequalities/LorentzCommonGridStability.operator_residual
+    target_statement_id: sha256:498479c731a0698d7c78b7889c9b051c4aeed2f8450bf5797789c19e9e7d954c
+  - gid: D5/S3/Analytic/SeriesInequalities/LorentzLocalCoefficientKernel.local_coefficient_bound
+    target_statement_id: sha256:47c8d385cbb2463b0f929b9fc9fe917310c96955d089b1111fc4f0c0e2ff6629
+  - gid: D5/S3/Analytic/SeriesInequalities/LorentzLowDegreeCoefficientRemainder.bernstein_coefficient_C_mul
+    target_statement_id: sha256:5504d32150b6a3ff7db016f42cb9bf3a1b483308d8d4ba119ab811664938e92a
+  - gid: D5/S3/Analytic/SeriesInequalities/LorentzLowDegreeCoefficientRemainder.bernstein_coefficient_sum
+    target_statement_id: sha256:50258b31e64c1966bcdace4eb294ea7aea8fdd909923a6cd41bb7dfe67411b33
+  - gid: D5/S3/Analytic/SeriesInequalities/LorentzLowDegreeCoefficientRemainder.bernstein_reconstruction
+    target_statement_id: sha256:a354f4141970a2f5551189d8aff854583577c4342313dcf5db582ac0b4554d92
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - f8b2ad7599e18c838cd9ca48ee3f5e251696f6e810839fddc2df9c729fd90a7c
+    - 5f725d338e937b7665bfbb0040f9c6168c30dff8abd939868b1508b6dd823e7d

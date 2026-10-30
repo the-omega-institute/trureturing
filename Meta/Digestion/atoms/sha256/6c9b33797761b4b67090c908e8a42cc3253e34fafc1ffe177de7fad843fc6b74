@@ -1,0 +1,13 @@
+For either old or new row fix the actual reached set of the case and
+construct its mask expression by replacing exactly those subtrees by
+$\alpha$. Every uncut frontier remains in that expression. Equality to
+the label's concrete filled mask, together with equality of reached
+sets, gives precisely its complete exterior. For every two reached
+holes retain the equality required by the label's partition or the
+disequality required by different classes. This includes all old
+cross-class pairs, all repeated class occurrences and all off-task
+inequalities. Empty reached sets and one-hole partitions have their
+literal empty pair lists. Consequently the finite case formula retains
+both complete partitions and masks, rather than projecting to selected
+partition bits.
+

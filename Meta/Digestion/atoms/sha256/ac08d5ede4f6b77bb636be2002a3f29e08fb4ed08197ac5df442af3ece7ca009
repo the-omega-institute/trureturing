@@ -1,0 +1,26 @@
+### 21.6 (A6). Actual selected nonlinear use and resource vector
+
+If some gain is active, the active-eigenline part of the proof of Theorem 21.3 supplies a rational $G$-unit vector $v\in\mathcal Z$ on an active axis even when $r>1$. Its actual native field is $Rv=\pm e_i$ for some active $i$. Perform an actual `Reset`, prepare $Rv$ using $v$ as the coefficients of the earned $N$-Add schedule, call native $Q_g$, and execute the actual all-port $N$-epoch window. The immediate native output is $g_i e_i\neq0$, its acquired coordinate is $\mu(v,v)$, and the window endpoint has native and acquired coordinates
+
+$$
+T^{N-1}Q_g(Rv),\qquad A^{N-1}\mu(v,v),
+$$
+
+respectively. On the $r\leq1$ recovery domain one may choose $v=w_i$; the prepared actual field is then $Pe_i$, the immediate output is $P(\widehat g_i e_i)$, and the recovered native endpoint is $\widehat T^{N-1}(\widehat g_i e_i)=W^{-1}A^{N-1}\mu(w_i,w_i)$. The controller selects and forwards these actual calls and retains their returned window and successor. A singular $T$ may kill the nonzero immediate output during that window; no nonzero endpoint is asserted. If every gain is zero, the operation still has a zero output and no active-axis selection or nonzero-output claim is made. The additional call vector in the order (Reset, Add, Tick, $Q_g$, Read, Hold) is
+
+$$
+(1,N,2(N-1),1,bN,2N).
+$$
+
+For the entire acquisition, with $q=N(N+1)/2$, an attained same-run upper vector is
+
+$$
+\bigl(b+q+1,\ b+Nq,\ b(2N-1)+2q(N-1),\ q,\ 2Nb^2+bNq,\ 2Nb+2Nq+1\bigr).
+$$
+
+The $b$ impulse trials, all $q$ product probes, their actual windows, final reset, records, source field, destination field, and observer table coexist in this vector. It is an upper account for the declared schedule, not a minimum. A stronger installation with authentic Add and Read at every native cell has the alternative vector $(N+2,2N,N,1,N^2+N,N+2)$: $N$ impulses acquire $T$, one all-ones preparation and one $Q_g$ acquire $g$, and a final reset restores zero. This changes the grants and installation, so no scalar or Pareto dominance is asserted.
+
+Every source law coefficient, gain, field, destination buffer, rational pulse, returned word, reduced numerator and denominator, root-search intermediate, characteristic polynomial, nullspace, axis frame, parser buffer, reference, grant, retained report and export is charged at its actual width. In a dense installation the source retains $N^2$ law entries, $N$ gains, and $N$ current plus $N$ destination entries at the same time as the observer's records. One native $Q_g$ can use $2N$ scalar products to form all squares and gain products; these and local exact solves are paid work, not additional source observations. A dense observer can retain $O(b^2N+bNq+N^3+Nb+N^2)$ rational slots in addition to code, framing, indices, references and copies. Finite per-instance rational termination gives no uniform bit, conditioning, lifetime-memory, energy, noise or physical-shot bound; arbitrary rational Adds already have unbounded operand width, and repeated squaring can grow denominator bits without new input.
+
+The existing gain-one calibrated Square, finite observability, minimal symmetric realization, rational-root, and simultaneous-diagonalization results are suppliers. They do not supply this unknown signed gain acquisition, its zero-plane residual classification, or the native $r=2$ family. The public fixed-pair diffusion purification and timed-release results likewise retain their own source and clock. No common apparatus is inferred. The sustained common-source/four-expression programme remains open: this portfolio does not prove a universal alpha/beta generator, transport A into B/C, a globally minimal resource vector, physical conformance, arbitrary chronology recovery, or completion through 2027.
+

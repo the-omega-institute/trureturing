@@ -1,0 +1,213 @@
+## 215. Native geometry, Gibbs preparation, CAR convention, and the filtered input
+
+The native source is the stopped singleton substitution
+$\beta\mapsto\langle\beta,\alpha\rangle$ at its first accepted epoch,
+with actual-coordinate order $(r,\ell,R)$. Here the source symbol $\beta$
+is distinct from the inverse temperature used below. The relevant fixed data
+and metric family are
+
+$$
+\begin{gathered}
+T=(1,1,1)^{\mathsf T},\qquad
+L_\star=\begin{pmatrix}2&-1&-1\\-1&1&0\\-1&0&1\end{pmatrix},\\
+q=(q_1,q_2)^{\mathsf T},\qquad
+\pi_q=(1-q_1-q_2,q_1,q_2)^{\mathsf T},\qquad
+G_q=L_\star+\pi_q\pi_q^{\mathsf T},\\
+G_qT=\pi_q,\qquad T^{\mathsf T}G_qT=1,\qquad
+Q_q=-G_q^{-1}L_\star=T\pi_q^{\mathsf T}-I_3.
+\end{gathered}
+\tag{215.1}
+$$
+
+For $q_1,q_2\ge0$, $q_1+q_2\le1$, this is the source's Markov metric
+subclass. The two interior examples are
+
+$$
+q_a=(1/6,1/6)^{\mathsf T},\quad
+\pi_a=(2/3,1/6,1/6)^{\mathsf T},\qquad
+q_b=(1/3,1/3)^{\mathsf T},\quad \pi_b=T/3.
+\tag{215.2}
+$$
+
+Their off-diagonal Markov rates are positive. The present quantum processing
+does not change these generators or assert anything about later accepted
+epochs.
+
+Use the positive principal root $S_q=G_q^{1/2}$ and the normalized
+one-particle coordinate $S_qx$. After complexification, the source Hamiltonian
+and the declared common normalized cut are
+
+$$
+\begin{gathered}
+V_q=S_qT,\qquad \|V_q\|=1,\qquad
+H_q=S_q^{-1}L_\star S_q^{-1}=I_3-V_qV_q^*,\\
+\operatorname{spec}H_q=\{0,1,1\},\qquad
+\mathfrak h=\mathbb Ce_\ell\oplus
+\operatorname{span}_{\mathbb C}\{e_r,e_R\},\qquad
+p_q=|(V_q)_\ell|^2.
+\end{gathered}
+\tag{215.3}
+$$
+
+In particular,
+
+$$
+V_a=(10,7,7)^{\mathsf T}/\sqrt{198},\quad p_a=49/198,
+\qquad V_b=T/\sqrt3,\quad p_b=1/3.
+\tag{215.4}
+$$
+
+The principal-root normalization is part of this definition. It can mix raw
+occurrence coordinates, so the normalized cut is not identified with raw
+weighted spatial subsystems. Equal one-particle spectra do not specify the
+cut-dependent scalar $p_q$.
+
+The unconditioned finite fermionic preparation retains all number sectors and
+the zero-energy mode:
+
+$$
+\mathcal F_-(\mathbb C^3)=\bigoplus_{j=0}^3\Lambda^j\mathbb C^3,
+\qquad \dim\mathcal F_-=8,\qquad
+\rho_{q,\beta}=\frac{e^{-\beta d\Gamma_-(H_q)}}{2(1+t)^2},
+\qquad t=e^{-\beta}\in(0,1].
+\tag{215.5}
+$$
+
+There is no chemical-potential term, kernel removal, or replacement by a
+fixed-number conditioned Gibbs state. A Bob-local number-preserving rotation
+aligns the Bob component of $V_q$ with an active mode $b$ and an orthogonal
+spectator mode, denoted here by $\varsigma$. With creation order
+$(A,b,\varsigma)$, the aligned preparation is
+$\sigma_\beta(p)\otimes\tau_\beta$, where
+
+$$
+\begin{gathered}
+D=2(1+t),\qquad
+\sigma_\beta(p)=
+\begin{pmatrix}
+a&0&0&0\\
+0&b&z&0\\
+0&\overline z&c&0\\
+0&0&0&d
+\end{pmatrix},\qquad
+\tau_\beta=\operatorname{diag}(r_0,r_1),\\
+a=\frac1D,\quad b=\frac{1-(1-t)p}{D},\quad
+c=\frac{t+(1-t)p}{D},\quad d=\frac tD,\\
+z=\frac{(1-t)\sqrt{p(1-p)}}D,\qquad
+r_0=\frac1{1+t},\quad r_1=\frac t{1+t}.
+\end{gathered}
+\tag{215.6}
+$$
+
+The effective occupation basis is $(|00\rangle,|01\rangle,|10\rangle,
+|11\rangle)$. The scalar $b$ in this matrix is a weight, not the active
+mode operator. Define
+
+$$
+\mu=|z|^2,\qquad
+ad=\frac{t}{4(1+t)^2},\qquad
+\mu=\frac{(1-t)^2p(1-p)}{4(1+t)^2},\qquad
+bc=ad+\mu.
+\tag{215.7}
+$$
+
+Thus $\mu$ denotes squared coherence; it is not an independently specified
+joint-occupancy parameter.
+
+The alignment is an even Bob-local CAR operation: bilinears of Bob modes have
+no remaining Alice parity string. It does not license treating individual
+odd Bob annihilators as ordinary local tensor operators. Passing from
+copy-first order $(A_1,b_1,\varsigma_1,A_2,b_2,\varsigma_2)$ to
+party-first order $(A_1,A_2,b_1,\varsigma_1,b_2,\varsigma_2)$ contributes
+the passive CAR sign
+
+$$
+(-1)^{(n_{b_1}+n_{\varsigma_1})n_{A_2}}.
+\tag{215.8}
+$$
+
+This coordinate regrouping is not a physical cross-party gate or an unsigned
+tensor swap.
+
+On the original two-preparation resource the common filter is
+
+$$
+F=\Pi_{n_{A_1}+n_{A_2}=1}\,
+\Pi_{n_{r_1}+n_{R_1}+n_{r_2}+n_{R_2}=1}.
+\tag{215.9}
+$$
+
+Bob's projector counts all four Bob modes. It commutes with Bob's
+number-preserving alignment and is the same operator for the two native
+models on their declared normalized axes. The source-informed active
+extraction used subsequently is a separate, known-$q$ operation.
+
+In the aligned party-first code, identify Alice rail states $A_1,A_2$ with
+$0,1$, and Bob active rail states $b_1,b_2$ with $0,1$. The active block is
+
+$$
+C_-=
+\begin{pmatrix}
+ad&0&0&0\\
+0&bc&-\mu&0\\
+0&-\mu&bc&0\\
+0&0&0&ad
+\end{pmatrix}
+=ad I_4+2\mu P_-.
+\tag{215.10}
+$$
+
+The diagonal terms are $ad,bc,bc,ad$. Before CAR regrouping the middle
+coherence is $z\overline z=\mu$; the ket $A_2,b_1$ has the negative
+regrouping sign and $A_1,b_2$ has the positive sign. Hence the literal block
+has coherence $-\mu$. An explicit Alice phase $e^{i\pi n_{A_2}}$ changes
+that sign without changing negativity or success, but no such phase is
+implicit here.
+
+Bob's selected one-particle space splits as
+
+$$
+B_{\mathrm{act}}=\operatorname{span}\{|b_1\rangle,|b_2\rangle\},
+\qquad
+B_{\mathrm{sp}}=\operatorname{span}\{|\varsigma_1\rangle,
+|\varsigma_2\rangle\}.
+\tag{215.11}
+$$
+
+Both spectators are empty in the active block, giving factor $r_0^2$.
+When a spectator is occupied, Bob's selected total number excludes an active
+Bob particle. Each of the four remaining Alice-rail/spectator-rail
+configurations has weight $ac\,r_0r_1$. The diagonal spectator state and the
+number selection leave no coherence between these configurations or with the
+active block. Consequently the full unnormalized filtered state is
+
+$$
+\begin{gathered}
+\Omega_F=r_0^2C_-\oplus_B ac\,r_0r_1 I_4,\\
+P_{\mathrm{eff}}=\operatorname{Tr}C_-=4ad+2\mu>0,\qquad
+P_a=r_0^2P_{\mathrm{eff}},\qquad P_{\mathrm{sp}}=4ac\,r_0r_1>0,\\
+P_{\mathrm{full}}=\operatorname{Tr}\Omega_F=P_a+P_{\mathrm{sp}},\qquad
+\lambda=\frac{2\mu}{P_{\mathrm{eff}}},\qquad
+w=\frac{P_a}{P_{\mathrm{full}}},\qquad
+\frac{\Omega_F}{P_{\mathrm{full}}}=\rho_{w,\lambda}.
+\end{gathered}
+\tag{215.12}
+$$
+
+All diagonal factors are positive at finite $\beta$. Hence $0<w<1$ and
+$0\le\lambda<1$. The active partial-transpose spectrum is
+$\{bc,bc,ad+\mu,ad-\mu\}$ before normalization; the full one adds
+the spectator eigenvalue $ac\,r_0r_1$ four times and multiplies the active
+eigenvalues by $r_0^2$. Therefore
+
+$$
+N_0=\frac{(\mu-ad)_+}{P_{\mathrm{eff}}},\qquad
+N(\rho_{w,\lambda})=wN_0.
+\tag{215.13}
+$$
+
+The full state is separable when $\mu\le ad$ because its active block
+is a separable two-qubit state and its spectator block is a product state;
+it is NPT when $\mu>ad$. No sufficiency of PPT for arbitrary
+$2\times4$ states is assumed.
+

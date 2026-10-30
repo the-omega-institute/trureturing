@@ -1,0 +1,70 @@
+**Definition 15.1 (Three regular labels and an exact rational centre).**
+Let $\Psi^\sharp(r,b,j)=(p,v,a,m)$ mean the regular parent lift of
+Definition 7.1 and its four original response functions, with
+$n=j+r,T=1+b,U=1+2b$. Here $j$ may first be an independent chart
+variable; the source identity is imposed on legal labels. Thus the
+one interpolant has samples
+
+$$
+(-24-e,-e/j,(27/5-e)/T,-e/n),\qquad
+ e=-\frac{24(b-1/8)\kappa}{5\Lambda}.
+$$
+
+Define
+
+$$
+\begin{aligned}
+\mathcal N(r,b)&=\Psi^\sharp(r,b,b+r(1-r)/b),\\
+\mathcal A(u,t)&=\Psi^\sharp(1-ut,t,t+u-u^2t).
+\end{aligned}
+$$
+
+For $t>0$, $\mathcal A$ is precisely the original strict-source chart
+when $0<1-ut<1$; the third argument is
+$b+r(1-r)/b=t+u-u^2t$. At $t=0$ it is an auxiliary analytic
+boundary chart with $(r,b,c)=(1,0,u)$.
+For $z=(u,r_B,b_B,r_Q,b_Q)$ write
+
+$$
+A=\mathcal A(u,t),\quad B=\mathcal N(r_B,b_B),\quad
+Q=\mathcal N(r_Q,b_Q),
+$$
+
+and define the five-component rational function
+
+$$
+\mathcal E(z,t)=(p_A-p_B,\ v_A-v_B,\ m_A-m_B,\ p_A-p_Q,\ v_A-v_Q).
+$$
+
+Let $z_c$ have denominator $10^{95}$ and the following five numerators,
+in that coordinate order:
+
+$$
+\begin{gathered}
+100428761387816823696480171765441312044987893072648279126168973533098255816050448537824871433525\\
+70716954727879839279480184367659045851078335574041753095114351262855582985017322755503173275409\\
+30814988061236982635547616875755700750487136119740475471798671699545887071653908946326719388474\\
+6104050961496413159205837486701483942203552259477108118661530488778466938075465071686482585820\\
+5847642733657720862719432264186152695748000961996411761678819588053707155234072033938760516187
+\end{gathered}
+$$
+
+Let $(p_c,v_c)$ have denominator $10^{95}$ and respective numerators
+
+$$
+\begin{gathered}
+367068393378998395246026571982456711245305890922162694264197866224863529619880873392282957453850\\
+5679629840728084907886878607821919633308547340517015332315858757685186396688860630206243979276432
+\end{gathered}
+$$
+
+Define the closed base rectangle and parameter box
+
+$$
+\mathcal B_0=\{(p,v):|p-p_c|\le10^{-65},\ |v-v_c|\le10^{-65}\},
+\qquad
+\mathcal Z=\{z:\|z-z_c\|_\infty\le10^{-70}\}.
+$$
+
+Every base in $\mathcal B_0$ has $3<p<4$ and $56<v<57$.
+

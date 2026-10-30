@@ -1,0 +1,78 @@
+**Lemma 21.2 (Excluded companion intervals).** Suppose an actual world
+belongs to a base with
+
+$$
+(p,w)\in Z=[-115,-70]\times[-13,-8],\qquad v=11p/2+w.
+\tag{21.4}
+$$
+
+Its tail ratio $x$ belongs neither to $[1/5,3/10]$ nor to $[4/5,+\infty)$.
+
+Proof. First suppose $1/5\le x\le3/10$. Strict source positivity gives
+
+$$
+xU=b+r+\frac{r(1-r)}b>b=\frac{U-1}{2}.
+$$
+
+Since $x<1/2$ and $U>1$, it follows that
+
+$$
+1<U<\frac1{1-2x},\qquad
+U=1+\frac{2xy}{1-2x}\quad\text{for some }0<y<1.
+\tag{21.5}
+$$
+
+Define the polynomial
+
+$$
+G_-(x,p,w,y)=(1-2x)^2
+ L\left(x,1+\frac{2xy}{1-2x},p,11p/2+w\right).
+\tag{21.6}
+$$
+
+The denominator cancels exactly. On the box
+$[1/5,3/10]_x\times[-115,-70]_p\times[-13,-8]_w\times[0,1]_y$,
+use the degree vector $(5,1,1,2)$ in (21.3). The complete family
+of $6\cdot2\cdot2\cdot3=72$ rational coefficients satisfies
+
+$$
+\min_{\mathbf i}\mathcal B_{\mathbf i}(G_-)=\frac{568697}{500},
+\qquad
+\max_{\mathbf i}\mathcal B_{\mathbf i}(G_-)=\frac{861092}{125}.
+\tag{21.7}
+$$
+
+These finite identities follow by substituting (21.2) into (21.6)
+and applying the sum (21.3) for every
+$\mathbf i\in\{0,\ldots,5\}\times\{0,1\}^2\times\{0,1,2\}$.
+Their positive lower bound, the partition of unity, and
+$(1-2x)^2>0$ imply $L>0$, contradicting its necessary vanishing.
+
+For $x\ge4/5$ write $x=4/5+s$, $U=1+z$, with $s,z\ge0$.
+There is the exact finite expansion
+
+$$
+L(4/5+s,1+z,p,11p/2+w)
+       =\sum_{i=0}^3\sum_{j=0}^2 c_{ij}(p,w)s^iz^j.
+\tag{21.8}
+$$
+
+There are no other monomials. Each coefficient has coordinate degrees
+at most $(1,1)$ in $(p,w)$. In the order
+$(0,0),(0,1),(1,0),(1,1)$, its four Bernstein coefficients on $Z$
+are the following exact rational numbers:
+
+| $(i,j)$ | Four coefficients of $c_{ij}$ |
+|---|---|
+| $(0,0)$ | $(838196,867196,581696,610696)/125$ |
+| $(0,1)$ | $(455882,434382,309632,288132)/125$ |
+| $(0,2)$ | $(180986,185486,151736,156236)/125$ |
+| $(1,0)$ | $(977912,929912,590912,542912)/25$ |
+| $(1,1)$ | $(1055774,1018774,785774,748774)/25$ |
+| $(1,2)$ | $(247649,250899,246524,249774)/50$ |
+| $(2,0)$ | $(473888,467888,329888,323888)/5$ |
+| $(2,1)$ | $(369256,365256,279256,275256)/5$ |
+| $(2,2)$ | $(30961,31211,34336,34586)/10$ |
+| $(3,0)$ | $(6504,6504,6504,6504)$ |
+| $(3,1)$ | $(7338,7338,7338,7338)$ |
+| $(3,2)$ | $(834,834,834,834)$ |

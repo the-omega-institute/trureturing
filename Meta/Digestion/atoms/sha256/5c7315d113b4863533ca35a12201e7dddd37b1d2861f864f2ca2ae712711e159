@@ -1,0 +1,11 @@
+**接口 V（未归一化分支、被动参考与因果接线）。** 混合相容性要求未归一化分支线性，因而在归一化输入集合上仿射；正概率条件态 $\mathcal I_i(\rho)/\operatorname{tr}\mathcal I_i(\rho)$ 一般非线性。每个局部分支对任意未触及参考的放大 $\mathcal I_i\otimes\mathrm{id}_R$ 都须正，才是完全正；仅要求同一映射的所有正张量幂不够。转置 $\mathsf T$ 的每个 $\mathsf T^{\otimes r}$ 都是全转置，保持正性，而 $(\mathsf T\otimes\mathrm{id})(|\Omega_2\rangle\langle\Omega_2|)=F_{\rm swap}/2$ 在反对称向量上有本征值 $-1/2$，其中 $|\Omega_2\rangle=(|00\rangle+|11\rangle)/\sqrt2$，$F_{\rm swap}|a,b\rangle=|b,a\rangle$。保留失败、停止等全部输出后，分支和须保迹。这些是矩阵模型的操作假设，不从递归一词推出。
+
+多步接线直接用 [Context Geometry §11，定义 11.5、定理 11.6](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md) 及其原始供应 [Chiribella–D'Ariano–Perinotti，arXiv:0904.4483v2，定理 3、5](https://arxiv.org/pdf/0904.4483v2)：有限维、固定有限因果次序，输入 $A_k$ 对应文献 $H_{2k-2}$、输出 $B_k$ 对应 $H_{2k-1}$，采用未归一化 Choi 算子，按过去端口在前排列有
+
+$$
+R^{(k)}\ge0,\qquad
+\operatorname{Tr}_{B_k}R^{(k)}=R^{(k-1)}\otimes I_{A_k'},\qquad R^{(0)}=1.
+$$
+
+它供应带记忆通道的实现；回流环境须沿同一记忆边保留。整体保迹不足以保证这个时间次序，也没有任意自指网络或所有时域共用有限记忆的结论。
+

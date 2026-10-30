@@ -1,0 +1,25 @@
+**Definition 29.1 (the future task at the actual cutoff).** Suppose the
+initial native tree has at least three terminals. The cutoff of any
+terminating acquisition has a definite final tree, adjacency $B$ and
+field $w$. Fix any of its current terminals $j$. The real response curve
+and the deterministic digital response curve at an actually available
+fixed scale $h_*>0$ are
+
+$$
+f_w(k)=(B^k w)_j,
+\qquad g_w(k)=\left\lfloor(B^k w)_j/h_*\right\rfloor,
+\qquad k\in\mathbb N.
+\tag{29.1}
+$$
+
+For requested precision use $h_*=2^{-p_0}$, with fixed $p_0\ge0$.
+Each value refers to the pure-Tick continuation followed by a held Read;
+Read and Hold have identity field successor. An autonomous forecast is
+a function $\widehat r:\mathbb N\to\mathbb R$ determined by the stopped
+receiver state; arbitrary further source-independent computation is
+allowed. Its loss is the supremum,
+over all $k$, of absolute response error, taking value $+\infty$ when
+unbounded. The task quantifies sufficiently backed finite continuations
+of every length; it does not assume an infinite physical run with finite
+backing.
+

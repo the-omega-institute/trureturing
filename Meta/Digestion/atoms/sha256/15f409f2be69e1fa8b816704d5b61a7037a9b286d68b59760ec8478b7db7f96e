@@ -1,0 +1,100 @@
+### 2.3. 两张多项式图及完整世界的无零分母逆
+
+按 $r<3/4$ 或 $r>3/4$ 取图 A、B，分别代入
+
+$$
+\begin{array}{c|c|c|c|c}
+\text{图}&r&c&X_{\max}&\lambda\\ \hline
+\mathrm A&bx&x(1-bx)&4&3/4\\
+\mathrm B&1-bx&x(1-bx)&4/3&1/4
+\end{array}
+\tag{2.10}
+$$
+
+由式 (2.9)，图 A 的 $x=r/b=c/(1-r)<4$，图 B 的 $x=(1-r)/b=c/r<4/3$。所以所有严格零源恰落在两个互不相交的严格图域内，其闭包含域为
+
+$$
+D_\nu=\{(b,x):0\le b\le1,\ 0\le x\le X_{\max,\nu},\ bx\le\lambda_\nu\},
+\qquad \nu\in\{\mathrm A,\mathrm B\}.
+\tag{2.11}
+$$
+
+在每图中先用式 (2.10) 代入 $r,c$，此后 $j,n,T,U,L$ 均是 $b,x$ 的多项式。定义
+
+$$
+F_\nu(b,x)=\frac{S(r_\nu(b,x),b)}{b^3}.
+\tag{2.12}
+$$
+
+这是在多项式环中的精确整除，故也定义 $b=0$ 的延拓，坐标次数为 $(4,6)$。以下各式均按所选图作多项式运算，省略下标 $\nu$：
+
+$$
+\begin{aligned}
+\Delta&=L+U(L-4Tn+6jn-4jT),\\
+B&=YL-U(4ATn-6Cjn+4zjT),\\
+V_0&=-B,\\
+V_1&=(A-Y)Tn+U\bigl(ATn+6(A-C)n+4(z-A)T\bigr),\\
+V_2&=(C-Y)jn+U\bigl(Cjn+4(A-C)n+4(z-C)j\bigr),\\
+V_3&=(z-Y)jT+U\bigl(zjT+4(A-z)T+6(z-C)j\bigr).
+\end{aligned}
+\tag{2.13}
+$$
+
+直接合并项有
+
+$$
+\Delta=La_4,\quad B=L(Y-k_4),\quad
+jV_1=A\Delta-B,\quad TV_2=C\Delta-B,\quad nV_3=z\Delta-B.
+\tag{2.14}
+$$
+
+为表达实际末两读，定义
+
+$$
+\begin{aligned}
+G_6&=-10V_0+36V_1-45V_2+20V_3,\\
+G_7&=-20V_0+70V_1-84V_2+35V_3,\\
+\tau_6&=1+2r+2b+c,\qquad \tau_7=2+5b+c,\\
+H&=B+\tau_6G_6,\qquad M_n=B+\tau_7G_7.
+\end{aligned}
+\tag{2.15}
+$$
+
+两条多项式余项恒等式为
+
+$$
+\begin{aligned}
+B+U(-V_0+4V_1-6V_2+4V_3)-Y\Delta&=0,\\
+B+(n+U)(-4V_0+15V_1-20V_2+10V_3)-p_\star\Delta
+&=-\frac2{2625}F.
+\end{aligned}
+\tag{2.16}
+$$
+
+式 (2.14) 可逐个展开；例如 $jV_1=A[L+U(L-4Tn+6jn-4jT)]-YL+U(4ATn-6Cjn+4zjT)$，消去相反项即得 $j$ 乘式 (2.13) 的 $V_1$。其余两个同理。式 (2.16) 第一行代入 $V_i$ 消去全部项；第二行由式 (2.5) 和 $L(Y-k_4)=B$、$La_4=\Delta$ 得到，乘开时 $b^3$ 正好由式 (2.12) 消去。这些均为多项式恒等式，不要求 $F=0$ 或 $\Delta\ne0$。
+
+下一小节将先证明每个严格零点的
+
+$$
+F_x>0,\qquad \Delta<0.
+\tag{2.17}
+$$
+
+在此之后才定义完整逆
+
+$$
+d=\frac B\Delta,\qquad
+g(s)=\frac1\Delta\sum_{i=0}^3V_i\ell_i(s),\qquad
+W_\nu(b,x)=(P(r_\nu,b),g,d).
+\tag{2.18}
+$$
+
+式 (2.14) 给全部前四读，式 (2.16) 给后两读；因此每个严格零源产生一个实现整个 $H_5^\star$ 的世界。它的增益不恒零：否则初读与第一动后读数均等于 $d$，与 $0\ne24$ 矛盾。反向，任一兼容世界由式 (2.5) 落在严格零集，由式 (2.17) 及 $L>0$ 知 $a_4\ne0$，于是式 (2.4) 强迫同一个 $d=B/\Delta$，前四样本再强迫式 (2.18) 的整个 $g$。这证明严格源零集与全部完整世界的双射，也与前卷定理 10.2 的逆相同。在该双射下，式 (2.3)、(2.15) 进一步给
+
+$$
+h=\frac H\Delta,\qquad m=\frac{M_n}\Delta.
+\tag{2.19}
+$$
+
+此推导只在证明 $\Delta<0$ 后除它；从不除以 $g(i)$、最高次系数、根差或判别式。
+

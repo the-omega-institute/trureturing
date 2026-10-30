@@ -1718,3 +1718,3273 @@ direct local-block proof of §§192–194.
   domain. It concerns the trace-norm functional of Convention 191.2.
 
 ## 200.99 追加锚（本行以下为增补区）
+
+## 201. Fixed model, cut, and assertion
+
+**Definition 201.1 (The fixed independent-ray family).** Use the family,
+one-copy occupation convention and sector bases of (177.2) and
+(178.1)–(178.3). Fix $0<t\leq 1$, $s=1-t$, and
+
+$$
+ Z=2(1+t)^2.
+$$
+
+Let $v=(\alpha,u)$ and $w=(\gamma,h)$ be unit vectors in
+$\mathbb C^3=\mathbb C\oplus\mathbb C^2$. Write
+
+$$
+ x=|\alpha|^2,\qquad y=|\gamma|^2,\qquad z=|u^*h|^2.
+$$
+
+The one-copy number blocks, in the supplied bases
+$(\ell,R,r)$ for $N=1$ and $(r\wedge R,\ell\wedge R,\ell\wedge r)$ for
+$N=2$, are
+
+$$
+ R=1\oplus(tI_3+s vv^*)\oplus(tI_3-ts ww^*)\oplus t^2,
+ \qquad \rho=R/Z.
+$$
+
+The arbitrary global-number-preserving orbit is a premise of this manuscript. It is
+separate from passive one-particle $\Gamma(U_3)$, native reachability, and local
+SSR operations.
+
+**Assumption 201.2 (Compatible preparations and local operations).**
+The resource consists of two disjoint, independently prepared instances
+of this same untwirled $\rho(t,v,w)$, with compatible labelled modes,
+creation order and coupling-phase conventions, as in VI §147. One common local-number twirl is applied across
+the two copies. Bob has all four modes, and local filters may be arbitrary
+coherent contractions inside a fixed total local-number space. Independent
+pre-twirling of the two inputs is a different resource. No cloning, external
+reference, or additional physical access is included.
+
+The original creation order is
+
+$$
+ (\ell _1,r_1,R_1,\ell _2,r_2,R_2),
+$$
+
+and the fixed ordinary tensor cut is
+
+$$
+ (\ell _1,\ell _2)\mid(r_1,R_1,r_2,R_2).
+$$
+
+Partial transpose below is the ordinary transpose on this Alice tensor factor
+once the CAR coordinate convention has been fixed; it is not fermionic
+partial time reversal. An encoded $2\times2$ branch has a two-dimensional
+Alice rail space and a two-dimensional Bob space, each at fixed local
+total number. For a normalized output $\sigma$, write
+
+$$
+ \mathcal N(\sigma)=\frac{\|\sigma^{T_A}\|_1-1}{2},
+ \qquad [r]_+=\max\{r,0\}.
+$$
+
+**Theorem 201.3 (Finite two-copy extraction equivalence).** Under
+Definition 201.1 and Assumption 201.2, the normalized common-twirled
+resource $\Omega$ defined in (203.2) satisfies
+
+$$
+ \boxed{
+ \Omega\text{ has an allowed positive-probability encoded NPT branch}
+ \iff q_0>1\ \text{or}\ q_3>1.
+ }
+$$
+
+This is exactly the ordinary one-copy NPT region of Theorem 181.1,
+which also identifies ordinary one-copy PPT with separability for
+this exact family. The complete common-twirled
+state is PPT exactly when $q_0\leq1$ and $q_3\leq1$. The sector
+$(N_A,N_B)=(1,2)$ has criterion $q_0q_3>1$, and therefore supplies no
+additional activation region.
+
+Proof. The signed charge reduction in §§203–206 and the local-filter
+congruence in §207 give necessity. The explicit positive-probability
+outer branches in §208 give sufficiency; §210 combines them.
+
+## 202. One-copy coordinates and the two Schur parameters
+
+**Notation 202.1 (Reused one-copy matrix data).** Retain (178.1)–(178.6)
+and the criterion of VI §170, with $d=t^2$. Put
+$H=\operatorname{span}\{R,r\}\cong\mathbb C^2$,
+in the ordered basis $(R,r)$, and write
+
+$$
+ |0\rangle=|b_0\rangle,\qquad |2\rangle=|b_{12}\rangle=|r\wedge R\rangle.
+$$
+
+In the Bob order $(|0\rangle,H,|2\rangle)$, define
+
+$$
+\begin{aligned}
+ D&=tI_2+suu^*,& E&=tI_2-ts\,hh^*,\\
+ f&=s\overline{\alpha}\,u,& g&=-ts\overline{\gamma}\,h,\\
+ c&=t+sx,& b&=t(1-sy),& d&=t^2.
+\end{aligned}
+$$
+
+The Alice blocks of $R$ are
+
+$$
+ A_0=1\oplus D\oplus b,\qquad A_1=c\oplus E\oplus d,\qquad
+ C=|f\rangle\langle0|+|2\rangle\langle g|,
+$$
+
+so that
+
+$$
+ R=\begin{pmatrix}A_0&C\\ C^*&A_1\end{pmatrix}.
+ \tag{202.1}
+$$
+
+The number-block spectra are
+
+$$
+ \operatorname{spec}(R)=\{1,1,t,t,t,t,t^2,t^2\},\qquad
+ \operatorname{tr}R=Z.
+ \tag{202.2}
+$$
+
+Thus $R>0$ for $t>0$, while $D\geq tI_2$ and $E\geq t^2I_2$.
+The original positive blocks give the strict Schur inequalities
+
+$$
+ cD-ff^*>0,\qquad bE-gg^*>0. \tag{202.3}
+$$
+
+Define
+
+$$
+ q_0=f^*E^{-1}f,\qquad q_3={g^*D^{-1}g\over d}. \tag{202.4}
+$$
+
+The inverse rank-one formulas are
+
+$$
+ E^{-1}={1\over t}\left(I_2+{s\,hh^*\over t+sy}\right),\qquad
+ D^{-1}={1\over t}\left(I_2-{s\,uu^*\over t+s(1-x)}\right),
+$$
+
+so
+
+$$
+ q_0={s^2x\over t}\left((1-x)+{sz\over t+sy}\right),\qquad
+ q_3={s^2y\over t}\left((1-y)-{sz\over t+s(1-x)}\right). \tag{202.5}
+$$
+
+The published ordinary one-copy partial-transpose reduction
+(178.4)–(178.5), equivalently VI (170.1)–(170.5), has positive singleton
+blocks $c,b$, and nontrivial blocks
+
+$$
+ \begin{pmatrix}1&f^*\\f&E\end{pmatrix},\qquad
+ \begin{pmatrix}d&g^*\\g&D\end{pmatrix}.
+$$
+
+Its Schur criterion is
+
+$$
+ \rho^{T_A}\geq0\iff q_0\leq1\text{ and }q_3\leq1. \tag{202.6}
+$$
+
+## 203. Literal CAR regrouping and the common twirl
+
+**Proposition 203.1 (Signed 64-dimensional resource law).** For
+occupations $a_i=n_{\ell_i}$ and $k_i=n_{r_i}+n_{R_i}$, moving
+$\ell _2$ left across the occupied first-copy Bob modes gives exactly
+
+$$
+ J|a_1,j;a_2,k\rangle=(-1)^{k_1a_2}|a_1,a_2;j,k\rangle,\qquad
+ \boxed{(-1)^{(n_{r_1}+n_{R_1})n_{\ell_2}}}. \tag{203.1}
+$$
+
+Proof. Moving $\ell_2$ to the stated Alice position crosses each
+occupied first-copy Bob mode once. CAR anticommutation contributes
+one minus sign per crossing. There is no further permutation within
+either Bob copy. $J$ is a signed
+permutation of the 64 occupation kets; it is not asserted to factor across the
+Alice--Bob cut.
+
+Let $\Pi_{a,k}$ project onto total Alice number $a$ and total Bob number
+$k$. The actual normalized resource is
+
+$$
+ \Omega={1\over Z^2}
+ \sum_{a=0}^2\sum_{k=0}^4
+ \Pi_{a,k}J(R\otimes R)J^*\Pi_{a,k}. \tag{203.2}
+$$
+
+This is one common twirl. The opposing one-copy coherences are retained in
+(203.2), subject to the CAR signs in (203.1).
+
+For the $N_A=1$ rails write $p=|10\rangle$, $q=|01\rangle$, and
+
+$$
+ P=1\oplus(-I_H)\oplus1.
+$$
+
+Before restriction to a Bob charge, the $N_A=1$ block is
+
+$$
+ S=\begin{pmatrix}
+ A_1\otimes A_0&(C^*P)\otimes C\\
+ (PC)\otimes C^*&A_0\otimes A_1
+ \end{pmatrix},\qquad C^*P=-|0\rangle\langle f|+|g\rangle\langle2|. \tag{203.3}
+$$
+
+On $\mathcal H_k=\bigoplus_{i+j=k}\mathcal B_i\otimes\mathcal B_j$,
+where $\mathcal B_0=\mathbb C|0\rangle$, $\mathcal B_1=H$,
+$\mathcal B_2=\mathbb C|2\rangle$, the off-diagonal restrictions are
+
+$$
+\begin{array}{c|c}
+ k&S\text{-off-diagonal map}\\ \hline
+0&0\\
+1&-|0,f\rangle\langle f,0|\\
+2&-|0,2\rangle\langle f,g|+|g,f\rangle\langle2,0|\\
+3&|g,2\rangle\langle2,g|\\
+4&0.
+\end{array} \tag{203.4}
+$$
+
+Here $|a,b\rangle$ means $a\otimes b$, and all phases are those of the
+same source vectors $f,g$.
+
+The $N_A=0$ and $N_A=2$ blocks are, respectively,
+
+$$
+ M_{0,k}=(A_0\otimes A_0)|_{\mathcal H_k},\qquad
+ M_{2,k}=(A_1\otimes A_1)|_{\mathcal H_k}. \tag{203.5}
+$$
+
+Each has a one-dimensional Alice factor.
+
+## 204. All fifteen charge probabilities
+
+**Proposition 204.1 (All charge probabilities).** Let
+
+$$
+ \delta=\operatorname{tr}D=2t+s(1-x),\qquad
+ \varepsilon=\operatorname{tr}E=2t-ts(1-y).
+$$
+
+The following entries are the unnormalized numerators; every physical probability
+is the displayed entry divided by $Z^2$:
+
+$$
+\begin{array}{c|ccccc}
+N_A\backslash N_B & 0 & 1 & 2 & 3 & 4 \\ \hline
+0 & 1 & 2\delta & \delta^2+2b & 2b\delta & b^2 \\
+1 & 2c & 2(\varepsilon+c\delta) & 2(d+\delta\varepsilon+bc) & 2(d\delta+b\varepsilon) & 2bd \\
+2 & c^2 & 2c\varepsilon & \varepsilon^2+2cd & 2d\varepsilon & d^2
+\end{array} \tag{204.1}
+$$
+
+They include every spectator direction and all four Bob modes.
+
+Proof. Taking traces of the blocks in (203.3)–(203.5) gives the table.
+The off-diagonal maps have zero trace in the Alice rails. The row
+polynomials are
+
+$$
+ (1+\delta r+br^2)^2,\quad
+ 2(1+\delta r+br^2)(c+\varepsilon r+dr^2),\quad
+ (c+\varepsilon r+dr^2)^2.
+$$
+
+At $r=1$, their sum is
+$(1+\delta+b+c+\varepsilon+d)^2/Z^2=1$, proving normalization.
+
+## 205. Explicit source matrices by Bob charge
+
+**Proposition 205.1 (Source matrices in every Bob charge).**
+The generic formula (203.3) can be written without suppressed spectator
+entries. For $N_B=0$ and $N_B=4$, in the two Alice rails, it is
+
+$$
+ S_0=cI_2,\qquad S_4=bdI_2. \tag{205.1}
+$$
+
+For $N_B=1$, use the Bob basis
+
+$$
+ L(\xi)=\xi\otimes|0\rangle,\qquad R(\xi)=|0\rangle\otimes\xi,\qquad \xi\in H.
+$$
+
+Then
+
+$$
+ S_1=
+ \begin{pmatrix}
+ E\oplus cD&-|R(f)\rangle\langle L(f)|\\
+ -|L(f)\rangle\langle R(f)|&cD\oplus E
+ \end{pmatrix}. \tag{205.2}
+$$
+
+For $N_B=2$, use $U=|2,0\rangle$, $V=H\otimes H$,
+$W=|0,2\rangle$. Then
+
+$$
+ S_2=
+ \begin{pmatrix}
+ d\oplus(E\otimes D)\oplus bc&K_2\\
+ K_2^*&bc\oplus(D\otimes E)\oplus d
+ \end{pmatrix},\quad
+ K_2=|g\otimes f\rangle\langle U|-|W\rangle\langle f\otimes g|. \tag{205.3}
+$$
+
+For $N_B=3$, use $L(\xi)=|2\rangle\otimes\xi$ and
+$R(\xi)=\xi\otimes|2\rangle$. Then
+
+$$
+ S_3=
+ \begin{pmatrix}
+ dD\oplus bE&|R(g)\rangle\langle L(g)|\\
+ |L(g)\rangle\langle R(g)|&bE\oplus dD
+ \end{pmatrix}. \tag{205.4}
+$$
+
+All five sector matrices are unnormalized $R\otimes R$ blocks; division by $Z^2$
+gives their physical contributions. Equations (205.1)--(205.4) display every
+spectator direction and every phase needed below.
+
+Proof. Restrict $A_1\otimes A_0$ and $A_0\otimes A_1$
+to the displayed Bob direct sums and use the corresponding row of
+(203.4) for the off-diagonal map. This gives every displayed entry.
+
+## 206. Partial-transpose normal forms in every Bob sector
+
+**Proposition 206.1 (Complete partial-transpose normal forms).**
+Ordinary Alice partial transposition of the actual matrices (203.3)--(203.5)
+gives the following complete normal forms.
+
+Proof. Transpose the two Alice rail indices, retaining all Bob indices. The dimensions of the Bob charge
+spaces $k=0,1,2,3,4$ are $1,4,6,4,1$.
+
+For $k=0$,
+
+$$
+ M_{1,0}^{T_A}=cI_2, \tag{206.1}
+$$
+
+and for $k=4$,
+
+$$
+ M_{1,4}^{T_A}=bdI_2. \tag{206.2}
+$$
+
+Both are positive.
+
+For $k=1$, a unitary permutation and a $2\times2$ rail rotation give
+
+$$
+ M_{1,1}^{T_A}\simeq cD\oplus cD\oplus(E-ff^*)\oplus(E+ff^*). \tag{206.3}
+$$
+
+Since $E>0$, this is positive exactly when $q_0\leq1$.
+
+For $k=2$, put
+
+$$
+ H_-=
+ \begin{pmatrix}E\otimes D&-f\otimes g\\-(f\otimes g)^*&d\end{pmatrix},\qquad
+ H_+=
+ \begin{pmatrix}D\otimes E&g\otimes f\\(g\otimes f)^*&d\end{pmatrix}. \tag{206.4}
+$$
+
+Then
+
+$$
+ M_{1,2}^{T_A}\simeq bc\oplus bc\oplus H_-\oplus H_+. \tag{206.5}
+$$
+
+The two $5\times5$ Schur complements are controlled by
+
+$$
+ (f\otimes g)^*(E^{-1}\otimes D^{-1})(f\otimes g)
+ =d\,q_0q_3, \tag{206.6}
+$$
+
+and the analogous equality for $g\otimes f$. Hence (206.5) is positive
+exactly when $q_0q_3\leq1$.
+
+For $k=3$,
+
+$$
+ M_{1,3}^{T_A}\simeq bE\oplus bE\oplus(dD-gg^*)\oplus(dD+gg^*), \tag{206.7}
+$$
+
+Alice transposition leaves $p\otimes R(H)$ and $q\otimes L(H)$
+uncoupled, each with the strictly positive block $bE$. It couples
+$p\otimes L(H)$ to $q\otimes R(H)$ by $gg^*$; symmetric and
+antisymmetric combinations of these components give $dD+gg^*$ and
+$dD-gg^*$, respectively. Since $dD>0$, the latter is positive
+semidefinite exactly when $g^*(dD)^{-1}g=q_3\leq1$. Thus (206.7)
+is positive exactly when $q_3\leq1$. Equations (206.1)--(206.7),
+together with the one-dimensional-Alice blocks (203.5), classify all 15
+charge blocks. Therefore
+
+$$
+ \boxed{\Omega^{T_A}\geq0\iff q_0\leq1\text{ and }q_3\leq1.} \tag{206.8}
+$$
+
+No PPT inference through an assumed local ordinary regrouping is used.
+
+## 207. Necessity for every allowed local filter
+
+**Proof of necessity in Theorem 201.3.** If the right side of
+(206.8) holds and $K_A\otimes K_B$ is any product
+Kraus operator, then
+
+$$
+ \bigl[(K_A\otimes K_B)\Omega(K_A\otimes K_B)^*\bigr]^{T_A}
+ =(\overline K_A\otimes K_B)\Omega^{T_A}
+ (K_A^{\mathsf T}\otimes K_B^*)\geq0. \tag{207.1}
+$$
+
+An adaptive branch is still a product Kraus operator, and coarse-graining is
+a positive sum of such congruences. A positive-probability normalization preserves
+positivity. Charge-preserving filters are a subset. Thus $q_0\leq1,q_3\leq1$
+forbids encoded NPT under the entire declared local operation class.
+
+## 208. Inverse-direction filters and exact outer branches
+
+**Proof of sufficiency in Theorem 201.3: the outer branches.**
+Assume $q_0>1$. Define the normalized inverse direction
+
+$$
+ k_0={E^{-1}f\over\|E^{-1}f\|},\qquad
+ L(\xi)=\xi\otimes|0\rangle,\qquad R(\xi)=|0\rangle\otimes\xi.
+$$
+
+Bob applies the orthogonal rank-two projector within $N_B=1$ onto
+$\operatorname{span}\{L(k_0),R(k_0)\}$, and Alice projects onto
+$\operatorname{span}\{p,q\}$. Set
+
+$$
+ a_0=k_0^*Ek_0,\qquad B_0=c\,k_0^*Dk_0,\qquad m_0=|k_0^*f|^2.
+$$
+
+Then $m_0/a_0=q_0$, $B_0>m_0$ by (202.3), and the actual subnormalized
+encoded state in the order $(pL,pR,qL,qR)$ is
+
+$$
+ X_0={1\over Z^2}
+ \begin{pmatrix}
+ a_0&0&0&0\\0&B_0&-m_0&0\\0&-m_0&B_0&0\\0&0&0&a_0
+ \end{pmatrix}. \tag{208.1}
+$$
+
+Its probability and partial-transpose spectrum are
+
+$$
+ P_0={2(a_0+B_0)\over Z^2}>0,\qquad
+ \operatorname{spec}(X_0^{T_A})={1\over Z^2}\{B_0,B_0,a_0+m_0,a_0-m_0\}. \tag{208.2}
+$$
+
+Thus $q_0>1$ gives NPT, with
+
+$$
+ \lambda_{\min}\bigl((X_0/P_0)^{T_A}\bigr)
+ ={a_0-m_0\over2(a_0+B_0)}<0,\quad
+ \mathcal N(X_0/P_0)={(m_0-a_0)_+\over2(a_0+B_0)},\quad
+ P_0\mathcal N={(m_0-a_0)_+\over Z^2}. \tag{208.3}
+$$
+
+The central $2\times2$ source block has eigenvalues $B_0\pm m_0$,
+so the original filtered state is positive. The minus sign in (208.1) is
+exactly the CAR sign and can be changed by an Alice rail phase.
+
+Assume $q_3>1$. Define
+
+$$
+ k_3={D^{-1}g\over\|D^{-1}g\|},\qquad
+ L(\xi)=|2\rangle\otimes\xi,\qquad R(\xi)=\xi\otimes|2\rangle,
+$$
+
+with the orthogonal rank-two Bob projector onto $\operatorname{span}\{L(k_3),R(k_3)\}$ in $N_B=3$.
+Set
+
+$$
+ a_3=d\,k_3^*Dk_3,\qquad B_3=b\,k_3^*Ek_3,\qquad m_3=|k_3^*g|^2.
+$$
+
+Then $m_3/a_3=q_3$, $B_3>m_3$, and
+
+$$
+ X_3={1\over Z^2}
+ \begin{pmatrix}
+ a_3&0&0&0\\0&B_3&m_3&0\\0&m_3&B_3&0\\0&0&0&a_3
+ \end{pmatrix}. \tag{208.4}
+$$
+
+Consequently
+
+$$
+ P_3={2(a_3+B_3)\over Z^2}>0,\qquad
+ \operatorname{spec}(X_3^{T_A})={1\over Z^2}\{B_3,B_3,a_3+m_3,a_3-m_3\},\tag{208.5}
+$$
+
+and
+
+$$
+ \lambda_{\min}={(a_3-m_3)\over2(a_3+B_3)},\quad
+ \mathcal N(X_3/P_3)={(m_3-a_3)_+\over2(a_3+B_3)},\quad
+ P_3\mathcal N={(m_3-a_3)_+\over Z^2}. \tag{208.6}
+$$
+
+The plus sign in (208.4) is the corresponding literal CAR sign.
+
+## 209. The middle sector and the product threshold
+
+**Proposition 209.1 (Middle-sector extraction).** Under
+$q_0q_3>1$, the middle branch below has positive probability and
+is NPT.
+
+Proof. Use the same $k_0,k_3$. In $N_B=2$, let
+
+$$
+ U=|2\rangle\otimes|0\rangle,\qquad \chi=k_3\otimes k_0,
+$$
+
+and project Bob onto $\operatorname{span}\{U,\chi\}$. Choose phases so that
+
+$$
+ \mu=(k_3^*g)(k_0^*f)>0.
+$$
+
+Put
+
+$$
+ A=(k_3^*Ek_3)(k_0^*Dk_0),\qquad
+ B=(k_3^*Dk_3)(k_0^*Ek_0).
+$$
+
+In the order $(pU,p\chi,qU,q\chi)$, the actual subnormalized output is
+
+$$
+ X_2={1\over Z^2}
+ \begin{pmatrix}
+ d&0&0&0\\0&A&\mu&0\\0&\mu&bc&0\\0&0&0&B
+ \end{pmatrix}. \tag{209.1}
+$$
+
+Positivity follows from (202.3):
+$\mu^2\leq (b\,k_3^*Ek_3)(c\,k_0^*Dk_0)=bcA$.
+Moreover,
+
+$$
+ {\mu^2\over dB}=q_0q_3. \tag{209.2}
+$$
+
+Partial transposition has spectrum
+
+$$
+ {1\over Z^2}\left\{A,bc,
+ {d+B+\sqrt{(d-B)^2+4\mu^2}\over2},
+ {d+B-\sqrt{(d-B)^2+4\mu^2}\over2}\right\}. \tag{209.3}
+$$
+
+With $H_2=d+A+bc+B$,
+
+$$
+ P_2={H_2\over Z^2},\qquad
+ \lambda_{\min}={(d+B)-\sqrt{(d-B)^2+4\mu^2}\over2H_2},\tag{209.4}
+$$
+
+$$
+ \mathcal N(X_2/P_2)={\left[\sqrt{(d-B)^2+4\mu^2}-d-B\right]_+\over2H_2},\quad
+ P_2\mathcal N={\left[\sqrt{(d-B)^2+4\mu^2}-d-B\right]_+\over2Z^2}. \tag{209.5}
+$$
+
+The last eigenvalue is negative exactly when $\mu^2>dB$, namely
+$q_0q_3>1$. Thus the middle sector is a valid additional witness inside
+the already known union, not an activation mechanism beyond it.
+
+## 210. Exact equivalence and a single compatible instrument
+
+**Proof of Theorem 201.3 and its compatible flagged instrument.**
+Equations (208.1)--(208.6) prove sufficiency whenever $q_0>1$ or $q_3>1$.
+Equations (206.8) and (207.1) prove necessity for every allowed filter.
+Therefore
+
+$$
+ \boxed{
+ \Omega\text{ is PPT}\iff(q_0\leq1\ \land\ q_3\leq1),\qquad
+ \Omega\text{ admits encoded NPT}\iff(q_0>1\ \lor\ q_3>1).
+ }\tag{210.1}
+$$
+
+The three displayed Bob projectors occupy mutually exclusive total-number
+sectors. For a fixed $t,v,w$, one instrument may measure $N_B$ and retain
+flags $j\in\{0,2,3\}$ for the selected branches. Alice first
+projects coherently onto $N_A=1$. Within that Alice outcome, Bob
+uses the mutually orthogonal projectors from §§208–209 for a chosen
+subset $J$ of defined branches and their orthogonal complement
+as a failure outcome. Together with Alice’s failure outcome these
+operators define one number-preserving instrument. Its accepted probability is
+
+$$
+ P_{\mathrm{acc}}=\sum_{j\in J}P_j,
+$$
+
+and its flag-retaining success-weighted negativity is
+
+$$
+ \sum_{j\in J}P_j\mathcal N_j.
+$$
+
+Only branches using the same source parameters are added. Full 64-dimensional
+negativity, one selected conditional negativity, and this flagged sum are
+separate quantities; no equality between them is asserted. No global
+optimality or maximal-rate statement is made.
+
+## 211. One-copy obstruction, minimum declared copy number, and preparation
+
+**Corollary 211.1 (One-copy obstruction and the minimum in the declared menu).**
+In the region $q_0>1$ or $q_3>1$, the minimum number of
+compatible preparations for the declared encoded-NPT extraction is
+exactly two.
+
+Proof. For one copy, the local-number twirl is
+
+$$
+ {1\over Z}\bigl(|0\rangle\langle0|\otimes A_0
+ +|1\rangle\langle1|\otimes A_1\bigr). \tag{211.1}
+$$
+
+Each Alice fixed-number sector is one-dimensional. A number-preserving local
+instrument cannot turn the positive product sum (211.1) into an encoded
+entangled subsystem. Thus ordinary NPT of the untwirled one-copy matrix does
+not constitute one-copy SSR-accessible entanglement.
+
+If $q_0>1$ or $q_3>1$, one copy is impossible and §§208--209 give a
+positive-probability two-copy branch, so the minimum copy number in this menu is
+exactly two. If $q_0,q_3\leq1$, neither one nor two copies yields encoded NPT.
+No claim about three or more copies is made.
+
+The common untwirled preparation is essential. If each input is independently
+number-twirled first, its $C$ block is removed before tensoring. Every term
+in (203.4) then vanishes, and a later common twirl of the product remains a
+positive sum of Alice--Bob product blocks. The compatible-preparation and
+common-phase assumptions are resource premises, not conclusions about physical
+availability.
+
+## 212. Finite endpoints and exact parameter cases
+
+**Proposition 212.1 (Finite endpoint and vanishing-coupling cases).**
+The sector laws and extraction criteria include all finite endpoints
+and all vanishing couplings of Definition 201.1.
+
+Proof. At $t=1$, $s=0$, $f=g=0$, $R=I_8$, and
+$\Omega=I_{64}/64$. The table (204.1) reduces to the binomial charge
+multiplicities; no NPT branch exists. The endpoint $t=0$ is excluded.
+
+If $f=0$ or $g=0$, the corresponding $q$ is zero and its inverse filter
+is simply unused. Formula (202.5) is regular at $x,y\in\{0,1\}$: an
+endpoint component forces the associated coupling to vanish. Repeated,
+collinear, orthogonal, or otherwise nonaligned unit $v,w$ require no change;
+no division by $\|u\|$, $\|h\|$, or $z$ occurs. Strict activation itself
+ensures the inverse direction being used is nonzero.
+
+At $q_0=1$, $q_3=1$, or $q_0q_3=1$, the corresponding partial-transpose
+block has a zero eigenvalue and is PPT, not NPT. If one outer parameter is
+strictly greater than one, the other equality does not suppress that branch.
+
+**Proposition 212.2 (Shared-source threshold equality).** An exact
+shared-source equality point is
+
+$$
+ t=3-2\sqrt2,\qquad v={(1,1,0)\over\sqrt2},\qquad w={(1,0,1)\over\sqrt2}.
+$$
+
+Proof. Here $z=0$, $x=y=1/2$, and $(1-t)^2=4t$, hence
+$q_0=q_3=1$ and $q_0q_3=1$. The relevant partial-transpose eigenvalues
+are zero, so this point is PPT at all three threshold equalities.
+
+**Proposition 212.3 (A rational $q_0$-only branch).** Take
+
+$$
+ t={1\over4},\qquad v={(1,1,0)\over\sqrt2},\qquad w=(0,1,0).
+$$
+
+Proof. Substitution in (202.5) and (208.1)–(208.3) gives
+$q_0=9/4,q_3=0$, and $k_0=(1,0)$ gives
+
+$$
+ (a_0,B_0,m_0)=\left({1\over16},{25\over64},{9\over64}\right),\quad
+ Z={25\over8},\quad P_0={58\over625},\quad
+ \lambda_{\min}=-{5\over58},\quad P_0\mathcal N={1\over125}.
+$$
+
+**Proposition 212.4 (A rational $q_3$-only branch).** Take
+
+$$
+ t={1\over10},\qquad v=(0,1,0),\qquad
+ w={(1,0,1)\over\sqrt2}.
+$$
+
+Proof. Substitution in (202.5) and (208.4)–(208.6) gives
+$q_0=0,q_3=81/40$, and $k_3=(0,1)$ gives
+
+$$
+ (a_3,B_3,m_3)=\left({40\over40000},{121\over40000},{81\over40000}\right),\quad
+ Z={121\over50},\quad P_3={161\over117128},\quad
+ \lambda_{\min}=-{41\over322},\quad P_3\mathcal N={41\over234256}.
+$$
+
+**Proposition 212.5 (One complex source with three strict branches).**
+A fully complex, nonaligned joint point is
+
+$$
+ t={1\over10},\qquad v={(1,2,2)\over3},\qquad
+ w={(2,1,2i)\over3}.
+$$
+
+Proof. Here $x=1/9,y=4/9,z=20/81$, and direct substitution gives
+
+$$
+ q_0={6\over5},\qquad q_3={10\over9},\qquad q_0q_3={4\over3}.
+$$
+
+Thus both outer branches and the middle criterion are strict for one shared
+complex source. The derivation, rather than this example, supplies the
+classification.
+
+## 213. Mathematical suppliers and finite two-copy scope
+
+**Convention 213.1 (Source correspondence and supporting methods).**
+The source and cut are those of [Continuation VI, §§139–156 and
+169–176](https://github.com/the-omega-institute/trureturing/blob/d90bd2fb685cbc899f24a36bf253ad4e6d3b1886/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md).
+VI (140.1) and (141.1)–(141.3) supply the native finite Gibbs spectrum
+and normalization. VI (142.1)–(142.2), §147 and (149.2) supply the
+compatible CAR convention, common-number resource and four-mode Bob cut.
+VI (169.2) and §170 supply the enlarged independent-ray orbit and
+one-copy Schur criterion. Equations (177.2), (178.1)–(178.6) and
+Theorem 181.1 are the corresponding one-copy prerequisites in this volume.
+The pointwise ordinary PPT–separability classification is reused for
+this exact family; the necessity argument in §§203–207 uses the explicit
+signed two-copy law rather than treating CAR regrouping as an ordinary
+local tensor permutation.
+
+The fixed-local-number sector interpretation is the mature method of
+H. M. Wiseman and J. A. Vaccaro, *The entanglement of indistinguishable
+particles shared between two parties*, Phys. Rev. Lett. **91**, 097902,
+[quant-ph/0210002v2](https://arxiv.org/pdf/quant-ph/0210002v2),
+Eqs. (12)–(14), as cited in VI §156 [W]. Its pure-state formula is not
+used as a mixed-state Gibbs formula. The mixed-state number-SSR filtering
+standard form and two-copy local fixed-number projection are those of
+N. Schuch, F. Verstraete and J. I. Cirac, *Quantum entanglement theory in
+the presence of superselection rules*, Phys. Rev. A **70**, 042310,
+[quant-ph/0404079v1](https://arxiv.org/pdf/quant-ph/0404079v1),
+§IV.D.1–2, mapped to the native family in VI (148.4) and §§149–151.
+Group twirling and multiple-copy reference-frame methods are treated by
+S. D. Bartlett, T. Rudolph and R. W. Spekkens, *Reference frames,
+superselection rules, and quantum information*, Rev. Mod. Phys. **79**,
+555, [quant-ph/0610030v3](https://arxiv.org/pdf/quant-ph/0610030v3),
+§III.C.2 and §III.C.4, as cited in VI §156 [R].
+
+The ordinary partial-transpose method is applied only after fixing the
+actual CAR coordinates and charge matrices; the encoded outputs are
+explicit $2\times2$ matrices. Their PPT–separability criterion is the
+$2\times2$ case of M. Horodecki, P. Horodecki and R. Horodecki,
+*Separability of Mixed States: Necessary and Sufficient Conditions*,
+[quant-ph/9605038v2](https://arxiv.org/pdf/quant-ph/9605038v2), Theorem 3,
+as cited in VI §156 [P]. The signed full-orbit sector decomposition,
+all fifteen probabilities, inverse-selected outer flags and middle
+$q_0q_3$ branch in §§203–209 are repo-derived application synthesis
+using these mature methods. No literature-priority assertion is attached
+to those identities.
+
+**Assumption 213.2 (Applicability of the finite extraction statement).**
+Every assertion concerns Definition 201.1 with $0<t\le1$, two compatible
+independent untwirled preparations, the stated creation convention,
+one common local-number twirl and the fixed-charge coherent filters of
+Assumption 201.2. The enlarged global sector orbit is a premise distinct
+from passive $\Gamma(U(3))$, native reachability and the local operation
+class. The physical availability of the preparations and filters is a
+separate premise. Independent pre-twirling specifies a different resource.
+No cloning or external phase reference is inferred. Theorem 181.1
+classifies ordinary one-copy separability; Theorem 201.3 and Corollary
+211.1 concern the finite two-copy encoded-NPT task. They supply no
+all-copy theorem, asymptotic rate, global filter optimum, physical
+implementation or resource advantage. Full-state negativity, selected
+conditional negativity and the flagged success-weighted sum in §210
+remain distinct quantities.
+
+## 213.99 追加锚（本行以下为增补区）
+
+## 214. Exact postfilter negativity at prescribed success
+
+The subject is a fixed,
+known-parameter, already-filtered native quantum state and its subsequent
+one-copy processing. The result is an ordinary conditional analytic application
+of established two-qubit entanglement tools, with an explicit native parameter
+bridge and a finite attaining instrument.
+
+Let
+
+$$
+\begin{gathered}
+\mathcal H_A=\mathbb C^2,\qquad
+\mathcal H_B=B_{\mathrm{act}}\oplus B_{\mathrm{sp}},\qquad
+B_{\mathrm{act}}\cong B_{\mathrm{sp}}\cong\mathbb C^2,\\
+|\psi^-\rangle=(|01\rangle-|10\rangle)/\sqrt2,\qquad
+P_-=|\psi^-\rangle\langle\psi^-|,\\
+W_\lambda=\frac{1-\lambda}{4}I_4+\lambda P_-,\qquad
+\rho_{w,\lambda}=wW_\lambda\oplus_B(1-w)\frac{I_4}{4}.
+\end{gathered}
+\tag{214.1}
+$$
+
+The direct sum is on Bob alone. The second normalized block means
+$I_A/2\otimes I_{B_{\mathrm{sp}}}/2$, supported on Bob's spectator
+subspace. The active/spectator distinction is a local orthogonal flag, not
+an extra copy of the entangled block. Initially take $0<w<1$ and
+$0\le\lambda<1$; the exact finite-native subset is derived in §216.
+
+The allowed processing uses one copy of $\rho_{w,\lambda}$, a known source
+$q$ and its known active/spectator basis, finite adaptive LOCC, local neutral
+memories, separable auxiliaries, classical communication, and arbitrary biased
+classical coins. Every local quantum operation preserves local total number.
+There is no additional input copy, entangled ancillary resource, or external
+phase reference. Arbitrary allowed logical channels and exact real-valued coin
+probabilities belong to this mathematical operation menu. Finite gate synthesis
+and noisy implementation are separate questions.
+
+Success has an exact prescribed probability $s\in(0,1]$, conditional on
+preparation of $\rho_{w,\lambda}$. The successful quantum output must be
+one common encoded $\mathbb C^2\otimes\mathbb C^2$ state. Only a common
+classical success flag is retained; all active/spectator, rail, instrument,
+coin, and environmental records are discarded. This output requirement rules
+out treating a retained $2\times4$ flagged quantum state as the requested
+answer.
+
+For normalized states use ordinary occupation-tensor negativity,
+
+$$
+N(\sigma)=\frac{\|\sigma^{T_A}\|_1-1}{2},\qquad
+N_0=N(W_\lambda)=\frac{(3\lambda-1)_+}{4},\qquad
+(y)_+=\max\{0,y\}.
+\tag{214.2}
+$$
+
+Partial transpose refers to the declared Alice tensor factor. It is not a
+fermionic partial-time-reversal operation.
+
+**Theorem 214.1 (exact additional-success frontier).** Under the preceding
+fixed-input, known-basis, one-copy operation and output assumptions, the maximum
+conditional ordinary negativity at every exact $s\in(0,1]$ is
+
+$$
+\boxed{
+N_{\max}(s)=N_0\min\!\left\{1,\frac ws\right\}
+=\begin{cases}
+N_0,&0<s\le w,\\
+wN_0/s,&w\le s\le1.
+\end{cases}}
+\tag{214.3}
+$$
+
+This is a maximum attained by a finite LOCC instrument, including after all
+records other than success are erased. §§217–219 supply the full bound and
+attainer. §§215–216 identify the exact native input; §§220–221 retain the
+complete preparation probability and rational benchmark. The single-product
+restriction of §222 is a different operation class and objective.
+
+## 215. Native geometry, Gibbs preparation, CAR convention, and the filtered input
+
+The native source is the stopped singleton substitution
+$\beta\mapsto\langle\beta,\alpha\rangle$ at its first accepted epoch,
+with actual-coordinate order $(r,\ell,R)$. Here the source symbol $\beta$
+is distinct from the inverse temperature used below. The relevant fixed data
+and metric family are
+
+$$
+\begin{gathered}
+T=(1,1,1)^{\mathsf T},\qquad
+L_\star=\begin{pmatrix}2&-1&-1\\-1&1&0\\-1&0&1\end{pmatrix},\\
+q=(q_1,q_2)^{\mathsf T},\qquad
+\pi_q=(1-q_1-q_2,q_1,q_2)^{\mathsf T},\qquad
+G_q=L_\star+\pi_q\pi_q^{\mathsf T},\\
+G_qT=\pi_q,\qquad T^{\mathsf T}G_qT=1,\qquad
+Q_q=-G_q^{-1}L_\star=T\pi_q^{\mathsf T}-I_3.
+\end{gathered}
+\tag{215.1}
+$$
+
+For $q_1,q_2\ge0$, $q_1+q_2\le1$, this is the source's Markov metric
+subclass. The two interior examples are
+
+$$
+q_a=(1/6,1/6)^{\mathsf T},\quad
+\pi_a=(2/3,1/6,1/6)^{\mathsf T},\qquad
+q_b=(1/3,1/3)^{\mathsf T},\quad \pi_b=T/3.
+\tag{215.2}
+$$
+
+Their off-diagonal Markov rates are positive. The present quantum processing
+does not change these generators or assert anything about later accepted
+epochs.
+
+Use the positive principal root $S_q=G_q^{1/2}$ and the normalized
+one-particle coordinate $S_qx$. After complexification, the source Hamiltonian
+and the declared common normalized cut are
+
+$$
+\begin{gathered}
+V_q=S_qT,\qquad \|V_q\|=1,\qquad
+H_q=S_q^{-1}L_\star S_q^{-1}=I_3-V_qV_q^*,\\
+\operatorname{spec}H_q=\{0,1,1\},\qquad
+\mathfrak h=\mathbb Ce_\ell\oplus
+\operatorname{span}_{\mathbb C}\{e_r,e_R\},\qquad
+p_q=|(V_q)_\ell|^2.
+\end{gathered}
+\tag{215.3}
+$$
+
+In particular,
+
+$$
+V_a=(10,7,7)^{\mathsf T}/\sqrt{198},\quad p_a=49/198,
+\qquad V_b=T/\sqrt3,\quad p_b=1/3.
+\tag{215.4}
+$$
+
+The principal-root normalization is part of this definition. It can mix raw
+occurrence coordinates, so the normalized cut is not identified with raw
+weighted spatial subsystems. Equal one-particle spectra do not specify the
+cut-dependent scalar $p_q$.
+
+The unconditioned finite fermionic preparation retains all number sectors and
+the zero-energy mode:
+
+$$
+\mathcal F_-(\mathbb C^3)=\bigoplus_{j=0}^3\Lambda^j\mathbb C^3,
+\qquad \dim\mathcal F_-=8,\qquad
+\rho_{q,\beta}=\frac{e^{-\beta d\Gamma_-(H_q)}}{2(1+t)^2},
+\qquad t=e^{-\beta}\in(0,1].
+\tag{215.5}
+$$
+
+There is no chemical-potential term, kernel removal, or replacement by a
+fixed-number conditioned Gibbs state. A Bob-local number-preserving rotation
+aligns the Bob component of $V_q$ with an active mode $b$ and an orthogonal
+spectator mode, denoted here by $\varsigma$. With creation order
+$(A,b,\varsigma)$, the aligned preparation is
+$\sigma_\beta(p)\otimes\tau_\beta$, where
+
+$$
+\begin{gathered}
+D=2(1+t),\qquad
+\sigma_\beta(p)=
+\begin{pmatrix}
+a&0&0&0\\
+0&b&z&0\\
+0&\overline z&c&0\\
+0&0&0&d
+\end{pmatrix},\qquad
+\tau_\beta=\operatorname{diag}(r_0,r_1),\\
+a=\frac1D,\quad b=\frac{1-(1-t)p}{D},\quad
+c=\frac{t+(1-t)p}{D},\quad d=\frac tD,\\
+z=\frac{(1-t)\sqrt{p(1-p)}}D,\qquad
+r_0=\frac1{1+t},\quad r_1=\frac t{1+t}.
+\end{gathered}
+\tag{215.6}
+$$
+
+The effective occupation basis is $(|00\rangle,|01\rangle,|10\rangle,
+|11\rangle)$. The scalar $b$ in this matrix is a weight, not the active
+mode operator. Define
+
+$$
+\mu=|z|^2,\qquad
+ad=\frac{t}{4(1+t)^2},\qquad
+\mu=\frac{(1-t)^2p(1-p)}{4(1+t)^2},\qquad
+bc=ad+\mu.
+\tag{215.7}
+$$
+
+Thus $\mu$ denotes squared coherence; it is not an independently specified
+joint-occupancy parameter.
+
+The alignment is an even Bob-local CAR operation: bilinears of Bob modes have
+no remaining Alice parity string. It does not license treating individual
+odd Bob annihilators as ordinary local tensor operators. Passing from
+copy-first order $(A_1,b_1,\varsigma_1,A_2,b_2,\varsigma_2)$ to
+party-first order $(A_1,A_2,b_1,\varsigma_1,b_2,\varsigma_2)$ contributes
+the passive CAR sign
+
+$$
+(-1)^{(n_{b_1}+n_{\varsigma_1})n_{A_2}}.
+\tag{215.8}
+$$
+
+This coordinate regrouping is not a physical cross-party gate or an unsigned
+tensor swap.
+
+On the original two-preparation resource the common filter is
+
+$$
+F=\Pi_{n_{A_1}+n_{A_2}=1}\,
+\Pi_{n_{r_1}+n_{R_1}+n_{r_2}+n_{R_2}=1}.
+\tag{215.9}
+$$
+
+Bob's projector counts all four Bob modes. It commutes with Bob's
+number-preserving alignment and is the same operator for the two native
+models on their declared normalized axes. The source-informed active
+extraction used subsequently is a separate, known-$q$ operation.
+
+In the aligned party-first code, identify Alice rail states $A_1,A_2$ with
+$0,1$, and Bob active rail states $b_1,b_2$ with $0,1$. The active block is
+
+$$
+C_-=
+\begin{pmatrix}
+ad&0&0&0\\
+0&bc&-\mu&0\\
+0&-\mu&bc&0\\
+0&0&0&ad
+\end{pmatrix}
+=ad I_4+2\mu P_-.
+\tag{215.10}
+$$
+
+The diagonal terms are $ad,bc,bc,ad$. Before CAR regrouping the middle
+coherence is $z\overline z=\mu$; the ket $A_2,b_1$ has the negative
+regrouping sign and $A_1,b_2$ has the positive sign. Hence the literal block
+has coherence $-\mu$. An explicit Alice phase $e^{i\pi n_{A_2}}$ changes
+that sign without changing negativity or success, but no such phase is
+implicit here.
+
+Bob's selected one-particle space splits as
+
+$$
+B_{\mathrm{act}}=\operatorname{span}\{|b_1\rangle,|b_2\rangle\},
+\qquad
+B_{\mathrm{sp}}=\operatorname{span}\{|\varsigma_1\rangle,
+|\varsigma_2\rangle\}.
+\tag{215.11}
+$$
+
+Both spectators are empty in the active block, giving factor $r_0^2$.
+When a spectator is occupied, Bob's selected total number excludes an active
+Bob particle. Each of the four remaining Alice-rail/spectator-rail
+configurations has weight $ac\,r_0r_1$. The diagonal spectator state and the
+number selection leave no coherence between these configurations or with the
+active block. Consequently the full unnormalized filtered state is
+
+$$
+\begin{gathered}
+\Omega_F=r_0^2C_-\oplus_B ac\,r_0r_1 I_4,\\
+P_{\mathrm{eff}}=\operatorname{Tr}C_-=4ad+2\mu>0,\qquad
+P_a=r_0^2P_{\mathrm{eff}},\qquad P_{\mathrm{sp}}=4ac\,r_0r_1>0,\\
+P_{\mathrm{full}}=\operatorname{Tr}\Omega_F=P_a+P_{\mathrm{sp}},\qquad
+\lambda=\frac{2\mu}{P_{\mathrm{eff}}},\qquad
+w=\frac{P_a}{P_{\mathrm{full}}},\qquad
+\frac{\Omega_F}{P_{\mathrm{full}}}=\rho_{w,\lambda}.
+\end{gathered}
+\tag{215.12}
+$$
+
+All diagonal factors are positive at finite $\beta$. Hence $0<w<1$ and
+$0\le\lambda<1$. The active partial-transpose spectrum is
+$\{bc,bc,ad+\mu,ad-\mu\}$ before normalization; the full one adds
+the spectator eigenvalue $ac\,r_0r_1$ four times and multiplies the active
+eigenvalues by $r_0^2$. Therefore
+
+$$
+N_0=\frac{(\mu-ad)_+}{P_{\mathrm{eff}}},\qquad
+N(\rho_{w,\lambda})=wN_0.
+\tag{215.13}
+$$
+
+The full state is separable when $\mu\le ad$ because its active block
+is a separable two-qubit state and its spectator block is a product state;
+it is NPT when $\mu>ad$. No sufficiency of PPT for arbitrary
+$2\times4$ states is assumed.
+
+## 216. Exact image of the declared scalar family
+
+In this section the declared scalar family means all
+$t\in(0,1]$, $p\in[0,1]$ in the preceding scalar formulas. This is
+an explicit mathematical family. It is not a claim that every such $p$ is
+realized by a physically admissible native metric $q$ or by the earlier
+Markov metric subclass. The native examples retain
+$p_a=49/198$ and $p_b=1/3$.
+
+Set
+
+$$
+h=t+(1-t)p,\qquad
+u=(1-t)^2p(1-p)=(h-t)(1-h).
+\tag{216.1}
+$$
+
+Then
+
+$$
+\lambda=\frac{u}{2t+u},\qquad
+w=\frac{2t+u}{2t+u+2th}
+=\frac1{1+(1-\lambda)h}.
+\tag{216.2}
+$$
+
+**Proposition 216.1 (exact image and inverse realization).** The image of this
+scalar family in the $(\lambda,w)$ plane is exactly
+
+$$
+\boxed{
+\{(0,w):1/2\le w<1\}
+\ \cup\
+\{(\lambda,w):0<\lambda<1,\ (2-\lambda)^{-1}<w<1\}.}
+\tag{216.3}
+$$
+
+For every point in the second set an inverse realization is
+
+$$
+\begin{gathered}
+h=\frac{1-w}{w(1-\lambda)},\\
+t=\frac{h(1-h)(1-\lambda)}{(1-h)(1-\lambda)+2\lambda},
+\qquad p=\frac{h-t}{1-t}.
+\end{gathered}
+\tag{216.4}
+$$
+
+Proof. If $\lambda>0$, then $u>0$, so $0<t<h<1$ and
+$0<\lambda<1$. Since $h\in(0,1)$, the displayed expression for $w$
+gives $(2-\lambda)^{-1}<w<1$. Conversely, these strict inequalities
+give $0<h<1$. The denominator defining $t$ is positive and strictly
+larger than $(1-h)(1-\lambda)$, so $0<t<h<1$. It follows that
+$0<p<1$. The equation for $t$ is precisely
+
+$$
+(h-t)(1-h)=\frac{2t\lambda}{1-\lambda}.
+\tag{216.5}
+$$
+
+Thus the constructed $p,t$ reproduce $u/(2t+u)=\lambda$ and the
+prescribed $w$. All corresponding inverse temperatures $-\log t$ are
+finite and nonnegative.
+
+If $\lambda=0$, then $u=0$. For $p=0$ one has $h=t$ and
+$w=1/(1+t)$, covering $[1/2,1)$ as $t\in(0,1]$. For $p=1$,
+$h=1$ and $w=1/2$; $t=1$ gives $(\lambda,w)=(0,1/2)$ for every
+$p$. These cases exhaust $u=0$. This proves both necessity and realization.
+
+In particular, finite scalar parameters always have $w\ge1/2$. For positive
+$\lambda$, the lower curve $w=(2-\lambda)^{-1}$ is excluded; $w=1$
+and $\lambda=1$ are excluded everywhere. The abstract rectangular parameter
+range of the filtering proof must not be substituted for this native scalar
+image.
+
+**Proposition 216.2 (fixed-temperature curve and monotonicity).** At fixed
+$0<t<1$ the exact curve is
+
+$$
+\lambda(h)=\frac{(h-t)(1-h)}{2t+(h-t)(1-h)},\qquad
+w(h)=\frac{2t+(h-t)(1-h)}{2t+(h-t)(1-h)+2th},
+\qquad t\le h\le1.
+\tag{216.6}
+$$
+
+Its active singlet parameter obeys
+
+$$
+\lambda\le\frac{(1-t)^2}{1+6t+t^2},
+\tag{216.7}
+$$
+
+with equality at $p=1/2$. The flag weight $w$ strictly decreases from
+$1/(1+t)$ to $1/2$ as $p$ increases from $0$ to $1$.
+
+Proof. The quadratic $u=(1-t)^2p(1-p)$ is maximized at $p=1/2$,
+and $u\mapsto u/(2t+u)$ is increasing. Substituting the maximum
+$u=(1-t)^2/4$ gives the bound. For the second assertion,
+$u(h)=(h-t)(1-h)$ gives
+
+$$
+\frac{dw}{dh}
+=-\frac{2t(t+h^2)}{[2t+u(h)+2th]^2}<0.
+\tag{216.8}
+$$
+
+Because $dh/dp=1-t>0$, this proves the strict monotonicity and the
+endpoint values. At $t=1$ the curve collapses to $(0,1/2)$ rather than
+remaining a nontrivial monotone curve.
+
+The native entanglement threshold can be written in equivalent forms:
+
+$$
+\lambda>1/3
+\ \Longleftrightarrow\ \mu>ad
+\ \Longleftrightarrow\ u>t
+\ \Longleftrightarrow\ 4\sinh^2(\beta/2)p(1-p)>1.
+\tag{216.9}
+$$
+
+For $0<p<1$, this is $\beta>2\operatorname{arsinh}
+(1/[2\sqrt{p(1-p)}])$. Equality is separable. At $\beta=0$ or
+$p\in\{0,1\}$, $u=\mu=0$ and no positive-negativity branch is
+available in the stated one-copy menu.
+
+## 217. Every product filter has the required conditional ceiling
+
+For positive, possibly subnormalized $X$, define homogeneous negativity
+
+$$
+n(X)=\frac{\|X^{T_A}\|_1-\operatorname{Tr}X}{2}.
+\tag{217.1}
+$$
+
+It satisfies $n(cX)=c\,n(X)$ for $c\ge0$, and
+$n(X+Y)\le n(X)+n(Y)$ by the trace-norm triangle inequality. In
+particular $n(s\sigma)=sN(\sigma)$ for normalized $\sigma$. Every
+positive separable operator has $n=0$.
+
+**Lemma 217.1 (filter denominator, including singular matrices).** For arbitrary
+complex $2\times2$ matrices $A,B$, let
+
+$$
+Q=(A\otimes B)W_\lambda(A\otimes B)^*,\quad
+q=\operatorname{Tr}Q,\quad X=A^*A,\quad Y=B^*B,\quad
+\delta=\sqrt{\det X\det Y}=|\det A\det B|.
+\tag{217.2}
+$$
+
+For $0\le\lambda\le1$ one has $q\ge\delta$. No invertibility or
+contraction hypothesis is needed for this algebraic assertion.
+
+Proof. For a two-dimensional Hermitian matrix,
+$\operatorname{adj}Y=\sigma_yY^{\mathsf T}\sigma_y$; when $Y\ge0$,
+its adjugate is also positive and has determinant $\det Y$, including at
+singular $Y$. Expanding the singlet gives
+
+$$
+\langle\psi^-|X\otimes Y|\psi^-\rangle
+=\frac12\operatorname{Tr}(X\operatorname{adj}Y),
+\tag{217.3}
+$$
+
+and hence
+
+$$
+q=\frac{1-\lambda}{4}\operatorname{Tr}X\operatorname{Tr}Y
++\frac\lambda2\operatorname{Tr}(X\operatorname{adj}Y).
+\tag{217.4}
+$$
+
+The eigenvalue arithmetic–geometric mean inequality gives
+
+$$
+\frac{\operatorname{Tr}X\operatorname{Tr}Y}{4}\ge\delta.
+\tag{217.5}
+$$
+
+For the second term, the positive matrix
+$Z=X^{1/2}\operatorname{adj}(Y)X^{1/2}$ has
+$\det Z=\delta^2$, so
+
+$$
+\frac12\operatorname{Tr}(X\operatorname{adj}Y)
+=\frac12\operatorname{Tr}Z\ge\sqrt{\det Z}=\delta.
+\tag{217.6}
+$$
+
+Thus both quantities being averaged in $q$ are at least $\delta$.
+This proves the denominator inequality without cancelling a determinant or
+dividing by a possibly zero eigenvalue.
+
+**Lemma 217.2 (all-product-filter conditional bound).** With the same notation,
+
+$$
+\boxed{n(Q)\le N_0\delta\le N_0q.}
+\tag{217.7}
+$$
+
+Consequently every nonzero normalized filtered output $Q/q$ has
+$N(Q/q)\le N_0$, including outputs of singular filters.
+
+Proof. The threshold state has the explicit six-product decomposition
+
+$$
+W_{1/3}=\frac16\sum_{k=x,y,z}\sum_{\epsilon=\pm1}
+|\epsilon_k\rangle\langle\epsilon_k|
+\otimes|-\epsilon_k\rangle\langle-\epsilon_k|,
+\tag{217.8}
+$$
+
+where $|\epsilon_k\rangle$ is the Pauli-$k$ eigenvector of eigenvalue
+$\epsilon$. Indeed the sum is
+$I_4/4-(\sigma_x\otimes\sigma_x+\sigma_y\otimes\sigma_y+
+\sigma_z\otimes\sigma_z)/12=W_{1/3}$.
+For $0\le\lambda\le1/3$,
+
+$$
+W_\lambda=3\lambda W_{1/3}+(1-3\lambda)I_4/4
+\tag{217.9}
+$$
+
+is separable. Its product-filtered image is separable, proving the zero bound
+in this range.
+
+For $1/3<\lambda\le1$, put
+$\eta=(3\lambda-1)/2=2N_0$. Then
+
+$$
+W_\lambda=\eta P_-+(1-\eta)W_{1/3}.
+\tag{217.10}
+$$
+
+The filtered boundary summand is separable. The unnormalized pure vector
+$v=(A\otimes B)|\psi^-\rangle$ has coefficient matrix
+
+$$
+V=\frac1{\sqrt2}A\begin{pmatrix}0&1\\-1&0\end{pmatrix}B^{\mathsf T}.
+\tag{217.11}
+$$
+
+If its singular values are $r_1,r_2\ge0$, the partial transpose of
+$|v\rangle\langle v|$ has eigenvalues $r_1^2,r_2^2,r_1r_2,-r_1r_2$.
+Therefore
+
+$$
+n(|v\rangle\langle v|)=r_1r_2=|\det V|=\delta/2.
+\tag{217.12}
+$$
+
+Homogeneity and subadditivity now give
+
+$$
+n(Q)\le\eta\delta/2=N_0\delta\le N_0q.
+\tag{217.13}
+$$
+
+If either filter is singular, $\delta=0$, and this argument already proves
+the result. Equivalently, a rank-one local filter leaves a one-dimensional
+local output support, so its nonzero output is separable. If $q=0$, positivity
+implies $Q=0$; no normalized zero-probability branch is needed.
+
+The nontrivial step connecting the homogeneous numerator to the conditional
+quantity is $q\ge\delta$. Average entanglement monotonicity by itself
+does not provide this normalization control.
+
+### 217.3. Concurrence route and the factor of two
+
+The same bound follows from the standard concurrence suppliers in §224.
+The spin flip fixes $W_\lambda$, whose eigenvalues are
+$(1+3\lambda)/4$ once and $(1-\lambda)/4$ three times. Wootters'
+formula therefore gives
+
+$$
+C(W_\lambda)=\frac{(3\lambda-1)_+}{2}=2N_0.
+\tag{217.14}
+$$
+
+For every pure two-qubit state, $C=2N$. Convexity of $N$ and the
+convex-roof characterization of $C$ consequently imply
+
+$$
+N(\sigma)\le C(\sigma)/2
+\tag{217.15}
+$$
+
+for every normalized two-qubit state. The comparison papers [AVBDM] and
+[VADDM] use a negativity convention equal to $2N$ here, so their
+concurrence upper bound must be converted with this factor.
+
+For nonsingular local filters, Verstraete–Dehaene–De Moor [VDM], Theorem 1,
+Eq. (2), gives the exact identity
+
+$$
+C(Q/q)=C(W_\lambda)\frac{|\det A\det B|}{q}
+=2N_0\frac\delta q\le2N_0.
+\tag{217.16}
+$$
+
+It follows that $N(Q/q)\le N_0$. Singular filters are covered directly
+by Lemma 217.2, rather than by extending an invertible-filter theorem without
+proof. Bell-diagonal normal-form statements and concurrence/entanglement-of-
+formation optimization do not alone identify the present negativity frontier.
+
+## 218. Upper bound for all finite adaptive LOCC and erased success records
+
+Consider the entire trace-nonincreasing successful map $\mathcal E$ from
+the input $2\times4$ space to the common $2\times2$ output. Resolve local
+instrument indices, discarded environments, classical randomization, and
+separable auxiliary preparations into product components. Each full adaptive
+history has a product Kraus operator
+
+$$
+K_j=A_j\otimes B_j,\qquad
+A_j:\mathbb C^2\longrightarrow\mathbb C^2,\qquad
+B_j:\mathbb C^4\longrightarrow\mathbb C^2.
+\tag{218.1}
+$$
+
+Adaptivity changes these factors according to the preceding messages but does
+not change their product form for a complete history. Including all final
+local channels before taking these Kraus factors accounts for discarded local
+memories and the required common output type. Separable ancillary states only
+add convexly weighted product histories. This is the standard one-pair LOCC
+reduction also used in [LMP].
+
+Let $J_a,J_{\mathrm{sp}}$ embed the two Bob subspaces. The restrictions
+$B_jJ_a$ are $2\times2$ matrices, so Lemma 217.2 applies to every active
+contribution. The normalized spectator input is a product state, and every
+product history maps it to a separable positive operator. Writing
+
+$$
+\begin{gathered}
+Q_j=(A_j\otimes B_jJ_a)W_\lambda(A_j\otimes B_jJ_a)^*,\\
+R_j=(A_j\otimes B_jJ_{\mathrm{sp}})\frac{I_4}{4}
+(A_j\otimes B_jJ_{\mathrm{sp}})^*,\\
+Q=\sum_jQ_j,\quad R=\sum_jR_j,\quad
+q_a=\operatorname{Tr}Q,\quad q_{\mathrm{sp}}=\operatorname{Tr}R,
+\end{gathered}
+\tag{218.2}
+$$
+
+one has $n(Q)\le N_0q_a$ and $n(R)=0$. Trace nonincrease of
+$\mathcal E$ on each separately normalized sector input gives
+$0\le q_a,q_{\mathrm{sp}}\le1$.
+
+Linearity and the absence of initial cross-sector coherence give the actual
+unnormalized success output and its probability:
+
+$$
+\Sigma=\mathcal E(\rho_{w,\lambda})=wQ+(1-w)R,\qquad
+s=\operatorname{Tr}\Sigma=wq_a+(1-w)q_{\mathrm{sp}}.
+\tag{218.3}
+$$
+
+After success records are erased the quantum state is $\Sigma/s$, so
+
+$$
+\begin{aligned}
+sN(\Sigma/s)=n(\Sigma)
+&\le w\,n(Q)+(1-w)n(R)\\
+&\le wN_0q_a\\
+&\le N_0\min\{w,s\}.
+\end{aligned}
+\tag{218.4}
+$$
+
+The last line uses both $q_a\le1$ and $wq_a\le s$. Dividing by
+$s>0$ gives the upper bound in Theorem 214.1. No assumption that the protocol
+first measures Bob's flag was made.
+
+For countable refinements, the same reasoning uses trace-norm continuity and
+nonnegative sums. If standard measurable continuous-outcome instruments are
+included, the inequalities hold under their trace-class integrals. Equivalently,
+the finite-dimensional input/output separable Choi operator admits a finite
+product decomposition. No nonmeasurable instrument or infinite-round protocol
+is asserted. The upper bound thus covers the larger class of separable
+trace-nonincreasing success maps with this output type, and in particular the
+specified finite LOCC class.
+
+Vidal–Werner average monotonicity [VW] is consistent with
+$sN(\Sigma/s)\le wN_0$, but gives only the $wN_0/s$ bound. It does
+not imply the independent conditional ceiling $N_0$ when $s<w$.
+For example, for the different pure state
+
+$$
+|\chi_\epsilon\rangle=\sqrt{1-\epsilon}|00\rangle+
+\sqrt\epsilon|11\rangle,\qquad 0<\epsilon<1/2,
+\tag{218.5}
+$$
+
+the filter $\operatorname{diag}(\sqrt{\epsilon/(1-\epsilon)},1)
+\otimes I$ succeeds with probability $2\epsilon$ and produces a Bell
+state. Its ordinary negativity rises from $\sqrt{\epsilon(1-\epsilon)}$
+to $1/2$ while respecting average monotonicity. The fixed Werner-block
+argument is therefore necessary; the conditional ceiling is not a general
+postselection law.
+
+## 219. Finite attainer, full joint law, common output, and local-number legality
+
+For $0<w<1$ and the prescribed $s$, set
+
+$$
+\alpha=\min\{1,s/w\},\qquad
+\gamma=\frac{(s-w)_+}{1-w}.
+\tag{219.1}
+$$
+
+Both are in $[0,1]$. Bob measures
+$\Pi_{\mathrm{act}}=J_aJ_a^*$ and
+$\Pi_{\mathrm{sp}}=J_{\mathrm{sp}}J_{\mathrm{sp}}^*$ without resolving
+the rails inside either subspace. These are projectors; the scalar
+$P_a=r_0^2P_{\mathrm{eff}}$ remains the preparation probability from §215.
+
+Bob accepts an active event with probability $\alpha$ and a spectator
+event with probability $\gamma$, then communicates flag and acceptance
+to Alice. On active success Alice keeps her encoded state and Bob coherently
+identifies the active rails with the common output code. On spectator success
+Alice resets her encoded qubit to $|0\rangle$ and Bob resets his spectator
+qubit to the common output $|1\rangle$. Thus the accepted spectator output
+is the fixed product state
+
+$$
+\tau=|01\rangle\langle01|.
+\tag{219.2}
+$$
+
+The explicit success Kraus operators are
+
+$$
+\begin{gathered}
+K_a=\sqrt\alpha\,I_A\otimes
+\left(\sum_{j=0}^1|j\rangle_{B,\mathrm{out}}\langle b_{j+1}|\right),\\
+K_{ij}=\sqrt\gamma\,|0\rangle_A\langle i|\otimes
+|1\rangle_{B,\mathrm{out}}\langle\varsigma_{j+1}|,
+\qquad i,j\in\{0,1\},\\
+K_a^*K_a+\sum_{i,j}K_{ij}^*K_{ij}
+=I_A\otimes(\alpha\Pi_{\mathrm{act}}+\gamma\Pi_{\mathrm{sp}})
+\le I.
+\end{gathered}
+\tag{219.3}
+$$
+
+Rejected flag/coin outcomes provide a finite complement. Alice's spectator
+reset is conditioned on Bob's message, so this is an explicit finite LOCC
+instrument, not solely an existence claim about a separable map.
+
+The complete sector/success joint law conditional on preparation is
+
+| Input sector | Outcome | Probability |
+| --- | --- | --- |
+| Active | Success | $w\alpha=\min\{w,s\}$ |
+| Active | Failure | $w(1-\alpha)=(w-s)_+$ |
+| Spectator | Success | $(1-w)\gamma=(s-w)_+$ |
+| Spectator | Failure | $(1-w)(1-\gamma)=1-w-(s-w)_+$ |
+
+Every entry is nonnegative and the four entries sum to one. Each accepted
+spectator reset pair $(i,j)$ has probability $(1-w)\gamma/4$ and
+the same quantum output $\tau$. The total accepted probability is exactly
+$w\alpha+(1-w)\gamma=s$.
+
+Discard every record except the common success flag. The resulting actual
+two-qubit state is
+
+$$
+\sigma_s=xW_\lambda+(1-x)\tau,\qquad
+x=\frac{w\alpha}{s}=\min\{1,w/s\}.
+\tag{219.4}
+$$
+
+To compute its negativity, put $a_x=x(1-\lambda)/4$ and
+$b_x=x(1+\lambda)/4$. In the common $00,01,10,11$ output basis,
+
+$$
+\sigma_s=
+\begin{pmatrix}
+a_x&0&0&0\\
+0&b_x+1-x&-x\lambda/2&0\\
+0&-x\lambda/2&b_x&0\\
+0&0&0&a_x
+\end{pmatrix}.
+\tag{219.5}
+$$
+
+Partial transpose moves the off-diagonal coherence to the $00,11$ corner.
+The exact spectrum is
+
+$$
+\operatorname{spec}(\sigma_s^{T_A})=
+\left\{
+\frac{x(1-3\lambda)}4,
+\frac{x(1+\lambda)}4,
+\frac{x(1+\lambda)}4,
+1-x+\frac{x(1+\lambda)}4
+\right\}.
+\tag{219.6}
+$$
+
+Only the first eigenvalue can be negative, giving
+
+$$
+N(\sigma_s)=xN_0=N_0\min\{1,w/s\}.
+\tag{219.7}
+$$
+
+This proves attainment after erasure. It does not assume that negativity is
+generally affine under mixing. The specific padding works because
+$\tau^{T_A}=\tau$ annihilates
+$|\Phi^+\rangle=(|00\rangle+|11\rangle)/\sqrt2$, the active block's
+negative partial-transpose eigenvector when $\lambda>1/3$. Arbitrary
+separable padding need not have this property.
+
+All logical input/output kets in the instrument have local total number one.
+For example $|0\rangle_A,|1\rangle_A$ are the one-particle states in
+Alice's two rails; the active and spectator Bob rail states also each contain
+one local particle. Thus every displayed local matrix element connects equal
+local number. A reset has a neutral-memory dilation
+
+$$
+|i\rangle\otimes|\mathrm{ready}\rangle_E
+\longmapsto |\mathrm{target}\rangle\otimes|i\rangle_E,
+\tag{219.8}
+$$
+
+with orthogonal neutral states $|i\rangle_E$. This is an isometry in
+the local total-number-one sector and extends to a unitary there. Bob's
+sector-to-common-code map stores its sector/rail information in an analogous
+neutral memory. Extend the channels block diagonally to other number sectors,
+using an identity or failure channel there. Coins and communicated messages
+are neutral records.
+
+Local number preservation means preservation of Alice's and Bob's number
+separately. Merely preserving their sum would be a weaker constraint and is
+not the legality argument. The global number action is scalar on this
+two-particle encoded input/output, but that fact does not substitute for the
+local construction. Nor does occupation-tensor notation license arbitrary
+qubit operations across local vacuum and occupied sectors. Discarding neutral
+records is the channel operation used here; no thermodynamic cost for resetting
+a reusable memory is calculated.
+
+At $s=w$, every active event and no spectator event is accepted, giving
+$W_\lambda$. At $s=1$, every flag is accepted and the encoded output
+$\sigma_1=wW_\lambda+(1-w)|01\rangle\langle01|$ has
+$N=wN_0$, equal to the initial flagged state's ordinary negativity. If
+$\lambda\le1/3$, the input and every allowed conditional output are
+separable and the zero frontier is attained by the same construction.
+
+## 220. Complete preparation law and the overall-success frontier
+
+The additional probability $s$ is conditional on having the full-filter
+output. It must be converted to the probability relative to the original
+two-preparation input:
+
+$$
+\boxed{R=P_{\mathrm{full}}s,\qquad
+P_a=r_0^2P_{\mathrm{eff}}=P_{\mathrm{full}}w,\qquad
+0<R\le P_{\mathrm{full}}.}
+\tag{220.1}
+$$
+
+The full joint law, including the preceding filter rejection, is
+
+| Preparation event | Subsequent event | Unconditional probability |
+| --- | --- | --- |
+| Full filter rejected | No postfilter output | $1-P_{\mathrm{full}}$ |
+| Full filter active block | Success | $\min\{R,P_a\}$ |
+| Full filter active block | Failure | $(P_a-R)_+$ |
+| Full filter spectator block | Success | $(R-P_a)_+$ |
+| Full filter spectator block | Failure | $P_{\mathrm{sp}}-(R-P_a)_+$ |
+
+These entries sum to one. The last entry is nonnegative because
+$R\le P_a+P_{\mathrm{sp}}$. Each fine spectator-reset success has
+unconditional probability $P_{\mathrm{sp}}\gamma/4=ac\,r_0r_1\gamma$.
+The total failure probability, including both preparation and additional
+failure, is $1-R$.
+
+In the coordinate $R$, the exact postfilter frontier is
+
+$$
+\boxed{N_{\max}^{\mathrm{postfilter}}(R)
+=N_0\min\!\left\{1,\frac{P_a}{R}\right\},
+\qquad 0<R\le P_{\mathrm{full}}.}
+\tag{220.2}
+$$
+
+Its success-weighted negativity is
+
+$$
+\begin{aligned}
+R N_{\max}^{\mathrm{postfilter}}(R)
+&=N_0\min\{R,P_a\}\\
+&=P_{\mathrm{full}}N_0\min\{s,w\}.
+\end{aligned}
+\tag{220.3}
+$$
+
+For $s\ge w$ this is the plateau
+
+$$
+P_aN_0=r_0^2(\mu-ad)_+.
+\tag{220.4}
+$$
+
+For $s<w$ it decreases linearly with $s$: discarding additional active
+successes cannot increase their conditional negativity above $N_0$.
+Success-weighted negativity is a finite state quantity; it is not a
+distillation rate or an advantage claim.
+
+For direct substitution of native parameters,
+
+$$
+\begin{gathered}
+\lambda=\frac{u}{2t+u},\qquad
+N_0=\frac{(u-t)_+}{2(2t+u)},\\
+P_a=\frac{2t+u}{2(1+t)^4},\qquad
+P_{\mathrm{sp}}=\frac{th}{(1+t)^4},\\
+P_{\mathrm{full}}=\frac{2t+u+2th}{2(1+t)^4},\qquad
+w=\frac{2t+u}{2t+u+2th},\\
+h=t+(1-t)p,\qquad u=(1-t)^2p(1-p).
+\end{gathered}
+\tag{220.5}
+$$
+
+These probabilities do not include any undeclared preliminary standard-form
+filter. The earlier effective procedure—align each preparation and discard its
+Bob spectator before projecting the two effective copies—has success
+$P_{\mathrm{eff}}$ and output $W_\lambda$, with weighted negativity
+$(\mu-ad)_+$. It is a different preceding operation from the common full
+filter. Selecting the active sector after the full filter instead succeeds
+with $P_a=r_0^2P_{\mathrm{eff}}$. Omitting $r_0^2$ would compare
+different preparation laws. The present optimization starts with one prepared
+$\rho_{w,\lambda}$ and does not optimize over the original unfiltered
+$64$-dimensional two-preparation resource.
+
+## 221. Exact native benchmark at q_b and inverse temperature log 7
+
+At $q_b=(1/3,1/3)^{\mathsf T}$ and $\beta=\log7$,
+
+$$
+\begin{gathered}
+t=1/7,\quad p=1/3,\quad
+(a,b,c,d)=(7,5,3,1)/16,\quad z=\sqrt2/8,\\
+ad=7/256,\quad \mu=8/256,\quad bc=15/256,\quad
+(r_0,r_1)=(7,1)/8,\\
+C_-=\frac1{256}
+\begin{pmatrix}
+7&0&0&0\\
+0&15&-8&0\\
+0&-8&15&0\\
+0&0&0&7
+\end{pmatrix}.
+\end{gathered}
+\tag{221.1}
+$$
+
+The exact probability and normalized-state tuple is
+
+$$
+\begin{gathered}
+P_{\mathrm{eff}}=11/64,\quad
+P_a=539/4096,\quad P_{\mathrm{sp}}=147/4096,\quad
+P_{\mathrm{full}}=343/2048,\\
+\lambda=4/11,\quad w=11/14,\quad
+N_0=1/44,\quad wN_0=1/56.
+\end{gathered}
+\tag{221.2}
+$$
+
+In the overall full-filter output the unnormalized partial-transpose spectrum
+is
+
+$$
+\operatorname{spec}(\Omega_F^{T_A})
+=\frac1{16384}\{735,735,735,-49,147,147,147,147\}.
+\tag{221.3}
+$$
+
+Its trace is $343/2048$, and its homogeneous negativity is $49/16384$.
+The exact frontier and preparation conversion are
+
+$$
+\begin{gathered}
+N_{\max}(s)=
+\begin{cases}
+1/44,&0<s\le11/14,\\
+1/(56s),&11/14\le s\le1,
+\end{cases}
+\qquad R=343s/2048,\\
+R N_{\max}(s)=
+\begin{cases}
+343s/90112,&0<s\le11/14,\\
+49/16384,&11/14\le s\le1.
+\end{cases}
+\end{gathered}
+\tag{221.4}
+$$
+
+Equivalently,
+
+$$
+N_{\max}^{\mathrm{postfilter}}(R)=
+\begin{cases}
+1/44,&0<R\le539/4096,\\
+49/(16384R),&539/4096\le R\le343/2048.
+\end{cases}
+\tag{221.5}
+$$
+
+The two notable attaining points are
+
+| Additional protocol | Exact additional success $s$ | Overall success $R$ | Conditional $N$ | $RN$ |
+| --- | --- | --- | --- | --- |
+| Accept exactly the active block | $11/14$ | $539/4096$ | $1/44$ | $49/16384$ |
+| Accept both blocks, reset spectator | $1$ | $343/2048$ | $1/56$ | $49/16384$ |
+
+In the second row the encoded output, rather than a retained flagged input,
+is explicitly
+
+$$
+\sigma_1=\frac1{56}
+\begin{pmatrix}
+7&0&0&0\\
+0&27&-8&0\\
+0&-8&15&0\\
+0&0&0&7
+\end{pmatrix},\qquad
+\sigma_1^{T_A}=\frac1{56}
+\begin{pmatrix}
+7&0&0&-8\\
+0&27&0&0\\
+0&0&15&0\\
+-8&0&0&7
+\end{pmatrix}.
+\tag{221.6}
+$$
+
+Thus
+
+$$
+\operatorname{spec}(\sigma_1^{T_A})=\{-1,15,15,27\}/56,
+\qquad N(\sigma_1)=1/56.
+\tag{221.7}
+$$
+
+Here “deterministic” refers to the additional protocol conditional on
+preparation: $s=1$. Preparation itself still succeeds only with probability
+$343/2048$.
+
+For comparison, the earlier effective procedure has weighted negativity
+$P_{\mathrm{eff}}N_0=1/256$. Active extraction after the full filter has
+weighted negativity $r_0^2/256=49/16384$, since $r_0^2=49/64$.
+These exact factors distinguish the two procedures without asserting global
+optimality of either on the unfiltered input.
+
+## 222. Literal single-product success maps have a different feasibility ceiling
+
+**Proposition 222.1 (maximum success for one physical product Kraus).** Suppose
+the entire success map is literally
+
+$$
+X\longmapsto (A\otimes B)X(A\otimes B)^*,\qquad
+A:\mathbb C^2\to\mathbb C^2,\quad B:\mathbb C^4\to\mathbb C^2,
+\tag{222.1}
+$$
+
+with $A^*A\le I_2$ and $B^*B\le I_4$. Its maximum success probability,
+irrespective of output negativity, is
+
+$$
+\boxed{s_{\max}^{\mathrm{one\ product}}=\max\{w,1-w\}.}
+\tag{222.2}
+$$
+
+Proof. Bob's marginal is
+
+$$
+\rho_B=\frac w2\Pi_{\mathrm{act}}+
+\frac{1-w}{2}\Pi_{\mathrm{sp}}.
+\tag{222.3}
+$$
+
+Put $X=A^*A\le I$ and $Y=B^*B\le I$. Since $B$ has
+two-dimensional output, $\operatorname{rank}Y\le2$ and
+$\operatorname{Tr}Y\le2$. Positivity gives
+
+$$
+\begin{aligned}
+s&=\operatorname{Tr}[\rho_{w,\lambda}(X\otimes Y)]\\
+&\le\operatorname{Tr}(\rho_BY)\\
+&\le\text{the sum of the largest two eigenvalues of }\rho_B\\
+&=\max\{w,1-w\}.
+\end{aligned}
+\tag{222.4}
+$$
+
+The spectral step can also be seen from
+$\rho_B\le\max\{w,1-w\}I_4/2$ and $\operatorname{Tr}Y\le2$.
+Taking $A=I$ and $B$ to be the coisometry onto the heavier sector
+attains equality. Both sector codes have local number one, so this choice is
+compatible with the encoded-number restriction.
+
+If only global physical contractivity $(A\otimes B)^*(A\otimes B)\le I$
+is specified, the same conclusion holds. For nonzero $A$, replace the factors
+by $A/\|A\|$ and $\|A\|B$; their product is unchanged and both
+are contractions because $\|A\|\|B\|\le1$. A zero factor gives zero
+success. Rank alone, with no contraction or physical-instrument assumption,
+would not supply a probability bound.
+
+In the finite scalar image of §216, $w\ge1/2$, so the ceiling is exactly
+$w$. Active selection, thinned when necessary, attains negativity $N_0$
+for every $0<s\le w$ with a single product success Kraus. No literal
+single-product success map can reach $s>w$ in this native image.
+
+This proposition maximizes success probability under a stricter map condition;
+it is not the exact-success negativity optimization of Theorem 214.1. For
+abstract $w<1/2$, the maximum-success coisometry selects the spectator
+and has zero negativity. The full conditional-negativity frontier of that
+stricter abstract operation class is not derived here. In contrast, the
+allowed multi-leaf LOCC instrument of §219 accepts all input sectors at $s=1$.
+Its several accepted Kraus leaves, including the communicated Alice reset,
+cannot be replaced by a single rank-two Bob contraction. Discarding their
+records does not make the channel have only one Kraus operator.
+
+## 223. Restricted white-noise merging comparison and parameter boundaries
+
+Consider the particular deterministic channel that identifies both Bob sectors
+with the output code while leaving Alice unchanged and leaving the spectator
+logical state maximally mixed. In terms of the two sector identifications,
+its Bob Kraus operators are $J_a^*$ and $J_{\mathrm{sp}}^*$; its effect
+sum is $\Pi_{\mathrm{act}}+\Pi_{\mathrm{sp}}=I_4$. With the active
+orientation chosen as above, its output is
+
+$$
+wW_\lambda+(1-w)I_4/4=W_{w\lambda},\qquad
+N=\frac{(3w\lambda-1)_+}{4}.
+\tag{223.1}
+$$
+
+At the benchmark $w\lambda=2/7$, this output is $W_{2/7}$ and is
+separable. The communicated, spectator-conditioned reset instead retains
+$1/56$ in the common encoded output. The comparison concerns exactly this
+white-noise-preserving sector-identification channel at $s=1$. It does not
+bound every flag-erasing channel, every local channel, every no-communication
+protocol, or every choice of separable padding. In particular, Theorem 214.1
+already gives a flag-erasing channel that saturates the true allowed frontier.
+
+The analytic proof and attainer extend algebraically to the closed rectangle
+$w,\lambda\in[0,1]$. At $w=0$, reset the product input and accept with
+an $s$ coin, obtaining zero negativity. At $w=1$, keep $W_\lambda$
+and accept with an independent $s$ coin. At $\lambda=1$ the active block
+is a singlet, and $N_{\max}(s)=\tfrac12\min\{1,w/s\}$. These are
+abstract extensions, not additional finite-native realizability statements.
+At $s=0$ there is no normalized successful output and no frontier value is
+assigned by the conditional definition.
+
+## 224. Sources, conventions, and the exact scope of reuse
+
+The native source is
+[FIB ATOM recursive holographic boundary geometry, Continuation VI](https://github.com/the-omega-institute/trureturing/blob/2cc0f1a8c9795a708bf251234763243ee241e3b1/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md),
+at immutable revision `2cc0f1a8c9795a708bf251234763243ee241e3b1`.
+Its content SHA256 is
+`80280f488da57e8a1d80d8c861083bf2759814507189d33657c2da271515e682`.
+The source correspondence uses §§139–142 for the metric, principal root,
+cut, full fermionic Gibbs state, and even Bob-local alignment; §§148–152 for
+the scalar weights, CAR singlet block, filter, spectator direct sum, probability
+normalization, and benchmark; and §§155–156 for application and supplier
+boundaries.
+The mature mathematical suppliers are listed by exact arXiv versions and
+the result used.
+
+| Reference | Primary source | Scope used here |
+| --- | --- | --- |
+| [LMP] | N. Linden, S. Massar, S. Popescu, *Purifying noisy entanglement requires collective measurements*, Phys. Rev. Lett. 81, 3279, [quant-ph/9805001v1](https://arxiv.org/src/quant-ph/9805001v1), DOI 10.1103/PhysRevLett.81.3279 | One-pair Werner concurrence/entanglement-of-formation no-concentration and adaptive product-history reduction. Its fidelity convention is $F=(1+3\lambda)/4$. It is close prior one-copy work, not the complete flagged exact-success output calculation. |
+| [VDM] | F. Verstraete, J. Dehaene, B. De Moor, *Local filtering operations on two qubits*, Phys. Rev. A 64, 010101(R), [quant-ph/0011111v1](https://arxiv.org/src/quant-ph/0011111v1), DOI 10.1103/PhysRevA.64.010101 | Theorem 1, Eq. (2), gives $C'=C\lvert\det A\det B\rvert/q$ for normalized two-qubit filtering with nonsingular filters. Singular leaves are handled directly in §217. |
+| [W] | W. K. Wootters, *Entanglement of Formation of an Arbitrary State of Two Qubits*, Phys. Rev. Lett. 80, 2245, [quant-ph/9709029v1](https://arxiv.org/src/quant-ph/9709029v1), DOI 10.1103/PhysRevLett.80.2245 | Spin-flip formula $C=\max(0,l_1-l_2-l_3-l_4)$ and minimum-average pure-state concurrence. The actual spin-flip-invariant $W_\lambda$ has $C=2N_0$. |
+| [AVBDM] | K. Audenaert, F. Verstraete, T. De Bie, B. De Moor, *Negativity and Concurrence of mixed 2-by-2 states*, [quant-ph/0012074v1](https://arxiv.org/src/quant-ph/0012074v1) | Its convention $E_N=\max(0,-2\lambda_{\min}(\rho^{T_B}))$ and its convex-roof concurrence comparison imply $C\ge2N$ here. Transposing the other party does not change the relevant spectrum. |
+| [VADDM] | F. Verstraete, K. Audenaert, J. Dehaene, B. De Moor, *A comparison of the entanglement measures negativity and concurrence*, [quant-ph/0108021v1](https://arxiv.org/src/quant-ph/0108021v1) | A distinct comparison paper. Its Theorem 1 bounds its doubled negativity by concurrence, again giving $2N\le C$ in the present convention. No lower-bound classification is used. |
+| [VW] | G. Vidal, R. F. Werner, *A computable measure of entanglement*, Phys. Rev. A 65, 032314, [quant-ph/0102117v1](https://arxiv.org/src/quant-ph/0102117v1), DOI 10.1103/PhysRevA.65.032314 | Eq. (1) uses the present ordinary negativity; Proposition 1 gives convexity and Proposition 3 average LOCC monotonicity. Average monotonicity alone does not supply the conditional ceiling. |
+| [SVC] | N. Schuch, F. Verstraete, J. I. Cirac, *Quantum entanglement theory in the presence of superselection rules*, Phys. Rev. A 70, 042310, [quant-ph/0404079v1](https://arxiv.org/src/quant-ph/0404079v1), DOI 10.1103/PhysRevA.70.042310 | Local operations commute with local number. Section IV.D supplies the mixed-state standard-form and two-copy local-one-particle projection context underlying the already-prepared native input. No extra copy of $\rho_{w,\lambda}$ is used in its subsequent processing. |
+| [HI] | T. Hiroshima, S. Ishizaka, *Local and Nonlocal Properties of Werner States*, Phys. Rev. A 62, 044302, [quant-ph/0003058v1](https://arxiv.org/src/quant-ph/0003058v1) | Eq. (2) uses Werner singlet fidelity $F=(1+3\lambda)/4$; Eq. (13) and its Bell-diagonal discussion give unit concurrence enhancement for the relevant Bell-diagonal inputs. This concerns concurrence/entanglement of formation, not the present flagged negativity objective. |
+| [KLM] | A. Kent, N. Linden, S. Massar, *Optimal Entanglement Enhancement for Mixed States*, Phys. Rev. Lett. 83, 2656, [quant-ph/9902022v3](https://arxiv.org/src/quant-ph/9902022v3), DOI 10.1103/PhysRevLett.83.2656 | Related one-copy orbit and Bell-diagonal normal-form background. No blanket finite normal-form attainability theorem for rank-deficient states, or unrestricted negativity optimum, is inferred. |
+
+For the [SVC] standard-form correspondence, its scalar parameters, denoted here
+by $w_{\mathrm{SVC}},v_{\mathrm{SVC}}$ to avoid confusion with the flag
+weight, are
+
+$$
+(w_{00},w_{01},w_{10},w_{11},\gamma)=(a,b,c,d,z),\qquad
+w_{\mathrm{SVC}}=\sqrt{ad/(bc)},\qquad
+v_{\mathrm{SVC}}=|z|/\sqrt{bc}.
+\tag{224.1}
+$$
+
+Its two-copy one-particle block has diagonal
+$(w_{\mathrm{SVC}}^2,1,1,w_{\mathrm{SVC}}^2)$ and middle coherence
+$v_{\mathrm{SVC}}^2$. The local phase described in §215 relates its positive
+coherence convention to $C_-$. Its unchanged threshold
+$v_{\mathrm{SVC}}^2>w_{\mathrm{SVC}}^2$ is exactly $\mu>ad$.
+Those are mature preparation facts; the displayed native probabilities are
+computed from the actual source weights without adding that paper's
+preliminary filter.
+
+This appendix is a source-specific synthesis and application: the native
+relation $bc=ad+\mu$ yields the Werner active block, the Bob-local
+spectator flag yields two trace budgets, and a compatible product reset
+saturates them in one common quantum output. Standard filtering, concurrence,
+convexity, and local-number encoding are attributed to their existing sources.
+
+## 225. Established scope and unresolved boundaries
+
+Within the stated ideal menu, the exact finite one-copy postfilter problem is
+closed analytically by a bound for every allowed protocol and a finite
+attainer for every exact $s$. The scalar-family image and inverse realization
+retain the finite parameter exclusions. The literal single-product map has
+its separate success ceiling, while multi-leaf LOCC reaches $s=1$.
+
+The following boundaries remain unresolved by these results:
+
+- Realization of arbitrary scalar $p$ by a native metric $q$, a physical
+  subsystem cut, or a physically available preparation/control platform.
+- A $q$-independent decoder or operation when the source-informed active and
+  spectator basis is unknown. The common raw full filter is known; that does
+  not supply unknown-$q$ active extraction.
+- Finite gate-set synthesis, implementation noise, costs of exact biased coins,
+  or the thermodynamic cost of resetting neutral memories.
+- Global optimization over operations on the original unfiltered resource,
+  or identification of the full unfiltered six-mode state's optimum from its
+  selected block or from an effective number-twirled state.
+- Additional-copy or collective protocols, asymptotic rates, other
+  entanglement measures, quantum advantage, or a full conditional-negativity
+  characterization of the stricter single-product class for all abstract
+  spectator-heavier inputs.
+
+
+## 225.99 追加锚（本行以下为增补区）
+
+
+## 226. The fixed native principal-root cut
+
+**Definition 226.1 (native family and closed extension).** Retain the stopped
+singleton history and coordinate order $(r,\ell,R)$ of VI §139. Write
+
+$$
+\begin{gathered}
+T=(1,1,1)^\top,\qquad
+L=\begin{pmatrix}2&-1&-1\\-1&1&0\\-1&0&1\end{pmatrix},\\
+\pi_q=(1-u-v,u,v)^\top,\qquad
+G_q=L+\pi_q\pi_q^\top,\qquad
+S_q=G_q^{1/2},\qquad V_q=S_qT,\\
+p(q)=(V_q)_\ell^2,\\
+D=\{(u,v):u>0,\ v>0,\ u+v<1\},\qquad
+\Delta=\{(u,v):u\ge0,\ v\ge0,\ u+v\le1\}.
+\tag{226.1}
+\end{gathered}
+$$
+
+The square root is the positive principal square root. The cut is the
+second coordinate after this normalization. No additional orthogonal
+rotation is permitted. The irreducible native family has domain $D$;
+$\Delta$ is its closed mathematical extension. In this appendix the vector
+$\pi_q$ and the circle constant $\pi_{\mathrm c}$ are distinct symbols.
+
+**Definition 226.2 (algebraic endpoints).** Let $\sigma_*$ be the unique root
+in $(13/4,7/2)$ of
+
+$$
+\sigma_*^3-\sigma_*^2-9\sigma_*+1=0.
+\tag{226.2}
+$$
+
+Put
+
+$$
+\tau_*=\frac{\sigma_*^2-5}{2},\qquad
+H_*=\sigma_*\tau_*-1,\qquad
+m=\frac{\sigma_*^2}{H_*^2},\qquad
+M=\frac{(\sigma_*+\tau_*+3)^2}{H_*^2}.
+\tag{226.3}
+$$
+
+The uniqueness, positivity and endpoint interpretation follow in §§227–229.
+The conclusions there concern the particular source family (226.1), rather
+than an arbitrary coordinate of a matrix square root.
+
+## 227. A scalar reduction for every asymmetric native parameter
+
+**Proposition 227.1 (native root reduction and uniform bounds).** For every
+$q\in\Delta$, define
+
+$$
+\begin{gathered}
+\sigma=\operatorname{tr}S_q,\qquad
+\tau=\operatorname{tr}(S_q^{-1}),\qquad H=\sigma\tau-1,\\
+A=5+2u^2+2uv-2u+2v^2-2v,\qquad
+B=5+3u^2-2u+3v^2-2v.
+\tag{227.1}
+\end{gathered}
+$$
+
+Then
+
+$$
+\begin{gathered}
+G_q\succ0,\quad \det G_q=1,\quad \|V_q\|^2=1,\\
+\sigma^2=A+2\tau,\qquad \tau^2=B+2\sigma,\\
+\frac{13}{4}<\sigma<\frac72,\qquad
+\frac{13}{4}<\tau<\frac{15}{4},\qquad H>\frac{153}{16},\\
+V_q=\frac{(\tau+4)\pi_q-L\pi_q+\sigma T}{H}.
+\tag{227.2}
+\end{gathered}
+$$
+
+In particular, all three coordinates of $V_q$ are positive, and
+
+$$
+\begin{aligned}
+(V_q)_r&=\frac{\sigma+1+(\tau+1)(1-u-v)}{H},\\
+(V_q)_\ell&=\frac{\sigma+(1-u-v)+(\tau+3)u}{H},\\
+(V_q)_R&=\frac{\sigma+(1-u-v)+(\tau+3)v}{H}.
+\tag{227.3}
+\end{aligned}
+$$
+
+The value of $\sigma$ is equivalently the unique root in $(13/4,7/2)$ of
+
+$$
+(\sigma^2-A)^2-8\sigma-4B=0,\qquad
+\tau=\frac{\sigma^2-A}{2}.
+\tag{227.4}
+$$
+
+Proof. For $x=(x_r,x_\ell,x_R)^\top$,
+
+$$
+x^\top G_qx=(\pi_q^\top x)^2+(x_\ell-x_r)^2+(x_R-x_r)^2.
+\tag{227.5}
+$$
+
+Its vanishing forces $x=aT$ and then $a=0$, since $\pi_q^\top T=1$.
+The matrix with rows $\pi_q^\top$, $(-1,1,0)$, $(-1,0,1)$ has determinant
+$1$, and its Gram matrix is $G_q$. Hence $\det G_q=1$.
+Also $G_qT=\pi_q$ and $T^\top G_qT=1$, proving the normalization.
+The finite real spectral theorem supplies the unique positive principal
+root. All subsequent polynomial identities concern this root.
+
+Let its eigenvalues be $a\ge b\ge c>0$. Their product is $1$,
+so $\tau=e_2(S_q)$. Direct expansion gives $A=\operatorname{tr}G_q$
+and $B=e_2(G_q)$; the displayed trace identities follow. Since
+$G_q\succeq L$ and the eigenvalues of $L$ are $3,1,0$, eigenvalue
+monotonicity gives $a\ge\sqrt3$ and $b\ge1$. Both
+$a+b+1/(ab)$ and $ab+1/a+1/b$ increase in $a,b$ on that region. Thus
+
+$$
+\sigma,\tau\ge1+\frac4{\sqrt3}>\frac{13}{4}.
+\tag{227.6}
+$$
+
+On $\Delta$ one has $A=4+\|\pi_q\|^2\le5$ and
+$B\le5+u+v\le6$. Therefore
+
+$$
+(\sigma^2-5)^2\le4\tau^2\le24+8\sigma.
+\tag{227.7}
+$$
+
+The polynomial $P(x)=x^4-10x^2-8x+1$ is strictly increasing on
+$[7/2,\infty)$, while $P(7/2)=9/16>0$. Inequality (227.7) yields
+$\sigma<7/2$. Now $\tau^2=B+2\sigma<13$, so $\tau<15/4$,
+and the bound on $H$ follows.
+
+Cayley–Hamilton for $S_q$ gives
+
+$$
+S_q=\frac{-G_q^2+(\sigma^2-\tau)G_q+\sigma I}{H}.
+\tag{227.8}
+$$
+
+Indeed its characteristic polynomial is
+$x^3-\sigma x^2+\tau x-1$; reduction of the numerator modulo this
+polynomial gives $HS_q$. Applying (227.8) to $T$ and using
+$G_q\pi_q=L\pi_q+\|\pi_q\|^2\pi_q$ proves (227.2), hence
+(227.3). The positive coordinates and normalization imply
+$0<(V_q)_i<1$ for every coordinate.
+Finally, eliminating $\tau$ gives (227.4). Its derivative in $\sigma$ is
+$4\sigma(\sigma^2-A)-8>0$ throughout $(13/4,7/2)$ when $A\le5$.
+Existence follows from the actual principal root just constructed, proving
+uniqueness without selecting another algebraic branch.
+
+The spectral theorem, eigenvalue monotonicity and Cayley–Hamilton used
+inside this proof are standard matrix results. The reduction (227.3) is a
+source-specific consequence for (226.1).
+
+## 228. Global extrema on the full closed simplex
+
+**Theorem 228.1 (unique native extrema).** On $\Delta$, the function $p$
+has a unique minimum at $q_-=(0,1)$ and a unique maximum at $q_+=(1,0)$.
+Their values are $m$ and $M$ from (226.3). In particular
+
+$$
+0<m<\frac12<M<1.
+\tag{228.1}
+$$
+
+Proof. Write $z=(V_q)_\ell$. It is positive, so extrema and strict
+comparisons for $z$ pass to $p=z^2$.
+
+For the minimum, spectral calculus gives the convergent vector integral
+
+$$
+V_q=\frac2{\pi_{\mathrm c}}\int_0^\infty
+(t^2I+G_q)^{-1}\pi_q\,dt.
+\tag{228.2}
+$$
+
+This is the standard square-root integral applied to $T$, using
+$G_qT=\pi_q$; the scalar identity follows by integrating
+$\lambda/(t^2+\lambda)$ for $\lambda>0$. For fixed $q$, positive
+definiteness makes the integrand bounded near $t=0$ and $O(t^{-2})$
+as $t\to\infty$. At $t=0$ its continuous extension is
+$G_q^{-1}\pi_q=T$, since $G_qT=\pi_q$.
+
+For $x=t^2>0$, set $N=(L+xI)^{-1}$ and $K=x(x+1)(x+3)$.
+Its $\ell$ row, in the declared coordinate order, is
+
+$$
+(N_{\ell r},N_{\ell\ell},N_{\ell R})
+=\frac{(x+1,x^2+3x+1,1)}K.
+\tag{228.3}
+$$
+
+The Sherman–Morrison identity gives
+
+$$
+(t^2I+G_q)^{-1}\pi_q
+=\frac{N\pi_q}{1+\pi_q^\top N\pi_q}.
+\tag{228.4}
+$$
+
+Since $\pi_q$ has nonnegative coordinates summing to $1$,
+$(N\pi_q)_\ell\ge N_{\ell R}>0$, strictly unless $\pi_q=e_R$.
+Convexity of the positive quadratic form gives
+
+$$
+\pi_q^\top N\pi_q\le\sum_i(\pi_q)_iN_{ii}
+\le N_{RR}=N_{\ell\ell}.
+\tag{228.5}
+$$
+
+For the last inequality, the two child diagonal entries agree and exceed
+the root diagonal entry by $x/K$. The $\ell$ component of (228.4) is
+therefore at least $N_{\ell R}/(1+N_{RR})$, its value at $\pi_q=e_R$.
+It is strictly greater for every other $\pi_q$ and every $t>0$.
+Integration proves the asserted unique minimum, with no assertion about
+$N$ at the excluded point $t=0$.
+
+For the maximum, differentiate the trace identities of §227. Subscripts
+$u,v$ denote partial derivatives of their smooth extension to a
+neighborhood of each point of $\Delta$. One obtains
+
+$$
+\begin{aligned}
+\sigma_u&=\frac{\tau(2u+v-1)+(3u-1)}H,&
+\tau_u&=\frac{\sigma(3u-1)+(2u+v-1)}H,\\
+Hz_u&=\tau+2+(1-\tau z)\sigma_u+(u-\sigma z)\tau_u.
+\tag{228.6}
+\end{aligned}
+$$
+
+Here the smooth extension exists because $G_q$ is positive definite and
+the principal square root is smooth on positive definite matrices; the
+strict scalar derivative in (227.4) also provides this extension locally.
+The uniform bounds of §227 imply
+
+$$
+\begin{gathered}
+|\sigma_u|\le\frac{92}{153},\quad
+|\tau_u|\le\frac{128}{153},\quad
+|1-\tau z|\le\frac{11}{4},\quad
+|u-\sigma z|\le\frac72,\\
+Hz_u\ge\frac{21}{4}
+-\frac{11}{4}\frac{92}{153}
+-\frac72\frac{128}{153}
+=\frac{409}{612}>0.
+\tag{228.7}
+\end{gathered}
+$$
+
+In obtaining the first two bounds use $|2u+v-1|\le1$ and
+$|3u-1|\le2$. The other two follow from $0<z<1$ and $0\le u\le1$.
+For $\delta=\partial_u-\partial_v$, direct subtraction instead gives
+
+$$
+\begin{aligned}
+\sigma_\delta&=\frac{(\tau+3)(u-v)}H,&
+\tau_\delta&=\frac{(3\sigma+1)(u-v)}H,\\
+Hz_\delta&=\tau+3+(1-\tau z)\sigma_\delta
+ +(u-\sigma z)\tau_\delta.
+\tag{228.8}
+\end{aligned}
+$$
+
+Consequently
+
+$$
+\begin{gathered}
+|\sigma_\delta|\le\frac{108}{153},\qquad
+|\tau_\delta|\le\frac{184}{153},\\
+Hz_\delta\ge\frac{25}{4}
+-\frac{11}{4}\frac{108}{153}
+-\frac72\frac{184}{153}
+=\frac{61}{612}>0.
+\tag{228.9}
+\end{gathered}
+$$
+
+From any point of $\Delta$, first increase $u$ at fixed $v$ until
+$u+v=1$, then increase $u$ and decrease $v$ equally along that edge
+toward $(1,0)$. Both segments increase $z$ whenever nontrivial, and
+at least one segment is nontrivial unless the original point is $(1,0)$.
+This proves the unique global maximum on the full asymmetric domain.
+The same argument in direction $\delta$ shows strict increase on every
+segment of constant $u+v$.
+
+At either child vertex, $G_q$ has characteristic polynomial
+$x^3-5x^2+6x-1$. Thus the trace identities give
+
+$$
+\sigma^4-10\sigma^2-8\sigma+1
+=(\sigma+1)(\sigma^3-\sigma^2-9\sigma+1)=0.
+\tag{228.10}
+$$
+
+The cubic is strictly increasing on $(13/4,7/2)$, and its signs at the
+two endpoints differ. Proposition 227.1 therefore identifies
+$\sigma=\sigma_*$, $\tau=\tau_*$. Formula (227.3) now reads
+
+$$
+V_{(1,0)}=
+\frac{(\sigma_*+1,\sigma_*+\tau_*+3,\sigma_*)^\top}{H_*},
+\qquad
+V_{(0,1)}=
+\frac{(\sigma_*+1,\sigma_*,\sigma_*+\tau_*+3)^\top}{H_*}.
+\tag{228.11}
+$$
+
+This proves the endpoint formulas. Positivity of all three coordinates
+and unit norm give $0<m$ and $M<1$. The trace bounds give
+
+$$
+\sqrt m<\frac{56}{153},\qquad
+\sqrt M>\frac{76}{97},
+\tag{228.12}
+$$
+
+because $H_*>153/16$, $H_*<97/8$ and
+$\sigma_*+\tau_*+3>19/2$. Squaring proves $m<1/2<M$.
+
+The integral and rank-one inverse identities in this proof are standard
+spectral-calculus and Sherman–Morrison tools. Their use here proves the
+extremal statement for the declared native cut; no general theorem of
+vertex extremality for matrix-function coordinates is assumed.
+
+## 229. Exact native images and inverse realization
+
+**Theorem 229.1 (full image, attainment and monotone inverse).** The images
+of the declared native family and its closed extension are exactly
+
+$$
+p(D)=(m,M),\qquad p(\Delta)=[m,M],\qquad
+p(\partial\Delta)=[m,M].
+\tag{229.1}
+$$
+
+The endpoint $m$ is attained only at $(0,1)$ and $M$ only at $(1,0)$.
+Every other value is attained both in $D$ and on $\partial\Delta$.
+The third vertex has the previously established value $p(0,0)=1/6$,
+strictly between the endpoints.
+
+For $y\in[m,M]$, the boundary inverse is the unique solution of
+
+$$
+p(s,1-s)=y,\qquad 0\le s\le1.
+\tag{229.2}
+$$
+
+For $m<y<M$, choose any integer $n\ge2$ large enough that, with
+$\varepsilon=1/n$,
+
+$$
+p(0,1-\varepsilon)<y<p(1-\varepsilon,0).
+\tag{229.3}
+$$
+
+Then an interior inverse is the unique $s\in(0,1)$ satisfying
+
+$$
+p\big((1-\varepsilon)s,(1-\varepsilon)(1-s)\big)=y.
+\tag{229.4}
+$$
+
+Proof. Positive-root continuity and (228.9) make $p(s,1-s)$ continuous
+and strictly increasing from $m$ to $M$. This proves boundary coverage
+and uniqueness in (229.2). Endpoint uniqueness in Theorem 228.1 excludes
+both endpoints from $D$.
+
+Continuity at the two child vertices guarantees an $n$ satisfying
+(229.3). Along the segment in (229.4), the derivative is a positive
+multiple of $\partial_u p-\partial_v p$, so it is strictly positive.
+The intermediate value theorem gives a unique $s\in(0,1)$. Both
+coordinates are positive and their sum is $1-\varepsilon<1$, proving
+interior realization. These scalar inversions use the unique root in
+(227.4); they do not choose an arbitrary square-root branch. The endpoint
+formulas and interior inverses establish both exclusion and coverage.
+The claim at $(0,0)$ follows from VI §140 and the unique extrema.
+
+## 230. Which scalar filtering parameters are native
+
+**Theorem 230.1 (native membership inside the scalar image).** Retain the
+scalar formulas and the ideal known-parameter preparation and operation
+assumptions of §§215–216. To distinguish the native coordinate $u$ from
+the interaction scalar in (216.1), write the latter as
+
+$$
+\upsilon=(1-t)^2p(1-p),\qquad
+h=t+(1-t)p,\qquad
+\lambda=\frac{\upsilon}{2t+\upsilon},\qquad
+w=\frac1{1+(1-\lambda)h},\qquad 0<t\le1.
+\tag{230.1}
+$$
+
+For $0<\lambda<1$ and $(2-\lambda)^{-1}<w<1$, define
+
+$$
+\begin{gathered}
+h_{\lambda,w}=\frac{1-w}{w(1-\lambda)},\\
+t_{\lambda,w}=
+\frac{h_{\lambda,w}(1-h_{\lambda,w})(1-\lambda)}
+{(1-h_{\lambda,w})(1-\lambda)+2\lambda},\\
+p_{\lambda,w}=\frac{h_{\lambda,w}-t_{\lambda,w}}{1-t_{\lambda,w}}.
+\tag{230.2}
+\end{gathered}
+$$
+
+Such a pair $(\lambda,w)$ is realized by some $q\in D$ and finite
+$t\in(0,1]$ exactly when
+
+$$
+m<p_{\lambda,w}<M.
+\tag{230.3}
+$$
+
+For the closed extension $\Delta$, replace the strict inequalities by
+$m\le p_{\lambda,w}\le M$. In either domain, the part with
+$\lambda=0$ consists only of $(\lambda,w)=(0,1/2)$.
+
+Proof. The inverse in (230.2) is (216.4). For positive $\lambda$,
+$h$ is determined by $\lambda,w$, the defining scalar relation determines
+$t$, and $p=(h-t)/(1-t)$; thus this inverse is necessary, not merely one
+optional realization. Theorem 229.1 now proves necessity of (230.3),
+and its monotone inverses prove sufficiency with the same $t$.
+For $\lambda=0$, the strict bounds $0<m\le p\le M<1$ imply
+$\upsilon=0$ only when $t=1$. Formula (230.1) then gives $w=1/2$.
+Conversely every $q\in D$ at $t=1$ realizes this pair.
+
+**Corollary 230.2 (native attainment of the scalar thermal threshold).**
+For each fixed $0<t<1$, some $q\in D$ attains
+
+$$
+\lambda_{\max}(t)=\frac{(1-t)^2}{1+6t+t^2}.
+\tag{230.4}
+$$
+
+Writing $t=e^{-\beta}$ with finite $\beta\ge0$, a native $q\in D$
+can enter the positive-negativity branch of the stated one-copy
+postfilter menu exactly when
+
+$$
+\beta>2\operatorname{arsinh}(1).
+\tag{230.5}
+$$
+
+Proof. Theorem 228.1 and Theorem 229.1 give an interior realization of
+$p=1/2$. It attains the scalar bound in (216.7). Conversely that bound
+holds for every native parameter because it holds for every scalar
+$p\in[0,1]$. The threshold in (216.9) is
+$4\sinh^2(\beta/2)p(1-p)>1$; its left side is at most
+$\sinh^2(\beta/2)$, with equality at the attained value $p=1/2$.
+This proves (230.5), including the exclusion of equality.
+The assertion concerns existence of positive negativity, not maximization
+of the full weighted success frontier over $q$.
+
+Theorems 229.1 and 230.1 resolve the native scalar-realization boundary
+of §225 for the family (226.1). They do not assert realization of arbitrary
+$p\in[0,1]$ by that family, other native metrics or physical subsystem
+cuts. The physical availability of the source-informed basis and controls,
+unknown-$q$ extraction, original unfiltered optimization and the other
+operation and resource boundaries in §225 are unchanged assumptions or
+unresolved questions. The image and membership results are source-specific
+mathematical derivations; no literature-priority or physical-realization
+assertion is included.
+
+
+## 230.99 追加锚（本行以下为增补区）
+
+
+## 231. Prepared-state optimization over the actual native sources
+
+**Definition 231.1 (fixed-temperature, fixed-conditional-success objective).**
+Retain the native domain $D$, positive principal root, normalized cut and
+$p(q)$ of (226.1), with $p(D)=(m,M)$ from Theorem 229.1. Fix
+$0<t\le1$ and $0<s\le1$. For scalar $0<p<1$ write
+
+$$
+\begin{gathered}
+b_t=1-t,\qquad U_t(p)=b_t^2p(1-p),\qquad h_t(p)=t+b_tp,\\
+Z_t(p)=2t+U_t(p),\qquad E_t(p)=Z_t(p)+2th_t(p),\\
+\lambda_t(p)=\frac{U_t(p)}{Z_t(p)},\qquad
+w_t(p)=\frac{Z_t(p)}{E_t(p)},\\
+A_t(p)=\frac{(U_t(p)-t)_+}{2Z_t(p)},\qquad
+B_t(p)=A_t(p)w_t(p)=\frac{(U_t(p)-t)_+}{2E_t(p)},\\
+F_{t,s}(p)=A_t(p)\min\{1,w_t(p)/s\}
+=\min\{A_t(p),B_t(p)/s\}.
+\end{gathered}
+\tag{231.1}
+$$
+
+The denominators $Z_t,E_t$ are positive scalar functions; neither denotes
+the native domain $D$ or the root-reduction quantity $H$ of §227.
+These are precisely the scalar identities of §§216,220, with $U_t$
+replacing their interaction scalar, not the native coordinate $u$.
+In particular $A_t=N(W_{\lambda_t})$ and $0<w_t<1$.
+
+For the ideal known-$q$ operation menu of §214, define
+
+$$
+\mathcal V_t(s)=\sup_{q\in D}\;
+\sup_{\substack{\text{allowed one-copy instruments}\\
+\Pr(\mathrm{success}\mid\mathrm{prepared})=s}}
+N(\sigma_{\mathrm{success}})
+=\sup_{q\in D}F_{t,s}(p(q)).
+\tag{231.2}
+$$
+
+The inner equality is Theorem 214.1, with its finite common-output attainer
+in §219. Choosing $q$ here is a source-informed choice of which state to
+prepare and subsequently process. The input to the optimized processing is
+one already prepared $\rho_{w_t(p(q)),\lambda_t(p(q))}$, not an unknown
+state to which one common source-independent decoder must apply.
+
+**Theorem 231.2 (exact native maximum and every maximizing source).** Put
+
+$$
+t_c=3-2\sqrt2,\qquad K_t=1+6t+t^2,\qquad
+\delta_t=1-6t+t^2.
+\tag{231.3}
+$$
+
+For $0<t<t_c$, define
+
+$$
+\begin{gathered}
+p_c(t)=\frac{\sqrt{15+14t}-3-2t}{2(1-t)},\qquad
+\frac25<p_c(t)<\frac12,\\
+s_0(t)=w_t(1/2)=\frac{K_t}{1+10t+5t^2},\qquad
+s_1(t)=w_t(p_c(t)),\qquad 0<s_0(t)<s_1(t)<1.
+\end{gathered}
+\tag{231.4}
+$$
+
+There is a unique maximizing scalar $p_*(t,s)$ on all $p\in(0,1)$:
+
+$$
+\begin{array}{c|c|c}
+\text{success interval}&p_*(t,s)&\mathcal V_t(s)\\ \hline
+0<s\le s_0&1/2&\delta_t/(2K_t)\\
+s_0<s<s_1&p_s&A_t(p_s)\\
+s_1\le s\le1&p_c&B_t(p_c)/s
+\end{array}
+\tag{231.5}
+$$
+
+Here $p_s$ is the unique solution of $w_t(p_s)=s$ in $(p_c,1/2)$.
+An exact inverse, used only on this middle interval, is
+
+$$
+c_{t,s}=1+t-\frac{2st}{1-s},\qquad
+h_s=\frac{c_{t,s}+\sqrt{c_{t,s}^2+4t}}2,\qquad
+p_s=\frac{h_s-t}{1-t}.
+\tag{231.6}
+$$
+
+The radical selects the sole positive root of
+$h_s^2-c_{t,s}h_s-t=0$; the other root is negative. The stated success
+interval ensures $h_s\in(h_t(p_c),h_t(1/2))$, so this is the admissible
+scalar branch. There is no inversion at $s=1$.
+At $s=s_0$ the unique scalar maximizer is $1/2$; at $s=s_1$ it is $p_c$.
+The middle formula extends continuously to these endpoints with the same
+points and values. Neither equality produces another scalar maximizer.
+
+All three scalar optimizers are actual native interior values, and
+
+$$
+\operatorname*{Argmax}_{q\in D}F_{t,s}(p(q))
+=\{q\in D:p(q)=p_*(t,s)\}.
+\tag{231.7}
+$$
+
+Thus the supremum in (231.2) is a maximum. Its maximizing sources form the
+entire inverse fibre; uniqueness of $p_*$ does not assert uniqueness of $q$.
+The same scalar maximum is obtained if $(m,M)$ is replaced by $(0,1)$.
+
+For $t_c\le t\le1$, the maximum is zero and every $p\in(0,1)$,
+hence every $q\in D$, is a maximizer. At $t=t_c$, $U_t(p)=t$ only
+at $p=1/2$, where $\lambda_t=1/3$ and negativity is still zero.
+At $t=1$ one has $U_t=\lambda_t=A_t=B_t=0$ and $w_t=1/2$ for every
+source. These cases do not have the positive-branch uniqueness property.
+
+For $0<t<t_c$, the exact positivity interval is
+
+$$
+p_-(t)=\frac{1-\sqrt{1-4t/(1-t)^2}}2,\qquad
+p_+(t)=1-p_-(t),\qquad
+F_{t,s}(p)>0\ \Longleftrightarrow\ p_-<p<p_+.
+\tag{231.8}
+$$
+
+At both endpoints and outside this interval $F_{t,s}=0$ for every $s>0$.
+Moreover $p_-<p_c<1/2<p_+$. For the native family intersect this
+positivity interval with $(m,M)$; it always contains the maximizer.
+
+## 232. All-domain calculus proof and native interior attainment
+
+**Proof of Theorem 231.2.** First $U_t(p)\le(1-t)^2/4$, with equality
+only at $p=1/2$ when $t<1$. Positive negativity is possible exactly when
+$(1-t)^2>4t$, equivalently $0<t<t_c$ in the specified temperature domain.
+This proves the entire zero regime, including the critical equality and
+$t=1$, without dividing by $1-t$ or $U_t-t$. Solving the strict quadratic
+inequality $U_t>t$ gives (231.8); its boundary denominators remain positive.
+
+Now suppose $0<t<t_c$. On the positive interval, differentiation gives
+
+$$
+\begin{aligned}
+A_t'(p)&=\frac{3t b_t^2(1-2p)}{2Z_t(p)^2},\\
+w_t'(p)&=-\frac{2tb_t(t+h_t(p)^2)}{E_t(p)^2}<0,\\
+B_t'(p)&=\frac{tb_t Q_t(p)}{2E_t(p)^2},\\
+Q_t(p)&=b_t(3+2t)(1-2p)-2b_t^2p^2+2t,\\
+Q_t'(p)&=-2b_t(3+2t)-4b_t^2p<0\qquad(0\le p\le1).
+\end{aligned}
+\tag{232.1}
+$$
+
+The derivative of $w_t$ holds on the whole scalar interval and is the
+$p$ form of (216.8). Exact sign evaluations are
+
+$$
+Q_t(2/5)=\frac{7+61t-18t^2}{25}>0,\qquad
+Q_t(1/2)=-\frac{\delta_t}{2}<0.
+\tag{232.2}
+$$
+
+The first numerator is positive for $0<t<1$, since $61t-18t^2>43t$.
+Strict decrease gives precisely one root between $2/5$ and $1/2$; solving
+its quadratic gives $p_c$ in (231.4). At the lower positivity endpoint,
+using $U_t(p_-)=t$ gives
+
+$$
+Q_t(p_-)=b_t(1-2p_-)(3+2h_t(p_-))>0.
+\tag{232.3}
+$$
+
+Consequently $p_-<p_c<1/2<p_+$. The truncated functions vanish outside
+$(p_-,p_+)$, while inside it $A_t$ strictly increases up to $1/2$ and
+strictly decreases thereafter, and $B_t$ strictly increases up to $p_c$
+and strictly decreases thereafter. Thus their unique positive global
+maxima on all of $(0,1)$ occur at $1/2$ and $p_c$, respectively.
+Strict decrease of $w_t$ gives $s_0<s_1$; positivity and $w_t<1$ give
+the other bounds in (231.4).
+
+If $s\le s_0$, then $F_{t,s}\le A_t\le A_t(1/2)$, with equality
+at $1/2$ because $w_t(1/2)\ge s$. Strict scalar uniqueness follows
+from that of $A_t$. Direct substitution gives $A_t(1/2)=\delta_t/(2K_t)$.
+If $s\ge s_1$, then $F_{t,s}\le B_t/s\le B_t(p_c)/s$, with equality
+at $p_c$ because $w_t(p_c)\le s$. Strict uniqueness follows from that
+of $B_t$. These arguments include both threshold equalities.
+
+If $s_0<s<s_1$, continuity and strict decrease of $w_t$ give one
+$p_s\in(p_c,1/2)$ with
+$A_t(p_s)=B_t(p_s)/s>0$. For every $p<p_s$, either the truncated
+$A_t(p)$ is zero or its strict increase below $1/2$ gives
+$F_{t,s}(p)\le A_t(p)<A_t(p_s)$. For every $p>p_s$, either $B_t(p)=0$
+or its strict decrease above $p_c$ gives
+$F_{t,s}(p)\le B_t(p)/s<B_t(p_s)/s$. This proves global strict
+optimality even outside $[p_c,1/2]$. Rewriting $Z_t=sE_t$ with
+$U_t=(h-t)(1-h)$ gives
+
+$$
+(1-s)\left[-h^2+
+\left(1+t-\frac{2st}{1-s}\right)h+t\right]=0.
+\tag{232.4}
+$$
+
+Since $s<1$ and the two quadratic roots have product $-t<0$, the positive
+root is exactly (231.6); the monotone crossing fixes its admissible domain.
+Continuity of this inverse gives the asserted boundary matches.
+
+It remains to restrict this scalar proof to actual sources. The established
+bound (228.12) gives
+
+$$
+m<(56/153)^2<2/5<p_c<1/2<(76/97)^2<M.
+\tag{232.5}
+$$
+
+Therefore every $y=p_*(t,s)$ lies in $(m,M)$. Use the interior inverse
+of §229: choose any integer $n\ge2$ satisfying (229.3) for this $y$,
+put $\varepsilon=1/n$, and take the unique $\xi\in(0,1)$ solving
+
+$$
+p\big((1-\varepsilon)\xi,(1-\varepsilon)(1-\xi)\big)=y.
+\tag{232.6}
+$$
+
+Then $q=((1-\varepsilon)\xi,(1-\varepsilon)(1-\xi))$ has both
+coordinates positive and sum $1-\varepsilon<1$. This is an actual native
+interior source with the fixed principal square root, not a free scalar or
+a boundary substitute. Theorem 229.1 supplies existence and uniqueness on
+each chosen segment; its image and inverse proof need not be repeated.
+The scalar upper bound and this attaining source prove equality of scalar
+and native optimal values, and scalar uniqueness proves precisely (231.7).
+In fact all sufficiently large integers $n$ satisfy (229.3); their distinct
+coordinate sums exhibit multiple sources in each optimal fibre. In the zero
+regime any interior source attains zero, as already proved. This completes
+the proof.
+
+## 233. The same-source attaining instrument and its preparation law
+
+**Proposition 233.1 (simultaneous source, success and common output).** For
+any maximizing native $q$ above, evaluate $p,\lambda,w,A_t$ at that same
+$q$. Apply the finite instrument (219.1)–(219.3) with
+
+$$
+\alpha=\min\{1,s/w\},\qquad
+\gamma=\frac{(s-w)_+}{1-w},\qquad x=\min\{1,w/s\}.
+\tag{233.1}
+$$
+
+Its active-success, active-failure, spectator-success and spectator-failure
+probabilities, conditional on preparation, are respectively
+
+$$
+\min\{w,s\},\qquad (w-s)_+,\qquad
+(s-w)_+,\qquad 1-w-(s-w)_+.
+\tag{233.2}
+$$
+
+They sum to one, with total success $w\alpha+(1-w)\gamma=s$.
+On active success the encoded active state is kept; on spectator success
+the communicated local reset prepares $|01\rangle$. After erasing every
+record except success the one common normalized output is simultaneously
+
+$$
+\sigma_s=xW_\lambda+(1-x)|01\rangle\langle01|,\qquad
+N(\sigma_s)=xA_t(p)=F_{t,s}(p)=\mathcal V_t(s).
+\tag{233.3}
+$$
+
+Proof. These are the joint law and actual output of §219 at the selected
+source. Its partial-transpose spectrum (219.6), rather than a general
+assumption of affine negativity, gives (233.3). All its local maps preserve
+each party's number separately, and its neutral-memory construction and
+finite rejected complement apply unchanged. In the low-success regime
+$\gamma=0$ and the active branch is thinned. In the strict middle regime
+$w=s$, $\alpha=1$, $\gamma=0$, $x=1$. In the high-success regime
+$\alpha=1$ and spectator padding supplies any $s-w\ge0$. The same
+construction attains zero throughout the zero regime.
+
+**Definition 233.2 (unconditional accounting).** The source convention is
+the full two-preparation filter of (215.9)–(215.12), not the effective
+spectator-discarding preparation. From (220.5), at the same chosen source,
+
+$$
+P_a=\frac{Z_t(p)}{2(1+t)^4},\qquad
+P_{\mathrm{sp}}=\frac{th_t(p)}{(1+t)^4},\qquad
+P_{\mathrm{full}}=\frac{E_t(p)}{2(1+t)^4},\qquad
+R=P_{\mathrm{full}}s.
+\tag{233.4}
+$$
+
+The complete unconditional law is preparation rejection with probability
+$1-P_{\mathrm{full}}$, followed by the four events (233.2) multiplied by
+$P_{\mathrm{full}}$. In particular the two successful contributions are
+$P_a\alpha$ and $P_{\mathrm{sp}}\gamma$, with sum $R$; each spectator
+reset pair has probability $P_{\mathrm{sp}}\gamma/4$. Thus state,
+preparation probability and prescribed conditional success are realized
+jointly by one source and one instrument. No independent extrema of
+$\lambda$ and $w$, or of $A_t$ and $B_t$, have been combined.
+
+At fixed $s$, maximizing $sF_{t,s}$ is equivalent to maximizing $F_{t,s}$;
+for $s\ge s_1$ the optimum $s\mathcal V_t(s)=B_t(p_c)$ is constant.
+The unconditional success-weighted quantity is instead
+$R\mathcal V_t(s)=P_{\mathrm{full}}s\mathcal V_t(s)$ at an attaining
+source. Both $P_{\mathrm{full}}$ and $R$ vary with source choice; (231.5)
+does not optimize this latter quantity or impose fixed overall success $R$.
+
+**Example 233.3 (three exact branches at one temperature).** At $t=1/14$,
+
+$$
+p_c=6/13,\qquad s_0=281/341,\qquad s_1=5/6,\qquad
+\mathcal V_t(s)=
+\begin{cases}
+113/562,&0<s\le281/341,\\
+A_t(p_s),&281/341<s<5/6,\\
+1/(6s),&5/6\le s\le1.
+\end{cases}
+\tag{233.5}
+$$
+
+For a strict middle point, $s=1123/1355$ gives $p_s=25/52$ and
+$\mathcal V_t(s)=451/2246$. Indeed $w_t(25/52)=1123/1355$ and
+$A_t(25/52)=451/2246$, with $281/341<1123/1355<5/6$.
+At the upper threshold the value is $1/5$; at $s=1$ it is $1/6$.
+Every displayed optimizer has an interior inverse (232.6), and (233.1)–(233.4)
+provide its simultaneous preparation and success law.
+
+## 234. Source and operation boundaries of the optimization
+
+This is a source-specific derived application of the exact frontier in
+§§214,217–219, the scalar relations in §216 and the native image/inverse
+in §§226–230. Its additional proof is one-variable calculus on that fixed
+source family. The mature supplier and literature scopes remain those of
+§224; no new general filtering principle or literature-priority conclusion
+is attached to this optimization.
+
+The ideal preparation assumptions remain the full finite fermionic Gibbs
+states, with the zero mode and all number sectors retained, no chemical
+potential or preliminary sector conditioning, and two independent instances
+of the same known $q,t$ with compatible labelled modes, CAR ordering and
+coupling phase. The original common coherent number filter counts all of
+Bob's modes. The positive principal square root and normalized coordinate
+cut remain fixed, with no additional postrotation of that cut. The subsequent
+known-$q$ Bob-local alignment is the allowed operation of §215, not a choice
+of a different cut. The normalized axes are not identified with raw spatial
+subsystems by this argument.
+
+The optimized stage uses one copy of the prepared state, finite adaptive
+LOCC preserving each party's local total number, separable auxiliaries,
+neutral memories, communication and exact biased coins. It requires one
+common encoded output and erasure of every record except success. The
+multi-leaf instrument remains essential when $s>w$: §222 gives the literal
+single-product success-map ceiling $w$ in this native family. Discarding
+records does not turn its several Kraus leaves into one product Kraus.
+
+The success parameter $s$ is conditional on preparation. This result is not
+an optimization of the original unfiltered resource, a fixed-overall-$R$
+source optimization, an unknown-$q$ extraction protocol, an additional-copy
+or collective rate result, or a noisy-control or finite-gate synthesis
+result. Exact coins, neutral-memory discard and preparation availability
+remain ideal assumptions; their physical availability and costs are not
+established. There is no physical-realization, resource-advantage or kernel
+certificate claim.
+
+The endpoint $t=0$ is excluded: it would mean infinite inverse temperature.
+The formal scalar extension at $t=0$ has $A_t=1/2$, $w_t=1$ and
+$F_{t,s}=1/2$ for every interior $p$ and $0<s\le1$, so positive-$t$
+uniqueness must not be extended to it. Nor does that uniqueness survive the
+zero regime $t\ge t_c$. The fixed-overall-success original-source question
+would require keeping $P_{\mathrm{full}}(t,p)s=R$ while varying $q$;
+it is not settled here. These finite conditional results advance only this
+application; the broader ongoing AURIC FIB ATOM quantum-theory objective
+remains open.
+
+
+## 234.99 追加锚（本行以下为增补区）
+## 235. A fixed raw-coordinate copy-rail decoder
+
+Retain the native family $q\in D$ of §226, the positive principal root,
+and the fixed normalized cut $A=\mathbb Ce_\ell$,
+$B=\operatorname{span}\{e_r,e_R\}$ of VI §§139–142 and §215.
+Here “raw-coordinate” means these normalized labelled modes before Bob
+alignment; it does not mean raw weighted occurrence coordinates.
+For every $0<t\le1$, use two independent preparations of the same
+$\rho_{q,\beta}$, $t=e^{-\beta}$, with all Fock sectors and the zero mode
+retained. Their labelled CAR modes and coupling-phase convention must be
+compatible as in VI §147 and §188. The value of $q$ may be unknown to
+the decoder; this assumes availability of the two specified preparations,
+not preparation or cloning of arbitrary unknown carriers.
+
+Apply the actual common coherent filter
+
+$$
+F=\Pi_{n_{A_1}+n_{A_2}=1}
+  \Pi_{n_{r_1}+n_{R_1}+n_{r_2}+n_{R_2}=1}.
+\tag{235.1}
+$$
+
+On its Bob output space define the fixed register identification
+
+$$
+\begin{gathered}
+B_1=\operatorname{span}\{|r_1\rangle,|R_1\rangle,
+ |r_2\rangle,|R_2\rangle\},\\
+J:B_1\longrightarrow\mathbb C^2_{\mathrm{copy}}\otimes
+ \mathbb C^2_{\mathrm{space}},\qquad
+J|x_i\rangle=|i\rangle_{\mathrm{copy}}|x\rangle_{\mathrm{space}},
+\quad x\in\{r,R\},\quad i\in\{1,2\}.
+\tag{235.2}
+\end{gathered}
+$$
+
+This is a register factorization of the selected one-particle space,
+not a tensor identification of the full Fock space or a change of cut.
+Let the output copy code have fixed physical one-particle rails $r_1,r_2$,
+with $|i\rangle_{\mathrm{out}}$ denoting $|r_i\rangle$. Define
+
+$$
+\begin{gathered}
+K_r=|1\rangle_{\mathrm{out}}\langle r_1|
+     +|2\rangle_{\mathrm{out}}\langle r_2|,\qquad
+K_R=|1\rangle_{\mathrm{out}}\langle R_1|
+     +|2\rangle_{\mathrm{out}}\langle R_2|,\\
+\mathcal D(X)=K_rXK_r^*+K_RXK_R^*
+ =\operatorname{Tr}_{\mathrm{space}}(JXJ^*),\\
+K_r^*K_r+K_R^*K_R
+ =\sum_{i=1}^2\bigl(|r_i\rangle\langle r_i|
+                    +|R_i\rangle\langle R_i|\bigr)=I_{B_1}.
+\tag{235.3}
+\end{gathered}
+$$
+
+The Kraus representation proves complete positivity and its effect sum
+proves trace preservation on $B_1$. Every coefficient is fixed independently
+of $q,t$. Alice is untouched. The following argument supplies the actual
+source bridge for this map to §223's sector-merging calculation.
+
+
+## 236. Actual native CAR and spectator bridge
+
+Write the actual source vector of §215 in A-first order as
+$V_q=(\alpha,V_B)$, where $p=|\alpha|^2$, and put
+
+$$
+u=\frac{V_B}{\sqrt{1-p}},\qquad
+\|d\|=1,\quad u^*d=0,\qquad U(q)=[u,d].
+\tag{236.1}
+$$
+
+The native image in §§227–229 has $0<p<1$, so the denominator is
+nonzero throughout $D$. No endpoint extrapolation is required.
+The two compatible preparations have the same $u,d$. In each copy,
+$|b_i\rangle=\sum_xu_x|x_i\rangle$ and
+$|s_i\rangle=\sum_xd_x|x_i\rangle$ are the active and spectator
+basis vectors. This is the basis-matrix convention of §187:
+coordinates transform by $U(q)^*$, while the displayed columns embed
+aligned vectors in the original normalized coordinates.
+
+By VI §142, Bob rotations are generated by even bilinears:
+$`a_x^\dagger a_y=I_A\otimes b_x^\dagger b_y`$ for Bob indices.
+Their lifts are ordinary Bob-local number-preserving unitaries.
+Regrouping copy-first order $(A_1,r_1,R_1,A_2,r_2,R_2)$ into
+party-first order $(A_1,A_2,r_1,R_1,r_2,R_2)$ gives the passive CAR sign
+
+$$
+(-1)^{N_{B_1}n_{A_2}},\qquad N_{B_1}=n_{r_1}+n_{R_1}.
+\tag{236.2}
+$$
+
+Each rotation preserves $N_{B_1}$ and $n_{A_2}$, and hence commutes
+with this regrouping sign. It also commutes with $F$. Thus on the selected
+Bob one-particle space its actual action is exactly
+
+$$
+\mathcal R_q=U(q)\oplus U(q),\qquad
+J\mathcal R_qJ^*=I_{\mathrm{copy}}\otimes U(q).
+\tag{236.3}
+$$
+
+The vacuum lift is identity. A determinant phase belongs to a doubly
+occupied copy, whereas $B_1$ contains exactly one Bob particle in total;
+there is no determinant factor or extra relative copy phase in (236.3).
+The arbitrary phase choice of the common spectator vector $d$ cancels
+in its projector. Odd Bob fields have not been treated as ordinary
+local tensor operators, and (236.2) is not a physical cross-party gate.
+
+For the active block, the compatible coupling phases give
+$`z_1\overline{z_2}=|z|^2=\mu`$. The ket with $A_2,b_1$
+occupied has the negative regrouping sign; the ket with $A_1,b_2$
+occupied has the positive sign. The actual middle exchange coherence is
+therefore $-\mu$, with the same singlet orientation for every $q$.
+Define in Alice-copy rail order
+
+$$
+|\psi^-\rangle=\frac{|A_1\rangle|2\rangle_{
+\mathrm{copy}}-|A_2\rangle|1\rangle_{\mathrm{copy}}}{\sqrt2},
+\qquad P_-=|\psi^-\rangle\langle\psi^-|,\qquad
+ g=(1-t)^2p(1-p),\quad h=t+(1-t)p.
+\tag{236.4}
+$$
+
+Here $h$ is the scalar denoted $v$ in §§187–190. The source weights of
+§215, with $D_t=2(1+t)$, obey
+
+$$
+\begin{gathered}
+a=1/D_t,\quad c=h/D_t,\quad d_{\mathrm{wt}}=t/D_t,
+\quad r_0=1/(1+t),\quad r_1=t/(1+t),\\
+ad_{\mathrm{wt}}=\frac{t}{4(1+t)^2},\quad
+\mu=\frac{g}{4(1+t)^2},\quad bc=ad_{\mathrm{wt}}+\mu,\\
+r_0^2C_-=\frac{tI_4+2gP_-}{4(1+t)^4},\qquad
+ac\,r_0r_1=\frac{th}{4(1+t)^4}.
+\tag{236.5}
+\end{gathered}
+$$
+
+The subscript distinguishes the scalar weight $d_{\mathrm{wt}}$ from
+the spectator vector $d$. These are the actual active and spectator
+populations of VI §151 and §§189,215. With a spectator occupied, the
+selected Bob number excludes both active Bob occupations; the four
+$(A_i,s_j)$ configurations each have weight $ac\,r_0r_1$ and no
+mutual or active-spectator coherence. Both spectators are empty in the
+active block. Embedding those two blocks by (236.3) proves, for the
+actual unnormalized output $\Omega_F=F\rho^{(2)}_{q,\beta}F$ in
+party-first coordinates, where $\rho^{(2)}_{q,\beta}$ denotes the
+compatible even CAR product of the two full preparations,
+
+$$
+\begin{aligned}
+(I_A\otimes J)\Omega_F(I_A\otimes J)^*
+ =\frac{(tI_4+2gP_-)\otimes|u\rangle\langle u|
+          +thI_4\otimes|d\rangle\langle d|}
+        {4(1+t)^4}.
+\end{aligned}
+\tag{236.6}
+$$
+
+The order is Alice, copy, space. This derives the raw-coordinate law
+from the full native active/spectator state, including its CAR sign and
+all selected spectator populations; it does not posit freely rotated
+input states. The $q$-dependent basis is used only to prove (236.6).
+No alignment needs to be applied physically.
+
+
+## 237. Covariance, neutral memory and the joint output-success law
+
+For any spatial unitary $U$, let $\mathcal R=U\oplus U$ on $B_1$.
+Partial-trace invariance and (235.2) give
+
+$$
+\mathcal D(\mathcal RX\mathcal R^*)=\mathcal D(X).
+\tag{237.1}
+$$
+
+This holds also with an untouched Alice register. More explicitly, for
+the active embedding $E_u|i\rangle=\sum_xu_x|x_i\rangle$,
+$K_xE_u=u_xI_{\mathrm{copy}}$, so
+$\sum_xK_xE_uYE_u^*K_x^*=Y$; the same identity holds for $d$.
+Consequently (236.6) yields
+
+$$
+(\operatorname{id}_A\otimes\mathcal D)(\Omega_F)
+ =\frac{t(1+h)I_4+2gP_-}{4(1+t)^4}.
+\tag{237.2}
+$$
+
+There is a number-preserving local dilation of this fixed map within the
+ideal control menu of §§188,215. Attach a two-state zero-charge memory
+$M$, initially $|r\rangle_M$, whose basis is labelled $r,R$.
+On $B_1\otimes M$ define the spatial-register SWAP by its full basis action
+
+$$
+W\bigl(|x_i\rangle_B|m\rangle_M\bigr)
+   =|m_i\rangle_B|x\rangle_M,
+\qquad x,m\in\{r,R\},\quad i\in\{1,2\}.
+\tag{237.3}
+$$
+
+It permutes an orthonormal basis and squares to identity, hence is unitary.
+Extend it by identity on every other Bob number sector tensored with $M$.
+Each sector is invariant, so $[W,N_B\otimes I_M]=0$ and Bob parity
+is preserved. In particular
+$W(|x_i\rangle|r\rangle_M)=|r_i\rangle|x\rangle_M$.
+Discarding $M$ realizes exactly (235.3), leaving the output particle in
+the fixed rails $r_1,r_2$ and preserving copy-rail coherence.
+No individual occupation measurement occurs. The memory is neutral,
+Alice is untouched, and no thermodynamic reset is included. This assumes
+coherent local control of the selected space and a same-dimensional
+neutral memory, not just passive linear optics; physical availability,
+finite gate synthesis, reset work and gate costs are not established.
+
+The original filter selects $N_A=N_B=1$. Total local-number phases
+are scalar there, so $F\mathcal G_N(X)F=FXF$ as in §188.
+The dilation preserves that number and parity. Its deterministic action
+conditional on $F$ retains the original success probability. In particular,
+tracing (237.2), using $\operatorname{Tr}I_4=4$ and
+$\operatorname{Tr}P_-=1$, gives the simultaneous law
+
+$$
+\begin{gathered}
+Q_F=2t+g+2th,\qquad
+P_{\mathrm{full}}=\frac{4t(1+h)+2g}{4(1+t)^4}
+                 =\frac{Q_F}{2(1+t)^4},\\
+\eta=\frac{g}{Q_F}=w\lambda,\qquad
+\lambda=\frac{g}{2t+g},\quad w=\frac{2t+g}{Q_F},\\
+\rho_{\mathrm{out}}=W_\eta
+ =\frac{1-\eta}{4}I_4+\eta P_-.
+\tag{237.4}
+\end{gathered}
+$$
+
+Indeed $1-\eta=2t(1+h)/Q_F$, which checks normalization directly.
+An independent extra acceptance coin of probability $0<s\le1$ changes
+success to $sP_{\mathrm{full}}$ and leaves this state unchanged.
+Common decoding means the same fixed map and output code for every
+$q,t$; it does not require the scalar $\eta$ to be the same for all sources.
+Equation (237.4) instantiates §223's output calculation and adds its
+actual raw-coordinate implementation, without a new optimization claim.
+
+
+## 238. Entanglement threshold and the limits of common decoding
+
+By §223, the output negativity is $(3\eta-1)_+/4$. Equivalently,
+the two-qubit partial-transpose eigenvalues are $(1+\eta)/4$ three
+times and $(1-3\eta)/4$ once. As $Q_F>0$, the exact criterion is
+
+$$
+W_\eta\text{ is entangled}
+\quad\Longleftrightarrow\quad 3g>2t+g+2th
+\quad\Longleftrightarrow\quad g>t(1+h).
+\tag{238.1}
+$$
+
+Equality is separable. The original full filtered state instead has
+criterion $g>t$ by VI §151 and §215; since $h>0$, common decoding
+imposes a strictly stronger threshold. At $q_b,t=1/7$, §223's benchmark
+has $\eta=2/7$ and hence separable decoded output, while the original
+full filtered state has negativity $1/56$; its success is still
+$343/2048$. Known-$q$ spectator-conditioned reset retains that
+negativity in the encoded output. This comparison does not change any
+of the established optimization statements.
+
+The construction gives common degraded-output decoding $W_{w\lambda}$.
+Exact unknown-$q$ extraction of the active $W_\lambda$ and the best
+$q$-independent decoder remain separate unresolved questions. The common
+map here supplies neither a source-independent preparation procedure for
+unknown carriers nor a decoder for arbitrary unrelated encoders.
+Compatible same-$q,t$ preparations, the common phase convention and one
+SSR on each party's total charge are essential. Separate preliminary
+per-copy twirls or independent unrecorded phase randomization change the
+input and remove the exchange coherence used in (236.6).
+
+All statements concern the declared normalized axes and finite ideal local
+control model. They establish no optimization on the full unfiltered
+resource, additional-copy rate, noise tolerance, physical availability,
+thermodynamic or gate-cost result. This is a source-specific bridge using
+finite-dimensional partial trace and the existing §223 calculation; no
+novelty or priority claim, new external literature assertion, or kernel
+verification is attached to it.
+
+
+## 238.99 追加锚（本行以下为增补区）
+
+## 239. Two actual native sources obstruct common exact heralding
+
+**Definition 239.1 (native input and common success contract).** Retain
+$q\in D$ of §226, the principal-root normalization and fixed cut of §215,
+and the compatible two full Gibbs preparations, coupling phases, coherent
+filter $F$ and fixed register identification $J$ of §§235–236. In Alice,
+copy, space order, normalize (236.6) to obtain
+
+$$
+\begin{gathered}
+\rho_q=w_q(W_{\lambda_q}\otimes U_q)+(1-w_q)\tau_q,\qquad
+\tau_q=\tfrac14 I_A\otimes I_{\mathrm{copy}}\otimes D_q,\\
+U_q=|u_q\rangle\langle u_q|,\quad D_q=|d_q\rangle\langle d_q|,
+\quad u_q=V_B/\sqrt{1-p_q},\quad \|d_q\|=1,\quad u_q^*d_q=0,\\
+W_\lambda=(1-\lambda)I_4/4+\lambda P_-,\qquad
+p_q=|(V_q)_\ell|^2,\quad g_q=(1-t)^2p_q(1-p_q),\quad
+h_q=t+(1-t)p_q,\\
+\lambda_q=\frac{g_q}{2t+g_q},\qquad
+w_q=\frac{2t+g_q}{2t+g_q+2th_q}.
+\end{gathered}
+\tag{239.1}
+$$
+
+Here $V_B$ is in $(r,R)$ order, $P_-$ has the fixed singlet orientation
+of (236.4), and $0<w_q<1$ at finite temperature. The vectors $u_q,d_q$
+describe the actual native state; their use does not apply a source-dependent
+alignment or replace the source by freely chosen rays.
+
+At fixed $t$, a common success map $\mathcal E_t$ acts from the selected
+$\mathbb C^2_A\otimes\mathbb C^2_{\mathrm{copy}}\otimes
+\mathbb C^2_{\mathrm{space}}$ to one fixed encoded two-qubit output register.
+It may depend on $t$ but not on the unknown $q$. Exact heralding requires
+$\mathcal E_t(\rho_q)=s_qW_{\lambda_q}$ with $s_q>0$ for every required
+source, after erasing all records except success. The target parameter may
+vary with $q$; the common register does not require identical target states.
+No uniform positive lower bound on $s_q$ is imposed. In the finite adaptive
+local-number-preserving LOCC menu of §§214,218, local neutral memories,
+separable auxiliaries and classical coins are allowed, with no additional
+input copy, entangled ancillary resource or external phase reference.
+Failure outcomes are stopped and supply no further input. Every such success
+map is separable, completely positive and trace-nonincreasing by §218.
+
+**Theorem 239.2 (native two-point consequence of §§217–218).** At
+$t_0=1/10$, no single separable completely positive trace-nonincreasing
+success map satisfies Definition 239.1 simultaneously for
+$q_a=(1/6,1/6)$ and $q_b=(1/3,1/3)$. In particular, the assertion that
+for every $t\in(0,1]$ there exists one allowed $q$-independent instrument
+with positive success and exact $W_{\lambda(q,t)}$ output for every native
+$q\in D$ is false under this preparation and operation contract.
+
+Proof. Use exactly the principal-root vectors in (215.4). In $(r,R)$ order,
+their normalized Bob components and orthogonal spectator vectors are
+
+$$
+\begin{gathered}
+u_a=(10,7)^{\mathsf T}/\sqrt{149},\qquad
+ d_a=(7,-10)^{\mathsf T}/\sqrt{149},\\
+u_b=(1,1)^{\mathsf T}/\sqrt2,\qquad
+ d_b=(1,-1)^{\mathsf T}/\sqrt2.
+\end{gathered}
+\tag{239.2}
+$$
+
+Substituting $p_a=49/198$, $p_b=1/3$ and $t_0=1/10$ into (239.1) gives
+
+$$
+(\lambda_a,w_a)=\left(\frac{7301}{16981},\frac{16981}{20105}\right),
+\qquad
+(\lambda_b,w_b)=\left(\frac9{19},\frac{19}{23}\right).
+\tag{239.3}
+$$
+
+Thus $N_i=(3\lambda_i-1)/4>0$ for $i=a,b$. Suppose a common map
+$\mathcal E=\mathcal E_{t_0}$ has the stated outputs. For each $i$ put
+$Q_i=\mathcal E(W_{\lambda_i}\otimes U_i)$,
+$Z_i=\mathcal E(\tau_i)$, $a_i=\operatorname{Tr}Q_i$ and
+$b_i=\operatorname{Tr}Z_i$. Restricting each product Kraus factor on Bob
+to $\mathbb C^2_{\mathrm{copy}}\otimes u_i$ gives the two-dimensional
+filters of Lemma 217.2. The spectator input is separable. Consequently
+§218's summation argument, with homogeneous negativity $n$ of (217.1), gives
+
+$$
+n(\mathcal E(\rho_i))\le w_iN_i a_i,\qquad
+s_i=w_i a_i+(1-w_i)b_i.
+\tag{239.4}
+$$
+
+Exactness gives $n(\mathcal E(\rho_i))=n(s_iW_{\lambda_i})=s_iN_i$.
+Dividing by $N_i>0$ yields $s_i\le w_i a_i$. Since $b_i\ge0$ and
+$1-w_i>0$, (239.4) forces $b_i=0$. Positivity then gives $Z_i=0$.
+Spectator annihilation has therefore been derived from exactness, without
+assuming sector-pure heralding or measuring a source-dependent flag.
+
+Let $M=\mathcal E^*(I_4)\ge0$ be the success effect and put
+$P_i=I_A\otimes I_{\mathrm{copy}}\otimes D_i$, so $\tau_i=P_i/4$.
+The preceding zero trace gives
+
+$$
+0=\operatorname{Tr}(MP_i)
+ =\|M^{1/2}P_i\|_{\mathrm{HS}}^2,
+\qquad M^{1/2}P_i=0.
+\tag{239.5}
+$$
+
+The unnormalized columns $(7,-10)^{\mathsf T}$ and $(1,-1)^{\mathsf T}$
+have determinant $3$, so the two spectator rays span the spatial register.
+Hence the ranges of $P_a,P_b$ span the entire selected input space, forcing
+$M=0$. A positive output of $\mathcal E$ then has zero trace for every
+positive input, so $\mathcal E=0$. This contradicts the required individual
+positive success probabilities. The two sources belong to $D$, so this one
+fixed-temperature obstruction also disproves the stated universal assertion.
+
+This source-specific application uses the native bridge of §§215,235–236
+and the existing filtering bound of §§217–218. It asserts no failure at every
+temperature. Approximate extraction, best degraded decoding, existence for
+separable targets, additional-copy protocols and optimization on the original
+unfiltered $64$-dimensional resource are not determined by this theorem.
+The preparation and ideal control assumptions do not establish physical
+availability, gate synthesis or thermodynamic costs.
+
+## 239.99 追加锚（本行以下为增补区）

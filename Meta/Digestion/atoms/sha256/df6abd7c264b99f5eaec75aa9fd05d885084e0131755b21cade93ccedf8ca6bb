@@ -1,0 +1,69 @@
+**Theorem 7.4 (Empty limiting child and a whole-child singleton
+neighbourhood).** The entire child $C(-216/5,-225)$ is empty. There is
+an open real neighbourhood $\mathcal U$ of $q_\infty$, contained in
+$p\ne24$, such that every entire $C(p,v)$ over $\mathcal U$ has at
+most one complete world. Consequently there is $B_0>0$ such that every
+complete $H_4$ world with $b>B_0$ has a singleton acquired sixth-$M$
+child.
+
+The stronger assertion uses Theorem 4.1 for every actual world, including
+$F_0=0$, zero drift and $\Lambda=0$, as well as F's faithful reconstruction.
+It is not inferred from injectivity on one regular source sheet.
+
+**Proof.** Specialize $\alpha,\beta$ at $q_\infty$ as well. Let $R_z,A_z$
+be the primitive integer versions of $R^*,\alpha^*$ with positive leading
+coefficient. Their degrees modulo $101$ remain $18,32$ and
+
+$$
+\operatorname{Res}_x(R_z,A_z)=50,\qquad
+\operatorname{Res}_x(R_z,R_z')=44\pmod {101}.
+$$
+
+Thus $R^*$ is squarefree and $\alpha^*$ is a unit at all its roots.
+The pseudo-remainder identity of Section 2 fixes the only possible drift
+as $-\beta^*/\alpha^*$, even if the quadratic coefficient of $f$ vanishes.
+For $G=R^*/(2x-1)$ the signed Sturm sequence
+$G,G',-\operatorname{rem}(G,G'),\ldots$ has variations $8$ at zero and
+$5$ at positive infinity. Its three positive roots are isolated as follows.
+All finite decimal endpoints in this and subsequent tables are exact
+rationals.
+
+| $x$ interval | $d$ interval | $r$ interval | $b$ interval | $H_1$ interval | $C_0$ interval |
+|---|---|---|---|---|---|
+| $(286201658,286201659)/10^9$ | $(15.710074,15.710075)$ | $(5.050258,5.050259)$ | $(3.310135,3.310136)$ | $(-23,-21)$ | $(256,258)$ |
+| $(1241903126,1241903127)/10^9$ | $(27.259169,27.259170)$ | $(0.556711,0.556712)$ | $(-0.699536,-0.699535)$ | $(-2,-1)$ | $(793,795)$ |
+| $(2882887525,2882887526)/10^9$ | $(18.949707,18.949708)$ | $(-0.258417,-0.258416)$ | $(-0.530518,-0.530517)$ | $(-4,-3)$ | $(854,856)$ |
+
+For an exact evaluation rule, bisect each sign-changing rational bracket
+until its width is at most $10^{-65}$, retaining its sign change.
+Rational interval Horner evaluation of $\alpha^*,\beta^*$ followed by
+Definition 1.1 gives the displayed enclosures. The nonzero $H_1,C_0$
+intervals justify these divisions. Each row violates a strict source
+guard. The only other positive $R^*$ root is $1/2$; there
+
+$$
+\alpha^*=-4859811144123638596875/8388608\ne0,\qquad\beta^*=0.
+$$
+
+Its forced drift is zero and it fails $dU=-H_0$ as in Lemma 7.2.
+Theorem 4.1 and $x>0$ exhaust every possible world, so the child is empty.
+
+The polynomial has four negative real roots, four positive real roots and
+ten nonreal roots. Nonzero leading and constant coefficients, simplicity
+and the $\alpha$ unit persist on a sufficiently small base neighbourhood.
+The implicit-function theorem continues all eighteen roots separately.
+Negative roots stay negative; roots off the real axis stay off it. On
+the three rejected positive branches, $H_1,C_0$ remain nonzero, and the
+strict rejection margins in the table persist. Hence every nearby actual
+world must use the single branch near $1/2$, with its unique drift.
+The injection $W\mapsto(x,d)$ of F, Lemma 30.2, gives at most one world
+in the entire child. This argument does not invert $C_0$ on the half-root
+branch, where it vanishes at the limiting base. Shrink the neighbourhood
+to avoid $p=24$ and call it $\mathcal U$.
+
+Uniform convergence in Definition 7.1 puts every sufficiently large-$b$
+parent world over $\mathcal U$. Its source is regular, its whole parent
+lift exists by O, Theorem 2.1, and that world belongs to the acquired child.
+The child is therefore exactly a singleton. Neither a numerical $B_0$
+nor a radius for $\mathcal U$ has been computed. ∎
+

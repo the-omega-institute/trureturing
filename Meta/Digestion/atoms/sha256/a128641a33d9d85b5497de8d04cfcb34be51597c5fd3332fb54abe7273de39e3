@@ -1,0 +1,30 @@
+Theorem 2.1 bounds this by $B/s$, proving finiteness. Its lower bound
+$N_H^+(u)\ge bu-1$ for $u>1/b$ gives
+
+$$
+Z_H^+(s)\ge s\int_{1/b}^{\infty}(bu-1)e^{-su}\,du
+          =\frac b s e^{-s/b}.
+\tag{3.6}
+$$
+
+For $s\le b$ this is at least $b/(es)$. The bounds in (2.1) and
+(3.2), after taking logarithms and dividing by their diverging positive
+logarithmic denominators, give (3.3). The addition of the one constant
+mode does not alter that limit.
+
+The positive eigenvalues of $\Sigma$ are precisely
+$\mu_j=1/\lambda_j$, with the same multiplicities; its other eigenvalues
+are zero. From (2.1),
+
+$$
+\frac b j\le\mu_j\le\frac B j.
+\tag{3.7}
+$$
+
+Comparing with the positive series $\sum j^{-r}$ proves the first
+assertion of (3.4). Since $C^*C=\Sigma$, the nonzero singular values
+of $C$ are $\sqrt{\mu_j}$; the same comparison proves the second.
+The Laplace-transform identity and summability comparison are standard
+intermediate methods. Equations (3.2)–(3.4) are their repo-derived
+consequences for the source-specific $H,C,\Sigma$. $\square$
+

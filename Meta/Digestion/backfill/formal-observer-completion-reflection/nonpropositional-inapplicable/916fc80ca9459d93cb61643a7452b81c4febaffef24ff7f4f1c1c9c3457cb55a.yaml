@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:916fc80ca9459d93cb61643a7452b81c4febaffef24ff7f4f1c1c9c3457cb55a
+  normalized_sha256: sha256:916fc80ca9459d93cb61643a7452b81c4febaffef24ff7f4f1c1c9c3457cb55a
+cas_ref: sha256:916fc80ca9459d93cb61643a7452b81c4febaffef24ff7f4f1c1c9c3457cb55a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Conceptual account of attribution rather than absence of causes.
+    previous_atom_id: 0e6485a46bea062817a5ac5564a024bdc4ee3e6ff0d8d2559498ef190b567494
+    next_atom_id: ba227585e4371fbf22c31e1df3d491033707b8d5ada6ddd7eb440783faff97ac

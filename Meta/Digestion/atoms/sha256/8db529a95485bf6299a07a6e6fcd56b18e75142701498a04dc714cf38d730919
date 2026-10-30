@@ -1,0 +1,63 @@
+**Theorem 9.2 (Weighted shared-context lower bound).** For every $N\ge1$, every band-compatible $p$ on $B_n$, and every deterministic family of disjoint nonempty interior intervals $C_j$,
+
+$$
+\mathscr R_{N,n}(p)\ge
+\sum_j c_{|C_j|}\sum_{a,b\in\{0,1\}}
+\operatorname{tail}_{N^2}\bigl(S_{C_j}^{a,b}(p)\bigr).
+\tag{9.4}
+$$
+
+Every comparison in the minimum on the left is one global $r\in\mathscr F_{N,n}^{0,0}$. All conditionals and weights on the right belong to the same $p$.
+
+Proof. Fix such an $r$ and one interval $C=[c,d]$. Extend its word probabilities by zero to the whole binary cube, as in (1.7). The ordinary ranks at the cuts $c-1$ and $d$ are at most $N$, since ordinary rank is at most nonnegative rank. At the first cut choose $h\le N$ prefix rows indexed by $u_\alpha$ spanning all prefix rows. There are real coefficients $A_\alpha(u)$, independent of $w,v$, such that
+
+$$
+r(uwv)=\sum_{\alpha=1}^h A_\alpha(u)r(u_\alpha wv).
+\tag{9.5}
+$$
+
+At the second cut choose a basis $D_\beta(v)$, $1\le\beta\le e\le N$, for the row space of the prefix/suffix matrix. For each $\alpha,w$ there are coefficients $H_{\alpha\beta}(w)$ with
+
+$$
+r(u_\alpha wv)=\sum_{\beta=1}^e H_{\alpha\beta}(w)D_\beta(v),\qquad
+r(uwv)=\sum_{\alpha,\beta}A_\alpha(u)D_\beta(v)H_{\alpha\beta}(w).
+\tag{9.6}
+$$
+
+Thus the matrix with rows $(u,v)$, columns $w$ and entries $r(uwv)$ has ordinary rank at most $he\le N^2$. These equalities hold on the full binary cube, including every illegal entry. The auxiliary real coefficients need not be nonnegative. This is the two-cut linear-factorization mechanism also underlying the context rank in [Intrinsic, §2][SC-I]; it is used only as a necessary condition on the given global $r$.
+
+Both $p$ and $r$ are positive on $B_n$ by Definition 1.3. Hence every extendible complement has $r_\eta=r(W_{C^c}=\eta)>0$. For a fixed adjacent-bit type define
+
+$$
+T_C^{a,b}(\eta,w)=\sqrt{p_\eta}\,r_C^\eta(w),\qquad
+r_C^\eta(w)=\frac{r(uwv)}{r_\eta}.
+\tag{9.7}
+$$
+
+Restricting the matrix in (9.6) to those rows and to $K_m^{a,b}$, then scaling row $\eta$ by $\sqrt{p_\eta}/r_\eta$, gives $T_C^{a,b}$. Consequently its ordinary rank is at most $N^2$. For every such row, $p_C^\eta$ and $r_C^\eta$ are band-compatible on exactly the same $K_m^{a,b}$: each insertion inequality is an original inequality divided by the corresponding fixed positive complement mass.
+
+The global single-site predictors at sites in $C$, after the entire complement is fixed, are exactly the single-site predictors of these conditional block laws. Disintegration, [Guarded, Lemma 8.1][SC-G] and $\|x\|_1\ge\|x\|_2$ give
+
+$$
+\begin{aligned}
+\sum_{i\in C}\mathbb E_p(p_i(W_{-i})-r_i(W_{-i}))^2
+&=\sum_\eta p_\eta\mathcal D_{K_m^{a,b}}(p_C^\eta\Vert r_C^\eta)\\
+&\ge c_m\sum_\eta p_\eta\|p_C^\eta-r_C^\eta\|_1^2\\
+&\ge c_m\sum_{a,b}\|S_C^{a,b}(p)-T_C^{a,b}\|_F^2.
+\end{aligned}
+\tag{9.8}
+$$
+
+In the first two sums $a,b$ are the adjacent bits of that $\eta$. Forced fibers have zero single-site discrepancy; singleton completion sets satisfy the same inequality. Nonextendible complements contribute zero and require no denominator.
+
+The needed low-rank approximation inequality is the classical orthogonal-projection bound [Eckart–Young][SC-EY], also used in [Whitebox, Theorem 43.5][SC-W]. Explicitly, if $T$ has rank at most $q$ and $Q$ is the orthogonal projection onto its column space, then
+
+$$
+\|S-T\|_F^2\ge\|(I-Q)S\|_F^2
+=\operatorname{tr}(SS^{\mathsf T})-\operatorname{tr}(QSS^{\mathsf T})
+\ge\sum_{j>q}\sigma_j(S)^2.
+\tag{9.9}
+$$
+
+To obtain the last inequality, diagonalize $SS^{\mathsf T}$. The diagonal entries of $Q$ in that basis lie in $[0,1]$ and sum to at most $q$, so their pairing with the decreasing nonnegative eigenvalues is at most the sum of the first $q$. Apply (9.9) to each term of (9.8) with $q=N^2$. The site sums for disjoint $C_j$ are distinct summands of $\mathcal D_{B_n}(p\Vert r)$, even if their complements or adjacent bits overlap. They can therefore be added without independence. Minimize over this single global $r$. If the family is empty its value is $+\infty$, so (9.4) still holds. $\square$
+

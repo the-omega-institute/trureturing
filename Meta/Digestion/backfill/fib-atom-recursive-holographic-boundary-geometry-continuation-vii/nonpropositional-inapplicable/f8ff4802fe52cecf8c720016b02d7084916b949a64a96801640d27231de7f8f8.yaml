@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f8ff4802fe52cecf8c720016b02d7084916b949a64a96801640d27231de7f8f8
+  normalized_sha256: sha256:f8ff4802fe52cecf8c720016b02d7084916b949a64a96801640d27231de7f8f8
+cas_ref: sha256:f8ff4802fe52cecf8c720016b02d7084916b949a64a96801640d27231de7f8f8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 仅定义任务相对三维载体证书的五项要求，不断言这些要求成立，也不证明其实现。
+    previous_atom_id: b769705bfcea5264a39022b6d99cf1687a9ddc1c80003410040241e482bb205c
+    next_atom_id: 76cdbb20881942b62fcc127a9ea83ebc3034a2865ef2b9d57be61779627dccc1

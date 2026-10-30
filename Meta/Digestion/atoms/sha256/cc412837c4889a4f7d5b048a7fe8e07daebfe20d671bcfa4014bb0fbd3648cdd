@@ -1,0 +1,52 @@
+**Theorem 5.1 (Region of the second inequality).** Let $u=a+ib$ with $a\ge0$ and $a^2+b^2\le1$, let $z=(u,\overline{u})$, and let $f(x)=(x-u)(x-\overline{u})$. For $(n,k)=(2,1)$ the second inequality of cited fact (a) reads $\lvert s_{(t-2\mid0)}(z)\rvert\le\binom{t}{2}\lvert e_1(z)\rvert$, that is,
+
+$$
+\lvert h_{t-1}(u,\overline{u})\rvert\le t(t-1)\,a .
+$$
+
+The following are equivalent.
+
+1. This inequality holds for every $t\ge2$.
+2. This inequality holds for $t=3$.
+3. $b^2\le3a^2+6a$.
+4. $f(0)\le f'(0)^2-3f'(0)$.
+
+For $t=2$ the inequality holds with equality for every such $u$. Stance: suspected-novel (see Section 7).
+
+**Proof.** For $t=2$, $h_1(u,\overline{u})=2a$. For $t=3$, $h_2(u,\overline{u})=3a^2-b^2$ as in the proof of Theorem 4.1, so the inequality reads $-6a\le3a^2-b^2\le6a$. The right half holds because $0\le a\le1$ gives $3a^2\le6a$, and the left half is $b^2\le3a^2+6a$; so 2 and 3 are equivalent. Since $f(0)=a^2+b^2$ and $f'(0)=-2a$, condition 4 reads $a^2+b^2\le4a^2+6a$, which is 3. Clearly 1 implies 2.
+
+It remains to show that 3 implies 1. Let $H=\{(a,b):\ a\ge0,\ a^2+b^2\le1,\ b^2\le3a^2+6a\}$. The inequality for $t$ is $G_t^{+}\ge0$ and $G_t^{-}\ge0$. The case $t=2$ is done; let $t\ge3$, and assume $b\ge0$ since $G_t^{\pm}$ is even in $b$.
+
+*Monotonicity in $a$.* As in the proof of Theorem 4.1,
+
+$$
+\partial_aG_t^{\pm}(a,b)=t(t-1)\pm t\,h_{t-2}(u,\overline{u})\ge t(t-1)-t(t-1)\lvert u\rvert^{t-2}\ge0
+$$
+
+on the closed unit disk. Since $3a^2+6a$ is increasing for $a\ge0$, the horizontal section of $H$ at height $b\ge0$ is the interval $a_0(b)\le a\le\sqrt{1-b^2}$, where $a_0(b)=\sqrt{1+b^2/3}-1\ge0$ is the nonnegative root of $3a^2+6a=b^2$, whenever this interval is nonempty; the segment lies in the unit disk. Hence $G_t^{\pm}(a,b)\ge G_t^{\pm}(a_0(b),b)$, and the left endpoint $(a_0,b)$ lies in $H$, so $a_0^2+b^2=4a_0^2+6a_0\le1$, which means $0\le a_0\le a^*:=\frac{\sqrt{13}-3}{4}$. It therefore suffices to prove, for $0\le a\le a^*$, $b=\sqrt{3a^2+6a}$ and $u=a+ib$,
+
+$$
+\lvert h_{t-1}(u,\overline{u})\rvert\le t(t-1)\,a\qquad(t\ge3).
+$$
+
+On this arc $r^2:=\lvert u\rvert^2=4a^2+6a\le1$, and $a^*<\tfrac14$ because $\sqrt{13}<4$. Write $H_m=h_m(u,\overline{u})$. By cited fact (b), $H_0=1$, $H_1=2a$ and $H_m=2aH_{m-1}-r^2H_{m-2}$, which yields
+
+$$
+H_2=-6a,\quad H_3=-8a^3-24a^2,\quad H_4=-16a^4-24a^3+36a^2,\quad H_5=96a^4+216a^3,
+$$
+
+$$
+H_6=64a^6+384a^5+432a^4-216a^3 .
+$$
+
+Using $0\le a\le\tfrac14$:
+
+- $t=3$: $\lvert H_2\rvert=6a$, equality.
+- $t=4$: $\lvert H_3\rvert=a(8a^2+24a)\le a\bigl(\tfrac12+6\bigr)<12a$.
+- $t=5$: $H_4=4a^2(9-6a-4a^2)$ with $0\le9-6a-4a^2\le9$, so $\lvert H_4\rvert\le36a^2\le9a<20a$.
+- $t=6$: $\lvert H_5\rvert=a(96a^3+216a^2)\le a\bigl(\tfrac32+\tfrac{27}{2}\bigr)=15a<30a$.
+- $t=7$: $\lvert H_6\rvert\le a(64a^5+384a^4+432a^3+216a^2)\le a\bigl(\tfrac1{16}+\tfrac32+\tfrac{27}{4}+\tfrac{27}{2}\bigr)=\tfrac{349}{16}a<42a$.
+- $t\ge8$: by the bound of Convention 2.2 and $r\le1$, $\lvert H_{t-1}\rvert\le t\,r^{t-1}\le t\,r^2=t(4a+6)\,a\le7t\,a\le t(t-1)\,a$.
+
+This proves the inequality on the arc for every $t\ge3$, and hence on $H$. $\square$
+

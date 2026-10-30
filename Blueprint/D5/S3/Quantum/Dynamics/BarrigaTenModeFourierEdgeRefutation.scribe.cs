@@ -29,6 +29,9 @@ internal sealed class BarrigaTenModeFourierEdgeRefutationDocument : IScribeDocum
             Node("claim", "The conjectured bound for N = 10", ClaimFormula(),
                 "The third conjecture of the paper for N = 10 with l = 5, read for the most restrictive notion of solution: every real symmetric coupling matrix with nonnegative off-diagonal entries and connected coupling graph whose propagator exp(-i H) gives F10 after input and output phase shifters has at least 25 edges. The propagator is the frozen hamiltonianPropagator at time 1, applied to the complex matrix map(H, ofReal) obtained by casting each real entry of H to a complex number.",
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("idempotent-exponential", "Exponential of an idempotent", IdempotentExponentialFormula(),
+                "For every finite matrix over the complex numbers with Q squared equal to Q, the exponential of t times Q is the identity plus (exp(t) minus one) times Q.",
+                "expIdempotent", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("result", "The bound fails", Disp(new Formula.Not(F.Id("claim"))),
                 "Let s = sqrt 5 and let C0 be the symmetric circulant on Z_5 with a = pi (35 - 13 s)/25 at distance 1 and b = pi (35 + 13 s)/25 at distance 2. Its Fourier eigenvalues are 28 pi/5, -4 pi, 6 pi/5, 6 pi/5 and -4 pi, so exp(-i C0) has entries (w/sqrt 5) w^(4 (j - k)^2) with w = exp(2 pi i/5). With q = (21 s - 65)/20 and g = q + i sqrt(1 - q^2), the matrix P with entries (Re(g w^(j + k - 1)) + cos(2 pi (j - k)/5))/5 is a rank-one projector onto a vector of the -4 pi eigenspace. Hence K = C0 + 2 pi P commutes with C0 and exp(-i K) = exp(-i C0) exp(-2 pi i P) = exp(-i C0). The value of q makes K 0 1 = 0, and every other off-diagonal entry of K is positive. Through x -> (x mod 2, x mod 5) the ten-mode matrix is H = (pi/4) X (x) I + I (x) K. Its exponential is w D F10 D for the unimodular diagonal D with entries (-i)^(x mod 2) w^(4 (x mod 5)^2), by the congruence 5ab + 4jk = -xy mod 10. The coupling graph consists of the cliques on the even and on the odd modes without the edges {0, 6} and {1, 5}, together with the five edges {x, x + 5}. It is connected and has 23 < 25 edges.",
                 "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
@@ -74,6 +77,21 @@ internal sealed class BarrigaTenModeFourierEdgeRefutationDocument : IScribeDocum
     private static Formula RealMatrices() => Call("Matrix", Modes(), Modes(), Seq(Mathbb, Grp(F.Id("R"))));
     private static Formula ComplexMatrices() => Call("Matrix", Modes(), Modes(), Seq(Mathbb, Grp(F.Id("C"))));
     private static Formula Entry(Formula m, Formula x, Formula y) => new Formula.Apply(m, [x, y]);
+
+    private static Formula IdempotentExponentialFormula()
+    {
+        Formula n = F.Id("n"), q = F.Id("Q"), t = F.Id("t");
+        Formula complex = Seq(Mathbb, Grp(F.Id("C")));
+        Formula matrices = Call("Matrix", n, n, complex);
+        Formula square = Equal(Seq(q, Sp, Cdot, Sp, q), q);
+        Formula rhs = Seq(D(1), Sp, Plus, Sp,
+            Parenthesized(Seq(Call("exp", t), Sp, Minus, Sp, D(1))), Sp, Cdot, Sp, q);
+        Formula identity = Equal(Call("exp", Seq(t, Sp, Cdot, Sp, q)), rhs);
+        return Disp(All("n", Named("Type"),
+            Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+                OpenBracket, Call("DecidableEq", n), CloseBracket, Comma, Sp,
+                All("Q", matrices, Implies(square, All("t", complex, identity))))));
+    }
 
     private static Formula FourierFormula()
     {

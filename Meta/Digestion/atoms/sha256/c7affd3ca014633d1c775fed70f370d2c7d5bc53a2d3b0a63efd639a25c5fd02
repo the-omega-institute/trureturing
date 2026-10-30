@@ -1,0 +1,14 @@
+**Definition 21.1 (independent birth blocks on raw exact A).** Use the
+unchanged exact-Read raw installation A of §§2–3, with its actually
+prepared unit seed and authentic context. For a pre-block term $s$,
+an independent block $B$ is a nonempty finite set of distinct current
+logical leaf addresses, each carrying its unique enabled $P$ or $S$.
+Execute these edits as ordinary serial raw transactions in any order,
+with no Tick inside. There is no batch primitive. Denote the resulting
+term by $s[B]$ and the zero inclusion by $\iota_B$.
+
+Each initial logical leaf cone comprises that position and all its
+future logical descendants. Every successful edit of an unticked
+extension belongs to a unique such cone. Unary material markers are
+included in supports, but are not additional logical leaves.
+

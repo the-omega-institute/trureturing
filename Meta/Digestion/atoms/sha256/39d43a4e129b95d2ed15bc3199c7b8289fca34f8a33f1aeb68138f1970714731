@@ -1,0 +1,16 @@
+**Lemma 48.2 (The original $p\ne24$ condition).** Every world of
+$C(p,v)$ with $p\ne24$ has $\epsilon\ne0$.
+
+**Proof.** If $\epsilon=0$, then (48.2) and $B_{\rm par}>0$ force
+$b=1/8$. The four samples in (48.3) then give exactly
+
+$$
+g(s)=h(s)=\frac85(s-1)(s-3)(s-5),\qquad d=24.
+\tag{48.7}
+$$
+
+Since $h(5)=0$, the literal fifth response is $p=24$, a contradiction.
+Thus $\epsilon\ne0$ is a derived consequence of the required base,
+not a restriction on the original world domain. In particular it does
+not require $d\ne0$. $\square$
+

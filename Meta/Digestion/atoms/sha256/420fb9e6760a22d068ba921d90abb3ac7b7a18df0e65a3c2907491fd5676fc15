@@ -1,0 +1,54 @@
+**定义 16.1（共同射线类与固定五目标的记号）。** Retain the complete-target domain, original clocks, acquisition rules and failure recursion of Definition 1.1. Put
+
+$$
+\begin{gathered}
+L=MJ=\begin{pmatrix}1&0\\1&1\end{pmatrix},\qquad
+h(T)=T(T-5)(T-7),\\
+H_2=(0,J,24,M,48),\qquad
+H_3=(H_2,M,312/5),\qquad H_M=(H_3,M,252/5),\\
+\mathscr R=\left\{R\in\mathbb R^{2\times2}:
+R_{ij}>0,\ \operatorname{rank}R=1,\
+\operatorname{tr}(JR)=1,\
+\operatorname{tr}(LR)=8/5\right\},\\
+\mathcal C=\left\{W(R)=
+\left(\frac R{\operatorname{tr}R},(\operatorname{tr}R)h,0\right):
+R\in\mathscr R\right\}.
+\end{gathered}                                                     \tag{16.1}
+$$
+
+Thus $\mathcal C$ contains every source satisfying the two trace constraints, rather than a selected finite subset. Equivalently, writing $s=\operatorname{tr}R$ and $a=R_{11}$ gives
+
+$$
+\begin{gathered}
+R(a,s)=
+\begin{pmatrix}
+a&8/5-s\\s-3/5&s-a
+\end{pmatrix},\qquad
+C(a,s)=a^2-as-s^2+\frac{11}5s-\frac{24}{25},\\
+\mathscr R=
+\left\{R(a,s):\frac35<s<\frac85,\quad 0<a<s,\quad C(a,s)=0\right\},
+\qquad W(a,s)=\left(\frac{R(a,s)}s,sh,0\right).
+\end{gathered}                                                     \tag{16.2}
+$$
+
+Indeed, the first trace constraint fixes the sum of the off-diagonal entries to $1$, and the second fixes $R_{11}+R_{12}+R_{22}=8/5$. These give exactly the entries in (16.2). Their determinant is $-C(a,s)$; positivity excludes rank zero and is equivalent to the displayed strict inequalities. The complete target determines $R$: the coefficient multiplying the fixed polynomial $h$ gives $\operatorname{tr}R$, and its normalized source then gives $R$. Hence $R\mapsto W(R)$ is injective.
+
+Use exactly $x_*,y_*,\mathcal T$ and $\mathcal K$ of Theorems 14.2 and 15.1, and write
+
+$$
+\mathcal K_5=\mathcal K=\{U_-,U_+\}\cup\mathcal T,\qquad
+U_\pm=W_{\ell_\pm}\in\mathcal A_{y_*},\qquad
+\ell_-<\ell_+.
+                                                                  \tag{16.3}
+$$
+
+The notation $W_{\ell}$ refers to (10.3), with $t=5(y_*-12)/96$. In particular $x_*$ is the limit (14.7), not a rounded solution of a new system, and $y_*=Y_1(x_*)$ is the same number used throughout Section 15. Every member of $\mathcal C$ is a complete legal target. Conversely, among worlds with the known promise $d=0$ and $g=\kappa h$, $\kappa\ne0$, compatibility with $H_2$ forces
+
+$$
+\kappa\operatorname{tr}(JP)=1,\qquad
+\kappa\operatorname{tr}(LP)=8/5.
+                                                                  \tag{16.4}
+$$
+
+Since $\operatorname{tr}(JP)>0$, one has $\kappa>0$; setting $R=\kappa P$ recovers precisely (16.1). This converse uses the stated gain and drift promise.
+

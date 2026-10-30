@@ -1,0 +1,101 @@
+**Theorem 22.11 (quadrant selector).** Fix $t_0>0$. Let $S$ be the first
+$a\geq t_0$ at which $\mathcal C_a$ is a singleton. If it
+is already singleton at $t_0$, hand off immediately without an endpoint
+query. For $r\in(0,\delta]$ define the comparison time and policy by
+
+$$
+T_\square=\inf\{a\geq t_0:\Xi_a\in\pi/2+\pi\mathbb Z\},
+\qquad
+\tau=\min\{S,T_\square\}.
+\tag{22.20}
+$$
+
+Use $\inf\varnothing=\infty$. The comparison time $T_\square$ is defined
+also when $S=t_0$; it is then unused by the policy but still satisfies the
+delay estimate below.
+
+Query the binary sensor $h$ of (22.14) only if the candidate set is still
+double at $\tau=T_\square$. Then $\tau<\infty$ almost surely, at most one
+binary reply is used, and the full original prefix through $\tau$ is
+recovered. Relative to waiting for the $v$-only time $S$, $\tau\leq S$ on
+the same run and $\Pr(\tau<S)>0$ under each nonzero sign law. The sensor is
+an installed resource and is charged even on a no-query branch.
+
+For each fixed $r\in(0,\delta]$, put
+
+$$
+\beta_-(r)=\sqrt2\,r\inf_{u\in\overline{I_+\cup I_-}}g_r(u)>0.
+\tag{22.21}
+$$
+
+The selector obeys the fixed-parameter conditional delay bound
+
+$$
+\mathbf E\bigl[(T_\square-t_0)^+\mid\mathcal F_{t_0}\bigr]
+\leq\frac{\pi^2}{4\beta_-(r)^2},
+\qquad
+\mathbf E[\tau-t_0\mid\mathcal F_{t_0},\,S>t_0]
+\leq\frac{\pi^2}{4\beta_-(r)^2}.
+\tag{22.22}
+$$
+
+There is no bound in this statement uniform as $r\downarrow0$.
+
+At this selected horizon the boundary record includes $\tau$, its stopped
+$v$ prefix, a query flag, and either the actual binary reply or a distinguished
+no-query symbol. The temporal target includes the same $\tau$ and the full
+parameter/path prefix through it. The flag is determined by the specified
+policy. At $r=0$ set $\tau=t_0$ and make no query.
+
+**Proof.** All candidate tests use only the recovered $r,U$, the prefix
+$V$, and the known clock. If $S$ occurs first, the inherited quotient
+classification supplies the sign. If $T_\square$ occurs first while two
+candidates remain, $\sin(\Xi_{T_\square})=\pm1$ and (22.14) separates them.
+No future driver is consulted. For $a\geq t_0$, the event $S\leq a$ is
+the base-observable singleton test on $\mathcal C_a$, and entry of the
+continuous recovered $\Xi$ into the closed quadrant lattice through $a$ is
+also a Borel prefix test. Thus these are causal stopping rules on actual good
+records. Lemma 22.4 gives one common-in-time identity event under each law;
+using (22.17) there reconstructs the entire prefix at $\tau$, including on
+no-query branches. Conversely the target prefix determines its stopped base
+record, the policy flag and, when queried, $h((D_\tau-D_0)\bmod2\pi)$.
+These two maps are inverse on the resulting attained policy image, with the
+observed horizon retained on both sides. This does not assert fixed-time
+sensor separation simultaneously at all times.
+
+For the delay bound, choose adjacent lattice points $a<b$ in
+$\pi/2+\pi\mathbb Z$ bracketing $\Xi_{t_0}$; if it is already on the lattice,
+the delay is zero. Until the first exit, apply Itô's formula to
+$f(x)=(x-a)(b-x)$:
+
+$$
+df(\Xi_s)=f'(\Xi_s)\,d\Xi_s-d[\Xi]_s.
+\tag{22.23}
+$$
+
+Since $d[\Xi]_s=2r^2g_r(U_s)^2ds\geq\beta_-(r)^2ds$ and
+$0\leq f\leq\pi^2/4$, stopping at the exit and at $t_0+n$ gives
+
+$$
+\beta_-(r)^2\,
+\mathbf E[(T_\square-t_0)\wedge n\mid\mathcal F_{t_0}]
+\leq f(\Xi_{t_0})\leq\frac{\pi^2}{4}.
+\tag{22.24}
+$$
+
+Here $|f'|\leq\pi$ before exit and $\sqrt2r g_r$ is bounded above on
+the closed admissible union, so the martingale stopped at $t_0+n$ is square
+integrable and has zero conditional mean. Monotone convergence proves
+(22.22) and almost-sure finiteness. Since
+$\tau\leq T_\square$ and $\tau\leq S$, the same bound holds for $\tau$.
+
+For strict improvement, choose a compact common height interval and a finite
+$L>t_0$. The event that the height stays in that interval through $L$ has
+positive probability and keeps both candidates admissible, so $S>L$. Given
+such a path, the nondegenerate time-changed Brownian $\Xi$ has positive
+probability of hitting the quadrant lattice before $L$. Hence
+$\Pr(T_\square<S)>0$ under either sign. At $r=0$, Theorem 63.1 resolves the
+target at $t_0$ and no division or selector is used. The bound is
+per-parameter and does not claim finite operations, finite precision,
+uniform cost, or a physical implementation. $\square$
+

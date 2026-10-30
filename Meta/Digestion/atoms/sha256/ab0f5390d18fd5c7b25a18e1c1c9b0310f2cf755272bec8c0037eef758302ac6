@@ -1,0 +1,41 @@
+**Theorem 15.1 (every-run lower bounds despite adaptive updates).**
+For every $S,K$ of Definition 13.1, every competitor of Assumption 13.2
+and every one of its actual runs on $(x,k)\in\mathcal F(S,K)$,
+
+$$
+ Q\ge n,\qquad M_{\rm addr}\ge h+k+1,\qquad
+ W\ge L+n(k+1).
+ \tag{GPO.46}
+$$
+
+Proof. Fix this complete actual run and an original leaf index $i$.
+Compare with the fixed alternative obtained by flipping just $x_i$ and
+keeping the same authentic $k$. It belongs to the same family, and
+correctness requires a different original in the output. If every Read
+along the fixed run had the same presence answer on this alternative,
+induction on the actual actions as in Lemma 14.1 would force identical
+updates, choices, stopping and output. This is impossible. Hence there
+is a first Read with different answers between these two runs.
+
+Before that Read their acquired prefixes agree, so their extra-update
+counts are the same $e_i$. This Read really occurs at the same point
+in both runs; subsequent schedules may differ without restriction.
+Its word must enter cone $i$, since every other cone and the scaffold
+are identical at this shared prefix. The two ranks there are
+$2k+e_i$ and $2k+e_i+1$. Lemma 14.2 therefore forces the selected
+word to have length at least
+
+$$
+ d_i+k+\lfloor e_i/2\rfloor+1\ \ge\ d_i+k+1.
+ \tag{GPO.47}
+$$
+
+Choose this first differing Read for every $i$. These are distinct
+Read occurrences: one word enters at most one original cone. The fixed
+run therefore contains at least $n$ such calls. Summing their lengths
+gives $L+n(k+1)$; all unselected calls have nonnegative costs. Selecting
+a deepest original leaf gives maximum at least $h+k+1$. These are
+three bounds on the same arbitrary actual run, without a fixed schedule
+or a separate optimum for each coordinate. Forward updates only increase
+the common blind radius in (GPO.47). $\square$
+

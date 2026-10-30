@@ -10,6 +10,10 @@ strata_touched:
   - D5/S3/Combinatorics/TwoColorPartition/AndrewsElBachraouiThree
   - D5/S3/Combinatorics/TwoColorPartition/AndrewsElBachraouiFour
   - D5/S3/Combinatorics/TwoColorPartition/AndrewsElBachraouiTwo
+  - D5/S3/Combinatorics/TwoColorPartition/AndrewsElBachraouiFiveReduction
+  - D5/S3/Combinatorics/TwoColorPartition/AndrewsElBachraouiFiveGauss
+  - D5/S3/Combinatorics/TwoColorPartition/AndrewsElBachraouiFiveConstants
+  - D5/S3/Combinatorics/TwoColorPartition/AndrewsElBachraouiFive
 license: citation-only
 triage: anchor
 ---
@@ -25,6 +29,11 @@ and of D'(2,2) (Conjecture 3), that D'(2,3,n) < 0 exactly for n = 10, 22 (Conjec
 D'(k,m) for k > m (Conjecture 5). Conjecture 1 is proved by Chern and Wang, arXiv:2601.19845.
 
 The module `D5/S3/Combinatorics/TwoColorPartition/AndrewsElBachraouiThree` proves Conjecture 3.
+The module `D5/S3/Combinatorics/TwoColorPartition/AndrewsElBachraouiFive` proves the complete Conjecture 5
+for every k>m≥1, on the original `dCoeff` and with a parameter-dependent threshold. Its native proof uses the
+source transformation, a sharp Gauss upper sequence and a strict Wallis leading gap.
+The source defines positivity as coefficient nonnegativity; eventual positivity therefore has the quantifiers
+∀k,m≥1, k>m → ∃N ∀n≥N, D'(k,m,n)≥0.
 
 ## Verified locator
 
@@ -34,3 +43,5 @@ URL: https://arxiv.org/abs/2507.09276v1
 
 - Locator: Section 1, equations (1.2) and (1.3).
 - Locator: Section 2, Theorem 1 and Conjecture 2; Section 3, Theorem 4 and Conjectures 3 and 4.
+
+- Locator: Conjecture 5, eventual positivity for k>m, with equation (1.3) defining D-prime.

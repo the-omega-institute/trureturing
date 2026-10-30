@@ -1,0 +1,6 @@
+**Theorem 40.1 (finite signs are equivalent to actual source escape).** Use Definitions 38.1 and 39.1 for the actual $y,\delta,k,d$ on (26.2). Then:
+
+1. The $P_{12}$ projection of $\mathcal W_\delta(y)$ is unbounded if and only if $\mathsf{Pass}_{12}(y,\delta)$ is true. The corresponding equivalence holds for $P_{21}$ and $\mathsf{Pass}_{21}$.
+2. The source projection is unbounded if and only if at least one of the two finite tests passes. A passing test constructs whole legal worlds at every $0<s<\varepsilon$, with the selected escaping entry exactly $1/s$, by the fixed-basis formulas (38.5).
+3. If the $12$ test fails, every compatible world has $P_{12}\le1/\varepsilon$. If the $21$ test fails, every compatible world has $P_{21}\le1/\varepsilon$. If both fail, all compatible complete targets satisfy
+

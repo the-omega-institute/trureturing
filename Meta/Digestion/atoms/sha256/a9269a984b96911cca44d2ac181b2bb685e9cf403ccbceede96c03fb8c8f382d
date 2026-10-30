@@ -1,0 +1,10 @@
+**Proposition 3.2 (ambient coordinate changes).** If the four ambient coefficients are instead $U_j$ with $Z_j=Q_0U_j$, their observation determinant is
+
+$$
+2064008635379195904\,(\det Q_0)^8.
+$$
+
+Replacing local polynomial coefficients by absolute polynomial coefficients preserves invertibility.
+
+**Proof.** Left multiplication by $Q_0$ acts independently on the two columns of a matrix and has determinant $(\det Q_0)^2$ on $\operatorname{Mat}_2(\mathbb R)$. It acts on four matrix blocks, giving the eighth power. Cubic time translation is triangular with diagonal one on each scalar entry's coefficient vector. Thus it has determinant one on the sixteen matrix coefficients; any reordering of this same basis in both coordinates is a conjugation and does not change that determinant. Both changes leave the intercept fixed. ∎
+

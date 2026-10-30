@@ -1,0 +1,94 @@
+**Theorem 14.2 (complete bounded-weight escape and divergence).**
+Suppose the unweighted output laws and the normalized weighted output
+laws of Definition 14.1 satisfy, for a reference of Definition 13.1,
+
+$$
+\mu_n\Rightarrow\mu_{I,T},\qquad
+\nu_n\Rightarrow\nu_{I,T}.
+\tag{14.2}
+$$
+
+Then every bounded-weight portion loses all its weighted mass:
+
+$$
+\begin{gathered}
+\lim_{n\to\infty}\mathbb E_{\mathbb P_n}
+                   [w_n\mathbf1_{\{w_n\le M\}}]=0
+                                \quad\hbox{for every }0<M<\infty,\\
+\lim_{n\to\infty}\mathbb E_{\mathbb P_n}
+                   [w_n\mathbf1_{\{w_n>M\}}]=1.
+\end{gathered}
+\tag{14.3}
+$$
+
+In particular the weights are not uniformly integrable. For every
+$p>1$,
+
+$$
+\mathbb E_{\mathbb P_n}w_n^p\longrightarrow\infty,\qquad
+D(\mathbb Q_n\Vert\mathbb P_n)
+ =\mathbb E_{\mathbb P_n}[w_n\log w_n]\longrightarrow\infty.
+\tag{14.4}
+$$
+
+Here $0\log0=0$ and infinite values are allowed. These are moments
+and entropy of the two sampling laws at the same finite stage.
+No entropy comparison between an absolutely continuous control path
+and a diffusion path is asserted, and (14.2) supplies no divergence
+rate or existence of such a weighting family.
+
+**Proof.** Write $\mu=\mu_{I,T}$ and $\nu=\nu_{I,T}$.
+Theorem 13.2 gives a Borel set of $\mu$-measure zero and
+$\nu$-measure one. On a Polish space, regularity of probability
+measures gives, for any $\epsilon>0$, a compact subset $K$ of that
+set with $\nu(K)>1-\epsilon$, and an open neighbourhood $U$ of
+$K$ with $\mu(U)<\epsilon$. Choose a continuous function
+$0\le f\le1$ that is one on $K$ and zero outside $U$. Such a
+function exists by the elementary distance construction for disjoint
+closed sets in a metric space. Thus
+
+$$
+\mu f<\epsilon,\qquad \nu(1-f)<\epsilon.
+\tag{14.5}
+$$
+
+For a fixed finite $M>0$, positivity and (14.1) give
+
+$$
+\begin{aligned}
+\mathbb E_{\mathbb P_n}[w_n\mathbf1_{\{w_n\le M\}}]
+ &\le M\mathbb E_{\mathbb P_n}f(V_n)
+           +\mathbb E_{\mathbb P_n}[w_n(1-f(V_n))]\\
+ &=M\mu_nf+\nu_n(1-f).
+\end{aligned}
+\tag{14.6}
+$$
+
+Both test functions are bounded and continuous. Apply the two weak
+limits (14.2), obtaining a limsup at most $(M+1)\epsilon$.
+Let $\epsilon\downarrow0$. This proves the first line of (14.3);
+normalization proves the second. This argument uses continuous
+separators of the singular limit laws. It never passes an exact-return
+event through weak convergence, nor requires a joint limit of
+$(V_n,w_n)$.
+
+For any fixed $M>1$,
+
+$$
+\begin{aligned}
+\mathbb E_{\mathbb P_n}w_n^p
+ &\ge M^{p-1}\mathbb E_{\mathbb P_n}
+                          [w_n\mathbf1_{\{w_n>M\}}],\\
+\mathbb E_{\mathbb P_n}[w_n\log w_n]
+ &\ge(\log M)\mathbb E_{\mathbb P_n}
+                          [w_n\mathbf1_{\{w_n>M\}}]-e^{-1}.
+\end{aligned}
+\tag{14.7}
+$$
+
+The last bound uses $x\log x\ge-e^{-1}$ on $[0,\infty)$, so
+its negative part is always integrable. First take the liminf in
+$n$ and use (14.3), then let $M\to\infty$. This proves (14.4).
+The tail mass limit one for every $M$ also contradicts uniform
+integrability directly. $\square$
+

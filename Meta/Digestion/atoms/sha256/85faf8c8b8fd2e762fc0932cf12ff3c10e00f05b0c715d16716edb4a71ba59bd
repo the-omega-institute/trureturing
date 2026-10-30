@@ -1,0 +1,16 @@
+**Proposition 16.3 (necessary call coordinates and calibrated-operation boundary).** Uniform exact family identification in the menu of Definition 16.1 requires at least one Square and one successful scalar Read on every identifying path of an everywhere-correct deterministic finite protocol. The two words attain these coordinates simultaneously, without a Tick, bit, energy or total-resource optimality claim. Replacing native Square by a radial orthogonally equivariant nonlinearity or a transported-coordinate square need not break the old ambiguity. The scalar inverse is not uniformly Lipschitz at $S=0$.
+
+**Proof.** On any identifying path without Square, the complete acquired history is an old-service path, so Theorem 4.2 gives that same history, stopping decision and output on every parameter. The native laws differ by Theorem 5.1, making uniform exact identification impossible on that path. On a path with no successful scalar Read, even with Squares, every obtained reply is a common ACK or fixed refusal. Induction on that history again makes the whole path and terminal answer independent of the parameter. The same pointwise argument applies to fixed common random tapes; for zero-error almost-sure termination on every rational family member, intersect the probability-one events over the countable rational family before applying it. The lower coordinates then hold almost surely for each entry.
+
+For the radial gate $x\mapsto\|x\|_2^2x$, every orthogonal $U$ in (CL.13) commutes with the gate. Thus the same full-service coupling as Theorem 4.2 survives its addition. For the transported gate $\widetilde{\operatorname{Square}}_p(x)=Q((Q^{\mathsf T}x)\odot(Q^{\mathsf T}x))$, the actual pre-gate state in (CM.29) is mapped to $Qe_d$. Its later leaf read is $\epsilon^2$, independent of the parameter. At $C=4/5,S=3/5$, the genuine native read is $(91/125)\epsilon^2$. These are different operations in different coordinate ownership, not alternative implementations of (CM.2). This pair is a conformance discriminator for those specified gates, not global authentication of an unrestricted black box from finite tests.
+
+Finally,
+
+$$
+1-a=S^2\left(\frac{1+C+C^2}{1+C}-S\right),\qquad
+\frac{34}{45}S^2\le1-a\le\frac32S^2.
+\tag{CM.35}
+$$
+
+For the bounds use $\frac{1+C+C^2}{1+C}=C+1/(1+C)$, increasing for $4/5\le C\le1$, its endpoint values $61/45,3/2$, and $0\le S\le3/5$. Rational arc parameters approach $S=0$ by (CL.5). Their parameter distance is at least $S$, whereas either scalar's distance from its $S=0$ value is a fixed positive multiple of $1-a=O(S^2)$. No uniform Lipschitz inverse exists there. A larger algebraic signal coefficient does not establish a noise or finite-resolution guarantee. $\square$
+

@@ -1,0 +1,24 @@
+**Definition 65.5 (coexisting backing and optimization boundary).** If
+$h$ is the original logical height, a single mutable path and ancestor
+continuation flags use $O(h+1)$ symbols, in addition to the two result
+words and actual request/reply buffers. Acquisition address/reply
+payloads have width at most $2h+5$. No separate copied address for each
+pending subtree is needed. The sampler adds its paid denominator,
+$O(\log d)$ remainder state, mode and finite control; its bit provider
+has its own binding and resources. Actual list links, result slots,
+reference widths, source parent/left/right fields, rights, parser latches,
+allocator state and instruction backing coexist with these payloads.
+No address, grant or reference becomes free merely because its semantic
+name is suppressed in the equations.
+
+At a retained synchronized cut, paid finite current-code scans and word
+replacement suffice for prediction and update. An implementation retaining
+old and proposed current words and complete predicted and actual replies
+pays for their simultaneous backing and cleanup. Copies or exports of
+the entry/current words add their actual payload, framing and lifetime.
+Computing a different view from the current code is further paid work.
+The source material itself persists throughout. Almost-sure finiteness
+is not a fixed lifetime store bound, an entropy-free hardware source,
+a physical timing/energy theorem or an optimum of this complete resource
+vector. Only the specified weighted source coordinate is minimized.
+

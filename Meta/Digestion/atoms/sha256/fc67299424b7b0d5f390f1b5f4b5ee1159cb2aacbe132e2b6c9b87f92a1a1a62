@@ -1,0 +1,41 @@
+**Lemma 30.2 (the classical $2K-1$ separation).** Two members of
+$\mathscr M_K$ agreeing in their first $2K-1$ outputs agree forever.
+A finite observed word of that length, under the authentic promise,
+yields an effective generator for that behavior.
+
+Proof. Take the disjoint union of their state sets, with at most
+$2K$ states. Let $R_l$ equate states whose first $l$ outputs agree.
+Then $R_1$ is the output partition and
+
+$$
+ q\ R_{l+1}\ q'\quad\Longleftrightarrow\quad
+     g(q)=g(q')\ \text{ and }\ f(q)\ R_l\ f(q').
+ \tag{GPO.77}
+$$
+
+These partitions refine. If a refinement stops, (GPO.77) makes it
+stable under $f$ and all subsequent refinements stop too. If the
+initial states have different infinite outputs, the disjoint union
+has at least two output classes in $R_1$. There can be at most
+$2K-2$ further strict refinements, since each increases the number
+of classes. Thus $R_{2K-1}$ is already the infinite-output relation,
+and those states differ within $2K-1$ observations.
+
+Enumerate labelled sets of sizes $1,\ldots,K$, all their transitions,
+binary outputs and initial states, in a fixed finite order. Test their
+first $2K-1$ outputs and choose the first passing machine. The actual
+presentation has an isomorphic labelled candidate, so one passes.
+The separation proves equality of its entire stream with the actual
+one. There are
+$\sum_{r=1}^K r^{r+1}2^r$ candidates before any removal of duplicate
+presentations. This deliberately elementary finite algorithm claims no
+optimal running time or recovery of the actual state names.
+
+This is Moore's finite partition/direct-sum identification argument:
+*Gedanken-Experiments on Sequential Machines*, Theorems 6–7. His
+$2n-1$ comparison uses output observations, including the initial
+output, rather than $2n-1$ transitions after an uncounted initial
+observation. It does not require the strong connectivity assumed by
+some later theorems in that source. Formula (GPO.76) fixes the unary
+and emission conventions needed here. $\square$
+

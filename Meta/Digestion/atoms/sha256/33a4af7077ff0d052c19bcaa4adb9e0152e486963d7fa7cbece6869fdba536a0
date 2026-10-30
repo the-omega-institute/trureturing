@@ -1,0 +1,42 @@
+**Corollary 28.3 (exact current service and physical nulling are not
+finitely acquired over the dense entrance).** No such protocol can,
+for every rational entrance, terminate with an exact autonomous predictor
+of the complete current QN service, an exact whole-current-field report,
+or an actual all-zero current field. The same conclusion holds for the
+requested-precision installation. The service statement concerns all
+common finite sufficiently backed continuations, not merely unperturbed
+passive responses.
+
+Proof. Theorem 28.2 gives identical stopped receiver states and distinct
+actual current vectors $w,w+\epsilon v$. Distinct reports cannot both
+be returned by the same local state, and the two physical endpoints
+cannot both be zero. To distinguish complete current services, choose
+an original vertex $s$ with $v_s>0$ and any current terminal $j$.
+Let $d$ be their graph distance on the common final tree, with adjacency
+$B$. After $d$ common Ticks the terminal difference is positive, since
+
+$$
+(B^d v)_j\ge v_s>0.
+\tag{28.7}
+$$
+
+Nonnegative walk counting proves the inequality: the simple path from
+$s$ to $j$ contributes one summand. Write the two rational terminal
+values at that epoch as $a<a'$. Execute the same legal
+$\operatorname{Add}(j,-(a+a')/2)$, then Hold and Read. The values are
+$-(a'-a)/2<0$ and $(a'-a)/2>0$. At any positive bin width the first
+floor is at most $-1$ and the second at least $0$. For (28.3) one may
+use $p=0$. This is a common finite distinguishing continuation.
+
+The operand is an existential witness to inequality of two task
+functions; the acquiring receiver is not granted either unknown value
+or their midpoint. Its identical stopped state cannot supply both exact
+services. This proof includes the nonbranching two-vertex beta; it does
+not assert exponential growth of its passive responses. $\square$
+
+Reset, signed homogeneous measurement rows, exact rational Reads,
+source-dependent accessible advice, or a genuinely discrete entrance
+would change a load-bearing premise. In particular on the one-vertex
+alpha, Tick erases the field, so the $N_0\ge2$ current/nulling statement
+cannot be extended by omitting that condition.
+

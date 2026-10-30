@@ -1,0 +1,12 @@
+## 8. 联合参数的定量赤字与实际联盟
+
+本节固定自然对数 $L=\log a$ 及
+
+$$
+\delta=\frac1a-\frac1b=\frac{b-a}{ab}>0,
+\qquad
+H=H(a,b)=U_{a,b}-\frac12,
+$$
+
+其中 $U_{a,b}$ 是 (7.2) 的实际阶乘 Shapley 份额。所有联盟仍是实际标号联盟；若其两侧计数为 $(i,j)$，就取恰好 $i$ 个指定的 $A$ 顶点和 $j$ 个指定的 $B$ 顶点。由两侧内部置换，赤字只依赖于 $(i,j)$，但以下结论对每一个达到最大值的标号联盟都成立。普通邻接能量和阶乘权重分别沿用 Arizmendi–Arizmendi，*The graph energy*，arXiv:2012.14114v2，Definition 3.1 与 §2.4；二项式平均的删样本 Jensen 比较沿用 Lamkin–Tkocz，arXiv:2001.06439v3，§1。
+

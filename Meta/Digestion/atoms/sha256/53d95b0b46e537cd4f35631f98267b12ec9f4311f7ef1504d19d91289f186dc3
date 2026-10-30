@@ -1,0 +1,25 @@
+**Theorem 5.2 (no scalar trace is injective on the crossing fiber).** For every fixed real matrix $A$, the map $P\mapsto\operatorname{tr}(AP)$ fails to be injective on the actual legal fiber $\mathcal F$.
+
+**Proof.** Put
+
+$$
+a_A=w^{\mathsf T}A\nu,\qquad b_A=\nu^{\mathsf T}Aw,
+\qquad c_A=\operatorname{tr}(AP_*).
+$$
+
+The two branches give
+
+$$
+\operatorname{tr}(AP_x)=c_A+xa_A,\qquad
+\operatorname{tr}(AQ_y)=c_A+yb_A.
+\tag{5.4}
+$$
+
+If $a_A=0$, any sufficiently small nonzero $x\in\mathcal I$ gives distinct $P_x,P_*$ with equal trace. If $b_A=0$, use distinct $Q_y,P_*$ instead. If both slopes are nonzero, choose a sufficiently small nonzero real $\varepsilon$ and set
+
+$$
+x=\varepsilon b_A,\qquad y=\varepsilon a_A.
+$$
+
+The open interval $\mathcal I$ contains zero, so both parameters belong to it for sufficiently small $|\varepsilon|$. Both are nonzero and $xa_A=yb_A$. The sources $P_x,Q_y$ are distinct by the intersection assertion of Theorem 5.1, yet (5.4) gives the same scalar trace. All constructed sources are actual strictly positive rank-one trace-one matrices. The argument applies to every $A$, including every cumulative matrix that any legal next action could produce. Arbitrary processing of that one scalar cannot distinguish the exhibited pair. $\square$
+

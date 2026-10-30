@@ -1,0 +1,51 @@
+**Theorem 25.1 (one actual update calibrates the preceding boundary).**
+Suppose the actual current $S$ of Definition 24.1 has been acquired
+and retained stationarily. On the same source perform one completed
+update and query $paa$ once for each $p\in C(S)$. The acquired bits
+recover the entire **old** labelled physical tree and its old local
+semantic address adapter. For this calibration segment the jointly
+attained prices are
+
+$$
+ U_{\rm updates}=1,\qquad Q=c,\qquad
+ W=\sum_{p\in C(S)}(|p|+2),\qquad
+ M_{\rm addr}=\max_{p\in C(S)}(|p|+2).
+ \tag{GPO.71}
+$$
+
+Each of the three Read coordinates is sharp among protocols with
+that same acquired $S$, common initialization apart from its data,
+no extra old-label information, exactly one actual update and full
+old-state recovery. After calibration the newest current state still
+has $F_n$ unobserved terminal bits.
+
+Proof. The paid bits are exactly $\chi_p$ by (GPO.69). Theorem
+24.2 reconstructs all old labels and nonterminal orientations;
+the terminal bits fix the remaining old orientations. Composing
+those local correspondences along an old semantic address gives its
+old physical address. This is retained historical data, not a new
+mutable old register.
+
+For lower bounds fix an arbitrary complete run and flip only one
+old $\chi_p$, holding the acquired $S$ and other old choices fixed.
+All pre-update presence replies agree. After the one update, support
+can differ only strictly below $pa$ or $pb$, inside the incomparable
+$p$-cone. Correct old-state output forces a first different Read,
+and its length is at least $|p|+2$. The same first-difference
+argument can be applied separately to each $p$ on that one fixed
+run. Their selected occurrences are distinct, since the terminal-fork
+addresses are prefix-incomparable. Summing, counting and taking their
+maximum gives all three lower bounds of (GPO.71), jointly attained
+by the stated queries. Adaptive queries and additional pre-update
+Reads cannot avoid them. The lower bound is scoped to this segment
+and these prerequisites; it does not claim optimal cost of acquiring
+$S$ or an optimum allowing additional updates or supplementary data.
+
+The update splits the $F_n$ beta leaves at epoch $n$, creating
+$F_n$ new terminal forks. Their new wiring bits affect no presence
+answer yet. Varying just those choices leaves the calibration queries
+and all current stationary observations unchanged, exactly as in
+Theorem 24.3. Thus the decoded old state does not remove the newest
+residual. Repetition acquires successive historical states while
+continually creating this current gap. $\square$
+

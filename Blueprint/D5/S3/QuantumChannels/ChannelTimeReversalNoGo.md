@@ -40,7 +40,79 @@ $$claim = \left(\forall d \in \mathbb{N},\; (2 \le d) \Rightarrow (\forall S \in
 
 Section V.B, PDF page 7: "We conjecture that this assumption can be lifted, and that the no-go theorem to time reversal applies also to symmetries of the set of quantum channels." The dimension d ranges over every natural number at least two. IsCPTP is the existing completely positive trace-preserving predicate on complex-linear maps of d by d matrices. For every natural dimension d and every d by d complex matrix U, conjugation by U is LinearMap.mulRight ℂ (star U) after LinearMap.mulLeft ℂ U, equal to LinearMap.mulLeftRight ℂ (U, star U). The displayed claim uses unitaryChannel in both targets. The two targets are conjugation by star U and by Matrix.transpose U. The quantifier ranges over every randomisation-consistent bijection of this channel set.
 
-**Theorem 1.4 (Time-reversal symmetries do not exist).**
+**Theorem 1.4 (Pauli spectral projectors are positive semidefinite).**
+
+$$\forall a \in \operatorname{Fin}\left(3\right),\; \forall e \in Bool,\; \operatorname{Matrix}.\operatorname{PosSemidef}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Magic}.\operatorname{WignerDistanceMinimum}.\operatorname{spectral}\left([\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Information}.\operatorname{StabilizerPairLocalUnitaryInequivalence}.\operatorname{Pauli}.\operatorname{X}, \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Information}.\operatorname{StabilizerPairLocalUnitaryInequivalence}.\operatorname{Pauli}.\operatorname{Y}, \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Information}.\operatorname{StabilizerPairLocalUnitaryInequivalence}.\operatorname{Pauli}.\operatorname{Z}]\left(a\right), \operatorname{ite}\left(e = true, 1, 0\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/ChannelTimeReversalNoGo.density_psd` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every axis index a in Fin 3 and Boolean sign e, the spectral projector of the Pauli axis a with sign e is positive semidefinite.
+
+**Theorem 1.5 (Pauli spectral projectors have trace one).**
+
+$$\forall a \in \operatorname{Fin}\left(3\right),\; \forall e \in Bool,\; \operatorname{Matrix}.\operatorname{trace}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Magic}.\operatorname{WignerDistanceMinimum}.\operatorname{spectral}\left([\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Information}.\operatorname{StabilizerPairLocalUnitaryInequivalence}.\operatorname{Pauli}.\operatorname{X}, \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Information}.\operatorname{StabilizerPairLocalUnitaryInequivalence}.\operatorname{Pauli}.\operatorname{Y}, \operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Information}.\operatorname{StabilizerPairLocalUnitaryInequivalence}.\operatorname{Pauli}.\operatorname{Z}]\left(a\right), \operatorname{ite}\left(e = true, 1, 0\right)\right)\right) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/ChannelTimeReversalNoGo.density_trace` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every axis index a in Fin 3 and Boolean sign e, the spectral projector of the Pauli axis a with sign e has trace one.
+
+**Theorem 1.6 (Expansion in the qubit Pauli basis).**
+
+$$\forall X \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; X = (\frac{\operatorname{Matrix}.\operatorname{trace}\left(X\right)}{2}) \cdot ((1: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))) + \sum_{b: \operatorname{Fin}\left(3\right)}((\frac{\operatorname{Matrix}.\operatorname{trace}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{pauli}\left(b\right) \cdot X\right)}{2}) \cdot (\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{pauli}\left(b\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/ChannelTimeReversalNoGo.pauli_expansion` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every complex two-by-two matrix is the sum of its trace component and its three Pauli components.
+
+**Theorem 1.7 (Pauli axes have zero trace).**
+
+$$\forall a \in \operatorname{Fin}\left(3\right),\; \operatorname{Matrix}.\operatorname{trace}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{pauli}\left(a\right)\right) = 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/ChannelTimeReversalNoGo.sigma_trace` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Each of the three qubit Pauli axes has trace zero.
+
+**Definition 1.8 (Qubit spin flip).**
+
+$$\operatorname{D5}.\operatorname{S3}.\operatorname{QuantumChannels}.\operatorname{ChannelTimeReversalNoGo}.\operatorname{QubitUnital}.\operatorname{J} = (\operatorname{unitaryChannel}\left(\operatorname{D5}.\operatorname{S3}.\operatorname{Quantum}.\operatorname{Entanglement}.\operatorname{SteeringEllipsoidFullyEntangledFraction}.\operatorname{pauli}\left(1\right)\right)) \circ_{l} (\operatorname{LinearEquiv}.\operatorname{toLinearMap}\left(\operatorname{Matrix}.\operatorname{transposeLinearEquiv}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}, \mathbb{C}\right)\right))$$
+
+*Formalization.* `D5/S3/QuantumChannels/ChannelTimeReversalNoGo.J` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The complex-linear qubit spin flip transposes a matrix and conjugates it by the second Pauli axis.
+
+**Theorem 1.9 (Trace formula for the qubit spin flip).**
+
+$$\forall X \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \operatorname{D5}.\operatorname{S3}.\operatorname{QuantumChannels}.\operatorname{ChannelTimeReversalNoGo}.\operatorname{QubitUnital}.\operatorname{J}\left(X\right) = (\operatorname{Matrix}.\operatorname{trace}\left(X\right)) \cdot ((1: \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right))) - X$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/QuantumChannels/ChannelTimeReversalNoGo.J_apply` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every complex two-by-two matrix X, the spin flip sends X to its trace times the identity minus X.
+
+**Theorem 1.10 (Time-reversal symmetries do not exist).**
 
 $$\forall d \in \mathbb{N},\; (2 \le d) \Rightarrow (\forall S \in \operatorname{MatrixMap}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right) \to \operatorname{MatrixMap}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; (\operatorname{IsChannelSymmetry}\left(S\right)) \Rightarrow ((\neg (\forall U \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; (U \in \operatorname{Matrix}.\operatorname{unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)) \Rightarrow (S\left(\operatorname{unitaryChannel}\left(U\right)\right) = \operatorname{unitaryChannel}\left(\operatorname{star}\left(U\right)\right)))) \land (\neg (\forall U \in \operatorname{Matrix}\left(\operatorname{Fin}\left(d\right), \operatorname{Fin}\left(d\right), \mathbb{C}\right),\; (U \in \operatorname{Matrix}.\operatorname{unitaryGroup}\left(\operatorname{Fin}\left(d\right), \mathbb{C}\right)) \Rightarrow (S\left(\operatorname{unitaryChannel}\left(U\right)\right) = \operatorname{unitaryChannel}\left(\operatorname{Matrix}.\operatorname{transpose}\left(U\right)\right))))))$$
 
@@ -61,8 +133,14 @@ For dimensions at least three, Bi_basic forces three finite-block identities; di
 ## References
 
 - Truth anchor: `D5/S3/QuantumChannels/ChannelTimeReversalNoGo.IsChannelSymmetry`
+- Truth anchor: `D5/S3/QuantumChannels/ChannelTimeReversalNoGo.J`
+- Truth anchor: `D5/S3/QuantumChannels/ChannelTimeReversalNoGo.J_apply`
 - Truth anchor: `D5/S3/QuantumChannels/ChannelTimeReversalNoGo.claim`
+- Truth anchor: `D5/S3/QuantumChannels/ChannelTimeReversalNoGo.density_psd`
+- Truth anchor: `D5/S3/QuantumChannels/ChannelTimeReversalNoGo.density_trace`
+- Truth anchor: `D5/S3/QuantumChannels/ChannelTimeReversalNoGo.pauli_expansion`
 - Truth anchor: `D5/S3/QuantumChannels/ChannelTimeReversalNoGo.result`
+- Truth anchor: `D5/S3/QuantumChannels/ChannelTimeReversalNoGo.sigma_trace`
 - Truth anchor: `D5/S3/QuantumChannels/ChannelTimeReversalNoGo.unitaryChannel`
 - Dependency: [D5/S3/Quantum/Entanglement/ElegantJointMeasurementSourceNoise](../Quantum/Entanglement/ElegantJointMeasurementSourceNoise.md)
 - Dependency: [D5/S3/Quantum/Entanglement/GraphDensity/FormationBounds](../Quantum/Entanglement/GraphDensity/FormationBounds.md)

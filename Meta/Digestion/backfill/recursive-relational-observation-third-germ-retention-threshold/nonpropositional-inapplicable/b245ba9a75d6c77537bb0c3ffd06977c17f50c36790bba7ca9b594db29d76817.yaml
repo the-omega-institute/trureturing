@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b245ba9a75d6c77537bb0c3ffd06977c17f50c36790bba7ca9b594db29d76817
+  normalized_sha256: sha256:b245ba9a75d6c77537bb0c3ffd06977c17f50c36790bba7ca9b594db29d76817
+cas_ref: sha256:b245ba9a75d6c77537bb0c3ffd06977c17f50c36790bba7ca9b594db29d76817
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines compatibility and a partial decoder on the stipulated singleton-compatibility domain. It asserts no singleton existence or correctness theorem on a larger domain.
+    previous_atom_id: 00535ec4b57757ed8d0c8e814bf9acf31bfccf5f479aba0f32a8d60595deb24c
+    next_atom_id: 6a8d3390ee9985966768acfa70a3770f86095657a629bc703f136cd6d3af281f

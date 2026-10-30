@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b2b515071ca33d9dd5f6e2c6481cbc6d5ed340e939b9a62e7260133c098d2ff9
+  normalized_sha256: sha256:b2b515071ca33d9dd5f6e2c6481cbc6d5ed340e939b9a62e7260133c098d2ff9
+cas_ref: sha256:b2b515071ca33d9dd5f6e2c6481cbc6d5ed340e939b9a62e7260133c098d2ff9
+coverage_gids:
+  - gid: D5/S3/Analytic/Zeta/EulerLogBridge.countableEntropy_zeta_eq_tsum_prime
+    target_statement_id: sha256:1b0206239242c09b1895c0d52f7c88e2d90c31658cf9bbebb0d623d55a58032a
+receipts:
+  unresolved_subitems: []

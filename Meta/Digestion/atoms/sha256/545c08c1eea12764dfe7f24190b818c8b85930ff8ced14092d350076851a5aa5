@@ -1,0 +1,106 @@
+**定理 4.2（最优统一尾部系数）。** 定义 4.1 的上确界满足
+
+$$
+\lim_{N\to\infty}M_B(N)=\lim_{N\to\infty}M_P(N)=1.
+\tag{4.2}
+$$
+
+更具体地，对每个 $N\ge4$，令
+
+$$
+D_N=\max\left\{\sqrt5,\sqrt{4\sqrt{N-1}-3}\right\}.
+\tag{4.3}
+$$
+
+则利用式（2.12）的 $G,H$ 有对所有树参数及所有时间一致的估计
+
+$$
+1\le M_P(N)\le M_B(N)\le\max\{G(D_N),H(D_N)\}.
+\tag{4.4}
+$$
+
+因此对任意 $\varepsilon>0$，存在 $N_\varepsilon$，使全部 $n\ge N_\varepsilon$ 的 $T(k,\ell)$、任意叶子和全部实数 $t$ 同时满足
+
+$$
+P_{k,\ell}(t)\le B_{k,\ell}^2\le(1+\varepsilon)n^{-3/2}.
+\tag{4.5}
+$$
+
+指数 $3/2$ 不能提高：若 $\beta>3/2$，则不存在有限常数 $C_\beta$ 使所有这些 $k,\ell,t$ 均有 $P_{k,\ell}(t)\le C_\beta n^{-\beta}$。
+
+**证明。** 首先给出覆盖所有大阶数参数的上界，而非选择某一条参数族。由式（2.9）与 $n=a(a+d)$，因 $a\mapsto a(a+d)$ 在 $a>0$ 上递增，得
+
+$$
+\begin{aligned}
+n&\le A(d)(A(d)+d)\\
+&=\frac{(d^2-2d+5)(d^2+2d+5)}{16}
+=\frac{d^4+6d^2+25}{16}.
+\end{aligned}
+\tag{4.6}
+$$
+
+若 $n\ge N\ge4$，则 $(d^2+3)^2\ge16(N-1)$，从而 $d^2\ge4\sqrt{N-1}-3$。结合 $d\ge\sqrt5$，得 $d\ge D_N$。式（2.11）与 $G,H$ 的递减性于是给出
+
+$$
+n^{3/2}P_{k,\ell}(t)\le n^{3/2}B_{k,\ell}^2
+\le\max\{G(D_N),H(D_N)\}
+\quad(n\ge N).
+\tag{4.7}
+$$
+
+同时
+
+$$
+\begin{aligned}
+G(d)&=4d^{-1/2}(1+d^{-1})^{3/2}\longrightarrow0,\\
+H(d)&=\frac{(1+2d^{-1}+5d^{-2})^{3/2}}
+{\sqrt{1-2d^{-1}+5d^{-2}}}\longrightarrow1.
+\end{aligned}
+\tag{4.8}
+$$
+
+由于 $D_N\to\infty$，这证明两个尾部上确界的上极限均不超过 $1$，并给出式（4.5）。
+
+为得到同一实际动力学的下界，使用上引[仓内两层树的根列分解](../../../D5/S3/Quantum/Dynamics/LaplacianPeakTransferTrees.lean)的特殊参数族
+
+$$
+\ell_s=s(s+1),\qquad k_s=\ell_s+1,\qquad
+n_s=1+(s^2+s+1)^2.
+\tag{4.9}
+$$
+
+该处的分解对全部 $s$ 给出整个根列；其叶子坐标的三个向量值均为 $1$。仅将此既有根列作为紧性见证代入，有
+
+$$
+a_s=s^2+1,\qquad b_s=(s+1)^2+1,\qquad d_s=2s+1.
+$$
+
+取正偶数 $s$，则 $a_s$ 为奇数、$b_s$ 为偶数。在同一树的时间 $t=\pi$，相位恰为 $e^{i\pi a_s}=-1$、$e^{i\pi b_s}=1$，故式（2.7）给出
+
+$$
+P_{k_s,\ell_s}(\pi)=B_{k_s,\ell_s}^2
+=\frac4{(s^2+1)^2(2s+1)^2}.
+\tag{4.10}
+$$
+
+此处的特殊族相位取等只是既有根列及上述文献相位判据的应用。由式（4.9）与（4.10），沿正偶数 $s\to\infty$，
+
+$$
+n_s^{3/2}P_{k_s,\ell_s}(\pi)
+=\frac{4[1+(s^2+s+1)^2]^{3/2}}
+{(s^2+1)^2(2s+1)^2}\longrightarrow1.
+\tag{4.11}
+$$
+
+事实上，将分子分母同除以 $s^6$，该极限等于 $4/(1\cdot4)=1$。对每个固定 $N$，式（4.11）的充分远尾均有 $n_s\ge N$；所以上确界 $M_P(N)$ 至少为该子列的极限 $1$。再由 $M_P(N)\le M_B(N)$ 与式（4.7），得到式（4.4），继而证明式（4.2）。
+
+最后，若 $\beta>3/2$，同一偶数子列满足
+
+$$
+n_s^\beta P_{k_s,\ell_s}(\pi)
+=n_s^{\beta-3/2}\bigl(n_s^{3/2}P_{k_s,\ell_s}(\pi)\bigr)
+\longrightarrow+\infty,
+$$
+
+故不可能存在所述有限 $C_\beta$。$\square$
+

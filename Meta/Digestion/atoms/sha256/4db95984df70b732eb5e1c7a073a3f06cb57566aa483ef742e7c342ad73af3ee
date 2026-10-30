@@ -1,0 +1,61 @@
+**Definition 21.3 (finite main graph and ordered acquisition).** Construct
+$G_B$ from Definitions 2.1–2.3 and 7.1–7.4 with the substitutions below.
+Its persistent service words include bootWitness and bootRef; include
+all importer, parser, descriptor, comparison and body-decoder temporaries
+before hygienic expansion and register numbering. Use the original
+textual/false-before-true/symbol/port order with port74 last, and the same
+finite parity product. Let $r_B$ be the resulting complete field count.
+Every assignment emits all $r_B$ fields by ARC's two-pass construction;
+it preserves all unchanged service words. No old register count is reused.
+
+After the $r_B$-field empty bank, execute ARC's closed owned importer
+(Definition 3.1)'s method through the new source74 instance of BRN
+Definition 3.1 and Theorem 3.2, not outside ARC's stated source domain.
+Its Save/Scan/Reverse/Home/restore loops touch compiler64–68 and restore
+source74 before parsing its exact $e$ binary symbols, F and exhaustion.
+Retained, the actual A read token and the physical seal are invariants
+proved by BRN Lemma 2.4; RD imports symbol bits only, with no seal-read
+operation. Retain the actual binary word in bootWitness. Equal compares it with
+the two fixed earlier words $w_0,w_1$, accepting their disjunction.
+The comparisons certify the admitted family; neither selects an input
+nor replaces the imported word. A failing initialization test executes
+a CTL to absorbing InitializationFault, retaining all constructed material
+and releasing no unheld resource; it promises no original consumer result.
+
+Complete the original ordered initial69 fields without changing their
+order or field zero. Append two new fields before ManifestPrefix: first
+a fixed-kind tuple containing bootWitness and its complete source record
+$(A,74,\omega_{74},0,e+1,\text{first-loader version},\text{sealed})$;
+then a staged copy of that field's actual complete68 descriptor/placement.
+The base0 is the verified empty ordinary prefix before the first EX.
+Native field export measures the actual destination base and length,
+writes its F/seal, counts and writes its descriptor. Immediately copy
+that completed descriptor to the second field by ARC Definition 7.1's
+dry-count/positioned staging schema. Give the stage its own descriptor
+once; do not stage that descriptor recursively. These are two specified
+initial fields, not later scratch accidentally imported as initialization.
+
+ManifestPrefix imports the entire frozen initial prefix before any later
+staging. Parse the two new fields with exact arity/exhaustion, compare
+the word with the already imported bootWitness, and check the complete
+source and measured placement fields against this reached export/stage
+lineage. bootRef retains both full references, including origins,
+port/base/length, descriptor ordinal, version and seals. Immutable
+manifests, covers and packages copy the acquired word and these references;
+printed reference equality alone is never payload acquisition.
+Only then initialize completed lists and hand over invocation for Ready.
+Source74 is unchanged during and after its import. Its read permission,
+the seals and this immutable lineage remain current service invariants.
+
+Earlier code constants include the paid active loader and its fixed effects.
+The capture is the actual $101U(\delta_B)\Delta(G_B)$, followed by the
+matching second-bootstrap $E(G_B)$. Regenerate all raw-state codecs,
+Step port tests over0–74, finite locations/effects, GCA entry/exit tables
+and ConstructionDirectory by BRN Definition 4.1 and Proposition 4.4's
+explicit construction and correspondence proof. Keep $L$'s
+unchanged literal capture algorithm: it has no main-description or
+main-length constant. Generate $\Delta(G_B)$ only after expansion.
+The self-description is acquired from field zero, never inserted as an
+executable literal. The two comparison words concern the fixed earlier
+$L$, so introduce no description equation.
+

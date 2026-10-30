@@ -1,0 +1,24 @@
+**定理 4.1（可见十四维表示的交错平方）。** 令 $V=\mathbb C^5$，$W=\operatorname{Sym}^2_0(V)$，用对称无迹矩阵实现。映射
+
+$$
+\kappa:\Lambda^2W\longrightarrow\mathfrak{so}_5,
+\qquad
+\kappa(S\wedge T)=[S,T]
+$$
+
+是 $\operatorname{SO}_5(\mathbb C)$-等变满射，并有
+
+$$
+\Lambda^2W\simeq\mathfrak{so}_5\oplus K_{81}.
+$$
+
+**证明。** $[S,T]^{\mathsf T}=-[S,T]$，且交换两输入变号，所以映射有定义。共同共轭与交换子相容，给出等变性。对 $i\ne j$，取 $S=E_{ii}-E_{jj}$、$T=E_{ij}+E_{ji}$，则
+
+$$
+[S,T]=2(E_{ij}-E_{ji}),
+$$
+
+这些元素张成 $\mathfrak{so}_5$，故满射。半单性给出分裂，且核维数为 $\binom{14}{2}-10=81$。$□$
+
+这里的映射只重建伴随表示的类型和结构方向；固定一个 $S$ 仍不能决定源态的 $A$。本文不把 $K_{81}$ 的不可约性作为已证内容。
+

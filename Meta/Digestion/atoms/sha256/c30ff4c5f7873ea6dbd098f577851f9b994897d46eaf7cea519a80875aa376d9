@@ -1,0 +1,39 @@
+**Theorem 71.2 (four-way recovery, route agreement and task kernel).**
+On these exact domains each view recovers the same represented term $v$
+and the actual physical term $u=J(v)$, and hence all the other three
+contents. All conversion routes agree. Their equality kernels are
+exactly equality of $v$, which is also the complete represented
+continuation kernel of $Q_J$ at the fixed binding and authority. These
+recoveries are finite procedures on given owned data. The acquisition
+installs the Memory-based callable service; it does not install three
+additional source read ports.
+
+Proof. Apply the existing AA Theorem 17.2 and Definition 17.3 to the
+actual reachable term $u$. Their original arity parser takes material
+support to $u$; prefix closure takes the terminal antichain to that
+support; event membership and the specified birth types take the actual
+causal order to $u$. These are the supplied original inverses, with
+parameter exactly $u=J(v)$, rather than new tree-inverse theorems. Apply
+$K$ to the resulting term. Lemma 68.3 gives $K(u)=v$. Memory parses its
+own canonical word to $v$ and computes $J(v)=u$. Conversely $v$ computes
+$u$, its material support and terminals, and its labelled causal order
+by the supplied finite definitions. Thus every conversion is the
+appropriate observation after recovery of this same $v$; both round
+trips hold and every composed route agrees on its actual image.
+
+Equal $v$ gives the same complete outer task by Theorem 70.2. For distinct
+$v,w$, descend through their common branch constructors to their first
+differing constructor. The address is present in both. The outer promotion
+there distinguishes alpha, beta and branch respectively by Growth,
+wrong-type refusal and branch refusal. Hence the complete tasks differ.
+The view round trips give precisely the same equality kernel.
+
+All these algorithms parse finite data, construct finite trees or event
+lists and run the given decoder. Their inputs and outputs require owned
+backing and ordinary computation. Computing a boundary or event order
+from the acquired word is a description of the actual source content;
+it is not an observation of previously unexposed serial provenance.
+Neither a correct word nor a conversion creates a reference, root
+association or grant. Those remain the common genuine attachment used
+by the real calls. $\square$
+

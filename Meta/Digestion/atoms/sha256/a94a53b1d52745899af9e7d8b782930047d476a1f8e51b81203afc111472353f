@@ -1,0 +1,35 @@
+**Definition 27.1 (Inherited elimination polynomials and the image).**
+Use $X,N,H,T,U$ of (12.1)–(12.2), and exactly
+$D_\Lambda,K_\Lambda,Z_6,G_{6,\Lambda},\mathsf N_u,\mathsf A,\mathsf B$
+of (20.1). In particular $D_\Lambda=N_4/2$,
+$\mathsf A=5b(p-24)D_\Lambda+3(8b-1)H$ and
+$\mathsf B=5bD_\Lambda v-\mathsf N_u$.
+Write $R=R_{18}$ with its exact integer coefficients in Definition
+24.1 and its scale and sign fixed by (20.3). Set
+$E=\Psi_2\Psi_4\Phi$, using (20.2) and (4.5).
+Retain the exact minors $\mathcal L_0,\mathcal L_1$ of (20.4)–(20.5),
+including their divisor $72900r^6(r-1)^4$; these are polynomial
+coefficients, distinct from the recursive guards $L_k$.
+All these definitions apply to arbitrary $p,v$, without the response
+rectangle hypotheses of Section 21. Now define
+
+$$
+\begin{gathered}
+Z_7=2N+3bU,\qquad
+G_{7,\Lambda}=(20T+84)XN-bT(70N+35X),\\
+N_m=\frac{120bTD_\Lambda+12Z_7D_\Lambda(200b+11)
+ -3K_\Lambda(bTXN+Z_7G_{7,\Lambda})}{T},\qquad
+D_m=5bD_\Lambda.
+\end{gathered}
+\tag{27.1}
+$$
+
+For $C(r,b)=\sum_{k=0}^7C_k(r)b^k$, always padded to degree seven,
+put
+
+$$
+\mathcal H(C)=\sum_{k=0}^7 C_k(r)(-\mathcal L_0)^k\mathcal L_1^{7-k},
+\qquad F=\mathcal H(N_m),\quad G=\mathcal H(D_m).
+\tag{27.2}
+$$
+

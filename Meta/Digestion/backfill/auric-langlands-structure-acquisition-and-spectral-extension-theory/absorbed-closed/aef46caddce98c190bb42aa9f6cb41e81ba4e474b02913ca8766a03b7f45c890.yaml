@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:aef46caddce98c190bb42aa9f6cb41e81ba4e474b02913ca8766a03b7f45c890
+  normalized_sha256: sha256:aef46caddce98c190bb42aa9f6cb41e81ba4e474b02913ca8766a03b7f45c890
+cas_ref: sha256:aef46caddce98c190bb42aa9f6cb41e81ba4e474b02913ca8766a03b7f45c890
+coverage_gids:
+  - gid: D5/S3/Resource/SubmodularGreedyApproximation.greedy_gap_le_geometric
+    target_statement_id: sha256:a44de56cecfb8c12a110ab8a7f0bd48f2fd9373ac83cdd415d0055c97454b29c
+receipts:
+  unresolved_subitems: []

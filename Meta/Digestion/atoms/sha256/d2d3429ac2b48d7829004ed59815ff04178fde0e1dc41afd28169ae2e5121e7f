@@ -1,0 +1,67 @@
+**Definition 135.1 (Distance from the source reflection to the same control powers; repo-derived).**
+Fix any allowed source $\mathfrak s$ of VI Definition 114.1 and retain
+Definition 125.1 literally, for any $0<A<1$ and any complex unit
+$f\perp e=t/\tau$. All matrix norms below denoted $\|\cdot\|_{\rm op}$
+are operator norms for the standard complex Euclidean norm;
+$\|\cdot\|_{\rm HS}$ remains the Hilbert–Schmidt norm. Put
+
+$$
+\begin{gathered}
+\Pi=I_3-ee^\dagger,\qquad W=I_3-2ee^\dagger,\qquad
+\mathscr T(z,g)=(Wz,-g),\\
+\mathscr G_N=\overline{\{\omega N^n:
+                  n\in\mathbb N_0,\ \omega\in S^1\}}\subset U(3),\\
+\epsilon_N=\operatorname{dist}_{\rm op}(W,\mathscr G_N)
+ =\inf_{\substack{n\in\mathbb N_0\\ |\lambda|=1}}
+                    \|N^n-\lambda W\|_{\rm op}.
+\end{gathered}
+\tag{135.1}
+$$
+
+The $W$ in this definition is the original source matrix of V (54.1),
+not a freely chosen reflection: VI (106.3), (106.7) give
+$e=(1,-1,0)^{\mathsf T}/\sqrt2$. Thus (135.1) measures a relation
+between that source reflection and powers of its one installed $N$.
+The closure is in the operator norm. It is compact, so the distance
+is attained in $\mathscr G_N$, and $\epsilon_N=0$ means exactly
+$W\in\mathscr G_N$. It need not mean $N^n=\lambda W$ for an actual
+finite exponent.
+
+The same-power description (130.1), (130.6) gives, using its fixed
+spectral coordinates,
+
+$$
+\mathscr G_N=\{\omega M(\zeta):\omega\in S^1,\ \zeta\in T_N\}.
+\tag{135.2}
+$$
+
+Indeed $N^n=\lambda_1^nM(\alpha^n)$ and the scalar in (135.1)
+absorbs $\lambda_1^n$; the dense tuples $\alpha^n$ of (130.6)
+and compactness give both inclusions. The topological intermediary
+here is the nonnegative-power criterion in Ouaknine–Worrell,
+[*Ultimate Positivity is Decidable for Simple Linear Recurrence
+Sequences*, arXiv:1309.1914v4, §3, Theorem 3.4 and Proposition
+3.5](https://arxiv.org/pdf/1309.1914v4), and the torus criterion
+already used in §130 and recorded in the
+[Onishchik note](../../../Library/Fourier/onishchik2020kronecker.md).
+Theorem 3.4 and the proof of Proposition 3.5 use arbitrary real
+angles for this closure statement. The algebraic-input assumptions
+for the effective bounds in that paper's Theorem 3.1 and Corollary
+3.2 are not imposed here, and no effective procedure for arbitrary
+real source data is part of (135.1)–(135.2). Neither formula replaces
+the same-power closure by unrestricted $U(3)$.
+
+For the literal tangent matrices (125.3) define the nonnegative number
+
+$$
+\mathscr B_A(z,g)=R_{\mathfrak s}
+ \bigl(\|X_1(z)\|_{\rm HS}+\|Y_1(z)\|_{\rm HS}
+                      +2|g|\|K_-\|_{\rm HS}\bigr),\qquad
+R_{\mathfrak s}=\max_i\|r_i\|_{\rm HS}.
+\tag{135.3}
+$$
+
+In particular the $r_i$ in this number are still the subnormalised
+original prefixes. The norms $\mathcal F_f,\mathcal F_a$ and the
+numbers $m_j,n_j,\delta_j$ keep precisely (125.2)–(125.5).
+

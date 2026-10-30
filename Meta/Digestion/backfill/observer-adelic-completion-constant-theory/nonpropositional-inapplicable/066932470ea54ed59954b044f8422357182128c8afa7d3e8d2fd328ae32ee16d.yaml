@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:066932470ea54ed59954b044f8422357182128c8afa7d3e8d2fd328ae32ee16d
+  normalized_sha256: sha256:066932470ea54ed59954b044f8422357182128c8afa7d3e8d2fd328ae32ee16d
+cas_ref: sha256:066932470ea54ed59954b044f8422357182128c8afa7d3e8d2fd328ae32ee16d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 全局反射 J 是所需输入的列表片段；无性质断言。'
+    previous_atom_id: 006f5f35fc362fb63895fcb5f201ccbeed663de87c110f26d92061acbf63a565
+    next_atom_id: fa81c5c59ed0bdd9530ace5e528060ef06162cd8aec32a5945f836e50adfa8d0

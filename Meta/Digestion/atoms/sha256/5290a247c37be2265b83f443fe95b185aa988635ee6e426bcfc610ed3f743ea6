@@ -1,0 +1,40 @@
+**推论 478.2（普通素数 $E_1$ 累积量的有限消费）。** 沿用 [Zhao，arXiv:2411.18903v2，式 (14)](../../../Library/Analytic/zhao2025mertensmeans.md) 的
+
+$$
+\mathcal E_1=-\gamma_E-\sum_p\sum_{j\ge2}\frac{\log p}{p^j},
+\quad E_1(t)=\sum_{p\le t}\frac{\log p}{p}-\log t-\mathcal E_1,
+\quad F_1(A)=\int_2^AE_1(t)\,dt,
+\quad c_1=2\log2-2+2\mathcal E_1.
+$$
+
+对 $A\ge10000$、$L=\log A$，若
+
+$$
+F_1(A)-c_1>\sqrt A\left[
+\frac{4L^2}{1+L}+9+\frac{2L^2+8L+16}{\log2}\right],
+\tag{478.12}
+$$
+
+则有同一个显式 $B=\exp(4(L+20)^2)$ 与 (478.3) 中的实际整数见证。
+
+证明。直接使用该来源的恒等式 $Q_\theta(A)=(c_1-F_1(A))/A$。全部高次素数幂满足
+
+$$
+0\le\psi(u)-\theta(u)
+\le\frac{\sqrt u(\log u)^2}{\log2}.
+$$
+
+因此保留它们的非负积分后是
+
+$$
+\begin{aligned}
+0\le Q(A)-Q_\theta(A)
+&\le\frac1{\log2}\int_A^\infty\frac{(\log u)^2}{u^{3/2}}\,du\\
+&=\frac{2L^2+8L+16}{\sqrt A\log2}.
+\end{aligned}
+$$
+
+由此，$\mathcal U(A)=-AQ(A)$ 大于 $\sqrt A(4L^2/(1+L)+9)$；应用命题 478.1，证毕。
+
+第 477 节的输入是普通素数倒数误差 $E_2$ 在有限前缀上的累积峰值；命题 478.1 的输入是有限完整素数幂和 $\mathcal U(A)$，推论 478.2 则消费普通素数 $E_1$ 的累积峰值。新的远端位置 $B$ 由完整尾项 (478.7) 与无条件显式误差 (478.4) 决定，并未删除未来均值。它不要求 CA 最优性、零点高度门槛、零点简单性或零点分离，但也未断言任何实际 $A$ 满足其峰值前提。峰值前提的存在性及全范围严格 Robin 的估计不包含在上述条件结论中。
+

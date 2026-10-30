@@ -12,6 +12,30 @@ internal sealed class ArchimedeanJumpDecompositionDocument : IScribeDocumentDefi
         H("Archimedean Jump Decomposition"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("actual-digamma-increment-small-frequency-six"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.digamma_increment_le_six_of_abs_le_two"),
+                H("Retain the zero term and bound the complete tail"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For every real t with |t|<=2, "
+                        + "Re digamma(1/4+i*t/2)-Re digamma(1/4)<=6. The proof uses the summable digamma-increment series in ArchimedeanJumpDecomposition.")),
+                    Paragraph(Text(
+                        "Put y=t/2 and b_n=n+1/4. The existing increment equals "
+                        + "y^2/(b_n*(b_n^2+y^2)) and is nonnegative. Since y^2<=1, its n=0 "
+                        + "term is <=64/17. For n>=0 the term indexed n+1 is <= "
+                        + "2/((n+1)*(n+2))=2/(n+1)-2/(n+2). Finite range sums telescope "
+                        + "to at most 2, and the nonnegative real tsum bound controls the entire "
+                        + "tail. The existing summable series splits into its zero term and tail, "
+                        + "giving <=98/17<6. This proof uses no compact supremum and no finite "
+                        + "sampling of digamma values. This compact-frequency estimate is one "
+                        + "input for a comparison with logarithmic frequency weights; an "
+                        + "all-frequency comparison requires further estimates.")),
+                    Paragraph(Text(
+                        "The result is a uniform estimate on the full closed frequency interval, including both endpoints and zero."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("archimedean-jump-density-geometric-series"),
                 DeclarationHandle.Create(
                     "D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.jump_density_eq_tsum"),
@@ -46,6 +70,38 @@ internal sealed class ArchimedeanJumpDecompositionDocument : IScribeDocumentDefi
                         "The first public conjunct is the exact complex identity. The second "
                             + "public conjunct records positivity of the independently constructed "
                             + "continuous jump energy."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("jump-density-nonnegative"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.jump_density_nonnegative"),
+                H("Nonnegative actual density owner"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The actual density exp(-x/2)/(1-exp(-2*x)) is nonnegative for positive x; this is the original owner used by all spectral consumers."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("levy-integral-eq-digamma-increment"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_integral_eq_digamma_increment"),
+                H("Levy integral and digamma owner"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real z, the integral over positive x of 2*rho(x)*(1-cos(z*x)) equals Re digamma(1/4+i*z/2)-Re digamma(1/4). This original owner determines the spectral multiplier of the periodic and whole-line translation energies."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("levy-kernel-integrable-on"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.levy_kernel_integrableOn"),
+                H("Integrable Levy kernel owner"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real z, 2*rho(x)*(1-cos(z*x)) is integrable on the positive half-line. The original owner includes z=0 and uses the actual density."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("digamma-increment-nonnegative"),
+                DeclarationHandle.Create("D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.digamma_increment_nonnegative"),
+                H("Nonnegative digamma increment owner"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every real frequency z, Re digamma(1/4+i*z/2)-Re digamma(1/4) is nonnegative by the original Levy-integral owner."))),
                 DescribeRole.Theorem),
             Paragraph(Text(
                 "The same density has an exact interval L2 application. Let a>0, d=2*a, "

@@ -1,0 +1,94 @@
+**命题 86.2（从单任务 certificate 到任意共同 map 的定量约束）。** 对定义 86.1 的每个 complex qutrit CPTP map，令
+
+$$
+\mathcal T_{\mathcal D}(X)
+  =(U_0^\dagger\mathcal D^\dagger(X)U_0)_{\xi,e},\qquad
+K_\varphi=\mathcal T_{\mathcal D}(E_\varphi),\qquad
+\mathsf P_\varphi=\begin{pmatrix}
+1-y&-we^{-i\varphi}\\-we^{i\varphi}&y
+\end{pmatrix}.
+$$
+
+则对每个 $\varphi$，
+
+$$
+L_{\mathcal D}(\varphi)\le\eta+\delta
+ \quad\Longrightarrow\quad
+\|K_\varphi-\mathsf P_\varphi\|_{\rm op}\le\sqrt{\delta/\mu}.
+\tag{86.3}
+$$
+
+而对任意 $\varphi,\psi$，不加近似最优假设也有
+
+$$
+\max\{L_{\mathcal D}(\varphi),L_{\mathcal D}(\psi)\}-\eta
+ \ge\frac{A_q}{4}|e^{i\varphi}-e^{i\psi}|^2.
+\tag{86.4}
+$$
+
+**证明。** $\mathcal T_{\mathcal D}:M_3\to M_2$ 是 unital CP compression，故 $K_\varphi$ 是任意可能的 complex effect。这里 domain 为 $M_3$，所以它 unital；(85.9) 另将 domain 限制为 $M_2$ 的 corner，才得到 subunital map。两种接口均从一个实际 $\mathcal D$ 取得。
+
+令 $Z_\varphi^{(2)}=\operatorname{diag}(1,e^{i\varphi})$，
+$Q_\varphi=Z_\varphi^{(2)}Q_\vartheta Z_\varphi^{(2)\dagger}$，其中 $Q_\vartheta$ 是定理 81.4 的 certificate projection。复用该定理与定理 83.1 的 conjugated witness，
+
+$$
+Y_\varphi=\frac{Q_\varphi\oplus(-3\vartheta)}{R^2},\qquad
+\|Y_\varphi\|_1=1,
+\qquad
+M_\varphi=m_+\mathsf P_\varphi-\mu(I_2-\mathsf P_\varphi).
+$$
+
+(85.1) 中的 competitor scalar $d'$ 在此 pairing 中消去，故
+
+$$
+\operatorname{Tr}\bigl(Y_\varphi\mathcal N^\dagger
+                         \mathcal D^\dagger(E_\varphi)\bigr)
+   =\operatorname{Tr}(M_\varphi K_\varphi),\qquad
+\operatorname{Tr}(Y_\varphi E_\varphi)-m_+=\eta.
+\tag{86.5}
+$$
+
+由 trace/operator-norm support duality，
+
+$$
+L_{\mathcal D}(\varphi)\ge\eta+g_\varphi,\qquad
+ g_\varphi=m_+-\operatorname{Tr}(M_\varphi K_\varphi).
+$$
+
+令 $a_\varphi=\operatorname{Tr}(\mathsf P_\varphi(I-K_\varphi))$、
+$b_\varphi=\operatorname{Tr}((I-\mathsf P_\varphi)K_\varphi)$。两者非负，且
+
+$$
+g_\varphi=m_+a_\varphi+\mu b_\varphi
+ \ge\mu(a_\varphi+b_\varphi),\qquad
+m_+-\mu=\frac{2-R^2}{R^2}>0.
+$$
+
+因为 $K_\varphi^2\le K_\varphi$，
+
+$$
+\|K_\varphi-\mathsf P_\varphi\|_{\rm HS}^2
+ =\operatorname{Tr}(K_\varphi^2)+1
+                  -2\operatorname{Tr}(\mathsf P_\varphi K_\varphi)
+ \le a_\varphi+b_\varphi.
+$$
+
+若 loss 不超过 $\eta+\delta$，则 $g_\varphi\le\delta$，再用 operator norm 不超过 Hilbert–Schmidt norm 得 (86.3)。这是 reduced-image stability，不声称 decoder 本身唯一或接近某个唯一 map。
+
+对同一个 map 的两个 tasks，置 $r=|e^{i\varphi}-e^{i\psi}|$。positive unital maps 在 Hermitian operator norm 下 contract，故
+
+$$
+\|K_\varphi-K_\psi\|\le\|E_\varphi-E_\psi\|=hr,
+\qquad
+\|\mathsf P_\varphi-\mathsf P_\psi\|=wr.
+$$
+
+两个 individual optima 均为 $\eta$，所以
+$\epsilon=\max\{L_{\mathcal D}(\varphi),L_{\mathcal D}(\psi)\}-\eta\ge0$。用 (86.3) 的 $\delta=\epsilon$ 与三角不等式，
+
+$$
+(w-h)r\le2\sqrt{\epsilon/\mu}.
+$$
+
+平方即得 (86.4)。此处 $K_\varphi,K_\psi$ 一直来自同一个 $\mathcal T_{\mathcal D}$，未以两个独立可达 effects 代替 commonness。∎
+

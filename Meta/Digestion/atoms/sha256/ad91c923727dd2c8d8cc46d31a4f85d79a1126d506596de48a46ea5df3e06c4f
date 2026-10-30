@@ -1,0 +1,11 @@
+**Theorem 105.1 (performed acquisition and cancellation).** For every
+source and every $\theta$ in Definition 103.1, the following actual
+receiver schedule ends at $H\theta$:
+
+1. After fresh-only growth, Hold; execute two Tick;Hold pairs. Read
+   the $k$ genuine designated terminals $p_iLR$, in index order.
+2. From those replies compute and actually Add $-11\theta_i/2$ at
+   $p_iLR$ and $+11\theta_i/2$ at $q_iLR$, in that order for each $i$.
+3. Execute two more Tick;Hold pairs. Actually Add $+3\theta_i/2$ at
+   $p_iLR$ and $-3\theta_i/2$ at $q_iLR$, then Hold.
+

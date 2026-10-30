@@ -1,0 +1,65 @@
+**Theorem 10.2 (observable source-budget obstruction).** Every realization in Definition 10.1 satisfies
+
+$$
+\begin{aligned}
+I(A;B)+I(A;C)-H(A)&\le 2C_{\rm src},\\
+I(B;C)+I(B;A)-H(B)&\le 2C_{\rm src},\\
+I(C;A)+I(C;B)-H(C)&\le 2C_{\rm src}.
+\end{aligned}
+\tag{10.3}
+$$
+
+Consequently the observable quantity
+
+$$
+\mathcal B(P):=\frac12\max\bigl\{0,
+ I(A;B)+I(A;C)-H(A),
+ I(B;C)+I(B;A)-H(B),
+ I(C;A)+I(C;B)-H(C)\bigr\}
+\tag{10.4}
+$$
+
+is a lower bound on the source defect of every such realization of $P$. For any specified $c\ge0$, the strict inequality $\mathcal B(P)>c$ excludes every finite incident lift of $P$ having $C_{\rm src}\le c$.
+
+*Proof.* Reuse the finite entropy chain rule, strong subadditivity and Markov data processing. Their roles in the product-source case are exactly Fritz, Lemma 2.14, equation (2.10), with $\lambda_{AB}=\gamma$, $\lambda_{CA}=\beta$, $\lambda_{BC}=\alpha$. For the possibly dependent law (10.1), keep the two additional conditional information costs rather than importing product-source conditional independences.
+
+Indeed, summing over unobserved outputs in (10.1) shows that $A$ and $B$ are conditionally independent given $(\alpha,\gamma)$: the conditional law of $B$ is the fixed kernel $K_B$, irrespective of $\beta$ or $A$. Also $A$ and $\alpha$ are conditionally independent given $(\beta,\gamma)$. Conditional versions of data processing are obtained by applying the finite inequality on each positive conditioning slice and averaging. Hence
+
+$$
+\begin{aligned}
+I(A;B)&\le I(A;\alpha,\gamma)
+ =I(A;\gamma)+I(A;\alpha\mid\gamma)\\
+&\le I(A;\gamma)+I(\beta;\alpha\mid\gamma),\\
+I(A;C)&\le I(A;\alpha,\beta)
+ \le I(A;\beta)+I(\gamma;\alpha\mid\beta).
+\end{aligned}
+\tag{10.5}
+$$
+
+The second line uses the corresponding conditional independences with $C$. Each assertion concerns marginals of (10.1), including when a conditioning value has no mass. The standard chain-rule identity is
+
+$$
+I(A;\beta)+I(A;\gamma)-H(A)
+=I(\beta;\gamma)-I(\beta;\gamma\mid A)-H(A\mid\beta,\gamma)
+\le I(\beta;\gamma).
+\tag{10.6}
+$$
+
+Combining (10.5) and (10.6) bounds the first left side of (10.3) by
+
+$$
+\begin{aligned}
+&I(\beta;\gamma)+I(\alpha;\beta\mid\gamma)+I(\alpha;\gamma\mid\beta)\\
+&\quad=H(\alpha,\beta)+H(\alpha,\gamma)+H(\beta,\gamma)
+       -2H(\alpha,\beta,\gamma)\\
+&\quad=2C_{\rm src}
+ -I(\alpha;\beta)-I(\alpha;\gamma)-I(\beta;\gamma)
+ \le 2C_{\rm src}.
+\end{aligned}
+\tag{10.7}
+$$
+
+The middle entropy expression is the classical three-variable dual total correlation, used here only as an attributed intermediate. The equalities are the standard entropy identities for total and dual total correlation, not a new entropy functional. Nonnegativity of mutual information proves the final inequality. Cyclic permutation of $(A,B,C)$ together with $(\alpha,\beta,\gamma)$ proves the other two bounds. Nonnegativity of relative entropy gives (10.4) and its budget consumer.
+
+When $\nu$ is a product, all source information terms in (10.5)–(10.7) vanish. Thus (10.3) explicitly recovers the existing Fritz product-source baseline $I(A;B)+I(A;C)\le H(A)$ and its cyclic versions. No continuity comparison with a different output law is involved. ∎
+

@@ -27,6 +27,25 @@ cleanup = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(cleanup)
 
 
+def fixture_active_paths(codex, pids, scopes=()):
+    """Use the production observer on fixture-owned processes only."""
+    pids = {str(pid) for pid in pids}
+    selection = ",".join(sorted(pids))
+    iterdir, run = Path.iterdir, subprocess.run
+    def inventory(path):
+        entries = iterdir(path)
+        return (entry for entry in entries if entry.name in pids) if path == Path("/proc") else entries
+    def observe(arguments, **kwargs):
+        if arguments[0] == "ps":
+            arguments = ["ps", "-p", selection, "-o", arguments[-1]]
+        elif arguments[0] == "lsof":
+            arguments = [*arguments, "-p", selection]
+        return run(arguments, **kwargs)
+    with patch.object(Path, "iterdir", inventory), \
+         patch.object(cleanup.subprocess, "run", side_effect=observe):
+        return cleanup.active_paths(codex, scopes=scopes)
+
+
 class HostReclaimTests(unittest.TestCase):
     def setUp(self):
         self.workspace = tempfile.TemporaryDirectory(prefix="host reclaim with spaces ")
@@ -65,6 +84,25 @@ class HostReclaimTests(unittest.TestCase):
 
     def clean(self, target, delete=True):
         return cleanup.clean_candidate(target, self.cutoff, [], delete=delete, repository=self.main)
+
+    def remnant(self, name="old", blueprint=True):
+        target = self.root / (self.main.name + "-" + name)
+        (target / ".lake/build").mkdir(parents=True)
+        (target / ".lake/build/object").write_bytes(b"regenerable")
+        if blueprint:
+            source = self.main / "Blueprint/Retained.md"
+            source.parent.mkdir(exist_ok=True)
+            source.write_bytes(b"retained blueprint\x00bytes\n")
+            self.git(self.main, "add", "Blueprint")
+            self.git(self.main, "commit", "--allow-empty", "-m", "Retain blueprint")
+            (target / "Blueprint").mkdir()
+            shutil.copyfile(source, target / "Blueprint/Retained.md")
+        self.age(target)
+        return target
+
+    def clean_remnant(self, target, delete=True, **kwargs):
+        return cleanup.clean_candidate(target, self.cutoff, [], delete=delete,
+                                       repository=self.main, remnant=True, **kwargs)
 
     def test_case_inventory_lists_every_case_without_running_git(self):
         environment = dict(os.environ, PATH="")

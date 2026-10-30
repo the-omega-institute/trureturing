@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3b338dc3f74fb73a0647f587fe3fd928a4e819ed4c375e53261f7476ec248ab9
+  normalized_sha256: sha256:3b338dc3f74fb73a0647f587fe3fd928a4e819ed4c375e53261f7476ec248ab9
+cas_ref: sha256:3b338dc3f74fb73a0647f587fe3fd928a4e819ed4c375e53261f7476ec248ab9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the four-component model contract and states resource/composition conventions; no mathematical consequence or realizability theorem is asserted.
+    previous_atom_id: bcf0a0665e233c844f4808761707966a8913c701817c3b8232f407d50b878c9a
+    next_atom_id: 4f89767570c9218c8ce784e851a32e2a2a9cb32eeb8117bd94649922d9fff207

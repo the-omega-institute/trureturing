@@ -1,0 +1,15 @@
+**Open problem 9.2 (universal root summability).** The two assertions
+
+$$
+\begin{aligned}
+\mathsf Q_{\rm full}:&\quad
+\forall N\ge1\ \forall\theta\in\Theta_N,\quad A_{P_\theta}(0)<\infty,\\
+\mathsf Q_{\rm band}:&\quad
+\forall N\ge1\ \forall\theta\in\Theta_N,\quad
+\mathsf B(P_\theta)\Longrightarrow A_{P_\theta}(0)<\infty
+\end{aligned}
+\tag{9.2}
+$$
+
+remain unresolved here. For a proposed application of Theorem 7.1, each actual positive component must separately supply a quotient satisfying both labeled identities and both all-feasible-word bounds. No implication from the posterior band to those combined hypotheses is proved. A failure to find a quotient or a contracting block is not a divergent-root-sum example.
+

@@ -1,0 +1,21 @@
+**Theorem 81.1 (conditional fixed-source payload attainment).** Fix a
+reachable $t$, the installation, returned phase and current rights, and
+exclude other history-dependent side information exactly as in Definition
+60.1. Among supplements whose fixed-width binary content must support
+all original FetchGrowth answers for every $w\in\mathcal H(t)$, any
+width $g$ satisfies $g\ge G(t)$. The actually installed maintained
+layout of §§75–78 attains this conditional information width with its
+$G(t)$ data bits, including $G=0$ when $F=1$.
+
+Proof. This is Definition 60.5's supplied counting lower bound: the
+$F(t)$ histories are separated by a FetchGrowth index, so $2^g\ge F$.
+Lemma 75.3 makes the global number range over exactly those $F$ values,
+and Theorems 76.4 and 78.2 now give an actual installed history-bearing
+record with the callable full service, rather than merely a static
+numbering. Length, header presence and binding shape are functions of
+$t$. If raw names, allocation choices, capacity or control contents are
+instead exposed as a history channel, their information must be included
+in the lower-bound premise; it cannot be called fixed context. Actual
+reference widths, headers, old/new coexistence and work capacity are
+not claimed to fit in $G$ physical bits. $\square$
+

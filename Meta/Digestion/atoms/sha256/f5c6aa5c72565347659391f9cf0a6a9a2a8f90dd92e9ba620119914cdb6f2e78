@@ -1,0 +1,35 @@
+## 23. Suppliers, literature attribution and the remaining joint gap
+
+Repository sources for §§17–22 are the committed public version at
+`773d4d43b91abd515be1059283d79dd6572fc174`. The following contribution
+map preserves their distinct source and assistance contracts.
+
+| Supplier | Exact use and boundary |
+| --- | --- |
+| `D5/S3/Quantum/Fibers/FiniteRectangleTransport.lean`, `ValidBase`, `probability`, signed `phaseWeight`, `weight_compatible`, `finite_rectangles_realize`, and its owning Blueprint/Scribe | Positive five-mode source and actual rectangles. The all-sector application in the Scribe supplies the fixed-height signed leg followed by the rectangle in Proposition 21.1; the rectangle Lean declaration alone is not credited with that whole application. |
+| `D5/S3/Quantum/Fibers/OriginalControlComposition.lean`, `OriginalControl`, `FiniteC1Control`, `concatenate_original`, and its owning Blueprint/Scribe | Both original regularity alternatives, arbitrary finite durations including zero, unchanged prefix, matching chronological interface, translated real tail and additive integrals. It supplies no actuator, sensor or unknown past input. |
+| This volume §§4–5.2, (OC.10)–(OC.12), (OC.19)–(OC.19b), and §§9–15 | Full unknown-phase/parity rigidity, canonical optimal stopped instrument, exact mode/time output, whole-law classification, actual witnesses and joint finite continuation are credited. Proposition 17.2 specializes the instrument; Theorem 21.2 consumes the existing rigidity. |
+| Quantum Carrier Minimum §§1.3, 2–3, 6 | Exact labelled $M_3$ carrier and absorbing sector, with supplied actual joint archives preserved. Its unassisted live coding lower bound has a different assistance premise from this source-height programming task. |
+| Instrument Stability §§2–5; Record Acquisition §§2–9, 11–12 | Conditional inverse and forward bounds, sampling obstructions and paid area/winding certificates are retained as suppliers. No new sample complexity or finite-noise estimate is claimed here. |
+| Sampled Instrument Certificates §§3, 7–8 | Its timed simultaneous tables and joint sensor premise can supply a restricted complete-operation approximation. Its exact return-height promise is an actual matching input. Theorem 21.2 tests a live cut lacking that anchor; it neither acquires the table nor replaces the sampler's full joint-law premise. |
+| Event Memory and Coarse Aliasing §§3–6 | Actual-event memory bounds, finite-bin CP aliases and known-programme law regeneration are distinct supplied results. Theorem 19.1 instead prices the height programme for implementing two complete instruments. |
+| Parity Record Transport §§3–9 | Calibrated pure parity helpers, consumable/returned-on-success endpoint gates and finite checkpoint recurrence are a separate additional operation class. The height programmes here must implement the prescribed canonical CP measures, not merely the pure-family endpoint target. Neither source constructs its helper. |
+| Probability/Phase Transport §9.1; Transport–Memory Completion §§2.9–2.12, 2.18 | The actual relative-command domain is used in §§17, 21. Common-port recovery still requires the same coherent source, aligned acquired readings, known nonzero amplitudes and known nonzero record overlap. A calibrated height programme is not that acquired interference service. |
+| Process Geometry §34, especially (PG.3400b-full), (PG.3400c); Atlas Stable Core Holonomy Theorem 6.3 | Actual joint source/epoch image, archives, domains/routes, references, permissions, and complete selection/update successors remain required. Proposition 22.1 retains them when supplied and matched. It does not construct the full actual image or its four individual recovery maps. |
+
+**Literature statement 23.1 (mature tools and precise exclusions).**
+Stinespring dilation, rank-one Choi rigidity, Gram isometries, positive
+matrix-valued Radon–Nikodym densities, strict Cauchy–Schwarz, spectral
+purification and finite CP composition are mature ingredients. The
+source-specific formulas (OC.59), (OC.64), their strict separation, the
+near-wall reusable-programme consequence and the actual unresolved-height
+application are `repo-derived` ordinary deductions. No worldwide priority
+or new Lean/kernel verification is claimed.
+
+| Primary source and version | Checked theorem scope and use |
+| --- | --- |
+| A. Chefles, R. Jozsa and A. Winter, [*On the existence of physical transformations between sets of quantum states*, quant-ph/0307227v1](https://arxiv.org/html/quant-ph/0307227v1), Theorems 2–3, Eqs. (7)–(9) | `literature-attested`: finite pure-family conversion factors its Gram matrix through an environment Gram matrix; a complete finite probabilistic transformation sums the positive outcome contributions. Theorems 18.1 and 19.1 use this mature isometry method. The nonatomic calculation is proved directly in §18, rather than imported from their finite-outcome theorem. Discarded source-dependent environments are allowed by the paper; acquired programmes are not supplied. |
+| M. A. Nielsen and I. L. Chuang, [*Programmable quantum gate arrays*, quant-ph/9703032v1](https://arxiv.org/html/quant-ph/9703032v1), stated Result and Eqs. (6)–(10) | `literature-attested`: distinct exact deterministic unitaries on arbitrary data require orthogonal pure programmes. The dissipative two-height instruments here have nonorthogonal feasible programmes, so that unitary theorem cannot prove our finite-pair or reusable-menu statement. |
+| L. Leppäjärvi and M. Sedlák, [*Incompatibility of quantum instruments*, 2212.11225v2](https://arxiv.org/html/2212.11225v2), Proposition 7 | For its finite-outcome, finite-dimensional instruments, compatibility is equivalent to obtaining the other instrument by postprocessing a complementary instrument. Its title is *Incompatibility of quantum instruments*. The proposition neither grants a complementary output port nor supplies an original-control calibration acquisition. No continuous-time threshold is imported from it. |
+| A. Muñoz-Moller, L. Leppäjärvi and T. Heinosaari, [*Adversarial Information Gain in Non-ideal Quantum Measurements*, 2602.20941v1](https://arxiv.org/html/2602.20941v1), Definition 1 and Proposition 1 | Its meter/instrument compatibility requires a joint instrument with both prescribed marginals; the characterization uses meters on a conjugate instrument's ancilla. This confirms the stronger joint-operation premise, without providing such access on the original source. Its qubit examples and numerical values are not transferred. |
+| M. Jing, M. Guo, L. Zhu, H. Yao and X. Wang, [*Programmable Open Quantum Systems*, 2512.08279v1](https://arxiv.org/html/2512.08279v1), programming-channel definition and Propositions 3–4 | The model retrieves a fixed-generator Lindbladian semigroup on arbitrary inputs from a time-varying analytic programme family. Its coherent-generator and spontaneous-emission exclusions concern that different programming contract. Theorems 18.1–20.1 concern source height, prescribed relative requests and marked failure instruments, so those semigroup conclusions are not transferred. |

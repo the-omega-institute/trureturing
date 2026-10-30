@@ -1,0 +1,12 @@
+**Corollary 83.3 (restricted fresh-coordinate necessity).** If a fixed
+field-independent symmetric fresh-zero extension protects all old entries
+under positive passive powers, its number $f$ of fresh cells satisfies
+$f\ge\dim\ker T$. On a subspace $X$ the bound is
+$f\ge\dim(X\cap\ker T)$.
+
+Proof. By (83.3), $K_{\rm new}^{\mathsf T}$ must be injective on
+$\ker T$, or on $X\cap\ker T$, respectively, and its codomain has dimension
+$f$. Rank-nullity gives the bounds. They are not optimal native-edit counts
+or bounds against entry-dependent controls, archives or nonlinear encoding.
+$\square$
+

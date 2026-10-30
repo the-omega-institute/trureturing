@@ -1,0 +1,5 @@
+- **[P] Two-qubit PPT sufficiency.** M. Horodecki, P. Horodecki and
+  R. Horodecki, *Separability of Mixed States: Necessary and Sufficient
+  Conditions*, [quant-ph/9605038v2](https://arxiv.org/pdf/quant-ph/9605038v2),
+  Theorem 3, PDF p. 8. Its $2\times2$ case applies to the active and
+  even--even blocks. No general $2\times4$ sufficiency is imported.

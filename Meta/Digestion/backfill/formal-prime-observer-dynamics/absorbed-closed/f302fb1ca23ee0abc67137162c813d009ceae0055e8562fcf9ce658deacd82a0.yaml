@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f302fb1ca23ee0abc67137162c813d009ceae0055e8562fcf9ce658deacd82a0
+  normalized_sha256: sha256:f302fb1ca23ee0abc67137162c813d009ceae0055e8562fcf9ce658deacd82a0
+cas_ref: sha256:f302fb1ca23ee0abc67137162c813d009ceae0055e8562fcf9ce658deacd82a0
+coverage_gids:
+  - gid: D5/S3/Analytic/ZetaObservation/PrimeFactorCountMoments.prime_factor_count_variance
+    target_statement_id: sha256:800805c9cfea536894f817582dcd2a0423ae4d62c88e072fe106aff6a97374c2
+receipts:
+  unresolved_subitems: []

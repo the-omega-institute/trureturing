@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:46b8a7ddcc1d92bfbcfe35bd1ee2c237fb125ad9ff9a5d8f0a0c6b7b8e961787
+  normalized_sha256: sha256:46b8a7ddcc1d92bfbcfe35bd1ee2c237fb125ad9ff9a5d8f0a0c6b7b8e961787
+cas_ref: sha256:46b8a7ddcc1d92bfbcfe35bd1ee2c237fb125ad9ff9a5d8f0a0c6b7b8e961787
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Names the proposed positive Li-curvature Toeplitz-kernel target, without asserting positivity.
+    previous_atom_id: f134ff096fc4e8c0da7ee28505b8ff4e236e7a23654e40bdf436752778c18979
+    next_atom_id: cd7f48f2884b7e036c50b96374e717ec1100f6de57708e4bcc579c008ea8f8df

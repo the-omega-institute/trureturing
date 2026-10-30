@@ -1,0 +1,29 @@
+**Theorem 26.4 (mutual recovery, route agreement and task meaning).**
+On the image of Definition 26.3 each expression recovers the other three,
+with both image identities and agreement of all recovery routes. Their
+equality kernels equal the placement/joint-task kernel and the complete
+current-service kernel on this fixed-context image. At $r\le d$ this
+four-expression assertion fails: Time distinguishes the two placements
+while the current Space, Boundary and Memory coincide.
+
+**Proof.** Time reads its actual restricted order and obtains $\tau$.
+Space tests its actual coordinate at $f$, zero exactly for $\tau=0$;
+Boundary does the same to its extracted $q_\tau$. Memory contains the
+whole current and does the same test. Given $\tau$ and the public
+recipe, (25.7) evaluates the whole state, the prescribed actual restricted
+chronology, the nominal terminal value and the complete service law.
+Thus decoding after encoding is the identity on $\{0,1\}$, and encoding
+after decoding is the identity on every listed image. All routes factor
+through that same bit. No view was defined as an arbitrary encoding of
+all history: each exposes a different present, temporal, boundary or
+callable object with its stated independent meaning.
+
+For $r>d$, the nominal difference at $f$ is a nonzero integer multiple
+of $8^{-r}$. At precision $3r+1$ the allowed sets for $\tau=0$ and
+$\tau=1$ are disjoint, since their floors are $0$ and $2a\ge2$.
+Thus their full current services are different. Equal bits have equal
+whole state and service under the common context. At $r\le d$,
+Corollary 25.4 instead gives identical states and nominal boundary values,
+while the actual order still differs. It would be false to erase that
+Time distinction by changing the declared placement task. $\square$
+

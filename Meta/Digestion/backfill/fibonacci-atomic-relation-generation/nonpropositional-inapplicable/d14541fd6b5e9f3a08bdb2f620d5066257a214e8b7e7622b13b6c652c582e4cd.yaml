@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d14541fd6b5e9f3a08bdb2f620d5066257a214e8b7e7622b13b6c652c582e4cd
+  normalized_sha256: sha256:d14541fd6b5e9f3a08bdb2f620d5066257a214e8b7e7622b13b6c652c582e4cd
+cas_ref: sha256:d14541fd6b5e9f3a08bdb2f620d5066257a214e8b7e7622b13b6c652c582e4cd
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条仅引入 D_y=lcm(1,…,floor(y)) 的记号；未断言其渐近、素因子或 Robin 性质。
+    previous_atom_id: b59fb9fb159244fb2d4f6dfcc0b02d770bfb347b2b044e9093061a815aa6146e
+    next_atom_id: e42c12a928f71f3f0608fab4c1c542c443bb581bf9f9ed368248146d368b0911

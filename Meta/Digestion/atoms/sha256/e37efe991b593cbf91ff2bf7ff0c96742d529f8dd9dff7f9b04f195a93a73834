@@ -1,0 +1,9 @@
+**Proposition 7.4 (Why the larger enclosure is not an immersion domain).**
+$\Psi_M$ is not an immersion at every point of $K_+$.
+
+Proof. The strict regular world $W_c$ has $p=24$ and
+$v=591/4>\ell(24)-1/25=6543/50$, so it belongs to $K_+$.
+Equation (6.5) gives rank one there. Compactness of $K_+$ remains
+available as an enclosure result, while Theorem 7.3 concerns the actual
+$K_J$ and uses the exact exclusion (7.2). ∎
+

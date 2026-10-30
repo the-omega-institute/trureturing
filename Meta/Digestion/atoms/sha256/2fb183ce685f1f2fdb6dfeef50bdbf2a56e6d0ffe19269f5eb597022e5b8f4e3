@@ -1,0 +1,39 @@
+**Definition 5.1 (The carrier algebra and source functions).** Put
+$k=\mathbb Q(p,v)$ and $\rho=[x^{18}]R$. In the degree-eighteen
+algebra
+
+$$
+B=k[x]/(\bar R),\qquad \bar R=R/\rho,
+\tag{5.1}
+$$
+
+define, whenever the indicated elements are units,
+
+$$
+\begin{gathered}
+\delta=-\beta/\alpha,\qquad H_i=a_i(x,\delta)/D\quad(i=0,1,2,7),\\
+U=-H_0/\delta,\qquad b=(U-1)/2,\qquad
+j=\frac{U(24-\delta)}{H_1},\qquad n=xU,\qquad r=n-j,\quad T=1+b,\\
+\tau=\delta+(2x+3)H_7.
+\end{gathered}
+\tag{5.2}
+$$
+
+All representatives have degree less than eighteen in $x$. For a
+representative $u$, its multiplication matrix $M(u)$ has column $j$
+equal to the coefficient vector of
+$\operatorname{rem}_x(ux^j,\bar R)$, $0\le j<18$. Define
+
+$$
+\operatorname{Nm}(u)=\det M(u),\qquad
+\chi(z)=\det(zI-M(\tau)),\qquad
+\kappa=\det[1,\tau,\ldots,\tau^{17}].
+\tag{5.3}
+$$
+
+Columns in the last determinant are coefficient vectors. An inverse is
+defined exactly by $M(u)^{-1}\mathbf e_0$, or by its adjugate divided
+by $\operatorname{Nm}(u)$. This specifies a rational polynomial circuit;
+it does not select any ordering of roots. The nonvanishing facts needed
+to define these functions over $k$ follow from Proposition 5.2.
+

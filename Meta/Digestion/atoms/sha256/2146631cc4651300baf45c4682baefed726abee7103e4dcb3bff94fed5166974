@@ -1,0 +1,17 @@
+**Corollary 20.2 (a strict conflict of the two coordinates).** When
+$K=2^r$, $r\ge2$ and $n\ge\delta+2K-2$, the exact penalty for
+requiring minimum worst calls is
+
+$$
+ W_{\rm call}(S,K)-W_*(S,K)
+       =(r-1)\delta+(2r-3)K+2>0.
+ \tag{GPO.62}
+$$
+
+Proof. Subtract (GPO.57) from (GPO.60). The first term is nonnegative
+and $2r-3\ge1$. Thus no one protocol minimizes both worst $Q$ and
+worst $W$ on this intersection. Each optimum has its own common-run
+upper witness; they have not been added or declared jointly attainable.
+For $r=1$ the two expressions agree. No assertion about the full
+Pareto frontier follows. $\square$
+

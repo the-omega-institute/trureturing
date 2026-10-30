@@ -1,0 +1,25 @@
+**命题 33.1（相同局部边缘的两块关系见证）。** 在 $m=2$ 的同一个七位编码链上，取命题 30.3 的 $|\mathbf0\rangle=|N\rangle$、$|\mathbf1\rangle=|25\rangle$，并令
+
+$$
+\begin{aligned}
+\rho_{\mathrm{eq}} &= \tfrac12\bigl(|\mathbf0\mathbf0\rangle\langle\mathbf0\mathbf0|
+                     +|\mathbf1\mathbf1\rangle\langle\mathbf1\mathbf1|\bigr),\\
+\rho_{\mathrm{neq}} &= \tfrac12\bigl(|\mathbf0\mathbf1\rangle\langle\mathbf0\mathbf1|
+                     +|\mathbf1\mathbf0\rangle\langle\mathbf1\mathbf0|\bigr).
+\end{aligned}
+\tag{33.1}
+$$
+
+两态在每个块的边缘都相同，但存在只用块内字、一次原生分隔 $\pi$ 脉冲及第一块末次模式读的有限延拓，使两态的 $25$ 模式概率差严格大于 $1/2$。无其他块的测量或经典结果。
+
+**证明。** 两边缘均为 $(|\mathbf0\rangle\langle\mathbf0|+|\mathbf1\rangle\langle\mathbf1|)/2$，而两态的联合经典关系分别为相等与不等。令 $H$ 在第一块的这两个向量上是 Hadamard，其他三个模式上为恒等。对 (30.5) 的 $E=E_1$，理想酉
+
+$$
+U_*=(H\otimes I)E(H\otimes I)
+\tag{33.2}
+$$
+
+在第二块为 $\mathbf0$ 时对第一块施加 $-X$，第二块为 $\mathbf1$ 时施加恒等。因此它把相等关系的第一块确定送到 $\mathbf1$，不等关系的第一块确定送到 $\mathbf0$；理想 $25$ 概率分别为一和零。
+
+取任意 $0<\delta<1/8$，由定理 31.1 的单块部分选有限局部字 $L$ 及 $|z|=1$ 使 $\|L-zH\|_{\rm op}<\delta$。实际字为 $(L\otimes I)E(L\otimes I)$，与 $z^2U_*$ 的算子范数距离小于 $2\delta$。由 (31.2) 的同一展开及测量收缩，两输入的各自事件概率误差小于 $2\delta$，所以实际概率差大于 $1-4\delta>1/2$。$E$ 由一个完整分隔脉冲精确实现，两个 $L$ 均保持分隔零，故全过程合法、末端回零。此见证把已有边缘不足的关系落实为本链上无旁支读数的有限可读延拓，而不是新增自由联合观察假设。$\square$
+

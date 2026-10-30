@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9bd78b6424886ad5ec4353a95a57bc788d4ff755f5881b620cd262a8c70522d9
+  normalized_sha256: sha256:9bd78b6424886ad5ec4353a95a57bc788d4ff755f5881b620cd262a8c70522d9
+cas_ref: sha256:9bd78b6424886ad5ec4353a95a57bc788d4ff755f5881b620cd262a8c70522d9
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The table row explicitly labels a possible PrimeGap-sticky-tower/RH bridge as a new research route. It proposes an investigation without asserting existence of such a tower, a sufficient positivity hypothesis, or an established implication to RH; it is not a proof or a refutation of that proposed bridge.
+    previous_atom_id: b53903d26cc8c809b12842bfe144320b1f8fa48b491375719cd1093bc6c95113
+    next_atom_id: 4232057fd615f65c0aef8758b0ebb2fd60f9f826d598fbe51cc879dec0ed780b

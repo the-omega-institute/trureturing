@@ -1,0 +1,46 @@
+**定理 6.3（固定菜单的统一有限生成）。**
+
+<a id="thm-uniform"></a>
+
+若 $\operatorname{Lie}_{\mathbb R}(\mathcal S)=\mathfrak k$，则存在有限整数 $N(\mathcal S)$，
+使每个 $g\in G$ 都有长度不超过 $N(\mathcal S)$ 的精确合法字。
+
+**证明。**
+
+令 $R$ 为所有合法字组成的子群，定义
+
+$$
+L=\operatorname{span}_{\mathbb R}\{\operatorname{Ad}_rY:r\in R,\ Y\in\mathcal S\}.
+$$
+
+$L$ 对 $\operatorname{Ad}_R$ 不变。对其中生成向量 $Z=\operatorname{Ad}_rY$，
+$e^{tZ}=r e^{tY}r^{-1}\in R$。对 $\operatorname{Ad}_{e^{tZ}}L\subset L$ 求导，
+得到 $[Z,L]\subset L$，再线性扩张知 $L$ 为 Lie 子代数。
+它包含 $\mathcal S$，所以 $L=\mathfrak k$。
+
+从这些实际共轭方向中选基 $Z_1,\ldots,Z_{248}$。
+映射
+
+$$
+F(t_1,\ldots,t_{248})=\prod_{\ell=1}^{248}e^{t_\ell Z_\ell}
+$$
+
+在原点的导数为同构。由逆函数定理，其像包含单位元邻域 $U$。
+每个 $Z_\ell=\operatorname{Ad}_{r_\ell}Y_{i_\ell}$，
+其指数可由固定共轭字实现，故整个 $U$ 内的目标都可用某个共同有限长度
+$M$ 表示。缩小 $U$ 使它对称且包含单位元。
+
+$\bigcup_{n\ge1}U^n$ 是 $G$ 的开子群；
+$G$ 连通，故它等于 $G$。这些 $U^n$ 递增并覆盖紧群 $G$，
+紧性给出某个 $n_0$ 满足 $G=U^{n_0}$。
+于是 $N(\mathcal S)=n_0M$ 即可。证毕。
+ □
+
+这是紧群统一有限生成的经典结论在本菜单中的应用，
+一般结果见 D'Alessandro [[7](#ref-dalessandro)]。
+本证明给出**统一有限上界存在**，不能误写为“没有统一上界”。
+它没有给出 $N(\mathcal S)$ 的已评价数值、可执行综合算法、
+实参数的有限位精度或随系统尺寸变化的多项式界。
+
+<a id="subsection-6-3"></a>
+

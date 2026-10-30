@@ -1,0 +1,41 @@
+**定理 82.2（直和隐藏环境定理）。** 假设第 62 节的某个有限字 $W=m_s\cdots m_1$ 满足
+
+$$
+W\iota=e^{i\gamma}\iota U
+$$
+
+且每个执行前缀保码。对 (XVIII.2) 的任意扩张，有
+
+$$
+\widetilde W=W\oplus V_{m_s}\cdots V_{m_1},
+\qquad
+\widetilde W\widetilde\iota=e^{i\gamma}\widetilde\iota U.
+\tag{XVIII.3}
+$$
+
+同一等式对每个前缀及脉冲中途成立。因此，对任意有限被动参考 $R$ 和任意 $\rho\in\mathsf D(\mathbb C^4\otimes R)$，嵌入第一块以后，扩张字与原字诱导完全相同的逻辑联合通道。若 $\widetilde M$ 是扩张系统上的任意读出效果，令
+
+$$
+M=J^\dagger\widetilde M J,
+\qquad J:\mathcal H\hookrightarrow\widetilde{\mathcal H},
+$$
+
+则对所有支撑在第一块的输入，读出概率满足
+
+$$
+\operatorname{Tr}\!\left[\widetilde M\,J\sigma J^\dagger\right]
+=
+\operatorname{Tr}[M\sigma].
+\tag{XVIII.4}
+$$
+
+**证明。** 直和乘法给出
+
+$$
+(m_s\oplus V_{m_s})\cdots(m_1\oplus V_{m_1})
+=
+W\oplus V_{m_s}\cdots V_{m_1}.
+$$
+
+归纳同样适用于删去最后一个因子的任意前缀以及连续脉冲的中途参数。由于 $\widetilde\iota=J\iota$，将 (XVII.8) 左乘 $J$ 即得 (XVIII.3)。参考系统只张量单位算子，因而第一块限制上的共轭通道与原通道相同。最后，$J^\dagger\widetilde M J$ 的迹恒等式是有限维迹的循环性。□
+

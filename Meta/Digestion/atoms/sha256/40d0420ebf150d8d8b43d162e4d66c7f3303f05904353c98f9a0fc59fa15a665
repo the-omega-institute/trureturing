@@ -1,0 +1,42 @@
+**Definition 53.3 (complete guard task $Q_A$).** On a current term $u$,
+the semantic reply and successor of a complete addressed request are:
+
+| Current logical target at $p$ | $P_p$ | $S_p$ |
+| --- | --- | --- |
+| absent | Refusal(absent), unchanged $u$ | Refusal(absent), unchanged $u$ |
+| branch | Refusal(branch), unchanged $u$ | Refusal(branch), unchanged $u$ |
+| $\alpha$ | Growth$(P,p)$, replace that leaf by $\beta$ | Refusal(wrong type), unchanged $u$ |
+| $\beta$ | Refusal(wrong type), unchanged $u$ | Growth$(S,p)$, replace that leaf by $\langle\beta,\alpha\rangle$ |
+
+Use the original three-bit $P/S$ request tags and
+$A(p)=1^{|p|}0p$ of AA Definition 20.2, with the same bit meanings for
+$L,R$. Growth has its original three-bit reply tag, kind bit and $A(p)$;
+a refusal has its original three-bit tag and two-bit reason. Thus their
+lengths are respectively $2|p|+5$ and $5$. To specify the entire minimal
+parser, each of the other six three-bit request tags is a complete
+unsupported frame and returns the three-bit BadFrame reply, with no
+payload and no source change. It does not call an omitted AA service.
+A $P/S$ tag followed by a proper incomplete address frame waits for the
+missing suffix and has no completed reply. The parser consumes exactly
+one frame before return; later input belongs to a later request.
+
+Receive backs each input bit before releasing its pending latch.
+Navigate follows logical branches from the retained root. Guard applies
+the displayed cases. A successful request reserves its finite fresh
+material before the source edit. BuildAnswer seals the entire reply,
+Print transmits every bit followed by End, the supplied local
+acknowledgement enables Return, and finite scratch cleanup restores Ready.
+Return may follow the parent chain from the target to the root. No next
+request is admitted during an unfinished edit or reply. The pending
+request, cursor, reserved references, answer and phase remain actual busy
+state. A source cut used below is settled only after this return and the
+observer's corresponding record update.
+
+$Q_A$ compares the same finite future frames, their complete replies,
+enabledness and all resulting settled source successors. It exposes no
+private observer archive, source allocation names, primitive-duration
+trace or arbitrary busy state. Its semantic source equality is equality
+of rooted oriented contents with this fixed binding and authority,
+disregarding fresh-name spellings. This convention preserves actual
+binding relations; it does not identify different authorities or roots.
+

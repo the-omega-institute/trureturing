@@ -1,0 +1,8 @@
+**Definition 125.1 (a two-label perturbation).** Let $f$ be a pointwise Borel simplex tuple, let $i\neq j$ be labels, and let $\kappa>0$ satisfy
+
+$$
+E=\{f_i\geq\kappa,\ f_j\geq\kappa\},\qquad m(E)>0.
+$$
+
+Set $\sigma_i=1$, $\sigma_j=-1$, and $\sigma_y=0$ otherwise. For a bounded real Borel $v$ supported in $E$, put $f_y^s=f_y+s\sigma_yv$. The tuple remains a pointwise Borel simplex tuple whenever $|s|\|v\|_\infty\leq\kappa$.
+

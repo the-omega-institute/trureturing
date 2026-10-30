@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:eb63d94fb969a1286629a162897aa4df8d9dcad702c577841481245765a5c48b
+  normalized_sha256: sha256:eb63d94fb969a1286629a162897aa4df8d9dcad702c577841481245765a5c48b
+cas_ref: sha256:eb63d94fb969a1286629a162897aa4df8d9dcad702c577841481245765a5c48b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the action-record append in the protocol.
+    previous_atom_id: 9cf004e22a9590110b364b520f75b427a5fd893a58a6d16ed207e9eedd42b9eb
+    next_atom_id: 8c1b612ca38eae8129af69fa67221ec226ac705105d8052a0c8439960405460d

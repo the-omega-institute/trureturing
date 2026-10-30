@@ -6,6 +6,10 @@
    utility: none
    digest: Bound unitary tensor sums by their scalar coefficients on the unit circle. -/
 
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19212.
+unitary_diagonalization: proof_shape: bind-only; consumers: tensor_block_bound,
+FannesRootFidelityHolevo.unitary_diagonalization; escape_witness: none. -/
+
 import D5.S3.Quantum.BlockNorm.EssentiallyHermitian
 import D5.S3.Observer.WindowRegister
 /-!
@@ -75,7 +79,7 @@ theorem norm_diagonal_tensor_sum_le {n m d : ℕ}
         Fintype.sum_prod_type, Finset.mul_sum]
 
 /-- Unitary diagonalization has unit-circle diagonal entries. -/
-private theorem unitary_diagonalization {n : ℕ}
+theorem unitary_diagonalization {n : ℕ}
     (U : Matrix (Fin n) (Fin n) ℂ) (hU : U ∈ unitaryGroup (Fin n) ℂ) :
     ∃ P ∈ unitaryGroup (Fin n) ℂ, ∃ z : Fin n → ℂ,
       (∀ i, ‖z i‖ = 1) ∧ star P * U * P = diagonal z := by

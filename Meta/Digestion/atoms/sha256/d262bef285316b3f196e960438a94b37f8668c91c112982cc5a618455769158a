@@ -1,0 +1,61 @@
+### 17.2. Interior occupation frequencies and the true rotation quotient
+
+Suppose first that $0<a_s<1$ for every $s$. A zero reaches a previous-bit-zero state from any state. Further zeros visit every phase, and a final one reaches any prescribed previous-bit-one state. All these required transitions have positive probability, so $A$ is irreducible. Its stationary row is unique and strictly positive. Every return length is divisible by $m$, since every edge advances phase. The all-zero path from $(s,0)$ returns to it in exactly $m$ steps with positive probability. Thus the hidden period is exactly $m$, even when the parameter profile has a smaller period. Its stationary phase marginal is uniform. The $m$-step chain on the two previous-bit states at a fixed phase is irreducible and aperiodic; irreducibility also follows by padding the zero paths just described with full zero cycles.
+
+Here are explicit visible statistics that use the two tails separately. For $j=0,\ldots,m-1$ and $i\in\mathbb Z$, put
+
+$$
+t_{i,j,k}^{\pm}=i+j\pm km\quad(k\ge2),
+$$
+
+$$
+\begin{aligned}
+D_{i,j}^{\pm}(x)
+ &=\lim_{N\to\infty}\frac1N\sum_{k=2}^{N+1}
+       \mathbf1_{\{x_{t_{i,j,k}^{\pm}-1}=0\}},\\
+R_{i,j}^{\pm}(x)
+ &=\lim_{N\to\infty}
+   \frac{\sum_{k=2}^{N+1}\mathbf1_{\{x_{t_{i,j,k}^{\pm}-1}=0\}}x_{t_{i,j,k}^{\pm}}}
+        {\sum_{k=2}^{N+1}\mathbf1_{\{x_{t_{i,j,k}^{\pm}-1}=0\}}}.
+\end{aligned}
+\tag{17.8}
+$$
+
+The ratio is used only when the denominator is eventually positive and the limit exists. The plus statistics use coordinates strictly larger than $i$; the minus statistics use coordinates strictly smaller than $i$.
+
+Conditional on $S_i=s$, write
+
+$$
+\rho_{s+j}=J_\theta(X_{i+j-1}=0\mid S_i=s)>0.
+$$
+
+The stationary $m$-step chain on the corresponding phase class is ergodic. Apply the classical finite-chain occupation theorem to its states and its intervening transition paths. The denominator averages in (17.8) converge to $\rho_{s+j}$ and the numerator averages converge to $\rho_{s+j}a_{s+j}$. For the negative direction apply the same theorem to the stationary reversed chain, or equivalently the ergodic theorem for the inverse $m$-step shift. The reversed sampling averages the same forward pair observable; it does not replace its limit by a reversed transition probability. It follows that
+
+$$
+D_{i,j}^+=D_{i,j}^-=\rho_{s+j}>0,\qquad
+R_{i,j}^+=R_{i,j}^-=a_{s+j}
+\quad\text{conditional on }S_i=s,
+\tag{17.9}
+$$
+
+almost surely. In particular, the recovered numbers are the transition probabilities among previous-zero visits, not unconditional emitted-one frequencies. Finite-chain occupation and conditional projection are classical tools, as in Proposition 13.1 and [Universal, Theorem 5.1][ClockUniversal].
+
+Let $\Gamma$ be the legal configurations for which all the limits (17.8) exist, all $D_{i,j}^{\pm}>0$, and for every $i$ the two vectors $(R_{i,j}^{\pm})_{j=0}^{m-1}$ agree and are rotations of $a$. Require also the compatibility
+
+$$
+R_{i+1,j}^{\pm}=R_{i,j+1\bmod m}^{\pm}.
+\tag{17.10}
+$$
+
+These are countably many Borel conditions, so $\Gamma$ is Borel and, by (17.9), $P_\theta$-conull. Reindexing the sampling progression changes only finitely many terms at a wrap from $j=m-1$ to $j=0$, which gives (17.10). Translation permutes these conditions, so $\Gamma$ is shift invariant. Changing finitely many visible coordinates changes only finitely many summands in every statistic. All limits, positive denominator limits and profiles remain the same. Therefore $\Gamma$ is saturated under every legal finite modification, and every recovered vector is constant on each such class.
+
+Two rotation vectors $(a_{s+j})_j$ and $(a_{t+j})_j$ agree exactly when $t-s\in H(a)$. Thus (17.8) determines precisely the coset $s+H(a)$ in this rotation parametrization. At cut $i$ let its value be $\sigma_i(x)$; on $\Gamma$,
+
+$$
+\sigma_i=S_i+H(a)\quad J_\theta\text{-almost surely},\qquad
+\sigma_{i+1}=\sigma_i+1.
+\tag{17.11}
+$$
+
+Each tail separately determines this same quotient. It is also the actual rotation quotient of the visible law: for $h\in H(a)$, the state permutation $(s,b)\mapsto(s+h,b)$ commutes with both labeled matrices. Uniqueness makes the stationary row invariant under this permutation. Applying it to (17.6) proves that the whole visible laws conditional on $S_i=s$ and $S_i=s+h$ are equal. Thus no visible event distinguishes representatives within that coset; conditional on the whole visible record the hidden phase is uniform within its recovered coset. A constant profile gives the trivial quotient. No identification of hidden memory with finite visible memory has been made.
+

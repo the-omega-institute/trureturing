@@ -1,0 +1,55 @@
+**Definition 15.5.2 (Mathematical source and applicability boundaries).**
+The lifting and admissible-difference principle are classical inputs.
+Choudhary and Mitra, *Identifiability Scaling Laws in Bilinear Inverse
+Problems*, [Proposition 1 and Remark 5](https://arxiv.org/html/1402.2637),
+use the exact lifted feasible set
+$\mathcal K'=\{xy^{\mathsf T}:(x,y)\in\mathcal K\}$ and its difference
+set $\mathcal K'-\mathcal K'$. Their rank-at-most-two nullspace
+intersection criterion retains those admissible differences; Remark 5
+distinguishes original realizable observations from an unrestricted
+lifted observation. In this section their two factors correspond to
+$s,\gamma$, their linear operator to the explicit $\mathcal L_M$, and
+the exact fixed-history constraints to legal source directions and
+(15.28), together with the acquired zero read.
+
+Li, Lee and Bresler, *Identifiability in Blind Deconvolution with
+Subspace or Sparsity Constraints*,
+[Proposition 2.2](https://arxiv.org/html/1505.03399), for nonzero factor
+pairs, characterizes uniqueness of $X_0$ by
+$\ker\mathcal G\cap\{X_0-X:X\in\Omega_{\mathcal M}\}=\{0\}$.
+Its admissible-difference algebra transfers under the preceding factor
+and operator correspondence: equality of linear measurements is exactly
+membership of the difference in the linear kernel. The fixed-H4
+feasible set here need not be a Cartesian product of factor sets; its
+additional absolute constraints remain (15.28), not a consequence of
+that paper. Its circular-convolution operator,
+complex subspace or sparsity models, generic frames and sample
+thresholds are not hypotheses or conclusions here. Both factors in
+(15.29) are nonzero, and the normalization $s_0=1$ removes the factor
+scaling ambiguity. Neither paper supplies (15.10), the positive-root
+exclusions, or the absolute fixed-history guards of this FIB source.
+
+The generic source/gain projection in
+[SelfcalIV, Theorem 13.3](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_IV.md)
+is reused as the existing general lifting setting. Its Theorem 5.2
+concerns a required pair at the different $MMJM$ parent with extra
+shared-tail constraints; that result does not prove Theorem 15.3.1
+for the present $JMJM$ history. The new source-specific conclusions
+here are the two uniform exclusions and their consumed constrained
+inverse, with the finite arithmetic specified in (15.8)–(15.17).
+These are repository-derived statements; no literature-priority or
+exhaustive-search assertion is attached to them.
+
+Theorem 15.5.1 asserts an exact correspondence, not nonemptiness of its
+right side. The selected singular-M joint exclusion in S, Corollary
+18.2, the complete first negative-J child in Theorem 14.2, and XI,
+Theorem 8.1.2's entire-child M exclusion on its closed rectangle keep
+their published scopes. In particular XI's whole delivered finite J
+arc already lies in that rectangle. None is used as a global
+restriction on $\mathfrak A_M$; singular J sources and unused singular
+worlds remain allowed. The all-response volume's Theorem 24.2 and
+Corollary 24.3 continue to settle the old exact $p_J$ for all real $v$.
+No four-world witness, seven-read recovery, all-real joint
+nonexistence, fixed-48 ancestor result or original full-domain
+eight/nine-read conclusion follows from (15.29) or (15.34).
+

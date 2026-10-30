@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:159af31f20a37ae919254b01e444b2ede00b85fb1f136cfdd2451151a0d5d6e5
+  normalized_sha256: sha256:159af31f20a37ae919254b01e444b2ede00b85fb1f136cfdd2451151a0d5d6e5
+cas_ref: sha256:159af31f20a37ae919254b01e444b2ede00b85fb1f136cfdd2451151a0d5d6e5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 定义支持等价、逐来源等价和概率推前等价，声明各自采用的接口，不断言三者间的蕴含。'
+    previous_atom_id: c366e4a66dc622720aeb851d107d076e16afc5a18b8a20b395e64fda381fd69f
+    next_atom_id: 1424ec2fb5cd2a7be08e106148366b685f5e6c2c0e92d34ffbd600bd66b79a1b

@@ -12,12 +12,18 @@ internal sealed class FiniteEndpointPairingDocument : IScribeDocumentDefinition
         "Finite alternating paths pair exposed endpoints and determine all reattached endpoint orbits.",
         H("Finite Alternating Paths and Endpoint Pairing"),
         Blocks(
+            Paragraph(Text("The first-return witnesses give the same least positive first-visit length for the original cut path from J(x) and the reattached path from x, with terminal endpoint (P*J)(x). These lengths are the segment weights in the complete reattachment inventory.")),
             Paragraph(Text("Let X be finite and let s and r be involutive permutations of X. "
                 + "Put E = {x : r(x)=x} and q=s*r, with the right factor applied first. "
                 + "For x in E, take the least positive n with q^n(x) in E. Such n exists by finite "
                 + "permutation recurrence. P(s,r)(x) is this actual first-return endpoint. "
                 + "A first-return segment has no intermediate point in E. "
                 + "For a permutation J of E, extend(J) acts as J on E and fixes X outside E.")),
+            Node("involution-square", "An Involutive Permutation Squares to the Identity", "square_of_involutive",
+                Disp(All("X", V("Type"), All("p", Call("Perm", V("X")),
+                    Imp(Call("Involutive", V("p")),
+                        Equal(Multiply(V("p"), V("p")), Num(1)))))),
+                "Applying an involutive permutation twice fixes every element, so its square is the identity permutation."),
             Node("endpoint-involution", "First Return Reverses the Same Path", "endpoint_pairing_involutive",
                 Context(Call("Involutive", P())),
                 "The identity q^n*r*q^n=r reverses any segment with endpoints fixed by r. "

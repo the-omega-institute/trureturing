@@ -27,6 +27,11 @@ internal sealed class BooleanNullBoundaryDocument : IScribeDocumentDefinition
                 "N removes exactly 000 from A. Equivalently its third bit is NOR of its first "
                     + "two bits: z = not(x or y). This equivalence is checked in the proof of "
                     + "the construction below."),
+            Node("nor-truth-table", "The null-free relation computes NOR", "n_iff_nor",
+                NorFormula(),
+                "For all Boolean x, y and z, N on the ordered triple (x,y,z) holds exactly "
+                    + "when z is the negation of x or y. The four satisfying triples are "
+                    + "100, 010, 110 and 001.", DescribeRole.Theorem, Sheffer),
             Rel("equality", "Equality", "EQ", 2, Equal(At("a", 0), At("a", 1)),
                 "The binary equality relation."),
             Rel("disequality", "Disequality", "NEQ", 2,
@@ -89,6 +94,13 @@ internal sealed class BooleanNullBoundaryDocument : IScribeDocumentDefinition
                     + "Majority closure and NOR completeness are classical Boolean constraint "
                     + "theory; the explicit small construction identifies the effect of the null tuple.",
                 DescribeRole.Theorem, Schaefer)), []));
+
+    private static Formula NorFormula()
+    {
+        Formula body = Iff(Call("N", Id("x"), Id("y"), Id("z")),
+            Equal(Id("z"), Call("not", Call("or", Id("x"), Id("y")))));
+        return Disp(All("x", Bool(), All("y", Bool(), All("z", Bool(), body))));
+    }
 
     private static Formula ResultFormula()
     {

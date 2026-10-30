@@ -1,0 +1,19 @@
+## 21. Exhaustive finite escape responses
+
+Define the following rational curves, omitting poles:
+$$
+\begin{aligned}
+R_0(z)&=\left(\frac{-3(72z^3+746z^2+465z+130)}{5(z^3-8z-4)},
+\frac{-3(375z^3+4431z^2+2486z+344)}{5(z^3-8z-4)}\right),\\
+R_1(z)&=\left(\frac{-6(36z^4+61z^3+221z^2+181z+30)}{5(z+1)(z^3-4z-2)},
+\frac{-3(375z^4+881z^3+2486z^2+1706z+266)}{5(z+1)(z^3-4z-2)}\right),\\
+\mathcal B_0(z)&=\left(\frac{-3(16z^2-80z+65)}{10(z-1)},
+\frac{3(45z^2+125z-172)}{10(z-1)}\right),\\
+\mathcal B_1(z)&=\left(\frac{-6(8z^3-24z^2-2z+15)}{5(2z^2-1)},
+\frac{3(45z^3+215z^2-33z-133)}{5(2z^2-1)}\right).
+\end{aligned}
+\tag{21.1}
+$$
+Use $z>0$ for $R_i$ and $z\ge0$ for $\mathcal B_i$. Also put
+$q_\infty=(-216/5,-225)$.
+

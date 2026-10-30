@@ -1,0 +1,2 @@
+**约定 83.6（凸性与资源范围）。** Helly 作用于固定 noise 下同一个 effective common-CPTP image。若 encoder 也变化，composition 的 bilinearity 不自动给出该 convex image；discrete controllers 或非凸 resource restrictions 同样不能直接套用。bounded witness size 不给出 efficient enumeration、arbitrary-real decidability、统一 label 数上界或 memory dimension。定理 83.1 的 zero-slack phase catalogue 有更强的 pairwise obstruction；定理 83.4 则适用于一般方向与 thresholds。两者均只刻画已供应 tasks 的 static decoder choice，不推导 online controller minimum、quantum capacity 或物理资源 minimum。
+

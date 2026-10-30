@@ -1,0 +1,21 @@
+**Open Question 7.3 (Unchanged whole-domain finite attainment).** On precisely (1.3), put
+
+$$
+C_N=\sup_{\theta\in\Theta_N}d(P_\theta),\qquad
+D_r(P)=\mathbb E_P\left(X_0-
+\mathbb E_P[X_0\mid X_{-r},\ldots,X_{-1},X_1,\ldots,X_r]\right)^2,\qquad
+U_{N,r}=\max_{\theta\in\Theta_N}D_r(P_\theta).
+$$
+
+Does some finite $N$ admit $d(P_\theta)=c_\star$, or is $C_N<c_\star$ for every finite $N$? [Universal, Theorem 6.2][U] supplies attainment of each $C_N$, the identity $C_N=\inf_rU_{N,r}$, and the equivalence of the second alternative with
+
+$$
+\forall N\ge1\ \exists r,m\ge1:\qquad
+U_{N,r}<\frac{\kappa_m}{m+1}.
+\tag{7.1}
+$$
+
+Neither alternative follows from the comparison law, which has the exhibited dimension $2(N+1)$ and is strictly nonattaining. For $N=1$, scalar legality forces $M_1=0$ and the all-zero visible law; it fails the free-site band. This boundary does not settle arbitrary finite $N$.
+
+An attainment construction must use one actual stationary common-matrix law across all lengths. At the rank-relaxation level, all candidate block kernels must be slices of a single global candidate. At the producer level they must additionally arise from the same $J_\theta/P_\theta$ and the same matrices. Ordinary marginals of that law are projective; guarded kernels at different lengths condition on different events and are not required to be projective. Ordinary rank at most two supplied the reset obstruction, but no converse to it or to any nonnegative-rank necessary condition is asserted.
+

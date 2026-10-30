@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:d6af1c673e1a9c35a24e34f3c384f6079a3ef1392015a8abc3550bff273c372a
+  normalized_sha256: sha256:d6af1c673e1a9c35a24e34f3c384f6079a3ef1392015a8abc3550bff273c372a
+cas_ref: sha256:d6af1c673e1a9c35a24e34f3c384f6079a3ef1392015a8abc3550bff273c372a
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 此片询问哪类图表适合形式化或数值计算，是方法选择问题，没有数学结论。
+    previous_atom_id: f9e064879715c1236711677786b60c0426a28831f3d919a772a446dcf44eb9a6
+    next_atom_id: f11705a9758daa278477f75ab288a6b1ba609e9e1430b00a45eb7f71dcf66487

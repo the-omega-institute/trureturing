@@ -1,0 +1,20 @@
+**Definition 6.3 (a lawful strategy with tapered terminal rules).**
+Under (6.1), let $\widehat\Gamma$ use the source-independent fair
+seed space $\{13,23\}$ with its full power-set sigma-algebra.
+For every real first report and every legal continuation history set
+
+$$
+f_{13}(r_0)=1,\qquad f_{23}(r_0)=2,\qquad
+g_j(u,r_0,r_u)=3\quad(j\in\{13,23\}).
+\tag{6.14}
+$$
+
+On terminal pair $(1,3)$ use $\widehat d_{13}$ from (6.5)--(6.6),
+and on $(2,3)$ use $\widehat d_{23}$, for either seed. On pair
+$(1,2)$ use the midpoint of $C_{12}$ when nonempty, and $z$ when
+empty. These definitions apply also to histories and pairs unreachable
+for a given seed. The constants $m,c,E$ and the functions in (6.2)--(6.3)
+are public operands fixed independently of the source. At the separate
+endpoint $E=c/3$, define $\widehat\Gamma$ instead to be the existing
+$\Gamma_{1/2}$ of Definition 3.1.
+

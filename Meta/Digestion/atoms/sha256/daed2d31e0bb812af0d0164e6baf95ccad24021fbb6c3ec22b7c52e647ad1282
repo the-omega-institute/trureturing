@@ -1,0 +1,59 @@
+**Proposition 2.2 (finite positive unit-source full Green).** In the same
+contract, $\Gamma_{A,o}$ is strictly positive, finite and smooth off $o$,
+belongs to $L^1(\Omega,\mu)$, and is bounded on
+$\Omega\setminus U$ for every neighbourhood $U$ of $o$ with compact
+closure in $\Omega$. At $o$ the integral is infinite. For all
+$\varphi\in C_c^\infty(\Omega)$,
+
+$$
+\int_\Omega\Gamma_{A,o}L_A\varphi\,d\mu=\varphi(o).
+\tag{2.3}
+$$
+
+In particular (1.4) is finite on
+$\mathcal D_o=C_c^\infty(\Omega\setminus\{o\})$ before any attraction
+claim is made.
+
+**Proof.** The sub-Markov property bounds the heat row mass by one.
+For $t\ge1$, the semigroup identity and (2.1) give
+
+$$
+p_t^\Omega(o,q)\le e^{-\lambda_A(t-1)}
+\sqrt{p_1^\Omega(o,o)p_1^\Omega(q,q)}.
+\tag{2.4}
+$$
+
+Indeed the two time-$1/2$ rows have squared $L^2$ norms equal to their
+time-one diagonals, and the intervening semigroup has the displayed norm.
+For the row mass, pairing one time-$1/2$ row with $H_{t-1/2}1$ gives
+
+$$
+\int_\Omega p_t^\Omega(o,q)\,d\mu(q)
+\le \mu(\Omega)^{1/2}e^{-\lambda_A(t-1/2)}
+\sqrt{p_1^\Omega(o,o)}\quad(t\ge1).
+\tag{2.5}
+$$
+
+Tonelli and the small-time mass bound prove $\Gamma\in L^1$.
+Away from $o$, the heat kernel extended by zero to $t<0$ solves the
+homogeneous parabolic equation across $t=0$; parabolic hypoellipticity makes
+it smooth and flat there. This is [H, §3.2.1]'s off-diagonal flatness,
+$O_K(t^N)$ for every $N$ on each off-source interior compact $K$.
+Together with (2.4) it proves finite off-source values, locally uniform
+convergence, and positivity. Integrating
+$-\partial_t(H_t\varphi)(o)=(H_tL_A\varphi)(o)$ gives (2.3).
+The initial value is $\varphi(o)$; the terminal value is zero by smoothing
+and the gap. Absolute interchange follows from $\Gamma\in L^1$ and bounded
+$L_A\varphi$. Spatial hypoellipticity in (2.3) gives smoothness off $o$.
+
+Apply the same argument on $\Omega'$ from Proposition 2.1. Domain domination
+bounds $\Gamma_{A,o}^\Omega$ by $\Gamma_{A,o}^{\Omega'}$. The latter is
+bounded on the off-source compact $\overline\Omega\setminus U$.
+This establishes the bound all the way towards the original killed boundary,
+without presuming a boundary regularity theorem.
+Finally the local diagonal result of [N, Theorem 10.7], with the hypotheses
+checked in Proposition 2.1, is
+$p_t(o,o)\sim c_ot^{-Q_v/2}$, $c_o>0$. All four $Q_v\ge4$, so its integral
+at zero diverges. A point value of infinity does not contradict the proved
+spatial $L^1$ property. $\square$
+

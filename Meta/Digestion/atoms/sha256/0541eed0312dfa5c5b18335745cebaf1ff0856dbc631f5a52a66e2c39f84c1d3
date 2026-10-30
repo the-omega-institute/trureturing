@@ -1,0 +1,24 @@
+### Definition 256.2 (a restricted resolution-preserving boundary)
+
+Let $S_0\subseteq\mathcal S$ be a declared source domain, $E$ a normed space,
+and $\Gamma:S_0\to E$ a boundary encoding. It is a $q$-resolution bridge on
+$S_0$ only when there are fixed constants $0<c\le C<\infty$ such that
+
+$$
+c\,\delta_q(s,t)\le\|\Gamma(s)-\Gamma(t)\|\le C\,\delta_q(s,t)
+\qquad(s,t\in S_0),
+\tag{256.2}
+$$
+
+and a declared update $T$ on $\Gamma(S_0)$ satisfies
+
+$$
+\Gamma(\rho^2s)=T(\Gamma(s))
+\qquad(s,\rho^2s\in S_0).
+\tag{256.3}
+$$
+
+The lower bound, upper bound, and update equation are separate obligations.
+Theorem 255.2 says that (256.2) cannot hold when $S_0=\mathcal S$ and $E$
+has finite dimension.
+

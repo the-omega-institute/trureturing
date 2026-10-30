@@ -1,0 +1,54 @@
+**Exact-arithmetic specification of the bounds.** The following finite
+integer computation proves the table and makes its precision explicit.
+Set $\sigma_{\rm f}=10^{80}$ and encode a rational $q$ by
+$$
+ [\lfloor \sigma_{\rm f}q\rfloor,\lceil \sigma_{\rm f}q\rceil]/\sigma_{\rm f}.
+$$
+Addition and negation act on endpoints exactly. For multiplication and
+reciprocal use
+$$
+ \begin{aligned}
+ ([l,u]/\sigma_{\rm f})([v,w]/\sigma_{\rm f})&\subseteq
+ [\lfloor\min(lv,lw,uv,uw)/\sigma_{\rm f}\rfloor,
+   \lceil\max(lv,lw,uv,uw)/\sigma_{\rm f}\rceil]/\sigma_{\rm f},\\
+ ([l,u]/\sigma_{\rm f})^{-1}&\subseteq
+ [\lfloor \sigma_{\rm f}^2/u\rfloor,\lceil \sigma_{\rm f}^2/l\rceil]/\sigma_{\rm f}\quad(lu>0).
+ \end{aligned}
+ \tag{33.3}
+$$
+Attach to each scalar its two first derivatives and symmetric two by two
+Hessian. Independent $r,b$ carry the respective unit first derivatives
+and zero Hessians; constants carry zero derivatives. Use
+$$
+ \begin{aligned}
+ (xy)_i&=x_i y+x y_i,\\
+ (xy)_{ij}&=x_{ij}y+x_i y_j+x_j y_i+x y_{ij},\\
+ (x^{-1})_i&=-x_i(x^{-1})^2,\\
+ (x^{-1})_{ij}&=2x_i x_j(x^{-1})^3-x_{ij}(x^{-1})^2.
+ \end{aligned}
+ \tag{33.4}
+$$
+All operations on the right are interval operations (33.3), including
+repeated multiplications. Evaluate (31.1) in displayed factored order,
+left to right within unparenthesized sums and products; use $r-r^2$
+as $r-r\cdot r$. Form (31.2) by a reciprocal followed by multiplication.
+Then evaluate (33.2), with $t^2=t\cdot t$. Endpoint comparisons give the
+strict bounds in the table. For scale, the unrounded enclosures for
+$\kappa,\mathcal{L}a,\mathcal{L}m$ lie respectively inside the rational intervals
+$$
+ (111214/1000,129280/1000),\quad
+ (556915/1000,560340/1000),\quad
+ (133004/1000,140491/1000).
+ \tag{33.5}
+$$
+The coarse integer table follows directly from these interval operations;
+it is not obtained by combining only its rounded derivative rows.
+Apply the same circuit to the root bracket (32.4) with $b=1$ for (32.7),
+and apply Horner's rule to $\Phi_{\rm f}'$ on $\overline I_0$ for (32.5).
+Thus the specification involves only integer arithmetic, ordered
+comparisons and integer floor or ceiling division. Each operation is an
+outer inclusion, so the table applies at every real point of the box.
+
+In particular $D,H\ne0$ throughout $\mathcal B_{\rm f}$, justifying every chart
+and response division. Positivity of $b,X,N,T,U$ justifies (31.3).
+

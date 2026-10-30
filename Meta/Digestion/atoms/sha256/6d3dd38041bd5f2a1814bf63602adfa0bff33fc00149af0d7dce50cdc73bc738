@@ -1,0 +1,78 @@
+**Theorem 32.2 (one fixed polynomial-access SAT embedding).** There
+is one fixed polynomial verifier $V^{\rm SAT}$ for which SAT reduces
+with polynomial local overhead to coefficient $2t$ of either
+$\widehat{\operatorname{FM}}^{\rm SAT}_{3t}(m_x)$ or
+$\pi_1\widehat{\operatorname{EN}}^{\rm SAT}_{3t}(P_x)$.
+The reduction is unconditional. Under $\mathrm P\ne\mathrm{NP}$,
+this auxiliary convention has polynomial forward and inverse access
+but no uniform deterministic polynomial exact local normalizer on
+all authentic inputs, even restricted to the nonzero rank-$2t$
+common-seed inputs of Theorem 31.3.
+
+Proof. Use the prefix Boolean syntax with constants $00,01$, variable
+$10\,1^j0$ for $j\ge1$, negation $110\,u$, and conjunction
+$111\,u\,v$. Parsing consumes exactly one formula. Relabel the
+variables of any input formula as $1,\ldots,k$ and encode it as a
+word $u$ of length $L$ in this syntax; disjunctions use De Morgan's
+identity. The resulting length is polynomial in the original formula
+length: there are polynomially many occurrences and every unary
+variable index is at most the number of distinct original variables.
+Set
+
+$$
+x=1^L0\,u\,0^{k+1},\qquad t=|x|=2L+k+2.
+$$
+
+One fixed verifier reads the unary length, then exactly $L$ syntax
+bits, requires every remaining padding bit to be zero, and rejects
+malformed formulas or variable indices exceeding $t-1$. Otherwise
+it evaluates the formula using the corresponding first witness bits.
+This is polynomial in $t$ on sequential tapes, including parsing,
+input scans, stack/counter writes and output. The constructed encoding
+always has enough witness bits, including for constant formulas.
+Consequently $\exists y\,V^{\rm SAT}_t(x,y)=1$ holds exactly for
+satisfiable input formulas; unused witness bits cause no change.
+
+Construct $m_x$ or generate the $6t$ bits of $P_x$ by its recurrence,
+without any verifier search. Prefix generation takes $O(d^2)$
+binary updates on $O(d+1)$ data, hence costs $L(d)$ work/writes
+and $O(d+1+\ell_d)$ backing. Theorem 31.3 gives the designated bit
+and the full descriptor, while Definition 32.1 charges the call and
+every output transfer. Reading the designated coefficient and copying
+the common seed are within those bounds. Thus a polynomial exact
+normalizer would decide SAT in polynomial time. Cook's primary proof
+of Theorem 1, printed p.152, constructs a polynomial-size conjunctive
+formula $A(w)$ satisfiable exactly when a polynomially bounded
+nondeterministic machine accepts [ACR-COOK]; this supplies the
+standard implication SAT in $\mathrm P\Rightarrow\mathrm P=\mathrm{NP}$.
+It supplies no recurrence-fibre or arbitrary-order selection theorem.
+
+If a local task additionally carries cut fields, choose $n=2d+2$.
+For $n\ge2$, Fibonacci induction gives $F_n\ge n-1$, so
+$F_n-1\ge2d$ and this cut is mature. Its $n$ and
+$B_n=F_{n+1}-1$ fields have $O(d+1)$ bits and are constructed and
+copied with the polynomial paid arithmetic of (ACR.91). The same
+reduction therefore applies to such extended local inputs with
+polynomial bounds in $d+n$. It supplies no physical cut acquisition.
+The always feasible row $m_xE^t$ is first exactly for unsatisfiable
+formulas, by the same identity, without assuming a complexity separation.
+
+As the standard search-to-decision consequence, $\mathrm P=\mathrm{NP}$
+is equivalent to the statement that every fixed uniformly
+polynomial-forward-evaluable bijective convention has its own uniform
+deterministic polynomial exact normalizer on authentic prefixes. The
+equivalence persists if the conventions are also required to have
+polynomial inverse access. Necessity uses this single SAT convention.
+For sufficiency, for each fixed convention the predicate
+$\exists v\ H(P)\rho_d([uv]_2)=y(P)$ is in NP: $v$ completes a
+$d$-bit ordinal, and forward evaluation and the Hankel test are
+polynomial. Under $\mathrm P=\mathrm{NP}$, test successive zero
+children and retain the first feasible child at each of $d$ levels,
+then evaluate the row and copy the authentic seed. Polynomial tape
+time also bounds cumulative writes and visited backing. The algorithm
+and polynomial may depend on the fixed convention; no common exponent
+or interpreter for arbitrary convention codes is asserted. This is a
+statement over all fixed conventions, not an iff for each individual
+convention: direct coefficient order already has polynomial Gaussian
+normalization via its affine ordinal cells as in Theorem 21.6. $\square$
+

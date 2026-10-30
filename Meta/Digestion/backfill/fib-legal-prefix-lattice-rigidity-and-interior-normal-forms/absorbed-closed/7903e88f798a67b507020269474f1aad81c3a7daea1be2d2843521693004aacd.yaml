@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7903e88f798a67b507020269474f1aad81c3a7daea1be2d2843521693004aacd
+  normalized_sha256: sha256:7903e88f798a67b507020269474f1aad81c3a7daea1be2d2843521693004aacd
+cas_ref: sha256:7903e88f798a67b507020269474f1aad81c3a7daea1be2d2843521693004aacd
+coverage_gids:
+  - gid: D5/S3/Observer/CubicGain/LegalMatrixMonoid.legal_matrix_monoid
+    target_statement_id: sha256:8e2db540da51cf07dc1e54500d62d355620d262ae70b8a105ea1ffef55e305d9
+receipts:
+  unresolved_subitems: []

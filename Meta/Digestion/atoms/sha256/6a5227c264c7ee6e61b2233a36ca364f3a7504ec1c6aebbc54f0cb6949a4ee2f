@@ -1,0 +1,73 @@
+**Proposition 21.1 (same-run prices and even handoff).** The descending
+controller in Theorem 19.2 has worst $Q=n+K-1$; the midpoint controller
+in Theorem 20.1 has worst $Q=n+r$. Both have zero acquisition updates,
+worst $M_{\rm addr}=h+2K$, and their respective exact $W$ values
+just proved. They actually retain the authentic pair at the unchanged
+entrance cut. With the supplied $\pi$ and the derived public original
+count $n$, their usable record is $(\pi,u_x,k,n,0)$ with backing,
+same-root binding and current grants.
+
+Proof. Equations (GPO.59) and the midpoint construction give the call
+counts. Their label words have length $d_i+k+1$; at $k=b$ a deepest
+leaf attains $h+2K$. Every clock word has length at most
+$\delta+b<h+2K$. Actual assembly writes the acquired data into
+owned readable backing and preserves the supplied services through
+handoff. Since $K\ge2$, every successful cut lies in Definition 6.1's
+passive $k\ge2$ domain, with authentic advice $A=B=n$. Theorems
+6.2 and 6.4 therefore apply directly: physical incidence and terminal
+boundary recover the same target, and the retained record recovers
+these data and authentic count $2k$. With fixed $N=2k$, every completed
+logical macro boundary satisfies
+$\widehat r_e=\rho^N(\rho^eu_x)$ on this very register. The supplier
+preserves complete four-valued logical replies, absence, choices,
+outputs, successors and pending cuts. These are reused continuation
+results, not consequences merely of a query optimum. $\square$
+
+If an odd-offset consumer is selected instead, execute one actual
+permitted update and retain its phase: now the register is
+$\rho^{2k+1}u_x$. Theorem 11.1 and Theorem 11.2 then apply with fixed
+$N=2k+1$. That update, its material and actuator work, finite offset
+arithmetic and attachment are additional costs. Either handoff followed
+by a finite continuation with charges $Q_c,W_c,M_c,U_c,J_c$ pays
+$Q+Q_c,W+W_c,\max(M_{\rm addr},M_c)$ and its actual sum of updates
+and local work. Resuming a pending macro retains its already acquired
+bit and evaluator state; it does not refund or repeat that Read.
+
+The programs pay parsing of $S$, shortest-leaf selection, every binary
+counter operation, whole-word construction/translation, output assembly,
+allocation, record access and maintenance. All are finite on their
+attained operands. The Read backend additionally pays at most $W+Q$
+root/edge steps under Definition 1.3's node-following implementation.
+The source, private full writer, public scaffold/orientation/bin, their
+authentication, surviving rights, code, scratch and retention lifetime
+have separate actual prices. A data encoding of $x,k-K$ has $n$ label
+bits and $\lceil\log_2K\rceil$ lag bits, but is not a total memory
+minimum. Finite code does not mean fixed storage capacity.
+
+The source-relative increment beyond Convention 18.2 is (GPO.58)'s
+extra disjoint clock charge, the descending attainment regime, and the
+tight-call forced clock prefix yielding (GPO.60). The existing cone,
+first-difference, finite reply-tree and midpoint results of §§13–16
+are suppliers. FiniteSourceMass and its
+[owning Scribe](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/Geometry/FiniteSourceMass.scribe.cs)
+supply (GPO.56); NativeSerialMachine and its Scribe supply actual
+reached-prefix control, not a hidden epoch. The ordered algebra remains
+GenealogicalFiberTransport and pinned mathlib's `FreeMagma` as in §18.
+
+For literature comparison, Cicalese–Keszegh–Lidický–Pálvölgyi–Valla,
+[*On the Tree Search Problem with Non-uniform Costs*,
+arXiv:1404.4504v1](https://arxiv.org/abs/1404.4504v1), §§1–2,
+defines cost as the sum of actual query costs along one decision-tree
+path, followed by its maximum. Proposition 2 is the general exponential
+algorithm; **Theorem 2**, rather than Theorem 2.1, is the exact weighted
+path algorithm. Their oracle cuts an edge of one fixed input tree and
+returns its component containing a sought vertex. It does not implement
+the multi-cone unknown label/lag source, changing ranks or literal root
+tariff here. The weighted-search objective is literature-attested;
+neither that path algorithm nor its complexity is transported without
+such a correspondence. The formulas here have the direct proofs above.
+They are repo-derived synthesis, with no worldwide-priority or new Lean
+certification claim. Smaller-$n$ unrestricted $W$, non-power-of-two tight
+call traffic, the whole frontier and total-resource parsimony remain
+outside these exact formulas.
+

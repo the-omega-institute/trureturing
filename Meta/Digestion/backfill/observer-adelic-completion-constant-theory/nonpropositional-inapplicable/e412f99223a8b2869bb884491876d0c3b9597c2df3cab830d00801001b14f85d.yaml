@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e412f99223a8b2869bb884491876d0c3b9597c2df3cab830d00801001b14f85d
+  normalized_sha256: sha256:e412f99223a8b2869bb884491876d0c3b9597c2df3cab830d00801001b14f85d
+cas_ref: sha256:e412f99223a8b2869bb884491876d0c3b9597c2df3cab830d00801001b14f85d
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 对谱压缩图表的编辑分类。'
+    previous_atom_id: ea496b8800569c5d38537a8444627b320b7c3119e469fe5c11978f828ed04dae
+    next_atom_id: cf487aa9fde4adc23910f6777e3c17cc504eb1bbdcf8ece0a0ff1531ddb7d43e

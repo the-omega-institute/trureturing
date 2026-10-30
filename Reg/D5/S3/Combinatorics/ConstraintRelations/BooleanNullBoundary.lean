@@ -183,3 +183,97 @@ noncomputable def resultRegistration :
   options := #[]
 
 end Reg.D5.S3.Combinatorics.ConstraintRelations.BooleanNullBoundary
+
+namespace Reg.D5.S3.Combinatorics.ConstraintRelations.BooleanNullBoundary.Nor
+
+open LeanInformationAudit
+open _root_.D5.S3.Combinatorics.ConstraintRelations.BooleanNullBoundary
+open _root_.D5.S3.ConceptDynamics.InformationEscape
+
+def signature : DependentFamily.Signature where
+  Params := Bool
+  State := fun _ => Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output := fun _ _ => Bool
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def actual : DependentFamily.Realization signature :=
+  DependentFamily.realize signature (fun _ x y => !(x || y)) (fun e => nomatch e)
+
+def arena : DependentFamily.Arena where
+  signature := signature
+  Law := fun R => ∀ x y z : Bool, N ![x, y, z] ↔ z = R.readout () x y
+
+abbrev sourceScope := type_of% (@n_iff_nor)
+
+theorem source_bridge : sourceScope ↔ arena.Law actual := Iff.rfl
+
+theorem actual_positive : arena.Law actual := source_bridge.mp n_iff_nor
+
+def rejected : DependentFamily.Realization signature :=
+  DependentFamily.realize signature (fun _ _ _ => false) (fun e => nomatch e)
+
+theorem rejected_law : ¬ arena.Law rejected := by
+  intro h
+  have hn := (h false false false).mpr rfl
+  exact (by simp [N, A] : ¬ N ![false, false, false]) hn
+
+def familyRegistration : DependentFamily.Registration arena sourceScope where
+  actual := actual
+  bridge := source_bridge
+  variation := ⟨actual_positive, rejected, rejected_law⟩
+  sensitivity := by
+    constructor
+    · intro i
+      refine ⟨rejected, ?_, rfl, rejected_law⟩
+      intro j hji
+      exact (hji (@Subsingleton.elim Unit _ j i)).elim
+    · intro e; exact nomatch e
+  dependence := by
+    intro i
+    refine ⟨false, false, true, ?_⟩
+    change true ≠ false
+    decide
+
+noncomputable def registration :
+    Contract.Registration.{_, _, _, 0, 0, 0, _, _, 0, 0, 0, 0}
+      (@n_iff_nor) (DependentFamily.Realization signature) Type Unit where
+  unitName := `D5.S3.Combinatorics.ConstraintRelations.BooleanNullBoundary.n_iff_nor.__information_unit
+  realizationName :=
+    `Reg.D5.S3.Combinatorics.ConstraintRelations.BooleanNullBoundary.Nor.familyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨arena⟩
+  objectArena := .source ⟨arena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source arena ⟨familyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .evidence ⟨(show True from trivial)⟩ trivial
+  readout := some (DependentFamily.realize signature
+    (fun _ x y => !(x || y)) (fun e => nomatch e))
+  variation := .evidence ⟨(show True from trivial)⟩ trivial
+  sensitivity := .evidence ⟨(show True from trivial)⟩ trivial
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Combinatorics.ConstraintRelations.BooleanNullBoundary
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "arg", "arg"]
+      stateBinder := 1
+      functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms familyRegistration
+#print axioms registration
+
+end Reg.D5.S3.Combinatorics.ConstraintRelations.BooleanNullBoundary.Nor

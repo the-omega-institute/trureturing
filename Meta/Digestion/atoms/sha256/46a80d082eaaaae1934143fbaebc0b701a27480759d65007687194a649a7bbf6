@@ -1,0 +1,32 @@
+#### 定理 5.3（消去列相位的变分距离）
+
+给单位向量 $z,z'\in\mathbb{C} ^d$，令 $p_s=|z_s|^2$、$q_s=|z'_s|^2$。对全部对角相位 $D$ 优化，有
+
+$$
+\min_D\left\lVert z'-Dz\right\rVert ^2
+=\sum_s(\sqrt{q_s}-\sqrt{p_s})^2
+$$
+
+<a id="equation-5"></a>
+
+<a id="eq-phasevar"></a>
+
+$$
+=2-2\sum_s\sqrt{p_sq_s}.
+\tag{5}
+$$
+
+**证明。**
+
+每个分量的相位独立可选。复平面三角不等式给
+$|z'_s-e^{i\theta_s}z_s|\ge\bigl||z'_s|-|z_s|\bigr|$，对齐两相位时达到等号。逐项相加，再用 $\sum p_s=\sum q_s=1$ 即得。
+
+∎
+
+这个公式将“关系相位的商”“概率几何”和一个确切的最优化问题接在一起。平方根来自已经声明的 $p_s=|z_s|^2$；它说明这些结构相容，不是由优化一词独立导出 Born 平方律。若只允许公共整体相位，则优化值改为
+$2-2|\langle z,z'\rangle|$，两种相位群对应不同的商。
+
+<a id="statement-5-4"></a>
+
+<a id="prop-choi"></a>
+

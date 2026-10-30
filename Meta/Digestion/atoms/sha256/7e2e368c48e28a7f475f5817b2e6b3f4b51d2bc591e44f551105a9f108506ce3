@@ -1,0 +1,8 @@
+**Theorem 4.4 (rigidity in original coordinates and effective prefixes).**
+In a passing mode from Theorem 3.3, each original-coordinate reconstruction
+has decidable canonical finite/infinite status. A canonically finite original
+coordinate is one symbolic finite value $f_i(\mathbf p)$ in every admissible
+solution of that mode. Canonically infinite original coordinates have
+computable prefixes at any supplied $\mathbf p,h$. They need not be infinite
+in every other solution.
+

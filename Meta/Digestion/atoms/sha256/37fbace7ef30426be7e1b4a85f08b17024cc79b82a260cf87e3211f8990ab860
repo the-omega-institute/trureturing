@@ -1,0 +1,100 @@
+**Proposition 4.2 (relative control by the actual full Green field).** There
+are finite constants $K_o>0$ and $B_o\ge0$ such that
+$V_{A,o}[f]\le K_oT_A[f]+B_o\|f\|_2^2$ for every $f\in\mathcal F_A$.
+
+**Proof.** The unweighted Hardy supplier is the same
+Ciatti--Cowling--Ricci Corollary 3.2 used inside the original volume's
+Proposition 4.3. Apply it on the standard Heisenberg group with $p=2$,
+$\alpha=1$ and homogeneous dimension $Q=4$; its strict hypothesis is
+$0<1<4/2$. For $w\in C_c^\infty(\mathbb R^3)$ it gives
+
+$$
+\int N^{-2}|w|^2\,d\xi\,d\eta\,d\zeta
+\le C\|(-(U^2+V^2))^{1/2}w\|_2^2
+=C\int(|Uw|^2+|Vw|^2)\,d\xi\,d\eta\,d\zeta.
+$$
+
+Here $N$ is the homogeneous gauge whose pullback by (3.3a) is $N_o$.
+Pulling back this attributed inequality through $F_B$, the constant
+Haar-measure multiplier occurs on both sides and cancels. Hence there is a
+finite $H_o>0$ with
+
+$$
+\int N_o^{-2}|v|^2\,d\widehat\mu\le H_o\mathscr T_o[v]
+\qquad(v\in C_c^\infty(\mathbb R^3)).
+\tag{4.2}
+$$
+
+This is an unweighted inverse-gauge estimate; no factor such as
+$|\nabla_HN|^2$ is inserted.
+
+Shrink $U_o$ to a relatively compact chart if necessary. Smooth positivity
+and SPD give finite $d_o,a_o\ge1$ such that throughout the chart
+
+$$
+d_o^{-1}d\widehat\mu\le\Phi_o^*d\mu\le d_o\,d\widehat\mu,
+\qquad
+A(o)\le a_o A(\Phi_o(q))
+$$
+
+as measures and quadratic forms, respectively. For
+$u\in C_c^\infty(U_o)$ and $v=u\circ\Phi_o$, the exact fields
+$P,Q$ in (2.3) are $\widehat X_1,\widehat X_2$, so
+$\mathscr T_o[v]\le a_od_oT_A[u]$. Therefore
+
+$$
+\int_{U_o}N_o^{-2}|u|^2\,d\mu
+\le d_oH_o\mathscr T_o[v]
+\le a_od_o^2H_oT_A[u].
+$$
+
+Fix the nonsharp comparison multiplier and relative coefficient as
+
+$$
+M_o:=a_od_o^2,\qquad K_o:=C_{G,o}M_oH_o>0.
+$$
+
+This finite factor absorbs both density comparisons and the covariance
+comparison. With this choice of $K_o$, the bound to prove is
+
+$$
+V_{A,o}[f]\le C_{G,o}M_oH_oT_A[f]+B_o\|f\|_2^2
+=K_oT_A[f]+B_o\|f\|_2^2
+\qquad(f\in\mathcal F_A).
+\tag{4.3}
+$$
+
+Choose smooth real cutoffs $\chi,\vartheta$ with
+$\chi^2+\vartheta^2=1$, $\chi=1$ near $o$, and $\chi$ supported in $U_o$.
+For instance choose $\chi=\cos\theta$, $\vartheta=\sin\theta$, with
+$\theta=0$ near $o$ and $\theta=\pi/2$ outside the chart. On the
+$\chi$ part, (3.6) and the preceding comparison give the coefficient
+$K_o$. The coefficients of
+$P\chi,Q\chi,P\vartheta,Q\vartheta$ are bounded, so the horizontal product
+rule gives
+
+$$
+T_A[\chi f]+T_A[\vartheta f]
+\le T_A[f]+C_\chi\|f\|_2^2.
+\tag{4.4}
+$$
+
+The $B_{G,o}$ term in (3.6) and the complement of the source chart are
+bounded by Proposition 2.2 of the original volume. Combining these facts
+gives (4.3) on $C_c^\infty(\Omega\setminus\{o\})$.
+
+The punctured core is dense in $\mathcal F_A$: in the step-two chart, a
+smooth cutoff equal to one near the source and supported in a dilation of
+radius $s$ has squared $L^2$ norm $O(s^4)$ (thus $L^2$ norm $O(s^2)$) and
+horizontal energy $O(s^2)$. For each fixed smooth core function,
+multiplication by the cutoff's complement therefore converges in the free
+form norm; core approximation gives the asserted density.
+Applying (4.3) to differences of a core sequence makes
+the weighted $L^2(\Gamma_{A,o}d\mu)$ sequence Cauchy. The $L^2$ limit agrees
+almost everywhere with the ordinary form limit, and (4.3) therefore passes
+to every $f\in\mathcal F_A$. $\square$
+
+The estimate is deliberately fixed-model. Neither $H_o$, $M_o$, $K_o$ nor
+$B_o$ is asserted to remain bounded when the density, covariance,
+source, interval or means vary.
+

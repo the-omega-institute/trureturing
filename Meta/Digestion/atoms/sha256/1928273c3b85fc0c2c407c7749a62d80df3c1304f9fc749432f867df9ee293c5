@@ -1,0 +1,38 @@
+### 2.3. The odd-factor constraint on $C_2^2\times C_m$
+
+Let $V=C_2^2$. The three restrictions of a projectively faithful triple to $V$ are pairwise distinct. If two coincide, their common ratio is trivial; the only other independent coordinate ratio has values in $\{\pm1\}$, whose kernel on $V$ has at least two elements. A nonidentity element of that kernel is in the projective kernel, a contradiction.
+
+Fix independent characters $\alpha,\beta$ of $V$. Its character group has four elements, and every three-element subset is a translate of $\{1,\alpha,\beta\}$. Independently twist and reorder both triples so that their restrictions are $(1,\alpha,\beta)$. Divide each triple by the character of $O$ in its first coordinate. Identifying $O$ with $\mu_m$, the triples become
+
+$$
+\chi(s,t,z)=(1,sz^u,tz^v),\qquad
+\psi(s,t,z)=(1,sz^w,tz^x),
+\tag{2.4}
+$$
+
+where $s=\alpha(g)$, $t=\beta(g)$ range independently over $\{\pm1\}$ and $u,v,w,x\in\mathbb Z/m\mathbb Z$. If the pair is not globally matched, then $(w,x)\ne(u,v)$.
+
+Take a primitive $m$th root $\zeta$; for $m=1$, take $\zeta=1$. At each of the sign patterns $(-1,-1),(-1,1),(1,-1)$, the coordinate values lie in the disjoint cosets $\mu_m$ and $-\mu_m$, with multiplicities $1,2$ in some order. Every matching scalar is a ratio of such values and lies in $\mu_m\cup(-\mu_m)$. A scalar in $-\mu_m$ would exchange the two unequal multiplicities. Hence the scalar lies in $\mu_m$ and the permutation preserves the two cosets, fixing the coordinate in the singleton coset.
+
+The remaining two coordinates are either fixed or interchanged. The identity permutation would force scalar $1$ from the first coordinate, and then $(w,x)=(u,v)$, contrary to the assumption. Interchanging the other coordinates gives, in $\mathbb Z/m\mathbb Z$,
+
+$$
+\begin{array}{c|c}
+(s,t)&(w,x)\\\hline
+(-1,-1)&(v,u)\\
+(-1,1)&(u-v,-v)\\
+(1,-1)&(-u,v-u).
+\end{array}
+\tag{2.5}
+$$
+
+For example, at $(-1,1)$ the first and third coordinates interchange, giving scalar $\zeta^{-v}$, and hence $w=u-v$, $x=-v$. The other rows follow by the same coordinate equalities; no distinct-eigenvalue assumption is required.
+
+Combining the rows yields $u=-v$ and $3v=0$. If $v=0$, all four exponents vanish, contradicting $(w,x)\ne(u,v)$. Thus $v$ has additive order exactly $3$. The first triple on $O$ is now
+
+$$
+z\longmapsto[\operatorname{diag}(1,z^{-v},z^v)].
+$$
+
+Its kernel is the kernel of the character $z\mapsto z^v$. This character has order $3$, so its image has order $3$ and its kernel has order $m/3$. Projective faithfulness on $O$ makes this kernel trivial, forcing $m=3$. This proves necessity for every odd $m$, including exclusion of $m=1$.
+

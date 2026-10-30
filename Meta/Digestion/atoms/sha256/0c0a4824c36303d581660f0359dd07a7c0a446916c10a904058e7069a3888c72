@@ -1,0 +1,17 @@
+## 104. Exact successful-growth minima and an infinite family
+
+For finite sets $X,Y\subseteq\mathbb N^2$, put
+$X+Y=\{x+y:x\in X,y\in Y\}$. Define finite sets
+$\mathcal F_u,\mathcal R_u$ recursively by the bases (103.3) and
+
+$$
+\begin{aligned}
+\mathcal F_{\langle l,r\rangle}
+ &=\operatorname{Min}\bigl((\mathcal R_l+\mathcal F_r)
+                    \cup(\mathcal F_l+\mathcal R_r)\bigr),\\
+\mathcal R_{\langle l,r\rangle}
+ &=\operatorname{Min}(\mathcal F_l+\mathcal F_r).
+\end{aligned}
+\tag{104.1}
+$$
+

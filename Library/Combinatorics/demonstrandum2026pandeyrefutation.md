@@ -35,7 +35,7 @@ provenance date.
 ## Exact prior refutation
 
 The graph domain and conjecture are recorded in the separate
-[Pandey Library note](pandey2026parity.md): `n >= 3`, `1 <= k`,
+[Pandey Library note](../GraphInvariants/pandey2026parity.md): `n >= 3`, `1 <= k`,
 `2*k < n`, with no restriction to the experimental range `20 <= n <= 30`.
 Section 3(c) of the prior note explicitly gives the triangular prism
 `GP(3,1)`, its polynomial `1+6x+6x^2`, and its real-rootedness although

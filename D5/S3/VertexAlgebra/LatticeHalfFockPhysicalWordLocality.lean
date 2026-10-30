@@ -51,7 +51,7 @@ private theorem physicalSlice_word_cons (D : LatticeData) (hu : IsUnit D.G.det)
   exact h
 
 set_option maxHeartbeats 2000000 in
-private theorem physicalSlice_charged_locality (D : LatticeData) (hu : IsUnit D.G.det)
+theorem physicalSlice_charged_locality (D : LatticeData) (hu : IsUnit D.G.det)
     (first second : Charge D) (firstParity secondParity : ℤ) :
     delta^[(bilinear D first second).natAbs]
       (commutator (physicalSlice D hu (chargedField D hu first) firstParity)

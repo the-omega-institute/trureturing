@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:e4f306f2976d844f2f067a4ae9cfba32a0b2900a1dd86291d91436f27673118c
+  normalized_sha256: sha256:e4f306f2976d844f2f067a4ae9cfba32a0b2900a1dd86291d91436f27673118c
+cas_ref: sha256:e4f306f2976d844f2f067a4ae9cfba32a0b2900a1dd86291d91436f27673118c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Introduces commitment, future action block and environment-history variables.
+    previous_atom_id: 27f038460ba2475e4a434ce069fe89a578fb8eea53217da03a1e6a1b9ad4d289
+    next_atom_id: bd56d540d38bbe6409839325b1dec1023155ec58da42f2a23a1a53ac386896de

@@ -1,0 +1,68 @@
+**Theorem 5.5.1 (Exact equal-ratio J secant).** Suppose two different original worlds have the same off-24 $(p,v,x)$. Use the drift ordering $d_+>d_-$, and write $a_\pm=a(x,d_\pm)$, $C_{1,\pm}=C_1(x,d_\pm,p,v)$. Then
+
+$$
+\boxed{
+\frac{a_+-a_-}{d_+-d_-}
+   =\frac{D\,\mathcal T(x;p,v)}{5\Pi L C_{1,+}C_{1,-}}.
+}
+\tag{5.5.3}
+$$
+
+All denominator factors are nonzero consequences of two original endpoints. In particular
+
+$$
+a_+=a_-\quad\Longleftrightarrow\quad \mathcal T(x;p,v)=0.
+\tag{5.5.4}
+$$
+
+**Proof.** The two entire gains and all source traces are already fixed by (5.3.1)–(5.3.5). In particular (5.5.1) is their actual J response, not a refitted seventh gain.
+
+The following finite quadratic reduction proves the secant identity. Let $\rho_i,\sigma_i$ be the entries in this table:
+
+| i | $\rho_i$ | $\sigma_i$ |
+|---|---|---|
+| 0 | $f_2^3$ | 0 |
+| 1 | 0 | $f_2^3$ |
+| 2 | $-f_0f_2^2$ | $-f_1f_2^2$ |
+| 3 | $f_0f_1f_2$ | $(f_1^2-f_0f_2)f_2$ |
+| 4 | $f_0^2f_2-f_0f_1^2$ | $-f_1^3+2f_0f_1f_2$ |
+
+Thus $f_2^3d^i\equiv\rho_i+\sigma_i d\pmod\Phi$. Write $N_J=\sum_{i=0}^4 n_id^i$, $Q_J=\sum_{i=0}^3 q_id^i$, and set
+
+$$
+A_N=\sum n_i\sigma_i,\quad B_N=\sum n_i\rho_i,\quad
+A_Q=\sum q_i\sigma_i,\quad B_Q=\sum q_i\rho_i.
+$$
+
+Direct polynomial expansion using (5.3.2), (5.3.3), and the coefficient list in Section 5.7 gives
+
+$$
+A_NB_Q-B_NA_Q=1000D^7\Pi^3 L B\mathcal T.
+\tag{5.5.6}
+$$
+
+This identity, together with (5.4.8), is also a short determinant definition of the cubic. No source equation or numerical fit is used in these two polynomial identities.
+
+For either drift root,
+$a=(A_Nd+B_N)/(A_Qd+B_Q)$ and
+$A_Qd+B_Q=f_2^3Q_J\ne0$. Subtract the two fractions. Their denominator product is
+
+$$
+f_2^6 Q_J(d_+)Q_J(d_-)
+=4D^2f_2^6S_+S_-C_{1,+}C_{1,-}.
+$$
+
+Insert (5.4.6), (5.5.6), and $f_2=5\Pi$. Cancellation gives (5.5.3). Theorems 5.4.1–5.4.2 and the guards give the asserted nonzero factors, so the equivalence (5.5.4) follows. ∎
+
+This is a relation between two independently realized whole endpoints over one base. It eliminates both unknown drifts from their J equality and reduces that equality to a cubic in the response-plane coordinates. The factor L is proved nonzero on a legal two-endpoint fibre; it is not silently discarded. Formula (5.4.6) is what makes that cancellation legitimate even if one endpoint has zero drift or a zero clock-zero gain sample.
+
+For comparison, the same two roots satisfy
+
+$$
+m(x,d_+)-m(x,d_-)=-\frac{K(x)}D(d_+-d_-),\qquad
+K=8x^4+29x^3+18x^2-15x-6.
+\tag{5.5.8}
+$$
+
+This is the fixed-terminal drift identity in `FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_X.md`, in the present normalization. Thus a distinct equal-M pair at equal x would require $x=x_{\mathrm{exc}}$, the unique positive root of K. the p-only separation in `FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_X.md` on that entire layer excludes it. The cited identity has this scope only; it does not assert a global M obstruction. Every selected M pair in (5.1.1) therefore has unequal x; the selected J pair need not.
+

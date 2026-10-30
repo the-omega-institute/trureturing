@@ -1,0 +1,25 @@
+**Theorem 27.2 (age binding, endpoint and simultaneous resources).** The schedule terminates and earns the exact entry map and complete current raw map for every §17 attachment. At its sole scan,
+
+$$
+\operatorname{Read}(j_i)=\begin{cases}L-i,&i<L,\\L,&i=L.\end{cases}
+\tag{NLBAII.30}
+$$
+
+Its endpoint replaces original leaves $1,\ldots,L-1$ by $B_1$ and the last by $B_0$. The inherited labels bind $p_iLL$ for $i<L$ and $p_LL$ for $i=L$; appended label $L+i$ binds $p_iR$. Here $p_LL$ means the address $p_L$ followed by one letter $L$. The final whole field is zero. On this same acquisition,
+
+$$
+\begin{aligned}
+P\text{ calls}&=2L-1,&S\text{ calls/successes}&=L-1,\\
+\mathrm{Reset}&=2,&\mathrm{Add}&=L^2,&\mathrm{Read}&=L,\\
+\mathrm{Tick}&=0,&\mathrm{Hold}&=L+1,\\
+\text{fresh vertices}&=a+2(L-1),&\text{final terminals}&=2L-1,&N_{\rm age}&=5L-3.
+\end{aligned}
+\tag{NLBAII.31}
+$$
+
+Every acquisition field cell is an integer between zero and $L$. Scalar replies therefore pay $O(\log(L+1))$ bits. There are $L^2+L+3$ fixed field acknowledgements and $L$ scalar replies, besides the $3L-2$ complete addressed replies and all call completion costs. Formula (NLBAII.28) applies with $k_i=1$ for $i<L$, $k_L=0$, and $M=3L-2$. Structural, fresh-zero, binding and Reset-write counts are those of Theorem 26.1 with $K=L-1$, while field additions are the $L^2$ actual units here.
+
+Proof. Before its split at stage $i$, the original label in cone $i$ has received its initial unit and the $i-1$ earlier stage units. Its split moves this label to fresh zero. From that stage through stage $L-1$ it receives exactly $L-i$ further units, including stage $i$ itself. The last label is never moved and receives the initial unit and all $L-1$ stage units. This proves (NLBAII.30); its $L$ values are distinct. A finite comparison with this known list decodes $i$ and hence the entry address $e_i$ of (NLBAII.20). Distinct cones are each split at most once, so the inheritance and append formulas follow directly from (NLBAII.4) and exhaust the $2L-1$ current terminals.
+
+There are $L$ initial Adds and $L(L-1)$ stage Adds, one final scan, $L-1$ successful splits, and the displayed Holds and Resets. No Add targets an internal or appended cell. An old cell keeps the finite value it had when it became internal; an inherited terminal has at most the number of remaining stage inputs, and the last terminal has $L$. Thus the entire field has the stated integer bound before final Reset, not just the scanned terminals. Counting source vertices, framing and acknowledgements as in Theorem 26.1 proves the remaining assertions. Column decoding is replaced here by finite integer comparisons; its work, growing numerical widths, entry archive, current records, references and retained use remain paid. $\square$
+

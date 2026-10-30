@@ -1,0 +1,30 @@
+**Theorem 105.2 (persistent designated ambiguity and full-service
+distinction).** For every $k$ realized above, the attained set
+$H\mathbb Q^k$ has dimension $k$. On it every designated present germ
+and every infinite passive designated trajectory is identically zero,
+yet distinct parameters have different full original future services.
+Nonzero fields persist with period exactly two. In particular this is
+an unbounded family of actual controlled examples, not an extrapolation
+from a finite specimen or an ambient unreachable vector.
+
+**Proof.** Lemma 103.2 proves dimension, invisibility and $B^2H=H$.
+The supports of $H\theta$ and $BH\theta$ are disjoint, so equality
+between them forces $\theta=0$. If $\theta_i\ne\theta'_i$, the
+common legal continuation Tick;Hold;Read at the fresh nondesignated
+$p_iR$ returns $\theta_i/2$ versus $\theta'_i/2$. A different legal
+continuation instead Reads the moved inherited $p_iLLL$ and returns
+$-\theta_i/2$ versus $-\theta'_i/2$. Each uses its own genuine binding
+and surviving right. They are alternatives, not two free samples in
+one path. Although all current terminals are zero at $H\theta$, one
+Tick exposes the distinction at these other terminals. $\square$
+
+For $\theta\ne0$, $H\theta$ is outside every no-Add entrance image
+$B^hE\mathbb Q^N$: Theorem 89.2 would otherwise recover a nonzero
+entrance from its zero designated germ. Thus the theorem does not
+contradict passive fresh-zero protection. The controls remove a visible
+component of the prepared entrance; they do not create a hidden component
+from zero using sensor controls. Symmetry gives, for each $j$,
+$h_i^{\mathsf T}B^jC^{\mathsf T}=0$, since $CB^jh_i=0$. Hence
+designated Adds alone cannot create $h_i$ from zero. The prior paid
+entrance and its acquired visible component are essential.
+

@@ -1,0 +1,40 @@
+**Definition 19.1 (Actual locator and entire child).** A complete world is
+
+$$
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+\quad0<r<1,\quad b>0,
+\quad0\ne g\in\mathbb R[s],\quad\deg g\le3,\quad d\in\mathbb R.
+\tag{19.1}
+$$
+
+For real $p<0,v$, retain the literal entire child
+
+$$
+C(p,v)=\mathcal F(0,J,24,M,147/5,J,24,M,18,M,p,M,v).
+\tag{19.2}
+$$
+
+Thus the acquired actions are $J,M,J,M,M,M$ at clocks $1,\ldots,6$;
+the initial read is at clock zero. Products act on the left as in O,
+(1.2). Each world has its own fixed source, entire gain and constant drift,
+used at every original clock. For that world put
+
+$$
+j=b+r(1-r)/b,\quad n=j+r,\quad U=1+2b,\quad T=1+b,
+\quad x=n/U>0,
+\tag{19.3}
+$$
+
+and retain the exact polynomial of F, (31.7),
+
+$$
+F_0(x,p,v)=405x^3+(975-18p+5v)x^2+(90-36p+5v)x-480.
+\tag{19.4}
+$$
+
+An actual negative nonzero-drift F0 locator is a member $W\in C(p,v)$
+with $d(W)\ne0$ and $F_0(x(W),p,v)=0$. Membership in $C(p,v)$,
+including every original reading and every strict source guard, is part
+of this definition. A projected polynomial zero alone is not a locator.
+

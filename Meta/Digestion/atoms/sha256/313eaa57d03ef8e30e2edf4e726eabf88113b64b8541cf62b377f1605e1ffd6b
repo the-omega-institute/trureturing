@@ -1,0 +1,120 @@
+**Theorem 125.1 (Unrestricted lower certificate).** For every complex
+CPTP map $\mathcal R:M_3\to M_3$,
+
+$$
+e_{-1/2}(\mathcal R)\ge L_*.
+\tag{125.1}
+$$
+
+*Proof.* Define the constant
+
+$$
+b_{\rm test}=\sum_{r=e,i}\lambda_r\operatorname{Tr}(T_rP_r).
+\tag{125.2}
+$$
+
+For a trace-zero Hermitian matrix $H$, its positive and negative parts
+have equal trace, and every effect $0\preceq T\preceq I$ satisfies
+$\operatorname{Tr}(TH)\le\operatorname{Tr}(H_+)=\frac12\|H\|_1$.
+Apply this inequality to every legal pair (123.5). Their weights are
+positive and sum to one. The error maximum is at least their weighted
+average, so (124.1)–(124.2) give
+
+$$
+\begin{aligned}
+e_{-1/2}(\mathcal R)
+&\ge\sum_{r,k,\ell}\frac{\lambda_r}{9}
+ \operatorname{Tr}\!\left[T_{r,k\ell}
+ (P_{r,k\ell}-\mathcal R\Phi(P_{r,k\ell}))\right]\\
+&=b_{\rm test}-\operatorname{Tr}(WJ_{\mathcal R}).
+\end{aligned}
+\tag{125.3}
+$$
+
+The first term is $b_{\rm test}$ by unitary invariance of trace.
+Since $S\succeq0$ and $J_{\mathcal R}\succeq0$,
+$\operatorname{Tr}(SJ_{\mathcal R})\ge0$; this follows, for example,
+by tracing $S^{1/2}J_{\mathcal R}S^{1/2}\succeq0$.
+Trace preservation and (124.9) imply
+
+$$
+\operatorname{Tr}(WJ_{\mathcal R})
+\le\operatorname{Tr}[(I_{\rm out}\otimes Y)J_{\mathcal R}]
+=\operatorname{Tr}Y.
+\tag{125.4}
+$$
+
+Thus every complex CPTP map obeys
+$e_{-1/2}(\mathcal R)\ge b_{\rm test}-\operatorname{Tr}Y$.
+This argument has not averaged, restricted or changed $\mathcal R$.
+The phase twirl constructed the fixed supporting functional $W$;
+it imposed no symmetry on the arbitrary decoder in (125.3).
+
+It remains to identify the lower value exactly. Covariance of
+$\mathcal C_*$, (123.3), and $\lambda_e+\lambda_i=1$ give
+
+$$
+b_{\rm test}-\operatorname{Tr}(WJ_*)
+=\sum_{r,k,\ell}\frac{\lambda_r}{9}L=L.
+\tag{125.5}
+$$
+
+Complementarity $SJ_*=0$ and $\operatorname{Tr}_{\rm out}J_*=I$ give
+$\operatorname{Tr}(WJ_*)=\operatorname{Tr}Y$. Consequently
+
+$$
+\boxed{b_{\rm test}-\operatorname{Tr}Y=L.}
+\tag{125.6}
+$$
+
+An additional polynomial form of the matching identity makes its finite
+algebra explicit. Define
+
+$$
+\begin{aligned}
+t_r={}&p_rm_{0r}+x_rm_{1r}+y_rm_{2r}
+ +2p_rx_r(y_r+\kappa d_{2r})\\
+&+2p_ry_r(d_{1r}+\kappa x_r)
+ +2x_ry_r(d_{0r}+\kappa p_r).
+\end{aligned}
+\tag{125.7}
+$$
+
+Then $t_r=\operatorname{Tr}(A_rP_r)$ and
+$b_{\rm test}=\alpha t_e+\beta t_i$ at the root. In fact, before
+imposing the polynomial equations, direct substitution of
+(119.2)–(119.4), (123.2), (124.3) and (125.7) gives the identity
+
+$$
+\begin{aligned}
+\alpha t_e+\beta t_i-\operatorname{Tr}Y-L
+={}&LF_6-3\alpha F_1-3\beta F_3
+ +aF_7+bF_8+cF_9+\eta F_{10}-2\tau F_0.
+\end{aligned}
+\tag{125.8}
+$$
+
+Every term on the right vanishes at $\theta_*$. This also proves
+(125.6) by polynomial arithmetic alone. Outward rational enclosures,
+provided only to locate the constants, are
+
+$$
+\begin{aligned}
+0.998777&<b_{\rm test}<0.998779,\\
+0.392330&<\operatorname{Tr}Y<0.392332.
+\end{aligned}
+\tag{125.9}
+$$
+
+The equality in (125.6) is exact, not obtained by subtracting these
+intervals. Combining it with (125.3)–(125.4) proves (125.1).
+Proposition 122.2 supplies the opposite inequality and its attaining
+map, proving Theorem 118.2. Transport (118.3) proves the assertion for
+the original terminal decoder $D_*$. $\square$
+
+The proof separates two uses of the inputs. The twelve fixed physical
+states support a lower bound for all decoders. The independent
+polynomial identity (122.2) supplies the upper bound for every input
+of the single decoder $\mathcal R_*$. A finite test optimum alone
+would not establish (118.4).
+

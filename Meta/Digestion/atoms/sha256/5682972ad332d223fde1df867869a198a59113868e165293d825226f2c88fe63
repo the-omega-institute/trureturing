@@ -1,0 +1,45 @@
+**定理 13.3（全参数的共同 Borel 二元读出）。** For every $q,b>0$, define
+
+$$
+ A_{q,b}=\left\{(u,v):v>
+ \frac{c(q)+\ln\cosh(qu)+b^2/2}{b}\right\},\qquad
+ Q_{q,b}(u,v)=\mathbf 1_{A_{q,b}}(u,v).
+\tag{13.16}
+$$
+
+This is a Borel readout applied identically for all five labels, and its singleton Bayes gain satisfies
+
+$$
+ B_{Q_{q,b}}=B(q,b)>0.
+\tag{13.17}
+$$
+
+If $\mathcal J_{q,b}'$ is any supplied comparison law on the same label--output alphabet, with the same uniform original-label prior, and $B_{Q_{q,b}}'$ denotes its singleton gain, then
+
+$$
+ \operatorname{TV}(\mathcal J_{q,b},\mathcal J_{q,b}')\le e_{q,b}
+ \quad\Longrightarrow\quad
+ \left|B_{Q_{q,b}}'-B(q,b)\right|\le e_{q,b}.
+\tag{13.18}
+$$
+
+**Proof.** The threshold in (13.16) is continuous, hence $A_{q,b}$ is Borel, and (13.6) shows it is exactly the positive set of the signed density. It is nonempty and open, so (13.17)'s strict positivity follows from the positive Gaussian density on a nonempty open subset. Since the three component densities integrate to one,
+
+$$
+ \int_{\mathbb R^2}(f_0-2f_--2f_+)\,du\,dv=-3.
+$$
+
+Consequently the two unweighted signed bin masses and their prior-weighted versions are
+
+$$
+ \begin{aligned}
+ \int_{A_{q,b}}(f_0-2f_--2f_+)&=5B(q,b),
+ &\int_{A_{q,b}^c}(f_0-2f_--2f_+)&=-3-5B(q,b),\\
+ \mathcal J_{q,b}(3,1)-\sum_{i\ne3}\mathcal J_{q,b}(i,1)&=B(q,b),
+ &\mathcal J_{q,b}(3,0)-\sum_{i\ne3}\mathcal J_{q,b}(i,0)&=-\frac35-B(q,b).
+ \end{aligned}
+\tag{13.19}
+$$
+
+The binary Bayes action chooses the singleton exactly on bins with positive signed joint mass. Thus bin $1$ contributes $B(q,b)$ and bin $0$ contributes zero, proving (13.17) by the existing decision-partition argument. Proposition 7.5, applied to the two finite joint laws on $\{1,\ldots,5\}\times\{0,1\}$, gives (13.18). The boundary graph has zero Gaussian probability, so its inclusion convention does not alter either bin mass. This readout is parameter-dependent and exact; it supplies no retention statement for an arbitrary quantizer.
+

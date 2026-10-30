@@ -1,0 +1,22 @@
+**Theorem 4.3 (complete original-source signed image strata).** Fix the
+input of Definition 4.1 and any complete finite row label $r$ at $Q$.
+One can construct finitely many source templates $U_{r,b}$ and predicates
+
+$$
+C_{r,b}(\mathbf n,\mathbf z)
+=P_{r,b}(\mathbf n)\land\Delta_{r,b}(\mathbf n,\mathbf z)
+\tag{NIC.19}
+$$
+
+of the form in Theorem 3.3 such that
+
+$$
+D_r:=\{u\in D:R_Q(u)=r\}
+=\bigcup_b\{U_{r,b}(\mathbf n,\mathbf z):C_{r,b}(\mathbf n,\mathbf z)\}.
+\tag{NIC.20}
+$$
+
+Every produced source satisfies all retained records with both guards,
+the entire old row and exactly the finite row label $r$. Conversely
+every original $u\in D_r$ is reconstructed as that same source.
+

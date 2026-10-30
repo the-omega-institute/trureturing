@@ -1,0 +1,18 @@
+**Proposition 126.2 (unscaled trace projection can leave the feasible set).** The Frobenius projection $\widehat V$ in (U.97) need not be a contraction, even when $V$ is a contraction.
+
+Proof. Take $V_0=\operatorname{diag}(1,-1)$, $V_1=0$. Its Gram is $I_2$. Its first weighted trace is $\alpha-\beta$, so
+
+$$
+\widehat V_0=\operatorname{diag}(q+g,-p-g),\qquad\widehat V_1=0.
+\tag{U.100}
+$$
+
+If $p>q>0$, then $g>q$, so $p+g>p+q=1$ and $\|\widehat V\|_{\mathrm{op}}=p+g>1$. In particular at $p=17/20$,
+
+$$
+\|\widehat V\|_{\mathrm{op}}=\frac{17+\sqrt{51}}{20}
+\in\left(\frac{12070714214}{10^{10}},\frac{12070714215}{10^{10}}\right).
+$$
+
+The enclosure follows by squaring $7141428428/10^9<\sqrt{51}<714142843/10^8$. Thus the projected norm is approximately $1.2070714214$, strictly larger than one. Its weighted traces are zero, but that linear constraint does not restore contraction feasibility. This is a counterexample to an unscaled-removal shortcut, not a counterexample to (U.94) or to the universal recovery assertion. $\square$
+

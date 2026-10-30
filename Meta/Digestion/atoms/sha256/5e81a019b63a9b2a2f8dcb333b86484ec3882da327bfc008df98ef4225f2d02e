@@ -1,0 +1,24 @@
+**Convention 7.3 (NCR, PVC, PR57, PG and Atlas).** These ordinary
+contracts are taken at the documentary revision
+`e2665d9f06157453325ad4e1064681b41db63625`, preserving each volume's
+own internal supplier pins: NCR uses
+`b7d37ca0fee9638f28af45d4a63f7f0eb974c972`, PVC uses
+`82c9eb9c1462af91333b7038a93488c8b9b8bdc7`, Atlas uses
+`a683624403f0c22bc441dc3171f5e181bfd709f6`, and PR57's immutable
+supplier revision is `17b26a61db5577d2f67031c777e9d86e91c3e617`.
+
+| Contract | Precise distinction |
+| --- | --- |
+| [NCR: Native Clocked Recovery and Order](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CLOCKED_RECOVERY_AND_ORDER.md), §§2–6 | Its fixed installed controller, atomic Native tree source, actually acquired seed, receipt clocks and owned callable records give separate view/task kernels. Its fence-at-$n+1$ readout requires the stated authorization. The present cubic-gain real experiment supplies neither that controller nor its clock-reading mechanism. |
+| [PVC: Native Paid View Conversion](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_PAID_VIEW_CONVERSION.md), §§1–2, 5–7 | It constructs a finite $D_2$ conversion program on a fixed-$H$ alpha/beta entrance, unused lanes and an explicitly added once-only owner-authorized Install. Its serialized $S\to B\to M\to T\to S$ cycle has actual copying and return. This volume adds no such installation or conversion service, and does not change PVC's original CAP-consumer boundary. |
+| [PR57: Transport Memory Completion, §57](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) | Its padded finite source packet, constructed tapes, local opcodes, meter, masks and ideal owner/token primitives are runtime assumptions with their own schedules and bills. They are not consequences of an exact-real inverse or a wire representation. No PR57 source-acquisition or bit-operation tariff is imported here. |
+| [PG: Process Geometry](RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md), §§1–3 | Complete partial-action transport must preserve actual joint source, legality, labels, root readouts and successors, with selector descent for adaptive use. The terminal recovery theorem does not by itself prove those conditions for a future installed process. |
+| [Atlas: Native Callable Storage Atlas](RECURSIVE_RELATIONAL_OBSERVATION_NATIVE_CALLABLE_STORAGE_ATLAS.md), §§1–2 and 7 | It preserves initialization, partial-source/control phases, retained backing, actual selectors, packages and invocation rights. Lemma 7.2 distinguishes reversible wire interpretation from installing additional serializers; Theorem 7.3 keeps the old target and later Call return separate. Reconstructing $W$ here issues no package, token or late-target reference. |
+
+These results remain stronger on their own operational subjects.
+The gain here is a sharp terminal retention condition on another
+explicitly supplied actual source, without an unproved transplantation
+of their machinery. A promised-domain conditional theorem does not
+require a digital implementation as a premise; claiming that stronger
+implementation would require its own acquisition and execution bridge.
+

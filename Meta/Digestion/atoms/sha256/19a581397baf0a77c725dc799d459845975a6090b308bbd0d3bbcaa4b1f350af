@@ -1,0 +1,46 @@
+**Corollary 28.4 (sharp finite conditional continuation).** Under
+Definition 28.3, the largest probability of reaching every prescribed cut
+successfully is
+
+$$
+ S_n^*=\prod_{j=1}^n\tau_j .                              \tag{OC.91}
+$$
+
+Every successful cut has the exact state $\psi_{x_j}(t;\Delta_1+\cdots+
+\Delta_j)$ and a backing independent of the unknown $t$.  Every first failure
+has its actual stage, flag, retained residue and all earlier records; no later
+operation is run from that stopped branch.
+
+The complete instrument is conditional on its installed known-parameter
+service and preserves its failure successors; it is not the original
+unconditional CPTP cut service.  It does not solve unknown-height reanchoring,
+acquisition of source-bound helpers, an all-times original instrument, finite
+memory for an unbounded schedule, or the native $\alpha/\beta$ and
+fixed-Hamiltonian problems.  The fixed-$G_{gc}$, original-$Q$, parked-consumer,
+and unchanged-initialization results retain their literal scopes.  Exact
+ConditionalPreparationCost, ProbeComponentRigidity, the double-wall,
+programming and assistance sections, and Reanchoring's uncertain-height
+problem remain distinct contracts.
+
+The double-wall rigidity and finite-product
+mechanism in §§4–5 are reused with their stated domains; the existing
+amplitude-ratio filter and finite-product construction are suppliers, not new
+endpoint capabilities.
+
+**Proof.** Theorem 28.2 bounds each conditional stage by $\tau_j$, because the
+successful backing supplies no phase-correlated helper.  Multiplication gives
+the upper bound for any finite selector policy.  The operators in (OC.90) attain
+it.  With $Q_0=I$, $Q_j=K_jQ_{j-1}$ and $L_j=F_jQ_{j-1}$,
+
+$$
+ Q_n^*Q_n+\sum_{j=1}^nL_j^*L_j=I                         \tag{OC.92}
+$$
+
+by telescoping $K_j^*K_j+F_j^*F_j=I$.  Hence the all-success branch and the
+first-failure branches form a complete finite instrument, including arbitrary
+joint passive references through tensoring with identity.  On a promised input,
+$\|K_j\psi_{x_{j-1}}(t)\|^2=\tau_j$, so (OC.91) is attained.  The source
+correspondence in Definition 28.1 and `concatenate_original` identify each
+success with the prescribed chronological cut; the CP instrument itself does
+not execute the original continuous waveform.  $\square$
+

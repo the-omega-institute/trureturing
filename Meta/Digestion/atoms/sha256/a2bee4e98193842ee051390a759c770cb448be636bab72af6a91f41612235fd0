@@ -1,0 +1,39 @@
+## 40. 坐标返回为什么不等于实际仪器逆
+
+这里直接消费[Original Control Instrument Stability 定理 12.1](RECURSIVE_RELATIONAL_OBSERVATION_ORIGINAL_CONTROL_INSTRUMENT_STABILITY.md#12-scalar-triangular-controls-and-survival)，
+不把已有三角反例另算新结果。给 $0<c<1/2$、$a=c/2$、$t\in[0,1]$，该定理以
+
+$$
+\begin{aligned}
+C_n(t)&=\frac c2\sum_{j=0}^{n-1}\max(0,\min(t-j/n,(j+1)/n-t)),\\
+k_n(t)&=a-C_n(t)/(2-t),\\
+h_c[k]&=\max(k',0)/k+\max(-k',0)/(c-k),\quad
+S_c[k](t)=\exp\left(-\int_0^t h_c[k](u)\,du\right)
+\end{aligned}
+$$
+
+给出每个 $n\ge1$ 的原生控制，且同时有
+
+$$
+k_n(0)=k_n(1)=a,\quad \|k_n-a\|_\infty\le c/(4n),\quad
+\int_0^1|k_n'|\le3c/4,\quad
+\int_0^1|k_n'|^2\le9c^2/16,
+$$
+
+但 $S_c[k_n](t)=1-t/2$，而等待 $k=a$ 的生存率恒为一。
+源定理 (ST.8) 在上升／下降 tent 腿上分别给
+$k_n'=-(c-k_n)/(2-t)$ 与 $k_n'=k_n/(2-t)$，
+所以其*实际* hazard 在角点外为 $1/(2-t)$，积分解释了固定的终端差 $1/2$。
+这同时保留端点、趋于零的一致坐标误差、有界长度与平方速度作用；
+分段数为 $2n$，没有跨 $n$ 的共同分段上限，作用也不是已标定物理能量。
+
+因此这些坐标条件不足以推出同一个仪器的返回是逆、成功率趋一或记录可擦除。
+这与 §39 的全码酉等距返回不矛盾：后者是直接的算子恒等式，
+前者只控制坐标轨迹而真实损失仍被完整仪器保留。
+静态描述同样保留操作次序；原卷命题 8.7 的
+$[H_1,H_2]=E_{12}-E_{21}$ 及两种顺序分别到 $-i|2\rangle,-i|1\rangle$
+仍是原供应，[单参考 §8](FIB_LEGAL_GATES_SINGLE_REFERENCE_AND_CERTIFIED_READOUT.md#v9-word-error)
+给有序编译字的误差与最终泄漏消费者，不把“没有外时钟”改写为干预交换。
+
+<a id="v9-synthesis"></a>
+

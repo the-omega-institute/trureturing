@@ -1,0 +1,51 @@
+**Definition 11.1 (The reciprocal opposite-offdiagonal chart).** Retain
+the complete worlds and the literal history of Definition 1.1. Write
+$c=r(1-r)/b$, and, in this section only, put
+
+$$
+t=1/c,\qquad q=r(1-r),\qquad b=qt,\qquad
+j=t^{-1}+qt,\qquad n=t^{-1}+r+qt,\qquad
+T=1+qt,\quad U=1+2qt.
+$$
+
+The legal chart has $t>0$ and $0<r<1$. On it use the parent equation
+$e\Lambda=-(24/5)(b-1/8)\kappa$ and the single interpolant of
+Definition 7.1. The segment $t=0$, $0\le r\le1$ is an auxiliary
+analytic boundary, not a family of legal sources. After clearing the
+$t$ poles, the denominator factors are
+
+$$
+1+qt^2,\quad 1+rt+qt^2,\quad 1+qt,\quad 1+2qt,\quad\Lambda,
+\qquad \Lambda|_{t=0}=8.
+$$
+
+They are units on a neighbourhood of that compact segment. In particular
+the entire gain has a coefficientwise analytic limit
+
+$$
+e\longrightarrow3/10,\qquad d\longrightarrow243/10,\qquad
+g(s)\longrightarrow(s-1)(s-3)(3s/2-81/10).
+$$
+
+The first parent coefficients are
+
+$$
+\Lambda=8-8(q+1)t+O(t^2),\qquad
+e=\frac3{10}+\left(\frac3{10}-\frac94q\right)t+O(t^2).
+$$
+
+Applying the fixed extrapolation rows of Definition 2.1 gives
+
+$$
+\begin{aligned}
+p&=-\frac{24}{5t}-\frac{24}{5}(10r^2-9r-4)+O(t),\\
+v&=\frac{27}{2t}-\frac34(141r^2-159r-68)+O(t),\\
+a=f_{MJ}&=\frac{576}{5t}-\frac3{10}(1296r^2-2064r-271)+O(t),\\
+m=f_{MM}&=\frac{576}{5t}-\frac3{10}(1296r^2-1680r-655)+O(t).
+\end{aligned}
+$$
+
+Every remainder here is uniform with its first derivatives in $r$ on
+$[0,1]$, by the analytic extension and compactness. Thus $p\to-\infty$
+uniformly as $c\to\infty$.
+

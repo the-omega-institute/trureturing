@@ -1,0 +1,38 @@
+## 169. Source correspondence and the remaining scope
+
+The incidence polarity and finite convex-intersection argument are mature
+general tools, proved explicitly above in the forms used here. Compactness
+adds the infinite-family passage; compactness of pure inputs adds exact
+finite value attainment. The channel-specific contributions are their
+parameter correspondence, the recovered affine dimensions 40 and 16,
+and the justified fixed-family and orbit bounds. The proofs use no
+historical original-text attribution for Helly or Carathéodory.
+
+[FC-W, (2.65)–(2.66), Theorems 2.22 and 2.26] supplies the unnormalized
+output-first Choi, complete-positivity and trace-preservation interfaces:
+its input and output spaces are both $\mathbb C^3$ here. Trace preservation
+ensures its nonzero-map hypothesis where required. The compact-carrier
+proof avoids any additional constrained-subgradient supplier.
+
+The common-map experiment comparisons already stated in §138 have source
+states $\Phi_s(\rho)$, target states $\rho$, and reconstruction map
+$\mathcal R$. A half-trace threshold $a$ corresponds to the full trace
+threshold $2a$ there. Their auxiliary comparison tests do not change the
+input or decoder permissions specified in §162. The present proofs do not
+depend on any further experiment-comparison theorem.
+
+Existing exact results include [FC-TR, §§107, 115–118] at the stated
+endpoints and second horizon, §§153–161 for its full optimizer classification,
+and §§128, 139–152 for the third horizon and positive interval $0<s\le1/4$.
+The latter retains Theorem 146.1's explicit base premises and gives its
+anchored exact value and optimizer disk. The finite-certificate theorems
+apply throughout their stated domains, independently of whether a value
+has been evaluated. They do not turn those published evaluations into
+unknown problems or supply a general negative-parameter evaluation.
+They assert no sharp certificate cardinality, explicit optimal input list,
+or classification beyond the existing parameter-specific results.
+
+[FC-W]: https://cs.uwaterloo.ca/~watrous/TQI/TQI.2.pdf "John Watrous, The Theory of Quantum Information, Chapter 2, equations (2.65)–(2.66), Theorems 2.22 and 2.26"
+[FC-TR]: AURIC_FIB_ACTUAL_ERASED_HISTORY_TERMINAL_RECOVERY.md "Actual erased-history terminal recovery, original channel and no-reference objective"
+[FC-TP]: FIB_TASK_PARTITION_GALOIS_AND_WHITEBOX.md "Task–partition Galois correspondence, arbitrary-set extension in Section 10"
+

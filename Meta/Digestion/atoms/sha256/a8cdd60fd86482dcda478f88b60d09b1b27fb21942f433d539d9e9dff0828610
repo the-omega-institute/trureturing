@@ -1,0 +1,28 @@
+**Definition 20.3 (a calibration of the same trace).** Fix positive units
+$\tau_0,M_0,a_0$. For inputs of length $n$, partition the entire execution
+between $s_0$ and $s_j$ into its $W_j$ native intervals. Let interval $i$ have
+positive proper duration $d_i$ and let $t(\tau)$ be an absolutely continuous,
+strictly increasing reference clock with
+$dt/d\tau=1/\alpha(\tau)>0$ almost everywhere. All waiting, control,
+communication and copying in this interval is included in the partition.
+Write
+
+$$
+T_\tau=\sum_{i=1}^{W_j}d_i,\qquad
+T_t=\int_0^{T_\tau}\alpha(\tau)^{-1}\,d\tau.
+\tag{C.20.3}
+$$
+
+A polynomial calibration supplies fixed polynomials $p,q\ge1$, evaluated at
+$n$, with
+
+$$
+\frac{\tau_0}{p(n)}\le d_i\le\tau_0p(n),\qquad
+\frac1{q(n)}\le\alpha(\tau)\le q(n)
+\quad\text{almost everywhere}.
+\tag{C.20.4}
+$$
+
+This is an additional implementation assumption; a native tick is not
+identified by definition with a physical second.
+

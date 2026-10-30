@@ -1,0 +1,18 @@
+**定理 81.6（每个前缀保码的精确双逻辑位通道）。** 对任意 $U\in U(4)$，上述子菜单存在一个与未知输入无关的有限字 $W$ 及 $\gamma\in\mathbb R$，使
+
+$$
+W\iota_2=e^{i\gamma}\iota_2U.
+\tag{XVII.8}
+$$
+
+每个原语前缀及脉冲中途都保持 $\mathcal C$。因此，对任意有限维被动参考 $R$ 和任意 $\rho\in\mathsf D(\mathbb C^4\otimes R)$，该字在编码后实现与 $U\otimes I_R$ 完全相同的通道。
+
+**证明。** 由 (XVII.7)，两个逻辑位分别取得 $D_i=\operatorname{diag}(1,i)$ 的单体作用。其共轭满足 $D_iX_iD_i^\dagger=Y_i$，因此 $D_ie^{-itX_i}D_i^\dagger=e^{-itY_i}$ 可执行。复用 [Barenco 等的单体 Euler 分解与局部门加 CNOT 精确分解](../../../Library/Computability/brylinski2001universal.md#exact-elementary-decompositions-and-scalar-scope)，每个单逻辑位 $SU(2)$ 门可由 $X$–$Y$–$X$ 三旋转取得。又由 (XVII.5) 得到 $CZ$。取 Hadamard 矩阵 $H$ 及 $V=iH\in SU(2)$，有
+
+$$
+(I\otimes V)CZ(I\otimes V^\dagger)=CNOT.
+\tag{XVII.9}
+$$
+
+故全部单逻辑位 $SU(2)$ 与 CNOT 都可执行。在标准有限分解中将每个 $U(2)$ 单体因子的标量提出，所有标量合并为逻辑整体相位，即得 (XVII.8)。所有构件均来自命题 81.5 的保码子菜单，保持性在组合下仍成立。对编码态及参考取共轭时 $e^{i\gamma}$ 消去，得到所述通道恒等。$\square$
+

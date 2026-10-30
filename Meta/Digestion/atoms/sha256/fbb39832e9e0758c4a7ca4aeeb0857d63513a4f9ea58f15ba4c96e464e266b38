@@ -1,0 +1,32 @@
+**引理 3.3（有限方向的一阶风险）。** 在引理 3.2 的条件下，以（3.2）的 $A_n,B_{kl}$ 和 $c=d(P_w)$ 置
+
+$$
+E_\Delta=\sum_na_nA_n+\sum_{k,l}\Delta_{kl}B_{kl},\qquad
+L_\Delta=(E_\Delta-cb)/\mu.
+$$
+
+对充分小的正负 $t$，
+
+$$
+d(P_t)\ge c+L_\Delta t-
+\left(25H^2+\frac{2|L_\Delta b|}{\mu}\right)t^2.
+\tag{3.8}
+$$
+
+若 $L_\Delta\ne0$，其相应符号的所有充分小非零参数都严格提高密度。
+
+证明。固定 $p_0$，其损失在零段 $n$ 的自由相位和为 $A_n$，在事件中心前后间隙 $k,l$ 的损失为 $B_{kl}$。$P_t$ 的相位质量和事件相邻间隙质量分别为 $w_t(n)/\mu_t$、$F_t(k,l)/\mu_t$，故
+
+$$
+\mathbb E_{P_t}(X_0-p_0)^2=\frac{\mu c+tE_\Delta}{\mu+tb}.
+$$
+
+条件于 $\mathcal E_0$，$X_0-p_t$ 与外部函数正交，因此
+
+$$
+d(P_t)=\frac{\mu c+tE_\Delta}{\mu+tb}-\mathbb E_{P_t}(p_t-p_0)^2
+=c+L_\Delta t-\frac{L_\Delta b\,t^2}{\mu+tb}-\mathbb E_{P_t}(p_t-p_0)^2.
+$$
+
+缩小区间使 $\mu+tb\ge\mu/2$，再用（3.5）即得（3.8）。变化的分子条目只有有限个；不对无限体积极限求导。线性非零项支配二次余项，给出最后结论。$\square$
+

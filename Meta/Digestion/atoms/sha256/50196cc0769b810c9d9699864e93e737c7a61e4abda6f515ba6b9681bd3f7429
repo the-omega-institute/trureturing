@@ -1,0 +1,28 @@
+**Proposition 35.1 (source generation is larger than the acquired prefix).**
+For a cut $N\ge2$ in this construction, the actual source has
+
+$$
+ L_N=F_{N+1},\qquad V_N=2F_{N+1}-1=1+2B_N
+ \tag{GPO.86}
+$$
+
+leaves and nodes. From alpha through that cut it has allocated exactly
+$2B_N$ new child nodes and $2B_N$ new child links and generated
+$B_N$ actual birth bits, including the unqueried newest bits. At an
+update $e\to e+1$ with $e\ge1$, exactly $F_{e+1}$ old leaf
+tags are overwritten and $2F_e$ new nodes and child links are
+allocated. The initial update overwrites its one alpha tag and allocates
+no child. A straightforward old-node traversal inspects $V_e$ old
+nodes per update, with $V_0=1$; it never recursively revisits newborns.
+These are separate material and work coordinates, not one unit per
+applyRho.
+
+Proof. A full binary tree with $L$ leaves has $2L-1$ nodes.
+The leaf counts and birth counts are Proposition 27.2. Each birth
+retains its parent and constructs exactly two children and links; every
+old leaf changes tag or becomes a branch. Summing these actual additions
+gives (GPO.86) and the stated totals. The traversal is a possible
+implementation of Definition 27.1's old-leaf rule. Other backends must
+price their own traversal and allocation, without replacing the source
+by an already expanded paper tree. $\square$
+

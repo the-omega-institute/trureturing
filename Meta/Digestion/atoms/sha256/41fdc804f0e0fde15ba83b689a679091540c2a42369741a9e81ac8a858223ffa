@@ -1,0 +1,67 @@
+**定理 11.1（同一正相干输入、全部输入及参考的分类）。** Let $\gamma$ and
+$\widetilde\gamma$ be two controls of §9 at the same $b,a,T$. The following
+conditions are equivalent.
+
+1. Their complete terminal classical–quantum output measures agree on one
+   common coherent pure input with diagonal $p(a)$ and positive middle
+   amplitude. Equality includes the unnormalized success density and every
+   Borel failure-time event in every original mode.
+2. They agree on every paired same input of (OC.10), for all
+   $\beta\in\mathbb R$ and signed $m\in\mathbb Z$.
+3. They have the same $k(t)$ for every $t$ and the same two terminal
+   characters $z_+=e^{-iH_+(T)}$, $z_-=e^{-iH_-(T)}$.
+4. Their instruments are equal as CP-valued measures on every live input,
+   and on the supplied six-dimensional stopped extension, including after
+   adjoining any finite-dimensional external quantum reference.
+
+Equivalently the exact classification data are
+$(u(\cdot),v(\cdot),z_+,z_-)$ on (OC.35), or
+$(\ell(\cdot),z_+,z_-)$ on (OC.34), with the phase image specified in
+Proposition 10.3 and any stated loop promises. The classified object is the
+terminal operation; these data do not replace its actual quantum specimen
+and retained events by a classical state.
+
+Proof. From condition 1 the mode/time traces agree. Theorem 9.1 gives the
+same height at every time and the same $S$. For any common positive coherent
+input, let $x=K_T\psi$ and $\widetilde x=\widetilde K_T\psi$.
+They are nonzero and equality of their unnormalized rank-one densities
+implies $x=e^{i\omega}\widetilde x$ for some unit scalar. Their middle
+coordinates are both exactly $\sqrt{S(T)Z}>0$, so $e^{i\omega}=1$.
+All other input components and all diagonal moduli are nonzero. Cancelling
+them gives $e^{-iH_i(T)}=e^{-i\widetilde H_i(T)}$ for every $i$, hence
+condition 3. This is a comparison proof, not an instruction to read the
+unknown input phases.
+
+Conversely, equal height paths have equal almost-everywhere derivatives,
+$\lambda,S,q_i$ and loss measures. For every live $\rho$ and Borel
+$E\subseteq(0,T]$, (OC.31)–(OC.32) give the full CP map
+
+$$
+\mathcal I_{\mathrm{fail},i}(E)(\rho)
+ =\frac{\int_E dF_i(t)}{p_i(a)}\rho_{ii}|f\rangle\langle f|.
+\tag{OC.38}
+$$
+
+Thus equal $k$ gives equal failure CP measures, even when intermediate phases
+differ. The terminal characters also make $K_T=\widetilde K_T$ exactly,
+so the success maps and $K_T\oplus1_f$ extensions agree. With a reference
+$R$, the corresponding formula is
+
+$$
+(\mathcal I_{\mathrm{fail},i}(E)\otimes\mathrm{id}_R)(\rho_{LR})
+ =\frac{\int_E dF_i(t)}{p_i(a)}
+ |f\rangle\langle f|\otimes\langle i|\rho_{LR}|i\rangle.
+\tag{OC.39}
+$$
+
+Equality therefore preserves reference blocks and not only scalar
+probabilities. Success uses the same $K_T\otimes I_R$; the same argument
+covers live/stopped coherences of the declared extension. This proves 3
+implies 4. Condition 4 implies 2 and 2 implies 1. The zero-duration case
+has the identity operation and no failure events. $\square$
+
+This upgrade from one coherent input to all inputs uses the special diagonal
+success and rank-one marked jumps just calculated. It is not a claim that
+one input generally characterizes a quantum channel, or that arbitrary
+preparations and tomography have become legal source actions.
+

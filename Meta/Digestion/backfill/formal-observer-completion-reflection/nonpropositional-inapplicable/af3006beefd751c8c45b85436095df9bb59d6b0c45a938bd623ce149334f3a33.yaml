@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:af3006beefd751c8c45b85436095df9bb59d6b0c45a938bd623ce149334f3a33
+  normalized_sha256: sha256:af3006beefd751c8c45b85436095df9bb59d6b0c45a938bd623ce149334f3a33
+cas_ref: sha256:af3006beefd751c8c45b85436095df9bb59d6b0c45a938bd623ce149334f3a33
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 以四个映射或 kernel 及策略充分性要求定义自我生成系统；没有存在性或充分性定理。
+    previous_atom_id: 4c771a62a734a2bf726feffeda7333a85c99fc0320d8e84cddbe22b90004bdef
+    next_atom_id: bb01cf7a6fdf4cb383fdc573fb658cc3e162c6056acc64a2cc90610cdd3dff08

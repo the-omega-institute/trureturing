@@ -1,0 +1,101 @@
+**Proposition 20.2 (Exact rectangle bounds).** The tables in Sections
+17–18 satisfy the following finite rational relations. At each of the
+eighteen centres, $A^{(i)}_{100}\ne0$. Put
+$\gamma_i=\operatorname{Round}_{100}(1/A^{(i)}_{100})$ as in (17.2).
+Then their displayed integers satisfy
+
+$$
+\begin{gathered}
+ E_i-1<10^{15}\eta_i\le E_i,\qquad
+ Q_i-1<10^{12}q_i\le Q_i,\\
+ S_i-1<2\cdot10^{15}\eta_i\le S_i
+ \quad(c_i\in\mathbb R).
+\end{gathered}
+\tag{20.4}
+$$
+
+The eighteen domains have all $153$ pairwise separations asserted in
+Section 17. The sixteen real-root radii satisfy (17.4). For the nine
+positive labels, the $63$ intervals of Section 18 contain the entire
+late-node reconstruction on the corresponding sharpened interval and
+the full base rectangle. Every quotient used there has denominator
+excluding zero.
+
+Proof. Formula (20.3), the exact centres of Section 17, and (20.2)
+reduce (17.2) to finite sums of Gaussian rationals. For $z=a+\mathrm i b$,
+use $z^{-1}=(a-\mathrm i b)/(a^2+b^2)$, and
+$\nu(z)=|a|+|b|$. Substitution into these finite sums gives (20.4).
+For rounding, the precise relation is
+
+$$
+\operatorname{Round}_{100}(t)=k10^{-100}
+\quad\Longleftrightarrow\quad
+ k-\tfrac12\le10^{100}t<k+\tfrac12,
+\qquad k\in\mathbb Z.
+\tag{20.5}
+$$
+
+Thus all inverse, absolute-value and rounding statements are rational
+identities or rational inequalities, with no choice of an approximate
+root. The largest $E_i$ is $7395594491$ and the largest $Q_i$ is
+$203648161630$. In particular, uniformly in $i$,
+
+$$
+\eta_i+q_i\rho
+\le\frac{7395594491}{10^{15}}
+ +\frac{203648161630}{10^{12}}\frac1{10^4}
+ =\frac{27760410654}{10^{15}}<\frac1{25000}.
+\tag{20.6}
+$$
+
+These maxima also give $\eta_i<10^{-5}$ and $q_i<3/10$.
+For two centres $c_i=a_i+\mathrm i b_i$, $c_j=a_j+\mathrm i b_j$,
+separation is witnessed by
+
+$$
+|a_i-a_j|>2\rho\quad\hbox{or}\quad
+|b_i-b_j|>w_i+w_j,
+\qquad
+w_i=\begin{cases}0&b_i=0,\\\rho&b_i\ne0.\end{cases}
+\tag{20.7}
+$$
+
+The centre table gives this alternative for every $i<j$. It also gives
+$a_i+\rho<0$ for $0\le i\le6$,
+$a_i-\rho>0$ for the nine positive labels, and
+$|b_i|>\rho$ for $i=9,10$.
+Since $q_i<3/10$, (20.4) gives
+$\eta_i/(1-q_i)<2\eta_i\le S_i/10^{15}$ for each real centre;
+(17.4) follows once Lemma 17.1 supplies the root.
+
+For a positive label put $X_i=[c_i-\sigma_i,c_i+\sigma_i]$.
+For $P=\alpha,\zeta$, take its constant translated coefficient and
+radius (18.1), using (20.3), and enclose the resulting rational
+interval by $\mathcal E_{10^{80}}$ from (13.1). Form
+$d=-\zeta/\alpha$ by (13.2), then form
+$h_3,h_4,h_5,h_6,H_0,H_1,H_2,H_7,B_0,C_0,U,b,j,r,m$
+in that order from (15.1), (15.3), with base intervals
+$[p_c-\delta,p_c+\delta]$, $[v_c-\delta,v_c+\delta]$.
+Use the same left association and sum order as Section 13, with
+$H=10^{80}$ at each product and quotient. If $V$ is any of the
+resulting seven intervals $(d,r,b,m,\alpha,H_1,C_0)$, its table pair is
+exactly
+
+$$
+\left(\left\lfloor10^9\inf V\right\rfloor,
+      \left\lceil10^9\sup V\right\rceil\right).
+\tag{20.8}
+$$
+
+The endpoint formulas (13.5) and their quotient counterparts give the
+$63$ displayed pairs by finite rational arithmetic. Positive $X_i$
+justify division by $x,x+1,x+2$; the displayed $\alpha,H_1,C_0$
+intervals justify the remaining divisions. The sign inequalities are
+visible in their endpoints. Their smallest absolute bounds are
+exactly (18.2). In particular label $7$ fails $r<1$, six labels fail
+$b>0$, and the two remaining $m$ intervals are disjoint. The interval
+containment induction of Section 13 applies at every step, so these
+bounds hold for every actual root in the sharpened intervals, not
+only at their centres. This proves the finite assertions used in
+Lemmas 17.1 and Theorem 14.1. ∎
+

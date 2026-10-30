@@ -1,0 +1,26 @@
+**Assumption 2.2 (actual producer and consumer resources).** For the chosen
+known $q,\theta$, one producer releases two disjoint three-mode systems with
+the joint state specified in Definition 2.4. Exact preparation at general
+$\theta$ is a conditional input. Proposition 2.3 supplies one bounded
+preparation at $\theta=\log7$ only. Neither premise supplies a cloning
+channel for an unknown specimen. Preparation controls may cross the eventual
+$A\mid B$ cut; they belong to the producer and are withdrawn on release.
+
+The consumer has the following resources on these same released systems:
+the two known B-local number-preserving alignments of VI142.3, permission
+to discard each aligned spectator, four blank memory modes, four calibrated
+local even mode transfers, one blank neutral qutrit at each party, the
+controlled-count gates of §3, pointer readout and stable flag writing, and
+the controls, readouts and isolation of §5. Each primitive is paid and
+available as specified, rather than inferred from a commutation relation.
+In particular, bilinear control alone is not asserted to synthesize the
+controlled-count interaction with a neutral pointer. Ancillas supplied to
+the consumer are local product resources, with no borrowed entanglement or
+coherence between different particle numbers. Only acquired reports and
+actually delivered classical inputs are available to its controller. Each
+named primitive specifies its complete input-to-output map, including any
+controlled evolution during that operation. No unspecified drift interval
+is inserted between these maps. A sufficient order is preparation, B
+alignment, spectator discard, transfer, storage isolation, controlled
+counting and flag readout, followed by the legal consumer commands.
+

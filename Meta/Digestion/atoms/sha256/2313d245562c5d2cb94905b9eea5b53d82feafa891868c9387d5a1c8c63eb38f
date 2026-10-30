@@ -1,0 +1,22 @@
+**定义 2.3（残余系统）。** 令 $V$ 为有限维实向量空间，$T_a:V\to V$ 为原有总定义
+线性分支，$a\in\mathcal A$。旧全未来效果空间 $O\subset V^*$ 满足
+$T_a^*O\subseteq O$，并令
+
+$$
+N=\{v\in V:\ell(v)=0\text{ 对所有 }\ell\in O\}.
+$$
+
+于是 $T_aN\subseteq N$。增加末端线性读口 $A:V\to\mathbb R^s$，保留旧分支并定义
+
+$$
+K_A=N\cap\bigcap_{w\in\mathcal A^*}\ker(AT_w),
+$$
+
+其中空词包含在内。置 $m=\dim N$、$r=\operatorname{rank}(A|_N)$，并在 $N^*$ 中
+递推
+
+$$
+M_0=\operatorname{rowspan}(A|_N),\qquad
+M_{k+1}=M_k+\sum_{a\in\mathcal A}(T_a|_N)^*M_k.
+$$
+

@@ -1,0 +1,15 @@
+**推论 2.1（signed signature as TV and JS）。** In the balanced case, let $P_1$ and $P_0$ be the two conditional laws of $Q_A$ given $Y=1$ and $Y=0$. Then
+
+$$
+\|\sigma_A\|_1=\operatorname{TV}(P_1,P_0)=1-2e(A),\qquad
+I(A)=\operatorname{JS}_2(P_1,P_0).
+$$
+
+Consequently Theorem 2 is the sharp Jensen--Shannon/total-variation interval
+
+$$
+1-h_2\!\left(\frac{1-\operatorname{TV}(P_1,P_0)}2\right)\le\operatorname{JS}_2(P_1,P_0)\le\operatorname{TV}(P_1,P_0).
+$$
+
+This is the cleanest information-theoretic reading of the FIB signed atom: its $L^1$ cancellation is total variation, while its posterior entropy defect is Jensen--Shannon information.
+

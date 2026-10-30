@@ -1,0 +1,11 @@
+**Definition 17.1 (two distinct calibration images).** Fix $b$, the family, authentic context and one schedule $\sigma\in\{\mathrm n,\mathrm p\}$ of Definition 16.1. Its common cut is after the final Read and Hold, with the full return consumed and the predictor installed at $w_\sigma$. On these actual runs expose:
+
+| Expression | Exposed independent content |
+| --- | --- |
+| Space | the native weighted law $T$ and present field $w_\sigma$, modulo leaf-fixing permutations |
+| Time | that schedule's actual complete ordered command/input/reply word, four Tick occurrences and completed held phase |
+| Boundary | the original leaf transfer $B^{\mathsf T}(\zeta I-T)^{-1}B$ and the one actually returned current leaf-1 scalar $y_\sigma$ |
+| Memory | the earned $(C,S,z_\sigma)$ predictor, rules including (CM.34), and genuine callable context |
+
+Here $\zeta$ is a formal resolvent variable. The transfer is the public common template $B^{\mathsf T}(\zeta I-T_0)^{-1}B$ by (CL.14); it carries no hidden parameter advice and is not said to have been separately measured. Only Time retains the calibration word. Neither image contains arbitrary current fields or arbitrary previous histories.
+

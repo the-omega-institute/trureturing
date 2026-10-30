@@ -24,7 +24,7 @@ def mass (q : ℚ) (s t : Source) : ℚ :=
 private theorem mass_self (q : ℚ) (s : Source) : mass q s s = 0 := by
   cases s <;> simp [mass, ActualImageAlphaSeparation.frontier]
 
-private theorem mass_of_of (q : ℚ) (b c : Bool) (h : b ≠ c) :
+theorem mass_of_of (q : ℚ) (b c : Bool) (h : b ≠ c) :
     mass q (.of b) (.of c) = 1 := by
   have hn : (FreeMagma.of b : Source) ≠ .of c := by
     intro he

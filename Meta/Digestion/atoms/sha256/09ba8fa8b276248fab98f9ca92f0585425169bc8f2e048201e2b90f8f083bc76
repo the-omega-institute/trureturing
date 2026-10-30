@@ -1,0 +1,8 @@
+**Theorem 198.1 (Success weighting and subnormalized disturbance).**
+The probability-weighted conditional quantities are
+
+| Quantity | Procedure E | Procedure F |
+| --- | --- | --- |
+| $P C_M=P\sqrt{D_G^A}$ | $2\mu$ | $2r_0^2\mu$ |
+| $P D_G^A$ | $4\mu^2/P_E=2\mu^2/S$ | $4r_0^4\mu^2/P_F$ |
+| $P\mathcal N$ | $(\mu-A)_+$ | $r_0^2(\mu-A)_+$ |

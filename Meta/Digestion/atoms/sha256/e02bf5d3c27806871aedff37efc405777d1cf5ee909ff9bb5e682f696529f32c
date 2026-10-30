@@ -1,0 +1,6 @@
+**命题 79.3（在已取得 child 上的单次任务证书）。** 固定命题 79.2 的同一 actual base，令 $z$ 是其三个 legal worlds 的 branch label。若合同允许原 clock-seven $M$，实际取得其 paid response 并保留，且 source-independent 规则可判别 supplier 的三个不交 response intervals，则该 branch-label task 有一次动作的有限证书。这里没有新增 source port 或追加 counterfactual $J$。
+
+**证明。** 固定 base 的三个候选 world 给出三个 pre-read complete states，加入这一次合法 $M$ 的实际 successor、response class 和 halt labels 就构成一个有限局部模型。其抽象只忘记与这一个任务无关的 fields；合法性和各实际 successor 逐候选保留，判别规则使用三个固定的 rational intervals，不依赖隐藏 world 选择动作。由 supplier injectivity，每个非空 response class 只有一个 $z$，故其 successor candidate relation 在 $\mathcal W_0$；读前的 union 在 $\mathcal W_1$。以读前/读后 rank $1/0$、实际 response update 和正确 halt label 得到 §62 的 chosen-action certificate。若计费用，其 actual branch cost 作为另行已声明的标签保留；三个固定候选上的标签仍只有有限多个。∎
+
+这个应用取得的是固定 child 的 branch label；它不安装对任意 real $(p,v)$ 的 world enumerator，不假定有限 semantic candidates 已被读取，也不供应全局最小控制器。用于原任务时，已取得 $(p,v)$、exact read permission、response retention、source-independent 判别和 successor/cost 合同都是必要前提。反过来，一处 algebraic false lift 不排除其他 children 的合法 collisions。
+

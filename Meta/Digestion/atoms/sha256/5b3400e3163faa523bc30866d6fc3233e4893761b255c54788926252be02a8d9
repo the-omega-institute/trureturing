@@ -1,0 +1,8 @@
+**Convention 2.1 (The family).** Fix an integer $d\ge3$ and real numbers $\lambda,q$. Put $\mu=1-dq-\lambda$ and define $\Phi=\Phi_{\lambda,q}\colon M_d(\mathbb C)\to M_d(\mathbb C)$ by
+
+$$
+\Phi(X)=\lambda X+\mu\,\mathrm{diag}(X)+q\,\mathrm{tr}(X)\,I ,
+$$
+
+where $\mathrm{diag}(X)$ keeps the diagonal of $X$ and sets all other entries to zero. In the notation of cited fact (a)(i), $\Phi_{\lambda,q}=\Phi_{\alpha,\beta}$ with $\alpha=dq$ and $\beta=\mu$, so $\lambda=1-\alpha-\beta$. The map is unital, trace-preserving and Hermiticity-preserving, and it commutes with conjugation by diagonal unitaries: $\Phi(UXU^\ast)=U\Phi(X)U^\ast$ for every diagonal unitary $U$. Write $p=1-(d-1)q$. The Schwarz defect is $S(X)=\Phi(X^\ast X)-\Phi(X)^\ast\Phi(X)$, and $\Phi$ is called Schwarz if $S(X)\ge0$ (positive semidefinite) for every $X\in M_d(\mathbb C)$. For $X\in M_d(\mathbb C)$ write $D=\mathrm{diag}(X)$, $Y=X-D$ and $\|X\|^2=\mathrm{tr}(X^\ast X)$. Stance: repo-derived (notation fixed in this volume).
+

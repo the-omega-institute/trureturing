@@ -45,20 +45,10 @@ internal sealed class QutritPerturbationAttainmentDocument : IScribeDocumentDefi
     private static Formula n => Id("n");
     private static Formula v => Id("v");
     private static Formula P => Id("P");
-    private static Formula AB => Prod(Id("A"), Id("B"));
     private static Formula J => Prod(Fin(Int(3)), Fin(n));
     private static Formula Mj => Matrix(J,J,C);
     private static Formula Pure => Call("rhoPure",n,v);
     private static Formula Projector => Call("rhoProjector",n,P);
-    private static Formula ApptDefinition()
-    {
-        var u=Call("val",Id("U"));
-        var f=All("M",Matrix(AB,AB,C),Seq(Call("APPT",Id("M")),Iff,Sp,
-            All("U",Call("unitaryGroup",AB,C),PSInt(Call("KickedIsingNegativityRefutation.partialTranspose",Mul(Mul(u,Id("M")),Adj(u)))))));
-        f=Seq(Bracket(Call("Fintype",Id("A"))),Sp,Bracket(Call("Fintype",Id("B"))),Sp,
-            Bracket(Call("DecidableEq",Id("A"))),Sp,Bracket(Call("DecidableEq",Id("B"))),Sp,f);
-        return All("A",Id("Type"),All("B",Id("Type"),f));
-    }
     private static Formula PureDefinition() => All("n",N,All("v",Arrow(J,C),
         Eq(Pure,Smul(OfReal(Frac(Int(1),Add(Mul(Int(3),CastN(n)),Int(2)))),
             Parenthesized(Add(Int(1),Smul(Int(2),Call("Matrix.vecMulVec",v,Star(v)))))))));
@@ -102,9 +92,6 @@ internal sealed class QutritPerturbationAttainmentDocument : IScribeDocumentDefi
         "Explicit rank-one and projector perturbations attain the two candidate qutrit APPT purities.",
         H("Qutrit APPT attaining states"),Blocks(
             Paragraph(Text("APPT is definitionally equal to Bipartite.APPT over the same finite local types and their Fintype and DecidableEq instances. Both predicates require partial-transpose positivity after every global unitary, including on empty systems.")),
-            Desc("QutritPerturbationAttainment","APPT","Literal absolute PPT predicate",ApptDefinition(),
-                "Ahiable–Kothakonda–Winter, page 2: Defined analogously to absolutely separable states, absolute PPT states are those states which remain PPT after global unitary rotations and have been completely characterized across all dimensions [17]. Here unitaryGroup is Mathlib's group of unitary matrices and val displays its matrix coercion. The predicate alone does not include density normalization. The partialTranspose operator is reused from KickedIsingNegativityRefutation and has entry formula M((i,l),(k,j)).",
-                provenance:AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuantumStates/ahiablekothakondawinter2026geometry"))),
             Desc("QutritPerturbationAttainment","rhoPure","Rank-one perturbation",PureDefinition(),
                 "The scalar coefficient is Complex.ofReal of a real quotient. The numeral one is the identity Matrix. The vector is indexed by Fin 3 × Fin n and star acts pointwise."),
             Desc("QutritPerturbationAttainment","rhoProjector","Projector perturbation",ProjectorDefinition(),

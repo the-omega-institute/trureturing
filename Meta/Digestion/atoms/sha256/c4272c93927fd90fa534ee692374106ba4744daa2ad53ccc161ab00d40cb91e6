@@ -1,0 +1,13 @@
+**Lemma 8.5.3 (Replacement continuation bounds on the original tubes).**
+Use the $240$-bit source-circuit convention of Definition 8.5.1 on the
+same centres, preconditioners, boxes and parameter cells of (7.2.3).
+Write $q_i^\sharp,\beta_i^\sharp,D_i^\sharp,\widetilde q_i^\sharp$ for
+the resulting rational bounds defined by (7.2.5)–(7.2.6). Then
+
+| Quantity | Rational upper bound | Sufficient strict bound |
+|---|---:|---:|
+| $\max_i q_i^\sharp$ | $440377709788/10^{12}$ | $441/1000$ |
+| $\max_i\beta_i^\sharp$ | $263610681681/10^{12}$ | $264/1000$ |
+| $\max_i\widetilde q_i^\sharp$ | $238818207545/10^{12}$ | $239/1000$ |
+| $\max_i\rho_BD_i^\sharp$ | $2475331406433/10^{12}$ | $5/2$ |
+| $\max_i\rho_kD_i^\sharp$ | $24753314064322/10^{12}$ | $25$ |

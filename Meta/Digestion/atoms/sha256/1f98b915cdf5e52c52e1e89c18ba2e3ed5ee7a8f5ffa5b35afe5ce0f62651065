@@ -1,0 +1,10 @@
+**定理 7.1（闭族统一分离）。** 存在 $\varepsilon_{\mathcal R}>0$，使每个 $P\in\mathcal R$ 都满足
+
+$$
+d(P)\le C_{\mathcal R}:=\max_{Q\in\mathcal R}d(Q)
+=c_\star-\varepsilon_{\mathcal R}<c_\star.
+\tag{7.1}
+$$
+
+证明。由定理 5.2、4.3，每个 $a>0$ 成员的风险为 $a\,d(P_w)<c_\star$，因为 $0\le d(P_w)<c_\star$；全零风险零也严格次优。$\mathcal R$ 是紧 $\mathcal S$ 的非空闭子集，而 $d$ 上半连续，所以最大值在某个成员取到；该成员的严格性给正差距。紧性是在实际律空间中使用，不能用未闭的有限均值参数域替代。$\square$
+

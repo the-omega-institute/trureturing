@@ -1,0 +1,100 @@
+**Theorem 14.3 (Global injectivity of terminal $M$ on actual singular
+sources).**  The map $\Psi_M$ is injective on $\mathcal S$, including
+both singular lines, every real $e$ (in particular $e=0$ and
+$e=-24$), lower gain degrees, and repeated or sampled gain roots.
+
+Proof.  The exact evaluations
+
+$$
+\begin{aligned}
+S(13/100)&=-89481543/390625,&
+S(7/50)&=100610367/390625,\\
+S(9/10)&=94967/625,&
+S(91/100)&=-178093443/390625
+\end{aligned}
+$$
+
+refine the two unique strict roots of Proposition 11.1 to
+
+$$
+\frac{13}{100}<r_-<\frac7{50},
+\qquad
+\frac9{10}<r_+<\frac{91}{100}.
+\tag{14.6a}
+$$
+
+The monotonicity of $n(r)=1/8+9r-8r^2$ on these intervals then gives
+
+$$
+\frac{23}{20}<n_-<\frac54,
+\qquad
+\frac53<n_+<\frac74.
+\tag{14.6}
+$$
+
+The polynomial $D$ is increasing for $n>0$, and
+
+$$
+D(23/20)=\frac{2064}{25}>0.
+\tag{14.7}
+$$
+
+Thus $A(n_\pm)\ne0$.  If two points lie on the same singular line
+and have equal $p$, (14.5) first gives equal $e$; Proposition 11.1 and
+the zero-safe correspondence (10.6) then give the same complete world.
+
+It remains to separate the two lines.  Define
+
+$$
+K(n)=\frac{C(n)-(32/5)B(n)}{A(n)}
+ =-\frac{6(18328n^2+45765n-74850)}{25D(n)}.
+\tag{14.8}
+$$
+
+Equation (14.5) gives the identity
+
+$$
+m-\frac{32}{5}v+\frac{1128}{5}=(p-24)K(n).
+\tag{14.9}
+$$
+
+For independent variables $n,z$, direct subtraction gives
+
+$$
+K(n)-K(z)=
+\frac{12(n-z)E(n,z)}{25D(n)D(z)},
+\tag{14.10}
+$$
+
+where
+
+$$
+E(n,z)=16099786nz-18548700(n+z)+19434075.
+\tag{14.11}
+$$
+
+The four corner values of this bilinear polynomial on
+$[23/20,5/4]\times[5/3,7/4]$ are
+
+$$
+-\frac{11721041}{6},\quad
+-\frac{78253427}{40},\quad
+-\frac{6750475}{6},\quad
+-\frac{7949945}{8}.
+\tag{14.12}
+$$
+
+The bilinear interpolation formula on a rectangle is a convex
+combination of its four corner values, so $E<0$ throughout that
+rectangle.  Equations (14.6), (14.7), and (14.10) imply
+$K(n_- )\ne K(n_+)$.
+
+Suppose points on the two lines had equal $(p,v,m)$.  Comparing (14.9)
+and using the unequal $K$ values forces $p=24$.  Equation (14.5) and
+$A(n_\pm)\ne0$ then force both $e$ values to be zero.  The second
+equation in (14.5) becomes $v=84+24n$, which differs on the two
+disjoint intervals in (14.6), a contradiction.  This explicitly
+handles the $p=24$ case even though selected children in Definition
+1.1 use $p\ne24$.  Hence $\Psi_M$ is injective on all of $\mathcal S$.
+∎
+

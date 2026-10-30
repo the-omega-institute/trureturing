@@ -1,0 +1,20 @@
+**Construction 32.1 (passive QN-D acquisition on the same specimen).**
+Fix an actually built $t_n$, $n\ge1$, with its earned complete map,
+known law, authentic context and supplied $D,h$. Compute $K$ by the
+credited forcing algorithm and $H$ by (30.7)–(30.8). At the held entrance
+$x\in\Lambda_D$, perform Hold and all $b$ Reads in earned order.
+Repeat exactly $H$ times: Tick, Hold, then all $b$ Reads in that order.
+Consume every complete source lifecycle. The numerical record is
+exactly $R_H(x)$, and the actual terminal cut is
+
+$$
+s=A_n^H x.
+\tag{32.1}
+$$
+
+During the final Hold decode $x$ by Theorem 30.2 and compute and retain
+$s$, graph, roster, model and a synchronized complete predictor.
+This executes $b(H+1)$ scalar Reads, $H$ Ticks and $H+1$ Holds,
+with no acquisition Add, growth or Reset. Computing $A_n^{-H}$ is
+local arithmetic; it does not physically reverse any executed Tick.
+

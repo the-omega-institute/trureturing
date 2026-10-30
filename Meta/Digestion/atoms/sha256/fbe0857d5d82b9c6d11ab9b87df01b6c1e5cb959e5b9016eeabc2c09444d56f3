@@ -1,0 +1,37 @@
+**Theorem 116.9 (original degree-uniform square-root alternative).** For every integer $k\ge2$, the parameters of Definition 116.1 give an irreducible public polynomial $f$ and an explicit initialized finite complete passive selector $\pi_k$ in the original $m=2$ experiment such that
+
+$$
+D_{\rm read}(\pi_k)=D(\pi_k)=2,\qquad
+W=\binom a{a/2}\le D_{\rm blind}(\pi_k)<\infty.
+$$
+
+These conclusions hold for every fixed original hidden depth and every fixed common depth prior throughout acquisition and payload. One can keep the same such depth or prior across the whole family. Every encoder comparison within an instance uses its same original total canonical decoder on the entire original integer domain. In particular
+
+$$
+\frac{D_{\rm blind}(\pi_k)}{D(\pi_k)\sqrt n}\longrightarrow\infty.
+$$
+
+Proof. Lemma 116.3 validates the field representation, and Proposition 116.7 gives $D=2$ on the whole acquired-seed source. The co-read attainment $D_{\rm read}=D$ and existence of a finite initialized total blind encoder with this same decoder are precisely the suppliers of Boundary Dynamics §§106.3 and 110.3, applied to the finite initialized selector just specified. Their hypotheses hold: all complete marker words select once, the original source and Stop are unchanged, seed acquisition precedes payload, and the one register has its fixed initial value before seed acquisition.
+
+For this particular selector the co-read supplier also has a direct realization. In Definition 116.6's paid prefix-control implementation, hold $z=0$ through acquisition and every continuing marker transaction. At a first selection, use the actual prefix from that readable control, appending the current marker if needed, and the public finite dictionary to write its colex rank in the entire $\mathcal S_b$ before latching. Off-target root selection writes 0. Proposition 116.7 bounds every one of these dictionaries by 2 even at zero-completion addresses, so all these writes lie in $\{0,1\}$. Previously frozen and non-marker events hold; inconsistent formal inputs have the original fixed default. This is a total initialized one-register implementation using only separately paid readable selector state and allowed transaction timing. It supplies exactly the original leaf codes. The positive two-member cell in Proposition 116.7 forces at least two distinct frozen values even for co-read, so the attained value is exactly 2.
+
+Proposition 116.8 supplies the all-encoder blind lower bound. To make the finite upper existence explicit, recall §110.3's supplied program. Its alphabet size is the finite maximum of $D$ and the sizes of all positive after-decision active sets $W_b$ over all actual seeds and nonterminal addresses. In a positive active cell it retains the actual prefix's colex rank in $W_b$. On a marker transaction, inverse lookup at the old allowed address and current $z$ determines that prefix in temporary workspace; append the actual marker, then write its rank in the new $W_b$ on continue, or its canonical rank in the entire new $\mathcal S_b$ on first-freeze. On a new zero-completion cell write 0. A dead cell cannot acquire a positive completion by extension, since the possible suffixes split by the next marker. Thus an accepted history never loses a required distinction through that default. Invalid formal addresses default to 0; seed acquisition, non-markers and previously frozen paths hold. The root value is 0, and all first-freeze writes precede the latch. Here no terminal leaf occurs; the original supplier's actual-Stop block rule remains its terminal definition. Finite tables can evaluate these functions using only allowed transaction inputs, with every temporary prefix cleared afterward. Their preparation, storage, addressing and workspace are separately paid. This gives a total finite blind program, without claiming a small bound or equality with $W$, and leaves the decoder unchanged on all integers. All source witnesses above have positive mass at each original depth, so the same proof works for any single common depth prior.
+
+For divergence, the central binomial coefficient is the largest coefficient in $(1+X)^a$, as follows from the adjacent-coefficient ratio. Summing all $a+1$ coefficients therefore gives
+
+$$
+W\ge\frac{2^a}{a+1}>\frac{H}{4(a+1)}.
+$$
+
+Also $n=4H+2a\le6H$ and $a\le\log_2 H=k\log_2 3$. Thus
+
+$$
+\frac{D_{\rm blind}}{D\sqrt n}
+\ge\frac{W}{2\sqrt n}
+>\frac{\sqrt H}{8\sqrt6(a+1)}
+\ge\frac{3^{k/2}}{8\sqrt6(k\log_2 3+1)}
+\longrightarrow\infty.
+$$
+
+The endpoint $a=2$, $W=2$ uses the single-edge schedule and still satisfies every finite-instance claim; no large-parameter assumption was used for completeness, selected-cell control or the blind lower bound. This disproves a degree-independent bound $D_{\rm blind}\le C D\sqrt n$ for all the original instances. It leaves intact the fixed-degree and seed-order-dependent bounds of §112 and the explicitly conditional bounds of §114. $\square$
+

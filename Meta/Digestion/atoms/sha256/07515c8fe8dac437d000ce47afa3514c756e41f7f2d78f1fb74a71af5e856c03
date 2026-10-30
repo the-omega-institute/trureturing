@@ -1,0 +1,43 @@
+**Theorem 4.2 (initialization-preserving service equivalence).** Fix $b$ and any two parameters $p=(C,S)$ and $p'=(C',S')$ in $\mathcal P$. Their entire old services from the actual zero entrance are equivalent. Every common adaptive policy has exactly the same acquired command/reply record, stopping behavior and observer outputs on both sources. With a common random tape the equality holds pointwise in the tape; consequently every defined randomized acquired-record law is the same.
+
+**Proof.** Write $T_p=Q_pT_0Q_p^{\mathsf T}$ and set
+
+$$
+U=Q_{p'}Q_p^{\mathsf T}.
+$$
+
+Then
+
+$$
+UT_p=T_{p'}U,\qquad
+Ue_{\ell_j}=e_{\ell_j},\qquad
+e_{\ell_j}^{\mathsf T}U=e_{\ell_j}^{\mathsf T},\qquad U0=0.
+\tag{CL.13}
+$$
+
+Couple native fields by $x'=Ux$. The initial fields satisfy this relation. Every old operation preserves it and its full reply:
+
+- Reset gives the two zero fields and the same acknowledgement.
+- Add$(j,u)$ gives $x'+u e_{\ell_j}=U(x+u e_{\ell_j})$ and the same acknowledgement.
+- Tick gives $T_{p'}x'=UT_px$ and the same acknowledgement.
+- Read$(j)$ gives $e_{\ell_j}^{\mathsf T}x'=e_{\ell_j}^{\mathsf T}x$ and changes neither field.
+- Hold leaves the relation unchanged, prevents further advancement and gives the same acknowledgement.
+
+The valid command and input domains in Definition 1.2 are parameter-independent. All supplied calibration and capability roles correspond, so there is no differing legality or successful-call output to omit.
+
+Induct on the acquired record. Equal previous records, equal common external inputs and equal current observer memory make a common deterministic observer choose the same next command, rational pulse or stopping decision. The one-operation calculation gives the same next reply and corresponding next fields. The observer therefore writes the same next record and memory. The induction includes any finite number of local calculations between calls. If a policy never stops, every finite prefix still agrees.
+
+For a randomized observer, fix its complete random tape and use the same tape on both sides. Its decisions then satisfy the deterministic argument. Thus the record maps are identical at every tape, including any termination/output coordinates. Pushing forward any common tape law gives equal record laws whenever these maps are measurable. The bad-source choice does not depend on the tape. $\square$
+
+Equivalently, every multiport Markov matrix and transfer function of the old interface agree:
+
+$$
+HT_p^kB=HT_0^kB\quad(k\ge0),\qquad
+H(zI-T_p)^{-1}B=H(zI-T_0)^{-1}B.
+\tag{CL.14}
+$$
+
+The resolvent identity holds as a matrix of rational functions. These formulas follow directly from (CL.13); Theorem 4.2 additionally checks the authentic initial field, Reset, inputs, all replies and adaptive records. The actual sources can have different native fields, related by $U$ rather than equality.
+
+This is the same mature distinction between native graph and realization coordinates used in [P, Counterexample 42.2][P] and [Process Geometry, §§17.2–17.4][PG]. The extra content here is that the fixed ports are the entire true leaf set for every member, with the same known order, positive links, connected cyclic graphs and full joint reachability/observability. Neither an unseen component nor an unobservable mode explains the equality.
+

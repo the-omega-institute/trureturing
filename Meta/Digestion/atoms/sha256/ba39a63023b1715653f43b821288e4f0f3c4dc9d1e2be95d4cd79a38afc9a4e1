@@ -1,0 +1,32 @@
+**定理 9.2（同一实际 H4 的具体十六槽系统）。** Introduce a real $Y$, a response variable $z_v$ for each nonempty chronological word $v\in\{M,J\}^{\le3}$, and two slots $\theta_{w,0},\theta_{w,1}$ for each $w\in\{M,J\}^3$. For a nonempty prefix $v=E_1\cdots E_k$, let $A_v=E_k\cdots E_1D$. Impose the following simultaneous conditions:
+
+1. Every slot satisfies (9.1), and each leaf pair has $\Delta(\theta_{w,0},\theta_{w,1})>0$.
+2. Every slot satisfies
+
+$$
+O_1(M)=1,\quad O_2(M^2)=23/7,\quad O_3(B)=331/35,\quad O_4(D)=Y.
+\tag{9.4}
+$$
+
+3. For each slot below a leaf $w$, and each nonempty prefix $v$ of $w$, require
+
+$$
+O_{4+|v|}(A_v;\theta_{w,\epsilon})=z_v\qquad(\epsilon=0,1).
+\tag{9.5}
+$$
+
+Existential satisfaction of this rational polynomial system is equivalent to
+
+$$
+\exists Y\in\mathbb R:\quad L_3(\mathcal F(H_4(Y)),H_4(Y)).
+\tag{9.6}
+$$
+
+There are $16\cdot7+14+1=127$ real coordinates and all constraints have total degree at most two after clearing fixed rational denominators. The sixteen slots need not represent sixteen distinct targets; no distinctness between different leaves is required.
+
+Proof. Given a solution, take the union of its leaf pairs. At a prefix use the single response $z_v$ required of every descendant slot. Both action extensions have their specified descendant subfamilies, and each leaf contains a distinct pair. Induction upward therefore gives $L_3$ for this union and then for the unrestricted parent fiber. Every internal selected child contains a descendant distinct pair, so stopping there also fails.
+
+Conversely unfold (1.3) three times and choose a distinct pair in each terminal child. Each chosen target is a fixed world already satisfying all its ancestor equalities. Use the selected actual response at each prefix as $z_v$. The target parametrization gives all slots and all equations (9.4)–(9.5). No independent terminal fitting is permitted by those shared prefix variables.
+
+Equivalently, the elementary finite-horizon witness induction bounds a depth-$s$ binary failure certificate by $2^{s+1}$ fixed targets: two targets at depth zero; at greater depth take the union of certificates in one selected losing child for each action. Upward monotonicity preserves each child after taking the union. This standard finite-tree argument is used here only to explain the concrete slot bound, not as a distinct general result. Fifth responses need not be common across all sixteen slots; only descendants of the same chosen prefix share its actual response. The same holds for sixth responses. All cubic shapes, signs, roots and drifts remain in (9.1)–(9.5). ∎
+

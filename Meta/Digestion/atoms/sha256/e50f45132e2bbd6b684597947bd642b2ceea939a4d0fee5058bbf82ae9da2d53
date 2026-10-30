@@ -1,0 +1,44 @@
+### 14.1. Worlds, strip coordinates and the reused interfaces
+
+Retain the entire original world space (13.1), the acquired word
+$J,M,J,M,M,M$, and the readings $(0,24,147/5,24,18,p,v)$ at the
+original clocks zero through six. Thus $P=P(r,b)$ has $0<r<1$,
+$b>0$, rank one and trace one; every world has its own arbitrary
+real constant $d$ and one nonzero real polynomial $g$ of degree at
+most three. The alternative $m(W)$ is the immediately read atomic
+$M$ at clock seven, as in (12.2). Write
+
+$$
+\begin{gathered}
+w=v-\frac{46}{25}p,\\
+\mathcal S=\left\{(p,v):-534\le p\le-457,\quad
+ -\frac{1877}{50}\le w\le-\frac{3749}{100}\right\}.
+\end{gathered}
+\tag{14.1}
+$$
+
+Here $C(p,v)$ still means all complete original worlds at that base,
+and $C_{\rm reg}(p,v)$ means exactly those with $D_s\ne0$ in
+(12.5). The letter $\mathcal S$ distinguishes this strip from the
+smaller rectangle $\mathcal B$ in (12.4). In particular no bounded
+source class is part of the definition of $C$ or $C_{\rm reg}$.
+
+The necessary carrier $R$, with its exact polynomial quotients formed
+before specialization, is precisely (12.10)–(12.12). Every regular
+world satisfies $R(x,p,v)=0$ at $x=n/U>0$ by the source identity
+(12.13), even when $A=0$ or $F_0=0$. The inverse (12.8)–(12.9),
+equivalently all-response geometry, Definition 30.1 and Lemma 30.2,
+is injective on complete worlds in $(x,d)$ for every $p\ne24$.
+Its guards are $d\ne24$, $H_1\ne0$, $\chi>0$, $U>1$ and the
+original strict source inequalities; it does not assume $d\ne0$.
+Every base in (14.1) has $p\ne24$.
+
+For the selected pair, $q$, $(X,Y,K_{\rm sec})(q)$ and $W_\pm(q)$
+mean exactly IX (24.6), (25.2) and Theorems 26.1–28.1. Their whole
+polynomial and own constant drift are the lifts (12.6), with the
+same original clock. IX Theorem 28.1 supplies their existence,
+distinction, equal $J$ responses and unequal $M$ responses for every
+$0<q<q_*$. Theorem 13.1 and (13.24) exclude every singular companion
+on precisely this strict interval. These inputs do not by themselves
+count the regular companions outside the smaller $Q$ of Theorem 13.2.
+

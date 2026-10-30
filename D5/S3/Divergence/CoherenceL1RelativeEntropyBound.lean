@@ -149,14 +149,14 @@ private def binaryPinch {n : ℕ} (P ρ : Matrix (Fin n) (Fin n) ℂ) :=
     (fun b : Bool => if b then P else 1-P)
     (fun b : Bool => (if b then P else 1-P)ᴴ) ρ
 
-private def reflection {n : ℕ} (P : Matrix (Fin n) (Fin n) ℂ) := (2 : ℂ) • P - 1
+def reflection {n : ℕ} (P : Matrix (Fin n) (Fin n) ℂ) := (2 : ℂ) • P - 1
 
-private theorem reflection_hermitian {n : ℕ} (P : Matrix (Fin n) (Fin n) ℂ)
+theorem reflection_hermitian {n : ℕ} (P : Matrix (Fin n) (Fin n) ℂ)
     (hP : P.IsHermitian) : (reflection P).IsHermitian := by
   change ((2 : ℂ) • P - 1)ᴴ = (2 : ℂ) • P - 1
   simp [Matrix.conjTranspose_sub, Matrix.conjTranspose_smul, hP.eq]
 
-private theorem reflection_unitary {n : ℕ} (P : Matrix (Fin n) (Fin n) ℂ)
+theorem reflection_unitary {n : ℕ} (P : Matrix (Fin n) (Fin n) ℂ)
     (hP : P.IsHermitian) (hPP : P * P = P) : reflection P ∈ Matrix.unitaryGroup (Fin n) ℂ := by
   have hp : IsStarProjection P := ⟨hPP, hP.isSelfAdjoint⟩
   simpa only [reflection, Matrix.unitaryGroup, two_smul, two_mul] using
@@ -350,7 +350,7 @@ private theorem rowL2_le_rowL1 {n : ℕ} (ρ : Matrix (Fin n) (Fin n) ℂ) (k : 
   simpa only [PiLp.norm_single, PiLp.norm_eq_of_L1, PiLp.toLp_apply] using
     norm_sum_le (Finset.univ) (fun i => PiLp.single 2 i (v i))
 
-private theorem coherenceL1_eq_twice_upper {n : ℕ} (ρ : Matrix (Fin n) (Fin n) ℂ)
+theorem coherenceL1_eq_twice_upper {n : ℕ} (ρ : Matrix (Fin n) (Fin n) ℂ)
     (hρ : ρ.IsHermitian) : l1Coherence ρ = 2 * ∑ k, ‖WithLp.toLp 1 (fun j : Fin n => if k < j then ρ k j else 0)‖ := by
   have hnorm (i j : Fin n) : ‖ρ i j‖ = ‖ρ j i‖ := by
     have h := congrArg (fun A : Matrix (Fin n) (Fin n) ℂ => A i j) hρ.eq
@@ -394,7 +394,7 @@ open D5.S3.Quantum.Foundation.FiniteTraceDistance
 private theorem basisVector_sq {n : ℕ} (k : Fin n) : star ((Pi.single k (1 : ℂ))) ⬝ᵥ (Pi.single k (1 : ℂ)) = 1 := by
   simpa only [dotProduct_single_one, Pi.star_apply, Pi.single_eq_same, star_one]
 
-private theorem vector_dot_star {n : ℕ} (v : Fin n → ℂ) : v ⬝ᵥ star v = ((∑ j, ‖v j‖ ^ 2 : ℝ) : ℂ) := by
+theorem vector_dot_star {n : ℕ} (v : Fin n → ℂ) : v ⬝ᵥ star v = ((∑ j, ‖v j‖ ^ 2 : ℝ) : ℂ) := by
   simp only [dotProduct, Pi.star_apply, Complex.star_def, Complex.mul_conj, Complex.normSq_eq_norm_sq,
     Complex.ofReal_sum, Complex.ofReal_pow]
 

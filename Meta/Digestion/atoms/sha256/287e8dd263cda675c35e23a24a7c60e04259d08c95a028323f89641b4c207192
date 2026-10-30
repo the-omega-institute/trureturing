@@ -1,0 +1,23 @@
+**Lemma 61.3 (paired runs with a common tape).** Fix a compatible
+installation, $p\in V_K$, the types at all other leaves and one fair-bit
+tape. Up to the first well-formed $P/S$ request directly targeting $p$,
+the two runs with opposite entry types at $p$ have identical accessible
+traces, local choices and consumed-bit prefixes. If both runs return
+correct entry words, each must make such a request, and their first
+such request has the same kind.
+
+Proof. With the tape fixed the controller is deterministic. Lemma 57.2's
+cases still exhaust every possible earlier source observation: a strict
+ancestor is a permanent branch; a strict logical descendant is absent
+in both variants; an incomparable cone has identical content and edits;
+unsupported frames have fixed replies. In particular, targeting the
+material beta marker's address reads no extra logical position. Local
+computations and random-service calls also agree because their supplied
+inputs and the consumed tape prefixes agree. Induction preserves the
+paired relation and the common control trace. Incomplete frames disclose
+no additional reply. If either run returned before a direct request,
+the other would return the same word on the same finite trace. Both
+words cannot be correct. The first direct request is therefore present
+on every tape on which both runs return correctly, and its kind agrees.
+$\square$
+

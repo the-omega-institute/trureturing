@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:4f076897e869733b394d0a147aa00d28197176083aac32ba8885a67fc836c39d
+  normalized_sha256: sha256:4f076897e869733b394d0a147aa00d28197176083aac32ba8885a67fc836c39d
+cas_ref: sha256:4f076897e869733b394d0a147aa00d28197176083aac32ba8885a67fc836c39d
+coverage_gids:
+  - gid: D5/S3/Topology/CompactMidpointInterval.compact_midpoints_isometric_interval
+    target_statement_id: sha256:4eb14ac51a721db5001f7c71803971f8e906097875f77c5e4ddfd5468c3173e1
+receipts:
+  unresolved_subitems: []

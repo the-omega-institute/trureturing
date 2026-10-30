@@ -1,0 +1,11 @@
+**Corollary 17.1 (each fixed interior fiber has the sharp full degree budget).** Fix $T\ge2$, $b\in I_T$, and any fixed known allowed $D$. For each integer $0\le s\le k$, the optimal uniform continuation budget over all known gains of actual degree $s$, with the entire $\mathcal F_b$ retained, is exactly $s+2$. Over all nonzero gains of degree at most $k$ it is exactly $k+2$. These statements hold for every fixed interior $b$, including $b\ne\phi$.
+
+**Proof.** Among the first $s+2$ future integer clocks at least two are nonroots, so $r_2\le s+2$. Theorem 16.1 gives the upper bound. For the matching lower bound take the single common gain
+
+$$
+H_s(t)=c\prod_{j=2}^{s+1}(t-(T+j)),\qquad c\ne0.
+\tag{17.1}
+$$
+
+The empty product for $s=0$ is $1$. This gain has actual degree $s$, with $r_1=1$ and $r_2=s+2$. Since $b\in I_T$, the second branch of Theorem 16.1 proves that its uniform optimum is $s+2$. Its fixed collision worlds use the same arbitrary allowed $D$. Taking $s=k$ proves the degree-at-most-$k$ lower bound, and root counting proves its upper bound. Coefficients of either sign are allowed. The construction places its zeros after the first useful read; zeros before that read can instead yield the saving below. For comparison, the already established exterior budgets of Theorem 11.1 are $s+1$ and $k+1$ for each fixed $b\notin I_T$. $\square$
+

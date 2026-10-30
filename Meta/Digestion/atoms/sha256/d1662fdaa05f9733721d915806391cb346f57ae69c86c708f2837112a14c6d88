@@ -1,0 +1,84 @@
+**Theorem 19.2 (the complete-service necessary stopping condition).**
+A robust pointwise-finite policy for Definition 19.1 implies that $f$
+is locally constant on $S$ in its relative sup-norm topology:
+
+$$
+\forall x\in S\ \exists\epsilon>0\
+ \forall z\in S:\quad
+ \|z-x\|_\infty<\epsilon\ \Longrightarrow\ f(z)=f(x).
+\tag{19.1}
+$$
+
+This allows arbitrary adaptive rational Adds, Reset, growth with its
+actual attached Tick, further Ticks, Holds, malformed complete probes,
+range and growth refusals, and arbitrary finite precision requests.
+In particular exact entrance identity cannot be robustly acquired
+pointwise finitely on all of $\mathbb Q^{V_t}$.
+
+Proof. Fix $x$ and a policy tape. At every enabled Read choose its
+lower legal reply
+$k=\lfloor2^pa(x)\rfloor$, where $a(x)$ is the actual sampled scalar
+at that prefix. Both bits are available after every prefix by
+Definition 8.1, so this specifies a legal path, not an independent-noise
+assumption. Robust pointwise finiteness gives a finite terminating
+complete record on this path.
+
+Freeze its finitely many acquired inputs, replies and policy decisions.
+Along these fixed inputs the field at each prefix is a continuous
+affine function of an alternative entrance $z\in\mathbb R^{V_t}$.
+Initially it is $z$; Add is a fixed translation, Tick a fixed linear
+map, Reset a constant map, raw growth a fixed zero inclusion followed
+in C by the fixed new-tree matrix, and Read/Hold/refusal leave it
+unchanged. All matrices may have changed finite dimensions, but the
+entrance dimension remains fixed. Geometry, guard outcomes and range
+are determined by the same input frames and initial geometry.
+The syntax/precision parser also depends only on acquired bits.
+
+For each recorded Read the identical integer $k$ is legal exactly when
+
+$$
+2^pa(z)\in[k-1,k+1).
+\tag{19.2}
+$$
+
+At $z=x$ the lower-report choice has
+$k\le2^pa(x)<k+1$, strictly inside the larger open interval
+$(k-1,k+1)$. Continuity therefore gives an open entrance neighborhood
+in which that same integer remains legal, even if the baseline scaled
+value is exactly the integer $k$. Intersect these finitely many open
+neighborhoods; if there were no Reads take the whole entrance space.
+
+Every rational $z$ in that neighborhood and $S$ admits exactly this
+complete finite record. This statement follows inductively, rather
+than presupposing the policy path: equal earlier replies force equal
+next requests and local decisions; (19.2) permits the next recorded
+Read, with its own legal bit at $z$; other replies are the same fixed
+ones. Identical finite integer values have identical complete frames,
+End, local acknowledgement and Return. Proper input prefixes, busy
+serialization and all input-determined refusal branches agree as well.
+There is no extra field-dependent public observation by Definition 19.1.
+Thus the same stop and finite output occur. Robust correctness at
+every such $z$ forces $f(z)=f(x)$, proving (19.1).
+
+Identity output would require this neighborhood to contain no other
+member of $S$. No rational point of the nonzero-dimensional
+$\mathbb Q^{V_t}$ is isolated: perturb one coordinate by an arbitrarily
+small nonzero rational. Thus identity fails (19.1) there.
+The tree always has at least one vertex, including alpha.
+Fixing each random tape proves the pathwise randomized statement.
+$\square$
+
+The finite-information principle is classical, including
+[Schröder, *Admissibly Represented Spaces and QCB-Spaces*,
+arXiv:2004.09450v1, Proposition 2.4](https://arxiv.org/html/2004.09450v1)
+and the equality argument in
+[Finite Start Predictive Memory, Theorem 8.4](RECURSIVE_RELATIONAL_OBSERVATION_FINITE_START_PREDICTIVE_MEMORY.md).
+The source-specific obligation here is (19.2) along the entire adaptive
+C service. The proof does not assert continuity of deterministic floor
+at its integer walls. The two legal outputs provide the open slack.
+The existing
+[finite-prefix theorem](../../../D5/S3/Observer/SymbolicStability/FinitePrefixLocalConstancy.lean)
+and its [Scribe](../../../Blueprint/D5/S3/Observer/SymbolicStability/FinitePrefixLocalConstancy.scribe.cs)
+combine given off-boundary neighborhoods; they do not establish this
+C report/affine-prefix correspondence.
+

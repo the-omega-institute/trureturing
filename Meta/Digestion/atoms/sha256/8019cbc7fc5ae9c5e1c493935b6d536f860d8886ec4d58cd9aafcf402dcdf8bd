@@ -1,0 +1,58 @@
+## 154. A fixed-source relation distinguished by joint local access
+
+For a fixed $q,\beta$, compare $\rho$ with
+$\overline\rho=\mathcal D_A(\rho)$ from §145, not with the other native
+model. In the aligned proof basis their effective factors are $\sigma$
+and $\overline\sigma=\operatorname{diag}(a,b,c,d)$, and they have the
+same B spectator. Their single-copy SSR product-observable statistics agree:
+
+$$
+\operatorname{Tr}[\rho(X_A\otimes Y_B)]
+=\operatorname{Tr}[\overline\rho(X_A\otimes Y_B)]
+\tag{154.1}
+$$
+
+for the allowed single-copy local observables. Applying the full common
+filter to $\overline\rho\otimes\overline\rho$ retains precisely the same
+diagonal weights and success probability as for $\rho\otimes\rho$.
+Its active block, however, is $r_0^2\operatorname{diag}(ad,bc,bc,ad)$;
+there is no surviving middle coherence. The spectator blocks are unchanged.
+
+In the selected sector define the Hermitian observable
+
+$$
+W=|A_1b_2\rangle\langle A_2b_1|
+ +|A_2b_1\rangle\langle A_1b_2|,
+\tag{154.2}
+$$
+
+extended by zero on Bob's spectator flags. For this fixed source it can be
+measured through local dual-rail correlations:
+$W=(X_A\otimes X_b+Y_A\otimes Y_b)/2$ on the active space.
+Here $X$ and $Y$ are the rail Pauli operators inside a number-one space;
+Bob's versions vanish on the spectator flags. These observables preserve
+local total number and require joint local access to the preparations.
+
+In the literal CAR convention (149.4), the two normalized conditional
+expectations are exactly
+
+$$
+\langle W\rangle_{\rho\text{ product},F}
+=-\frac{2r_0^2\mu}{P_{\mathrm{full}}},\qquad
+\langle W\rangle_{\overline\rho\text{ product},F}=0.
+\tag{154.3}
+$$
+
+For $\mu>0$ they differ; entanglement is not needed merely to distinguish
+them. An explicit application of (149.5) reverses the first sign.
+The observable is fixed for the chosen aligned source; this is not an
+assertion of a common raw $q$-independent extractor or analyzer.
+
+This finite pair shows why the stated single-copy operational equivalence
+cannot simply be composed when the operation menu is enlarged to joint
+local access. It does not assert that a tensor-compatible quotient of
+whole processes was already defined by the single-copy observation rule.
+Nor is $\overline\rho$ identified with $\rho_{q_a,\beta}$: at $\log7$,
+the allowed Alice occupations $115/528$ and $1/4$ already distinguish the
+two native models, as (145.3) records.
+

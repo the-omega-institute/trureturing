@@ -1,0 +1,27 @@
+## 13. Classical mathematical attribution
+
+The fixed-node interpolation in Lemma 7.2 uses [1]. The Bernstein
+basis conversion and positivity argument in Lemma 8.1 use [2].
+Lemma 9.1 uses Descartes' rule [3] and the intermediate value theorem
+[4]; the global ordering uses the mean value theorem [4]. Analytic
+parametrization and the analytic inverse use [5]. The specific
+polynomials, their exact coefficient extrema, the resulting global
+negative-sheet terminal-J coordinate, and its algebraic image are the
+model-specific conclusions proved in Sections 7–11. These are ordinary
+mathematical proofs, with no formal-kernel or literature-priority claim.
+
+[1] Jean-Paul Berrut and Lloyd N. Trefethen, “Barycentric Lagrange
+Interpolation,” *SIAM Review* **46** (2004), 501–517, §2.
+
+[2] Rida T. Farouki, “The Bernstein polynomial basis: A centennial
+retrospective,” *Computer Aided Geometric Design* **29** (2012), 379–419.
+
+[3] René Descartes, *La Géométrie* (1637), Book III, rule of signs.
+
+[4] Walter Rudin, *Principles of Mathematical Analysis*, third edition,
+McGraw-Hill, Theorems 4.23 and 5.10.
+
+[5] Steven G. Krantz and Harold R. Parks, *A Primer of Real Analytic
+Functions*, second edition, Birkhäuser, implicit and inverse function
+theorems for real analytic functions.
+

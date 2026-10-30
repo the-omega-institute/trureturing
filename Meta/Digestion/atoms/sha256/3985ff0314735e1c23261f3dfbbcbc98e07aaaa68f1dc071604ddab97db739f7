@@ -1,0 +1,85 @@
+**Lemma 10.13 (Nonzero exceptional polynomial and both embeddings).**
+After substituting $v=s_t(p)$ there is a nonzero
+$e(p)\in\mathbb K[p]$ such that, whenever $e(p)\ne0$, all of the
+following conclusions survive specialization: $\mathscr R$ has
+degree eighteen and is squarefree;
+
+$$
+\gcd(\ell_1,\mathscr R H)=\gcd(\mathscr R,HD)
+=\gcd(H,Z_0)=\gcd(H,D)=1;
+\tag{10.36}
+$$
+
+and the characteristic polynomial of multiplication by the actual
+terminal expression in the eighteen-dimensional carrier algebra
+has nonzero discriminant. For each sign the set
+
+$$
+E_\sigma=\{p\in\mathbb R:\iota_\sigma(e)(p)=0\},\qquad
+\iota_\sigma:t\mapsto\rho_\sigma,
+\tag{10.37}
+$$
+
+is finite and consists of real algebraic numbers.
+
+Proof. Work first over $\mathbb K(p)$. Lemma 10.12 proves that
+the coefficient of $x^{18}$ in $\mathscr R$ is nonzero and that
+the resultants expressing every gcd in (10.32) are nonzero.
+Indeed their defining determinant expressions live in the ring
+$\mathcal A[p]$ of (10.21), or in a localization by elements
+with nonzero image at $(179,t=7,p=1)$. A zero element of this
+ring would have zero image. Thus the nonzero reductions establish
+the corresponding characteristic-zero nonvanishings. The degree
+bound in Lemma 10.9 then makes the degree exactly eighteen.
+
+Write $\widehat R$ for the monic associate of $\mathscr R$ and use
+
+$$
+\mathcal B=\mathbb K(p)[x]/(\widehat R),\qquad
+d_R=-\ell_0/\ell_1,\qquad
+M_R=d_R+(3+2x)N_7(x,d_R)/D.
+\tag{10.38}
+$$
+
+The gcds give the inverses of $\ell_1$ and $D$ in $\mathcal B$.
+Define its multiplication matrix by the same remainder-column rule
+as in Lemma 10.12. Its entries are in $\mathbb K(p)$, and its
+characteristic polynomial $Q_{\rm term}(Y)$ specializes to $Q_*$.
+This specialization is legitimate: monic division uses the leading
+coefficient of $\mathscr R$, and the inverse computations use
+Bezout identities whose determinant denominators have nonzero
+reductions in (10.32). Localize $\mathcal A[p]$ at these finitely
+many nonzero-image elements before reducing. The squarefreeness of
+$Q_*$ then gives a nonzero discriminant of $Q_{\rm term}$ over
+$\mathbb K(p)$.
+
+Here is a precise construction of a sufficient $e$. Take the finite
+list consisting of the leading coefficient of $\mathscr R$, its
+squarefreeness resultant, the resultants in (10.36), and the
+discriminant of $Q_{\rm term}$. Include every denominator of the
+coefficients of the monic $\widehat R$, $d_R$, $M_R$, their
+multiplication matrix, and the Bezout identities for
+$(\ell_1,\mathscr R)$, $(\ell_1,H)$, $(\mathscr R,H)$,
+$(\mathscr R,D)$, $(H,Z_0)$ and $(H,D)$. The fixed numerical
+and coefficient-field denominators in (10.8), (10.17), (10.21)
+and (10.29) can be included as nonzero constant factors.
+Express each required nonzero rational function as a quotient of
+nonzero polynomials in $\mathbb K[p]$, and take the product of
+all their numerators and denominators, along with those coefficient
+and Bezout denominators. Only denominators of defined rational
+functions are included; zero coefficients introduce no zero factors.
+This product is a nonzero polynomial $e(p)$. All nonconstant
+inversions, all required leading coefficients, all Bezout identities
+and all nonvanishings are valid wherever $e(p)\ne0$.
+The localization argument above shows that these choices may all be
+made with nonzero reductions at the displayed specialization.
+
+Each $\iota_\sigma$ is injective by Lemma 10.8. It therefore maps
+$e$ to a nonzero polynomial over the real algebraic field
+$\mathbb Q(\rho_\sigma)$. Its real zero set is finite. Every such
+zero is algebraic over this number field and hence over $\mathbb Q$.
+This proves (10.37) for both real embeddings without requiring
+either finite-field point to be a real lift. The sets are sufficient
+supersets; neither minimality nor feasibility of their members is
+part of their definition. ∎
+

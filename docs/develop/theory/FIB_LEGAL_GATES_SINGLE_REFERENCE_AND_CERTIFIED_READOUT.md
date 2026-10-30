@@ -147,3 +147,74 @@ The next genuinely unfinished targets are tighter or optimal native routing cost
 - [RG02] T. Rudolph and L. Grover, *A 2 rebit gate universal for quantum computing*, arXiv:quant-ph/0210187 (2002). Establishes the distinction between real-amplitude computational universality and implementing arbitrary unitaries on an unchanged complex encoding. Its encoding is not implemented by this chapter.
 - [HRMS20] S. R. Howard, A. Ramdas, J. McAuliffe and J. Sekhon, *Time-uniform Chernoff bounds via nonnegative supermartingales*, Probability Surveys 17 (2020), 257-317, arXiv:1808.03204. Standard Ville/supermartingale tool, already attributed by dev C-121. The score correction, actual PVM compiler and pulse-to-statistics correspondence are derived here.
 - [WMBW26] G. Warttmann, F. Meinert, H. P. Buechler and S. Weber, *Suppressing crosstalk for Rydberg quantum gates*, Quantum 10 (2026), 2045, DOI 10.22331/q-2026-03-24-2045. Current primary context that local addressing errors require explicit physical treatment. Its pulse scheme or error rates are not assumed in the operator-norm contract above.
+
+<a id="v9-antiunitary"></a>
+
+## 7. Quantitative zero-address obstruction with classical feedback
+
+Keep the standard code J_m of Section 1 and the all-zero native input. Let K conjugate the legal computational-word basis, let Z_par|w>=(-1)^|w||w>, and put A=Z_par K. A is an antiunitary involution. Allow phase-zero pulses with arbitrary real angles, computational-word projection instruments, classical randomization, record-dependent choices of later allowed operations, and discarding classical records. A finite event of positive probability may also be postselected. Supply no other coherent ancilla, phase reference, encoding change or symmetry-breaking operation.
+
+### Theorem 7.1. Every such preparation is at trace distance at least one half from the encoded plus state
+
+For m>=1 define
+
+$$
+\rho_\pm=J_m\bigl(|\pm\rangle\langle\pm|\otimes|0\rangle\langle0|^{\otimes(m-1)}\bigr)J_m^\dagger.
+$$
+
+Every attainable normalized final state sigma, including after the allowed positive-probability postselection, obeys
+
+$$
+\operatorname{tr}(\sigma\rho_+)=\operatorname{tr}(\sigma\rho_-)\le\tfrac12,
+\qquad D(\sigma,\rho_+)=\tfrac12\|\sigma-\rho_+\|_1\ge\tfrac12.
+$$
+
+Proof. Each phase-zero H_i is real and changes word parity. Thus A H_i A^{-1}=-H_i; antiunitarity also conjugates -i, so A R_i(0,t) A^{-1}=R_i(0,t). Computational-word projectors commute with A. The unnormalized state in every history branch from the A-invariant all-zero input is therefore A-invariant. Random choices give nonnegative real weights. Adaptive choice of the next allowed operation preserves the same invariant in each branch; summing any accepted histories and normalizing by their positive probability preserves it too. Discarding a classical record just sums such states. Finally A rho_+ A^{-1}=rho_-, and their supports are orthogonal. Antiunitary conjugation preserves the real trace pairing of density matrices, so the two overlaps are equal and sum to at most one. The effect rho_+ has probability one on its target; the trace-distance effect bound gives the last inequality. QED.
+
+This argument concerns the whole legal output, including leakage from the code. It needs neither access to a phase-sensitive separating measurement nor a lower bound on postselection success probability. A coherent record processor outside the stated menu would require a new symmetry analysis.
+
+### Corollary 7.2. Deterministic channel obstruction and the exact address count
+
+Let Psi be any deterministic CPTP protocol from this zero-address menu, restricted at its input through J_m. Let Xi be any CPTP target from the m-qubit input space to the legal output space that sends the all-zero input to rho_+. Then
+
+$$
+\tfrac12\|\Psi\circ\operatorname{Ad}_{J_m}-\Xi\|_\diamond\ge\tfrac12.
+$$
+
+Proof. Evaluate the channel difference on the all-zero input. Theorem 7.1 gives trace norm at least one; the diamond supremum includes that input, even without a reference. QED.
+
+An example target is the encoded Hadamard action on the first data qubit. Theorem 3.1 supplies every known R_x/R_y/CZ circuit with one fixed data Y address, while Corollary 7.2 excludes zero addresses even approximately below this error. Hence the minimum address count for this fixed encoding and all-input action task is exactly one. The pulse costs remain the existing seven-pulse CY, twenty-one-pulse SWAP and formula (3.2), not a newly optimized compiler. This address minimum does not apply to the altered real-amplitude encoding of [RG02]. A normalized, input-dependent postselected map is generally nonlinear; Theorem 7.1 supplies its state bound, and no diamond norm is assigned to that normalized nonlinear map.
+
+<a id="v9-word-error"></a>
+
+## 8. Compiled-word error and final leakage, including references
+
+### Theorem 8.1. Operator error accumulates along the supplied ordered word
+
+Let V=V_L...V_1 and U=U_L...U_1 be unitary words on the same legal carrier, with
+||U_j-V_j||_op<=epsilon_j and epsilon=sum_j epsilon_j. Then
+
+$$
+\|U-V\|_{\rm op}\le\varepsilon,\qquad
+\|\operatorname{Ad}_U-\operatorname{Ad}_V\|_\diamond\le2\varepsilon.
+$$
+
+If the ideal word is the compiler output V J_m=J_m C and P_m=J_m J_m^dagger, then for every normalized encoded input with every untouched external reference R,
+
+$$
+\operatorname{tr}\bigl[((I-P_m)\otimes I_R)
+ (U\otimes I_R)(J_m\otimes I_R)\rho(J_m^\dagger\otimes I_R)(U^\dagger\otimes I_R)\bigr]
+ \le\min(1,\varepsilon^2).
+$$
+
+Also the implemented encoded channel differs from the ideal clean output Ad_(J_m C) by unhalved diamond norm at most min(2,2epsilon).
+
+Proof. Telescope the product difference as
+
+$$
+U-V=\sum_{j=1}^L U_L\cdots U_{j+1}(U_j-V_j)V_{j-1}\cdots V_1.
+$$
+
+All surrounding factors have norm one, giving the first bound. For every reference, split U X U^dagger - V X V^dagger into (U-V)XU^dagger + V X(U^dagger-V^dagger); the trace-norm ideal property gives at most 2epsilon||X||_1, unchanged by tensoring identities. This proves the diamond bound. Since (I-P_m)VJ_m=0, the leakage amplitude is (I-P_m)(U-V)J_m, of norm at most epsilon, also with a reference. Squaring and averaging pure inputs gives the probability bound for every mixed rho. Restricting the input isometry gives the encoded channel bound. QED.
+
+Only the final ideal word is required to return the separators. The intermediate ideal entangling pulse may leave the code. Formula (3.2) gives, for a uniform per-pulse unitary error delta, epsilon<=L delta and final leakage<=(L delta)^2 (capped at one). This consumes a known source circuit and specified real angles. It gives no generic efficient synthesis of an arbitrary exponentially described matrix, noise threshold, fault-tolerance theorem or hardware calibration. These bounds assume unitary operator errors on the common carrier; general noisy or trace-decreasing implementations need their own channel/instrument error contract. Matrix phases used in the operator comparison are fixed consistently; this is not a procedure for controlling an unknown black box.

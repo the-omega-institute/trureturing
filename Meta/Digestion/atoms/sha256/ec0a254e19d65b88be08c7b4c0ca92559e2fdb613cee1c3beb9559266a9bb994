@@ -1,0 +1,55 @@
+**Theorem 9.2 (Limit and exact eventual membership of asymptotically optimal sequences).** Fix an integer $\ell\ge1$, and use the notation $E^\ast(n,\ell)$ of Proposition 4.7. Then
+
+$$
+\lim_{n\to\infty}nE^\ast(n,\ell)=2.
+$$
+
+Furthermore, let $G_n\in\mathcal G(n,\ell)$ for every sufficiently large integer $n$, and suppose
+
+$$
+nE(G_n)\longrightarrow2.
+$$
+
+Then, for all sufficiently large $n$, $G_n$ is exactly $K_{2,\ell+1}$ with all remaining vertices attached as leaves only to its two nonadjacent hubs. If $D_{1,n},D_{2,n}$ are the hub degrees, in either order, then
+
+$$
+\frac{D_{1,n}}n\longrightarrow\frac12,\qquad
+\frac{D_{2,n}}n\longrightarrow\frac12.
+$$
+
+In particular these conclusions apply whenever $E(G_n)-E^\ast(n,\ell)=o(1/n)$. Exact equality or a bounded difference between the two leaf counts is not required of these sequences. All limits in this theorem keep $\ell$ fixed. Stance: repo-derived.
+
+**Proof.** By Theorem 8.2, for all $n\ge N(\ell)$ the minimum is attained at $H_{n,\ell}$. Its hub degrees are $\lfloor m/2\rfloor$ and $\lceil m/2\rceil$, where $m=n-1+\ell$, and each divided by $n$ tends to $1/2$. We have already shown $E(H_{n,\ell})\le3/n$, so Theorem 7.1 supplies the degree bounds needed in Lemma 9.1. That lemma yields
+
+$$
+nE^\ast(n,\ell)
+=\frac12\left(\frac n{\lfloor m/2\rfloor}
++\frac n{\lceil m/2\rceil}\right)+O_\ell(1/n)
+\longrightarrow2.
+$$
+
+For the general sequence, $nE(G_n)\to2$ implies $E(G_n)\le3/n$ eventually. Since $\ell$ is fixed, also $n\ge N(\ell)$ eventually, and Theorem 7.1 proves the exact eventual membership assertion. Drop the subscript $n$ from the hub degrees and put
+
+$$
+\delta_n=\frac{D_1-D_2}{m},\qquad
+D_1+D_2=m,\qquad |\delta_n|<1.
+$$
+
+Lemma 9.1 supplies a remainder $R_n$ with $nR_n\to0$ and gives
+
+$$
+nE(G_n)-nR_n
+=\frac n2\left(\frac1{D_1}+\frac1{D_2}\right)
+=\frac{2n/m}{1-\delta_n^2}.
+$$
+
+The left side tends to $2$, and $2n/m\to2$. Thus
+
+$$
+1-\delta_n^2
+=\frac{2n/m}{nE(G_n)-nR_n}\longrightarrow1,
+\qquad \delta_n\longrightarrow0.
+$$
+
+It follows that $D_i/n=(m/(2n))(1\pm\delta_n)\to1/2$. Finally, if $E(G_n)-E^\ast(n,\ell)=o(1/n)$, the first assertion implies $nE(G_n)\to2$, proving the stated consequence. ∎
+

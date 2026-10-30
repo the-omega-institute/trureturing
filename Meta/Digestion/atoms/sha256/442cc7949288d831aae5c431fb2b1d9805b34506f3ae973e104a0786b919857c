@@ -1,0 +1,21 @@
+**Theorem 71.3 (dynamics compatibility at the declared cuts).** For every
+complete $Q_J$ transaction between synchronized outer Ready cuts, all four
+recovered dynamics agree with the represented successor table. This also
+holds for every finite composite of such transactions. Time's physical
+update contains two successful LAB events for a represented promotion and
+one event at $pL$ for a represented split.
+
+Proof. By Theorem 70.2 the physical endpoint is the encoding of exactly
+the next represented word. Each final view is its independently specified
+observation in Definition 71.1. Recovering before or after applying that
+observation therefore gives the same next word by Theorem 71.2. For
+Time, the actual calls add $P_p,S_p$ or $S_{pL}$, with their actual
+local/creation precedences; they do not add a single fictitious event
+at the virtual address in place of those real events. Negative cases
+add no successful-source event. This verifies compatibility also for
+that view. Induction gives the finite-composite statement. Intermediate
+inner returns need not lie in the image, as Proposition 70.3 exhibits.
+Private pending words, answer buffers, allocation identities and full
+control phases are outside the claimed view inverse even at cuts where
+the physical term happens to lie in the image. $\square$
+

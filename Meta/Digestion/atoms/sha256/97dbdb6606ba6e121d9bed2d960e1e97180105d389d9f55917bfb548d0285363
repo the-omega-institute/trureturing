@@ -1,0 +1,52 @@
+**Theorem 5.2 (source-dependent orthogonal side record is necessary).**
+For a fiber with $\ell\ge2$, assume the finite-specimen input on
+$D_{a,b}$ has the form
+
+$$
+\widetilde\rho_u^{(m)}
+=|\psi_u\rangle\!\langle\psi_u|^{\otimes m}
+ \otimes\eta_u\otimes\tau,
+\tag{5.3}
+$$
+
+where $\tau$ is source-independent and $E$ is a common finite-dimensional
+side register containing every source-dependent accessible record.  If an
+exact complete service exists, then
+
+$$
+\operatorname{supp}(\eta_u)\perp\operatorname{supp}(\eta_v)
+\quad(u\ne v),
+\qquad
+\dim E\ge K_{a,b}.
+\tag{5.4}
+$$
+
+Proof. The densities in (113.7) are strictly positive on every terminal
+cylinder and those cylinders partition $\Omega$; hence
+
+$$
+\langle\psi_u,\psi_v\rangle=\int\sqrt{f_uf_v}\,dM>0
+\quad\text{for all }u,v\in D_{a,b}.
+\tag{5.5}
+$$
+
+Run the exact epoch-zero traversal. Its classical transcript is different
+for every different ordered source because the four-valued address replies
+recover every constructor and label.  By Lemma 1.3, the complete input
+supports for two distinct sources must be orthogonal.  The support of (5.3)
+is
+
+$$
+\operatorname{span}\{\psi_u^{\otimes m}\}\otimes
+\operatorname{supp}(\eta_u)\otimes\operatorname{supp}(\tau).
+\tag{5.6}
+$$
+
+The first factors for $u$ and $v$ have positive inner product by (5.5).
+If the two side supports were not orthogonal, choose side vectors with a
+nonzero inner product; their tensor products in (5.6) would then have a
+nonzero inner product, contradicting exact output orthogonality.  Thus all
+$K_{a,b}$ nonzero side supports are pairwise orthogonal, so their dimensions
+sum to at least $K_{a,b}$ and $\dim E\ge K_{a,b}$.  The common factor $\tau$
+cannot alter this conclusion. $\square$
+

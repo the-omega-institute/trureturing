@@ -1,0 +1,2 @@
+**来源与形式化边界。** 正长度分类和角公式仍使用 Luo–Yang, *Volume and rigidity of hyperbolic polyhedral 3-manifolds*, [arXiv:1404.5365](https://arxiv.org/pdf/1404.5365)，以及混合匹配卷第 65、88 节的既有公式。无不动点有限对合的偶性是经典事实；第 27 节已有面签名转移的偶性，双公共边卷第 101.2 节已有另一框架下的轴向偶度。本节具体构造的是由短轴长度选出的低面槽与真正中槽出现的对应，再结合角区间排除所列形状族；不主张发现了新的通用奇偶原理。`EdgeStarTransitions.RawFacePairing` 提供无不动点面配对、互逆槽映射及原生全局边商；`PositiveFlatClassification` 提供真正/平坦二分。这里的实际低面槽应用、形状族排除及开邻域结论尚未获本节新增 Lean 内核验证。本节没有声称穷尽文献或世界范围优先权，也不把书面证明视为 registration 或 admission 门禁的替代。
+

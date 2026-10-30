@@ -1,0 +1,5 @@
+**Theorem 79.3 (original entry and actual advanced current have different criteria).** Under precisely the fixed-geometry acquisition policy of Definition 79.1:
+
+1. Uniform exact original-entry reporting is possible if and only if $g=1$.
+2. Uniform exact reporting of the whole actual final current field, or installation of a self-contained predictor of its full original future service, is possible if and only if $g\le2$.
+

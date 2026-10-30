@@ -1,0 +1,35 @@
+### 159.4 Applying the source phase loss to future tasks
+
+Applying Theorem 113.5 to a scale-sensitive task gives
+
+$$
+\nu_\alpha=\nu_\beta=M,
+\qquad
+W(\alpha)=1,
+\qquad
+W(\beta)=\varphi.
+$$
+
+Consequently the target \(F(u)=W(u)\), or the full future scale response
+
+$$
+F_n(u)=W(\rho^n u)=\varphi^nW(u),
+$$
+
+does not factor through the \(\nu\)-only observation. The pair
+\((\alpha,\beta)\) is an explicit escape pair:
+
+$$
+\nu_\alpha=\nu_\beta,
+\qquad
+F_n(\alpha)\ne F_n(\beta)
+\quad(n\ge0).
+\tag{159.6}
+$$
+
+The quotient still supports the restricted action \(\nu\mapsto\nu\), since
+\(\nu_{\rho u}=\nu_u\). What fails is action closure for tasks that retain
+the acquired scale, INITIAL identity, or any legality condition depending
+on that scale. The pair \((\nu,W)\) is the boundary datum supplied by
+Theorem 113.5 that restores this phase on the attained finite-source image.
+

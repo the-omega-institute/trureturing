@@ -1,0 +1,48 @@
+**Theorem 10.6 (The exact future quotient for base-only outputs).**
+The declared task observes only the four bottom native edges and the
+lawfulness of each relative command, including the empty command. Two
+states in $\mathcal M=(0,L)\times\mathbb T^2$ have the same full behavior
+if and only if their $(\kappa,e^{i(u-v)})$ coordinates agree. Thus the
+behavioral quotient has exactly the topology and smooth structure (10.9).
+It has a smooth global section, while the common phase remains invisible.
+
+Proof. For a lawful command the single independent bottom coherence is
+
+$$
+z_\gamma=\sqrt{(\kappa+A)(L-\kappa-A)}
+ e^{i(u-v)+iB/2}.
+\tag{10.13}
+$$
+
+Its other bottom outputs are its copy and conjugates, followed by their
+fixed preparation rotations. The lawful domain (10.10) depends only on
+$\kappa$. Hence equality of $(\kappa,e^{i(u-v)})$ gives equality of all
+outputs and refusal symbols. In particular a common increment
+$(u,v)\mapsto(u+\lambda,v+\lambda)$ stays invisible after every command;
+(10.11) adds the same height-dependent common term to both candidates.
+
+Conversely the empty command fixes $e^{i(u-v)}$ and the positive magnitude
+$\sqrt{\kappa(L-\kappa)}$, leaving only the possible reflection
+$\kappa\leftrightarrow L-\kappa$. For any proposed pair of interior
+heights choose a sufficiently small nonzero $A$ so that the straight
+height command from zero to $A$ is lawful at both. This is a common
+command for that pair, not a claim of lawfulness on the whole fiber.
+Its two observations satisfy
+
+$$
+|z_A|^2-|z_0|^2=A(L-2\kappa)-A^2,
+\qquad
+\kappa=\frac{L-A-(|z_A|^2-|z_0|^2)/A}{2}.
+\tag{10.14}
+$$
+
+The identity follows by expanding
+$(\kappa+A)(L-\kappa-A)-\kappa(L-\kappa)$.
+Therefore identical behaviors force the same height. The case
+$\kappa=L/2$ already has only one reflected candidate.
+The circle coordinate then agrees by the empty output, proving necessity.
+Proposition 10.4 establishes the actual quotient topology and section.
+If the $02$ output is added to this task, its empty-command values already
+recover the full current state by (10.8), in agreement with Transport
+Theorem 9.7. $\square$
+

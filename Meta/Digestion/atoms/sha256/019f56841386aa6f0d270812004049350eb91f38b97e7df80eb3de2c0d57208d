@@ -1,0 +1,64 @@
+## 140. Principal-root normalization and the declared common cut
+
+For each metric use its positive principal square root $S_q=G_q^{1/2}$,
+normalize by $z=S_qx$, and then complexify the normalized real space to
+$\mathfrak h=\mathbb C^3$ with its standard Hermitian product. Define
+
+$$
+V_q=S_qT,\qquad \|V_q\|^2=1,\qquad
+H_q=S_q^{-1}L_\star S_q^{-1}=I_3-V_qV_q^*,
+\qquad \operatorname{spec}H_q=\{0,1,1\}.
+\tag{140.1}
+$$
+
+Here $*$ is complex adjoint; the displayed vectors are real. To obtain the
+rank-one formula, use $\pi_q^{\mathsf T}S_q^{-1}=T^{\mathsf T}S_q$ in
+$H_q=S_q(G_q^{-1}L_\star)S_q^{-1}$. This fixes the normalization:
+an arbitrary metric factor followed by an unspecified unitary would not
+fix the coordinate cut used below.
+
+For $q_a$, the antisymmetric direction $(0,1,-1)/\sqrt2$ has $G_a$
+eigenvalue $1$. In the orthonormal symmetric basis
+$(e_r,(e_\ell+e_R)/\sqrt2)$ the other block is
+
+$$
+M_a=\begin{pmatrix}22/9&-8\sqrt2/9\\-8\sqrt2/9&19/18\end{pmatrix},
+\qquad \det M_a=1,\quad \operatorname{tr}M_a=7/2,
+\qquad M_a^{1/2}=\frac{M_a+I_2}{\sqrt{11/2}}.
+\tag{140.2}
+$$
+
+Cayley--Hamilton gives $(M_a+I_2)^2=(\operatorname{tr}M_a+2)M_a$;
+$M_a+I_2$ is positive, so this is the principal root. Since $T$ is
+symmetric under exchange of the children, it follows that
+
+$$
+V_a=\frac{\pi_a+T}{\sqrt{11/2}}
+ =\frac{(10,7,7)^{\mathsf T}}{\sqrt{198}},\qquad
+G_bT=T/3,\qquad V_b=T/\sqrt3.
+\tag{140.3}
+$$
+
+Use the same normalized coordinate labels in both models and declare
+
+$$
+A=\mathbb C e_\ell,\qquad
+B=\operatorname{span}_{\mathbb C}\{e_r,e_R\},\qquad
+\mathfrak h=A\oplus B,\qquad
+p_q=|(V_q)_\ell|^2,\quad p_a=49/198,\quad p_b=1/3.
+\tag{140.4}
+$$
+
+This is a common cut of the declared normalized axes. The principal-root
+map can mix actual coordinates, so it does not identify this cut with
+orthogonal raw weighted occurrence spans or physical spatial subsystems.
+Its use is part of the finite quantum model being specified.
+
+The boundary comparison $q_0=(0,0)$ retains
+$\pi_0=(1,0,0)^{\mathsf T}$ and
+$V_0=(2,1,1)^{\mathsf T}/\sqrt6$, hence $p_0=1/6$.
+Its root is absorbing and its Markov generator is reducible. Its ordinary
+separability comparison with $q_b$ at inverse temperature $\log7$ remains
+valid; it is not relabeled as an interior or irreducible example.
+The pair (139.4) supplies the comparison with both rate graphs irreducible.
+

@@ -1,0 +1,47 @@
+**定理 21.2（所有联合第四响应的充要图，包括相等响应）。** Fix arbitrary real $z,U,V$, denoting common fourth-$J$ and fourth-$M$ predictions by $U,V$. Put $C=2U-V$. All worlds in $\mathcal G_z$ with these two predictions are exactly the following filtered interpolants (20.3).
+
+If $U\ne V$, choose $0<r<1$ and $d\in\mathbb R$ with
+
+$$
+C-d\ne0,\qquad b=\frac{V-U}{C-d}>0,
+\qquad c=\frac{r(1-r)}b,\quad j=b+c,\quad \ell=1+b,\quad T=r+j,
+                                                                  \tag{21.3}
+$$
+
+and impose the single remaining equation
+
+$$
+C-2d=\frac{4(24-d)}j-\frac{6(48-d)}\ell+\frac{4(z-d)}T.
+                                                                  \tag{21.4}
+$$
+
+If $U=V$, set $d=U$, choose any $0<r<1,b>0$, define $c,j,\ell,T$ as above, and impose
+
+$$
+0=U+\frac{4(24-U)}j-\frac{6(48-U)}\ell+\frac{4(z-U)}T.
+                                                                  \tag{21.5}
+$$
+
+The equal-response stratum has exactly $g(4)=0,d=U=V$. In the unequal-response stratum $g(4)=C-d$ has the sign of $V-U$; hence all its drifts satisfy $d<C$ for $V>U$, and $d>C$ for $V<U$.
+
+Proof. For every one of the same worlds, the actual fourth matrices in (20.4) give
+
+$$
+\begin{gathered}
+U=d+\ell g(4),\qquad V=d+(2\ell-1)g(4),\\
+C=d+g(4),\qquad V-U=b\,g(4),\\
+g(4)=d+\frac{4(24-d)}j-\frac{6(48-d)}\ell+\frac{4(z-d)}T.
+\end{gathered}                                                     \tag{21.6}
+$$
+
+The last identity is interpolation of the same polynomial (20.3), using the coefficient row $(-1,4,-6,4)$ at clock four. If $U\ne V$, $b>0$ forces $g(4)\ne0$, so (21.3) and (21.4) follow. Conversely these conditions give $g(4)=C-d$ and $b g(4)=V-U$. Substitution in the first line of (21.6) recovers exactly $U,V$. If $U=V$, positivity of $b$ forces $g(4)=0$ and $d=U$; the last line is exactly (21.5), and its converse is immediate by the same substitution. All source traces divided by here are positive. The interpolant is nonzero and reproduces all ancestors by Definition 20.1. Thus this is the complete joint fiber, including its zero-fourth-gain stratum. Membership in it supplies neither $L_4$ nor existence of a three-target losing family. ∎
+
+The affine bijection of Lemma 9.2 transports (20.7), (21.1)–(21.6), and all actual responses for either sign of its nonzero scale. In particular at $(a_0,J,b_0,M,2b_0-a_0,J,c_0)$ with $b_0\ne a_0$, the normalized window is
+
+$$
+\frac65<\frac{c_0-a_0}{b_0-a_0}<\frac95.
+                                                                  \tag{21.7}
+$$
+
+The fourth-$J$ witness response is $a_0+(144/5)(b_0-a_0)/24$. The case $b_0=a_0$ is outside this bijection. Transport preserves a reached history and its entire compatible fiber; it does not force a root policy to reach that history.
+

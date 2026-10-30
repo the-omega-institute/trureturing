@@ -3255,3 +3255,207 @@ ordinary results assert no worldwide originality, physical realization,
 new Lean certification or completion of that programme.
 
 ## 追加锚（本行以下为增补区）
+## 28. Off-wall arbitrary-CP rigidity and conditional prescribed-cut continuation
+
+**Definition 28.1 (the actual off-wall fixed-charge family).** Fix a `ValidBase`
+$b=(X,Y,Z)$, put $r=1-Z$, and assume
+
+$$
+0<Z<1,\qquad 0<X,Y<r,\qquad X\ne Y,\qquad X+Y\ne r.
+$$
+
+Let $J=\bigl(\max\{0,X+Y-r\},\min\{X,Y\}\bigr)$ and, in the order
+$(0,1,2,3,13)$, let
+
+$$
+ p_x=(r-X-Y+x,\,X-x,\,Z,\,Y-x,\,x),\qquad d=(1,-1,0,-1,1).
+$$
+
+Choose known $k,l\in J$, a fixed positive preparation with
+$\theta _2=0$, and a real relation charge $q$.  For
+$t=(a,b,c)\in\mathbb T^3$ define
+
+$$
+ h_q(t)=(q+a+b-c,\ a,\ 0,\ b,\ c),\qquad
+ \psi_x(t)_i=\sqrt{p_x{}_i}\,e^{-i(\theta_i+h_q(t)_i)}.
+ \tag{OC.86}
+$$
+
+Angles are modulo $2\pi$, while their real lifts and signed windings remain
+distinct original histories.  The source promise is the complete actual fibre
+$\{\psi_k(t):t\in\mathbb T^3\}$ from this one preparation and charge coset.
+The off-wall reachability theorem supplies every member: since
+$d\cdot w_b(k)=1$, $h_q(t)-q w_b(k)$ lies in
+$V_b=\{v:v_2=0,\ d\cdot v=0\}$; off both walls $V_b$ has dimension three,
+and the supplied finite rectangles realize it.  A fixed-height phase leg of
+charge $q$, followed by those rectangles, is an actual finite prefix.  The
+zero-phase horizontal control from $k$ to $l$ and `concatenate_original` give
+the same chronological source with the prescribed relative continuation.
+Thus (OC.86) is a source family, not a postulated list of endpoint vectors.
+It is one unknown specimen with known source and target parameters; the
+selector receives the public cut description, not the unknown $t$ or its lift.
+The target is exactly the §1 state-at-cut contract with $y=l$ and increment
+$\Delta$.
+
+An accessible helper or controller is an input fixed independently of $t$;
+its state is absorbed into the common CP operation.  A passive reference $R$
+may have an arbitrary joint extension of the specimen and is acted on only by
+identity.  It is not an accessible selector or programming port.  The
+success operation below may be the accepted event of any finite adaptive
+protocol; all its flags and retained backing are part of that event.
+
+The source reachability and chronological identities used here are the supplied
+`FiniteRectangleTransport` and `OriginalControlComposition` results and the
+actual source construction in §§1–2.
+
+**Theorem 28.2 (off-wall unrestricted-CP necessity and sharpness).** Let
+$\mathcal S:M_5\to M_5$ be any fixed trace-nonincreasing CP success map with
+no phase-correlated accessible input.  Suppose that, for all $t\in\mathbb T^3$,
+
+$$
+ \mathcal S\bigl(|\psi_k(t)\rangle\langle\psi_k(t)|\bigr)
+ =s(t)\,|\psi_l(t;\Delta)\rangle\langle\psi_l(t;\Delta)|,
+ \qquad s(t)\ge0,                                      \tag{OC.87}
+$$
+
+where $\psi_l(t;\Delta)=U_\Delta\psi_l(t)$ and
+$U_\Delta=\operatorname{diag}(e^{-i\Delta_i})$ is the known prescribed
+intermediate phase increment.  Put
+
+$$
+ A_{lk}=\operatorname{diag}_i\sqrt{p_l{}_i/p_k{}_i},\qquad
+ \tau_* =\min_i p_k{}_i/p_l{}_i .                         \tag{OC.88}
+$$
+
+Then every Kraus operator $B_j$ of $\mathcal S$ is
+$B_j=c_jU_\Delta A_{lk}$ on all of $\mathbb C^5$, and
+
+$$
+ \mathcal S(R)=\tau\,U_\Delta A_{lk}R A_{lk}^{*}U_\Delta^{*},
+ \qquad \tau=\sum_j|c_j|^2,\qquad 0\le\tau\le\tau_* .   \tag{OC.89}
+$$
+
+Consequently $s(t)=\tau$ is constant.  Conversely, every
+$0\le\tau\le\tau_*$ is attained by the displayed successful Kraus operator
+$\sqrt\tau\,U_\Delta A_{lk}$ and the complementary failure operator
+$(I-\tau A_{lk}^{*}A_{lk})^{1/2}$.  If $k\ne l$, then $0<\tau_*<1$; if
+$k=l$, then $A_{lk}=I$ and $\tau_*=1$.
+
+The endpoint phase/holonomy of a returned rectangle is already implementable by
+known phase operations.  The new assertion is the unrestricted-CP necessity
+and the exact intermediate-cut correspondence, not an endpoint-only capability
+or a cost advantage.
+
+Chiribella--Yang,
+*Optimal energy-preserving conversions of quantum coherence*,
+arXiv:1502.00259v1 Corollary 2 and v5 Proposition 5, concern
+energy-preserving transformations and do not prove this unrestricted-CP
+necessity.
+
+**Proof.** Take a finite Kraus representation $\mathcal S(R)=\sum_jB_jRB_j^*$.
+The right side of (OC.87) has rank one.  Positivity therefore gives
+$B_j\psi_k(t)=\lambda_j(t)U_\Delta\psi_l(t)$ for every $j,t$, including
+zero-success points.  Set
+$C_j=A_{lk}^{-1}U_\Delta^*B_j$.  Since every entry of $p_k$ is positive,
+$A_{lk}$ is invertible and
+$C_j\psi_k(t)=\lambda_j(t)\psi_k(t)$.  The middle component is nonzero and
+independent of $t$, so $\lambda_j(t)$ is continuous.  It belongs to the
+finite spectrum of $C_j$; connectedness of $\mathbb T^3$ makes it a constant
+$c_j$.
+
+Write $z_1=e^{-ia},z_2=e^{-ib},z_3=e^{-ic}$.  Apart from fixed nonzero
+coefficients, the five components of $\psi_k(t)$ have the distinct characters
+$z_1z_2z_3^{-1},z_1,1,z_2,z_3$.  If a linear functional annihilates the whole
+family, multiplying its character expansion by each inverse character and
+integrating over the three circles makes every coefficient zero.  Hence the
+family spans $\mathbb C^5$, and $C_j=c_jI$; this proves the Kraus assertion.
+Summing the Kraus terms gives (OC.89).  Trace nonincrease is
+$\tau A_{lk}^{*}A_{lk}\le I$, exactly the bound in (OC.88).  The single
+Kraus construction is therefore sufficient and its complement makes a
+complete binary instrument.  Equality of the sums of the two probability
+vectors shows that $\tau_*<1$ when $k\ne l$: otherwise every
+$p_k{}_i\ge p_l{}_i$, forcing equality coordinatewise and hence $k=l$.
+
+For a retained successful dilation, purify the fixed helper and expand the
+success output in an orthonormal backing basis.  Each system component obeys
+the preceding argument, so the successful state factors as
+$U_\Delta\psi_l(t)\otimes\xi$ with a fixed positive backing state
+(independent of $t$), up to its total weight $\tau$.  Thus a successful flag,
+record, or coherent controller output is not a recovered phase, winding,
+original history, or substitute for the live specimen.  Tensoring every branch
+with $I_R$ proves the same correspondence for any passive reference.  An
+adaptive finite accepted event is already one CP success map, so it cannot
+exceed (OC.88).  $\square$
+
+**Definition 28.3 (the installed conditional cut instrument).** For a known
+finite sequence of strict heights $x_0,\ldots,x_n\in J$ and known increments
+$\Delta_j$, set
+
+$$
+ A_j=\operatorname{diag}_i\sqrt{p_{x_j}{}_i/p_{x_{j-1}}{}_i},\quad
+ \tau_j=\min_i p_{x_{j-1}}{}_i/p_{x_j}{}_i,\quad
+ K_j=\sqrt{\tau_j}\,U_{\Delta_j}A_j,\quad
+ F_j=(I-K_j^*K_j)^{1/2}.                              \tag{OC.90}
+$$
+
+Give each branch supplied fixed backing states $\sigma^s_{E,j}$ and
+$\sigma^f_{E,j}$, independent of $t$, and define the complete outputs
+$K_j\rho K_j^*\otimes\sigma^s_{E,j}\otimes|s,j\rangle\langle s,j|$ and
+$F_j\rho F_j^*\otimes\sigma^f_{E,j}\otimes|f,j\rangle\langle f,j|$.
+The installed binary instrument retains the ordered status record, any
+passive reference by identity, and the actual quantum residue; a failure
+residue is embedded in an absorbing stopped carrier and has no right to invoke
+a later positive-original operation.  On success, the selector may invoke
+stage $j+1$ using only the public stage label, the retained phase-independent
+backing, and declared common inputs.  Installation, calibration, the exact
+parameters, the fixed preparation, the reference-preparation/access contract,
+and the right to invoke each $K_j,F_j$ are model premises, not acquired
+capabilities.  These premises do not assert physical realization.
+
+**Corollary 28.4 (sharp finite conditional continuation).** Under
+Definition 28.3, the largest probability of reaching every prescribed cut
+successfully is
+
+$$
+ S_n^*=\prod_{j=1}^n\tau_j .                              \tag{OC.91}
+$$
+
+Every successful cut has the exact state $\psi_{x_j}(t;\Delta_1+\cdots+
+\Delta_j)$ and a backing independent of the unknown $t$.  Every first failure
+has its actual stage, flag, retained residue and all earlier records; no later
+operation is run from that stopped branch.
+
+The complete instrument is conditional on its installed known-parameter
+service and preserves its failure successors; it is not the original
+unconditional CPTP cut service.  It does not solve unknown-height reanchoring,
+acquisition of source-bound helpers, an all-times original instrument, finite
+memory for an unbounded schedule, or the native $\alpha/\beta$ and
+fixed-Hamiltonian problems.  The fixed-$G_{gc}$, original-$Q$, parked-consumer,
+and unchanged-initialization results retain their literal scopes.  Exact
+ConditionalPreparationCost, ProbeComponentRigidity, the double-wall,
+programming and assistance sections, and Reanchoring's uncertain-height
+problem remain distinct contracts.
+
+The double-wall rigidity and finite-product
+mechanism in §§4–5 are reused with their stated domains; the existing
+amplitude-ratio filter and finite-product construction are suppliers, not new
+endpoint capabilities.
+
+**Proof.** Theorem 28.2 bounds each conditional stage by $\tau_j$, because the
+successful backing supplies no phase-correlated helper.  Multiplication gives
+the upper bound for any finite selector policy.  The operators in (OC.90) attain
+it.  With $Q_0=I$, $Q_j=K_jQ_{j-1}$ and $L_j=F_jQ_{j-1}$,
+
+$$
+ Q_n^*Q_n+\sum_{j=1}^nL_j^*L_j=I                         \tag{OC.92}
+$$
+
+by telescoping $K_j^*K_j+F_j^*F_j=I$.  Hence the all-success branch and the
+first-failure branches form a complete finite instrument, including arbitrary
+joint passive references through tensoring with identity.  On a promised input,
+$\|K_j\psi_{x_{j-1}}(t)\|^2=\tau_j$, so (OC.91) is attained.  The source
+correspondence in Definition 28.1 and `concatenate_original` identify each
+success with the prescribed chronological cut; the CP instrument itself does
+not execute the original continuous waveform.  $\square$
+
+## 追加锚（本行以下为增补区）

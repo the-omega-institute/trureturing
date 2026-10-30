@@ -1,0 +1,15 @@
+**命题 103.2（互不替代的反例与实际代表）。** 两叶交换的树 $\langle\alpha,\beta\rangle$、$\langle\beta,\alpha\rangle$ 的 $q_3$ 都为二，八元群读出分别为 $-c,c$。而
+
+$$
+t_1=\langle\langle\alpha,\alpha\rangle,\beta\rangle,
+\quad t_2=\langle\alpha,\langle\alpha,\beta\rangle\rangle
+$$
+
+的八元群读出都为 $-b$，$q_3$ 却分别为二、一。
+
+证明（103.2）。第一对由 $-0-1=2$ 和 $ab=-c,ba=c$ 得到。第二对的矩阵值均为 $a^2b=-b$；第33.3条已给 $h(t_1)=2-\omega,h(t_2)=\omega$，应用第87.3条的 $B\bmod3$ 得二、一。也可直接由 $\beta$ 叶深度一和二得到这两个值。$\square$
+
+单窗若另选高位置在来源左侧的代表，规定 $[2]\leftrightarrow\alpha$、$[3]\leftrightarrow\beta$、$[5]\leftrightarrow\gamma=\langle\beta,\alpha\rangle$、$[25]\leftrightarrow\langle\gamma,\alpha\rangle$，则矩阵读出依次为 $a,b,c,ca=-b$。若将两端来源改成 $\langle\alpha,\gamma\rangle$，则为 $ac=b$。这说明 $[25]=-b$ 依赖明确代表，不能成为脱离来源、次序和表示的普遍“$25=-3$”命题。
+
+来源从左到右的叶序与矩阵实际执行次序也不同：$U_sU_t$ 对状态先执行右因子 $U_t$。乘法中的空贡献可取 $I$，却不是实际 $\mathrm{null}$ 读者的全动作。第90章的输出接缝在 $[3],[25]$ 上不同；本章的相位表示没有代替这些合法性守卫。
+

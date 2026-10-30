@@ -1,0 +1,40 @@
+**Lemma 4.2 (Base points and simple base factors).** For arbitrary
+$p,v$, the equations $\mathsf A=\mathsf B=D=0$ have the following
+fixed points over the roots of the indicated factors:
+
+| Factor | Fixed $b$ | $D$ at that $b$ |
+| --- | --- | --- |
+| $\Psi_2$ | $-1/2$ | $(4r^2-4r-1)\Psi_2/64$ |
+| $\Psi_4$ | $-2/5$ | $24\Psi_4/15625$ |
+| $\Phi$ | $1/8$ | $3\Phi/262144$ |
+
+The factors are squarefree and pairwise coprime.
+
+Proof. Substitute in (3.6). At $b=-1/2$ the quotients of
+$\mathsf A,\mathsf B$ by $\Psi_2$ are respectively
+
+$$
+\begin{aligned}
+-\frac5{128}\{&p(4r^2-4r-1)+3072r^4-4608r^3-672r^2+1644r+360\},\\
+-\frac5{128}\{&6768r^4-10152r^3-1416r^2+3522r+777
++v(4r^2-4r-1)\}.
+\end{aligned}
+\tag{4.4}
+$$
+
+At $b=-2/5$ the quotients by $\Psi_4$ are
+$-48(5p+1050r^2-630r-204)/78125$ and
+$-24(825r^2-495r+2v-48)/15625$.
+At $b=1/8$ the quotients by $\Phi$ are
+$15(p-24)/2097152$ and
+$15(192r^2-216r+v-87)/2097152$.
+The exact univariate resultants are
+
+| Inputs | Resultant |
+| --- | --- |
+| $\Psi_2,\Psi_2'$ | $-80$ |
+| $\Psi_4,\Psi_4'$ | $1052148437500000000$ |
+| $\Phi,\Phi'$ | $1599002682601002815300829777913446400$ |
+| $\Psi_2,\Psi_4$ | $-19319$ |
+| $\Psi_2,\Phi$ | $167160966400$ |
+| $\Psi_4,\Phi$ | $25020641227626799334847923761$ |

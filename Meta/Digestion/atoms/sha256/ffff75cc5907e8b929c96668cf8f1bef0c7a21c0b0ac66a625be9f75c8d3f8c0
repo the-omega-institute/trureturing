@@ -1,0 +1,19 @@
+## 16. The whole-child implication
+
+Proof of the uniform assertion in Theorem 12.2. Let $W$ be any
+complete world in any child over $\mathcal U$. If $\Lambda=0$,
+Lemma 15.2 excludes it. Otherwise the necessary resultant projection
+of Definition 13.1 applies. Since $0<r<1$, its projection is a root
+of $R$ or one of the three exceptional factors. Lemma 15.1 excludes
+all regular exceptional lifts. Lemmas 13.2 and 14.2 leave only the
+first two $R$ projections, with at most one complete world at each.
+Thus there are at most two worlds in the entire child.
+
+If two distinct worlds remain, they occupy different rows, and
+Lemma 14.3 places their terminal J readings in disjoint intervals.
+Thus $a$ is injective. The argument divides by no drift or gain
+sample. The only chart division for regular sources is justified by
+$\Lambda\ne0$, and the complementary singular case was evaluated
+separately. Gain degree drops, repeated gain roots, sampled zeros
+and zero drift were never excluded. ∎
+

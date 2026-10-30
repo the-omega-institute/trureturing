@@ -1,0 +1,36 @@
+**Theorem 106.4 (adaptive-growth no-report current task).** The same
+$k-d$ pathwise bound holds for the exact current-predictor task even
+when arbitrary adaptive original growth is permitted during acquisition.
+No report of the entry parameter is required.
+
+**Proof.** Use the same finite-path rows and $\eta$ as in Theorem 106.2.
+It remains to show that the final difference survives the frozen path;
+Theorem 106.2 alone does not establish this.
+
+Initially $H\eta=B(BH\eta)$ lies in $\operatorname{im}B$ and is nonzero.
+Group all actual growths before the next Tick into their composite
+old-cell inclusion $E_1$, and write $B_1$ for the then-current symmetric
+adjacency. Native persistence gives $E_1^{\mathsf T}B_1E_1=B$. Lemma
+60.1 therefore makes $B_1E_1$ injective on $\operatorname{im}B$.
+After this Tick the nonzero difference is in $\operatorname{im}B_1$.
+Repeat between each successive pair of Ticks: if the preceding difference
+is in the preceding adjacency image, compression and that same lemma
+make the next growth-then-Tick map injective on it. Common Add operands
+cancel in differences throughout; all other calls leave differences
+unchanged. A final block of growth with no Tick is an injective inclusion.
+If there is no Tick anywhere, the entire difference is just the composite
+inclusion of $H\eta$, also nonzero.
+
+Thus every frozen finite path is injective on $H\mathbb Q^k$. This is
+the image-wise application of the existing growth-survival proof in
+Theorem 60.2, stronger here than using only its ambient rank inequality.
+Both indistinguishable executions end at the same final material tree
+with a nonzero rational field difference. All-terminal forcing on that
+actual final tree supplies a finite common terminal/Tick continuation
+separating it, by Convention 75.2. Equal complete final receiver states
+cannot be correct self-contained predictors for both. The contradiction
+proves $m\ge k-d$, without a deferred learning step or an entry report.
+Symmetry, old-old compression and the original no-Reset interface are
+load-bearing; no such conclusion is asserted for a different erasing
+growth or nonsymmetric update. $\square$
+

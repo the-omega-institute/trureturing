@@ -1,0 +1,48 @@
+**Lemma 6.1 (Actual singular responses miss the strip).** There is no
+world in $\mathcal C(p,v)$ with $\Lambda=0$ when $p\in K$ and
+$v\in[142,150]$.
+
+Proof. Equation (3.2) and $B_{\rm coef}>0$ force $b=1/8$.
+At this width,
+
+$$
+j=1/8+8r(1-r),\quad n=j+r,\quad T=9/8,\quad U=5/4,
+\qquad \Lambda=\Phi(r)/(960jn).
+\tag{6.1}
+$$
+
+There are exactly two roots $r_-,r_+$ of $\Phi$ in $(0,1)$, in
+
+$$
+I_-=[149383/1108052,182914/1356769],\qquad
+I_+=[1412683/1565387,1774115/1965888].
+\tag{6.2}
+$$
+
+Indeed the signed Sturm chain
+$f_0=\Phi,f_1=\Phi',f_{i+1}=-\operatorname{rem}(f_{i-1},f_i)$
+has degrees $4,3,2,1,0$, signs $(-,-,+,-,+)$ at zero and
+$(-,-,+,+,+)$ at one. Its variation drop is two; both intervals
+in (6.2) have opposite polynomial endpoint signs. These are the
+owning Section 21 root isolations.
+
+At $b=1/8$ put
+
+$$
+\begin{aligned}
+A_5(r)&=1+(n+5/4)(4-15/j+160/9-10/n),\\
+a_6(r)&=50-36/j-20/n,\\
+\epsilon&=(p-24)/A_5(r),\\
+s(r,p)&=24+\epsilon+(5/2+n)\{24+\epsilon a_6(r)\}.
+\end{aligned}
+\tag{6.3}
+$$
+
+The interpolant gives $p=24+\epsilon A_5$ and the actual sixth-M
+response $s(r,p)$. Rational interval evaluation on all of (6.2)
+and $K$ gives
+
+| $r$ interval | Guard for $A_5$ | Enclosure of $s(r,p)$ |
+| --- | --- | --- |
+| $I_-$ | $(-908,-907)/10^3$ | $(1198704988168,1198704988252)/10^{10}$ |
+| $I_+$ | $(-5217,-5216)/10^3$ | $(1387528570299,1387528570311)/10^{10}$ |

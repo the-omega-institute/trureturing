@@ -1,0 +1,19 @@
+**Lemma 4.2 (A conditional upper bound).** For every length-$m$ block, including an endpoint block, its actual conditional (3.5) satisfies
+
+$$
+\delta_{N,m}^{a,b}(p_C^\eta)\le
+m\bigl(1-\max_\ell\theta_\ell(\eta)\bigr).
+\tag{4.3}
+$$
+
+Proof. Each $r_{\ell,C}^\eta$ lies in $\mathscr F_{2,m}^{a,b}\subseteq\mathscr F_{N,m}^{a,b}$. For a fixed index $k$, the score identity (1.9) and concavity of $\Phi_K$ give
+
+$$
+\mathcal D_K\left(\sum_\ell\theta_\ell r_\ell\middle\Vert r_k\right)
+\le\sum_\ell\theta_\ell\mathcal D_K(r_\ell\Vert r_k)
+\le m(1-\theta_k).
+\tag{4.4}
+$$
+
+The last inequality uses zero discrepancy for $\ell=k$ and the bound one for each squared single-site posterior difference. Choose an index of largest posterior weight. This choice is allowed separately for each complement in the local minimum. It is not asserted to be a conditional slice of any one global rank-$N$ candidate. Singleton completion sets have zero discrepancy and satisfy the same inequality. $\square$
+

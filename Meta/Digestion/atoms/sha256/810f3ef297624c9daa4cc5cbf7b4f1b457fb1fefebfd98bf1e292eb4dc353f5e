@@ -1,0 +1,6 @@
+#### 例 7.4（非正交不等于交非零）
+
+$S=\operatorname{span}|0\rangle$ 与 $T=\operatorname{span}|+\rangle$ 的交为零，但它们不正交，$\operatorname{Tr}(P_TP_S)=1/2$。因此不能把定理[7.3](#thm-quantumexists)换写成普通集合交有元素。
+
+<a id="thm-adjunction"></a>
+

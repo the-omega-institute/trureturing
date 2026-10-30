@@ -1,0 +1,125 @@
+**Theorem 11.2 (joint acquisition on every unbounded mature input).**
+Under Definition 9.1, Definition 11.1 terminates on every admitted
+actual $(s,n)$ with the correct installed data (ACR.25). On **that
+same run**, for its actually acquired $h,k$ and actual emitted count
+$K$, let $J$ be the number of candidate comparisons that really make
+a Read. Then
+
+$$
+ \begin{aligned}
+ U_{\rm source}&=0,& Q&=2k+J\le2k+K-1\le2k+2\,4^d-1,\\
+ M&\le\max(2^k,2h)\le2h\le2n-2,&
+ W&=W_{\rm spine}+\sum_{i=1}^{J}|w_i|\le2h\,Q.
+ \end{aligned}
+ \tag{ACR.37}
+$$
+
+In particular the required same-input orders are
+
+$$
+ Q=O(\log(n+2)+4^d),\qquad M=O(n),\qquad
+ W=O\bigl(n(\log(n+2)+4^d)\bigr).
+ \tag{ACR.38}
+$$
+
+For an absolute binary-operation-model constant $C$, one implementation
+has local bit work, including all literal and data writes, at most
+
+$$
+ e_d+C\left[(4^d+1)\bigl((d+1)^3(n+2)^2+(n+2)^3\bigr)
+       +(n+2)^2(1+\log_2(n+2))\right],
+ \tag{ACR.39}
+$$
+
+and reusable owned data backing
+
+$$
+ v_d+O\bigl((d+1)^2+(d+1)(n+2)+(n+2)^2\bigr)\text{ bits}.
+ \tag{ACR.40}
+$$
+
+The returned record and optional phase require $O(d+n+1)$ binary data
+writes, including an explicit $\Theta(n)$-bit $B_n$ field. The actual
+fixed code, installation, call service, binding/grants, backing lifetime
+and handoff apparatus have their separate actual charges. Neither their
+physical tariffs nor Read, allocation or handoff durations are bounded
+by (ACR.39). Thus this is polynomial local work for each fixed $d$,
+and polynomial reusable data backing for each fixed $d$, without a total
+physical-time or weighted-resource optimum. The explicit $e_d,v_d$
+charge the exact public canonical enumeration; no complexity bound in
+$d$ is inferred from an unspecified ordering.
+
+Proof. The actual behavior has an order-$d$ presentation when $d>0$,
+including a padded presentation of a lower order. By Proposition 9.2,
+its actual cut occurs in the emitted list. At $d=0$ the same assertion
+uses the one known zero behavior, whose age remains to be acquired.
+The list is finite and nonempty regardless of which duplicate
+presentations are enumerated.
+
+The comparison invariant is that the actual behavioral datum is either
+the current candidate or still occurs among the unprocessed candidates.
+It holds initially. If the actual datum is current, every comparison
+retains it because its predicted reply is correct. If it arrives as the
+next candidate, the separator's opposite replies select it. If neither
+candidate is actual, the actual datum still lies later in the list.
+Equality of the first $2d$ bits and the cut means equality of the datum
+by GPO Lemma 29.2, so skipping duplicates preserves the invariant.
+This is the usual finite comparison/elimination argument, used here as
+an intermediate step. It needs no stored reply history or generally
+balanced splitting hypothesis. At exhaustion the invariant makes the
+survivor actual. Its generated prefix is therefore the authentic $P$,
+earned from this run's replies rather than retained source advice.
+
+For canonical equality, the survivor's raw row is only a computational
+presentation. Applying the **original fixed** synthesis to its authentic
+$P$ gives exactly the $K_d(P)$ field selected in GPO §§29 and 34.
+Equal output behavior alone is not used to equate distinct coefficient
+rows. In particular a zero behavior at $d>0$ does not authorize
+replacing that field by a newly selected minimal order-zero row.
+
+There are $2k$ actual spine calls and at most $K-1$ comparison calls.
+By (ACR.36), Proposition 10.2 constructs every comparison word with
+length at most $(2h+1)-1=2h$. Proposition 9.2 bounds the spine's
+peak by the same $2h$. Summing the actual lengths of these very calls
+gives (ACR.37); no maxima from different inputs are combined. Since
+$h\le n-1$, $k\le\lceil\log_2 n\rceil$, proving (ACR.38).
+The supplied interval was unbounded; $2h+1$ is a bound obtained during
+this run, and is never supplied as entry age information.
+
+For work, materializing and submitting spine literals, updating their
+binary length brackets, copying replies and initializing their buffers
+uses $O((n+2)^2(1+\log(n+2)))$ bit operations as a conservative bound.
+Computing $n_0$ by Fibonacci addition also fits, since $n_0\le n$.
+For each of $4^d$ presentations, generating the first $2d$ bits costs
+$O((d+1)^2)$. Computing the two spine thresholds uses $O(h+1)$
+forward path descriptors and the (ACR.32) arithmetic bound, with
+hypothetical times at most $2h+2$. There are at most twice as many
+comparison constructions, each bounded by (ACR.32) with $H\le2h+1$.
+The row/seed counters and every emitted age are explicitly generated
+and written. Final canonical synthesis generates its rows by the
+original fixed enumerator, charging $e_d$, and tests at most $2^d$
+rows with the fixed seed in $O(2^d(d+1)^2)$ further bit operations.
+All remaining costs fit the polynomial terms of (ACR.39), since $h<n$.
+
+Forward Fibonacci addition computes $B_n$ in $O((n+2)^2)$ bit work
+and $O(n+1)$ bits. If requested, the forward companion power
+$C^{B_n}$ applied to the selected seed gives the behavioral phase whose
+next output is $z_{B_n+1}$, in $O((d+1)^3(n+1))$ bit work. No private
+state is recovered or inverted. The prefix, descriptor and phase take
+$O(d+1)$ bits, the cut takes $O(\log(n+2))$, and the binary integer
+$B_n=F_{n+1}-1$ takes $\Theta(n)$ bits. Actual copying, readable
+installation and receiver data writes of these fields, along with ready
+control, fit (ACR.39) and the stated data-write bill. Only two candidate
+records, their prefixes, enumeration counters, two descriptor paths,
+Fibonacci tables and companion scratch coexist; final canonical row
+generation additionally uses at most $v_d$ working bits. Reuse their
+storage between comparisons. This proves (ACR.40), without a retained
+exponential candidate catalogue, an age-dependent preinstalled table or
+a retained test transcript.
+All intermediate operand reads and bit writes are in this bit-operation
+bill; each real Read and physical service/handoff operation additionally
+keeps its actual tariff. Finite progress and completed service/handoff
+give finite return. The stationary premise covers those real operations
+through return, so the installed $n,B_n$ still name the actual cut.
+$\square$
+

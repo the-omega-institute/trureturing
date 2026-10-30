@@ -1,0 +1,27 @@
+## 15. 合法关系方向的观察阶数与高斯 Fisher 系数
+
+给长度 $n\ge1$ 的合法集合族
+
+$$
+\mathcal B_n=\{I\subseteq\{1,\ldots,n\}:I\text{ 不含相邻位置}\},
+$$
+
+选择非空合法集合 $T=\{t_1,\ldots,t_r\}$。定义零总质量的基本方向
+
+$$
+d_T(I)=\begin{cases}(-1)^{r-|I|},&I\subseteq T,\\0,&I\not\subseteq T.\end{cases}
+\qquad p_\theta=p^0+\theta d_T.
+\tag{15.1}
+$$
+
+在一个固定、全正的参考参数点估计 $\theta$；其他概率坐标和所有读出向量已知。所有 $I\subseteq T$ 均合法，故该方向确实留在指定支持内。另供白化高斯记录
+
+$$
+R_\varepsilon=\varepsilon m_I+G,\qquad
+m_I=\sum_{i\in I}a_i,\quad a_i\in\mathbb R^D,\quad
+G\sim\mathcal N(0,I_D),\qquad \varepsilon>0.
+\tag{15.2}
+$$
+
+这些是有限经典混合实验。有限差分的低阶消去在《隐藏关系、统计、相位与接缝》C-22.2 已用于指定原生数量；此处新增的是对合法关系方向的高斯似然及信息尺度的组合。低信噪比与矩层级的文献背景见 Katsevich–Bandeira, [*Likelihood maximization and moment matching in low SNR Gaussian mixture models*](https://arxiv.org/abs/2006.15202)；不把一般矩匹配或 Hermite 方法作为新工具。
+

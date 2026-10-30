@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9f91d37d55e318275cc387ac53bd96f6dec0f0e3dfe31bf5d601b2c70a300682
+  normalized_sha256: sha256:9f91d37d55e318275cc387ac53bd96f6dec0f0e3dfe31bf5d601b2c70a300682
+cas_ref: sha256:9f91d37d55e318275cc387ac53bd96f6dec0f0e3dfe31bf5d601b2c70a300682
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines the paired completion interface and its effective image.
+    previous_atom_id: 251438717e74015fb2ee0fb6869c9899294b226c74cd78c4e88a07a871a02e10
+    next_atom_id: 95d2bca97cf93d27c64f88aa3dc55a73c9e5411f675e388a9ff4c89f8e6157c7

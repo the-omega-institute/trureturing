@@ -1,0 +1,16 @@
+**Lemma 19.2 (common-domain ambiguity for every three-dimensional word).** Fix $L\ge1$. Let $w$ be any mixed legal word with at most $L$ actions and with three-dimensional cumulative-matrix span. For every $P\in\mathcal U_L$ there is a distinct $P'\in\mathcal S$ with
+
+$$
+\operatorname{tr}(A_iP')=\operatorname{tr}(A_iP)
+\quad\text{at every acquired clock of }w.
+\tag{19.13}
+$$
+
+Consequently no deterministic protocol correct for the complete target on the whole domain can terminate on such a word at a world with source in $\mathcal U_L$. This consequence allows arbitrary nonlinear answers and requires no gain-output mechanism.
+
+**Proof.** Apply the supplied legal-word classification, Lemma 6.1. Write $w=M^aJ^bM^c$, with $a,c\ge0$, $a+c>0$, $b>0$, and with $b$ even if $a,c>0$.
+
+If $a\ge1$, its cumulative span is $H_a$: the initial run lies in $\operatorname{span}\{I,M\}$, the $J$ block toggles $M^a$ and $JM^a$, and any final run is permitted only after an even $J$ block and returns to powers of $M$. Here $a\le L$, so take $P'=\mathcal T_a(P)$. If $a=0$, then $c\ge1$. For even $b$ the span is $H_0$, since the final matrices are $M^k$; take $P'=\mathcal T_0(P)$. For odd $b$ the final matrices are $M^kJ$, and (2.3) makes the span $H_*$; take $P'=\mathcal R(P)$. Lemma 19.1 supplies legality, distinctness and (19.13) in every case, on the same $\mathcal U_L$.
+
+Keep exactly the same whole nonzero gain $g$ and the same drift $\delta$ in the two worlds. Equation (19.13) makes all word reads equal, including the initial read and every immediate read, regardless of gain roots or signs. If the first world follows $w$ under a deterministic protocol, induction on its actual history forces the second world to make the same action and stopping decisions at every prefix. It therefore terminates on $w$ with the same answer. The targets differ in $P$, contradicting whole-domain correctness. This proves the asserted prohibition on terminal branches without any regularity assumption. $\square$
+

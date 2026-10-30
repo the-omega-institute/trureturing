@@ -1,0 +1,90 @@
+## 36. Two exact worlds at the specified displacement
+
+Fix
+$$
+ q=p_{\rm f},\qquad \nu=10^{-12},\qquad
+ \widehat v_{\rm f}=v_{\rm f}+10^{-12},\qquad W_\pm=W_\pm(p_{\rm f},10^{-12}).
+ \tag{36.1}
+$$
+Because $\chi_{\rm f}(p_{\rm f})=\alpha_{\rm f}$ and $h_0(p_{\rm f})=v_{\rm f}$, (35.6) places both
+worlds in the exact same acquired child $C(p_{\rm f},\widehat v_{\rm f})$.
+They are distinct and all source guards remain strict.
+
+More precisely, put $s_-=\alpha_{\rm f}-r_->0$ and
+$s_+=r_+-\alpha_{\rm f}>0$. From (34.4) and Taylor's identity,
+$$
+ 55s_\pm^2<10^{-12}<(131/2)s_\pm^2.
+$$
+The exact rational comparisons
+$$
+ (131/2)(123/10^9)^2<10^{-12}
+ <55(135/10^9)^2
+$$
+therefore give
+$$
+ 123/10^9<s_-,s_+<135/10^9.
+ \tag{36.2}
+$$
+Integration of $-82/1000<\beta_{\rm f}_r<-79/1000$ also gives
+$$
+ \begin{aligned}
+ 1+9717/10^{12}&<b_-<1+11070/10^{12},\\
+ 1-11070/10^{12}&<b_+<1-9717/10^{12}.
+ \end{aligned}
+ \tag{36.3}
+$$
+In particular the sources are unequal and strictly legal.
+
+These exact worlds are algebraic, as well as analytic constructions.
+For example $r_-$ is the unique real $r\in I_r$, $r<\alpha_{\rm f}$,
+for which some $b\in(1-10^{-6},1+10^{-6})$ satisfies
+$$
+ N_p(r,b)-p_{\rm f}H(r,b)=0,\qquad
+ N_v(r,b)-\widehat v_{\rm f}H(r,b)=0;
+ \tag{36.4}
+$$
+use $r>\alpha_{\rm f}$ for $r_+$. Each sign selects exactly one source by
+Section 35. The algebraic coefficient field is the real algebraic field
+containing $\alpha_{\rm f},p_{\rm f},v_{\rm f}$. A singleton semialgebraic set over that
+field has algebraic coordinates: projection and real quantifier
+elimination reduce a singleton to polynomial sign conditions; away from
+all polynomial roots such signs are locally constant and cannot isolate
+a point. This standard real-algebraic argument proves algebraicity of
+$r_\pm,b_\pm$, hence of their drifts and gain coefficients. The strict
+pole bounds show that clearing denominators in (36.4) introduces no extra
+world in the specified box.
+
+Here are the whole gains and drifts explicitly. For each sign evaluate
+all polynomials (31.1) at its single source $(r_\pm,b_\pm)$, and denote
+the evaluations by a sign subscript. Set
+$$
+ \begin{aligned}
+ d_\pm&=-C_{0,\pm}/D_\pm,\\
+ g_\pm(s)&=D_\pm^{-1}\bigg[
+ -\frac{C_{0,\pm}}6(s-1)(s-2)(s-3)
+ +\frac{C_{1,\pm}}2s(s-2)(s-3)\\
+ &\hspace{28mm}-\frac{C_{2,\pm}}2s(s-1)(s-3)
+ +\frac{C_{3,\pm}}6s(s-1)(s-2)\bigg].
+ \end{aligned}
+ \tag{36.5}
+$$
+This is one complete polynomial for each world, with its own one fixed
+real drift; no per-clock parameter is chosen. The gains have degree at
+most three and cannot vanish identically by the unequal first two rows.
+In fact $30<d_\pm<31$, but this property of the constructed worlds
+does not restrict the original drift domain.
+
+For either sign, all seven acquired readings and both alternatives are
+as follows. Every entry in the gain column belongs to the same (36.5).
+
+| Clock | Action | Gain sample | Trace | Reading |
+| --- | --- | --- | --- | --- |
+| 0 | initial | $C_{0,\pm}/D_\pm$ | $1$ | $0$ |
+| 1 | $J$ | $C_{1,\pm}/D_\pm$ | $X_\pm/b_\pm$ | $24$ |
+| 2 | $M$ | $C_{2,\pm}/D_\pm$ | $T_\pm$ | $147/5$ |
+| 3 | $J$ | $C_{3,\pm}/D_\pm$ | $N_\pm/b_\pm$ | $24$ |
+| 4 | $M$ | $C_{4,\pm}/D_\pm$ | $U_\pm$ | $18$ |
+| 5 | $M$ | $B_{5,\pm}/D_\pm$ | $U_\pm+N_\pm/b_\pm$ | $p_{\rm f}$ |
+| 6 | $M$ | $B_{6,\pm}/D_\pm$ | $2U_\pm+N_\pm/b_\pm$ | $\widehat v_{\rm f}$ |
+| 7 | alternative $J$ | $B_{7,\pm}/D_\pm$ | $T_\pm+2X_\pm/b_\pm+4r_\pm$ | $a_\pm=N_{a,\pm}/H_\pm$ |
+| 7 | alternative $M$ | $B_{7,\pm}/D_\pm$ | $3U_\pm+2N_\pm/b_\pm$ | $m_\pm=N_{m,\pm}/H_\pm$ |

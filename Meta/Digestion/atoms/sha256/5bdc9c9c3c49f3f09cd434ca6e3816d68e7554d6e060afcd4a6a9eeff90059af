@@ -1,0 +1,7 @@
+**Proposition 53.3 (one selected route, with its actual outputs).** For the selected actual experiment at starting field $q$, the exact operation and endpoint account is:
+
+| Choice | Tick | Successful growth | Read | Complete output and endpoint |
+| --- | ---: | ---: | ---: | --- |
+| $V_j$ | $j$ | $0$ | $1$ | $j$ Tick ACKs; scalar $(A^jq)_e$; field $A^jq$ |
+| $W^+_{z,j}$ | $j+\kappa_z+1$ | $1$ | $1$ | its Tick ACKs, one original Growth reply, scalar $w^+_{z,j}(q)$; first $W$ endpoint in (51.6) |
+| $W^-_{z,j}$ | $j+\kappa_z+1$ | $1$ | $1$ | its Tick ACKs, one original Growth reply, scalar $w^-_{z,j}(q)$; second $W$ endpoint in (51.6) |

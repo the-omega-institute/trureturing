@@ -1,0 +1,10 @@
+**定理 3.4（纤维函子的维数刚性）。** 若 $F:\operatorname{Rep}_{\mathbb C}(G)\to\operatorname{Vect}_{\mathbb C}$ 为 $\mathbb C$-线性强对称幺半函子，则 $\dim F(V)=\dim V$。任何满射 $\omega(V)\twoheadrightarrow F(V)$ 都是同构。
+
+**证明。** 强对称幺半函子保持求值、余求值、交换与单位，因而保持范畴迹。在有限维表示范畴中
+
+$$
+\operatorname{tr}(\operatorname{id}_V)=(\dim V)\operatorname{id}_{\mathbf1}.
+$$
+
+线性保证单位上的标量不变，故 $\dim F(V)=\dim V$。同维空间之间的满射必为同构。$□$
+

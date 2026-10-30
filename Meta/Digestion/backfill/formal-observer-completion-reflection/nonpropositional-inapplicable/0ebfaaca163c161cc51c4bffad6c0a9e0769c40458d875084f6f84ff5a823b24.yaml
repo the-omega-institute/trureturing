@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0ebfaaca163c161cc51c4bffad6c0a9e0769c40458d875084f6f84ff5a823b24
+  normalized_sha256: sha256:0ebfaaca163c161cc51c4bffad6c0a9e0769c40458d875084f6f84ff5a823b24
+cas_ref: sha256:0ebfaaca163c161cc51c4bffad6c0a9e0769c40458d875084f6f84ff5a823b24
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 逐层约定 Open/NonCanonical/Authored/Diachronic/OnticBranch 的词义和判定条件；没有断言某个系统满足这些条件。
+    previous_atom_id: 31801ac7f036ed47d4092c51d7f57177bf09e3c4a2fc186a0da5c495d1c700d0
+    next_atom_id: 86e744c12ba1daaab26a49f9644645326c2b1d5ad6f5d10520e43f310f6f4bdc

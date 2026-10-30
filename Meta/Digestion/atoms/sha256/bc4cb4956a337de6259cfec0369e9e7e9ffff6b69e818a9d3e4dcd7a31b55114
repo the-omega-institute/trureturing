@@ -1,0 +1,6 @@
+**Theorem 10.3 (native joint supplementation criterion on the whole source).** Fix the entire source of Definition 10.2, its arbitrary positive vectors (10.3), and any $\epsilon>0$. The following conditions are equivalent:
+
+1. A finite admissible static supplement exists for (10.1) on all finite legal root histories.
+2. A complete finite names-only online register exists for the same contract.
+3. $A,B$ are linearly independent over $\mathbb R$.
+

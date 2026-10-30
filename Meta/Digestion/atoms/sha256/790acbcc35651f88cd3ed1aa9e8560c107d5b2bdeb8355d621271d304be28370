@@ -1,0 +1,70 @@
+**Definition 12.1 (Variable-height density representation).** Fix
+$0<Z<1$, $r=1-Z$, $X=Y=r/2$, $L=r/2$, one preparation height
+$k_{\rm in}\in(0,L)$ and arbitrary fixed preparation phases. In the
+middle-positive gauge put
+$\eta_s=\theta_s^{\rm in}-\theta_2^{\rm in}$, so $\eta_2=0$.
+The source is exactly the open-prefix source of Transport Definition 8.1
+and Theorem 8.2, with no terminal closing condition:
+
+$$
+\begin{aligned}
+\mathcal M&=(0,L)\times\mathbb T^2,\qquad
+\mathbb T=\mathbb R/2\pi\mathbb Z,\\
+\psi(k,u,v)&=\bigl(
+\sqrt{k}e^{-i(\eta_0+u)},\,
+\sqrt{L-k}e^{-i(\eta_1+v)},\,
+\sqrt Z,\,
+\sqrt{L-k}e^{-i(\eta_3+v)},\,
+\sqrt{k}e^{-i(\eta_{13}+u)}\bigr)^{\mathsf T},\\
+P(x)&=|\psi(x)\rangle\langle\psi(x)|\in M_5(\mathbb C).
+\end{aligned}
+\tag{12.1}
+$$
+
+The mode order remains $(0,1,2,3,13)$. Both circles have their actual
+$2\pi$ periods; fixed preparation phases are not assumed equal within
+either bottom group. All points in (12.1) are reachable by finite
+full-support original histories from the one fixed preparation. This is
+the exact synthesis statement of Transport Theorem 8.2, with
+$h=(u,v,0,v,u)$, not an additional preparation service.
+
+For a density matrix $R$ use the original signed, doubled $02$ readouts
+
+$$
+\begin{aligned}
+A_R&=|0\rangle\langle2|+|2\rangle\langle0|,&
+q_R(R)&=\operatorname{tr}(A_RR),\\
+A_I&=-i|0\rangle\langle2|+i|2\rangle\langle0|,&
+q_I(R)&=\operatorname{tr}(A_IR).
+\end{aligned}
+\tag{12.2}
+$$
+
+Thus $C_{02}(R)=R_{20}$, $q_R=2\operatorname{Re}C_{02}$ and
+$q_I=2\operatorname{Im}C_{02}$. In particular the sign is the sign of
+$\overline{\psi_0}\psi_2$ in (10.1), and
+$\|A_R\|_{\rm op}=\|A_I\|_{\rm op}=1$.
+Write $D(R,S)=\frac12\|R-S\|_1$.
+
+An affine predictor here is a real affine function $f$ on the convex
+hull of $P(\mathcal M)$, with one fixed set of coefficients for the
+prescribed command. It may use every entry of the complete $5\times5$
+matrix, with no positivity constraint on its prediction. A common CPTP
+implementation is one channel $\Phi:M_5\to M_5$, independent of the
+unknown current height, phases and producing history. All accessible
+ancillas, controllers and classical inputs are fixed and independent of
+that source; an accessible source-correlated programme changes this
+contract. A finite deterministic adaptive protocol with these same
+inputs is included through its induced channel. No postselection or
+extra failure alternative is included.
+
+This is the state-only contract of [Original-control instruments,
+§1][OC12], applied to the present phase request. Its Theorem 4.1 and
+§§17–18, 26 concern horizontal filtering and source-height assistance;
+their operations and success/failure laws are retained. Transport
+Theorem 9.8 already excludes finite shared affine prediction of all
+futures. [Native affine continuation, Theorems 7.4 and 8.4][NA12]
+also supply repeated-command approximation and lossless affine-action
+obstructions. Below the comparison is one application of one command,
+with an explicit finite relation between complete density matrices.
+

@@ -1,0 +1,22 @@
+**Definition 9.1 (the single acquisition program).** Check the supplied
+advice $1\le A\le B<2A$ by paid finite arithmetic, then execute and wait
+for the one preparation update in Assumption 7.1. On its stationary $x$:
+
+1. Acquire $\pi$ by Lemma 7.2 and retain its bit. Thereafter translate
+   each computed semantic word by the acquired letter map $\tau_\pi$.
+2. Query $R^{s-1}LL$ for $s=1,2,4,\ldots$ through the first absence,
+   and binary search the last bracket to acquire the threshold $H$ of
+   (GPO.29). Every word is translated and submitted literally from the
+   bound physical root. The first bit is one on the promised domain.
+3. Initialize $l=\max(1,H-B+1)$, $z=H$. While $l<z$, choose
+   $j=\lfloor(l+z)/2\rfloor$ and use Proposition 8.4. Its greater answer
+   sets $l=j+1$, and its at-most answer sets $z=j$. At the singleton
+   retain $K=l$.
+4. Traverse from the confirmed original root. At each $p$ execute both
+   probes (GPO.26), with $k=K$, in the displayed order. Their pairs
+   $00,10,11$ construct an alpha leaf, beta leaf or branch. Schedule
+   children only in the branch case. Count acquired leaves, producing
+   $\widehat n$, and assemble the acquired ordered tree $U$ in owned
+   backing. Retain $R_o=(\pi,U,K,\widehat n,d=1)$ with readable backing,
+   the same source binding and the current continuation grants.
+

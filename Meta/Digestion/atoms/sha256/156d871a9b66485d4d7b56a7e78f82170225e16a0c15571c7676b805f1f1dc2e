@@ -1,0 +1,38 @@
+## 481. 原前向价格核的临界零点响应与统一下界障碍
+
+这里继续使用 [QG3、QG7、QG9 与 CW3–CW5](../../../Library/ArithSums/nicolas2025comparison.md) 的实际前向积分，不更换为素数单层、固定相对区间或另一种平滑。它们的整数后继、完整库存和终端凹性成本均直接复用。本节证明这一原核的 Mellin 接口，并区分全实中心下界与实际被选来源上的下界。
+
+令
+
+$$
+\begin{gathered}
+E(x)=\psi(x)-x,\qquad H_x=x^{4/5},\qquad B_x=x+H_x,\\
+\lambda(x)=\frac1{x\log x},\qquad
+w(x)=-\lambda'(x)=\frac{1+\log x}{x^2\log^2x},\qquad
+\rho_x(u)=\frac{w(x+u)}{w(x)}.
+\end{gathered}
+$$
+
+定义同一归一化前向响应
+
+$$
+\begin{aligned}
+\mathcal T(x)
+&=\frac{\sqrt x}{H_x^2}
+\int_0^{H_x}[E(x+u)-E(x)]\rho_x(u)\,du\\
+&=\frac{T_\psi(x,x^{4/5})}{x^{11/10}}.
+\end{aligned}
+\tag{481.1}
+$$
+
+原 QG7 的有限恒等式给出
+
+$$
+\mathcal T(x)=\frac{\sqrt x}{w(x)H_x^2}
+\int_{(x,B_x]}[\lambda(t)-\lambda(B_x)]\,dE(t),
+\qquad dE=\sum_{n\ge1}\Lambda(n)\delta_n-dt.
+\tag{481.2}
+$$
+
+初端原子排除，终端原子的权重为零；每个参考素数幂仍带完整的 $\log p$ 权重。
+

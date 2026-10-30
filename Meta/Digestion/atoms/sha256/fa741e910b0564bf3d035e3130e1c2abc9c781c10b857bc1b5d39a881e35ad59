@@ -1,0 +1,95 @@
+**Proposition 11.2 (a legal $\Theta_4$ representation with a forward quotient).** In state order $0,1,2,3$, set
+
+$$
+M_0=
+\begin{pmatrix}
+\frac12&0&\frac12&0\\
+0&\frac12&0&\frac12\\
+0&0&0&\frac12\\
+0&0&\frac12&0
+\end{pmatrix},
+\qquad
+M_1=
+\begin{pmatrix}
+0&0&0&0\\
+0&0&0&0\\
+0&\frac12&0&0\\
+\frac18&\frac38&0&0
+\end{pmatrix},
+\qquad
+\lambda=\left(\frac1{13},\frac{11}{26},\frac5{26},\frac4{13}\right).
+\tag{11.3}
+$$
+
+Then $A=M_0+M_1$ is stochastic, $\lambda A=\lambda$, $M_1^2=0$, and $A$ is irreducible; hence (11.3) is a legal positive stationary $\Theta_4$ witness. Let $\pi=\{0,1\}\mid\{2,3\}$. Its forward quotient has
+
+$$
+\bar\lambda=\left(\frac12,\frac12\right),
+\qquad
+\bar M_0=\frac12\begin{pmatrix}1&1\\0&1\end{pmatrix},
+\qquad
+\bar M_1=\frac12\begin{pmatrix}0&0\\1&0\end{pmatrix},
+\tag{11.4}
+$$
+
+and the canonical reverse in (11.1) is
+
+$$
+R_0=\frac12\begin{pmatrix}1&0\\1&1\end{pmatrix},
+\qquad
+R_1=\frac12\begin{pmatrix}0&1\\0&0\end{pmatrix}.
+\tag{11.5}
+$$
+
+The feasible-row diameters of $\bar M_0,R_0$ are $1/2$, and those of $\bar M_1,R_1$ are $0$. Thus (3.7) holds with $m_+=m_-=1$ and $\rho_+=\rho_-=1/2$, and Proposition 11.1 transfers (6.1)--(6.3) to this representation's visible law.
+
+**Proof.** Explicitly,
+
+$$
+A=
+\begin{pmatrix}
+\frac12&0&\frac12&0\\
+0&\frac12&0&\frac12\\
+0&\frac12&0&\frac12\\
+\frac18&\frac38&\frac12&0
+\end{pmatrix},
+\qquad
+\lambda A=\left(\frac1{13},\frac{11}{26},\frac5{26},\frac4{13}\right).
+$$
+
+Every row of $A$ sums to one. The range of $M_1$ is contained in the span of the first two coordinate vectors, whose rows in $M_1$ vanish, so $M_1^2=0$ and therefore $\lambda M_1^2\mathbf1=0$. The positive paths $0\to2\to1\to3\to0$ and $3\to2$ show irreducibility. Aggregating the rows of (11.3) over the two fibers gives (11.4); since $\bar\lambda$ is uniform, (11.5) is the transpose family. For $\bar M_0$ and $R_0$, the two normalized feasible rows differ by TV $1/2$; each of $\bar M_1,R_1$ has one feasible row and hence diameter zero. $\square$
+
+The hidden reverse identity (3.3) fails for this same $\pi$. From (3.1), the relevant rows are
+
+$$
+\check M_0(2,\cdot)=\left(\frac15,0,0,\frac45\right),
+\qquad
+\check M_0(3,\cdot)=\left(0,\frac{11}{16},\frac5{16},0\right).
+$$
+
+Their reverse $M_0$-mass into the fiber $\{0,1\}$ is $1/5$ and $11/16$, respectively. Hence no hidden reverse channel is fiber-constant here; the canonical quotient reverse in (11.5) is the object used by Proposition 11.1.
+
+For the identity quotient, every $m\ge1$ fails (3.7) in both directions. The rows $2,3$ of $M_0^m$, after normalization, are the two alternating point masses, so $\delta(M_0^m)=1$. The rows $0,1$ of the hidden reverse $\check M_0^m$, after normalization, are the point masses at $0,1$, so $\delta(\check M_0^m)=1$. These are feasible because
+
+$$
+(M_0^m\mathbf1)_0=(M_0^m\mathbf1)_1=\frac{m+1}{2^m},
+\qquad
+(M_0^m\mathbf1)_2=(M_0^m\mathbf1)_3=\frac1{2^m},
+$$
+
+and therefore
+
+$$
+P(0^m)=\lambda M_0^m\mathbf1=\frac{m+2}{2^{m+1}}>0.
+\tag{11.6}
+$$
+
+The reverse word has the same positive probability by stationarity. Finally, every forward-labeled strongly lumpable partition refines $\{0,1\}\mid\{2,3\}$: label $1$ has total outgoing mass $0$ from $0,1$ and $1/2$ from $2,3$, so a block cannot cross these fibers. If $0,1$ were merged while $2,3$ were split, their $M_0$-masses into the block containing $2$ would be $1/2$ and $0$. If $2,3$ were merged while $0,1$ were split, their $M_1$-masses into the block containing $0$ would be $0$ and $1/8$. Thus the only forward-lumpable partitions are the identity and $\pi$. The identity fails the diameter hypotheses by (11.6), while $\pi$ fails hidden reverse lumpability by $1/5\ne11/16$; no deterministic quotient of this fixed representation satisfies the old combined criterion (3.2), (3.3), and (3.7).
+
+This obstruction is representation-level only. The quotient matrices (11.4) are exactly the producer in Proposition 8.2, so (11.3) has the same visible law as that triangular example and does not enlarge the output-law class. Its band failure is retained: by Counterexample 8.4, the exterior event $G$ has probability $1/64$ and $q_0=9/16>1/2$. Consequently this witness resolves neither $\mathsf Q_{\rm full}$ nor $\mathsf Q_{\rm band}$, and it claims no divergent root sum.
+
+**Open Question 11.3 (band-preserving obstructions and averaged criteria).** For a legal producer whose visible law satisfies $\mathsf B(P)$, must every positive stationary component admit a forward-labeled quotient whose canonical reverse and forward matrices satisfy (3.7), or can a band-preserving component make every such deterministic quotient fail? If the latter obstruction exists, can a stationary-word-weighted (averaged) diameter condition still imply the bounds (6.1)--(6.3)? This is the next exact question; no answer is asserted here.
+
+**Attribution 11.4.** Proposition 11.1 reuses Definition 3.2's forward identity, the cylinder calculation of Lemma 3.3, and Theorems 6.1 and 7.1. Proposition 11.2 is a direct $\Theta_4$ calculation from Definitions 2.1 and 3.1; its visible-law and band comparisons use Proposition 8.2 and Counterexample 8.4. No hidden reverse lumpability, new variance argument, or resolution of either open assertion is claimed.
+
+

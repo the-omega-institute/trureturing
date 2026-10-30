@@ -1,0 +1,17 @@
+**定理 87.2（全树等变与三步观察）。** 对每棵树 $t$，
+
+$$
+q(\rho t)=Rq(t),\qquad q(\rho^3t)=q(t).
+$$
+
+这是观察的周期；原生树轨道没有三周期。
+
+证明（87.2）。全置换等变使 $R$ 为运算自同构。叶 $\alpha$ 上，$q(\rho\alpha)=b=Ra$；叶 $\beta$ 上，$q(\rho\beta)=b\star a=c=Rb$。若式对 $s,t$ 成立，则
+
+$$
+q(\rho\langle s,t\rangle)
+=Rq(s)\star Rq(t)=R(q(s)\star q(t)),
+$$
+
+完成对全部构造子的归纳。迭代三次，$R^3=I$ 给第二式。来源的 $T_n=\rho^n\alpha$ 则满足 $T_{n+2}=\langle T_{n+1},T_n\rangle$，叶数为 $F_{n+1}$。更一般，第33.2条的增长读出 $g(\rho^nt)=\phi^ng(t)$，$g(t)>0$、$\phi>1$，对任意树排除三步后来源相同。这里直接复用已有增长结论，不以有限读出反推来源返回。$\square$
+

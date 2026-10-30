@@ -1,0 +1,55 @@
+**Definition 19.1 (Boundary coordinates).** Retain the entire original
+world domain and independent pair predicate of Definitions 1.1–1.2.
+The rectangle $\mathcal U$, center $q_c=(p_c,v_c)$ and $h=10^{-34}$
+remain Definition 12.1. In the additions use $\mathcal R=(p,v)$ for
+the regular-source map of Definition 2.1; denote Definition 13.1's
+exceptional quartic $\Phi$ by $\varphi_{\rm sing}$. Thus response-map
+and exceptional-polynomial symbols are distinct. Retain $H=b\widehat D$
+for the circuit denominator. On the full strict source domain put
+
+$$
+\begin{gathered}
+c_{\rm src}=r(1-r)/b,\quad j=b+c_{\rm src},\quad n=j+r,\quad
+T=1+b,\quad U=1+2b,\quad V=U+n,\quad\epsilon=d-24,\\
+\Lambda=1+6/T+1/U-4/j-4/n,\qquad
+B_{\rm par}=6/T-2/U=2(2+5b)/(TU)>0,\\
+F_{\rm par}=\epsilon\Lambda+(24/5)(b-1/8)B_{\rm par}.
+\end{gathered}
+\tag{19.1}
+$$
+
+[Common Parent Geometry](FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md),
+Theorem 2.1, gives the bijection between the full five-row parent and
+$0<r<1,b>0,F_{\rm par}=0$. The entire gain is the unique polynomial
+of degree at most three with samples
+
+$$
+(g_0,g_1,g_2,g_3)=(-24-\epsilon,-\epsilon/j,
+                         (27/5-\epsilon)/T,-\epsilon/n).
+\tag{19.2}
+$$
+
+For the boundary calculations use the literal fifth and sixth responses
+
+$$
+\begin{aligned}
+K_5&=V(96-108/T),&A_5&=1+V(4-15/j+20/T-10/n),\\
+K_6&=(2U+n)(240-243/T),&
+A_6&=1+(2U+n)(10-36/j+45/T-20/n),\\
+P_5&=24+K_5+\epsilon A_5,&P_6&=24+K_6+\epsilon A_6.
+\end{aligned}
+\tag{19.3}
+$$
+
+These follow from Lemma 2.2's extrapolation weights. On actual worlds
+$P_5=p,P_6=v$; eliminating $\epsilon$ where $\Lambda\ne0$ gives
+$\mathcal R$. Common Parent Geometry, Lemma 12.2 and Theorem 12.3,
+give $\Lambda^2+A_5^2>0$ on every strict source and unique whole-world
+lifting at fixed source and fifth response, including $\Lambda=0$.
+These premises are reused, together with the complete regular,
+exceptional and singular inventory of Sections 13–16. They impose
+no bound on positive offdiagonals, no nonzero drift or gain sample,
+no exact degree and no simple gain roots. Every world keeps one fixed
+drift and one whole nonzero real gain. The unequal first two readings
+exclude only the identically zero gain.
+

@@ -1,0 +1,48 @@
+**Theorem 108.4 (every repaired inverse, route and specified action
+square).** Each of these four expressions recovers the other three on
+its exact attained repair image, with both inverse identities. The same
+holds after any fixed known number $n$ of actual subsequent passive
+Tick;Hold pairs, retaining the samples at their original epoch. The
+recovery maps commute with these actual passive steps and, at the odd
+repair cut, with the particular performed use (107.2) on its declared
+post-use image.
+
+**Proof.** For $d=0$, Time and Boundary-plus recover
+$\theta=2z$ in the fresh run or $\theta=-2y$ in the inherited run.
+For $d>0$ use the same unique stacked rational solve as Theorem 107.1.
+Space and Memory recover $\theta$ from the current $p_iR$ coordinates
+at odd parity and $p_i$ at even parity. At the $d=k$ no-call image
+the parity starts even. Conversely $\theta$ reconstructs the retained
+$R\theta$, exactly the selected samples, their fixed performed chronology,
+the actual current field, its metric/germ and the predictor component.
+This proves both image identities individually for all four views,
+including redundant rows of $R$, zero parameters and zero operands.
+There are no unperformed samples in the re-encoding: it reconstructs
+the contents of the specified already performed record.
+
+Explicitly, let $\mathcal E_i^n(\theta)$ be one of these four
+independently defined expressions and $\mathcal D_i^n$ its displayed
+decoder. Then
+$\mathcal D_i^n\mathcal E_i^n=\mathrm{Id}_{\mathbb Q^k}$ and
+$\mathcal E_i^n\mathcal D_i^n=\mathrm{Id}$ on that image. A route
+$i\to j$ is $\mathcal E_j^n\mathcal D_i^n$; composing any two routes
+gives the direct route. Equality of each view is $\theta$ equality,
+hence exactly the full-current-service kernel in this fixed context.
+
+One actual Tick;Hold updates the field by $B$, increments the retained
+count and appends precisely those real calls to Time. Boundary-plus
+keeps its old measured samples and recomputes the *present* germ with
+paid work; Memory updates its actual predictor. Since $B^2H=H$,
+each expression becomes $\mathcal E_i^{n+1}(\theta)$. Both orders of
+transport and recovery therefore give $\mathcal E_j^{n+1}(\theta)$.
+This algebra verifies the real updates just specified, rather than
+defining the observations by desired inverses.
+
+For (107.2), Time appends the actual Add/Hold/Read and literal $q$;
+Boundary-plus retains the repair samples and exposes the updated germ
+$OGBH\theta$; Space and Memory expose $GBH\theta$. The unchanged
+$p_iR$ values still decode $\theta$ (or first apply $G^{-1}$).
+Re-encoding gives exactly these post-use contents, so the same two
+image identities and the before/after action square hold. No passive
+image after an arbitrary later control is assumed. $\square$
+

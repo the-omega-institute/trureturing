@@ -1,0 +1,28 @@
+**Definition 4.4 (the existing positive timed consumer is retained).**
+[N, §§24–28] uses the same source $\mathbb P_e$, but its added
+Assumption 25.1 returns types, original-clock timestamps and four
+real coordinates at release, together with nonarrival while pending.
+The calibrated entrance/contact/survival laws and exact clock are
+premises. Its completed events on $[0,T]$ number at most
+
+$$
+2\lfloor T/\epsilon\rfloor+\lfloor T/\delta\rfloor,
+\tag{4.1}
+$$
+
+with at most one extra pending primitive; at $T=0$ there are zero
+completed events. Assumption 26.1 additionally supplies exact real
+computation and native actuation. These are one source's jointly
+coupled records and costs, not independently optimized marginals.
+Theorem 24.3's coupling, Theorem 25.2's filtration containment and
+Theorem 27.1's same-original-time ten-output/own-exit convergence
+remain available with their explicit premises. That consumer uses
+its fixed interior interval $I=[l,u]$, $0<l<k_0<u<H_{\rm n}$,
+and uses $(x,y,w)$, even though its service releases $z$ too. Its
+observation exit is not substituted for full source evolution in
+Theorem 3.1. Theorem 3.1
+does not remove these positive results or pay their calibration,
+exact timing, notification, real computation, command, traffic or
+storage costs. Their finite-event record and causal controller are
+not the current finite sheet in (2.1).
+

@@ -1,0 +1,12 @@
+### 定义 2.1（任务商）
+
+令
+
+$$
+\eta_\Gamma:S\to S/R_\Gamma,
+\qquad
+\eta_\Gamma(s)=[s]_{R_\Gamma}.
+$$
+
+称 $\eta_\Gamma$ 为任务族 $\Gamma$ 的规范商。
+

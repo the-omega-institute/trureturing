@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:8f593040cf56be0781b4d3003b3d983db1c7aa8771c1ef32b7ac99a0447aa965
+  normalized_sha256: sha256:8f593040cf56be0781b4d3003b3d983db1c7aa8771c1ef32b7ac99a0447aa965
+cas_ref: sha256:8f593040cf56be0781b4d3003b3d983db1c7aa8771c1ef32b7ac99a0447aa965
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Implementation roadmap or dependency name: the displayed module/theorem names and library references are proposed work or search routes, not newly asserted mathematical results.'
+    previous_atom_id: d916a733ecaa45b3d504ea52fe03bb680af58ade8bccab1b54b181472e3e4070
+    next_atom_id: 6e4e0112bf17deb4485732a71d43a61c6e6744d750a4e09cfe7c4ef617c1c887
+  chain_atoms:
+    - 22a7bf89c2af1ae48e722e6ba201a1b4679f0681d17a1bfd4461feee60cb501c
+    - 6648389a6ac817c460c8e51caaa98624f20ec18f85d5b4f7c133992618d67098
+    - f02e174f88bd9c5dbfcee6fafbffa9a83809354c4a3cabe5141c954005060480

@@ -1,0 +1,27 @@
+## 8. 主定理的合法性边界：共同实现与量子恢复
+
+共同量子对象不等于共同经典答案表。主定理不把第 5 节的经典赋值拼接强加给不相容量子设置。CHSH 的标准计算说明原因：若在同一个设置无关概率空间上有 $\pm1$ 变量 $A_0,A_1,B_0,B_1$，则每一点的
+
+$$
+A_0(B_0+B_1)+A_1(B_0-B_1)
+$$
+
+恰为 $\pm2$，故期望绝对值不超过二。而 Bell 态 $|\Phi^+\rangle=(|00\rangle+|11\rangle)/\sqrt2$ 与
+
+$$
+A_0=Z,\quad A_1=X,\quad
+B_0=(Z+X)/\sqrt2,\quad B_1=(Z-X)/\sqrt2
+$$
+
+有 $\langle Z\otimes Z\rangle=\langle X\otimes X\rangle=1$、两个交叉期望为零，CHSH 值为 $2\sqrt2$。同一密度态统一这些设置的概率，却不满足上述共同经典变量假设。另一方面，局部 POVM 的归一化给
+
+$$
+\sum_b p(a,b|x,y)
+=\operatorname{tr}\bigl(\rho(E_{a|x}\otimes\sum_bF_{b|y})\bigr)
+=\operatorname{tr}(\rho(E_{a|x}\otimes I)),
+$$
+
+所以边缘与远端设置 $y$ 无关。这是 no-disturbance 的量子实现，不是对每个未选设置赋共同实际值。
+
+重叠边缘一致也不保证量子拼接。若 $\rho_{AB}$ 与 $\rho_{BC}$ 各为 Bell 纯态，它们在 $B$ 上都为 $I/2$。假定存在共同 $\rho_{ABC}$，令 $P=\rho_{AB}$。正性及 $\operatorname{tr}((I-P)\otimes I\,\rho_{ABC})=0$ 使全态支撑落在 $\operatorname{ran}P\otimes H_C$，故 $\rho_{ABC}=P\otimes\sigma_C$。于是 $BC$ 边缘为 $I_B/2\otimes\sigma_C$，不可能是 Bell 态。量子相融所需的是共同正、迹一实现，不只是重叠一致。
+

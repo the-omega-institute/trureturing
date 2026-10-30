@@ -1,0 +1,37 @@
+## 3. What “three-dimensional” means in the network interface
+
+The triangle incidence matrix has three edge columns and three party rows. Each party sees exactly two columns:
+
+\[
+\begin{array}{c|ccc}
+ & \alpha & \beta & \gamma\\
+\hline
+A&0&1&1\\
+B&1&0&1\\
+C&1&1&0
+\end{array}.
+\tag{3.1}
+\]
+
+This is a three-edge incidence geometry. It is not a coordinate chart for physical space.
+
+The FIB three-axis interface starts with a supplied real positive-definite \(g\), a nonzero trilinear form \(T\), and full simultaneous \(SO(V,g)\)-invariance. Under those hypotheses, the invariant tensor calculation gives
+
+\[
+T=0\quad(d\ne3),\qquad
+T=c\,\operatorname{vol}_g\quad(d=3).
+\tag{3.2}
+\]
+
+The associated bilinear response is \(B=c\,\times_g\). The result is a conditional representation theorem for a response interface. It does not follow from the existence of three sources, three parties, or a cycle.
+
+The correct combined interpretation is:
+
+- the network contributes three independent edge slots and two-edge local access;
+- the FIB quotient contributes a three-coordinate observable carrier;
+- the hidden \(\kappa\)-fiber records information lost by that quotient;
+- a full triangle-local model is a lift of the observed carrier that must preserve the product law on the three edges and every unconnected-source invariance;
+- an inflation proof is a finite lifted obstruction to such a global lift.
+
+This is the same distinction used elsewhere in the project between a local projection and a future-complete boundary. A valid projection can be geometrically closed and still fail to have a compatible hidden lift.
+

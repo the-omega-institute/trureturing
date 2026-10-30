@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:a6c944671057e0cada127642e41e350acfede49db1e67d1b3261b648f692fd71
+  normalized_sha256: sha256:a6c944671057e0cada127642e41e350acfede49db1e67d1b3261b648f692fd71
+cas_ref: sha256:a6c944671057e0cada127642e41e350acfede49db1e67d1b3261b648f692fd71
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 定义 157 以坐标绝对差之和定义盒距离，以路径长度等于该距离定义 Geo，并简记 m_p 和 D；未声称最短路径存在或计数公式。
+    previous_atom_id: d1c44efa4fdc5363e5d656e5f10dadb735e50d64e208f60446e72264e4823439
+    next_atom_id: 896a3b5bf26a9e0b98d8105e8c3a29d4aebef610dcbe98e13846d45de152615d

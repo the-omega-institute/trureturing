@@ -1,0 +1,57 @@
+**every** \(u\in\mathcal T\) has reached list \((\varepsilon)\), exterior
+\(\square_1\), and singleton partition \(\{\{1\}\}\). Denote this constant
+row by \(R\). A root reply is a different object from this row.
+
+Before entry, a public producer makes exactly one actual epoch-zero
+\(\mathsf{Read}(\varepsilon)\) on every finite source and retains its literal
+record. Consider its acquired output
+\[
+H_0=[(0,\varepsilon,\mathsf{branch})],\qquad H_{\rm rel}=[],\qquad N=0.
+\]
+The old row \(R\) is known from the root-cut definition and nonemptiness;
+no whole-tree traversal is required to compute it. The producer's other
+root outcomes retain alpha or beta rather than report branch. Under the
+complete-cut premise of
+[Acquired Relation History, Assumption 1.3](RECURSIVE_RELATIONAL_OBSERVATION_ACQUIRED_RELATION_HISTORY.md),
+the entire entry state is a fixed recoverable encoding of
+\((P,R,H_0,H_{\rm rel},N)\), common code and parameters. No source-bearing
+cache, timing, address, length, count, control position, archive, permission,
+or handle is omitted. The same original-root register is still at epoch zero.
+Authentic entry and this complete access cut are premises, not a physical
+erasure or preparation result.
+
+Its exact original-source fiber is
+\[
+D=\{u\in\mathcal T:R_P(u)=R,\ r_u(\varepsilon)=\mathsf{branch}\}
+ =\mathcal B:=\{\langle x,y\rangle:x,y\in\mathcal T\}.
+\tag{112.1}
+\]
+Both directions hold: a source producing this retained output has branch
+root; every branch source executes the same one-read schedule, gives that
+output, and, conditional on the complete cut, has that same entry state.
+There is no witness-family restriction or acquired size/index selector.
+The pre-cut raw bill is one Read, zero updates and zero literal-address
+length; its supplier paid-address set is \(\{\varepsilon\}\). Preparation,
+certification, installation and access-cut prices are unspecified.
+
+The original target cut is \(Q=\{L,R\}\). The entire target row is
+\[
+\mathsf{Row}(u)=R_Q(u)
+ =\bigl((L,R),\ \langle\square_1,\square_2\rangle,\ \pi_Q(u)\bigr),
+\quad
+\pi_Q(u)=
+\begin{cases}
+\{\{1,2\}\},&u|_L=u|_R,\\
+\{\{1\},\{2\}\},&u|_L\ne u|_R.
+\end{cases}
+\tag{112.2}
+\]
+Both addresses are reached on all of \(D\). The exterior has distinct
+numbered holes in this reached order; the partition records equality of
+their **entire ordered subtrees**. Subtree descriptions are possible acquired
+evidence, not additional target fields. This is the full original row of
+Acquired Relation History, Definition 1.1, equivalently the independent
+exterior/partition record of `Observer.ActualCutPartitionDecoder` after
+numbering its addresses. Absence supplies no fictitious hole.
+The target is evaluated on INITIAL \(u\), after any later action too.
+

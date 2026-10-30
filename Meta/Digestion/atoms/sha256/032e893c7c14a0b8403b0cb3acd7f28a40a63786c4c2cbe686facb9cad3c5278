@@ -1,0 +1,24 @@
+**Definition 11.8 (Sources and mathematical status).** The exact model,
+whole-world inverse, universal carrier identity, subresultant identity
+and earlier M specialization are respectively (10.1)–(10.6), Lemma
+10.5, Lemma 10.9, Lemma 10.11 and Lemma 10.12 of this volume.
+F, Sections 30–33, supplies the same entire-child and actual-pair
+semantics. X, Theorem 6.1, supplies an equivalent actual J terminal
+formula; equation (11.13) derives the form used here directly.
+The supplied completed local zero-drift source supplies only the
+nonemptiness of one guarded denominator stratum and no collision.
+
+Fixed-node interpolation is used in the classical scope of
+[Berrut–Trefethen, §2](https://doi.org/10.1137/S0036144502417715).
+The Sylvester and subresultant identities use the classical tools cited
+in Lemmas 10.9 and 10.11. Newton identities and the Chinese remainder
+theorem are elementary finite-algebra tools; the finite separable
+algebra interpretation is the same one cited in Theorem 10.14,
+[Stacks Project, Tag 00U3](https://stacks.math.columbia.edu/tag/00U3).
+These literature references are inherited from the authenticated
+ordinary sources. No fresh external literature search, priority,
+physical-realization or Lean/kernel-validation claim is made.
+The additional evaluated content is (11.5)–(11.9) for the actual J
+terminal, and the guarded all-plane correspondence and obstruction
+(11.12); no coprimality or real feasibility conclusion is appended.
+

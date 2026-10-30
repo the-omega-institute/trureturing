@@ -1,0 +1,72 @@
+## 57. Polynomial numerator for the derivative
+
+All polynomial definitions in this section have integer coefficients.
+Define
+
+$$
+ h(r,u)=u^2H(\beta,\nu),\qquad U_*=1+2\beta,
+ \qquad S_*=1+\beta+2\nu+2r.
+ \tag{57.1}
+$$
+
+Although $\nu$ was written using $1/u$, $h$ is a polynomial. For
+positive integers $K,q$ put
+
+$$
+\begin{aligned}
+ p_{K,q}(r,u)=u^3\big[&5(q-K)(U_*+\nu)B(\beta,\nu)\\
+       &+qS_*N_7(\beta,\nu)
+             -K(2U_*+\nu)N_6(\beta,\nu)\big].
+\end{aligned}\tag{57.2}
+$$
+
+This too is a polynomial: every product inside the brackets has at
+most three factors of $1/u$. Its separate degrees are at most $(8,7)$,
+and those of $h$ are $(8,6)$. On either actual arc, (55.4) gives exactly
+
+$$
+ A-\frac KqV=\frac{3p_{K,q}}{5quh}.
+ \tag{57.3}
+$$
+
+The denominator is nonzero there, since $u>0$ and $h=u^2H<0$.
+Define the polynomial
+
+$$
+\begin{aligned}
+ T_{K,q}={}&(h\,\partial_rp_{K,q}-p_{K,q}\,\partial_rh)f_u\\
+ &-(h\,\partial_up_{K,q}-p_{K,q}\,\partial_uh)f_r
+                 +p_{K,q}h\,\frac{f_r}{u}.
+\end{aligned}\tag{57.4}
+$$
+
+The final quotient is the polynomial specified after (56.3); it is not
+a division on a source chart. For $(K,q)=(23,4),(3,1)$, the separate
+degrees of $T_{K,q}$ are $(22,18)$. These formulas, together with
+(55.3), (56.1) and (56.2), specify every coefficient without a root
+choice or numerical parameter.
+
+Differentiating $f(r,u(r))=0$ gives $u'=-f_r/f_u$. The quotient rule
+in (57.3), with no further hypotheses, gives
+
+$$
+ \frac{d}{dr}\left(A-\frac KqV\right)
+       =\frac{3T_{K,q}}{5quh^2f_u}.
+ \tag{57.5}
+$$
+
+For example, the undivided derivative numerator for $p/(uh)$ is
+
+$$
+ u(hp_r-ph_r)f_u-{u(hp_u-ph_u)-ph\}f_r=uT_{K,q},
+$$
+
+which verifies both the normalization and the sign in (57.5).
+Consequently it suffices to prove
+
+$$
+ T_{23,4}<0\ \text{on the lower arc},\qquad
+ T_{3,1}>0\ \text{on the upper arc}.
+ \tag{57.6}
+$$
+

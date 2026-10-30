@@ -1,0 +1,36 @@
+**推论 11.3（全部原守卫迫使历史平面落入四类有向退化关系）。** 在 (11.1) 下，若全部原守卫 (3.9) 成立，则至少满足
+
+$$
+\begin{aligned}
+&\operatorname{rank}(F,\Delta)\le1,\quad\text{或}\quad
+K\in\mathbb R_{>0}\Delta,\quad\text{或}\\
+&Z\in\mathbb R_{>0}\Delta,\quad\text{或}\quad
+\bigl[\kappa=0\ \text{或}\ \lambda\in\mathbb R_{>0}\kappa\bigr].
+\end{aligned}
+\tag{11.22}
+$$
+
+更具体地，若 $F,\Delta$ 独立，则存在唯一实数 $e,f$ 使 $E=eF+f\Delta$；此时至少有
+
+$$
+\left[e=-\frac45,\ f>0\right],\qquad\text{或}\qquad
+\left[e=-\frac{16}{5},\ f>0\right],\qquad\text{或}\qquad
+\left[75e+16f=52,\ e\ge-4\right].
+\tag{11.23}
+$$
+
+**证明。** (11.22) 是定理 11.2 的逆否命题。所有这些形式都经 $H$ 分解；$\operatorname{rank}H=2$ 且 $F,\Delta$ 独立，所以它们是这个二维对偶像的基，给出唯一 $e,f$。于是
+
+$$
+\begin{aligned}
+K&=\left(1+\frac54e\right)F+\frac54f\Delta,\\
+Z&=\left(\frac{16}{5}+e\right)F+f\Delta,\\
+\kappa&=\left(1+\frac e4\right)F+
+ \left(\frac f4-\frac{11}{2}\right)\Delta,\qquad
+\lambda=\frac{16}{5}F-15\Delta.
+\end{aligned}
+\tag{11.24}
+$$
+
+前两种正比例分别给 $e=-4/5,f>0$ 和 $e=-16/5,f>0$。若 $\kappa=0$，则 $e=-4,f=22$，满足最后一组条件。若 $\lambda=r\kappa$ 且 $r>0$，比较 $F$ 系数得 $e>-4$；最后两形式的系数行列式为 $(52-75e-16f)/20$，因此 $75e+16f=52$。反向在这条直线上，$e=-4$ 给 $\kappa=0$，而 $e>-4$ 给 $\lambda=64\kappa/[5(4+e)]$。这也说明零形式和正比例的边界均已保留。∎
+

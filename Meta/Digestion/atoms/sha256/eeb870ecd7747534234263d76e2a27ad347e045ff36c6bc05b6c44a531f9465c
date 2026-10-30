@@ -1,0 +1,212 @@
+**定理 43.2（不变量积累给出的一致模反例及其规范边界）。** 定义
+
+$$
+\begin{aligned}
+b(s,t)&:=\delta_{s,t},&q(\alpha)&=q(\beta)=0,\\
+q(\langle s,t\rangle)&:=q(s)+q(t)+b(s,t).
+\end{aligned}
+\tag{43.3}
+$$
+
+因而 $q:T\to\mathbb N$ 计数左右直接子树相等的内部节点。对每个整数 $n\ge1$，取
+
+$$
+\begin{aligned}
+m_n&=5n,&r_n&=\frac1{5n},&h_n&=\frac\pi{5n},&a_n&=1-r_n,\\
+z_n(t)&=e^{ih_nq(t)},&P_n(s,t)&=\overline{z_n(s)}z_n(t),\\
+K_n(s,t)&=a_nP_n(s,t)+r_n\delta_{s,t},&\varepsilon_n&=\frac1n.
+\end{aligned}
+\tag{43.4}
+$$
+
+这些函数定义在全部 $T$ 上，且 $q(\rho t)=q(t)$。每个 $K_n$ 都属于
+$\mathcal C_{\varepsilon_n}$，并有更具体的全域界
+
+$$
+\sup_{s,t,u,v\in T}|D_{K_n}(s,t,u,v)|
+\le\left(1-\frac1{5n}\right)\frac{\pi+1}{5n}<\frac1n.
+\tag{43.5}
+$$
+
+令 $C=\langle\alpha,\alpha\rangle$，$w_0=\beta$，
+$w_{k+1}=\langle w_k,C\rangle$。则
+
+$$
+q(w_k)=k,\qquad K_n(\alpha,w_{5n})=-a_n,
+\qquad
+\min\{|K_n(\alpha,w_{5n})|,|K_n(\alpha,w_{5n})-1|\}
+=a_n\ge\frac45>\frac12.
+\tag{43.6}
+$$
+
+所以 (43.2) 的一致模不存在。与此同时，这一反例族有以下精确边界：对每个固定来源对
+$K_n(s,t)\to1$，对每个固定有限来源集合该收敛一致；其模长与模长平方在全域上一致趋于 $1$；
+把 Gram 代表 $\eta_n(t)$ 改为 $\overline{z_n(t)}\eta_n(t)$ 后，核恰好变为 §42.4
+已经给出的 $K_c$，其中 $c=a_n$。
+
+**证明。** 首先复用实际来源运输的单射性：[Source Transport Centralizer 的
+`source_transport_centralizer`](../../../D5/S3/Arith/FibonacciAtomic/SourceTransportCentralizer.lean)
+的第三个合取项适用于 $F=\rho$，因为该 $F$ 保持构造子且与自身交换。
+这里的来源对应是 [Genealogical Fiber Transport](../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean)
+中的 $\mathrm{Source}=\mathrm{FreeMagma}(\mathrm{Bool})$，
+$\alpha=\mathrm{of}(\mathrm{true})$、$\beta=\mathrm{of}(\mathrm{false})$，
+$\rho=\mathrm{substitution}$。不把该全域结论换成单轨道结论。
+
+对树作结构归纳。两个叶情形分别给出
+$q(\rho\alpha)=q(\beta)=0$ 和
+$q(\rho\beta)=q(\langle\beta,\alpha\rangle)=0$；后者使用 $\beta\ne\alpha$。
+内部节点情形使用归纳假设与运输单射性，得到
+
+$$
+\begin{aligned}
+q(\rho\langle s,t\rangle)
+&=q(\rho s)+q(\rho t)+\mathbf1_{\{\rho s=\rho t\}}\\
+&=q(s)+q(t)+\mathbf1_{\{s=t\}}=q(\langle s,t\rangle).
+\end{aligned}
+\tag{43.7}
+$$
+
+归纳覆盖所有有限树，未对树高或叶数取统一上限。$q$ 本身不单射；这不改变来源域，
+而且 (43.4) 的 delta 项仍分离每一对不同来源。
+
+固定 $n$，简记 $r=r_n$、$h=h_n$、$a=1-r$、$z=z_n$、$P=P_n$、$K=K_n$。
+有 $0<r\le1/5$、$a>0$ 和 $|z(t)|=1$，所以 $K$ Hermitian 且 $K(t,t)=a+r=1$。
+若 $F$ 是任意有限树列 $t_1,\ldots,t_M$ 中不同树的集合，则
+
+$$
+\sum_{j,k=1}^{M}\overline{c_j}c_kK(t_j,t_k)
+=a\left|\sum_{j=1}^{M}c_jz(t_j)\right|^2
++r\sum_{x\in F}\left|\sum_{j:t_j=x}c_j\right|^2\ge0.
+\tag{43.8}
+$$
+
+该恒等式也包含重复标签，故给出全部所需正性。这是通常的 Gram 正性计算，作为本构造的
+中间步骤使用，不另作新正性结论。取内积对第一个变量共轭线性，显式实现为
+
+$$
+\eta_n(t)=\sqrt{a_n}\,z_n(t)e_0+\sqrt{r_n}\,e_t
+\quad\hbox{于}\quad \mathbb Ce_0\oplus\ell^2(T),
+\qquad K_n(s,t)=\langle\eta_n(s),\eta_n(t)\rangle.
+\tag{43.9}
+$$
+
+不同 $t$ 的非零 $e_t$ 分量保证此归一 Gram 映射单射；也可直接由
+$s\ne t\Rightarrow|K(s,t)|=a<1$ 得到 $K(s,t)=1\Longleftrightarrow s=t$。
+式 (43.7) 保持 $P$，运输单射性保持 delta 项，所以 $K(\rho s,\rho t)=K(s,t)$ 精确成立。
+
+现取任意四棵树 $s,t,u,v$，允许它们之间有任意相等关系。置
+
+$$
+A=P(s,u),\quad B=P(t,v),\quad d=\delta_{s,u},\quad e=\delta_{t,v},
+\quad E=e^{ih(b(u,v)-b(s,t))}.
+$$
+
+式 (43.3) 给出 $P(\langle s,t\rangle,\langle u,v\rangle)=ABE$；
+自由有序构造子的单射性给出
+$\delta_{\langle s,t\rangle,\langle u,v\rangle}=de$。因此直接展开为
+
+$$
+\begin{aligned}
+D_K(s,t,u,v)
+&=aABE+rde-(aA+rd)(aB+re)\\
+&=aAB(E-1)+ra(A-d)(B-e).
+\end{aligned}
+\tag{43.10}
+$$
+
+这里 $|AB|=1$。若 $d=1$ 则 $A=1$，故 $A-d=0$；若 $d=0$ 则
+$|A-d|=|A|=1$。于是总有 $|A-d|\le1$，同理 $|B-e|\le1$。
+又 $b(u,v)-b(s,t)\in\{-1,0,1\}$，由
+$|e^{ix}-1|\le|x|$ 得到 $|E-1|\le h$。故
+
+$$
+|D_K(s,t,u,v)|\le a(h+r)
+=\left(1-\frac1{5n}\right)\frac{\pi+1}{5n}<\frac1n,
+$$
+
+最后使用 $\pi<4$。这个估计与四棵树的大小无关，因而得到 (43.5)，并完成
+$K_n\in\mathcal C_{1/n}$ 的全部条件。它们并非精确乘法核：取
+$(s,t,u,v)=(\alpha,\beta,\beta,\alpha)$，有 $A=B=E=1$、$d=e=0$，
+故 $D_K=ra>0$。因此不与定理 42.2 的精确刚性冲突。
+
+再验证移动见证。$q(C)=1$；$w_0$ 是叶，与 $C$ 不同，而每个 $w_k$（$k\ge1$）
+的右子树是 $C$，$C$ 的右子树却是 $\alpha$。由 $C\ne\alpha$ 和自由构造子的
+唯一可读性，对所有 $k\ge0$ 都有 $w_k\ne C$。于是
+
+$$
+q(w_{k+1})=q(w_k)+q(C)+b(w_k,C)=q(w_k)+1,
+\qquad q(w_0)=0.
+$$
+
+归纳得 $q(w_k)=k$。由于 $\alpha\ne w_{5n}$，
+$P_n(\alpha,w_{5n})=e^{ih_n5n}=e^{i\pi}=-1$，故核值是 $-a_n$。
+它到 $0$ 和 $1$ 的距离分别为 $a_n$ 和 $1+a_n$，这证明 (43.6)。如果 (43.2)
+成立，就有 $\omega(1/n)\ge4/5$ 对所有 $n\ge1$ 成立，与趋零要求矛盾。
+这里必须让来源对随 $n$ 移动；对一个预先固定的有限树列作检查不能代替该量词。
+
+最后计算相位规范与极限。对任意固定 $s,t$，$q(t)-q(s)$ 是固定的有限整数，并且
+
+$$
+|K_n(s,t)-1|
+\le r_n+h_n|q(t)-q(s)|\longrightarrow0.
+\tag{43.11}
+$$
+
+有限集合上 $|q(t)-q(s)|$ 有固定最大值，故其上的收敛一致。逐对极限是非忠实的全 $1$ 核；
+每个 $K_n$ 的忠实性未给出与 $n$ 无关的分离尺度。反之，移动见证满足
+$h_n(q(w_{5n})-q(\alpha))=\pi$，所以 (43.11) 不能在全 $T$ 上变成趋零界。
+
+在 (43.9) 中令 $\widetilde\eta_n(t)=\overline{z_n(t)}\eta_n(t)$。
+按同一内积约定，其核严格满足
+
+$$
+\begin{aligned}
+\widetilde K_n(s,t)
+&=z_n(s)\overline{z_n(t)}K_n(s,t)
+=\overline{P_n(s,t)}K_n(s,t)\\
+&=a_n+r_n\delta_{s,t}=K_{a_n}(s,t).
+\end{aligned}
+\tag{43.12}
+$$
+
+最后一步在 delta 非零时使用 $P_n(t,t)=1$。这恰是命题 42.4 的既有族，
+不是另一个新 $K_c$ 构造。此处重相位保持归一化、正性、忠实性和精确运输不变性，
+其全四元组缺陷还能直接写为
+
+$$
+D_{\widetilde K_n}(s,t,u,v)
+=r_na_n(1-\delta_{s,u})(1-\delta_{t,v}).
+\tag{43.13}
+$$
+
+不过 (43.12) 改变了 (43.2) 所测试的复核值；一般的来源依赖重相位也不保证保持
+构造乘法或原误差界。允许先作这种规范选择，就换成了另一稳定性问题。
+
+对原族本身，所有来源对都精确满足
+
+$$
+\begin{aligned}
+|K_n(s,t)|&=a_n+r_n\delta_{s,t},\\
+|K_n(s,t)|^2&=a_n^2+(1-a_n^2)\delta_{s,t},\\
+\sup_{s,t\in T}\bigl||K_n(s,t)|-1\bigr|&=r_n\longrightarrow0,\\
+\sup_{s,t\in T}\bigl||K_n(s,t)|^2-1\bigr|&=2r_n-r_n^2\longrightarrow0.
+\end{aligned}
+\tag{43.14}
+$$
+
+上确界等号由任意不同的来源对取得。因此本族不反驳以模长、模长平方或允许上述相位规范
+表述的稳定性，也不证明这些其他问题对所有核成立。机制是无界的运输不变量 $q$ 把每次
+构造至多 $h_n$ 的相位误差积累为移动树对上的有限相角，同时 delta 项维持全来源忠实性。∎
+
+定理 43.2 的数学来源与归属如下：自由全树及其运输单射性复用上述来源，精确刚性与
+$K_c$ 复用 §42，Gram 正性与 Hilbert 表示复用原卷 §§6、15.2、26.2 的既有机制。
+本条承重内容是 $q$、全四元组缺陷恒等式及移动见证的来源特定接合，归为 repo-derived。
+有限比对范围是本卷、原卷、相邻的 Probability Phase Transport and Holonomy 两卷、
+Boundary Transport Fibers and Loop Closure 卷，以及 FibonacciAtomic 的实际树运输来源；
+在该范围的相等子树与一致稳定性精确词组比对中未找到这一完整反例族，不声称全库无重复。
+文献范围限于 arXiv 的 quasimorphism 与 binary trees 联合查询，以及 Baker、Lawrence、
+Zorzitto 的 *The stability of the equation f(x+y)=f(x)f(y)*，
+[DOI 10.1090/S0002-9939-1979-0524294-6](https://doi.org/10.1090/S0002-9939-1979-0524294-6)。
+前者无命中，后者原文不可访问，故后者只作相邻文献指向，不借用其定理或假定其适用于自由树。
+这组有限范围不支持原创性或优先权断言。
+

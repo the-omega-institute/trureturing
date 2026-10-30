@@ -1,0 +1,50 @@
+**Proposition 13.5 (finite extraction from each actual structural
+occurrence).** Use precisely Definition 2.5's incidence realization and
+Definition 8.5's UAS ordered stencil. From the finite-component probe
+slice of every actually executed patch after either first Ready, including
+the patch for final halt if reached, a fixed finite mathematical extractor
+returns the entire $e$-bit first word $w_\sigma$. Corresponding slices on
+the paired continuations differ. This statement concerns actual occurrence
+probes, not the represented T body computed from receiver73.
+
+Proof. Let $r_j$ be the socket of $c_j$ at its fixed catalog position in
+$F_{q_{\mathrm{gc}}}$. UAS Definition 4.1 prescribes, on every row, the
+root route followed by a full depth-first inspection of that finite
+component. UAS Definition 2.2 probes both child slots of every visited
+vertex and its parent slot on each nonroot return. The catalog and fixed
+ordered scaffold therefore identify each $r_j$ during this finite scan.
+Follow the known scaffold in depth-first order, using the probe outcomes
+to account for an optional terminal visit at each socket; record the two
+child-slot occupancy bits at each selected $r_j$. Actual occurrence
+records retain the probed endpoint and optional partner, as specified by
+Definition 3.1 and CYCLE Definition 5.3, so no graph-renaming inference
+or traversal of a lost past carrier is needed.
+
+All these first-store bits are present at Ready and remain unchanged by
+Theorem 13.3. UAS Definition 2.1 encodes their values by
+
+$$
+\begin{aligned}
+(r_j.\mathsf L\ne\varnothing,\ r_j.\mathsf R=\varnothing)&\mapsto0,\\
+(r_j.\mathsf L=\varnothing,\ r_j.\mathsf R\ne\varnothing)&\mapsto1.
+\end{aligned}
+$$
+
+Reading the $e$ pairs in store order returns $w_\sigma$. This algorithm
+uses only that occurrence's finite scan and the fixed installation/catalog;
+its finite size is independent of future source or annex growth. At $c_p$
+the occupied sides are different, proving unequal actual probe slices.
+A cut with no later executed row has no such later occurrence; the
+proposition does not create one at halt or at unavailable input.
+
+The slice belongs to the mathematical actual $T$ occurrence relation.
+UAS Assumption 1.2 and Definition 2.3 grant no actor read from a probe or
+from membership in the finite rule table. There is no resident probe tape.
+CYCLE Definitions 5.2–5.4 format/check probes from represented states;
+Definitions 6–7's FromM/CheckT import the actual receiver73 and work on
+that delivered representation. They do not sample this live slice. In
+particular GENERAL12's canonical delivered T remains distinct from the
+actual $P_1$ occurrence records. The extractor supplies mathematical
+recoverability of the missing word in bounded local occurrence material,
+with no asserted executable cost, authorized acquisition or task port. ∎
+

@@ -1,0 +1,68 @@
+**Theorem 91.2 (the entire hidden space, not just examples).** Put
+$v_i=e_{\ell_i}-e_{r_i}$ and $w_i=e_{m_i}-e_{n_i}$ in old
+coordinates. Then, for every $k\ge1$ and every subset $J$,
+
+$$
+\begin{aligned}
+W_J=\ker O_J
+ &=\bigoplus_{i\notin J}E_J\operatorname{span}_{\mathbb Q}\{v_i,w_i\},\\
+\dim W_J&=2(k-|J|),\\
+\operatorname{rank}O_J&=M_J-2(k-|J|),\\
+\operatorname{rank}(O_JE_J)&=N-2(k-|J|).
+\end{aligned}
+\tag{91.4}
+$$
+
+On each surviving pair $B_J$ swaps $E_Jv_i,E_Jw_i$. Its hidden
+eigenvectors have eigenvalues $+1,-1$, and no finite number of Ticks
+erases a nonzero hidden vector.
+
+**Proof of exhaustion.** Let $a(t)=B_J^t a(0)$ be invisible at all
+times. Every allowed terminal coordinate is zero for every $t\ge0$.
+If a coordinate is always zero and all but one of its neighbors are
+always zero, its next-time equation forces that remaining neighbor
+always zero. Apply this rule at each readable guard marker, forcing
+$g_i=0$, and then at $g_i$, forcing $h_i=0$.
+
+The readable tail $z=0$ forces $q_k=0$. If $k>1$, the equation at
+$q_k$, with zero $h_k$ and $z$, forces $q_{k-1}=0$. Continue
+backward along the right spine. At every step its side $h_i$ is
+already zero, so all $q_i$ vanish. This also covers $k=1$ directly.
+The equation at $h_i$, whose neighbors are $q_i,g_i,c_i$, now
+forces $c_i=0$ for every module.
+
+In a repaired module $i\in J$, the fresh readable $f_i$ forces
+$\ell_i=0$. The equation at $c_i$, with zero $h_i,\ell_i$,
+forces $r_i=0$. At $r_i$ it forces $n_i=0$; at $\ell_i$,
+with zero $c_i,f_i$, it forces old $m_i=0$; and at $m_i$ it
+forces new $e_i=0$. Every coordinate in that module has vanished.
+
+In an unrepaired module $i\notin J$, the equation at $c_i$ gives
+$a_{\ell_i}(t)+a_{r_i}(t)=0$. Apply this at time $t+1$ and
+use the equations at the two owners. Their sums are
+$2a_{c_i}(t)+a_{m_i}(t)+a_{n_i}(t)$, so also
+$a_{m_i}(t)+a_{n_i}(t)=0$. At $t=0$ the only remaining coordinates
+are therefore a multiple of $v_i$ plus a multiple of $w_i$ in each
+unrepaired module. This proves containment in the displayed sum and
+excludes additional guard, spine or fresh-coordinate modes.
+
+**Proof of sufficiency and ranks.** Direct neighbor sums give, for
+each unrepaired $i$,
+
+$$
+B_JE_Jv_i=E_Jw_i,\qquad B_JE_Jw_i=E_Jv_i.
+\tag{91.5}
+$$
+
+The two owner contributions cancel at $c_i$, all other exterior
+coordinates are zero, and both terminal supports are masked. Hence
+this whole invariant two-dimensional subspace is invisible. Different
+modules have disjoint supports, proving the direct sum. The finite
+kernel equality in (91.3) is the ambient saturation supplier at
+dimension $M_J$. Rank-nullity gives the full-grown rank. Every
+vector in the displayed hidden space is an old-cell vector, so
+$\ker(O_JE_J)=\bigoplus_{i\notin J}\operatorname{span}\{v_i,w_i\}$,
+which gives its stated entry rank. Finally $v_i+w_i$ and $v_i-w_i$
+have eigenvalues $1,-1$; (91.5) squares to the identity on their
+direct sum. This proves persistence at every finite horizon. $\square$
+

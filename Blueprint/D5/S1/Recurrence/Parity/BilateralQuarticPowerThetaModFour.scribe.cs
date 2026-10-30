@@ -36,6 +36,8 @@ internal sealed class BilateralQuarticPowerThetaModFourDocument : IScribeDocumen
                 Text(". Its constant coefficient is one; its other coefficients are "
                 + "two at positive square degrees and zero elsewhere, as stated by "
                 + "coeff_thetaSeries.")),
+            Node("map_inv", "Coefficient maps preserve the unit inverse", MapInverseFormula(),
+                "A ring homomorphism applied coefficientwise takes the formal inverse of a series with constant coefficient one to the formal inverse of its image. Both rings are arbitrary commutative rings."),
             Node("bilateralTerm", "The ordinary-series bilateral terms", TermFormula(),
                 "For n=-r with r at least two, factoring powers of A gives the "
                 + "displayed nonnegative exponent and unit inverse. The index -1 is "
@@ -102,6 +104,22 @@ internal sealed class BilateralQuarticPowerThetaModFourDocument : IScribeDocumen
         Describe.Lean(DescribeId.Create("a379204-" + name.Replace('_', '-').ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
             provenance ?? AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role, claim);
+
+    private static Formula MapInverseFormula()
+    {
+        var r = F.Id("R");
+        var s = F.Id("S");
+        var f = F.Id("f");
+        var series = F.Id("F");
+        var inverse = Call("invOfUnit", series, D(1));
+        var image = Call("map", f, series);
+        return Disp(Seq(Bound("R", F.Id("Type")), Bound("S", F.Id("Type")),
+            OpenBracket, Call("CommRing", r), CloseBracket, Sp,
+            OpenBracket, Call("CommRing", s), CloseBracket, Comma, Sp,
+            Bound("f", Call("RingHom", r, s)), Bound("F", Call("PowerSeries", r)),
+            Implication(Equal(Call("constantCoeff", series), D(1)),
+                Equal(Call("map", f, inverse), Call("invOfUnit", image, D(1))))));
+    }
 
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Integers() => Seq(Mathbb, Grp(F.Id("Z")));

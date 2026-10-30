@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:119c9b04fdf8a6d670cfbe972df70469823a66a9d8920499111086f46badaff6
+  normalized_sha256: sha256:119c9b04fdf8a6d670cfbe972df70469823a66a9d8920499111086f46badaff6
+cas_ref: sha256:119c9b04fdf8a6d670cfbe972df70469823a66a9d8920499111086f46badaff6
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Defines implementability as an existential factorization; asserts no factor exists.
+    previous_atom_id: bb5fcabed599b81985fd67768008ae8a50744dce07ad6b859993d1f17b5cbca3
+    next_atom_id: c07a0ad96189a9d2b7faf1c112031c0708cc52ad05683d50a1e45af0a6865d2d

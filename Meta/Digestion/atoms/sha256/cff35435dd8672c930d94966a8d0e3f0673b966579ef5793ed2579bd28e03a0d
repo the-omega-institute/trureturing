@@ -1,0 +1,32 @@
+**Theorem 4.2 (Unrestricted lower and upper asymptotic bounds).** For every $\kappa\in(0,\infty)$ and every sequence (1.2),
+
+$$
+\max\{0,4\kappa-2\}
+\le\liminf_{n\to\infty}D_n
+\le\limsup_{n\to\infty}D_n
+\le U(\kappa).
+\tag{4.2}
+$$
+
+The infimum defining $D_n$ is over the entire class $\mathcal X(a_n,h_n)$.
+
+**Proof.** Apply Theorem 2.1 with $s=a+1+h$. For every admissible $x$,
+
+$$
+\frac{H(x)-B_0(a)}{a^2}
+\ge\frac{\beta_a(h+1)}{a^2}-2-\frac1a.
+\tag{4.3}
+$$
+
+This bound is uniform over $\mathcal X(a,h)$, so it holds with $H(x)$ replaced by $M(a,h)$. Along (1.2) its right side tends to $4\kappa-2$.
+
+For the other lower bound, reuse [*CDSO incidence moments and capacity phases*, Theorem 11.3](CDSO_INCIDENCE_MOMENTS_AND_CAPACITY_PHASES.md). Its hypotheses hold with $r=a+1\ge5$, $q=a=r-1$ and $s=a+1+h\ge r$. In the notation of that theorem, $2F_{a+1}(a)=a(a+1)^2=B_0(a)$, and $H=2J_s$. Thus $H(x)\ge B_0(a)$ throughout this class, giving $D_n\ge0$. Together these prove the left side of (4.2).
+
+If $0<\kappa\le\sqrt2$, use Proposition 3.2 with $j=1$ and $v=\kappa/\sqrt2\in(0,1]$. Its limiting normalized gap is
+
+$$
+\frac{\kappa^2}{v}+2v=2\sqrt2\,\kappa.
+$$
+
+Since $M(a,h)$ is bounded above by the energy of this actual law, this gives the first upper branch. If $\kappa\ge\sqrt2$, Theorem 3.1 bounds $\limsup D_n$ by $F_j(\kappa)$ for every fixed positive integer $j$. Taking the minimum over these constants proves the second branch. The constructions are available eventually on every sequence (1.2). ∎
+

@@ -25,29 +25,71 @@ internal static class WorktreeProtocolCommand
             Encoding.UTF8.GetString(result.StandardError), result.ExitCode);
     }
 
+    internal static CommandResult RunLines(string root, IReadOnlyList<string> arguments,
+        IWorktreeProcessRunner runner, TimeSpan timeout, Action<string> consume)
+    {
+        var result = runner.RunStreaming("python3", new[] { "-IB", "-c", Program.Value
+            + "sys.exit(sys.modules['worktree_protocol'].main())\n", "--source", root }.Concat(arguments).ToArray(),
+            root, timeout, async (stream, cancellation) =>
+            {
+                using var reader = new StreamReader(stream, Encoding.UTF8);
+                var buffer = new char[4096];
+                var line = new StringBuilder();
+                while (true)
+                {
+                    var count = await reader.ReadAsync(buffer.AsMemory(), cancellation);
+                    if (count == 0) break;
+                    for (var index = 0; index < count; index++)
+                    {
+                        if (buffer[index] == '\n')
+                        {
+                            consume(line.ToString());
+                            line.Clear();
+                        }
+                        else
+                        {
+                            if (line.Length >= 64 * 1024)
+                                throw new InvalidOperationException("qualification row exceeded 65536 characters");
+                            line.Append(buffer[index]);
+                        }
+                    }
+                }
+                if (line.Length != 0) throw new InvalidOperationException("incomplete qualification row:"
+                    + CleanLanesCommand.BoundedDiagnostic(line.ToString()));
+                return 0;
+            });
+        return new CommandResult(result.ExitCode == 0, string.Empty,
+            Encoding.UTF8.GetString(result.StandardError), result.ExitCode);
+    }
+
     internal static IReadOnlyDictionary<string, string> InitializationEnvironment(string root)
     {
-        // Use the protocol's environment policy without exporting environment values.
+        // Export ambient names and generated policy values only; ambient values stay local.
         var result = new ProductionWorktreeProcessRunner().Run("python3",
             ["-IB", "-c", Program.Value
-                + "import json\nprint(json.dumps(list(sys.modules['worktree_protocol'].git_environment())))\n"],
+                + "import json\np = sys.modules['worktree_protocol']\n"
+                + "print(json.dumps(dict(Inherited=list(p.inherited_environment()), Scoped=p.scoped_process_environment())))\n"],
             root, BoundedProcessRunner.HangDetectionBudget);
         if (result.ExitCode != 0)
             throw new InvalidOperationException(Encoding.UTF8.GetString(result.StandardError));
-        var names = JsonSerializer.Deserialize<string[]>(result.StandardOutput)
-            ?? throw new InvalidOperationException("worktree environment policy returned no names");
-        return names.Where(name => Environment.GetEnvironmentVariable(name) is not null)
+        var policy = JsonSerializer.Deserialize<InitializationPolicy>(result.StandardOutput)
+            ?? throw new InvalidOperationException("worktree environment policy is absent");
+        var environment = policy.Inherited.Where(name => Environment.GetEnvironmentVariable(name) is not null)
             .ToDictionary(name => name, name => Environment.GetEnvironmentVariable(name)!);
+        foreach (var (name, value) in policy.Scoped) environment[name] = value;
+        return environment;
     }
+
+    private sealed record InitializationPolicy(string[] Inherited, Dictionary<string, string> Scoped);
 
     private static string LoadProgram()
     {
         var assembly = typeof(WorktreeProtocolCommand).Assembly;
         var program = new StringBuilder("import base64, sys, types\n");
         // Dependency order: both operations import protocol; preservation's
-        // commit_snapshot import consumes publication. All three use only
+        // commit_snapshot import consumes publication. These modules use only
         // host Python standard-library modules and native Git beyond this set.
-        foreach (var name in new[] { "worktree_protocol", "worktree_publication", "worktree_preservation" })
+        foreach (var name in new[] { "worktree_protocol", "worktree_publication", "worktree_preservation", "worktree_pool" })
         {
             using var stream = assembly.GetManifestResourceStream($"WorktreeProtocol.{name}.py")
                 ?? throw new InvalidOperationException($"worktree adapter module is unavailable: {name}");

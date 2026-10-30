@@ -1,0 +1,86 @@
+**Proposition 13.2 (Explicit retained mass, dimension and error).**
+For all $W\in K_J$ and integers $N\ge0$,
+
+$$
+\begin{aligned}
+q_N(W)&=e^{-\lambda(W)}\sum_{n=0}^N\frac{\lambda(W)^n}{n!}
+\ \ge e^{-B}>0,\\
+t_N(W)&\le\min\left\{1,\frac{B}{N+1}\right\},\qquad
+\operatorname{rank}\Pi_N=\binom{N+17}{17}.
+\end{aligned}
+\tag{13.2}
+$$
+
+With trace distance defined by $D(\rho,\tau)=\tfrac12\|\rho-\tau\|_1$,
+the exact input error and its uniform consequence are
+
+$$
+\begin{aligned}
+D(\rho_W,\rho_{W,N})&=\sqrt{t_N(W)},\\
+\sup_{W\in K_J}D(\rho_W,\rho_{W,N})
+&\le\delta_N:=\min\left\{1,\sqrt{\frac{B}{N+1}}\right\}
+\xrightarrow[N\to\infty]{}0.
+\end{aligned}
+\tag{13.3}
+$$
+
+*Proof.* Let $\mathfrak a_j=(q_j+i\pi_j)/\sqrt2$ denote the
+annihilation operators, distinct from the gain coefficients $a_k$.
+Then $N_{\rm ref}=\sum_j\mathfrak a_j^\dagger\mathfrak a_j$.
+The real translated vacuum (12.3) is the product coherent state with
+amplitude $\alpha=\mu(W)/\sqrt2$, so
+$\sum_j|\alpha_j|^2=\lambda(W)$ and
+$\langle N_{\rm ref}\rangle=\lambda(W)$.
+Substitution into the standard coherent-state Fock expansion gives
+
+$$
+\psi_W=e^{-\lambda(W)/2}
+\sum_{\mathbf n\in\mathbb N^{17}}
+\frac{\prod_{j=1}^{17}\alpha_j^{n_j}}
+{\sqrt{\prod_{j=1}^{17}n_j!}}\,|\mathbf n\rangle.
+\tag{13.4}
+$$
+
+The expansion includes zero amplitudes, with the constant term
+interpreted in the usual way. Grouping its squared coefficients by
+total occupation and substituting the multinomial identity yields
+
+$$
+\mathbb P_W(N_{\rm ref}=n)
+=e^{-\lambda(W)}
+\sum_{|\mathbf n|=n}\prod_j\frac{|\alpha_j|^{2n_j}}{n_j!}
+=e^{-\lambda(W)}\frac{\lambda(W)^n}{n!}.
+\tag{13.5}
+$$
+
+Thus the total occupation is Poisson with parameter $\lambda(W)$.
+Summing through $N$ gives (13.2). Its vacuum term alone gives
+$q_N(W)\ge e^{-\lambda(W)}\ge e^{-B}$, including cutoffs for which
+the subsequent tail bound is trivial. Hence (13.1) always defines a
+unit vector and a trace-one pure state in the common subspace.
+
+The discrete spectral bound
+$N_{\rm ref}\ge(N+1)(I-\Pi_N)$, evaluated in this preparation, gives
+$(N+1)t_N(W)\le\lambda(W)\le B$. Combining with $t_N\le1$
+gives the tail estimate. The overlap is exactly
+
+$$
+\langle\psi_W,\psi_{W,N}\rangle=\sqrt{q_N(W)}.
+\tag{13.6}
+$$
+
+Applying the standard pure-state trace-distance identity
+$D(|u\rangle\langle u|,|v\rangle\langle v|)
+=\sqrt{1-|\langle u,v\rangle|^2}$ gives (13.3), with no additional
+normalization error. Finally, the occupation labels of total at most
+$N$ are counted by seventeen-variable stars and bars:
+
+$$
+\dim\mathcal H_N
+=\sum_{n=0}^N\binom{n+16}{16}=\binom{N+17}{17}.
+\tag{13.7}
+$$
+
+These are applications of the mature oscillator, counting and
+distance formulas identified in Definition 16.1. $\square$
+

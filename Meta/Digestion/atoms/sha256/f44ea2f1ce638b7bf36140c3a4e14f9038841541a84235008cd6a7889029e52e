@@ -1,0 +1,56 @@
+**Theorem 2.2 (actual finite adaptive record law).** For every fixed
+$W\in\mathcal W$, $\sigma\in(0,\infty)$, finite causal policy $\pi$ and
+$N\ge0$, the retained transcript law of the actual sequential instrument is
+
+$$
+\boxed{\quad
+\mathsf{Law}_{W,\boldsymbol\eta}^{\pi,N}
+ =B_{W,\boldsymbol\eta}^{\sigma}K_{\pi,N}.
+\quad}
+\tag{2.3}
+$$
+
+This is an equality of probability measures on the finite retained transcript
+space. It includes the old $JM$ records, the selected settings and widths,
+all selected pointer outputs, the stopping symbol and the report. It does not
+factor the conditional quantum successor state through $p$.
+
+**Proof.** The source dilation gives (1.4), the commutator cancellation
+$[Z_i,p_j]=0$, and the product Gaussian law (1.5). For a selected pointer,
+the actual Kraus density on its readout is
+
+$$
+M_{c,\tau}(y)=(2\pi\tau^2)^{-1/4}
+ \exp\!\left(-\frac{(y-c^{\mathsf T}p)^2}{4\tau^2}\right).
+\tag{2.4}
+$$
+
+The pointer coupling preserves $p$ and changes the system positions. For a
+fixed realized history, every factor in the chronological product is a
+bounded Borel function of the same commuting $p$. Therefore cyclicity of the
+trace and the spectral theorem give, conditionally on the spectral value
+$x$, the likelihood (2.1), even when the conditional quantum state is not a
+function of $p$:
+
+$$
+\operatorname{tr}\!\left(M_{c,\tau}(y)\,\rho_h\,
+ M_{c,\tau}(y)^*\right)
+ =\int \varphi_{c,\tau}(y\mid x)\,\nu_h(dx),
+\tag{2.5}
+$$
+
+and products of these factors give the joint branch likelihood. Here
+$\rho_h$ is the actual normalized successor on that branch and $\nu_h$ is
+its $p$ spectral measure; no normalizable momentum eigenstate is introduced.
+Since later settings are measurable functions of earlier records, the
+branch product is precisely the recursive transition kernel in
+$K_{\pi,N}$. Induction on the executed steps proves (2.3), including the
+absorbing stopped branches. The same argument with $N=0$ gives the old
+record law. $\square$
+
+The policy-dependent branch law is generally a mixture of word-specific
+densities on selection regions. It is therefore not the single Gaussian law
+of a word fixed independently of its outcomes. This retains the adaptive-word
+restriction in Proposition 5.4 of the Gaussian source while supplying the
+missing actual instrument bridge.
+

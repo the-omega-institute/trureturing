@@ -1,0 +1,50 @@
+**Proposition 8.1 (Whole-child $J$ injectivity and the possible $M$ pair).**
+For every $q\in Q_{70}$, $a=f_{MJ}$ is injective on the entire $C(q)$.
+If this child contains an $M$ pair, that pair consists of its one $A$-patch
+world and its one $B$-patch world, and is its unique unordered $M$ pair.
+
+Proof. The source squares in (3.2) are convex, disjoint and strict.
+Substitution of their rational endpoints into the regular circuit gives
+$\Lambda\in(5,6),(4,5),(-0.092,-0.091)$, respectively. Thus the original
+regular lift and its derivatives are defined throughout each square.
+With the exact matrices from (3.4)–(3.6), the uniform rational chart bounds
+and terminal ranges are
+
+| Source square | $\sup\|I-B_i^JD(p,a)\|_\infty$ | $a$ range | $m$ range |
+| --- | --- | --- | --- |
+| $\mathcal U_A$ | $<1/50$ | $(406,407)$ | $(522,524)$ |
+| $\mathcal U_B$ | $<1/50$ | $(517,518)$ | $(522,524)$ |
+| $\mathcal U_C$ | $<1/50$ | $(333,334)$ | $(492,493)$ |
+
+On $\mathcal U_C$ one also has
+
+$$
+\sup\|I-B_C^MD(p,m)\|_\infty<\frac1{10}.
+\tag{8.1}
+$$
+
+The matrices and their quantitative bins are in Section 3. The inequalities
+in this table and (8.1) use the derivatives of (2.1)–(2.3) on the entire
+squares, with the rational interval rules of Definition 3.1. In particular
+the domains here have radius $10^{-10}$, not radius $10^{-90}$.
+
+For $s_0,s_1$ in one square with equal $L(s)=(p(s),a(s))$, integrate
+$B_i^JDL$ on the straight segment joining them. The equality of the
+endpoints gives
+
+$$
+s_1-s_0=\int_0^1\bigl(I-B_i^JDL(s_0+u(s_1-s_0))\bigr)(s_1-s_0)\,du.
+$$
+
+The norm bound forces $\|s_1-s_0\|_\infty\le
+\tfrac1{50}\|s_1-s_0\|_\infty$, hence $s_0=s_1$. The regular lift
+has only one complete world at that source. Distinct patches have disjoint
+$a$ ranges. Proposition 7.1 therefore proves injectivity on every actual
+companion of the entire child, including companions unused by a selected
+pair.
+
+The same segment argument with (8.1) excludes a distinct $M$ pair within
+$\mathcal U_C$. Its $m$ range excludes $C$-to-$A$ and $C$-to-$B$ pairs.
+Proposition 7.1 allows at most one world in each of the other two patches.
+Consequently the only possible $M$ pair is the unordered $A,B$ pair. ∎
+

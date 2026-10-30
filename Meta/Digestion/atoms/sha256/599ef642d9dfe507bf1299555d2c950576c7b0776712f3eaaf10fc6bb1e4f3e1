@@ -1,0 +1,81 @@
+**命题 2.8 (Shorter periods among good states).** For $m\ge6$, let
+$n=2m$ and
+
+$$
+E_m=(\{1\}\times[m,2m])\cup
+(\{2\}\times[m-2,2m-2])\cup
+(\{3\}\times[m-4,2m-4]).
+$$
+
+All six indexed endpoints are at mutual distance at least two, but
+for every complete legal reverse extension $e$,
+
+$$
+\operatorname{per}_{R_e}(E_m)=m+2=\frac{n+4}{2}. \tag{2.20}
+$$
+
+*Proof.* The starts and ends are strictly decreasing, the intervals
+are nonempty, and $m-(m-4)=4$ while the nearest endpoints from the
+two different triples are separated by $m-4\ge2$. Thus this is a
+good state in the sense of the count (2.15).
+
+Apply the full row formula (2.2), which allows equal endpoints.
+The successive row intervals are
+
+$$
+\begin{array}{c|ccc}
+t&\text{row }1&\text{row }2&\text{row }3\\ \hline
+0 &[m,2m]&[m-2,2m-2]&[m-4,2m-4]\\
+1 &[m+1,2m-1]&[m-1,2m-1]&[m-3,2m-3]\\
+2 &[m+2,2m]&[m,2m-2]&[m-2,2m-2]\\
+3 &[m+3,2m-1]&[m+1,2m-1]&[1,m-3]\\
+4 &[m+4,2m]&[2,m]&[2,m-2]\\
+5 &[3,m+3]&[3,m+1]&[1,m-1]\\
+6 &[4,m+4]&[2,m+2]&[2,m]\\
+7\le t\le m+2 &[t-2,m+t-2]&[t-4,m+t-4]&[t-6,m+t-6].
+\end{array} \tag{2.21}
+$$
+
+For explicit verification of the boundary and refill steps, the ceiling
+and selected-minimum index sets in (2.2) for $t=0,\ldots,6$ are
+
+$$
+\begin{array}{c|c|c|c|c}
+t&K&Q&d&h\\ \hline
+0&\{2,3\}&\{1,2,3\}&(2m-1,2m-1,2m-3)&(m,m-2,m-4)\\
+1&\{1,3\}&\{1,2,3\}&(2m,2m-2,2m-2)&(m+1,m-1,m-3)\\
+2&\{2\}&\{1,2\}&(2m-1,2m-1,0)&(m+2,m,0)\\
+3&\{1,3\}&\{1,3\}&(2m,m-2,m-2)&(m+3,1,1)\\
+4&\{2,3\}&\{2\}&(m+1,m+1,m-1)&(2,2,0)\\
+5&\{1,2,3\}&\{1,3\}&(m+4,m+2,m)&(3,1,1)\\
+6&\{1,2,3\}&\{1,2\}&(m+5,m+3,m+1)&(4,2,0).
+\end{array} \tag{2.22}
+$$
+
+The incomparable contributions not already removed by the old row
+are $[1,m-3]$ in row 3 at $t=2$, $[m-1,m]$ in row 2 at
+$t=3$, and $[m+2,m+3]$ in row 1 at $t=4$; all other such
+contributions in these steps are empty. Together with the intervals
+$[h_r+1,d_r]$, these are exactly the next lines of (2.21).
+In particular $h_3=0$ at $t=4,6$ accounts for the displayed
+refills in row 3.
+
+At $t=7$ both endpoint sequences are strict. For
+$7\le t<m+2$ its largest endpoint $m+t-2$ is less than $2m$,
+so Proposition 2.2 translates all endpoints by one. This proves the
+last line by induction, and at $t=m+2$ it is the initial state.
+Before that return, row 1 starts successively at
+$m,m+1,m+2,m+3,m+4$, then $3,4$, then the distinct values
+$5,\ldots,m-1$ when this last range is nonempty. None except the
+initial value equals $m$. Hence no positive time below $m+2$
+returns to $E_m$, proving (2.20). $\square$
+
+The scope of (2.12) is compatible with (2.20) and with the literal
+$73$-state orbit in $[3]\times[12]$.
+The latter orbit has period $73\nmid16$; its seed has an empty middle
+row and is outside $\mathcal F_{12}$. The matching action above
+represents only the rotation-invariant family $D(\mathcal M_{n+4})$.
+The bound concerns the full set $\mathcal C_n$, without requiring
+period divisibility on its complement. No assertion for heights
+other than three follows from the three-row transition calculation.
+

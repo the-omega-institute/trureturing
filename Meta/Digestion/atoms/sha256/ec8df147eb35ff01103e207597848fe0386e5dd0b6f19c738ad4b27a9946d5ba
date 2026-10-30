@@ -1,0 +1,195 @@
+**定理 7.3（交叠三世界的同父 $L_2$ 及其最小支撑）。** 式 (7.7) 在闭盒 $\mathcal K_3$ 中恰有一个实零点 $x_\dagger=(k,\theta,\psi,r,b)$。以下全部量均在该零点取值：
+
+$$
+\alpha=24/N_1,\qquad\lambda=\alpha k,
+\tag{7.8}
+$$
+
+$$
+\begin{aligned}
+P_\theta&=R_k(\theta),&
+g_\theta(s)&=\lambda(V_k(s)-\psi U_k(s)),&
+d_\theta&=-\lambda(V_k(0)-\psi U_k(0)),\\
+P_\psi&=R_k(\psi),&
+g_\psi(s)&=\lambda(V_k(s)-\theta U_k(s)),&
+d_\psi&=-\lambda(V_k(0)-\theta U_k(0)),\\
+P_3&=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},&
+g_3(s)&=\frac\alpha D\sum_{i=0}^3\widetilde V_i\ell_i(s),&
+d_3&=\alpha\widetilde B/D.
+\end{aligned}
+\tag{7.9}
+$$
+
+记这些完整世界为 $W_\theta,W_\psi,W_3$。定义精确响应
+
+$$
+\begin{gathered}
+C=\alpha N_2,\quad z=\alpha N_3,\quad Y=\alpha N_4,\quad p=\alpha N_5,\\
+u_J=\alpha N_{6J},\quad w_{JJ}=\alpha N_{7JJ},\quad w_{JM}=\alpha N_{7JM},\\
+u_M=\alpha O_{6M},\quad w_{MJ}=\alpha O_{7MJ},\quad w_{MM}=\alpha O_{7MM},\\
+H_4^{[3]}=H_4(C,z,Y),\quad H_5^{[3]}=(H_4^{[3]},M,p),\quad
+K_3=\{W_\theta,W_\psi,W_3\}.
+\end{gathered}
+\tag{7.10}
+$$
+
+三个世界合法且不同，并有
+
+$$
+K_3\subseteq\mathcal F(H_5^{[3]}),\qquad
+L_2(K_3,H_5^{[3]}),\qquad L_2(\mathcal F(H_5^{[3]}),H_5^{[3]}).
+\tag{7.11}
+$$
+
+在这一固定精确历史下，所有满足 $K\subseteq\mathcal F(H_5^{[3]})$、$L_2(K,H_5^{[3]})$ 的子集，其最小基数恰为三。此为见证支撑最小性，不是完整纤维的基数断言。父与第五响应满足 $69<C<70$、$13<z<14$、$-15<Y<-14$、$-65<p<-64$。
+
+证明。先证明零点存在唯一性及所有除法的合法性。对展开的 $E_i=\sum_\nu c_{i\nu}x^\nu$，在 $|x_j|\le2$ 上有
+
+$$
+\sum_{j,h}|\partial_j\partial_hE_i(x)|
+\le H_i:=\sum_{|\nu|\ge2}|c_{i\nu}|\,|\nu|(|\nu|-1)2^{|\nu|-2}.
+\tag{7.12}
+$$
+
+由式 (7.1)–(7.7) 展开得到证书列出的次数、单项式数及五个 $H_i$；最后四行各有 $1082,1084,1082,1084$ 个单项式。式 (6.6) 给
+
+$$
+\|C_{\rm pre}\|_\infty\le1,\quad
+\|I-C_{\rm pre}JE(m)\|_\infty\le10^{-25},\quad
+\|E(m)\|_\infty\le10^{-60},\quad
+\|C_{\rm pre}E(m)\|_\infty\le10^{-60}.
+\tag{7.13}
+$$
+
+这些有限界的复算只需：以数组的升幂约定乘开式 (7.7)，逐项使用式 (6.6)，作五乘五有理矩阵点积，并取绝对行和。式 (7.12) 的有限和与 JSON 中的五个整数逐项对应，无浮点根作为输入。
+
+$\mathcal K_3$ 内全部坐标绝对值小于二。沿 $m$ 到 $x$ 的线段积分导数，得
+
+$$
+\|JE(x)-JE(m)\|_\infty
+\le10^{-30}\max_iH_i<3\cdot10^{-14}.
+$$
+
+于是 $T_E(x)=x-C_{\rm pre}E(x)$ 在盒内的导数范数小于 $10^{-25}+3\cdot10^{-14}<10^{-12}$，且
+
+$$
+\|T_E(x)-m\|_\infty\le10^{-60}+10^{-12}10^{-30}
+=10^{-60}+10^{-42}<10^{-30}.
+\tag{7.14}
+$$
+
+闭盒在无穷范数下完备且凸，Banach 压缩定理给唯一不动点，且它在内部。式 (7.13) 的矩阵缺陷小于一，Neumann 级数给 $C_{\rm pre}JE(m)$ 可逆；两因子均为五阶方阵，故 $C_{\rm pre}$ 可逆。不动点恰为 $E=0$，从而证明所述唯一零点。
+
+其余符号界由明确有限包含法获得。对任一展开整数多项式 $P=\sum c_\nu x^\nu$ 令
+
+$$
+\mathcal L(P)=\sum_{|\nu|\ge1}|c_\nu||\nu|2^{|\nu|-1},\qquad
+I(P)=[P(m)-10^{-30}\mathcal L(P),P(m)+10^{-30}\mathcal L(P)].
+\tag{7.15}
+$$
+
+由一阶导数的系数界，$P(\mathcal K_3)\subseteq I(P)$。对 $N_i,O_i,D$ 按式 (7.15) 求值，给 JSON 的全部原多项式区间；对响应使用 $24I(N_i)/I(N_1)$ 或 $24I(O_i)/I(N_1)$，给十个严格的 $10^{-6}$ 响应包围。漂移分别使用
+
+$$
+-\frac{24I(k(V_k(0)-\psi U_k(0)))}{I(N_1)},\quad
+-\frac{24I(k(V_k(0)-\theta U_k(0)))}{I(N_1)},\quad
+\frac{24I(\widetilde B)}{I(N_1)I(D)}.
+\tag{7.16}
+$$
+
+第三支源差行列式用多项式分子
+
+$$
+-kb(\theta-r)^2-(k\theta-b)\bigl(b(1-\theta)-kr(1-r)\bigr)
+\tag{7.17}
+$$
+
+的 $I$ 区间除以 $I(kb)$，给证书中的严格负界。上述有限公式与所有字面数据完全指定所用每个包含，不需保留数值搜索或实验程序。
+
+由中心与半径直接有
+
+$$
+k>1,\quad \frac{49}{100}<\theta<\frac12,\quad
+\frac{76}{100}<\psi<\frac{77}{100},\quad
+\frac4{100}<r<\frac5{100},\quad\frac{19}{100}<b<\frac{20}{100}.
+\tag{7.18}
+$$
+
+再由证书 $-3294<N_1<-3293$、$-135/1000<D<-134/1000$，故 $k,b,N_1,D$ 均非零，式 (7.8)–(7.9) 的所有除法合法。三个源逐项正、迹一、行列式零，故秩恰一；式 (7.18) 的三个互不相交的首对角元区间区分三个源。
+
+接着证明实际行等式。由所给八行数组乘开，按标签 $1,2,3,4,5,6J,7JJ,7JM$ 有整数多项式恒等式
+
+$$
+K_i:=A_{Q_i}U_k(t_i)+B_{Q_i}V_k(t_i)-kU_k(0)
+=(0,0,0,0,0,0,0,6k^2f(k))_i.
+\tag{7.19}
+$$
+
+这里使用前卷式 (19.11) 的全多项式恒等式，而非其旧参数矩形上的区间估计。由式 (7.2) 直接展开式 (7.9) 的实际读数，得
+
+$$
+\begin{aligned}
+\alpha^{-1}\bigl(d_\theta+g_\theta(t_i)\operatorname{tr}(Q_iP_\theta)\bigr)-N_i&=-\psi K_i,\\
+\alpha^{-1}\bigl(d_\psi+g_\psi(t_i)\operatorname{tr}(Q_iP_\psi)\bigr)-N_i&=-\theta K_i.
+\end{aligned}
+\tag{7.20}
+$$
+
+$E_0=f(k)=0$，故这八行完全相同，初读则由 $d=-g(0)$ 为零。对三个 M 续行，式 (7.4) 正是 $W_\theta$ 的未缩放实际响应。
+
+第三源的完整逆可在除以 $D$ 前验证为多项式恒等式：令 $j=X/b,n=Z/b$，则
+
+$$
+\begin{gathered}
+\widetilde V_0=-\widetilde B,\qquad
+X\widetilde V_1=b(N_1D-\widetilde B),\qquad
+T\widetilde V_2=N_2D-\widetilde B,\\
+Z\widetilde V_3=b(N_3D-\widetilde B),\qquad
+\widetilde B+U_{\rm tr}(-\widetilde V_0+4\widetilde V_1-6\widetilde V_2+4\widetilde V_3)=N_4D.
+\end{gathered}
+\tag{7.21}
+$$
+
+因此未缩放漂移 $\widetilde B/D$ 和整个多项式 $\sum_i\widetilde V_i\ell_i/D$ 给前五行 $(0,N_1,N_2,N_3,N_4)$。反之，对这一固定源，前四行迫出四个样本 $(-d,(N_1-d)/j,(N_2-d)/T,(N_3-d)/n)$；四节点插值唯一确定整个至多三次多项式。第四动作行清除正分母 $TXZ$ 后即 $Dd=\widetilde B$，故此非零 $D$ 图上也是充要逆。将增益与漂移同乘 $\alpha$ 后得到式 (7.9)，与式 (6.3) 的全世界逆一致。这个固定源逆不声称整个父纤维都在 $D\ne0$ 图上。
+
+插值基在时钟 $4,5,6,7$ 的权重分别是
+
+$$
+(-1,4,-6,4),\quad(-4,15,-20,10),\quad
+(-10,36,-45,20),\quad(-20,70,-84,35).
+\tag{7.22}
+$$
+
+表 6.1 的相应源迹为 $R_i/b$，故第三世界未缩放续行读数为 $(b\widetilde B+R_iG_{t_i})/(bD)$。减去式 (7.3)–(7.4) 的目标响应得到
+
+$$
+(q_5-N_5,q_{6M}-O_{6M},q_{7MJ}-O_{7MJ},q_{7MM}-O_{7MM})
+=\frac{(E_1,E_2,E_3,E_4)}{bD}=0.
+\tag{7.23}
+$$
+
+乘回 $\alpha$ 就是完整实际读数等式。由式 (7.20)–(7.23)，逐行已获历史与见证为
+
+| 已获部分或互择续行 | 同一个精确响应 | 使用的完整世界 |
+| --- | --- | --- |
+| 原时钟 $0,\ldots,5$ 沿 $JMJMM$ | $(0,24,C,z,Y,p)$ | $W_\theta,W_\psi,W_3$ |
+| 第六 $J$ | $u_J$ | $W_\theta,W_\psi$ |
+| 其后最终 $J$ | $w_{JJ}$ | 同一对 $W_\theta,W_\psi$ |
+| 其后最终 $M$ | $w_{JM}$ | 同一对 $W_\theta,W_\psi$ |
+| 第六 $M$ | $u_M$ | $W_\theta,W_3$ |
+| 其后最终 $J$ | $w_{MJ}$ | 同一对 $W_\theta,W_3$ |
+| 其后最终 $M$ | $w_{MM}$ | 同一对 $W_\theta,W_3$ |
+
+每个 $g$ 是在任何动作前就固定的一个整个实多项式，每个 $d$ 是一个固定常数。各世界已有前两读 $0,24$，所以 $g\not\equiv0$。没有补加精确次数、样本非零、根简单或符号假设，整个原域也未排除零样本、重根或次数下降。式 (7.17) 给第六 M 对的源差严格非奇异，而 $\det(P_\theta-P_\psi)=0$；所以前卷定理 22.2 的“两支源差均奇异”假设不成立。
+
+四个终端叶各含所指定的两个不同完整世界，故满足 $L_0$；各选定第六节点含同一对，且对两个终端动作均有实际共同响应，故满足 $L_1$。第五节点有三个世界，两个第六动作分别用 $u_J,u_M$，故满足 $L_2$。同一第五响应 $p$ 在两支之间不变；没有将不同第六响应处的碰撞拼接。将这些见证包含进完整 $\mathcal F(H_5^{[3]})$，原递归的每个存在分句仍由相同世界见证，证明式 (7.11)，无需穷尽该纤维。
+
+最后证明最小支撑。若任意两元素 $K\subseteq\mathcal F(H_5^{[3]})$ 满足 $L_2$，前卷定义 8.1、定理 8.2 的全合法域分类适用，其中 $a_0=0,A=24,Z=z$，没有 chamber 条件。由其式 (8.3)，必有某 $0<\beta<1$ 使
+
+$$
+C=24+\frac{80}{7}(1+\beta)<\frac{328}{7}.
+\tag{7.24}
+$$
+
+这与证书给出的 $C>69$ 矛盾。空集与单点又不满足停止守卫，而 $K_3$ 是实际三元素见证，所以整个精确历史下的最小支撑恰为三；论证覆盖纤维内任意二元素集，不只检查 $K_3$ 的三个二元素子集。∎
+

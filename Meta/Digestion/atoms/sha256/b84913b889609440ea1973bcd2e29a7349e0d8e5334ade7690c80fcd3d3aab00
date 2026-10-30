@@ -1,0 +1,42 @@
+**Lemma 9.1 (Uniform error for a hub contribution).** For the functions of Definition 8.1, every $x>0$ and integer $b\ge2$ satisfy
+
+$$
+-\frac1{8x^3}\le M_b(x)-\frac1{2x}\le\frac{3b}{2x^2}.
+$$
+
+Consequently, if a graph in the two-hub family of Theorem 7.1 has hub degrees $D_1,D_2\ge2n/15$ and $b=\ell+1$, then
+
+$$
+E(G)=\frac12\left(\frac1{D_1}+\frac1{D_2}\right)+R,
+\qquad
+-\frac{3375}{32n^3}\le R\le\frac{675b}{4n^2}.
+$$
+
+Stance: repo-derived.
+
+**Proof.** Rationalization gives the exact identities
+
+$$
+xf_1(x)=\frac1{\sqrt{x^2+1}+x},\qquad
+\frac1{2x}-xf_1(x)
+=\frac1{2x(\sqrt{x^2+1}+x)^2},
+$$
+
+and
+
+$$
+f_2(x)-f_1(x)
+=\frac{3}{x^2\left(\sqrt{1+4/x^2}+\sqrt{1+1/x^2}\right)}.
+$$
+
+The first difference lies in $[0,1/(8x^3)]$, since $\sqrt{x^2+1}+x\ge2x$; the second lies in $[0,3/(2x^2)]$. Now use $M_b(x)=xf_1(x)+b(f_2(x)-f_1(x))$. Summing the resulting bounds at $D_1,D_2$ proves the second assertion, because
+
+$$
+\frac18\left(\frac1{D_1^3}+\frac1{D_2^3}\right)
+\le\frac{3375}{32n^3},\qquad
+\frac{3b}{2}\left(\frac1{D_1^2}+\frac1{D_2^2}\right)
+\le\frac{675b}{4n^2}.
+$$
+
+∎
+

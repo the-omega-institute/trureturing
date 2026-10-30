@@ -1,0 +1,55 @@
+## 2. The trureturing five-mode quotient
+
+The existing Auric FIB pyramid uses five modes
+
+\[
+\Sigma=\{0,2,5,25,3\}
+\]
+
+with binary features \(x,y,z\) satisfying \(xz=yz=0\). A probability law is written
+
+\[
+p=(p_0,p_2,p_5,p_{25},p_3).
+\]
+
+The retained coordinates and the hidden fiber coordinate are
+
+\[
+X=\mathbb E[x],\qquad
+Y=\mathbb E[y],\qquad
+Z=\mathbb E[z],\qquad
+\kappa=\mathbb E[xy].
+\tag{2.1}
+\]
+
+The probability reconstruction is exact:
+
+\[
+p_{25}=\kappa,\quad
+p_2=X-\kappa,\quad
+p_5=Y-\kappa,\quad
+p_3=Z,\quad
+p_0=1-X-Y-Z+\kappa.
+\tag{2.2}
+\]
+
+The quotient \((X,Y,Z)\) is the five-vertex pyramid. For a fixed quotient point, the complete legal fiber is
+
+\[
+\max(0,X+Y+Z-1)
+\le \kappa \le
+\min(X,Y).
+\tag{2.3}
+\]
+
+Its width is
+
+\[
+\Delta_\kappa
+=
+\min\{X,Y,1-X-Z,1-Y-Z\}.
+\tag{2.4}
+\]
+
+These formulas are inherited from AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md and AURIC_FIB_ATOM_READOUT_CLOSURE_AND_RECORD_TRIANGLE.md. They are an ordinary finite probability calculation, not a quantum-network theorem.
+

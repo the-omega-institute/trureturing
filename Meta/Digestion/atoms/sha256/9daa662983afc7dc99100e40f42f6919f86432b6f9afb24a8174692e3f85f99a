@@ -1,0 +1,57 @@
+**定理 51.2（两种方向的实际反例与精确成功成本）。** 对每个有限 $n\ge1$ 和两种 $X$，
+(51.1) 的构造、分解都不存在全来源确定性仅由状态决定的处理器。更精确地：
+
+1. 在构造限制 $(s,t)\in\{(\alpha,\alpha),(\beta,\alpha)\}$ 上，最优相等成功概率为
+
+$$
+p_{\rm con}(n)=\frac{1-a}{1-a\sqrt b}<1,
+\qquad \lim_{n\to\infty}p_{\rm con}(n)=\frac23.
+\tag{51.2}
+$$
+
+2. 在分解限制 $(s,t)\in\{(\alpha,\beta),(\beta,\alpha)\}$ 上，最优相等成功概率为
+
+$$
+p_{\rm dec}(n)=\frac{1-a}{1-a^2}=\frac1{1+a}<1,
+\qquad \lim_{n\to\infty}p_{\rm dec}(n)=\frac12.
+\tag{51.3}
+$$
+
+“最优”在此只量化各自的两个输入，允许任意数学 CP 仪器；它不是全来源共同可达到性，
+也不是原生五模菜单的可达到性。任何全来源、等成功的仪器都须服从这些限制上的相应上界。
+
+证明。叶 $\alpha,\beta$ 的着色场均为空且标签不同，所以两种核都给重叠 $a$。
+构造的两个乘积输入的重叠是 $a$；目标 $\langle\alpha,\alpha\rangle$ 的根着色为 $1$，
+$\langle\beta,\alpha\rangle$ 的场为空。由 (45.9)、(46.3) 得目标重叠 $a\sqrt b$。
+分解的两个输入 $\langle\alpha,\beta\rangle,\langle\beta,\alpha\rangle$ 场均为空，
+重叠为 $a$，而两个目标乘积的重叠为 $a^2$。所有这些数均为正实数。
+
+这里消费 Chefles–Jozsa–Winter，
+[*On the existence of physical transformations between sets of quantum states*，
+quant-ph/0307227v1，定理 2–3](https://arxiv.org/html/quant-ph/0307227v1)
+的纯族和带旗标 Gram 条件。所需二输入情形可直接计算：设输入单位向量内积为
+$c$，目标内积为 $d$，其中 $0\le d<c<1$。成功纯输出的环境向量内积记为 $g$；
+把全部失败记录、系统及环境一起保留后的归一失败向量内积记为 $f$。
+等距扩张和正交旗标给
+
+$$
+c=p\,d\,g+(1-p)f,\qquad |g|\le1,\quad |f|\le1,
+\qquad c\le pd+1-p.
+\tag{51.4}
+$$
+
+端点 $p=0,1$ 用对应非空分支解释，无须给零支定义归一态。
+因此 $p\le(1-c)/(1-d)<1$。在这个上界处，取共同成功环境、共同失败向量 $F$，令
+
+$$
+u_i\longmapsto\sqrt p\,w_i\otimes|\mathrm{success}\rangle
+ +\sqrt{1-p}\,F\otimes|\mathrm{failure}\rangle\quad(i=0,1).
+\tag{51.5}
+$$
+
+两边 Gram 相同，故在二输入张成空间上定义等距，扩张后给完整仪器；每支终止并保留
+其旗标。它证明二输入达到性，未指定其他源的像。固定混合 ancilla 可先纯化到同一固定
+辅助态，不能改善 (51.4)。代入 $(c,d)=(a,a\sqrt b)$ 和 $(a,a^2)$ 得两式。
+令 $h=1/(5n)$，则 $1-(1-h)^{3/2}\sim3h/2$，给第一极限；第二极限直接由 $a\to1$。
+任一全来源确定性通道也应在相应二输入限制上有 $p=1$，所以均被排除。∎
+

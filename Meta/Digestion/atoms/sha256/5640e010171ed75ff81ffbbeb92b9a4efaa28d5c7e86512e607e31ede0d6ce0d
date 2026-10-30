@@ -1,0 +1,41 @@
+**定义 31.3（辅助循环概率律）。** 令 $V=\mathbb Z/21\mathbb Z$，取全部循环独立集
+
+$$
+\mathcal C=\{S\subset V:
+ \text{不存在 }i\in V\text{ 使 }i,i+1\in S\}.
+\tag{31.9}
+$$
+
+其图 $\mathcal G$ 包含全部合法单点增删边，既不删空集，也不删单点集。对非空 $S$，按顺时针选整数代表
+$i_1<\cdots<i_r<i_1+21$，置 $i_{r+1}=i_1+21$，并令
+
+$$
+a_j=i_j\pmod7,\qquad n_j=i_{j+1}-i_j\ge2,\qquad
+\sum_{j=1}^r n_j=21,
+$$
+
+$$
+w(S)=\prod_{j=1}^r\kappa_{a_j}z_{a_j}(n_j),\qquad
+w(\varnothing)=1,\qquad
+\pi_S=\frac{w(S)}{\sum_{T\in\mathcal C}w(T)}.
+\tag{31.10}
+$$
+
+$21$ 被 $7$ 整除，故各相位和权重不依赖代表选择。单点集的唯一循环间隔为 $21$。全部 $\pi_S>0$。这是由取得参数构造的有限代数概率律；不声称它是 $J$ 的边缘、周期化实际律或另一个取得的平稳竞争者。
+
+对 $S\in\mathcal C$、$i\in V$，记 $S^0=S\setminus\{i\}$。若 $S^0\cup\{i\}$ 合法，定义完整其余坐标条件概率
+
+$$
+q_i^\pi(S)=\frac{\pi_{S^0\cup\{i\}}}
+ {\pi_{S^0}+\pi_{S^0\cup\{i\}}};
+\tag{31.11}
+$$
+
+否则 $q_i^\pi(S)=0$。定义该配置的全部坐标 Brier 损失
+
+$$
+L_\pi(S)=\sum_{i\in V}
+ \bigl(\mathbf1_{\{i\in S\}}-q_i^\pi(S)\bigr)^2.
+\tag{31.12}
+$$
+

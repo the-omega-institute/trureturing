@@ -11,20 +11,9 @@ internal sealed class OriginalFirstClockBufferEstimatesDocument : IScribeDocumen
         H("OriginalFirstClockBufferEstimates"),
         Blocks(
             Paragraph(Text(
-                "These are auxiliary estimates consumed on the live proof path of "
-                + "OriginalFirstClockTransport.good_edge_prime_buffer. They are moved from "
-                + "that owner to keep its source within the repository capacity limit. "
-                + "The density is the unchanged ActualRobinClockCovariance.activationDensity "
-                + "w(x)=(log(x)+1)/(x^2*log(x)^2). No second density or integer objective is defined.")),
-            Describe.Lean(
-                DescribeId.Create("original-first-clock-buffer-log-size"),
-                DeclarationHandle.Create(Prefix + "buffer_log_size"),
-                H("Logarithms near an original endpoint"),
-                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "For real x>=256 and x-2<=z<=x+1, one has 5<log(z)<=x/20. "
-                    + "Both endpoint exclusion proofs use this estimate at z=q, with h=log(q)."))),
-                DescribeRole.Theorem),
+                "These estimates support OriginalFirstClockTransport.good_edge_prime_buffer. "
+                + "The density is ActualRobinClockCovariance.activationDensity "
+                + "w(x)=(log(x)+1)/(x^2*log(x)^2). The logarithm window bound is stated in LogarithmBounds.")),
             Describe.Lean(
                 DescribeId.Create("original-first-clock-buffer-density-left"),
                 DeclarationHandle.Create(Prefix + "buffer_density_left"),
@@ -60,9 +49,6 @@ internal sealed class OriginalFirstClockBufferEstimatesDocument : IScribeDocumen
                     + "condition is removed from the good-edge theorem."))),
                 DescribeRole.Theorem),
             Paragraph(Text(
-                "All four public helpers are actually consumed by the original endpoint "
-                + "exclusions. The complete good_edge_prime_buffer theorem remains in its "
-                + "original owner with its full hypotheses, original GoodEdge and 5040. "
-                + "This structural split adds no Robin or RH conclusion and makes no "
-                + "literature novelty claim.")))));
+                "The density comparisons and integer removal estimate support the endpoint "
+                + "exclusions with the full GoodEdge hypotheses and the 5040 threshold.")))));
 }

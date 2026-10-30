@@ -1,0 +1,101 @@
+**Lemma 16.3 (Strict convexity and the ordered minimum of the second certificate).** The set $\Omega$ is nonempty, compact and convex. Both $F_0$ and $F_1$ are strictly convex there, as is $F$. In fact
+
+$$
+\nabla^2F_1\succeq a^2 I_2\quad\text{on }\Omega.
+\tag{16.17}
+$$
+
+The unique minimum $(u_1,w_1)$ of $F_1$ on $\Omega$ satisfies
+
+$$
+\sqrt{(u_1-\mu)^2+(w_1-\mu)^2}<\frac{64}{a^2},
+\qquad u_1>w_1,\qquad u_1,w_1<1.
+\tag{16.18}
+$$
+
+**Proof.** The point $(\mu,\mu)$ belongs to $\Omega$. Every point of $\Omega$ satisfies
+
+$$
+1\ge u\ge w\ge v\ge\frac{q-3}{n}
+=1-\frac{1+\delta}{a-1}\ge\ell=1-\frac2a>\tau,
+\tag{16.19}
+$$
+
+which also proves compactness. On $[\ell,1]$, elementary bounds give
+
+$$
+a^2\le g_1''(z)<3a^2,\qquad f''(z)\ge2a^2,
+\qquad c\le\frac{33a}{16},\qquad
+\ell^{-3}<\frac{10}{9},\quad\ell^{-4}<\frac87.
+\tag{16.20}
+$$
+
+For example, $g_1''(z)\ge2a^2-6\gamma\ell^{-4}>a^2$ and $g_1''(z)\le2r^2\ell^{-3}<3a^2$. These bounds already hold for $a\ge64$ in the parameter range at issue.
+
+Put $D=2u+\delta-2$. Differentiating with $v=(q-2u-w)/n$ gives
+
+$$
+\begin{aligned}
+(F_1)_{uu}&=2f''(u)+\frac4n g_1''(v),\\
+(F_1)_{uw}&=-\frac{4c}{w^3}+\frac2n g_1''(v),\\
+(F_1)_{ww}&=\frac{2r^2}{w^3}
+ +\frac{6cD}{w^4}+\frac1n g_1''(v).
+\end{aligned}
+\tag{16.21}
+$$
+
+Since $D\ge-4/a$, (16.20) implies
+
+$$
+(F_1)_{uu}\ge4a^2,\qquad
+|(F_1)_{uw}|<10a,\qquad
+(F_1)_{ww}\ge2a^2-\frac{396}{7}.
+\tag{16.22}
+$$
+
+For the middle bound, the two terms of opposite signs in $(F_1)_{uw}$ each have absolute value less than $10a$. Subtracting the off-diagonal row sums from the diagonal entries proves (16.17). The Hessian quadratic form of $F_0$ is
+
+$$
+\frac{4r^2}{u^3}(du)^2+g_1''(w)(dw)^2
+ +\frac{g_1''(v)}n(2du+dw)^2,
+\tag{16.23}
+$$
+
+so $F_0$ is strictly convex too. The maximum of two strictly convex functions is strictly convex, which proves the assertion for $F$.
+
+At $p_0=(\mu,\mu)$ both functions equal the actual uniform-law value $H_d$. Direct differentiation gives
+
+$$
+\nabla F_1(p_0)
+=-\frac{4c}{\mu^3}\big(1-\mu,\ \mu+\delta-1\big),
+\qquad \|\nabla F_1(p_0)\|<32.
+\tag{16.24}
+$$
+
+Indeed $1-\mu=(1+\delta)/s<1/a$ and $|\mu+\delta-1|=|r\delta-1|/s<1/a$. Strong convexity, together with $F_1(u_1,w_1)\le F_1(p_0)$, yields
+
+$$
+\frac{a^2}{2}\|(u_1,w_1)-p_0\|^2
+\le\|\nabla F_1(p_0)\|\,\|(u_1,w_1)-p_0\|.
+\tag{16.25}
+$$
+
+This proves the distance bound. Since $1-\mu\ge1/s>64/a^2$, both $u_1,w_1$ are less than one. The lower marginal boundary is already excluded by (16.19).
+
+If $u_1=w_1=v$, the point is $p_0$, where increasing $u$ with $w$ fixed is feasible and has derivative $-4c(1-\mu)/\mu^3<0$. If $u_1=w_1=z>v$, the feasible direction $(du,dw)=(1,-2)$ keeps $v$ fixed and has derivative
+
+$$
+\frac{4c(3z+2\delta-3)}{z^3}<0.
+\tag{16.26}
+$$
+
+For its sign, (16.18)'s distance bound gives
+
+$$
+3(1-z)-2\delta
+\ge\frac{3-c\delta}{s}-\frac{192}{a^2}
+\ge\frac1{2a}-\frac{192}{a^2}>0.
+$$
+
+Neither case can minimize $F_1$. Thus $u_1>w_1$. ∎
+

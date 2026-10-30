@@ -1,0 +1,25 @@
+**命题 33.4（合法误差下的窗口与整个低簇）。** 对每个满足 (33.3) 的 $L$，其常数零模保持，另有三个低非零模态及一个高模态。下列区间非空，且其中恰有三个非恒定增益至少为 $\varepsilon$：
+
+$$
+\frac{\ell}{9b-\eta}<s\le\frac{\ell}{5b+\eta}. \tag{33.4}
+$$
+
+若 $\widetilde P_v$ 为三个低非零模态的整体谱投影，则
+
+$$
+\|\widetilde P_v-P_v\|_{\rm op}\le\frac{\eta}{4b-\eta}. \tag{33.5}
+$$
+
+证明。将两矩阵限制在不变空间 $e_*^\perp$。对称矩阵的极小极大原理（标准 Weyl 扰动机制）给四个有序特征值的移动各至多 $\eta$；故三个低值属于 $[5b-\eta,5b+\eta]$，高值属于 $[9b-\eta,9b+\eta]$。$5b-\eta>0$ 排除额外零模，$9b-\eta>5b+\eta$ 分开两簇，亦给 (33.4) 非空。该区间使低值的增益全部至少为 $\varepsilon$、高值的增益严格较小。它是对所有这些扰动统一有效的窗口；对某一个实际 $L$，还可用其实际特征值扩大窗口。
+
+取新高模态的单位向量 $\widetilde q\in e_*^\perp$，其特征值 $\widetilde\lambda\ge9b-\eta$。将 $(L_0+\Delta)\widetilde q=\widetilde\lambda\widetilde q$ 左乘 $P_v$，得
+
+$$
+(\widetilde\lambda-5b)P_v\widetilde q=P_v\Delta\widetilde q,
+\qquad \|P_v\widetilde q\|_2\le\frac{\eta}{4b-\eta}.
+$$
+
+在 $e_*^\perp$ 内有 $P_v=I-P_h$、$\widetilde P_v=I-\widetilde q\widetilde q^{\mathsf T}$。对两个实单位向量，秩一投影差的算子范数为 $\sqrt{1-|\langle e_h,\widetilde q\rangle|^2}$：在它们张成的至多二维空间写矩阵即得两个非零本征值互为相反数，其绝对值为该正弦。此值正是 $\|P_v\widetilde q\|_2$，给 (33.5)。常数投影相同，所以扩回五维也保持此界。∎
+
+该投影估计保护整个三维簇，不选择簇内的三根命名轴。$L_0$ 的低值三重简并，任意簇内正交基都合法；小扰动可分裂简并并旋转这些轴。不能由 (33.5) 推出每根原轴逐一接近某根新轴。
+

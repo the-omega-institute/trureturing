@@ -1,0 +1,51 @@
+**Theorem 8.3 (odd clock and the sharp-interval crossing).** For all
+$k\ge1$, $u\in\mathcal T$, $n=\ell(u)$ and $x=\rho^{2k+1}u$, set
+$H=k+h_R(u)$. Then for every integer $s\ge1$,
+
+$$
+ P_x(R^{s-1}LL)=1\iff s\le H,
+ \qquad k\le H\le k+n-1.                        \tag{GPO.29}
+$$
+
+For $1\le j\le k$,
+
+$$
+ F_j^o(x)=\operatorname{sh}(\rho^{2(k-j)}u),
+ \qquad a_j^o(x)\ge2^{k-j}n.                     \tag{GPO.30}
+$$
+
+For $j\ge k$, $F_j^o(x)$ is a pruning of $\operatorname{sh}(u)$.
+Consequently, whenever $n\le B<2n$,
+
+$$
+ a_j^o(x)\le B\iff j\ge k\quad(j\ge1),
+ \qquad k=\min\{j\ge1:a_j^o(x)\le B\}.          \tag{GPO.31}
+$$
+
+Proof. Let $d=h_R(u)$, with rightmost original leaf label indicator
+$\eta$. At an original proper prefix $R^j$, $j<d$, the left child is
+an odd substituted nonempty tree and is a branch, so $R^jLL$ is present.
+For $j\ge d$, the suffix $R^{j-d}LL$ is evaluated inside
+$T_{2k+1+\eta}$. By (GPO.28) it is present exactly when
+$2k+1+\eta\ge2(j-d)+3$, equivalently $j<d+k$, for either value of
+$\eta$. This also covers suffixes that fail before their end. Taking
+$j=s-1$ gives (GPO.29); the original right path has at most $n-1$ edges.
+The clock here is this threshold $H$, not the right height of $x$,
+which by (GPO.25) can instead be $H+1$.
+
+For $j\le k$, write $w=\rho^{2(k-j)}u$. The actual equality
+$x=\rho^{2j+1}w$ lets Lemma 8.1 identify each pruning branch exactly
+with a branch of $w$. Starting at its root and recursing only at those
+branches proves the first equality in (GPO.30). The reused two-step
+composition inequality $\ell(\rho^2w)\ge2\ell(w)$, from ABT39.1,
+proves its lower bound.
+
+For $j\ge k$, every original leaf has zero branch test by (GPO.28).
+Starting at the original root, the traversal can therefore only retain
+original branches or stop earlier: it never descends below an original
+leaf. It is a pruning of the original shape and has at most $n$ leaves.
+For $j<k$, (GPO.30) has at least $2n>B$ leaves; at $j=k$ it has exactly
+$n$. These prove (GPO.31), including $n=1$. The proof does not assume
+monotonicity of $P_y(pR^jLL)$ on arbitrary full binary trees: that would
+be false without the substituted-source conditions. $\square$
+

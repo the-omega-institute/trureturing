@@ -1,0 +1,25 @@
+fingerprints:
+  raw_sha256: sha256:4bf194fd5d558664e7189386c49409822153d6894de008f2b0ffd188662391c1
+  normalized_sha256: sha256:4bf194fd5d558664e7189386c49409822153d6894de008f2b0ffd188662391c1
+cas_ref: sha256:4bf194fd5d558664e7189386c49409822153d6894de008f2b0ffd188662391c1
+coverage_gids:
+  - gid: D5/S3/Weil/Separator/ArchimedeanConvergence.archimedeanConvergent_of_weilTestFunction
+    target_statement_id: sha256:686b2d2ac8ec9c3bc18656b5965808c78e0fcc2e8aa1d7569d93b6a7dd352aee
+  - gid: D5/S3/Weil/Separator/PrimeArchimedeanPoincareCriterion.rh_iff_primeArchimedeanPoincare
+    target_statement_id: sha256:ef79a335eab326aa6c8c5d66102cf0ac6b7bddb5248d2105d051fb8c71373dd2
+  - gid: D5/S3/Weil/Separator/UnconditionalExplicitFormula.energyIdentity_unconditional
+    target_statement_id: sha256:f48a1090b3385b93964168b5eb7773871e2ee5218049917dc51b2bc207e506cc
+  - gid: D5/S3/Weil/ZeroInfinitude/ExplicitFormulaObstruction.nonempty_zeroData
+    target_statement_id: sha256:bdd7d8b4fb1b76b139edac3c0a70fce40058ba602ffc09fe6d58e9919a751815
+  - gid: D5/S3/Weil/ZetaBridge/PoleRankOneDecomposition.pole_rank_one_decomposition
+    target_statement_id: sha256:f6627fae6f282b08bb5a7e688780c90791c8ff9890c700d42729e4e30654bebb
+  - gid: D5/S3/Weil/ZetaBridge/PrimeJumpDecomposition.prime_jump_decomposition
+    target_statement_id: sha256:1f563b3d7f440452e470a74be69587bcb82ee82457977bd9b93cf5a171dd6380
+  - gid: D5/S3/Weil/ZetaGamma/ArchimedeanJumpDecomposition.archimedean_jump_decomposition
+    target_statement_id: sha256:ea82ee67fd0ea0b68effb6c26225e50ad1d16ae8ab91fe789a339b2cca6e1c4b
+receipts:
+  unresolved_subitems: []
+  chain_atoms:
+    - a8faaeeccac7c060ce5e4aea75a3bbec6404947754792895f85b1d840321d87d
+    - 14b238355ebcdc05b3773eebcebfad9bd9b8aea6d06b435314839f01caae1871
+    - 269e9fb74eb31944d8c21c7c539aab45ae871f4377783a58e9f2584d2a1b9fa6

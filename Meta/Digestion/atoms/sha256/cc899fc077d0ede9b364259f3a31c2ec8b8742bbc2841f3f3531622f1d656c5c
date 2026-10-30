@@ -1,0 +1,22 @@
+**定义 111.1（固定源、误差与距离）。** 固定定义 100.1 的任意允许源及定义 101.1 的任意合法前缀，保持假设 100.2 的整个竞争类。以 $\widetilde H=MP$、$\widetilde H^a=MB_aP$ 表示竞争者按原索引形成的四表；只将 (101.5) 替换为
+
+$$
+\max\{\|\widetilde H-H\|_{\max},\ \max_a\|\widetilde H^a-H^a\|_{\max}\}\le\epsilon,
+\qquad \epsilon\ge0.
+\tag{111.1}
+$$
+
+这里 $\|D\|_{\max}=\max_{m,i}|D_{mi}|$，不是对重新条件化概率的误差。$Q$ 取 Hilbert–Schmidt 范数 $\|X\|_2=\sqrt{\operatorname{Tr}(X^2)}$，$\mathbb R^9$ 取 Euclidean 范数，线性映射取相应诱导范数；$d_H$ 是此范数下非空紧集的 Hausdorff 距离。置
+
+$$
+\begin{gathered}
+\mathcal D=\{X\succeq0:\operatorname{Tr}X=1\},\quad
+\sigma=\sigma_{\min}(H)>0,\quad \kappa=\|L^{-1}\|\|L\|,\quad
+\chi=\max_a\|H^aH^{-1}\|,\\
+b=3\|L^{-1}\|,\quad \delta=9\epsilon,\quad
+\gamma=3\|L^{-1}\|\epsilon,\quad
+\beta=\frac{2\kappa\delta(1+\chi)}{\sigma-\delta}\quad(\delta<\sigma).
+\end{gathered}
+\tag{111.2}
+$$
+

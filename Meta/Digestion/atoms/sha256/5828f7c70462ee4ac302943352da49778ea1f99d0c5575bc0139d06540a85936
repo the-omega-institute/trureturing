@@ -1,0 +1,19 @@
+**约定 78.1（同一完整复空间）。** [Actual pair energy §30](AURIC_FIB_ACTUAL_PAIR_ENERGY_OVERLAPPING_PROJECTIONS.md) 保持原 $\theta=\pi/6$ actual matrices
+
+$$
+A=\tfrac14\begin{pmatrix}\sqrt3-i&3+i\sqrt3\\3-i\sqrt3&-\sqrt3-i\end{pmatrix},
+\quad J=\operatorname{diag}(-1,1),\quad
+C=JA^{-1}JA,\quad D=AC,
+$$
+
+并在 $K_{\rm grp}=\{g\in U(2):\det g=\pm1\}$ 的 $L^2(K_{\rm grp};\mathbb C)$ 上取其 §20 的 translation convention $T_g$，
+
+$$
+Q=(I+T_J)/2,\quad\mathcal H_J=\operatorname{ran}Q,\quad
+\mathsf S=(T_C+T_{C^{-1}})/2,\quad
+\mathsf B=(T_D\mathsf S)|_{\mathcal H_J},\quad
+E_C=(I+T_C+T_C^2)/3.
+$$
+
+$D^3=iI$ 在完整群中保持；不能将其当作三阶矩阵或删除其他中心扇区。令 $\Pi$ 是任意有限个完整 Peter–Weyl 左正则等型分量的投影，$\mathcal H_{J,\Pi}=\mathcal H_J\cap\ker\Pi$，$B_\Pi=\mathsf B|_{\mathcal H_{J,\Pi}}$。它是约化子空间。
+

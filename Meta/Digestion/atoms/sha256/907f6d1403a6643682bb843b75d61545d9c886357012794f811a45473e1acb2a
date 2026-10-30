@@ -1,0 +1,10 @@
+### 5.4 A positive quadratic and an excluded response line
+
+The leading coefficient in (5.3.3) is independent of the responses. To distinguish the positive drift polynomial from the source matrix $P(r,b)$, write it as $\Pi(x)$:
+
+$$
+f_2=5\Pi(x),\qquad
+\Pi(x)=177x^6+724x^5+542x^4-742x^3-629x^2+196x+160.
+\tag{5.4.1}
+$$
+

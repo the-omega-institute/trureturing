@@ -1,0 +1,32 @@
+**Theorem 134.1 (Finite minimax on the whole zero-optimizer set).** For every
+$0\le q\le1/2$,
+
+$$
+\boxed{\displaystyle\min_{\mathcal R\in\mathcal Z_0}e_{-q}(\mathcal R)=\frac23-\frac q{12}.}
+\tag{134.1}
+$$
+
+*Proof.* Phase averaging preserves $\mathcal Z_0$ and cannot increase the
+error. For a phase-averaged member, use the notation of Lemma 133.2 and test
+$p=(1/3,x,2/3-x)$. Direct substitution gives the fidelity
+
+$$
+\frac13+qg(x),\qquad
+g(x)=2(z-y)(x-1/3)^2+\frac{2ax}{3}.
+\tag{134.2}
+$$
+
+At $x=1/6$, complete positivity and column stochasticity give
+$a^2\le vy\le y$ and $z-y\le1-2y$, hence
+
+$$
+g(1/6)=\frac{z-y+2a}{18}
+\le\frac{1-2a^2+2a}{18}
+=\frac1{12}-\frac{(a-1/2)^2}{9}\le\frac1{12}.
+\tag{134.3}
+$$
+
+Therefore every member has $e_{-q}\ge2/3-q/12$. The decoder
+$\mathcal R_{\rm fam}=\Phi_{-1/2}$ belongs to $\mathcal Z_0$ and Theorem
+128.1 gives equality for every $q$ in the stated interval. $\square$
+

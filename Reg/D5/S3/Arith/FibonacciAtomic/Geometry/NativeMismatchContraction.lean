@@ -212,6 +212,88 @@ noncomputable def iterateRegistration :
   familyRecord := none
   options := #[] }
 
+@[reducible] def leafSignature : Signature where
+  Params := ℚ
+  State _ := Bool
+  Role := Unit
+  finiteRole := inferInstance
+  nonemptyRole := inferInstance
+  Output _ _ := Source → ℚ
+  Anchor := Empty
+  finiteAnchor := inferInstance
+
+def leafActual : Realization leafSignature :=
+  realize leafSignature (fun _ q b => mass q (.of b)) (fun e => nomatch e)
+
+def leafBad : Realization leafSignature :=
+  realize leafSignature (fun _ _ _ _ => 0) (fun e => nomatch e)
+
+@[reducible] def leafArena : Arena where
+  signature := leafSignature
+  Law R := ∀ (q : ℚ) (b c : Bool), b ≠ c → R.readout () q b (.of c) = 1
+
+private theorem leaf_bad : ¬ leafArena.Law leafBad := by
+  intro h
+  have hh := h 0 false true (by decide)
+  change (0 : ℚ) = 1 at hh
+  norm_num at hh
+
+private theorem leaf_dependence : ObservationalDependence leafSignature leafActual := by
+  intro i
+  refine ⟨1 / 4, false, true, ?_⟩
+  intro he
+  have hh := congrFun he (FreeMagma.of false : Source)
+  have hn : (FreeMagma.of true : Source) ≠ .of false := by decide
+  norm_num [leafActual, realize, mass,
+    _root_.D5.S3.Arith.FibonacciAtomic.ActualImageAlphaSeparation.frontier, hn] at hh
+
+def leafFamilyRegistration : Registration leafArena (type_of% mass_of_of) := {
+  actual := leafActual
+  bridge := Iff.rfl
+  variation := ⟨mass_of_of, leafBad, leaf_bad⟩
+  sensitivity := ⟨fun i => ⟨leafBad,
+    fun j hj => False.elim (hj (Subsingleton.elim j i)), rfl, leaf_bad⟩,
+    fun e => nomatch e⟩
+  dependence := leaf_dependence }
+
+noncomputable def leafRegistration :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@mass_of_of) (type_of% (realize leafSignature leafActual.readout leafActual.anchor))
+    Unit Unit := {
+  unitName := Lean.Name.str
+    `D5.S3.Arith.FibonacciAtomic.Geometry.NativeMismatchContraction.mass_of_of
+    "__information_unit"
+  realizationName :=
+    `Reg.D5.S3.Arith.FibonacciAtomic.Geometry.NativeMismatchContraction.leafFamilyRegistration
+  realizationSource := none
+  generated := false
+  arena := .source ⟨leafArena⟩
+  objectArena := .source ⟨leafArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source leafArena ⟨leafFamilyRegistration⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize leafSignature leafActual.readout leafActual.anchor)
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Arith.FibonacciAtomic.Geometry.NativeMismatchContraction
+    definition := none
+    coordinates := #[0]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "fn", "arg", "fn"]
+      stateBinder := 1, functionOperand := false
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[] }
+
+#print axioms leafFamilyRegistration
+#print axioms leafRegistration
 #print axioms rootFamilyRegistration
 #print axioms contractionFamilyRegistration
 #print axioms iterateFamilyRegistration

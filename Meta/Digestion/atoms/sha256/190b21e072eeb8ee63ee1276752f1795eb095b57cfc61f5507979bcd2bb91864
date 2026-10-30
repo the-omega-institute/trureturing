@@ -1,0 +1,117 @@
+**Proposition 120.2 (all-map cube-indicator floor).** For every
+$s\in\mathcal T$, every map $\pi:\operatorname{Pos}(s)\to Q_3$, either
+choice $A_V$ in (120.2), and $0\le t\le2/15$, put
+$g_3(t)=t-15t^2/2$. Then
+
+$$
+\max_{c\in Q_3}\|E_{\pi,c}^{A_V,K}(t)\|_{\mu_V}
+ \ge g_3(t)\sqrt{\frac{N+2}{8N}}.
+\tag{120.5}
+$$
+
+In particular, simultaneously for every such tree and map,
+
+$$
+\max_{c\in Q_3}
+ \|e^{-A_V/15}U_\pi e_c-U_\pi e^{-K/15}e_c\|_{\mu_V}
+ \ge\frac1{30}\sqrt{\frac{N+2}{8N}}
+ \ge\frac1{60\sqrt2}.
+\tag{120.6}
+$$
+
+This includes every actual $D_n(u)$ and every surjective eight-class
+partition when one exists. No graph-homomorphism, connected-fibre or
+exact-lumpability hypothesis is imposed.
+
+Proof. The common degree bound gives the nonnegative substochastic
+matrix $R_V=I-A_V/3$. It is stochastic for the closed choice. In the
+killed case, send each missing row mass to an absorbing cemetery, with
+every test function zero there. The standard uniformization identity,
+already used in Continuation (55.9), becomes
+
+$$
+e^{-tA_V}
+ =e^{-3t}\sum_{k=0}^\infty\frac{(3t)^k}{k!}R_V^k.
+\tag{120.7}
+$$
+
+This is the mature Poisson construction of
+[Rao--Teh, *Fast MCMC Sampling for Markov Jump Processes and Extensions*,
+arXiv:1208.4818v3, §3.1 and Proposition 1](https://arxiv.org/pdf/1208.4818v3).
+Their column-distribution convention is transposed to rows acting on
+observables here: the rate matrix is $-A_V$, the dominating rate is
+$\Omega=3$, and the discrete matrix is $I-A_V/3$. Cemetery augmentation
+handles killing. Formula (120.7) also follows directly from the
+convergent exponential series, since $A_V=3(I-R_V)$.
+
+Fix $x\in V$, write $b=\pi(x)$, and let $c$ be a cube neighbour of $b$
+that is absent among $\{\pi(y):y\sim_V x\}$. Such a pair $(x,c)$ will be
+called a missing pair within this proof. Since $c\ne b$, both
+$(U_\pi e_c)(x)$ and $(R_VU_\pi e_c)(x)$ are zero. All later iterates
+of this indicator lie between zero and one. Consequently
+
+$$
+\begin{aligned}
+0\le(e^{-tA_V}U_\pi e_c)(x)
+ &\le\mathbb P\{Z\ge2\}
+ \le\tfrac12\mathbb E[Z(Z-1)]
+ =\tfrac92t^2,\qquad Z\sim\operatorname{Poisson}(3t).
+\end{aligned}
+\tag{120.8}
+$$
+
+In the unit cube chain, the event of exactly one jump, along the
+specified edge $b\to c$, has probability $te^{-3t}$. Thus
+
+$$
+\begin{aligned}
+(e^{-tK}e_c)(b)&\ge te^{-3t}\ge t-3t^2,\\
+(U_\pi e^{-tK}e_c)(x)-(e^{-tA_V}U_\pi e_c)(x)
+ &\ge t-\tfrac{15}{2}t^2=g_3(t).
+\end{aligned}
+\tag{120.9}
+$$
+
+The last quantity is nonnegative on the stated interval, so its square
+is a lower bound for the squared discrepancy at every missing pair.
+At $x$, at most $\deg_V(x)$ of the three distinct cube-neighbour labels
+can be represented by actual neighbours. The number $M$ of missing
+pairs therefore satisfies
+
+$$
+M\ge\sum_{x\in V}(3-\deg_V(x))
+ =3N-2|E_V|=3N-2(N-1)=N+2.
+\tag{120.10}
+$$
+
+All these are distinct vertex/test pairs, even when several use the
+same target label. Hence
+
+$$
+\sum_{c\in Q_3}\|E_{\pi,c}^{A_V,K}(t)\|_{\mu_V}^2
+ =\frac1N\sum_{x\in V}\sum_{c\in Q_3}|E_{\pi,c}^{A_V,K}(t)(x)|^2
+ \ge\frac{N+2}{N}g_3(t)^2.
+\tag{120.11}
+$$
+
+The largest of the eight squared norms is at least one eighth of their
+sum. This proves (120.5); $g_3(1/15)=1/30$ gives (120.6).
+
+The root is included in (120.10): for $N>1$ its degree is two, so it
+contributes at least one missing pair. A singleton has degree zero and
+exactly three missing cube-neighbour labels, agreeing with $N+2=3$.
+For each of those labels its pullback is identically zero, under either
+$[0]$ or $[2]$, and the target one-jump estimate still applies. No onto
+map exists when $N<8$; the stronger arbitrary-map statement remains
+nonvacuous there. In fact full-tree sizes are odd. Empty fibres never
+invalidate a test in (120.4).
+
+The finite set of eight indicators is fixed; a maximizing indicator may
+depend on the source and map. Thus no sequence of these finite maps can
+make all eight errors tend to zero at $t=1/15$ in this norm and clock.
+The argument does not say that every individual observable fails.
+It strengthens the chosen-map free-flow failure (119.8) by a whole-vertex
+quantitative obstruction independent of the choice of map. The
+constrained form and mass identities of §119 are not hypotheses here.
+$\square$
+

@@ -16,6 +16,16 @@ internal sealed class ThetaRepresentationNonconvexDocument : IScribeDocumentDefi
         H("Nonconvexity of the theta representation set"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("dot-cauchy"),
+                DeclarationHandle.Create(Prefix + "dot_cauchy"),
+                H("Cauchy-Schwarz for finite real vectors"),
+                StatementSource.FromAuthor(DotCauchyFormula()),
+                AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/QuadraticForms/mathlib2026finitecauchyschwarz")),
+                Blocks(Paragraph(Text(
+                    "For real vectors indexed by any finite type, the square of their dot "
+                    + "product is at most the product of their squared lengths."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("theta-representation-set"),
                 DeclarationHandle.Create(Prefix + "representationSet"),
                 H("The full orthonormal representation set"),
@@ -116,6 +126,17 @@ internal sealed class ThetaRepresentationNonconvexDocument : IScribeDocumentDefi
     private static Formula Real() => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula FiniteVertex(Formula body) => All("V", Call("Type"),
         Instance(Call("Fintype", F.Id("V")), Instance(Call("DecidableEq", F.Id("V")), body)));
+
+    private static Formula DotCauchyFormula()
+    {
+        Formula v = F.Id("v"), w = F.Id("w"), coordinates = F.Id("V");
+        Formula vectors = Arrow(coordinates, Real());
+        Formula bound = Le(new Formula.Power(Call("dotProduct", v, w), D(2)),
+            new Formula.Binary(Call("dotProduct", v, v), FormulaBinaryOperator.Multiply,
+                Call("dotProduct", w, w)));
+        return Disp(All("V", Call("Type"), Instance(Call("Fintype", coordinates),
+            All("v", vectors, All("w", vectors, bound)))));
+    }
 
     private static Formula RepresentationFormula()
     {

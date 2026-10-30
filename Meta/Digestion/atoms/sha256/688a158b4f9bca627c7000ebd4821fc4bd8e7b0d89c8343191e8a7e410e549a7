@@ -1,0 +1,65 @@
+**Theorem 5.2 (Necessary profiles and exact-budget realization).** Let $(\ell_n)$ be any prescribed sequence of integers with $\ell_n\ge1$ and $\ell_n/n\to\alpha\in[0,1)$.
+
+For every sequence $G_n\in\mathcal G(n,\ell_n)$ with $\sup_n nE(G_n)<\infty$, every subsequence has a further subsequence on which the graphs are two-layer, the number $s\ge2$ of sinks is fixed, their normalized neighborhood-type counts converge to some $x\in\mathcal P_s(\alpha)$, and
+
+$$
+nE(G_n)\longrightarrow J_s(x).
+$$
+
+Conversely, for every fixed finite $s\ge2$ and every $x\in\mathcal P_s(\alpha)$ there exist, for all sufficiently large $n$, actual simple connected graphs $G_n\in\mathcal G(n,\ell_n)$ with those type limits and $nE(G_n)\to J_s(x)$. This assertion keeps every specified integer $\ell_n$ exactly.
+
+**Proof.** Choose a fixed $C>0$ bounding $nE(G_n)$. Theorem 3.1 gives eventual two-layer structure, bounded sink number and $D_i\ge n/(3C)$. Pass to a subsequence with constant $s\ge2$, label its sinks by $[s]$, and let $a_{S,n}$ count sources with neighborhood exactly $S\subseteq[s]$. All these neighborhoods are nonempty, and source degree is $|S|\le s$. Exact counting in this same graph gives
+
+$$
+\sum_Sa_{S,n}=n-s,\qquad
+\sum_S(|S|-1)a_{S,n}=\ell_n+s-1,\qquad
+D_{i,n}=\sum_{S\ni i}a_{S,n}.
+$$
+
+There are only $2^s-1$ types. Finite-dimensional compactness gives a further subsequence with $a_{S,n}/n\to x_S$. Dividing the identities by $n$ yields the constraints in Definition 5.1 and
+
+$$
+y_i=\lim_n D_{i,n}/n\ge1/(3C)>0.
+$$
+
+For $r\ge0$, rationalization gives the exact remainder
+
+$$
+0\le\frac{r^2}{2}-g(r)
+=\frac{r^4}{2(\sqrt{1+r^2}+1)^2}\le\frac{r^4}{8}.
+$$
+
+This elementary expansion is used here on the actual edges. The bounded source degrees and linear hub degrees imply
+
+$$
+E(G_n)=\frac12\sum_Sa_{S,n}|S|^2\sum_{i\in S}D_{i,n}^{-2}+O(n^{-3}),
+$$
+
+since there are $O(n)$ edges and each edge remainder is $O(n^{-4})$. Multiplication by $n$ proves $nE(G_n)\to J_s(x)$.
+
+For the converse, fix $s$ and $x$ and reserve $s$ hub vertices and $s-1$ distinct sources of degree two. Join the latter respectively to the pairs $\{1,2\},\{2,3\},\ldots,\{s-1,s\}$. This subdivided path connects all hubs. There remain
+
+$$
+M=n-2s+1
+$$
+
+source vertices. Round $Mx_S$ to nonnegative integer counts summing to $M$, with bounded error in each of the finitely many types; for example take all floors and distribute the remaining fewer than $2^s-1$ vertices. Give the remaining sources these nonempty hub neighborhoods. Their total additional membership count
+
+$$
+B=\sum_S(|S|-1)a_S
+$$
+
+satisfies $B=M\alpha+O_s(1)$ and hence $B-\ell_n=o(n)$. The exact target for these $M$ sources is $\ell_n$, because the reserved path already has $s-1$ additional memberships over one per source.
+
+For sufficiently large $n$, $0\le\ell_n\le(s-1)M$: indeed $\ell_n/n\to\alpha<1\le s-1$ and $M/n\to1$. If $B<\ell_n$, a remaining source has fewer than $s$ neighbors whenever $B<(s-1)M$; add one missing hub membership. If $B>\ell_n$, a remaining source has at least two neighbors whenever $B>0$; delete one membership while keeping its neighborhood nonempty. Repeat in the required direction until $B=\ell_n$. There are exactly $|B_{\mathrm{initial}}-\ell_n|=o(n)$ edits. They change the count of any type by at most $o(n)$, preserving its limiting mass, including every zero-mass type.
+
+The reserved path is never changed, so the graph stays connected; every other vertex still has a nonempty hub neighborhood. It is simple because memberships are subsets and all source vertices are distinct. It has precisely $n$ vertices and
+
+$$
+2(s-1)+M+\ell_n=n-1+\ell_n
+$$
+
+edges. Thus it has exactly the required cyclomatic number. Its hub degrees satisfy $D_{i,n}/n\to y_i>0$, whereas every source degree is at most $s$. Consequently these are its actual degree-oriented sinks for all sufficiently large $n$. The same remainder estimate proves the desired energy limit.
+
+This construction applies also at $\alpha=0$, even when the positive-mass support contains only disjoint singleton groups: the reserved $s-1$ sources still connect the hubs, and the $o(n)$ membership adjustment realizes each prescribed $\ell_n\ge1$. There is no requirement that a positive-mass type be shared by two hubs. ∎
+

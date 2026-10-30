@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8984cfb12f227f241b4e480906f5bf4898bf2ec00ffa12214c01b5783ec094f2
+  normalized_sha256: sha256:8984cfb12f227f241b4e480906f5bf4898bf2ec00ffa12214c01b5783ec094f2
+cas_ref: sha256:8984cfb12f227f241b4e480906f5bf4898bf2ec00ffa12214c01b5783ec094f2
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 指定动作丛、策略、cocycle 与状态更新的模型数据和记号；截面方程是模型要求，位移方程是定义，不主张模型存在或某个物理系统实现它。
+    previous_atom_id: a92fd0603fba6ba74cfa05eac780318e04baba0e28cff0ef29d887c8b559f286
+    next_atom_id: c794a7f95070b4617663b29c315102c0812760057a64f7a882581b01b00493e8

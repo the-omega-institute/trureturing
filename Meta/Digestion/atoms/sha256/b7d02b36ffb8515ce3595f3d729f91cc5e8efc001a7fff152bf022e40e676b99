@@ -1,0 +1,12 @@
+**Definition 80.1 (resource coordinates).** Count every source vertex,
+record header/cell, actual reference-field occurrence and its actual
+width, numerical/input/output bit, descriptor, fixed driver/root/right
+state and retained work capacity at the cut where it exists. Charge
+every actual primitive field read/write, reference/null comparison,
+traversal, allocation and grant, binary arithmetic, link initialization,
+copy, input/output transfer, End, supplied local acknowledgement, Return
+and clearing. Pointer fields are not unit-size bits and an empty or
+cleared buffer need not be absent material. These are simultaneous
+coordinates of this actual execution, not separate minima optimized on
+different runs.
+

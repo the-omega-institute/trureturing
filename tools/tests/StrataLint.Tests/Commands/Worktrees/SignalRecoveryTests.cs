@@ -155,13 +155,25 @@ public sealed partial class WorktreeCommandTests
             ],
             runner);
 
-        Assert.False(result.Success);
-        Assert.Contains("not a git repository", result.Error, StringComparison.OrdinalIgnoreCase);
+        Assert.True(!result.Success, result.Error);
+        Assert.Contains(runner.Invocations, invocation => invocation.FileName == "git"
+            && invocation.WorkingDirectory == target
+            && invocation.Arguments.SequenceEqual(["rev-parse", "--show-toplevel"]));
+        var nativeRejection = TestProcessRunner.Run("git", ["rev-parse", "--show-toplevel"],
+            target, BoundedProcessRunner.HangDetectionBudget, 64 * 1024 * 1024);
+        Assert.True(nativeRejection.ExitCode != 0, result.Error);
+        var nativeError = Encoding.UTF8.GetString(nativeRejection.StandardError).Trim();
+        Assert.True(nativeError.Length > 0, result.Error);
         Assert.True(Directory.Exists(target));
         Assert.NotNull(ownedMetadata);
         Assert.NotEqual(otherMetadata, ownedMetadata);
         Assert.True(Directory.Exists(ownedMetadata));
+        Assert.StartsWith("WORKTREE_FAILED ", result.Error, StringComparison.Ordinal);
         using var receipt = JsonDocument.Parse(result.Error["WORKTREE_FAILED ".Length..]);
+        Assert.Equal("registration", receipt.RootElement.GetProperty("stage").GetString());
+        Assert.Equal(target, receipt.RootElement.GetProperty("target").GetString());
+        Assert.True(string.Equals(nativeError, receipt.RootElement.GetProperty("reason").GetString(),
+            StringComparison.Ordinal), result.Error);
         Assert.Contains("retained", receipt.RootElement.GetProperty("cleanup_error").GetString(), StringComparison.Ordinal);
         var inventory = WorktreeHookFixture.RunGit(repository.Path, "worktree", "list", "--porcelain");
         Assert.Contains($"worktree {LeanCacheGuard.PhysicalPath(target)}\n", inventory, StringComparison.Ordinal);

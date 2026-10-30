@@ -1,0 +1,19 @@
+**定义 9.2（原始平台、均值簇与有限读出）。** Put $\bar X=n^{-1}\sum_{k=1}^nX_k$. Let $v_i^{(n)}$ be the posterior given the whole tuple, and define
+
+$$
+ r_i^{(n)}=\mathbb E\min\{v_i^{(n)},1-v_i^{(n)}\},\qquad
+ \epsilon_n=\mathbb E(1-\max_i v_i^{(n)}).
+\tag{9.2}
+$$
+
+The full raw indicator plateau means $r_i^{(n)}=1/5$ for all five labels. These are unweighted binary $0$–$1$ Bayes errors under the stated deployment prior, not balanced-resampling errors or an assertion about every scoring rule. A mean cluster consists of the labels with exactly the same mean; its multiplicity is their number. For any finite Borel quantizer $Q=\kappa_n(X_1,\ldots,X_n)$ common to the five labels, use $r_i(Q)$ and $\epsilon(Q)$ as in Definition 1.1. The quantizer may depend on the specified experiment and on $n$. Write
+
+$$
+ \langle x,y\rangle_{\Sigma^{-1}}=x^T\Sigma^{-1}y,\qquad
+ h_e(\theta)=-\theta\ln\theta-(1-\theta)\ln(1-\theta),
+ \quad 0<\theta<1.
+\tag{9.3}
+$$
+
+Here $h_e$ uses natural logarithms, unlike $h$ in Definition 1.1.
+

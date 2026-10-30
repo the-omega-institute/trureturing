@@ -1,0 +1,35 @@
+**Definition 21.2 (native mirror loader).** Begin with phase Mirror and
+head74 at R. The complete paid active table, finite row encodings,
+guards, owner/right fields and raw-store separation are
+[BRN Definitions 2.1–2.2](RECURSIVE_RELATIONAL_OBSERVATION_BOOTSTRAP_RETENTION_NATIVE_REFINEMENT.md#2-the-active-first-loader-and-its-ordinary-authority).
+Its input latch is $\ell=6$. Its seven rows per fixed cursor position are:
+
+$$
+\mathrm{NEXT};\quad \mathrm{IN}(\ell);\quad
+\mathrm{EX}(74);\quad \mathrm{WR}(74,\ell);\quad
+\mathrm{MR}(74);\quad \mathrm{WRITE}_L(\ell);\quad
+\mathrm{ADVANCE}.
+$$
+
+NEXT, WRITE and ADVANCE have the old fixed cursor/end, absent raw-slot,
+installation-owner and fresh-version tests. EX requires the marked R
+and the current tape74 write right. WR also requires that live write
+right and Mirror phase, at the resulting writable blank old R rather
+than a still-marked R. It writes the unchanged binary latch.
+EX, WR and MR do not overwrite $\ell$, consume an input or move the raw
+control cursor. At the end execute these six rows:
+
+$$
+\mathrm{NEXT};\quad \mathrm{EX}(74);\quad \mathrm{WR}(74,\mathsf F);
+\quad \mathrm{CTL}_{\rm seal};\quad \mathrm{MR}(74);
+\quad \mathrm{DONE}.
+$$
+
+The seal CTL marks this actual F cell using the existing local marker
+effect and sets the finite sealed flag. DONE performs the old activation
+effects, sets Retained and withdraws the tape74 write right. It preserves
+A's read right. There is no transition granting that write right again.
+The seal row runs while the head is on F. No bank or whole-word operation
+occurs in this loader, and no ordinary WR is substituted for WRITE's
+fresh-control-bit constructor.
+

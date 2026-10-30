@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1ad63420a146079e09adfcb6b75139e1cd82d44272d4590a7782ad1e2a8cbd57
+  normalized_sha256: sha256:1ad63420a146079e09adfcb6b75139e1cd82d44272d4590a7782ad1e2a8cbd57
+cas_ref: sha256:1ad63420a146079e09adfcb6b75139e1cd82d44272d4590a7782ad1e2a8cbd57
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 仅为 Rouche 计数这一实验步骤。
+    previous_atom_id: f10e07a31965ba4e2289f031c051574a6c002c73983df7fe6df79801ba5e5099
+    next_atom_id: 1bfe80e49fc01f81beb5a8be4ae41ac7e149393d57cb6332d79034a2f9b42680

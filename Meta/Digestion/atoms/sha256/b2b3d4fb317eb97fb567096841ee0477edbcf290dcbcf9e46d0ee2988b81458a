@@ -1,0 +1,39 @@
+**Proposition 127.1 (a legal rank-two family with zero and positive actual penalty).** For any $17/20\leq p\leq7/8$, set $a_0=\sqrt q/2$ and
+
+$$
+\begin{gathered}
+S_0=a_0\begin{pmatrix}1&1\\1&0\end{pmatrix},\qquad
+S_1=a_0\begin{pmatrix}0&0\\0&1\end{pmatrix},\\
+V=a_0\begin{pmatrix}
+-1/\alpha&0\\1/\alpha&1/\beta\\0&-1/\beta\\0&0
+\end{pmatrix},\qquad
+V_\varepsilon=V+\varepsilon\begin{pmatrix}I_2\\0_2\end{pmatrix},
+\qquad 0\leq\varepsilon\leq1/8.
+\end{gathered}
+\tag{U.101}
+$$
+
+Each $V_\varepsilon$ is a rank-two contraction with $[P,V_\varepsilon^TV_\varepsilon]\ne0$ and $R(V_\varepsilon)>0$. The actual penalty is
+
+$$
+\tau(V_\varepsilon)=\frac{\varepsilon^2h^2}{2},
+\tag{U.102}
+$$
+
+so it is zero at $\varepsilon=0$ and positive at every $\varepsilon>0$. Theorem 125.1 applies to all these pairs.
+
+Proof. Multiplication gives $V_i=JS_iP^{-1/2}$ and
+
+$$
+V^TV=a_0^2\begin{pmatrix}2/p&1/g\\1/g&2/q\end{pmatrix},\qquad
+B(V)=\begin{pmatrix}p-2a_0^2&-a_0^2\\-a_0^2&q-2a_0^2\end{pmatrix}.
+\tag{U.103}
+$$
+
+Both weighted traces vanish. The Gram is PSD, with trace
+$2a_0^2(1/p+1/q)=1/(2p)\leq10/17<3/4$, so $V^TV\preceq(3/4)I_2$. Its offdiagonal entry $a_0^2/g>0$ and $p>q$ prove noncommutation. The perturbation satisfies
+$\|V_\varepsilon\|_{\mathrm{op}}\leq\sqrt3/2+1/8<1$, where $\sqrt3/2<7/8$ follows by squaring. Rows two and three of $V_\varepsilon$ have determinant $-a_0^2/g\ne0$, so its rank stays two throughout. Its Gram offdiagonal entry is $a_0^2/g+\varepsilon a_0/\alpha>0$, again proving noncommutation.
+
+The two traces become $\varepsilon h$ and zero, which proves (U.102). Since $h^2=1+2g\leq2$, $\tau(V_\varepsilon)\leq1/64$. Also $\lambda(V_\varepsilon)\leq q\leq3/20$, so
+$R(V_\varepsilon)\geq1-3/20-1/64>0$. Every matrix and penalty here is thus from the same legal pair, including the second singular component and the trace cross terms. These matrices are common dual contractions; they are not a displayed physical Kraus list or a fixed-encoder realization converse. $\square$
+

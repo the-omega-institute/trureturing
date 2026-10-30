@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:021f815ab7fafff22b4dbb60e0306dd055e4571059f199c561d30b0805e082c5
+  normalized_sha256: sha256:021f815ab7fafff22b4dbb60e0306dd055e4571059f199c561d30b0805e082c5
+cas_ref: sha256:021f815ab7fafff22b4dbb60e0306dd055e4571059f199c561d30b0805e082c5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 影响权重、统计证据与参与权利的规范分层，不把数值换成人的价值。
+    previous_atom_id: 521c28480105ba17119ea9b6fcd918f3a710d0848b4ae67b9e61344103b8e391
+    next_atom_id: 3a1f55bb6b9fe62f2c971e95e6a7de652728944d737b2d12be2fb74c0dac09f8

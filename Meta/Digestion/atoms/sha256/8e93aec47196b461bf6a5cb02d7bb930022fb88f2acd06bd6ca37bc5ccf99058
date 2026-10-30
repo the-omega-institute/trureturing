@@ -1,0 +1,26 @@
+**Proposition 199.1 (Exact native comparison).** At $\beta=\log7$, one has
+$t=1/7$, $(r_0,r_1)=(7/8,1/8)$ and $A=7/256$. The common spectral
+quantities from VI (141.6) are $Z=128/49$, $\langle\widehat H\rangle=1/4$,
+$\langle\widehat N\rangle=3/4$ and $\Pr(111)=1/128$.
+The two source parameters give the exact effective entries
+
+$$
+\begin{aligned}
+q_a:\quad &(a,b,c,d,z)=
+ \left(\frac7{16},\frac{91}{264},\frac{41}{264},\frac1{16},
+       \frac{7\sqrt{149}}{528}\right),\\
+q_b:\quad &(a,b,c,d,z)=
+ \left(\frac7{16},\frac5{16},\frac3{16},\frac1{16},\frac{\sqrt2}{8}\right).
+\end{aligned}
+$$
+
+Their auxiliary values are
+
+| Parameter | $q_a$, $p=49/198$ | $q_b$, $p=1/3$ |
+| --- | --- | --- |
+| $\mu$ | $7301/278784$ | $1/32$ |
+| $E=ac$ | $287/4224$ | $21/256$ |
+| $S$ | $22547/278784$ | $11/128$ |
+| $\mu-A$ | $-161/139392$ | $1/256$ |
+| $\mu/A$ | $1043/1089$ | $8/7$ |
+| $w$ | $22547/27959$ | $11/14$ |

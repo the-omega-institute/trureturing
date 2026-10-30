@@ -1,0 +1,9 @@
+**定义 43.1（三位置合法子空间）。** 在 $(\mathbb C^2)^{\otimes3}$ 中禁止相邻位置同时为一，取
+
+$$
+\Sigma_F=\{000,100,010,001,101\},\qquad
+\mathcal H_F=\operatorname{span}\{|x\rangle:x\in\Sigma_F\},
+$$
+
+其投影为 $P_F$，按 $000,100,010,001,101$ 对应 $N,2,3,5,25$。令 $X_j$ 翻转第 $j$ 位，$P_j^0=|0\rangle\langle0|_j$。
+

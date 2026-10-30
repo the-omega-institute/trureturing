@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:0700768c5f6d4aa3be394c67391f1e40911b6039e53734f7d6b893825e8820fa
+  normalized_sha256: sha256:0700768c5f6d4aa3be394c67391f1e40911b6039e53734f7d6b893825e8820fa
+cas_ref: sha256:0700768c5f6d4aa3be394c67391f1e40911b6039e53734f7d6b893825e8820fa
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Section heading and HTML navigation anchor only; no mathematical assertion, identity, existence claim or certificate is present.
+    previous_atom_id: 63c8229b699531a256f0df42868b3f81dc0ddbc9837039fcf111fbb29e3b0b1f
+    next_atom_id: c1a6abf4ab62fe2610005c2d678e49bc81c2573d0299b25b93cdd892dcaab810

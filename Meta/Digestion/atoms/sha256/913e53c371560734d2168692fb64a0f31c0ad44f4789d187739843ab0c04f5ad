@@ -1,0 +1,40 @@
+**Definition 15.4.1 (The admissible signed difference section).**
+For a rank-two real $Z\in\mathcal K_M$, put $U_Z=\operatorname{col}Z$.
+Require that the zero directions of $q|_{U_Z}$ are exactly two distinct
+real lines, both legal source directions in Definition 15.1.1.
+Normalize them to $s_0=s'_0=1$. For either order $(s,s')$, the unique
+coefficient decomposition is
+
+$$
+Z=s a^{\mathsf T}+s'e^{\mathsf T},\qquad
+X=s a^{\mathsf T},\quad X'=-s'e^{\mathsf T}.
+\tag{15.26}
+$$
+
+This uses actual signed rows, without projective normalization of a gain.
+For an explicit formula choose any indices $h,k$ for which
+$\Delta=s_hs'_k-s_ks'_h\ne0$. Then for $j=0,1,2,3$,
+
+$$
+a_j=\frac{s'_kZ_{hj}-s'_hZ_{kj}}\Delta,\qquad
+e_j=\frac{-s_kZ_{hj}+s_hZ_{kj}}\Delta.
+\tag{15.27}
+$$
+
+The formula is independent of this choice of minor because every column
+of $Z$ lies in $\operatorname{span}(s,s')$.
+Retain $Z$ in $\mathfrak A_M$ precisely when one order satisfies
+
+$$
+\begin{gathered}
+(L_1(X),L_2(X),L_3(X),L_4(X))=(24,147/5,24,18),\\
+p_Z=L_5(X)\ne24,\qquad v_Z=L_6(X),\qquad \mu_Z=L_{7M}(X).
+\end{gathered}
+\tag{15.28}
+$$
+
+Thus the section imposes all four absolute H4 reads. It does not merely
+impose their differences or just the first read. No value of $p_Z,v_Z$
+or $\mu_Z$ is supplied externally. For fixed $p\ne24,v$ write
+$\mathfrak A_M(p,v)=\{Z\in\mathfrak A_M:(p_Z,v_Z)=(p,v)\}$.
+

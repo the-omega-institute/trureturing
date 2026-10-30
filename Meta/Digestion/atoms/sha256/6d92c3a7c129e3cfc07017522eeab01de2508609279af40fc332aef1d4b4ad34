@@ -1,0 +1,26 @@
+**Lemma 17.9 (Exact identification with the supplied actual pair).**
+The actual singular/ordinary pair $\{S_1,O_1\}$ in Theorem 8.2 has
+singular embedding $\theta_+$ and companion coordinate $x=x_*$.
+
+**Proof.** Let $(c_\theta,c_r,c_b)$ be exactly the three rational
+centre coordinates with denominator $10^{85}$ in Theorem 8.2, and let
+$\mathcal Z_8$ be their closed box of component radius $10^{-75}$.
+Evaluation on that entire rational box gives
+
+$$
+\theta(\mathcal Z_8)\subset I_+,\qquad
+\frac{b+r(1-r)/b+r}{1+2b}(\mathcal Z_8)
+ \subset(1.3718256939,1.3718256940)=I_*.
+$$
+
+Here $b$ and $1+2b$ exclude zero throughout the box. These inclusions
+are rational interval inclusions for the displayed source expression,
+using outward endpoint rounding to $10^{-400}$ as in Lemma 17.7.
+The supplied pair is actual and distinct, so Lemma 17.4 excludes the
+pole and the self case. Lemma 17.6 excludes $W_2$; Lemma 17.5 then
+places its $x$ on $Q_{14}$. Lemma 17.7's root isolation identifies
+it with $x_*$. Existence, every original-clock equality, the whole
+nonzero gains, strict source guards and within-pair distinctness here
+come from Theorem 8.2's actual construction, not from a converse to a
+projected-root test. ∎
+

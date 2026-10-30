@@ -1,0 +1,48 @@
+**命题 10.3（同一关系能量的 Hamilton 流与相位门）。**
+在 $\omega_{\rm red}=d\chi\wedge d\kappa$ 和
+$\iota_{X_h}\omega_{\rm red}=dh$ 的规范下，
+
+$$
+\dot\kappa=-\partial_\chi h,\qquad
+ \dot\chi=\partial_\kappa h.
+$$
+
+它保持 $h$，在上述零点的线性化特征值为 $\pm ir$。
+所以正能量的轨道不可能沿这个守恒流渐近收敛到 $h=0$。
+另一方面，联合占位相位门
+$e^{-i\alpha N_xN_y}$ 精确作用为
+
+$$
+(p,\chi)\longmapsto(p,\chi+\alpha),
+$$
+
+其关系商切向量的范数平方为 $2/I>0$。
+它能改变 $\zeta$ 的相位，却不会改变只依赖 $X,Y,Z$ 的即时损失。
+
+**证明。**
+
+把 $X_h=\dot\kappa\partial_\kappa+\dot\chi\partial_\chi$
+代入辛形式，得到
+$\iota_{X_h}\omega=\dot\chi\,d\kappa-\dot\kappa\,d\chi$，
+由此得方程。$dh(X_h)=\omega(X_h,X_h)=0$。
+使用前一定理的 Hessian，线性矩阵为
+
+$$
+\begin{pmatrix}
+ 0&-2r/I_*\\ rI_*/2&0
+ \end{pmatrix},
+$$
+
+平方等于 $-r^2I_2$，故特征值为 $\pm ir$。
+该门只对模式 $13$ 乘以 $e^{-i\alpha}$，所以
+$\theta_{13}$ 增加 $\alpha$，其余相位与全部概率不变；
+再代入商度量即得范数。
+
+证毕。
+
+此处的 Hamilton 流是关系商上的辛流。
+函数 $h$ 对纯态振幅为四次式；
+其可用两拷贝测量的事实，并不自动把这个流实现为固定单拷贝线性 Hamiltonian 的演化。
+
+<a id="prop-closure-penalty"></a>
+

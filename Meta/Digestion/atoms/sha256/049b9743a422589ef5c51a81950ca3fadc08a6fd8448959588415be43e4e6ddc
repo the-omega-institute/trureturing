@@ -1,0 +1,59 @@
+**Theorem 105.1 (performed acquisition and cancellation).** For every
+source and every $\theta$ in Definition 103.1, the following actual
+receiver schedule ends at $H\theta$:
+
+1. After fresh-only growth, Hold; execute two Tick;Hold pairs. Read
+   the $k$ genuine designated terminals $p_iLR$, in index order.
+2. From those replies compute and actually Add $-11\theta_i/2$ at
+   $p_iLR$ and $+11\theta_i/2$ at $q_iLR$, in that order for each $i$.
+3. Execute two more Tick;Hold pairs. Actually Add $+3\theta_i/2$ at
+   $p_iLR$ and $-3\theta_i/2$ at $q_iLR$, then Hold.
+
+The scalar replies in step 1 are exactly $\theta_i$. The receiver
+therefore earns every control operand from its own literal observations
+and can install the full current predictor at epoch two and maintain it
+through the remaining calls. Besides growth, the receiver vector is
+
+$$
+(\mathrm{Read},\mathrm{Add},\mathrm{Tick},\mathrm{Hold})
+=(k,4k,4,6).
+\tag{105.1}
+$$
+
+Zero parameters cause no skipped calls. The six Holds are the initial
+Hold, four Tick-following Holds and the final Hold. Whole transactions
+are completed between the displayed actions; no extra pre-Tick Hold
+is inserted into this particular template.
+
+The mixed-family alternative template is a distinct chronological
+choice with the same bill and endpoint: after the epoch-two Reads and
+first paired Adds, perform Hold;Tick;Hold;Tick, then the final paired
+Adds and Hold. Its cancellation segment has three Holds, as does step 3
+of the displayed template.
+More explicitly the displayed cancellation segment is
+first Adds;Tick;Hold;Tick;Hold;final Adds;Hold, while the original one is
+first Adds;Hold;Tick;Hold;Tick;final Adds;Hold. Hold acts identically on
+the field, so (105.2) applies to either schedule. Their Time windows
+retain their respective call positions; they are not identified as
+the same literal history. Each full receiver schedule has six Holds.
+
+**Proof.** The entrance after growth is $Ex_\theta=\sum_i\theta_i a_i$.
+At epoch two, (103.4) gives the actual field
+$\sum_i\theta_i(2a_i+c_i+f_i)$. Its $p_iLR$ value is $\theta_i$,
+and all other sectors contribute zero there. This proves genuine
+acquisition rather than an assumed response oracle. The first paired
+Adds translate this field by $-(11/2)\sum_i\theta_i f_i$.
+Two real Ticks and the last paired Adds give
+
+$$
+\sum_i\theta_i\bigl[B^4a_i-(11/2)B^2f_i+(3/2)f_i\bigr]
+=\sum_i\theta_i(a_i-c_i)/2=H\theta.
+\tag{105.2}
+$$
+
+Every equality follows from the actual update and Lemma 103.2. The
+epoch-two formula supplies the entire field from the acquired parameters.
+Updating it under each actual Add, Tick and identity call initializes
+and maintains Theorem 64.1's synchronized full-service invariant,
+including the complete parser, guards and label lifecycle. $\square$
+

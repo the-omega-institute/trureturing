@@ -1,0 +1,121 @@
+**Definition 2.2 (ports, latches and finite calling convention).** Ports 0–15
+are public producer runtime work: directory 0, twelve word-work ports 1–12,
+retained ingress stream 13, complete-row construction 14, generated literal
+gate code 15. Port 16 is the producer-private bit arena, containing source
+segments and separately allocated circuit work. Ports 17–23 retain the
+producer's supplied counters, archives, response blocks and other inherited
+private work. Actor/controller 24–31, verifier 32–39, consumer 40–47,
+mailboxes 48–55 and meter/readout 56–63 retain PR57's owner partitions.
+The inherited service graphs can relocate their scratch roles within their
+owner partition by the same Base/Seek discipline; this grants no cross-owner
+read. The new directory and twelve word registers use only 0–12.
+Within the actor partition, 24 holds its immutable table, 25 its encoded
+persistent state/workspace, 26 its acquired seed and earlier acquired data,
+and 27 its waiting command/return packet. Maintenance protects these four
+ports. Ports 28–31 are actor archive, archive descriptors, checking work and
+terminal/output work respectively. Delivery can append to or scan those
+four ports while preserving all old payloads and handle meanings. Producer
+17 holds block descriptions, 18 the semantic-journal index, 19 unified-row
+indices, 20 responses, 21 frozen-prefix work, 22 inherited public-expression
+frames, and 23 the counter bank of Definition 6.1. These are boot assignments,
+not a later movement of already acquired data.
+
+Port 21 also holds staged public blocks and frozen-prefix work; BuildManifest
+constructs its word on one of 1–12 before copying it into a block/row.
+These contain public directory material, never source payload.
+Verifier 32 is its acquired snapshot/block archive, 33 its native descriptor
+stream, 34 its candidate/replica arena, 35 its public prior/program work,
+36 receipt construction, 37 target work, 38 enumeration/frame work and 39
+checking work. Consumer 40 is its acquired receipt/binding archive, 41 its
+native descriptors, 42 initialization/proposal work, 43 task-output blocks,
+44 checks, 45 retained binding work, 46 serial output and 47 scratch.
+The fixed mailbox routes are producer-to-actor 48, actor-to-producer 49,
+producer-to-verifier 50 and verifier-to-consumer 51; 52–55 are unused here.
+A mailbox's native descriptor is on its sender's descriptor stream (17, 29
+or 33); the receiver's final archive descriptor is on 29, 17, 33 or 41 as
+appropriate. All these assignments are part of the paid resident boot.
+Descriptor streams on 17,
+29 and the corresponding verifier/consumer work ports use the same native
+record format of Definition 6.1. The readout service has the supplier's
+public meter read head; its arithmetic uses producer public word roles.
+No actor or consumer receives a private arena token from a descriptor.
+
+The new word routines use latch 4 for public tests/data and finite control for
+one additional read bit or comparison result. Private gate operands/results
+use latches 0–3. The input latch is 5 and is untouched until its corresponding
+WR. Latches 6–7 are available to inherited output/control routines. In
+particular an address seek does not overwrite a saved private operand or the
+input latch. A caller of maintenance is suspended at a complete source-service
+boundary: its persistent continuation, machine table, workspace, acquired seed
+and previous inputs are on actor-owned tapes. Its pending command and return
+kind are complete retained blocks, not live shared latches. Maintenance does
+not move the protected controller heads or change their bits or owner.
+Archive and checking heads can move in the prescribed delivery. Finite runtime
+latches and phase do change and remain part of the actual history.
+
+The twelve public word ports are one serial arithmetic workspace, initially
+owned by the producer. The installed joint control may lend them to the
+actor, verifier or consumer, using **twelve actual TOK occurrences**, one
+per port, then one CTL entering that owner's service phase. Return executes
+the twelve reverse TOKs and one CTL. These are the existing port tokens,
+not a new permission primitive or a free ability to read another owner's
+archive. A helper never runs while only part of this finite token transfer
+is complete. Those transfer cuts are actual busy states with a unique next
+TOK; they are not callable services. Existing word bytes/heads transfer as
+constructed public material. All caller words needed afterward are either
+among these transferred complete words or staged in their original owned
+blocks before reuse. Ports 0 and 13–27 do not join this lending pool.
+In particular no private source, producer descriptor bank or protected
+actor table/state/seed/command token is lent. A nonproducer owner accesses
+only its local descriptor/archive ports and these lent public word roles;
+it cannot call producer directory/counter lookup as a local private read.
+
+For a channel the pool starts at the sender. Before receiver allocation,
+lend it to that receiver for its own Base/Zero/status/descriptor preparation,
+then return it to the sender for stage one. After mailbox seal/read-token
+handoff, lend it to the receiver for stage two and receiver checks. Counter,
+base and status words survive these transfers at their actual ports. Return
+the pool to the sender after copy/check completion, before resuming a sender
+routine. A mandatory row parser can run in this receiver phase before the
+return; its final row ACK follows that return. At stop lend the pool to the
+verifier for its whole replay/receipt construction and to the consumer for
+its checks/output; nested channels follow the same rule with their actual
+sender as the pool-return owner. No two owners run these routines together.
+Thus the eight private ports of a verifier/consumer need hold its archive,
+descriptor stream, program/candidate blocks and snapshots, while the twelve
+actual lent word ports supply the stated arithmetic/field roles. Every
+lending and return is charged and installed at original boot.
+
+A native call is inlined with its fixed return edge, as in PR57.D1. There is no
+unbounded native call stack. Twelve word-role names can be permuted among the
+twelve work ports by a finite-control CTL; this is a permutation of twelve
+fixed ports, not a variable-address pointer. Arithmetic outputs always use a
+port distinct from their inputs. A needed repeated operand is copied to a
+spare port first. After the result is complete, one such CTL exchanges its role
+with the old destination role. Ordinary word/arithmetic routines use at most six operand,
+output and temporary word roles at once; directory iteration adds four field
+roles and two retained-state roles. More explicitly, ReadState retains five
+state words and one current field, with at most two arithmetic temporaries;
+Resolve retains its input/remainder/base/length/output and a subtraction
+temporary, with at most four caller gate fields; reservation can release
+unused $h,p$ roles and retains at most its eight command/state/record fields
+plus two arithmetic temporaries; raising retains seven such fields plus two
+temporaries; a channel retains its three bases, length, two status addresses
+and counter plus at most three construction temporaries. Variable generator
+frames and verifier candidates are constructed blocks on their designated
+work tapes, loaded a field at a time, not further simultaneously live word
+roles. CloseFence's scans/tuple construction use target/count/bound/tick/fee/ref-output
+roles and at most four temporary/field roles, at most ten in all; subsequent
+staging/descriptor construction releases these roles as in Definition 6.1. Before such a call, reusable
+row/state material is staged as complete blocks on 21 with actual native
+descriptors on 17, and is reloaded one field at a time. BuildManifest uses
+output/expected-count/visited-count/tag/current-field/length and at most two
+arithmetic temporaries, at most eight; earlier row fields have already been
+written or staged. Reference tuples and compound response/counter fields
+are built one component at a time, with those same bounded scans. Staging is
+the explicit bit-block graph of Definition 6.2, not an unbounded native
+stack or simultaneous collection of word roles. Thus the twelve ports suffice. Old words
+on a reused port remain constructed; appending the next word never overwrites
+them. Gate execution and directory generation use these work ports in separate
+phases, and do not share live word operands across that boundary.
+

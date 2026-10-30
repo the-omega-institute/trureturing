@@ -1,0 +1,18 @@
+## 7. A terminal-J coordinate on the entire negative sheet
+
+Retain the complete worlds, literal clocks, chronological left products,
+and entire child $C(p,v)$ of Section 1. In particular $a(W)$ is the
+alternative terminal-J reading at clock seven of that same world.
+Extend the polynomial chart (2.1) by
+
+$$
+\begin{aligned}
+G_7&=-20C_0+70C_1-84C_2+35C_3,\\
+N_a&=-bC_0+(bT+2\mathcal J+4br)G_7,\qquad a=N_a/H.
+\end{aligned}
+\tag{7.1}
+$$
+
+The earlier interpolation numerators $B_5,B_6$ retain their meanings;
+$G_7=Dg(7)$ is their clock-seven counterpart.
+

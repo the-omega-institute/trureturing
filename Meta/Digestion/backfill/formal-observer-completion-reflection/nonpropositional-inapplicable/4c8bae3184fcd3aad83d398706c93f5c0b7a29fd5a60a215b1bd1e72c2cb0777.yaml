@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4c8bae3184fcd3aad83d398706c93f5c0b7a29fd5a60a215b1bd1e72c2cb0777
+  normalized_sha256: sha256:4c8bae3184fcd3aad83d398706c93f5c0b7a29fd5a60a215b1bd1e72c2cb0777
+cas_ref: sha256:4c8bae3184fcd3aad83d398706c93f5c0b7a29fd5a60a215b1bd1e72c2cb0777
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: “多观察者联合”是知识增长来源清单的名词片段，无独立数学断言。'
+    previous_atom_id: 05bc53ef925b86afad696d1eb1922362e9c9e6ea7ae1e3f2b585c9549c8c8527
+    next_atom_id: 4afa0e9503a07718aead965659a24d3200bfa0feb41b009892ab2eb107e93fca

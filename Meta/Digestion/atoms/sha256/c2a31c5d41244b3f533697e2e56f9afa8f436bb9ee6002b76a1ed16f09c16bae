@@ -1,0 +1,24 @@
+### 定义 21.1（增强成功域与重新缩放的实际来源）
+
+固定有限实数 $\varepsilon>0$。对每个有限 $\delta>0$，置
+
+$$
+ \gamma=\varepsilon+\delta,\qquad
+ h=\frac{\delta}{\gamma},\qquad
+ \alpha=\frac{\varepsilon}{\gamma}=1-h,\qquad
+ C_\varepsilon(\delta)
+ =\nu_{3,\varepsilon}(\mathcal I_3(\gamma)).
+\tag{21.1}
+$$
+
+这里增强域 $\mathcal I_3(\gamma)$ 严格取定义 14.1：每个成员须有在完整
+$\mathcal M_3$ 上 $\gamma$-可靠、在该成员全部闭 $\gamma$ 误差历史上
+有限输出普通初始秩二的确定性协议。覆盖数及覆盖成员的完整环境域
+$\varepsilon$-可靠性取推论 14.6。原子、不可复制不可复位单轨迹、
+初读与每个原子后必读的收费合同均保持，不附加协议正则性或共同停止预算。
+
+使用 (17.2) 的同一个 $R_s$，但实际来源改取
+$R_{\gamma,s}=\gamma R_s$，$0\le s\le1/2$。
+以下 $\mathsf C_{q,\alpha}$ 指定义 14.3 在容限 $\alpha$ 下的系统；
+$A_i,x,v$ 及 $a_i,b_j^{(q)}$ 均沿用该定义。
+

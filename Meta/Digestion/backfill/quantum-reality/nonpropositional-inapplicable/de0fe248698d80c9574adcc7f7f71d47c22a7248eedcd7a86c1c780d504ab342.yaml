@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:de0fe248698d80c9574adcc7f7f71d47c22a7248eedcd7a86c1c780d504ab342
+  normalized_sha256: sha256:de0fe248698d80c9574adcc7f7f71d47c22a7248eedcd7a86c1c780d504ab342
+cas_ref: sha256:de0fe248698d80c9574adcc7f7f71d47c22a7248eedcd7a86c1c780d504ab342
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 该行枚举固定频率切面的输入输出振幅、定向流和边界匹配等角色，不另给守恒方程或存在性结论。
+    previous_atom_id: e96f5c16ece3c297150e8c1473f2c07271bbd5af6870f8ebd66c38df741aef05
+    next_atom_id: 09887e76a9ecc3ca50532c27aa1621cb63a9fa4896c76f85a914bf0208e5183f

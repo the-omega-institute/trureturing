@@ -1,0 +1,17 @@
+**命题 5.1（未来样本和每个原子动作）。** 记 $\gamma_i=g(i)$，(4.3)–(4.4) 给
+
+| 分支 | $k$ | $\gamma_6$ | $\gamma_7$ |
+| --- | --- | --- | --- |
+| $t>0,t\ne1$ | $-\alpha+\beta/(t-1)$ | $\alpha+\beta/(t-1)-8\Delta/t$ | $16\alpha/5+\beta/(t-1)-35\Delta/(2t)$ |
+| $t=1,\beta=0$ | 任意 $k$ | $k+2\alpha-8\Delta$ | $k+21\alpha/5-35\Delta/2$ |
+
+五个 $J$ 后 $A_5=J$。剩余全部响应为
+
+| 原时钟、续词 | 累计矩阵 | 迹因子 | 归一化响应 |
+| --- | --- | --- | --- |
+| $6:J$ | $I$ | $1$ | $\gamma_6-k=2\alpha-8\Delta/t$ |
+| $6:M$ | $MJ=\left(\begin{smallmatrix}1&0\\1&1\end{smallmatrix}\right)$ | $1+b$ | $(1+b)\gamma_6-k$ |
+| $7:JJ$ | $J$ | $t$ | $t\gamma_7-k$ |
+| $7:JM$ | $M$ | $t+1-a$ | $(t+1-a)\gamma_7-k$ |
+| $7:MJ$ | $JMJ=\left(\begin{smallmatrix}1&1\\1&0\end{smallmatrix}\right)$ | $t+a$ | $(t+a)\gamma_7-k$ |
+| $7:MM$ | $M^2J=\left(\begin{smallmatrix}1&1\\2&1\end{smallmatrix}\right)$ | $1+t+b$ | $(1+t+b)\gamma_7-k$ |

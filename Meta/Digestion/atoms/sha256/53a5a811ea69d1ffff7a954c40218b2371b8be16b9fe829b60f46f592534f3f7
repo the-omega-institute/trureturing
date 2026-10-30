@@ -1,0 +1,12 @@
+#### 定义 3.1（带权路径电路）
+
+设有限有向无环图具有初点 $s$，边 $e$ 携带半环 $S$ 中的权重 $a_e$。对路径 $\gamma$ 按接线顺序定义 $w(\gamma)=\bigotimes_{e\in\gamma}a_e$，并定义
+
+$$
+Z(v)=\bigoplus_{\gamma:s\leadsto v}w(\gamma).
+$$
+
+空路径的权重为 $1$，空路径族的和为 $0$。允许乘法非交换时必须保留顺序。
+
+<a id="thm-semiring"></a>
+

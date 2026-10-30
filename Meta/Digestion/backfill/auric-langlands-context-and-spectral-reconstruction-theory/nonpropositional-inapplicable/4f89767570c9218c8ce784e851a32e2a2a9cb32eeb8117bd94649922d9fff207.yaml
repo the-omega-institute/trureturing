@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:4f89767570c9218c8ce784e851a32e2a2a9cb32eeb8117bd94649922d9fff207
+  normalized_sha256: sha256:4f89767570c9218c8ce784e851a32e2a2a9cb32eeb8117bd94649922d9fff207
+cas_ref: sha256:4f89767570c9218c8ce784e851a32e2a2a9cb32eeb8117bd94649922d9fff207
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Inventory of project inputs and external interfaces, with explicit limits on their use; a provenance/routing paragraph, not an asserted mathematical result.
+    previous_atom_id: 3b338dc3f74fb73a0647f587fe3fd928a4e819ed4c375e53261f7476ec248ab9
+    next_atom_id: a4ec88ff0af44713e18388c9462ec531c18127712ce69b06ade1a578acc19b6f

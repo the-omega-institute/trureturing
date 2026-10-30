@@ -1,0 +1,23 @@
+**Proposition 112.2 (exact remaining directional inequality).** Let
+
+$$
+S_0=2a+b(\eta_1+\eta_2),\qquad
+\nu=S_0-4\sqrt2N\geq0.
+$$
+
+Then the exact target and its strict failure have the respective equivalent forms
+
+$$
+\begin{aligned}
+\Theta\leq r
+&\quad\Longleftrightarrow\quad
+\nu\geq S_0+2\sqrt2\sqrt R-L,\\
+\Theta>r
+&\quad\Longleftrightarrow\quad
+\nu<S_0+2\sqrt2\sqrt R-L.
+\end{aligned}
+\tag{U.29}
+$$
+
+Proof. Substitute the definition of $\nu$ into $4\sqrt2\Theta=S_0-\nu+2\sqrt2\sqrt R$ and rearrange, preserving the direction of the inequality. The nonnegativity of $\nu$ is (U.11). Where the right side in (U.29) is nonpositive, $\nu\geq0$ already proves the target. Thus only its positive part needs an additional lower bound. That lower bound must refer to the singular directions and both trace penalties of the actual same $V$; (U.29) does not supply it. $\square$
+

@@ -1,0 +1,64 @@
+## 29. Sources, evaluated addition and the unchanged global question
+
+The source chart, exact first critical world and germ are reused inputs:
+
+- Sections 18.1–18.8 and 19–23 of this volume supply the original-world
+  domain, regular response circuit, exact source cube, tangent,
+  nondegeneracy, local equal-$J$ germ and its initial base bounds.
+- [Common-parent geometry, Definitions 1.1–1.3 and Theorem 2.1](https://github.com/the-omega-institute/trureturing/blob/7bcb8485ed1daaa7b2a859c57e0ba8ccedc4991c/docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md)
+  supplies the complete original-world interpretation and the zero-safe
+  parent equation, including singular alternatives and arbitrary drifts.
+- [Support III, Definition 16.1](https://github.com/the-omega-institute/trureturing/blob/7bcb8485ed1daaa7b2a859c57e0ba8ccedc4991c/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_III.md)
+  supplies the rational polynomial circuit and the whole-gain lift.
+- [Support VI, Definition 14.1 and Theorem 15.1](https://github.com/the-omega-institute/trureturing/blob/7bcb8485ed1daaa7b2a859c57e0ba8ccedc4991c/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VI.md)
+  supplies the related symmetric-secant method; this volume's
+  Theorem 21.1 supplies the particular first-$J$ germ attached here.
+- [Support VII, Sections 23–26 and 30](https://github.com/the-omega-institute/trureturing/blob/7bcb8485ed1daaa7b2a859c57e0ba8ccedc4991c/docs/develop/theory/FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_VII.md)
+  supplies the exact critical source, singleton limiting child and
+  local entire-child $M$ injectivity used in Corollary 22.1.
+
+Fixed-node interpolation is the classical formula in
+Berrut–Trefethen, *Barycentric Lagrange Interpolation*, Section 2,
+[DOI 10.1137/S0036144502417715](https://doi.org/10.1137/S0036144502417715).
+The analytic implicit-function theorem is the analytic theorem cited in
+Section 23, Lebl, *Tasty Bits of Several Complex Variables*,
+Theorem 1.3.8. The contraction argument, adjugate identity, Taylor
+coefficient translation and intermediate value theorem are classical.
+Their hypotheses are supplied explicitly by the positive denominator,
+contraction and derivative comparisons above.
+
+The additional evaluated result is the twelve-cell continuation on
+$[0,3/1250]$, its exact attachment, its unique transverse corner
+(27.3), the strict-pair interval $0<q<q_*$, and the actual base
+coverage $[-533,-458]$. The existence of the original germ, its
+critical source, negative-base $J$ existence, the general secant
+method and the inherited local $M$ exclusion are not new claims.
+The rational calculations are ordinary mathematical evidence;
+no formal-verification or literature-priority assertion is made.
+
+The unchanged global target is still the existence of an **entire**
+$C(p,v)$ containing independently selected distinct equal-$J$ worlds
+and independently selected distinct equal-$M$ worlds. The pairs may
+overlap or be disjoint, and their common answers need not agree.
+Each original world retains its own arbitrary fixed real drift and
+one whole nonzero polynomial of degree at most three.
+No common-drift, positive-gain, exact-degree, nonzero-sample,
+simple-root or source-box restriction is imposed on that problem.
+
+For sufficiently small $q>0$, exact germ attachment retains
+Corollary 22.1's inherited entire-child $M$ exclusion. That theorem's
+unspecified neighborhood has no radius assigned here. In particular
+nothing here proves that the evaluated arc exits every such
+neighborhood. The unequal $M$ readings of the two selected endpoints
+in (28.2) exclude only their equality with each other; they do not
+exclude another independently selected $M$ pair elsewhere in the
+same entire child.
+
+Existence or absence of such an independent $M$ pair on the newly
+continued arc remains unresolved. There is no all-companion inventory
+or bound for that arc here. Singular and remote parent alternatives,
+all gain strata, other source branches and unexamined bases remain
+in the global domain. The corner limits only this selected strict
+pair continuation. It is neither a joint witness nor a global negative
+theorem for (18.3).
+

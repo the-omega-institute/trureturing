@@ -1,0 +1,30 @@
+The ordinary classical tools are used with their stated hypotheses:
+
+- Distinct-node interpolation at $0,1,2,3$ or $3,4,5,6$: Berrut and
+  Trefethen, *Barycentric Lagrange Interpolation*, §2, equations
+  (2.1)–(2.2),
+  [DOI 10.1137/S0036144502417715](https://doi.org/10.1137/S0036144502417715).
+  No sampled-value or exact-degree condition is required.
+- Fixed Sylvester resultants and polynomial division: Cox, Little and
+  O'Shea, *Ideals, Varieties, and Algorithms*, fourth edition, Chapter 3,
+  [DOI 10.1007/978-3-319-16721-3](https://doi.org/10.1007/978-3-319-16721-3).
+  The fixed degree-$(2,4)$ determinant retains its size at specialization.
+- Rouché's theorem: Ahlfors, *Complex Analysis*, third edition,
+  Chapter 4, §5.2, the argument principle and Rouché's theorem.
+  For each fixed real base, both compared functions are polynomials
+  holomorphic on a neighborhood of the closed disk, and (13.1) is the
+  strict boundary modulus inequality.
+- Banach's contraction principle: Lebl, *Basic Analysis II*,
+  [§8.5](https://www.jirka.org/ra/realanal2.pdf). The displayed closed
+  boxes are complete, the maps take them strictly into themselves, and
+  their derivative row-sum norms are strictly below one.
+- The analytic implicit-function theorem: Lebl, *Tasty Bits of Several
+  Complex Variables*, version 4.4,
+  [Theorem 1.3.8, p. 32](https://www.jirka.org/scv/scv.pdf).
+  The rational source functions have nonzero denominators in the
+  displayed boxes, and the preconditioned derivative bounds give
+  invertible Jacobians. They extend holomorphically to neighborhoods
+  of the relevant real sources. Real coefficients and local uniqueness
+  identify the real analytic branches. The derivative and mean value
+  estimates in Section 15 apply to these actual branches.
+

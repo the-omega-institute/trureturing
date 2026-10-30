@@ -1,0 +1,16 @@
+**定义 19.10（固定未来菜单的细化）。** 给定有限菜单 $M$（每个元素已经
+包含其允许的动作词、观察点和时间标签），定义
+
+$$
+s\equiv_M t\quad\Longleftrightarrow\quad
+\forall q\in M,\;Y(s,q)=Y(t,q).
+$$
+
+若 $M\subseteq M'$，则 $\equiv_{M'}$ 细化 $\equiv_M$；新增查询只会拆分
+原有纤维，删去查询只会合并纤维。若新查询在声明的可达域上是冗余的，商
+可能保持不变。所有“未来等价”“最小记忆”和“可恢复”均只相对于给定
+菜单、动作权限、观察域和时间索引成立；它们不自动量化到未声明的未来。
+这正是有限菜单源
+[FIB_NATIVE_FINITE_MENU_MINIMAL_MEMORY.md](FIB_NATIVE_FINITE_MENU_MINIMAL_MEMORY.md)
+与动态 future quotient 源的交接口。
+

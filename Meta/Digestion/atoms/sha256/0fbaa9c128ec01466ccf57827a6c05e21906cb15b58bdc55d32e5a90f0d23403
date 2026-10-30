@@ -1,0 +1,24 @@
+**Theorem 266.3 (uniform off-label row error and its optimal constant).** For any killed coarse generator $Q$ on $B$, define
+
+$$
+\Delta(G,\pi,Q)=
+\max_{x\in V}\max_{b\ne\pi(x)}
+\left|\sum_{\pi(y)=b}\frac{c_{xy}}{\mu_x}-Q_{\pi(x),b}\right|,
+\tag{266.4}
+$$
+
+where only actual neighbours contribute, and an empty maximum is zero. If $Q$ has a bidirectional simple cycle all of whose directed rates are at least $\eta>0$, then
+
+$$
+\Delta(G,\pi,Q)\ge\eta.
+\tag{266.5}
+$$
+
+The factor one is sharp in the unrestricted weighted-tree comparison class, even when $Q$ is the induced mass-weighted compression of $G$. This does not assert sharp attainment within a fixed native source orbit.
+
+Proof. The missing-neighbour argument applied to the cycle labels gives a vertex $x$ with no neighbour in an adjacent cycle class $b$. The actual sum in (266.4) is zero, while the specified directed $Q$ rate is at least $\eta$. This proves (266.5), independently of all diagonal and killing terms.
+
+For sharpness fix $k\ge3$. Take the path $v_0,\ldots,v_k$, masses one, all edge conductances $2\eta$, and zero killing. Give $v_j$ label $j$ for $0\le j<k$, and give $v_k$ label zero. The induced masses are $\nu_0=2$, $\nu_j=1$ for $j\ne0$. The compressed conductance between each pair of neighbouring cycle labels is $2\eta$. Its coarse generator therefore has rate $\eta$ from zero to either adjacent label, and rate $2\eta$ from every other label to each of its two neighbours. Its minimum directed cycle rate is exactly $\eta$.
+
+At each internal path vertex all off-label rates agree with this $Q$. At either endpoint, the existing adjacent-label rate is $2\eta$ rather than $\eta$, and the other adjacent-label rate is zero rather than $\eta$; every other off-label entry agrees. Thus the maximum error is exactly $\eta$. All masses and conductances are strictly positive and finite. This proves sharpness without altering the clock or discarding endpoint rows. □
+

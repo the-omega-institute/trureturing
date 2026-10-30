@@ -1,0 +1,67 @@
+**Proposition 120.5 (actual-domain heat convergence with a Poisson tail).**
+Fix $u\in\mathcal T$ and $m\ge3$, and use exactly $D_n(u)$ in (120.3).
+Let $q_n=q|_{D_n(u)}$, $U_nf=f\circ q_n$, $N_n=|D_n(u)|$,
+$\mu_n=\mu_{D_n(u)}$, and let $A_n$ be either boundary choice in
+(120.2). If $R$ is a nonnegative integer and the infinite-graph ball
+$B_R(x)$ is contained in $D_n(u)$, then for every bounded complex
+$f:C_m\to\mathbb C$ and every $0\le T<\infty$,
+
+$$
+\sup_{0\le t\le T}
+ \left|(e^{-tA_n}U_nf)(x)-(Ue^{-tK_m}f)(x)\right|
+ \le 2\|f\|_\infty\,
+       \mathbb P\{\operatorname{Poisson}(3T)>R\}.
+\tag{120.18}
+$$
+
+In particular heat converges at every fixed address, uniformly on each
+bounded time interval and uniformly over any fixed finite set of
+addresses, for either finite boundary convention.
+
+Proof. Set $R_n=I-A_n/3$ and retain $R_\infty$ of (120.16).
+For the killed choice $R_n$ is the compression of $R_\infty$; the two
+omitted child transitions at each leaf go to the zero-valued cemetery.
+For the closed choice those transitions become holds at the leaf.
+At a singleton the resulting rows are respectively holding $1/3$
+with cemetery probability $2/3$, and holding one. Away from the finite
+boundary every row agrees with the infinite row, including the actual
+root convention.
+
+Put $F=Uf$. For $k\le R$, every transition start in a $k$-step path
+from $x$ has distance at most $k-1<R$ from $x$; each neighbour it can
+use lies in $B_R(x)$. Thus no changed boundary row is needed, and
+
+$$
+(R_n^k(F|_{D_n}))(x)=(R_\infty^kF)(x)
+\qquad(0\le k\le R).
+\tag{120.19}
+$$
+
+For $R=0$ this simply asserts equality of the initial values.
+All later evaluations have magnitude at most $\|F\|_\infty$, since
+both the stochastic and substochastic matrices are contractions on
+bounded functions. Subtracting their common rate-three Poisson series
+therefore bounds the difference by
+$2\|F\|_\infty\mathbb P\{\operatorname{Poisson}(3t)>R\}$.
+Use (120.13), $\|F\|_\infty=\|f\|_\infty$ and monotonicity of the
+Poisson tail for $t\le T$ to obtain (120.18).
+
+For a fixed address $x$, (120.3) permits
+
+$$
+R=R_n(x):=\lfloor n/2\rfloor-|x|\ge0,
+\tag{120.20}
+$$
+
+because $B_R(x)\subseteq B_{R+|x|}(o)\subseteq D_n(u)$.
+This radius tends to infinity. For fixed $T$ the tail in (120.18) is
+explicitly $e^{-3T}\sum_{k>R}(3T)^k/k!$ and tends to zero. For a finite
+address set $S$, take $R=\lfloor n/2\rfloor-\max_{x\in S}|x|$ once
+nonnegative. The same estimate holds simultaneously at every $x\in S$
+and for all $\|f\|_\infty\le1$, in particular all $m$ indicators.
+Only the contained-ball inclusion is used: the finite domains remain
+the actual $D_n(u)$, not replacement balls. This is a bounded-time,
+fixed-address statement, without a claim of convergence uniformly over
+the whole growing domain or on time windows growing with $n$.
+$\square$
+

@@ -1,0 +1,12 @@
+## 27. The unique transverse strict-source corner
+
+Put $E(q)=Y(q)^2-q$. The following rational cube independently encloses
+the four-equation event. In the next table every center entry is divided
+by $10^{65}$; its coordinates are ordered $X,Y,K,q$.
+
+| Coordinate | Integer center numerator |
+| --- | --- |
+| $X$ | `102869832140216209209092689670665190791340142744995433124836749574` |
+| $Y$ | `4791088103043219140178249909350393572326818318610215355809217733` |
+| $K$ | `58572685567109174314161463780680974914585120509217795839398079844` |
+| $q$ | `229545252111222720256616727741767454210915555161701418701897253` |

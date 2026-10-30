@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6229d08e3aa71f2a2d7b4c70aa5923874afdb7150a571a8bd551987837368622
+  normalized_sha256: sha256:6229d08e3aa71f2a2d7b4c70aa5923874afdb7150a571a8bd551987837368622
+cas_ref: sha256:6229d08e3aa71f2a2d7b4c70aa5923874afdb7150a571a8bd551987837368622
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 库萨统一方案的基督论与肯定教义内容的文本释义。
+    previous_atom_id: d2a26a280819a4adc3edb4c15154a17111b7e6071264b94af3a98ebde153ff1a
+    next_atom_id: 29402e313e7a763e0e45b1dd5241c7f918e5c9f8b794ac0f1a16cf453f368626

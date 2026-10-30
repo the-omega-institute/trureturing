@@ -1,0 +1,47 @@
+**Lemma 4.3 (Component-identification bound).** Put
+
+$$
+\rho_\ell=\frac{a_\ell}{1+a_\ell},\qquad
+\Delta=\min_{\ell\ne k}|\rho_\ell-\rho_k|>0.
+\tag{4.5}
+$$
+
+For any length-$s$ contiguous segment of the stationary process, classify its label by the nearest $\rho_\ell$ to its empirical mean, with any fixed tie rule. If $s\Delta\ge4$, its error probability under any component, and under their actual mixture, is at most
+
+$$
+2\exp(-s\Delta^2/32).
+\tag{4.6}
+$$
+
+Proof. Under one component with parameter $a$ and mean $\rho=a/(1+a)$, put $Y_j=X_j-\rho$ and
+
+$$
+Z_j=Y_j+aY_{j-1}=X_j-a(1-X_{j-1}),\qquad 1\le j\le s.
+$$
+
+The Markov transition rule gives $\mathbb E[Z_j\mid X_0,\ldots,X_{j-1}]=0$, and $|Z_j|\le1$. For any conditional mean-zero $Z\in[-1,1]$, convexity of the exponential gives
+
+$$
+\mathbb E[e^{tZ}\mid\mathcal H]\le\frac{e^t+e^{-t}}2
+=\cosh t\le e^{t^2/2}.
+\tag{4.7}
+$$
+
+The last bound follows termwise from $(2k)!\ge2^kk!$ in the power series. Iterating (4.7) gives $\mathbb E\exp(t\sum_{j=1}^sZ_j)\le\exp(st^2/2)$. Exponential Markov inequality, with $t=u/s$ and then with its negative, yields
+
+$$
+\Pr\left(\left|\sum_{j=1}^sZ_j\right|\ge u\right)
+\le2\exp(-u^2/(2s)).
+\tag{4.8}
+$$
+
+Moreover,
+
+$$
+\sum_{j=1}^sZ_j=(1+a)\sum_{j=1}^sY_j+a(Y_0-Y_s),\qquad
+|a(Y_0-Y_s)|\le1.
+\tag{4.9}
+$$
+
+An empirical-mean deviation of at least $\Delta/2$ therefore forces $|\sum Z_j|\ge s\Delta/2-1\ge s\Delta/4$ when $s\Delta\ge4$. Substitution into (4.8) gives (4.6). Misclassification implies such a deviation, since distinct component means are separated by at least $\Delta$. The preceding bit $X_0$ is used only in this proof, not by the classifier. Stationarity gives the same bound for any translated segment, including one in the past. Averaging over the one actual label preserves the bound. This is the elementary bounded-martingale exponential method; see the mathematical citation [Azuma] below. $\square$
+

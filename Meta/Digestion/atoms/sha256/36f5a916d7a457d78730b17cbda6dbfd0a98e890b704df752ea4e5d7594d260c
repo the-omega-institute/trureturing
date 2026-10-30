@@ -1,0 +1,22 @@
+## 4. 一次运行解码的正确判据
+
+设有限个目标类由
+
+$$
+\theta:S\to\Theta
+$$
+
+给出，实验 $E$ 的档案律为 $\mu_s^E$。称 $E$ 对 $\theta$ 零误差取得，如果存在同一个可测解码器
+
+$$
+D_E:\mathcal R_E\to\Theta
+$$
+
+使
+
+$$
+(D_E)_\#\mu_s^E=\delta_{\theta(s)}
+\qquad\text{对所有 }s\in S.
+\tag{4.1}
+$$
+

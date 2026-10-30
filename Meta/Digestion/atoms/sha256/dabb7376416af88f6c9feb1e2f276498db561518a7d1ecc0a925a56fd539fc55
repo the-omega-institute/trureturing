@@ -1,0 +1,2 @@
+**Definition 4.4 (The unicyclic graphs $U_n$ and $T_n$).** For $n\ge3$, $U_n$ is the graph with a vertex $h$ adjacent to all of $x,y,z_1,\dots,z_{n-3}$ and one further edge $xy$. For $n\ge5$, $T_n$ is the graph with edges $hx$, $hy$, $xy$, $xz$ and $hz_j$ for $1\le j\le n-4$. Stance: repo-derived (construction fixed in this volume).
+

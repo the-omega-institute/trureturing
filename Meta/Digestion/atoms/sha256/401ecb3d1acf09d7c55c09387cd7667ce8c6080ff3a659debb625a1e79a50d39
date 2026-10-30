@@ -1,0 +1,42 @@
+## 99. Proof of Theorem 94.2: the limit and both parity limits
+
+At $s=0$ use the reduced identity decoder. As in §96, the Kraus choice
+$r=z=1$, $\sigma=+1$ has the same action after $\Phi_0$. Its data are
+
+$$
+M=\operatorname{diag}(1,1/2,1/2),\qquad
+p=\frac{(1,2,2)^{\mathsf T}}5,\qquad \eta=\frac15,
+\qquad Mp=\tfrac15\mathbf1.
+\tag{99.1}
+$$
+
+For this $p$, the coefficients of $u^2$ and $v$ in (95.3) vanish and $t=0$,
+so for every $u,v\in[0,1]$,
+
+$$
+L_0(p;u,v)=p_0^2+\tfrac12(p_1^2+p_2^2)=\frac15.
+\tag{99.2}
+$$
+
+Thus the limit channel itself, with its own arbitrary-decoder lower
+certificate and all-reference upper certificate, has $\delta_\infty=4/5$.
+By (93.7) it is invariant under $U_0$, so the actual identity decoder
+$D_\infty$ attains this value. It is unnecessary to infer its optimality
+solely from finite-horizon convergence.
+
+For odd $n\to\infty$, $s\to0$ in (96.1), giving $\eta_n\to1/5$.
+For even $n\to\infty$, $t\to0$ and $h\to1$ in (94.5); the positive
+denominator tends to
+
+$$
+K(1)=4+16=20,\qquad h^2(h^2+3)\longrightarrow4.
+\tag{99.3}
+$$
+
+Hence the even values also satisfy $\eta_n\to1/5$. The later-even
+attainer has the well-defined parameter limit $r\to1/4$, $z\to1/16$,
+and its probe tends to $(1,2,2)^{\mathsf T}/5$. The odd probe has the
+same limit. These endpoint statements use no division by $t$ or by $s$.
+Both parity sequences therefore converge to the directly computed
+$\delta_\infty=4/5$.
+

@@ -1,0 +1,21 @@
+**Proposition 14.2 (positive thickness with unchanged coordinate ranges).** On the very same source and native law (14.1), define a family of separately declared acquisition supports by
+
+$$
+K_\theta=\frac{K_{\perp}+\theta[-1,1]^2}{1+\theta},
+\qquad \theta\ge0.
+\tag{14.4}
+$$
+
+Every $K_\theta$ is compact, convex and origin symmetric, and its two coordinatewise ranges are exactly $[-1,1]$. At $\theta=0$ its dimension is one and one state recovers all histories at every tolerance. At every $\theta>0$ its dimension is two and, for each prescribed $\epsilon>0$, no finite supplement succeeds. At error zero all these supports permit recovery with one state. Moreover $K_\theta\to K_{\perp}$ in Hausdorff distance as $\theta\downarrow0$, so this is a positive-thickness discontinuity with normalized, fixed coordinate ranges.
+
+Proof. Minkowski addition and positive rescaling preserve the stated compactness, convexity and symmetry. Each coordinate projection before rescaling is $[-1-\theta,1+\theta]$, proving the exact ranges after division. For $\theta>0$,
+
+$$
+\frac{\theta}{1+\theta}[-1,1]^2\subseteq K_\theta,
+\tag{14.5}
+$$
+
+because $0\in K_{\perp}$. Thus the support contains a two-dimensional neighborhood of zero and, in particular, the segment $[-\theta/(1+\theta),\theta/(1+\theta)]A$. The obstruction (12.12) applies at every positive tolerance, with a smaller positive $\rho$ if needed. At $\theta=0$, (14.3) applies. Exact observations are independent of the support by Theorem 13.1.
+
+For convergence, write a point of $K_\theta$ as $(v+\theta w)/(1+\theta)$ with $v\in K_{\perp}$ and $w\in[-1,1]^2$. Its maximum-norm distance from $v$ is at most $2\theta/(1+\theta)$. Conversely $v/(1+\theta)\in K_\theta$ lies within $\theta/(1+\theta)$ of each $v\in K_{\perp}$. These bounds prove the asserted Hausdorff convergence. The loss of finite feasibility therefore occurs for arbitrarily small positive thickness, despite identical coordinatewise ranges. These supports are different acquisition guarantees; no source operation converts a $K_{\parallel}$ or positive-thickness reading into the $K_{\perp}$ guarantee. $\square$
+

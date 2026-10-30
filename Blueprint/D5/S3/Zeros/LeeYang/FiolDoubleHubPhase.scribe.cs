@@ -1,0 +1,57 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Zeros.LeeYang;
+
+internal sealed class FiolDoubleHubPhaseDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "The physical double-hub family: phase.",
+        H("Double-hub phase"), Blocks(
+            Paragraph(Text("Writing t=2cos(theta) and ell=2cos(theta/2), the phase is A t v^2+ell((B+C+E)t-E)uv+f_d(t)u^2. Here u,v are sine ratios for odd d and cosines for even d, and f_d(t)=(4d^2+6d-1)t^2-(3d^4-19d^2+8d+8)t/2-(32d-14).")),
+            Paragraph(Text("For odd d the grids are a_j=2pi j/d and b_j=2pi j/(d+1), giving phase values A t and f_d(t). For even d they are a_j=(2j-1)pi/d and b_j=(2j-1)pi/(d+1), giving A t(2-t) and (2-t)f_d(t). All surviving H_3 and H_4 contributions are retained.")),
+            Paragraph(Text("These new declarations are absent from the pinned statement-projection corpus. The supported omission records that projection gap; the mathematical argument and exact theorem statements are given in this document. No projection entry or judge is changed.")),
+            Describe.Lean(DescribeId.Create("fioldoublehubphase-ep"),
+                DeclarationHandle.Create("D5/S3/Zeros/LeeYang/FiolDoubleHubPhase.ep"), H("ep"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("This defines ep for the physical double-hub family."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("fioldoublehubphase-ep-pow"),
+                DeclarationHandle.Create("D5/S3/Zeros/LeeYang/FiolDoubleHubPhase.ep_pow"), H("ep pow"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Organizes instantiation, projections, finite-sum/degree/phase rewrites or normalization on a live proof path; no independent new-content claim. Exact source statement: theorem ep_pow (x : \u211d) (n : \u2115) : ep x^n = ep (x*n)."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fioldoublehubphase-realval"),
+                DeclarationHandle.Create("D5/S3/Zeros/LeeYang/FiolDoubleHubPhase.realVal"), H("realVal"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("This defines realVal for the physical double-hub family."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("fioldoublehubphase-fvalue"),
+                DeclarationHandle.Create("D5/S3/Zeros/LeeYang/FiolDoubleHubPhase.fValue"), H("fValue"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("This defines fValue for the physical double-hub family."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("fioldoublehubphase-q-phase-reduced"),
+                DeclarationHandle.Create("D5/S3/Zeros/LeeYang/FiolDoubleHubPhase.Q_phase_reduced"), H("Q phase reduced"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Uses the derived recurrence to obtain the exact real two-term phase reduction. Exact source statement: theorem Q_phase_reduced (d : \u2115) (hd : 2 \u2264 d) (theta : \u211d)     (hs : Real.sin (theta/2) \u2260 0) :     let x : \u211d := d     let u := realVal d 0 theta     let v := realVal d 1 theta     let ell := 2*Real.cos (theta/2)     let t := 2*Real.cos theta     phaseValue d theta =       ((2*x^4*t*v^2 + ell*(((3/2:\u211d)*x^2*(x^2-1)+         4*x*(x-1)*(2*x-1)+8*x*(2*x-1))*t-8*x*(2*x-1))*u*v+         fValue x t*u^2 : \u211d):\u2102)."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fioldoublehubphase-odd-a-values"),
+                DeclarationHandle.Create("D5/S3/Zeros/LeeYang/FiolDoubleHubPhase.odd_a_values"), H("odd a values"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Organizes instantiation, projections, finite-sum/degree/phase rewrites or normalization on a live proof path; no independent new-content claim. Exact source statement: theorem odd_a_values (d j : \u2115) (hd : 2 \u2264 d) (ho : Odd d)     (hj : 1 \u2264 j) (hjd : 2*j < d) :     let a := 2*Real.pi*(j:\u211d)/(d:\u211d)     realVal d 0 a = 0 \u2227 realVal d 1 a = (-1:\u211d)^j."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fioldoublehubphase-odd-b-values"),
+                DeclarationHandle.Create("D5/S3/Zeros/LeeYang/FiolDoubleHubPhase.odd_b_values"), H("odd b values"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Organizes instantiation, projections, finite-sum/degree/phase rewrites or normalization on a live proof path; no independent new-content claim. Exact source statement: theorem odd_b_values (d j : \u2115) (hd : 2 \u2264 d) (ho : Odd d)     (hj : 1 \u2264 j) (hjd : 2*j \u2264 d+1) :     let b := 2*Real.pi*(j:\u211d)/((d:\u211d)+1)     realVal d 1 b = 0 \u2227 realVal d 0 b = (-1:\u211d)^(j+1)."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fioldoublehubphase-odd-a-phase"),
+                DeclarationHandle.Create("D5/S3/Zeros/LeeYang/FiolDoubleHubPhase.odd_a_phase"), H("odd a phase"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Organizes instantiation, projections, finite-sum/degree/phase rewrites or normalization on a live proof path; no independent new-content claim. Exact source statement: theorem odd_a_phase (d j : \u2115) (hd : 2 \u2264 d) (ho : Odd d)     (hj : 1 \u2264 j) (hjd : 2*j < d) :     let a := 2*Real.pi*(j:\u211d)/(d:\u211d)     phaseValue d a = ((2*(d:\u211d)^4*(2*Real.cos a):\u211d):\u2102)."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fioldoublehubphase-odd-b-phase"),
+                DeclarationHandle.Create("D5/S3/Zeros/LeeYang/FiolDoubleHubPhase.odd_b_phase"), H("odd b phase"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Organizes instantiation, projections, finite-sum/degree/phase rewrites or normalization on a live proof path; no independent new-content claim. Exact source statement: theorem odd_b_phase (d j : \u2115) (hd : 2 \u2264 d) (ho : Odd d)     (hj : 1 \u2264 j) (hjd : 2*j \u2264 d+1) :     let b := 2*Real.pi*(j:\u211d)/((d:\u211d)+1)     phaseValue d b = ((fValue (d:\u211d) (2*Real.cos b):\u211d):\u2102)."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fioldoublehubphase-even-a-phase"),
+                DeclarationHandle.Create("D5/S3/Zeros/LeeYang/FiolDoubleHubPhase.even_a_phase"), H("even a phase"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Organizes instantiation, projections, finite-sum/degree/phase rewrites or normalization on a live proof path; no independent new-content claim. Exact source statement: theorem even_a_phase (d j : \u2115) (hd : 2 \u2264 d) (ho : \u00ac Odd d)     (hj : 1 \u2264 j) (hjd : 2*j \u2264 d) :     let a := (2*(j:\u211d)-1)*Real.pi/(d:\u211d)     phaseValue d a = ((2*(d:\u211d)^4*(2*Real.cos a)*(2-2*Real.cos a):\u211d):\u2102)."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("fioldoublehubphase-even-b-phase"),
+                DeclarationHandle.Create("D5/S3/Zeros/LeeYang/FiolDoubleHubPhase.even_b_phase"), H("even b phase"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Organizes instantiation, projections, finite-sum/degree/phase rewrites or normalization on a live proof path; no independent new-content claim. Exact source statement: theorem even_b_phase (d j : \u2115) (hd : 2 \u2264 d) (ho : \u00ac Odd d)     (hj : 1 \u2264 j) (hjd : 2*j \u2264 d+2) :     let b := (2*(j:\u211d)-1)*Real.pi/((d:\u211d)+1)     phaseValue d b = (((2-2*Real.cos b)*fValue (d:\u211d) (2*Real.cos b):\u211d):\u2102)."))), DescribeRole.Theorem))));
+}

@@ -1,0 +1,6 @@
+**Lemma 2.1 (Reset at every visible one).** Let $r$ be positive on $B_n$ and suppose every internal cut matrix has ordinary rank at most two. For each $1\le k\le n$, conditional on $W_k=1$, the two strings $W_{[1,k-1]}$ and $W_{[k+1,n]}$ are independent under this same $r$.
+
+Proof. At a cut $k<n$, every row whose last bit is one vanishes on every column whose first bit is one. Such a legal row is nonzero, since its entry at the all-zero suffix is positive. A legal row ending in zero has a positive entry at the column $10^{n-k-1}$. It is therefore outside the span of the rows ending in one. If the latter span had dimension at least two, the whole cut matrix would have rank at least three. Its dimension is consequently exactly one.
+
+All nonzero rows ending in one are positive multiples of a fixed such row: their coordinates at the all-zero suffix determine a positive proportionality factor. Normalizing each row by its sum shows that the conditional suffix law is the same for every legal prefix ending in one. This is the asserted independence. When $k=1$ the left string is empty; when $k=n$ the right string is empty. Those assertions are tautological, including $n=1$. The proof retains every forbidden seam as a zero. $\square$
+

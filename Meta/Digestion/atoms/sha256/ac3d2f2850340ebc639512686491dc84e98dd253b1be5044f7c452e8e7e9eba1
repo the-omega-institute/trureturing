@@ -1,0 +1,12 @@
+**例 5.2（局部近似不等于全部未来近似）。** 过程 $\Phi$ 每次必记 continue；$\Psi$ 每次活动调用以概率 $0<\varepsilon\le1$ 记 Stop，否则 continue。单次距离是 $\varepsilon$，但前 $N$ 次完整记录的 TV 为
+
+$$
+1-(1-\varepsilon)^N\longrightarrow1.
+$$
+
+这是合法的有限经典仪器例子，同时使访问概率界精确饱和。
+
+相干误差也可线性累积。令 $U_\theta=e^{-\mathrm i\theta Z}$，$0<\theta$、$N\theta\le\pi/2$。恒等通道与 $\operatorname{Ad}_{U_\theta}$ 的单次 half-diamond 为 $\sin\theta$：带参考纯输入的两输出重叠是 $\operatorname{Tr}(\rho U_\theta)=\cos\theta-\mathrm i\sin\theta\operatorname{Tr}(\rho Z)$，模至少 $\cos\theta$，$|+\rangle$ 达到等号。执行 $N$ 次，从 $|+\rangle$ 得距离 $\sin(N\theta)$，且 $\sin(N\theta)/(N\sin\theta)\to1$。因此统一加法界中的系数一不能改小，也不能普遍换成独立经典失配的乘积公式。
+
+<a id="prop-5-3"></a>
+

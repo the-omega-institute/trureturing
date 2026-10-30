@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:dbb9852de0df93532458dfc8074db7703cac948a29186fe6a8afd92a8503dd39
+  normalized_sha256: sha256:dbb9852de0df93532458dfc8074db7703cac948a29186fe6a8afd92a8503dd39
+cas_ref: sha256:dbb9852de0df93532458dfc8074db7703cac948a29186fe6a8afd92a8503dd39
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'An imperative step in the proposed diagonal restriction procedure: divide the Weyl vanishing factor first. No assertion that division extends or yields a specified function is made here.'
+    previous_atom_id: 3e4773b5c5259ed31ced2b7b9c3978c79b33148270742d475a5f56f24b7f5be9
+    next_atom_id: 855176f8c4b0217fc478ded25ab032e2e4b1e1a1e55dc5eee8c4aeadd6f455a2

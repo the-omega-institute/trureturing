@@ -1,0 +1,15 @@
+**Theorem 85.1 (post-clock inverse on its full reached image).** For any law satisfying Definition 84.1, the map
+
+$$
+w\longmapsto (t(w),v_w),\qquad w\in\mathcal W,
+\tag{85.1}
+$$
+
+is injective and has the following finite inverse on its image. At a noninitial pair $(t,x)$ compute $z=T_t^{-1}x$. Its zero support identifies the last addressed event uniquely. Collapse that event in the local term, delete exactly its fresh vertices, and restrict $z$ to the remaining coordinates. Repeat until $(\alpha,1)$. Reversing the recovered event list gives exactly $w$.
+
+Proof. Every completed $v_w$ is strictly positive in every material coordinate. This holds at the seed. If the old field is positive, its zero extension has zeros only at fresh vertices. At an old vertex the positive diagonal preserves a positive contribution. Every new vertex has an old neighbor: $pL$ has $p$ at a promotion, and $pLL,pR$ have $pL,p$ at a split. The positive edge coefficient therefore makes every fresh coordinate positive after the new-tree Tick. This proves the assertion by induction.
+
+For $w=w'g$, invertibility and (84.2) give $z=\iota_gv_{w'}$. Thus its zeros are exactly $\{pL\}$ for $g=P_p$, or exactly $\{pLL,pR\}$ for $g=S_p$. A singleton fresh support ending in $L$, whose parent is a literal logical beta in $t$, specifies that parent and hence $P_p$ uniquely. A two-element fresh support has exactly one $R$-ending element; removing its last $R$ gives $p$. Its other element must be $pLL$, and the current local term is literally $\langle\beta,\alpha\rangle$, specifying $S_p$. These tests use the material and logical distinctions of Definition 84.1, not an arbitrary graph contraction.
+
+In the promotion case replace that beta by alpha; in the split case replace the displayed branch by beta, retaining $pL$ as its marker. Deleting only the indicated fresh support gives the actual preceding material tree, with all its old edges. Restriction gives $v_{w'}$ exactly. Each reverse step decreases the positive integer $N$, so it terminates. On the stated image it reaches precisely the earned $(\alpha,1)$, by induction on $|w|$. At every step both the last letter and predecessor pair are forced; two words with the same pair therefore have the same last letter and, inductively, the same entire word. Conversely replay of the recovered letters using (84.2) returns the input pair. This proves both inverse identities on the image, including the empty word. No off-image recognition assertion is needed. $\square$
+

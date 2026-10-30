@@ -1,0 +1,38 @@
+**Definition 25.3 (one actual birth-placement family).** Actually prepare
+known unit alpha by Reset; Add$(1,1)$; Read$(1,1)$; Hold, as in
+Definition 17.1. Its initial digital reply is $2$ or $3$; the seed is
+known from the performed Reset/Add, not from an unknown-field inference.
+Execute one fixed public legal canonical unticked constructor word $\sigma$
+of $n$ births, earning $s$ and its authentic complete raw/canonical
+map. No Tick has occurred, so the current field is $e_\varepsilon$.
+Choose one enabled birth $g=P_p$ or $S_p$ at a logical leaf $p$ of
+material depth $d$, and let $u=g(s)$ and $E$ be its inclusion. Fix a
+public integer $r\ge1$. In particular an internal geometry-only selector
+may count the earned address depth and choose $r=d+1$ before the window;
+that finite address/counter computation and its storage are paid. An owned
+bit $\tau$ controls exactly one of
+the following two actual histories:
+
+$$
+\begin{array}{c|c|c}
+\tau&\text{executed window}&\text{current at its end}\\ \hline
+1&g;\operatorname{Tick}^r&x_1=T_u^rEe_\varepsilon\\
+0&\operatorname{Tick}^r;g&x_0=ET_s^re_\varepsilon.
+\end{array}
+\tag{25.7}
+$$
+
+They have the same law, known seed, constructor, earned final graph, raw
+map, genuine references and final current/fresh rights. Before late
+acquisition actually erase or isolate $\tau$ and all dependent scheduler
+state, replies, predictors, event/operation counters and resource archives.
+Retain only the common earned map, grants and public recipe
+$(\sigma,s,p,g,r)$. No timing, allocation name, capacity or dependent
+archive leaks placement. Such isolation and physical conformance remain
+explicit premises; isolated cells still cost storage. This is a two-history
+experiment, not arbitrary historical recovery or an unknown-source entrance.
+
+Let $f=pL$ for $P_p$ and $f=pR$ for $S_p$, using their actual
+inherited or fresh raw binding. It is a terminal of $u$. Define
+$q_\tau=(x_\tau)_f$.
+

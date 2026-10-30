@@ -1,0 +1,38 @@
+**Theorem 28.1 (The component containing the realized rectangle).**
+Let $q_*=(p_*,v_*)$ be the existing exact seed, and let $\Omega_*$
+be the connected component of $O\setminus D_{\rm crit}$ containing
+it. Then $\mathcal U\subset\Omega_*$. Every entire child over
+$\Omega_*$ has exactly two complete worlds. Transport of both seed
+worlds along any path in $\Omega_*$ exhausts its terminal fiber.
+
+**Proof.** On the entire closed rectangle, the four explicit polynomials
+(22.1) satisfy the finite inequalities
+
+| Polynomial | Enclosure on $\mathcal U$ |
+| --- | --- |
+| $E_0$ | $(-3807159123283,-3807159123282)$ |
+| $E_1$ | $(9406089304480,9406089304481)$ |
+| $E_2$ | $(-15436842,-15436841)$ |
+| $E_3$ | $(184377462718,184377462719)$ |
+
+For these comparisons use Lemma 25.1's grid operations, evaluate
+monomials in descending lexicographic order in $(p,v)$, sum from zero,
+and round endpoints outward to integers. Each comparison is strict.
+Also $p\ne24$ on $\mathcal U$ and $q_\infty\notin\mathcal U$.
+Thus $\mathcal U\subset O$.
+
+Theorem 26.1 supplies both actual worlds at every point and exhausts
+the entire child using Theorem 12.2. Lemma 25.1 gives nonzero response
+determinants on both boxes. Also
+$\Lambda=2\widehat D/(5TU\mathcal J\mathcal N)>0$ there. Eliminating
+$\epsilon$ in the parent equation gives
+$H_{\rm reg}=\Lambda\det D\mathcal R$ at either world. Hence neither
+is critical, and exhaustion excludes all additional critical preimages,
+including singular or exceptional ones. Thus
+$\mathcal U\cap D_{\rm crit}=\varnothing$. Connectedness and seed
+containment from Lemma 17.1 put the rectangle in one component.
+Theorem 23.1 gives constant cardinality on that component, equal to
+two by Corollary 17.2. The two lifts cannot meet: reversing the path
+would violate unique lifting from the meeting world. They exhaust the
+terminal fiber. No path-independent ordering of the sheets is needed. ∎
+

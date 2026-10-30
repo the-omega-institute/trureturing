@@ -1,0 +1,56 @@
+**Assumption 13.2 (stronger comparison access and complete control).**
+In this comparison interface the true unlabelled ordered scaffold $S$,
+the true $\pi$ and the authentic lag bin $[K,2K-1]$ are common public
+inputs. Immediately at entrance there are current rights for total paid
+presence Read, arbitrary serial forward applyRho on this same register,
+localStep and stop. Between completed actions there is no concurrent
+update. A Read itself observes a stationary register. All other conditions
+of Assumption 1.2 are retained: the root and physical names remain stable,
+updates preserve $\pi$, and the full append writer is inaccessible to
+control. In particular its old-epoch fields, full four-valued replies,
+pre-entry prefix and internal work are not observations.
+
+At fixed $S,K,\pi$, every other initially accessible field is common
+across all $K2^n$ members. This includes program selection, control,
+identifiers, grants, backing contents, readable capacities, prior outputs,
+reply latches and allocation metadata. All later accessible source-bearing
+state must be obtained from the actually paid presence bits and common
+inputs. Errors, acknowledgement contents, schedules, resource identities,
+allocation choices, runtime and source size supply no further channel.
+Local calculations, evaluator transitions, construction and submission of
+literal words, backing growth, retention, output and handoff are real
+paid operations. Owned growing storage and completion of each finite
+legal calculation/request are supplied, without a uniform space or time
+bound. Update material, private actuator work, writer work, installation,
+authentication, reference maintenance and current-right maintenance also
+retain their actual separate prices.
+
+A competitor is any common deterministic effective protocol terminating
+with the correct pair on every member of (GPO.43). It may perform any
+finite number of forward updates, adaptively between Reads, and any
+finite local work on each member. There is no uniform update allowance,
+no requirement of a fixed update schedule and no ban on odd intermediate
+epochs. The finite family and sourcewise termination imply an a posteriori
+finite maximum run length for this particular competitor and these public
+inputs; that maximum is neither an input nor a stopping oracle. No reset,
+clone, inverse substitution, reroot, cursor, graft, hidden-source comparison
+or writer read is available.
+
+The three optimized coordinates are Definition 1.3's $Q,W,M_{\rm addr}$,
+with maximum zero if there is no Read. Every call, including repetition
+and absence, is charged. Each semantic word is translated by the public
+$\tau_\pi$ and submitted as an entire physical root word of the same
+length; there is no shared-prefix, cached-receipt or free-focus discount.
+Actual arithmetic and memory costs are not omitted merely because this
+optimization projects onto these three coordinates.
+
+The public grants in this assumption are a lower-bound relaxation of
+original acquisition: the controller has more information and earlier
+access. They are not a service installed by a theorem. The encoded scaffold,
+port bit and bin have their own acquisition, authentication, encoding,
+storage and access costs. They reveal neither $x$ nor $k$ within (GPO.43).
+For example a preorder scaffold has $2n-1$ branch/slot bits; its usable
+physical binding and authenticity are additional to that data. A fixed
+encoding of the bin may store $K$ and compute its endpoint by paid binary
+work. None of these costs is claimed bounded by a query count alone.
+

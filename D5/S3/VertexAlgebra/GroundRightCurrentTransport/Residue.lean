@@ -137,7 +137,7 @@ def Q (A B : VertexOperator ℂ M) (s r : ℤ) (K : ℕ) :
   ∑ ell ∈ Finset.range ((K : ℤ) - r).toNat,
     Ring.choose (-(s : ℂ) / 2) ell • Z ell (R A B (r + ell))
 
-private theorem Q_mode (A B : VertexOperator ℂ M) (s r n : ℤ) (K : ℕ) (x : M) :
+theorem Q_mode (A B : VertexOperator ℂ M) (s r n : ℤ) (K : ℕ) (x : M) :
     ((Q A B s r K) [[n]]) x =
       ∑ ell ∈ Finset.range ((K : ℤ) - r).toNat,
         Ring.choose (-(s : ℂ) / 2) ell • ((R A B (r + ell)) [[n - ell]]) x := by
@@ -147,7 +147,7 @@ private theorem Q_mode (A B : VertexOperator ℂ M) (s r n : ℤ) (K : ℕ) (x :
 def Valid (A B : VertexOperator ℂ M) (K : ℕ) : Prop :=
   ∀ r : ℤ, (K : ℤ) ≤ r → R A B r = 0
 
-private theorem Q_cutoff (A B : VertexOperator ℂ M) (s r : ℤ)
+theorem Q_cutoff (A B : VertexOperator ℂ M) (s r : ℤ)
     (K L : ℕ) (hK : Valid A B K) (hL : Valid A B L) :
     Q A B s r K = Q A B s r L := by
   classical
@@ -311,7 +311,7 @@ private theorem finsum_convolution (a c : ℂ) (v : ℕ → M)
   by_contra outside
   exact hn (by simp [tail n (by have := Finset.mem_range.not.mp outside; omega)])
 
-private theorem R_nat (A B : VertexOperator ℂ M) (r : ℕ) (n : ℤ) (x : M) :
+theorem R_nat (A B : VertexOperator ℂ M) (r : ℕ) (n : ℤ) (x : M) :
     ((R A B r)[[n]]) x =
       ((FieldNormalProductLocality.deltaEnd ^ r)
         (FieldNormalProductLocality.commutator A B)) 0 n x := by
@@ -359,7 +359,7 @@ private theorem R_nat (A B : VertexOperator ℂ M) (r : ℕ) (n : ℤ) (x : M) :
   rw [← mul_assoc, sign, Int.natCast_sub within]
   rw [show n + (r : ℤ) - ((r : ℤ) - j) = n + j by omega]
 
-private theorem valid_of_locality (A B : VertexOperator ℂ M) (K : ℕ)
+theorem valid_of_locality (A B : VertexOperator ℂ M) (K : ℕ)
     (locality : (FieldNormalProductLocality.deltaEnd ^ K)
       (FieldNormalProductLocality.commutator A B) = 0) : Valid A B K := by
   intro r hr

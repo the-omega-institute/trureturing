@@ -1,0 +1,42 @@
+**定理 5.4（精确非实幺正的参考条件）。** 给定已知参考态 $\sigma$ 与固定数据维数 $d\ge2$，允许任意实 CPTP 处理器、实辅助态和丢弃，并要求对所有数据输入精确、确定性地实现已给定幺正通道。以下条件等价：
+
+1. 能实现某个不与实正交矩阵成比例的幺正 $U$；
+2. $\operatorname{supp}\sigma\perp\operatorname{supp}\bar\sigma$；
+3. $\operatorname{tr}(\sigma\bar\sigma)=0$；
+4. 能精确制备 $r=|+i\rangle\langle+i|$，其中 $|+i\rangle=(1,i)/\sqrt2$；
+5. 能实现任意已给定幺正矩阵的通道。
+
+这里允许按已知 $U$ 设计处理器，不是把未知黑盒升级为受控门。
+
+**证明。** 实处理器若以程序 $\sigma$ 实现 $\operatorname{Ad}_U$，则以 $\bar\sigma$ 实现 $\operatorname{Ad}_{\bar U}$。将两个程序分解为支持内纯态。幺正通道的 Choi 矩阵秩一，所以带正权混合中的每个纯程序也实现同一个幺正通道。若两个支持不正交，可选非正交程序 $s,t$。共同 Stinespring 等距给
+
+$$
+\psi\otimes s\mapsto U\psi\otimes e_s,
+\qquad
+\psi\otimes t\mapsto\bar U\psi\otimes e_t.
+$$
+
+环境向量与 $\psi$ 无关：先对数据基向量使用输出纯性，再对两基向量叠加使用线性性。保持内积于是要求
+
+$$
+\langle s,t\rangle I=\langle e_s,e_t\rangle U^\dagger\bar U.
+$$
+
+左端非零，故 $U^\dagger\bar U$ 为标量；调整整体相位使 $U$ 实，矛盾。这证明必要性。正半定矩阵的迹积为零等价于支持正交，故 2 与 3 等价。
+
+若 $S=\operatorname{supp}\sigma\perp\bar S$，选 $S$ 的正交基 $s_j=(a_j+ib_j)/\sqrt2$。由 $\langle s_j,s_k\rangle=\delta_{jk}$ 和 $s_j^{\mathsf T}s_k=0$，实向量组 $\{a_j,b_j\}$ 正交归一。实 Kraus 算子
+
+$$
+K_j=|0\rangle\langle a_j|+|1\rangle\langle b_j|
+$$
+
+满足 $K_js_k=\delta_{jk}|+i\rangle$，且 $\sum_jK_j^{\mathsf T}K_j$ 是 $S\oplus\bar S$ 上的投影。在正交补添加送至 $|0\rangle$ 的算子，即补成 CPTP 映射，把 $\sigma$ 送到 $r$。最后写 $U=X+iY$，令
+
+$$
+J=\begin{pmatrix}0&1\\-1&0\end{pmatrix},
+\qquad
+\mathcal R(U)=X\otimes I+Y\otimes J.
+$$
+
+$\mathcal R(U)$ 实正交且 $\mathcal R(U)(\psi\otimes|+i\rangle)=U\psi\otimes|+i\rangle$，故能实现全部已知幺正。其余蕴含显然。$□$
+

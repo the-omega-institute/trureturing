@@ -1,0 +1,5 @@
+source_id = "fib-exact-response-strip-and-joint-collision-exclusion"
+path = "docs/develop/theory/FIB_EXACT_RESPONSE_STRIP_AND_JOINT_COLLISION_EXCLUSION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

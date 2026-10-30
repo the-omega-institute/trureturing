@@ -83,7 +83,7 @@ private lemma cutRow_zero_above {ell R t : ℝ} (hell : 256 ≤ ell) (horder : e
       _ ≤ _ := Real.rpow_le_rpow (Real.rpow_nonneg hB.le _) hd (by norm_num)
   by_cases hz : kernel t x = 0
   · simp [cutRow, hz]
-  have hk : 0 < kernel t x := lt_of_le_of_ne ((rowSupplier% kernel_nonneg) ht4) (Ne.symm hz)
+  have hk : 0 < kernel t x := lt_of_le_of_ne (OriginalMovingCutRow.kernel_nonneg ht4) (Ne.symm hz)
   have hx := ((rowSupplier% kernel_pos_iff) ht4).mp hk
   have hK := (rowSupplier% windowMass_pos_of_kernel_pos) (by linarith : 4 ≤ ell) horder ht hk
   have hlate : (rowSupplier% afterMass) ell R d x = 0 := by
@@ -177,11 +177,11 @@ private lemma cutRow_zero_below {ell R t : ℝ} (hell : 256 ≤ ell) (horder : e
     have hτ1 : (1 : ℝ) ≤ (d : ℝ) ^ (500 / 151 : ℝ) :=
       Real.one_le_rpow hd1 (by norm_num)
     have hu1 : (1 : ℝ) ≤ lowerClock t := by linarith [hu.2.1]
-    exact ((rowSupplier% endpoint_strictMonoOn).monotoneOn hτ1 hu1 hτ).trans
+    exact (OriginalMovingCutRow.endpoint_strictMonoOn.monotoneOn hτ1 hu1 hτ).trans
       (lowerClock_endpoint_le (hell.trans ht.1))
   by_cases hz : kernel t x = 0
   · simp [cutRow, hz]
-  have hk : 0 < kernel t x := lt_of_le_of_ne ((rowSupplier% kernel_nonneg) ht4) (Ne.symm hz)
+  have hk : 0 < kernel t x := lt_of_le_of_ne (OriginalMovingCutRow.kernel_nonneg ht4) (Ne.symm hz)
   have hx := ((rowSupplier% kernel_pos_iff) ht4).mp hk
   have hlate : beforeMass ell R d x = 0 := by
     apply setIntegral_eq_zero_of_forall_eq_zero
@@ -194,7 +194,7 @@ private lemma cutRow_zero_below {ell R t : ℝ} (hell : 256 ≤ ell) (horder : e
     have hτ1 : (1 : ℝ) ≤ (d : ℝ) ^ (500 / 151 : ℝ) :=
       Real.one_le_rpow hd1 (by norm_num)
     have hse : endpoint s ≤ endpoint ((d : ℝ) ^ (500 / 151 : ℝ)) :=
-      (rowSupplier% endpoint_strictMonoOn).monotoneOn hs1 hτ1 (le_of_lt hsτ)
+      OriginalMovingCutRow.endpoint_strictMonoOn.monotoneOn hs1 hτ1 (le_of_lt hsτ)
     exact (hse.trans_lt (hclock.trans_lt hx.1)).le
   have hratio : beforeRatio ell R d x = 0 := by
     unfold beforeRatio
@@ -410,7 +410,7 @@ theorem original_cut_row_lattice_estimate {ell R t : ℝ}
     rw [hrow] at hgrid
     exact hgrid.trans (ENNReal.toReal_le_of_le_ofReal
       (mul_nonneg (mul_nonneg (by norm_num)
-        ((rowSupplier% height_bounds) (by linarith [ht.1] : 4 ≤ t)).1)
+        (OriginalMovingCutRow.height_bounds (by linarith [ht.1] : 4 ≤ t)).1)
         (Real.log_nonneg (by linarith [ht.1]))) hV)
   · have hd0 : (0 : ℝ) < d := by exact_mod_cast (lt_of_lt_of_le Nat.zero_lt_one hd)
     have hz : cutRow ell R t d = fun _ => 0 := by
@@ -428,7 +428,7 @@ theorem original_cut_row_lattice_estimate {ell R t : ℝ}
     rw [hsum, hz]
     simp only [intervalIntegral.integral_zero, zero_div, sub_zero, abs_zero]
     exact mul_nonneg (mul_nonneg (by norm_num)
-      ((rowSupplier% height_bounds) (by linarith [ht.1] : 4 ≤ t)).1)
+      (OriginalMovingCutRow.height_bounds (by linarith [ht.1] : 4 ≤ t)).1)
       (Real.log_nonneg (by linarith [ht.1]))
 
 private lemma latticeRowRemainder_zero_of_cutRow {ell R t : ℝ} {d : ℕ}
@@ -520,7 +520,7 @@ theorem original_cut_row_pointwise_budget {ell R t : ℝ}
     _ ≤ (2 * t ^ (51 / 500 : ℝ)) *
         (3 * lowerHeight t * Real.log (2 * t)) := by
       have hnonneg : 0 ≤ 3 * lowerHeight t * Real.log (2 * t) := by
-        exact mul_nonneg (mul_nonneg (by norm_num) ((rowSupplier% height_bounds) ht4).1)
+        exact mul_nonneg (mul_nonneg (by norm_num) (OriginalMovingCutRow.height_bounds ht4).1)
           (Real.log_nonneg (by linarith))
       apply mul_le_mul_of_nonneg_right _ hnonneg
       have hcard : (C.card : ℝ) ≤ 2 * t ^ (51 / 500 : ℝ) := by
@@ -528,7 +528,7 @@ theorem original_cut_row_pointwise_budget {ell R t : ℝ}
         exact_mod_cast crossing_count ht256
       exact hcard
     _ ≤ 6 * t ^ (-99 / 500 : ℝ) * Real.log (2 * t) := by
-      have hb := ((rowSupplier% height_bounds) ht4).2
+      have hb := (OriginalMovingCutRow.height_bounds ht4).2
       have hlog : 0 ≤ Real.log (2 * t) := Real.log_nonneg (by linarith)
       have hpow : t ^ (51 / 500 : ℝ) * t ^ (-3 / 10 : ℝ) =
           t ^ (-99 / 500 : ℝ) := by

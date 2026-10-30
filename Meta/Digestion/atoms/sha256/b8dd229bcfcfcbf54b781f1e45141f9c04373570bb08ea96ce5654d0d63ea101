@@ -1,0 +1,55 @@
+**Theorem 73.4 (clearing, second sweep and decode on the same specimen).**
+In Definition 72.1's no-intervening-continuation experiment the second
+sweep starts with
+
+$$
+n'=n+2b,\qquad
+D'=D+2D_\beta+2b,\qquad D'_\beta=D_\beta+b
+$$
+
+logical-node and depth coordinates. It makes $n'$ split calls, exactly
+$b$ successful, and adds $2b$ more material vertices. Its payloads are
+$2D'+4n'$ input and $5n'+2D'_\beta$ output, with $n'$ complete cycles,
+$D'$ descents and $D'$ ascents, and $8b$ source assignments. The physical
+source finally has $N+4b$ vertices. The newly acquired word $J(t)$ has
+$2n'$ content bits; keeping it while decoding a separate $t$ requires an
+additional $2n$ output content bits, besides work and backing.
+
+Proof. Each original beta at depth $d$ becomes one branch at depth $d$
+and two leaves at depth $d+1$, with exactly one beta. Relative to the
+original logical positions this adds two nodes, $2d+2$ to total depth,
+and one to beta-depth sum. Summing gives the three coordinates. Apply
+Theorem 73.2 to the actual second entry $J(t)$; its beta count is still
+$b$ and its material size is $N+2b$. This proves all source/traffic
+formulas on the actual successive run, rather than combining optima
+from separate realizations.
+
+The decoder can read its valid input preorder word once, using a backed
+structural stack. Alpha emits alpha; a branch with immediate left beta
+is the sentinel and consumes that beta and its right alpha, emitting
+beta; any other branch emits branch and parses its children. The valid
+range grammar proves these cases exhaustive and unambiguous. It uses
+$O(n')$ constructor decisions and $2n$ output-content writes, in addition
+to its actual stack, pointers, counters and operand widths. This is an
+arithmetic/symbol operation account, not a total bit-complexity theorem.
+$\square$
+
+The clearing itself scans/overwrites or releases every accessible
+entry-dependent occupied record specified in Definition 72.1, clears
+its accessible metadata and pays every actual such operation. A receiver
+that retained extra transcripts or exports pays to clear them too.
+There is no negative material charge for inaccessible retained capacity.
+At every cut total material counts the actual source's three reference
+fields per vertex, every still allocated record/cell at its real width,
+all code, cursor and allocator descriptors, actual root and grants,
+I/O and pending latches, old/new/proposed/result copies and retained
+backing simultaneously. Total work is the sum of their actual allocations,
+field assignments, symbol/operand operations, communication, navigation,
+clearing and retained-use operations, including old preparation. No
+unspecified auxiliary source field is assumed; if a realization supplies
+extra slots, their allocation and initialization are additional charges.
+Finite conversion/export of §71's views also pays for every constructed
+material address, terminal and labelled event/precedence record. These
+charges prevent the payload formulas from being read as total-resource,
+peak-memory, latency, energy or lifetime optima.
+

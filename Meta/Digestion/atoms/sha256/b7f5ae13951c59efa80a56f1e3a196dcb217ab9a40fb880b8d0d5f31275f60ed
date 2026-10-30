@@ -1,0 +1,12 @@
+**定义 11.2（绑定的同父二目标族）。** For every $y\in\mathcal I$, set $t=5(y-12)/96$ and define the one family
+
+$$
+\begin{aligned}
+\mathcal R_t&=\{\ell\in\mathbb R:
+Q_t(\ell)=0,\ 1<\ell<8/3,\ 0<t\ell-1<1\},\\
+\mathcal A_y&=\{W_\ell:\ell\in\mathcal R_t\},
+\end{aligned}                                                     \tag{11.6}
+$$
+
+where $W_\ell$ is exactly the complete target (10.3). By Theorems 10.1 and 11.1, $\mathcal A_y$ has exactly two elements, both in the same entire literal parent $\mathcal P_y$. The symbol $\mathcal A_y$ always denotes this set, including when it is retained in a fifth-$M$ or sixth-action response child.
+

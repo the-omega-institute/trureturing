@@ -1,0 +1,74 @@
+**Proposition 6.2 (Complete uniform root allocation).** For every real
+$(p,v)\in Q_{70}$, each $\mathcal R_i$ contains exactly one simple root of
+$R(x,p,v)$, and $\mathcal D_C$ contains exactly two roots counted with
+multiplicity. These eighteen roots exhaust the polynomial. Eight simple
+roots are negative real, two are nonreal conjugates, and the other six
+simple roots are positive real.
+
+Proof. Formula (5.2) gives every coefficient. Rational evaluation of those
+coefficients over the full closed parameter box gives
+
+$$
+L(p,v)>10^{19}.
+\tag{6.3}
+$$
+
+In particular the monic normalization has no parameter pole. For each of
+the sixteen rectangles, the uniform inequalities are
+
+$$
+\begin{aligned}
+\sup_{\mathcal R_i\times Q_{70}}
+ \bigl(|\operatorname{Re}(1-\gamma_i\overline R_x)|
+       +|\operatorname{Im}(1-\gamma_i\overline R_x)|\bigr)
+ &<8.493\cdot10^{-24},\\
+\sup_{q\in Q_{70}}\max\bigl(
+ |\operatorname{Re}(\gamma_i\overline R(\xi_i,q))|,
+ |\operatorname{Im}(\gamma_i\overline R(\xi_i,q))|\bigr)
+ &<7.189\cdot10^{-64}.
+\end{aligned}
+\tag{6.4}
+$$
+
+These bounds use the rational recurrence (6.1) and Definition 3.1;
+all $128$ Newton-step bins and the sixteen multiplier bins have the integer
+description immediately following (6.1). For fixed $q$, the map
+$x\mapsto x-\gamma_i\overline R(x,q)$ has the first line of (6.4) as a
+Lipschitz bound in the real-component maximum norm. The second line plus
+$10^{-30}$ times the first is strictly less than $10^{-30}$. Hence the map
+is a contraction into the rectangle's interior. Its unique fixed point is
+a root, and the first inequality also makes its derivative nonzero.
+
+For the cluster write $\overline R=\sum_{j=0}^{18}c_j(q)x^j$ and
+
+$$
+\overline R(\xi_C+h,q)=\sum_{k=0}^{18}t_k(q)h^k,\qquad
+t_k(q)=\sum_{j=k}^{18}\binom jk c_j(q)\xi_C^{j-k}.
+\tag{6.5}
+$$
+
+The exact uniform coefficient bounds needed for the circle $|h|=\rho_x$ are
+
+$$
+19<t_2(q)<21,\qquad
+\frac{\sup|t_0|+\rho_x\sup|t_1|
+ +\sum_{k=3}^{18}\rho_x^k\sup|t_k|}
+ {\rho_x^2\inf|t_2|}<1.298\cdot10^{-16}<1.
+\tag{6.6}
+$$
+
+Every supremum and infimum in (6.6) is over $Q_{70}$, with (6.5)
+evaluated by the rational rules of Definition 3.1. Rouché's theorem applied
+to $t_2h^2$ gives exactly two cluster roots counted with multiplicity and
+none on its boundary.
+
+The sixteen rectangles and the cluster disk are pairwise disjoint.
+The real-centred rectangles lie strictly on the indicated negative or
+positive sides of zero. Their centres are real by (6.1), so conjugation
+and uniqueness force their roots to be real. The other two rectangles
+are conjugate and disjoint from the real axis. Finally (6.3) gives degree
+exactly eighteen throughout the box. The sixteen simple roots and the
+two cluster roots already account for that degree, leaving no other roots.
+This is an allocation of polynomial roots; it does not assert that they
+are legal worlds. ∎
+

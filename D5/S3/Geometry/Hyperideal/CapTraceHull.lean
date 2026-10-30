@@ -33,13 +33,13 @@ def incident : Support → Fin 4 → Fin 4 → Prop
 instance (f : Support) (i j : Fin 4) : Decidable (incident f i j) := by
   cases f <;> dsimp [incident] <;> infer_instance
 
-private lemma support_body (l : Fin 6 → ℝ) (x : V) (hx : x ∈ cutBody l)
+lemma support_body (l : Fin 6 → ℝ) (x : V) (hx : x ∈ cutBody l)
     (f : Support) : support l f x ≤ 0 := by
   cases f with
   | inl i => exact neg_nonpos.mpr (hx.1.1 i)
   | inr i => simpa [support] using hx.2 i
 
-private lemma endpoint_support (l : Fin 6 → ℝ) (hl : ∀ q, 0 < l q)
+lemma endpoint_support (l : Fin 6 → ℝ) (hl : ∀ q, 0 < l q)
     (f : Support) (i j : Fin 4) (hij : i ≠ j) :
     (incident f i j → support l f (endpoint l i j) = 0) ∧
     (¬ incident f i j → support l f (endpoint l i j) < 0) := by

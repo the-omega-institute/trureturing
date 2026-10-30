@@ -1,0 +1,58 @@
+**Proposition 17.4 (separately attained scout variants).** The following
+schedules are also sufficient for this same historical task, with their
+own actual acquired images. Let $a$ be the preprocessing Tick count,
+$z=T^ax_h$, $\ell=(k_*-1)2^{-p_*}>0$, and $c$ the actual number of
+scout Reads. The table counts only acquisition, before adding the
+seed and historical bills.
+
+| Schedule | Certificate and assay precisions | Actual return | Tick, Hold and digital Read counts |
+| --- | --- | --- | --- |
+| One Tick, rational cutoff | $a=1$; scout $1,2,4,\ldots$; least $s$ with $\lambda^s<\ell$, then $U=s-1$; assay $p_r=3(U+r)+1$ | $T^{n+1}x_h$ | $n+1,\ n+1,\ c+b(n+1)$ |
+| $n$ Ticks, rational cutoff | $a=n$; scout $0,1,2,4,\ldots$; least $s$ with $\lambda^s<\ell$; assay $p_r=3(s+r)+1$ | $T^{2n}x_h$ | $2n,\ n+1,\ c+b(n+1)$ |
+| Alpha-skipping linear scout | $a=\delta=\mathbf1_{\{n>0\}}$; scout $0,1,\ldots,p_*$; $U=6(p_*+1)$; assay $p_r=3(U+r)+1$ | $T^{n+\delta}x_h$ | $n+\delta,\ 0,\ p_*+1+b(n+1)$ |
+
+The first two rows Hold once before scouting and share that Hold with
+assay epoch zero, then Hold after each assay Tick. In the second row,
+the $n$ preprocessing Ticks precede this single Hold. In the last row
+all diagnostic Holds are omitted; the seed Hold remains outside the
+table. No autonomous evolution occurs while local work or Reads run.
+
+Proof. For the first row put $R=Q+1$. Equation (17.6) gives
+$\lambda^R\ge\ell$. Thus the least $s$ with $\lambda^s<\ell$
+satisfies $s>R$, so $U=s-1\ge R$. The same inequality
+$\lambda^{6p_*}<2^{-p_*}\le\ell$ gives $s\le6p_*$.
+Its epoch-$r$ field lies on the $8^{-(U+r)}$ lattice, and the
+precision $3(U+r)+1$ extracts it exactly by the proof of Theorem 10.2.
+
+For the second row, the root coordinate of $x_h$ is at least $2^{-Q}$:
+each historical Tick preserves at least one half of its old root
+coordinate, and births preserve it. Every terminal has depth at most
+$n$, because each birth raises material depth by at most one. In $n$
+further Ticks, a path from root to that terminal, padded by diagonal
+steps, has product at least $8^{-n}$. Therefore
+$z_{\ell_j}\ge2^{-(Q+3n)}$, including alpha at $n=0$.
+Its common denominator divides $8^{Q+n}$ and norm is at most
+$\lambda^{Q+n}$. The scout terminates by precision $Q+3n+1$,
+or the next listed power of two, so $p_*<2(Q+3n+1)$.
+The least $s$ satisfies $Q+n<s\le6p_*+1$; the harmless added one
+also covers a possible stopping precision zero. Extraction now uses
+the lattice $8^{-(s+r)}$.
+
+For the last row, $z$ is positive with denominator dividing
+$8^R$, $R=Q+\delta$, also when $n=0,\delta=0$. Thus
+$p_*\le3R+1$. Equation (17.6), and
+$\lambda^{6(p_*+1)}<2^{-p_*}$, give $R<U$.
+The same epoch extraction applies. Reads and local work do not change
+the field, so omitting identity Holds changes neither sample nor
+endpoint. Counting the actual Ticks, epoch Holds and Reads proves
+the table. $\square$
+
+For Construction 17.2 the scout precision sum is $2p_*-1$ and the
+assay precision sum is $b(n+1)P$. The rational-cutoff doubling rows
+have scout sum at most $2p_*$; the linear row has sum
+$p_*(p_*+1)/2$. The cutoff search uses finite rational power products
+and comparisons. Each row changes its own precision work, calls or
+physical endpoint; no total optimum or combination of their cheapest
+coordinates is asserted. Exact-Read A needs no scout when that stronger
+port is genuinely available.
+

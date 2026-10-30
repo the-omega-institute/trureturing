@@ -1,0 +1,13 @@
+**定义 9.2（原生树的共同未来目标）。** 有序有限二叉树由叶 $\alpha,\beta$ 与分支 $\langle u,v\rangle$ 生成，替换为
+
+$$
+S\alpha=\beta,\qquad S\beta=\langle\beta,\alpha\rangle,
+\qquad S\langle u,v\rangle=\langle Su,Sv\rangle.
+$$
+
+初始源为 $t=\langle\alpha,v\rangle$。地址由 $L,R$ 组成，读出为 $\alpha,\beta,\mathrm{branch},\mathrm{absent}$ 四值。目标取全部已提供计数 $k\in\mathbb N$ 下地址 $RL,RR$ 的回复。计数是实际给定输入，不由预测码免费取得。
+
+这个特例直接使用 [《自适应取得参考前沿》§12，特别是 Theorems 12.3、12.6、12.7](RECURSIVE_RELATIONAL_OBSERVATION_ADAPTIVE_ACQUIRED_REFERENCE_FRONTIER.md) 的原生响应分类，接入定义 4.1 的任意目标族。其共同源解释如下：$v$ 是叶时有 $\alpha,\beta$ 两类；$v$ 是分支时，每个孩子的根回复轨迹只有三类，分别从 $\alpha$、$\beta$、branch 开始，其后由替换固定。两个孩子可在同一个实际分支中任取这三类代表，得到九个共同实现。两种叶源的地址回复含初始缺席阶段，与九种分支源区别。于是联合类数为 $2+3\cdot3=11$，而各单地址类数是五；不能把两个分别达到的五相乘成二十五。孩子代表可取 $\alpha,\beta,\langle\alpha,\alpha\rangle$，因而当 $v$ 高度上界至少二时全部十一类已达到。
+
+有限高度的源数也能与这项全未来证明区分。令 $b_h$ 为高度至多 $h$ 的 $v$ 数，则 $b_0=2$、$b_{h+1}=2+b_h^2$，所以 $b_1=6,b_2=38,b_3=1446$。这是全体初始树的计数，不是响应类数。上述分类来自替换轨迹与共同代表，对所有未来计数成立，不以枚举这两个有限集合代替证明，也不以原生十一类给量子端口定维。
+

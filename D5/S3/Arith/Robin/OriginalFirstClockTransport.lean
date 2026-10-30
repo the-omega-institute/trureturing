@@ -54,7 +54,7 @@ def originalMaximizes (p N : ℕ) : Prop :=
 def canonicalSource (p : ℕ) : ℕ :=
   if h : ∃ N, originalMaximizes p N then Nat.find h else 0
 
-private theorem canonical_source_spec {p : ℕ} (h : ∃ N, originalMaximizes p N) :
+theorem canonical_source_spec {p : ℕ} (h : ∃ N, originalMaximizes p N) :
     originalMaximizes p (canonicalSource p) ∧
       ∀ N, originalMaximizes p N → canonicalSource p ≤ N := by
   simp only [canonicalSource, dif_pos h]
@@ -208,7 +208,7 @@ private theorem first_clock_exists {q : ℕ} (hq : q.Prime) :
 def firstClock (q : ℕ) : ℝ :=
   if hq : q.Prime then Classical.choose (first_clock_exists hq) else 0
 
-private theorem first_clock_spec {q : ℕ} (hq : q.Prime) :
+theorem first_clock_spec {q : ℕ} (hq : q.Prime) :
     (q : ℝ) < firstClock q ∧ firstClock q < (q : ℝ)+1 ∧
       λ₀ (firstClock q) = goldenLayerMarginal q 1 := by
   simpa only [firstClock, dif_pos hq] using Classical.choose_spec (first_clock_exists hq)
@@ -278,7 +278,7 @@ private theorem contact_density {q : ℕ} (hq : q.Prime) {t : ℝ} (ht : 243 ≤
   have hw := original_curve.positive_weight t (by linarith)
   nlinarith
 
-private theorem first_absent {U q : ℕ} (hU : 0 < U) (hq : q.Prime) {t : ℝ}
+theorem first_absent {U q : ℕ} (hU : 0 < U) (hq : q.Prime) {t : ℝ}
     (ht : 1 < t) (hc : t ≤ firstClock q)
     (hstrict : ∀ q : ℕ, U.factorization q = optimalLayerCount (λ₀ t) q) : ¬q ∣ U := by
   have hy := first_clock_spec hq

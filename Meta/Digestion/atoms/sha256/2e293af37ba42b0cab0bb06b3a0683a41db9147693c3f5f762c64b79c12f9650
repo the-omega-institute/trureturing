@@ -1,0 +1,24 @@
+**定义 19.4（例外平面的四个固定目标与八槽）。** Fix any
+$p\in\mathcal C_3\setminus\{0\}$ with $E=(13/4)\Delta$, where the scalar values are those of (19.3). Formula (19.6) gives $\lambda=(16/5)\kappa$, including $\kappa=0$. For $0<d<1$ set
+
+$$
+Q_0(d)=\begin{pmatrix}1-d&1-d\\d&d\end{pmatrix},\qquad
+Q_1(d)=\begin{pmatrix}1-d&d\\1-d&d\end{pmatrix}.
+\tag{19.21}
+$$
+
+
+Define the four complete targets, before selecting any continuation, by
+
+$$
+\begin{aligned}
+W_e^J&=\bigl(Q_e(4/5),\ p-p(6),\ p(6)\bigr),\\
+W_e^M&=\bigl(Q_e(1/4),\ p-p(7),\ p(7)\bigr)
+\qquad(e=0,1).
+\end{aligned}
+\tag{19.22}
+$$
+
+
+Each triple records source, gain and drift. In the eight slots below the chronological prefix $J^4M$, assign $W_e^J$ to both $(J^4MJJ,e)$ and $(J^4MJM,e)$, and $W_e^M$ to both $(J^4MMJ,e)$ and $(J^4MMM,e)$. The repeated sources and repeated targets across different leaves are intentional; only each terminal pair must consist of distinct complete targets.
+

@@ -1,0 +1,50 @@
+**Theorem 18.2 (four recoveries and the actual current task).** On this
+joint image all four views recover each other and the unique $h$.
+The explicit historical routes are
+
+$$
+x_h=T^{-1}DY,\qquad
+x_h=T^{-(n+1)}v,\qquad
+v=Dm.
+\tag{18.1}
+$$
+
+Time evaluates the historical recurrence and (17.4). These routes
+have both inverse identities on their respective images and agree
+through every intermediate view. Their common kernel is exactly the
+kernel of complete sufficiently backed finite current continuation
+languages in AD, with fixed context and equal accessible side data.
+
+Proof. Boundary parses $t$ by terminal prefix closure and computes the
+first formula. Space computes the second. Memory computes the third
+and then the Space route. Theorem 4.1 returns the same $h$ from each.
+Conversely the actual recurrence of $h$ and the known suffix compute
+$t,Y,v,m$. Its two inverse identities and $DO=\operatorname{Id}$
+prove all round trips. More explicitly, for independent view maps
+$E_i(h)$ and these decoders $R_i$, $R_iE_i(h)=h$; hence the actual
+routes $E_jR_i$ satisfy
+$E_kR_jE_jR_i=E_kR_i$ on the joint image. This uses the acquired
+certificate to reach the image, not to define its observations.
+
+For complete service use every row, guard, parser and lifecycle of
+Theorem 7.2, choosing its raw growth row and its digital Read row.
+The same finite predictor updates the actual rational field, consumes
+the real reply and predicts the full two-element Read set. Canonical
+syntax and precision validation precede range; distinct growth
+refusals, BadFrame, RangeRefusal, proper-prefix pending behavior,
+serialization, reservation, End, local acknowledgement, Return and
+cleanup retain Definition 7.1. Disabled authority/backing/phase is
+nonexecution. No post-growth Tick is inserted. Induction on completed
+calls, retaining pending fields between them, proves complete current
+prediction on every rational state, including those outside this image.
+
+Equal $(t,v)$ thus has the same full language and matched successors.
+Unequal terms have the first-constructor growth/refusal witness of
+Theorem 5.4. For equal terms and unequal fields, $DO=\operatorname{Id}$
+gives a terminal difference after some $r\le n$ Ticks. At finite
+precision with scaled difference greater than two, the two digital
+reply pairs are disjoint, as in Theorem 12.1. Thus the current-language
+kernel is equality of $(t,v)$. Invertibility of $T^{n+1}$ and
+Theorem 4.1 make this exactly equality of $h$ on the sampled image,
+proving the asserted kernel correspondence. $\square$
+

@@ -104,7 +104,7 @@ Changing the origin adds its natural coordinate to every actual minimum depth. A
 
 **Theorem 1.9 (No gaps in the arbitrary-language spectrum).**
 
-$$\forall alpha \in \operatorname{Type},\; Finite\left(alpha\right) \Rightarrow \left(\forall A \in Language\left(alpha\right),\; \forall B \in Language\left(alpha\right),\; \forall r \in \mathbb{N},\; r \in iterationDepthSpectrumAt\left(closedSourceZero, A, B\right) \Rightarrow \left(\forall q \in \mathbb{N},\; q \le r \Rightarrow q \in iterationDepthSpectrumAt\left(closedSourceZero, A, B\right)\right)\right)$$
+$$\forall alpha \in \operatorname{Type},\; \forall A \in Language\left(alpha\right),\; \forall B \in Language\left(alpha\right),\; \forall r \in \mathbb{N},\; r \in iterationDepthSpectrumAt\left(closedSourceZero, A, B\right) \Rightarrow \left(\forall q \in \mathbb{N},\; q \le r \Rightarrow q \in iterationDepthSpectrumAt\left(closedSourceZero, A, B\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/HughesIterationDepthNoGap.result` (`✓ std3`). ∎
 
@@ -118,7 +118,7 @@ $$\forall alpha \in \operatorname{Type},\; Finite\left(alpha\right) \Rightarrow 
 
 *Commentary.*
 
-For every finite alphabet and arbitrary languages A and B, any attained depth r forces every q at most r to be attained. From a minimum-depth successor word, the proof extracts its predecessor. If that predecessor appeared too early at degree j, both histories lift to max(k,j) by padding with empty factor pairs, producing the original word too early. Induction then descends through every smaller depth. The argument includes empty languages, epsilon-only languages, and empty alphabets.
+For every alphabet and arbitrary languages A and B, any attained depth r forces every q at most r to be attained. From a minimum-depth successor word, the proof extracts its predecessor. If that predecessor appeared too early at degree j, both histories lift to max(k,j) by padding with empty factor pairs, producing the original word too early. Induction then descends through every smaller depth. The argument includes empty languages, epsilon-only languages, and empty alphabets. No finiteness, countability, or decidable equality assumption on the alphabet is needed.
 
 ## References
 

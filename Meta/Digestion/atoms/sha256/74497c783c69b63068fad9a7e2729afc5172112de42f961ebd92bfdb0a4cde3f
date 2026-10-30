@@ -1,0 +1,27 @@
+**Theorem 17.2 (the entire closed finite-clock class is excluded).** For every finite $m\ge1$, every $a\in[0,1]^m$ and every stationary row in Definition 17.1, the matrices define one original two-sided stationary law $J_\theta$, with visible marginal $P_\theta$, and
+
+$$
+\theta\in\mathcal C_m\subseteq\Theta_{2m},\qquad d(P_\theta)<c_\star.
+\tag{17.3}
+$$
+
+For an interior parameter $a\in(0,1)^m$, define its true rotation stabilizer and its free posterior values by
+
+$$
+H(a)=\{h\in\mathbb Z/m\mathbb Z:a_{t+h}=a_t\text{ for all }t\},\qquad
+b_s=\frac{a_s}{a_s+(1-a_s)(1-a_{s+1})}.
+\tag{17.4}
+$$
+
+Both visible tails recover $S_i+H(a)$ at every cut $i$. On one shift-invariant, finite-modification-saturated conull domain, the original full-exterior posteriors have the form
+
+$$
+q_i(x)=\mathbf1_{\{x_{i-1}=x_{i+1}=0\}}\,b_i(x),\qquad
+b_i(x)=b_{s+i}\quad\text{if the recovered coset at zero is }s+H(a).
+\tag{17.5}
+$$
+
+Every $b_i(x)$ is unchanged by every legal finite modification of $x$. The domain may be chosen for any fixed original posterior version and all its translates. This includes profiles with repeated rotations; it asserts recovery of the quotient, not recovery of a distinguished representative of it.
+
+**Proof of Theorem 17.2.**
+

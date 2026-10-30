@@ -1,0 +1,51 @@
+**Definition 270.1 (source, clock and fixed observables).** Retain precisely
+[IV, Definitions 92.1–92.2 and 98.1](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md).
+Thus $T_0=\alpha$, $T_1=\beta$ and
+$T_n=\langle T_{n-1},T_{n-2}\rangle$ for $n\ge2$, with the original
+ordered labels and all distinct occurrence addresses. Write
+
+$$
+\begin{gathered}
+N_n=2F_{n+1}-1,\qquad
+\mu_n=N_n^{-1}\sum_{x\in V_{T_n}}\delta_x,\qquad
+(L_nu)(x)=\sum_{y\sim x}(u(x)-u(y)),\\
+S_n(s)=e^{-N_nsL_n},\qquad s\ge0,\\
+\Omega=\{L,R\}^{\mathbb N},\quad
+\varphi=(1+\sqrt5)/2,\quad a=\varphi^{-1},\quad b=\varphi^{-2},\\
+M([p])=a^{\#_L(p)}b^{\#_R(p)}=\varphi^{-\#_L(p)-2\#_R(p)}.
+\end{gathered}
+\tag{270.1}
+$$
+
+The finite energy is the original sum of squared differences on unit
+edges, with no root killing term. In the normalized inner product,
+$\langle u,N_nL_nu\rangle_{\mu_n}$ is exactly that energy.
+The root, every interior node and every terminal have mass $1/N_n$.
+The variable $s$ is the supplied comparison clock. Each $T_n$ is a
+separately supplied original source, not a replacement of INITIAL in
+one native execution.
+
+Put $\mathscr H=\ell^2(\{L,R\}^+;\mathbb R)$ and
+$\mathscr G=L^2(\Omega,M;\mathbb R)$. Use the original path sums
+$J_n,J$, covariance operators $\Sigma_n,\Sigma$, vectors $v_n,v$,
+and $\mathscr K=(\ker\Sigma)^\perp$ of IV, §§98–99. Use exactly the
+free-root form $(\mathcal E,\mathcal D)$, operator $H$ and Markov
+semigroup $T(s)=e^{-sH}$ of IV, Theorems 111.2–111.3.
+For a nonempty word $p$, let
+$\chi_{n,p}(x)=\mathbf1_{\{p\preceq x\}}$ on actual nodes and
+$\chi_p=\mathbf1_{[p]}$ on $\Omega$; an absent finite address gives
+$\chi_{n,p}=0$. For a pair $u=(c,z)$ with $c\in\mathbb R$ and
+finitely supported $z\in\mathscr H$, set
+
+$$
+f_{u,n}=c\mathbf1+J_nz=c\mathbf1+\sum_pz_p\chi_{n,p},\qquad
+F_u=c\mathbf1+Jz=c\mathbf1+\sum_pz_p\chi_p,
+\qquad B_u=|c|+\sum_p|z_p|.
+\tag{270.2}
+$$
+
+Both fields are bounded in absolute value by $B_u$. The pair specifies
+its finite extension, including root value $c$, rather than just its
+boundary equivalence class. Write $\mathsf M_f$ for bounded
+multiplication by $f$ on the indicated $L^2$ space.
+

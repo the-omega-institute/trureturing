@@ -1,0 +1,24 @@
+**Corollary 3.3 (multiple fixed contexts).** Fix pairwise disjoint
+ordered source contexts and replace $k$ of them by $A$ or $B$, leaving all
+other leaves fixed with total scale $B_0$.  For
+$\sigma,\tau\in\{A,B\}^k$, put $d=d_H(\sigma,\tau)$ and
+
+$$
+w=B_0+k\varphi^2.
+\tag{3.4}
+$$
+
+Then all members have the same $W=w$, and
+
+$$
+\langle\psi_\sigma,\psi_\tau\rangle
+=1-\frac{\delta\,d_H(\sigma,\tau)}{w}.
+\tag{3.5}
+$$
+
+Proof. Each unchanged context contributes its common weight divided by
+$w$, and each changed context replaces $\varphi^2/w$ by
+$2\sqrt\varphi/w$.  Summing the $d$ deficits gives (3.5).  This is an
+authentic finite source family in the original algebra; no unreduced leaf
+partition is appended to the input. $\square$
+

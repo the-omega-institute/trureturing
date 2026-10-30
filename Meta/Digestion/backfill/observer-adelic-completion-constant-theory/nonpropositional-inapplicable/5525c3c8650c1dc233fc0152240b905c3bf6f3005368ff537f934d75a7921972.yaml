@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5525c3c8650c1dc233fc0152240b905c3bf6f3005368ff537f934d75a7921972
+  normalized_sha256: sha256:5525c3c8650c1dc233fc0152240b905c3bf6f3005368ff537f934d75a7921972
+cas_ref: sha256:5525c3c8650c1dc233fc0152240b905c3bf6f3005368ff537f934d75a7921972
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 开放问题下的备选答案：询问是否为多个标量模形式的线性组合，没有声称存在该分解。
+    previous_atom_id: 77b45a344ff8a9373335e52fd05a29dc5132a300836064be668958b137aab96f
+    next_atom_id: 872a45937a6e16c5b788a5d4a1acc5eb67be5d5ec215d8c85e89dbc32f56d6a9

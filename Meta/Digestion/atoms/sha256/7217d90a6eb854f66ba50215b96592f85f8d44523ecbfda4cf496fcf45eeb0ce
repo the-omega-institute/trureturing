@@ -1,0 +1,20 @@
+**Lemma 7.2.2 (Uniform rational inequalities).** The recurrence and enclosures (7.2.1)–(7.2.6) have the following bounds:
+
+| Quantity | Rational upper bound | Sufficient strict bound |
+|---|---:|---:|
+| $\max_i q_i$ | $110094427447/250000000000$ | $441/1000$ |
+| $\max_i\beta_i$ | $263610622981/1000000000000$ | $264/1000$ |
+| $\max_i\widetilde q_i$ | $47763641509/200000000000$ | $239/1000$ |
+| $\max_i\rho_BD_i$ | $247533043797/100000000000$ | $5/2$ |
+| $\max_i\rho_kD_i$ | $247533043797/10000000000$ | $25$ |
+
+In particular $q_i+\beta_i<141/200<1$. All inverses in these enclosures are defined. On all tubes, $B>0.1285$ and $k<-1.2188$. For both scalar endpoints (7.1.6), the following larger rational intervals contain the enclosures, uniformly over the cells and $0\le h\le1/250$, $h^2\in T_i$:
+
+| Quantity | Lower endpoint | Upper endpoint |
+|---|---:|---:|
+| $r_\pm$ | $447759700931/500000000000$ | $903519901863/1000000000000$ |
+| $b_\pm$ | $3092177973/25000000000$ | $8339901701/62500000000$ |
+| $e_\pm$ | $1661423734033/250000000000$ | $3484642346261/500000000000$ |
+| $d_\pm$ | $7661423734033/250000000000$ | $15484642346261/500000000000$ |
+| $p_\pm$ | $-13368909895949/1000000000000$ | $-4212208536209/500000000000$ |
+| $x_{\mathrm{sec}}$ | $1426727197703/500000000000$ | $2853937651871/1000000000000$ |

@@ -1,0 +1,66 @@
+**Proposition 103.1 (Three individual task optima).** For every finite
+$n\ge1$ and at the actual limit,
+
+$$
+\inf_{\mathcal R\ {\rm CPTP}}e_{P_0}(\mathcal R;s)=0,\qquad
+\inf_{\mathcal R\ {\rm CPTP}}e_{P_2}(\mathcal R;s)=B,\qquad
+\inf_{\mathcal R\ {\rm CPTP}}e_Q(\mathcal R;s)=\frac12.
+\tag{103.3}
+$$
+
+At the empty horizon all three optima are zero.
+
+*Proof.* The first value is attained by $\mathcal R=\operatorname{id}$,
+since $\Phi_s^\dagger(P_0)=P_0$. For the second, let
+$K=\mathcal R^\dagger(P_2)$ and $C=\Phi_s^\dagger(K)$. Since $C$ is an
+effect,
+
+$$
+ e_{P_2}(\mathcal R;s)\ge\max\{C_{11},1-C_{22}\}.
+$$
+The displayed formula (93.5) gives $C_{22}-C_{11}\le\tau$, hence
+$2e_{P_2}\ge1-\tau=2B$. If $s\ge0$, the choice $\mathcal R=\operatorname{id}$
+attains $B$; if $s<0$, use the unitary swapping $|1\rangle$ and $|2\rangle$
+and fixing $|0\rangle$, which makes $\mathcal R^\dagger(P_2)=P_1$ and
+again gives error $B$. At $s=0$ the first choice applies.
+
+For $Q$, every $\Phi_s^\dagger(K)$ has zero $(0,2)$ entry, while $Q_{02}=1/2$; therefore $e_Q\ge1/2$. Taking $K=I_3/2$ attains this bound, because
+$\Phi_s^\dagger(I_3/2)=I_3/2$ and $I_3/2-Q$ has operator norm $1/2$.
+$\square$
+
+The two operators
+
+$$
+\begin{aligned}
+\mathcal R_{0Q}(X)&=\operatorname{Tr}(P_0X)P_0
+ +\operatorname{Tr}((I_3-P_0)X)P_2,\\
+\mathcal R_j(X)&=\operatorname{Tr}(P_jX)P_2
+ +\operatorname{Tr}((I_3-P_j)X)P_0\qquad(j=1,2)
+\end{aligned}
+\tag{103.4}
+$$
+
+are CPTP measure-and-prepare channels. For the first, Kraus operators are
+$P_0,|2\rangle\langle1|,|2\rangle\langle2|$; for the second they are
+$|2\rangle\langle j|$ and $|0\rangle\langle k|$ for $k\ne j$. Their
+adjoint actions satisfy
+
+$$
+\mathcal R_{0Q}^\dagger(P_0)=P_0,
+\quad \mathcal R_{0Q}^\dagger(Q)=I_3/2,
+\quad
+\mathcal R_j^\dagger(P_2)=P_j,
+\quad \mathcal R_j^\dagger(Q)=I_3/2.
+\tag{103.5}
+$$
+
+Consequently every proper subset of $\{P_0,P_2,Q\}$ has a common
+individual-optimum decoder. For $\{P_0,P_2\}$ use $\operatorname{id}$ when
+$s\ge0$ and the $|1\rangle\leftrightarrow|2\rangle$ swap when $s<0$.
+For $\{P_0,Q\}$ use $\mathcal R_{0Q}$, and for $\{P_2,Q\}$ use
+$\mathcal R_j$ with $j=2$ for $s\ge0$ and $j=1$ for $s<0$. The displayed
+Kraus families prove complete positivity and trace preservation directly.
+These measure-and-prepare maps are the elementary form of the
+entanglement-breaking construction in
+[Horodecki--Shor--Ruskai, equation (1) and Theorem 2][HSR].
+

@@ -24,13 +24,13 @@ open OriginalErasureComparison ErasedExteriorFiltration PositiveRectangleMessage
 namespace D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.PositiveRectangleLaw
 variable {H : Type*} [Fintype H] [MeasurableSpace H] [MeasurableSingletonClass H]
 
-private def product (θ : Presentation H) (w : List Bool) : Matrix H H ℝ :=
+def product (θ : Presentation H) (w : List Bool) : Matrix H H ℝ :=
   (w.map θ.matrix).prod
 
-private def block (t : ℤ) (w : List Bool) : Set (ℤ → Bool) :=
+def block (t : ℤ) (w : List Bool) : Set (ℤ → Bool) :=
   {z | ∀ k : Fin w.length, z (t+k.val) = w.get k}
 
-private theorem product_word (θ : Presentation H) (w : List Bool) :
+theorem product_word (θ : Presentation H) (w : List Bool) :
     product θ w = wordMatrix θ.matrix w.length w.get := by
   induction w with
   | nil => rfl
@@ -47,7 +47,7 @@ private theorem block_mass (θ : Presentation H) (t : ℤ) (w : List Bool) :
   rw [h]
   simp only [futureMass,← product_word,Finset.mul_sum]
 
-private theorem block_append (t : ℤ) (u v : List Bool) :
+theorem block_append (t : ℤ) (u v : List Bool) :
     block t (u++v) = block t u ∩ block (t+u.length) v := by
   ext z
   simp only [block,Set.mem_setOf_eq,Set.mem_inter_iff]
@@ -75,7 +75,7 @@ private theorem block_append (t : ℤ) (u v : List Bool) :
       rw [Int.natCast_sub (by omega)]
       ring
 
-private theorem product_nonneg (θ : Presentation H) (w : List Bool) (i j : H) :
+theorem product_nonneg (θ : Presentation H) (w : List Bool) (i j : H) :
     0 ≤ product θ w i j := by
   induction w generalizing i with
   | nil => simp [product,Matrix.one_apply]; split_ifs <;> norm_num
@@ -345,7 +345,7 @@ private theorem exclusion (θ : Presentation H)
   obtain ⟨ε,hε,hguard⟩ := actual_finite_guard θ w R hp
   exact no_uniform_exterior_guard θ hfull (guard w) hG ε hε (w.length+1) hguard
 
-private theorem product_ofFn (θ : Presentation H) (n : ℕ) (w : Fin n → Bool) :
+theorem product_ofFn (θ : Presentation H) (n : ℕ) (w : Fin n → Bool) :
     product θ (List.ofFn w) = wordMatrix θ.matrix n w := by
   induction n with
   | zero => simp [product,wordMatrix]
@@ -439,7 +439,7 @@ theorem actual_every_presentation (θ : Presentation H)
     exact TwelveStatePresentation.actual_visible_support t n w
   exact supported_word_obstruction θ hf (fun t n w hw => (hs t n w).mpr hw) n w hw
 
-private theorem irreducible_initial_positive (θ : Presentation H)
+theorem irreducible_initial_positive (θ : Presentation H)
     (hirr : ∀ i j : H, ∃ n : ℕ, 0 < ((θ.matrix false+θ.matrix true)^n) i j) :
     ∀ j, 0 < θ.initial j := by
   let A := θ.matrix false+θ.matrix true

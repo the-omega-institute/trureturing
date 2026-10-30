@@ -1,0 +1,44 @@
+**定理 3.1（每个 `ValidBase` 上的三历史统一确定性障碍）。**
+Let $b$ be `ValidBase` and let distinct $k,l$ lie in the strict interior of
+$J(b)$.  Under the state-only containment-seat contract, no CPTP map can
+send all three actual input states
+$\Psi_k(h^{(a)})$ to the corresponding exact output states
+$\Psi_l(h^{(a)})$, $a=0,1,2$.  Consequently no endpoint-only deterministic
+quantum implementation can realize the common phase-preserving leg (OC.4)
+for every actual original history at that base.
+
+**证明。**  Dilate a hypothetical common CPTP map by an isometry $V$.  Exact
+pure output on each of the three inputs forces
+
+$$
+V\Psi_k(h^{(a)})=\Psi_l(h^{(a)})\otimes\eta_a
+$$
+
+for unit environment vectors $\eta_a$.  Inner products therefore obey
+
+$$
+G_k(a,b)=G_l(a,b)\langle\eta_a,\eta_b\rangle.
+\tag{OC.7}
+$$
+
+By (OC.5), the $(0,1)$ equation has the same nonzero value on both sides,
+so $\langle\eta_0,\eta_1\rangle=1$ and hence $\eta_0=\eta_1$.  Write
+$a=\langle\eta_0,\eta_2\rangle$.  The other two equations and (OC.6) give
+
+$$
+Z+C_k=a(Z+C_l),
+\qquad Z+qC_k=a(Z+qC_l).
+$$
+
+Subtracting $q$ times the first equation from the second yields
+$Z(1-q)=aZ(1-q)$.  Since $Z>0$ and $q=i\ne1$, $a=1$.  Returning to
+either equation gives $C_k=C_l$, contradicting the nonzero slope of the
+selected $C_x$ and $k\ne l$.  The contradiction used three actual histories,
+one common map, and no record correlated with the unknown past.  It did not
+use a phase estimate or divide by an unknown overlap.  $\square$
+
+The theorem is a containment result: adding a history-correlated actuator
+memory, a supplied winding record, a fresh preparation, or a promise to one
+parity changes the input family.  Each such change must be named before a
+deterministic implementation is claimed.
+

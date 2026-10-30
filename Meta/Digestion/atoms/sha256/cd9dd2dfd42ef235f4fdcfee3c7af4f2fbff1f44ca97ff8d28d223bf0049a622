@@ -1,0 +1,4 @@
+**定义 73.2（raw 审计与公开投影）。** 对一个动作 $a$，将其 lawful task-domain status 与 physical execution status 分别记入 $\operatorname{RawAct}(h,a)$，并保留实际发生的功能标签、released output、receipt、完整 successor 和声明的未来行费用。未执行的 disabled/unauthorized trial 为 `none`，无 receipt，状态不变。物理上 enabled 的 noncanonical Supply 可以在 lawful task map 中未定义，却已经执行一个 IN successor；其 latch/control、mirror 和 receipt 不因 task-domain status 未定义而消失。只在确无物理执行时才使用未执行标记。
+
+可将当前原始状态及这些带类型的行记录记为 $\operatorname{Aud}(h)$。一个声明的当前公开值 $\operatorname{Pub}(h)=\pi_{\rm pub}(\operatorname{Aud}(h))$ 只投影合同实际公开的字段。已 released 而未保留的整个旧 OUT stream 不因此成为当前状态的一部分；控制器也不能按未取得的完整 successor 序列分支。若任务另行要求旧 stream、累计费用或历史全状态序列，它们是额外历史观察，须单独声明取得与保留。审计等价蕴含这种已声明的公开投影相等，逆向一般不成立。
+

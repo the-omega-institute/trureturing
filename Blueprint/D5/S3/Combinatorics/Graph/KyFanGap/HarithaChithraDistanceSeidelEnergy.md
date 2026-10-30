@@ -16,19 +16,7 @@ $$\forall (V : Type), [\operatorname{Fintype}\left(V\right)] [\operatorname{Deci
 
 Page 2: "D^S(G) = J − I − 2D = −1 if v_r is adjacent to v_t, 1 − 2d_G(v_r, v_t) otherwise." The displayed expression encodes J − I − 2D entrywise using SimpleGraph.dist, with zero diagonal. The source's casewise expression instead gives diagonal one. Only the matrix equation is used here. On the complete bipartite graphs and their single-edge deletions considered below, every pair is connected.
 
-**Definition 1.2 (Energy from characteristic roots).**
-
-$$\forall (V : Type), [\operatorname{Fintype}\left(V\right)] [\operatorname{DecidableEq}\left(V\right)] \forall (M : \operatorname{Matrix}\left(V, V, \mathbb{R}\right)), \operatorname{energy}\left(M\right) = \operatorname{Multiset.sum}\left(\operatorname{Multiset.map}\left(\operatorname{fun} (x : \mathbb{R}) \mapsto \lvert x\rvert, \operatorname{Polynomial.roots}\left(\operatorname{Matrix.charpoly}\left(M\right)\right)\right)\right)$$
-
-*Formalization.* `D5/S3/Combinatorics/Graph/KyFanGap/HarithaChithraDistanceSeidelEnergy.energy` (`✓ std3`).
-
-*Citation.* T. Haritha and A. V. Chithra (2022). *Distance Seidel matrix of a connected graph*. DOI: [10.1080/09728600.2025.2479147](https://doi.org/10.1080/09728600.2025.2479147). URL: <https://arxiv.org/abs/2210.05940v2>.
-
-*Commentary.*
-
-Page 2: "The distance Seidel energy E_{D^S}(G) of a graph G is defined as E_{D^S}(G) = Σ_{r=1}^n |∂_r^S|." Matrix.charpoly and Polynomial.roots retain multiplicity. For a real symmetric matrix the characteristic polynomial splits over the reals, so this sum is the sum of absolute eigenvalues. For a general real matrix the expression sums only its real characteristic roots; the theorem applies it only to symmetric matrices.
-
-**Definition 1.3 (Problem 5.1).**
+**Definition 1.2 (Problem 5.1).**
 
 $$\operatorname{claim} = (\forall (a : \mathbb{N}), \forall (b : \mathbb{N}), (2 \le a) \Rightarrow ((2 \le b) \Rightarrow (\forall (e : \operatorname{Sym2}\left(\operatorname{Sum}\left(\operatorname{Fin}\left(a\right), \operatorname{Fin}\left(b\right)\right)\right)), (e \in \operatorname{SimpleGraph.edgeSet}\left(\operatorname{completeBipartiteGraph}\left(\operatorname{Fin}\left(a\right), \operatorname{Fin}\left(b\right)\right)\right)) \Rightarrow (\operatorname{energy}\left(\operatorname{distSeidel}\left(\operatorname{completeBipartiteGraph}\left(\operatorname{Fin}\left(a\right), \operatorname{Fin}\left(b\right)\right)\right)\right) < \operatorname{energy}\left(\operatorname{distSeidel}\left(\operatorname{SimpleGraph.deleteEdges}\left(\operatorname{completeBipartiteGraph}\left(\operatorname{Fin}\left(a\right), \operatorname{Fin}\left(b\right)\right), \{e\}\right)\right)\right)))))$$
 
@@ -40,7 +28,7 @@ $$\operatorname{claim} = (\forall (a : \mathbb{N}), \forall (b : \mathbb{N}), (2
 
 Problem 5.1, page 13: "Let G = K_{a,b}, with a, b > 1. Is E_{D^S}(K_{a,b} − e) > E_{D^S}(K_{a,b}), for any edge e of K_{a,b}?" The proposition gives the affirmative universal statement. The vertex type is Fin a ⊕ Fin b; edges are unordered pairs in the edge set. The natural-number inequalities 2 ≤ a and 2 ≤ b express a, b > 1. SimpleGraph.deleteEdges removes the singleton edge set.
 
-**Theorem 1.4 (Strict increase for every edge).**
+**Theorem 1.3 (Strict increase for every edge).**
 
 $$\forall (a : \mathbb{N}), \forall (b : \mathbb{N}), (2 \le a) \Rightarrow ((2 \le b) \Rightarrow (\forall (e : \operatorname{Sym2}\left(\operatorname{Sum}\left(\operatorname{Fin}\left(a\right), \operatorname{Fin}\left(b\right)\right)\right)), (e \in \operatorname{SimpleGraph.edgeSet}\left(\operatorname{completeBipartiteGraph}\left(\operatorname{Fin}\left(a\right), \operatorname{Fin}\left(b\right)\right)\right)) \Rightarrow (\operatorname{energy}\left(\operatorname{distSeidel}\left(\operatorname{completeBipartiteGraph}\left(\operatorname{Fin}\left(a\right), \operatorname{Fin}\left(b\right)\right)\right)\right) < \operatorname{energy}\left(\operatorname{distSeidel}\left(\operatorname{SimpleGraph.deleteEdges}\left(\operatorname{completeBipartiteGraph}\left(\operatorname{Fin}\left(a\right), \operatorname{Fin}\left(b\right)\right), \{e\}\right)\right)\right))))$$
 
@@ -62,5 +50,5 @@ The distance Seidel matrix of the complete bipartite graph has energy 6(a+b−2)
 
 - Truth anchor: `D5/S3/Combinatorics/Graph/KyFanGap/HarithaChithraDistanceSeidelEnergy.claim`
 - Truth anchor: `D5/S3/Combinatorics/Graph/KyFanGap/HarithaChithraDistanceSeidelEnergy.distSeidel`
-- Truth anchor: `D5/S3/Combinatorics/Graph/KyFanGap/HarithaChithraDistanceSeidelEnergy.energy`
 - Truth anchor: `D5/S3/Combinatorics/Graph/KyFanGap/HarithaChithraDistanceSeidelEnergy.result`
+- Dependency: [D5/S3/Combinatorics/Graph/KyFanGap/MandalMehatariDasSeidelMinimum](MandalMehatariDasSeidelMinimum.md)

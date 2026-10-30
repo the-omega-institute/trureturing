@@ -1,0 +1,56 @@
+**Proposition 47.6 (The $C_7+C_9$ terminal module).**
+For $\mathbf k=(3,4)$, the exact boundary counts are
+
+$$
+A_{3,1}=A_{4,1}=1,
+\qquad A_{3,2}=45,
+\qquad A_{4,2}=227,
+\qquad A_{3,3}=390.
+\tag{47.24}
+$$
+
+Thus
+
+$$
+(M_1,M_2,M_3)=(1,271,390),
+\qquad
+D=778,\quad d=15,\quad c=763,
+\tag{47.25}
+$$
+
+and
+
+$$
+\operatorname{type}(R)=662,
+\qquad
+\mathcal F_{763}
+=P(-775)\oplus P(-773)^{271}\oplus P(-771)^{390}.
+\tag{47.26}
+$$
+
+*Proof.* For $j=2$,
+
+$$
+H_2=\begin{pmatrix}1&1&1\\1&1&0\\1&0&0\end{pmatrix},
+\qquad
+H_2^2u_2=(5,4,2)^{\mathsf T},
+\qquad
+H_2^3u_2=(11,9,5)^{\mathsf T}.
+$$
+
+Hence $A_{3,2}=5^2+4^2+2^2=45$ and
+$A_{4,2}=11^2+9^2+5^2=227$. For $j=3$,
+$H_3^2u_3=(12,11,9,6,3)^{\mathsf T}$, so the uncapped count for
+$k=3$ is $12^2+11^2+9^2+6^2+3^2=391$. The correction in
+(47.7) is the single $q=0$ term, because $j-k=0$, and gives
+$A_{3,3}=390$. This is the short-branch total-cap subtraction.
+
+The multiplicity formula gives
+$M_2=45\cdot227-44\cdot226=271$ and
+$M_3=390\cdot A_{4,3}-390(A_{4,3}-1)=390$, without needing an
+uncapped replacement for the short branch. For the presentation,
+$f_5=13,f_7=34,f_4=8,f_6=21$, so
+$D=13\cdot34+2\cdot8\cdot21=778$. The graph has
+$2+5+7=14$ vertices, hence $d=15$, and (47.22) gives the stated
+shifts. $\square$
+

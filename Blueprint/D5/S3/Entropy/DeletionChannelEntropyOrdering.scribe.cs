@@ -14,6 +14,7 @@ internal sealed class DeletionChannelEntropyOrderingDocument : IScribeDocumentDe
         "Positional autocorrelation does not determine the finite entropy order of binary deletion-channel outputs.",
         H("Finite Deletion-Channel Entropy Ordering"),
         Blocks(
+            PublishedNode("embeddings_eq_count", Disp(Seq(Forall, Sp, Parenthesized(Seq(F.Id("m"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Comma, Sp, Parenthesized(Seq(Forall, Sp, Parenthesized(Seq(F.Id("n"), Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Comma, Sp, Parenthesized(Seq(Forall, Sp, Parenthesized(Seq(F.Id("x"), Colon, Sp, Seq(Parenthesized(Seq(PublishedName("Fin"), Sp, F.Id("m"))), Sp, To, Sp, Parenthesized(PublishedName("Bool"))))), Comma, Sp, Parenthesized(Seq(Forall, Sp, Parenthesized(Seq(F.Id("y"), Colon, Sp, Seq(Parenthesized(Seq(PublishedName("Fin"), Sp, F.Id("n"))), Sp, To, Sp, Parenthesized(PublishedName("Bool"))))), Comma, Sp, Parenthesized(Seq(PublishedName("embeddings"), Sp, F.Id("x"), Sp, F.Id("y"), Sp, Eq, Sp, PublishedName("scatteredCount"), Sp, Parenthesized(Seq(Seq(PublishedName("List"), Dot, PublishedName("ofFn")), Sp, F.Id("x"))), Sp, Parenthesized(Seq(Seq(PublishedName("List"), Dot, PublishedName("ofFn")), Sp, F.Id("y"))))))))))))), DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Paragraph(Text("Binary strings of length k are functions Fin k to Bool, with false representing 0 "
                 + "and true representing 1. List.ofFn reads positions in increasing order. List.sublists "
                 + "counts index subsets with multiplicity: equal subwords from distinct masks remain separate. "
@@ -67,7 +68,80 @@ internal sealed class DeletionChannelEntropyOrderingDocument : IScribeDocumentDe
                 DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("atashpendar-mestel-roscoe-ryan-2018-kappa2-entropy-ordering"),
-                    ResolutionKind.Refuted)))));
+                    ResolutionKind.Refuted)),
+            OddFamilyApplication())));
+
+    private static DocumentBlock OddFamilyApplication()
+    {
+        Formula r = F.Id("r"), x = new Formula.Subscript(F.Id("x"), r),
+            y = new Formula.Subscript(F.Id("y"), r);
+        Formula twice = Multiply(D(2), r), length = Add(twice, D(2));
+        Formula b = Q("Nat", "choose", twice, r),
+            c = Q("Nat", "choose", Multiply(D(4), r), twice);
+        Formula bSquare = new Formula.Power(b, D(2));
+        Formula kappaGap = Subtract(CastReal(Call("kappa2", y)), CastReal(Call("kappa2", x)));
+        Formula entropyGap = Subtract(Call("entropyBits", length, y), Call("entropyBits", length, x));
+        Formula entropyValue = new Formula.Fraction(
+            Subtract(Add(Call("f", twice), Call("f", D(2))), Multiply(D(2), Call("f", Add(r, D(1))))),
+            Multiply(D(4), Parenthesized(Add(r, D(1)))));
+        Formula asymptoticValue = Subtract(Subtract(new Formula.Fraction(D(1), D(2)),
+            new Formula.Fraction(Q("Real", "logb", D(2), r), Multiply(D(2), Parenthesized(Add(r, D(1)))))),
+            Multiply(new Formula.Fraction(D(1), D(2)),
+                Q("Real", "logb", D(2), Add(D(1), new Formula.Fraction(D(1), r)))));
+        return new DocumentBlock.Section(H("An odd family with a half-bit entropy gap"), Blocks(
+            Paragraph(Text("For every integer r at least 1, set m = 2r + 1 and n = 2r + 2. "
+                + "The word x_r is 0 followed by 2r - 1 ones and then 0; y_r is r zeros, "
+                + "one 1, and r zeros. In native Fin coordinates, x_r(i) is true exactly when "
+                + "0 < i.val < 2r, and y_r(i) is true exactly when i.val = r. "
+                + "List.ofFn gives runWord false [1, 2r - 1, 1] and runWord false [r, 1, r], respectively. "
+                + "These lists have length 2r + 1. Natural indices correspond to source positions i.val + 1; "
+                + "substitution in both binomial weights gives the source's one-based formula.")),
+            Paragraph(Text("The source word and the increasing m-position mask are independent and uniform. "
+                + "Each mask-word pair has mass 1/(2^n C(n,m)). Summing precisely the masks "
+                + "that output x gives joint mass omega_x(y)/(2^n C(n,m)). "
+                + "The identity embeddings_eq_count and the fixed-length sublists count retain each index "
+                + "embedding separately, even when the selected letters coincide. The generic deletion_total "
+                + "in TwoDeletionChannelEntropy gives total mass C(n,m) times 2^(n-m). Conditioning this joint "
+                + "law gives the exact posterior used by entropyBits. The inherited definitions include the "
+                + "empty pattern and all zero-weight words; zero entropy summands remain zero.")),
+            Paragraph(Text("Write f(t) = t log_2(t), with f(0) = 0. "
+                + "For positive consecutive run lengths a_1 through a_s, BinaryRunSupersequenceCounts.oneWordSum_runs "
+                + "applied to f gives the sum of weight times log_2(weight) as the sum of f(a_i + 1): "
+                + "its remaining term is a multiple of f(1) = 0. The generic entropy_eq_log_sub_phi in "
+                + "TwoDeletionChannelEntropy then gives the single-deletion run formula, with "
+                + "normalizer 2(m + 1). Thus the two displayed run lists give the following exact bit gap.")),
+            new DocumentBlock.DisplayFormula(Disp(Equal(entropyGap, entropyValue))),
+            Paragraph(Text("For r at least 2 the numerator is strictly positive. Indeed, strict convexity "
+                + "of t log(t) at the distinct positive points 2 and 2r gives "
+                + "f(2) + f(2r) > 2 f(r + 1), since log(2) is positive. The denominator 4(r + 1) is positive.")),
+            Paragraph(Text("For autocorrelation, let M be the source's positional weight matrix, "
+                + "B = C(2r,r), C = C(4r,2r), and S = C(4r + 1,2r). "
+                + "The coefficient identity PowerSeries.mk_one_pow_eq_mk_choose_add, multiplication of powers, "
+                + "and coefficient convolution show that each row sum of M is S. The matrix is symmetric. "
+                + "For a word, the equal-letter sum is the total matrix sum minus twice the zero-one cross sum. "
+                + "The endpoint entries are C, C, 1, 1; the middle diagonal entry is B squared. "
+                + "Consequently the cross sums of x_r and y_r are 2(S - C - 1) and S - B squared. "
+                + "Using S = (4r + 1) C / (2r + 1) gives the exact difference below. "
+                + "Both kappa2 values are cast to the reals before subtraction.")),
+            new DocumentBlock.DisplayFormula(Disp(Equal(kappaGap,
+                Multiply(D(2), Parenthesized(Subtract(Subtract(bSquare,
+                    new Formula.Fraction(c, Add(twice, D(1)))), D(2))))))),
+            Paragraph(Text("Its sign can also be read from the pinned binomial square-sum and central-maximum "
+                + "identities. They give C at most 2 + (2r - 1) B squared: the two endpoint terms are 1, "
+                + "and each of the other 2r - 1 terms is at most B squared. Also B is at least 2r. "
+                + "For r at least 2 this implies B squared > 2r + 2, so "
+                + "B squared - C/(2r + 1) - 2 is at least "
+                + "2(B squared - 2r - 2)/(2r + 1), which is strictly positive. "
+                + "Thus the autocorrelation and entropy comparisons hold simultaneously for these same words.")),
+            Paragraph(Text("Logarithm multiplication and division rules rewrite the same entropy gap as")),
+            new DocumentBlock.DisplayFormula(Disp(Equal(entropyGap, asymptoticValue))),
+            Paragraph(Text("Along the integer family r tending to infinity, log_2(r)/(2(r + 1)) tends to zero "
+                + "by Real.tendsto_pow_logb_div_mul_add_atTop, and log_2(1 + 1/r) tends to zero by continuity "
+                + "at 1. Hence the entropy gap tends to one half bit. At r = 1 both words are 010 and both "
+                + "differences are zero; r = 0 is outside the family. This application concerns one deletion "
+                + "with both lengths growing together. It does not imply a capacity statement or alter the "
+                + "fixed-m, n tending to infinity regime."))));
+    }
 
     private static DocumentBlock Node(string name, string title, Formula formula,
         string prose, DescribeRole role, AssessedProvenance provenance,
@@ -149,4 +223,11 @@ internal sealed class DeletionChannelEntropyOrderingDocument : IScribeDocumentDe
             Seq(D(1), Sp, Le, Sp, m, Sp, Rightarrow, Sp, m, Sp, Lt, Sp, n, Sp, Rightarrow, Sp,
                 All("u", Word(m), All("v", Word(m), comparison)))))));
     }
+
+    private static DocumentBlock PublishedNode(string name, Formula formula, DescribeRole role,
+        AssessedProvenance provenance) => Describe.Lean(
+        DescribeId.Create("singhvi-owner-" + name.Replace("_", "-").ToLowerInvariant()),
+        DeclarationHandle.Create("D5/S3/Entropy/DeletionChannelEntropyOrdering." + name), H(name), StatementSource.FromAuthor(formula),
+        provenance, Blocks(Paragraph(Text("The formula relates a word's constant runs and its scattered-subword counts."))), role);
+    private static Formula PublishedName(string name) => Seq(Operatorname, Grp(F.Id(name)));
 }

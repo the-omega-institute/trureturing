@@ -1,0 +1,21 @@
+**Proposition 132.2 (two columns do not bound the square-root difference rank).** There are feasible two-column $V$ for which $\operatorname{rank}(D-\sqrt A)=4$.
+
+Proof. For $1/2<p<1$ set
+
+$$
+V_* =\frac1{\sqrt2}\begin{pmatrix}1&0\\1&0\\0&1\\0&1\end{pmatrix}.
+\quad V_*^TV_*=I_2,\quad\lambda=0,\quad\tau=\frac14,\quad R=\frac34.
+\tag{U.128}
+$$
+
+Both diagonal blocks of $A$ are $\frac12\begin{pmatrix}p&-g\\-g&q\end{pmatrix}$. The matrix $C=\begin{pmatrix}p&-g\\-g&q\end{pmatrix}$ is PSD of trace one and determinant zero, so $C^2=C$. Thus each block of $\sqrt A$ is $C/\sqrt2$. The corresponding block of $D-\sqrt A$ has determinant
+
+$$
+\det\left[\operatorname{diag}(\alpha,\beta)
+-\frac1{\sqrt2}\begin{pmatrix}p&-g\\-g&q\end{pmatrix}\right]
+=g\left(1-\frac h{\sqrt2}\right)>0.
+\tag{U.129}
+$$
+
+Here $g>0$ and $h^2=1+2g<2$ because $p\ne q$. Both blocks are invertible, proving rank four. The traces in (U.128) are $\alpha/\sqrt2$ and $\beta/\sqrt2$, giving $\tau=(p+q)/4$. This is a counterexample to a rank shortcut, not to the recovery inequality. The proof of Theorem 131.1 used the actual $2\times2$ size of $C_s$, not the rank of $D-\sqrt A$. $\square$
+

@@ -1,0 +1,10 @@
+**(A5) Theorem 21.5 (sharpness by an infinite admissible family).** Let $b\geq3$ and $N=b+4$. Start with the public cyclic graph having unit edges $\ell_j-c$, $c-d$, $d-e$, $e-f$, and a weight-$2$ edge $d-f$. Put
+
+$$
+T_0=\frac12I+\frac1{4N}A_0.
+$$
+
+For every rational pair $(C,S)$ with $C^2+S^2=1$, $C\geq4/5$, and $0\leq S\leq3/5$, let $Q_{C,S}$ rotate the $(d,e)$ plane by $\begin{psmallmatrix}C&-S\\S&C\end{psmallmatrix}$ and fix all other axes. Set $T_{C,S}=Q_{C,S}T_0Q_{C,S}^{\mathsf T}$, set $g_d=g_e=0$, and set every other gain to $1$. Then the family is positive, connected, contracting and full-joint-rank, has $r=2$, and all members have identical complete enlarged-menu services. The members $(1,0)$ and $(4/5,3/5)$ have different native support graphs, with $b+4$ and $b+5$ support edges.
+
+**Proof.** The public cyclic construction supplies positivity, contraction, the authentic leaf roster and the joint-rank promise for $T_0$. Orthogonal conjugacy preserves the spectral contraction and the joint Krylov property. The rotated coordinates lie in the zero-gain plane, so $Q_g$ is unchanged by $Q_{C,S}$; all active coordinates are fixed. The conjugacy therefore intertwines `Reset`, every authentic `Add`, `Tick`, native `Q_g`, every `Read`, `Hold`, and the complete framing/successor protocol. Theorem 21.2 then gives equality for every common adaptive policy, not just a finite word. At $(1,0)$ the edge count is $b+4$; at $(4/5,3/5)$ the two rotated edge weights are both nonzero in a new pattern and the edge count is $b+5$. A port-fixing permutation cannot identify these nonisomorphic supports. Rational points on the arc are infinite. This proves failure of a uniform native-recovery theorem when the class admits $r=2$, without claiming that every individual $r\geq2$ source fails. ∎
+

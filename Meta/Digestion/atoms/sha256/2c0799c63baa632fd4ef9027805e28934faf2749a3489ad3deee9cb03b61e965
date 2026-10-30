@@ -1,0 +1,18 @@
+## 17. Mathematical dependencies and attribution
+
+The original domain and literal clock formulas are
+[Definition 1.1](#1-complete-worlds-and-the-corrected-complex-incidence)
+and [Proposition 2.1](#2-the-original-source-bridge-and-the-restored-clock)
+of this volume and O, Definitions 1.1–1.3 and Theorems 2.1–2.2:
+[common-parent geometry](https://github.com/the-omega-institute/trureturing/blob/c8ae6f747aeb40c61f9d135f171011de99a12c99/docs/develop/theory/FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md).
+The precise supplied correspondences for Sections 11–16 are:
+
+| Supplied ordinary result | Reused mathematical role |
+| --- | --- |
+| F, Lemma 30.2 and (30.9) | Injective whole-world inverse (12.1), (12.2), with $x=n/U$, $H=Ug$, original $d$, and original terminal reading $m=d+(3+2x)H_7$. |
+| F, Definition 31.1 and Lemma 31.2; this volume, Proposition 4.2; SVIII, Sections 12 and 22 | Fixed normalized integer carrier, pseudo-remainder and quadratic norm identities. The normalization is $K=4k$, giving the factor $256D^8F_0^2$; no pointwise cancellation is used. |
+| F, Theorem 32.1 | The existing $24$-world bound for every entire off-$24$ child, with determinant multiplicity counting distinct finite drift lifts. It is not a four-world classification or a finite list of bases. |
+| SIII, Definition 16.1, Lemma 16.3 and Theorem 16.4 | Source circuit (12.5), whole gain (12.6), original-source response equations and the actual analytic $J$ arc with pointwise radius-$10^{-5}$ uniqueness tubes. Its polynomial center arrays (16.7) are rational enclosure data, not exact arc points. |
+| SVIII, Theorem 30.3 and Sections 31–32 | Exactly four simple H-endpoint drift-division exceptions and no L-endpoint exception on the whole actual arc, with their exact parameter intervals. |
+| SVIII, Theorem 33.2 | Both distinct common finite drift roots at each exceptional H projection, and exactly one strict lift there; the other has negative $b$. This does not enumerate unused companions elsewhere in the child. |
+| SVIII, Theorem 34.1 | Exact multiplicity two of the unmodified carrier at each exceptional fixed projection, distinguished from strict-world multiplicity. |

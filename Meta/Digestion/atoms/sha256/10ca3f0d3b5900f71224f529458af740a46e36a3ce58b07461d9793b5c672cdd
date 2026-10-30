@@ -1,0 +1,37 @@
+**Definition 1.2 (preparation and current native display).** Fix
+arbitrary $0<Z<1$, put $r=1-Z$, $H_{\rm n}=r/2$, and fix
+$k_0\in(0,H_{\rm n})$, phases $\alpha_0,\beta_0$ and the original
+preparation rotations $\delta_{ij}$. All are known fixed preparation
+data. Define
+
+$$
+\begin{gathered}
+\mathcal S=\{-k_0<x<H_{\rm n}-k_0\},\quad
+c_0=\tfrac12-k_0/r,\quad \ell=2\pi r,\\
+\vartheta(p)=(y/2,c_0y-w/r),\qquad
+\Psi(p)=(k_0+x,[\alpha_0+y/2]_{2\pi},
+                         [\beta_0+c_0y-w/r]_{2\pi})\quad(p\in\mathcal S).
+\end{gathered}
+\tag{1.4}
+$$
+
+This is [N, (7.3)], with its real $z$ coordinate erased. With
+$u(s)=(\cos s,\sin s)$, the complete original signed doubled output
+menu is, in the same edge order,
+
+$$
+\begin{aligned}
+Y_{01}&=2\sqrt{k(H_{\rm n}-k)}u(\delta_{01}+\alpha),&
+Y_{02}&=2\sqrt{Zk}u(\delta_{02}+\beta),\\
+Y_{03}&=2\sqrt{k(H_{\rm n}-k)}u(\delta_{03}+\alpha),&
+Y_{1,13}&=2\sqrt{k(H_{\rm n}-k)}u(\delta_{1,13}-\alpha),\\
+Y_{3,13}&=2\sqrt{k(H_{\rm n}-k)}u(\delta_{3,13}-\alpha).
+\end{aligned}
+\tag{1.5}
+$$
+
+The probabilities remain $(k,H_{\rm n}-k,Z,H_{\rm n}-k,k)$.
+Equation (1.5) reuses [N, (7.8)] and its original holonomy and native
+continuation suppliers. It changes neither signs nor preparation
+rotations and uses no whitening.
+

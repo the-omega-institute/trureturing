@@ -1,0 +1,25 @@
+**推论 7.3（输入、量具和概率读数同时有误差）。** 若
+
+<a id="eq-7-u03"></a>
+
+$$
+D(\rho_j,\widetilde\rho_j)\le\alpha_j,
+\qquad
+\|E_{a,i}-\widetilde E_{a,i}\|_{\operatorname{op}}\le\beta_{a,i},
+$$
+
+且实际读数误差至多 $\xi_{aij}$，则
+
+<a id="eq-7-4"></a>
+
+$$
+\frac12\|\operatorname{Inst}_{\widehat\Phi}-\operatorname{Inst}_\Phi\|_\diamond
+\le\frac12\sum_{aij}(\xi_{aij}+\alpha_j+\beta_{a,i})
+\|F_{a,i}\|_1\|D_j\|_1.
+\tag{7.4}
+$$
+
+**证明。** 输入差项可写成 $\operatorname{Tr}(\Phi_a^*(\widetilde E_{a,i})(\rho_j-\widetilde\rho_j))$。因为 $0\le\Phi_a^*(\widetilde E_{a,i})\le I$ 且输入差迹为零，其绝对值至多 $\alpha_j$；效果差项至多 $\beta_{a,i}\operatorname{Tr}\Phi_a(\rho_j)\le\beta_{a,i}$。再加入读数误差 $\xi_{aij}$，应用定理 7.2 即得（7.4）。这里若 $\widehat\Phi$ 尚非合法仪器，不把它称为两个物理过程之间的概率距离；稀有分支归一化另需定理 6.1。
+
+<a id="sec-7-3"></a>
+

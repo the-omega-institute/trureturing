@@ -121,7 +121,7 @@ theorem observe_coarsen [Fintype B] (x : Rich 3) (f : ↥x.1.current → B) (g :
   exact Prod.ext (binCharge_pushforward (fullSelection x.1) f g)
     (binCharge_pushforward x.2 f g)
 
-private def generatedCurrentEquiv (c e : Context 3) :
+def generatedCurrentEquiv (c e : Context 3) :
     Parents c e ≃ ↥(GeneratedProduct.context c e).current :=
   (Equiv.subtypeUnivEquiv (fun p : Parents c e => Finset.mem_univ p)).symm.trans
     (Finset.equivMap (GeneratedProduct.generatedMap c e) Finset.univ)
@@ -196,7 +196,7 @@ theorem product_coarsened_charges [Fintype B] [Fintype D] (x y : Rich 3)
   exact Prod.ext (congrArg (pushforward h) (congrArg Prod.fst hp))
     (congrArg (pushforward h) (congrArg Prod.snd hp))
 
-private def parallelCurrentEquiv (c e : Context 3) :
+def parallelCurrentEquiv (c e : Context 3) :
     (↥c.current ⊕ ↥e.current) ≃ ↥(ParallelComposition.context c e).current :=
   Equiv.ofBijective
     (fun p => ⟨ParallelComposition.equiv c.archive e.archive

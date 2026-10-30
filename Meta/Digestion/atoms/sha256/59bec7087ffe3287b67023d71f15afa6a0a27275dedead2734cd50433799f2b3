@@ -1,0 +1,24 @@
+**Corollary 24.2 (The retained Q24 outer set with an actual locator).**
+Retain, without removing any factor or exceptional point, the finite
+outer set of S, Theorem 9.10,
+
+$$
+\mathcal T_{24}=
+ V_{\mathbb C}(Q_{24},e_{24}n_{24,J},e_{24}n_{24,M}),
+\tag{24.3}
+$$
+
+where all four polynomials are those of S, Definitions 9.3, 9.6 and
+9.7. A real point of $\mathcal T_{24}$ with $p<0$ whose entire
+original child contains an actual nonzero-drift F0 locator has no
+actual joint lift (24.2). This includes every such point with
+$e_{24}=0$.
+
+Proof. Actual membership and the stated locator guards put this same
+base under Theorem 19.2, so Corollary 24.1 excludes the lift. Neither
+proof evaluates an inverse from S, Definitions 9.6–9.7, or assumes
+$e_{24}\ne0$. The source-response denominators are justified instead
+in Lemma 20.3 and (23.4). The assertion therefore holds equally on
+$V(Q_{24},e_{24})$. The condition $Q_{24}=0$ by itself supplies no
+actual locator and is not sufficient for applying this corollary. ∎
+

@@ -1,0 +1,57 @@
+**Lemma 49.1 (Full-parent affine response identity).** On every full
+parent world the literal responses after fifth M, sixth M and terminal
+M satisfy
+
+$$
+\begin{pmatrix}p-24\\v-24\\m-24\end{pmatrix}
+=
+\begin{pmatrix}U\mathsf C_5\\2U\mathsf C_6\\3U\mathsf C_7\end{pmatrix}
++L_{\rm w}(b)
+\begin{pmatrix}n\\\epsilon n\\\epsilon\\\epsilon/n\end{pmatrix}.
+\tag{49.3}
+$$
+
+This identity also holds when $\epsilon=0$ or $\Lambda=0$.
+
+**Proof.** Rearranging (48.2), without dividing by either of those
+quantities, gives
+
+$$
+\frac{\epsilon}{j}
+=\frac{\epsilon}{4}(1+6/T+1/U)-\frac{\epsilon}{n}
+ +\frac{D_{\rm par}}4.
+\tag{49.4}
+$$
+
+Insert (49.4) in the last three interpolation rows (48.5).
+Collection of the constant and $\epsilon$ coefficients yields
+
+$$
+\begin{aligned}
+g(5)&=\mathsf C_5+\mathsf A_5\epsilon+5\epsilon/n,\\
+g(6)&=\mathsf C_6+\mathsf A_6\epsilon+16\epsilon/n,\\
+g(7)&=\mathsf C_7+\mathsf A_7\epsilon+35\epsilon/n.
+\end{aligned}
+\tag{49.5}
+$$
+
+Explicitly, the same coefficients before simplification are
+
+$$
+\begin{aligned}
+\mathsf C_5&=96-108/T-15D_{\rm par}/4,&
+\mathsf A_5&=(1-10/T-15/U)/4,\\
+\mathsf C_6&=240-243/T-9D_{\rm par},&
+\mathsf A_6&=1-9/T-9/U,\\
+\mathsf C_7&=480-2268/(5T)-35D_{\rm par}/2,&
+\mathsf A_7&=5/2-21/T-35/(2U).
+\end{aligned}
+\tag{49.6}
+$$
+
+Substituting (48.1) simplifies these to (49.1). Multiply (49.5),
+respectively, by $U+n$, $2U+n$ and $3U+2n$, and add $d=24+\epsilon$.
+The results are exactly (49.2)–(49.3). Thus these three readings belong
+to the same complete world with its one whole gain and one fixed drift.
+Only positive $j,n,T,U$ have been divided out. $\square$
+

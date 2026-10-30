@@ -1,0 +1,5 @@
+## 12. The fixed-height-path phase ambiguity class
+
+Here “fixed height path” means that the entire function $k(t)$ is held
+fixed, not necessarily that it is constant in time.
+

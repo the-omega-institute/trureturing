@@ -1,0 +1,93 @@
+**Definition 118.1 (the signed INITIAL consumer and its history fibre).**
+Use the authentic entry of [IV Definition 112.1](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_IV.md):
+the retained epoch-zero root Read reports branch, the old root-cut row is
+the constant one-hole row, and the original-root register is still INITIAL.
+The retained relation history is empty and the certified epoch is zero.
+The complete accessible state contains only that stipulated retained input
+and common code and parameters. Its source
+fibre is every finite ordered branch tree
+$D=\{\langle v,w\rangle:v,w\in\mathcal T\}$, with no acquired size,
+index, shape, archive or source law. Authentication and the complete access
+cut remain premises of that entry. Retain the original substitution
+
+$$
+\rho\alpha=\beta,\qquad \rho\beta=\langle\beta,\alpha\rangle,
+\qquad \rho\langle v,w\rangle=\langle\rho v,\rho w\rangle.
+$$
+
+For INITIAL $u$, keep every occurrence at its original address, with
+counting inner product, $N_u=|V_u|$, and the closed unit-edge operator
+
+$$
+(L_ug)(p)=\sum_{q\sim p}(g(p)-g(q)),\qquad
+\langle g,L_ug\rangle=\sum_{\{p,q\}\in E_u}|g(p)-g(q)|^2.
+$$
+
+There is no root killing or boundary grounding. Define exactly
+
+$$
+f_u(p)=
+\begin{cases}
++1,&p\text{ is an INITIAL alpha leaf},\\
+-1,&p\text{ is an INITIAL beta leaf},\\
+0,&p\text{ is an INITIAL branch occurrence},
+\end{cases}
+\qquad
+R_u(t)=\bigl[e^{-tN_uL_u}f_u\bigr](\varepsilon).
+\tag{118.1}
+$$
+
+The constant mode is included in this response. Fix common rationals
+$t>0$ and $0<\epsilon<1/2$. The combined task returns, at the same
+absorbing Stop, a rational $z$ and the entire INITIAL row
+
+$$
+\mathsf{Row}(u)=
+\bigl((L,R),\langle\square_1,\square_2\rangle,\pi(u)\bigr),\qquad
+\pi(u)=
+\begin{cases}
+\{\{1,2\}\},&u|_L=u|_R,\\
+\{\{1\},\{2\}\},&u|_L\ne u|_R,
+\end{cases}
+\tag{118.2}
+$$
+
+with $|z-R_u(t)|\le\epsilon$. The partition compares entire ordered
+subtrees. Actual later updates change neither INITIAL target.
+
+Fix any deterministic effective controller $A$ with the common entry,
+unrestricted finite-address four-valued Reads, serial same-register
+Apply $\rho$, and Stop, under any fixed common guard of IV Contract 112.1a.
+The original guard accepts every Apply without a cap. A separately declared
+guard is a total effective $G(\gamma,e,H)$ depending only on the common
+parameter, actual accepted epoch and complete chronological native history;
+acceptance executes exactly $\rho$ and increments $e$, refusal changes
+neither register nor epoch. Every status, repeated or absent Read and its
+literal address remain observations. Local effective work uses only common
+input and acquired history. There are no further source-dependent status,
+timing or scheduler outputs. Sourcewise finite termination imposes no
+uniform update, work or stopping-horizon bound.
+
+For an actual finite terminal history $H$ and an entire row $r$, let
+
+$$
+\mathcal C_{A,G,H}(r)=
+\{v\in D:A\text{ has that same terminal native history on }v,
+\ \mathsf{Row}(v)=r\},
+\qquad
+\operatorname{rad}_t(H,r)=
+\inf_{z\in\mathbb R}\sup_{v\in\mathcal C_{A,G,H}(r)}|z-R_v(t)|.
+\tag{118.3}
+$$
+
+All common parameters are fixed in this definition. Equal histories from
+the same entry also give equal local control, local work and terminal
+output. Restricting this mathematical fibre to $r$ supplies no row oracle
+to $A$. A semantic $\epsilon$ certificate for $(H,r,z)$ means the full
+universal inequality in (118.3) for that $z$, together with correctness of
+the entire row on the unrestricted history fibre. A leaf cone is covered
+iff an actual requested word has that INITIAL leaf address as a prefix;
+an absent reply can cover a cone in this sense without identifying its
+INITIAL subtree. The separately paid pre-entry root Read covers no leaf
+of a branch source.
+

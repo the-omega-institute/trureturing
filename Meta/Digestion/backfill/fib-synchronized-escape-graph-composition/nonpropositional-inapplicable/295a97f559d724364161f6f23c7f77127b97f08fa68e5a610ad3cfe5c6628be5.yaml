@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:295a97f559d724364161f6f23c7f77127b97f08fa68e5a610ad3cfe5c6628be5
+  normalized_sha256: sha256:295a97f559d724364161f6f23c7f77127b97f08fa68e5a610ad3cfe5c6628be5
+cas_ref: sha256:295a97f559d724364161f6f23c7f77127b97f08fa68e5a610ad3cfe5c6628be5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Unfold the explicit product conflict relation and the universally quantified same-length support premise. Existential/disjunction distribution gives the two edge inclusions and graph extensionality gives equality; no arbitrary marginal continuation is substituted for a same-length continuation. Pinned mathlib revision: 56a005855ea17e0b0958f73ec801ae140b0a1679. Upstream declarations: Prod.ext_iff, not_and_or, exists_or, Set.ext, Set.mem_setOf_eq. D5 searched scope: D5/**/*.lean, including private declarations; shape scan: lowerPolar/upperPolar/Galois/closure, chromaticNumber/coloring/products, convex intersection/Helly/Radon, numerical checker checked_expression_encloses and cutoff_first_nonstrict; inspected the graph-coloring, generic closure, formal-concept adapter, and quantum Foundation/Subentropy hits.'
+    previous_atom_id: e095de5dc4ae8b377028feb9516ab17de86977dda9e9b89f6235298b89236bd1
+    next_atom_id: 1bd1afa190cf69e7c03943af27348a8b1004ed7f3c9bfef992e96ff1a218f0b9

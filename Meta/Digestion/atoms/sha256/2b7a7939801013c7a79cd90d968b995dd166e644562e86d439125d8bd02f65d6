@@ -1,0 +1,69 @@
+**Convention 12.1 (unchanged world and changed last retention field).**
+Throughout §§12–17, $\mathcal H$, $\Phi=(p,v)$, $a$, $f_J$, $f_M$,
+$W_3$, $y_3$ and $Z$ have exactly their meanings in §§2–3 and 9.
+The supplier for §§9–11 is the published volume at
+`b2670c974a4d5042331fa7027fc722d0669ead1f`; the VI supplier remains
+`4442fb66c4d7017bb7b932cc63f058b46c83b71c`, including its complete
+original-world topology and exhaustion results. In particular $a$ is
+acquired at clock seven by $J$. The alternative seventh response $m$
+is never acquired. No calibration of the drift is supplied.
+
+The old record is precisely
+
+$$
+ R_7=(p,v,z_7,\varepsilon_7),\qquad
+ \varepsilon_7\ge0,\qquad |z_7-a(W)|\le\varepsilon_7.
+\tag{12.1}
+$$
+
+A public fixed eighth choice $e\in\{J,M\}$ invokes the same-source
+exact acquisition of Definition 10.3. Only its final retention field
+is changed here: the exact acquired $f_e(W)$ is discarded after producing
+its retained substitute. In the additive version, the complete variable
+record after this event is
+
+$$
+ R_{8,e}^{\rm add}=(p,v,z_7,\varepsilon_7,z_8,\varepsilon_8),
+ \qquad \varepsilon_8\ge0,
+\tag{12.2}
+$$
+
+and the jointly allowed output relation on each one $W$ is exactly
+
+$$
+ |z_7-a(W)|\le\varepsilon_7,\qquad
+ |z_8-f_e(W)|\le\varepsilon_8.
+\tag{12.3}
+$$
+
+Every pair $(z_7,z_8)$ satisfying these inequalities is permitted.
+The alternative positive logarithmic version has record
+
+$$
+ R_{8,e}^{\log}=(p,v,z_7,\varepsilon_7,z_8,\eta_8),\qquad
+ \eta_8\ge0,\quad z_8>0,
+\tag{12.4}
+$$
+
+and its full joint relation is
+
+$$
+ |z_7-a(W)|\le\varepsilon_7,\qquad
+ |\log z_8-\log f_e(W)|\le\eta_8.
+\tag{12.5}
+$$
+
+This version is used only where $f_e(W)>0$. All radii are finite,
+public and common to the worlds being compared. The fixed history,
+model, channel type, chronological labels $(7,J),(8,e)$, references and
+current rights are the same public metadata in every comparison.
+The relation is a specification of permitted outputs, with no probability
+law or probabilistic independence premise.
+
+Neither record retains an exact $a$ or $f_e$, an error residue, $m$,
+a branch or germ sign, a source parameter, an acquired list of possible
+worlds or a response oracle. In particular (12.2) is a different retention
+contract from the exact appended event in (10.6); it does not retain that
+exact event alongside its substitute. The public constant $e$ needs no
+world-dependent selector. In §§15–16 it is always $M$.
+

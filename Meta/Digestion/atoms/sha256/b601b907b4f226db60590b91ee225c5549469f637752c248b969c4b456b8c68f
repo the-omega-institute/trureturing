@@ -1,0 +1,26 @@
+**Definition 3.1 (original orthonormal moment record).** Let
+$\ell_0,\ldots,\ell_{\nu-1}$ be the original known orthonormal basis of
+the real polynomials of degree below $\nu$ on $[0,1]$. Write
+
+$$
+\ell_k(s)=\sum_{j<\nu}D_{kj}s^j,\qquad
+m_k=T^{-1/2}\int_0^T\ell_k(t/T)CE(t)x_0\,dt.
+\tag{3.5}
+$$
+
+Then
+
+$$
+m=T^{-1/2}D\mu.
+\tag{3.6}
+$$
+
+The matrix $D$ is invertible because these polynomials are a basis.
+Consequently $m$ and $\mu$ have the same fibers, with exact inverse
+$\mu=T^{1/2}D^{-1}m$. If the original numerical $m$ output is requested,
+the receiver actually performs (3.6) and retains/exports that array. This
+is a change of memory coordinates, not equality of their serialized bytes.
+Arbitrary real coefficients of an orthonormal basis are not made finitely
+computable by calling them known. The algebraic basis option in §6 supplies
+a finite exact version without shrinking the real mathematical theorem.
+

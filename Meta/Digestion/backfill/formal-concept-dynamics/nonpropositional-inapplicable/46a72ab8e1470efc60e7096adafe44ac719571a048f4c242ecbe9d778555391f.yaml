@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:46a72ab8e1470efc60e7096adafe44ac719571a048f4c242ecbe9d778555391f
+  normalized_sha256: sha256:46a72ab8e1470efc60e7096adafe44ac719571a048f4c242ecbe9d778555391f
+cas_ref: sha256:46a72ab8e1470efc60e7096adafe44ac719571a048f4c242ecbe9d778555391f
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 只设置状态集合 X、概念族 Ci 与各目标拓扑，定义观察拓扑和基的数学断言在紧邻定义 463.1，而非本参数段。
+    previous_atom_id: e908753ed1f3c443709c47f77d09ab21405b48860f27e3c50183b0cf8a09c892
+    next_atom_id: ff12900aea75486676f28effb166b506295d01ff81fef849d07328cc2d83ebe8

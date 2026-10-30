@@ -1,0 +1,10 @@
+**Definition 1.3 (unchanged original task).** $Q$ is exactly AIF Definition
+2.6, ARC Definition 11.1 and UAS Definition 1.4. Its lawful original
+experiments, input domain, legality, actual labels, released finite
+outputs and complete original joint successor after every executed
+original action are retained. The empty experiment gives only
+running/terminal type and actual terminal output. A disabled or
+unauthorized attempt is unexecuted `none`; an enabled noncanonical input
+can be outside the lawful task domain while its raw IN still executes;
+an executed refusal is a third case. No view diagnostic is added to $Q$.
+

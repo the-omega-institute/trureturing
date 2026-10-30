@@ -1,0 +1,59 @@
+**Proposition 4.1 (Source contraction and strict lifts).** The function $F_6$
+has exactly one zero $z^*$ in $\mathcal B_6$, and that zero is interior.
+At this zero the three source pairs lift to strict complete worlds
+$W_A^*,W_B^*,W_C^*$ satisfying
+
+$$
+p_A^*=p_B^*=p_C^*,\qquad
+v_A^*=v_B^*=v_C^*,\qquad m_A^*=m_B^*,\qquad F_v(r_C^*,b_C^*)=0.
+\tag{4.1}
+$$
+
+Their common acquired base $q^*=(p^*,v^*)$ belongs to
+$\operatorname{int}Q_{70}$, and the three worlds are distinct.
+
+Proof. The exact interval inequalities for (3.2)–(3.4) are
+
+$$
+\begin{aligned}
+\sup_{z\in\mathcal B_6}\|I-C_6DF_6(z)\|_\infty
+    &<\frac{117}{100}\,10^{-81},\\
+\|C_6F_6(c)\|_\infty&<\frac{2704}{1000}\,10^{-111}.
+\end{aligned}
+\tag{4.2}
+$$
+
+These are finite rational bounds: expand $F_v$ by (2.4)–(2.6), differentiate
+the original rational lift for the five response differences, use the inverse
+bins (3.5)–(3.6), and apply Definition 3.1 on $\mathcal B_6$. The same
+substitution gives the following guard and base bounds.
+
+| Source pair in $\mathcal B_6$ | $\Lambda$ | $d$ |
+| --- | --- | --- |
+| $A$ | $(5,6)$ | $(24.45,24.46)$ |
+| $B$ | $(4,5)$ | $(24.51,24.52)$ |
+| $C$ | $(-0.092,-0.091)$ | $(49.72,49.73)$ |
+
+All three source pairs are strict and pairwise disjoint; $b,j,n,T,U$ are
+positive. Moreover
+
+$$
+\sup_{z\in\mathcal B_6}|p_A(z)-p_c|<2.222\cdot10^{-86},\qquad
+\sup_{z\in\mathcal B_6}|v_A(z)-v_c|<6.366\cdot10^{-86}.
+\tag{4.3}
+$$
+
+The map $z\mapsto z-C_6F_6(z)$ has Lipschitz constant bounded by the first
+line of (4.2). Its distance from $c$ is at most the second bound plus
+$10^{-90}$ times the first, strictly less than $10^{-90}$. It is therefore
+a contraction of the complete closed box into its interior. Banach's theorem
+gives a unique fixed point. Since $\|I-C_6DF_6\|<1$, the square matrix
+$C_6$ is nonsingular; thus its fixed points are exactly zeros of $F_6$.
+This establishes exact equalities (4.1). Neither a response interval nor a
+small residual has been used as an equality proof.
+
+Apply the owning lift O, Theorem 2.1, through (2.1) at each source. It supplies
+the full original history and one nonzero entire gain at each fixed drift.
+The disjoint source pairs give distinct complete worlds. Finally (4.3)
+places the exact common base strictly inside $Q_{70}$. ∎
+

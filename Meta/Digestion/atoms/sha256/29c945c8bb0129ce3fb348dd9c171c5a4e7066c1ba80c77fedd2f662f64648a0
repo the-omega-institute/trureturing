@@ -1,0 +1,39 @@
+**Proposition 11.7 (Componentwise comparison of declared ensembles).**
+For any lower-half target and mixture (11.7), apply the same phase-only
+command $a(t)\equiv0$, $b(T)=B$ to each constituent pure preparation,
+and separately to the target. On a component of height $\kappa$ with
+initial phases $u,v$, the transport supplier gives
+
+$$
+u'=u+B(1/2-\kappa/r),\qquad v'=v-\kappa B/r,\qquad
+C_{02}'=\sqrt{Z\kappa}\,e^{iu}e^{iB(1/2-\kappa/r)}.
+$$
+
+This command is legal on the whole fiber by Transport Theorem 9.2.
+Averaging the componentwise readouts yields
+
+$$
+\begin{aligned}
+\overline C_{02}(B)&=\sqrt{Z\kappa_0}\,e^{iB(1/2-\kappa/r)},\\
+C_{02}^{\rm target}(B)&=\sqrt{Z\kappa_0}\,e^{iB(1/2-\kappa_0/r)}.
+\end{aligned}
+$$
+
+In Proposition 11.6, $B=2\pi$ gives respectively $(1+i)/10$ and
+$(-1+i)/10$. Thus equal current native menus can have different futures
+for these specified preparation ensembles.
+
+Proof. Set $A=K=0$ in (10.11), retaining each component's initial
+$u=\varepsilon b$. Its average phase factor is
+$\cos b=\sqrt{\kappa_0/\kappa}$, proving the first formula. The target
+has initial phase zero and its own height $\kappa_0$, proving the second.
+For the example $r=4/5$, the frequencies are $1/8$ and $3/8$, while
+both initial reference values are $\sqrt2/10$. Multiplication by
+$e^{i\pi/4}$ or $e^{i3\pi/4}$ gives the two exact values.
+
+This comparison applies the command componentwise to the explicitly
+declared ensembles. It neither defines a universal state-independent
+CPTP map on arbitrary mixed matrices nor claims that different
+decompositions of one mixed matrix acquire the same nonlinear future.
+The retained preparation label is essential to this statement. $\square$
+

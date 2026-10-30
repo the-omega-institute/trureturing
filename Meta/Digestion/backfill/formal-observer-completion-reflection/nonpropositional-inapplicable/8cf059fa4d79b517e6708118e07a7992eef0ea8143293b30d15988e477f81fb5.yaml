@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8cf059fa4d79b517e6708118e07a7992eef0ea8143293b30d15988e477f81fb5
+  normalized_sha256: sha256:8cf059fa4d79b517e6708118e07a7992eef0ea8143293b30d15988e477f81fb5
+cas_ref: sha256:8cf059fa4d79b517e6708118e07a7992eef0ea8143293b30d15988e477f81fb5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 约定信息完备或模型相对完备的含义，即所述条件下的状态分离性；没有断言某观察者完备。
+    previous_atom_id: 826779833bd0acdfc0ef51e59e54305b22ebb181aa73d3ac7e339c525447c5be
+    next_atom_id: 3f7117a0063a50720284293a156821caec1fd36507f73246da479e340fd396b5

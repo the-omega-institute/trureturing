@@ -1,0 +1,66 @@
+**Definition 94.1 (fixed native source and performed serial assay).**
+Fix one actually earned $u\in\mathcal D$ with $b\ge3$ logical leaves,
+$c$ beta leaves and $N=2b+c-1$ material cells. Retain Definition 75.1's
+original unit, symmetric, zero-diagonal adjacency $A\in\mathbb Q^{N\times N}$,
+the original root/orientation, the exhaustive raw/canonical table and the
+authentic current/fresh grants. Write $s_0,\ldots,s_{b-1}$ for a fixed
+permutation of all genuine material terminals. This order is computed
+from the earned table and fixed before numerical acquisition. A formula
+using $s_r$ is implemented through that actual raw binding.
+
+The receiver's held entrance field is arbitrary $x\in\mathbb Q^N$.
+Its accessible advice and other context are independent of $x$;
+dependent producer inputs, operands, packets and predictors have really
+been cleared or isolated as in NLBAII Construction 62.3. Section 99
+joins that paid preparation to the receiver run. This is an arbitrary
+current-field entrance, rather than the concealed zero-initialized
+history task. Source conformance, actual isolation, authentic access,
+exclusive settled serialization, exact rational arithmetic and adequate
+finite backing are **ASSUMED-UNVERIFIED** installation premises.
+
+The menu is exactly $P,S,\mathrm{Add},\mathrm{Tick},\mathrm{Read},\mathrm{Hold}$,
+without Reset. Only an actual Tick advances this fixed field; Hold
+prevents unrequested evolution during local work. All original guards,
+distinct refusals, RangeRefusal, BadFrame, proper incomplete-frame pending
+state, disabled missing-right calls, complete replies, End, local
+acknowledgements and Return keep Definition 75.1 and NLBAII Theorem 64.1's
+meanings. Calls below are completed before the next call. No side channel
+through time, allocation, capacity, guards or acknowledgements is added.
+
+Choose an integer period $L\ge b$. One cycle reads $s_r$ at phase
+$r=0,\ldots,b-1$, performing one actual Tick;Hold after each Read,
+then performs $L-b$ additional Tick;Hold pairs. There is no growth or
+Add in this assay. Starting from the held entrance, execute $N$ cycles.
+Put $M=LN$. Its actually received scalars and actual held endpoint are
+
+$$
+y_{n,r}=e_{s_r}^{\mathsf T}A^{Ln+r}x
+\quad(0\le n<N,\ 0\le r<b),
+\qquad w=A^M x.
+\tag{94.1}
+$$
+
+In particular the last Read is followed by its specified Tick and all
+remaining cycle Ticks. No block of serial readings is treated as a
+simultaneous all-leaf frame. The primitive vector is
+$(\mathrm{Read},\mathrm{Tick},\mathrm{Hold})=(bN,LN,LN)$.
+
+Define the rational matrices
+
+$$
+H_r=e_{s_r}^{\mathsf T}A^r,
+\qquad H=\begin{bmatrix}H_0\\\vdots\\H_{b-1}\end{bmatrix},
+\qquad
+S_L=\begin{bmatrix}H\\HA^L\\\vdots\\H(A^L)^{N-1}\end{bmatrix}.
+\tag{94.2}
+$$
+
+For the spectral description extend these matrices to $\mathbb R$,
+let $E_\lambda=\ker(A-\lambda I)$ for each distinct real eigenvalue,
+and set
+
+$$
+F_\mu=\bigoplus_{\lambda^L=\mu}E_\lambda.
+\tag{94.3}
+$$
+

@@ -1,0 +1,77 @@
+**Lemma 19.2 (Zero-safe equations with the faithful strict filter).**
+For arbitrary real $p\ne24,v$, define the following integer-polynomial
+circuit in $x,d$, using $D=x(x+1)(x+2)$:
+
+$$
+\begin{aligned}
+z_3&=(24-d)(x+1)(x+2),&z_4&=(18-d)D,\\
+z_5&=(p-d)x(x+2),&z_6&=(v-d)x(x+1),\\
+a_0&=20z_3-45z_4+36z_5-10z_6,\\
+a_1&=10z_3-20z_4+15z_5-4z_6,\\
+a_2&=4z_3-6z_4+4z_5-z_6,\\
+a_7&=-z_3+4z_4-6z_5+4z_6,\\
+z&=xa_1-D(24-d),\qquad b_s=(294-10d)D-5a_2,\\
+A_s&=4z^2-2za_1+(2x-1)a_1^2,\\
+B_s&=-2za_1+2(1-x)a_1^2,\\
+Q(u,w)&=A_su^2+B_suw-a_1^2w^2,\\
+f&=5dDa_2+a_0b_s,\qquad K=Q(-a_0,dD),\\
+K_{\rm safe}&=25K+Q(5a_2,b_s).
+\end{aligned}
+$$
+
+Let $H$ be Definition 1.1's whole interpolant at $3,4,5,6$,
+so $H_i=a_i/D$ for $i=0,1,2,7$. The exact actual-world filter is
+
+$$
+\begin{gathered}
+x>0,\quad d\ne24,\quad H_1\ne0,\quad
+B_0=b_s/(5D),\quad C_0=d^2+B_0^2>0,\\
+U=(-dH_0+B_0H_2)/C_0>1,\quad b=(U-1)/2,\\
+j=U(24-d)/H_1,\quad r=xU-j,\quad 0<r<1.
+\end{gathered}
+$$
+
+Pairs satisfying this filter and $f=K_{\rm safe}=0$ correspond
+bijectively to the entire $C(p,v)$, by $g=H/U$ and
+$c=r(1-r)/b$. The terminal responses are exactly
+
+$$
+f_{MM}=d+(2x+3)a_7/D,\qquad
+f_{MJ}=d+(1+b+2j+4r)a_7/(DU).
+$$
+
+**Proof.** This is F, Lemma 30.2's faithful reconstruction with its
+source equations expressed without dividing by $d$. Here are the
+identities establishing that expression. One has
+$f=5D^2(dH_2+H_0B_0)$; hence $f=0$ makes
+$(-H_0,H_2)$ parallel to $(d,B_0)$. The displayed projection onto
+this nonzero vector gives $dU=-H_0,B_0U=H_2$.
+For $r=Uz/a_1$, $b=(U-1)/2$, $n=xU$, direct expansion gives
+
+$$
+4a_1^2\{r^2-(1+b)r+b(n-b)\}=Q(U,1).
+$$
+
+On the two clock equations, $-a_0=dDU$, $5a_2=b_sU$, so
+
+$$
+K_{\rm safe}=(25d^2D^2+b_s^2)Q(U,1)=25D^2C_0Q(U,1).
+$$
+
+This positive prefactor makes $K_{\rm safe}=0$ precisely the source
+identity $j=b+r(1-r)/b$. Equivalently the universal polynomial identity is
+
+$$
+d^2D^2K_{\rm safe}-(25d^2D^2+b_s^2)K
+=f\{A_s(5dDa_2-a_0b_s)+B_sdDb_s\}.
+$$
+
+For every actual off-$24$ world, O, Theorems 2.1–2.2, give
+$d\ne24$; clock one gives $H_1=U(24-d)/j\ne0$.
+The clock-zero and clock-two equations imply $C_0>0$: if
+$d=B_0=0$, then $H_2=0$ and $B_0=294/5$, a contradiction.
+Conversely the strict filter and these identities give every hypothesis
+of F, Lemma 30.2. They reproduce reads $0,24,147/5,24,18,p,v$
+at the original clocks. The gain $H/U$ is nonzero since the first two
+reads differ. No extra observation or alternative clock is used. ∎
+

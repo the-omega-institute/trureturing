@@ -1,0 +1,17 @@
+The inputs in (IS.27) require certified $L^1$ loss-density error, including
+time/mode calibration, and terminal Kraus error, including terminal phase
+characters. Uniform CDF or signed-curve error cannot be substituted for
+these stronger data. For clarity, (IS.26) does provide a concrete route
+to loss-density convergence: with $D=\operatorname{TV}(k)\leq M+e$,
+product differentiation of $f_i=-(S p_i(k))'$ gives
+
+$$
+\int|f_i-\widetilde f_i|
+\leq(1+M/\eta+D)B+\delta+e.
+\tag{IS.28}
+$$
+
+Indeed $\int|S'-\widetilde S'|\leq(1+M/\eta)B$ follows from
+$S'=-\lambda S$, and $\int|\widetilde S'|\leq1$.
+The remaining product terms are bounded by $\delta$, $DB$ and $e$,
+using $p_i\leq1$ and $|p_i(k)-p_i(\widetilde k)|\leq\delta$.

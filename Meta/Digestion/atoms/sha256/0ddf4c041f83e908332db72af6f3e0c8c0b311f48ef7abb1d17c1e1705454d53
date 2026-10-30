@@ -1,0 +1,20 @@
+**Definition 3.1 (The permitted observer).** At a selected known common $q\in(0,1)$, the designer may choose a finite configuration set, initialization and real transition probabilities using $(q,H_c,\alpha)$. The chosen table and initialization are identical under $\mathsf P_{0,q}$ and $\mathsf P_{1,q}$. The true label and source-dependent advice are unavailable. The design may change arbitrarily with $q$; no continuity or lower bound on positive transition probabilities is assumed.
+
+Every persistent configuration is counted: waiting and other control phases, registers, walk values, flags, retained random choices, stored seeds and both internally emitted decision labels. Fresh coins are independent of the source and previous fresh coins. A retained seed, random-tape index or counter for choosing random updates would be counted information. Immutable design constants and their exact real-probability precision are permitted by this abstract contract, without a description-size or calibration-computation bound.
+
+Each nonterminal action reads the next bit of the single history in Definition 2.2. Choices use only the present configuration, the bit just read and fresh allowed randomness. There is no external clock, age, elapsed-read counter, program counter, archive, skipped bit, free gap, reset, parallel copy, extra source, hidden-state observation, parameter response or probability response. Known $q$ is design information, not a query to the actual source. The mathematical cost tally is unavailable to the controller. The output $D\in\{0,1\}$ is its emitted label; an external recipient does not decode $D$ from the time of stopping.
+
+If the actual prefix $X_0,\ldots,X_{T-1}$ is read, the paid cost is $T$. Every initial zero, tick, subsequent zero, holding interval and terminal read is paid. In the general contract an observer may stop without reading, at cost zero, or inside a gap, paying its observed prefix. Compliance at this selected $q$ means all six conditions
+
+$$
+\begin{gathered}
+\mathsf P_{0,q}(D=1)\le\alpha,\qquad
+\mathsf P_{1,q}(D=0)\le\alpha,\\
+\mathsf P_{i,q}(T<\infty)=1,\qquad
+\mathbb E_{i,q}T<\infty\quad(i=0,1).
+\end{gathered}
+\tag{3.1}
+$$
+
+Write $\mathfrak A_M(q,\alpha)$ for the compliant machines with at most $M$ complete configurations, as in the uniform companion. The new controller is a family of such pointwise designs. It is not required to be one unchanged table over unknown parameters or to separate two full nuisance families with independently varying parameters.
+

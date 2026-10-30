@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:9db84b98053a1289a8e50f78017a7f48964e95673b6f4f7df7394d1fe3a38f65
+  normalized_sha256: sha256:9db84b98053a1289a8e50f78017a7f48964e95673b6f4f7df7394d1fe3a38f65
+cas_ref: sha256:9db84b98053a1289a8e50f78017a7f48964e95673b6f4f7df7394d1fe3a38f65
+coverage_gids:
+  - gid: D5/S3/Arith/Coding/HorizontalCompletenessDepth.residue_reading_injOn_iff_primorial_gt
+    target_statement_id: sha256:ac219cefc57454b0a087ba8c5ae3708ef4b9769b13a2f58037e619edb224d630
+receipts:
+  unresolved_subitems: []

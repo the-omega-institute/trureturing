@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:407c0eaedbc77af22343473738a9d21a2a720c26f07a0ea3ca1015f762be4e43
+  normalized_sha256: sha256:407c0eaedbc77af22343473738a9d21a2a720c26f07a0ea3ca1015f762be4e43
+cas_ref: sha256:407c0eaedbc77af22343473738a9d21a2a720c26f07a0ea3ca1015f762be4e43
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional model and target specification: defines complete worlds, original observations, entire children, alternative responses by matrix traces and the original independent-pair configuration.'
+    previous_atom_id: null
+    next_atom_id: 99e9c01851a83860155d2e6f0c7fd4507f407050ffb163103e9efd9eb38bf544

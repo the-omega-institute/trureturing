@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5aeb72ae2adb9e946c364c0ec9379727b0aeab31d92c49b6096b661ba47bf28e
+  normalized_sha256: sha256:5aeb72ae2adb9e946c364c0ec9379727b0aeab31d92c49b6096b661ba47bf28e
+cas_ref: sha256:5aeb72ae2adb9e946c364c0ec9379727b0aeab31d92c49b6096b661ba47bf28e
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/Geometry/BiasedBoundaryMarkovSemigroup.actual_trace_contraction
+    target_statement_id: sha256:27019bedf1c7bcbc3baf4c8d54b1aa289ef993f47b8b7284140cdf8b8669526d
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,23 @@
+**定义 11.1（合法子集、矩与关系相位）。**
+令
+
+$$
+\Gamma_n=\{I\subseteq\{1,\ldots,n\}:
+       \text{$I$ 不含两个相邻整数}\},\qquad n\ge1.
+$$
+
+来源的模式为 $I\in\Gamma_n$，概率为 $p_I$，相位为 $\theta_I$。
+对每个合法子集 $T\in\Gamma_n$，定义
+
+$$
+\mu_T=\sum_{\substack{I\in\Gamma_n\\I\supseteq T}}p_I,
+ \qquad
+ \Phi_T=\sum_{I\subseteq T}(-1)^{|T|-|I|}\theta_I\pmod{2\pi}.
+$$
+
+其中 $\mu_\varnothing=1$，$\Phi_\varnothing=\theta_\varnothing$。
+$\mu_T$ 是所有 $T$ 中位置同时占位的概率。
+非合法 $T$ 的占位矩恒为零，所以不作为独立坐标。
+
+<a id="thm-mobius"></a>
+

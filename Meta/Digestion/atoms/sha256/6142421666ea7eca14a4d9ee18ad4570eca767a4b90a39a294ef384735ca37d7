@@ -1,0 +1,106 @@
+**Lemma 19.1 (simultaneous strictly positive partners).** For every integer $L\ge1$ there is a nonempty open set $\mathcal U_L\subset\mathcal S$ such that, for every $P\in\mathcal U_L$, all of
+
+$$
+\mathcal T_0(P),\ldots,\mathcal T_L(P),\mathcal R(P)
+\tag{19.2}
+$$
+
+are legal sources distinct from $P$. The pair $P,\mathcal T_a(P)$ has equal traces against every matrix in
+
+$$
+H_a=\operatorname{span}\{I,M,JM^a\},
+\tag{19.3}
+$$
+
+and $P,\mathcal R(P)$ has equal traces against every matrix in
+
+$$
+H_*=\operatorname{span}\{I,J,MJ\}.
+\tag{19.4}
+$$
+
+**Proof.** Similarity and transposition show that each $\mathcal T_a$ preserves rank and trace; symmetry of $M$ also makes it an involution. Directly, using cyclicity and invariance of trace under transposition,
+
+$$
+\begin{aligned}
+\operatorname{tr}(M\mathcal T_a(P))
+ &=\operatorname{tr}(MP^{\mathsf T})=\operatorname{tr}(MP),\\
+\operatorname{tr}(JM^a\mathcal T_a(P))
+ &=\operatorname{tr}(M^aJP^{\mathsf T})
+ =\operatorname{tr}(JM^aP).
+\end{aligned}
+\tag{19.5}
+$$
+
+Together with trace preservation these prove (19.3). For a trace-one matrix written as in (2.5), with $b=\theta(1-\theta)/c$, one has
+
+$$
+\mathcal R(P)=\begin{pmatrix}\theta&b\\c&1-\theta\end{pmatrix},
+\qquad
+\operatorname{tr}(JP)=b+c,
+\qquad
+\operatorname{tr}(MJP)=1+b.
+\tag{19.6}
+$$
+
+Thus $\mathcal R$ preserves $\mathcal S$ and (19.4), and is distinct from $P$ exactly when $\theta\ne1/2$.
+
+It remains to make all partners in (19.2) positive and distinct on the same open set. Use the orthonormal eigenvectors $\nu,w$ and interval $\mathcal I=(-\phi,\phi^{-1})$ from (16.4), and the supplied sources
+
+$$
+P_x=\nu(\nu+xw)^{\mathsf T},\qquad
+Q_y=(\nu+yw)\nu^{\mathsf T}
+\qquad(x,y\in\mathcal I).
+\tag{19.7}
+$$
+
+These sources are strictly positive, rank one and trace one by the positivity calculation in Theorem 16.3. In the basis $\nu,w$ the matrices of $P_x,Q_y$ are respectively
+
+$$
+\begin{pmatrix}1&x\\0&0\end{pmatrix},
+\qquad
+\begin{pmatrix}1&0\\y&0\end{pmatrix}.
+$$
+
+Since $M$ is diagonal there with entries $\phi,\psi$, where $\psi=-\phi^{-1}$, (19.1) gives the exact relation
+
+$$
+\mathcal T_a(P_x)=Q_{(\phi/\psi)^a x}
+=Q_{(-\phi^2)^a x}.
+\tag{19.8}
+$$
+
+Choose
+
+$$
+x_0=\tfrac14\phi^{-(2L+1)}>0.
+\tag{19.9}
+$$
+
+For every $0\le a\le L$,
+
+$$
+0<|(-\phi^2)^a x_0|\le\frac1{4\phi}<\phi^{-1}<\phi.
+\tag{19.10}
+$$
+
+Hence $x_0$ and all the partner parameters in (19.8) lie in $\mathcal I$. Both off-diagonal positions in the displayed eigenbasis show $P_{x_0}\ne Q_{(-\phi^2)^a x_0}$: equality would force $x_0=0$. In the original basis,
+
+$$
+(P_{x_0})_{22}=\frac{\phi^2+\phi x_0}{1+\phi^2}>\frac12,
+\tag{19.11}
+$$
+
+so $\mathcal R(P_{x_0})\ne P_{x_0}$ as well. Define
+
+$$
+\mathcal U_L=\left\{P\in\mathcal S:
+P_{11}\ne P_{22},\quad
+\mathcal T_a(P)\in\mathcal S\setminus\{P\}
+\ \text{for every integer }0\le a\le L
+\right\}.
+\tag{19.12}
+$$
+
+Each condition is open, the transformations already preserve rank and trace, and there are finitely many conditions. Equations (19.8)–(19.11) put $P_{x_0}$ in this set. Thus $\mathcal U_L$ is nonempty and open and has all the required properties. In particular the argument has produced an open two-dimensional source domain, rather than retaining only the crossing fiber (19.7). $\square$
+

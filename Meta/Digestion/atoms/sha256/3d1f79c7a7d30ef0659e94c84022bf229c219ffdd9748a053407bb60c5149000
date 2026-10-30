@@ -1,0 +1,26 @@
+**Definition 2.3 (Whole-world guard functions).** In the off-$24$ child
+F, Lemma 30.2, gives precisely the following necessary and sufficient
+conditions on $(x,d)$, with the interpolation above:
+
+$$
+\begin{gathered}
+x>0,\quad d\ne24,\quad \mathcal H_1\ne0,\quad
+B_*={294\over5}-2d-\mathcal H_2,\quad C_*=d^2+B_*^2>0,\\
+U={-d\mathcal H_0+B_*\mathcal H_2\over C_*}>1,\quad
+b={U-1\over2},\quad j={U(24-d)\over\mathcal H_1},\quad r=xU-j,\\
+0<r<1,\quad j=b+{r(1-r)\over b},\quad
+dU=-\mathcal H_0,\quad B_*U=\mathcal H_2.
+\end{gathered}
+\tag{2.10}
+$$
+
+For completeness, $d=24$ on the original parent forces $b=1/8$ and
+$g(s)=\frac85(s-1)(s-3)(s-5)$, whose fifth reading is $24$.
+Thus off $24$ gives $d\ne24$ and
+$\mathcal H_1=U(24-d)/j\ne0$. If $d=B_*=0$, the last equation
+would give $\mathcal H_2=0$, whereas the definition of $B_*$ would
+give $\mathcal H_2=294/5$. Hence $C_*>0$. These facts explain all
+denominators in (2.10), including at $d=0$. The reconstruction is one
+entire $g=\mathcal H/U$. Polynomial equations (2.9) alone do not
+replace these guards.
+

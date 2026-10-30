@@ -1,0 +1,7 @@
+**Theorem 4.1 (Region of the first inequality).** Let $w=a+ib$ with $a^2+b^2\le1$ and $w\ne1$, let $z=(-w,-\overline{w})$, and let $f(x)=(x+w)(x+\overline{w})$ be the characteristic polynomial of $z$. The following are equivalent.
+
+1. $\lvert Q_{t,2,1}(z_1+1,z_2+1)\rvert\le1$ for every $t\ge2$.
+2. $\lvert Q_{3,2,1}(z_1+1,z_2+1)\rvert\le1$.
+3. $b^2\le3(1-a)^2$; equivalently, $z$ lies in the closed sector with vertex $-1$, bisected by the ray $[-1,\infty)$, of half-opening angle $\pi/3$.
+4. $f'(-1)^2\ge f(-1)$.
+

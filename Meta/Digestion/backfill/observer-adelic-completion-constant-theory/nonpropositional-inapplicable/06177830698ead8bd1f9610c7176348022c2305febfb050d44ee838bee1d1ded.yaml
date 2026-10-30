@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:06177830698ead8bd1f9610c7176348022c2305febfb050d44ee838bee1d1ded
+  normalized_sha256: sha256:06177830698ead8bd1f9610c7176348022c2305febfb050d44ee838bee1d1ded
+cas_ref: sha256:06177830698ead8bd1f9610c7176348022c2305febfb050d44ee838bee1d1ded
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 非命题：只有方法学原型的节标题与引导句，数学关系在后续 atom。
+    previous_atom_id: f3ac0b0ed8b80bf2e079f280886c042963782311f7a4a5a439e27edaf8e2283e
+    next_atom_id: 2ebf6c1851eb71e3323be70573439e89c41f2757b84f23260a3168c35946f706

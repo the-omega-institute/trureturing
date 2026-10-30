@@ -1,0 +1,8 @@
+**Example 7.4 (clock and history are not recovered from a field).** In
+the source $B=0$, the same field occurs at every elapsed duration. A
+state inverse cannot discover an unknown duration. Even with a fixed
+known positive duration, arbitrary extra Hold/read histories can have
+the same endpoint. Theorem 4.1 instead uses the fixed actually performed
+window, its known phase and common installation context. It does not
+invert erased arbitrary history or infer event provenance from numbers.
+

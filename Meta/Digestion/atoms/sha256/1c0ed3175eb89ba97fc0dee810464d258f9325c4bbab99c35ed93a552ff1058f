@@ -1,0 +1,20 @@
+**Corollary 29.3 (robustness and the zero-error random-tape boundary).**
+An all-nuisance guarantee for the robust requested-precision interface
+cannot avoid the deterministic obstruction above. Nor can a
+field-independent randomized protocol be separately almost surely
+terminating and exactly correct on every rational entrance for any of
+the exact tasks in Corollary 28.3.
+
+Proof. Zero nuisance is allowed after every prefix, so the deterministic
+pair remains admitted. For randomization, fix the graph and context.
+The rational entrance set is countable. Intersect the probability-one
+events of termination and exact correctness for every entrance. A tape
+in this countable intersection makes a deterministic protocol correct
+and terminating on all of them, contradicting Corollary 28.3. $\square$
+
+This is not a positive-error randomized minimax rate. No infinite-error
+claim is made for every $N_0\ge2$ nonbranching graph, a contracting law,
+Reset-assisted current tasks or a receiver that continues to acquire
+actual source data after the advertised cutoff. Finite-horizon error
+bounds and ongoing paid observation remain compatible with Theorem 29.2.
+

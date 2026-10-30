@@ -1,0 +1,24 @@
+**Definition 2.1 (branch density and common base law).** For a chosen setting
+$(c,\tau)$ define
+
+$$
+\varphi_{c,\tau}(y\mid x)
+ =\frac1{\sqrt{2\pi\tau^2}}
+   \exp\!\left(-\frac{(y-c^{\mathsf T}x)^2}{2\tau^2}\right).
+\tag{2.1}
+$$
+
+For a finite policy, let $K_{\pi,N}((z,x,\omega),\cdot)$ be the recursively
+generated kernel that keeps $z,\omega$, applies the measurable policy, and at
+each continued step draws $y$ with density (2.1); after a stop it emits only
+$\dagger$ and keeps the report. The common base law is
+
+$$
+B_{W,\boldsymbol\eta}^{\sigma}
+ =G_W\otimes\mathcal N_2(0,P_{\boldsymbol\eta})\otimes\lambda.
+\tag{2.2}
+$$
+
+The kernel is $W$- and $\boldsymbol\eta$-independent; these parameters enter
+only through (2.2).
+

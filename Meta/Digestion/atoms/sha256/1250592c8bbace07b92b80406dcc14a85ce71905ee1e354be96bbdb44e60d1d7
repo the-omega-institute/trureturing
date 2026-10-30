@@ -1,0 +1,51 @@
+## 162. Budgeted tasks on the original recovered channel
+
+Work in the ordered complex qutrit basis (127.1), with the channel
+$\Phi_s$ of (127.3), for real $-1/2\le s\le1$. Explicitly, writing
+$a=(1+s)/2$ and $b=(1-s)/2$,
+
+$$
+\Phi_s(X)=\begin{pmatrix}
+X_{00}&sX_{01}&0\\
+sX_{10}&aX_{11}+bX_{22}&0\\
+0&0&bX_{11}+aX_{22}
+\end{pmatrix}.
+$$
+
+Let $\mathcal C$ be all complex CPTP maps $\mathcal R:M_3\to M_3$ and
+$K_s=\{\mathcal R\Phi_s:\mathcal R\in\mathcal C\}$. A decoder is fixed
+before the unknown input and the task subsequently selected from its
+prescribed family. Inputs range over all complex qutrit densities; the
+target is the original input. The decoder receives the terminal qutrit.
+The metric here is the unassisted half trace distance of (127.5).
+
+For the actual positive finite horizon $n\ge1$, the exact correspondence is
+
+$$
+s_n=(-1/2)^{n-1},\quad
+\mathcal N_n=\operatorname{Ad}_{U_0}\Phi_{s_n},\quad
+\mathcal R=D\operatorname{Ad}_{U_0},\quad
+D=\mathcal R\operatorname{Ad}_{U_0^\dagger}.
+$$
+
+Here $U_0=1\oplus\left(\begin{smallmatrix}-1/2&\sqrt3/2\\
+\sqrt3/2&1/2\end{smallmatrix}\right)$, as in (127.2). This is a bijection
+on all CPTP decoders, with $D\mathcal N_n=\mathcal R\Phi_{s_n}$ and no
+target rotation. The limiting channel is $\Phi_0=\mathcal N_\infty$.
+The empty horizon instead has $\mathcal N_0=\operatorname{id}$.
+
+Fix any set $\mathcal E$ of effects $0\preceq E\preceq I_3$; the set of
+all rank-one projectors is the principal example. Let
+$\mathcal I=\mathcal E\times[0,\infty)$ and define
+
+$$
+e_E(\mathcal R;s)=\| (\mathcal R\Phi_s)^\dagger(E)-E\|_{\rm op},\qquad
+F_{E,\epsilon}=\{\mathcal R\in\mathcal C:e_E(\mathcal R;s)\le\epsilon\}.
+$$
+
+For Hermitian $A$, $\sup_{\rho\in\mathsf D_3}|\operatorname{Tr}(A\rho)|
+=\|A\|_{\rm op}$, by spectral decomposition and a maximal absolute
+eigenvector. Thus this is exactly worst-density expectation error.
+Both $E$ and $(\mathcal R\Phi_s)^\dagger(E)$ are effects, so
+$0\le e_E\le1$. Every such error depends only on $T=\mathcal R\Phi_s$.
+

@@ -1,0 +1,83 @@
+### Integrable height envelope in Theorem 78.2
+
+For $f=a^2-m$, use the bounded corrector $u$ in Q Theorem 74.1.
+Under the deterministic-start $\mathsf Q_K$ law,
+
+$$
+N_t=u(K_t)-u(K_0)+\int_0^t f(K_s)ds,
+\qquad b=2\|u\|_\infty+\|f\|_\infty
+\tag{78.3}
+$$
+
+is a martingale starting at zero, with integer increments bounded by
+$b$. Its general-threshold Azuma bound from that proof gives, for
+$b>0$,
+
+$$
+\mathsf Q_K(|N_n|>z)\le2\exp\{-z^2/(2nb^2)\}
+\quad(n\ge1,\ z>0).
+\tag{78.4}
+$$
+
+This use of the supplier does not assume a stationary initial height.
+Set $S=\sup_{n\ge1}|N_n|/n^p$ and $\delta=2p-1>0$.
+A countable union bound gives
+$\mathsf Q_K(S>x)\le2\sum_{n\ge1}
+\exp\{-x^2 n^\delta/(2b^2)\}$.
+Integrate for $x\ge1$ and use $x^2\ge x$ there. Tonelli's theorem
+then yields
+
+$$
+\mathbb E_{\mathsf Q_K}S
+\le1+4b^2\sum_{n\ge1}n^{-\delta}
+                  e^{-n^\delta/(2b^2)}<\infty.
+\tag{78.5}
+$$
+
+The series converges because its stretched-exponential factor dominates
+any inverse power of $n$. If $b=0$, the bounded integer increments
+and $N_0=0$ give $N_n=0$ for all integers, so $S=0$ and its
+integrability holds directly.
+
+On height-path space define the initially extended-valued function
+
+$$
+R(K)=\max\left(0,\sup_{t>0}
+              \frac{V_K(t)-2mt}{g_p(t)}\right).
+\tag{78.6}
+$$
+
+The ratio is continuous for $t>0$, so the supremum equals the supremum
+over positive rationals and is measurable. Let $d_p=p2^{p-1}>0$.
+The integral of $g_p'(t)=p(1+t)^{p-1}$ gives
+$g_p(t)\ge d_pt$ for $0<t\le1$. For $t\ge1$, it gives
+$g_p(t)\ge pt(1+t)^{p-1}\ge d_pt^p$.
+For $0<t\le1$ the numerator in (78.6) has absolute value at most
+$2\|f\|_\infty t$. For $n\le t\le n+1$, $n\ge1$, (78.3) gives
+
+$$
+V_K(t)-2mt
+\le2|N_n|+4\|u\|_\infty+2\|f\|_\infty.
+\tag{78.7}
+$$
+
+Consequently $R\le c_0+c_1S$ for deterministic finite constants;
+for example one may take
+$c_0=(4\|u\|_\infty+2\|f\|_\infty)/d_p$ and $c_1=2/d_p$.
+Thus $R$ is finite almost surely and $\mathbb E R<\infty$.
+On this full-measure set put $C(K)=\max(1,\lceil R(K)\rceil)$,
+and put $C(K)=1$ on its null complement. This defines a measurable
+positive-integer function, with $C\le1+R$ almost surely, such that
+
+$$
+\begin{gathered}
+\mathbb E_{\mathsf Q_K}C<\infty,\qquad
+v_c(t)=2mt+c((1+t)^p-1),\\
+V_K(t)\le v_{C(K)}(t)\quad\text{for every real }t\ge0
+\quad\mathsf Q_K\text{-almost surely}.
+\end{gathered}
+\tag{78.8}
+$$
+
+No height event of positive mass is removed or reweighted.
+

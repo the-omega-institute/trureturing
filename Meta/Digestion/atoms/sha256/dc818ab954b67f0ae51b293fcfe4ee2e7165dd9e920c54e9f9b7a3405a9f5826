@@ -1,0 +1,32 @@
+**定义 1.1（采集域与历史）。** Let $\mathcal W_3$ consist of the triples $W=(P,g,\delta)$ such that $P$ is a strictly entrywise positive real $2\times2$ matrix, $\det P=0$, $\operatorname{tr}P=1$, $0\ne g\in\mathbb R[t]$, $\deg g\le3$, and $\delta\in\mathbb R$. Set
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\1&0\end{pmatrix},\qquad
+A_0=I,\quad A_i=E_iA_{i-1},\quad E_i\in\{M,J\}.
+$$
+
+The reading at original clock $i$ is $g(i)\operatorname{tr}(A_iP)+\delta$. The initial reading counts, and every single atom is followed immediately by its reading. Eight readings therefore use clocks $0,\ldots,7$ on one trajectory. Resetting, copying, skipping readings, unread compound actions, empty-action readings, renumbering clocks and additional observation ports are excluded. Actions, stopping and the returned complete target $(P,g,\delta)$ may depend arbitrarily and deterministically on the actual history. All gain signs, lower degrees, sampled roots, repeated roots and real constant drifts are allowed.
+
+For a literal history $H$, write $\mathcal F(H)$ for all its compatible complete targets. Use the failure recursion of [II, Definition 56.1](FIB_SELF_CALIBRATING_RELATION_MATHEMATICS_II.md):
+
+$$
+\begin{aligned}
+L_0(K,H)&\Longleftrightarrow |K|\ge2,\\
+L_s(K,H)&\Longleftrightarrow |K|\ge2\ \land\
+\bigwedge_{E\in\{M,J\}}\exists z\in\mathbb R:
+L_{s-1}(K\cap\mathcal F(H,E,z),(H,E,z)).
+\end{aligned}                                                    \tag{1.1}
+$$
+
+This recursion includes every early stop. Its negation gives recovery of the whole known candidate set within the stated remaining horizon. Counterfactual responses are functions of fixed targets used to define a strategy or prove a collision; they are not acquired readings.
+
+An unnormalized positive rank-one $R$ and nonzero polynomial $H$ represent exactly
+
+$$
+\left(\frac R{\operatorname{tr}R},\ (\operatorname{tr}R)H,\ \delta\right),
+\qquad z_i=H(i)\operatorname{tr}(A_iR)+\delta.                      \tag{1.2}
+$$
+
+The normalizing factor is positive, so signs, roots and degrees are preserved.
+

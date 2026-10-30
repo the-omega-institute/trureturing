@@ -1,0 +1,83 @@
+**Theorem 12.1 (the realization selected at every fixed real detuning).**
+For every fixed model just specified, every fixed admissible $b$ and
+every fixed real $\lambda$, let
+
+$$
+K_{\epsilon,\lambda}=L_A-g_{\mathrm c}(1+\lambda/L^2)\Gamma_\epsilon,
+\qquad L=\log(b/\epsilon),\qquad D(K_{\epsilon,\lambda})=D(L_A).
+\tag{12.3}
+$$
+
+The multiplier $\Gamma_\epsilon$ is bounded and real for each fixed
+$\epsilon$, so this is a selfadjoint bounded multiplication
+perturbation of $L_A$ on exactly $D(L_A)$.
+
+As $\epsilon\downarrow0$, these selfadjoint operators converge in
+strong resolvent sense to
+
+$$
+H_\lambda=
+\begin{cases}
+F,&\lambda\notin\{\lambda_n:n\ge1\},\\
+G_{\kappa_b},&\lambda=\lambda_n\text{ for some }n\ge1.
+\end{cases}
+\tag{12.4}
+$$
+
+Explicitly, for every $f\in L^2(\mu)$ and every
+$z\in\mathbb C\setminus\mathbb R$,
+
+$$
+\|(K_{\epsilon,\lambda}-z)^{-1}f-(H_\lambda-z)^{-1}f\|_2
+\longrightarrow0.
+\tag{12.5}
+$$
+
+This includes every $\lambda\le0$, every positive nonresonant value,
+all derivative zeros of the slow wave, and every positive resonance
+$\lambda_n$. In particular $\lambda_Z$ is not an exceptional operator
+parameter. Inputs may be complex or sign-changing, and all angular and
+spectral channels are included.
+
+For fixed $f$, model and $b$, convergence is uniform for $\lambda$ in
+any compact subset of $\mathbb R\setminus\{\lambda_n:n\ge1\}$ and
+$z$ in any compact subset of $\mathbb C\setminus\mathbb R$.
+There is no model-uniform assertion over $\rho,A$, or uniformity
+through an unscaled resonance.
+
+For a fixed $n\ge1$, replace the relative coupling in (12.3) by
+
+$$
+\frac{\widetilde g_\epsilon}{g_{\mathrm c}}
+ =1+\frac{\lambda_n}{L^2}+\frac{\eta}{L^3}+r_L(\eta),
+\qquad r_L(\eta)=o(L^{-3}).
+\tag{12.6}
+$$
+
+For every fixed real $\eta$ the strong-resolvent limit is
+
+$$
+G_{\kappa_b+\eta/(2\lambda_n)}.
+\tag{12.7}
+$$
+
+Convergence is uniform on compact $\eta$ sets, for each fixed $f$ and
+compact nonreal $z$ set, when the remainder in (12.6) is uniform on
+those $\eta$ sets. The parameter $\eta$ in (12.6) is the third-order
+relative detuning; it is distinct from the global response function
+$\eta(E)$ of §6.
+
+A zero eigenvalue or any other real eigenvalue of a selected global
+realization leaves (12.4)–(12.7) unchanged. The conclusions concern
+nonreal resolvents and do not require a global Weyl denominator to be
+nonzero at a prescribed real energy. They assert neither norm-resolvent
+convergence nor a quantitative rate, all-level eigenvalue count or
+classification of arbitrary varying-$\lambda$ sequences.
+
+The proof in §§13–19 constructs one source-singular graph-core vector
+for each selected line. It first solves a full-angular weighted frozen
+problem and then corrects that solution to the exact native local
+equation. It does not assume a bound on arbitrary actual resolvent
+trace amplitudes or on an outer return map. The ground and resource
+theorems remain the separate results identified in §20.
+

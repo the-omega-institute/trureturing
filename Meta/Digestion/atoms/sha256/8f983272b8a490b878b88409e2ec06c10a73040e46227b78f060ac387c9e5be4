@@ -1,0 +1,36 @@
+**Theorem 2.3 (exact owner/branch fiber).** For any two admitted old
+pairs on the same design,
+
+$$
+ \mathcal F_J(T,x)=\mathcal F_J(T',x')
+ \quad\Longleftrightarrow\quad
+ \exists D\in G_{K\cup(I\setminus J)}:
+       T'=DTD,\quad x'=Dx.
+\tag{SC.6}
+$$
+
+The same iff holds for the finite ranges in Lemma 2.2 with
+$n=n_J$. Every fiber contains exactly
+$2^{b-1+c-|J|}$ distinct old laws and pairs, even for $x=0$.
+
+Proof. Lemma 2.2 gives a diagonal grown sign matrix $\widetilde D$
+fixing every current terminal and relating the grown pairs. All fresh
+vertices are terminals, hence have sign $1$. For every split $p$, the
+known edge $p-pR$ is $+1$ in both grown laws, so its conjugacy equation
+forces $d_p=1$. Likewise the known $pL-pLL$ edge forces $d_{pL}=1$.
+Every unsplit original beta marker and every original alpha is still
+a terminal, so those signs are $1$ too. Thus all original terminals,
+and exactly the selected beta owners in addition, are fixed; among
+old vertices only $K\cup(I\setminus J)$ can vary. Restricting the
+grown law and free-field equation to old cells gives (SC.6).
+
+Conversely extend any displayed old $D$ by $1$ at the fresh vertices.
+Both endpoints of every new edge have sign $1$, so the physical $+1$
+birth constraints persist; the grown pairs are conjugate and all data
+agree. There are no additional alternatives. For distinctness, if
+$DTD=T$, every nonzero edge gives $d_vd_w=1$. Connectedness makes
+all signs equal, and a fixed terminal makes them all $1$. The action
+is therefore free on the law itself, regardless of field. Counting
+its $b-1+c-|J|$ independent signs proves the cardinality. This includes
+$J=\varnothing$ and $J=I$. $\square$
+

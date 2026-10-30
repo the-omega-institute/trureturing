@@ -1,0 +1,24 @@
+### 定理 2.2（相同扩展规则锁定黄金比例）
+
+考虑标签 $\mathbf1,\tau$ 的邻接矩阵
+
+$$
+A=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+$$
+
+若严格正的扩展权重满足
+
+$$
+Ad=\delta d,\qquad d_{\mathbf1}=1,
+$$
+
+则
+
+$$
+\boxed{\delta=\varphi=\frac{1+\sqrt5}{2},\qquad d_\tau=\varphi.}
+$$
+
+**证明。** 第一行给出 $d_\tau=\delta$，第二行给出 $1+d_\tau=\delta d_\tau$。所以 $\delta^2-\delta-1=0$；严格正性排除负根，结论成立。∎
+
+正权重此时不是测量概率。它是局部扩展相容性所选出的维数权重。
+

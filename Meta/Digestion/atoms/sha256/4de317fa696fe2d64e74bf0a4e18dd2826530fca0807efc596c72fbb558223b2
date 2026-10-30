@@ -1,0 +1,52 @@
+**Definition 1.1 (native family).** Fix an integer $b\ge3$, put $N=b+4$, and use the ordered native vertex set
+
+$$
+V=(\ell_1,\ldots,\ell_b,c,d,e,f),
+\qquad
+\epsilon=\frac1{4N}.
+\tag{CL.1}
+$$
+
+Write $e_v$ for a native coordinate vector. The rational symmetric matrix $A_0$ has zero diagonal and exactly the following undirected nonzero entries:
+
+$$
+(A_0)_{\ell_jc}=1\quad(1\le j\le b),\qquad
+(A_0)_{cd}=1,\qquad
+(A_0)_{de}=1,\qquad
+(A_0)_{df}=2,\qquad
+(A_0)_{ef}=1.
+\tag{CL.2}
+$$
+
+Define
+
+$$
+\begin{aligned}
+T_0&=\tfrac12 I+\epsilon A_0,\\
+\mathcal P&=\{(C,S)\in\mathbb Q^2:
+ C^2+S^2=1,\ 0\le S\le3/5,\ C\ge4/5\}.
+\end{aligned}
+\tag{CL.3}
+$$
+
+For $(C,S)\in\mathcal P$, let $Q=Q_{C,S}$ be the identity on the leaves, $c$ and $f$, with ordered $(d,e)$ block
+
+$$
+Q|_{d,e}=
+\begin{pmatrix}C&-S\\S&C\end{pmatrix},
+\qquad
+T=T_{C,S}=QT_0Q^{\mathsf T}.
+\tag{CL.4}
+$$
+
+A source has this fixed actual $T$ and native current field $x\in\mathbb Q^V$. Its actual entrance is $x=0$ on the entire field. The parameter is unknown to the observer. The native names describe coefficient positions in the promised family; they do not give read or input rights at those positions.
+
+The family is infinite even for a fixed $b$: every rational $t\in[0,1/3]$ gives
+
+$$
+C=\frac{1-t^2}{1+t^2},\qquad S=\frac{2t}{1+t^2}.
+\tag{CL.5}
+$$
+
+In particular the parameter encodings have no bound determined by $b$ alone.
+

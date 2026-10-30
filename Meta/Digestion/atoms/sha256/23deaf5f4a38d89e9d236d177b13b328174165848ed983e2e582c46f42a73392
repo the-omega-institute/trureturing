@@ -1,0 +1,15 @@
+**Definition 12.1 (Pairs across all acquired responses).** Define
+
+$$
+\begin{aligned}
+\mathcal T_M^{\rm ord}=\{(W,W')\in
+ \mathcal F(H_4,M,p_J)^2:\;&W\ne W',\\
+ &u_M(W)=u_M(W'),\quad f_{MM}(W)=f_{MM}(W')\}.
+\end{aligned}
+\tag{12.1}
+$$
+
+Let $\mathcal T_M^{\rm un}$ be the quotient by interchange of the
+two worlds. Their common acquired response is determined by the
+pair, so these sets count pairs across all real acquired responses.
+

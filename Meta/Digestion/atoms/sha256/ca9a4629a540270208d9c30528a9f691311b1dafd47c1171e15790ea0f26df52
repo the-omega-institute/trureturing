@@ -1,0 +1,19 @@
+**Lemma 63.1 (Actual exceptional identity).** Every complete parent world satisfies
+
+$$
+N_{\rm exc}(b,r)=TH_2(b)^2\Pi(b,r)K(W),
+\tag{63.1}
+$$
+
+including the singular sources $\Pi=0$.
+
+**Proof.** Substitution of (55.1) in the following expression and collection in powers of $b$ gives exactly the eleven coefficients in (62.2):
+
+$$
+N_{\rm exc}=TH_2^2\left\{\Pi(\gamma_{\rm w}\beta_{\rm w}-1)
+ -\frac35\alpha_{\rm w}S\mathcal J\mathcal N(1/n-\gamma_{\rm w})\right\}.
+\tag{63.2}
+$$
+
+This is a rational identity with only positive-width denominators, and its right side simplifies to the displayed polynomial. In an actual world, (61.2) replaces $-(3/5)S\mathcal J\mathcal N$ by $\epsilon\Pi$. The resulting expression is $TH_2^2\Pi K(W)$. No division by $\Pi$, $\epsilon$ or any gain sample occurs. $\square$
+

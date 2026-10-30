@@ -1,0 +1,15 @@
+Explicitly, set
+$z_i=e^{-iH_i(T)}$ and
+$e_z=\max_i|z_i-\widetilde z_i|$. Since
+$|S p_i(k)-\widetilde S p_i(\widetilde k)|\leq B+\delta$ and
+$|\sqrt x-\sqrt y|\leq\sqrt{|x-y|}$ for nonnegative $x,y$,
+
+$$
+\kappa\leq\max_i\sqrt{\frac{B+\delta}{p_i(a)}}+e_z.
+\tag{IS.29}
+$$
+
+The phase term uses that every diagonal entry of $\widetilde K_T$ has
+modulus at most one. This is an explicit sufficient condition, not a claim
+that derivative convergence is necessary or that $e_z$ has been acquired.
+

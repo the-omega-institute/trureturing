@@ -1,0 +1,40 @@
+**Theorem 107.1 (attained missing-rank repair at the actual endpoint).**
+For $d<k$ choose, from $R$ alone, an ordered set $J\subseteq\{1,\ldots,k\}$
+of $k-d$ coordinate rows completing its row space to $\mathbb Q^k$.
+Actually execute Tick;Hold once, then Read the $p_iR$ terminals for
+$i\in J$ in that order. Their actual replies are
+$z_i=\theta_i/2$. Alternatively use the moved inherited $p_iLLL$
+terminals, obtaining $y_i=-\theta_i/2$. The two readout choices are
+separate protocols, each with vector
+
+$$
+(\mathrm{Read},\mathrm{Add},\mathrm{Tick},\mathrm{Hold},P,S)
+=(k-d,0,1,1,0,0),\qquad w=BH\theta.
+\tag{107.1}
+$$
+
+Together with the genuinely retained $R\theta$, either returned vector
+recovers $\theta$ by exact rational solving and installs the full current
+predictor at this actual $w$. These schedules attain Theorems 106.2--106.4
+in their successful-Read coordinate. For $d=k$, solve from the retained
+data at $H\theta$ with zero new source calls. A further actual Tick;Hold
+after (107.1) physically returns to $H\theta$ if that extra task is
+requested; local inversion alone does not perform that return.
+
+**Proof.** Greedily append independent standard coordinate rows to any
+independent row basis of $R$; after exactly $k-d$ acceptances the stacked
+matrix has rank $k$. This uses paid computation on known $R$ and no
+parameter-dependent selector advice. Lemma 103.2 gives the literal
+replies at the real field $BH\theta$, so the stacked system is consistent
+and has the unique solution $\theta$. Compute the *advanced* vector
+$BH\theta$, not $H\theta$, and initialize the synchronized predictor
+and its genuine callable context there. If $d=k$ no physical change
+occurred, so the current vector is instead $H\theta$. The return claim
+is exactly $B^2H=H$. $\square$
+
+If the original acquired parameters or synchronized predictor were
+retained, the warm receiver already has complete current prediction
+and requires zero reacquisition calls. It still pays retention, updates
+and requested exports. A cold handoff is a real information operation,
+not an assertion that this warm information ceased to exist for free.
+

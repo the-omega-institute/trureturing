@@ -1,0 +1,107 @@
+**Theorem 9.2 (complete-domain acquisition and simultaneous prices).**
+For every $1\le A\le B<2A$ and every entrance realization in
+$\mathcal E_{[A,B]}$, under Assumption 7.1 the program of Definition 9.1
+terminates, retains exactly $R_o=(\pi,u,k,n,1)$ and leaves this same actual
+register equal to $x=\rho^{2k+1}u$. Its acquisition uses no further update.
+Let $h_a$ be as in Lemma 7.2 and put
+
+$$
+\begin{aligned}
+ m_H&=1+\lfloor\log_2H\rfloor,&d_B&=\lceil\log_2B\rceil,\\
+ q_I^o&=2m_H+(2B-1)d_B+4n-2,&
+ D_I^o&=\max\{2H+1,H+B+1,k+n+1\},\\
+ q_o&=2m_a+1+q_I^o,&D_o&=\max\{2h_a,D_I^o\},\\
+ \Lambda&=\lceil\log_2(k+B+3)\rceil.
+\end{aligned}                                                   \tag{GPO.32}
+$$
+
+Write $E_a,E_p$ for the actual extra controller bit transitions needed
+to access or copy service encodings and maintain their grant-bearing
+bindings during acquisition and preparation, beyond the tape routines
+specified below; let $S_E$ be their peak additional scratch. These are
+paid finite coordinates under Assumption 7.1, without an assumed uniform
+bound in $k,n$. They exclude the Read backend, actuator internals and
+writer's private work, which have their own coordinates. In particular
+retaining an opaque service handle is not assumed to be a free operation.
+
+In Definition 1.3's fixed bit-machine tariff the same run satisfies
+
+$$
+\begin{aligned}
+ Q&\le q_o,&M_{\rm addr}&\le D_o\le4(k+B+1),\\
+ W&\le2h_a(2m_a+1)+D_I^oq_I^o\le D_oq_o,\\
+ J&\le C(q_o+1)(k+B+1)\Lambda^2+E_a.&&
+\end{aligned}                                                   \tag{GPO.33}
+$$
+
+Here $J$ includes all acquisition controller arithmetic, projection,
+translation, allocation control, output and handoff. One fixed preparation
+phase adds $J_p\le C+E_p$ localSteps, and the joint interval has exactly
+one update, $Q$ Reads and $J+J_p$ localSteps. Additional acquisition scratch
+is $O(k+B+B\Lambda)+S_E$ bits, excluding retained target, advice,
+capabilities and writer. The retained target including its orientation
+and preparation bits occupies at most $3n+1+b(k)+b(n)$ bits before framing. In particular,
+on every sharp interval the simultaneous protocol bounds are
+
+$$
+\begin{aligned}
+ Q&=O(\log(k+n+2)+n\log(n+1)),\\
+ M_{\rm addr}&=O(k+n),\\
+ W&=O((k+n)(\log(k+n+2)+n\log(n+1))).
+\end{aligned}                                                   \tag{GPO.34}
+$$
+
+Proof. Lemma 7.2 acquires the actual global bijection from this one $x$.
+Thus every later translated word has exactly its semantic presence bit
+and unchanged length, by (GPO.12). The threshold tests in (GPO.29) are
+one exactly for $s\le H$. Exponential search uses $m_H+1$ tests and
+binary refinement $m_H-1$, with longest literal $2^{m_H}+1\le2H+1$.
+Both phases terminate without a supplied height or lag.
+
+Since $H-k=h_R(u)\le n-1\le B-1$, the next interval contains $k$ and
+has at most $B$ integers. Authentic sharp advice gives $n\le B<2n$.
+Theorem 8.3 therefore makes every cap answer at most equivalent to
+$j\ge k$. Each interval update retains $k$ and at least halves its
+size up to a ceiling, so at most $d_B$ comparisons leave exactly $K=k$.
+Each comparison pays its at most $2B-1$ Reads; its trial $j\le H$
+gives maximum word length $H+B+1$. No inverse is invoked at an incorrect
+trial.
+
+At $K=k$, Lemma 8.1 identifies every reached original node. The root
+exists; a decoded branch confirms its two original children. Structural
+induction therefore gives $U=u$ with acquired count $\widehat n=n$.
+The acquired-stack traversal of NativeFullSourceProducer supplies the
+stack/switch/combine method; the probes replace its full-reply read at
+each node. It visits exactly $2n-1$ nodes, makes exactly $4n-2$ Reads,
+and its words have length at most $k+n+1$. Repeated addresses in these
+phases are actual repeated calls and are included. The register never
+changes during any acquisition phase. Supplied finite-work progress and
+backing imply termination through the final retained write and handoff.
+
+Summing these actual phases proves the first two lines of (GPO.33).
+The bounds $h_a\le2k+n$, $H\le k+n-1$ and $n\le B$ prove its displayed
+bound for $D_o$. A concrete implementation uses the same tapes as Theorem
+3.1: binary counters, shared current path, phase/length stack frames, one
+reusable literal buffer, and growing preorder output. A capped comparison
+has at most $B$ frames and the final traversal at most $n$ frames.
+Paths and buffers have length $O(k+B)$; all counters, brackets, saved
+lengths and output positions have $O(\Lambda)$ bits. Hence the scratch
+bound holds. At most $O(q_o+1)$ search/visit/stack/output routines are
+needed: a cap visit has one paid query and a final node visit has two.
+Copying or extending a literal, translating its letters and binary-loop
+control cost $O((k+B+1)\Lambda^2)$ per routine by ordinary tape scans.
+Counter arithmetic, output construction, forming $2K+1$, and the
+payload part of handoff fit the same bound. Work on service encodings
+contributes $E_a$, with its extra scratch $S_E$; preparation control has
+a fixed phase transition in addition to its $E_p$. This proves the stated
+conservative estimates, with one constant for the fixed tape code
+independent of every unknown source parameter. Allocations
+follow actual counters and acquired lengths, rather than these unknown
+upper bounds.
+
+There are $2n-1$ preorder shape bits, $n$ label bits, $b(k)+b(n)$ numeric
+bits, one orientation bit and one preparation bit. This proves the payload
+bound; the binding, grants and framing are additional. Finally
+$n\le B<2A\le2n$ gives $B<2n$, so (GPO.34) follows from (GPO.32).
+Neither a call optimum nor a total-price optimum is asserted. $\square$
+

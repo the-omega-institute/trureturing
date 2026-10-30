@@ -1,0 +1,16 @@
+## 4. Silence-conditioned future law and finite banks
+
+For a source-mode request write $W_\varepsilon(dv,dc,dq)$ for the primitive future wait, type and point kernel, and for killed mode write $K_\delta(p;dv,dc,dq)$ for the corresponding kernel. If the current age is $a$, define the silence-conditioned kernels
+
+$$
+W_\varepsilon^{>a}(dv,dc,dq)=
+\frac{1_{v>a}W_\varepsilon(dv,dc,dq)}{W_\varepsilon(v>a)},
+$$
+
+$$
+K_\delta^{>a}(p;dv,dc,dq)=
+\frac{1_{v>a}K_\delta(p;dv,dc,dq)}{K_\delta(p;v>a)}.
+$$
+
+The denominators are positive on realized histories.
+

@@ -1,0 +1,16 @@
+## 247. Uniform finite-copy rank-three kernel and the separable zero-map theorem
+
+Fix $t=3-2\sqrt2$ and retain Definitions 240.1, 244.1 and 244.3.
+Thus $q\in D$ remains the actual jointly generated principal-root
+source, $p=p(q)$ and $U_q=u_qu_q^\dagger$ are linked by that source,
+$\rho_q=\Omega_q/P_q$, and $W_q=W_{\lambda(p(q))}$ is the fixed-register
+target. The CAR singlet, normalized cut, mode order and identification
+$J$ are unchanged. In particular, no independent choice of $p$ and
+$U_q$ is made. The required targets at this temperature are all
+separable by Theorem 240.3.
+
+The following complex rank lemma applies to the complete coherent
+coefficient sum. It imposes no Hermiticity, reality, positivity or
+diagonalizability condition and allows arbitrary cancellation among
+its spanning terms.
+

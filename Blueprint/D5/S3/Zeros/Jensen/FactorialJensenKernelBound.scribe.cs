@@ -1,4 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Zeros.Jensen;
 
@@ -8,6 +10,33 @@ internal sealed class FactorialJensenKernelBoundDocument : IScribeDocumentDefini
         "A degree-uniform factorial Jensen polynomial kernel bound.",
         H("A degree-uniform factorial Jensen kernel bound"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("even-factorial-partial-sum"),
+                DeclarationHandle.Create("D5/S3/Zeros/Jensen/FactorialJensenKernelBound.evenFactorialSum"),
+                H("The nonnegative even-factorial partial sum"),
+                StatementSource.FromAuthor(Disp(All("n", Nat, All("M", Real,
+                    Seq(Call("S", F.Id("n"), F.Id("M")), Eq,
+                        Sum, Underscore, Grp(F.Id("k"), Lt, Sp, F.Id("n")), Sp,
+                        new Formula.Fraction(new Formula.Power(F.Id("M"), F.Id("k")),
+                            Seq(Open, D(2), Cdot, Sp, F.Id("k"), Close, Bang))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The sum is over the natural indices from zero through n-1, "
+                    + "with the empty sum at n=0."))),
+                DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("even-sum-cosh-bound"),
+                DeclarationHandle.Create("D5/S3/Zeros/Jensen/FactorialJensenKernelBound.even_sum_le_cosh"),
+                H("Comparison with the full cosh series"),
+                StatementSource.FromAuthor(Disp(All("n", Nat, All("M", Real,
+                    Seq(D(0), Le, Sp, F.Id("M"), Rightarrow, Sp,
+                        Call("S", F.Id("n"), F.Id("M")), Le, Sp,
+                        Call("cosh", Seq(Sqrt, Grp(F.Id("M"))))))))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For nonnegative M, all series terms are nonnegative, "
+                    + "so every finite initial sum is at most cosh(sqrt(M)). "
+                    + "At n=2 this supplies the quadratic lower bound for cosh used by "
+                    + "the Gaussian positive-part local integral estimate."))),
+                DescribeRole.Lemma),
             Describe.Lean(
                 DescribeId.Create("factorial-jensen-kernel-uniform-bound"),
                 DeclarationHandle.Create("D5/S3/Zeros/Jensen/FactorialJensenKernelBound.factorial_jensen_kernel_uniform_bound"),
@@ -23,4 +52,11 @@ internal sealed class FactorialJensenKernelBoundDocument : IScribeDocumentDefini
                     Paragraph(Text("This theorem bounds the complete finite polynomial amplification used in the actual theta matrix estimates. It supplies neither the sign of the integrated quadratic form for mixed-sign vectors nor positive semidefiniteness of that integrated matrix. Degree-dependent positive margins, the remaining moderate separated-coordinate comparison, the Riemann hypothesis and strict Robin for all n>5040 remain outside this conclusion."))),
                 DescribeRole.Theorem)),
         [DocumentEdge.Dependency.Create(GidRef.Create("D5/S3/Zeros/Jensen/NormalizedJensenDegreeLowering"))]));
+
+    private static Formula Nat => Seq(Mathbb, Grp(F.Id("N")));
+    private static Formula Real => Seq(Mathbb, Grp(F.Id("R")));
+    private static Formula All(string name, Formula type, Formula body) =>
+        new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    private static Formula Call(string name, params Formula[] args) =>
+        new Formula.Apply(F.Id(name), [.. args]);
 }

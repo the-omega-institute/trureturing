@@ -1,0 +1,60 @@
+**定理 114.1（原九维类中的变源非统一性）。** 可固定任意允许的 $d,\theta$，取一族允许混合目标 $N_h\to I_3$ 和合法原前缀，构造九维、闭锥、紧基、四表均可逆的合法竞争者，使原表误差趋零、共同观察运输下制备／效果／归一化精确、三个映射误差趋零，但完整归一化基与 $\mathcal D$ 的 Hausdorff 距离有不随 $h$ 消失的正下界。因此不存在同时对全部允许混合 $N$ 生效的正误差邻域和趋零的完整锥模量；这不反驳定理 112.2 的固定源量词。
+
+证明。记 $c=d/2$，取 $a=c/2$、$b_+=(1+c)/2$，并置
+
+$$
+\begin{gathered}
+K_{[a,b_+]}=\{X\succeq0:\ a\operatorname{Tr}X\le\operatorname{Tr}(P_\xi X)\le b_+\operatorname{Tr}X\},\\
+z_c=cP_\xi+\tfrac{1-c}{2}(I_3-P_\xi),\qquad
+m=\min\{c-a,b_+-c\}>0.
+\end{gathered}
+\tag{114.1}
+$$
+
+此锥闭且尖，迹严格正、迹一基紧；正定 $z_c$ 严格满足两条人口不等式，所以锥生成全部九维 $Q$。$\rho_0$ 的 $\xi$ 人口为 $c$，故是合法制备；$E$ 仍为合法二元效果。原 $V_0,V_1$ 与 $P_\xi$ 对易，故原生 $A_0,A_1$ 保持此锥。
+用原基向量 $e$ 取 Hermitian $G=\xi e^\dagger+e\xi^\dagger$、$N_h=\exp(\mathrm ihG)$，$h>0$ 足够小，则目标混合且趋于恒等。对人口差泛函 $f(X)=\operatorname{Tr}((P_\xi-cI_3)X)$，
+
+$$
+\left.\frac{d}{dh}f(N_hXN_h^\dagger)\right|_{h=0}
+=\operatorname{Tr}(\mathrm i[P_\xi,G]X).
+\tag{114.2}
+$$
+
+右侧的非零交叉块矩阵不在 $\operatorname{span}\{P_\xi-cI_3\}$ 中，所以此泛函在 $\mathscr S_c$ 上不恒为零。固定任意原生八列基 $r_1,\ldots,r_8$，便有某个固定 $k$ 使 (114.2) 在 $r_k$ 上非零。因此对所有充分小 $h>0$，$f(A_{N_h}r_k)\ne0$，$p_9=p_kN_h$ 是合法逃逸列；前八词和 $k$ 都无需随 $h$ 改选。
+保持 $u=\operatorname{Tr},s_0=\rho_0,e(X)=\operatorname{Tr}(EX),B_j=A_j$，只将竞争者的控制定义为
+
+$$
+\begin{gathered}
+v_h=2\|N_h-I_3\|_\infty>0,\quad \lambda_h=\frac{v_h}{m+v_h}\in(0,1),\quad
+\mathcal R_c(X)=\operatorname{Tr}(X)z_c,\\
+B_{N,h}=(1-\lambda_h)\operatorname{Ad}_{N_h}+\lambda_h\mathcal R_c.
+\end{gathered}
+\tag{114.3}
+$$
+
+这里 $\|\cdot\|_\infty$ 是三维矩阵算子范数。对此锥的任意迹一 $X$，人口 $y\in[a,b_+]$，而 $N_h$ 改变人口的绝对值至多 $v_h$，因为 $\|N_hXN_h^\dagger-X\|_1\le v_h$。控制后人口为 $(1-\lambda_h)(y+\Delta y)+\lambda_hc$，且
+
+$$
+(1-\lambda_h)|\Delta y|\le(1-\lambda_h)v_h=\lambda_hm.
+\tag{114.4}
+$$
+
+这同时守住上下两个人口边界。$B_{N,h}$ 本身保持 PSD 和迹，故在整个 $K_{[a,b_+]}$ 上为正且保持 $u$；原两分支的和仍保持 $u$，原合同每条全域条件成立。
+所有读出后缀原生，故 $M=L$，共同观察运输 $S=L^{-1}M=I_Q$ 精确不变。前八竞争列仍为 $r_i$，第九列为
+
+$$
+x_9=(1-\lambda_h)A_{N_h}r_k+\lambda_h\operatorname{Tr}(r_k)z_c,
+\qquad f(x_9)=(1-\lambda_h)f(A_{N_h}r_k)\ne0.
+\tag{114.5}
+$$
+
+因此目标与竞争者的 $H$ 块都可逆，维数没有坍缩。$B_{N,h}$ 在无迹子空间上等于可逆的 $(1-\lambda_h)\operatorname{Ad}_{N_h}$，且保持迹，故在整个 $Q$ 上可逆；两个原生映射也可逆。因此四表各块均为三个同构的乘积，全部可逆。原生两个映射完全相同，控制差范数至多 $\lambda_h(1+\sqrt3\|z_c\|_2)\to0$。每个控制位置在归一化密度上引入至多 $2\lambda_h$ 的迹范数差，故含 $q$ 次控制的词，其两个终端误差各至多 $\alpha_w q\lambda_h$，质量精确。选定表至多两次控制，所以最大表误差 $\epsilon_h\le2\lambda_h\to0$。任意固定外定时序也保留所有标签和两个终端，总变差至多 $q\lambda_h$。
+最后，对每个 $X\in K_{[a,b_+]}$ 的迹一基，都有
+
+$$
+\|P_\xi-X\|_2\ge|\operatorname{Tr}(P_\xi(P_\xi-X))|\ge1-b_+>0.
+\tag{114.6}
+$$
+
+故 $d_H(\mathcal B,\mathcal D)\ge1-b_+$。每个 $h>0$ 的误差也必严格正，否则定理 102.1 在 $S=I_Q$ 下迫使该锥等于 PSD，违反 (114.6)。取此合法序列即排除任何跨全部 $N$ 的 $\omega(\epsilon)\to0$ 统一界，即使额外要求两边块可逆也不例外。此例不声称误差满足一个与 $h$ 无关的 $\sigma_{\min}(H)$ 下界；$h=0$ 是明确被原目标排除的非混合边界，固定 $h>0$ 后令误差趋零仍由定理 112.2 控制。∎
+

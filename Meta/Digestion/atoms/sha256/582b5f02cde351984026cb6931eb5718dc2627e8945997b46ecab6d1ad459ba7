@@ -1,0 +1,67 @@
+**Theorem 17.1 (The exact remaining common-response obligation).** An
+actual fifth-M $L_2$ support at the literal $H_4$ exists if and only if
+the following system has a solution. Choose one real $p\ne24$, one
+real $v_J$ and one real $v_M$, and for each
+$(E,F,a)\in\{J,M\}^2\times\{0,1\}$ choose a strict source
+$(r_{EFa},b_{EFa})$ satisfying
+
+$$
+0<r_{EFa}<1,\qquad b_{EFa}>0,\qquad
+\mathsf S_p(r_{EFa},b_{EFa})=0.
+\tag{17.1}
+$$
+
+For each label use exactly (12.5)–(12.6) to construct
+$\epsilon_{EFa}$ and the complete world $W_{EFa}$, and require
+
+$$
+\begin{aligned}
+p(W_{EFa})&=p&&\text{for every }E,F,a,\\
+u_E(W_{EFa})&=v_E&&\text{for every }E,F,a,\\
+f_{EF}(W_{EF0})&=f_{EF}(W_{EF1})&&\text{for every }E,F,\\
+(b_{EF0}-b_{EF1})^2+(r_{EF0}-r_{EF1})^2
+ +(\epsilon_{EF0}-\epsilon_{EF1})^2&>0&&\text{for every }E,F.
+\end{aligned}
+\tag{17.2}
+$$
+
+The functions in (17.2) are precisely (1.7), using the single entire
+gain and fixed drift of each reconstructed world. The first equality
+is also automatic from (17.1) and Theorem 12.3, but displays the one
+common acquired fifth response. The second line keeps the two terminal
+pairs of each child inside that child's one acquired sixth response.
+All label reuse, overlapping pairs and disjoint pairs are allowed.
+The system includes the legal $\Lambda=0$ worlds through the positive
+squared-norm lift.
+
+Proof. If a support has fifth-M $L_2$ at response $p$, Theorem 15.4
+forces $p\ne24$. Unfold (1.5): for each sixth action choose its one
+acquired response $v_E$ with $L_1$. For each terminal action $F$ choose
+two different complete worlds in one final-response $L_0$ leaf of
+that same child. They provide the eight labels, with any permitted
+reuse. Theorem 12.3 supplies (17.1) and their exact reconstruction.
+The parent bijection makes the last line of (17.2) exactly the
+complete-world distinctness guard. Thus every actual witness supplies
+a solution, including when the original support is infinite.
+
+Conversely a solution gives at most eight complete worlds in one
+$\mathcal F(H_4,M,p)$. For each $E$, its acquired $v_E$ child contains
+both distinct terminal pairs in (17.2). Each pair supplies its final
+$L_0$, so the child is nonsingleton and has $L_1$. The finite union
+has $L_2$ at the one common fifth response $p$. This is the guarded
+terminal-slot argument of Definition 10.1 with the proved extra
+condition $p\ne24$, not an extraction of a two-world nonterminal
+witness. ∎
+
+At such a $p$, Theorems 2.2, 3.2 and 5.1 still require at least three
+different complete worlds and gain directions, with a world outside
+$b=1/8$; all worlds have $d\ne24$ and gain not proportional to $h$.
+The sixth-M final-M pair in (17.2) must lie outside $\Gamma_+\cup\Gamma_-$,
+since those components have $p=24$. These necessary filters do not
+replace any equation or guard. Other components, all-external supports,
+singular worlds, sampled zeros, lower degrees, repeated roots, zero
+drift and unbounded legal offdiagonals remain available. The exact
+remaining obligation is to satisfy (17.1)–(17.2) for one common
+$p\ne24$, retaining each child's one acquired $v_E$; its feasibility
+and the resulting same-parent $L_3$ remain open.
+

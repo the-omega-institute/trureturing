@@ -88,7 +88,7 @@ theorem embed_readout (a : Address) (t : Source) :
     | of c => simp [embed, leaf, completionReadout, readout]
     | mul l r => cases b <;> simp [embed, node, completionReadout, readout, ih]
 
-private theorem cutoff_embed (d : Nat) (t : Source) :
+theorem cutoff_embed (d : Nat) (t : Source) :
     cutoff d (embed t) = (decompose d t).1 := by
   induction d generalizing t with
   | zero => rfl
@@ -99,7 +99,7 @@ private theorem cutoff_embed (d : Nat) (t : Source) :
           Sum.inr ((decompose d l).1, (decompose d r).1)
         rw [ih, ih]
 
-private theorem cutoff_readout (d : Nat) (S T : CompletionTree) :
+theorem cutoff_readout (d : Nat) (S T : CompletionTree) :
     cutoff d S = cutoff d T ↔
       ∀ a : Address, a.length < d → completionReadout a S = completionReadout a T := by
   induction d generalizing S T with

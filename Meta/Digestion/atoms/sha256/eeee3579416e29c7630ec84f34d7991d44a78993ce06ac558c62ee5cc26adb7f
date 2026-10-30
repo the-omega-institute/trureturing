@@ -1,0 +1,35 @@
+**Lemma 4.2 (integer transition inequalities).** Let $v=(x,y)^{\mathsf T}$ and $r_0=(d,c)^{\mathsf T}$ be primitive positive integer columns with
+$$
+\det(v,r_0)=t>0.
+$$
+Suppose a legal matrix $W$ sends $v$ to $v'=v+jr_0$, with integer $j\ge1$. Write $\epsilon=\det W$. Then an integer $\lambda\ge1$ satisfies
+$$
+Wr_0=\epsilon r_0+\lambda v'.
+\tag{4.3}
+$$
+Its lower-left entry implies
+$$
+\lambda\le\frac{jc^2}{y(y+jc)}\quad(\epsilon=+1),\qquad
+\lambda\le c\left(\frac1y+\frac1{y+jc}\right)\quad(\epsilon=-1).
+\tag{4.4}
+$$
+Consequently a determinant-$+1$ transition requires $y<c$, and no such transition of either sign exists when $y\ge2c$.
+
+**Proof.** Taking determinants with $v'$ gives
+$$
+\det(v',Wr_0)=\epsilon t=\det(v',\epsilon r_0).
+$$
+Thus $Wr_0-\epsilon r_0$ is parallel to $v'$. The vector $v'$ is primitive, since $W$ is integral unimodular, so its integer parallel vector has an integer multiplier $\lambda$. If $\epsilon=-1$, $Wr_0+r_0$ is strictly positive, giving $\lambda\ge1$. If $\epsilon=+1$, a realizing word for $W$ must contain $M$, because the coordinate sum increases from $v$ to $v'$. The same word increases the sum of the strictly positive $r_0$. Hence $Wr_0-r_0=\lambda v'$ has positive sum, again giving $\lambda\ge1$.
+
+The dual rows of the basis $[v,r_0]$ are $(c,-d)/t$ and $(-y,x)/t$. Therefore
+$$
+W=\frac{v'(c,-d)}t+
+\frac{(\epsilon r_0+\lambda v')(-y,x)}t.
+\tag{4.5}
+$$
+Writing $y'=y+jc$, its lower-left entry is
+$$
+\frac{c(y'-\epsilon y)-\lambda yy'}t.
+$$
+Nonnegativity gives (4.4). In the positive-determinant case, $y\ge c$ makes that upper bound at most $j/(j+1)<1$. In the negative-determinant case, $y\ge2c$ makes it at most $1/2+1/3<1$. These contradict the integer lower bound for $\lambda$. ∎
+

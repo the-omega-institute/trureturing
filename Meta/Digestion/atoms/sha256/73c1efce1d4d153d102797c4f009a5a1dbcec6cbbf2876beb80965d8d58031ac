@@ -1,0 +1,37 @@
+**命题 4.4。** 固定 $S$，令 $A$ 的坐标为 $a_1,\ldots,a_m$。在 $A\mapsto-A$ 下
+不变的多项式环由所有二次乘积 $a_ia_j$ 生成。并置
+
+$$
+\delta(A,B)=\min(\|A-B\|_F,\|A+B\|_F),qquad
+D(A,B)=\|A\otimes A-B\otimes B\|_F.
+$$
+
+则
+
+$$
+\delta(A,B)\le2^{1/4}D(A,B)^{1/2};
+$$
+
+若 $\|A\|_F,\|B\|_F\ge a_0>0$，还有
+$\delta(A,B)\le D(A,B)/a_0$。
+
+**证明。** 通过整体符号选择使 $c=\langle A,B\rangle_F\ge0$，记
+$u=\|A\|_F,v=\|B\|_F$。则
+
+$$
+\delta^2=u^2+v^2-2c,qquad D^2=u^4+v^4-2c^2,
+$$
+
+并有
+
+$$
+2D^2-\delta^4=(u^2-v^2)^2+4c\delta^2\ge0,
+$$
+
+$$
+D^2-\tfrac12(u^2+v^2)\delta^2
+=\tfrac12(u^2-v^2)^2+c\delta^2\ge0.
+$$
+
+两式分别给出两项界。$□$
+

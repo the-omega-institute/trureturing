@@ -1,0 +1,67 @@
+**定理 19.5（例外系数的四目标局部两步失败）。** All four targets of Definition 19.4 are legal, distinct complete targets. Their eight-slot assignment shares every actual ancestor of its assigned slots, retains a collision for either final action after each of the two selected sixth-action responses, and has $L_2$ at the common actual prefix $J^4M$, including stopping at that prefix or at either selected child. No condition $\kappa\ne0$ is required.
+
+Proof. Each $Q_e(d)$ has trace one, strictly positive entries, $a=1-d\in(0,1)$ and $bc=d(1-d)=a(1-a)$, and has unit signature. At each of $d=4/5,1/4$ the two sources are different since $d\ne1/2$; sources across the two groups have different $a$. Thus the four targets are distinct. A nonzero $p$ with $p(0)=0$ is nonconstant, so neither constant shift $p-p(6)$ nor $p-p(7)$ is the zero polynomial. These remain legal gains of degree at most three, with arbitrary coefficient signs and possible sample or repeated roots.
+
+The normalized initial readings are all zero. At clocks $i=1,2,3,4$, every target has response $p(i)$, since each pure-$J$ trace is one. At clock five the cumulative matrix is $M$ and its trace is $1+d$. The two groups have responses
+
+$$
+p(5)-\frac45\kappa,\qquad
+p(5)-\frac14\lambda=p(5)-\frac45\kappa.
+\tag{19.23}
+$$
+
+
+Thus all four targets share the same complete history through the fifth action; the gain shifts do not change their earlier readings or impose zero drift.
+
+If the sixth action is $J$, select the child response realized by $W_0^J,W_1^J$. Their cumulative matrix is $JM$ and their gain at clock six is zero, so both responses equal $p(6)$, regardless of their different $c$ entries. For their two possible final actions the exact cumulative matrices are
+
+$$
+M,\qquad MJM=\begin{pmatrix}0&1\\1&2\end{pmatrix}.
+\tag{19.24}
+$$
+
+
+For a unit source their traces are respectively $1+d$ and $b+c+2d=1+2d$. In particular the latter trace is $1+2d$; $2+d$ is instead the trace of $M^2$. At the fixed $d=4/5$, these traces agree between $Q_0(d)$ and $Q_1(d)$. Therefore the two final $J$ responses agree and the two final $M$ responses agree, being respectively
+
+$$
+(1+d)\bigl(p(7)-p(6)\bigr)+p(6),\qquad
+(1+2d)\bigl(p(7)-p(6)\bigr)+p(6).
+\tag{19.25}
+$$
+
+
+Both collisions use the same two already fixed targets and their actual shared ancestors. The two responses in (19.25) need not equal one another.
+
+If the sixth action is $M$, select the child response realized by $W_0^M,W_1^M$. Their cumulative matrix is
+
+$$
+M^2=\begin{pmatrix}1&1\\1&2\end{pmatrix},
+\qquad \operatorname{tr}(M^2P)=2+d
+\quad(\sigma(P)=1).
+\tag{19.26}
+$$
+
+
+Their shared sixth response is $(2+d)(p(6)-p(7))+p(7)$ at the fixed $d=1/4$. At clock seven the two cumulative matrices are
+
+$$
+JM^2=\begin{pmatrix}1&2\\1&1\end{pmatrix},\qquad
+M^3=\begin{pmatrix}1&2\\2&3\end{pmatrix},
+\qquad
+\operatorname{tr}(JM^2P)=2+c,\quad
+\operatorname{tr}(M^3P)=3+2d
+\quad(\sigma(P)=1).
+\tag{19.27}
+$$
+
+
+The first trace can differ between the two sources. Their common gain at clock seven is zero, however, so either final action gives response $p(7)$ for both targets. This proves both collisions on this child as well, without identifying sources or dividing by a gain value.
+
+For either sixth action, a selected actual response therefore leaves two distinct targets sharing their full acquired history. Stopping at that child fails; either final action still leaves a distinct pair, so one remaining reading also fails. At the fifth-action history all four targets are already present, so stopping there fails and either sixth action has a failing selected child. This is precisely its local $L_2$ conclusion. When $\kappa=0$, also $\lambda=0$; all formulas remain valid and the two gains are still nonzero by nonconstancy of $p$. No root, sign or nonzero future-sample promise was used. ∎
+
+Theorem 19.5 supplies exactly the eight slots below one fifth-action prefix. It supplies neither the opposite fifth action after $J^4$, earlier sibling branches, nor any extension to a complete source tuple or its full kernel. It gives no full-root bound or nine-read conclusion.
+
+The sources for Section 19 are the mathematical version `1eef3601bb81023352394a59bcb682b0c9b57cd8` of this volume, Definitions 13.1–13.2 and Theorem 13.3; [J-signature, Theorems 4.1, 7.1 and Proposition 7.3](FIB_ORIGINAL_ROOT_J_SIGNATURE_COUPLING_AND_HISTORY_FIBER_DECODER.md); and [J5, Theorem 6.2, Definition 8.2 and Conclusion 14.3](FIB_ORIGINAL_ROOT_J5_FIBER_DICHOTOMY_AND_RANK_TRICHOTOMY.md). The $B/G/D$ interface, initial-reading translation, finite-subspace avoidance, unit $J^5$ fiber result and localized constant directions are suppliers. Sections 17–18 of this volume and [E-zero, Section 13](FIB_ORIGINAL_ROOT_EZERO_FIBER_AND_GAIN_RANK_REDUCTION.md) provide the preceding four-world and nonunit return arguments; the nonunit hypotheses of those arguments remain in force there and are not assumed here. The new model-specific synthesis is the unit return comparison, shared fifth-response propagation, full source/gain/drift exclusion and its exceptional local construction. No global novelty or exhaustive literature claim is made.
+
+Rank-one unit tuples, rank-two tuples with $\Delta=0$, rank-two tuples with independent $E,\Delta$, and the exceptional rank-two plane $E=(13/4)\Delta$ remain unresolved by these results. A complete-root exclusion still requires an original failed guard for every remaining tuple; a surviving realization still requires one complete legal $256$-source tuple and all original guards on its same full $V$, or one simultaneous legal full coefficient vector. All $254$ prefixes, clocks zero through seven, the $1538\times1024$ matrix, coefficient signs, degree drops, roots, source repetitions, strict positivity, arbitrary real constant drifts, both actions and early stops remain in that obligation. No narrower branch kernel or independent branch/source choices discharge it.
+

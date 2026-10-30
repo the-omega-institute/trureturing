@@ -1,0 +1,26 @@
+**Definition 4.2 (ReadState and Resolve graphs).** ReadState invokes
+IterateDirectory. On the initial record it copies $H_0$ to the current $h,K$
+word roles, constructs $U(0)$ for $r,p$ and $U(1)$ for directory count $v$.
+It retains the initial base/length only when requested by the caller. On a
+reservation it copies $J$ into the current $K$ role and its stored $r+1$ into
+the layout role. On a raise it copies $J$ into $h$ and its stored $p+1$ into
+the policy role. At every later seal it increments $v$ by the actual unary
+graph. All other fields are skipped with SkipField. The field copies are
+ReadField into a distinct work port, then a finite role permutation; fields
+not needed after a check release their temporary roles. Copies of $H_0$ and
+initial identity needed for a row are obtained by another origin scan, never
+by a hidden register. The iterator's R exit is this routine's return edge.
+
+Resolve($i$) receives a constructed newest $U(i)$ on its input role, with
+$i<L(K)$. Copy it to a remainder role. Execute IterateDirectory from origin.
+For the initial record load its base and length; for each reservation load
+its base and length; skip raises. For each such interval Compare(remainder,
+length). If less, Add(base,remainder;address) and return at the newest word
+of the address role. Otherwise Sub(remainder,length;temporary), exchange
+the remainder role with that complete result and continue to the next record.
+An out-of-range R exit returns `bad-address`, never an arbitrary default cell.
+All other fields are consumed/skipped before the next record. The input
+ordinal and unfinished directory position are actual words and heads. Early
+return is to the fixed caller's next graph edge; the next invocation starts
+again with Home(0). It need not restore the directory head to its old position.
+

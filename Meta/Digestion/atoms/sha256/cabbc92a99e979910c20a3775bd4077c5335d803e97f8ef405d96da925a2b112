@@ -1,0 +1,76 @@
+**Theorem 60.3 (attained factorial floor).** Every source in Definition
+60.1 satisfies
+
+$$
+F(t)\ge2^{h(t)}h(t)!.
+\tag{AAII.18}
+$$
+
+For every integer $h\ge0$, equality is attained by an actual reachable
+source with exactly $h$ live headers, in the same known-alpha service.
+
+Proof. Apply structural induction to the product of local radices on
+birth-admissible subtrees. A leaf has product one and $h=0$. At a branch
+retain $x,y,a,b'$ from Lemma 60.2. If $x=0$ or $y=0$, its radix is one
+and the zero-event child has no ambiguity; the other child supplies
+the required bound for the entire subtree. This includes $x=y=0$.
+If both are positive, put $q=a+b'+1$. Lemma 60.2 and separate
+monotonicity of $\binom{x+y}{x}$ in the nonnegative integers $x,y$ give
+
+$$
+R\ge\binom{2q}{2a+1}\ge2q\binom{q-1}{a}.
+\tag{AAII.19}
+$$
+
+For the second inequality, partition a $2q$-element set into $q$ named
+pairs. Among its $(2a+1)$-element subsets, count those with exactly one
+split pair: choose that pair, one of its two members, and $a$ complete
+pairs among the remaining $q-1$. This gives
+$2q\binom{q-1}{a}$ distinct subsets. The first inequality also follows
+directly by increasing $x$ or $y$ one at a time in the factorial formula
+for a binomial coefficient. Multiplying (AAII.19) by the two inductive
+bounds gives
+
+$$
+R\,(2^a a!)\,(2^{b'}b'!)
+\ge2q\frac{(q-1)!}{a!b'!}\,2^{q-1}a!b'!
+=2^q q!.
+$$
+
+Since $q$ is this subtree's $h$, induction proves (AAII.18), using AA
+Theorem 19.2's history-product identity at the actual alpha root.
+
+For attainment define
+
+$$
+t_0=\langle\beta,\alpha\rangle,\qquad
+t_{h+1}=\langle t_h,\beta\rangle.
+\tag{AAII.20}
+$$
+
+As a beta-born subtree, $t_h$ has event count $2h+1$: the base needs
+one split, and the next branch has prefix one, left count $2h+1$ and
+right count one. The base branch has radix one. In the recursive term decomposition,
+the outer factor has radix $2h+2$, and the internal factors of its left
+term are exactly those of $t_h$. Thus $h(t_h)=h$ and
+$F(t_h)=\prod_{j=1}^h(2j)=2^h h!$. Being born alpha at the whole root
+adds its forced promotion and changes neither these child counts nor
+the history product.
+
+These terms occur along one nested sequence of actual legal growth
+words. Execute $P_\varepsilon;S_\varepsilon$ to obtain $t_0$. In $t_h$
+the deepest beta leaf is at $L^{h+1}$ and the sole alpha is at
+$L^hR$. Execute $S_{L^{h+1}}$ and then $P_{L^hR}$. The latter promotes
+the **old bottom branch's** right alpha, which is still at that address;
+it does not promote the newly created right alpha at $L^{h+1}R$.
+The old bottom subtree $\langle\beta,\alpha\rangle$ becomes
+$\langle\langle\beta,\alpha\rangle,\beta\rangle$, giving exactly
+$t_{h+1}$. Both guards are enabled. The original driver and Theorem
+49.1 supply the actual framed calls, maintenance, outputs, acknowledgement
+and Return after each event. At $t_h$ the same run has
+$P=S=h+1$ and $V=1+P+2S=3h+4$ source vertices. Its nontrivial radices
+are $2,4,\ldots,2h$, so its actual payload and conditional width are
+$B(t_h)=\sum_{j=1}^h\lceil\log_2(2j)\rceil$ and
+$G(t_h)=\lceil h+\log_2(h!)\rceil$. Each finite prefix has its supplied
+finite backing; no completed infinite physical run is used. $\square$
+

@@ -1,0 +1,118 @@
+**Proposition 40.1.** There is a unique $x_*\in X_{\rm J}$ satisfying $F_{\rm J}(x_*)=0$.
+The four associated worlds $W_A,W_B,W_C,W_D$ are distinct legal worlds in
+one entire $C(p_{\rm J},v_{\rm J})$, where
+
+$$
+\frac{2293}{100}<p_{\rm J}<\frac{2294}{100},\qquad
+\frac{12780}{100}<v_{\rm J}<\frac{12781}{100}.                           \tag{40.4}
+$$
+
+They satisfy
+
+$$
+a(W_A)=a(W_B),\qquad
+\frac{44766}{100}<a(W_A)<\frac{44767}{100},                       \tag{40.5}
+$$
+
+and their four terminal-M readings are pairwise distinct, with order
+$m(W_D)<m(W_B)<m(W_C)<m(W_A)$.
+In particular terminal J is not injective on all acquired children with
+$p\ne24$.
+
+**Proof.** All arithmetic bounds used here are specified over rational
+intervals. This also gives a finite reproduction of the existence proof.
+For a rational interval $I=[l,u]$, let
+
+$$
+\operatorname{rnd}_{36}(I)=10^{-36}
+ [\lfloor10^{36}l\rfloor,\lceil10^{36}u\rceil].                  \tag{40.6}
+$$
+
+After each addition, multiplication or reciprocal take $\operatorname{rnd}_{36}$ of
+the usual enclosing interval. Negation is exact. Products use the minimum
+and maximum of their four endpoint products. Reciprocals use
+$[1/u,1/l]$ and are used only when $0\notin I$. Division is multiplication
+by this reciprocal. Constants and input intervals are their exact
+rational intervals. For derivatives use seven-component interval jets:
+
+$$
+\begin{aligned}
+(v,q)+(w,t)&=(v+w,q+t),\\
+(v,q)(w,t)&=(vw,qw+vt),\\
+(v,q)^{-1}&=(v^{-1},-qv^{-1}v^{-1}).
+\end{aligned}                                                    \tag{40.7}
+$$
+
+Each operation on the right is the rounded interval operation just
+defined. Each variable $x_i$ begins with the $i$th unit derivative;
+constants have zero derivatives. Evaluate (31.4) through $\epsilon$,
+then $z_0,z_1,z_2,z_3,d$,
+then $t_5,t_6,t_7$, then the responses in (31.4), in displayed order.
+Within a sum evaluate terms from left to right. Evaluate (40.1) in row
+order. These rules enclose the map and its true first derivatives
+throughout the box, by induction on the displayed arithmetic expressions.
+
+The resulting strict rational comparisons are as follows. In the first
+table, the $i$th bound is for
+$\sum_j\sup_{x\in X_{\rm J}}|(I-L_{\rm J}DF_{\rm J}(x))_{ij}|$; compute each matrix product in
+increasing summation index starting at zero.
+
+| Row | Strict rational upper bound |
+| --- | --- |
+| 1 | $32\cdot10^{-8}$ |
+| 2 | $30\cdot10^{-7}$ |
+| 3 | $21\cdot10^{-7}$ |
+| 4 | $51\cdot10^{-8}$ |
+| 5 | $31\cdot10^{-8}$ |
+| 6 | $62\cdot10^{-6}$ |
+| 7 | $46\cdot10^{-6}$ |
+
+Evaluating $L_{\rm J}F_{\rm J}(c_{\rm J})$ by the same operations gives
+
+$$
+\|L_{\rm J}F_{\rm J}(c_{\rm J})\|_\infty<10^{-20},\qquad
+\sup_{x\in X_{\rm J}}\|I-L_{\rm J}DF_{\rm J}(x)\|_\infty<10^{-4}.                       \tag{40.8}
+$$
+
+The following additional enclosing intervals are obtained by the same
+expressions on the entire box; every endpoint is an exact rational.
+Only the common $p,v$ bounds in (40.4) are needed from the first world.
+
+| World | $\Lambda$ | $d$ | $g(7)$ | $a$ | $m$ |
+| --- | --- | --- | --- | --- | --- |
+| $A$ | $(2.90,2.91)$ | $(24.06,24.07)$ | $(75.50,75.51)$ | $(447.66,447.67)$ | $(604.27,604.29)$ |
+| $B$ | $(-0.70,-0.69)$ | $(28.28,28.30)$ | $(68.22,68.24)$ | $(447.66,447.67)$ | $(586.46,586.48)$ |
+| $C$ | $(1.65,1.66)$ | $(24.08,24.09)$ | $(75.35,75.36)$ | $(539.05,539.07)$ | $(604.13,604.15)$ |
+| $D$ | $(-0.20,-0.19)$ | $(31.96,31.97)$ | $(78.70,78.71)$ | $(371.76,371.78)$ | $(576.49,576.52)$ |
+
+These tables are finite inequalities obtained from (31.4) and
+(40.2)–(40.7), not rounded root assertions. All source intervals satisfy
+$b>0$ and $0<r<1$. Hence $j,n,T,U>0$ before division. The listed
+$\Lambda$ bounds justify the remaining divisions. In particular the
+interval evaluations do not cross an unhandled pole.
+
+To derive existence from the comparisons, set $N_{\rm J}(x)=x-L_{\rm J}F_{\rm J}(x)$.
+The mean-value estimate on the convex box gives
+
+$$
+\|N_{\rm J}(x)-c_{\rm J}\|_\infty
+\le \|L_{\rm J}F_{\rm J}(c_{\rm J})\|_\infty+10^{-4}\|x-c_{\rm J}\|_\infty
+<10^{-20}+10^{-4}\rho_{\rm J}<\rho_{\rm J}.                                    \tag{40.9}
+$$
+
+Thus $N_{\rm J}$ maps $X_{\rm J}$ into its interior and is a contraction with constant
+less than $10^{-4}$. The classical contraction principle gives one
+unique fixed point $x_*\in X_{\rm J}$.
+The norm bound at $c_{\rm J}$ also makes $L_{\rm J}DF_{\rm J}(c_{\rm J})$ invertible by its Neumann
+series, so $L_{\rm J}$ is invertible. Therefore $N_{\rm J}(x_*)=x_*$ is equivalent to
+$F_{\rm J}(x_*)=0$; every zero of $F_{\rm J}$ in $X_{\rm J}$ is this fixed point.
+
+Equations (40.1) now give one shared acquired $p_{\rm J},v_{\rm J}$ for all four
+worlds and the terminal-J equality for $A,B$. The disjoint $r$ intervals
+in (40.2), together with $r_A=1/4$, make all four source matrices and
+complete triples distinct. The actual realization in Section 31 proves
+membership in the entire child; membership does not require that child
+to have only four worlds. The response bounds give (40.4)–(40.5) and the
+strict M ordering. In particular $p_{\rm J}\ne24$. This proves the
+proposition. $\square$
+

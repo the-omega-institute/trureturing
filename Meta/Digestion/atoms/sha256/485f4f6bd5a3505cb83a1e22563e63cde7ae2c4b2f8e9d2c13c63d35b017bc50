@@ -1,0 +1,27 @@
+**命题 41.2（整个对角线上本策略的继续概率）。** 对定义 35.1 的策略及每个 $0<t<1$、$0<\epsilon\le1/4$，有
+
+$$
+P_{t,t}(\tau_\epsilon<\infty,F)\le\epsilon,
+\qquad
+P_{t,t}(\tau_\epsilon=\infty)
+\ge\frac{D_t}{1+t}-\epsilon\ge\frac18.
+\tag{41.5}
+$$
+
+**证明。** 标签 $A,B$ 仍不同，但 $a_A=a_B=t$，所以（36.10）的两侧均值均为零。引理 36.2 已在保留标签的条件下证明全部选定锚公式仍适用，故命题 37.2 的 $\mathcal G$ 仍有概率至少 $1-\epsilon$。在 $\mathcal G$ 上，所有检查点分数均满足 $|S_{n_j}^s|\le b_j$，没有任一统计证书。因而 $F\cap\mathcal G$ 上始终继续，有限停止且在 $F$ 内的事件只能落入 $\mathcal G^c$，得第一式。$F^c$ 上策略在半径一停止，故
+
+$$
+P_{t,t}(\tau_\epsilon=\infty)
+\ge P_{t,t}(F)-\epsilon.
+$$
+
+又
+
+$$
+D_t=(t-1/2)^2+3/4\ge3/4,\qquad 1+t\le2,
+$$
+
+所以 $P_{t,t}(F)\ge3/8$，减去 $\epsilon\le1/4$ 得到 $1/8$。正概率的无穷半径使扩展期望为无穷：对任意 $K>0$，$\mathbb E\tau_\epsilon\ge K P(\tau_\epsilon=\infty)$。这完成（35.12）及定理 35.3。$\square$
+
+本命题不排除 $F$ 上发生概率至多 $\epsilon$ 的有限统计停止。无限继续也不是有限时刻的参数等式证书；策略在这样的轨道上保持未终止输出 $\bot$。
+

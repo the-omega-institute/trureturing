@@ -1,0 +1,22 @@
+#### 定理 2.2（存在与全称是概率的支撑端点）
+
+有
+
+$$
+\mathsf Q_\mu R>0\iff\exists w\in\Omega_+:R(w)=1,
+$$
+
+$$
+\mathsf Q_\mu R=1\iff\forall w\in\Omega_+:R(w)=1.
+$$
+
+当 $\mu$ 全支撑时，右边才是原论域上的普通存在和全称量词。
+
+**证明。**
+
+第一式由有限个非负数的和为正当且仅当至少一项为正。第二式对补谓词应用第一式，并用 $\mathsf Q_\mu(1-R)=1-\mathsf Q_\mu R$。
+
+∎
+
+<a id="statement-2-3"></a>
+

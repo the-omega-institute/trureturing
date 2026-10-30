@@ -1,0 +1,30 @@
+**Definition 8.1 (Actual interpolation grid and entire target class).** Let $\mathbb D=\{z\in\mathbb C:|z|\le1\}$ and $I=[-1,1]$. For every real $d$ with $0<d\le\tfrac12$, put
+
+$$
+w_d=1-d+i\sqrt3\,d,\qquad W_d=(w_d,\overline{w_d}),\qquad
+p_d(z)=(z-w_d)(z-\overline{w_d}).
+$$
+
+For every entire function $g:\mathbb C\to\mathbb C$, let $I_dg$ be the unique polynomial of degree at most one with the same values as $g$ at the two nodes of $W_d$, and define
+
+$$
+L_d(g)=g'(1)-(I_dg)'(1)
+=g'(1)-\frac{g(w_d)-g(\overline{w_d})}{w_d-\overline{w_d}}.
+$$
+
+Write $\|h\|_{\mathbb D}=\sup_{z\in\mathbb D}|h(z)|$, and set
+
+$$
+\mathscr E_2(\mathbb D)=
+\{g:\mathbb C\to\mathbb C:\ g\text{ is entire and }\|g''\|_{\mathbb D}\le1\},
+$$
+
+$$
+\mathcal K_d=
+\left\{x\in I:\
+\sup_{g\in\mathscr E_2(\mathbb D)}
+|g'(x)-(I_dg)'(x)|=\frac{|p_d'(x)|}{2}\right\}.
+$$
+
+Thus $\mathcal K_d$ is exactly the analytic Kallioniemi set $\mathcal I^{\mathbb D}_{2,1}(W_d)$ in equation (35) of [Ostrovskii–Shcherbakov, arXiv:2508.13554v2, Section 6.2](https://arxiv.org/html/2508.13554v2#S6.SS2). The class is the entire complex-valued class specified there, without a real-coefficient restriction. For integers $t\ge2$ write $m_t(z)=z^t/[t(t-1)]$; these are the source's normalized monomials $(t-2)!z^t/t!$, and $\|m_t''\|_{\mathbb D}=\|z^{t-2}\|_{\mathbb D}=1$.
+

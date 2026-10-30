@@ -1,0 +1,28 @@
+**Definition 2.2 (the actual continuation and entire child).** Write
+
+$$
+j=b+c,\qquad n=j+r,\qquad T=1+b,\qquad U=1+2b.
+$$
+
+The actual fifth and sixth actions are $M,M$, giving
+
+$$
+p(W)=d+(U+n)g(5),\qquad v(W)=d+(2U+n)g(6).
+\tag{2.4}
+$$
+
+The actual seventh action in this volume is $J$, with acquired value
+
+$$
+a(W)=d+(T+2j+4r)g(7).
+\tag{2.5}
+$$
+
+The function
+
+$$
+m(W)=d+(3U+2n)g(7)
+\tag{2.6}
+$$
+
+denotes the alternative seventh-$M$ reply on that same world. It is

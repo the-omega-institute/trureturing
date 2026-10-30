@@ -1,0 +1,112 @@
+**Convention 93.2 (actual computation, traffic and retention).**
+All subset/forcing searches, graph traversals, row and column choices,
+inverse calculations, phase counters and operands are constructed
+from earned finite data by local exact routines. A finite exhaustive
+adequacy search is allowed and paid; no polynomial bound for finding
+an optimal subset is asserted. Once a sufficient graph is chosen,
+the dense construction in §86.2 provides a conservative
+$O(M^4)$ rational-operation and $O(M^3)$ rational-slot implementation
+of the needed stacks, pivots and solves. Form at most $M$ sparse
+adjacency powers; there are $O(M^2)$ candidate rows, and rank tests
+against at most $M$ pivots give this bound. The fresh-only
+left inverses at a later phase also pay the actual propagation to
+that phase, rational elimination and export work. No constant-time
+inverse or free selector is hidden in a rank equality.
+
+For each actual size-$m$ source Tick, initialize $m$ update slots
+and perform $2(m-1)$ directed neighbor additions; count the separate
+predictor computation and its writes. Section 88.2 pays its first
+update at $N$ and subsequent ones at $M$. Every other displayed
+receiver Tick is on its own grown graph. Literal traffic is exactly
+the actual sum prescribed by NLBAII §65 and Convention 81.1 over
+rational operands/replies, selectors, growth addresses, tags, frames,
+ACKs, End, local acknowledgement, Return, navigation and all inner
+and outward exports/copies. Computed metrics, germs, records and
+reports have their full finite output cost. No zero number is an
+empty packet, and no source ACK is an extra field measurement.
+
+The source old/new field, retained predictor old/new field, graph,
+raw/canonical maps, genuine references/grants, parser and pending
+request/reply, sample triples, original/target/current vectors while
+live, row/column matrices, solve scratch, output copies, phase
+counters and isolated provider buffers coexist when used. Count
+distinct physical copies distinctly and actually shared allocations
+once. Clearing writes do not erase retained capacity from the bill.
+All rationals, including determinants and intermediate pivots, pay
+their actual numerator/denominator widths. Arbitrary rational $x$
+has no dimension-only width bound; repeated phases can increase
+widths. Neither finite code nor finite termination per input gives a
+uniform lifetime store, bit-cost, energy, conditioning or total-resource
+optimum.
+
+The installed current controller really retains the attained whole
+field, graph and exhaustive binding, and updates all of them under
+NLBAII Theorem 64.1. Enabled $P/S$ retain old values, append the
+correct zeros and move/add actual labels with their lifecycle;
+Tick uses the current adjacency and returns only ACK; Add translates
+its genuinely bound terminal; Read returns its full rational; Hold
+preserves it. Absent, branch and wrong-type refusals remain distinct
+identities. Out-of-roster integer Add/Read gives RangeRefusal;
+complete malformed frames, including Reset, give BadFrame. Proper
+incomplete frames retain actual pending bytes and parser state without
+a completed action/reply. Missing rights disable dispatch. The
+controller consumes full output, End, acknowledgement and Return,
+and synchronizes before the next settled cut. One-step equality
+then inducts over every common sufficiently backed finite adaptive
+continuation, with the same future selector inputs. Lost, inaccessible
+or stale predictors do not meet this retained/callable premise.
+
+**Supplier correspondence 93.3 (what is added and what is reused).**
+The additions are the native arbitrary-mask incidence transfer in
+§87 and its separate current application; the fresh-only,
+fresh-zero entrance and every advanced-germ injectivity theorem in
+§89, with the ambient counterexample; and the exact all-subset
+guard/cherry kernel and adaptive terminal-mask price in §§91–92.
+The actual view applications, performed selection and legal controls
+are included to establish their recovery domains on one process.
+They do not claim a new generic quotient, forcing, observability,
+rank, control or four-view theorem.
+
+AA Definitions 17.1,17.3 and Theorem 17.2 supply the birth condition,
+persistent material and labelled causal-order interpretation. NLBA
+§28.1 and NLBAIII Convention 75.2 supply all-but-one-leaf forcing
+and polynomial coordinates. NLBAII §§60–62 supply surviving rank,
+adaptive scalar bounds and paid arbitrary-field preparation; §64
+supplies complete service and its fixed-context kernel; §65 supplies
+literal accounting. NLBAIII §§83–85 already repair two inherited
+omissions and provide selected assays, optional physical return and
+their image inverses. The new arbitrary mask is not another claim
+of those two-label minima. NLBAII §§45–50, especially §49.2, already
+use asymmetric cherry splitting in a root-Read, restricted-amplitude
+family. Theorem 91.2 adds the entire partial-repair kernel on its
+different guarded family; Theorem 92.1 needs the stated arbitrary-field
+terminal policy and persistent final-current argument.
+
+`D5/S3/ObserverMemory/Dynamics/FiniteTimeTomographySaturation.lean`,
+`all_future_kernel_eq_finrank_kernel`, and its owning Blueprint
+Scribe give the exact finite-kernel supplier: take $K=\mathbb Q$,
+$V=\mathbb Q^M$, update $B$ and the actual restriction $C$.
+Intersect the first $M$ kernels, then precompose with $E$ when
+needed. Its separate traceless-Hermitian specialization is not used.
+The proof reduces powers modulo the characteristic polynomial;
+the pinned mathlib revision
+`56a005855ea17e0b0958f73ec801ae140b0a1679`,
+`Mathlib/LinearAlgebra/Charpoly/Basic.lean`,
+`LinearMap.pow_eq_aeval_mod_charpoly`, supplies that reduction.
+`D5/S3/Observer/Linear/FiniteObservabilityEquivalence.lean` and
+its owning Scribe supply kernel/full-rank/positive-Gram equivalence
+for finite-dimensional **real** inner-product spaces. Here its
+matching realization is $\mathbb R^M$, actual sensor-output
+$\mathbb R^s$, update $B$ and the displayed horizon. Rational
+rank comparisons use nonzero minors. No rational Gram instance,
+compiled application, physical assay or new Lean certification is
+inferred from these source correspondences.
+
+The complete material graph/ordered metric and causal interpretation
+are the existing §75.2 suppliers. Authentic root/orientation and
+earned geometry are fixed common context here; no new unknown-root
+or raw-map acquisition is asserted. The finite original-root
+recognition declaration `NativeMaterialRootRecognition.effective_inverse`
+retains its full terminal-order, $\mathcal D$ and at-least-three-leaf
+hypotheses; it grants no source reference or right.
+

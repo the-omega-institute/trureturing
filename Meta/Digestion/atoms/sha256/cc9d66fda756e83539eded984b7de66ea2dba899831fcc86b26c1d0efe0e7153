@@ -1,0 +1,44 @@
+**Proposition 3.3 (An exact corrected design with a nonzero excursion).**
+Fix $r>0$ and prescribe, relative to the original real frame,
+
+$$
+g=ir,\qquad J=\frac{4r}{\sqrt3},\qquad
+ t_* =\frac{\pi\sqrt3\hbar}{4r}.
+$$
+
+Then $t_*=t_1$, $\Delta=8r/\sqrt3$, $d=1/2$,
+$x=\sqrt3/4$, $\eta=\sqrt3/2$, and $\lambda_1=i$.
+There is a separately supplied real inverse rotation $R_0\in G_{\mathbb R}$
+with $R_0U(t_*)|_V=S$. For every $V$ density,
+
+$$
+L_\rho(t_*/2)=3\kappa/4.
+$$
+
+Proof. Substitute in Theorems 2.2–2.3. With
+$\theta_*=\pi\sqrt3/4$, the two-plane endpoint is
+
+$$
+B_* =\begin{pmatrix}\cos\theta_*&\sin\theta_*\\
+                    -\sin\theta_*&\cos\theta_*\end{pmatrix}.
+$$
+
+Take $R_0=B_*^{-1}$ on $(e_1,e_3)$ and identity on $e_0,e_2,e_4$.
+It is in $SO(5)$ and commutes with $D_3$, hence lies in the stipulated
+group and corrects the endpoint exactly. At half time $\tau=\pi/2$
+and $\chi=\pi/4$, so the leakage coefficient is $\eta^2=3/4$.
+The true joint return phase is $i$ while the $PHP$ exponential gives $-1$;
+the determinants on $V,W$ are $i,-1$ respectively.
+
+The ordinary inverse *bosonic beam splitter* giving $B_*^{-1}$ in the
+single-particle sector also acts by its symmetric square on two particles.
+It sends $e_4$ outside $V$ with probability
+
+$$
+\sin^2(2\theta_*)=\sin^2(\pi\sqrt3/2)>0,
+$$
+
+because $\sqrt3/2$ is not an integer. It is therefore not the stipulated
+selective $R_0$ that fixes $e_4$. An exact endpoint formula does not supply
+that selective operation. $\square$
+

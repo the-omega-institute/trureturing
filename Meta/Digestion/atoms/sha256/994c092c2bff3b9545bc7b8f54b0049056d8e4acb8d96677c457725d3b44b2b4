@@ -1,0 +1,54 @@
+**Proposition 23.4 (block-stage costs).** Through paid seed,
+$h\in\mathcal H_{\rm blk}$ and the first exact assay,
+
+$$
+\begin{array}{c|c}
+\mathrm{Reset}&1\\
+\mathrm{Add}&1\\
+\mathrm{exact\ Read}&1+b(n+1)\\
+\mathrm{Tick}&Q+n\\
+\mathrm{Hold}&n+2\\
+\mathrm{raw\ growth}&n\\
+\mathrm{fixed\ field\ acknowledgements}&Q+2n+4 .
+\end{array}
+\tag{23.3}
+$$
+
+Let $N_i$ be material size after block $i$, $N_0=1$. Historical source
+Tick products and sums, including the assay, are respectively
+
+$$
+\sum_{i=0}^mq_i(3N_i-2)+n(3N-2),\qquad
+\sum_{i=0}^mq_i(2N_i-2)+n(2N-2).
+\tag{23.4}
+$$
+
+For $m=0$ use its sole gap $q_0$. A new $k$-birth block/reassay adds
+$k$ raw transactions, $n+k$ Ticks, $n+k+1$ Holds and
+$b'(n+k+1)$ exact Reads, with all their actual lifecycle costs.
+
+Proof. Every block member pays one raw growth, with no attached Tick.
+All historical Ticks occur on the block-stage trees of (23.4).
+The assay has unchanged horizon $I=n$, not the number of blocks:
+$n$ Ticks, $n+1$ Holds and $b(n+1)$ Reads.
+Adding seed calls gives (23.3), and Proposition 13.3 gives (23.4).
+The successor counts are that same assay schedule on the new tree
+after $k$ actual raw calls. $\square$
+
+The old rational forcing/route bound and exact inverse machinery give
+$O(N^4+QN^2)$ rational operations and $O(N^3)$ rational slots on
+valid inputs, plus actual support/address parsing. To see the new
+decoder fits, at most $n$ block collapses need finite rational inverses;
+their cubic solves sum to at most $O(N^4)$, and the $Q$ reversed
+Ticks use at most $O(N^2)$ work each. Each support parsing and recursive
+old/new comparison is a finite tree scan with its real address
+representation cost. Source widths are $O(Q+n+1)$; inverse and
+elimination widths remain separate. Off-image recognition is total
+by Theorem 22.4, without a valid-image $Q$ bound for rejected inputs.
+
+The gain is a class-level inverse for actual independent unticked
+blocks, with exactly its stated permutation kernel. No digital-block
+composition with §17 is asserted. Dependent zero-gap histories,
+chosen within-block order, unknown seeds/laws, arbitrary journals,
+busy-cut inversion and physical restoration are not supplied.
+

@@ -1,0 +1,31 @@
+**Lemma 56.2 (The ten literal products and the report rows).**
+For the prescribed first six atoms,
+
+$$
+Q_6=\begin{pmatrix}3&1\\5&2\end{pmatrix},
+\qquad
+Q_7=JQ_6=\begin{pmatrix}5&2\\3&1\end{pmatrix},
+\qquad
+Q_8=Q_6,\quad Q_9=Q_7,\quad Q_{10}=Q_6
+$$
+
+when four further atoms $J,J,J,J$ are appended.  Moreover
+
+$$
+\operatorname{tr}(Q_6P)=2U+n=:\tau>0,
+\quad
+\operatorname{tr}(Q_7P)=T+2j+4r,
+$$
+
+and the reports $y_6,y_7,y_8,y_9,y_{10}$ are the actual reports at
+clocks six through ten of one run.
+
+**Proof.**
+Multiplication of the displayed $2\times2$ matrices gives the five
+products.  Expanding the trace against $P$ gives
+$3r+c+5b+2(1-r)=2+5b+c+r=2U+n$ and
+$5r+2c+3b+1-r=T+2j+4r$.  Positivity of $P$ and of the entries of $Q_6$
+gives $\tau>0$.  The equality $Q_8=Q_{10}=Q_6$ is a return of the
+literal source route; it does not erase the reports at clocks seven or
+nine. ∎
+

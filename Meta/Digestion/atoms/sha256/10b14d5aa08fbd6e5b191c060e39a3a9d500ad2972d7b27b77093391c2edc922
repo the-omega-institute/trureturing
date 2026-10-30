@@ -1,0 +1,29 @@
+**Definition 28.1 (Fixed padding and the polynomial Q).**
+For degree bounds $m,n$, let $\operatorname{Res}^{m,n}_x(A,B)$ be
+the fixed $(m+n)$ by $(m+n)$ Sylvester determinant. Its ordered rows
+are $x^{n-1}A,\ldots,A,x^{m-1}B,\ldots,B$, with columns in descending
+powers $x^{m+n-1},\ldots,1$; all absent coefficients are zero.
+The degree bounds stay fixed under every specialization. Using exactly
+the polynomials of Definition 27.1, define
+
+$$
+\begin{aligned}
+a(p,v)&=[r^{18}]R,\\
+E_1(p,v)&=\operatorname{Res}^{18,26}_r(R,\mathcal L_1),\\
+E_2(p,v)&=\operatorname{Res}^{10,26}_r(E,\mathcal L_1),\\
+E_3(p,v)&=\operatorname{Res}^{18,186}_r(R,G),\\
+T_*(p,v,w)&=\operatorname{Res}^{18,188}_r(R,F-wG),\\
+E_4(p,v)&=\operatorname{Res}^{18,17}_w(T_*,\partial_wT_*),\\
+Q(p,v)&=a(p,v)E_1(p,v)E_2(p,v)E_3(p,v)E_4(p,v).
+\end{aligned}
+\tag{28.1}
+$$
+
+The input $F-wG$ is padded to degree $188$ in $r$, and $T_*$ and
+its derivative are padded to degrees $18,17$ in $w$. Equations
+(12.1)–(12.2), (20.1)–(20.5), (27.1)–(27.2), (28.1) are finite
+polynomial and determinant definitions of $Q$, with no choice of a
+primitive part, unspecified elimination operation or existential
+projection. Definition 24.1 supplies the existing coefficient table
+of $R$; no expansion of $Q$ is implicit in this notation.
+

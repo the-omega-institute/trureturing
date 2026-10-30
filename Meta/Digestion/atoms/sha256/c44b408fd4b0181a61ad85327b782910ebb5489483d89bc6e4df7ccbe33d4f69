@@ -1,0 +1,18 @@
+**Lemma 21.4 (A full-domain lower-branch sign).** For every $p\in K$
+and $0<r<1$, the lower source point $(r,b_-(r,p)/q)$ belongs to
+some $\mathcal V_j$. On that tube its selected response denominator
+$d_{k_j}$ is nonzero and $G^{(k_j)}>0$.
+
+**Proof.** The finite rational quantities (21.7)–(21.13) satisfy
+the following bounds. In every row, every integer $j$ in the
+stated range is included. The denominator column concerns
+$-[A_5](R_j,Z_j,K)$ when $k_j=1$, and
+$[\Lambda](R_j,Z_j,K)$ when $k_j=0$; $D_*$ is a lower bound
+for its lower endpoint.
+
+| $j$ | $k_j$ | $D_*$ | $-N^2\sup M_j^-$ exceeds | $N^2\inf M_j^+$ exceeds | $\inf V_{00,j}$ exceeds |
+| --- | --- | --- | --- | --- | --- |
+| $0,\ldots,613$ | $1$ | $1/3$ | $4000$ | $4000$ | $10^7$ |
+| $614,\ldots,2047$ | $0$ | $3/50$ | $3000$ | $3000$ | $50000$ |
+| $2048,\ldots,3644$ | $0$ | $1/5$ | $5000$ | $5000$ | $6\cdot10^8$ |
+| $3645,\ldots,4095$ | $1$ | $5/2$ | $5000$ | $5000$ | $5\cdot10^{12}$ |

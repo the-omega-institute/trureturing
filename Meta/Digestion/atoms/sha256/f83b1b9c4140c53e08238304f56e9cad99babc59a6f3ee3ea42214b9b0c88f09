@@ -1,0 +1,22 @@
+**Theorem 4.3 (No universal vertex for large order).** Let $\ell\ge1$ and $n\ge3\ell+9$. Then no minimizer in $\mathcal G(n,\ell)$ has a universal vertex. More precisely, every graph in $\mathcal G(n,\ell)$ with a universal vertex has a strictly larger index than $H_{n,\ell}$. Stance: suspected-novel (see §6).
+
+**Proof.** By Lemmas 3.2 and 4.2 it suffices to show
+
+$$
+\frac{2(n+7\ell+5)}{(n+\ell-2)^2}<\frac{2\ell}{(\ell+1)^2+1},
+$$
+
+for then every $G\in\mathcal G(n,\ell)$ with a universal vertex satisfies $\Phi(G)\ge m+c_\ell>\Phi(H_{n,\ell})$, while every minimizer $G^\ast$ satisfies $\Phi(G^\ast)\le\Phi(H_{n,\ell})$. Put $s=n+\ell-2$, so that $n+7\ell+5=s+6\ell+7$ and $s\ge4\ell+7$. Clearing the positive denominators, the inequality is equivalent to $f(s)>0$, where
+
+$$
+f(s)=\ell s^2-(\ell^2+2\ell+2)(s+6\ell+7).
+$$
+
+At $s=4\ell+7$, using $\ell(4\ell+7)^2=16\ell^3+56\ell^2+49\ell$ and $(\ell^2+2\ell+2)(10\ell+14)=10\ell^3+34\ell^2+48\ell+28$,
+
+$$
+f(4\ell+7)=6\ell^3+22\ell^2+\ell-28\ge6+22+1-28=1>0,
+$$
+
+since the cubic increases in $\ell\ge1$. For $s\ge4\ell+7$ the derivative satisfies $f'(s)=2\ell s-(\ell^2+2\ell+2)\ge2\ell(4\ell+7)-(\ell^2+2\ell+2)=7\ell^2+12\ell-2>0$, so $f(s)\ge f(4\ell+7)>0$ for all $s\ge4\ell+7$. ∎
+

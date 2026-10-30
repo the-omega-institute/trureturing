@@ -1,0 +1,32 @@
+**References 117.2 (standard probability and status of the increment).**
+Kaufmann, Cappe and Garivier, *On the Complexity of Best-Arm Identification
+in Multi-Armed Bandit Models*, [arXiv:1407.4443v2](https://arxiv.org/html/1407.4443v2),
+Appendix A, Lemma 18 and its §A.3 proof, supplies the classical adaptive
+likelihood-product induction and the decomposition over finite stopping
+counts. Its mutually absolutely continuous arm laws cannot be applied
+wholesale to unequal exact returns. Formula (112.3) is that standard
+finite-kernel argument on the specifically compatible mixed branch, with
+positive Gaussian factors; no new probability principle, KL optimality or
+bandit sample complexity is asserted. Null-set transport is also the
+definition `Measure.AbsolutelyContinuous` in pinned mathlib
+`56a005855ea17e0b0958f73ec801ae140b0a1679`,
+[MeasureTheory/Measure/AbsolutelyContinuous.lean](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/MeasureTheory/Measure/AbsolutelyContinuous.lean),
+with `AbsolutelyContinuous.ae_eq` transporting almost-everywhere equality.
+Gaussian positivity and finite rational solving are standard suppliers.
+
+The `repo-derived` increment is the mixed adaptive rank necessity for this
+attained source, together with its separate complete-current-service
+bridge, retained-data sufficiency and actual sign-selected two-read-type
+continuation. Its view result identifies exactly where acquired samples,
+current native state, law state and noisy chronology part company.
+The native geometry, preparation, deterministic repair, growth persistence,
+linear algebra and general measure-separation principle are reused rather
+than presented as new theorems. Relevant repository theory, D5, owning
+Scribes, pinned upstream definitions and the cited primary likelihood
+proof provide this bounded comparison; it establishes neither worldwide
+originality nor absence from every unrelated source.
+
+All assertions here are ordinary conditional mathematical proofs;
+no new Lean compilation, kernel certification, digestion or machine-state
+claim accompanies them.
+

@@ -1,0 +1,45 @@
+**Construction 84.3 (a separate current-only experiment at $g=3$).** Start
+again at the original entrance $x$, not at (84.2) or (84.4). Let
+$r=\operatorname{rank}A$ and choose an exact rational basis matrix
+$U_0$ of $\operatorname{im}A$. Actually Tick once on the old graph;
+perform the selected omitted-beta split of Theorem 83.2; then Tick once
+on the new graph and Hold. Its field is
+
+$$
+BEAx=Uc,\qquad U=BEU_0,\qquad Ax=U_0c.
+\tag{84.5}
+$$
+
+Select $r$ independent rows of $O'U$ in epoch/terminal order, forming
+$R_c$, with maximal epoch $H_c\le M-1$. At the held field (84.5),
+Read the selected epoch-zero sites; then execute $H_c$ new-graph rounds
+Tick; Hold and their selected Reads. The real samples and endpoint are
+
+$$
+y=R_cc,\qquad c=R_c^{-1}y,\qquad
+w=L_cc,\quad L_c=B^{H_c}U=B^{H_c+1}EU_0.
+\tag{84.6}
+$$
+
+This separate experiment has one split, $r$ Reads, $H_c+2$ Ticks,
+$H_c+1$ Holds and zero Adds. It installs whole-current service at $w$.
+It neither reports original $x$ nor restores it.
+
+**Proof.** Retention of all old edges gives $E^{\mathsf T}BE=A$.
+If $BEz=0$ for $z\in\operatorname{im}A$, compression gives
+$Az=0$, hence $z=0$ by symmetry and injectivity of $A$ on its image.
+Thus $U$ has rank $r$, and its image lies in $\operatorname{im}B$.
+The repaired divisor is one, so $O'$ is injective and the selected $R_c$
+exists. Symmetric $B$ is injective on its image, so $L_c$ also has rank
+$r$. Actual sampling proves (84.6). All lost $\ker A$ information was
+discarded by the first real Tick; no inverse for that information is
+asserted. The rank-$A$ arbitrary-current lower bound of NLBAII §§60–61
+allows adaptive growth and applies to this same entrance. Thus the $r$
+Reads attain that coordinate. $\square$
+
+For $g\le2$, use the separate no-edit current experiment of Theorem
+80.1: $r$ Reads, $H+1$ Ticks, $H+1$ Holds, zero Adds or births,
+ending at $A^{H+1}x$. Its observation stack is injective on
+$\operatorname{im}A$, even when $g=2$ and it is not injective on the
+whole field space. These no-edit bills are not substituted into (84.6).
+

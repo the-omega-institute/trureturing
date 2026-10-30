@@ -1,0 +1,144 @@
+**Theorem 47.2 (All mixed canonical layers and their multiplicities).**
+The semigroup and its cone satisfy
+
+$$
+S=K_{\mathbf k}\cap\mathbb Z^{1+|V(G_{\mathbf k})|},
+\qquad
+K_{\mathbf k}=\left\{(m,c)\in\mathbb R\times\mathbb R^{V(G_{\mathbf k})}:
+\begin{array}{l}
+ m\ge0,\\
+ c_v\ge0\quad(v\in V(G_{\mathbf k})),\\
+ c_v+c_w\le m\quad(\{v,w\}\in E(G_{\mathbf k})),\\
+ k_i m-\sum_{v\in C_i}c_v\ge0\quad(1\le i\le t)
+\end{array}\right\}.
+\tag{47.4}
+$$
+
+Consequently $R$ is a normal standard-graded Cohen–Macaulay domain,
+$\dim R=3+\sum_i(2k_i-1)$, and its canonical module is the interior
+monomial ideal
+
+$$
+\omega_R=\bigoplus_{p\in T}\mathbb C X^p .
+\tag{47.5}
+$$
+
+A point $p\in T$ is basic if and only if one restriction is a local
+basic vector $\nu_{i,j}$. Hence, for $1\le j<K$, the complete layer
+of basic exponents of degree $2j+1$ is
+
+$$
+\Gamma_{2j+1}=\left\{p\in T:
+\begin{array}{l}
+m=2j+1,\quad c_a=c_b=j,\\
+ p_i=\nu_{i,j}\text{ for at least one }i\text{ with }k_i>j
+\end{array}\right\},
+\tag{47.6}
+$$
+
+and there are no basic exponents in any other degree. In particular,
+with $\varepsilon_{k,j}=\mathbf 1_{\{k>j\}}$, define
+
+$$
+\begin{aligned}
+L_k&=2k-1,\qquad N_j=2j-1,\qquad
+H_j[x,y]=\mathbf 1_{\{x+y\le2j\}},\\
+u_j[x]&=\mathbf 1_{\{x\le j\}}
+\qquad(1\le x,y\le N_j),\\
+B_{k,j}&=(2j+1)(k-1),\\
+A_{k,j}&=u_j^{\mathsf T}H_j^{\,2k-2}u_j
+ -\sum_{q=0}^{j-k}\binom{q+k-1}{k-1}^{\!2},
+\end{aligned}
+\tag{47.7}
+$$
+
+where a sum with negative upper limit is zero. Then
+
+$$
+M_j:=|\Gamma_{2j+1}|
+=\prod_{i=1}^t A_{k_i,j}
+ -\prod_{i=1}^t\bigl(A_{k_i,j}-\varepsilon_{k_i,j}\bigr),
+\qquad
+\operatorname{type}(R)=\sum_{j=1}^{K-1}M_j.
+\tag{47.8}
+$$
+Every $M_j$ is positive and $M_1=1$.
+
+*Proof.* For each branch, the local integer decomposition supplied in
+§41 realizes every integral point of the inequalities in (47.4) by
+exactly $m$ independent-set rows. On a retained edge the three row
+states are $A=\{a\}$, $B=\{b\}$, and $O=\varnothing$. A local
+array has the same multiplicities
+$\alpha,\beta,m-\alpha-\beta$ for these states on every branch. Sorting the rows into
+these three blocks and taking unions row by row gives global independent
+sets, and restriction is inverse to this construction. Thus the mixed
+integer decomposition, including degree zero, is exact. Empty and
+singleton rows generate the full lattice, so the cone is full
+dimensional. The normality, Cohen–Macaulayness, and (47.5) now follow
+from the normal stable-set semigroup argument and the
+Danilov–Stanley theorem in the form used in §45.
+
+The local classification in §42 says that a local interior is basic
+exactly when it is $\nu_{i,j}$ for some $j<k_i$. It remains to
+show that unequal residual degrees do not obstruct a common deletion.
+Suppose every restriction of a global $p\in T$ is nonbasic. Choose
+
+$$
+ p_i=\nu_{i,j_i}+q_i,
+ \qquad n_i=\deg q_i=m-2j_i-1>0.
+\tag{47.9}
+$$
+
+In an $n_i$-row realization of $q_i$, the counts of the three
+shared-edge states are
+
+$$
+ A_i=\alpha-j_i,\qquad B_i=\beta-j_i,\qquad
+ O_i=n_i-A_i-B_i=m-\alpha-\beta-1=:h.
+\tag{47.10}
+$$
+
+The last number is independent of both $i$ and $j_i$, and it is
+nonnegative by the strict inequality on the retained edge. If $h>0$,
+choose an $O$-row in every branch. If $h=0$, put
+$J=\max_i j_i$. Residual coordinate nonnegativity gives
+$\alpha,\beta\ge J$. A branch attaining $J$ has positive residual degree,
+so $m-1=\alpha+\beta>2J$. Therefore either $\alpha>J$ or $\beta>J$. In the
+first case every branch has $A_i=\alpha-j_i>0$; in the second every branch
+has $B_i=\beta-j_i>0$. Select that same state on all branches. The
+selected local rows have the same values on $a,b$, and the absence
+of cross-edges makes their union an independent set of $G_{\mathbf k}$.
+Deleting it leaves strict inequalities on every branch, so $p$ is not
+basic.
+
+Conversely, if $p_i=\nu_{i,j}$, any positive-degree global semigroup
+subtraction restricts to a positive-degree local subtraction and would
+contradict local minimality. This proves the equivalence in (47.6).
+Repeated deletion lowers degree and terminates, so these monomials
+ generate the whole interior ideal. Distinct exponent monomials are
+linearly independent, and $R_+\omega_R$ is spanned exactly by the
+nonbasic exponents. Thus the classes of the basic monomials form a
+basis of $\omega_R/R_+\omega_R$, even for arbitrary polynomial
+combinations; graded Nakayama gives all minimal generator degrees and
+multiplicities.
+
+It remains to count one boundary layer. At $m=2j+1$, $\alpha=\beta=j$,
+write the private coordinates on a branch as
+$x_1,\ldots,x_{L_k}$. The strict edge and total inequalities become
+
+$$
+ x_r\ge1,\qquad x_1,x_{L_k}\le j,\qquad
+ x_r+x_{r+1}\le2j,\qquad
+ \sum_{r=1}^{L_k}x_r\le B_{k,j}.
+\tag{47.11}
+$$
+
+The local basic vector occurs exactly once when $k>j$, namely the
+all-$j$ vector; it is excluded by the total bound when $k\le j$.
+The exact number of all vectors in (47.11) is proved in Theorem 47.3
+below, giving (47.8). For positivity, $A_{k,j}\ge1$ because
+$(j,1,j,1,\ldots,j)$ satisfies (47.11), with total-cap slack
+$j(k-2)$. When $j<K$, choose the all-$j$ vector on an eligible
+branch and this alternating vector on all others. Thus $M_j>0$. For
+$j=1$, every coordinate is forced to one and $M_1=1$. $\square$
+

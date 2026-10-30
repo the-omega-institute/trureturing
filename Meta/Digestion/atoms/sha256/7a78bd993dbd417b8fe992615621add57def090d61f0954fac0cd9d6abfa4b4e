@@ -1,0 +1,18 @@
+**Definition 3.1 (Uniform lag-two constant).** For $0<\varepsilon<1$, let
+
+$$
+c_{\mathrm{opt}}(\varepsilon)
+=\inf\left\{
+\frac{\operatorname{Var}(W_t)}{t}:
+\begin{array}{l}
+G\text{ connected, locally finite and simple},\\
+1\leq\deg(v)<\infty\text{ for every }v,\quad u\in V(G),\\
+t\in\mathbb N_{\geq1},\quad d=2,\\
+\text{the full joint law is that of Assumption 1.1}
+\end{array}
+\right\}.
+\tag{3.1}
+$$
+
+Finite and infinite graphs are both included. The law of $W_t$ is independent of the chosen probability-space realization: its finite set of input coordinates has the product law prescribed in Assumption 1.1, and (1.1) is a fixed measurable function of them.
+

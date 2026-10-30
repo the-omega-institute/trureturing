@@ -1,0 +1,34 @@
+**定义 50.1（固定原生实例与连线族）。** 本节使用 [《有界原生准备器综合与线性字面正规化》](FIB_BOUNDED_NATIVE_PREPARER_SYNTHESIS.md)（下称 BPS）Definitions 1.1–1.3、3.2–3.3 及 Assumption 3.1 的整个原生合同：
+
+$$
+\mathcal T::=\alpha\mid\beta\mid\langle\mathcal T,\mathcal T\rangle,
+\quad\rho\alpha=\beta,\quad\rho\beta=\langle\beta,\alpha\rangle,
+\quad\rho\langle s,t\rangle=\langle\rho s,\rho t\rangle,
+\quad\mathcal U_*=\{u:R_{\{L,R\}^3}(\rho u)=R_*\}.
+\tag{VI.9}
+$$
+
+$R_*$ 是 BPS Definition 1.3 的六类重复伙伴完整当前行，$F(u)=R_{\{L,R\}^3}(u)$ 是含全部外部形状、孔、重命名后的限制分区、全值不等式与守卫的完整目标。记 $t_u=\rho u$，原生回复字母表为 $\mathcal R=\{\alpha,\beta,\mathsf{branch},\mathsf{absent}\}$。寄存器在两阶段静止，准备器只有当前计数状态，不取得已采集树、回复元组、来源身份、日志、计数器或附加工作寄存器。调用、取得、认证、隔离、仅代码交接及忠实新入口保持 BPS 的权限与分别支付条件。准备 Halt 以完整位锁存替换原控制，交接忠实进入 $e_0$ 或 $e_1$，位可从入口身份恢复，但没有另一个持续可读位寄存器。$N$ 只计全部安装记录，$P,L$ 只计实际原生调用；地址表示与传输、表安装、行及输出存储、取得和交接等另有各自的权限与价格，不由这些三坐标预算取得总物理资源守恒结论。
+
+固定服务表 $T=(K_T=Q_T\sqcup H_T,a_T,n_T,o_T,e_0,e_1)$，其中两原始有标号入口不同，所有服务记录及全部输出字面不变。固定非空准备器安装骨架 $K=Q\sqcup H$，$|K|\le N$，以及每个 Read 的有限字面地址赋值 $a:Q\to\{L,R\}^*$。只让以下连线参数变化：
+
+$$
+\Theta_K=K\times K^{Q\times\mathcal R}\times\{0,1\}^{H},
+\qquad \theta=(s,\nu,\lambda).
+\tag{VI.10}
+$$
+
+它们分别指定一个共同起点、所有四回复后继和每个 Halt 的原始导出位。无 Halt 时也保留这个有限族，实际成功条件会排除它。全部已安装状态计费，包括重复、未用和同位的多个 Halt。$\Theta_K$ 是多张可选安装表的数学族，不是运行时读取了来源以后再选表的权限。
+
+与连线无关的实际联合行是
+
+$$
+J_a=\left\{\left(v_a(u),w_T(u),F(u)\right):u\in\mathcal U_*\right\},
+\quad
+v_a(u)=(r_{t_u}(a(q)))_{q\in Q},\quad
+w_T(u)=(r_{t_u}(a_T(q)))_{q\in Q_T}.
+\tag{VI.11}
+$$
+
+两个向量按全部安装 Read 的身份编号，保留未访问状态、重复地址和两个服务入口的全部潜在回复；它们只是数学坐标，不是向控制器交付的数据。
+

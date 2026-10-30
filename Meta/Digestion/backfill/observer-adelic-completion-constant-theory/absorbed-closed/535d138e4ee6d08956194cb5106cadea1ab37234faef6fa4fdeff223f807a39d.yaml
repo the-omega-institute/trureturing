@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:535d138e4ee6d08956194cb5106cadea1ab37234faef6fa4fdeff223f807a39d
+  normalized_sha256: sha256:535d138e4ee6d08956194cb5106cadea1ab37234faef6fa4fdeff223f807a39d
+cas_ref: sha256:535d138e4ee6d08956194cb5106cadea1ab37234faef6fa4fdeff223f807a39d
+coverage_gids:
+  - gid: D5/S3/Zeros/ActualZeroGeometry.rh_iff_nontrivial_zeros_on_line
+    target_statement_id: sha256:4de5f23947c1d5e4f77f08c073db86922ed4bf72d784bf2c0d0d7a1b2b78cdd5
+receipts:
+  unresolved_subitems: []

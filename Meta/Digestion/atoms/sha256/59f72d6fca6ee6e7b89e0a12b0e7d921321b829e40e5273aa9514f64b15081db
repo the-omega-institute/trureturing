@@ -1,0 +1,14 @@
+**Definition 7.2 (fixed successful control path).** Every handoff below
+is the actual named TOK followed by its finite CTL. Bank assignments
+remain fully expanded as in Definition 2.1.
+
+| Entry | Operation and successor |
+| --- | --- |
+| ClientImage | Position/import73; run inherited full Image/binding checks; build $b_*$ from that acquired target. ACK Image and return mailbox availability. Keep the flight's invocation, with no M append/Ready. Transfer client→handler and enter RenderS. |
+| RenderS | Use only the acquired Image's raw projection to emit S. Clear acquired Image work fields. Publish stage0 and enter CheckS0. |
+| CheckS0 | Position73, clear candidate, import actual stage0 to received, parse body into sourceBody, independently run $D_S$/re-encoding/binding checks. Save this received body as firstS. ACK/mailbox return; client→handler; FromS. |
+| FromS / CheckB | Compute B solely from sourceBody; publish stage1. CheckB positions/imports73 after clearing candidate; independently checks B and binding; ACK/mailbox return; transfer to FromB. |
+| FromB / CheckM | Compute M solely from received B; publish stage2. CheckM independently imports/checks the actual M; ACK/mailbox return; transfer to FromM. |
+| FromM / CheckT | Compute T solely from received M; publish stage3. CheckT independently imports/checks actual T; ACK/mailbox return; transfer to FromT. |
+| FromT / CheckS1 | Compute S solely from received T; publish stage4. CheckS1 independently imports/decodes/checks actual final S and compares it with firstS. Serialize its own decoded prefix/raw record as HistoricalImage and run the original ClientImage value-checker subgraph on that value. |
+| FinalReturn | ACK final channel exactly once; return mailbox availability; append one complete five-field GCA history item, including actual mode/frame, typed outcome and received-reference bindings; return invocation to outer client; execute the sole final Ready. |

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1993fee00005dc8912034f4117aca90f078b15a9785ea0b2e180c0d4bbc157f5
+  normalized_sha256: sha256:1993fee00005dc8912034f4117aca90f078b15a9785ea0b2e180c0d4bbc157f5
+cas_ref: sha256:1993fee00005dc8912034f4117aca90f078b15a9785ea0b2e180c0d4bbc157f5
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'nonpropositional: 规定独立样本与逐份一次末端比特的统计资源合同，没有给出最优错误率结论。'
+    previous_atom_id: 26702b3ccaed85511c6c512da23cd471e5484ef02fe146a6ba27005f278a236a
+    next_atom_id: da9da8937f32c76003abb8f889c5019e25fa69cb10c4ec786222dfce123d59d1

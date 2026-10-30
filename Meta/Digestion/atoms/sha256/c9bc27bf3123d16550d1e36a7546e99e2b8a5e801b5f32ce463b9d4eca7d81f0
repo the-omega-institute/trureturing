@@ -1,0 +1,70 @@
+**Proposition 122.2 (All-density upper bound and contacts).** The decoder
+$\mathcal R_*$ satisfies $e_{-1/2}(\mathcal R_*)=L$.
+
+*Proof.* Let $p,x,y\ge0$ and $p+x+y=1$. Since $Q$ is affine,
+
+$$
+Q(p,x)=yQ(0,0)+pQ(1,0)+xQ(0,1)>1/2.
+\tag{122.6}
+$$
+
+The identity (122.2), $\gamma>0$ and $x\ge0$ imply $N(p,x)\ge0$ on
+the entire closed simplex. In particular the edge $x=0$ gives
+$N(p,0)=Q(p,0)(p-p_e)^2$. The edges $p=0$ and $y=0$, their vertices,
+and zero amplitudes are included in the same identity. There is no
+division by a variable population.
+
+Write $B_0=LI+\sigma$. This matrix is positive definite because
+$L>0$ and $\sigma\succeq0$. The rank-one determinant formula gives
+
+$$
+N=\det(B_0-P_z)=\det B_0\,(1-z^\dagger B_0^{-1}z).
+\tag{122.7}
+$$
+
+It follows that $\|B_0^{-1/2}z\|^2\le1$. Equivalently
+$I-(B_0^{-1/2}z)(B_0^{-1/2}z)^\dagger\succeq0$, so
+$P_z\preceq B_0$ and $\lambda_{\max}(P_z-\sigma)\le L$.
+
+The trace metric at a pure target requires an inertia argument. On the
+two-dimensional subspace $z^\perp$, the Hermitian matrix
+$H=P_z-\sigma$ has quadratic form $-\langle v,\sigma v\rangle\le0$.
+Thus $H$ has at most one positive eigenvalue: a two-dimensional positive
+spectral subspace would intersect $z^\perp$ nontrivially. Since
+$\operatorname{Tr}H=0$, its positive eigenvalues sum to
+$\frac12\|H\|_1$, and consequently
+
+$$
+\frac12\|P_z-\sigma\|_1=\lambda_{\max}(P_z-\sigma)\le L.
+\tag{122.8}
+$$
+
+If $H$ has no positive eigenvalue, trace zero forces $H=0$, and the
+same equality holds. Trace zero alone, without the pure-target inertia
+property, would not justify (122.8).
+
+For every diagonal unitary $U$, (121.5) directly gives
+$\mathcal C_*(UXU^\dagger)=U\mathcal C_*(X)U^\dagger$.
+Every complex unit vector is $Uz$ for nonnegative populations $z$;
+zero components cause no exception. Unitary invariance of the trace
+norm therefore proves (122.8) for every complex pure state. If
+$\rho=\sum_j t_jP_j$ is a spectral decomposition, linearity and the
+triangle inequality give
+
+$$
+\frac12\|\rho-\mathcal C_*(\rho)\|_1
+\le\sum_j t_j\frac12\|P_j-\mathcal C_*(P_j)\|_1\le L.
+\tag{122.9}
+$$
+
+Hence $e_{-1/2}(\mathcal R_*)\le L$ on all densities.
+
+The strict signs of $Q,\gamma$ in (122.2) show that $N=0$ on the
+simplex exactly when $u=0$ and $x=0$ or $x=x_i$. The two population
+contacts are therefore exactly $(p_e,0)$ and $(p_i,x_i)$.
+At either contact (122.7) is zero, so $B_0-P_z$ has a kernel and
+$P_z-\sigma$ has eigenvalue $L>0$. Thus both contacts attain the
+half trace distance $L$, and arbitrary complex phases give their
+complete pure-state orbits. This proves the asserted equality for this
+decoder, without classifying other minimizing decoders. $\square$
+

@@ -1,0 +1,12 @@
+**Boundary 16.1 (historical images are not whole service domains).** A
+recognizes exactly its known-unit, nonnegative-endpoint, positive-internal-
+gap raw-clock image. It does not recover arbitrary zero-gap histories,
+unknown seeds, Reset-closed journals or arbitrary Add interventions.
+C recovers pure clocked words with its known origin and changed digital
+Read. It does not recover literal nuisance journals or arbitrary
+bounded-error observations. Current exact/set-valued service in §7 is
+broader in each installation and survives leaving those historical
+images. Membership, provenance, access, recoverability and current
+callability are distinct assertions with the separate premises stated
+above.
+

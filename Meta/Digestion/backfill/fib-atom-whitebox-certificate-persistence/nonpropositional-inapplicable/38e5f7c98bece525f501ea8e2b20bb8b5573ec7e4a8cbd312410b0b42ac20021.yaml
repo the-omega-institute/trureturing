@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:38e5f7c98bece525f501ea8e2b20bb8b5573ec7e4a8cbd312410b0b42ac20021
+  normalized_sha256: sha256:38e5f7c98bece525f501ea8e2b20bb8b5573ec7e4a8cbd312410b0b42ac20021
+cas_ref: sha256:38e5f7c98bece525f501ea8e2b20bb8b5573ec7e4a8cbd312410b0b42ac20021
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Introduces old and added candidate families and defines the updated family as their union; no residual decomposition theorem is asserted.
+    previous_atom_id: 2c71c1e942245d5ef6722360f93b060059761826e69fff07729f96e74b4ed548
+    next_atom_id: 4c9bf4d54b0da7f4478c59ecaa6e05fa950c89aae1254ca7bcb9719594ab9eb7

@@ -1,0 +1,22 @@
+**Theorem 42.1 (Exact isolated ordered intersection).** The rational
+boxes of Section 43 determine three pairwise distinct strict complete
+worlds $W_A,W_B,W_C$ in one entire $C(24,v_{\cap})$ such that
+
+$$
+a(W_A)=a(W_B),\qquad m(W_A)=m(W_C),\qquad
+131.70<v_{\cap}<131.71.
+\tag{42.3}
+$$
+
+Among regular-chart ordered source triples in $X_{\cap}$, this is the
+unique solution of the six incidence equations (43.3). Consequently
+there is no solution of that specified ordered pairing in $X_{\cap}$
+with common $p\ne24$. The first five equations of (43.3) have rank five
+at the solution; the sixth, the M-incidence, has a nonzero derivative
+along their one-dimensional local solution manifold.
+
+The exclusion quantifies only over this ordered box and the pairing
+$J(A,B),M(A,C)$. It is not an exclusion for an entire child, for other
+ordered triples, for four-world pairings or for all bases. The base in
+(42.3) differs from the $p_{\rm J}\ne24$ base of Proposition 40.1.
+

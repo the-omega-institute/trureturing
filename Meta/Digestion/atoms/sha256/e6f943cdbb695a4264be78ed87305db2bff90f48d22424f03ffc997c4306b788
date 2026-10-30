@@ -1,0 +1,137 @@
+**Proposition 43.3 (The full degree-five endpoint table for two seven-cycles).**
+For $k=3$, $b=2$, $m=5$, the full table of shared-edge
+sectors $t,u\ge0$, $t+u\le5$ is as follows. Every other
+integer pair also has all six numerical entries zero.
+
+| $(t,u)$ | $B_3(5,t,u)$ | $E_3(5,t,u)$ | $I_3(5,t,u)$ | $I_3(5,t,u)^2$ | $B_3(5,t,u)^2$ | $I_3(5,t,u)^2-B_3(5,t,u)^2$ |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| $(0,0)$ | 0 | 0 | 0 | 0 | 0 | 0 |
+| $(0,1)$ | 0 | 0 | 0 | 0 | 0 | 0 |
+| $(0,2)$ | 0 | 0 | 0 | 0 | 0 | 0 |
+| $(0,3)$ | 0 | 0 | 0 | 0 | 0 | 0 |
+| $(0,4)$ | 0 | 0 | 0 | 0 | 0 | 0 |
+| $(0,5)$ | 0 | 0 | 0 | 0 | 0 | 0 |
+| $(1,0)$ | 0 | 0 | 0 | 0 | 0 | 0 |
+| $(1,1)$ | 70 | 0 | 70 | 4900 | 4900 | 0 |
+| $(1,2)$ | 56 | 0 | 56 | 3136 | 3136 | 0 |
+| $(1,3)$ | 31 | 0 | 31 | 961 | 961 | 0 |
+| $(1,4)$ | 0 | 0 | 0 | 0 | 0 | 0 |
+| $(2,0)$ | 0 | 0 | 0 | 0 | 0 | 0 |
+| $(2,1)$ | 56 | 0 | 56 | 3136 | 3136 | 0 |
+| $(2,2)$ | 44 | 1 | 45 | 2025 | 1936 | 89 |
+| $(2,3)$ | 0 | 0 | 0 | 0 | 0 | 0 |
+| $(3,0)$ | 0 | 0 | 0 | 0 | 0 | 0 |
+| $(3,1)$ | 31 | 0 | 31 | 961 | 961 | 0 |
+| $(3,2)$ | 0 | 0 | 0 | 0 | 0 | 0 |
+| $(4,0)$ | 0 | 0 | 0 | 0 | 0 | 0 |
+| $(4,1)$ | 0 | 0 | 0 | 0 | 0 | 0 |
+| $(5,0)$ | 0 | 0 | 0 | 0 | 0 | 0 |
+| Total | 288 | 1 | 289 | 15119 | 15030 | 89 |
+
+In particular the entire degree-five quotient has dimension
+$89$. Here it also equals the number of degree-five basic
+generators, whereas quotient dimensions in higher degrees
+are not in general new generator counts.
+
+Proof. Positive endpoints and the strict shared-edge inequality
+give $t,u\ge1$, $t+u\le4$. These are exactly the six
+nonzero rows of the table. Formula (43.3) has only $j=2$ and reduces to
+
+$$
+E_3(m,t,u)=\binom{t}{2}\binom{u}{2}
+\quad(t,u\ge2,\ m\ge t+u+1),
+\tag{43.9}
+$$
+
+and zero otherwise. At $m=5$ only $(2,2)$ qualifies, giving
+one. For a finite recurrence deriving every ordinary entry,
+fix degree $q$ and endpoints $r,s$. If $r,s\ge0$ and
+$r+s\le q$, start a path count at vertex $1$ by
+$H_0(s,r+s)=1$, all other entries zero. For each of the
+$2k-1$ private vertices use
+
+$$
+H_{h+1}(w,z+w)=\sum_{\substack{v\ge0\\v+w\le q}}H_h(v,z),
+\qquad 0\le w\le q.
+\tag{43.10}
+$$
+
+The state records the last coordinate and the total occupancy
+so far, including both endpoints from the start. Close the
+last edge back to vertex $0$ and enforce the total bound:
+
+$$
+L_k(q,r,s)=
+\sum_{\substack{v+r\le q\\z\le kq}}H_{2k-1}(v,z).
+\tag{43.11}
+$$
+
+Every labelled coordinate vector determines a unique state
+sequence, and conversely each counted sequence specifies
+exactly such a vector. This proves the recurrence rather than
+assuming that local edge counts enforce the global bound.
+At $q=0$ it returns just the zero vector when $r=s=0$.
+
+For the entries needed here there is also a direct transfer
+evaluation. The endpoint count ignoring only the total bound
+is $(T_2^6)_{r,s}$, provided $r+s\le2$. Direct multiplication
+gives
+
+$$
+T_2^6=
+\begin{pmatrix}
+70&56&31\\56&45&25\\31&25&14
+\end{pmatrix}.
+\tag{43.12}
+$$
+
+At degree two, a locally edge-feasible seven-cycle vector
+violating the total bound has sum at least seven. Summing
+edge bounds gives sum at most seven. Equality forces every
+edge sum to be two; oddness then forces every coordinate
+to be one. Hence the sole excluded vector has endpoints
+$(r,s)=(1,1)$. Removing it gives the complete endpoint
+array, with inadmissible pairs assigned zero,
+
+$$
+\bigl(L_3(2,r,s)\bigr)_{r,s=0}^{2}
+=\begin{pmatrix}70&56&31\\56&44&0\\31&0&0\end{pmatrix}.
+\tag{43.13}
+$$
+
+Substitute $(q,r,s)=(2,t-1,u-1)$ for the $B$ column;
+(43.9) supplies $E$, so $I=B+E$. Squaring and summing at
+each common endpoint pair gives
+
+$$
+\begin{aligned}
+\sum I^2&=70^2+2\cdot56^2+2\cdot31^2+45^2=15119,\\
+\sum B^2&=70^2+2\cdot56^2+2\cdot31^2+44^2=15030,\\
+\sum(I^2-B^2)&=2\cdot44\cdot1+1^2=89.
+\end{aligned}
+\tag{43.14}
+$$
+
+The sums of the local columns are $288,1,289$; squaring
+those sums would discard endpoint compatibility and does
+not give the global columns. Formula (43.3) gives no quotient
+in degrees below five. Thus all surviving degree-five classes
+are minimal, accounting for the $89$ generators of (42.8).
+For $k=3$ there are no basic generators beyond degree five
+by Theorem 42.3, but the full quotient has higher pieces.
+For example the six nonzero ordinary entries in degree six,
+in the order $(1,1),(1,2),(1,3),(1,4),(2,2),(2,3)$ up to
+endpoint reversal, are respectively $246,216,160,85,189,138$
+by (43.10)–(43.11). The exceptional entries occur at
+$(2,2),(2,3),(3,2)$ with values $1,3,3$. Consequently
+
+$$
+\dim(C^e_{3,2})_6
+=(2\cdot189+1)+2(2\cdot138\cdot3+9)=2053.
+\tag{43.15}
+$$
+
+These are degree-one multiples and their linear combinations
+in the quotient, not $2053$ additional canonical generators.
+$\square$
+

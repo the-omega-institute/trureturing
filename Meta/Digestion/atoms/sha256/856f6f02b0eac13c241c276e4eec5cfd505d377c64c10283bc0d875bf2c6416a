@@ -1,0 +1,45 @@
+## 1. Model
+
+For $n>m$, let $\Sigma_\ell=\{0,1\}^{\ell}$. A source word
+$Y\in\Sigma_n$ is uniform, and a deletion mask is chosen uniformly from the
+$\binom{n}{m}$ increasing $m$-subsets of $[n]$. For $x\in\Sigma_m$ and
+$y\in\Sigma_n$, write
+
+$$
+  \omega_x(y)=\#\{(j_1<\cdots<j_m): y_{j_i}=x_i\text{ for every }i\}.
+$$
+
+Thus $\omega_x(y)$ counts index embeddings, with multiplicity. The total
+number of compatible mask--word pairs is
+
+$$
+  \mu_{n,m}:=\sum_{y\in\Sigma_n}\omega_x(y)
+  =\binom{n}{m}2^{n-m},
+$$
+
+independently of $x$. The posterior law and its entropy in bits are
+
+$$
+  p_x(y)=\frac{\omega_x(y)}{\mu_{n,m}},
+  \qquad
+  H_n(x)=-\sum_{y\in\Sigma_n}p_x(y)\log_2 p_x(y),
+$$
+
+with $0\log_2 0=0$. These are the uniform-binary, uniform-position
+fixed-length deletion-channel quantities used in the model of
+Atashpendar--Mestel--Roscoe--Ryan.
+
+For a binary word $w=w_1\cdots w_m$, define the positional autocorrelation
+coefficient
+
+$$
+ \kappa_m^2(w):=
+ \sum_{i=1}^{m}\sum_{j=1}^{m}
+ \binom{i+j-2}{i-1}
+ \binom{2m-i-j}{m-i}[w_i=w_j],
+$$
+
+where $[P]$ is $1$ or $0$ according as $P$ holds or fails. This is
+Equation (11) of Atashpendar--Mestel--Roscoe--Ryan (arXiv:1807.11609v1),
+with the same indexing and binomial weights.
+

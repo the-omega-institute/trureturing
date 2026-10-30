@@ -1,0 +1,42 @@
+**命题 89.1（quadrature 与 radial 约束）。** 在定义 88.1、命题 88.3 的同一 map 下，若 $L_{\mathcal D}(\varphi)\le\eta+\delta$，$\delta\ge0$，则
+
+$$
+\begin{aligned}
+|\operatorname{Im}(e^{i\varphi}(K_\varphi)_{12})|&\le V,\qquad
+ V=2R\sqrt{2(\eta+\delta)\delta},\\
+|\operatorname{Re}(e^{i\varphi}(K_\varphi)_{12})+w|&\le U,\qquad
+ U=\sqrt{\delta/m_+}+w\delta(1/m_++1/\mu).
+\end{aligned}
+\tag{89.1}
+$$
+
+这里的 complex competitors 不限于 real effects。
+
+**证明。** 先以 $Z_\varphi^{(2)\dagger}$ conjugate 两维 block，$Q_\varphi$ 变成 real projection $Q_\vartheta$，$K$ 的 off-diagonal 变成 $e^{i\varphi}(K_\varphi)_{12}$。再以 real orthogonal matrix diagonalize $Q_\vartheta$。positive matrix $H_\varphi+\ell_\varphi I_2$ 在该 eigenbasis 中，一个 diagonal entry 是 $s_\varphi$，另一个在 $[0,2\ell_\varphi]$ 内。其 principal determinant 非负，故 off-diagonal 的平方模不超过 $2\ell_\varphi s_\varphi$。
+
+对任一两维 Hermitian matrix，off-diagonal 的 imaginary part 对应 real skew matrix 的一个标量系数；real orthogonal conjugation 只将此系数乘 $\det O\in\{1,-1\}$。所以其绝对值保持。相位旋转后的 $H$ entry 的 imaginary part 是 $-\operatorname{Im}(e^{i\varphi}(K_\varphi)_{12})/2$，因为 target off-diagonal $h$ 为实数。用 (88.7) 得
+
+$$
+|\operatorname{Im}(e^{i\varphi}(K_\varphi)_{12})|
+ \le2\sqrt{2\ell_\varphi s_\varphi}
+ \le2R\sqrt{2(\eta+\delta)\delta}.
+$$
+
+再在相位旋转后的 $\mathsf P_\varphi$ 的 real orthonormal eigenbasis 中写
+
+$$
+\widetilde K_\varphi=
+ \begin{pmatrix}1-a_\varphi&c_\varphi\\
+ \overline{c_\varphi}&b_\varphi\end{pmatrix}.
+$$
+
+由 $I_2-\widetilde K_\varphi\ge0$，
+$|c_\varphi|^2\le a_\varphi(1-b_\varphi)\le a_\varphi$。选第一 eigenvector 为 $(\sqrt{1-y},-\sqrt y)^{\mathsf T}$，第二为 $(\sqrt y,\sqrt{1-y})^{\mathsf T}$，变回原 coordinates 得
+
+$$
+\operatorname{Re}(e^{i\varphi}(K_\varphi)_{12})+w
+ =w(a_\varphi+b_\varphi)+(1-2y)\operatorname{Re}c_\varphi.
+$$
+
+$|1-2y|\le1$，故 (88.7) 给 radial bound。这里先控制完整 $|c_\varphi|$，没有以实数假设排除 imaginary direction。∎
+

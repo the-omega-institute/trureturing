@@ -1,0 +1,30 @@
+**Proposition 82.5 (actual use and same-run bill).** The acquired receiver
+may select $d=|w|\bmod4$ and actually execute Next$(d)$ through the
+earned raw binding of $LL$. Its real endpoint is $Av+d e$, its real
+Read is $(Av)_{LL}+d$, and its retained full predictor is updated to
+that endpoint. This paid use need not stay in the first-assay image.
+The existing complete-service invariant, rather than an off-image history
+inverse, maintains every later lawful reply and successor, including
+refusals, growth and pending frame behavior.
+
+For a definite paid origin start from known-zero alpha and actually execute
+$P_\varepsilon,S_\varepsilon,P_R,S_R$, then Add$(LL,1)$; Hold.
+There are six fresh material cells. After $m$ actual producer Next calls
+and (82.4), the same run has
+
+$$
+\begin{array}{c|rrrrrrr}
+ &P&S&\operatorname{Add}&\operatorname{Tick}&\operatorname{Hold}&\operatorname{Read}&\operatorname{Reset}\\ \hline
+\text{through acquisition}&2&2&m+1&m+4&m+4&m+4&0\\
+\text{through selected Next}&2&2&m+2&m+5&m+5&m+5&0
+\end{array}
+\tag{82.6}
+$$
+
+The Add/Tick/Hold ACK counts are respectively $3m+9$ and $3m+12$.
+Growth transactions, seed/input ingress, bindings, grants, complete scalar
+traffic, output, isolation and working/retained backing are additional.
+Enumeration has a finite computation on each promised word, not a uniform
+time, width or storage bound. No per-input four-Read bound, current-only
+four-Read bound, Tick optimum or global alpha/beta minimality follows.
+

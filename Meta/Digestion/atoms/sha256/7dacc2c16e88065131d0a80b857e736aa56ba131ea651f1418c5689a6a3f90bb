@@ -1,0 +1,17 @@
+**定理 69.1（全态、相对基相位、事件与配置取反）。** 以下四类运算不能相互替代：全纯态乘负号保持密度矩阵；二级基中的相对负号将 $(x,y,z)$ 送到 $(-x,-y,z)$；事件 $\Pi\mapsto I-\Pi$ 改测量事件；三位全域配置补集为 $C=X\otimes X\otimes X$，但合法五态压缩 $K_c=PCP$ 只给成功分支。
+
+证明（69.1）。全态负号在 $|\psi\rangle\langle\psi|$ 中抵消。相对符号为 $Z$ 共轭，直接乘 Pauli 给 $ZXZ=-X,ZYZ=-Y,ZZZ=Z$，是绕 $z$ 轴的正定向半周转，不是球反演。事件补集不作用于输入态；在整个 $\mathcal H_F$ 中
+
+$$
+I_5-\Pi_3=\Pi_N+\Pi_2+\Pi_5+\Pi_{25},
+$$
+
+只有限制到 $\operatorname{span}\{|3\rangle,|25\rangle\}$ 才将两事件互补。全八模式的三位 $X$ 张量积自伴且平方恒等；压缩按第 46.2 条交换 $3,25$ 并消去其他三基为零向量，而非送到 $|N\rangle$。因此
+
+$$
+K_c^\dagger K_c=\Pi_3+\Pi_{25}\ne I_5,
+\qquad p_{\mathrm{succ}}=\operatorname{tr}((\Pi_3+\Pi_{25})\varrho).
+$$
+
+补失败 Kraus $(I_5-K_c^\dagger K_c)^{1/2}$ 并记录失败，才能给完整仪器；成功归一化只在 $p_{\mathrm{succ}}>0$ 时定义。第 46.2 条残差精确描述这种漏出。$\square$
+

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:7174ca4e22a80ef4709f0331a05ab40480991871262945fde45d4ae8d0a1a279
+  normalized_sha256: sha256:7174ca4e22a80ef4709f0331a05ab40480991871262945fde45d4ae8d0a1a279
+cas_ref: sha256:7174ca4e22a80ef4709f0331a05ab40480991871262945fde45d4ae8d0a1a279
+coverage_gids:
+  - gid: D5/S0/Certificates/BoxCover/RationalIntervalExpression.checked_expression_encloses
+    target_statement_id: sha256:55fd549ad21c17edd29bfbda30075f70836c1b8c2023a9cc913348680e05632f
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,17 @@
+**定理 3.2（固定目录次模性）。** $C$ 单调且次模。若 $S\subseteq T$、$j\notin T$，则
+
+$$
+C(S\cup\{j\})-C(S)\ge C(T\cup\{j\})-C(T).
+$$
+
+删除 $j\in S$ 的损失为
+
+$$
+C(S)-C(S\setminus\{j\})
+=\left|D_j\setminus\bigcup_{i\in S\setminus\{j\}}D_i\right|.
+$$
+
+**证明。** 加入 $j$ 的边际收益是
+$|D_j\setminus\bigcup_{i\in S}D_i|$；$S$ 增大只会扩大被减去的集合。删除式是同一
+集合恒等式。$□$
+

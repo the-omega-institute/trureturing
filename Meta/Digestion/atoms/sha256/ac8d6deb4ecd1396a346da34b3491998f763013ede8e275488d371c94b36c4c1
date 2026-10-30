@@ -1,0 +1,38 @@
+**Corollary 119.2 (the first finite witness).** For
+\(x=\langle\alpha,\beta\rangle\), order the old vertices as
+\((\varepsilon,L,R)\). The old star Laplacian and the child restriction are
+
+$$
+L_e=
+\begin{pmatrix}
+2&-1&-1\\
+-1&1&0\\
+-1&0&1
+\end{pmatrix},
+\qquad
+C_e^*=\begin{pmatrix}0&0&1\\0&0&1\end{pmatrix},
+$$
+
+so
+
+$$
+C_e^*L_e=
+\begin{pmatrix}-1&0&1\\-1&0&1\end{pmatrix}\ne0.
+\tag{119.6}
+$$
+
+The beta-parent row is duplicated on \(RL,RR\), and
+\(C_e^*L_e\delta_R=(1,1)^{\mathsf T}\). Thus the full child response is
+already impossible at this finite birth step under Theorem 119.1.
+
+The exact escape boundaries are: the old-only condition (118.1), which does
+not constrain the child block; a transport that is not top-fixed or does not
+preserve the edge form; a domain-side clock; clocks or state metrics outside
+the strictly positive block-diagonal old/child class (including block-mixing or
+singular cases); an empty birth or \(C_e^*L_e=0\); and a quotient task whose
+specification omits the child-sensitive response. A quotient inherits this
+no-go only when its task preserves that response and the full equation descends
+to the quotient. This finite result only closes the raw full-child target-clock
+branch: it supplies no positive three-dimensional metric, volume, or spectral-
+dimension condition, and does not assert a physical realization.
+

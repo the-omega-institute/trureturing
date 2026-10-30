@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:53e8884b9caf17c6b925c0dfe7fa4756353f03d1e3c801031113521c5114bddf
+  normalized_sha256: sha256:53e8884b9caf17c6b925c0dfe7fa4756353f03d1e3c801031113521c5114bddf
+cas_ref: sha256:53e8884b9caf17c6b925c0dfe7fa4756353f03d1e3c801031113521c5114bddf
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: G 波把 divisor order 列为第二门，是里程碑排序。
+    previous_atom_id: b9cd1ac878508571381809fa53558abd0bdf9804435e938e37e11f31734847c0
+    next_atom_id: d7749b2a22549eaeb06c15fc772430f2248daccfcea9b204abbbe0d4ebaa4cf1

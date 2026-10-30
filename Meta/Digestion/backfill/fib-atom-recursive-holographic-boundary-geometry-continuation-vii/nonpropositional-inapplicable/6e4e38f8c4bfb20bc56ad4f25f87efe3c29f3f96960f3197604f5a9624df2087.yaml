@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:6e4e38f8c4bfb20bc56ad4f25f87efe3c29f3f96960f3197604f5a9624df2087
+  normalized_sha256: sha256:6e4e38f8c4bfb20bc56ad4f25f87efe3c29f3f96960f3197604f5a9624df2087
+cas_ref: sha256:6e4e38f8c4bfb20bc56ad4f25f87efe3c29f3f96960f3197604f5a9624df2087
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 是分辨率阈值章节的过渡说明，区分分辨率定律与载体维数，未陈述定量界或存在命题。
+    previous_atom_id: 981d485e333635a8dd966a5bf21cfd221ccf026bd6f300da227c4948e45a04dd
+    next_atom_id: 2514439c7d235257359ac3b9a8f54f75fd9491400dd53d13c854e7d6dc7ab77a

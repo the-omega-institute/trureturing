@@ -1,0 +1,36 @@
+**Definition 123.1 (Contact projectors and legal effects).** Let
+
+$$
+\begin{aligned}
+&(p_r,x_r,y_r)=
+\begin{cases}(p_e,0,1-p_e),&r=e,\\
+(p_i,x_i,1-p_i-x_i),&r=i,
+\end{cases}\\
+&z_r=(\sqrt{p_r},\sqrt{x_r},\sqrt{y_r})^{\mathsf T},\qquad
+P_r=z_rz_r^\dagger,\qquad B_r=B(p_r,x_r).
+\end{aligned}
+\tag{123.1}
+$$
+
+For either contact evaluate the $d_j$ of (119.2) and put
+
+$$
+\begin{aligned}
+m_{0r}&=d_{1r}d_{2r}-x_ry_r,\\
+m_{1r}&=d_{0r}d_{2r}-p_ry_r,\\
+m_{2r}&=d_{0r}d_{1r}-\kappa^2p_rx_r,\\
+A_r:=\operatorname{adj}B_r
+&=\begin{pmatrix}
+m_{0r}&\sqrt{p_rx_r}(y_r+\kappa d_{2r})
+       &\sqrt{p_ry_r}(d_{1r}+\kappa x_r)\\
+\sqrt{p_rx_r}(y_r+\kappa d_{2r})&m_{1r}
+       &\sqrt{x_ry_r}(d_{0r}+\kappa p_r)\\
+\sqrt{p_ry_r}(d_{1r}+\kappa x_r)
+       &\sqrt{x_ry_r}(d_{0r}+\kappa p_r)&m_{2r}
+\end{pmatrix},\\
+T_r&=\frac{A_r}{N_{r,L}},\qquad
+\lambda_e=\alpha N_{e,L},\qquad \lambda_i=\beta N_{i,L}.
+\end{aligned}
+\tag{123.2}
+$$
+

@@ -1,0 +1,6 @@
+For completeness take any original $\mathbf x\in\operatorname{Sol}(\mathscr E)$. Evaluate all named subexpressions and apply $B$ to their
+actual values. Their genuine smart-constructor cases choose one of the
+finite branches. Their finite ground shapes solve that branch's shape
+equations and hence factor through its most general unifier. Read the
+actual natural ranks at every explicit leaf and the actual collapse
+scalars. 

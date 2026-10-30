@@ -1,0 +1,38 @@
+**Counterexample 8.3 (actual stationary filters).** In the same stationary $J_\theta$, define
+
+$$
+\alpha_\infty=\mathcal L(H_0\mid X_{-\infty:-1}),\qquad
+\alpha_j=\mathcal L(H_0\mid X_{-j:-1}).
+$$
+
+On the event
+
+$$
+E=\{X_{-7}=1,\ X_{-6:-1}=0^6\},
+$$
+
+one has
+
+$$
+J_\theta(E)=\frac7{256},\qquad
+\alpha_\infty=(1/7,6/7),\qquad
+\alpha_6=(1/8,7/8),\qquad
+\operatorname{TV}(\alpha_\infty,\alpha_6)=\frac1{56}>\frac1{64}=(1/2)^6.
+\tag{8.8}
+$$
+
+**Proof.** Emitting $1$ fixes its endpoint to hidden state $1$. Thus $X_{-7}=1$ fixes $H_{-6}=1$, and observations earlier than $-7$ no longer affect the conditional distribution at $H_0$ after the six specified zeros. By (8.3),
+
+$$
+\lambda M_1B^6=(1/256,6/256),\qquad
+\frac{(1,0)B^6}{(1,0)B^6\mathbf1}=(1/7,6/7).
+$$
+
+The first row vector gives the event probability by summation. With only the six zeros observed, stationarity at $H_{-6}$ instead gives
+
+$$
+\alpha_6=\frac{\lambda B^6}{\lambda B^6\mathbf1}=(1/8,7/8).
+$$
+
+The binary TV distance is the absolute difference of the first coordinates, $1/56$. This is the actual full-past versus finite-past filter comparison under one stationary law, not a comparison of artificially chosen initial priors. It disproves the asserted bound $\operatorname{TV}(\alpha_\infty,\alpha_j)\le(1/2)^j$ on a positive-probability event. It does not assert failure of every possible almost-sure rate with a random prefactor, and it does not contradict (8.6). $\square$
+

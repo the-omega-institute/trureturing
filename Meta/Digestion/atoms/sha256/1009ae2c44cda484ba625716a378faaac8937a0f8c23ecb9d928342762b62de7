@@ -1,0 +1,12 @@
+## 6. Scope of the cancellation boundary
+
+The example satisfies the exact necessary cancellation condition from Corollary 3.2 and is an actual nonerasing source image, but its finite factor $z$ fails the defining richness condition. Therefore $h v_\beta=0$ is not sufficient for richness, and it is not a richness-preserving construction principle. Theorem 2.1 still supplies the ordinary bound $E(w_3)\ge e_3$ through its zero-defect case; this example supplies no matching upper bound and no assertion about attainment.
+
+This conclusion is restricted to the displayed $r=3$ morphic image and its explicit factor. It does not impose a condition on every rich word, does not prove or refute the unrestricted equality
+
+$$
+RT(\mathcal C_d)=E^*(u_{2d-1})\qquad(d\ge2),
+$$
+
+and does not provide the upper construction required for that equality. In particular, cancellation, richness, and control of the ordinary exponent remain separate requirements for any proposed source-image route.
+

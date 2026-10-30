@@ -1,0 +1,15 @@
+### 17.6. A missing legal cylinder for every boundary stationary row
+
+It remains to treat the whole boundary cube, without an irreducibility hypothesis. If $a_s=0$ for some $s$, take the length-$m^2$ word indexed by $0,\ldots,m^2-1$ whose ones occur exactly at
+
+$$
+k(m+1),\qquad 0\le k<m.
+\tag{17.22}
+$$
+
+This word is legal; for $m=1$ it is the one-letter word $1$. Its required one positions meet every residue modulo $m$. From any starting phase $r$, one required one therefore has phase $s$. That edge has probability zero whether its previous bit is zero, when $K_s(1\mid0)=a_s=0$, or one, when $K_s(1\mid1)=0$. Hence $M_w\mathbf1=0$ statewise and $P_\theta([w])=0$ for every stationary row.
+
+If $a_s=1$ for some $s$, use the legal word $0^{m+1}$. Either its first zero already has zero likelihood, or it installs previous bit zero. The following $m$ zeros traverse every phase, including $s$, with previous bit zero throughout. At that phase the required transition has probability $K_s(0\mid0)=0$. Again $M_w\mathbf1=0$ from every hidden state. These two cases cover every boundary parameter, including simultaneous zeros and ones. They cover all stationary mixtures, zero masses, reducibility and periodicity without selecting any component.
+
+An attaining stationary law has positive probability for every legal finite cylinder by [Universal, Theorem 3.1][ClockUniversal]. Thus every boundary row fails attainment. Together with the interior contradiction and the universal bound $d(P_\theta)\le c_\star$, this proves (17.3) on the entire closed family. $\square$
+

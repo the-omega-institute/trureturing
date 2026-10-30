@@ -1,0 +1,46 @@
+**Convention 129.3 (Rational interval evaluation).** For sign checks
+start with the four closed intervals $[c_j-\varepsilon,c_j+\varepsilon]$.
+A rational constant is a singleton interval. Add endpoints, subtract
+$[a,b]-[c,d]=[a-d,b-c]$, and multiply by taking the minimum and maximum
+of the four endpoint products. Nonnegative integer powers may be
+computed by repeated multiplication. Divide only by an interval
+excluding zero, using its reciprocal interval. Repeated occurrences
+may be treated independently. This is the rational interval method
+of [TR, §120]; all displayed decimal bounds are strict outer rational
+bounds, so no floating-point rounding rule is required.
+
+For subsequent use define, as polynomials on the whole box,
+
+$$
+\begin{aligned}
+a_0&=L^2-d^2-xy,\qquad a_1=L(L+d)-py,\\
+a_2&=L(L-d)-k^2px,\qquad \tau=a_0+a_1+a_2,\\
+\beta&=k(L+d)+y,\qquad
+\omega_0=px\beta/4,\qquad
+g=p(a_0-a_2)+r\omega_0.
+\end{aligned}
+\tag{129.9}
+$$
+
+Evaluation in this displayed order, starting with the auxiliaries in
+(128.1), gives the following enclosures on the entire box, including
+its endpoints. All entries are strictly between their displayed
+endpoints.
+
+| Expression | Lower bound | Upper bound |
+| --- | --- | --- |
+| $y$ | $0.400$ | $0.402$ |
+| $v_1$ | $0.328$ | $0.330$ |
+| $v_2$ | $0.357$ | $0.359$ |
+| $a_0$ | $0.267$ | $0.268$ |
+| $a_1$ | $0.259$ | $0.261$ |
+| $a_2$ | $0.324$ | $0.326$ |
+| $\tau$ | $0.852$ | $0.853$ |
+| $a_2-a_0$ | $0.057$ | $0.058$ |
+| $a_2-a_1$ | $0.065$ | $0.066$ |
+| $\beta$ | $0.881$ | $0.882$ |
+| $\omega_0$ | $0.019$ | $0.020$ |
+| $g$ | $0.00011$ | $0.00012$ |
+| $g/\tau$ | $0.00013$ | $0.00014$ |
+| $L-d+kx$ | $0.831$ | $0.832$ |
+| $L+kp$ | $0.859$ | $0.860$ |

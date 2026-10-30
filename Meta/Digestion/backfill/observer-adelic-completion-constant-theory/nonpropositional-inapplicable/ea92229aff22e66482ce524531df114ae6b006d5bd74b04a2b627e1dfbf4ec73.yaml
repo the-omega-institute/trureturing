@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ea92229aff22e66482ce524531df114ae6b006d5bd74b04a2b627e1dfbf4ec73
+  normalized_sha256: sha256:ea92229aff22e66482ce524531df114ae6b006d5bd74b04a2b627e1dfbf4ec73
+cas_ref: sha256:ea92229aff22e66482ce524531df114ae6b006d5bd74b04a2b627e1dfbf4ec73
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Nonpropositional: 光锥类比中的解释性标签“重复观察历史”，未断言卷积或概率等式。'
+    previous_atom_id: ef5c2e166c4acd6fbfeb85da06ecdc0f0deb52d65ff80f60f49a132670c41d48
+    next_atom_id: d678890144dad0963cb030c04054a00ad04e91dba6937e64d11086a26d046a18

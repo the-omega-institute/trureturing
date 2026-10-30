@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:3280728d5f5ba1af38624b5a8d5296e8f540a1d4a8763ee13bcb422ad65fa6dc
+  normalized_sha256: sha256:3280728d5f5ba1af38624b5a8d5296e8f540a1d4a8763ee13bcb422ad65fa6dc
+cas_ref: sha256:3280728d5f5ba1af38624b5a8d5296e8f540a1d4a8763ee13bcb422ad65fa6dc
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 杜威习惯、经验重构和候选集合类比的范围，没有新集合递推定理。
+    previous_atom_id: 40caf08b648771d948b70c70a30567c1ebdbdaa6923244d0133511708b8c1f0d
+    next_atom_id: d3b32fe02d0a60b9fc33ca806eabe107c90c4b6b71c111d7badfface2ff692c6

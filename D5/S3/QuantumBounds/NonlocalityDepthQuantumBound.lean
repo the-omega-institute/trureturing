@@ -363,7 +363,7 @@ private lemma tensor_insert {n : ℕ} {σ : Fin (n + 1) → Type*}
     ∏ i, A (j.succAbove i) (x (j.succAbove i)) (a (j.succAbove i)) (b (j.succAbove i))
   exact (Fin.mul_prod_removeNth j (fun i => A i (x i) (a i) (b i))).symm
 
-private lemma involution_binary {m : Type*} [Fintype m] [DecidableEq m]
+lemma involution_binary {m : Type*} [Fintype m] [DecidableEq m]
     (A : Matrix m m ℂ) (hA : A.IsHermitian) (eA : A ^ 2 = 1) :
     (1 - A).PosSemidef ∧ (1 + A).PosSemidef := by
   have defect (B : Matrix m m ℂ) (hB : B.IsHermitian) (eB : B ^ 2 = 1) :
@@ -811,7 +811,7 @@ private lemma eta_norm : ((-1 + Complex.I) / (Real.sqrt 2 : ℂ)) * star ((-1 + 
         ((Real.sqrt 2 : ℂ)⁻¹ * (Real.sqrt 2 : ℂ)⁻¹) := by ring
     _ = 1 := by rw [hinv]; norm_num; ring_nf; norm_num
 
-private lemma zero_ne_one (n : ℕ) (hn : 0 < n) : (fun _ : Fin n => (0 : Fin 2)) ≠ (fun _ : Fin n => (1 : Fin 2)) := by
+lemma zero_ne_one (n : ℕ) (hn : 0 < n) : (fun _ : Fin n => (0 : Fin 2)) ≠ (fun _ : Fin n => (1 : Fin 2)) := by
   letI : Nonempty (Fin n) := ⟨⟨0, hn⟩⟩
   exact Function.const_injective.ne (by decide : (0 : Fin 2) ≠ 1)
 
@@ -901,7 +901,7 @@ private lemma upper_binary (k : ℕ) {d : Fin (k + 3) → ℕ}
   exact D5.S3.QuantumBounds.NonlocalityDepthQuantumBound.Upper.weighted_upper_binary k A (fun j s => (hA j s).1)
       (fun j s => (hA j s).2.1) (fun j s => (hA j s).2.2)
 
-private lemma expectation_upper {m : Type*} [Fintype m] [DecidableEq m]
+lemma expectation_upper {m : Type*} [Fintype m] [DecidableEq m]
     (rho B : Matrix m m ℂ) (q : ℝ) (hr : (rho.PosSemidef ∧ Matrix.trace rho = 1))
     (hp : (q • (1 : Matrix m m ℂ) - B).PosSemidef) :
     (Matrix.trace (rho * B)).re ≤ q := by

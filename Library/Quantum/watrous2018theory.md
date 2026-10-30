@@ -74,3 +74,35 @@ and are not attributed to the book's nonzero-map statement in Theorem 2.22.
 The finite representation theorem alone does not establish the optimum over
 local channels in the spectral coarse-graining problem, or its stabilized
 trace-norm error formula.
+
+
+## Instrument composition and predictive intertwining
+
+The book's finite-dimensional channel and measurement formalism supplies the standard setting below.
+The displayed simulation lemma is derived here by composition; it is not attributed to a numbered theorem in the source.
+Let $\mathcal I_{t,a,y}$ and $\mathcal J_{t,a,y}$ be CP, trace-nonincreasing instrument branches,
+whose sums over $y$ are trace preserving for every legal action $a$.
+Let $\mathcal E_t$ be CPTP summaries between the respective finite-dimensional matrix or classical–quantum block algebras.
+Assume the initial target state is $\widehat\sigma_\emptyset=\mathcal E_0(\sigma_\emptyset)$ and, on all reachable unnormalized states,
+
+$$
+\mathcal E_{t+1}\mathcal I_{t,a,y}=\mathcal J_{t,a,y}\mathcal E_t.
+$$
+
+Use the same policy $a=\pi(h)$ determined by the recorded history $h$, and preserve action-legality guards.
+For unnormalized post-record states, induction gives
+
+$$
+\widehat\sigma_h=\mathcal E_{|h|}(\sigma_h),\qquad
+\Pr_{\mathcal J}(h)=\operatorname{tr}\widehat\sigma_h
+=\operatorname{tr}\sigma_h=\Pr_{\mathcal I}(h).
+$$
+
+Indeed, apply the branch identity after each step; the trace of an unnormalized branch state is its outcome-history probability.
+Matched histories select the same next action. At positive probability, dividing by the common trace gives the corresponding conditional-state identity.
+This establishes all finite transcript laws, not an efficient method to obtain or evaluate a summary.
+For infinite or continuous classical registers, an additional measurable channel/instrument framework is needed;
+finite block algebras alone do not supply it.
+
+The project-specific substitution, including program, optimizer memory and native gate choice, is in
+[Self-Generated Predictive Memory §11](../../docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_SELF_GENERATED_PREDICTIVE_MEMORY.md).

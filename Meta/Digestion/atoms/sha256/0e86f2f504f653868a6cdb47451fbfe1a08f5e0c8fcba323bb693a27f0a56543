@@ -1,0 +1,12 @@
+**Proposition 17.4 (separately attained scout variants).** The following
+schedules are also sufficient for this same historical task, with their
+own actual acquired images. Let $a$ be the preprocessing Tick count,
+$z=T^ax_h$, $\ell=(k_*-1)2^{-p_*}>0$, and $c$ the actual number of
+scout Reads. The table counts only acquisition, before adding the
+seed and historical bills.
+
+| Schedule | Certificate and assay precisions | Actual return | Tick, Hold and digital Read counts |
+| --- | --- | --- | --- |
+| One Tick, rational cutoff | $a=1$; scout $1,2,4,\ldots$; least $s$ with $\lambda^s<\ell$, then $U=s-1$; assay $p_r=3(U+r)+1$ | $T^{n+1}x_h$ | $n+1,\ n+1,\ c+b(n+1)$ |
+| $n$ Ticks, rational cutoff | $a=n$; scout $0,1,2,4,\ldots$; least $s$ with $\lambda^s<\ell$; assay $p_r=3(s+r)+1$ | $T^{2n}x_h$ | $2n,\ n+1,\ c+b(n+1)$ |
+| Alpha-skipping linear scout | $a=\delta=\mathbf1_{\{n>0\}}$; scout $0,1,\ldots,p_*$; $U=6(p_*+1)$; assay $p_r=3(U+r)+1$ | $T^{n+\delta}x_h$ | $n+\delta,\ 0,\ p_*+1+b(n+1)$ |

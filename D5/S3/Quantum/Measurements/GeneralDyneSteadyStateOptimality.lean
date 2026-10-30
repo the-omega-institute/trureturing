@@ -183,7 +183,7 @@ private lemma source_reduction (κ χ ν : ℝ) (M S : Matrix (Fin 2) (Fin 2) �
 
 
 set_option maxHeartbeats 2000000 in
-private lemma physical_forward (M : Matrix (Fin 2) (Fin 2) ℝ) (hM : IsGaussianMeasurementCov (m
+lemma physical_forward (M : Matrix (Fin 2) (Fin 2) ℝ) (hM : IsGaussianMeasurementCov (m
   := 1) M) :
     M.PosDef ∧ 1 ≤ M.det := by
   obtain ⟨hp, hd⟩ :=

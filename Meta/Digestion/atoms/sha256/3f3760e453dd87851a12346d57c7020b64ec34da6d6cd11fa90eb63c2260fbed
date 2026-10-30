@@ -1,0 +1,28 @@
+**推论 35.2（两点标量、未来律与付费长度的精确关系）。** 对同一任意正两点安装先验的实际活动历史，
+
+$$
+\begin{aligned}
+q(h)=q(h')
+&\Longleftrightarrow W(h)=W(h')\\
+&\Longleftrightarrow (a(h),\nu_h)=(a(h'),\nu_{h'})\\
+&\Longleftrightarrow (a(h),A,B)=(a(h'),A',B')\\
+&\Longleftrightarrow \mathscr L_h=\mathscr L_{h'}.
+\end{aligned}
+\tag{FR.35.5}
+$$
+
+相等的单独付费长度 $N=A+B$ 不足以确定这些对象。
+
+证明。等价链是定理35.1、推论34.3与既有定理21.2、22.1的组合。付费长度的反例取
+
+$$
+h_\alpha=\alpha\alpha\,\beta\alpha\mid\beta\beta\alpha\alpha,
+\qquad
+h_\beta=\beta\beta\,\beta\alpha\mid\beta\beta\alpha\alpha.
+\tag{FR.35.6}
+$$
+
+在每个支持深度，两字都有严格正柱质量。原提种器先拒绝一个相等对，再取得种子1；载荷完成100，第三次记录写入后锁存，两者均在 $p_4$。原选定字段均为 $B=(1,2,3,1,1),Q^+=(ac,bc),Z=1$，但活计数分别是 $(5,3)$ 与 $(3,5)$，同样支付八次 Read。定理34.2使后验不同，定理35.1使 $q$ 和未来律不同。这里共同的是这些原选定字段，不是包含 selected counts 的增补银行。证毕。
+
+上述等价不改变 §24 的同一全支持先验反演不稳定性，也不把两点标量恢复推广到每个三点先验：§16已有一个固定正有理三点先验的实际标量碰撞，而 §18 的特定代数先验有其不同条件。对所有固定非单例支持，普遍成立的是推论34.3的两项窗口分类。付费 Read 数也不是物理时间；原 Stop、记录、本地运算、传输及等待没有被来源合同指定为同一个时间单位。
+

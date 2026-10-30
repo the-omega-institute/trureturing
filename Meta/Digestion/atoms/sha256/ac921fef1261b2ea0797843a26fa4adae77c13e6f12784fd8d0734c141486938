@@ -1,0 +1,43 @@
+**Theorem 4.3 (Genuine quadratic and exceptional equivalence).** For
+every $p\ne24,v,m$, the worlds in $\mathcal W(p,v,m)$ with $K(x)=0$
+are in bijection with $\mathcal E(p,v,m)$. In the layer $N(\kappa)=0$,
+$\Phi_\kappa$ is genuinely quadratic in $d$, with leading coefficient
+
+$$
+[d^2]\Phi_\kappa=\frac{\mathscr H(\kappa)}{\Delta(\kappa)^2}\ne0.
+\tag{4.9}
+$$
+
+In particular there are at most two exceptional worlds.
+
+Proof. The coefficients of $d$ in $H_0,H_2$ from (2.4) are exactly
+$-M_0/\Delta,-M_2/\Delta$. Therefore the coefficient of $d^2$ in
+$H_0(H_2+2d-294/5)-dH_2$ is
+
+$$
+\frac{M_0M_2-2M_0\Delta+M_2\Delta}{\Delta^2}
+=\frac{\mathscr H}{\Delta^2}.
+\tag{4.10}
+$$
+
+Proposition 4.1 proves its nonvanishing at $\kappa$, independently
+of $(p,v,m)$. Every exceptional actual world has $x=\kappa$ by
+Proposition 4.1 and $N(\kappa)=0$ by (2.6). Its clocks zero and two
+give (4.5), the positive sum of squares, and the unique $u$ in (4.7)
+by the residual identities (3.8), which do not require $K\ne0$ when
+written in $H_i,d$. The consequence $d\ne24$ and clock one give
+$H_1\ne0$. The remaining formulas and guards are its strict source
+coordinates and source identity.
+
+Conversely an allowed drift root determines $h$ and the unique $u$
+in (4.7). The same residual identities give clocks zero and two;
+the definition of $j$ gives clock one. Since $K=N=0$, (2.6) gives
+clock three for this drift without a division by $K$. The four tail
+rows hold by (2.2)–(2.3). The source identity and strict guards give
+the original positive source, $n=j+r$, $U=1/u$, and a nonzero
+whole gain $g=uh$ as in Theorem 3.3. Thus every retained drift root
+is sufficient for a full original world. Different roots give different
+drifts and hence different complete triples. The nonzero quadratic
+has at most two distinct real roots, whether or not it has a repeated
+root. ∎
+

@@ -1,0 +1,25 @@
+**定义 8.3（输出解析的未来效果闭包）。**
+固定有限末端效果族 $\mathcal G\subset V$，其中 $I\in\mathcal G$。定义实线性空间
+
+$$
+W_0=\operatorname{span}_{\mathbb R}\mathcal G,
+ \qquad
+ W_{n+1}=W_n+
+ \sum_{a\in A,o\in O}\Phi_{a,o}^*(W_n),
+ \qquad
+ W_\infty=\bigcup_{n\ge0}W_n.
+$$
+
+定义全未来隐方向空间 $N=W_\infty^\perp$。由于 $I\in W_\infty$，有 $N\subseteq V_0$。两态称为未来等价，若
+
+$$
+\rho\sim\sigma
+ \quad\Longleftrightarrow\quad
+ p_\rho(h,G)=p_\sigma(h,G)
+ \quad\text{对所有有限历史 }h\text{ 和 }G\in\mathcal G.
+$$
+
+本定义保留每个实际输出分支；只保留平均通道 $\sum_o\Phi_{a,o}$ 定义的是另一个通常较弱的观察问题。
+
+<a id="obs-thm-predictive"></a>
+

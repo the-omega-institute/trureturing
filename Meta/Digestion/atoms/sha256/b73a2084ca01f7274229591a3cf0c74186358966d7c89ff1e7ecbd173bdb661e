@@ -1,0 +1,59 @@
+**Proposition 28.2 (Attained unique pointwise minimizers).** For each fixed $r>0$, minimize
+(28.1) subject to nonnegative noises and separability of (26.1). The minimum and its unique
+optimizer are
+
+$$
+\begin{array}{c|c|c}
+\text{range}&(\eta_A^*,\eta_B^*)&E_{\min}(r)\\ \hline
+0<r\le3/64&(3-64r,\,1-r)&(4-65r)/2\\
+3/64\le r<r_0&(0,\,(64r-2)^{-1}-r)&((64r-2)^{-1}-r)/2\\
+r\ge r_0&(0,0)&0
+\end{array}
+\tag{28.2}
+$$
+
+The overlap at $3/64$ denotes agreeing formulas, not two optimizers.
+
+*Proof.* The substitutions used in Proposition 27.2 give the exact constrained problem
+
+$$
+x>0,\quad y>0,\quad xy\ge1,\quad
+x\ge64r-2,\quad y\ge r,\qquad
+\Delta E=\frac{x+y+2-65r}{2}.
+\tag{28.3}
+$$
+
+The positive $x$ condition follows from separability and $y>0$; the last two bounds are
+precisely $\eta_A,\eta_B\ge0$. Thus no unconstrained stationary point can be accepted without
+these bounds.
+
+For $0<r\le3/64$, the point $x=y=1$ satisfies both bounds, since $64r-2\le1$ and $r<1$. Every
+feasible point obeys $x+y\ge2\sqrt{xy}\ge2$. Equality requires $x=y=1$, proving attainment,
+global minimality and uniqueness. The original noises are $(3-64r,1-r)$ and are nonnegative.
+
+For $3/64\le r<r_0$, put $a_0=64r-2\ge1$. The inequality $r<r_0$ is equivalent here to $a_0r<1$.
+For each $x\ge a_0$, the least feasible $y$ is $\max\{r,1/x\}$. On $a_0\le x\le1/r$, the
+minimized sum is $x+1/x$, strictly increasing away from $x=1$ on this interval. For $x\ge1/r$,
+it is $x+r$, strictly increasing. Hence the unique optimizer is $x=a_0$, $y=1/a_0>r$; it obeys
+all constraints and gives the middle row of (28.2), including its positive denominator.
+
+For $r\ge r_0$, zero noise is feasible by (27.1). The nonnegative objective has value zero only
+at $(0,0)$, so its minimizer is unique. These three arguments exhaust the domain. $\square$
+
+The endpoint values and the rational example are
+
+$$
+\begin{gathered}
+r=3/64:\quad (\eta_A^*,\eta_B^*)=(0,61/64),\quad
+E_{\min}=61/128,\\
+r\uparrow r_0:\quad (\eta_A^*,\eta_B^*)\longrightarrow(0,0),
+\quad E_{\min}\longrightarrow0,\quad F_{r_0}(0,0)=0,\\
+\sigma=2:\quad (\eta_A^*,\eta_B^*)=(0,7/16),\qquad
+E_{\min}=7/32.
+\end{gathered}
+\tag{28.4}
+$$
+
+Every positive-cost optimizer is a separable equality state $F_r=0$, covered by the explicit
+mixture certificate (27.5)–(27.7).
+

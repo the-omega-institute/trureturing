@@ -1,0 +1,29 @@
+## 1. The source-specific boundary-to-memory problem
+
+This continuation of [Joint Relations and Clocks](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_RELATIONS_CLOCKS.md)
+connects its joint-source and branch-instrument contracts to the full mixed
+thermal family of [Boundary Geometry VI, §§139–146](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md).
+Call the added apparatus **QSSR2**. The result is an attained relation between
+that source, a complete local-charge instrument, retained quantum modes and
+their subsequent legal use. The apparatus setting is known before preparation.
+The construction does not infer a setting from an unknown native source.
+
+Unless another revision is specified, references to these two source volumes mean their bodies at
+`c79b949f81a95ec1174e4582d04ba2e22e589d8c`. Their earlier internal historical
+pins retain their own identities. In particular, VI127.1's corrected native
+source quantifiers govern the application; a stopped singleton birth is not
+replaced by an arbitrary abstract birth or by the separate Gaussian
+program-world model.
+
+The supplier comparison with [VI147–156](https://github.com/the-omega-institute/trureturing/blob/3da21bf26eeb4f3dbbb1e2f416b8e80d44852767/docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION_VI.md)
+uses that volume at `3da21bf26eeb4f3dbbb1e2f416b8e80d44852767`.
+Its inverse temperature $\beta$ is the $\theta$ used here, and its scalar
+$\mu=|z|^2$ is our $z^2$, distinct from our joint phase law $\mu$.
+
+The observation at issue is genuinely joint. A one-copy local-number readout
+does not retain the coherence needed by the two-copy consumer. Two sources
+can have identical one-copy density matrices after phase averaging and still
+give different retained resources. The proof below identifies the precise
+surviving phase character and the competing thermal noise, rather than
+assuming that two prescribed marginals specify an available pair.
+

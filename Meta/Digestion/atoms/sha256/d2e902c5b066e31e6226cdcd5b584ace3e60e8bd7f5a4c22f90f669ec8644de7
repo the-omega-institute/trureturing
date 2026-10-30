@@ -1,0 +1,11 @@
+By contrast the
+probe $p=(1,2,3)^{\mathsf T}/6$ in §96 attains $1/2$.
+Thus diagonal covariance does not make the unweighted normalized Choi
+probe worst-case. The weighted two-density Choi expression in
+[Watrous, Simpler semidefinite programs for completely bounded norms,
+arXiv:1207.5726v2, Theorem 6, §3.1, p.10][W12]
+([paper reference][W12L]) allows variable input densities; it imposes
+no maximally mixed-input restriction. The proof of Theorem 94.2 uses
+the explicit CP-order certificate (95.8)–(95.10) to obtain the
+full diamond bound, rather than substituting a Choi overlap for the metric.
+

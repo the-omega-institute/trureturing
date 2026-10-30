@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:1079a4b6dca6e174b8c01e5258e65a067abaabfbae52daad81a44cd1ff611b42
+  normalized_sha256: sha256:1079a4b6dca6e174b8c01e5258e65a067abaabfbae52daad81a44cd1ff611b42
+cas_ref: sha256:1079a4b6dca6e174b8c01e5258e65a067abaabfbae52daad81a44cd1ff611b42
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Pure definitions and notation: the graph critical group is defined as the displayed quotient, Div^0 names the degree-zero lattice, and s_i names the positive Smith invariants when b>0. No cokernel identification or period theorem is asserted.'
+    previous_atom_id: aebaf3a67479109defe9d810e7f29da5cee788284a96db0856348cf4b2710b53
+    next_atom_id: b808e6104b1fe9f6767035d7b704a11690d02eb4d5ccd7fdad611791215f0b7c

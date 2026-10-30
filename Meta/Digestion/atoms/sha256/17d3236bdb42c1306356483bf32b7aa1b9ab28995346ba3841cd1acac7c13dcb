@@ -1,0 +1,58 @@
+**Proposition 181.2 (Realizable scalar region).** At fixed $t$, the exact
+region of scalar data realized by separable members is
+
+$$
+\left\{(x,y,z):\ 0\le x,y\le1,\quad
+0\le z\le(1-x)(1-y),\quad q_0(t,x,y,z)\le1,\quad
+q_3(t,x,y,z)\le1\right\}.
+\tag{181.3}
+$$
+
+Proof. The unit-vector conditions and Cauchy–Schwarz give the first three
+bounds. Every triple satisfying them is realized. For $x<1$, choose
+
+$$
+\alpha=\sqrt x,\quad \gamma=\sqrt y,\quad
+u=\begin{pmatrix}\sqrt{1-x}\\0\end{pmatrix},\quad
+h=\begin{pmatrix}\sqrt{z/(1-x)}\\
+\sqrt{1-y-z/(1-x)}\end{pmatrix}.
+\tag{181.4}
+$$
+
+The square roots are nonnegative, the two full vectors have unit norm,
+and $`|u^*h|^2=z`$. For $x=1$, necessarily $z=0$; use $u=0$ and
+$h=(\sqrt{1-y},0)^{\mathsf T}$. Theorem 181.1 then proves necessity and
+sufficiency of the remaining two bounds for every realization, including
+complex ones with those data.
+
+For interior $0<t<1$ and $0<x,y<1$, define
+
+$$
+\begin{aligned}
+L_3&=\frac{t+s(1-x)}s
+ \left((1-y)-\frac{t}{s^2y}\right),\\
+U_0&=\frac{t+sy}s
+ \left(\frac{t}{s^2x}-(1-x)\right).
+\end{aligned}
+$$
+
+Equivalently, the exact allowed overlaps at those fixed $t,x,y$ form
+
+$$
+\max\{0,L_3\}\le z\le
+\min\{(1-x)(1-y),U_0\},
+\tag{181.5}
+$$
+
+with an empty region when the lower endpoint exceeds the upper endpoint.
+This follows by solving $q_3\le1$ and $q_0\le1$ for $z$.
+At fixed interior $t,x,y$, increasing overlap increases $q_0$ and
+decreases $q_3$; both constraints must concern the same pair $u,h$.
+The endpoint cases use (181.3) directly, without division by $x$, $y$ or $s$.
+
+The uniform statement of §§171–172 has a different quantifier:
+all independent-ray members are PPT and separable exactly when $t\ge1/3$.
+Equation (181.1) instead decides each member, including $0<t<1/3$.
+It is a theorem for (177.2), not a PPT-sufficiency theorem for arbitrary
+$2\times4$ states.
+

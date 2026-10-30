@@ -1,0 +1,46 @@
+**Definition 130.1 (mathematical correspondence and boundaries).** The
+source algebra and accepted substitution in (127.1) are exactly IV
+Definitions 92.1 and 112.1. The branch access fibre $D=\mathcal B$ in
+IV (112.1) remains a branch fibre; the full-source quantifier here does
+not reinterpret a singleton as producing that branch entry record.
+The occurrence sets, old-address inclusions, beta parents and child
+incidence are the objects of IV (112.5)--(112.9), extended directly by
+the same algebraic definitions to singleton sources. In particular
+$P_e=C_e^*$, $P_e^{\mathsf T}P_e=2\operatorname{diag}
+(\mathbf1_{\mathcal P_e})$, and the $L_+$ of (127.2) is the unchanged
+native unit-edge form. The ancestry fibres in Lemma 129.2 are the actual
+fibres described in V Lemma 117.2: an old internal occurrence has a
+singleton fibre, and an old leaf has its own substituted finite tree.
+They are not quotients by equal subtree values.
+
+Theorems 128.1 and 129.3 compare all signed old fields, every successor
+coordinate, exact forms and SPD norms, and the same finite semigroup
+parameter $t$. Proposition 128.2 proves conservative Markov existence
+on these finite stages; Proposition 125.3 retains its exact rate-one
+fixed-source witness because (128.4) is its claimed rate recurrence.
+Theorem 129.3 additionally rules out a uniform finite occurrence-distance
+jump range for every uncapped compatible conservative Markov family,
+including ones that use nonzero cross vectors before range forcing
+applies. Theorems 121.2 and Corollary 121.3 retain their diagonal-old
+hypothesis from Definition 120.1; they supply a conditional one-step
+boundary and are not used to classify arbitrary inherited metrics.
+
+The Schur-complement and inverse identities used in Proposition 127.2
+are the standard ingredients cited in VI §120, Boyd--Vandenberghe,
+*Convex Optimization*, Appendix A.5.5. The remaining native conclusions
+are derived above from the specified incidence, congruence, intertwining
+and ancestry relations; no claim of literature novelty is attached to
+the finite matrix or Markov facts used inside those derivations.
+
+These statements concern finite occurrence-state spaces and their
+specified algebraic comparisons. They do not select a physical spatial
+dimension, turn occurrence distance into physical locality, or identify
+either the accepted epoch $e$ or semigroup parameter $t$ with a physical
+clock. In particular a three-port root compression is not a derivation
+of three physical dimensions. They assert neither an infinite-dimensional
+operator realization nor all-epoch irreducibility or original-edge
+support of the coherent generators. The finite SPD construction and
+the universal range obstruction leave those additional realization
+questions separate. The arguments here are mathematical prose and carry
+no Lean kernel-verification assertion.
+

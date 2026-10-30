@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:428dd8d7931a98210e8838b051fbec8affd7cdd66100e12e5ea6d7de758745db
+  normalized_sha256: sha256:428dd8d7931a98210e8838b051fbec8affd7cdd66100e12e5ea6d7de758745db
+cas_ref: sha256:428dd8d7931a98210e8838b051fbec8affd7cdd66100e12e5ea6d7de758745db
+coverage_gids:
+  - gid: D5/S3/Observer/GoldenCoding/PrimeGoldenScaleCoordinate.prime_golden_scale_coordinate_pos
+    target_statement_id: sha256:2c29a44fbb7b11ad8a45008cf686ce45affb204808d9f39a0532738d84a0011d
+receipts:
+  unresolved_subitems: []

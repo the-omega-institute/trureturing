@@ -1,0 +1,36 @@
+**定义 18.1（完整核上的 beta 零秩二来源层）。** Fix an arbitrary
+legal source tuple of Definition 13.1, retaining its full
+$1538\times1024$ matrix $B$, all $254$ prefixes, all $256$ maps
+$G_q$ and all $128$ four-component maps $D_w$ of Definition 13.2.
+Write $V=\ker B$ and $j_e=(J^7,e)$. Use exactly the scalar maps
+$E_J,\alpha,\Delta,\beta$ of
+[E-zero, Definition 7.1](FIB_ORIGINAL_ROOT_EZERO_FIBER_AND_GAIN_RANK_REDUCTION.md).
+The source layer considered here is
+
+$$
+\begin{gathered}
+\sigma(P_{j_0})=\sigma(P_{j_1})=s>0,\qquad s\ne1,\\
+E_J|_V=0,\qquad \beta|_V=0,\qquad
+\operatorname{rank}(G_{j_0}|_V)=2.
+\end{gathered}
+\tag{18.1}
+$$
+
+These are identities and a rank condition on the entire $V$.
+For each slot write
+
+$$
+P_q=\begin{pmatrix}a_q&b_q\\c_q&1-a_q\end{pmatrix},\qquad
+ d_q=1-a_q\in(0,1),\qquad t_q=b_q+c_q>0,
+\qquad T_q=t_q+d_q=\operatorname{tr}(MP_q)>0.
+\tag{18.2}
+$$
+
+The gain $g_q$ and $k_q=g_q(0)$ are polynomial-valued and
+scalar-valued linear maps on $V$, respectively; their normalized
+drift is $-k_q$. Zero blocks are allowed in these linear identities.
+For every nonempty prefix $v$, let $R_v$ denote its common response
+map on $V$, as supplied by all the rows (13.5). Thus every descendant
+slot realizes all of its ancestor response maps on the same $V$.
+Set $r_i=R_{J^i}$ for $1\le i\le4$ and $y=R_{J^4M}$.
+

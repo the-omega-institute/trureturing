@@ -1,0 +1,19 @@
+**Proposition 6.4 (Faithful joint consumer and its unresolved existence).**
+There is a base in $D_J\cap D_M$ exactly when (6.7) has a solution
+for some real $p\ne24,v,m_0,m_1,m$ and guarded candidates as in
+Definition 6.3. A positive solution requires only the four actual
+endpoints, with permitted overlap, and does not require exhaustion of
+$C(p,v)$.
+
+Proof. The bijection (5.4) reconstructs precisely every original world
+with any specified auxiliary terminal $M$ value. Given an actual
+$J$ pair, assign its two individual $M$ responses to $m_0,m_1$.
+Given an independently selected actual $M$ pair in the same child,
+assign its common $M$ response to $m$. Equation (6.1) identifies
+the actual $J$ equality, so these choices give (6.7). Conversely the
+four reconstructed worlds all belong to the same entire $C(p,v)$;
+(6.7) gives the two within-pair distinctness conditions, the $J$
+equality, and the $M$ equality by construction. These are precisely
+S, Definition 1.2 and SIII, Definition 19.1, with independent pair
+choices. No condition is imposed on unused companions. ∎
+

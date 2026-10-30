@@ -1,0 +1,33 @@
+## 21. Four complete worlds and a uniform M gap near p=20
+
+Sections 21–27 use the complete-world definition and independent-pair
+quantifiers of Section 1 without changing their domain. Every finite
+terminating decimal in these sections denotes the exact rational given
+by its decimal expansion. In particular set
+
+$$
+\begin{gathered}
+v_c=117.098504601811652853143640342847009910281780880505313347322910056227344807162345328734117,\\
+\epsilon=10^{-8},\qquad
+B=\{(p,v)\in\mathbb R^2:|p-20|\le\epsilon,\ |v-v_c|\le\epsilon\}.
+\end{gathered}
+\tag{21.1}
+$$
+
+The symbol $B$ in these sections denotes this closed rectangle, distinct
+from the lower-face rectangle $\mathcal B$ in (11.3). It has $p\ne24$
+everywhere. The source matrix remains
+
+$$
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},\qquad
+0<r<1,\quad b>0.
+$$
+
+Each world has one fixed real drift $d$ and one whole nonzero real
+polynomial $g$ of degree at most three. The original acquired word is
+$J,M,J,M,M,M$, its readings at clocks $0,\ldots,6$ are
+$(0,24,147/5,24,18,p,v)$, and clock seven has the two alternatives of
+Definition 1.2 on that same world. All singular sources, zero drift,
+sampled gain zeros, lower degrees, repeated gain roots and unused
+companions are included in the whole-child quantifier.
+

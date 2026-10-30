@@ -1,0 +1,50 @@
+## 157. Full-spectrum comparison at the fixed CAR cut
+
+This appendix fixes the finite model specified in §§139--146 and
+asks what follows from its complete spectrum before any further restriction
+on the allowed unitary.  The one-particle space is
+$\mathfrak h=\mathbb C^3$, with the normalized $A$-first CAR
+identification
+
+$$
+ \mathcal F_-(\mathfrak h)
+ =\mathbb C^2_A\otimes\mathbb C^4_B,
+ \qquad
+ A=\mathbb C e_\ell,\quad
+ B=\operatorname{span}_{\mathbb C}\{e_r,e_R\}.
+\tag{157.1}
+$$
+
+Here $B$ is the two-dimensional one-particle mode space, while
+$\mathbb C^4_B$ denotes its four-dimensional fermionic Fock factor
+$\mathcal F_-(B)$.
+
+The tensor product here is the ordinary occupation tensor product induced
+by the declared creation order.  It is the fixed cut for every partial
+transpose below.
+
+For a unit vector $V\in\mathbb C^3$, put
+
+$$
+ H_V=I_3-VV^*,\qquad \|V\|_2=1,\qquad
+ \rho_V(\beta)
+ =\frac{\exp[-\beta\,d\Gamma_-(H_V)]}{Z_\beta},
+ \qquad t=e^{-\beta},\quad \beta\ge0 .
+\tag{157.2}
+$$
+
+The eigenvalues of $H_V$ are $0,1,1$, independently of the placement
+of $V$ relative to the fixed $A|B$ cut.  We retain the zero mode and
+all particle-number sectors.  Thus this is the same eight-dimensional
+full Gibbs state as in §141, with $V$ as the varying
+one-particle eigenvector.
+
+The two questions that must be separated are:
+
+* what the spectrum forces for every global $W\in U(8)$, and
+* what a specified state $\rho_V(\beta)$, or a restricted orbit of it,
+does at the fixed cut (157.1).
+
+The first question is spectral.  The second also depends on eigenvector
+placement and on the unitary class that is admitted.
+

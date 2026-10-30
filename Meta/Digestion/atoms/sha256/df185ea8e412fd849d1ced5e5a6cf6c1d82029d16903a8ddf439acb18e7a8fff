@@ -1,0 +1,34 @@
+**Definition 5.1 (the unreduced fiber and an exact complete service).**
+For integers $a,b\ge0$ with $\ell=a+b\ge1$, let
+
+$$
+D_{a,b}=\{u\in\mathcal T:a(u)=a,\ b(u)=b\}.
+\tag{5.1}
+$$
+
+This is the entire ordered source fiber in the ambient algebra, including
+every binary shape and every ordered leaf labeling.  When $\ell\ge2$, every
+member is in $\mathcal B$, so the existing
+GenealogicalFiberTransport result supplies
+
+$$
+K_{a,b}=|D_{a,b}|
+=\operatorname{Catalan}_{\ell-1}\binom{\ell}{a}.
+\tag{5.2}
+$$
+
+For every fiber with $\ell\ge2$, an exact complete service is one common
+CPTP/instrument family that, from (1.3), returns every requested original
+four-valued Read and continues with the same actual guard, Apply rule,
+chronological records and absorbing Stop.  It must therefore support the
+finite epoch-zero traversal that reads the root and every reached node.  The
+traversal's replies encode the ordered source uniquely; it is the same paid
+acquisition supplier used in Theorem 112.10, not a free source index.  The
+$\ell=1$ fibers are the singleton leaf cases
+$D_{1,0}=\{\alpha\}$ and $D_{0,1}=\{\beta\}$.  The other cardinality-one
+fibers are the pure branch cases
+$D_{2,0}=\{\langle\alpha,\alpha\rangle\}$ and
+$D_{0,2}=\{\langle\beta,\beta\rangle\}$; they are authentic branch entries
+with reached $L/R$ holes and use the branch contract, not a leaf-root
+contract.
+

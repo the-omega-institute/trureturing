@@ -1,0 +1,7 @@
+Inflation replaces each source edge by several copies and each party by copies connected according to the incidence pattern. The resulting graph is a finite cover-like lift of the original causal incidence complex. A triangle-local model induces a distribution on the lifted parties with:
+
+- equal-copy symmetries;
+- marginal consistency whenever two lifted events descend to the same original event;
+- factorization or d-separation constraints for disjoint source copies;
+- the original \(P(a,b,c)\) as an appropriate marginal.
+

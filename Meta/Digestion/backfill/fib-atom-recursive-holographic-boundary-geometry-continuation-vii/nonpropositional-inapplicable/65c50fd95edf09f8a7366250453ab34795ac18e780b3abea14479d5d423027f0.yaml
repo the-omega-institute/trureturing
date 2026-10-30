@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:65c50fd95edf09f8a7366250453ab34795ac18e780b3abea14479d5d423027f0
+  normalized_sha256: sha256:65c50fd95edf09f8a7366250453ab34795ac18e780b3abea14479d5d423027f0
+cas_ref: sha256:65c50fd95edf09f8a7366250453ab34795ac18e780b3abea14479d5d423027f0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本 atom 仅规定仿射边运输、反边取逆、路径按复合定义及闭路 holonomy 的术语；没有声称平凡 holonomy 或路径无关性。
+    previous_atom_id: 570914e0f30c3381c0fc21c3f79664163152297865976e03e2a4b7829851f9af
+    next_atom_id: 2d015960c42c7dc454ded90d5ad933434503573d97f2eb264f1c46b0df1e9104

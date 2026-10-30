@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:257419dce12db28409f4368f176792a4cac1042ad4048612de7812cbdeb6cc93
+  normalized_sha256: sha256:257419dce12db28409f4368f176792a4cac1042ad4048612de7812cbdeb6cc93
+cas_ref: sha256:257419dce12db28409f4368f176792a4cac1042ad4048612de7812cbdeb6cc93
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 纯节标题 PC.1 历史词与部分变换；仅标识以下条目的主题，不包含量化命题、等式结论或证明断言。
+    previous_atom_id: 664c560d7d68d561646f2693a86cf9d959327fe814f9615d362cee0bbc6fa0af
+    next_atom_id: c895c0b206af8e197ad3d21d2d885a4df9b5f89ea4517da01fd76aac804236fd

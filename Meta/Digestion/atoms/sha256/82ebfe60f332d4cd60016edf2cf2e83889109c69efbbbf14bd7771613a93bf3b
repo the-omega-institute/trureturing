@@ -1,0 +1,13 @@
+#### 定义 6.1（全输入预测残差作用）
+
+对目标门 $V$，让内部 $X_j$ 遍历全部复矩阵，并固定额外边界 $X_{L+1}=V$，定义
+
+$$
+\mathcal S_w(X)=\sum_{j=1}^L\left\lVert X_j-G_jX_{j-1}\right\rVert_F^2
++\left\lVert V-X_L\right\rVert_F^2.
+$$
+
+额外末边的传输为恒等；该定义也覆盖空字 $L=0$。
+
+<a id="thm-action"></a>
+

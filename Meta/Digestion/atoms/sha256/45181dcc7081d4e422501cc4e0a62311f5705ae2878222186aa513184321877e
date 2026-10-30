@@ -1,0 +1,30 @@
+## 4. The critical three-dimensional span
+
+**Theorem 4.1.** For a critical mixed identity (3.1), let
+
+$$
+H=\operatorname{span}\{A_0,\ldots,A_{2m}\},\qquad
+E=\ker\operatorname{tr}(L\,\cdot),\qquad K=\ker C.
+$$
+
+Then $\dim K=m+1$, no $A_i$ is proportional to $L$, $\dim H=3$, and $L\in H$.
+
+**Proof.** A choice of $S$ with $\operatorname{tr}(LS)\ne0$ in (3.1) gives $\operatorname{rank}C=m$. Thus $\dim K=m+1$, and $K$ contains $\mathbf1$ and every $\operatorname{diag}(a(S))U$ for $S\in E$.
+
+Let $Q=\{i:A_i\text{ is proportional to }L\}$ and $q=|Q|$. Adjacent cumulative matrices are never proportional, since $A_{i+1}=cA_i$ would imply $E_{i+1}=cI$. Hence $q\le m+1$. For $i\notin Q$, the restriction of $a_i$ to $E$ is nonzero; a linear functional vanishing on $\ker\operatorname{tr}(L\,\cdot)$ is proportional to that functional. Avoiding finitely many proper hyperplanes in $E$, choose $S$ such that $a_i(S)\ne0$ precisely off $Q$. Such avoidance follows, for example, because the product of the nonzero linear defining polynomials cannot vanish identically.
+
+If $1\le q\le m$, there are at least $m+1$ complementary nodes. The nuisance image has dimension $m$ and vanishes on $Q$. The subspace of $K$ vanishing on $Q$ has dimension at most $m$, since $\mathbf1\in K$ does not vanish there. It therefore equals this image. For every $T\in E$, division by the chosen nonzero entries shows that the diagonal operator $a_i(T)/a_i(S)$ on the complementary nodes preserves degree-$(m-1)$ evaluation. Section 2 makes it scalar. All restrictions $a_i|_E$ consequently span at most one dimension, including their zero restrictions on $Q$. Lifting from $E$ to the full matrix space adds at most the functional represented by $L$. Hence $\dim H\le2$, contrary to mixedness.
+
+If $q=m+1$, nonadjacency among $2m+1$ indices forces $Q=\{0,2,\ldots,2m\}$. Since $A_0=I$, every even cumulative matrix is scalar. Each pair $E_{2j}E_{2j-1}$ therefore has scalar product. Of $MM,MJ,JM,JJ$, (2.2) and their entries show that only $JJ$ is scalar. The word would be pure $J$. Thus $q=0$.
+
+Choose $S\in E$ with $a=a(S)$ nonzero at every node, and let $r_0=\dim a(E)\le3$. Suppose $r_0=3$. Retain three coordinate positions witnessing this rank, and choose $m-2$ other positions $R$ disjoint from them; for $m=2$, take $R$ empty. Evaluation of $\operatorname{diag}(a)U\subset K$ on $R$ is surjective. Therefore
+
+$$
+K_R=\{v\in K:v|_R=0\}
+\quad\text{has dimension }(m+1)-(m-2)=3.
+$$
+
+Put $p_R(t)=\prod_{r\in R}(t-r)$. Both $a(T)p_R$ and $a(T)t p_R$ are in $K_R$ for every $T\in E$, since their polynomial factors have degrees at most $m-1$. Restrict to the remaining $m+3$ positions and divide by the nonzero values of $p_R$. The restricted space $W=a(E)|_{R^c}$ has dimension three by the retained coordinates. It and its clock multiple lie in a three-dimensional transformed copy of $K_R$. Thus $tW\subset W$. But $W$ contains the full-support vector $a|_{R^c}$. Its successive clock multiples through degree $m+2$ are independent by Vandermonde evaluation, and lie in $W$, a contradiction. Therefore $r_0\le2$.
+
+Restriction of linear functionals to $E$ has kernel the line represented by $L$. Accordingly $r_0$ is the dimension of the image of $H$ in the quotient by that line. If $L\notin H$, then $r_0=\dim H\ge3$, impossible. If $L\in H$, then $\dim H=r_0+1$. Mixedness forces $r_0=2$ and $\dim H=3$. $\square$
+

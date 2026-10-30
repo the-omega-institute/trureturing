@@ -1,0 +1,41 @@
+**定义 22.1（同源五模式律及符号对应）。** 沿用定义 19.1：代数顺序是
+$(x,y,z)$，三位印刷顺序是 $(x,z,y)$。将
+$000,100,010,001,101$ 分别命名为 $\varnothing,1,2,3,13$；因此
+$2$ 是中位独占，$13$ 是两个端点同时占位。令 $p$ 为这五点上的一个
+概率律，同一来源的随机变量满足 $xz=yz=0$。记
+
+$$
+X=\mathbb E_p x,\quad Y=\mathbb E_p y,\quad Z=\mathbb E_p z,
+\qquad \kappa=\mathbb E_p[xy].
+$$
+
+这些是总体均值，不是一次完整占位样本。[基础公式卷 §§4、7](AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md#四正方形回路与完整概率纤维)
+的标号 $(0,2,3,5,25)$ 在此依次对应
+$(\varnothing,1,2,3,13)$。其全部证明给出
+
+$$
+p_\varnothing=1-X-Y-Z+\kappa,\quad p_1=X-\kappa,
+\quad p_2=Z,\quad p_3=Y-\kappa,\quad p_{13}=\kappa,
+\tag{41}
+$$
+
+$$
+\kappa_-:=\max(0,X+Y+Z-1)\le\kappa\le
+\kappa_+:=\min(X,Y),\quad w=\kappa_+-\kappa_-.
+\tag{42}
+$$
+
+可达均值恰满足 $0\le Z\le1$、$0\le X,Y\le1-Z$，每个区间点都由
+(41) 的非负律实现；不对区间为空的不可达摘要作选择。原卷的宽度式给
+$w=\min(X,Y,1-Z-X,1-Z-Y)$。边界 $w=0$ 时联合律已唯一，顶点 $Z=1$
+时 $X=Y=\kappa=0$，没有可除的正剩余质量。两个实际来源
+
+$$
+p^+=\tfrac12\delta_\varnothing+\tfrac12\delta_{13},\qquad
+p^-=\tfrac12\delta_1+\tfrac12\delta_3
+\tag{43}
+$$
+
+给相同 $(X,Y,Z)=(1/2,1/2,0)$，但 $\kappa^+=1/2,\kappa^-=0$；它们
+不是同一个 SAT 实例的不同候选见证。
+

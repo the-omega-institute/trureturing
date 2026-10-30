@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:b8e6e4fec69d223e50d7cbfafa608422379a3ea94d164abadef342fa499f0120
+  normalized_sha256: sha256:b8e6e4fec69d223e50d7cbfafa608422379a3ea94d164abadef342fa499f0120
+cas_ref: sha256:b8e6e4fec69d223e50d7cbfafa608422379a3ea94d164abadef342fa499f0120
+coverage_gids:
+  - gid: D5/S3/QuadraticForms/GerzonEqualityParameterIdentity.symmetricCoordinates
+    target_statement_id: sha256:367af7eada0144b4bc68d9897ac9b344a9f8ffd1e0d8fc9a96423c8cd99050ac
+receipts:
+  unresolved_subitems: []

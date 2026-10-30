@@ -1,0 +1,103 @@
+**Proposition 128.1 (A sufficient checkable gap certificate; repo-derived).**
+Fix one of the two row families $\mathscr R_j$ in (125.2). Choose
+finitely many actual rows $\rho_1,\ldots,\rho_q\in\mathscr R_j$,
+signs $\sigma_l\in\{-1,1\}$ and weights $\lambda_l\ge0$ such that
+
+$$
+\sum_{l=1}^q\lambda_l=1,\qquad
+\sum_{l=1}^q\lambda_l\sigma_lU_{\rho_l r}=0
+                    \quad(1\le r\le6).
+\tag{128.1}
+$$
+
+Let $B=\sum_l\lambda_l\sigma_l\beta_{\rho_l}$. Pair this signed
+lower witness with an unrestricted trial $(\bar z,\bar g)$ and a
+number $U\ge0$ satisfying
+
+$$
+|\beta_\rho+U_\rho\cdot\bar x+V_\rho\cdot\bar y|\le U
+                 \quad\text{for every }\rho\in\mathscr R_j.
+\tag{128.2}
+$$
+
+If $B>U$, then
+
+$$
+n_j\ge B>U\ge m_j,\qquad
+\delta_j\ge\Delta:=B-U>0.
+\tag{128.3}
+$$
+
+Consequently Theorem 127.1 applies with this explicit certified
+$\Delta$, including all of its retention bounds and its positive
+$\eta$ range. For $j=f$, (128.2) is a finite list of inequalities.
+For $j=a$, it must cover every actual history. One sufficient
+all-history upper witness, using only the displayed trial matrices,
+is
+
+$$
+U=\frac{R_{\mathfrak s}}2
+ \left(\|X_1(\bar z)\|_{\rm HS}+\|Y_1(\bar z)\|_{\rm HS}
+                      +2|\bar g|\|K_-\|_{\rm HS}\right),
+\tag{128.4}
+$$
+
+or any larger number. A sharper $U$ is allowed only with the
+corresponding all-actual-row inequality (128.2).
+
+*Proof.* For every $z$, the six cancellation equalities give
+
+$$
+\begin{aligned}
+\mathcal F_j(z,0)
+ &\ge\sum_l\lambda_l\sigma_l\ell_{\rho_l}(z,0)\\
+ &=\sum_l\lambda_l\sigma_l\beta_{\rho_l}=B.
+\end{aligned}
+\tag{128.5}
+$$
+
+Minimising proves $n_j\ge B$. The unrestricted trial gives
+$m_j\le\mathcal F_j(\bar z,\bar g)\le U$, proving (128.3).
+The trace bound with the original row is
+
+$$
+|\ell_{i,w}(\bar z,\bar g)|
+ \le\frac{a_w}{2}\|r_i\|_{\rm HS}
+ \left(\|X_1(\bar z)\|_{\rm HS}+\|Y_1(\bar z)\|_{\rm HS}
+                         +2|\bar g|\|K_-\|_{\rm HS}\right).
+\tag{128.6}
+$$
+
+Since $a_w\le1$ for every actual $w$, this proves (128.4) for the
+entire family, with no restriction on history length.
+
+The classical intermediate is Chebyshev approximation and weak LP
+duality, not an additional source-specific theorem. In the finite
+case the epigraph problem has the inequalities
+$-t\le\beta_\rho+U_\rho\cdot x+V_\rho\cdot y\le t$;
+setting $y=0$ gives its zero-retention restriction. This is the
+minimax LP of Boyd–Vandenberghe,
+[*Convex Optimization*, §6.1.1, printed pp. 291–293](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf).
+Its signed annihilating lower bound is the dual-norm certificate in
+Example 5.6 and Exercise 5.6, equation (5.104), of the same book.
+The existing [Library entry](../../../Library/QuadraticForms/boydvandenberghe2004convex.md)
+records the book; the approximation result cited here is distinct
+from that entry's S-procedure application. Sukhorukova–Ugon–Yost,
+[*Chebyshev approximation for multivariate functions*,
+arXiv:1510.06076v1, §2, equations (2.3)–(2.5) and Theorem 2.1](https://arxiv.org/pdf/1510.06076v1),
+give the convex supremum formulation and signed active-gradient
+criterion for their finite-set or continuous-hyperbox approximation
+problems. Here (128.5) uses only their elementary convex-combination
+intermediate, with the literal source rows and six completion
+columns specified in (125.4). It does not require maximal deviations
+to be attained by an actual history.
+
+The all-history conclusion uses its own lower witness and its own
+valid upper bound. The finite decoder supplies neither (128.2) for
+all histories nor an exact norming set for $\mathcal F_a$.
+Only actual rows enter (128.1); no coefficient-closure point is
+asserted to be a history or an installed operation. The result is a
+sufficient certificate. It certifies no particular allowed source
+with $B>U$, and asserts neither universal endpoint entry nor a
+resolution of an external open problem. $\square$
+

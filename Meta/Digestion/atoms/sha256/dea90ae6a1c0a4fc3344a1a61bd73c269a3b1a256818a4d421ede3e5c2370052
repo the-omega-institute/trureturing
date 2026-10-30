@@ -1,0 +1,53 @@
+**Proposition 6.5 (raw-writer distinction and retained scope).** The
+continuation in Theorem 6.4 preserves the declared logical task, not raw
+writer identity or direct cursor-action domains. The unknown-global-port
+result has no implication for arbitrary local swaps, an unbound root,
+untrusted advice, lost backing, revoked rights, unknown earlier histories,
+or physical duration.
+
+Proof. The raw writer has the actual concatenation
+$H_{\rm old}H_{\rm prep}H_{\rm orient}H_{\rm interval}H_{\rm cont}$,
+with empty $H_{\rm prep}$ only in passive mode. It contains the real
+orientation calls, interval calls, local work and optional two updates.
+A logical program consisting of one Read then stop has only its one
+logical Read; the physical writer already contains these additional
+acquisition entries. Even its continuation Read can expand to several
+physical entries, as ABT15.6's explicit example shows. No causal logical
+interpretation deletes those physical events or exposes their hidden
+contents to acquisition. Likewise a logical leaf can have physical children
+after expansion, so a direct DownL action has a different success domain;
+this is the unchanged ABT15.6 cursor counterexample.
+
+Globality is used at the exact call $a^{h_a-2}ba$ and at every translated
+word in (GPO.12). If local assignments vary independently, its letters
+need not follow a semantic extreme path, and the lemma's premise is absent.
+For an actual collision in that different model take any unequal sources
+$s,t$, originals $\langle s,t\rangle$ and $\langle t,s\rangle$, and the
+same $k\ge2$. Reverse only the semantic assignment at the root in the
+second realization, using the same assignments within corresponding
+subtrees. Since substitution preserves an original branch, the complete
+physical labelled trees can be identical, while those ordered originals
+differ. This does not satisfy the single-global-$\pi$ premise.
+
+All the other listed services are explicit hypotheses rather than source
+consequences. The same-current-tree/different-history and arbitrary-parity
+ambiguities of ABT9,37.2,39.2 remain in their original domains. Existing
+fixed-apparatus, cursor, graft, guarded and joint-contact tasks keep their
+own initialization, response, current-right and cost obligations. No
+atomic-to-continuous, affine or quantum correspondence is assumed here.
+Thus neither the proved data inverses nor the lawful native continuation
+is an unrestricted four-expression inverse or a physical realization of
+the larger relational-observation programme. $\square$
+
+[ABT]: RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_BOUNDARY_TRICHOTOMY.md
+[FARG]: FIBONACCI_ATOMIC_RELATION_GENERATION.md
+[JM]: RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md
+[GFT]: ../../../D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.lean
+[DOR]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/DelayedOriginalReadout.lean
+[NES]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/OriginalVector/NativeErasedSupportKernels.lean
+[NFP]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeFullSourceProducer.lean
+[NSM]: ../../../D5/S3/Arith/FibonacciAtomic/Observer/NativeSerialMachine.lean
+[XML]: https://arxiv.org/abs/1809.05730v1
+[TWT]: https://arxiv.org/abs/1904.09203v3
+[REC]: https://arxiv.org/abs/1705.00167v2
+

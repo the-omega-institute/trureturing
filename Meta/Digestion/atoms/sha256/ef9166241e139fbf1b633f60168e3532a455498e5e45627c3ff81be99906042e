@@ -1,0 +1,46 @@
+**Proposition 15.4 (An exact boundary-to-interior mixed-$M$ solution).**
+There is an exact $x_*\in Q$ with $F(x_*)=0$, and it has the following
+strict sign and response bounds.  Every endpoint in the display is a
+terminating rational; decimal notation is only a shorter rendering.
+
+$$
+\begin{array}{c|c}
+\text{quantity}&\text{certified interval}\ \hline
+t&[0.8987958456003912,\ 0.8987958656003912]\\
+q(t)&[-4.869105644371515,-4.869105515901476]\\
+\Lambda_1(t)&[-2.039649458741292,-2.039649308892886]\\
+e_1(t)&[4.452361155628864,4.452361555816960]\\
+b&[0.8707640922982145,0.8707641122982145]\\
+r&[0.9275770746479353,0.9275770946479353]\\
+r(1-r)/b&[0.07714813430547741,0.07714815904577490]\\
+\Lambda(r,b)&[-1.780571070584005,-1.780570758182900]\\
+e&[4.981230380477398,4.981230400477398]\\
+p&[56.979126254089785,56.97915185049104]\\
+v&[304.4973220331739,304.4974196326005]\\
+m&[1226.7304798320263,1226.7307912592719]
+\end{array}
+\tag{15.11}
+$$
+
+In particular all source entries $r,b,c$, and the derived positive
+quantities $j,n,T,U$ are strictly positive at $x_*$.  The two displayed
+$\Lambda$ intervals are contained respectively in $(-2.040,-2.039)$
+and $(-1.781,-1.780)$; $p>56$ and $e>0$.
+
+Proof.  Define $T(x)=x-RF(x)$.  From (15.7)--(15.10), for $x\in Q$,
+
+$$
+\|T(x)-x_0\|_\infty
+\le10^{-12}+\frac{13887}{10^6}10^{-8}<10^{-8},
+\tag{15.12}
+$$
+
+and $T$ has Lipschitz constant at most $13887/10^6<1$.  Banach's
+fixed-point theorem gives a unique $x_*\in Q$ with $T(x_*)=x_*$.  It
+follows that $RF(x_*)=0$.  Since $\|I-RDF(x_*)\|_\infty<1$, the product
+$RDF(x_*)$ is invertible by the Neumann series; hence both $R$ and
+$DF(x_*)$ are invertible, and therefore $F(x_*)=0$.  The remaining
+intervals in (15.11) are the same rational interval evaluations used
+in (15.7)--(15.8).  The centre $x_0$ is only a rational test point; it
+is not asserted to solve $F=0$. ∎
+

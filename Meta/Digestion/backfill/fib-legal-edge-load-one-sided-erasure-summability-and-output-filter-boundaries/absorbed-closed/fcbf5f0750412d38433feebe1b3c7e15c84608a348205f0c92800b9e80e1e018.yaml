@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:fcbf5f0750412d38433feebe1b3c7e15c84608a348205f0c92800b9e80e1e018
+  normalized_sha256: sha256:fcbf5f0750412d38433feebe1b3c7e15c84608a348205f0c92800b9e80e1e018
+cas_ref: sha256:fcbf5f0750412d38433feebe1b3c7e15c84608a348205f0c92800b9e80e1e018
+coverage_gids:
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveRectangleLaw.irreducible_initial_positive
+    target_statement_id: sha256:a54e5e9142c54ece858454ed18ec4f1fd30d576ef49c29c48216610ff7b7e865
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveSupportPresentation.trim_no11
+    target_statement_id: sha256:0091356db9a34ca8feff1ed064868bf8f3a4901d7761551e592733ab0330d1fe
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleOccurrence.component_restriction
+    target_statement_id: sha256:c8e9ba034969989b529709ea27a403f7093cf7a142f1488591d2ad47e36e6686
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleRoutes.first_one_incoming_past_null
+    target_statement_id: sha256:ee59cdf995c4572e5749e6bc6c706e37f21b66a09ee72c14d50b76051730fb28
+  - gid: D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/Rectangles/OriginalRectangleRoutes.irreducible_rectangle_occurrence
+    target_statement_id: sha256:f14f7abcd2eb01ef3eb158177ba18497df82e4165cd669f5585aba31cb0a1574
+receipts:
+  unresolved_subitems: []

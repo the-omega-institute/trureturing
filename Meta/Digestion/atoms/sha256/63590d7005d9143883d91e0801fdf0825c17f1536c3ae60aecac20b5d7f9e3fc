@@ -1,0 +1,11 @@
+### 定义 5.1（风险阈值特征秩）
+
+固定权重 $\omega$ 和阈值 $\tau\ge0$，定义
+
+$$
+\rho_\tau(\omega)=
+\min\{ |A|:A\subseteq I,\ \mathsf E_\omega(A)\le\tau\},
+$$
+
+若不存在这样的 $A$，取 $\rho_\tau(\omega)=\infty$。$\rho_0$ 是在给定特征库、分布和证书合同下达到零 Bayes 风险所需的最少特征数；它不是脱离任务的“模型白盒维度”。
+

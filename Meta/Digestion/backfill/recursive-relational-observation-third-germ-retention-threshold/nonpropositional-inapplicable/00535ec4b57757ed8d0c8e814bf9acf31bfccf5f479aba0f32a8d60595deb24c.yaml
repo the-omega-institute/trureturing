@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:00535ec4b57757ed8d0c8e814bf9acf31bfccf5f479aba0f32a8d60595deb24c
+  normalized_sha256: sha256:00535ec4b57757ed8d0c8e814bf9acf31bfccf5f479aba0f32a8d60595deb24c
+cas_ref: sha256:00535ec4b57757ed8d0c8e814bf9acf31bfccf5f479aba0f32a8d60595deb24c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Stipulates the full closed retention-channel relation and the public decoder-input fields. The displayed inequality defines permitted outputs; no recovery or existence theorem is asserted.
+    previous_atom_id: b38ff2e6a3ad76001eaf20daeab7ede4f59a2475b6fa70d49ad841765550998e
+    next_atom_id: b245ba9a75d6c77537bb0c3ffd06977c17f50c36790bba7ca9b594db29d76817

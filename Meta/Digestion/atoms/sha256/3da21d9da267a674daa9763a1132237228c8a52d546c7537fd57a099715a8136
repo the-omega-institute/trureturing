@@ -1,0 +1,21 @@
+**Theorem 11.1 (completed classification and actual signed realizations).**
+For $B=\{r_0,r_1\}$ of Theorem 10.2, the two completed source maps are equal
+exactly when their copies of $x,y,z,w,v$ agree as $X,Y,Z,W,V$ and
+
+$$
+\rho X=\langle Y,Z\rangle,\qquad
+\rho Y=\langle X,W\rangle,\qquad
+V=\langle X,\langle\rho V,\alpha\rangle\rangle.
+\tag{SFS.38}
+$$
+
+The unique common point of $\overline{D_0}$ and $\overline{D_1}$ is
+
+$$
+\Lambda=C[\Omega,\Omega,\Omega,\Omega,\Omega,\Omega,\Omega,
+\Omega,\Omega,\Omega,K,K,K],\qquad
+K=\langle\Omega,\langle\rho K,\alpha\rangle\rangle,
+\tag{SFS.39}
+$$
+
+where $K$ is the already existing tree of Theorem 6.3. 

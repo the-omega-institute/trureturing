@@ -1,0 +1,85 @@
+**Convention 9.1 (source and action correspondence).** Retain the complete
+worlds, the history $H_4$, the actual continuation $M,M,J$ after $H_4$, followed by the
+entire-child definition $C(y)$ of §§2–3. The seventh action remains the
+actual $J$; $m(W)$ is the unacquired alternative seventh-$M$ value. In
+VI at the pinned revision 4442fb66c4d7017bb7b932cc63f058b46c83b71c, direct
+multiplication of the chronological products gives
+
+$$
+ Q_6=\begin{pmatrix}3&1\\5&2\end{pmatrix},\qquad
+ Q_7=JQ_6=\begin{pmatrix}5&2\\3&1\end{pmatrix},
+$$
+
+and therefore
+
+$$
+ JQ_7=\begin{pmatrix}3&1\\5&2\end{pmatrix},\qquad
+ MQ_7=\begin{pmatrix}3&1\\8&3\end{pmatrix}.
+\tag{9.1}
+$$
+
+Put
+
+$$
+ c=\frac{r(1-r)}b,\qquad U=1+2b,\qquad n=b+c+r,
+ \qquad \theta=\frac nU.
+\tag{9.2}
+$$
+
+For a complete world define $q_k=Ug(k)$. The unchanged readings at
+clocks $3,4,5,6$ and the source-determined alternative $m$ give
+
+$$
+ q_3=\frac{24-d}{\theta},\quad q_4=18-d,
+ \quad q_5=\frac{p-d}{1+\theta},\quad
+ q_6=\frac{v-d}{2+\theta},\quad
+ q_7=\frac{m-d}{3+2\theta}.
+\tag{9.3}
+$$
+
+The alternative $m$ occurs only in this source identity. It is not an
+observer input. The four values in (9.3) are samples of one whole polynomial
+of degree at most three, so fixed-node interpolation gives
+
+$$
+\begin{aligned}
+ F&:=q_3-4q_4+6q_5-4q_6+q_7=0,\\
+ q_0&:=35q_4-84q_5+70q_6-20q_7=-Ud,\\
+ q_8&:=-q_4+4q_5-6q_6+4q_7=Ug(8).
+\end{aligned}
+\tag{9.4}
+$$
+
+The identities follow by checking the weights on $1,s,s^2,s^3$, hence
+remain valid for every lower degree, zero sample, repeated root and other
+allowed gain specialization. From (9.1), the two possible actual clock-eight
+scalars are
+
+$$
+ f_J=d+(2U+n)g(8)=d+(2+\theta)q_8,
+ \qquad
+ f_M=d+(3+8b+c)g(8).
+\tag{9.5}
+$$
+
+They are responses of the same $W$, with one fixed $g$ and one fixed $d$
+throughout the run.
+
+At $W_3$, VI Lemma 13.2 gives
+
+$$
+27.263115<d<27.263116,\qquad
+1.2551610794<U<1.2551610796,
+$$
+
+and $g(4)=(18-d)/U$, hence
+
+$$
+-7.381<g(4)<-7.379.
+\tag{9.6}
+$$
+
+Using the same source intervals in (9.4), with outward rational endpoint
+substitution, gives $139.8<q_8<139.9$ and $111<g(8)<112$. The response
+conclusion below uses (9.4).
+

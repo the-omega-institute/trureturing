@@ -1,0 +1,52 @@
+**定理 8.2（近似正性到 CPTP 模型）。** 若 $J=J_\Phi$ Hermitian、$\operatorname{Tr}_{\rm out}J=I_d/d$ 且 $J\succeq-\nu I_{md}$，令
+
+<a id="eq-8-u02"></a>
+
+$$
+ t=md\nu,\qquad
+\mathcal D(X)=\operatorname{Tr}(X)I_m/m,\qquad
+\Phi^{\rm cp}=\frac{\Phi+t\mathcal D}{1+t},
+$$
+
+则 $\Phi^{\rm cp}$ CPTP 且
+
+<a id="eq-8-2"></a>
+
+$$
+\frac12\|\Phi^{\rm cp}-\Phi\|_\diamond\le md^2\nu.
+\tag{8.2}
+$$
+
+**证明。** $J_{\mathcal D}=I_{md}/(md)$，故 $J^{\rm cp}=(J+\nu I)/(1+t)\succeq0$；偏迹仍为 $I_d/d$。若 $s=\operatorname{Tr}J_-$，则 $s\le md\nu=t$、$\operatorname{Tr}J=1$ 给 $\|J\|_1=1+2s$。因此
+
+<a id="eq-8-u03"></a>
+
+$$
+\|J^{\rm cp}-J\|_1
+\le\frac{2t(1+s)}{1+t}\le2t,
+$$
+
+再用[式（7.1）](#eq-7-1)并除以二。
+
+若估计 Choi 矩阵不保迹，置
+
+<a id="eq-8-u04"></a>
+
+$$
+B=\operatorname{Tr}_{\rm out}\widehat J-I_d/d,
+\qquad
+Y=\widehat J-(I_m/m)\otimes B,
+$$
+
+先修正为 $Y$ 再应用定理 8.2，得到
+
+<a id="eq-8-3"></a>
+
+$$
+\frac12\|\Phi^{\rm cp}-\widehat\Phi\|_\diamond
+\le\frac d2\|B\|_1+md^2\left(\nu+\frac{\|B\|_{\operatorname{op}}}m\right).
+\tag{8.3}
+$$
+
+完整仪器的各分支必须共同除以 $1+t$，否则会破坏总概率归一化。该修复只产生邻近抽象 CPTP 模型，不证明它属于原五模菜单。
+

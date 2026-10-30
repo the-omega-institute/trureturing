@@ -1,0 +1,38 @@
+**Corollary 98.1 (Every optimal decoder has the common necessary support).**
+For every legal $\mathcal R$ with $e(\mathcal R)=L$,
+
+$$
+\operatorname{ran}J_{\mathcal R}\subseteq K,\qquad
+J_{\mathcal R}=PJ_{\mathcal R}P,\qquad
+SJ_{\mathcal R}=J_{\mathcal R}S=0,\qquad
+\operatorname{rank}J_{\mathcal R}\le5 .
+\tag{98.1}
+$$
+
+*Proof.* Equation (97.1) and positivity give
+$0\le\operatorname{Tr}(SJ_{\mathcal R})\le e(\mathcal R)-L=0$.
+For positive semidefinite $S,J_{\mathcal R}$,
+
+$$
+\operatorname{Tr}(SJ_{\mathcal R})
+=\|S^{1/2}J_{\mathcal R}^{1/2}\|_{\rm HS}^2,\qquad
+\|B\|_{\rm HS}^2=\operatorname{Tr}(B^\dagger B).
+\tag{98.2}
+$$
+
+The zero norm implies $S^{1/2}J_{\mathcal R}^{1/2}=0$, so
+$\operatorname{ran}J_{\mathcal R}^{1/2}\subseteq\ker S^{1/2}=\ker S$.
+A finite-dimensional positive matrix and its square root have the same
+range, as their positive spectral eigenspaces coincide. Hence
+$PJ_{\mathcal R}=J_{\mathcal R}$; taking adjoints also gives
+$J_{\mathcal R}P=J_{\mathcal R}$. These identities prove (98.1),
+including the rank bound from $\dim K=5$. $\square$
+
+This is a necessary support condition for all optimizers. It retains
+arbitrary complex coherences among the five allowed directions; it is
+not a real ansatz or a symmetry reduction of the decoder domain.
+The number five is a Choi support dimension and rank ceiling. It is
+not a minimum Kraus rank or a count of controller or hardware states.
+It is also distinct from the real dimension of the channel image in
+Theorem 83.4.
+

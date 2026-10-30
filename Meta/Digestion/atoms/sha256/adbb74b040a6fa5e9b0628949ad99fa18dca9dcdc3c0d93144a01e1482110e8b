@@ -1,0 +1,43 @@
+## 170. Exact partial transpose in the declared product basis
+
+In the product order above, the two diagonal entries of $R^{T_A}$ that
+are not in a nontrivial block are
+$$
+ c=t+sx\quad\text{on }|1,b_0\rangle,\qquad
+ b=t(1-sy)\quad\text{on }|0,b_{12}\rangle.
+\tag{170.1}
+$$
+The remaining entries split into the two blocks
+$$
+ M_0=\begin{pmatrix}
+ 1&s\alpha u^*\\
+ s\bar\alpha u&tI_2-ts\,hh^*
+ \end{pmatrix}
+\quad\text{on }( |0,b_0\rangle,|1,b_1\rangle,|1,b_2\rangle),
+\tag{170.2}
+$$
+$$
+ M_3=\begin{pmatrix}
+ t^2&-ts\gamma h^*\\
+ -ts\bar\gamma h&tI_2+s\,uu^*
+ \end{pmatrix}
+\quad\text{on }( |1,b_{12}\rangle,|0,b_1\rangle,|0,b_2\rangle).
+\tag{170.3}
+$$
+The displayed conjugations follow from ordinary partial transpose on the
+Alice factor; no real-vector replacement or fermion-mode swap is made.
+For $t>0$, $tI_2-ts\,hh^*\succeq t^2I_2$ and
+$tI_2+s\,uu^*\succeq tI_2$.  Thus Schur complements give the exact
+conditions
+$$
+ q_0:=\frac{s^2x}{t}\left((1-x)+\frac{s z}{t+sy}\right)\le1,
+\tag{170.4}
+$$
+$$
+ q_3:=\frac{s^2y}{t}\left((1-y)-\frac{s z}{t+s(1-x)}\right)\le1.
+\tag{170.5}
+$$
+The second expression is the Schur subtraction divided by the $t^2$
+pivot in (170.3).  The denominators are positive for every finite
+$\beta$.
+

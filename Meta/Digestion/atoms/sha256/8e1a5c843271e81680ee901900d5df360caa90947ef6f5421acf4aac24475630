@@ -1,0 +1,34 @@
+**Definition 1.1 (The five coordinates and their bosonic embedding).**
+Use the ordered five-state space of [Static Compatibility–Fiber Theory,
+Definition 43.1](AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md#19-续篇ⅳ五模式的受约束翻转与记录障碍)
+and its explicitly fixed physical coordinates in Definition 68.1, equation (X.1):
+
+$$
+\begin{aligned}
+(e_0,e_1,e_2,e_3,e_4)
+  &=(|000\rangle,|100\rangle,|010\rangle,|001\rangle,|101\rangle),\\
+V&=\operatorname{span}_{\mathbb C}\{e_0,e_1,e_2,e_3,e_4\},\\
+D_3&=\operatorname{diag}(1,i,i,i,1),\\
+S&=\operatorname{diag}(1,1,1,1,i).
+\end{aligned}
+$$
+
+Here $S$ is the native $S_{\star,3}=S_{13}$ of that volume's
+Assumption 55.2, equation (VII.4), and equation (X.26).
+$D_3$ is a passive coordinate change, as in its Definitions 1.4 and 68.1;
+it is not an executable phase gate.
+
+For this model embed those five basis vectors into the normalized Fock space
+of three independent modes indexed by positions $1,2,3$. Put
+
+$$
+f_+=|200\rangle,\qquad f_-=|002\rangle,\qquad
+W=V\oplus\operatorname{span}_{\mathbb C}\{f_+,f_-\}.
+$$
+
+Let $P$ be the orthogonal projection onto $V$ and $Q=I-P$ on the Fock space.
+On $W$, $Q$ has range $\operatorname{span}\{f_+,f_-\}$.
+The ordered basis of $W$ is $(e_0,e_1,e_2,e_3,e_4,f_+,f_-)$.
+The embedding identifies five orthonormal vectors; it does not identify
+all operators or permitted paths of the two carriers.
+

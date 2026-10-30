@@ -1,0 +1,32 @@
+**Corollary 10.2 (supplier-relative passive and strict-grant statements).**
+On the whole passive $k\ge2$ domain of Theorem 3.1, zero preparation
+suffices and is minimal. On the separately known $k=1$ domain containing
+a beta leaf, Theorem 4.2 already gives finite zero-update acquisition;
+on its all-alpha opposite-orientation fibers passive uniform acquisition
+fails. For the full positive-even entrance domain, Assumption 5.1 alone
+still supplies the two-update upper bound of Theorem 5.2. If a service
+forbids acquisition Read until two completed preparations and provides
+no other accessible source observation before that barrier, its uniform
+worst-case count within that strict service is exactly two.
+
+Proof. The first two sufficiency assertions are direct reuse of their
+stated suppliers; nonnegative preparation counts make zero minimal.
+The all-alpha failure is their unchanged two-target fiber. In the strict
+service, before two completions the only available source-action result
+is the common acknowledgement. A terminating protocol that always used
+at most one update would therefore have identical accessible executions
+on two different entrance targets, chosen with the same advice and
+initial fields. It cannot be uniformly correct. The existing two-update
+protocol attains the bound. The conditional count two in that different
+service does not establish that Read is physically unavailable after one
+completion in any particular installation. $\square$
+
+One can have a cheaper additional-update coordinate and still a more
+expensive complete run. For example the one-update protocol's longer odd
+probes need not have the same Read/backend/local prices as a two-update
+protocol; maintaining a first-completion grant may itself cost more.
+Propositions 5.3 and 9.3 expose material prices, but no weights or backend
+comparisons turn their separate coordinates into a universal total order.
+No query, memory, actuator-work or physical-duration optimum is inferred
+from Theorem 10.1.
+

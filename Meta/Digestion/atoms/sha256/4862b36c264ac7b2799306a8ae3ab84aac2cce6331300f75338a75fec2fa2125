@@ -1,0 +1,15 @@
+### 7.3 尺子退化使小坐标差失去意义
+
+qubit 效果基
+
+<a id="eq-7-u04"></a>
+
+$$
+I/2,\quad(I+\epsilon X)/2,\quad(I+\epsilon Y)/2,\quad(I+\epsilon Z)/2,
+\qquad 0<\epsilon\le1
+$$
+
+始终张成 $\operatorname{Herm}_2$，但 $|0\rangle$ 与 $|1\rangle$ 的所有测试概率差至多 $\epsilon$。对偶基相应放大，因此不能删除框架条件数。
+
+这给出“关系也测不准”的操作含义：不确定的不只是状态坐标，还包括解释它的框架。若框架只有未固定的 $GL$ 规范而无物理标定，首先得到的是该规范下的预测模型，不是已核证的 Hilbert 迹距离或 diamond 距离。
+

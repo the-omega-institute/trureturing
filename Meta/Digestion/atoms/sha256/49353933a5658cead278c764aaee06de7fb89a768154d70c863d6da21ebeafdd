@@ -1,0 +1,15 @@
+**Corollary 63.2 (two coordinate optima and their incompatibility).**
+Fresh source vertices alone have minimax expected price $2m/3$, attained
+with $q=2/3$. Successful growth events alone have minimax expected price
+$m/2$, attained with $q=1/2$. No one competitor attains both worst-input
+bounds simultaneously.
+
+Proof. Apply Theorem 63.1 with $(u,v)=(0,1)$ and $(1,0)$ respectively.
+If a competitor had both $\max_t\mathbb EG(t)\le m/2$ and
+$\max_t\mathbb E\Delta(t)\le2m/3$, then every fixed entry would satisfy
+$\mathbb E(G+\Delta)\le7m/6$. The same theorem with $u=v=1$ requires
+a fixed entry with expectation at least $6m/5$. Since $m\ge1$ and
+$7/6<6/5$, this is impossible. This argument compares coordinates on
+the same runs; it does not add separately attainable optima as though
+they were jointly attainable. $\square$
+

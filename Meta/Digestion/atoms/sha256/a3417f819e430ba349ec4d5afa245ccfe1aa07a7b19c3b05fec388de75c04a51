@@ -1,0 +1,88 @@
+**Definition 125.1 (Source-specific eight-real-variable coefficients; repo-derived).**
+Fix one allowed source of Definition 114.1, once and for all, and fix
+$0<A<1$ and a complex unit vector $f\perp e=t/\tau$, where
+$\tau=\|t\|>0$. The anchor, limiting reflected point and reflected
+comparison curve are
+
+$$
+h_0(\eta)=Ae+\eta f,\qquad h_-=-Ae,\qquad
+h_\#(\eta)=-Ae+\eta f.
+\tag{125.1}
+$$
+
+Write $c_\theta=\cos\theta$, $s_\theta=\sin\theta$, and retain the
+source's $b,D,W,r_i,Q_w,a_w$ without changing their meanings. In
+particular $r_i$ is subnormalised and $a_w=2^{-k(w)}$ is the
+original mass. Let $q_\rho=q_{i,w}$, $\rho=(i,w)$, be exactly the
+real functional (116.2), with (116.1). Keep the particular finite
+length $L_{\mathfrak s}$ chosen in Proposition 118.2 and set
+
+$$
+\mathscr R_f=\{(i,w):1\le i\le9,\ |w|\le L_{\mathfrak s}\},
+\qquad
+\mathscr R_a=\{(i,w):1\le i\le9,\ w\text{ any finite actual history}\}.
+\tag{125.2}
+$$
+
+For $z\in\mathbb C^3$ and $g\in\mathbb C$ define
+
+$$
+\begin{aligned}
+H(z)&=-A(ez^\dagger+ze^\dagger),\\
+S(z)&=\mathrm i\tau(ze^\dagger-ez^\dagger),\\
+H_1(z)&=H(z)+H(f),\qquad S_1(z)=S(z)-S(f),\\
+K_-&=K_{h_-}=-A\tau ee^\dagger
+       +\mathrm i s_\theta c_\theta(D-bA^2ee^\dagger),\\
+X_1(z)&=s_\theta^2bH_1(z)+s_\theta c_\theta S_1(z),\\
+Y_1(z)&=c_\theta^2bH_1(z)-s_\theta c_\theta S_1(z),\\
+\ell_\rho(z,g)&=q_\rho(X_1(z),Y_1(z),gK_-),\\
+\mathcal F_j(z,g)&=\sup_{\rho\in\mathscr R_j}|\ell_\rho(z,g)|,
+                  \qquad j=f,a.
+\end{aligned}
+\tag{125.3}
+$$
+
+The supremum for $j=f$ is a maximum. To specify all eight real
+columns explicitly, choose a unit $k$ making $(e,f,k)$ a complex
+orthonormal basis, put
+$(v_1,\ldots,v_6)=(e,\mathrm i e,f,\mathrm i f,k,\mathrm i k)$,
+and write $z=\sum_{r=1}^6x_rv_r$, $g=y_1+\mathrm i y_2$.
+Then
+
+$$
+\begin{aligned}
+\beta_\rho&=q_\rho\bigl(
+ s_\theta^2bH(f)-s_\theta c_\theta S(f),
+ c_\theta^2bH(f)+s_\theta c_\theta S(f),0\bigr),\\
+U_{\rho r}&=q_\rho\bigl(
+ s_\theta^2bH(v_r)+s_\theta c_\theta S(v_r),
+ c_\theta^2bH(v_r)-s_\theta c_\theta S(v_r),0\bigr),\\
+(V_{\rho1},V_{\rho2})
+ &=\bigl(q_\rho(0,0,K_-),q_\rho(0,0,\mathrm iK_-)\bigr),\\
+\ell_\rho(z,g)&=\beta_\rho+U_\rho\cdot x+V_\rho\cdot y.
+\end{aligned}
+\tag{125.4}
+$$
+
+Thus every coefficient contains the literal factor $a_w/2$ and
+trace pairing with the literal $r_i$. The outcome-$0$ difference is
+the negative of the outcome-$1$ difference, so (125.2) retains both
+original error norms exactly. Define, initially as infima,
+
+$$
+m_j=\inf_{z\in\mathbb C^3,\ g\in\mathbb C}\mathcal F_j(z,g),
+\qquad
+n_j=\inf_{z\in\mathbb C^3}\mathcal F_j(z,0),
+\qquad \delta_j=n_j-m_j.
+\tag{125.5}
+$$
+
+The zero-retention coefficient is the restriction of the same affine
+rows, not a separately chosen approximation. The complex variable $g$
+has both real coordinates free. These definitions use the completion
+vector only as in Theorem 106.3: each admissible vector is realised by
+one full ten-dimensional completion shared by emission, the single
+forward return and every history of its hypothesis. Compared hypotheses
+may have different completions. The rows add no preparation, repetition,
+selection, record phase, menu entry, clock or schedule.
+

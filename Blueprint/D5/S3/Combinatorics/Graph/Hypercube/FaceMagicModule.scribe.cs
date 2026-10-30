@@ -51,7 +51,30 @@ internal sealed class FaceMagicModuleDocument : IScribeDocumentDefinition
                     + "Bhargava Section 2, equations (4), (8), (9) and Theorem 13 supply the "
                     + "face recurrence and induction method. The empty-entry, singleton-entry "
                     + "and common-face-sum coordinates instead give an integral reconstruction, "
-                    + "avoiding the invertibility of two required by the source's determinant-two coordinates."))),
+                    + "avoiding the invertibility of two required by the source's determinant-two coordinates.")),
+                Paragraph(Text(
+                    "For the ordinary Boolean cube with literal complement edges, the exact symmetry "
+                    + "model used alongside this module is the following. For every even n with 2 ≤ n, "
+                    + "write Bin n = Fin n → ZMod 2 and identify Boolean vertices with Bin n by the "
+                    + "coordinatewise equivalence boolVector. The folded graph is the ordinary hypercube "
+                    + "joined with the complement relation, and its generators are direction none (the "
+                    + "all-one vector) together with direction (some i) (the i-th unit vector), indexed "
+                    + "by Option (Fin n). Every actual graph automorphism has one and only one pair "
+                    + "(t, π), with t : Bin n and π : Perm (Option (Fin n)), and acts by "
+                    + "x ↦ t + (j ↦ E_x(π⁻¹(some j)) + E_x(π⁻¹(none))), where E_x none = 0 and "
+                    + "E_x (some j) = x j; every such affine action is an automorphism. The proof uses "
+                    + "parity to separate the all-one-plus-unit sums from two-unit sums, the uniform "
+                    + "extended-coordinate cancellation formula for composition, and generation by the "
+                    + "directions. The ordinary-cube subgroup is exactly π none = none, equivalently "
+                    + "π = σ.optionCongr for a unique σ : Perm (Fin n), with coordinate action "
+                    + "x j ↦ t j + x (σ⁻¹ j). This symmetry statement is an application boundary for "
+                    + "the face-magic module: an arbitrary folded automorphism that moves none may "
+                    + "exchange cube edges with complement edges and therefore does not automatically "
+                    + "preserve ordinary coordinate-face incidence; only the stabilizer conclusion "
+                    + "is used when transporting FaceMagic arrays. The Boolean-to-ZMod2 identification, "
+                    + "the all-even family, and the folded action are exact graph facts; no claim about "
+                    + "the separate real-array reconstruction, offsets, distinct labels, free orbits, "
+                    + "or counting problem is included here."))),
                 DescribeRole.Theorem,
                 new OpenProblemResolutionClaim(
                     ProblemSlugRef.Create("bhargava-2026-facemagic-module"),

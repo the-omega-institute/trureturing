@@ -1,0 +1,31 @@
+**Definition 75.2 (actual global layout at Ready).** Each source vertex
+retains its parent, left, right and auxiliary-reference fields. If $F=1$,
+all auxiliary fields are null and no persistent history header or cell
+exists. If $F>1$, the actual root's auxiliary field binds one owned
+header, with head and tail references, and exactly $G$ owned linked
+cells. Each cell has one bit and one next-reference field. Its contents,
+from head to tail, are the big-endian length-$G$ binary expansion of
+$Z$, padded with zeros; the final next field is null. All other source
+auxiliary fields, including marker fields, are null. No local rank
+headers, persistent count/radix arrays, literal tapes or second packed
+history bank are retained.
+
+The actual reference links, header and cells are initialized objects,
+not a number interpreted as an object address. This rooted layout is
+unique as content and binding shape up to fresh-name spelling; its
+occupancy and length depend on $t$, not on which $w\in\mathcal H(t)$
+occurred. The alphabet restrictions of Definition 60.1 exclude a second
+history channel in object names, capacity, allocator state or fixed
+control. Cleared work capacity can be retained, but is actual charged
+material and is not an additional semantic observation of $Q_g$.
+The valid record domain requires $0\le Z<F$. Corruption, an invalid
+binary pattern or a broken binding is not an additional original refusal
+case; the service theorem is conditional on its maintained actual image.
+
+Ready means root cursor, empty acquired request, pending result, output
+and occupied work contents, no outstanding reservation or maintenance,
+and current source/record/input/output rights. Allocated cleared work
+capacity need not vanish. Busy phases, their live integers and references
+are part of the actual process; Ready does not abbreviate an unfinished
+transaction. The root binding is preserved by both source templates.
+

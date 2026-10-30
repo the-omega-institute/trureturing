@@ -285,7 +285,7 @@ private theorem ordered_residue (A B : VertexOperator ℂ M)
   intro j
   rw [smul_comm]
 
-private theorem recover_full (A B : VertexOperator ℂ M)
+theorem recover_full (A B : VertexOperator ℂ M)
     (U : ℤ → VertexOperator ℂ M) (s : ℤ) (KU KR : ℕ)
     (tail : ∀ t : ℤ, (KU : ℤ) ≤ t → U t = 0)
     (locality : ∀ p : ℤ, Valid (Z (-p) A) B KR)

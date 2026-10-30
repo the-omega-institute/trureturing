@@ -1,0 +1,90 @@
+**定理 4.1（整个已知因子域的八读数恢复）。** 在事先已知输入属于 $\mathcal C$ 的条件下，固定路径 $MMJMJJJ$ 的八条原读数唯一确定完整目标 $(P,g,\delta)$。以下同一解码规则对全部 $\mathcal C$ 成立，不要求候选集合有限，也不要求预先知道 $a:b$。
+
+先由实际数据计算
+
+$$
+f_i=z_i/q_i,\qquad
+(U_*,V_*)=\mathcal R(f),\qquad
+c=\ell(U_*),\quad d=\ell(V_*).
+\tag{4.1}
+$$
+
+再置
+
+$$
+F=cV_*-dU_*,\qquad W=cV_0-dU_0.
+\tag{4.2}
+$$
+
+对合法输入必有 $(c,d)\ne(0,0)$、$W\ne0$。按固定次序 $(11,12,21,22)$ 选取 $W$ 的第一个非零项 $W_{rs}$，令
+
+$$
+\lambda=-F_{rs}/W_{rs},\qquad
+\widehat\delta=E\lambda,\qquad
+U=U_*+\lambda U_0,\quad V=V_*+\lambda V_0.
+\tag{4.3}
+$$
+
+最后计算
+
+$$
+\widehat a=\operatorname{tr}U,\qquad
+\widehat b=\operatorname{tr}V,\qquad
+\widehat P=
+\begin{cases}
+U/\widehat a,&\widehat a\ne0,\\
+V/\widehat b,&\widehat a=0,
+\end{cases}
+\qquad
+\widehat g(t)=(1+t^2)(\widehat a+\widehat b t).
+\tag{4.4}
+$$
+
+这些量恰为真实的 $(P,g,\delta)$。
+
+证明。令真实提升为 $U^{\rm true}=aP,V^{\rm true}=bP$。它们来自同一个 $P$，不把任意两独立矩阵误当作物理来源。式 (1.1) 除以正数 $q_i$ 得
+
+$$
+f=\mathcal L(aP,bP)+\delta r.
+$$
+
+由线性逆与式 (3.3)，
+
+$$
+U_*=aP-\frac\delta E U_0,\qquad
+V_*=bP-\frac\delta E V_0.
+\tag{4.5}
+$$
+
+更强地，若暂允许任意漂移 $\delta'$ 与任意提升矩阵，而只要求匹配全部八条读数，则所有解恰为
+
+$$
+U'=U_*+\frac{\delta'}E U_0,\qquad
+V'=V_*+\frac{\delta'}E V_0,\qquad \delta'\in\mathbb R.
+\tag{4.6}
+$$
+
+必要性来自 $\mathcal R(f-\delta'r)$ 的唯一性，充分性来自式 (3.2)。这是整条无约束相容仿射直线，包括其中全部奇异点。
+
+由引理 3.2，式 (4.5) 给出
+
+$$
+c=a\ell(P),\qquad d=b\ell(P).
+\tag{4.7}
+$$
+
+因 $\ell(P)>0$、$(a,b)\ne(0,0)$，故 $(c,d)\ne(0,0)$，并且 $c:d=a:b$。这里 $c,d$ 是对实际八条数据施行固定线性运算所得；在确定漂移之前，未知的增益比例已经确定。等式保留零坐标与符号，不除以 $a$、$b$ 或任何采样增益。
+
+任意合法相容世界都须满足 $cV'-dU'=0$。将式 (4.6) 代入，令 $\lambda'=\delta'/E$，得到必要条件
+
+$$
+F+\lambda'W=0.
+\tag{4.8}
+$$
+
+若 $W=0$，则 $cV_0=dU_0$。当 $c\ne0$，这使 $V_0=(d/c)U_0$；当 $c=0$，由 $d\ne0$ 得 $U_0=0$。两种情况都违反引理 3.2 的线性无关性。因此 $W$ 至少有一项非零，式 (4.3) 的选项存在，且其分母非零。
+
+式 (4.8) 的被选坐标强制 $\lambda'=\lambda$。真实世界提供一个解 $\lambda'=\delta/E$，所以该 $\lambda$ 同时满足其余三个坐标，不需要分别选择不同漂移。于是式 (4.3) 恢复真实漂移，继而恢复 $U=aP,V=bP$。
+
+迹一给出 $\widehat a=a,\widehat b=b$。若 $a\ne0$，第一分支返回 $P$；若 $a=0$，则 $b\ne0$，第二分支的分母已获保证，也返回 $P$。增益的完整多项式由唯一系数对恢复。任意两个合法相容世界都经过同样的数据运算，比例、漂移、提升、系数与 $P$ 依次相同，故整个合法相容纤维只有一个目标。∎
+

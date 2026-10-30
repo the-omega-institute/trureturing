@@ -1,0 +1,30 @@
+### 129.C. Oscillatory smoothing and the correction commutator
+
+In the original symmetric cylindrical coordinates $(r,\theta,z,\xi)$, take genuine compact punctured core vectors
+$$
+u_N=e^{i\ell\theta}\chi(r,z,\xi)e^{iN\zeta\cdot(r,z,\xi)},\quad
+\chi\in C_c^\infty((0,\infty)\times\mathbb R^2;\mathbb R),\quad\zeta\ne0.
+                                                                            \tag{129.11}
+$$
+Their norms are independent of $N$, and the actual local order-two expression gives $\|Ku_N\|=O(N^2)$. For every integer $j$ and every $\tau>0$,
+$$
+\|e^{-\tau K}u_N\|+\|Ke^{-\tau K}u_N\|=O(N^{-j}).                           \tag{129.12}
+$$
+To justify the global norms in (129.12), the source's interior elliptic estimates (120.6)–(120.7), iterated at higher order, and spectral smoothing bound both $e^{-\tau K}$ and $Ke^{-\tau K}$ from the $L^2$ unit ball into every local $H^j(U)$, on a fixed punctured neighborhood of the support of $\chi$. In the pairing with $u_N$, move $j$ derivatives in the nonzero $\zeta$-direction off the oscillatory exponential. The compact amplitude and density $rh^2$ are smooth. The bound is uniform on the $L^2$ unit ball; duality and self-adjointness prove (129.12). No global Sobolev embedding is assumed.
+
+For bounded self-adjoint $A$, write
+$\mathcal D_A(u)=\langle Ku,Au\rangle-\langle Au,Ku\rangle$.
+Equations (129.4) and the definition of $S$ give
+$$
+\begin{aligned}
+|\mathcal D_S(u_N)|\le{}&
+2\|W\|\bigl(\|Ku_N\|\|Pu_N\|
+                  +\|PKu_N\|\|u_N\|\bigr)\\
+&+2\|D\|\|P^{1/2}Ku_N\|\|P^{1/2}u_N\|=o(1),                              \tag{129.13}
+\end{aligned}
+$$
+using (129.12) with $\tau=d,d/2$. Equation (129.10) consequently gives
+$$
+|\mathcal D_F(u_N)|=O(1).                                                  \tag{129.14}
+$$
+

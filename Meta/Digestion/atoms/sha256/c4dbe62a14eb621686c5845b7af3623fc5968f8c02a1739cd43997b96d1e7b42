@@ -1,0 +1,10 @@
+**Definition 28.1 (joint conditioning classes and prescribed-prefix risks).** For $R>0$ let
+
+$$
+ \mathcal C_R=\{(P,H,D)\hbox{ in Definition 25.1}:
+       (1+\operatorname{tr}(MP))/\|\operatorname{coeff}_kH\|_\infty\le R\}.
+ \tag{28.1}
+$$
+
+This is an explicit sufficient joint source/gain condition. Neither trace normalization nor $H\ne0$ implies membership. It imposes no separate upper bound on $P,H,D$, and the decoder is not supplied the true $\chi$ or $R$. Prescribed-prefix risks restrict competitors to the first $N$ pure-$M$ reads at clocks $0,\ldots,N-1$ as in (26.2), allowing any subsequent legal deterministic adaptive actions, stopping, and ambient answers. Uniform risks take the supremum over $\mathcal C_R$ and all raw errors. A fixed total cap, rather than a source-dependent or error-dependent unbounded wait, is the budget being minimized; the competitors themselves remain arbitrarily $\delta$-dependent.
+

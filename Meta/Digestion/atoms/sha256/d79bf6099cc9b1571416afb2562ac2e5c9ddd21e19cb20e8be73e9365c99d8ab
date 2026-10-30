@@ -1,0 +1,57 @@
+**Proposition 47.5 (Actual presentation and the complete terminal module).**
+Let $f_0=1$, $f_1=2$, and $f_n=f_{n-1}+f_{n-2}$. Put
+
+$$
+D=\prod_{i=1}^t f_{2k_i-1}+2\prod_{i=1}^t f_{2k_i-2},
+\qquad
+ d=3+\sum_{i=1}^t(2k_i-1),
+\qquad c=D-d.
+\tag{47.21}
+$$
+
+Then $|\mathcal I|=D$, $\dim R=d$, and $\operatorname{pd}_P R=c$. If
+$\mathcal F_\bullet\to R$ is the minimal standard-graded resolution,
+then its final module is
+
+$$
+\mathcal F_c
+=\bigoplus_{j=1}^{K-1}
+ P\bigl(-(D-2j-1)\bigr)^{M_j}.
+\tag{47.22}
+$$
+
+In the full exponent grading, with
+$\Sigma=\sum_{I\in\mathcal I}\gamma_I$, the same statement is
+
+$$
+\mathcal F_c
+=\bigoplus_{j=1}^{K-1}
+  \bigoplus_{p\in\Gamma_{2j+1}}P\bigl(-(\Sigma-p)\bigr).
+\tag{47.23}
+$$
+
+*Proof.* Conditional on the shared-edge state $O$, branch $i$ has a
+private path of length $2k_i-1$, giving $f_{2k_i-1}$ choices. States
+$A$ and $B$ each force one private endpoint absent and leave a path of
+length $2k_i-2$, giving $f_{2k_i-2}$ choices. These three cases are
+exclusive and exhaustive, proving $|\mathcal I|=D$, including the empty
+row in the $O$ case. The full lattice rank in Theorem 47.2 gives
+$d=1+|V(G_{\mathbf k})|$.
+
+The polynomial ring $P$ has depth $D$, while the nonzero
+Cohen–Macaulay quotient $R$ has depth $d$. Hilbert syzygy and
+Auslander–Buchsbaum (Stacks Project, tag 090U [AB44]) give
+$\operatorname{pd}_P R=D-d=c$. The graded canonical module of $P$
+is $P(-D)$ in ordinary degree and $P(-\Sigma)$ in the full exponent
+degree. The canonical Ext interface of Barile–Bruns [BB41] identifies
+$\omega_R$ with the top Ext of $R$ into this module and kills all
+other Ext degrees. Dualizing a minimal resolution, the incoming map to
+its last dual free module has entries in the homogeneous maximal ideal;
+modulo that ideal, its basis is therefore the canonical quotient
+$\omega_R/R_+\omega_R$. A summand $P(-\Theta)$ contributes the
+canonical generator $\Sigma-\Theta$, so (47.23) follows from
+(47.6). Coarsening to ordinary degree gives
+$\Theta=D-(2j+1)$, which is (47.22). This uses the actual canonical
+quotient and does not infer the terminal module from an alternating
+Hilbert numerator. $\square$
+

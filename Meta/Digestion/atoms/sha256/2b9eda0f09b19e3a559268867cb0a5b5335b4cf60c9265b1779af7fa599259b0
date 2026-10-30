@@ -1,0 +1,14 @@
+**Definition 70.1 (outer frames, replies and real macros).** $Q_J$ uses
+exactly Definition 53.3's framing and complete reply alphabet, evaluated
+on the represented term $v$. In particular its addressed request length
+is $2|p|+4$, a Growth reply has length $2|p|+5$, and any of the three
+Refusal reasons has length five. Logical lookup in the earned live word
+uses the original blocking rule: a strict extension through a leaf is
+absent. The complete semantic table is
+
+| Represented target at $p$ | Outer $P_p$ | Outer $S_p$ |
+| --- | --- | --- |
+| absent | Refusal(absent), identity | Refusal(absent), identity |
+| branch | Refusal(branch), identity | Refusal(branch), identity |
+| alpha | Growth$(P,p)$, replace by beta | Refusal(wrong type), identity |
+| beta | Refusal(wrong type), identity | Growth$(S,p)$, replace by pair beta-alpha |

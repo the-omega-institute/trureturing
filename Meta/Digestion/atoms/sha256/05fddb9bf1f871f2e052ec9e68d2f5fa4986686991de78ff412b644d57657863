@@ -1,0 +1,8 @@
+**Theorem 8.2 (Unique minimizer beyond a sufficient threshold).** For every integer $\ell\ge1$ and every $n\ge N(\ell)=30(\ell+14)^2$, the graph $H_{n,\ell}$ of Definition 4.1 is the unique minimizing isomorphism class in $\mathcal G(n,\ell)$. Equivalently, for every $G\in\mathcal G(n,\ell)$,
+
+$$
+\Phi(G)\ge\Phi(H_{n,\ell}),
+$$
+
+with equality if and only if $G\cong H_{n,\ell}$. This determines the eventual minimizer structure asked for in Open question 5.2; $N(\ell)$ is a sufficient threshold, without a claim of optimality. Stance: repo-derived.
+

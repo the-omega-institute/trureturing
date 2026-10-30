@@ -1,0 +1,14 @@
+## 34. Exact specialized Sylvester cokernel and algebra length
+
+Retain the entire original child $C(p,v)$ of Definition 30.1, with
+$p\ne24$: the acquired word is $J,M,J,M,M,M$, its readings at clocks
+$0,\ldots,6$ are $(0,24,147/5,24,18,p,v)$, and each world has one
+whole nonzero real gain polynomial of degree at most three and one
+arbitrary fixed real drift. The coordinates $x=n/U$ and $H=Ug$ are
+(30.3). Sections 31–32 already imply finite complex solution support
+away from $D=0$, hence qualitative finite dimensionality of the algebra
+below. Theorem 32.1 already bounds the entire strict-real child by
+$24$, and Section 33 already bounds its ordered distinct candidate
+pairs by $552$. The refinement here identifies the specialized module
+and its exact length, including nilpotents.
+

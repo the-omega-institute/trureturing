@@ -1,0 +1,119 @@
+**Theorem 143.2 (A seven-row lower certificate; repo-derived).**
+On the entire complex tangent domain, $n_f\ge163/4000$.
+
+*Proof.* Choose the following seven literal signed rows, in the given order:
+
+$$
+((i_j,w_j,\sigma_j))_{j=1}^7
+ =((1,N0,+1),(1,N1,-1),(1,NN,-1),(3,1N,+1),
+   (5,NN,+1),(9,0,+1),(9,NN,-1)).
+\tag{143.3}
+$$
+
+Let $M$ be the $7\times7$ matrix whose first row is all ones and
+whose entry in row $r+1$, column $j$ is $\sigma_jU_{i_j,w_j,r}$,
+$1\le r\le6$. Put $c_j=\sigma_j\beta_{i_j,w_j}$,
+$d_0=\det M$, and $d_j=\det M^{(j)}$, where $M^{(j)}$ replaces
+column $j$ by $(1,0,0,0,0,0,0)^{\mathsf T}$.
+The following integer quadruples give the exact determinants:
+$d_j=[p_j]/(3\cdot2^{69})$.
+
+| $j$ | $p_j$ |
+|---|---|
+| 0 | $(-31220053431162,-22073591298906,100293003605827,70917713152081)$ |
+| 1 | $(-45484145366184,-32162113122336,28572580689496,20203972682396)$ |
+| 2 | $(-1558616643432,-1101578522784,21070201204248,14898880792756)$ |
+| 3 | $(1422651311326,1005908484762,4148583120107,2933487112869)$ |
+| 4 | $(-65894129011488,-46593623215968,60314417694432,42648266573880)$ |
+| 5 | $(52680843320784,37252123958808,-18757220296288,-13263213464480)$ |
+| 6 | $(39364427549952,27834693731904,-8967243112384,-6340716360072)$ |
+| 7 | $(-11751084592120,-8309002613292,13911684306216,9837035814732)$ |
+
+The other required exact identity is
+
+$$
+\begin{aligned}
+\mathscr H&:=\sum_{j=1}^7d_j(c_j-163/4000)\\
+ &=\frac{[123146034328974498,87074386961004549,
+             -71087808719360658,-50266456519073999]}
+ {56668397794435742564352000}.
+\end{aligned}
+\tag{143.4}
+$$
+
+These identities can be expanded entirely in the four-dimensional
+ring basis $(1,\sqrt2,\sqrt3,\sqrt6)$: multiply using
+$(\sqrt2)^2=2$, $(\sqrt3)^2=3$ and
+$\sqrt2\sqrt3=\sqrt6$, and use
+$\det A=\sum_{\pi\in S_7}\operatorname{sgn}(\pi)
+\prod_{r=1}^7A_{r,\pi(r)}$. In particular all columns in these
+identities are the six columns of (143.2), with their original weights.
+Here are rational enclosures, including the small positive remainder
+in (143.4):
+
+| Quantity | Strict lower bound times $10^{15}$ | Strict upper bound times $10^{15}$ |
+|---|---:|---:|
+| $d_0$ | 160929462 | 160929463 |
+| $d_1$ | 4523349 | 4523350 |
+| $d_2$ | 39456393 | 39456394 |
+| $d_3$ | 9721862 | 9721863 |
+| $d_4$ | 43563844 | 43563845 |
+| $d_5$ | 22805932 | 22805933 |
+| $d_6$ | 26916103 | 26916104 |
+| $d_7$ | 13941977 | 13941978 |
+| $\mathscr H$ | 581 | 582 |
+
+To specify and verify the rational inequalities without decimal
+assumptions, put $B_0=10^{40}$ and
+
+$$
+\begin{aligned}
+b_2&=14142135623730950488016887242096980785696,\\
+b_3&=17320508075688772935274463415058723669428,\\
+b_6&=24494897427831780981972840747058913919659.
+\end{aligned}
+\tag{143.5}
+$$
+
+For $n=2,3,6$ the integer inequalities
+$b_n^2<nB_0^2<(b_n+1)^2$ hold. Thus
+$b_n/B_0<\sqrt n<(b_n+1)/B_0$. For any integer quadruple $a$ define
+
+$$
+\begin{aligned}
+\mathscr L(a)&=a_0B_0+\sum_{n=2,3,6}
+ \bigl(a_n^+b_n+a_n^-(b_n+1)\bigr),\\
+\mathscr U(a)&=a_0B_0+\sum_{n=2,3,6}
+ \bigl(a_n^+(b_n+1)+a_n^-b_n\bigr),
+\end{aligned}
+\tag{143.6}
+$$
+
+where in these sums $a_2,a_3,a_6$ mean the coefficients of
+$\sqrt2,\sqrt3,\sqrt6$, respectively, and
+$a_n^+=\max(a_n,0)$, $a_n^-=\min(a_n,0)$.
+Then $\mathscr L(a)\le B_0[a]\le\mathscr U(a)$.
+Substitution of each displayed quadruple and its positive denominator
+in (143.6) gives the enclosure table by integer comparisons alone.
+Hence $d_j>0$ for every $0\le j\le7$ and $\mathscr H>0$.
+
+Define $\lambda_j=d_j/d_0$. Cramer's rule gives
+$M\lambda=(1,0,\ldots,0)^{\mathsf T}$, so
+$\lambda_j>0$, $\sum_j\lambda_j=1$ and
+$\sum_j\lambda_j\sigma_jU_{i_j,w_j}=0$ in all six real columns.
+Furthermore
+
+$$
+\sum_j\lambda_jc_j
+ =\frac{163}{4000}+\frac{\mathscr H}{d_0}>\frac{163}{4000}.
+\tag{143.7}
+$$
+
+Apply Proposition 128.1's lower-witness argument to get
+$\mathcal F_f(z,0)\ge\sum_j\lambda_jc_j$ for every
+$z\in\mathbb C^3$, proving the claim. The classical intermediate is
+weak duality for Chebyshev approximation, as in Boyd–Vandenberghe,
+[*Convex Optimization*, §6.1.1 and Exercise 5.6, equation (5.104)](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf).
+The new assertion here is the concrete original-source certificate
+(143.3)–(143.7), rather than that general duality. $\square$
+

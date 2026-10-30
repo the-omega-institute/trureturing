@@ -1,0 +1,52 @@
+**Proposition 136.1 (second-quantized native lift).** On the algebraic
+finite-particle core $\mathcal D_{\mathrm{fin}}$,
+
+$$
+Q_\sigma^*d\Gamma_\sigma(H_+)Q_\sigma
+=d\Gamma_\sigma(H)\otimes I+I\otimes d\Gamma_\sigma(K).
+$$
+
+The equality extends to the self-adjoint closures on their natural domains.
+
+**Proof.** On the $r$-particle sector,
+
+$$
+d\Gamma_r(X)=\sum_{j=1}^r
+I\otimes\cdots\otimes X^{(j)}\otimes\cdots\otimes I.
+$$
+
+The one-particle equality $U^{\mathsf T}H_+U=H\oplus K$ transports each slot
+of this sum. The exponential law separates the old and birth slots, giving the
+two commuting summands on $\mathcal D_{\mathrm{fin}}$. The core is invariant
+under all finite-mode second quantizations, and closure gives the stated
+self-adjoint identity. $\square$
+
+For bosons, if $\psi=(\psi_r)_{r\ge0}$, the self-adjoint domain is
+
+$$
+\mathcal D(d\Gamma_+(H))
+=\left\{\psi:\sum_{r\ge0}\|d\Gamma_r(H)\psi_r\|^2<\infty\right\},
+$$
+
+and analogously for $H_+$ and $K$. Finite-particle vectors form a core. Under
+$Q_+$ the domain of the tensor sum is the intersection domain of its two
+commuting self-adjoint summands, with the same weighted sector condition. For
+fermions, $\dim\mathcal F_-(\mathbb C^m)=2^m$; hence all finite-mode
+$d\Gamma_-(X)$ are bounded and the whole exterior Fock space is their domain.
+These are finite-prefix statements and do not take an infinite-native-epoch
+limit.
+
+The generic Fock maps and vacuum facts used here are the existing
+D5/S3/Quantum/PassiveFockModel.lean declarations; the finite occupation
+identities are the existing
+D5/S3/Quantum/FockSpace/FiniteOccupationPartitionFunctions.lean route.
+The direct-sum exponential law and $d\Gamma$ slot sum are treated in Jan
+Dereziński, *Mathematical Introduction to Quantum Field Theory*, §§5.2--5.4,
+5.7 and Theorem 5.3 (§5.9),
+[PDF](https://users.fuw.edu.pl/~derezins/qft-lectures.pdf). The domain and core
+terminology is consistent with Dereziński, *Mathematical Topics in Many Body
+Quantum Physics*, §§1.1--1.5,
+[PDF](https://users.fuw.edu.pl/~derezins/manybody.pdf). Those references supply
+the generic Fock constructions; the native matrices and the $U$ above are the
+source-dependent content of this continuation.
+

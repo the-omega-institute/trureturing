@@ -23,4 +23,4 @@ The proof controls every singular-value prefix of Z(s) by the corresponding resi
 - Truth anchor: `D5/S3/Quantum/Entanglement/FiniteSectorPassivePair.sector_pair`
 - Dependency: [D5/S3/Observer/Hilbert/FiniteMoorePenroseInverse](../../Observer/Hilbert/FiniteMoorePenroseInverse.md)
 - Dependency: [D5/S3/Quantum/Entanglement/FiniteSectorChannelModel](FiniteSectorChannelModel.md)
-- Dependency: [D5/S3/Quantum/Entanglement/FiniteSectorRectangularVariational](FiniteSectorRectangularVariational.md)
+- Dependency: [D5/S3/Quantum/Entanglement/Rectangular/FiniteSectorRectangularAttainment](Rectangular/FiniteSectorRectangularAttainment.md)

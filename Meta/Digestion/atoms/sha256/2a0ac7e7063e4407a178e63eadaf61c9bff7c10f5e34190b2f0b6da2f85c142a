@@ -1,0 +1,16 @@
+# FIB strict-real joint incidence: raw complex obstruction and trace saturation
+
+This volume gives a concrete obstruction to using the raw complex four-world
+projection as a finite list of candidate bases for the original strict-real
+joint problem. A fully guarded complex family forces every nonzero raw joint
+eliminant to contain a specified irreducible conic factor. The raw two-world
+terminal-$M$ system, by itself, projects onto an explicit complex Zariski-open
+set. Neither statement decides the original real problem. Trace saturation
+preserves its entire strict-real domain and restores the missing clock-four
+constraint; the resulting projection remains **OPEN**.
+
+All polynomial rings and identities below are over $\mathbb Q$ unless a
+real or complex locus is specified. The source definitions cited in
+Section 8 are taken at the fixed revision
+`c91f4841791e83e61d117ab81a4a70495567f21d`.
+

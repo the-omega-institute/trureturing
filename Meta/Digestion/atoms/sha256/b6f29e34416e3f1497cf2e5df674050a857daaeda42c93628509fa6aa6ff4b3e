@@ -1,0 +1,17 @@
+**Corollary 3.1 (Necessary restriction on near-attaining images).** Let $r\ge3$, let $c_r$ be as in (12), and let $`\eta:A_r^*\to B^*`$ be nonerasing. If
+
+$$
+0<\varepsilon<c_r,\qquad
+E\bigl(\eta(u_{2r+1})\bigr)\le e_r+\varepsilon,
+$$
+
+then
+
+$$
+\rho\le\left(\frac{\varepsilon}{c_r}\right)^{1/\kappa_r}.
+$$
+
+In particular, this holds whenever the image is rich and its actual alphabet has exactly $r+1$ letters. If a family of such morphic images has ordinary exponents tending to $e_r$, its normalized defects $\rho$ tend to zero.
+
+*Proof.* Theorem 2.1 gives $\min(1,\rho)^{\kappa_r}\le\varepsilon/c_r<1$. Consequently $\rho<1$, and taking the positive $\kappa_r$th root proves the displayed bound. Apply the bound eventually along any family whose exponent excess tends to zero. Richness and the actual output alphabet impose no additional step in this inference. $\square$
+

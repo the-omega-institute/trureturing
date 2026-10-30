@@ -1,0 +1,73 @@
+**Proposition 35.2 (Length bound and original-real points).** One has
+
+$$
+\dim_{\mathbb R}\mathcal B_{p,v}\le\ell(p,v)\le24.
+\tag{35.4}
+$$
+
+The real points of $\mathcal B_{p,v}$ with the strict guards
+
+$$
+x>0,\qquad U>1,\qquad r>0,\qquad1-r>0
+\tag{35.5}
+$$
+
+are exactly the entire original $C(p,v)$, bijectively under
+$W=(P(r,b),H/U,d)$. This is the reconstruction of Lemma 30.2
+expressed in the finite algebra of Theorem 34.2.
+
+Proof. Complexification of $\mathcal A^{\mathbb R}_{p,v}$ is
+$\mathcal A_{p,v}$, so its real dimension is $\ell(p,v)$.
+Localization of a finite-dimensional commutative algebra retains some
+of its Artin local factors and deletes the others; a quotient cannot
+increase dimension. These facts prove (35.4).
+
+For faithfulness, an actual world satisfies $f=K=0$ by Section 31,
+including when $d=0$. Lemma 30.2 gives $d\ne24$, $H_1\ne0$,
+$dU=-H_0$ and $B_0U=H_2$. The pair $(d,B_0)$ cannot be zero:
+those equations would give $H_2=0$, whereas the definition of $B_0$
+would give $H_2=294/5$. Hence $q>0$. The original source also has
+$U>1$, $b>0$ and $bj=b^2+r(1-r)$. Thus every localization and
+quotient in (35.1)–(35.3) retains the actual world and its strict guards.
+
+Conversely, a real point with (35.5) has $b>0$ and
+$j=b+r(1-r)/b$. With $n=j+r=xU$ and $T=1+b=(U+1)/2$,
+the source is literally the original $P(r,b)$. Put $g=H/U$.
+The quotient equations restore clocks zero and two; the formula for
+$j$ restores clock one. Explicitly their readings are
+
+$$
+d+g(0)=0,\qquad d+jg(1)=24,\qquad
+d+Tg(2)=147/5.
+\tag{35.6}
+$$
+
+The interpolation samples (30.4) restore clocks three through six as
+$d+ng(3)=24$, $d+Ug(4)=18$, $d+(U+n)g(5)=p$, and
+$d+(2U+n)g(6)=v$. These are exactly the chronological traces
+(30.8) at the original clocks. The unequal first two readings exclude
+$g\equiv0$. Interpolation supplies one whole polynomial of degree at
+most three. Finally the coordinates $x,d$ force all expressions
+(35.1)–(35.3) and this whole gain, so Lemma 30.2 gives injectivity. ∎
+
+For this same reconstructed world the two clock-seven alternatives are
+
+$$
+a=d+\frac{T+2j+4r}{U}H_7=f_{MJ},\qquad
+m=d+(3+2x)H_7=f_{MM},
+\tag{35.7}
+$$
+
+by (30.9). Neither is an additional acquired read. The construction
+uses no reset, copy, skipped clock, clock shift, new port or longer
+protocol. All singular sources in $C(p,v)$ are retained, as are
+realized cases with $d=0$, $F_0=0$, $\alpha=0$ or $\Lambda=0$.
+Here $\alpha$ is the pseudo-remainder coefficient of
+[support IX, (4.5)](FIB_STRICT_REAL_JOINT_INCIDENCE_SUPPORT_IX.md#4-the-fixed-finite-carrier-and-its-drift-equation).
+No localization by any of these four expressions, terminal gain
+sample, gain leading coefficient or root difference occurs. Lower
+gain degrees, repeated roots and gain samples equal to zero wherever
+the original readings permit them remain included. The nonzero $H_1$
+in (35.1) is forced by $p\ne24$ and clock one, not a new gain promise.
+There is no gain-positivity condition, source box or source bound.
+

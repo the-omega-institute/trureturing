@@ -4,6 +4,8 @@
 import argparse
 from collections import Counter
 from contextlib import ExitStack
+import ctypes
+import errno
 import fcntl
 import hashlib
 import json
@@ -18,6 +20,7 @@ import subprocess
 import sys
 import tempfile
 import time
+import uuid
 
 REPOSITORY = Path(__file__).resolve().parents[2]
 # BSD file flags by which the owner or the system marks an entry as not to be removed or changed.
@@ -95,7 +98,122 @@ class ProtectedPaths:
         return path in self.prefixes
 
 
-def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True):
+class RefRecovery:
+    """Check intact blobs against a bounded sample of retained commit trees."""
+    REF_TIP_LIMIT = 16
+    HISTORY_LIMIT = 32
+
+    def __init__(self, repository):
+        self.repository = repository
+        self.candidate = None
+        self.refs = None
+        self.roots = []
+        self.scanned = set()
+        self.reachable = set()
+        self._algorithm = None
+
+    @property
+    def algorithm(self):
+        if self._algorithm is None:
+            preservation, _ = worktree_modules()
+            self._algorithm = preservation.git(self.repository, "rev-parse", "--show-object-format").stdout.strip().decode("ascii")
+        return self._algorithm
+
+    def close(self):
+        self.refs = None
+        self.roots.clear()
+        self.scanned.clear()
+        self.reachable.clear()
+
+    def selected_roots(self):
+        # Names prioritize evidence only; even an exact match certifies no bytes.
+        name = os.fsencode(self.candidate.name) if self.candidate is not None else b""
+        name = re.sub(rb"(?:-cleanup-[0-9a-f]{32})+$", b"", name)
+        def priority(root):
+            ref = root[0]
+            leaf = ref.rsplit(b"/", 1)[-1]
+            matches = name == leaf or name.endswith(b"-" + leaf)
+            return (-len(leaf) if matches else 0, ref)
+        return list(dict.fromkeys(oid for _, oid in sorted(self.roots, key=priority)))[:self.REF_TIP_LIMIT]
+
+    def scan_commit(self, commit):
+        if commit in self.scanned:
+            return
+        preservation, _ = worktree_modules()
+        listing = preservation.git(self.repository, "--no-replace-objects", "ls-tree", "-r", "-z",
+                                   "--full-tree", commit.decode("ascii"), "--", "Blueprint", timeout=60).stdout
+        for row in listing.split(b"\0"):
+            if not row:
+                continue
+            metadata, separator, _ = row.partition(b"\t")
+            fields = metadata.split()
+            if not separator or len(fields) != 3:
+                raise ValueError("recovery_tree_unreadable")
+            if fields[1] == b"blob":
+                self.reachable.add(fields[2])
+        self.scanned.add(commit)
+
+    def check(self, wanted):
+        preservation, _ = worktree_modules()
+        from worktree_protocol import git_environment, scope_fds
+        refs = preservation.git(self.repository, "for-each-ref", "--format=%(refname) %(objectname)").stdout
+        if refs != self.refs:
+            # Peel snapshot OIDs, so a moving ref cannot substitute another root.
+            records = [row.split(b" ", 1) for row in refs.splitlines()]
+            names = [oid + b"^{commit}\n" for _, oid in records]
+            peeled = preservation.git(self.repository, "--no-replace-objects", "cat-file",
+                                      "--batch-check=%(objectname) %(objecttype)", input=b"".join(names)).stdout
+            rows = peeled.splitlines()
+            if len(rows) != len(records):
+                raise ValueError("recovery_roots_unreadable")
+            self.roots = [(record[0], row.split()[0]) for record, row in zip(records, rows)
+                          if row.endswith(b" commit")]
+            self.refs, self.reachable, self.scanned = refs, set(), set()
+        roots = self.selected_roots()
+        for root in roots:
+            if wanted <= self.reachable:
+                break
+            self.scan_commit(root)
+        if roots and not wanted <= self.reachable:
+            # Sample commit history without enumerating the reachable object database.
+            history = preservation.git(self.repository, "--no-replace-objects", "rev-list",
+                                       "--max-count=" + str(self.HISTORY_LIMIT), "--stdin",
+                                       input=b"\n".join(roots) + b"\n", timeout=60).stdout
+            for commit in history.splitlines():
+                self.scan_commit(commit)
+                if wanted <= self.reachable:
+                    break
+        missing = set(wanted) - self.reachable
+        if not missing:
+            # Listing a blob does not establish that its bytes are present and intact.
+            with tempfile.TemporaryFile() as blobs:
+                subprocess.run(["git", "--no-replace-objects", "-C", str(self.repository), "cat-file", "--batch"],
+                               input=b"\n".join(sorted(wanted)) + b"\n", stdout=blobs,
+                               stderr=subprocess.PIPE, check=True, timeout=60,
+                               env=git_environment(), pass_fds=scope_fds())
+                blobs.seek(0)
+                for oid in sorted(wanted):
+                    header = blobs.readline().split()
+                    if len(header) != 3 or header[:2] != [oid, b"blob"]:
+                        raise ValueError("recovery_blob_unreadable")
+                    size = int(header[2])
+                    digest = hashlib.new(self.algorithm, b"blob " + header[2] + b"\0")
+                    remaining = size
+                    while remaining > 0:
+                        chunk = blobs.read(min(remaining, 1024 * 1024))
+                        if not chunk:
+                            raise ValueError("recovery_blob_truncated")
+                        digest.update(chunk)
+                        remaining -= len(chunk)
+                    if blobs.read(1) != b"\n" or digest.hexdigest().encode("ascii") != oid:
+                        missing.add(oid)
+        if preservation.git(self.repository, "for-each-ref", "--format=%(refname) %(objectname)").stdout != refs:
+            raise ValueError("recovery_refs_changed")
+        return missing
+
+
+def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True, remnant=False, recovery=None,
+                      verify_recovery=True):
     """Fingerprint owned, inactive trees without following links or crossing mounts."""
     path = Path(path).absolute()
     if path.name == ".git" and not reclaim:
@@ -114,11 +232,15 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True):
     root_stat = path.lstat()
     if stat.S_ISLNK(root_stat.st_mode):
         return dict(reason="symlink")
+    if remnant and not stat.S_ISDIR(root_stat.st_mode):
+        return dict(reason="not_directory")
     if reclaim and root_stat.st_dev != path.parent.stat().st_dev:
         return dict(reason="mount")
     digest = hashlib.sha256()
     apparent_bytes = 0
     lakes = []
+    blueprint = set()
+    shape_reason = None
     pending = [path]
     while pending:
         entry = pending.pop()
@@ -127,31 +249,64 @@ def inspect_candidate(path, cutoff, protected, repository=None, reclaim=True):
             return dict(reason="not_owned")
         if info.st_dev != root_stat.st_dev:
             return dict(reason="mount")
+        if remnant and stat.S_ISLNK(info.st_mode):
+            return dict(reason="symlink")
         if getattr(info, "st_flags", 0) & PROTECTED_FLAGS:
             return dict(reason="protected_flag")
         if "\n" in str(entry) or "\r" in str(entry):
             return dict(reason="unrepresentable_path")
         # FIFOs and sockets hold no data; reclaimable trees treat them like empty files.
         if not (stat.S_ISREG(info.st_mode) or stat.S_ISDIR(info.st_mode) or stat.S_ISLNK(info.st_mode)
-                or reclaim and (stat.S_ISFIFO(info.st_mode) or stat.S_ISSOCK(info.st_mode))):
+                or reclaim and not remnant and (stat.S_ISFIFO(info.st_mode) or stat.S_ISSOCK(info.st_mode))):
             return dict(reason="special_file")
         if info.st_mtime > cutoff:
             return dict(reason="recent")
         digest.update(os.fsencode(str(entry.relative_to(path))))
         digest.update(str((info.st_dev, info.st_ino, info.st_mode, info.st_size,
-                           info.st_mtime_ns, info.st_ctime_ns)).encode())
+                           info.st_mtime_ns, None if remnant and entry == path else info.st_ctime_ns)).encode())
         if stat.S_ISREG(info.st_mode):
             apparent_bytes += info.st_size
+            if remnant:
+                with entry.open("rb") as handle:
+                    if path / "Blueprint" in entry.parents:
+                        blob = hashlib.new(recovery.algorithm)
+                        blob.update(b"blob " + str(info.st_size).encode("ascii") + b"\0")
+                        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+                            blob.update(chunk)
+                        blueprint.add(blob.hexdigest().encode("ascii"))
+                        digest.update(blob.digest())
+                if entry.parent == path:
+                    shape_reason = "lake_content" if entry.name == ".lake" else "unknown_top_level"
+                if entry == path / ".lake/build":
+                    shape_reason = "lake_content"
         elif stat.S_ISDIR(info.st_mode):
             with os.scandir(entry) as children:
                 names = sorted(child.name for child in children)
             if not reclaim and ".git" in names:
                 return dict(reason="repository")
+            if remnant:
+                if ".git" in names or {"HEAD", "objects", "refs"}.issubset(names):
+                    return dict(reason="repository")
+                if entry == path and set(names) - {".lake", "Blueprint"}:
+                    return dict(reason="unknown_top_level")
+                if entry == path / ".lake" and set(names) - {"build"}:
+                    return dict(reason="lake_content")
             if reclaim and entry.name == ".lake":
-                lakes.append(str(entry))
+                lakes.append(str(entry.relative_to(path)) if remnant else str(entry))
             pending.extend(entry / name for name in names)
-    return dict(reason=None, fingerprint=digest.hexdigest(), apparent_bytes=apparent_bytes,
-                lakes=lakes)
+    if shape_reason:
+        return dict(reason=shape_reason)
+    result = dict(reason=None, fingerprint=digest.hexdigest(), apparent_bytes=apparent_bytes, lakes=lakes)
+    if remnant and blueprint and verify_recovery:
+        missing = recovery.check(blueprint)
+        if missing:
+            return dict(reason="blueprint_unrecoverable")
+        current = inspect_candidate(path, cutoff, protected, repository=repository, reclaim=reclaim,
+                                    remnant=True, recovery=recovery, verify_recovery=False)
+        if current != result:
+            return dict(reason="changed")
+        return current
+    return result
 
 
 def remove_tree(path):
@@ -164,17 +319,43 @@ def remove_tree(path):
     shutil.rmtree(path)
 
 
+def rename_exclusive(source, destination):
+    """Atomically move a sibling without replacing any destination entry."""
+    native = ctypes.CDLL(None, use_errno=True)
+    if sys.platform == "darwin" and hasattr(native, "renamex_np"):
+        rename = native.renamex_np
+        rename.argtypes = (ctypes.c_char_p, ctypes.c_char_p, ctypes.c_uint)
+        arguments = (os.fsencode(source), os.fsencode(destination), 4)  # RENAME_EXCL
+    elif sys.platform.startswith("linux") and hasattr(native, "renameat2"):
+        rename = native.renameat2
+        rename.argtypes = (ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p, ctypes.c_uint)
+        arguments = (-100, os.fsencode(source), -100, os.fsencode(destination), 1)  # AT_FDCWD, RENAME_NOREPLACE
+    else:
+        raise OSError(errno.ENOTSUP, "exclusive_rename_unavailable")
+    rename.restype = ctypes.c_int
+    if rename(*arguments) != 0:
+        error = ctypes.get_errno()
+        raise OSError(error, os.strerror(error), str(destination))
+
+
 def clean_candidate(path, cutoff, protected, delete=False, repository=None, activity=None,
-                    reclaim=True, refresh_activity=False):
+                    reclaim=True, refresh_activity=False, remnant=False, recovery=None):
     path = Path(path).absolute()
     result = dict(path=str(path), action="kept", reason=None, apparent_bytes=0)
     removal_started = False
+    original, isolated = path, None
+    owned_recovery = None
     try:
         kwargs = {} if repository is None else {"repository": repository}
+        if remnant:
+            if recovery is None:
+                owned_recovery = recovery = RefRecovery(repository)
+            recovery.candidate = path
+            kwargs.update(remnant=True, recovery=recovery)
         if not reclaim:
             kwargs["reclaim"] = False
-        def observe(protection):
-            return inspect_candidate(path, cutoff, protection, **kwargs)
+        def observe(protection, **options):
+            return inspect_candidate(path, cutoff, protection, **kwargs, **options)
         before = observe(protected)
         result.update({key: before[key] for key in ("reason", "detail", "apparent_bytes") if key in before})
         if before["reason"] is not None:
@@ -185,12 +366,24 @@ def clean_candidate(path, cutoff, protected, delete=False, repository=None, acti
         with ExitStack() as stack:
             for lake in before.get("lakes", []):
                 _, release = worktree_modules()
-                stack.enter_context(release.cache_guard(Path(lake).parent))
+                lake_path = path / lake if remnant else Path(lake)
+                stack.enter_context(release.cache_guard(lake_path.parent))
             refreshed = ProtectedPaths(activity()) if activity and (repository is not None or refresh_activity) else protected
-            after = observe(refreshed)
+            after = observe(refreshed, verify_recovery=False) if remnant else observe(refreshed)
             if after != before:
                 result["reason"] = "changed"
                 return result
+            if remnant:
+                destination = path.with_name(path.name + "-cleanup-" + uuid.uuid4().hex)
+                rename_exclusive(path, destination)
+                isolated = path = destination
+                # Original-path opens are now closed off; existing handles and cwd
+                # resolve to the isolated tree in the fresh activity observation.
+                refreshed = ProtectedPaths(activity()) if activity else protected
+                after = observe(refreshed)
+                if after != before:
+                    result["reason"] = "changed"
+                    return result
             removal_started = True
             if path.is_dir():
                 remove_tree(path)
@@ -208,6 +401,20 @@ def clean_candidate(path, cutoff, protected, delete=False, repository=None, acti
             result.update(action="kept", reason="unreadable", detail=str(error))
     except OSError as error:
         result.update(action="failed", reason=str(error))
+    except (RuntimeError, ValueError, subprocess.SubprocessError) as error:
+        if not remnant:
+            raise
+        result.update(action="kept", reason="recovery_unverifiable", detail=str(error))
+    finally:
+        if isolated is not None and result["action"] != "removed":
+            try:
+                rename_exclusive(isolated, original)
+            except OSError as error:
+                result.update(retained_path=str(isolated), retention_reason=result["reason"],
+                              reason="restore_destination_exists" if isinstance(error, FileExistsError)
+                              else "restore_failed", restore_detail=str(error))
+        if owned_recovery is not None:
+            owned_recovery.close()
     return result
 
 
@@ -391,6 +598,27 @@ def registered_worktrees(repository):
             for field in result.stdout.split(b"\0") if field.startswith(b"worktree ")]
 
 
+def remnant_candidates(repository, inventory):
+    """Select only physical siblings of the inventory's verified main checkout."""
+    if not inventory:
+        return
+    main = next(iter(inventory))
+    siblings = [path for path in children(main.parent)
+                if path.name.startswith(main.name + "-") and (path.is_symlink() or path.is_dir())]
+    if not siblings:
+        return
+    preservation, _ = worktree_modules()
+    try:
+        top = preservation.git(main, "rev-parse", "--show-toplevel").stdout.removesuffix(b"\n")
+        if (Path(os.fsdecode(top)).resolve() != main or not (main / ".git").is_dir()
+                or preservation.common(main) != (main / ".git").resolve()
+                or preservation.common(repository) != preservation.common(main)):
+            raise OSError("main_checkout_unverifiable")
+    except (OSError, RuntimeError, ValueError, subprocess.SubprocessError) as error:
+        raise OSError("main_checkout_unverifiable: " + str(error)) from error
+    yield from sorted(siblings)
+
+
 def containing_repository(path):
     """Find the governing Git boundary, including nested project directories."""
     for parent in (path, *path.parents):
@@ -506,7 +734,8 @@ def clean_from_anchor(options, caller, disk_descriptor):
             apparent_bytes += result["apparent_bytes"]
         elif result["action"] == "kept":
             skipped[result["reason"]] += 1
-        if options.verbose or result["action"] == "failed" or result["reason"] == "unreadable":
+        if (options.verbose or category == "worktree_remnant" or result["action"] == "failed"
+                or result["reason"] == "unreadable"):
             emit("host_cleanup_item", category=category, **result)
 
     def unobservable(path, error):
@@ -533,6 +762,17 @@ def clean_from_anchor(options, caller, disk_descriptor):
             lake = tree / ".lake"
             if lake.is_dir() and not lake.is_symlink():
                 clean_staging(lake)
+        with ExitStack() as remnant_stack:
+            recovery = None
+            for path in remnant_candidates(main_checkout, inventory):
+                if recovery is None:
+                    recovery = RefRecovery(main_checkout)
+                    remnant_stack.callback(recovery.close)
+                seen.add(path)
+                result = clean_candidate(path, cutoff, protections["sshx"], options.delete,
+                                         repository=main_checkout, activity=fresh_protection,
+                                         remnant=True, recovery=recovery)
+                record("worktree_remnant", result)
         for category, path in candidates(codex, sshx, roots):
             if path in seen:
                 continue

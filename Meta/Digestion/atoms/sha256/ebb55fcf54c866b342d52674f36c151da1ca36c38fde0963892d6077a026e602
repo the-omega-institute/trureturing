@@ -1,0 +1,51 @@
+## 45. Reflected exact root and transverse uniqueness
+
+For either $(\mathcal H,L,c,Z,\rho)=(G,L_3,\bar u,Y_{\cap},10^{-18})$ or
+$(F,L_6,\bar x,X_{\cap},10^{-15})$, Section 44 gives
+
+$$
+\sup_Z\|I-LD\mathcal H\|_\infty<10^{-7},\qquad
+\|L\mathcal H(c)\|_\infty<10^{-50}.
+$$
+
+Thus $\mathscr T(z)=z-L\mathcal H(z)$ maps the closed box into its interior, since
+
+$$
+\|\mathscr T(z)-c\|_\infty
+<10^{-50}+10^{-7}\rho<\rho,
+$$
+
+and is a contraction. The contraction principle gives its unique fixed
+point. Also $LD\mathcal H(c)$ is invertible by the Neumann-series criterion.
+As these are square matrices, $L$ and $D\mathcal H(c)$ are invertible. Hence
+fixed points of $\mathscr T$ are precisely zeros of $\mathcal H$. This proves existence
+and uniqueness of a zero in each indicated box.
+
+Let $u_{\cap}$ be the zero of $G$ in $Y_{\cap}$ and define the exact six-tuple
+
+$$
+x_{\cap}=(u_{\cap,1},1/8,u_{\cap,2},u_{\cap,3},9/8-u_{\cap,1},1/8).              \tag{45.1}
+$$
+
+Inspection of the printed finite decimals shows
+$|\bar x_5-(9/8-\bar u_1)|<10^{-61}$, with the other corresponding
+coordinates equal. Therefore $10^{-18}+10^{-61}<10^{-15}$ implies
+$x_{\cap}\in X_{\cap}$. (42.1)–(42.2) give identical $p,v,m$ for A and C, with
+$p_A=p_C=24$. Equation $G(u_{\cap})=0$ gives $p_B=24$ and equality of the
+A/B $v$ and $a$ responses. It follows that $F(x_{\cap})=0$ exactly.
+The unique zero of $F$ in $X_{\cap}$ must consequently be (45.1), proving that
+its common $p$ is exactly 24, rather than merely close to 24.
+
+Section 31 and Lemma 2.2 lift all three sources to complete worlds.
+Their equal acquired responses place them in the same entire child. Disjoint source intervals give distinct
+complete triples. The interval table proves the remaining bounds in
+Theorem 42.1.
+
+Finally the same derivative bound at the zero implies that $DF(x_{\cap})$
+is invertible. Its first five rows are linearly independent, so the
+implicit-function theorem makes their local common zero set a smooth
+one-dimensional manifold. If the sixth row vanished on its tangent
+line, $DF(x_{\cap})$ would have a nonzero kernel. This is impossible.
+Thus the M-incidence is transverse on this local J-incidence curve.
+This proves Theorem 42.1. $\square$
+

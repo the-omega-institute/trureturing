@@ -1,0 +1,94 @@
+**Proposition 126.1 (signed analytic rotation-invariant coefficient).** Let $s>0$ and let $\varphi\in L^1(m;\mathbb R)$ have a real analytic, rotation-invariant representative on
+
+$$
+\Omega=\{(x,y,z,w)\in G:x^2+y^2>0\}.
+$$
+
+If $\varphi$ is nonconstant on the connected set $\Omega$, then for every positive-measure Borel set $E$ the symmetric form
+
+$$
+Q_{\varphi,s}(u,v)=\frac12\int_G\varphi\{uT_sv+vT_su\}\,dm
+\tag{126.1}
+$$
+
+on bounded real functions supported in $E$ has infinite negative index. Applying the assertion to $-\varphi$ gives infinite positive index as well.
+
+**Proof.** Complexify the actual heat RKHS $\mathcal H_s=\operatorname{Ran}T_{s/2}$ with its pullback $L^2$ norm. Its kernel is $p_s$ and is nonsingular by the off-source kernel construction of §120. Every member of $\mathcal H_s$ and of $\mathcal H_s\mathcal H_s+\mathcal H_s\mathcal H_s$ is analytic on $\Omega$ by the heat-regularity argument used in §122.
+
+Assume the negative index of (126.1) on $E$ is finite, say $\kappa$. If $E\cap\{\varphi<0\}$ has positive measure, the rotation-invariant density-point construction selects, for every $N$, points in one angular slice at which $\varphi=c<0$. The limiting Gram matrix is $c(p_s(p_i,p_j))$, strictly negative definite. Indicators of sufficiently small intersections of $E$ with balls around these points then give $N$ negative directions, a contradiction. Up to a null set we may therefore restrict to $E\cap\{\varphi\geq0\}$ and to a positive-measure relatively compact subset.
+
+Suppose $\varphi(q)<0$ somewhere and put $c_0=-\varphi(q)>0$. On the density-point uniqueness set $E^*$ define
+
+$$
+b=\frac{\varphi-c_0}{\varphi+c_0},\qquad |b|\leq1.
+$$
+
+The Gram identity
+
+$$
+\frac{\varphi(p)+\varphi(q')}{2}p_s(p,q')
+=\frac{(\varphi(p)+c_0)(\varphi(q')+c_0)}{4c_0}
+(1-b(p)b(q'))p_s(p,q')
+\tag{126.2}
+$$
+
+transfers the negative-square bound to $(1-b(p)\overline{b(q')})p_s(p,q')$. The Agler–Young theorem, *Functions which are almost multipliers of Hilbert function spaces*, arXiv:math/9605224v1, Theorem 2.1, p. 11, applies after complexification because $E^*$ is a uniqueness set for both analytic classes and $p_s$ is nonsingular. It supplies a closed finite-codimensional $W\subset\mathcal H_s$ and a bounded $L:W\to\mathcal H_s$ with $Lu=bu$ on $E^*$.
+
+Analytic uniqueness extends
+
+$$
+(\varphi+c_0)Lu=(\varphi-c_0)u
+\tag{126.3}
+$$
+
+to all of $\Omega$. At every point of the rotation orbit of $q$, $\varphi=-c_0$, so (126.3) gives $u=0$. That orbit contains arbitrarily many distinct points, while their evaluation functionals are linearly independent by nonsingularity of $p_s$. A finite-codimensional $W$ cannot be annihilated by arbitrarily many independent evaluations. Hence $\varphi\geq0$ on $\Omega$.
+
+Now put $b=(\varphi-1)/(\varphi+1)$. The same theorem yields a finite-codimensional multiplication domain
+
+$$
+D=\{u\in\mathcal H_s:bu\in\mathcal H_s\}.
+$$
+
+The domain contains the closed finite-codimensional space supplied by the theorem, so it too is closed and finite-codimensional. Point evaluations give the closed graph of multiplication on $D$, hence boundedness. Rotation invariance preserves $D$ and $D^\perp$. Choose an angular character $\ell$ absent from the finite-dimensional representation on $D^\perp$. The corresponding sector lies in $D$, and
+
+$$
+B_\ell=e^{(s/2)K_\ell}M_be^{-(s/2)K_\ell}
+$$
+
+is bounded, since the pullback norm is $\|u\|_{\mathcal H_s}=\|e^{(s/2)K}u\|_2$. For $P_R=\mathbf1_{[0,R]}(K_\ell)$, the entire functions
+
+$$
+F_R(z)=P_Re^{zK_\ell}M_be^{-zK_\ell}P_R
+$$
+
+have uniform bound $\|B_\ell\|$ on the two boundary lines $\Re z=\pm s/2$: the positive boundary uses $B_\ell$, and the negative boundary uses its adjoint since $b$ is real. The three-lines theorem and Cauchy's estimate on a circle of radius $s/4$ give
+
+$$
+\|F_R'(0)\|\leq\frac{4\|B_\ell\|}{s}.
+$$
+
+Passing to spectral limits gives a bounded commutator form $[K_\ell,M_b]$. In cylindrical coordinates $(r,\theta,z,\xi)$, the principal symbol of the actual operator is
+
+$$
+a\left[p_r^2+\left(\frac{p_\theta}{r}+\frac r2p_\xi\right)^2+p_z^2\right]+\eta p_\xi^2.
+\tag{126.4}
+$$
+
+Use compact-core tests supported in $r>0$,
+
+$$
+u_N=e^{i\ell\theta}\chi(r,z,\xi)e^{iN\zeta\cdot(r,z,\xi)},\qquad
+\chi\in C_c^\infty(\{r>0\}),\quad\zeta\in\mathbb R^3.
+$$
+
+The divergence-form Leibniz identity gives, at order $N$,
+
+$$
+-2iN e^{i\ell\theta+iN\zeta\cdot(r,z,\xi)}\chi
+\left[a b_r\zeta_r+a b_z\zeta_z
++\left(\eta+\frac{ar^2}{4}\right)b_\xi\zeta_\xi\right].
+\tag{126.5}
+$$
+
+All remaining terms are uniformly bounded in $L^2(m)$ as $N\to\infty$. Boundedness of the commutator forces $b_r=b_z=b_\xi=0$ on every compact patch of $\Omega$; rotation invariance gives $b_\theta=0$. Thus $b$, and hence $\varphi$, is constant, contradicting the hypothesis. This proves infinite negative index. Replacing $\varphi$ by $-\varphi$ proves infinite positive index. $\square$
+

@@ -1,0 +1,70 @@
+**Theorem 146.2 (Exact full-history lower certificate; repo-derived).**
+For the full-history tangent norm of (125.5),
+
+$$
+n_a>\frac{189}{4096}.
+\tag{146.2}
+$$
+
+*Proof.* Let $d_0=\det M$, and let $d_j$ replace column $j$ of $M$ by
+$(1,0,0,0,0,0,0)^{\mathsf T}$, for $1\le j\le7. Direct expansion in
+$\mathbb Q(\sqrt2,\sqrt3)$ gives
+
+$$
+\begin{aligned}
+d_0={}&\frac{148689184238033\sqrt2+210278927993446
++169606516283115\sqrt6+239860620630880\sqrt3}
+{4722366482869645213696},\\
+d_1={}&\frac{-704179540270-497912696323\sqrt2+5522995798882\sqrt3
++3905391073879\sqrt6}{1180591620717411303424},\\
+d_2={}&\frac{4431862778894+3134204531693\sqrt2+23397372993571\sqrt6
++33088950632464\sqrt3}{4722366482869645213696},\\
+d_3={}&\frac{6657713390264\sqrt2+9415871119692+7081008641242\sqrt3
++5007043628175\sqrt6}{1180591620717411303424},\\
+d_4={}&\frac{-3205241353621\sqrt6-4532858035242\sqrt3+8819173387014
++6236145086803\sqrt2}{295147905179352825856},\\
+d_5={}&\frac{-5035357134791\sqrt2-7120923894510+6089708029451\sqrt6
++8612159649921\sqrt3}{295147905179352825856},\\
+d_6={}&\frac{773296199455\sqrt3+546834469621\sqrt6+2887987934358
++2042152182645\sqrt2}{295147905179352825856},\\
+d_7={}&\frac{762660156774+539286990438\sqrt2+434832704329\sqrt6
++614953806342\sqrt3}{36893488147419103232}.
+\end{aligned}
+\tag{146.3}
+$$
+
+The rational radical bounds (143.5)–(143.6), applied by integer
+multiplication, give the following strict intervals after multiplication
+by $10^{15}$:
+
+$$
+\begin{array}{c|rrrrrrrr}
+&d_0&d_1&d_2&d_3&d_4&d_5&d_6&d_7\\ \hline
+10^{15}d_j\text{ lies in}&
+(265006410,265006411)&(15012803,15012804)&
+(26149530,26149531)&(36727914,36727915)&
+(6559653,6559654)&(52825654,52825655)&
+(28646251,28646252)&(99084602,99084603)
+\end{array}
+$$
+
+Thus all eight determinants are positive. Cramer's rule gives
+$\lambda_j=d_j/d_0>0$, $\sum_j\lambda_j=1$, and
+$\sum_j\lambda_j\sigma_jU_{\rho_j}=0$. The same exact expansion gives
+
+$$
+\sum_{j=1}^7d_j\left(c_j-\frac{189}{4096}\right)
+=\frac{-20327335451999776\sqrt3-14373489159543967\sqrt6
++35385978341760498+25021737772452819\sqrt2}
+{19342813113834066795298816}>0.
+\tag{146.4}
+$$
+
+The last positivity is certified by (143.5)–(143.6); its value times
+$10^{15}$ lies strictly in $(18423,18424)$. Hence
+$\sum_j\lambda_jc_j>189/4096$. The signed cancellation identity and
+Proposition 128.1 give $\mathcal F_a(z,0)\ge\sum_j\lambda_jc_j$ for every
+complex $z$. Taking the infimum proves (146.2). Every row in (146.1) is an
+actual original history, with its original prefix mass and native-label
+weight.
+

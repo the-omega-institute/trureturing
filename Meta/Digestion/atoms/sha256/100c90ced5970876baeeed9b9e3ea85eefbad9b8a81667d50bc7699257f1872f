@@ -1,0 +1,75 @@
+**Theorem 12.3 (accepted canonical publications for a noncanonical
+target).** Both requests of Definition 12.1 have finite executions
+through the actual CoverRef, PackageRef and Image callbacks and all five
+View callbacks, with their installed successful checks, ACKs and final
+Ready. Corresponding receiver73 payloads, imported values and acquired
+bindings are identical. Their computed target tally is $k=b$. In both
+flights the received Image is the full HistoricalImage of $h_0,P_0$;
+the five received natural bodies are, in order,
+
+$$
+S(h_0),\quad B(h_0),\quad M_J(h_0),\quad T(h_0),\quad S(h_0).
+$$
+
+On the $P_1$ flight the named actual length-$b$ target is $h_1,P_1$.
+Its retained bit is $c_p=1$, whereas the accepted Image and decoded
+S/B/M bodies have $c_p=0$. They are therefore not faithful
+representations of that target. All these deliveries have genuine
+current channel authority; successful checking here denotes the actual
+successful control branch, not a new authenticity premise on
+$\mathcal D_1$.
+
+Proof. On $P_0$ the acquired manifest and empty $M$ supply the authentic
+first predecessor. GCA's binder parses the stated frame and computes
+$a+d=b$, within its inclusive range. Theorem 8.2 supplies the canonical
+positive flight and its actual payloads. Apply Lemma 12.2 from
+$P_0\equiv_{C_L}P_1$ to that entire finite execution. In particular
+Boundary returns the same numerical $a,b$ on the second flight; they
+also are that flight's actual acquisition/first-Ready tallies by
+Proposition 11.2. The acquired cover and package numbers and all
+expected source/version/selector fields agree.
+
+The transferred CoverRef route really serializes its immutable record
+on71, initializes the distinct mailbox72 and receiver73, copies through
+both actual length-tested loops, seals and prints, and performs its
+ACK/mailbox return. ClientCover clears its internal numeral and imports
+the current receiver to obtain $c$. ClientIssue similarly obtains $p$
+from its own completed PackageRef delivery, checks the current invocation
+slot and transfers that slot to Call. These are ARC Definitions 7.1–7.3's
+fixed entries; no internal helper is called out of turn and no printed
+historical right is used as present authority.
+
+Issue and Call use the equal copied manifest and $I_b$. Their prescribed
+first-bootstrap reservoir is $w_0$, so Call's serialized value is the
+canonical $h_0,P_0$ Image. The second flight physically copies that
+same value, not the raw word in its live $C_L$. At ClientImage the
+current placement is used to Seek73 before bank work; the F-bounded
+importer preserves head73 while rebuilding64–68. The equal imported
+tuple passes the same finite codec/source/version/$p,c,k,\varrho$
+checks. CYCLE Definition 8.3's CheckImageValue is precisely this parser
+and comparison subgraph; it does not compare the represented endpoint
+with the receiver's live complete state. Thus the first checked Image
+already witnesses the claimed mismatch, before that Image's ACK.
+
+For completeness, the installed suffix also really executes. RenderS
+uses this acquired raw projection. Each following callback clears its
+candidate, imports its own current receiver and checks the same canonical
+body and binding as in the $P_0$ flight. Hence every arrow and final
+Equal/CheckImageValue takes the same successful branch. The actual
+FinalReturn ACKs once, returns mailbox availability, appends one
+five-field completed item with the eight received bindings, returns
+invocation to the outer client and executes Ready. No earlier callback
+is treated as a return. All partial and final current successors still
+contain their respective first words.
+
+Finally, Proposition 11.2 gives the unequal actual target bit and
+Theorem 11.4 retains the true four independent inverses on
+$\mathcal D_0\cup\mathcal D_1$. The acquired Image's raw projection
+instead has the canonical value zero at that same identity. Full raw
+equality fails there. Lemma 3.3's geometric inversion and the memory
+family1 entry give the same failure for the displayed S/B/M bodies.
+Since $h_0\ne h_1$, Theorem 11.4 also gives $T(h_0)\ne T(h_1)$;
+the received T records are the canonical $h_0$ records. None
+of these comparisons identifies endpoint inequality with
+$Q$-inequivalence. ∎
+

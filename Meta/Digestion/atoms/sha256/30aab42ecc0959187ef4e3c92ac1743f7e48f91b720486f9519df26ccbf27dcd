@@ -1,0 +1,30 @@
+**定义 12.1（实际标量相型与零瞬态深度）。** 本节始终使用定义 11.1 的同一份 $J,P,Q,f_a$，保留实际 $\nu$、$\mu$、两个严格半线解码器及原完整外部风险 $d(P)$。称该核族为有限相型，若对每个实际相位 $a$，移位序列有有限吸收表示
+
+$$
+u_a(k):=f_a(k+2)=\alpha_aT_a^kb_a\quad(k\ge0),\qquad
+\alpha_a\mathbf1=1,\quad T_a\ge0,\quad b_a\ge0,\quad
+T_a\mathbf1+b_a=\mathbf1.
+\tag{12.1}
+$$
+
+不同相位可用不同维数和矩阵；允许零条目、可约矩阵、周期、Jordan 块及未使用状态，不要求整个 $T_a$ 瞬态。严格正、归一化、有限均值仍是实际 $f_a$ 的假设。以下尾刚性证明只需（12.1）的有限非负标量表示，故也适用于将吸收条件写成 $T_a\mathbf1+b_a\le\mathbf1$ 的表示。
+
+令 $\mathsf E$ 为序列上的前移算子，$(\mathsf Eu)(k)=u(k+1)$，与相位集 $E=\mathbb Z/m\mathbb Z$ 区分。由 Cayley–Hamilton，实际标量序列 $u_a$ 有唯一首一最小前移零化多项式
+
+$$
+p_a(x)=x^{r_a}q_a(x),\qquad q_a(0)\ne0,\qquad
+p_a(\mathsf E)u_a(k)=0\quad\text{对每个 }k\ge0.
+\tag{12.2}
+$$
+
+这里的 $r_a$ 是实际标量可见的零特征值深度，不是任一选定矩阵中零特征值的总代数重数。若有用部分的零特征值半单，则 $r_a\le1$；可逆有用矩阵给 $r_a=0$。未使用状态不影响（12.2）。记
+
+$$
+\beta(t)=(1+t)^{-2},\qquad
+\mathcal P(t)=\left(\frac{t}{1+t}\right)^2,\qquad
+\Xi(s)=(1-\sqrt s)^2.
+\tag{12.3}
+$$
+
+于是 $B_b(h,g)=\beta(R_{b-h}(h,g))$，且 $\mathcal P(t)=\Xi(\beta(t))$。本节有关 $c_\star-d(P)$ 的结论消费定理 11.3、定理 11.5 及本卷 §1 的原目标供应；下面的序列刚性只用带与有向分离。
+

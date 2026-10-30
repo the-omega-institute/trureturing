@@ -1,0 +1,92 @@
+**Theorem 9.1 (A mixed sixth-M $L_1$ at the same parent).** There exist
+three different worlds $X,A,B$ in $\mathcal F(H_4,M,24)$ with a common
+acquired sixth-M response. The final-J pair is $(X,A)$ and the final-M
+pair is $(A,B)$, giving an actual $L_1$ child. The two worlds $A,B$ have
+$g=h,d=24,b=1/8$; the third has $b\ne1/8,d\ne24$ and gain not
+proportional to $h$.
+
+The exact definition is the unique zero in $\mathcal B_M$ below:
+
+$$
+\begin{gathered}
+z=(r,b,t),\quad\rho=10^{-12},\quad
+m_M=10^{-18}\begin{pmatrix}
+768583210418733285\\312445051052584098\\273384932776920629
+\end{pmatrix},\qquad
+\mathcal B_M=\{z:\|z-m_M\|_\infty\le\rho\},\\
+X=W(r,b),\qquad A=W(t,1/8),\qquad B=W(9/8-t,1/8),\\
+F_M(z)=\begin{pmatrix}
+p(X)-24\\u_M(X)-u_M(A)\\f_{MJ}(X)-f_{MJ}(A)
+\end{pmatrix},\\
+C_M=10^{-6}\begin{pmatrix}
+40943&-13829&1777\\-23754&10075&-1294\\14835&-1596&-952
+\end{pmatrix}.
+\end{gathered}
+\tag{9.1}
+$$
+
+Proof. On this box $0<t<9/8-t<1$, $0<r<1$ and $b\in(31/100,32/100)$.
+The following denominator and drift bounds hold on the entire box:
+
+| World | $b$ | $j$ | $n$ | $T$ | $U$ | $\Lambda$ | $d$ |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| $X$ | $(31/100,32/100)$ | $(8/10,9/10)$ | $(16/10,17/10)$ | $(13/10,14/10)$ | $(16/10,17/10)$ | $(-4/5,-3/4)$ | $(27,28)$ |
+| $A$ | $1/8$ | $(17/10,18/10)$ | $(19/10,2)$ | $9/8$ | $5/4$ | $(2,3)$ | $24$ |
+| $B$ | $1/8$ | $(11/10,12/10)$ | $(19/10,2)$ | $9/8$ | $5/4$ | $(1,2)$ | $24$ |
+
+As before, evaluate source quantities and $\Lambda$ first, so no
+interval reciprocal contains zero. In the last two worlds the factor
+$b-1/8$ is exactly zero, giving $\epsilon=0$, $g=h$ and $d=24$
+identically, even away from the root. All three sources are legal.
+Their $r$ or $b$ boxes separate them.
+
+The rational derivative and center-displacement bounds, in the same
+convention as Section 8, are
+
+| Row | Derivative row bound, denominator $10^8$ | Center displacement bound, denominator $10^{24}$ |
+| --- | --- | --- |
+| $1$ | $130856$ | $263303$ |
+| $2$ | $131938$ | $93388$ |
+| $3$ | $66536$ | $381079$ |
+
+For these three rows evaluate the ordered expressions in (9.1), using
+$t$ as the third variable; the constant $1/8$ has zero derivative. With
+the same endpoint and derivative rules (7.3)–(7.5) this gives
+
+$$
+q_M=\frac{131938}{10^8}<\frac1{500},\qquad
+\eta_M=\frac{381079}{10^{24}}<10^{-18},\qquad
+\eta_M+q_M10^{-12}<10^{-12}.
+\tag{9.2}
+$$
+
+The contraction argument (7.6) proves that the specified rational box
+contains exactly one zero, strictly interior, with algebraic
+coordinates. The parent converse constructs $X,A,B$ as complete worlds
+at $H_4$ there. The first root equation fixes $p(X)=24$; the sampled zero
+$h(5)=0$ gives $p(A)=p(B)=24$.
+
+For fixed $b=1/8$, the function
+
+$$
+n(t)=\frac18+8t(1-t)+t
+\quad\text{satisfies}\quad n(t)=n(9/8-t).
+\tag{9.3}
+$$
+
+Thus $u_M(A)=u_M(B)$ and $f_{MM}(A)=f_{MM}(B)$ exactly, by (1.7) and their
+common $h,d,b$. The two remaining root equations give
+$u_M(X)=u_M(A)$ and $f_{MJ}(X)=f_{MJ}(A)$. Therefore all three worlds have
+the same sixth-M response, and the two required terminal collisions lie
+inside this one acquired child. Both pairs have different complete
+worlds. All non-singleton guards hold, proving $L_1$.
+
+For exact response bounds define $u_M=u_M(A)$,
+$a_J=f_{MJ}(A)$ and $a_M=f_{MM}(A)$. The following strict numerator
+intervals have denominator $10^8$:
+
+| Response | Numerator interval |
+| --- | --- |
+| $u_M$ | $(13170119575,13170119576)$ |
+| $a_J$ | $(45767957852,45767957853)$ |
+| $a_M$ | $(61728765284,61728765286)$ |

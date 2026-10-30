@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:64a63e02b4794a56570325ce1a1c3d96a68de09e61055440fafe99431bfbd95c
+  normalized_sha256: sha256:64a63e02b4794a56570325ce1a1c3d96a68de09e61055440fafe99431bfbd95c
+cas_ref: sha256:64a63e02b4794a56570325ce1a1c3d96a68de09e61055440fafe99431bfbd95c
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 这是要求说明反例如何引导最小概念改变的问题，没有给出或断言具体最小修复。
+    previous_atom_id: 6f19c0a4e84c6a5edc8f51bbfbcb6e0a9c5e3d9ad640ee617927eec00dfb116f
+    next_atom_id: d9cd8eb50aa91e50afc277bcff2ebf1d3d4988d40f3ddd8dacd3f4e330728fc9

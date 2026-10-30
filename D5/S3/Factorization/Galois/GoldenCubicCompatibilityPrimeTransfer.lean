@@ -22,6 +22,69 @@ open D5.S3.Factorization.QuadraticIdeals.EisensteinCyclotomicBridge
 open D5.S3.Factorization.QuadraticIdeals.CubicIdealCharacter
 open scoped NumberField
 
+/-- The original norm-preserving rational-prime/prime-ideal correspondence.
+Factored from `actual_prime_transfer_data`, which still consumes it. -/
+theorem rationalPrimeIdeal_data :
+    let fp : Nat.Primes → Ideal (𝓞 ℚ) := fun p => Ideal.span {((p.1 : ℕ) : 𝓞 ℚ)}
+    (∀ p : Nat.Primes, Ideal.absNorm (fp p) = p.1) ∧
+    (∀ p : Nat.Primes, (fp p).IsPrime) ∧
+    (∀ p : Nat.Primes, fp p ≠ ⊥) ∧
+    Function.Injective fp ∧
+    (∀ I : Ideal (𝓞 ℚ), I.IsPrime → I ≠ ⊥ → ∃ p : Nat.Primes, fp p = I) := by
+  classical
+  let fp : Nat.Primes → Ideal (𝓞 ℚ) := fun p => Ideal.span {((p.1 : ℕ) : 𝓞 ℚ)}
+  have hnorm (p : Nat.Primes) : Ideal.absNorm (fp p) = p.1 := by
+    simp only [fp, Ideal.absNorm_span_natCast,
+      NumberField.RingOfIntegers.rank, Module.finrank_self, pow_one]
+  have hprime (p : Nat.Primes) : (fp p).IsPrime := by
+    have hpZ : (Ideal.span {((p.1 : ℕ) : ℤ)}).IsPrime :=
+      (Ideal.span_singleton_prime (by exact_mod_cast p.2.ne_zero)).2
+        (Nat.prime_iff_prime_int.mp p.2)
+    letI : (Ideal.span {((p.1 : ℕ) : ℤ)}).IsPrime := hpZ
+    have hpMap :
+        ((Ideal.span {((p.1 : ℕ) : ℤ)}).map
+          Rat.ringOfIntegersEquiv.symm).IsPrime := inferInstance
+    simpa only [fp, Ideal.map_span, Set.image_singleton, map_natCast] using hpMap
+  have hnonzero (p : Nat.Primes) : fp p ≠ ⊥ := by
+    intro heq
+    have hz : p.1 = 0 := by simpa [heq] using (hnorm p).symm
+    exact p.2.ne_zero hz
+  have hinj : Function.Injective fp := by
+    intro p q hpq
+    apply Subtype.ext
+    exact (hnorm p).symm.trans ((congrArg Ideal.absNorm hpq).trans (hnorm q))
+  have hsurj : ∀ I : Ideal (𝓞 ℚ), I.IsPrime → I ≠ ⊥ →
+      ∃ p, fp p = I := by
+    intro I hIp hIne
+    let J : Ideal ℤ := I.map Rat.ringOfIntegersEquiv
+    have hJp : J.IsPrime := by
+      letI : I.IsPrime := hIp
+      exact inferInstance
+    have hJne : J ≠ ⊥ := by
+      intro hbot
+      exact hIne ((Ideal.map_eq_bot_iff_of_injective
+        Rat.ringOfIntegersEquiv.injective).mp hbot)
+    rcases Ideal.isPrime_int_iff.mp hJp with hbot | ⟨p, hp, heq⟩
+    · exact (hJne hbot).elim
+    refine ⟨⟨p, hp⟩, ?_⟩
+    have hundo :
+        (I.map (Rat.ringOfIntegersEquiv : 𝓞 ℚ →+* ℤ)).map
+          (Rat.ringOfIntegersEquiv.symm : ℤ →+* 𝓞 ℚ) = I := by
+      rw [← RingEquiv.toRingHom_eq_coe, ← RingEquiv.toRingHom_eq_coe,
+        Ideal.map_map, RingEquiv.toRingHom_eq_coe,
+        RingEquiv.toRingHom_eq_coe, RingEquiv.symm_comp, Ideal.map_id]
+    have hmap :
+        (I.map (Rat.ringOfIntegersEquiv : 𝓞 ℚ →+* ℤ)).map
+          (Rat.ringOfIntegersEquiv.symm : ℤ →+* 𝓞 ℚ) =
+        (Ideal.span {((p : ℕ) : ℤ)}).map
+          (Rat.ringOfIntegersEquiv.symm : ℤ →+* 𝓞 ℚ) := by
+      exact congrArg
+        (fun L : Ideal ℤ => L.map
+          (Rat.ringOfIntegersEquiv.symm : ℤ →+* 𝓞 ℚ)) heq
+    rw [hundo] at hmap
+    simpa only [fp, Ideal.map_span, Set.image_singleton, map_natCast] using hmap.symm
+  exact ⟨hnorm, hprime, hnonzero, hinj, hsurj⟩
+
 def ActualPrimeTransferData (j : ℕ) (a : (ZMod (modulus j))ˣ) : Prop :=
     letI : IsCyclotomicExtension {3} ℚ E := CyclotomicField.isCyclotomicExtension 3 ℚ
     ∃ ζ : L, IsPrimitiveRoot ζ (modulus j) ∧
@@ -287,56 +350,7 @@ theorem actual_prime_transfer_data (j : ℕ) (a : (ZMod (modulus j))ˣ)
     {q | q.IsPrime ∧ Chebotarev.UnramifiedIn ℚ F q ∧
       Chebotarev.frobeniusClass ℚ F q = ConjClasses.mk gQ ∧
       (Ideal.absNorm q).Coprime (modulus j)}
-  have hnorm (p : Nat.Primes) : Ideal.absNorm (fp p) = p.1 := by
-    simp only [fp, Ideal.absNorm_span_natCast,
-      NumberField.RingOfIntegers.rank, Module.finrank_self, pow_one]
-  have hprime (p : Nat.Primes) : (fp p).IsPrime := by
-    have hpZ : (Ideal.span {((p.1 : ℕ) : ℤ)}).IsPrime :=
-      (Ideal.span_singleton_prime (by exact_mod_cast p.2.ne_zero)).2
-        (Nat.prime_iff_prime_int.mp p.2)
-    letI : (Ideal.span {((p.1 : ℕ) : ℤ)}).IsPrime := hpZ
-    have hpMap :
-        ((Ideal.span {((p.1 : ℕ) : ℤ)}).map
-          Rat.ringOfIntegersEquiv.symm).IsPrime := inferInstance
-    simpa only [fp, Ideal.map_span, Set.image_singleton, map_natCast] using hpMap
-  have hnonzero (p : Nat.Primes) : fp p ≠ ⊥ := by
-    intro heq
-    have hz : p.1 = 0 := by simpa [heq] using (hnorm p).symm
-    exact p.2.ne_zero hz
-  have hinj : Function.Injective fp := by
-    intro p q hpq
-    apply Subtype.ext
-    exact (hnorm p).symm.trans ((congrArg Ideal.absNorm hpq).trans (hnorm q))
-  have hsurj : ∀ I : Ideal (𝓞 ℚ), I.IsPrime → I ≠ ⊥ →
-      ∃ p, fp p = I := by
-    intro I hIp hIne
-    let J : Ideal ℤ := I.map Rat.ringOfIntegersEquiv
-    have hJp : J.IsPrime := by
-      letI : I.IsPrime := hIp
-      exact inferInstance
-    have hJne : J ≠ ⊥ := by
-      intro hbot
-      exact hIne ((Ideal.map_eq_bot_iff_of_injective
-        Rat.ringOfIntegersEquiv.injective).mp hbot)
-    rcases Ideal.isPrime_int_iff.mp hJp with hbot | ⟨p, hp, heq⟩
-    · exact (hJne hbot).elim
-    refine ⟨⟨p, hp⟩, ?_⟩
-    have hundo :
-        (I.map (Rat.ringOfIntegersEquiv : 𝓞 ℚ →+* ℤ)).map
-          (Rat.ringOfIntegersEquiv.symm : ℤ →+* 𝓞 ℚ) = I := by
-      rw [← RingEquiv.toRingHom_eq_coe, ← RingEquiv.toRingHom_eq_coe,
-        Ideal.map_map, RingEquiv.toRingHom_eq_coe,
-        RingEquiv.toRingHom_eq_coe, RingEquiv.symm_comp, Ideal.map_id]
-    have hmap :
-        (I.map (Rat.ringOfIntegersEquiv : 𝓞 ℚ →+* ℤ)).map
-          (Rat.ringOfIntegersEquiv.symm : ℤ →+* 𝓞 ℚ) =
-        (Ideal.span {((p : ℕ) : ℤ)}).map
-          (Rat.ringOfIntegersEquiv.symm : ℤ →+* 𝓞 ℚ) := by
-      exact congrArg
-        (fun L : Ideal ℤ => L.map
-          (Rat.ringOfIntegersEquiv.symm : ℤ →+* 𝓞 ℚ)) heq
-    rw [hundo] at hmap
-    simpa only [fp, Ideal.map_span, Set.image_singleton, map_natCast] using hmap.symm
+  obtain ⟨hnorm, hprime, hnonzero, hinj, hsurj⟩ := rationalPrimeIdeal_data
   have hQover (p : Nat.Primes) (qE : Ideal (𝓞 E))
       (hover : qE.LiesOver (Ideal.span {((p.1 : ℕ) : ℤ)})) :
       qE.LiesOver (fp p) := by
@@ -396,7 +410,10 @@ theorem actual_prime_transfer_data (j : ℕ) (a : (ZMod (modulus j))ˣ)
     have hr := hres (fp p) (hprime p) hunr
       ((hnorm p).symm ▸ hcop) hclass
     have hv := congrArg Units.val hr
-    simpa only [ZMod.coe_unitOfCoprime, hnorm p] using hv
+    have hnormp : Ideal.absNorm (fp p) = p.1 := hnorm p
+    simp only [ZMod.coe_unitOfCoprime] at hv
+    rw [hnormp] at hv
+    exact hv
   have htop : M' ⊔ C' = ⊤ := by
     apply IntermediateField.lift_injective F
     rw [IntermediateField.lift_sup, IntermediateField.lift_restrict,

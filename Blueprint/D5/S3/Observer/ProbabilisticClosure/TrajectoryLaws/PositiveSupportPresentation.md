@@ -6,7 +6,19 @@ Positive stationary support and original cylinders
 
 Positive theta is the subtype of original hidden states with strictly positive stationary mass. trim theta restricts lambda and both real matrices to that subtype; includePath inserts its hidden coordinates into the original hidden set and keeps every emitted integer coordinate exactly unchanged.
 
-**Theorem 1.1 (Entrywise no11 after trimming).**
+**Theorem 1.1 (Original no11 entries from positive stationary states).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveSupportPresentation.weighted_no11`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveSupportPresentation.weighted_no11` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original stationary Presentation theta, every retained state i with strictly positive original initial mass, and every original target state j, the (i,j) entry of the square of the original one-symbol matrix is zero. The target j ranges over the entire original hidden set, including zero-mass states. The original scalar no11 sum consists of nonnegative terms; its vanishing forces each term with positive initial multiplier to vanish. Both trim and trim_no11 use this entrywise conclusion. The weighted_no11 helper of OriginalRectangleOccurrence also applies it when the original initial mass is positive; when that mass is zero, the weighted product vanishes directly. This supplies the scalar no11 field of nativeComponent with the original matrix entries and normalized stationary masses.
+
+**Theorem 1.2 (Entrywise no11 after trimming).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveSupportPresentation.trim_no11`
 
@@ -20,7 +32,7 @@ For every original Presentation, the square of the trimmed one-symbol matrix is 
 
 Stationarity and nonnegativity show that a positive-mass state cannot have a positive transition into a zero-mass state. Thus the retained set is closed under every positive symbol transition. Restriction preserves the stochastic row sums, normalization and stationarity. The weighted original no11 sum is a sum of nonnegative terms; each term starting from a retained state has a positive initial multiplier and hence a zero two-one product. Restricting its intermediate-state sum therefore gives the asserted zero matrix. All four parameter conditions and the original weighted no11 constraint are proved in the fields of trim theta.
 
-**Theorem 1.2 (Law-preserving inclusion including ghost cylinders).**
+**Theorem 1.3 (Law-preserving inclusion including ghost cylinders).**
 
 Lean statement: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveSupportPresentation.include_cylinders`
 
@@ -40,4 +52,5 @@ OriginalLawTrimming uses this inclusion theorem to construct one original law to
 
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveSupportPresentation.include_cylinders`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveSupportPresentation.trim_no11`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/PositiveSupportPresentation.weighted_no11`
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkedPredictiveQuotient](MarkedPredictiveQuotient.md)

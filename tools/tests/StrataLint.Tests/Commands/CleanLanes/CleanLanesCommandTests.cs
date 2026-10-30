@@ -194,17 +194,16 @@ public sealed partial class CleanLanesCommandTests
         Assert.True(fixture.BranchExists(retainedBranch));
         Assert.False(Directory.Exists(removed));
         Assert.True(fixture.BranchExists(removedBranch));
-        Assert.Contains(ReadItems(result.Output), item =>
-            ItemMatches(
-                item,
-                retained,
-                "partially_removed",
-                "worktree_remove_failed_state_indeterminate"));
+        var retainedItem = Assert.Single(ReadItems(result.Output), item => item.GetProperty("path").GetString() == retained);
+        Assert.Equal("partially_removed", retainedItem.GetProperty("action").GetString());
+        Assert.Equal("worktree_remove_failed_state_indeterminate", retainedItem.GetProperty("reason").GetString());
+        Assert.Contains("synthetic worktree removal failure", retainedItem.GetProperty("diagnostic").GetString());
         Assert.Contains(ReadItems(result.Output), item =>
             ItemMatches(item, removed, "removed", "merged_to_dev"));
         Assert.Contains("\"event\":\"clean_lanes_summary\"", result.Output, StringComparison.Ordinal);
         var summary = ReadSummary(result.Output);
         Assert.Equal(1, summary.GetProperty("partial_count").GetInt32());
+        Assert.Equal(0, summary.GetProperty("failed_count").GetInt32());
         Assert.Equal(1, summary.GetProperty("removable_count").GetInt32());
         Assert.Equal(1, summary.GetProperty("removed_count").GetInt32());
     }
@@ -276,7 +275,7 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
-    public void RecentHeadActivityProtectsOldCheckoutEvenAfterResetToOldCommit()
+    public void ResetToOldCommitDoesNotRenewSavedWorkAge()
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddLandedLane("harness/recent-reset");
@@ -287,8 +286,8 @@ public sealed partial class CleanLanesCommandTests
         var result = fixture.RunAt(now, "--force", "--lanes-only");
 
         Assert.True(result.Success, result.Error);
-        Assert.True(Directory.Exists(lane));
-        Assert.Equal("recently_updated", ReasonFor(result.Output, lane));
+        Assert.False(Directory.Exists(lane));
+        Assert.Equal("merged_to_dev", ReasonFor(result.Output, lane));
     }
 
     [Theory]
@@ -330,7 +329,7 @@ public sealed partial class CleanLanesCommandTests
     }
 
     [Fact]
-    public void ActivityBetweenClassificationAndRemovalPreventsDeletion()
+    public void AllocationChangeBetweenClassificationAndRemovalPreventsDeletion()
     {
         using var fixture = new CleanLanesFixture();
         var lane = fixture.AddLandedLane("harness/updated-during-sweep");
@@ -338,7 +337,7 @@ public sealed partial class CleanLanesCommandTests
         var runner = fixture.CreateRunner((file, args, directory) =>
         {
             if (args[0] == "worktree" && args[1] == "list" && ++reads == 2)
-                fixture.RewriteLastUpdate(lane, new DateTimeOffset(2030, 1, 2, 0, 0, 0, TimeSpan.Zero));
+                fixture.RewriteAllocation(lane, new DateTimeOffset(2030, 1, 2, 0, 0, 0, TimeSpan.Zero));
             return null;
         });
         var result = fixture.RunWithRaw(runner, "--force", "--lanes-only");

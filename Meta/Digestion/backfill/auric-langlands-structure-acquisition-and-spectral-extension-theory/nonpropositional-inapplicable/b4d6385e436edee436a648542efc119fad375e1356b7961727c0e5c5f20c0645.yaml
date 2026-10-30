@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:b4d6385e436edee436a648542efc119fad375e1356b7961727c0e5c5f20c0645
+  normalized_sha256: sha256:b4d6385e436edee436a648542efc119fad375e1356b7961727c0e5c5f20c0645
+cas_ref: sha256:b4d6385e436edee436a648542efc119fad375e1356b7961727c0e5c5f20c0645
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Bibliographic citation(s) and source/version identification only; no mathematical assertion from the cited work is stated.
+    previous_atom_id: 28a723642eb95d3da43b5ad84eceba9ea20bce7ee389f7eb4b848149759c325f
+    next_atom_id: 957437bcccff786a2e4d2c4a2ef982571932ea5117ff1a65d513c5b3593bd7b5

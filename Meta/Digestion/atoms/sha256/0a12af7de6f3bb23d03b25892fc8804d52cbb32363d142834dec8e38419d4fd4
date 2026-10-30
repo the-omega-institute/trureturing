@@ -1,0 +1,20 @@
+**例 20.3（同一有理对的全部实际后继）。** At $z_0=936/25$, (20.6) has $a=6/25$ and roots $B=8/25,18/25$. The two complete worlds are
+
+$$
+\begin{aligned}
+W_1&=\left(\frac1{11}\begin{pmatrix}3&4\\6&8\end{pmatrix},
+\frac{22}{25}\psi,0\right),\\
+W_2&=\left(\frac16\begin{pmatrix}3&9\\1&3\end{pmatrix},
+\frac{12}{25}\psi,0\right).
+\end{aligned}                                                     \tag{20.19}
+$$
+
+Their positive unnormalized sources are $\frac1{25}(\begin{smallmatrix}6&8\\12&16\end{smallmatrix})$ and $\frac1{25}(\begin{smallmatrix}6&18\\2&6\end{smallmatrix})$, both of determinant zero. Both actual JMJJM reading arrays are
+
+$$
+(0,24,48,936/25,144/5,20).
+                                                                  \tag{20.20}
+$$
+
+Fifth $J$ instead reads $52/5$ on both. Every sixth and seventh response is zero under every intervening choice, verifying all eight length-three suffixes of this same pair after fourth $J$. Their alternative fourth-$M$ responses are $912/25,1152/25$, respectively, since in general that response is $144/5+24B$. Thus this pair has $L_3$ after fourth $J$ and is separated by fourth $M$ at $H_{z_0}$; it is not an $L_4$ family at that parent.
+

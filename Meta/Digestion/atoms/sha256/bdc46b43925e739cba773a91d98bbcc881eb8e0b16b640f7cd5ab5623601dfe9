@@ -1,0 +1,42 @@
+**Definition 2.1 (the fixed native-derived thermal inputs).** Stop the actual
+singleton substitution $\beta\mapsto\langle\beta,\alpha\rangle$ after its first
+accepted step. In coordinate order $(r,\ell,R)$ retain $G_0=[1]$, $K=I_2$,
+the unchanged unit-edge form and the two residual settings
+
+$$
+L_\star=\begin{pmatrix}2&-1&-1\\-1&1&0\\-1&0&1\end{pmatrix},\quad
+T=(1,1,1)^{\mathsf T},\quad
+q_a=(1/6,1/6)^{\mathsf T},\quad q_b=(1/3,1/3)^{\mathsf T}.
+\tag{QSSR.1}
+$$
+
+For $q=(u,v)$ put $\pi_q=(1-u-v,u,v)^{\mathsf T}$ and
+$G_q=L_\star+\pi_q\pi_q^{\mathsf T}$. VI139–140 gives the positive principal
+root $S_q$, the normalized unit vector $V_q=S_qT$, and
+
+$$
+H_q=S_q^{-1}L_\star S_q^{-1}=I-V_qV_q^*,\qquad
+V_a=(10,7,7)^{\mathsf T}/\sqrt{198},\qquad V_b=T/\sqrt3.
+\tag{QSSR.2}
+$$
+
+Complexify these normalized coordinates and declare
+$A=\mathbb C e_\ell$, $B=\operatorname{span}(e_r,e_R)$, so
+$p=|(V_q)_\ell|^2$ equals $49/198$ or $1/3$. This is exactly the cut of
+VI140.4. It is added quantum-model data; principal-root mixing does not make
+it a physical partition of raw occurrence coordinates.
+
+For any finite inverse temperature $\theta\ge0$, write
+
+$$
+t=e^{-\theta}\in(0,1],\qquad
+\rho_{q,\theta}=
+\frac{e^{-\theta d\Gamma_-(H_q)}}{2(1+t)^2}
+\quad\hbox{on }\mathcal F_-(\mathbb C^3),\qquad \dim\mathcal F_-=8.
+\tag{QSSR.3}
+$$
+
+There is no particle-number conditioning, removed zero mode or chemical
+potential. VI141 supplies this full state: its eigenmode occupations are
+independent with probabilities $(1/2,t/(1+t),t/(1+t))$.
+

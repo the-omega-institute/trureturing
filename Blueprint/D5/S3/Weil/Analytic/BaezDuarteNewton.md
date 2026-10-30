@@ -4,7 +4,19 @@
 
 The actual Baez-Duarte Newton series converges to reciprocal zeta for every complex argument with real part greater than one, with absolute interchange derived on that domain.
 
-**Theorem 1.1 (The original Newton series on the initial half-plane).**
+**Theorem 1.1 (Normalized Pochhammer and generalized binomial coefficients).**
+
+$$\forall k \in \mathbb{N},\; \forall z \in \mathbb{C},\; \operatorname{normalizedPochhammer}\left(k, z\right) = (-1:\mathbb{C})^{k} \cdot \operatorname{Ring.choose}\left(z - 1, k\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Weil/Analytic/BaezDuarteNewton.signed_choose` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The normalized descending product is the signed generalized binomial coefficient. This identity relates the Newton-series coefficients to Euler's Gamma sequence.
+
+**Theorem 1.2 (The original Newton series on the initial half-plane).**
 
 $$\forall s\in\mathbb{C}, 1<\operatorname{Re}\left(s\right)\Rightarrow \operatorname{HasSum}\left((k:\mathbb{N})\mapsto\operatorname{c}\left(k\right) \operatorname{P}\left(k, \frac{s}{2}\right), \frac{1}{\operatorname{riemannZeta}\left(s\right)}\right)$$
 
@@ -25,6 +37,7 @@ This initial half-plane identification is literature-attested; its Lean proof is
 ## References
 
 - Truth anchor: `D5/S3/Weil/Analytic/BaezDuarteNewton.baez_duarte_newton_hasSum`
+- Truth anchor: `D5/S3/Weil/Analytic/BaezDuarteNewton.signed_choose`
 - Dependency: [D5/S3/Analytic/SeriesInequalities/BaezDuarteQBounds](../../Analytic/SeriesInequalities/BaezDuarteQBounds.md)
 - Dependency: [D5/S3/Analytic/SeriesInequalities/NormalizedPochhammerBounds](../../Analytic/SeriesInequalities/NormalizedPochhammerBounds.md)
 - Dependency: [D5/S3/Weil/ZetaBridge/RieszBaezDuarte](../ZetaBridge/RieszBaezDuarte.md)

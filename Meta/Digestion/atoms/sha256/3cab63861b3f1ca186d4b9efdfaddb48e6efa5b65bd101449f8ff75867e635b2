@@ -1,0 +1,166 @@
+**Theorem 9.1 (Actual J pair at p=-11).** There exist two distinct strict
+regular complete worlds $W_0,W_1\in C(-11,v_*)$ with
+$a(W_0)=a(W_1)=a_*$. The common values and the two terminal-$M$ values
+have the strict enclosures
+
+$$
+\begin{gathered}
+-8.215078<v_*<-8.215077,\qquad
+96.245820<a_*<96.245821,\\
+102.260466<m(W_0)<102.260467,\\
+107.408353<m(W_1)<107.408354.
+\end{gathered}
+\tag{9.1}
+$$
+
+There is a local real-analytic actual $J$ branch through this pair,
+parameterized by $p$ near $-11$. No explicit continuation interval,
+exhaustion of $J$ branches, or assertion of a different global connected
+component is part of the theorem.
+
+Proof. Use $t=r/b$, so
+
+$$
+r=tb,\qquad j=t+b(1-t^2),\qquad n=j+tb.
+\tag{9.2}
+$$
+
+On $D\ne0$ evaluate (2.5)–(2.7) in these coordinates, and set
+
+$$
+F(z)=(p_0+11,p_1+11,v_0-v_1,a_0-a_1),\qquad
+z=(t_0,b_0,t_1,b_1).
+\tag{9.3}
+$$
+
+The exact center and radius are
+
+$$
+\bar z=10^{-24}
+\begin{pmatrix}
+10504686942715102009569284\\
+88666866113376049686925\\
+5156906641684654809138004\\
+167936210357531086294279
+\end{pmatrix},\qquad
+\rho=10^{-16},\qquad
+\mathcal Q=\{z:\|z-\bar z\|_\infty\le\rho\}.
+\tag{9.4}
+$$
+
+Use the following exact rational preconditioner:
+
+$$
+Y=10^{-12}
+\begin{pmatrix}
+74317654135440&-97353116212496&-85945879326012&20330257536319\\
+-583841728296&764803004244&675188111775&-159713860693\\
+-27730856875100&34069982371636&25456366786943&-5564302263316\\
+770570055051&-946704119133&-707367754439&154617822330
+\end{pmatrix}.
+\tag{9.5}
+$$
+
+All endpoints in the finite certificate are rounded outward to the
+$10^{-60}$ grid. Addition and subtraction use endpoint arithmetic;
+multiplication takes the minimum and maximum of four endpoint products;
+division takes the four endpoint quotients only when the denominator
+interval excludes zero. After each operation round the lower endpoint
+down and the upper endpoint up. For derivative enclosures use the product rule and
+
+$$
+(a/b)'=\frac{a'-(a/b)b'}{b}.
+\tag{9.6}
+$$
+
+Section 13 defines the rational interval operations, their expression order
+on the factorized circuit (2.5), and the exact finite data proving the bounds
+
+$$
+\begin{aligned}
+\|YF(\bar z)\|_\infty&\le\eta_0,\\
+\sup_{z\in\mathcal Q}\|I-YDF(z)\|_\infty&\le q_0,
+\end{aligned}
+$$
+
+where
+
+$$
+\begin{aligned}
+\eta_0&=\frac{973789251791947370114393715220755890}{10^{60}}
+<10^{-24},\\
+q_0&=\frac{5144072038985496620415930974177109689174603232758782855326}{10^{60}}
+<\frac{5145}{10^6}<1.
+\end{aligned}
+\tag{9.7}
+$$
+
+Every division has denominator excluding zero. Proposition 13.2 also
+proves the following strict bounds on the entire box; every table
+entry $(l,u)$ means $l/10^6<f<u/10^6$:
+
+| Quantity | World 0 | World 1 |
+| --- | --- | --- |
+| $b$ | $(88666,88667)$ | $(167936,167937)$ |
+| $r$ | $(931417,931418)$ | $(866031,866032)$ |
+| $D$ | $(536056,536058)$ | $(-525133,-525131)$ |
+| $v$ | $(-8215078,-8215077)$ | $(-8215078,-8215077)$ |
+| $a$ | $(96245820,96245821)$ | $(96245820,96245821)$ |
+| $m$ | $(102260466,102260467)$ | $(107408353,107408354)$ |
+
+For completeness, the self-map inequality follows already from the simpler
+bounds:
+
+$$
+\eta_0+q_0\rho
+<10^{-24}+\frac{5145}{10^6}10^{-16}<10^{-16}=\rho.
+\tag{9.8}
+$$
+
+The map $G(z)=z-YF(z)$ therefore maps the complete closed box strictly
+into itself, with Lipschitz constant at most $q_0<1$. Banach's fixed-point
+theorem gives a unique fixed point $z_*$ in its interior. Since
+$\|I-YDF(\bar z)\|<1$, the Neumann series makes $YDF(\bar z)$ invertible;
+as square matrices this forces $Y$ invertible. Consequently the fixed-point
+equation is $F(z_*)=0$. In particular the equalities of the responses come
+from an exact zero, not merely from overlapping response intervals.
+
+The table gives $b_i>0$, $0<r_i<1$, and $D_i\ne0$. At this zero take
+
+$$
+\begin{aligned}
+P_i&=\begin{pmatrix}r_i&b_i\\r_i(1-r_i)/b_i&1-r_i\end{pmatrix},\\
+d_i&=-C_{0,i}/D_i,\\
+g_i(s)&=\sum_{k=0}^3\frac{C_{k,i}}{D_i}
+\prod_{\substack{0\le l\le3\\l\ne k}}\frac{s-l}{k-l}.
+\end{aligned}
+\tag{9.9}
+$$
+
+Equations (2.1)–(2.7) give the exact original readings
+$(0,24,147/5,24,18,-11,v_*)$. These use the single entire $g_i$ and
+fixed $d_i$ of (9.9), including at both terminal alternatives. Each $g_i$
+has degree at most three and is nonzero by the first two readings.
+The disjoint $r$ intervals show distinct sources, hence distinct complete
+worlds. Equations (9.3) and (9.1) now establish the asserted $J$ pair.
+They also give
+
+$$
+m(W_1)-m(W_0)>5.147886,
+\tag{9.10}
+$$
+
+so these two endpoints do not themselves form an $M$ pair.
+
+Finally replace the first two entries of (9.3) by $p_0-p,p_1-p$.
+The equations are real analytic near $(z_*,-11)$, and (9.7) makes their
+$z$ derivative invertible there. The analytic implicit-function theorem
+gives $z=z(p)$ on some open interval about $-11$. Shrink it to preserve
+all strict guards and endpoint distinctness. The formulas (9.9) then give
+analytic gain coefficients and drift, and $v_J(p)=v_0(z(p))$ is analytic.
+This is only a local continuation assertion. ∎
+
+Theorem 9.1 puts $(-11,v_*)$ in $D_J$. Its unequal $M$ readings do not
+exclude a different $M$ pair elsewhere in the same entire child, and do
+not establish such a pair. It is not a joint witness.
+

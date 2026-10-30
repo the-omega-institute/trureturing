@@ -1,0 +1,22 @@
+**定义 4.1。** 固定 $H=\mathbb C^d$ 及指定实基。密度态唯一写为
+
+$$
+\rho=S+iA,qquad S^{\mathsf T}=S,\quad A^{\mathsf T}=-A,quad S,A\in M_d(\mathbb R).
+$$
+
+实效果是满足 $0\le E\le I$ 的实对称矩阵。二拷贝结果另要求来源能够独立重复制备
+$\rho^{\otimes2}$，并且联合载体允许的实效果张成全部实对称矩阵。单系统实门菜单不
+自动提供这两个条件。
+
+单拷贝实效果只看 $S$：$\operatorname{tr}(E\rho)=\operatorname{tr}(ES)$。
+在 $D$ 维联合载体上，设置
+
+$$
+P_i=|e_i\rangle\langle e_i|,qquad
+P_{ij}=\tfrac12|e_i+e_j\rangle\langle e_i+e_j|
+$$
+
+可由 $R_{ii}=p(P_i)$、
+$R_{ij}=p(P_{ij})-[p(P_i)+p(P_j)]/2$ 重构实对称部分。它们是多个测量设置，
+不是一个正交测量的同时结果。
+

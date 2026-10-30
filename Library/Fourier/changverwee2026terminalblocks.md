@@ -90,3 +90,24 @@ The source's **§9.1, printed pp.59–60**, states the corresponding
 transfer condition: terminal restrictions can be inserted when the
 necessary twisted arithmetic estimates are available; a toral lift
 does not remove an already open untwisted problem.
+
+## Möbius weights on fixed complete blocks
+
+The same source already proves a signed arithmetic statement: Corollary 7.11, printed pp.50–51, under Hypothesis 4.3, gives for every fixed depth $e\ge1$ and complete block word $B\in\mathcal B_e$,
+
+$$
+\sum_{n\le X}\mu(n)\mathbf1_{\{\operatorname{TB}_e(n)=B\}}=o(X).
+$$
+
+Proposition 8.1, printed pp.55–56, proves Hypothesis 4.3 under Assumption 2.8, namely the source's Pisot and minimal-polynomial conditions recorded above. These hypotheses hold for its stated Fibonacci system. The result is reused directly; translating it to the project's five-window vocabulary is not a new Möbius estimate, and the retained unit and complete-block conventions still apply.
+
+The proof uses Davenport's uniform additive-twist estimate $X/(\log X)^A$ for each finite Fourier approximation. Its boundary exceptional set and Riemann-integrable approximation contribute only $o(X)$ in the stated argument. Therefore the corollary does not automatically inherit Davenport's logarithmic rate, a square-root error, or uniformity for depth growing with $X$.
+
+For a fixed $e$, the finite block classes form an exact exhaustive partition of the integers. Hence, writing $M(X)=\sum_{n\le X}\mu(n)$,
+
+$$
+M(X)=\sum_{B\in\mathcal B_e}
+ \sum_{n\le X}\mu(n)\mathbf1_{\{\operatorname{TB}_e(n)=B\}}.
+$$
+
+In particular, square-root bounds $O_\varepsilon(X^{1/2+\varepsilon})$ for every class at even one fixed depth would already imply the ordinary RH-equivalent Mertens bound. Uniform constants over a growing collection of depths are not needed for this implication: the collection at that one depth is finite. The displayed $o(X)$ corollary instead gives the known $M(X)=o(X)$ after summation; the full family of twisted assertions is not identified with that single untwisted consequence. Fixed-resolution geometric refinement has not removed the constant arithmetic component. Growing-depth quantitative control and the Robin residual remain unsupplied.

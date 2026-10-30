@@ -1,0 +1,23 @@
+### 129.D. Local ellipticity and independent real angular tests
+
+Both $u_N$ and $fu_N$ are actual smooth compact punctured core vectors. The original local divergence expression (122.9) gives
+$$
+[K,M_f]u=(Kf)u-2\langle\mathsf A\nabla f,\nabla u\rangle,
+$$
+where $Kf$ is used only as a local differential expression. Rotation invariance and the original principal symbol (126.4) yield
+$$
+\mathcal D_F(u_N)=
+-2iN\int|\chi|^2\left[
+af_r\zeta_r+af_z\zeta_z+
+\left(\eta+\frac{ar^2}{4}\right)f_\xi\zeta_\xi
+\right]dm+O(1).                                                          \tag{129.15}
+$$
+Every remaining term is on one fixed compact punctured support and is bounded independently of $N$. Equations (129.14)–(129.15), for every real $\chi$ and every $\zeta$, force the integral coefficient to vanish. Continuity and positivity of the local density imply $f_r=f_z=f_\xi=0$; rotation invariance gives $f_\theta=0$. Connectedness makes $f$ constant on $\Omega$, a contradiction.
+
+Thus nonnegativity fails in the arbitrary positive sector. There is a bounded complex vector $v_\ell$ of this character with $q(v_\ell)<0$. Reality and rotation invariance imply
+$$
+q(\Re v_\ell)=q(\Im v_\ell)=\tfrac12q(v_\ell)<0.
+$$
+The real polar form pairs distinct positive angular frequencies to zero. Choose one such real test at each of any $N$ distinct positive frequencies. Their polar Gram matrix is diagonal and strictly negative. These bounded real Borel $m$-classes span an allowed $N$-dimensional negative subspace. Letting $N$ vary proves the theorem. $\square$
+
+

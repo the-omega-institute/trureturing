@@ -1,0 +1,23 @@
+**Definition 68.2 (encoding and recognized range).** For finite ordered
+LAB terms define
+
+$$
+J(\alpha)=\alpha,\qquad J(\beta)=\langle\beta,\alpha\rangle,
+\qquad J(\langle u,v\rangle)=\langle J(u),J(v)\rangle.
+$$
+
+Let $\mathcal R$ be the least finite-term grammar
+
+$$
+r::=\alpha\ \mid\ \langle\beta,\alpha\rangle\ \mid\ \langle r,r\rangle.
+$$
+
+Define a partial decoder $K$ as follows. At alpha return alpha. At the
+literal pair $\langle\beta,\alpha\rangle$ return beta. At any other pair,
+recursively decode both children and return their ordered pair, provided
+both decodings succeed. Reject bare beta and every unsuccessful recursive
+case. This is a finite structural procedure on an owned constructor word,
+not a new source primitive. No member of $\mathcal R$ has root beta;
+therefore the literal sentinel pair cannot also be a pair of two members
+of $\mathcal R$. In particular the two pair rules are unambiguous.
+

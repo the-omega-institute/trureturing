@@ -22,7 +22,7 @@ conjugate_outer, unitary_vector_norm, pure_outer_square; proof_shape: bind-only;
   escape_witness: none; consumer: pure_attainment, QuadbitMaximumPurity.result
 -/
 
-import D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite
+import D5.S3.Quantum.Entanglement.AbsolutePPT.UniformSchmidtCorner
 import D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation
 
 set_option autoImplicit false
@@ -33,10 +33,6 @@ open Matrix
 open scoped ComplexOrder
 namespace D5.S3.Quantum.Entanglement.AbsolutePPT.QutritPerturbationAttainment
 open D5.S3.Quantum.Dynamics.KickedIsingNegativityRefutation (partialTranspose)
-
-def APPT {A B : Type*} [Fintype A] [Fintype B] [DecidableEq A] [DecidableEq B]
-    (M : Matrix (A × B) (A × B) ℂ) : Prop :=
-  D5.S3.Quantum.Entanglement.AbsolutePPT.Bipartite.APPT M
 
 noncomputable def rhoPure (n : ℕ) (v : Fin 3 × Fin n → ℂ) : Matrix (Fin 3 × Fin n) (Fin 3 × Fin n) ℂ :=
   ((1 / (3*(n : ℝ)+2) : ℝ) : ℂ) • (1+(2 : ℂ) • vecMulVec v (star v))

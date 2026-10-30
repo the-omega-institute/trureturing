@@ -1,0 +1,50 @@
+**Proposition 5.1 (From generated code to the actual stopped process).**
+Under Definitions 1.1–1.3, the advice of Theorem 3.2 is realizable by a
+finite initialized classical table controller. At every preterminal
+classical or action cut its stored path and the quantum substate agree
+with the corresponding node of the compiled tree. It uses no online
+matrix-norm comparison, model oracle or target-outcome choice.
+
+**Proof.** Serialize the finite expanded tree using action tags, child
+indices, checkpoint stop bits and marker updates; retain $s$, its
+checkpoints and reference labels with it. Allocate its storage and an
+archive before preparation, write the generated data into that storage,
+and initialize the pointer to the root. These are specified classical
+state transitions in this declared ideal controller, with their costs
+charged in §8. The advice has thereby been produced and retained, not
+supplied as a further unexplained oracle. The supplied prerequisites are
+the accurate names, finite memory and stopping authority.
+
+At a continue node the action tag requests precisely the next letter
+of $s$. For $\mathsf N$ follow its sole child and record that action.
+For $\mathsf J$ read the actual returned label and follow exactly its
+child; record that label and update the mismatch bit. At a checkpoint
+read the already stored bit. A stop invokes the sole terminal, records
+its actual bit, and terminates; the final non-hit also sets timeout.
+There is no discard transition. Table fetch and archive writes alter
+only the classical state in this discrete-call model, and do not
+request a new quantum action.
+
+Induction on executed actions now proves that at a history $w$ the
+quantum substate for a mathematical input $\mu$ is exactly
+$2^{-k(w)}U_w\mu U_w^\dagger$, and the pointer and archive encode
+that same history. Intermediate classical steps preserve this
+invariant. At terminal invocation the Born rule gives exactly (3.5).
+All decisions are determined by fixed retained data and actual past
+labels. The paths therefore have the same legal actions and
+preterminal successors as the compiled tree, not just the same
+terminal marginal. This proof is an interpreter realization in the
+declared source interface. It does not supply a physical memory
+device, a native call service, a bound on laboratory delay or the
+unspecified quantum state after terminal measurement. ∎
+
+The map from supplied names to advice is a one-way effective
+construction. The table need not recover $\theta$, $N$, $P$ or their
+names; different inputs can give the same finite table. Likewise a
+finite actual archive does not determine the unused rows of the table.
+No inverse or unknown-source calibration is inferred from either map.
+Exact numerical probabilities for the actual preparation would also
+require information about $d$ if $d$ is not computably supplied; the
+compiler instead gives the uniform law bound for its entire allowed
+range.
+

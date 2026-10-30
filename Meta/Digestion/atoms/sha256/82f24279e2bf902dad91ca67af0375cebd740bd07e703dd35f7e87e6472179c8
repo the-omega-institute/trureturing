@@ -1,0 +1,25 @@
+**Theorem 16.1 (prior root-aware recovery).** Every world admits deterministic complete recovery within $4d+5$ reads, with exactly $\beta$ as a fixed linear gain output for each terminal word.
+
+**Proof.** First acquire the $2m+1$ pure-$M$ reads of Theorem 12.3, obtaining $\beta,\delta,U,W$. Choose the least index $k$ with $\beta_k\ne0$ and obtain
+
+$$
+\alpha(P)=U_k/\beta_k,\qquad
+\operatorname{tr}(MP)=\phi\alpha(P)+\psi(1-\alpha(P)).
+$$
+
+This divides by a verified nonzero coefficient. The whole polynomial $g$ is now known. Let $C_0=M^{2m}$ and $B=JC_0$.
+
+Take one $J$ action and its read, reaching $B$. At that original clock $i$, if $g(i)\ne0$, recover $\operatorname{tr}(BP)=(z_i-\delta)/g(i)$. If $g(i)=0$, take two separate $J$ actions with both immediate reads, returning to $B$, and try again. Once successful, take one $M$ and its read, reaching $MB$. Use the same rule there: a nonzero $g(i)$ gives $\operatorname{tr}(MBP)$, and on a zero two separate $J$ actions and reads return to $MB$ for another attempt.
+
+Each failed attempt is a distinct clock that is a root of the same nonzero polynomial. If its actual degree is $s$, there are at most $s\le d$ such failures across both phases together. A nonzero polynomial has this root bound by successive division by distinct linear factors. Thus both phases terminate. Their two first attempts cost two actions and reads, and every failure adds two more. The total is
+
+$$
+(2m+1)+2+2f=2d+5+2f\le4d+5.
+$$
+
+Return reads are counted. Repeated root multiplicity and roots at unused return reads do not affect this bound, and no division by an unchecked polynomial value occurs.
+
+The recovered traces determine $P$. Right multiplication of the basis $I,M,J,MJ$ by the invertible $C_0$ gives $C_0,MC_0,B,MB$. Right multiplication preserves $\operatorname{span}\{I,M\}$ bijectively by (2.2), so $I,M,B,MB$ are a basis. Their known trace pairings are $1,\operatorname{tr}(MP),\operatorname{tr}(BP),\operatorname{tr}(MBP)$. Nondegeneracy of the trace pairing gives a unique matrix, and the actual legal source is that solution. Together with the known $g,\delta$ this is complete recovery.
+
+Pad the fixed gain matrix from the initial pure-$M$ segment by zero columns. For each terminal word it is one fixed matrix returning exactly $\beta$. The uniform finite bound leaves finitely many such words. Subsequent coefficient selection, polynomial-value tests, adaptive actions, and source reconstruction do not make the gain matrix data-dependent. $\square$
+

@@ -1,0 +1,7 @@
+Consequently the following are equivalent:
+
+1. $A$ has no eigenvalue $0,1,-1$.
+2. For every $D\ge1$ and rational $h>0$, a finite effectively
+   computable $H\ge I$, depending only on $A,C,K,D,h$, makes $R_H$
+   injective on all of $\Lambda_D$.
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f25834291142be5b2d4bc37f6d60971fe67429ce2df7f71bada3245e4a0bdc14
+  normalized_sha256: sha256:f25834291142be5b2d4bc37f6d60971fe67429ce2df7f71bada3245e4a0bdc14
+cas_ref: sha256:f25834291142be5b2d4bc37f6d60971fe67429ce2df7f71bada3245e4a0bdc14
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Specifies nonzero modes as candidate data and defines their mode residual; it does not assert that the residual vanishes.
+    previous_atom_id: b3b7bb6c2833d5eb1db6e69fb35220e7fc819c3408b62c8ace0f15e6456d93c4
+    next_atom_id: 865503bd0239f4e28cf1d55fd9e680ab545f555eb2a681876be7de54140591a6

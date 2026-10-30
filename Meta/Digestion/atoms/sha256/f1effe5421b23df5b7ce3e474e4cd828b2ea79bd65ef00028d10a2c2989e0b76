@@ -1,0 +1,10 @@
+**Theorem 5.1 (Full-width slice and direction obstructions).** For every
+$\beta>0$ and every real $p$, the following hold at
+$H_5=(H_{4,\beta},M,p)$.
+
+1. Every support with $L_2$ has at least three different complete worlds.
+2. No support contained in one entire gain direction has $L_2$.
+3. No subset of $S_p$ in (4.3) has $L_2$. In particular an unrestricted
+   $L_2$ support contains a world with $b\ne\beta$, and this world has
+   $d\ne24$ and $[g]\ne[h]$.
+

@@ -1,0 +1,9 @@
+## 4. The unweighted Hardy estimate and localization
+
+Define the frozen energy quantity
+
+$$
+\mathscr T_o[v]=\sum_{a=1}^2\int|\widehat Y_av|^2\,d\widehat\mu.
+\tag{4.1}
+$$
+

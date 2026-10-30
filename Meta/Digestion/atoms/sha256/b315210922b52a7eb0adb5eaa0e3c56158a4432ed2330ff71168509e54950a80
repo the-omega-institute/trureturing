@@ -1,0 +1,26 @@
+**Proposition 125.3 (fixed-source long-range witness).** Let
+$u=\langle\alpha,\beta\rangle$, take $M_0=I_3$ in the old order
+$(\varepsilon,L,R)$, and use (125.3) with every $\kappa_c=1$. Then the
+coherent Markov family satisfies, for every $m\ge0$,
+
+$$
+Q_m(RL^m,\varepsilon)=1,
+\qquad
+ d_m(RL^m,\varepsilon)=m+1,
+\qquad
+\operatorname{jr}(Q_m)\ge m+1.
+\tag{125.5}
+$$
+
+Here $RL^m$ is an actual occurrence, not a subtree quotient. The transition
+at $m=0$ is the old edge $R\to\varepsilon$; for $m\ge1$ it is inherited
+through the beta-left lineage and is a non-edge of the current occurrence
+tree.
+
+**Proof.** At epoch zero, $Q_0=-L_0$ gives
+$Q_0(R,\varepsilon)=1$. The address $R$ is beta, and the left child $RL$ is
+beta at epoch one. Formula (125.4) transfers the positive rate from $R$ to
+$\varepsilon$ to $RL$ because $\varepsilon$ is not a newborn parent. Inductively,
+$RL^m$ is beta at epoch $m$, its left child is $RL^{m+1}$, and the same
+rate is transferred. The address length is $m+1$, proving (125.5). $\square$
+

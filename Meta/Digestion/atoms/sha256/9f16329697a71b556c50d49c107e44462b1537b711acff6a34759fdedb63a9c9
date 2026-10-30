@@ -1,0 +1,62 @@
+**Theorem 131.2 (Semialgebraic values and compact argmin relation; repo-derived).**
+For each $j=f,a$ separately, $\mu_j,\nu_j,r_j^-,r_j^+$ are
+semialgebraic functions on $[0,\bar\eta]$. The relation
+
+$$
+\Gamma_j=\{(\eta,\gamma,h):0\le\eta\le\bar\eta,
+                                  (\gamma,h)\in\Gamma_j(\eta)\}
+\tag{131.2}
+$$
+
+is a compact semialgebraic set with nonempty compact fibers.
+The two value functions $\mu_j,\nu_j$ are continuous there, and
+$0\le r_j^-\le r_j^+\le1$. For $0<\eta\le\eta_*$ in
+Theorem 126.3 all compact minimizers, and hence both extremal radii,
+satisfy $|\gamma|\le G\eta$.
+
+*Proof.* The source-fixed polynomial description of $\mathcal P$
+and Theorem 130.2 show that each $d_j(\gamma,h;h_0(\eta))$ is
+semialgebraic on the indicated domain. This is the original finite
+error for $j=f$ and the original full error for $j=a$. Continuity
+of both is already proved in Theorem 124.2. The feasible set
+$\mathcal C$ is a fixed nonempty compact semialgebraic set,
+independent of $\eta$. In particular minima exist. An exact
+value-graph formula for $\mu_j$ is
+
+$$
+\begin{aligned}
+v=\mu_j(\eta)\quad\Longleftrightarrow\quad
+ &\exists x\in\mathcal C:\ d_j(x;h_0(\eta))=v,\\
+ &\forall x'\in\mathcal C:\ d_j(x';h_0(\eta))\ge v.
+\end{aligned}
+\tag{131.3}
+$$
+
+When $d_j$ is represented by its semialgebraic graph, these are
+real polynomial quantifiers after introducing its value variables.
+The same formula with $\gamma=0$ throughout gives $\nu_j$.
+The real projection/complement theorem cited in Theorem 130.2
+therefore proves both value graphs semialgebraic. Equality to the
+value gives a semialgebraic graph for $\Gamma_j$.
+
+Uniform continuity of $d_j$ on $[0,\bar\eta]\times\mathcal C$
+shows that the change in each minimum is bounded by the supremum
+of the corresponding change of the objective. This proves
+continuity of both values, using the zero-retention compact slice
+for $\nu_j$. The equality defining $\Gamma_j$ is thus closed
+in a compact product, so (131.2) is compact as well as semialgebraic.
+Each fiber is nonempty and compact.
+
+The retention function has the polynomial graph
+$r\ge0$, $r^2=(\operatorname{Re}\gamma)^2+
+(\operatorname{Im}\gamma)^2$. Existential attainment and universal
+lower, respectively upper, bounds for $r$ over the nonempty fiber
+$\Gamma_j(\eta)$ give value-graph formulas just as in (131.3).
+They prove semialgebraicity and existence of both radii. This
+argument requires no choice of a minimizer. Their order and unit
+bound follow from $\mathcal C$. Finally, (126.9) bounds retention
+for every compact minimizer by $G\eta$, so it bounds both extrema.
+The source-specific content is the application to the unchanged
+raw-law objectives and their entire minimizer fibers; the real
+projection intermediate is the classical one already cited. $\square$
+

@@ -1,0 +1,16 @@
+**Theorem 19.2 (The \(Q_3\) third-world consequence).**  For the original
+Euclidean-squared predicate \(Q_3\) of (16.8), \(Q_3\) implies that the exact
+base child \(C(p_3,v_3)\) contains a third strict world besides \(W_3\) and
+the unique world of Theorem 18.1 in \(R\).
+
+**Proof.** Take witnesses in (16.8) with \(\epsilon=1/n\).  Their two
+selected \(M\)-endpoints eventually lie in \(\mathcal U_3\), while their
+bases lie in \(K_3\).  By Theorem 19.1, choose a selected \(J\)-endpoint
+outside \(\mathcal U_3\cup R\).  Passing to a subsequence and applying
+Theorem 17.2 gives a strict complete-world limit in the exact base child
+\(C(p_3,v_3)\).  The limit cannot be \(W_3\), because \(W_3\) is interior to
+\(\mathcal U_3\), and cannot be the remote world, because that world has a
+strict interior margin in \(R\).  It is therefore a third distinct base
+world.  No closedness of the distinct-pair relation is used, and the
+conclusion is a necessary condition only.  \(\square\)
+

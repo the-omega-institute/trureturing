@@ -8,7 +8,21 @@ The entry cited in hanna2026a396102 defines A(x)=x+... by A(A(A(x)))=(1+x)A(A(x)
 
 PowerSeries(R) denotes the formal power-series ring over R, and X is its indeterminate. The ring argument of iterate and mobius, implicit in Lean, is displayed explicitly. These operations come from CompositionalIterateCongruence: iterate(f,0)=X, and each successor substitutes f into the preceding iterate; mobius(c) is X times the geometric series with coefficients c^n. Indices are natural numbers, mk constructs a series from its coefficient function, and the final remainder is integer remainder.
 
-**Definition 1.1 (The integer coefficient sequence).**
+**Theorem 1.1 (Coefficients of substitution).**
+
+$$\forall R: \operatorname{Type}, [\operatorname{CommRing}\left(R\right)], \forall f: \operatorname{PowerSeries}\left(R\right), \forall u: \operatorname{PowerSeries}\left(R\right), (\operatorname{constantCoeff}\left(u\right) = 0) \implies (\forall n: \mathbb{N}, \operatorname{coeff}\left(n, \operatorname{subst}\left(u, f\right)\right) = \sum_{k \in \operatorname{range}\left(n + 1\right)} (\operatorname{coeff}\left(k, f\right) \cdot \operatorname{coeff}\left(n, u^{k}\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/TripleIterateShiftModThree.subst_coeff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paul D. Hanna (2026). *OEIS A396102, g.f. satisfying A(A(A(x))) = (1+x)*A(A(x))*. URL: <https://oeis.org/A396102>.
+
+*Commentary.*
+
+For a series u with zero constant coefficient, only powers up to n contribute to the coefficient of degree n in f(u).
+
+**Definition 1.2 (The integer coefficient sequence).**
 
 $$\begin{aligned}\forall n: \mathbb{N}, \operatorname{a}\left(n\right) = \operatorname{coeff}\left(n, \operatorname{approximation}\left(\mathbb{Z}, n\right)\right)\\\operatorname{approximation}\left(\mathbb{Z}, 0\right) = X\\\forall d: \mathbb{N}, \operatorname{approximation}\left(\mathbb{Z}, d + 1\right) = (\operatorname{approximation}\left(\mathbb{Z}, d\right) + (1 + X) \cdot \operatorname{iterate}\left(\mathbb{Z}, \operatorname{approximation}\left(\mathbb{Z}, d\right), 2\right)) - \operatorname{iterate}\left(\mathbb{Z}, \operatorname{approximation}\left(\mathbb{Z}, d\right), 3\right)\end{aligned}$$
 
@@ -20,7 +34,7 @@ $$\begin{aligned}\forall n: \mathbb{N}, \operatorname{a}\left(n\right) = \operat
 
 The local notation approximation denotes the integer series defined by the displayed iteration, starting at X. Agreement below degree d, for d at least two, improves to agreement below degree d+1 after one step. Thus the diagonal coefficient defines a(n).
 
-**Definition 1.2 (The generating series).**
+**Definition 1.3 (The generating series).**
 
 $$\operatorname{generatingSeries} = \operatorname{mk}\left(\operatorname{a}\right)$$
 
@@ -32,7 +46,7 @@ $$\operatorname{generatingSeries} = \operatorname{mk}\left(\operatorname{a}\righ
 
 The integer series is constructed with coefficient function a.
 
-**Theorem 1.3 (Existence and the functional equation).**
+**Theorem 1.4 (Existence and the functional equation).**
 
 $$(\operatorname{constantCoeff}\left(\operatorname{generatingSeries}\right) = 0) \land (\operatorname{coeff}\left(1, \operatorname{generatingSeries}\right) = 1) \land (\operatorname{iterate}\left(\mathbb{Z}, \operatorname{generatingSeries}, 3\right) = (1 + X) \cdot \operatorname{iterate}\left(\mathbb{Z}, \operatorname{generatingSeries}, 2\right))$$
 
@@ -44,7 +58,7 @@ $$(\operatorname{constantCoeff}\left(\operatorname{generatingSeries}\right) = 0)
 
 For n greater than one and two zero-constant series agreeing below degree n with linear coefficient one, the difference at degree n of the j-th compositional iterates is j times the original coefficient difference. The correction step therefore cancels this difference with multiplier 1+2-3=0; the factor X uses only the preceding coefficient. The stabilized coefficients form a fixed point of the correction step, which is exactly the displayed functional equation.
 
-**Theorem 1.4 (Uniqueness of the normalized integer solution).**
+**Theorem 1.5 (Uniqueness of the normalized integer solution).**
 
 $$\forall f: \operatorname{PowerSeries}\left(\mathbb{Z}\right), (\operatorname{constantCoeff}\left(f\right) = 0) \implies (\operatorname{coeff}\left(1, f\right) = 1) \implies (\operatorname{iterate}\left(\mathbb{Z}, f, 3\right) = (1 + X) \cdot \operatorname{iterate}\left(\mathbb{Z}, f, 2\right)) \implies f = \operatorname{generatingSeries}$$
 
@@ -56,7 +70,7 @@ $$\forall f: \operatorname{PowerSeries}\left(\mathbb{Z}\right), (\operatorname{c
 
 Any two solutions satisfy the correction fixed-point identity. Their constant and linear coefficients agree. Applying degree contraction inductively proves agreement at every degree, hence equality.
 
-**Theorem 1.5 (The geometric solution modulo three).**
+**Theorem 1.6 (The geometric solution modulo three).**
 
 $$\operatorname{iterate}\left(\operatorname{ZMod}\left(3\right), \operatorname{mobius}\left(\operatorname{ZMod}\left(3\right), 1\right), 3\right) = (1 + X) \cdot \operatorname{iterate}\left(\operatorname{ZMod}\left(3\right), \operatorname{mobius}\left(\operatorname{ZMod}\left(3\right), 1\right), 2\right)$$
 
@@ -68,7 +82,7 @@ $$\operatorname{iterate}\left(\operatorname{ZMod}\left(3\right), \operatorname{m
 
 The geometric-family iteration identity gives mobius(3)=X and mobius(2) for the third and second iterates over ZMod(3). Since -2=1 in that ring, the geometric denominator of mobius(2) is 1+X. Multiplication by this denominator gives X, proving the equation.
 
-**Theorem 1.6 (Hanna's A396102 conjecture).**
+**Theorem 1.7 (Hanna's A396102 conjecture).**
 
 $$\forall n: \mathbb{N}, (1 \le n) \implies \operatorname{a}\left(n\right) \bmod 3 = 1$$
 
@@ -92,4 +106,5 @@ Map the integer generating equation into ZMod(3). Mapping coefficients commutes 
 - Truth anchor: `D5/S1/Recurrence/Invariants/TripleIterateShiftModThree.generating_unique`
 - Truth anchor: `D5/S1/Recurrence/Invariants/TripleIterateShiftModThree.hanna_conjecture`
 - Truth anchor: `D5/S1/Recurrence/Invariants/TripleIterateShiftModThree.mod_three_fixed`
+- Truth anchor: `D5/S1/Recurrence/Invariants/TripleIterateShiftModThree.subst_coeff`
 - Dependency: [D5/S1/Recurrence/Invariants/CompositionalIterateCongruence](CompositionalIterateCongruence.md)

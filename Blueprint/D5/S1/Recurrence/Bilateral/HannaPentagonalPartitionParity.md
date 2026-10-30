@@ -120,7 +120,21 @@ $$\operatorname{partitionSeries} = \operatorname{mk}\left((n: \mathbb{N} \mapsto
 
 The coefficients are these ordinary cardinalities cast to integers. The product supplier Nat.Partition.hasProd_powerSeriesMk_card_restricted is applied at predicate True. Euler's pentagonal product and the geometric-factor inverse prove that this series is the reciprocal of pentagonalSeries over the integers.
 
-**Definition 1.9 (The integer-index coefficients).**
+**Theorem 1.9 (The partition series is the pentagonal reciprocal).**
+
+$$(\operatorname{pentagonalSeries}\left(\mathbb{Z}\right)) \cdot (\operatorname{partitionSeries}) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Bilateral/HannaPentagonalPartitionParity.partition_reciprocal` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Paul D. Hanna (2023). *OEIS A361552: implicit pentagonal unit series and partition parity*. URL: <https://oeis.org/A361552>.
+
+*Commentary.*
+
+Euler's product and the geometric factors show that pentagonalSeries over the integers multiplied by the ordinary partition series is one.
+
+**Definition 1.10 (The integer-index coefficients).**
 
 $$\forall n: \mathbb{Z}, \operatorname{a}\left(n\right) = \operatorname{ifThenElse}\left(0 \le n, \operatorname{coeff}\left(\operatorname{toNat}\left(n\right), \operatorname{generatingSeries}\left(\mathbb{Z}\right)\right), 0\right)$$
 
@@ -134,7 +148,7 @@ $$\forall n: \mathbb{Z}, \operatorname{a}\left(n\right) = \operatorname{ifThenEl
 
 At a nonnegative integer n this reads the coefficient at n.toNat. Negative indices are zero; the stated parity range starts at one.
 
-**Definition 1.10 (All clauses of the original-domain assertion).**
+**Definition 1.11 (All clauses of the original-domain assertion).**
 
 $$\operatorname{LiteralResolution} \iff ((\forall k: \mathbb{Z}, (\operatorname{intCast}\left(\operatorname{exponent}\left(k\right)\right) = \operatorname{ediv}\left((k) \cdot (((3) \cdot (k)) + (1)), 2\right)) \land ((0 \le \operatorname{intCast}\left(\operatorname{exponent}\left(k\right)\right)) \land ((2) \cdot (\operatorname{intCast}\left(\operatorname{exponent}\left(k\right)\right)) = (k) \cdot (((3) \cdot (k)) + (1))))) \land ((\forall A: \operatorname{Units}\left(\operatorname{PowerSeries}\left(\mathbb{Z}\right)\right), \forall N: \mathbb{N}, \forall k: \mathbb{Z}, (\neg (k \in \operatorname{Icc}\left(-(\operatorname{intCast}\left(N\right)), \operatorname{intCast}\left(N\right)\right))) \implies ((\operatorname{coeff}\left(N, ((X)^{\operatorname{exponent}\left(k\right)}) \cdot (\operatorname{val}\left((A)^{(3) \cdot (k)}\right))\right) = 0) \land (\operatorname{coeff}\left(N, ((X)^{\operatorname{exponent}\left(k\right)}) \cdot (\operatorname{val}\left((A)^{-(((3) \cdot (k)) + (1))}\right))\right) = 0))) \land ((\forall A: \operatorname{Units}\left(\operatorname{PowerSeries}\left(\mathbb{Z}\right)\right), \operatorname{HasSum}\left((k: \mathbb{Z} \mapsto \operatorname{term}\left(A, k\right)), \operatorname{bilateral}\left(A\right)\right)) \land ((\operatorname{Original}\left(\operatorname{generatingUnit}\left(\mathbb{Z}\right)\right)) \land ((\forall A: \operatorname{Units}\left(\operatorname{PowerSeries}\left(\mathbb{Z}\right)\right), (\operatorname{Original}\left(A\right)) \implies ((\operatorname{constantCoeff}\left(\operatorname{val}\left(A\right)\right) = 1) \land ((A = \operatorname{generatingUnit}\left(\mathbb{Z}\right)) \land (\forall n: \mathbb{Z}, (1 \le n) \implies ((2 \mid \operatorname{coeff}\left(\operatorname{toNat}\left(n\right), \operatorname{val}\left(A\right)\right)) \land (\operatorname{ediv}\left(\operatorname{coeff}\left(\operatorname{toNat}\left(n\right), \operatorname{val}\left(A\right)\right), 2\right) \bmod 2 = \operatorname{intCast}\left(\operatorname{partitionCount}\left(\operatorname{toNat}\left((n) - (1)\right)\right)\right) \bmod 2)))))) \land ((\operatorname{partitionCount}\left(0\right) = 1) \land (\forall n: \mathbb{Z}, (0 \le n) \implies (\operatorname{a}\left(n\right) = \operatorname{coeff}\left(\operatorname{toNat}\left(n\right), \operatorname{generatingSeries}\left(\mathbb{Z}\right)\right)))))))))$$
 
@@ -148,7 +162,7 @@ $$\operatorname{LiteralResolution} \iff ((\forall k: \mathbb{Z}, (\operatorname{
 
 The clauses give exponent validity, local finiteness of both monomials, the whole bilateral HasSum, integral unit existence, forced constant coefficient one, uniqueness among every original unit solution, all positive integer indices, the unique empty partition, and the signed-index correspondence.
 
-**Theorem 1.11 (The literal partition-parity assertion).**
+**Theorem 1.12 (The literal partition-parity assertion).**
 
 $$(\forall k: \mathbb{Z}, (\operatorname{intCast}\left(\operatorname{exponent}\left(k\right)\right) = \operatorname{ediv}\left((k) \cdot (((3) \cdot (k)) + (1)), 2\right)) \land ((0 \le \operatorname{intCast}\left(\operatorname{exponent}\left(k\right)\right)) \land ((2) \cdot (\operatorname{intCast}\left(\operatorname{exponent}\left(k\right)\right)) = (k) \cdot (((3) \cdot (k)) + (1))))) \land ((\forall A: \operatorname{Units}\left(\operatorname{PowerSeries}\left(\mathbb{Z}\right)\right), \forall N: \mathbb{N}, \forall k: \mathbb{Z}, (\neg (k \in \operatorname{Icc}\left(-(\operatorname{intCast}\left(N\right)), \operatorname{intCast}\left(N\right)\right))) \implies ((\operatorname{coeff}\left(N, ((X)^{\operatorname{exponent}\left(k\right)}) \cdot (\operatorname{val}\left((A)^{(3) \cdot (k)}\right))\right) = 0) \land (\operatorname{coeff}\left(N, ((X)^{\operatorname{exponent}\left(k\right)}) \cdot (\operatorname{val}\left((A)^{-(((3) \cdot (k)) + (1))}\right))\right) = 0))) \land ((\forall A: \operatorname{Units}\left(\operatorname{PowerSeries}\left(\mathbb{Z}\right)\right), \operatorname{HasSum}\left((k: \mathbb{Z} \mapsto \operatorname{term}\left(A, k\right)), \operatorname{bilateral}\left(A\right)\right)) \land ((\operatorname{Original}\left(\operatorname{generatingUnit}\left(\mathbb{Z}\right)\right)) \land ((\forall A: \operatorname{Units}\left(\operatorname{PowerSeries}\left(\mathbb{Z}\right)\right), (\operatorname{Original}\left(A\right)) \implies ((\operatorname{constantCoeff}\left(\operatorname{val}\left(A\right)\right) = 1) \land ((A = \operatorname{generatingUnit}\left(\mathbb{Z}\right)) \land (\forall n: \mathbb{Z}, (1 \le n) \implies ((2 \mid \operatorname{coeff}\left(\operatorname{toNat}\left(n\right), \operatorname{val}\left(A\right)\right)) \land (\operatorname{ediv}\left(\operatorname{coeff}\left(\operatorname{toNat}\left(n\right), \operatorname{val}\left(A\right)\right), 2\right) \bmod 2 = \operatorname{intCast}\left(\operatorname{partitionCount}\left(\operatorname{toNat}\left((n) - (1)\right)\right)\right) \bmod 2)))))) \land ((\operatorname{partitionCount}\left(0\right) = 1) \land (\forall n: \mathbb{Z}, (0 \le n) \implies (\operatorname{a}\left(n\right) = \operatorname{coeff}\left(\operatorname{toNat}\left(n\right), \operatorname{generatingSeries}\left(\mathbb{Z}\right)\right))))))))$$
 
@@ -177,5 +191,6 @@ Map the original unit equation to characteristic two and use uniqueness to obtai
 - Truth anchor: `D5/S1/Recurrence/Bilateral/HannaPentagonalPartitionParity.generatingUnit`
 - Truth anchor: `D5/S1/Recurrence/Bilateral/HannaPentagonalPartitionParity.partitionCount`
 - Truth anchor: `D5/S1/Recurrence/Bilateral/HannaPentagonalPartitionParity.partitionSeries`
+- Truth anchor: `D5/S1/Recurrence/Bilateral/HannaPentagonalPartitionParity.partition_reciprocal`
 - Truth anchor: `D5/S1/Recurrence/Bilateral/HannaPentagonalPartitionParity.result`
 - Truth anchor: `D5/S1/Recurrence/Bilateral/HannaPentagonalPartitionParity.term`

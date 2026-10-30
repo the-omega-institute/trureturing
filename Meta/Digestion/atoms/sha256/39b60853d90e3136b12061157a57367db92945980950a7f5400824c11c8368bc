@@ -1,0 +1,41 @@
+**Definition 13.2 (a literal finite codec).** Use AAII Definition 90.2's
+codec. Write $\ell(k)$ for the binary length of a nonnegative integer,
+with $\ell(0)=0$. A canonical signed integer $z$ consists of its sign,
+$1^{\ell(|z|)}0$, and its magnitude bits, of total length
+$2\ell(|z|)+2$; negative zero is forbidden. A reduced rational $A/B$
+with $B>0$ consists of the signed numerator and positive denominator
+length prefix/bits, of total length
+
+$$
+\rho(A/B)=2\ell(|A|)+2\ell(B)+3.
+\tag{13.1}
+$$
+
+Three-bit field tags give Reset/Tick/Hold request length three, exact
+Read$(j)$ length $5+2\ell(|j|)$, and Add$(j,q)$ this latter length
+plus $\rho(q)$. Exact scalar replies have length $3+\rho(q)$.
+Fixed Ack, RangeRefusal and BadFrame tags have three bits each.
+Digital Read adds the canonical signed code of its nonnegative $p$,
+so its request length is $7+2\ell(|j|)+2\ell(p)$ and its signed integer
+reply length is $5+2\ell(|k|)$. Complete invalid/noncanonical payloads
+take the branches of §7; they are not alternative encodings of valid
+values. This finite codec does not make a rational or a precision a
+constant-width primitive.
+
+For actual success addresses $p_1,\ldots,p_n$ and refused-probe addresses
+$r_1,\ldots,r_f$, one raw or outward growth channel pays payload bits
+
+$$
+G_{\rm bits}=\sum_{i=1}^n(4|p_i|+9)
+ +\sum_{j=1}^f(2|r_j|+9).
+\tag{13.2}
+$$
+
+A pays this once; C's stated adapter pays it twice. Add every actual
+field request and response at its above length, including seed and
+inner Tick acknowledgements. Also add each actual End, local
+acknowledgement, Return/navigation, dispatch, copy, clear, law/roster/
+binding handoff and requested record/history export. Input generation
+and provider traffic are actual resources, not absorbed by a semantic
+call count. A different codec must pay its own literal words.
+

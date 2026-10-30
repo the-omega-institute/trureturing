@@ -1,0 +1,41 @@
+**Proposition 8.2 (Pair closure under the actual reads and controls).** The pair projections of the three laboratory readout rows are
+
+$$
+(\ell_0)_{AB}=(0,0),\qquad
+(\ell_1)_{AB}=(1,0),\qquad
+(\ell_2)_{AB}=(8,0).
+$$
+
+Each control preserves the pair as a closed canonical subsystem. Nonselective readout reduces to a Gaussian momentum kick on that pair even when the rest is correlated with it.
+
+Proof. The pair is the first column of $X_3$, so Definition 3.1 gives its readout contribution $i^3q_A$ and no $q_B$ term. Left multiplication by $J$ or $M$ acts separately on each matrix column, hence $U_{A_E}=U_E^{AB}\otimes U_E^{\rm rest}$ under this tensor splitting, with the inverse-transpose momentum action of Theorem 3.2.
+
+For a read at clock $i$, split $F_i(q)=f_i^{AB}+f_i^{\rm rest}$, where $f_i^{AB}=i^3q_A$ (zero at clock zero). Put
+
+$$
+r_\sigma=\frac{1}{4\sigma^2},\qquad
+\mu_\sigma=\mathcal N(0,r_\sigma),\qquad
+V_i^{AB}(\eta)=e^{-i\eta f_i^{AB}},\quad
+V_i^{\rm rest}(\eta)=e^{-i\eta f_i^{\rm rest}}.
+$$
+
+The spectral momentum distribution of the independent probe in Assumption 4.1 and its coupling in Theorem 4.2 give
+
+$$
+\mathcal D_i(\rho)=\int
+(V_i^{AB}(\eta)\otimes V_i^{\rm rest}(\eta))\rho
+(V_i^{AB}(\eta)\otimes V_i^{\rm rest}(\eta))^\dagger
+\,\mu_\sigma(d\eta).
+$$
+
+This is a common kick parameter on pair and rest, not an assumption of independent kicks on those subsystems. Unitary invariance of the partial trace on the rest gives, for any trace-class $\rho$ including correlated inputs,
+
+$$
+\operatorname{Tr}_{\rm rest}\mathcal D_i(\rho)
+=\int V_i^{AB}(\eta)
+(\operatorname{Tr}_{\rm rest}\rho)
+V_i^{AB}(\eta)^\dagger\,\mu_\sigma(d\eta).
+$$
+
+Pair-factorization of the controls and this identity justify successive pair reduction throughout the nonselective composition in Definition 8.1. In particular the initial read is still present even though its reduced pair channel is the identity. No such identity for a branch conditioned on the retained records is being asserted. $\square$
+

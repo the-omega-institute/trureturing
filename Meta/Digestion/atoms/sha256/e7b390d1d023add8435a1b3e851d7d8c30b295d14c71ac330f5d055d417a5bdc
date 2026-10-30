@@ -1,0 +1,67 @@
+**Theorem 13.10 (Sharp value expansion).** For fixed $h\ge2$, as $a\to\infty$ through integers, the exact minimum in Theorem 13.9 satisfies
+$$
+\min_{x\in\mathcal X_{a,h}}J_s(x)-\frac{B_0}{2}
+=\sqrt2\,h\,a^{3/2}+\frac{3h}{\sqrt2}\,a^{1/2}
+ -\frac{h}{4\sqrt2}\,a^{-1/2}
+ +\frac{h^2}{a}+O_h(a^{-3/2}).
+\tag{13.25}
+$$
+The optimizer also has the finer expansion
+$$
+ u_h=\frac{h}{\sqrt2\,a^{3/2}}
+ \left(1-\frac3{2a}+O_h(a^{-2})\right).
+\tag{13.26}
+$$
+
+**Proof.** With $M_a,N_a,b_a$ as in Lemma 13.3, an exact rearrangement of (13.1) is
+$$
+\Phi_{a,h}(u)-B_0=\frac{h^2}{u}+b_au+W_a(u),
+$$
+where
+$$
+W_a(u)=\frac{r^2u^2(2aM_a-a^3-M_au)}{a^2(a-u)^2}.
+\tag{13.27}
+$$
+Equation (13.4) and $u_h=O_h(a^{-3/2})$ give
+$$
+ u_h=\frac{h}{\sqrt{b_a}}+O_h(a^{-4}),
+\tag{13.28}
+$$
+and the exact identity
+$$
+\frac{h^2}{u_h}+b_au_h-2h\sqrt{b_a}
+=\frac{b_a\bigl(u_h-h/\sqrt{b_a}\bigr)^2}{u_h}
+$$
+shows that the error in replacing the first two terms by $2h\sqrt{b_a}$ is $O_h(a^{-7/2})$.
+
+Put
+$$
+ c_{2,a}=r^2\left(\frac{2M_a}{a^3}-\frac1a\right)
+=4a^2+11a+6-\frac7a-\frac8{a^2}-\frac2{a^3}.
+$$
+For $0<u\le Ca^{-3/2}$, expansion of $(1-u/a)^{-2}$ in (13.27) with a bounded remainder gives
+$$
+W_a(u)=c_{2,a}u^2+O_C(au^3).
+\tag{13.29}
+$$
+Using (13.28), (13.29), and $b_a\asymp a^3$ yields
+$$
+\Phi_{a,h}(u_h)-B_0
+=2h\sqrt{b_a}+\frac{h^2c_{2,a}}{b_a}+O_h(a^{-7/2}).
+\tag{13.30}
+$$
+Now
+$$
+ b_a=2a^3+6a^2+4a-3-\frac4a-\frac1{a^2},
+$$
+so Taylor expansion with a bounded remainder gives
+$$
+\sqrt{b_a}=\sqrt2\,a^{3/2}
+ \left(1+\frac3{2a}-\frac1{8a^2}+O(a^{-3})\right),
+\qquad
+\frac{c_{2,a}}{2b_a}=\frac1a+O(a^{-2}).
+$$
+Dividing (13.30) by two proves (13.25). The same expansion of $b_a^{-1/2}$ in (13.28) proves (13.26). ∎
+
+Theorem 13.9 is a repo-derived consequence for every fixed integer $h\ge2$ of one actual joint array, the common-event charge, the integer core polynomial and strict scalar Jensen. Theorem 10.1 and Section 12 supply the one-tail family and the $h=1$ endpoint analysis; they are used as prior material rather than repeated claims. The threshold $A(h)$ is asserted to exist but neither specified nor minimized. No statement is made for $h$ growing with $a$, for the finite range below that threshold, or for a prescribed finite graph budget. The full text of K. Zhao and X. Zhao, DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), has not been obtained, so possible overlap is unassessed and no literature-priority claim is made.
+

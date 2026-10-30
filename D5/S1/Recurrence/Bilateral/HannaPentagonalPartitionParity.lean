@@ -289,7 +289,7 @@ noncomputable def partitionCount (n : ℕ) : ℕ := Fintype.card (Nat.Partition 
 noncomputable def partitionSeries : PowerSeries ℤ := mk fun n => (partitionCount n : ℤ)
 
 
-private theorem partition_reciprocal : pentagonalSeries ℤ * partitionSeries = 1 := by
+theorem partition_reciprocal : pentagonalSeries ℤ * partitionSeries = 1 := by
   have hp : HasProd (fun i : ℕ => ∑' j : ℕ, (X : PowerSeries ℤ) ^ ((i + 1) * j))
       partitionSeries := by
     simpa [Nat.Partition.restricted, partitionSeries, partitionCount] using

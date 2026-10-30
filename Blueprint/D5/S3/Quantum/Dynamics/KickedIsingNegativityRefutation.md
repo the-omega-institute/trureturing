@@ -114,19 +114,7 @@ $$\forall L \in \mathbb{N},\; \forall A \in \operatorname{Finset}\left(\operator
 
 Page 2 defines ρ_AB(t) = tr_C(|ψ(t)⟩⟨ψ(t)|). The coordinate function inside vecMulVec is the same ψ expressed on the product of the retained blocks and the complement. Its star is complex conjugation, so vecMulVec forms the rank-one density matrix. The frozen partialTraceRight sums over the complement.
 
-**Definition 1.10 (Partial transposition).**
-
-$$\forall A \in Type,\; \forall B \in Type,\; \forall rho \in \operatorname{Matrix}\left((A)\times(B), (A)\times(B), \mathbb{C}\right),\; \forall p \in (A)\times(B),\; \forall q \in (A)\times(B),\; \operatorname{partialTranspose}\left(rho\right)\left(p, q\right) = rho\left((\operatorname{fst}\left(p\right),\operatorname{snd}\left(q\right)), (\operatorname{fst}\left(q\right),\operatorname{snd}\left(p\right))\right)$$
-
-*Formalization.* `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.partialTranspose` (`✓ std3`).
-
-*Citation.* T. Pathak (2026). *Mixed-State Entanglement in a Minimal Model of Quantum Chaos*. DOI: [10.48550/arXiv.2603.14292](https://doi.org/10.48550/arXiv.2603.14292). URL: <https://arxiv.org/abs/2603.14292v1>.
-
-*Commentary.*
-
-Equation (5), p. 2, uses partial transposition with respect to B. It swaps the two B indices while preserving the A indices. This definition allows different subsystem dimensions; the existing partialTransposeB is used directly for the equal two-qubit matrix in the proof.
-
-**Definition 1.11 (Integer-time evolution).**
+**Definition 1.10 (Integer-time evolution).**
 
 $$\forall L \in \mathbb{N},\; \forall h \in \operatorname{Fin}\left(L\right) \to \mathbb{R},\; \forall theta \in \operatorname{Fin}\left(L\right) \to \mathbb{R},\; \forall phi \in \operatorname{Fin}\left(L\right) \to \mathbb{R},\; \forall t \in \mathbb{Z},\; \operatorname{evolved}\left(h, theta, phi, t\right) = Matrix.mulVec\left((\operatorname{floquet}\left(h\right))^{t}, \operatorname{initial}\left(theta, phi\right)\right)$$
 
@@ -138,7 +126,7 @@ $$\forall L \in \mathbb{N},\; \forall h \in \operatorname{Fin}\left(L\right) \to
 
 The source evolves the initial state with U_KI[h]^t (supplement, p. 6). The exponent is an integer power of the literal Floquet matrix, and Matrix.mulVec is its action on the amplitude vector. The counterexample uses t = 1.
 
-**Definition 1.12 (Logarithmic negativity).**
+**Definition 1.11 (Logarithmic negativity).**
 
 $$\forall A \in Type,\; \forall B \in Type,\; [\operatorname{Fintype}\left(A\right)] [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(A\right)] [\operatorname{DecidableEq}\left(B\right)] \forall rho \in \operatorname{Matrix}\left((A)\times(B), (A)\times(B), \mathbb{C}\right),\; \operatorname{logNegativity}\left(rho\right) = Real.log\left(\operatorname{traceNorm}\left(\operatorname{partialTranspose}\left(rho\right)\right)\right)$$
 
@@ -150,7 +138,7 @@ $$\forall A \in Type,\; \forall B \in Type,\; [\operatorname{Fintype}\left(A\rig
 
 Equation (5), p. 2: 𝓔(t) = ln tr(√((ρ_AB^{T_B}(t))†ρ_AB^{T_B}(t))). The frozen traceNorm is defined by precisely this trace-of-square-root expression, with conjTranspose as the adjoint. Real.log is the natural logarithm.
 
-**Definition 1.13 (Half-order Rényi mutual information).**
+**Definition 1.12 (Half-order Rényi mutual information).**
 
 $$\forall A \in Type,\; \forall B \in Type,\; [\operatorname{Fintype}\left(A\right)] [\operatorname{Fintype}\left(B\right)] [\operatorname{DecidableEq}\left(A\right)] [\operatorname{DecidableEq}\left(B\right)] \forall rho \in \operatorname{Matrix}\left((A)\times(B), (A)\times(B), \mathbb{C}\right),\; \operatorname{mutualHalf}\left(rho\right) = \operatorname{renyiHalf}\left(\operatorname{partialTraceRight}\left(rho\right)\right) + \operatorname{renyiHalf}\left(\operatorname{partialTraceLeft}\left(rho\right)\right) - \operatorname{renyiHalf}\left(rho\right)$$
 
@@ -162,7 +150,7 @@ $$\forall A \in Type,\; \forall B \in Type,\; [\operatorname{Fintype}\left(A\rig
 
 Equation (9), p. 2: I_{A:B}^(α)(t) = S_A^(α)(t) + S_B^(α)(t) − S_AB^(α)(t). Here α = 1/2, partialTraceRight retains A and partialTraceLeft retains B.
 
-**Definition 1.14 (Pathak's Conjecture 1 at half order).**
+**Definition 1.13 (Pathak's Conjecture 1 at half order).**
 
 $$claim \Leftrightarrow (\forall L \in \mathbb{N},\; \forall h \in \operatorname{Fin}\left(L\right) \to \mathbb{R},\; \forall theta \in \operatorname{Fin}\left(L\right) \to \mathbb{R},\; \forall phi \in \operatorname{Fin}\left(L\right) \to \mathbb{R},\; \forall A \in \operatorname{Finset}\left(\operatorname{Fin}\left(L\right)\right),\; \forall B \in \operatorname{Finset}\left(\operatorname{Fin}\left(L\right)\right),\; \forall C \in \operatorname{Finset}\left(\operatorname{Fin}\left(L\right)\right),\; \forall t \in \mathbb{Z},\; (\operatorname{contiguous}\left(A, B, C\right)) \Rightarrow ((\operatorname{generic}\left(theta\right)) \Rightarrow ((2) \cdot (\operatorname{logNegativity}\left(\operatorname{reducedAB}\left(A, B, \operatorname{evolved}\left(h, theta, phi, t\right)\right)\right)) = \operatorname{mutualHalf}\left(\operatorname{reducedAB}\left(A, B, \operatorname{evolved}\left(h, theta, phi, t\right)\right)\right))))$$
 
@@ -174,7 +162,7 @@ $$claim \Leftrightarrow (\forall L \in \mathbb{N},\; \forall h \in \operatorname
 
 Conjecture 1, p. 3, states verbatim: "2𝓔(t) = I_{A:B}^{(α)}(t), hold for generic states at all times t." This is its α = 1/2 specialization, quantified over the chain length, real fields, product-state angles, contiguous tripartition and integer time. Each allowed tripartition has nonempty blocks. The specific fields are hᵢ = 1, with phases φᵢ = 0, for the counterexample.
 
-**Theorem 1.15 (Partial trace under a right unitary).**
+**Theorem 1.14 (Partial trace under a right unitary).**
 
 $$\forall a \in Type,\; \forall b \in Type,\; [\operatorname{Fintype}\left(a\right)] [\operatorname{Fintype}\left(b\right)] [\operatorname{DecidableEq}\left(a\right)] [\operatorname{DecidableEq}\left(b\right)] \forall rho \in \operatorname{Matrix}\left((a)\times(b), (a)\times(b), \mathbb{C}\right),\; \forall V \in \operatorname{Matrix}\left(b, b, \mathbb{C}\right),\; ((Matrix.conjTranspose\left(V\right)) \cdot (V) = 1) \Rightarrow (D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight\left(((Matrix.kronecker\left(1, V\right)) \cdot (rho)) \cdot (Matrix.conjTranspose\left(Matrix.kronecker\left(1, V\right)\right))\right) = D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight\left(rho\right))$$
 
@@ -188,7 +176,7 @@ $$\forall a \in Type,\; \forall b \in Type,\; [\operatorname{Fintype}\left(a\rig
 
 For arbitrary finite index types a and b with decidable equality, conjugating a complex bipartite operator by the identity on a and a matrix V on b with V adjoint times V equal to the identity leaves the partial trace over b unchanged.
 
-**Theorem 1.16 (Partial trace under left conjugation).**
+**Theorem 1.15 (Partial trace under left conjugation).**
 
 $$\forall a \in Type,\; \forall b \in Type,\; [\operatorname{Fintype}\left(a\right)] [\operatorname{Fintype}\left(b\right)] [\operatorname{DecidableEq}\left(a\right)] [\operatorname{DecidableEq}\left(b\right)] \forall rho \in \operatorname{Matrix}\left((a)\times(b), (a)\times(b), \mathbb{C}\right),\; \forall U \in \operatorname{Matrix}\left(a, a, \mathbb{C}\right),\; D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight\left(((Matrix.kronecker\left(U, 1\right)) \cdot (rho)) \cdot (Matrix.conjTranspose\left(Matrix.kronecker\left(U, 1\right)\right))\right) = ((U) \cdot (D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight\left(rho\right))) \cdot (Matrix.conjTranspose\left(U\right))$$
 
@@ -202,7 +190,7 @@ $$\forall a \in Type,\; \forall b \in Type,\; [\operatorname{Fintype}\left(a\rig
 
 For arbitrary finite index types a and b with decidable equality, conjugating a complex bipartite operator by U on a and the identity on b conjugates its partial trace over b by U. The matrix U is arbitrary.
 
-**Theorem 1.17 (Partial trace under local conjugation).**
+**Theorem 1.16 (Partial trace under local conjugation).**
 
 $$\forall a \in Type,\; \forall b \in Type,\; [\operatorname{Fintype}\left(a\right)] [\operatorname{Fintype}\left(b\right)] [\operatorname{DecidableEq}\left(a\right)] [\operatorname{DecidableEq}\left(b\right)] \forall rho \in \operatorname{Matrix}\left((a)\times(b), (a)\times(b), \mathbb{C}\right),\; \forall U \in \operatorname{Matrix}\left(a, a, \mathbb{C}\right),\; \forall V \in \operatorname{Matrix}\left(b, b, \mathbb{C}\right),\; ((Matrix.conjTranspose\left(V\right)) \cdot (V) = 1) \Rightarrow (D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight\left(((Matrix.kronecker\left(U, V\right)) \cdot (rho)) \cdot (Matrix.conjTranspose\left(Matrix.kronecker\left(U, V\right)\right))\right) = ((U) \cdot (D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceRight\left(rho\right))) \cdot (Matrix.conjTranspose\left(U\right)))$$
 
@@ -216,7 +204,7 @@ $$\forall a \in Type,\; \forall b \in Type,\; [\operatorname{Fintype}\left(a\rig
 
 For arbitrary finite index types a and b with decidable equality, conjugation by U tensor V acts on the partial trace over b as conjugation by U whenever V adjoint times V equals the identity. The operator rho and the matrix U are arbitrary complex matrices of the displayed sizes.
 
-**Theorem 1.18 (The left partial trace under local conjugation).**
+**Theorem 1.17 (The left partial trace under local conjugation).**
 
 $$\forall a \in Type,\; \forall b \in Type,\; [\operatorname{Fintype}\left(a\right)] [\operatorname{Fintype}\left(b\right)] [\operatorname{DecidableEq}\left(a\right)] [\operatorname{DecidableEq}\left(b\right)] \forall rho \in \operatorname{Matrix}\left((a)\times(b), (a)\times(b), \mathbb{C}\right),\; \forall U \in \operatorname{Matrix}\left(a, a, \mathbb{C}\right),\; \forall V \in \operatorname{Matrix}\left(b, b, \mathbb{C}\right),\; ((Matrix.conjTranspose\left(U\right)) \cdot (U) = 1) \Rightarrow (D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceLeft\left(((Matrix.kronecker\left(U, V\right)) \cdot (rho)) \cdot (Matrix.conjTranspose\left(Matrix.kronecker\left(U, V\right)\right))\right) = ((V) \cdot (D5.S3.Quantum.Information.PartialTraceMutualInformation.partialTraceLeft\left(rho\right))) \cdot (Matrix.conjTranspose\left(V\right)))$$
 
@@ -230,7 +218,7 @@ $$\forall a \in Type,\; \forall b \in Type,\; [\operatorname{Fintype}\left(a\rig
 
 For arbitrary finite index types a and b with decidable equality, conjugation by U tensor V acts on the partial trace over a as conjugation by V whenever U adjoint times U equals the identity. The operator rho and the matrix V are arbitrary complex matrices of the displayed sizes.
 
-**Theorem 1.19 (Partial transpose under local conjugation).**
+**Theorem 1.18 (Partial transpose under local conjugation).**
 
 $$\forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right))\times(\operatorname{Fin}\left(2\right)), (\operatorname{Fin}\left(2\right))\times(\operatorname{Fin}\left(2\right)), \mathbb{C}\right),\; \forall U \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; \forall V \in \operatorname{Matrix}\left(\operatorname{Fin}\left(2\right), \operatorname{Fin}\left(2\right), \mathbb{C}\right),\; D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation.partialTransposeB\left(((Matrix.kronecker\left(U, V\right)) \cdot (rho)) \cdot (Matrix.conjTranspose\left(Matrix.kronecker\left(U, V\right)\right))\right) = ((Matrix.kronecker\left(U, Matrix.map\left(V, star\right)\right)) \cdot (D5.S3.Quantum.Entanglement.StructuredNegativityCoincidenceRefutation.partialTransposeB\left(rho\right))) \cdot (Matrix.conjTranspose\left(Matrix.kronecker\left(U, Matrix.map\left(V, star\right)\right)\right))$$
 
@@ -244,7 +232,7 @@ $$\forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right))\
 
 For every complex two-qubit matrix rho and arbitrary complex two-by-two matrices U and V, partial transposition on the second factor carries conjugation by U tensor V to conjugation by U tensor the entrywise complex conjugate of V. No Hermitian or unitary hypothesis is required.
 
-**Theorem 1.20 (Refutation).**
+**Theorem 1.19 (Refutation).**
 
 $$\neg claim$$
 
@@ -275,7 +263,6 @@ Take L = 4, A = {0}, B = {1}, C = {2,3}, t = 1, hᵢ = 1 and φᵢ = 0. The init
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.joinParts`
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.logNegativity`
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.mutualHalf`
-- Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.partialTranspose`
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.partialTransposeB_kronecker_conj`
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.reducedAB`
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.renyiHalf`
@@ -284,7 +271,7 @@ Take L = 4, A = {0}, B = {1}, C = {2,3}, t = 1, hᵢ = 1 and φᵢ = 0. The init
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.trace_conjugate_right`
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.trace_local_left`
 - Truth anchor: `D5/S3/Quantum/Dynamics/KickedIsingNegativityRefutation.trace_local_right`
-- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/Bipartite](../Entanglement/AbsolutePPT/Bipartite.md)
+- Dependency: [D5/S3/Quantum/Entanglement/AbsolutePPT/UniformSchmidtCorner](../Entanglement/AbsolutePPT/UniformSchmidtCorner.md)
 - Dependency: [D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation](../Entanglement/FourQubitResidualSumMonotoneRefutation.md)
 - Dependency: [D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation](../Entanglement/StructuredNegativityCoincidenceRefutation.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteTraceDistance](../Foundation/FiniteTraceDistance.md)

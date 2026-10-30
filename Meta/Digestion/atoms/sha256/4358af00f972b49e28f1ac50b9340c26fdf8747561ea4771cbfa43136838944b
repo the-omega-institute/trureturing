@@ -1,0 +1,41 @@
+**Definition 14.1 (the resources which coexist).** The sufficient layouts
+above pay simultaneously for the following actual objects whenever live:
+
+- the persistent material source, its actual field cells and old/new Tick
+  buffers, fresh-cell initialization and the grants/provider supporting
+  all old and fresh vertices;
+- genuine root, dispatcher, return, input, output and record bindings,
+  their authority stores and their actual reference widths;
+- the earned current term, material-address maps, terminal order and
+  ordinal inclusion/correspondence, and the finite installed program;
+- A's literal $Y$, or C's literal integer reports and separate extracted
+  nominal $Y$, with their actual epoch/ordinal order;
+- historical and current field buffers, the present prediction block,
+  $O_I,D_I$, matrix powers/inverses and elimination/forcing scratch;
+- the changing local reverse syntax, recovered addressed word, A's gap
+  counters, selector address/kind, old/new predictor buffers and all
+  transient copies actually used;
+- pending input bits, complete requests, parser lengths/subphases,
+  actual target cursors, adapter lock/inner reply state, digitizer and
+  nuisance-provider latches, sealed output and Return/cleanup backing;
+- input generation, any retained or isolated old producer/controller/
+  observer/caller archive, exported records, and cleared but retained
+  arena capacity.
+
+The list describes one possible simultaneous implementation, not separate
+minima combined from incompatible runs. Shared storage counts once only
+when actually shared; a second copy, a raw record and its nominal
+extraction, or a predictor and recovered word all coexist and count
+separately. Clearing pays writes and changes accessibility; it does not
+retroactively remove material or earlier allocations. Fresh rights,
+authentication of roster dispatch and enough material are conditional
+installation resources, not conclusions of a numerical inverse.
+
+Successful address lengths have at worst quadratic total length in $N$
+for the native word, since there are at most $N$ events and each address
+has length at most $N$. A compressed A history additionally pays
+$\sum_i\ell(q_i)$ and delimiters. Arbitrary refused addresses or arbitrary
+input rationals can be much longer and are charged as actually acquired.
+The fixed program has loops over these growing data; finite control
+does not imply bounded lifetime memory, storage, traffic or precision.
+

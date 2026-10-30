@@ -1,0 +1,73 @@
+**Theorem 13.1 (two sufficient suppliers with their different prices).**
+There are the following source-faithful ways to reach Definition 8.1.
+They do not imply that an arbitrary finite menu, an unearned bit string
+or a young support already meets that definition.
+
+First, at any actual cone satisfying the core-only premise, a complete
+stationary paid root-literal scan supplies its whole ordered support,
+its age and its visible batches. If $T\ge s+3$, this yields (PCR.24).
+With $N=2F_{T+2}-1$, a scan which pays both child tests at every
+present node has
+
+$$
+ Q\le2N+1,\qquad M\le m+T+1,\qquad J\le(m+T+1)(2N+1),\quad U=0.
+ \tag{PCR.35}
+$$
+
+The initial confirmation is included; an already earned root can omit
+it. If the acquired full-address support record has encoded length $L$,
+conversion/extraction has conservative sequential work and cumulative
+writes at most $c(L+d+\Gamma+2)^{12}$ and peak backing at most
+$c(L+d+\Gamma+2)^4$. Expanded-record disposal does not refund its
+writes. The retained boundary still has (PCR.33)'s size. In particular
+(PCR.35) is generally exponential in $T$, not a polynomial paid
+acquisition in $d,\log T$.
+
+Second, in PSA Definition 1.1's *original entrance* with earned spine
+$h$, $H=2h+1$, and $S=d+H+2$, the deep branch of PSA Theorem 2.1
+actually supplies a cone with $s+3\le T\le2(s+3)$ and $N=O((d+1)^2)$.
+Its complete scan and chronological decoding furnish the record here.
+All complete root literals have length at most $H$; the spine and scan
+use $O(\log(H+2)+(d+1)^2)$ Reads and at most $H$ times that total
+literal traffic. The represented records, sequential calculations,
+cumulative scratch/retained writes and peak backing admit, for example,
+the conservative envelopes $c(S+\Gamma+2)^{60}$ and
+$c(S+\Gamma+2)^8$ respectively. These
+cover this supplier's prelude and conversion, without asserting any
+improvement to PSA's full-domain acquisition bound. If its shallow
+branch applies it instead acquires the original complete root and
+$(P,n)$, with $O((d+1)^4)$ nodes; that root need not be core-only.
+The second supplier is a genuine polynomial-size acquired local example
+in the full source class. It neither selects the user's arbitrary $v$
+nor makes a huge support at a prescribed $v$ cheap to scan.
+
+Proof. Prefix closure and actual full binarity justify scheduling each
+positive child once. Paying both child tests at each present node
+closes all terminal absences and cannot stop at an unqueried fringe.
+The normalized maximum depth is $T$ and a terminal test adds at most
+one, giving (PCR.35). The acquired leaf count $F_{T+2}$ determines
+$T$ uniquely, including $T=0,1$. Theorem 2.1 determines exactly the
+visible batches, sorted by normalized update and *physical* address.
+Counts, heights and addresses can be stored in delimited records and
+propagated by finite repeated scans, with comparison sorting if desired.
+Since $T\le N$, and an explicit record has at least $N$ entries,
+all these computations and sequential address accesses fit the
+stated polynomial in $L+d+\Gamma$. This does not shrink its input
+bill to a polynomial in a succinct unknown age.
+
+For the second supplier use its *proved* terminal-spine dichotomy,
+not a generic cone assertion. Its earned all-$a$ endpoint, $s+3$
+ancestors and rank decrements give exactly the stated local age
+interval. Its selected depth is at least the ACR core cutoff, so every
+subsequent birth is a core birth at its original index even when the
+original stream has a singular transient. PSA Theorem 2.2 supplies
+(PCR.22). These are precisely the physical selection hypotheses which
+Theorem 8.2 did not give for an arbitrary cone. Its scan node/address
+bounds and polynomial finite record processing give the stated price;
+the larger conservative envelopes also accommodate the matrix/operator
+conversion and all copies. This relies only on that prelude and the
+checked algebraic inverse, not on assuming a successful original
+normalization or installation. At $d=0$ the known zero law requires no
+batches, but the age, binding and all actual service costs still need
+their own supplier. $\square$
+

@@ -1,0 +1,29 @@
+**Theorem 14.1.** For every declared $d\ge1$, the word $JM^{2m}$ gives one all-input fixed gain map in $2m+2=2d+4$ reads, with output $\operatorname{tr}(JP)\beta$.
+
+**Proof.** Acquire one $J$ and then $2m$ separate $M$ actions, with every immediate read and the initial read. At original clock $s+1$,
+
+$$
+A_{s+1}=M^sJ,\qquad
+z_{s+1}=\bigl(\alpha'\phi^s+\eta'\psi^s\bigr)g(s+1)+\delta,
+$$
+
+where $\alpha'=\operatorname{tr}(\Pi_+JP)$ and $\eta'=\operatorname{tr}(\Pi_-JP)$. Their sum is $\operatorname{tr}(JP)=P_{12}+P_{21}>0$.
+
+For each $0\le k\le d$ choose $h_k(x)=\sum_{s=0}^{2m}b_{ks}x^s$ with
+
+$$
+h_k(1)=0,\qquad
+((D+1)^jh_k)(\phi)=((D+1)^jh_k)(\psi)=\delta_{jk}
+\quad(0\le j\le d).
+$$
+
+Lemma 12.2 proves existence and uniqueness for all these prescribed conditions. Equation (12.3), with the actual factor $(s+1)^j$ from $g(s+1)$, gives
+
+$$
+\sum_{s=0}^{2m}b_{ks}z_{s+1}=(\alpha'+\eta')\beta_k.
+$$
+
+Clock zero has output coefficient zero but is acquired. The scale is strictly positive, with no condition on the actual degree, sampled roots, coefficient signs, drift, or $\eta'$. Polynomial exponents specify coefficients on original clocks; they do not reindex acquisition. This is a gain construction, not a claim of complete-target recovery on this word. $\square$
+
+Combining Sections 10–14, the fixed mixed threshold at any $m$ is $2m+1$ if (10.3) has a positive solution and $2m+2$ otherwise. Its $m=2,3,4$ nonexistence is established in Section 13, giving the sharp fixed mixed thresholds six, eight, and ten. For $m\ge5$ the criterion remains unresolved. The prior pure-$M$ threshold is already $2m+1$ at every $m$.
+

@@ -1,0 +1,19 @@
+## 9. Sources and boundaries
+
+The model, clocks, source coordinates, zero-safe lift, and the exact
+$R_{18}$ coefficient table are supplied by
+FIB_COMMON_PARENT_GEOMETRY_AND_MIXED_CHILDREN.md, Definitions 1.1,
+12.1, 20.1, 24.1 and Theorems 12.3 and 20.2.  The affine resultant and
+Bézout facts are standard; see Cox--Little--O'Shea, *Ideals, Varieties,
+and Algorithms*, Chapter 3.  Univariate resultants and the root-counting
+interface have the standard real-algebraic background in Basu--Pollack--
+Roy, *Algorithms in Real Algebraic Geometry*.  These references supply
+general algebraic methods, not the FIB-specific certificate.
+
+The exact three Taylor enclosures above are the new source-specific
+finite rational certificate.  They prove noncollapse on the whole
+$\mathcal P\times\mathbb R$; they do not rerun or reprove the published
+668-term determinant identity.  No exhaustive novelty claim, Lean
+formalization, ingestion status, feasibility decision, candidate count,
+or publication status is part of this volume.
+

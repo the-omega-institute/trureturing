@@ -33,6 +33,14 @@ internal sealed class OutputMaximalCoherenceTensorizationRefutationDocument : IS
                     + "This is MatrixMap.of_kraus K K applied to R, the Kraus representation of the "
                     + "completely positive maps considered in Section IV. No normalization is imposed "
                     + "by the action itself.", "krausApply"),
+            Describe.Lean(
+                DescribeId.Create("kraus-psd"),
+                DeclarationHandle.Create(Prefix + "kraus_psd"),
+                H("Kraus actions preserve positivity"),
+                StatementSource.FromAuthor(Disp(KrausPsdFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Every finite Kraus family sends positive semidefinite input matrices to positive semidefinite output matrices."))),
+                DescribeRole.Theorem),
             Node("iskrauschannel", "Kraus normalization", KrausChannelFormula(),
                 "The finite Kraus family represents a trace-preserving channel precisely when the sum "
                     + "of K(r)^H K(r) is the identity on a. Together with the Kraus action, this is the "
@@ -187,6 +195,18 @@ internal sealed class OutputMaximalCoherenceTensorizationRefutationDocument : IS
         Formula normalization = Equal(SumOver("r", V("k"), Multiply(Adjoint(kr), kr)), D(1));
         return ChannelBinders(All("K", Family("k", "b", "a"),
             IffOf(Call("IsKrausChannel", k), normalization)), true);
+    }
+
+    private static Formula KrausPsdFormula()
+    {
+        Formula positive = Call("PosSemidef", Call("krausApply", V("K"), V("R")));
+        Formula body = All("K", Family("k", "b", "a"), All("R", Mat(V("a"), V("a")),
+            Imp(Call("PosSemidef", V("R")), positive)));
+        body = Instance("Fintype", "k", body);
+        body = Instance("Finite", "b", body);
+        body = Instance("DecidableEq", "a", body);
+        body = Instance("Fintype", "a", body);
+        return Types(["a", "b", "k"], body);
     }
 
     private static Formula OutputFormula()

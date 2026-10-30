@@ -1,0 +1,15 @@
+## 6. Entire-child terminal-J injectivity
+
+Take any $(p,v)\in K$ and any two worlds $W,W'\in C(p,v)$ with
+$a(W)=a(W')$. Section 3 applies to every companion, including companions not selected
+for a proposed pair, so both sources lie in $R$. Section 4 is regular on $R$ because
+$L<0$ and $X,N,T,U>0$. By (5.4)–(5.5), each world has the unique representation
+$b=b_p(r)$ and the terminal-$J$ value is strictly increasing with $r$.
+The equality $a(W)=a(W')$ therefore implies $r=r'$, then $b=b'$. The undivided
+full-parent correspondence in Theorem 2.1, equivalently III, Lemma 10.2, fixes
+$e$ from (2.1), then fixes $d$ and the entire interpolating gain from its four
+samples. Thus $W=W'$. This proves Theorem 1.1, including the unused companions.
+
+No terminal-$M$ equality, selected-endpoint restriction, or pair-overlap assumption
+was used in this injectivity argument.
+

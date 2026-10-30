@@ -1,0 +1,58 @@
+**Theorem 15.2 (one fixed input pays all three bin lower bounds).**
+Put $r=\lceil\log_2K\rceil$, so $r=0$ when $K=1$. For every $S,K$
+and every competitor in Assumption 13.2 there exists one fixed
+$(x,k)\in\mathcal F(S,K)$ whose entire actual run simultaneously has
+
+$$
+ \begin{aligned}
+ Q&\ge n+r,\\
+ M_{\rm addr}&\ge h+K+1,\\
+ W&\ge L+n(K+1)+(\delta+K+1)r.
+ \end{aligned}
+ \tag{GPO.48}
+$$
+
+Proof. Take the union of the actual terminating runs on the finite
+$K2^n$-member family, with nodes indexed by reached reply prefixes.
+Each individual run, including all local work and updates, is finite;
+the union is finite. Common-prefix control makes the next query or
+terminal output unique at each such node. Terminal reply words are
+prefix-free: if one were a proper prefix of another, the latter run
+would be forced by the common intervening actions to stop at the former
+one's output. Distinct required pairs cannot have the same terminal
+reply word. Thus this finite reply tree has exactly $K2^n$ terminal
+leaves.
+
+Suppress its single-child queries and deterministic local/update segments
+for the counting argument only. They remain charged actions in the
+actual run. The resulting tree is binary, with each internal vertex an
+actual query that has both bit answers among the compatible members.
+A binary tree all of whose paths have at most $b$ branching vertices
+has at most $2^b$ leaves: for $b=0$ there is at most one leaf, and at
+an internal root the two subtrees each have at most $2^{b-1}$ leaves.
+Therefore some actual leaf has at least
+
+$$
+ \lceil\log_2(K2^n)\rceil=n+\lceil\log_2K\rceil=n+r
+ \tag{GPO.49}
+$$
+
+branching queries. Choose the original member $(x,k)$ that realizes
+that leaf. It is fixed for its entire run, rather than chosen anew at
+each query.
+
+On this very run, Theorem 15.1 selected $n$ distinct first-difference
+queries. Each is a branching vertex of the unsuppressed tree: its
+single-bit-flipped alternative with the same $k$ follows the whole
+prefix and supplies the opposite next bit. Thus all $n$ selected calls
+belong to the at least $n+r$ branching calls just counted. Charge their
+individual lengths by $d_i+K+1$, using (GPO.47) and $k\ge K$.
+There are at least $r$ other branching calls; charge each by
+$\delta+K+1$ using Lemma 14.2. These sets of actual occurrences are
+disjoint, so their sum is precisely the asserted lower bound for $W$.
+The deepest selected leaf also gives $M_{\rm addr}\ge h+k+1\ge h+K+1$,
+and branching calls alone give the $Q$ bound. No separately attained
+coordinate maxima have been added. The argument counts only reached
+finite segments and permits every adaptive finite update schedule in
+the competitor class. $\square$
+

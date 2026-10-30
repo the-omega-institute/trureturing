@@ -1,0 +1,38 @@
+**Proposition 65.4 (old preparation and actual later successors).** The
+old source preparation still has exactly $b$ successful promotions and
+$L-1$ successful splits. Its initialization and successful edits use
+$3+4b+8(L-1)$ located source-field assignments. Old addressed traffic,
+allocation, grants and any retained old records are additional actual
+resources, whether or not the observer can recover their serial order.
+The acquisition assignments $4\Delta$ are added to this preparation.
+
+For a subsequent completed continuation on the actual random endpoint,
+let $r,z,p_+,s_+,J,J_+$ have precisely the meanings in Proposition 58.3.
+Then its additional guard traffic and source growth are
+
+$$
+I_{\rm cont}=2J+4r+3z,\qquad
+O_{\rm cont}=5r+2J_++3z,\qquad
+\Delta_{\rm cont}=p_++2s_+.
+\tag{AAII.34}
+$$
+
+At that settled cut the source has
+$n+b+\Delta+p_++2s_+$ vertices. The current logical word has
+$n+2S_++2s_+$ constructors and the immutable entry word has $n$.
+Their total constructor payload is $4n+4S_++4s_+$ bits. Successful
+continuation templates add $4p_++8s_+$ source-field assignments.
+Every actual End, acknowledgement, Return, pending prefix, prediction,
+code replacement, record copy and clearing is charged in addition.
+
+Proof. The old counts are the same birth-type identities used in
+Proposition 58.3; acquisition changes neither what was actually prepared
+nor its charges. The continuation is the original complete parser and
+source templates of Definition 53.3. Summing their literal lengths gives
+(AAII.34), including absent, branch and wrong-type refusals among the
+$r$ requests and the six unsupported tags among the $z$ requests.
+Only splits add logical constructors, while both kinds add their actual
+source vertices. The starting source is $u_{\rm end}$ from Theorem 62.3,
+so substituting $\nu(t)$ instead would generally give a false source
+count. $\square$
+

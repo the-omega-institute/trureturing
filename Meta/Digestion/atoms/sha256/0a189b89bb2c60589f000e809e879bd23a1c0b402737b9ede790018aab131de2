@@ -1,0 +1,83 @@
+**定理 14.1（保留实际联合档案的有限前向续接）。** Suppose Theorem 11.1 holds.
+Use a common initial joint state of the live/stopped system and any retained
+reference, archive and controller registers. Retain the old time/mode event,
+its live or stopped quantum successor, source/preparation/epoch identity,
+clock and units, calibration, reference, permissions, every already acquired
+record and every actual selection/update input. Any further history-bearing
+field generated outside the classified instrument is required to match in
+the full joint state or joint output kernel, not merely in its marginal law.
+
+On a live endpoint allow the complete prescribed original tail menu at this
+same double-wall base and matching initial height, restricted only by the
+same declared permissions and resource promises. Each tail may have any
+finite nonnegative duration, including zero, either original regularity
+alternative, any real phase increment, and every signed winding permitted
+by its explicit promise. The command specifies relative real phase; it does
+not query the unknown past lift. On a failed branch retain $f$ and all its
+records with only the supplied absorbing/stopped continuation. Illegal
+requests and any visible rejection remain distinct from executed failures.
+
+Then every finite common lawful downstream protocol gives the same complete
+joint output law in both cases. Its policy may depend on actually retained
+records and matched controller inputs. Additional quantum reads or random
+seeds are allowed only when separately permitted, with the same operations,
+independence contract where needed, records and charged resources.
+
+Proof. Theorem 11.1 and (OC.39) give equality of the full initial
+record-conditioned operator measures jointly with every common reference
+register, including any common pre-existing quantum/classical archive.
+By hypothesis any separately generated archive fields are also retained
+and jointly matched. Thus no correlation needed for feedback was replaced
+by equality of a marginal failure-time law.
+
+On the success record the endpoint height is common, so every matching
+original tail has the same mathematical domain and permission test. If its
+controls are $(\kappa,\varphi)$ of duration $L$, the actual source join is
+
+$$
+k(T+s)=\kappa(s),\qquad
+\chi(T+s)=\chi(T)+\varphi(s)-\varphi(0),\quad 0\le s\le L.
+\tag{OC.52}
+$$
+
+The supplied composition result keeps the entire old prefix and gives
+this translated tail and addition of every continuous weighted integral.
+Its derivative and added phase integral are the same in both cases even
+when the unknown old real endpoint lifts differ. No controller is handed
+$\chi(T)$. The canonical tail therefore has one common success operator
+$K_\delta$ and failure kernels $\mathcal I_{\delta,i}$ on the common
+live port. Old success followed by new success uses $K_\delta K_T$;
+old success followed by a new failure uses
+$\mathcal I_{\delta,i}(K_T\rho K_T^*)$ with the old record retained.
+Old failures keep their same event and absorbing successor. All these maps
+agree. Later timestamps are translated by the same actual terminal clock.
+
+For feedback, condition on the retained classical record and classical
+controller fields, keeping quantum registers in the conditional operator.
+The common permitted selector supplies the same next operation kernel on
+these equal joint inputs. Compose with that kernel, preserve its full label
+and successor, and integrate over the old records. Countable additivity and
+linearity preserve equality on every joint event. Induction proves equality
+for each finite number of such stages. A supplied common quantum instrument
+on controller/reference registers is handled by exactly the same CP-map
+composition. Branchwise durations and added cost meters agree whenever
+computed by these common declared operations; any extra source-sensitive
+meter is among the separately matched fields in the hypothesis. $\square$
+
+This is a sufficient boundary for the specified forward operation component
+with all other actual fields retained. It does not identify differing full
+archives. If a program log, old phase sample, winding sensor, source-bearing
+controller state or permission guard distinguishes the histories, that field
+must stay in the joint model and the theorem's matching hypothesis must be
+checked anew. Neither the equal-resource witness nor a compressed law
+coordinate authorizes deleting it. Likewise $F_0=F_4$ does not authorize
+merging the actual mode labels: a permitted policy may depend on which mode
+actually failed.
+
+The result covers every finite continuation in the declared menu. It proves
+no unbounded execution, finite-state implementation, least hardware memory,
+archive-acquisition procedure or relative-phase actuator. Exact prescribed
+waveforms and calibrated instruments remain named ideal resources of §5.2.
+A mathematical relative-command join is not a device for compiling unknown
+absolute controls or for recovering the unknown past waveform.
+

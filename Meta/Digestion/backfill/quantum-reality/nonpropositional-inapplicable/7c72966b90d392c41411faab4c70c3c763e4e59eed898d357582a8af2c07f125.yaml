@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7c72966b90d392c41411faab4c70c3c763e4e59eed898d357582a8af2c07f125
+  normalized_sha256: sha256:7c72966b90d392c41411faab4c70c3c763e4e59eed898d357582a8af2c07f125
+cas_ref: sha256:7c72966b90d392c41411faab4c70c3c763e4e59eed898d357582a8af2c07f125
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 宏观极限一行只列振荡积分、弱极限与有效源的证明义务，不陈述某个极限等式或估计。
+    previous_atom_id: 2c7e39279c723df2c7e5b08f88eeca8a8a83f120d6277213226abc986893e572
+    next_atom_id: 2a50535be4db7720682862ad3b3e9a754a71f9c72aaf25763ecaa92d9550b0f8

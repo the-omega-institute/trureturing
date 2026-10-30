@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:f809fae9cec007041156cda8ae0dfddc8760c123166e210f0e2583f34a014b92
+  normalized_sha256: sha256:f809fae9cec007041156cda8ae0dfddc8760c123166e210f0e2583f34a014b92
+cas_ref: sha256:f809fae9cec007041156cda8ae0dfddc8760c123166e210f0e2583f34a014b92
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本条只记录席位、模块、依赖次序与结账安排；未提出需要证明的数学断言。文本定位：## 四 预算与结算 L2a 一席位轮(codex-cli,独立 worktree,`GermWindow/`;同 PR deposit(绑 L2a atom)+ cover;三席评审),须在第一层 la165 合入后开工。L2b 一席位轮(新桶 `Analytic/Certified/`,可与 L
+    previous_atom_id: e622ef2634eea54c61fe9fe43d5b657f6db1e5813dc9e6dbf32f659e89bfc260
+    next_atom_id: null

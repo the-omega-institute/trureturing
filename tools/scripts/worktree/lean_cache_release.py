@@ -21,6 +21,7 @@ from urllib.parse import quote
 
 from lean_cache import SHARED_SEED_PLATFORMS, normalized_platform, partition_path, seed_partitions
 from cache_material import sha
+from lean_cache_topology import checkout_topology, git_absolute_path, warm_dev_remediation
 
 # Use the report entry's declared format and execution capture, never program hashes.
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / "lean-inspector"))
@@ -32,23 +33,30 @@ REPO = os.environ.get("STRATALINT_CACHE_REPO", "the-omega-institute/trureturing"
 # Issue #6194, run 34119746844: Release assets must be strictly below 2 GiB.
 # Keep dev's 1.5 GiB headroom and two-digit, at-most-100-part inventory.
 CHUNK_BYTES = 1610612736
-# Optional transport policy (#5985): a thirty-minute operation ceiling,
-# configurable downward, leaves headroom over measured multipart Release fetches
+# Optional transport policy (#5985): a thirty-minute default operation ceiling,
+# with an explicitly selected finite extension for large multipart Release fetches
 # of the 4 GB seed on a developer host (5m08s, #2634; 7m09s for one fetch, and
 # over ten minutes when two fetches share the link). This is a policy choice,
 # not a throughput derivation or a copy of the C# ArchiveBudget.
 # Fetch includes all snapshot attempts; publish starts only after the current report succeeds.
 RELEASE_OPERATION_TIMEOUT_SECONDS = 1800
+RELEASE_OPERATION_TIMEOUT_MAX_SECONDS = 21600
 
 
 def operation_deadline():
     variable = "STRATALINT_LEAN_CACHE_RELEASE_TIMEOUT_SECONDS"
-    try:
-        seconds = int(os.environ.get(variable, str(RELEASE_OPERATION_TIMEOUT_SECONDS)))
-        if not 0 < seconds <= RELEASE_OPERATION_TIMEOUT_SECONDS:
-            raise ValueError()
-    except ValueError:
-        raise ValueError(f"{variable} must be 1..{RELEASE_OPERATION_TIMEOUT_SECONDS}") from None
+    raw = os.environ.get(variable)
+    if raw is None:
+        seconds = RELEASE_OPERATION_TIMEOUT_SECONDS
+    elif not re.fullmatch(r"[0-9]+", raw):
+        raise ValueError(f"{variable} must be 1..{RELEASE_OPERATION_TIMEOUT_MAX_SECONDS}")
+    else:
+        try:
+            seconds = int(raw)
+        except ValueError:
+            raise ValueError(f"{variable} must be 1..{RELEASE_OPERATION_TIMEOUT_MAX_SECONDS}") from None
+        if not 0 < seconds <= RELEASE_OPERATION_TIMEOUT_MAX_SECONDS:
+            raise ValueError(f"{variable} must be 1..{RELEASE_OPERATION_TIMEOUT_MAX_SECONDS}")
     return time.monotonic() + seconds
 
 
@@ -114,69 +122,6 @@ class RollbackFailed(Exception):
         self.backup = str(backup)
         self.install_error, self.rollback_error = str(install_error), str(rollback_error)
         super().__init__(f"rollback failed: {rollback_error}; installation error: {install_error}")
-
-
-def git_absolute_path(root, *arguments):
-    result = subprocess.run(["git", "-C", str(root), "rev-parse", *arguments],
-                            check=True, capture_output=True, text=True, timeout=10)
-    value = result.stdout.rstrip("\n")
-    if not value or "\n" in value or not pathlib.Path(value).is_absolute():
-        raise ValueError("Git path is not an absolute path")
-    return pathlib.Path(value).resolve()
-
-
-def checkout_topology(root):
-    """Return (linked, validated main path); refuse unknown classification."""
-    try:
-        git_directory = git_absolute_path(root, "--absolute-git-dir")
-        common_directory = git_absolute_path(root, "--path-format=absolute", "--git-common-dir")
-    except (OSError, ValueError, subprocess.SubprocessError) as error:
-        detail = getattr(error, "stderr", None) or str(error)
-        raise ValueError(f"cannot determine checkout Git topology: {detail}") from error
-    linked = git_directory != common_directory
-    try:
-        result = subprocess.run(["git", "-C", str(root), "worktree", "list", "--porcelain", "-z"],
-                                check=True, capture_output=True, text=True, timeout=10)
-        if not result.stdout.endswith("\0\0"):
-            raise ValueError("missing or incomplete Git worktree records")
-        checkouts = []
-        for record in result.stdout[:-2].split("\0\0"):
-            lines = record.split("\0")
-            fields = dict((line.partition(" ")[0], line.partition(" ")[2]) for line in lines)
-            if (not lines[0].startswith("worktree ") or len(fields) != len(lines)
-                    or set(fields) - {"worktree", "HEAD", "branch", "detached", "bare", "locked", "prunable"}
-                    or not fields.get("worktree") or not pathlib.Path(fields["worktree"]).is_absolute()):
-                raise ValueError("unparsable Git worktree record")
-            if "bare" in fields:
-                raise ValueError("Git main checkout is bare")
-            if (not re.fullmatch(r"(?:[0-9a-f]{40}|[0-9a-f]{64})", fields.get("HEAD", ""))
-                    or ("branch" in fields) == ("detached" in fields)
-                    or ("branch" in fields and not fields["branch"].startswith("refs/heads/"))
-                    or fields.get("detached", "")):
-                raise ValueError("unparsable Git worktree HEAD or branch")
-            checkouts.append(pathlib.Path(fields["worktree"]).resolve())
-    except (OSError, ValueError, subprocess.SubprocessError) as error:
-        if linked:
-            return True, None
-        detail = getattr(error, "stderr", None) or str(error)
-        raise ValueError(f"cannot determine checkout Git topology: {detail}") from error
-    if not linked:
-        return False, None
-    candidate = checkouts[0]
-    try:
-        if (git_absolute_path(candidate, "--show-toplevel") != candidate
-                or git_absolute_path(candidate, "--path-format=absolute", "--git-common-dir") != common_directory):
-            return True, None
-    except (OSError, ValueError, subprocess.SubprocessError):
-        return True, None
-    return True, candidate
-
-
-def warm_dev_remediation(main_checkout):
-    if main_checkout is None:
-        return ("sync dev and warm the dev cache in this repository's dev main checkout: "
-                "make warm-donor there (its location cannot be determined from this worktree)")
-    return "sync dev and warm the dev cache: make -C " + shlex.quote(str(main_checkout)) + " warm-donor"
 
 
 def existing_release(tag, deadline):
@@ -583,6 +528,10 @@ def publish(root, partition, verification=None, *, build_report=True):
                str(stage / MANIFEST), "--repo", REPO)
             gh(deadline, "release", "edit", tag, "--repo", REPO, "--draft=false")
             if verification is not None:
+                # Uploaded transport copies must not share the empty restore
+                # target's disk budget with the independently downloaded bytes.
+                for name in {ASSET, *(part["name"] for part in metadata["parts"])}:
+                    (stage / name).unlink(missing_ok=True)
                 # Verify this exact inventory through restore into an empty target.
                 target, downloaded = stage / "verified-target", stage / "downloaded"
                 target.mkdir()
@@ -658,15 +607,50 @@ def snapshot_manifest(partition, tag, stage, deadline, expected=None, verificati
     return metadata, manifest, parts
 
 
+def clone_local_parts(local_assets, stage, parts, deadline):
+    """Clone regular files from an explicit source into the private fetch stage."""
+    if sys.platform != "darwin":
+        raise ValueError("local assets require macOS native clonefile")
+    import ctypes
+    clone = getattr(ctypes.CDLL(None, use_errno=True), "fclonefileat", None)
+    if clone is None:
+        raise ValueError("native fclonefileat is unavailable")
+    clone.argtypes = [ctypes.c_int, ctypes.c_int, ctypes.c_char_p, ctypes.c_uint]
+    clone.restype = ctypes.c_int
+    # Pin the directory and each regular source; never follow a supplied symlink
+    # or block opening a FIFO. fclonefileat cannot fall back to an ordinary copy.
+    with contextlib.ExitStack() as opened:
+        source_dir = os.open(local_assets, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+        opened.callback(os.close, source_dir)
+        target_dir = os.open(stage, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+        opened.callback(os.close, target_dir)
+        for part in parts:
+            remaining(deadline)
+            source = os.open(part["name"], os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=source_dir)
+            try:
+                if not stat.S_ISREG(os.fstat(source).st_mode):
+                    raise ValueError("local asset is not a regular file: " + part["name"])
+                if clone(source, target_dir, os.fsencode(part["name"]), 0) != 0:
+                    error = ctypes.get_errno()
+                    raise OSError(error, "local asset clonefile failed: " + os.strerror(error), part["name"])
+            finally:
+                os.close(source)
+            remaining(deadline)
+
+
 def restore_snapshot(root, partition, tag, stage, deadline, verification=None, refresh_stale=False, *,
-                     cache_key, approved_producer=None, require_compatible_seed=False, on_installed=None):
+                     cache_key, approved_producer=None, require_compatible_seed=False, on_installed=None,
+                     local_assets=None):
     metadata, manifest, parts = snapshot_manifest(partition, tag, stage, deadline,
         expected=verification if approved_producer is None else {"producer_commit_sha": approved_producer},
         verification=verification is not None, cache_key=cache_key)
     assets = metadata["assets"]
     commit = manifest["producer_commit_sha"]
-    gh(deadline, "release", "download", tag, "--repo", REPO, "--dir", str(stage),
-       *(argument for part in parts for argument in ("--pattern", part["name"])))
+    if local_assets is None:
+        gh(deadline, "release", "download", tag, "--repo", REPO, "--dir", str(stage),
+           *(argument for part in parts for argument in ("--pattern", part["name"])))
+    else:
+        clone_local_parts(local_assets, stage, parts, deadline)
     for part in parts:
         path = stage / part["name"]
         if part["sha256"] != sha(path) or part["bytes"] != path.stat().st_size:
@@ -835,7 +819,8 @@ def fetch_candidate(root, partition, tag, producer):
         return 1
 
 
-def fetch(root, partition, writer_owned=False, refresh_stale=False, approved_tag=None, approved_producer=None):
+def fetch(root, partition, writer_owned=False, refresh_stale=False, approved_tag=None, approved_producer=None,
+          local_assets=None):
     if os.environ.get("GITHUB_ACTIONS") == "true":
         receipt("fetch", "skipped", reason="CI does not consume Release seeds")
         return 0
@@ -854,7 +839,7 @@ def fetch(root, partition, writer_owned=False, refresh_stale=False, approved_tag
     try:
         deadline = operation_deadline()
         with contextlib.nullcontext() if writer_owned else cache_guard(root):
-            return fetch_locked(root, partition, deadline, refresh_stale, approved_tag, approved_producer)
+            return fetch_locked(root, partition, deadline, refresh_stale, approved_tag, approved_producer, local_assets)
     except (OSError, ImportError, ValueError) as error:
         receipt("fetch", "miss", reason=str(error), partition=partition)
         return 1
@@ -878,7 +863,10 @@ def snapshot_candidates(root, partition, deadline, cache_key):
             yield source, tag
 
 
-def fetch_locked(root, partition, deadline, refresh_stale=False, approved_tag=None, approved_producer=None):
+def fetch_locked(root, partition, deadline, refresh_stale=False, approved_tag=None, approved_producer=None,
+                 local_assets=None):
+    if local_assets is not None and (not approved_tag or not approved_producer or not refresh_stale):
+        raise ValueError("local assets require an approved production refresh")
     fetch_staging_cleanup(root, now=time.time())
     reason = "no published snapshot in this partition"
     cache_key = release_key(root)
@@ -896,7 +884,8 @@ def fetch_locked(root, partition, deadline, refresh_stale=False, approved_tag=No
                 temporary = tempfile.TemporaryDirectory(prefix="lean-fetch-")
                 try:
                     restore_snapshot(root, source, tag, pathlib.Path(temporary.name), deadline,
-                        refresh_stale=refresh_stale, cache_key=cache_key, approved_producer=approved_producer)
+                        refresh_stale=refresh_stale, cache_key=cache_key, approved_producer=approved_producer,
+                        local_assets=local_assets)
                 finally:
                     try:
                         temporary.cleanup()
@@ -942,6 +931,8 @@ def main():
     parser.add_argument("--writer-owned", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--approved-tag", help=argparse.SUPPRESS)
     parser.add_argument("--approved-producer", help=argparse.SUPPRESS)
+    parser.add_argument("--local-assets", type=pathlib.Path,
+                        help="native-clone standard part filenames for an approved production refresh")
     parser.add_argument("--refresh-stale", action="store_true",
                         help="replace an expired private project build after validating the complete snapshot")
     args = parser.parse_args()
@@ -958,6 +949,9 @@ def main():
                     or not re.fullmatch(r"[0-9a-f]{40}", args.approved_producer)
                     or not args.refresh_stale):
                 raise ValueError("approved snapshot requires a tag, producer and production refresh")
+        if args.local_assets is not None and (args.command != "fetch" or args.mode != "production"
+                                              or not args.approved_tag):
+            raise ValueError("local assets require an approved production refresh")
         if args.mode == "production" and (args.source_ref or args.source_commit):
             raise ValueError("explicit source parameters require verification mode")
         verification = None
@@ -982,7 +976,7 @@ def main():
             if verification is not None:
                 return fetch_verification(args.repository, partition, verification)
             return fetch(args.repository, partition, args.writer_owned, args.refresh_stale,
-                         args.approved_tag, args.approved_producer)
+                         args.approved_tag, args.approved_producer, args.local_assets)
         return publish(args.repository, partition, verification, build_report=not args.no_build)
     except RollbackFailed as error:
         receipt(args.command, "rollback-failed", reason=str(error), backup=error.backup)

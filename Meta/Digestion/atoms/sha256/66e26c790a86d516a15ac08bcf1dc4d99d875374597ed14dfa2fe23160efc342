@@ -1,0 +1,7 @@
+**Reference 8.3 (finite tree automata).** Hubert Comon, Max Dauchet,
+Rémi Gilleron, Florent Jacquemard, Denis Lugiez, Christof Löding,
+Sophie Tison and Marc Tommasi, *Tree Automata Techniques and
+Applications*, 2008 edition, Chapter 1, especially Theorems 1.1.9 and
+1.4.3 and §1.3. Determinization and linear images, including erasing
+linear images, are the precise regular-language ingredients.
+

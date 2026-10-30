@@ -1,0 +1,45 @@
+**Proposition 88.4 (actual selected use and its precise transport).**
+At a restored cut choose an old physical terminal $a$ and a different
+allowed current terminal $v$. If the mask is nonempty, $a$ may be
+chosen from it. Such $v$ exists: if it is old unmasked then it differs
+from a masked $a$, and otherwise a fresh allowed terminal differs from
+every old coordinate. With empty mask choose two different old leaves.
+Compute $q_*=x_a$ from the acquired record and actually execute
+Add$(v,q_*)$; Hold; Read$(v)$ through its earned raw binding. Put
+
+$$
+G=I_M+e_v e_a^{\mathsf T},\qquad
+G^{-1}=I_M-e_v e_a^{\mathsf T}.
+\tag{88.7}
+$$
+
+The actual successor and entire scalar reply are
+
+$$
+w_+=GEx,\qquad \operatorname{reply}=(Ex)_v+x_a.
+\tag{88.8}
+$$
+
+This adds one Add, Hold and Read, including two field ACKs and the
+scalar transaction. No direct observation of the masked label occurs.
+
+On the corresponding post-use image Space exposes $GEx$, Boundary
+exposes $O_FGEx$, Memory is updated there, and Time retains its
+performed old samples and appends these actual calls and reply. Space
+and Memory decode by $E^{\mathsf T}G^{-1}$; Boundary first uses the
+left inverse of $O_F$; Time still uses $R_e^{-1}$. Conversely $x$
+constructs exactly the stated post-use contents. The identity in
+(88.7) holds because $a\ne v$, so all inverse identities survive and
+the actual action squares commute through the same $x$. In particular
+no $R_e$-samples at the new field are labelled measured. This is a
+new declared post-use image, which need not be $E\mathbb Q^N$.
+
+For a current-only cut the same construction can use an acquired
+current coordinate $w_a$ at a terminal different from an allowed $v$.
+The successor is $GD_cc$. Replace the above inverse by a left inverse
+of $D_c$ after $G^{-1}$; Boundary uses full rank of $O_F$ first.
+Time retains $R_cc$ and the actual use. This proves the corresponding
+post-use route and dynamics identities on that distinct image as well.
+Arbitrary later operations are governed by complete current service,
+without a claim that these particular historical charts remain valid.
+

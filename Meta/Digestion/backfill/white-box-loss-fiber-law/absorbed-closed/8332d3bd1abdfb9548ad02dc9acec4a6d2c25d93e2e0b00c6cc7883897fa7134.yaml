@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8332d3bd1abdfb9548ad02dc9acec4a6d2c25d93e2e0b00c6cc7883897fa7134
+  normalized_sha256: sha256:8332d3bd1abdfb9548ad02dc9acec4a6d2c25d93e2e0b00c6cc7883897fa7134
+cas_ref: sha256:8332d3bd1abdfb9548ad02dc9acec4a6d2c25d93e2e0b00c6cc7883897fa7134
+coverage_gids:
+  - gid: D5/S3/Estimation/WhiteBoxLossFiberLaw/ActualCostEndpoints.partial_absorption
+    target_statement_id: sha256:0fc59506dc334683d4c0835143a276cdfb536954dce92476bd4280cb2497cc45
+receipts:
+  unresolved_subitems: []

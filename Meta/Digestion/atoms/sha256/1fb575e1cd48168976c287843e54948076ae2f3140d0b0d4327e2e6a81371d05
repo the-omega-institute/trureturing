@@ -1,0 +1,17 @@
+**命题 81.2（五模式混合差分的相位像）。** 在 (XVII.3) 的合同下，编码后的端点门可分解为两个单逻辑位门的张量积，当且仅当
+
+$$
+\theta J_f\equiv0\pmod{2\pi}.
+\tag{XVII.4}
+$$
+
+否则它将 $|++\rangle$ 变为 Schmidt 秩二的态。特别地，假设 55.2 的固定门在本编码上为
+
+$$
+S=\iota_2^\dagger S_{\star,3}\iota_2
+=\operatorname{diag}(1,1,1,i),\qquad S^2=CZ.
+\tag{XVII.5}
+$$
+
+**证明。** 将 (XVII.2) 在 $z=0$ 的四点值代入，得到混合相位 $\Theta=\theta J_f$。单独的常数项与两个一次项只给整体及单体相位；剩余因子为 $e^{i\Theta n_1n_2}$。复用 [Brylinski–Brylinski，命题 2.1 的相位矩形判据](../../../Library/Computability/brylinski2001universal.md)：其 $|++\rangle$ 输出系数矩阵的行列式为 $e^{i(\phi_{01}+\phi_{10})}(e^{i\Theta}-1)/4$，故恰在 (XVII.4) 时可分。固定 $f=xy,\theta=\pi/2$ 给 (XVII.5)。这是五模式读出与已知判据的参数对应；一般纠缠判据归属于该文献。$\square$
+

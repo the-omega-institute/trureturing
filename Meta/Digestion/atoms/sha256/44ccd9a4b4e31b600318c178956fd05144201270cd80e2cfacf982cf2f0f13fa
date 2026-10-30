@@ -1,0 +1,10 @@
+**Proposition 5.1 (ambient dimension boundary).** For the unrestricted space
+
+$$
+\mathcal X=\mathbb R\oplus\operatorname{Mat}_2(\mathbb R)^4,
+$$
+
+recovery of every point from $n$ fixed scalar linear observations requires $n\ge17$. Theorem 2.1 attains that bound.
+
+**Proof.** The dimension is $1+4\cdot4=17$. A linear map to $\mathbb R^n$ for $n<17$ has a nonzero kernel by rank-nullity, so distinct ambient points have the same data, irrespective of the decoding rule. Theorem 2.1 supplies an invertible observation map when $n=17$. This argument concerns fixed linear observations of the whole ambient space; its hypothesis is not the constrained common-source domain, an already restricted data fibre, or an adaptive acquisition rule. ∎
+

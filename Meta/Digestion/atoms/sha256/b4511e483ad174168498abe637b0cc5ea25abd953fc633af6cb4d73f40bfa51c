@@ -1,0 +1,41 @@
+**Theorem 69.2 (earned entry, exact source and termination).** For every
+$t\in\mathcal D$, every legal old LAB preparation ending at $t$, and every
+installation of Definition 68.1, the split sweep terminates with an owned
+canonical word for $t$ and actual physical source $J(t)$ on the same
+callable root and current authority. It visits exactly the entry logical
+positions, once each in preorder. Its only successful source events are
+one split at every entry beta leaf. Its acquisition endpoints, as the
+entry varies, are exactly $\mathcal I$.
+
+Proof. At the start of any scheduled entry-subtree visit, all previous
+edits are in finished entry-leaf cones, disjoint from the pending subtree.
+A previously split entry leaf has newborn descendants, but the controller
+has finished that visit and never schedules them. A pending child is
+scheduled only after its actual parent produced a branch refusal. Thus
+all scheduled positions exist and their constructors still equal the
+entry constructors. This invariant is preserved by every scheduling
+step and source edit.
+
+Prove the visit assertion by induction on the finite entry subtree,
+allowing arbitrary pending continuations outside its cone. At alpha the
+actual split has the wrong type; it leaves alpha and records alpha.
+At beta the actual split succeeds, leaves the pair beta-alpha and records
+beta. The visit ends in both cases, so neither case uses a newborn child
+as evidence about the entry. At a branch the actual refusal preserves
+both child cones. Apply the left induction hypothesis and then the right
+one; disjointness preserves each hypothesis. Their recorded words form
+the original branch word, and their physical endpoints form the pair of
+encoded children. These are precisely the three clauses of $J$.
+
+Every actual request, reply, End, acknowledgement, return and finite local
+update completes under the installation premises. The structural induction
+establishes finitely many visits and stack operations without passing a
+runtime bound to the observer. It also excludes absent replies. At the
+root completion the output is therefore the exact entry word and the
+physical endpoint is $J(t)$. The current representation needed by §70 is
+this earned word $t$; a second physical-current word $J(t)$ need not be
+retained. The real reference, rights, program and work backing remain
+owned for later use. Every endpoint belongs to $\mathcal I$ by Lemma
+68.3, and each member of that set is obtained from its decoded reachable
+entry by this same sweep. $\square$
+

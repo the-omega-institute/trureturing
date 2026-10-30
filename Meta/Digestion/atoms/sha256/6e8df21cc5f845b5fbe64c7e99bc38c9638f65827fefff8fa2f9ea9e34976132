@@ -1,0 +1,31 @@
+**Definition 124.1 (The actual reflection-side entry threshold).**
+Keep the fixed source, finite vector and raw law errors of
+Definition 122.1. For an anchor with $A>0$, $\eta>0$, put
+$\sigma=\operatorname{sgn}(a)$ and define the closed reflection side
+
+$$
+\mathcal B_{h_0}
+ =\{h:\|h\|\le1,\ \sigma\operatorname{Re}(e^\dagger h)\le0\}.
+\tag{124.1}
+$$
+
+For $j=f,a$ define
+
+$$
+\begin{aligned}
+\mu_j(h_0)
+ &=\min_{|\gamma|\le1,\ h\in\mathcal B_{h_0}}
+                              d_j(\gamma,h;h_0),\\
+\mu_j^+(h_0)
+ &=\inf_{0<|\gamma|\le1,\ h\in\mathcal B_{h_0}}
+                              d_j(\gamma,h;h_0).
+\end{aligned}
+\tag{124.2}
+$$
+
+The first expression is an auxiliary compact-domain minimum, with
+zero retention included; the second retains exactly the punctured
+retention constraint in the original modulus. Both evaluate actual
+laws, rather than the scalar profile. The minimum and the equality
+of these two thresholds are justified in Theorem 124.2.
+

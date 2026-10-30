@@ -1,0 +1,142 @@
+## 文献与固定项目来源
+
+<a id="ref-repohead"></a>
+
+**[1]** 
+The Omega Institute, *trureturing*.
+[固定 dev 快照 75c5f3c4…](https://github.com/the-omega-institute/trureturing/commit/75c5f3c4aea976b089df5070a2f9f24f2905ee3a)，
+2026-10-30 21:45:05 Asia/Singapore，PR #24231。
+
+<a id="ref-repoomega"></a>
+
+**[2]** 
+项目，[《AURIC $\Omega$ 静态相融纤维理论》](https://github.com/the-omega-institute/trureturing/blob/75c5f3c4aea976b089df5070a2f9f24f2905ee3a/docs/develop/theory/AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)，尤其 §12；
+当前 Git blob：`40806fc692c91bd90684a556fed5468f1562268c`。
+
+<a id="ref-repov21"></a>
+
+**[3]** 
+项目，[《静态量子历史、内生观察者与关系时钟》](https://github.com/the-omega-institute/trureturing/blob/75c5f3c4aea976b089df5070a2f9f24f2905ee3a/docs/develop/theory/AURIC_STATIC_QUANTUM_HISTORIES_ENDOGENOUS_OBSERVERS_AND_RELATIONAL_CLOCKS_V21.md)，v21，§§4--7；
+当前 blob：`a3b63441a4f6390e89557b70fb3686807848217b`。
+
+<a id="ref-repoq"></a>
+
+**[4]** 
+项目，[《AURIC FIB ATOM 与量子基本原则：原生预测秩与终端响应（续卷 II）》](https://github.com/the-omega-institute/trureturing/blob/75c5f3c4aea976b089df5070a2f9f24f2905ee3a/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md)，
+本轮新增 §§99--103，继承 §§77、91、93；
+当前 blob：`af41ad5241634914b2ecd5882205b03ecb554a48`。
+
+<a id="ref-repov15"></a>
+
+**[5]** 
+项目，[《AURIC 黄金门、NAND 类通用性与算术边界》](https://github.com/the-omega-institute/trureturing/blob/75c5f3c4aea976b089df5070a2f9f24f2905ee3a/docs/develop/theory/AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md)，v15，§§4、6、9--10。
+本文通过量子续卷 II §100 消费其完整合法扇区射影密度，
+不宣称重证全部旧稿。
+
+<a id="ref-repoclock"></a>
+
+**[6]** 
+项目，[《Recursive Relational Observation: Periodic Clock Rigidity》](https://github.com/the-omega-institute/trureturing/blob/75c5f3c4aea976b089df5070a2f9f24f2905ee3a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PERIODIC_CLOCK_RIGIDITY.md)，
+新增 §§22--26；
+blob：`86c26ba488701013859aa6118629790368fc07b1`。
+
+<a id="ref-repotyped"></a>
+
+**[7]** 
+项目，[《Recursive Relational Observation: Typed Residual Cocycle Reconstruction》](https://github.com/the-omega-institute/trureturing/blob/75c5f3c4aea976b089df5070a2f9f24f2905ee3a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TYPED_RESIDUAL_COCYCLE_RECONSTRUCTION.md)，
+新增 §22；
+blob：`326829179c75d53c883c4409d83222f9e1192fe1`。
+
+<a id="ref-fewster"></a>
+
+**[8]** 
+C. J. Fewster and K. Rejzner,
+*Algebraic Quantum Field Theory -- an introduction*,
+[arXiv:1904.04051v2](https://arxiv.org/abs/1904.04051) (2019)，§2.3。
+本文自足证明所用有界 $C^*$ 版本，未移用全部 AQFT 公理。
+
+<a id="ref-mermin"></a>
+
+**[9]** 
+N. D. Mermin,
+*Hidden variables and the two theorems of John Bell*,
+Rev. Mod. Phys. **65**, 803--815 (1993)，§ V；
+[作者综述全文](https://cqi.inf.usi.ch/qic/Mermin1993.pdf)，
+[doi:10.1103/RevModPhys.65.803](https://doi.org/10.1103/RevModPhys.65.803)。
+
+<a id="ref-nielsen"></a>
+
+**[10]** 
+M. A. Nielsen and I. L. Chuang,
+*Programmable quantum gate arrays*,
+Phys. Rev. Lett. **79**, 321--324 (1997)，
+[arXiv:quant-ph/9703032](https://arxiv.org/abs/quant-ph/9703032)。
+精确确定性、全部数据输入的无编程合同。
+
+<a id="ref-page"></a>
+
+**[11]** 
+D. N. Page and W. K. Wootters,
+*Evolution without evolution: Dynamics described by stationary observables*,
+Phys. Rev. D **27**, 2885--2892 (1983)，
+[doi:10.1103/PhysRevD.27.2885](https://doi.org/10.1103/PhysRevD.27.2885)。
+本轮核对官方摘要；本文双无限构造自带证明。
+
+<a id="ref-quantumtime"></a>
+
+**[12]** 
+V. Giovannetti, S. Lloyd and L. Maccone,
+*Quantum Time*,
+Phys. Rev. D **92**, 045033 (2015)，
+[arXiv:1504.04215v3](https://arxiv.org/abs/1504.04215)。
+
+<a id="ref-mcclean"></a>
+
+**[13]** 
+J. R. McClean, J. A. Parkhill and A. Aspuru-Guzik,
+*Feynman's clock, a new variational principle, and parallel-in-time quantum dynamics*,
+[arXiv:1301.2326v2](https://arxiv.org/abs/1301.2326) (2013)，
+[doi:10.1073/pnas.1308069110](https://doi.org/10.1073/pnas.1308069110)。
+
+<a id="ref-qrf"></a>
+
+**[14]** 
+F. Giacomini, E. Castro-Ruiz and Č. Brukner,
+*Quantum mechanics and the covariance of physical laws in quantum reference frames*,
+Nat. Commun. **10**, 494 (2019)，
+[arXiv:1712.07207v2](https://arxiv.org/abs/1712.07207)。
+
+<a id="ref-gravityclocks"></a>
+
+**[15]** 
+E. Castro-Ruiz, F. Giacomini, A. Belenchia and Č. Brukner,
+*Quantum clocks and the temporal localisability of events in the presence of gravitating quantum systems*,
+Nat. Commun. **11**, 2672 (2020)，
+[arXiv:1908.10165v2](https://arxiv.org/abs/1908.10165)。
+
+<a id="ref-connes"></a>
+
+**[16]** 
+A. Connes and C. Rovelli,
+*Von Neumann Algebra Automorphisms and Time-Thermodynamics Relation in General Covariant Quantum Theories*,
+Class. Quantum Grav. **11**, 2899--2918 (1994)，
+[arXiv:gr-qc/9406019](https://arxiv.org/abs/gr-qc/9406019)；
+[作者全文](https://alainconnes.org/wp-content/uploads/carlotime.pdf)。
+本文仅将模流作为带忠实性条件的背景。
+
+<a id="ref-bauer"></a>
+
+**[17]** 
+M. Bauer and D. Bernard,
+*Convergence of repeated quantum non-demolition measurements and wave function collapse*,
+Phys. Rev. A **84**, 044103 (2011)，
+[arXiv:1106.4953](https://arxiv.org/abs/1106.4953)。
+
+<a id="ref-donoghue"></a>
+
+**[18]** 
+J. F. Donoghue,
+*General relativity as an effective field theory: The leading quantum corrections*,
+Phys. Rev. D **50**, 3874--3888 (1994)，
+[arXiv:gr-qc/9405057](https://arxiv.org/abs/gr-qc/9405057)。
+支持低能量子引力有效理论的存在，不替代完整高能动力学。

@@ -1,0 +1,60 @@
+**Notation 189.1 (Success blocks of VI §§149–151).**
+Use the following supplier blocks with their literal CAR signs.
+Regrouping the effective creation order $(A_1,b_1,A_2,b_2)$ into party
+order $(A_1,A_2,b_1,b_2)$ multiplies an occupation ket by
+$(-1)^{n_{b_1}n_{A_2}}$. For the full order
+$(A_1,b_1,s_1,A_2,b_2,s_2)$ the sign is
+$(-1)^{(n_{b_1}+n_{s_1})n_{A_2}}$. These are passive coordinate signs,
+not physical nonlocal unitaries or unsigned swaps.
+
+In the dual-rail product basis
+$(|A_1b_1\rangle,|A_1b_2\rangle,|A_2b_1\rangle,|A_2b_2\rangle)$,
+procedure E has the unnormalized success block of VI (149.4)–(149.6)
+
+$$
+C_-=
+\begin{pmatrix}A&0&0&0\\0&bc&-\mu&0\\0&-\mu&bc&0\\0&0&0&A\end{pmatrix}
+=A I_4+2\mu|\psi^-\rangle\langle\psi^-|,
+\qquad
+|\psi^-\rangle=\frac{|A_1b_2\rangle-|A_2b_1\rangle}{\sqrt2}.
+$$
+
+The outer populations are $ad$, from double occupation of one preparation
+and vacuum of the other. Each middle population is $bc$. Their coherence
+is $z\overline z$ before regrouping; the ket with $b_1,A_2$ occupied
+has the negative CAR sign, yielding $-\mu$ as displayed.
+The legal Alice-local phase $e^{i\pi n_{A_2}}$ reverses this sign and
+preserves all quantities evaluated here.
+
+In the aligned full proof basis define
+$B_{\mathrm{act}}=\operatorname{span}\{|b_1\rangle,|b_2\rangle\}$ and
+$B_{\mathrm{sp}}=\operatorname{span}\{|s_1\rangle,|s_2\rangle\}$.
+Both spectators are empty on the active block. If one spectator is occupied,
+the selected Bob number excludes every active Bob particle. Each of the four
+remaining configurations $(A_i,s_j)$ has population $ac\,r_0r_1$.
+The diagonal spectator input permits neither coherence between these flags
+nor coherence linking them to the active block. Thus the full supplier block VI (151.3) is
+
+$$
+\Omega_F=r_0^2 C_-\ \oplus_B\ E r_0r_1 I_{A\otimes B_{\mathrm{sp}}}.
+$$
+
+This is a direct sum on Bob, not an additional postselection. It displays
+every selected population. With
+
+$$
+Q_E=2t+g,\qquad Q_F=2t+g+2tv,
+$$
+
+the raw success probabilities VI (150.1), (151.4) become
+
+$$
+P_E=\operatorname{Tr}C_-=2S=\frac{Q_E}{2(1+t)^2},\qquad
+P_F=\operatorname{Tr}\Omega_F=r_0^2P_E+4E r_0r_1
+ =\frac{Q_F}{2(1+t)^4}.
+$$
+
+They lie strictly between zero and one: the finite-temperature input is
+positive definite, and both the success and failure subspaces are nonempty.
+No preliminary standard-form filter is performed or hidden in either value.
+

@@ -1,0 +1,29 @@
+#### 定理 7.3（正概率的几何存在判据）
+
+设 $\rho\ge0,E\ge0$，则
+
+$$
+\begin{aligned}
+\operatorname{Tr}[E\Phi(\rho)]>0
+&\iff \mathsf F_\Phi(\operatorname{supp}\rho)\not\perp\operatorname{supp} E\\
+&\iff \exists a,\ v\in\operatorname{supp}\rho:\ E^{1/2}K_av\ne0.
+\end{aligned}
+$$
+
+**证明。**
+
+有
+
+$$
+\operatorname{Tr}[E\Phi(\rho)]
+=\sum_a\|E^{1/2}K_a\rho^{1/2}\|_{\mathrm{HS}}^2.
+$$
+
+该和为正当且仅当至少一个矩阵非零，等价于在 $\operatorname{ran}\rho^{1/2}$ 上有一个未被 $E^{1/2}K_a$ 杀掉的向量。又 $\ker E^{1/2}=(\operatorname{supp} E)^\perp$，给中间条件。
+
+∎
+
+这是“概率对应某种存在”的一个严格量子版本。Kraus 指标是表示指标，未必是实际可读历史；上述真值具有表示不变性，不能据此宣布隐藏轨迹存在。
+
+<a id="statement-7-4"></a>
+

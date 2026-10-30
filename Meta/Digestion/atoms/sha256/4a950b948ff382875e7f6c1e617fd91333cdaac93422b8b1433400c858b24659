@@ -1,0 +1,40 @@
+#### 定理 7.5（支撑量词的右伴随）
+
+定义
+
+$$
+\mathsf G_\Phi(T)=\bigcap_a K_a^{-1}(T).
+$$
+
+则
+
+$$
+\mathsf F_\Phi(S)\subseteq T
+\iff S\subseteq\mathsf G_\Phi(T),
+$$
+
+且对 Hilbert–Schmidt 对偶 $\Phi^*$，
+
+$$
+\mathsf G_\Phi(T)=\bigl[\mathsf F_{\Phi^*}(T^\perp)\bigr]^\perp,
+\quad
+\mathsf F_\Phi(S)\perp T\iff S\perp\mathsf F_{\Phi^*}(T).
+$$
+
+**证明。**
+
+$\operatorname{span}_aK_aS\subseteq T$ 等价于对每个 $a$ 都有 $K_aS\subseteq T$，再等价于 $S\subseteq\bigcap_aK_a^{-1}(T)$。此外 $K_av\in T$ 当且仅当对全部 $w\in T^\perp$ 有 $\langle K_a^\dagger w,v\rangle=0$。对所有 $a,w$ 求交给第一条正交补公式；同样的内积恒等式给最后一式。
+
+∎
+
+对迹递减分支，$\mathsf G_\Phi(T)$ 是宽松的全称前条件：它保证所有存活输出落在 $T$，不保证输出一定出现。被全部 $K_a$ 杀掉的输入也因空条件而属于该空间。保迹通道满足 $\sum_aK_a^\dagger K_a=I$，排除了非零输入被全部杀掉的情况。对规范初态和通道，上一伴随给出全称端点
+
+$$
+\operatorname{supp}\rho\subseteq\mathsf G_\Phi(T)
+\iff\operatorname{Tr}[P_T\Phi(\rho)]=1.
+$$
+
+对迹递减过程，右边的一应换成总存活质量 $\operatorname{Tr}\Phi(\rho)$。两式均由对补投影 $I-P_T$ 应用定理[7.3](#thm-quantumexists)得到。
+
+<a id="statement-7-6"></a>
+

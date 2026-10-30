@@ -1,0 +1,46 @@
+**Definition 14.1 (The parameter and the source polynomials).** Retain
+exactly the complete-world domain, original $H_4$, clocks and actual
+responses of Section 1 and $O$, Definitions 1.1–1.3. Put
+
+$$
+\begin{gathered}
+p_c=\frac{2744214237392974691433531179656369993836520133001835}{10^{50}},
+\qquad h=10^{-40},\qquad K=[p_c-h,p_c+h],\\
+a=\frac{6618}{10000},\qquad w=\frac1{10000},\qquad
+R_{\rm loc}=[a,a+w].
+\end{gathered}
+\tag{14.1}
+$$
+
+Here $R_{\rm loc}$ is an interval, distinct from the resultant
+$R_{18}$. The parameter $p_J$ is still the value at the unique zero
+of the original $F_J$ in its original box $\mathcal B_J$, supplied
+by $O$, Theorem 8.1 and (8.4). For that same zero, $O$,
+Theorem 26.2, gives $p_J\in K$.
+
+Use exactly $D=D_\Lambda,H,X,N,T,U,K_\Lambda,N_u$ from Section 2,
+with $N_u=\mathsf N_u$, and $D_m=5bD$. In particular
+
+$$
+\mathsf A(r,b,p)=5b(p-24)D+3(8b-1)H
+                 =\mathsf S_p(r,b)/2.
+\tag{14.2}
+$$
+
+The terminal numerator is exactly $O$ (27.1):
+
+$$
+\begin{gathered}
+Z_7=2N+3bU,\qquad
+G_7=(20T+84)XN-bT(70N+35X),\\
+N_m=\frac{120bTD+12Z_7D(200b+11)
+ -3K_\Lambda(bTXN+Z_7G_7)}{T}.
+\end{gathered}
+\tag{14.3}
+$$
+
+The divisions by $T=1+b$ defining $N_u,N_m$ are exact polynomial
+divisions before any coefficient operation. Thus all the polynomials
+used below are specified by Section 2 and (14.2)–(14.3), without
+using a projected root chart or an eliminant root as a source.
+

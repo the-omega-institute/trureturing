@@ -34,7 +34,17 @@ internal sealed class VisibleStateSpaceDimensionDocument : IScribeDocumentDefini
                         + "directions, proving the upper bound. Injectivity of the visible "
                         + "readout makes the centered map injective and preserves all d "
                         + "squared minus one traceless degrees of freedom."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("density-matrix-set-compact-convex"),
+                DeclarationHandle.Create("D5/S3/Quantum/Measurements/VisibleStateSpaceDimension."
+                    + "density_matrix_set_compact_convex"),
+                H("The actual normalized density domain is compact and convex"),
+                StatementSource.FromAuthor(DensityDomainFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every nonzero dimension this is the set of all complex "
+                    + "positive semidefinite matrices of trace one. Singular states are included. "
+                    + "The same original supplier is used by the visible-image dimension proof "
+                    + "and by the centered physical conjugation-quotient geometry."))),
+                DescribeRole.Theorem))));
 
     private static Formula Apply(Formula function, params Formula[] arguments) =>
         new Formula.Apply(function, [.. arguments]);
@@ -53,6 +63,18 @@ internal sealed class VisibleStateSpaceDimensionDocument : IScribeDocumentDefini
 
     private static Formula LessEqual(Formula left, Formula right) =>
         new Formula.Relation(left, FormulaRelationOperator.LessThanOrEqual, right);
+
+    private static Formula DensityDomainFormula()
+    {
+        var d = F.Id("d");
+        var m = F.Id("M");
+        var domain = Call("setOf", Seq(m, InMacro,
+            Call("Matrix", Call("Fin", d), Call("Fin", d), Call("Complex")),
+            Mapsto, Call("PosSemidef", m), Land, Call("trace", m), Eq, D(1)));
+        return Disp(Seq(Forall, Sp, d, InMacro, Call("Nat"), Comma,
+            OpenBracket, Call("NeZero", d), CloseBracket, Comma,
+            Call("IsCompact", domain), Land, Call("Convex", Call("Real"), domain)));
+    }
 
     private static Formula TheoremFormula()
     {

@@ -1,0 +1,19 @@
+**Lemma 4.3 (real address correspondence).** At every completed maintenance
+boundary, Resolve($i$) terminates for $i<L(K)$ and returns exactly
+$U(\phi_K(i))$. The map $\phi_K$ is injective, disjoint from every allocated
+scratch interval, and a successful Reserve extends it without changing any
+of its earlier values.
+
+Proof. Each segment was created by Base before Zero at the arena's current R.
+It is disjoint from every preceding arena cell; later allocations begin beyond
+it and its delimiter. Thus all source intervals are mutually disjoint and
+are disjoint from the intervals designated scratch. In Resolve, after skipping
+$a$ segments, the remainder is $i-\sum_{c<a}d_c$. If it is less than $d_a$,
+the displayed Add returns $b_a$ plus that remainder, the stated formula.
+Otherwise the displayed Sub preserves the next remainder equation. Positive
+lengths with sum $L(K)$ force the less branch at exactly one segment before
+the final R. Lemma 3.5 gives actual termination of every intervening scan and
+arithmetic call. Within each segment the formula is injective; different
+segments have disjoint images. Appending a new segment changes neither an
+old base nor an old partial sum, proving extension. $\square$
+

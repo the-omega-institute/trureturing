@@ -1,0 +1,102 @@
+## 35. A source class containing the negative continuation
+
+Retain the original complete-world domain, chronological left products,
+whole gain polynomial and arbitrary fixed drift of Definition 1.1.
+Thus a world is
+
+$$
+W=(P(r,b),g,d),\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+\quad 0<r<1,\ b>0,\quad
+0\ne g\in\mathbb R[s],\ \deg g\le3,\ d\in\mathbb R.
+\tag{35.1}
+$$
+
+The parent readings at clocks zero through four are
+$(0,24,147/5,24,18)$; $p,v$ are the two subsequent acquired $M$
+readings and $a,m$ the alternative clock-seven $J,M$ readings on that
+same world. The child $C(p,v)$ still contains every original compatible
+world, with $p\ne24$.
+
+Define the source class
+
+$$
+\mathscr R=\left\{W\text{ in the original parent}:\quad
+0<b\le\frac1{10},\quad 1\le\frac rb\le\frac{107}{100}\right\},
+\qquad I_p=[-534,-457].
+\tag{35.2}
+$$
+
+The class is used for a restricted theorem and is not substituted for
+$C(p,v)$. In particular the independent terminal-$M$ pair in the global
+question may have one or both endpoints outside this class.
+
+Here is the supplied regular response circuit, recorded to specify all
+polynomials used below. Write $t=r/b$, and put
+
+$$
+\begin{gathered}
+r=tb,\quad j=t+b(1-t^2),\quad n=j+tb,\quad
+T=1+b,\quad U=1+2b,\\
+D=5\{(b^2+8b+4)jn-2TU(j+n)\},\quad S=(8b-1)(2+5b),\\
+C_0=-24D+3Sjn,\quad C_1=3Sn,\\
+C_2=3(49b+34)jn-54U(j+n),\quad C_3=3Sj,\\
+B_5=-4C_0+15C_1-20C_2+10C_3,\\
+B_6=-10C_0+36C_1-45C_2+20C_3,\\
+B_7=-20C_0+70C_1-84C_2+35C_3,\\
+N_p=-C_0+(U+n)B_5,\quad
+N_v=-C_0+(2U+n)B_6,\quad
+N_m=-C_0+(3U+2n)B_7.
+\end{gathered}
+\tag{35.3}
+$$
+
+When $D\ne0$, the original complete-world lift is
+
+$$
+d=-C_0/D,\qquad
+g(s)=\frac1D\sum_{i=0}^3 C_i
+ \prod_{\substack{0\le k\le3\\k\ne i}}\frac{s-k}{i-k},
+\qquad (p,v,m)=(N_p,N_v,N_m)/D.
+\tag{35.4}
+$$
+
+This is the circuit and whole-world bridge of (24.2), (28.3)–(28.7),
+and the inherited Support III, Definition 16.1. It uses the same entire
+polynomial at every original clock. The traces are
+
+$$
+(1,j,T,n,U,U+n,2U+n),\qquad T+2j+4r,\qquad3U+2n.
+\tag{35.5}
+$$
+
+In particular the four fixed noninitial parent readings follow from
+
+$$
+\begin{gathered}
+-C_0+jC_1=24D,\quad -C_0+TC_2=(147/5)D,\\
+-C_0+nC_3=24D,\quad
+-C_0+U(-C_0+4C_1-6C_2+4C_3)=18D.
+\end{gathered}
+\tag{35.6}
+$$
+
+These are polynomial identities. Clock zero is $d+g(0)=0$; the rows
+$B_5,B_6,B_7$ are evaluations of this same interpolant.
+The unequal first two readings ensure that $g$ is not identically zero.
+
+Every original parent world in $\mathscr R$ is regular in this circuit.
+Indeed the zero-safe parent equation is
+
+$$
+(d-24)\Lambda+\frac{24}{5}(b-1/8)
+       \left(\frac6T-\frac2U\right)=0,\qquad
+D=\frac52TUjn\Lambda.
+\tag{35.7}
+$$
+
+All of $T,U,j,n$ are positive, as is $6/T-2/U$.
+If $\Lambda=0$, (35.7) forces $b=1/8$, which is outside (35.2).
+Thus (35.4) is necessary as well as sufficient for this source class.
+This observation does not delete singular worlds from the global child.
+

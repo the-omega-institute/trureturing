@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:fb3cb828d12a569f57cad79bcddc6d6fd8d9c066c9f44507509c2884776fb7da
+  normalized_sha256: sha256:fb3cb828d12a569f57cad79bcddc6d6fd8d9c066c9f44507509c2884776fb7da
+cas_ref: sha256:fb3cb828d12a569f57cad79bcddc6d6fd8d9c066c9f44507509c2884776fb7da
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: Analogy-table pairing of tube directions with logarithmic frequencies; no transfer theorem is asserted.
+    previous_atom_id: 27e75d30d3c09330e53292aee9598a14fcd120b33ca821f3d2458d6d1834985d
+    next_atom_id: 9e5743040f80228b8ee5351b964d50dfc6f537e13997e96b85c06477e4cae1d5

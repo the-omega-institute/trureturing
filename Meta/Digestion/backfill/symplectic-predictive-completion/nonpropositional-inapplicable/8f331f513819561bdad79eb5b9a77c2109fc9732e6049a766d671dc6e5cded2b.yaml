@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:8f331f513819561bdad79eb5b9a77c2109fc9732e6049a766d671dc6e5cded2b
+  normalized_sha256: sha256:8f331f513819561bdad79eb5b9a77c2109fc9732e6049a766d671dc6e5cded2b
+cas_ref: sha256:8f331f513819561bdad79eb5b9a77c2109fc9732e6049a766d671dc6e5cded2b
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本项仅为第34节标题和范围说明，预告同一辛符号与观测映射下的代数构造，不包含该构造的数学结论。
+    previous_atom_id: 8192e2599d559fc0a49e6b23123ee66450681f62b08fff18c0f3ba35f7efd16d
+    next_atom_id: 6a7266f7579abbe5b9fbd8a769a80d7c3a8f046e6dd9d4b9e034fcc52bbf83dd

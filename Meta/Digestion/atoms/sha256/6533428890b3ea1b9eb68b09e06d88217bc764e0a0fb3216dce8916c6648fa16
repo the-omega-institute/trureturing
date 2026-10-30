@@ -1,0 +1,10 @@
+**假设 14.1（全标签高斯族与相对尺度）。** Use the known-law binary singleton experiment of Definition 13.1: $C$ is uniform on the five original labels, and one complete observation $X=(U,V)$ conditional on $C=i$ has law $\mathcal N_2(\mu_i,I_2)$, with means $(-q,0),(-q,0),(0,b),(q,0),(q,0)$ in label order, for $q,b>0$. The target is $C=3$ versus its complement under measurable binary zero--one decision rules. Retain $r_0(q,b)$, $B(q,b)=1/5-r_0(q,b)$, $c(q)=\ln4-q^2/2$, $q_c=\sqrt{2\ln4}$, the standard normal density $\phi$, and $H$ from (13.2)--(13.3). For positive sequences $q_n\to q_c$ and $b_n\to0$, put
+
+$$
+ \tau_n=\frac{c(q_n)}{b_n},\qquad
+ S_n=b_n^{3/2}H(\tau_n)>0.
+\tag{14.1}
+$$
+
+No boundedness, convergence, monotonicity or additional rate restriction is imposed on $\tau_n$.
+

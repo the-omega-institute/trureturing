@@ -1,0 +1,21 @@
+**定理 6.1（非零 beta 的整个纤维实际 MJ 逆）。** 若 $\alpha=\Delta=0$、$\beta\ne0$，取得完整 J5 历史后实际执行第六 $M$、立即读 $x$，再执行第七 $J$、立即读 $z$。令
+
+$$
+h=z-\beta,\qquad
+k=\frac{h^2+x\beta-x^2}{h-x},\qquad
+a=\frac hk,\quad b=\frac xk,\quad c=1+\frac\beta k-b.
+\tag{6.1}
+$$
+
+返回 $P=\left(\begin{smallmatrix}a&b\\c&1-a\end{smallmatrix}\right)$、$g(T)=k$、$\delta=-k$，即是整个不受承诺限制纤维的完整逆。所有分母在每个实际输入上非零。
+
+**证明。** 定理 4.2、推论 4.3 已从全部历史推出 $g=k\ne0$、$k(t-1)=\beta$，不是输入给定的常数类别。实际矩阵表给 $x=kb$、$z=k(a+t)-k=ka+\beta$，故 $h=ka$。因 $b>0,k\ne0$，有 $x\ne0$，继而 $x\beta\ne0$。将 $bc=a(1-a)$ 乘以 $k^2$，得到
+
+$$
+x(k+\beta-x)=h(k-h),\qquad
+(h-x)k=h^2+x\beta-x^2.
+\tag{6.2}
+$$
+
+若 $h=x$，右边为非零 $x\beta$，矛盾，所以 $h-x\ne0$。因此 (6.1) 恢复的就是原非零 $k$，随后三个除以 $k$ 的式子恢复原 $a,b,c$，迹一恢复第四元素。实际成员性保证返回来源合法；任意增益符号均包括在内。若原初读为 $a_0$，先用归一化读数 $x=z_6-a_0$、$z=z_7-a_0$，最后返回漂移 $a_0-k$。两单独动作均立即读取，最大总预算为八。此处是 J5 两读边界逆，J4 的三读常数逆仍为第 3 节的既有结果。∎
+

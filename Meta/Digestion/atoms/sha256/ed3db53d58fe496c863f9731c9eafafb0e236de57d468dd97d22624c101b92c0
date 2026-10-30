@@ -1,0 +1,27 @@
+**Theorem 18.2 (Q4 pole exclusion).** At a positive $Q_4$ root the only
+possible drift satisfying both original pole source equations
+$\widetilde f=\widetilde K_s=0$ is $d=d_1$. Its source reconstruction
+has $r=1$, so it gives no strict companion.
+
+Proof. In $\mathcal A_4$, the pole coordinate is
+$x=(t+1)/(2t+1)$ and the quadratic has the exact factorization
+
+$$
+\begin{gathered}
+\widetilde f=f_2(d-d_1)(d-d_o),\\
+d_o=\frac{-3286744321946172282t^3+4749234502781385t^2
+ +5146526094595587693t+3318426590487962019}
+ {27062287663495765},\\
+\widetilde K_s(d_1)=0.
+\end{gathered}
+\tag{18.3}
+$$
+
+These identities use the unreduced circuits (18.1), followed by monic
+reduction in $t$. For completeness, the following norms give exact
+nonvanishing data. Use the monic $Q_4$ over $\mathbb Z_{(103)}$ and
+reduce the multiplication determinants modulo $103$:
+
+| Element | $q_d$ | $2t+1$ | $f_2$ | $d_o-d_1$ | $\widetilde K_s(d_o)$ |
+| --- | --- | --- | --- | --- | --- |
+| Norm modulo $103$ | $87$ | $58$ | $78$ | $49$ | $75$ |

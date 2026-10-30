@@ -1,0 +1,28 @@
+**命题 117.2（同一可见 FIB 响应的四维中心延拓）。** 令 $O$ 为二阶坐标可行集的非空开内部。对满足整条线段 $q+tu$（$0\le t\le1$）留在 $O$ 的局部控制，比较下列两个模型：
+
+$$
+H_u(q)=q+u,
+$$
+
+以及
+
+$$
+\widetilde H_u(q,z)=\left(q+u,\ z+\frac12\beta(q,u)\right),
+\qquad
+\widetilde T(q,z)=(Tq,z).
+$$
+
+投影 $\pi(q,z)=q$ 满足
+
+$$
+\pi\widetilde H_u=H_u\pi,
+\qquad
+\pi\widetilde T=T\pi,
+\qquad
+\widetilde T\widetilde H_u=\widetilde H_{Tu}\widetilde T.
+$$
+
+因此，以 $q$ 为全部读出、以同一线段条件为合法性规则的任意有限控制词，在两个模型中给出完全相同的可见历史；若初始联合律和观测核也只依赖 $q$，所有这些任务的决策风险也相同。
+
+**证明。** 第一组等式由 $PT=AP$ 和 $\det A=1$ 直接得到。逐步应用投影等式，并对控制词长度归纳，得到可见历史和合法性逐项相同。最后一式保证裸 FIB 更新与控制的次序相容。这里没有把控制、来源或读出扩展为原生 FIB 已有操作；它们是用于检验桥接条件的附加合同。$\square$
+

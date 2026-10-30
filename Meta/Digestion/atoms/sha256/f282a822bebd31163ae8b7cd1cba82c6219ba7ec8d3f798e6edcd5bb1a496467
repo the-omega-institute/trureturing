@@ -1,0 +1,25 @@
+**定义 251.1（完整世界、基点和局部图）。** 取 [SJ] 的全部严格完整世界
+
+$$
+W=(P(r,b),g,d)\in\mathcal H,\qquad
+P(r,b)=\begin{pmatrix}r&b\\r(1-r)/b&1-r\end{pmatrix},
+$$
+
+其中 $0<r<1$、$b>0$、$0\ne g\in\mathbb R[t]$、$\deg g\le3$、$d\in\mathbb R$，并保留该来源最初五个固定读数和原时钟。记
+
+$$
+\pi(W)=(p(W),v(W)),\qquad
+\Gamma(W)=\Psi_J(W)=(p(W),v(W),a(W)).
+\tag{251.1}
+$$
+
+$a$ 是同一完整世界的第七时钟 $J$ 响应；$g,d$ 不随目标更换。为避免与世界的 drift $d$ 混淆，本节不用 $d$ 表示维数。[SJ] 推论 24.2 供应
+
+$$
+p(W)\ge0\quad\Longrightarrow\quad
+\operatorname{rank}d\Gamma_W=2
+\tag{251.2}
+$$
+
+在完整二维解析 parent 上成立，包括奇异来源；它不是固定 drift 切片的秩断言。
+

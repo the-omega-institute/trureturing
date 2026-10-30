@@ -6,6 +6,8 @@
    utility: none
    digest: The exponent-n integer series has odd support at dyadic neighbors. -/
 
+/- Escape audit unfinished for square_odd, derivative_map: https://github.com/the-omega-institute/trureturing/issues/19834. -/
+/- Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/19891; Agree, pow_change. -/
 import D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity
 import Mathlib.RingTheory.PowerSeries.Derivative
 import Mathlib.RingTheory.PowerSeries.WellKnown
@@ -90,11 +92,11 @@ private theorem square_expand (F : PowerSeries F2) : F^2 = expand 2 (by decide) 
 private theorem square_even (F : PowerSeries F2) (n : ℕ) : coeff (2*n) (F^2) = coeff n F := by
   rw [square_expand, coeff_expand_mul]
 
-private theorem square_odd (F : PowerSeries F2) (n : ℕ) : coeff (2*n+1) (F^2) = 0 := by
+theorem square_odd (F : PowerSeries F2) (n : ℕ) : coeff (2*n+1) (F^2) = 0 := by
   rw [square_expand, coeff_expand_of_not_dvd]
   omega
 
-private def Agree (n : ℕ) (F G : PowerSeries R) : Prop := ∀ k < n, coeff k F = coeff k G
+def Agree (n : ℕ) (F G : PowerSeries R) : Prop := ∀ k < n, coeff k F = coeff k G
 
 private theorem agree_iff (n : ℕ) (F G : PowerSeries R) :
     Agree n F G ↔ (X : PowerSeries R)^n ∣ F-G := by
@@ -117,7 +119,7 @@ private theorem leading_mul {n : ℕ} {U : PowerSeries R} (h : X ^ n ∣ U) (V :
     simpa only [zero_add, coeff_zero_eq_constantCoeff] using coeff_X_pow_mul T n 0
   rw [mul_assoc, hc, hc, map_mul]
 
-private theorem pow_change {n : ℕ} {F G : PowerSeries R}
+theorem pow_change {n : ℕ} {F G : PowerSeries R}
     (hF : constantCoeff F = 1) (hG : constantCoeff G = 1) (h : Agree n F G) (e : ℕ) :
     coeff n (F^e) - coeff n (G^e) = (e : R)*(coeff n F - coeff n G) := by
   induction e with
@@ -253,7 +255,7 @@ private theorem integer_normalized_iff (F : PowerSeries ℤ) (n : ℕ) (hn : 0 <
 private theorem geom_map {S : Type*} [CommRing S] (f : R →+* S) (n : ℕ) :
     (geom (R := R) n).map f = geom n := by ext k; simp [geom]
 
-private theorem derivative_map {S : Type*} [CommRing S] (f : R →+* S) (F : PowerSeries R) :
+theorem derivative_map {S : Type*} [CommRing S] (f : R →+* S) (F : PowerSeries R) :
     (PowerSeries.derivative (R := R) F).map f = PowerSeries.derivative (R := S) (F.map f) := by ext k; simp [coeff_derivative]
 
 private theorem normalized_map {S : Type*} [CommRing S] (f : R →+* S)

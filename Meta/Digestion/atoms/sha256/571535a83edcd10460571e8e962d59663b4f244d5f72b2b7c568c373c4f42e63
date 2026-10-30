@@ -1,0 +1,45 @@
+**Theorem 149.1 (A uniform finite gap).**
+Let
+
+$$
+B_f={163\over4000},\qquad U_f={813\over20000},\qquad
+G_f=B_f-U_f={1\over10000}.
+\tag{149.1}
+$$
+
+These are respectively the lower and upper certificates (143.8) for the
+literal $117$-row problem at $t=0$. For the finite row family
+$\mathscr R_f=\{(i,w):w\in\mathcal W_2\}$, write
+$\ell_{\rho,t}=\beta_{\rho,t}+U_{\rho,t}\cdot x+V_{\rho,t}\cdot y$ and set
+
+$$
+L_f=\sup_{|s|\le\rho}\max_{\rho\in\mathscr R_f}
+\left(|\partial_s\beta_{\rho,s}|+R_*'\|\partial_sU_{\rho,s}\|+G_*\|\partial_sV_{\rho,s}\|\right),
+\qquad
+\rho_f=\min\left\{\rho,{G_f\over4L_f}\right\}.
+\tag{149.2}
+$$
+
+For $L_f=0$ take the second entry as $+\infty$. Then, for every
+$|t|\le\rho_f$,
+
+$$
+\boxed{\qquad \delta_{f,t}=n_{f,t}-m_{f,t}\ge {1\over20000}.\qquad}
+\tag{149.3}
+$$
+
+The derivative bound in (149.2) is a finite maximum of source trigonometric
+polynomials. Uniform coercivity from (148.2) puts every finite minimizer
+inside the displayed $\|z\|\le R_*'$, $|g|\le G_*$ ball. On that ball, the
+mean-value theorem gives
+$|m_{f,t}-m_{f,0}|\le L_f|t|$ and
+$|n_{f,t}-n_{f,0}|\le L_f|t|$. Therefore
+
+$$
+\delta_{f,t}\ge G_f-2L_f|t|\ge G_f/2=1/20000.
+\tag{149.4}
+$$
+
+This is a tangent statement. It does not identify a nonlinear optimizer,
+an endpoint type, or an equality case from a tangent tie.
+
