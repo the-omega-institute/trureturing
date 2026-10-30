@@ -4665,3 +4665,278 @@ $0<d<1$、$\sin(2\theta)\ne0$、每个 $[N,P_\xi]\ne0$ 的量词完整保留。
 仍是与此精确单系统应用不同的数学与物理问题。
 
 ## 追加锚（本行以下为增补区）
+
+
+## 111. 原四表的有限噪声合同与共同观察运输
+
+**定义 111.1（固定源、误差与距离）。** 固定定义 100.1 的任意允许源及定义 101.1 的任意合法前缀，保持假设 100.2 的整个竞争类。以 $\widetilde H=MP$、$\widetilde H^a=MB_aP$ 表示竞争者按原索引形成的四表；只将 (101.5) 替换为
+
+$$
+\max\{\|\widetilde H-H\|_{\max},\ \max_a\|\widetilde H^a-H^a\|_{\max}\}\le\epsilon,
+\qquad \epsilon\ge0.
+\tag{111.1}
+$$
+
+这里 $\|D\|_{\max}=\max_{m,i}|D_{mi}|$，不是对重新条件化概率的误差。$Q$ 取 Hilbert–Schmidt 范数 $\|X\|_2=\sqrt{\operatorname{Tr}(X^2)}$，$\mathbb R^9$ 取 Euclidean 范数，线性映射取相应诱导范数；$d_H$ 是此范数下非空紧集的 Hausdorff 距离。置
+
+$$
+\begin{gathered}
+\mathcal D=\{X\succeq0:\operatorname{Tr}X=1\},\quad
+\sigma=\sigma_{\min}(H)>0,\quad \kappa=\|L^{-1}\|\|L\|,\quad
+\chi=\max_a\|H^aH^{-1}\|,\\
+b=3\|L^{-1}\|,\quad \delta=9\epsilon,\quad
+\gamma=3\|L^{-1}\|\epsilon,\quad
+\beta=\frac{2\kappa\delta(1+\chi)}{\sigma-\delta}\quad(\delta<\sigma).
+\end{gathered}
+\tag{111.2}
+$$
+
+**定理 111.2（同一观察坐标的全域估计）。** 若 (111.1) 且 $\delta<\sigma$，则 $\dim V=9$，$M,P$ 都为同构。同一个实线性双射
+
+$$
+S=L^{-1}M,\qquad C=S(K),\qquad \mathcal B=S(\mathcal B_K)
+\tag{111.3}
+$$
+
+满足下列全部结论，且没有给竞争锥添加内点半径或紧族假设：
+
+$$
+\begin{gathered}
+u=\operatorname{Tr}\circ S,\qquad e(x)=\operatorname{Tr}(ESx)\quad(x\in V),\qquad
+\|Ss_0-\rho_0\|_2\le\gamma,\\
+T_a=SB_aS^{-1},\quad \|T_a-A_a\|\le\beta/2,\qquad
+\mathcal B\subseteq\{X:\operatorname{Tr}X=1,\ \|X\|_2\le b\},\\
+D_j=2T_j\ (j=0,1),\quad D_N=T_N,\qquad
+\|D_a-\operatorname{Ad}_{U_a}\|\le\beta.
+\end{gathered}
+\tag{111.4}
+$$
+
+$C$ 仍闭、尖、生成，$\mathcal B$ 仍紧且凸；$D_a(C)\subseteq C$，$\operatorname{Tr}(EX)\ge0$ 对 $X\in C$ 成立。$S$ 此时不被断言为精确有序同构。
+
+证明。逐条误差的 Frobenius 上界给每个 $9\times9$ 块的诱导范数误差至多 $9\epsilon$。由 $\|\widetilde Hv\|\ge(\sigma-\delta)\|v\|$，$\widetilde H$ 可逆且 $\|\widetilde H^{-1}\|\le(\sigma-\delta)^{-1}$。因此 (103.3) 的秩饱和论证直接给 $\dim V=9$ 及 $M,P$ 的同构性。$LS=M$ 的第零行与第一是行给两个精确泛函等式；第一列给 $\|Ss_0-\rho_0\|_2\le3\|L^{-1}\|\epsilon$。
+令 $\Delta=\widetilde H-H$、$\Delta^a=\widetilde H^a-H^a$，则
+
+$$
+\begin{aligned}
+T_a&=L^{-1}\widetilde H^a\widetilde H^{-1}L,\\
+T_a-A_a&=L^{-1}(\Delta^a-H^aH^{-1}\Delta)\widetilde H^{-1}L.
+\end{aligned}
+\tag{111.5}
+$$
+
+取范数即得映射界。缩放不改变锥的正性，且各 $\operatorname{Ad}_{U_a}$ 的范数为一，故得 $D_a$ 的界。
+对每个 $x\in K$，(100.6) 与正性给 $0\le u(B_jx)\le u(x)$；逐步应用于原生后缀，再用 $0\le e\le u$，得到
+
+$$
+0\le m_m(x)\le u(x)\quad(1\le m\le8),\qquad
+M(\mathcal B_K)\subseteq\{1\}\times[0,1]^8.
+\tag{111.6}
+$$
+
+故 $\|Sx\|_2\le3\|L^{-1}\|=b$。这是所有归一化状态的界，不只约束九个已到达列。其余闭性、紧性、正性来自同一个同构及原假设。∎
+
+## 112. 固定源的完整归一化锥基稳定性
+
+**定义 112.1（目标轨道的有限证书）。** 对 $\tau>0$，选取两个有限正向词集 $\mathcal W_{\rm s},\mathcal W_{\rm e}$，使
+
+$$
+\{U_w\rho_0U_w^\dagger:w\in\mathcal W_{\rm s}\},\qquad
+\{U_w^\dagger EU_w:w\in\mathcal W_{\rm e}\}
+\tag{112.1}
+$$
+
+各为全部复秩一迹一投影的 $\tau$-网，最大词长记为 $n$。每个固定源均有这样的证书：定理 95.1 给两侧稠密轨道，纯投影集合紧，有限子覆盖给有限网。这是目标侧数学证书，不是新增的实测词、可执行逆或纯态制备。
+置
+
+$$
+F_n=(1+\beta)^n-1,\qquad q_n=(1+\beta)^n(1+\gamma)-1,\qquad
+ g(q)=\frac{(1+\sqrt3)q}{1-\sqrt3q}.
+\tag{112.2}
+$$
+
+**定理 112.2（对原竞争类统一的固定源有限噪声结论）。** 在定理 111.2 的条件下，对任一 (112.1) 的证书，若 $\sqrt3q_n<1$，同一个 $S$ 同时满足
+
+$$
+d_H(\mathcal B,\mathcal D)
+\le\max\{\tau+g(q_n),\ 6b(\tau+F_n)\}.
+\tag{112.3}
+$$
+
+特别地，对每个固定允许源、每一种合法前缀及每个 $\eta>0$，存在 $\epsilon_0>0$，使所有原假设 100.2 的竞争者只要满足 (111.1) 且 $0\le\epsilon<\epsilon_0$，便同时有 $\dim V=9$、(111.4) 及 $d_H(\mathcal B,\mathcal D)<\eta$。$\epsilon_0$ 可依赖该源、前缀、$\eta$ 和有限证书，不能依赖竞争者。
+
+证明。置 $s=Ss_0$、$J_a=\operatorname{Ad}_{U_a}$，按原时间次序复合。乘积差的逐项展开给每个长 $k$ 的词
+
+$$
+\|D_w-J_w\|\le(1+\beta)^k-1=F_k,\qquad
+\|D_ws-J_w\rho_0\|_2\le(1+\beta)^k\gamma+F_k=q_k.
+\tag{112.4}
+$$
+
+确实，每项至多 $\beta(1+\beta)^j$，求和得首式，初态误差再乘 $\|D_w\|\le(1+\beta)^k$ 得次式；$\beta=0$ 时同样成立。
+先取任意 $X\in\mathcal B$。对效果网中的 $w$，$D_wX\in C$，所以
+
+$$
+\operatorname{Tr}(U_w^\dagger EU_wX)=\operatorname{Tr}(EJ_wX)\ge-F_n b.
+\tag{112.5}
+$$
+
+任意纯投影 $P$ 距某个网点至多 $\tau$，Cauchy–Schwarz 不等式给 $\operatorname{Tr}(PX)\ge-b(\tau+F_n)$。置 $t=b(\tau+F_n)$，则 $\lambda_{\min}(X)\ge-t$。写 $X=X_+-X_-$，$v=\operatorname{Tr}X_-\le3t$；因 $\operatorname{Tr}X=1$，$\operatorname{Tr}X_+=1+v$。故
+
+$$
+Y=\frac{X_+}{1+v}\in\mathcal D,\qquad
+\|X-Y\|_2\le\|X_-\|_2+\frac{v}{1+v}\|X_+\|_2\le2v\le6t.
+\tag{112.6}
+$$
+
+这给 $\sup_{X\in\mathcal B}\operatorname{dist}(X,\mathcal D)$，未将总量上界倒用为某一部分的下界。
+再取状态网中的 $w$，令 $Z=D_ws\in C$、$P_w=J_w\rho_0$。由 (112.4)，
+
+$$
+|\operatorname{Tr}Z-1|\le\sqrt3q_n<1,\qquad
+\left\|\frac Z{\operatorname{Tr}Z}-P_w\right\|_2
+\le\frac{q_n+\sqrt3q_n}{1-\sqrt3q_n}=g(q_n).
+\tag{112.7}
+$$
+
+因此 $Z/\operatorname{Tr}Z\in\mathcal B$，每个纯投影距离 $\mathcal B$ 至多 $\tau+g(q_n)$。对任意密度矩阵取其至多三个纯投影的谱凸组合，并取对应 $\mathcal B$ 中点的同一凸组合，即得反向距离界。这一步约束完整基，不假设竞争锥自对偶、纯性或任意效果可取得，合起来就是 (112.3)。
+为显式给出正的误差门槛，任取
+
+$$
+\begin{gathered}
+0<\tau<\min\{\eta/2,\eta/(12b)\},\qquad
+q_* =\min\{1/(2\sqrt3),\eta/[4(1+\sqrt3)],\eta/(12b)\},\\
+C_0=3\|L^{-1}\|,\qquad C_1=36\kappa(1+\chi)/\sigma,\\
+\epsilon_0=\min\{\sigma/18,\ \log(1+q_*)/(nC_1+C_0)\}>0.
+\end{gathered}
+\tag{112.8}
+$$
+
+选择该 $\tau$ 的一个有限证书。若 $\epsilon<\epsilon_0$，则 $\beta\le C_1\epsilon$、$\gamma=C_0\epsilon$，所以
+$q_n\le\exp((nC_1+C_0)\epsilon)-1<q_*$，且 $F_n\le q_n$。代入 (112.3)，两方向都严格小于 $\eta$，所需量词成立。没有由此取得无证书的 $O(\epsilon)$ 完整锥速率。∎
+
+**推论 112.3（保留权重的有限词界与证伪条件）。** 对每个长 $k$ 的原词，$T_w=\alpha_wD_w$，故是、否与质量的误差分别至多
+
+$$
+\alpha_wq_k,\qquad \sqrt2\alpha_wq_k,\qquad \sqrt3\alpha_wq_k.
+\tag{112.9}
+$$
+
+证明。用 (112.4) 分别与 $E,I_3-E,I_3$ 配对，其 Hilbert–Schmidt 范数为 $1,\sqrt2,\sqrt3$。任何固定深度 $k$ 的外定时序，所有原生标签历史的 $\alpha_w$ 总和为一，所以保留所有标签和两个终端的总变差至多 $(1+\sqrt2)q_k/2$。这里没有无限时域统一误差断言。
+若存在一个合法固定源竞争序列，其原四表误差趋零，而 (111.3) 的完整基距离保持正下界，就直接否定定理 112.2；矩阵拟合收敛本身不排除这个证伪条件。(111.6)、(112.5)–(112.7) 正是排除它的两侧证明。∎
+
+## 113. 任意小正记录误差不强制精确 PSD 有序同构
+
+**定理 113.1（同一源的九维闭多面锥竞争族）。** 对每个固定允许源及其任意合法原四表，有满足假设 100.2 的九维实竞争者族，原表最大误差在 $(0,13t]$ 内且随 $t\downarrow0$ 趋零，但每个 $t\in(0,1)$ 的完整锥都不与 $\mathrm{PSD}_3$ 实线性有序同构。所有历史标签、原权重和两个终端保留，全部词的质量恰为 $\alpha_w$。
+
+证明。置 $z=I_3/3$、$r=1/\sqrt6$。在迹一仿射超平面中，$\mathcal D-z$ 含半径 $r$ 的 Hilbert–Schmidt 球：若 $Y$ 无迹，则 $\lambda_{\min}(Y)\ge-\sqrt{2/3}\|Y\|_2$，因为其另两个本征值之和为 $-\lambda_{\min}(Y)$，平方和至少为后者平方的一半。因此 $z+Y\succeq0$ 对 $\|Y\|_2\le r$ 成立。
+取全部纯投影的一组有限 $tr$-网，令 $P_t$ 为其凸包。对每个无迹 $F\in Q$，以 $h_A(F)=\sup_{X\in A}\operatorname{Tr}(FX)$ 表示支撑函数，网点和上面的球给
+
+$$
+h_{P_t}(F)\ge h_{\mathcal D}(F)-tr\|F\|_2
+\ge(1-t)h_{\mathcal D}(F).
+\tag{113.1}
+$$
+
+两个集合都在迹一超平面上，加常数法向量不影响包含判据。有限维凸集分离于是给
+
+$$
+(1-t)\mathcal D+tz\ \subseteq P_t\subseteq\mathcal D.
+\tag{113.2}
+$$
+
+左侧有相对内点，故 $P_t$ 的仿射维数为八；极射线数不等于载体维数，不将各顶点提升为独立基向量。定义整个九维 $Q$ 上的模型
+
+$$
+\begin{gathered}
+K_t=\operatorname{cone}(P_t),\quad u=\operatorname{Tr},\quad
+s_t=(1-t)\rho_0+tz,\quad e(X)=\operatorname{Tr}(EX),\\
+\Phi_{a,t}(X)=(1-t)U_aXU_a^\dagger+t\operatorname{Tr}(X)z,\\
+B_{j,t}=\tfrac12\Phi_{j,t}\ (j=0,1),\qquad B_{N,t}=\Phi_{N,t}.
+\end{gathered}
+\tag{113.3}
+$$
+
+$K_t$ 是有限生成、闭、尖、生成的凸锥，迹严格正且归一化基恰为紧多面体 $P_t$。$s_t\in P_t$，$0\le e\le u$ 由 $P_t\subseteq\mathcal D$ 给出。每个 $\Phi_{a,t}$ 将 $P_t$ 送入 (113.2) 的左侧，故三个映射在整个 $K_t$ 上为正；迹恒等式逐支为 $uB_{j,t}=u/2$、$uB_{N,t}=u$，从而 (100.6) 全域成立。
+归一化初态与目标相差的迹范数至多 $2t$，每步 $\Phi_{a,t}$ 与其目标酉共轭在任意密度上的差至多 $2t$。这些映射本身在整个 PSD 域上保持迹且为正，逐项展开或迹范数收缩给长 $k$ 的归一化轨道误差至多 $2(k+1)t$。两态之差无迹，$0\le E\le I_3$，故每个终端的原加权误差至多 $\alpha_w(k+1)t$。
+原表深度至多十二，故最大表误差至多 $13t$；任何固定深度的全部历史总变差至多 $(k+1)t$。质量始终精确，否／失败事件未删除，也未对稀有标签条件化。
+$K_t$ 只有有限条极射线，而 $\mathrm{PSD}_3$ 的复秩一极射线不可数；线性有序同构保持极射线，所以不存在这样的同构。若原表误差为零，定理 102.1 又会迫使该同构，矛盾。因此每个 $t>0$ 的最大表误差严格为正。这个模型族满足原竞争合同，未添加隐藏维数或放松闭紧基；其数学构造不主张这些修改后的仪器已由原生菜单取得。∎
+
+## 114. 接近非混合控制时没有跨源统一锥模量
+
+**定理 114.1（原九维类中的变源非统一性）。** 可固定任意允许的 $d,\theta$，取一族允许混合目标 $N_h\to I_3$ 和合法原前缀，构造九维、闭锥、紧基、四表均可逆的合法竞争者，使原表误差趋零、共同观察运输下制备／效果／归一化精确、三个映射误差趋零，但完整归一化基与 $\mathcal D$ 的 Hausdorff 距离有不随 $h$ 消失的正下界。因此不存在同时对全部允许混合 $N$ 生效的正误差邻域和趋零的完整锥模量；这不反驳定理 112.2 的固定源量词。
+
+证明。记 $c=d/2$，取 $a=c/2$、$b_+=(1+c)/2$，并置
+
+$$
+\begin{gathered}
+K_{[a,b_+]}=\{X\succeq0:\ a\operatorname{Tr}X\le\operatorname{Tr}(P_\xi X)\le b_+\operatorname{Tr}X\},\\
+z_c=cP_\xi+\tfrac{1-c}{2}(I_3-P_\xi),\qquad
+m=\min\{c-a,b_+-c\}>0.
+\end{gathered}
+\tag{114.1}
+$$
+
+此锥闭且尖，迹严格正、迹一基紧；正定 $z_c$ 严格满足两条人口不等式，所以锥生成全部九维 $Q$。$\rho_0$ 的 $\xi$ 人口为 $c$，故是合法制备；$E$ 仍为合法二元效果。原 $V_0,V_1$ 与 $P_\xi$ 对易，故原生 $A_0,A_1$ 保持此锥。
+用原基向量 $e$ 取 Hermitian $G=\xi e^\dagger+e\xi^\dagger$、$N_h=\exp(\mathrm ihG)$，$h>0$ 足够小，则目标混合且趋于恒等。对人口差泛函 $f(X)=\operatorname{Tr}((P_\xi-cI_3)X)$，
+
+$$
+\left.\frac{d}{dh}f(N_hXN_h^\dagger)\right|_{h=0}
+=\operatorname{Tr}(\mathrm i[P_\xi,G]X).
+\tag{114.2}
+$$
+
+右侧的非零交叉块矩阵不在 $\operatorname{span}\{P_\xi-cI_3\}$ 中，所以此泛函在 $\mathscr S_c$ 上不恒为零。固定任意原生八列基 $r_1,\ldots,r_8$，便有某个固定 $k$ 使 (114.2) 在 $r_k$ 上非零。因此对所有充分小 $h>0$，$f(A_{N_h}r_k)\ne0$，$p_9=p_kN_h$ 是合法逃逸列；前八词和 $k$ 都无需随 $h$ 改选。
+保持 $u=\operatorname{Tr},s_0=\rho_0,e(X)=\operatorname{Tr}(EX),B_j=A_j$，只将竞争者的控制定义为
+
+$$
+\begin{gathered}
+v_h=2\|N_h-I_3\|_\infty>0,\quad \lambda_h=\frac{v_h}{m+v_h}\in(0,1),\quad
+\mathcal R_c(X)=\operatorname{Tr}(X)z_c,\\
+B_{N,h}=(1-\lambda_h)\operatorname{Ad}_{N_h}+\lambda_h\mathcal R_c.
+\end{gathered}
+\tag{114.3}
+$$
+
+这里 $\|\cdot\|_\infty$ 是三维矩阵算子范数。对此锥的任意迹一 $X$，人口 $y\in[a,b_+]$，而 $N_h$ 改变人口的绝对值至多 $v_h$，因为 $\|N_hXN_h^\dagger-X\|_1\le v_h$。控制后人口为 $(1-\lambda_h)(y+\Delta y)+\lambda_hc$，且
+
+$$
+(1-\lambda_h)|\Delta y|\le(1-\lambda_h)v_h=\lambda_hm.
+\tag{114.4}
+$$
+
+这同时守住上下两个人口边界。$B_{N,h}$ 本身保持 PSD 和迹，故在整个 $K_{[a,b_+]}$ 上为正且保持 $u$；原两分支的和仍保持 $u$，原合同每条全域条件成立。
+所有读出后缀原生，故 $M=L$，共同观察运输 $S=L^{-1}M=I_Q$ 精确不变。前八竞争列仍为 $r_i$，第九列为
+
+$$
+x_9=(1-\lambda_h)A_{N_h}r_k+\lambda_h\operatorname{Tr}(r_k)z_c,
+\qquad f(x_9)=(1-\lambda_h)f(A_{N_h}r_k)\ne0.
+\tag{114.5}
+$$
+
+因此目标与竞争者的 $H$ 块都可逆，维数没有坍缩。$B_{N,h}$ 在无迹子空间上等于可逆的 $(1-\lambda_h)\operatorname{Ad}_{N_h}$，且保持迹，故在整个 $Q$ 上可逆；两个原生映射也可逆。因此四表各块均为三个同构的乘积，全部可逆。原生两个映射完全相同，控制差范数至多 $\lambda_h(1+\sqrt3\|z_c\|_2)\to0$。每个控制位置在归一化密度上引入至多 $2\lambda_h$ 的迹范数差，故含 $q$ 次控制的词，其两个终端误差各至多 $\alpha_w q\lambda_h$，质量精确。选定表至多两次控制，所以最大表误差 $\epsilon_h\le2\lambda_h\to0$。任意固定外定时序也保留所有标签和两个终端，总变差至多 $q\lambda_h$。
+最后，对每个 $X\in K_{[a,b_+]}$ 的迹一基，都有
+
+$$
+\|P_\xi-X\|_2\ge|\operatorname{Tr}(P_\xi(P_\xi-X))|\ge1-b_+>0.
+\tag{114.6}
+$$
+
+故 $d_H(\mathcal B,\mathcal D)\ge1-b_+$。每个 $h>0$ 的误差也必严格正，否则定理 102.1 在 $S=I_Q$ 下迫使该锥等于 PSD，违反 (114.6)。取此合法序列即排除任何跨全部 $N$ 的 $\omega(\epsilon)\to0$ 统一界，即使额外要求两边块可逆也不例外。此例不声称误差满足一个与 $h$ 无关的 $\sigma_{\min}(H)$ 下界；$h=0$ 是明确被原目标排除的非混合边界，固定 $h>0$ 后令误差趋零仍由定理 112.2 控制。∎
+
+## 115. 有限噪声有序结论的来源对应与操作边界
+
+**定义 115.1（中间工具与新增范围）。** §§111–114 的承重增量是本源原四表对整个原竞争类的固定源正误差锥基结论，以及两个保持原合同的识别边界；不把下列一般工具单列为新增定理。
+[Fanizza–Lumbreras–Winter，2209.11225v2，§2.1、Propositions 2–3、(5)–(7)](https://arxiv.org/html/2209.11225v2) 的不变内外锥方法按 §110 的时间反转对应使用；本源有质量行和替代控制，仍不满足该文的平稳过程合同。该文 §2.3、Theorem 6 已研究 qubit FRDN 过程的退极化噪声及正实现所需隐藏状态数；本处 (113.3) 是原九维实载体上的全局合法多面锥族，不限制顶点数或断言同样多的 HMM 隐藏状态。
+[Monras–Winter，1412.3634v1，§4 及 Theorem 6](https://arxiv.org/html/1412.3634v1) 分别给商实现和多面不变锥的正实现背景；(113.2)–(113.3) 在本源上直接证明全域不变性，不以一般实现存在性代替本模型的合法性。
+[Mazurek 等，1710.05948v3，§§II.4、III.5、IV](https://arxiv.org/html/1710.05948v3) 与 [Grabowecky 等，2108.05864v2，§V.3](https://arxiv.org/html/2108.05864v2) 已用 realized／consistent 状态效果集的两侧约束分析 GPT 偏离；它们的多制备／多测量实验、拟合与几何界不是本处单源固定映射和原四表的直接实例，也不供应本处完整不变锥的稳定量词。
+[Hsu–Kakade–Zhang，0811.4413v2，Conditions 1–2、Theorem 6](https://arxiv.org/html/0811.4413v2) 在有限隐藏 Markov、指定秩与抽样合同下给条件数相关的有限长度分布误差；这里没有供应该 HMM 分解或样本合同，不能直接套其样本界。
+仓内 [HoKalmanPerturbation](../../../D5/S3/Observer/Hankel/HoKalmanPerturbation.lean) 的 `solve_error_identity`／`solve_error_le` 属指定左解方程及诱导无穷范数；本处 (111.5) 是右解次序并用 Euclidean／Hilbert–Schmidt 范数，故仅复用扰动恒等式的方法，不冒称直接 Lean 应用。[NoisyHoKalmanRecovery](../../../D5/S3/Observer/Hankel/NoisyHoKalmanRecovery.lean) 还要求单一转移矩阵的有限 Markov 参数和有理程序输出；[HoKalmanPredictionBudget](../../../D5/S3/Observer/Hankel/HoKalmanPredictionBudget.lean) 的单矩阵幂传播同样不直接覆盖三字母。这里用 (112.4) 的有序乘积展开，新增工作是继而控制全部锥基。
+
+**命题 115.2（资源、退化边界及未供应的原则）。** 本增量仍只比较 $324=36+288$ 个原加权索引标量，实测深度至多十二、每个时序至多两次同一个 $N$，竞争载体上限仍为九；(112.1) 的长词不增加观察菜单。
+
+证明。定义 111.1 没有改变四表的任一索引，直接用命题 108.1。缩放 $D_j=2T_j$ 仅是锥证明中的正倍数，(112.9)、(113.3)、(114.3) 都保留实际分支权重；归一化轨道点只在数学基中使用，不授予选支、丢弃失败、重复制备或停止权限。
+固定源的 $\sigma>0$ 和轨道网来自原允许条件；$d=0,1$、$\sin(2\theta)=0$、$[N,P_\xi]=0$ 不由定理 112.2 扩展，(114.1)–(114.6) 明确处理趋近最后边界的变源族。$\epsilon=0$ 时原定理 102.1 仍给精确完整有序同构；任意小正误差下定理 113.1 排除一般的精确锥类型识别。这里的数值常数依赖实际目标及证书，不是一个经验噪声阈值、未知源的取得算法或样本复杂度结论。
+目标的复矩阵、纯制备、秩一效果和三个指定酉仍是输入，竞争者未被改成预设 Hilbert／PSD／CP 类。完整锥基的运输不供应所有数学效果的物理取得、共同参考、相干记录访问、独立张量制备、一般复合规则或动力学起源；V–VII 的原生菜单、完整记录、相干／返回合同及相干重建续卷 §§57–60 的全来源近似量词均各自保留。本处不宣称量子起源已闭合。∎
+
+## 追加锚（本行以下为增补区）

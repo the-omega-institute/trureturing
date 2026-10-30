@@ -1,0 +1,47 @@
+#### 命题 3.4（稳定概率与活动的相位）
+
+所有保持三占位投影的酉通道都由模式基上的对角酉矩阵实现。对
+
+$$
+
+\lvert \psi\rangle=\sum_s\alpha_s\lvert s\rangle,\qquad
+\Omega=\frac{\alpha_0\alpha_{13}}{\alpha_1\alpha_3},
+
+$$
+
+假设四个底面振幅均非零。对角相位门 $D=\operatorname{diag}(e^{i\chi_s})$ 给出
+
+$$
+
+\Omega'=
+e^{i(\chi_0+\chi_{13}-\chi_1-\chi_3)}\Omega.
+
+$$
+
+所有占位概率、三均值和 $|\Omega|$ 均不变，但四角关系的相位可以改变。
+
+**证明。** 
+酉通道稳定投影等价于 $D^\dagger N_aD=N_a$，从而 $D$ 与三个 $N_a$ 对易，联合谱简单迫使其对角。逐个代入 $\alpha'_s=e^{i\chi_s}\alpha_s$ 即得。
+ ∎
+
+例如
+
+$$
+
+\lvert \Psi_\pm\rangle=\frac{\lvert 000\rangle+\lvert 100\rangle+\lvert 010\rangle+\lvert 001\rangle\pm\lvert 101\rangle}{\sqrt5}
+
+$$
+
+具有同一概率律。条件于中位为 $0$ 后，$\Psi_+$ 的两个端点是乘积态，$\Psi_-$ 的端点是最大纠缠纯态：其归一振幅矩阵分别为
+
+$$
+
+\tfrac12\begin{pmatrix}1&1\\1&1\end{pmatrix},\qquad
+\tfrac12\begin{pmatrix}1&1\\1&-1\end{pmatrix}.
+
+$$
+
+前者秩一，后者的约化态为 $I/2$。这是给定复 Hilbert 与两端张量分割下的例子，不额外声称这些精确态或相位门可由有限原生黄金门词制备。
+
+<a id="sec-4"></a>
+

@@ -9,6 +9,11 @@ internal sealed class TwoSmallPlacementDocument : IScribeDocumentDefinition
         H("Placing two SMALL occurrences across two free gaps"),
         Blocks(
             Paragraph(Text("The physical source is centered modulo N=2^k-1. A label is SMALL when its absolute increment is less than Q=2^(k-2); all other labels are LARGE. Physical occurrences are counted even when their numerical values coincide.")),
+            Describe.Lean(DescribeId.Create("circle-paired-segment"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/TwoSmallPlacement.paired_segment"),
+                H("Every step of a consecutive physical pair segment"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Let H(j) be the height before physical pair j and P(j) its intermediate peak. On start<=j<=start+len assume 0<=H(j)<=B, and on start<=j<start+len assume 0<=P(j)<=B. If the two physical increments at off+2j and off+2j+1 equal P(j)-H(j) and H(j+1)-P(j), then the complete range segment lies in InStrip(f,B,H(start)) and has mass H(start+len)-H(start). Induction on the number of pairs checks both steps and includes the empty segment. The three-SMALL adjacency placement consumes this original pair-segment owner with decreasing geometric valleys and peaks."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("even-cut"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Circle/TwoSmallPlacement.even_cut"),
                 H("The cut forced by the two even gap lengths"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),

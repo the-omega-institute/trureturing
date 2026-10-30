@@ -11,7 +11,8 @@ import unittest
 
 NYX = Path(__file__).resolve().with_name("nyx.py")
 POOLS_ROUTE = ["proxy", "request", "oracle", "api/v1/oracle/pools", "--output", "json"]
-CHAT_ROUTE = ["proxy", "request", "oracle", "api/v1/oracle/openai/v1/chat/completions", "--method", "POST", "--data"]
+CHAT_ROUTE = ["proxy", "request", "oracle", "api/v1/oracle/openai/v1/chat/completions", "--method", "POST", "--stream", "--data"]
+NONSTREAM_CHAT_ROUTE = [*CHAT_ROUTE[:6], CHAT_ROUTE[7]]
 
 FAKE_NYXID = textwrap.dedent('''\
     #!/usr/bin/env python3
@@ -31,15 +32,17 @@ FAKE_NYXID = textwrap.dedent('''\
     if argv == %(pools)r:
         emit("listing.json")
         sys.exit(code("listing.rc"))
-    if argv[:-1] == %(chat)r and argv[-1].startswith("@"):
+    if argv and argv[-1].startswith("@") and argv[:-1] in (%(nonstream_chat)r, %(chat)r):
         (fake / "request.seen").write_bytes(Path(argv[-1][1:]).read_bytes())
-        emit("stream.sse")
+        # A non-streaming CLI buffers the response and loses it when the carrier fails.
+        if code("chat.rc") == 0 or "--stream" in argv:
+            emit("stream.sse")
         if (fake / "chat.stderr").exists():
             sys.stderr.write((fake / "chat.stderr").read_text())
         sys.exit(code("chat.rc"))
     sys.stderr.write("fake nyxid: unexpected argv %%r\\n" %% (argv,))
     sys.exit(99)
-    ''') % {"pools": POOLS_ROUTE, "chat": CHAT_ROUTE}
+    ''') % {"pools": POOLS_ROUTE, "chat": CHAT_ROUTE, "nonstream_chat": NONSTREAM_CHAT_ROUTE}
 
 
 def listing(*pools):
@@ -204,6 +207,18 @@ class NyxContracts(unittest.TestCase):
         self.assertEqual(Path(status["stream_ref"]).read_text(encoding="utf-8"), GOOD_STREAM)
         self.assertIn("NYX_RESULT status=COMPLETE reason=COMPLETE pool=big-pool task=task-0001", completed.stdout)
         self.assertEqual(len(self.chat_calls()), 1)
+
+    def test_stream_flag_preserves_partial_sse_after_carrier_failure(self):
+        partial = sse(chunk("partial response"))
+        self.set_stream(partial, rc=1)
+        completed = self.run_nyx("ask", self.brief, self.out)
+        self.assertEqual(completed.returncode, 1, completed.stdout)
+        self.assertEqual(self.status()["status"], "NOT_COMPLETE")
+        self.assertEqual(self.status()["reason_code"], "CARRIER_EXIT_NONZERO")
+        self.assertEqual(Path(self.status()["stream_ref"]).read_bytes(), partial.encode("utf-8"))
+        self.assertFalse(self.out.exists())
+        self.assertEqual(len(self.chat_calls()), 1)
+        self.assertIn("--stream", self.chat_calls()[0]["argv"])
 
     def test_crlf_lines_and_unicode_separators_are_preserved(self):
         self.set_stream(sse(chunk("a b ∑"), chunk(finish="stop", oracle=ORACLE), "[DONE]", newline="\r\n"))

@@ -82,7 +82,7 @@ $$\forall n: \mathbb{N}, 1 \le n \Rightarrow \exists z:\mathbb{Z}, \operatorname
 
 *Commentary.*
 
-The denominator coefficients are d(2r)=1 and d(2r+1)=-1-2*(-4)^r. The binomial product equation identifies the rational coefficients with an integer recurrence. Triangular uniqueness identifies its inverse modulo two with 1,1,1,... and its inverse modulo five with 1,3,3,... . Coprimality of two and five gives the stated congruence. The calculation uses finite coefficient identities and does not invert factorials in a residue field.
+The denominator coefficients are d(2r)=1 and d(2r+1)=-1-2*(-4)^r. The binomial product equation identifies the rational coefficients with an integer recurrence. Triangular uniqueness identifies its inverse modulo two with 1,1,1,... and its inverse modulo five with 1,3,3,... . Coprimality of two and five gives the stated congruence. The calculation uses finite coefficient identities and does not invert factorials in a residue field. An applicable reuse route for the even-binomial sum is SymmetricBinomialChiSquare.symmetric_binomial_chi_square at B=2*n and z=1, for n>0. Comparing its closed form and finite-sum form, adjoining the index zero, multiplying by two and casting back to integers gives the even-binomial identity. The S1 placement does not obstruct this specialization. The current Lean helper proves the identity using add_pow and does not call that owner.
 
 ## References
 

@@ -1,0 +1,28 @@
+**定义 122.2（有限配分差）。** 置
+
+$$
+\Xi_\alpha(y)=
+ \log\frac{\sum_mP_x(m)^\alpha e^{-\alpha\lambda_y(m)}}
+ {\sum_mP_x(m)^\alpha e^{-\alpha\lambda_0(m)}}.
+\tag{122.3}
+$$
+
+若 $f_\alpha$ 为 $P_x^\alpha/\sum P_x^\alpha$ 下的 $T_x$
+加独立 $N(0,\sigma^2/\alpha)$ 的密度，则
+$\Xi_\alpha(y)=\log[f_\alpha(y)/f_\alpha(0)]$。
+每个有限纤维的精确恒等式为
+
+$$
+\log\sum_m(P_x^y(m))^\alpha-
+\log\sum_m(P_x^0(m))^\alpha
+=\Xi_\alpha(y)-\alpha\Xi_1(y),
+$$
+
+$$
+C3_x(y)-C3_x(0)=-\left.\partial_\alpha^3\Xi_\alpha(y)\right|_{1}.
+\tag{122.4}
+$$
+
+第一式由代入归一化质量得到；第三次对数配分导数是 $\log P_x^y$ 的第三中心矩，
+而惊讶多一个负号，故得第二式。
+

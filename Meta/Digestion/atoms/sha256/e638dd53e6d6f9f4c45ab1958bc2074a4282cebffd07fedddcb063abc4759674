@@ -1,0 +1,16 @@
+**Definition 13.1 (The fixed-$h$ endpoint array problem).** Fix an integer $h\ge2$. For each integer $a\ge4$, put
+$$
+r=a+1,\qquad s=r+h=a+1+h.
+$$
+Let $\mathcal X_{a,h}$ be the profiles of Definition 1.1 on $[s]$ satisfying
+$$
+\mathbb E K=a,\qquad y_i=\mathbb P(i\in T)>0\quad(1\le i\le s).
+$$
+The law of the one nonempty subset $T$ is the only source of $K$, the incidences and the marginals. Put
+$$
+H(x)=2J_s(x)=\mathbb E\!\left[K^2\sum_{i\in T}y_i^{-2}\right],
+\qquad B_0=a r^2,
+\qquad d(x)=H(x)-B_0.
+$$
+No support, cardinality, or connectedness condition is imposed beyond these actual-array constraints; zero type masses and disconnected incidence support remain allowed.
+

@@ -1,0 +1,29 @@
+**Definition 1.1 (The unrestricted integer-mean problem).** Let $a\ge4$ and $h\ge1$ be integers and put $s=a+1+h$. Let $\mathcal X(a,h)$ be the set of probability laws
+
+$$
+x=(x_T)_{\varnothing\ne T\subseteq[s]},\qquad
+x_T\ge0,\qquad \sum_Tx_T=1,\qquad
+\sum_T|T|x_T=a,
+$$
+
+whose actual marginals satisfy
+
+$$
+y_i=\sum_{T\ni i}x_T>0\qquad(i\in[s]).
+$$
+
+For the random nonempty subset $T$ with this one law, write
+
+$$
+K=|T|,\qquad U_T=\sum_{i\in T}\frac1{y_i},\qquad
+H(x)=\mathbb E_x\left[K^2\sum_{i\in T}\frac1{y_i^2}\right],
+$$
+
+$$
+B_0(a)=a(a+1)^2,\qquad
+M(a,h)=\inf_{x\in\mathcal X(a,h)}H(x).
+\tag{1.1}
+$$
+
+These are the profiles of [*CDSO incidence moments and capacity phases*, Definition 1.1](CDSO_INCIDENCE_MOMENTS_AND_CAPACITY_PHASES.md), with $q=a$ and $H=2J_s$. Every marginal, cardinality and expectation in (1.1) is determined by $x$; none can be optimized independently. Type masses may vanish, every cardinality $1\le K\le s$ is allowed, and the positive-mass types need not form a connected incidence support. Positivity imposes no uniform lower bound on $y_i$ over this class. The uniform law on the $a$-element subsets of $[s]$ belongs to $\mathcal X(a,h)$, so the class is nonempty and $M(a,h)$ is finite. The notation is an infimum and does not assert attainment.
+

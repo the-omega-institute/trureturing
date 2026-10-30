@@ -1,0 +1,14 @@
+## 4. Universal bounds for both subtrees
+
+Fix any tree from Lemma 2.2. Let $\alpha\in\{0,1\}$ be the parity
+of its first address $t$, and put $\beta=1-\alpha$. Let $e$ be the
+first address's active edge in phase $\alpha$. The first reply one
+certifies phase $\alpha$ and has full-law mass $\eta$. The first
+reply zero retains both phase alternatives. Define
+
+$$
+B_1=m(C_{10})+m(C_{11}),\qquad
+B_0=m(C_{00})+m(C_{01}).
+\tag{4.1}
+$$
+

@@ -1,0 +1,19 @@
+#### 定义 10.1（静态程序空间）
+
+令 $\mathcal W$ 为全部有限合法门字，取程序空间 $\ell^2(\mathcal W)$。已知矩阵族定义直和酉算符
+
+$$
+\mathrm{SELECT}=\sum_{w\in\mathcal W}\lvert w\rangle\langle w\rvert\otimes U_w.
+$$
+
+它把每个程序索引关联到其数据变换。这个数学定义没有证明一个有限装置可以免费执行无界长度程序。
+
+程序态 $\sum_w c_w\lvert w\rangle$ 与数据 $\lvert \psi\rangle$ 经过该算符后成为
+$\sum_w c_w\lvert w\rangle U_w\lvert \psi\rangle$。若保留程序，整体仍是相干演化；若丢弃程序，数据通道为
+
+$$
+\mathcal E(\rho)=\sum_w|c_w|^2U_w\rho U_w^\dagger.
+$$
+
+<a id="statement-10-2"></a>
+

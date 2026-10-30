@@ -1,0 +1,69 @@
+#### 定理 9.3（同一地址原生门的精确六参数预测）
+
+在 $H_5$ 上只允许同一固定地址的原生 $K$、其有限正向幂，以及共同五模式 PVM 的指定 Lüders 读取。可保留经典结果并依结果选择后续同菜单操作，但不加入混合不同扇区的额外地址、外供换基或重制备。则
+
+<a id="eq-seven"></a>
+
+$$
+W_\infty=\operatorname{Herm} (H_{0,2})\oplus\mathbb R \Pi_1
+\oplus\mathbb R \Pi_3\oplus\mathbb R \Pi_{13},\qquad
+\dim_\mathbb R  W_\infty=7,
+\tag{9}
+$$
+
+其中 $H_{0,2}=\operatorname{span}_\mathbb C \{\lvert 0\rangle ,\lvert 2\rangle \}$。全态来源上的最小仿射预测摘要恰为六个实数，例如
+
+<a id="eq-six"></a>
+
+$$
+\boxed{(X,Y,Z,\kappa,\operatorname{Re}\rho_{02},
+\operatorname{Im}\rho_{02}) .}
+\tag{10}
+$$
+
+**证明。**
+
+门 $K$ 保持分解 $H_{0,2}\oplus H_1\oplus H_3\oplus H_{13}$，模式投影也保持此分解。因此所有分支对偶保持右侧的块对角实空间，给出 $W_\infty$ 的七维上界。完整三读口联合记录提供全部 $\Pi_s$，所以所有对角方向已经可得。
+
+令 $a=\varphi^{-1},d=\varphi^{-2},b=\varphi^{-3/2}$，$P=\Pi_2$。两个合法词效果为
+$Q_+=K^\dagger PK$ 与 $Q_-=KPK^\dagger$；后者由正向 $K^9$ 的拉回实现。在活动块中，
+
+$$
+Q_+=\begin{pmatrix}a&b\bar\omega\\b\omega&d\end{pmatrix},
+\qquad
+Q_-=\begin{pmatrix}a&b\omega\\b\bar\omega&d\end{pmatrix}.
+$$
+
+例如 $(Q_+)_{12}=b[(\bar\omega-1)+|\omega-1|^2d]=b\bar\omega$，因为 $|\omega-1|^2d=1$；其对角元由命题 [3.4](#prop-gold) 给出。设 $\theta=3\pi/5$，
+
+$$
+D=a\Pi_0+d\Pi_2,\quad
+X_{02}=\lvert 0\rangle \langle 2\rvert +\lvert 2\rangle \langle 0\rvert ,\quad
+Y_{02}=-i\lvert 0\rangle \langle 2\rvert +i\lvert 2\rangle \langle 0\rvert .
+$$
+
+则
+
+$$
+Q_\pm=D+b\cos\theta\,X_{02}\pm b\sin\theta\,Y_{02}.
+$$
+
+$\sin\theta,\cos\theta$ 均非零，故 $Q_\pm$ 的和差连同对角方向给出 $X_{02},Y_{02}$。七维上界遂取等，得式 [(9)](#eq-seven)。定理 [9.2](#thm-future) 给六维最小值；式 [(3)](#eq-fiber) 用 $X,Y,Z,\kappa$ 恢复全部人口，另两实数恢复唯一可见的活动块相干，故式 [(10)](#eq-six) 达到此下界。
+
+∎
+
+这一定理进一步把三个稳定分量背后的隐藏信息分成一项经典关联与一项复相干。若想显式读回它们，记
+$q_\pm=\operatorname{Tr} (\rho Q_\pm)$、$d_0=a p_0+d p_2$，则
+
+$$
+\operatorname{Re}\rho_{02}
+=\frac{q_++q_--2d_0}{4b\cos\theta},
+\qquad
+\operatorname{Im}\rho_{02}
+=\frac{q_--q_+}{4b\sin\theta}.
+$$
+
+这些是理想概率律的线性逆式，未省略估计这些概率所需的重复来源与样本成本。其余跨扇区相干在这个菜单下永远不能返回读口；加入新地址或新基底之后，应重新计算闭包。
+
+<a id="statement-9-4"></a>
+

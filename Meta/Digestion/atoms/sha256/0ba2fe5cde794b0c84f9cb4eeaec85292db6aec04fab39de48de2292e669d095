@@ -1,0 +1,44 @@
+#### 定义 7.1（黄金投影与相对编织）
+
+置
+
+$$
+
+\varphi=\frac{1+\sqrt5}{2},\qquad
+\lambda=\varphi^{-2},\qquad \zeta=e^{3\pi i/5}.
+
+$$
+
+在同一父空间上取不同的非零正交投影 $P,Q$，满足
+
+$$
+
+PQP=\lambda P,\qquad QPQ=\lambda Q.
+
+$$
+
+这里“正交投影”指自伴幂等；不指 $PQ=0$。项目的相邻投影关系须在已指定的合法路径或融合扇区上使用，不能无条件推广到任意物理位串空间。
+
+在项目的五模式顺序中，具体原子投影为
+
+$$
+
+\lvert v\rangle=\varphi^{-1/2}\lvert 000\rangle+\varphi^{-1}\lvert 010\rangle,\qquad
+P_A=\lvert v\rangle\langle v\rvert+\lvert 101\rangle\langle 101\rvert,
+
+$$
+
+其中 $\langle v,v\rangle=\varphi^{-1}+\varphi^{-2}=1$，黄金门为
+
+$$
+
+K_A=\zeta(I-P_A)+\zeta^2P_A.
+
+$$
+
+下面的算符参数定理应用于这种两谱形式。编织投影 $P,Q$ 也不能与第三节的占位投影 $N_x,N_y,N_z$ 混同：后者两两对易，并不自动满足本节非平凡的相邻重叠关系。
+
+<a id="statement-7-2"></a>
+
+<a id="thm-braidspectrum"></a>
+

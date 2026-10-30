@@ -10,6 +10,7 @@ import Mathlib.Analysis.SpecialFunctions.Trigonometric.Series
 import Mathlib.Analysis.Complex.ExponentialBounds
 import Mathlib.Data.Nat.Choose.Bounds
 import Mathlib.Tactic
+import D5.S3.TotalVariation.Bhattacharyya
 import D5.S3.TotalVariation.Hellinger
 
 open scoped BigOperators

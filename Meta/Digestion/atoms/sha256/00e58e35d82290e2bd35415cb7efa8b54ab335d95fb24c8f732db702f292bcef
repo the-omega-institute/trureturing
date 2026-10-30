@@ -1,0 +1,52 @@
+**引理 31.2（七相位取得的完整能量）。** 在上述反设下，存在
+$0<\rho<1$、$\eta_a>0$、$\kappa_a\in[1/3,1]$ 和 $z_a(n)>0$，使
+
+$$
+f_a(n)=\rho^n\frac{\eta_{a+n}}{\eta_a}
+ \kappa_{a+n}z_a(n),\qquad
+z_a(7)=1,\quad z_a(n)=1\quad(n\ge9).
+\tag{31.5}
+$$
+
+置 $\beta(t)=(1+t)^{-2}$、$\mathcal P(t)=(t/(1+t))^2$ 及
+
+$$
+s_a=\beta(\kappa_a),\qquad e_a=\mathcal P(\kappa_a),\qquad
+c=\frac17\sum_{a\in E}e_a=d(P)=c_\star.
+\tag{31.6}
+$$
+
+对全部 $a$、$l,r,h,g\ge2$，原拆分比与占据损失满足
+
+$$
+\begin{aligned}
+R_a(l,r)&=\kappa_{a+l}
+ \frac{z_a(l)z_{a+l}(r)}{z_a(l+r)},\\
+B_b(h,g)&=\beta\!\left(\kappa_b
+ \frac{z_{b-h}(h)z_b(g)}{z_{b-h}(h+g)}\right)\\
+&=\beta(\kappa_bz_{b-h}(h))
+  +\beta(\kappa_bz_b(g))-s_b.
+\end{aligned}
+\tag{31.7}
+$$
+
+全部内部零损失及两个端点贡献为
+
+$$
+\begin{aligned}
+V_a(n)&=\sum_{j=2}^{n-2}
+ \mathcal P\!\left(\kappa_{a+j}
+ \frac{z_a(j)z_{a+j}(n-j)}{z_a(n)}\right),\\
+\widetilde W_a(n)&=V_a(n)+\beta(\kappa_a z_a(n))
+ +\beta(\kappa_{a+n}z_a(n))-s_{a+n}\\
+&=cn+H_{a+n}-H_a
+\end{aligned}
+\tag{31.8}
+$$
+
+对某个 $H:E\to\mathbb R$ 成立。此处可取 $N=9$，命题 12.4 的有限能量核对范围为 $2\le n\le24$；全长度式仍成立。空和取零，故 $V_a(2)=V_a(3)=0$。
+
+证明。取得先由 [普适缺陷卷][P4] 定理 3.1 供应原后验带，再由命题 11.2 得全部拆分带。命题 11.4 用原带、有限相位集及两个严格解码器支付单侧根和，因此定理 11.5 使用 [强零卷][SC-A] 定理 1.5 的额外前提已经满足；其完整端点平衡给全部有向恒等式。定理 12.2 与命题 12.4 随后给几何尾、正的有限前段、（12.22）–（12.28）及原行归一化。这里（31.2）的全部有限非负分支仍在定理 12.2 的原范围内。定理 22.1 取 $d=m=7$，给 $z_a(7)=1$ 与 $n\ge9$ 中性，故 $N=9$ 是结论而非瞬态深度假设，且 $2N+m-1=24$。
+
+式（31.7）是（12.22）、（12.24）的全部长度版本；（31.8）逐项保留（12.26）的内部和与两个端点。斜率由（12.27）–（12.29）及定理 11.5 识别为（31.6）。其中相位算术平均来自长间隔内部的周期计数，原风险识别仍使用同一实际 $\nu K=\nu$ 与 $\mu$，尚未令 $\nu$ 均匀。$\square$
+

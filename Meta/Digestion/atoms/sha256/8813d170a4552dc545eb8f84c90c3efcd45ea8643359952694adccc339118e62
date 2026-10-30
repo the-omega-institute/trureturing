@@ -1,0 +1,42 @@
+**定义 64.1（两个来源族共用的读者载体）。** 固定公开 $D\ge0$，沿用 §61 的
+$N_D,b_D,c_D(t)$，置
+
+$$
+ m=1+2N_D+b_D=6\cdot2^D-3,\qquad
+ \mathcal Q_D=\mathbb C^2_f\otimes(\mathbb C^2)^{\otimes2N_D}
+                 \otimes(\mathbb C^2)^{\otimes b_D}.
+\tag{64.1}
+$$
+
+实完成直接使用 $E_{R,D}$；复场每个地址的原一位按 $0\mapsto00,1\mapsto01$
+增加一个零位，得固定等距映射 $I_D:\mathcal Q_{\mathrm c,D}\to\mathcal Q_D$。
+记 $\eta_t^{\mathrm c}=I_D\psi_{\mathrm c,D,n}(t)$、$\eta_t^R=\psi_{R,D,n}(t)$。
+下标 $n$ 在本节的向量中省略，仍取 $h=r=1/(5n)$、$a=b=1-h$。
+对场字 $y\in\{00,01,10,11\}^{A_D}$，令
+
+$$
+\begin{aligned}
+ z'_0&=(1,0,0,0),&z'_1&=(\sqrt b,\sqrt h,0,0),&
+ z'_2&=(\sqrt b,i\sqrt h,0,0),\\
+ u'_0&=(1,0,0,0),&u'_1&=(\sqrt b,\sqrt h,0,0),&
+ u'_2&=(\sqrt b,\gamma,\varphi,0),\\
+ F_t^{\mathrm c}(y)&=\prod_{p\in A_D}(z'_{\lambda_t(p)})_{y_p},&&
+ F_t^R(y)=\prod_{p\in A_D}(u'_{\lambda_t(p)})_{y_p},
+\end{aligned}
+\tag{64.2}
+$$
+
+其中 $\gamma,\varphi$ 严格沿用 (46.1)，四个坐标依次为 $00,01,10,11$。
+空地址表的乘积为一。每个完整块字 $x=(f,y,l)\in\{0,1\}^m$ 的实际系数为
+
+$$
+ d_t^X(x)=\sqrt a\,\mathbf1_{\{f=0,l=0^{b_D}\}}F_t^X(y)
+       +\sqrt r\,\mathbf1_{\{f=1,y=0^{2N_D},l=c_D(t)\}},
+ \qquad X\in\{\mathrm c,R\}.
+\tag{64.3}
+$$
+
+因此 $\eta_t^X=\sum_xd_t^X(x)|x\rangle$，没有删除标签扇区、局部零坐标或完整节点字。
+两种向量的 Gram 仍分别为 $\mathcal K_{\mathrm c}=K_n^{\mathrm c}$、$\mathcal K_R=R_n$。
+这里的共同载体只为固定装置比较而给定，不是对一般实、复物理模型的唯一编码。
+

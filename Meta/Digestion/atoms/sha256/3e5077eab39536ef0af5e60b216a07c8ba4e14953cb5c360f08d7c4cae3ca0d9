@@ -1,0 +1,37 @@
+#### 定理 8.1（一个谱矩控制父系统的相干）
+
+设父投影 $0\ne P\ne I$。父输入为 $\rho$，子输入为 $\sigma$，两者初始为乘积态。令
+
+$$
+
+m=\operatorname{Tr}(\sigma W).
+
+$$
+
+施加 $\mathcal C_P(W)$ 或 $\mathcal L_P(W)$ 并对全部子系统取偏迹，父系统得到同一通道
+
+$$
+
+\Lambda_m(\rho)={}(I-P)\rho(I-P)+P\rho P
+
+$$
+
+<a id="eq-coherence"></a>
+
+$$
+
++\bar m(I-P)\rho P+mP\rho(I-P).
+\tag{9}
+
+$$
+
+特别 $|m|\le1$；$m=0$ 时恰为 $P$ 的非选择 Lüders 通道；$|m|=1$ 时该父通道只是两扇区间的酉相位变换。
+
+**证明。** 
+按父投影的四个块展开。对 $\mathcal C$ 的交叉块，偏迹系数分别为 $\operatorname{Tr}(\sigma W^\dagger)$ 与 $\operatorname{Tr}(W\sigma)$。对 $\mathcal L$，系数变为 $\operatorname{Tr}(W\sigma W^{\dagger2})=\bar m$ 及其共轭，故相同。$|m|\le1$ 由酉算符的谱分解及概率凸组合得到。其余结论直接代入。
+ ∎
+
+<a id="statement-8-2"></a>
+
+<a id="prop-recordpurity"></a>
+

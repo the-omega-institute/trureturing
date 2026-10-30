@@ -1,0 +1,33 @@
+**定义 1.1（带标号的正电导环）。** 令 $V=\mathbb Z/12\mathbb Z$，
+$e_i=\{i,i+1\}$，$E=\{e_i:i\in V\}$，所得简单图记为 $C_{12}$。
+各边电导 $c_i$ 是独立的严格正实数；可行集合不附加对称性条件。
+在顶点函数空间上取计数测度内积，定义普通 Laplacian
+
+$$
+(L(c)x)_i=c_i(x_i-x_{i+1})+c_{i-1}(x_i-x_{i-1}).
+$$
+
+令 $H=\{x\in\mathbb R^{12}:\sum_i x_i=0\}$，按重数记特征值为
+$0=\lambda_1(c)<\lambda_2(c)\le\cdots\le\lambda_{12}(c)$。
+以 $L(c)^+$ 表示在 $H$ 上等于 $L(c)|_H$ 的逆、在常数上为零的算子。
+有效电阻与总电阻取为
+
+$$
+R_{\mathrm{eff},c}(i,j)
+=(\delta_i-\delta_j)^{\mathsf T}L(c)^+(\delta_i-\delta_j),
+\qquad
+R(c)=\sum_{0\le i<j\le11}R_{\mathrm{eff},c}(i,j).
+$$
+
+这里 $\delta_i$ 是第 $i$ 个坐标向量，和中共有 $66$ 个无序不同点对。
+这些约定对应 Cruz Ortega–Menéndez-Conde，
+[*Maximal Algebraic Connectivity for Paths with Fixed Effective Resistance*,
+arXiv:2306.08187v1](https://arxiv.org/html/2306.08187v1)，
+§2、§4 定义 4.1–4.2 以及 §5 式 (3)。
+所用经典电学输入是有效电阻的伪逆表达式、
+$R(c)=12\operatorname{tr}L(c)^+$ 与电导缩放律；
+其矩阵形式见 Ghosh–Boyd–Saberi，
+[*Minimizing Effective Resistance of a Graph*](https://web.stanford.edu/~boyd/papers/pdf/eff_res.pdf)，
+[DOI:10.1137/050645452](https://doi.org/10.1137/050645452)，
+§§2.4–2.5，式 (8)、(13)–(15)。
+

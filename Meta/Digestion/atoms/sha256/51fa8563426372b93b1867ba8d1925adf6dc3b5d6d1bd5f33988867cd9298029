@@ -1,0 +1,49 @@
+#### 定理 8.2（残差与干涉的精确桥）
+
+若实际保留共同校准的相干路径程序
+
+$$
+\Xi_\psi=\frac{\lvert 0\rangle  A\psi+\lvert 1\rangle  B\psi}{\sqrt2},
+$$
+
+并在路径寄存器的 $\lvert \pm\rangle =(\lvert 0\rangle \pm\lvert 1\rangle )/\sqrt2$ 基读出，记负端口概率为 $p_-$，则
+
+<a id="eq-interference"></a>
+
+$$
+\boxed{
+\min_z E_\psi(z)
+=\tfrac12\left\lVert (A-B)\psi\right\rVert ^2
+=1-\operatorname{Re}\langle\psi,A^\dagger B\psi\rangle
+=2p_- .}
+\tag{8}
+$$
+
+唯一最小元为 $z_*=(A+B)\psi/2$。若改为约束 $\left\lVert z\right\rVert =1$，则
+
+$$
+\min_{\left\lVert z\right\rVert =1}E_\psi(z)=4\bigl(1-\sqrt{1-p_-}\bigr).
+$$
+
+**证明。**
+
+记 $a=A\psi,b=B\psi$。配方给
+
+$$
+\left\lVert z-a\right\rVert ^2+\left\lVert z-b\right\rVert ^2
+=2\left\lVert z-\frac{a+b}{2}\right\rVert ^2+\frac12\left\lVert a-b\right\rVert ^2.
+$$
+
+酉性给 $\left\lVert a\right\rVert =\left\lVert b\right\rVert =1$，故第二项等于 $1-\operatorname{Re}\langle a,b\rangle$。负端口的未归一化数据向量是 $(a-b)/2$，所以 $p_-=\left\lVert a-b\right\rVert ^2/4$。若要求 $\left\lVert z\right\rVert =1$，则
+$E_\psi(z)=4-2\operatorname{Re}\langle z,a+b\rangle$，Cauchy–Schwarz 使最大实部为 $\left\lVert a+b\right\rVert =2\sqrt{1-p_-}$，得后一式。$a+b=0$ 时所有单位 $z$ 都达最小值四。
+
+∎
+
+对固定输入，零残差等价于 $A\psi=B\psi$；对所有输入，等价于 $A=B$。若两种局部推进为 $U,V$，取 $A=VU,B=UV$，则全输入的零残差恰要求 $[U,V]=0$。固定输入则只需 $(VU-UV)\psi=0$。
+
+这并不要求所有量子多路径都零残差。非零 $p_-$ 是完全合法的干涉现象；只有把两条路径声明为同一个唯一端点向量的两种描述，才要求零相容。若 $A=e^{i\theta}B$，数据射线单独看相同，路径干涉却给 $p_-=\sin^2(\theta/2)$。因此受控路径的相位参考须保留，不能把单独门的整体相位在控制接口内随意删掉。
+
+<a id="statement-8-3"></a>
+
+<a id="thm-graphaction"></a>
+

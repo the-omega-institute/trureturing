@@ -1,0 +1,30 @@
+**Corollary 3.2 (Bound on the least index).** For $N\ge1$ and
+$0<\rho<1$, the selector
+
+$$
+M(N,\rho)=\min\{m\ge0:d_{N,m}\ge\rho\}
+\tag{3.1}
+$$
+
+exists and satisfies
+
+$$
+N\le M(N,\rho)\le B(N,\rho).
+\tag{3.2}
+$$
+
+Moreover $d_{N,m}>\rho$ for every $m\ge B(N,\rho)$, and
+$\lim_{m\to\infty}d_{N,m}=1$ for each fixed $N$.
+
+**Proof 3.2.** Theorem 1.3 makes the set in (3.1) nonempty, with an
+element at $B(N,\rho)$. Lemma 1.2 gives $d_{N,m}=0<\rho$ for
+$m<N$ and gives the asserted tail inequality by monotonicity.
+The nondecreasing sequence is bounded above by one. Its limit must be
+at least every $\rho\in(0,1)$, so it is one. $\square$
+
+The definitions, qualitative limit, and selector in (3.1) are those of
+the companion [F], §§11.2–11.4. The quantitative addition is the
+closed bound (3.2) and the strict finite certificate (1.3). The finite
+proof above does not use the companion's infinite-rank growth lemma or
+diagonal subsequence argument.
+

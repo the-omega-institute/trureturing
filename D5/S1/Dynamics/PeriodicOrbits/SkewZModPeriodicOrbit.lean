@@ -1,0 +1,93 @@
+/- GID: D5/S1/Dynamics/PeriodicOrbits/SkewZModPeriodicOrbit
+   generality: G
+   mirror-B: D5/B/S1/Dynamics/PeriodicOrbits/SkewZModPeriodicOrbit
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
+   anchors: []
+   utility: none
+   digest: Periodic orbit equality in a cyclic additive skew product is exactly holonomy congruence. -/
+
+import D5.S1.Dynamics.PeriodicOrbits.SkewAdditiveReturn
+import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
+import Mathlib.Data.ZMod.Basic
+
+set_option autoImplicit false
+
+namespace D5.S1.Dynamics.PeriodicOrbits.SkewZModPeriodicOrbit
+
+open Function
+open D5.S1.Dynamics.PeriodicOrbits.SkewAdditiveReturn
+
+variable {X : Type*} {q : ℕ}
+
+/-- Two lifted periodic points over the same base point lie on the same forward orbit
+exactly when their fiber displacement is an integer multiple of the base holonomy. -/
+theorem skew_periodicOrbit_eq_iff
+    (f : X → X) (c : X → ZMod q) (x : X)
+    (hx : x ∈ Function.periodicPts f)
+    [NeZero q] (a b : ZMod q) :
+    Function.periodicOrbit (skewStep f c) (x, a) =
+        Function.periodicOrbit (skewStep f c) (x, b) ↔
+      b - a ∈ AddSubgroup.zmultiples
+        (birkhoffSum f c (Function.minimalPeriod f x) x) := by
+  have hq : q • birkhoffSum f c (Function.minimalPeriod f x) x = 0 := by
+    rw [nsmul_eq_mul, ZMod.natCast_self, zero_mul]
+  have hper (z : ZMod q) :
+      (x, z) ∈ Function.periodicPts (skewStep f c) := by
+    apply Function.mk_mem_periodicPts (n := Function.minimalPeriod f x * q)
+      (Nat.mul_pos
+        (Function.minimalPeriod_pos_of_mem_periodicPts hx)
+        (Nat.pos_of_ne_zero (NeZero.ne q)))
+    change (skewStep f c)^[Function.minimalPeriod f x * q] (x, z) = (x, z)
+    rw [skew_iterate_block f c
+      (Function.isPeriodicPt_minimalPeriod f x) q z, hq, add_zero]
+  constructor
+  · intro horb
+    have hmem : (x, b) ∈ periodicOrbit (skewStep f c) (x, a) := by
+      rw [horb]
+      exact self_mem_periodicOrbit (hper b)
+    obtain ⟨n, hn⟩ := (mem_periodicOrbit_iff (hper a)).mp hmem
+    have hbase : f^[n] x = x := by
+      have hfst := congrArg Prod.fst hn
+      simpa only [skew_iterate] using hfst
+    have hdiv : Function.minimalPeriod f x ∣ n :=
+      (Function.isPeriodicPt_iff_minimalPeriod_dvd).mp hbase
+    obtain ⟨k, rfl⟩ := hdiv
+    rw [skew_iterate_block f c
+      (Function.isPeriodicPt_minimalPeriod f x) k a] at hn
+    have hab : a + k • birkhoffSum f c (Function.minimalPeriod f x) x = b :=
+      congrArg Prod.snd hn
+    refine AddSubgroup.mem_zmultiples_iff.mpr ⟨(k : ℤ), ?_⟩
+    apply (eq_sub_iff_add_eq).2
+    simpa [add_comm] using hab
+  · intro hmem
+    obtain ⟨k, hk⟩ := AddSubgroup.mem_zmultiples_iff.mp hmem
+    let n : ℕ := k.natMod q
+    have hcast : (n : ZMod q) = (k : ZMod q) := by
+      dsimp [n, Int.natMod]
+      have hnonneg : 0 ≤ k % (q : ℤ) :=
+        Int.emod_nonneg _ (by exact_mod_cast (NeZero.ne q))
+      calc
+        (((k % (q : ℤ)).toNat : ℕ) : ZMod q) =
+            ((((k % (q : ℤ)).toNat : ℕ) : ℤ) : ZMod q) := by
+              rw [Int.cast_natCast]
+        _ = ((k % (q : ℤ) : ℤ) : ZMod q) := by
+              rw [Int.toNat_of_nonneg hnonneg]
+        _ = (k : ZMod q) := ZMod.intCast_mod k q
+    have hsmul : n • birkhoffSum f c (Function.minimalPeriod f x) x =
+        k • birkhoffSum f c (Function.minimalPeriod f x) x := by
+      rw [nsmul_eq_mul, zsmul_eq_mul, hcast]
+    have hab : a + n • birkhoffSum f c (Function.minimalPeriod f x) x = b := by
+      apply (eq_sub_iff_add_eq').mp
+      exact hsmul.trans hk
+    have hit :
+        (skewStep f c)^[Function.minimalPeriod f x * n] (x, a) = (x, b) := by
+      rw [skew_iterate_block f c
+        (Function.isPeriodicPt_minimalPeriod f x) n a, hab]
+    have horb := periodicOrbit_apply_iterate_eq (hper a)
+      (Function.minimalPeriod f x * n)
+    rw [hit] at horb
+    exact horb.symm
+
+#print axioms skew_periodicOrbit_eq_iff
+
+end D5.S1.Dynamics.PeriodicOrbits.SkewZModPeriodicOrbit

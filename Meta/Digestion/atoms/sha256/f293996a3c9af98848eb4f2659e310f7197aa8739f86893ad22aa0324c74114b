@@ -1,0 +1,17 @@
+#### 定义 5.1（带内部操作与记录的配置核）
+
+令 $T_{ji}\ge0$ 是从输入配置 $i$ 到输出配置 $j$ 的权重，$U_{ji}$ 为共同内部空间 $K$ 上的酉算符，$e_{ji}$ 为共同记录空间中的单位向量。定义
+
+$$
+
+V(\lvert i\rangle\otimes\psi)
+=\sum_j\sqrt{T_{ji}}\lvert j\rangle\otimes U_{ji}\psi\otimes e_{ji}.
+
+$$
+
+所有边使用同一个内部空间、同一个记录空间，以及同一套相位约定。
+
+<a id="statement-5-2"></a>
+
+<a id="thm-blocks"></a>
+

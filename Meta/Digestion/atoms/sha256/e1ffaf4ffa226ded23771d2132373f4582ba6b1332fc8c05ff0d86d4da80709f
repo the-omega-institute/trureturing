@@ -1,0 +1,40 @@
+**约定 123.1（原纤维界与范数）。** 以下均在谱边界第 68、69、70、117、119 节的共同实际好事件上工作。
+固定其紧性常数后，原式 (117.7)–(117.10)、(119.8)–(119.10) 给
+
+$$
+m_Q:=\#\{j:C_j>0\}\le CQ^2=C\delta^{-4},\quad
+\log q=c_qQ^3+O(1),\quad N_J:=\sum_jC_j\le CB^2,
+$$
+
+$$
+c\le V\le C,\quad c\delta\le v_*\le C\delta,\quad
+c\delta\le\sum_jv_j^2\le C\delta,\quad
+|e_j|\le C\sqrt{v_j}\,e_M,\quad
+\|e\|_2\le Ce_M,\quad e_M\le C(\delta^5+q^{-1/2}),
+$$
+
+$$
+\max_j|p_j-1/2|\le Cq^{-1/2},\quad
+cq\le d_c\le d_a\le q,\quad d_a-d_c=B^2V,
+\quad d_c:=\sum_{i\notin J}p_i(1-p_i),\quad
+ d_a:=\sum_i p_i(1-p_i),
+$$
+
+$$
+|\ell(m)|\le C\delta^5(1+\mathcal D(m)^2),\quad
+\ell(m)\le C\delta^5.
+\tag{123.1}
+$$
+
+整个盒可行。原核心含 $c/\delta$ 个 $v_j\asymp\delta$ 的坐标。
+原式 (117.15)–(117.16) 还给
+$-C\|e\|^2\le s_\alpha:=2v_*t_\alpha/\alpha\le s_+<1$，$1\le\alpha\le2$。
+原式 (117.24)、(117.26)、(117.33) 的每个固定阶矩均可使用；这些是同一输出条件下的矩，
+并不由条件化前的负相关推断。
+
+对函数 $F(\alpha,y)$ 记
+$\|F\|_{3,R}=\sup_{1\le\alpha\le2,\,|y|\le R}\sum_{k=0}^3|\partial_\alpha^kF|$。
+常数可依赖固定振幅、$\beta,R$ 及上述好事件常数。
+$\operatorname{poly}(Q)$ 表示次数固定的多项式上界。
+好事件可穷尽，使其补集概率对两个实验和所有确定大小 $q$ 的支持一致趋零。
+

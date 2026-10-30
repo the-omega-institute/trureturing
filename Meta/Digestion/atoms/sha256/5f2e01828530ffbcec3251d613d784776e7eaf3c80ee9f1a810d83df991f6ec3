@@ -1,0 +1,28 @@
+#### 引理 5.2（逆向配对消除一阶大误差）
+
+设四个算符均酉，并满足
+
+$$
+\left\lVert V-\widetilde V\right\rVert,\left\lVert W-\widetilde W\right\rVert\le\epsilon,
+\qquad \left\lVert V-I\right\rVert,\left\lVert W-I\right\rVert\le r.
+$$
+
+则其交换子的误差满足
+
+$$
+\left\lVert [V,W]_{\rm g}-[\widetilde V,\widetilde W]_{\rm g}\right\rVert_{\rm op}
+\le4r\epsilon+2\epsilon^2.
+$$
+
+**证明。**
+
+先只替换 $V$，将 $W$ 写成 $I+(W-I)$；共轭中的恒等项抵消，所以这一差至多
+$2\epsilon\left\lVert W-I\right\rVert$。再只替换 $W$，把 $\widetilde V^\dagger$ 写成
+$I+(\widetilde V^\dagger-I)$，相应差至多
+$2\epsilon\left\lVert \widetilde V-I\right\rVert\le2\epsilon(r+\epsilon)$。
+相加即得。这里使用了同一个近似门及其精确逆；若反向因子是独立漂移的硬件操作，该抵消不能无条件沿用。
+
+∎
+
+<a id="thm-sk"></a>
+

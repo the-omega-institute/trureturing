@@ -1,0 +1,39 @@
+**定义 128.1（阶数、范数与完整系数族）。** 保持定义 121.1–121.3、式 (122.3)
+及约定 123.1 的全部对象。固定原振幅、$\beta\in(1/2,1)$、$R<\infty$，
+并固定满足 (122.1) 的任意确定正噪声序列。在每个原共同好纤维常数类上选取
+$0<l<c_q/2$，使最终 $L\le lQ^3$，再固定
+
+$$
+0<\chi<\min\{(c_q/2-l)/16,c_q/32\},\qquad
+H=\{j:C_j\ge e^{\chi Q^3}\},
+$$
+
+$$
+\mu=\min\{\chi,c_q/2-l,c_q-2\chi-l,c_q/2-\chi,c_q-2\chi,1\}>0,
+\qquad p=p(Q)=\left\lfloor\frac{\log Q}{64\log\log Q}\right\rfloor.
+\tag{128.1}
+$$
+
+只考虑 $Q>e^e$。$H$ 仅用于比较积分；$K_\alpha,t_\alpha,W_\alpha$ 仍含全部原组。
+对 $a\in[1,2]$ 及光滑函数 $f(\alpha,y)$，令
+
+$$
+[f]_{k,a}(y)=\frac{\partial_\alpha^k f(a,y)}{k!},\qquad
+\mathfrak n_{p,a}(f)=\sum_{k=0}^p\rho^k\sup_{|y|\le R}|[f]_{k,a}(y)|,
+\qquad N_p(f)=\sup_{1\le a\le2}\mathfrak n_{p,a}(f).
+\tag{128.2}
+$$
+
+其中固定 $\rho>0$ 取小于引理 129.1 的系数半径。系数族为
+
+$$
+t_r=\left.\partial_\alpha^r t_\alpha\right|_1,\qquad
+u_r=\left.\partial_\alpha^r(W_\alpha^{-1})\right|_1\quad(r\ge0).
+\tag{128.3}
+$$
+
+它们是定义 121.3 的有限函数的实际导数，
+包括所有整数、精确中心、低组与原噪声。式 (127.4) 是其前三阶的同一隐函数求导。
+对 $r\ge2$，记 $\kappa_r(y)$ 为 $-\log P_x^y$ 在 $P_x^y$ 下的第 $r$ 累积量，
+$\Delta\kappa_r(y)=\kappa_r(y)-\kappa_r(0)$。这里累积量不除以 $r!$ 或任何规模因子。
+

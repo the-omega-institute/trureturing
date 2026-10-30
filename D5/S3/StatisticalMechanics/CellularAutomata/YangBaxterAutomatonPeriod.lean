@@ -69,7 +69,7 @@ def claim : Prop :=
     ∀ N : ℕ, (step f (N := N))^[Fintype.card F] = id
 
 /-- Pairwise commuting involutions generate a 2-group. -/
-private theorem isPGroup_closure_of_commuting_involutions {G : Type*} [Group G] (S : Set G)
+theorem isPGroup_closure_of_commuting_involutions {G : Type*} [Group G] (S : Set G)
     (hSc : ∀ x ∈ S, ∀ y ∈ S, x * y = y * x) (hSi : ∀ x ∈ S, x * x = 1) :
     IsPGroup 2 (Subgroup.closure S) := by
   have hc : ∀ x ∈ Subgroup.closure S, ∀ y ∈ Subgroup.closure S, x * y = y * x := by

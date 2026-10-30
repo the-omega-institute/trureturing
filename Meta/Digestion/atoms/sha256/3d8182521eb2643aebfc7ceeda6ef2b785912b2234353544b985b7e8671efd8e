@@ -1,0 +1,22 @@
+**定义 1.2（普通三变量系数）。** 固定整数 $\ell\ge1$，对整数 $j\ge0$ 定义
+
+$$
+A(z)=F_{\boldsymbol{k}}(z)^{-\ell},\qquad
+C_n^{j;\boldsymbol{k};\ell}
+ =[z^n](1-z)^{-j}A(z),\qquad a_n=C_n^{0;\boldsymbol{k};\ell}.
+$$
+
+这里 $[z^n]$ 是普通幂级数系数，解析函数的系数为其 $n$ 阶导数除以 $n!$。特别地
+
+$$
+C_0^{j;\boldsymbol{k};\ell}=f_0^{-\ell}
+ =\left(\prod_{i=1}^d(d+1-i)^{k_i}\right)^\ell.
+$$
+
+若 $k_1>1$，称组合可容许，并记
+
+$$
+Z=\zeta(\boldsymbol{k})
+ =\sum_{n_1>\cdots>n_d>0}\frac1{n_1^{k_1}\cdots n_d^{k_d}}>0.
+$$
+

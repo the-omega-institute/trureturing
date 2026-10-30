@@ -1,0 +1,28 @@
+**推论 129.3（完整有限根的 Gaussian 响应喷射）。** 对原 $g_\alpha$，有
+
+$$
+\begin{aligned}
+N_p\left(\log\frac{g_\alpha(y)}{g_\alpha(0)}
+       +\sqrt\delta t_\alpha y+\frac{\delta y^2}{2W_\alpha}\right)
+&\le C\sqrt\delta+
+ e^{-c/\delta+C(p+1)\log[Q(p+2)]}\\
+&\quad+e^{-\mu Q^3/64+C(p+1)\log[Q(p+2)]}.
+\end{aligned}
+\tag{129.13}
+$$
+
+**证明。** 用原精确撤倾斜公式 (123.15)，其比值等于
+$e^{-\sqrt\delta t_\alpha y}q_\alpha(z_y)/q_\alpha(z_0)$。
+引理 129.2 的有限 Taylor 对数给
+
+$$
+\log\frac{q_\alpha(z_y)}{q_\alpha(z_0)}
+=-\frac{z_y^2-z_0^2}{2}+r_\alpha(y),
+\qquad N_p(r)\le C\sqrt\delta+e^{-c/\delta+C(p+1)\log[Q(p+2)]}.
+$$
+
+又
+$z_y^2-z_0^2=\delta y^2/W_H+2\sqrt\delta y\epsilon_H/W_H$。
+引理 129.1 支付 $W_H^{-1}-W^{-1}$ 和 $\epsilon_H/W_H$ 的全系数和。
+这给 (129.13)，系数仍为完整 $t,W$。∎
+

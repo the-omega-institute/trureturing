@@ -1,0 +1,56 @@
+**定义 121.1（固定模型）。** 取
+
+$$
+d_1=1,\quad d_{n+1}=10^{5d_n},\quad Q_n=10^{d_n},\quad
+P_n=\sum_{h\le n}10^{d_n-d_h},\quad
+\theta=\sum_{h\ge1}10^{-d_h}.
+\tag{121.1}
+$$
+
+固定满足 $\log(1+r)/[-\log(1-r)]=\theta$ 的原振幅 $r\in(0,1)$，
+并固定任意 $\beta\in(1/2,1)$。记
+
+$$
+a=(1+r)/2,\quad b=(1-r)/2,\quad
+\phi=a\log(1+r)+b\log(1-r),\quad c_q=\phi(1-\beta)/\beta.
+$$
+
+每个层级保留以下整数和实数；省略下标 $n$ 时均指该层级：
+
+$$
+\lambda=Q^3,\quad M=2^{\lfloor\phi\lambda/(\beta\log2)\rfloor},\quad
+\mathsf T=2M\lambda,\quad k_0=\lfloor a\lambda\rfloor,\quad
+l_0=\lambda-k_0,
+$$
+
+$$
+z_0=k_0\log(1+r)+l_0\log(1-r),\quad
+q=\lfloor Me^{-z_0}\rfloor,\quad
+\delta=Q^{-1/2},\quad B^2=q/Q^{5/2},\quad
+\tau=\log(M/q),\quad w=\sqrt{\lambda/q}.
+\tag{121.2}
+$$
+
+只需考虑 $1\le q<M$ 且 $\epsilon_c=rq/(M-q)<1$ 的充分大层级。
+原补偿核在 $\mathcal X=\operatorname{Fin}M\sqcup\operatorname{Fin}M$ 上为
+
+$$
+\chi(\operatorname{inl}i)=1,\quad\chi(\operatorname{inr}i)=-1,\quad
+b_S(\operatorname{inl}i)=r\mathbf1_S(i)-\epsilon_c\mathbf1_{S^c}(i),\quad
+b_S(\operatorname{inr}i)=0,
+$$
+
+$$
+\mathsf K_S(u,v)=\frac{1+b_S(u)\chi(v)}{2M},\qquad |S|=q.
+\tag{121.3}
+$$
+
+实验 $\mathcal E=\mathrm{pair}$ 观察 $\mathsf T$ 个独立平稳相邻对，
+各对质量为 $(2M)^{-1}\mathsf K_S(u,v)$；实验 $\mathcal E=\mathrm{path}$
+观察从均匀初态出发的 $\mathsf T$ 步完整路径。
+$\mathbb P_S^{\mathcal E}$ 始终表示这些实际数据律。
+支持后验始终由全体大小为 $q$ 的支持上的均匀先验定义。
+这些对象与[后验场定义 39.1](PARITY_HIDDEN_ARROW_POSTERIOR_FIELD.md)、
+[波动卷定义 27.1](PARITY_HIDDEN_ARROW_FLUCTUATIONS.md)及
+[谱边界定义 68.1](PARITY_HIDDEN_ARROW_SPECTRAL_BOUNDARY.md)相同。
+

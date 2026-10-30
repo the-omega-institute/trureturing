@@ -9,6 +9,16 @@ internal sealed class TwoSmallSourceDocument : IScribeDocumentDefinition
         H("Native full completion with exactly two physical SMALL labels"),
         Blocks(
             Paragraph(Text("The physical source is centered modulo N=2^k-1. A label is SMALL when its absolute increment is less than Q=2^(k-2); all other labels are LARGE. Physical occurrences are counted even when their numerical values coincide.")),
+            Describe.Lean(DescribeId.Create("circle-source-phase-addition"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/TwoSmallSource.phase_add"),
+                H("Physical phase is cyclic addition"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For k>0, a physical origin o in Fin(k), and any natural j, phase(k,o,j) is o plus the Fin(k) residue of j modulo k. Thus a phase change acts on physical occurrences by the cyclic group, independently of any coincidences among their numerical source values. Both the two-SMALL and three-SMALL constructions use this identity to recover forward physical coordinates."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("circle-filter-cyclic-cut"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/TwoSmallSource.filter_rotate"),
+                H("Filtering preserves a cyclic cut"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any label type, Boolean predicate p, list l and natural cut n, filtering l.rotate(n) is List.IsRotated to filtering l. Split l into its prefix and suffix at n modulo its length and filter both pieces. The conclusion includes empty filters and records cyclic order without reversal. It transfers the LARGE order through the physical phase and through the final sign-restoring cut in the two-SMALL and three-SMALL completions."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-two-gap-profile"),
                 DeclarationHandle.Create("D5/S3/Combinatorics/Circle/TwoSmallSource.actual_two_gap_profile"),
                 H("Extracting and closing the actual physical gaps"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -24,6 +34,11 @@ internal sealed class TwoSmallSourceDocument : IScribeDocumentDefinition
                 DeclarationHandle.Create("D5/S3/Combinatorics/Circle/TwoSmallSource.negate_rotation"),
                 H("Restoring signs by a cyclic cut"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For any integer-valued label word L in [0,C] with total zero, there is a cyclic cut j such that every natural prefix of L.rotate(j), evaluated with the negated weights, is again in [0,C]. Choose an attained minimum of the negated prefix sums. The existing nonnegative_rotate_of_minimum theorem gives the lower bound, while prefix_segment_sum and the original strip give the upper bound. The operation changes only the cyclic starting point and preserves every physical occurrence. Both the two-SMALL completion and the arbitrary-count isolated same-sign SMALL construction consume this same sign-restoration theorem."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("circle-zero-total-strip-negate-rotation-prefix-bound"),
+                DeclarationHandle.Create("D5/S3/Combinatorics/Circle/TwoSmallSource.negate_rotation_prefix_bound"),
+                H("Controlling the rotated prefixes by the cut height"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any integer-valued label word L in [0,C] with total zero, there is a cut j<=L.length for which every natural prefix of the rotated word with negated weights is nonnegative, at most C, and at most the original prefix height at j. A minimum of the negated prefix sums gives the cut. Splitting each rotated prefix at the seam expresses its height as an original prefix height subtracted from the cut height; all original heights are nonnegative. The negate_rotation theorem follows by forgetting the cut-height bound. In the isolated native completion, a strict upper margin on all original prefixes therefore bounds every new prefix, including the empty word, full word and takes beyond the length."))),
                 DescribeRole.Theorem),
             Paragraph(Text("The mathematical source context is Damasdi, Frankl, Pach and Palvolgyi, Monochromatic configurations on a circle, arXiv:2504.10687v2, Conjecture 3.1, DOI 10.5070/C6.68671. This result treats exactly two physical SMALL labels. Arbitrary-defect completion and the full global strict lexicographic exchange remain open."))), []));
 }
