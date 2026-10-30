@@ -80,8 +80,11 @@ class LakeDependencyAllowlistCases:
             self.g(boundary, "update-ref", "-d", ref)
         if (metadata / "logs/refs").exists():
             shutil.rmtree(metadata / "logs/refs")
+        if (metadata / "refs/remotes").exists():
+            shutil.rmtree(metadata / "refs/remotes")
         (metadata / "packed-refs").unlink(missing_ok=True)
         (metadata / "refs/tags").mkdir(exist_ok=True)
+        self.assertEqual(["heads", "tags"], sorted(entry.name for entry in (metadata / "refs").iterdir()))
         self.assertEqual([], list((metadata / "refs/heads").iterdir()))
         self.assertEqual([], list((metadata / "refs/tags").iterdir()))
         (metadata / "info/exclude").write_text("# clone exclusions\n\n# comment\n")
