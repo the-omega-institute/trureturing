@@ -6,7 +6,7 @@
    utility: none
    digest: The unstable-eigenvalue count of a clamped Lennard-Jones chain is k-1 or k. -/
 
-import Mathlib.Analysis.Calculus.Deriv.ZPow
+import D5.S3.Combinatorics.Hypermatrix.PencilParameterFibers
 import D5.S3.Weil.ZetaLinear.Sylvester
 
 /-!
@@ -90,17 +90,11 @@ private lemma curvature_formula (r : ℝ) (hr : 0 < r) :
 
 private lemma inflection_iff (r : ℝ) (hr : 0 < r) :
     inflectionPoint < r ↔ 13 < 7 * r ^ (6 : ℕ) := by
-  have hroot : 0 < (13 / 7 : ℝ) ^ ((1 : ℝ) / 6) :=
-    Real.rpow_pos_of_pos (by norm_num) _
-  have hpow : ((13 / 7 : ℝ) ^ ((1 : ℝ) / 6)) ^ (6 : ℝ) = 13 / 7 := by
-    rw [← Real.rpow_mul (by norm_num : 0 ≤ (13 / 7 : ℝ))]
-    norm_num
   change (13 / 7 : ℝ) ^ ((1 : ℝ) / 6) < r ↔ _
-  rw [← Real.rpow_lt_rpow_iff hroot.le hr.le (by norm_num : (0 : ℝ) < 6)]
-  norm_num [hpow]
-  constructor <;> intro h
-  · nlinarith
-  · nlinarith
+  simpa only [one_div, Real.rpow_ofNat,
+    div_lt_iff₀ (by norm_num : (0 : ℝ) < 7), mul_comm] using
+    (Real.rpow_inv_lt_iff_of_pos (by norm_num : (0 : ℝ) ≤ 13 / 7) hr.le
+      (by norm_num : (0 : ℝ) < 6))
 
 private lemma curvature_sign (r : ℝ) (hr : 0 < r) :
     deriv (deriv ljPotential) r < 0 ↔ inflectionPoint < r := by
@@ -151,7 +145,7 @@ private lemma jacobian_factorization {m : ℕ} (d : ℝ) (u : Fin (m + 2) → �
       (if q.succ = n.succ then 1 else 0)))
   by_cases hnq : n = q
   · subst q
-    have hne : n.succ ≠ n.castSucc := by intro heq; have := congrArg Fin.val heq; simp at this
+    have hne : n.succ ≠ n.castSucc := Fin.castSucc_lt_succ.ne.symm
     simp only [ite_true, ite_eq_right hne, ite_eq_right hne.symm]
     ring
   · have hqn : q ≠ n := Ne.symm hnq
@@ -172,41 +166,52 @@ private lemma jacobian_factorization {m : ℕ} (d : ℝ) (u : Fin (m + 2) → �
       ring
     · ring
 
+open D5.S3.Combinatorics.Hypermatrix in
 private lemma bond_difference_injective {m : ℕ}
     (b : Matrix (Fin (m + 1)) (Fin m) ℝ)
     (hb : ∀ j n, b j n = (if n.castSucc = j then 1 else 0) -
       (if n.succ = j then 1 else 0)) :
     Function.Injective (b.mulVec) := by
   classical
-  suffices hz : ∀ x : Fin m → ℝ, b *ᵥ x = 0 → x = 0 by
-    intro x y hxy
-    have he : b *ᵥ (x - y) = 0 := by
-      rw [Matrix.mulVec_sub, hxy, sub_self]
-    exact sub_eq_zero.mp (hz (x - y) he)
-  intro x hx
-  have he : ∀ t : ℕ, ∀ n : Fin m, n.val = t → x n = 0 := by
-    intro t
-    induction t using Nat.strong_induction_on with
-    | h t ih =>
-      intro n hn
-      have hrow := congrFun hx n.castSucc
-      change (∑ q : Fin m, b n.castSucc q * x q) = 0 at hrow
-      simp_rw [hb, sub_mul, ite_mul, one_mul, zero_mul,
-        Finset.sum_sub_distrib, Fin.castSucc_inj] at hrow
-      have hsecond : (∑ q : Fin m, if q.succ = n.castSucc then x q else 0) = 0 := by
-        apply Finset.sum_eq_zero
-        intro q _
-        split_ifs with hqn
-        · apply ih q.val
-          · have hval := congrArg Fin.val hqn
-            simp only [Fin.val_succ, Fin.val_castSucc] at hval
-            omega
-          · rfl
-        · rfl
-      rw [hsecond] at hrow
-      simpa only [Finset.sum_ite_eq', Finset.mem_univ, ite_true, sub_zero] using hrow
-  funext n
-  exact he n.val n rfl
+  by_cases hm : m = 0
+  · subst m
+    exact fun _ _ _ => Subsingleton.elim _ _
+  have hmpos : 1 ≤ m := Nat.one_le_iff_ne_zero.mpr hm
+  let f := algebraMap ℝ (AlgebraicClosure ℝ)
+  have hr := (PencilParameterFibers.pencil_parameter_fibers ℝ m hmpos).2.1
+    ((1, 1) : MaskedFacesDefs.Factors ℝ m) 1 (-1) (Or.inl one_ne_zero)
+  have he : (1 : AlgebraicClosure ℝ) •
+      (MaskedFacesDefs.factorMap ((1, 1) : MaskedFacesDefs.Factors ℝ m)).1.map f +
+      (-1 : AlgebraicClosure ℝ) •
+      (MaskedFacesDefs.factorMap ((1, 1) : MaskedFacesDefs.Factors ℝ m)).2.map f = b.map f := by
+    change (1 : AlgebraicClosure ℝ) •
+        ((1 : Matrix (Fin (m + 1)) (Fin (m + 1)) ℝ) * MaskedFacesDefs.E0 ℝ m *
+          (1 : Matrix (Fin m) (Fin m) ℝ)).map f +
+        (-1 : AlgebraicClosure ℝ) •
+        ((1 : Matrix (Fin (m + 1)) (Fin (m + 1)) ℝ) * MaskedFacesDefs.E1 ℝ m *
+          (1 : Matrix (Fin m) (Fin m) ℝ)).map f = _
+    simp only [Matrix.one_mul, Matrix.mul_one]
+    ext j n
+    simp [MaskedFacesDefs.E0, MaskedFacesDefs.E1,
+      Matrix.map_apply, hb, eq_comm, sub_eq_add_neg]
+  rw [he] at hr
+  have hi : Function.Injective (b.map f).mulVecLin := by
+    apply LinearMap.ker_eq_bot.mp
+    apply Submodule.finrank_eq_zero.mp
+    have hd := LinearMap.finrank_range_add_finrank_ker (b.map f).mulVecLin
+    change (b.map f).rank + Module.finrank (AlgebraicClosure ℝ)
+      (b.map f).mulVecLin.ker = Module.finrank (AlgebraicClosure ℝ)
+      (Fin m → AlgebraicClosure ℝ) at hd
+    simp only [hr, Module.finrank_pi, Fintype.card_fin] at hd
+    omega
+  intro x y hxy
+  have hmap : f ∘ x = f ∘ y := by
+    apply hi
+    ext j
+    simpa only [Matrix.mulVecLin_apply, ← RingHom.map_mulVec] using
+      congrArg f (congrFun hxy j)
+  ext n
+  exact f.injective (congrFun hmap n)
 
 private lemma bond_difference_range {m : ℕ}
     (b : Matrix (Fin (m + 1)) (Fin m) ℝ)
@@ -223,9 +228,16 @@ private lemma factorization_form {m : ℕ}
     (ha : a = -(b.transpose * Matrix.diagonal c * b)) (x : Fin m → ℝ) :
     RHLinalg.hermForm a x = -∑ j, c j * (b *ᵥ x) j ^ 2 := by
   rw [ha]
-  change x ⬝ᵥ ((-(b.transpose * Matrix.diagonal c * b)) *ᵥ x) = _
-  rw [Matrix.neg_mulVec, dotProduct_neg, ← Matrix.mulVec_mulVec,
-    ← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec, Matrix.vecMul_transpose]
+  have hpull := RHLinalg.hermForm_conj (Matrix.diagonal c) b x
+  rw [Matrix.conjTranspose_eq_transpose_of_trivial] at hpull
+  have hzero : RHLinalg.hermForm (0 : Matrix (Fin m) (Fin m) ℝ) x = 0 := by
+    change RCLike.re (star x ⬝ᵥ ((0 : Matrix (Fin m) (Fin m) ℝ) *ᵥ x)) = 0
+    simp only [Matrix.zero_mulVec, dotProduct_zero, map_zero]
+  have hneg : RHLinalg.hermForm (-(b.transpose * Matrix.diagonal c * b)) x =
+      -RHLinalg.hermForm (b.transpose * Matrix.diagonal c * b) x := by
+    simpa only [zero_sub, hzero]
+      using RHLinalg.hermForm_sub 0 (b.transpose * Matrix.diagonal c * b) x
+  rw [hneg, hpull]
   congr 1
   change (∑ j, (b *ᵥ x) j * ((Matrix.diagonal c) *ᵥ (b *ᵥ x)) j) = _
   simp only [Matrix.mulVec_diagonal]
