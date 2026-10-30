@@ -1,0 +1,30 @@
+**Lemma 13.8 (Attainment and one threshold for all minimizers).** For each fixed $a,h$, the infimum of $H$ on $\mathcal X_{a,h}$ is attained. For every fixed $h$ there is an integer $A(h)$ such that, for every $a\ge A(h)$, every global minimizer and every choice of $h$ smallest-marginal labels satisfy (13.18).
+
+**Proof.** The feasible scalar family in Definition 13.2 supplies a finite positive-marginal comparison. Also
+$$
+H\ge\sum_{i=1}^s\frac1{y_i},
+$$
+so a bounded sublevel has all marginals bounded away from zero. Its intersection with the finite probability simplex and the two affine constraints is compact, and $H$ is continuous there. Hence a minimizing sequence has a convergent subsequence whose limit remains in $\mathcal X_{a,h}$.
+
+For fixed $h$, put $u_0=h/(\sqrt2\,a^{3/2})$, which lies in $(0,1/a]$ for all sufficiently large $a$. The actual array of Definition 13.2 has
+$$
+\begin{aligned}
+\Phi_{a,h}(u_0)-B_0
+&=\frac{h^2}{u_0}+\frac{ar^2u_0}{a-u_0}
+ +\frac{(a-1)(2a+1)r^3u_0}{(a-u_0)^2}\\
+&=2\sqrt2\,h\,a^{3/2}+O_h(a^{1/2}).
+\end{aligned}
+$$
+Every global minimizer therefore belongs to one fixed low-energy sublevel (13.8). For any sequence $a\to\infty$ of such minimizers, and any sequence of choices of $D$, (13.10) supplies a constant $C_h$ independent of those choices such that, eventually, $2a^3-C_ha^2>0$ and
+$$
+2h\sqrt{2a^3-C_ha^2}
+\le\frac{h^2}{p}+(2a^3-C_ha^2)p
+\le d(x_a)\le\Phi_{a,h}(u_0)-B_0.
+$$
+The first inequality is arithmetic--geometric mean. Dividing by $a^{3/2}$ proves the sharp limit $d(x_a)/a^{3/2}\to2\sqrt2h$ for every minimizer sequence. This sharp limit supplies the additional hypothesis of Lemma 13.6: for every such sequence and every choice of $D$, $\delta a^{3/2}\to1/\sqrt2$ and $c\to1$. If no single threshold $A(h)$ made (13.18) hold for every minimizer and every such $D$, one could choose integers $a\to\infty$ and failing pairs $(x_a,D_a)$. These pairs would contradict the two limits, since
+$$
+\frac{3}{\delta^2}\sim6a^3,\qquad
+\frac{\max\{\alpha,\beta\}}{c^2}\sim2a^3.
+$$
+This contradiction proves the common eventual threshold. ∎
+

@@ -1,0 +1,17 @@
+**Corollary 21.3 (the full-domain hybrid normalizer).** Once the
+authentic prefix has been earned, compute the exact rank of $H(P)$. If
+$r=d$, solve the single system $H(P)c=y(P)$ and return
+
+$$
+ (c,s_d(P))=\operatorname{EN}_d(P).
+ \tag{ACR.81}
+$$
+
+The solution is unique, so this row is the same first row selected by
+$\rho_d$, whatever that enumeration is. If $r<d$, run the original
+$\rho_d$ first-passing enumeration and return
+$(\kappa_d(P),s_d(P))$. Keep the $d=0$ zero descriptor. Thus every
+branch returns the original order-$d$ row together with the original
+first-$d$ seed, including deficient-rank and finite-transient fibres.
+No entrance assumption or physical source action is added.
+

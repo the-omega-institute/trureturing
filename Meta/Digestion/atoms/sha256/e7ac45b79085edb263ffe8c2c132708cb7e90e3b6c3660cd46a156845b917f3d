@@ -1,0 +1,4 @@
+**假设 61.2（其他实复分离结果的适用前提）。** Fawzi、Gouveia、Parrilo、Robinson、Thomas，[*Positive Semidefinite Rank*](https://arxiv.org/html/1407.4095v1)，§2.2 的实复 psd 秩比较，研究有限非负表的静态半正定因子分解。若以它推出本题更强维数下界，需另给实际历史子表、所需秩下证书以及从动态实现到该因子的明确映射；反向上界还需固定 CP 动态与全族仿射制备。静态分解本身不供应这些接口。
+
+Renou 等，[*Quantum theory based on real numbers can be experimentally falsified*](https://arxiv.org/html/2101.10873v2)，使用两个来源、三方张量结构、纠缠交换和多种局域测量选择。把该结果用于本题，需证明这里的单一原生历史合同供应其来源独立性、子系统分解和测量菜单；本卷不作此假设。其任意维数实模型排除不直接成为本题的实四维或五维排除。
+

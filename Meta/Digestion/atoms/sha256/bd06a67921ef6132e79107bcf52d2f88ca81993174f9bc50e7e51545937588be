@@ -1,0 +1,63 @@
+**Theorem 5.2 (Capacity exclusion and quantitative rounding).** For $n\ge2r$, the complete integer interval in which $r$ independent hubs can accommodate the edge budget and every smaller hub number is excluded by that capacity is precisely $[L_r(n),U_r(n)]$. On this interval,
+
+$$
+b+c=N,\qquad (r-1)b+rc=m=n-1+\ell,\qquad c\ge r,\quad b\ge0.
+$$
+
+The graph $H_r(n,\ell)$ is simple and connected with exactly the prescribed $n,m,\ell$. Its hub degrees are $D_i=N-b_i$. For $n\ge3r$, these are larger than the source degrees, so they are its degree-oriented sinks. Its exact excess is
+
+$$
+E(H_r(n,\ell))=\sum_{i=1}^rM_c(N-b_i).\tag{5.1}
+$$
+
+Set
+
+$$
+q_r=\frac mN=r-1+\frac cN,\qquad
+B=r\bigl[4(r-1)^2+24(2r-1)\bigr],\qquad C_0=4r^3.
+$$
+
+The actual normalized profile $x^H$ satisfies
+
+$$
+0\le J_r(x^H)-F_r(q_r)\le\frac B{N^2},\tag{5.2}
+$$
+
+and
+
+$$
+E(H_r(n,\ell))\le\frac{F_r(q_r)}N+\frac B{N^3},\qquad
+E(H_r(n,\ell))\le\frac{C_0}{n}.\tag{5.3}
+$$
+
+**Proof.** With $t$ independent hubs and $n-t$ sources, simplicity gives $m\le t(n-t)$. For integers $t\le r-1$ and $n\ge2r$, this capacity increases with $t$. Thus the condition excluding all $t\le r-1$ is
+
+$$
+m>(r-1)(n-r+1),
+$$
+
+which, for integer $\ell$, is exactly $\ell\ge L_r(n)$. Feasibility of $r$ hubs is $m\le r(n-r)$, or $\ell\le U_r(n)$. Conversely all integer edge counts in this interval are supplied by the construction. Solving its two count equations gives the displayed $b,c$. At the lower endpoint $c=r$ and at the upper endpoint $b=0$; hence $r\le c\le N$ throughout. The full sources connect every hub, and every other source has a nonempty neighborhood. All memberships are simple edges between distinct vertices. Thus connectedness, simplicity, order and size hold together in this one graph, even if a missing-one count is zero.
+
+At hub $i$, precisely $c$ incident sources have degree $r$ and $b-b_i=D_i-c$ have degree $r-1$. Every $D_i\ge c\ge r$, so the hub is a larger-degree endpoint and (5.1) holds even when the endpoint degrees are equal. For a balanced choice, $b_i\le b/r+1$ and $b\le N-r$, so $D_i\ge(r-1)N/r$. If $n\ge3r$, this is greater than $r$. This also proves the claimed orientation.
+
+For the quantitative estimate, write $\theta=c/N$ and $y_i=1-b_i/N$. Balance gives
+
+$$
+|y_i-q_r/r|<1/N,\qquad \sum_i(y_i-q_r/r)=0,
+\qquad y_i\ge\tfrac12.
+$$
+
+Only cardinalities $r-1,r$ occur. Hence (3.3) is an equality with $R_i=0$ and $J_r(x^H)=\sum_i h_\theta(y_i)$. On the segment between $y_i$ and $q_r/r$, both arguments are at least $1/2$, and
+
+$$
+h_\theta''(y)\le8(r-1)^2+48(2r-1).
+$$
+
+Taylor's formula, summed with the zero linear term, proves the upper bound in (5.2); its lower bound is Theorem 3.1. On every actual edge $g(t)\le t^2/2$, so $E(H_r)\le J_r(x^H)/N$, proving the first part of (5.3). Finally $D_i\ge N/2$, there are $m\le rN$ edges, and each source degree is at most $r$. Therefore
+
+$$
+E(H_r)\le\frac{mr^2}{2(N/2)^2}\le\frac{2r^3}{N}\le\frac{4r^3}{n}.
+$$
+
+Here $N\ge n/2$. All the cost estimates hold for $n\ge2r$; the stronger $n\ge3r$ condition was needed only for strict degree orientation. ∎
+

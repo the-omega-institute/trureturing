@@ -1,0 +1,17 @@
+**Definition 1.2 (The growing-surplus scale).** A sequence in the growing-surplus regime consists of integers $(a_n,h_n)$ such that
+
+$$
+a_n\ge4,\qquad h_n\ge1,\qquad a_n\longrightarrow\infty,
+\qquad \frac{h_n}{\sqrt{a_n}}\longrightarrow\kappa\in(0,\infty).
+\tag{1.2}
+$$
+
+The normalized infimum along it is
+
+$$
+D_n=\frac{M(a_n,h_n)-B_0(a_n)}{a_n^2}.
+\tag{1.3}
+$$
+
+Subscripts are suppressed when no ambiguity results. Bounds for $\liminf D_n$ and $\limsup D_n$ do not presume convergence, or that different sequences with the same $\kappa$ have a common limit.
+

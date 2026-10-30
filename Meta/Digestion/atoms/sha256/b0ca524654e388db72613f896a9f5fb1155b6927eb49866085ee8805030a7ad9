@@ -1,0 +1,23 @@
+**Definition 3.1 (Normalized domains and product supremum).** Set
+
+$$
+\begin{aligned}
+\mathcal N_{a,b,c}
+&=\{g\in\mathcal P_{a,b,c}:\lambda_2(g)=1\},\\
+\mathcal C_{a,b,c}
+&=\{g\in[0,\infty)^E:\lambda_2(g)=1\},\\
+U_n&=n\left(n-\frac32\right),\qquad
+M_{a,b,c}=\sup_{g\in\mathcal P_{a,b,c}}F(g).
+\end{aligned}
+\tag{3.1}
+$$
+
+Every member of $\mathcal C_{a,b,c}$ has connected support. This is
+exactly the coordinatewise closure of $\mathcal N_{a,b,c}$: if
+$g_j\in\mathcal N_{a,b,c}$ converges, continuity preserves
+nonnegativity and $\lambda_2=1$; conversely for $g\in\mathcal C_{a,b,c}$,
+the positive vectors
+$(g+\varepsilon\mathbf1_E)/\lambda_2(g+\varepsilon\mathbf1_E)$ converge
+to $g$ as $\varepsilon\downarrow0$. Resistance on $\mathcal C_{a,b,c}$
+is defined on the same original vertices by (1.4)–(1.5).
+

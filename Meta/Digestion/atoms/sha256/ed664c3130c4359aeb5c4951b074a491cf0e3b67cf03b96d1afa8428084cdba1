@@ -1,0 +1,36 @@
+#### 命题 8.4（长路径的有效权重）
+
+对于两条内部互不相交、无额外耦合边的路径，分别具有完整传输 $A,B$，定义
+
+$$
+k_A=\left(\sum_{e\in p_A}a_e^{-1}\right)^{-1},\qquad
+k_B=\left(\sum_{e\in p_B}a_e^{-1}\right)^{-1}.
+$$
+
+固定根 $\psi$ 后，先消去内部顶点，再对共同端点最小化，得到
+
+$$
+\min\mathcal S
+=\frac{k_Ak_B}{k_A+k_B}\left\lVert (A-B)\psi\right\rVert ^2
+=\frac{4k_Ak_B}{k_A+k_B}p_-.
+$$
+
+**证明。**
+
+沿一条路径用累计酉变换将所有边运输化为普通差分 $d_e$。其和固定为运输回根后的端点差 $d$。加权 Cauchy–Schwarz 给
+
+$$
+\left\lVert d\right\rVert ^2=\left\lVert \sum_e d_e\right\rVert ^2
+\le\left(\sum_ea_e^{-1}\right)\sum_ea_e\left\lVert d_e\right\rVert ^2,
+$$
+
+等号可由 $d_e$ 取为 $a_e^{-1}$ 比例的同向分量实现。所以消元后为 $k_A\left\lVert z-A\psi\right\rVert ^2$，另一条同理。两路径内部不交使两个消元可独立进行；再次配方得系数 $k_Ak_B/(k_A+k_B)$，再用 $p_-$ 公式。
+
+∎
+
+例如两条各有两条单位权边的菱形，$k_A=k_B=1/2$，完整图最小残差为 $p_-$。式 [(8)](#eq-interference) 的 $2p_-$ 只对应两个单位权的有效端点约束。边权与切面细分会改变变分的数值，故不能把某个残差常数直接认定为普遍物理能量。
+
+<a id="statement-8-5"></a>
+
+<a id="prop-gauge"></a>
+

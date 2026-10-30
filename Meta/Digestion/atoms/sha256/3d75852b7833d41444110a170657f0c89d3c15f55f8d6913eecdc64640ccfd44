@@ -1,0 +1,25 @@
+#### 定理 11.2（谱约束与不可消失的关系风险）
+
+$$
+\boxed{\mathcal R(\pi)
+=1-\max_{U\in\operatorname{U}(d)}\langle u\rvert M_\pi\lvert u\rangle
+\ge1-\lambda_{\max}(M_\pi).}
+$$
+
+等号当且仅当最大本征空间含有一个归一化的酉 Choi 向量。并且
+
+$$
+\mathcal R(\pi)=0
+\iff \text{所有正权 }V_j\text{ 仅差整体相位。}
+$$
+
+**证明。**
+
+$\langle v_j,u\rangle=\operatorname{Tr}(V_j^\dagger U)/d$，求和得等式。酉 Choi 向量只是全单位球的一个紧子集；Rayleigh 商给谱上界，其等号条件就是最大本征空间与该子集相交。若风险为零，每一个正权非负损失均为零；Hilbert–Schmidt Cauchy–Schwarz 等号要求 $V_j$ 与同一个 $U$ 成比例，即只差相位。反向显然。
+
+∎
+
+例如目标等概率为 $I$ 或 $iX$，两条 Choi 向量正交，$\lambda_{\max}=1/2$；取预测 $I$ 即达到风险 $1/2$。再通用的门菜单，也不能在没有额外记录时把这个评分下的风险降到零。编译误差可消失与目标关系已被辨识，是两个命题。
+
+<a id="statement-11-3"></a>
+

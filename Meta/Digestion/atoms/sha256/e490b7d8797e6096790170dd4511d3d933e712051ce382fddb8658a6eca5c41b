@@ -1,0 +1,92 @@
+**Lemma 13.5 (Localization and bootstrap on every fixed low-energy sublevel).** Fix $h$ and $M>0$. If $a\to\infty$ through integers and $x_a\in\mathcal X_{a,h}$ satisfies
+$$
+ d(x_a)\le M a^{3/2},
+\tag{13.8}
+$$
+then, for every choice of $h$ smallest-marginal labels as in Lemma 13.4,
+$$
+\delta\longrightarrow0,
+$$
+and, with $p,u,H_D$ as there, eventually
+$$
+ p=O_{h,M}(a^{-3/2}),\qquad u=O_{h,M}(a^{-3/2}),\qquad H_D=O_{h,M}(a^{3/2}).
+\tag{13.9}
+$$
+More precisely, after the first bootstrap there is a constant $C_{h,M}>0$, independent of the array and the choice of $D$, such that eventually
+$$
+\begin{aligned}
+ d(x_a)&\ge H_D+(2a^3-C_{h,M}a^2)p\\
+ &\ge\frac{h^2}{p}+(2a^3-C_{h,M}a^2)p.
+\end{aligned}
+\tag{13.10}
+$$
+
+**Proof.** First, $H\ge\mathbb E K^3$. For integer $K\in[1,a+1+h]$,
+$$
+K^3-(3a^2+3a+1)K+a(a+1)(2a+1)
+=(K-a)(K-a-1)(K+2a+1),
+$$
+so, after expectation and $\mathbb E K=a$,
+$$
+\mathbb E K^3-a^3\ge(2a+2)\operatorname{Var}K.
+\tag{13.11}
+$$
+The sublevel bound and $H=B_0+d$ thus give $\operatorname{Var}K=O_{h,M}(a)$.
+
+We prove $\delta\to0$ by contradiction. Suppose that along a subsequence the $h$ selected marginals do not all tend to zero. After passing to a further subsequence, let $Z$ be the set of $z\le h-1$ selected labels whose marginals tend to zero, and let $R=[s]\setminus Z$, with $m=|R|=a+1+h-z$. The marginals in $R$ are at least some $c_0>0$. Put
+$$
+V_R=\sum_{i\in T\cap R}(y_i^{-2}-1).
+$$
+Because $\sum_i(1-y_i)=s-a=h+1$,
+$$
+0\le V_R\le\frac{2(h+1)}{c_0^2},
+$$
+and
+$$
+\mathbb E V_R=\sum_{i\in R}(y_i^{-1}-y_i)
+\ge\frac{m^2}{a-v}-(a-v),
+$$
+where $v=\sum_{i\in Z}y_i\to0$. Put $b=h+1-z\ge2$, so $m=a+b$. For every $a$ in this subsequence, $v\ge0$ and $a-v=\sum_{i\in R}y_i>0$, and hence
+$$
+\frac{m^2}{a-v}-(a-v)
+=2(b+v)+\frac{(b+v)^2}{a-v}\ge2b\ge4.
+$$
+Also (13.11) gives
+$$
+\mathbb E|K^2-a^2|\le(2a+h+1)\sqrt{\operatorname{Var}K}=O_{h,M}(a^{3/2}).
+$$
+Using $H=\mathbb E[K^3+K^2\sum_{i\in T}(y_i^{-2}-1)]$ and dropping the nonnegative $Z$ terms yields
+$$
+H\ge a^3+4a^2-O_{h,M,c_0}(a^{3/2}),
+$$
+contradicting $H\le a^3+2a^2+a+Ma^{3/2}$. Thus $\delta\to0$.
+
+On $A$, put
+$$
+V=\sum_{j\in T\cap D}t_j^{-1},
+\qquad
+W=K^2\sum_{j\in T\cap D}t_j^{-2},
+$$
+and set both zero off $A$. Cauchy--Schwarz within one actual type gives $W\ge V^2$, while $\mathbb E V=h$; Cauchy--Schwarz on the one event $A$ gives
+$$
+H_D\ge\mathbb E V^2\ge\frac{h^2}{p}.
+\tag{13.12}
+$$
+Since $W\ge K^2/\delta^2$ on $A$, $\mathbb E[K^2;A]\le\delta^2H_D$. By (13.5), $H_D\le d+u\mathcal A_a(u)$, and $u\le hp$, so
+$$
+\frac{\mathbb E[K^2\mid A]}{a^2}
+\le M\frac{\delta}{a^{1/2}}+C_hh\delta^2\longrightarrow0,
+\tag{13.13}
+$$
+where $\delta\le p$ was used in the first term. Since $Q(L)\ge\alpha-\beta L$, (13.13) gives
+$$
+\mathbb E[Q(L);A]\ge(2-o(1))a^3p.
+$$
+The terms off $A$ are nonnegative, and $u\mathcal A_a(u)=O_h(a^2p)$, so (13.5) implies $d\ge H_D+a^3p$ eventually. Consequently $p=O_{h,M}(a^{-3/2})$, and then $u=O_{h,M}(a^{-3/2})$ and $H_D=O_{h,M}(a^{3/2})$ by (13.5).
+
+The improved bounds and $\delta\le p$ give
+$$
+\mathbb E[K^2\mid A]\le\frac{\delta^2H_D}{p}=O_{h,M}(1).
+$$
+Thus $\mathbb E[L;A]=O_{h,M}(p)$, and returning to (13.5), using $\alpha=2a^3+O(a^2)$ and $\beta=O(a^2)$, proves (13.10). ∎
+

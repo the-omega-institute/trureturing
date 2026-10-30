@@ -1,0 +1,43 @@
+**定理 55.2（C1：有限经典精确实现的充要角度）。** 对每个固定已知实角度 $\theta$ 和每个 $0<d<1$，在定义 54.3 的全部经典模型中，
+
+$$
+k_{\min}(\theta,d)<\infty\quad\Longleftrightarrow\quad
+\theta\in(\pi/2)\mathbb Z.
+\tag{55.10}
+$$
+
+非例外情形仅匹配引理 55.1 的两个世界就已不可能；这一下界不要求经典制备映射仿射。
+
+证明。假设存在非例外角度的有限模型。置 $A=2T_0$，取双世界制备 $p_+,p_-$。由两个终端结果之和，对所有 $n,r\ge0$，
+
+$$
+\mathbf1^{\mathsf T}A^{n+r}p_\pm=1.
+\tag{55.11}
+$$
+
+令 $S$ 为所有 $A^rp_\pm$ 的支持并集。非负性使 $S$ 向前不变。它是有限集合；从这些可达概率向量中取有限个，使其支持覆盖 $S$，再取严格正权凸组合 $\eta$。则 $\eta_j>0$ 对每个 $j\in S$ 成立，且
+
+$$
+\mathbf1^{\mathsf T}A^n\eta=1,\qquad
+\sum_{i\in S}(A^n)_{ij}\le\eta_j^{-1}
+\quad(n\ge0,j\in S).
+\tag{55.12}
+$$
+
+因此 $A|_S$ 幂有界。质量恒为一还排除谱半径小于一，所以其谱半径为一。这个推导没有对各隐藏状态假设 $\mathbf1^{\mathsf T}T_0=\mathbf1^{\mathsf T}/2$；不可达的高增长块根本不参与。
+
+对 $A|_S$ 作不可约对角块的上三角分解。每个单位模本征值来自 Perron 根为一的不可约块。以该块的严格正 Perron 向量作对角相似变换，得到不可约行随机矩阵。对其单位模本征向量，在最大模坐标的三角不等式中必须处处等号，沿每条正边的相位乘子固定为该本征值。沿长度 $l$ 的有向圈返回便给 $\lambda^l=1$。于是即使整体可约，每个外围本征值仍是单位根。
+
+幂有界性排除外围非平凡 Jordan 块；内部 Jordan 项是衰减的多项式乘指数。因此
+
+$$
+f_{\rm cl}^{\mathsf T}A^n(p_+-p_-)
+\tag{55.13}
+$$
+
+的非衰减频率只能是单位根。引理 55.1 则要求它等于含非单位根频率的 (55.1)。若选取其中一个未抵消频率 $\lambda$，将两端乘 $\lambda^{-n}$ 后对 $0\le n<N$ 作 Cesàro 平均：经典端所有单位根频率与衰减项均趋零，量子端趋向该非零系数。矛盾。乘 $2^n$ 只是对给定联合表作算术，不是物理选支。
+
+例外角度的有限实现由定理 57.1 给出，至多六状态，故反向成立。
+
+此证明使用成熟的正实现、Perron–Frobenius 和指数展开唯一性方法。相关先例是 Monras–Winter，[*Quantum learning of classical stochastic processes: The Completely-Positive Realization Problem*](https://arxiv.org/html/1412.3634)，定理 6、9，以及 Fanizza–Lumbreras–Winter，[*Quantum theory in finite dimension cannot explain every general process with finite memory*](https://arxiv.org/html/2209.11225v2)，定理 5 后的外围谱讨论。前者的多面锥条件同时要求初始向量属于锥、动态保持锥及终端泛函属于对偶锥；最小商的同构不保证隐藏载体本身同构。后者的 FRDN 过程、平稳制备及角度条件不同。(55.8)、真实原域双世界和 (55.12) 是本源承担的对应，未借用其过程或噪声结论。∎
+

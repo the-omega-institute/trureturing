@@ -1,0 +1,27 @@
+#### 命题 6.2（全部门历史的叠加需要权重）
+
+给正交历史标签 $\lvert w\rangle$ 与单位历史向量 $\Psi_w$，则
+
+$$
+\Omega=\sum_w c_w\lvert w\rangle \otimes\Psi_w
+$$
+
+是通常 Hilbert 空间中的单位向量，当且仅当 $\sum_w|c_w|^2=1$。无限非零等权和不能归一化。均匀有限时钟历史
+
+$$
+\Omega_T=\frac1{\sqrt{T+1}}\sum_{t=0}^T\lvert t\rangle \otimes\psi_t,\qquad \left\lVert \psi_t\right\rVert =1,
+$$
+
+在该共同空间中也没有向量范数极限。
+
+**证明。**
+
+标签正交使部分和的范数平方为系数平方和，Cauchy 条件恰为平方可和。对 $S\ge T$，
+$\langle\Omega_T,\Omega_S\rangle=\sqrt{(T+1)/(S+1)}$。取 $S+1=4(T+1)$，两单位向量距离恒为一，故不是 Cauchy 序列。
+
+∎
+
+因此可以谈加权门历史、有限窗口，或满足一致性条件的局部代数态极限；这些是不同的精确定义。若丢弃正交程序标签，数据通常成为混合；若希望不同历史相干干涉，还须保留并重组路径参考。单独说“全部序列的叠加”尚未选定其中一种对象。
+
+<a id="sec-7"></a>
+

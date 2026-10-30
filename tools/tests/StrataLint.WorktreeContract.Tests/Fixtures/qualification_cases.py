@@ -18,7 +18,7 @@ class QualificationCases:
         lock = protocol.identity(self.main, self.tree)[1] / "locked"
         original_bytes = lock.read_bytes()
         old = 1000000000
-        original_stat = os.stat
+        original_stat = Path.stat
         for action in ("qualify", "preview", "preflight", "scoped"):
             for change in ("unlock", "replace", "timestamp", "replace_error", "present_error", "present_missing_error"):
                 with self.subTest(action=action, change=change):
@@ -50,7 +50,7 @@ class QualificationCases:
                         args.append("--preview")
                     output, errors = io.StringIO(), io.StringIO()
                     try:
-                        with patch.object(os, "stat", new=injected), \
+                        with patch.object(Path, "stat", new=injected), \
                                 patch.object(publication, "commit_snapshot", side_effect=AssertionError("unexpected checkpoint")) as checkpoint, \
                                 redirect_stdout(output), redirect_stderr(errors):
                             code = protocol.main(args)

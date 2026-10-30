@@ -1,0 +1,62 @@
+**定理 2.3（同幂次的局部两岸数据与前导一界）。** 固定 $\boldsymbol{k}$ 与 $\ell$，置
+
+$$
+\lambda=\begin{cases}Z^{-\ell},&k_1>1,\\0,&k_1=1.\end{cases}
+$$
+
+存在 $0<\rho<1$，使 $L_{\boldsymbol{k}}$ 在 $\Omega\cap\{|z-1|\le\rho\}$ 非零，且 $\mathcal A(z)\to\lambda$ 当 $z\to1$、$z\in\Omega$。存在函数 $U,V$，分别连续于闭半圆盘
+
+$$
+K_+=\{|z-1|\le\rho,\ \operatorname{Im}z\ge0\},\qquad
+K_-=\{|z-1|\le\rho,\ \operatorname{Im}z\le0\},
+$$
+
+在各自与 $\Omega$ 的交集中等于 $\mathcal A$，满足
+
+$$
+U(1)=V(1)=\lambda,\qquad V(z)=\overline{U(\overline z)}\quad(z\in K_-),
+\qquad \operatorname{Im}U(1+t)<0\quad(0<t\le\rho).
+$$
+
+若 $k_1=1$，还存在 $D\ge1$、整数 $M\ge0$ 与 $r_*<1$，使
+
+$$
+0<F_{\boldsymbol{k}}(r)
+ \le r^{-d}D\bigl(1+|\log(1-r)|\bigr)^M\qquad(r_*<r<1,\ r>0).
+$$
+
+证明。两岸及端点部分直接使用 `CompositionBanks.result head tail ell` 的完整结论，其中 $\ell$ 就是定义 1.2 的幂次。取 $\ell=1$ 的两岸符号后任意升幂并不能替代这一引用。该命题在全 $\Omega$ 内趋于 $1$ 的滤子上给出端点极限，且连续性包括两岸的 $t=0$ 与 $t=\rho$，不是只有逐条射线的边界值。
+
+有关前导一部分，任意有限组合唯一分成 $(1^q,s)$：$s$ 为空或首项大于 $1$。若 $k_1=1$ 则 $q\ge1$。`CompositionBanksSourceInduction.composition_remainder_cases_of_controls` 取它实际证明中给出的全部控制输入：`CompositionBanksLeadingClosure.composition_continued_norm_bound`、`CompositionBanksOrdinaryTransport.ordinary_admissible_remainder_step`、`CompositionBanksLeadingClosure.leading_one_remainder_iterate` 与 `CompositionBanksLeadingTransport.split_leading_ones`，得到同一实际分支的余项二分。可容许情形有某些 $0<\eta<1$、$C\ge0$、$M\ge0$ 满足
+
+$$
+|L_{(h,s)}(1-w)-\zeta(h,s)|
+ \le C|w|(1+|-\operatorname{Log}w|)^M\quad(h>1),
+$$
+
+前导一情形有实系数多项式 $P$，满足
+
+$$
+\deg P=q,\qquad [T^q]P(T)=\frac{Z_s}{q!}>0,\qquad
+Z_s=\begin{cases}1,&s=\varnothing,\\\zeta(s),&s\ne\varnothing,\end{cases}
+$$
+
+以及
+
+$$
+|L_{(1^q,s)}(1-w)-P(-\operatorname{Log}w)|
+ \le C|w|(1+|-\operatorname{Log}w|)^M.
+$$
+
+这两个余项界的域都是 $w\in\mathbb C\setminus(-\infty,0]$、$0<|w|<\eta$；常数依赖相应有限组合。可容许尾部的常数使用 `CompositionBoundary.result`，仅在其首项大于 $1$ 时调用；该结果给出严格多重和与 $\sum f_m$ 的收敛、相等、正性及归一化函数的径向极限。没有把它用于首项为 $1$ 的非可容许组合。
+
+上述控制输入的源权重归纳分别降低首项或删除首个 $1$；前导一迭代允许每一个有限 $q$。其中 `leading_remainder_integral_identity` 的常数为各射线共同的实常数，`CompositionBanksIntegralControl.radial_majorant_integrable` 以 $a\ge0$、$N\ge1$ 保证
+
+$$
+\int_0^1 t^{N-1}(1+a-\log t)^M\,dt<\infty,
+$$
+
+`radial_div_uniform_bound` 与 `radial_one_sub_uniform_bound` 分别保留 $N\ge1$ 和 $|w|<1$ 的前提，后者保留 $(1-|w|)^{-1}$ 因子；`inner_arc_decay` 要求正的消失阶 $N\ge1$。因此这里引用的是完整的源权重归纳及其积分控制，不是以待证的余项界作为额外假设。全纯分支、共轭及普通首项的边界导数均使用 `CompositionSlit.result` 和 `actual_upper_bank_atlas` 的同一分支；主值上岸有 $-\operatorname{Log}(-t-i0)=-\log t+i\pi$。
+
+前导一的多项式余项界，或其完整推论 `leading_one_continued_norm_bound_of_remainder`，给出 $|L_{\boldsymbol{k}}(1-w)|\le D(1+|-\operatorname{Log}w|)^{M'}$，其中 $M'=\max(M,q)$，可增大 $D$ 至至少 $1$。限制到实数 $w=1-r>0$，再除以 $r^d$ 就得到所述 $F$ 的界（将 $M'$ 记为 $M$）。正性来自定义 1.1 的正系数。因子 $r^{-d}$ 在此保留，不能把 $L$ 的界直接当成 $F$ 的界。
+

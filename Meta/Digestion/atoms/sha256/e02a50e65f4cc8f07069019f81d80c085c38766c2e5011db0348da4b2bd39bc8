@@ -1,0 +1,29 @@
+**Definition 1.2 (Adjacent-cardinality candidate).** Fix an integer $r\ge5$ and write
+
+$$
+a=r-1,\qquad D=3a^2+3a+1=3r^2-3r+1,\qquad
+C=a(a+1)(2a+1)=r(r-1)(2r-1),
+$$
+
+$$
+f_r(q)=Dq-C,\qquad F_r(q)=\frac{r^2f_r(q)}{2q^2},\qquad
+\kappa_r=2+\sqrt{8a(a^2-1)}.
+$$
+
+For $q\in[a,r]$, put $\theta=q-a$ and define a profile on $[r]$ by
+
+$$
+x^*_{[r]}(q)=\theta,\qquad
+x^*_{[r]\setminus\{i\}}(q)=\frac{r-q}{r}\quad(1\le i\le r),
+\qquad x^*_T(q)=0\text{ otherwise}.
+$$
+
+Its marginals are $q/r$, its mean cardinality is $q$, and
+
+$$
+\mathbb E_{x^*}K^3=(1-\theta)a^3+\theta r^3=f_r(q),
+\qquad J_r(x^*(q))=F_r(q).
+$$
+
+Both endpoints are included: the full type has mass zero at $q=a$, and all missing-one types have mass zero at $q=r$.
+

@@ -1,0 +1,38 @@
+#### 定理 3.2（两个黄金组合块稠密生成 $\operatorname{SU}(2)$）
+
+$$
+\boxed{\overline{\langle D,E\rangle}=\operatorname{SU}(2).}
+$$
+
+故 $\Sigma$ 是有限、逆封闭、无连续可调参数、指定相位的通用单比特字母表。
+
+**证明。**
+
+直接展开得
+
+$$
+\begin{aligned}
+\operatorname{Tr} D
+&=\omega+\bar\omega+|\omega-1|^2\operatorname{Tr}(PQ)\\
+&=-\varphi^{-1}+\varphi^2\varphi^{-2}=\varphi^{-2}.
+\end{aligned}
+$$
+
+若 $D$ 有限阶，则其特征值是单位根 $\xi,\xi^{-1}$，迹的每一个代数共轭都形如另一单位根与其逆之和，必落在 $[-2,2]$。但 $\varphi^{-2}=(3-\sqrt5)/2$ 的另一共轭是 $\varphi^2=(3+\sqrt5)/2>2$，矛盾。因此 $D$ 无限阶，其幂在一个连续酉圆上稠密。
+
+又 $E=ADA^{-1}$，同迹且非中心。若 $D,E$ 交换，因 $D$ 有两个不同特征值，两者同对角化且 $E=D$ 或 $D^{-1}$。第一种情况要求 $A$ 与 $D=A^{-1}B$ 交换，等价于 $A,B$ 交换；但
+
+$$
+AB-BA=\omega^2(\omega-1)^2(PQ-QP)\ne0.
+$$
+
+第二种情况要求 $A$ 交换 $D$ 的两条特征线，因此 $A$ 在该基中对角元为零，得到 $\operatorname{Tr} A=0$，与 $\operatorname{Tr} A=\omega+\omega^2\ne0$ 矛盾。故 $D,E$ 不交换。
+
+两个无限阶元素所生成的酉圆因而具有不同轴。$\mathfrak{su}(2)$ 中两个不共线生成元及其交换子张成整个三维 Lie 代数：在 $i\sigma_x,i\sigma_y,i\sigma_z$ 基下，交换子对应叉积。闭子群的 Lie 代数包含它们，故包含整个连通群 $\operatorname{SU}(2)$。反向包含来自每个字母均在 $\operatorname{SU}(2)$。
+
+∎
+
+单个 $K$ 的谱只有十次单位根，两个地址的相对关系却产生无限阶元素。这给“连续表达从离散组合中出现”一个精确版本：连续性是此指定算符范数闭包的性质，每个实现仍为有限字；它没有单独证明物理连续性是幻觉。
+
+<a id="statement-3-3"></a>
+

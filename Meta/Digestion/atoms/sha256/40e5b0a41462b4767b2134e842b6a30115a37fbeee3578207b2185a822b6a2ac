@@ -1,0 +1,53 @@
+**定理 8.2（实际 Shapley 份额的三种参数区间）。** 令 $\vartheta=432/L$。
+对全部整数 $b>a\ge5$，有以下有效的相对误差界。
+
+若 $d=b-a$，则
+
+$$
+\left|\frac{H}{dL/(16a^2)}-1\right|
+\le\vartheta+\frac da.
+$$
+
+若 $s=b/a$，对任意指定实数 $r>1$，则
+
+$$
+\left|\frac{H}{(1-1/r)L/(16a)}-1\right|
+\le\vartheta+(1+\vartheta)\frac{|s-r|}{s(r-1)}.
+$$
+
+同时，
+
+$$
+\left|\frac{H}{L/(16a)}-1\right|
+\le\vartheta+\frac ab.
+$$
+
+因而，分别在 $d=o(a)$、$s\to r\in(1,\infty)$、$s\to\infty$ 时，
+
+$$
+\begin{aligned}
+H&=\frac{dL}{16a^2}\left(1+O(L^{-1}+d/a)\right),\\
+H&=\frac{(1-1/r)L}{16a}
+ \left(1+O_r(L^{-1}+|s-r|)\right),\\
+H&=\frac L{16a}\left(1+O(L^{-1}+a/b)\right).
+\end{aligned}
+$$
+
+第一式、第三式的隐常数绝对；第二式允许依赖固定的 $r$。
+对全部比率共同适用的相对误差仍为 (8.2)。
+
+**证明。** 写 $H=(\delta L/16)(1+\epsilon)$，
+$|\epsilon|\le\vartheta$。第一式的比例因子为 $a/b$，
+故误差不超过 $(a/b)\vartheta+d/b\le\vartheta+d/a$。
+第三式的因子为 $1-a/b$，故误差不超过
+$(1-a/b)\vartheta+a/b\le\vartheta+a/b$。
+第二式使用精确恒等式
+
+$$
+\frac{1-1/s}{1-1/r}-1=\frac{s-r}{s(r-1)}.
+$$
+
+将这个差记为 $v$，则
+$|(1+v)(1+\epsilon)-1|\le\vartheta+(1+\vartheta)|v|$。
+在所述三个极限中相应误差趋于零；第二式不要求对 $r\downarrow1$ 一致。∎
+

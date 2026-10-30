@@ -1,14 +1,17 @@
 """User-directed worktree removal and independent non-worktree retention policies."""
 
 from contextlib import ExitStack, contextmanager
+from contextvars import ContextVar
 import hashlib
 import json
 import os
 from pathlib import Path
 import re
+import shutil
 import signal
 import stat
 import subprocess
+import tempfile
 import time
 import uuid
 
@@ -56,18 +59,104 @@ def reflog_oids(path):
 
 
 REMOVAL_RECORD = "worktree-removal"
+_PAYLOAD_PLAN = ContextVar("worktree_removal_payload_plan", default=None)
+
+
+def reject_nested_git(target):
+    """Refuse repository boundaries before checkpointing or deleting payload."""
+    def unreadable(error):
+        raise error
+    for directory, folders, files in os.walk(target, followlinks=False, onerror=unreadable):
+        path = Path(directory)
+        if path == target:
+            folders[:] = [name for name in folders if name != ".git"]
+        elif ".git" in folders or ".git" in files:
+            raise Refused("nested_git_boundary:" + str(path.relative_to(target)))
+        if "HEAD" in files and git(target, "rev-parse", "--resolve-git-dir", path,
+                                   check=False).returncode == 0:
+            raise Refused("nested_git_boundary:" + str(path.relative_to(target)))
+
+    for entry in git(target, "ls-files", "--stage", "-z").stdout.split(b"\0"):
+        if entry.startswith(b"160000 "):
+            raise Refused("nested_git_boundary:" + os.fsdecode(entry.split(b"\t", 1)[1]))
 
 
 def record_removal(metadata, commit, recovery_branch, predecessors=None, native_locks=None):
-    """Record the verified snapshot in Git metadata, which native removal deletes last."""
+    """Keep the verified snapshot in Git metadata until content deletion succeeds."""
     staged = metadata / (REMOVAL_RECORD + ".tmp")
     staged.write_text(json.dumps(dict(commit=commit, recovery_branch=recovery_branch,
                                      predecessors=predecessors or [], native_locks=native_locks or [])))
     os.replace(staged, metadata / REMOVAL_RECORD)
 
 
+def remove_payload(target):
+    """Retain the Git link and registration throughout fallible content deletion."""
+    planned = _PAYLOAD_PLAN.get()
+    payload = planned[1] if planned is not None and planned[0] == target else tuple(
+        (child, child.is_dir() and not child.is_symlink())
+        for child in target.iterdir() if child.name != ".git")
+    for child, directory in payload:
+        if directory:
+            shutil.rmtree(child)
+        else:
+            child.unlink()
+    if payload and any(child.name != ".git" for child in target.iterdir()):
+        raise Refused("worktree_payload_changed_during_removal")
+
+
+def native_removal_preflight(source, target, flags, stack=None):
+    """Recheck every native refusal condition immediately before payload deletion."""
+    # The tree walk must finish before the final qualification so a concurrent
+    # lock is observed by the last refusal check before payload deletion.
+    reject_nested_git(target)
+    item = qualify(source, target, stack)
+    if "locked" in item and flags.count("--force") < 2:
+        raise Refused("native_locked:" + item["locked"])
+    return item
+
+
+@contextmanager
+def payload_removal_budget(force):
+    """Bound interruptible payload deletion and share its deadline with Git."""
+    if force:
+        yield None
+        return
+    deadline = time.monotonic() + 300
+    def expired(signum, frame):
+        raise subprocess.TimeoutExpired(["worktree", "remove"], 300,
+                                        stderr=b"payload removal deadline expired")
+    handler = signal.signal(signal.SIGALRM, expired)
+    previous = signal.setitimer(signal.ITIMER_REAL, 300)
+    try:
+        yield deadline
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, *previous)
+        signal.signal(signal.SIGALRM, handler)
+
+
+def ignored_by_snapshot(target, metadata, commit, paths):
+    """Evaluate untracked paths against the checkpoint's tracked ignore files."""
+    with tempfile.TemporaryDirectory(prefix="worktree-removal-ignore-") as directory:
+        rules = Path(directory).resolve()
+        for entry in git(target, "ls-tree", "-r", "-z", commit).stdout.split(b"\0"):
+            if not entry:
+                continue
+            header, name = entry.split(b"\t", 1)
+            mode, kind, oid = header.split(b" ")
+            if Path(os.fsdecode(name)).name == ".gitignore" and mode in (b"100644", b"100755"):
+                file = rules / os.fsdecode(name)
+                file.parent.mkdir(parents=True, exist_ok=True)
+                file.write_bytes(git(target, "cat-file", "blob", oid.decode("ascii")).stdout)
+        result = git(rules, "--git-dir=" + str(metadata), "--work-tree=" + str(rules),
+                     "check-ignore", "--no-index", "-z", "--stdin",
+                     input=b"\0".join(paths) + b"\0", check=False)
+        if result.returncode not in (0, 1):
+            raise GitFailure(result.stderr.decode(errors="replace").strip() or "ignore inspection failed")
+        return set(result.stdout.split(b"\0")) >= set(paths)
+
+
 def interrupted_removal(target, metadata, stack, source, branch):
-    """Return the record of an earlier removal whose native deletion stopped part way."""
+    """Return the record of an earlier removal whose deletion stopped part way."""
     record = metadata / REMOVAL_RECORD
     if not record.exists():
         return None
@@ -106,9 +195,11 @@ def interrupted_removal(target, metadata, stack, source, branch):
                        getattr(stack, "native_locks", []))
         return dict(commit=snapshot["commit"], recovery_branch=current_root, reconverged=True,
                     native_locks=getattr(stack, "native_locks", []))
-    # Native deletion only deletes files; other differences may be later changes.
-    status = git(target, "status", "--porcelain", "--untracked-files=all").stdout.splitlines()
-    if any(not line.startswith(b" D ") for line in status):
+    # Content deletion only deletes files; other differences may be later changes.
+    status = git(target, "status", "--porcelain", "-z", "--untracked-files=all").stdout.split(b"\0")
+    changed = [line for line in status if line and not line.startswith(b" D ")]
+    if changed and (any(not line.startswith(b"?? ") for line in changed)
+                    or not ignored_by_snapshot(target, metadata, commit, [line[3:] for line in changed])):
         raise Refused("interrupted_removal_tree_changed")
     return removal
 
@@ -136,7 +227,10 @@ def qualify(source, path, stack=None, snapshot=None, deadline=None):
                 if stack is None:
                     with ExitStack() as probe:
                         tree_scope(probe, source, path, True)
-                else:
+                elif not any(not handle.closed
+                             and handle.scope_key == "tree:" + str(path)
+                             and handle.scope_exclusive
+                             for handle in getattr(stack, "scope_handles", [])):
                     tree_scope(stack, source, path, True)
             except Refused as error:
                 if not str(error).startswith("busy_scope:"):
@@ -274,6 +368,7 @@ def remove(options):
     qualified = {}
     for target in targets:
         item = qualify(source, target)
+        reject_nested_git(target)
         expected_rows = [json.loads(raw) for raw in options.expected]
         matches = [row for row in expected_rows if Path(row["path"]).resolve() == target.resolve()]
         if expected_rows and len(matches) != 1:
@@ -303,7 +398,7 @@ def remove(options):
                 _, metadata = identity(source, target)
                 resumed = interrupted_removal(target, metadata, stack, source, branch)
                 if resumed:
-                    # The earlier removal verified this snapshot clean before native
+                    # The earlier removal verified this snapshot clean before content
                     # deletion began; missing files are its effects, not changes.
                     checkpoint = dict(event="worktree_checkpoint", status="reconverged" if resumed.get("reconverged") else "resumed",
                                       commit=resumed["commit"], branch=branch,
@@ -335,9 +430,26 @@ def remove(options):
                     record_removal(metadata, checkpoint["commit"], recovery_branch,
                                    native_locks=checkpoint.get("native_locks", []))
                 flags = ["--force", "--force"] if "locked" in refreshed else ["--force"]
-                removing = True
+                payload = tuple((child, child.is_dir() and not child.is_symlink())
+                                for child in target.iterdir() if child.name != ".git")
+                owned_initializer_scope = (refreshed.get("locked", "").startswith("worktree-init:")
+                                           if isinstance(refreshed, dict) else False)
+                payload_token = _PAYLOAD_PLAN.set((target, payload))
+                try:
+                    qualifying = True
+                    native_removal_preflight(source, target, flags,
+                                             stack if owned_initializer_scope else None)
+                    qualifying = False
+                    removing = True
+                    with payload_removal_budget(options.force) as deadline:
+                        remove_payload(target)
+                finally:
+                    _PAYLOAD_PLAN.reset(payload_token)
+                remaining = None if deadline is None else deadline - time.monotonic()
+                if remaining is not None and remaining <= 0:
+                    raise subprocess.TimeoutExpired(["worktree", "remove"], 300)
                 git(source, "worktree", "remove", *flags, "--", target,
-                    timeout=None if options.force else 300)
+                    timeout=remaining)
                 outcomes.append(dict(path=str(target), outcome="removed", checkpoint=checkpoint,
                                      recovery_branch=recovery_branch,
                                      recovery_roots=getattr(stack, "recovery_roots", [])))

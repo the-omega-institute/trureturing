@@ -1,0 +1,20 @@
+### 定义 10.5（达到的秩二证书最小读数）
+
+对固定 $k\ge2$，令 $\mathcal A_k$ 为集合
+$$
+\begin{aligned}
+\{\,n\in\mathbb N:\ &\exists R\in\mathcal M_k,\ \operatorname{rank}(R)=2,
+\ \exists\Pi,\ \exists h=(z_0,E_1,z_1,\ldots,E_{n-1},z_{n-1})\\
+&\text{使 $\Pi$ 在 $R$ 上实际停止并输出 $2$ 于 $h$，且}\\
+&\mathcal F_\Pi(h)=\{S\in\mathcal M_k:\Pi\text{ 在 }S\text{ 上产生同一完整 }h\}\\
+&\text{中的每个 }S\text{ 都满足 }\operatorname{rank}(S)=2\,\}.
+\end{aligned}
+\tag{10.19}
+$$
+其中 $n$ 是包含初读的实际读数数，$\Pi$ 只须在该实际历史上停止；不要求对所有其他来源有共同截止时间。定义
+$$
+ C_k=\min\mathcal A_k,
+\tag{10.20}
+$$
+一旦证明该集合非空。这样定义的证书是非空的实际秩二来源上的历史纤维性质，既不把“每个来源均可认证”当作目标，也不把混合项数当作矩阵秩。
+

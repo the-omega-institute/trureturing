@@ -1,0 +1,48 @@
+**定理 14.1（原路径第三特征值处的精确正闭合判据）。**
+令 $P_n$ 是任意正电导路径，顶点质量全部为一，端点为 $a,b$，
+$e=\delta_a-\delta_b\in H$。记
+$A=L_P|_H$，其严格递增的特征值为
+$0<\lambda_2<\lambda_3<\cdots<\lambda_n$，
+正交单位特征向量为 $x_j$。置
+
+$$
+\gamma_j=e^{\mathsf T}x_j,\qquad
+S_3=\sum_{\substack{2\le j\le n\\j\ne3}}
+ \frac{\gamma_j^2}{\lambda_j-\lambda_3}.
+$$
+
+给端点间添加实际电导 $h>0$ 后，有
+$\lambda_2(L_P+hee^{\mathsf T})=\lambda_3(L_P+hee^{\mathsf T})=\lambda_3$
+当且仅当
+
+$$
+\gamma_3=0,\qquad S_3<0,\qquad h=-1/S_3. \tag{14.1}
+$$
+
+这包括路径的全部正谱与共同端点向量，不以独立路径边际替代。
+
+证明。正路径的特征向量由端点的一个坐标经首行和三对角递推唯一确定，
+故每个特征值单重。
+对 $\lambda$ 不在路径谱内，直接展开秩一行列式得到经典世俗方程
+
+$$
+1+h\,e^{\mathsf T}(A-\lambda I)^{-1}e
+=1+h\sum_{j=2}^n\frac{\gamma_j^2}{\lambda_j-\lambda}=0. \tag{14.2}
+$$
+
+在 $\lambda=\lambda_3$ 处，若 $\gamma_3\ne0$，
+把更新后的特征方程与 $x_3$ 内积可推出 $e^{\mathsf T}y=0$，
+进而 $y$ 为 $x_3$ 的倍数，再推出 $y=0$，故此时不是特征值。
+若 $\gamma_3=0$，$x_3$ 仍为特征向量。
+在 $x_3^\perp$ 上 $A-\lambda_3I$ 可逆；
+第二个独立特征向量存在当且仅当
+$1+hS_3=0$，且此时其在该补空间中唯一至倍数。
+因为 $h>0$，此条件恰为 (14.1)。
+
+正秩一交错给出，若更新后的正谱为 $\mu_2\le\cdots\le\mu_n$，则
+$\lambda_j\le\mu_j\le\lambda_{j+1}$ 对 $2\le j<n$ 成立。
+$\lambda_3$ 的二重只能出现在 $\mu_2,\mu_3$，
+因为 $\mu_4\ge\lambda_4>\lambda_3$。
+故 (14.1) 给出的二重确为 Fiedler 二重，反向必要性亦成立。
+所用交错也可直接由 Rayleigh 极小极大原理在 $e^\perp$ 上限制得到。∎
+
