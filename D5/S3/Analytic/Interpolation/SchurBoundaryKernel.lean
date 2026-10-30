@@ -541,10 +541,11 @@ private theorem rational_zero_mean (h : ℂ → ℂ) (hh : Differentiable ℂ h)
         exact (show ‖z‖ < 1 by simpa using hz).le
       apply DifferentiableAt.differentiableWithinAt
       dsimp [F, rationalKernel]
-      exact ((differentiableAt_id.div
-        ((differentiableAt_const _).add
-          ((differentiableAt_const _).mul (differentiableAt_id.pow 2)))
-        (rationalKernel_den_ne hr z hz')).mul (hh z))
+      have hnum : DifferentiableAt ℂ (fun z : ℂ => z) z := differentiableAt_id
+      have hden : DifferentiableAt ℂ (fun z : ℂ => 1 + (r : ℂ) ^ 2 * z ^ 2) z :=
+        (differentiableAt_const _).add
+          ((differentiableAt_const _).mul (differentiableAt_id.pow 2))
+      exact (hnum.div hden (rationalKernel_den_ne hr z hz')).mul (hh z)
     · rw [abs_one, closure_ball _ (by norm_num : (1 : ℝ) ≠ 0)]
       dsimp [F, rationalKernel]
       exact (continuousOn_id.div

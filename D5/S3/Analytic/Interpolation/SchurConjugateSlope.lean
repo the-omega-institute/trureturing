@@ -282,7 +282,11 @@ private theorem nodal_derivative_norm (a b x : ℝ) :
   have hd := (((hasDerivAt_id (x : ℂ)).sub_const ((a : ℂ) + b * I)).mul
     ((hasDerivAt_id (x : ℂ)).sub_const ((a : ℂ) - b * I)))
   have he : deriv (nodalPolynomial a b) (x : ℂ) = (2 : ℂ) * ((x : ℂ) - a) := by
-    rw [hd.deriv]
+    have hd' : HasDerivAt (nodalPolynomial a b)
+        (1 * ((x : ℂ) - ((a : ℂ) - b * I)) +
+          ((x : ℂ) - ((a : ℂ) + b * I)) * 1) (x : ℂ) := by
+      simpa only [nodalPolynomial, Pi.mul_apply, id_eq] using hd
+    rw [hd'.deriv]
     ring
   rw [he, norm_mul]
   simp only [norm_ofNat, ← Complex.ofReal_sub, Complex.norm_real, Real.norm_eq_abs]
@@ -293,6 +297,7 @@ private theorem nodal_sup (a b : ℝ) :
   have hbound : ∀ v ∈ ((fun x : ℝ => ‖deriv (nodalPolynomial a b) x‖) '' Icc (-1 : ℝ) 1),
       v ≤ 2 * (1 + |a|) := by
     rintro v ⟨x, hx, rfl⟩
+    change ‖deriv (nodalPolynomial a b) (x : ℂ)‖ ≤ _
     rw [nodal_derivative_norm]
     have hh := (abs_sub x a).trans (show |x| + |a| ≤ 1 + |a| by linarith [abs_le.mpr hx])
     linarith
