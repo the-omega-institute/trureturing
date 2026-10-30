@@ -22,7 +22,8 @@ private def graph (n : ℕ) : EdgeGraph (Fin n × Bool) (Fin n × Bool × Bool) 
   { source := fun e => (e.1, e.2.1)
     target := fun e => (finRotate n e.1, e.2.2) }
 
-private def allGenerators (n : ℕ) : Set (Fin n → Bool → Bool → ℝ) :=
+/-- Union of deterministic cycle laws and parity laws with mass 1/2 when `b xor c = γ i`. -/
+def allGenerators (n : ℕ) : Set (Fin n → Bool → Bool → ℝ) :=
   Set.range (fun s : Fin n → Bool => fun i b c =>
     if s i = b ∧ s (finRotate n i) = c then (1 : ℝ) else 0) ∪
   Set.range (fun γ : Fin n → Bool => fun i b c =>
