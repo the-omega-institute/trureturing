@@ -439,6 +439,13 @@ public sealed class WorktreeProtocolTests(ITestOutputHelper output)
     [InlineData("removal_expired_budget_never_starts_native_unregistration")]
     [InlineData("removal_payload_alarm_keeps_record_and_can_resume")]
     [InlineData("force_removal_disables_only_the_removal_budget")]
+    [InlineData("removal_owner_boundary_before_checkpoint")]
+    [InlineData("removal_device_boundary_before_checkpoint")]
+    [InlineData("removal_boundary_batch_preflight_preserves_all_targets")]
+    [InlineData("removal_rechecks_owner_boundary_after_checkpoint")]
+    [InlineData("removal_rechecks_device_boundary_after_checkpoint")]
+    [InlineData("removal_boundary_scan_does_not_follow_directory_links")]
+    [InlineData("removal_boundaries_share_the_nested_git_walk")]
     public void RemovalKeepsRegistrationUntilPayloadIsGone(string probe)
     {
         if (OperatingSystem.IsWindows()) return;
