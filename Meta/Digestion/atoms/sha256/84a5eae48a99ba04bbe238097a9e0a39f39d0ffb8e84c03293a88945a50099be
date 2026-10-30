@@ -1,0 +1,27 @@
+**定理 5.2（Density limit of the signed violation）。** Suppose (3.1). For every integer sequence $1\leq k_s\leq\lfloor ms/2\rfloor$ with $k_s/(ms)\to\rho\in[0,1/2]$,
+
+$$
+\lim_{s\to\infty}\frac{\mathcal V(s,k_s)}{s^2}
+=\Delta_H(\rho)
+=-\frac{C(H)}2-\lambda m\rho(1-\rho).
+\tag{5.3}
+$$
+
+If $\Delta_H(\rho)>0$, every such sequence eventually violates (5.1). If $\Delta_H(\rho)<0$, every such sequence eventually satisfies (5.1) strictly. The case $\Delta_H(\rho)=0$ has no sign conclusion from this limit.
+
+Proof. The required cut calculation is an intermediate already supplied for the pentagon in [the cut-bound source](../../../D5/S3/Combinatorics/Graph/TokenGraph/CutBoundRefutation.lean), through `cut_occupancy` and `cutPoly_endpoint`, and in [its uniform half-filled family](../../../Problems/apte-parekh-sud-2025-token-graph-cut-bound.md). For general $H$, a cut having $x_i$ vertices on its chosen side in block $i$ has size
+
+$$
+\sum_{\{i,j\}\in E(H)}
+\bigl[x_i(s-x_j)+x_j(s-x_i)\bigr].
+$$
+
+This polynomial is affine in each coordinate $x_i\in[0,s]$. Keeping all other coordinates fixed, an endpoint $0$ or $s$ has value at least the value at $x_i$. Rounding coordinates successively produces a block cut with no decrease. At an endpoint vector the value is $s^2$ times the size of a cut of $H$. A maximum cut of $H$ itself lifts to such a block cut. Consequently, exactly,
+
+$$
+C(G_s)=s^2C(H).
+\tag{5.4}
+$$
+
+Also $0\leq M_{k_s}(G_s)\leq k_s\leq ms/2$, so $M_{k_s}(G_s)/s^2\to0$. Combine this with (3.4), (5.2) and (5.4) to prove (5.3). If its limit is strictly positive or strictly negative, the same strict sign holds for all sufficiently large terms of the sequence. At zero limit, a quantity of order smaller than $s^2$ may have either sign; a lower-order estimate is required. $\square$
+
