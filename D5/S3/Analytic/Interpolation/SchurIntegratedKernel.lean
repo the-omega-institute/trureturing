@@ -65,28 +65,29 @@ private theorem density_bounds {r t : ℝ} (hr0 : 0 ≤ r) (hr : r < 1)
 
 private theorem density_angle_continuous {t : ℝ} (ht : |t| < 1) :
     Continuous (poissonDensity t) := by
-  apply continuous_iff_continuousAt.mpr
-  intro θ
-  have hc := density_continuousOn (r := |t|) ht
-  exact (hc (t, θ) ⟨abs_le.mp (le_refl |t|), mem_univ _⟩).comp_continuousAt
-    (by fun_prop : ContinuousAt (fun φ : ℝ => (t, φ)) θ)
-    (Filter.Eventually.of_forall (fun _ => ⟨abs_le.mp (le_refl |t|), mem_univ _⟩))
+  apply continuousOn_univ.mp
+  simpa only [Function.comp_def] using
+    (density_continuousOn (r := |t|) ht).comp
+      ((continuous_const.prodMk continuous_id).continuousOn)
+      (fun θ _ => ⟨abs_le.mp (le_refl |t|), mem_univ θ⟩)
 
 private theorem density_time_integrable {r : ℝ} (hr0 : 0 ≤ r) (hr : r < 1) (θ : ℝ) :
     IntervalIntegrable (fun t => poissonDensity t θ) volume (-r) r := by
   apply ContinuousOn.intervalIntegrable
-  simpa only [uIcc_of_le (by linarith : -r ≤ r)] using
+  simpa only [uIcc_of_le (by linarith : -r ≤ r), Function.comp_def] using
     (density_continuousOn hr).comp (by fun_prop : ContinuousOn (fun t : ℝ => (t, θ)) (Icc (-r) r))
       (fun t ht => ⟨ht, mem_univ θ⟩)
 
 private theorem integrated_continuous {x : ℝ} (hx : |x| < 1) :
     Continuous (integratedPoisson x) := by
+  have hsub : uIcc (0 : ℝ) x ⊆ Icc (-|x|) |x| :=
+    uIcc_subset_Icc ⟨by linarith [abs_nonneg x], abs_nonneg x⟩ ⟨neg_abs_le x, le_abs_self x⟩
+  have hsub' : uIcc (0 : ℝ) x ⊆ uIcc (-|x|) |x| := by
+    simpa only [uIcc_of_le (by linarith [abs_nonneg x] : -|x| ≤ |x|)] using hsub
   apply intervalIntegral.continuous_of_dominated_interval
     (bound := fun _ => (1 + |x|) / (1 - |x|))
   · intro θ
-    exact ((density_time_integrable (abs_nonneg x) hx θ).mono_set
-      (uIcc_subset_Icc (by constructor <;> linarith [abs_nonneg x])
-        ⟨neg_abs_le x, le_abs_self x⟩)).aestronglyMeasurable
+    exact ((density_time_integrable (abs_nonneg x) hx θ).mono_set hsub').aestronglyMeasurable
   · intro θ
     exact Filter.Eventually.of_forall (fun t ht => by
       have ht' : |t| ≤ |x| := by
@@ -111,7 +112,7 @@ private def lowerPolynomial (t : ℝ) : ℝ :=
 
 private theorem lowerPolynomial_le {t : ℝ} (ht : t ∈ Icc (0 : ℝ) 1) :
     lowerPolynomial t ≤ (1 - t) / (1 + t) := by
-  apply (le_div_iff₀ (by linarith : 0 < 1 + t)).mpr
+  apply (le_div_iff₀ (by linarith [ht.1] : 0 < 1 + t)).mpr
   have h := pow_nonneg (sub_nonneg.mpr ht.2) 6
   dsimp [lowerPolynomial]
   nlinarith [h]
@@ -122,9 +123,9 @@ private theorem lowerPolynomial_integral :
       1 / ((n + 1 : ℕ) * (2 : ℝ) ^ n) := by
     have he : (fun t : ℝ => ((1 - t) / 2) ^ n) =
         (fun t => (1 - t) ^ n * (2 ^ n)⁻¹) := by
-      funext t; simp [div_pow, div_eq_mul_inv]
+      funext t; rw [div_pow, div_eq_mul_inv]
     rw [he, intervalIntegral.integral_mul_const,
-      intervalIntegral.integral_comp_sub_right (fun t : ℝ => t ^ n)]
+      intervalIntegral.integral_comp_sub_left (fun t : ℝ => t ^ n)]
     simp only [sub_self, sub_zero]
     rw [integral_pow]
     simp only [one_pow, zero_pow (Nat.succ_ne_zero n), sub_zero]
@@ -133,12 +134,13 @@ private theorem lowerPolynomial_integral :
   unfold lowerPolynomial
   rw [intervalIntegral.integral_add, intervalIntegral.integral_add,
     intervalIntegral.integral_add, intervalIntegral.integral_add]
-  · simpa using (by norm_num [hp] :
-      (∫ t in (0 : ℝ)..1, ((1 - t) / 2)) +
+  · change (∫ t in (0 : ℝ)..1, ((1 - t) / 2) ^ 1) +
       (∫ t in (0 : ℝ)..1, ((1 - t) / 2) ^ 2) +
       (∫ t in (0 : ℝ)..1, ((1 - t) / 2) ^ 3) +
       (∫ t in (0 : ℝ)..1, ((1 - t) / 2) ^ 4) +
-      (∫ t in (0 : ℝ)..1, ((1 - t) / 2) ^ 5) = 367 / 960)
+      (∫ t in (0 : ℝ)..1, ((1 - t) / 2) ^ 5) = 367 / 960
+    rw [hp 1, hp 2, hp 3, hp 4, hp 5]
+    norm_num
   all_goals exact (by fun_prop : Continuous _).intervalIntegrable _ _
 
 private theorem integrated_lower_pos {x : ℝ} (hx0 : 0 ≤ x) (hx1 : x < 1) (θ : ℝ) :
@@ -147,7 +149,9 @@ private theorem integrated_lower_pos {x : ℝ} (hx0 : 0 ≤ x) (hx1 : x < 1) (θ
   · simp [hx, integratedPoisson]
   have hchange : integratedPoisson x θ =
       x * ∫ t in (0 : ℝ)..1, poissonDensity (x * t) θ := by
-    rw [intervalIntegral.integral_comp_mul_left _ hx]
+    have hh := intervalIntegral.integral_comp_mul_left
+      (fun t => poissonDensity t θ) hx (a := 0) (b := 1)
+    rw [hh]
     simp [integratedPoisson, smul_eq_mul, hx]
   have hlo : (367 / 960 : ℝ) ≤ ∫ t in (0 : ℝ)..1, poissonDensity (x * t) θ := by
     rw [← lowerPolynomial_integral]
@@ -155,8 +159,10 @@ private theorem integrated_lower_pos {x : ℝ} (hx0 : 0 ≤ x) (hx1 : x < 1) (θ
       ((show Continuous lowerPolynomial by unfold lowerPolynomial; fun_prop).intervalIntegrable _ _)
     · apply ContinuousOn.intervalIntegrable
       rw [uIcc_of_le (by norm_num : (0 : ℝ) ≤ 1)]
-      exact (density_continuousOn hx1).comp (by fun_prop)
-        (fun t ht => ⟨⟨by nlinarith [ht.1], by nlinarith [ht.2]⟩, mem_univ θ⟩)
+      simpa only [Function.comp_def] using
+        (density_continuousOn hx1).comp
+          (show ContinuousOn (fun t : ℝ => (x * t, θ)) (Icc (0 : ℝ) 1) by fun_prop)
+          (fun t ht => ⟨⟨by nlinarith [ht.1], by nlinarith [ht.2]⟩, mem_univ θ⟩)
     · intro t ht
       have hxt : |x * t| ≤ x := by rw [abs_of_nonneg (mul_nonneg hx0 ht.1)]; nlinarith [ht.2]
       apply (lowerPolynomial_le ht).trans
@@ -167,5 +173,85 @@ private theorem integrated_lower_pos {x : ℝ} (hx0 : 0 ≤ x) (hx1 : x < 1) (θ
   rw [hchange]
   exact (mul_le_mul_of_nonneg_left (by norm_num : (3067 / 8100 : ℝ) ≤ 367 / 960) hx0).trans
     (mul_le_mul_of_nonneg_left hlo hx0)
+
+private theorem density_mean {t : ℝ} (ht : |t| < 1) :
+    (∫ θ in (0 : ℝ)..(2 * Real.pi), poissonDensity t θ) = 2 * Real.pi := by
+  have hw : (t : ℂ) ∈ ball (0 : ℂ) 1 := by
+    simpa only [mem_ball, dist_zero_right, Complex.norm_real, Real.norm_eq_abs] using ht
+  have hn : (t : ℂ) ∉ sphere (0 : ℂ) |(1 : ℝ)| := by
+    simp only [mem_sphere, dist_zero_right, Complex.norm_real, Real.norm_eq_abs, abs_one]
+    exact ne_of_lt ht
+  have hc : ContinuousOn (poissonKernel 0 (t : ℂ)) (sphere (0 : ℂ) |(1 : ℝ)|) := by
+    rw [poissonKernel_eq_re_herglotzRieszKernel]
+    exact Complex.continuous_re.comp_continuousOn (continuousOn_herglotzRieszKernel_sphere hn)
+  have hi : CircleIntegrable (fun z => poissonKernel 0 (t : ℂ) z • (1 : ℂ)) 0 1 :=
+    (hc.smul continuousOn_const).circleIntegrable'
+  have hp := (differentiable_const (1 : ℂ)).diffContOnCl.circleAverage_poissonKernel_smul hw
+  have hh := Complex.reCLM.circleAverage_comp_comm hi
+  rw [hp] at hh
+  have havg : (2 * Real.pi)⁻¹ *
+      (∫ θ in (0 : ℝ)..(2 * Real.pi), poissonDensity t θ) = 1 := by
+    simpa [Real.circleAverage, Function.comp_def, poissonDensity] using hh
+  have hmul := congrArg (fun v : ℝ => (2 * Real.pi) * v) havg
+  rwa [← mul_assoc, mul_inv_cancel₀ (ne_of_gt Real.two_pi_pos), one_mul, mul_one] at hmul
+
+private theorem integrated_mean_pos {x : ℝ} (hx0 : 0 ≤ x) (hx1 : x < 1) :
+    (∫ θ in (0 : ℝ)..(2 * Real.pi), integratedPoisson x θ) = 2 * Real.pi * x := by
+  have hc : ContinuousOn (fun p : ℝ × ℝ => poissonDensity p.1 p.2)
+      (Icc (0 : ℝ) x ×ˢ Icc (0 : ℝ) (2 * Real.pi)) :=
+    (density_continuousOn hx1).mono (by
+      intro p hp
+      exact ⟨⟨by linarith [hp.1.1], hp.1.2⟩, mem_univ p.2⟩)
+  have hi := hc.integrableOn_compact (μ := volume.prod volume) (isCompact_Icc.prod isCompact_Icc)
+  have hip : Integrable (fun p : ℝ × ℝ => poissonDensity p.1 p.2)
+      ((volume.restrict (Ioc (0 : ℝ) x)).prod
+        (volume.restrict (Ioc (0 : ℝ) (2 * Real.pi)))) := by
+    rw [Measure.prod_restrict]
+    exact hi.mono_set (Set.prod_mono Ioc_subset_Icc_self Ioc_subset_Icc_self)
+  have hswap : (∫ θ in (0 : ℝ)..(2 * Real.pi), integratedPoisson x θ) =
+      ∫ t in (0 : ℝ)..x, ∫ θ in (0 : ℝ)..(2 * Real.pi), poissonDensity t θ := by
+    simpa only [integratedPoisson, intervalIntegral.integral_of_le hx0,
+      intervalIntegral.integral_of_le Real.two_pi_pos.le] using
+      (integral_integral_swap hip).symm
+  rw [hswap]
+  calc
+    _ = ∫ _ in (0 : ℝ)..x, (2 * Real.pi) := by
+      apply intervalIntegral.integral_congr
+      intro t ht
+      have ht' : t ∈ Icc (0 : ℝ) x := by simpa [uIcc_of_le hx0] using ht
+      exact density_mean (by rw [abs_of_nonneg ht'.1]; exact ht'.2.trans_lt hx1)
+    _ = _ := by simp [mul_comm]
+
+private theorem l1_pos {b x : ℝ} (hb : b ∈ Icc (0 : ℝ) 1)
+    (hx0 : 0 ≤ x) (hx1 : x < 1) :
+    (2 * Real.pi)⁻¹ * (∫ θ in (0 : ℝ)..(2 * Real.pi),
+      |integratedPoisson x θ - boundaryKernel b θ|) ≤ 1 := by
+  have hx : |x| < 1 := by rwa [abs_of_nonneg hx0]
+  have hA := integrated_continuous hx
+  have hB := (boundary_kernel_control b 0 hb).1
+  have hpoint (θ : ℝ) : |integratedPoisson x θ - boundaryKernel b θ| ≤
+      integratedPoisson x θ - boundaryKernel b θ + 2 * (1 - x) * (3067 / 8100) := by
+    have hlo := integrated_lower_pos hx0 hx1 θ
+    have hsize := (boundary_kernel_control b θ hb).2.2.2.2.2.2.1
+    have hupper := (abs_le.mp hsize).2
+    apply abs_le.mpr
+    constructor <;> nlinarith
+  have hi := intervalIntegral.integral_mono_on (μ := volume) Real.two_pi_pos.le
+    ((hA.sub hB).abs.intervalIntegrable _ _)
+    (((hA.sub hB).add continuous_const).intervalIntegrable _ _) (fun θ _ => hpoint θ)
+  rw [intervalIntegral.integral_add ((hA.sub hB).intervalIntegrable _ _)
+      intervalIntegrable_const,
+    intervalIntegral.integral_sub (hA.intervalIntegrable _ _) (hB.intervalIntegrable _ _),
+    integrated_mean_pos hx0 hx1, (boundary_kernel_control b 0 hb).2.2.2.2.2.1,
+    intervalIntegral.integral_const] at hi
+  have hh := mul_le_mul_of_nonneg_left hi (inv_nonneg.mpr Real.two_pi_pos.le)
+  have hnorm : (2 * Real.pi)⁻¹ *
+      (2 * Real.pi * x - 0 + (2 * Real.pi - 0) • (2 * (1 - x) * (3067 / 8100))) =
+      x + 2 * (1 - x) * (3067 / 8100) := by
+    rw [smul_eq_mul]
+    field_simp
+    <;> ring
+  rw [hnorm] at hh
+  exact hh.trans (by nlinarith)
 
 end D5.S3.Analytic.Interpolation.SchurIntegratedKernel
