@@ -41,8 +41,8 @@ internal sealed class PhysicalTapeDepthDocument : IScribeDocumentDefinition
                 + "presence, a case excluded by every asserted sufficient-horizon paid walk. "
                 + "A stop state executes the original stop operation; no source, descriptor or clock "
                 + "is an input to the control, and it issues no update."),
-            Def("eventTrace", "Actual stationary Read trace", "eventTrace(U,qs) maps every operand a to "
-                + "the native event Read(0,a,readout(a,U)). Run is the existing NativeSerialMachine.Run: "
+            Def("eventTrace", "Actual stationary Read trace", "eventTrace(e,U,qs) maps every operand a to "
+                + "the native event Read(e,a,readout(a,U)). Run is the existing NativeSerialMachine.Run: "
                 + "the same physical root is passed between reads, and every final absent reply "
                 + "remains an actual charged read event."),
             Describe.Lean(DescribeId.Create("physical-tape-depth-geometry"),
@@ -94,8 +94,8 @@ internal sealed class PhysicalTapeDepthDocument : IScribeDocumentDefinition
             All("U",source,All("p",address,All("u",address,
                 Imp(All("w",address,EqOf(Call("readout",App(p,w),root),Call("readout",w,t))),
                     Imp(enough,And(Call("PaidWalk",root,p,u,Call("probes",t,p,u),Dp(t,u)),
-                        Call("Run",V("controller"),Call("walk",p,u,D(0)),D(0),root,
-                            Call("eventTrace",root,Call("probes",t,p,u)),Dp(t,u)))))))),
+                        All("e",nat,Call("Run",V("controller"),Call("walk",p,u,D(0)),V("e"),root,
+                            Call("eventTrace",V("e"),root,Call("probes",t,p,u)),Dp(t,u))))))))),
             All("p",address,All("u",address,EqOf(Len(Call("probes",t,p,u)),Add(Dp(t,u),D(1))))),
             All("u",address,LeOf(Dp(t,u),Ht(t))),
             All("u",address,All("v",address,Imp(enough,EqOf(Dp(t,App(u,v)),Dp(t,u))))),

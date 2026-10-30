@@ -49,8 +49,8 @@ def geometry (d : Source → Address → Nat) (pr : Source → Address → Addre
     (∀ (U : Source) (p u : Address),
       (∀ w, readout (p ++ w) U = readout w T) → height T ≤ u.length →
       PaidWalk U p u (pr T p u) (d T u) ∧
-        Observer.NativeSerialMachine.Run controller (.walk p u 0) 0 U
-          (eventTrace U (pr T p u)) (d T u)) ∧
+        ∀ epoch : Nat, Observer.NativeSerialMachine.Run controller (.walk p u 0) epoch U
+          (eventTrace epoch U (pr T p u)) (d T u)) ∧
     (∀ p u : Address, (pr T p u).length = d T u + 1) ∧
     (∀ u : Address, d T u ≤ height T) ∧
     (∀ u v : Address, height T ≤ u.length → d T (u ++ v) = d T u) ∧
@@ -102,8 +102,11 @@ def family : DependentFamily.Registration arena sourceScope where
       refine ⟨erased i, ?_, rfl, erasure_fails i⟩
       intro j hj
       funext p s
-      cases i <;> cases j <;> simp [erased, erasedReadout, actual,
-        actualReadout, DependentFamily.realize] at hj ⊢
+      cases i <;> cases j
+      · exact (hj rfl).elim
+      · rfl
+      · rfl
+      · exact (hj rfl).elim
     · intro e; exact nomatch e
   dependence := by
     intro i

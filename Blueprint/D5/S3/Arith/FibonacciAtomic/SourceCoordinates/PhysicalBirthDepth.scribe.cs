@@ -175,8 +175,8 @@ internal sealed class PhysicalBirthDepthDocument : IScribeDocumentDefinition
             All("u",address,Imp(LeOf(qm,Len(u)),And(
                 Call("PaidWalk",root,p,u,Call("probes",st,p,u),Dp(st,u)),
                 EqOf(Len(Call("probes",st,p,u)),Add(Dp(st,u),D(1))),
-                Call("Run",V("controller"),Call("walk",p,u,D(0)),D(0),root,
-                    Call("eventTrace",root,Call("probes",st,p,u)),Dp(st,u))))),
+                Call("Run",V("controller"),Call("walk",p,u,D(0)),n,root,
+                    Call("eventTrace",n,root,Call("probes",st,p,u)),Dp(st,u))))),
             All("u",address,All("v",address,Imp(LeOf(qm,Len(u)),EqOf(Dp(st,App(u,v)),Dp(st,u))))),
             All("L",nat,Imp(LeOf(Sub(n,D(1)),l),LeOf(qm,Sub(l,Len(p))))),
             All("u",address,EqOf(Dp(root,App(p,u)),Add(Len(p),Dp(st,u)))),

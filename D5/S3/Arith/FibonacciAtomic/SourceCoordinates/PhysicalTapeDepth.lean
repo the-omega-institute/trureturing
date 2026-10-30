@@ -62,22 +62,22 @@ def controller : Control → Observer.NativeSerialMachine.Op Control Nat
         | b :: v => .walk (p ++ [b]) v (k + 1))
 
 /-- Every query is an actual serial Read of that literal in the same stationary root. -/
-def eventTrace (U : Source) (qs : List Address) : Observer.NativeSerialMachine.Trace :=
-  qs.map (fun a => .read 0 a (readout a U))
+def eventTrace (epoch : Nat) (U : Source) (qs : List Address) : Observer.NativeSerialMachine.Trace :=
+  qs.map (fun a => .read epoch a (readout a U))
 
 private theorem paid_execution {U : Source} {p u : Address} {qs : List Address} {d : Nat}
-    (h : PaidWalk U p u qs d) (k : Nat) :
-    Observer.NativeSerialMachine.Run controller (.walk p u k) 0 U (eventTrace U qs) (k + d) := by
+    (h : PaidWalk U p u qs d) (epoch k : Nat) :
+    Observer.NativeSerialMachine.Run controller (.walk p u k) epoch U (eventTrace epoch U qs) (k + d) := by
   induction h generalizing k with
   | stop p u absent =>
-      change Observer.NativeSerialMachine.Run controller (.walk p u k) 0 U
-        [.read 0 (p ++ [false]) (readout (p ++ [false]) U)] k
+      change Observer.NativeSerialMachine.Run controller (.walk p u k) epoch U
+        [.read epoch (p ++ [false]) (readout (p ++ [false]) U)] k
       refine Observer.NativeSerialMachine.Run.read rfl rfl ?_
       simpa only [absent, ite_true] using
         (Observer.NativeSerialMachine.Run.stop (δ := controller) (c := Control.stop k) rfl)
   | step p u b tr d present next ih =>
-      change Observer.NativeSerialMachine.Run controller (.walk p (b :: u) k) 0 U
-        (.read 0 (p ++ [false]) (readout (p ++ [false]) U) :: eventTrace U tr) (k + (d + 1))
+      change Observer.NativeSerialMachine.Run controller (.walk p (b :: u) k) epoch U
+        (.read epoch (p ++ [false]) (readout (p ++ [false]) U) :: eventTrace epoch U tr) (k + (d + 1))
       refine Observer.NativeSerialMachine.Run.read rfl rfl ?_
       have tail := ih (k + 1)
       have hk : k + 1 + d = k + (d + 1) := by omega
@@ -263,8 +263,8 @@ theorem tape_geometry (T : Source) :
     (∀ (U : Source) (p u : Address),
       (∀ w, readout (p ++ w) U = readout w T) → height T ≤ u.length →
       PaidWalk U p u (probes T p u) (depth T u) ∧
-        Observer.NativeSerialMachine.Run controller (.walk p u 0) 0 U
-          (eventTrace U (probes T p u)) (depth T u)) ∧
+        ∀ epoch : Nat, Observer.NativeSerialMachine.Run controller (.walk p u 0) epoch U
+          (eventTrace epoch U (probes T p u)) (depth T u)) ∧
     (∀ p u : Address, (probes T p u).length = depth T u + 1) ∧
     (∀ u : Address, depth T u ≤ height T) ∧
     (∀ u v : Address, height T ≤ u.length → depth T (u ++ v) = depth T u) ∧
@@ -277,7 +277,7 @@ theorem tape_geometry (T : Source) :
       (decompose T).1 = (decompose U).1) :=
   ⟨fun U p u loc enough => by
       have h := paid_walk T U p u loc enough
-      exact ⟨h, by simpa using paid_execution h 0⟩,
+      exact ⟨h, fun epoch => by simpa using paid_execution h epoch 0⟩,
     probe_count T, depth_bound T, depth_padding T, depth_maximum T,
     fun U p found => ⟨height_prefix U T p found, fun u => depth_prefix U T p u found⟩,
     shape_from_depth T⟩

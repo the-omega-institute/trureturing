@@ -40,8 +40,8 @@ def coneLaw (dpth : Source → Address → Nat)
   (∀ u : Address, q - 1 ≤ u.length →
     PaidWalk (orbit z n).1.source p u (pr T.source p u) (dpth T.source u) ∧
       (pr T.source p u).length = dpth T.source u + 1 ∧
-      Observer.NativeSerialMachine.Run PhysicalTapeDepth.controller (.walk p u 0) 0 (orbit z n).1.source
-        (PhysicalTapeDepth.eventTrace (orbit z n).1.source (pr T.source p u))
+      Observer.NativeSerialMachine.Run controller (.walk p u 0) n (orbit z n).1.source
+        (eventTrace n (orbit z n).1.source (pr T.source p u))
         (dpth T.source u)) ∧
   (∀ u v : Address, q - 1 ≤ u.length → dpth T.source (u ++ v) = dpth T.source u) ∧
   (∀ (L : Nat), n - 1 ≤ L → q - 1 ≤ L - p.length) ∧
@@ -69,7 +69,7 @@ def coneLaw (dpth : Source → Address → Nat)
       (3 ≤ q → (e.bit = true ↔ beats dpth a.source b.source L))) ∧
     (3 ≤ q → q - 2 ≤ (2 * n - 1) - p.length - 1 ∧
       p.length + 1 + ((2 * n - 1) - p.length - 1) = 2 * n - 1 ∧
-      (e.bit = true ↔ rootbeats dpth dpth (orbit z n).1.source p ((2 * n - 1) - p.length - 1))) ∧
+      (e.bit = true ↔ rootBeats dpth (orbit z n).1.source p ((2 * n - 1) - p.length - 1))) ∧
     (q = 3 → (if e.bit then height a.source else height b.source) = 1 ∧
       (if e.bit then height b.source else height a.source) = 0) ∧
     (q = 2 → a.source = .of (!e.bit) ∧ b.source = .of e.bit ∧
@@ -116,10 +116,24 @@ def family : DependentFamily.Registration arena sourceScope where
       refine ⟨erased i, ?_, rfl, erasure_fails i⟩
       intro j hj
       funext p s
-      cases i <;> cases j <;> simp [erased, erasedReadout, actual,
-        actualReadout, DependentFamily.realize] at hj ⊢
+      cases i <;> cases j
+      · exact (hj rfl).elim
+      · rfl
+      · rfl
+      · exact (hj rfl).elim
     · intro e; exact nomatch e
-  dependence := _root_.Reg.D5.S3.Arith.FibonacciAtomic.SourceCoordinates.PhysicalTapeDepth.family.dependence
+  dependence := by
+    intro i
+    change Role at i
+    cases i with
+    | depths =>
+        refine ⟨(), (.of true, [], [false]), (.mul (.of false) (.of true), [], [false]), ?_⟩
+        change (0 : Nat) ≠ 1
+        decide
+    | queries =>
+        refine ⟨(), (.of true, [], [false]), (.mul (.of false) (.of true), [], [false]), ?_⟩
+        change ([[false]] : List Address) ≠ [[false], [false, false]]
+        decide
 
 noncomputable def registration :
     LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,0,0,0,0}

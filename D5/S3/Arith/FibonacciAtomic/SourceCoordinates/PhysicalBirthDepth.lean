@@ -396,8 +396,8 @@ def ConeLaw (n : Nat) (z : Nat → Bool) (p : Address) (T : Physical) : Prop :=
   (∀ u : Address, q - 1 ≤ u.length →
     PaidWalk (orbit z n).1.source p u (probes T.source p u) (depth T.source u) ∧
       (probes T.source p u).length = depth T.source u + 1 ∧
-      Observer.NativeSerialMachine.Run PhysicalTapeDepth.controller (.walk p u 0) 0 (orbit z n).1.source
-        (PhysicalTapeDepth.eventTrace (orbit z n).1.source (probes T.source p u))
+      Observer.NativeSerialMachine.Run PhysicalTapeDepth.controller (.walk p u 0) n (orbit z n).1.source
+        (PhysicalTapeDepth.eventTrace n (orbit z n).1.source (probes T.source p u))
         (depth T.source u)) ∧
   (∀ u v : Address, q - 1 ≤ u.length → depth T.source (u ++ v) = depth T.source u) ∧
   (∀ (L : Nat), n - 1 ≤ L → q - 1 ≤ L - p.length) ∧
@@ -467,7 +467,7 @@ private theorem cone_law (n : Nat) (z : Nat → Bool) (p : Address) (T : Physica
   · intro L hL; simpa only [ht] using maximum_of_height T.source L (by omega)
   · intro u hu
     have paid := geo.1 (orbit z n).1.source p u loc (by omega)
-    exact ⟨paid.1, geo.2.1 p u, paid.2⟩
+    exact ⟨paid.1, geo.2.1 p u, paid.2 n⟩
   · intro u v hu; exact geo.2.2.2.1 u v (by omega)
   · intro u v hn hu hv
     refine ⟨prefixLaw.2 u, ?_⟩
