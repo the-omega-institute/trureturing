@@ -4150,3 +4150,661 @@ graph with prescribed budgets. The finite-value and equality parts
 of Open problem 7.3 are resolved here only on the stated range. ∎
 
 ## 追加锚（本行以下为增补区）
+
+## 15. Uniform exact laws through every fixed square-root phase
+
+**Definition 15.1 (All adjacent-core branches).** Retain exactly
+Definition 1.1. For $1\le j\le h$ put
+
+$$
+\begin{gathered}
+m=a+j,\quad r=m-1,\quad n=h+1-j,\quad d=2m-1,\\
+\ell_j=\frac{j-1}{m-2},\quad u_j=\frac jr,\qquad
+I_1=(0,1/a],\quad I_j=[\ell_j,u_j]\ (j\ge2),\\
+b_j(p)=d((m-2)p-(j-1)),\\
+F_j(p)=\frac{n^2}{p}+\frac{r^2m^2}{a-p}
+                    +\frac{m^3b_j(p)}{(a-p)^2},\qquad
+\mu_j=\min_{p\in I_j}F_j(p),\\
+S_j=F_j(u_j)=\frac{m^3r}{a-1}+\frac{n^2r}{j}.
+\end{gathered}
+\tag{15.1}
+$$
+
+Here $F_j$ denotes the finite-parameter function in (15.1), rather
+than the leading-value function with the same letter in Section 7.
+Write $p_j$ for the constrained minimizer. Thus $\mu_1=m_1$ and
+$\mu_2=m_2$ in Definition 14.1; a missing second branch has value
+$+\infty$. On a partition $C\dot\cup D=[s]$ of sizes $m,n$, let
+$x^{j,p}$ be the law
+
+$$
+x^{j,p}_{\{k\}}=p/n\ (k\in D),\quad
+x^{j,p}_C=1-j+(m-2)p,\quad
+x^{j,p}_{C\setminus\{i\}}=\frac{j-rp}{m}\ (i\in C),
+\tag{15.2}
+$$
+
+with all other masses zero. These are comparison laws, not a
+restriction of the original domain.
+
+**Lemma 15.2 (Uniform finite-index localization with a strict cap
+margin).** Fix $R\ge4$, set $C_R=R^2+10$ and
+$J=\lceil4C_R\rceil$. For all sufficiently large $a$, uniformly over
+$7/2\le q=h/\sqrt a\le R$, one has $h\ge J$. Put
+$U=\min_{1\le k\le J}S_k$. Every actual law with $H\le U$ has the
+threshold partition of Lemma 7.1, with
+
+$$
+\begin{gathered}
+|C|=a+j,\quad |D|=h+1-j,\quad 2\le j\le J,\\
+y_i\ge c_0=(8C_R+1)^{-1}\ (i\in C),\qquad
+0<y_k<b/a\ (k\in D),\quad b=4C_R,\\
+\frac{q^2}{j^2}>\frac52,\qquad
+v:=a\mathbb P(T\cap D\ne\varnothing)=j+O_R(a^{-1/2}).
+\end{gathered}
+\tag{15.3}
+$$
+
+For $u=\sum_{k\in D}y_k$ this implies $u>\ell_j$ and
+$u=O_R(a^{-1/2})$. The threshold partition is unique. Constants in
+this section depend only on the fixed $R$, not on the law or labels.
+
+**Proof.** For bounded $k$, direct expansion of (15.1) gives
+
+$$
+\frac{S_k-B_0(a)}{a^2}
+=g_k(q)+O_R(a^{-1/2}),\qquad g_k(q)=q^2/k+4k-2.
+\tag{15.4}
+$$
+
+The choice $k=1$ gives $U\le a^3+C_Ra^2$ eventually. Lemma 7.1
+with lower ratio $7/2$ gives its actual partition, $1\le j\le J$,
+$v$ bounded below, $v\le j+O_R(a^{-1/2})$, and
+
+$$
+\frac{H-B_0(a)}{a^2}
+\ge q^2/v+2v+2j-2-O_R(a^{-1/2}).
+\tag{15.5}
+$$
+
+Its threshold construction gives the displayed $b,c_0$ and
+$u\le bn/a=O_R(a^{-1/2})$. In particular these sets are recovered
+from the actual marginals, with $b/a<c_0$ eventually.
+
+Let $\phi_j(q)=\min_{0<w\le j}(q^2/w+2w+2j-2)$, and denote the
+leading value in Theorem 7.2 by $\mathcal U(q)$. That theorem's scalar
+evaluation says $\min_j\phi_j(q)=\mathcal U(q)$, and, since
+$q\ge7/2>\sqrt2$, this is also $\min_k g_k(q)$. Its minimizing
+integers obey (7.24), hence are at most $J$. Therefore (15.4) gives
+$U\le B_0+a^2\mathcal U(q)+O_R(a^{3/2})$. Replacing $v$ by
+$w=\min(v,j)$ in (15.5) costs $O_R(a^{-1/2})$, so
+
+$$
+0\le\phi_j(q)-\mathcal U(q)\le O_R(a^{-1/2}).
+\tag{15.6}
+$$
+
+At an exact scalar minimum in this compact ratio interval, the
+phase description (7.22) excludes $j=1$. For $j=2$ it gives
+$q^2/j^2\ge49/16$, and for $j\ge3$ it gives
+$q^2/j^2\ge4(j-1)/j\ge8/3$. Thus none of the compact sets
+
+$$
+\{(q,1):7/2\le q\le R\},\qquad
+\{(q,j):7/2\le q\le R,\ 2\le j\le J,\ q^2/j^2\le5/2\}
+$$
+
+contains a zero of $\phi_j(q)-\mathcal U(q)$. Its continuity and
+the finite index range give a positive gap on their union, ignoring
+empty sets. Equation (15.6) excludes that union eventually. This
+proves the index and strict-margin assertions in (15.3).
+
+For this same actual $j$, $H\le U\le S_j$. Comparing (15.4)--(15.5)
+after clipping $v$ gives
+
+$$
+0\le q^2/w+2w-(q^2/j+2j)\le O_R(a^{-1/2}).
+$$
+
+On $0<w\le j$ the derivative $2-q^2/w^2$ is at most $-1/2$.
+Consequently $j-w=O_R(a^{-1/2})$, proving the assertion about $v$.
+Finally $au\ge v=j+O_R(a^{-1/2})$, whereas
+$a\ell_j=j-1+O_R(a^{-1})$. Hence $u>\ell_j$ eventually. ∎
+
+**Lemma 15.3 (Uniform residual bootstrap for all surviving indices).**
+On the sublevel in Lemma 15.2, write
+
+$$
+\begin{gathered}
+t_k=y_k\ (k\in D),\quad \delta=\max_{k\in D}t_k,\quad
+c=\min_{i\in C}y_i,\quad \bar y=(a-u)/m,\\
+B=|T\cap D|,\quad L=|T\cap C|,\quad K=L+B,\quad A=\{B>0\},\\
+\alpha=mr(2m-1),\quad \beta=3m^2-3m+1,\\
+Q(l)=(m-l)(r-l)(2m-1+l)=\alpha-\beta l+l^3,\\
+f_u(y)=r^2/y-d(j-1+u)/y^2,\quad
+\mathcal S_f=\sum_{i\in C}f_u(y_i)-m f_u(\bar y),\\
+\mathcal B_j(w)=\frac{r^2m^2}{a-w}
+                    -\frac{dm^3(j-1+w)}{(a-w)^2},\qquad
+\mathcal A_j(u)=\frac{\mathcal B_j(0)-\mathcal B_j(u)}u,\\
+\eta=rn/j,\qquad \gamma=\eta^2-\alpha+\mathcal A_j(u).
+\end{gathered}
+\tag{15.7}
+$$
+
+For sufficiently large $a$, $\gamma\ge0$, and there are positive
+constants $\kappa_R,K_R$ for which the following hold. On $A$ put
+
+$$
+\begin{gathered}
+V_T=\sum_{k\in T\cap D}t_k^{-1},\quad
+Z_T=K^2\sum_{k\in T\cap D}t_k^{-2},\\
+\mathcal G_T=Z_T+Q(L)-\mathcal A_j(u)B-2\eta V_T+\gamma B
+           -\frac\gamma r\{m(B-1)+L\}.
+\end{gathered}
+\tag{15.8}
+$$
+
+Then
+
+$$
+\begin{gathered}
+\mathcal G_{\{k\}}=(t_k^{-1}-\eta)^2,\qquad
+\mathcal G_T\ge\kappa_Ra^3\quad(B>0,K\ge2),\\
+\mathcal S_f\ge\frac{a^2}{2}\sum_{i\in C}(y_i-\bar y)^2,\\
+0\le\mathbb E[\mathcal G_T;A]+\mathbb E[Q(L);A^c]+\mathcal S_f
+\le K_Ra,\\
+\mathbb P(A,K\ge2)=O_R(a^{-2}),\quad
+c\ge1-O_R(a^{-1/2}),\quad
+\delta\le\frac{1+O_R(a^{-1/4})}{\eta}.
+\end{gathered}
+\tag{15.9}
+$$
+
+**Proof.** The incidence identity and cap correction in Section 14
+can be retained with arbitrary bounded $j$; their uniform signs are
+proved here. Throughout, $2\le j\le J$, $n=O_R(\sqrt a)$,
+$c\ge c_0$, $t_k<b/a$ and $0<u=O_R(a^{-1/2})$. Differentiation gives
+
+$$
+\mathcal B_j'(w)=\frac{r^2m^2}{(a-w)^2}
+ -\frac{dm^3(a+w+2j-2)}{(a-w)^3}
+=-a^2+O_R(a)\quad(0\le w\le u).
+\tag{15.10}
+$$
+
+Thus $\mathcal A_j(u)=a^2+O_R(a)$. Set $z=n^2/(j^2a)$.
+Lemma 15.2 gives $z=q^2/j^2+O_R(a^{-1/2})>5/2-O_R(a^{-1/2})$.
+Consequently
+
+$$
+\eta^2/a^3=z+O_R(a^{-1}),\quad
+(\alpha-\mathcal A_j(u))/a^3=2+O_R(a^{-1}),\quad
+\gamma\ge a^3/4,\quad \eta=O_R(a^{3/2}),\quad\gamma=O_R(a^3).
+\tag{15.11}
+$$
+
+For a core label put $I_i=\mathbf1_{\{i\in T\}}$ and
+
+$$
+\rho_i=(1-I_i)d(r-L)+I_i(m-L)(m-L-1),\qquad R_i=\mathbb E\rho_i.
+$$
+
+Each $\rho_i$ is nonnegative at every actual type, including $L=m$:
+when $I_i=0$, $L\le r$, and otherwise the last factors are consecutive
+integers. Expansion and the original mean give
+
+$$
+\sum_{i\in C}\rho_i=Q(L)\ge0,\qquad
+R_i=\mathbb E[L^2I_i]-r^2y_i+d(j-1+u).
+\tag{15.12}
+$$
+
+Since $K^2\ge L^2$ and $0<y_i\le1$, the core contribution implies
+
+$$
+H\ge H_D+\mathcal B_j(u)+\mathbb E Q(L)+\mathcal S_f,
+\qquad H_D=\mathbb E[Z_T;A].
+\tag{15.13}
+$$
+
+On $c_0\le y\le1$,
+$f_u''(y)=2\{r^2y-3d(j-1+u)\}/y^4\ge a^2$ eventually,
+uniformly in $j\le J$. Jensen applied after subtracting $a^2y^2/2$
+gives the asserted strong bound for $\mathcal S_f$.
+
+The same law's mean and actual marginal identities give
+
+$$
+ru-j\le m\mathbb E[B-1;A]+\mathbb E[L;A],\qquad
+\mathbb E[V_T;A]=n.
+\tag{15.14}
+$$
+
+Indeed $a\le m\mathbb P(A^c)+\mathbb E[L+B;A]$ proves the first
+inequality. Substituting (15.8) into (15.13), using
+$\mathcal B_j(u)=\mathcal B_j(0)-u\mathcal A_j(u)$ and (15.14), yields
+
+$$
+H\ge E_j+\mathbb E[\mathcal G_T;A]+\mathbb E[Q(L);A^c]+\mathcal S_f,
+\qquad E_j=\mathcal B_j(0)+2\eta n-j\gamma/r.
+\tag{15.15}
+$$
+
+For $B=K=1,L=0$, (15.8) is exactly the singleton square in (15.9).
+For other types on $A$, completing each reciprocal square gives
+
+$$
+\mathcal G_T\ge\eta^2(1-B/K^2)-\mathcal A_j(u)(B-1)
+ -\beta L+L^3-\frac\gamma r(K-1).
+\tag{15.16}
+$$
+
+If $2\le K\le\sqrt a$, then $B/K^2\le1/2$, and all negative
+terms other than $-\eta^2 B/K^2$ are $O_R(a^{5/2})$.
+By (15.11), this bounds (15.16) below by $a^3/4$ eventually.
+If $K>\sqrt a$, every $t_k^{-1}>a/b$ and
+$K^2t_k^{-1}>4\eta$ eventually. Using $Q(L)\ge0$ gives
+
+$$
+\mathcal G_T\ge\frac{BK^2a^2}{2b^2}-\mathcal A_j(u)B
+                  +\gamma\left(1-\frac{K-1}{r}\right).
+\tag{15.17}
+$$
+
+For $K\le m$ the last term is nonnegative, so this is at least
+$Ba^3/(4b^2)$. For $K>m$, its negative part is at most
+$\gamma n/r=O_R(a^{5/2})$, while $K^2a^2\ge m^2a^2$ has order
+$a^4$. The same lower bound $a^3/(4b^2)$ follows after increasing
+the threshold. This covers every cardinality up to $s=m+n$.
+
+Uniformly for bounded $j$, (15.10) and elementary expansion give
+
+$$
+\mathcal B_j(0)=a^3+2ja^2+O_R(a),\qquad
+\frac{j(\alpha-\mathcal A_j(u))}{r}=2ja^2+O_R(a),\qquad
+\frac{m^3r}{a-1}=a^3+4ja^2+O_R(a).
+$$
+
+Since $\eta=rn/j$, equation (15.15) has
+
+$$
+E_j=\mathcal B_j(0)+\frac{rn^2}{j}
+                +\frac{j(\alpha-\mathcal A_j(u))}{r}
+=S_j+O_R(a).
+\tag{15.18}
+$$
+
+Now $H\le U\le S_j$. All three residuals in (15.15) are
+nonnegative by the signs just proved, so their sum is $O_R(a)$.
+The nonsingleton bound gives $p_2:=\mathbb P(A,K\ge2)=O_R(a^{-2})$,
+and strong Jensen gives
+$\sum_{i\in C}(y_i-\bar y)^2=O_R(a^{-1})$.
+Since $\bar y=1-O_R(a^{-1})$, this proves the bound for $c$.
+
+For each tail label let $x_k=x_{\{k\}}$. Actual marginals satisfy
+$0\le t_k-x_k\le p_2$ and $\eta p_2=O_R(a^{-1/2})$.
+If $t_k\ge1/\eta$, then $x_k\ge t_k/2$ eventually. Put
+$w=\eta t_k\ge1$. Its singleton square in (15.15) implies
+
+$$
+\frac\eta2\frac{(w-1)^2}{w}
+\le x_k(t_k^{-1}-\eta)^2\le K_Ra,
+\qquad \frac{(w-1)^2}{w}=O_R(a^{-1/2}).
+$$
+
+It follows that $w-1=O_R(a^{-1/4})$. Labels with $t_k<1/\eta$
+already obey the desired upper bound, proving (15.9) for their
+maximum as well. No positive marginal was assumed bounded below
+on the tail. ∎
+
+**Lemma 15.4 (Strict payment to a capped branch, uniformly in the
+surviving index).** On the same sublevel define
+
+$$
+e=\mathbb E[K-1;A],\quad
+\Lambda=\frac3{\delta^2}-\frac{\max\{\alpha,\beta\}}{c^2},\quad
+P_j=(-F_j'(u_j))_+.
+$$
+
+For sufficiently large $a$, $p_j=u_j$ and
+
+$$
+\Lambda-\frac mrP_j\ge a^3,\qquad H(x)\ge S_j+a^3e.
+\tag{15.19}
+$$
+
+Equality $H=S_j$ holds exactly for the cap law $x^{j,u_j}$ on this
+partition.
+
+**Proof.** Put $c_m=rd$,
+$\Delta_i=\mathbb E[(K^2-L^2)I_i]\ge0$ and
+$Z=\mathbb E[(K^2-1)\sum_{k\in T\cap D}t_k^{-2}]$.
+Equation (15.12) gives the exact identity
+
+$$
+H=\sum_{k\in D}t_k^{-1}+Z+
+\sum_{i\in C}\left\{\frac{r^2}{y_i}
+ -\frac{d(j-1+u)}{y_i^2}+\frac{R_i+\Delta_i}{y_i^2}\right\}.
+\tag{15.20}
+$$
+
+On $A$, $c_mB-\rho_i\ge0$. For $I_i=0$ this is
+$d\{r(B-1)+L\}$, and for $I_i=1$ it is
+$c_m(B-1)+r^2+dL-L^2\ge0$. Summing gives
+
+$$
+\sum_{i\in C}(c_mB-\rho_i)
+=\alpha(B-1)+\beta L-L^3
+\le\max\{\alpha,\beta\}(K-1).
+$$
+
+Off $A$ all $\rho_i\ge0$. Weighting only these signed inequalities
+by $y_i^{-2}\le c^{-2}$ yields
+$\sum_i(R_i-c_mu)/y_i^2\ge-\max\{\alpha,\beta\}e/c^2$.
+Also $Z\ge3e/\delta^2$, since on $A$,
+$B(K^2-1)\ge3(K-1)$. Thus (15.20) gives
+
+$$
+H\ge\sum_{k\in D}t_k^{-1}
+ +\sum_{i\in C}\{r^2/y_i+b_j(u)/y_i^2\}+\Lambda e
+\ge F_j(u)+\Lambda e.
+\tag{15.21}
+$$
+
+Here $b_j(u)>0$ by Lemma 15.2. Cauchy for the actual tail
+marginals, and strict Jensen for the core marginals of total $a-u$,
+prove the last inequality.
+
+On $\ell_j\le p<a$, excluding zero when $j=1$,
+
+$$
+F_j''(p)=\frac{2n^2}{p^3}+\frac{2r^2m^2}{(a-p)^3}
+ +\frac{4m^3d(m-2)}{(a-p)^3}
+ +\frac{6m^3b_j(p)}{(a-p)^4}>0.
+\tag{15.22}
+$$
+
+The exact derivative at the cap is
+
+$$
+F_j'(u_j)=-\frac{n^2r^2}{j^2}
+ +\frac{r^2\{2m r^2+2m-1\}}{(a-1)^2}.
+\tag{15.23}
+$$
+
+Its second term is $2a^3+O_R(a^2)$, whereas the first term divided
+by $a^3$ is $-z+O_R(a^{-1})$, with
+$z>5/2-O_R(a^{-1/2})$. Hence $F_j'(u_j)<0$, so strict convexity
+forces the unique constrained minimum to be $p_j=u_j$ and
+$\mu_j=S_j$. Moreover $P_j/a^3=z-2+O_R(a^{-1})$.
+
+The mean inequality (15.14) gives
+$(u-u_j)_+\le(m/r)e$. Convexity and its supporting tangent at
+$u_j$ therefore give $F_j(u)\ge S_j-P_j(u-u_j)_+$, including
+$u\le u_j$ by the constrained minimality just established.
+By (15.9), $c^{-2}=1+O_R(a^{-1/2})$ and
+$\delta^{-2}\ge\eta^2(1-O_R(a^{-1/4}))$. Consequently
+
+$$
+\frac{\Lambda-(m/r)P_j}{a^3}
+\ge3z-2-(z-2)-O_R(a^{-1/4})
+=2z-O_R(a^{-1/4})\ge1
+\tag{15.24}
+$$
+
+eventually. This proves (15.19) from (15.21).
+
+If $H=S_j$, then $e=0$, so every positive-mass type meeting $D$
+is a singleton, and $u\le u_j$. The strict scalar minimum and
+(15.21) force $u=u_j$, equal tail marginals $t_k=u_j/n$, and equal
+core marginals $y_i=(a-u_j)/m$. With only tail singletons,
+$\Delta_i=0$ and the contribution to $R_i$ on $A$ is $c_mu_j$.
+The remaining nonnegative term in (15.20) is
+$\mathbb E[\sum_i\rho_i/y_i^2;A^c]$, which must vanish.
+The only integer zeros of $Q(L)$ on a nonempty core type are
+$L=r,m$. Thus the core types are $C$ and $C\setminus\{i\}$.
+Normalization and the original mean force their total masses to be
+$1-j+(m-2)u_j$ and $j-ru_j=0$, respectively. The full-core mass is
+$(a-1)/r=1-u_j>0$. These are exactly (15.2) at the cap.
+Conversely this law has energy $S_j$, as verified below. ∎
+
+**Theorem 15.5 (The unrestricted uniform finite envelope and every
+equality law).** For every fixed finite $R>0$ there is $A_R$ such
+that for all integers $a\ge A_R$, $1\le h\le R\sqrt a$,
+
+$$
+M(a,h)=\min_{1\le j\le h}\mu_j.
+\tag{15.25}
+$$
+
+This value is attained. Every attaining law, up to arbitrary label
+permutations, is exactly $x^{j,p_j}$ from (15.2) for a branch $j$
+attaining the displayed minimum. Each $p_j$ is unique. There are
+no other equality laws, and no nontrivial convex combination of
+distinct minimizing laws is minimizing.
+
+One may take the finite active-index bound
+$J_R=\lceil4((\max\{R,4\})^2+10)\rceil$. Every winning $j$ is at
+most $J_R$, and every winning $j\ge3$ satisfies $p_j=u_j$.
+Equivalently, with the minimum of an empty set interpreted as $+\infty$,
+
+$$
+M(a,h)=\min\left\{m_1(a,h),m_2(a,h),
+                 \min_{3\le j\le\min(h,J_R)}S_j\right\}.
+\tag{15.26}
+$$
+
+The following two exact descriptions overlap:
+
+$$
+\begin{array}{ll}
+1\le h\le4\sqrt a:&M=\min\{m_1,m_2\},\\
+(7/2)\sqrt a\le h\le R\sqrt a:&M=\min_{1\le j\le J_R}S_j.
+\end{array}
+\tag{15.27}
+$$
+
+The second line is used only when its range is nonempty; then
+$h\ge J_R$ for the chosen threshold. On the overlap the unique
+winning index is $2$, and $m_2=S_2<m_1$. Below it the first two
+branches retain exactly their published constrained competition.
+
+**Proof.** For every $1\le j\le h$, $\ell_j<u_j<1$, with
+$u_j-\ell_j=(a-1)/(r(m-2))$ for $j\ge2$. The masses in (15.2)
+are nonnegative on their stated intervals. If $z_0$ is its full-core
+mass and $w_0$ its total missing-one mass, then
+
+$$
+p+z_0+w_0=1,\qquad p+mz_0+rw_0=a,\qquad
+y_k=p/n\ (k\in D),\quad y_i=(a-p)/m\ (i\in C).
+$$
+
+All these actual marginals are positive. Its energy is
+$n^2/p+(m^3z_0+r^3w_0)/((a-p)/m)^2=F_j(p)$.
+Equation (15.22) proves strict convexity on every branch. Compactness
+for $j\ge2$, and divergence at zero for $j=1$, prove existence and
+uniqueness of $p_j$. Thus every $\mu_j$ is attained by an original
+admissible law, giving all required upper bounds.
+
+Apply Lemmas 15.2--15.4 with $R$ replaced by $\max\{R,4\}$ and
+$J=J_R$. On their high-ratio range, a law outside $H\le U$ already
+has $H>U$. A law inside it has a surviving $j$ and satisfies
+$H\ge S_j+a^3e\ge U$. The comparison laws attain $U$, so $M=U$.
+Equality forces $S_j=U$ and the exact cap law by Lemma 15.4.
+Conversely every cap law with $S_j=U$ attains $M$.
+
+For $1\le h\le4\sqrt a$, Theorem 14.5, with fixed upper ratio
+$4<2\sqrt6$, gives the first line of (15.27) and every equality law
+there. The intervals $[1,4\sqrt a]$ and $[(7/2)\sqrt a,R\sqrt a]$
+leave no gap, including bounded $h$ and $h/\sqrt a\to0$.
+Together these arguments classify every equality law on the full
+range without assuming the existence of a global optimizer.
+
+For completeness this also excludes hidden winners of the longer
+envelope. Uniformly over every $j\le h\le R\sqrt a$ and $p\in I_j$,
+the comparison laws have core marginals at least
+$(a-1)/(a+h)>1/2$ and tail marginals at most
+$p\le h/(a+h-1)<1/2$, eventually. Thus their number of marginals
+exceeding $1/2$ is exactly $a+j$. If any $\mu_j=M$, its attaining
+comparison law must be one of the equality laws already classified.
+On the lower interval this forces $j=1,2$; on the higher interval
+it forces $j\le J_R$ and the cap parameter, which is also fixed by
+its total singleton mass. This proves (15.25), the index bound and
+the cap assertion. All terms in (15.26) are admissible comparison
+energies, and the classified law occurs among them, proving its
+equivalence. The overlap assertion follows also from the ordered
+crossings in Proposition 15.6: its first crossing is below
+$(7/2)\sqrt a$ and its second above $4\sqrt a$ eventually.
+
+At $p=u_j$ every missing-one mass vanishes, while the full-core mass
+is $(a-1)/r>0$. At $p=\ell_j$ for $j\ge2$, the full-core mass
+vanishes and each missing-one mass is $(a-1)/(m(m-2))>0$.
+Both endpoint laws have positive actual marginals, so none was
+discarded from comparison. A winning $j=2$ cannot be at the lower
+endpoint: in the lower window Theorem 14.5 gives $ap_2\ge3/2$
+whenever it wins, and in the higher window it is capped. No
+$j\ge3$ lower endpoint wins either. For $j=1$, $p=0$ is excluded
+and its full-core mass $(a-1)p$ is positive. The unique scalar
+minimum is at an allowed lower endpoint if its derivative is
+nonnegative there, at the cap if its derivative is nonpositive
+there, and otherwise at its unique interior derivative zero.
+Zero derivative at an endpoint introduces no additional scalar
+minima. These statements include all vanishing type masses.
+
+The lower-window exclusion of nontrivial minimizing mixtures is
+already part of Theorem 14.5. In the higher window every minimizing
+law has positive singleton masses exactly on its tail and one
+positive nonsingleton mass, exactly its full core. If a convex
+combination of minimizing laws were itself minimizing, every
+component with positive weight would have its full-core type in
+the resulting support. The resulting law has just one nonsingleton
+type, so all such cores must be that same set. Their index and cap
+parameter then agree, and their singleton masses agree individually.
+All components are the identical law. This also treats mixtures
+of the two cap classes at an exact tie. Arbitrary permutations of
+labels are included, since all partitions were allowed, and every
+equality partition is recovered from its actual marginals. ∎
+
+**Proposition 15.6 (Ordered exact cap competition and its crossings).**
+Let $t=h+1$, $a\ge4$ and, for an integer $j\ge1$, set
+
+$$
+\begin{gathered}
+D_j(a)=\frac{4(a+j)^3+3(a+j)^2+(a+j)}{a-1}+a+2j,\\
+\tau_j(a)=\frac{j(j+1)}{a-1}
+ \left(\sqrt{1+\frac{(a-1)D_j(a)}{j(j+1)}}-1\right)-1.
+\end{gathered}
+\tag{15.28}
+$$
+
+The polynomial continuation of the cap energies has signed adjacent
+differences
+
+$$
+\Delta_j:=S_{j+1}-S_j
+=D_j(a)-2t-\frac{(a-1)t^2}{j(j+1)}.
+\tag{15.29}
+$$
+
+For $h\ge0$, this difference is positive, zero or negative as
+$h<\tau_j$, $h=\tau_j$ or $h>\tau_j$, respectively. The thresholds
+are strictly increasing in $j$. The cap sequence is strictly convex
+in its integer index. Therefore its minimum on any consecutive
+finite index interval has either one winning index or exactly two
+adjacent winning indices; at $h=\tau_j$ those indices are $j,j+1$
+whenever both belong to that interval. There are no triple ties.
+
+For each fixed finite index range, uniformly in that range,
+
+$$
+\frac{\tau_j(a)}{\sqrt a}=2\sqrt{j(j+1)}+O(a^{-1/2}).
+\tag{15.30}
+$$
+
+In the high-ratio interval of Theorem 15.5, this is the exact
+competition for $M$. More explicitly, set $\tau_0=-\infty$ and
+$\tau_{J_R}=+\infty$ only as endpoint conventions for this finite
+competition. Index $j$ wins exactly when
+$\tau_{j-1}\le h\le\tau_j$, with the natural endpoint omissions.
+Each real crossing $\tau_j$, $2\le j<J_R$, lying in the claimed
+high-ratio interval is an actual crossing of the full unrestricted
+value whenever $h=\tau_j$ is an admissible integer. If it is not an
+integer, the same threshold gives the exact switch between integer
+budgets. A threshold outside the interval makes no assertion of a
+crossing inside it. On the lower interval all winning indices are
+$1,2$ as in Theorem 14.5, so globally there are still at most two
+adjacent winning indices, with all their equality classes included.
+
+**Proof.** Write the tail term as
+
+$$
+\frac{(t-j)^2(a+j-1)}j
+=\frac{(a-1)t^2}{j}-2(a-1)t+(a-1)j+t^2-2tj+j^2.
+$$
+
+The adjacent difference of the core term, with $m=a+j$, is
+$\{(m+1)^3m-m^3(m-1)\}/(a-1)=(4m^3+3m^2+m)/(a-1)$.
+Their sum is (15.29). Since $D_j(a)>0$, the quadratic in $t$ is
+strictly decreasing for $t\ge0$ and has one positive root, precisely
+$t=\tau_j+1$. Its sign gives the asserted comparison for $h\ge0$.
+Moreover
+
+$$
+\Delta_{j+1}-\Delta_j
+=\frac{12m^2+18m+8}{a-1}+2
+ +\frac{2(a-1)t^2}{j(j+1)(j+2)}>0.
+\tag{15.31}
+$$
+
+This proves strict convexity and shows that the positive roots in
+$t$ strictly increase: at the root of $\Delta_j$, $\Delta_{j+1}>0$
+and has its zero later. At a root, differences before it are strictly
+negative and those after it strictly positive. This proves the
+global finite-sequence tie and winner assertions, not merely equality
+of the two compared terms.
+
+For fixed $j$, $D_j(a)=4a^2+O_j(a)$. Inserting this into the positive
+root in (15.28) gives (15.30), with a bounded error before division
+by $\sqrt a$. All constants are uniform for finitely many indices.
+In particular $\tau_1/\sqrt a\to2\sqrt2<7/2$ and
+$\tau_2/\sqrt a\to2\sqrt6>4$. This proves the overlap assertion in
+Theorem 15.5. Within its higher interval, (15.27) transfers the exact
+finite competition to $M$, and the endpoint conventions give its
+winner test. Every cap used there is admissible because $h\ge J_R$.
+For bounded indices, the thresholds themselves also exceed the
+corresponding indices eventually, by (15.30). The restrictions on
+which thresholds lie in the interval therefore preserve both the
+original integer domain and the fixed upper ratio. ∎
+
+**Corollary 15.7 (Scope of the uniform conclusion).** The finite-value
+and exact-equality parts of Open problem 7.3 are resolved on every
+fixed range $1\le h\le R\sqrt a$ for sufficiently large $a$ depending
+on that fixed $R$. The result does not assert uniformity for a
+growing $R$, a least sufficient threshold, a classification of small
+$a$, a near-equality rate, or an exact connected finite-graph optimum.
+
+**Proof.** These are precisely the quantifiers of Theorem 15.5.
+Its proof uses the original common law, all nonempty cardinalities,
+zero type masses, arbitrary positive marginals and arbitrary
+incidence support throughout. Its new lower-bound input is the
+uniform active-index margin (15.3), which makes the bounded-index
+residual (15.8) and strict payment (15.19) simultaneous over every
+fixed number of higher phases. Theorem 7.2 supplies the scalar
+localization, and Theorem 14.5 supplies the overlapping lower window;
+the cap evaluations alone would not yield this conclusion.
+
+The theorem and residual estimates here are repo-derived. Finite
+Jensen and its supporting-tangent inequality are used only after
+the explicit second derivatives (15.22) and $f_u''$ establish their
+hypotheses; see S. Boyd and L. Vandenberghe, *Convex Optimization*,
+§§3.1.3 and 3.1.8,
+[author text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf).
+The expectation certificate in (15.15) is proved directly and uses
+no strong duality or convexity of $H$ in the law. The graph sources
+and normalization cited in Section 14 remain as stated there;
+none supplies the unrestricted growing-surplus equality theorem.
+The possible full-text overlap with Zhao--Zhao, DOI
+[10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26),
+remains unassessed. No worldwide priority assertion is made. ∎
+
+## 追加锚（本行以下为增补区）
