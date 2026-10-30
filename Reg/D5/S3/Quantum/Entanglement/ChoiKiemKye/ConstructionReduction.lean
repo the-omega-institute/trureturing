@@ -63,7 +63,8 @@ def registration :
       (@_root_.D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.Cycle.sign_square)
       (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.unit
-  realizationName := `Reg.D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.source_registration
+  realizationName :=
+    `Reg.D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩

@@ -80,7 +80,8 @@ def registration :
       (@_root_.D5.S3.Quantum.Dynamics.BarrigaTenModeFourierEdgeRefutation.expIdempotent)
       (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.Dynamics.BarrigaTenModeFourierEdgeRefutation.unit
-  realizationName := `Reg.D5.S3.Quantum.Dynamics.BarrigaTenModeFourierEdgeRefutation.source_registration
+  realizationName :=
+    `Reg.D5.S3.Quantum.Dynamics.BarrigaTenModeFourierEdgeRefutation.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -101,7 +102,8 @@ def registration :
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "fn", "arg"]
+      path := #["body", "body", "body", "body", "body", "body",
+        "arg", "arg", "fn", "arg", "fn", "arg"]
       stateBinder := 5
       functionOperand := false
       stateOperand := none

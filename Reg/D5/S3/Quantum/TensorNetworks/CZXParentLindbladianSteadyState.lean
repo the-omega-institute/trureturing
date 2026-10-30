@@ -74,7 +74,8 @@ def registration :
       (@_root_.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState.result)
       (Realization signature) Unit Unit := {
   unitName := `Reg.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState.unit
-  realizationName := `Reg.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState.source_registration
+  realizationName :=
+    `Reg.D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState.source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -92,6 +93,7 @@ def registration :
   escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState
+    -- The claim is defined in the imported window-channel source owner.
     definition := some {
       owner := `D5.S3.Quantum.TensorNetworks.CZXParentLindbladianWindowChannel
       name := `D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState.claim
