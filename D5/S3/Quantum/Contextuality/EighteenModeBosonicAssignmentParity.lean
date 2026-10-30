@@ -8,10 +8,8 @@
 
 import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Algebra.Ring.Parity
 import Mathlib.Order.Interval.Finset.Nat
 import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.NormNum
 
 /-! Occupation assignments for the eighteen-mode set in Kurzyński,
     arXiv:1609.01250v1, Eq. (1) and the nine contexts.
