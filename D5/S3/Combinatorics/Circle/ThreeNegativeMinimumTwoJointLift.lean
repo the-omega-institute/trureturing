@@ -476,12 +476,15 @@ private theorem realize (a b c : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ 
       (hnpos T Ear.t (fun i hi => (hTpos i hi).2))
       (by rw [hPN]; change K (Order.first (Plan.order plan)) ≤ _ ∧ _ ≤ N; rw [hN]; exact ⟨hseams.2.2.2.2.1,hseams.2.2.2.2.2.1⟩)
       (by rw [hTN]; rw [hN]; exact ⟨hseams.2.2.2.2.2.2.1,hseams.2.2.2.2.2.2.2⟩) hzn
-  let cut := match (Plan.ear plan) with
+  let cut : ℕ := match (Plan.ear plan) with
     | Ear.p => 0 | Ear.q => P.length + 1 | Ear.t => P.length + 1 + Q.length + 1
   have hcut : cut ≤ k := by
-    have hl := hperm.length_eq
-    simp only [word,List.length_append,List.length_cons,List.length_singleton,List.length_range] at hl
-    cases he : (Plan.ear plan) <;> simp only [cut,he] <;> omega
+    have hl : P.length + Q.length + T.length + 3 = k := by
+      simpa [word, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using hperm.length_eq
+    cases he : (Plan.ear plan)
+    · simpa only [cut,he] using (Nat.zero_le k)
+    · simpa only [cut,he] using (show P.length + 1 ≤ k by omega)
+    · simpa only [cut,he] using (show P.length + 1 + Q.length + 1 ≤ k by omega)
   have hear : earWord k (word.map (ThreeNegativeEqualOuterJointLift.label k (by dsimp [k]; omega))) cut =
       plus.map (ThreeNegativeEqualOuterJointLift.label (k + 1) (by dsimp [k]; omega)) := by
     cases he : (Plan.ear plan)
