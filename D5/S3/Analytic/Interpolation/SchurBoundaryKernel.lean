@@ -600,13 +600,20 @@ private theorem rational_real_average (h : ℂ → ℂ) (hh : Differentiable ℂ
     have hre : ((rationalKernel r z).re : ℂ) =
         (rationalKernel r z + conj (rationalKernel r z)) / 2 :=
       RCLike.re_eq_add_conj (rationalKernel r z)
-    rw [hre]
+    have hzconj : conj z = z⁻¹ := (RCLike.inv_eq_conj hz').symm
+    have hcj : conj (rationalKernel r z) =
+        conj z / (1 + (r : ℂ) ^ 2 * conj z ^ 2) := by
+      simp only [rationalKernel, map_div, map_add, map_one, map_mul, map_pow,
+        RCLike.conj_ofReal]
+    have hcj' : conj (rationalKernel r z) = z / (z ^ 2 + (r : ℂ) ^ 2) := by
+      rw [hcj, hzconj]
+      field_simp [hz0, hd]
+    have hdm : z + (r : ℂ) * Complex.I ≠ 0 := by
+      simpa only [neg_mul, sub_neg_eq_add] using hden _ hnorm' z hz
+    rw [hre, hcj']
     unfold rationalKernel
-    simp only [map_div, map_add, map_one, map_mul, map_pow, RCLike.conj_ofReal,
-      ← RCLike.inv_eq_conj hz']
-    field_simp [hz0, hd, rationalKernel_den_ne hr z hz'.le,
-      hden _ hnorm z hz, hden _ hnorm' z hz]
-    <;> simp [Complex.I_sq] <;> ring
+    field_simp [hd, rationalKernel_den_ne hr z hz'.le, hden _ hnorm z hz, hdm]
+    <;> ring_nf <;> simp [Complex.I_sq] <;> ring
   have hsum := Real.circleAverage_congr_sphere hpoint
   have hhalf : CircleIntegrable (fun z => (1 / 2 : ℂ) * (rationalKernel r z * h z)) 0 1 :=
     (continuousOn_const.mul hψ).circleIntegrable'
@@ -657,6 +664,9 @@ private theorem kernel_rational_integral (b θ : ℝ) (hb0 : 0 ≤ b) (hb1 : b <
   rw [← intervalIntegral.integral_const_mul]
   apply intervalIntegral.integral_congr
   intro t _
+  change -2 * b ^ 2 * Real.cos θ *
+    (t * (1 - t) * (1 + b ^ 2 * t ^ 2) /
+      ((1 - b ^ 2 * t ^ 2) ^ 2 + 4 * b ^ 2 * t ^ 2 * Real.cos θ ^ 2)) = _
   rw [hrat]
   ring
 
@@ -741,7 +751,7 @@ private theorem kernel_pairing_interior (h : ℂ → ℂ) (hh : Differentiable �
         push_cast
         field_simp [Complex.ofReal_ne_zero.mpr hb0.ne', Complex.ofReal_ne_zero.mpr ht0,
           Complex.I_ne_zero]
-        <;> ring_nf <;> simp [Complex.I_sq]
+        <;> ring_nf <;> simp [Complex.I_sq] <;> ring
     _ = _ := by rw [intervalIntegral.integral_const_mul]
 
 /-- Uniform convergence, continuity, reflection, and the sign of the actual source kernel,
