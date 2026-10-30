@@ -11,6 +11,8 @@ import D5.S3.QuantumBounds.CHSHWitness
 
 /-! Complex nuclear norms of coefficient tensors and a mixed equality-case counterexample. -/
 
+set_option linter.style.longLine false
+
 noncomputable section
 
 open scoped BigOperators ComplexOrder
@@ -19,25 +21,20 @@ open Matrix
 namespace D5.S3.Quantum.Entanglement.Witness.DensityTensorNuclearNormEqualityRefutation
 
 set_option autoImplicit false
-set_option linter.style.longLine false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
-
-/-- The Euclidean norm of a finite complex coefficient array. -/
-def tensorNorm {ι : Type*} [Fintype ι] (t : ι → ℂ) : ℝ :=
-  Real.sqrt (∑ i, ‖t i‖ ^ 2)
 
 /-- The source's complex nuclear norm, over finite sums of product tensors. -/
 def nuclearNorm {κ : Type*} [Fintype κ] (m : κ → ℕ)
     (t : ((j : κ) → Fin (m j)) → ℂ) : ℝ :=
   sInf {s : ℝ | ∃ (r : ℕ) (x : Fin r → (j : κ) → Fin (m j) → ℂ),
-    t = (fun i => ∑ a, ∏ j, x a j (i j)) ∧ s = ∑ a, ∏ j, tensorNorm (x a j)}
+    t = (fun i => ∑ a, ∏ j, x a j (i j)) ∧ s = ∑ a, ∏ j, ‖WithLp.toLp 2 (x a j)‖}
 
 /-- Maximal nuclear norm among Euclidean unit tensors. -/
 def alpha {κ : Type*} [Fintype κ] (m : κ → ℕ) : ℝ := by
   classical
   exact sSup {s : ℝ | ∃ t : ((j : κ) → Fin (m j)) → ℂ,
-    tensorNorm t = 1 ∧ s = nuclearNorm m t}
+    ‖WithLp.toLp 2 t‖ = 1 ∧ s = nuclearNorm m t}
 
 /-- The row and column modes of a matrix, regarded as separate tensor factors. -/
 def densityTensor {d : ℕ} {n : Fin d → ℕ}
@@ -52,38 +49,12 @@ def claim : Prop :=
     a.PosSemidef → a.trace = 1 →
     nuclearNorm (Sum.elim n n) (densityTensor a) = alpha n ^ 2 →
     ∃ t : ((j : Fin d) → Fin (n j)) → ℂ,
-      tensorNorm t = 1 ∧ nuclearNorm n t = alpha n ∧ a = vecMulVec t (star t)
-
-private lemma tensorNorm_eq {ι : Type*} [Fintype ι] (t : ι → ℂ) :
-    tensorNorm t = Real.sqrt (∑ i, ‖t i‖ ^ 2) := rfl
-
-private lemma tensorNorm_fintype_eq {ι : Type*} (f g : Fintype ι) (t : ι → ℂ) :
-    @tensorNorm ι f t = @tensorNorm ι g t := by
-  cases Subsingleton.elim f g
-  rfl
-
-private lemma tensorNorm_nonneg {ι : Type*} [Fintype ι] (t : ι → ℂ) :
-    0 ≤ tensorNorm t := Real.sqrt_nonneg _
-
-private lemma tensorNorm_sq {ι : Type*} [Fintype ι] (t : ι → ℂ) :
-    tensorNorm t ^ 2 = ∑ i, ‖t i‖ ^ 2 :=
-  Real.sq_sqrt (Finset.sum_nonneg fun _ _ => sq_nonneg _)
-
-private lemma spike_norm {ι : Type*} [Fintype ι] [DecidableEq ι] (a : ι) (c : ℂ) :
-    tensorNorm (fun b => if b = a then c else 0) = ‖c‖ := by
-  simpa only [PiLp.norm_eq_of_L2, PiLp.single_apply, Pi.single_apply, tensorNorm_eq] using
-    PiLp.norm_single 2 (fun _ : ι => ℂ) a c
-
-private lemma dot_bound {ι : Type*} [Fintype ι] (x y : ι → ℂ) :
-    ‖∑ i, x i * y i‖ ≤ tensorNorm x * tensorNorm y := by
-  simpa only [EuclideanSpace.inner_toLp_toLp, dotProduct, Pi.star_apply,
-    star_star, PiLp.norm_eq_of_L2, PiLp.toLp_apply, norm_star, tensorNorm_eq, mul_comm] using
-      norm_inner_le_norm (𝕜 := ℂ) (WithLp.toLp 2 (star x)) (WithLp.toLp 2 y)
+      ‖WithLp.toLp 2 t‖ = 1 ∧ nuclearNorm n t = alpha n ∧ a = vecMulVec t (star t)
 
 private lemma decomposition_nonempty {κ : Type*} [Fintype κ] [Nonempty κ]
     (m : κ → ℕ) (t : ((j : κ) → Fin (m j)) → ℂ) :
     Set.Nonempty {s : ℝ | ∃ (r : ℕ) (x : Fin r → (j : κ) → Fin (m j) → ℂ),
-      t = (fun i => ∑ a, ∏ j, x a j (i j)) ∧ s = ∑ a, ∏ j, tensorNorm (x a j)} := by
+      t = (fun i => ∑ a, ∏ j, x a j (i j)) ∧ s = ∑ a, ∏ j, ‖WithLp.toLp 2 (x a j)‖} := by
   classical
   let j₀ : κ := Classical.choice inferInstance
   let e := (Fintype.equivFin ((j : κ) → Fin (m j))).symm
@@ -92,16 +63,16 @@ private lemma decomposition_nonempty {κ : Type*} [Fintype κ] [Nonempty κ]
   have hp (a) (i) : (∏ j, x a j (i j)) = if e a = i then t i else 0 := by
     by_cases h : e a = i
     · subst i
-      simp only [x, if_pos rfl, if_pos]
+      simp only [x, ite_eq_left rfl, ite_eq_left]
       exact Fintype.prod_ite_eq' j₀ (fun _ => t (e a))
-    · rw [if_neg h]
+    · rw [ite_eq_right h]
       obtain ⟨j, hj⟩ : ∃ j, i j ≠ e a j := by
         by_contra hn
         apply h
         funext j
         exact (not_not.mp (not_exists.mp hn j)).symm
-      exact Finset.prod_eq_zero (Finset.mem_univ j) (by simp only [x, if_neg hj])
-  refine ⟨∑ a, ∏ j, tensorNorm (x a j), Fintype.card _, x, ?_, rfl⟩
+      exact Finset.prod_eq_zero (Finset.mem_univ j) (by simp only [x, ite_eq_right hj])
+  refine ⟨∑ a, ∏ j, ‖WithLp.toLp 2 (x a j)‖, Fintype.card _, x, ?_, rfl⟩
   funext i
   simp_rw [hp]
   rw [e.sum_comp (fun a => if a = i then t i else 0)]
@@ -111,21 +82,21 @@ private lemma nuclear_le {κ : Type*} [Fintype κ] (m : κ → ℕ)
     (t : ((j : κ) → Fin (m j)) → ℂ) (r : ℕ)
     (x : Fin r → (j : κ) → Fin (m j) → ℂ)
     (hx : t = fun i => ∑ a, ∏ j, x a j (i j)) :
-    nuclearNorm m t ≤ ∑ a, ∏ j, tensorNorm (x a j) := by
+    nuclearNorm m t ≤ ∑ a, ∏ j, ‖WithLp.toLp 2 (x a j)‖ := by
   classical
   change sInf _ ≤ _
   apply csInf_le
   · refine ⟨0, ?_⟩
     rintro s ⟨q, y, _, rfl⟩
     exact Finset.sum_nonneg fun a _ => Finset.prod_nonneg fun j _ =>
-      Real.sqrt_nonneg _
+      norm_nonneg _
   · exact ⟨r, x, hx, rfl⟩
 
 private lemma dual_bound {κ : Type*} [Fintype κ] [Nonempty κ]
     (m : κ → ℕ) (t : ((j : κ) → Fin (m j)) → ℂ)
     (s : ((((j : κ) → Fin (m j)) → ℂ)) →ₗ[ℂ] ℂ)
     (hs : ∀ x : (j : κ) → Fin (m j) → ℂ,
-      ‖s (fun i => ∏ j, x j (i j))‖ ≤ ∏ j, tensorNorm (x j)) :
+      ‖s (fun i => ∏ j, x j (i j))‖ ≤ ∏ j, ‖WithLp.toLp 2 (x j)‖) :
     ‖s t‖ ≤ nuclearNorm m t := by
   classical
   change _ ≤ sInf _
@@ -140,7 +111,7 @@ private lemma dual_bound {κ : Type*} [Fintype κ] [Nonempty κ]
 
 private lemma row_bound (n : ℕ)
     (t : ((j : Fin 2) → Fin ((![2, n] : Fin 2 → ℕ) j)) → ℂ) :
-    nuclearNorm ((![2, n] : Fin 2 → ℕ)) t ≤ Real.sqrt 2 * tensorNorm t := by
+    nuclearNorm ((![2, n] : Fin 2 → ℕ)) t ≤ Real.sqrt 2 * ‖WithLp.toLp 2 t‖ := by
   classical
   let m := (![2, n] : Fin 2 → ℕ)
   let e : ((j : Fin 2) → Fin (m j)) ≃ Fin 2 × Fin n := piFinTwoEquiv _
@@ -155,29 +126,28 @@ private lemma row_bound (n : ℕ)
     rcases hi0 with h | h
     · simpa [Fin.sum_univ_two, Fin.prod_univ_two, x, h, rows] using congrArg t hi.symm
     · simpa [Fin.sum_univ_two, Fin.prod_univ_two, x, h, rows] using congrArg t hi.symm
-  have hc : (∑ a, ∏ j, tensorNorm (x a j)) = ∑ a, tensorNorm (rows a) := by
+  have hc : (∑ a, ∏ j, ‖WithLp.toLp 2 (x a j)‖) = ∑ a, ‖WithLp.toLp 2 (rows a)‖ := by
     apply Finset.sum_congr rfl
     intro a _
     rw [Fin.prod_univ_two]
-    change tensorNorm (fun b : Fin 2 => if b = a then 1 else 0) *
-      tensorNorm (rows a) = tensorNorm (rows a)
-    rw [spike_norm]
-    norm_num
-  have hn : ∑ a, tensorNorm (rows a) ^ 2 = tensorNorm t ^ 2 := by
-    simp_rw [tensorNorm_sq]
+    change ‖WithLp.toLp 2 (fun b : Fin 2 => if b = a then 1 else 0)‖ *
+      ‖WithLp.toLp 2 (rows a)‖ = ‖WithLp.toLp 2 (rows a)‖
+    simp only [← Pi.single_apply, PiLp.toLp_single, PiLp.norm_single, norm_one, one_mul]
+  have hn : ∑ a, ‖WithLp.toLp 2 (rows a)‖ ^ 2 = ‖WithLp.toLp 2 t‖ ^ 2 := by
+    simp_rw [PiLp.norm_sq_eq_of_L2]
     rw [← e.symm.sum_comp (fun i => ‖t i‖ ^ 2), Fintype.sum_prod_type]
   calc
-    _ ≤ ∑ a, ∏ j, tensorNorm (x a j) := nuclear_le m t 2 x hx
-    _ = ∑ a, tensorNorm (rows a) := hc
-    _ ≤ Real.sqrt 2 * Real.sqrt (∑ a, tensorNorm (rows a) ^ 2) := by
+    _ ≤ ∑ a, ∏ j, ‖WithLp.toLp 2 (x a j)‖ := nuclear_le m t 2 x hx
+    _ = ∑ a, ‖WithLp.toLp 2 (rows a)‖ := hc
+    _ ≤ Real.sqrt 2 * Real.sqrt (∑ a, ‖WithLp.toLp 2 (rows a)‖ ^ 2) := by
       simpa [Fin.sum_univ_two] using
         Real.sum_mul_le_sqrt_mul_sqrt Finset.univ (fun _ : Fin 2 => (1 : ℝ))
-          (fun a => tensorNorm (rows a))
-    _ = Real.sqrt 2 * tensorNorm t := by rw [hn, Real.sqrt_sq (tensorNorm_nonneg t)]
+          (fun a => ‖WithLp.toLp 2 (rows a)‖)
+    _ = Real.sqrt 2 * ‖WithLp.toLp 2 t‖ := by rw [hn, Real.sqrt_sq (norm_nonneg (WithLp.toLp 2 t))]
 
 private lemma bell_bound (x : Fin 2 → ℂ) (y : Fin 4 → ℂ) :
-    ‖x 0 * y 0 + x 1 * y 1‖ ≤ tensorNorm x * tensorNorm y := by
-  simpa [EuclideanSpace.inner_toLp_toLp, dotProduct, PiLp.norm_eq_of_L2, tensorNorm_eq,
+    ‖x 0 * y 0 + x 1 * y 1‖ ≤ ‖WithLp.toLp 2 x‖ * ‖WithLp.toLp 2 y‖ := by
+  simpa [EuclideanSpace.inner_toLp_toLp, dotProduct, PiLp.norm_eq_of_L2, PiLp.toLp_apply,
     Fin.sum_univ_succ, mul_comm] using
       norm_inner_le_norm (𝕜 := ℂ)
         (WithLp.toLp 2 (![star (x 0), star (x 1), 0, 0] : Fin 4 → ℂ))
@@ -186,59 +156,64 @@ private lemma bell_bound (x : Fin 2 → ℂ) (y : Fin 4 → ℂ) :
 private lemma flag_bound (x z : Fin 2 → ℂ) (y w : Fin 4 → ℂ) :
     ‖(x 0 * y 0 + x 1 * y 1) * (z 0 * w 0 + z 1 * w 1) +
       (x 0 * y 2 + x 1 * y 3) * (z 0 * w 2 + z 1 * w 3)‖ ≤
-      tensorNorm x * tensorNorm y * tensorNorm z * tensorNorm w := by
-  let a : Fin 2 → Fin 2 → ℂ := fun b i => y ⟨i.val + 2 * b.val, by change _ < 4; omega⟩
-  let c : Fin 2 → Fin 2 → ℂ := fun b i => w ⟨i.val + 2 * b.val, by change _ < 4; omega⟩
-  have hy : ∑ b, tensorNorm (a b) ^ 2 = tensorNorm y ^ 2 := by
-    simp only [tensorNorm_sq, Fin.sum_univ_succ, Fin.sum_univ_zero, add_zero]
+      ‖WithLp.toLp 2 x‖ * ‖WithLp.toLp 2 y‖ * ‖WithLp.toLp 2 z‖ * ‖WithLp.toLp 2 w‖ := by
+  let a : Fin 2 → Fin 2 → ℂ := fun b i => y ⟨i.val + 2 * b.val, by omega⟩
+  let c : Fin 2 → Fin 2 → ℂ := fun b i => w ⟨i.val + 2 * b.val, by omega⟩
+  have hy : ∑ b, ‖WithLp.toLp 2 (a b)‖ ^ 2 = ‖WithLp.toLp 2 y‖ ^ 2 := by
+    simp only [PiLp.norm_sq_eq_of_L2, Fin.sum_univ_succ, Fin.sum_univ_zero, add_zero]
     dsimp [a]
     ring
-  have hw : ∑ b, tensorNorm (c b) ^ 2 = tensorNorm w ^ 2 := by
-    simp only [tensorNorm_sq, Fin.sum_univ_succ, Fin.sum_univ_zero, add_zero]
+  have hw : ∑ b, ‖WithLp.toLp 2 (c b)‖ ^ 2 = ‖WithLp.toLp 2 w‖ ^ 2 := by
+    simp only [PiLp.norm_sq_eq_of_L2, Fin.sum_univ_succ, Fin.sum_univ_zero, add_zero]
     dsimp [c]
     ring
-  have hcs : ∑ b, tensorNorm (a b) * tensorNorm (c b) ≤ tensorNorm y * tensorNorm w := by
+  have hcs : ∑ b, ‖WithLp.toLp 2 (a b)‖ * ‖WithLp.toLp 2 (c b)‖ ≤ ‖WithLp.toLp 2 y‖ * ‖WithLp.toLp 2 w‖ := by
     have h := Real.sum_mul_le_sqrt_mul_sqrt Finset.univ
-      (fun b => tensorNorm (a b)) (fun b => tensorNorm (c b))
-    rwa [hy, hw, Real.sqrt_sq (tensorNorm_nonneg y),
-      Real.sqrt_sq (tensorNorm_nonneg w)] at h
+      (fun b => ‖WithLp.toLp 2 (a b)‖) (fun b => ‖WithLp.toLp 2 (c b)‖)
+    rwa [hy, hw, Real.sqrt_sq (norm_nonneg (WithLp.toLp 2 y)),
+      Real.sqrt_sq (norm_nonneg (WithLp.toLp 2 w))] at h
   have hb (b : Fin 2) :
       ‖(∑ i, x i * a b i) * (∑ i, z i * c b i)‖ ≤
-        tensorNorm x * tensorNorm z * (tensorNorm (a b) * tensorNorm (c b)) := by
+        ‖WithLp.toLp 2 x‖ * ‖WithLp.toLp 2 z‖ * (‖WithLp.toLp 2 (a b)‖ * ‖WithLp.toLp 2 (c b)‖) := by
     rw [norm_mul]
-    convert mul_le_mul (dot_bound x (a b)) (dot_bound z (c b))
-      (norm_nonneg _) (mul_nonneg (tensorNorm_nonneg _) (tensorNorm_nonneg _)) using 1 <;> ring
+    have hx : ‖∑ i, x i * a b i‖ ≤
+        ‖WithLp.toLp 2 x‖ * ‖WithLp.toLp 2 (a b)‖ := by
+      simpa only [EuclideanSpace.inner_toLp_toLp, dotProduct, Pi.star_apply,
+        star_star, PiLp.norm_eq_of_L2, PiLp.toLp_apply, norm_star, mul_comm] using
+          norm_inner_le_norm (𝕜 := ℂ) (WithLp.toLp 2 (star x)) (WithLp.toLp 2 (a b))
+    have hz : ‖∑ i, z i * c b i‖ ≤
+        ‖WithLp.toLp 2 z‖ * ‖WithLp.toLp 2 (c b)‖ := by
+      simpa only [EuclideanSpace.inner_toLp_toLp, dotProduct, Pi.star_apply,
+        star_star, PiLp.norm_eq_of_L2, PiLp.toLp_apply, norm_star, mul_comm] using
+          norm_inner_le_norm (𝕜 := ℂ) (WithLp.toLp 2 (star z)) (WithLp.toLp 2 (c b))
+    convert mul_le_mul hx hz
+      (norm_nonneg _) (mul_nonneg (norm_nonneg _) (norm_nonneg _)) using 1; ring
   calc
     _ = ‖∑ b, (∑ i, x i * a b i) * (∑ i, z i * c b i)‖ := by
       simp only [Fin.sum_univ_two]
       rfl
     _ ≤ ∑ b, ‖(∑ i, x i * a b i) * (∑ i, z i * c b i)‖ := norm_sum_le _ _
-    _ ≤ ∑ b, tensorNorm x * tensorNorm z * (tensorNorm (a b) * tensorNorm (c b)) :=
+    _ ≤ ∑ b, ‖WithLp.toLp 2 x‖ * ‖WithLp.toLp 2 z‖ * (‖WithLp.toLp 2 (a b)‖ * ‖WithLp.toLp 2 (c b)‖) :=
       Finset.sum_le_sum fun b _ => hb b
-    _ = tensorNorm x * tensorNorm z * ∑ b, tensorNorm (a b) * tensorNorm (c b) :=
+    _ = ‖WithLp.toLp 2 x‖ * ‖WithLp.toLp 2 z‖ * ∑ b, ‖WithLp.toLp 2 (a b)‖ * ‖WithLp.toLp 2 (c b)‖ :=
       (Finset.mul_sum _ _ _).symm
-    _ ≤ tensorNorm x * tensorNorm z * (tensorNorm y * tensorNorm w) :=
-      mul_le_mul_of_nonneg_left hcs (mul_nonneg (tensorNorm_nonneg x) (tensorNorm_nonneg z))
+    _ ≤ ‖WithLp.toLp 2 x‖ * ‖WithLp.toLp 2 z‖ * (‖WithLp.toLp 2 y‖ * ‖WithLp.toLp 2 w‖) :=
+      mul_le_mul_of_nonneg_left hcs (mul_nonneg (norm_nonneg (WithLp.toLp 2 x)) (norm_nonneg (WithLp.toLp 2 z)))
     _ = _ := by ring
 
 private lemma pure_idempotent {ι : Type*} [Fintype ι] (t : ι → ℂ)
-    (ht : tensorNorm t = 1) :
+    (ht : ‖WithLp.toLp 2 t‖ = 1) :
     vecMulVec t (star t) * vecMulVec t (star t) = vecMulVec t (star t) := by
-  have hsq : ∑ i, ‖t i‖ ^ 2 = 1 := by
-    have hh := congrArg (fun x : ℝ => x ^ 2) ht
-    rw [tensorNorm_eq, Real.sq_sqrt (Finset.sum_nonneg fun _ _ => sq_nonneg _)] at hh
-    simpa only [one_pow] using hh
   have hd : star t ⬝ᵥ t = (1 : ℂ) := by
-    change ∑ i, star (t i) * t i = 1
-    have hh (z : ℂ) : star z * z = ((‖z‖ ^ 2 : ℝ) : ℂ) := by
-      simpa only [Complex.star_def, Complex.ofReal_pow] using Complex.conj_mul' z
-    simp_rw [hh]
-    exact_mod_cast hsq
+    rw [dotProduct_comm]
+    simpa only [EuclideanSpace.inner_toLp_toLp, ht, RCLike.ofReal_one, one_pow] using
+      inner_self_eq_norm_sq_to_K (𝕜 := ℂ) (WithLp.toLp 2 t)
   simpa only [D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity] using
     (D5.S3.Quantum.PureState.PureStateHandshake.pure_state_handshake t hd
       (0 : Matrix ι ι ℂ)).1
 
 set_option maxHeartbeats 2000000 in
+-- The finite counterexample expands eight rank-one terms across four tensor modes.
 /-- A mixed density tensor attains the conjectured pure-state maximum. -/
 theorem result : ¬ claim := by
   classical
@@ -261,15 +236,15 @@ theorem result : ¬ claim := by
   have hcoeffnorm : ‖(Real.sqrt 2 : ℂ)⁻¹‖ ^ 2 = 1 / 2 := by
     simpa only [norm_inv, Complex.norm_real, Real.norm_eq_abs, abs_of_pos hrootpos,
       pow_two, one_div] using TsirelsonInequality.sqrt_two_inv_mul_self
-  have hv : tensorNorm (v 0) = 1 := by
-    rw [tensorNorm_eq, ← e.symm.sum_comp (fun i => ‖v 0 i‖ ^ 2)]
+  have hv : ‖WithLp.toLp 2 (v 0)‖ = 1 := by
+    rw [PiLp.norm_eq_of_L2, ← e.symm.sum_comp (fun i => ‖v 0 i‖ ^ 2)]
     simp only [Fintype.sum_prod_type, v, Equiv.apply_symm_apply]
     norm_num [Fin.sum_univ_succ, hcoeffnorm]
   let sb : ((((j : Fin 2) → Fin (n j)) → ℂ)) →ₗ[ℂ] ℂ :=
     LinearMap.proj (R := ℂ) (φ := fun _ => ℂ) (e.symm (0, 0)) +
       LinearMap.proj (R := ℂ) (φ := fun _ => ℂ) (e.symm (1, 1))
   have hsb : ∀ x : (j : Fin 2) → Fin (n j) → ℂ,
-      ‖sb (fun i => ∏ j, x j (i j))‖ ≤ ∏ j, tensorNorm (x j) := by
+      ‖sb (fun i => ∏ j, x j (i j))‖ ≤ ∏ j, ‖WithLp.toLp 2 (x j)‖ := by
     intro x
     simp only [sb, LinearMap.add_apply, LinearMap.proj_apply, Fin.prod_univ_two,
       he0, he1]
@@ -291,19 +266,21 @@ theorem result : ¬ claim := by
       exact dual_bound n (v 0) sb hsb
   have halpha : alpha n = Real.sqrt 2 := by
     have hbound : ∀ s ∈ {s : ℝ | ∃ t : ((j : Fin 2) → Fin (n j)) → ℂ,
-        tensorNorm t = 1 ∧ s = nuclearNorm n t}, s ≤ Real.sqrt 2 := by
+        ‖WithLp.toLp 2 t‖ = 1 ∧ s = nuclearNorm n t}, s ≤ Real.sqrt 2 := by
       rintro s ⟨t, ht, rfl⟩
       simpa only [ht, mul_one] using row_bound 4 t
     let ic : Fintype ((j : Fin 2) → Fin (n j)) :=
       @Pi.instFintype (Fin 2) (fun j => Fin (n j))
         (fun i j => Classical.propDecidable (i = j)) (Fin.fintype 2)
         (fun j => Fin.fintype (n j))
-    change sSup {s : ℝ | ∃ t, @tensorNorm _ ic t = 1 ∧ s = nuclearNorm n t} = _
+    change sSup {s : ℝ | ∃ t, (letI := ic; ‖WithLp.toLp 2 t‖) = 1 ∧ s = nuclearNorm n t} = _
     let istd : Fintype ((j : Fin 2) → Fin (n j)) :=
       @Pi.instFintype (Fin 2) (fun j => Fin (n j)) (instDecidableEqFin 2)
         (Fin.fintype 2) (fun j => Fin.fintype (n j))
     have hu (t : ((j : Fin 2) → Fin (n j)) → ℂ) :
-        @tensorNorm _ ic t = @tensorNorm _ istd t := tensorNorm_fintype_eq _ _ t
+        (letI := ic; ‖WithLp.toLp 2 t‖) = (letI := istd; ‖WithLp.toLp 2 t‖) :=
+      congrArg (fun f : Fintype ((j : Fin 2) → Fin (n j)) =>
+        letI := f; ‖WithLp.toLp 2 t‖) (Subsingleton.elim ic istd)
     simp_rw [hu]
     exact le_antisymm (csSup_le ⟨_, v 0, hv, rfl⟩ hbound)
       (le_csSup ⟨_, hbound⟩ ⟨v 0, hv, hb.symm⟩)
@@ -355,16 +332,16 @@ theorem result : ¬ claim := by
       generalize h₃ : (i (.inr 1) : Fin 4) = w
       fin_cases r <;> fin_cases s <;> fin_cases u <;> fin_cases w <;>
         norm_num [← sq, hcoeff]
-    have hcost : (∑ r, ∏ j, tensorNorm (x r j)) = 2 := by
-      have hterm (r : Fin 8) : (∏ j, tensorNorm (x r j)) = 1 / 4 := by
+    have hcost : (∑ r, ∏ j, ‖WithLp.toLp 2 (x r j)‖) = 2 := by
+      have hterm (r : Fin 8) : (∏ j, ‖WithLp.toLp 2 (x r j)‖) = 1 / 4 := by
         rw [Fintype.prod_sum_type, Fin.prod_univ_two, Fin.prod_univ_two]
-        change (tensorNorm (fun b : Fin 2 => if b = (q r).2.1 then 1 / 4 else 0) *
-          tensorNorm (fun b : Fin 4 => if b =
-            ⟨(q r).2.1.val + 2 * (q r).1.val, by omega⟩ then 1 else 0)) *
-          (tensorNorm (fun b : Fin 2 => if b = (q r).2.2 then 1 else 0) *
-          tensorNorm (fun b : Fin 4 => if b =
-            ⟨(q r).2.2.val + 2 * (q r).1.val, by omega⟩ then 1 else 0)) = _
-        rw [spike_norm, spike_norm, spike_norm, spike_norm]
+        change (‖WithLp.toLp 2 (fun b : Fin 2 => if b = (q r).2.1 then 1 / 4 else 0)‖ *
+          ‖WithLp.toLp 2 (fun b : Fin 4 => if b =
+            ⟨(q r).2.1.val + 2 * (q r).1.val, by omega⟩ then 1 else 0)‖) *
+          (‖WithLp.toLp 2 (fun b : Fin 2 => if b = (q r).2.2 then 1 else 0)‖ *
+          ‖WithLp.toLp 2 (fun b : Fin 4 => if b =
+            ⟨(q r).2.2.val + 2 * (q r).1.val, by omega⟩ then 1 else 0)‖) = _
+        simp only [← Pi.single_apply, PiLp.toLp_single, PiLp.norm_single]
         norm_num
       simp only [hterm, Finset.sum_const, Finset.card_univ, Fintype.card_fin]
       norm_num
@@ -373,10 +350,10 @@ theorem result : ¬ claim := by
   let sf : ((((j : Fin 2 ⊕ Fin 2) → Fin (Sum.elim n n j)) → ℂ)) →ₗ[ℂ] ℂ :=
     ∑ b : Fin 2, ∑ i : Fin 2, ∑ k : Fin 2,
       LinearMap.proj (R := ℂ) (φ := fun _ => ℂ)
-        (Sum.rec (e.symm (i, ⟨i.val + 2 * b.val, by change _ < 4; omega⟩))
-        (e.symm (k, ⟨k.val + 2 * b.val, by change _ < 4; omega⟩)))
+        (Sum.rec (e.symm (i, ⟨i.val + 2 * b.val, by omega⟩))
+        (e.symm (k, ⟨k.val + 2 * b.val, by omega⟩)))
   have hsf : ∀ x : (j : Fin 2 ⊕ Fin 2) → Fin (Sum.elim n n j) → ℂ,
-      ‖sf (fun i => ∏ j, x j (i j))‖ ≤ ∏ j, tensorNorm (x j) := by
+      ‖sf (fun i => ∏ j, x j (i j))‖ ≤ ∏ j, ‖WithLp.toLp 2 (x j)‖ := by
     intro x
     have h := flag_bound (x (.inl 0)) (x (.inr 0)) (x (.inl 1)) (x (.inr 1))
     have he : sf (fun i => ∏ j, x j (i j)) =
@@ -388,7 +365,7 @@ theorem result : ¬ claim := by
             x (.inl 0) (1 : Fin 2) * x (.inl 1) (3 : Fin 4)) *
           (x (.inr 0) (0 : Fin 2) * x (.inr 1) (2 : Fin 4) +
             x (.inr 0) (1 : Fin 2) * x (.inr 1) (3 : Fin 4)) := by
-      simp only [sf, LinearMap.sum_apply, Fin.sum_univ_two, LinearMap.add_apply,
+      simp only [sf, Fin.sum_univ_two, LinearMap.add_apply,
         LinearMap.proj_apply, Fintype.prod_sum_type, Fin.prod_univ_two, he0, he1]
       norm_num only [Fin.val_zero, Fin.val_one]
       simp only [show (⟨0, by decide⟩ : Fin 4) = (0 : Fin 4) from rfl,
@@ -400,18 +377,17 @@ theorem result : ¬ claim := by
     simpa only [Fintype.prod_sum_type, Fin.prod_univ_two, mul_assoc] using h
   have hsfa : ‖sf (densityTensor a)‖ = 2 := by
     have heval (b i k : Fin 2) :
-        densityTensor a (Sum.rec (e.symm (i, ⟨i.val + 2 * b.val, by change _ < 4; omega⟩))
-          (e.symm (k, ⟨k.val + 2 * b.val, by change _ < 4; omega⟩))) = 1 / 4 := by
+        densityTensor a (Sum.rec (e.symm (i, ⟨i.val + 2 * b.val, by omega⟩))
+          (e.symm (k, ⟨k.val + 2 * b.val, by omega⟩))) = 1 / 4 := by
       change (1 / 2 : ℂ) *
         (v 0 (e.symm (i, _)) * star (v 0 (e.symm (k, _))) +
          v 1 (e.symm (i, _)) * star (v 1 (e.symm (k, _)))) = _
       simp only [v, Equiv.apply_symm_apply]
       fin_cases b <;> fin_cases i <;> fin_cases k <;>
         norm_num [← sq, hcoeff]
-    simp only [sf, LinearMap.sum_apply, LinearMap.add_apply, LinearMap.proj_apply,
+    simp only [sf, LinearMap.add_apply, LinearMap.proj_apply,
       heval, Fin.sum_univ_two]
     norm_num
-
   have hn : nuclearNorm (Sum.elim n n) (densityTensor a) = alpha n ^ 2 := by
     rw [halpha, hroot]
     apply le_antisymm hupper
@@ -424,9 +400,9 @@ theorem result : ¬ claim := by
   have hhalf : a * a = (1 / 2 : ℂ) • a := by
     dsimp only [a]
     simp only [smul_mul_assoc, mul_smul_comm, add_mul, mul_add,
-      vecMulVec_mul_vecMulVec, hgram, if_pos rfl, one_smul, if_neg (by decide :
-        (0 : Fin 2) ≠ 1), if_neg (by decide : (1 : Fin 2) ≠ 0), zero_smul,
-      vecMulVec_zero, add_zero, zero_add, ite_true, ite_false, smul_add, smul_zero]
+      vecMulVec_mul_vecMulVec, hgram, one_smul, ite_eq_right (by decide :
+        (0 : Fin 2) ≠ 1), ite_eq_right (by decide : (1 : Fin 2) ≠ 0), zero_smul,
+      vecMulVec_zero, add_zero, zero_add, ite_true, smul_add, smul_zero]
   have hnonzero : a ≠ 0 := by
     intro hz
     rw [hz, trace_zero] at htrace

@@ -14,20 +14,17 @@ internal sealed class DensityTensorNuclearNormEqualityRefutationDocument : IScri
         "A mixed flagged Bell density tensor attains the conjectured nuclear-norm maximum.",
         H("Refuting the density-tensor nuclear-norm equality conjecture"),
         Blocks(
-            Node("tensor-norm", "The Euclidean norm of a coefficient array", TensorNormFormula(),
-                "For a finite type ι and a complex coefficient function t, tensorNorm is the square root of the sum of squared complex norms. This is the Euclidean norm used in the source's nuclear-norm definition (TeX lines 494–497).",
-                "tensorNorm", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("nuclear-norm", "The complex nuclear norm", NuclearNormFormula(),
-                "For a finite mode type κ, nuclearNorm is the infimum of the costs of finite decompositions of a complex tensor into products of factor functions. Each product cost is the product of the Euclidean norms of its factors, matching the source's definition at TeX lines 494–497.",
+                "For a finite mode type κ, nuclearNorm is the infimum of the costs of finite decompositions of a complex tensor into products of factor functions. Each product cost is the product of Mathlib's Euclidean norms of its factors, matching the source's definition at TeX lines 494–497.",
                 "nuclearNorm", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("alpha", "The maximal nuclear norm of unit tensors", AlphaFormula(),
-                "For a finite mode type κ and mode sizes m, alpha is the supremum of nuclearNorm over coefficient tensors whose Euclidean norm is one. This is the source's α(n,ℂ) definition at TeX lines 525–526.",
+                "For a finite mode type κ and mode sizes m, alpha is the supremum of nuclearNorm over coefficient tensors whose Mathlib Euclidean norm is one. This is the source's α(n,ℂ) definition at TeX lines 525–526.",
                 "alpha", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("density-tensor", "A matrix as a doubled density tensor", DensityTensorFormula(),
                 "The matrix indexed by tuples over Fin d is read as a tensor with separate row and column modes. At an index in Fin d ⊕ Fin d, the inl coordinates select the matrix row and the inr coordinates select its column. This is the density-tensor construction described at TeX lines 680–695.",
                 "densityTensor", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "The equality-case conjecture", ClaimFormula(),
-                "For every number of modes, mode-size function and positive semidefinite trace-one complex matrix, equality of the doubled density tensor's nuclear norm with alpha squared is asserted to produce a unit tensor t whose nuclear norm is alpha and whose rank-one density matrix is the given matrix. This is the repository's formal reading of the equality conjecture stated at TeX line 878.",
+                "For every number of modes, mode-size function and positive semidefinite trace-one complex matrix, equality of the doubled density tensor's nuclear norm with alpha squared is asserted to produce a tensor t with Mathlib Euclidean norm one whose nuclear norm is alpha and whose rank-one density matrix is the given matrix. This is the repository's formal reading of the equality conjecture stated at TeX line 878.",
                 "claim", DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Describe.Lean(
                 DescribeId.Create("result"),
@@ -59,17 +56,6 @@ internal sealed class DensityTensorNuclearNormEqualityRefutationDocument : IScri
             StatementSource.FromAuthor(Disp(formula)), provenance,
             Blocks(Paragraph(Text(prose))), role);
 
-    private static Formula TensorNormFormula()
-    {
-        Formula index = Iota;
-        Formula body = Equal(LocalCall("tensorNorm", X("t")),
-            At(Qualified("Real", "sqrt"),
-                SumOver("i", index, new Formula.Power(
-                    Norm(At(X("t"), X("i"))), D(2)))));
-        return All(index, TypeUniverse(), WithFintype(index,
-            All(X("t"), Arrow(index, Complexes()), body)));
-    }
-
     private static Formula NuclearNormFormula()
     {
         Formula modes = Kappa;
@@ -77,14 +63,14 @@ internal sealed class DensityTensorNuclearNormEqualityRefutationDocument : IScri
         Formula tensor = TensorType(modes, m);
         Formula xType = Arrow(FinOf(X("r")),
             PiType(X("j"), modes, Arrow(FinOf(At(m, X("j"))), Complexes())));
-        Formula reconstructed = LambdaOf(X("i"), tensor,
+        Formula reconstructed = LambdaOf(X("i"), PiType(X("j"), modes, FinOf(At(m, X("j")))),
             SumOver("a", FinOf(X("r")),
                 ProductOver("j", modes,
                     At(At(At(X("x"), X("a")), X("j")),
                         At(X("i"), X("j"))))));
         Formula cost = SumOver("a", FinOf(X("r")),
             ProductOver("j", modes,
-                LocalCall("tensorNorm", At(At(X("x"), X("a")), X("j")))));
+                Norm(At(Qualified("WithLp", "toLp"), D(2), At(At(X("x"), X("a")), X("j"))))));
         Formula decomposition = And(Equal(X("t"), reconstructed),
             Equal(X("s"), cost));
         Formula set = SetOf(X("s"), Reals(),
@@ -103,7 +89,7 @@ internal sealed class DensityTensorNuclearNormEqualityRefutationDocument : IScri
         Formula tensor = TensorType(modes, m);
         Formula set = SetOf(X("s"), Reals(),
             Exists(X("t"), tensor,
-                And(Equal(LocalCall("tensorNorm", X("t")), Typed(D(1), Reals())),
+                And(Equal(Norm(At(Qualified("WithLp", "toLp"), D(2), X("t"))), Typed(D(1), Reals())),
                     Equal(X("s"), LocalCall("nuclearNorm", m, X("t"))))));
         return All(modes, TypeUniverse(), WithFintype(modes,
             All(m, Arrow(modes, Naturals()),
@@ -142,7 +128,7 @@ internal sealed class DensityTensorNuclearNormEqualityRefutationDocument : IScri
             LocalCall("nuclearNorm", doubled, density),
             new Formula.Power(LocalCall("alpha", n), D(2)));
         Formula conclusion = Exists(X("t"), Arrow(matrixIndex, Complexes()),
-            And(Equal(LocalCall("tensorNorm", X("t")), Typed(D(1), Reals())),
+            And(Equal(Norm(At(Qualified("WithLp", "toLp"), D(2), X("t"))), Typed(D(1), Reals())),
                 And(Equal(LocalCall("nuclearNorm", n, X("t")), LocalCall("alpha", n)),
                     Equal(X("a"), At(Qualified("Matrix", "vecMulVec"), X("t"),
                         At(Qualified("star"), X("t")))))));
@@ -162,12 +148,10 @@ internal sealed class DensityTensorNuclearNormEqualityRefutationDocument : IScri
 
     private static Formula X(string name) => name switch
     {
-        "ι" => Iota,
         "κ" => Kappa,
         _ => F.Id(name),
     };
 
-    private static Formula Iota => FormulaDsl.Iota;
     private static Formula Kappa => FormulaDsl.Kappa;
     private static Formula TypeUniverse() => Seq(Operatorname, Grp(F.Id("Type")));
     private static Formula Naturals() => Seq(Mathbb, Grp(F.Id("N")));
