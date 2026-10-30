@@ -221,7 +221,7 @@ private theorem integrated_mean_pos {x : ℝ} (hx0 : 0 ≤ x) (hx1 : x < 1) :
       ∫ t in (0 : ℝ)..x, ∫ θ in (0 : ℝ)..(2 * Real.pi), poissonDensity t θ := by
     simpa only [integratedPoisson, intervalIntegral.integral_of_le hx0,
       intervalIntegral.integral_of_le Real.two_pi_pos.le] using
-      (integral_integral_swap (f := fun t θ => F (t, θ)) hip).symm
+      (integral_integral_swap hip).symm
   rw [hswap]
   calc
     _ = ∫ _ in (0 : ℝ)..x, (2 * Real.pi) := by
