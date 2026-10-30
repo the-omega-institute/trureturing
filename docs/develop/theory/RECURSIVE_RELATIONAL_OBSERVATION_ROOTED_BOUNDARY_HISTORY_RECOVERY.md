@@ -499,7 +499,7 @@ There are only finitely many rationals in $Q_N$. Choose a nonempty open interval
 
 Finally suppose an all-source always-correct policy also always stops finitely. Run it on the original root with truthful reports, an admissible error sequence. Its promised finite stopping supplies such a finite transcript. The compatibility just proved supplies a different finite original word with the identical stopped transcript and hence the identical output, contradicting correctness. Arbitrarily small adaptively chosen positive radii do not change this argument: a finite truthful path has only finitely many of them, with a positive minimum. The conclusion does not address an infinite reading sequence, a zero-radius read, a supplied finite original-depth bound or a stronger joint channel. $\square$
 
-**Proposition 10.5 (the same marginal radii can have different joint acquisition power).** Consider instead a joint channel that supplies two exact rational report strings with one common unknown rational bias $e$, $|e|\le\epsilon$:
+**Proposition 10.5 (the same marginal radii can have different joint acquisition power).** For any rational $\epsilon\ge0$, consider instead a joint channel that supplies two exact rational report strings with one common unknown rational bias $e$, $|e|\le\epsilon$:
 
 $$
 y_0=x+e,\qquad
@@ -524,7 +524,7 @@ $$
 
 It is rational for every report pair allowed by (10.9), since the actual $x$ is rational; indeed $D^2+4D=(2x-D)^2$. Exact rational arithmetic and rational-square-root extraction recover it from the finite strings. For a concrete allowed pair, $x=2/3$ and $e=\epsilon=1/10$ give $y_0=23/30$, $y_1=1/2$ and $D=4/15$, which determine $x=2/3$ uniquely. Theorem 6.2 then decodes the original word.
 
-This channel is not rectangular: after a first report from a specified source, its bias is fixed, so the second report is constrained by that same bias. Its allowed two-report set is smaller than the Cartesian product of the two marginal error intervals. Therefore the freely chosen successive midpoint reports in Theorem 10.2, and the replayed truthful reports for alternative sources in Theorem 10.4, need not be allowed by (10.9). There is no contradiction. Per-read error bounds alone do not specify joint acquisition power. $\square$
+For $\epsilon>0$, this channel is not rectangular: after a first report from a specified source, its bias is fixed, so the second report is constrained by that same bias. Its allowed two-report set is a proper subset of the Cartesian product of the two marginal error intervals: the corner $(x+\epsilon,x/(1+x)-\epsilon)$ would require $e=\epsilon$ and $e=-\epsilon$ simultaneously. At $\epsilon=0$, both sets are the singleton $\{(x,x/(1+x))\}$, so the channel is rectangular; the exact recovery identity remains valid. For $\epsilon>0$, therefore, the freely chosen successive midpoint reports in Theorem 10.2, and the replayed truthful reports for alternative sources in Theorem 10.4, need not be allowed by (10.9). There is no contradiction. Per-read error bounds alone do not specify joint acquisition power. $\square$
 
 **Corollary 10.6 (transport to the original four views).** Under the same source/epoch, operation and joint-channel contracts, replace the original-word target in Theorems 10.2 and 10.4 by any one of the original exact boundary response, the original root-oriented named-incidence path, the original literal chronology or the original indexed prefix-memory table of §6. The same attainability thresholds and unbounded finite-certification obstruction hold.
 
