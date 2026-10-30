@@ -12,12 +12,12 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-universe u
+universe u_1
 noncomputable section
 
 /-- Equality of the two operands in the square-one hypothesis. -/
 abbrev signature : Signature where
-  Params := Type u
+  Params := Type u_1
   State G := G
   Role := Unit
   finiteRole := inferInstance
@@ -26,22 +26,22 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def actual : Realization signature.{u} :=
+def actual : Realization signature.{u_1} :=
   realize signature (fun _ _ x y => x = y) (fun e => nomatch e)
 
-def rejected : Realization signature.{u} :=
+def rejected : Realization signature.{u_1} :=
   realize signature (fun _ _ _ _ => True) (fun e => nomatch e)
 
 /-- Retain every group, generator set, and commutativity and square-one hypothesis. -/
 abbrev arena : Arena where
-  signature := signature.{u}
-  Law R := ∀ {G : Type u} [Group G] (S : Set G),
+  signature := signature.{u_1}
+  Law R := ∀ {G : Type u_1} [Group G] (S : Set G),
     (∀ x ∈ S, ∀ y ∈ S, x * y = y * x) →
     (∀ x ∈ S, R.readout () G (x * x) 1) → IsPGroup 2 (Subgroup.closure S)
 
-private theorem rejected_law : ¬ arena.{u}.Law rejected := by
+private theorem rejected_law : ¬ arena.{u_1}.Law rejected := by
   intro law
-  have hp := @law (ULift.{u} (Multiplicative ℤ)) inferInstance Set.univ
+  have hp := @law (ULift.{u_1} (Multiplicative ℤ)) inferInstance Set.univ
     (fun x _ y _ => mul_comm x y) (fun _ _ => True.intro)
   rw [Subgroup.closure_univ, isPGroup_iff_pow_pow_eq_one] at hp
   obtain ⟨k, hk⟩ := hp ⟨⟨Multiplicative.ofAdd 1⟩, Subgroup.mem_top _⟩
@@ -51,16 +51,16 @@ private theorem rejected_law : ¬ arena.{u}.Law rejected := by
   simp only [nsmul_eq_mul, mul_one, Nat.cast_pow, Nat.cast_ofNat] at hz
   exact (ne_of_gt hpos) hz
 
-private theorem dependence : ObservationalDependence signature.{u} actual := by
+private theorem dependence : ObservationalDependence signature.{u_1} actual := by
   intro i
-  refine ⟨ULift.{u} Bool, ⟨false⟩, ⟨true⟩, ?_⟩
+  refine ⟨ULift.{u_1} Bool, ⟨false⟩, ⟨true⟩, ?_⟩
   intro h
-  have hbad : (ULift.up true : ULift.{u} Bool) = ULift.up false :=
+  have hbad : (ULift.up true : ULift.{u_1} Bool) = ULift.up false :=
     Eq.mp (congrFun h (ULift.up false)) rfl
   cases congrArg ULift.down hbad
 
-def source_registration : Registration arena.{u}
-    (type_of% (@isPGroup_closure_of_commuting_involutions.{u})) where
+def source_registration : Registration arena.{u_1}
+    (type_of% (@isPGroup_closure_of_commuting_involutions.{u_1})) where
   actual := actual
   bridge := Iff.rfl
   variation := ⟨isPGroup_closure_of_commuting_involutions, rejected, rejected_law⟩
@@ -74,8 +74,8 @@ def source_registration : Registration arena.{u}
 
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
-      (@isPGroup_closure_of_commuting_involutions.{u})
-      (Realization signature.{u}) Unit Unit := {
+      (@isPGroup_closure_of_commuting_involutions.{u_1})
+      (Realization signature.{u_1}) Unit Unit := {
   unitName :=
     `Reg.D5.S3.StatisticalMechanics.CellularAutomata.YangBaxterAutomatonPeriod.unit
   realizationName :=
