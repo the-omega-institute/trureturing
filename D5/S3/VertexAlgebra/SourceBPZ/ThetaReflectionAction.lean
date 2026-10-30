@@ -115,8 +115,8 @@ theorem coevaluation_fixed_under_reflection (D : LatticeData)
     thetaRep D (-1) (coevaluation D h f).val = (coevaluation D h f).val := by
   simpa using coevaluation_fixed_under_theta D h f
 
-end D5.S3.VertexAlgebra.SourceBPZ.ThetaReflectionAction
-
 #print axioms thetaRep
 #print axioms thetaRep_pairing
 #print axioms coevaluation_fixed_under_reflection
+
+end D5.S3.VertexAlgebra.SourceBPZ.ThetaReflectionAction
