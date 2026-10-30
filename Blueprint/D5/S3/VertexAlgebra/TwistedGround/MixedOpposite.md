@@ -12,7 +12,7 @@ For an arbitrary fixed source, each original energy projection is averaged with 
 
 Positive original source energy kills negative fixed grades. If m exceeds the sum of the nonnegative upper bounds for the source energy support and the restricted-dual input support, each opposite term has negative output grade and vanishes. This supplies an actual opposite formal field with standard mode m. No invariant-form identification of the output with the source is used.
 
-This construction is a repository Lean derivation using the existing original source, Sugawara, involution and finite L1 suppliers. It does not assert the full normalized mixed Jacobi identity. The missing identity still requires support-controlled transformation of the three-supported original twisted law, including both right-hand branches.
+This construction is a repository Lean derivation using the existing original source, Sugawara, involution and finite L1 suppliers. MixedJacobiFinite.mixed_jacobi proves the full signed normalized mixed Jacobi identity with this actual opposite action under positive real Gram, unit determinant and rank twenty-four, using support-controlled transformation of the three-supported original twisted law and both right-hand branches. MixedJacobi.actual_leech_vacuum_channel supplies a nonzero I_3 channel on the actual Golay Leech data. Full source BPZ/Riesz identification, skew exchange, three-twisted crossing, full fusion and anomaly structure, complete VOA/CFT, string theory and AdS/CFT remain separate obligations.
 
 **Theorem 1.1 (Exact homogeneous compatibility of the full opposite action).**
 
