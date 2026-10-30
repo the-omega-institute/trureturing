@@ -8,9 +8,6 @@
 
 import D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment
 import D5.S3.QuantumBounds.LandauCommutingCollapse
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Data.Finset.SymmDiff
-import Mathlib.Analysis.Matrix.Order
 
 /-! The symmetric-qubit dilation of linear spin observables gives the CHSH bound. -/
 
@@ -21,6 +18,7 @@ noncomputable section
 open scoped BigOperators Matrix Kronecker ComplexOrder symmDiff
 open Matrix Complex
 open D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment (spinComponent)
+open D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound (Jplus Jx Jy Jz)
 
 namespace D5.S3.QuantumBounds.HighSpinCHSHNonviolation
 
@@ -106,10 +104,6 @@ private lemma dicke_isometry (n : ℕ) : (dicke n)ᴴ * dicke n = 1 := by
       simp [conjTranspose_apply, dicke_entry, hj]
     · simp [conjTranspose_apply, dicke_entry, hi]
 
-private lemma slot_compression (n : ℕ) (r : Fin n) (u : Fin 3 → ℝ) :
-    (dicke n)ᴴ * slotPauli n r u * dicke n = (2 / n : ℂ) • spinComponent n u := by
-  sorry
-
 private lemma slot_entry (n : ℕ) (r : Fin n) (u : Fin 3 → ℝ)
     (x y : Finset (Fin n)) : slotPauli n r u x y =
       (if x = y then (if r ∈ x then -(u 2 : ℂ) else (u 2 : ℂ)) else 0) +
@@ -184,6 +178,228 @@ private lemma slots_commute (n : ℕ) (r t : Fin n) (hrt : r ≠ t)
     (eq_comm : x ∆ {r} = y ↔ y = x ∆ {r}),
     (eq_comm : x ∆ {t} = y ↔ y = x ∆ {t})]
   split_ifs <;> ring
+
+private lemma absent_count (n k : ℕ) (r : Fin n) :
+    (Finset.univ.filter (fun x : Finset (Fin n) => x.card = k ∧ r ∉ x)).card =
+      (n - 1).choose k := by
+  have hf : Finset.univ.filter (fun x : Finset (Fin n) => x.card = k ∧ r ∉ x) =
+      ((Finset.univ : Finset (Fin n)).erase r).powersetCard k := by
+    ext x
+    simp [Finset.subset_erase, and_comm]
+  rw [hf, Finset.card_powersetCard, Finset.card_erase_of_mem (Finset.mem_univ r),
+    Finset.card_univ, Fintype.card_fin]
+
+private lemma flip_card_absent (n : ℕ) (r : Fin n) (x : Finset (Fin n)) (hr : r ∉ x) :
+    (x ∆ {r}).card = x.card + 1 := by
+  have he : x ∆ {r} = insert r x := by
+    ext y
+    by_cases hy : y = r
+    · subst y
+      simp [Finset.mem_symmDiff, hr]
+    · simp [Finset.mem_symmDiff, hy]
+  rw [he, Finset.card_insert_of_notMem hr]
+
+private lemma absent_choose_identity (n k : ℕ) (hn : 0 < n) (hk : k ≤ n) :
+    (n : ℝ) * ((n - 1).choose k : ℝ) = ((n : ℝ) - k) * (n.choose k : ℝ) := by
+  have h := congrArg (fun m : ℕ => (m : ℝ)) (Nat.choose_mul_succ_eq (n - 1) k)
+  rw [Nat.sub_add_cancel (by omega : 1 ≤ n)] at h
+  push_cast [Nat.cast_sub hk] at h
+  nlinarith
+
+private lemma raising_coefficient (n k : ℕ) (hk : k < n) :
+    ((n - 1).choose k : ℝ) * (1 / Real.sqrt (n.choose k : ℝ)) *
+        (1 / Real.sqrt (n.choose (k + 1) : ℝ)) =
+      (1 / n : ℝ) * Real.sqrt (((k : ℝ) + 1) * ((n : ℝ) - k)) := by
+  let a : ℝ := (n - 1).choose k
+  let b : ℝ := n.choose k
+  let c : ℝ := n.choose (k + 1)
+  let q : ℝ := ((k : ℝ) + 1) * ((n : ℝ) - k)
+  have hn : 0 < n := by omega
+  have hnR : 0 < (n : ℝ) := by exact_mod_cast hn
+  have hb : 0 < b := by
+    change 0 < (n.choose k : ℝ)
+    exact_mod_cast Nat.choose_pos (Nat.le_of_lt hk)
+  have hc : 0 < c := by
+    change 0 < (n.choose (k + 1) : ℝ)
+    exact_mod_cast Nat.choose_pos (show k + 1 ≤ n by omega)
+  have ha : 0 ≤ a := Nat.cast_nonneg _
+  have hq : 0 ≤ q := mul_nonneg (by positivity)
+    (sub_nonneg.mpr (by exact_mod_cast hk.le))
+  have h₁ : (n : ℝ) * a = ((n : ℝ) - k) * b :=
+    absent_choose_identity n k hn hk.le
+  have h₂ : (n : ℝ) * a = ((k : ℝ) + 1) * c := by
+    have h := congrArg (fun m : ℕ => (m : ℝ)) (Nat.add_one_mul_choose_eq (n - 1) k)
+    rw [Nat.sub_add_cancel (by omega : 1 ≤ n)] at h
+    push_cast at h
+    nlinarith
+  have hroot : (n : ℝ) * a = Real.sqrt q * Real.sqrt b * Real.sqrt c := by
+    apply (sq_eq_sq₀ (by positivity) (by positivity)).mp
+    calc
+      _ = (((n : ℝ) - k) * b) * (((k : ℝ) + 1) * c) := by
+        rw [pow_two]
+        exact congrArg₂ (· * ·) h₁ h₂
+      _ = _ := by
+        rw [mul_pow, mul_pow, Real.sq_sqrt hq, Real.sq_sqrt hb.le,
+          Real.sq_sqrt hc.le]
+        change _ = (((k : ℝ) + 1) * ((n : ℝ) - k)) * b * c
+        ring
+  change a * (1 / Real.sqrt b) * (1 / Real.sqrt c) = (1 / n : ℝ) * Real.sqrt q
+  have hsb : Real.sqrt b ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr hb)
+  have hsc : Real.sqrt c ≠ 0 := ne_of_gt (Real.sqrt_pos.mpr hc)
+  apply (mul_right_cancel₀ (show (n : ℝ) * Real.sqrt b * Real.sqrt c ≠ 0 by positivity))
+  calc
+    _ = (n : ℝ) * a := by field_simp
+    _ = Real.sqrt q * Real.sqrt b * Real.sqrt c := hroot
+    _ = _ := by field_simp
+
+private def raisingSlot (n : ℕ) (r : Fin n) :
+    Matrix (Finset (Fin n)) (Finset (Fin n)) ℂ :=
+  fun x y => if r ∉ x ∧ y = x ∆ {r} then 1 else 0
+
+private def zSlot (n : ℕ) (r : Fin n) :
+    Matrix (Finset (Fin n)) (Finset (Fin n)) ℂ :=
+  diagonal fun x => if r ∈ x then -1 else 1
+
+private lemma raising_entry (n : ℕ) (r : Fin n) (x y : Finset (Fin n)) :
+    raisingSlot n r x y = if r ∉ x ∧ y = x ∆ {r} then 1 else 0 := rfl
+
+private lemma raising_action (n : ℕ) (r : Fin n) (x : Finset (Fin n)) (j : Fin (n + 1)) :
+    (raisingSlot n r * dicke n) x j = if r ∉ x then dicke n (x ∆ {r}) j else 0 := by
+  by_cases hr : r ∈ x <;> simp [Matrix.mul_apply, raising_entry, hr]
+
+private lemma raising_compression (n : ℕ) (r : Fin n) :
+    (dicke n)ᴴ * raisingSlot n r * dicke n = (1 / n : ℂ) • Jplus n := by
+  ext i j
+  rw [Matrix.mul_assoc, Matrix.mul_apply]
+  have he (x : Finset (Fin n)) :
+      (dicke n)ᴴ i x * (raisingSlot n r * dicke n) x j =
+        if i.val + 1 = j.val then
+          if x.card = i.val ∧ r ∉ x then
+            ((1 / Real.sqrt (n.choose i.val : ℝ) : ℝ) : ℂ) *
+              ((1 / Real.sqrt (n.choose j.val : ℝ) : ℝ) : ℂ) else 0
+        else 0 := by
+    rw [raising_action, conjTranspose_apply]
+    by_cases hr : r ∈ x
+    · simp [hr]
+    · have hf := flip_card_absent n r x hr
+      by_cases hi : x.card = i.val <;> by_cases hij : i.val + 1 = j.val <;>
+        simp [dicke_entry, hr, hf, hi, hij]
+  simp_rw [he]
+  by_cases hij : i.val + 1 = j.val
+  · simp only [if_pos hij]
+    rw [← Finset.sum_filter]
+    simp only [Finset.sum_const, nsmul_eq_mul, absent_count, Matrix.smul_apply,
+      smul_eq_mul]
+    have hk : i.val < n := by have := j.isLt; omega
+    have hjR : (j.val : ℝ) = (i.val : ℝ) + 1 := by exact_mod_cast hij.symm
+    have hJ : Jplus n i j =
+        (Real.sqrt (((i.val : ℝ) + 1) * ((n : ℝ) - i.val)) : ℂ) := by
+      change (if i.val + 1 = j.val then _ else 0) = _
+      rw [if_pos hij]
+      congr 1
+      rw [hjR]
+      congr 1
+      ring
+    rw [hJ, ← hij]
+    have hh := raising_coefficient n i.val hk
+    have hhC := congrArg Complex.ofReal hh
+    push_cast at hhC ⊢
+    simpa only [mul_assoc] using hhC
+  · simp only [if_neg hij, Finset.sum_const_zero, Matrix.smul_apply, smul_eq_mul]
+    change 0 = (1 / n : ℂ) * (if i.val + 1 = j.val then _ else 0)
+    rw [if_neg hij, mul_zero]
+
+private lemma z_compression (n : ℕ) (r : Fin n) :
+    (dicke n)ᴴ * zSlot n r * dicke n = (2 / n : ℂ) • Jz n := by
+  have hsum (k : ℕ) :
+      (∑ x : Finset (Fin n), if x.card = k then (if r ∈ x then (-1 : ℂ) else 1) else 0) =
+        2 * ((n - 1).choose k : ℂ) - (n.choose k : ℂ) := by
+    have he (x : Finset (Fin n)) :
+        (if x.card = k then (if r ∈ x then (-1 : ℂ) else 1) else 0) =
+          2 * (if x.card = k ∧ r ∉ x then (1 : ℂ) else 0) -
+            (if x.card = k then 1 else 0) := by
+      by_cases hx : x.card = k <;> by_cases hr : r ∈ x <;> norm_num [hx, hr]
+    simp_rw [he]
+    rw [Finset.sum_sub_distrib, ← Finset.mul_sum]
+    simp only [← Finset.sum_filter, Finset.sum_const, nsmul_eq_mul, mul_one,
+      absent_count, weight_count]
+  ext i j
+  change ((dicke n)ᴴ * (diagonal (fun x => if r ∈ x then (-1 : ℂ) else 1) :
+      Matrix (Finset (Fin n)) (Finset (Fin n)) ℂ) * dicke n) i j =
+    (2 / n : ℂ) * diagonal (fun k : Fin (n + 1) => (((n : ℝ) / 2 - k.val : ℝ) : ℂ)) i j
+  rw [Matrix.mul_assoc, Matrix.mul_apply]
+  simp only [Matrix.diagonal_mul, conjTranspose_apply]
+  by_cases hij : i = j
+  · subst j
+    have he (x : Finset (Fin n)) :
+        star (dicke n x i) * ((if r ∈ x then (-1 : ℂ) else 1) * dicke n x i) =
+          (((1 / Real.sqrt (n.choose i.val : ℝ) : ℝ) : ℂ)) ^ 2 *
+            (if x.card = i.val then (if r ∈ x then (-1 : ℂ) else 1) else 0) := by
+      by_cases hx : x.card = i.val <;> simp [dicke_entry, hx] <;> ring
+    simp_rw [he]
+    rw [← Finset.mul_sum, hsum, Matrix.diagonal_apply_eq]
+    have hn : 0 < n := by have := r.isLt; omega
+    have hnR : (n : ℝ) ≠ 0 := by exact_mod_cast (Nat.ne_of_gt hn)
+    have hc : (n.choose i.val : ℝ) ≠ 0 := by
+      exact_mod_cast (Nat.ne_of_gt (Nat.choose_pos (by omega : i.val ≤ n)))
+    have hA := absent_choose_identity n i.val hn (show i.val ≤ n by omega)
+    have hh : (1 / Real.sqrt (n.choose i.val : ℝ)) ^ 2 *
+        (2 * ((n - 1).choose i.val : ℝ) - (n.choose i.val : ℝ)) =
+        (2 / n : ℝ) * ((n : ℝ) / 2 - i.val) := by
+      rw [div_pow, one_pow, Real.sq_sqrt (Nat.cast_nonneg _)]
+      field_simp
+      nlinarith [hA]
+    have hhC := congrArg Complex.ofReal hh
+    push_cast at hhC ⊢
+    exact hhC
+  · rw [Matrix.diagonal_apply_ne _ hij, mul_zero]
+    apply Finset.sum_eq_zero
+    intro x _
+    by_cases hi : x.card = i.val
+    · have hj : x.card ≠ j.val := fun hj => hij (Fin.ext (hi.symm.trans hj))
+      simp [dicke_entry, hj]
+    · simp [dicke_entry, hi]
+
+private lemma slot_decomposition (n : ℕ) (r : Fin n) (u : Fin 3 → ℝ) :
+    slotPauli n r u = ((u 0 : ℂ) - I * (u 1 : ℂ)) • raisingSlot n r +
+      ((u 0 : ℂ) + I * (u 1 : ℂ)) • (raisingSlot n r)ᴴ + (u 2 : ℂ) • zSlot n r := by
+  have hz (x y : Finset (Fin n)) : zSlot n r x y =
+      if x = y then (if r ∈ x then (-1 : ℂ) else 1) else 0 := rfl
+  ext x y
+  simp only [slot_entry, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, conjTranspose_apply,
+    raising_entry, hz]
+  by_cases hxy : x = y
+  · subst y
+    have hf := flip_ne n r x
+    by_cases hr : r ∈ x <;> simp [hr, Ne.symm hf]
+  · by_cases hy : y = x ∆ {r}
+    · subst y
+      have hf := flip_ne n r x
+      by_cases hr : r ∈ x <;>
+        simp [hf, Ne.symm hf, symmDiff_symmDiff_cancel_right, Finset.mem_symmDiff, hr] <;> ring
+    · have hx : x ≠ y ∆ {r} := fun h => hy ((flip_eq n r x y).mp h)
+      simp [hxy, hy, hx]
+
+private lemma slot_compression (n : ℕ) (r : Fin n) (u : Fin 3 → ℝ) :
+    (dicke n)ᴴ * slotPauli n r u * dicke n = (2 / n : ℂ) • spinComponent n u := by
+  have hadj : (dicke n)ᴴ * (raisingSlot n r)ᴴ * dicke n =
+      (1 / n : ℂ) • (Jplus n)ᴴ := by
+    have h := congrArg (fun m : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ => mᴴ)
+      (raising_compression n r)
+    simpa only [conjTranspose_mul, conjTranspose_conjTranspose, conjTranspose_smul,
+      star_div₀, star_one, star_natCast, Matrix.mul_assoc] using h
+  rw [slot_decomposition]
+  simp only [Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul, Matrix.smul_mul]
+  rw [raising_compression, hadj, z_compression]
+  change _ = (2 / n : ℂ) •
+    ((u 0 : ℂ) • ((1 / 2 : ℂ) • (Jplus n + (Jplus n)ᴴ)) +
+      (u 1 : ℂ) • ((1 / (2 * I) : ℂ) • (Jplus n - (Jplus n)ᴴ)) + (u 2 : ℂ) • Jz n)
+  have hI : (1 / (2 * I) : ℂ) = -I / 2 := by
+    apply Complex.ext <;> norm_num [Complex.div_re, Complex.div_im]
+  rw [hI]
+  ext i j
+  simp only [Matrix.smul_apply, Matrix.add_apply, Matrix.sub_apply, smul_eq_mul]
+  ring
 
 private lemma dilation_isometry (n : ℕ) : (dilation n)ᴴ * dilation n = 1 := by
   change (dicke n ⊗ₖ dicke n)ᴴ * (dicke n ⊗ₖ dicke n) = 1
