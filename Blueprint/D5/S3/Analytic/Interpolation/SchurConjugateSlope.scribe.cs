@@ -15,7 +15,7 @@ internal sealed class SchurConjugateSlopeDocument : IScribeDocumentDefinition
     private static Formula C => Seq(Mathbb, Grp(F.Id("C")));
     private static Formula Functions => Seq(C, Sp, To, Sp, C);
     private static Formula All(string v, Formula type, Formula body) =>
-        Seq(Forall, Sp, F.Id(v), Sp, Colon, Sp, type, Comma, Sp, body);
+        Seq(Open, Forall, Sp, F.Id(v), Sp, Colon, Sp, type, Comma, Sp, body, Close);
     private static Formula Eqn(Formula l, Formula r) => Seq(l, Sp, Eq, Sp, r);
     private static Formula S(Formula a) => Call("S", G, a, B);
     private static Formula I(Formula a) => Call("interpolant", G, a, B);
@@ -34,9 +34,9 @@ internal sealed class SchurConjugateSlopeDocument : IScribeDocumentDefinition
     private static Formula Sharp => Seq(D(1), Plus, Call("abs", A));
     private static Formula Error(Formula x) => Call("actualError", G, A, B, x);
     private static Formula On(string v, Formula domain, Formula body) =>
-        Seq(Forall, Sp, F.Id(v), Sp, InMacro, Sp, domain, Comma, Sp, body);
+        Seq(Open, Forall, Sp, F.Id(v), Sp, InMacro, Sp, domain, Comma, Sp, body, Close);
     private static Formula Some(string v, Formula domain, Formula body) =>
-        Seq(Exists, Sp, F.Id(v), Sp, InMacro, Sp, domain, Comma, Sp, body);
+        Seq(Open, Exists, Sp, F.Id(v), Sp, InMacro, Sp, domain, Comma, Sp, body, Close);
     private static Formula InnerAttainment => Seq(
         Call("Nonempty", V), Sp, Land, Sp, Call("BddAbove", V), Sp, Land, Sp,
         Some("z", Call("closedBall", D(0), D(1)), Eqn(Call("M", G), Call("normSecondDerivative", G, Z))),
@@ -76,16 +76,16 @@ internal sealed class SchurConjugateSlopeDocument : IScribeDocumentDefinition
             Entry("interpolant", "interpolant", "The original two-node Lagrange expression",
                 Disp(All("g", Functions, All("a", R, All("b", R, All("z", C,
                     Eqn(Call("interpolant", G, A, B, Z), Seq(
-                        Frac, Grp(Z, Minus, Grp(A, Minus, B, F.Id("i"))), Grp(D(2), B, F.Id("i")),
+                        Frac, Grp(Z, Minus, Open, A, Minus, B, F.Id("i"), Close), Grp(D(2), B, F.Id("i")),
                         Call("g", Seq(A, Plus, B, F.Id("i"))), Plus,
-                        Frac, Grp(Grp(A, Plus, B, F.Id("i")), Minus, Z), Grp(D(2), B, F.Id("i")),
+                        Frac, Grp(Open, A, Plus, B, F.Id("i"), Close, Minus, Z), Grp(D(2), B, F.Id("i")),
                         Call("g", Seq(A, Minus, B, F.Id("i")))))))))),
                 "For b>0 the displayed affine polynomial interpolates g at the distinct conjugate nodes. The formula uses complex division.", DescribeRole.Definition),
             Entry("nodal", "nodalPolynomial", "The actual nodal polynomial",
                 Disp(All("a", R, All("b", R, All("z", C,
                     Eqn(Call("nodalPolynomial", A, B, Z), Seq(
-                        Grp(Z, Minus, Grp(A, Plus, B, F.Id("i"))),
-                        Grp(Z, Minus, Grp(A, Minus, B, F.Id("i"))))))))),
+                        Seq(Open, Z, Minus, Open, A, Plus, B, F.Id("i"), Close, Close),
+                        Seq(Open, Z, Minus, Open, A, Minus, B, F.Id("i"), Close, Close))))))),
                 "The polynomial is the original product (z-(a+ib))(z-(a-ib)). Its derivative is 2(z-a), including for every nonreal unit-circle pair.", DescribeRole.Definition),
             Entry("nodal-norm", "nodalDerivativeNorm", "The original nodal derivative norm",
                 Disp(All("a", R, All("b", R, Eqn(Call("nodalDerivativeNorm", A, B),
@@ -137,7 +137,7 @@ internal sealed class SchurConjugateSlopeDocument : IScribeDocumentDefinition
                     Open, All("x", R, Eqn(Call("actualError", G, A, B, F.Id("x")),
                         Call("abs", Seq(F.Id("x"), Minus, A)))), Close, Sp, Land, Sp,
                     Call("sSup", Call("V", G, A, B)), Sp, Eq, Sp, D(1), Plus, Call("abs", A), Sp, Land, Sp,
-                    Eqn(Call("nodalDerivativeNorm", A, B), Seq(D(2), Grp(D(1), Plus, Call("abs", A)))),
+                    Eqn(Call("nodalDerivativeNorm", A, B), Seq(D(2), Open, D(1), Plus, Call("abs", A), Close)),
                     Sp, Land, Sp, Eqn(Seq(Frac, Grp(D(1)), Grp(D(2)), Call("nodalDerivativeNorm", A, B)),
                         Seq(D(1), Plus, Call("abs", A))), Sp, Land, Sp,
                     Exists, Sp, F.Id("x"), Sp, InMacro, Sp, Call("Icc", Seq(Minus, D(1)), D(1)), Comma, Sp,

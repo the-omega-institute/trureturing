@@ -17,6 +17,8 @@ internal sealed class SchurBoundaryKernelDocument : IScribeDocumentDefinition
     private static Formula All(string v, Formula type, Formula body) =>
         Seq(Forall, Sp, F.Id(v), Sp, Colon, Sp, type, Comma, Sp, body);
     private static Formula Eqn(Formula l, Formula r) => Seq(l, Sp, Eq, Sp, r);
+    private static Formula Integral(string v, Formula lo, Formula hi, Formula body) =>
+        Call("integral", lo, hi, Seq(Open, F.Id(v), Sp, Colon, Sp, R, Close, Sp, Mapsto, Sp, body));
     private static Formula Term => Call("boundaryTerm", B, T, J);
     private static Formula Kernel(Formula t) => Call("boundaryKernel", B, t);
     private static Formula Pow(Formula x, Formula n) => new Formula.Power(x, n);
@@ -27,8 +29,8 @@ internal sealed class SchurBoundaryKernelDocument : IScribeDocumentDefinition
         H("The boundary kernel of the imaginary-axis primitive average"), Blocks(
             Entry("term", "boundaryTerm", "The actual Fourier term",
                 Disp(All("b", R, All("t", R, All("j", N, Eqn(Term,
-                    Seq(Frac, Grp(D(2), Pow(Grp(Minus, D(1)), Seq(J, Plus, D(1))), Pow(B, Twoj(D(2)))),
-                        Grp(Grp(Twoj(D(2))), Grp(Twoj(D(3)))), Call("cos", Seq(Grp(Twoj(D(1))), T)))))))),
+                    Seq(Frac, Grp(D(2), Pow(Seq(Open, Minus, D(1), Close), Seq(J, Plus, D(1))), Pow(B, Twoj(D(2)))),
+                        Grp(Open, Twoj(D(2)), Close, Open, Twoj(D(3)), Close), Call("cos", Seq(Open, Twoj(D(1)), Close, T)))))))),
                 "The term is 2(-1)^(j+1)b^(2j+2) cos((2j+1)t)/((2j+2)(2j+3)). These are the coefficients of B_b in the source; no sign or size contract is postulated.", DescribeRole.Definition),
             Entry("kernel", "boundaryKernel", "The source Fourier series",
                 Disp(All("b", R, All("t", R, Eqn(Kernel(T), Call("tsum", Call("boundaryTerm", B, T)))))),
@@ -55,9 +57,9 @@ internal sealed class SchurBoundaryKernelDocument : IScribeDocumentDefinition
                     Eqn(Call("H", D(0)), D(0)), Sp, Land, Sp,
                     D(0), Sp, Lt, Sp, B, Sp, Le, Sp, D(1), Sp, Implies, Sp,
                     Eqn(Seq(Frac, Grp(D(1)), Grp(D(2), B),
-                            Call("integral", Seq(Minus, B), B, Call("H", Seq(F.Id("i"), T)))),
+                            Integral("t", Seq(Minus, B), B, Call("H", Seq(F.Id("i"), T)))),
                         Seq(Frac, Grp(D(1)), Grp(D(2), Pi),
-                            Call("integral", D(0), Seq(D(2), Pi),
+                            Integral("t", D(0), Seq(D(2), Pi),
                                 Seq(Call("h", Call("circleMap", D(0), D(1), T)), Kernel(T)))))))))),
                 "Let h be any entire complex-valued function and let H have complex derivative h everywhere and H(0)=0. Then the normalized integral of H(it) from -b to b is the circle pairing of h with the actual real Fourier kernel, for every 0<b<=1. The primitive is entire because it is complex differentiable everywhere; existence of a normalized entire primitive follows from the exact primitive theorem on the complex plane. For 0<b<1, the Cauchy mean formula gives the average of h(z)/(z-w). Applying it at w=ir and w=-ir, and conjugating only the rational kernel z/(1+r squared z squared) on the unit circle, gives its real-part pairing. Continuity and compact product integrability justify exchanging the time and angle integrals. The fundamental theorem of calculus applied to (1-t)(H(ibt)+H(-ibt)) identifies the resulting weighted integral. Real changes of variables give the displayed vertical-segment average. Joint continuity of the actual kernel and compact parameter integrals extend the identity to b=1. No conjugation identity for h or H is assumed, and all coefficients remain arbitrary complex numbers.", DescribeRole.Theorem))));
 
