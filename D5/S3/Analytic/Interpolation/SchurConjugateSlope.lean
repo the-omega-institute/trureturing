@@ -10,6 +10,8 @@ import Mathlib.Analysis.Complex.CauchyIntegral
 import Mathlib.Analysis.Complex.RealDeriv
 import Mathlib.Analysis.Calculus.MeanValue
 
+/-! Actual entire-function conjugate slopes and original compact suprema. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -113,6 +115,19 @@ def outerValues (a b : ℝ) : Set ℝ :=
 
 def uniformError (a b : ℝ) : ℝ := sSup (outerValues a b)
 
+private theorem diskNorm_attained (g : ℂ → ℂ) (hg : Differentiable ℂ g) :
+    ∃ z ∈ closedBall (0 : ℂ) 1, diskNorm g = ‖deriv (deriv g) z‖ :=
+  (isCompact_closedBall (0 : ℂ) 1).exists_sSup_image_eq
+    ⟨0, by simp⟩ hg.deriv.deriv.continuous.norm.continuousOn
+
+private theorem innerSup_attained (g : ℂ → ℂ) (hg : Differentiable ℂ g) (a b : ℝ) :
+    ∃ x ∈ Icc (-1 : ℝ) 1,
+      sSup (innerValues g a b) = ‖deriv g x - deriv (interpolant g a b) x‖ := by
+  have hc : Continuous (fun x : ℝ => ‖deriv g x - deriv (interpolant g a b) x‖) := by
+    simp_rw [interpolant_deriv]
+    exact ((hg.deriv.continuous.comp Complex.continuous_ofReal).sub continuous_const).norm
+  exact isCompact_Icc.exists_sSup_image_eq ⟨0, by norm_num⟩ hc.continuousOn
+
 private theorem coarse_error_bound (g : ℂ → ℂ) (hg : Differentiable ℂ g) (a b x : ℝ)
     (hb : 0 < b) (hab : a ^ 2 + b ^ 2 ≤ 1) (hx : x ∈ Icc (-1 : ℝ) 1) :
     ‖deriv g x - deriv (interpolant g a b) x‖ ≤ 2 * diskNorm g := by
@@ -210,17 +225,33 @@ private theorem quadratic_sup (a b : ℝ) (hb : 0 < b) :
       ring
   exact le_antisymm (csSup_le ⟨_, hatt⟩ hbound) (le_csSup ⟨_, hbound⟩ hatt)
 
+private theorem quadratic_norm : diskNorm quadratic = 1 := by
+  apply le_antisymm quadratic_member.2
+  apply le_csSup (diskNorm_bdd quadratic quadratic_member.1)
+  refine ⟨0, by simp, ?_⟩
+  simp [quadratic_second]
+
 /-- Both original supremum levels are nonempty and bounded; the actual quadratic supplies
     the sharp proposed lower value. The separate sharp upper estimate is not assumed. -/
 theorem original_suprema_bounded (a b : ℝ) (hb : 0 < b) (hab : a ^ 2 + b ^ 2 ≤ 1) :
     entireClass.Nonempty ∧
-    (∀ g ∈ entireClass, (innerValues g a b).Nonempty ∧ BddAbove (innerValues g a b)) ∧
+    (∀ g ∈ entireClass, (innerValues g a b).Nonempty ∧ BddAbove (innerValues g a b) ∧
+      (∃ z ∈ closedBall (0 : ℂ) 1, diskNorm g = ‖deriv (deriv g) z‖) ∧
+      ∃ x ∈ Icc (-1 : ℝ) 1,
+        sSup (innerValues g a b) = ‖deriv g x - deriv (interpolant g a b) x‖) ∧
     (outerValues a b).Nonempty ∧ BddAbove (outerValues a b) ∧
     1 + |a| ≤ uniformError a b ∧ uniformError a b ≤ 2 ∧
-    ∃ g ∈ entireClass, sSup (innerValues g a b) = 1 + |a| := by
+    ∃ g ∈ entireClass, g = (fun z => z ^ 2 / 2) ∧ diskNorm g = 1 ∧
+      slope g a b = a ∧ (∀ x : ℝ,
+        ‖deriv g x - deriv (interpolant g a b) x‖ = |x - a|) ∧
+      sSup (innerValues g a b) = 1 + |a| := by
   have hinner (g : ℂ → ℂ) (hg : g ∈ entireClass) :
-      (innerValues g a b).Nonempty ∧ BddAbove (innerValues g a b) := by
-    refine ⟨⟨_, 0, by norm_num, rfl⟩, ⟨2, ?_⟩⟩
+      (innerValues g a b).Nonempty ∧ BddAbove (innerValues g a b) ∧
+      (∃ z ∈ closedBall (0 : ℂ) 1, diskNorm g = ‖deriv (deriv g) z‖) ∧
+      ∃ x ∈ Icc (-1 : ℝ) 1,
+        sSup (innerValues g a b) = ‖deriv g x - deriv (interpolant g a b) x‖ := by
+    refine ⟨⟨_, 0, by norm_num, rfl⟩, ⟨2, ?_⟩,
+      diskNorm_attained g hg.1, innerSup_attained g hg.1 a b⟩
     rintro v ⟨x, hx, rfl⟩
     exact (coarse_error_bound g hg.1 a b x hb hab hx).trans (by linarith [hg.2])
   have hout : (outerValues a b).Nonempty :=
@@ -232,7 +263,8 @@ theorem original_suprema_bounded (a b : ℝ) (hb : 0 < b) (hab : a ^ 2 + b ^ 2 �
     rintro w ⟨x, hx, rfl⟩
     exact (coarse_error_bound g hg.1 a b x hb hab hx).trans (by linarith [hg.2])
   refine ⟨⟨quadratic, quadratic_member⟩, hinner, hout, hbout, ?_, ?_,
-    quadratic, quadratic_member, quadratic_sup a b hb⟩
+    quadratic, quadratic_member, rfl, quadratic_norm, quadratic_slope a b hb,
+    (fun x => quadratic_error a b x hb), quadratic_sup a b hb⟩
   · apply le_csSup hbout
     exact ⟨quadratic, quadratic_member, quadratic_sup a b hb⟩
   · apply csSup_le hout

@@ -12,6 +12,8 @@ import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Analysis.Complex.Poisson
 
+/-! The actual Fourier kernel and its closed-domain analytic controls. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -141,7 +143,9 @@ private theorem density_integral (b θ : ℝ) (j : ℕ) :
     funext t
     rw [show 2 * j + 2 = (2 * j + 1) + 1 by omega, pow_succ]
     ring
-  rw [he, intervalIntegral.integral_sub (by fun_prop) (by fun_prop),
+  rw [he, intervalIntegral.integral_sub
+    ((show Continuous (fun t : ℝ => t ^ (2 * j + 1)) by fun_prop).intervalIntegrable 0 1)
+    ((show Continuous (fun t : ℝ => t ^ (2 * j + 2)) by fun_prop).intervalIntegrable 0 1),
     integral_pow, integral_pow]
   simp only [one_pow, zero_pow (by omega : 2 * j + 1 + 1 ≠ 0),
     zero_pow (by omega : 2 * j + 2 + 1 ≠ 0), sub_zero]
@@ -222,6 +226,219 @@ private theorem kernel_sign_interior (b θ : ℝ) (hb0 : 0 ≤ b) (hb1 : b < 1) 
   nlinarith [sq_nonneg (Real.cos θ), sq_nonneg b,
     mul_nonneg (mul_nonneg (sq_nonneg b) (sq_nonneg (Real.cos θ))) hi]
 
+private theorem term_integral_zero (b : ℝ) (j : ℕ) :
+    (∫ θ in (0 : ℝ)..(2 * Real.pi), boundaryTerm b θ j) = 0 := by
+  unfold boundaryTerm
+  rw [intervalIntegral.integral_const_mul]
+  have hk : 2 * (j : ℝ) + 1 ≠ 0 := by positivity
+  rw [intervalIntegral.integral_comp_mul_left Real.cos hk, integral_cos]
+  have he : (2 * (j : ℝ) + 1) * (2 * Real.pi) =
+      ((4 * j + 2 : ℕ) : ℝ) * Real.pi := by push_cast; ring
+  simp [he, Real.sin_nat_mul_pi]
+
+private theorem kernel_mean_zero {b : ℝ} (hb : b ∈ Icc (0 : ℝ) 1) :
+    (∫ θ in (0 : ℝ)..(2 * Real.pi), boundaryKernel b θ) = 0 := by
+  have hsum := intervalIntegral.hasSum_integral_of_dominated_convergence
+    (μ := volume) (a := (0 : ℝ)) (b := (2 * Real.pi))
+    (F := fun j θ => boundaryTerm b θ j) (f := boundaryKernel b)
+    (fun j (_ : ℝ) => majorant j)
+    (fun j => (show Continuous (fun θ => boundaryTerm b θ j) by
+      unfold boundaryTerm; fun_prop).aestronglyMeasurable)
+    (fun j => .of_forall (fun θ _ => term_norm_le hb θ j))
+    (.of_forall (fun _ _ => majorant_summable)) intervalIntegrable_const
+    (.of_forall (fun θ _ =>
+      ((majorant_summable.of_nonneg_of_le (fun _ => norm_nonneg _)
+        (term_norm_le hb θ)).of_norm).hasSum))
+  simp_rw [term_integral_zero] at hsum
+  simpa using hsum.tsum_eq.symm
+
+private def kernelQ (t c : ℝ) : ℝ :=
+  2 * c * t * (1 + t ^ 2) / ((1 - t ^ 2) ^ 2 + 4 * c ^ 2 * t ^ 2)
+
+private theorem kernelQ_den_pos {t c : ℝ} (hc : 0 < c) :
+    0 < (1 - t ^ 2) ^ 2 + 4 * c ^ 2 * t ^ 2 := by
+  by_cases ht : t = 0
+  · simp [ht]
+  · have h : 0 < 4 * c ^ 2 * t ^ 2 := by positivity
+    nlinarith [sq_nonneg (1 - t ^ 2)]
+
+private theorem kernelQ_nonneg {t c : ℝ} (ht : 0 ≤ t) (hc : 0 < c) :
+    0 ≤ kernelQ t c := div_nonneg (by positivity) (kernelQ_den_pos hc).le
+
+private theorem kernelQ_small {t c : ℝ} (ht : t ∈ Icc (0 : ℝ) (1 / 3))
+    (hc : c ∈ Ioc (0 : ℝ) 1) : kernelQ t c ≤ 2 * t / (1 + t ^ 2) := by
+  have h1 : 0 ≤ 1 - t ^ 2 - 2 * t := by nlinarith [ht.1, ht.2]
+  have h2 : 0 ≤ (1 - t ^ 2) ^ 2 - 4 * c * t ^ 2 := by
+    nlinarith [sq_nonneg (1 - t ^ 2 - 2 * t),
+      mul_nonneg h1 (by nlinarith : 0 ≤ 1 - t ^ 2 + 2 * t),
+      mul_nonneg (sub_nonneg.mpr hc.2) (sq_nonneg t)]
+  have h3 := mul_nonneg (sub_nonneg.mpr hc.2) h2
+  have h4 := mul_nonneg ht.1 h3
+  unfold kernelQ
+  apply (div_le_div_iff₀ (kernelQ_den_pos hc.1) (by positivity)).mpr
+  nlinarith
+
+private def smallEnvelope (t : ℝ) : ℝ := 2 * t * (1 - t) * (1 - (9 / 10) * t ^ 2)
+private def largeEnvelope (t : ℝ) : ℝ :=
+  3 / 8 + t / 8 - (3 / 16) * (t - 1 / 3) * (1 - t)
+
+private theorem kernelQ_small_envelope {t c : ℝ}
+    (ht : t ∈ Icc (0 : ℝ) (1 / 3)) (hc : c ∈ Ioc (0 : ℝ) 1) :
+    (1 - t) * kernelQ t c ≤ smallEnvelope t := by
+  have ht1 : t ≤ 1 := ht.2.trans (by norm_num)
+  have h := mul_le_mul_of_nonneg_left (kernelQ_small ht hc) (sub_nonneg.mpr ht1)
+  apply h.trans
+  unfold smallEnvelope
+  rw [mul_div_assoc]
+  apply (div_le_iff₀ (by positivity : 0 < 1 + t ^ 2)).mpr
+  have hpoly : 0 ≤ t ^ 2 * (1 - 9 * t ^ 2) := by
+    apply mul_nonneg (sq_nonneg t)
+    nlinarith [ht.1, ht.2]
+  have hmul := mul_nonneg (mul_nonneg ht.1 (sub_nonneg.mpr ht1)) hpoly
+  nlinarith
+
+private theorem kernelQ_large_envelope {t c : ℝ}
+    (ht : t ∈ Icc (1 / 3 : ℝ) 1) (hc : c ∈ Ioc (0 : ℝ) 1) :
+    (1 - t) * kernelQ t c ≤ largeEnvelope t := by
+  have ht0 : 0 ≤ t := (by norm_num : (0 : ℝ) ≤ 1 / 3).trans ht.1
+  have hfirst : (1 - t) * kernelQ t c ≤ (1 + t ^ 2) / (2 * (1 + t)) := by
+    unfold kernelQ
+    rw [mul_div_assoc]
+    apply (div_le_div_iff₀ (kernelQ_den_pos hc.1) (by positivity)).mpr
+    have h := mul_nonneg (show 0 ≤ 1 + t ^ 2 by positivity)
+      (sq_nonneg (1 - t ^ 2 - 2 * c * t))
+    nlinarith
+  apply hfirst.trans
+  apply (div_le_iff₀ (by positivity : 0 < 2 * (1 + t))).mpr
+  unfold largeEnvelope
+  have h := mul_nonneg (by linarith : 0 ≤ 3 * t - 1) (sq_nonneg (t - 1))
+  nlinarith
+
+private theorem envelope_integrals :
+    (∫ t in (0 : ℝ)..(1 / 3), smallEnvelope t) = 667 / 8100 ∧
+    (∫ t in (1 / 3 : ℝ)..1, largeEnvelope t) = 8 / 27 := by
+  constructor
+  · have hd (t : ℝ) : HasDerivAt
+        (fun t : ℝ => t ^ 2 - (2 / 3) * t ^ 3 - (9 / 20) * t ^ 4 + (9 / 25) * t ^ 5)
+        (smallEnvelope t) t := by
+      convert ((((hasDerivAt_id t).pow 2).sub
+        (((hasDerivAt_id t).pow 3).const_mul (2 / 3))).sub
+        (((hasDerivAt_id t).pow 4).const_mul (9 / 20))).add
+        (((hasDerivAt_id t).pow 5).const_mul (9 / 25)) using 1 <;>
+        dsimp [smallEnvelope] <;> ring
+    rw [intervalIntegral.integral_eq_sub_of_hasDerivAt (fun t _ => hd t)
+      ((show Continuous smallEnvelope by unfold smallEnvelope; fun_prop).intervalIntegrable _ _)]
+    norm_num
+  · have hd (t : ℝ) : HasDerivAt
+        (fun t : ℝ => (7 / 16) * t - (1 / 16) * t ^ 2 + (1 / 16) * t ^ 3)
+        (largeEnvelope t) t := by
+      convert (((hasDerivAt_id t).const_mul (7 / 16)).sub
+        (((hasDerivAt_id t).pow 2).const_mul (1 / 16))).add
+        (((hasDerivAt_id t).pow 3).const_mul (1 / 16)) using 1 <;>
+        dsimp [largeEnvelope] <;> ring
+    rw [intervalIntegral.integral_eq_sub_of_hasDerivAt (fun t _ => hd t)
+      ((show Continuous largeEnvelope by unfold largeEnvelope; fun_prop).intervalIntegrable _ _)]
+    norm_num
+
+private theorem kernelQ_integral_bound {c : ℝ} (hc : c ∈ Ioc (0 : ℝ) 1) :
+    (∫ t in (0 : ℝ)..1, (1 - t) * kernelQ t c) ≤ 3067 / 8100 := by
+  have hcont : Continuous (fun t : ℝ => (1 - t) * kernelQ t c) := by
+    unfold kernelQ
+    exact (continuous_const.sub continuous_id).mul
+      (by fun_prop (disch := exact (kernelQ_den_pos hc.1).ne'))
+  have hsmall := intervalIntegral.integral_mono_on (by norm_num : (0 : ℝ) ≤ 1 / 3)
+    (hcont.intervalIntegrable 0 (1 / 3))
+    ((show Continuous smallEnvelope by unfold smallEnvelope; fun_prop).intervalIntegrable _ _)
+    (fun t ht => kernelQ_small_envelope ht hc)
+  have hlarge := intervalIntegral.integral_mono_on (by norm_num : (1 / 3 : ℝ) ≤ 1)
+    (hcont.intervalIntegrable (1 / 3) 1)
+    ((show Continuous largeEnvelope by unfold largeEnvelope; fun_prop).intervalIntegrable _ _)
+    (fun t ht => kernelQ_large_envelope ht hc)
+  rw [← intervalIntegral.integral_add_adjacent_intervals
+    (hcont.intervalIntegrable 0 (1 / 3)) (hcont.intervalIntegrable (1 / 3) 1)]
+  rw [envelope_integrals.1] at hsmall
+  rw [envelope_integrals.2] at hlarge
+  linarith
+
+private theorem kernel_size_interior (b θ : ℝ) (hb0 : 0 ≤ b) (hb1 : b < 1) :
+    |boundaryKernel b θ| ≤ 3067 / 8100 := by
+  by_cases hb : b = 0
+  · simp [boundaryKernel, boundaryTerm, hb]
+  have hbpos : 0 < b := lt_of_le_of_ne hb0 (Ne.symm hb)
+  by_cases hz : Real.cos θ = 0
+  · rw [kernel_integral_interior b θ hb0 hb1, hz]
+    norm_num
+  let c := |Real.cos θ|
+  have hc : c ∈ Ioc (0 : ℝ) 1 := ⟨abs_pos.mpr hz, Real.abs_cos_le_one θ⟩
+  have hden (t : ℝ) :
+      (1 - (b * t) ^ 2) ^ 2 + 4 * c ^ 2 * (b * t) ^ 2 =
+        (1 - b ^ 2 * t ^ 2) ^ 2 + 4 * b ^ 2 * t ^ 2 * Real.cos θ ^ 2 := by
+    dsimp [c]
+    rw [sq_abs]
+    ring
+  have hi : 0 ≤ ∫ t in (0 : ℝ)..1,
+      t * (1 - t) * (1 + b ^ 2 * t ^ 2) /
+        ((1 - b ^ 2 * t ^ 2) ^ 2 + 4 * b ^ 2 * t ^ 2 * Real.cos θ ^ 2) := by
+    apply intervalIntegral.integral_nonneg (by norm_num)
+    intro t ht
+    apply div_nonneg
+    · positivity [ht.1, sub_nonneg.mpr ht.2]
+    · positivity
+  have hrep : |boundaryKernel b θ| =
+      ∫ t in (0 : ℝ)..1, b * (1 - t) * kernelQ (b * t) c := by
+    rw [kernel_integral_interior b θ hb0 hb1]
+    simp only [abs_mul, abs_neg, abs_pow,
+      abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 2), abs_of_nonneg hb0, abs_of_nonneg hi]
+    change 2 * b ^ 2 * c * _ = _
+    rw [← intervalIntegral.integral_const_mul]
+    apply intervalIntegral.integral_congr
+    intro t
+    simp only [kernelQ, hden]
+    ring
+  let f : ℝ → ℝ := fun t => (1 - t) * kernelQ t c
+  have hcont : Continuous f := by
+    unfold f kernelQ
+    fun_prop (disch := exact (kernelQ_den_pos hc.1).ne')
+  have hcontLeft : Continuous (fun t : ℝ => b * (1 - t) * kernelQ (b * t) c) := by
+    unfold kernelQ
+    fun_prop (disch := exact (kernelQ_den_pos hc.1).ne')
+  have hpoint (t : ℝ) (ht : t ∈ Icc (0 : ℝ) 1) :
+      b * (1 - t) * kernelQ (b * t) c ≤ b * f (b * t) := by
+    dsimp [f]
+    rw [← mul_assoc]
+    apply mul_le_mul_of_nonneg_right _ (kernelQ_nonneg (mul_nonneg hb0 ht.1) hc.1)
+    have h := mul_nonneg ht.1 (sub_nonneg.mpr hb1.le)
+    nlinarith
+  have hchange : (∫ t in (0 : ℝ)..1, b * f (b * t)) = ∫ t in (0 : ℝ)..b, f t := by
+    rw [intervalIntegral.integral_const_mul,
+      intervalIntegral.integral_comp_mul_left f hb]
+    simp [smul_eq_mul, hb]
+  calc
+    |boundaryKernel b θ| = ∫ t in (0 : ℝ)..1, b * (1 - t) * kernelQ (b * t) c := hrep
+    _ ≤ ∫ t in (0 : ℝ)..1, b * f (b * t) :=
+      intervalIntegral.integral_mono_on (by norm_num)
+        (hcontLeft.intervalIntegrable _ _)
+        ((continuous_const.mul (hcont.comp (continuous_const.mul continuous_id))).intervalIntegrable _ _)
+        hpoint
+    _ = ∫ t in (0 : ℝ)..b, f t := hchange
+    _ ≤ ∫ t in (0 : ℝ)..1, f t :=
+      intervalIntegral.integral_mono_interval le_rfl hb0 hb1.le
+        (.of_forall (fun t ht => mul_nonneg (sub_nonneg.mpr ht.2)
+          (kernelQ_nonneg ht.1.le hc.1))) (hcont.intervalIntegrable _ _)
+    _ ≤ 3067 / 8100 := kernelQ_integral_bound hc
+
+private theorem kernel_size_closed (b θ : ℝ) (hb : b ∈ Icc (0 : ℝ) 1) :
+    |boundaryKernel b θ| ≤ 3067 / 8100 := by
+  have hc : ContinuousOn (fun b => |boundaryKernel b θ|) (Icc (0 : ℝ) 1) := by
+    apply ContinuousOn.abs
+    exact continuousOn_tsum (fun j => by unfold boundaryTerm; fun_prop)
+      majorant_summable (fun j b hb => term_norm_le hb θ j)
+  have hcl : closure (Ico (0 : ℝ) 1) = Icc (0 : ℝ) 1 := closure_Ico (by norm_num)
+  exact le_on_closure (s := Ico (0 : ℝ) 1)
+    (f := fun c => |boundaryKernel c θ|) (g := fun _ => 3067 / 8100)
+    (fun c hc => kernel_size_interior c θ hc.1 hc.2)
+    (by simpa only [hcl] using hc) continuousOn_const (by simpa only [hcl] using hb)
+
 /-- Uniform convergence, continuity, reflection, and the sign of the actual source kernel,
 including the entire closed parameter edge `b = 1`. -/
 theorem boundary_kernel_control (b θ : ℝ) (hb : b ∈ Icc (0 : ℝ) 1) :
@@ -230,17 +447,24 @@ theorem boundary_kernel_control (b θ : ℝ) (hb : b ∈ Icc (0 : ℝ) 1) :
     Real.cos θ * boundaryKernel b θ ≤ 0 ∧
     TendstoUniformlyOn
       (fun n (p : ℝ × ℝ) => ∑ j ∈ Finset.range n, boundaryTerm p.1 p.2 j)
-      (fun p => boundaryKernel p.1 p.2) atTop {p | p.1 ∈ Icc (0 : ℝ) 1} := by
-  refine ⟨kernel_continuous hb, kernel_reflection b θ, ?_, kernel_uniform_convergence⟩
-  have hc : ContinuousOn (fun b => Real.cos θ * boundaryKernel b θ) (Icc (0 : ℝ) 1) := by
-    apply ContinuousOn.const_mul
-    exact continuousOn_tsum (fun j => by unfold boundaryTerm; fun_prop)
-      majorant_summable (fun j b hb => term_norm_le hb θ j)
-  have hcl : closure (Ico (0 : ℝ) 1) = Icc (0 : ℝ) 1 := closure_Ico (by norm_num)
-  exact le_on_closure (s := Ico (0 : ℝ) 1)
-    (f := fun c => Real.cos θ * boundaryKernel c θ) (g := fun _ => 0)
-    (fun c hc => kernel_sign_interior c θ hc.1 hc.2)
-    (by simpa only [hcl] using hc) continuousOn_const (by simpa only [hcl] using hb)
+      (fun p => boundaryKernel p.1 p.2) atTop {p | p.1 ∈ Icc (0 : ℝ) 1} ∧
+    ContinuousOn (fun p : ℝ × ℝ => boundaryKernel p.1 p.2)
+      {p | p.1 ∈ Icc (0 : ℝ) 1} ∧
+    (∫ φ in (0 : ℝ)..(2 * Real.pi), boundaryKernel b φ) = 0 ∧
+    |boundaryKernel b θ| ≤ 3067 / 8100 ∧ (3067 / 8100 : ℝ) < 19 / 50 := by
+  refine ⟨kernel_continuous hb, kernel_reflection b θ, ?_, kernel_uniform_convergence,
+    ?_, kernel_mean_zero hb, kernel_size_closed b θ hb, by norm_num⟩
+  · have hc : ContinuousOn (fun b => Real.cos θ * boundaryKernel b θ) (Icc (0 : ℝ) 1) := by
+      apply ContinuousOn.const_mul
+      exact continuousOn_tsum (fun j => by unfold boundaryTerm; fun_prop)
+        majorant_summable (fun j b hb => term_norm_le hb θ j)
+    have hcl : closure (Ico (0 : ℝ) 1) = Icc (0 : ℝ) 1 := closure_Ico (by norm_num)
+    exact le_on_closure (s := Ico (0 : ℝ) 1)
+      (f := fun c => Real.cos θ * boundaryKernel c θ) (g := fun _ => 0)
+      (fun c hc => kernel_sign_interior c θ hc.1 hc.2)
+      (by simpa only [hcl] using hc) continuousOn_const (by simpa only [hcl] using hb)
+  · exact continuousOn_tsum (fun j => by unfold boundaryTerm; fun_prop)
+      majorant_summable (fun j p hp => term_norm_le hp p.2 j)
 
 #print axioms boundary_kernel_control
 

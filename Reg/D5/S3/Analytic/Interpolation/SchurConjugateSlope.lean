@@ -140,6 +140,67 @@ def derivativeAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+abbrev supremaArena : Arena where
+  signature := normSignature
+  Law R := ∀ (a b : ℝ) (_hb : 0 < b) (_hab : a ^ 2 + b ^ 2 ≤ 1),
+    entireClass.Nonempty ∧
+    (∀ g ∈ entireClass, (innerValues g a b).Nonempty ∧ BddAbove (innerValues g a b) ∧
+      (∃ z ∈ Metric.closedBall (0 : ℂ) 1, diskNorm g = ‖deriv (deriv g) z‖) ∧
+      ∃ x ∈ Set.Icc (-1 : ℝ) 1,
+        sSup (innerValues g a b) = ‖deriv g x - deriv (interpolant g a b) x‖) ∧
+    (outerValues a b).Nonempty ∧ BddAbove (outerValues a b) ∧
+    R.readout () () (1 + |a|) (uniformError a b) ∧ uniformError a b ≤ 2 ∧
+    ∃ g ∈ entireClass, g = (fun z => z ^ 2 / 2) ∧ diskNorm g = 1 ∧
+      slope g a b = a ∧ (∀ x : ℝ,
+        ‖deriv g x - deriv (interpolant g a b) x‖ = |x - a|) ∧
+      sSup (innerValues g a b) = 1 + |a|
+
+private theorem supremaRejected : ¬ supremaArena.Law normRejected := by
+  intro h
+  exact (h 0 1 (by norm_num) (by norm_num)).2.2.2.2.1
+
+def supremaFamily : Registration supremaArena (type_of% @original_suprema_bounded) where
+  actual := normActual
+  bridge := Iff.rfl
+  variation := ⟨@original_suprema_bounded, normRejected, supremaRejected⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    supremaArena.Law normActual normRejected supremaRejected
+  dependence := normDependence
+
+def supremaAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@original_suprema_bounded) (Realization normSignature) Unit Unit where
+  unitName := `D5.S3.Analytic.Interpolation.SchurConjugateSlope.original_suprema_bounded.__information_unit
+  realizationName := `Reg.D5.S3.Analytic.Interpolation.SchurConjugateSlope.supremaFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨supremaArena⟩
+  objectArena := .source ⟨supremaArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source supremaArena ⟨supremaFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize normSignature (fun _ _ x y => x ≤ y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.Interpolation.SchurConjugateSlope
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms supremaAudit
+
 #print axioms slopeAudit
 #print axioms derivativeAudit
 

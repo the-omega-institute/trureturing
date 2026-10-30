@@ -5,7 +5,7 @@ import Reg.Support.SingleDependentReadout
 noncomputable section
 open _root_.D5.S3.Analytic.Interpolation.SchurBoundaryKernel
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open LeanInformationAudit Set Filter
+open LeanInformationAudit Set Filter MeasureTheory
 open scoped Topology BigOperators
 
 namespace Reg.D5.S3.Analytic.Interpolation.SchurBoundaryKernel
@@ -27,7 +27,11 @@ abbrev arena : Arena where
     R.readout () () (Real.cos θ * boundaryKernel b θ) 0 ∧
     TendstoUniformlyOn
       (fun n (p : ℝ × ℝ) => ∑ j ∈ Finset.range n, boundaryTerm p.1 p.2 j)
-      (fun p => boundaryKernel p.1 p.2) atTop {p | p.1 ∈ Icc (0 : ℝ) 1}
+      (fun p => boundaryKernel p.1 p.2) atTop {p | p.1 ∈ Icc (0 : ℝ) 1} ∧
+    ContinuousOn (fun p : ℝ × ℝ => boundaryKernel p.1 p.2)
+      {p | p.1 ∈ Icc (0 : ℝ) 1} ∧
+    (∫ φ in (0 : ℝ)..(2 * Real.pi), boundaryKernel b φ) = 0 ∧
+    |boundaryKernel b θ| ≤ 3067 / 8100 ∧ (3067 / 8100 : ℝ) < 19 / 50
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
