@@ -2,6 +2,8 @@ import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.DependentFamily
 
+/-! Exact two-readout registration for the complete marked equal-outer joint lift. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -60,14 +62,14 @@ private theorem actual_law : arena.Law actual := by
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   obtain ⟨sigma, hold, _⟩ := h 2 3 (by decide) (by decide)
-  simpa [rejected, realize] using hold
+  simp [rejected, realize] at hold
 
 private theorem deleted_law (side : Bool) : ¬ arena.Law (deleted side) := by
   intro h
   obtain ⟨sigma, hold, hnew⟩ := h 2 3 (by decide) (by decide)
   cases side
-  · simpa [deleted, realize] using hold
-  · simpa [deleted, realize] using hnew
+  · simp [deleted, realize] at hold
+  · simp [deleted, realize] at hnew
 
 private def identityWord : List (Fin 7) := List.finRange 7
 
@@ -110,7 +112,9 @@ private theorem actual_dependence : ObservationalDependence signature actual := 
 def source_registration : Registration arena
     (type_of% (@actualSource_three_negative_equal_outer_joint_lift)) where
   actual := actual
-  bridge := by simp [arena, actual, realize, orderPredicate]
+  bridge := by
+    classical
+    simp [actual, realize, orderPredicate]
   variation := ⟨actual_law, rejected, rejected_law⟩
   sensitivity := by
     constructor
@@ -165,5 +169,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
 
 #print axioms source_registration
 #print axioms audit
+
+end
 
 end Reg.D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
