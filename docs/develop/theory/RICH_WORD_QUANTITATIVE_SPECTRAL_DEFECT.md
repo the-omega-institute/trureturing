@@ -1397,3 +1397,185 @@ The minimum $H=30$ and the equality classification of Theorem 14.1 concern the l
 *Proof.* Apply Theorems 12.2 and 13.1 to (43). This is also an arbitrary-nonerasing-morphism existence witness, since that larger class contains the literal class. Taking the infimum over all infinite rich four-letter words proves (60). Theorem 14.1 uses the literal marker conditions in its size and word arguments; there is no implication giving them for an arbitrary morphism. Inequality (60) is an upper bound supplied by one actual word and supplies no lower bound for all words in $\mathcal C_4$. The construction fixes $r=3$ and gives one exact exponent, so it supplies neither the higher-parameter constructions nor a family with strictly positive exponent excess. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 16. A finite ordinary obstruction in the first enlarged row
+
+**Definition 16.1 (The enlarged row and its source prefix).** Fix an integer $r\ge4$ and retain exactly the original substitution $\varphi$, source $u=u_{2r+1}$, actual alphabet convention and ordinary critical exponent of Definitions 1.1–1.3 and 7.1. Define the full positive row $\widetilde h$ by
+
+$$
+\begin{gathered}
+\widetilde h_0=1,\qquad \widetilde h_{r-1}=3,\qquad
+\widetilde h_i=2\quad(1\le i\le r,\ i\ne r-1),\\
+\widetilde h_{r+j}=3\cdot2^{j-1}\quad(1\le j<r),\qquad
+\widetilde h_{2r}=3\cdot2^{r-1}+1.
+\end{gathered}
+\tag{61}
+$$
+
+Thus $H(\widetilde h)=2r+3\cdot2^r$. Put
+
+$$
+J=\{1,\ldots,r\}\setminus\{r-1\},\qquad
+T_n=\varphi^n(0),\qquad F_n=T_n[0,2^n-1)\quad(0\le n\le2r).
+$$
+
+The supplied ruler identity (36) says that $T_n$ is an actual prefix of $u$, has length $2^n$, and has letter $\nu_2(j+1)$ at position $j$. It follows in particular that
+
+$$
+T_n=F_n n,\qquad F_{n+1}=F_n n F_n\quad(0\le n<2r),
+\tag{62}
+$$
+
+where an integer in a concatenation denotes one source letter. For $n\ge1$, $F_n$ contains every letter $0,\ldots,n-1$, contains no other letter, and ends in $0$. These are consequences of the same identity, with the source unchanged.
+
+**Theorem 16.2 (A dictionary-uniform finite repetition witness).** For every integer $r\ge4$ and every pair $(\eta,p)\in\mathcal L_r$ of Definition 8.1 with length row exactly (61), suppose that $x=\eta(u_{2r+1})$ is rich and has exactly $r+1$ actual letters. Then the finite actual output prefix
+
+$$
+W=\eta(T_{r+3})=\eta\bigl(\varphi^{r+3}(0)\bigr)
+\tag{63}
+$$
+
+contains a factor of one of the following three forms, for output letters $d,e$ with $d\ne e$ in the last two forms:
+
+$$
+ddd,\qquad deded,\qquad d e e d e e d.
+\tag{64}
+$$
+
+The third word has length seven. Consequently
+
+$$
+E(x)\ge\frac73>e_r.
+\tag{65}
+$$
+
+The same source prefix $T_{r+3}$ works for every dictionary in (61), and its image length is $3\cdot2^{r+2}+24$. In particular, at $r=4$ every rich five-actual-letter pair in $\mathcal L_4$ with row $(1,2,2,3,2,3,6,12,25)$ and $H=56$ has a factor of (64) within its first $216$ output letters, and cannot have ordinary exponent $e_4$.
+
+*Proof.* Since $h_0=1$ and every image begins with the nonempty marker, $p$ is a single letter $a$ and $\eta(0)=a$. Write $\eta(i)=a q_i$. The complete-return condition in Definition 8.1 makes every $q_i$ free of $a$: any occurrence of $a$ in $q_i$ would give an additional occurrence of $p=a$ in $a q_i a$. All the $q_i$ are palindromes. For $i\in J$ their length is one, so write $q_i=b_i$. Injectivity makes these $r-1$ letters distinct, and each differs from $a$. Every source letter occurs in $u$, so the actual-alphabet hypothesis leaves exactly one further nonmarker letter, say $c$:
+
+$$
+\operatorname{Alph}(x)=\{a\}\cup\{b_i:i\in J\}\cup\{c\}.
+\tag{66}
+$$
+
+Put $K=\{b_i:i\in J\}$. The length-two palindromes at indices $r-1$ and $r+1$ have the form
+
+$$
+q_{r-1}=z^2,\qquad q_{r+1}=y^2,
+\qquad z,y\in K\cup\{c\}.
+\tag{67}
+$$
+
+Injectivity also gives $z\ne y$, although the argument below does not require that extra restriction. Every nonempty $q_i$ with $i\le r+1$ is therefore a constant word.
+
+We use the complete-return characterization of richness as a supplied intermediate result: every factor whose only occurrences of a letter $d$ are its two endpoints is a palindrome. This is Glen–Justin–Widmer–Zamboni, [*Palindromic richness*, Theorem 2.14 and Remark 2.15, arXiv:0801.1656v1](https://arxiv.org/html/0801.1656v1), [doi:10.1016/j.ejc.2008.04.006](https://doi.org/10.1016/j.ejc.2008.04.006). We use its implication from richness, with no recurrence or reversal-closure premise. In particular, the letter immediately after the first endpoint equals the letter immediately before the second endpoint. All applications below are to consecutive occurrences inside the displayed finite prefix $W$.
+
+Suppose for a contradiction that $W$ has none of the three factors (64). Any constant word of length at least three is then excluded, as is an alternating word of length five on distinct letters.
+
+The first occurrence of the source letter $r+2$ is preceded by $F_{r+2}$. Thus
+
+$$
+U=\eta(F_{r+2})a,\qquad Uq_{r+2}=\eta(T_{r+2})
+\tag{68}
+$$
+
+are prefixes of $W$. Here $|q_{r+2}|=5$, because $2<r$. Every nonmarker occurring in $U$ has its last occurrence there followed by $a$: take its last constant block among the $q_i$ for $i\le r+1$, and then the next marker, including the final appended marker. For any such letter $d$, its first occurrence in $q_{r+2}$ cannot be noninitial. Otherwise the factor from its last occurrence in $U$ to its first occurrence in $q_{r+2}$ is a complete return to $d$, with second letter $a$ and penultimate letter different from $a$, contradicting richness.
+
+If $c$ occurs in either word in (67), all the nonmarkers in (66) already occur in $U$. The preceding observation forces $q_{r+2}$ to be constant: every letter different from its first letter would have a noninitial first occurrence. Its length five contradicts the exclusion of $ddd$. Hence
+
+$$
+z,y\in K,
+\tag{69}
+$$
+
+and $c$ does not occur in $U$. The same observation shows that a nonconstant $q_{r+2}$ must start with a letter $b\in K$ and use only $b$ and $c$, with both occurring. Indeed, if it started with $c$, no member of $K$ could first enter later, and it would be constant. Write its length-five palindrome as $b s t s b$, where $s,t\in\{b,c\}$. Of the four choices for $(s,t)$, $(b,b)$ and $(c,c)$ contain a cube, and $(c,b)$ gives the alternating factor $bcbcb$. The only remaining choice is
+
+$$
+q_{r+2}=bb c bb.
+\tag{70}
+$$
+
+Next use (62) at $n=r+2$. Since $r+3<2r$, the entire prefix in (63) is still in the ruler range, and
+
+$$
+V=\eta(F_{r+3})a
+ =\eta(F_{r+2})\,a q_{r+2}\,\eta(F_{r+2})a,
+\qquad W=Vq_{r+3}.
+\tag{71}
+$$
+
+Every letter of $K$ occurs in the final $\eta(F_{r+2})$ and has its last occurrence in $V$ followed by $a$. The letter $c$ is absent from that final part by (69); its last occurrence in $V$ is the middle of (70), and is followed by $b$. The next palindrome $q_{r+3}$ has length eleven, since $3<r$.
+
+For a letter of $K$, the same last-to-first complete-return argument shows that its first occurrence in $q_{r+3}$, if any, must be initial. The word $q_{r+3}$ cannot start with $c$: the complete return from the last $c$ in $V$ would have second letter $b$ and penultimate letter $a$. Suppose it starts with $d\in K\setminus\{b\}$. No other member of $K$ can occur later. If $c$ first occurs later, the complete return from the last $c$ in $V$ requires its preceding letter to be $b$, which cannot have occurred. Thus $c$ cannot occur either, making $q_{r+3}$ constant and giving a cube. We conclude that $q_{r+3}$ starts with $b$ and uses only $b,c$.
+
+Its central seven-letter factor is a palindrome on at most two letters. Write that factor as $\alpha\beta\gamma\delta\gamma\beta\alpha$. If $\gamma=\delta$, its middle three letters are a cube. Otherwise $\gamma\ne\delta$. If $\beta=\delta$, the middle five letters are the alternating word $\delta\gamma\delta\gamma\delta$. The absence of these two forms therefore forces $\beta=\gamma$. If also $\alpha=\gamma$, the first three letters are a cube. The only remaining possibility is $\alpha=\delta$, giving
+
+$$
+\delta\gamma\gamma\delta\gamma\gamma\delta,
+$$
+
+which is the third form in (64). This contradicts the assumption on $W$ in every case. We have proved the finite witness assertion for every dictionary, without choosing any of the words at indices greater than $r+3$.
+
+The three forms in (64) have least periods one, two and three, respectively, and hence ordinary exponents $3$, $5/2$ and $7/3$. In the third case periods one and two are impossible because $d\ne e$; period three follows by direct comparison. Thus (63) certifies the ordinary bound in (65), even if $E(x)$ is infinite. Identity (27) gives
+
+$$
+e_r=2+\frac1{\Lambda^r-1}
+ <2+\frac1{2^r-1}\le\frac{31}{15}<\frac73.
+$$
+
+Finally $T_n$ has $2^{n-i-1}$ occurrences of each $i<n$ and one occurrence of $n$, by (36). At $n=r+3$ its image length is therefore
+
+$$
+\sum_{i=0}^{r+2}2^{r+2-i}\widetilde h_i+\widetilde h_{r+3}
+ =3\cdot2^{r+2}+24.
+$$
+
+At $r=4$ this is $216$, and (61) is exactly the row in the statement. The source ruler identity and the cited richness characterization are reused in full as intermediate inputs. The consequences (69)–(70), the restriction of the next block to two letters, and the finite-prefix obstruction for the whole row (61) are the additional inferences; neither a length equation nor the sufficient richness criterion in Dvořáková–Pelantová, [*The limit of repetition thresholds of rich sequences*, §7, arXiv:2509.06104v1, Definition 18 and Proposition 19](https://arxiv.org/html/2509.06104v1#S7), [doi:10.37236/14600](https://doi.org/10.37236/14600), supplies that row-wide conclusion. The literal class here is exactly their Definition 18, journal Definition 19, with the additional nonempty-marker convention of Definition 8.1. $\square$
+
+## 17. The necessary length boundary for every higher parameter
+
+**Corollary 17.1 (Exclusion below the next length boundary).** For every integer $r\ge4$ and every $(\eta,p)\in\mathcal L_r$ for which $\eta(u_{2r+1})$ is rich, has exactly $r+1$ actual letters and satisfies the ordinary equality $E(\eta(u_{2r+1}))=e_r$, one has
+
+$$
+H\ge2r+3\cdot2^r+2.
+\tag{72}
+$$
+
+In particular $H\ge58$ at $r=4$. This is a necessary boundary, with no assertion of sharpness or attainment. For $r=3$, the existing minimum and equality class remain precisely $H=30$ and (43) up to a bijective renaming, as supplied by Theorems 12.2, 13.1 and 14.1.
+
+*Proof.* Put
+
+$$
+S_r=r+2^{r+1}-1,\qquad H_0=2S_r-2^r=2r+3\cdot2^r-2.
+$$
+
+We reuse the exact-attainment cancellation of Corollary 3.2, its complete positive-integer parameterization in Theorem 4.2, and the marker relaxation of Theorem 8.2. In particular, with $m=|p|$ and $t=h_r$,
+
+$$
+H=(r+1)t+\sum_{i=0}^{r-1}2^{r-i}h_i,
+\qquad H\ge(m+1)S_r-2^r.
+\tag{73}
+$$
+
+If $m\ge2$, the latter inequality gives $H\ge H_0+S_r>H_0+4$, since $r\ge4$. Hence a putative pair with $H<H_0+4$ must have $m=1$.
+
+Among the independent positive integers $h_0,\ldots,h_{r-1},t$, at most one is one, since an image of length one would be the marker itself and $\eta$ is injective. If none is one, (73) gives $H\ge2S_r=H_0+2^r$. If the unique one is not $h_0$, its coefficient in (73) is at most $2^{r-1}$: all the other powers of two are at most this, and $r+1\le2^{r-1}$ for $r\ge4$. In that case
+
+$$
+H\ge2S_r-2^{r-1}=H_0+2^{r-1}\ge H_0+8.
+$$
+
+Both cases contradict $H<H_0+4$. Thus $h_0=1$ and $h_1,\ldots,h_{r-1},t\ge2$. Subtracting their minimum contribution in (73) gives the exact nonnegative integer equation
+
+$$
+H-H_0=(r+1)(t-2)+\sum_{i=1}^{r-1}2^{r-i}(h_i-2).
+\tag{74}
+$$
+
+The only coefficient below four on the right is two, at $h_{r-1}$; the coefficient of $t-2$ is at least five. Consequently $H<H_0+4$ permits exactly two parameter choices: all increments vanish, or $h_{r-1}-2=1$ and all other increments vanish. In the first case Theorem 4.2 gives the full row (34), excluded by the ordinary fifth-power conclusion of Theorem 9.1. In the second case the same parameterization gives exactly (61): the change of $h_{r-1}$ increases only the final dependent coordinate $h_{2r}$, by one. Theorem 16.2 excludes every rich dictionary in that row. Thus no attaining pair has $H<H_0+4$, proving (72).
+
+The range distinction is exact. Substituting $r=3$ into the formula for (61) gives $(1,2,3,2,3,6,13)$, the existing attaining row (43), whose literal construction, infinite richness, ordinary exponent and equality classification are reused from Theorems 12.2–14.1. Its block $q_{r+3}=q_6$ has even length twelve, whereas the obstruction above requires $r+3<2r$ and the odd length eleven. Thus Theorem 16.2 and (72) have the stated range $r\ge4$ and do not displace that construction.
+
+All uses of the marker concern the same morphism $\eta(i)=p q_i$ on the original $u_{2r+1}$. The general overlapping complete-return representation, a conjugated morphism or a derived source does not supply this literal factorization with these lengths, as distinguished in Section 11. The new length exclusion is the combination of the two exact possibilities in (74) with the finite witness of Theorem 16.2; the cancellation and parameterization in (73) are the existing supplied inputs. Cancellation alone still asserts no realizability. Rows of total length at or above (72), and exact rich original-source existence for $r\ge4$, are not settled by this exclusion, even within $\mathcal L_r$. Neither the finite ordinary witness nor the necessary morphic length inequality gives an asymptotic-exponent identity, an impossibility for all literal lengths, or the unrestricted lower inequality for $RT(\mathcal C_{r+1})$ in Definition 3.3. $\square$
+
+## 追加锚（本行以下为增补区）
