@@ -275,7 +275,7 @@ The last line includes \(t=m+2\), where it is exactly the first line; hence
 Here is the endpoint check behind (2.12). In each row, scan from the right
 endpoint to the left. Before a boundary is met, the two legal flips are
 \(b_i+1\) (insert) and \(a_i\) (delete), giving simultaneous translation by one.
-At \(b_1=2m\), the absent-point test in (2.5) blocks the insertion and the
+At \(b_1=2m\), the absent-point test in (2.4) blocks the insertion and the
 present-point test deletes the endpoint; the next two rows then perform the same
 operation with the already updated upper row. This gives the rows \(t=1,2,3,4\).
 The next sweep gives \(t=5\), and thereafter the left-boundary events occur in
