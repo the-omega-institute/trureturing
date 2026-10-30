@@ -1,6 +1,6 @@
-/- GID: D5/S3/Arith/Robin/PriceRecordFixedLayerRigidity
+/- GID: D5/S3/Arith/Robin/PriceRecord/FixedLayerRigidity
    generality: I
-   mirror-B: D5/B/S3/Arith/Robin/PriceRecordFixedLayerRigidity
+   mirror-B: D5/B/S3/Arith/Robin/PriceRecord/FixedLayerRigidity
    mirror-E: none(waiver:general-theorem-no-numerical-experiment)
    anchors: []
    utility: none
@@ -23,7 +23,7 @@ set_option relaxedAutoImplicit false
 
 noncomputable section
 
-namespace D5.S3.Arith.Robin.PriceRecordFixedLayerRigidity
+namespace D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity
 
 open Finset Filter
 open D5.S3.Arith.GoldenResourceOptimalInteger
@@ -75,16 +75,14 @@ private theorem valuation_below_layer_prime {m j q : ℕ} (hq : q.Prime)
       (Nat.prime_of_mem_primeFactors hmem) (lt_of_le_of_ne hqQ heq))
 
 private theorem valuation_above_layer_prime {m j q : ℕ} (hm : 0 < m)
-    (hj : 1 ≤ j) (hq : q.Prime) (hQq : layerPrime m j < q) :
-    m.factorization q < j := by
+    (hj : 1 ≤ j) (hq : q.Prime) (hQq : layerPrime m j < q) : m.factorization q < j := by
   classical
   by_contra! hval
   have hqmem : q ∈ m.primeFactors := hq.mem_primeFactors
     ((hq.dvd_iff_one_le_factorization hm.ne').mpr (hj.trans hval)) hm.ne'
   have hmem : q ∈ m.primeFactors.filter (fun p => j ≤ m.factorization p) :=
     Finset.mem_filter.mpr ⟨hqmem, hval⟩
-  have hle : q ≤ layerPrime m j :=
-    (Finset.le_sup (f := id) hmem).trans (le_max_right _ _)
+  have hle : q ≤ layerPrime m j := (Finset.le_sup (f := id) hmem).trans (le_max_right _ _)
   exact hQq.not_ge hle
 
 private theorem layer_gain_antitone {p a b : ℕ} (hp : p.Prime)
@@ -127,8 +125,7 @@ private theorem theta_relative_scale {C : ℝ} (hC : 0 < C) :
   field_simp [ne_of_gt hC, ne_of_gt hx]
 
 private theorem eventually_prime_in_relative_window {A B : ℝ}
-    (hA : 0 < A) (hAB : A < B) :
-    ∀ᶠ x : ℝ in atTop, ∃ q : ℕ,
+    (hA : 0 < A) (hAB : A < B) : ∀ᶠ x : ℝ in atTop, ∃ q : ℕ,
       q.Prime ∧ A * x < (q : ℝ) ∧ (q : ℝ) ≤ B * x := by
   have hB : 0 < B := hA.trans hAB
   have hdiff : Tendsto
@@ -146,8 +143,7 @@ private theorem eventually_prime_in_relative_window {A B : ℝ}
   have hsub : Nat.primesLE ⌊B * x⌋₊ ⊆ Nat.primesLE ⌊A * x⌋₊ := by
     intro q hq
     obtain ⟨hqB, hprime⟩ := Nat.mem_primesLE.mp hq
-    have hqBx : (q : ℝ) ≤ B * x :=
-      (Nat.le_floor_iff (mul_nonneg hB.le hx.le)).mp hqB
+    have hqBx : (q : ℝ) ≤ B * x := (Nat.le_floor_iff (mul_nonneg hB.le hx.le)).mp hqB
     have hqAx : (q : ℝ) ≤ A * x := by
       by_contra! hlt
       exact (hnone q hprime hlt).not_ge hqBx
@@ -159,8 +155,7 @@ private theorem eventually_prime_in_relative_window {A B : ℝ}
   exact hthetaless.not_ge htheta_le
 
 private theorem fixed_cardinality_prime_window {A B : ℝ}
-    (hA : 0 < A) (hAB : A < B) (N : ℕ) :
-    ∃ Y : ℝ, ∀ x : ℝ, Y ≤ x → ∃ S : Finset ℕ,
+    (hA : 0 < A) (hAB : A < B) (N : ℕ) : ∃ Y : ℝ, ∀ x : ℝ, Y ≤ x → ∃ S : Finset ℕ,
       S.card = N ∧ ∀ q ∈ S,
         q.Prime ∧ A * x < (q : ℝ) ∧ (q : ℝ) ≤ B * x := by
   classical
@@ -178,10 +173,8 @@ private theorem fixed_cardinality_prime_window {A B : ℝ}
       intro x hx
       have hx0 : 0 < x := lt_of_lt_of_le (by norm_num)
         ((le_max_left 1 (max Y₁ Y₂)).trans hx)
-      have hx₁ : Y₁ ≤ x :=
-        ((le_max_left Y₁ Y₂).trans (le_max_right 1 (max Y₁ Y₂))).trans hx
-      have hx₂ : Y₂ ≤ x :=
-        ((le_max_right Y₁ Y₂).trans (le_max_right 1 (max Y₁ Y₂))).trans hx
+      have hx₁ : Y₁ ≤ x := ((le_max_left Y₁ Y₂).trans (le_max_right 1 (max Y₁ Y₂))).trans hx
+      have hx₂ : Y₂ ≤ x := ((le_max_right Y₁ Y₂).trans (le_max_right 1 (max Y₁ Y₂))).trans hx
       obtain ⟨S, hcard, hS⟩ := hY₁ x hx₁
       obtain ⟨q, hq, hqC, hqB⟩ := hY₂ x hx₂
       have hqS : q ∉ S := by
@@ -195,15 +188,12 @@ private theorem fixed_cardinality_prime_window {A B : ℝ}
         · obtain ⟨hpprime, hpA, hpC⟩ := hS p hp
           exact ⟨hpprime, hpA, hpC.trans (mul_le_mul_of_nonneg_right hCB.le hx0.le)⟩
 
-private abbrev gain (p a : ℕ) : ℝ :=
-  goldenLayerMarginal p a * Real.log p
+private abbrev gain (p a : ℕ) : ℝ := goldenLayerMarginal p a * Real.log p
 
-private def LowerGainSupply : Prop :=
-  ∀ p a : ℕ, p.Prime → 1 ≤ a →
+private def LowerGainSupply : Prop := ∀ p a : ℕ, p.Prime → 1 ≤ a →
     (1 - (p : ℝ)⁻¹) * (p : ℝ)⁻¹ ^ a ≤ gain p a
 
-private def ExchangeSupply (m : ℕ) (lambda : ℝ) : Prop :=
-  ∀ D U : Finset ℕ, Disjoint D U →
+private def ExchangeSupply (m : ℕ) (lambda : ℝ) : Prop := ∀ D U : Finset ℕ, Disjoint D U →
     (∀ p ∈ D, p.Prime ∧ p ∣ m) → (∀ q ∈ U, q.Prime) →
     (∏ q ∈ U, q) < (∏ p ∈ D, p) →
     (∑ q ∈ U, gain q (m.factorization q + 1)) +
@@ -213,8 +203,7 @@ private def ExchangeSupply (m : ℕ) (lambda : ℝ) : Prop :=
 
 private theorem gain_lower_window (hlower : LowerGainSupply)
     {p a k : ℕ} (hp : p.Prime) (ha : 1 ≤ a) (hak : a ≤ k)
-    {Z W : ℝ} (hZ : 1 < Z) (hZp : Z ≤ p) (hpW : (p : ℝ) ≤ W) :
-    (1 - Z⁻¹) * W⁻¹ ^ k ≤ gain p a := by
+    {Z W : ℝ} (hZ : 1 < Z) (hZp : Z ≤ p) (hpW : (p : ℝ) ≤ W) : (1 - Z⁻¹) * W⁻¹ ^ k ≤ gain p a := by
   have hp0 : (0 : ℝ) < p := by exact_mod_cast hp.pos
   have hZ0 : 0 < Z := by linarith
   have hW0 : 0 < W := hp0.trans_le hpW
@@ -229,16 +218,14 @@ private theorem gain_lower_window (hlower : LowerGainSupply)
     (layer_gain_antitone hp ha hak))
 
 private theorem gain_upper_window {p a k : ℕ} (hp : p.Prime)
-    (hk : 1 ≤ k) (hka : k ≤ a) {Z : ℝ} (hZ : 0 < Z) (hZp : Z ≤ p) :
-    gain p a ≤ Z⁻¹ ^ k := by
+    (hk : 1 ≤ k) (hka : k ≤ a) {Z : ℝ} (hZ : 0 < Z) (hZp : Z ≤ p) : gain p a ≤ Z⁻¹ ^ k := by
   have hp0 : (0 : ℝ) < p := by exact_mod_cast hp.pos
   exact (layer_gain_antitone hp hk hka).trans ((layer_gain_upper hp hk).trans
     (pow_le_pow_left₀ (inv_nonneg.mpr hp0.le)
       ((inv_le_inv₀ hp0 hZ).mpr hZp) k))
 
 private theorem scaled_inverse_power {P C R : ℝ} {j : ℕ}
-    (hP : 0 < P) (hC : 0 < C) (hR : R ^ j = P) :
-    P * ((C * R)⁻¹) ^ j = (C ^ j)⁻¹ := by
+    (hP : 0 < P) (hC : 0 < C) (hR : R ^ j = P) : P * ((C * R)⁻¹) ^ j = (C ^ j)⁻¹ := by
   rw [inv_pow, mul_pow, hR]
   field_simp [hP.ne', (pow_pos hC j).ne']
 
@@ -256,8 +243,7 @@ private theorem finite_products_lt {D U : Finset ℕ} {r s : ℕ} {L W : ℝ}
       _ ≤ _ := Finset.prod_le_prod₀ (fun _ _ => hL.le) hD
   have hlt : (∏ q ∈ U, (q : ℝ)) < ∏ p ∈ D, (p : ℝ) :=
     hupper.trans_lt (((div_lt_one (pow_pos hL r)).mp hratio).trans_le hlower)
-  have hcast : ((∏ q ∈ U, q : ℕ) : ℝ) < ((∏ p ∈ D, p : ℕ) : ℝ) := by
-    simpa only [Nat.cast_prod] using hlt
+  have hcast : ((∏ q ∈ U, q : ℕ) : ℝ) < ((∏ p ∈ D, p : ℕ) : ℝ) := by simpa only [Nat.cast_prod] using hlt
   exact_mod_cast hcast
 
 private theorem exchange_forbids_scaled_gain_bounds {m : ℕ} {lambda P l u : ℝ}
@@ -269,8 +255,7 @@ private theorem exchange_forbids_scaled_gain_bounds {m : ℕ} {lambda P l u : �
     (hlower : ∀ q ∈ U, u ≤ P * gain q (m.factorization q + 1))
     (hmargin : (D.card : ℝ) * l < (U.card : ℝ) * u) : False := by
   have hcert' := hcert D U hdis hD hU hprod
-  have hUpos : (0 : ℝ) < (∏ q ∈ U, q) := by
-    exact_mod_cast Finset.prod_pos (fun q hq => (hU q hq).pos)
+  have hUpos : (0 : ℝ) < (∏ q ∈ U, q) := by exact_mod_cast Finset.prod_pos (fun q hq => (hU q hq).pos)
   have hlog : 0 ≤ lambda *
       (Real.log ((∏ p ∈ D, p : ℕ) : ℝ) - Real.log ((∏ q ∈ U, q : ℕ) : ℝ)) :=
     mul_nonneg hlambda.le (sub_nonneg.mpr
@@ -312,8 +297,7 @@ private theorem fixed_window_lower_barrier (hlower : LowerGainSupply)
   have hB : 0 < B := hA.trans hAB
   obtain ⟨Yq, hYq⟩ := fixed_cardinality_prime_window hA hAB s
   obtain ⟨Yp, hYp⟩ := fixed_cardinality_prime_window hc hc1 r
-  have hroot : Tendsto (fun P : ℝ => P ^ ((j : ℝ)⁻¹)) atTop atTop :=
-    tendsto_rpow_atTop hinvj
+  have hroot : Tendsto (fun P : ℝ => P ^ ((j : ℝ)⁻¹)) atTop atTop := tendsto_rpow_atTop hinvj
   have hsep := scaled_power_ratio_tendsto_zero B c ((j : ℝ)⁻¹) 1 1 1
     (by simpa using sub_neg.mpr hinvj1)
   simp only [pow_one, Real.rpow_one] at hsep
@@ -357,8 +341,7 @@ private theorem fixed_window_lower_barrier (hlower : LowerGainSupply)
       refine ⟨hpprime, Nat.dvd_of_mem_primeFactors ?_⟩
       rw [hsupport]
       exact Nat.mem_primesLE.mpr ⟨hpnat, hpprime⟩
-    have hprod : (∏ q ∈ U, q) < (∏ p ∈ D, p) :=
-      finite_products_lt hDcard hUcard (mul_pos hc hP)
+    have hprod : (∏ q ∈ U, q) < (∏ p ∈ D, p) := finite_products_lt hDcard hUcard (mul_pos hc hP)
         (fun p hp => (hD p hp).2.1.le) (fun q hq => (hU q hq).2.2) hratio'
     have hupper : ∀ p ∈ D, P * gain p (m.factorization p) ≤ c⁻¹ := by
       intro p hp
@@ -423,8 +406,7 @@ private theorem fixed_window_upper_barrier (hlower : LowerGainSupply)
   have hd0 : 0 < d := by linarith
   obtain ⟨Yq, hYq⟩ := fixed_cardinality_prime_window hA hAB s
   obtain ⟨Yp, hYp⟩ := fixed_cardinality_prime_window (by norm_num : (0 : ℝ) < 1) hd r
-  have hroot : Tendsto (fun P : ℝ => P ^ ((j : ℝ)⁻¹)) atTop atTop :=
-    tendsto_rpow_atTop hinvj
+  have hroot : Tendsto (fun P : ℝ => P ^ ((j : ℝ)⁻¹)) atTop atTop := tendsto_rpow_atTop hinvj
   have hsep := scaled_power_ratio_tendsto_zero B 1 ((j : ℝ)⁻¹) 1 1 1
     (by simpa using sub_neg.mpr hinvj1)
   simp only [pow_one, Real.rpow_one, one_mul] at hsep
@@ -464,15 +446,13 @@ private theorem fixed_window_upper_barrier (hlower : LowerGainSupply)
       linarith)
     have hvalD : ∀ q ∈ D, j ≤ m.factorization q := by
       intro q hq
-      have hqQ : q ≤ layerPrime m j := by
-        exact_mod_cast ((hD q hq).2.2.trans hcut)
+      have hqQ : q ≤ layerPrime m j := by exact_mod_cast ((hD q hq).2.2.trans hcut)
       exact valuation_below_layer_prime (hD q hq).1 hanti hqQ
     have hdonors : ∀ q ∈ D, q.Prime ∧ q ∣ m := by
       intro q hq
       refine ⟨(hD q hq).1, ((hD q hq).1.dvd_iff_one_le_factorization hm.ne').mpr ?_⟩
       exact (show 1 ≤ j by omega).trans (hvalD q hq)
-    have hprod : (∏ p ∈ U, p) < (∏ q ∈ D, q) :=
-      finite_products_lt hDcard hUcard (mul_pos hA hR)
+    have hprod : (∏ p ∈ U, p) < (∏ q ∈ D, q) := finite_products_lt hDcard hUcard (mul_pos hA hR)
         (fun q hq => (hD q hq).2.1.le) (fun p hp => (hU p hp).2.2) hratio'
     have hupper : ∀ q ∈ D, P * gain q (m.factorization q) ≤ (A ^ j)⁻¹ := by
       intro q hq
@@ -519,8 +499,7 @@ private theorem golden_layer_gain_lower {p a : ℕ} (hp : p.Prime) (ha : 1 ≤ a
       goldenLayerMarginal p a * Real.log p := by
   have hpPos : (0 : ℝ) < p := by exact_mod_cast hp.pos
   have hpInvPos : 0 < (p : ℝ)⁻¹ := inv_pos.mpr hpPos
-  have hpInvLt : (p : ℝ)⁻¹ < 1 :=
-    (inv_lt_one₀ hpPos).mpr (by exact_mod_cast hp.one_lt)
+  have hpInvLt : (p : ℝ)⁻¹ < 1 := (inv_lt_one₀ hpPos).mpr (by exact_mod_cast hp.one_lt)
   let x : ℝ := (p : ℝ)⁻¹
   let r : ℝ := x ^ a
   have hx : 0 < x := hpInvPos
@@ -529,8 +508,7 @@ private theorem golden_layer_gain_lower {p a : ℕ} (hp : p.Prime) (ha : 1 ≤ a
   have hr1 : r < 1 := pow_lt_one₀ hx.le hxl (by omega)
   have hden : 0 < 1 - r := sub_pos.mpr hr1
   have hnum : 0 < 1 - r * x := by
-    have hpow : r * x = x ^ (a + 1) := by
-      rw [show r = x ^ a by rfl, ← pow_succ]
+    have hpow : r * x = x ^ (a + 1) := by rw [show r = x ^ a by rfl, ← pow_succ]
     rw [hpow]
     exact sub_pos.mpr (pow_lt_one₀ hx.le hxl (by omega))
   have hratio : 0 < (1 - r * x) / (1 - r) := div_pos hnum hden
@@ -540,11 +518,9 @@ private theorem golden_layer_gain_lower {p a : ℕ} (hp : p.Prime) (ha : 1 ≤ a
     linarith
   have hleft : r * (1 - x) ≤ r * (1 - x) / (1 - r * x) := by
     apply (le_div_iff₀ hnum).2
-    have hnonneg : 0 ≤ r * (1 - x) :=
-      mul_nonneg hr.le (sub_nonneg.mpr hxl.le)
+    have hnonneg : 0 ≤ r * (1 - x) := mul_nonneg hr.le (sub_nonneg.mpr hxl.le)
     nlinarith
-  have hinv :
-      1 - ((1 - r * x) / (1 - r))⁻¹ = r * (1 - x) / (1 - r * x) := by
+  have hinv : 1 - ((1 - r * x) / (1 - r))⁻¹ = r * (1 - x) / (1 - r * x) := by
     field_simp
     ring
   have hcore : r * (1 - x) ≤ Real.log ((1 - r * x) / (1 - r)) := by
@@ -562,10 +538,8 @@ private theorem local_insert_delta (lambda : ℝ) {p a : ℕ} (hp : p.Prime) :
   have hpPos : (0 : ℝ) < p := by exact_mod_cast hp.pos
   have hpLog : 0 < Real.log (p : ℝ) := hp.log_pos
   have hpInvPos : 0 < (p : ℝ)⁻¹ := inv_pos.mpr hpPos
-  have hpInvLt : (p : ℝ)⁻¹ < 1 :=
-    (inv_lt_one₀ hpPos).mpr (by exact_mod_cast hp.one_lt)
-  have ha : 0 < 1 - (p : ℝ)⁻¹ ^ (a + 1) :=
-    sub_pos.mpr (pow_lt_one₀ hpInvPos.le hpInvLt (by omega))
+  have hpInvLt : (p : ℝ)⁻¹ < 1 := (inv_lt_one₀ hpPos).mpr (by exact_mod_cast hp.one_lt)
+  have ha : 0 < 1 - (p : ℝ)⁻¹ ^ (a + 1) := sub_pos.mpr (pow_lt_one₀ hpInvPos.le hpInvLt (by omega))
   have hb : 0 < 1 - (p : ℝ)⁻¹ ^ (a + 1 + 1) :=
     sub_pos.mpr (pow_lt_one₀ hpInvPos.le hpInvLt (by omega))
   unfold goldenPrimeLocalObjective goldenLayerMarginal
@@ -576,16 +550,14 @@ private theorem local_insert_delta (lambda : ℝ) {p a : ℕ} (hp : p.Prime) :
   ring
 
 private theorem prime_product_factorization {S : Finset ℕ}
-    (hS : ∀ p ∈ S, p.Prime) (p : ℕ) :
-    (∏ q ∈ S, q).factorization p = if p ∈ S then 1 else 0 := by
+    (hS : ∀ p ∈ S, p.Prime) (p : ℕ) : (∏ q ∈ S, q).factorization p = if p ∈ S then 1 else 0 := by
   simpa [primePowerProduct] using
     (primeBlock_factorization hS (fun _ => 1) p)
 
 private theorem objective_exchange_delta (lambda : ℝ) {m : ℕ}
     (hm : 0 < m) (D U : Finset ℕ)
     (hD : ∀ p ∈ D, p.Prime) (hU : ∀ q ∈ U, q.Prime)
-    (hDvd : ∀ p ∈ D, p ∣ m) (hDU : Disjoint D U) :
-    let d : ℕ := ∏ p ∈ D, p
+    (hDvd : ∀ p ∈ D, p ∣ m) (hDU : Disjoint D U) : let d : ℕ := ∏ p ∈ D, p
     let u : ℕ := ∏ q ∈ U, q
     let n : ℕ := (m / d) * u
     goldenResourceObjective lambda n - goldenResourceObjective lambda m =
@@ -617,12 +589,9 @@ private theorem objective_exchange_delta (lambda : ℝ) {m : ℕ}
   have hd0 : d ≠ 0 := hdpos.ne'
   have hu0 : u ≠ 0 := hupos.ne'
   have hr0 : r ≠ 0 := hrpos.ne'
-  have hmd : r * d = m := by
-    exact Nat.div_mul_cancel hdvd
-  have hdfac (p : ℕ) : d.factorization p = if p ∈ D then 1 else 0 := by
-    exact prime_product_factorization hD p
-  have hufac (p : ℕ) : u.factorization p = if p ∈ U then 1 else 0 := by
-    exact prime_product_factorization hU p
+  have hmd : r * d = m := by exact Nat.div_mul_cancel hdvd
+  have hdfac (p : ℕ) : d.factorization p = if p ∈ D then 1 else 0 := by exact prime_product_factorization hD p
+  have hufac (p : ℕ) : u.factorization p = if p ∈ U then 1 else 0 := by exact prime_product_factorization hU p
   have hmf (p : ℕ) : m.factorization p =
       r.factorization p + if p ∈ D then 1 else 0 := by
     rw [← hmd, Nat.factorization_mul hr0 hd0, Finsupp.add_apply, hdfac]
@@ -630,10 +599,8 @@ private theorem objective_exchange_delta (lambda : ℝ) {m : ℕ}
       r.factorization p + if p ∈ U then 1 else 0 := by
     rw [show n = r * u by rfl, Nat.factorization_mul hr0 hu0,
       Finsupp.add_apply, hufac]
-  have hrdvd : r ∣ m := by
-    exact Nat.div_dvd_of_dvd hdvd
-  have hrsupp : r.primeFactors ⊆ m.primeFactors :=
-    Nat.primeFactors_mono hrdvd hm.ne'
+  have hrdvd : r ∣ m := by exact Nat.div_dvd_of_dvd hdvd
+  have hrsupp : r.primeFactors ⊆ m.primeFactors := Nat.primeFactors_mono hrdvd hm.ne'
   have huFactors : u.primeFactors = U := by
     dsimp [u]
     exact Nat.primeFactors_prod hU
@@ -641,10 +608,8 @@ private theorem objective_exchange_delta (lambda : ℝ) {m : ℕ}
     rw [show n = r * u by rfl, Nat.primeFactors_mul hr0 hu0, huFactors]
     exact union_subset (hrsupp.trans subset_union_left) subset_union_right
   let s : Finset ℕ := m.primeFactors ∪ U
-  have hnsupp' : n.primeFactors ⊆ s := by
-    simpa [s] using hnsupp
-  have hsum :
-      goldenResourceObjective lambda n - goldenResourceObjective lambda m =
+  have hnsupp' : n.primeFactors ⊆ s := by simpa [s] using hnsupp
+  have hsum : goldenResourceObjective lambda n - goldenResourceObjective lambda m =
         ∑ p ∈ s,
           (goldenPrimeLocalObjective lambda p (n.factorization p) -
             goldenPrimeLocalObjective lambda p (m.factorization p)) := by
@@ -662,46 +627,34 @@ private theorem objective_exchange_delta (lambda : ℝ) {m : ℕ}
     rcases hp with hpD | hpU
     · exact Finset.mem_union.mpr (Or.inl (hDmem hpD))
     · exact Finset.mem_union.mpr (Or.inr hpU)
-  have hzero (p : ℕ) (hp : p ∈ s) (hpD : p ∉ D) (hpU : p ∉ U) :
-      f p = 0 := by
+  have hzero (p : ℕ) (hp : p ∈ s) (hpD : p ∉ D) (hpU : p ∉ U) : f p = 0 := by
     dsimp [f]
     rw [hnf, hmf, if_neg hpU, if_neg hpD]
     simp
-  have hsumSupport :
-      (∑ p ∈ D ∪ U, f p) = ∑ p ∈ s, f p := by
+  have hsumSupport : (∑ p ∈ D ∪ U, f p) = ∑ p ∈ s, f p := by
     apply Finset.sum_subset hDUsub
     intro p hpS hpDU
     rcases not_or.mp (by simpa only [mem_union] using hpDU) with ⟨hpD, hpU⟩
     exact hzero p hpS hpD hpU
-  have hsumDU :
-      (∑ p ∈ s, f p) = (∑ p ∈ D, f p) + (∑ p ∈ U, f p) := by
-    rw [← hsumSupport, Finset.sum_union hDU]
-  have hDterm (p : ℕ) (hp : p ∈ D) :
-      goldenPrimeLocalObjective lambda p (n.factorization p) -
+  have hsumDU : (∑ p ∈ s, f p) = (∑ p ∈ D, f p) + (∑ p ∈ U, f p) := by rw [← hsumSupport, Finset.sum_union hDU]
+  have hDterm (p : ℕ) (hp : p ∈ D) : goldenPrimeLocalObjective lambda p (n.factorization p) -
           goldenPrimeLocalObjective lambda p (m.factorization p) =
         -(goldenLayerMarginal p (m.factorization p) * Real.log p) +
           lambda * Real.log p := by
-    have hpU : p ∉ U := by
-      exact fun hp' => (Finset.disjoint_left.1 hDU hp hp').elim
-    have hmf' : m.factorization p = r.factorization p + 1 := by
-      simpa [hp] using hmf p
-    have hnf' : n.factorization p = r.factorization p := by
-      simpa [hpU] using hnf p
+    have hpU : p ∉ U := by exact fun hp' => (Finset.disjoint_left.1 hDU hp hp').elim
+    have hmf' : m.factorization p = r.factorization p + 1 := by simpa [hp] using hmf p
+    have hnf' : n.factorization p = r.factorization p := by simpa [hpU] using hnf p
     rw [hnf', hmf']
     have hi := local_insert_delta lambda (hD p hp)
       (a := r.factorization p)
     nlinarith [hi]
-  have hUterm (q : ℕ) (hq : q ∈ U) :
-      goldenPrimeLocalObjective lambda q (n.factorization q) -
+  have hUterm (q : ℕ) (hq : q ∈ U) : goldenPrimeLocalObjective lambda q (n.factorization q) -
           goldenPrimeLocalObjective lambda q (m.factorization q) =
         goldenLayerMarginal q (m.factorization q + 1) * Real.log q -
           lambda * Real.log q := by
-    have hqD : q ∉ D := by
-      exact fun hp' => (Finset.disjoint_left.1 hDU hp' hq).elim
-    have hmf' : m.factorization q = r.factorization q := by
-      simpa [hqD] using hmf q
-    have hnf' : n.factorization q = r.factorization q + 1 := by
-      simpa [hq] using hnf q
+    have hqD : q ∉ D := by exact fun hp' => (Finset.disjoint_left.1 hDU hp' hq).elim
+    have hmf' : m.factorization q = r.factorization q := by simpa [hqD] using hmf q
+    have hnf' : n.factorization q = r.factorization q + 1 := by simpa [hq] using hnf q
     rw [hnf', hmf']
     convert local_insert_delta lambda (hU q hq) (a := r.factorization q) using 1 <;> ring
   rw [hsum, hsumDU]
@@ -712,8 +665,7 @@ private theorem objective_exchange_delta (lambda : ℝ) {m : ℕ}
       (U.sum (fun q =>
         goldenPrimeLocalObjective lambda q (n.factorization q) -
           goldenPrimeLocalObjective lambda q (m.factorization q))) = _
-  have hDsum :
-      D.sum (fun p =>
+  have hDsum : D.sum (fun p =>
           goldenPrimeLocalObjective lambda p (n.factorization p) -
             goldenPrimeLocalObjective lambda p (m.factorization p)) =
         D.sum (fun p =>
@@ -722,8 +674,7 @@ private theorem objective_exchange_delta (lambda : ℝ) {m : ℕ}
     apply Finset.sum_congr rfl
     intro p hp
     exact hDterm p hp
-  have hUsum :
-      U.sum (fun q =>
+  have hUsum : U.sum (fun q =>
           goldenPrimeLocalObjective lambda q (n.factorization q) -
             goldenPrimeLocalObjective lambda q (m.factorization q)) =
         U.sum (fun q =>
@@ -740,22 +691,19 @@ private theorem objective_exchange_delta (lambda : ℝ) {m : ℕ}
     rw [show (u : ℝ) = ∏ q ∈ U, (q : ℝ) by simp [u],
       Real.log_prod (fun q hq => by exact_mod_cast (hU q hq).ne_zero)]
   rw [hlogD, hlogU]
-  have hDlin :
-      D.sum (fun p =>
+  have hDlin : D.sum (fun p =>
         -(goldenLayerMarginal p (m.factorization p) * Real.log p) +
           lambda * Real.log p) =
         -(D.sum (fun p =>
           goldenLayerMarginal p (m.factorization p) * Real.log p)) +
           lambda * (D.sum (fun p => Real.log p)) := by
     rw [Finset.sum_add_distrib, Finset.sum_neg_distrib, ← Finset.mul_sum]
-  have hUlin :
-      U.sum (fun q =>
+  have hUlin : U.sum (fun q =>
         goldenLayerMarginal q (m.factorization q + 1) * Real.log q -
           lambda * Real.log q) =
         (U.sum (fun q =>
           goldenLayerMarginal q (m.factorization q + 1) * Real.log q)) -
-          lambda * (U.sum (fun q => Real.log q)) := by
-    rw [Finset.sum_sub_distrib, ← Finset.mul_sum]
+          lambda * (U.sum (fun q => Real.log q)) := by rw [Finset.sum_sub_distrib, ← Finset.mul_sum]
   rw [hDlin, hUlin]
   ring
 
@@ -766,8 +714,7 @@ private theorem signed_exchange_certificate (lambda : ℝ) {m : ℕ}
     (D U : Finset ℕ)
     (hD : ∀ p ∈ D, p.Prime) (hU : ∀ q ∈ U, q.Prime)
     (hDvd : ∀ p ∈ D, p ∣ m) (hDU : Disjoint D U)
-    (hprod : (∏ q ∈ U, q) < ∏ p ∈ D, p) :
-    let d : ℕ := ∏ p ∈ D, p
+    (hprod : (∏ q ∈ U, q) < ∏ p ∈ D, p) : let d : ℕ := ∏ p ∈ D, p
     let u : ℕ := ∏ q ∈ U, q
     let n : ℕ := (m / d) * u
     0 < n ∧ n < m ∧
@@ -801,30 +748,24 @@ private theorem signed_exchange_certificate (lambda : ℝ) {m : ℕ}
     rw [show m = r * d by exact (Nat.div_mul_cancel hdvd).symm]
     exact Nat.mul_lt_mul_of_pos_left hprod hrpos
   have hdelta := objective_exchange_delta lambda hm D U hD hU hDvd hDU
-  have hdelta' :
-      goldenResourceObjective lambda n - goldenResourceObjective lambda m =
+  have hdelta' : goldenResourceObjective lambda n - goldenResourceObjective lambda m =
         (∑ q ∈ U,
             goldenLayerMarginal q (m.factorization q + 1) * Real.log q) -
           (∑ p ∈ D,
             goldenLayerMarginal p (m.factorization p) * Real.log p) +
-          lambda * (Real.log d - Real.log u) := by
-    simpa [d, u, r, n] using hdelta
+          lambda * (Real.log d - Real.log u) := by simpa [d, u, r, n] using hdelta
   have hrec := hrecord n hnpos hnm
-  have hcert :
-      (∑ q ∈ U,
+  have hcert : (∑ q ∈ U,
           goldenLayerMarginal q (m.factorization q + 1) * Real.log q) +
           lambda * (Real.log d - Real.log u) <
         ∑ p ∈ D,
-          goldenLayerMarginal p (m.factorization p) * Real.log p := by
-    linarith [hrec, hdelta']
+          goldenLayerMarginal p (m.factorization p) * Real.log p := by linarith [hrec, hdelta']
   exact ⟨hnpos, hnm, hcert⟩
 
-private def FullPredecessorRecord (m : ℕ) (lambda : ℝ) : Prop :=
-  ∀ n : ℕ, 0 < n → n < m →
+private def FullPredecessorRecord (m : ℕ) (lambda : ℝ) : Prop := ∀ n : ℕ, 0 < n → n < m →
     goldenResourceObjective lambda n < goldenResourceObjective lambda m
 
-private def LowerBarrierSupply (L : ℕ → ℕ → ℕ) : Prop :=
-  ∀ (j r : ℕ), 2 ≤ j → 1 ≤ r → ∀ (A B c : ℝ),
+private def LowerBarrierSupply (L : ℕ → ℕ → ℕ) : Prop := ∀ (j r : ℕ), 2 ≤ j → 1 ≤ r → ∀ (A B c : ℝ),
     0 < A → A < B → 0 < c → c < 1 →
     (r : ℝ) / c < ((j * r - 1 : ℕ) : ℝ) / B ^ j →
     ∃ T : ℝ, 0 < T ∧
@@ -833,8 +774,7 @@ private def LowerBarrierSupply (L : ℕ → ℕ → ℕ) : Prop :=
         T ≤ (largestPrime m : ℝ) →
           A * (largestPrime m : ℝ) ^ ((j : ℝ)⁻¹) < (L m j : ℝ)
 
-private def UpperBarrierSupply (L : ℕ → ℕ → ℕ) : Prop :=
-  ∀ (j r : ℕ), 2 ≤ j → 1 ≤ r → ∀ (A B d : ℝ),
+private def UpperBarrierSupply (L : ℕ → ℕ → ℕ) : Prop := ∀ (j r : ℕ), 2 ≤ j → 1 ≤ r → ∀ (A B d : ℝ),
     0 < A → A < B → 1 < d →
     ((j * r + 1 : ℕ) : ℝ) / A ^ j < (r : ℝ) / d →
     ∃ T : ℝ, 0 < T ∧
@@ -844,8 +784,7 @@ private def UpperBarrierSupply (L : ℕ → ℕ → ℕ) : Prop :=
           (L m j : ℝ) < B * (largestPrime m : ℝ) ^ ((j : ℝ)⁻¹)
 
 private theorem lower_window_parameters {j : ℕ} (hj : 2 ≤ j)
-    {epsilon : ℝ} (hepsilon : 0 < epsilon) (hej : epsilon < j) :
-    ∃ A B c : ℝ, ∃ r s : ℕ,
+    {epsilon : ℝ} (hepsilon : 0 < epsilon) (hej : epsilon < j) : ∃ A B c : ℝ, ∃ r s : ℕ,
       0 < A ∧ A < B ∧ 0 < c ∧ c < 1 ∧ 1 ≤ r ∧ s = j * r - 1 ∧
       (j : ℝ) - epsilon < A ^ j ∧ (r : ℝ) / c < (s : ℝ) / B ^ j := by
   have hjpos : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
@@ -897,8 +836,7 @@ private theorem lower_window_parameters {j : ℕ} (hj : 2 ≤ j)
     nlinarith
 
 private theorem upper_window_parameters {j : ℕ} (hj : 2 ≤ j)
-    {epsilon : ℝ} (hepsilon : 0 < epsilon) :
-    ∃ A B d : ℝ, ∃ r s : ℕ,
+    {epsilon : ℝ} (hepsilon : 0 < epsilon) : ∃ A B d : ℝ, ∃ r s : ℕ,
       0 < A ∧ A < B ∧ 1 < d ∧ 1 ≤ r ∧ s = j * r + 1 ∧
       B ^ j < (j : ℝ) + epsilon ∧ (s : ℝ) / A ^ j < (r : ℝ) / d := by
   have hjpos : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
@@ -953,8 +891,7 @@ private theorem rigidity_from_window_barriers (L : ℕ → ℕ → ℕ)
   let delta : ℝ := min (epsilon / 2) ((j : ℝ) / 2)
   have hjpos : (0 : ℝ) < j := by exact_mod_cast (show 0 < j by omega)
   have hdelta : 0 < delta := lt_min (by positivity) (by positivity)
-  have hdelta_j : delta < (j : ℝ) := by
-    exact lt_of_le_of_lt (min_le_right _ _) (by linarith)
+  have hdelta_j : delta < (j : ℝ) := by exact lt_of_le_of_lt (min_le_right _ _) (by linarith)
   obtain ⟨Al, Bl, cl, rl, sl, hAl, hAlBl, hcl, hcl1, hrl, hsl,
       hAlpow, hmarginl⟩ := lower_window_parameters hj hdelta hdelta_j
   obtain ⟨Tl, hTl, hlower⟩ := lower j rl hj hrl Al Bl cl hAl hAlBl hcl hcl1
@@ -966,8 +903,7 @@ private theorem rigidity_from_window_barriers (L : ℕ → ℕ → ℕ)
   have hBu : 0 < Bu := hAu.trans hAuBu
   refine ⟨max 1 (max Tl Tu), lt_of_lt_of_le (by norm_num) (le_max_left _ _), ?_⟩
   intro m hm lambda hlam hrecord hT
-  have hP1 : (1 : ℝ) ≤ (largestPrime m : ℝ) :=
-    (le_max_left 1 (max Tl Tu)).trans hT
+  have hP1 : (1 : ℝ) ≤ (largestPrime m : ℝ) := (le_max_left 1 (max Tl Tu)).trans hT
   have hP : 0 < (largestPrime m : ℝ) := lt_of_lt_of_le (by norm_num) hP1
   let P : ℝ := largestPrime m
   let R : ℝ := P ^ ((j : ℝ)⁻¹)
@@ -979,13 +915,11 @@ private theorem rigidity_from_window_barriers (L : ℕ → ℕ → ℕ)
     (le_max_right Tl Tu).trans ((le_max_right 1 (max Tl Tu)).trans hT)
   have hlow := hlower m hm lambda hlam hrecord hTlP
   have hupp := hupper m hm lambda hlam hrecord hTuP
-  have hAR : 0 < Al * (largestPrime m : ℝ) ^ ((j : ℝ)⁻¹) := by
-    simpa [R, P] using mul_pos hAl hR
+  have hAR : 0 < Al * (largestPrime m : ℝ) ^ ((j : ℝ)⁻¹) := by simpa [R, P] using mul_pos hAl hR
   have hLpos : 0 < (L m j : ℝ) := hAR.trans hlow
   have hpowlow : (Al * R) ^ j < (L m j : ℝ) ^ j :=
     pow_lt_pow_left₀ hlow (mul_pos hAl hR).le (by omega)
-  have hpowupp : (L m j : ℝ) ^ j < (Bu * R) ^ j :=
-    pow_lt_pow_left₀ hupp hLpos.le (by omega)
+  have hpowupp : (L m j : ℝ) ^ j < (Bu * R) ^ j := pow_lt_pow_left₀ hupp hLpos.le (by omega)
   have hAlratio : Al ^ j < (L m j : ℝ) ^ j / P := by
     have h := hpowlow
     rw [mul_pow, hRpow] at h
@@ -996,8 +930,7 @@ private theorem rigidity_from_window_barriers (L : ℕ → ℕ → ℕ)
     exact (div_lt_iff₀ hP).mpr h
   have hratio_lower : (j : ℝ) - delta <
       (L m j : ℝ) ^ j / P := hAlpow.trans hAlratio
-  have hratio_upper : (L m j : ℝ) ^ j / P < (j : ℝ) + epsilon :=
-    hBuratio.trans hBupow
+  have hratio_upper : (L m j : ℝ) ^ j / P < (j : ℝ) + epsilon := hBuratio.trans hBupow
   have hratio_nonneg : 0 ≤ (L m j : ℝ) ^ j / P :=
     div_nonneg (pow_nonneg (Nat.cast_nonneg _) _) hP.le
   have hdelta_eps : delta < epsilon := by
@@ -1032,8 +965,7 @@ theorem price_record_fixed_layer_rigidity (j : ℕ) (hj : 2 ≤ j)
     exact hcert.2.2
   have lower : LowerBarrierSupply layerPrime := by
     intro j r hj hr A B c hA hAB hc hc1 hmargin
-    obtain ⟨T, hT, hbarrier⟩ :=
-      fixed_window_lower_barrier lowerGain hj hr hA hAB hc hc1 hmargin
+    obtain ⟨T, hT, hbarrier⟩ := fixed_window_lower_barrier lowerGain hj hr hA hAB hc hc1 hmargin
     refine ⟨T, hT, ?_⟩
     intro m hm lambda hlambda hrecord hP
     have hstructure := price_record_prime_structure hm hlambda hrecord
@@ -1041,8 +973,7 @@ theorem price_record_fixed_layer_rigidity (j : ℕ) (hj : 2 ≤ j)
       (exchange m lambda (by omega) hrecord) hstructure.2 hP
   have upper : UpperBarrierSupply layerPrime := by
     intro j r hj hr A B d hA hAB hd hmargin
-    obtain ⟨T, hT, hbarrier⟩ :=
-      fixed_window_upper_barrier lowerGain hj hr hA hAB hd hmargin
+    obtain ⟨T, hT, hbarrier⟩ := fixed_window_upper_barrier lowerGain hj hr hA hAB hd hmargin
     refine ⟨T, hT, ?_⟩
     intro m hm lambda hlambda hrecord hP
     have hstructure := price_record_prime_structure hm hlambda hrecord
@@ -1052,4 +983,4 @@ theorem price_record_fixed_layer_rigidity (j : ℕ) (hj : 2 ≤ j)
 
 #print axioms price_record_fixed_layer_rigidity
 
-end D5.S3.Arith.Robin.PriceRecordFixedLayerRigidity
+end D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity

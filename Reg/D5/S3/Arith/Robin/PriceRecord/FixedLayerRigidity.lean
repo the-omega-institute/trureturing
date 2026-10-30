@@ -1,10 +1,10 @@
 import LeanInformationAuditInterface.Contract.Registration
-import D5.S3.Arith.Robin.PriceRecordFixedLayerRigidity
+import D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity
 import Reg.Support.DependentFamily
 
 /-! Source-bound audit of uniform fixed prime-layer rigidity. -/
 
-open _root_.D5.S3.Arith.Robin.PriceRecordFixedLayerRigidity
+open _root_.D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity
 open _root_.D5.S3.Arith.GoldenResourceOptimalInteger
 open _root_.D5.S3.Arith.GoldenResource.GoldenResource5040EndpointComparison
 open _root_.D5.S3.Arith.Robin.OriginalEndpointPrimeTail (largestPrime)
@@ -13,7 +13,7 @@ open LeanInformationAudit
 
 noncomputable section
 
-namespace Reg.D5.S3.Arith.Robin.PriceRecordFixedLayerRigidity
+namespace Reg.D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity
 
 abbrev signature : Signature where
   Params := Unit
@@ -110,8 +110,8 @@ def family : Registration arena (type_of% @price_record_fixed_layer_rigidity) wh
 def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@price_record_fixed_layer_rigidity) (Realization signature) Type Unit where
   unitName :=
-    `D5.S3.Arith.Robin.PriceRecordFixedLayerRigidity.price_record_fixed_layer_rigidity.audit
-  realizationName := `Reg.D5.S3.Arith.Robin.PriceRecordFixedLayerRigidity.family
+    `D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity.price_record_fixed_layer_rigidity.audit
+  realizationName := `Reg.D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity.family
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -127,7 +127,7 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
   partialSensitivity := none
   escapeFrom := none
   sourceSelection := some {
-    owner := `D5.S3.Arith.Robin.PriceRecordFixedLayerRigidity
+    owner := `D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity
     definition := none
     coordinates := #[]
     readouts := #[{
@@ -144,4 +144,4 @@ def audit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
 #print axioms family
 #print axioms audit
 
-end Reg.D5.S3.Arith.Robin.PriceRecordFixedLayerRigidity
+end Reg.D5.S3.Arith.Robin.PriceRecord.FixedLayerRigidity

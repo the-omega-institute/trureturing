@@ -10,7 +10,7 @@ internal sealed class PriceRecordFixedLayerRigidityDocument : IScribeDocumentDef
         Blocks(Describe.Lean(
             DescribeId.Create("price-record-fixed-layer-rigidity"),
             DeclarationHandle.Create(
-                "D5/S3/Arith/Robin/PriceRecordFixedLayerRigidity.price_record_fixed_layer_rigidity"),
+                "D5/S3/Arith/Robin/PriceRecord/FixedLayerRigidity.price_record_fixed_layer_rigidity"),
             H("Uniform fixed-layer ratio"),
             StatementSource.WithoutFormula(),
             AssessedProvenance.FromRepo(),
