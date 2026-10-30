@@ -3209,3 +3209,465 @@ $$
 which proves (16.55). All masses, moments and the energy are those of the one law already verified in (16.49)–(16.51). In contrast, the parameter $m=(1-r\delta)/s$ in (14.13) equals $-1/[a(a+2)]$ at this endpoint, so its masses $m-\varepsilon$ cannot define a law for $\varepsilon\ge0$. The three-pair branch supplies the actual endpoint law. ∎
 
 ## 追加锚（本行以下为增补区）
+
+## 17. An exact dense phase with a continuum of actual minimizers
+
+**Definition 17.1 (The interior capacity window and its marginal functions).** Fix a real number $0<\eta<1/4$ and put
+
+$$
+A(\eta)=\left\lceil\frac{1024}{\eta}\right\rceil.
+$$
+
+Throughout this section let
+
+$$
+\begin{gathered}
+a\in\mathbb Z,\quad a\ge A(\eta),\quad
+\frac32+\eta\le\lambda\le2-\eta,\quad \delta=\frac\lambda a,\\
+r=a+1,\quad s=a+2,\quad n=a-2,\quad C=2a+1,\\
+q=r-\delta,\quad \mu=\frac qs,\quad
+\tau=\frac{3(2a+3)\delta}{r^2},\quad
+H_d=\frac{\delta a^3+(1-\delta)r^3}{\mu^2}.
+\end{gathered}
+\tag{17.1}
+$$
+
+The domain is exactly that of Definition 1.1 with the additional inequalities $y_i\ge\tau$. Thus the random nonempty subset $T\subseteq[s]$ has arbitrary nonnegative masses of total one, actual marginals $y_i=\mathbb P(i\in T)>0$, mean $\mathbb E|T|=q$, and energy
+
+$$
+H(x)=\mathbb E_x\left[|T|^2\sum_{i\in T}y_i^{-2}\right].
+$$
+
+The dense infimum is still $\mathscr D_a(\delta)$ from (11.1). No constraint on cardinalities, connectedness, symmetry or positive atom masses is added. Write $J=[s]\setminus T$ and $\bar x_J=x_{[s]\setminus J}$ for each proper subset $J\subsetneq[s]$. For $z>0$ define
+
+$$
+\varphi(z)=\frac{a^2}{z}+\frac{C(1-\delta)}{z^2},
+\qquad g(z)=\frac{r^2}{z}-\frac{C\delta}{z^2}.
+\tag{17.2}
+$$
+
+For a three-element label set $P$ and a label $j\notin P$, define on the box $\mathcal B=[9/10,1]^s$
+
+$$
+\begin{aligned}
+F_{P,j}(y)
+={}&\sum_{i\in P}\varphi(y_i)
+ +\frac{r^2}{y_j}
+ +\frac{C(\delta-3+\sum_{i\in P}y_i)}{y_j^2}
+ +\sum_{k\notin P\cup\{j\}}g(y_k),\\
+\mathcal B_q={}&\left\{y\in\mathcal B:\sum_i y_i=q\right\}.
+\end{aligned}
+\tag{17.3}
+$$
+
+These are auxiliary functions of a vector; an arbitrary vector in $\mathcal B_q$ is not assumed to be the marginal vector of a law. Attainment by one actual law will be established separately. The energy normalization is the one in Definition 1.1; its graph convention comes only from Albalahi et al., DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176), p.109, where the factor $1/\sqrt2$ is removed in defining CDSO. The results of §§14 and 16 have smaller parameter ranges and do not classify the window (17.1).
+
+**Lemma 17.2 (Explicit localization of all relevant dense competitors).** Every actual dense law in Definition 17.1 with $H(x)\le H_d$ satisfies
+
+$$
+y_i>\frac9{10}\quad(1\le i\le s).
+\tag{17.4}
+$$
+
+In particular this is a consequence on an energy sublevel, rather than an additional hypothesis on the original domain.
+
+**Proof.** The uniform adjacent-cardinality law of Lemma 1.2 has all marginals $\mu$ and energy $H_d$. The parameter bounds give
+
+$$
+\begin{gathered}
+a>4096,\quad 0<\delta<2/a<1,\quad
+\frac1a-\frac2{a^2}<h_0:=1-\mu
+ =\frac{1+\delta}{a+2}\le\frac1a,\\
+\mu\ge\frac9{10},\qquad
+C\delta\le5,\qquad \tau\le\frac{15}{a^2}<\frac9{10},\qquad
+\mu^{-2}-1\le\frac3a.
+\end{gathered}
+\tag{17.5}
+$$
+
+The last inequality follows by substituting $\mu\ge1-1/a$ and multiplying by $(1-1/a)^2>0$. Thus the uniform law is dense.
+
+Apply Lemma 14.2 to the actual weights $\alpha_i=y_i^{-2}$. If $\alpha_{(1)},\alpha_{(2)}$ are their two smallest values, then $M=\sum_i\alpha_i-\alpha_{(1)}-\alpha_{(2)}$. Its unrestricted-cardinality certificate gives
+
+$$
+H(x)\ge\sum_i g(y_i)+C\delta[\alpha_{(1)}+\alpha_{(2)}]
+\ge\sum_i g(y_i)+2C\delta.
+\tag{17.6}
+$$
+
+On the whole dense interval $[\tau,1]$,
+
+$$
+g''(z)=\frac{2r^2}{z^3}
+ \left(1-\frac{3C\delta}{r^2z}\right)
+\ge\frac{4r^2}{2a+3}\ge r.
+\tag{17.7}
+$$
+
+Here $z\ge\tau=3(C+2)\delta/r^2$ bounds the fraction by $C/(C+2)$, and $z\le1$. Taylor's inequality with (17.7), summed using $\sum_i(y_i-\mu)=0$, proves
+
+$$
+\sum_i g(y_i)\ge s g(\mu)+\frac r2 V,
+\qquad V=\sum_i(y_i-\mu)^2.
+$$
+
+The identity $H_d=sg(\mu)+2C\delta\mu^{-2}$ therefore yields
+
+$$
+\frac r2V\le2C\delta(\mu^{-2}-1)\le\frac{30}{a}.
+\tag{17.8}
+$$
+
+Consequently $|y_i-\mu|\le\sqrt V<8/a$, whence $1-y_i<9/a<1/10$. This proves (17.4) for every sublevel competitor without assuming an adjacent-cardinality support. ∎
+
+**Lemma 17.3 (The fourth-weight certificate and its complete zero set).** Let $x$ be any actual law whose marginals belong to $\mathcal B$, and order labels so that $P$ consists of three largest marginals and $j$ is a fourth largest marginal, breaking ties arbitrarily. Put
+
+$$
+\alpha_i=y_i^{-2},\quad \beta=\alpha_j,\quad
+W=\sum_i\alpha_i,\quad W_T=\sum_{i\in T}\alpha_i,
+\quad Q_T=\sum_{i\in P}(\alpha_i-\beta)\mathbf1_{\{i\in J\}}\le0.
+\tag{17.9}
+$$
+
+For every nonempty subset $T\subseteq[s]$, with $k=|T|$, define
+
+$$
+R_y(T)=(k^2-r^2)W_T
+ +C(r-k)(W-2\beta)-C Q_T.
+\tag{17.10}
+$$
+
+Then $R_y(T)\ge0$. Its entire zero set is
+
+$$
+R_y(T)=0\quad\Longleftrightarrow\quad
+\begin{cases}
+k=r,\quad J=\{i\},\quad y_i\le y_j,\quad\text{or}\\
+k=a,\quad J=\{i,l\},\quad y_i,y_l\ge y_j.
+\end{cases}
+\tag{17.11}
+$$
+
+If this law also has mean $q$, its exact same-law decomposition is
+
+$$
+\boxed{\ H(x)=F_{P,j}(y)+\mathbb E_x R_y(T)\ }.
+\tag{17.12}
+$$
+
+**Proof.** The ordering gives $\alpha_i\le\beta$ on $P$ and $\alpha_i\ge\beta$ outside $P$. At $k=r$ the residual is $-C Q_T$ on a singleton omission, so it vanishes exactly as in the first case of (17.11). At $k=a$, $J$ is a pair and expansion gives
+
+$$
+R_y(T)=C\sum_{i\in J\setminus P}(\alpha_i-\beta)\ge0.
+\tag{17.13}
+$$
+
+Its zeros are exactly the second case of (17.11), including all ties. At $k=s$ the residual is $2W+2C\beta>0$.
+
+For every remaining cardinality $k<a$, put $z=r-k$, so $2\le z\le r-1$ and $|J|=z+1$. With $A_J=\sum_{i\in J}\alpha_i$, (17.10) becomes
+
+$$
+R_y(T)=z\big[(z-1)W+(2r-z)A_J-2C\beta\big]-C Q_T.
+\tag{17.14}
+$$
+
+Since $\alpha_i\ge1$ and $\beta\le100/81<5/4$, the bracket is strictly greater than
+
+$$
+\begin{aligned}
+(z-1)(r+1)+(2r-z)(z+1)-\frac52C
+ &=-z^2+3rz+r-1-\frac52C\\
+ &\ge7r-5-\frac52C
+ =2r-\frac52>0.
+\end{aligned}
+\tag{17.15}
+$$
+
+For the middle inequality the quadratic is concave on $[2,r-1]$; its endpoint values before subtracting $5C/2$ are $7r-5$ and $2r^2-2$, and the latter is no smaller for $r\ge3$. Thus (17.14) is strictly positive. This accounts for every allowed cardinality and proves the complete zero set.
+
+Taking expectations in (17.10), use only the identities of this actual law,
+
+$$
+\mathbb E(r-K)=\delta,\qquad
+\mathbb E W_T=\sum_i y_i^{-1},\qquad
+\mathbb E Q_T=\sum_{i\in P}(\alpha_i-\beta)(1-y_i).
+$$
+
+It follows that
+
+$$
+H(x)=r^2\sum_i y_i^{-1}-C\delta(W-2\beta)
+ +C\sum_{i\in P}(\alpha_i-\beta)(1-y_i)
+ +\mathbb E R_y(T).
+\tag{17.16}
+$$
+
+The non-residual part is exactly (17.3), because $r^2-C=a^2$. This proves (17.12). Integrating a pointwise bound is the weak-duality principle in Bertsimas and Popescu, *Optimal inequalities in probability theory: A convex optimization approach*, DOI [10.1137/S1052623401399903](https://doi.org/10.1137/S1052623401399903), Theorem 2.1, p.785. Here (17.10) supplies the pointwise certificate itself. No strong duality, independent attainment of moment coordinates, or convexity of $H$ in the law is used. ∎
+
+**Lemma 17.4 (A unique legal root for the marginal lower problem).** For every fixed $P,j$ of Definition 17.1, $F_{P,j}$ has exactly one minimizer on $\mathcal B_q$. Its coordinates are $u$ on $P$, $v$ at $j$ and $w$ elsewhere, where $(u,v,w)$ is the unique real triple in the region
+
+$$
+\begin{gathered}
+3u+v+n w=q,\qquad \frac9{10}<w<v<u<1,\\
+\max\{|u-\mu|,|v-\mu|,|w-\mu|\}<\frac{48}{a^2},\\
+h=1-u,\qquad \zeta=2\delta-3h,\qquad 0<\zeta<h,
+\end{gathered}
+\tag{17.17}
+$$
+
+satisfying
+
+$$
+\boxed{\quad
+\varphi'(u)+\frac C{v^2}
+=g'(v)-\frac{2C\zeta}{v^3}
+=g'(w).
+\quad}
+\tag{17.18}
+$$
+
+In fact (17.18) and the sum constraint have at most one root anywhere in $(9/10,1)^3$. Moreover $\min_{\mathcal B_q}F_{P,j}<H_d$.
+
+**Proof.** The compact convex slice $\mathcal B_q$ contains $\mu\mathbf1$. On the whole box $\mathcal B$, the only nonzero off-diagonal Hessian entries connect $j$ with a label in $P$ and equal $-2C/y_j^3$. Their absolute values are less than $12a$. For the diagonal entries, writing $D=\delta-3+\sum_{i\in P}y_i\ge-3/10$, one has
+
+$$
+\begin{aligned}
+(F_{P,j})_{ii}
+ &=\frac{2a^2}{y_i^3}+\frac{6C(1-\delta)}{y_i^4}
+ \ge2a^2 &&(i\in P),\\
+(F_{P,j})_{jj}
+ &=\frac{2r^2}{y_j^3}+\frac{6CD}{y_j^4}
+ \ge2a^2-11a,\\
+(F_{P,j})_{kk}
+ &=\frac{2r^2}{y_k^3}-\frac{6C\delta}{y_k^4}
+ \ge2a^2-72 &&(k\notin P\cup\{j\}).
+\end{aligned}
+\tag{17.19}
+$$
+
+For these bounds, $C\le3a$, $C\delta\le5$, $y_i^{-4}\le(10/9)^4<2$, and $a\ge100$ suffice: in particular $6CD/y_j^4\ge-(18/10)\cdot3a\cdot2>-11a$. Subtracting absolute off-diagonal row sums gives respectively $2a^2-12a$, $2a^2-47a$ and $2a^2-72$. Each is at least $a^2$ for $a\ge100$. Thus
+
+$$
+\nabla^2F_{P,j}\succeq a^2 I_s\quad\text{throughout }\mathcal B.
+\tag{17.20}
+$$
+
+The minimizer $y^*$ on $\mathcal B_q$ exists and is unique.
+
+Subtract the scalar $g'(\mu)$ from each entry of $\nabla F_{P,j}(\mu\mathbf1)$. The remaining vector has three entries $-2Ch_0/\mu^3$, one entry $-2Cd_0/\mu^3$, and all other entries zero, where
+
+$$
+h_0=1-\mu,\qquad
+ d_0=2\delta-3h_0
+ =\frac{2\lambda-3+\lambda/a}{a+2}.
+\tag{17.21}
+$$
+
+Here $0<h_0\le1/a$ by (17.5), and $0<d_0\le1/a$: the lower bound follows from $\lambda\ge3/2+\eta$, and the upper bound follows by substituting $\lambda\le2$. Using $C\le3a$ and $\mu\ge9/10$, the norm of this residual vector is less than $24$. Since $F_{P,j}(\mu\mathbf1)=H_d$, strong convexity and minimality give
+
+$$
+\frac{a^2}{2}\|y^*-\mu\mathbf1\|^2
+\le-\nabla F_{P,j}(\mu\mathbf1)\cdot(y^*-\mu\mathbf1)
+<24\|y^*-\mu\mathbf1\|
+\tag{17.22}
+$$
+
+when $y^*\ne\mu\mathbf1$. In fact this inequality is strict in the nonzero case because of the strict residual norm bound, and yields
+
+$$
+\|y^*-\mu\mathbf1\|<48/a^2.
+\tag{17.23}
+$$
+
+The same bound holds if the difference is zero. This places every coordinate strictly between $9/10$ and one: use $\mu\ge1-1/a$, $h_0>1/a-2/a^2$, and $a\ge100$. Hence $y^*$ is interior relative to its sum hyperplane.
+
+Permuting $P$, or permuting the other $n$ labels, leaves both the function and slice unchanged. Finite Jensen applied to the average over these permutations, with convexity on $\mathcal B_q$ supplied by (17.20), and uniqueness therefore give three equal coordinates $u$, one coordinate $v$, and $n$ equal coordinates $w$. This is the finite convex-combination inequality of Boyd and Vandenberghe, *Convex Optimization*, §3.1.8, pp.77–78, [author-hosted text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf), used on an explicitly convex domain. The Lagrange equations for the interior minimum are (17.18).
+
+It remains to establish strict ordering and the capacity inequalities, rather than impose them on this minimization. From (17.5) and (17.23),
+
+$$
+\zeta=2\delta-3(1-u)
+\ge\frac{2\eta}{a}-\frac{144}{a^2}>0,
+\qquad
+h-\zeta=4h-2\delta
+>\frac{2\eta}{a}-\frac{200}{a^2}>0.
+\tag{17.24}
+$$
+
+Both signs follow from $a\eta\ge1024$.
+
+Hold $w$ fixed, and let $t=(3u+v)/4$. The point with all four of these coordinates equal to $t$ lies in the same slice and within $48/a^2$ of $\mu$ in each coordinate. At this point the difference of a top partial derivative and the fourth partial derivative is
+
+$$
+\frac{4C[\delta-2(1-t)]}{t^3}<0,
+\qquad
+\delta-2(1-t)\le-\frac\eta a+\frac{100}{a^2}<0.
+\tag{17.25}
+$$
+
+Along the line fixing $3u+v$ and $w$, the derivative in the direction increasing $u$ and decreasing $v$ is three times this difference at $u=v=t$. Strict convexity makes this one-variable derivative strictly increasing, while it vanishes at the interior minimizer. Therefore $u>t>v$.
+
+Next hold $u$ fixed and set $t=(v+n w)/(n+1)$. At $v=w=t$, the fourth partial derivative minus a lower partial derivative is
+
+$$
+-\frac{2C\zeta}{t^3}<0.
+\tag{17.26}
+$$
+
+Strict convexity along the line fixing $v+n w$ now gives $v>t>w$. This proves all of (17.17). Any triple in $(9/10,1)^3$ with the stated sum and (17.18) gives a stationary point of the same strictly convex function on $\mathcal B_q$, and hence must give its unique minimizer. This proves the stronger uniqueness assertion as well.
+
+Finally $\mu\mathbf1$ is not a minimum: increasing one coordinate in $P$ and decreasing one lower coordinate has derivative $-2Ch_0/\mu^3<0$ there, and is feasible for a sufficiently small displacement. Consequently the minimum is strictly below $H_d$. ∎
+
+**Theorem 17.5 (Exact dense infimum and every actual labeled minimizing law).** For every parameter in (17.1), let $(u,v,w)$ be the unique triple of Lemma 17.4 and put $h=1-u$, $\zeta=2\delta-3h$. Then
+
+$$
+\boxed{\quad
+\mathscr D_a(\delta)
+=3\varphi(u)+g(v)+\frac{C\zeta}{v^2}+n g(w)
+<H_d.
+\quad}
+\tag{17.27}
+$$
+
+Equivalently the middle two terms are $r^2/v+C(\delta-3+3u)/v^2$. The dense infimum of $d(x)$ from Definition 1.1 is (17.27) minus $B$.
+
+A finite polynomial specification of this value consists of (17.17), the sum constraint, and
+
+$$
+\begin{aligned}
+[a^2u+2C(1-\delta)]v^3
+ &=[(r^2+C)v+2C(\zeta-\delta)]u^3,\\
+[r^2v+2C(\zeta-\delta)]w^3
+ &=[r^2w-2C\delta]v^3,\qquad
+\zeta=2\delta-3+3u.
+\end{aligned}
+\tag{17.28}
+$$
+
+There exists exactly one legal root. All denominators in (17.18) are strictly positive in (17.17), so (17.28) is equivalent there; roots outside that region are not part of the specification.
+
+All labeled minimizing laws, and only those laws, are the following. Choose an unordered triple $P\subseteq[s]$, a label $j\notin P$, and real parameters
+
+$$
+b_i\ge0\quad(i\in P),\qquad \sum_{i\in P}b_i=\zeta.
+\tag{17.29}
+$$
+
+Their masses are
+
+$$
+\begin{aligned}
+\bar x_{\{i,j\}}&=b_i &&(i\in P),\\
+\bar x_{\{i,k\}}&=\frac{h-\zeta}{2}+b_l
+ &&(\{i,k,l\}=P),\\
+\bar x_{\{j\}}&=1-v-\zeta,\\
+\bar x_{\{k\}}&=1-w &&(k\notin P\cup\{j\}),\\
+\bar x_J&=0 &&\text{for every other proper subset }J.
+\end{aligned}
+\tag{17.30}
+$$
+
+The actual marginals are $u,u,u,v,w,\ldots,w$, with the strict ordering in (17.17). The three pair masses inside $P$ and all displayed singleton masses are strictly positive. Each of the three masses $b_i$ may be zero, including two simultaneously.
+
+For each of exactly $\binom{s}{3}(s-3)$ distinct labeled marginal patterns, (17.30) is an affine bijection from the nondegenerate closed two-dimensional simplex (17.29) onto the entire actual minimizing-law fibre over that pattern. Its inverse is $b_i=\bar x_{\{i,j\}}$. Thus uniqueness of the marginal pattern up to labels coexists with a continuum of actual minimizing laws.
+
+**Proof.** First construct each law in (17.30) and verify every condition using its own masses. Since $0<\zeta<h$, all pair masses are nonnegative and the three pairs inside $P$ have positive masses. Moreover
+
+$$
+1-v-\zeta>h-\zeta>0,\qquad 1-w>0.
+\tag{17.31}
+$$
+
+The pair-omission degrees at the four labels $P\cup\{j\}$ are $(h,h,h,\zeta)$. Indeed, at $i\in P$ the two internal pairs have total $h-\zeta+\sum_{k\in P\setminus\{i\}}b_k=h-b_i$, and the pair $\{i,j\}$ adds $b_i$. The degree at $j$ is $\sum_i b_i=\zeta$. The total pair mass is therefore
+
+$$
+\frac{3h+\zeta}{2}=\delta.
+\tag{17.32}
+$$
+
+The sum constraint gives
+
+$$
+3h+(1-v)+n(1-w)=s-q=1+\delta.
+$$
+
+Consequently the singleton-omission masses sum to
+
+$$
+1-v-\zeta+n(1-w)=1-\delta.
+\tag{17.33}
+$$
+
+Total mass is one and all atoms are nonempty, since omissions have size one or two and $s>2$. The mean is $a\delta+r(1-\delta)=q$. The omission probabilities are $h$ on $P$, $\zeta+(1-v-\zeta)=1-v$ at $j$, and $1-w$ elsewhere. Thus these same masses induce precisely the claimed marginals. They are dense, since $w>9/10>\tau$.
+
+For a direct energy computation, the incidence second moments of this law are
+
+$$
+\begin{aligned}
+\mathbb E[K^2 I_i]&=r^2u-C(\delta-h)
+ =a^2u+C(1-\delta) &&(i\in P),\\
+\mathbb E[K^2 I_j]&=r^2v-C(\delta-\zeta),\\
+\mathbb E[K^2 I_k]&=r^2w-C\delta
+ &&(k\notin P\cup\{j\}).
+\end{aligned}
+\tag{17.34}
+$$
+
+Dividing by the squares of the actual marginals gives exactly (17.27). Equivalently every supported atom has residual zero in Lemma 17.3, and its energy is $\min_{\mathcal B_q}F_{P,j}$.
+
+Now take any dense law from the full original domain. If $H>H_d$, it is strictly worse than (17.27) by Lemma 17.4. Otherwise Lemma 17.2 places its marginals in $\mathcal B$. Choose its top triple and fourth label and apply Lemma 17.3. The same-law identity gives
+
+$$
+H(x)\ge F_{P,j}(y)\ge\min_{\mathcal B_q}F_{P,j}.
+\tag{17.35}
+$$
+
+Relabeling coordinates does not change this last minimum. Lemma 17.4 therefore identifies it with (17.27), already attained by the constructed actual laws. This proves the minimum over all cardinalities, including nonsymmetric and disconnected incidence laws.
+
+Conversely, any law attaining this value has $H<H_d$, is localized, and has equality in both inequalities (17.35). Strict convexity forces its marginal vector to be exactly the unique minimizer of $F_{P,j}$. Its strict three-level pattern recovers $P$ as the three largest coordinates and $j$ as the sole intermediate coordinate. Equality in (17.12) forces all positive-mass atoms into (17.11). At these strict marginals, the allowed omissions are exactly singleton omissions outside $P$ and pair omissions within $P\cup\{j\}$. Every other atom has strictly positive residual, whatever its cardinality.
+
+The mean now forces pair mass $\delta$. Since no singleton omission at a label of $P$ is allowed, each such label has pair degree $h$. The remaining pair degree at $j$ is $2\delta-3h=\zeta$. Set $b_i=\bar x_{\{i,j\}}$. Its degree equation gives $\sum_i b_i=\zeta$. For $\{i,k,l\}=P$, the remaining three degree equations have the unique solution
+
+$$
+\bar x_{\{i,k\}}
+=\frac{(h-b_i)+(h-b_k)-(h-b_l)}2
+=\frac{h-\zeta}{2}+b_l.
+\tag{17.36}
+$$
+
+The actual marginals then force all singleton masses to be those in (17.30). This proves necessity as well as sufficiency, with no positivity assumption on $b_i$ and no omitted boundary laws.
+
+Because the marginal groups are strict, different choices of $P,j$ give different recoverable labeled patterns. There are $\binom{s}{3}(s-3)$ choices. The displayed affine inverse and $\zeta>0$ prove that every fibre is exactly the stated closed two-dimensional simplex.
+
+The pair-degree part is the classical fractional perfect $b$-matching polytope $\mathcal P(K_4,(h,h,h,\zeta))$ in the notation of Roger E. Behrend, *Fractional Perfect b-Matching Polytopes. I: General Theory*, [arXiv:1301.7356v1](https://arxiv.org/abs/1301.7356v1), (2), DOI [10.1016/j.laa.2013.10.001](https://doi.org/10.1016/j.laa.2013.10.001). Taking all $b_i=\zeta/3$ makes all six pair masses strictly positive. Thus its Corollary 19 applies: $K_4$ is connected and nonbipartite, so the dimension is $6-4=2$. This dimension formula is a classical intermediate fact. Equations (17.32)–(17.36) supply the particular simplex shape and the exhaustive bridge to the actual nonlinear energy minimizers. Finally clearing the positive denominators in (17.18) gives exactly (17.28), and Lemma 17.4 proves existence and uniqueness in the specified region. ∎
+
+**Corollary 17.6 (Boundary strata and the continuum after relabeling).** Under (17.1), each labeled marginal pattern has exactly three vertex laws. A simplex vertex has four positive pair-omission masses, a relative interior point of an edge has five, and a relative interior point of the simplex has six. All these laws also have the same $n+1=a-1$ positive singleton-omission masses. Two minimizing laws are related by a label permutation if and only if, after mapping their recovered $P,j$ to one another, their parameter triples $(b_i)_{i\in P}$ differ by a permutation. Consequently a full set of representatives for all minimizing laws modulo relabeling is
+
+$$
+0\le b_1\le b_2\le b_3,\qquad b_1+b_2+b_3=\zeta.
+\tag{17.37}
+$$
+
+It is the nondegenerate closed triangle with vertices
+
+$$
+(0,0,\zeta),\qquad (0,\zeta/2,\zeta/2),
+\qquad (\zeta/3,\zeta/3,\zeta/3).
+\tag{17.38}
+$$
+
+In particular the continuum survives relabeling.
+
+**Proof.** The three internal pair masses in (17.30) always exceed zero. Of the other three pair masses, respectively one, two or three are positive at a vertex, in an edge interior, or in the simplex interior. Equation (17.31) supplies all singleton positivities. A permutation relating two laws must map their actual marginal vectors to one another, hence must map their recovered top triples and intermediate labels. The only remaining action on (17.29) is the permutation of the three top labels; permutations of lower labels do not affect $b$. Conversely every permutation of $b$ is induced by such a label permutation. Sorting the triple therefore gives a unique representative. To verify the triangle description directly, any sorted triple in (17.37) is the convex combination of the three vectors in (17.38) with coefficients
+
+$$
+\frac{b_3-b_2}{\zeta},\qquad
+\frac{2(b_2-b_1)}{\zeta},\qquad
+\frac{3b_1}{\zeta},
+$$
+
+which are nonnegative and sum to one. The vertices are not collinear because $\zeta>0$. ∎
+
+The nonlinear all-law optimum and the complete actual-law fibre correspondence in Theorem 17.5 are deductions for the common law of Definition 1.1; the attributed weak-duality, finite-Jensen and matching-polytope statements supply only the indicated intermediate steps. No conclusion here extends to $\lambda=3/2$ or $\lambda=2$, their adjoining boundary layers, smaller $a$, a least sufficient $A(\eta)$, unrestricted rare/dense competition, or realization by a finite graph with prescribed budgets. The full text of Zhao–Zhao, DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), is not an input; its possible overlap remains unassessed. No worldwide priority assertion is made.
+
+## 追加锚（本行以下为增补区）
