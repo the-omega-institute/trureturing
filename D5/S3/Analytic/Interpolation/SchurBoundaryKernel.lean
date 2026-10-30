@@ -596,7 +596,11 @@ private theorem rational_real_average (h : ℂ → ℂ) (hh : Differentiable ℂ
         simp [Complex.I_sq]
       rw [he]
       exact mul_ne_zero (hden _ hnorm z hz) (hden _ hnorm' z hz)
-    rw [RCLike.re_eq_add_conj]
+    change ((rationalKernel r z).re : ℂ) * h z = _
+    have hre : ((rationalKernel r z).re : ℂ) =
+        (rationalKernel r z + conj (rationalKernel r z)) / 2 :=
+      RCLike.re_eq_add_conj (rationalKernel r z)
+    rw [hre]
     dsimp [rationalKernel]
     simp only [map_div, map_add, map_one, map_mul, map_pow, RCLike.conj_ofReal,
       ← RCLike.inv_eq_conj hz']
@@ -612,16 +616,43 @@ private theorem rational_real_average (h : ℂ → ℂ) (hh : Differentiable ℂ
   have hm : CircleIntegrable (fun z => (1 / 4 : ℂ) *
       (h z / (z - -(r : ℂ) * Complex.I))) 0 1 :=
     (continuousOn_const.mul (hc _ hnorm')).circleIntegrable'
-  rw [Real.circleAverage_fun_add (hhalf.add hp) hm,
-    Real.circleAverage_fun_add hhalf hp] at hsum
-  simp_rw [← smul_eq_mul, Real.circleAverage_fun_smul] at hsum
-  simp only [smul_eq_mul] at hsum
+  have hadd₁ := Real.circleAverage_add (hhalf.add hp) hm
+  have hadd₂ := Real.circleAverage_add hhalf hp
+  change Real.circleAverage (fun z => (1 / 2 : ℂ) * (rationalKernel r z * h z) +
+        (1 / 4 : ℂ) * (h z / (z - (r : ℂ) * Complex.I)) +
+        (1 / 4 : ℂ) * (h z / (z - -(r : ℂ) * Complex.I))) 0 1 = _ at hadd₁
+  change Real.circleAverage (fun z => (1 / 2 : ℂ) * (rationalKernel r z * h z) +
+        (1 / 4 : ℂ) * (h z / (z - (r : ℂ) * Complex.I))) 0 1 = _ at hadd₂
+  rw [hadd₁, hadd₂] at hsum
+  have hmul (c : ℂ) (f : ℂ → ℂ) : Real.circleAverage (fun z => c * f z) 0 1 =
+      c * Real.circleAverage f 0 1 := by
+    simpa only [smul_eq_mul] using
+      (Real.circleAverage_fun_smul (a := c) (f := f) (c := 0) (R := 1))
+  simp_rw [hmul] at hsum
   rw [rational_zero_mean h hh r hr,
     divided_cauchy_average h hh _ hnorm hrI,
     divided_cauchy_average h hh _ hnorm' hrI'] at hsum
   rw [hsum]
-  field_simp
+  field_simp [Complex.ofReal_ne_zero.mpr hr0, Complex.I_ne_zero]
   <;> ring
+
+private theorem kernel_rational_integral (b θ : ℝ) (hb0 : 0 ≤ b) (hb1 : b < 1) :
+    boundaryKernel b θ = ∫ t in (0 : ℝ)..1,
+      (-2 * b ^ 2 * t * (1 - t)) *
+        (rationalKernel (b * t) (Complex.circleMap 0 1 θ)).re := by
+  have hrat (t : ℝ) : (rationalKernel (b * t) (Complex.circleMap 0 1 θ)).re =
+      Real.cos θ * (1 + b ^ 2 * t ^ 2) /
+        ((1 - b ^ 2 * t ^ 2) ^ 2 + 4 * (b ^ 2 * t ^ 2) * Real.cos θ ^ 2) := by
+    convert rational_cosine_real ((b * t) ^ 2) θ using 1
+    · simp only [rationalKernel, Complex.circleMap_zero, Complex.ofReal_one, one_mul,
+        Complex.ofReal_pow, neg_mul, sub_neg_eq_add]
+    · rw [mul_pow]
+  rw [kernel_integral_interior b θ hb0 hb1]
+  rw [← intervalIntegral.integral_const_mul]
+  apply intervalIntegral.integral_congr
+  intro t _
+  rw [hrat]
+  ring
 
 /-- Uniform convergence, continuity, reflection, and the sign of the actual source kernel,
 including the entire closed parameter edge `b = 1`. -/
