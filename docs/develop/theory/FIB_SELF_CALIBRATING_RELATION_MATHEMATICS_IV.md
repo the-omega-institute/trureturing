@@ -1435,7 +1435,7 @@ $$
 
 “把四维矩阵补一行”不是自动有效的校准。若直接把最后一行取为 $r_s$ 而把初读常数保持为 $K$，末次切口会出现统一伴随，导致一个固定协议覆盖整族；这说明新增坐标必须同时保持纯 $N$ 数据、所有早切口和晚切口的共同来源障碍。第 22.2--22.6 节保存的是这种经过切口检查的正性保持构造，不是维数单调性的推论。
 
-这些结论是仓内代数推导与有限精确交叉检查，未新增 Lean 声明，不主张外部原创性，也不推出非负闭包、$\varepsilon=0$、随机协议、在线选择器、有效实可行性、有限位复杂度或本族九报告的最优性。
+这些结论不推出非负闭包、$\varepsilon=0$、随机协议、在线选择器、有效实可行性、有限位复杂度或本族九报告的最优性。
 
 ## 13. 原根完整目标的联合源秩投影
 
@@ -4860,7 +4860,7 @@ $$
 | 引理 21.4 | $q=0,1$ 的完整严格正伴随，使用原来的相同旧前缀。 |
 | III 引理 10.1、10.3 | 任意原子字归约、永久零状态及全部纯 $N$ 数据的正秩一实现。 |
 | III 定理 14.2 | 只提供保成功集合的正规形，不保原费用；本节下界直接使用 (23.11)，不从正规形推断原协议费用。 |
-| 本节 (23.4)--(23.11) | 两个晚切口的部分报告严格正伴随及其任意历史费用下界，属于本模型内推导（repo-derived）。 |
+| 本节 (23.4)--(23.11) | 两个晚切口的部分报告严格正伴随及其任意历史费用下界。 |
 | van den Bos--Vaandrager，[*State Identification for Labeled Transition Systems with Inputs and Outputs*，Definition 11、Theorem 6.1](https://arxiv.org/html/1907.11034v2) | 自适应区分的文献背景；其悬挂自动机和单射分裂条件不供应本节连续正矩阵的七报告下界。 |
 
 本节补足定义 21.8 留出的该固定四维族的逐来源最优费用。
@@ -4871,7 +4871,6 @@ $$
 非负闭包、零误差、随机协议及有效实数判定或位复杂度不由本节解决。
 认证初始秩关系不等于恢复初始矩阵或辨认其一项、两项来源分解；
 逐来源协议的存在不提供未知来源的在线选择器或有限预选覆盖。
-本节不作外部原创性或形式核验声明。
 
 ## 24. 五维固定来源族的精确九报告费用
 
@@ -4989,7 +4988,7 @@ $$
 
 This is the budget identity $1+q+1+j\le8$; for $q=4$ the old $a_4$ report is shared and the two subsequent $N$ steps expose $b_1,b_2$ after the initial $b_0$. Repeated $L_0$ only repeats $b_0$, and after $j=4$ every further $N$ enters the permanent zero state; hence the same fixed $S_q$ and the same report table cover every repeated-reset and zero-tail continuation allowed before report eight. Determinism now forces $\Pi$ to make identical actions, stopping decisions and output on $Q_s$ and on $S_q$. If it outputs $2$ within eight reports on the former, it does so on the rank-one latter, contradicting full-domain reliability. Therefore $c_{5,1}(Q_s)\ge9$.
 
-Finally let $\varepsilon>0$. The map $R\mapsto\varepsilon R$ is a bijection of $\mathcal M_5$ preserving strict positivity and ordinary rank, and $\operatorname{tr}(A\varepsilon R)=\varepsilon\operatorname{tr}(AR)$. If an $\varepsilon$-reliable protocol achieved $Q_{\varepsilon,s}$ in at most eight reports, construct a unit protocol by multiplying each unit-scale report by $\varepsilon$ before feeding it to the original decision function. This would be a unit-reliable protocol achieving $Q_s$ in at most eight reports, contradicting the preceding paragraph. The scaled version of the nine-report protocol gives the matching upper bound, proving (24.2). All new algebra and the finite cut table are repo-derived synthesis; no external optimality or formal-verification claim is made. ∎
+Finally let $\varepsilon>0$. The map $R\mapsto\varepsilon R$ is a bijection of $\mathcal M_5$ preserving strict positivity and ordinary rank, and $\operatorname{tr}(A\varepsilon R)=\varepsilon\operatorname{tr}(AR)$. If an $\varepsilon$-reliable protocol achieved $Q_{\varepsilon,s}$ in at most eight reports, construct a unit protocol by multiplying each unit-scale report by $\varepsilon$ before feeding it to the original decision function. This would be a unit-reliable protocol achieving $Q_s$ in at most eight reports, contradicting the preceding paragraph. The scaled version of the nine-report protocol gives the matching upper bound, proving (24.2). ∎
 
 ### 约定 24.3（费用边界）
 
