@@ -1618,3 +1618,485 @@ physical services have already been carried out. $\square$
 [PCR-KIE]: https://arxiv.org/pdf/2009.01217v1
 
 ## 追加锚（本行以下为增补区）
+
+## 17. Transport to genuine physical children
+
+**Definition 17.1 (integer boundary coordinates and child delays).**
+Fix one source $s\in\mathscr R_d$ with its original alpha initialization,
+physical order and aligned decomposition $s=y+t$ from Definition 1.1.
+Consider its entire original forward orbit. For every finite physical
+address $v$, put
+
+$$
+ A_v=I_v(1),\quad B_v=I_v(2),\quad e_v=\tau_v-1,
+ \qquad c_v=s_{A_v-1}.
+ \tag{PCR.36}
+$$
+
+These are mathematical attributes of the actual source, not entrance
+registers. Every finite address is eventually created: the root branches
+at cut two, and a newly created beta or alpha branches respectively one
+or two cuts after creation. At the normalized origin of $v$, its first
+branch is in local update one and consumes bit $c_v$. For a physical
+child $vx$, let $\delta_x(c_v)$ be one for an initially beta child and
+two for an initially alpha child. Thus
+
+$$
+ (\delta_a(1),\delta_b(1))=(1,2),\qquad
+ (\delta_a(0),\delta_b(0))=(2,1).
+ \tag{PCR.37}
+$$
+
+**Theorem 17.2 (authentic integer child transport).** For every $v$,
+including cones containing singular births, the root boundary and child
+boundaries satisfy
+
+$$
+ (e_\varepsilon,A_\varepsilon,B_\varepsilon)=(1,1,2),
+ \qquad e_{vx}=e_v+\delta_x(c_v),
+ \tag{PCR.38}
+$$
+
+and the following exact integer table:
+
+$$
+\begin{array}{c|c|c}
+ c_v &(A_{va},B_{va})&(A_{vb},B_{vb})\\ \hline
+ 1 &(B_v,A_v+B_v)&(A_v+B_v+1,A_v+2B_v+2)\\
+ 0 &(A_v+B_v,A_v+2B_v)&(B_v,A_v+B_v+1).
+\end{array}
+ \tag{PCR.39}
+$$
+
+The children are created at actual cut $e_v+1$. Their normalization
+origins are $e_v+1$ for beta and $e_v+2$ for alpha; neither is the
+parent's normalization origin. In particular $1\le A_v<B_v$ and
+$A_{vx}>A_v$. If $v$ is genuinely core-only, then so are both children,
+$c_v=y_{A_v-1}$, and reduction of this table modulo the least period
+$p$ is a well-defined transport depending only on $(A_v,B_v)\bmod p$.
+
+Proof. The alpha root becomes beta at cut one, and its first two birth
+batches begin at indices one and two. A child born at parent-local cut
+one branches at cut two if initially beta, and at cut three if initially
+alpha. Its beta normalization is therefore at parent-local cut one or
+two, proving (PCR.38). By (PCR.1), the parent's first four batch starts
+are $A,B,A+B,A+2B$.
+
+The $a$ child has no preceding sibling inside $v$. Its first two starts
+are therefore $B,A+B$ in the beta case and $A+B,A+2B$ in the alpha
+case. For the $b$ child, the $a$ sibling contributes its beta-leaf
+mass just before each relevant update. If $c_v=0$, that sibling is born
+alpha and has beta masses zero and one at parent-local cuts one and
+two. The right beta child's starts are $B,A+B+1$. If $c_v=1$, the
+sibling is born beta and has beta masses one and two at cuts two and
+three. The right alpha child's starts are $A+B+1,A+2B+2$. These masses
+are independent of the sibling's later orientation bits. The preceding
+exterior of $v$ is already included in the parent's batch starts, by
+[ACR, Theorem 27.2][ACR]; adding precisely these internal masses gives
+(PCR.39), with the original one-based indices and physical order.
+
+The inequalities hold at the root and are preserved by each integer
+row; they also give strict increase of $A$ at every descent. A child's
+birth events are a subset of its parent's future birth events, so
+core-only evolution is hereditary. On that domain its first bit is the
+aligned core bit; periodicity makes it a function of $A\bmod p$.
+Induction on the address proves that these equations recover the actual
+boundary of every physical node, rather than a separately chosen local
+trial. $\square$
+
+## 18. Exact transient seeding, including shallow core-only cones
+
+**Definition 18.1 (finite early clock tree and defect ancestors).**
+Let $a$ be the transient exponent of Definition 1.1, and set
+
+$$
+ D_s=\{j:1\le j\le a,\ t_{j-1}=1\},\qquad
+ \ell_a=\min\{m\ge0:F_{m+2}>a\}.
+ \tag{PCR.40}
+$$
+
+Construct a finite rooted address tree $H_s$ as follows. Start with
+$(\varepsilon,e,A,B)=(\varepsilon,1,1,2)$. At a node with $A\le a$,
+use its actual bit $s_{A-1}$ and (PCR.38)--(PCR.39) to include both
+children with their integer coordinates. Stop a branch as soon as
+$A>a$. Let
+
+$$
+ Z_s=\{v\in H_s:A_v\in D_s\},\qquad
+ U_s=\{u\in H_s:\text{some }v\in Z_s\text{ has }u\preceq v\}.
+ \tag{PCR.41}
+$$
+
+Here $\preceq$ includes equality. Define the seed addresses $C_s$ to be
+$\{\varepsilon\}$ if $U_s$ is empty, and otherwise
+
+$$
+ C_s=\{vx:v\in U_s,\ x\in\{a,b\},\ vx\notin U_s\}.
+ \tag{PCR.42}
+$$
+
+The $a$ in the address alphabet remains distinct from the transient
+exponent. The integer recursion uses only actual source entries with
+indices at most that exponent; it does not enumerate finite source
+cuts or invent exterior forests.
+
+**Theorem 18.2 (complete seed characterization).** The construction is
+finite, contains every defect birth parent, and has depth at most
+$\ell_a$. Its marked nodes are exactly the actual parents whose
+orientation bits differ from the aligned core. For every physical
+address $v$,
+
+$$
+ v\text{ is genuinely core-only}
+ \quad\Longleftrightarrow\quad
+ \text{no }w\in Z_s\text{ extends }v
+ \quad\Longleftrightarrow\quad
+ v\in\bigcup_{c\in C_s}c\{a,b\}^*.
+ \tag{PCR.43}
+$$
+
+The finite, nonempty set $C_s$ is prefix-incomparable. Its members are
+exactly the core-only nodes whose proper ancestors are not core-only.
+In particular a safe node with $A_v\le a$ is retained whenever it has
+no defect descendant; the condition $A_v>a$ is not used as a necessary
+condition. All original singular transients are included.
+
+For $L=\lceil\log_2(a+1)\rceil$ one has $\ell_a\le2L$,
+$|H_s|\le2^{\ell_a+1}-1\le8(a+1)^2$. The integer coordinates have
+$O(\log(a+2))$ bits. These are bounds on this supplied-source
+mathematical construction, not paid acquisition bounds.
+
+Proof. At physical depth $m$, the first branch is no earlier than cut
+$m+2$, and its birth index is at least $F_{m+2}$, by ACR Theorems
+27.2--27.3. Consequently every branch of the construction stops by
+$\ell_a$. Its edges agree with the true orbit by Theorem 17.2. Every
+actual birth $j$ has one parent, whose first branch index is $A_v=j$.
+If $j\le a$, every proper ancestor has smaller first index, so the
+construction reaches that parent before stopping. Conversely each
+marked node consumes a defect bit at precisely its actual index.
+Thus $Z_s$ accounts for every and only actual defect parent, including
+ones generated by the transient's own altered physical wiring.
+
+A cone's subsequent births are precisely the first branches of all
+nodes extending its root. Each such node eventually branches. Its
+birth agrees with the aligned core if and only if its index is not
+in $D_s$, since $t$ vanishes outside the prescribed range. This proves
+the first equivalence in (PCR.43). The unsafe set is exactly the finite
+ancestor closure of $Z_s$; it is prefix-closed. If nonempty it contains
+the root, and each of its children is present in $H_s$, since an unsafe
+node has $A_v\le a$. Any infinite address path leaves this finite
+unsafe tree through exactly one edge; any finite safe address has a
+unique earliest safe prefix. Those prefixes are precisely (PCR.42).
+If there is no unsafe node, the root itself is that prefix. This proves
+both directions, nonemptiness and prefix-incomparability, without
+replacing a shallow safe cone by a deeper frontier.
+
+Finally $F_{2k+2}\ge2^k$ gives the stated depth and size bounds (at
+$a=0$ the construction is just the root). The seed bounds in ACR
+(ACR.114), applied at depth at most $\ell_a$, give
+$A,B<F_{2\ell_a+4}<2^{2\ell_a+4}$; (PCR.38) gives
+$e\le2\ell_a+1$. Their binary lengths have the claimed order. No
+period or transient parameter has thereby become an observer input.
+$\square$
+
+## 19. An explicit finite image of the original source
+
+**Definition 19.1 (source-calibrated residue relation).** On
+$Q_p=(\mathbb Z/p\mathbb Z)^2$, define $c_y(A)=y_{A-1}$ by original
+periodic indexing. Define maps $f_a,f_b:Q_p\to Q_p$ by the two columns
+of (PCR.39), using $c_y(A)$ and reducing the result modulo $p$. Retain
+on each edge $q\xrightarrow{x}f_x(q)$ the positive integer weight
+$\delta_x(c_y(A))$ from (PCR.37). The seed set and its initial times are
+
+$$
+ E_s=\{(A_c,B_c)\bmod p:c\in C_s\},\qquad
+ \{(c,e_c,(A_c,B_c)\bmod p):c\in C_s\}.
+ \tag{PCR.44}
+$$
+
+The second object retains multiplicities of residue seeds at distinct
+addresses or times. Let $N_y$ be the $p^2$ by $p^2$ nonnegative integer
+matrix with row $r$, column $q$ equal to
+$\mathbf1_{r=f_a(q)}+\mathbf1_{r=f_b(q)}$. Write $\mathbf1_{E_s}$ for
+the indicator column. Put
+
+$$
+ R_s=\left\{q\in Q_p:
+ \left[\left(\sum_{j=0}^{p^2-|E_s|}N_y^j\right)
+                  \mathbf1_{E_s}\right]_q>0\right\}.
+ \tag{PCR.45}
+$$
+
+At $p=1$ this uses the single residue $(0,0)$ and the zeroth matrix
+power. Formula (PCR.45), the explicit edge table and the finite defect
+construction specify $R_s$ without an oracle for reachable histories.
+
+**Theorem 19.2 (both realization directions and timed transport).**
+For this one fixed original source,
+
+$$
+ R_s=\{(I_v(1),I_v(2))\bmod p:
+                  v\text{ is genuinely core-only}\}.
+ \tag{PCR.46}
+$$
+
+Every matrix path starting at a seed lifts to its literal physical
+address in the same original source. If its edge word is $w=x_1\cdots
+x_h$, then
+
+$$
+ q_{cw}=f_{x_h}\circ\cdots\circ f_{x_1}(q_c),\qquad
+ e_{cw}=e_c+\sum_{i=1}^h
+       \delta_{x_i}(c_y(A_{cx_1\cdots x_{i-1}})).
+ \tag{PCR.47}
+$$
+
+All quantities $A$ in the last formula may be reduced modulo $p$ for
+the bit evaluation. Conversely every core-only address has a unique
+seed prefix and supplies such a path. Every state in $R_s$ has a
+realization with at most $p^2-|E_s|$ edges after some seed, although
+this shortened witness need not retain an original witness's address
+or normalization time. A cone on a particular path has normalized age
+$T\ge0$ at actual cut $n$ exactly when $n=e_{cw}+T$. In particular the
+full square is attained if and only if every coordinate of the explicit
+column in (PCR.45) is positive; a zero coordinate is a strict-image
+certificate for that supplied source.
+
+Proof. By Theorem 18.2 every seed is an actual core-only cone. Suppose
+a path prefix has been lifted. Both actual children eventually exist;
+they remain core-only, and Theorem 17.2 gives exactly the two outgoing
+residue states and the stated time increments. Induction proves the
+lift for every finite word, including its normalization time. This is
+the realization direction for the finite presentation; no hypothetical
+state is installed as an actual cone. Conversely (PCR.43) writes every
+core-only address uniquely as $cw$, and the same induction computes
+its actual residues. This gives equality with the states reached by
+arbitrary finite graph paths.
+
+For completeness, a shortest path from the seed set to any reached
+state repeats no vertex, and has no seed vertex after its initial one:
+a repeated segment can be deleted, and a later seed allows a shorter
+start. All vertices after its first therefore lie in the complement
+of $E_s$, so its length is at most $p^2-|E_s|$. Matrix powers count
+these paths, proving (PCR.45)--(PCR.46), including both inclusions.
+Deleting a repeated segment changes the sum of positive time weights;
+there is no same-time shortening assertion. The time statement is
+precisely the original normalization equation of Definition 1.2.
+
+The elementary finite-path argument applies only after the physical
+transport and transient initialization have been established. In the
+terminology of [Rigo--Stipulanti, *Automatic sequences: from rational
+bases to trees*, arXiv:2102.10828v5, Definition 25 and Theorem 28](https://arxiv.org/html/2102.10828v5),
+the residue-decorated full address tree below a seed has finitely many
+suffixes; Theorem 28 concerns an abstract numeration system built on a
+prefix-closed regular language. Its address-enumeration correspondence
+is not this source's chronological birth enumeration. Neither that
+result nor finite graph closure supplies (PCR.39), (PCR.43), the actual
+normalization times or a physical Read service. $\square$
+
+**Proposition 19.3 (a strict-image obstruction).** Suppose $p>1$ and
+the aligned core satisfies $y_{-1}=0$ and $y_{-2}=1$. If neither
+$(0,0)$ nor $(-1,-1)$ belongs to $E_s$, then
+
+$$
+ R_s\subseteq Q_p\setminus\{(0,0),(-1,-1)\},
+ \qquad |R_s|\le p^2-2.
+ \tag{PCR.48}
+$$
+
+In particular every purely periodic source with these aligned terminal
+bits satisfies this obstruction. The presence of a transient can change
+the seed set, so this statement is not extended by forgetting $E_s$.
+
+Proof. Each of the four affine branches in (PCR.39) has an invertible
+linear part modulo every $p$. An edge into $(0,0)$ can have predecessor
+$(0,0)$ in the $a$ column, $(-1,0)$ in the $b,c=0$ case, or
+$(0,-1)$ in the $b,c=1$ case. The latter two require respectively
+$c_y(-1)=0$ and $c_y(0)=1$, both contrary to the assumed bits. Thus
+its only permitted incoming edges are from itself. An edge into
+$(-1,-1)$ in the $a,c=1$, $a,c=0$, or $b,c=0$ cases requires
+predecessor $(0,-1)$, $(-1,0)$, or $(-1,-1)$, respectively. These
+require $c_y(0)=1$ or $c_y(-1)=0$, again impossible. The remaining
+$b,c=1$ predecessor is $(-1,-1)$ itself and is permitted. Neither
+vertex can first be entered from its complement. The seed assumption
+therefore excludes them from (PCR.45). They are distinct for $p>1$.
+For a purely periodic source the sole seed is the root $(1,2)\bmod p$,
+which equals neither excluded pair: the second equality would require
+$p$ to divide both two and three. $\square$
+
+## 20. Actual strict and full images, and a shallow safe seed
+
+**Proposition 20.1 (the same aligned core with two different images).**
+Let $y=(10)^\infty$ with its displayed index-zero alignment. The purely
+periodic original source $s=y$ belongs to $\mathscr R_2$ and has
+
+$$
+ p=2,\qquad R_y=\{(1,0),(0,1)\},\qquad |R_y|=2<4.
+ \tag{PCR.49}
+$$
+
+For the original source $s'=y+(1,0,0,\ldots)=(001010\ldots)$,
+the same aligned core has $a=1$, $s'\in\mathscr R_3$, and
+
+$$
+ C_{s'}=\{a,b\},\quad q_a=(1,1),\quad q_b=(0,0),
+ \qquad R_{s'}=(\mathbb Z/2\mathbb Z)^2.
+ \tag{PCR.50}
+$$
+
+The full square is therefore neither universally attained nor universally
+excluded, even with the aligned core fixed and with authentic singular
+sources retained.
+
+Proof. The least core annihilator is $g(E)=E^2+1$ over $\mathbb F_2$:
+$y$ has period two and is nonconstant, so neither order zero nor the
+constant-term-one degree-one polynomial annihilates it. The first
+source is purely periodic, and its root state is $(1,0)$. For this
+aligned core, the entire residue table is
+
+$$
+\begin{array}{c|c|c|c}
+ q&c_y(A)&f_a(q)&f_b(q)\\ \hline
+ (0,0)&0&(0,0)&(0,1)\\
+ (0,1)&0&(1,0)&(1,0)\\
+ (1,0)&1&(0,1)&(0,1)\\
+ (1,1)&1&(1,0)&(1,1).
+\end{array}
+ \tag{PCR.51}
+$$
+
+The two off-diagonal states form a closed set, both occur from the root,
+and the other two cannot be reached, proving (PCR.49) by Theorem 19.2.
+This is also the sharp $p=2$ instance of Proposition 19.3.
+
+The transient of $s'$ is killed by $E$; $E(E^2+1)$ annihilates $s'$
+at every nonnegative index, so the source is in the original class with
+$d=3$. Coprime decomposition gives exactly the displayed aligned core
+and transient. Its only defect is birth one at the root. That actual
+birth uses zero, so the integer child boundaries are $(3,5)$ at $a$
+and $(2,4)$ at $b$, with origins $e_a=3,e_b=2$. Both children are
+core-only and are the minimal safe seeds. Their residues are the two
+diagonal states. By (PCR.51), $a$ followed by $a$ reaches $(1,0)$,
+and $b$ followed by $b$ reaches $(0,1)$; thus all four states have
+actual address witnesses. This uses the original transient to initialize
+the image, not hypothetical seed states. $\square$
+
+**Proposition 20.2 (a core-only seed inside the transient bound).**
+Let $y=(01)^\infty$ and $s=y+(0,0,1,0,\ldots)$. This original
+source lies in $\mathscr R_5$, has transient exponent $a=3$, and has
+
+$$
+ Z_s=\{a\},\qquad U_s=\{\varepsilon,a\},\qquad
+ C_s=\{b,aa,ab\}.
+ \tag{PCR.52}
+$$
+
+In particular $b$ is genuinely core-only although its first birth index
+is $A_b=2\le a$. Its normalization origin is two, whereas those of
+$aa,ab$ are four and five. A depth or first-index cutoff alone would
+not list all minimal safe cones.
+
+Proof. Here $E^3(E^2+1)$ annihilates $s$, and the displayed finite
+transient has least nilpotent exponent three. The root consumes zero,
+so $a$ has boundary $(3,5)$ and origin three, while $b$ has boundary
+$(2,4)$ and origin two. The only defect is at index three, hence its
+actual parent is $a$. That parent consumes $s_2=1$, producing
+$aa$ with boundary $(5,8)$ and origin four, and $ab$ with boundary
+$(9,15)$ and origin five. The first indices of both exceed three.
+For $b$, every proper descendant has first index at least $B_b=4$
+by (PCR.39), while its own index two is not a defect. This proves
+core-only evolution directly, including the shallow birth inside the
+transient bound. There are no other defect parents, so (PCR.41)--(PCR.43)
+give exactly the displayed sets. $\square$
+
+## 21. Predictive capacity and the unchanged original recovery problem
+
+**Theorem 21.1 (capacity on the authentic image).** Fix the entire
+aligned source $s$ above as a comparison parameter, and put $K_s=|R_s|$.
+There are exactly $K_s$ distinct complete normalized local forward
+behaviours among its genuinely core-only physical cones. For every
+common normalized age $T\ge0$, the future families $(S_{T+u})_{u\ge0}$
+still have exactly $K_s$ behaviours. At any common normalized age
+satisfying (PCR.5), the same $K_s$ behaviours are already
+distinguished by complete current support. The statement includes the
+constants with $p=1,K_s=1$, without a maturity requirement for clocks.
+It compares cones at their respective actual cuts $e_v+T$; it does not
+assert that they all have the same age at one common global cut.
+
+A deterministic predictor for these behaviours, with aligned source
+and common age fixed, must distinguish $K_s$ configurations and needs
+at least $\lceil\log_2K_s\rceil$ bits in a fixed-length code. For the
+clock distinction alone this many bits suffice as a mathematical index
+into a supplied list of the $K_s$ states. The list, core, age, binding,
+physical address, evaluator and any source-dependent advice contribute
+their own stored data and costs. The two named coordinates are not two
+compulsory physical registers or a claim about total minimal memory.
+
+Proof. Theorem 19.2 identifies exactly the authentic residue image, with
+a real cone for each member. Theorem 3.1 separates any two members by a
+finite presence witness and identifies equal residues with equal full
+local histories; its mature-cut conclusion gives the current-support
+assertion. For a future family beginning at any earlier common age $T$,
+choose a mature age at least $T$; that future cut separates every distinct
+pair as well. Equal residues agree at every future cut. Thus the
+restriction of that earlier exact classification
+has cardinality $K_s$, now with a specified finite source presentation
+and both realization directions instead of an abstract image. The
+configuration lower bound and indexed coding argument are finite
+counting, as in Theorem 15.1. For $s=y$ and $s'$ of Proposition 20.1,
+these are respectively two and four behaviours and one and two bits of
+fixed-core clock capacity, with all other data still charged. $\square$
+
+**Proposition 21.2 (scope of representation, time and physical recovery).**
+Formula (PCR.45) characterizes all-address future attainment from a
+supplied mathematical description of the fixed original source.
+It does not by itself provide the image from erased unknown inputs,
+identify the actual cone's residue, certify that a path is present at
+an unknown current cut, or perform acquisition or installation.
+Unweighted state reachability cannot replace the timed equality
+(PCR.47). A complete finite-cut support, complete cut-indexed local
+future, timeless address union, and a paid finite Read transcript
+retain the distinctions of Theorem 2.1, Proposition 2.2 and §13.
+
+The supplied graph has $p^2$ vertices and two named outgoing edges
+per vertex before restriction; no polynomial bound in the core degree
+$r$ follows for its expansion, period extraction or numerical phase
+extraction. The earlier operator representation and evaluator do not
+need this graph to be expanded. Unbounded normalized age retains the
+obstruction of Theorem 15.2.
+
+The original task still requires the transient-inclusive output $(P,n)$,
+unknown law and cut, all-index $\mathscr R_d$, original $K_d/\rho_d$
+firstness and normalization, and actual completed installation with all
+root-literal, stationarity, backing and physical service premises of
+[PSA, Definitions 1.1--1.3 and §8](RECURSIVE_RELATIONAL_OBSERVATION_POLYNOMIAL_SOURCE_ACQUISITION.md).
+A local core image is not a replacement for any of those objects or
+obligations.
+
+Proof. The seed construction uses the source's actual transient and
+aligned core, and the residue table uses its least period; Definition
+1.1 supplies these as mathematical properties, not observation inputs.
+Theorem 19.2's path lifting proves eventual existence with an exact
+normalization time, rather than existence at every earlier cut. Its
+shortest-path reduction changes that time. Theorem 2.1 requires the
+whole ordered support for its equivalence; Proposition 2.2 proves that a
+finite menu can miss distinctions and that the timeless local union is
+the same full address tree. These facts prevent substituting any of
+those observations for another.
+
+A binary degree-$r$ invertible recurrence can have exponentially long
+period, as already accounted for in Theorem 15.1; constructing its
+$p^2$-vertex table charges that expansion. None of (PCR.36)--(PCR.52)
+solves an inverse exponent problem from the compact operators. Even a
+single clock behaviour with $p=1$ has infinitely many distinct age-indexed
+supports, by Theorem 15.2. Finally Proposition 20.1 gives the same
+aligned core with different authentic images after changing a permitted
+transient. The source entrance and output of PSA retain that transient;
+discarding it can therefore lose even the initialization of this local
+image, besides failing to return the original prefix. The missing
+acquisition, original normalization and physical completion implications
+cannot be inferred from a theorem whose inputs are supplied descriptions
+and whose conclusions are about the original mathematical orbit.
+$\square$
+
+## 追加锚（本行以下为增补区）

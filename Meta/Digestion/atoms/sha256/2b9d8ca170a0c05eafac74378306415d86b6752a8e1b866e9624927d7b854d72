@@ -1,0 +1,50 @@
+**Theorem 14.1 (the domain has not been narrowed).** The construction
+covers zero, both constants, nonminimal original presentations and
+periodic cores whose *least* polynomial has repeated factors. It does
+not extend the core-only conclusion to a cone with a singular birth
+inside it. There is no inverse here for the original transient, actual
+integer clocks, original global age, exterior geometry or private law
+presentation from a local boundary alone.
+
+Proof. Zero and the all-one core were handled explicitly in Theorems
+8.2 and 9.2, including $d=0$. For a concrete genuine repeated-factor
+case take the purely periodic stream $00110011\cdots$. It has
+$(E+1)^3=E^3+E^2+E+1$ as its least polynomial: the four-term recurrence
+holds, and its leading $3$ by $3$ Hankel matrix is
+
+$$
+ \begin{pmatrix}0&0&1\\0&1&1\\1&1&0\end{pmatrix},
+$$
+
+whose determinant is one in $\mathbb F_2$. Thus its least degree is
+three. In $R_g$ the class $x$ is a unit even though $x+1$ is a
+nonzero nilpotent. Only powers of $x$ are inverted in the clock
+construction; no step discards the repeated factor. Purely periodic
+$0101\cdots$ similarly has least $g=(X+1)^2$. Hence reduced or
+semisimple dynamics are not assumed. A redundant original modulus is
+allowed by $\mathscr R_d$ and disappears only because the actual rank
+calculation computes the least core polynomial. Inverting a numerator
+under an arbitrary padded modulus would fail in PSA Proposition 3.2's
+all-one example; that is not the algorithm here.
+
+For a singular original stream, ACR Theorem 27.3 supplies
+$s=y+t$, $E^at=0$, with $a+\deg g\le d$. All source-specific uses of
+$y$ above are at actual original indices in a genuinely core-only cone.
+The transient can be arbitrary within that promise, including early
+bits used to create $v$ and its exterior. Their consequences for the
+later local indexing are retained in $Q_1,Q_2$; their full values are
+not recovered. If a birth inside the cone is transient, (PCR.31)'s
+last equality is not licensed. Proposition 6.2 gives actual constant-core
+pairs with identical normalized exterior clocks and different early
+local supports; it refutes precisely that extension. No inference of
+core-only evolution from empirical periodicity repairs it.
+
+The local-output separation in PSA Proposition 4.3 gives original
+sources with the same actually selected acquired cone and core but
+different original $(P,n)$. It is a direct counterexample to treating
+this compression as whole-source recovery. More generally the discarded
+integer multiples of $p$ in the clocks, erasure of exterior geometry
+and transient distinctions are already recorded by Propositions 4.2
+and 7.1. The original source class has not been replaced by a short
+period or a reversible all-index class. $\square$
+

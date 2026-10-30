@@ -1,0 +1,76 @@
+**Theorem 13.1 (Ordinary exponent of the dictionary).** For the very same $u_7$ and $\eta$ in (43),
+
+$$
+E(x)=e_3.
+\tag{44}
+$$
+
+*Proof.* The source is uniformly recurrent, since its defining substitution is primitive. A nonerasing image of a uniformly recurrent word is uniformly recurrent: a sufficiently long output factor contains the image of a sufficiently long source factor, and the bounded gaps of each source factor give bounded output gaps. The source is aperiodic; in particular its supplied finite value $E^*(u_7)=e_3$ precludes eventual periodicity. If $x$ were eventually periodic, the successive gaps between its marker letters would give an eventually periodic sequence of the distinct words $q_i$. Decoding them would make $u_7$ eventually periodic. Hence $x$ is aperiodic as well.
+
+We may therefore apply the supplied ordinary-exponent Theorem 5 to $x$: it suffices to prove $|v|\le L|R'|$ for every bispecial factor $v$ of $x$ and every return word $R'$ to $v$. This criterion covers every finite factor and its least period; it is not an asymptotic criterion.
+
+First suppose $v$ does not contain $a$. For the empty factor the ratio is zero. For the eight nonempty factors in Theorem 12.2 the following lower bounds on the distance $P=|R'|$ suffice.
+
+| $v$ | Lower bound on $P$ | Upper bound on $|v|/P$ |
+|---|---:|---:|
+| $b,c,d$ | $1$ | $1$ |
+| $cc$ | $3$ | $2/3$ |
+| $ccd,dcc$ | $3$ | $1$ |
+| $dccd$ | $4$ | $1$ |
+| $ccdcc$ | $6$ | $5/6$ |
+
+Here $cc$ occurs only as a run of exactly two $c$'s, so two starts are at distance at least three. The words $ccd,dcc$ have least period three. Within $q_6$, the two starts of $dccd$ are at positions $2$ and $6$, using zero-based positions; it occurs in no other $q_i$. Starts in different blocks are farther apart. The starts of $ccdcc$ in $q_6$ are $0$ and $7$, and its only other block is $q_5$ itself. Two occurrences in different blocks have a marker between them, hence distance at least six. These facts prove every bound in the table, including possible overlapping returns. Since $L>1$, all these ratios are at most $L$.
+
+Now suppose $v$ contains $a$. Markers uniquely delimit image blocks. Highlighting its first and last marker writes it uniquely as
+
+$$
+v=s\eta(w)a t,
+\qquad |v|=h\vec w+1+|s|+|t|,
+\tag{45}
+$$
+
+where $s,t$ have no $a$ and $w$ is a source factor, possibly empty. As in the proof of the supplied Proposition 19, bispeciality of $v$ makes $w$ bispecial. The possible $s$ are longest common suffixes of distinct blocks $q_i$, and $t$ are the corresponding longest common prefixes. Directly from (43), the only possible boundary words are
+
+$$
+\mathcal S=\{\varepsilon,b,c,cc,T\},\qquad T=ccdcc.
+\tag{46}
+$$
+
+All these words are palindromes. Shorter suffixes of a common suffix cannot create a new left extension until their preceding letters differ; this explains why, for example, $dcc$ and $cdcc$ do not occur in (46).
+
+Every occurrence of (45) determines an occurrence of $w$. Two occurrences of $v$ at distance $P$ determine two occurrences of $w$ whose gap has output length $P$: their offsets from the first highlighted marker are the same. If they are not consecutive occurrences of $w$, the gap is a concatenation of source return words. Consequently any lower bound on the image length of every source return to $w$ also bounds $P$. This observation includes restrictions imposed by $s,t$; it does not assert that every source return is an output return.
+
+The supplied exhaustive source classification has the finite palindromes $F_k$, $0\le k\le5$, the two infinite palindromic series, and the nonpalindromic series and their reversals. We treat all these classes.
+
+For $w=F_k$, the source extension pairs are
+
+$$
+\{(k,j),(j,k):k<j\le6\}\cup\{(6,6)\}.
+\tag{47}
+$$
+
+This is source Proposition 4 for $k\le4$; the final pair of extensions $\{5,6\}$ gives the same formula for $F_5$. Put $D_k=|\eta(F_k)|$. The recursion for $F_k$ or its ruler-word expression gives
+
+$$
+(D_0,D_1,D_2,D_3,D_4,D_5)=(0,1,4,11,24,51).
+$$
+
+For $k\ge1$, each return to $F_k$ is an image $\varphi^k(i)$: the occurrences of $F_{k+1}=\varphi(F_k)0$ are exactly the images of the occurrences of $F_k$, since the zeros are precisely the substitution boundaries. This is also the return description used in the proof of source Lemma 9. Each such return begins with $F_k$ and has at least one further letter; thus occurrences of $F_k$ do not overlap. If the output occurrence in (45) has a right neighbor $j$ of $F_k$, and the next one has a left neighbor $i$, then
+
+$$
+P\ge D_k+h_j,\qquad P\ge D_k+h_i.
+\tag{48}
+$$
+
+The first follows by including the prefix $F_kj$ of the gap; the second by including its prefix $F_k$ and its final letter $i$. These bounds remain true if the gap contains several returns. At $k=0$ the same bounds hold with $D_0=0$.
+
+Restrict (46) to extension indices at least $k$ in (47). For instance, the suffix $b$ permits indices $1,2$, the suffix $c$ permits $3,4,5,6$, $cc$ permits $4,5,6$, and $T$ permits $5,6$. Their preceding letters are read from the explicit blocks. Formula (47), and the requirement of two distinct extensions on both sides, give the following table containing every possible unordered boundary pair; reversing a pair is allowed.
+
+| $k$ | Boundary pairs $\{s,t\}$ covering all possibilities, with multiplicity | Bound on $|v|/P$ |
+|---:|---|---:|
+| $0$ | $(\varepsilon,z)$, $z\in\mathcal S$ | $1$ |
+| $1$ | $(\varepsilon,z)$, $z\in\mathcal S$; $(b,b)$ | $1$ |
+| $2$ | $(\varepsilon,z)$, $z\in\{\varepsilon,c,cc,T\}$ | $1$ |
+| $3$ | $(c,c),(c,cc),(c,T)$ | $14/13$ |
+| $4$ | $(cc,cc),(cc,T)$ | $29/27$ |
+| $5$ | $(T,T)$ | $62/57$ |

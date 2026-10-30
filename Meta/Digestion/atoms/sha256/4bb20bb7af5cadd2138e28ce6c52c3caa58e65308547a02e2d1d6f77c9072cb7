@@ -1,0 +1,36 @@
+**Definition 33.1 (the sparse aligned-core class).** Let $s=y+t$ be the
+unique coprime decomposition supplied by Theorem 27.3: $g(E)y=0$ and
+$E^a t=0$, with $g$ the least annihilator of $y$. For a fixed integer
+$k\ge1$, write $\mathscr R^{\mathrm{sp}}_{d,k}$ for the members of the
+original class $\mathscr R_d$ for which, for some hidden $1\le p\le d$ and
+$W\subseteq\{0,\ldots,p-1\}$ with $|W|\le k$,
+
+$$
+y_i=\mathbf 1_{\{i\bmod p\in W\}}.
+\tag{ACR.125}
+$$
+
+The zero core is included. The values $a,p,W$, the core degree, the
+transient, the two clock integers and the cut are existential source data,
+not controller inputs. Membership in $\mathscr R_d$ keeps the original
+all-index condition $a+\deg(g)\le d$; no condition $a+p\le d$ is added.
+Thus every allowed transient prefix remains arbitrary, and the class is a
+resource subclass rather than a replacement for the original source class.
+
+For $b\ge0$, let
+
+$$
+Y_{d,b}=\{0\}\cup
+ \{(u,W):1\le u\le d,
+       W\subseteq\{0,\ldots,u-1\}, 1\le |W|\le b\}.
+\tag{ACR.126}
+$$
+
+A member of $Y_{d,b}$ is generated as a stream by modular counting; no
+word of length $u$ is stored. At a frontier of period $u$, replace the two
+external clock seeds in (ACR.115) by their residues
+$A_1,A_2\in\mathbb Z/u\mathbb Z$ and perform every Fibonacci, skipped-sibling
+and index addition in $\mathbb Z/u\mathbb Z$. The orientation is then
+$\mathbf 1_{\{\bar J-1\in W\}}$, where $\bar J$ is the reduced index in
+(ACR.115). The zero member uses no clock residues.
+

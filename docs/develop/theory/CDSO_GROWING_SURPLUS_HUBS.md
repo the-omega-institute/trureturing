@@ -1879,3 +1879,415 @@ remaining classification questions in Open problem 8.6. No external
 priority assertion is attached to these deductions.
 
 ## 追加锚（本行以下为增补区）
+
+## 11. Prescribed finite budgets at the transition scale
+
+Write $W(G)=2NE(G)$ for the graph energy in Definition 9.1 and
+$Q(G)=H(x_G)$ for the quadratic energy of its actual neighborhood law in
+Lemma 9.2. All constants in this section may depend on a fixed compact
+interval $I=[\rho_-,\rho_+]\subset(0,\infty)$, and on no other parameters.
+
+**Theorem 11.1 (Prescribed-budget transition realization).** There are
+finite positive constants $A,D,C$, depending only on $I$, such that the
+following holds for every integer $a\ge A$, every integer $h\ge1$ with
+$\rho_a=h/a^{3/2}\in I$, and every integer $N\ge\lceil Da^6\rceil$.
+Put $s=a+1+h$, $t=t(\rho_a)$ as in Definition 8.3, and
+
+$$
+j=\lfloor a(t-1)\rfloor,\quad m=a+j,\quad n=s-m=h+1-j,
+\quad \alpha=\frac{a-1}{m-1},\quad p=\frac{j}{m-1}=1-\alpha.
+\tag{11.1}
+$$
+
+Then $1\le j\le h$, and there exists
+$G_N\in\mathfrak G_N(a,h)$ such that
+
+$$
+\left|Q(G_N)-H_j(a,h)\right|
+\le C\frac{a^{15/2}}N,
+\qquad
+H_j(a,h)=\frac{m^3}{\alpha}+\frac{n^2}{p}.
+\tag{11.2}
+$$
+
+Here $H_j$ is exactly the actual-law energy (8.3). The graph has exactly
+$N$ sources and $aN$ edges; there is no divisibility condition on $N$.
+
+**Proof.** By Definition 8.3, $t\in[1+\delta,T]$ for some
+$\delta>0$ and $T<\infty$ depending only on $I$. The parameter estimates
+in the upper-bound proof of Theorem 8.4 show, after increasing $A$, that
+$1\le j\le h$. They also allow a constant $K\ge4$, depending only on $I$,
+such that throughout the domain
+
+$$
+\begin{gathered}
+K^{-1}\le\alpha,p\le1-K^{-1},\qquad
+ a\le m\le Ka,\qquad
+ K^{-1}a^{3/2}\le n\le Ka^{3/2},\qquad
+ s\le Ka^{3/2}.
+\end{gathered}
+\tag{11.3}
+$$
+
+Indeed $m/a=t+O_I(a^{-1})$,
+$p=(t-1)/t+O_I(a^{-1})$, $\alpha=1/t+O_I(a^{-1})$, and
+$n/a^{3/2}=\rho_a+O_I(a^{-1/2})$; the displayed limiting quantities
+range in compact positive intervals, with $p,\alpha$ bounded away from
+one. Fix such $K,A$, and take $D\ge64K^6$.
+
+Partition the $s$ sink labels into a core of size $m$ and a tail of size
+$n$. Reserve one source whose neighborhood is all $s$ sink labels. To
+choose the other neighborhoods, use integer division:
+
+$$
+R=(a-1)N-(s-1),\qquad
+q=\left\lfloor\frac{R}{m-1}\right\rfloor,\qquad
+r=R-q(m-1),\qquad 0\le r\le m-2,
+\tag{11.4}
+$$
+
+and put $e=\mathbf1_{\{r>0\}}$ and $L=N-1-q-e$.
+Since $m-1\ge a$, (11.3) gives
+
+$$
+|q-\alpha N|\le\frac{s-1}{m-1}+1\le2K\sqrt a,
+\qquad |L-pN|\le4K\sqrt a.
+\tag{11.5}
+$$
+
+Our lower bound on $N$ implies $N\ge16K^2\sqrt a$, so (11.5) implies
+$q\ge\alpha N/2>0$ and $L\ge pN/2>0$. In particular all source counts
+below are nonnegative integers, and their sum is $N$.
+
+Use $q$ sources with the entire core as neighborhood. If $r>0$, use one
+additional source with any $r+1$ distinct core neighbors; this is feasible
+because $2\le r+1\le m-1$. Use the remaining $L$ sources as singletons
+on the tail. Distribute them as evenly as possible: for tail label $i$,
+choose an integer $\ell_i\in\{\lfloor L/n\rfloor,\lceil L/n\rceil\}$
+with $\sum_{i\in\mathrm{tail}}\ell_i=L$, and give precisely $\ell_i$
+sources the neighborhood $\{i\}$. Such integers exist by the remainder
+of the integer division of $L$ by $n$.
+
+The edge count is exactly
+
+$$
+\begin{aligned}
+s+qm+e(r+1)+L
+ &=s+N-1+q(m-1)+r\\
+ &=s+N-1+R=aN.
+\end{aligned}
+\tag{11.6}
+$$
+
+All neighborhoods consist of distinct sink labels, so this is a simple
+bipartite graph even though distinct sources may have equal neighborhoods.
+The reserved source connects every sink, and every other source has a
+nonempty neighborhood; hence the graph is connected.
+
+For core label $i$, let $\delta_i\in\{0,1\}$ indicate incidence with the
+additional source, setting every $\delta_i=0$ when $r=0$. The actual sink
+degrees and actual marginals are
+
+$$
+\begin{array}{lll}
+d_i=q+1+\delta_i,& y_i=(q+1+\delta_i)/N,& i\in\mathrm{core},\\
+d_i=\ell_i+1,& y_i=(\ell_i+1)/N,& i\in\mathrm{tail}.
+\end{array}
+\tag{11.7}
+$$
+
+Every core degree is at least $N/(2K)$, and every tail degree is at least
+$L/n\ge N/(2Kn)$. Thus every sink degree is at least $N/(2Kn)>s$:
+indeed $2Kns\le2K^3a^3<N$ by the choice of $D$. Every source degree
+is at most $s$. Consequently the strict orientation condition (9.1)
+holds for every edge, and the constructed graph belongs to
+$\mathfrak G_N(a,h)$.
+
+It remains to control its actual quadratic energy, including the reserved
+source. Equations (11.5)--(11.7) give
+
+$$
+\begin{aligned}
+|q/N-\alpha|&\le2K\sqrt a/N,\\
+|y_i-\alpha|&\le4K\sqrt a/N,
+ & y_i&\ge\alpha/2 &&(i\in\mathrm{core}),\\
+|y_i-p/n|&\le6K^2/N,
+ & y_i&\ge p/(2n) &&(i\in\mathrm{tail}).
+\end{aligned}
+\tag{11.8}
+$$
+
+For the tail error, explicitly,
+$|\ell_i+1-pN/n|\le2+4K\sqrt a/n\le6K^2$, using (11.3).
+All these are estimates on the marginals in (11.7), rather than on
+separately chosen marginal data.
+
+Let $C_K$ denote finite constants depending only on $K$. The contribution
+of the $q$ full-core sources is
+
+$$
+Q_C=\frac qN m^2\sum_{i\in\mathrm{core}}y_i^{-2},
+\qquad
+\left|Q_C-\frac{m^3}{\alpha}\right|
+\le C_K\frac{a^{7/2}}N.
+\tag{11.9}
+$$
+
+For completeness, for each core label the difference of the coefficients
+is bounded by
+
+$$
+\left|\frac{q/N}{y_i^2}-\frac1\alpha\right|
+\le \frac{|q/N-\alpha|}{y_i^2}
+ +\alpha\left|y_i^{-2}-\alpha^{-2}\right|
+\le C_K\frac{\sqrt a}{N}.
+$$
+
+The last step follows either by factoring the difference of squares or by
+the derivative of $z^{-2}$ on $z\ge1/(2K)$. Summing over $m$ labels and
+multiplying by $m^2\le K^2a^2$ proves (11.9).
+
+The $L$ singleton sources contribute
+
+$$
+Q_D=\sum_{i\in\mathrm{tail}}\frac{\ell_i/N}{y_i^2}
+=\sum_{i\in\mathrm{tail}}\left(\frac1{y_i}-\frac1{Ny_i^2}\right).
+\tag{11.10}
+$$
+
+By (11.8), for each tail label,
+
+$$
+\left|\frac1{y_i}-\frac np\right|
+\le\frac{|y_i-p/n|}{y_i(p/n)}\le C_K\frac{n^2}{N},
+\qquad \frac1{Ny_i^2}\le C_K\frac{n^2}{N}.
+$$
+
+Therefore
+
+$$
+\left|Q_D-\frac{n^2}p\right|
+\le C_K\frac{n^3}{N}\le C_K\frac{a^{9/2}}N.
+\tag{11.11}
+$$
+
+The additional source, when present, has at most $m$ core neighbors, so
+its contribution $Q_R$ satisfies
+
+$$
+0\le Q_R\le C_K\frac{m^3}{N}\le C_K\frac{a^3}{N}.
+\tag{11.12}
+$$
+
+Finally the reserved source has degree $s$ and meets all labels. Its
+contribution is bounded, using both lower bounds in (11.8), by
+
+$$
+\begin{aligned}
+0\le Q_*&=\frac{s^2}N\sum_{i=1}^s y_i^{-2}\\
+&\le C_K\frac{s^2}N(m+n^3)
+\le C_K\frac{a^{15/2}}N.
+\end{aligned}
+\tag{11.13}
+$$
+
+The identity $Q(G_N)=Q_C+Q_D+Q_R+Q_*$ and (11.9)--(11.13) prove
+(11.2), after enlarging one constant. This construction works separately
+for every integer $N$ in the stated range. ∎
+
+**Theorem 11.2 (Transition graph value and stability for all comparison
+graphs).** For every fixed $I=[\rho_-,\rho_+]\subset(0,\infty)$ there
+exist finite positive constants $A,C,D$, depending only on $I$, such that
+for every integer $a\ge A$, every integer $h\ge1$ with
+$\rho_a=h/a^{3/2}\in I$, and every integer $N\ge\lceil Da^6\rceil$,
+$\mathfrak G_N(a,h)$ is nonempty, its infimum $V_N(a,h)$ is a minimum,
+and, with $t=t(\rho_a)$,
+
+$$
+\left|\frac{V_N(a,h)}{a^3}-F(\rho_a)
+               +\frac{2\rho_a t}{\sqrt a}\right|\le\frac Ca.
+\tag{11.14}
+$$
+
+Furthermore, for every $G\in\mathfrak G_N(a,h)$ and every
+$\epsilon\in[0,1]$ satisfying
+
+$$
+W(G)\le V_N(a,h)+\epsilon a^3,
+\tag{11.15}
+$$
+
+choose a source $u$ uniformly from its $N$ actual sources, and put
+$K=k_u$, $y_i=d_i/N$, $U_u=\sum_{i\in N_G(u)}y_i^{-1}$. Then
+simultaneously
+
+$$
+\mathbb E\left[\left(\frac Ka-t\right)^2
+                      \mathbf1_{\{K\ge2\}}\right]
+\le C\left(\epsilon+\frac1a\right),
+\tag{11.16}
+$$
+
+$$
+\left|\mathbb P(K=1)-\left(1-\frac1t\right)\right|
+\le C\sqrt{\epsilon+\frac1a},
+\tag{11.17}
+$$
+
+$$
+\mathbb E\left[\left(\frac{U_u}{a^{3/2}}-2t^{5/2}\right)^2
+                      \mathbf1_{\{K=1\}}\right]
+\le C\left(\epsilon+\frac1a\right).
+\tag{11.18}
+$$
+
+The expectations, marginals, mean and energy in these assertions all
+belong to the same actual graph $G$. The comparison class has exactly the
+conditions of Definition 9.1; it has no extra marginal floor, symmetry,
+cardinality-support restriction or attainment assumption for the law
+infimum $M(a,h)$.
+
+**Proof.** Use Theorem 11.1 and Theorem 8.4 on the same compact interval,
+increasing $A,D$ when necessary. Their constants are uniform in the
+integer parameters. In the notation (11.1), the upper-bound calculation
+(8.16)--(8.17) gives
+
+$$
+\frac{H_j(a,h)}{a^3}
+=F(\rho_a)-\frac{2\rho_a t}{\sqrt a}+O_I(a^{-1}),
+\qquad 0\le H_j(a,h)-M(a,h)\le C_Ia^2.
+\tag{11.19}
+$$
+
+The second inequality uses both the admissibility of that exact law and
+the full-law value estimate (8.6). By (9.5) and (11.2),
+
+$$
+V_N(a,h)\le W(G_N)\le Q(G_N)
+\le H_j(a,h)+C_I\frac{a^{15/2}}N.
+\tag{11.20}
+$$
+
+In particular the graph class is nonempty. The finite number of labelled
+simple graphs on the two fixed sides implies attainment of $V_N$.
+
+We next give a lower bound on the entire graph class. Put
+$\gamma=2/(\sqrt2+1)>0$. For every actual edge ratio $0\le z<1$,
+
+$$
+2(\sqrt{1+z^2}-1)
+=\frac{2z^2}{\sqrt{1+z^2}+1}\ge\gamma z^2.
+$$
+
+Thus $W(G)\ge\gamma Q(G)$ for every comparison graph. Also, (9.5) and
+$\sum_e z_e^4\le(\sum_e z_e^2)^2$ give
+
+$$
+0\le Q(G)-W(G)\le\frac{Q(G)^2}{4N}.
+\tag{11.21}
+$$
+
+Choose $B_I\ge1$ so large that, for all parameters in the domain,
+$M(a,h)\le H_j(a,h)\le B_Ia^3$ and the right side of (11.20) is at most
+$B_Ia^3$. Such a constant exists by (11.19), compactness of $I$, and
+$a^{15/2}/N\le a^{3/2}/D\le a^3/D$.
+If $W(G)\ge B_Ia^3$, then $W(G)\ge M(a,h)$. Otherwise
+$Q(G)\le B_Ia^3/\gamma$, and (11.21) and Lemma 9.2 give
+
+$$
+W(G)\ge Q(G)-\frac{B_I^2a^6}{4\gamma^2N}
+\ge M(a,h)-C_I\frac{a^6}{N}.
+$$
+
+This proves, on the full class and hence for its minimum,
+
+$$
+M(a,h)-C_I\frac{a^6}{N}
+\le V_N(a,h)
+\le H_j(a,h)+C_I\frac{a^{15/2}}N.
+\tag{11.22}
+$$
+
+Combining (11.22), (11.19) and (8.6), before absorbing the budget errors,
+one obtains
+
+$$
+\left|\frac{V_N(a,h)}{a^3}-F(\rho_a)
+                +\frac{2\rho_a t}{\sqrt a}\right|
+\le C_I\left(\frac1a+\frac{a^{9/2}}N\right).
+\tag{11.23}
+$$
+
+Here $a^3/N\le a^{9/2}/N$ also absorbs the lower-bound error. Since
+$N\ge Da^6$, (11.23) implies (11.14). Neither the energy sublevel
+argument nor its complementary high-energy case used any construction
+property as a hypothesis on comparison graphs.
+
+Now let $G$ satisfy (11.15). Equations (11.20) and (11.19) show
+$W(G)\le(B_I+1)a^3$. Consequently $Q(G)\le(B_I+1)a^3/\gamma$, and
+(11.21), followed by (11.20), gives for its actual law $x_G$
+
+$$
+\begin{aligned}
+H(x_G)=Q(G)
+&\le W(G)+C_Ia^6/N\\
+&\le M(a,h)+\epsilon a^3
+       +C_I\left(a^2+\frac{a^{15/2}}N+\frac{a^6}N\right)\\
+&\le M(a,h)+\epsilon a^3+C_Ia^2.
+\end{aligned}
+\tag{11.24}
+$$
+
+The last line uses the stated budget. This is a same-law estimate:
+Lemma 9.2 identifies $x_G$, $y_i=d_i/N$, $K=k_u$ and $U_u$ and gives
+$\mathbb E K=a$ and $\mathbb E U_u=s$ exactly.
+
+Apply the residual argument already proved in Theorem 10.1. In its
+notation, (10.11)--(10.12) and (11.24) give
+
+$$
+0\le\frac{\mathbb E W_{at}(K,aU_u)}{a^5}
+\le\epsilon+\frac{C_I}{a}
+\le C'_I\left(\epsilon+\frac1a\right).
+\tag{11.25}
+$$
+
+The implication from the residual bound (10.13) to (10.2)--(10.4), proved
+in (10.14)--(10.18), applies directly to (11.25), with
+$\eta=\epsilon+a^{-1}$. Those steps use only this bound, the exact mean
+of this law, and the uniform singleton-contact estimate (10.17).
+In particular they impose no upper bound on the coefficient multiplying
+$\eta$; there is no need to insert $\epsilon+C_I/a$ as a parameter in
+$[0,1]$ into the statement of Theorem 10.1. They give precisely
+(11.16)--(11.18), after increasing one common $C$. Thus the three rates
+are applications of the established actual-law stability estimates to
+the actual graph law. ∎
+
+The new realization estimate (11.2) supplies the prescribed-budget bridge
+in the transition part of Open problem 8.6(4). The value and stability
+conclusions reuse the full-law value and first correction of Theorem 8.4,
+the same-law graph identity and quadratic bridge of Lemma 9.2, and the
+three-observable remainder estimates proved in Theorem 10.1. The balanced
+integer allocation and the single remainder source above are elementary
+incidence constructions. No fixed-$s$ graph limit or square-root-regime
+realization estimate is needed for this joint-growth conclusion.
+
+The CDSO normalization remains the one cited in Section 7 from
+Albalahi--Das--Ali--Barman--Hamza, DOI
+[10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176), p.109.
+The weak-duality input is only the expectation of the pointwise
+certificate already proved in Section 8, with the Bertsimas--Popescu
+source and its scope specified there. These deductions carry no global
+priority claim. Their relation to the full results of Zhao--Zhao, DOI
+[10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26),
+and Smirnov, DOI
+[10.47443/dml.2026.164](https://doi.org/10.47443/dml.2026.164), remains
+undetermined; neither article is a premise here.
+
+The constants are uniform only for $\rho_a$ in a fixed compact positive
+interval. The budget $Da^6$ is sufficient; no least exponent or coefficient
+is asserted. These results do not determine finite exact values or
+extremizers, reconstruct the complete neighborhood law, classify its
+label partition, or settle the other scales in Open problem 8.6.
+
+## 追加锚（本行以下为增补区）

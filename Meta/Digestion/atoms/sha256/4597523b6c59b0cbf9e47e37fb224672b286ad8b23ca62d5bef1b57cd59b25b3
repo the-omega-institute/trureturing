@@ -1,0 +1,36 @@
+**Definition 3.1 (one cumulative history).** Set
+
+$$
+B=\max(k,d)+1,\qquad \nu=k+2,\qquad
+T=B+k+1,\qquad L=T+k+2=B+2k+3.
+$$
+
+The cumulative matrices at recorded positions are
+
+$$
+A_i=I\qquad(0\le i<B),
+$$
+
+$$
+c_\ell=B+\ell-1,\qquad
+A_{c_\ell}=U^\ell=\begin{pmatrix}1&\ell\\0&1\end{pmatrix}
+\qquad(1\le\ell\le k+1),
+$$
+
+and
+
+$$
+A_{T+j}=U^jMU^{k+1}
+=\begin{pmatrix}j&1+\nu j\\1&\nu\end{pmatrix}
+\qquad(0\le j\le k+1).
+$$
+
+The complete chronological acquisition is as follows.
+
+1. Read at $I$ with index zero, then repeat $B-1$ times: execute the empty word and read again at $I$.
+2. For $\ell=1,\ldots,k+1$, execute $M$ then $J$, with no intermediate read, and read the endpoint at index $c_\ell$.
+3. Execute one $M$ and read at index $T$.
+4. For $j=1,\ldots,k+1$, execute $M$ then $J$, with no intermediate read, and read at index $T+j$; stop at index $L-1$.
+
+The fixed prefix comprises steps 1 and 2. It has $T$ reads, ends at index $T-1=B+k$ and cumulative matrix $U^{k+1}$, and is the prefix used in the continuation optimum below.
+

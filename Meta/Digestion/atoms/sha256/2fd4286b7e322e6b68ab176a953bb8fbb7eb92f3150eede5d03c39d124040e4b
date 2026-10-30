@@ -1,0 +1,44 @@
+**Theorem 13.2 (necessary information, rather than a prescribed menu).**
+On any fixed comparison family at a common age, equality of an acquired
+data map $D$ implying equality of every response in (PCR.21) is necessary
+for an exact deterministic predictive decoder. It is sufficient for a
+set-theoretic factorization of those responses through $D$; neither
+effectivity nor a polynomial decoding algorithm follows from that alone.
+On the full mature core-only family it is equivalently that each data
+fibre lies inside one of Theorem 9.3's descriptor fibres. Complete
+support or the authentic three-prefix record above is sufficient with
+the explicit decoder and costs; no necessity of exactly three batches
+or the displayed slack horizon is claimed.
+
+Proof. Equal data give the same deterministic retained computation;
+a response which differs on that fibre is impossible to predict
+correctly for both sources. Conversely, if every response is constant
+on each fibre, it defines a mathematical response function on fibres.
+This assertion alone supplies neither an effective encoding, termination
+nor a polynomial algorithm. Theorems 8.2--12.2 provide those additional
+properties for their stated inputs. The descriptor-fibre formulation
+uses the already proved complete classification in Theorem 9.3.
+
+For concrete failures reuse Proposition 2.2's shallow-menu saturation:
+any fixed finite menu, at all sufficiently old actual cuts, consists
+entirely of present words, whereas actual different constant sources
+have different ordered supports and futures. The same fixed full
+prefix $v$ can be chosen past the core cutoff for both constants;
+its branch origins have bounded finite difference, and one can compare
+at the same arbitrarily large normalized $T$. All queried suffixes
+still saturate, but the constant-zero and constant-one cone supports
+at $T\ge2$ differ. Adaptive acquisition earns only its actual transcript;
+it must prove its fibres sufficient rather than invoke this fixed-menu
+example as a universal adaptive lower bound.
+
+Nor is youth sufficient even with the entire support: in actual
+constant sources $0^\infty$ and $1^\infty$ the alpha root is beta at
+$e=1$, and the two core-only cones have identical support at $T=1$.
+At $T=2$, $aa$ is present exactly for the all-one source. They belong
+to $\mathscr R_1$ and show a common young support with different local
+future, with full-root paid separator $aa$. With a *fixed* nonconstant
+core the more restrictive actual pair in Proposition 6.1 has the same
+lesson before its maturity bound. An authentic stronger law may make
+younger data sufficient; none of these examples forbids that.
+$\square$
+

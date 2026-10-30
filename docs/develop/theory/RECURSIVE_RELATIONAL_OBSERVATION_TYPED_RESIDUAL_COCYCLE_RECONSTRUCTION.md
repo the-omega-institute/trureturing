@@ -1214,3 +1214,585 @@ The literature correspondence attached to Theorem 11.2 is limited to its actual 
 
 ## 追加锚（本行以下为增补区）
 
+## 12. Joint-support classification on the entire successive-loop source
+
+**Definition 12.1 (support-relative acquisition on the delivered source).** Keep the entire actual source of Definition 10.2, its one type, fixed root $p$, exact current readout, all four legal named edges and their fixed arbitrary positive native vectors $A,C,B,E\in\mathbb R_{>0}^r$. In particular the two occurrences of $a$ are the same typed parameterized name. Let $K\subseteq\mathbb R^r$ be compact, convex and centrally symmetric, with $0$ in its relative interior, and put
+
+$$
+L=\operatorname{span}_{\mathbb R}K,\qquad
+\Delta K=K-K=\{v-w:v,w\in K\}.
+\tag{12.1}
+$$
+
+Fix a prescribed $\epsilon\ge0$. Replace only the box acquisition of Definition 10.1 by the declared joint observation sets
+
+$$
+\mathcal O_{\epsilon,K}(u)
+ =\{z(u)\}\times\bigl(T(u)+\epsilon K\bigr).
+\tag{12.2}
+$$
+
+Every error in $\epsilon K$ is allowed for every legal history of this same source. The vectors and their calibrations stay fixed. This is a contract for one final joint acquisition, not coordinatewise error bounds interpreted as a joint support. With symmetry about the origin, $\Delta K=2K$; using $\Delta K$ also covers the convention of central symmetry about a different center with $0$ still in the relative interior. Relative interior here is in $L$, since $0\in K$ makes its affine span equal to $L$. Both lower-dimensional supports and $K=\{0\}$ are allowed.
+
+Static labels, complete finite online registers, initialization, exact final supplement acquisition and the decoder have precisely Definition 10.1's restrictions. The register receives only its full current persistent state and each ordered actually executed name. Intermediate endpoints, edge identifiers, clock readings, complete response records, an archive, an external step index, a stop event and future input remain unavailable. A static label need not have an update. The final decoder sees the exact typed endpoint, final label and $y$; the support and tolerance are fixed shared parameters.
+
+The actual-source bridge is unchanged, rather than inferred from possible marginal records. The empty complete response contains $q_i(x)=x$, so distinct $p,s,t$ are distinct complete residuals; equal states have equal responses to every continuation by determinism. The stipulated edge records carry their native vectors, making descent representative independent. Definition 1.2 therefore identifies the actual executions with exactly the three rows of Definition 10.2:
+
+$$
+\begin{array}{c|c|c}
+z(u)&u&T(u)\\ \hline
+p&a^m&mA\\
+s&a^mca^n&C+mA+nB\\
+t&a^mca^ne&C+E+mA+nB
+\end{array}
+\qquad(m,n\in\mathbb N_0).
+\tag{12.3}
+$$
+
+These are all finite legal histories, not selected successful samples. They include the empty word, every stopping prefix, zero exponents, $c$, $ce$ and every terminal word. This actual source has no legal executed failures; none has been deleted to obtain (12.3). Illegal attempts are not executed words, and stopping contributes no extra name. The complete response records certify the source correspondence but are not extra inputs to the register.
+
+**Theorem 12.2 (finite supplementation for arbitrary joint support on this source).** Under Definition 12.1, for every prescribed $\epsilon>0$ the following are equivalent:
+
+1. A successful finite static supplement exists on the entire language (12.3).
+2. A successful complete finite names-only online supplement exists on that language.
+3. Either $A,B$ are real-linearly independent, or
+   $B=\lambda A$ for a positive irrational $\lambda$ and $A\notin L$.
+
+The criterion is independent of the positive values of $\epsilon$ and of the fixed arbitrary crossing and exit vectors $C,E$. Registers may be chosen separately at each tolerance. An explicit achieved complete-state bound is as follows. In the independent case define
+
+$$
+\begin{aligned}
+S_{\epsilon,K}
+ &=\{(j,k)\in\mathbb Z^2:jA+kB\in\epsilon\Delta K\},\\
+q_{\epsilon,K}
+ &=1+\max_{(j,k)\in S_{\epsilon,K}}\max(|j|,|k|).
+\end{aligned}
+\tag{12.4}
+$$
+
+The set is finite and contains $(0,0)$. The common update (10.8), with $q=q_{\epsilon,K}$, has exactly $q_{\epsilon,K}^2$ reachable complete states and succeeds. In the irrational collinear case with $A\notin L$, one state succeeds at every tolerance. These are construction bounds, not a general minimum formula.
+
+Proof. First specialize the observation-intersection principle of Lemma 9.2 and (10.6) to the actual support. Two final vector sets intersect exactly when
+
+$$
+\bigl(T(u)+\epsilon K\bigr)\cap
+\bigl(T(v)+\epsilon K\bigr)\ne\varnothing
+\quad\Longleftrightarrow\quad
+T(u)-T(v)\in\epsilon\Delta K.
+\tag{12.5}
+$$
+
+Indeed, an intersection gives $T(u)-T(v)=\epsilon(w-v')$ with $w,v'\in K$, and such an equality gives an intersection by reversing the calculation. This also holds at $\epsilon=0$. Thus an arbitrary static label $h$ succeeds exactly when
+
+$$
+u\ne v,\quad z(u)=z(v),\quad h(u)=h(v)
+\quad\Longrightarrow\quad
+T(u)-T(v)\notin\epsilon\Delta K.
+\tag{12.6}
+$$
+
+Failure supplies the same allowed decoder input for two different words. Sufficiency returns the unique compatible legal word and rejects outside their observation union. This is a support-relative use of the existing overlap criterion, without assuming that overlap is transitive or that a label admits an online update.
+
+For complete explicitness, in the $p$ row the difference is $(m-m')A$, with equal labels $h(a^m)=h(a^{m'})$. In either the $s$ or the $t$ row it is $(m-m')A+(n-n')B$, with labels compared within that row. Different rows never compete because their typed endpoints are exact. Every integer pair $(j,k)$ is realized as a same-endpoint difference at $s$: take $(m,n)=(\max(j,0),\max(k,0))$ and $(m',n')=(\max(-j,0),\max(-k,0))$. For $(j,k)\ne(0,0)$ these are distinct actual words, even if their totals coincide. In particular, no supplement is needed exactly when
+
+$$
+(j,k)\in\mathbb Z^2\setminus\{(0,0)\}
+\quad\Longrightarrow\quad
+jA+kB\notin\epsilon\Delta K.
+\tag{12.7}
+$$
+
+The endpoint offsets $C$ and $C+E$ cancel; no comparison has substituted independent coordinates from different histories. An online register induces a static label by $h=\mu$, proving $2\Rightarrow1$.
+
+Suppose $A,B$ are independent. To see that (12.4) is finite, choose any invertible two-row submatrix $D$ of the matrix with columns $A,B$, and set
+
+$$
+R=\max_{v\in K}\|v\|_\infty,\qquad
+\kappa=\max_i\sum_j|(D^{-1})_{ij}|.
+\tag{12.8}
+$$
+
+If $(j,k)\in S_{\epsilon,K}$, restriction to these two rows and the row-inverse estimate already used in (11.13) give
+
+$$
+\max(|j|,|k|)\le 2\epsilon R\kappa.
+\tag{12.9}
+$$
+
+Hence (12.4) is a maximum over a finite subset of the integer square of that radius. In particular $q_{\epsilon,K}\le\lfloor2\epsilon R\kappa\rfloor+1$; the latter integer can also be used as a conservative modulus. This estimate is an existing finite-dimensional supplier, not a new rank or packing assertion.
+
+Use exactly the complete state and update of (10.8):
+
+$$
+\begin{gathered}
+M=(\mathbb Z/q\mathbb Z)^2,\qquad m_0=(0,0),\\
+U_a(x,y)=(x+1,y),\qquad U_c(x,y)=(0,x),\qquad
+U_e(x,y)=(x,y).
+\end{gathered}
+\tag{12.10}
+$$
+
+The same $U_a$ applies at both loop vertices. The already established induction (10.9) gives $(m,0)$ on the $p$ row and $(n,m)$ on both other rows, modulo $q$. Every persistent component is one of these two residues. There is no stored or externally read phase, selector, vertex, clock, event index or terminal flag. Every pair of residues is reached at $s$ by legal nonnegative exponents, so exactly $q^2$ full states, including initialization and all cuts, are charged.
+
+Distinct same-endpoint histories with equal states have a nonzero integer difference pair in $q\mathbb Z^2$; on the $p$ row its second component is zero. If their observation sets overlapped, that pair would belong to $S_{\epsilon,K}$, where both absolute coordinates are less than $q$ by construction. This is impossible for a nonzero pair in $q\mathbb Z^2$. Thus (12.6) holds at every endpoint and cut. This proves sufficiency in the independent case by reusing the delivered online construction, without applying a static-to-online principle to an arbitrary label.
+
+If $A,B$ are dependent, their strict coordinatewise positivity gives a unique $\lambda>0$ with $B=\lambda A$. Suppose first that $\lambda$ is irrational and $A\notin L$. For a nonzero integer pair, $j+\lambda k\ne0$, and $(j+\lambda k)A\notin L$. Since $\epsilon\Delta K\subseteq L$, condition (12.7) holds for every tolerance. The constant register therefore succeeds.
+
+It remains to prove impossibility in the other dependent cases. If $\lambda=b/a$ with positive integers $a,b$, then for every $N\ge0$ the $N+1$ distinct legal histories
+
+$$
+a^{bj}c\,a^{a(N-j)},\qquad 0\le j\le N,
+\tag{12.11}
+$$
+
+have endpoint $s$ and identical total $C+bNA$. Their observation sets share that center because $0\in K$. For any $Q$-valued static label take $N=Q$. Two labels agree, so (12.6) fails, including at error zero. Appending $e$ also gives terminal witnesses.
+
+Finally suppose that $\lambda$ is irrational and $A\in L$. Relative interior supplies $\rho>0$ such that $[-\rho,\rho]A\subseteq K$. For any proposed alphabet size $Q\ge1$, choose an integer $J>0$ with $\lambda/J<2\epsilon\rho$ and an integer $N$ with $N+1>QJ$. Reuse the finite-bin mechanism of Theorem 10.3 on the fractional parts $\{m/\lambda\}$, $0\le m\le N$. One of $J$ half-open bins contains $Q+1$ distinct indices $m_i$. Choose an integer $H\ge\max_i\lfloor m_i/\lambda\rfloor$ and let $n_i=H-\lfloor m_i/\lambda\rfloor\ge0$. The actual words $u_i=a^{m_i}ca^{n_i}$ have totals
+
+$$
+T(u_i)=C+t_i A,\qquad
+t_i=\lambda\bigl(H+\{m_i/\lambda\}\bigr),\qquad
+\max_i t_i-\min_i t_i<2\epsilon\rho.
+\tag{12.12}
+$$
+
+The single vector $y_*=C+\tfrac12(\max_i t_i+\min_i t_i)A$ lies in every $T(u_i)+\epsilon K$: each required error belongs to $[-\epsilon\rho,\epsilon\rho]A$. All these distinct histories end at $s$. Two share any $Q$-valued label, precluding recovery. This adapts the delivered obstruction to the actual noisy direction inside the support; a small maximum-norm distance alone would not imply overlap for a singular support. Translation by $E$ gives the same terminal obstruction. These alternatives exhaust dependent positive vectors and prove necessity. $\square$
+
+The finite candidate decoder remains a mathematical construction under the arbitrary-real contract. For a given endpoint subtract its offset $b\in\{0,C,C+E\}$. In the last two rows every compatible pair satisfies $mA_1+nB_1\le y_1-b_1+\epsilon R$; positivity bounds both indices. At $p$ there is only $m$. Enumerate these finitely many nonnegative candidates, check the final state or label and the exact membership $y-T(u)\in\epsilon K$, and use (12.6). This does not supply effective equality, irrationality, span or support-membership decisions for unspecified real constants or an unspecified compact set.
+
+## 13. Exact observations and a register fixed across tolerances
+
+**Theorem 13.1 (zero error, zero support and tolerance quantifiers).** On the entire source of Definition 12.1 the following boundaries hold.
+
+1. At $\epsilon=0$, finite static and complete finite online supplementation exist exactly when $A,B$ are independent or $B=\lambda A$ for an irrational $\lambda>0$. In either feasible case the endpoint and exact native vector already recover every history, with one register state. The support has no role in this statement.
+2. If $K=\{0\}$, the same exact criterion holds for every $\epsilon\ge0$.
+3. For fixed $K$ and positive tolerances, existence separately at every tolerance, allowing different finite registers, is equivalent to existence at one positive tolerance and to condition 3 of Theorem 12.2.
+4. There exists one fixed finite static label, or one fixed complete finite names-only register, successful for every finite positive tolerance, if and only if
+
+$$
+\{(j,k)\in\mathbb Z^2:jA+kB\in L\}=\{(0,0)\}.
+\tag{13.1}
+$$
+
+When (13.1) holds, one state already suffices for every tolerance, including zero. A decoder may know the prescribed tolerance; allowing that knowledge does not relax the necessity of (13.1).
+
+Proof. At zero error, $\epsilon\Delta K=\{0\}$. The integer count map $(m,n)\mapsto mA+nB$ is injective precisely in the two alternatives of item 1: independence ensures this, while in the dependent case $j+\lambda k=0$ has a nonzero integer solution precisely when $\lambda$ is rational. Equation (12.7) then proves unsupplemented recovery in the injective cases, simultaneously on all three rows. The arbitrarily large exact fibers (12.11) rule out every finite supplement in the rational case. Item 2 follows because multiplication of the zero support by any tolerance still gives the zero support. Item 3 is Theorem 12.2 with its tolerance-dependent constructions.
+
+For item 4, $\Delta K$ contains a neighborhood of zero relative to $L$, so
+
+$$
+\bigcup_{\epsilon>0}\epsilon\Delta K=L.
+\tag{13.2}
+$$
+
+Under (13.1), every distinct same-endpoint difference is outside $L$, and hence outside every $\epsilon\Delta K$; (12.7) supplies the constant register for all tolerances.
+
+Conversely, suppose a nonzero integer pair $v=(j,k)$ has $jA+kB\in L$. Consider a proposed fixed label with $Q$ values. Choose a nonnegative integer base pair $b$ large enough that $b+iv\in\mathbb N_0^2$ for $0\le i\le Q$. These $Q+1$ different pairs give different legal words in the $s$ row. Two have the same label. Their native difference is $(i-i')(jA+kB)\in L$, and by (13.2) it belongs to $\epsilon\Delta K$ for some finite positive $\epsilon$. At that tolerance their allowed observations overlap and (12.6) fails. If the difference is zero, it fails at every tolerance. A fixed finite online register is also such a label. This proves necessity without assuming periodic labels or an online counting form. $\square$
+
+**Proposition 13.2 (integer and real transversality differ).** Condition (13.1) can hold while $\operatorname{span}_{\mathbb R}\{A,B\}\cap L\ne\{0\}$. If instead $A\in L$, no fixed finite supplement works at all tolerances, even when the loop vectors are independent and each tolerance separately admits a finite register.
+
+Proof. For the first assertion retain the independent positive vectors $A=(1,1)$ and $B=(1,2)$ of (10.10) with $h=1$, and take $K=[-1,1](A+\sqrt2 B)$. If $jA+kB=t(A+\sqrt2 B)$ for integers $j,k$, independence gives $j=t$ and $k=\sqrt2 t$, forcing $j=k=0$. Thus (13.1) holds although $L$ is a nonzero line inside their real span. This example is a direct specialization of the condition, not a transfer of the box rank necessity to a singular support. By contrast, if $A\in L$, even the words $a^m$ prevent one fixed finite label from working at every tolerance, although independent $A,B$ still allow a different finite register at each tolerance by Theorem 12.2. $\square$
+
+## 14. Identical marginal ranges and the normalized thickness boundary
+
+**Proposition 14.1 (one fixed native source, equal-dimensional supports, different feasibility).** Fix once and for all the actual source of Definition 10.2 and the native law
+
+$$
+A=(1,1),\qquad B=\sqrt2(1,1),\qquad C=E=(1,1).
+\tag{14.1}
+$$
+
+Consider the two separately declared joint acquisition supports
+
+$$
+K_{\parallel}=\{(t,t):|t|\le1\},\qquad
+K_{\perp}=\{(t,-t):|t|\le1\}.
+\tag{14.2}
+$$
+
+They are compact convex origin-symmetric supports with $0$ in their relative interiors, both of dimension one, and both have the identical coordinatewise ranges $[-1,1]$ and $[-1,1]$. For every $\epsilon>0$, the $K_{\parallel}$ contract admits no finite static or complete finite online supplement, whereas the $K_{\perp}$ contract recovers every legal history with one state. At $\epsilon=0$ both recover every history with one state.
+
+Proof. The loop ratio is positive irrational and the native vectors and all operations stay fixed in the comparison. Its line is contained in $\operatorname{span}K_{\parallel}$ and is transverse to $\operatorname{span}K_{\perp}$. Theorem 12.2 gives respectively all-history impossibility and recovery at every positive tolerance. More explicitly, the first contract has the arbitrarily large common-observation families (12.12), at $s$ and after appending $e$ at $t$. In the second contract the acquired value
+
+$$
+\frac{y_1+y_2}{2}
+ =\begin{cases}
+m,&z=p,\\
+1+m+\sqrt2 n,&z=s,\\
+2+m+\sqrt2 n,&z=t
+\end{cases}
+\tag{14.3}
+$$
+
+is exact for every permitted error. In each row it determines the nonnegative exponents uniquely: equality in either two-exponent row would give an integer relation with $\sqrt2$. The $c$ and optional $e$ then give the unique ordered word, not merely its name counts. At $p$ this includes $m=0$ and the empty word; at $s,t$ it includes either or both zero exponents and every stopping or terminal history. Theorem 13.1 supplies the zero-error boundary for both supports. Thus matching coordinate ranges and matching support dimension do not determine feasibility on this fixed actual native source. $\square$
+
+**Proposition 14.2 (positive thickness with unchanged coordinate ranges).** On the very same source and native law (14.1), define a family of separately declared acquisition supports by
+
+$$
+K_\theta=\frac{K_{\perp}+\theta[-1,1]^2}{1+\theta},
+\qquad \theta\ge0.
+\tag{14.4}
+$$
+
+Every $K_\theta$ is compact, convex and origin symmetric, and its two coordinatewise ranges are exactly $[-1,1]$. At $\theta=0$ its dimension is one and one state recovers all histories at every tolerance. At every $\theta>0$ its dimension is two and, for each prescribed $\epsilon>0$, no finite supplement succeeds. At error zero all these supports permit recovery with one state. Moreover $K_\theta\to K_{\perp}$ in Hausdorff distance as $\theta\downarrow0$, so this is a positive-thickness discontinuity with normalized, fixed coordinate ranges.
+
+Proof. Minkowski addition and positive rescaling preserve the stated compactness, convexity and symmetry. Each coordinate projection before rescaling is $[-1-\theta,1+\theta]$, proving the exact ranges after division. For $\theta>0$,
+
+$$
+\frac{\theta}{1+\theta}[-1,1]^2\subseteq K_\theta,
+\tag{14.5}
+$$
+
+because $0\in K_{\perp}$. Thus the support contains a two-dimensional neighborhood of zero and, in particular, the segment $[-\theta/(1+\theta),\theta/(1+\theta)]A$. The obstruction (12.12) applies at every positive tolerance, with a smaller positive $\rho$ if needed. At $\theta=0$, (14.3) applies. Exact observations are independent of the support by Theorem 13.1.
+
+For convergence, write a point of $K_\theta$ as $(v+\theta w)/(1+\theta)$ with $v\in K_{\perp}$ and $w\in[-1,1]^2$. Its maximum-norm distance from $v$ is at most $2\theta/(1+\theta)$. Conversely $v/(1+\theta)\in K_\theta$ lies within $\theta/(1+\theta)$ of each $v\in K_{\perp}$. These bounds prove the asserted Hausdorff convergence. The loss of finite feasibility therefore occurs for arbitrarily small positive thickness, despite identical coordinatewise ranges. These supports are different acquisition guarantees; no source operation converts a $K_{\parallel}$ or positive-thickness reading into the $K_{\perp}$ guarantee. $\square$
+
+## 15. Faithful transport, retained chronological targets and supplier scope
+
+**Proposition 15.1 (support-relative transport and resource boundaries).** All sourcewise feasibility statements, attained construction sizes and tolerance boundaries in §§12–14 are preserved when the exact endpoint is replaced by an already acquired faithful typed boundary or spatial representation on this same actual residual image. Here faithful means injective on $\{p,s,t\}$ with its type. The native joint acquisition and final supplement are kept. A successful augmented observation recovers every fixed lossless chronological target of the legal root word, as well as the modeled endpoint, exact native total and declared response sequence. These conclusions concern the declared mathematical source and acquisition, not physical realization or physical dimension.
+
+Proof. Reuse the observation-set transport of Theorem 8.5 and Propositions 10.7 and 11.4. For an injective $b$ the map $(z,h,y)\mapsto(b(z),h,y)$ has an inverse on the actual observation image and preserves exactly which words can share an observation. The register updates and their charged full states are unchanged. The same argument applies to a faithful spatial endpoint representation. Transport of the whole process, rather than just its endpoints, requires the rooted typed named-graph correspondence preserving every legal operation, successor, complete response and native vector of Remark 4.2 and Process Geometry §§39–43. A representation cannot insert an unavailable archive or response into the update feed.
+
+After decoding $u$, evaluate any fixed chronological target $m(u)$. If it is lossless, it conversely determines $u$ on its actual image. Replay of the known deterministic source from $p$ gives the stipulated response sequence and exact native total without another source query. This does not assert that a future-response residual by itself retains the past, or that each unaugmented endpoint, time, boundary, spatial or chronological coordinate is invertible to each other. Already all $a^m$ have the same endpoint $p$. No nontrivial allowed error is determined by the decoded word alone: retaining $y$ as well gives its realized value $y-T(u)$.
+
+The native totals $T(a^m)=mA$ are unbounded in every coordinate, and $0\in K$ makes these exact totals allowed acquired readings at every tolerance. Input length and decoded chronological output length are unbounded too. Finite persistent register cardinality bounds only that register. It bounds neither clock/readout range and precision, source storage, observation storage, output or retained-history storage, decoding time nor workspace. The finite candidate searches following Theorem 12.2 grow with the observation. The data representation and comparison obligations for arbitrary real vectors and arbitrary compact supports remain separate from set-theoretic existence; no uniform effective procedure follows for unspecified real inputs. Exact typed endpoint and supplement acquisition, fixed initialization, faithfully received executed names, native calibration and the joint error guarantee are assumptions, not devices constructed by the theorem.
+
+Invertible recoding preserves recovery when the complete observation sets are transported. Replacing those images by a fresh box or another support of the same numerical radius is a new acquisition contract, as Proposition 8.6 and (14.2)–(14.4) distinguish. Marginal channel laws from separate executions cannot replace the common actual acquisition. The number of channels $r$, the dimension of $L$ and ranks of the native vectors count relations in this model; none is a physical spatial dimension. $\square$
+
+**Definition 15.2 (supplier correspondence and the remaining general-graph obligation).** The ordinary mathematical synthesis in §§12–14 is repo-derived on the whole source of Definition 10.2. Its uncovered content is the arbitrary-support static/online equivalence on that source, including the irrational transverse alternative, the all-tolerance distinction, and the same-native equal-dimensional support comparison with its normalized thickness boundary. The path schemas, overlap argument, integer-difference mechanism, finite-bin obstruction and residue update are reused suppliers, not independent claims of new general theory.
+
+The bounded primary correspondence is the following. Krieger–Rampersad–Shallit, [arXiv:0711.4990v1, Theorem 5 and its proof, pp.4–5](https://arxiv.org/pdf/0711.4990v1), assume an accessible and co-accessible DFA with polynomial-growth language and use its disjoint cycles and condensation paths to produce ordered schemas. Here the explicit language $a^*\cup a^*ca^*\cup a^*ca^*e$ and its actual interpretation are already supplied by Definition 10.2. Anthony Widjaja To, sole author of [arXiv:1002.1464v2, Theorems 3.1 and 4.1](https://arxiv.org/pdf/1002.1464v2), treats respectively finitely generated integer cones and Parikh images of finite NFAs. Their integer generators and counts do not establish inversion after an arbitrary real native map with joint uncertainty. Actual-edge counts may describe native totals mathematically; the two occurrences of the same $a$ cannot be relabeled in the online feed.
+
+Qureshi–Costa, [arXiv:1512.05908v2, Definition 2.7, p.6, and Proposition 3.1, p.7](https://arxiv.org/pdf/1512.05908v2), define Cartesian codes in finite integer tori and give the stated integer-radius perfect-code condition $Q=(2e+1)t$, $t>1$. Those finite-torus hypotheses do not supply a classification for singular real supports or a minimum for (12.4). Nair, [*A Nonstochastic Information Theory for Communication and State Estimation*, arXiv:1112.3471v5, §II, equations (1)–(5) and Definition 2.1](https://arxiv.org/pdf/1112.3471v5), defines marginal, conditional and joint ranges on one underlying set, with product ranges a separate unrelatedness condition. In that notation the underlying set here can be $\mathcal P_p\times\epsilon K$, with $Y(u,\eta)=T(u)+\eta$ and the same $z(u),h(u)$. Recovery means that every conditional range of $u$ given $(z,h,Y)$ is a singleton on its actual image. This supplies the joint-range convention, not the sourcewise finite-register equivalence or the names-only realization.
+
+The relevant existing formal interfaces retain their own telescopes. `DynamicsDescent.dynamics_descends_iff` characterizes fiber preservation for descent, and `DynamicClosureMinimality.dynamic_closure_is_least` supplies a stable refinement principle; (12.10) is the actual update verification here. `DefectGraphMinimumColoring.minimum_repair_labels_eq_chromatic_eq_fiber_diversity` concerns a finite deterministic-readout source, not the infinite history language with nontransitive observation overlap. `ExactRollbackInjectivityCriterion.exact_rollback_iff_joint_record_injective` concerns exact joint records. `ReachableBehaviorMinimality.finite_state_minimality` minimizes future behavior, rather than rooted chronological recovery. `TypedFiniteViewKernel` retains typed partial responses and ordered labels, while `ConfigurationPathTransport` concerns configuration/path correspondence. None automatically checks the present joint-support, complete-state and feed correspondence. Arithmetic Refinement Memory §§1 and 3 require a source-canonical current-state record; Transport–Memory Completion §§16–17 also have a different current-state telescope and initialization domain. Their earlier §§8 and 11 supply overlap and causal-label distinctions. Process Geometry §29 and §§39–43, and Joint Relations Clocks §4.2, supply common-source and typed correspondence boundaries. `ArchiveClockRecovery`, `TwoClockKrylovClosure` and `TimeOrderedPrimeMemoryCocycle` retain their visible-archive, exponential-orbit and time-parameterized contracts. Reading these sources supplies no fresh Lean application or kernel verification of §§12–14.
+
+Theorem 11.2 remains the delivered arbitrary-finite-graph result for its full-box contract and is not reconstructed here as new work. The named research obligation **arbitrary-finite-graph joint-support criterion and static-to-online bridge** remains unresolved: for a general fixed actual finite graph and a singular joint support, neither a full sourcewise criterion nor its complete names-only online realization is established by this two-loop theorem. In particular, a real dependence alone is not a singular-support impossibility proof. No exhaustive literature novelty, world priority, physical spacetime law, physical realization or completion of the broader reconstruction program follows from this bounded source result.
+
+## 追加锚（本行以下为增补区）
+
+## 16. Arbitrary finite actual graphs with a joint final error support
+
+**Definition 16.1 (source, acquisition and the routewise integer subgroup).** Retain the entire actual-source telescope of Definition 11.1: Definitions 1.1–1.2's typed deterministic complete-response quotient, its finite root-reachable named graph, fixed root representative and root vertex $o$, every finite legal root history $\mathcal P_o$, and the fixed native law $d:E\to\mathbb R_{>0}^r$ for any $r\ge1$. The graph may have no edges. Names include their actual parameters and types; distinct parallel names remain distinct edges. The empty word, stopping at any prefix, legal continuing failures, exits and terminal success or failure remain in the language. Illegal attempts are not executed edges. Complete-response congruence and actual-image closure give the legal-word lifting of Definition 1.2, so these are executions from that one actual root, not a collection of separately possible transitions. Native vectors are representative independent and use the same fixed origins, units and calibrations on that execution.
+
+Fix a compact convex centrally symmetric $K\subseteq\mathbb R^r$, with $0$ in its relative interior, and write
+
+$$
+W=\operatorname{span}_{\mathbb R}K,\qquad \Delta K=K-K.
+\tag{16.1}
+$$
+
+All dimensions $0\le\dim W\le r$ are admitted, including $K=\{0\}$. As in Definition 12.1, relative interior is in $W$. Origin symmetry gives $\Delta K=2K$; the arguments below also work under the alternative convention of a nonzero symmetry center, provided $0$ remains in the relative interior. The stipulated final observation of a word is exactly
+
+$$
+\mathcal O_{\epsilon,K}(u)
+ =\{z(u)\}\times\bigl(T(u)+\epsilon K\bigr),\qquad
+z(u)=o\cdot u,\quad T(u)=\sum_{e\text{ occurring in }u}d(e).
+\tag{16.2}
+$$
+
+For now $\epsilon>0$ is prescribed. Every error in this full joint support is adversarially allowed for every word. There is only one final noisy cut. No per-edge errors, finite horizon, probability law, coordinate independence, separate executions or additional source query enter this contract. The typed final endpoint is exact.
+
+A static label and a complete online register have exactly Definition 11.1's distinct contracts. In the online case there is one fixed $m_0\in M$ and one total $U:M\times\mathcal A\to M$, with $\mu(ua)=U(\mu(u),a)$. Its only live inputs are the complete current persistent value and the next actually executed typed parameterized name. A name shared across vertices stays the same token. Every persistent route, vertex, phase, selector and control value is charged in $M$. No intermediate endpoint, edgeID, response field, native increment, clock, archive, step index, stopping signal or future input is available. The final decoder receives precisely $(z(u),h(u),y)$ or $(z(u),\mu(u),y)$, with the exact final label or register and $y\in T(u)+\epsilon K$. Exact acquisition of those discrete final fields is an assumption.
+
+Whenever every cyclic SCC is a single directed named cycle in Definition 11.1's sense, reuse the complete actual normal form (11.9). Let $\mathcal S$ be all simple named root paths, including the empty path. For $P\in\mathcal S$, list all its visited cyclic SCCs in order, let $k(P)$ be their number, and let $A_P:\mathbb R^{k(P)}\to\mathbb R^r$ have their complete positive lap vectors as columns. Every word has a unique pair
+
+$$
+(P,t),\qquad t\in\mathbb N_0^{k(P)},\qquad
+T(u)=T(P)+A_Pt.
+\tag{16.3}
+$$
+
+These are the supplied ordered word schemas, including crossings and proper final cycle arcs, not a replacement of words by a Parikh image. For a cyclic root, the empty reduced path already has that cycle coordinate. A route with no cycles has $k(P)=0$ and represents one word. Define, with integer vectors regarded as real vectors,
+
+$$
+\begin{aligned}
+\Gamma_P&=\{j\in\mathbb Z^{k(P)}:A_Pj\in W\},\\
+V_P&=\operatorname{span}_{\mathbb R}\Gamma_P
+       \ \subseteq\mathbb R^{k(P)}.
+\end{aligned}
+\tag{16.4}
+$$
+
+The set $\Gamma_P$ is an additive subgroup. Each of its vectors is an actual same-schema, same-endpoint count difference: use $j_+$ and $j_-$ in (16.3), with coordinates $\max(j_i,0)$ and $\max(-j_i,0)$. Conversely every difference within that schema is an integer vector. Only those differences whose native image is in $W$ can be confused under (16.2). Because $V_P$ is spanned by these integer vectors, $A_PV_P\subseteq W$. It is not generally the whole inverse image $A_P^{-1}(W)$. Complete families are kept on their own actual condensation routes; vectors from incompatible routes are never pooled.
+
+The supplied source for §§12–15 is the delivered owner at commit `39446dccd2d1c1d83b9926e41d4b7b6e55a03223`, [RRO16 PR 24168](https://github.com/the-omega-institute/trureturing/pull/24168). Those sections give arbitrary joint supports on Definition 10.2's entire successive-loop source. The general full-box supplier is Theorem 11.2, delivered through [RRO14 PR 24137](https://github.com/the-omega-institute/trureturing/pull/24137). The uncovered relation treated here is (16.4) on arbitrary finite actual graphs and its complete online realization. The narrower suppliers and their exact minima are retained with their stated scopes.
+
+**Proposition 16.2 (exact same-endpoint confusability on the whole language).** For any two legal root words and any $\epsilon\ge0$,
+
+$$
+\mathcal O_{\epsilon,K}(u)\cap\mathcal O_{\epsilon,K}(v)\ne\varnothing
+\quad\Longleftrightarrow\quad
+z(u)=z(v)\ \text{ and }\ T(u)-T(v)\in\epsilon\Delta K.
+\tag{16.5}
+$$
+
+Consequently an arbitrary static label $h$ succeeds precisely when
+
+$$
+u\ne v,\quad z(u)=z(v),\quad h(u)=h(v)
+\quad\Longrightarrow\quad
+T(u)-T(v)\notin\epsilon\Delta K.
+\tag{16.6}
+$$
+
+These statements include comparisons between different schemas ending at the same vertex. Within a single schema the native difference is exactly $A_P(t-t')$. There is no transitivity assumption on overlap.
+
+Proof. Equation (12.5)'s translated-support intersection calculation is independent of the two-loop source: an intersection gives $T(u)+\epsilon a=T(v)+\epsilon b$ for $a,b\in K$, and the same equality constructs an intersection from a difference in $\epsilon\Delta K$. Exact endpoint equality is separately necessary and sufficient for the first fields to agree. At zero tolerance the difference set is $\{0\}$. If (16.6) fails, one identical permitted decoder input explains two distinct actual words. If it holds, every permitted input has a unique compatible word; return it and reject outside the observation union. This reuses the established overlap principle with the actual whole language substituted, rather than identifying overlap with a quotient equivalence. An online register induces a static label by $h=\mu$, but this fact alone supplies no online update for a general successful static label. $\square$
+
+## 17. The support-relative arithmetic separation relation
+
+**Lemma 17.1 (finite integer ambiguity or arbitrarily large common observations).** Let $A:\mathbb R^k\to\mathbb R^r$ be any real linear map, let $K,W$ be as in Definition 16.1, and put
+
+$$
+\Gamma=\{j\in\mathbb Z^k:Aj\in W\},\qquad
+V=\operatorname{span}_{\mathbb R}\Gamma,\qquad
+S_{\epsilon}=\{j\in\mathbb Z^k:Aj\in\epsilon\Delta K\}.
+\tag{17.1}
+$$
+
+For each prescribed $\epsilon>0$, the following are equivalent:
+
+1. $\ker A\cap V=\{0\}$.
+2. $S_{\epsilon}$ is finite.
+3. For the centers $At$, $t\in\mathbb N_0^k$, the translates $At+\epsilon K$ have a finite upper bound on the number containing any one point, counting distinct $t$ separately.
+
+More strongly, failure of item 1 gives, for every positive integer $Q$, more than $Q$ distinct nonnegative integer vectors whose translated supports have one common point. A single common translation of all centers leaves every assertion unchanged. This is an arithmetic lemma; the source bridge is (16.3).
+
+Proof. Choose linearly independent $v_1,\ldots,v_d\in\Gamma$ spanning $V$; such a finite choice exists by finite-dimensional linear algebra. They need not be a basis of $\Gamma$ over $\mathbb Z$. Let $B$ be the $k\times d$ matrix with these columns. If $V=\{0\}$, then $\Gamma=\{0\}$, $S_\epsilon=\{0\}$ and no two distinct centers can share an observation. This includes $k=0$.
+
+Suppose item 1 holds and $d>0$. The columns of $AB$ are independent. Choose a set $I$ of $d$ native rows for which $D=(AB)_I$ is invertible. In the maximum norm put
+
+$$
+\beta=\max_{1\le a\le k}\sum_{i=1}^d|B_{ai}|,
+\qquad \gamma=\max_{1\le i\le d}\sum_{j=1}^d|(D^{-1})_{ij}|,
+\qquad \kappa_A=\beta\gamma.
+\tag{17.2}
+$$
+
+For $x=Bc\in V$, the identity $c=D^{-1}(Ax)_I$ gives the supplied finite-dimensional inverse estimate
+
+$$
+\|x\|_\infty\le\kappa_A\|Ax\|_\infty.
+\tag{17.3}
+$$
+
+With $R=\max_{a\in K}\|a\|_\infty$, every $j\in S_\epsilon$ lies in $\Gamma\subseteq V$ and obeys
+
+$$
+\|j\|_\infty\le 2\epsilon R\kappa_A.
+\tag{17.4}
+$$
+
+There are finitely many integer vectors in this coordinate box, proving item 2. Set $\kappa_A=0$ in the case $V=\{0\}$. The estimate is only on $V$, not on all of $\mathbb R^k$; that restriction is essential for singular supports. If several centers share a point, subtracting any one count vector injects their count vectors into $S_\epsilon$ by (16.5)'s vector calculation. Thus item 2 implies item 3, with bound $|S_\epsilon|$.
+
+For the converse suppose item 1 fails. Then $d>0$ and $s=\operatorname{rank}(AB)<d$. All columns of $AB$ lie in $W$. For each integer $N\ge0$ and $n\in\{0,\ldots,N\}^d$, define
+
+$$
+(b_N)_a=N\sum_{i=1}^d|B_{ai}|,\qquad t_n=b_N+Bn.
+\tag{17.5}
+$$
+
+These are nonnegative integer vectors, since $b_N$ compensates every possibly negative coordinate of $Bn$. They are distinct because $B$ is injective. Their native centers are $Ab_N+ABn$. This translation is what makes signed integer directions into legal nonnegative counts; no signed count is executed.
+
+If $s=0$, all these centers are identical. Since $0\in K$, they have that common allowed observation for every $\epsilon$, even zero. Choose $(N+1)^d>Q$.
+
+If $s>0$, choose a basis $c_1,\ldots,c_s$ of the image of $AB$, with matrix $C$, and write $AB=CF$. Here each $c_i\in W$ and $F$ is an $s\times d$ real matrix. Choose $\rho>0$ such that
+
+$$
+\{w\in W:\|w\|_\infty\le\rho\}\subseteq K;
+\tag{17.6}
+$$
+
+this follows from $0\in\operatorname{relint}K$, by taking a smaller closed ball in its relative neighborhood. Put $G=\sum_i\|c_i\|_\infty>0$, $H=\max_i\sum_j|F_{ij}|>0$ and $h=\epsilon\rho/(2G)>0$. The $(N+1)^d$ vectors $Fn$ lie in $[-HN,HN]^s$. At most $(2HN/h+3)^s$ half-open cubes of side $h$ meet that box. Because $d>s$, choose $N$ with
+
+$$
+(N+1)^d>Q(2HN/h+3)^s.
+\tag{17.7}
+$$
+
+One cube contains images of more than $Q$ distinct $n$; coincident images still count their different integer inputs. Fix one of them, $n_0$, and set $y_*=Ab_N+ABn_0$. For every selected $n$,
+
+$$
+y_*-At_n=CF(n_0-n)\in W,\qquad
+\|CF(n_0-n)\|_\infty<Gh=\epsilon\rho/2.
+\tag{17.8}
+$$
+
+Thus (17.6) gives $y_*\in At_n+\epsilon K$ simultaneously for all selected vectors. This proves the stronger failure of item 3. Subtracting $t_{n_0}$ from these arbitrarily large families also produces arbitrarily many distinct elements of $S_\epsilon$, so item 2 fails. Adding a fixed vector to every center just adds it to $y_*$. The proof uses exact membership in $W$ before using a norm estimate; small ambient distance alone would not imply overlap for a singular support. $\square$
+
+The inverse bound in (17.3) is the existing finite-dimensional supplier, corresponding to pinned mathlib's `LinearMap.exists_antilipschitzWith` and `LinearMap.injective_iff_antilipschitz` on $A|_V$. The new step is selecting the real span of the integer subgroup with image in the actual support space, and proving the same-support obstruction by (17.5)–(17.8). Neither a lattice assumption on $A\mathbb Z^k$ nor an effective method for computing $\Gamma$ is presupposed.
+
+## 18. General-source equivalence and an attained complete-state bound
+
+**Theorem 18.1 (arbitrary-graph joint-support criterion and static-to-online bridge).** Under Definition 16.1, for every prescribed finite $\epsilon>0$, the following conditions are equivalent:
+
+1. Finite static supplementation recovers every finite legal root history from (16.2).
+2. Complete fixed-initial finite names-only online supplementation does so.
+3. Every cyclic SCC is a single directed named cycle, and for every actual reduced path schema $P\in\mathcal S$,
+
+$$
+\ker(A_P)\cap
+\operatorname{span}_{\mathbb R}
+ \{j\in\mathbb Z^{k(P)}:A_Pj\in W\}
+ =\{0\}.
+\tag{18.1}
+$$
+
+It is equivalent to check all complete co-visited families on root condensation routes, with their actual crossing choices. No independence condition is imposed on mutually incompatible routes. If condition 3 fails, for every positive $\epsilon$ and every positive integer $Q$ there are more than $Q$ distinct actual root histories, with one common typed endpoint, whose entire joint observation sets have a common point.
+
+Here is one attained bound when condition 3 holds. Choose $\kappa_P$ from (17.2) for $A_P|_{V_P}$, using zero when $V_P=\{0\}$, and put
+
+$$
+\begin{aligned}
+R&=\max_{a\in K}\|a\|_\infty,&
+\kappa&=\max_{P\in\mathcal S}\kappa_P,\\
+q&=\lfloor2\epsilon R\kappa\rfloor+1,&
+k_*&=\max_{P\in\mathcal S}k(P).
+\end{aligned}
+\tag{18.2}
+$$
+
+A complete fixed-initial update has exactly
+
+$$
+|M|=\sum_{P\in\mathcal S}q^{k(P)}
+       \ \le |\mathcal S|q^{k_*}
+\tag{18.3}
+$$
+
+reachable full states and succeeds. These are construction cardinalities, not general minimum formulas or an equality of the static and online minima. In contrast to the full-dimensional case, (18.1) does not imply $k_*\le r$.
+
+Proof. An online register supplies a static label, proving $2\Rightarrow1$. For the first necessity in $1\Rightarrow3$, reuse the support-independent exact-collision construction (11.8). A cyclic SCC with two internal outgoing named choices yields two prefix-free actual return blocks. Arbitrarily many different permutations with the same block multiplicities have the same additive vector and endpoint. Their common exact center belongs to every observation set because $0\in K$. This rules out every finite static label, with no restriction on support dimension or tolerance. Thus each cyclic SCC must be one directed named cycle.
+
+The actual normal form (11.9), now (16.3), then applies without a noise assumption. If (18.1) fails at some $P$, apply Lemma 17.1 with $A=A_P$ and common translation $T(P)$. All its nonnegative vectors are valid lap counts in this single schema. The inserted words are distinct, legal from the same actual root representative and have the same endpoint $z(P)$. Its common vector is therefore one allowed acquisition for more than $Q$ such words, for every $Q$. Pigeonhole identifies two labels, contradicting (16.6). This also proves the stated whole-domain ambiguity assertion. Both obstructions preserve the stipulated graph and native law.
+
+For sufficiency, (17.4) gives, on every schema,
+
+$$
+S_{\epsilon,P}=\{j\in\mathbb Z^{k(P)}:A_Pj\in\epsilon\Delta K\}
+\ \subseteq\{j:\|j\|_\infty<q\}.
+\tag{18.4}
+$$
+
+Indeed $q>2\epsilon R\kappa$. Give the word $(P,t)$ the label
+
+$$
+h(u)=\bigl(P,(t_C\bmod q)_{C\in\mathcal C(P)}\bigr).
+\tag{18.5}
+$$
+
+Distinct histories with equal labels have the same $P$ and a nonzero count difference $j\in q\mathbb Z^{k(P)}$. Such a vector cannot satisfy (18.4). Hence their supports do not overlap, proving (16.6). Different schemas receive different labels even when their endpoints agree. No separation between offsets $T(P)$ on different routes is required.
+
+It remains to realize this label under the exact feed restrictions, rather than assume that a static coloring has an online update. Reuse the complete state representation (11.15), with the present value of $q$:
+
+$$
+M=\coprod_{P\in\mathcal S}
+       \{P\}\times(\mathbb Z/q\mathbb Z)^{\mathcal C(P)}.
+\tag{18.6}
+$$
+
+The root and graph are fixed program data. In a state $(P,\bar t)$, $P$ includes its current last vertex, each cycle entry, the proper current cycle arc, all crossing choices and the visited component order. For the empty path its vertex is $o$. These are stored finite control, charged in the disjoint union, not extra inputs. The unique initialization is the empty reduced path with zero residues, including the root-cycle residue if present.
+
+For clarity, the previously proved update has exactly these cases. From the stored vertex and incoming name, compute its unique edge in the known deterministic graph. An illegal name leaves the value unchanged, making $U$ total without adding a reachable state. A legal internal cycle edge that does not return to the stored entry extends the proper arc of $P$. A legal internal edge returning to that entry removes that proper arc from $P$ and increments this component's residue modulo $q$; this also covers a self-loop with empty proper arc. An edge leaving the SCC appends the crossing edge, preserves the earlier residues and creates a zero residue if the new component is cyclic. A loopless singleton has only this last case. Condensation acyclicity ensures that an exited component is not visited again. All resulting reduced paths remain in $\mathcal S$.
+
+The induction verifying (11.15) uses only lap extraction and modular addition, so it applies to this $q$ unchanged: after every actual word $(P,t)$ the complete value is exactly (18.5). On a proper arc the state advances its stored phase; on a completed lap it increments its residue; on an exit it retains the completed past and initializes the next entry. The empty word starts the induction. No step reads an endpoint, edgeID, output/failure tag, clock, archive or source reply. A shared name is handled by this one function on its different stored states, not renamed according to an external vertex. Every stopping prefix, including a cut midway around a cycle, is already covered. Continuing failure edges use the same graph transition rule. Terminal success or failure is simply a legal final vertex; no terminal or stopping token is synthesized.
+
+Every pair in (18.6) is reached: insert into its $P$ the nonnegative representatives $0,\ldots,q-1$ of all prescribed residues using (16.3). This proves the exact complete-state count (18.3), including all route, entry, phase and control memory. The register realizes the separating label (18.5), proving $3\Rightarrow2$ and closing the existence bridge. It does not turn an arbitrary static labeling into an online machine of the same size.
+
+Every condensation route can be realized by a simple root path with its actual crossing edges and proper arcs, as established for (11.9). Its $A_P$ depends on the complete visited cycle family and its order, not on the crossing offsets. This proves the equivalent route formulation without introducing non-co-realizable vectors. Finally, Proposition 16.2 gives a decoder on the actual observation union. For a mathematical finite candidate search, if $E\ne\varnothing$ put $c=\min_e d_1(e)>0$. Since $|y_1-T_1(u)|\le\epsilon R$, every compatible word has length at most $(y_1+\epsilon R)/c$. Enumerate legal words up to its integer floor and test the final endpoint, full state and membership $y-T(u)\in\epsilon K$. There is exactly one on an allowed input; reject if there is none or the bound is negative. If $E=\varnothing$, check the empty word directly. This is a finite search with the stipulated real data, not a claim of effective membership tests for arbitrary real descriptions. $\square$
+
+**Corollary 18.2 (what depends on support shape, and what is supplied by rank).** For the fixed graph and native law, positive-tolerance finite static or online existence depends on $K$ only through $W=\operatorname{span}K$. Existence at one positive tolerance is equivalent to existence separately at every prescribed finite positive tolerance. The separating difference sets, attained bounds and least possible cardinalities can still depend on support shape and on $\epsilon$.
+
+Proof. Condition (18.1) contains $W$ but neither shape nor positive tolerance. Compactness gives the upper estimate and relative interior the obstruction at every positive tolerance. Shape remains present in the exact overlap relation (16.5). The conservative modulus (18.2) uses $R$; an alternative attained modulus is
+
+$$
+q'=1+\max_{P\in\mathcal S}\ \max_{j\in S_{\epsilon,P}}\|j\|_\infty,
+\tag{18.7}
+$$
+
+where $0\in S_{\epsilon,P}$ and all these finite sets are supplied by Lemma 17.1. The same state update with $q'$ succeeds. Neither modulus is asserted optimal. Actual shape-dependent minima are already supplied by Theorem 10.4 and Proposition 10.6, and need no new example or reproof.
+
+For $W=\mathbb R^r$, $\Gamma_P=\mathbb Z^{k(P)}$ and $V_P=\mathbb R^{k(P)}$, so (18.1) is full real column independence. This is exactly the supplied general full-box theorem, now applicable to every full-dimensional compact support under the stated relative-interior hypothesis. If $A_P$ is already real-injective, (18.1) holds for every support. With singular $W$, a nonzero real kernel may miss $V_P$, so real dependence alone is no obstruction. On Definition 10.2's source, the dependent irrational case transverse to $W$ has $\Gamma_P=0$; the noisy collinear case fails (18.1). These are precisely Theorem 12.2's delivered alternatives, not new narrow-source results. Proposition 11.3 already shows why integer injectivity alone does not suffice for a full-dimensional positive-error contract, even with pairwise independence and no more cycles than channels. Proposition 14.1 supplies the same-native, same-source, identical-marginal and equal-dimensional support falsifier. Proposition 14.2 supplies its normalized positive-thickness discontinuity. In the latter, the loss of existence occurs when thickening changes $W$; it does not contradict shape-invariance of existence for fixed $W$. None of these suppliers is promoted to a new physical or general minimum claim. $\square$
+
+## 19. Exact acquisition and the three tolerance quantifiers
+
+**Theorem 19.1 (exact, per-tolerance, uniformly bounded and fixed-machine boundaries).** Keep the arbitrary actual graph and native law of Definition 16.1.
+
+1. At $\epsilon=0$, finite static supplementation and complete finite names-only online supplementation exist if and only if every cyclic SCC is a single directed named cycle and
+
+$$
+\ker(A_P)\cap\mathbb Z^{k(P)}=\{0\}
+\quad\text{for every }P\in\mathcal S.
+\tag{19.1}
+$$
+
+The same criterion holds for every $\epsilon\ge0$ when $K=\{0\}$. An attained complete-state bound is $|\mathcal S|$, using only the reduced path, with $q=1$. Exact endpoint and native vector without any supplement need not recover different schemas ending at the same vertex.
+
+2. For fixed $K$, existence at one positive tolerance and a separately chosen finite label or machine at each positive tolerance are equivalent to (18.1) and the cyclic-SCC condition. This statement imposes no uniform cardinality bound as tolerance grows.
+
+3. For fixed $K$, each of the following is equivalent to the cyclic-SCC condition together with
+
+$$
+\Gamma_P=\{0\}\quad\text{for every }P\in\mathcal S:
+\tag{19.2}
+$$
+
+there is a uniform finite upper bound on static alphabet size over all positive tolerances, allowing the labels to change; there is such a bound on complete online state size, allowing the machines to change; there is one fixed finite static label successful at every positive tolerance; there is one fixed complete finite names-only machine successful at every positive tolerance. A decoder may know the prescribed tolerance. Under (19.2), the same route-only machine with $|\mathcal S|$ complete states succeeds for every tolerance, including zero. In fact its decoder may use the condition $y-T(u)\in W$ without knowing the tolerance.
+
+Proof. A non-cycle cyclic SCC has the exact common-center obstruction (11.8), so cannot satisfy any item. Once all cyclic SCCs are cycles, at zero error the only same-schema overlap differences are the integer kernel. Under (19.1), the route label $P$ separates all comparisons within a schema: equal exact vectors force equal counts. The $q=1$ instance of the verified update (18.6) realizes that label, with one state per simple reduced path. If a nonzero integer $j$ lies in $\ker A_P$, choose for each integer $N\ge0$ a base $b\in\mathbb N_0^{k(P)}$ so that $b+ij$ is nonnegative for all $0\le i\le N$, for example $b_a=N|j_a|$. These $N+1$ distinct counts give legal words in this one schema with identical vector and endpoint. Every finite static alphabet fails for large enough $N$. This proves item 1. The support drops out at zero tolerance, and $\epsilon\{0\}=\{0\}$ for all tolerances. Cross-schema equal-vector paths explain the final limitation; the equal-duration acyclic supplier in Theorem 8.5 already realizes it.
+
+Item 2 is Theorem 18.1 and Corollary 18.2. For item 3 use the absorption relation
+
+$$
+\bigcup_{\epsilon>0}\epsilon\Delta K=W,
+\qquad
+\bigcup_{\epsilon>0}\epsilon K=W,
+\tag{19.3}
+$$
+
+which follows from the relative ball (17.6) and containment of each dilate in $W$. If (19.2) holds, every nonzero integer count difference has native image outside $W$. Thus two words of the same schema cannot explain the same $y$, even if two arbitrary finite tolerances are allowed for their respective errors. The route-only label and update therefore work at every tolerance. Testing $y-T(u)\in W$ identifies at most one count vector per label, and at least one on every actual observation. Cross-schema comparisons are separated by $P$. No measurement of $P$ by the source is assumed; it is the complete finite state already constructed.
+
+Conversely suppose $0\ne j\in\Gamma_P$. To rule out an arbitrary uniform budget $Q\ge1$, choose the $Q+1$ nonnegative counts $b+ij$, $0\le i\le Q$, with $b_a=Q|j_a|$. Their native centers, including the common offset, are
+
+$$
+x_i=T(P)+A_Pb+iA_Pj.
+\tag{19.4}
+$$
+
+All differences $x_0-x_i$ lie in $W$. By (17.6) choose one finite positive $\epsilon$ large enough that all these differences belong to $\epsilon K$; if $A_Pj=0$, every positive tolerance works. Thus $x_0$ is a common allowed observation for all $Q+1$ distinct words at that same endpoint. No static label with at most $Q$ values works at this tolerance, even if it was chosen specially for this tolerance. This disproves a uniform finite static budget, hence also a uniform online budget and either fixed finite object. The argument does not assume periodic labels, a residue construction or a fixed decoder. The route-only construction proves all reverse implications and the final assertion. $\square$
+
+Conditions (18.1) and (19.2) are different: injectivity of $A_P$ on $V_P$ permits a nonzero support-relative subgroup, while a uniform finite budget requires that subgroup to vanish. Theorem 13.1 and Proposition 13.2 give the delivered two-loop witnesses for this quantifier distinction and for integer versus real transversality. On a general graph, $|\mathcal S|$ replaces their one-state conclusion because finite route offsets and merging paths may need labels. In particular, a fixed finite machine successful at every tolerance need not have one state. If the graph is acyclic, all its schemas have zero cycle coordinates and the finite route-only machine meets every criterion automatically.
+
+## 20. Same-source four-view transport and the acquisition boundary
+
+**Proposition 20.1 (faithful endpoint, spatial, boundary and chronological transport).** For the entire graph and acquisition contract of Definition 16.1, let $b:V\to B$ and $s:V\to S$ be exact faithful typed representations of this same actual endpoint image. Replacing $z$ by $b(z)$ or $s(z)$, while transporting each word's entire joint observation set and retaining the same supplement, preserves every feasible static alphabet size, every feasible complete online state size, Theorem 18.1's existence criterion and all tolerance distinctions of Theorem 19.1. A successful supplemented observation recovers every fixed lossless chronological target $m:\mathcal P_o\to\mathcal M$. These are conditional augmented recovery maps, not pairwise inverses of unaugmented coordinates.
+
+Proof. Apply the supplied actual-image bijections (11.18), leaving the final register and acquired vector untouched. Injectivity gives $b^{-1}$ on $b(V)$ and $s^{-1}$ on $s(V)$, so both directions transport each word's whole observation set. They preserve (16.5), every decoder and every cardinality, and the online update is unchanged. This argument does not use a box support. If a spatial or boundary view is asserted to represent the process itself, retain Proposition 11.4's stronger requirement: a rooted typed named-graph isomorphism onto its actual represented image preserving all menus, parameters, successors, complete responses, native vectors, origins and calibrations. Word induction then preserves every legal history and native total, including executed failures and terminal outcomes. A mere endpoint injection supplies the observation transport but not this process isomorphism.
+
+Recovering $u$ permits evaluation of $m(u)$, the modeled endpoint, exact native vector and declared response sequence from the fixed actual root representative. Losslessness of $m$ gives an inverse on its actual word image. These evaluations do not acquire an archive, introduce a new source reply or determine data outside the declared model. If a quotient representative alone was fixed instead of an actual root representative, only response-invariant quantities would be justified. Here the actual root is part of the telescope.
+
+The exact endpoint supplies the final vertex and type to the decoder; it supplies no step vertex to $U$. The joint observation supplies an unbounded real reading constrained by the actual support; it is never stored or sampled by $U$. The constructed register stores precisely the finite reduced path and lap residues, including every control value required to update them. A static label may be a different function of the whole history and need not be online realizable at the same cardinality. Feasibility equivalence here comes from the explicit complete update and obstruction, not from a generic coloring-to-automaton conversion.
+
+For a fixed recovered word, several permitted errors may still give different $y$. Only if $y$ is retained as well does the known native model determine the realized error $y-T(u)$. Consequently a chronological record alone does not reconstruct the acquired noisy vector. Unsupplemented endpoint, time, boundary or spatial coordinates retain the failure examples of Theorem 8.5. Proposition 10.5 supplies failure of each separate native channel on one fixed source, and Proposition 14.1 supplies equal marginal ranges with opposite joint-support feasibility. Neither may be replaced by marginal observations from different executions. Invertible recoding preserves recovery when applied to the entire actual observation sets; imposing a fresh support after recoding changes the acquisition contract. $\square$
+
+**Remark 20.2 (range, representation and physical limits).** If the graph has a reachable cyclic SCC, a root prefix $p$ and one actual nonempty return word $L$ give all legal histories $pL^j$. Strict native positivity makes $T(pL^j)=T(p)+jT(L)$ unbounded in every coordinate, and $0\in K$ permits those exact values as acquired readings. Input and lossless chronological output lengths are unbounded. Finite $|M|$ bounds only the persistent register. It bounds neither source storage, native range, exact endpoint or final-state acquisition, vector precision and storage, chronological output or retained-history storage, nor decoding time and workspace. If the graph is acyclic its whole legal language is finite, so the unbounded-lap statement does not apply.
+
+The arithmetic criterion and bounds are set-theoretic under fixed real data. They do not provide algorithms for deciding arbitrary real equality, integer relations, the space $V_P$, exact support membership or the rank and inverse data used in (17.2). Effective real representations and certified comparison procedures are additional implementation requirements. Even with those supplied, the candidate search bound depends on the acquired vector and has no uniform resource bound over all histories. The finite transition table itself uses only stored finite control and executed names once its modulus is fixed; neither it nor the proof builds the acquisition devices, calibrates an unknown source or verifies physical law. Channel count $r$, $\dim W$, $\dim V_P$ and the number of co-visited cycles describe relations in this model and imply no physical spacetime dimension.
+
+## 21. Supplier correspondence and the precise mathematical increment
+
+**Definition 21.1 (bounded source and literature correspondence).** The new ordinary mathematical content is the support-relative integer-span alternative of Lemma 17.1 on each actual ordered schema, its arbitrary-graph criterion (18.1), and its uniform-budget boundary (19.2). Theorem 18.1 applies it to the entire stipulated graph and supplies a complete names-only update by direct reuse of the delivered route-state machine. The general full-box theorem, scalar and successive-loop classifications, exact minima on their stated sources, ordered normal forms, overlap calculation, finite-bin principle, inverse estimate and modular updates are suppliers, not newly claimed results. The arbitrary-finite-graph joint-support criterion and static-to-online existence bridge named in Definition 15.2 are supplied by Theorem 18.1 under exactly Definition 16.1's telescope. General least cardinalities and equality of static and online minima remain unestablished. The broader space–time–boundary–memory reconstruction program remains open beyond these conditional source results.
+
+The pinned repository interface comparison is explicit. `DynamicsDescent.dynamics_descends_iff` requires a surjective quotient presentation and preservation of its fibers under one self-map; `DynamicClosureMinimality.dynamic_closure_is_least` assumes an intervention-closed refinement. They explain the stability obligation, but do not assert finiteness for the present history partition. That obligation is discharged by (18.6)'s complete update. `ExactRollbackInjectivityCriterion.exact_rollback_iff_joint_record_injective` treats a deterministic exact joint record. `DefectGraphMinimumColoring.minimum_repair_labels_eq_chromatic_eq_fiber_diversity` has a finite source and equality fibers, rather than the infinite legal history language and nontransitive observation overlap here. `ReachableBehaviorMinimality.finite_state_minimality` minimizes future behavior of finite reachable action systems, not the rooted chronological past. `TypedFiniteViewKernel.typed_finite_view_kernel` retains types, partial legality and ordered response labels; its finite-view and complete-behavior equivalence does not supply this historical error-support criterion. `ConfigurationPathTransport` concerns configurations and path correspondences. The related Arithmetic Refinement Memory §§1 and 3 impose a source-canonical current-state record, while Transport–Memory Completion §§16–17 retain their own initialization and acquisition contracts. Process Geometry §§39–43 and Joint Relations Clocks §4.2 supply actual-source and joint-observation discipline. These are scoped correspondences, not a compiled application of those declarations to (18.1).
+
+At mathlib revision `56a005855ea17e0b0958f73ec801ae140b0a1679`, `Mathlib/Analysis/Normed/Module/FiniteDimension.lean` supplies `LinearMap.exists_antilipschitzWith` for a finite-dimensional domain and zero kernel, and `LinearMap.injective_iff_antilipschitz` over its complete normed field telescope. Applied mathematically to $A_P|_{V_P}$ over $\mathbb R$, they supply the type of estimate (17.3); (17.2) is the already used row-inverse way to select a constant. `Mathlib/Topology/Algebra/Module/FiniteDimension.lean` supplies continuity of finite-dimensional linear maps. `Mathlib/Algebra/Module/ZLattice/Basic.lean`'s `IsZLattice` requires a discrete integer submodule spanning the ambient space. No discreteness of $A_P\mathbb Z^{k(P)}$ is assumed here: imposing it would exclude the delivered irrational transverse case. Reading these pinned sources is not a fresh Lean application or kernel verification. The bounded searches did not supply the complete actual-source, support and feed theorem, so its missing arithmetic-to-source inference is proved above as ordinary mathematics.
+
+The primary-source correspondence is bounded by that missing relation. Krieger–Rampersad–Shallit, [arXiv:0711.4990v1, Theorem 5 and proof, pp.4–5](https://arxiv.org/pdf/0711.4990v1), use an accessible and co-accessible DFA with polynomial-growth language, disjoint cycle contraction and finitely many ordered schemas. Here every reachable vertex is an admissible stopping endpoint, and the supplied normal form (11.9) already establishes the needed actual-word schema. Their theorem does not classify separation under a real native map with singular joint error. Anthony Widjaja To, [arXiv:1002.1464v2, Theorem 3.1, p.4, and Theorem 4.1, p.6](https://arxiv.org/pdf/1002.1464v2), treats respectively finitely generated cones of integer vectors and Parikh images of finite NFAs. Those finite integer representations do not retain arbitrary chronology or supply (18.1) after a real native map. Actual-edge counts can describe native totals mathematically, but are not additional feed tokens when identical operation names occur at different vertices.
+
+Qureshi–Costa, [arXiv:1512.05908v2, Definition 2.7, p.6, and Proposition 3.1, p.7](https://arxiv.org/pdf/1512.05908v2), concern Cartesian codes and perfect maximum-metric codes in finite integer tori, with the stated integer-radius condition $Q=(2e+1)t$, $t>1$. These hypotheses do not supply a general minimum or support-relative integer-span criterion for arbitrary real native vectors. Nair, [arXiv:1112.3471v5, §II, equations (1)–(5) and Definition 2.1, p.2](https://arxiv.org/pdf/1112.3471v5), defines joint, conditional and marginal ranges on one underlying set and distinguishes product ranges as unrelatedness. Here that underlying set is $\mathcal P_o\times\epsilon K$, with $(u,\eta)\mapsto(z(u),h(u),T(u)+\eta)$. Its conditional word ranges must be singletons. This supplies the joint-range language; it supplies neither the complete names-only construction nor the new routewise criterion.
+
+The derivation is independently written from the delivered owner, pinned repository and dependency sources, and these bounded primary texts. It makes no exhaustive novelty, priority, physical validation, optimal-register or formal-verification claim. No Lean, Scribe, digestion or experimental result is asserted for §§16–21.
+
+## 追加锚（本行以下为增补区）
+

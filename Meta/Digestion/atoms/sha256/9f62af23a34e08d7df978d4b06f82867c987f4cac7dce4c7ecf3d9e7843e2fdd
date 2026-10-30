@@ -1,0 +1,30 @@
+**Proposition 28.5 (hypothetical clocks and a one-coordinate failure).**
+Global realizability of every enumerated local clock is unnecessary
+for Theorem 28.4. Conversely a single first clock value does not
+in general determine the second, even with the physical address
+and normalization cut fixed.
+
+Proof. The positive pair $(1,1)$ cannot be an actual clock pair:
+indices in consecutive nonempty global birth batches strictly
+increase. Nevertheless, with the zero core it generates an all-zero
+local orientation. At the actual zero-source root of rank four,
+$x=bbb$ and $y=a$ pass (ACR.94): $bbb$ is present, while $aaa$
+and $aba$ are absent. This certifies rank four; it certifies neither
+the false clock pair nor a global realization. Soundness belongs
+to the actual certificate, and completeness only requires inclusion
+of the genuine pair somewhere in the search.
+
+For the second assertion take two sources in $\mathscr R_5$. In
+source A only $z_5$ is one; in source B only $z_1$ is one. At
+$p=aba$, direct old-leaf substitution gives $e_p=5$ in both.
+The only preceding sibling cone is $aa$. In A it has descriptor
+$(4,\alpha)$, hence at cut five its $(\alpha,\beta)$ counts are
+$(0,1)$. In B it has descriptor $(3,\alpha)$, hence those counts
+are $(1,1)$. Thus $L_p(5)=1$ in both, but $L_p(6)$ is respectively
+one and two. Formula (ACR.113) gives clock pairs $(9,14)$ and
+$(9,15)$. Both may be considered at the same mature cut eight,
+where $p$ has rank four. This disproves recovering the exact clock
+from its first value alone. These tails are both zero, so it proves
+neither distinct final local supports nor a minimal coordinate
+count or an acquisition lower bound. $\square$
+

@@ -1,0 +1,13 @@
+**Lemma 5.1 (shared finite witness representation).** All retained lists of Lemma 4.3 can be represented together by an acyclic ordered-term DAG with at most
+
+$$
+4K^2V+2K+2
+\tag{POC.15}
+$$
+
+nodes. Equality in this DAG is equality of finite unfolded ordered terms.
+
+Proof. Store alpha and beta once. The successive $B_j=\langle B_{j-1},B_{j-1}\rangle$, $1\le j\le K$, add $K$ nodes. The $K$ nonimage witnesses $\langle\alpha,B_j\rangle$ add $K$ more. This common $\#$ basis has $2K+2$ nodes. Process explicit trie children before parents. Each retained nonleaf parent adds at most one pair node pointing to already retained child witnesses; leaves reuse their two global nodes. There are at most $4K^2$ retained parents at an explicit node. Unselected candidate pairs need not be stored. This proves (POC.15).
+
+All pair pointers can go to earlier nodes. Recursive unfolding therefore terminates in an ordinary finite tree, duplicating repeated pointers into separate ordered occurrences. For exact equality give the two leaf tags different identifiers and intern every pair by the ordered pair of its children's canonical identifiers. Induction on the topological order proves that two identifiers agree exactly when the finite unfolded terms agree. Interning can reduce the node count and never increases it. Neither cyclic nor rational trees enter this construction. $\square$
+

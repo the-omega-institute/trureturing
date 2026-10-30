@@ -1,0 +1,30 @@
+**Corollary 33.5 (unbounded full-rank one-hot cores with transients).**
+Let $p\ge1$, let $a\ge0$, and put $d=a+p$. Choose a phase
+$\phi\in\{0,\ldots,p-1\}$ and the one-hot core
+$y_i=\mathbf 1_{\{i\equiv\phi\pmod p\}}$. If $a>0$, choose any transient
+supported on $0,\ldots,a-1$ with $t_{a-1}=1$; if $a=0$, put $t=0$. Then
+$s=y+t$ belongs to the $k=1$ sparse subclass, has least annihilator
+
+$$
+m_s=E^a(E^p+1),
+\tag{ACR.129}
+$$
+
+and $\deg(m_s)=d$. Hence its Hankel matrix has rank $d$, and the original
+$K_d(P)$ is recovered with the polynomial full-rank normalization of
+(ACR.89), with the authentic first-$d$ seed and the original row convention. Theorem
+29.2 therefore installs the exact tuple $(P,K_d(P),n,F_{n+1}-1)$ with its
+separate physical and handoff charges. Both $p$ and $a$ may grow with $d$.
+
+Proof. The $p$ cyclic shifts of a one-hot period-$p$ word are the standard
+basis of its period space, so its least annihilator is $E^p+1$ and has
+degree $p$. The terminal nonzero transient has least annihilator $E^a$.
+These factors are coprime because $E^p+1$ has constant term one. The
+coprime-kernel argument already used in Theorem 27.3 shows that an
+annihilator of their sum must contain both factors; their product already
+annihilates the sum. Theorem 21.2 gives rank $d$ and uniqueness of the
+order-$d$ row: $c_a=1$ and every other coefficient is zero, since
+$m_s=E^d+E^a$. Copying the authentic first-$d$ seed therefore gives
+the exact original $K_d(P)$ independently of its row enumeration.
+$\square$
+

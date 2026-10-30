@@ -1,0 +1,10 @@
+**推论 2.2（The exact one-element gap）。** Under the other hypotheses
+of Theorem 2.1, $|A|+1=|B|$ implies that $M$ is matched to $N$.
+
+Proof. The equality of cardinalities implies $|A|<|B|$, so Theorem 2.1
+applies. In [AZ, Question 2.7], the notation $n$ for rank is $r$ here,
+$E(M)=A$ and $E(N)=B$. This proves its strict one-element-gap clause.
+The disjunction in that question still has a negative answer, because
+its equal-cardinality clause has the supplied counterexamples described
+in the interval recovery in Section 4 below.
+

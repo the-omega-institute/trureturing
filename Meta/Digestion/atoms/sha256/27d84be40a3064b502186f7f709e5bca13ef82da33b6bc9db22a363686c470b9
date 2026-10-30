@@ -1,0 +1,29 @@
+#### 定理 4.2（四种心的明确变分问题）
+
+下列解均唯一：
+
+$$
+\begin{aligned}
+
+ G&=\arg\min_x\sum_{P=A,B,C}\left\lVert x-P\right\rVert ^2,\\
+ I&=\arg\max_{x\in\triangle ABC}\min\{d(x,AB),d(x,BC),d(x,CA)\},\\
+ O&=\arg\min_x\sum_{\{P,Q\}\subset\{A,B,C\}}
+       \bigl(\left\lVert x-P\right\rVert ^2-\left\lVert x-Q\right\rVert ^2\bigr)^2,\\
+ H&=\arg\min_x\sum_{\mathrm{cyc}}
+       \bigl((x-A)\cdot(B-C)\bigr)^2.
+
+\end{aligned}
+$$
+
+外心、垂心两式的最小值为零；内心式的最大值为 $r=2\Delta/(a+b+c)$。
+
+**证明。**
+
+第一式配方为常数加 $3\left\lVert x-G\right\rVert ^2$。若三角形内一点到对边距离为 $d_a,d_b,d_c$，则 $2\Delta=ad_a+bd_b+cd_c$，故最小距离不超过 $r$。内心的正重心系数使三个子三角面积分别为 $a,b,c$ 的比例，故三距离均为 $r$；两条独立内偏移线保证唯一性。
+平方距离差为 $x$ 的仿射函数，两条独立边使其残差平方和在平面上严格凸，垂直平分线交点给零残差。
+最后，$O$ 等距于 $B,C$ 意味着 $(B+C-2O)\cdot(B-C)=0$，故 $H-A$ 垂直 $BC$，其余循环同理。边方向张成平面，残差平方和严格凸，零点唯一。
+
+∎
+
+<a id="statement-4-3"></a>
+

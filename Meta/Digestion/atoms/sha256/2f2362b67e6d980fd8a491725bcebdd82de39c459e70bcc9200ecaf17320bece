@@ -1,0 +1,21 @@
+**Definition 9.1 (finite clock-memory supplements and the acquisition boundary).** Keep the actual root-reachable typed graph, the fixed native positive duration \(d\), the complete set of finite legal words \(\mathcal P_r\), the exact typed endpoint \(z(u)=r\cdot u\), and the single final observation \(y\) with \(\lvert y-\tau(u)\rvert\le\epsilon\) from Definition 8.1. A parameterized operation name, including its declared type and all of its parameters, is one atomic symbol of a typed alphabet \(\mathcal A\).
+
+A finite static supplement is a map \(h:\mathcal P_r\to H\) with finite range. It is admissible at \(\epsilon\) when there is a decoder
+\[
+D:V\times H\times\mathbb R\longrightarrow\mathcal P_r\cup\{\bot\}
+\]
+such that \(D(z(u),h(u),y)=u\) for every legal root word \(u\) and every \(y\) in its closed native error interval. The label is a final static value; it is not assumed to have a prefix-compatible update.
+
+A finite online supplement is a finite set \(M\), a fixed initialization \(m_0\in M\), and one update map
+\[
+U:M\times\mathcal A\longrightarrow M.
+\]
+The register receives exactly the names of the operations that actually execute, in their execution order. Its value is
+\[
+\mu(\varepsilon_r)=m_0,\qquad
+\mu(ua)=U(\mu(u),a).
+\]
+The decoder receives only the exact typed endpoint, the final register value and the one final clock value. It receives no endpoint or clock during the execution, no one-step duration, complete response record, permission result, archive, future operation or unexecuted branch, and no external event counter. Initialization is independent of the word. Every persistent phase, control bit and auxiliary variable is part of \(M\); there is no hidden persistent state. Updates on names that are illegal at the current source state may be chosen arbitrarily, since only finite legal words are in the contract.
+
+Thus an online supplement induces the static map \(h=\mu\), but the converse requires a genuine prefix-compatible construction. The native \(d\), the actual source, the whole legal-word domain and the exact final endpoint are unchanged.
+

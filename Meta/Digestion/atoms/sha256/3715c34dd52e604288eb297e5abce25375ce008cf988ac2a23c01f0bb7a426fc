@@ -1,0 +1,123 @@
+**Theorem 14.1 (An explicit strict upper bound for the supremum).** Put
+
+$$
+ N=n(n-2),\qquad q=d+3,\qquad B=B_{\rm bip},\qquad
+ U_{\rm ext}=
+ \frac{B+qN+n+\sqrt{(B+qN+n)^2-4qBN}}{2q}.
+\tag{14.1}
+$$
+
+For every exterior triple,
+
+$$
+ \max\{B,N\}<U_{\rm ext}
+ <n\left(n-2+\frac1{d+2}\right),\qquad
+ B\le M<U_{\rm ext}.
+\tag{14.2}
+$$
+
+Every independently positive original assignment therefore satisfies
+$F(g)\le M<U_{\rm ext}$; in fact $R(h)<U_{\rm ext}$ for every
+$h\in\mathcal C$. The number $U_{\rm ext}$ is an upper bound,
+not an evaluation of the unrestricted supremum.
+
+*Proof.* Write $V=N+n/(d+2)$ for the estimate in Proposition 6.1.
+A direct computation gives
+
+$$
+ V-B=\frac{d(m-1)(d+3)}{(d+1)(d+2)}>0.
+\tag{14.3}
+$$
+
+Consider the polynomial
+
+$$
+ p(r)=(r-N)(qr-B)-nr
+     =qr^2-(B+qN+n)r+BN.
+\tag{14.4}
+$$
+
+One has $p(N)=-nN<0$, and
+
+$$
+ p(B)=B\bigl((d+2)(B-N)-n\bigr)<0,\qquad
+ p(V)=\frac n{d+2}(V-B)>0.
+$$
+
+Since $q>0$, these signs imply two distinct real roots, with the larger
+root strictly between $\max\{B,N\}$ and $V$. The quadratic formula
+identifies that root as (14.1), proving its reality and the first
+comparisons in (14.2).
+
+Fix any $h\in\mathcal C$ and put
+
+$$
+ r=R(h),\qquad x=\sum_{e\in E_{AB}}h_e\ge0.
+$$
+
+By Lemma 2.1, $D_C\ge c$. The sum of all original conductances is
+$D_C+x$, so the trace excess satisfies
+$S=2(D_C+x)-n+1\ge d+1+2x$.
+The finite-list comparison (3.5) gives
+
+$$
+ r\le N+\frac n{d+2+2x}.
+\tag{14.5}
+$$
+
+Let $h^0$ be obtained from this same $h$ by setting only its $AB$
+coordinates to zero, and let $D=L(h)-L(h^0)$. Since each incidence
+vector has squared norm $2$ and lies in $\mathbf1^\perp$,
+
+$$
+ 0\preceq D\preceq2xP,\qquad
+ L(h^0)\succeq(1-2x)P.
+\tag{14.6}
+$$
+
+If $x<1/2$, this original bipartite assignment has connected support
+and actual $\lambda_2(h^0)\ge1-2x$. The whole bipartite bound,
+extended to connected nonnegative assignments as in Theorem 12.2,
+gives $\lambda_2(h^0)R(h^0)\le B$.
+For $0<x<1/2$, adding the nonzero $D$ strictly decreases the trace
+of the inverse on $\mathbf1^\perp$, hence
+
+$$
+ r<R(h^0)\le\frac B{1-2x}.
+\tag{14.7}
+$$
+
+Here strictness can be seen directly: for positive definite
+$A=L(h^0)|_{\mathbf1^\perp}$, the difference
+$A^{-1}-(A+D)^{-1}$ is the congruence by $A^{-1/2}$ of
+$I-(I+A^{-1/2}DA^{-1/2})^{-1}$. It is positive semidefinite and
+nonzero when $D\ne0$, so has strictly positive trace.
+This also proves the required strict total-resistance comparison on
+the original vertices. The non-strict monotonicity is the classical
+one in Ghosh–Boyd–Saberi, §2.6.
+
+If $r\le B$, then $r<U_{\rm ext}$ already. Suppose $r>B$.
+The case $x=0$ is excluded by the whole bipartite bound.
+For $0<x<1/2$, (14.7) implies
+$x>(1-B/r)/2$; for $x\ge1/2$ the same strict inequality holds because
+$0<(1-B/r)/2<1/2$. Thus (14.5) yields
+
+$$
+ r<N+\frac n{d+3-B/r}.
+$$
+
+The denominator is positive since $r>B>0$. Multiplying by $qr-B>0$
+gives $p(r)<0$. A quadratic with positive leading coefficient is
+negative only between its two roots, so $r<U_{\rm ext}$.
+This proves the pointwise strict assertion on the entire
+$\mathcal C$, without a symmetry, trace or rank restriction.
+
+For strictness of the supremum, take any positive maximizing sequence
+and normalize each term by its own $\lambda_2$. Theorem 11.2 gives a
+convergent subsequence with limit $k\in K$ and
+$R(k)=\lim_jF(g_j)=M$. The pointwise strict result applied to this
+actual connected limit gives $M=R(k)<U_{\rm ext}$.
+This limiting argument, rather than pointwise strictness alone,
+justifies the strict-supremum claim. The lower comparison is
+Theorem 11.1. ∎
+
