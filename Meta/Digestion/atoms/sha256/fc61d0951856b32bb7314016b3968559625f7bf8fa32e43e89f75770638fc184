@@ -1,0 +1,16 @@
+**定义 78.2（实代数预测秩）。** 固定完整条件核
+
+$$
+ H_P(p;(f,w))=P_w(K_fK_pv),\qquad
+ p,f\in\mathsf W,\quad w\in\Omega_{10}.
+ \tag{78.2}
+$$
+
+记 $r(P)=\operatorname{rank}_{\mathbb R}H_P$ 为全部有限子矩阵实秩的上确界，允许 $+\infty$。下文无限维的维数也按 $+\infty$ 读取。归一化常数计入秩：对每个 $f$，$\sum_wH_P(p;(f,w))=1$。令
+
+$$
+ V_P=\operatorname{span}_{\mathbb R}\{[\psi]\mapsto P_w(K_f\psi):f\in\mathsf W,\ w\in\Omega_{10}\}
+ \ \subset C(\mathbb P(H),\mathbb R).
+ \tag{78.3}
+$$
+

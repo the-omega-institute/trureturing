@@ -1,0 +1,17 @@
+**定义 136.1（原数据下的共同失败概率）。** 对固定原参数、原噪声序列和紧输出，令
+$\mathcal A_{n,x}(r)$ 表示以下两个断言同时成立：
+对每个 $|y|\le R$，实际 $G_y$ 在
+$\{z:\operatorname{dist}(z,[1,2])\le r\}$ 上无零；
+实际 $M_y$ 在 $\{s:|s|\le r\}$ 上无零。
+定义
+
+$$
+f_n(d)=\max_{\mathcal E\in\{\mathrm{pair},\mathrm{path}\}}
+ \sup_{|S|=q_n}\mathbb P_S^{\mathcal E}
+ \{\mathcal A_{n,x}(d/Q_n)\text{ 不成立}\},\qquad d>0.
+\tag{136.1}
+$$
+
+这里的支持均为确定支持，数据律与先验均为原律。
+该事件只涉及实际有限后验；比较函数不作为概率替代律。
+

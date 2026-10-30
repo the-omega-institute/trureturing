@@ -419,7 +419,7 @@ The host sweep does not split retained or recent candidates to reclaim `.lake/bu
 
 **A20.1 Named registered worktree removal** `make worktree-remove NAMES="DIR [DIR ...]" [FORCE=1]` calls `StrataLint worktree remove --names "DIR [DIR ...]" [--force]`. Match complete final directory names exactly, Ordinal, against Git registration. Names are whitespace-separated and deduplicated, without prefix/branch/path fallback; names containing whitespace are unsupported. Make passes raw NAMES through the existing environment-variable boundary, never as shell code.
 
-Resolve the entire batch and check every member before any deletion. A refused preflight deletes none. Naming bypasses automatic Git-update age, behind and PR selection; it retains the intentional-lock 24-hour duration rule, initialization-scope liveness and main/nested identity protection. Content deletion and native unregistration share one 300-second removal budget. Before deleting content, prepare payload entries and their file types, scan for nested Git boundaries and then evaluate every native `git worktree remove` refusal condition using the flags that will be passed to Git. This final refusal evaluation is the last step up to the deletion call entry: `unlink`/`rmtree` for content or the native removal call. Reads performed inside a recursive deletion operation, including those before its first filesystem change, belong to that operation and have the same boundary as native Git recursive removal. No observation intervenes between the final refusal evaluation and that call entry. An empty payload proceeds directly to native unregistration. A refusal deletes no content and keeps the registration. Content deletion has an interruptible deadline; native unregistration receives only the remaining budget and does not start after its expiry. Explicit FORCE only removes that removal budget. Content-phase timeout retains registration and the readable removal record for retry; native Git retains its existing termination grace. A timed-out or killed removal resumes on a later request under the common rule. Identity inspection retains its own hang guards. Do not prune, kill, auto-unlock, manipulate PRs or delete branch/remote refs or other trees' caches. Report actual removed, retained and partial/unknown effects; no cross-tree transaction is promised.
+Resolve the entire batch and check every member before any deletion. A refused preflight deletes none. Before any checkpoint or content deletion, refuse a tree whose root's `lstat().st_uid` differs from `os.getuid()` as `owner_boundary:<path>`, using the host sweep's owner identity, or whose payload contains any directory with `st_dev` different from the tree root as `device_boundary:<path>`. Device checks share the nested Git traversal, inspect directories before descending and do not follow directory links; the root `.git` registration link is outside the payload. These refusals preserve content and registration. Naming bypasses automatic Git-update age, behind and PR selection; it retains the intentional-lock 24-hour duration rule, initialization-scope liveness and main/nested identity protection. Content deletion and native unregistration share one 300-second removal budget. Before deleting content, prepare payload entries and their file types, recheck owner and device boundaries in the nested Git scan and then evaluate every native `git worktree remove` refusal condition using the flags that will be passed to Git. This final refusal evaluation is the last step up to the deletion call entry: `unlink`/`rmtree` for content or the native removal call. Reads performed inside a recursive deletion operation, including those before its first filesystem change, belong to that operation and have the same boundary as native Git recursive removal. No observation intervenes between the final refusal evaluation and that call entry. An empty payload proceeds directly to native unregistration. A refusal deletes no content and keeps the registration. Content deletion has an interruptible deadline; native unregistration receives only the remaining budget and does not start after its expiry. Explicit FORCE only removes that removal budget. Content-phase timeout retains registration and the readable removal record for retry; native Git retains its existing termination grace. A timed-out or killed removal resumes on a later request under the common rule. Identity inspection retains its own hang guards. Do not prune, kill, auto-unlock, manipulate PRs or delete branch/remote refs or other trees' caches. Report actual removed, retained and partial/unknown effects; no cross-tree transaction is promised.
 
 Per-item JSONL has name/path/outcome/error and the confirmed recovery branch; failures also identify any attempted recovery-branch candidate. The last line is `WORKTREE_REMOVE_RESULT exit=<code> removed=<n> failed=<n> refused=<n>`. CLI codes: 0 success, 64 usage, 65 not_found, 66 ambiguous, 67 main, 68 lock duration unavailable or not elapsed, 69 inventory, 73 identity refusal, 74 execution failure or indeterminate effects. GNU make returns its own 0/2; read the classified final line. Local checks follow A22 and do not certify remote required CI or integration qualification.
 
@@ -1091,3 +1091,146 @@ source hash 绑定 writer 观察到的源版本，不断言该版本是 atom 最
 **权属与裁决**:agent 禁改理论卷正文,修文唯作者;记错义务归发现者/消化层。**判真唯 Lean**;harness 不裁决数学真假,只裁决收据存在性与路由合规。若 Lean witness 证明理论 claim 与冻结真值冲突,按本类结算;若反查证实**库内**节点证明有洞,则走既有“勘误 ≠ 解冻”之后代撤销路径。〔守护:**硬+评审**·Lean kernel 与现役 harness 各守其机器可判边界;agent 禁改理论卷、作者修文权及处置归类由评审守护〕
 
 **升提律**:TheoryErratum 专用 schema/lint 规则仅在第二个同构实例出现,或已有路由被证实失效时再立;届时再机器化触发分类、唯一案件复用、issue/送达/重试等尚由评审守护的规范性动作,依第 8 条不预建空壳。〔守护:**元准则+评审**·第二同构实例或路由失效是升提前提;当前不冒领专用 schema/lint〕
+
+
+## 11.28 CLAUDE.md 引用材料
+
+本节保存 CLAUDE.md 引用的命令速查、用途样本读数、配置比较读数与古典引语；这些资料不增设、替代或改变 CLAUDE.md 的规范性规则。
+另保存下列已在 CLAUDE.md 他处保留其规范要素的重复陈述原文；本小节不是这些规范的唯一出处。
+
+
+
+### CLAUDE.md 重复陈述原文（保留文本）
+
+本小节逐字保存 CLAUDE.md 中已有规范要素的重复陈述原文。每项给出基线行号、CLAUDE.md 中保留规范要素的位置，以及原文（UTF-8、不含行末换行）的 SHA-256；代码块内每行均为对应基线原文的精确匹配。
+
+**基线第 46 行；保留位置：第 5.11 条（当前第 469 行）。**
+逐字证据：`sha256:19a420cdd4dd8beeaa13c2c21f7be0b6bc2bafe5356ec1289bdfa65ea801d52c`（UTF-8，不含行末换行）。
+
+```text
+**Nyx 调用禁令**：禁止执行旧 `nyxid oracle` CLI 及其子命令，包括脚本封装、sshx 席位和失败回退中的间接调用。独立提问统一用上述 `nyx.py ask`，sshx 的 oracle 席统一用其 broker runner；具体契约见第 5.11 条。
+```
+
+**基线第 82 行；保留位置：第 4.2 条（当前第 286 行）。**
+逐字证据：`sha256:e17cf0b94cd8be0af54f096e38cb7339b20ded01b060838a021469b94bf6378e`（UTF-8，不含行末换行）。
+
+```text
+- **C# harness**:程序集只许程序(类型/逻辑/loader/writer);声明性实例住程序目录外(TOML/scribe.cs/Evidence/D5)或测试 fixture(第 4.2 条)。
+```
+
+**基线第 761 行；保留位置：第 8.6 条（当前第 719–721 行）。**
+逐字证据：`sha256:fb84282937292ff4d53fa3b31310ec183f414fba077ab10015779f9dee3e4a06`（UTF-8，不含行末换行）。
+
+```text
+“看起来像旧 lane 自动重生”的进程不属于本任务,除非本任务记录的 pid/pgid 能证明归属;无法证明就不动。
+```
+
+**基线第 999 行；保留位置：第 2.2、2.4、2.9 条（当前第 81、91、127 行）。**
+逐字证据：`sha256:56c8849a6c1bdea80441f99a8cb7bfd1bc9e81ccb44dc866d9743d5f0dfc75dd`（UTF-8，不含行末换行）。
+
+```text
+- **知之为知之,不知为不知,是知也**——诚实标 open/ASSUMED-UNVERIFIED,不冒领(第 2.2、2.4 条)。
+```
+
+**基线第 1001 行；保留位置：第 5.8 条（当前第 439–440 行）。**
+逐字证据：`sha256:5e4395514917e78d2931998486b098ce24385ece8cce943c6427d5dc97a5893c`（UTF-8，不含行末换行）。
+
+```text
+- **兼听则明,偏信则暗**——异模型破相关先验(第 5.8 条)。
+```
+
+**基线第 1002 行；保留位置：第 3.7 条（当前第 237 行）。**
+逐字证据：`sha256:0d64b79f5c3aa7e40b249d217fdd51198e7e45bf3c6ca0521b58b8324cd126a8`（UTF-8，不含行末换行）。
+
+```text
+- **述而不作,信而好古**(第 3.7 条)。
+```
+
+**基线第 1007 行；保留位置：第 4.1 条（当前第 280 行）。**
+逐字证据：`sha256:fcd4db4abe5532dddc14e01f5af3eafb17581131595a5567c4c09e5167918e9b`（UTF-8，不含行末换行）。
+
+```text
+- **己欲立而立人,己欲达而达人**(忠道)——harness 服务下级程序(第 4.1 条)。
+```
+
+**基线第 1014 行；保留位置：第 2.1、7.11 条（当前第 76、599–602 行）。**
+逐字证据：`sha256:29c7c926ccd2469925978e666d1e9a62d24d02eb293a74df3eb790353ca04332`（UTF-8，不含行末换行）。
+
+```text
+- **欲速则不达**——诚实>速度,打地鼠反慢(第 2.1 条)。
+```
+
+**基线第 1020 行；保留位置：第 2.5、4.8、9.1 条（当前第 96–97、380、817 行）。**
+逐字证据：`sha256:45ccd51e8b78e2fd137019117eb6f1f4fec486b7eb4649c3ac5c9f17ac849d30`（UTF-8，不含行末换行）。
+
+```text
+- **过犹不及**——只在会说谎处设门,不过度、不镀金(第 2.5、4.8 条)。
+```
+
+**基线第 1025 行；保留位置：第 4.1、4.2、7.1、7.16 条（当前第 280、284、530、643–652 行）。**
+逐字证据：`sha256:6607c3f36b9fecabe662c5b09ee6763813b47aaee1810d6b7e6880b8309b969e`（UTF-8，不含行末换行）。
+
+```text
+- **无为而治;道法自然;上善若水,利万物而不争**——稳态自主、算法定址、harness 服务下级不争特权(第 7.16、4.2、4.1 条)。
+```
+### CLAUDE 常用命令速查
+
+| 用途 | 命令 |
+|---|---|
+| 仓库修改先复用兼容 linked worktree，需隔离时创建；只读与 issue 操作复用现有检出（第 6.1 条） | `make worktree KIND=<kind> NAME=<任务码> DEST=../trureturing-<session-id>` |
+| 编译指定 Lean 模块及依赖 | `make lean LEAN_TARGETS="<点分模块名>"`（省略 `LEAN_TARGETS` 为全项目） |
+| 核对指定 Lean 模块、utility 输入及 imports / 发射所选 Scribe | `make lean-report-scoped LEAN_TARGETS="<点分模块名>"` / `make emit [PATHS=<NUL分隔路径文件>]` |
+| 显式整库 Lean 报告（CI / 整库核验） | `make lean-report` |
+| 摄入指定理论源 | `make ingest SOURCE="<source-id 或源文件路径>"` |
+| 查看 atom / 连读上下文 | `make show-atom ATOM_ID=<id>` / `make atom-context ATOM_ID=<id>` |
+| 搜索指定理论的 atom | `make search-atoms SOURCE=<源ID或理论路径> [TEXT=<关键词>] [STATE=<目录状态>] [LIMIT=<上限>]` |
+| 构建、冻结并覆盖锚点 atom | `make deposit ATOM_ID=<id> GID=<gid>` |
+| 构建并冻结无对应理论卷(故无 atom)的形式化 | `make deposit-uncovered GID=<gid>` |
+| 用既有冻结声明覆盖 atom | `make cover ATOM_ID=<id> GID=<gid>`；批量用 `make cover-batch ATOMS=<TSV文件>` |
+| 预览 atom 子句拆分 | `make decompose ATOM_ID=<id> DRY_RUN=1` |
+| 按请求结算 atom（先连读上下文） | `make settle REQUEST=<请求文件>`（适用范围见第 3.2 条） |
+| 快速 .NET 结构检查 | `make -C tools check-fast`（不验证 Lean 或完整准入） |
+| 基线到当前工作树的完整增量检查 | `make gate BASE=<40位commit-SHA>` |
+| .NET 构建 / 全量测试 | `make -C tools dotnet` / `make -C tools test` |
+| 数学门 / 本地 CI 准入流程 | `make test` / `make gate` |
+| 建 PR | `make pr HEAD=<分支> MESSAGE=<消息文件>`（首行为标题；默认自动合并并等 required CI；`AUTO_MERGE=0` 关闭自动合并；`DRAFT=1` 创建草稿后直接返回；`pr-open` 同义） |
+| 等指定 PR 提交的 CI | `make pr-watch PR=<编号> HEAD_SHA=<40位commit-SHA>` |
+| 预览可回收 worktree | `make -C tools clean-lanes`（加 `FORCE=1` 执行；已合并到 dev、干净且 HEAD 提交与分配均满 3 小时可回收；未合并或不干净的须 HEAD 提交与分配均满 24 小时并落后 BASE 300 提交；未知保留，删除按锁时长与身份核验） |
+| 交付后归还 worktree 并保留缓存 | `make worktree-return PR=<编号> WRITERS_JOINED=1`（先核验 MERGED、首个 dev push 并 join 本任务写入者；第 6.1 条） |
+| 显式删除指定 worktree | `make worktree-remove NAMES="<目录名>"`（第 6.1 条） |
+| 磁盘可用空间低于 5% 时回收 | `make -C tools clean-all FORCE=1`（AI 可直接执行，第 6.1 条） |
+
+### CLAUDE 常用独立脚本
+
+| 用途 | 命令 |
+|---|---|
+| 查指定修订的工具文件 / 目录容量余量 | `bash tools/scripts/agent/headroom.sh HEAD` |
+| 提取定理前的节级假设 | `bash tools/scripts/agent/section-context.sh <源文件.md> <定理号>` |
+| Nyx 提问(oracle broker 单次流式调用) | `python3 tools/scripts/agent/nyx/nyx.py ask <brief文件> <输出文件>` |
+| 查看 Nyx 可用池 | `python3 tools/scripts/agent/nyx/nyx.py pools` |
+| 抓取网页或 PDF(可选 NyxID Firecrawl；文献读取路线见第 5.11 条) | `nyxid proxy request api-firecrawl v1/scrape -m POST -H "Content-Type:application/json" -d '{"url":"<地址>","formats":["markdown"]}' --output json` |
+
+### CLAUDE §3.5 用途样本读数
+
+| 样本 | 模块 | 行数 | 有下游 import | 闭合 atom | 两者皆无 |
+| --- | --- | --- | --- | --- | --- |
+| 全库 D5 | 3360 | 512,608 | 45% | 58% | 19% |
+| 枚举族(S0/Tower 周期 6–12) | 80 | 31,971 | 96%(族内互引) | 1% | 2% |
+| 反例 | 23 | 2,913 | 13% | 83% | 13% |
+| 数值证书(去概念桶) | 27 | 3,523 | 33% | 56% | 26% |
+同窗口枚举族 78 模块有 import 或 coverage,77 有 importer,仅 5 有族外 importer(被 6 模块引);4 个数学消费者只用周期 ≤5 底层生成器(`ASSUMED-UNVERIFIED`:未复算声明闭包)。周期 6–12 塔只汇入两个子句打包模块各闭 1 atom,源句报告枚举本身。3 个反例模块两类边皆无,故按边数设用途门会误判。`TribonacciPermanentSurvivors` 声明枚举未用于一般定理。`LeanCacheBudgetPolicy.cs` 注 S0/Tower 81 模块 6305 s@ARM、最贵单子图 1656 s;与本表 80 模块集合是否相同未核对,`ASSUMED-UNVERIFIED`。
+**同窗口的未履行用途**:LRAT 链至 `GoldenDFAOMinimalityTargets` M07–M16 均是假设 `refutation` 的条件定理,仓内 `lrat_proof`/`.lrat`/`.cnf` 皆 0;`FiniteExhaustion`→`FiniteBranchAtlas` 无 importer/coverage/具体实例。`germ_zero_of_center_jet` 三前提仅曲率由 `g60_curvature_le_118` 履行,值界缺,导数只到 g 1(阈值 1 非 1.87),唯一应用仍带假设。`DedekindBhkCertificates` 四实例零引用而定义被用;7 个数值证书无 importer/coverage(详 #5515)。
+
+### CLAUDE §10.2 配置比较读数
+
+| 配置 | 墙钟 | `checked` | 峰值内存 |
+| --- | --- | --- | --- |
+| 原始 | 100.4 s | 87.1 s | 22.7 GB |
+| ① 拆分逐项归约 | 87.2 s | 68.0 s | 3.2 GB |
+| ② 证书换平衡树 | 29.3 s | 11.2 s | 3.0 GB |
+| ③ 精确导入 | 19.2 s | 11.6 s | 1.5 GB |
+
+### CLAUDE §11.5 古典引语
+
+- **量腹而食,度身而衣**(第 10.1 条)。
+- **一事不再理**(第 10.3 条)。

@@ -1,0 +1,33 @@
+**Lemma 3.1 (One active edge).** Conditional on a specified phase, an
+active edge has zero-reply probability $c$ and one-reply probability
+$2\eta$. Its two joint target-spin masses are as follows, with the
+majority-spin mass listed first when it differs from the other mass.
+
+| Position of the target vertex | Reply zero | Reply one |
+| --- | --- | --- |
+| In the edge | $a^2,\ b^2$ | $\eta,\ \eta$ |
+| Outside the edge | $ac,\ bc$ | $2a\eta,\ 2b\eta$ |
+
+All entries in this table are conditional on that phase. A full-law
+mass with this phase specified has an additional factor $1/2$. The
+total best target correctness after one XOR with phase known is $a$,
+whether or not its edge meets the target.
+
+Proof. A zero XOR says the two spins agree, giving the assignments
+$(\sigma,\sigma)$ and $(1-\sigma,1-\sigma)$ with masses $a^2,b^2$.
+A one XOR has the two assignments
+$(\sigma,1-\sigma)$ and $(1-\sigma,\sigma)$, each of mass $ab=\eta$.
+If the target is outside the pair, its independent spin factor is
+$a$ or $b$. This proves the table. For an incident edge the sum of the
+two maximal branch masses is $a^2+\eta=a$; for an exterior target it
+is $ac+2a\eta=a$, since $c+2\eta=1$. $\square$
+
+The comparisons used below are
+
+$$
+a>\frac12,\qquad
+a-c=b(a-b)>0,\qquad
+2a^2-c=a^2-b^2>0.
+\tag{3.1}
+$$
+

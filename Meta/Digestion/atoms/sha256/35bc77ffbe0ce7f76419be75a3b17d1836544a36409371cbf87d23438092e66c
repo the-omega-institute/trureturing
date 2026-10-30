@@ -1,0 +1,26 @@
+**Lemma 1.2 (trace and legal-word interfaces).** For a matrix $C=(\begin{smallmatrix}\alpha&\beta\\\gamma&\delta\end{smallmatrix})$ and $R=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$,
+
+$$
+\operatorname{tr}(CR)=\alpha p+\beta r+\gamma q+\delta s.
+$$
+
+For $R=c\ell$ this equals $\ell Cc$. Every cumulative legal-word matrix has nonnegative integer entries and determinant $1$ or $-1$. A strictly positive initial factorization stays positive at all read and unread states with the same fixed row.
+
+Proof. Expanding the diagonal of $CR$ gives the trace formula. Expanding $Cc\ell$ gives $\operatorname{tr}(Cc\ell)=\ell Cc$. Both $M$ and $J$ have nonnegative integer entries and determinant $-1$; multiplication preserves nonnegative integer entries and multiplies determinants. The empty word is $I$. Finally,
+
+$$
+M\begin{pmatrix}c_1\\c_2\end{pmatrix}
+=\begin{pmatrix}c_2\\c_1+c_2\end{pmatrix},\qquad
+J\begin{pmatrix}c_1\\c_2\end{pmatrix}
+=\begin{pmatrix}c_2\\c_1\end{pmatrix}
+$$
+
+are strictly positive when $c_1,c_2>0$. Only the column is acted on. Conversely, every strictly positive matrix $R=(\begin{smallmatrix}p&q\\r&s\end{smallmatrix})$ of determinant zero has the positive factorization
+
+$$
+c=\begin{pmatrix}p\\r\end{pmatrix},\qquad
+\ell=(1,q/p),
+$$
+
+because $rq/p=s$. Thus the matrix source domain and the stated positive-factor domain agree. ∎
+

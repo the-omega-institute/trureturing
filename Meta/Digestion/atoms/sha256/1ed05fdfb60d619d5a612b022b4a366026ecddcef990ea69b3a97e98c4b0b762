@@ -1,0 +1,26 @@
+**Theorem 13.2 (exact closed strip in every dimension).** For every integer $d\ge3$ and all real $\lambda,q$ with $|\lambda|\le1/d$, the original map of Convention 2.1 is Schwarz if and only if
+
+$$
+0\le q\le\frac{1-\lambda^2}{d-1}.
+$$
+
+The assertion is for every $X\in M_d(\mathbb C)$ and every $v\in\mathbb C^d$, including singular row blocks, zero-support coordinates and all closed endpoints. Stance: repo-derived.
+
+**Proof.** Necessity is Theorem 4.1(i),(ii). For sufficiency, the upper boundary $q=q_b$ is Lemma 13.1. The lower boundary $q=0$ is Proposition 4.2, since $[-1/d,1/d]\subset[-1/(d-1),1]$. For $0\le q\le q_b$ put $\theta=q/q_b$. The original maps satisfy
+
+$$
+\Phi_{\lambda,q}=(1-\theta)\Phi_{\lambda,0}+\theta\Phi_{\lambda,q_b}.
+$$
+
+The exact convexity identity in Remark 4.4, evaluated on a traceless $X=D+Y$ and the normalized probe $s$, is
+
+$$
+s^TS_q(X)s=(1-\theta)s^TS_0(X)s+\theta s^TS_b(X)s
+ +\theta(1-\theta)d^2q_b^2\sum_i t_i|z_i|^2.
+\tag{13.2}
+$$
+
+Indeed $(\Phi_{\lambda,q_b}-\Phi_{\lambda,0})(X)=-dq_bD$. All three terms are nonnegative, including when $\theta$ is zero or one. Scalar-shift invariance and diagonal-unitary covariance, proved in Lemma 3.1 and Theorem 3.2, transfer these identities to arbitrary complex inputs and probes; the zero probe has defect zero.
+
+This argument also proves the row range claims directly, without any inverse or limiting convention. At any fixed admissible $(\lambda,q,t)$, set $z=0$ and vary one row of $Y$: nonnegativity forces $P_i\ge0$. If a real $w\in\ker P_i$ had $b_i^Tw\ne0$, choose $z_i=1$, $z_j=-1$ for one $j\ne i$, all other diagonal entries zero, and vary that row as $\eta_i=\tau w$. Its contribution has the nonconstant linear term $2\tau b_i^Tw$ and zero quadratic term in $\tau$; all other contributions are fixed. One choice of sign as $|\tau|\to\infty$ contradicts (13.2). Hence $b_i\perp\ker P_i$, equivalently $b_i\in\operatorname{Ran}P_i$, at every singular point as well. Its Moore–Penrose quadratic value is therefore finite. Completing squares exactly as in Step 4 of Theorem 3.2, and minimizing the independent rows, gives the nonnegative restricted form $\sum_i\kappa_i|z_i|^2$ and thus condition (B), with its zero-coefficient cases. No expression $c_i/(1+\gamma c_i)$ is used, so zeros of $e_j$ and of $1+\gamma c_i$, and their intersections, require no denominator cancellation. ∎
+

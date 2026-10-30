@@ -1,0 +1,18 @@
+**Lemma 116.4 (the entire relevant midpoint fiber).** At seed $\theta$ and
+
+$$
+b_*=(\ell,3a/2,C_\theta),
+$$
+
+one has $U_{b_*}=\mathcal A$ and
+
+$$
+\mathcal F_{b_*}=\{1-u:u\in\mathcal A\},\qquad N_{b_*}=W>1.
+$$
+
+Thus every pair from $\mathcal A\times\mathcal F_{b_*}$, not just a complementary pair, is an actual positive accepted history in the original source.
+
+Proof. A length-$\ell$ word $x$ has zero evaluation at $\theta$ exactly when its binary polynomial $P_x$, of degree less than $\ell$, is divisible by $f$. The quotient is a unique polynomial $T$ of degree less than $a$, including the zero polynomial. Since $a<H$, the three supports in $fT=T+X^HT+X^{2H}T$ are disjoint. Hence such $x$ is exactly $u(t)$, and its integer weight is $3|t|$. Weight $3a/2$ gives precisely $\mathcal A$.
+
+At the midpoint the repeated half-coefficients identify a suffix with a length-$\ell$ word $y$. Its field equation is $\sum_{i=1}^{\ell}\theta^{i-1}y_i=C_\theta$. This is equivalent to zero evaluation of $1-y$. Its weight is $|1-y|=3a/2$. The first part therefore gives the stated entire suffix set. In particular its cardinality is $W$, which is at least 2. The original source rectangle and its positive common-depth mass give the last assertion. No conditional sampler or future readout has been introduced. $\square$
+

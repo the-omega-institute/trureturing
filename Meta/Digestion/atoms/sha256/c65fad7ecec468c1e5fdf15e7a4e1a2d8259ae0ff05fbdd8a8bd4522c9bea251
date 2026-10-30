@@ -1,0 +1,58 @@
+**Lemma 17.2 (Explicit localization of all relevant dense competitors).** Every actual dense law in Definition 17.1 with $H(x)\le H_d$ satisfies
+
+$$
+y_i>\frac9{10}\quad(1\le i\le s).
+\tag{17.4}
+$$
+
+In particular this is a consequence on an energy sublevel, rather than an additional hypothesis on the original domain.
+
+**Proof.** The uniform adjacent-cardinality law of Lemma 1.2 has all marginals $\mu$ and energy $H_d$. The parameter bounds give
+
+$$
+\begin{gathered}
+a>4096,\quad 0<\delta<2/a<1,\quad
+\frac1a-\frac2{a^2}<h_0:=1-\mu
+ =\frac{1+\delta}{a+2}\le\frac1a,\\
+\mu\ge\frac9{10},\qquad
+C\delta\le5,\qquad \tau\le\frac{15}{a^2}<\frac9{10},\qquad
+\mu^{-2}-1\le\frac3a.
+\end{gathered}
+\tag{17.5}
+$$
+
+The last inequality follows by substituting $\mu\ge1-1/a$ and multiplying by $(1-1/a)^2>0$. Thus the uniform law is dense.
+
+Apply Lemma 14.2 to the actual weights $\alpha_i=y_i^{-2}$. If $\alpha_{(1)},\alpha_{(2)}$ are their two smallest values, then $M=\sum_i\alpha_i-\alpha_{(1)}-\alpha_{(2)}$. Its unrestricted-cardinality certificate gives
+
+$$
+H(x)\ge\sum_i g(y_i)+C\delta[\alpha_{(1)}+\alpha_{(2)}]
+\ge\sum_i g(y_i)+2C\delta.
+\tag{17.6}
+$$
+
+On the whole dense interval $[\tau,1]$,
+
+$$
+g''(z)=\frac{2r^2}{z^3}
+ \left(1-\frac{3C\delta}{r^2z}\right)
+\ge\frac{4r^2}{2a+3}\ge r.
+\tag{17.7}
+$$
+
+Here $z\ge\tau=3(C+2)\delta/r^2$ bounds the fraction by $C/(C+2)$, and $z\le1$. Taylor's inequality with (17.7), summed using $\sum_i(y_i-\mu)=0$, proves
+
+$$
+\sum_i g(y_i)\ge s g(\mu)+\frac r2 V,
+\qquad V=\sum_i(y_i-\mu)^2.
+$$
+
+The identity $H_d=sg(\mu)+2C\delta\mu^{-2}$ therefore yields
+
+$$
+\frac r2V\le2C\delta(\mu^{-2}-1)\le\frac{30}{a}.
+\tag{17.8}
+$$
+
+Consequently $|y_i-\mu|\le\sqrt V<8/a$, whence $1-y_i<9/a<1/10$. This proves (17.4) for every sublevel competitor without assuming an adjacent-cardinality support. ∎
+

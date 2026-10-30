@@ -3671,3 +3671,422 @@ which are nonnegative and sum to one. The vertices are not collinear because $\z
 The nonlinear all-law optimum and the complete actual-law fibre correspondence in Theorem 17.5 are deductions for the common law of Definition 1.1; the attributed weak-duality, finite-Jensen and matching-polytope statements supply only the indicated intermediate steps. No conclusion here extends to $\lambda=3/2$ or $\lambda=2$, their adjoining boundary layers, smaller $a$, a least sufficient $A(\eta)$, unrestricted rare/dense competition, or realization by a finite graph with prescribed budgets. The full text of Zhao–Zhao, DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), is not an input; its possible overlap remains unassessed. No worldwide priority assertion is made.
 
 ## 追加锚（本行以下为增补区）
+
+## 18. Fixed higher dense phases and their complete degree fibres
+
+**Definition 18.1 (Fixed-phase parameters and auxiliary marginal functions).** Fix an integer $k\ge4$ and a real number $0<\eta<1/4$, and put
+
+$$
+\begin{gathered}
+L=k+1,\qquad A(k,\eta)=\left\lceil\frac{2^{16}L^2}{\eta}\right\rceil,\\
+a\in\mathbb Z,\quad a\ge A(k,\eta),\qquad
+\frac k2+\eta\le\lambda\le\frac{k+1}{2}-\eta,\qquad
+\delta=\frac\lambda a,\\
+r=a+1,\quad s=a+2,\quad n=a+1-k,\quad c=2a+1,\\
+q=r-\delta,\quad \theta=1-\delta,\quad \gamma=c\delta,\quad
+\mu=\frac qs,\quad \tau=\frac{3(2a+3)\delta}{r^2}.
+\end{gathered}
+\tag{18.1}
+$$
+
+The actual-law domain is exactly Definition 11.1: nonnegative masses $x_T$ on all nonempty $T\subseteq[s]$, of total one, with $\mathbb E_x|T|=q$ and actual marginals $y_i=\mathbb P_x(i\in T)\ge\tau$. Its energy is the $H(x)$ of Definition 1.1. All expectations and marginals belong to this same law. In particular no support, symmetry, connectedness, or strictly positive atom-mass condition is imposed. Write $J=[s]\setminus T$ and $\bar x_J=x_{[s]\setminus J}$ for proper subsets $J\subsetneq[s]$.
+
+For $z>0$ set
+
+$$
+f(z)=\frac{a^2}{z}+\frac{c\theta}{z^2},\qquad
+g(z)=\frac{r^2}{z}-\frac\gamma{z^2}.
+\tag{18.2}
+$$
+
+Given $P\subseteq[s]$ with $|P|=k$ and $h\notin P$, put $N=[s]\setminus(P\cup\{h\})$ and define
+
+$$
+\begin{aligned}
+\mathcal G_{P,h}(y)
+&=\sum_{i\in P}f(y_i)+\frac{r^2}{y_h}
+ +\frac{c(\sum_{i\in P}y_i+\delta-k)}{y_h^2}
+ +\sum_{j\in N}g(y_j),\\
+\mathcal B&=[9/10,1]^s,\qquad
+\mathcal B_q=\{y\in\mathcal B:\sum_i y_i=q\},\\
+v(u,w)&=\frac{q-ku-w}{n},\qquad D(u)=ku+\delta-k,\\
+F_k(u,w)&=k f(u)+\frac{r^2}{w}+\frac{cD(u)}{w^2}+n g(v(u,w)).
+\end{aligned}
+\tag{18.3}
+$$
+
+These are auxiliary functions; membership in $\mathcal B_q$ does not assert realizability by an actual law. The normalization $H$ and the subtractand $B$ remain (1.1). The graph normalization cited there uses the convention of Albalahi et al., DOI [10.47443/dml.2025.176](https://doi.org/10.47443/dml.2025.176), §1, p.109, which drops $1/\sqrt2$ in defining CDSO; no finite-graph extremal theorem is assumed here. The parameter range (18.1) is disjoint from §17.
+
+**Lemma 18.2 (A full-cardinality certificate and a grouped lower bound).** Sort the actual marginals of any law in Definition 18.1 as $y_1\ge\cdots\ge y_s$, and choose $P=\{1,\ldots,k\}$ and $h=k+1$. Set
+
+$$
+\alpha_i=y_i^{-2},\quad \omega=\alpha_h,\quad
+W=\sum_i\alpha_i,\quad W_T=\sum_{i\in T}\alpha_i,\quad
+b_i=c(\omega-\alpha_i)_+.
+\tag{18.4}
+$$
+
+Here $(z)_+=\max\{z,0\}$. For every allowed nonempty $T$, let $j=|T|$ and define
+
+$$
+R_y(T)=(r-j)\{c(W-2\omega)-(r+j)W_T\}
+       +\sum_{i\notin T}b_i.
+\tag{18.5}
+$$
+
+Then $R_y(T)\ge0$, with its entire zero set given by
+
+$$
+R_y(T)=0\quad\Longleftrightarrow\quad
+\begin{cases}
+J=\{i\},\quad y_i\le y_h,\quad\text{or}\\
+J=\{i,l\},\quad y_i,y_l\ge y_h.
+\end{cases}
+\tag{18.6}
+$$
+
+Ties are included in these conditions. There is the exact same-law identity
+
+$$
+H(x)=\mathcal G_{P,h}(y)+\mathbb E_xR_y(T).
+\tag{18.7}
+$$
+
+If $u=k^{-1}\sum_{i\in P}y_i$, $w=y_h$ and $v=n^{-1}\sum_{j\in N}y_j$, then
+
+$$
+H(x)\ge F_k(u,w),\qquad
+\tau\le v\le w\le u\le1,\qquad
+ku+w+nv=q,\qquad v\ge1-\frac3a>\frac9{10}.
+\tag{18.8}
+$$
+
+Equality in the first inequality holds exactly when $R_y(T)=0$ on every positive-mass atom, all $k$ top marginals equal $u$, and all $n$ lower marginals equal $v$.
+
+**Proof.** The threshold in (18.1) implies
+
+$$
+a\ge1024L^2,\quad n\ge a/2,\quad
+0<\delta\le\frac{L}{2a}<\frac12,\quad
+\tau\le\frac{9L}{2a^2}<\frac9{10}.
+\tag{18.9}
+$$
+
+The mean and ordering give $q\le k+(s-k)y_h$, hence
+
+$$
+y_h\ge1-\frac{1+\delta}{s-k}\ge1-\frac3a
+       \ge\ell:=1-\frac4a,\qquad
+1\le\omega\le\ell^{-2}<\frac{16}{15}.
+\tag{18.10}
+$$
+
+The last strict bound follows already for $a\ge128$. All $\alpha_i\ge1$. At $j=r$, (18.5) is $b_i$ for the sole omitted label; it vanishes exactly when $y_i\le y_h$. At $j=a$ it is
+
+$$
+c\left(\sum_{i\in J}\alpha_i-2\omega\right)
+ +c\sum_{i\in J}(\omega-\alpha_i)_+
+ =c\sum_{i\in J}(\alpha_i-\omega)_+.
+\tag{18.11}
+$$
+
+This proves precisely the pair case in (18.6). At $j=s$, the residual is $2W+2c\omega>0$.
+
+For every remaining nonempty cardinality $j<a$, put $e=|J|=s-j$, so $3\le e\le s-1$ and $r-j=e-1>0$. Writing $A_J=\sum_{i\in J}\alpha_i$, the bracket in (18.5) equals
+
+$$
+\begin{aligned}
+(e-2)W+(2s-1-e)A_J-2c\omega
+&\ge 3se-2s-e-e^2-2c\omega\\
+&>7s-12-\frac{32c}{15}
+ =\frac{41a-2}{15}>0.
+\end{aligned}
+\tag{18.12}
+$$
+
+Indeed the quadratic $3se-2s-e-e^2$ is concave in $e$; at the two endpoints it is $7s-12$ and $2s(s-2)$, and the latter is no smaller for $s\ge5$. Also $2s-1-e>0$ throughout this interval, justifying both substitutions $W\ge s$ and $A_J\ge e$. The omitted $b_i$ are nonnegative. This proves positivity for every other cardinality and exhausts the zero set.
+
+Taking expectation of (18.5) under the actual $x$, use $\mathbb E(r-|T|)=\delta$, $\mathbb EW_T=\sum_i y_i^{-1}$, and $\mathbb E\mathbf1_{\{i\notin T\}}=1-y_i$. It follows that
+
+$$
+H(x)=r^2\sum_i\frac1{y_i}-c\delta(W-2\omega)
+      -\sum_i(1-y_i)b_i+\mathbb E R_y(T).
+\tag{18.13}
+$$
+
+Only indices in $P$ can have $b_i\ne0$. Expanding their terms and using $r^2-c=a^2$ turns the non-residual part exactly into $\mathcal G_{P,h}(y)$, proving (18.7). This is the pointwise-to-expectation weak-duality argument of Bertsimas and Popescu, DOI [10.1137/S1052623401399903](https://doi.org/10.1137/S1052623401399903), Theorem 2.1, p.785, with the present residual established directly. No strong-duality or independent moment-attainment assertion is needed.
+
+On the entire original dense interval $[\tau,1]$,
+
+$$
+f''(z)=\frac{2a^2}{z^3}+\frac{6c\theta}{z^4}>0,\qquad
+g''(z)=\frac{2(r^2z-3\gamma)}{z^4}>0,
+\qquad r^2\tau-3\gamma=6\delta>0.
+\tag{18.14}
+$$
+
+Finite Jensen applied separately on $P$ and $N$ gives (18.8), with equality precisely as stated, since the remaining dependence on the top coordinates in (18.3) is linear. The finite convex-combination inequality used here is Boyd and Vandenberghe, *Convex Optimization*, §3.1.8, pp.77–78, [author-hosted text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf); its strictness follows from (18.14). Finally $ku+w\le k+1$ implies
+
+$$
+v\ge\frac{q-k-1}{n}=1-\frac{1+\delta}{n}\ge1-\frac3a.
+\tag{18.15}
+$$
+
+Thus the grouped vector belongs to $\mathcal B_q$ even when some individual lower marginals of the original law do not belong to $\mathcal B$. No energy sublevel or stronger density condition was imposed. ∎
+
+**Lemma 18.3 (Unique exact root and strict capacity slack).** For each fixed $P,h$, the function $\mathcal G_{P,h}$ has exactly one minimum on $\mathcal B_q$. Its coordinates are $u$ on $P$, $w$ at $h$, and $v$ on $N$, independent of the labels. They satisfy
+
+$$
+\begin{gathered}
+ku+w+nv=q,\qquad \tau<v<w<u<1,\\
+\max\{|u-\mu|,|w-\mu|,|v-\mu|\}\le\frac{48L}{a^2},\\
+t=1-u,\qquad d=2\delta-kt,\qquad
+0<d<t,\qquad d>\frac\eta a,\quad
+ t-d>\frac\eta a,\quad 1-w-d>\frac\eta a.
+\end{gathered}
+\tag{18.16}
+$$
+
+Equivalently $(u,w,v)$ is the unique real triple in the legal region
+
+$$
+ku+w+nv=q,\qquad \tau<v<w<u<1
+\tag{18.17}
+$$
+
+solving
+
+$$
+\begin{aligned}
+[a^2u+2c\theta]w^3
+ &=\big[(r^2+c)w+2c(ku+\delta-k)\big]u^3,\\
+[r^2w+2c(ku+\delta-k)]v^3
+ &=[r^2v-2\gamma]w^3.
+\end{aligned}
+\tag{18.18}
+$$
+
+Its value $F_k(u,w)$ is strictly less than $H_d=Z/\mu^2$, where $Z=\delta a^3+\theta r^3$ as in (1.1).
+
+**Proof.** On $\mathcal B$, put $D_y=\sum_{i\in P}y_i+\delta-k\ge-k/10$. The only off-diagonal Hessian entries of $\mathcal G_{P,h}$ are the $P$--$h$ entries $-2c/y_h^3$, each of absolute value at most $9a$. Its diagonal entries have the respective lower bounds
+
+$$
+\begin{aligned}
+(\mathcal G_{P,h})_{ii}
+ &=2a^2/y_i^3+6c\theta/y_i^4\ge2a^2 &&(i\in P),\\
+(\mathcal G_{P,h})_{hh}
+ &=2r^2/y_h^3+6cD_y/y_h^4\ge2a^2-4ka,\\
+(\mathcal G_{P,h})_{jj}
+ &=2r^2/y_j^3-6\gamma/y_j^4\ge2a^2-18L &&(j\in N).
+\end{aligned}
+\tag{18.19}
+$$
+
+Here $c\le3a$, $\gamma\le3L/2$, $z^{-3}<3/2$ and $z^{-4}<2$ on $[9/10,1]$. Subtracting the absolute off-diagonal row sums gives lower bounds $2a^2-9a$, $2a^2-13ka$ and $2a^2-18L$. Each is at least $a^2$ under (18.9). Consequently
+
+$$
+\nabla^2\mathcal G_{P,h}\succeq a^2 I_s\quad\text{on }\mathcal B.
+\tag{18.20}
+$$
+
+For completeness the row estimate follows by applying $2|z_i z_j|\le z_i^2+z_j^2$ to each off-diagonal term of the Hessian quadratic form. The compact convex slice $\mathcal B_q$ contains $\mu\mathbf1$, so it has a unique minimizer $y^*$.
+
+Let $\beta=2\lambda-k\in[2\eta,1-2\eta]$ and $h_0=1-\mu$. The exact identities and bounds
+
+$$
+\begin{gathered}
+h_0=\frac1a+\frac{\lambda-2}{a(a+2)},\qquad
+\frac1a\le h_0\le\frac1a+\frac{L}{2a^2}\le\frac2a,\\
+d_0=2\delta-kh_0=\frac\beta a-k\left(h_0-\frac1a\right),
+\qquad |d_0|\le\frac2a,\qquad \mu^{-3}<2
+\end{gathered}
+\tag{18.21}
+$$
+
+follow from $k\ge4$, $\lambda>2$ and $a\ge1024L^2$. Subtract $g'(\mu)$ from every entry of $\nabla\mathcal G_{P,h}(\mu\mathbf1)$. The resulting vector has entries $-2ch_0/\mu^3$ on $P$, $-2cd_0/\mu^3$ at $h$, and zero on $N$. Each nonzero entry has absolute value at most $24$, so its Euclidean norm is at most $24\sqrt L\le24L$. The sum constraint annihilates the subtracted constant vector. Strong convexity and $\mathcal G_{P,h}(y^*)\le\mathcal G_{P,h}(\mu\mathbf1)$ therefore give
+
+$$
+\frac{a^2}{2}\|y^*-\mu\mathbf1\|^2
+ \le24L\|y^*-\mu\mathbf1\|,
+\qquad \|y^*-\mu\mathbf1\|\le\frac{48L}{a^2}.
+\tag{18.22}
+$$
+
+In particular every coordinate is strictly below one, since $h_0\ge1/a>48L/a^2$, and strictly above $9/10$, since it is at least $1-2/a-48L/a^2>9/10$. Thus the minimum is interior relative to its sum hyperplane. Invariance under permutations of $P$ and of $N$, together with uniqueness, forces coordinates $u,w,v$ of the stated multiplicities. Its Lagrange equations are
+
+$$
+f'(u)+\frac c{w^2}
+ =-\frac{r^2}{w^2}-\frac{2c(ku+\delta-k)}{w^3}
+ =g'(v).
+\tag{18.23}
+$$
+
+We next prove ordering and legal masses. From (18.21)–(18.22),
+
+$$
+\left|t-\frac1a\right|\le\frac{49L}{a^2},\qquad
+\left|d-\frac\beta a\right|\le\frac{49L^2}{a^2},\qquad
+\left|(t-d)-\frac{1-\beta}{a}\right|\le\frac{49L^2}{a^2}.
+\tag{18.24}
+$$
+
+Since $a\eta\ge2^{16}L^2>49L^2$, this implies $d>\eta/a$ and $t-d>\eta/a$.
+
+To compare $u$ and $w$, hold the lower coordinates $v$ fixed and set $z=(ku+w)/L$. The line with high coordinates $z+\varepsilon$ and intermediate coordinate $z-k\varepsilon$ preserves the sum. At $\varepsilon=0$, its derivative is $k$ times the difference of a top partial derivative and the intermediate partial derivative, namely
+
+$$
+\frac{2kc[2\delta-L(1-z)]}{z^3}<0.
+\tag{18.25}
+$$
+
+Indeed $|1-z-1/a|\le49L/a^2$ by the same coordinate bound, and
+$2\delta-L(1-z)\le-(1-\beta)/a+49L^2/a^2<-\eta/a$.
+The line segment from this equalized point to $y^*$ lies inside $\mathcal B_q$. Its one-variable derivative is strictly increasing by (18.20), and vanishes at $y^*$. Its parameter there must therefore be positive. Thus $u>z>w$.
+
+Next hold all high coordinates $u$ fixed, and set $z=(w+nv)/(n+1)$. Along the line increasing the intermediate coordinate and decreasing each lower coordinate by $1/n$ times that increase, the derivative at the equalized point is
+
+$$
+-\frac{2cd}{z^3}<0.
+\tag{18.26}
+$$
+
+The same strict-convexity argument gives $w>z>v$. Also $1-w-d>1-u-d=t-d>\eta/a$. Together with (18.9), (18.22) and $v>9/10$, these prove (18.16).
+
+Clearing the positive denominators in (18.23) gives exactly (18.18). Conversely any real triple satisfying (18.17) has
+$v\ge1-(1+\delta)/n\ge1-3/a>9/10$ by its mean and $u,w\le1$. Its repeated-coordinate vector is therefore interior to $\mathcal B_q$. Equations (18.18), with positive denominators, are equivalent to (18.23); they make this vector a stationary point of $\mathcal G_{P,h}$ on that slice. Strong convexity identifies it with $y^*$. This proves existence, uniqueness, and absence of additional roots in the whole legal region, without interpreting roots outside that region as solutions of the original optimization.
+
+Finally direct substitution gives $\mathcal G_{P,h}(\mu\mathbf1)=Z/\mu^2$. At this point, increasing one coordinate of $P$ and decreasing one coordinate of $N$ has derivative $-2ch_0/\mu^3<0$. Such a sufficiently small displacement is feasible, since $\mu\mathbf1$ is interior and $n>0$. The unique minimum is thus strictly below $H_d$. ∎
+
+**Theorem 18.4 (Exact full-law dense minimum and all labeled closed fibres).** For all parameters (18.1), let $(u,w,v)$ be the unique legal root (18.17)–(18.18), and put $t=1-u$ and $d=2\delta-kt$. Then the exact infimum in Definition 11.1 is an attained minimum, equal to
+
+$$
+\boxed{\quad
+\mathscr D_a(\delta)
+ =k\left(\frac{a^2}{u}+\frac{c\theta}{u^2}\right)
+  +\frac{r^2}{w}+\frac{c(d-\delta)}{w^2}
+  +n\left(\frac{r^2}{v}-\frac\gamma{v^2}\right)
+ =F_k(u,w)<\frac Z{\mu^2}.
+\quad}
+\tag{18.27}
+$$
+
+The exact dense minimum of $d(x)$ from Definition 1.1 is (18.27) minus $B$.
+
+All labeled minimizing actual laws are given as follows. Choose $P\subseteq[s]$ with $|P|=k$ and $h\notin P$, and set $S=P\cup\{h\}$ and $N=[s]\setminus S$. On the unordered edges of the complete graph $K_S$, choose any array in the closed polytope
+
+$$
+\begin{aligned}
+\mathcal Q_{P,h}(t,d)=\bigg\{(z_{ij})_{\{i,j\}\in\binom S2}:\;&z_{ij}\ge0,\\
+&\sum_{j\in S\setminus\{i\}}z_{ij}=t\quad(i\in P),\qquad
+\sum_{i\in P}z_{ih}=d\bigg\}.
+\end{aligned}
+\tag{18.28}
+$$
+
+Here $z_{ij}=z_{ji}$ denotes one unordered-edge coordinate. The masses of the law are
+
+$$
+\begin{aligned}
+\bar x_{\{i,j\}}&=z_{ij} &&(\{i,j\}\in\tbinom S2),\\
+\bar x_{\{h\}}&=1-w-d,\\
+\bar x_{\{j\}}&=1-v &&(j\in N),\\
+\bar x_J&=0 &&\text{for every other proper subset }J\subsetneq[s].
+\end{aligned}
+\tag{18.29}
+$$
+
+Every edge coordinate in (18.28) is allowed to be zero, subject only to its displayed degree equations. There are exactly
+
+$$
+\binom sk(s-k)
+\tag{18.30}
+$$
+
+distinct labeled marginal patterns, recovered from each actual minimizing law as its $k$ largest-marginal labels $P$ and sole intermediate-marginal label $h$. For each such pattern, (18.29) is an affine bijection from the entire compact polytope (18.28) onto the full minimizing-law fibre, with inverse $z_{ij}=\bar x_{\{i,j\}}$. Its affine dimension is
+
+$$
+\binom{k+1}{2}-(k+1)=\frac{(k+1)(k-2)}2.
+\tag{18.31}
+$$
+
+More precisely the following describes every support stratum and boundary of each law fibre. For $E\subseteq\binom S2$, let $\mathcal Q_E$ be the subset of (18.28) with $z_e=0$ for $e\notin E$, and let $\mathcal Q_E^+$ additionally require $z_e>0$ for all $e\in E$. When $\mathcal Q_E^+$ is nonempty, it is the relative interior of $\mathcal Q_E$, its closure is $\mathcal Q_E$, and
+
+$$
+\dim\mathcal Q_E=|E|-|S|+B(E),
+\tag{18.32}
+$$
+
+where $B(E)$ is the number of bipartite components of the spanning graph $(S,E)$. These $\mathcal Q_E$ are exactly all nonempty faces when $E$ is taken to be the positive support of a relative interior point of that face. Under (18.29), the relative interior of the full law fibre consists exactly of the laws with every $z_e>0$, and its relative boundary consists exactly of the laws with at least one $z_e=0$. The singleton masses in (18.29) stay strictly positive throughout. The vertex laws are exactly those whose positive pair-support components are trees or contain exactly one cycle, of odd length.
+
+Two minimizing laws are related by a label permutation exactly when, after identifying their recovered $P,h$, their edge arrays are related by a permutation of $P$ fixing $h$. Permutations of $N$ act trivially on the array. Thus every labeled fibre and also the set of minimizing laws modulo all label permutations contain uncountably many laws.
+
+**Proof.** The inequalities $0<d<t$ in (18.16) give a strictly positive member of (18.28):
+
+$$
+z_{ih}^{\circ}=\frac dk\quad(i\in P),\qquad
+z_{ij}^{\circ}=\frac{t-d/k}{k-1}\quad(i,j\in P,\ i\ne j).
+\tag{18.33}
+$$
+
+Its degrees at $P$ are $(k-1)(t-d/k)/(k-1)+d/k=t$, and its degree at $h$ is $d$. Thus the polytope is nonempty; it is closed and bounded, since every coordinate is between zero and the positive degree at either endpoint.
+
+For any member of this whole polytope, double counting degrees gives total pair mass
+
+$$
+\sum_{\{i,j\}\in\binom S2}z_{ij}=\frac{kt+d}{2}=\delta.
+\tag{18.34}
+$$
+
+The mean constraint of the root gives $kt+(1-w)+n(1-v)=s-q=1+\delta$, hence
+
+$$
+(1-w-d)+n(1-v)=1-\delta.
+\tag{18.35}
+$$
+
+All masses in (18.29) are nonnegative, and its displayed singleton masses are strictly positive by (18.16). Equations (18.34)–(18.35) prove total mass one. All its atoms are nonempty, since their omission sizes are one or two. Its actual mean is $a\delta+r(1-\delta)=q$. Its omission probabilities are exactly $t$ on $P$, $d+(1-w-d)=1-w$ at $h$, and $1-v$ on $N$. Consequently its actual marginals are $u$ on $P$, $w$ at $h$ and $v$ on $N$, and these exceed $\tau$.
+
+The same masses give the actual incidence second moments
+
+$$
+\begin{aligned}
+\mathbb E_x[|T|^2I_i]
+ &=r^2u-c(\delta-t)=a^2u+c\theta &&(i\in P),\\
+\mathbb E_x[|T|^2I_h]
+ &=r^2w-c(\delta-d),\\
+\mathbb E_x[|T|^2I_j]
+ &=r^2v-c\delta &&(j\in N).
+\end{aligned}
+\tag{18.36}
+$$
+
+For example the probability of a cardinality-$a$ atom containing a high label is $\delta-t$; subtracting $c=r^2-a^2$ times this probability from $r^2u$ gives its first expression. The other two follow from probabilities $\delta-d$ and $\delta$. Dividing (18.36) by the squares of these actual marginals proves energy (18.27), since $d-\delta=ku+\delta-k$. These computations hold at every boundary point of the polytope as well as at its positive member.
+
+Now take an arbitrary dense actual law with every cardinality still allowed. Sort its marginals and apply Lemma 18.2. Its grouped vector lies in $\mathcal B_q$, and therefore
+
+$$
+H(x)\ge F_k(u',w')
+       \ge\min_{\mathcal B_q}\mathcal G_{P,h}
+       =F_k(u,w).
+\tag{18.37}
+$$
+
+The minimum of the auxiliary function is independent of the chosen labels. Lemma 18.3 identifies it exactly, and (18.29) attains it using an actual law. This proves the full-domain minimum, without assuming realizability of arbitrary auxiliary vectors.
+
+If an actual law attains this value, equality must hold in both inequalities (18.37). Strict convexity fixes the grouped vector to the root. The strict Jensen conditions of Lemma 18.2 then fix all its individual marginals to $u$ on $P$, $w$ at $h$ and $v$ on $N$. The strict inequalities $u>w>v$ uniquely recover these label groups, irrespective of any initial tie-breaking in sorting. Equality in (18.7) forces residual zero on each positive-mass atom. At these strict marginal groups, (18.6) permits exactly singleton omissions outside $P$ and pair omissions within $S$. Every other cardinality and support atom has strictly positive residual.
+
+The mean, with only these two cardinalities remaining, forces total pair mass $\delta$. A label in $P$ has no singleton omission, so its pair degree equals its omission probability $t$. The remaining pair degree at $h$ is $2\delta-kt=d$. Its singleton omission is therefore $1-w-d$, and the singleton omission at each lower label is $1-v$. All remaining freedom is exactly the nonnegative array (18.28). This proves exhaustive necessity, including every zero pair-mass boundary, as well as the asserted affine inverse. The strict marginal groups also prove disjointness and the count (18.30).
+
+The geometry used at this point is classical intermediate geometry. In the notation of Roger E. Behrend, *Fractional Perfect b-Matching Polytopes. I: General Theory*, [arXiv:1301.7356v1](https://arxiv.org/html/1301.7356v1), definition (2), DOI [10.1016/j.laa.2013.10.001](https://doi.org/10.1016/j.laa.2013.10.001), (18.28) is $\mathcal P(K_S,b)$ with $b_i=t$ for $i\in P$ and $b_h=d$. The graph is finite, loopless and undirected, and its prescribed degrees are positive. Equation (18.33) supplies a strictly positive feasible element, the required hypothesis of Behrend's Corollary 19. The complete graph $K_{k+1}$ is connected and nonbipartite, so that corollary gives dimension $|E|-|S|$, exactly (18.31). The affine bijection transfers that dimension to the actual-law fibre.
+
+For precision about all boundaries, in the affine space of the degree equations a point with every edge positive has a neighborhood with every edge positive; it is a relative interior point. A feasible point with $z_e=0$ lies in a supporting coordinate hyperplane. This is a proper supporting hyperplane because (18.33) has $z_e>0$. Thus the relative boundary is exactly the union of these coordinate-zero sets, with any empty sets contributing nothing. The same argument applied to the coordinates $E$ shows that if $\mathcal Q_E^+$ is nonempty, it is exactly $\operatorname{relint}\mathcal Q_E$. Blending any point of $\mathcal Q_E$ with a point of $\mathcal Q_E^+$ gives a positive point on $E$ and converges back to the former point, proving the closure assertion. For the graph $(S,E)$, the positive element of $\mathcal Q_E^+$ permits the same Corollary 19 and yields (18.32). Its hypotheses hold separately for every claimed support stratum; no dimension is assigned by this formula to an empty stratum.
+
+Every nonempty face is of this form. Indeed take a relative interior point $z$ of a face and let $E$ be its positive support. Every other point of the face has support in $E$: otherwise extending the segment slightly past $z$ inside the face would make a zero coordinate of $z$ negative. Conversely, for any $y\in\mathcal Q_E$, all coordinates of $z$ in $E$ are positive, so for sufficiently small $\varepsilon>0$ the point $z+\varepsilon(z-y)$ is feasible. The point $z$ lies in the open segment between this point and $y$. The defining face property implies $y$ belongs to the face. Hence that face is exactly $\mathcal Q_E$.
+
+Behrend's Theorem 22 applies to any element of this same $\mathcal P(K_S,b)$: it is a vertex if and only if each component of its positive-support graph is acyclic or has just one odd cycle. Since $b_i>0$, there are no isolated vertices in a feasible positive-support graph, so acyclic components here are trees with at least one edge. This proves the stated vertex-law characterization. It is also a finite exact description: enumerate such spanning subgraphs of $K_S$ and retain precisely their strictly positive solutions to the degree equations. Each candidate has at most one solution. On a tree, remove a leaf, assign its sole edge the remaining required degree at that leaf, and subtract it at the neighbor; the last residual must vanish. On an odd unicyclic component, remove its attached leaves in this way. The remaining odd cycle equations $z_{i-1}+z_i=b_i'$ have a unique solution, obtained by alternating substitution around the cycle and division by two. Retaining only positive edge weights and vanishing final residuals gives exactly all vertex laws. A solution with some zero edge weights is represented by its smaller positive support. Arbitrary feasible arrays, not merely these vertices, are included in (18.28)–(18.29).
+
+Finally a label permutation relating two minimizing laws must carry their actual marginal vectors to one another. It must therefore carry $P$ to $P$, $h$ to $h$, and $N$ to $N$ after the two recovered patterns have been identified. Its only nontrivial effect on the edge array is the indicated permutation of $P$. Conversely each such permutation, extended arbitrarily on $N$, gives the corresponding relabeling of (18.29). The dimension (18.31) is positive for $k\ge4$, and the positive member has an open neighborhood in that affine space, so each fibre is uncountable. Quotienting finitely many such fibres by the finite label-permutation group still leaves uncountably many laws.
+
+The new all-law optimization and inverse reconstruction in (18.27)–(18.37) use weak duality, finite Jensen, and Behrend's geometry only in the attributed intermediate roles above. Their scope is the fixed-$k$, fixed-$\eta$ interval (18.1); they assert no endpoint or transition-layer classification, growing-$k$ asymptotic regime, small-$a$ classification, least sufficient threshold, global rare/dense comparison, or prescribed finite-graph realization. The full text of Zhao–Zhao, DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), is not an input, and its possible overlap remains unassessed. No worldwide priority claim is made. ∎
+
+## 追加锚（第18节之后为增补区）

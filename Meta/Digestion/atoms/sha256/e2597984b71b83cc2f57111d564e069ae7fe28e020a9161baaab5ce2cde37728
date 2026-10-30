@@ -1,0 +1,31 @@
+**Definition 25.1 (bounded finder and its source-specific acceptance
+functions).** Put $K_0=\lceil\log_4(4L)\rceil$. Let
+$\mathcal B_{d,H}$ be the guarded finder of §23 capped at $K_0$
+attempts per phase, returning either a certified $(n,P)$ or FAIL,
+with no deterministic fallback. The local inputs include the earned
+$h,H$; they are not treated as an upper bound supplied at entrance.
+Fix slots for every potential estimate, block, walk and direction bit
+in every potential attempt, even when an earlier success makes a slot
+unused. With $E=4(H+2)$ estimate slots per attempt, a sufficient
+fixed tape length is
+
+$$
+b(d,H)=LK_0EmRH.
+\tag{ACR.104}
+$$
+
+Unused slots are ignored. On independent fair tapes this gives the
+same distribution as fresh streaming coins. In an actual streaming
+run only generated bits are charged; in a deterministic tape-list
+implementation all generated list bits, including unused slots, are
+charged. A short or malformed supplied tape returns FAIL rather than
+accessing an unowned cell.
+
+For a hypothetical properly presented source $s\in\mathscr R_d$
+and mature cut $n\le H$ whose actual $a$-spine is the fixed $h$,
+define $C_{s,n}(u)=1$ exactly when $\mathcal B_{d,H}$ returns a
+certified answer using tape $u\in\{0,1\}^{b(d,H)}$ against that
+source's literal presence replies. Presentations which denote the
+same source have the same function. This definition supplies no hidden
+law, cut, reply or advice to the actual acquisition controller.
+

@@ -1,0 +1,25 @@
+#### 命题 11.3（有限次近似重铺的误差预算）
+
+在酉电路上下文中，各次替换均在相同输入、输出接口上比较。
+若第 $j$ 次局部替换的算子范数误差至多 $\varepsilon_j$，
+经 $m$ 次替换后
+
+$$
+\left\lVert U-V\right\rVert_{\rm op}\le\sum_{j=1}^m\varepsilon_j.
+$$
+
+对单位输入及 $0\le E\le I$，相应 Born 读数误差至多
+$\min\{1,\,2\sum_j\varepsilon_j\}$。
+
+**证明。**
+
+左右酉上下文不改变算子范数，依次替换并用三角不等式给第一式。
+第二式展开
+$U^\dagger EU-V^\dagger EV =(U^\dagger-V^\dagger)EU+V^\dagger E(U-V)$，
+两项范数各至多 $\left\lVert U-V\right\rVert$；概率本身在 $[0,1]$ 中，再取最小值。 ∎
+
+该界没有给无限次重铺统一误差，也不能用于范数无约束的一般张量环境。
+要使递归尺度任意增大仍稳定，必须另证误差可求和、收缩性、谱隙或其他一致控制。
+
+<a id="sec-latest"></a>
+

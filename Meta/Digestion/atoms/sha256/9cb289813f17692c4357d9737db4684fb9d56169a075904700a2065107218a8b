@@ -1,0 +1,18 @@
+### 115.6 Bounded evidence, supplies and four expressions
+
+The bounded computation enumerates the $\binom{31}{2}=465$ balanced words extending $1^{27}$, independently orders selected pasts by colex, forms active response vectors over their compatible suffixes, and compares every accepting emitted value with its canonical rank:
+
+| Actual seed | Residual balanced words checked | Accepted | Maximum selected fiber | Maximum response image | Two-state failures |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 0 | 465 | 435 | 2 | 2 | 0 |
+| 1 | 465 | 465 | 2 | 3 | 0 |
+
+The latest first freeze among these residual words is marker 57. This is bounded finite computation, not the proof of all-path totality or of the lower bounds. The $2^{58}$ complete-word enumeration was not performed. Earlier-deviation prefixes and rejected/noncompleted raw histories are covered by the ordinary branch and holding proofs above, not by these residual counts.
+
+| Existing supply | Exact use and remaining boundary |
+| --- | --- |
+| Boundary Dynamics §§104–108, 114 | Positive support, single-snapshot/Stop contract, colex decoder, two register contracts, complete $r$-schedule and response-index upper bound. The new selector deletes one trigger and adds the strict $2<3$ witness; it does not duplicate the original complete-pair $2$ versus $r$ separation. §§109–113 supply related factorization, width, support and paid implementations, not this gap. |
+| [Recovery Geometry](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md) §§34–35 | §34 supplies the distinction between compatible recovery maps and actual-source completion. §35's periodic gradient estimates supply no memory bound or metric here; no analytic/physical transfer is inferred. |
+| [Transport Memory](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md) §§64–72 | Preserve actual response supports, original outputs, supplied resources and shared-address successor obligations. Its full Moore/controller counts are different resources from this one supplementary alphabet. |
+| [Context Geometry](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md) §§82–90 | Common-history constraints, source access, references and operation closure remain explicit; static response correspondence does not install a new readable event or clock. Its preparation and control costs are not removed here. |
+| [Atomic Generation](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md) §12 | A readable cut/record requires an explicit supplied port. Here the completed-event input is already in §108.1's contract, rather than inferred from an abstract relation. |

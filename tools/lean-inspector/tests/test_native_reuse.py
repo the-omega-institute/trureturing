@@ -16,7 +16,7 @@ class NativeLocalReportConsumerTests:
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         policy['report_execution'] = EXECUTION
         self.write('lean-report-inputs.json', json.dumps(policy))
-        for name in ('lean_cache_release.py', 'cache_material.py'):
+        for name in ('lean_cache_release.py', 'lean_cache_topology.py', 'cache_material.py'):
             self.copy('tools/scripts/worktree/' + name)
         # Make owns the real native report build; only Release transport is replaced.
         compiler_seed = self.compiler_seed

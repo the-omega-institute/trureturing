@@ -1,0 +1,32 @@
+#### 定理 9.1（三角形的余切能量）
+
+在欧氏三角形上，以顶点值 $z_1,z_2,z_3$ 作分片线性插值 $z$，角 $\theta_i$ 对边为 $jk$。则
+
+<a id="eq-cot"></a>
+
+$$
+E_D(z)=\frac12\int_T\left\lVert \nabla z\right\rVert ^2\,dA
+ =\frac14\sum_{i=1}^3\cot\theta_i\,\left\lVert z_j-z_k\right\rVert ^2 .
+\tag{6}
+$$
+
+向量或复数值逐分量成立。若有平坦酉连接，可先把三顶点输运到同一坐标框再用此式。
+
+**证明。**
+
+写 $z=\sum_i\lambda_i z_i$，其中 $\lambda_i$ 为重心基函数。
+$\nabla\lambda_i$ 垂直于对边且长度为该边长除以 $2\Delta$。
+对 $i\ne j$，两梯度的夹角是 $\pi-\theta_k$，于是
+$\int_T\nabla\lambda_i\cdot\nabla\lambda_j=-\frac12\cot\theta_k$。
+再用 $\sum_i\nabla\lambda_i=0$ 确定对角项，将梯度平方展开并重组为两两差平方，得到 [(6)](#eq-cot)。
+酉换框保持范数；面平坦使三次换框一致。
+
+∎
+
+这是离散 Dirichlet 能量的标准余切公式，系数随能量是否带 $1/2$ 而变；这里与 Pinkall–Polthier 的约定一致。（[10](#ref-pinkall)）
+一个内边对应权为 $(\cot\alpha+\cot\beta)/4$。当 $\alpha+\beta\le\pi$ 时该权非负，因为
+$\cot\alpha+\cot\beta=\sin(\alpha+\beta)/(\sin\alpha\sin\beta)$。
+钝角的单个余切可以为负，边界边也未必非负。标量 FEM 的整体能量仍由积分保证非负，但不能把负余切当概率，或在任意非平坦边酉矩阵上照搬后声称仍是正边权模型。
+
+<a id="statement-9-2"></a>
+

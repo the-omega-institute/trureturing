@@ -1,0 +1,39 @@
+**Theorem 7.2 (Necessary cone on the full cancellation locus).** Let $r\ge3$, let $B$ be any nonempty finite alphabet and let $`\eta:A_r^*\to B^*`$ be any nonerasing morphism. If $h\in\mathcal K_r$ and $E(x)\le e_r$, then, writing $t=h_r$,
+
+$$
+D_rh_0\le2t+\sum_{i=1}^{r-1}2^{r-i}h_i.
+\tag{25}
+$$
+
+In particular, every exact attaining image satisfies (25), with no injectivity, richness or output-alphabet-size assumption and with all independent positive integer parameters in Theorem 4.2 allowed.
+
+*Proof.* The actual-factor inequality (1), using the already supplied Type I return at index $1$ in (3), gives the reused intermediate bound
+
+$$
+E(x)\ge2+\frac{h_0}{h_0+2h_{2r}}.
+\tag{26}
+$$
+
+Its input is the Type I factor $0(2r)(2r)0$ and the return $0(2r)(2r)$; the inequality certifies an output period and does not require that period to be least. The supplier is Dvořáková–Pelantová, [arXiv:2509.06104v1, §3, Lemma 9 and Type I](https://arxiv.org/pdf/2509.06104v1), journal Lemma 10 in [EJC 33(2), P2.15](https://doi.org/10.37236/14600), used in Theorem 2.1. Thus (26) is reused, rather than an additional local-period result.
+
+The equation $\Lambda^r(\Lambda-2)=1$ implies
+
+$$
+e_r=2+\frac{1}{\Lambda^r-1}.
+\tag{27}
+$$
+
+All denominators are positive. Combining (26) with $E(x)\le e_r$ and multiplying gives
+
+$$
+(\Lambda^r-2)h_0\le2h_{2r}.
+$$
+
+On the entire cancellation locus, Theorem 4.2 gives
+
+$$
+2h_{2r}=2t+2^rh_0+\sum_{i=1}^{r-1}2^{r-i}h_i.
+$$
+
+Substitution proves (25). For an exact attaining image, Corollary 3.2 supplies $h\in\mathcal K_r$, so the same calculation applies. $\square$
+

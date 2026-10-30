@@ -1,0 +1,21 @@
+**推论 4.4（混合态的权重上界）。**
+
+任意密度态 $\rho$，令 $w_j=\operatorname{tr}(P_j\rho)$，则其均匀中心轨道满足
+
+$$
+P_{\rm opt}(\rho)\le\frac15\left(\sum_j\sqrt{w_j}\right)^2.
+$$
+
+混合态等权重不是完美辨别的充分条件。
+
+**证明。**
+
+纯化 $\rho$，将投影改为 $P_j\otimes I$。
+纯化态各分级范数仍为 $\sqrt{w_j}$，故可用定理 [4.3](#thm-phaseopt)。
+允许访问纯化环境只会扩大测量集合，给出上界。
+反例 $\rho=\frac15\sum_j\lvert e_j\rangle\langle e_j\rvert$ 在中心作用下不变，
+最优成功率仅为 $1/5$。证毕。
+ □
+
+<a id="statement-4-5"></a>
+
