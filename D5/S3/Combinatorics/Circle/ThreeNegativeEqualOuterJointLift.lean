@@ -5,7 +5,7 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: One physical gamma-beta-alpha schedule and its marked ear for equal outer gaps. -/
-import all D5.S3.Combinatorics.Circle.ThreeBitSource
+import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterSourceBridge
 import D5.S3.Combinatorics.Circle.RunFirstEarTransport
 
 /-! A common zero cut for the actual three-negative sources with equal outer gaps. -/
@@ -173,7 +173,7 @@ private theorem paired_chains (a b : ℕ) (ha : 2 ≤ a) (hab : a < b) :
   let g := fun i : ℕ => centered M ((2 : ℤ) ^ i * (2 * v))
   change (1 ≤ v ∧ v < N) ∧ (1 ≤ B ∧ B < N) ∧ (1 ≤ L ∧ L < N) ∧ _
   obtain ⟨hv, hB, hL, _, hU, hV, hW⟩ :=
-    ThreeBitSource.actual_source_chains a b a (by omega) (by omega) ha
+    ThreeNegativeEqualOuterSourceBridge.actual_source_chains a b a (by omega) (by omega) ha
   change (1 ≤ v ∧ v < N) at hv
   change (1 ≤ B ∧ B < N) at hB
   change (1 ≤ L ∧ L < N) at hL
@@ -181,7 +181,7 @@ private theorem paired_chains (a b : ℕ) (ha : 2 ≤ a) (hab : a < b) :
   change ∀ e < b, f (a + e) = if e + 1 < b then (2 : ℤ) ^ e * B else -(N - L) / 2 at hV
   change ∀ e < a, f (a + b + e) = if e + 1 < a then (2 : ℤ) ^ e * L else -(N - v) / 2 at hW
   obtain ⟨_, _, _, _, hU', hV', hW'⟩ :=
-    ThreeBitSource.actual_source_chains a b (a + 1) (by omega) (by omega) (by omega)
+    ThreeNegativeEqualOuterSourceBridge.actual_source_chains a b (a + 1) (by omega) (by omega) (by omega)
   have hM : modulus (a + b + (a + 1)) = M := by congr 1; dsimp [k]; omega
   have hr : (2 : ℤ) ^ (a + 1) = 2 * r := by dsimp [r]; rw [pow_succ]; ring
   have hB' : 1 + (2 : ℤ) ^ (a + 1) + 2 ^ (a + 1) * 2 ^ a = 2 * B - 1 := by
@@ -251,7 +251,7 @@ private theorem schedule_from_tail (f : ℕ → ℤ) (labels P Q T : List ℕ)
   have he := (hp.map f).sum_eq
   simp only [List.map_append, List.sum_append, List.map_cons, List.sum_cons,
     List.map_nil, List.sum_nil, add_zero, hg, hb, ha, hz] at he
-  exact ThreeBitSource.physical_schedule f labels P Q T gamma beta alpha Hg Hb Ha C
+  exact ThreeNegativeEqualOuterSourceBridge.physical_schedule f labels P Q T gamma beta alpha Hg Hb Ha C
     hp hg hb ha hHg hHb hHa hP hQ hT hfirst ⟨by omega, by omega⟩ hz
 
 set_option maxHeartbeats 4000000 in
@@ -455,10 +455,10 @@ theorem actualSource_three_negative_equal_outer_joint_lift (a b : ℕ)
   have hseed : ((1 + 2 ^ a + 2 ^ (a + b) : ℕ) : ℤ) = v := by
     push_cast; dsimp [v, r, s]; rw [pow_add]
   have hzero : ((List.range k).map f).sum = 0 := by
-    have hz := ThreeBitSource.source_zero k (1 + 2 ^ a + 2 ^ (a + b)) (by dsimp [k]; omega)
+    have hz := ThreeNegativeEqualOuterSourceBridge.source_zero k (1 + 2 ^ a + 2 ^ (a + b)) (by dsimp [k]; omega)
     simpa only [hseed] using hz
   have hzero' : ((List.range (k + 1)).map g).sum = 0 := by
-    have hz := ThreeBitSource.source_zero (k + 1) (2 * (1 + 2 ^ a + 2 ^ (a + b))) (by dsimp [k]; omega)
+    have hz := ThreeNegativeEqualOuterSourceBridge.source_zero (k + 1) (2 * (1 + 2 ^ a + 2 ^ (a + b))) (by dsimp [k]; omega)
     simpa only [Nat.cast_mul, Nat.cast_ofNat, hseed] using hz
   have hold : InStrip f C 0 word := schedule_from_tail f (List.range k) P Q T
     (k - 1) (a + b - 1) (a - 1) Hg Hb Ha C hp hfG' hfB' hfA'
