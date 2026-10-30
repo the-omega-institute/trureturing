@@ -3200,3 +3200,577 @@ These are ordinary mathematical deductions on the original supplied
 source, without a fresh compiled Lean assertion. $\square$
 
 ## 追加锚（本行以下为增补区）
+
+## 28. Paid sparse authentication along actual physical ancestry
+
+**Definition 28.1 (source, menu and certificate domain).** Retain the
+original alpha-origin source of Definition 1.1, the authentic public
+promise $s\in\mathscr R_d$, and the entire paid entrance of
+[ACR, Definition 9.1][ACR]. In particular the unknown completed cut $n$
+is mature, the root is genuinely bound, and the only replies are
+stationary, total, paid full-root presence bits. Law, seed, labels,
+ordinal ports and the cut are not supplied. Reads do not advance the
+source. The original requested output remains $(P,n)$ with
+$P=s_0\cdots s_{2d-1}$; the following scoped output is an additional
+boundary, not an alternative definition of that task.
+
+Let $T\subseteq\{a,b\}^*$ be a finite public prefix-closed set of $K$
+words. Empty $T$ is allowed; otherwise it contains the empty root.
+Put $h=\max_{v\in T}|v|$, with $h=0$ for empty $T$. The immutable
+creation descriptors, actual indices and event bits are those of
+Definitions 17.1 and 27.1. Write
+
+$$
+ \gamma_s(T)=(c_v:v\in T),\qquad c_v=s_{A_v-1},\qquad
+ \mathcal D_{d,n}(T)=\{s\in\mathscr R_d:
+                   \tau_v=e_v+1\le n-1\text{ for all }v\in T\}.
+\tag{PCR.81}
+$$
+
+The menu has a fixed length-then-physical-lexicographic order. This is
+an actual-image domain: every record must be produced by the same
+original source, with its own recursively determined indices. Arbitrary
+bit records, independently chosen local cones and unbound numerical
+clocks are not declared attained data. The guard in (PCR.81) means that
+at least one update has followed the queried branching event. It is
+stronger than PCR27's already-occurred guard $\tau_v\le n$.
+
+A proposed certificate consists of a binary integer $\nu\ge2$, the
+root words $x,y$ below, and, for each $v\in T$, a bit $\widehat c_v$
+and a physical suffix $w_v$. Derive all proposed coordinates from
+$(e,A,B)=(1,1,2)$ and the actual integer table (PCR.37)--(PCR.39), using
+only the bits at proper physical ancestors. Derive the root creation
+pair $(0,\alpha)$, and a child's creation cut $e_{\rm parent}+1$ and
+initial label from the chosen delay. No earlier chronological prefix
+is an argument to this derivation. Require
+
+$$
+ \widehat\tau_v=\widehat e_v+1\le\nu-1,
+ \qquad |w_v|=t_v:=\nu-\widehat\tau_v\ge1.
+\tag{PCR.82}
+$$
+
+The root tests, including their indispensable length conditions, are
+exactly [ACRC, Definition 33.1][PCR-ACRC]: $|x|=\nu-1$, with
+$\operatorname{Read}(x)=1$, and
+
+$$
+\begin{array}{c|c|c}
+\nu&|y|&\text{required replies}\\ \hline
+2k+1&k&\operatorname{Read}(ya)=0\\
+2k&k-1&\operatorname{Read}(yaa)=\operatorname{Read}(yba)=0.
+\end{array}
+\tag{PCR.83}
+$$
+
+After these tests pass, check the menu in its fixed ancestor-first
+order. For $\widehat c_v=1$ put $p_v=a$, and for $\widehat c_v=0$
+put $p_v=b$. Require the single paid reply
+
+$$
+                \operatorname{Read}(v p_v w_v)=1.
+\tag{PCR.84}
+$$
+
+Every displayed argument is materialized at the original root, including
+$v$. There is no relative-root operation. An acceptance returns the
+acquired cut and every PCR27 full tuple
+
+$$
+ \Theta_s(v)=
+ (v; j_v,b_v,\sigma_v,\tau_v,e_v,A_v,B_v,c_v),\qquad j_v=A_v,
+\tag{PCR.85}
+$$
+
+including the event bit at the final queried node.
+
+Reject noncanonical or signed integer encodings, a nonphysical letter,
+a nonbit, duplicated or missing menu entries, a menu that is not
+prefix-closed, a wrong suffix or root length, or a failed guard before
+source tests. Integers use canonical binary notation, with one digit
+for zero. If extra indices, creation fields or labels are proposed,
+compare them with the derived values and reject disagreement. Reject
+on any failed required reply. A failed suffix is a failed certificate,
+not by itself a certificate that its proposed bit is false. The
+public source-class promise and the physical binding remain premises;
+no syntactic check certifies either.
+
+**Theorem 28.2 (universal soundness and existential completeness).**
+On every original input, every accepted certificate of Definition 28.1
+has $\nu=n$, $s\in\mathcal D_{d,n}(T)$, and exactly the actual
+orientation record and tuples (PCR.85). Conversely, for this fixed
+source there exists an accepted certificate for a proposed cut and
+record exactly when
+
+$$
+ \nu=n,\qquad s\in\mathcal D_{d,n}(T),\qquad
+           \widehat c_v=c_v\quad(v\in T).
+\tag{PCR.86}
+$$
+
+Verification uses at most $K+3$ paid Reads. A well-formed but incorrect
+proposal cannot acquire an actual-image boundary by passing these tests.
+
+Proof. ACR Theorem 22.2 and ACRC Theorem 33.2 give universal root
+soundness and existential root completeness with precisely (PCR.83).
+For clarity, a rank-$q\ge1$ cone has maximal suffix depth $q-1$;
+ranks zero and one are terminal. Presence of $x$ forces $n\ge\nu$.
+If $\nu=2k+1$ and $n\ge\nu+1$, every word of length $k+1$ is
+present, contradicting $ya$ absent. If $\nu=2k$ and $n\ge\nu+1$,
+every $y$ of length $k-1$ reaches residual rank at least three, so
+one of $yaa,yba$ is present. Thus an acceptance forces $n=\nu$.
+At the true cut choose a longest $x$ and a path repeatedly taking the
+rank-two decrement for $y$. It ends at rank one in the odd case and
+rank two in the even case, giving the required absences. For $\nu=2$
+this is empty $y$ and the absent literals $aa,ba$. No independent
+presence query for $y$ is needed. Cuts zero and one cannot pass this
+root certificate and are outside the original mature entrance.
+
+Now induct on the menu order. The root's proposed descriptor is actual.
+At any later $v$, prefix closure supplies all its proper ancestors.
+Their already authenticated bits and Theorem 17.2 give the actual
+$(e_v,A_v,B_v)$, creation label and creation time, using only this
+ancestry. In particular this is the genuine physical parent of birth
+$A_v$, regardless of any bits at earlier chronological events outside
+its ancestry. The exterior contribution in (PCR.39) is already exact;
+it does not require authenticating the exterior's orientations. This
+discharges the genuine-parent premise of ACRC Theorem 33.3 without
+its earlier-prefix reconstruction.
+
+At cut $n$, set $t=n-\tau_v\ge1$. The originally beta child has rank
+$t+1$ and maximal suffix depth $t$; the originally alpha child has
+rank $t$ and maximal suffix depth $t-1$. These are the same actual
+children created at $\tau_v$, with no normalization of the source.
+Consequently a supplied positive length-$t$ suffix exists exactly
+under the true beta child. Every positive such suffix certifies
+$\widehat c_v=c_v$; a wrong orientation admits none. This proves
+the induction and every returned field, including the final event bit.
+For the reverse direction choose one longest suffix under every true
+beta child and the true root witnesses. The ancestor induction makes
+all lengths and guards correct. There are at most three root Reads
+and exactly one required Read per menu node, proving the bound.
+A particular correct record with badly chosen witnesses can still fail;
+only existence of accepting witnesses is asserted. $\square$
+
+**Corollary 28.3 (one word and one ordinal).** For one physical word
+$v$ of depth $h$, use its $h+1$ prefixes, including itself. If its
+actual branch time satisfies $\tau_v\le n-1$, a certificate for its
+full tuple uses at most $h+4$ paid Reads. For one positive ordinal
+$j$ in birth batch $\tau=\tau(j)$, a certificate for its actual word
+and full tuple uses at most $\tau+2$ Reads when $\tau\le n-1$.
+Neither certificate assumes the full acquired law.
+
+Proof. The word's proper ancestors branch strictly earlier, so its guard
+implies all ancestral guards. Theorem 28.2 gives the first bound.
+For the ordinal, compute its unique Fibonacci bracket
+$F_\tau\le j<F_{\tau+1}$, without source bits. A certificate proposes
+one physical word $v$, with its full prefix menu, and additionally
+requires $|v|\le\tau-2$, $\widehat\tau_v=\tau$ and
+$\widehat A_v=j$. Reject ordinal zero or any failed comparison.
+PCR27.2 makes these equalities sufficient to identify the unique actual
+parent of birth $j$ after the ancestry has been authenticated.
+Conversely that actual parent has depth at most $\tau-2$, so its
+certificate has $K\le\tau-1$. Theorem 28.2 proves soundness,
+completeness and $K+3\le\tau+2$. The tuple includes $s_{j-1}$,
+not merely an address. The empty word is included: $j=1$, $\tau=2$,
+and the sparse orientation certificate needs $n\ge3$. At $n=2$ that
+event has occurred but this certificate guard fails; at $d=0$ its bit
+can instead be inferred from the public zero-source promise. No
+necessity of this guard for all possible methods is claimed. $\square$
+
+**Theorem 28.4 (literal traffic and represented certificate charges).**
+Let $I$ be the complete actual encoded input length, including $d$, the
+menu or query, every certificate field and every extra proposed field.
+Let $L$ be the complete actual output length. On a well-formed proposal,
+let $L_{\rm root}$ be the sum of all root literal lengths in (PCR.83).
+Verification has
+
+$$
+ Q\le K+3,\qquad
+ J\le L_{\rm root}+\sum_{v\in T}(|v|+1+t_v)
+       \le3\nu+K(\nu-1),\qquad M\le\nu.
+\tag{PCR.87}
+$$
+
+Here $J$ counts full literal traffic and $M$ is the maximum literal
+length. On success $\nu=n$. In the sequential symbol-and-head-motion
+model of Theorem 27.6 there is a uniform verifier with conservative
+bounds
+
+$$
+ C,W=O((I+L+1)^4),\qquad V_{\rm peak}=O((I+L+1)^2).
+\tag{PCR.88}
+$$
+
+These include rejected proposals, actual input access, local arithmetic,
+all copied literals, cumulative writes, retained cut, tuples and any
+requested certificate copy. They exclude no address prefix. Physical
+Read charges and durations retain the original tariff in addition to
+these local charges.
+
+Proof. Every derived edge increases $e$ by one or two. Hence
+$\widehat\tau_v\ge|v|+2$, even before authenticity is established.
+Thus $|v|+1+t_v\le\nu-1$. Directly from the two parity cases,
+$L_{\rm root}\le3\nu$ and each root literal has length at most
+$\nu$, including $\nu=2$. Early rejection only shortens this list
+of tests. No source Read is needed on a malformed structural proposal.
+The caller pays for receiving and retaining proposed witnesses; the
+Read count does not pay for their discovery.
+
+Here is a finite sequential realization of the local bound. Scan actual
+input fields and count their lengths before expanding any declared
+quantity. Compare the binary $\nu-1$ with the actual length of $x$;
+a huge but short malformed integer proposal causes no numeric-$\nu$
+loop. Validate letters and all other lengths similarly. On a structurally
+valid proposal $\nu\le I+1$ and every explicit menu depth is at most
+$I$. Repeated scans of the finite menu can check duplicates, order and
+prefix closure and locate each parent without indexed unit-cost access.
+After depth $r$, the integer transport has $B+1\le3^{r+1}$, so its
+coordinate operands have $O(r+1)$ bits. Addition, doubling, comparison,
+label propagation and subtraction use sequential scans of those strings.
+Root and suffix literals are copied in full. Even charging a complete
+input scan for each lookup, comparison and buffer relocation fits the
+fourth-power work and write bound. Storing the finite records, visited
+buffers, input and explicit output fits the stated quadratic backing.
+The ordinal variant computes its Fibonacci bracket by $O(|\operatorname{bin}
+(j)|+1)$ additions on operands of that represented width, as in PCR27.6.
+No table indexed by the numeric ordinal is built. All syntax failures,
+false fields, failed guard tests and failed presence tests fit (PCR.88)
+at their actual input lengths. An accepted explicit certificate has
+size $O((K+1)(n+1)+I_{\rm request})$; its words and output copies are
+paid data, even if the retained orientation payload is only $K$ bits.
+$\square$
+
+## 29. Finite discovery and exact source-coordinate retention
+
+**Theorem 29.1 (unknown-cut and unknown-law discovery).** On the original
+paid entrance, there is a finite uniform discovery of the boundary and,
+if requested, a positive certificate of Definition 28.1, for every
+$s\in\mathcal D_{d,n}(T)$. It assumes neither actual $n$ nor a source
+law. With $t_v=n-\tau_v$, put
+
+$$
+ S(n)=\sum_{\nu=2}^n
+          (2^{\nu-1}+2^{\lfloor\nu/2\rfloor}),\qquad
+ R=S(n)+2\sum_{v\in T}2^{t_v}.
+\tag{PCR.89}
+$$
+
+One such discovery has $Q_{\rm disc}\le R$, maximum literal length
+at most $n$ and literal traffic $J_{\rm disc}\le nR$. In particular
+$R\le(n+K)2^n$ for $n\ge2$. These are conservative exponential
+bounds, not a cheap discovery optimum. If $I_0$ is the actual request
+length and $L_0$ the actual discovery output length, a sequential
+realization has, with $E=I_0+L_0+K+n+2$,
+
+$$
+ C_{\rm disc},W_{\rm disc}=O(E^4(R+1)),\qquad
+ V_{\rm disc}=O(E^2),\qquad U_{\rm source}=0.
+\tag{PCR.90}
+$$
+
+The same discovery applies to a word query and, with an adaptively
+generated ancestor chain, to an ordinal query under Corollary 28.3's
+guard. If the actual menu fails its visibility guard, the procedure
+instead returns that scoped failure after finite root recovery and
+ancestral work; it does not report the original $(P,n)$ task impossible.
+
+Proof. Reuse exactly ACRC Proposition 33.4's root discovery. Try
+$\nu=2,3,\ldots$. Enumerate length-$(\nu-1)$ words until a positive
+$x$ appears; if none appears skip the $y$ search. Otherwise enumerate
+all correctly sized $y$ until (PCR.83)'s required absences hold. Odd
+proposals use at most $2^{\lfloor\nu/2\rfloor}$ negative tests;
+even proposals use at most twice $2^{\nu/2-1}$ tests. Universal
+soundness excludes acceptance at a false cut, and existential
+completeness forces acceptance at $n$. This gives $S(n)$, including
+all unsuccessful proposals and negative replies. It does not repeat
+ACR's spine doubling/bisection as a new acquisition result.
+
+Proceed in menu order. With ancestors earned, compute the genuine
+parent coordinates by Theorem 28.2's induction. A failed actual guard
+ends this scoped attempt. Otherwise try orientation zero and enumerate
+all $2^{t_v}$ suffixes under its selected child. A positive reply
+authenticates zero and supplies its witness. If every reply is zero,
+ACRC (ACRC.1) authenticates one, because the genuine parent's true beta
+child must have a length-$t_v$ suffix. For a positive certificate,
+search that other child until one such suffix appears. This costs at
+most another $2^{t_v}$ Reads. Retain the successful suffix; exhausted
+negative replies need not be stored to output a positive certificate.
+The extra factor two in (PCR.89) pays for obtaining that witness.
+If only the orientation boundary is requested, the complete-negative
+argument alone avoids this second search, with bound
+$S(n)+\sum_{v\in T}2^{t_v}$. No single absent suffix is used to infer
+a bit. Parent correctness at every step uses only earned ancestry.
+
+For an ordinal query, root discovery first earns $n$; its public
+Fibonacci bracket supplies $\tau(j)$. Reject this scoped request when
+$\tau(j)>n-1$. Otherwise use PCR27.3's exact layer block counts and
+residual rank. Earn the current node's orientation by the same suffix
+search, select the next physical child using those counts, and continue
+until the remaining layer time is zero. At that final node also earn
+its own event bit. The block counts depend only on Fibonacci numbers
+and the earned current orientation. PCR27.4's descent proof therefore
+applies without supplying a term evaluator or the full law. Its chain
+has $K\le\tau(j)-1$ nodes, all within the visibility guard. Equations
+(PCR.89)--(PCR.90) apply with that actual finite chain; $I_0$ includes
+the represented ordinal and $L_0$ its full literal and tuple output.
+
+Root literals have length at most $n$ and subsequent literals at most
+$n-1$. Each summand defining $S(n)$ is at most $2^\nu$, so
+$S(n)<2^{n+1}\le n2^n$ for $n\ge2$. Also $t_v\le n-2$, so
+$2\sum_v2^{t_v}\le K2^{n-1}$. These imply the displayed conservative
+bound $R\le(n+K)2^n$. Contiguous binary-word enumeration, actual
+root words, one current suffix and the finite retained records suffice.
+All counters have at most $O(n+1)$ bits. Scans, copies, arithmetic,
+clearing and output can each be charged within $O(E^4)$ per trial;
+only a polynomial amount of scratch and the actual output is retained.
+This gives (PCR.90) without treating exponentially many trials as
+free. Fresh re-verification after discovery has the separate bill
+(PCR.87); the successful discovery replies themselves already justify
+the boundary.
+
+This finite entrance is different in cost and output from
+[PSA, Theorem 8.4][PCR-PSA], which acquires the entire original $(P,n)$
+with its stated logarithmic-Read and polynomial represented-work bounds.
+That supplier, followed by PCR27, remains available for queries outside
+(PCR.81), including occurred events at the final cut and whole-orbit
+future queries. Neither bound creates an ordinal Read service. $\square$
+
+**Definition 29.2 (the actual source-label image).** For fixed $d,T$ put
+
+$$
+ \Gamma_d(T)=\{\gamma_s(T):s\in\mathscr R_d\},\qquad
+ \mathcal Q_s(T)=(\Theta_s(v):v\in T).
+\tag{PCR.91}
+$$
+
+Fix a common public cut $n\ge\max(n_0(d),2h+3)$, where $n_0(d)$ is
+the original maturity bound of ACR (ACR.23). Then every such source is
+in (PCR.81). All capacity statements below fix this cut, the public
+menu and the public order bound, and count only a source-dependent
+fixed-width binary label for mathematical query output. They do not
+count the public codebook, binding, grants, cut storage or physical
+installation as zero-cost acquired resources. Empty $T$ requires no
+additional cut bound beyond original maturity.
+
+**Theorem 29.3 (mutual recovery on the actual image and exact label capacity).**
+On the domain of Definition 29.2, $\gamma_s(T)$ and the entire full-tuple
+menu $\mathcal Q_s(T)$ determine one another. Their zero-error source-label
+capacity is exactly
+
+$$
+ b_d(T)=\left\lceil\log_2|\Gamma_d(T)|\right\rceil,
+ \qquad 0\le b_d(T)\le\min(K,2d).
+\tag{PCR.92}
+$$
+
+If $T$ is nonempty with maximal depth $h$, then
+
+$$
+ d\ge F_{2h+3}-1\quad\Longrightarrow\quad
+                \Gamma_d(T)=\{0,1\}^T,
+ \qquad b_d(T)=K.
+\tag{PCR.93}
+$$
+
+Every assignment in (PCR.93) is realized by an original all-index source
+fixed before its first birth, at the same legitimate cut. These are
+not independent hypothetical local-cone assignments. At any smaller
+mature cut the same mutual recovery holds on $\mathcal D_{d,n}(T)$;
+when this domain is nonempty its exact label capacity is the ceiling
+logarithm of its restricted orientation image.
+
+Proof. Given an attained orientation record, run the physical ancestor
+transport, including the creation descriptors, and output each node's
+own record bit as its event bit. Theorem 17.2 and PCR27.2 give exactly
+(PCR.85). Conversely extract the event bit in each full tuple. The
+compositions are identities on the actual images in (PCR.91), not on
+arbitrary malformed tuple arrays. The same tuple and the public cut
+also decide that node's already-occurred guard. A full-tuple distinction
+therefore is exactly a distinction of attained orientation records.
+
+The finite-label pigeonhole bound gives the lower bound in (PCR.92).
+An enumeration of the finite set $\Gamma_d(T)$ attains it as an
+abstract code. A $K$-bit uncompressed record also suffices. GPO Lemma
+29.2 makes $P=s_0\cdots s_{2d-1}$ injective on $\mathscr R_d$, so
+there are at most $2^{2d}$ sources and at most that many records.
+This proves the upper bounds, and restricting the same bijection and
+counting argument proves the assertion at smaller cuts. It supplies no free
+codebook acquisition or efficient optimal encoder. At $d=0$ the sole
+source is zero and the label has zero bits. For empty $T$ there is one
+empty record and one empty tuple menu, so again $b_d(T)=0$; cut recovery
+has its independent bill.
+
+For (PCR.93), set $M=F_{2h+3}-1$ and prescribe arbitrary bits
+$\eta_v$ at every $v\in T$. Construct one finite chronological word
+by running the actual alpha-origin rule through cut $2h+2$: when the
+next old beta parent is $v\in T$, append $\eta_v$, and at every other
+parent append zero. Process each batch in physical order. Counts do
+not depend on orientations, so exactly $M$ bits are appended.
+Every node of physical depth at most $h$ branches by cut $2h+2$,
+because each edge adds at most two to branch time. Each such parent
+is consequently encountered once, with its prescribed bit if in $T$.
+
+Now define a single stream $s$ to be this finite word followed by
+zeros. This definition specifies the source before any observation or
+first physical birth. The finite construction is a mathematical way
+to compute its seed, not feedback supplied to the running generator.
+Forward induction on chronological events shows that its original
+orbit reproduces that construction. Also $E^Ms=0$ at every
+nonnegative index, so $s\in\mathscr R_M\subseteq\mathscr R_d$,
+including its entire finite singular transient. Its record is precisely
+$\eta$. Fix $n\ge\max(n_0(d),2h+3)$ for all these sources. Every
+selected event is then visible by (PCR.81), and Theorem 28.2 gives
+actual accepting certificates at that common cut. Thus all $2^K$
+assignments are attained. The sufficient bound is not asserted sharp;
+no generic independence of coordinates at a smaller $d$ is presumed.
+$\square$
+
+**Theorem 29.4 (exact limits of retained-menu extension).** Let
+$T\subseteq T'$ be fixed finite prefix-closed full-tuple menus, and
+fix a common legitimate cut large enough for the visibility guard of
+both. The retained boundary for $T$ determines all of $T'$ exactly
+when the actual restriction
+
+$$
+          \Gamma_d(T')\longrightarrow\Gamma_d(T)
+\tag{PCR.94}
+$$
+
+has singleton fibres. If $T'=T$ this holds. If $T'\setminus T$ is
+nonempty and $d\ge F_{2h'+3}-1$, where $h'$ is its maximal depth,
+it fails. For an arbitrary finite word menu $V$ that is not necessarily
+prefix-closed, orientations on its ancestor closure, including the
+queried nodes, are sufficient for its full tuples; no necessity or
+minimality of that sufficient record is asserted.
+
+Proof. Theorem 29.3 identifies each complete tuple menu with its actual
+orientation record. Thus unique extension of the record is sufficient
+and necessary for extension of the prefix-closed full-tuple menu.
+This uses the actual simultaneous source image, not a Cartesian
+product of independently realizable cone records. In the large-order
+case Theorem 29.3 realizes two assignments equal on $T$ and different
+at a selected node of $T'\setminus T$. Their target event-bit fields
+differ, refuting extension. For a non-prefix-closed menu, applying
+ancestor transport to its prefix closure proves only the stated
+sufficient direction. Correlations at small order can reduce necessary
+information, as the zero source already demonstrates. An arbitrary
+new query need not factor through (PCR.94), so there is no automatic
+boundary-update rule for undeclared extensions. $\square$
+
+**Proposition 29.5 (a mature actual pair and the two visibility limits).**
+A retained root full tuple need not determine a later word or ordinal
+query, or its already-occurred domain. This failure occurs on two
+sources in the same original class at a common mature cut. Further,
+omitting the positive residual-time guard in (PCR.82) makes its
+one-literal orientation check unsound even on a mature source.
+
+Proof. Take $s=000\cdots$ and $s'=01000\cdots$ in $\mathscr R_2$.
+The latter is annihilated by $E^2$; the sources are fixed before birth.
+Both root bits are zero, and hence both root tuples are
+$(\varepsilon;1,0,\alpha,2,1,1,2,0)$. Both have child $b$ with
+$(e,A,B)=(2,2,4)$, but its event bit is respectively zero and one.
+Transport gives
+
+$$
+ U_s(4)=bb,\quad U_{s'}(4)=ba,\qquad
+ Q_s(bb)=4,\quad Q_{s'}(bb)=7.
+\tag{PCR.95}
+$$
+
+At common cut six the root and the $bb$ queries satisfy the sparse
+visibility guards for both sources; the full tuple of $b$ also differs.
+Their original prefixes are respectively $0000$ and $0100$, so this
+common current query record has not determined the full original law.
+The two individual queries in (PCR.95) are available without retaining
+all earlier chronological bits, but acquiring their missing ancestry
+still has Theorem 29.1's bill.
+
+The original maturity bound at $d=2$ is five. At common cut five,
+the word $bbb$ branches at cut five for $s$ and six for $s'$:
+its normalization origins are four and five. Thus even the legality
+of an already-occurred event query at that word is not determined by
+the common retained root tuple and cut. This is a query-domain
+distinction, not an authorization to perform a physical update.
+
+For the last assertion take the zero source with $d=1$ at its mature
+cut four. The node $a$ branches at that very cut. Both $aa$ and $ab$
+are present. If $t=0$ were admitted, the empty suffix under either
+claimed beta child would pass, although its actual event bit is zero.
+The event has occurred; its children's just-created supports do not
+yet distinguish their initial labels. PCR27 with a separately acquired
+law can still answer it. With $t\ge1$, a negative suffix also cannot
+alone refute a bit: at cut four the true root beta child is $b$, but
+$baa$ is absent while $bba$ is present. These are genuine original-source
+words, not abstract rank trials. $\square$
+
+**Proposition 29.6 (supplier scope and preservation of the original task).**
+The preceding authentication, discovery and retention conclusions use
+the original full class without invertibility, squarefreeness, a period
+bound or a supplied law. They add a sparse genuine-parent entrance to
+PCR27's supplied-data queries, while retaining the independent original
+acquisition, normalization, source-binding and installation obligations.
+
+Proof. The only source-specific inputs to the new ancestor induction
+are PCR17.2's exact integer table and PCR27.2's global calibration.
+ACR22.2 and ACRC33.2 supply precisely the parity- and length-guarded
+root test. ACRC33.3--33.4 supply the actual-parent maximal-suffix
+criterion and finite paid enumerations. The additional induction in
+Theorem 28.2 proves their genuine-parent premise from physical ancestry;
+it does not invoke their chronological-prefix reconstruction. ACR10.2
+already supplies the beta-list inverse mechanism; ACR21 gives behavioral
+synthesis and firstness boundaries; ACR27 gives authentic integer
+exterior clocks. ACR28--33 and PSA8.4 concern acquisition or
+normalization with their own hypotheses and bills. None is replaced
+by a new general inverse-existence or generic quotient theorem.
+
+The source-label count and finite transient realization in Theorem 29.3
+are repository-derived ordinary deductions on this same source. The
+finite-label counting step is elementary; it is not a literature-priority
+claim. Massey [MAS], §§II--III, defines length-$L$ synthesis without
+requiring the final tap nonzero, and distinguishes register length from
+connection-polynomial degree. With forward coefficients as here the
+polynomial is $X^L C(1/X)$, retaining possible factors of $X$. This is
+the existing ACR21/GPO29 convention, not a physical acquisition theorem.
+Bostan--Mori [PCR-BM], v1 §1.3, equation (3), takes the coefficient
+vector of $X^N\bmod\Gamma$ against the original initial terms for
+$\Gamma=X^r-\sum_{i<r}c_iX^i$. Its monic quotient identity is PCR27's
+computational supplier, including singular factors; it is not needed
+to manufacture any Read in (PCR.83)--(PCR.84).
+
+The D5 suppliers discussed in PCR27.7 keep their exact types:
+`ActualTreeReadoutAcquisition.readout` takes an explicit native tree and
+returns a four-valued reply, while
+`ArchiveClockRecovery.archive_clock_recovery_and_finite_ambiguity`
+takes a finite action system and full visible archives. Neither is an
+unknown-law presence entrance. Likewise TRC24's finite partial-token
+source, source-refining online state and final-only acquired endpoint
+and clock belong to a different interface. No endpoint, archive or
+source-refining online state is an input here. The new statements are
+ordinary mathematical proofs, without a fresh Lean/kernel claim.
+
+Authentic root binding, grants, reliable completed Reads, sufficient
+owned readable backing, source storage and a stationary completed-cut
+interval covering all realized discovery, verification, local work and
+writes remain independent premises. If the cut changes, the root
+certificate must be reacquired or a separately justified synchronized
+update must provide the new cut. A record for a fixed menu gives no
+arbitrary-source online update, additional permission or physical
+installation. The same applies to retaining a compressed label: its
+encoding, decoding, copying, codebook and output must be paid.
+
+The original transient-inclusive $P$ is not generally recovered by the
+sparse menu, as Proposition 29.5 proves. If the original $(P,n)$ output
+is requested, use a supplier that actually earns it, such as PSA8.4,
+and charge its work and the full output copy. The original $K_d(P)$,
+$\rho_d$ first passing row, normalization and completed same-source
+installation remain the independently charged tasks of ACR26/29 and
+GPO34/39. Finite transients, repeated core factors, nonminimal
+presentations and unbounded periods retain their original domains;
+none of the present arguments substitutes a core for the source.
+$\square$
+
+[PCR-ACRC]: RECURSIVE_RELATIONAL_OBSERVATION_ACTUAL_CUT_REINSTATEMENT_CONTINUATION.md
+[PCR-PSA]: RECURSIVE_RELATIONAL_OBSERVATION_POLYNOMIAL_SOURCE_ACQUISITION.md
+
+## 追加锚（本行以下为增补区）
