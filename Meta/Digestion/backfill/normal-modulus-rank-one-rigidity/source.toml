@@ -1,0 +1,5 @@
+source_id = "normal-modulus-rank-one-rigidity"
+path = "docs/develop/theory/NORMAL_MODULUS_RANK_ONE_RIGIDITY.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

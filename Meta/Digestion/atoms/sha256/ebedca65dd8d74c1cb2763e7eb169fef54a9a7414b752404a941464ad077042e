@@ -1,0 +1,6 @@
+**Definition 115.1 (one removed early pair).** Enumerate $e_1=\{1,2\}$, $e_2=\{1,3\}$, $e_3=\{2,3\}$. Define $\pi^-$ from §108.1's $\pi_3$ by deleting only the early-pair trigger for $e_2$. From its fixed initialized control, on every binary 58-marker word:
+
+1. At or before marker 27, first encountering 0 causes immediate first freeze; otherwise the prefix is $1^{27}$.
+2. Read identity positions 28–30 without freezing before position 30. An all-zero identity block freezes at 30. With at least two identity ones, let the first two local positions form $e_t$ and freeze at tail position $6+t$, regardless of that marker's value. This includes rejected blocks with three ones.
+3. With exactly one identity one at local position $i\in\{1,2,3\}$, wait through tail position $3+i$. A first tail one at $j\le3+i$ freezes immediately exactly when $j\in\{1,3\}$ and $i\in e_j$. Otherwise schedule freeze at
+
