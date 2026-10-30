@@ -106,12 +106,11 @@ private lemma slot_entry (n : ℕ) (r : Fin n) (u : Fin 3 → ℝ)
 
 private lemma flip_ne (n : ℕ) (r : Fin n) (x : Finset (Fin n)) : x ∆ {r} ≠ x := by
   intro h
-  have he := Finset.ext_iff.mp h r
-  by_cases hr : r ∈ x <;> simp [Finset.mem_symmDiff, hr] at he
+  exact Finset.singleton_ne_empty r (Finset.bot_eq_empty ▸ symmDiff_eq_left.mp h)
 
 private lemma flip_eq (n : ℕ) (r : Fin n) (x y : Finset (Fin n)) :
     x = y ∆ {r} ↔ y = x ∆ {r} := by
-  constructor <;> intro h <;> rw [h, symmDiff_symmDiff_cancel_right]
+  exact eq_comm.trans (symmDiff_left_involutive {r}).eq_iff
 
 private lemma slot_left_mul {κ : Type*} (n : ℕ) (r : Fin n) (u : Fin 3 → ℝ)
     (m : Matrix (Finset (Fin n)) κ ℂ) (x : Finset (Fin n)) (y : κ) :
@@ -185,13 +184,9 @@ private lemma absent_count (n k : ℕ) (r : Fin n) :
 
 private lemma flip_card_absent (n : ℕ) (r : Fin n) (x : Finset (Fin n)) (hr : r ∉ x) :
     (x ∆ {r}).card = x.card + 1 := by
-  have he : x ∆ {r} = insert r x := by
-    ext y
-    by_cases hy : y = r
-    · subst y
-      simp [Finset.mem_symmDiff, hr]
-    · simp [Finset.mem_symmDiff, hy]
-  rw [he, Finset.card_insert_of_notMem hr]
+  rw [Finset.symmDiff_eq_union (Finset.disjoint_singleton_right.mpr hr),
+    Finset.card_union_of_disjoint (Finset.disjoint_singleton_right.mpr hr),
+    Finset.card_singleton]
 
 private lemma absent_choose_identity (n k : ℕ) (hn : 0 < n) (hk : k ≤ n) :
     (n : ℝ) * ((n - 1).choose k : ℝ) = ((n : ℝ) - k) * (n.choose k : ℝ) := by
