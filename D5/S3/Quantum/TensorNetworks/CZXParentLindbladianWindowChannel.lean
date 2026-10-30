@@ -6,7 +6,6 @@
    utility: none
    digest: The CZX four-site window channel and gauge action. -/
 import D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging
-import Mathlib.Algebra.CharP.Basic
 import Mathlib.Analysis.Normed.Algebra.MatrixExponential
 /-! Source: Liu et al., arXiv:2501.10552v2, Example VI.6 and Appendix F.
    The first site is the most significant bit of each four-site window.
