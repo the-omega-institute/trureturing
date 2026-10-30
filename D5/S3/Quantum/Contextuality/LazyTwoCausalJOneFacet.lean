@@ -6,8 +6,8 @@
    utility: none
    digest: The lazy two-causal inequality J1 induces a facet for every party count at least two. -/
 
+import D5.S3.TotalVariation.Equality.FiberwiseEqualDistanceLift
 import Mathlib.Analysis.Convex.Hull
-import Mathlib.Basic.Real.Basic
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
 
 /-! The lazy binary scenario and inequality (10) of Abbott–Wechs–Costa–Branciard,
@@ -22,19 +22,17 @@ open Finset
 
 namespace D5.S3.Quantum.Contextuality.LazyTwoCausalJOneFacet
 
+open D5.S3.TotalVariation.Equality.FiberwiseEqualDistanceLift (labelKernel)
+
 /-- The first nonempty proper group answers from its own inputs; all outputs are lazy. -/
 def IsLazyTwoCausalStrategy {n : ℕ} (k : Finset (Fin n))
     (f : Finset (Fin n) → Finset (Fin n)) : Prop :=
   k.Nonempty ∧ k ≠ univ ∧ (∀ t, f t ⊆ t) ∧
     ∀ t u, t ∩ k = u ∩ k → f t ∩ k = f u ∩ k
 
-/-- The probability table of a deterministic response. -/
-def deterministicCorrelation {n : ℕ} (f : Finset (Fin n) → Finset (Fin n))
-    (t a : Finset (Fin n)) : ℝ := if f t = a then 1 else 0
-
 /-- The convex hull of deterministic two-causal correlations in the lazy binary scenario. -/
 def twoCausalPolytope (n : ℕ) : Set (Finset (Fin n) → Finset (Fin n) → ℝ) :=
-  convexHull ℝ {p | ∃ k f, IsLazyTwoCausalStrategy k f ∧ p = deterministicCorrelation f}
+  convexHull ℝ {p | ∃ k f, IsLazyTwoCausalStrategy k f ∧ p = labelKernel f}
 
 /-- Inequality (10). On a lazy table, inputs supported in `k` force all outputs outside
 `k` to zero, so the marginal event that every output in `k` is one is exactly `p k k`. -/
@@ -79,25 +77,25 @@ private lemma admissible_group {n : ℕ} (hn : 2 ≤ n) :
 
 private lemma vertex_valid {n : ℕ} {k : Finset (Fin n)}
     {f : Finset (Fin n) → Finset (Fin n)} (hf : IsLazyTwoCausalStrategy k f) :
-    0 ≤ jOne (deterministicCorrelation f) := by
+    0 ≤ jOne (labelKernel f) := by
   classical
   have hforced : f univ = univ → f k = k := by
     intro hu
     have hd := hf.2.2.2 univ k (by simp)
     simpa only [hu, univ_inter, inter_eq_left.mpr (hf.2.2.1 k)] using hd.symm
-  have hnonneg (t a : Finset (Fin n)) : 0 ≤ deterministicCorrelation f t a := by
+  have hnonneg (t a : Finset (Fin n)) : 0 ≤ labelKernel f t a := by
     change 0 ≤ if f t = a then (1 : ℝ) else 0
-    split_ifs <;> norm_num
-  have hsingle : deterministicCorrelation f k k ≤
-      ∑ t with t.Nonempty ∧ t ≠ univ, deterministicCorrelation f t t :=
+    exact ite_nonneg zero_le_one le_rfl
+  have hsingle : labelKernel f k k ≤
+      ∑ t with t.Nonempty ∧ t ≠ univ, labelKernel f t t :=
     single_le_sum (fun t _ => hnonneg t t) (by simp [hf.1, hf.2.1])
-  have hle : deterministicCorrelation f univ univ ≤ deterministicCorrelation f k k := by
+  have hle : labelKernel f univ univ ≤ labelKernel f k k := by
     by_cases hu : f univ = univ
     · change (if f univ = univ then (1 : ℝ) else 0) ≤ if f k = k then 1 else 0
       rw [ite_eq_left hu, ite_eq_left (hforced hu)]
     · calc
-        deterministicCorrelation f univ univ = 0 := ite_eq_right hu
-        _ ≤ deterministicCorrelation f k k := hnonneg k k
+        labelKernel f univ univ = 0 := ite_eq_right hu
+        _ ≤ labelKernel f k k := hnonneg k k
   exact sub_nonneg.mpr (hle.trans hsingle)
 
 private lemma validity (n : ℕ) : ∀ p ∈ twoCausalPolytope n, 0 ≤ jOne p := by
@@ -196,14 +194,11 @@ private lemma dimension_upper (n : ℕ) :
   rw [Module.finrank_fintype_fun_eq_card] at hr
   exact hs.trans hr
 
-private def spike {n : ℕ} (t a : Finset (Fin n)) (u : Finset (Fin n)) :=
-  if u = t then a else ∅
-
 private def block {n : ℕ} (k t : Finset (Fin n)) :=
   (if k ⊆ t then k else ∅) ∪ (if t = univ then univ \ k else ∅)
 
 private lemma zero_on_face {n : ℕ} (hn : 2 ≤ n) :
-    deterministicCorrelation (fun _ : Finset (Fin n) => ∅) ∈
+    labelKernel (fun _ : Finset (Fin n) => ∅) ∈
       twoCausalPolytope n ∩ {p | jOne p = 0} := by
   classical
   obtain ⟨k, hk, hku⟩ := admissible_group hn
@@ -212,10 +207,10 @@ private lemma zero_on_face {n : ℕ} (hn : 2 ≤ n) :
   · apply subset_convexHull ℝ _
     exact ⟨k, (fun _ => ∅), ⟨hk, hku, fun _ => empty_subset _, by simp⟩, rfl⟩
   · change (∑ t with t.Nonempty ∧ t ≠ univ,
-      deterministicCorrelation (fun _ => ∅) t t) -
-        deterministicCorrelation (fun _ => ∅) univ univ = 0
+      labelKernel (fun _ => ∅) t t) -
+        labelKernel (fun _ => ∅) univ univ = 0
     have hz : ∀ t : Finset (Fin n), t.Nonempty →
-        deterministicCorrelation (fun _ => ∅) t t = 0 := by
+        labelKernel (fun _ => ∅) t t = 0 := by
       intro t ht
       exact ite_eq_right (Ne.symm ht.ne_empty)
     rw [hz univ hu, sub_zero]
@@ -223,7 +218,8 @@ private lemma zero_on_face {n : ℕ} (hn : 2 ≤ n) :
 
 private lemma spike_on_face {n : ℕ} {t a : Finset (Fin n)}
     (ha : a.Nonempty) (hat : a ⊂ t) :
-    deterministicCorrelation (spike t a) ∈ twoCausalPolytope n ∩ {p | jOne p = 0} := by
+    labelKernel (Function.update (fun _ => (∅ : Finset (Fin n))) t a) ∈
+      twoCausalPolytope n ∩ {p | jOne p = 0} := by
   classical
   have hgroup : (univ \ a).Nonempty :=
     sdiff_nonempty.mpr (fun h => hat.not_ge ((subset_univ t).trans h))
@@ -232,36 +228,38 @@ private lemma spike_on_face {n : ℕ} {t a : Finset (Fin n)}
     obtain ⟨x, hx⟩ := ha
     have hm : x ∈ univ \ a := by rw [he]; exact mem_univ x
     exact (mem_sdiff.mp hm).2 hx
-  have hz (u : Finset (Fin n)) : spike t a u ∩ (univ \ a) = ∅ := by
-    change (if u = t then a else ∅) ∩ (univ \ a) = ∅
+  have hz (u : Finset (Fin n)) :
+      (Function.update (fun _ => (∅ : Finset (Fin n))) t a) u ∩ (univ \ a) = ∅ := by
+    rw [Function.update_apply]
     split_ifs <;> simp only [inter_sdiff_self, empty_inter]
   constructor
   · apply subset_convexHull ℝ _
-    refine ⟨univ \ a, spike t a, ⟨hgroup, hproper, ?_, ?_⟩, rfl⟩
+    refine ⟨univ \ a, Function.update (fun _ => (∅ : Finset (Fin n))) t a,
+      ⟨hgroup, hproper, ?_, ?_⟩, rfl⟩
     · intro u
-      change (if u = t then a else ∅) ⊆ u
+      rw [Function.update_apply]
       split_ifs with h
       · exact h ▸ hat.subset
       · exact empty_subset _
     · intro u v _
       rw [hz, hz]
   · have hdiag (u : Finset (Fin n)) (hu : u.Nonempty) :
-        deterministicCorrelation (spike t a) u u = 0 := by
-      change (if (if u = t then a else ∅) = u then (1 : ℝ) else 0) = 0
+        labelKernel (Function.update (fun _ => (∅ : Finset (Fin n))) t a) u u = 0 := by
+      simp only [labelKernel, Function.update_apply]
       by_cases he : u = t
       · subst u
         simp only [ite_true, ite_eq_right (ne_of_lt hat)]
       · simp only [ite_eq_right he, ite_eq_right (Ne.symm hu.ne_empty)]
     have hu : (univ : Finset (Fin n)).Nonempty := ha.mono (subset_univ _)
     change (∑ u with u.Nonempty ∧ u ≠ univ,
-      deterministicCorrelation (spike t a) u u) -
-        deterministicCorrelation (spike t a) univ univ = 0
+      labelKernel (Function.update (fun _ => (∅ : Finset (Fin n))) t a) u u) -
+        labelKernel (Function.update (fun _ => (∅ : Finset (Fin n))) t a) univ univ = 0
     rw [hdiag univ hu, sub_zero]
     exact sum_eq_zero (fun u hu => hdiag u (mem_filter.mp hu).2.1)
 
 private lemma block_on_face {n : ℕ} {k : Finset (Fin n)}
     (hk : k.Nonempty) (hku : k ≠ univ) :
-    deterministicCorrelation (block k) ∈ twoCausalPolytope n ∩ {p | jOne p = 0} := by
+    labelKernel (block k) ∈ twoCausalPolytope n ∩ {p | jOne p = 0} := by
   classical
   have hfull : block k univ = univ := by
     change (if k ⊆ univ then k else ∅) ∪
@@ -292,7 +290,7 @@ private lemma block_on_face {n : ℕ} {k : Finset (Fin n)}
         rw [← inter_eq_right, ← inter_eq_right, h]
       simp only [he]
   · have hd (t : Finset (Fin n)) (ht : t.Nonempty) (htu : t ≠ univ) :
-        deterministicCorrelation (block k) t t = if k = t then 1 else 0 := by
+        labelKernel (block k) t t = if k = t then 1 else 0 := by
       change (if ((if k ⊆ t then k else ∅) ∪
         (if t = univ then univ \ k else ∅)) = t then (1 : ℝ) else 0) = _
       rw [ite_eq_right htu, union_empty]
@@ -301,9 +299,9 @@ private lemma block_on_face {n : ℕ} {k : Finset (Fin n)}
       · have hne : k ≠ t := fun h => hkt (h ▸ subset_rfl)
         rw [ite_eq_right hkt, ite_eq_right (Ne.symm ht.ne_empty), ite_eq_right hne]
     change (∑ t with t.Nonempty ∧ t ≠ univ,
-      deterministicCorrelation (block k) t t) - deterministicCorrelation (block k) univ univ = 0
+      labelKernel (block k) t t) - labelKernel (block k) univ univ = 0
     have he : (∑ t with t.Nonempty ∧ t ≠ univ,
-        deterministicCorrelation (block k) t t) = 1 := by
+        labelKernel (block k) t t) = 1 := by
       calc
         _ = ∑ t with t.Nonempty ∧ t ≠ univ, (if k = t then (1 : ℝ) else 0) :=
           sum_congr rfl (fun t ht => hd t (mem_filter.mp ht).2.1 (mem_filter.mp ht).2.2)
@@ -314,8 +312,8 @@ private lemma block_on_face {n : ℕ} {k : Finset (Fin n)}
 
 private def facePoint {n : ℕ} (i : FaceIndex n) :
     Finset (Fin n) → Finset (Fin n) → ℝ :=
-  if i.1.1.2 = i.1.1.1 then deterministicCorrelation (block i.1.1.1)
-  else deterministicCorrelation (spike i.1.1.1 i.1.1.2)
+  if i.1.1.2 = i.1.1.1 then labelKernel (block i.1.1.1)
+  else labelKernel (Function.update (fun _ => (∅ : Finset (Fin n))) i.1.1.1 i.1.1.2)
 
 private lemma facePoint_mem {n : ℕ} (i : FaceIndex n) :
     facePoint i ∈ twoCausalPolytope n ∩ {p | jOne p = 0} := by
@@ -333,52 +331,55 @@ private lemma facePoint_mem {n : ℕ} (i : FaceIndex n) :
 
 private lemma off_diagonal_coordinate {n : ℕ} (i j : FaceIndex n)
     (hi : i.1.1.2 ≠ i.1.1.1) :
-    (facePoint i -ᵥ deterministicCorrelation (fun _ : Finset (Fin n) => ∅))
+    (facePoint i -ᵥ labelKernel (fun _ : Finset (Fin n) => ∅))
       j.1.1.1 j.1.1.2 = if i = j then 1 else 0 := by
   classical
-  have hz : deterministicCorrelation (fun _ : Finset (Fin n) => ∅) j.1.1.1 j.1.1.2 = 0 :=
+  have hz : labelKernel (fun _ : Finset (Fin n) => ∅) j.1.1.1 j.1.1.2 = 0 :=
     ite_eq_right (Ne.symm j.1.2.1.ne_empty)
   change facePoint i j.1.1.1 j.1.1.2 -
-    deterministicCorrelation (fun _ : Finset (Fin n) => ∅) j.1.1.1 j.1.1.2 = _
+    labelKernel (fun _ : Finset (Fin n) => ∅) j.1.1.1 j.1.1.2 = _
   rw [hz, sub_zero]
   by_cases he : i = j
   · subst j
-    change (if i.1.1.2 = i.1.1.1 then deterministicCorrelation (block i.1.1.1)
-      else deterministicCorrelation (spike i.1.1.1 i.1.1.2)) i.1.1.1 i.1.1.2 = _
+    change (if i.1.1.2 = i.1.1.1 then labelKernel (block i.1.1.1)
+      else labelKernel (Function.update (fun _ => (∅ : Finset (Fin n))) i.1.1.1 i.1.1.2))
+      i.1.1.1 i.1.1.2 = _
     rw [ite_eq_right hi]
-    change (if (if i.1.1.1 = i.1.1.1 then i.1.1.2 else ∅) = i.1.1.2
-      then (1 : ℝ) else 0) = if i = i then 1 else 0
-    simp only [ite_true]
-  · have hf : spike i.1.1.1 i.1.1.2 j.1.1.1 ≠ j.1.1.2 := by
-      change (if j.1.1.1 = i.1.1.1 then i.1.1.2 else ∅) ≠ j.1.1.2
+    simp only [labelKernel, Function.update_apply, ite_true]
+  · have hf :
+        (Function.update (fun _ => (∅ : Finset (Fin n))) i.1.1.1 i.1.1.2) j.1.1.1 ≠ j.1.1.2 := by
+      rw [Function.update_apply]
       split_ifs with ht
       · intro ha
         exact he (Subtype.ext (Subtype.ext (Prod.ext ht.symm ha)))
       · exact Ne.symm j.1.2.1.ne_empty
-    change (if i.1.1.2 = i.1.1.1 then deterministicCorrelation (block i.1.1.1)
-      else deterministicCorrelation (spike i.1.1.1 i.1.1.2)) j.1.1.1 j.1.1.2 = _
+    change (if i.1.1.2 = i.1.1.1 then labelKernel (block i.1.1.1)
+      else labelKernel (Function.update (fun _ => (∅ : Finset (Fin n))) i.1.1.1 i.1.1.2))
+      j.1.1.1 j.1.1.2 = _
     rw [ite_eq_right hi]
-    change (if spike i.1.1.1 i.1.1.2 j.1.1.1 = j.1.1.2 then (1 : ℝ) else 0) = _
+    change (if (Function.update (fun _ => (∅ : Finset (Fin n))) i.1.1.1 i.1.1.2) j.1.1.1 = j.1.1.2
+      then (1 : ℝ) else 0) = _
     rw [ite_eq_right hf, ite_eq_right he]
 
 private lemma diagonal_coordinate {n : ℕ} (i j : FaceIndex n)
     (hj : j.1.1.2 = j.1.1.1) :
-    (facePoint i -ᵥ deterministicCorrelation (fun _ : Finset (Fin n) => ∅))
+    (facePoint i -ᵥ labelKernel (fun _ : Finset (Fin n) => ∅))
       j.1.1.1 j.1.1.2 = if i = j then 1 else 0 := by
   classical
   by_cases hi : i.1.1.2 = i.1.1.1
   · have hju : j.1.1.1 ≠ univ := by
       intro h
       exact j.2 (Prod.ext h (hj.trans h))
-    have hz : deterministicCorrelation (fun _ : Finset (Fin n) => ∅)
+    have hz : labelKernel (fun _ : Finset (Fin n) => ∅)
         j.1.1.1 j.1.1.2 = 0 := ite_eq_right (Ne.symm j.1.2.1.ne_empty)
     change facePoint i j.1.1.1 j.1.1.2 -
-      deterministicCorrelation (fun _ : Finset (Fin n) => ∅) j.1.1.1 j.1.1.2 = _
+      labelKernel (fun _ : Finset (Fin n) => ∅) j.1.1.1 j.1.1.2 = _
     rw [hz, sub_zero]
     by_cases he : i = j
     · subst i
-      change (if j.1.1.2 = j.1.1.1 then deterministicCorrelation (block j.1.1.1)
-        else deterministicCorrelation (spike j.1.1.1 j.1.1.2)) j.1.1.1 j.1.1.2 = _
+      change (if j.1.1.2 = j.1.1.1 then labelKernel (block j.1.1.1)
+        else labelKernel (Function.update (fun _ => (∅ : Finset (Fin n))) j.1.1.1 j.1.1.2))
+        j.1.1.1 j.1.1.2 = _
       rw [ite_eq_left hj]
       change (if ((if j.1.1.1 ⊆ j.1.1.1 then j.1.1.1 else ∅) ∪
         (if j.1.1.1 = univ then univ \ j.1.1.1 else ∅)) = j.1.1.2
@@ -394,32 +395,34 @@ private lemma diagonal_coordinate {n : ℕ} (i j : FaceIndex n)
         split_ifs
         · exact fun h => hnt (h.trans hj)
         · exact Ne.symm j.1.2.1.ne_empty
-      change (if i.1.1.2 = i.1.1.1 then deterministicCorrelation (block i.1.1.1)
-      else deterministicCorrelation (spike i.1.1.1 i.1.1.2)) j.1.1.1 j.1.1.2 = _
+      change (if i.1.1.2 = i.1.1.1 then labelKernel (block i.1.1.1)
+        else labelKernel (Function.update (fun _ => (∅ : Finset (Fin n))) i.1.1.1 i.1.1.2))
+        j.1.1.1 j.1.1.2 = _
       rw [ite_eq_left hi]
-      change (if block i.1.1.1 j.1.1.1 = j.1.1.2 then (1 : ℝ) else 0) = _
+      change (if block i.1.1.1 j.1.1.1 = j.1.1.2
+        then (1 : ℝ) else 0) = _
       rw [ite_eq_right hf, ite_eq_right he]
   · exact off_diagonal_coordinate i j hi
 
 private lemma face_independent (n : ℕ) : LinearIndependent ℝ
     (fun i : FaceIndex n => facePoint i -ᵥ
-      deterministicCorrelation (fun _ : Finset (Fin n) => ∅)) := by
+      labelKernel (fun _ : Finset (Fin n) => ∅)) := by
   classical
   rw [Fintype.linearIndependent_iff]
   intro c hc j
   have hdiag (i : FaceIndex n) (hi : i.1.1.2 = i.1.1.1) : c i = 0 := by
     have he := congrArg (fun p : Finset (Fin n) → Finset (Fin n) → ℝ =>
       p i.1.1.1 i.1.1.2) hc
-    simp only [sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at he
+    simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at he
     simp only [diagonal_coordinate _ _ hi] at he
     simpa using he
   by_cases hj : j.1.1.2 = j.1.1.1
   · exact hdiag j hj
   · have he := congrArg (fun p : Finset (Fin n) → Finset (Fin n) → ℝ =>
         p j.1.1.1 j.1.1.2) hc
-    simp only [sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at he
+    simp only [Finset.sum_apply, Pi.smul_apply, smul_eq_mul, Pi.zero_apply] at he
     have ht (i : FaceIndex n) :
-        c i * (facePoint i -ᵥ deterministicCorrelation (fun _ : Finset (Fin n) => ∅))
+        c i * (facePoint i -ᵥ labelKernel (fun _ : Finset (Fin n) => ∅))
           j.1.1.1 j.1.1.2 = if i = j then c j else 0 := by
       by_cases hi : i.1.1.2 = i.1.1.1
       · have hne : i ≠ j := fun h => hj (h ▸ hi)
@@ -451,7 +454,7 @@ private lemma dimension_lower {n : ℕ} (hn : 2 ≤ n) :
       Module.finrank ℝ (vectorSpan ℝ (twoCausalPolytope n ∩ {p | jOne p = 0})) := by
   let v (i : FaceIndex n) :
       vectorSpan ℝ (twoCausalPolytope n ∩ {p | jOne p = 0}) :=
-    ⟨facePoint i -ᵥ deterministicCorrelation (fun _ : Finset (Fin n) => ∅),
+    ⟨facePoint i -ᵥ labelKernel (fun _ : Finset (Fin n) => ∅),
       vsub_mem_vectorSpan ℝ (facePoint_mem i) (zero_on_face hn)⟩
   have hv : LinearIndependent ℝ v :=
     (face_independent n).of_comp (vectorSpan ℝ
@@ -459,8 +462,8 @@ private lemma dimension_lower {n : ℕ} (hn : 2 ≤ n) :
   exact hv.fintype_card_le_finrank
 
 private lemma identity_positive {n : ℕ} (hn : 2 ≤ n) :
-    deterministicCorrelation (fun t : Finset (Fin n) => t) ∈ twoCausalPolytope n ∧
-      0 < jOne (deterministicCorrelation (fun t : Finset (Fin n) => t)) := by
+    labelKernel (fun t : Finset (Fin n) => t) ∈ twoCausalPolytope n ∧
+      0 < jOne (labelKernel (fun t : Finset (Fin n) => t)) := by
   classical
   obtain ⟨k, hk, hku⟩ := admissible_group hn
   have hcomp : (univ \ k).Nonempty := sdiff_nonempty.mpr
@@ -515,11 +518,11 @@ private lemma dimension_strict {n : ℕ} (hn : 2 ≤ n) :
     have hid := identity_positive hn
     have hd := vsub_mem_vectorSpan ℝ hid.1 hz.1
     have he := hker (h hd)
-    change jLinear n (deterministicCorrelation (fun t : Finset (Fin n) => t) -
-      deterministicCorrelation (fun _ : Finset (Fin n) => ∅)) = 0 at he
+    change jLinear n (labelKernel (fun t : Finset (Fin n) => t) -
+      labelKernel (fun _ : Finset (Fin n) => ∅)) = 0 at he
     rw [map_sub] at he
-    change jOne (deterministicCorrelation (fun t : Finset (Fin n) => t)) -
-      jOne (deterministicCorrelation (fun _ : Finset (Fin n) => ∅)) = 0 at he
+    change jOne (labelKernel (fun t : Finset (Fin n) => t)) -
+      jOne (labelKernel (fun _ : Finset (Fin n) => ∅)) = 0 at he
     rw [hz.2, sub_zero] at he
     exact (ne_of_gt hid.2) he
   exact Nat.add_one_le_iff.mpr (Submodule.finrank_lt_finrank_of_lt (lt_of_le_not_ge hle hnot))
