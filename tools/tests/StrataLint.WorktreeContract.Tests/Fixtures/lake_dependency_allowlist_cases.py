@@ -1,6 +1,7 @@
 """Recognized Lake Git shapes and refusal before any batch mutation."""
 
 from pathlib import Path
+import shutil
 import subprocess
 from unittest.mock import patch
 
@@ -67,6 +68,8 @@ class LakeDependencyAllowlistCases:
             self.g(boundary, "config", key, setting)
         for ref in self.g(boundary, "for-each-ref", "--format=%(refname)").splitlines():
             self.g(boundary, "update-ref", "-d", ref)
+        if (metadata / "logs/refs").exists():
+            shutil.rmtree(metadata / "logs/refs")
         (metadata / "packed-refs").unlink(missing_ok=True)
         (metadata / "refs/tags").mkdir(exist_ok=True)
         self.assertEqual([], list((metadata / "refs/heads").iterdir()))
