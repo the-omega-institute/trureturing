@@ -48,7 +48,7 @@ internal sealed class MultigraphCohomologyContractionDocument : IScribeDocumentD
             Theorem("extension-evacuation-correction", "extend_evacuate_sub", "The other composite has an exact coboundary correction",
                 Context(All("a", Functions(E), Equal(
                     Seq(Call("J", e, Call("A", G, e, a)), Sp, Minus, Sp, a),
-                    Call("d", G, Call("targetCorrection", G, e, a)))), false, true),
+                    Call("d", G, Call("targetCorrection", G, e, a)))), false, true, nonloopBinder: false),
                 "targetCorrection(G,e,a)(w) is −a(e) times the indicator of w = target(e). Its coboundary "
                 + "is −a(e) at e and −a(e) incidence G (target(e)) f at every surviving edge f. "
                 + "Thus J A(a) and a define the same cohomology class."),
@@ -102,9 +102,14 @@ internal sealed class MultigraphCohomologyContractionDocument : IScribeDocumentD
     private static Formula Functions(Formula type) => Seq(Grp(type), Sp, To, Sp, Seq(Mathbb, Grp(F.Id("Q"))));
     private static Formula Contract() => Call("contract", G, e, h);
     private static Formula Psi() => Call("Psi", G, e, h);
-    private static Formula Context(Formula body, bool finite, bool nonloop, bool selectedEdge = true, bool edgeDecidable = true)
+    private static Formula Context(Formula body, bool finite, bool nonloop, bool selectedEdge = true,
+        bool edgeDecidable = true, bool nonloopBinder = true)
     {
-        if (nonloop) body = All("h", Seq(Call("source", G, e), Sp, Neq, Sp, Call("target", G, e)), body);
+        if (nonloop)
+        {
+            Formula condition = Seq(Call("source", G, e), Sp, Neq, Sp, Call("target", G, e));
+            body = nonloopBinder ? All("h", condition, body) : Seq(Grp(condition), Sp, To, Sp, body);
+        }
         if (selectedEdge) body = All("e", E, body);
         body = All("G", Call("DirectedMultigraph", V, E), body);
         body = Seq(OpenBracket, Call("DecidableEq", V), CloseBracket, Sp,
