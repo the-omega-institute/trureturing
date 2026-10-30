@@ -3,6 +3,7 @@
    mirror-B: D5/B/S1/Words/FibonacciIncidence
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
+   utility: none
    digest: Fibonacci substitution words act on Parikh vectors by a reusable incidence matrix and transport arbitrary additive observables. -/
 
 import D5.S1.Words.GoldenGapPrefix
