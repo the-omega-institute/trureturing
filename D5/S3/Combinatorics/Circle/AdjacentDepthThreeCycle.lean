@@ -102,199 +102,26 @@ theorem physicalThreeCycle_inverse {α : Type*} [DecidableEq α]
   simp only [Equiv.apply_symm_apply]
   exact (cycleForward_backward hab hac hbc x).symm
 
-/-! The remainder of this module works with the physical successor, rather than
-the numerical value of a label.  This is the distinction needed when the
-source has a proper numerical period. -/
-
-def successor {k : ℕ} (hk : 0 < k) (i : Fin k) : Fin k := phase hk i 1
-
-def predecessor {k : ℕ} (hk : 0 < k) (i : Fin k) : Fin k := phase hk i (k - 1)
-
-private theorem predecessor_successor {k : ℕ} (hk : 0 < k) (i : Fin k) :
-    predecessor hk (successor hk i) = i := by
-  apply Fin.ext
-  simp [predecessor, successor, phase, Nat.add_mod, hk, Nat.mod_eq_of_lt i.isLt]
-
-private theorem successor_predecessor {k : ℕ} (hk : 0 < k) (i : Fin k) :
-    successor hk (predecessor hk i) = i := by
-  apply Fin.ext
-  simp [predecessor, successor, phase, Nat.add_mod, hk, Nat.mod_eq_of_lt i.isLt]
-
-private theorem predecessor_injective {k : ℕ} (hk : 0 < k) :
-    Function.Injective (predecessor hk) := by
-  intro i j hij
-  exact (successor_predecessor hk i).symm ▸
-    (successor_predecessor hk j).symm ▸ congrArg (successor hk) hij
-
-private theorem successor_injective {k : ℕ} (hk : 0 < k) :
-    Function.Injective (successor hk) := by
-  intro i j hij
-  exact (predecessor_successor hk i).symm ▸
-    (predecessor_successor hk j).symm ▸ congrArg (predecessor hk) hij
-
-def longSeed {k : ℕ} (hk : 0 < k) (h : ℕ) (w : Fin k → ℤ) (j : Fin k) : Prop :=
-  w (predecessor hk j) < 0 ∧ 0 < w j ∧ (2 : ℤ) ^ h * w j < quarter k
-
-instance longSeedDecidable {k : ℕ} (hk : 0 < k) (h : ℕ) (w : Fin k → ℤ) :
-    DecidablePred (longSeed hk h w) := fun j => inferInstance
-
-private theorem long_seed_role_separation {k t h : ℕ} (hk : 3 ≤ k)
-    (hsmall : ∀ i : Fin k, |actualSource k t i| < quarter k →
-      0 < actualSource k t i)
-    {j : Fin k} (hj : longSeed (by omega) h (actualSource k t) j)
-    (hroot : quarter k ≤ actualSource k t (predecessor (by omega)
-      (predecessor (by omega) j))) :
-    let root := predecessor (by omega) (predecessor (by omega) j)
-    let neg := predecessor (by omega) j
-    quarter k ≤ actualSource k t root ∧ 0 < actualSource k t root ∧
-      actualSource k t neg < 0 ∧
-      |actualSource k t j| < quarter k := by
-  dsimp [longSeed] at hj
-  dsimp
-  have hq := (source_geometry hk).1
-  have hN := (source_geometry hk).2.1
-  have hneg : actualSource k t (predecessor (by omega) j) < 0 := hj.1
-  have hseed : 0 < actualSource k t j := hj.2.1
-  have hsmall' : |actualSource k t j| < quarter k := by
-    rw [abs_of_pos hseed]
-    exact (by omega : actualSource k t j < quarter k)
-  have hstep := phase_step hk t (predecessor (by omega) j) 0
-  have hpred : actualSource k t j =
-      doubleStep (modulus k) (actualSource k t (predecessor (by omega) j)) := by
-    simpa [successor, predecessor, phase_zero, Nat.add_zero,
-      predecessor_successor (by omega : 0 < k) j] using hstep
-  have hrootstep := phase_step hk t (predecessor (by omega) j) (k - 2)
-  have hroot : actualSource k t (predecessor (by omega)
-      (predecessor (by omega) j)) =
-      2 * actualSource k t (predecessor (by omega) j) - modulus k := by
-    have hpp : phase (by omega) (predecessor (by omega) j) (k - 2) =
-        predecessor (by omega) (predecessor (by omega) j) := by
-      apply Fin.ext
-      simp [predecessor, phase, Nat.add_mod]
-    rw [hpp] at hrootstep
-    unfold doubleStep at hpred hrootstep
-    split_ifs at hpred hrootstep <;> omega
-  have hrootpos : 0 < actualSource k t (predecessor (by omega)
-      (predecessor (by omega) j)) := by omega
-  exact ⟨hroot, hrootpos, hneg, hsmall'⟩
-
-/- The pointwise map below selects a packet by the depth of its *next seed*.
-Its inverse is written explicitly; no involution or value-injectivity is used. -/
-def simultaneousLongMap {k : ℕ} (hk : 0 < k) (h : ℕ)
-    (w : Fin k → ℤ) (x : Fin k) : Fin k :=
-  if hroot : ∃ j, longSeed hk h w j ∧
-      x = predecessor hk (predecessor hk j) then
-    Classical.choose hroot
-  else if hneg : ∃ j, longSeed hk h w j ∧ x = predecessor hk j then
-    predecessor hk (predecessor hk (Classical.choose hneg))
-  else if hseed : ∃ j, longSeed hk h w j ∧ x = j then
-    predecessor hk (Classical.choose hseed)
-  else x
-
-def simultaneousLongMapInv {k : ℕ} (hk : 0 < k) (h : ℕ)
-    (w : Fin k → ℤ) (x : Fin k) : Fin k :=
-  if hroot : ∃ j, longSeed hk h w j ∧
-      x = predecessor hk (predecessor hk j) then
-    predecessor hk (Classical.choose hroot)
-  else if hneg : ∃ j, longSeed hk h w j ∧ x = predecessor hk j then
-    Classical.choose hneg
-  else if hseed : ∃ j, longSeed hk h w j ∧ x = j then
-    predecessor hk (predecessor hk (Classical.choose hseed))
-  else x
-
-private theorem simultaneousLongMap_inverse
-    {k t h : ℕ} (hk : 3 ≤ k)
-    (hsmall : ∀ i : Fin k, |actualSource k t i| < quarter k →
-      0 < actualSource k t i)
-    (hrole : ∀ j : Fin k, longSeed (by omega) h (actualSource k t) j →
-      quarter k ≤ actualSource k t (predecessor (by omega)
-        (predecessor (by omega) j))) :
-    Function.LeftInverse (simultaneousLongMap (by omega) h (actualSource k t))
-      (simultaneousLongMapInv (by omega) h (actualSource k t)) := by
-  intro x
-  classical
-  by_cases hxroot : ∃ j, longSeed (by omega) h (actualSource k t) j ∧
-      x = predecessor (by omega) (predecessor (by omega) j)
-  · let j := Classical.choose hxroot
-    have hj := Classical.choose_spec hxroot
-    have hroot := hrole j hj.1
-    have hnegval := hj.1.1
-    have hseedval := hj.1.2.1
-    have hrootpos := (long_seed_role_separation hk hsmall hj.1 hroot).2
-    have hseedsmall := (long_seed_role_separation hk hsmall hj.1 hroot).2.2.2
-    have hrootnegnext :
-        predecessor (by omega) (predecessor (by omega) j) ≠
-          predecessor (by omega) j := by
-      intro he
-      have := congrArg (actualSource k t) he
-      omega
-    have hrootseed :
-        predecessor (by omega) (predecessor (by omega) j) ≠ j := by
-      intro he
-      have := congrArg (actualSource k t) he
-      have hs := (long_seed_role_separation hk hsmall hj.1 hroot).2.2.2
-      omega
-    have hnegseed : predecessor (by omega) j ≠ j := by
-      intro he
-      have := congrArg (actualSource k t) he
-      omega
-    simp [simultaneousLongMapInv, simultaneousLongMap, hxroot, hj,
-      hrootnegnext, hrootseed, hnegseed,
-      predecessor_successor (by omega : 0 < k),
-      successor_predecessor (by omega : 0 < k)]
-  · by_cases hxneg : ∃ j, longSeed (by omega) h (actualSource k t) j ∧
-      x = predecessor (by omega) j
-    · let j := Classical.choose hxneg
-      have hj := Classical.choose_spec hxneg
-      have hroot := hrole j hj.1
-      have hrootpos := (long_seed_role_separation hk hsmall hj.1 hroot).2
-      have hseedsmall := (long_seed_role_separation hk hsmall hj.1 hroot).2.2.2
-      have hrootnegnext :
-          predecessor (by omega) (predecessor (by omega) j) ≠
-            predecessor (by omega) j := by
-        intro he
-        have := congrArg (actualSource k t) he
-        omega
-      have hrootseed :
-          predecessor (by omega) (predecessor (by omega) j) ≠ j := by
-        intro he
-        have := congrArg (actualSource k t) he
-        omega
-      have hnegseed : predecessor (by omega) j ≠ j := by
-        intro he
-        have := congrArg (actualSource k t) he
-        omega
-      simp [simultaneousLongMapInv, simultaneousLongMap, hxroot, hxneg, hj,
-        hrootnegnext, hrootseed, hnegseed,
-        predecessor_successor (by omega : 0 < k),
-        successor_predecessor (by omega : 0 < k)]
-    · by_cases hxseed : ∃ j, longSeed (by omega) h (actualSource k t) j ∧ x = j
-      · let j := Classical.choose hxseed
-        have hj := Classical.choose_spec hxseed
-        have hroot := hrole j hj.1
-        have hrootpos := (long_seed_role_separation hk hsmall hj.1 hroot).2
-        have hseedsmall := (long_seed_role_separation hk hsmall hj.1 hroot).2.2.2
-        have hrootnegnext :
-            predecessor (by omega) (predecessor (by omega) j) ≠
-              predecessor (by omega) j := by
-          intro he
-          have := congrArg (actualSource k t) he
-          omega
-        have hrootseed :
-            predecessor (by omega) (predecessor (by omega) j) ≠ j := by
-          intro he
-          have := congrArg (actualSource k t) he
-          omega
-        have hnegseed : predecessor (by omega) j ≠ j := by
-          intro he
-          have := congrArg (actualSource k t) he
-          omega
-        simp [simultaneousLongMapInv, simultaneousLongMap, hxroot, hxneg,
-          hxseed, hj, hrootnegnext, hrootseed, hnegseed,
-          predecessor_successor (by omega : 0 < k),
-          successor_predecessor (by omega : 0 < k)]
-      · simp [simultaneousLongMapInv, simultaneousLongMap, hxroot, hxneg,
-          hxseed]
+private theorem physicalThreeCycle_roles {α : Type*} [DecidableEq α]
+    (a b c : α) (hab : a ≠ b) (hac : a ≠ c) (hbc : b ≠ c) :
+    physicalThreeCycle a b c hab hac hbc a = c ∧
+      physicalThreeCycle a b c hab hac hbc b = a ∧
+      physicalThreeCycle a b c hab hac hbc c = b ∧
+      (physicalThreeCycle a b c hab hac hbc).symm a = b ∧
+      (physicalThreeCycle a b c hab hac hbc).symm b = c ∧
+      (physicalThreeCycle a b c hab hac hbc).symm c = a := by
+  have hba : b ≠ a := Ne.symm hab
+  have hca : c ≠ a := Ne.symm hac
+  have hcb : c ≠ b := Ne.symm hbc
+  refine ⟨physicalThreeCycle_apply_root a b c hab hac hbc,
+    physicalThreeCycle_apply_negative a b c hab hac hbc,
+    physicalThreeCycle_apply_seed a b c hab hac hbc, ?_, ?_, ?_⟩
+  · rw [physicalThreeCycle_inverse a b c hab hac hbc]
+    simp [cycleBackward, hab, hac, hbc, hba, hca, hcb]
+  · rw [physicalThreeCycle_inverse a b c hab hac hbc]
+    simp [cycleBackward, hab, hac, hbc, hba, hca, hcb]
+  · rw [physicalThreeCycle_inverse a b c hab hac hbc]
+    simp [cycleBackward, hab, hac, hbc, hba, hca, hcb]
 
 private theorem phase_offset_injective {k : ℕ} (hk : 0 < k) (a : Fin k)
     {i j : ℕ} (hi : i < k) (hj : j < k)
@@ -413,16 +240,10 @@ theorem native_long_seed_three_cycle {k t : ℕ} (hk : 3 ≤ k)
   intro hlong
   refine ⟨r - 1, by omega, by omega, rfl, rfl, rfl, ha', hroot', hrootQ',
       hrootupper', hneg', hneglt', hnext', hnextpos', ?_, ?_⟩
-  · refine ⟨physicalThreeCycle root neg next hrn hrx hnx, ?_, ?_, ?_, ?_, ?_, ?_⟩
-    · exact physicalThreeCycle_apply_root root neg next hrn hrx hnx
-    · exact physicalThreeCycle_apply_negative root neg next hrn hrx hnx
-    · exact physicalThreeCycle_apply_seed root neg next hrn hrx hnx
-    · rw [physicalThreeCycle_inverse root neg next hrn hrx hnx]
-      simp [cycleBackward, hrn, hnr, hrx, hxr, hnx, hnx']
-    · rw [physicalThreeCycle_inverse root neg next hrn hrx hnx]
-      simp [cycleBackward, hrn, hnr, hrx, hxr, hnx, hnx']
-    · rw [physicalThreeCycle_inverse root neg next hrn hrx hnx]
-      simp [cycleBackward, hrn, hnr, hrx, hxr, hnx, hnx']
+  · have hroles := physicalThreeCycle_roles root neg next hrn hrx hnx
+    exact ⟨physicalThreeCycle root neg next hrn hrx hnx, hroles.1, hroles.2.1,
+      hroles.2.2.1, hroles.2.2.2.1, hroles.2.2.2.2.1,
+      hroles.2.2.2.2.2⟩
   · constructor
     · dsimp
       rw [hneg', hroot']
