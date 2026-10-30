@@ -9,7 +9,10 @@
 /-
 admission_basis: open-problem-resolution (#18636; Proved)
 Mathematical escape witnesses are named per content declaration below.
-Direct frozen dependencies: none.
+Direct frozen dependencies:
+| Import owner | Consumed declaration | Use |
+| D5.S3.Arith.Congruence.BalaA363411 | b | Sequence in at_multiple, before_multiple, and claim. |
+| D5.S3.Arith.Congruence.BalaA363412 | reflection_congruences | Factorizations in at_multiple and before_multiple. |
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/21978.
 proof_shape: double_factor: bind-only; consumers: D5.S3.Arith.Congruence.BalaA363412Valuation.at_multiple, D5.S3.Arith.Congruence.BalaA363412Valuation.before_multiple.
 proof_shape: at_multiple: content; escape_witness: D5.S3.Arith.Congruence.BalaA363412.uniform_shift; consumers: D5.S3.Arith.Congruence.BalaA363412Valuation.result.
