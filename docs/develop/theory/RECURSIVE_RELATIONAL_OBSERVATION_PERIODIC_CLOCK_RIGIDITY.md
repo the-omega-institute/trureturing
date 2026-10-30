@@ -3774,3 +3774,312 @@ $\square$
 [PCR-PSA]: RECURSIVE_RELATIONAL_OBSERVATION_POLYNOMIAL_SOURCE_ACQUISITION.md
 
 ## 追加锚（本行以下为增补区）
+
+## 30. A late global band retains the original source law
+
+**Definition 30.1 (the exact band and its actual image).** Retain the
+alpha-origin process, physical order $a<b$, old-leaf replacement, and the
+one-based chronological birth order of Definition 1.1 and PCR27. Let
+$F_0=0,F_1=1,F_{k+2}=F_{k+1}+F_k$. For an integer $T\ge0$ put
+
+$$
+ J_T=\{F_T,F_T+1,\ldots,F_{T+1}-1\}.
+ \tag{PCR.85}
+$$
+
+The ordinal interface accepts positive ordinals. Thus its literal query
+domain is $J_T^+=J_T\cap\mathbb N_{>0}$; for $T\ge2$ this is exactly
+$J_T$, with
+
+$$
+ |J_T|=F_{T+1}-F_T=F_{T-1}.
+ \tag{PCR.86}
+$$
+
+For $s\in\mathscr R_d$, define the **actual band image**
+
+$$
+ \mathcal B_{d,T}=\{\,U_s\!\upharpoonright J_T:s\in\mathscr R_d\,\},
+ \qquad
+ (U_s\!\upharpoonright J_T)(j)=U_s(j).
+ \tag{PCR.87}
+$$
+
+A supplied band call at $j\in J_T$ returns this exact physical literal,
+with no tuple, label, cut, period, source advice, or independently chosen
+value. The common decoder knows only $d,T$, the $a<b$ order and this query
+interface. It is defined on the actual image (PCR.87), not on arbitrary
+tables of literals. This is the whole-origin query of PCR27.3--27.4. If
+the already-occurred query is used instead, a common acquired cut $n\ge T$
+is required, because every $j\in J_T$ has event cut $\tau(j)=T$ by
+PCR27.2; the band itself never supplies or infers $n$.
+
+For $d>0$ define
+
+$$
+ r_d=\min\{r\ge2:F_{r+1}-1\ge2d\}.
+ \tag{PCR.88}
+$$
+
+The sufficient late-band condition below is $T\ge r_d+3$. It is not a
+claim that this horizon is sharp.
+
+**Theorem 30.2 (exact late-band recovery of the transient-inclusive
+prefix).** Let $d>0$, $T\ge r_d+3$, and let $s\in\mathscr R_d$ be an
+actual source. The supplied restriction $U_s\!\upharpoonright J_T$
+determines, and is determined by, the original prefix
+
+$$
+ P=s_0s_1\cdots s_{2d-1}.
+ \tag{PCR.89}
+$$
+
+More precisely, there is a common adaptive decoder which recovers $P$
+using at most
+
+$$
+ 4d\,\left\lceil\log_2(F_{T-1}+1)\right\rceil
+ \tag{PCR.90}
+$$
+band calls and at most $O(dT^2)$ returned literal symbols. Its local
+arithmetic, prefix comparisons and actual-parent reconstruction are
+finite polynomial work in $d+T$ when integers and strings use their
+represented binary lengths. Conversely, PCR27.2--27.7, supplied with
+$P$, computes every literal in $U_s\!\upharpoonright J_T$ through the
+unique all-index law determined by $P$.
+
+**Proof.** PCR27.2 identifies $J_T$ with the ordered beta-parent layer
+$\mathcal H_s(T-2)$ branching at cut $T$. Its members are the actual
+parents $U_s(j)$ in physical lexicographic order. For $1\le i\le2d$,
+let $p_i$ be the actual parent of birth $i$, and let $\tau_i$ be its
+branch cut. The Fibonacci bracket in PCR27.2 gives
+
+$$
+ F_{\tau_i}\le i<F_{\tau_i+1}.
+ \tag{PCR.91}
+$$
+
+Because $2d\le F_{r_d+1}-1$, we have $\tau_i\le r_d$ and hence
+
+$$
+ u_i:=T-\tau_i\ge3.
+ \tag{PCR.92}
+$$
+
+Assume inductively that $s_0,\ldots,s_{i-2}$ are known. Replaying the
+actual alpha-origin updates through the birth immediately before $i$,
+using the prescribed physical $a<b$ parent order, reconstructs $p_i$
+exactly. This is the actual-parent construction of GPO39; it uses no
+unseen bit at birth $i$. The first parent is $p_1=\varepsilon$, and the
+same replay is valid at the first event of every chronological batch.
+
+For a finite physical word $p$, all words beginning with $p$ form a
+convex interval in the $a<b$ lexicographic order. Consequently the
+indices in $J_T$ whose returned literal extends $p_i$ form an interval
+
+$$
+ E_i=\{L_i,L_i+1,\ldots,R_i\}\subseteq J_T,
+ \tag{PCR.93}
+$$
+
+where, writing $N_T=F_{T-1}$,
+
+$$
+ \begin{aligned}
+ L_i&=\min\{j\in J_T:p_i\text{ is a prefix of }U_s(j)\},\\
+ R_i&=\max\{j\in J_T:p_i\text{ is a prefix of }U_s(j)\}.
+ \end{aligned}
+ \tag{PCR.94}
+$$
+
+These endpoints exist because $u_i\ge3$. At cut $\tau_i$, the parent
+$p_i$ branches into its $a$ and $b$ children. At each later update an
+alpha leaf becomes beta and a beta leaf becomes one alpha and one beta.
+Thus the pair of alpha/beta counts changes by
+$(A,B)\mapsto(B,A+B)$, independently of every later orientation. After
+$u_i-1$ updates, a child that was initially beta has $F_{u_i}$ beta
+leaves, while a child that was initially alpha has $F_{u_i-1}$ beta
+leaves. The beta leaves at cut $T-1$ are exactly the event parents in
+$J_T$. Physical prefix order puts the $a$ descendants before the $b$
+descendants, so (PCR.93)--(PCR.94) have the exact endpoint relation
+
+$$
+ R_i=L_i+F_{u_i+1}-1,
+ \tag{PCR.95}
+$$
+
+and the $a$-prefixed subinterval has length
+
+$$
+ \begin{cases}
+ F_{u_i},&s_{i-1}=1\
+ F_{u_i-1},&s_{i-1}=0.
+ \end{cases}
+ \tag{PCR.96}
+$$
+
+The other child has the other length. This is the required unequal
+Fibonacci descendant count. Equation (PCR.96) also proves that later
+orientations can change the literal names inside a child subtree but
+cannot change either count or either interval boundary once the parent
+and its initial orientation are fixed.
+
+For completeness, the endpoints in (PCR.94) are obtained from the
+supplied calls themselves. Use the computable finite-word order with
+$a<b$ and prefix before a proper extension. A returned word is
+``before $p_i$'' when it precedes every extension of $p_i$, and
+``after $p_i$'' when it follows every such extension; both tests use only
+$p_i$ and that returned literal. The first index which is not before
+$p_i$ is $L_i$, and the first index after the interval is $R_i+1$.
+Each is a monotone boundary search over the $N_T+1$ positions including
+the virtual endpoint, and therefore costs at most
+
+$$
+ B_T=\left\lceil\log_2(N_T+1)\right\rceil
+ =\left\lceil\log_2(F_{T-1}+1)\right\rceil
+ \tag{PCR.97}
+$$
+
+actual band calls. This search does not assume a source-independent
+location for $p_i$; it learns the location from exact returned literals.
+After $L_i$ is known, make one further call at
+
+$$
+ k_i=L_i+F_{u_i}-1.
+ \tag{PCR.98}
+$$
+
+Since $u_i\ge3$, this lies in $E_i$ and the two lengths in (PCR.96)
+are unequal. The returned word begins with $p_i a$ exactly when
+$s_{i-1}=1$, and begins with $p_i b$ exactly when $s_{i-1}=0$: in the
+first case (PCR.98) is the last member of the $a$ block, while in the
+second it is already in the $b$ block. This recovers the next bit.
+Induction in increasing birth order proves recovery of all of (PCR.89).
+
+The two endpoint searches and one orientation call use at most
+$2B_T+1$ calls per bit. Since $B_T\ge1$,
+$2d(2B_T+1)\le4dB_T$, proving (PCR.90). Any parent in the layer
+$\mathcal H_s(T-2)$ has depth at most $T-2$: the root branches at cut
+$2$ and each edge increases branch cut by at least one. Every returned
+literal therefore has $O(T)$ symbols. Also $F_{T-1}+1\le2^{O(T)}$,
+so $B_T=O(T)$ and the total returned literal traffic is $O(dT^2)$.
+The replay of at most $2d$ births, Fibonacci boundary arithmetic and
+finite-word comparisons are polynomial in $d+T$.
+
+For the converse, GPO29.2 supplies all-index uniqueness in the full
+class $\mathscr R_d$: the transient-inclusive prefix of length $2d$
+fixes the entire behavioral source, including singular presentations,
+repeated factors and any unbounded least period. ACR10.2 and
+ACR21--22, 27--33 (with ACRC33's genuine-parent and certificate
+conditions) provide the permitted inverse, normalization and source
+correspondence. PCR27.2--27.7 then evaluates the exact global layer and
+returns each $U_s(j)$ for $j\in J_T$. No independently attainable table
+or hidden period, cut, label or source advice is used. This proves both
+implications. $\square$
+
+**Proposition 30.3 (degenerate bands and the $d=0$ case).** At $d=0$,
+$\mathscr R_0$ contains only the zero source, so $P$ is the empty word
+and the actual band image is a singleton for every $T\ge2$. A common
+decoder returns the empty prefix without a band call, and PCR27 computes
+the singleton band from that known law. At small endpoints, $J_1$ is
+empty, $J_2=\{1\}$ is a singleton, and $J_0$ contains the nonpositive
+endpoint $0$ and therefore has empty positive query domain. These
+boundary cases carry no version of the $d>0$ recovery claim. For
+$d>0$, the condition $T\ge r_d+3$ makes $J_T$ nonempty and ensures all
+prefix-parent descendant intervals used in the proof have both unequal
+positive counts in (PCR.96). $\square$
+
+**Proposition 30.4 (same local cone, separated global band).** There is
+an actual-image distinction even when a local cone is identical. Take
+$d=3$ and the two authentic sources
+
+$$
+ s=(10)^\infty=101010\cdots,
+ \qquad
+ s'=001010\cdots,
+ \tag{PCR.99}
+$$
+
+from the common-class pair of Proposition 23.1. Their physical cone
+$aa$ has the same creation data $(e,A,B)=(4,5,8)$ and the same complete
+normalized future at every common mature local age. Here $r_3=5$ and take
+the global band $T=8$, so
+
+$$
+ J_8=\{F_8,\ldots,F_9-1\}=\{21,22,\ldots,33\}.
+$$
+
+A direct PCR27 chronological forward evaluation gives, for the first
+four members of this actual band,
+
+$$
+\begin{array}{c|cccc}
+ j&21&22&23&24\\ \hline
+ U_s(j)&aaaa&aaaba&aabb&abaaa\\
+ U_{s'}(j)&aaaa&aaaba&aabb&abaa
+\end{array}
+ \tag{PCR.100}
+$$
+
+In particular the supplied exact answer at $j=24$ is $abaaa$ for $s$
+and $abaa$ for $s'$. Thus a common local cone does not determine the
+same global band. If the already-occurred interface is intended, use a
+common independently acquired cut $n\ge8$; the whole-origin band
+comparison itself has no current-cut premise. The table is a computed
+actual-source image, not an arbitrary pair of independently attainable
+literal tables.
+
+**Theorem 30.5 (retained semantic source capacity).** For fixed
+$d>0$ and any $T\ge r_d+3$,
+
+$$
+ |\mathcal B_{d,T}|=|\mathscr R_d|=D_d
+ =\frac{2\,4^d+1}{3}.
+ \tag{PCR.101}
+$$
+
+Hence a common deterministic evaluator which retains all accessible
+installation data from these supplied band calls, has no further source
+access, and must distinguish every actual law needs at least
+
+$$
+ \left\lceil\log_2D_d\right\rceil=2d
+ \tag{PCR.102}
+$$
+
+fixed source-dependent bits. At $d=0$ the semantic capacity is one law
+and this lower bound is zero.
+
+**Proof.** Theorem 30.2 makes the map $s\mapsto U_s\!\upharpoonright
+J_T$ injective on the actual class. GPO37 supplies the all-index count
+$D_d$ for the same class, including finite transients, singular and
+repeated-factor laws, and nonminimal presentations. Thus (PCR.101)
+follows. A deterministic evaluator with $q$ fixed source-dependent
+binary state bits has at most $2^q$ distinct retained states. To answer
+all source-dependent continuations correctly with no later source read,
+it must place distinct laws in distinct states, so $2^q\ge D_d$ and
+(PCR.102) follows from
+$2^{2d-1}<D_d\le2^{2d}$. This is semantic law capacity, not a free
+codebook or a physical resource: every full literal, represented ordinal
+input, local comparison, copied symbol, cumulative write, retained
+storage cell, output copy and installation operation remains charged.
+The original $P,n$, exact $K_d(P)$ and $\rho_d$ firstness, genuine
+binding, permissions, owned backing, stationarity and completed
+installation still require their own acquisition obligations. In
+particular PSA8.4 remains the supplier for paid unknown-law/unknown-cut
+acquisition; a supplied band call does not replace that physical
+entrance. $\square$
+
+**Scope and supplier boundary.** The results above are ordinary
+mathematical deductions from PCR17.2's exact integer child transport,
+PCR27.2--27.7's global beta layers, ordinals and source preparation,
+GPO29.2/GPO37/GPO39's source uniqueness, count and actual-parent
+suppliers, and ACR10.2/21/22/27--33 with ACRC33's inverse,
+normalization, genuine-parent and paid-presence boundaries. They retain
+the whole all-index class $\mathscr R_d$, including singular transients,
+repeated factors and unbounded periods. The supplied band is a query
+restriction, not a new physical port. Any realization by paid physical
+presence acquisition must separately satisfy PSA8.4, ACR's genuine
+binding and certificate conditions, source storage, permissions,
+stationarity and completed installation. No sharp horizon, physical
+acquisition algorithm, or fresh Lean/kernel claim is asserted here.
