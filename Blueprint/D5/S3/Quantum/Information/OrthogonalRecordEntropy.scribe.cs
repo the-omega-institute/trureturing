@@ -29,6 +29,16 @@ internal sealed class OrthogonalRecordEntropyDocument : IScribeDocumentDefinitio
                     Call("S", Call("mixture", F.Id("p"), Rho)), Sp, Eq, Sp,
                     Call("H", F.Id("p")), Sp, Plus, Sp,
                     Call("WeightedEntropy", F.Id("p"), Rho)))),
+            Result("cq-record-entropy", "entropy_recordState",
+                "Entropy of a classical pointer with arbitrary quantum fragments",
+                "For arbitrary fragment densities rho_i, the whole states |i><i| tensor "
+                    + "rho_i are pairwise orthogonal because the pointer states are orthogonal. "
+                    + "Thus the record entropy is H(p) plus sum_i p_i S(rho_i), without "
+                    + "requiring orthogonality of the fragment states. Zero weights and "
+                    + "singular fragment states are included.",
+                Disp(Seq(Call("S", Call("recordState", F.Id("p"), Rho)), Sp, Eq, Sp,
+                    Call("H", F.Id("p")), Sp, Plus, Sp,
+                    Call("WeightedEntropy", F.Id("p"), Rho)))),
             Result("pointer-information", "orthogonal_record_trace_gives_sbs_consensus",
                 "The fragment carries all pointer information",
                 "The joint state is sum_i p_i |i><i| tensor rho_i. Its system marginal is "
