@@ -106,7 +106,7 @@ private lemma coefficient_signs {u v : ℝ} (hu : u ∈ Ioo (0 : ℝ) 1)
   have hthresh : (1 + 3 * B) / 2 ≤ A := by
     dsimp [c4] at hfour
     have hinner : 0 ≤ 2 * A - 3 * B - 1 :=
-      nonneg_of_mul_nonneg_left hfour (by positivity : 0 < 2 * B)
+      nonneg_of_mul_nonneg_right hfour (by positivity : 0 < 2 * B)
     linarith
   apply mul_nonneg (by positivity)
   by_cases hsmall : w ≤ 1 / 3
