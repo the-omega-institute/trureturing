@@ -78,7 +78,7 @@ theorem thetaRep_pairing (D : LatticeData) (g : ReflectionGroup)
     sourcePairing D (thetaRep D g u) (thetaRep D g v) = sourcePairing D u v := by
   fin_cases g
   · simp
-  · simpa using sourcePairing_theta D u v
+  · simpa [thetaRep] using sourcePairing_theta D u v
 
 theorem thetaRep_involutive (D : LatticeData) (v : Carrier D) :
     thetaRep D 1 (thetaRep D 1 v) = v := by
@@ -89,12 +89,12 @@ theorem thetaRep_fixed (D : LatticeData) (g : ReflectionGroup)
     thetaRep D g v.val = v.val := by
   fin_cases g
   · rfl
-  · exact (mem_fixedSpace D v.val).mp v.property
+  · simpa [thetaRep] using (mem_fixedSpace D v.val).mp v.property
 
 theorem coevaluation_fixed_under_theta (D : LatticeData)
     (h : ℤ) (f : Module.Dual ℂ ↥(grade D h ⊓ fixedSpace D)) :
     thetaRep D 1 (coevaluation D h f).val = (coevaluation D h f).val := by
-  exact (mem_fixedSpace D (coevaluation D h f).val).mp
+  simpa [thetaRep] using (mem_fixedSpace D (coevaluation D h f).val).mp
     (coevaluation D h f).property.2
 
 theorem coevaluation_fixed_under_reflection (D : LatticeData)
