@@ -9,6 +9,8 @@
 import D5.S1.Words.Complexity.LyndonBrackets.LyndonOrder
 import Mathlib.Data.List.Induction
 
+/-! # Uniqueness of nonincreasing Lyndon factorization -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -62,7 +64,8 @@ theorem last_factor_is_min_nonempty_suffix (fs : List (List A)) (m : List A) :
               rcases eq_or_ne t u with rfl | htu_ne
               · exact le_rfl
               · exact (((isLyndon_iff_lt_suffix u).mp hu).2 t ht htu htu_ne).le
-            exact (hmu.trans hut).trans List.le_append_left
+            exact (hmu.trans hut).trans (le_of_not_gt
+              (List.le_append_left (l₁ := t) (l₂ := (fs ++ [m]).flatten)))
 
 /-- Equality of words determines every factor in a nonincreasing Lyndon factorization. -/
 theorem nonincreasing_lyndon_factorization_unique (fs gs : List (List A))
