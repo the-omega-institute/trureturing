@@ -224,7 +224,8 @@ set_option maxHeartbeats 8000000 in
 private theorem sourceSeed_score (n : ℕ) (hn : n ∈ [6,7,8,9,10,11]) :
     IsScoreCycle n (sourceSeed n) := by
   simp only [List.mem_cons, List.not_mem_nil, or_false] at hn
-  rcases hn with rfl | rfl | rfl | rfl | rfl | rfl <;> decide
+  rcases hn with rfl | rfl | rfl | rfl | rfl | rfl <;>
+    unfold IsScoreCycle IsDie <;> decide
 
 private theorem hasCycle_of_score (n : ℕ) (hn : 3 ≤ n) (c : List (List ℕ))
     (h : IsScoreCycle n c) : HasCycle n c.length := by

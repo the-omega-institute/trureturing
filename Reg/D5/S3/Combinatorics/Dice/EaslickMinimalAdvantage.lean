@@ -83,6 +83,10 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   continuation := .unknown,
   familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
 namespace Threshold
@@ -112,7 +116,7 @@ abbrev arena : Arena where
     (1/2 < winProbability d e ↔ r.readout () () n ≤ winCount d e)
 theorem rejected_law : ¬ arena.Law Threshold.rejected := by
   intro h
-  have hd : IsDie 3 [1,1,1] := by decide
+  have hd : IsDie 3 [1,1,1] := by unfold IsDie; decide
   have hp : winProbability [1,1,1] [1,1,1] = 0 := by decide
   have hw : winCount [1,1,1] [1,1,1] = 0 := by decide
   have hh := h 3 (by decide) [1,1,1] [1,1,1] hd hd
@@ -136,7 +140,7 @@ abbrev arena : Arena where
     (Edge n d e ↔ winCount d e = r.readout () () n)
 theorem rejected_law : ¬ arena.Law Threshold.rejected := by
   intro h
-  have hd : IsDie 3 [1,1,1] := by decide
+  have hd : IsDie 3 [1,1,1] := by unfold IsDie; decide
   have hp : winProbability [1,1,1] [1,1,1] = 0 := by decide
   have hw : winCount [1,1,1] [1,1,1] = 0 := by decide
   have hh := (h 3 (by decide) [1,1,1] [1,1,1] hd hd).mpr
@@ -190,6 +194,10 @@ noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_
       functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
 namespace Minimum
@@ -236,6 +244,10 @@ noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{_
       functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
 namespace EdgeScore
@@ -282,6 +294,10 @@ noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{_
       functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
     { name := `relaxedAutoImplicit, value := .bool false }] }
 
 end Reg.D5.S3.Combinatorics.Dice.EaslickMinimalAdvantage
