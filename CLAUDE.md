@@ -8,42 +8,11 @@
 
 **Python 版本**：仓库脚本及构建、测试、gate 使用 **Python 3.12 或更新版本**。执行前用 `python3 -c 'import sys; assert sys.version_info >= (3, 12), sys.version; import tomllib; print(sys.executable, sys.version)'` 核对实际解释器。版本不符时，先选择已安装的合规 Python，将其 `python3` 所在目录放在本次命令的 `PATH` 最前，并让 Make、Shell、Lean 子进程继承该环境；macOS 可使用 Homebrew 安装或升级的 Python。本条为 agent 执行约定，自动版本检查以现役脚本为准。
 
-| 用途 | 命令 |
-|---|---|
-| 仓库修改先复用兼容 linked worktree，需隔离时创建；只读与 issue 操作复用现有检出（第 6.1 条） | `make worktree KIND=<kind> NAME=<任务码> DEST=../trureturing-<session-id>` |
-| 编译指定 Lean 模块及依赖 | `make lean LEAN_TARGETS="<点分模块名>"`（省略 `LEAN_TARGETS` 为全项目） |
-| 核对指定 Lean 模块、utility 输入及 imports / 发射所选 Scribe | `make lean-report-scoped LEAN_TARGETS="<点分模块名>"` / `make emit [PATHS=<NUL分隔路径文件>]` |
-| 显式整库 Lean 报告（CI / 整库核验） | `make lean-report` |
-| 摄入指定理论源 | `make ingest SOURCE="<source-id 或源文件路径>"` |
-| 查看 atom / 连读上下文 | `make show-atom ATOM_ID=<id>` / `make atom-context ATOM_ID=<id>` |
-| 搜索指定理论的 atom | `make search-atoms SOURCE=<源ID或理论路径> [TEXT=<关键词>] [STATE=<目录状态>] [LIMIT=<上限>]` |
-| 构建、冻结并覆盖锚点 atom | `make deposit ATOM_ID=<id> GID=<gid>` |
-| 构建并冻结无对应理论卷(故无 atom)的形式化 | `make deposit-uncovered GID=<gid>` |
-| 用既有冻结声明覆盖 atom | `make cover ATOM_ID=<id> GID=<gid>`；批量用 `make cover-batch ATOMS=<TSV文件>` |
-| 预览 atom 子句拆分 | `make decompose ATOM_ID=<id> DRY_RUN=1` |
-| 按请求结算 atom（先连读上下文） | `make settle REQUEST=<请求文件>`（适用范围见第 3.2 条） |
-| 快速 .NET 结构检查 | `make -C tools check-fast`（不验证 Lean 或完整准入） |
-| 基线到当前工作树的完整增量检查 | `make gate BASE=<40位commit-SHA>` |
-| .NET 构建 / 全量测试 | `make -C tools dotnet` / `make -C tools test` |
-| 数学门 / 本地 CI 准入流程 | `make test` / `make gate` |
-| 建 PR | `make pr HEAD=<分支> MESSAGE=<消息文件>`（首行为标题；默认自动合并并等 required CI；`AUTO_MERGE=0` 关闭自动合并；`DRAFT=1` 创建草稿后直接返回；`pr-open` 同义） |
-| 等指定 PR 提交的 CI | `make pr-watch PR=<编号> HEAD_SHA=<40位commit-SHA>` |
-| 预览可回收 worktree | `make -C tools clean-lanes`（加 `FORCE=1` 执行；已合并到 dev、干净且 HEAD 提交与分配均满 3 小时可回收；未合并或不干净的须 HEAD 提交与分配均满 24 小时并落后 BASE 300 提交；未知保留，删除按锁时长与身份核验） |
-| 交付后归还 worktree 并保留缓存 | `make worktree-return PR=<编号> WRITERS_JOINED=1`（先核验 MERGED、首个 dev push 并 join 本任务写入者；第 6.1 条） |
-| 显式删除指定 worktree | `make worktree-remove NAMES="<目录名>"`（第 6.1 条） |
-| 磁盘可用空间低于 5% 时回收 | `make -C tools clean-all FORCE=1`（AI 可直接执行，第 6.1 条） |
+仓库修改先复用兼容 linked worktree，需隔离时创建；只读与 issue 操作复用现有检出（第 6.1 条）。常用命令速查表见 SPEC §11.28（CLAUDE.md 常用命令速查）。
 
-常用独立脚本（以下 `bash tools/scripts/agent/…` 均在仓库根运行）：
+常用独立脚本速查见 SPEC §11.28（CLAUDE.md 常用独立脚本）；其中 `bash tools/scripts/agent/…` 均在仓库根运行。
 
-| 用途 | 命令 |
-|---|---|
-| 查指定修订的工具文件 / 目录容量余量 | `bash tools/scripts/agent/headroom.sh HEAD` |
-| 提取定理前的节级假设 | `bash tools/scripts/agent/section-context.sh <源文件.md> <定理号>` |
-| Nyx 提问(oracle broker 单次流式调用) | `python3 tools/scripts/agent/nyx/nyx.py ask <brief文件> <输出文件>` |
-| 查看 Nyx 可用池 | `python3 tools/scripts/agent/nyx/nyx.py pools` |
-| 抓取网页或 PDF(可选 NyxID Firecrawl；文献读取路线见第 5.11 条) | `nyxid proxy request api-firecrawl v1/scrape -m POST -H "Content-Type:application/json" -d '{"url":"<地址>","formats":["markdown"]}' --output json` |
 
-**Nyx 调用禁令**：禁止执行旧 `nyxid oracle` CLI 及其子命令，包括脚本封装、sshx 席位和失败回退中的间接调用。独立提问统一用上述 `nyx.py ask`，sshx 的 oracle 席统一用其 broker runner；具体契约见第 5.11 条。
 
 ## 1. 权威、本体与不可逆真值 DAG
 
@@ -79,7 +48,6 @@ docs/theory(参考输入)──(可选)摄入机器──► Lean(唯一真源)�
 ```
 
 - **Lean**:真值=声明+证明项+axiom 闭包,注释零参与。X_Frontier 的 `TASK D5-Tnnnn` 是冻结门与目标处理命令读取的治理地址;其余工单散文非数学承重。SL-013 为 deferred `NoFindings`,不执法散文形状。
-- **C# harness**:程序集只许程序(类型/逻辑/loader/writer);声明性实例住程序目录外(TOML/scribe.cs/Evidence/D5)或测试 fixture(第 4.2 条)。
 - **docs/theory**:理论卷是参考输入；需要进入消化账本时，经 atomizer+消化账本摄入，Lean/C# 对其零知识零定位(TheoryIsolation)。新增理论 PR 可以只提交正文，不以 `make ingest`、atom CAS 或 backfill 作为合并前置；形式化交付不以先写理论卷为前置，但内容已有理论卷时须先摄入并经 deposit/cover 入链(第 1.2 条「形式化直接写 Lean 与 Scribe」)；卷与 atoms 不删属建设者纪律。已形式化者不重复形式化,勘误追加散文与新 atom。只增不减的账本是 git,机器只保证数据当下正确,改删历史由 git 查证,无历史单调判官。实现层无既有 CAS blob 删除面;失败回滚只删本次新建且尚未入账的 blob。
 
 ### 1.3 真值图、冻结与两个偏序
@@ -245,14 +213,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 
 **用途样本(仅限 2026-09-05 采样)**:全库读数来自 dev `a030e0dc6e`;枚举族/反例/证书三行在 `5aa818b070` 复算一致(该树全库 3361 模块/512,850 行)。五坐标不外推为当前全库保证:
 
-| 样本 | 模块 | 行数 | 有下游 import | 闭合 atom | 两者皆无 |
-| --- | --- | --- | --- | --- | --- |
-| 全库 D5 | 3360 | 512,608 | 45% | 58% | 19% |
-| 枚举族(S0/Tower 周期 6–12) | 80 | 31,971 | 96%(族内互引) | 1% | 2% |
-| 反例 | 23 | 2,913 | 13% | 83% | 13% |
-| 数值证书(去概念桶) | 27 | 3,523 | 33% | 56% | 26% |
-同窗口枚举族 78 模块有 import 或 coverage,77 有 importer,仅 5 有族外 importer(被 6 模块引);4 个数学消费者只用周期 ≤5 底层生成器(`ASSUMED-UNVERIFIED`:未复算声明闭包)。周期 6–12 塔只汇入两个子句打包模块各闭 1 atom,源句报告枚举本身。3 个反例模块两类边皆无,故按边数设用途门会误判。`TribonacciPermanentSurvivors` 声明枚举未用于一般定理。`LeanCacheBudgetPolicy.cs` 注 S0/Tower 81 模块 6305 s@ARM、最贵单子图 1656 s;与本表 80 模块集合是否相同未核对,`ASSUMED-UNVERIFIED`。
-**同窗口的未履行用途**:LRAT 链至 `GoldenDFAOMinimalityTargets` M07–M16 均是假设 `refutation` 的条件定理,仓内 `lrat_proof`/`.lrat`/`.cnf` 皆 0;`FiniteExhaustion`→`FiniteBranchAtlas` 无 importer/coverage/具体实例。`germ_zero_of_center_jet` 三前提仅曲率由 `g60_curvature_le_118` 履行,值界缺,导数只到 g 1(阈值 1 非 1.87),唯一应用仍带假设。`DedekindBhkCertificates` 四实例零引用而定义被用;7 个数值证书无 importer/coverage(详 #5515)。
+用途样本表、同窗口读数与未履行用途读数见 SPEC §11.28（CLAUDE.md §3.5）。
 **仍有用的区别**:`GapEndpoints` 两枚举器周期九相差的 3 词正是 gap 边界周期 3 环;保留探针发现及其证明链,无需保留整塔。既有 `clause_depth_sixty_claim_is_false` 是一般定理在 60 的实例化,仍判 bind-only;新同形 atom 走消化,反驳用途不豁免包装禁令。
 **黎曼路线样本(2026-09-04,增订二十五至二十九 W-10…W-21)**:W-12 阿基米德可积性提供主要分析逃逸。W-14/W-15 的 `exists_supportRadius`、W-18 的 `activePrimePowers_eq_empty_of_exp_lt_two` 须按第 3.2 条四项检查见证,不能使其 bind-only 主声明取得资格;W-10/11/13/16/17/19/20/21 是去假设化、投影、存在见证绑定或冻结 iff 复合,亦为 bind-only。既有冻结保留,同形新增直接消化,同模块 content helper 不豁免。席位空闲不得在边际收益触底后继续派同形任务。
 *成熟锚*:旧数据可推出的信息不算新信息、数学新颖性/拒绝平凡包装、预算包络与第二次同症状停手、需求到验收的 traceability、真实实例端到端交付、YAGNI、Popper、Goodhart。理论卷的“无明确下游 theorem 消费者按 DECT 平凡病淘汰”“C8 禁枚举完备”按各自范围理解,用途例外以第 3.3 条为准。
@@ -758,7 +719,6 @@ CI、非 dev 和 detached 主检出不进行可选刷新。相符的种子按原
 **进程终止归属**:只终止本任务自己创建、并持有其 pid 或进程组句柄的进程,如自己的子进程、`start_new_session` 创建的组或宿主作业句柄所指进程。
 禁止按命令名、参数或路径模式跨进程终止,包括 `pkill -f`、`killall`、按 `ps | grep` 结果批量 `kill`;同机多个驱动者与席位共享 runner 名、`codex exec` 参数、`claude` 参数及 `<主检出父目录>/trureturing-*` 路径前缀,按模式匹配会终止其他会话的工作。
 本树 cwd 只用于列出遗留进程候选,不单独构成终止依据;终止须凭本任务自己创建并持有的 pid/进程组句柄或宿主作业句柄确认归属,无法证明就不动,只报告。操作要求见 `tools/scripts/agent/implementation-brief-note.txt`。
-“看起来像旧 lane 自动重生”的进程不属于本任务,除非本任务记录的 pid/pgid 能证明归属;无法证明就不动。
 〔守护:**软+硬投影**·shell 文本可搜,意图不可 lint;进程终止归属为软约束,靠评审;完成须给真实哨兵退出码。转录自审须同时判①尾随 & 且同命令无 wait;②已知长任务在前台且无后台选项。已知类含 `seat.sh dispatch`、`nyx.py ask`、`make {lean,lean-report,本地检查,gate,worktree,pr-open,cover,cover-batch,deposit,emit,ingest,test}`、`dotnet test`。只查①会漏②,运行输出/判词绿也不能证明未违规。匹配限定命令位置(行首、`;`、`&&`、`|`、`$(` 后),先剥 heredoc 体,不整命令豁免,避免散文/源码假阳与体外漏检。`tools/scripts/agent/selfaudit.sh` 可数违规/合法形及按用户指令行号分窗的挂钟,并查第 8.3 条裸 lake;每次反思必跑,只留有用结果不存转录副本(第 2.10 条)〕
 
 ### 8.7 原生同步等待与外部轮询边界
@@ -926,12 +886,7 @@ check-current 只检查候选最终树,不读 base、不消费工程阶段证据
 先经 `/usr/bin/time -l lake env lean -Dprofiler=true -Dtrace.profiler=true -Dtrace.profiler.threshold=1000 <模块>.lean` 量 checked 秒数与 maximum resident set size,按声明找主成本,每改一处重量,PR 给前后读数(第 2.8 条)。
 **三类已实测的病因与处方(2026-09-10,`CrimGrundyRefutation`,同一模块同一台机)**:①**一次性 `decide +kernel` 判一个大集合** —— 内核要把全部状态的归约中间项同时驻留,峰值即其和;处方是先 `reduce`、`simp only` 拆合取、`repeat' apply And.intro` 分解,再 `all_goals decide +kernel`,每次只驻留一项。②**证书用线性表** —— `List.lookup` 在内核归约里是二次代价(377 个位置各查一次、平均走一半);处方是换成平衡树的归纳类型,降到对数级。③**伞形 `import Mathlib.Tactic`** —— 载入整个 tactic 库的环境;处方是精确导入,并把无限制的 `simp` 换成 `simp only [具名引理]` 配 `omega`。配置比较:
 
-| 配置 | 墙钟 | `checked` | 峰值内存 |
-| --- | --- | --- | --- |
-| 原始 | 100.4 s | 87.1 s | 22.7 GB |
-| ① 拆分逐项归约 | 87.2 s | 68.0 s | 3.2 GB |
-| ② 证书换平衡树 | 29.3 s | 11.2 s | 3.0 GB |
-| ③ 精确导入 | 19.2 s | 11.6 s | 1.5 GB |
+配置比较读数见 SPEC §11.28（CLAUDE.md §10.2）。
 
 同批一个**负结果**一并入账:把证书展开成显式 `cons` 链,`checked` 72.1 s 对 68.0 s,**无改进,丢弃**。CI 侧该模块的构建由被杀变为 68 秒通过。**不冒领**:本地峰值内存由 22.7 GB 降到 1.5 GB **不证明**先前那次 SIGTERM 的成因就是内存耗尽 —— runner 侧证据未取,该归因记 `ASSUMED-UNVERIFIED`(第 2.9 条:不确定须带排除项)。已排除的替代解释在该案里是逐条有读数的:非 job timeout(限 45 min 而 job 只跑 7 min 22 s)、非并发取消(`concurrency.group` 为 `ci-<PR 号>`,不跨 PR,且该分支仅一个 run)、非该步自身 timeout(它没有 `timeout-minutes`)。
 **两条红线**:①**agent 不得擅自抬 `timeout-minutes` 或计算预算，不得靠重跑碰运气**(第 7.8 条:检测绝不降级,不以抬预算掩盖失败);普通 `current` 与 `ci-unit` 依 SPEC A22 使用 120 分钟（2 小时）累计计算预算，缓存/准备包与工具依赖下载准备不计入；外层 job 平台挂钟上限为 360 分钟，不承诺无限下载。独立长 producer 360 分钟、定时 Release 120 分钟保持各自范围；agent 不得自行抬计算预算或平台上限。②**不得为了快而削掉逃逸见证**(第 3.2 条)—— 把待判的常数直接写进定理、用 `native_decide` 把成本挪到别处、砍掉证书的完整性检查,都是把模块掏空;**一个被掏空的模块过了门也是假的过**,宁可它暂时进不去。改动只许落在 tactic 脚本、私有数据表示与 import 面上,**公开陈述的 `statement_id` 应当不变**;若确实变了,冻结 pin 须重做(SL-008 会以 `pin mismatch: stored=… actual=…` 判红,那是**先冻结后改源码**的必然后果,正序是实施 → 评审 → 修复 → deposit)。
@@ -996,38 +951,30 @@ Release 名为 `lean-cache-v2-<resolved-mathlib>-<platform>-report-<format>-env-
 古训是同一批规则的成熟锚,〔守护〕仍按各条边界。
 
 - **实事求是**——结论据可核验事实,不据记忆/权威/美感/推测;能验先验,证据在前、主张在后。
-- **知之为知之,不知为不知,是知也**——诚实标 open/ASSUMED-UNVERIFIED,不冒领(第 2.2、2.4 条)。
 - **毋意,毋必,毋固,毋我**——不臆测、武断、固执、自证,自信也交独立机器(第 5.7 条)。
-- **兼听则明,偏信则暗**——异模型破相关先验(第 5.8 条)。
-- **述而不作,信而好古**(第 3.7 条)。
 
 ### 11.2 待人
 
 - **己所不欲,勿施于人**(恕道)——交付须是下游愿收的:账平、可复现、诚实;收尾清理,不留坑。约束人=约束 AI(第 7.4 条)。〔守护:**软+硬投影**·对手官与反思守,SL 判账平,遗留问题只留有用结果(第 2.10、5.10 条)〕
-- **己欲立而立人,己欲达而达人**(忠道)——harness 服务下级程序(第 4.1 条)。
 - **君子求诸己,小人求诸人**——出错先查自身/harness,不甩锅(第 2.2 条)。
 - **言必信,行必果**——完成承诺须有新鲜验证;过而不改,是谓过矣——失败保留可复用教训,不重走死路(第 5.10 条)。
 
 ### 11.3 规矩与利器
 
 - **不以规矩,不能成方圆**(孟子·离娄上:"离娄之明,公输子之巧,不以规矩,不能成方圆")——单点再聪明也须规矩;先定义再处理(第 5.7、7.3 条)。方圆=真值 DAG,规=门(义务守恒、声明与消费分 PR),矩=器(本地检查/ingest/GID);加固规矩也付 τ 成本,无后门。〔守护:**元准则**·新类无定义标“未实例化(案号)”,不即兴〕
-- **欲速则不达**——诚实>速度,打地鼠反慢(第 2.1 条)。
 - **工欲善其事,必先利其器**——器律见第 8 章。
 
 ### 11.4 俭约与自然
 
 - **磨刀不误砍柴工**——器 bug 最高优先修,胜于赶路;修器同门、无免费捷径(第 7.2、7.8 条)。
-- **过犹不及**——只在会说谎处设门,不过度、不镀金(第 2.5、4.8 条)。
 - **大道至简**——唯一真源、规范最简、程序/数据递归(第 4.2 条)。
 - **为学日益,为道日损;损之又损,以至于无为**(老子·四十八)——harness 成熟应变小;消病因即删补偿面(第 4.2 条)。判据是净行数下降且合并与仪式耗时下降,不数新机器。〔守护:**软+硬投影**·行数/耗时可测,何时减靠评审〕*成熟锚*:奥卡姆、YAGNI、负代码量、精益。
 - **买椟还珠**(韩非子·外储说左上)——楚人卖珠,饰以木兰之椟、缀以珠玉;郑人**买其椟而还其珠**。动手先问是在做椟还是取珠,不可只建补偿/验证机器而不消病因。〔守护:**软**·对手官;硬投影=净行数判据〕
 - **因其固然**(庄子·养生主:「依乎天理,批大郤,导大窾,因其固然」)——庖丁十九年而刀刃若新发于硎,顺天然关节下刀。门设在性质可能被破坏处:确定性属生成程序,触发应为生成程序闭包变更,非每次内容变更(第 2.5、7.8 条)。〔守护:**软+硬投影**·路径闭包可判,关节选择靠评审〕*成熟锚*:Bazel/Nix 增量触发、变更影响、不变量断言。
-- **无为而治;道法自然;上善若水,利万物而不争**——稳态自主、算法定址、harness 服务下级不争特权(第 7.16、4.2、4.1 条)。
 
 ### 11.5 度身与既判力
 
-- **量腹而食,度身而衣**(第 10.1 条)。
-- **一事不再理**(第 10.3 条)。
+度身与既判力的古典引语见 SPEC §11.28（CLAUDE.md §11.5）。
 
 ### 11.6 砺与生于忧患
 

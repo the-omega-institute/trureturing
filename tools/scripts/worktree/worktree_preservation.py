@@ -63,14 +63,22 @@ _PAYLOAD_PLAN = ContextVar("worktree_removal_payload_plan", default=None)
 
 
 def reject_nested_git(target):
-    """Refuse repository boundaries before checkpointing or deleting payload."""
+    """Refuse owner, device and repository boundaries before payload mutation."""
+    root_stat = target.lstat()
+    if root_stat.st_uid != os.getuid():
+        raise Refused("owner_boundary:" + str(target))
     def unreadable(error):
         raise error
     for directory, folders, files in os.walk(target, followlinks=False, onerror=unreadable):
         path = Path(directory)
         if path == target:
             folders[:] = [name for name in folders if name != ".git"]
-        elif ".git" in folders or ".git" in files:
+        for name in folders:
+            child = path / name
+            info = child.lstat()
+            if stat.S_ISDIR(info.st_mode) and info.st_dev != root_stat.st_dev:
+                raise Refused("device_boundary:" + str(child))
+        if path != target and (".git" in folders or ".git" in files):
             raise Refused("nested_git_boundary:" + str(path.relative_to(target)))
         if "HEAD" in files and git(target, "rev-parse", "--resolve-git-dir", path,
                                    check=False).returncode == 0:

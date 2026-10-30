@@ -1,0 +1,25 @@
+## Theorem (explicit symmetric linear-support family)
+Let K be a finite field of odd order q. The planar graph has vertices O,A,B,C,D, edges OA,OB,AB,OC,OD,CD, and two boundary legs at each outer vertex. For nonzero t,s in K define the normalized state
+
+    |Psi(t,s)> = q^(-2) sum_(x,y,z,w in K)
+      |x+z,x-z,y+tz,y-tz,x+y+w,x+y-w,x-y+sw,x-y-sw>.
+
+All coefficients here are positive and identical; arbitrary phases are NOT covered.
+
+This state is realized by five normalized AME(4,q) tensors. It satisfies S(R)=m(R) log q for every subset of the eight individual boundary legs if and only if
+
+    t,s not in {0,1,-1},
+    st+s+t-1 != 0, st+s-t+1 != 0,
+    st-s+t+1 != 0, st-s-t-1 != 0.                 (1)
+
+The initial t,s !=0 is necessary for the stipulated local AME realization. The remaining conditions characterize exact RT within this family, not among all possible tensors.
+
+There are exactly
+
+    (q-3)(q-7) + 4, if q == 1 mod 4;
+    (q-3)(q-7),     if q == 3 mod 4
+
+ordered parameter pairs satisfying (1). Consequently this family works over every odd finite field of order at least 9, and over no smaller odd finite field. This is not a minimum-dimension theorem for arbitrary AME networks.
+
+For q=9, take K=F3[i]/(i^2+1), t=i and s=1+i. For any prime characteristic p>=11, t=s=2 works over every finite extension of Fp.
+
