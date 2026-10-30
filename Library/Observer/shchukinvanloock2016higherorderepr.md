@@ -27,7 +27,7 @@ proves for $n=2$ that (bS:2) "is always strict and tight, i.e., the left-hand si
 Source: https://arxiv.org/abs/1511.08444v1
 - DOI: https://doi.org/10.1103/PhysRevA.93.032114 (Physical Review A 93(3), 032114, 2016; title, authors, journal, volume, issue and article number from Crossref).
 - URL: https://arxiv.org/abs/1511.08444v1. The e-print member `bip-ent2.tex` has 1772 lines and md5 `97ea0260ffd180db07b62fdb44c91bc5`. Locations:
-  - the theorem for $n=2$ and its tightness, l. 804–811;
+  - the theorem for $n=2$ and its tightness, l. 804–812;
   - the theorem (nS) for general $n$, l. 908–922;
   - the family $|\psi^{(n)}_\xi\rangle$ and its limit, l. 924–958;
   - the conjecture, l. 961–963.
