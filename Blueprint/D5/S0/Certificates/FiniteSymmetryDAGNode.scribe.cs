@@ -11,7 +11,7 @@ internal sealed class FiniteSymmetryDAGNodeDocument : IScribeDocumentDefinition
         H("Untrusted finite symmetry replay nodes"),
         Blocks(
             Paragraph(Text("A node proposes a bound test, a symmetry action or all value children of a literal split. Node identity by itself establishes no acceptance at any context.")),
-            Node("Node", "Node", "Finite literal node data",
+            Node("node", "Node", "Finite literal node data",
                 "The data type keeps the complete coordinate and every value child. The checker, rather than the data producer, establishes acceptance.", DescribeRole.Definition))));
 
     private static DocumentBlock Node(string id, string declaration, string title, string prose,

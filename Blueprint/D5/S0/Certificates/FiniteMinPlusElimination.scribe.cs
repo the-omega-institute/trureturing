@@ -15,7 +15,7 @@ internal sealed class FiniteMinPlusEliminationDocument : IScribeDocumentDefiniti
                 "A factor is an integer-valued function on the assignment type. For one exact prefix, that type may contain full original events together with a proof of compatibility; every event in that context is retained.", DescribeRole.Definition),
             Node("state", "State", "Retain the constant and every active occurrence",
                 "A state stores an integer constant and a finite list of active factors. Repeated occurrences remain repeated list entries.", DescribeRole.Definition),
-            Node("state-value", "State.value", "Evaluate the represented bound",
+            Node("state-value", "value", "Evaluate the represented bound",
                 "The state value on an assignment is its accumulated constant plus the sum of every active factor value.", DescribeRole.Definition),
             Node("elimination", "Elimination", "Propose a literal bucket replacement",
                 "An operation supplies its old bucket, untouched rest, integer offset and output function. The rest may still depend on the same axis; full elimination and mini-bucket relaxations share this interface. An empty kept-axis set uses a constant output.", DescribeRole.Definition),

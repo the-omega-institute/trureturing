@@ -11,7 +11,7 @@ internal sealed class EJMOriginalDAGEncodingDocument : IScribeDocumentDefinition
         H("Balanced storage for original DAG words"),
         Blocks(
             Paragraph(Text("This module stores untrusted words only. Missing lookup returns zero and never establishes acceptance; the full replay must check every reached bound, action and split.")),
-            Node("PackedTree", "PackedTree", "Balanced literal word data",
+            Node("packed-tree", "PackedTree", "Balanced literal word data",
                 "Each tree node stores its original chunk index, literal word and both subtrees.", DescribeRole.Definition),
             Node("get", "get", "Look up the proposed original chunk",
                 "The exact chunk index selects the word through the balanced tree. An empty tree returns zero, so lookup alone supplies no correctness premise.", DescribeRole.Definition))));

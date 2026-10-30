@@ -11,7 +11,7 @@ internal sealed class EJMGlobalScoreSymmetryDocument : IScribeDocumentDefinition
         H("Actual original EJM source and outcome symmetry"),
         Blocks(
             Paragraph(Text("The original 192 source-copy actions and 24 common outcome actions preserve the same F1/F2 score. A cut keeps its actual pivot in the natural twenty-coordinate order.")),
-            Node("cutOfTag", "cutOfTag", "Decode the actual source-major symmetry tag",
+            Node("cut-of-tag", "cutOfTag", "Decode the actual source-major symmetry tag",
                 "The tag specifies the original source action and common outcome permutation, retaining the actual pivot.", DescribeRole.Definition),
             Node("act", "act", "Apply the complete original event action",
                 "The whole original source-copy map and common outcome permutation act on the complete event.", DescribeRole.Definition),
