@@ -5,7 +5,7 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: A floor-mask physical joint constructor for all strictly ordered middle-minimum gaps. -/
-import all D5.S3.Combinatorics.Circle.ThreeBitSource
+import D5.S3.Combinatorics.Circle.ThreeBitSource
 import Batteries.Tactic.OpenPrivate
 import Mathlib.Data.Nat.Prime.Basic
 import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
