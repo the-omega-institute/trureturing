@@ -8,7 +8,7 @@ internal sealed class LyndonFactorizationUniqueDocument : IScribeDocumentDefinit
 {
     private const string Module = "D5/S1/Words/Complexity/LyndonBrackets/LyndonFactorizationUnique";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Words/burcroffwinsor2019lyndon");
+        LibraryNoteRef.Create("D5/L/Words/nilforoushanparvaresh2026kdecks");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A nonincreasing factorization into Lyndon words is unique over any linearly ordered alphabet.",
@@ -21,8 +21,24 @@ internal sealed class LyndonFactorizationUniqueDocument : IScribeDocumentDefinit
                 + "arising from a split into two nonempty words. Flatten concatenates a list of words. "
                 + "LyndonFactors means that every member is Lyndon, and Nonincreasing means "
                 + "Pairwise (fun u v => v <= u), so repeated identical factors are permitted. "
-                + "Suffix includes the whole word. The finite uniqueness statement is classical; "
-                + "Burcroff and Winsor state it explicitly for possibly infinite ordered alphabets.")),
+                + "Suffix includes the whole word. The uniqueness statement is classical. "
+                + "The cited paper states Chen-Fox-Lyndon factorization in Lemma 4.4 for nonempty "
+                + "words on a finite ordered alphabet, using the rotation definition in Definition 4.1. "
+                + "Its Section 2 assumes a finite alphabet; it does not state an infinite-alphabet theorem.")),
+            Paragraph(Text(
+                "The arbitrary-alphabet scope follows by finite support. Given two factorizations "
+                + "with common concatenation w, every letter of every factor belongs to the finite "
+                + "set B of letters occurring in w. Give B the order inherited from A and relabel "
+                + "its elements by increasing rank in a finite chain. This injective order-preserving "
+                + "relabeling preserves and reflects word equality and lexicographic comparison, "
+                + "including the proper-prefix case. It commutes with concatenation and rotation, "
+                + "so it preserves and reflects the Lyndon predicate and the nonincrease condition. "
+                + "Lemma 4.4 identifies the relabeled factor lists, and injectivity recovers the "
+                + "original lists. One may enlarge the finite chain by unused letters if an alphabet "
+                + "of at least two symbols is required. If w is empty, nonemptiness of Lyndon factors "
+                + "forces both lists to be empty. This transfers the classical uniqueness assertion; "
+                + "the Lean proof below works directly in A and does not assume finite support as "
+                + "an additional hypothesis or claim mathematical novelty.")),
             Describe.Lean(DescribeId.Create("last-factor-min-suffix"),
                 DeclarationHandle.Create(Module + ".last_factor_is_min_nonempty_suffix"),
                 H("The final factor is the minimum nonempty suffix"),
