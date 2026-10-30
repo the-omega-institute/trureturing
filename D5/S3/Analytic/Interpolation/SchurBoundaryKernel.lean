@@ -11,6 +11,9 @@ import Mathlib.Analysis.PSeries
 import Mathlib.MeasureTheory.Integral.DominatedConvergence
 import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 import Mathlib.Analysis.Complex.Poisson
+import Mathlib.Analysis.Complex.HasPrimitives
+import Mathlib.MeasureTheory.Integral.Prod
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
 
 /-! The actual Fourier kernel and its closed-domain analytic controls. -/
 
@@ -86,6 +89,37 @@ private theorem kernel_reflection (b θ : ℝ) :
     norm_num [pow_add, pow_mul]
   simp only [boundaryTerm, hc, mul_neg]
 
+private theorem rational_cosine_real (q θ : ℝ) :
+    (Complex.exp ((θ : ℂ) * Complex.I) /
+      (1 - (-(q : ℂ) * Complex.exp ((θ : ℂ) * Complex.I) ^ 2))).re =
+      Real.cos θ * (1 + q) / ((1 - q) ^ 2 + 4 * q * Real.cos θ ^ 2) := by
+  let u : ℂ := Complex.exp ((θ : ℂ) * Complex.I)
+  change (u / (1 - (-(q : ℂ) * u ^ 2))).re = _
+  have huR : u.re = Real.cos θ := by
+    dsimp [u]
+    exact Complex.exp_ofReal_mul_I_re θ
+  have huI : u.im = Real.sin θ := by
+    dsimp [u]
+    exact Complex.exp_ofReal_mul_I_im θ
+  have hdR : (1 - -(q : ℂ) * u ^ 2).re =
+      1 + q * (Real.cos θ ^ 2 - Real.sin θ ^ 2) := by
+    simp [pow_two, Complex.mul_re, Complex.mul_im, huR, huI]
+  have hdI : (1 - -(q : ℂ) * u ^ 2).im =
+      2 * q * Real.cos θ * Real.sin θ := by
+    simp [pow_two, Complex.mul_re, Complex.mul_im, huR, huI]
+    ring
+  have htrig := Real.sin_sq_add_cos_sq θ
+  have hN : u.re * (1 - -(q : ℂ) * u ^ 2).re +
+      u.im * (1 - -(q : ℂ) * u ^ 2).im = Real.cos θ * (1 + q) := by
+    rw [huR, huI, hdR, hdI]
+    linear_combination q * Real.cos θ * htrig
+  have hD : Complex.normSq (1 - -(q : ℂ) * u ^ 2) =
+      (1 - q) ^ 2 + 4 * q * Real.cos θ ^ 2 := by
+    rw [Complex.normSq_apply, hdR, hdI]
+    linear_combination
+      (-2 * q + q ^ 2 * (Real.sin θ ^ 2 + Real.cos θ ^ 2 + 1)) * htrig
+  rw [Complex.div_re, ← add_div, hN, hD]
+
 private theorem cosine_geometric (q θ : ℝ) (hq0 : 0 ≤ q) (hq1 : q < 1) :
     HasSum (fun j : ℕ => (-q) ^ j * Real.cos ((2 * (j : ℝ) + 1) * θ))
       (Real.cos θ * (1 + q) / ((1 - q) ^ 2 + 4 * q * (Real.cos θ) ^ 2)) := by
@@ -117,30 +151,7 @@ private theorem cosine_geometric (q θ : ℝ) (hq0 : 0 ≤ q) (hq1 : q < 1) :
   simp_rw [he] at hh
   convert hh using 1
   rw [← div_eq_mul_inv]
-  have huR : u.re = Real.cos θ := by
-    dsimp [u]
-    exact Complex.exp_ofReal_mul_I_re θ
-  have huI : u.im = Real.sin θ := by
-    dsimp [u]
-    exact Complex.exp_ofReal_mul_I_im θ
-  have hdR : (1 - -(q : ℂ) * u ^ 2).re =
-      1 + q * (Real.cos θ ^ 2 - Real.sin θ ^ 2) := by
-    simp [pow_two, Complex.mul_re, Complex.mul_im, huR, huI]
-  have hdI : (1 - -(q : ℂ) * u ^ 2).im =
-      2 * q * Real.cos θ * Real.sin θ := by
-    simp [pow_two, Complex.mul_re, Complex.mul_im, huR, huI]
-    ring
-  have htrig := Real.sin_sq_add_cos_sq θ
-  have hN : u.re * (1 - -(q : ℂ) * u ^ 2).re +
-      u.im * (1 - -(q : ℂ) * u ^ 2).im = Real.cos θ * (1 + q) := by
-    rw [huR, huI, hdR, hdI]
-    linear_combination q * Real.cos θ * htrig
-  have hD : Complex.normSq (1 - -(q : ℂ) * u ^ 2) =
-      (1 - q) ^ 2 + 4 * q * Real.cos θ ^ 2 := by
-    rw [Complex.normSq_apply, hdR, hdI]
-    linear_combination
-      (-2 * q + q ^ 2 * (Real.sin θ ^ 2 + Real.cos θ ^ 2 + 1)) * htrig
-  rw [Complex.div_re, ← add_div, hN, hD]
+  exact (rational_cosine_real q θ).symm
 
 
 private def densityTerm (b θ : ℝ) (j : ℕ) (t : ℝ) : ℝ :=
@@ -467,6 +478,80 @@ private theorem kernel_size_closed (b θ : ℝ) (hb : b ∈ Icc (0 : ℝ) 1) :
     (f := fun c => |boundaryKernel c θ|) (g := fun _ => 3067 / 8100)
     (fun c hc => kernel_size_interior c θ hc.1 hc.2)
     (by simpa only [hcl] using hc) continuousOn_const (by simpa only [hcl] using hb)
+
+private theorem divided_cauchy_average (h : ℂ → ℂ) (hh : Differentiable ℂ h)
+    (w : ℂ) (hw : ‖w‖ < 1) (hw0 : w ≠ 0) :
+    Real.circleAverage (fun z => h z / (z - w)) 0 1 = (h w - h 0) / w := by
+  have hden (z : ℂ) (hz : z ∈ Metric.sphere (0 : ℂ) |(1 : ℝ)|) : z - w ≠ 0 := by
+    intro he
+    have hz' : ‖z‖ = 1 := by simpa using hz
+    have he' := sub_eq_zero.mp he
+    rw [he'] at hz'
+    exact (ne_of_lt hw) hz'
+  have hd : ContinuousOn (fun z => h z / (z - w)) (Metric.sphere (0 : ℂ) |(1 : ℝ)|) :=
+    hh.continuous.continuousOn.div (continuousOn_id.sub continuousOn_const) hden
+  have hwball : w ∈ Metric.ball (0 : ℂ) |(1 : ℝ)| := by simpa using hw
+  have hdc : DiffContOnCl ℂ h (Metric.ball (0 : ℂ) |(1 : ℝ)|) := hh.diffContOnCl
+  have hC := hdc.circleAverage_smul_div hwball
+  have hC' : Real.circleAverage (fun z => (z / (z - w)) * h z) 0 1 = h w := by
+    simpa only [sub_zero, smul_eq_mul] using hC
+  have hmean : Real.circleAverage h 0 1 = h 0 := hdc.circleAverage
+  have hpoint : Set.EqOn (fun z => (z / (z - w)) * h z)
+      (fun z => h z + w * (h z / (z - w))) (Metric.sphere (0 : ℂ) |(1 : ℝ)|) := by
+    intro z hz
+    field_simp [hden z hz]
+    <;> ring
+  have hadd := Real.circleAverage_fun_add (f₁ := h)
+    (f₂ := fun z => w * (h z / (z - w)))
+    hh.continuous.continuousOn.circleIntegrable'
+    ((show ContinuousOn (fun _ : ℂ => w) (Metric.sphere (0 : ℂ) |(1 : ℝ)|) from
+      continuousOn_const).mul hd).circleIntegrable'
+  have hsmul : Real.circleAverage (fun z => w * (h z / (z - w))) 0 1 =
+      w * Real.circleAverage (fun z => h z / (z - w)) 0 1 := by
+    simpa only [smul_eq_mul] using Real.circleAverage_fun_smul
+      (a := w) (f := fun z => h z / (z - w)) (c := 0) (R := 1)
+  have he := Real.circleAverage_congr_sphere hpoint
+  rw [hC', hadd, hsmul, hmean] at he
+  apply (eq_div_iff hw0).mpr
+  linear_combination -he
+
+private def rationalKernel (r : ℝ) (z : ℂ) : ℂ :=
+  z / (1 + (r : ℂ) ^ 2 * z ^ 2)
+
+private theorem rationalKernel_den_ne {r : ℝ} (hr : |r| < 1) (z : ℂ) (hz : ‖z‖ ≤ 1) :
+    1 + (r : ℂ) ^ 2 * z ^ 2 ≠ 0 := by
+  have hr2 : |r| ^ 2 < 1 := by nlinarith [abs_nonneg r]
+  have hz2 : ‖z‖ ^ 2 ≤ 1 := by nlinarith [norm_nonneg z]
+  have hq : ‖(r : ℂ) ^ 2 * z ^ 2‖ < 1 := by
+    rw [norm_mul, norm_pow, norm_pow, Complex.norm_real, Real.norm_eq_abs]
+    nlinarith [sq_nonneg |r|, sq_nonneg ‖z‖]
+  intro he
+  have he' : (r : ℂ) ^ 2 * z ^ 2 = -1 := by linear_combination he
+  rw [he', norm_neg, norm_one] at hq
+  exact lt_irrefl 1 hq
+
+private theorem rational_zero_mean (h : ℂ → ℂ) (hh : Differentiable ℂ h)
+    (r : ℝ) (hr : |r| < 1) :
+    Real.circleAverage (fun z => rationalKernel r z * h z) 0 1 = 0 := by
+  let F : ℂ → ℂ := fun z => rationalKernel r z * h z
+  have hF : DiffContOnCl ℂ F (Metric.ball (0 : ℂ) |(1 : ℝ)|) := by
+    constructor
+    · intro z hz
+      have hz' : ‖z‖ ≤ 1 := by
+        exact (show ‖z‖ < 1 by simpa using hz).le
+      apply DifferentiableAt.differentiableWithinAt
+      dsimp [F, rationalKernel]
+      exact ((differentiableAt_id.div
+        ((differentiableAt_const _).add
+          ((differentiableAt_const _).mul (differentiableAt_id.pow 2)))
+        (rationalKernel_den_ne hr z hz')).mul (hh z))
+    · rw [abs_one, closure_ball _ (by norm_num : (1 : ℝ) ≠ 0)]
+      dsimp [F, rationalKernel]
+      exact (continuousOn_id.div
+        (continuousOn_const.add (continuousOn_const.mul (continuousOn_id.pow 2)))
+        (fun z hz => rationalKernel_den_ne hr z (by simpa using hz))).mul
+        hh.continuous.continuousOn
+  simpa [F, rationalKernel] using hF.circleAverage
 
 /-- Uniform convergence, continuity, reflection, and the sign of the actual source kernel,
 including the entire closed parameter edge `b = 1`. -/
