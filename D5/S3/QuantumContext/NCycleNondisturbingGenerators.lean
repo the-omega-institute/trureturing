@@ -7,7 +7,6 @@
    digest: Binary cyclic nondisturbing laws are mixtures of deterministic and parity laws. -/
 
 import D5.S3.Combinatorics.Graph.LayeredCirculation.PositiveCircuitSupplier
-import Mathlib.Logic.Equiv.Fin.Rotate
 
 /-! The normalized circulation supplier applied to the two-outcome layered cycle graph. -/
 
@@ -34,11 +33,14 @@ private lemma departures_visited {v e : Type} [Fintype e] [DecidableEq e] [Decid
     g.outgoingMultiplicity w.edgeMultiplicity u + (if b = u then 1 else 0) =
       w.visited.count u := by
   induction w with
-  | nil => simp [EdgeGraph.outgoingMultiplicity, EdgeGraph.Walk.edgeMultiplicity,
-      EdgeGraph.Walk.visited, List.count_singleton, beq_iff_eq]
-  | @concat b w e he ih =>
+  | nil =>
+    dsimp only [EdgeGraph.Walk.visited]
     simp [EdgeGraph.outgoingMultiplicity, EdgeGraph.Walk.edgeMultiplicity,
-      EdgeGraph.Walk.visited, sum_add_distrib, List.count_singleton, beq_iff_eq] at ih ⊢
+      List.count_singleton]
+  | @concat b w e he ih =>
+    dsimp only [EdgeGraph.Walk.visited]
+    simp [EdgeGraph.outgoingMultiplicity, EdgeGraph.Walk.edgeMultiplicity,
+      sum_add_distrib, List.count_singleton] at ih ⊢
     simp only [he] at *
     omega
 
@@ -80,13 +82,15 @@ private lemma circuit_generator {n : ℕ} (hn : 0 < n) {a : Fin n × Bool}
           ∑ c, count i b c := by
       simp only [EdgeGraph.outgoingMultiplicity, sum_filter, Fintype.sum_prod_type,
         Fintype.sum_bool, hzero, ite_self, zero_add]
-      cases b <;> simp [signedGraph, graph, Prod.mk.injEq, ite_and, count, sum_add_distrib]
+      dsimp only [signedGraph, graph]
+      cases b <;> simp [Prod.mk.injEq, ite_and, count, sum_add_distrib] <;> rfl
     have hin (i : Fin (k + 1)) (c : Bool) :
         (signedGraph (graph (k + 1))).incomingMultiplicity w.edgeMultiplicity
           (finRotate (k + 1) i, c) = ∑ b, count i b c := by
       simp only [EdgeGraph.incomingMultiplicity, sum_filter, Fintype.sum_prod_type,
         Fintype.sum_bool, hzero, ite_self, zero_add]
-      cases c <;> simp [signedGraph, graph, Prod.mk.injEq, ite_and, count, sum_add_distrib]
+      dsimp only [signedGraph, graph]
+      cases c <;> simp [Prod.mk.injEq, ite_and, count, sum_add_distrib] <;> rfl
     have hrow (i : Fin (k + 1)) (b : Bool) : (∑ c, count i b c) ≤ 1 := by
       rw [← hout]
       exact simple_departures_le_one w hw (i, b)
@@ -209,11 +213,13 @@ theorem decomposition (n : ℕ) (hn : 0 < n) (r : Fin n → Bool → Bool → �
       have hin : (∑ e : Fin n × Bool × Bool,
           if (finRotate n i, c) = (graph n).target e then r e.1 e.2.1 e.2.2 else 0) =
           ∑ b, r i b c := by
-        simp [Fintype.sum_prod_type, graph, Prod.mk.injEq, ite_and]
+        dsimp only [graph]
+        simp [Fintype.sum_prod_type, Prod.mk.injEq, ite_and]
       have hout : (∑ e : Fin n × Bool × Bool,
           if (finRotate n i, c) = (graph n).source e then r e.1 e.2.1 e.2.2 else 0) =
           ∑ d, r (finRotate n i) c d := by
-        simp [Fintype.sum_prod_type, graph, Prod.mk.injEq, ite_and]
+        dsimp only [graph]
+        simp [Fintype.sum_prod_type, Prod.mk.injEq, ite_and]
       rw [Fintype.sum_prod_type]
       simp only [Fintype.sum_bool, coefficient, Bool.false_eq_true, ite_false, ite_true,
         zero_mul, zero_add]
@@ -268,7 +274,7 @@ theorem decomposition (n : ℕ) (hn : 0 < n) (r : Fin n → Bool → Bool → �
       intro j _
       ring
     _ = (n : ℝ) * (r i b c / n) := by rw [← hrep]; rfl
-    _ = r i b c := by field_simp
+    _ = r i b c := mul_div_cancel₀ _ hnreal
 
 
 end D5.S3.QuantumContext.NCycleNondisturbingGenerators

@@ -7,7 +7,6 @@
    digest: Normalized Bell and contextuality inequalities obey the binary n-cycle trade-off. -/
 
 import D5.S3.QuantumContext.NCycleNondisturbingGenerators
-import Mathlib.Logic.Equiv.Fin.Rotate
 import Mathlib.Algebra.Ring.BooleanRing
 
 /-! The binary generalized Bell scenario of Porto–Ruffolo–Rabelo–Terra Cunha–Kurzyński,
@@ -116,14 +115,18 @@ private lemma product_nsnd {n : ℕ} {α : AliceResponse} {r : BobBehavior n}
   · intro x i a b c
     exact mul_nonneg (hα.1 x a) (hr.1 i b c)
   · intro x i
-    simp only [productBehavior, ← mul_sum, hr.2.1, mul_one]
+    dsimp only [productBehavior]
+    simp only [← mul_sum, hr.2.1, mul_one]
     exact hα.2 x
   · intro x i a c
-    simp_rw [productBehavior, ← mul_sum, hr.2.2 i c]
+    dsimp only [productBehavior]
+    simp_rw [← mul_sum, hr.2.2 i c]
   · intro x y i b c
-    simp only [productBehavior, ← sum_mul, hα.2, one_mul]
+    dsimp only [productBehavior]
+    simp only [← sum_mul, hα.2, one_mul]
   · intro x i j a
-    simp only [productBehavior, ← mul_sum, hr.2.1, mul_one]
+    dsimp only [productBehavior]
+    simp only [← mul_sum, hr.2.1, mul_one]
 
 private lemma vertex_nd {n : ℕ} (γ : Fin n → Bool) : IsND (vertex γ) := by
   refine ⟨?_, ?_, ?_⟩
@@ -131,10 +134,12 @@ private lemma vertex_nd {n : ℕ} (γ : Fin n → Bool) : IsND (vertex γ) := by
     dsimp [vertex]
     split_ifs <;> norm_num
   · intro i
-    cases h : γ i <;> norm_num [vertex, Fintype.sum_bool, h]
+    dsimp only [vertex]
+    cases h : γ i <;> norm_num [Fintype.sum_bool, h]
   · intro i c
+    dsimp only [vertex]
     cases h : γ i <;> cases k : γ (finRotate n i) <;>
-      cases c <;> norm_num [vertex, Fintype.sum_bool, h, k]
+      cases c <;> norm_num [Fintype.sum_bool, h, k]
 
 private lemma bool_sign_sum {ι : Type} (s : Finset ι) (γ : ι → Bool) :
     (∏ i ∈ s, if γ i then (-1 : ℝ) else 1) = if ∑ i ∈ s, γ i then -1 else 1 := by
@@ -203,7 +208,8 @@ private lemma even_vertex_noncontextual {n : ℕ} (γ : Fin n → Bool)
     ext i b c
     change vertex γ i b c = (1 / 2 : ℝ) * deterministic s i b c +
       (1 / 2 : ℝ) * deterministic (fun j => !(s j)) i b c
-    simp only [vertex, deterministic, ← hs i]
+    dsimp only [vertex, deterministic]
+    simp only [← hs i]
     have hbinary (u v b c : Bool) :
         (if Bool.xor b c = Bool.xor u v then (1 / 2 : ℝ) else 0) =
           (1 / 2 : ℝ) * (if u = b ∧ v = c then 1 else 0) +
@@ -273,9 +279,11 @@ private lemma midpoint_noncontextual {n : ℕ}
       (1 / 2 : ℝ) * vertex δ i b c + (1 / 2 : ℝ) * vertex ε i b c
     by_cases hi : i = j
     · subst i
+      dsimp only [vertex]
       cases h₁ : γ j <;> cases h₂ : η j <;> cases b <;> cases c <;>
-        simp_all [vertex, δ, ε, Function.update]
-    · simp only [vertex, δ, ε, Function.update_of_ne hi]
+        simp_all [δ, ε, Function.update]
+    · dsimp only [vertex]
+      simp only [δ, ε, Function.update_of_ne hi]
   rw [heq]
   exact (convex_convexHull ℝ _) hδ hε (by norm_num) (by norm_num) (by norm_num)
 
@@ -296,7 +304,8 @@ private lemma unique_positive_generator {n : ℕ}
     have h := ht.2.1 (productBehavior α (vertex γ)) (product_nsnd hα (vertex_nd γ))
     have hm : bobMarginal (productBehavior α (vertex γ)) = vertex γ := by
       ext i b c
-      simp only [bobMarginal, productBehavior, Fintype.sum_bool, α]
+      dsimp only [bobMarginal, productBehavior]
+      simp only [Fintype.sum_bool, α]
       ring
     rwa [hm] at h
   have hex : ∃ γ : Fin n → Bool, oddSigns γ ∧ t.1 (vertex γ) + t.2 = 1 := by
@@ -445,7 +454,8 @@ private lemma common_local_part {n : ℕ} (hn : 3 ≤ n)
     have h := sum_le_sum fun a (_ : a ∈ (univ : Finset Bool)) => hval x a
     have hq : (∑ a, (fun i b c => p x i a b c : BobBehavior n)) = bobMarginal p := by
       ext i b c
-      simpa only [Finset.sum_apply, bobMarginal] using hp.2.2.2.1 x 0 i b c
+      dsimp only [bobMarginal]
+      simpa only [Finset.sum_apply] using hp.2.2.2.1 x 0 i b c
     rw [sum_add_distrib, ← map_sum, ← sum_mul, hp.2.1 x i₀, one_mul, hq] at h
     exact h
   have hpos (x : Fin 2) : 0 < total x := hc.trans_le (htotal x)
