@@ -62,30 +62,53 @@ REMOVAL_RECORD = "worktree-removal"
 _PAYLOAD_PLAN = ContextVar("worktree_removal_payload_plan", default=None)
 
 
-def _is_declared_lake_dependency(path):
+def _declared_lake_dependency(path, target):
     """Recognize one manifest-declared checkout under a Lake project."""
     packages = path.parent
     lake = packages.parent
     project = lake.parent
-    if packages.name != "packages" or lake.name != ".lake" or not path.name:
-        return False
+    if (packages.name != "packages" or lake.name != ".lake" or not path.name
+            or not project.is_relative_to(target)):
+        return None
     manifest = project / "lake-manifest.json"
     try:
         info = manifest.lstat()
         if stat.S_ISLNK(info.st_mode) or not stat.S_ISREG(info.st_mode):
-            return False
+            return None
         document = json.loads(manifest.read_text(encoding="utf-8"))
         entries = document.get("packages") if isinstance(document, dict) else None
         if not isinstance(entries, list):
-            return False
+            return None
         names = []
         for entry in entries:
             if not isinstance(entry, dict) or not isinstance(entry.get("name"), str):
-                return False
+                return None
             names.append(entry["name"])
-        return names.count(path.name) == 1
+        return entries[names.index(path.name)] if names.count(path.name) == 1 else None
     except (OSError, UnicodeError, json.JSONDecodeError, TypeError):
-        return False
+        return None
+
+
+def reject_lake_local_content(path, target, package):
+    """Only recoverable dependency history and ignored build outputs may leave."""
+    relative = str(path.relative_to(target))
+    revision = package.get("rev")
+    if not isinstance(revision, str) or not re.fullmatch(r"[0-9a-fA-F]{40}|[0-9a-fA-F]{64}", revision):
+        raise Refused("lake_dependency_check_failed:" + relative + ":manifest_revision")
+    try:
+        status = git(path, "status", "--porcelain=v1", "-z", "--untracked-files=all",
+                     "--ignore-submodules=none").stdout
+        manifest_commit = git(path, "rev-parse", "--verify", revision + "^{commit}").stdout.strip()
+        # A metacharacter keeps Git from appending /* to the exact stash ref.
+        local_history = git(path, "rev-list", "--max-count=1", "HEAD", "--branches",
+                            "--glob=refs/stas[h]", "--not", "--remotes", "--tags",
+                            manifest_commit.decode("ascii"), "--").stdout
+    except (Refused, OSError, subprocess.SubprocessError, UnicodeError) as error:
+        raise Refused("lake_dependency_check_failed:" + relative + ":" + str(error)) from error
+    if status:
+        raise Refused("lake_dependency_dirty:" + relative)
+    if local_history.strip():
+        raise Refused("lake_dependency_local_history:" + relative)
 
 
 def reject_nested_git(target):
@@ -104,13 +127,14 @@ def reject_nested_git(target):
             info = child.lstat()
             if stat.S_ISDIR(info.st_mode) and info.st_dev != root_stat.st_dev:
                 raise Refused("device_boundary:" + str(child))
-        lake_dependency = path != target and _is_declared_lake_dependency(path)
-        if lake_dependency:
+        if path != target and (".git" in folders or ".git" in files):
+            package = _declared_lake_dependency(path, target)
+            if package is None:
+                raise Refused("nested_git_boundary:" + str(path.relative_to(target)))
+            reject_lake_local_content(path, target, package)
             folders[:] = [name for name in folders if name != ".git"]
-        if path != target and (".git" in folders or ".git" in files) and not lake_dependency:
-            raise Refused("nested_git_boundary:" + str(path.relative_to(target)))
         if "HEAD" in files and git(target, "rev-parse", "--resolve-git-dir", path,
-                                   check=False).returncode == 0 and not lake_dependency:
+                                   check=False).returncode == 0:
             raise Refused("nested_git_boundary:" + str(path.relative_to(target)))
 
     for entry in git(target, "ls-files", "--stage", "-z").stdout.split(b"\0"):

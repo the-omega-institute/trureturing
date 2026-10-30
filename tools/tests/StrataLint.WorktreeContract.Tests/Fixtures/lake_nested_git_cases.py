@@ -14,9 +14,7 @@ class LakeNestedGitCases:
 
     def test_removal_allows_declared_lake_dependency(self):
         (self.tree / ".gitignore").write_text(".lake/\n")
-        boundary = self.lake_dependency(self.tree, "mathlib")
-        self.declare_lake_package(self.tree, "mathlib")
-        (boundary / "unique").write_text("lake dependency bytes\n")
+        self.clean_lake_clone(self.tree)
         result = self.remove()
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertFalse(self.tree.exists())
@@ -52,9 +50,7 @@ class LakeNestedGitCases:
         (self.tree / ".gitignore").write_text(".lake/\n")
         project = self.tree / "tools/sub"
         project.mkdir(parents=True)
-        boundary = self.lake_dependency(project, "pkg")
-        self.declare_lake_package(project, "pkg")
-        (boundary / "unique").write_text("nested lake dependency bytes\n")
+        self.clean_lake_clone(project, "pkg")
         result = self.remove()
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
         self.assertFalse(self.tree.exists())
