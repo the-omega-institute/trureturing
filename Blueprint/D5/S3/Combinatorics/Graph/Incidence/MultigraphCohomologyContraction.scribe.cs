@@ -70,7 +70,7 @@ internal sealed class MultigraphCohomologyContractionDocument : IScribeDocumentD
                 + "by J with zero at the deleted coordinate. These formulas hold on the native quotients without choosing representatives."),
             Theorem("coboundaries-annihilate-cycles", "coboundary_annihilates_cycles", "Finite-endpoint annihilation with arbitrary vertices",
                 Context(All("k", Functions(V), All("z", Call("CycleSpace", G),
-                    Equal(Call("edgePair", Call("d", G, k), Call("val", z)), D(0)))), true, false, false),
+                    Equal(Call("edgePair", Call("d", G, k), Call("val", z)), D(0)))), true, false, false, false),
                 "edgePair(a,z) is the finite sum over edge IDs f of a(f) z(f). Let S be the union of the finite "
                 + "source and target images. Interchanging finite sums gives edgePair(d(G,k),z) = "
                 + "sum over w in S of k(w) boundary(G,z)(w). Every boundary coordinate vanishes for z in CycleSpace G. "
@@ -102,13 +102,13 @@ internal sealed class MultigraphCohomologyContractionDocument : IScribeDocumentD
     private static Formula Functions(Formula type) => Seq(Grp(type), Sp, To, Sp, Seq(Mathbb, Grp(F.Id("Q"))));
     private static Formula Contract() => Call("contract", G, e, h);
     private static Formula Psi() => Call("Psi", G, e, h);
-    private static Formula Context(Formula body, bool finite, bool nonloop, bool selectedEdge = true)
+    private static Formula Context(Formula body, bool finite, bool nonloop, bool selectedEdge = true, bool edgeDecidable = true)
     {
         if (nonloop) body = All("h", Seq(Call("source", G, e), Sp, Neq, Sp, Call("target", G, e)), body);
         if (selectedEdge) body = All("e", E, body);
         body = All("G", Call("DirectedMultigraph", V, E), body);
         body = Seq(OpenBracket, Call("DecidableEq", V), CloseBracket, Sp,
-            OpenBracket, Call("DecidableEq", E), CloseBracket, Sp,
+            edgeDecidable ? Seq(OpenBracket, Call("DecidableEq", E), CloseBracket, Sp) : Sp,
             finite ? Seq(OpenBracket, Call("Fintype", E), CloseBracket, Comma, Sp, body) : Seq(Comma, Sp, body));
         Formula type = Seq(Operatorname, Grp(F.Id("Type")));
         return Disp(All("V", type, All("E", type, body)));

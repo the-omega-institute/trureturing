@@ -61,7 +61,7 @@ private theorem restrict_vertexMap (G : DirectedMultigraph V E) (e : E)
     (h : G.source e ≠ G.target e) (k : V → ℚ) (w : V) :
     k (vertexMap G e h w).val =
       k w - (k (G.target e) - k (G.source e)) * (if w = G.target e then 1 else 0) := by
-  by_cases hw : w = G.target e <;> simp [vertexMap, hw]
+  by_cases hw : w = G.target e <;> simp [vertexMap, hw] <;> ring
 
 /-- Evacuation sends an actual coboundary to the restricted vertex potential. -/
 theorem evacuate_coboundary (G : DirectedMultigraph V E) (e : E)
@@ -179,7 +179,7 @@ private theorem endpoint_duality (G : DirectedMultigraph V E) (k : V → ℚ) (z
       simp only [incidence, signedIncidence, Int.cast_sub, Int.cast_ite,
         Int.cast_one, Int.cast_zero, sub_mul, mul_sub, Finset.sum_sub_distrib]
       simp only [mul_ite, mul_one, mul_zero, ite_mul, zero_mul]
-      rw [Finset.sum_ite_eq' _ _ ht, Finset.sum_ite_eq' _ _ hs]
+      simp only [Finset.sum_ite_eq', ht, hs, if_true]
       change k (G.target f) * z f - k (G.source f) * z f = _
       change _ = (k (G.target f) - k (G.source f)) * z f
       ring
@@ -232,7 +232,7 @@ private theorem evacuation_inverse_transpose (G : DirectedMultigraph V E) (e : E
   simp_rw [(inverse_cycle_coefficients G e h z).2]
   change (∑ f : Surviving e,
     (a f.val - a e * incidence G (G.target e) f.val) * z.val f) = _
-  simp only [sub_mul, Finset.sum_sub_distrib, residual]
+  simp only [sub_mul, Finset.sum_sub_distrib, residual, mul_assoc]
   rw [← Finset.mul_sum]
   ring
 
