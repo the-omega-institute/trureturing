@@ -213,7 +213,7 @@ private lemma nonleaf_root {l : ℕ} {a : Parts l} {x : Vertex a}
 private lemma iso_two_neighbors {V W : Type*} {G : SimpleGraph V} {H : SimpleGraph W}
     (e : G ≃g H) {x : V} (h : twoNeighbors G x) : twoNeighbors H (e x) := by
   rcases h with ⟨u,v,huv,hu,hv⟩
-  exact ⟨e u,e v,fun h => huv (e.injective h),e.map_adj hu,e.map_adj hv⟩
+  exact ⟨e u,e v,fun h => huv (e.injective h),e.map_adj_iff.mpr hu,e.map_adj_iff.mpr hv⟩
 
 private instance {l : ℕ} (a : Parts l) : DecidableRel (edgeRel a) :=
   fun u v => inferInstanceAs (Decidable
@@ -275,4 +275,3 @@ theorem result : ¬ claim := by
   · exact (ordinary_eq_iff _ _ 3).2 ps3_equal
 
 end Trureturing.OpenProblems.BinghamCaterpillarUniquenessRefutation
-
