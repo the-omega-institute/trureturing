@@ -681,8 +681,10 @@ noncomputable def returnTrailEquiv {n : ℕ} (hn : 2 ≤ n) (v : Fin n) :
       apply Subtype.ext
       have hc := full_closed v w.1 w.2.1 w.2.2
       change Fin.snoc (initialWalk w.1) v = w.1
-      exact (congrArg (Fin.snoc (initialWalk w.1)) hc.symm).trans
-        (Fin.snoc_init_self w.1) }
+      calc
+        _ = appendVertex (initialWalk w.1) (w.1 (Fin.last (n * n - 1 + 1))) :=
+          congrArg (fun z : Fin n => appendVertex (initialWalk w.1) z) hc.symm
+        _ = w.1 := Fin.snoc_init_self w.1 }
   refine e.trans (Equiv.cast ?_)
   change {w : Walk (Fin n) (n * n - 1 + 1) //
     w 0 = v ∧ Function.Bijective (edge w)} = Euler n v
@@ -843,5 +845,158 @@ theorem short_count {n : ℕ} (hn : 2 ≤ n) (v : Fin n) :
   have htwo : 2 * n - 1 = (n - 1) + n := by omega
   rw [htwo, Nat.add_mul]
   simp only [Nat.mul_comm]
+
+private abbrev Out {n k : ℕ} (w : Walk (Fin n) k) (a : Fin n) :=
+  {i : Fin k // (edge w i).1 = a}
+
+private abbrev Into {n k : ℕ} (w : Walk (Fin n) k) (a : Fin n) :=
+  {i : Fin k // (edge w i).2 = a}
+
+private theorem degree_balance {n k : ℕ} (w : Walk (Fin n) k) (a : Fin n) :
+    (Fintype.card (Out w a) : ℤ) - Fintype.card (Into w a) =
+      indicator (w 0) a - indicator (w (Fin.last k)) a := by
+  have h := telescope (fun i => indicator (w i) a)
+  rw [Finset.sum_sub_distrib] at h
+  change (Fintype.card {i : Fin k // w i.castSucc = a} : ℤ) -
+    Fintype.card {i : Fin k // w i.succ = a} = _
+  rw [Fintype.card_subtype, Fintype.card_subtype]
+  simpa [indicator, Finset.sum_ite] using h
+
+private theorem out_injective {n k : ℕ} (w : Walk (Fin n) k)
+    (hi : Function.Injective (edge w)) (a : Fin n) :
+    Function.Injective (fun i : Out w a => (edge w i.1).2) := by
+  intro i j h
+  apply Subtype.ext
+  exact hi (Prod.ext (i.2.trans j.2.symm) h)
+
+private theorem into_injective {n k : ℕ} (w : Walk (Fin n) k)
+    (hi : Function.Injective (edge w)) (a : Fin n) :
+    Function.Injective (fun i : Into w a => (edge w i.1).1) := by
+  intro i j h
+  apply Subtype.ext
+  exact hi (Prod.ext h (i.2.trans j.2.symm))
+
+private def LastExit {n k : ℕ} (v : Fin n) (w : Walk (Fin n) k) : Prop :=
+  ∀ a b : Fin n, (a, v) ∈ Set.range (edge w) → (a, b) ∈ Set.range (edge w)
+
+private theorem unused_departure {n k : ℕ} (v : Fin n) (w : Walk (Fin n) k)
+    (hs : w 0 = v) (hi : Function.Injective (edge w))
+    (hl : LastExit v w) (hk : k < n * n) :
+    ∃ z : Fin n, (w (Fin.last k), z) ∉ Set.range (edge w) := by
+  classical
+  by_contra! hfull
+  let t := w (Fin.last k)
+  have hout : Function.Surjective (fun i : Out w t => (edge w i.1).2) := by
+    intro b
+    obtain ⟨i, he⟩ := hfull b
+    exact ⟨⟨i, congrArg Prod.fst he⟩, congrArg Prod.snd he⟩
+  have hco : Fintype.card (Out w t) = n := by
+    simpa only [Fintype.card_fin] using Fintype.card_congr
+      (Equiv.ofBijective (fun i : Out w t => (edge w i.1).2)
+        ⟨out_injective w hi t, hout⟩)
+  have hci : Fintype.card (Into w t) ≤ n := by
+    simpa only [Fintype.card_fin] using Fintype.card_le_of_injective _
+      (into_injective w hi t)
+  have hb := degree_balance w t
+  rw [hco, hs] at hb
+  by_cases ht : t = v
+  · have hcard : Fintype.card (Into w t) = n := by
+      have heq : w (Fin.last k) = t := rfl
+      simp only [← ht, heq, indicator, if_true] at hb
+      change (n : ℤ) - Fintype.card (Into w t) = 1 - 1 at hb
+      omega
+    have hinto : Function.Surjective (fun i : Into w t => (edge w i.1).1) := by
+      apply ((Fintype.bijective_iff_injective_and_card _).mpr
+        ⟨into_injective w hi t, by simpa only [Fintype.card_fin] using hcard⟩).2
+    have he : Function.Surjective (edge w) := by
+      rintro ⟨a, b⟩
+      obtain ⟨i, hai⟩ := hinto a
+      apply hl a b
+      exact ⟨i.1, Prod.ext hai (i.2.trans ht)⟩
+    have hc := Fintype.card_congr (Equiv.ofBijective (edge w) ⟨hi, he⟩)
+    simp only [Fintype.card_fin, Fintype.card_prod] at hc
+    omega
+  · have hvt : v ≠ t := Ne.symm ht
+    have heq : w (Fin.last k) = t := rfl
+    simp only [heq, indicator, hvt, if_false, if_true] at hb
+    omega
+
+private theorem last_exit_extension {n k : ℕ} (v : Fin n) (w : Walk (Fin n) k)
+    (hs : w 0 = v) (hi : Function.Injective (edge w))
+    (hl : LastExit v w) (hk : k < n * n) :
+    ∃ z : Fin n, (w (Fin.last k), z) ∉ Set.range (edge w) ∧
+      LastExit v (appendVertex w z) := by
+  classical
+  let t := w (Fin.last k)
+  obtain ⟨z, hz, hlast⟩ : ∃ z : Fin n, (t, z) ∉ Set.range (edge w) ∧
+      (z = v → ∀ b : Fin n, b ≠ v → (t, b) ∈ Set.range (edge w)) := by
+    by_cases h : ∃ z : Fin n, z ≠ v ∧ (t, z) ∉ Set.range (edge w)
+    · obtain ⟨z, hne, hz⟩ := h
+      exact ⟨z, hz, fun h => False.elim (hne h)⟩
+    · obtain ⟨z, hz⟩ := unused_departure v w hs hi hl hk
+      refine ⟨z, hz, ?_⟩
+      intro _ b hb
+      by_contra hmiss
+      exact h ⟨b, hb, hmiss⟩
+  refine ⟨z, hz, ?_⟩
+  intro a b ha
+  rw [edge_append, Fin.range_snoc] at ha ⊢
+  rcases ha with ha | ha
+  · have hat : a = t := congrArg Prod.fst ha
+    have hzv : z = v := (congrArg Prod.snd ha).symm
+    by_cases hb : b = v
+    · exact Or.inl (Prod.ext hat (hb.trans hzv.symm))
+    · exact Or.inr (hat.symm ▸ hlast hzv b hb)
+  · exact Or.inr (hl a b ha)
+
+/-- Reserving every return-to-start edge as a last exit constructs a full walk. -/
+theorem euler_nonempty (n : ℕ) (v : Fin n) : Nonempty (Euler n v) := by
+  classical
+  have hex : ∀ k : ℕ, k ≤ n * n → ∃ w : Walk (Fin n) k,
+      w 0 = v ∧ Function.Injective (edge w) ∧ LastExit v w := by
+    intro k
+    induction k with
+    | zero =>
+      intro _
+      refine ⟨(fun _ => v), rfl, ?_, ?_⟩
+      · exact fun i => Fin.elim0 i
+      · intro a b h
+        obtain ⟨i, _⟩ := h
+        exact Fin.elim0 i
+    | succ k ih =>
+      intro hk
+      obtain ⟨w, hs, hi, hl⟩ := ih (by omega)
+      obtain ⟨z, hz, hnew⟩ := last_exit_extension v w hs hi hl (by omega)
+      refine ⟨appendVertex w z, ?_, ?_, hnew⟩
+      · simpa only [appendVertex, Fin.snoc_apply_zero] using hs
+      · rw [edge_append]
+        exact Fin.snoc_injective_of_injective hi hz
+  obtain ⟨w, hs, hi, _⟩ := hex (n * n) le_rfl
+  exact ⟨⟨w, hs, (Fintype.bijective_iff_injective_and_card _).mpr ⟨hi, by simp⟩⟩⟩
+
+/-- The literal source denominator is strictly positive. -/
+theorem long_count_positive {n : ℕ} (hn : 2 ≤ n) (v : Fin n) :
+    0 < collisionCount n v (n * n + 1) := by
+  letI := euler_nonempty n v
+  rw [long_count]
+  exact Nat.mul_pos (by omega) Fintype.card_pos
+
+/-- The exact universal ratio for ordered looped directed edge-collision walks. -/
+theorem collision_ratio {n : ℕ} (hn : 2 ≤ n) (v : Fin n) :
+    (collisionCount n v (n * n) : ℚ) / collisionCount n v (n * n + 1) =
+      (2 * (n : ℚ) - 1) / n := by
+  have he : eulerCount n v ≠ 0 := by
+    letI := euler_nonempty n v
+    exact Nat.ne_of_gt Fintype.card_pos
+  have hn0 : (n : ℚ) ≠ 0 := by exact_mod_cast (show n ≠ 0 by omega)
+  have he0 : (eulerCount n v : ℚ) ≠ 0 := by exact_mod_cast he
+  rw [short_count hn v, long_count]
+  have hc : ((2 * n - 1 : ℕ) : ℚ) = 2 * (n : ℚ) - 1 := by
+    rw [Nat.cast_sub (by omega)]
+    push_cast
+    rfl
+  push_cast
+  rw [hc]
+  field_simp
 
 end D5.S3.Combinatorics.Graph.Walks.CollisionPrefix
