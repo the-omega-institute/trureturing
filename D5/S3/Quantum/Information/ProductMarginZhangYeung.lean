@@ -671,7 +671,11 @@ private theorem mutual_information_nonneg (rho : DensityState (Bit × Bit))
           (∑ i : Bit, CStarMatrix.ofMatrix.symm (marginalLeft rho).1 i i) *
           CStarMatrix.ofMatrix.symm uniformBit.1 r.2 t.2 := by
         simp only [Finset.sum_mul, Finset.mul_sum]
-      _ = _ := by rw [(marginalLeft rho).2.2]; ring
+      _ = _ := by
+        have ht : (∑ i : Bit, CStarMatrix.ofMatrix.symm (marginalLeft rho).1 i i) = 1 :=
+          (marginalLeft rho).2.2
+        rw [ht]
+        ring
 
 private def LocalPair.radius (c : LocalPair) : ℝ := Real.sqrt (1 - c.x ^ 2)
 private def LocalPair.reliability (c : LocalPair) : ℝ := c.z / c.radius
@@ -680,7 +684,7 @@ private theorem local_radius_sq (c : LocalPair) : c.radius ^ 2 = 1 - c.x ^ 2 :=
   Real.sq_sqrt (by nlinarith [c.disk, sq_nonneg c.z])
 
 private def LocalPair.pure (c : LocalPair) : LocalPair :=
-  ⟨c.x, c.radius, c.x_nonneg, Real.sqrt_nonneg _, by rw [local_radius_sq]; ring_nf⟩
+  ⟨c.x, c.radius, c.x_nonneg, Real.sqrt_nonneg _, by rw [local_radius_sq]; nlinarith⟩
 
 private theorem reliability_range (c : LocalPair) (hx : c.x < 1) :
     c.reliability ∈ Set.Icc (0 : ℝ) 1 := by
@@ -741,8 +745,9 @@ private theorem product_information_absolute (c d : LocalPair)
   let f := c.scaled d.reliability hdt
   have hprep := prepare_record_information e f c.pure (by norm_num [e, classicalPair]) hc rfl (by
     change d.reliability * c.z = (c.reliability * d.reliability) * c.radius
-    rw [mul_assoc, mul_comm d.reliability, ← mul_assoc, reliability_radius c hc]
-    ring)
+    calc
+      _ = d.reliability * (c.reliability * c.radius) := by rw [reliability_radius c hc]
+      _ = _ := by ring)
   have h := prepare_product_information c d d.pure d.reliability hdt hc hd rfl
     (reliability_radius d hd).symm
   have hle := h.trans hprep
@@ -753,7 +758,7 @@ private theorem product_information_absolute (c d : LocalPair)
     rw [show (0 : ℝ) ^ 2 + (0 : ℝ) ^ 2 = 0 by norm_num, Real.sqrt_zero]
     rw [show (0 : ℝ) ^ 2 + (c.reliability * d.reliability) ^ 2 =
         (c.reliability * d.reliability) ^ 2 by ring, Real.sqrt_sq hs.1]
-    norm_num [Real.binEntropy_two_inv]
+    rw [show ((1 : ℝ) + 0) / 2 = (2 : ℝ)⁻¹ by norm_num, Real.binEntropy_two_inv]
   exact hle.trans_eq heval
 
 private theorem product_mixture_zero_left (c d : LocalPair) (hz : c.z = 0) :
