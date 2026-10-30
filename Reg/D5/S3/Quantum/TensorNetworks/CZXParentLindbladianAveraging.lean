@@ -259,6 +259,7 @@ theorem rejected_law : ¬ arena.{u}.Law commutationRejected := by
   simp only [spike, LinearMap.coe_mk, AddHom.coe_mk] at hz
   rw [avg_pair_apply 2 0 1 (by decide), avg_pair_apply 2 0 1 (by decide)] at hz
   norm_num [spike, Fin.sum_univ_two, Function.update_apply, funext_iff, Fin.forall_fin_two] at hz
+  norm_num [Finset.filter_eq'] at hz
 
 def source_registration : Registration arena.{u} (type_of% @avg_commute.{u}) where
   actual := operatorActual
