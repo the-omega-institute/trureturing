@@ -97,7 +97,10 @@ internal sealed class EighteenModeBosonicAssignmentParityDocument : IScribeDocum
                         + "whereas zero and every even particle number admit an assignment. "
                         + "The classification concerns the existence of occupation assignments "
                         + "for these nine contexts."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kurzynski-2017-eighteen-mode-bosonic-assignment-parity"),
+                    ResolutionKind.Proved)))));
 
     private static Formula ModesFormula() => Equal(
         Typed(Local("modes"), At(Qualified("Finset"), PairType())),
