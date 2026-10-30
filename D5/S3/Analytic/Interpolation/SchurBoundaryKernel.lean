@@ -782,6 +782,7 @@ private theorem primitive_weighted_identity (h H : ℂ → ℂ)
   let U : ℂ → ℂ := fun z => (1 - z) * F z
   have hdU (z : ℂ) : HasDerivAt U ((1 - z) * D z - F z) z := by
     convert! (((hasDerivAt_const z (1 : ℂ)).sub (hasDerivAt_id z)).mul (hdF z)) using 1
+    dsimp only [Pi.sub_apply, id_eq]
     ring
   have hhc : Continuous h := hh.continuous
   have hcF : Continuous F := by dsimp [F]; fun_prop
@@ -862,10 +863,9 @@ private theorem kernel_pairing_closed (h : ℂ → ℂ) (hh : Differentiable ℂ
   have hk := (boundary_kernel_control 0 0 (by norm_num)).2.2.2.2.1
   have hks : Continuous (fun p : (Icc (0 : ℝ) 1) × ℝ =>
       boundaryKernel p.1.val p.2) := by
-    apply continuousOn_univ.mp
-    exact hk.comp
-      (((continuous_subtype_val.comp continuous_fst).prodMk continuous_snd).continuousOn)
-      (fun p _ => p.1.property)
+    have hmap : Continuous (fun p : (Icc (0 : ℝ) 1) × ℝ => (p.1.val, p.2)) :=
+      (continuous_subtype_val.comp continuous_fst).prodMk continuous_snd
+    exact hk.comp_continuous hmap (fun p => p.1.property)
   have hL : ContinuousOn L (Icc (0 : ℝ) 1) := by
     apply continuousOn_iff_continuous_domRestrict.mpr
     change Continuous (fun b : Icc (0 : ℝ) 1 => L b.val)
@@ -876,6 +876,7 @@ private theorem kernel_pairing_closed (h : ℂ → ℂ) (hh : Differentiable ℂ
       (fun b : Icc (0 : ℝ) 1 => fun θ =>
         (boundaryKernel b.val θ : ℂ) * h (circleMap 0 1 θ))
       hprod 0 (2 * Real.pi) Real.two_pi_pos.le)
+  have hhc : Continuous h := hh.continuous
   have hR : Continuous R := by
     apply Continuous.mul (by fun_prop)
     apply fixed_interval_continuous _ _ 0 1 (by norm_num)
@@ -889,6 +890,61 @@ private theorem kernel_pairing_closed (h : ℂ → ℂ) (hh : Differentiable ℂ
   exact he.of_subset_closure hL hR.continuousOn Ico_subset_Icc_self
     (by rw [closure_Ico (by norm_num : (0 : ℝ) < 1)]; exact subset_rfl) hb
 
+private theorem primitive_vertical_average (H : ℂ → ℂ) (hH : Continuous H)
+    (b : ℝ) (hb : 0 < b) :
+    (1 / 2 : ℂ) * (∫ t in (0 : ℝ)..1,
+      (H ((b * t : ℝ) * Complex.I) + H (-(b * t : ℝ) * Complex.I))) =
+      (1 / (2 * b) : ℝ) • (∫ t in -b..b, H ((t : ℂ) * Complex.I)) := by
+  let f : ℝ → ℂ := fun t => H ((t : ℂ) * Complex.I)
+  have hf : Continuous f := hH.comp (by fun_prop)
+  have hp : (∫ t in (0 : ℝ)..1, H ((b * t : ℝ) * Complex.I)) =
+      b⁻¹ • (∫ t in (0 : ℝ)..b, f t) := by
+    simpa only [f, mul_zero, mul_one] using
+      (intervalIntegral.integral_comp_mul_left (f := f) (a := 0) (b := 1) hb.ne')
+  have hm : (∫ t in (0 : ℝ)..1, H (-(b * t : ℝ) * Complex.I)) =
+      b⁻¹ • (∫ t in -b..(0 : ℝ), f t) := by
+    have he := intervalIntegral.integral_comp_mul_left (f := f) (a := 0) (b := 1)
+      (c := -b) (neg_ne_zero.mpr hb.ne')
+    simp only [mul_zero, mul_one] at he
+    rw [intervalIntegral.integral_symm (-b) 0] at he
+    simpa only [f, neg_mul, inv_neg, neg_smul, smul_neg, neg_neg] using he
+  have hiP : IntervalIntegrable (fun t : ℝ => H ((b * t : ℝ) * Complex.I)) volume 0 1 :=
+    (hH.comp (by fun_prop)).intervalIntegrable _ _
+  have hiM : IntervalIntegrable (fun t : ℝ => H (-(b * t : ℝ) * Complex.I)) volume 0 1 :=
+    (hH.comp (by fun_prop)).intervalIntegrable _ _
+  have hsum : (∫ t in (0 : ℝ)..1,
+      (H ((b * t : ℝ) * Complex.I) + H (-(b * t : ℝ) * Complex.I))) =
+      b⁻¹ • (∫ t in -b..b, f t) := by
+    rw [intervalIntegral.integral_add hiP hiM, hp, hm, ← smul_add,
+      add_comm (∫ t in (0 : ℝ)..b, f t) (∫ t in -b..(0 : ℝ), f t),
+      intervalIntegral.integral_add_adjacent_intervals
+        (hf.intervalIntegrable (-b) 0) (hf.intervalIntegrable 0 b)]
+  rw [hsum]
+  simp only [Complex.real_smul]
+  push_cast
+  field_simp
+  <;> ring
+
+/-- The normalized average of every entire primitive is the pairing with the actual Fourier
+kernel on the full parameter interval, including `b = 1`. -/
+theorem boundary_primitive_representation (h H : ℂ → ℂ) (hh : Differentiable ℂ h)
+    (hH : ∀ z : ℂ, HasDerivAt H (h z) z) (hH0 : H 0 = 0)
+    (b : ℝ) (hb : b ∈ Ioc (0 : ℝ) 1) :
+    (1 / (2 * b) : ℝ) • (∫ t in -b..b, H ((t : ℂ) * Complex.I)) =
+      ((2 * Real.pi)⁻¹ : ℝ) • (∫ θ in (0 : ℝ)..(2 * Real.pi),
+        h (circleMap 0 1 θ) * (boundaryKernel b θ : ℂ)) := by
+  have hHc : Continuous H := (show Differentiable ℂ H from fun z => (hH z).differentiableAt).continuous
+  have he := kernel_pairing_closed h hh b ⟨hb.1.le, hb.2⟩
+  rw [primitive_weighted_identity h H hh hH hH0 b,
+    primitive_vertical_average H hHc b hb.1] at he
+  rw [← he]
+  congr 1
+  apply intervalIntegral.integral_congr
+  intro θ _
+  dsimp only
+  exact mul_comm _ _
+
 #print axioms boundary_kernel_control
+#print axioms boundary_primitive_representation
 
 end D5.S3.Analytic.Interpolation.SchurBoundaryKernel
