@@ -1,23 +1,23 @@
 # Higher-arity monotonicity for evil and odious sums
 
-## 1. The representation functions
+## 1. Ordered representations
 
-Let $\mathbb N=\{0,1,2,\ldots\}$. The Thue--Morse sequence is the map
-$t:\mathbb N\to\{0,1\}$ determined by
+**Definition 1.1 (supports and literal counts).** Put
+$\mathbb N=\{0,1,2,\ldots\}$. Let $t:\mathbb N\to\{0,1\}$ be determined by
 
 $$
-t_0=0,\qquad t_{2m}=t_m,\qquad t_{2m+1}=1-t_m.
+t_0=0,\qquad t_{2m}=t_m,\qquad t_{2m+1}=1-t_m
+\qquad(m\in\mathbb N),
 $$
 
-Write
+and define the evil and odious supports by
 
 $$
 E=\{a\in\mathbb N:t_a=0\},\qquad
 O=\{a\in\mathbb N:t_a=1\}.
 $$
 
-For $x\in\{r,s\}$, $k\geq1$, and $n\in\mathbb N$, define the literal ordered
-representation counts
+For every integer $k\geq1$ and every $n\in\mathbb N$, set
 
 $$
 \begin{aligned}
@@ -26,228 +26,294 @@ s_k(n)&=\#\{(a_1,\ldots,a_k)\in O^k:a_1+\cdots+a_k=n\}.
 \end{aligned}
 $$
 
-The coordinates are ordered, repetitions are allowed, and every coordinate is
-nonnegative. Let $e$ and $o$ be the characteristic functions of $E$ and $O$.
-The Thue--Morse recursion gives, for every $m$,
+Coordinates are ordered and repetitions are allowed. These are the conventions
+of Allouche--Shallit, [*Additive properties of the evil and odious numbers and
+similar sequences*, arXiv:2112.13627v3](https://arxiv.org/pdf/2112.13627v3),
+equations (2)--(3). Write $a_r=\mathbf1_E$ and $a_s=\mathbf1_O$. For
+$x\in\{r,s\}$ the defining recursion gives
 
 $$
-e(2m)+e(2m+1)=1,\qquad o(2m)+o(2m+1)=1. \tag{1.1}
+a_x(2q)+a_x(2q+1)=1\qquad(q\in\mathbb N). \tag{1.1}
 $$
 
-The usual ordered-convolution identity (the last coordinate is separated from
-the first $k$ coordinates) is
+We use the standard ordered-convolution and composition-count inputs from
+Sándor--Yang, [*On the monotonicity of higher-fold representation functions*,
+arXiv:2606.28849v1](https://arxiv.org/pdf/2606.28849v1), Lemmas 4.2--4.3:
 
 $$
 x_{k+1}(n)=\sum_{j=0}^{n}a_x(j)x_k(n-j),\qquad
-a_r=e,\quad a_s=o. \tag{1.2}
+0\leq x_k(n)\leq\binom{n+k-1}{k-1}. \tag{1.2}
 $$
 
-This is the specialization of the ordered composition convolution in Sándor--Yang,
-Lemma 4.2, to the supports $E$ and $O$. The same counting argument gives the
-composition bound
+Here the convolution follows by fixing the last coordinate $j$ of the ordered
+tuple. For the bound, the unrestricted nonnegative $k$-tuples with sum $n$
+are in bijection with placements of $k-1$ separators among $n+k-1$ positions;
+restricting their coordinates to $E$ or $O$ cannot increase their number.
+For $k=1$ there are no separators and the unrestricted count is $1$.
+These inputs concern ordered tuples, including the endpoint $j=n$.
+
+## 2. Correction for a finite prefix
+
+**Definition 2.1 (integer differences and prefix variation).** For
+$f:\mathbb N\to\mathbb N$, regard its values as integers when taking
 
 $$
-0\leq x_k(m)\leq\binom{m+k-1}{k-1}. \tag{1.3}
+\delta f(m)=f(m+1)-f(m)\in\mathbb Z.
 $$
 
-The right side counts all ordered $k$-tuples of nonnegative integers with sum
-$m$; thus (1.3) does not use any density assertion about $E$ or $O$.
-
-The sixfold inequalities
+For $u\in\mathbb Z$ put $u_-:=\max\{0,-u\}$. For $R\in\mathbb N$ define
 
 $$
-r_6(n+1)>r_6(n)\quad(n\geq37),\qquad
-s_6(n+1)>s_6(n)\quad(n\geq5) \tag{1.4}
+V_R(f)=\sum_{m=0}^{R-1}(\delta f(m))_-.
 $$
 
-are supplied by Allouche--Shallit, *Additive properties of the evil and odious
-numbers and similar sequences*, arXiv:2112.13627v3, Conjecture 12 and its
-settling sixfold result. Their generating-function identities and the
-dyadic coefficient estimates are inputs here. Their analytic theorem for each
-fixed $k\geq10$ is likewise an input and is not used as a separate assertion
-below.
+An empty sum is $0$. For nonnegative integers $u,v$ use $\binom uv=0$ when
+$v>u$. All subtractions below are in $\mathbb Z$.
 
-## 2. The finite-prefix correction
-
-For an integer $u$, put $u_-:=\max\{0,-u\}$. If $f:\mathbb N\to\mathbb N$
-and $R\in\mathbb N$, define the exact negative variation in the finite prefix by
+**Proposition 2.2 (quantified finite-prefix correction).** Let
+$a:\mathbb N\to\{0,1\}$, $f:\mathbb N\to\mathbb N$, and $R\in\mathbb N$.
+Suppose that
 
 $$
-V_R(f):=\sum_{m=0}^{R-1}\bigl(f(m+1)-f(m)\bigr)_-. \tag{2.1}
+a(2q)+a(2q+1)=1\quad(q\in\mathbb N),\qquad
+\delta f(m)\geq1\quad(m\in\mathbb N,\ m\geq R).
 $$
 
-The empty sum is $0$. The next proposition keeps every early negative
-difference in (2.1), including the endpoint $m=0$, instead of replacing the
-prefix by an assumed monotone sequence.
-
-**Proposition 2.1 (finite-prefix correction).** Let $k\geq1$, $R\geq0$, and
-let $a:\mathbb N\to\{0,1\}$ satisfy
+Define $g:\mathbb N\to\mathbb N$ by
 
 $$
-a(2q)+a(2q+1)=1\qquad(q\in\mathbb N). \tag{2.2}
+g(n)=\sum_{j=0}^{n}a(j)f(n-j).
 $$
 
-Let $f:\mathbb N\to\mathbb N$ satisfy
-
-$$
-f(m)\leq\binom{m+k-1}{k-1}\quad(m\in\mathbb N),\qquad
-f(m+1)-f(m)\geq1\quad(m\geq R). \tag{2.3}
-$$
-
-Define
-
-$$
-g(n):=\sum_{j=0}^{n}a(j)f(n-j),\qquad
-B:=\binom{R+k-1}{k}.
-$$
-
-Then
-
-$$
-g(n+1)-g(n)\geq1
-\qquad\text{for every }n\geq R+2B+1. \tag{2.4}
-$$
-
-**Proof.** First, (2.3) and $f(m+1)\geq0$ give
-
-$$
-\bigl(f(m+1)-f(m)\bigr)_-\leq f(m)\leq\binom{m+k-1}{k-1}.
-$$
-
-Summing and using the hockey-stick identity yields the fully quantified
-finite-prefix estimate
-
-$$
-V_R(f)\leq\sum_{m=0}^{R-1}\binom{m+k-1}{k-1}
-=\binom{R+k-1}{k}=B. \tag{2.5}
-$$
-
-For $n\geq R$, subtract the two convolution sums in the definition of $g$ and
-retain the new endpoint term:
+Then, for every integer $n\geq R$, the following identity and inequalities hold:
 
 $$
 \begin{aligned}
-g(n+1)-g(n)
-={}&a(n+1)f(0)\\
-&+\sum_{m=0}^{R-1}a(n-m)\bigl(f(m+1)-f(m)\bigr)\\
-&+\sum_{j=0}^{n-R}a(j)\bigl(f(n+1-j)-f(n-j)\bigr).
-\end{aligned} \tag{2.6}
+\delta g(n)
+={}&a(n+1)f(0)
+  +\sum_{m=0}^{R-1}a(n-m)\delta f(m)
+  +\sum_{j=0}^{n-R}a(j)\delta f(n-j)\\
+\geq{}&a(n+1)f(0)
+  +\left\lfloor\frac{n-R+1}{2}\right\rfloor
+  -\sum_{m=0}^{R-1}a(n-m)(\delta f(m))_-\\
+\geq{}&a(n+1)f(0)
+  +\left\lfloor\frac{n-R+1}{2}\right\rfloor-V_R(f).
+\end{aligned} \tag{2.1}
 $$
 
-The middle line is at least $-V_R(f)$. In the last line every difference is at
-least $1$ by (2.3). Among the first $L=n-R+1$ integers, (2.2) puts exactly one
-support point in each adjacent pair, so
+In particular, $\delta g(n)\geq1$ for every
+$n\geq R+2V_R(f)+1$. If in addition an integer $k\geq1$ satisfies
 
 $$
-\sum_{j=0}^{n-R}a(j)\geq\left\lfloor\frac{L}{2}\right\rfloor. \tag{2.7}
+f(m)\leq\binom{m+k-1}{k-1}\qquad(m\in\mathbb N),
 $$
 
-The endpoint in (2.6) is nonnegative. Combining (2.5)--(2.7), and using
-$n\geq R+2B+1$, gives
+then
 
 $$
-g(n+1)-g(n)\geq\left\lfloor\frac{n-R+1}{2}\right\rfloor-B
-\geq(B+1)-B=1.
+V_R(f)\leq\binom{R+k-1}{k},\qquad
+\delta g(n)\geq1\quad
+\left(n\geq R+2\binom{R+k-1}{k}+1\right). \tag{2.2}
 $$
 
-This proves (2.4). ∎
-
-## 3. The recursive quantitative consumer
-
-Define, for $x\in\{r,s\}$,
+Proof. Subtract the convolution at $n$ from that at $n+1$. The new summand
+$j=n+1$ must be retained, giving
 
 $$
-R_{r,6}=37,\qquad R_{s,6}=5, \tag{3.1}
+\delta g(n)=a(n+1)f(0)+\sum_{j=0}^{n}a(j)\delta f(n-j).
 $$
 
-and recursively, for $k\geq6$,
+For $n\geq R$, the indices with $n-j<R$ are precisely
+$j=n-R+1,\ldots,n$. Reindex these by $m=n-j$ to obtain the identity
+in (2.1). This partition includes $m=0$ in the prefix whenever $R>0$,
+and includes $m=R$ in the tail. When $R=0$ the prefix is empty and the
+tail is the whole sum, so the same identity holds.
+
+For each prefix index, $0\leq a(n-m)\leq1$ and
+$\delta f(m)\geq-(\delta f(m))_-$. Therefore its total contribution is at
+least the negative of the weighted prefix sum in (2.1). No early negative
+difference is discarded. The tail has $\delta f(n-j)\geq1$ for every
+$0\leq j\leq n-R$. If $L=n-R+1$, the integers $0,\ldots,L-1$ contain
+$\lfloor L/2\rfloor$ complete pairs $(2q,2q+1)$, and possibly one further
+even integer. Each complete pair has $a$-sum $1$, and the remaining value
+is nonnegative. Consequently
 
 $$
-R_{x,k+1}=R_{x,k}+2\binom{R_{x,k}+k-1}{k}+1. \tag{3.2}
+\sum_{j=0}^{n-R}a(j)\geq\left\lfloor\frac{n-R+1}{2}\right\rfloor.
 $$
 
-**Theorem 3.1 (evil and odious higher-arity monotonicity).** For each
-$x\in\{r,s\}$, every integer $k\geq6$, and every $n\geq R_{x,k}$,
+The weighted prefix sum is at most $V_R(f)$, proving both inequalities in
+(2.1). Since $a(n+1)f(0)\geq0$, if $n\geq R+2V_R(f)+1$ then
 
 $$
-x_k(n+1)>x_k(n). \tag{3.3}
+\delta g(n)\geq
+\left\lfloor\frac{2V_R(f)+2}{2}\right\rfloor-V_R(f)=1.
 $$
 
-The bounds in (3.1)--(3.2) are sufficient bounds depending on $k$; no common
-threshold or sharpness assertion is part of the statement.
-
-**Proof.** We first establish the evil branch, which is the new quantitative
-consumer of Proposition 2.1. Assume $r_k(m+1)>r_k(m)$ for every
-$m\geq R_{r,k}$. Apply Proposition 2.1 with
+For the additional conclusion, nonnegativity of $f(m+1)$ gives
 
 $$
-a=e,\qquad f=r_k,\qquad R=R_{r,k}.
+(\delta f(m))_-\leq f(m)\leq\binom{m+k-1}{k-1}.
 $$
 
-Equation (1.1) supplies (2.2), equation (1.3) supplies the first part of
-(2.3), and the induction hypothesis supplies its second part. By (1.2), the
-resulting $g$ is $r_{k+1}$. Therefore
+Thus the classical cumulative composition count yields
 
 $$
-r_{k+1}(n+1)>r_{k+1}(n)
-\quad\left(n\geq R_{r,k}+2\binom{R_{r,k}+k-1}{k}+1\right),
+V_R(f)\leq\sum_{m=0}^{R-1}\binom{m+k-1}{k-1}
+=\binom{R+k-1}{k}. \tag{2.3}
 $$
 
-which is exactly the recurrence (3.2). The base case is the evil inequality
-in (1.4), so induction proves (3.3) for $x=r$ and all $k\geq6$. In particular,
+For completeness, when $R=0$ both sides of the equality are $0$; increasing
+$R$ by $1$ adds $\binom{R+k-1}{k-1}$ to the sum, and Pascal's identity adds
+the same amount to $\binom{R+k-1}{k}$. This proves the equality for every
+$R\geq0$, including $k=1$. Substitution into (2.1) proves (2.2). $\square$
+
+## 3. The higher-arity quantitative consequence
+
+**Definition 3.1 (recursive sufficient bounds).** For $x\in\{r,s\}$ set
 
 $$
-R_{r,7}=37+2\binom{42}{6}+1
-=38+2\binom{42}{6}. \tag{3.4}
+R_{r,6}=37,\qquad R_{s,6}=5,
 $$
 
-For the odious coordinate, we use the shifted support and the global propagation
-input rather than introduce a separate odious theorem. Put
+and for every integer $k\geq6$ define
 
 $$
-B:=O-1=\{b\in\mathbb N:t_{b+1}=1\},\qquad
-q_k(m):=\#\{(b_1,\ldots,b_k)\in B^k:b_1+\cdots+b_k=m\}.
+R_{x,k+1}=R_{x,k}+2\binom{R_{x,k}+k-1}{k}+1. \tag{3.1}
 $$
 
-The coordinatewise bijection $a_i=b_i+1$ gives, for $n\geq k$,
+**Theorem 3.2 (evil and odious counts at every higher arity).** For every
+$x\in\{r,s\}$, every integer $k\geq6$, and every integer $n\geq R_{x,k}$,
 
 $$
-s_k(n)=q_k(n-k),\qquad s_k(k-1)=0,\qquad q_k(0)=1. \tag{3.5}
+x_k(n+1)>x_k(n). \tag{3.2}
 $$
 
-The sixfold inequality in (1.4), including its endpoint at $n=5$, says via
-(3.5) that $q_6(m+1)>q_6(m)$ for every $m\geq0$. Bell--Shallit,
-arXiv:2212.12473v3, Remark 3, supplies the propagation fact that a set whose
-ordered $q$-fold representation function is strictly increasing from $0$ has
-the same property for every larger arity. Hence $q_k(m+1)>q_k(m)$ for every
-$m\geq0$ and $k\geq6$. Translating back through (3.5) gives
+The first recursive bounds are
 
 $$
-s_k(n+1)>s_k(n)\qquad(n\geq k-1). \tag{3.6}
+R_{r,7}=38+2\binom{42}{6},\qquad R_{s,7}=426. \tag{3.3}
 $$
 
-It remains only to compare the supplied odious range (3.6) with the requested
-recursive bound. From (3.1)--(3.2), $R_{s,6}=5$ and
-$R_{s,k+1}\geq R_{s,k}+1$; induction gives $R_{s,k}\geq k-1$. Thus (3.6)
-implies (3.3) for $x=s$ whenever $n\geq R_{s,k}$. The first recursive value is
+The bounds depend on $k$ and are sufficient; the statement makes no assertion
+of a common threshold or of sharpness.
+
+Proof. The supplied sixfold result is
 
 $$
-R_{s,7}=5+2\binom{10}{6}+1=426. \tag{3.7}
+r_6(n+1)>r_6(n)\quad(n\geq37),\qquad
+s_6(n+1)>s_6(n)\quad(n\geq5). \tag{3.4}
 $$
 
-Both branches therefore satisfy the single combined conclusion (3.3). ∎
+We use (3.4) from the repository's
+[SixfoldMonotonicity.result](https://github.com/the-omega-institute/trureturing/blob/84ebe63b875f6ca10d1b4d7aefb68a24ce0ff80f/D5/S1/Words/EvilOdious/SixfoldMonotonicity.lean),
+whose literal counts are those of Definition 1.1. The thresholds are the
+clauses of Allouche--Shallit, arXiv:2112.13627v3, Conjecture 12; that
+conjecture is the source of the statements, rather than a proof of (3.4).
 
-## 4. Scope of the cited inputs
+First fix the evil support. The case $k=6$ of (3.2) is (3.4). Suppose for
+an integer $k\geq6$ that $r_k(m+1)>r_k(m)$ for every $m\geq R_{r,k}$.
+Since the counts are integers, $\delta r_k(m)\geq1$ on that entire tail.
+Apply Proposition 2.2 with
 
-The tuple convention, the Thue--Morse recursion, and the sixfold seed are those
-of Allouche--Shallit, arXiv:2112.13627v3, equations (2)--(3) and Conjecture 12.
-The convolution and composition estimates used in (1.2)--(1.3) are the ordered
-composition estimates of Sándor--Yang, arXiv:2606.28849v1, Lemmas 4.2--4.3,
-specialized here to $E$ and $O$. The only higher-arity propagation used in the
-odious branch is Bell--Shallit, arXiv:2212.12473v3, Remark 3, applied after the
-explicit shift in (3.5). The comparison is limited to these accessible source
-versions; the publisher text associated with DOI 10.7169/facm/2108 and the
-inaccessible monotonicity sequel DOI 10.1016/j.disc.2008.01.057 are not used as
-additional premises.
+$$
+a=\mathbf1_E,\qquad f=r_k,\qquad R=R_{r,k}.
+$$
 
-## 5. 追加锚（本行以下为增补区）
+The pair condition is (1.1) and the composition bound is (1.2).
+The convolution $g$ is exactly $r_{k+1}$ by (1.2). Consequently
+
+$$
+\delta r_{k+1}(n)\geq
+\left\lfloor\frac{n-R_{r,k}+1}{2}\right\rfloor
+-V_{R_{r,k}}(r_k)\geq1
+\qquad(n\geq R_{r,k+1}), \tag{3.5}
+$$
+
+because
+
+$$
+V_{R_{r,k}}(r_k)\leq\binom{R_{r,k}+k-1}{k}.
+$$
+
+This proves the induction step and hence the evil branch for every $k\geq6$.
+The finite-prefix correction (2.1), applied in (3.5), is the additional
+inference beyond the cited convolution and counting inputs. In particular,
+it does not assume that the evil counts increase below $R_{r,k}$.
+
+For the odious branch use the classical global propagation of Bell--Shallit,
+[*Counterexamples to a conjecture of Dombi in additive number theory*,
+arXiv:2212.12473v3](https://arxiv.org/pdf/2212.12473v3), Remark 3, with the
+following explicit shift. Since $t_0=0$ and $t_1=1$, $O$ has minimum $1$.
+Put
+
+$$
+B=O-1=\{b\in\mathbb N:t_{b+1}=1\},\qquad
+q_k(m)=\#\{(b_1,\ldots,b_k)\in B^k:b_1+\cdots+b_k=m\}
+\quad(m\in\mathbb N).
+$$
+
+The coordinatewise bijection $a_i=b_i+1$ gives, for every $k\geq1$,
+
+$$
+s_k(n)=0\ (0\leq n<k),\qquad
+s_k(n)=q_k(n-k)\ (n\geq k),\qquad q_k(0)=1. \tag{3.6}
+$$
+
+Indeed every odious coordinate is at least $1$, and $0\in B$; the unique
+nonnegative tuple with sum $0$ is the zero tuple. From (3.4) at
+$n=m+6$ we get
+
+$$
+q_6(m+1)>q_6(m)\qquad(m\in\mathbb N).
+$$
+
+Thus the shifted sixfold counts are strictly increasing from $0$, as required
+by Bell--Shallit's propagation. To spell out that supplied implication with
+its endpoint, let $b=\mathbf1_B$. If $\delta q_k(m)\geq1$ for all $m\geq0$,
+the classical difference-convolution identity gives
+
+$$
+\delta q_{k+1}(m)=b(m+1)q_k(0)
+ +\sum_{j=0}^{m}b(j)\delta q_k(m-j)\geq\delta q_k(m)\geq1,
+$$
+
+because $b(0)=1$ and all the other summands are nonnegative. Induction gives
+this global strictness for every $k\geq6$. For $n\geq k$ translate by
+$m=n-k$ in (3.6); for $n=k-1$ use
+$s_k(k)=q_k(0)=1>0=s_k(k-1)$. Hence the cited propagation supplies the
+stronger odious range
+
+$$
+s_k(n+1)>s_k(n)\qquad(k\geq6,\ n\geq k-1). \tag{3.7}
+$$
+
+It is an intermediate consequence of that classical supply, rather than a
+separate higher-arity assertion here. As $R_{s,6}=5$ and
+$R_{s,k+1}\geq R_{s,k}+1$, induction gives $R_{s,k}\geq k-1$.
+Thus (3.7) implies the required odious branch of (3.2) for all
+$n\geq R_{s,k}$. Formula (3.1) also gives
+
+$$
+R_{r,7}=37+2\binom{37+5}{6}+1=38+2\binom{42}{6},\qquad
+R_{s,7}=5+2\binom{5+5}{6}+1=5+2\cdot210+1=426.
+$$
+
+For the relation with the other cited higher-arity input,
+Allouche--Shallit's Theorem 10 already supplies qualitative eventual strictness
+for every fixed $k\geq10$. Its hypothesis holds for the Thue--Morse signs
+with exponent $\alpha=\log3/\log4$ (as used in its Corollary 11), and
+$k>2/(1-\alpha)$ holds for all $k\geq10$, since $3^5<4^4$ implies
+$\alpha<4/5$. Its positive-coordinate supports
+are $E+1$ and $O+1$: adding $1$ to each coordinate raises a $k$-tuple sum by
+$k$. In the notation $r(k,L,N)$ of that paper the exact correspondence is
+
+$$
+r(k,E+1,n+k)=r_k(n),\qquad r(k,O+1,n+k)=s_k(n).
+$$
+
+That qualitative range and the whole odious propagation above are cited
+inputs. The quantitative evil conclusion uses the finite-prefix correction
+and the supplied sixfold seed as shown in (3.5). $\square$
+
+## 追加锚（本行以下为增补区）
