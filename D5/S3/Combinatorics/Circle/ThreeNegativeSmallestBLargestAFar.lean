@@ -5,6 +5,7 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Unbounded far masks in the strict smallest-b largest-a chamber. -/
+module
 import Batteries.Tactic.OpenPrivate
 import all D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoMasks
 import D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoJointLift
@@ -90,9 +91,8 @@ private theorem far_certificate (s q h : ℤ) (hs : 8 ≤ s) (hq : 1 ≤ q) (hh 
   have hR : 0 ≤ R ∧ R < lam := by dsimp [R]; constructor <;> nlinarith
   have hzr : z < r / 2 := by
     have hEe : 2*(lam*(r/2)-Y)=3*r*(s+1)+lam+3 := by
-      dsimp [lam,L,Y,u]
-      nlinarith only [hH,hC,hs2,
-        show (2*L-s-1)*(2*(r/2)-r)=0 by rw [hr2]; ring]
+      dsimp [lam,L,Y,H,C,u]
+      linear_combination (2*L-s-1)*hr2 - 2*r*s*ht2 + (2*t+1)*hs2
     have hE : 0 < lam*(r/2)-Y := by
       nlinarith [mul_pos hr0 (show 0<s+1 by omega)]
     by_contra hn
@@ -104,11 +104,13 @@ private theorem far_certificate (s q h : ℤ) (hs : 8 ≤ s) (hq : 1 ≤ q) (hh 
       dsimp [lam,delta,M,R,Y]; ring
     have hM : 2 * M = (s + 1) * (r*s*t-1+2*u) + L := by
       dsimp [M,H,C,L,u]
-      nlinarith [show r*s*(2*(t/2)-t)=0 by rw [ht2]; ring,
-        show (t+1)*(2*(s/2)-s)=0 by rw [hs2]; ring]
+      linear_combination -r*s*(s+1)*ht2 + t*hs2
     have hM0 : 0 < M := by
       have hu0 : 0 < u := by dsimp [u]; positivity
-      have hn0 : 0 < r*s*t-1 := by nlinarith [mul_pos hr0 (show 0<s by omega)]
+      have hn0 : 0 < r*s*t-1 := by
+        have hrs : 1≤r*s := by nlinarith [mul_pos hr0 (show 0<s by omega)]
+        have hprod := mul_le_mul_of_nonneg_right hrs ht0.le
+        nlinarith
       nlinarith [mul_pos (show 0<s+1 by omega) (show 0<r*s*t-1+2*u by omega)]
     have hd0 : 0 < 2 * delta := by
       have hp := mul_nonneg hL.le hR.1
@@ -122,19 +124,14 @@ private theorem far_certificate (s q h : ℤ) (hs : 8 ≤ s) (hq : 1 ≤ q) (hh 
       have hrHalf' : r/2=4*s := by rw [hr']; omega
       have hz' : z=r/2-4 := by
         apply (Int.ediv_eq_iff_of_pos hlam).mpr
-        have hrem : Y-lam*(r/2-4)=(s-4)*(4*s-1)/2 := by
-          rw [hYe]
-          dsimp [lam,L]
-          rw [ht',hr',hrHalf']
-          omega
-        have hrem0 : 0 ≤ Y-lam*(r/2-4) := by
-          rw [hrem]
-          exact Int.ediv_nonneg (mul_nonneg (by omega) (by omega)) (by norm_num)
         have hrem2 : 2*(Y-lam*(r/2-4))=(s-4)*(4*s-1) := by
           rw [hYe]
           dsimp [lam,L]
           rw [ht',hr',hrHalf']
           nlinarith only [hs2]
+        have hrem0 : 0 ≤ Y-lam*(r/2-4) := by
+          have hp := mul_nonneg (show 0≤s-4 by omega) (show 0≤4*s-1 by omega)
+          nlinarith only [hrem2,hp]
         constructor
         · omega
         · dsimp [lam,L] at *
@@ -144,8 +141,9 @@ private theorem far_certificate (s q h : ℤ) (hs : 8 ≤ s) (hq : 1 ≤ q) (hh 
         dsimp [delta]
         rw [hz',hrHalf']
         dsimp [L]
-        rw [ht'] at *
-        nlinarith only [hH,hC,hr']
+        rw [ht',hr'] at hH hC
+        rw [ht']
+        nlinarith only [hH,hC]
       dsimp [u]
       rw [hr']
       nlinarith [sq_nonneg (s-4)]

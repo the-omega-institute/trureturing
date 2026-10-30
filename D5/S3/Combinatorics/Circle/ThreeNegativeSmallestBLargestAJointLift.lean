@@ -5,13 +5,17 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: One physical order and literal fresh ear throughout the strict b<c<a chamber. -/
-import D5.S3.Combinatorics.Circle.ThreeNegativeSmallestBLargestAFar
-import D5.S3.Combinatorics.Circle.ThreeNegativeSmallestBLargestAAdjacent
+module
+public import D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoJointLift
+import all D5.S3.Combinatorics.Circle.ThreeNegativeSmallestBLargestAFar
+import all D5.S3.Combinatorics.Circle.ThreeNegativeSmallestBLargestAAdjacent
 
 /-! One joint physical order for the entire strict chamber. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
+
+public section
 
 namespace D5.S3.Combinatorics.Circle.ThreeNegativeSmallestBLargestAJointLift
 open SourceWidth PeriodicShortening RunFirstEarTransport

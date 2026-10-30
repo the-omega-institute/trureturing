@@ -5,6 +5,7 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Adjacent two-chain masks and unbounded ceiling estimates. -/
+module
 import Batteries.Tactic.OpenPrivate
 import all D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoMasks
 import D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoJointLift
