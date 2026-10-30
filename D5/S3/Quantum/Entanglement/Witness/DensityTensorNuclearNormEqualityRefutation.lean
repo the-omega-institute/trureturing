@@ -6,9 +6,7 @@
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/Witness/DensityTensorNuclearNormEqualityRefutation.claim; result=D5/S3/Quantum/Entanglement/Witness/DensityTensorNuclearNormEqualityRefutation.result; claim=D5/S3/Quantum/Entanglement/Witness/DensityTensorNuclearNormEqualityRefutation.claim
    digest: A flagged Bell mixture refutes the pure-state nuclear-norm equality case. -/
 
-
 import D5.S3.Quantum.PureState.PureStateHandshake
-import Mathlib.LinearAlgebra.PiTensorProduct.Basis
 
 /-! Complex nuclear norms of coefficient tensors and a mixed equality-case counterexample. -/
 
