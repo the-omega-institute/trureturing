@@ -1496,8 +1496,8 @@ $$
 \tag{10.3}
 $$
 
-If there is one fixed $e\in E_{AB}$ such that $(h_j)_e\to\infty$
-and all the other original coordinates are bounded, the stronger bound is
+If any fixed $e\in E_{AB}$ satisfies $(h_j)_e\to\infty$, without
+any boundedness assumption on the other coordinates, the stronger bound is
 
 $$
 \limsup_{j\to\infty}R(h_j)\le n(n-3)+m.
@@ -1644,8 +1644,10 @@ endpoint removed. Then $k=c-1\ge2$, and the bound is
 $n(n-2)-(c-1)=B_\infty$. These alternatives cover every original
 edge. They prove (10.3) on the chosen limsup subsequence and hence on
 the original sequence. Under the additional hypothesis of (10.4),
-every such subsequence has only the stated $AB$ edge diverging, so
-the stronger choice $I=C$ always applies. ∎
+every such subsequence either has at least two infinite edge limits,
+where (10.5) applies, or has just the stated $AB$ edge with infinite
+limit, where the stronger choice $I=C$ applies. This proves (10.4)
+even if other original coordinates are unbounded. ∎
 
 ## 11. Compact superlevels and the entire nonnegative optimizer set
 
@@ -2240,7 +2242,17 @@ $$
 \tag{15.3}
 $$
 
-is compact. For every sequence $(g_j)$ of strictly positive assignments
+is compact. For every sequence $(g_j)$ in the closed level with
+$\max_e(g_j)_e\to\infty$,
+
+$$
+ \limsup_j\lambda_2(g_j)\le B_\infty/R_0.
+\tag{15.3a}
+$$
+
+If any fixed $AB$ coordinate tends to infinity, this improves to
+$\limsup_j\lambda_2(g_j)\le(n(n-3)+m)/R_0$.
+For every sequence $(g_j)$ of strictly positive assignments
 with $R(g_j)=R_0$ exactly,
 
 $$
@@ -2286,6 +2298,13 @@ The positive level supremum and the bounds are Theorem 5.1 and
 Theorems 11.1, 14.1. Equation (15.5) identifies (15.3) exactly with
 $\Psi_{R_0}(\mathcal S_\alpha)$, a continuous image of the compact
 set in Theorem 11.1, proving its compactness.
+The bounds $n/R_0\le\lambda_2(g)\le M/R_0$ on this closed level
+show that $\max_e(g_j)_e\to\infty$ implies
+$\max_e(\Theta(g_j))_e\to\infty$. A fixed diverging $AB$
+coordinate has the same property after this normalization. Applying
+Theorem 10.2 to $\Theta(g_j)$ and using
+$R(\Theta(g_j))=R_0\lambda_2(g_j)$ proves (15.3a) and its
+stronger $AB$ version.
 
 If a positive exact-level sequence is maximizing, then
 $F(g_j)=R_0\lambda_2(g_j)\to M$.
