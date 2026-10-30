@@ -391,8 +391,10 @@ private lemma epsilon_admissible {a : ℕ} (ha : 4 ≤ a) :
     0 < epsilon a ∧ epsilon a ≤ 1/(a : ℝ) := by
   have h4 : (4 : ℝ) ≤ a := by exact_mod_cast ha
   have hp : 0 < scale a := Real.rpow_pos_of_pos (by linarith) _
-  have hs : 1 ≤ Real.sqrt 2 := by nlinarith [Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num),
-    Real.sqrt_nonneg (2 : ℝ)]
+  have hs : 1 ≤ Real.sqrt 2 := by
+    have hs0 := Real.sqrt_nonneg (2 : ℝ)
+    have hs2 := Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
+    nlinarith
   have hscale : (a : ℝ) ≤ scale a :=
     Real.self_le_rpow_of_one_le (by linarith) (by norm_num)
   constructor
@@ -425,12 +427,39 @@ private lemma normalized_gap {a : ℕ} (ha : 4 ≤ a) :
   have hss : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
   have hps := scale_square a
   have hg := gap_formula ha hepos heub
+  have hz : 1 - epsilon a/(a : ℝ) ≠ 0 := by
+    have heq : 1 - epsilon a/(a : ℝ) = ((a : ℝ)-epsilon a)/(a : ℝ) := by
+      field_simp
+    rw [heq]
+    exact div_ne_zero hd hap.ne'
+  have hequot : epsilon a / scale a = 1/(Real.sqrt 2*(a : ℝ)^3) := by
+    unfold epsilon
+    rw [div_div, mul_assoc, ← pow_two, hps]
+  have hfirst : (1/epsilon a)/scale a = Real.sqrt 2 := by
+    unfold epsilon
+    field_simp
+  have hn1 : (1+1/(a : ℝ))^2 = ((a : ℝ)+1)^2/(a : ℝ)^2 := by
+    field_simp
+    <;> ring
+  have hn2 : 2+2/(a : ℝ)-2/(a : ℝ)^2-1/(a : ℝ)^3-epsilon a/(a : ℝ)^2 =
+      (2*(a : ℝ)^3+2*(a : ℝ)^2-2*(a : ℝ)-1-(a : ℝ)*epsilon a)/(a : ℝ)^3 := by
+    field_simp
+    <;> ring
+  have hn3 : (1-epsilon a/(a : ℝ))^2 = ((a : ℝ)-epsilon a)^2/(a : ℝ)^2 := by
+    field_simp
+    <;> ring
   apply (mul_left_cancel₀ (show (2 : ℝ) ≠ 0 by norm_num))
-  rw [← mul_div_assoc, hg]
-  unfold epsilon at *
-  field_simp
-  ring_nf
-  nlinarith [hps]
+  rw [← mul_div_assoc, hg, add_div, hfirst, hn1, hn2, hn3]
+  calc
+    _ = Real.sqrt 2 + ((a : ℝ)+1)^2 *
+        (2*(a : ℝ)^3+2*(a : ℝ)^2-2*(a : ℝ)-1-(a : ℝ)*epsilon a)/
+          ((a : ℝ)-epsilon a)^2 * (epsilon a / scale a) := by ring
+    _ = _ := by
+      rw [hequot]
+      field_simp
+      ring_nf
+      rw [hss]
+      ring
 
 private lemma first_limit :
     Tendsto (fun a : ℕ =>
@@ -438,7 +467,7 @@ private lemma first_limit :
       atTop (𝓝 (Real.sqrt 2)) := by
   have hn : Tendsto (fun a : ℕ => (a : ℝ)) atTop atTop := tendsto_natCast_atTop_atTop
   have hi : Tendsto (fun a : ℕ => 1/(a : ℝ)) atTop (𝓝 0) := by
-    simpa only [one_div] using tendsto_inv_atTop_zero.comp hn
+    simpa only [one_div, Function.comp_def] using tendsto_inv_atTop_zero.comp hn
   have hi2 : Tendsto (fun a : ℕ => 1/(a : ℝ)^2) atTop (𝓝 0) := by
     simpa using hi.pow 2
   have hi3 : Tendsto (fun a : ℕ => 1/(a : ℝ)^3) atTop (𝓝 0) := by
@@ -451,14 +480,15 @@ private lemma first_limit :
       (1+1/(a : ℝ))^2 *
         (2+2/(a : ℝ)-2/(a : ℝ)^2-1/(a : ℝ)^3-epsilon a/(a : ℝ)^2))
       atTop (𝓝 2) := by
-    convert ((tendsto_const_nhds.add hi).pow 2).mul
-      ((((tendsto_const_nhds.add (hi.const_mul 2)).sub (hi2.const_mul 2)).sub hi3).sub he2)
-      using 1 <;> simp [div_eq_mul_inv]
+    have h1 := ((tendsto_const_nhds (x := (1 : ℝ))).add hi).pow 2
+    have h2 := ((((tendsto_const_nhds (x := (2 : ℝ))).add (hi.const_mul 2)).sub
+      (hi2.const_mul 2)).sub hi3).sub he2
+    simpa [div_eq_mul_inv] using h1.mul h2
   have hden : Tendsto (fun a : ℕ =>
       2*Real.sqrt 2*(1-epsilon a/(a : ℝ))^2) atTop (𝓝 (2*Real.sqrt 2)) := by
     convert ((tendsto_const_nhds.sub he1).pow 2).const_mul (2*Real.sqrt 2)
       using 1 <;> simp
-  have h := tendsto_const_nhds.add (hnum.div hden (by positivity))
+  have h := (tendsto_const_nhds (x := 1/Real.sqrt 2)).add (hnum.div hden (by positivity))
   have hs : 1/Real.sqrt 2 + 2/(2*Real.sqrt 2) = Real.sqrt 2 := by
     have hss := Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
     have hsp : 0 < Real.sqrt 2 := by positivity
@@ -476,8 +506,13 @@ private lemma second_limit :
   have hr : Tendsto (fun a : ℕ => scale a / scale (a+1)) atTop (𝓝 1) := by
     have h := (tendsto_natCast_div_add_atTop (1 : ℝ)).rpow_const
       (p := (3/2 : ℝ)) (Or.inr (by norm_num))
-    simpa only [Real.one_rpow, Real.div_rpow (Nat.cast_nonneg _) (by positivity),
-      scale, Nat.cast_add, Nat.cast_one] using h
+    have heq : (fun a : ℕ => ((a : ℝ)/((a : ℝ)+1))^(3/2 : ℝ)) =
+        fun a : ℕ => scale a/scale (a+1) := by
+      funext a
+      rw [Real.div_rpow (Nat.cast_nonneg a) (by positivity)]
+      simp only [scale, Nat.cast_add, Nat.cast_one]
+    rw [heq] at h
+    simpa only [Real.one_rpow] using h
   have h := first_limit.mul hr
   simp only [mul_one] at h
   apply h.congr'
@@ -499,7 +534,7 @@ private lemma quadratic_limit :
   apply h.congr'
   apply Eventually.of_forall
   intro a
-  dsimp only
+  dsimp only [Function.comp_def]
   have hz : (0 : ℝ) < (a : ℝ)+1 := by positivity
   have he : scale (a+1) * (((a : ℝ)+1)^(1/2 : ℝ)) = ((a : ℝ)+1)^2 := by
     unfold scale
@@ -509,6 +544,26 @@ private lemma quadratic_limit :
   rw [Real.rpow_neg hz.le]
   rw [div_eq_mul_inv, mul_assoc, ← mul_inv, he]
   rfl
+
+private lemma rational_epsilon {b : ℕ} (hb : 2 ≤ b) :
+    epsilon (2*b^2) = 1/(4*(b : ℝ)^3) := by
+  have hbpos : (0 : ℝ) < b := by exact_mod_cast (show 0 < b by omega)
+  have hap : (0 : ℝ) < (2*b^2 : ℕ) := by positivity
+  have hs : Real.sqrt (2*b^2 : ℕ) = Real.sqrt 2 * (b : ℝ) := by
+    push_cast
+    rw [Real.sqrt_mul (by norm_num), Real.sqrt_sq (Nat.cast_nonneg b)]
+  have hp : scale (2*b^2) = (2*b^2 : ℕ) * Real.sqrt (2*b^2 : ℕ) := by
+    unfold scale
+    rw [show (3/2 : ℝ) = 1 + 1/2 by norm_num, Real.rpow_add hap,
+      Real.rpow_one, ← Real.sqrt_eq_rpow]
+  unfold epsilon
+  rw [hp, hs]
+  push_cast
+  have hss : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  field_simp
+  ring_nf
+  rw [hss]
+  ring
 
 /-- The proposed bound quantifies over the actual subset law, at every finite
 hub number and every mean in the complete adjacent-cardinality interval. -/
@@ -563,6 +618,9 @@ structure FiniteFacts (a : ℕ) (ε : ℝ) (x : Finset (Fin (a+2)) → ℝ) : Pr
       (2*(a : ℝ)^3+2*(a : ℝ)^2-2*(a : ℝ)-1-(a : ℝ)*ε)/((a : ℝ)-ε)^2
   gap_pos : 0 < energy x-benchmark (a+1) a
   endpoint : ε = 1/(a : ℝ) → ∀ j ∈ core a, x ((core a).erase j) = 0
+  native_expectation : ∀ f : Finset (Fin (a+2)) → ℝ,
+    (∑ T : {T : Finset (Fin (a+2)) // T.Nonempty}, x T.val * f T.val) =
+      ∑ T, x T * f T
 
 private lemma finite_facts {a : ℕ} (ha : 4 ≤ a) {ε : ℝ}
     (hε : 0 < ε) (hεa : ε ≤ 1/(a : ℝ)) : FiniteFacts a ε (rareLaw a ε) := by
@@ -570,7 +628,7 @@ private lemma finite_facts {a : ℕ} (ha : 4 ≤ a) {ε : ℝ}
   refine ⟨hn, (total_mean a ε).1, he, hp, (total_mean a ε).2,
     displayed_masses ha ε, ?_, marginal_extra a ε, marginal_core a ε,
     moment_extra a ε, moment_core a ε, support_components ha hε, ?_,
-    energy_formula ha hε hεa, gap_formula ha hε hεa, gap_positive ha hε hεa, ?_⟩
+    energy_formula ha hε hεa, gap_formula ha hε hεa, gap_positive ha hε hεa, ?_, ?_⟩
   · intro T h1 h2 h3
     simp only [rareLaw, h1, h2, ↓reduceIte, zero_add]
     exact Finset.sum_eq_zero fun j hj => if_neg (h3 j hj)
@@ -580,6 +638,17 @@ private lemma finite_facts {a : ℕ} (ha : 4 ≤ a) {ε : ℝ}
     have hap := (scalar_bounds ha hε hεa).1.ne'
     field_simp
     <;> ring
+  · intro f
+    have hs := Fintype.sum_subtype_add_sum_subtype
+      (fun T : Finset (Fin (a+2)) => T.Nonempty) (fun T => rareLaw a ε T * f T)
+    have hz : (∑ T : {T : Finset (Fin (a+2)) // ¬T.Nonempty},
+        rareLaw a ε T.val * f T.val) = 0 := by
+      apply Finset.sum_eq_zero
+      intro T _
+      have ht : T.val = ∅ := Finset.not_nonempty_iff_eq_empty.mp T.property
+      rw [ht, he, zero_mul]
+    rw [hz, add_zero] at hs
+    exact hs
 
 /-- The complete family assertion, including both natural-index asymptotics and
 the quantified obstruction for actual laws. -/
@@ -590,12 +659,14 @@ def TheoremClaims (F : (a : ℕ) → ℝ → Finset (Fin (a+2)) → ℝ) : Prop 
     atTop (𝓝 (Real.sqrt 2)) ∧
   Tendsto (fun a : ℕ => (energy (F a (epsilon a))-benchmark (a+1) a)/scale (a+1))
     atTop (𝓝 (Real.sqrt 2)) ∧
+  (∀ b : ℕ, 2 ≤ b → epsilon (2*b^2) = 1/(4*(b : ℝ)^3)) ∧
   ¬ UniformQuadraticGap
 
 /-- The full genuine-profile family: all admissible real parameters, exact
 formulas, both components and limits, and failure of a uniform quadratic gap. -/
 theorem result : TheoremClaims rareLaw := by
   exact ⟨fun _ ha _ he heub => finite_facts ha he heub,
-    fun _ ha => epsilon_admissible ha, first_limit, second_limit, no_uniform⟩
+    fun _ ha => epsilon_admissible ha, first_limit, second_limit,
+    fun _ hb => rational_epsilon hb, no_uniform⟩
 
 end D5.S3.Combinatorics.Probability.CdsoRareHubProfile
