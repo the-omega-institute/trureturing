@@ -20,7 +20,8 @@ open SourceWidth PeriodicShortening RunFirstEarTransport
 open scoped BigOperators
 
 open private ThreeBitSource.centered_ladder ThreeBitSource.mask_labels
-  ThreeBitSource.mask_labels_bound ThreeBitSource.mask_labels_disjoint
+  ThreeBitSource.mask_labels_bound ThreeBitSource.mask_labels_mem
+  ThreeBitSource.mask_complement ThreeBitSource.mask_labels_disjoint
   ThreeBitSource.mask_labels_sum ThreeBitSource.labelled_permutation
   from D5.S3.Combinatorics.Circle.ThreeBitSource
 open private ThreeNegativeEqualOuterJointLift.label
@@ -586,9 +587,9 @@ private theorem four_phase_selector (a b c : ℕ)
   have hxy : 0 < x * y := mul_pos (by omega) (by omega)
   have hxz : 0 < x * z := mul_pos (by omega) (by omega)
   have hyz : 0 < y * z := mul_pos (by omega) (by omega)
-  have hDB : x * y ≤ DB ∧ 3 * DB < 4 * (x * y) := by dsimp [DB]; constructor <;> nlinarith
-  have hDL : x * z ≤ DL ∧ 3 * DL < 4 * (x * z) := by dsimp [DL]; constructor <;> nlinarith
-  have hDM : y * z ≤ DM ∧ 3 * DM < 4 * (y * z) := by dsimp [DM]; constructor <;> nlinarith
+  have hDB : x * y ≤ DB ∧ 3 * DB < 4 * (x * y) := by dsimp [DB]; constructor <;> nlinarith only [hx, hy]
+  have hDL : x * z ≤ DL ∧ 3 * DL < 4 * (x * z) := by dsimp [DL]; constructor <;> nlinarith only [hx, hz]
+  have hDM : y * z ≤ DM ∧ 3 * DM < 4 * (y * z) := by dsimp [DM]; constructor <;> nlinarith only [hyz]
   obtain ⟨R, hR0, hR, ⟨nB, hnB, hB0, hB1⟩,
       ⟨nL, hnL, hL0, hL1⟩, ⟨nM, hnM, hM0, hM1⟩⟩ :=
     simultaneous_half_phase DB DL DM (a + b) (a + c) (b + c)
@@ -600,11 +601,11 @@ private theorem four_phase_selector (a b c : ℕ)
   have hLr : DL ≤ r := le_trans (le_max_left _ _) (le_max_right _ _)
   have hMr : DM ≤ r := le_trans (le_max_right _ _) (le_max_right _ _)
   have hsmall : 3 * r < P := by
-    have hB : 3 * DB < P := by dsimp [P]; nlinarith [mul_le_mul_of_nonneg_left hz hxy.le]
+    have hB : 3 * DB < P := by dsimp [P]; nlinarith only [hDB.2, mul_le_mul_of_nonneg_left hz hxy.le]
     have hL : 3 * DL < P := by
       have := mul_le_mul_of_nonneg_left hy hxz.le
-      dsimp [P]; nlinarith
-    have hM : 3 * DM < P := by dsimp [P]; nlinarith [mul_le_mul_of_nonneg_left hx hyz.le]
+      dsimp [P]; nlinarith only [hDL.2, this]
+    have hM : 3 * DM < P := by dsimp [P]; nlinarith only [hDM.2, mul_le_mul_of_nonneg_left hx hyz.le]
     dsimp [r]
     rcases le_total DL DM with h | h
     · rw [max_eq_right h]
@@ -616,13 +617,13 @@ private theorem four_phase_selector (a b c : ℕ)
       · rw [max_eq_right h']; exact hL
       · rw [max_eq_left h']; exact hB
   have hcapB : 2 * nB < z := by
-    have hnp : 2 * nB * DB < P := by change R < 4 * r at hR; nlinarith
+    have hnp : 2 * nB * DB < P := by change R < 4 * r at hR; nlinarith only [hM0, hR, hMr, hsmall] only [hL0, hR, hLr, hsmall] only [hB0, hR, hBr, hsmall]
     have hrel : z * DB = P + DL := by dsimp [DB, DL, P]; ring
     have hpos : 0 < DB := by omega
     have hposL : 0 < DL := by omega
     by_contra h
     have := mul_le_mul_of_nonneg_right (show z ≤ 2 * nB by omega) hpos.le
-    nlinarith
+    nlinarith only [hnp, hrel, hposL, this]
   have hcapL : 2 * nL < y := by
     have hnp : 2 * nL * DL < P := by change R < 4 * r at hR; nlinarith
     have hrel : y * DL = P + DM := by dsimp [DL, DM, P]; ring
@@ -630,18 +631,18 @@ private theorem four_phase_selector (a b c : ℕ)
     have hposM : 0 < DM := by omega
     by_contra h
     have := mul_le_mul_of_nonneg_right (show y ≤ 2 * nL by omega) hpos.le
-    nlinarith
+    nlinarith only [hnp, hrel, hposM, this]
   have hcapM : 2 * nM < x := by
     have hnp : 2 * nM * DM < P := by change R < 4 * r at hR; nlinarith
     have hrel : x * DM = P := by dsimp [DM, P]; ring
     have hpos : 0 < DM := by omega
     by_contra h
     have := mul_le_mul_of_nonneg_right (show x ≤ 2 * nM by omega) hpos.le
-    nlinarith
-  refine ⟨R, nB, nL, nM, hR0, ?_, ⟨hnB, hcapB, by nlinarith, by nlinarith⟩,
-    ⟨hnL, hcapL, by nlinarith, by nlinarith⟩, ⟨hnM, hcapM, by nlinarith, by nlinarith⟩⟩
+    nlinarith only [hnp, hrel, this]
+  refine ⟨R, nB, nL, nM, hR0, ?_, ⟨hnB, hcapB, by nlinarith only [hB1], by nlinarith only [hB0]⟩,
+    ⟨hnL, hcapL, by nlinarith only [hL1], by nlinarith only [hL0]⟩, ⟨hnM, hcapM, by nlinarith only [hM1], by nlinarith only [hM0]⟩⟩
   change R < 4 * r at hR
-  nlinarith
+  nlinarith only [hR, hsmall]
 
 /-- Ceiling in the quarter-grid coordinate, with its exact rounding loss. -/
 private theorem quarter_ceiling (A t R : ℤ) (hA : 0 < A) (ht : 0 < t)
@@ -738,8 +739,9 @@ private theorem four_mask_parameters (a b c d : ℕ)
   have hte : t % 2 = 0 := by
     have he : t = 2 * (2 : ℤ) ^ (d - 1) := by
       dsimp [t]
-      rw [show d = (d - 1) + 1 by omega, pow_succ]
-      ring
+      calc
+        (2 : ℤ) ^ d = 2 ^ ((d - 1) + 1) := by congr 1 <;> omega
+        _ = 2 * (2 : ℤ) ^ (d - 1) := by rw [pow_succ]; ring
     rw [he]; omega
   obtain ⟨R, nB, nL, nM, hR, hRP, hB, hL, hM⟩ := four_phase_selector a b c ha hb hc
   change 3 * R < 4 * P at hRP
@@ -754,17 +756,17 @@ private theorem four_mask_parameters (a b c d : ℕ)
   have hchargeB : nB * 1 < A := by
     have hxy' : 1 ≤ x * y := by omega
     have hzP : z ≤ P := by dsimp [P]; nlinarith
-    dsimp [A]; nlinarith [hB.2.1]
+    dsimp [A]; nlinarith only [hB.2.1, hzP, hDB]
   have hchargeL : nL * (1 + z) < A := by
     have hmul := mul_lt_mul_of_pos_right hL.2.1 (show 0 < 1 + z by omega)
     have hP' : 4 * (y * z) ≤ P := by dsimp [P]; nlinarith
     have hy' : y ≤ y * z := by nlinarith
-    dsimp [A]; nlinarith
+    dsimp [A]; nlinarith only [hmul, hP', hy', hDB]
   have hchargeM : nM * (1 + y + y * z) < A := by
     have hmul := mul_lt_mul_of_pos_right hM.2.1 (show 0 < 1 + y + y * z by nlinarith)
     have he : x * (1 + y + y * z) = A - 1 := by dsimp [A, P, DB]; ring
     have hpos : 0 < nM * (1 + y + y * z) := mul_pos (by omega) (by nlinarith)
-    nlinarith
+    nlinarith only [hmul, he, hpos]
   have hseamB := rounded_phase_seam P A DB 1 t R nB q hP hA hAP ht
     (by norm_num) hchargeB hB.2.2.1 hB.2.2.2 heps heps'
   have hseamL := rounded_phase_seam P A DL (1 + z) t R nL q hP hA hAP ht
@@ -776,5 +778,105 @@ private theorem four_mask_parameters (a b c d : ℕ)
   · simpa [A, P, DB] using hseamB
   · simpa [A, P, DB, DL, mul_add, add_assoc] using hseamL
   · simpa [A, P, DB, DM, add_assoc] using hseamM
+
+private def chainMask (len off m : ℕ) : List ℕ :=
+  if h : m < 2 ^ len then (mask_labels len off m h).toList else []
+
+private theorem chainMask_partition (len off m n : ℕ) (hs : m + n = 2 ^ len - 1) :
+    (chainMask len off m ++ chainMask len off n).Perm (List.range' off len) := by
+  classical
+  have hp : 0 < 2 ^ len := by positivity
+  have hm : m < 2 ^ len := by omega
+  have hn : n < 2 ^ len := by omega
+  have hc := mask_complement len m n hs
+  have hd := mask_labels_disjoint (len := len) (off := off) (hx := hm) (hy := hn) hc.1
+  simp only [chainMask, dif_pos hm, dif_pos hn]
+  apply (List.perm_ext_iff_of_nodup ?_ (List.nodup_range' (s := off) (n := len))).mpr
+  · intro i
+    simp only [List.mem_append, Finset.mem_toList, mask_labels_mem, List.mem_range'_1]
+    constructor
+    · rintro (⟨e, he, _, hei⟩ | ⟨e, he, _, hei⟩) <;> omega
+    · intro hi
+      have he : i - off < len := by omega
+      have hmem : i - off ∈ m.bitIndices.toFinset ∪ n.bitIndices.toFinset := by
+        rw [hc.2]; exact Finset.mem_range.mpr he
+      rcases Finset.mem_union.mp hmem with h | h
+      · left
+        exact ⟨i - off, he, Nat.mem_bitIndices.mp (List.mem_toFinset.mp h), by omega⟩
+      · right
+        exact ⟨i - off, he, Nat.mem_bitIndices.mp (List.mem_toFinset.mp h), by omega⟩
+  · apply List.nodup_append.mpr
+    refine ⟨Finset.nodup_toList _, Finset.nodup_toList _, ?_⟩
+    intro i hi j hj hij
+    subst j
+    exact Finset.disjoint_left.mp hd (Finset.mem_toList.mp hi) (Finset.mem_toList.mp hj)
+
+private theorem chainMask_sum (len off m : ℕ) (hm : m < 2 ^ len)
+    (f : ℕ → ℤ) (A : ℤ) (hf : ∀ e < len, f (off + e) = (2 : ℤ) ^ e * A) :
+    ((chainMask len off m).map f).sum = (m : ℤ) * A := by
+  classical
+  simp only [chainMask, dif_pos hm]
+  change (((mask_labels len off m hm).toList : Multiset ℕ).map f).sum = _
+  rw [Finset.coe_toList]
+  exact mask_labels_sum len off m hm f A hf
+
+private theorem four_mask_inventory (a b c d q nB nL nM : ℕ)
+    (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hd : 2 ≤ d)
+    (hq : 1 ≤ q ∧ q ≤ 2 ^ (d - 1))
+    (hB : 1 ≤ nB ∧ nB ≤ 2 ^ (c - 1))
+    (hL : 1 ≤ nL ∧ nL ≤ 2 ^ (b - 1))
+    (hM : 1 ≤ nM ∧ nM ≤ 2 ^ (a - 1)) :
+    let U0 := chainMask (d - 1) 0 (2 ^ (d - 1) - q)
+    let U1 := chainMask (d - 1) 0 (q - 1)
+    let V0 := chainMask (c - 1) d (nB - 1)
+    let V1 := chainMask (c - 1) d (2 ^ (c - 1) - nB)
+    let W0 := chainMask (b - 1) (d + c) (nL - 1)
+    let W1 := chainMask (b - 1) (d + c) (2 ^ (b - 1) - nL)
+    let X0 := chainMask (a - 1) (d + c + b) (nM - 1)
+    let X1 := chainMask (a - 1) (d + c + b) (2 ^ (a - 1) - nM)
+    (U0 ++ V0 ++ [d - 1] ++ V1 ++ W0 ++ [d + c - 1] ++
+      W1 ++ X0 ++ [d + c + b - 1] ++ U1 ++ X1 ++ [d + c + b + a - 1]).Perm
+      (List.range (a + b + c + d)) := by
+  dsimp only
+  let U0 := chainMask (d - 1) 0 (2 ^ (d - 1) - q)
+  let U1 := chainMask (d - 1) 0 (q - 1)
+  let V0 := chainMask (c - 1) d (nB - 1)
+  let V1 := chainMask (c - 1) d (2 ^ (c - 1) - nB)
+  let W0 := chainMask (b - 1) (d + c) (nL - 1)
+  let W1 := chainMask (b - 1) (d + c) (2 ^ (b - 1) - nL)
+  let X0 := chainMask (a - 1) (d + c + b) (nM - 1)
+  let X1 := chainMask (a - 1) (d + c + b) (2 ^ (a - 1) - nM)
+  have hU := chainMask_partition (d - 1) 0 (2 ^ (d - 1) - q) (q - 1) (by omega)
+  have hV := chainMask_partition (c - 1) d (nB - 1) (2 ^ (c - 1) - nB) (by omega)
+  have hW := chainMask_partition (b - 1) (d + c) (nL - 1) (2 ^ (b - 1) - nL) (by omega)
+  have hX := chainMask_partition (a - 1) (d + c + b) (nM - 1) (2 ^ (a - 1) - nM) (by omega)
+  have hblock (off len : ℕ) (hlen : 1 ≤ len) (A B : List ℕ)
+      (h : (A ++ B).Perm (List.range' off (len - 1))) :
+      (A ++ B ++ [off + len - 1]).Perm (List.range' off len) := by
+    have he : List.range' off (len - 1) ++ [off + len - 1] = List.range' off len := by
+      simpa [show len - 1 + 1 = len by omega, show off + (len - 1) = off + len - 1 by omega]
+        using (List.range'_1_concat (s := off) (n := len - 1)).symm
+    simpa only [List.append_assoc, he] using h.append (List.Perm.refl [off + len - 1])
+  have hu : (U0 ++ U1 ++ [d - 1]).Perm (List.range' 0 d) := by
+    simpa only [Nat.zero_add] using hblock 0 d (by omega) U0 U1 hU
+  have hv := hblock d c (by omega) V0 V1 hV
+  have hw := hblock (d + c) b (by omega) W0 W1 hW
+  have hx := hblock (d + c + b) a (by omega) X0 X1 hX
+  have hreorder :
+      (U0 ++ V0 ++ [d - 1] ++ V1 ++ W0 ++ [d + c - 1] ++
+        W1 ++ X0 ++ [d + c + b - 1] ++ U1 ++ X1 ++ [d + c + b + a - 1]).Perm
+      ((U0 ++ U1 ++ [d - 1]) ++ (V0 ++ V1 ++ [d + c - 1]) ++
+        (W0 ++ W1 ++ [d + c + b - 1]) ++ (X0 ++ X1 ++ [d + c + b + a - 1])) := by
+    apply Multiset.coe_eq_coe.mp
+    simp only [← Multiset.coe_add]
+    ac_rfl
+  have hrange : List.range' 0 d ++ List.range' d c ++ List.range' (d + c) b ++
+      List.range' (d + c + b) a = List.range (a + b + c + d) := by
+    rw [← List.append_assoc, ← List.append_assoc]
+    rw [← List.range'_append_1 (s := 0) (m := d) (n := c)]
+    rw [← List.range'_append_1 (s := 0) (m := d + c) (n := b)]
+    rw [← List.range'_append_1 (s := 0) (m := d + c + b) (n := a)]
+    simp [← List.range_eq_range', show d + c + b + a = a + b + c + d by omega]
+  exact hreorder.trans (by simpa only [hrange] using hu.append (hv.append (hw.append hx)))
 
 end D5.S3.Combinatorics.Circle.FourNegativeEventual
