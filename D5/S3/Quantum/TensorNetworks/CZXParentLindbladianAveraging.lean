@@ -32,18 +32,15 @@ private noncomputable def bitAvg (n : ℕ) (k : Fin n) :
     simp only [Pi.smul_apply, RingHom.id_apply, ← Finset.smul_sum]
     exact smul_comm _ _ _
 
-private lemma bitAvg_apply (n : ℕ) (k : Fin n)
-    (f : (Fin n → Fin 2) → V) (x : Fin n → Fin 2) :
-    bitAvg n k f x = (2 : ℂ)⁻¹ • ∑ b : Fin 2, f (Function.update x k b) := rfl
-
 private lemma bitAvg_idempotent (n : ℕ) (k : Fin n) :
     bitAvg (V := V) n k * bitAvg n k = bitAvg n k := by
   apply LinearMap.ext
   intro f
   funext x
   change (2 : ℂ)⁻¹ • (∑ b : Fin 2,
-    (2 : ℂ)⁻¹ • ∑ c : Fin 2, f (Function.update (Function.update x k b) k c)) = _
-  simp only [bitAvg_apply, Fin.sum_univ_two, Function.update_idem]
+    (2 : ℂ)⁻¹ • ∑ c : Fin 2, f (Function.update (Function.update x k b) k c)) =
+      (2 : ℂ)⁻¹ • ∑ b : Fin 2, f (Function.update x k b)
+  simp only [Fin.sum_univ_two, Function.update_idem]
   module
 
 private lemma bitAvg_commute (n : ℕ) (k l : Fin n) :
@@ -133,7 +130,7 @@ private lemma avg_fill (n : ℕ) (s : Finset (Fin n))
     rw [avg_empty]
     have hf (b : {j : Fin n // j ∈ (∅ : Finset (Fin n))} → Fin 2) : fill ∅ x b = x := by
       funext j
-      simp [fill]
+      (delta fill; simp [])
     simp only [hf, Finset.card_empty, pow_zero, inv_one, one_smul]
     simp
   | @insert k s hk ih =>
@@ -165,8 +162,8 @@ private lemma avg_fill (n : ℕ) (s : Finset (Fin n))
       funext j
       by_cases hj : j = k
       · subst j
-        simp [fill, hk, e]
-      · by_cases hs : j ∈ s <;> simp [fill, hs, hj, e, Function.update_apply]
+        (delta fill; simp [hk, e])
+      · by_cases hs : j ∈ s <;> (delta fill; simp [hs, hj, e, Function.update_apply])
     rw [avg_insert n s k hk]
     change (2 : ℂ)⁻¹ • (∑ b : Fin 2, avg n s f (Function.update x k b)) = _
     simp only [ih]
@@ -188,6 +185,6 @@ lemma avg_univ (n : ℕ) (f : (Fin n → Fin 2) → V) (x : Fin n → Fin 2) :
   intro b
   congr 1
   funext j
-  simp [fill, e]
+  (delta fill; simp [e])
 
 end D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState

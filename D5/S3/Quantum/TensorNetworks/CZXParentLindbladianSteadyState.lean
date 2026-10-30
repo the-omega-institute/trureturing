@@ -140,7 +140,8 @@ private def evenStarts (n : ℕ) : List (Fin n) :=
 
 private lemma mem_evenStarts (n : ℕ) (i : Fin n) :
     i ∈ evenStarts n ↔ i.val % 2 = 0 := by
-  simp [evenStarts]
+  delta evenStarts
+  simp
 
 private lemma all_good_iff_constant (n : ℕ) (hn : 4 ≤ n) (δ : Fin n → Fin 2) :
     (∀ i ∈ evenStarts n, goodWindow i δ) ↔ ∃ e : Fin 2, δ = fun _ => e := by
@@ -304,7 +305,10 @@ private lemma gauge_flip (n : ℕ) (hn : Even n) (x : Fin n → Fin 2) :
 private lemma sum_gauged_zero (n : ℕ) :
     (∑ x : Fin n → Fin 2, gaugedUnit n (fun _ => 0) x) =
       (1 : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) := by
-  simp only [gaugedUnit, sectorGauge_const, gauge, Fin.val_zero, zero_mul, pow_zero,
+  delta gaugedUnit
+  simp only [sectorGauge_const]
+  delta gauge
+  simp only [Fin.val_zero, zero_mul, pow_zero,
     one_smul, add_zero]
   simp only [show (fun _ : Fin n => (0 : Fin 2)) = 0 from rfl, add_zero]
   change (∑ x : Fin n → Fin 2, Matrix.single x x (1 : ℂ)) = 1
@@ -328,7 +332,7 @@ private lemma sum_gauged_one (n : ℕ) (hn : Even n) :
   rw [Finset.sum_eq_single v]
   · by_cases h : u = v + fun _ => 1
     · subst u
-      simp only [eq_self_iff_true, and_self, if_true, mul_one]
+      simp only [and_self, if_true, mul_one]
       exact (gauge_flip n hn v).symm
     · simp [h, eq_comm]
   · intro x hx hxv
@@ -385,7 +389,7 @@ private lemma trace_symmetry_gauged (n : ℕ) (hn : Even n)
     smul_eq_mul, hu]
   by_cases h : δ = (fun _ => 1)
   · subst δ
-    simp only [eq_self_iff_true, if_true, mul_one, sectorGauge_const, gauge_flip n hn]
+    simp only [if_true, mul_one, sectorGauge_const, gauge_flip n hn]
     have hs : star (gauge n 1 x) = gauge n 1 x := by
       change star ((-1 : ℂ) ^ _) = (-1 : ℂ) ^ _
       simp only [star_pow, star_neg, star_one]
@@ -456,7 +460,7 @@ private lemma projection_formula (n : ℕ) (hn : Even n) (hsize : 4 ≤ n)
         change ((2 : ℂ) ^ n)⁻¹ • czxUnitary n = ((2 : ℂ) ^ n)⁻¹ •
           ((if (fun _ : Fin n => (1 : Fin 2)) = 0 then 1 else 0) • 1 +
             (if (fun _ : Fin n => (1 : Fin 2)) = (fun _ => 1) then 1 else 0) • czxUnitary n)
-        simp only [if_neg hne, eq_self_iff_true, if_true, zero_smul, one_smul, zero_add]
+        simp only [if_neg hne, if_true, zero_smul, one_smul, zero_add]
     · have hg : ¬ ∀ i ∈ evenStarts n, goodWindow i δ :=
         mt (all_good_iff_constant n hsize δ).mp hd
       have h0 : δ ≠ 0 := fun h => hd ⟨0, h⟩
@@ -630,8 +634,13 @@ private lemma projection_initial (n : ℕ) (hn : Even n) (hsize : 4 ≤ n) :
     rw [zpow_sub₀ (by norm_num), zpow_one, zpow_natCast]
     rw [show (2 : ℂ) ^ n = (2 : ℂ) ^ (n / 2) * (2 : ℂ) ^ (n / 2) by
       rw [← pow_add, ← hm], pow_add, pow_one]
-    field_simp
-    <;> ring
+    let p : ℂ := 2 ^ (n / 2)
+    have hp : p ≠ 0 := pow_ne_zero _ (by norm_num)
+    change (p * p)⁻¹ * (p * 2) = 2 * p⁻¹
+    rw [_root_.mul_inv_rev]
+    calc
+      p⁻¹ * p⁻¹ * (p * 2) = (p⁻¹ * p) * (p⁻¹ * 2) := by ring
+      _ = 2 * p⁻¹ := by rw [inv_mul_cancel₀ hp, one_mul, mul_comm]
   rw [projection_formula n hn hsize, ht]
   rw [Matrix.mul_smul, Matrix.trace_smul, Matrix.mul_add, Matrix.mul_one,
     Matrix.trace_add, hu, transfer_coefficient n hn hsize, zero_add]
