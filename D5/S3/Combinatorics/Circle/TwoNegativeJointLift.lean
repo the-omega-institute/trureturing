@@ -2,48 +2,101 @@
    generality: I
    mirror-B: D5/B/S3/Combinatorics/Circle/TwoNegativeJointLift
    mirror-E: none(waiver:no-escape-mirror-specified)
-   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange, mathlib/module/Mathlib.Data.Int.ModEq]
    utility: none
-   digest: Native common-cut two-negative lift for the asymmetric dyadic source.
--/
-
-import D5.S3.Combinatorics.Circle.RunFirstEarTransport
-import D5.S3.Combinatorics.Circle.DyadicPrefix
+   digest: Native common-cut two-negative lift for the asymmetric dyadic source. -/
+module
+public import D5.S3.Combinatorics.Circle.RunFirstEarTransport
+public import D5.S3.Combinatorics.Circle.DyadicPrefix
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
+@[expose] public section
+
 namespace D5.S3.Combinatorics.Circle.TwoNegativeJointLift
-open SourceWidth PeriodicShortening PeriodicShorteningArithmetic
-open RunFirstEarTransport
+open SourceWidth PeriodicShortening RunFirstEarTransport
 open scoped BigOperators
 
-private theorem nonneg_strip {α : Type*} (f : α → ℤ) (B : ℤ) (l : List α)
-    (hpos : ∀ x ∈ l, 0 ≤ f x) (hsum : (l.map f).sum ≤ B) :
-    InStrip f B 0 l := by
-  induction l with
-  | nil => simp [InStrip]
-  | cons x xs ih =>
-    have hx := hpos x (by simp)
-    have hrest : ∀ y ∈ xs, 0 ≤ f y := fun y hy => hpos y (by simp [hy])
-    have htail : 0 ≤ (xs.map f).sum := List.sum_nonneg (by
-      intro y hy
-      obtain ⟨z, hz, rfl⟩ := List.mem_map.mp hy
-      exact hrest z hz)
-    have hsum' : (xs.map f).sum ≤ B - f x := by
-      simp only [List.map_cons, List.sum_cons] at hsum
-      omega
-    refine ⟨by omega, by omega, ?_⟩
-    exact ih hrest (by omega)
+private theorem positive_strip {α : Type*} {f : α → ℤ} {B h : ℤ} {l : List α}
+    (hp : ∀ x ∈ l, 0 ≤ f x) (hh : 0 ≤ h) (hend : h + (l.map f).sum ≤ B) :
+    InStrip f B h l := by
+  apply inStrip_reflect
+  apply inStrip_nonpos
+  · intro x hx; have := hp x hx; omega
+  · omega
+  · rw [sum_neg_map]; omega
 
-private theorem sum_scale {α : Type*} (l : List α) (f : α → ℤ) (c : ℤ) :
-    (l.map (fun x => c * f x)).sum = c * (l.map f).sum := by
-  induction l with
-  | nil => simp
-  | cons x xs ih =>
-    simp only [List.map_cons, List.sum_cons, ih]
-    ring
+/-- Positivity controls the interiors; the two seam heights control the whole word. -/
+private theorem two_blocks {α : Type*} (f : α → ℤ) (B : ℤ)
+    (E F : List α) (x y : α)
+    (hE : ∀ i ∈ E, 0 ≤ f i) (hF : ∀ i ∈ F, 0 ≤ f i)
+    (htotal : (E.map f).sum + f x + (F.map f).sum + f y = 0)
+    (hp : 0 ≤ (E.map f).sum ∧ (E.map f).sum ≤ B)
+    (hx : 0 ≤ (E.map f).sum + f x)
+    (hy : 0 ≤ -f y ∧ -f y ≤ B) :
+    InStrip f B 0 (E ++ [x] ++ F ++ [y]) := by
+  apply inStrip_append (positive_strip hE (by omega) (by omega))
+  change 0 ≤ 0 + (E.map f).sum ∧ 0 + (E.map f).sum ≤ B ∧ _
+  refine ⟨by omega, by omega, ?_⟩
+  apply inStrip_append (positive_strip hF (by omega) (by omega))
+  change 0 ≤ 0 + (E.map f).sum + f x + (F.map f).sum ∧
+    0 + (E.map f).sum + f x + (F.map f).sum ≤ B ∧ _
+  simp only [InStrip]
+  omega
 
+private theorem split_perm {k : ℕ} (E : Finset (Fin k)) (x y : Fin k)
+    (hxy : x ≠ y) (hx : x ∉ E) (hy : y ∉ E) :
+    (E.toList ++ (Finset.univ \ (E ∪ {x,y})).toList ++ [x,y]).Perm
+      (List.finRange k) := by
+  classical
+  let F := Finset.univ \ (E ∪ {x,y})
+  have hEF : List.Disjoint E.toList F.toList := by
+    intro i hi hj
+    have hh := (Finset.mem_sdiff.mp (Finset.mem_toList.mp hj)).2
+    exact hh (Finset.mem_union_left _ (Finset.mem_toList.mp hi))
+  have hN : (E.toList ++ F.toList ++ [x,y]).Nodup := by
+    rw [← List.append_assoc]
+    apply List.nodup_append.mpr
+    refine ⟨List.nodup_append.mpr ⟨E.nodup_toList, F.nodup_toList, hEF⟩,
+      by simp [hxy], ?_⟩
+    intro i hi hj
+    simp only [List.mem_append, Finset.mem_toList] at hi
+    simp only [List.mem_cons, List.mem_singleton] at hj
+    rcases hi with hi | hi
+    · rcases hj with rfl | rfl <;> contradiction
+    · have hh := (Finset.mem_sdiff.mp hi).2
+      exact hh (Finset.mem_union_right _ (by simpa using hj))
+  apply (List.perm_ext_iff_of_nodup hN (List.nodup_finRange k)).mpr
+  intro i
+  simp only [List.mem_append, Finset.mem_toList, List.mem_cons, List.mem_singleton,
+    List.mem_finRange, F, Finset.mem_sdiff, Finset.mem_univ, true_and,
+    Finset.mem_union, Finset.mem_insert, Finset.mem_singleton]
+  tauto
+
+private theorem source_total {k t : ℕ} (hk : 0 < k) (l : List (Fin k))
+    (hp : l.Perm (List.finRange k)) : (l.map (actualSource k t)).sum = 0 := by
+  rw [(hp.map (actualSource k t)).sum_eq]
+  rw [← List.sum_toFinset _ (List.nodup_finRange _), List.toFinset_finRange]
+  exact (ZeroSumSubsets.source_cycle hk t).2.1
+
+private theorem inserted_perm {k : ℕ} (l : List (Fin k)) (j : ℕ)
+    (hp : l.Perm (List.finRange k)) :
+    (earWord k l j).Perm (List.finRange (k + 1)) := by
+  have h : (earWord k l j).Perm (l.map Fin.castSucc ++ [Fin.last k]) := by
+    unfold earWord
+    calc
+      _ ~r (l.take j).map Fin.castSucc ++ (l.drop j).map Fin.castSucc ++ [Fin.last k] := by
+        simpa only [List.append_assoc] using
+          (List.perm_append_comm [Fin.last k] ((l.drop j).map Fin.castSucc)).append_left
+            ((l.take j).map Fin.castSucc)
+      _ ~r l.map Fin.castSucc ++ [Fin.last k] := by
+        rw [← List.append_assoc, ← List.map_append, List.take_append_drop]
+  exact h.trans (by simpa only [List.finRange_succ_last] using
+    (hp.map Fin.castSucc).append_right [Fin.last k])
+
+/-- One literal V-mask gives both full actual-source orders at the same zero cut. -/
+set_option maxHeartbeats 2000000 in
 theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
     (hba : b < a) :
     ∃ sigma : List (Fin (a + b)), ∃ j : ℕ, j ≤ a + b ∧
@@ -52,773 +105,428 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
         (earWord (a + b) sigma j) := by
   classical
   let k := a + b
-  let q := 2 ^ a
-  let r := 2 ^ b
-  let v := q + 1
+  let q : ℤ := 2 ^ a
+  let r : ℤ := 2 ^ b
+  let Q : ℤ := 2 ^ (a - 1)
+  let R : ℤ := 2 ^ (b - 1)
+  let v : ℕ := 2 ^ a + 1
+  let N := modulus k
+  let C := N / 2
   let A := 2 * r + 1
-  let N : ℤ := modulus k
-  let C : ℤ := N / 2
   let alpha : Fin k := ⟨b - 1, by dsimp [k]; omega⟩
   let beta : Fin k := ⟨k - 1, by dsimp [k]; omega⟩
+  let f := actualSource k v
+  let g := fun i : Fin k => actualSource (k + 1) (2 * v) i.castSucc
   let fresh : Fin (k + 1) := Fin.last k
-  let U : List (Fin k) := (List.finRange (b - 1)).map (fun i =>
-    ⟨i.val, by dsimp [k]; omega⟩)
-  let V : List (Fin k) := (List.finRange (a - 1)).map (fun i =>
-    ⟨b + i.val, by dsimp [k]; omega⟩)
-  have hqr : (q : ℤ) * r = (2 : ℤ) ^ k := by
-    dsimp [q, r, k]
-    rw [← pow_add]
-  have hq2r : 2 * (r : ℤ) ≤ q := by
-    have hp : (2 : ℕ) ^ (b + 1) ≤ 2 ^ a := by
-      exact Nat.pow_le_pow_right (by omega) (by omega)
-    exact_mod_cast (show 2 * r ≤ q by simpa [r, Nat.pow_succ] using hp)
-  have hr4 : (4 : ℤ) ≤ r := by
-    have := Nat.one_le_two_pow (n := b - 2)
-    dsimp [r]
-    rw [show b = (b - 2) + 2 by omega, pow_add]
-    norm_num at *
-    nlinarith
-  have hN : N = (q : ℤ) * r - 1 := by
-    dsimp [N, modulus]
-    rw [← hqr]
-    norm_num
-  have hNpos : 0 < N := by
-    rw [hN]
-    have hqNat : 2 ≤ q := by
-      dsimp [q]
-      rw [show a = (a - 1) + 1 by omega, pow_succ]
-      have hpow : 1 ≤ (2 : ℕ) ^ (a - 1) := Nat.one_le_two_pow
-      omega
-    nlinarith [show (2 : ℤ) ≤ q by exact_mod_cast hqNat]
-  have hq2 : (q : ℤ) % 2 = 0 := by
-    have hqNat : 2 ∣ q := by
-      refine ⟨2 ^ (a - 1), ?_⟩
-      dsimp [q]
-      rw [show a = (a - 1) + 1 by omega, pow_succ]
-      ring
-    exact Int.emod_eq_zero_of_dvd (by exact_mod_cast hqNat)
-  have hr2 : (r : ℤ) % 2 = 0 := by
-    have hrNat : 2 ∣ r := by
-      refine ⟨2 ^ (b - 1), ?_⟩
-      dsimp [r]
-      rw [show b = (b - 1) + 1 by omega, pow_succ]
-      ring
-    exact Int.emod_eq_zero_of_dvd (by exact_mod_cast hrNat)
-  have hprodmod : ((q : ℤ) * r) % 2 = 0 := by
-    rw [Int.mul_emod, hq2]
-    norm_num
+  have hq : q = 2 * Q := by
+    dsimp [q, Q]
+    rw [show a = (a - 1) + 1 by omega, pow_succ]
+    ring
+  have hr : r = 2 * R := by
+    dsimp [r, R]
+    rw [show b = (b - 1) + 1 by omega, pow_succ]
+    ring
+  have hr4 : 4 ≤ r := by
+    have h := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hb
+    norm_num at h
+    exact h
+  have hq2r : 2 * r ≤ q := by
+    have h := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2)
+      (show b + 1 ≤ a by omega)
+    simpa [q, r, pow_succ, mul_comm] using h
+  have hq8 : 8 ≤ q := by omega
+  have hqr8 : 8 * r ≤ q * r := mul_le_mul_of_nonneg_right hq8 (by omega)
+  have hqr4 : 4 * q ≤ q * r := by
+    simpa [mul_comm] using mul_le_mul_of_nonneg_left hr4 (show 0 ≤ q by omega)
+  have hQR : 0 < Q ∧ 0 < R := by dsimp [Q, R]; constructor <;> positivity
+  have hvc : (v : ℤ) = q + 1 := by simp [v, q]
+  have hN : N = q * r - 1 := by dsimp [N, modulus, k, q, r]; rw [pow_add]
+  have hC : C = q * R - 1 := by
+    have hn : N = 2 * (q * R) - 1 := by rw [hN, hr]; ring
+    dsimp [C]; rw [hn]; omega
+  have hC2 : 2 * C = N - 1 := by rw [hC, hN, hr]; ring
+  have hNpos : 0 < N := by rw [hN]; nlinarith
   have hNodd : N % 2 = 1 := by
-    rw [hN, Int.sub_emod, hprodmod]
-    norm_num
-  have hC : 2 * C = N - 1 := by dsimp [C]; omega
+    have hn : N = 2 * (q * R) - 1 := by rw [hN, hr]; ring
+    rw [hn]; omega
   have hM : modulus (k + 1) = 2 * N + 1 := by
-    dsimp [N, modulus]
-    rw [show k + 1 = (a + b) + 1 by rfl, pow_succ, hqr]
-    ring
-  have hMhalf : modulus (k + 1) / 2 = N := by rw [hM]; omega
-  have hMpos : 0 < modulus (k + 1) := by rw [hM]; omega
-  have hModd : modulus (k + 1) % 2 = 1 := by rw [hM]; omega
-  have old_centered (i : Fin k) (x : ℤ)
-      (hx : -C ≤ x ∧ x ≤ C)
-      (hmod : x % N = ((2 : ℤ) ^ i.val * (v : ℕ)) % N) :
-      actualSource k v i = x := by
-    unfold actualSource
+    dsimp [N, modulus]; rw [pow_succ]; ring
+  have hMH : modulus (k + 1) / 2 = N := by rw [hM]; omega
+  have hMP : 0 < modulus (k + 1) := by rw [hM]; omega
+  have hMO : modulus (k + 1) % 2 = 1 := by rw [hM]; omega
+  have hpk : (2 : ℤ) ^ (k - 1) = Q * r := by
+    have he : k - 1 = (a - 1) + b := by dsimp [k]; omega
+    dsimp [Q, r]; rw [he, pow_add]
+  have old_value (i : Fin k) (x m : ℤ) (hx : -C ≤ x ∧ x ≤ C)
+      (he : (2 : ℤ) ^ i.val * (v : ℤ) = x + m * N) : f i = x := by
     apply centered_unique hNpos hNodd (centered_bounds hNpos hNodd _) hx
-    rw [centered_mod]
-    exact hmod.symm
-  have new_centered (i : Fin (k + 1)) (x : ℤ)
-      (hx : -N ≤ x ∧ x ≤ N)
-      (hmod : x % modulus (k + 1) =
-        ((2 : ℤ) ^ i.val * (2 * (v : ℕ))) % modulus (k + 1)) :
-      actualSource (k + 1) (2 * v) i = x := by
-    unfold actualSource
-    apply centered_unique hMpos hModd (centered_bounds hMpos hModd _) hx
-    rw [centered_mod]
-    exact hmod.symm
-  have hUval (i : Fin (b - 1)) :
-      actualSource k v ⟨i.val, by dsimp [k]; omega⟩ =
-        (q + 1 : ℤ) * 2 ^ i.val := by
-    have hi : i.val ≤ b - 2 := by omega
-    have hpowi : (2 : ℤ) ^ i.val ≤ (2 : ℤ) ^ (b - 2) :=
-      pow_le_pow_right₀ (by norm_num) (by omega)
-    have hhalf : (q + 1 : ℤ) * 2 ^ i.val ≤ C := by
-      rw [hC, hN, ← hqr]
-      nlinarith [hpowi, hq2r, hr4]
-    apply old_centered _ _ ⟨by positivity, hhalf⟩
-    rw [Int.emod_eq_of_lt (by positivity)]
-    · congr 1
-      norm_num [v]
-    · rw [← hqr]
-      nlinarith [hpowi, hq2r]
-  have hVval (i : Fin (a - 1)) :
-      actualSource k v ⟨b + i.val, by dsimp [k]; omega⟩ =
-        (r + 1 : ℤ) * 2 ^ i.val := by
-    have hi : i.val ≤ a - 2 := by omega
-    have hpowi : (2 : ℤ) ^ i.val ≤ (2 : ℤ) ^ (a - 2) :=
-      pow_le_pow_right₀ (by norm_num) (by omega)
-    have hhalf : (r + 1 : ℤ) * 2 ^ i.val ≤ C := by
-      rw [hC, hN]
-      nlinarith [hpowi, hq2r, hr4]
-    apply old_centered _ _ ⟨by positivity, hhalf⟩
-    rw [Int.emod_eq_of_lt (by positivity)]
-    · rw [show (2 : ℤ) ^ (b + i.val) * (v : ℕ) =
-          ((q : ℤ) * r - 1) * 2 ^ i.val + (r + 1) * 2 ^ i.val by
-          rw [← hqr]; simp only [Nat.cast_add, Nat.cast_one, Nat.cast_pow]; ring]
-      rw [Int.add_emod_self_left]
-    · rw [← hqr]
-      nlinarith [hpowi, hq2r]
-  have hAlphaval : actualSource k v alpha = -C + r / 2 := by
-    apply old_centered alpha _
-      (by rw [hC]; constructor <;> nlinarith [hr4])
-    rw [show (2 : ℤ) ^ (b - 1) * (v : ℕ) =
-      N + (r - N + 1) / 2 by rw [hN, ← hqr]; simp only [Nat.cast_add, Nat.cast_one,
-      Nat.cast_pow]; ring]
-    rw [Int.add_emod_self_left]
-    rw [show (-C + r / 2) = (r - N + 1) / 2 by rw [hC]; ring]
-    omega
-  have hBetaval : actualSource k v beta = -C + q / 2 := by
-    apply old_centered beta _
-      (by rw [hC]; constructor <;> nlinarith [hq2r, hr4])
-    rw [show (2 : ℤ) ^ (k - 1) * (v : ℕ) =
-      (q + 2) / 2 * N + (-C + q / 2) by
-      rw [hN, hC, ← hqr]; simp only [Nat.cast_add, Nat.cast_one, Nat.cast_pow]; ring]
-    rw [Int.add_mul_emod_self_left]
-  have hUnew (i : Fin (b - 1)) :
-      actualSource (k + 1) (2 * v) (⟨i.val, by dsimp [k]; omega⟩ : Fin (k + 1)) =
-        2 * ((q + 1 : ℤ) * 2 ^ i.val) := by
-    apply new_centered _ _
-      (by rw [hMhalf]; constructor <;> nlinarith [hUval i])
-    rw [show (2 : ℤ) ^ i.val * (2 * (v : ℕ)) =
-      2 * ((q + 1 : ℤ) * 2 ^ i.val) by norm_num [v]; ring]
-  have hVnew (i : Fin (a - 1)) :
-      actualSource (k + 1) (2 * v) (⟨b + i.val, by dsimp [k]; omega⟩ : Fin (k + 1)) =
-        A * 2 ^ i.val := by
-    have hi : i.val ≤ a - 2 := by omega
-    have hpowi : (2 : ℤ) ^ i.val ≤ (2 : ℤ) ^ (a - 2) :=
-      pow_le_pow_right₀ (by norm_num) (by omega)
-    apply new_centered _ _
-      (by rw [hMhalf]; constructor <;> nlinarith [hq2r, hr4, hpowi])
-    rw [show (2 : ℤ) ^ (b + i.val) * (2 * (v : ℕ)) =
-      A * 2 ^ i.val + modulus (k + 1) * 2 ^ i.val by
-      rw [hM, ← hqr]; simp only [Nat.cast_add, Nat.cast_one, Nat.cast_pow]; ring]
-    rw [Int.add_mul_emod_self_right]
-  have hAlphanew : actualSource (k + 1) (2 * v)
-      (⟨b - 1, by dsimp [k]; omega⟩ : Fin (k + 1)) = -N + r := by
-    apply new_centered _ _ ⟨by rw [hN]; nlinarith [hq2r], by rw [hN]; nlinarith [hq2r, hr4]⟩
-    rw [show (2 : ℤ) ^ (b - 1) * (2 * (v : ℕ)) =
-      (-N + r) + modulus (k + 1) by rw [hM, ← hqr]; simp only [Nat.cast_add,
-      Nat.cast_one, Nat.cast_pow]; ring]
-    rw [Int.add_emod_self_right]
-  have hBetanew : actualSource (k + 1) (2 * v)
-      (⟨k - 1, by dsimp [k]; omega⟩ : Fin (k + 1)) = -N + q / 2 := by
-    apply new_centered _ _ ⟨by rw [hN]; nlinarith [hq2r], by rw [hN]; nlinarith [hq2r]⟩
-    rw [show (2 : ℤ) ^ (k - 1) * (2 * (v : ℕ)) =
-      (q / 2 + 1) * modulus (k + 1) + (-N + q / 2) by
-      rw [hM, hN, ← hqr]; simp only [Nat.cast_add, Nat.cast_one, Nat.cast_pow]; ring]
-    rw [Int.add_mul_emod_self_left]
-  have hFresh : actualSource (k + 1) (2 * v) fresh = v := by
-    apply new_centered _ _ ⟨by positivity, by rw [hN]; nlinarith [hq2r]⟩
-    rw [show (2 : ℤ) ^ k * (2 * (v : ℕ)) =
-      (v : ℤ) + modulus (k + 1) * (v : ℕ) by rw [hM, ← hqr]; simp only [Nat.cast_add,
-      Nat.cast_one, Nat.cast_pow]; ring]
-    rw [Int.add_mul_emod_self_right]
-  let w : ℕ := ((N - (v : ℤ)) / (A : ℤ)).toNat
-  have hv0 : 0 ≤ N - (v : ℤ) := by
-    rw [hN]
-    dsimp [v]
-    nlinarith [hq2r, hr4]
-  have hApos : (0 : ℤ) < A := by dsimp [A]; omega
-  have hwcast : (w : ℤ) = (N - (v : ℤ)) / (A : ℤ) := by
-    dsimp [w]
-    rw [Int.toNat_of_nonneg hv0]
-  have hwfloor : (w : ℤ) * A ≤ N - (v : ℤ) ∧
-      N - (v : ℤ) < ((w : ℤ) + 1) * A := by
-    have h := Int.ediv_emod (N - (v : ℤ)) (A : ℤ)
-    have hrm := Int.emod_nonneg (N - (v : ℤ)) (ne_of_gt hApos)
-    have hrl := Int.emod_lt_of_pos (N - (v : ℤ)) hApos
-    rw [← hwcast] at h
-    constructor <;> omega
-  have hwupper : (w : ℤ) < (q : ℤ) / 2 := by
-    have hnum : N - (v : ℤ) < (A : ℤ) * (q : ℤ) / 2 := by
+    change centered N _ % N = x % N
+    rw [centered_mod, he]
+    simp [Int.add_emod, Int.mul_emod]
+  have new_value (i : Fin (k + 1)) (x m : ℤ) (hx : -N ≤ x ∧ x ≤ N)
+      (he : (2 : ℤ) ^ i.val * ((2 * v : ℕ) : ℤ) =
+        x + m * modulus (k + 1)) : actualSource (k + 1) (2 * v) i = x := by
+    apply centered_unique hMP hMO (centered_bounds hMP hMO _) (by simpa [hMH] using hx)
+    rw [centered_mod, he]
+    simp [Int.add_emod, Int.mul_emod]
+  have U (i : ℕ) (hi : i < b - 1) :
+      f ⟨i, by dsimp [k]; omega⟩ = (q + 1) * 2 ^ i ∧
+      g ⟨i, by dsimp [k]; omega⟩ = 2 * (q + 1) * 2 ^ i := by
+    have ht : 4 * (2 : ℤ) ^ i ≤ r := by
+      have h := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2)
+        (show i + 2 ≤ b by omega)
+      simpa [r, pow_add, mul_comm] using h
+    have ht0 : 0 < (2 : ℤ) ^ i := by positivity
+    have hbnd : 2 * ((q + 1) * (2 : ℤ) ^ i) ≤ N - 1 := by
+      have hm := mul_le_mul_of_nonneg_left ht (show 0 ≤ q + 1 by nlinarith)
       rw [hN]
-      dsimp [v, A]
-      nlinarith [hq2r, hr4]
-    nlinarith [hwfloor.1, hApos]
-  have hwbits : w < 2 ^ (a - 1) := by
-    have hqhalf : (q : ℤ) / 2 = (2 : ℤ) ^ (a - 1) := by
-      dsimp [q]
-      rw [show a = (a - 1) + 1 by omega, pow_succ]
-      omega
-    exact_mod_cast (show (w : ℤ) < (2 : ℤ) ^ (a - 1) by rw [← hqhalf]; exact hwupper)
-  have hdyadic : Dyadic (fun x : Fin k => actualSource k v x)
-      (r + 1 : ℤ) V := by
-    dsimp [V]
-    induction (a - 1) with
-    | zero => simp [Dyadic]
-    | succ n ih =>
-      rw [List.finRange_succ_last]
-      simp only [List.map_append, List.map_cons, List.map_nil, Dyadic]
-      constructor
-      · simpa using hVval ⟨n, by omega⟩
-      · simpa [pow_succ] using ih
-  obtain ⟨E, Vr, hEV, hEsum⟩ := dyadic_select hdyadic w hwbits
-  let F := U ++ Vr
-  have hphysical : (U ++ V ++ [alpha, beta]).Perm (List.finRange k) := by
-    have hUn : U.Nodup := by
-      apply (List.nodup_finRange (b - 1)).map
-      intro i j hij
-      exact Fin.ext (congrArg Fin.val hij)
-    have hVn : V.Nodup := by
-      apply (List.nodup_finRange (a - 1)).map
-      intro i j hij
-      exact Fin.ext (congrArg Fin.val hij)
-    have hUV : List.Disjoint U V := by
-      apply List.disjoint_left.mpr
-      intro x hx hy
-      obtain ⟨i, _, hi⟩ := List.mem_map.mp hx
-      obtain ⟨j, _, hj⟩ := List.mem_map.mp hy
-      have hh := congrArg Fin.val (hi.trans hj.symm)
-      simp only [Fin.val_mk] at hh
-      omega
-    have hUa : List.Disjoint U [alpha] := by
-      apply List.disjoint_left.mpr
-      intro x hx hy
-      obtain ⟨i, _, hi⟩ := List.mem_map.mp hx
-      simp only [List.mem_singleton] at hy
-      subst x
-      have hh := congrArg Fin.val hi
-      simp only [Fin.val_mk] at hh
-      omega
-    have hVa : List.Disjoint V [alpha] := by
-      apply List.disjoint_left.mpr
-      intro x hx hy
-      obtain ⟨i, _, hi⟩ := List.mem_map.mp hx
-      simp only [List.mem_singleton] at hy
-      subst x
-      have hh := congrArg Fin.val hi
-      simp only [Fin.val_mk] at hh
-      omega
-    have hUb : List.Disjoint U [beta] := by
-      apply List.disjoint_left.mpr
-      intro x hx hy
-      obtain ⟨i, _, hi⟩ := List.mem_map.mp hx
-      simp only [List.mem_singleton] at hy
-      subst x
-      have hh := congrArg Fin.val hi
-      simp only [Fin.val_mk] at hh
-      omega
-    have hVb : List.Disjoint V [beta] := by
-      apply List.disjoint_left.mpr
-      intro x hx hy
-      obtain ⟨i, _, hi⟩ := List.mem_map.mp hx
-      simp only [List.mem_singleton] at hy
-      subst x
-      have hh := congrArg Fin.val hi
-      simp only [Fin.val_mk] at hh
-      omega
-    have habnd : ([alpha, beta] : List (Fin k)).Nodup := by simp [alpha, beta]
-    have hUVab : List.Disjoint (U ++ V) ([alpha, beta] : List (Fin k)) := by
-      apply List.disjoint_left.mpr
-      intro x hx hy
-      simp only [List.mem_append] at hx
-      simp only [List.mem_cons, List.mem_singleton] at hy
-      rcases hx with hx | hx
-      · rcases hy with rfl | rfl
-        · exact hUa x hx (by simp)
-        · exact hUb x hx (by simp)
-      · rcases hy with rfl | rfl
-        · exact hVa x hx (by simp)
-        · exact hVb x hx (by simp)
-    have hallnd : (U ++ V ++ [alpha, beta]).Nodup := by
-      apply List.nodup_append.mpr
-      exact ⟨List.nodup_append.mpr ⟨hUn, hVn, hUV⟩, habnd, hUVab⟩
-    have hmem : ∀ x : Fin k, x ∈ U ++ V ++ [alpha, beta] ↔ x ∈ List.finRange k := by
-      intro x
-      constructor
-      · intro hx
-        exact List.mem_finRange x
-      · intro hx
-        simp only [List.mem_finRange] at hx
-        by_cases h₁ : x.val < b - 1
-        · apply List.mem_append_left
-          apply List.mem_map.mpr
-          refine ⟨⟨x.val, h₁⟩, List.mem_finRange _, ?_⟩
-          exact Fin.ext rfl
-        · by_cases h₂ : x.val = b - 1
-          · apply List.mem_append_left
-            apply List.mem_append_right
-            simp [alpha, h₂]
-          · by_cases h₃ : x.val < k - 1
-            · apply List.mem_append_left
-              apply List.mem_append_right
-              apply List.mem_map.mpr
-              refine ⟨⟨x.val - b, by dsimp [k] at *; omega⟩, List.mem_finRange _, ?_⟩
-              exact Fin.ext (by dsimp; omega)
-            · apply List.mem_append_right
-              right
-              apply Fin.ext
-              dsimp [beta]
-              omega
-    apply (List.perm_ext_iff_of_nodup hallnd (List.nodup_finRange k)).mpr
-    exact hmem
-  have hposperm' : (E ++ U ++ Vr ++ [alpha, beta]).Perm
-      (U ++ V ++ [alpha, beta]) := by
-    calc
-      E ++ U ++ Vr ++ [alpha, beta] ~r U ++ (E ++ Vr) ++ [alpha, beta] := by
-        simpa [List.append_assoc] using
-          (List.perm_append_comm E U |>.append_right (Vr ++ [alpha, beta]))
-      _ ~r U ++ V ++ [alpha, beta] := by
-        exact (hEV.append_left U).append_right [alpha, beta]
-      _ ~r List.finRange k := hphysical
-  have hposperm : (E ++ F ++ [alpha, beta]).Perm (List.finRange k) := by
-    simpa [F, List.append_assoc] using hposperm'
-  have hEsub (x : Fin k) (hx : x ∈ E) : x.val ≥ b ∧ x.val ≤ k - 2 := by
-    have hx' : x ∈ V := hEV.mem_iff.mp (by simp [F, hx])
-    simp only [V, List.mem_map, List.mem_finRange] at hx'
-    obtain ⟨i, hi, rfl⟩ := hx'
-    simp only [Fin.val_mk]
-    omega
-  let powV : Fin k → ℤ := fun x => (2 : ℤ) ^ (x.val - b)
-  have hEold : (E.map (actualSource k v)).sum =
-      (r + 1 : ℤ) * (E.map powV).sum := by
-    have hmap : E.map (actualSource k v) =
-        E.map (fun x => (r + 1 : ℤ) * powV x) := by
-      apply List.map_congr_left
-      intro x hx
-      have hbounds := hEsub x hx
-      obtain ⟨i, hi, hxi⟩ := List.mem_map.mp (hEV.mem_iff.mp (by simp [F, hx]))
-      have heq : x.val - b = i.val := by
-        have := congrArg Fin.val hxi
-        simp only [V, Fin.val_mk] at this
-        omega
-      rw [show x = ⟨b + i.val, by dsimp [k]; omega⟩ by exact Fin.ext (by omega), hVval i]
-      simp [powV, heq, mul_comm]
-    rw [hmap]
-    exact sum_scale E powV (r + 1)
-  have hEpow : (E.map powV).sum = (w : ℤ) := by
-    rw [hEold] at hEsum
-    nlinarith [hEsum]
-  have hEnew :
-      (E.map (actualSource (k + 1) (2 * v) ∘ Fin.castSucc)).sum = (A : ℤ) * w := by
-    have hmap : E.map (actualSource (k + 1) (2 * v) ∘ Fin.castSucc) =
-        E.map (fun x => (A : ℤ) * powV x) := by
-      apply List.map_congr_left
-      intro x hx
-      have hbounds := hEsub x hx
-      obtain ⟨i, hi, hxi⟩ := List.mem_map.mp (hEV.mem_iff.mp (by simp [F, hx]))
-      have heq : x.val - b = i.val := by
-        have := congrArg Fin.val hxi
-        simp only [V, Fin.val_mk] at this
-        omega
-      rw [show x = ⟨b + i.val, by dsimp [k]; omega⟩ by exact Fin.ext (by omega)]
-      simpa [Function.comp_def, powV, heq] using hVnew i
-    rw [hmap, sum_scale]
-    rw [hEpow]
-    ring
-  have hUpos : ∀ x ∈ U, 0 < actualSource k v x := by
-    intro x hx
-    obtain ⟨i, hi, rfl⟩ := List.mem_map.mp hx
-    rw [hUval i]
-    positivity
-  have hVpos : ∀ x ∈ V, 0 < actualSource k v x := by
-    intro x hx
-    obtain ⟨i, hi, rfl⟩ := List.mem_map.mp hx
-    rw [hVval i]
-    positivity
-  have hEpos : ∀ x ∈ E, 0 < actualSource k v x := by
-    intro x hx
-    exact hVpos x (hEV.mem_iff.mp (by simp [F, hx]))
-  have hVrpos : ∀ x ∈ Vr, 0 < actualSource k v x := by
-    intro x hx
-    exact hVpos x (hEV.mem_iff.mp (by simp [F, hx]))
-  have hFpos : ∀ x ∈ F, 0 < actualSource k v x := by
-    intro x hx
-    simp only [F, List.mem_append] at hx
-    rcases hx with hx | hx
-    · exact hUpos x hx
-    · exact hVrpos x hx
-  have hnewFpos : ∀ x ∈ F, 0 < actualSource (k + 1) (2 * v) x.castSucc := by
-    intro x hx
-    simp only [F, List.mem_append] at hx
-    rcases hx with hx | hx
-    · obtain ⟨i, hi, rfl⟩ := List.mem_map.mp hx
-      rw [hUnew i]
-      positivity
-    · obtain ⟨i, hi, hxi⟩ := List.mem_map.mp (hEV.mem_iff.mp (by simp [F, hx]))
-      subst x
-      rw [hVnew i]
-      positivity
-  have hnewFpos' : ∀ y ∈ F.map Fin.castSucc,
-      0 < actualSource (k + 1) (2 * v) y := by
-    intro y hy
-    obtain ⟨x, hx, rfl⟩ := List.mem_map.mp hy
-    exact hnewFpos x hx
-  have hOldPerm : (E ++ F ++ [alpha, beta]).Perm (List.finRange k) := hposperm
-  have hOldTotal : ((E ++ F ++ [alpha, beta]).map (actualSource k v)).sum = 0 := by
-    rw [(hOldPerm.map (actualSource k v)).sum_eq]
-    rw [← List.sum_toFinset _ (List.nodup_finRange _), List.toFinset_finRange]
-    exact (ZeroSumSubsets.source_cycle (by dsimp [k]; omega) v).2.1
-  have hFsum : (F.map (actualSource k v)).sum =
-      -(E.map (actualSource k v)).sum - actualSource k v alpha - actualSource k v beta := by
-    simp only [List.map_append, List.sum_append, List.map_cons, List.map_nil,
-      List.sum_cons, List.sum_nil] at hOldTotal
-    linarith
-  have hNewPermBase :
-      (E.map Fin.castSucc ++ F.map Fin.castSucc ++
-        [alpha.castSucc, beta.castSucc, fresh]).Perm (List.finRange (k + 1)) := by
-    have hp := hOldPerm.map Fin.castSucc
-    calc
-      E.map Fin.castSucc ++ F.map Fin.castSucc ++
-          [alpha.castSucc, beta.castSucc, fresh] ~r
-          (E ++ F ++ [alpha, beta]).map Fin.castSucc ++ [fresh] := by
-            simp only [List.map_append, List.map_cons, List.map_nil]
-            exact List.Perm.refl _
-      _ ~r (List.finRange k).map Fin.castSucc ++ [fresh] := by
-            exact hp.append_right [fresh]
-      _ ~r List.finRange (k + 1) := by
-            simpa only [List.finRange_succ_last] using
-              (List.Perm.refl (List.finRange k).map Fin.castSucc).append_right [fresh]
-  have hNewTotal :
-      ((E.map Fin.castSucc ++ F.map Fin.castSucc ++
-        [alpha.castSucc, beta.castSucc, fresh]).map
-        (actualSource (k + 1) (2 * v))).sum = 0 := by
-    rw [(hNewPermBase.map (actualSource (k + 1) (2 * v))).sum_eq]
-    rw [← List.sum_toFinset _ (List.nodup_finRange _), List.toFinset_finRange]
-    exact (ZeroSumSubsets.source_cycle (by dsimp [k]; omega) (2 * v)).2.1
-  have hnewFsum : (F.map (actualSource (k + 1) (2 * v) ∘ Fin.castSucc)).sum =
-      -(E.map (actualSource (k + 1) (2 * v) ∘ Fin.castSucc)).sum -
-        actualSource (k + 1) (2 * v) alpha.castSucc -
-        actualSource (k + 1) (2 * v) beta.castSucc -
-        actualSource (k + 1) (2 * v) fresh := by
-    simp only [List.map_append, List.sum_append, List.map_cons, List.map_nil,
-      List.sum_cons, List.sum_nil, Function.comp_def] at hNewTotal
-    linarith
-  have hp : (E.map (actualSource k v)).sum = (r + 1 : ℤ) * w := by
-    simpa [mul_comm] using hEsum
-  have hz : (E.map (actualSource (k + 1) (2 * v) ∘ Fin.castSucc)).sum =
-      (A : ℤ) * w := hEnew
-  have hcase : a = b + 1 ∨ b + 2 ≤ a := by omega
-  rcases hcase with hq2case | hq4case
-  · have hqeq : (q : ℤ) = 2 * r := by
-      dsimp [q, r]
-      rw [hq2case, show b + 1 = b + 1 by rfl, pow_succ]
-      norm_num
-    have hNq : N = 2 * r ^ 2 - 1 := by rw [hN, hqeq]; ring
-    have hwq : (w : ℤ) = r - 2 := by
-      apply le_antisymm
-      · have := hwfloor.2
-        rw [hNq, hqeq] at this ⊢
-        dsimp [A, v] at this ⊢
-        nlinarith
-      · have := hwfloor.1
-        rw [hNq, hqeq] at this ⊢
-        dsimp [A, v] at this ⊢
-        nlinarith
-    have hpq : (E.map (actualSource k v)).sum = C - r - 1 := by
-      rw [hp, hwq, hqeq, hNq, hC]
-      ring
-    have hzq : (E.map (actualSource (k + 1) (2 * v) ∘ Fin.castSucc)).sum =
-        N - r := by
-      rw [hz, hwq, hqeq, hNq, A]
-      ring
-    have hFq : (F.map (actualSource k v)).sum = C - r / 2 + 1 := by
-      rw [hFsum, hpq, hAlphaval, hBetaval]
-      ring
-    have hnewFq : (F.map (actualSource (k + 1) (2 * v) ∘ Fin.castSucc)).sum =
-        N - r := by
-      rw [hnewFsum, hzq, hAlphanew, hBetanew, hFresh, hqeq]
-      ring
-    have hOldStrip : InStrip (actualSource k v) C 0
-        (F ++ [alpha] ++ E ++ [beta]) := by
-      have hFstrip : InStrip (actualSource k v) C 0 F :=
-        nonneg_strip _ _ _ (fun x hx => le_of_lt (hFpos x hx))
-          (by rw [hFq]; rw [hC]; nlinarith [hr4])
-      have haStrip : InStrip (actualSource k v) C (F.map (actualSource k v)).sum [alpha] := by
-        simp only [InStrip, hAlphaval]
-        rw [hFq]
-        rw [hC]
-        constructor <;> nlinarith [hr4]
-      have heStrip : InStrip (actualSource k v) C
-          ((F.map (actualSource k v)).sum + actualSource k v alpha) E := by
-        rw [hFq, hAlphaval]
-        exact nonneg_strip _ _ _ (fun x hx => le_of_lt (hEpos x hx))
-          (by rw [hpq]; rw [hC]; nlinarith [hr4])
-      have hbStrip : InStrip (actualSource k v) C
-          ((F.map (actualSource k v)).sum + actualSource k v alpha +
-            (E.map (actualSource k v)).sum) [beta] := by
-        simp only [InStrip, hBetaval]
-        rw [hFq, hAlphaval, hpq]
-        rw [hC]
-        constructor <;> nlinarith [hr4]
-      simpa [List.append_assoc, List.map_map, Function.comp_def] using inStrip_append hFstrip
-        (inStrip_append haStrip (inStrip_append heStrip hbStrip))
-    have hNewStrip : InStrip (actualSource (k + 1) (2 * v)) N 0
-        (F.map Fin.castSucc ++ [alpha.castSucc] ++ E.map Fin.castSucc ++
-          [fresh, beta.castSucc]) := by
-      have hFstrip : InStrip (actualSource (k + 1) (2 * v)) N 0
-          (F.map Fin.castSucc) := by
-        apply nonneg_strip _ _ _ (fun x hx => le_of_lt (hnewFpos' x hx))
-        have hbound :
-            (F.map (actualSource (k + 1) (2 * v) ∘ Fin.castSucc)).sum ≤ N := by
-          rw [hnewFq, hNq]
-          nlinarith [hr4]
-        simpa only [List.map_map, Function.comp_def] using hbound
-      have haStrip : InStrip (actualSource (k + 1) (2 * v)) N hnewFq
-          [alpha.castSucc] := by
-        simp only [InStrip, hAlphanew]
-        rw [hnewFq]
-        constructor <;> nlinarith [hr4]
-      have heStrip : InStrip (actualSource (k + 1) (2 * v)) N 0
-          (E.map Fin.castSucc) := by
-        apply nonneg_strip _ _ _
-        · intro x hx
-          obtain ⟨y, hy, rfl⟩ := List.mem_map.mp hx
-          obtain ⟨i, hi, hxi⟩ := List.mem_map.mp (hEV.mem_iff.mp (by simp [F, hy]))
-          subst y
-          rw [hVnew i]
-          positivity
-        · have hbound :
-              (E.map (actualSource (k + 1) (2 * v) ∘ Fin.castSucc)).sum ≤ N := by
-            rw [hzq, hNq]
-            nlinarith [hr4]
-          simpa only [List.map_map, Function.comp_def] using hbound
-      have hfreshStrip : InStrip (actualSource (k + 1) (2 * v)) N hzq [fresh] := by
-        simp only [InStrip, hFresh]
-        rw [hzq, hNq]
-        constructor <;> nlinarith [hr4]
-      have hbetaStrip : InStrip (actualSource (k + 1) (2 * v)) N (hzq + v) [beta.castSucc] := by
-        simp only [InStrip, hBetanew]
-        rw [hzq, hNq, hFresh]
-        constructor <;> nlinarith [hr4]
-      simpa [List.append_assoc, List.map_map, Function.comp_def] using inStrip_append hFstrip
-        (inStrip_append haStrip (inStrip_append heStrip
-          (inStrip_append hfreshStrip hbetaStrip)))
-    let sigma := F ++ [alpha] ++ E ++ [beta]
-    let j := k - 1
-    have hsigma : sigma.Perm (List.finRange k) := by
-      have horder : (F ++ [alpha] ++ E ++ [beta]).Perm
-          (E ++ F ++ [alpha, beta]) := by
-        calc
-          F ++ [alpha] ++ E ++ [beta] ~r F ++ E ++ [alpha] ++ [beta] := by
-            simpa [List.append_assoc] using
-              ((List.perm_append_comm [alpha] E).append_right [beta]).append_left F
-          _ ~r E ++ F ++ [alpha] ++ [beta] := by
-            simpa [List.append_assoc] using
-              (List.perm_append_comm F E).append_right ([alpha] ++ [beta])
-          _ ~r E ++ F ++ [alpha, beta] := by rfl
-      exact horder.trans hOldPerm
-    have hneweq : earWord k sigma j =
-        (F.map Fin.castSucc ++ [alpha.castSucc] ++ E.map Fin.castSucc ++
-          [fresh, beta.castSucc]) := by
-      simp [earWord, sigma, j, List.length_append, hsigma.length_eq]
-    have hOldTotalSigma : (sigma.map (actualSource k v)).sum = 0 := by
-      rw [((hsigma.trans hOldPerm.symm).map (actualSource k v)).sum_eq]
-      exact hOldTotal
-    have hneworder :
-        (F.map Fin.castSucc ++ [alpha.castSucc] ++ E.map Fin.castSucc ++
-          [fresh, beta.castSucc]).Perm
-          (E.map Fin.castSucc ++ F.map Fin.castSucc ++
-            [alpha.castSucc, beta.castSucc, fresh]) := by
-      let X := E.map Fin.castSucc
-      let Y := F.map Fin.castSucc
-      let x := alpha.castSucc
-      let y := beta.castSucc
-      let z := fresh
-      calc
-        Y ++ [x] ++ X ++ [z, y] ~r
-            Y ++ X ++ [x] ++ [z, y] := by
-              simpa [List.append_assoc] using
-                ((List.perm_append_comm [x] X).append_right [z, y]).append_left Y
-        _ ~r X ++ Y ++ [x] ++ [z, y] := by
-              simpa [List.append_assoc] using
-                (List.perm_append_comm Y X).append_right ([x] ++ [z, y])
-        _ ~r X ++ Y ++ [x] ++ [y, z] := by
-              simpa [List.append_assoc] using
-                (List.Perm.swap z y []).append_left (X ++ Y ++ [x])
-        _ ~r X ++ Y ++ [x, y, z] := by rfl
-    have hNewTotalDesired :
-        ((F.map Fin.castSucc ++ [alpha.castSucc] ++ E.map Fin.castSucc ++
-          [fresh, beta.castSucc]).map (actualSource (k + 1) (2 * v))).sum = 0 := by
-      rw [(hneworder.map (actualSource (k + 1) (2 * v))).sum_eq]
-      exact hNewTotal
-    refine ⟨sigma, j, by dsimp [j]; omega, ?_, ?_⟩
-    · exact ⟨hsigma, hOldTotalSigma, by simpa [Set.mem_Icc, sigma] using (by
-        intro n; exact inStrip_prefix hOldStrip n)⟩
-    · rw [hneweq]
-      exact ⟨hneworder.trans hNewPermBase, hNewTotalDesired, by
-        intro n
-        simpa [Set.mem_Icc] using inStrip_prefix hNewStrip n⟩
-  · have hq4 : (4 : ℤ) * r ≤ q := by
-      have hp : (2 : ℕ) ^ (b + 2) ≤ 2 ^ a := by
-        exact Nat.pow_le_pow_right (by omega) (by omega)
-      have hpow : (2 : ℕ) ^ (b + 2) = 4 * r := by
-        dsimp [r]
-        rw [show b + 2 = b + 2 by rfl, pow_add]
-        norm_num
-      exact_mod_cast (show 4 * r ≤ q by simpa [hpow, q] using hp)
-    have hp_lower : C - q / 2 ≤ (r + 1 : ℤ) * w := by
-      have hh := mul_lt_mul_of_pos_left hwfloor.2 (by positivity : (0 : ℤ) < r + 1)
-      rw [hN, hC, hN] at hh ⊢
-      dsimp [v, A] at hh
-      nlinarith [hq4, hr4]
-    have hp_upper : (r + 1 : ℤ) * w ≤ C := by
-      have hh := mul_le_mul_of_nonneg_left hwfloor.1 (by positivity : (0 : ℤ) ≤ r + 1)
-      rw [hN, hC, hN] at hh ⊢
-      dsimp [v, A] at hh
-      nlinarith [hq4, hr4]
-    have hz_lower : N - q / 2 ≤ (A : ℤ) * w + v := by
-      have hh := hwfloor.2
-      dsimp [A] at hh ⊢
-      nlinarith [hq4]
-    have hz_upper : (A : ℤ) * w + v ≤ N := by
-      have hh := hwfloor.1
-      dsimp [A] at hh ⊢
       nlinarith
-    have hFsum4 : (F.map (actualSource k v)).sum =
-        -(r + 1 : ℤ) * w + C - r / 2 + C - q / 2 := by
-      rw [hFsum, hp, hAlphaval, hBetaval]
-      ring
-    have hnewFsum4 :
-        (F.map (actualSource (k + 1) (2 * v) ∘ Fin.castSucc)).sum =
-        -A * w + N - r + N - q / 2 + v := by
-      rw [hnewFsum, hz, hAlphanew, hBetanew, hFresh]
-      ring
-    have hOldStrip : InStrip (actualSource k v) C 0
-        (E ++ [beta] ++ F ++ [alpha]) := by
-      have hEstrip : InStrip (actualSource k v) C 0 E :=
-        nonneg_strip _ _ _ (fun x hx => le_of_lt (hEpos x hx))
-          (by rw [hp]; exact hp_upper)
-      have hbStrip : InStrip (actualSource k v) C hp [beta] := by
-        simp only [InStrip, hBetaval]
-        rw [hC]
-        constructor <;> nlinarith [hp_lower, hp_upper]
-      have hFstrip : InStrip (actualSource k v) C (hp + actualSource k v beta) F := by
-        rw [hBetaval]
-        apply nonneg_strip _ _ _ (fun x hx => le_of_lt (hFpos x hx))
-        rw [hFsum4, hC]
-        constructor <;> nlinarith [hp_lower, hp_upper]
-      have haStrip : InStrip (actualSource k v) C
-          (hp + actualSource k v beta + (F.map (actualSource k v)).sum) [alpha] := by
-        simp only [InStrip, hAlphaval]
-        rw [hFsum4, hC]
-        constructor <;> nlinarith [hp_lower, hp_upper]
-      simpa [List.append_assoc, List.map_map, Function.comp_def] using inStrip_append hEstrip
-        (inStrip_append hbStrip (inStrip_append hFstrip haStrip))
-    have hNewStrip : InStrip (actualSource (k + 1) (2 * v)) N 0
-        (E.map Fin.castSucc ++ [fresh, beta.castSucc] ++ F.map Fin.castSucc ++
-          [alpha.castSucc]) := by
-      have hEstrip : InStrip (actualSource (k + 1) (2 * v)) N 0
-          (E.map Fin.castSucc) := by
-        apply nonneg_strip _ _ _
-        · intro x hx
-          obtain ⟨y, hy, rfl⟩ := List.mem_map.mp hx
-          obtain ⟨i, hi, hxi⟩ := List.mem_map.mp (hEV.mem_iff.mp (by simp [F, hy]))
-          subst y
-          rw [hVnew i]
-          positivity
-        · have hbound :
-              (E.map (actualSource (k + 1) (2 * v) ∘ Fin.castSucc)).sum ≤ N := by
-            rw [hz]
-            exact hz_upper
-          simpa only [List.map_map, Function.comp_def] using hbound
-      have hfreshStrip : InStrip (actualSource (k + 1) (2 * v)) N hz [fresh] := by
-        simp only [InStrip, hFresh]
-        rw [hMhalf]
-        constructor <;> nlinarith [hz_lower, hz_upper]
-      have hbetaStrip : InStrip (actualSource (k + 1) (2 * v)) N (hz + v)
-          [beta.castSucc] := by
-        simp only [InStrip, hBetanew]
-        rw [hMhalf]
-        constructor <;> nlinarith [hz_lower, hz_upper]
-      have hFstrip : InStrip (actualSource (k + 1) (2 * v)) N
-          (hz + v + actualSource (k + 1) (2 * v) beta.castSucc)
-          (F.map Fin.castSucc) := by
-        rw [hBetanew]
-        apply nonneg_strip _ _ _ (fun x hx => le_of_lt (hnewFpos' x hx))
-        have hbound :
-            (F.map (actualSource (k + 1) (2 * v) ∘ Fin.castSucc)).sum ≤ N := by
-          rw [hnewFsum4, hMhalf]
-          constructor <;> nlinarith [hz_lower, hz_upper]
-        simpa only [List.map_map, Function.comp_def] using hbound
-      have haStrip : InStrip (actualSource (k + 1) (2 * v)) N
-          (hz + v + actualSource (k + 1) (2 * v) beta.castSucc +
-            (F.map (actualSource (k + 1) (2 * v) ∘ Fin.castSucc)).sum)
-          [alpha.castSucc] := by
-        simp only [InStrip, hAlphanew]
-        rw [hnewFsum4, hMhalf]
-        constructor <;> nlinarith [hz_lower, hz_upper]
-      simpa [List.append_assoc, List.map_map, Function.comp_def] using inStrip_append hEstrip
-        (inStrip_append hfreshStrip (inStrip_append hbetaStrip
-          (inStrip_append hFstrip haStrip)))
-    let sigma := E ++ [beta] ++ F ++ [alpha]
-    let j := E.length
-    have hsigma : sigma.Perm (List.finRange k) := by
-      have horder : (E ++ [beta] ++ F ++ [alpha]).Perm
-          (E ++ F ++ [alpha, beta]) := by
-        calc
-          E ++ [beta] ++ F ++ [alpha] ~r E ++ F ++ [beta] ++ [alpha] := by
-            simpa [List.append_assoc] using
-              ((List.perm_append_comm [beta] F).append_right [alpha]).append_left E
-          _ ~r E ++ F ++ [alpha] ++ [beta] := by
-            simpa [List.append_assoc] using
-              (List.Perm.swap beta alpha []).append_left (E ++ F)
-          _ ~r E ++ F ++ [alpha, beta] := by rfl
-      exact horder.trans hOldPerm
-    have hnewperm :
-        (E.map Fin.castSucc ++ [fresh, beta.castSucc] ++ F.map Fin.castSucc ++
-          [alpha.castSucc]).Perm (List.finRange (k + 1)) := by
-      have hbase := hNewPermBase
-      let X := E.map Fin.castSucc
-      let Y := F.map Fin.castSucc
-      let x := alpha.castSucc
-      let y := beta.castSucc
-      let z := fresh
-      have horder : X ++ [z, y] ++ Y ++ [x] ~r
-          X ++ Y ++ [x, y, z] := by
-        calc
-          X ++ [z, y] ++ Y ++ [x] ~r
-              X ++ Y ++ [z, y] ++ [x] := by
-                simpa [List.append_assoc] using
-                  ((List.perm_append_comm [z, y] Y).append_right [x]).append_left X
-          _ ~r Y ++ X ++ [z, y] ++ [x] := by
-                simpa [List.append_assoc] using
-                  (List.perm_append_comm X Y).append_right ([z, y] ++ [x])
-          _ ~r Y ++ X ++ [x] ++ [z, y] := by
-                simpa [List.append_assoc] using
-                  (List.perm_append_comm [z, y] [x]).append_left (Y ++ X)
-          _ ~r X ++ Y ++ [x] ++ [z, y] := by
-                simpa [List.append_assoc] using
-                  (List.perm_append_comm Y X).append_right ([x] ++ [z, y])
-          _ ~r X ++ Y ++ [x, y, z] := by
-                simpa [List.append_assoc] using
-                  (List.Perm.swap z y []).append_left (X ++ Y ++ [x])
+    constructor
+    · apply old_value _ _ 0 (by constructor <;> nlinarith)
+      simp only [Fin.val_mk, hvc]; ring
+    · apply new_value _ _ 0 (by constructor <;> nlinarith)
+      simp only [Fin.val_mk, Nat.cast_mul, Nat.cast_ofNat, hvc]; ring
+  have V (i : ℕ) (hi : i < a - 1) :
+      f ⟨b + i, by dsimp [k]; omega⟩ = (r + 1) * 2 ^ i ∧
+      g ⟨b + i, by dsimp [k]; omega⟩ = A * 2 ^ i := by
+    have ht : 4 * (2 : ℤ) ^ i ≤ q := by
+      have h := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2)
+        (show i + 2 ≤ a by omega)
+      simpa [q, pow_add, mul_comm] using h
+    have ht0 : 0 < (2 : ℤ) ^ i := by positivity
+    have hbnd : 2 * ((r + 1) * (2 : ℤ) ^ i) ≤ N - 1 ∧
+        A * (2 : ℤ) ^ i ≤ N := by
+      have hm := mul_le_mul_of_nonneg_left ht (show 0 ≤ r + 1 by omega)
+      have hm' := mul_le_mul_of_nonneg_left ht (show 0 ≤ A by dsimp [A]; omega)
+      rw [hN]
+      dsimp [A] at *
+      constructor <;> nlinarith
+    constructor
+    · apply old_value _ _ ((2 : ℤ) ^ i) (by constructor <;> nlinarith)
+      simp only [Fin.val_mk, pow_add, hvc]
+      change r * 2 ^ i * (q + 1) = _
+      rw [hN]; ring
+    · apply new_value _ _ ((2 : ℤ) ^ i) (by dsimp [A] at *; constructor <;> nlinarith)
+      simp only [Fin.val_mk, pow_add, Nat.cast_mul, Nat.cast_ofNat, hvc]
+      change r * 2 ^ i * (2 * (q + 1)) = _
+      rw [hM, hN]; dsimp [A]; ring
+  have hAlpha : f alpha = -C + R := by
+    apply old_value _ _ 1 (by rw [hC]; constructor <;> nlinarith)
+    change R * (v : ℤ) = _
+    rw [hvc, hC, hN, hr]; ring
+  have hBeta : f beta = -C + Q := by
+    apply old_value _ _ (Q + 1) (by rw [hC]; constructor <;> nlinarith)
+    change (2 : ℤ) ^ (k - 1) * (v : ℤ) = _
+    rw [hpk, hvc, hC, hN, hr, hq]; ring
+  have hAlphaNew : g alpha = -N + r := by
+    apply new_value _ _ 1 (by rw [hN]; constructor <;> nlinarith)
+    change R * ((2 * v : ℕ) : ℤ) = _
+    rw [Nat.cast_mul, Nat.cast_ofNat, hvc, hM, hN, hr]; ring
+  have hBetaNew : g beta = -N + Q := by
+    apply new_value _ _ (Q + 1) (by rw [hN]; constructor <;> nlinarith)
+    change (2 : ℤ) ^ (k - 1) * ((2 * v : ℕ) : ℤ) = _
+    rw [hpk, Nat.cast_mul, Nat.cast_ofNat, hvc, hM, hN, hq]; ring
+  have hFresh : actualSource (k + 1) (2 * v) fresh = (v : ℤ) := by
+    apply new_value _ _ (v : ℤ) (by rw [hvc, hN]; constructor <;> nlinarith)
+    change (2 : ℤ) ^ k * ((2 * v : ℕ) : ℤ) = _
+    have he : (2 : ℤ) ^ k = N + 1 := by dsimp [N, modulus]; ring
+    rw [he, Nat.cast_mul, Nat.cast_ofNat, hM]; ring
+  let w : ℕ := ((N - (v : ℤ)) / A).toNat
+  have hD : 0 ≤ N - (v : ℤ) := by rw [hN, hvc]; nlinarith
+  have hA : 0 < A := by dsimp [A]; omega
+  have hw : (w : ℤ) = (N - (v : ℤ)) / A := by
+    dsimp [w]
+    exact Int.toNat_of_nonneg (Int.ediv_nonneg hD (le_of_lt hA))
+  have hfloor : A * (w : ℤ) ≤ N - (v : ℤ) ∧
+      N - (v : ℤ) < A * ((w : ℤ) + 1) := by
+    have h := Int.emod_add_mul_ediv (N - (v : ℤ)) A
+    have hlo := Int.emod_nonneg (N - (v : ℤ)) (ne_of_gt hA)
+    have hhi := Int.emod_lt_of_pos (N - (v : ℤ)) hA
+    rw [← hw] at h
+    constructor <;> nlinarith
+  have hwQ : (w : ℤ) < Q := by
+    have hh : N - (v : ℤ) < A * Q := by rw [hN, hvc, hq]; dsimp [A]; nlinarith
+    exact (mul_lt_mul_left hA).mp (lt_of_le_of_lt hfloor.1 hh)
+  have hwbits : w < 2 ^ (a - 1) := by exact_mod_cast hwQ
+  let mask := DyadicPrefix.bitSubset (a - 1) w hwbits
+  let label : Fin (a - 1) → Fin k := fun i => ⟨b + i.val, by dsimp [k]; omega⟩
+  have hinj : Function.Injective label := by
+    intro i j hij; apply Fin.ext
+    have h := congrArg Fin.val hij
+    dsimp [label] at h; omega
+  let ES := mask.image label
+  let FS := Finset.univ \ (ES ∪ {alpha,beta})
+  let E := ES.toList
+  let F := FS.toList
+  have E_values (i : Fin k) (hi : i ∈ ES) :
+      ∃ j : Fin (a - 1), i = label j ∧ j ∈ mask := by
+    obtain ⟨j, hj, rfl⟩ := Finset.mem_image.mp hi
+    exact ⟨j, rfl, hj⟩
+  have hEa : alpha ∉ ES := by
+    intro hi
+    obtain ⟨j, hj, _⟩ := E_values alpha hi
+    have h := congrArg Fin.val hj
+    dsimp [alpha, label] at h; omega
+  have hEb : beta ∉ ES := by
+    intro hi
+    obtain ⟨j, hj, _⟩ := E_values beta hi
+    have h := congrArg Fin.val hj
+    dsimp [beta, label, k] at h; omega
+  have hab : alpha ≠ beta := by
+    intro h
+    have he := congrArg Fin.val h
+    dsimp [alpha, beta, k] at he; omega
+  have hperm : (E ++ F ++ [alpha,beta]).Perm (List.finRange k) :=
+    split_perm ES alpha beta hab hEa hEb
+  have hmask : (∑ i ∈ mask, (2 : ℤ) ^ i.val) = (w : ℤ) := by
+    exact_mod_cast DyadicPrefix.bit_subset_sum hwbits
+  have hEold : (E.map f).sum = (r + 1) * w := by
+    rw [← List.sum_toFinset _ ES.nodup_toList, Finset.toList_toFinset]
+    change (∑ i ∈ mask.image label, f i) = _
+    rw [Finset.sum_image (fun i _ j _ hij => hinj hij)]
+    simp_rw [show ∀ i : Fin (a - 1), f (label i) = (r + 1) * 2 ^ i.val from
+      fun i => (V i.val i.isLt).1]
+    rw [← Finset.mul_sum, hmask]
+  have hEnew : (E.map g).sum = A * w := by
+    rw [← List.sum_toFinset _ ES.nodup_toList, Finset.toList_toFinset]
+    change (∑ i ∈ mask.image label, g i) = _
+    rw [Finset.sum_image (fun i _ j _ hij => hinj hij)]
+    simp_rw [show ∀ i : Fin (a - 1), g (label i) = A * 2 ^ i.val from
+      fun i => (V i.val i.isLt).2]
+    rw [← Finset.mul_sum, hmask]
+  have pos (i : Fin k) (hi : i ≠ alpha ∧ i ≠ beta) : 0 ≤ f i ∧ 0 ≤ g i := by
+    by_cases hu : i.val < b - 1
+    · have hv := U i.val hu
+      have he : i = ⟨i.val, by dsimp [k]; omega⟩ := Fin.ext rfl
+      rw [he, hv.1, hv.2]
+      constructor <;> positivity
+    · have hai : i.val ≠ b - 1 := fun h => hi.1 (Fin.ext h)
+      have hbi : i.val ≠ k - 1 := fun h => hi.2 (Fin.ext h)
+      have hlt : i.val - b < a - 1 := by dsimp [k] at *; omega
+      have he : i = label ⟨i.val - b, hlt⟩ := Fin.ext (by dsimp [label]; omega)
+      rw [he, (V _ hlt).1, (V _ hlt).2]
+      dsimp [A]
+      constructor <;> positivity
+  have Epos : ∀ i ∈ E, 0 ≤ f i ∧ 0 ≤ g i := by
+    intro i hi
+    apply pos i
+    have hm : i ∈ ES := Finset.mem_toList.mp hi
+    exact ⟨fun h => hEa (h ▸ hm), fun h => hEb (h ▸ hm)⟩
+  have Fpos : ∀ i ∈ F, 0 ≤ f i ∧ 0 ≤ g i := by
+    intro i hi
+    have hm := (Finset.mem_sdiff.mp (Finset.mem_toList.mp hi)).2
+    apply pos i
+    constructor <;> intro h <;> apply hm <;> simp [h]
+  let EN := E.map Fin.castSucc
+  let FN := F.map Fin.castSucc
+  let gn := actualSource (k + 1) (2 * v)
+  have ENpos : ∀ i ∈ EN, 0 ≤ gn i := by
+    intro i hi; obtain ⟨j,hj,rfl⟩ := List.mem_map.mp hi; exact (Epos j hj).2
+  have FNpos : ∀ i ∈ FN, 0 ≤ gn i := by
+    intro i hi; obtain ⟨j,hj,rfl⟩ := List.mem_map.mp hi; exact (Fpos j hj).2
+  have hEN : (EN.map gn).sum = A * w := by simpa [EN, List.map_map, g, gn] using hEnew
+  have hOldZero := source_total (t := v) (show 0 < k by dsimp [k]; omega) _ hperm
+  have hOldMass : (F.map f).sum = 2 * C - R - Q - (r + 1) * w := by
+    change ((E ++ F ++ [alpha,beta]).map f).sum = 0 at hOldZero
+    simp only [List.map_append, List.sum_append, List.map_cons, List.map_nil,
+      List.sum_cons, List.sum_nil, hEold, hAlpha, hBeta] at hOldZero
+    linarith
+  have hNewPerm : (EN ++ FN ++ [alpha.castSucc,beta.castSucc,fresh]).Perm
+      (List.finRange (k + 1)) := by
+    have hp := (hperm.map Fin.castSucc).append_right [fresh]
+    simpa [EN, FN, List.map_append, List.finRange_succ_last, fresh, List.append_assoc] using hp
+  have hNewZero := source_total (t := 2 * v) (show 0 < k + 1 by omega) _ hNewPerm
+  have hNewMass : (FN.map gn).sum = 2 * N - r - Q - (v : ℤ) - A * w := by
+    change ((EN ++ FN ++ [alpha.castSucc,beta.castSucc,fresh]).map gn).sum = 0 at hNewZero
+    simp only [List.map_append, List.sum_append, List.map_cons, List.map_nil,
+      List.sum_cons, List.sum_nil, hEN] at hNewZero
+    change A * w + ((FN.map gn).sum + ((g alpha) + (g beta + (gn fresh + 0)))) = 0 at hNewZero
+    rw [hAlphaNew, hBetaNew, hFresh] at hNewZero
+    linarith
+  let p : ℤ := (r + 1) * w
+  let z : ℤ := A * w
+  have hp0 : 0 ≤ p := by dsimp [p]; positivity
+  have hz0 : 0 ≤ z := by dsimp [z, A]; positivity
+  have finish (sigma : List (Fin k)) (j : ℕ) (hj : j ≤ k)
+      (hp : sigma.Perm (List.finRange k)) (hs : InStrip f C 0 sigma)
+      (hn : InStrip gn N 0 (earWord k sigma j)) :
+      ∃ sigma : List (Fin (a + b)), ∃ j : ℕ, j ≤ a + b ∧
+        OriginalOrder (a + b) (2 ^ a + 1) sigma ∧
+        OriginalOrder (a + b + 1) (2 * (2 ^ a + 1)) (earWord (a + b) sigma j) := by
+    refine ⟨sigma,j,hj,⟨hp,source_total (by dsimp [k]; omega) _ hp,?_⟩,
+      ⟨inserted_perm sigma j hp,source_total (by omega) _ (inserted_perm sigma j hp),?_⟩⟩
+    · intro n; simpa [Set.mem_Icc] using inStrip_prefix hs n
+    · intro n; simpa [Set.mem_Icc, hMH] using inStrip_prefix hn n
+  by_cases h2 : a = b + 1
+  · have hqr : q = 2 * r := by dsimp [q,r]; rw [h2,pow_succ]; ring
+    have hw2 : (w : ℤ) = r - 2 := by
+      obtain ⟨hl,hu⟩ := hfloor
+      rw [hN,hvc,hqr] at hl hu
+      dsimp [A] at hl hu
+      have hlo : r - 2 ≤ (w : ℤ) := by
+        by_contra h
+        have hm := mul_le_mul_of_nonneg_left (show (w : ℤ) + 1 ≤ r - 2 by omega)
+          (show 0 ≤ 2*r+1 by omega)
+        nlinarith
+      have hhi : (w : ℤ) < r - 1 := by
+        by_contra h
+        have hm := mul_le_mul_of_nonneg_left (show r - 1 ≤ (w : ℤ) by omega)
+          (show 0 ≤ 2*r+1 by omega)
+        nlinarith
+      omega
+    have hQeq : Q = r := by omega
+    have hp2 : p = C - Q - 1 := by
+      dsimp [p]; rw [hw2,hC,hqr,hQeq,hr]; ring
+    have hz2 : z + (v : ℤ) = N - r := by
+      dsimp [z,A]; rw [hw2,hvc,hN,hqr]; ring
+    let sigma := F ++ [alpha] ++ E ++ [beta]
+    have hsperm : sigma.Perm (List.finRange k) := by
+      apply List.Perm.trans (l₂ := E ++ F ++ [alpha,beta]) ?_ hperm
       calc
-        E.map Fin.castSucc ++ [fresh, beta.castSucc] ++ F.map Fin.castSucc ++
-            [alpha.castSucc] ~r
-            E.map Fin.castSucc ++ F.map Fin.castSucc ++
-              [alpha.castSucc, beta.castSucc, fresh] := horder
-        _ ~r List.finRange (k + 1) := by
-          exact hbase
-    have hneweq : earWord k sigma j =
-        (E.map Fin.castSucc ++ [fresh, beta.castSucc] ++ F.map Fin.castSucc ++
-          [alpha.castSucc]) := by
-      simp [earWord, sigma, j]
-    have hOldTotalSigma : (sigma.map (actualSource k v)).sum = 0 := by
-      rw [((hsigma.trans hOldPerm.symm).map (actualSource k v)).sum_eq]
-      exact hOldTotal
-    have hNewTotalDesired :
-        ((E.map Fin.castSucc ++ [fresh, beta.castSucc] ++ F.map Fin.castSucc ++
-          [alpha.castSucc]).map (actualSource (k + 1) (2 * v))).sum = 0 := by
-      have hperm := hnewperm.trans hNewPermBase.symm
-      rw [(hperm.map (actualSource (k + 1) (2 * v))).sum_eq]
-      exact hNewTotal
-    refine ⟨sigma, j, by dsimp [j]; omega, ?_, ?_⟩
-    · exact ⟨hsigma, hOldTotalSigma, by
-        intro n
-        simpa [Set.mem_Icc] using inStrip_prefix hOldStrip n⟩
-    · rw [hneweq]
-      exact ⟨hnewperm, hNewTotalDesired, by
-        intro n
-        simpa [Set.mem_Icc] using inStrip_prefix hNewStrip n⟩
+        _ ~r F ++ E ++ [alpha] ++ [beta] := by
+          simpa [sigma,List.append_assoc] using
+            ((List.perm_append_comm [alpha] E).append_right [beta]).append_left F
+        _ ~r E ++ F ++ [alpha,beta] := by
+          simpa [List.append_assoc] using (List.perm_append_comm F E).append_right [alpha,beta]
+    have hlen : (F ++ [alpha] ++ E).length = k - 1 := by
+      have hh := hsperm.length_eq
+      simp only [sigma,List.length_append,List.length_cons,List.length_nil,List.length_finRange] at hh ⊢
+      omega
+    have hear : earWord k sigma (k - 1) = FN ++ [alpha.castSucc] ++ EN ++ [fresh,beta.castSucc] := by
+      rw [← hlen]
+      rw [show sigma = (F ++ [alpha] ++ E) ++ [beta] by simp [sigma,List.append_assoc]]
+      simp [earWord,EN,FN,fresh,List.append_assoc]
+    have hs : InStrip f C 0 sigma := by
+      apply two_blocks f C F E alpha beta (fun i hi => (Fpos i hi).1)
+        (fun i hi => (Epos i hi).1)
+      · rw [hOldMass,hAlpha,hBeta,hEold]; ring
+      · rw [hOldMass]; change 0 ≤ 2*C-R-Q-p ∧ 2*C-R-Q-p ≤ C
+        rw [hp2]; constructor <;> nlinarith [hC,hqr]
+      · rw [hOldMass,hAlpha]; change 0 ≤ 2*C-R-Q-p+(-C+R)
+        rw [hp2]; omega
+      · rw [hBeta]; constructor <;> nlinarith [hC,hqr]
+    have hn : InStrip gn N 0 (earWord k sigma (k - 1)) := by
+      rw [hear]
+      have hns : InStrip gn N 0 (FN ++ [alpha.castSucc] ++ (EN ++ [fresh]) ++ [beta.castSucc]) := by
+        apply two_blocks gn N FN (EN ++ [fresh]) alpha.castSucc beta.castSucc FNpos
+          (by intro i hi; rcases List.mem_append.mp hi with hi|hi
+              · exact ENpos i hi
+              · have he := List.mem_singleton.mp hi
+                subst i
+                rw [hFresh]
+                omega)
+        · simp only [List.map_append,List.sum_append,List.map_singleton]
+          change (FN.map gn).sum + g alpha + ((EN.map gn).sum + gn fresh) + g beta = 0
+          rw [hNewMass,hEN,hAlphaNew,hBetaNew,hFresh]; ring
+        · rw [hNewMass]; change 0 ≤ 2*N-r-Q-(v:ℤ)-z ∧ 2*N-r-Q-(v:ℤ)-z ≤ N
+          constructor <;> nlinarith [hN,hqr,hz2]
+        · change 0 ≤ (FN.map gn).sum + g alpha
+          rw [hNewMass,hAlphaNew]; change 0 ≤ 2*N-r-Q-(v:ℤ)-z+(-N+r)
+          nlinarith [hqr,hz2]
+        · change 0 ≤ -g beta ∧ -g beta ≤ N
+          rw [hBetaNew]; constructor <;> nlinarith [hN]
+      simpa only [List.append_assoc, List.singleton_append] using hns
+    exact finish sigma (k-1) (by omega) hsperm hs hn
+  · have h4 : b + 2 ≤ a := by omega
+    have bounds : C - Q ≤ p ∧ p ≤ C ∧ N - Q ≤ z + (v : ℤ) ∧ z + (v : ℤ) ≤ N := by
+      by_cases h4eq : a = b + 2
+      · have hqr : q = 4 * r := by dsimp [q,r]; rw [h4eq,pow_add]; norm_num; ring
+        have hw4 : (w : ℤ) = 2*r-3 := by
+          obtain ⟨hl,hu⟩ := hfloor
+          rw [hN,hvc,hqr] at hl hu
+          dsimp [A] at hl hu
+          have hlo : 2*r-3 ≤ (w:ℤ) := by
+            by_contra h
+            have hm := mul_le_mul_of_nonneg_left (show (w:ℤ)+1 ≤ 2*r-3 by omega)
+              (show 0 ≤ 2*r+1 by omega)
+            nlinarith
+          have hhi : (w:ℤ) < 2*r-2 := by
+            by_contra h
+            have hm := mul_le_mul_of_nonneg_left (show 2*r-2 ≤ (w:ℤ) by omega)
+              (show 0 ≤ 2*r+1 by omega)
+            nlinarith
+          omega
+        have hQeq : Q = 2*r := by omega
+        have hp4 : p - (C-Q) = r-2 := by
+          dsimp [p]; rw [hw4,hC,hqr,hQeq,hr]; ring
+        have hp4u : C-p = r+2 := by
+          dsimp [p]; rw [hw4,hC,hqr,hr]; ring
+        have hz4 : z + (v:ℤ) = N-1 := by
+          dsimp [z,A]; rw [hw4,hvc,hN,hqr]; ring
+        refine ⟨by omega,by omega,by omega,by omega⟩
+      · have h8 : 8*r ≤ q := by
+          have h := pow_le_pow_right₀ (by norm_num : (1:ℤ) ≤ 2)
+            (show b+3 ≤ a by omega)
+          simpa [q,r,pow_add,mul_comm] using h
+        have hzl : N-q-2*r-1 ≤ z := by
+          have hh := hfloor.2
+          change N-(v:ℤ) < z+A at hh
+          rw [hvc] at hh
+          dsimp [A] at hh
+          omega
+        have hzu : z ≤ N-q-1 := by have hh := hfloor.1; rw [hvc] at hh; exact hh
+        have margin : 0 ≤ q*(r-1)-4*r^2-4*r-2 := by
+          nlinarith [mul_nonneg (show 0 ≤ q-8*r by omega) (show 0 ≤ r-1 by omega),
+            mul_nonneg (show 0 ≤ r-4 by omega) (show 0 ≤ 4*r+4 by omega)]
+        have hidlo : 2*(r+1)*(N-q-2*r-1)-(2*C-q)*A = q*(r-1)-4*r^2-4*r-2 := by
+          rw [show 2*C-q = N-1-q by omega,hN]; dsimp [A]; ring
+        have hidhi : (2*C)*A-2*(r+1)*(N-q-1) = q*(r+2)+2 := by
+          rw [hC2,hN]; dsimp [A]; ring
+        have hmlo := mul_le_mul_of_nonneg_left hzl (show 0 ≤ 2*(r+1) by omega)
+        have hmhi := mul_le_mul_of_nonneg_left hzu (show 0 ≤ 2*(r+1) by omega)
+        have hrel : 2*(r+1)*z = 2*p*A := by dsimp [p,z]; ring
+        refine ⟨?_,?_,?_,?_⟩
+        · apply (mul_le_mul_right (show 0 < 2*A by omega)).mp
+          rw [hq] at hidlo
+          nlinarith
+        · apply (mul_le_mul_right (show 0 < 2*A by omega)).mp
+          nlinarith
+        · nlinarith [hvc,h8]
+        · exact (by have hh := hfloor.1; dsimp [z] at *; omega)
+    obtain ⟨hpl,hpu,hzl,hzu⟩ := bounds
+    let sigma := E ++ [beta] ++ F ++ [alpha]
+    have hsperm : sigma.Perm (List.finRange k) := by
+      apply List.Perm.trans (l₂ := E ++ F ++ [alpha,beta]) ?_ hperm
+      calc
+        _ ~r E ++ F ++ [beta] ++ [alpha] := by
+          simpa [sigma,List.append_assoc] using
+            ((List.perm_append_comm [beta] F).append_right [alpha]).append_left E
+        _ ~r E ++ F ++ [alpha,beta] := by
+          simpa [List.append_assoc] using (List.Perm.swap beta alpha []).append_left (E ++ F)
+    have hear : earWord k sigma E.length = EN ++ [fresh,beta.castSucc] ++ FN ++ [alpha.castSucc] := by
+      simp [earWord,sigma,EN,FN,fresh,List.append_assoc]
+    have hs : InStrip f C 0 sigma := by
+      apply two_blocks f C E F beta alpha (fun i hi => (Epos i hi).1)
+        (fun i hi => (Fpos i hi).1)
+      · rw [hOldMass,hAlpha,hBeta,hEold]; ring
+      · exact ⟨by simpa [p] using hp0, by simpa [p] using hpu⟩
+      · rw [hEold,hBeta]; change 0 ≤ p+(-C+Q); omega
+      · rw [hAlpha]; constructor <;> nlinarith [hC]
+    have hn : InStrip gn N 0 (earWord k sigma E.length) := by
+      rw [hear]
+      have hns : InStrip gn N 0 ((EN ++ [fresh]) ++ [beta.castSucc] ++ FN ++ [alpha.castSucc]) := by
+        apply two_blocks gn N (EN ++ [fresh]) FN beta.castSucc alpha.castSucc
+          (by intro i hi; rcases List.mem_append.mp hi with hi|hi
+              · exact ENpos i hi
+              · have he := List.mem_singleton.mp hi; subst i; rw [hFresh]; omega) FNpos
+        · simp only [List.map_append,List.sum_append,List.map_singleton]
+          change ((EN.map gn).sum + gn fresh) + g beta + (FN.map gn).sum + g alpha = 0
+          rw [hNewMass,hEN,hAlphaNew,hBetaNew,hFresh]; ring
+        · simp only [List.map_append,List.sum_append,List.map_singleton]
+          rw [hEN,hFresh]; change 0 ≤ z+(v:ℤ) ∧ z+(v:ℤ) ≤ N
+          constructor <;> nlinarith
+        · simp only [List.map_append,List.sum_append,List.map_singleton]
+          change 0 ≤ ((EN.map gn).sum + gn fresh) + g beta
+          rw [hEN,hFresh,hBetaNew]; change 0 ≤ z+(v:ℤ)+(-N+Q); omega
+        · change 0 ≤ -g alpha ∧ -g alpha ≤ N
+          rw [hAlphaNew]; constructor <;> nlinarith [hN]
+      simpa only [List.append_assoc, List.singleton_append] using hns
+    have hj : E.length ≤ k := by
+      have hh := hsperm.length_eq
+      simp only [sigma,List.length_append,List.length_cons,List.length_nil,List.length_finRange] at hh
+      omega
+    exact finish sigma E.length hj hsperm hs hn
+
+#print axioms actualSource_two_negative_joint_lift
 
 end D5.S3.Combinatorics.Circle.TwoNegativeJointLift
