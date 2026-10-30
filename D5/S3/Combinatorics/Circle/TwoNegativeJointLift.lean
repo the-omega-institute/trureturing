@@ -33,6 +33,7 @@ private theorem two_blocks {α : Type*} (f : α → ℤ) (B : ℤ)
     (hx : 0 ≤ (E.map f).sum + f x)
     (hy : 0 ≤ -f y ∧ -f y ≤ B) :
     InStrip f B 0 (E ++ [x] ++ F ++ [y]) := by
+  simp only [List.append_assoc, List.singleton_append, List.cons_append]
   apply inStrip_append (positive_strip hE (by omega) (by omega))
   change 0 ≤ 0 + (E.map f).sum ∧ 0 + (E.map f).sum ≤ B ∧ _
   refine ⟨by omega, by omega, ?_⟩
@@ -54,7 +55,6 @@ private theorem split_perm {k : ℕ} (E : Finset (Fin k)) (x y : Fin k)
     have hh := (Finset.mem_sdiff.mp (Finset.mem_toList.mp hj)).2
     exact hh (Finset.mem_union_left _ (Finset.mem_toList.mp hi))
   have hN : (E.toList ++ F.toList ++ [x,y]).Nodup := by
-    rw [← List.append_assoc]
     apply List.nodup_append.mpr
     refine ⟨List.nodup_append.mpr ⟨E.nodup_toList, F.nodup_toList, hEF⟩,
       by simp [hxy], ?_⟩
@@ -84,13 +84,15 @@ private theorem inserted_perm {k : ℕ} (l : List (Fin k)) (j : ℕ)
     (earWord k l j).Perm (List.finRange (k + 1)) := by
   have h : (earWord k l j).Perm (l.map Fin.castSucc ++ [Fin.last k]) := by
     unfold earWord
-    calc
-      _ ~r (l.take j).map Fin.castSucc ++ (l.drop j).map Fin.castSucc ++ [Fin.last k] := by
-        simpa only [List.append_assoc] using
-          (List.perm_append_comm (l₁ := [Fin.last k]) (l₂ := (l.drop j).map Fin.castSucc)).append_left
-            ((l.take j).map Fin.castSucc)
-      _ ~r l.map Fin.castSucc ++ [Fin.last k] := by
-        rw [← List.append_assoc, ← List.map_append, List.take_append_drop]
+    have hp' :=
+      (List.perm_append_comm (l₁ := [Fin.last k]) (l₂ := (l.drop j).map Fin.castSucc)).append_left
+        ((l.take j).map Fin.castSucc)
+    have hj : (l.take j).map Fin.castSucc ++
+        ((l.drop j).map Fin.castSucc ++ [Fin.last k]) =
+        l.map Fin.castSucc ++ [Fin.last k] := by
+      rw [← List.append_assoc, ← List.map_append, List.take_append_drop]
+    rw [hj] at hp'
+    simpa only [List.append_assoc] using hp'
   exact h.trans (by simpa only [List.finRange_succ_last] using
     (hp.map Fin.castSucc).append_right [Fin.last k])
 
@@ -115,16 +117,21 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
   let alpha : Fin k := ⟨b - 1, by dsimp [k]; omega⟩
   let beta : Fin k := ⟨k - 1, by dsimp [k]; omega⟩
   let f := actualSource k v
+  let gn := actualSource (k + 1) (2 * v)
   let g := fun i : Fin k => actualSource (k + 1) (2 * v) i.castSucc
   let fresh : Fin (k + 1) := Fin.last k
   have hq : q = 2 * Q := by
     dsimp [q, Q]
-    rw [show a = (a - 1) + 1 by omega, pow_succ]
-    ring
+    calc
+      (2 : ℤ) ^ a = 2 ^ ((a - 1) + 1) :=
+        congrArg (fun n : ℕ => (2 : ℤ) ^ n) (by omega)
+      _ = 2 * 2 ^ (a - 1) := by rw [pow_succ]; ring
   have hr : r = 2 * R := by
     dsimp [r, R]
-    rw [show b = (b - 1) + 1 by omega, pow_succ]
-    ring
+    calc
+      (2 : ℤ) ^ b = 2 ^ ((b - 1) + 1) :=
+        congrArg (fun n : ℕ => (2 : ℤ) ^ n) (by omega)
+      _ = 2 * 2 ^ (b - 1) := by rw [pow_succ]; ring
   have hr4 : 4 ≤ r := by
     have h := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) hb
     norm_num at h
@@ -186,7 +193,7 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
     · apply old_value _ _ 0 (by constructor <;> nlinarith)
       simp only [Fin.val_mk, hvc]; ring
     · apply new_value _ _ 0 (by constructor <;> nlinarith)
-      simp only [Fin.val_mk, Nat.cast_mul, Nat.cast_ofNat, hvc]; ring
+      simp only [Fin.val_castSucc, Fin.val_mk, Nat.cast_mul, Nat.cast_ofNat, hvc]; ring
   have V (i : ℕ) (hi : i < a - 1) :
       f ⟨b + i, by dsimp [k]; omega⟩ = (r + 1) * 2 ^ i ∧
       g ⟨b + i, by dsimp [k]; omega⟩ = A * 2 ^ i := by
@@ -210,7 +217,7 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
       change r * 2 ^ i * (q + 1) = _
       rw [hN]; ring
     · apply new_value _ _ ((2 : ℤ) ^ i) (by dsimp [A] at *; constructor <;> nlinarith)
-      simp only [Fin.val_mk, pow_add, Nat.cast_mul, Nat.cast_ofNat, hvc]
+      simp only [Fin.val_castSucc, Fin.val_mk, pow_add, Nat.cast_mul, Nat.cast_ofNat, hvc]
       change r * 2 ^ i * (2 * (q + 1)) = _
       rw [hM, hN]; dsimp [A]; ring
   have hAlpha : f alpha = -C + R := by
@@ -229,7 +236,7 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
     apply new_value _ _ (Q + 1) (by rw [hN]; constructor <;> nlinarith)
     change (2 : ℤ) ^ (k - 1) * ((2 * v : ℕ) : ℤ) = _
     rw [hpk, Nat.cast_mul, Nat.cast_ofNat, hvc, hM, hN, hq]; ring
-  have hFresh : actualSource (k + 1) (2 * v) fresh = (v : ℤ) := by
+  have hFresh : gn fresh = (v : ℤ) := by
     apply new_value _ _ (v : ℤ) (by rw [hvc, hN]; constructor <;> nlinarith)
     change (2 : ℤ) ^ k * ((2 * v : ℕ) : ℤ) = _
     have he : (2 : ℤ) ^ k = N + 1 := by dsimp [N, modulus]; ring
@@ -323,12 +330,15 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
     constructor <;> intro h <;> apply hm <;> simp [h]
   let EN := E.map Fin.castSucc
   let FN := F.map Fin.castSucc
-  let gn := actualSource (k + 1) (2 * v)
   have ENpos : ∀ i ∈ EN, 0 ≤ gn i := by
     intro i hi; obtain ⟨j,hj,rfl⟩ := List.mem_map.mp hi; exact (Epos j hj).2
   have FNpos : ∀ i ∈ FN, 0 ≤ gn i := by
     intro i hi; obtain ⟨j,hj,rfl⟩ := List.mem_map.mp hi; exact (Fpos j hj).2
-  have hEN : (EN.map gn).sum = A * w := by simpa [EN, List.map_map, g, gn] using hEnew
+  have hEN : (EN.map gn).sum = A * w := by
+    change ((E.map Fin.castSucc).map gn).sum = A * w
+    rw [List.map_map]
+    change (E.map g).sum = A * w
+    exact hEnew
   have hOldZero := source_total (t := v) (show 0 < k by dsimp [k]; omega) _ hperm
   have hOldMass : (F.map f).sum = 2 * C - R - Q - (r + 1) * w := by
     change ((E ++ F ++ [alpha,beta]).map f).sum = 0 at hOldZero
@@ -344,7 +354,7 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
     change ((EN ++ FN ++ [alpha.castSucc,beta.castSucc,fresh]).map gn).sum = 0 at hNewZero
     simp only [List.map_append, List.sum_append, List.map_cons, List.map_nil,
       List.sum_cons, List.sum_nil, hEN] at hNewZero
-    change A * w + ((FN.map gn).sum + ((g alpha) + (g beta + (gn fresh + 0)))) = 0 at hNewZero
+    change A * w + (FN.map gn).sum + (g alpha + (g beta + (gn fresh + 0))) = 0 at hNewZero
     rw [hAlphaNew, hBetaNew, hFresh] at hNewZero
     linarith
   let p : ℤ := (r + 1) * w
@@ -357,10 +367,20 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
       ∃ sigma : List (Fin (a + b)), ∃ j : ℕ, j ≤ a + b ∧
         OriginalOrder (a + b) (2 ^ a + 1) sigma ∧
         OriginalOrder (a + b + 1) (2 * (2 ^ a + 1)) (earWord (a + b) sigma j) := by
-    refine ⟨sigma,j,hj,⟨hp,source_total (by dsimp [k]; omega) _ hp,?_⟩,
-      ⟨inserted_perm sigma j hp,source_total (by omega) _ (inserted_perm sigma j hp),?_⟩⟩
-    · intro n; simpa [Set.mem_Icc] using inStrip_prefix hs n
-    · intro n; simpa [Set.mem_Icc, hMH] using inStrip_prefix hn n
+    change ∃ sigma : List (Fin k), ∃ j : ℕ, j ≤ k ∧
+      OriginalOrder k v sigma ∧ OriginalOrder (k + 1) (2 * v) (earWord k sigma j)
+    have hk : 0 < k := by dsimp [k]; omega
+    have hnp := inserted_perm sigma j hp
+    refine ⟨sigma,j,hj,⟨hp,source_total hk _ hp,?_⟩,
+      ⟨hnp,source_total (by omega) _ hnp,?_⟩⟩
+    · intro n
+      change 0 ≤ ((sigma.take n).map f).sum ∧ ((sigma.take n).map f).sum ≤ C
+      simpa only [zero_add] using inStrip_prefix hs n
+    · intro n
+      change 0 ≤ (((earWord k sigma j).take n).map gn).sum ∧
+        (((earWord k sigma j).take n).map gn).sum ≤ modulus (k + 1) / 2
+      rw [hMH]
+      simpa only [zero_add] using inStrip_prefix hn n
   by_cases h2 : a = b + 1
   · have hqr : q = 2 * r := by dsimp [q,r]; rw [h2,pow_succ]; ring
     have hw2 : (w : ℤ) = r - 2 := by
@@ -385,21 +405,22 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
       dsimp [z,A]; rw [hw2,hvc,hN,hqr]; ring
     let sigma := F ++ [alpha] ++ E ++ [beta]
     have hsperm : sigma.Perm (List.finRange k) := by
-      apply List.Perm.trans (l₂ := E ++ F ++ [alpha,beta]) ?_ hperm
-      calc
-        _ ~r F ++ E ++ [alpha] ++ [beta] := by
-          simpa [sigma,List.append_assoc] using
-            ((List.perm_append_comm (l₁ := [alpha]) (l₂ := E)).append_right [beta]).append_left F
-        _ ~r E ++ F ++ [alpha,beta] := by
-          simpa [List.append_assoc] using (List.perm_append_comm (l₁ := F) (l₂ := E)).append_right [alpha,beta]
+      have hswap : sigma.Perm (F ++ E ++ [alpha,beta]) := by
+        simpa only [sigma, List.append_assoc, List.cons_append, List.nil_append] using
+          ((List.perm_append_comm (l₁ := [alpha]) (l₂ := E)).append_right [beta]).append_left F
+      exact hswap.trans
+        (((List.perm_append_comm (l₁ := F) (l₂ := E)).append_right [alpha,beta]).trans hperm)
     have hlen : (F ++ [alpha] ++ E).length = k - 1 := by
       have hh := hsperm.length_eq
       simp only [sigma,List.length_append,List.length_cons,List.length_nil,List.length_finRange] at hh ⊢
       omega
     have hear : earWord k sigma (k - 1) = FN ++ [alpha.castSucc] ++ EN ++ [fresh,beta.castSucc] := by
       rw [← hlen]
-      rw [show sigma = (F ++ [alpha] ++ E) ++ [beta] by simp [sigma,List.append_assoc]]
-      simp [earWord,EN,FN,fresh,List.append_assoc]
+      change earWord k ((F ++ [alpha] ++ E) ++ [beta]) (F ++ [alpha] ++ E).length = _
+      unfold earWord
+      rw [List.take_left, List.drop_left]
+      simp only [EN, FN, fresh, List.map_append, List.map_cons, List.map_nil,
+        List.append_assoc, List.cons_append, List.nil_append]
     have hs : InStrip f C 0 sigma := by
       apply two_blocks f C F E alpha beta (fun i hi => (Fpos i hi).1)
         (fun i hi => (Epos i hi).1)
@@ -429,7 +450,7 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
           nlinarith [hqr,hz2]
         · change 0 ≤ -g beta ∧ -g beta ≤ N
           rw [hBetaNew]; constructor <;> nlinarith [hN]
-      simpa only [List.append_assoc, List.singleton_append] using hns
+      simpa only [List.append_assoc, List.cons_append, List.nil_append] using hns
     exact finish sigma (k-1) (by omega) hsperm hs hn
   · have h4 : b + 2 ≤ a := by omega
     have bounds : C - Q ≤ p ∧ p ≤ C ∧ N - Q ≤ z + (v : ℤ) ∧ z + (v : ℤ) ≤ N := by
@@ -490,15 +511,17 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
     obtain ⟨hpl,hpu,hzl,hzu⟩ := bounds
     let sigma := E ++ [beta] ++ F ++ [alpha]
     have hsperm : sigma.Perm (List.finRange k) := by
-      apply List.Perm.trans (l₂ := E ++ F ++ [alpha,beta]) ?_ hperm
-      calc
-        _ ~r E ++ F ++ [beta] ++ [alpha] := by
-          simpa [sigma,List.append_assoc] using
-            ((List.perm_append_comm (l₁ := [beta]) (l₂ := F)).append_right [alpha]).append_left E
-        _ ~r E ++ F ++ [alpha,beta] := by
-          simpa [List.append_assoc] using (List.Perm.swap alpha beta []).append_left (E ++ F)
+      have hswap : sigma.Perm (E ++ F ++ [beta,alpha]) := by
+        simpa only [sigma, List.append_assoc, List.cons_append, List.nil_append] using
+          ((List.perm_append_comm (l₁ := [beta]) (l₂ := F)).append_right [alpha]).append_left E
+      exact hswap.trans (((List.Perm.swap alpha beta []).append_left (E ++ F)).trans hperm)
     have hear : earWord k sigma E.length = EN ++ [fresh,beta.castSucc] ++ FN ++ [alpha.castSucc] := by
-      simp [earWord,sigma,EN,FN,fresh,List.append_assoc]
+      rw [show sigma = E ++ ([beta] ++ F ++ [alpha]) by
+        simp only [sigma, List.append_assoc]]
+      unfold earWord
+      rw [List.take_left, List.drop_left]
+      simp only [EN, FN, fresh, List.map_append, List.map_cons, List.map_nil,
+        List.append_assoc, List.cons_append, List.nil_append]
     have hs : InStrip f C 0 sigma := by
       apply two_blocks f C E F beta alpha (fun i hi => (Epos i hi).1)
         (fun i hi => (Fpos i hi).1)
@@ -516,7 +539,7 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
         · simp only [List.map_append,List.sum_append,List.map_singleton,List.sum_singleton]
           change ((EN.map gn).sum + gn fresh) + g beta + (FN.map gn).sum + g alpha = 0
           rw [hNewMass,hEN,hAlphaNew,hBetaNew,hFresh]; ring
-        · simp only [List.map_append,List.sum_append,List.map_singleton]
+        · simp only [List.map_append,List.sum_append,List.map_singleton,List.sum_singleton]
           rw [hEN,hFresh]; change 0 ≤ z+(v:ℤ) ∧ z+(v:ℤ) ≤ N
           constructor <;> nlinarith
         · simp only [List.map_append,List.sum_append,List.map_singleton,List.sum_singleton]
@@ -524,7 +547,7 @@ theorem actualSource_two_negative_joint_lift (a b : ℕ) (ha : 2 ≤ a) (hb : 2 
           rw [hEN,hFresh,hBetaNew]; change 0 ≤ z+(v:ℤ)+(-N+Q); omega
         · change 0 ≤ -g alpha ∧ -g alpha ≤ N
           rw [hAlphaNew]; constructor <;> nlinarith [hN]
-      simpa only [List.append_assoc, List.singleton_append] using hns
+      simpa only [List.append_assoc, List.cons_append, List.nil_append] using hns
     have hj : E.length ≤ k := by
       have hh := hsperm.length_eq
       simp only [sigma,List.length_append,List.length_cons,List.length_nil,List.length_finRange] at hh
