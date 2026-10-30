@@ -68,7 +68,6 @@ internal sealed class OneSidedGoldenHistoryDocument : IScribeDocumentDefinition
     private static Formula X(string name) => new Formula.Symbol(FormulaIdentifier.Create(name));
     private static Formula C(string name) => new Formula.NamedConstant(FormulaIdentifier.Create(name));
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(C(name), [.. args]);
-    private static Formula At(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
     private static Formula All(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
     private static Formula Some(string name, Formula type, Formula body) =>
