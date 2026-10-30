@@ -88,7 +88,7 @@ private theorem coefficient_at_zero (p : ℕ) :
   rw [show (-1 : ℤ) = -(1 : ℤ) by rfl, Ring.choose_neg]
   simp [Units.smul_def, Ring.choose_natCast]
 
-theorem forward_finite (D : LatticeData) (L F : VertexOperator ℂ (Carrier D))
+private theorem forward_finite (D : LatticeData) (L F : VertexOperator ℂ (Carrier D))
     (m : ℤ) (u : Carrier D) :
     Function.HasFiniteSupport (fun t : ℕ => (L[[-(t : ℤ)-1]]) ((F[[m+t]]) u)) := by
   refine BddAbove.finite (bddAbove_def.mpr ?_)
@@ -100,7 +100,7 @@ theorem forward_finite (D : LatticeData) (L F : VertexOperator ℂ (Carrier D))
     omega
   simp [hz]
 
-theorem reverse_finite (D : LatticeData) (L F : VertexOperator ℂ (Carrier D))
+private theorem reverse_finite (D : LatticeData) (L F : VertexOperator ℂ (Carrier D))
     (m : ℤ) (u : Carrier D) :
     Function.HasFiniteSupport (fun t : ℕ => (F[[m-t-1]]) ((L[[t]]) u)) := by
   refine BddAbove.finite (bddAbove_def.mpr ?_)

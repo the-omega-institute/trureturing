@@ -261,8 +261,8 @@ private theorem scalar_offsets (D : LatticeData) (B : LinearMap.BilinForm ℂ (C
   let L := dividedDerivative p (neutralField D i)
   rw [insertion, (normalMinusOne L F).2]
   change (B.flip v) (_+_) = _
-  rw [map_add, map_finsum (B.flip v) (forward_finite D L F m u),
-    map_finsum (B.flip v) (reverse_finite D L F m u)]
+  rw [map_add, map_finsum (B.flip v) (LatticeInvolution.normal_forward_finite D L F m u),
+    map_finsum (B.flip v) (LatticeInvolution.normal_reverse_finite D L F m u)]
   simp only [L, derivative_mode, LinearMap.smul_apply, LinearMap.BilinForm.flip_apply,
     map_smul, smul_eq_mul]
   congr 1

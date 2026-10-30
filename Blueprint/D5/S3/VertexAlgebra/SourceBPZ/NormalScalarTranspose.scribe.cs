@@ -25,18 +25,6 @@ internal sealed class NormalScalarTransposeDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For every natural p and integer k with -p<=k<0, coefficient(p,k) is zero. This original integer binomial supporting proof is consumed by both scalar interval calculations."))), DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("normalscalartranspose-forward-finite"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.forward_finite"),
-                H("forward_finite"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For arbitrary actual vertex operators L and F, integer m and original input u, the forward normal-product sequence L[-t-1](F[m+t]u), indexed by natural t, has finite support. The original truncation proof is shared by both scalar calculations."))), DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("normalscalartranspose-reverse-finite"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.reverse_finite"),
-                H("reverse_finite"), StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For arbitrary actual vertex operators L and F, integer m and original input u, the reverse normal-product sequence F[m-t-1](L[t]u), indexed by natural t, has finite support. The original truncation proof is shared by both scalar calculations."))), DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("sourcebpz-normal-insertion"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.insertion"),
                 H("insertion"), StatementSource.WithoutFormula(),
