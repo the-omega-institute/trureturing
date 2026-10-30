@@ -336,4 +336,218 @@ private theorem four_chain_table (a b c d : ℕ)
   rw [show (2 * N + 1) * A + A = A + (2 * N + 1) * A by ring]
   simp [Int.add_emod, Int.mul_emod]
 
+/-- The phase coordinate is four times the actual phase. -/
+private def HalfPhase (D R : ℤ) : Prop :=
+  ∃ n : ℤ, 1 ≤ n ∧ (4 * n - 2) * D < R ∧ R < 4 * n * D
+
+/-- An interval longer than one closed half-period gap meets an open upper half.
+The interval endpoints are twice their actual coordinates. -/
+private theorem interval_half_phase (p a b : ℤ) (hp : 0 < p)
+    (ha : 0 ≤ a) (hab : p < b - a) :
+    ∃ R : ℤ, 2 * a < R ∧ R < 2 * b ∧ HalfPhase p R := by
+  let n := a / (2 * p) + 1
+  have hmod := Int.emod_nonneg a (show 2 * p ≠ 0 by omega)
+  have hmod' := Int.emod_lt_of_pos a (show 0 < 2 * p by omega)
+  have hdiv := Int.ediv_add_emod a (2 * p)
+  have hn : 1 ≤ n := by
+    dsimp [n]
+    have := Int.ediv_nonneg ha (show 0 ≤ 2 * p by omega)
+    omega
+  have hfloor : 2 * (n - 1) * p ≤ a ∧ a < 2 * n * p := by
+    dsimp [n]
+    constructor <;> nlinarith
+  let l := max a ((2 * n - 1) * p)
+  let u := min b (2 * n * p)
+  have hlow : l < u := by
+    dsimp [l, u]
+    rw [max_lt_iff, lt_min_iff, lt_min_iff]
+    constructor
+    · constructor <;> nlinarith [hfloor.2]
+    · constructor <;> nlinarith [hfloor.1]
+  refine ⟨l + u, ?_, ?_, n, hn, ?_, ?_⟩
+  · have := le_max_left a ((2 * n - 1) * p)
+    change a ≤ l at this
+    omega
+  · have := min_le_left b (2 * n * p)
+    change u ≤ b at this
+    omega
+  · have := le_max_right a ((2 * n - 1) * p)
+    change (2 * n - 1) * p ≤ l at this
+    nlinarith
+  · have := min_le_right b (2 * n * p)
+    change u ≤ 2 * n * p at this
+    nlinarith
+
+private theorem phase_meet (p q r e v E : ℤ)
+    (he : 1 ≤ e) (hv : 1 ≤ v)
+    (hp : (2 * e - 1) * p < E) (hq : (2 * v - 1) * q < E)
+    (hr : r < E) (hP : E ≤ 2 * e * p) (hQ : E ≤ 2 * v * q)
+    (hR : E ≤ 2 * r) :
+    ∃ R : ℤ, 2 * r < R ∧ R < 4 * r ∧ HalfPhase p R ∧ HalfPhase q R := by
+  let l := max ((2 * e - 1) * p) (max ((2 * v - 1) * q) r)
+  have hl : l < E := by simp only [l, max_lt_iff]; exact ⟨hp, hq, hr⟩
+  have hlp : (2 * e - 1) * p ≤ l := le_max_left _ _
+  have hlq : (2 * v - 1) * q ≤ l := le_trans (le_max_left _ _) (le_max_right _ _)
+  have hlr : r ≤ l := le_trans (le_max_right _ _) (le_max_right _ _)
+  refine ⟨l + E, by omega, by omega, ⟨e, he, ?_, ?_⟩, ⟨v, hv, ?_, ?_⟩⟩ <;>
+    nlinarith
+
+/-- A direct clipped-interval proof replaces connected-complement reasoning. -/
+private theorem wide_half_phase (p q r : ℤ) (hp : 0 < p) (hpq : p ≤ q)
+    (hwide : 2 * p + q < r) :
+    ∃ R : ℤ, 2 * r < R ∧ R < 4 * r ∧ HalfPhase p R ∧ HalfPhase q R := by
+  have hq : 0 < q := by omega
+  have hr : 0 < r := by omega
+  by_cases heq : p = q
+  · obtain ⟨R, hR, hR', hphase⟩ := interval_half_phase p r (2 * r) hp hr.le (by omega)
+    exact ⟨R, hR, by omega, hphase, by simpa [← heq] using hphase⟩
+  have hpq' : p < q := by omega
+  let n := r / (2 * q) + 1
+  have hn : 1 ≤ n := by
+    dsimp [n]
+    have := Int.ediv_nonneg hr.le (show 0 ≤ 2 * q by omega)
+    omega
+  have hmod := Int.emod_nonneg r (show 2 * q ≠ 0 by omega)
+  have hmod' := Int.emod_lt_of_pos r (show 0 < 2 * q by omega)
+  have hdiv := Int.ediv_add_emod r (2 * q)
+  have hfloor : 2 * (n - 1) * q ≤ r ∧ r < 2 * n * q := by
+    dsimp [n]
+    constructor <;> nlinarith
+  let a := max r ((2 * n - 1) * q)
+  have har : r ≤ a := le_max_left _ _
+  have haq : (2 * n - 1) * q ≤ a := le_max_right _ _
+  have ha_bound : a ≤ r + q := by
+    dsimp [a]
+    rw [max_le_iff]
+    constructor <;> nlinarith [hfloor.1]
+  by_cases htail : p < 2 * n * q - a
+  · let b := min (2 * r) (2 * n * q)
+    have hab : p < b - a := by
+      dsimp [b]
+      rcases le_total (2 * r) (2 * n * q) with h | h
+      · rw [min_eq_left h]; omega
+      · rw [min_eq_right h]; exact htail
+    obtain ⟨R, hR, hR', hphase⟩ := interval_half_phase p a b hp (by omega) hab
+    have hb : b ≤ 2 * r := min_le_left _ _
+    have hb' : b ≤ 2 * n * q := min_le_right _ _
+    exact ⟨R, by omega, by omega, hphase, ⟨n, hn, by nlinarith, by nlinarith⟩⟩
+  · have hend : 2 * n * q ≤ r + p := by
+      by_cases h : r ≤ (2 * n - 1) * q
+      · have ha' : a = (2 * n - 1) * q := max_eq_right h
+        rw [ha'] at htail
+        nlinarith
+      · have ha' : a = r := max_eq_left (by omega)
+        rw [ha'] at htail
+        omega
+    let a' := (2 * n + 1) * q
+    let b' := min (2 * r) (2 * (n + 1) * q)
+    have ha' : r ≤ a' := by dsimp [a']; nlinarith [hfloor.2]
+    have ha'_bound : a' ≤ r + p + q := by dsimp [a']; nlinarith
+    have hab : p < b' - a' := by
+      dsimp [b', a']
+      rcases le_total (2 * r) (2 * (n + 1) * q) with h | h
+      · rw [min_eq_left h]; nlinarith
+      · rw [min_eq_right h]; nlinarith
+    obtain ⟨R, hR, hR', hphase⟩ := interval_half_phase p a' b' hp (by omega) hab
+    have hb : b' ≤ 2 * r := min_le_left _ _
+    have hb' : b' ≤ 2 * (n + 1) * q := min_le_right _ _
+    exact ⟨R, by omega, by omega, hphase, ⟨n + 1, by omega, by dsimp [a'] at hR; nlinarith,
+      by nlinarith⟩⟩
+
+private theorem sorted_half_phase (p q r : ℤ) (i j k : ℕ)
+    (hij : i ≤ j) (hjk : j ≤ k) (hpq : p ≤ q) (hqr : q ≤ r)
+    (hp : (2 : ℤ) ^ i ≤ p) (hp' : 3 * p < 4 * (2 : ℤ) ^ i)
+    (hq : (2 : ℤ) ^ j ≤ q) (hq' : 3 * q < 4 * (2 : ℤ) ^ j)
+    (hr : (2 : ℤ) ^ k ≤ r) (hr' : 3 * r < 4 * (2 : ℤ) ^ k) :
+    ∃ R : ℤ, 2 * r < R ∧ R < 4 * r ∧ HalfPhase p R ∧ HalfPhase q R := by
+  have hI : 0 < (2 : ℤ) ^ i := by positivity
+  have hJ : 0 < (2 : ℤ) ^ j := by positivity
+  have hp0 : 0 < p := by omega
+  by_cases hjk' : j = k
+  · subst k
+    by_cases hij' : i = j
+    · subst j
+      have hlt : r < 2 * p := by omega
+      exact phase_meet p q r 1 1 (2 * p) (by norm_num) (by norm_num)
+        (by nlinarith) (by nlinarith) hlt (by ring_nf) (by nlinarith) (by nlinarith)
+    · have hpow : 2 * (2 : ℤ) ^ i ≤ (2 : ℤ) ^ j := by
+        have := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) (show i + 1 ≤ j by omega)
+        simpa [pow_succ, mul_comm] using this
+      obtain ⟨R, hR, hR', hphase⟩ := interval_half_phase p r (2 * q) hp0 (by omega) (by omega)
+      exact ⟨R, hR, by omega, hphase, ⟨1, by norm_num, by nlinarith, by nlinarith⟩⟩
+  have hjk1 : j + 1 ≤ k := by omega
+  by_cases hstep : k = j + 1
+  · have hK : (2 : ℤ) ^ k = 2 * (2 : ℤ) ^ j := by rw [hstep, pow_succ]; ring
+    by_cases hij' : i = j
+    · subst j
+      exact phase_meet p q r 2 2 (min (2 * r) (4 * p)) (by norm_num) (by norm_num)
+        (by rw [lt_min_iff]; constructor <;> nlinarith)
+        (by rw [lt_min_iff]; constructor <;> nlinarith)
+        (by rw [lt_min_iff]; constructor <;> nlinarith)
+        (min_le_right _ _) (le_trans (min_le_right _ _) (by omega)) (min_le_left _ _)
+    · by_cases hstep' : j = i + 1
+      · have hJ' : (2 : ℤ) ^ j = 2 * (2 : ℤ) ^ i := by rw [hstep', pow_succ]; ring
+        by_cases hqp : q < 2 * p
+        · exact phase_meet p q r 3 2 (6 * p) (by norm_num) (by norm_num)
+            (by nlinarith) (by nlinarith) (by nlinarith) (by ring_nf)
+            (by nlinarith) (by nlinarith)
+        · by_cases hrp : r < 4 * p
+          · exact phase_meet p q r 2 1 (4 * p) (by norm_num) (by norm_num)
+              (by nlinarith) (by nlinarith) hrp (by ring_nf)
+              (by nlinarith) (by nlinarith)
+          · exact phase_meet p q r 4 2 (8 * p) (by norm_num) (by norm_num)
+              (by nlinarith) (by nlinarith) (by nlinarith) (by ring_nf)
+              (by nlinarith) (by nlinarith)
+      · have hpow : 4 * (2 : ℤ) ^ i ≤ (2 : ℤ) ^ j := by
+          have := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) (show i + 2 ≤ j by omega)
+          simpa [pow_add, mul_comm] using this
+        exact wide_half_phase p q r hp0 hpq (by nlinarith)
+  · have hpow : 4 * (2 : ℤ) ^ j ≤ (2 : ℤ) ^ k := by
+      have := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) (show j + 2 ≤ k by omega)
+      simpa [pow_add, mul_comm] using this
+    exact wide_half_phase p q r hp0 hpq (by nlinarith)
+
+private theorem dyadic_index_mono (p q : ℤ) (i j : ℕ) (hpq : p ≤ q)
+    (hp : (2 : ℤ) ^ i ≤ p) (hq' : 3 * q < 4 * (2 : ℤ) ^ j) : i ≤ j := by
+  by_contra h
+  have hpow : 2 * (2 : ℤ) ^ j ≤ (2 : ℤ) ^ i := by
+    have := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) (show j + 1 ≤ i by omega)
+    simpa [pow_succ, mul_comm] using this
+  have : 0 < (2 : ℤ) ^ j := by positivity
+  nlinarith
+
+private theorem simultaneous_half_phase (p q r : ℤ) (i j k : ℕ)
+    (hp : (2 : ℤ) ^ i ≤ p) (hp' : 3 * p < 4 * (2 : ℤ) ^ i)
+    (hq : (2 : ℤ) ^ j ≤ q) (hq' : 3 * q < 4 * (2 : ℤ) ^ j)
+    (hr : (2 : ℤ) ^ k ≤ r) (hr' : 3 * r < 4 * (2 : ℤ) ^ k) :
+    ∃ R : ℤ, 0 < R ∧ R < 4 * max p (max q r) ∧
+      HalfPhase p R ∧ HalfPhase q R ∧ HalfPhase r R := by
+  have hsorted (p q r : ℤ) (i j k : ℕ) (hpq : p ≤ q) (hqr : q ≤ r)
+      (hp : (2 : ℤ) ^ i ≤ p) (hp' : 3 * p < 4 * (2 : ℤ) ^ i)
+      (hq : (2 : ℤ) ^ j ≤ q) (hq' : 3 * q < 4 * (2 : ℤ) ^ j)
+      (hr : (2 : ℤ) ^ k ≤ r) (hr' : 3 * r < 4 * (2 : ℤ) ^ k) :
+      ∃ R : ℤ, 0 < R ∧ R < 4 * r ∧ HalfPhase p R ∧ HalfPhase q R ∧ HalfPhase r R := by
+    obtain ⟨R, hR, hR', hP, hQ⟩ := sorted_half_phase p q r i j k
+      (dyadic_index_mono p q i j hpq hp hq') (dyadic_index_mono q r j k hqr hq hr')
+      hpq hqr hp hp' hq hq' hr hr'
+    have : 0 < r := lt_of_lt_of_le (by positivity : 0 < (2 : ℤ) ^ k) hr
+    exact ⟨R, by omega, hR', hP, hQ, ⟨1, by norm_num, by nlinarith, by nlinarith⟩⟩
+  rcases le_total p q with hpq | hqp
+  · rcases le_total q r with hqr | hrq
+    · obtain ⟨R, hR, hR', hP, hQ, hT⟩ := hsorted p q r i j k hpq hqr hp hp' hq hq' hr hr'
+      exact ⟨R, hR, by simpa [max_eq_right hpq, max_eq_right hqr, max_eq_right (le_trans hpq hqr)] using hR', hP, hQ, hT⟩
+    · rcases le_total p r with hpr | hrp
+      · obtain ⟨R, hR, hR', hP, hT, hQ⟩ := hsorted p r q i k j hpr hrq hp hp' hr hr' hq hq'
+        exact ⟨R, hR, by simpa [max_eq_left hrq, max_eq_right hpq] using hR', hP, hQ, hT⟩
+      · obtain ⟨R, hR, hR', hT, hP, hQ⟩ := hsorted r p q k i j hrp hpq hr hr' hp hp' hq hq'
+        exact ⟨R, hR, by simpa [max_eq_left hrq, max_eq_right hpq] using hR', hP, hQ, hT⟩
+  · rcases le_total p r with hpr | hrp
+    · obtain ⟨R, hR, hR', hQ, hP, hT⟩ := hsorted q p r j i k hqp hpr hq hq' hp hp' hr hr'
+      exact ⟨R, hR, by simpa [max_eq_right (le_trans hqp hpr), max_eq_right hpr] using hR', hP, hQ, hT⟩
+    · rcases le_total q r with hqr | hrq
+      · obtain ⟨R, hR, hR', hQ, hT, hP⟩ := hsorted q r p j k i hqr hrp hq hq' hr hr' hp hp'
+        exact ⟨R, hR, by simpa [max_eq_right hqr, max_eq_left hrp] using hR', hP, hQ, hT⟩
+      · obtain ⟨R, hR, hR', hT, hQ, hP⟩ := hsorted r q p k j i hrq hqp hr hr' hq hq' hp hp'
+        exact ⟨R, hR, by simpa [max_eq_left hrq, max_eq_left hqp] using hR', hP, hQ, hT⟩
+
 end D5.S3.Combinatorics.Circle.FourNegativeEventual
