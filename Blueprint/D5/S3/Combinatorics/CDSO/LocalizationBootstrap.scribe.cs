@@ -16,29 +16,6 @@ internal sealed class LocalizationBootstrapDocument : IScribeDocumentDefinition
                 + "positive actual marginals and mean cardinality a. Its K, H and d are computed from that same mass function. "
                 + "A TailChoice contains any tied-allowed h-smallest-marginal set and its exact minimum relation.")),
             Describe.Lean(
-                DescribeId.Create("cdso-array-data"),
-                DeclarationHandle.Create(Prefix + "JointArray"),
-                H("One actual finite incidence array"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "JointArray preserves the original law on all nonempty subsets, normalization, nonnegative masses, positive actual marginals, "
-                    + "and the single actual expectation EK=a. No separate marginal vector, support condition, independence premise, certificate, "
-                    + "near-minimizer premise, or graph condition is introduced."))),
-                DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("cdso-producer-target"),
-                DeclarationHandle.Create(Prefix + "Lemma134ProducerStatement"),
-                H("Actual common-tail producer target"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "The full producer statement includes delta≤p≤u≤hp, the core rank bounds, the nonnegative discrete remainder Q, "
-                    + "the nonnegative actual-core Jensen gap, and d≥H_D−u A_a(u)+E Q(L)+S_f under a²≥3h(2a+1). "
-                    + "The implementation obtains the remainder by summing nonnegative actual-incidence residuals. A rational tangent inequality supplies Jensen; "
-                    + "no producer certificate is added to the hypotheses of the localization theorem."))),
-                DescribeRole.Definition),
-            Describe.Lean(
                 DescribeId.Create("cdso-lemma-13-5-target"),
                 DeclarationHandle.Create(Prefix + "Lemma135Statement"),
                 H("Uniform statement of Lemma 13.5"),
