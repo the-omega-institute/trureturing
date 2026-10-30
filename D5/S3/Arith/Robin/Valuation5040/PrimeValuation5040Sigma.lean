@@ -64,9 +64,10 @@ theorem normalized_sigma_5040_mul_of_coprime {n : ℕ} (hn0 : n ≠ 0)
           rw [Nat.mul_comm 5040 n, mul_comm (5040 : ℝ) (n : ℝ)]
     _ = ((ArithmeticFunction.sigma 1 n : ℝ) / n) *
         ((ArithmeticFunction.sigma 1 5040 : ℝ) / 5040) := by
-          simpa [Nat.cast_mul] using hnorm
+          convert hnorm using 1 <;> norm_num [Nat.cast_mul]
     _ = (403 / 105 : ℝ) * ((ArithmeticFunction.sigma 1 n : ℝ) / n) := by
           rw [h5040]
+          ring
 
 /-- The normalized factorization applies directly to the exact 5040 valuation fibre.
 The fibre theorem supplies both nonzeroness and the residual coprimality. -/
