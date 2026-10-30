@@ -6,31 +6,7 @@ Fixed-surplus actual-array localization and two-stage bootstrap for CDSO Lemma 1
 
 The source is CDSO incidence moments and capacity phases, Definitions 1.1 and 13.1–13.2 and Lemmas 13.4–13.5. One JointArray is the sole law: it assigns nonnegative mass to every nonempty subset of Fin (a+1+h), has total mass one, positive actual marginals and mean cardinality a. Its K, H and d are computed from that same mass function. A TailChoice contains any tied-allowed h-smallest-marginal set and its exact minimum relation.
 
-**Definition 1.1 (One actual finite incidence array).**
-
-Lean statement: `D5/S3/Combinatorics/CDSO/LocalizationBootstrap.JointArray`
-
-*Formalization.* `D5/S3/Combinatorics/CDSO/LocalizationBootstrap.JointArray` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-JointArray preserves the original law on all nonempty subsets, normalization, nonnegative masses, positive actual marginals, and the single actual expectation EK=a. No separate marginal vector, support condition, independence premise, certificate, near-minimizer premise, or graph condition is introduced.
-
-**Definition 1.2 (Actual common-tail producer target).**
-
-Lean statement: `D5/S3/Combinatorics/CDSO/LocalizationBootstrap.Lemma134ProducerStatement`
-
-*Formalization.* `D5/S3/Combinatorics/CDSO/LocalizationBootstrap.Lemma134ProducerStatement` (`✓ std3`).
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-The full producer statement includes delta≤p≤u≤hp, the core rank bounds, the nonnegative discrete remainder Q, the nonnegative actual-core Jensen gap, and d≥H_D−u A_a(u)+E Q(L)+S_f under a²≥3h(2a+1). The implementation obtains the remainder by summing nonnegative actual-incidence residuals. A rational tangent inequality supplies Jensen; no producer certificate is added to the hypotheses of the localization theorem.
-
-**Definition 1.3 (Uniform statement of Lemma 13.5).**
+**Definition 1.1 (Uniform statement of Lemma 13.5).**
 
 Lean statement: `D5/S3/Combinatorics/CDSO/LocalizationBootstrap.Lemma135Statement`
 
@@ -44,7 +20,7 @@ For fixed h≥2 and M>0, along integer a≥4 tending to infinity, every actual J
 
 The target retains the exact lower chain d≥H_D+(2a^3−C_{h,M}a^2)p≥h^2/p+(2a^3−C_{h,M}a^2)p, with the same actual event and no added localization, support, certificate, minimizer, singleton, independence or graph premise. All four positive constants and the finite threshold precede the quantifiers over arrays and tied choices. The statement includes uniform epsilon thresholds and the resulting sequence limit and eventual estimates.
 
-**Theorem 1.4 (Localization, both bootstraps and the exact lower chain).**
+**Theorem 1.2 (Localization, both bootstraps and the exact lower chain).**
 
 Lean statement: `D5/S3/Combinatorics/CDSO/LocalizationBootstrap.lemma135`
 
@@ -64,7 +40,6 @@ The real-power expressions are transported exactly through a^(3/2)=a sqrt(a) and
 
 ## References
 
-- Truth anchor: `D5/S3/Combinatorics/CDSO/LocalizationBootstrap.JointArray`
-- Truth anchor: `D5/S3/Combinatorics/CDSO/LocalizationBootstrap.Lemma134ProducerStatement`
 - Truth anchor: `D5/S3/Combinatorics/CDSO/LocalizationBootstrap.Lemma135Statement`
 - Truth anchor: `D5/S3/Combinatorics/CDSO/LocalizationBootstrap.lemma135`
+- Dependency: [D5/S3/Combinatorics/CDSO/ArrayCore](ArrayCore.md)
