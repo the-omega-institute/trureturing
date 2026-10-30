@@ -449,7 +449,7 @@ private theorem rejectedLaw : ¬ arena.Law rejectedEqual := by
 private theorem actualDependence : ObservationalDependence signature actualEqual := by
   intro i
   obtain ⟨D, e, hu, h24, hpos, hpair, a, u, v, ha, huH, hvK, hvac, hne⟩ :=
-    _root_.D5.S3.VertexAlgebra.TwistedGround.MixedJacobi.actual_leech_vacuum_channel
+    _root_.D5.S3.VertexAlgebra.TwistedGround.MixedIntertwiner.actual_leech_vacuum_channel
   let z : FixedRestrictedDual D := normalizedCoefficient D hu 3 u v
   refine ⟨D, 0, z, ?_⟩
   intro he
