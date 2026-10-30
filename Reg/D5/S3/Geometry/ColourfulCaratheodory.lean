@@ -11,17 +11,17 @@ namespace Reg.D5.S3.Geometry.ColourfulCaratheodory
 noncomputable section
 
 abbrev signature : Signature where
-  Params := Σ d : ℕ, Fin (d + 1)
-  State p := Fin (p.1 + 1) → Set (EuclideanSpace ℝ (Fin p.1))
+  Params := ℕ
+  State d := Set (EuclideanSpace ℝ (Fin d))
   Role := Unit
   finiteRole := inferInstance
   nonemptyRole := inferInstance
-  Output _ p := Set (EuclideanSpace ℝ (Fin p.1))
+  Output _ d := Set (EuclideanSpace ℝ (Fin d))
   Anchor := Empty
   finiteAnchor := inferInstance
 
 def actual : Realization signature :=
-  realize signature (fun _ p S => convexHull ℝ (S p.2)) (fun a => nomatch a)
+  realize signature (fun _ _ S => convexHull ℝ S) (fun a => nomatch a)
 
 def rejected : Realization signature :=
   realize signature (fun _ _ _ => Set.univ) (fun a => nomatch a)
@@ -30,7 +30,7 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ {d : ℕ} (p : EuclideanSpace ℝ (Fin d))
     (S : Fin (d + 1) → Set (EuclideanSpace ℝ (Fin d))),
-    (∀ i, p ∈ R.readout () ⟨d, i⟩ S) →
+    (∀ i, p ∈ R.readout () d (S i)) →
     ∃ f : Fin (d + 1) → EuclideanSpace ℝ (Fin d),
       (∀ i, f i ∈ S i) ∧ p ∈ convexHull ℝ (Set.range f)
 
@@ -44,7 +44,7 @@ private theorem rejected_law : ¬ arena.Law rejected := by
 
 private theorem dependence : ObservationalDependence signature actual := by
   intro role
-  refine ⟨⟨0, 0⟩, (fun _ => ∅), (fun _ => {0}), ?_⟩
+  refine ⟨0, ∅, {0}, ?_⟩
   change convexHull ℝ (∅ : Set (EuclideanSpace ℝ (Fin 0))) ≠ convexHull ℝ {0}
   simp
 
@@ -64,7 +64,7 @@ def familyRegistration : Registration arena (type_of% (@colourful_caratheodory))
 
 def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
     (@colourful_caratheodory)
-    (type_of% (realize signature (fun _ p S => convexHull ℝ (S p.2)) (fun a => nomatch a)))
+    (type_of% (realize signature (fun _ _ S => convexHull ℝ S) (fun a => nomatch a)))
     Unit Unit := {
   unitName := `D5.S3.Geometry.ColourfulCaratheodory.colourful_caratheodory.hulls,
   realizationName := `Reg.D5.S3.Geometry.ColourfulCaratheodory.familyRegistration,
@@ -77,7 +77,7 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   realization := .source arena ⟨familyRegistration⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
-  readout := some (realize signature (fun _ p S => convexHull ℝ (S p.2)) (fun a => nomatch a)),
+  readout := some (realize signature (fun _ _ S => convexHull ℝ S) (fun a => nomatch a)),
   variation := .absent,
   sensitivity := .absent,
   partialSensitivity := none,
@@ -85,12 +85,12 @@ def registration : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   sourceSelection := some {
     owner := `D5.S3.Geometry.ColourfulCaratheodory,
     definition := none,
-    coordinates := #[0, 3],
+    coordinates := #[0],
     readouts := #[{
       path := #["body", "body", "body", "domain", "body", "fn", "arg"],
-      stateBinder := 2,
+      stateBinder := 0,
       functionOperand := false,
-      stateOperand := none,
+      stateOperand := some #["arg"],
       booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
