@@ -1,8 +1,8 @@
-/- GID: D5 / S3 / Combinatorics / Circle / ThreeNegativeMinimumTwoJointLift
+/- GID: D5/S3/Combinatorics/Circle/ThreeNegativeMinimumTwoJointLift
    generality: I
-   mirror - B: D5 / B / S3 / Combinatorics / Circle / ThreeNegativeMinimumTwoJointLift
-   mirror - E: none(waiver:no - escape - mirror - specified)
-   anchors: [mathlib / module / Mathlib.Data.List.FinRange]
+   mirror-B: D5/B/S3/Combinatorics/Circle/ThreeNegativeMinimumTwoJointLift
+   mirror-E: none(waiver:no-escape-mirror-specified)
+   anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Complete physical mask construction and literal ear for minimum gap two. -/
 import D5.S3.Combinatorics.Circle.ThreeBitSource
@@ -266,7 +266,7 @@ private theorem support_sum (a b c : ℕ) (m : PhysicalMask a b c)
       have := ThreeBitSource.mask_labels_bound hi <;> omega
   have hsum (S : Finset ℕ) : (S.toList.map f).sum = ∑ i ∈ S,f i := by
     change ((S.toList:Multiset ℕ).map f).sum = _
-    rw [Finset.coe_toList]; rfl
+    rw [Finset.coe_toList] <;> rfl
   rw [hsum, support, Finset.sum_union hWsep, Finset.sum_union hUV]
   rw [ThreeBitSource.mask_labels_sum (c - 1) 0 _ _ f u (by simpa using hU),
     ThreeBitSource.mask_labels_sum (b - 1) c _ _ f v hV,
@@ -677,7 +677,7 @@ private theorem axes_two (d : ℕ) :
     have hbits : Disjoint q.toNat.bitIndices.toFinset (2 * q).toNat.bitIndices.toFinset := by
       have hdis : Disjoint (1 : ℕ).bitIndices.toFinset (2 : ℕ).bitIndices.toFinset := by decide
       have hqnat : q.toNat = 2 ^ d := by
-        dsimp [q]; rw [Int.toNat_pow_of_nonneg (by norm_num)]; rfl
+        dsimp [q]; rw [Int.toNat_pow_of_nonneg (by norm_num)] <;> rfl
       rw [Int.toNat_mul (by norm_num) (by omega), hqnat]
       change Disjoint (2 ^ d).bitIndices.toFinset (2 * 2 ^ d).bitIndices.toFinset
       simpa only [mul_one, Nat.mul_comm] using disjoint_scaled_bits d 1 2 hdis
@@ -705,7 +705,7 @@ private theorem axes_three (d : ℕ) :
       have he : ((q - 1).toNat : ℤ) = q - 1 := Int.toNat_of_nonneg (by omega)
       exact_mod_cast (show ((q - 1).toNat : ℤ) < (2 : ℤ) ^ d by dsimp [q] at he; omega)
     have hqnat : q.toNat = 2 ^ d := by
-      dsimp [q]; rw [Int.toNat_pow_of_nonneg (by norm_num)]; rfl
+      dsimp [q]; rw [Int.toNat_pow_of_nonneg (by norm_num)] <;> rfl
     rw [hqnat]
     simpa only [mul_one] using (disjoint_low_bits d (q - 1).toNat 1 hh).symm
   · dsimp [Seams,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
@@ -732,7 +732,7 @@ private theorem axes_six (d : ℕ) :
     have hdis : Disjoint (2 : ℕ).bitIndices.toFinset (5 : ℕ).bitIndices.toFinset := by decide
     refine ⟨by simp,by simp,?_⟩
     have hqnat : q.toNat = 2 ^ d := by
-      dsimp [q]; rw [Int.toNat_pow_of_nonneg (by norm_num)]; rfl
+      dsimp [q]; rw [Int.toNat_pow_of_nonneg (by norm_num)] <;> rfl
     rw [Int.toNat_mul (by norm_num) (by omega), Int.toNat_mul (by norm_num) (by omega), hqnat]
     change Disjoint (2 * 2 ^ d).bitIndices.toFinset (5 * 2 ^ d).bitIndices.toFinset
     simpa only [Nat.mul_comm] using disjoint_scaled_bits d 2 5 hdis
@@ -743,19 +743,25 @@ private theorem axes_six (d : ℕ) :
 private def exceptionalTriples : List (ℤ × ℤ × ℤ) :=
   [(4,16,8),(4,32,8),(4,64,16),(16,4,8),(8,8,4),
       (8,16,4),(16,8,4),(16,16,4),(32,16,4),(64,16,4),(8,32,4),
-      (16,32,4),(32,32,4),(32,64,4),(32,4,8),(8,4,8)]
+      (16,32,4),(32,32,4),(32,64,4),(32,4,8),(8,4,8),(4,8,8)]
 
 private theorem finite_rows (r s t : ℤ)
     (h : (r,s,t) ∈ exceptionalTriples) :
     Certificate r s t (constructor r s t) := by
   simp [exceptionalTriples,Prod.mk.injEq] at h
-  rcases h with h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h
+  rcases h with h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h|h
   all_goals
     rcases h with ⟨rfl,rfl,rfl⟩
     norm_num [Certificate,constructor,makePlan,chooseEar,Bounded,Separate,Seams,
       oldMass,newMass,cap,oldHeight,newHeight,Order.first,Order.middle,Order.last,
-      atNegative,Nat.bitIndices_two_mul,Nat.bitIndices_one,List.disjoint_left,
-      Nat.bitIndices, List.mem_cons, List.not_mem_nil]
+      atNegative,Nat.bitIndices_two_mul,Nat.bitIndices_one] <;>
+      simp [List.disjoint_left,
+        show (2:ℕ).bitIndices=[1] by decide,
+        show (3:ℕ).bitIndices=[0,1] by decide,
+        show (4:ℕ).bitIndices=[2] by decide,
+        show (6:ℕ).bitIndices=[1,2] by decide,
+        show (9:ℕ).bitIndices=[0,3] by decide,
+        show (10:ℕ).bitIndices=[1,3] by decide]
 
 private theorem a_two_twice (d : ℕ) :
     Certificate 4 (32 * (2 : ℤ)^d) (16 * (2 : ℤ)^d)
@@ -812,7 +818,7 @@ private theorem int_scaled_bits (d x y : ℕ)
   rw [Int.toNat_mul (by positivity) (by positivity),
     Int.toNat_mul (by positivity) (by positivity),
     Int.toNat_pow_of_nonneg (by norm_num)]
-  simpa only [Int.toNat_natCast, Int.toNat_ofNat, Nat.mul_comm] using disjoint_scaled_bits d x y h
+  simpa only [Int.toNat_natCast, show (2:ℤ).toNat=2 from rfl, Nat.mul_comm] using disjoint_scaled_bits d x y h
 
 private theorem c_two_small_s_eight (d : ℕ) :
     Certificate (32*(2:ℤ)^d) 8 4 (constructor (32*(2:ℤ)^d) 8 4) := by
@@ -886,7 +892,7 @@ private theorem c_two_small_r_eight (d : ℕ) :
   · dsimp [Bounded,makePlan]; rw [hs2]; omega
   · dsimp [Separate,makePlan]
     refine ⟨by simp,?_,by simp⟩
-    simpa only [one_mul, Nat.cast_ofNat] using int_scaled_bits d 12 1 (by decide)
+    simpa [q] using int_scaled_bits d 12 1 (by decide)
   · dsimp [Seams,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
       Order.first,Order.middle,Order.last,atNegative]
     rw [hs2]
@@ -912,7 +918,7 @@ private theorem c_two_small_r_sixteen (d : ℕ) :
   · dsimp [Bounded,makePlan]; rw [hs2]; omega
   · dsimp [Separate,makePlan]
     refine ⟨by simp,?_,by simp⟩
-    simpa only [one_mul, Nat.cast_ofNat] using int_scaled_bits d 14 1 (by decide)
+    simpa [q] using int_scaled_bits d 14 1 (by decide)
   · dsimp [Seams,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
       Order.first,Order.middle,Order.last,atNegative]
     rw [hs2]
@@ -1049,12 +1055,13 @@ private theorem c_two_equal (d : ℕ) :
   have hcon : constructor (64*q) (64*q) 4 =
       makePlan 26 .agb .q ⟨1,16*q-1,0⟩ ⟨0,0,25*q⟩ := by
     simp only [constructor]
-    split_ifs <;> simp_all <;> omega
+    split_ifs <;> try omega
+    all_goals simp only [hr2,hs2,hv,hw,hw']
   change Certificate (64*q) (64*q) 4 (constructor (64*q) (64*q) 4)
   rw [hcon]
   refine ⟨?_,?_,?_,?_⟩
-  · dsimp [Bounded,makePlan]; rw [hr2,hs2]; omega
-  · dsimp [Bounded,makePlan]; rw [hr2,hs2]; omega
+  · dsimp [Bounded,makePlan]; simp only [hr2,hs2]; omega
+  · dsimp [Bounded,makePlan]; simp only [hr2,hs2]; omega
   · simp [Separate,makePlan]
   · dsimp [Seams,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
       Order.first,Order.middle,Order.last,atNegative]
@@ -1076,12 +1083,13 @@ private theorem c_two_double_s (d : ℕ) :
   have hcon : constructor (64*q) (128*q) 4 =
       makePlan 26 .agb .q ⟨1,32*q-1,0⟩ ⟨0,0,25*q⟩ := by
     simp only [constructor]
-    split_ifs <;> simp_all <;> omega
+    split_ifs <;> try omega
+    all_goals simp only [hr2,hs2,hv,hw,hw']
   change Certificate (64*q) (128*q) 4 (constructor (64*q) (128*q) 4)
   rw [hcon]
   refine ⟨?_,?_,?_,?_⟩
-  · dsimp [Bounded,makePlan]; rw [hr2,hs2]; omega
-  · dsimp [Bounded,makePlan]; rw [hr2,hs2]; omega
+  · dsimp [Bounded,makePlan]; simp only [hr2,hs2]; omega
+  · dsimp [Bounded,makePlan]; simp only [hr2,hs2]; omega
   · simp [Separate,makePlan]
   · dsimp [Seams,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
       Order.first,Order.middle,Order.last,atNegative]
@@ -1103,12 +1111,13 @@ private theorem c_two_double_r (d : ℕ) :
   have hcon : constructor (64*q) (32*q) 4 =
       makePlan 27 .gab .q ⟨1,0,12*q⟩ ⟨0,16*q-1,0⟩ := by
     simp only [constructor]
-    split_ifs <;> simp_all <;> omega
+    split_ifs <;> try omega
+    all_goals simp only [hr2,hs2,hv,hw,hw']
   change Certificate (64*q) (32*q) 4 (constructor (64*q) (32*q) 4)
   rw [hcon]
   refine ⟨?_,?_,?_,?_⟩
-  · dsimp [Bounded,makePlan]; rw [hr2,hs2]; omega
-  · dsimp [Bounded,makePlan]; rw [hr2,hs2]; omega
+  · dsimp [Bounded,makePlan]; simp only [hr2,hs2]; omega
+  · dsimp [Bounded,makePlan]; simp only [hr2,hs2]; omega
   · simp [Separate,makePlan]
   · dsimp [Seams,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
       Order.first,Order.middle,Order.last,atNegative]
@@ -1117,6 +1126,405 @@ private theorem c_two_double_r (d : ℕ) :
     repeat' constructor
     all_goals nlinarith [sq_nonneg (q-1)]
 
+private theorem floor_bounds (n d : ℤ) (hd : 0<d) :
+    d*(n/d)≤n ∧ n<d*(n/d+1) := by
+  have h0 := Int.emod_nonneg n (ne_of_gt hd)
+  have h1 := Int.emod_lt_of_pos n hd
+  have he := Int.mul_ediv_add_emod n d
+  constructor <;> nlinarith
+
+private theorem a_two_far (q h : ℤ) (hq : 1≤q) (hh : 32*q≤h) :
+    Certificate 4 (2*h) (8*q) (constructor 4 (2*h) (8*q)) := by
+  let n := oldHeight 4 (2*h) (8*q) .alpha
+  let d := 1+8*q+8*q*4
+  let v := n/d
+  have hn : n=32*h*q-20*q-1 := by
+    dsimp [n,oldHeight,cap,atNegative]
+    have ht : 8*q/2=4*q := by omega
+    rw [ht]; ring
+  have hd : d=40*q+1 := by dsimp [d]; ring
+  have hv := floor_bounds n d (by rw [hd]; omega)
+  change d*v≤n ∧ n<d*(v+1) at hv
+  have hv0 : 0≤v := Int.ediv_nonneg (by rw [hn]; nlinarith) (by rw [hd]; omega)
+  have hvh : 5*v<4*h := by
+    by_contra hn'
+    have hp := mul_nonneg (show 0≤q by omega) (show 0≤5*v-4*h by omega)
+    rw [hn,hd] at hv
+    nlinarith
+  have ht2 : 8*q/2=4*q := by omega
+  have hs2 : 2*h/2=h := by omega
+  have ht8 : 8*q/8=q := by omega
+  have hcon : constructor 4 (2*h) (8*q)=makePlan 11 .bga .q ⟨q,0,1⟩ ⟨0,v,0⟩ := by
+    simp only [constructor]
+    split_ifs <;> try omega
+    all_goals simp only [ht8] <;> rfl
+  rw [hcon]
+  refine ⟨?_,?_,?_,?_⟩
+  · dsimp [Bounded,makePlan]; rw [ht2,hs2]; omega
+  · dsimp [Bounded,makePlan]; rw [ht2,hs2]; omega
+  · simp [Separate,makePlan]
+  · dsimp [Seams,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
+      Order.first,Order.middle,Order.last,atNegative]
+    simp only [ht2,hs2]
+    rw [hn,hd] at hv
+    norm_num
+    repeat' constructor
+    all_goals nlinarith [mul_nonneg (h-32*q) (q-1), sq_nonneg (q-1)]
+
+private theorem c_two_far_s (q h : ℤ) (hq : 1≤q) (hh : 64*q≤h) :
+    Certificate (64*q) (4*h) 4 (constructor (64*q) (4*h) 4) := by
+  let n := (64*q)*(4*h)-64*q-2
+  let d := 4*(64*q)+5
+  let y := n/d
+  have hd : 0<d := by dsimp [d]; omega
+  have hy := floor_bounds n d hd
+  change d*y≤n ∧ n<d*(y+1) at hy
+  have hy0 : 0≤y := Int.ediv_nonneg (by dsimp [n]; nlinarith) (by omega)
+  have hyh : y<h := by
+    by_contra hn
+    have hp := mul_nonneg (show 0≤q by omega) (show 0≤y-h by omega)
+    dsimp [n,d] at hy
+    nlinarith
+  have hr2 : 64*q/2=32*q := by omega
+  have hs2 : 4*h/2=2*h := by omega
+  have hw : 25*(64*q)/64=25*q := by omega
+  have hcon : constructor (64*q) (4*h) 4=makePlan 29 .bga .q ⟨1,y,0⟩ ⟨0,0,25*q⟩ := by
+    simp only [constructor]
+    split_ifs <;> try omega
+    all_goals simp only [hw] <;> rfl
+  rw [hcon]
+  refine ⟨?_,?_,?_,?_⟩
+  · dsimp [Bounded,makePlan]; rw [hr2,hs2]; omega
+  · dsimp [Bounded,makePlan]; rw [hr2,hs2]; omega
+  · simp [Separate,makePlan]
+  · dsimp [Seams,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
+      Order.first,Order.middle,Order.last,atNegative]
+    simp only [hr2,hs2]
+    dsimp [n,d] at hy
+    norm_num
+    repeat' constructor
+    all_goals nlinarith [mul_nonneg (h-64*q) (q-1),sq_nonneg (q-1)]
+
+private theorem c_two_far_r (e : ℕ) (h : ℤ)
+    (hq : 2≤(2:ℤ)^e) (hh : 8≤h) (hrel : h≤4*(2:ℤ)^e) :
+    Certificate (64*(2:ℤ)^e) (4*h) 4
+      (constructor (64*(2:ℤ)^e) (4*h) 4) := by
+  let q : ℤ := 2^e
+  change 2≤q at hq
+  change h≤4*q at hrel
+  let n := 128*q+2-9*h
+  let d := 36*h+1
+  let m := -(-n/d)
+  have hd : 0<d := by dsimp [d]; omega
+  have hm := floor_bounds (-n) d hd
+  change d*(-m)≤ -n ∧ -n<d*(-m+1) at hm
+  have hn : 0<n := by dsimp [n]; omega
+  have hm0 : 0≤m := by
+    by_contra ht
+    have hp := mul_nonpos_of_nonneg_of_nonpos hd.le (show m≤0 by omega)
+    nlinarith [hm.1]
+  have hmq : m<q := by
+    have hb : n≤d*(q-1) := by
+      dsimp [n,d]
+      nlinarith [mul_nonneg (q-2) (h-8)]
+    by_contra ht
+    have hp := mul_nonneg hd.le (show 0≤m-q by omega)
+    nlinarith [hm.2]
+  have hG : 0≤192*q+3-5*h-(20*h+1)*m := by
+    by_contra ht
+    have hp := mul_nonpos_of_nonneg_of_nonpos hd.le
+      (show 192*q+3-5*h-(20*h+1)*m≤0 by omega)
+    have hr := mul_nonneg (show 0≤h by omega) (show 0≤4*q-h by omega)
+    have hc := mul_nonneg (show 0≤20*h+1 by omega)
+      (show 0≤n+d-d*m by nlinarith [hm.2])
+    dsimp [n,d] at hp hc
+    nlinarith
+  have hr2 : 64*q/2=32*q := by omega
+  have hs2 : 4*h/2=2*h := by omega
+  have hsv : 4*h/4=h := by omega
+  have hs9 : 9*(4*h)/4=9*h := by omega
+  have hw : 25*(64*q)/64=25*q := by omega
+  have hmform : -(-(2*(64*q)+2-9*(4*h)/4)/(9*(4*h)+1))=m := by
+    rw [hs9]
+    dsimp [m,n,d]
+    congr 2 <;> ring
+  have hcon : constructor (64*q) (4*h) 4=makePlan 28 .agb .q ⟨1,h-1,m⟩ ⟨0,0,25*q⟩ := by
+    simp only [constructor]
+    split_ifs <;> try omega
+    all_goals simp only [hmform,hsv,hw]
+  change Certificate (64*q) (4*h) 4 (constructor (64*q) (4*h) 4)
+  rw [hcon]
+  refine ⟨?_,?_,?_,?_⟩
+  · dsimp [Bounded,makePlan]; rw [hr2,hs2]; omega
+  · dsimp [Bounded,makePlan]; rw [hr2,hs2]; omega
+  · dsimp [Separate,makePlan]
+    refine ⟨by simp,by simp,?_⟩
+    have hmn : m.toNat<2^e := by
+      have he := Int.toNat_of_nonneg hm0
+      exact_mod_cast (show (m.toNat:ℤ)<(2:ℤ)^e by change _<q; omega)
+    have hp : (25*q).toNat=2^e*25 := by
+      dsimp [q]
+      rw [Int.toNat_mul (by norm_num) (by positivity),Int.toNat_pow_of_nonneg (by norm_num)]
+      norm_num; ring
+    rw [hp]
+    exact disjoint_low_bits e m.toNat 25 hmn
+  · dsimp [Seams,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
+      Order.first,Order.middle,Order.last,atNegative]
+    simp only [hr2,hs2]
+    dsimp [n,d] at hm
+    norm_num
+    repeat' constructor
+    all_goals nlinarith [mul_nonneg (q-2) (h-8)]
+
+private theorem b_two_diagonal (q : ℤ) (hq : 1≤q) :
+    Certificate (16*q) 4 (16*q) (constructor (16*q) 4 (16*q)) := by
+  let n := oldHeight (16*q) 4 (16*q) .gamma
+  let d := 1+16*q+(16*q)*4
+  let v := n/d
+  have hr2 : 16*q/2=8*q := by omega
+  have hn : n=512*q*q-40*q-1 := by
+    dsimp [n,oldHeight,cap,atNegative]; rw [hr2]; ring
+  have hd : d=80*q+1 := by dsimp [d]; ring
+  have hv := floor_bounds n d (by rw [hd]; omega)
+  change d*v≤n ∧ n<d*(v+1) at hv
+  have hv0 : 0≤v := Int.ediv_nonneg (by rw [hn]; nlinarith) (by rw [hd]; omega)
+  have hvc : v<8*q := by
+    apply Int.ediv_lt_of_lt_mul (by rw [hd]; omega)
+    rw [hn,hd]; nlinarith [sq_nonneg q]
+  have hcon : constructor (16*q) 4 (16*q)=makePlan 13 .bag .p ⟨0,0,8*q-1⟩ ⟨v,0,0⟩ := by
+    simp only [constructor]
+    split_ifs <;> try omega
+    all_goals simp only [hr2] <;> rfl
+  rw [hcon]
+  refine ⟨?_,?_,?_,?_⟩
+  · dsimp [Bounded,makePlan]; rw [hr2]; omega
+  · dsimp [Bounded,makePlan]; rw [hr2]; omega
+  · simp [Separate,makePlan]
+  · dsimp [Seams,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
+      Order.first,Order.middle,Order.last,atNegative]
+    simp only [hr2]
+    rw [hn,hd] at hv
+    norm_num
+    repeat' constructor
+    all_goals nlinarith [sq_nonneg (q-1)]
+
+private theorem b_two_tall (h w : ℤ) (hh : 4≤h) (hw : 4*h≤w) :
+    Certificate (2*h) 4 (2*w) (constructor (2*h) 4 (2*w)) := by
+  let n := cap (2*h) 4 (2*w)
+  let d := 1+2*h+(2*h)*4
+  let v := n/d
+  have hr2 : 2*h/2=h := by omega
+  have ht2 : 2*w/2=w := by omega
+  have hn : n=8*h*w-1 := by dsimp [n,cap]; rw [ht2]; ring
+  have hd : d=10*h+1 := by dsimp [d]; ring
+  have hv := floor_bounds n d (by rw [hd]; omega)
+  change d*v≤n ∧ n<d*(v+1) at hv
+  have hv0 : 0≤v := Int.ediv_nonneg (by rw [hn]; nlinarith) (by rw [hd]; omega)
+  have hvc : v<w := by
+    apply Int.ediv_lt_of_lt_mul (by rw [hd]; omega)
+    rw [hn,hd]; nlinarith
+  have hcon : constructor (2*h) 4 (2*w)=makePlan 12 .bag .q ⟨v,0,0⟩ ⟨0,0,h-1⟩ := by
+    simp only [constructor]
+    split_ifs <;> try omega
+    all_goals simp only [hr2] <;> rfl
+  rw [hcon]
+  refine ⟨?_,?_,?_,?_⟩
+  · dsimp [Bounded,makePlan]; rw [hr2,ht2]; omega
+  · dsimp [Bounded,makePlan]; rw [hr2,ht2]; omega
+  · simp [Separate,makePlan]
+  · dsimp [Seams,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
+      Order.first,Order.middle,Order.last,atNegative]
+    simp only [hr2,ht2]
+    rw [hn,hd] at hv
+    norm_num
+    repeat' constructor
+    all_goals nlinarith [mul_nonneg (h-4) (w-4*h),sq_nonneg (h-4)]
+
+private theorem b_two_next_arithmetic (h : ℤ) (hh : 4≤h) (hnodiv : ¬(5:ℤ)∣8*h) :
+    Certificate (2*h) 4 (4*h) (constructor (2*h) 4 (4*h)) := by
+  let n := cap (2*h) 4 (4*h)
+  let d := 1+2*h+(2*h)*4
+  let v := n/d
+  let z := 8*h/5
+  have hz : 0≤8*h-5*z ∧ 8*h-5*z<5 := by
+    have hh' := floor_bounds (8*h) 5 (by norm_num)
+    change 5*z≤8*h ∧ 8*h<5*(z+1) at hh'
+    omega
+  have hz1 : 1≤8*h-5*z := by
+    by_contra ht
+    apply hnodiv
+    exact ⟨z,by omega⟩
+  have hz0 : 0≤z := Int.ediv_nonneg (by omega) (by norm_num)
+  have hzmax : z≤2*h-1 := by omega
+  have hr2 : 2*h/2=h := by omega
+  have ht2 : 4*h/2=2*h := by omega
+  have hn : n=16*h*h-1 := by dsimp [n,cap]; rw [ht2]; ring
+  have hd : d=10*h+1 := by dsimp [d]; ring
+  have hvz : v=z := by
+    apply (Int.ediv_eq_iff_of_pos (by rw [hd]; omega)).mpr
+    rw [hn,hd]
+    constructor <;> nlinarith [mul_nonneg (show 0≤h by omega)
+      (show 0≤8*h-5*z-1 by omega),
+      mul_nonneg (show 0≤h by omega) (show 0≤4-(8*h-5*z) by omega)]
+  have hv0 : 0≤v := by omega
+  have hvc : v<2*h := by omega
+  have hrem : 0≤n-d*v ∧ n-d*v<8*h := by
+    rw [hvz,hn,hd]
+    constructor <;> nlinarith [mul_nonneg (show 0≤h by omega)
+      (show 0≤8*h-5*z-1 by omega),
+      mul_nonneg (show 0≤h by omega) (show 0≤4-(8*h-5*z) by omega)]
+  have hcon : constructor (2*h) 4 (4*h)=makePlan 12 .bag .q ⟨v,0,0⟩ ⟨0,0,h-1⟩ := by
+    simp only [constructor]
+    split_ifs <;> try omega
+    all_goals simp only [hr2] <;> rfl
+  rw [hcon]
+  refine ⟨?_,?_,?_,?_⟩
+  · dsimp [Bounded,makePlan]; rw [hr2,ht2]; omega
+  · dsimp [Bounded,makePlan]; rw [hr2,ht2]; omega
+  · simp [Separate,makePlan]
+  · dsimp [Seams,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
+      Order.first,Order.middle,Order.last,atNegative]
+    simp only [hr2,ht2]
+    rw [hn,hd] at hrem
+    norm_num
+    repeat' constructor
+    all_goals nlinarith [sq_nonneg (h-4)]
+
+private theorem b_two_next (e : ℕ) :
+    Certificate (8*(2:ℤ)^e) 4 (16*(2:ℤ)^e)
+      (constructor (8*(2:ℤ)^e) 4 (16*(2:ℤ)^e)) := by
+  have hp : 1≤(2:ℤ)^e := by exact_mod_cast Nat.one_le_two_pow
+  have hn : ¬(5:ℕ)∣2^(e+5) := by
+    intro h
+    have hh := (by decide : Nat.Prime 5).dvd_of_dvd_pow h
+    norm_num at hh
+  have hnZ : ¬(5:ℤ)∣8*(4*2^e) := by
+    have he : 8*(4*(2:ℤ)^e)=2^(e+5) := by rw [pow_add]; norm_num; ring
+    rw [he]
+    exact_mod_cast hn
+  convert b_two_next_arithmetic (4*2^e) (by omega) hnZ using 1 <;> ring
+
+private theorem b_two_far (h q : ℤ) (hq : 1≤q) (hh : 16*q≤h)
+    (hex : 2≤q ∨ 32≤h) :
+    Certificate (2*h) 4 (8*q) (constructor (2*h) 4 (8*q)) := by
+  let n := 64*h*q-10*h-32*q-4
+  let d := 64*q+5
+  let z := n/d
+  have hd : 0<d := by dsimp [d]; omega
+  have hz := floor_bounds n d hd
+  change d*z≤n ∧ n<d*(z+1) at hz
+  have hz0 : 0≤z := Int.ediv_nonneg
+    (by dsimp [n]; nlinarith [mul_nonneg (h-16*q) (q-1),sq_nonneg (q-1)]) hd.le
+  have hzc : z<h := by
+    apply Int.ediv_lt_of_lt_mul hd
+    dsimp [n,d]; nlinarith
+  have hb : 2048*q*q+496*q+30≤h*(160*q-25) := by
+    rcases hex with hex|hex
+    · nlinarith [mul_nonneg (h-16*q) (160*q-25),sq_nonneg (q-2)]
+    · by_cases hq2 : 2≤q
+      · nlinarith [mul_nonneg (h-16*q) (160*q-25),sq_nonneg (q-2)]
+      · have he : q=1 := by omega
+        subst q; nlinarith
+  have htail : 32*h*q-16*q-3-(32*q+5)*z≤5*h := by
+    by_contra ht
+    have hp := mul_pos hd (show 0<32*h*q-16*q-3-(32*q+5)*z-5*h by omega)
+    have hc := mul_pos (show 0<32*q+5 by omega)
+      (show 0<d*(z+1)-n by nlinarith [hz.2])
+    dsimp [n,d] at hp hc
+    nlinarith
+  have hr2 : 2*h/2=h := by omega
+  have ht2 : 8*q/2=4*q := by omega
+  have hp : 3*(8*q)/8=3*q := by omega
+  have hzform : (4*(2*h)*(8*q)-5*(2*h)-4*(8*q)-4)/(8*(8*q)+5)=z := by
+    dsimp [z,n,d]
+    congr 1 <;> ring
+  have hcon : constructor (2*h) 4 (8*q)=makePlan 16 .agb .t ⟨3*q,0,0⟩ ⟨0,0,z⟩ := by
+    simp only [constructor]
+    split_ifs <;> try omega
+    all_goals simp only [hp,hzform]
+  rw [hcon]
+  refine ⟨?_,?_,?_,?_⟩
+  · dsimp [Bounded,makePlan]; rw [hr2,ht2]; omega
+  · dsimp [Bounded,makePlan]; rw [hr2,ht2]; omega
+  · simp [Separate,makePlan]
+  · dsimp [Seams,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
+      Order.first,Order.middle,Order.last,atNegative]
+    simp only [hr2,ht2]
+    dsimp [n,d] at hz
+    norm_num
+    repeat' constructor
+    all_goals nlinarith [mul_nonneg (h-16*q) (q-1),sq_nonneg (q-1)]
+
+private theorem a_two_ordered_small (q : ℤ) (hq : 2≤q) :
+    Certificate 4 8 (8*q) (constructor 4 8 (8*q)) := by
+  have ht2 : 8*q/2=4*q := by omega
+  have hq' : 8*q/8=q := by omega
+  have hv : (8*(8*q)-3*8-4)/(5*(8*q)+1)=1 := by
+    apply (Int.ediv_eq_iff_of_pos (by omega)).mpr
+    constructor <;> nlinarith
+  have hcon : constructor 4 8 (8*q)=chooseEar 4 8 (8*q) 7 ⟨3*q,0,0⟩ ⟨0,1,1⟩ := by
+    simp [constructor,show 8*q≠4 by omega,show 8≤8*q by omega,hq',hv]
+    congr 2 <;> congr 1 <;> ring
+  rw [hcon]
+  unfold chooseEar
+  split_ifs with he
+  all_goals
+    refine ⟨?_,?_,?_,?_⟩
+    · dsimp [Bounded,makePlan]; rw [ht2]; omega
+    · dsimp [Bounded,makePlan]; rw [ht2]; omega
+    · simp [Separate,makePlan]
+    · dsimp [Seams,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
+        Order.first,Order.middle,Order.last,atNegative]
+      simp only [ht2]
+      dsimp [newHeight,oldHeight,oldMass,newMass,cap,atNegative] at he
+      simp only [ht2] at he
+      norm_num at *
+      omega
+
+private theorem a_two_ordered (h q : ℤ) (hh : 8≤h) (hq : 1≤q) :
+    Certificate 4 (2*h) (2*h*q) (constructor 4 (2*h) (2*h*q)) := by
+  let n := (2*h)*(2*h*q)-3*(2*h)-4
+  let d := 5*(2*h*q)+1
+  let v := n/d
+  have hp : 0≤h*h*q := mul_nonneg (sq_nonneg h) (by omega)
+  have hp' := mul_nonneg (show 0≤q-1 by omega) (sq_nonneg h)
+  have hd : 0<d := by dsimp [d]; nlinarith
+  have hv := floor_bounds n d hd
+  change d*v≤n ∧ n<d*(v+1) at hv
+  have hv0 : 0≤v := Int.ediv_nonneg (by dsimp [n]; nlinarith [sq_nonneg (h-8)]) hd.le
+  have hvc : v<h := by
+    apply Int.ediv_lt_of_lt_mul hd
+    dsimp [n,d]; nlinarith
+  have hs2 : 2*h/2=h := by omega
+  have ht2 : 2*h*q/2=h*q := by omega
+  have htq : 2*h*q/(2*h)=q := Int.ediv_eq_of_eq_mul_right (by omega) rfl
+  have hcon : constructor 4 (2*h) (2*h*q)=chooseEar 4 (2*h) (2*h*q) 7
+      ⟨q*(h-1),0,0⟩ ⟨0,v,1⟩ := by
+    simp only [constructor]
+    split_ifs <;> try nlinarith
+    all_goals simp only [hs2,htq]
+  rw [hcon]
+  have htail : n-d*v≤h*(2*h*q+1) := by
+    have hc := mul_nonneg (show 0≤h-8 by omega) (show 0≤h*q by nlinarith)
+    dsimp [d] at hv
+    nlinarith [hv.2]
+  unfold chooseEar
+  split_ifs with he
+  all_goals
+    refine ⟨?_,?_,?_,?_⟩
+    · dsimp [Bounded,makePlan]; rw [hs2,ht2]; nlinarith
+    · dsimp [Bounded,makePlan]; rw [hs2,ht2]; omega
+    · simp [Separate,makePlan]
+    · dsimp [Seams,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
+        Order.first,Order.middle,Order.last,atNegative]
+      simp only [hs2,ht2]
+      dsimp [newHeight,oldHeight,oldMass,newMass,cap,atNegative] at he
+      simp only [hs2,ht2] at he
+      dsimp [n,d] at hv htail
+      norm_num at *
+      repeat' constructor
+      all_goals nlinarith [mul_nonneg (h-8) (q-1)]
+
 private theorem constructor_certificate (a b c : ℕ)
     (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2 ≤ c) (hmin : min a (min b c)=2) :
     Certificate (2^a) (2^b) (2^c) (constructor (2^a) (2^b) (2^c)) := by
@@ -1124,6 +1532,10 @@ private theorem constructor_certificate (a b c : ℕ)
     rw [←pow_add]
     congr 1
     omega
+  have lower (x m : ℕ) (hm : m≤x) : (2:ℤ)^m≤2^x := by
+    exact_mod_cast Nat.pow_le_pow_right (by decide : 1≤(2:ℕ)) hm
+  have shift (x m n : ℕ) (hm : m≤x) : (2:ℤ)^(x+n)=2^(m+n)*2^(x-m) := by
+    rw [←pow_add]; congr 1; omega
   by_cases hab : a=2 ∧ b=2
   · obtain ⟨rfl,rfl⟩ := hab
     by_cases hc2 : c=2
@@ -1161,7 +1573,22 @@ private theorem constructor_certificate (a b c : ℕ)
           · by_cases hf : (4,(2:ℤ)^b,(2:ℤ)^c) ∈ exceptionalTriples
             · exact finite_rows _ _ _ hf
             · by_cases hordered : b≤c
-              · fail "row 7: unbounded ordered a=2 floor, capacities, and seam certificate"
+              · have hq : 1≤(2:ℤ)^(c-b) := by exact_mod_cast Nat.one_le_two_pow
+                by_cases hbthree : b=3
+                · subst b
+                  have hc4 : 4≤c := by
+                    by_contra ht
+                    have he : c=3 := by omega
+                    subst c; norm_num [exceptionalTriples] at hf
+                  have htf : (2:ℤ)^c=8*2^(c-3) := by simpa using factor c 3 (by omega)
+                  have hqp : 2≤(2:ℤ)^(c-3) := by simpa using lower (c-3) 1 (by omega)
+                  rw [htf]
+                  exact a_two_ordered_small _ hqp
+                · have hbf : (2:ℤ)^b=2*2^(b-1) := by simpa using factor b 1 (by omega)
+                  have htf : (2:ℤ)^c=2*2^(b-1)*2^(c-b) := by rw [factor c b hordered,hbf]
+                  have hhp : 8≤(2:ℤ)^(b-1) := by simpa using lower (b-1) 3 (by omega)
+                  rw [hbf,htf]
+                  exact a_two_ordered _ _ hhp hq
               · by_cases hfour : b=c+2
                 · have hc5 : 5≤c := by
                     by_contra hh
@@ -1172,16 +1599,49 @@ private theorem constructor_certificate (a b c : ℕ)
                     rw [hfour,pow_add,hcf]; norm_num <;> ring
                   rw [hbf,hcf]
                   exact a_two_four_times (c-5)
-                · fail "row 11: s>=8t floor(H_alpha/B), capacity, and Q seam certificate"
+                · have hfar : c+3≤b := by
+                    by_contra ht
+                    have he : b=c+1 := by omega
+                    have hcval : c=3 := by omega
+                    subst c; subst b; norm_num [exceptionalTriples] at hf
+                  have hbf : (2:ℤ)^b=2*2^(b-1) := by simpa using factor b 1 (by omega)
+                  have htf : (2:ℤ)^c=8*2^(c-3) := by simpa using factor c 3 (by omega)
+                  have hq : 1≤(2:ℤ)^(c-3) := by exact_mod_cast Nat.one_le_two_pow
+                  have hh : 32*(2:ℤ)^(c-3)≤2^(b-1) := by
+                    have hp := lower (b-1) (c+2) (by omega)
+                    have he : (2:ℤ)^(c+2)=32*2^(c-3) := by simpa using shift c 3 2 (by omega)
+                    rwa [he] at hp
+                  rw [hbf,htf]
+                  exact a_two_far _ _ hq hh
         · have hwhich : b=2 ∨ c=2 := by omega
           rcases hwhich with hb2|hc2
           · subst b
             by_cases hf : ((2:ℤ)^a,4,(2:ℤ)^c) ∈ exceptionalTriples
             · exact finite_rows _ _ _ hf
             · by_cases hlarge : a<c
-              · fail "row 12: floor(C/u), power-of-two remainder, and physical capacity"
+              · by_cases hnext : c=a+1
+                · have haf : (2:ℤ)^a=8*2^(a-3) := by simpa using factor a 3 (by omega)
+                  have hcf : (2:ℤ)^c=16*2^(a-3) := by rw [hnext,pow_succ,haf]; ring
+                  rw [haf,hcf]
+                  exact b_two_next (a-3)
+                · have haf : (2:ℤ)^a=2*2^(a-1) := by simpa using factor a 1 (by omega)
+                  have hcf : (2:ℤ)^c=2*2^(c-1) := by simpa using factor c 1 (by omega)
+                  have hh : 4≤(2:ℤ)^(a-1) := by simpa using lower (a-1) 2 (by omega)
+                  have hw : 4*(2:ℤ)^(a-1)≤2^(c-1) := by
+                    have hp := lower (c-1) (a+1) (by omega)
+                    have he : (2:ℤ)^(a+1)=4*2^(a-1) := by simpa using shift a 1 1 (by omega)
+                    rwa [he] at hp
+                  rw [haf,hcf]
+                  exact b_two_tall _ _ hh hw
               · by_cases hdiag : a=c
-                · fail "row 13: diagonal floor(H_gamma/u) and first-ear seams"
+                · subst c
+                  have ha4 : 4≤a := by
+                    by_contra ht
+                    have he : a=3 := by omega
+                    subst a; norm_num [exceptionalTriples] at hf
+                  have haf : (2:ℤ)^a=16*2^(a-4) := by simpa using factor a 4 ha4
+                  rw [haf]
+                  exact b_two_diagonal _ (by exact_mod_cast Nat.one_le_two_pow)
                 · by_cases htwice : a=c+1
                   · have hc4 : 4≤c := by
                       by_contra hh
@@ -1192,7 +1652,24 @@ private theorem constructor_certificate (a b c : ℕ)
                       rw [htwice,pow_succ,hcf]; ring
                     rw [haf,hcf]
                     exact b_two_twice (c-4)
-                  · fail "row 16: r>=4t floor, exceptional remainder bounds, and T-ear seams"
+                  · have haf : (2:ℤ)^a=2*2^(a-1) := by simpa using factor a 1 (by omega)
+                    have hcf : (2:ℤ)^c=8*2^(c-3) := by simpa using factor c 3 (by omega)
+                    have hq : 1≤(2:ℤ)^(c-3) := by exact_mod_cast Nat.one_le_two_pow
+                    have hh : 16*(2:ℤ)^(c-3)≤2^(a-1) := by
+                      have hp := lower (a-1) (c+1) (by omega)
+                      have he : (2:ℤ)^(c+1)=16*2^(c-3) := by simpa using shift c 3 1 (by omega)
+                      rwa [he] at hp
+                    have hex : 2≤(2:ℤ)^(c-3) ∨ 32≤(2:ℤ)^(a-1) := by
+                      by_cases hc4 : 4≤c
+                      · left; simpa using lower (c-3) 1 (by omega)
+                      · have hcval : c=3 := by omega
+                        have ha6 : 6≤a := by
+                          by_contra ht
+                          have he : a=5 := by omega
+                          subst a; subst c; norm_num [exceptionalTriples] at hf
+                        right; simpa using lower (a-1) 5 (by omega)
+                    rw [haf,hcf]
+                    exact b_two_far _ _ hq hh hex
           · subst c
             by_cases hf : ((2:ℤ)^a,(2:ℤ)^b,4) ∈ exceptionalTriples
             · exact finite_rows _ _ _ hf
@@ -1260,8 +1737,26 @@ private theorem constructor_certificate (a b c : ℕ)
                             rw [haf,hbf]
                             exact c_two_double_r (b-5)
                           · by_cases hhigh : b+2≤a
-                            · fail "row 28: ceiling mask bound m<r/64, disjointness, and paired seams"
-                            · fail "row 29: V floor bound, W=25r/64 capacity, and paired seams"
+                            · have ha7 : 7≤a := by omega
+                              have haf : (2:ℤ)^a=64*2^(a-6) := by simpa using factor a 6 (by omega)
+                              have hbf : (2:ℤ)^b=4*2^(b-2) := by simpa using factor b 2 (by omega)
+                              have hq : 2≤(2:ℤ)^(a-6) := by simpa using lower (a-6) 1 (by omega)
+                              have hh : 8≤(2:ℤ)^(b-2) := by simpa using lower (b-2) 3 (by omega)
+                              have hr : (2:ℤ)^(b-2)≤4*2^(a-6) := by
+                                have hp := lower (a-2) b (by omega)
+                                have he : (2:ℤ)^(a-2)=16*2^(a-6) := by
+                                  simpa only [show a-2-4=a-6 by omega,show (2:ℤ)^4=16 by norm_num] using factor (a-2) 4 (by omega)
+                                rw [he,hbf] at hp; omega
+                              rw [haf,hbf]
+                              exact c_two_far_r (a-6) _ hq hh hr
+                            · have haf : (2:ℤ)^a=64*2^(a-6) := by simpa using factor a 6 (by omega)
+                              have hbf : (2:ℤ)^b=4*2^(b-2) := by simpa using factor b 2 (by omega)
+                              have hq : 1≤(2:ℤ)^(a-6) := by exact_mod_cast Nat.one_le_two_pow
+                              have hh : 64*(2:ℤ)^(a-6)≤2^(b-2) := by
+                                have hp := lower (b-2) a (by omega)
+                                rwa [haf] at hp
+                              rw [haf,hbf]
+                              exact c_two_far_s _ _ hq hh
 
 /-- One complete physical list, with its literal identity-embedded ear, for all minimum-two gaps. -/
 theorem actualSource_three_negative_minimum_two_joint_lift (a b c : ℕ)
