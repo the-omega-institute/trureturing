@@ -339,7 +339,8 @@ theorem rejected_law : ¬ arena.{u}.Law evaluationRejected := by
   norm_num [probe, Fin.sum_univ_two, Function.update_apply] at hz
 
 def source_registration : Registration arena.{u} (type_of% @avg_pair_apply.{u}) where
-  actual := evaluationActual
+  actual := realize evaluationSignature
+    (fun _ p x => p.2.2 x) (fun e => Empty.elim e)
   bridge := Iff.rfl
   variation := ⟨avg_pair_apply, evaluationRejected, rejected_law⟩
   sensitivity := by
@@ -415,7 +416,8 @@ theorem rejected_law : ¬ arena.{u,v}.Law evaluationRejected := by
   norm_num [l, f, evaluationRejected, realize] at hz
 
 def source_registration : Registration arena.{u,v} (type_of% @avg_map.{u,v}) where
-  actual := evaluationActual
+  actual := realize evaluationSignature
+    (fun _ p x => p.2.2 x) (fun e => Empty.elim e)
   bridge := Iff.rfl
   variation := ⟨avg_map, evaluationRejected, rejected_law⟩
   sensitivity := by
@@ -491,7 +493,8 @@ theorem rejected_law : ¬ arena.{u}.Law evaluationRejected := by
   norm_num [probe, Fin.sum_univ_two, Function.update_apply] at hz
 
 def source_registration : Registration arena.{u} (type_of% @avg_univ.{u}) where
-  actual := evaluationActual
+  actual := realize evaluationSignature
+    (fun _ p x => p.2.2 x) (fun e => Empty.elim e)
   bridge := Iff.rfl
   variation := ⟨avg_univ, evaluationRejected, rejected_law⟩
   sensitivity := by
