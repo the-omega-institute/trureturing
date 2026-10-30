@@ -56,7 +56,8 @@ private def density : DensityState (Fin 2) :=
   ⟨(1/2 : ℝ) • (1 : CStarMatrix (Fin 2) (Fin 2) ℂ),
     smul_nonneg (by norm_num : (0 : ℝ) ≤ 1/2) zero_le_one,
     by
-      rw [Matrix.trace, Fin.sum_univ_two]
+      unfold Matrix.trace
+      rw [Fin.sum_univ_two]
       change ((1/2 : ℝ) • (1 : ℂ)) + ((1/2 : ℝ) • (1 : ℂ)) = 1
       norm_num⟩
 private theorem projection_idem : projection*projection=projection := by
