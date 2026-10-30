@@ -241,17 +241,18 @@ noncomputable instance eulerFintype (n : ℕ) (v : Fin n) : Fintype (Euler n v) 
   unfold Euler
   infer_instance
 
-private theorem full_closed {n : ℕ} (v : Fin n) (w : Euler n v) :
-    w.1 (Fin.last (n * n)) = v := by
-  have ht := telescope (fun i => indicator (w.1 i) v)
-  have hs := Equiv.sum_comp (Equiv.ofBijective (edge w.1) w.2.2)
+private theorem full_closed {n k : ℕ} (v : Fin n) (w : Walk (Fin n) k)
+    (hstart : w 0 = v) (hedge : Function.Bijective (edge w)) :
+    w (Fin.last k) = v := by
+  have ht := telescope (fun i => indicator (w i) v)
+  have hs := Equiv.sum_comp (Equiv.ofBijective (edge w) hedge)
     (fun e : Fin n × Fin n => indicator e.1 v - indicator e.2 v)
   have hz := complete_balance v
-  change (∑ i : Fin (n * n), (indicator (w.1 i.castSucc) v - indicator (w.1 i.succ) v)) = _ at hs
-  have hh : indicator (w.1 0) v - indicator (w.1 (Fin.last (n * n))) v = 0 := by
+  change (∑ i : Fin k, (indicator (w i.castSucc) v - indicator (w i.succ) v)) = _ at hs
+  have hh : indicator (w 0) v - indicator (w (Fin.last k)) v = 0 := by
     linarith
   by_contra hne
-  simp [indicator, w.2.1, hne] at hh
+  simp [indicator, hstart, hne] at hh
 
 private theorem full_covers {n : ℕ} (v : Fin n) (w : Euler n v) :
     Function.Surjective w.1 := by
@@ -286,7 +287,7 @@ noncomputable def longCollisionEquiv (n : ℕ) (v : Fin n) :
       simpa only [appendVertex, Fin.snoc_apply_zero] using p.1.2.1
     · rw [initial_snoc]
       exact p.1.2.2.1
-    · rw [initial_snoc, last_edge_snoc, full_closed v p.1]
+    · rw [initial_snoc, last_edge_snoc, full_closed v p.1.1 p.1.2.1 p.1.2.2]
       exact p.1.2.2.2 (v, p.2)
     · intro a
       obtain ⟨i, hi⟩ := full_covers v p.1 a
@@ -343,18 +344,19 @@ private theorem insert_loop_other {V : Type u} {k : ℕ}
     apply Prod.ext
     · simp only [edge, insertLoop, Fin.val_castSucc]
       rw [dif_pos (by simpa only [Fin.lt_def, Fin.val_castSucc] using Nat.le_of_lt h)]
+      rfl
     · simp only [edge, insertLoop, Fin.val_castSucc, Fin.val_succ]
-      rw [dif_pos (by simpa only [Fin.lt_def, Fin.val_castSucc] using h)]
+      rw [dif_pos (by simp only [Fin.lt_def, Fin.val_castSucc] at h; omega)]
+      rfl
   · rw [Fin.succAbove_of_le_castSucc _ _ (le_of_not_gt h)]
     apply Prod.ext
     · simp only [edge, insertLoop, Fin.val_castSucc, Fin.val_succ]
       rw [dif_neg (by simp only [Fin.lt_def, Fin.val_castSucc] at h; omega)]
       simp only [Nat.add_sub_cancel]
+      rfl
     · simp only [edge, insertLoop, Fin.val_castSucc, Fin.val_succ]
       rw [dif_neg (by simp only [Fin.lt_def, Fin.val_castSucc] at h; omega)]
       congr 1
-      apply Fin.ext
-      simp
 
 private theorem insert_loop_start {V : Type u} {k : ℕ}
     (w : Walk V k) (p : Fin (k + 1)) : insertLoop w p 0 = w 0 := by
@@ -376,33 +378,30 @@ def removeLoop {V : Type u} {k : ℕ} (w : Walk V (k + 1)) (p : Fin (k + 1)) :
 private theorem remove_insert_loop {V : Type u} {k : ℕ}
     (w : Walk V k) (p : Fin (k + 1)) : removeLoop (insertLoop w p) p = w := by
   funext j
-  simp only [removeLoop, insertLoop]
-  split_ifs with h h' h'
-  · rfl
-  · omega
-  · omega
-  · congr 1
-    apply Fin.ext
-    simp
+  by_cases h : j.val ≤ p.val
+  · simp only [removeLoop, h, dite_true, insertLoop]
+  · have hh : ¬ j.val + 1 ≤ p.val := by omega
+    simp only [removeLoop, h, dite_false, insertLoop]
+    rw [dif_neg hh]
+    rfl
 
 private theorem insert_remove_loop {V : Type u} {k : ℕ}
     (w : Walk V (k + 1)) (p : Fin (k + 1))
     (hp : w p.castSucc = w p.succ) : insertLoop (removeLoop w p) p = w := by
   funext j
-  simp only [insertLoop, removeLoop]
-  split_ifs with h h' h'
-  · rfl
-  · omega
-  · have hj : j.val = p.val + 1 := by omega
-    have h₁ : (⟨j.val - 1, by omega⟩ : Fin (k + 2)) = p.castSucc := by
-      apply Fin.ext; simp; omega
-    have h₂ : j = p.succ := by apply Fin.ext; exact hj
-    rw [h₁, h₂]
-    exact hp
-  · congr 1
-    apply Fin.ext
-    simp
-    omega
+  by_cases h : j.val ≤ p.val
+  · simp only [insertLoop, h, dite_true, removeLoop]
+  · by_cases h' : j.val - 1 ≤ p.val
+    · have hj : j.val = p.val + 1 := by omega
+      simp only [insertLoop, h, dite_false, removeLoop]
+      rw [dif_pos h']
+      convert hp using 1 <;> congr 1 <;> apply Fin.ext <;> simp <;> omega
+    · simp only [insertLoop, h, dite_false, removeLoop]
+      rw [dif_neg h']
+      congr 1
+      apply Fin.ext
+      simp
+      omega
 
 private theorem remove_loop_start {V : Type u} {k : ℕ}
     (w : Walk V (k + 1)) (p : Fin (k + 1)) : removeLoop w p 0 = w 0 := by
@@ -449,23 +448,25 @@ private theorem insert_loop_bijective {n : ℕ} (hn : 2 ≤ n) {v a : Fin n}
     (w : MissingLoop n v a) (p : Fin (n * n - 1 + 1)) (hp : w.1 p = a) :
     Function.Bijective (edge (insertLoop w.1 p)) := by
   classical
-  have hsize : n * n - 1 + 1 = n * n := by have : 0 < n * n := by positivity; omega
+  have hsize : n * n - 1 + 1 = n * n := by
+    have : 0 < n * n := by positivity
+    omega
   apply (Fintype.bijective_iff_injective_and_card _).mpr
   refine ⟨?_, by simp only [Fintype.card_fin, Fintype.card_prod]; exact hsize⟩
   intro i j hij
   induction i using Fin.succAboveCases p with
-  | refl =>
+  | x =>
     induction j using Fin.succAboveCases p with
-    | refl => rfl
-    | step j =>
+    | x => rfl
+    | p j =>
       rw [insert_loop_edge, insert_loop_other, hp] at hij
       exact False.elim (missing_loop_no_loop w j hij.symm)
-  | step i =>
+  | p i =>
     induction j using Fin.succAboveCases p with
-    | refl =>
+    | x =>
       rw [insert_loop_edge, insert_loop_other, hp] at hij
       exact False.elim (missing_loop_no_loop w i hij)
-    | step j =>
+    | p j =>
       rw [insert_loop_other, insert_loop_other] at hij
       exact congrArg p.succAbove (w.2.2.1 hij)
 
@@ -492,7 +493,7 @@ private theorem loop_cut_card {n : ℕ} {v a : Fin n} (ha : a ≠ v)
     refine ⟨(edge w.1 i).2, ?_⟩
     intro hz
     apply missing_loop_no_loop w i
-    exact Prod.ext (hi ▸ p.2) hz
+    exact Prod.ext ((congrArg w.1 hi).trans p.2) hz
   have hf : Function.Bijective f := by
     constructor
     · intro p q h
@@ -512,7 +513,7 @@ private theorem loop_cut_card {n : ℕ} {v a : Fin n} (ha : a ≠ v)
         rw [w.2.2.2]
         simp only [Finset.mem_erase, Finset.mem_univ, and_true, Prod.mk.injEq,
           true_and]
-        exact z.2
+        exact fun h => z.2 (congrArg Prod.snd h)
       obtain ⟨i, _, hi⟩ := Finset.mem_image.mp hz
       refine ⟨⟨i.castSucc, congrArg Prod.fst hi⟩, ?_⟩
       apply Subtype.ext
@@ -585,7 +586,9 @@ noncomputable def loopInsertionEquiv {n : ℕ} (hn : 2 ≤ n) (v a : Fin n) :
       exact insert_remove_loop w.1 p
         ((congrArg Prod.fst hp).trans (congrArg Prod.snd hp).symm)
   refine (Equiv.ofBijective f hf).trans (Equiv.cast ?_)
-  have hs : n * n - 1 + 1 = n * n := by have : 0 < n * n := by positivity; omega
+  have hs : n * n - 1 + 1 = n * n := by
+    have : 0 < n * n := by positivity
+    omega
   change {w : Walk (Fin n) (n * n - 1 + 1) //
     w 0 = v ∧ Function.Bijective (edge w)} = Euler n v
   rw [hs]
@@ -600,5 +603,245 @@ theorem loop_count {n : ℕ} (hn : 2 ≤ n) (v a : Fin n) (ha : a ≠ v) :
     {p : Fin (n * n - 1 + 1) // w.1 p = a}) = _
   simp only [Fintype.card_sigma, loop_cut_card ha]
   simp [Nat.mul_comm]
+
+private theorem edge_append {V : Type u} {k : ℕ} (w : Walk V k) (z : V) :
+    edge (appendVertex w z) = Fin.snoc (edge w) (w (Fin.last k), z) := by
+  funext i
+  induction i using Fin.lastCases with
+  | last => simpa only [Fin.snoc_last] using last_edge_snoc w z
+  | cast i =>
+    change (edge (initialWalk (appendVertex w z))) i = _
+    rw [initial_snoc, Fin.snoc_castSucc]
+
+private theorem initial_image {n k : ℕ} (w : Walk (Fin n) (k + 1))
+    (he : Function.Bijective (edge w)) :
+    Finset.univ.image (edge (initialWalk w)) = Finset.univ.erase (edge w (Fin.last k)) := by
+  classical
+  ext e
+  simp only [Finset.mem_image, Finset.mem_univ, true_and, Finset.mem_erase, and_true]
+  constructor
+  · rintro ⟨i, hi⟩ h
+    have hh : edge w i.castSucc = edge w (Fin.last k) := hi.trans h
+    have := he.1 hh
+    exact Fin.castSucc_ne_last i this
+  · intro h
+    obtain ⟨i, hi⟩ := he.2 e
+    induction i using Fin.lastCases with
+    | last => exact False.elim (h hi.symm)
+    | cast i => exact ⟨i, hi⟩
+
+private theorem append_missing {n k : ℕ} (w : Walk (Fin n) k) (z : Fin n)
+    (hs : k + 1 = n * n) (hi : Function.Injective (edge w))
+    (hm : Finset.univ.image (edge w) = Finset.univ.erase (w (Fin.last k), z)) :
+    Function.Bijective (edge (appendVertex w z)) := by
+  classical
+  apply (Fintype.bijective_iff_injective_and_card _).mpr
+  refine ⟨?_, by simpa only [Fintype.card_fin, Fintype.card_prod] using hs⟩
+  rw [edge_append]
+  apply Fin.snoc_injective_of_injective hi
+  rintro ⟨i, he⟩
+  have hh := Finset.mem_image.mpr ⟨i, Finset.mem_univ i, he⟩
+  rw [hm] at hh
+  simpa using hh
+
+/-- Trails whose omitted edge closes their endpoint back to the fixed start. -/
+def ReturnTrail (n : ℕ) (v : Fin n) :=
+  {w : Walk (Fin n) (n * n - 1) // w 0 = v ∧ Function.Injective (edge w) ∧
+    Finset.univ.image (edge w) =
+      Finset.univ.erase (w (Fin.last (n * n - 1)), v)}
+
+noncomputable instance returnTrailFintype (n : ℕ) (v : Fin n) :
+    Fintype (ReturnTrail n v) := by
+  classical
+  unfold ReturnTrail
+  infer_instance
+
+/-- Appending the unique omitted closing edge is a bijection with Euler walks. -/
+noncomputable def returnTrailEquiv {n : ℕ} (hn : 2 ≤ n) (v : Fin n) :
+    ReturnTrail n v ≃ Euler n v := by
+  classical
+  have hs : n * n - 1 + 1 = n * n := by
+    have : 0 < n * n := by positivity
+    omega
+  let E := {w : Walk (Fin n) (n * n - 1 + 1) //
+    w 0 = v ∧ Function.Bijective (edge w)}
+  let e : ReturnTrail n v ≃ E := {
+    toFun := fun w => ⟨appendVertex w.1 v, by
+      simpa only [appendVertex, Fin.snoc_apply_zero] using w.2.1,
+      append_missing w.1 v hs w.2.2.1 w.2.2.2⟩
+    invFun := fun w => ⟨initialWalk w.1, w.2.1,
+      w.2.2.1.comp (Fin.castSucc_injective _), by
+        have hh := initial_image w.1 w.2.2
+        have hc := full_closed v w.1 w.2.1 w.2.2
+        have hl : edge w.1 (Fin.last (n * n - 1)) =
+            (initialWalk w.1 (Fin.last (n * n - 1)), v) := Prod.ext rfl hc
+        rwa [hl] at hh⟩
+    left_inv := fun w => Subtype.ext (initial_snoc _ _)
+    right_inv := fun w => by
+      apply Subtype.ext
+      have hc := full_closed v w.1 w.2.1 w.2.2
+      change Fin.snoc (initialWalk w.1) v = w.1
+      exact (congrArg (Fin.snoc (initialWalk w.1)) hc.symm).trans
+        (Fin.snoc_init_self w.1) }
+  refine e.trans (Equiv.cast ?_)
+  change {w : Walk (Fin n) (n * n - 1 + 1) //
+    w 0 = v ∧ Function.Bijective (edge w)} = Euler n v
+  rw [hs]
+  rfl
+
+private theorem collision_append {n : ℕ} (hn : 2 ≤ n) (v : Fin n)
+    (w : Walk (Fin n) (n * n - 1)) (z : Fin n) (hs : w 0 = v)
+    (hi : Function.Injective (edge w))
+    (hr : (w (Fin.last (n * n - 1)), z) ∈ Set.range (edge w)) :
+    Collision v (appendVertex w z) := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · simpa only [appendVertex, Fin.snoc_apply_zero] using hs
+  · rwa [initial_snoc]
+  · rwa [initial_snoc, last_edge_snoc]
+  · intro a
+    obtain ⟨i, hi⟩ := (prefix_structure hn w hi).1 a
+    exact ⟨i.castSucc, (Fin.snoc_castSucc
+      (α := fun _ : Fin (n * n - 1 + 2) => Fin n) z w i).trans hi⟩
+
+private theorem append_injective {V : Type u} {k : ℕ}
+    {w t : Walk V k} {z y : V} (h : appendVertex w z = appendVertex t y) :
+    w = t ∧ z = y := by
+  constructor
+  · simpa only [initial_snoc] using congrArg initialWalk h
+  · simpa only [appendVertex, Fin.snoc_last] using
+      congrArg (fun s => s (Fin.last (k + 1))) h
+
+private abbrev ShortData (n : ℕ) (v : Fin n) :=
+  (ReturnTrail n v × {z : Fin n // z ≠ v}) ⊕
+    ((Σ a : {a : Fin n // a ≠ v}, MissingLoop n v a.1) × Fin n)
+
+private noncomputable def shortDataMap {n : ℕ} (hn : 2 ≤ n) (v : Fin n) :
+    ShortData n v → {w : Walk (Fin n) (n * n - 1 + 1) // Collision v w}
+  | .inl (w, z) => ⟨appendVertex w.1 z.1, collision_append hn v w.1 z.1
+      w.2.1 w.2.2.1 (by
+        have hh : (w.1 (Fin.last (n * n - 1)), z.1) ∈
+            Finset.univ.image (edge w.1) := by
+          rw [w.2.2.2]
+          simp only [Finset.mem_erase, Finset.mem_univ, and_true]
+          exact fun h => z.2 (congrArg Prod.snd h)
+        obtain ⟨i, _, hi⟩ := Finset.mem_image.mp hh
+        exact ⟨i, hi⟩)⟩
+  | .inr (⟨a, w⟩, z) => ⟨appendVertex w.1 z, collision_append hn v w.1 z
+      w.2.1 w.2.2.1 (by
+        have hh : (w.1 (Fin.last (n * n - 1)), z) ∈
+            Finset.univ.image (edge w.1) := by
+          rw [w.2.2.2, missing_loop_closed w]
+          simp only [Finset.mem_erase, Finset.mem_univ, and_true]
+          exact fun h => a.2 (congrArg Prod.fst h).symm
+        obtain ⟨i, _, hi⟩ := Finset.mem_image.mp hh
+        exact ⟨i, hi⟩)⟩
+
+private theorem erased_edge_eq {n : ℕ} {e f : Fin n × Fin n}
+    (h : Finset.univ.erase e = Finset.univ.erase f) : e = f :=
+  (Finset.erase_inj Finset.univ (Finset.mem_univ e)).mp h
+
+/-- The two omitted-edge classes retain every ordered prefix and final choice. -/
+private noncomputable def shortDataEquiv {n : ℕ} (hn : 2 ≤ n) (v : Fin n) :
+    ShortData n v ≃ {w : Walk (Fin n) (n * n - 1 + 1) // Collision v w} := by
+  classical
+  apply Equiv.ofBijective (shortDataMap hn v)
+  constructor
+  · intro x y h
+    cases x with
+    | inl x =>
+      rcases x with ⟨w, z⟩
+      cases y with
+      | inl y =>
+        rcases y with ⟨t, q⟩
+        have hh := append_injective (congrArg Subtype.val h)
+        exact congrArg Sum.inl (Prod.ext (Subtype.ext hh.1) (Subtype.ext hh.2))
+      | inr y =>
+        rcases y with ⟨⟨a, t⟩, q⟩
+        have hh := append_injective (congrArg Subtype.val h)
+        have hmi := congrArg (fun s => Finset.univ.image (edge s)) hh.1
+        have hm := w.2.2.2.symm.trans (hmi.trans t.2.2.2)
+        have he := erased_edge_eq hm
+        exact False.elim (a.2 (congrArg Prod.snd he).symm)
+    | inr x =>
+      rcases x with ⟨⟨a, w⟩, z⟩
+      cases y with
+      | inl y =>
+        rcases y with ⟨t, q⟩
+        have hh := append_injective (congrArg Subtype.val h)
+        have hmi := congrArg (fun s => Finset.univ.image (edge s)) hh.1
+        have hm := w.2.2.2.symm.trans (hmi.trans t.2.2.2)
+        have he := erased_edge_eq hm
+        exact False.elim (a.2 (congrArg Prod.snd he))
+      | inr y =>
+        rcases y with ⟨⟨b, t⟩, q⟩
+        have hh := append_injective (congrArg Subtype.val h)
+        have hmi := congrArg (fun s => Finset.univ.image (edge s)) hh.1
+        have hm := w.2.2.2.symm.trans (hmi.trans t.2.2.2)
+        have hab : a = b := Subtype.ext (congrArg Prod.fst (erased_edge_eq hm))
+        subst b
+        have hwt : w = t := Subtype.ext hh.1
+        subst t
+        have hzq := hh.2
+        subst q
+        rfl
+  · intro w
+    obtain ⟨_, a, b, hm, hc⟩ := collision_prefix_structure hn v w.1 w.2
+    let z := w.1 (Fin.last (n * n - 1 + 1))
+    have hw : appendVertex (initialWalk w.1) z = w.1 := Fin.snoc_init_self w.1
+    rcases hc with ⟨hb, ha⟩ | ⟨hab, hav, hend⟩
+    · subst b
+      let t : ReturnTrail n v := ⟨initialWalk w.1, w.2.1, w.2.2.1, by
+        simpa only [ha] using hm⟩
+      have hz : z ≠ v := by
+        intro hz
+        obtain ⟨i, hi⟩ := w.2.2.2.1
+        have hh : (a, v) ∈ Finset.univ.image (edge (initialWalk w.1)) := by
+          refine Finset.mem_image.mpr ⟨i, Finset.mem_univ i, ?_⟩
+          rw [← hw, last_edge_snoc] at hi
+          simpa only [ha, hz, initial_snoc] using hi
+        rw [hm] at hh
+        simpa using hh
+      exact ⟨.inl (t, ⟨z, hz⟩), Subtype.ext hw⟩
+    · subst b
+      let t : MissingLoop n v a := ⟨initialWalk w.1, w.2.1, w.2.2.1, hm⟩
+      exact ⟨.inr (⟨⟨a, hav⟩, t⟩, z), Subtype.ext hw⟩
+
+private theorem missing_loop_sum {n : ℕ} (hn : 2 ≤ n) (v : Fin n) :
+    (∑ a : {a : Fin n // a ≠ v}, Fintype.card (MissingLoop n v a.1)) =
+      eulerCount n v := by
+  classical
+  have hmul : (n - 1) *
+      (∑ a : {a : Fin n // a ≠ v}, Fintype.card (MissingLoop n v a.1)) =
+      (n - 1) * eulerCount n v := by
+    rw [Finset.mul_sum]
+    calc
+      _ = ∑ _a : {a : Fin n // a ≠ v}, eulerCount n v :=
+        Finset.sum_congr rfl (fun a _ => (loop_count hn v a.1 a.2).symm)
+      _ = _ := by simp [Nat.mul_comm]
+  exact Nat.eq_of_mul_eq_mul_left (by omega) hmul
+
+/-- The numerator counts both possible omitted-edge classes on the source carrier. -/
+theorem short_count {n : ℕ} (hn : 2 ≤ n) (v : Fin n) :
+    collisionCount n v (n * n) = (2 * n - 1) * eulerCount n v := by
+  classical
+  have hs : n * n - 1 + 1 = n * n := by
+    have : 0 < n * n := by positivity
+    omega
+  have hc : collisionCount n v (n * n) = Fintype.card (ShortData n v) := by
+    conv_lhs => rw [← hs]
+    change Fintype.card {e : OrderedEdges (Fin n) v (n * n - 1) //
+      SourceCollision e} = _
+    exact (Fintype.card_congr (sourceCollisionEquiv v (n * n - 1))).symm.trans
+      (Fintype.card_congr (shortDataEquiv hn v)).symm
+  rw [hc]
+  change Fintype.card ((ReturnTrail n v × {z : Fin n // z ≠ v}) ⊕
+    ((Σ a : {a : Fin n // a ≠ v}, MissingLoop n v a.1) × Fin n)) = _
+  simp only [Fintype.card_sum, Fintype.card_prod, Fintype.card_sigma, Fintype.card_fin]
+  rw [Fintype.card_congr (returnTrailEquiv hn v), ← eulerCount]
+  have hz : Fintype.card {z : Fin n // z ≠ v} = n - 1 := by simp
+  rw [hz, missing_loop_sum hn v]
+  have htwo : 2 * n - 1 = (n - 1) + n := by omega
+  rw [htwo, Nat.add_mul]
+  simp only [Nat.mul_comm]
 
 end D5.S3.Combinatorics.Graph.Walks.CollisionPrefix
