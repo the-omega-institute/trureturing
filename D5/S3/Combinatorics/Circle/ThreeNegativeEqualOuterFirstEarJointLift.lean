@@ -5,11 +5,10 @@
    anchors: [mathlib/module/Mathlib.Data.List.FinRange]
    utility: none
    digest: Complementary equal-outer physical orders with literal fresh-first insertion. -/
-module
-import all D5.S3.Combinatorics.Circle.ThreeBitSource
-import all D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
-public import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterSourceBridge
-public import D5.S3.Combinatorics.Circle.RunFirstEarTransport
+import Mathlib.Data.Nat.Bitwise
+import Mathlib.Combinatorics.Colex
+import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterSourceBridge
+import D5.S3.Combinatorics.Circle.RunFirstEarTransport
 
 /-! One common permutation for the two actual centered source tables. -/
 
@@ -20,6 +19,203 @@ namespace D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterFirstEarJointLift
 
 open SourceWidth PeriodicShortening RunFirstEarTransport
 open scoped BigOperators
+
+private theorem mask_complement (u m n : ℕ) (h : m + n = 2 ^ u - 1) :
+    Disjoint m.bitIndices.toFinset n.bitIndices.toFinset ∧
+      m.bitIndices.toFinset ∪ n.bitIndices.toFinset = Finset.range u := by
+  classical
+  have hm : m < 2 ^ u := by
+    have hp : 0 < 2 ^ u := by positivity
+    omega
+  have hsub : m.bitIndices.toFinset ⊆ Finset.range u := by
+    intro i hi
+    have hpow := Nat.two_pow_le_of_mem_bitIndices (List.mem_toFinset.mp hi)
+    apply Finset.mem_range.mpr
+    by_contra h'
+    have hle := Nat.pow_le_pow_right (by decide : 0 < 2) (show u ≤ i by omega)
+    omega
+  let A := Finset.range u \ m.bitIndices.toFinset
+  have hdis : Disjoint A m.bitIndices.toFinset := Finset.disjoint_left.mpr
+    (fun i hi hmi => (Finset.mem_sdiff.mp hi).2 hmi)
+  have hfull : A ∪ m.bitIndices.toFinset = Finset.range u := Finset.sdiff_union_of_subset hsub
+  have hs := Finset.sum_union hdis (f := fun i : ℕ => 2 ^ i)
+  have hsum : ∑ i ∈ Finset.range u, 2 ^ i = 2 ^ u - 1 := by
+    simpa using Nat.geomSum_eq (by decide : 2 ≤ 2) u
+  rw [hfull, Finset.sum_toFinset_bitIndices_two_pow, hsum] at hs
+  have hA : n.bitIndices.toFinset = A := by
+    apply Finset.geomSum_injective (by decide : 2 ≤ (2 : ℕ))
+    dsimp only
+    rw [Finset.sum_toFinset_bitIndices_two_pow]
+    omega
+  rw [hA]
+  exact ⟨hdis.symm, by simpa only [Finset.union_comm] using hfull⟩
+
+private def mask_labels (len off x : ℕ) (hx : x < 2 ^ len) : Finset ℕ :=
+  (DyadicPrefix.bitSubset len x hx).image (fun i => off + i.val)
+
+private theorem mask_labels_mem (len off x i : ℕ) (hx : x < 2 ^ len) :
+    i ∈ mask_labels len off x hx ↔
+      ∃ e : ℕ, e < len ∧ x.testBit e = true ∧ off + e = i := by
+  classical
+  constructor
+  · intro hi
+    obtain ⟨e, he, rfl⟩ := Finset.mem_image.mp hi
+    exact ⟨e, e.isLt, (DyadicPrefix.bit_subset_mem hx).mp he, rfl⟩
+  · rintro ⟨e, he, hb, rfl⟩
+    exact Finset.mem_image.mpr ⟨⟨e, he⟩, (DyadicPrefix.bit_subset_mem hx).mpr hb, rfl⟩
+
+private theorem mask_labels_bound {len off x i : ℕ} {hx : x < 2 ^ len}
+    (hi : i ∈ mask_labels len off x hx) : off ≤ i ∧ i < off + len := by
+  obtain ⟨e, he, _, hi⟩ := (mask_labels_mem len off x i hx).mp hi
+  omega
+
+private theorem mask_labels_disjoint {len off x y : ℕ}
+    {hx : x < 2 ^ len} {hy : y < 2 ^ len}
+    (hxy : Disjoint x.bitIndices.toFinset y.bitIndices.toFinset) :
+    Disjoint (mask_labels len off x hx) (mask_labels len off y hy) := by
+  apply Finset.disjoint_left.mpr
+  intro i hi hj
+  obtain ⟨e, he, hb, hei⟩ := (mask_labels_mem len off x i hx).mp hi
+  obtain ⟨e', he', hb', he'i⟩ := (mask_labels_mem len off y i hy).mp hj
+  have heq : e' = e := by omega
+  subst e'
+  exact Finset.disjoint_left.mp hxy (by simpa using Nat.mem_bitIndices.mpr hb)
+    (by simpa using Nat.mem_bitIndices.mpr hb')
+
+private theorem mask_labels_sum (len off x : ℕ) (hx : x < 2 ^ len)
+    (f : ℕ → ℤ) (A : ℤ) (hf : ∀ e < len, f (off + e) = (2 : ℤ) ^ e * A) :
+    ∑ i ∈ mask_labels len off x hx, f i = (x : ℤ) * A := by
+  classical
+  have hinj : Function.Injective (fun i : Fin len => off + i.val) := by
+    intro i j hij
+    apply Fin.ext
+    change off + i.val = off + j.val at hij
+    omega
+  unfold mask_labels
+  rw [Finset.sum_image (fun i _ j _ hij => hinj hij)]
+  simp_rw [hf _ (Fin.isLt _)]
+  rw [← Finset.sum_mul]
+  have hs : (∑ i ∈ DyadicPrefix.bitSubset len x hx, (2 : ℤ) ^ i.val) = (x : ℤ) := by
+    exact_mod_cast DyadicPrefix.bit_subset_sum hx
+  rw [hs]
+
+/-- Disjoint physical supports, including three separate event labels, exhaust the whole word. -/
+private theorem labelled_permutation (k av aw au : ℕ) (F Q : Finset ℕ)
+    (hF : F ⊆ Finset.range k) (hQ : Q ⊆ Finset.range k)
+    (hFQ : Disjoint F Q)
+    (hne : av ≠ aw ∧ av ≠ au ∧ aw ≠ au)
+    (hneg : av < k ∧ aw < k ∧ au < k)
+    (hFn : ∀ i ∈ F, i ≠ av ∧ i ≠ aw ∧ i ≠ au)
+    (hQn : ∀ i ∈ Q, i ≠ av ∧ i ≠ aw ∧ i ≠ au) :
+    let G := Finset.range k \ (F ∪ Q ∪ {av, aw, au})
+    (F.toList ++ av :: Q.toList ++ aw :: G.toList ++ [au]).Perm (List.range k) := by
+  classical
+  let E : Finset ℕ := ⟨(([av, aw, au] : List ℕ) : Multiset ℕ), by
+    simpa using (show ([av, aw, au] : List ℕ).Nodup by simp [hne.1, hne.2.1, hne.2.2])⟩
+  have hE (i : ℕ) : i ∈ E ↔ i = av ∨ i = aw ∨ i = au := by simp [E]
+  have hEs : E = {av, aw, au} := by ext i; simp [hE]
+  let G := Finset.range k \ (F ∪ Q ∪ E)
+  have hG : G = Finset.range k \ (F ∪ Q ∪ {av, aw, au}) := by dsimp only [G]; rw [hEs]
+  have hFG : Disjoint (F.disjUnion Q hFQ) G := by
+    apply Finset.disjoint_left.mpr
+    intro i hi hj
+    have hi' : i ∈ F ∪ Q ∪ E := by
+      simp only [Finset.mem_union]
+      have hh := Finset.mem_disjUnion.mp hi
+      tauto
+    exact (Finset.mem_sdiff.mp hj).2 hi'
+  have hNE : Disjoint ((F.disjUnion Q hFQ).disjUnion G hFG) E := by
+    apply Finset.disjoint_left.mpr
+    intro i hi hj
+    have he := (hE i).mp hj
+    simp only [Finset.mem_disjUnion] at hi
+    rcases hi with (hi | hi) | hi
+    · obtain ⟨ha, hb, hc⟩ := hFn i hi
+      tauto
+    · obtain ⟨ha, hb, hc⟩ := hQn i hi
+      tauto
+    · exact (Finset.mem_sdiff.mp hi).2 (Finset.mem_union_right _ hj)
+  let T := ((F.disjUnion Q hFQ).disjUnion G hFG).disjUnion E hNE
+  have hT : T = Finset.range k := by
+    ext i
+    have hFi : i ∈ F → i ∈ Finset.range k := fun hi => hF hi
+    have hQi : i ∈ Q → i ∈ Finset.range k := fun hi => hQ hi
+    have hEi : i ∈ E → i ∈ Finset.range k := by
+      intro hi
+      rcases (hE i).mp hi with rfl | rfl | rfl <;> exact Finset.mem_range.mpr (by omega)
+    simp only [T, G, Finset.mem_disjUnion, Finset.mem_sdiff, Finset.mem_union]
+    tauto
+  rw [← hG]
+  apply Multiset.coe_eq_coe.mp
+  have hs :
+      ((F.toList ++ av :: Q.toList ++ aw :: G.toList ++ [au] : List ℕ) : Multiset ℕ) =
+        T.val := by
+    change (F.toList : Multiset ℕ) + ({av} + (Q.toList : Multiset ℕ)) +
+      ({aw} + (G.toList : Multiset ℕ)) + {au} =
+        F.val + Q.val + G.val + ({av} + {aw} + {au})
+    simp only [Finset.coe_toList]
+    ac_rfl
+  rw [hs, hT]
+  rfl
+
+private def label (k : ℕ) (hk : 0 < k) (i : ℕ) : Fin k :=
+  ⟨i % k, Nat.mod_lt i hk⟩
+
+private theorem lift_order (k t : ℕ) (hk : 0 < k) (l : List ℕ)
+    (hp : l.Perm (List.range k))
+    (hs : InStrip (fun i => centered (modulus k) ((2 : ℤ) ^ i * t))
+      (modulus k / 2) 0 l)
+    (hz : ((List.range k).map (fun i => centered (modulus k) ((2 : ℤ) ^ i * t))).sum = 0) :
+    OriginalOrder k t (l.map (label k hk)) := by
+  let f := fun i : ℕ => centered (modulus k) ((2 : ℤ) ^ i * t)
+  have hbase : (List.range k).map (label k hk) = List.finRange k := by
+    apply List.ext_getElem
+    · simp
+    · intro i hi hi'
+      apply Fin.ext
+      simp only [List.getElem_map, List.getElem_range, List.getElem_finRange, label]
+      exact Nat.mod_eq_of_lt (by simpa using hi)
+  have hvalue : ∀ i ∈ l, actualSource k t (label k hk i) = f i := by
+    intro i hi
+    have hib : i < k := List.mem_range.mp (hp.mem_iff.mp hi)
+    simp only [actualSource, label, Nat.mod_eq_of_lt hib, f]
+  have hm : (l.map (label k hk)).map (actualSource k t) = l.map f := by
+    rw [List.map_map]
+    exact List.map_congr_left hvalue
+  refine ⟨by rw [← hbase]; exact hp.map _, ?_, ?_⟩
+  · rw [hm]
+    exact (hp.map f).sum_eq.trans hz
+  · intro n
+    have hv : ∀ i ∈ l.take n, actualSource k t (label k hk i) = f i :=
+      fun i hi => hvalue i (List.mem_of_mem_take hi)
+    have hm' := List.map_congr_left hv
+    have hn := inStrip_prefix hs n
+    simpa only [← List.map_take, List.map_map, Function.comp_def, hm', zero_add,
+      Set.mem_Icc] using hn
+
+private theorem marked_word (k cut : ℕ) (hk : 0 < k) (P R : List ℕ)
+    (hlen : P.length = cut) (hp : (P ++ R).Perm (List.range k)) :
+    earWord k ((P ++ R).map (label k hk)) cut =
+      (P ++ k :: R).map (label (k + 1) (by omega)) := by
+  have hb : ∀ i ∈ P ++ R, i < k := fun i hi => List.mem_range.mp (hp.mem_iff.mp hi)
+  have hcast (L : List ℕ) (hL : ∀ i ∈ L, i < k) :
+      (L.map (label k hk)).map Fin.castSucc =
+        L.map (label (k + 1) (by omega)) := by
+    rw [List.map_map]
+    apply List.map_congr_left
+    intro i hi
+    apply Fin.ext
+    simp only [Function.comp_def, label, Fin.val_castSucc, Nat.mod_eq_of_lt (hL i hi),
+      Nat.mod_eq_of_lt (show i < k + 1 from by have := hL i hi; omega)]
+  have hP := hcast P (fun i hi => hb i (List.mem_append_left R hi))
+  have hR := hcast R (fun i hi => hb i (List.mem_append_right P hi))
+  have hl : (P.map (label k hk)).length = cut := by simpa using hlen
+  have hlast : label (k + 1) (by omega) k = Fin.last k := by
+    apply Fin.ext
+    simp [label, Nat.mod_eq_of_lt (show k < k + 1 by omega)]
+  simp only [earWord, List.map_append, ← hl, List.take_left, List.drop_left, hP, hR,
+    List.map_cons, List.map_append, hlast, List.append_assoc, List.singleton_append, List.cons_append, List.nil_append]
+
 
 private theorem paired_chains (a b : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b) :
     let r : ℤ := 2 ^ a
@@ -173,19 +369,19 @@ private theorem complementary_bits (len : ℕ) (R p t : ℤ) (hR : R = 2 ^ len)
   have hpow : (((2 : ℕ) ^ len : ℕ) : ℤ) = R := by push_cast; exact hR.symm
   have hpos : 0 < (2 : ℕ) ^ len := by positivity
   have hsum : p.toNat + t.toNat = 2 ^ len - 1 := by omega
-  exact (ThreeBitSource.mask_complement len p.toNat t.toNat hsum).1
+  exact (mask_complement len p.toNat t.toNat hsum).1
 
 private theorem high_bit_disjoint (len : ℕ) (S t : ℤ) (hS : S = 2 ^ len)
     (ht : 0 ≤ t) (hlt : t < S) :
     Disjoint S.toNat.bitIndices.toFinset t.toNat.bitIndices.toFinset := by
   have hS0 : 0 ≤ S := by rw [hS]; positivity
   have hs : S.toNat = 2 ^ len := by
-    have hh : (S.toNat : ℤ) = S := Int.toNat_of_nonneg hS0
-    rw [hS] at hh
-    exact_mod_cast hh
+    have hh : S = (((2 : ℕ) ^ len : ℕ) : ℤ) := by
+      simpa only [Nat.cast_pow, Nat.cast_ofNat] using hS
+    rw [hh, Int.toNat_natCast]
   rw [hs, Nat.bitIndices_two_pow]
-  simp only [List.toFinset_cons, List.toFinset_nil, Finset.insert_empty_eq,
-    Finset.disjoint_singleton_left]
+  change Disjoint ({len} : Finset ℕ) t.toNat.bitIndices.toFinset
+  rw [Finset.disjoint_singleton_left]
   intro hi
   have hp := Nat.two_pow_le_of_mem_bitIndices (List.mem_toFinset.mp hi)
   have ht' : (t.toNat : ℤ) = t := Int.toNat_of_nonneg ht
@@ -229,6 +425,7 @@ private def adjacent_choice (e : ℕ) (tau : ℤ) (ht : 1 ≤ tau)
       (try constructor) <;> nlinarith
 
 set_option maxHeartbeats 4000000 in
+-- The paired integer source and mask expressions require a larger elaboration budget.
 private def large_choice (len : ℕ) (R S q : ℤ) (hS : 4 ≤ S) (hq : 4 ≤ q)
     (hRS : R = q * S) (hR : R = 2 ^ len) : Choice R S := by
   let v := 1 + 2 * R + 4 * R * S
@@ -265,19 +462,29 @@ private def large_choice (len : ℕ) (R S q : ℤ) (hS : 4 ≤ S) (hq : 4 ≤ q)
     have hpos := mul_nonneg (show 0 ≤ R by omega) (show 0 ≤ 2 * R - 4 * S - 1 by omega)
     dsimp [v] at hd
     nlinarith
-  have he0 : 0 ≤ e := by dsimp [e]; positivity
+  have he0 : 0 ≤ e := by
+    have hh := mul_nonneg (show 0 ≤ 2 * S + 1 by omega) (show 0 ≤ R - 3 * q by omega)
+    have hp : 0 ≤ 2 * R * S := by positivity
+    dsimp only [e]
+    omega
   have heB : e ≤ 4 * R ^ 2 + 2 * R := by
     have he1 : e ≤ 3 * v - 2 := by
       dsimp [e, v] at *
       nlinarith [mul_nonneg (show 0 ≤ 2 * S + 1 by omega) (show 0 ≤ 3 * q by omega)]
     have hgap : 3 * R ≤ R * (R - 3 * S - 1) :=
-      mul_le_mul_of_nonneg_left (show 3 ≤ R - 3 * S - 1 by omega) (by omega)
+      mul_le_mul_of_nonneg_left (show 3 ≤ R - 3 * S - 1 by omega) (show 0 ≤ R by omega)
     dsimp [v] at he1
     nlinarith
-  refine { pu := 0, pv := S - 3, pw := 3 * q - 1,
-    tu := n - 1, tv := 0, tw := R - 3 * q,
-    bounds := by omega,
-    orthogonal := ?_, good := ?_ }
+  refine {
+    pu := 0
+    pv := S - 3
+    pw := 3 * q - 1
+    tu := n - 1
+    tv := 0
+    tw := R - 3 * q
+    bounds := by omega
+    orthogonal := ?_
+    good := ?_ }
   · exact ⟨by simp, by simp,
       complementary_bits len R _ _ hR (by omega) (by omega) (by ring)⟩
   · dsimp [margins]
@@ -311,6 +518,7 @@ private def large_choice (len : ℕ) (R S q : ℤ) (hS : 4 ≤ S) (hq : 4 ≤ q)
     · nlinarith only [heqE, heB]
 
 set_option maxHeartbeats 4000000 in
+-- The paired integer source and mask expressions require a larger elaboration budget.
 private def small_choice (R : ℤ) (hR : 16 ≤ R) : Choice R 2 := by
   let v := 1 + 10 * R
   let H := 8 * R ^ 2 - 5 * R - 1
@@ -330,8 +538,16 @@ private def small_choice (R : ℤ) (hR : 16 ≤ R) : Choice R 2 := by
     nlinarith
   have hdB : d ≤ 2 * R ^ 2 + R := by nlinarith
   have heB : 1 + 5 * R + 2 * d ≤ 4 * R ^ 2 + 2 * R := by nlinarith
-  refine { pu := 0, pv := 0, pw := R - 1, tu := z, tv := 0, tw := 0,
-    bounds := by omega, orthogonal := by simp, good := ?_ }
+  refine {
+    pu := 0
+    pv := 0
+    pw := R - 1
+    tu := z
+    tv := 0
+    tw := 0
+    bounds := by omega
+    orthogonal := by simp
+    good := ?_ }
   dsimp [margins]
   have heq : (8 * R ^ 2 * 2 - 2 * R * 2 - R - 1) -
       2 * (1 + 2 * R + 4 * R * 2) * z = 1 + 5 * R + 2 * d := by
@@ -351,9 +567,9 @@ private def small_choice (R : ℤ) (hR : 16 ≤ R) : Choice R 2 := by
 
 private def packet (a b u v w : ℕ) (hu : u < 2 ^ (a - 1))
     (hv : v < 2 ^ (b - 1)) (hw : w < 2 ^ (a - 1)) : Finset ℕ :=
-  ThreeBitSource.mask_labels (a - 1) 0 u hu ∪
-    ThreeBitSource.mask_labels (b - 1) a v hv ∪
-    ThreeBitSource.mask_labels (a - 1) (a + b) w hw
+  mask_labels (a - 1) 0 u hu ∪
+    mask_labels (b - 1) a v hv ∪
+    mask_labels (a - 1) (a + b) w hw
 
 private theorem packet_bound (a b u v w : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
     (hu : u < 2 ^ (a - 1)) (hv : v < 2 ^ (b - 1)) (hw : w < 2 ^ (a - 1))
@@ -361,7 +577,7 @@ private theorem packet_bound (a b u v w : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
     i < a + b + a ∧ i ≠ a - 1 ∧ i ≠ a + b - 1 ∧ i ≠ a + b + a - 1 := by
   simp only [packet, Finset.mem_union] at hi
   rcases hi with (hi | hi) | hi <;>
-    have hi' := ThreeBitSource.mask_labels_bound hi <;> omega
+    have hi' := mask_labels_bound hi <;> omega
 
 private theorem packet_sum (a b u v w : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
     (hu : u < 2 ^ (a - 1)) (hv : v < 2 ^ (b - 1)) (hw : w < 2 ^ (a - 1))
@@ -370,33 +586,33 @@ private theorem packet_sum (a b u v w : ℕ) (ha : 2 ≤ a) (hb : 2 ≤ b)
     (hV : ∀ i < b - 1, f (a + i) = (2 : ℤ) ^ i * V)
     (hW : ∀ i < a - 1, f (a + b + i) = (2 : ℤ) ^ i * W) :
     ∑ i ∈ packet a b u v w hu hv hw, f i = u * U + v * V + w * W := by
-  have hUV : Disjoint (ThreeBitSource.mask_labels (a - 1) 0 u hu)
-      (ThreeBitSource.mask_labels (b - 1) a v hv) := by
+  have hUV : Disjoint (mask_labels (a - 1) 0 u hu)
+      (mask_labels (b - 1) a v hv) := by
     apply Finset.disjoint_left.mpr
     intro i hi hj
-    have hi' := ThreeBitSource.mask_labels_bound hi
-    have hj' := ThreeBitSource.mask_labels_bound hj
+    have hi' := mask_labels_bound hi
+    have hj' := mask_labels_bound hj
     omega
-  have hUW : Disjoint (ThreeBitSource.mask_labels (a - 1) 0 u hu)
-      (ThreeBitSource.mask_labels (a - 1) (a + b) w hw) := by
+  have hUW : Disjoint (mask_labels (a - 1) 0 u hu)
+      (mask_labels (a - 1) (a + b) w hw) := by
     apply Finset.disjoint_left.mpr
     intro i hi hj
-    have hi' := ThreeBitSource.mask_labels_bound hi
-    have hj' := ThreeBitSource.mask_labels_bound hj
+    have hi' := mask_labels_bound hi
+    have hj' := mask_labels_bound hj
     omega
-  have hVW : Disjoint (ThreeBitSource.mask_labels (b - 1) a v hv)
-      (ThreeBitSource.mask_labels (a - 1) (a + b) w hw) := by
+  have hVW : Disjoint (mask_labels (b - 1) a v hv)
+      (mask_labels (a - 1) (a + b) w hw) := by
     apply Finset.disjoint_left.mpr
     intro i hi hj
-    have hi' := ThreeBitSource.mask_labels_bound hi
-    have hj' := ThreeBitSource.mask_labels_bound hj
+    have hi' := mask_labels_bound hi
+    have hj' := mask_labels_bound hj
     omega
   unfold packet
   rw [Finset.sum_union (Finset.disjoint_union_left.mpr ⟨hUW, hVW⟩),
     Finset.sum_union hUV]
-  rw [ThreeBitSource.mask_labels_sum (a - 1) 0 u hu f U (by simpa using hU),
-    ThreeBitSource.mask_labels_sum (b - 1) a v hv f V hV,
-    ThreeBitSource.mask_labels_sum (a - 1) (a + b) w hw f W hW]
+  rw [mask_labels_sum (a - 1) 0 u hu f U (by simpa using hU),
+    mask_labels_sum (b - 1) a v hv f V hV,
+    mask_labels_sum (a - 1) (a + b) w hw f W hW]
 
 private theorem packet_disjoint (a b u v w x y z : ℕ)
     (hu : u < 2 ^ (a - 1)) (hv : v < 2 ^ (b - 1)) (hw : w < 2 ^ (a - 1))
@@ -409,15 +625,30 @@ private theorem packet_disjoint (a b u v w x y z : ℕ)
   intro i hi hj
   simp only [packet, Finset.mem_union] at hi hj
   rcases hi with (hi | hi) | hi <;> rcases hj with (hj | hj) | hj
-  all_goals first
-    | exact Finset.disjoint_left.mp (ThreeBitSource.mask_labels_disjoint hbits.1) hi hj
-    | exact Finset.disjoint_left.mp (ThreeBitSource.mask_labels_disjoint hbits.2.1) hi hj
-    | exact Finset.disjoint_left.mp (ThreeBitSource.mask_labels_disjoint hbits.2.2) hi hj
-    | have hi' := ThreeBitSource.mask_labels_bound hi
-      have hj' := ThreeBitSource.mask_labels_bound hj
-      omega
+  · exact Finset.disjoint_left.mp (mask_labels_disjoint hbits.1) hi hj
+  · have hi' := mask_labels_bound hi
+    have hj' := mask_labels_bound hj
+    omega
+  · have hi' := mask_labels_bound hi
+    have hj' := mask_labels_bound hj
+    omega
+  · have hi' := mask_labels_bound hi
+    have hj' := mask_labels_bound hj
+    omega
+  · exact Finset.disjoint_left.mp (mask_labels_disjoint hbits.2.1) hi hj
+  · have hi' := mask_labels_bound hi
+    have hj' := mask_labels_bound hj
+    omega
+  · have hi' := mask_labels_bound hi
+    have hj' := mask_labels_bound hj
+    omega
+  · have hi' := mask_labels_bound hi
+    have hj' := mask_labels_bound hj
+    omega
+  · exact Finset.disjoint_left.mp (mask_labels_disjoint hbits.2.2) hi hj
 
 set_option maxHeartbeats 4000000 in
+-- The paired integer source and mask expressions require a larger elaboration budget.
 private theorem realize_choice (a b : ℕ) (hb : 2 ≤ b) (hab : b ≤ a)
     (c : Choice ((2 : ℤ) ^ (a - 1)) ((2 : ℤ) ^ (b - 1))) :
     ∃ sigma : List (Fin (a + b + a)),
@@ -452,19 +683,22 @@ private theorem realize_choice (a b : ℕ) (hb : 2 ≤ b) (hab : b ≤ a)
     dsimp [S, R]
     exact pow_le_pow_right₀ (by norm_num) (by omega)
   have hr : r = 2 * R := by
-    dsimp [r, R]
-    rw [show a = (a - 1) + 1 by omega, pow_succ]
-    ring
+    calc
+      r = (2 : ℤ) ^ ((a - 1) + 1) := by dsimp [r]; congr 1; omega
+      _ = 2 * R := by rw [pow_succ]; dsimp [R]; ring
   have hs : s = 2 * S := by
-    dsimp [s, S]
-    rw [show b = (b - 1) + 1 by omega, pow_succ]
-    ring
+    calc
+      s = (2 : ℤ) ^ ((b - 1) + 1) := by dsimp [s]; congr 1; omega
+      _ = 2 * S := by rw [pow_succ]; dsimp [S]; ring
   have hN : N = 8 * R ^ 2 * S - 1 := by
     dsimp [N, k, modulus]
     rw [pow_add, pow_add]
     change r * s * r - 1 = _
     rw [hr, hs]; ring
-  have hhalf : modulus k / 2 = C := by change N / 2 = C; dsimp [C]; omega
+  have hhalf : modulus k / 2 = C := by
+    have hNC : N = 2 * C + 1 := by rw [hN]; dsimp [C]; ring
+    change N / 2 = C
+    omega
   have hnewN : modulus (k + 1) = 2 * N + 1 := by
     dsimp [modulus, N]; rw [pow_succ]; ring
   have hnewhalf : modulus (k + 1) / 2 = N := by rw [hnewN]; omega
@@ -510,10 +744,11 @@ private theorem realize_choice (a b : ℕ) (hb : 2 ≤ b) (hab : b ≤ a)
     · by_cases hib : i < a + b - 1
       · obtain ⟨j, rfl⟩ := Nat.exists_eq_add_of_le (show a ≤ i by omega)
         rw [(hV j (by omega)).1, (hV j (by omega)).2]
-        constructor <;> positivity
+        constructor <;> apply mul_nonneg (by positivity) (by omega)
       · obtain ⟨j, rfl⟩ := Nat.exists_eq_add_of_le (show a + b ≤ i by omega)
         rw [(hW j (by dsimp [k] at *; omega)).1, (hW j (by dsimp [k] at *; omega)).2]
-        have hnewL : 0 ≤ 2 * L - s - 1 := by dsimp [L]; rw [hr, hs]; positivity
+        have hnewL : 0 ≤ 2 * L - s - 1 := by
+          dsimp [L]; rw [hr, hs]; ring_nf; positivity
         constructor <;> positivity
   obtain ⟨hpu, hpv, hpw, htu, htv, htw⟩ := c.bounds
   have castU : ∀ (x : ℤ), 0 ≤ x → (x.toNat : ℤ) = x := fun x hx => Int.toNat_of_nonneg hx
@@ -535,7 +770,7 @@ private theorem realize_choice (a b : ℕ) (hb : 2 ≤ b) (hab : b ≤ a)
   have hTbound (i : ℕ) (hi : i ∈ T) :
       i < k ∧ i ≠ a - 1 ∧ i ≠ a + b - 1 ∧ i ≠ k - 1 :=
     packet_bound a b _ _ _ ha hb _ _ _ hi
-  have hp0 := ThreeBitSource.labelled_permutation k (a + b - 1) (a - 1) (k - 1) P T
+  have hp0 := labelled_permutation k (a + b - 1) (a - 1) (k - 1) P T
     (fun i hi => Finset.mem_range.mpr (hPbound i hi).1)
     (fun i hi => Finset.mem_range.mpr (hTbound i hi).1) hPT
     (by dsimp [k]; omega) (by dsimp [k]; omega)
@@ -547,8 +782,10 @@ private theorem realize_choice (a b : ℕ) (hb : 2 ≤ b) (hab : b ≤ a)
   have hp : word.Perm (List.range k) := by
     apply List.Perm.trans _ hp0
     apply Multiset.coe_eq_coe.mp
-    dsimp [word]
-    simp only [← Multiset.coe_add]
+    change (P.toList : Multiset ℕ) + ({a + b - 1} + (Q.toList : Multiset ℕ)) +
+      ({a - 1} + (T.toList : Multiset ℕ)) + {k - 1} =
+      (P.toList : Multiset ℕ) + ({a + b - 1} + (T.toList : Multiset ℕ)) +
+      ({a - 1} + (Q.toList : Multiset ℕ)) + {k - 1}
     ac_rfl
   have posP (i : ℕ) (hi : i ∈ P.toList) : 0 ≤ f i ∧ 0 ≤ g i := by
     have hh := hPbound i (Finset.mem_toList.mp hi)
@@ -647,15 +884,15 @@ private theorem realize_choice (a b : ℕ) (hb : 2 ≤ b) (hab : b ≤ a)
     · simp only [List.map_cons, List.sum_cons, hgear]
       exact ⟨by omega, by omega⟩
     · exact hgzero
-  let sigma := word.map (ThreeNegativeEqualOuterJointLift.label k (by dsimp [k]; omega))
+  let sigma := word.map (label k (by dsimp [k]; omega))
   refine ⟨sigma, ?_, ?_⟩
-  · apply ThreeNegativeEqualOuterJointLift.lift_order k _ (by dsimp [k]; omega) word hp
+  · apply lift_order k _ (by dsimp [k]; omega) word hp
     · simpa only [hvNat, hhalf] using oldStrip
     · simpa only [hvNat] using hfzero
-  · have hear := ThreeNegativeEqualOuterJointLift.marked_word k 0 (by dsimp [k]; omega) [] word (by simp) (by simpa using hp)
+  · have hear := marked_word k 0 (by dsimp [k]; omega) [] word (by simp) (by simpa using hp)
     simp only [List.nil_append] at hear
     rw [hear]
-    apply ThreeNegativeEqualOuterJointLift.lift_order (k + 1) _ (by omega) (k :: word) hpnew
+    apply lift_order (k + 1) _ (by omega) (k :: word) hpnew
     · simpa only [Nat.cast_mul, Nat.cast_ofNat, hvNat, hnewhalf] using newStrip
     · simpa only [Nat.cast_mul, Nat.cast_ofNat, hvNat] using hgzero
 
@@ -687,9 +924,10 @@ private theorem base_four_two :
   exact finite_order 11 162 (earWord 10 sigma 0) (by decide) (by decide) (by decide)
 
 set_option maxHeartbeats 4000000 in
+-- The paired integer source and mask expressions require a larger elaboration budget.
 /-- A complete physical permutation and its literal fresh-first ear for every
 complementary equal-outer pair, including nonunit and repeated source values. -/
-public theorem actualSource_three_negative_equal_outer_first_ear_joint_lift (a b : ℕ)
+theorem actualSource_three_negative_equal_outer_first_ear_joint_lift (a b : ℕ)
     (hb : 2 ≤ b) (hab : b ≤ a) :
     ∃ sigma : List (Fin (a + b + a)),
       OriginalOrder (a + b + a) (1 + 2 ^ a + 2 ^ (a + b)) sigma ∧
