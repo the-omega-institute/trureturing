@@ -1,0 +1,104 @@
+**定理 99.2（共同非恒定部分、二次型及单记录校准）。** 对定义 99.1 的两个响应，(99.3) 当且仅当存在两组 Hermitian 正效果 $E_w^{(i)}\succeq0$ 和实数 $c_w$，使
+
+$$
+ \begin{gathered}
+ P^{(i)}_w(\psi)=\langle\psi,E_w^{(i)}\psi\rangle,
+ \qquad\sum_{w\in\Omega_{10}}E_w^{(i)}=I_H,\\
+ E_w^{(1)}=E_w^{(0)}+c_w I_H,\qquad
+ \sum_{w\in\Omega_{10}}c_w=0.
+ \end{gathered}
+ \tag{99.4}
+$$
+
+特别地，两响应的非恒定部分完全相同。若仅对旧响应 $P=P^{(0)}$ 独立供应 79.1 的全部基底校准
+
+$$
+ P^{(0)}_w(e_\beta)=\mathbf1_{\{w=10\beta010\}}
+ \qquad(\beta\in\mathcal B,\ w\in\Omega_{10}),
+ \tag{99.5}
+$$
+
+则两个响应都被迫为同一个原 Born 律：
+
+$$
+ P^{(0)}_w(\psi)=P^{(1)}_w(\psi)=|\psi_w|^2
+ \qquad(\psi\in S(H),\ w\in\Omega_{10}).
+ \tag{99.6}
+$$
+
+其余 $1011$ 个标签也在等式内，右端为零。不假设有限预测秩、共同多项式次数、第二记录的旧响应转移或第二记录的基底校准。
+
+证明。先逐标签证明一个实连续函数对的共同核陈述，随后才使用概率正性。固定 $w$，记 $F=P^{(0)}_w,G=P^{(1)}_w$。以 $Cg=g\circ D$ 表示射线拉回。对每个实际 $f$，77.2 的原制备稠密性把 (99.3) 延拓到所有 $[\eta]\in X$。再以原接续的射影算符范数密度和这两个固定连续函数在紧 $X$ 上的一致连续性，得到
+
+$$
+ a(C^3-I)(F\circ U)+b(C-C^2)(G\circ U)=0
+ \qquad(U\in PU(H)).
+ \tag{99.7}
+$$
+
+这是数学延拓，不授予极限酉调用。两次延拓分别保持全部原 $p,f$ 的量词，不以有限套件代替它们。
+
+复用 86.3–86.4 的无重数完备分解
+
+$$
+ L^2(X,\mu;\mathbb C)=\widehat{\bigoplus}_{j\ge0}\mathcal H_j^{\mathbb C},
+ \qquad Q_j:L^2(X,\mu;\mathbb C)\longrightarrow\mathcal H_j^{\mathbb C}.
+ \tag{99.8}
+$$
+
+$\mu$ 是酉不变全支撑概率测度，$\mathcal H_0$ 是常数，$\mathcal H_1$ 是迹零 Hermitian 二次型的复化。各 $Q_j$ 与所有酉拉回交换。此分解的有限多项式部分来自 78.8 所引 Galley–Masanes 1610.04859v3 Result 2、A.12 及 Masanes–Galley–Müller 1811.11060v2 Appendix A Lemma 7；无界完备性复用 86.4，不给未知响应增加有限表示前提。
+
+令 $W_j$ 为 $(Q_jF,Q_jG)$ 在同时酉拉回下的复线性轨道张成。它是 $\mathcal H_j^{\mathbb C}\oplus\mathcal H_j^{\mathbb C}$ 的不变子空间，且其每个 $(h,k)$ 都满足
+
+$$
+ a(C^3-I)h+b(C-C^2)k=0.
+ \tag{99.9}
+$$
+
+这里有两个等价不可约副本，不能分别对 $F,G$ 套用单响应的 86.1。由有限维酉表示的 Schur 引理，存在 $L_j\subset\mathbb C^2$，使
+$W_j=\mathcal H_j^{\mathbb C}\otimes L_j$。具体地，$W_j$ 的正交投影与同时群作用交换，其四个块均为不可约空间的自交织，故各块为标量倍恒等；这个投影正是 $I\otimes M_j$，其中 $M_j$ 是 $\mathbb C^2$ 上的正交投影。可取 $L_j=\operatorname{ran}M_j$。因此，对每个 $(\alpha,\beta)\in L_j$ 和每个 $h\in\mathcal H_j^{\mathbb C}$，有
+
+$$
+ \bigl[a\alpha(C^3-I)+b\beta(C-C^2)\bigr]h=0.
+ \tag{99.10}
+$$
+
+在 $D$ 的本征正交坐标中，选 $z_A$ 属于秩五的 $\operatorname{ran}\Pi$，选不同的 $z_B,z_C$ 属于八维 $\ker\Pi$。对每个 $j\ge1$，多项式
+
+$$
+ Y_{j,1}=z_Az_B^{j-1}\bar z_C^{\,j}
+ \tag{99.11}
+$$
+
+非零、双次数为 $(j,j)$，且所有收缩 $\sum_d\partial_{z_d}\partial_{\bar z_d}$ 为零。85.2 已说明这个收缩核就是最高分量 $\mathcal H_j^{\mathbb C}$；故 $Y_{j,1}$ 在该分量内且 $CY_{j,1}=\zeta Y_{j,1}$。对 $j\ge2$，同理
+
+$$
+ Y_{j,2}=z_A^2z_B^{j-2}\bar z_C^{\,j}\in\mathcal H_j^{\mathbb C},
+ \qquad CY_{j,2}=\zeta^2Y_{j,2}.
+ \tag{99.12}
+$$
+
+这些是两个副本共同核的谱检验，不是另加的可制备态或测量。
+
+(91.6) 给 $\zeta^3-1=x^2(\zeta^2-\zeta)$，且 $b=ax^2$。将 (99.11) 代入 (99.10)，得到
+
+$$
+ b(\zeta^2-\zeta)(\alpha-\beta)=0,
+ \quad\text{从而 }\alpha=\beta\qquad(j\ge1).
+ \tag{99.13}
+$$
+
+非恒定两个副本的系数因此只能在对角线上。对 $j\ge2$ 再用 (99.12)，(99.10) 化为
+
+$$
+ a\alpha\rho(\zeta^2)=0,\qquad
+ \rho(z)=z^3-x^2z^2+x^2z-1=(z-1)(z-\zeta)(z-\zeta^{-1}).
+ \tag{99.14}
+$$
+
+$\zeta$ 的阶为十，$\zeta^2$ 不等于三个根，所以 $\alpha=\beta=0$。于是 $W_j=0$ 对所有 $j\ge2$ 成立，而 $Q_1F=Q_1G$。$j=0$ 时 (99.9) 恒为零，两个常数不受这个等式约束。由完备分解，$F,G$ 在 $L^2$ 中都是常数加二次型，且差是常数。它们连续、$\mu$ 全支撑，故这些等式逐点成立。实值性给 Hermitian 系数，常数可吸收进标量恒等算子。
+
+对全部 $w$ 应用上述结论。逐射线非负性等价于 $E_w^{(i)}\succeq0$；归一化及 Hermitian 二次型的唯一性给 $\sum_wE_w^{(i)}=I$。差为常数恰给 $E_w^{(1)}-E_w^{(0)}=c_wI$，两组归一化给 $\sum_wc_w=0$，证明 (99.4)。反之，两个响应具有同一非恒定二次型部分；其二次型满足 (86.6) 的四时关系，而每个记录自己的常数在设置两侧都具有相同权重，直接代入 (99.3) 即成立。
+
+最后，(99.5) 给 $E_w^{(0)}$ 的全部对角元。正矩阵满足 $|E_{uv}|^2\le E_{uu}E_{vv}$，所以零对角元的整行整列为零。故合法 $w=10\beta010$ 时 $E_w^{(0)}=|e_\beta\rangle\langle e_\beta|$，其余标签为零算子。每个这样的效果的秩至多一，严格小于 $13$；由 $E_w^{(1)}=E_w^{(0)}+c_wI\succeq0$ 在其非零维核上的限制，必有 $c_w\ge0$。全部 $1024$ 个 $c_w$ 之和为零，故逐个为零，得到 (99.6)。第二记录的转移在此成为结论。∎
+
