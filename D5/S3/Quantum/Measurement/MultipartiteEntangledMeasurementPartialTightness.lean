@@ -9,9 +9,7 @@
 import D5.S3.Quantum.Information.SLDSpectralEnergy
 import D5.S3.Quantum.Entanglement.Witness.AbsolutelyEntangledAllPartitions
 import D5.S3.Observer.MatrixUnitCertificate
-import D5.S3.Quantum.Recovery.PurifiedLocalPath
 import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
-import D5.S3.Quantum.Entanglement.AbsolutePPT.QutritPerturbationAttainment
 
 /-! Partial tightness of the multipartite entangled-measurement bound. -/
 
