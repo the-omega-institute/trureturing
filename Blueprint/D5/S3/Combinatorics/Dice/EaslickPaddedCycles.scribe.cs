@@ -24,7 +24,7 @@ internal sealed class EaslickPaddedCyclesDocument : IScribeDocumentDefinition
     private static DocumentBlock Node(string id, string title, string declaration, string prose) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), (declaration == "sourceSeed" ? StatementSource.WithoutFormula() : StatementSource.FromAuthor(StrataLint.Scribe.FormulaDsl.Disp(Statement(declaration)))), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+            Blocks(Paragraph(Text(prose)), Paragraph(Text("Every position i in Fin(k) is read through its natural value when indexing a list or forming (i+1) modulo k. The notation head denotes head!, and the closed-chain expression includes the final edge. All lengths, clone indices, products, remainders and inequalities are over natural numbers."))), DescribeRole.Theorem);
     private static Formula.BoundVariable B(string name, Formula type) => new(FormulaIdentifier.Create(name), type);
     private static Formula All(Formula body, params Formula.BoundVariable[] variables) => new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
     private static Formula Ex(Formula body, params Formula.BoundVariable[] variables) => new Formula.BindMany(FormulaQuantifier.Exists, [.. variables], body);

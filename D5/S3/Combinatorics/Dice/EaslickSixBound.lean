@@ -28,7 +28,7 @@ private theorem enumerate_complete (n lo k : ℕ) (d : List ℕ)
     (hlen : d.length = k) (hs : d.Pairwise (· ≤ ·))
     (hb : ∀ x ∈ d, lo ≤ x ∧ x ≤ n) : d ∈ enumerate n lo k := by
   induction k generalizing lo d with
-  | zero => have : d=[] := List.length_eq_zero.mp hlen; subst d; simp [enumerate]
+  | zero => have : d=[] := List.eq_nil_of_length_eq_zero hlen; subst d; simp [enumerate]
   | succ k ih =>
     cases d with
     | nil => simp at hlen
@@ -1443,8 +1443,8 @@ private theorem constant_rank (c : List (List ℕ)) (hne : c ≠ [])
     (hc : (c ++ [c.head!]).IsChain (Edge 6)) :
     ∀ d ∈ c, rank6 d = rank6 c.head! := by
   let R := fun d e : List ℕ => rank6 e ≤ rank6 d
-  letI : Trans R R R := ⟨fun _ _ _ h₁ h₂ => le_trans h₂ h₁⟩
-  have hp : (c ++ [c.head!]).Pairwise R := (hc.imp (fun h => rank_edge _ _ h)).pairwise
+  letI : Trans R R R := ⟨fun h₁ h₂ => le_trans h₂ h₁⟩
+  have hp : (c ++ [c.head!]).Pairwise R := (hc.imp (fun _ _ h => rank_edge _ _ h)).pairwise
   cases c with
   | nil => contradiction
   | cons a l =>
@@ -1500,11 +1500,11 @@ private theorem collision_excludes (B : List (List ℕ)) (a b z : List ℕ)
   have hsi : (getElem c ((i+1)%c.length) (Nat.mod_lt _ hk)) = z := hs _
     ((heq _).mp (List.getElem_mem _)) (by
       have h := (edge_iff 6 (by decide) _ _ hI.1 hI.2.1).mp hI
-      simpa [hia] using h)
+      simpa [hia, threshold] using h)
   have hsj : (getElem c ((j+1)%c.length) (Nat.mod_lt _ hk)) = z := ht _
     ((heq _).mp (List.getElem_mem _)) (by
       have h := (edge_iff 6 (by decide) _ _ hJ.1 hJ.2.1).mp hJ
-      simpa [hjb] using h)
+      simpa [hjb, threshold] using h)
   have hij := successor_injective c hnd hk ⟨i,hi⟩ ⟨j,hj⟩ (hsi.trans hsj.symm)
   have : i=j := congrArg Fin.val hij
   subst j
@@ -1527,11 +1527,13 @@ theorem six_cycle_bound (k : ℕ) (hc : HasCycle 6 k) : k ≤ 6 := by
   have hcap : B.length ≤ 7 := (certificate c.head! hd).2.2.1
   have hfull : ∀ x, x ∈ c ↔ x ∈ B := by
     have hlen' : c.length = B.length := by omega
-    have hs : c.toFinset ⊆ B.toFinset := by simpa using hsub
+    have hs : c.toFinset ⊆ B.toFinset := by
+      intro x hx
+      exact List.mem_toFinset.mpr (hsub (List.mem_toFinset.mp hx))
     have he : c.toFinset = B.toFinset := Finset.eq_of_subset_of_card_le hs (by
-      rw [List.toFinset_card_of_nodup hnd,
-        List.toFinset_card_of_nodup (certificate c.head! hd).2.1]
-      omega)
+      have hnB : B.Nodup := (certificate c.head! hd).2.1
+      rw [List.toFinset_card_of_nodup hnd, List.toFinset_card_of_nodup hnB]
+      exact hlen'.ge)
     intro x
     have := Finset.ext_iff.mp he x
     simpa using this
