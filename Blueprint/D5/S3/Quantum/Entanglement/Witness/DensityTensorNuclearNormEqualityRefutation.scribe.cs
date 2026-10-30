@@ -46,7 +46,10 @@ internal sealed class DensityTensorNuclearNormEqualityRefutationDocument : IScri
                             + "For the reverse inequality, use the four-mode linear functional that sums the two Bell contractions in each flag block. Its value on a product tensor is bounded by Cauchy–Schwarz after splitting the second and fourth factors into their two two-coordinate blocks; the resulting bound is the product of the four Euclidean norms. The functional takes densityTensor a to 2, so the dual bound gives nuclearNorm (densityTensor a) ≥ 2.")),
                     Paragraph(Text(
                         "Consequently nuclearNorm (densityTensor a) = 2 = alpha n squared. If claim held, its witness t would have unit Euclidean norm and would satisfy a = vecMulVec t (star t). The unit norm makes this rank-one matrix idempotent, so a squared would equal a. Direct multiplication of the two orthogonal flagged rank-one summands instead gives a squared = (1/2) • a. Since a has trace one and is nonzero, these equalities contradict each other. Thus the equality case need not be a pure density state."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("derksen-friedland-lim-wang-2017-density-tensor-nuclear-norm-equality"),
+                    ResolutionKind.Refuted))
         ), []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
