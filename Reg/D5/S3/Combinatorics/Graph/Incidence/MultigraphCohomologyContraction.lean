@@ -25,19 +25,24 @@ abbrev survivorSignature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def survivorActual : Realization survivorSignature :=
-  realize survivorSignature (fun _ _ x y => x = y) (fun a => nomatch a)
-def survivorRejected : Realization survivorSignature :=
-  realize survivorSignature (fun _ _ _ _ => False) (fun a => nomatch a)
+def survivorActual : Realization survivorSignature.{v} :=
+  realize survivorSignature.{v} (fun _ _ x y => x = y) (fun a => nomatch a)
+def survivorRejected : Realization survivorSignature.{v} :=
+  realize survivorSignature.{v} (fun _ _ _ _ => False) (fun a => nomatch a)
 
 theorem survivorDependence : ObservationalDependence survivorSignature.{v} survivorActual := by
   intro i
   let E := ULift.{v} (Fin 2)
   let e : E := ⟨0⟩
-  let f : Surviving e := ⟨⟨1⟩, by simp [e]⟩
+  let f : Surviving e := ⟨⟨1⟩, by
+    intro he
+    have hh : (1 : Fin 2) = 0 := congrArg ULift.down he
+    norm_num at hh⟩
   refine ⟨⟨E, e⟩, 0, fun _ => 1, ?_⟩
   intro he
-  have hx : (fun _ : Surviving e => (1 : ℚ)) = 0 := congrFun he 0 ▸ rfl
+  have hp := congrFun he 0
+  change ((0 : Surviving e → ℚ) = 0) = ((fun _ : Surviving e => (1 : ℚ)) = 0) at hp
+  have hx := Eq.mp hp rfl
   have hf := congrFun hx f
   norm_num at hf
 
@@ -51,17 +56,19 @@ abbrev edgeSignature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def edgeActual : Realization edgeSignature :=
-  realize edgeSignature (fun _ _ x y => x = y) (fun a => nomatch a)
-def edgeRejected : Realization edgeSignature :=
-  realize edgeSignature (fun _ _ _ _ => False) (fun a => nomatch a)
+def edgeActual : Realization edgeSignature.{v} :=
+  realize edgeSignature.{v} (fun _ _ x y => x = y) (fun a => nomatch a)
+def edgeRejected : Realization edgeSignature.{v} :=
+  realize edgeSignature.{v} (fun _ _ _ _ => False) (fun a => nomatch a)
 
 theorem edgeDependence : ObservationalDependence edgeSignature.{v} edgeActual := by
   intro i
   let E := ULift.{v} Unit
   refine ⟨E, 0, fun _ => 1, ?_⟩
   intro he
-  have hx : (fun _ : E => (1 : ℚ)) = 0 := congrFun he 0 ▸ rfl
+  have hp := congrFun he 0
+  change ((0 : E → ℚ) = 0) = ((fun _ : E => (1 : ℚ)) = 0) at hp
+  have hx := Eq.mp hp rfl
   have hf := congrFun hx ⟨()⟩
   norm_num at hf
 
@@ -84,7 +91,9 @@ theorem scalarDependence : ObservationalDependence scalarSignature scalarActual 
   intro i
   refine ⟨(), 0, 1, ?_⟩
   intro he
-  have hx : (1 : ℚ) = 0 := congrFun he 0 ▸ rfl
+  have hp := congrFun he 0
+  change ((0 : ℚ) = 0) = ((1 : ℚ) = 0) at hp
+  have hx := Eq.mp hp rfl
   norm_num at hx
 
 abbrev graphSignature : Signature where
@@ -97,10 +106,10 @@ abbrev graphSignature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-def graphActual : Realization graphSignature :=
-  realize graphSignature (fun _ _ x y => x = y) (fun a => nomatch a)
-def graphRejected : Realization graphSignature :=
-  realize graphSignature (fun _ _ _ _ => False) (fun a => nomatch a)
+def graphActual : Realization graphSignature.{u,v} :=
+  realize graphSignature.{u,v} (fun _ _ x y => x = y) (fun a => nomatch a)
+def graphRejected : Realization graphSignature.{u,v} :=
+  realize graphSignature.{u,v} (fun _ _ _ _ => False) (fun a => nomatch a)
 
 theorem graphDependence : ObservationalDependence graphSignature.{u,v} graphActual := by
   intro i
@@ -110,7 +119,9 @@ theorem graphDependence : ObservationalDependence graphSignature.{u,v} graphActu
   let q := (coboundary G).range.mkQ
   refine ⟨⟨V, E, G⟩, q 0, q (fun _ => 1), ?_⟩
   intro he
-  have hx : q (fun _ => 1) = q 0 := congrFun he (q 0) ▸ rfl
+  have hp := congrFun he (q 0)
+  change (q 0 = q 0) = (q (fun _ => 1) = q 0) at hp
+  have hx := Eq.mp hp rfl
   have hm := (Submodule.Quotient.eq (coboundary G).range).mp hx
   obtain ⟨k, hk⟩ := hm
   have hf := congrFun hk (⟨()⟩ : E)
@@ -119,26 +130,26 @@ theorem graphDependence : ObservationalDependence graphSignature.{u,v} graphActu
 
 private def testGraph : DirectedMultigraph (ULift.{u} Bool) (ULift.{v} Unit) :=
   ⟨fun _ => ⟨false⟩, fun _ => ⟨true⟩⟩
-private theorem testNonloop : testGraph.{u,v}.source ⟨()⟩ ≠ testGraph.target ⟨()⟩ := by
+private theorem testNonloop.{w,x} : testGraph.{w,x}.source ⟨()⟩ ≠ testGraph.{w,x}.target ⟨()⟩ := by
   intro he
   have := congrArg ULift.down he
   cases this
 
-@[reducible] def evacuate_coboundaryArena : Arena where
-  signature := survivorSignature.{v}
-  Law R := ∀ {V : Type u} {E : Type v} [DecidableEq V] [DecidableEq E]
+@[reducible] def evacuate_coboundaryArena.{w,x} : Arena where
+  signature := survivorSignature.{x}
+  Law R := ∀ {V : Type w} {E : Type x} [DecidableEq V] [DecidableEq E]
     (G : DirectedMultigraph V E) (e : E)
     (h : G.source e ≠ G.target e) (k : V → ℚ),
     R.readout () ⟨E, e⟩ (evacuate G e (coboundary G k))
       (coboundary (contract G e h) (fun w => k w.val))
 
-theorem evacuate_coboundaryPositive : evacuate_coboundaryArena.Law survivorActual :=
+theorem evacuate_coboundaryPositive : evacuate_coboundaryArena.{u,v}.Law survivorActual :=
   @_root_.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.evacuate_coboundary.{u,v}
-theorem evacuate_coboundaryNegative : ¬ evacuate_coboundaryArena.Law survivorRejected := by
+theorem evacuate_coboundaryNegative : ¬ evacuate_coboundaryArena.{u,v}.Law survivorRejected := by
   intro h
-  exact h testGraph ⟨()⟩ testNonloop 0
+  exact h testGraph.{u,v} ⟨()⟩ testNonloop.{u,v} 0
 
-def evacuate_coboundaryEvidence : Registration evacuate_coboundaryArena
+def evacuate_coboundaryEvidence : Registration evacuate_coboundaryArena.{u,v}
     (type_of% (@_root_.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.evacuate_coboundary.{u,v})) where
   actual := survivorActual
   bridge := Iff.rfl
@@ -155,9 +166,9 @@ noncomputable def evacuate_coboundaryRegistration : Contract.Registration.{_,_,_
     "Reg.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction/Reg.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.evacuate_coboundaryArena/[anonymous]") "__information_unit",
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.evacuate_coboundaryEvidence,
   realizationSource := none, generated := false,
-  arena := .source ⟨evacuate_coboundaryArena⟩, objectArena := .source ⟨evacuate_coboundaryArena⟩,
+  arena := .source ⟨evacuate_coboundaryArena.{u,v}⟩, objectArena := .source ⟨evacuate_coboundaryArena.{u,v}⟩,
   catalog := Lean.Name.anonymous, localNames := false,
-  realization := .source evacuate_coboundaryArena ⟨evacuate_coboundaryEvidence⟩,
+  realization := .source evacuate_coboundaryArena.{u,v} ⟨evacuate_coboundaryEvidence⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
   readout := some (realize survivorSignature.{v} (fun _ _ x y => x = y) (fun a => nomatch a)),
@@ -177,21 +188,21 @@ noncomputable def evacuate_coboundaryRegistration : Contract.Registration.{_,_,_
 
 #print axioms evacuate_coboundaryRegistration
 
-@[reducible] def extend_coboundaryArena : Arena where
-  signature := edgeSignature.{v}
-  Law R := ∀ {V : Type u} {E : Type v} [DecidableEq V] [DecidableEq E]
+@[reducible] def extend_coboundaryArena.{w,x} : Arena where
+  signature := edgeSignature.{x}
+  Law R := ∀ {V : Type w} {E : Type x} [DecidableEq V] [DecidableEq E]
     (G : DirectedMultigraph V E) (e : E)
     (h : G.source e ≠ G.target e) (k : ContractedVertex G e → ℚ),
     R.readout () E (extend e (coboundary (contract G e h) k))
       (coboundary G (k ∘ vertexMap G e h))
 
-theorem extend_coboundaryPositive : extend_coboundaryArena.Law edgeActual :=
+theorem extend_coboundaryPositive : extend_coboundaryArena.{u,v}.Law edgeActual :=
   @_root_.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.extend_coboundary.{u,v}
-theorem extend_coboundaryNegative : ¬ extend_coboundaryArena.Law edgeRejected := by
+theorem extend_coboundaryNegative : ¬ extend_coboundaryArena.{u,v}.Law edgeRejected := by
   intro h
-  exact h testGraph ⟨()⟩ testNonloop 0
+  exact h testGraph.{u,v} ⟨()⟩ testNonloop.{u,v} 0
 
-def extend_coboundaryEvidence : Registration extend_coboundaryArena
+def extend_coboundaryEvidence : Registration extend_coboundaryArena.{u,v}
     (type_of% (@_root_.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.extend_coboundary.{u,v})) where
   actual := edgeActual
   bridge := Iff.rfl
@@ -208,9 +219,9 @@ noncomputable def extend_coboundaryRegistration : Contract.Registration.{_,_,_,0
     "Reg.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction/Reg.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.extend_coboundaryArena/[anonymous]") "__information_unit",
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.extend_coboundaryEvidence,
   realizationSource := none, generated := false,
-  arena := .source ⟨extend_coboundaryArena⟩, objectArena := .source ⟨extend_coboundaryArena⟩,
+  arena := .source ⟨extend_coboundaryArena.{u,v}⟩, objectArena := .source ⟨extend_coboundaryArena.{u,v}⟩,
   catalog := Lean.Name.anonymous, localNames := false,
-  realization := .source extend_coboundaryArena ⟨extend_coboundaryEvidence⟩,
+  realization := .source extend_coboundaryArena.{u,v} ⟨extend_coboundaryEvidence⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
   readout := some (realize edgeSignature.{v} (fun _ _ x y => x = y) (fun a => nomatch a)),
@@ -230,19 +241,19 @@ noncomputable def extend_coboundaryRegistration : Contract.Registration.{_,_,_,0
 
 #print axioms extend_coboundaryRegistration
 
-@[reducible] def evacuate_extendArena : Arena where
-  signature := survivorSignature.{v}
-  Law R := ∀ {V : Type u} {E : Type v} [DecidableEq V] [DecidableEq E]
+@[reducible] def evacuate_extendArena.{w,x} : Arena where
+  signature := survivorSignature.{x}
+  Law R := ∀ {V : Type w} {E : Type x} [DecidableEq V] [DecidableEq E]
     (G : DirectedMultigraph V E) (e : E) (b : Surviving e → ℚ),
     R.readout () ⟨E, e⟩ (evacuate G e (extend e b)) b
 
-theorem evacuate_extendPositive : evacuate_extendArena.Law survivorActual :=
+theorem evacuate_extendPositive : evacuate_extendArena.{u,v}.Law survivorActual :=
   @_root_.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.evacuate_extend.{u,v}
-theorem evacuate_extendNegative : ¬ evacuate_extendArena.Law survivorRejected := by
+theorem evacuate_extendNegative : ¬ evacuate_extendArena.{u,v}.Law survivorRejected := by
   intro h
-  exact h testGraph ⟨()⟩ 0
+  exact h testGraph.{u,v} ⟨()⟩ 0
 
-def evacuate_extendEvidence : Registration evacuate_extendArena
+def evacuate_extendEvidence : Registration evacuate_extendArena.{u,v}
     (type_of% (@_root_.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.evacuate_extend.{u,v})) where
   actual := survivorActual
   bridge := Iff.rfl
@@ -259,9 +270,9 @@ noncomputable def evacuate_extendRegistration : Contract.Registration.{_,_,_,0,0
     "Reg.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction/Reg.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.evacuate_extendArena/[anonymous]") "__information_unit",
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.evacuate_extendEvidence,
   realizationSource := none, generated := false,
-  arena := .source ⟨evacuate_extendArena⟩, objectArena := .source ⟨evacuate_extendArena⟩,
+  arena := .source ⟨evacuate_extendArena.{u,v}⟩, objectArena := .source ⟨evacuate_extendArena.{u,v}⟩,
   catalog := Lean.Name.anonymous, localNames := false,
-  realization := .source evacuate_extendArena ⟨evacuate_extendEvidence⟩,
+  realization := .source evacuate_extendArena.{u,v} ⟨evacuate_extendEvidence⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
   readout := some (realize survivorSignature.{v} (fun _ _ x y => x = y) (fun a => nomatch a)),
@@ -281,21 +292,21 @@ noncomputable def evacuate_extendRegistration : Contract.Registration.{_,_,_,0,0
 
 #print axioms evacuate_extendRegistration
 
-@[reducible] def extend_evacuate_subArena : Arena where
-  signature := edgeSignature.{v}
-  Law R := ∀ {V : Type u} {E : Type v} [DecidableEq V] [DecidableEq E]
+@[reducible] def extend_evacuate_subArena.{w,x} : Arena where
+  signature := edgeSignature.{x}
+  Law R := ∀ {V : Type w} {E : Type x} [DecidableEq V] [DecidableEq E]
     (G : DirectedMultigraph V E) (e : E)
     (h : G.source e ≠ G.target e) (a : E → ℚ),
     R.readout () E (extend e (evacuate G e a) - a)
       (coboundary G (fun w => -a e * (if w = G.target e then 1 else 0)))
 
-theorem extend_evacuate_subPositive : extend_evacuate_subArena.Law edgeActual :=
+theorem extend_evacuate_subPositive : extend_evacuate_subArena.{u,v}.Law edgeActual :=
   @_root_.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.extend_evacuate_sub.{u,v}
-theorem extend_evacuate_subNegative : ¬ extend_evacuate_subArena.Law edgeRejected := by
+theorem extend_evacuate_subNegative : ¬ extend_evacuate_subArena.{u,v}.Law edgeRejected := by
   intro h
-  exact h testGraph ⟨()⟩ testNonloop 0
+  exact h testGraph.{u,v} ⟨()⟩ testNonloop.{u,v} 0
 
-def extend_evacuate_subEvidence : Registration extend_evacuate_subArena
+def extend_evacuate_subEvidence : Registration extend_evacuate_subArena.{u,v}
     (type_of% (@_root_.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.extend_evacuate_sub.{u,v})) where
   actual := edgeActual
   bridge := Iff.rfl
@@ -312,9 +323,9 @@ noncomputable def extend_evacuate_subRegistration : Contract.Registration.{_,_,_
     "Reg.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction/Reg.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.extend_evacuate_subArena/[anonymous]") "__information_unit",
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.extend_evacuate_subEvidence,
   realizationSource := none, generated := false,
-  arena := .source ⟨extend_evacuate_subArena⟩, objectArena := .source ⟨extend_evacuate_subArena⟩,
+  arena := .source ⟨extend_evacuate_subArena.{u,v}⟩, objectArena := .source ⟨extend_evacuate_subArena.{u,v}⟩,
   catalog := Lean.Name.anonymous, localNames := false,
-  realization := .source extend_evacuate_subArena ⟨extend_evacuate_subEvidence⟩,
+  realization := .source extend_evacuate_subArena.{u,v} ⟨extend_evacuate_subEvidence⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
   readout := some (realize edgeSignature.{v} (fun _ _ x y => x = y) (fun a => nomatch a)),
@@ -334,9 +345,9 @@ noncomputable def extend_evacuate_subRegistration : Contract.Registration.{_,_,_
 
 #print axioms extend_evacuate_subRegistration
 
-@[reducible] def cohomologyEquiv_representativesArena : Arena where
-  signature := graphSignature.{u,v}
-  Law R := ∀ {V : Type u} {E : Type v} [DecidableEq V] [DecidableEq E]
+@[reducible] def cohomologyEquiv_representativesArena.{w,x} : Arena where
+  signature := graphSignature.{w,x}
+  Law R := ∀ {V : Type w} {E : Type x} [DecidableEq V] [DecidableEq E]
     (G : DirectedMultigraph V E) (e : E)
     (h : G.source e ≠ G.target e),
     (∀ a : E → ℚ, cohomologyEquiv G e h ((coboundary G).range.mkQ a) =
@@ -345,13 +356,13 @@ noncomputable def extend_evacuate_subRegistration : Contract.Registration.{_,_,_
       ((cohomologyEquiv G e h).symm ((coboundary (contract G e h)).range.mkQ b))
       ((coboundary G).range.mkQ (extend e b)))
 
-theorem cohomologyEquiv_representativesPositive : cohomologyEquiv_representativesArena.Law graphActual :=
+theorem cohomologyEquiv_representativesPositive : cohomologyEquiv_representativesArena.{u,v}.Law graphActual :=
   @_root_.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.cohomologyEquiv_representatives.{u,v}
-theorem cohomologyEquiv_representativesNegative : ¬ cohomologyEquiv_representativesArena.Law graphRejected := by
+theorem cohomologyEquiv_representativesNegative : ¬ cohomologyEquiv_representativesArena.{u,v}.Law graphRejected := by
   intro h
-  exact (h testGraph ⟨()⟩ testNonloop).2 0
+  exact (h testGraph.{u,v} ⟨()⟩ testNonloop.{u,v}).2 0
 
-def cohomologyEquiv_representativesEvidence : Registration cohomologyEquiv_representativesArena
+def cohomologyEquiv_representativesEvidence : Registration cohomologyEquiv_representativesArena.{u,v}
     (type_of% (@_root_.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.cohomologyEquiv_representatives.{u,v})) where
   actual := graphActual
   bridge := Iff.rfl
@@ -368,9 +379,9 @@ noncomputable def cohomologyEquiv_representativesRegistration : Contract.Registr
     "Reg.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction/Reg.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.cohomologyEquiv_representativesArena/[anonymous]") "__information_unit",
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.cohomologyEquiv_representativesEvidence,
   realizationSource := none, generated := false,
-  arena := .source ⟨cohomologyEquiv_representativesArena⟩, objectArena := .source ⟨cohomologyEquiv_representativesArena⟩,
+  arena := .source ⟨cohomologyEquiv_representativesArena.{u,v}⟩, objectArena := .source ⟨cohomologyEquiv_representativesArena.{u,v}⟩,
   catalog := Lean.Name.anonymous, localNames := false,
-  realization := .source cohomologyEquiv_representativesArena ⟨cohomologyEquiv_representativesEvidence⟩,
+  realization := .source cohomologyEquiv_representativesArena.{u,v} ⟨cohomologyEquiv_representativesEvidence⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
   readout := some (realize graphSignature.{u,v} (fun _ _ x y => x = y) (fun a => nomatch a)),
@@ -390,19 +401,19 @@ noncomputable def cohomologyEquiv_representativesRegistration : Contract.Registr
 
 #print axioms cohomologyEquiv_representativesRegistration
 
-@[reducible] def coboundary_annihilates_cyclesArena : Arena where
+@[reducible] def coboundary_annihilates_cyclesArena.{w,x} : Arena where
   signature := scalarSignature
-  Law R := ∀ {V : Type u} {E : Type v} [DecidableEq V] [Fintype E]
+  Law R := ∀ {V : Type w} {E : Type x} [DecidableEq V] [Fintype E]
     (G : DirectedMultigraph V E) (k : V → ℚ) (z : CycleSpace G),
     R.readout () () (∑ f : E, coboundary G k f * z.val f) 0
 
-theorem coboundary_annihilates_cyclesPositive : coboundary_annihilates_cyclesArena.Law scalarActual :=
+theorem coboundary_annihilates_cyclesPositive : coboundary_annihilates_cyclesArena.{u,v}.Law scalarActual :=
   @_root_.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.coboundary_annihilates_cycles.{u,v}
-theorem coboundary_annihilates_cyclesNegative : ¬ coboundary_annihilates_cyclesArena.Law scalarRejected := by
+theorem coboundary_annihilates_cyclesNegative : ¬ coboundary_annihilates_cyclesArena.{u,v}.Law scalarRejected := by
   intro h
-  exact h testGraph 0 0
+  exact h testGraph.{u,v} 0 0
 
-def coboundary_annihilates_cyclesEvidence : Registration coboundary_annihilates_cyclesArena
+def coboundary_annihilates_cyclesEvidence : Registration coboundary_annihilates_cyclesArena.{u,v}
     (type_of% (@_root_.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.coboundary_annihilates_cycles.{u,v})) where
   actual := scalarActual
   bridge := Iff.rfl
@@ -419,9 +430,9 @@ noncomputable def coboundary_annihilates_cyclesRegistration : Contract.Registrat
     "Reg.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction/Reg.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.coboundary_annihilates_cyclesArena/[anonymous]") "__information_unit",
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.coboundary_annihilates_cyclesEvidence,
   realizationSource := none, generated := false,
-  arena := .source ⟨coboundary_annihilates_cyclesArena⟩, objectArena := .source ⟨coboundary_annihilates_cyclesArena⟩,
+  arena := .source ⟨coboundary_annihilates_cyclesArena.{u,v}⟩, objectArena := .source ⟨coboundary_annihilates_cyclesArena.{u,v}⟩,
   catalog := Lean.Name.anonymous, localNames := false,
-  realization := .source coboundary_annihilates_cyclesArena ⟨coboundary_annihilates_cyclesEvidence⟩,
+  realization := .source coboundary_annihilates_cyclesArena.{u,v} ⟨coboundary_annihilates_cyclesEvidence⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
   readout := some (realize scalarSignature (fun _ _ x y => x = y) (fun a => nomatch a)),
@@ -441,9 +452,9 @@ noncomputable def coboundary_annihilates_cyclesRegistration : Contract.Registrat
 
 #print axioms coboundary_annihilates_cyclesRegistration
 
-@[reducible] def cohomology_pairing_naturalityArena : Arena where
+@[reducible] def cohomology_pairing_naturalityArena.{w,x} : Arena where
   signature := scalarSignature
-  Law R := ∀ {V : Type u} {E : Type v} [DecidableEq V] [DecidableEq E] [Fintype E]
+  Law R := ∀ {V : Type w} {E : Type x} [DecidableEq V] [DecidableEq E] [Fintype E]
     (G : DirectedMultigraph V E) (e : E) (h : G.source e ≠ G.target e),
     (∀ (a : E → ℚ) (z : CycleSpace G), R.readout () ()
       (cohomologyPairing G ((coboundary G).range.mkQ a) z) (∑ f : E, a f * z.val f)) ∧
@@ -454,13 +465,13 @@ noncomputable def coboundary_annihilates_cyclesRegistration : Contract.Registrat
       cohomologyPairing G ((cohomologyEquiv G e h).symm b) z =
         cohomologyPairing (contract G e h) b (cycleEquiv G e h z))
 
-theorem cohomology_pairing_naturalityPositive : cohomology_pairing_naturalityArena.Law scalarActual :=
+theorem cohomology_pairing_naturalityPositive : cohomology_pairing_naturalityArena.{u,v}.Law scalarActual :=
   @_root_.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.cohomology_pairing_naturality.{u,v}
-theorem cohomology_pairing_naturalityNegative : ¬ cohomology_pairing_naturalityArena.Law scalarRejected := by
+theorem cohomology_pairing_naturalityNegative : ¬ cohomology_pairing_naturalityArena.{u,v}.Law scalarRejected := by
   intro h
-  exact (h testGraph ⟨()⟩ testNonloop).1 0 0
+  exact (h testGraph.{u,v} ⟨()⟩ testNonloop.{u,v}).1 0 0
 
-def cohomology_pairing_naturalityEvidence : Registration cohomology_pairing_naturalityArena
+def cohomology_pairing_naturalityEvidence : Registration cohomology_pairing_naturalityArena.{u,v}
     (type_of% (@_root_.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.cohomology_pairing_naturality.{u,v})) where
   actual := scalarActual
   bridge := Iff.rfl
@@ -477,9 +488,9 @@ noncomputable def cohomology_pairing_naturalityRegistration : Contract.Registrat
     "Reg.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction/Reg.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.cohomology_pairing_naturalityArena/[anonymous]") "__information_unit",
   realizationName := `Reg.D5.S3.Combinatorics.Graph.Incidence.MultigraphCohomologyContraction.cohomology_pairing_naturalityEvidence,
   realizationSource := none, generated := false,
-  arena := .source ⟨cohomology_pairing_naturalityArena⟩, objectArena := .source ⟨cohomology_pairing_naturalityArena⟩,
+  arena := .source ⟨cohomology_pairing_naturalityArena.{u,v}⟩, objectArena := .source ⟨cohomology_pairing_naturalityArena.{u,v}⟩,
   catalog := Lean.Name.anonymous, localNames := false,
-  realization := .source cohomology_pairing_naturalityArena ⟨cohomology_pairing_naturalityEvidence⟩,
+  realization := .source cohomology_pairing_naturalityArena.{u,v} ⟨cohomology_pairing_naturalityEvidence⟩,
   correspondence := { stage := .evidence, objectStage := .evidence },
   bundleNonempty := .absent,
   readout := some (realize scalarSignature (fun _ _ x y => x = y) (fun a => nomatch a)),

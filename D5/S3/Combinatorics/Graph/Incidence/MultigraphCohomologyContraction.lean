@@ -77,7 +77,7 @@ theorem evacuate_coboundary (G : DirectedMultigraph V E) (e : E)
     restrict_vertexMap G e h k (G.source f.val)]
   by_cases ht : G.target f.val = G.target e <;>
     by_cases hs : G.source f.val = G.target e <;>
-      simp [incidence, signedIncidence, ht, hs, eq_comm] <;> ring
+      simp_all [incidence, signedIncidence, eq_comm] <;> ring
 
 /-- Zero extension of a contracted coboundary is pullback along vertexMap. -/
 theorem extend_coboundary (G : DirectedMultigraph V E) (e : E)
