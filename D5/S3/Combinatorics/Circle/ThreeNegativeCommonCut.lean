@@ -77,7 +77,7 @@ private theorem mask_bound (t u m : ℤ) (hu : 4 ≤ u) (hm : m = 4 ∨ 8 ≤ m)
   change 0 ≤ f ∧ f ≤ m - 2 ∧ f < t / 2 ∧ 0 ≤ h ∧
     2 * h + 1 + (t + 1) * f ≤ t * (t + 1) / 2
   have hm4 : 4 ≤ m := by rcases hm with rfl | hm <;> omega
-  have ht : 4 * u ≤ t := by nlinarith
+  have ht : 4 * u ≤ t := by nlinarith [mul_nonneg (show 0 ≤ m - 4 by omega) (show 0 ≤ u by omega)]
   have ht0 : 0 ≤ t := by omega
   have hH : 0 < H := by dsimp [H]; positivity
   have hf0 : 0 ≤ f := Int.ediv_nonneg (mul_nonneg (by omega) (by omega)) (le_of_lt hH)
@@ -107,14 +107,14 @@ private theorem mask_bound (t u m : ℤ) (hu : 4 ≤ u) (hm : m = 4 ∨ 8 ≤ m)
   have hg1 := Int.emod_lt_of_pos (t * (t + 1)) (by norm_num : (0 : ℤ) < 2)
   rcases hm with hm | hm
   · have ht4 : t = 4 * u := by rw [htu, hm]
-    have htwo : 2 * H ≤ (t + 1) * (t - u) := by dsimp [H]; rw [ht4]; nlinarith
+    have htwo : 2 * H ≤ (t + 1) * (t - u) := by dsimp [H]; rw [ht4]; nlinarith [mul_nonneg (show 0 ≤ u - 4 by omega) (show 0 ≤ u by omega)]
     have hf2 : 2 ≤ f := (Int.le_ediv_iff_mul_le hH).mpr (by nlinarith)
     have hfe : f = 2 := by omega
     dsimp [h, H]
     rw [hfe, ht4]
     rw [ht4] at hg hg0 hg1
     nlinarith
-  · have ht8 : 8 * u ≤ t := by nlinarith
+  · have ht8 : 8 * u ≤ t := by nlinarith [mul_nonneg (show 0 ≤ m - 8 by omega) (show 0 ≤ u by omega)]
     have hq : 2 * h + 1 + (t + 1) * f ≤ 2 * t * u + (t + 1) * m - 1 := by
       have hf := mul_le_mul_of_nonneg_left hfm (show 0 ≤ t + 1 by omega)
       dsimp [H] at hh1
@@ -212,15 +212,15 @@ private theorem source_rows (a c : ℕ) (hc : 2 ≤ c) (hca : c < a) : Rows a c 
   have hcg0 : 0 ≤ sh a * (T a + 1) := by positivity
   have hcaC : (T a + 1) * rh c ≤ C a c := by
     rw [hCraw]
-    have hh : 1 ≤ T a * T a - T a - 1 := by nlinarith
+    have hh : 1 ≤ T a * T a - T a - 1 := by nlinarith [mul_nonneg (show 0 ≤ T a - 2 by omega) (show 0 ≤ T a by omega)]
     nlinarith [mul_nonneg (show 0 ≤ rh c - 1 by omega) (show 0 ≤ T a * T a - T a - 1 by omega)]
   have hcbC : sh a * (U c + 1) ≤ C a c := by
     dsimp [C]
-    have hh : 1 ≤ T a * U c - U c - 1 := by nlinarith
+    have hh : 1 ≤ T a * U c - U c - 1 := by nlinarith [mul_nonneg (show 0 ≤ T a - 2 by omega) (show 0 ≤ U c by omega)]
     nlinarith [mul_nonneg (show 0 ≤ sh a - 1 by omega) (show 0 ≤ T a * U c - U c - 1 by omega)]
   have hcgC : sh a * (T a + 1) ≤ C a c := by
     dsimp [C]
-    have hh : 1 ≤ T a * U c - T a - 1 := by nlinarith
+    have hh : 1 ≤ T a * U c - T a - 1 := by nlinarith [mul_nonneg (show 0 ≤ U c - 2 by omega) (show 0 ≤ T a by omega)]
     nlinarith [mul_nonneg (show 0 ≤ sh a - 1 by omega) (show 0 ≤ T a * U c - T a - 1 by omega)]
   have hnewa : 0 ≤ (T a + 1) * U c ∧ (T a + 1) * U c ≤ 2 * C a c + 1 := by
     constructor
@@ -487,18 +487,15 @@ private theorem joint_lift (k v j : ℕ) (hk : 0 < k) (l : List ℕ)
   have hear : RunFirstEarTransport.earWord k (l.map lift) j =
       (l.take j ++ [k] ++ l.drop j).map liftNew := by
     simp only [RunFirstEarTransport.earWord, List.map_take, List.map_drop,
-      List.map_append, List.map_cons, List.map_nil]
-    rw [← List.map_take, ← List.map_drop, List.map_map, List.map_map]
-    change (l.take j).map (fun i => (lift i).castSucc) ++ [Fin.last k] ++
-      (l.drop j).map (fun i => (lift i).castSucc) = _
-    rw [List.map_take, List.map_drop, hphysical]
+      List.map_append, List.map_singleton, List.map_map]
+    rw [hphysical]
     congr 2
     apply Fin.ext
     simp [liftNew, Nat.mod_eq_of_lt (by omega : k < k + 1)]
   have newperm : (l.take j ++ [k] ++ l.drop j).Perm (List.range (k + 1)) := by
     have hp : (l.take j ++ [k] ++ l.drop j).Perm (l ++ [k]) := by
       have hh := (List.perm_append_comm : ([k] ++ l.drop j).Perm (l.drop j ++ [k])).append_left (l.take j)
-      simpa [List.append_assoc, ← List.append_assoc, List.take_append_drop] using hh
+      simpa only [← List.append_assoc, List.take_append_drop] using hh
     exact hp.trans (by simpa [List.range_succ] using hl.append_right [k])
   have hbaseNew : (List.range (k + 1)).map liftNew = List.finRange (k + 1) := by
     apply List.ext_getElem
@@ -518,7 +515,7 @@ private theorem joint_lift (k v j : ℕ) (hk : 0 < k) (l : List ℕ)
     have he := mapped k (l.take n) (actualSource k v) (raw k v) lift
       (fun i hi => hold i (List.mem_of_mem_take hi))
     rw [← List.map_take, he]
-    exact inStrip_prefix hs n
+    simpa only [zero_add, Set.mem_Icc] using inStrip_prefix hs n
   · rw [hear]
     refine ⟨?_, ?_, ?_⟩
     · simpa [hbaseNew] using newperm.map liftNew
@@ -528,7 +525,7 @@ private theorem joint_lift (k v j : ℕ) (hk : 0 < k) (l : List ℕ)
         (actualSource (k + 1) (2 * v)) (raw (k + 1) (2 * v)) liftNew
         (fun i hi => hnew i (List.mem_of_mem_take hi))
       rw [← List.map_take, he]
-      exact inStrip_prefix hsn n
+      simpa only [zero_add, Set.mem_Icc] using inStrip_prefix hsn n
 
 
 /-- Assemble the two literal words using a single partition of the physical W row. -/
@@ -636,8 +633,21 @@ private theorem assemble (a c : ℕ) (hc : 2 ≤ c) (hca : c < a)
     simp only [List.length_append, List.length_range', List.length_singleton]
     split_ifs <;> dsimp only [K] <;> omega
   have hear : l.take j ++ [K a c] ++ l.drop j = ln := by
-    cases before <;>
-      simp [l, j, ln, Qn, Rn, List.append_assoc, List.take_append, List.drop_append]
+    cases before with
+    | true =>
+      have hlit : l = (VL ++ [be] ++ E) ++ ([ga] ++ F ++ UL ++ [al]) := by
+        simp only [l, List.append_assoc]
+      change l.take (VL ++ [be] ++ E).length ++ [K a c] ++
+        l.drop (VL ++ [be] ++ E).length = ln
+      rw [hlit, List.take_append_length, List.drop_append_length]
+      simp only [ln, Qn, Rn, if_true, List.nil_append, List.append_nil, List.append_assoc]
+    | false =>
+      have hlit : l = (VL ++ [be] ++ E ++ [ga]) ++ (F ++ UL ++ [al]) := by
+        simp only [l, List.append_assoc]
+      have hje : j = (VL ++ [be] ++ E ++ [ga]).length := by
+        simp only [j, if_false, List.length_append, List.length_singleton]
+      rw [hje, hlit, List.take_append_length, List.drop_append_length]
+      simp only [ln, Qn, Rn, if_false, List.nil_append, List.append_nil, List.append_assoc]
   have hpos (v : ℕ → ℤ) (off len : ℕ) (b : ℤ) (hb : 0 ≤ b)
       (hv : ∀ i < len, v (off + i) = (2 : ℤ) ^ i * b) :
       ∀ i ∈ row off len, 0 ≤ v i :=
@@ -713,7 +723,8 @@ private theorem assemble (a c : ℕ) (hc : 2 ≤ c) (hca : c < a)
     dsimp only [delta]
     constructor
     · omega
-    · nlinarith [mul_nonneg (show 0 ≤ T a by omega) (show 0 ≤ U c - 1 by omega)]
+    · rw [hts]
+      nlinarith [mul_nonneg hs (show 0 ≤ U c - 1 by omega)]
   have hbetan : 0 ≤ T a - 2 * U c ∧ T a - 2 * U c ≤ T a * U c + sh a := by
     constructor
     · omega
@@ -724,7 +735,7 @@ private theorem assemble (a c : ℕ) (hc : 2 ≤ c) (hca : c < a)
       hPs hQs hRs
     · rw [d.oldBeta]; linarith [d.caps.2.1.2]
     · rw [d.oldGamma]; linarith [d.caps.2.2.2]
-    · rw [d.oldAlpha]; constructor <;> linarith [d.caps.1]
+    · rw [d.oldAlpha]; constructor <;> linarith [d.caps.1.1, d.caps.1.2]
     · exact netv
     · exact hqs
     · simp only [List.map_append, List.sum_append] at htot ⊢
@@ -738,11 +749,15 @@ private theorem assemble (a c : ℕ) (hc : 2 ≤ c) (hca : c < a)
       hPx hQx hRx
     · rw [d.newBeta]
       have hh := d.caps.2.1.2
-      nlinarith only [hh, hts, hs]
+      have he : T a * U c + sh a = 2 * (sh a * (U c + 1)) - sh a := by rw [hts]; ring
+      rw [he]
+      linarith
     · rw [d.newGamma]
       linarith [d.caps.2.2.2, d.cap0]
     · rw [d.newAlpha]
-      constructor <;> nlinarith only [d.caps.1.1, d.caps.1.2, hur]
+      have he : (T a + 1) * U c = 2 * ((T a + 1) * rh c) := by rw [hur]; ring
+      rw [he]
+      constructor <;> linarith [d.caps.1.1, d.caps.1.2]
     · exact hpn
     · exact hqn
     · dsimp only [ln] at htotn
@@ -775,11 +790,18 @@ theorem native_three_negative_common_cut (a c : ℕ) (hc : 2 ≤ c) (hca : c < a
     apply assemble a c hc hca false [] (row (a + c) (a - 1)) 0
       (by simp) (by simp) (by simp)
     · simp only [Nat.cast_zero, mul_zero, sub_zero]
-      constructor
-      · positivity
-      · nlinarith only [htu, hts]
+      have huS : U c = sh a := by omega
+      have he : (T a + 1) * (T a - U c) = sh a * (T a + 1) := by
+        rw [hts, huS]
+        ring
+      rw [he]
+      exact ⟨by positivity, le_refl _⟩
     · simp only [Bool.false_eq_true, if_false, Nat.cast_zero, mul_zero, sub_zero, add_zero]
-      constructor <;> nlinarith only [htu]
+      have he : 2 * ((T a + 1) * (T a - U c)) - T a * (T a + 1) = 0 := by
+        rw [htu]
+        ring
+      rw [he]
+      exact ⟨le_refl 0, by positivity⟩
   · have hgap : 2 ≤ a - c := by omega
     let m : ℤ := 2 ^ (a - c)
     have hm : m = 4 ∨ 8 ≤ m := by

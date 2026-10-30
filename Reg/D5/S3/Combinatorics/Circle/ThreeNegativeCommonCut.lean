@@ -4,8 +4,8 @@ import Reg.Support.DependentFamily
 
 /-! The source-equivalence bridge retains the complete native telescope and the
 literal joint candidate. The law is an existential constructor; a lawful enrolled
-readout and whole-family sourceSelection remain subject to the source.params
-boundary of issue #22063. This is not a Contract.Registration. -/
+readout, whole-family variation/sensitivity, sourceSelection and current binding
+remain unresolved under issue #22063. This is not a Contract.Registration. -/
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
