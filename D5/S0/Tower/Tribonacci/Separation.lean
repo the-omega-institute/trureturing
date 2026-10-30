@@ -246,7 +246,6 @@ private theorem resultant_three_embeddings {z : ℂ}
   rw [hcompR] at hreal
   rw [hcompC] at hconj
   rw [← hreal, ← hconj]
-  rfl
 
 private theorem integer_norm_lower_bound {z : ℂ}
     (hz : z ∈ tribonacciCharacteristicPolynomial.roots)
