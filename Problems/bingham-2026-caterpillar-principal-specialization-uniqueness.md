@@ -43,8 +43,7 @@ The listed pairs do not exhaust the phenomenon. The counterexample is
 
 $$A=(2,2,2,2,2,1,4,3),\qquad B=(2,2,3,2,3,4,2).$$
 
-Both compositions have total size eighteen and admissible endpoints. The formal claim
-retains the full universal domain and is negated by its designated result.
+Both compositions have total size eighteen and admissible endpoints. This counterexample refutes the assertion over its full universal domain.
 
 ## Route
 
@@ -60,9 +59,9 @@ polynomial normalization gives
 $$P_2(A)=X^8+X^{10},\qquad P_2(B)=2X^9,\qquad P_3(A)=P_3(B).$$
 
 The coefficient of degree eight separates the second polynomials. The source's complex
-coefficient polynomials are defined as the same actual coloring sums over C[X]. A compiled
+coefficient polynomials are defined as the same actual coloring sums over C[X]. A
 map-of-sums identity and injectivity of the coefficient map Z[X] to C[X] transfer both
-comparisons; no coefficient-ring equivalence is merely assumed.
+comparisons.
 
 A vertex with two distinct neighbors must be on the spine, since a pendant vertex has
 only its incident spine vertex as a neighbor. All eight spine vertices of A have two
@@ -80,30 +79,21 @@ the second polynomials, or an actual graph isomorphism placing the witness pair 
 listed class would invalidate this counterexample. Agreement only at finitely many
 values of X would not establish the needed identity.
 
-## Evidence
+## Result and scope
 
-The designated declaration is
-`D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarUniquenessRefutation.result`.
-Its source-declared type is literally the negation of the module's full `claim : Prop`. All polynomial,
-coefficient-extension and isomorphism-exclusion helpers are on that result's proof path.
-The claim includes the base pair, every positive j, and both pair orders through actual
-graph isomorphisms. A finite witness negates this universal assertion for all sizes.
+`D5/S3/Combinatorics/Graph/PrincipalSpecialization/BinghamCaterpillarUniquenessRefutation.result`
+negates the full exhaustive-pairs assertion. The coloring-sum identities give unequal second
+and equal third ordinary specializations over the source's complex coefficient ring. The
+nonleaf invariant excludes A from every base and positive-j family member, and therefore
+excludes the witness from the full unordered graph-isomorphism closure.
 
-## Triage
+The earlier first-question theorem, that every positive-j listed pair exhibits the phenomenon,
+is compatible with this refutation. A classification of all pairs, the smallest counterexample
+size, other infinite families, four-color questions and t-refined analogues remain unresolved
+here. None follows from this finite counterexample alone.
 
-- Proved by the designated result: the whole exhaustive-pairs assertion is false.
-- Proved on its proof path: the witness polynomials have unequal second and equal
-  third ordinary specializations over the source's complex coefficient ring.
-- Proved on its proof path: A is not isomorphic to any base or positive-j family
-  member, so no listed unordered pair can represent this witness.
-- The earlier first-question result, that every positive-j listed pair exhibits the
-  phenomenon, is compatible with this refutation and remains a separate theorem.
-- Unresolved: a classification of all pairs, the smallest counterexample size, other
-  infinite families, four-color questions and t-refined analogues. No such consequence
-  follows from the finite counterexample alone.
+## Literature limits
 
-## ASSUMED-UNVERIFIED
-
-The bounded source and literature screen supporting the named external question did
-not locate an earlier settlement. Citation and third-party code searches were incomplete.
-No exhaustive absence, originality, priority or minimality claim is made.
+The bounded source and literature screen for the external question did not locate an earlier
+settlement. Citation and third-party code searches were incomplete. This does not establish
+exhaustive absence, originality, priority or minimality.
