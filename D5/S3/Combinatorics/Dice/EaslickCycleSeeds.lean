@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Combinatorics/Dice/EaslickCycleSeeds
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: [mathlib/module/Mathlib.Data.List.Chain]
-   utility: none
+   utility: kind=checker; basis=consumer=D5/S3/Combinatorics/Dice/EaslickPaddedCycles.longer_cycle; instance=D5/S3/Combinatorics/Dice/EaslickCycleSeeds.sourceSeed_check
    digest: Fixed simple cycles supply the finite seeds for minimal-advantage padding. -/
 
 import D5.S3.Combinatorics.Dice.EaslickMinimalAdvantage
@@ -214,45 +214,78 @@ def sourceSeed : ℕ → List (List ℕ)
     [2, 2, 4, 4, 4, 4, 5, 6, 6, 10, 10]]
   | _ => []
 
-private def IsScoreCycle (n : ℕ) (c : List (List ℕ)) : Prop :=
-  c ≠ [] ∧ c.Nodup ∧ (∀ d ∈ c, IsDie n d) ∧
-    (c ++ [c.head!]).IsChain (fun d e => winCount d e = threshold n)
+/-- Scan successive encoded vertices without assuming a semantic chain law. -/
+def checkSteps {α : Type} (edge : α → α → Bool) : List α → Bool
+  | [] => true
+  | [_] => true
+  | a :: b :: tail => edge a b && checkSteps edge (b :: tail)
 
-set_option maxRecDepth 100000 in
-set_option maxHeartbeats 8000000 in
-/-- Finite source lists are checked by kernel reduction. -/
-private theorem sourceSeed_score (n : ℕ) (hn : n ∈ [6,7,8,9,10,11]) :
-    IsScoreCycle n (sourceSeed n) := by
-  simp only [List.mem_cons, List.not_mem_nil, or_false] at hn
-  rcases hn with rfl | rfl | rfl | rfl | rfl | rfl <;>
-    unfold IsScoreCycle IsDie <;> decide
+private theorem checkSteps_sound {α : Type} (edge : α → α → Bool) (c : List α)
+    (h : checkSteps edge c = true) : c.IsChain (fun a b => edge a b = true) := by
+  induction c with
+  | nil => exact .nil
+  | cons a tail ih =>
+    cases tail with
+    | nil => exact .singleton a
+    | cons b tail =>
+      simp only [checkSteps, Bool.and_eq_true] at h
+      exact List.isChain_cons_cons.mpr ⟨h.1, ih h.2⟩
 
-private theorem hasCycle_of_score (n : ℕ) (hn : 3 ≤ n) (c : List (List ℕ))
-    (h : IsScoreCycle n c) : HasCycle n c.length := by
-  obtain ⟨hne,hnodup,hvalid,hchain⟩ := h
-  have hhead : c.head! ∈ c := by
-    cases c with
-    | nil => contradiction
-    | cons a l => simp
+/-- Executable face-count, adjacent-order and label-range tests for arbitrary dice. -/
+def checkDie (n : ℕ) (d : List ℕ) : Bool :=
+  (d.length == n) && checkSteps (fun a b => decide (a ≤ b)) d &&
+    d.all (fun x => decide (1 ≤ x ∧ x ≤ n))
+
+private theorem checkDie_sound (n : ℕ) (d : List ℕ) (h : checkDie n d = true) :
+    IsDie n d := by
+  simp only [checkDie, Bool.and_eq_true, beq_iff_eq, List.all_eq_true,
+    decide_eq_true_eq] at h
+  refine ⟨h.1.1, ?_, h.2⟩
+  have hs := checkSteps_sound _ _ h.1.2
+  exact (hs.imp (by simpa using fun a b (hab : decide (a ≤ b) = true) => of_decide_eq_true hab)).pairwise
+
+/-- Check the actual encoded cycle: nonempty, no duplicate vertices, valid dice,
+    and every successive score including the closing edge. No graph law is input. -/
+def checkCycle (n : ℕ) (c : List (List ℕ)) : Bool :=
+  (!c.isEmpty) && (c.dedup.length == c.length) && c.all (checkDie n) &&
+    checkSteps (fun d e => winCount d e == threshold n) (c ++ [c.head!])
+
+/-- Successful arbitrary-input checking reconstructs the original probability graph. -/
+theorem checkCycle_sound (n : ℕ) (hn : 3 ≤ n) (c : List (List ℕ))
+    (h : checkCycle n c = true) : HasCycle n c.length := by
+  simp only [checkCycle, Bool.and_eq_true, Bool.not_eq_true, List.isEmpty_eq_false,
+    beq_iff_eq, List.all_eq_true] at h
+  have hne : c ≠ [] := h.1.1.1
+  have hnd : c.Nodup := List.nodup_iff_length_dedup_eq.mpr h.1.1.2
+  have hvalid (d : List ℕ) (hd : d ∈ c) : IsDie n d := checkDie_sound n d (h.1.2 d hd)
+  have hhead : c.head! ∈ c := by cases c with | nil => contradiction | cons a l => simp
   have hv (d : List ℕ) (hd : d ∈ c ++ [c.head!]) : IsDie n d := by
     rcases List.mem_append.mp hd with hmem | hmem
     · exact hvalid d hmem
     · have : d = c.head! := by simpa using hmem
       rw [this]
       exact hvalid _ hhead
-  refine ⟨c,rfl,hnodup,hne,?_⟩
-  exact hchain.imp_of_mem_imp (fun a b ha hb hab =>
-    (edge_iff n hn a b (hv a ha) (hv b hb)).mpr hab)
+  refine ⟨c,rfl,hnd,hne,?_⟩
+  exact (checkSteps_sound _ _ h.2).imp_of_mem_imp (fun a b ha hb hab =>
+    (edge_iff n hn a b (hv a ha) (hv b hb)).mpr (by simpa using hab))
+
+set_option maxRecDepth 100000 in
+set_option maxHeartbeats 8000000 in
+/-- The first actual checker inputs are precisely the six source and derived seeds. -/
+theorem sourceSeed_check (n : ℕ) (hn : n ∈ [6,7,8,9,10,11]) :
+    checkCycle n (sourceSeed n) = true := by
+  simp only [List.mem_cons, List.not_mem_nil, or_false] at hn
+  rcases hn with rfl | rfl | rfl | rfl | rfl | rfl <;> decide
 
 /-- These finite witnesses are ingredients for the full parameter cover. -/
 theorem finite_cycle_witnesses :
     HasCycle 6 6 ∧ HasCycle 7 14 ∧ HasCycle 8 29 ∧
       HasCycle 9 10 ∧ HasCycle 10 110 ∧ HasCycle 11 14 := by
-  exact ⟨hasCycle_of_score 6 (by decide) _ (sourceSeed_score 6 (by decide)),
-    hasCycle_of_score 7 (by decide) _ (sourceSeed_score 7 (by decide)),
-    hasCycle_of_score 8 (by decide) _ (sourceSeed_score 8 (by decide)),
-    hasCycle_of_score 9 (by decide) _ (sourceSeed_score 9 (by decide)),
-    hasCycle_of_score 10 (by decide) _ (sourceSeed_score 10 (by decide)),
-    hasCycle_of_score 11 (by decide) _ (sourceSeed_score 11 (by decide))⟩
+  exact ⟨checkCycle_sound 6 (by decide) _ (sourceSeed_check 6 (by decide)),
+    checkCycle_sound 7 (by decide) _ (sourceSeed_check 7 (by decide)),
+    checkCycle_sound 8 (by decide) _ (sourceSeed_check 8 (by decide)),
+    checkCycle_sound 9 (by decide) _ (sourceSeed_check 9 (by decide)),
+    checkCycle_sound 10 (by decide) _ (sourceSeed_check 10 (by decide)),
+    checkCycle_sound 11 (by decide) _ (sourceSeed_check 11 (by decide))⟩
 
 end D5.S3.Combinatorics.Dice.EaslickCycleSeeds
