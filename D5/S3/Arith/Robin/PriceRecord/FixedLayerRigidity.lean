@@ -42,7 +42,7 @@ open D5.S3.Factorization.PrimePowers.FiniteCrtJoin (primePowerProduct)
 def layerPrime (m j : ℕ) : ℕ :=
   max 1 ((m.primeFactors.filter fun p => j ≤ m.factorization p).sup id)
 
-private theorem layer_prime_mem {m j : ℕ} (hQ : 1 < layerPrime m j) :
+theorem layer_prime_mem {m j : ℕ} (hQ : 1 < layerPrime m j) :
     layerPrime m j ∈ m.primeFactors ∧ j ≤ m.factorization (layerPrime m j) := by
   classical
   let S := m.primeFactors.filter fun p => j ≤ m.factorization p
