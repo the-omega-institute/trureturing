@@ -1,0 +1,29 @@
+The infimum is attained. Its equality laws are exactly as follows.
+
+* If $0<\delta<\delta_c(a)$, they are the $\binom{s}{2}$ laws $D_P$ indexed by
+  $P\subset[s]$, $|P|=2$, with
+
+  $$
+  x_{[s]\setminus P}=\delta,
+  \quad
+  x_{[s]\setminus\{i\}}=\frac{1-r\delta}{s}-\varepsilon_*(\delta)\ (i\in P),
+  \quad
+  x_{[s]\setminus\{j\}}=\frac{1+\delta}{s}+\frac{2\varepsilon_*(\delta)}a\ (j\notin P),
+  \tag{15.6}
+  $$
+
+  with all other masses zero.
+* If $\delta_c(a)<\delta\le L/a$, they are the $s$ laws $R_e$ indexed by
+  $e\in[s]$, with
+
+  $$
+  x_{\{e\}}=\frac\delta a,
+  \qquad
+  x_{[s]\setminus\{e\}}=1-\frac\delta a,
+  \tag{15.7}
+  $$
+
+  and all other masses zero.
+* At $\delta=\delta_c(a)$ the equality class is the disjoint union of the two
+  displayed families. There is no additional mixed equality law.
+

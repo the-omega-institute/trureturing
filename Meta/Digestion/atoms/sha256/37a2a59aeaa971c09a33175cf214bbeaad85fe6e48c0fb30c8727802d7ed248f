@@ -1,0 +1,244 @@
+**Theorem 14.3 (Exact dense minimum and all labeled equality laws).** Fix $0<L<1$ and set
+
+$$
+A(L)=\left\lceil\frac{64}{1-L}\right\rceil.
+\tag{14.7}
+$$
+
+For every integer $a\ge A(L)$ and every real $0<\delta\le L/a$, there is a unique $\varepsilon_*$ in $(0,e_0)$ satisfying
+
+$$
+r^2v(\varepsilon_*)
+ \big[u(\varepsilon_*)^2-v(\varepsilon_*)^2\big]
+=2\gamma u(\varepsilon_*)^2.
+\tag{14.8}
+$$
+
+It obeys the strict bounds
+
+$$
+0<\varepsilon_*<\frac{\rho}{\mu^3}<e_0<m.
+\tag{14.9}
+$$
+
+Write $u_*=u(\varepsilon_*)$ and $v_*=v(\varepsilon_*)$. The minimum over the entire dense domain (11.1) is exactly
+
+$$
+\boxed{\quad
+\mathscr D_a(\delta)
+=\frac{2r^2}{u_*}
+ +a\left(\frac{r^2}{v_*}-\frac{\gamma}{v_*^2}\right)
+=\mathcal H(\varepsilon_*)<H_d.
+\quad}
+\tag{14.10}
+$$
+
+An equivalent algebraic specification uses the unique real root $z_*$ in the isolating interval $(1-1/a,1)$ of
+
+$$
+r^2qz^3-(r^2q-2a\gamma)z+4\gamma=0.
+\tag{14.11}
+$$
+
+In terms of this root,
+
+$$
+\begin{aligned}
+u_*&=\frac q{2+az_*},
+&v_*&=\frac{qz_*}{2+az_*},
+&\varepsilon_*&=\frac q{2+az_*}-\mu,\\
+\mathscr D_a(\delta)
+&=\frac{r^2(2+az_*)}{q}
+  \left[2+\frac a2\left(z_*+z_*^{-1}\right)\right].
+\end{aligned}
+\tag{14.12}
+$$
+
+All labeled minimizing laws, and only those laws, are indexed by a two-element set $P\subseteq[s]$ and have masses
+
+$$
+\begin{aligned}
+x_{[s]\setminus P}&=\delta,\\
+x_{[s]\setminus\{i\}}&=m-\varepsilon_*
+&& (i\in P),\\
+x_{[s]\setminus\{j\}}&=\frac{1+\delta}{s}
+                       +\frac{2\varepsilon_*}{a}
+&& (j\notin P),\\
+x_T&=0&&\text{for every other }T.
+\end{aligned}
+\tag{14.13}
+$$
+
+Every displayed nonzero mass is strictly positive. The actual marginals are $u_*$ on $P$ and $v_*$ off $P$, with $u_*>v_*>\tau$. Consequently there are exactly $\binom{s}{2}$ labeled minimizers, and there is a unique minimizer up to relabeling. The minimum of $d(x)$ on this domain is $\mathcal H(\varepsilon_*)-B$.
+
+The quantifiers include arbitrarily small positive $\delta$ in the stated interval. The least sufficient threshold, the remaining smaller values of $a$, an exact rare/dense crossing curve, and prescribed finite-graph realization remain undetermined.
+
+**Proof.** First establish parameter bounds uniformly throughout the interval, without a lower bound on $\delta$. Put $w=1-L$. Since $aw\ge64$, $\delta\le L/a<1/a$, and $s\le2a$, one has
+
+$$
+\begin{gathered}
+1-r\delta\ge1-L-\frac La>\frac w2,
+\qquad m>\frac w{4a},\\
+0<\rho<\frac2{a^2},\qquad
+e_0<\frac8{a^2}\le\frac w{8a}<m,
+\qquad \mu\ge\frac a{a+2}\ge\frac79,\\
+0<\tau=\frac{3(2r+1)\delta}{r^2}
+ <\frac9{a^2}<\frac12.
+\end{gathered}
+\tag{14.14}
+$$
+
+For every $0\le\varepsilon\le e_0$ these imply
+
+$$
+\tau<v(\varepsilon)
+\ge\mu-\frac{2e_0}{a}
+>\frac79-\frac{16}{a^3}>\frac12,
+\qquad
+\tau<u(\varepsilon)\le\mu+e_0
+<\mu+m=1-\delta<1.
+\tag{14.15}
+$$
+
+Consider the interval of grouped dense marginals
+
+$$
+\mathcal I=
+\left[0,\min\left\{1-\mu,\frac a2(\mu-\tau)\right\}\right].
+\tag{14.16}
+$$
+
+It contains $[0,e_0]$ by (14.15); on $\mathcal I$, both $u$ and $v$ belong to $[\tau,1]$. The auxiliary functions
+
+$$
+g_0(t)=\frac{r^2}t,\qquad
+g_1(t)=\frac{r^2}t-\frac{\gamma}{t^2}
+\tag{14.17}
+$$
+
+are strictly convex on $[\tau,1]$, since
+
+$$
+g_0''(t)=\frac{2r^2}{t^3}>0,\qquad
+g_1''(t)=\frac{2(r^2t-3\gamma)}{t^4}>0,
+\qquad r^2\tau-3\gamma=6\delta>0.
+\tag{14.18}
+$$
+
+In particular direct differentiation of (14.2) gives, throughout $\mathcal I$,
+
+$$
+\begin{aligned}
+\mathcal H'(\varepsilon)
+&=2r^2(v^{-2}-u^{-2})-4\gamma v^{-3},\\
+\mathcal H''(\varepsilon)
+&=\frac{4r^2}{u^3}
+ +\frac{8(r^2v-3\gamma)}{av^4}>4r^2.
+\end{aligned}
+\tag{14.19}
+$$
+
+Here $u=u(\varepsilon)$ and $v=v(\varepsilon)$. Thus $\mathcal H'$ is strictly increasing, and
+
+$$
+\mathcal H'(0)=-\frac{4r^2\rho}{\mu^3}<0,\qquad
+\mathcal H'(e_0)
+>4r^2\rho(4-\mu^{-3})>0,
+\tag{14.20}
+$$
+
+because $\mu^{-3}\le(9/7)^3<4$. There is exactly one zero $\varepsilon_*\in(0,e_0)$; it is the unique minimizer of $\mathcal H$ on all of $\mathcal I$. Its derivative equation is (14.8). Integrating the strict second-derivative bound from zero to $\varepsilon_*$ yields $\varepsilon_*<\rho/\mu^3$, proving (14.9). Also $\mathcal H(\varepsilon_*)<\mathcal H(0)=H_d$, using the existing family identity (7.5).
+
+Now let $x$ be any dense law in the original domain, with no assumption on its support or energy. Form its weights (14.3), and choose $P$ to consist of two largest marginals, breaking ties arbitrarily. Then $[s]\setminus P$ maximizes $W_U$ over $a$-subsets, so (14.6) reads
+
+$$
+\begin{aligned}
+H(x)
+&=F_P(y)+\mathbb E_xG_y(T),\\
+F_P(y)
+&=\sum_{i\in P}g_0(y_i)
+  +\sum_{j\notin P}g_1(y_j).
+\end{aligned}
+\tag{14.21}
+$$
+
+Let $u=\frac12\sum_{i\in P}y_i$ and $v=\frac1a\sum_{j\notin P}y_j$. These are averages of the same actual marginals. The choice of $P$ gives $u\ge v$, and $2u+av=q$, hence $u=\mu+\varepsilon$, $v=\mu-2\varepsilon/a$ for some $\varepsilon\in\mathcal I$. Applying Jensen's inequality separately to the two strictly convex functions in (14.17) gives
+
+$$
+H(x)\ge F_P(y)
+\ge2g_0(u)+ag_1(v)
+=\mathcal H(\varepsilon)
+\ge\mathcal H(\varepsilon_*).
+\tag{14.22}
+$$
+
+The middle inequality is an equality exactly when the two marginals on $P$ both equal $u$ and all $a$ marginals off $P$ equal $v$. Jensen's inequality is used in its standard finite convex-combination form; see S. Boyd and L. Vandenberghe, *Convex Optimization*, Cambridge University Press, §3.1.8, pp.77–78, [author-hosted text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf). Strictness here follows from the positive second derivatives in (14.18). Convexity is asserted for $g_0,g_1$ and $\mathcal H$, without imposing convexity on $H$ as a function of the law.
+
+To prove actual attainment, fix $P$ and use (14.13). Positivity follows from (14.9), including $\delta>0$. The masses on the $r$-subsets add to
+
+$$
+2(m-\varepsilon_*)
++a\left(\frac{1+\delta}{s}
+        +\frac{2\varepsilon_*}{a}\right)=1-\delta.
+\tag{14.23}
+$$
+
+Thus the total mass is one and its cardinality mean is $a\delta+r(1-\delta)=q$. A label in $P$ is absent from the sole $a$-atom and from its own missing-one type, giving marginal
+
+$$
+1-\delta-(m-\varepsilon_*)=u_*.
+$$
+
+A label off $P$ is absent only from its own missing-one type, giving marginal
+
+$$
+1-\left(\frac{1+\delta}{s}
+       +\frac{2\varepsilon_*}{a}\right)=v_*.
+$$
+
+These actual marginals satisfy the density condition by (14.15). Moreover $w_i=r^2u_*$ on $P$ and $w_j=r^2v_*-\gamma$ off $P$. Therefore its energy is precisely $\mathcal H(\varepsilon_*)$, proving (14.10) together with the unrestricted-cardinality lower bound (14.22).
+
+For completeness, suppose any actual dense law attains this value. Every inequality in (14.22) must then be an equality. Strict convexity gives $\varepsilon=\varepsilon_*$ and constant marginals within each group. Since $\varepsilon_*>0$, the two marginals on $P$ are strictly larger than all the others. Consequently $[s]\setminus P$ is the unique $a$-subset maximizing $W_U$. By (14.5) and $\mathbb E_xG_y(T)=0$, every positive-mass atom has cardinality $r$, except possibly this one $a$-subset. The mean constraint forces the mass of that $a$-subset to be $\delta$. Each $r$-subset is a missing-one type, and its mass is forced by the actual marginal to be
+
+$$
+x_{[s]\setminus\{i\}}
+=1-y_i-\delta\,\mathbf1_{\{i\in P\}}.
+\tag{14.24}
+$$
+
+These are exactly the masses in (14.13). The construction already proves the converse. The pair $P$ is recoverable as the two largest marginals, so different pairs give different labeled laws and all are related by label permutations.
+
+Finally put $z_*=v_*/u_*$. The identity $2u_*+av_*=q$ gives the first line of (14.12), and (14.8) becomes
+
+$$
+\gamma=\frac{r^2qz_*(1-z_*^2)}{2(2+az_*)},
+\tag{14.25}
+$$
+
+which is equivalent to (14.11). Also
+
+$$
+1-z_* =\frac{s\varepsilon_*}{au_*}
+<\frac{se_0}{a\mu}<\frac1a,
+\qquad se_0<\frac{16}a\le\frac14<\mu.
+\tag{14.26}
+$$
+
+Thus $z_*\in(1-1/a,1)$. The derivative of the polynomial in (14.11) is
+
+$$
+r^2q(3z^2-1)+2a\gamma>0
+\quad\text{for }1-1/a\le z\le1,
+$$
+
+since $a\ge64$. Its root in this interval is therefore unique. Substitute (14.25) into (14.2) to obtain
+
+$$
+\mathcal H(\varepsilon_*)
+=\frac{r^2(2+az_*)}{q}
+ \left[2+\frac a{z_*}
+       -\frac{a(1-z_*^2)}{2z_*}\right],
+$$
+
+which simplifies to the second line of (14.12). This completes the exact algebraic specification and the equality classification. ∎
+

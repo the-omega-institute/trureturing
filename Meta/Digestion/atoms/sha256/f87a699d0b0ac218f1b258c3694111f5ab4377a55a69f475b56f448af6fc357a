@@ -1,0 +1,28 @@
+### 定义 14.1（固定容限成功域与单次补全正规形）
+
+固定 $k\ge2$ 和有限实数 $\varepsilon>0$。本节完全沿用定义 9.1、13.1 的
+$\mathcal M_k$、严格正因子、普通初始实秩、完整闭逐读数误差、确定性完整历史
+协议以及初读和每个原子后必读的收费合同。对一个 $\varepsilon$-可靠协议，记
+
+$$
+ \operatorname{Succ}_{\varepsilon}(\Pi)
+ =\{R\in\mathcal M_k:\Pi\text{ 对 }R\text{ 的每条允许误差历史均有限输出 }2\},
+ \qquad
+ \mathcal I_k(\varepsilon)
+ =\bigcup_{\Pi\text{ 为 }\varepsilon\text{-可靠协议}}
+       \operatorname{Succ}_{\varepsilon}(\Pi).
+\tag{14.1}
+$$
+
+因此 $\mathcal I_k^{\mathrm{rob}}=\bigcup_{\varepsilon>0}\mathcal I_k(\varepsilon)$，
+但这里的 $\varepsilon$ 已经固定，不能在证明中按来源缩小。
+
+称一个协议为单次补全正规形，若在首次 $L_0$ 前，它只根据已取得的纯 $N$
+报告前缀 $u=(u_0,\ldots,u_q)$，选择停止而不作秩二断言、继续一次 $N$，或
+立即执行首次 $L_0$；其中 $0\le q<k$，在 $q=k-1$ 时不再选择 $N$。
+一旦选择首次 $L_0$，它按定义 12.1 的规范词补全 $T_q$，并在且仅在
+引理 13.2 的严格正共同解系统 (13.5) 无解时输出 $2$，否则停止而不作秩二断言。
+补全期间没有第二次 $L_0$，也不重复读取同一规范坐标；特别是 $q=k-1$
+时直接共享此前的 $u_{k-1}$，不再读取 $b_{k-1}^{(k-1)}=a_{k-1}$。
+所有决策仍可不连续、不可测或不可计算。
+
