@@ -435,10 +435,11 @@ theorem actualSource_three_negative_equal_outer_joint_lift (a b : ℕ)
     have hUG := ladder_sum g 0 (a - 1) (2 * v) (fun i hi => by simpa using (hU i hi).2)
     have hVF := ladder_sum f a m B (fun i hi => (hV i (by dsimp [m] at hi; omega)).1)
     have hVG := ladder_sum g a m (2 * B - 1) (fun i hi => (hV i (by dsimp [m] at hi; omega)).2)
+    simp only [← List.range_eq_range'] at hUF hUG
     constructor
-    · simpa only [T, List.map_append, List.sum_append, ← List.range_eq_range', hUF, hVF] using
+    · simpa only [T, List.map_append, List.sum_append, hUF, hVF] using
         (show (2 ^ (a - 1) - 1) * v + (2 ^ m - 1) * B = t by rfl)
-    · simpa only [T, List.map_append, List.sum_append, ← List.range_eq_range', hUG, hVG] using
+    · simpa only [T, List.map_append, List.sum_append, hUG, hVG] using
         (show (2 ^ (a - 1) - 1) * (2 * v) + (2 ^ m - 1) * (2 * B - 1) = tn by rfl)
   have hp : word.Perm (List.range k) := inventory a b ha hab
   have hplus : plus.Perm (List.range (k + 1)) := by
