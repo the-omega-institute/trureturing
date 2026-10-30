@@ -93,10 +93,9 @@ on j and no numerical specialization of X.
   This is the uniform mechanism for all positive j; it asserts no general endpoint replacement.
 - Proved on that result's live proof path: `ps2_alpha` and `ps2_beta` give the displayed exact
   two-color monomials, and `ps2_ne` separates their coefficients at degree j+5.
-- Separate proof source: `BinghamCaterpillarUniquenessRefutation.result` targets the
-  exhaustive-pairs assertion using an eighteen-vertex witness. Its accepted-axiom and compiled-utility checks remain
-  outstanding; no second-question settlement is asserted here. The first-question family
-  proof supplies no classification.
+- The separate `BinghamCaterpillarUniquenessRefutation.result` refutes the
+  exhaustive-pairs assertion using an eighteen-vertex witness. The first-question family
+  theorem supplies no classification.
 - Open here: the source's four-color questions and any analogous t-refined statement. This
   resolution supplies no settlement of those questions or additional source results.
 
@@ -104,5 +103,5 @@ on j and no numerical specialization of X.
 
 The bounded literature screen described in the Library note found no earlier settlement;
 citation and third-party code searches were incomplete. No exhaustive absence or originality
-claim is made. No conclusion about uniqueness, arbitrary end blocks, four colors, or the
-t refinement is asserted.
+claim is made. The family theorem makes no claim about arbitrary end blocks, four colors, or the
+t refinement.

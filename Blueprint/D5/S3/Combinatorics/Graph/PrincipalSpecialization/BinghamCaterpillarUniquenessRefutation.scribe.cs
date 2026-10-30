@@ -31,11 +31,10 @@ internal sealed class BinghamCaterpillarUniquenessRefutationDocument : IScribeDo
             Node("b", "The second witness", "witnessB", Eq(Call("witnessB"),Tuple(2,2,3,2,3,4,2)),
                 "The seven positive parts sum to eighteen and satisfy the same endpoint condition."),
             Describe.Lean(DescribeId.Create("bingham-uniqueness-result"), DeclarationHandle.Create(Prefix + "result"),
-                H("The exhaustive-pairs assertion is false"), StatementSource.FromAuthor(Disp(Seq(Neg,Id("claim")))),
+                H("The exhaustive-pairs assertion is false"), StatementSource.FromAuthor(Disp(Seq(Neg,P(ClaimBody())))),
                 AssessedProvenance.FromRepo(Source), Blocks(Paragraph(Text(
                     "For A=witnessA and B=witnessB, the actual two-color polynomials are X^8+X^10 and 2X^9. The coefficients at degree eight are one and zero. Their actual three-color polynomials agree. The proof directly reuses ps_spine_sum, which follows from the original explicit bijection between all proper colorings and proper spine colorings with independent leaf choices. Each block has weight X^c times (the sum of X^d over d different from c) to the power val(a(i))−1. Finite spine sums and polynomial normalization prove the two identities and the complete third-polynomial equality. The injective coefficient-extension bridge transfers both comparisons to the source's complex polynomials. To exclude every listed pair, a vertex with two distinct neighbors must lie on the spine: a pendant vertex has its incident spine vertex as its only neighbor. Every one of A's eight spine vertices has two distinct neighbors. Any graph isomorphism from A to a caterpillar with l spine vertices would therefore induce an injection Fin 8 into Fin l. Each base member has l=3 and each family member has l=5 for every positive j. The resulting cardinal inequalities exclude every such isomorphism, including all relabelings, reversals, and pair exchanges. This single pair refutes the full universal assertion. It asserts no minimality, priority, converse classification, four-color statement, or t-refined extension."))),
-                DescribeRole.Theorem, new OpenProblemResolutionClaim(
-                    ProblemSlugRef.Create("bingham-2026-caterpillar-principal-specialization-uniqueness"), ResolutionKind.Refuted))), []));
+                DescribeRole.Theorem)), []));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("bingham-uniqueness-" + id), DeclarationHandle.Create(Prefix + name), H(title),

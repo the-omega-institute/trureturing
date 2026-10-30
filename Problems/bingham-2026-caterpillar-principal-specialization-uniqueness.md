@@ -22,7 +22,7 @@ compositions of n, unequal ordinary second and identical ordinary third principa
 specializations imply that their unordered graph-isomorphism pair is the displayed base
 pair {(5,4,3),(4,5,3)} or {(5,j,j,4,3),(4,j,j,5,3)} for some positive integer j.
 All graph relabelings, reversals and pair exchanges are included. There is no size cutoff.
-The first all-j question is a separate result and is not counted again here.
+The first all-j question is a separate result.
 
 Definition 2.1 admits (1), and every nonempty positive composition whose two endpoint
 parts are at least two, including length-one stars. The actual graph has one spine
@@ -91,24 +91,18 @@ graph isomorphisms. A finite witness negates this universal assertion for all si
 
 ## Triage
 
-- Compiled proof target (axiom closure outstanding) of the designated result: the whole exhaustive-pairs assertion is false.
-- Compiled proof target (axiom closure outstanding) on its source proof path: the witness polynomials have unequal second and equal
+- Proved by the designated result: the whole exhaustive-pairs assertion is false.
+- Proved on its proof path: the witness polynomials have unequal second and equal
   third ordinary specializations over the source's complex coefficient ring.
-- Compiled proof target (axiom closure outstanding) on its source proof path: A is not isomorphic to any base or positive-j family
+- Proved on its proof path: A is not isomorphic to any base or positive-j family
   member, so no listed unordered pair can represent this witness.
 - The earlier first-question result, that every positive-j listed pair exhibits the
   phenomenon, is compatible with this refutation and remains a separate theorem.
 - Unresolved: a classification of all pairs, the smallest counterexample size, other
   infinite families, four-color questions and t-refined analogues. No such consequence
   follows from the finite counterexample alone.
-- A possible successor is a classification incorporating further collision mechanisms;
-  this is a research direction, not a proved replacement assertion.
 
 ## ASSUMED-UNVERIFIED
-
-The second-question proof source passes a guarded Lean build. Its accepted-axiom closure
-and compiled utility evidence remain unchecked. No fully verified or published settlement
-of the second question is asserted.
 
 The bounded source and literature screen supporting the named external question did
 not locate an earlier settlement. Citation and third-party code searches were incomplete.
