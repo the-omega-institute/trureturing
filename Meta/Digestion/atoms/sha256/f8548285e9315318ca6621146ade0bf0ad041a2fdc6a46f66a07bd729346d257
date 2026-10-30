@@ -1,0 +1,6 @@
+The same criterion holds for every $\epsilon\ge0$ when $K=\{0\}$. An attained complete-state bound is $|\mathcal S|$, using only the reduced path, with $q=1$. Exact endpoint and native vector without any supplement need not recover different schemas ending at the same vertex.
+
+2. For fixed $K$, existence at one positive tolerance and a separately chosen finite label or machine at each positive tolerance are equivalent to (18.1) and the cyclic-SCC condition. This statement imposes no uniform cardinality bound as tolerance grows.
+
+3. For fixed $K$, each of the following is equivalent to the cyclic-SCC condition together with
+

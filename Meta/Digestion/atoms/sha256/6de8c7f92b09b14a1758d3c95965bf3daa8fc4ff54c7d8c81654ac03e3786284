@@ -1,0 +1,58 @@
+**Theorem 14.4 (Uniform exact value, attainment and all equality laws).** For every fixed $0<R<\sqrt2$ there is an integer $A_R$ such that all integers $a\ge A_R$ and $1\le h\le R\sqrt a$ have the following properties. The function
+$$
+\Phi_{a,h}(u)=\frac{h^2}{u}+\frac{a^2r^2}{a-u}
++\frac{(a-1)(2a+1)r^3u}{(a-u)^2},\qquad 0<u\le1/a,
+$$
+has a unique minimizer $u_{a,h}\in(0,1/a)$, and
+$$
+M(a,h):=\inf_{x\in\mathcal X(a,h)}H(x)
+=\Phi_{a,h}(u_{a,h}).
+\tag{14.19}
+$$
+The infimum is attained. Up to label permutations, every globally minimizing law, and only those laws, is obtained by choosing $C\subseteq[s]$ of size $r$ and $D=[s]\setminus C$ and setting
+$$
+x_{\{j\}}=\frac{u_{a,h}}h\quad(j\in D),\qquad
+x_C=(a-1)u_{a,h},\qquad
+x_{C\setminus\{i\}}=\frac{1-au_{a,h}}r\quad(i\in C),
+\tag{14.20}
+$$
+with every other type mass zero. No support, marginal floor, symmetry or connectedness hypothesis is imposed on $\mathcal X(a,h)$.
+
+**Proof.** The strictly positive second derivative in Lemma 13.3 is valid for every $h\ge1$ on $(0,a)$. The derivative tends to $-\infty$ at $0$ and to $+\infty$ at $a$, and at the constrained endpoint it satisfies
+$$
+\Phi_{a,h}'(1/a)=-h^2a^2+2a^3+O(a^2)
+\ge(2-R^2)a^3+O(a^2)>0
+$$
+uniformly. Thus its unique zero $u_{a,h}$ lies in $(0,1/a)$ and is also the unique global minimizer of the same expression on $(0,a)$. The masses (14.20) sum to one, have mean cardinality $a$, and have positive marginals $u_{a,h}/h$ on $D$ and $(a-u_{a,h})/r$ on $C$, by the direct count in Definition 13.2. Their energy is $\Phi_{a,h}(u_{a,h})$.
+
+Consider any actual law $x\in\mathcal X(a,h)$. If $H(x)>\Phi_{a,h}(u_0)$, it exceeds the candidate minimum. Otherwise Lemmas 14.2 and 14.3 apply. Choose their $C,D$ and write $u=\sum_{j\in D}t_j$. The strict deficit payment of Lemma 13.7 gives
+$$
+H(x)\ge\sum_{j\in D}\frac1{t_j}
++\sum_{i\in C}\left(\frac{a^2}{y_i}
++\frac{(a-1)(2a+1)u}{y_i^2}\right).
+\tag{14.21}
+$$
+Its proof is a pointwise identity and inequality once (13.18) holds; it requires no fixed-$h$ limiting argument. Cauchy on the actual tail marginals and strict Jensen on the actual core marginals give
+$$
+H(x)\ge\frac{h^2}{u}+\frac{a^2r^2}{a-u}
++\frac{(a-1)(2a+1)r^3u}{(a-u)^2}
+=\Phi_{a,h}(u)\ge\Phi_{a,h}(u_{a,h}).
+\tag{14.22}
+$$
+Here $0<u<a$ follows from positivity and the marginal budget. The comparison on $(0,a)$ is legitimate even before proving any upper bound $u\le1/a$. This proves the unrestricted lower bound, exact value and attainment.
+
+For equality, strict convexity of $\Phi_{a,h}$ forces $u=u_{a,h}$. Tail Cauchy and core strict Jensen force $t_j=u_{a,h}/h$ and $y_i=(a-u_{a,h})/r$. The strict assertion of Lemma 13.7 excludes every positive-mass tail-containing type with $K\ge2$, so all tail mass is on the displayed singletons.
+
+For a core-only type, the exact remainder identity (13.20) and equality force every nonnegative $\rho_i$ of Lemma 13.4 to vanish. Their sum is $Q(L)$; since the type is nonempty, its only possible sizes are $L=a$ and $L=r$. Thus the remaining masses are $z=x_C$ and $b_i=x_{C\setminus\{i\}}$. Normalization and the cardinality mean give
+$$
+z+\sum_i b_i=1-u_{a,h},\qquad
+rz+a\sum_i b_i=a-u_{a,h},
+$$
+so $z=(a-1)u_{a,h}$ and $\sum_i b_i=1-au_{a,h}$. The equal core marginals give
+$$
+1-u_{a,h}-b_i=\frac{a-u_{a,h}}r,
+$$
+which forces the individual masses in (14.20). Conversely their direct evaluation attains (14.19).
+
+The estimates and thresholds above are uniform over the entire integer range $1\le h\le R\sqrt a$. They therefore include bounded $h$, diverging $h$ with $h/\sqrt a\to0$, and all positive ratios bounded above by $R$. The finite value and equality assertion is a repo-derived consequence of the common-law certificates and the pointwise estimate (14.15); the classical Cauchy and Jensen inequalities are used with the actual marginals. It resolves the subcritical portions of Growing Open problems 7.3 and 8.6(1,3). It makes no assertion at or above the square-root threshold or about prescribed finite-graph realizations. The normalization is the one cited in Growing Definition 1.1 and this volume's earlier sections. Possible overlap with the unread full texts of DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26) and DOI [10.47443/dml.2026.164](https://doi.org/10.47443/dml.2026.164) remains unassessed; neither text is a premise of this theorem and no literature-priority assertion is made. ∎
+

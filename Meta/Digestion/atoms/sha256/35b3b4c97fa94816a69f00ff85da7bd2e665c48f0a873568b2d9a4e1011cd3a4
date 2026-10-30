@@ -1,0 +1,46 @@
+**Proposition 17.2 (the separating affine inequality).** Every point of $\mathcal C_{\rm declared}$ satisfies
+
+$$
+2\lambda+3q\le2.
+\tag{17.2}
+$$
+
+Its equality set is exactly the segment with original-coordinate endpoints $A=(1,0)$ and $B=(1/3,4/9)$. For every $0<\epsilon\le1/40000$, Theorem 16.2 supplies a Schwarz point $(1/2,1/3+\epsilon)$ strictly outside this declared hull. This comparison quantifies over exactly (17.1).
+
+**Proof.** For $\mathcal T$ and either $\mathcal P_k$, $\lambda\le p$ gives $2\lambda+3q\le2p+3(1-p)/2=(3+p)/2\le2$, with equality only at $A$. On $\mathcal Q$,
+
+$$
+2\lambda+3q\le\tfrac32+2\lambda-6\lambda^2
+ =\tfrac53-6(\lambda-1/6)^2<2.
+$$
+
+On $\mathcal D$, the affine expression is $1+t\le2$, with equality only at $A$, while at $G$ it is $5/3$. On $\mathcal B$,
+
+$$
+2\lambda+3q\le\tfrac32+2\lambda-\tfrac32\lambda^2
+ =2-\tfrac12(1-\lambda)(1-3\lambda)\le2,
+$$
+
+with equality only at $B$, because $-1/3\le\lambda\le1/3$. On $\mathcal N$, $\lambda\le0$ and $q\le1/2$ give $2\lambda+3q\le3/2<2$.
+
+For completeness the entire declared reduction class $\mathcal R$, rather than only $G$, also satisfies a strict bound. If $a=0$, its only original-family parameter is $(0,1/3)$. If $a>0$ and $\Phi_{\lambda,q}=R_{a,\Psi}$, solving for $\Psi$ shows that its off-diagonal multiplier is $\lambda_\Psi=-(3-a)\lambda/a$. Its diagonal action fixes $I_3$, so on the all-ones positive matrix $J$ it has
+
+$$
+\Psi(J)=I_3+\lambda_\Psi(J-I_3).
+$$
+
+Positivity on the all-ones vector gives $1+2\lambda_\Psi\ge0$, hence $\lambda\le a/(2(3-a))$. Also, for $i\ne j$, the $j$th diagonal entry of the positive matrix $\Psi(E_{ii})$ is $(1-(3-a)q)/a\ge0$. Consequently
+
+$$
+2\lambda+3q\le\frac{a+3}{3-a}\le\frac53<2
+\qquad(0<a\le3/4).
+$$
+
+Thus every generator satisfies (17.2), and only $A,B$ can give equality. Affinity preserves the inequality under every finite convex combination; equality requires every generator of positive weight to be $A$ or $B$. Conversely both endpoints belong to the declared class, proving the equality-set assertion. Finally
+
+$$
+2(1/2)+3(1/3+\epsilon)=2+3\epsilon>2,
+$$
+
+whereas Theorem 16.2 proves full-complex Schwarz sufficiency at these same original parameters. ∎
+

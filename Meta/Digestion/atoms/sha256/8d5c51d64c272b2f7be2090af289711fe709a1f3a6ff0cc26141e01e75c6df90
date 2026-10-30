@@ -1,0 +1,26 @@
+**Proposition 115.2 (strict response-index gap).** On the complete original two-seed source and the fixed interface above,
+
+$$
+D_{\rm read}(\pi^-)=D_{\rm blind}(\pi^-)=2< H_{\rm resp}(\pi^-)=3.
+$$
+
+Proof of the selected-fiber and register lower bounds. If a balanced word first deviates from $1^{27}$, its selected prefix is the unique $1^{c-1}0$ at that address. Otherwise exactly two ones remain among 31 positions. An all-zero identity block has one selected past. A two-one identity block has no tail ones and its distinct pair target identifies a singleton. A one-hot block has exactly one tail one: retained early pairs have two members, and each delayed or zero-deadline address has one. Target intervals do not overlap, and delayed addresses identify $(i,j)$. No terminal leaf exists. Hence $D_\rho\le2$ for both seeds.
+
+For $\rho=1$, $p_1y_1$ and $p_2y_1$ are positive accepted words with different selected pasts, the same frozen $(1,29,31,29,0)$, suffix $0^{27}$ and Stop 0. A one-value register cannot decode both. This proves $D_{\rm read}\ge2$ and $D_{\rm blind}\ge2$, and $D=2$.
+
+Proof of the response bound. The table gives $H_{\rm resp}\ge3$. Before or through marker 27 there is only the active all-one prefix. At markers 28–29, each fixed weight admits at most two active identity prefixes. At marker 30 and afterward, one-hot prefixes with no tail one have at most three possibilities. Any positive active past that already contains both residual ones has only the all-zero future; its future selected fiber is a singleton, by the disjoint schedule classification, so its response is the constant 0 even when several pasts share a bare address. These cases cover all positive active addresses with initial $1^{27}$; dead addresses do not enter the maximum. Restricting to seed 0 introduces no additional prefix possibilities or selected collisions. Consequently every response image has size at most three, giving $H_{\rm resp}=3$.
+
+Construction of the upper bound. Initialize $z=0$ in $\{0,1\}$. Previously frozen and non-marker events hold with priority. On an unfrozen marker transaction, let $c'=c+1$ be the new position and $a$ the marker. Apply the original phase/address consistency checks, including synchronized new fields; malformed addresses take default 0. On a valid address:
+
+1. If $c'\le27$, write 0.
+2. If $28\le c'\le30$, a first identity one (old $\beta=27$) writes $\operatorname{color}(c'-27)$, where $\operatorname{color}(1)=\operatorname{color}(3)=0$, $\operatorname{color}(2)=1$. A second or later identity one clears to 0; zeros hold.
+3. In the tail put $j=c'-30$. Old $\beta\ne28$ clears to 0. With old $\beta=28$ and $a=1$, an actual first freeze at $j=1$ keeps $z$, an actual first freeze at $j=3$ writes $1-z$, and all other cases write 0. With old $\beta=28$ and $a=0$, an actual first freeze writes 0 and continue holds.
+
+Write the resulting value before the original first-freeze latch; then use that same register's frozen value. This is a total function of allowed transaction inputs, with no stored identity, schedule, mode or $\kappa$ replica.
+
+Canonical-output proof. The first identity one writes its color, and zeros preserve it until a tail one or deadline. An early $e_1$ freeze produces ranks $(0,1)$ for $i=(1,2)$; an early $e_3$ freeze produces ranks $(0,1)$ for $i=(2,3)$ by complementing the colors. A non-early tail one clears to 0 before its later singleton freeze. Zero deadlines clear to 0. All-zero identity, two-one identity and first-deviation branches freeze 0. Thus every accepting first freeze emits the original colex rank for seed 1.
+
+For seed 0 only positions 1 and 30 have coefficient 1, and $C_0=1$. With initial $1^{27}$, acceptance is exactly $b_{30}=0$, so $p_3$ is absent. The $e_1$ pair remains intact with ranks 0,1; the $e_3$ fiber becomes the singleton $p_2$, whose complemented color is 0. Every other accepting branch is still a singleton emitting 0. Early-deviation branches are unique for either seed. This proves canonical output on both $E_\rho$, without altering rejected executions. Deterministic induction over completed markers proves the stated invariant; holding rules extend totality to every finite original raw-event prefix.
+
+The construction gives $D_{\rm blind}\le2$; a read encoder can ignore $\kappa$, so $D_{\rm read}\le2$. Together with the lower bounds this proves the proposition in ordinary mathematics.
+

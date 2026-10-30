@@ -1,0 +1,54 @@
+**Theorem 33.3 (maximal witnesses and earned indexed samples).**
+Suppose a well-formed root certificate has passed. For $1\le j\le m$,
+assume all proposed bits before $j$ have already been authenticated, either
+by positive maximal witnesses or by complete negative certificates as below.
+Then $p_j(A)$ is the actual birth parent, $t_j=n-\tau(j)$, and
+
+$$
+\begin{aligned}
+z_j=a_j
+&\Longleftrightarrow
+\exists v\in\{a,b\}^{t_j}
+   \;\operatorname{Read}\bigl(p_j(A)c_jv\bigr)=1,\\
+z_j\ne a_j
+&\Longleftrightarrow
+\forall v\in\{a,b\}^{t_j}
+   \;\operatorname{Read}\bigl(p_j(A)c_jv\bigr)=0.
+\end{aligned}
+\tag{ACRC.1}
+$$
+
+A supplied suffix of length $t_j$ with positive reply universally certifies
+that proposed bit under these hypotheses. An accepting supplied suffix
+exists for the correct bit; an arbitrary supplied suffix need not pass.
+Consequently an accepting supplied root-and-birth certificate for $(\nu,A)$
+exists exactly when $\nu=n$ and $A=z_1\cdots z_m$, for $m\le v_n$.
+
+Proof. Theorem 33.2 authenticates the cut. The authenticated earlier bits
+reconstruct the actual old tree at $\tau(j)-1$, so GPO Proposition 39.2
+identifies the actual parent independently of later bits. At cut $n$ the
+child selected by $z_j$ has rank $t_j+1$, and the opposite child has rank
+$t_j$. The former has a suffix of length $t_j$; the latter has maximum
+suffix depth $t_j-1$. This proves both equivalences and the supplied-witness
+soundness. Choose a longest suffix in each correct child to obtain
+existential completeness, inductively in $j$. $\square$
+
+For a single reply under the same actual-parent and maturity hypotheses,
+
+$$
+\operatorname{Read}(p_jc_jv)=0
+\Longrightarrow
+\bigl(a_j\ne z_j\bigr)
+\vee
+\bigl(a_j=z_j\ \wedge\ v\text{ is not a present maximal witness}\bigr)
+\quad(|v|=t_j).
+\tag{ACRC.2}
+$$
+
+The second alternative occurs: on the zero source at cut four, $j=1$,
+the correct child is $b$ and $t_1=2$, but $baa$ is absent whereas $bba$
+is present. Thus this negative reply alone does not imply $a_j\ne z_j$.
+A single negative literal does refute a full candidate when that candidate
+has a separately established prediction that the literal is present;
+(ACRC.2) alone supplies no such prediction.
+

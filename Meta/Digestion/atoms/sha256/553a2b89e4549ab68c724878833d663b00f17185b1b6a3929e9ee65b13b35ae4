@@ -1,0 +1,77 @@
+**Theorem 27.2 (all-root beta layers and the exact chronological offset).**
+For every source of Definition 27.1 define
+
+$$
+ \mathcal H_s(t)=\{v:e_v=1+t\}\quad(t\in\mathbb N_0),\qquad
+ h_{s,t}(v)=\operatorname{rank}_{a<b}(v;\mathcal H_s(t)),
+\tag{PCR.70}
+$$
+
+where ranks start at zero. Then $\mathcal H_s(t)$ is exactly the set of
+beta leaves at actual cut $t+1$, has size $F_{t+1}$, and is exactly the
+parent batch branching at actual cut $t+2$. For every $v$ in that set,
+
+$$
+ \begin{aligned}
+ j_v=A_v&=F_{t+2}+h_{s,t}(v),\\
+ e_v&=t+1,\qquad \tau_v=t+2.
+ \end{aligned}
+\tag{PCR.71}
+$$
+
+Consequently, for every $j\ge1$ there is a unique $\tau(j)\ge2$ with
+$F_{\tau(j)}\le j<F_{\tau(j)+1}$. Its actual parent is the member of
+$\mathcal H_s(\tau(j)-2)$ of zero-based rank
+$j-F_{\tau(j)}$. In particular $A_{p_j}=j$ and
+$e_{p_j}=\tau(j)-1$. These statements include the actual alpha root,
+all finite singular transients and all repeated factors.
+
+For an arbitrary actual prefix $c$, define the all-source local layer
+$\mathcal H_{s,c}(t)=\{w:e_{cw}-e_c=t\}$, ordered in physical order,
+and its zero-based rank $h_{s,c,t}$. At cut $e_c+t$ it is exactly the
+beta-leaf list inside $c$, and the global event of $cw$ is
+
+$$
+ \begin{aligned}
+ j_{cw}&=I_c(t+1)+h_{s,c,t}(w),\\
+ I_c(t+1)&=F_{e_c+t+1}+L_c(e_c+t),\\
+ h_{s,e_c+t-1}(cw)&=L_c(e_c+t)+h_{s,c,t}(w).
+ \end{aligned}
+\tag{PCR.72}
+$$
+
+Here $L_c$ is precisely [ACR, (ACR.112)--(ACR.116)][ACR]'s actual
+preceding exterior forest, with its authentic integer data;
+$I_c(1)=A_c$, $I_c(2)=B_c$ and $I_c(k+2)=I_c(k+1)+I_c(k)$.
+For a safe seed of Definition 24.1, $\mathcal H_{s,c}(t)=H_c(t)$.
+Equation (PCR.72), including its exterior offset, is the resulting
+conversion from that exact local history layer to global chronology.
+
+Proof. A node with immutable descriptor $(b,\sigma)$ is a beta leaf
+at exactly the single cut $b+1$ for initial alpha and $b$ for initial
+beta; in either case that cut is $e$. At the next update it branches
+once and remains a branch. The root follows these same rules from
+$(0,\alpha)$, so its beta cut is one, not zero. This proves the
+beta-layer identities. If $U_n,V_n$ are the alpha and beta leaf counts,
+old-leaf replacement gives $(U_{n+1},V_{n+1})=(V_n,U_n+V_n)$, with
+$(U_0,V_0)=(1,0)$. Hence $V_n=F_n$, including $V_0=0$.
+Before update $\tau\ge2$ there have been
+$\sum_{q=1}^{\tau-1}F_{q-1}=F_\tau-1$ births. Physical lexicographic
+order therefore assigns indices $F_\tau,\ldots,F_{\tau+1}-1$ to
+that old beta list. This is exactly [GPO, Proposition 39.2][GPO]'s
+one-based rank formula after subtracting one from the rank.
+
+The first normalized batch of any cone $v$ consists of its own unique
+branch, so its first index $A_v$ is $j_v$. Every physical word is
+eventually created and branches: the root branches at two and each
+edge adds one or two to branch time. Thus the batches partition all
+finite physical words and all positive ordinals, proving uniqueness.
+Inside $c$, its beta-normalized origin is $e_c$ and the same count
+recurrence gives $F_{t+1}$ beta leaves at $e_c+t$. They form a contiguous
+interval of the global beta list. The preceding exterior contributes
+exactly $L_c(e_c+t)$ members. Applying ACR Theorem 27.2 to this interval
+gives (PCR.72), with no core-only assumption. For a safe seed the
+normalization-time definition is exactly (PCR.61). This neither
+identifies an exact normalization layer with all terminal leaves nor
+identifies a local rank with a global ordinal. $\square$
+

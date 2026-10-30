@@ -1,0 +1,28 @@
+**Corollary 9.5 (Common realized normalized limits).** Let
+$a_r,h_r,N_r$ be integers with $a_r\to\infty$,
+$h_r/\sqrt{a_r}\to\kappa\in(0,\infty)$, and
+$N_r\ge Da_r^5$ eventually for some $0<L<\kappa<R<\infty$, where $D$ is
+the constant in (9.19) for this interval. Then
+
+$$
+\frac{V_{N_r}(a_r,h_r)-a_r(a_r+1)^2}{a_r^2}\longrightarrow U(\kappa).\tag{9.27}
+$$
+
+**Proof.** Eventually $L\le h_r/\sqrt{a_r}\le R$ and $a_r\ge A$.
+The graph class is then nonempty by Theorem 9.4, and its error bound tends
+to zero because $a_r^4/N_r\le1/(Da_r)$. Continuity of $U$, proved in
+Theorem 7.2, gives (9.27). Every quantity is taken from the finite graph
+class at that same $(a_r,h_r,N_r)$, with no divisibility subsequence.
+The construction includes integer $v$ and $v=j$, since a branch that would
+exceed the core capacity has zero count. ∎
+
+This theorem resolves the square-root-surplus finite graph interface requested
+in Open problems 7.3 and 8.6. It does not determine finite equality cases,
+least thresholds, graph isomorphism classes, other sink counts, other edge
+budgets, moving intervals with $h/\sqrt a\to0$ or $\infty$, or global extrema
+outside the two-layer class. The normalization is the CDSO normalization of
+Definition 1.3 in *CDSO incidence moments and capacity phases* and of
+Albalahi--Das--Ali--Barman--Hamza, DOI 10.47443/dml.2025.176, p.109. No
+priority claim is made for the Zhao--Zhao article cited in Open problem 7.3;
+its full text was not used.
+

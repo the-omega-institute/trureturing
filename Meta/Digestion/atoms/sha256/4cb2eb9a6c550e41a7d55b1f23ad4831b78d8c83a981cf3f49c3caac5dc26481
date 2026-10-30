@@ -1,0 +1,19 @@
+**引理 7.1（代数范数）。**
+
+<a id="lem-algnorm"></a>
+
+对 $(p,q)\in\mathbb Z^2\setminus\{(0,0)\}$，
+
+$$
+(p+\varphi q)(p+\sigma q)=p^2+pq-q^2\in\mathbb Z\setminus\{0\}.
+$$
+
+**证明。**
+
+由 $\varphi+\sigma=1$、$\varphi\sigma=-1$ 得乘积式。
+若乘积为零，某个因子为零；$\varphi,\sigma$ 的无理性迫使 $p=q=0$，
+与假设矛盾。证毕。
+ □
+
+<a id="statement-7-2"></a>
+

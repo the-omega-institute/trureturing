@@ -1,0 +1,42 @@
+**Definition 13.1 (The full first-phase range and a comparison law).** Fix
+$0<R<2\sqrt2$ and put $R_*=\max\{1,R\}$. The domain, actual marginals,
+energy and infimum are exactly $\mathcal X(a,h)$, $y_i$, $H$ and $M(a,h)$
+of Definition 1.1, with integers $a\ge4$, $1\le h\le R\sqrt a$ and
+$r=a+1$. Use $\Phi_{a,h}$, $u_{a,h}$, $m_{a,h}$, $\Gamma_a$ and
+$P_{a,h}$ from (12.2) and Proposition 5.2, without imposing the
+fixed-width hypothesis (12.1). Thus $u_{a,h}$ is the unique constrained
+scalar minimizer, whose existence holds for every $a\ge4$, $h\ge1$.
+For the compact part $\sqrt a\le h\le R_*\sqrt a$, set
+
+$$
+q=\frac h{\sqrt a},\qquad
+v_0=\min\{q/\sqrt2,1\},\qquad u_0=\frac{v_0}a,
+\qquad U_{a,h}=\Phi_{a,h}(u_0),
+$$
+
+$$
+\psi(q)=
+\begin{cases}
+2\sqrt2\,q,&q\le\sqrt2,\\
+q^2+2,&q\ge\sqrt2.
+\end{cases}
+\tag{13.1}
+$$
+
+Here $U_{a,h}$ is the energy of the actual law of Definition 5.1, not
+an assumed description of an optimizing law. Uniformly for
+$1\le q\le R_*$,
+
+$$
+U_{a,h}-B_0=a^2\psi(q)+O_R(a).
+\tag{13.2}
+$$
+
+Indeed $1/\sqrt2\le v_0\le1$. In (5.4), substituting $u=v/a$ with
+$1/\sqrt2\le v\le1$ gives the uniform expansion
+$C_a(v/a)-B_0=2v a^2+O(a)$; the singleton contribution is exactly
+$h^2/(v/a)=q^2a^2/v$. Every $O_R$ in this section has a constant and a
+threshold depending only on $R$, independent of the law, integer pair
+and label choices. Increasing such a threshold never restricts the
+allowed types or the actual positive marginals.
+

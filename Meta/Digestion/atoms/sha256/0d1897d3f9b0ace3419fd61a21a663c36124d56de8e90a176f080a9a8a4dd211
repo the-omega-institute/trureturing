@@ -1,0 +1,40 @@
+**Proposition 9.3 (A two-vertex part supplies partial coercivity).** For
+every integer triple $2=a\le b\le c$, with $n=2+b+c$,
+
+$$
+M_{2,b,c}\ge n\left(n-2+\frac1{n-2}\right)>n(n-2).
+\tag{9.3}
+$$
+Every positive maximizing sequence $g_j$, that is
+$F(g_j)\to M_{2,b,c}$, is bounded after normalization by its own
+$\lambda_2(g_j)$. Each cluster point of
+$g_j/\lambda_2(g_j)$ is a connected nonnegative original assignment
+with $\lambda_2=1$ and $R=M_{2,b,c}$. In particular at least one
+such cluster point exists. For $c>b+2$, this gives no exact value of
+$M_{2,b,c}$, no classification of these maximizers, and no assertion
+of positive attainment.
+
+*Proof.* Delete $BC$, identifying the retained graph by an actual
+vertex bijection as $K_{2,n-2}$ with hubs $A$ and leaves $B\sqcup C$.
+Here $m=n-2=b+c\ge4$, so the whole two-hub Theorem 2.1 applies.
+At its equality assignment with scale $t=1$ it supplies finite positive
+conductances on all retained edges, $\lambda_2=1$, and product
+
+$$
+(m+2)\left(m+\frac1m\right)
+=n\left(n-2+\frac1{n-2}\right).
+$$
+Set the deleted coordinates to zero and then add $\varepsilon>0$ to
+every $BC$ edge. The limiting support is connected. As in Proposition
+9.2, continuity on the same original vertices and pairs proves the
+lower bound by positive tripartite approximants. Its excess above
+$n(n-2)$ is $n/(n-2)>0$.
+The supremum $M$ is finite by Theorem 3.2. A maximizing sequence exists
+by the definition of supremum on the nonempty positive domain.
+Every such sequence satisfies (8.1), so Lemma 8.1 gives boundedness,
+connectedness and the value of each normalized cluster point, as well
+as a convergent subsequence. The positive-approximation bridge in that
+lemma identifies its value as a maximum on the connected nonnegative
+original domain. None of these steps determines its coordinates or
+makes its zero coordinates positive. ∎
+

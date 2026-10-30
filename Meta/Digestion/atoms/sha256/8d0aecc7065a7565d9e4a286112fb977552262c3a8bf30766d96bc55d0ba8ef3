@@ -1,0 +1,47 @@
+**命题 136.3（输入归属与未决的复相消问题）。**
+(132.5)–(136.3) 的适用范围是原固定模型、全部完整计数质量、
+原正噪声严格余量与紧物理输出。
+它们不决定最近实际复零点的位置，也不决定一个更大的域是否无零。
+
+**证明。** 谱边界第 119 节已给 (134.2) 的实际 $[1,2]$ 方差供应；
+单组模态、全支持矩及半 escort 配分供应是 `BinomialFiniteSurprise.result`，
+其二项参数条件由 (123.1) 保证，空组和端点均按原声明保留。
+该声明的有限壳层及截断平台证明用于单组矩，不给实际输出条件后的独立性。
+完整根、原核心 Fourier 包络、全部低元组格元误差与双尾 raw 比较
+分别是第 129–130 节的输入；第 128–131 节的增长阶结论仍为原结论。
+新增推导将这些输入连接为 (133.2)–(134.9) 的两端外领实际曲率，
+再给 (132.6) 的更大实际零点排除域及 (135.5)–(136.3) 的原对象桥。
+没有以累积量阶数窗口的改变来定义这些结论。
+
+中心化特征函数、$\cos u\ge1-u^2/2$、Cauchy 导数估计和单连通域上的解析对数
+都是经典中间步骤。特征函数及矩的对应可参见 Pitman 的
+[*Lecture 9: Characteristic Functions*](https://www.stat.berkeley.edu/~pitman/s205f02/lecture9.pdf)；
+Cauchy–Goursat 定理与 Cauchy 积分公式的标准解析条件亦见
+Mathlib 的 [*Cauchy integral formula*](https://github.com/leanprover-community/mathlib4/blob/56a005855ea17e0b0958f73ec801ae140b0a1679/Mathlib/Analysis/Complex/CauchyIntegral.lean)：
+闭圆盘上连续、内部解析足以使用圆周积分公式及其导数估计；
+(134.8) 的差函数在更大的开圆盘解析，满足这些条件。
+解析对数的构造在 (135.7) 中给出，使用的条件正是解析、无零及单连通，
+不假定在整个右半平面已有对数。
+Goodman，[*Asymptotic accuracy of the saddlepoint approximation for maximum likelihood estimation*,
+arXiv:2005.11028v3](https://arxiv.org/html/2005.11028v3)，
+条件 (2.9)–(2.10)、Theorem 6(b) 和 Appendix H，
+提供 Fourier 衰减及混合导数须分别控制的先例；
+其固定 iid 求和与固定观测数制度不直接供应此处的增长维实际后验。
+Boistard–Lopuhaä–Ruiz-Gazen，
+[*Approximation of rejective sampling inclusion probabilities and application to high order correlations*,
+arXiv:1207.5654v1](https://arxiv.org/html/1207.5654v1)，
+式 (2.1)–(2.5) 及 Lemma 1 的 Bernoulli 总数条件化与中心质量展开，
+是 (124.2) 所用选择输入的先例，亦不直接给此处复零点结论。
+这些经典结果均只作为上述实际对象推导的中间依据。
+
+在 $|t|$ 超出 (135.2) 的正下界范围时，
+该二阶估计不能排除原中心化特征函数的复相消。
+更大域的问题需要在同一个实际 escort 上证明更强的相位下界，
+或直接控制其复相消与零点位置；实方差上界本身不提供这样的结论。
+二阶充分估计失去正下界，既不产生实际零点，也不构成原模型的反例。
+因此没有最近零点、最优尺度、固定宽度条带或更大增长阶窗口的推论。
+(136.4)–(136.5) 中先选好纤维类再取其常数的量词，
+也不提供一个固定普适正数 $d$ 使 $f_n(d)\to0$ 的结论。
+零噪声、半指数边界等号、变化振幅或 $\beta$ 上的一致性及无界输出
+仍不在所证范围内。∎
+
