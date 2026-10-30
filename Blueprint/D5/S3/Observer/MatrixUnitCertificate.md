@@ -6,7 +6,7 @@ Finite Fourier combinations of the cyclic window clock and shift form exact matr
 
 **Theorem 1.1 (Clock phase powers are cyclic characters).**
 
-$$\forall M \in \mathbb{N} [\operatorname{NeZero} M], \forall r, k \in \mathbb{Z}/M\mathbb{Z},\ (\operatorname{windowRoot}(M)^{\operatorname{val}(r)})^{\operatorname{val}(k)} = \operatorname{character}_{M}(k,r)$$
+$$\forall M \in \mathbb{N} [\operatorname{NeZero} M], \forall r, k \in \mathbb{Z}/M\mathbb{Z},\ (\operatorname{windowRoot}\left(M\right)^{\operatorname{val}\left(r\right)})^{\operatorname{val}\left(k\right)} = \left(\operatorname{character}_{M}\right)\left(k, r\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Observer/MatrixUnitCertificate.clock_phase_pow_eq_character` (`✓ std3`). ∎
 
