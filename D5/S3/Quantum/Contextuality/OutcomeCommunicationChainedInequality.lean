@@ -95,7 +95,7 @@ private lemma deterministic_relabel {n : ℕ} (f : Fin n → Fin 2)
     deterministicBehaviour f g x y (relabel x c) b =
       if c = relabel x (f x) then (if g (y, f x) = b then 1 else 0) else 0 := by
   by_cases hc : c = relabel x (f x)
-  · rw [hc, relabel_involutive, if_pos rfl]
+  · rw [hc, relabel_involutive, ite_eq_left rfl]
     change (if f x = f x then (1 : ℝ) else 0) *
       (if g (y, f x) = b then 1 else 0) = _
     simp only [ite_true, one_mul]
@@ -103,10 +103,10 @@ private lemma deterministic_relabel {n : ℕ} (f : Fin n → Fin 2)
       intro he
       apply hc
       rw [he, relabel_involutive]
-    rw [if_neg hc]
+    rw [ite_eq_right hc]
     change (if f x = relabel x c then (1 : ℝ) else 0) *
       (if g (y, relabel x c) = b then 1 else 0) = 0
-    rw [if_neg hf, zero_mul]
+    rw [ite_eq_right hf, zero_mul]
 
 private lemma deterministic_event {n : ℕ} (f : Fin n → Fin 2)
     (g : Fin n × Fin 2 → Fin 2) (x y : Fin n)
@@ -120,10 +120,10 @@ private lemma deterministic_event {n : ℕ} (f : Fin n → Fin 2)
     rw [sum_eq_single (g (y, f x))]
     · simp only [ite_true]
     · intro b _ hb
-      simp only [if_neg (Ne.symm hb), ite_self]
+      simp only [ite_eq_right (Ne.symm hb), ite_self]
     · simp only [mem_univ, not_true_eq_false, false_implies]
   · intro c _ hc
-    simp only [if_neg hc, ite_self, sum_const_zero]
+    simp only [ite_eq_right hc, ite_self, sum_const_zero]
   · simp only [mem_univ, not_true_eq_false, false_implies]
 
 private lemma deterministic_value {n : ℕ} (f : Fin n → Fin 2)
@@ -155,7 +155,106 @@ private lemma response_marginal {ι : Type} [Fintype ι] [DecidableEq ι]
 private lemma deterministic_bound {n : ℕ} (hn : Odd n) (f : Fin n → Fin 2)
     (g : Fin n × Fin 2 → Fin 2) :
     1 ≤ chainedValue n (deterministicBehaviour f g) := by
-  sorry
+  classical
+  by_contra hbound
+  have hlt : chainedValue n (deterministicBehaviour f g) < 1 := lt_of_not_ge hbound
+  let d : Fin n → ℝ := fun x => if relabel x (f x) ≠ g (x, f x) then 1 else 0
+  let o : Fin n → Fin n → ℝ := fun x y => if x.val = y.val + 1 then
+    (if relabel x (f x) ≠ g (y, f x) then 1 else 0) else 0
+  let c : Fin n → Fin n → ℝ := fun x y => if x.val = 0 ∧ y.val + 1 = n then
+    (if relabel x (f x) = g (y, f x) then 1 else 0) else 0
+  have hd (x : Fin n) : 0 ≤ d x := ite_nonneg zero_le_one le_rfl
+  have ho (x y : Fin n) : 0 ≤ o x y :=
+    ite_nonneg (ite_nonneg zero_le_one le_rfl) le_rfl
+  have hc (x y : Fin n) : 0 ≤ c x y :=
+    ite_nonneg (ite_nonneg zero_le_one le_rfl) le_rfl
+  have hds : 0 ≤ ∑ x, d x := sum_nonneg fun x _ => hd x
+  have hos : 0 ≤ ∑ x, ∑ y, o x y :=
+    sum_nonneg fun x _ => sum_nonneg fun y _ => ho x y
+  have hcs : 0 ≤ ∑ x, ∑ y, c x y :=
+    sum_nonneg fun x _ => sum_nonneg fun y _ => hc x y
+  have htotal : chainedValue n (deterministicBehaviour f g) =
+      (∑ x, d x) + (∑ x, ∑ y, o x y) + ∑ x, ∑ y, c x y :=
+    deterministic_value f g
+  have hdle (x : Fin n) : d x ≤ chainedValue n (deterministicBehaviour f g) := by
+    have hx := single_le_sum (fun i _ => hd i) (mem_univ x)
+    linarith
+  have hole (x y : Fin n) : o x y ≤ chainedValue n (deterministicBehaviour f g) := by
+    have hxy := single_le_sum (fun j _ => ho x j) (mem_univ y)
+    have hx : (∑ j, o x j) ≤ ∑ i, ∑ j, o i j :=
+      single_le_sum (fun i _ => sum_nonneg fun j _ => ho i j) (mem_univ x)
+    linarith
+  have hcle (x y : Fin n) : c x y ≤ chainedValue n (deterministicBehaviour f g) := by
+    have hxy := single_le_sum (fun j _ => hc x j) (mem_univ y)
+    have hx : (∑ j, c x j) ≤ ∑ i, ∑ j, c i j :=
+      single_le_sum (fun i _ => sum_nonneg fun j _ => hc i j) (mem_univ x)
+    linarith
+  have hdiag (x : Fin n) : relabel x (f x) = g (x, f x) := by
+    by_contra he
+    have hx := hdle x
+    change (if relabel x (f x) ≠ g (x, f x) then 1 else 0) ≤ _ at hx
+    rw [ite_eq_left he] at hx
+    linarith
+  have hoff (x y : Fin n) (hxy : x.val = y.val + 1) :
+      relabel x (f x) = g (y, f x) := by
+    by_contra he
+    have hx := hole x y
+    change (if x.val = y.val + 1 then
+      (if relabel x (f x) ≠ g (y, f x) then 1 else 0) else 0) ≤ _ at hx
+    rw [ite_eq_left hxy, ite_eq_left he] at hx
+    linarith
+  have hclose (x y : Fin n) (hx : x.val = 0) (hy : y.val + 1 = n) :
+      relabel x (f x) ≠ g (y, f x) := by
+    intro he
+    have hxy := hcle x y
+    change (if x.val = 0 ∧ y.val + 1 = n then
+      (if relabel x (f x) = g (y, f x) then 1 else 0) else 0) ≤ _ at hxy
+    rw [ite_eq_left ⟨hx, hy⟩, ite_eq_left he] at hxy
+    linarith
+  have halt (x y : Fin n) (hxy : x.val = y.val + 1) : f x ≠ f y := by
+    intro he
+    apply relabel_adjacent x y hxy (f y)
+    calc
+      relabel x (f y) = g (y, f y) := by simpa only [he] using hoff x y hxy
+      _ = relabel y (f y) := (hdiag y).symm
+  have htwo (x y z : Fin n) (hy : y.val = x.val + 1) (hz : z.val = y.val + 1) :
+      f z = f x := by
+    have hxy : (f y).val ≠ (f x).val := fun he => halt y x hy (Fin.ext he)
+    have hyz : (f z).val ≠ (f y).val := fun he => halt z y hz (Fin.ext he)
+    have hx := (f x).isLt
+    have hy := (f y).isLt
+    have hz := (f z).isLt
+    apply Fin.ext
+    omega
+  obtain ⟨k, hk⟩ := hn
+  have hnpos : 0 < n := by omega
+  let first : Fin n := ⟨0, hnpos⟩
+  let last : Fin n := ⟨n - 1, by omega⟩
+  have heven : ∀ j : ℕ, ∀ hj : 2 * j < n, f ⟨2 * j, hj⟩ = f first := by
+    intro j
+    induction j with
+    | zero => intro hj; rfl
+    | succ j ih =>
+      intro hj
+      have hprev : 2 * j < n := by omega
+      have hmid : 2 * j + 1 < n := by omega
+      exact (htwo ⟨2 * j, hprev⟩ ⟨2 * j + 1, hmid⟩ ⟨2 * (j + 1), hj⟩
+        rfl (by dsimp; omega)).trans (ih hprev)
+  have hend : f last = f first := by
+    have hi : last = ⟨2 * k, by omega⟩ := Fin.ext (by dsimp [last]; omega)
+    rw [hi]
+    exact heven k (by omega)
+  have hrfirst (a : Fin 2) : relabel first a = a := by
+    rw [relabel_formula]
+    exact ite_eq_left rfl
+  have hrlast (a : Fin 2) : relabel last a = a := by
+    rw [relabel_formula]
+    exact ite_eq_left (by dsimp [last]; omega)
+  apply hclose first last rfl (by dsimp [last]; omega)
+  calc
+    relabel first (f first) = f first := hrfirst _
+    _ = relabel last (f last) := by rw [hrlast, hend]
+    _ = g (last, f first) := by simpa only [hend] using hdiag last
 
 private lemma tableWeight_nonneg {n : ℕ} {α : Type} [Fintype α] (w : α → ℝ)
     (alice : Fin n → α → Fin 2 → ℝ) (bob : Fin n → α → Fin 2 → Fin 2 → ℝ)
