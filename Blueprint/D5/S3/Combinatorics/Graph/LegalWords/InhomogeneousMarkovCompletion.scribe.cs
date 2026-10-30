@@ -88,7 +88,8 @@ internal sealed class InhomogeneousMarkovCompletionDocument : IScribeDocumentDef
                         + "be the product of w(i) over occupied positions, divided by the "
                         + "sum of those products over legal words. Extend P by zero to "
                         + "forbidden words. Define u(i) by taking the expectation of the "
-                        + "indicator of occupation at i under this same P. The empty word "
+                        + "indicator of occupation at i under this same P. Read false and "
+                        + "true as the indicators zero and one throughout. The all-false word "
                         + "and every singleton word have positive mass. They give "
                         + "0<u(i)<1 and 1-u(i)-u(i+1)>0 at every adjacent pair.")),
                     Paragraph(Text(
@@ -105,21 +106,24 @@ internal sealed class InhomogeneousMarkovCompletionDocument : IScribeDocumentDef
                         + "The suffix factors telescope along each complete word. Thus "
                         + "this chain has exactly mass P, including zero on forbidden "
                         + "words. Its cylinder identities include every history. Applying "
-                        + "uniqueness with the actual means identifies P with completion(u,n).")),
+                        + "unique_markov_completion with the actual means identifies P "
+                        + "with completion(u,n).")),
                     Paragraph(Text(
                         "Under this common law set R(i)=b(i)-u(i), "
                         + "alpha(i)=-u(i+1)/(1-u(i)), E(0)=R(0), and "
                         + "E(i+1)=R(i+1)-alpha(i)R(i). The canonical transition row "
-                        + "has mean zero when applied to E(i+1). The prefix expectation "
-                        + "identity therefore gives expectation zero for E(i+1) times "
+                        + "has mean zero when applied to E(i+1). The identities "
+                        + "completion_chain and prefix_expect therefore give expectation "
+                        + "zero for E(i+1) times "
                         + "every real function of b(0),...,b(i). In particular every "
                         + "distinct pair from the whole family E has product expectation "
                         + "zero. The finite measure assigning each word its mass P gives "
-                        + "conditional expectation alpha(i)R(i) for R(i+1), both when "
+                        + "conditional expectation alpha(i)R(i) for R(i+1), by the "
+                        + "characterization ae_eq_condExp_of_forall_setIntegral_eq, both when "
                         + "conditioning on the whole prefix and when conditioning only "
                         + "on b(i). These equalities hold almost everywhere under P.")),
                     Paragraph(Text(
-                        "The same prefix identities reduce the square moments to the "
+                        "The same prefix identities and endpoint_canonical reduce the square moments to the "
                         + "one-site and adjacent two-site tables. They give "
                         + "expectation E(0)^2=u(0)(1-u(0)) and "
                         + "expectation E(i+1)^2="
