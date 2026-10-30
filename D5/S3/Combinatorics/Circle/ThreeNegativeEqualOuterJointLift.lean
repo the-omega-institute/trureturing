@@ -47,7 +47,7 @@ private theorem inventory (a b : ℕ) (ha : 2 ≤ a) (hab : a < b) :
   let P := List.range' (b - 1) a
   let Q := List.range' (a + b) (a - 1)
   have hU : U ++ [a - 1] = List.range a := by
-    simpa only [U, show (a - 1) + 1 = a by omega] using (List.range_succ (n := a - 1)).symm
+    simpa only [U, Nat.succ_eq_add_one, show (a - 1) + 1 = a by omega] using (List.range_succ (n := a - 1)).symm
   have hV : V ++ P = List.range' a (b - 1) := by
     dsimp [V, P]
     simpa only [show a + (b - a - 1) = b - 1 by omega,
@@ -59,14 +59,14 @@ private theorem inventory (a b : ℕ) (ha : 2 ≤ a) (hab : a < b) :
     simpa only [Nat.zero_add, show a + (b - 1) = a + b - 1 by omega] using
       List.range'_append_1 (s := 0) (m := a) (n := b - 1)
   have hB : List.range (a + b - 1) ++ [a + b - 1] = List.range (a + b) := by
-    simpa only [show (a + b - 1) + 1 = a + b by omega] using (List.range_succ (n := a + b - 1)).symm
+    simpa only [Nat.succ_eq_add_one, show (a + b - 1) + 1 = a + b by omega] using (List.range_succ (n := a + b - 1)).symm
   have hQ : List.range (a + b) ++ Q = List.range (a + b + a - 1) := by
     dsimp [Q]
     simp only [List.range_eq_range']
     simpa only [Nat.zero_add, show a + b + (a - 1) = a + b + a - 1 by omega] using
       List.range'_append_1 (s := 0) (m := a + b) (n := a - 1)
   have hG : List.range (a + b + a - 1) ++ [a + b + a - 1] = List.range (a + b + a) := by
-    simpa only [show (a + b + a - 1) + 1 = a + b + a by omega] using (List.range_succ (n := a + b + a - 1)).symm
+    simpa only [Nat.succ_eq_add_one, show (a + b + a - 1) + 1 = a + b + a by omega] using (List.range_succ (n := a + b + a - 1)).symm
   have hall : (((U ++ [a - 1]) ++ (V ++ P)) ++ [a + b - 1]) ++ Q ++
       [a + b + a - 1] = List.range (a + b + a) := by
     rw [hUV, hB, hQ, hG]
@@ -76,7 +76,7 @@ private theorem inventory (a b : ℕ) (ha : 2 ≤ a) (hab : a < b) :
     simp only [← Multiset.coe_add]
     ac_rfl
   rw [hall] at hx
-  simpa only [P, Q, U, V, List.append_assoc, List.singleton_append, List.cons_append] using hx
+  simpa only [P, Q, U, V, List.append_assoc, List.singleton_append, List.cons_append, List.nil_append] using hx
 
 
 private def label (k : ℕ) (hk : 0 < k) (i : ℕ) : Fin k :=
@@ -111,7 +111,8 @@ private theorem lift_order (k t : ℕ) (hk : 0 < k) (l : List ℕ)
       fun i hi => hvalue i (List.mem_of_mem_take hi)
     have hm' := List.map_congr_left hv
     have hn := inStrip_prefix hs n
-    simpa only [← List.map_take, List.map_map, Function.comp_def, hm', zero_add, Set.mem_Icc] using hn
+    simpa only [← List.map_take, List.map_map, Function.comp_def, hm', zero_add,
+      Set.mem_Icc] using hn
 
 private theorem marked_word (k cut : ℕ) (hk : 0 < k) (P R : List ℕ)
     (hlen : P.length = cut) (hp : (P ++ R).Perm (List.range k)) :
@@ -134,7 +135,7 @@ private theorem marked_word (k cut : ℕ) (hk : 0 < k) (P R : List ℕ)
     apply Fin.ext
     simp [label, Nat.mod_eq_of_lt (show k < k + 1 by omega)]
   simp only [earWord, List.map_append, ← hl, List.take_left, List.drop_left, hP, hR,
-    List.map_cons, List.map_append, hlast, List.append_assoc, List.singleton_append, List.cons_append]
+    List.map_cons, List.map_append, hlast, List.append_assoc, List.singleton_append, List.cons_append, List.nil_append]
 
 
 private theorem paired_chains (a b : ℕ) (ha : 2 ≤ a) (hab : a < b) :
@@ -229,11 +230,11 @@ private theorem paired_chains (a b : ℕ) (ha : 2 ≤ a) (hab : a < b) :
   · simpa only [show a + b + (a - 1) = k - 1 by dsimp [k]; omega,
       ite_eq_right (by omega : ¬ a - 1 + 1 < a)] using hW (a - 1) (by omega)
   · rw [hshift, show a - 1 + 1 = a by omega]
-    simpa only [ite_eq_right (by omega : ¬ a + 1 < a + 1), hMN] using hU' a (by omega)
+    simpa only [ite_eq_right (by omega : ¬ a + 1 < a + 1), F, hMN] using hU' a (by omega)
   · rw [hshift, show a + b - 1 + 1 = (a + 1) + (b - 1) by omega]
-    simpa only [ite_eq_right (by omega : ¬ b - 1 + 1 < b), hMN] using hV' (b - 1) (by omega)
+    simpa only [ite_eq_right (by omega : ¬ b - 1 + 1 < b), F, hMN] using hV' (b - 1) (by omega)
   · rw [hshift, show k - 1 + 1 = (a + 1) + b + (a - 1) by dsimp [k]; omega]
-    simpa only [ite_eq_right (by omega : ¬ a - 1 + 1 < a), hMN] using hW' (a - 1) (by omega)
+    simpa only [ite_eq_right (by omega : ¬ a - 1 + 1 < a), F, hMN] using hW' (a - 1) (by omega)
   · have hvNat : ((1 + 2 ^ a + 2 ^ (a + b) : ℕ) : ℤ) = v := by
       push_cast; dsimp [v, r, s]; rw [pow_add]
     have hp : g k = centered M v := by
@@ -261,7 +262,8 @@ private theorem schedule_from_tail (f : ℕ → ℤ) (labels P Q T : List ℕ)
   have he := (hp.map f).sum_eq
   simp only [List.map_append, List.sum_append, List.map_cons, List.sum_cons,
     List.map_nil, List.sum_nil, add_zero, hg, hb, ha, hz] at he
-  exact ThreeNegativeEqualOuterSourceBridge.physical_schedule f labels P Q T gamma beta alpha Hg Hb Ha C
+  exact ThreeNegativeEqualOuterSourceBridge.physical_schedule f labels P Q T
+    gamma beta alpha Hg Hb Ha C
     hp hg hb ha hHg hHb hHa hP hQ hT hfirst ⟨by omega, by omega⟩ hz
 
 set_option maxHeartbeats 4000000 in
@@ -460,7 +462,7 @@ theorem actualSource_three_negative_equal_outer_joint_lift (a b : ℕ)
         apply Multiset.coe_eq_coe.mp
         simp only [← Multiset.coe_add]
         ac_rfl
-      simpa only [plus, word, List.append_assoc, List.singleton_append, List.cons_append] using he'
+      simpa only [plus, word, List.append_assoc, List.singleton_append, List.cons_append, List.nil_append] using he'
 
     exact he.trans (by simpa only [List.range_succ] using hp.append_right [k])
   have hseed : ((1 + 2 ^ a + 2 ^ (a + b) : ℕ) : ℤ) = v := by
@@ -493,9 +495,9 @@ theorem actualSource_three_negative_equal_outer_joint_lift (a b : ℕ)
         plus.map (label (k + 1) (by omega)) := by
       have hpre : (P ++ [k - 1]).length = a + 1 := by simp [P]
       have hword : (P ++ [k - 1]) ++ (Q ++ (a + b - 1) :: T ++ [a - 1]) = word := by
-        simp only [word, List.append_assoc, List.singleton_append, List.cons_append]
+        simp only [word, List.append_assoc, List.singleton_append, List.cons_append, List.nil_append]
       have hplusword : (P ++ [k - 1]) ++ k :: (Q ++ (a + b - 1) :: T ++ [a - 1]) = plus := by
-        simp only [plus, List.append_assoc, List.singleton_append, List.cons_append]
+        simp only [plus, List.append_assoc, List.singleton_append, List.cons_append, List.nil_append]
       simpa only [hword, hplusword] using marked_word k (a + 1) hk
         (P ++ [k - 1]) (Q ++ (a + b - 1) :: T ++ [a - 1]) hpre (by rw [hword]; exact hp)
     rw [he]
