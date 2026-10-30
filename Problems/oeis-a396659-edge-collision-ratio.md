@@ -29,24 +29,41 @@ At either of these two lengths the distinct prefix uses all directed edges
 or all but one. This reduces the required comparison to ordered Euler walks
 and the location of one missing directed edge.
 
-## Gap
+## Formal result and delivery boundary
 
-The whole ratio is unresolved here. Required further results are the
-cardinality decomposition of the numerator, the loop-deletion/insertion
-bijection with marked departures, and existence of a full ordered Euler walk
-for every n and fixed start. The denominator factor alone does not settle
-the ratio.
+CollisionPrefix.short_count gives T(n,n*n)=(2*n-1)E and long_count gives
+T(n,n*n+1)=nE on the source's literal ordered-edge carriers.
+euler_nonempty constructs an Euler walk for each fixed start;
+long_count_positive proves the denominator positive, and collision_ratio
+states the exact rational identity for every n at least two.
+
+These mathematical declarations require the current scoped axiom report.
+Independent source/form review, public-theorem audit completion or disclosed
+issue exceptions, canonical freeze, required CI and delivery to dev remain
+separate obligations. No delivered external-resolution count is asserted here.
 
 ## Route
 
 Write E for the full Euler-walk count. Deleting the final repeated edge gives
-T(n,n^2+1)=nE. An almost-complete trail omits either an edge from its endpoint
+T(n,n*n+1)=nE. An almost-complete trail omits either an edge from its endpoint
 back to its start, or a loop at a different vertex while remaining closed.
-The former class should contribute (n-1)E. For each other vertex a, let L(a)
-count full trails missing only its loop. The remaining desired correspondence
-is E=(n-1)L(a), obtained by deleting that loop while marking its insertion
-cut. Summing over the n-1 choices of a then gives the required numerator.
-These cardinality statements must be proved for the same ordered carriers.
+Appending the omitted closing edge bijects the first class with Euler walks;
+its final collision step has n-1 choices, giving (n-1)E.
+
+For a different from v, let L(a) count trails missing only (a,a). Deleting that
+loop from an Euler walk retains its insertion cut. The inverse inserts the
+loop at the marked linear position. These cuts biject with the n-1 remaining
+outgoing edges from a; neither boundary cut is at a. Thus E=(n-1)L(a).
+Summing over the n-1 choices of a and cancelling n-1 gives the sum of L(a)
+equal to E. These trails have n final choices, giving the numerator
+(n-1)E+nE=(2n-1)E.
+
+Euler existence uses a finite trail extension. Reserve each edge (a,v) until
+all other outgoing edges from a have occurred. If an endpoint has no unused
+outgoing edge, incidence balance forces it to be v. All edges entering v
+then have occurred, so the reserved-exit invariant forces all directed edges
+to have occurred. A shorter trail can therefore always extend, producing
+exactly n*n distinct edges. This proves positivity without a count formula.
 
 ## Falsifier
 
@@ -57,22 +74,19 @@ without by itself refuting the ratio.
 
 ## Evidence
 
-CollisionPrefix defines the source's ordered edge sequences and compatible
-vertex walks, together with their exact collision correspondence. Its
-prefix_structure and collision_prefix_structure describe the two omitted-edge
-cases and the automatic coverage of vertices. Its longCollisionEquiv is the
-append/delete construction underlying long_count. These statements leave the
-numerator and positivity obligations above.
+CollisionPrefix.sourceCollisionEquiv transports the distinguished start,
+adjacency, vertex coverage and collision conditions between vertex walks
+and the literal ordered-edge source carrier. longCollisionEquiv supplies
+the denominator bijection. loopInsertionEquiv retains the marked insertion
+cut; returnTrailEquiv completes the closing-edge class. short_count takes
+cardinalities of their actual carriers. euler_nonempty uses the reserved-exit
+construction; long_count_positive and collision_ratio give the two terminal
+source obligations.
 
 ## Triage
 
-This is an all-n finite combinatorial problem. No finite prefix, factorial
-formula assumed from the source, or assertion of global novelty supplies a
-resolution. The next mathematical target is the loop-insertion equivalence
-with a count of its distinct ordered cuts. No successor problem is selected.
-
-## ASSUMED-UNVERIFIED
-
-The proposed numerator and positive-denominator arguments have not been
-established by the declarations listed above. The current source's conjecture
-label is source evidence, not a proof of worldwide nonsettlement.
+The statement covers all n at least two, not a finite prefix. The separate
+factorial formula is not assumed. No worldwide openness, priority, novelty or
+model-diversity claim follows. The mathematical result has not yet completed
+the independent review, audit, freeze and merged-delivery boundary. No successor
+problem is selected.

@@ -362,13 +362,6 @@ private theorem insert_loop_start {V : Type u} {k : ℕ}
     (w : Walk V k) (p : Fin (k + 1)) : insertLoop w p 0 = w 0 := by
   simp [insertLoop]
 
-private theorem insert_loop_end {V : Type u} {k : ℕ}
-    (w : Walk V k) (p : Fin (k + 1)) :
-    insertLoop w p (Fin.last (k + 1)) = w (Fin.last k) := by
-  simp only [insertLoop, Fin.val_last]
-  rw [dif_neg (by omega)]
-  rfl
-
 /-- Remove the head vertex of the edge at the marked position. -/
 def removeLoop {V : Type u} {k : ℕ} (w : Walk V (k + 1)) (p : Fin (k + 1)) :
     Walk V k :=
