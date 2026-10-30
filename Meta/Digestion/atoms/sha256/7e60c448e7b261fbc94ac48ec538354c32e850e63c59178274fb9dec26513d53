@@ -1,0 +1,24 @@
+#### 命题 3.4（整体纯态与局部平方余量）
+
+设复合系统纯态为 $\lvert \Psi\rangle=\lvert 0\rangle\otimes u+\lvert 1\rangle\otimes v$，且
+$\|u\|^2+\|v\|^2=1$。记 $a=\|u\|^2,b=\|v\|^2,c=\langle u,v\rangle$，约化 qubit 的 Bloch 向量为 $(2\operatorname{Re} c,2\operatorname{Im} c,a-b)$，并有
+
+$$
+
+\boxed{1-|r|^2=4(ab-|c|^2)\ge0.}
+
+$$
+
+等号当且仅当 $u,v$ 线性相关，包括一个为零的情形。
+
+
+**证明。**
+
+部分迹给约化矩阵 $(\begin{smallmatrix}a&\bar c\\c&b\end{smallmatrix})$。展开 $1-|r|^2$ 得所列式，非负性与等号由 Cauchy–Schwarz。
+
+**证明完。** ∎
+
+这把局部“不满单位球面”解释为隐藏分支关系的 Gram 行列式。整体本体态为纯态，并不要求每个局部观察接口也纯。
+
+
+<a id="sec:clifford"></a>

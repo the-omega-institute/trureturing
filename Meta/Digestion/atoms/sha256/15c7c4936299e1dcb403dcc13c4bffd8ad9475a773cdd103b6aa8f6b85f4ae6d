@@ -1,0 +1,38 @@
+#### 定理 8.1（球面中心与射线中心）
+
+给定 $w_j>0,y_j\in\mathbb{C}^d$，令 $W=\sum_jw_j$、
+$s=\sum_jw_jy_j$。在 $\|z\|=1$ 上，
+
+$$
+
+\min\sum_jw_j\|z-y_j\|^2
+ =W+\sum_jw_j\|y_j\|^2-2\|s\|.
+
+$$
+
+若 $s\ne0$，唯一极小元为 $z=s/\|s\|$；若 $s=0$，所有单位向量极小。
+
+若各 $y_j$ 单位且只保留其射线，应使用相位不变目标
+
+$$
+
+F_{\rm ray}(z)=\sum_jw_j(1-|\langle z,y_j\rangle|^2).
+
+$$
+
+令 $A=\sum_jw_j\lvert y_j\rangle\langle y_j\rvert$，则最小值为
+$W-\lambda_{\max}(A)$，极小向量为最高本征空间中的单位向量。
+
+
+**证明。**
+
+第一个目标展开为所列常数减 $2\operatorname{Re}\langle z,s\rangle$，Cauchy–Schwarz 给值与等号。第二个目标为
+$W-\langle z,Az\rangle$，谱分解给最大 Rayleigh 商及全部等号态。
+
+**证明完。** ∎
+
+对 qubit 射线中心，若输入 Bloch 向量为 $r_j$，则
+$A=(WI+b\cdot\sigma)/2$、$b=\sum w_jr_j$。$b\ne0$ 时极小射线方向为 $b/\|b\|$。这里相加的是射线的 Bloch 向量；第一个目标相加的是带相位的复振幅，两者不可混用。
+
+
+<a id="prop:nonassoc"></a>
