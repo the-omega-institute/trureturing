@@ -471,7 +471,7 @@ private def large_choice (len : ℕ) (R S q : ℤ) (hS : 4 ≤ S) (hq : 4 ≤ q)
     have he1 : e ≤ 3 * v - 2 := by
       dsimp [e, v] at *
       nlinarith [mul_nonneg (show 0 ≤ 2 * S + 1 by omega) (show 0 ≤ 3 * q by omega)]
-    have hgap : 3 * R ≤ R * (R - 3 * S - 1) :=
+    have hgap : R * 3 ≤ R * (R - 3 * S - 1) :=
       mul_le_mul_of_nonneg_left (show 3 ≤ R - 3 * S - 1 by omega) (show 0 ≤ R by omega)
     dsimp [v] at he1
     nlinarith
