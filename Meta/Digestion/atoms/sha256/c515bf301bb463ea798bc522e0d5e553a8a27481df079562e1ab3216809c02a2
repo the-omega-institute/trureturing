@@ -1,0 +1,34 @@
+**Assumption 18.1 (Finite actual data and original-compatible boundaries).** Use the original stationary joint law, visible marginal $P$, actual Palm law $Q$ and strict-left reset of Definition 4.1. On a supplied positive actual component, suppose the following structural data are given, without assuming $d(P)=c_\star$ or any score-constancy identity.
+
+There is a finite predictive state set $S$, with actual future laws $F_c$, actual gap rows $f_c(g)>0$ for $g\ge2$, and actual maps $\tau_g:S\to S$. The rows are normalized with finite mean, and the full-history reset rule gives the actual cylinder likelihood
+
+$$
+L_c(g_1\cdots g_m)=\prod_{k=1}^m f_{c_{k-1}}(g_k),
+\qquad c_k=\tau_{g_k}(c_{k-1}),\qquad L_c(\varnothing)=1.
+$$
+
+Fix $G\ge2$ and $\Gamma=\{2,\ldots,G\}$. Supply the original scalar rows through $2G$ and a forward-closed ordered-pair set $\mathcal P\subset S^2$ containing every pair in (17.6). Supply the finite **joint actual** range
+
+$$
+\mathcal T=\{\mathbf R(v):v\in\Gamma^*\},\qquad
+\mathbf R(v)_{(u,v')}=\frac{L_{v'}(v)}{L_u(v)}.
+$$
+
+In particular its coordinates come from one common suffix word. The identity (17.3), used only as actual reset factorization, defines the supplied maps
+
+$$
+\bigl(\Phi_g(t)\bigr)_{(u,v)}
+=\frac{f_v(g)}{f_u(g)}t_{(\tau_g(u),\tau_g(v))},\qquad
+\mathbf R(gz)=\Phi_g(\mathbf R(z)),\qquad
+\mathbf R(\varnothing)=\mathbf1.
+\tag{18.1}
+$$
+
+Finiteness of $S,\mathcal T$ and the phase/guard interfaces is a premise here; no attainment-dependent conclusion of Proposition 17.2 supplies it.
+
+A supplied finite boundary package specifies an unchanged left anchor $T_\ast<A_\ast$, its positive actual reset state, the fixed connections and guards, and an intact third guard ending at $R>B_\ast$. It includes a finite spatial phase clock and the actual rule that the third guard merges predictive states in each common phase. Phase equality denotes mutual absolute continuity of future channels, not equality of predictive states. For each allowed boundary mode, the gap word from $B_\ast$ through $R$ is fixed and nonempty, say $\eta=b\xi$ with $b\in\Gamma$; the fixed prefix from $T_\ast$ determines the state $c$ at the predecessor of $A_\ast$ and its gap $h\in\Gamma$ to $A_\ast$. The package specifies allowed terminal predictive states and phases after $\eta$.
+
+The authorized original words have a fixed prefix, a $\Gamma^*$ interior and fixed closing data, subject to finite phase and guard constraints. All their original gaps, from the predecessor of $A_\ast$ through $R$, are at most $G$. Finite control records the exact allowed language, including its empty or short interiors and any authorized coincidences of joining anchors or scored boundaries. Every entry-to-exit matching constraint and every allowed relation between two boundary modes is finite and is retained in persistent boundary tags; a path cannot change its boundary prescription at a shared interior state. No unauthorized coincidence or empty word is added.
+
+For each allowed pair, the unchanged left reset and fixed left exterior agree; equal physical displacement puts its fixed closing data at the same coordinates and gives a common phase at the third guard. For each legal one-site completion at a scored site, $T_\ast$ stays unchanged, the third guard stays intact, and the two completion channels have this common phase before that guard. Thus the direct structural full-exterior bridge in the proof of (16.5) applies: the common left factor and the synchronized entire future after $R$ cancel in the original posterior. This is a condition on the original law and guards, including completions outside the authorized language. No right decoder, entrywise matrix positivity, inverse context map, or replacement stationary or Palm law is supplied or required.
+

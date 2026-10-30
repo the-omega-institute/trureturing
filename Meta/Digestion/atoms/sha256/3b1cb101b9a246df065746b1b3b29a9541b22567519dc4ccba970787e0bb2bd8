@@ -1,0 +1,42 @@
+**命题 12.5（非零耦合的额外节点根）。** 对实际缺陷圈 $r=5,m=3$，有 $L=15$、$q=11$。取 $t_0=1/2$，则 $\lambda-3/2$ 同时整除 $p(\lambda,t_0)$ 与 $Q(\lambda,t_0)$，却不整除 $G(\lambda,t_0)$。特别地 $\mathcal R_{5,3}(1/2)=0$，且这个特化后的首一 gcd 次数严格大于 $5$。
+
+**证明。** 令 $H_0,p_0,C$ 如定理 11.1 证明中式 (11.1)–(11.3)，并记 $A=T(a)$、$B=T(b)$、$D=bY-Z$。由事实 3.2，$A^{r-2}$ 的第一列为 $(Y,Z)^{\mathsf T}$，故
+
+$$
+Ce_1=ABA^{r-2}e_1
+ =A\begin{pmatrix}bY-Z\\Y\end{pmatrix}
+ =\begin{pmatrix}aD-Y\\D\end{pmatrix},
+\qquad C_{21}=D.
+$$
+
+记
+
+$$
+s_m(x)=S_{m-1}(x),\qquad
+F_m(x)=xS_{m-1}(x)-2\bigl(S_{m-2}(x)+1\bigr).
+$$
+
+直接对式 (11.3) 使用事实 4.1 的幂公式并取相应矩阵元与迹，得到
+
+$$
+Q=(-1)^{L-1}s_m(\sigma_r)D,\qquad
+p_0=(-1)^L F_m(\sigma_r),\qquad p=p_0+2tQ.
+$$
+
+这些公式使用实际圈的周期边界和实际删点主子矩阵，后者的剩余对角元仍是 $2+tU_i$。周期 Jacobi 的相应单值约定见 G. Teschl，*Jacobi Operators and Completely Integrable Nonlinear Lattices*，§7.1；其半迹判别式在此为 $\sigma_r/2$。S. Roy，[*A spectral viewpoint on the single defect tight-binding chain*](https://arxiv.org/html/2607.29467v1)，§2 式 (1)–(4)、(10)，讨论的是均匀周期背景上的单点缺陷及零振幅态；这里的周期背景是块 $u_5$ 的重复，上式由本卷的矩阵公式给出。
+
+在 $\lambda=3/2,t=1/2$ 处，$a=1,b=0$，而约定 2.4 的递推给出
+
+$$
+X=S_4(1)=-1,\qquad Y=S_3(1)=-1,\qquad Z=S_2(1)=0,
+\qquad D=0,\qquad \sigma_5=2.
+$$
+
+所以 $Q=0$；又 $F_3(2)=2S_2(2)-2(S_1(2)+1)=6-6=0$，故 $p_0=p=0$。另一方面 $h=1$、$\Psi_3(x)=x+1$，从而
+
+$$
+G(3/2,1/2)=(-1)^5\Psi_3(2)=-3\ne0.
+$$
+
+由因式定理，$\lambda-3/2$ 是特化后额外出现的公共因子；结合命题 12.4 得到结式取零与次数严格增加。∎
+

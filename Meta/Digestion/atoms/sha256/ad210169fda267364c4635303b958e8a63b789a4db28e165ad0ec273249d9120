@@ -1,0 +1,42 @@
+#### 定理 7.2（递归消元与整体变分等价）
+
+将 $L$ 按边界、内部写成块矩阵，则 $L_{II}>0$，
+
+$$
+\psi_I^\ast=-L_{II}^{-1}L_{IB}g,\qquad
+ \mathcal E_{\mathrm{eff}}(g)=g^\dagger Sg,\qquad
+ S=L_{BB}-L_{BI}L_{II}^{-1}L_{IB}\ge0.
+$$
+
+将内部任意分层后逐层消元，与一次消掉全部内部得到同一个 $S$。
+
+**证明。**
+
+若零边界截面的能量为零，酉边关系沿连通路径将边界零值传播到全部顶点，因此该截面为零；有限维中即得 $L_{II}$ 正定。
+配方给
+
+$$
+\mathcal E(g,\psi_I)
+ =(\psi_I-\psi_I^\ast)^\dagger L_{II}(\psi_I-\psi_I^\ast)
+   +g^\dagger Sg .
+$$
+
+唯一极小元、最小值和 $S\ge0$ 随即成立。任意有限分块满足
+
+$$
+\min_{x,y}E(x,y)=\min_x\min_yE(x,y).
+$$
+
+严格凸性使每层的极小元唯一，最小二次型对所有 $g$ 相等，故 Schur 消元结合。
+
+∎
+
+在这个模型中，“预测”被具体定义为给定边界后求内部相容振幅；递归是分层消元；变分是内部 Euler–Lagrange 方程；最优化是同一个正二次型的极小化。这四者确实一致，前件也清楚。
+一般的预测任务未指定损失与载体时，不能由名称直接得出相等。
+
+逐点归一化会改变问题。例如边界为单位向量 $u,-u$，内点 $z$ 的能量
+$\left\lVert z-u\right\rVert ^2+\left\lVert z+u\right\rVert ^2=2\left\lVert z\right\rVert ^2+2$。
+自由振幅的唯一解为 $z=0$；若强制 $\left\lVert z\right\rVert =1$，所有单位向量都成为同能量解，线性 Schur 唯一性不再适用。
+
+<a id="sec-7-2"></a>
+

@@ -1,0 +1,136 @@
+**Lemma 7.2 (A three-part second-excess comparison).** Let
+$h\in\mathcal C_{a,b,c}$, and set
+
+$$
+\begin{gathered}
+H=L(h)-P,\qquad S=\operatorname{tr}H,\qquad s=S-1,\\
+z_A=D_A-a,\quad z_B=D_B-b,\quad z_C=D_C-c,\qquad
+D_I=\sum_{x\in I}d_x(h).
+\end{gathered}
+\tag{7.2}
+$$
+Let $E(H)$ be the second elementary symmetric sum of the eigenvalues of
+$H$, equivalently the sum of all its second-order principal minors.
+Then $z_A,z_B,z_C\ge0$, $s=z_A+z_B+z_C\ge0$, and
+
+$$
+E(H)\ge\eta+
+ \frac{a^2+b^2-c^2}{2abc}s-\frac n{4abc}s^2.
+\tag{7.3}
+$$
+In particular,
+
+$$
+s=0\ \Longrightarrow\ E(H)\ge\eta,\qquad
+0<s\le1\ \Longrightarrow\ E(H)>\eta-\frac s4.
+\tag{7.4}
+$$
+No invariance of the within-part difference spaces is assumed.
+
+*Proof.* Lemma 2.1 gives $H\succeq0$, $H\mathbf1=0$, $D_I\ge|I|$
+and $S=D_A+D_B+D_C-(n-1)$, proving the first assertions.
+Let $m_A=a,m_B=b,m_C=c$, and form the three orthonormal vectors
+$f_I=\mathbf1_I/\sqrt{m_I}$. Let $K$ be the compression of $H$ to their
+span, $K_{IJ}=f_I^{\mathsf T}Hf_J$, and put
+
+$$
+B_{IJ}=\sqrt{m_I m_J}\,K_{IJ}
+       =\sum_{x\in I,\,y\in J}H_{xy},\qquad X_I=B_{II}.
+$$
+The letter $B$ here denotes a symmetric three by three matrix, not a
+replacement graph. Since each original part is independent, its
+principal block of $H$ has diagonal $d_x(h)-1+1/n$ and off-diagonal
+$1/n$. Thus
+
+$$
+X_A=\frac{a^2}n+z_A,\quad
+X_B=\frac{b^2}n+z_B,\quad
+X_C=\frac{c^2}n+z_C.
+\tag{7.5}
+$$
+Also $B\mathbf1_3=0$, because $H\mathbf1=0$. Solving these three row-sum
+relations gives, for distinct $I,J,K'$ in $\{A,B,C\}$,
+
+$$
+B_{IJ}=\frac{X_{K'}-X_I-X_J}{2}.
+$$
+Consequently every numerator of a second-order principal minor of $K$
+is the same number
+
+$$
+\begin{aligned}
+\Omega(X)
+&=X_I X_J-\frac{(X_{K'}-X_I-X_J)^2}{4}\\
+&=\frac{2(X_A X_B+X_A X_C+X_B X_C)
+              -X_A^2-X_B^2-X_C^2}{4},\\
+E(K)&=\left(\frac1{ab}+\frac1{ac}+\frac1{bc}\right)\Omega(X)
+     =\frac n{abc}\Omega(X).
+\end{aligned}
+\tag{7.6}
+$$
+For a Gram representation $H_{xy}=\langle v_x,v_y\rangle$, the vectors
+$V_I=\sum_{x\in I}v_x$ satisfy $V_A+V_B+V_C=0$ and
+$\|V_I\|^2=X_I$. Then $\Omega(X)=\|V_A\wedge V_B\|^2$.
+This is precisely the squared-area identity for that actual triple of
+part sums. In particular the three areas are evaluated in a common Gram
+representation. The algebra in (7.5)–(7.6) uses only symmetry, the
+within-part entries and zero row sums; it does not require positivity
+once those entries are specified.
+
+Complete $f_A,f_B,f_C$ to an orthonormal basis of $\mathbb R^V$.
+In that basis every second-order principal minor of the positive
+semidefinite matrix $H$ is nonnegative, and the three minors using only
+the first three coordinates sum to $E(K)$. Since
+$E(H)=((\operatorname{tr}H)^2-\operatorname{tr}(H^2))/2$ is unchanged by
+this orthogonal change of basis, $E(H)\ge E(K)$. This inequality retains
+all the other original coordinates.
+
+Substitution of (7.5) into (7.6) gives the exact expression
+
+$$
+\begin{aligned}
+E(K)=\eta
+ &+\frac{b^2+c^2-a^2}{2abc}z_A
+  +\frac{a^2+c^2-b^2}{2abc}z_B
+  +\frac{a^2+b^2-c^2}{2abc}z_C\\
+ &+\frac n{4abc}
+  \left(2(z_Az_B+z_Az_C+z_Bz_C)-z_A^2-z_B^2-z_C^2\right).
+\end{aligned}
+\tag{7.7}
+$$
+For its constant term the elementary Heron expansion is
+
+$$
+2(a^2b^2+a^2c^2+b^2c^2)-a^4-b^4-c^4
+=n(a+b-c)(a+c-b)(b+c-a).
+$$
+The smallest of the three linear coefficients in (7.7) is the one
+multiplying $z_C$, because $c$ is the largest part. The parenthesis on
+the second line is at least $-s^2$: adding $s^2$ to it gives
+$4(z_Az_B+z_Az_C+z_Bz_C)\ge0$. These facts prove (7.3).
+
+Here the integer hypotheses yield a useful strict coefficient estimate:
+
+$$
+\frac{a^2+b^2-c^2}{2abc}-\frac n{4abc}>-\frac14.
+\tag{7.8}
+$$
+To prove it without discarding any size-two case, put
+$J(c)=abc+2a^2+2b^2-2c^2-a-b-c$.
+It is a concave quadratic in $c$ on $[b,a+b-1]$, so it is at least the
+smaller of its endpoint values. Those values are
+
+$$
+\begin{aligned}
+J(b)&=ab^2+2a^2-a-2b>0,\\
+J(a+b-1)&=ab(a+b-5)+2(a+b)-1>0.
+\end{aligned}
+$$
+For the first inequality, $ab^2-2b=b(ab-2)>0$ and $2a^2-a>0$.
+For the second, if $a+b=4$ its value is $3$; if $a+b\ge5$ both the
+nonnegative first term and the strictly positive last terms have the
+indicated signs. Integrality and $c<a+b$ give $c\le a+b-1$, hence
+$J(c)>0$. Division by $4abc$ proves (7.8).
+If $0<s\le1$, then $s^2\le s$, so (7.3) and (7.8) give the strict
+inequality in (7.4). The assertion at $s=0$ is immediate from (7.3). ∎
+
