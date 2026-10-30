@@ -16,6 +16,7 @@ model and induction first on coefficient degree, then on the unbounded column. -
 set_option autoImplicit false
 
 open PowerSeries
+open D5.S1.Recurrence.Algebraic.SchroderIntegralEGF (R_eq R_zero)
 
 namespace D5.S1.Recurrence.Algebraic.PeriodicBoundarySchroder
 
@@ -87,7 +88,7 @@ private theorem H2_system :
   refine ⟨?_, ?_, ?_⟩
   · intro d
     unfold H2
-    split_ifs <;> simp [D5.S1.Recurrence.Algebraic.SchroderIntegralEGF.R_zero]
+    split_ifs <;> simp [R_zero]
   · simp [H2]
   · intro d
     have hr := Nat.mod_lt d (by decide : 0 < 2)
@@ -98,7 +99,7 @@ private theorem H2_system :
       rw [hf, H2_odd, H2_even]
       rw [show 2 * j + 2 + 1 = 2 * (j + 1) + 1 by omega, H2_odd]
       rw [pow_succ, pow_succ]
-      linear_combination S ^ j * D5.S1.Recurrence.Algebraic.SchroderIntegralEGF.R_eq
+      linear_combination S ^ j * R_eq
     · obtain ⟨j, rfl⟩ : ∃ j, d = 2 * j + 1 := ⟨d / 2, by omega⟩
       have hf : f2 (2 * j + 1 + 1) = 0 := by simp [f2, Nat.add_mod]
       rw [hf, show 2 * j + 1 + 1 = 2 * (j + 1) by omega, H2_even, H2_odd]
@@ -115,13 +116,13 @@ private theorem R_equations : R - S = X * S * R ∧ S ^ 2 - R = X * S * R := by
     rw [← map_mul]
     norm_num
   constructor <;> dsimp [R]
-  · linear_combination (PowerSeries.C (1 / 2 : ℚ)) * S * D5.S1.Recurrence.Algebraic.SchroderIntegralEGF.R_eq +
+  · linear_combination (PowerSeries.C (1 / 2 : ℚ)) * S * R_eq +
       S * hc
-  · linear_combination (PowerSeries.C (1 / 2 : ℚ)) * S * D5.S1.Recurrence.Algebraic.SchroderIntegralEGF.R_eq -
+  · linear_combination (PowerSeries.C (1 / 2 : ℚ)) * S * R_eq -
       S ^ 2 * hc
 
 private theorem R_constant : constantCoeff R = 1 := by
-  norm_num [R, D5.S1.Recurrence.Algebraic.SchroderIntegralEGF.R_zero]
+  norm_num [R, R_zero]
 
 private noncomputable def H3 (d : ℕ) : PowerSeries ℚ :=
   if d = 0 then 1 + X * S else
@@ -144,11 +145,11 @@ private theorem H3_system :
   refine ⟨?_, ?_, ?_⟩
   · intro d
     unfold H3
-    split_ifs <;> simp [D5.S1.Recurrence.Algebraic.SchroderIntegralEGF.R_zero, R_constant]
+    split_ifs <;> simp [R_zero, R_constant]
   · simp [H3]
   · intro d
     cases d with
-    | zero => simpa [H3, f3] using D5.S1.Recurrence.Algebraic.SchroderIntegralEGF.R_eq
+    | zero => simpa [H3, f3] using R_eq
     | succ d =>
       have hr := Nat.mod_lt d (by decide : 0 < 3)
       have he := Nat.mod_add_div d 3
@@ -185,7 +186,8 @@ theorem result (n : ℕ) :
     rw [h1] at h
     have hp : P f (n + 1) (n + 1) = C f n 1 := by simp [P, C]
     rw [hp]
-    exact_mod_cast (show (C f n 1 : ℚ) = (Nat.largeSchroder n : ℚ) by simpa [S] using h)
+    exact_mod_cast (show (C f n 1 : ℚ) = (Nat.largeSchroder n : ℚ) by
+      simpa [D5.S1.Recurrence.Algebraic.SchroderIntegralEGF.R] using h)
   exact ⟨diagonal f2 H2 H2_system.1 H2_system.2.1 H2_system.2.2 (by simp [H2]),
     diagonal f3 H3 H3_system.1 H3_system.2.1 H3_system.2.2 (by simp [H3])⟩
 
