@@ -74,19 +74,98 @@ $F=\left(\begin{smallmatrix}x&y\\y&-x\end{smallmatrix}\right)$，在按局部融
 
 最后一行由 $F\operatorname{diag}(1,0)F$ 按中心顺序重排得到；$y^2=x$ 给其对角 $x,x^2$ 及非对角 $xy$。故三类块都精确给 (77.1)，没有漏掉合法的一维块。左端 $i=1$ 固定 $x_0=\mathbf1,x_1=\tau$，投影是 $n_{b_1}$；右端 $i=7$ 固定 $x_7=\tau,x_8=\mathbf1$，投影是 $n_{b_5}$。所以 $j=0,6$ 也逐块相符，不是借内部公式省略边界。
 
-外部密度供应为 Freedman–Larsen–Wang，[*The two-eigenvalue problem and density of Jones representation of braid groups*, math/0103200v1，§6 Lemma 6.1、Theorem 6.2](https://arxiv.org/html/math/0103200v1)。其标签 $0,2$ 分别对应这里的 $\mathbf1,\tau$，理论为 $r=5$ 的 $SO(3)$ Fibonacci 理论。八个非平凡边界、一个真空外边界给 $(g,m,n)=(0,1,8)$。Lemma 6.1 允许封掉标记零的外边界，且
+外部供应为 Freedman–Larsen–Wang，[*The two-eigenvalue problem and density of Jones representation of braid groups*, math/0103200v1](https://arxiv.org/html/math/0103200v1)。其 §6 的标签 $0,2$ 分别对应这里的 $\mathbf1,\tau$，八个非平凡边界、一个真空外边界给 $(g,m,n)=(0,1,8)$。Lemma 6.1 的维数确为
 
 $$
  \dim V_{0,1,8}=\frac{\varphi^7-((1-\sqrt5)/2)^7}{\sqrt5}=13.
  \tag{77.5}
 $$
 
-Theorem 6.2 的例外 $g+n=1$ 不适用。其纯映类群作用射影稠密于 $PU(13)$。封口前的带框纯编织覆盖封口后的纯映类：可把一个无标记小圆盘通过同伦固定，再在其补上表示映类；忘掉各边界框只产生各固定标签的扭转。带框编织由普通八股编织及个别边界扭转生成；标记固定的边界扭转是标量（原文 §6 给 $0$ 标签为 $1$、$2$ 标签为 $e^{4\pi i/5}$），故普通编织的射影像已包含该纯映类的像。因而七个相邻编织生成元的射影闭包就是 $PU(13)$。
+但维数与标签相同尚不足以转移密度，尤其不能把其印刷的局部矩阵默认为本规范。原文 v1 Lemma 6.3 的显示式及原始 TeX 都给出
 
-还需对齐原文规范，不能仅凭同名 Fibonacci 表示借用密度。原文 Lemma 6.3 显示的 $R_0=\operatorname{diag}(e^{4\pi i/5},-e^{2\pi i/5})$ 满足
-$\overline{R_0}=\operatorname{diag}(\zeta^2,\zeta)=R$。其 $F_0$ 的两个非对角元是 $-y$；用 $D=\operatorname{diag}(1,-1)$ 有 $DF_0D=F$。在整个前缀路径基中，可同时以
-$S|x_0\cdots x_8\rangle=(-1)^{\#\{1\le k\le7:x_k=\mathbf1\}}|x_0\cdots x_8\rangle$
-实施这个符号规范：每个非对角矩阵元恰翻转一个中间标签，故改变一次符号；所有一维块及对角块保持。于是对全部七个生成元，同时有 $K_{i-1}=S\overline{B_i^{\rm FLW}}S^{-1}$，在另取框或标量规范时等式至多相差各生成元的标量。共同酉规范、共轭手性和标量扭转都保持射影密度。
+$$
+ R_0=\operatorname{diag}(e^{4\pi i/5},-e^{2\pi i/5}),\qquad
+ F_{\rm print}=\begin{pmatrix}x&-y\\-y&x\end{pmatrix}.
+ \tag{77.6}
+$$
+
+虽然 $\overline{R_0}=R$，但 $D=\operatorname{diag}(1,-1)$ 给
+$DF_{\rm print}D=\left(\begin{smallmatrix}x&y\\y&x\end{smallmatrix}\right)\ne F$；对角共轭不能改变右下角的 $x$。而且 $(F_{\rm print}^{*}F_{\rm print})_{12}=-2xy\ne0$，故它不是本正交基中的酉融合矩阵。这里不把 (77.6) 静默改成另一显示式，也不把这个失效等式作为密度的前提。下面直接用同文 §2 明定的 Jones–Wenzl 表示建立整个扇区的对应，再调用其 Theorem 0.1。
+
+取 $q=e^{2\pi i/5}$、$q^{1/2}=e^{\pi i/5}$，并沿用该文量子整数
+$[a]=(q^{a/2}-q^{-a/2})/(q^{1/2}-q^{-1/2})$。于是
+$[1]=[4]=1$、$[2]=[3]=\varphi$、$[-a]=-[a]$。令 $\lambda=[4,4]$，使用该文 §2 Definitions 1–2 的 $(k,r)=(2,5)$ 可容许标准 Young 表基 $v_t$。在此前缀路径上定义高度
+
+$$
+ h_k=\begin{cases}
+ 0,&k\text{ 偶},\ x_k=\mathbf1,\\
+ 2,&k\text{ 偶},\ x_k=\tau,\\
+ 3,&k\text{ 奇},\ x_k=\mathbf1,\\
+ 1,&k\text{ 奇},\ x_k=\tau,
+ \end{cases}\qquad 0\le k\le8.
+ \tag{77.7}
+$$
+
+融合邻接恰等价于 $h_{k+1}-h_k=\pm1$、$0\le h_k\le3$；端点为 $h_0=h_8=0$。若一步为 $+1$，就在 Young 表第一行末放入该步序号；若为 $-1$，就在第二行末放入。非负高度保证每个前缀都是 Young 图，高度上限 $3=r-k$ 正是 $(2,5)$ 可容许条件；端点迫使两行各有四格。反向每个这样的表唯一给出高度，再由 (77.7) 恢复路径。因此这是前表全部十三条路径与 $V_{[4,4]}^{(2,5)}$ 的整个正交基的双射；记所得酉映射为 $Ue_\beta=v_{t(\beta)}$，不增加或删除任何路径。
+
+现从 FLW 的表公式逐项算生成元，而非只比较两个特征值。若表中 $i$ 的行列为 $(r_i,c_i)$，令
+
+$$
+ d_{t,i}=(c_i-c_{i+1})-(r_i-r_{i+1}),\qquad
+ a_{t,i}=\frac{[d_{t,i}+1]}{[2][d_{t,i}]},\qquad
+ b_{t,i}=\sqrt{a_{t,i}(1-a_{t,i})}.
+ \tag{77.8}
+$$
+
+该文 §2 (2)–(3) 给 $E_i=\pi_{[4,4]}^{(2,5)}(e_i)$ 的对角元 $a_{t,i}$、可交换 $i,i+1$ 的表之间的正非对角元 $b_{t,i}$；不可容许交换时非对角元为零。高度为当前两行长度之差，故两步同向时 $i,i+1$ 在同一行，$d=-1$；先升后降时 $d=h_{i-1}+1$；先降后升时 $d=-h_{i-1}-1$。代入 (77.7) 得整个局部域的表：
+
+| 外侧 $x_{i-1},x_{i+1}$ | 中间 $x_i$／中心位 | $d_{t,i}$（$i$ 奇／偶） | $a_{t,i}$ |
+| --- | --- | --- | --- |
+| $\mathbf1,\mathbf1$ | $\tau$／$0$ | $1$／$-4$ | $1$ |
+| $\mathbf1,\tau$ 或 $\tau,\mathbf1$ | $\tau$／$0$ | $-1$／$-1$ | $0$ |
+| $\tau,\tau$ | $\tau$／$0$ | $-3$／$2$ | $x$ |
+| $\tau,\tau$ | $\mathbf1$／$1$ | $3$／$-2$ | $x^2$ |
+
+所有分母 $[d]$ 均非零。前两行的交换分别越过高度边界或破坏标准表，故只有一维块；后两行互相交换，且正平方根为 $\sqrt{x x^2}=xy$。因此在中心顺序 $0,1$ 下，其二维块正是 $Q$。包括 $i=1,7$ 在内，每个允许的表／路径都已落在此表中；特别是前述端点投影 $n_{b_1},n_{b_5}$ 也相同。所以同时对全部七个 $i$ 有
+
+$$
+ U(\mathcal P_{i-1}|_H)U^{-1}=E_i,\qquad
+ \rho_{[4,4]}^{(2,5)}(\sigma_i)=qI-(1+q)E_i.
+ \tag{77.9}
+$$
+
+第二式正是该文 Lemma 2.1、(1) 的编织定义。由 $\zeta=-q^{-1}$，两式立即给统一的标量对应
+
+$$
+ U(K_{i-1}|_H)U^{-1}
+ =c\,\rho_{[4,4]}^{(2,5)}(\sigma_i),\qquad
+ c=\frac\zeta q=e^{\pi i/5},\qquad 1\le i\le7.
+ \tag{77.10}
+$$
+
+同一个 $U$ 和同一个 $c$ 用于每个生成元；任意正向字在此对应下只产生整体标量 $c^{|p|}$。这证明相容性来自整个 Jones–Wenzl 表示，既不依赖 (77.6) 的非酉显示式，也不是逐门选择不同的相似变换。
+
+为明确与 v15 的 Fibonacci 局部规范的关系，可以在相同路径上定义另一手性的酉融合数据
+
+$$
+ \widehat F_0=\begin{pmatrix}x&-y\\-y&-x\end{pmatrix},\qquad
+ \widehat F_0^*\widehat F_0=\widehat F_0^2=I,\qquad
+ D\widehat F_0D=F.
+ \tag{77.11}
+$$
+
+这是此处明确指定并由 (77.9)–(77.10) 支持的规范，不能称为 FLW v1 的字面 $F_{\rm print}$。用 $(\widehat F_0,R_0)$ 定义局部编织：外侧均 $\tau$ 时取 $\widehat F_0R_0\widehat F_0$，按中心 $\tau,\mathbf1$ 顺序重排；外侧均 $\mathbf1$ 时取 $R_{0,\mathbf1}$，外侧不同取 $R_{0,\tau}$。其二维真空投影是 $\left(\begin{smallmatrix}x&-xy\\-xy&x^2\end{smallmatrix}\right)$。记这些全路径算子为 $\widehat B_i$，并置
+$S|x_0\cdots x_8\rangle=(-1)^{\#\{1\le k\le7:x_k=\mathbf1\}}|x_0\cdots x_8\rangle$。
+每个非对角元恰翻转一个中间标签，所以对所有七个生成元同时有
+
+$$
+ K_{i-1}|_H=S\overline{\widehat B_i}S^{-1}.
+ \tag{77.12}
+$$
+
+故这些规范化 Fibonacci 算子本身组成与 (77.10) 共轭、换手性及乘标量等价的酉编织表示；全扇区的编织关系由 Jones–Wenzl 表示保证。本论证不把一个二维块的酉性当作完整 TQFT 结合公理的证明，也不要求额外执行 $F$ 门或改变原生制备权限。
+
+现在才转移密度。FLW Theorem 0.1 对 $r\ge5,r\ne6,10,n\ge3$ 的 $(2,r)$ Jones 表示断言闭像包含各可容许扇区的 $SU$ 因子。此处 $r=5,n=8$ 满足条件，$\lambda=[4,4]$ 满足 $4-4\le5-2$，其整个空间由上述双射给出维数 $13$。将该定理的闭像投影到这个扇区，得到 $SU(13)$ 包含于其闭像，故射影闭像为 $PU(13)$。(77.10) 的共同标量和酉对应保持射影像；(77.12) 的规范和手性也不改变它。这一密度转移不需要由 §6 的印刷矩阵推断修正，也不需要另借纯映类封口关系。
 
 最后 v15 (3.2) 的 $K_j^{10}=I$ 给 $K_j^{-1}=K_j^9$，故正向有限字已经包含生成群的全部元素；没有新增逆调用。任意射线可由一个酉将 $[v]$ 送达，算符范数逼近施于 $v$ 后给射线逼近，证明 (77.3)。这同时证明 $H$ 是初态的最小共同不变线性包络：一个含 $v$ 的闭不变子空间含其稠密射线轨道，只能等于 $H$。∎
 
@@ -466,7 +545,7 @@ $$
 
 | 原始供应 | 消费范围及不能迁移的前提 |
 | --- | --- |
-| Freedman–Larsen–Wang，[math/0103200v1 §6 Lemma 6.1、Theorem 6.2、Lemma 6.3](https://arxiv.org/html/math/0103200v1)，DOI 10.1007/s002200200636 | `literature-attested`：$r=5,SO(3)$ Fibonacci 表示的维数、真空封口、密度和局部规范。77.2 逐路径／逐生成元接到原 $K_0,\ldots,K_6$，不是由四维码密度直接推断十三维密度。 |
+| Freedman–Larsen–Wang，[math/0103200v1 Theorem 0.1；§2 Definitions 1–2、Lemma 2.1、(1)–(3)；§6 Lemmas 6.1、6.3](https://arxiv.org/html/math/0103200v1)，DOI 10.1007/s002200200636 | `literature-attested`：可容许 Young 表上的 Jones–Wenzl 投影及编织定义、$(2,5)$ Jones 表示的密度；§6 另给 Fibonacci 标签和维数。77.2 把原全部十三路径及七门同时接到 $[4,4]$ 扇区，依 Theorem 0.1 取得密度。原印刷 $F_{\rm print}$ 的正右下角保留为引用事实，明确不与本酉规范混同；(77.11)–(77.12) 的相容规范由整个 Jones 表示支持，不以错误的字面对角共轭借用 §6 密度。 |
 | Galley–Masanes，[1610.04859v3 §2.3 Result 2、(16)、A.2/A.12](https://arxiv.org/html/1610.04859v3) | `literature-attested`：连续等变有限维射线表示的稳定子分类、实型、无重数及维数。78.3 先从本源实际矩阵的有限秩建立连续不变函数空间，再使用该分类；未借入物理闭包可执行性、混合制备或预装量子仿射结构。 |
 | Masanes–Galley–Müller，[1811.11060v2 Appendix A Lemmas 5、7](https://arxiv.org/html/1811.11060v2) | `literature-attested`：射线函数无重数与 $\operatorname{Sym}^k$ 算子表示分解。这里其有限维条件由 $r(P)<\infty$ 给出；没有以文献的状态估计前提取得本源容量。 |
 | 同文 §II.3–II.4、条件 (7)–(14) 与 measurement theorem | 全测量定理另需各维度 OPF 家族、混合与酉闭合、背景系统嵌入、保概率且相容结合的 $\star$ 组合，以及可能状态估计。单个十三维终端合同没有提供这些全维／复合条件；故不调用该全测量结论解释原生容量或测后仪器。 |
