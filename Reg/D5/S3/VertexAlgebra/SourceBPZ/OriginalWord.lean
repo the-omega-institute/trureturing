@@ -61,7 +61,7 @@ def family : Registration arena (type_of% (@word_choice_charge)) where
   sensitivity := Reg.Support.SingleDependentReadout.sensitivity arena.Law actual bad rejected_law
   dependence := dependence
 
-def audit : Contract.Registration (@word_choice_charge)
+def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@word_choice_charge)
     (type_of% (realize signature actual.readout actual.anchor)) Type Unit where
   unitName := Lean.Name.str `D5.S3.VertexAlgebra.SourceBPZ.OriginalWord.word_choice_charge "__information_unit"
   realizationName := `Reg.D5.S3.VertexAlgebra.SourceBPZ.OriginalWord.Charge.family
