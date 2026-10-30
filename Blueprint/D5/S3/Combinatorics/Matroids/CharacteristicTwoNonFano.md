@@ -2,28 +2,22 @@
 
 ## Abstract
 
-For four arbitrary finite-dimensional subspaces over a field of characteristic two, the sum of the three opposite pair intersections has dimension at most twice the relation deficiency. This is the unrestricted geometric step used by the seven-subspace non-Fano rank-cone certificate.
+Characteristic-two opposite intersections obey an arbitrary-dimensional relation-deficiency bound.
 
-**Theorem 1.1 (`finrank_opposite_sum_le_two_deficiency`).**
+**Theorem 1.1 (Three opposite intersections are controlled by twice the relation deficiency).**
 
-Let `F` be a field of characteristic two, let `V` be a finite-dimensional `F`-module, and let `A B C Z` be submodules of `V`. Then
+$$\forall (F: Type), [Field\left(F\right)] [CharP\left(F, 2\right)] \forall (V: Type), [AddCommGroup\left(V\right)] [Module\left(F, V\right)] [FiniteDimensional\left(F, V\right)] \forall (A: Submodule\left(F, V\right)), \forall (B: Submodule\left(F, V\right)), \forall (C: Submodule\left(F, V\right)), \forall (Z: Submodule\left(F, V\right)), \operatorname{finrank}\left(F, \operatorname{sup}\left(\operatorname{sup}\left(\operatorname{inf}\left(\operatorname{sup}\left(A, B\right), \operatorname{sup}\left(C, Z\right)\right), \operatorname{inf}\left(\operatorname{sup}\left(A, C\right), \operatorname{sup}\left(B, Z\right)\right)\right), \operatorname{inf}\left(\operatorname{sup}\left(A, Z\right), \operatorname{sup}\left(B, C\right)\right)\right)\right) \le \operatorname{mul}\left(2, (\operatorname{finrank}\left(F, A\right)+\operatorname{finrank}\left(F, B\right)+\operatorname{finrank}\left(F, C\right)+\operatorname{finrank}\left(F, Z\right)-\operatorname{finrank}\left(F, \operatorname{sup}\left(\operatorname{sup}\left(\operatorname{sup}\left(A, B\right), C\right), Z\right)\right))\right)$$
 
-$$
-\begin{aligned}
-\operatorname{finrank}\big(&((A+B)\cap(C+Z)) + ((A+C)\cap(B+Z))\\
-&+ ((A+Z)\cap(B+C))\big)\\
-&\le 2\big(\operatorname{finrank}A+\operatorname{finrank}B+\operatorname{finrank}C+\operatorname{finrank}Z\\
-&\qquad-\operatorname{finrank}(A+B+C+Z)\big).
-\end{aligned}
-$$
+*Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Matroids/CharacteristicTwoNonFano.finrank_opposite_sum_le_two_deficiency` (`✓ std3`). ∎
 
-*Proof.* The third opposite intersection is contained in the sum of the first two. If `y = a + z = b + c`, characteristic two gives `a+b = c+z`, `a+c = b+z`, and `y = (a+b)+(a+c)`. The Grassmann formula bounds each opposite intersection by the total relation deficiency, and the submodule sum bound finishes the estimate. The proof permits zero, overlapping, and unequal subspaces.
+*Source.* Repository-derived.
 
-*Lean status.* The declaration is retained as WIP while the canonical targeted kernel build is unavailable; no formal verification claim is made until that build and its scoped report succeed.
+*Acknowledgement.* Anna Blasiak; Robert Kleinberg; Eyal Lubetzky (2011). *Lexicographic products and the power of non-linear network coding*. URL: <https://arxiv.org/abs/1108.2489v1>.
 
-*Attribution and boundary.* The theorem is the unrestricted relation-space form needed here. The projection-cancellation mechanism and codimension robustification have an earlier restricted source in Anna Blasiak, Robert Kleinberg, and Eyal Lubetzky, *Lexicographic products and the power of non-linear network coding*, arXiv:1108.2489v1, Lemma 6.2 Eq. (6.1) and Lemma 6.3/Theorem 6.4 Eq. (6.8). This declaration does not claim priority for the characteristic-two inequality, and it does not formalize the remaining seven-subspace `Phi` elimination or the six-party stabilizer bridge.
+*Commentary.*
+
+For four arbitrary finite-dimensional submodules over characteristic two, the third opposite intersection is contained in the sum of the first two by the identity (a+b)+(a+c)=b+c. Grassmann's dimension formula bounds each of the first two intersections by the total relation deficiency. The proof allows overlapping, unequal, and zero subspaces. The cited Blasiak–Kleinberg–Lubetzky source supplies the earlier direct-sum projection-cancellation mechanism and codimension robustification; it is attribution, not a proof of this unrestricted declaration. The seven-subspace Phi elimination and the six-party physical bridge remain separate obligations.
 
 ## References
 
-- `D5/S3/Combinatorics/Matroids/CharacteristicTwoNonFano.finrank_opposite_sum_le_two_deficiency`
-- Anna Blasiak, Robert Kleinberg, and Eyal Lubetzky, *Lexicographic products and the power of non-linear network coding*, [arXiv:1108.2489v1](https://arxiv.org/abs/1108.2489), Lemma 6.2 Eq. (6.1), Lemma 6.3, and Theorem 6.4 Eq. (6.8).
+- Truth anchor: `D5/S3/Combinatorics/Matroids/CharacteristicTwoNonFano.finrank_opposite_sum_le_two_deficiency`
