@@ -3,6 +3,8 @@ import D5.S3.Combinatorics.Dice.EaslickMinimalAdvantage
 import Reg.Support.DependentFamily
 import Mathlib.Tactic.NormNum
 
+/-! Source-bound counting and threshold readouts for dice probabilities. -/
+
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
@@ -78,8 +80,7 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
     owner := `D5.S3.Combinatorics.Dice.EaslickMinimalAdvantage,
     definition := none,
     coordinates := #[],
-    readouts := #[{ path := #["body", "body", "fn", "arg"], stateBinder := 0,
-      functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+    readouts := #[{ path := #["body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
@@ -117,7 +118,8 @@ abbrev arena : Arena where
 theorem rejected_law : ¬ arena.Law Threshold.rejected := by
   intro h
   have hd : IsDie 3 [1,1,1] := by unfold IsDie; decide
-  have hp : winProbability [1,1,1] [1,1,1] = 0 := by decide
+  have hp : winProbability [1,1,1] [1,1,1] = 0 := by
+    norm_num [winProbability, ← winCount_eq_indexWinCount, winCount]
   have hw : winCount [1,1,1] [1,1,1] = 0 := by decide
   have hh := h 3 (by decide) [1,1,1] [1,1,1] hd hd
   norm_num [Threshold.rejected, realize, hp, hw] at hh
@@ -141,7 +143,8 @@ abbrev arena : Arena where
 theorem rejected_law : ¬ arena.Law Threshold.rejected := by
   intro h
   have hd : IsDie 3 [1,1,1] := by unfold IsDie; decide
-  have hp : winProbability [1,1,1] [1,1,1] = 0 := by decide
+  have hp : winProbability [1,1,1] [1,1,1] = 0 := by
+    norm_num [winProbability, ← winCount_eq_indexWinCount, winCount]
   have hw : winCount [1,1,1] [1,1,1] = 0 := by decide
   have hh := (h 3 (by decide) [1,1,1] [1,1,1] hd hd).mpr
     (by simpa [Threshold.rejected, realize] using hw)
@@ -190,8 +193,7 @@ noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Dice.EaslickMinimalAdvantage,
     definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg", "fn", "arg"], stateBinder := 0,
-      functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
     { name := `internal.cmdlineSnapshots, value := .bool true },
@@ -240,8 +242,7 @@ noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Dice.EaslickMinimalAdvantage,
     definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "arg", "fn", "arg", "arg"], stateBinder := 0,
-      functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+    readouts := #[{ path := #["body", "body", "arg", "fn", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
     { name := `internal.cmdlineSnapshots, value := .bool true },
@@ -290,8 +291,7 @@ noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some {
     owner := `D5.S3.Combinatorics.Dice.EaslickMinimalAdvantage,
     definition := none, coordinates := #[],
-    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg", "arg"], stateBinder := 0,
-      functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+    readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown, familyRecord := none,
   options := #[{ name := `Elab.async, value := .bool true },
     { name := `internal.cmdlineSnapshots, value := .bool true },
