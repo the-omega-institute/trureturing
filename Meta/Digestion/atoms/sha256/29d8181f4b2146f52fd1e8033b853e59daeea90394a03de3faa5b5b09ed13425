@@ -1,0 +1,33 @@
+## 固定来源与前篇
+
+<a id="ref-head"></a>
+
+**[head]** The Omega Institute, *trureturing*, [固定 dev 提交 bd2207586c3c64e1a4ebcfa23f53b974a2700385](https://github.com/the-omega-institute/trureturing/commit/bd2207586c3c64e1a4ebcfa23f53b974a2700385)， 2026-10-30 23:41:32 Asia/Singapore。
+
+<a id="ref-v30"></a>
+
+**[v30]** 此前对话源稿，*AURIC：唯一静态本体、内生观察者与黄金递归时钟*，v30.0，2026-10-30。 [已读取的原 LaTeX 源稿](https://chatgpt.com/library?file_id=libfile_47e07a3dbbcc8191b42ece3369704c7b&account_id=personal)。 本轮核对原稿的定义、定理与后续缺口；前篇状态是纸面理论，不视为机器证明。
+
+<a id="ref-quantum"></a>
+
+**[quantum]** 项目，[《AURIC FIB ATOM 与量子基本原则：续卷 II》](https://github.com/the-omega-institute/trureturing/blob/bd2207586c3c64e1a4ebcfa23f53b974a2700385/docs/develop/theory/AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION_CONTINUATION_II.md)，固定版本，尤其新增 §§104--110， 及 §§100、103 的被引用原生接口。新增全文本轮已读取；源中的调和与门密度结果作为标明的依赖消费。
+
+<a id="ref-omega"></a>
+
+**[omega]** 项目，[《AURIC$\Omega$静态相融纤维理论》](https://github.com/the-omega-institute/trureturing/blob/bd2207586c3c64e1a4ebcfa23f53b974a2700385/docs/develop/theory/AURIC_OMEGA_STATIC_COMPATIBILITY_FIBER_THEORY.md)。相对 v30 的固定源不变。
+
+<a id="ref-v21"></a>
+
+**[v21]** 项目，[《静态量子历史、内生观察者与关系时钟》](https://github.com/the-omega-institute/trureturing/blob/bd2207586c3c64e1a4ebcfa23f53b974a2700385/docs/develop/theory/AURIC_STATIC_QUANTUM_HISTORIES_ENDOGENOUS_OBSERVERS_AND_RELATIONAL_CLOCKS_V21.md)，v21。相对 v30 固定源不变。
+
+<a id="ref-typed"></a>
+
+**[typed]** 项目，[《Typed Residual Cocycle Reconstruction》](https://github.com/the-omega-institute/trureturing/blob/bd2207586c3c64e1a4ebcfa23f53b974a2700385/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TYPED_RESIDUAL_COCYCLE_RECONSTRUCTION.md)，新增 §23，尤其定理 23.3。 条件容量中的最终真实响应商取得与资源范围保留原合同。
+
+<a id="ref-clock"></a>
+
+**[clock]** 项目，[《Periodic Clock Rigidity》](https://github.com/the-omega-institute/trureturing/blob/bd2207586c3c64e1a4ebcfa23f53b974a2700385/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PERIODIC_CLOCK_RIGIDITY.md)，新增 §27。本篇只记录其版本增量，未消费该节为主证明依赖。
+
+<a id="ref-v28"></a>
+
+**[v28]** 项目，[《二态读出、全框架相融与 E8 黄金门条件桥》](https://github.com/the-omega-institute/trureturing/blob/bd2207586c3c64e1a4ebcfa23f53b974a2700385/docs/develop/theory/AURIC_BINARY_READOUT_FULL_FRAME_COMPATIBILITY_AND_E8_GOLDEN_GATE_BRIDGE_V28.md)，v28。本篇只记录新入库事实，不把其条件桥当作无条件 E8 起源。
