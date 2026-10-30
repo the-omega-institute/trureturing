@@ -208,9 +208,10 @@ def arena : Arena where
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
   have H := h 0
-  have hc : coeff 0 = 1 := by
-    simp only [coeff, Nat.cast_zero, zero_add, pow_zero, one_mul]
-    exact div_self (ne_of_gt (Gamma_pos_of_pos (by norm_num)))
+  have hc1 := coeff_factorial 0
+  norm_num at hc1
+  have hc := coeff_sum 0
+  norm_num [intPow, hc1] at hc
   norm_num [rejected, realize, hc] at H
 
 private theorem dependence : ObservationalDependence signature actual := by

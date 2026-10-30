@@ -4,8 +4,9 @@
    mirror-E: none
    anchors: [D5/S3/Analytic/XuYangMillsRemainder/Result]
    utility: none
-   digest: Original Mills Gamma coefficients, origin obstruction and closed kernel ranges.
+   digest: Original Mills coefficients, origin obstruction and closed kernel ranges. -/
 
+/-
 The general-parameter Mills definitions retain the original normalization from
 `Result.D`. Both complete equivalence chains are recorded as a proposition.
 The Gamma coefficient correspondence identifies the sharp positive-branch
@@ -92,14 +93,15 @@ private theorem mills_smooth : ContDiff ℝ ∞ millsRatio := by
 /-! The exact finite truncation has a removable singularity after rescaling. -/
 
 private theorem coefficient_one_zero (a : ℝ) : u 1 a (a - 2) = 0 := by
-  have hg : Gamma ((1 : ℝ) + 1 / 2) = (1 / 2) * Gamma (1 / 2) := by
-    rw [show (1 : ℝ) + 1 / 2 = 1 / 2 + 1 by ring,
-      Gamma_add_one (by norm_num)]
-  have hz : Gamma (1 / 2) ≠ 0 := ne_of_gt (Gamma_pos_of_pos (by norm_num))
-  norm_num at hg
-  norm_num [u, Finset.sum_range_succ, hg]
-  field_simp [hz]
-  <;> ring
+  have hc1 := coeff_factorial 0
+  norm_num at hc1
+  have hc0 := coeff_sum 0
+  norm_num [intPow, hc1] at hc0
+  have hu : u 1 a (a - 2) = (a - 1) * coeff 1 + (1 - a) * coeff 0 := by
+    norm_num [u, coeff, Finset.sum_range_succ]
+    ring
+  rw [hu, hc0, hc1]
+  ring
 
 private theorem rescaled_f (n : ℕ) (a : ℝ) {x : ℝ} (hx : x ≠ 0) :
     x ^ (2 * n) * F n a x = (-1 : ℝ) ^ n *
@@ -554,7 +556,7 @@ private theorem coefficient_identity (r : ℕ) (a : ℝ) :
   have hfac : ((r + 1).factorial : ℝ) ≠ 0 := by positivity
   have hfr : (r.factorial : ℝ) ≠ 0 := by positivity
   have hfa : ((r + 1).factorial : ℝ) = ((r : ℝ) + 1) * r.factorial := by
-    rw [Nat.factorial_succ]; push_cast; rfl
+    simp only [Nat.factorial_succ, Nat.cast_mul, Nat.cast_add, Nat.cast_one]
   have hu : u (r + 2) a (a - 2) = (a - 1) * coeff (r + 2) +
       ((r : ℝ) + 2 - a) * (r + 1).factorial *
         (coeff (r + 2) / ((2 : ℝ) ^ (r + 1) * (r + 1).factorial) * I (r + 1)) := by
@@ -592,7 +594,7 @@ private theorem coefficient_identity (r : ℕ) (a : ℝ) :
     _ = _ := by
       rw [hc, hp]
       simp only [hfa]
-      field_simp
+      field_simp [hd, hfr, show (r : ℝ) + 1 ≠ 0 by positivity]
       <;> ring
 
 private theorem coefficient_threshold_signs (r : ℕ) (a : ℝ) :

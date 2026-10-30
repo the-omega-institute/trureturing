@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Analytic.XuYangMillsRemainder;
 internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "The original general-parameter Mills target, regularity, origin asymptotic, strict remainder moment bounds and closed kernel ranges.",
+        "The original general-parameter Mills target, regularity, Gamma coefficients, sharp origin obstruction, strict remainder moment bounds and closed kernel ranges.",
         H("General-parameter Mills remainder classification"),
         Blocks(
             Describe.Lean(
@@ -105,6 +105,8 @@ internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
                 + "(2r+3)! / (4^(r+1) r!) times (I_r+(2a-1)B_r). "
                 + "The proof directly consumes Result.coeff_sum, Result.intPow_rec and "
                 + "Result.coeff_factorial at their original owner. "
+                + "The same original identities give u_1(a,a-2)=0 for every real a; "
+                + "this removes the first term from the rescaled finite sum. "
                 + "Linearity of the polynomial moment gives B_r=I_(r+1)-I_r. "
                 + "The coefficient is a strictly positive factor times a-theta_r. "
                 + "Both coefficient-sign equivalences include the zero endpoint."),
