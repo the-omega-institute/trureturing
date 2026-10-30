@@ -846,3 +846,470 @@ Dubbini–Piccoli–Bicchi, *Left invertibility of discrete-time output-quantize
 This fixed-floor contract has exact deterministic grid endpoints and no freely selectable radius. Section 10's adversarial positive-error reports cannot replace it, and a change from one contract to the other changes the available joint observations. The finite bounds above count actions and reads as stated; report widths, arithmetic, candidate descriptions, output size, retention and physical installation remain separate quantities. The four recovered expressions have §§5–6's mathematical meanings, with no additional metric spacetime, physical clock or apparatus realization assumed.
 
 ## 追加锚（本行以下为增补区）
+
+## 15. A sharp installed read for the entire predictive class
+
+**Definition 15.1 (scale comparisons on the original cut).** Retain exactly Assumption 11.1's positive rational source, chronological actions, deterministic unclipped floor convention and source identity. For positive integers $M,D$, saying that a current $q_D$ report determines the full scale-$M$ predictive class means
+
+$$
+q_D(x)=q_D(y)\ \Longrightarrow\ x\equiv_M y
+\qquad(x,y\in\mathbb Q_{>0}).
+\tag{15.1}
+$$
+
+This compares partitions of the same original source, with no preceding probe. It is equivalent to a factor from the actual report image to $\kappa_M(\mathbb Q_{>0})$, or to the entire scale-$M$ future-response profile. Put $\Lambda_M=\operatorname{lcm}(1,2,\ldots,M)$, with $\Lambda_1=1$. The scale $D$ is an available read only when its nondisturbing port is supplied; a partition factor does not install a port or execute any counterfactual continuation.
+
+**Theorem 15.2 (least current-read scale and arithmetic saturation).** Under Definition 15.1,
+
+$$
+q_D\text{ determines }\equiv_M
+\quad\Longleftrightarrow\quad
+\mathcal C_M\subseteq\mathcal G_D
+\quad\Longleftrightarrow\quad
+\Lambda_M\mid D.
+\tag{15.2}
+$$
+
+Thus $\Lambda_M$ is the least sufficient single current-read scale, both in the divisibility order and in the ordinary numerical order among positive integer scales. This minimum concerns determination of the specified predictive class by one floor report; it is not a minimum of report length, installation cost or history-acquisition resources. Furthermore, for every reduced $a/b>0$,
+
+$$
+M>ab\quad\Longrightarrow\quad a/b\in\mathcal C_M.
+\tag{15.3}
+$$
+
+Proof. The raw $D$-floor cells are $(0,1/D)\cap\mathbb Q$ and $[k/D,(k+1)/D)\cap\mathbb Q$ for $k\ge1$. If every predictive cut is a $D$-grid cut, none of these raw cells crosses a predictive cut, so Theorem 11.2 gives (15.1). Conversely suppose $z\in\mathcal C_M\setminus\mathcal G_D$. Choose a positive rational $x<z$ sufficiently close that $\mathcal G_D\cap(x,z]=\varnothing$. This is possible because $z$ is strictly inside a raw cell. Then $q_D(x)=q_D(z)$ while $x\not\equiv_M z$, proving the first equivalence including its endpoint direction.
+
+Every reduced denominator of a cut in $\mathcal C_M$ is at most $M$: grid denominators divide $M$, and the nongrid core has $a+b\le M$. Consequently $\Lambda_M\mid D$ puts every such cut on $\mathcal G_D$. For the converse, $1/b\in\mathcal C_M$ for each $1\le b\le M$. When $b\mid M$ it is a grid cut. Otherwise $b<M$, and $1\cdot(M-b)+b\cdot1=M$ has both coefficients positive, so (11.5) makes it a nongrid cut. Therefore $\mathcal C_M\subseteq\mathcal G_D$ forces $D/b$ to be an integer for every $b\le M$, exactly $\Lambda_M\mid D$. Every sufficient $D$ is a positive multiple of $\Lambda_M$, proving both stated minimalities. In particular $\Lambda_3=6$ and $\Lambda_4=12$; the extra cuts $1/2$ and $1/3$ respectively explain why the original scale alone does not suffice in these cases.
+
+For (15.3), choose $j\in\{1,\ldots,a\}$ with $bj\equiv M\pmod a$, using $\gcd(a,b)=1$; when $a=1$ take $j=1$. Since $bj\le ab<M$, the integer $h=(M-bj)/a$ is positive. Thus $ah+bj=M$ with $h,j>0$. If $b\mid M$ the fraction is on the grid, and otherwise (11.5) puts it in the nongrid core. The modular step is classical coprime arithmetic; the asserted consequence uses precisely this source's already derived cut formula. $\square$
+
+## 16. The predictive inverse limit and its exact source image
+
+**Definition 16.1 (nested predictive cells).** Fix any sequence of positive integers $s_0,s_1,\ldots$ with $s_n\mid s_{n+1}$ and $s_n\to\infty$. Repetitions are allowed. Write $\mathscr P_n$ for the actual partition of $\mathbb Q_{>0}$ into $\equiv_{s_n}$ cells. By Theorem 12.2 a cell of $\mathscr P_{n+1}$ lies in a unique cell of $\mathscr P_n$; this inclusion defines the restriction map. Let
+
+$$
+\mathscr L_{\mathbf s}
+ =\{(I_n)_{n\ge0}:I_n\in\mathscr P_n, I_{n+1}\subseteq I_n\},
+\qquad
+\iota(x)=(\text{the cell of }x\text{ in }\mathscr P_n)_n.
+\tag{16.1}
+$$
+
+These are compatible families of actual stage cells; no common rational realization is built into their definition. Write the endpoints of $I_n$ as $\ell_n,r_n$. The cell is $[\ell_n,r_n)\cap\mathbb Q$ when $\ell_n>0$ and $(0,r_n)\cap\mathbb Q$ when $\ell_n=0$. Its associated real interval has the same endpoint convention. Every upper endpoint is finite, and
+
+$$
+0\le\ell_n<r_n<\infty,\qquad r_n-\ell_n\le1/s_n.
+\tag{16.2}
+$$
+
+The inequality follows because predictive cells refine the raw $s_n$-floor cells. This carrier is an inverse limit of partitions of the fixed source, rather than a change to the original source of histories.
+
+**Theorem 16.2 (classification and the source-realization criterion).** Every thread in $\mathscr L_{\mathbf s}$ has a unique finite real endpoint limit
+
+$$
+t=\sup_n\ell_n=\inf_n r_n\in[0,\infty).
+\tag{16.3}
+$$
+
+There is exactly one thread over $0$, denoted $0^+$; exactly one over each positive irrational $t$; and exactly two over each positive rational $t$, denoted $t^-$ and $t^+$. Here $t^+$ always selects the cell containing $t$, and $t^-$ selects the cell immediately to the left whenever $t$ is a cut, and the cell containing $t$ otherwise. Consequently the same explicit carrier represents every such predictive limit:
+
+$$
+\widehat X
+ =\{0^+\}\ \sqcup\ (\mathbb R_{>0}\setminus\mathbb Q)
+ \ \sqcup\ \{t^-,t^+:t\in\mathbb Q_{>0}\}.
+\tag{16.4}
+$$
+
+The map $\iota$ is injective and has exactly the image
+
+$$
+\iota(\mathbb Q_{>0})
+ =\{t^+:t\in\mathbb Q_{>0}\}
+ =\{(I_n):\ell_n\text{ is eventually a constant }c>0\}.
+\tag{16.5}
+$$
+
+For a thread in this image $\bigcap_n I_n=\{c\}$; for every other thread that intersection in the actual rational carrier is empty. In particular compatibility and separation hold without surjectivity of the original-source map.
+
+Proof. Theorem 15.2 gives $a/b\in\mathcal C_{s_n}$ as soon as $s_n>ab$. Together with nestedness this proves
+
+$$
+\bigcup_n\mathcal C_{s_n}=\mathbb Q_{>0}.
+\tag{16.6}
+$$
+
+Inclusion of rational cells implies inclusion of their real closures, so $\ell_n$ is nondecreasing, $r_n$ is nonincreasing and $\ell_n\le r_m$ for all $n,m$. Both sequences are bounded by the first cell's endpoints. Their limits agree by (16.2), proving (16.3), finiteness and uniqueness. No thread at infinity is possible, since its first coordinate already has a finite upper endpoint.
+
+If $t=0$, every $\ell_n=0$, so each coordinate is the unique initial cell; conversely these initial cells form a thread with limit zero. If $t>0$ is irrational, rationality of every cell endpoint forces $\ell_n<t<r_n$ at every stage. Thus the only possible coordinate is the cell whose associated real interval contains $t$. Those cells are nested and nonempty in the rational carrier and have limit $t$, giving existence and uniqueness.
+
+For rational $t>0$, (16.6) supplies a stage $N$ at which $t$ is a cut and hence a cut at every later stage. At such a stage the only cell closures containing $t$ are the two adjacent ones, $[t,r_n)$ on the right and the left cell with upper endpoint $t$. Once either side is selected, nestedness forbids switching sides at a later stage. Before $t$ is a cut there is only one cell closure containing it. Selecting the same side at every stage with that cut therefore constructs exactly two threads. The cell immediately to the left exists even when $t$ is the smallest positive cut: it is then the initial open cell. This verifies all endpoint cases in (16.4).
+
+The thread $\iota(x)$ is exactly $x^+$ for rational $x>0$, and once $x$ is a cut its lower endpoint is $x$ at every later stage. Conversely suppose $\ell_n=c>0$ for all $n\ge N$. The number $c$ is rational because it is a cell endpoint, and every one of those cells contains $c$. Nestedness puts $c$ in the earlier cells as well. Their widths tend to zero, so their common rational intersection is precisely $\{c\}$ and the thread is $\iota(c)$. If any other thread had a rational realization $x$, it would equal $\iota(x)$ and would satisfy this eventual positive stabilization. This proves (16.5) and emptiness for all the remaining threads. Finally, different rational $x<y$ are separated by a rational cut in $(x,y]$ occurring at some stage by (16.6); hence $\iota$ is injective. The interval-nesting argument is classical; its cut union and exact original-source image here are consequences of the fixed rational process. $\square$
+
+**Definition 16.3 (split order and raw-floor comparison).** Order (16.4) by its numerical coordinate, and put $t^-<t^+$ for a rational coordinate $t$; $0^+$ is the least point. Only rational positive coordinates are split. This is a rationally split unbounded ray, not the compact double-arrow space obtained by splitting every real coordinate. Its interval notation below refers to this order, without an added point at infinity.
+
+For comparison let $\mathscr R_n$ be the raw $s_n$-floor partition and let $\mathscr L^{\mathrm{raw}}_{\mathbf s}$ be its cell-inclusion inverse limit. The raw restriction sends a fine integer report $j$ to $\lfloor j/(s_m/s_n)\rfloor$ when $n\le m$. Call the chain **divisibility-cofinal** if every positive integer divides some $s_n$. This is stronger than being unbounded.
+
+**Theorem 16.4 (when raw and predictive towers agree).** The numerical-limit classification of the raw tower has one thread at zero, two at exactly the positive rationals in $\bigcup_n\mathcal G_{s_n}$, and one at every other positive real coordinate. The canonical map from predictive threads to raw threads forgets predictive distinctions; it is bijective exactly when the chain is divisibility-cofinal. Under that condition there are explicit stage refinement maps in both directions, and the resulting limit bijection fixes every original rational source. In particular the factorial chain $s_n=(n+1)!$ has this property. For $s_n=2^n$, the predictive threads $(1/3)^-$ and $(1/3)^+$ have the same raw thread.
+
+Proof. The raw partitions are nested and their widths tend to zero. Repeat the endpoint argument of Theorem 16.2 with cut union $\bigcup_n\mathcal G_{s_n}$. A coordinate in that union is permanently a cut after its first occurrence and has two consistent sides; any positive coordinate outside the union is strictly interior at every stage and has just one thread. This proves the raw classification directly, including positive rational coordinates absent from the raw union. Every predictive cell lies inside a raw cell at the same scale, defining the asserted forgetful map. Under the two classifications it preserves numerical coordinate and side whenever the raw tower records a side, and merges the two sides at each missing rational cut. Therefore it is bijective iff the raw union contains every positive rational. This is equivalent to divisibility cofinality: $1/d\in\mathcal G_{s_n}$ iff $d\mid s_n$.
+
+For explicit interleaving, fix $i$. Cofinality supplies a $j\ge i$ with $\Lambda_{s_i}\mid s_j$. Theorem 15.2 then gives a map from the raw stage $\mathscr R_j$ to the predictive stage $\mathscr P_i$, sending each raw cell into its unique containing predictive cell. In the opposite direction $\mathscr P_i$ maps to $\mathscr R_i$ by grid inclusion. All maps are induced by the identity on the actual rational carrier. Compositions agree with the corresponding restriction maps: choose any rational in a finer input cell and compute its unique containing coarser cell. Independence of that choice follows from the stated refinements. Choosing a common larger index also proves independence of the permitted $j$. Applied coordinatewise, these maps define inverse maps on compatible families. Their composites are the identity because the same containing-cell calculation fixes each coordinate. Thus equality of completed carriers is accompanied here by proved refinement maps, not used to infer such maps without hypotheses.
+
+Every integer divides a sufficiently large factorial; for the refinement of stage $i$, any factorial with index at least $s_i$ is already divisible by $\Lambda_{s_i}$. This proves the factorial assertion. In contrast $1/3$ belongs to no dyadic grid, whereas $1/3\in\mathcal C_4$ by (11.5). The raw dyadic limit has a single coordinate-$1/3$ thread, while the predictive dyadic limit has its two sides. This supplies the stated failure for an unbounded noncofinal chain. $\square$
+
+## 17. Canonical actions, predecessor and the original four expressions
+
+**Definition 17.1 (actions on compatible cells).** For $a\in\{L,R\}$ and $I\in\mathscr P_n$, define $U_{a,n}(I)$ to be the cell containing $f_a(x)$ for any $x\in I$. Corollary 11.3 makes this independent of $x$. These maps commute with restriction: choose a rational in the finer cell, apply the same action, and take containing cells at the two stages. Hence
+
+$$
+\widehat a((I_n)_n)=(U_{a,n}(I_n))_n
+\tag{17.1}
+$$
+
+is a well-defined action on $\mathscr L_{\mathbf s}$. It extends the actual source action in the exact sense $\widehat a\circ\iota=\iota\circ f_a$. This definition uses the predictive tower. On a general raw tower no stagewise action or commutation law is presumed.
+
+**Theorem 17.2 (action ranges and the complete incoming-edge criterion).** Under the classification (16.4), the actions in (17.1) are
+
+$$
+\begin{aligned}
+\widehat L(0^+)&=0^+,&\widehat R(0^+)&=1^+,\\
+\widehat L(t^{\pm})&=(t/(1+t))^{\pm},&
+\widehat R(t^{\pm})&=(t+1)^{\pm}\quad(t\in\mathbb Q_{>0}),\\
+\widehat L(t)&=t/(1+t),&\widehat R(t)&=t+1
+\quad(t>0\text{ irrational}).
+\end{aligned}
+\tag{17.2}
+$$
+
+Both maps are injective. Their disjoint ranges, with the order of Definition 16.3, are
+
+$$
+\widehat L(\widehat X)=[0^+,1^-),\qquad
+\widehat R(\widehat X)=[1^+,\infty).
+\tag{17.3}
+$$
+
+The second notation means all points at least $1^+$, with no infinite endpoint adjoined. Every point except $1^-$ consequently has exactly one incoming named edge; $1^-$ has none. In particular the unique incoming edges at the special points are $0^+\xrightarrow{L}0^+$ and $0^+\xrightarrow{R}1^+$. The unique $\widehat L$ fixed point is $0^+$, and the original root is recovered from these named maps by
+
+$$
+\iota(1)=1^+=\widehat R(\text{the unique fixed point of }\widehat L).
+\tag{17.4}
+$$
+
+Proof. Take a thread $(I_n)$ of limit $t$. For each $m$ choose a positive rational $x_m\in I_m$; for the thread $t^-$ choose it strictly below $t$, and for $t^+$ strictly above $t$. Such choices exist because the cells have nonempty interior. At an irrational limit the side of the choices is immaterial. For each fixed $n$, all $m\ge n$ have $x_m\in I_n$, so the cell of $f_a(x_m)$ at stage $n$ is exactly $U_{a,n}(I_n)$. The bound (16.2) gives $x_m\to t$. Both rational transformations extend continuously and strictly increasingly to finite nonnegative real inputs, taking zero to $0$ and $1$ respectively. At positive rational $t$ they preserve the chosen strict side; at zero both have only the right side. At irrational $t$ both transformed values are irrational, since the rational inverse formulas would otherwise make $t$ rational. The unique-thread and two-side classification now proves (17.2).
+
+For $0<t<1$, the inverse of $L$ is $t/(1-t)$, a finite positive value, preserving irrationality or rational side as appropriate. It also has the inverse $0^+\mapsto0^+$. Every finite input has $L$-value strictly below $1$, so neither $1^-$ nor $1^+$ is in its range. This gives the first equality of (17.3). For a value strictly above $1$, the inverse of $R$ is subtraction of $1$, preserving side; $1^+$ has inverse $0^+$. There is no value with $R$-image $1^-$, since a positive input gives a value strictly above $1$ and the only zero-limit input is $0^+$. This gives the second equality. The inverse descriptions prove individual injectivity, range disjointness and the complete incoming-edge assertion. Finally no positive $t$ satisfies $t/(1+t)=t$, while $0^+$ is fixed. Equation (17.4) follows. Notice that the unattained limit $1^-$ of increasingly large $L$-inputs is not an extra action value: the carrier has no input at infinity. $\square$
+
+**Theorem 17.3 (the original orbit retains exact four-view recovery).** Put
+
+$$
+\mathscr A=\{t^+:t\in\mathbb Q_{>0}\},\qquad
+E(w)=\iota(B(w))\quad(w\in\{L,R\}^*).
+\tag{17.5}
+$$
+
+Then $\mathscr A$ is exactly the finite forward orbit of the original root $1^+$, and $E$ is a bijection from the original chronological word set onto $\mathscr A$. On this orbit ROOT and PREDECESSOR of §5 hold for that same root and the restricted actions. Each of the original rational boundary, the limit boundary $E(w)$, original rooted named-incidence path, original literal chronology and original indexed prefix-memory table recovers all the others on their actual images.
+
+On the whole $\widehat X$, the incoming-edge map is still injective, but ROOT for the original root $1^+$ fails and there is no global finite-word decoder satisfying the original root and extension equations. The rootless point $1^-$, the point $0^+$, and all irrational threads lie outside the original finite orbit. These are global enlargement obstructions, not counterexamples to the restricted recovery theorem.
+
+Proof. Equation (17.2) preserves positive rational plus-points and intertwines their actions with the original $L/R$ actions. Theorem 6.2 reaches each positive rational from $1$ by one unique finite chronological word. Together with injectivity of $\iota$, this proves the orbit assertion and bijectivity of $E$. Within $\mathscr A$, both incoming ranges are disjoint and actionwise injective, and the only global predecessor of $1^+$ is $0^+\notin\mathscr A$. Thus the original root is excluded from the restricted incoming image. All other orbit points have their usual positive rational predecessor, so the criterion is exactly the original ROOT/PREDECESSOR criterion, with no replacement of its reachable domain.
+
+For explicit correspondence, if $z\in\mathscr A$, recover the unique rational $c>0$ by (16.5) and define
+
+$$
+\begin{aligned}
+D_E(z)&=\operatorname{dec}(c),\\
+T_z&=D_E(z),\\
+S_z&=S(D_E(z)),\\
+M_z&=\bigl((k,\operatorname{enc}(D_E(z)|_k))\bigr)_{0\le k\le|D_E(z)|}.
+\end{aligned}
+\tag{17.6}
+$$
+
+Here $S$ is exactly §6's original root-oriented path with named edges, and $\operatorname{enc}$ returns its reduced positive pair. The scalar boundary is $c$, and $E(D_E(z))=z$. Conversely the original word constructs its pair, its thread, path and table. The path or table recovers that word by §§5–6. These equations prove all actual-image inverse transports. A table of prefix threads is also equivalent: apply $\iota$ rowwise to its pair ratios and retain its indices; conversely decode each realized row. In particular the same decoded word determines the original prefixes and their order, not just a numerical duration or a current post-probe history. The eventual condition in (16.5) gives a mathematical inverse on its promised image; it supplies no finite stopping certificate for acquiring that promise.
+
+On the full carrier $1^+=\widehat R(0^+)$ violates root exclusion, although injectivity of the named predecessor map follows from (17.3). If a finite-word decoder $D$ on all $\widehat X$ satisfied $D(1^+)=\varepsilon$ and $D(\widehat a z)=D(z)a$ for both names and every $z$, the fixed point would give $D(0^+)=D(0^+)L$, contradicting finite word length. Already the incoming edge to the original root would force $\varepsilon=D(0^+)R$. Neither point is in $\mathscr A$ except the original root itself. Irrationality is preserved by the forward actions and by their positive inverse branches, so an irrational predecessor chain never reaches any rational root; no such point has a finite original rational history. This proves the stated global failures without classifying irrational components or changing the original root. $\square$
+
+## 18. Finite cylinders and adaptive variable-scale acquisition
+
+**Theorem 18.1 (finite coordinates do not certify original-source realization).** In $\mathscr L_{\mathbf s}$, every nonempty cylinder specified by finitely many exact stage coordinates contains infinitely many members of $\mathscr A$ and also members outside $\mathscr A$. More strongly, for every prescribed finite original chronological prefix $v$ and every integer $N\ge0$, that cylinder contains an $E(w)$ with $w$ extending $v$ and $|w|>N$. Thus finitely many predictive coordinates cannot certify membership or nonmembership in the actual-source image, cannot identify a unique original word under the rational-source promise, and cannot give a finite upper bound on its original depth.
+
+Proof. Choose a thread in the cylinder and let $n$ be at least every specified index; with no specified coordinates take $n=0$. Its cell $I_n$ is a subset of all the specified cells and contains a nonempty open positive real interval $J$. Every positive rational $x\in J$ gives an actual thread $\iota(x)$ agreeing with all those coordinates. There are infinitely many such rationals and their histories are distinct by Theorem 6.2. Any irrational in $J$ gives a thread outside $\mathscr A$ with the same coordinates. One can also choose $t^-\notin\mathscr A$ for a rational $t\in J$: since $t$ is strictly interior at stage $n$, its left-side thread has that same coordinate and hence all the specified ones.
+
+For the stronger assertion, extend $v$ to any finite word $v'$ of length greater than $N$. Alkauskas–Steuding, *Statistical properties of the Calkin–Wilf tree: real and $p$-adic distribution*, [arXiv:0801.0054v2](https://arxiv.org/html/0801.0054v2), §2, Corollary 3 and its continued-fraction proof, states that every nonempty positive open interval contains the endpoint of a continuation of any given finite Calkin–Wilf path. Its §1 children are exactly $a/b\mapsto a/(a+b),(a+b)/b$, read chronologically from the root, as here. Apply that existing density result to $v'$ and $J$. The resulting word $w$ extends $v'$ and therefore $v$, has length greater than $N$, and satisfies $B(w)\in J$. This proves the strengthened ambiguity using classical subtree density, not a new density theorem. The cylinder contains both membership classes and, under the rational-source promise, arbitrarily deep original candidates. No function of just those finite coordinates can make the contrary certifications. $\square$
+
+**Assumption 18.2 (finite variable-scale observation on one original source).** Start with the same unknown original $x=B(w)\in\mathbb Q_{>0}$ at the original cut of Definition 10.1. Grant, conditionally, nondisturbing unclipped $q_D$ reads for every positive integer scale $D$ a controller requests. The deterministic controller may select $D$ adaptively from its acquired transcript, perform actual forward $L/R$ actions and arbitrary finite computation, retain its actual reports and actions, and choose when to stop. There is no common bound on scales, number of reads, action count, computation, storage or original depth. Each successful run must nevertheless finish all its computation, reads and actions in finite time and output the original target. The only source-dependent input is the acquired transcript. No reset, copy, inverse source action, original-word archive, exact target supplied as input, or access to an infinite thread is granted. The promise is the full positive rational source, without an original depth or denominator bound. Allowing a restricted installed scale menu is a special case of this stronger grant.
+
+**Theorem 18.3 (finite adaptive observations leave a right neighborhood of original ambiguity).** Under Assumption 18.2, fix a run that terminates on an actual original $x>0$. There exists a real $\delta>0$ such that every rational $y\in[x,x+\delta)$ produces exactly the same complete acquired transcript, stopping decision and output. In every open subinterval of $(x,x+\delta)$ there are alternative originals extending any prescribed chronological prefix, at arbitrarily large original depth. Consequently no such deterministic policy can stop finitely and correctly recover the original word for every positive rational source. The same impossibility holds for each exact original four-view expression in Theorem 17.3, even though the entire mathematical tower separates all original sources.
+
+Proof. List the finitely many reads on the terminating run. A read made after its known chronological probe prefix $u_i$, at its chosen integer scale $D_i$, returns
+
+$$
+q_{D_i}(f_{u_i}(x))
+ =\lfloor D_i f_{u_i}(x)\rfloor=:k_i.
+\tag{18.1}
+$$
+
+For fixed $u_i$, the nonnegative determinant-one matrix of Definition 10.1 makes $f_{u_i}$ continuous and strictly increasing at every positive input. Since
+
+$$
+k_i\le D_i f_{u_i}(x)<k_i+1,
+\tag{18.2}
+$$
+
+continuity gives $\delta_i>0$ such that $D_i f_{u_i}(y)<k_i+1$ whenever $x\le y<x+\delta_i$. Monotonicity gives the other inequality $D_i f_{u_i}(y)\ge k_i$ on that interval, including when the original input is exactly on a floor threshold. Hence the report remains $k_i$. Let $\delta$ be the minimum of these finitely many positive $\delta_i$; if there are no reads take any positive $\delta$.
+
+Now replay the controller from an original $y\in[x,x+\delta)$. Before its first read, its decisions and actions agree because it has no different source-dependent input. The first read has the fixed prefix and scale listed above, so it gives the same report. Inductively equal previous reports and known actions force the same computations, next scale, probe actions and stop choice, and the corresponding read agrees by the same bound. Deterministic computations between reads therefore terminate exactly as on the fixed run. This proves transcript and output equality without presuming that scales on different branches would have been bounded or predetermined. The minimum is taken only over one completed branch; adaptivity is handled by equality of its prefixes.
+
+Every positive open subinterval of the resulting right neighborhood contains a descendant of any finite chronological prefix by the same Calkin–Wilf density corollary used in Theorem 18.1. Extending that prescribed prefix beyond any requested depth before applying density gives arbitrarily deep alternatives. Choose one such rational $y\ne x$. Its unique original word differs from that of $x$, yet the policy returns the same output. If a policy were correct on every original source and terminated on each, applying this argument to any one of its runs would contradict correctness on this alternative. The original pair boundary, oriented named path, literal chronology and indexed prefix table each determine the original word, and the word constructs each, by Theorem 17.3. Composing a hypothetical correct acquisition of any one with its word decoder therefore gives the same contradiction. This proves the four-view claim at the unchanged original cut. $\square$
+
+**Proposition 18.4 (finite predictive-class queries do not evade the obstruction).** Suppose a finite adaptive policy is additionally described as requesting an exact scale-$M$ predictive-class coordinate at its current cut, with the scale chosen adaptively. If every such request is implemented by a supplied current floor report at $D$ satisfying $\Lambda_M\mid D$ and the factor of Theorem 15.2, the original-history and four-view impossibility of Theorem 18.3 still applies. Merely receiving a finite set of compatible coordinates cannot certify eventual positive stabilization in (16.5).
+
+Proof. Replace each requested class coordinate by its one stipulated floor read and deterministic factor computation. A terminating run remains finite and satisfies Assumption 18.2, so Theorem 18.3 applies. Independently Theorem 18.1 provides both actual and nonactual threads with every nonempty finite coordinate specification; hence no such specification can imply the eventual property that distinguishes the actual image. With an explicit promise that the source is rational, the semantic inverse (17.6) exists on the full thread, but the same finite cylinder still contains infinitely many alternative rational histories. Neither argument grants an infinite-thread query or treats eventual stabilization as a decidable finite stopping test. $\square$
+
+## 19. Mathematical supplier contracts for the rational limit
+
+**Definition 19.1 (source and antecedent correspondence).** The hypotheses and conclusions used in §§15–18 have the following fixed mathematical roles. The synthesis is `repo-derived` ordinary mathematics for the source of §§6 and 11, without a worldwide novelty assertion. Classical modular arithmetic, nested interval reasoning, one-sided floor continuity and Calkin–Wilf subtree density are supporting mathematics within those derivations.
+
+| Supplier | Correspondence and scope |
+| --- | --- |
+| Theorems 11.2 and 12.2 of this volume | The exact cut set, finite core $ah+bj=M$, endpoint convention, denominator bound and divisibility refinement supply the partitions in §16. Arithmetic saturation proves their rational cut union, rather than assuming that an arbitrary increasing scale is a raw divisibility refinement. |
+| [WordNodesAreReduced](../../../D5/S3/PrimeForms/SternBrocot/WordNodesAreReduced.lean), `wordMatrix`, `unimodular_wordMatrix`, `wordMatrix_lower_right_pos`; [UnimodularGeneration](../../../D5/S3/PrimeForms/SternBrocot/UnimodularGeneration.lean), `unimodular_iff_wordMatrix` | The nonnegative generators, determinant one, positive lower-right entry and natural unimodular factorization are the matrix antecedents already used in §§10–11. The chronological response uses `wordMatrix` on the reversed probe word. The reduced lower-row statement is not a replacement for reducedness of the source pair. |
+| [CompletionIsomorphismCriterion](../../../D5/S3/ObserverMemory/InverseLimits/CompletionIsomorphismCriterion.lean), `InverseStageSystem`, `CompatibleStageFamily`, `completion_map_equiv_iff` | The declared restriction identity and composition laws, source projections and compatibility equations are prerequisites. Its equivalence requires joint separation and a unique source realization for every compatible family. Here actual cells and containing-cell maps provide those structural data; (16.5) proves separation but refutes universal source realization. The criterion therefore does not identify the original rational carrier with all of $\widehat X$. |
+| [InverseLimitCompletion](../../../D5/S3/ConceptDynamics/RefinementGeometry/InverseLimitCompletion.lean), `ThreadComplete`, `SeparatesStates`, `stateThread_bijective_iff_complete_and_separates` | `ThreadComplete` requires every compatible thread to be realized by a source state. It is distinct from the condition that every finite coordinate has a representative. The explicit nonactual threads in (16.4) fail this premise for the original source. |
+| [ItineraryCompletion](../../../D5/S3/ObserverMemory/Prediction/ItineraryCompletion.lean), `completeItinerary`, `ItineraryRange`; [BehaviorCompletionUniqueStability](../../../D5/S3/ObserverMemory/RefinementClosure/BehaviorCompletionUniqueStability.lean), `behavior_completion_has_unique_induced_update` | `ItineraryRange` is the actual range of the complete future itinerary for one specified update, and the unique induced update theorem acts on that range. It does not adjoin every compatible finite family. The two-action maps (17.1) instead come from the explicitly proved congruences and restrictions of this source. An actual behavior quotient and a point-adjoining inverse limit are separate carriers. |
+| Alkauskas–Steuding, [arXiv:0801.0054v2](https://arxiv.org/html/0801.0054v2), §1 and §2, Corollary 3 | The same root and chronological child formulas, together with density of continuations of any finite path in every nonempty positive open interval, supply the prescribed-prefix part of Theorems 18.1 and 18.3. Only this deterministic existence statement is used; no probability, uniform hitting-time or finite acquisition bound is inferred from the paper's random-walk results. |
+
+These are correspondences to the stated source declarations and literature hypotheses. They assert no new kernel check of the rational completion, its source-image criterion, its predecessor graph or its acquisition obstruction.
+
+**Definition 19.2 (remaining recovery conditions).** Exact recovery of the original four mathematical expressions from a full predictive thread is conditional on membership in the actual finite orbit $\mathscr A$, equivalently eventual positive lower-endpoint stabilization. The original root is $1^+$ throughout; $1^-$ is the ambient graph's unique point without an incoming edge and does not replace it. Semantic forward compatibility on $\widehat X$ preserves the source orbit and its exact histories, while global root exclusion and a global original-word decoder fail as stated in §17. Acquisition from finitely many installed reads remains obstructed on the unrestricted source even with adaptive scales. A finite original prior, a distinct equality or certification port, an infinite supplied thread, changed allowed operations, or a different target would impose a different recovery problem. None is supplied by the limit construction. Spatial incidence, ordered prefixes and memory remain the expressions of §§5–6; no metric spacetime, physical duration or physical apparatus law is asserted.
+
+## 追加锚（本行以下为增补区）
+
+## 20. Marked anchors and the exact finite-history fibers
+
+**Definition 20.1 (one joint source of anchored histories).** Retain the split carrier $\widehat X$ of (16.4), its order and the two total named actions of (17.2). Write $U_L=\widehat L$, $U_R=\widehat R$. For a chronological word $w=a_1\cdots a_n$, put
+
+$$
+U_w=U_{a_n}\circ\cdots\circ U_{a_1},\qquad
+U_{uv}=U_v\circ U_u,\qquad U_\varepsilon=\operatorname{id}.
+\tag{20.1}
+$$
+
+The mathematical comparison source is $\mathcal H=\widehat X\times\{L,R\}^*$, with a specified anchor $a$ and the finite word executed from it. Its expressions are the anchored endpoint $E(a,w)=(a,U_w(a))$, literal chronology $T(a,w)=(a,w)$, the occurrence path $S(a,w)$ of Definition 5.4 with root state $a$, and the indexed prefix table $M_*(a,w)=((j,U_{w|_j}(a)))_{j=0}^{|w|}$. The table retains its row indices and the root row. Adjacent states determine their named edge by Theorem 17.2, even at the $0^+$ loop, so the table and the occurrence path each recover $(a,w)$. All memory records below are specified deterministic functions on this same $\mathcal H$; all inverse maps are on their actual images. Restricting to one declared anchor means $\mathcal H_a=\{a\}\times\{L,R\}^*$.
+
+These are mathematical anchored histories on an ambient carrier. The original actual source remains exactly $\mathcal H_{1^+}$ with endpoint orbit $\mathscr A$ in (17.5). Declaring another anchor does not make it an original rational realization. An exact supplied anchor or endpoint below is an input to a mathematical inverse, with no finite acquisition or computation claim.
+
+Let $P$ be the partial predecessor on $\widehat X$, undefined only at $1^-$. Its incoming name $\lambda(z)$ satisfies $z=U_{\lambda(z)}(Pz)$. In numerical coordinates,
+
+$$
+\begin{aligned}
+P(0^+)&=0^+,&\lambda(0^+)&=L,\\
+P(1^+)&=0^+,&\lambda(1^+)&=R,\\
+P(t)&=t/(1-t),&\lambda(t)&=L\quad(0<t<1),\\
+P(t)&=t-1,&\lambda(t)&=R\quad(t>1).
+\end{aligned}
+\tag{20.2}
+$$
+
+For rational coordinates the last two formulas preserve the displayed $-$ or $+$ side. A **cyclic anchor** admits a nonempty return word $c$ with $U_c(a)=a$; a **free anchor** admits none. A component means a component of the graph after forgetting edge orientation, while a directed cycle retains the named directed edges.
+
+**Theorem 20.2 (source-specific anchored recovery and complete ambiguity).** Define
+
+$$
+\mathscr C=\{0^+\}\ \sqcup\
+\{t>0:t\text{ is a quadratic irrational and its algebraic conjugate }t'<0\}.
+\tag{20.3}
+$$
+
+For every declared anchor $a$, the following are equivalent: $a\notin\mathscr C$; $a$ is free; the endpoint map on $\mathcal H_a$ is injective; and $E,T,S,M_*$ restricted to $\mathcal H_a$ are pairwise mutually recoverable. Thus both rational sides, including $1^-$ and the original $1^+$, permit finite-word recovery; the remaining free anchors are the positive nonquadratic irrationals and the positive quadratic irrationals with positive conjugate.
+
+For a cyclic anchor let $c_a$ be its shortest nonempty chronological return word and $p_a=|c_a|$. This word is unique, every return word is a power of $c_a$, and $p_{0^+}=1$, with $c_{0^+}=L$. Every positive irrational cyclic anchor has $p_a\ge2$. For every $z\in\widehat X$, put
+
+$$
+\mathcal F_a(z)=\{w:U_w(a)=z\}.
+\tag{20.4}
+$$
+
+An unreachable endpoint has empty fiber. At a reachable endpoint let $v_{a,z}$ be the unique shortest reaching word and $d_{a,z}=|v_{a,z}|$. The entire fiber, including endpoints reached after leaving a cycle, is
+
+$$
+\mathcal F_a(z)=
+\begin{cases}
+\{v_{a,z}\},&a\text{ free},\\
+\{c_a^k v_{a,z}:k\in\mathbb N\},&a\text{ cyclic}.
+\end{cases}
+\tag{20.5}
+$$
+
+Equivalently the possible starting occurrences in the endpoint's predecessor record are
+
+$$
+\{n:P^n z\text{ is defined and equals }a\}
+ =\{d_{a,z}\}\quad\text{or}\quad
+ \{d_{a,z}+kp_a:k\in\mathbb N\},
+\tag{20.6}
+$$
+
+respectively. In particular a cyclic anchor loses finite-history information at every reachable endpoint, and a free anchor loses none, even when its component contains a directed cycle.
+
+Proof. First apply the unique incoming named-edge statement of Theorem 17.2. If $U_u(a)=U_v(a)$, peel the last incoming edge from both sides as long as both words remain nonempty. The names and predecessor states must agree at each step. Equal lengths force $u=v$. Otherwise, say $|u|>|v|$, one obtains $u=rv$ with a nonempty return $U_r(a)=a$. Conversely any return gives a collision between $\varepsilon$ and $r$, and between $v$ and $rv$ for every $v$. This proves the recovery iff the anchor is free. The other three views are injective on $\mathcal H_a$ by Definition 20.1, so it also proves their asserted equivalence with $E$. In §5's terminology PREDECESSOR always holds on this orbit, and ROOT fails exactly when the anchor itself has a return within that orbit. An incoming edge from outside it does not violate the restricted ROOT condition.
+
+We identify those returns using the classical quadratic-surd recurrence as an antecedent, not as a new periodicity theorem. On finite numerical coordinates a pure $R^m$ acts by $t\mapsto t+m$ and has no fixed point, while a pure $L^m$ acts by $t\mapsto t/(mt+1)$ and fixes only $0$. A word containing both letters has a matrix
+
+$$
+A_w=G_{a_n}\cdots G_{a_1}
+ =\begin{pmatrix}\alpha&\beta\\\gamma&\delta\end{pmatrix},
+\quad \alpha,\beta,\gamma,\delta>0,\quad
+\alpha\delta-\beta\gamma=1.
+\tag{20.7}
+$$
+
+Indeed the product containing the first occurrence of both generators has all four entries positive, and subsequent multiplication preserves positivity. A fixed positive coordinate solves
+
+$$
+\gamma t^2+(\delta-\alpha)t-\beta=0.
+\tag{20.8}
+$$
+
+Its roots have product $-\beta/\gamma<0$. The discriminant is $(\alpha+\delta)^2-4$. The integral trace $h=\alpha+\delta$ is at least three: trace two would force $\alpha=\delta=1$ and contradict the positive off-diagonal product in the determinant equation. For $h\ge3$ one has $(h-1)^2<h^2-4<h^2$, so the discriminant is not a square. Thus the positive root is quadratic irrational with negative conjugate. No positive rational coordinate, on either split side, can be fixed. Zero itself has just its $L$ loop. This proves necessity in (20.3), without inferring evaluation freeness from any matrix-generation or matrix-freeness assertion.
+
+For sufficiency take a positive quadratic irrational $t$ with $t'<0$, and an integral irreducible quadratic $Ax^2+Bx+C$ for it, normalized with $A>0$. Then $C<0$, and
+
+$$
+\Delta=B^2-4AC,\qquad
+ t=\frac{\sqrt\Delta-B}{2A},\qquad
+ (N,p,q)=(\Delta,-B,2A).
+\tag{20.9}
+$$
+
+Here $\Delta$ is a positive nonsquare integer, $p^2<N$, $q>0$, and $q\mid N-p^2$ because $N-p^2=-4AC$. These are precisely the standing hypotheses in §3 of Lionel Ponton, *The Calkin-Wilf tree of a quadratic surd*, [arXiv:1709.00473v2](https://arxiv.org/html/1709.00473v2). Its Definition 1 selects the left-positive path in the tree with children $x/(x+1)$ and $x+1$. Its §4, Proposition 3 says that this path is purely periodic, so a positive-length path from its root returns to $t$ itself. The path letters $\ell,r$ are our chronological $L,R$, with the same child functions, not the reversed Stern–Brocot chart. At an irrational coordinate the split carrier has only one point, so this is a return in $\widehat X$. No assertion for arbitrary positive quadratics is being imported: (20.9) verifies the negative-conjugate hypotheses, and (20.8) excludes the positive-conjugate case. This proves (20.3) and the classification of free anchors. Neither $L$ nor $R$ alone fixes a positive irrational, which also proves $p_a\ge2$.
+
+For completeness prove the fiber formula, using the elementary lap-count mechanism already present for finite graphs in [Typed residual cocycles](RECURSIVE_RELATIONAL_OBSERVATION_TYPED_RESIDUAL_COCYCLE_RECONSTRUCTION.md), §§7.2–7.5. Here the ambient graph is infinite, but uniqueness of the incoming edge makes the normal form more restrictive. At each fixed length there is at most one word reaching $z$, since peeling determines that entire word. A reachable endpoint therefore has a unique least-length word $v=v_{a,z}$. Comparing any longer reaching word with $v$ by peeling gives $w=rv$ with $r$ a return. For a cyclic anchor choose a least positive return length $p$ and its unique word $c$. Comparing any return $r$ of length at least $p$ with $c$ gives $r=sc$, where $s$ is another return or empty. Repeating removes blocks of length $p$; a remaining positive return of length less than $p$ would contradict minimality. Thus $r=c^k$, which proves (20.5); conversely all its listed words reach $z$. Peeling $n$ steps from an endpoint is exactly reversing a reaching word of length $n$, so (20.6) follows, including halting predecessor chains.
+
+The cycle visited by $c$ has no repeated vertex before its return to $a$: a shorter internal repetition and unique predecessors would force a return of $a$ of smaller length. Every cycle vertex has its incoming edge occupied by that cycle. Therefore no path from outside a cycle can enter it. In particular a free anchor cannot reach a directed cycle, although it can lie on a branch leaving a cycle. An endpoint reached by leaving a cycle cannot reenter it; its repetitions in (20.5) are laps made at the anchor before the exit. This establishes the component distinction without a classification of all irrational components. $\square$
+
+**Proposition 20.3 (the golden-ratio separating pair).** Let $\phi=(1+\sqrt5)/2$. The anchor $\phi$ is cyclic with $c_\phi=LR$ and $p_\phi=2$, whereas $\phi+1$ is free. They lie in the same component, and the latter has an infinite predecessor record that is eventually periodic. More precisely,
+
+$$
+U_L(\phi)=\phi-1,\quad U_R(\phi-1)=\phi,
+\quad U_R(\phi)=\phi+1,
+\quad \mathcal F_\phi(\phi+1)=\{(LR)^kR:k\ge0\}.
+\tag{20.10}
+$$
+
+From the declared anchor $\phi+1$, every reachable endpoint instead has a singleton fiber.
+
+Proof. The identities follow from $\phi^2=\phi+1$. They give a two-edge cycle, and no one-edge return is possible at a positive irrational. The conjugate $\phi'=(1-\sqrt5)/2$ is negative, but the conjugate of $\phi+1$ is $(3-\sqrt5)/2>0$, so Theorem 20.2 applies to both. The shortest word from $\phi$ to $\phi+1$ is $R$, giving the displayed fiber. The predecessor of $\phi+1$ is $\phi$, after which the predecessor states alternate between $\phi-1$ and $\phi$. Thus an infinite, even eventually periodic, unmarked past does not force a return to the marked anchor. The two anchors are joined by the displayed $R$ edge. $\square$
+
+## 21. Complete predecessor records and the missing occurrence
+
+**Definition 21.1 (unmarked maximal records).** Starting from $z_0=z$, repeatedly set $z_{n+1}=Pz_n$ while defined. The full state record retains this ordered sequence, including $z_0$, with a halt marker $!$ if the last state is $1^-$. The full name record is
+
+$$
+\mathcal N(z)=
+\begin{cases}
+(\lambda(z_0),\ldots,\lambda(z_{m-1}),!),&P^m z=1^-,\\
+(\lambda(z_n))_{n\ge0},&\text{the predecessor sequence is infinite}.
+\end{cases}
+\tag{21.1}
+$$
+
+These names are read backwards from the endpoint; they are not the chronological word from an anchor. A full record has its endpoint index zero but no selected earlier occurrence as the start of a history. On $\mathcal H$ compare the unmarked views $(a,\mathcal N(U_w(a)))$ and $(a,\text{full state record of }U_w(a))$. The anchor value is supplied in both, while its occurrence index is not.
+
+**Theorem 21.2 (endpoint sufficiency on the split carrier).** The map $z\mapsto\mathcal N(z)$ is a bijection from $\widehat X$ to its actual record image. Consequently, with the anchor retained, either full unmarked record has exactly the same history fibers as $E$. It determines the endpoint, its unique maximal predecessor sequence and every index at which the anchor occurs. It recovers the finite anchored history exactly for free anchors. For a cyclic anchor it fails to choose among all the occurrences $d_{a,z}+kp_a$, and hence among all words in (20.5), even when every predecessor state and name is supplied.
+
+Proof. The classification of actual records must include the split rational sides. For $z=t^-$ with $t>0$ rational, the subtractive Euclidean descent of Theorem 6.2, preserving the minus side by (20.2), reaches $1^-$ in finitely many steps and halts there. These are exactly the finite records: any point reaching $1^-$ is a finite forward image of it, and these images remain positive rational minus-points. Reverse the listed names and execute that chronological word from the fixed terminal state $1^-$; this reconstructs the endpoint uniquely. The halt marker is part of this information, including the record consisting only of $!$ at $1^-$ itself.
+
+For $t^+$ the same descent reaches $1^+$, then $0^+$, then repeats $0^+$ forever with name $L$. The zero point itself has record $LLLL\cdots$. Conversely an actual infinite record that is eventually all $L$ must reach $0^+$: if its state at the beginning of that tail had positive coordinate $x$, repeated inverse-$L$ steps would have numerical value $x/(1-nx)$ while defined, which cannot remain finite and positive for every $n$. The only zero-coordinate point is $0^+$. Thus a finite prefix of the record, reversed and executed from $0^+$, reconstructs the endpoint. This covers exactly zero and the positive rational plus-points. The tail is not a halt marker and cannot be substituted for one; it distinguishes the plus-points from the rational minus-points.
+
+All other endpoints are positive irrational points and have infinite predecessor records. Such a record is not eventually $L$ by the preceding argument and cannot be eventually $R$, since repeated inverse-$R$ steps subtract one and cannot remain positive forever. Hence both letters occur infinitely often. To prove uniqueness from its names $b_0,b_1,\ldots$, without assuming a binary-shift identification, form
+
+$$
+A_n=G_{b_0}\cdots G_{b_{n-1}}
+ =\begin{pmatrix}\alpha_n&\beta_n\\\gamma_n&\delta_n\end{pmatrix}.
+\tag{21.2}
+$$
+
+The endpoint is the result of applying the first incoming name to the next predecessor, and so forth. Its numerical coordinate therefore belongs, for each $n$ with $\gamma_n>0$, to the closed real interval
+
+$$
+\left[\frac{\beta_n}{\delta_n},
+      \frac{\alpha_n}{\gamma_n}\right],
+\qquad
+\frac{\alpha_n}{\gamma_n}-\frac{\beta_n}{\delta_n}
+ =\frac1{\gamma_n\delta_n}.
+\tag{21.3}
+$$
+
+This follows by letting the remaining nonnegative numerical input range from zero to arbitrarily large finite values in its increasing determinant-one fractional map; only containment in the closure is needed. Right multiplication by $G_L$ changes the lower row $(\gamma,\delta)$ to $(\gamma+\delta,\delta)$, and right multiplication by $G_R$ changes it to $(\gamma,\gamma+\delta)$. Starting from $(0,1)$, after the first $L$ both entries are positive. Infinitely many occurrences of each letter make their product tend to infinity. The widths in (21.3) tend to zero, so two endpoints with these same names have the same numerical coordinate. Both endpoints are irrational in this case and (16.4) assigns only one split point to that coordinate. They are therefore equal.
+
+The three cases exhaust actual records. This proves endpoint sufficiency including zero, the rational sides and termination. It asserts no surjectivity onto an arbitrary binary code space: for instance $RRRR\cdots$ is not an actual predecessor record. The endpoint determines the full records by (20.2), and the state record includes that endpoint. Thus both records and the endpoint recover each other on actual images. Pulling these maps back to the common source $\mathcal H$ gives precisely the fibers (20.5). Formula (20.6) then gives every possible starting occurrence, but nothing in the unmarked record selects one. $\square$
+
+**Theorem 21.3 (exact record condition for chronological memory).** Let $Q:\mathcal H\to\mathcal Q$ be any deterministic supplementary record and retain the exact anchored endpoint as well. The observation
+
+$$
+R_Q(a,w)=(a,U_w(a),Q(a,w))
+\tag{21.4}
+$$
+
+recovers $T,S,M_*$ on its actual image if and only if, for every cyclic anchor $a$ and every reachable $z$, the function
+
+$$
+k\longmapsto Q(a,c_a^k v_{a,z})\quad(k\in\mathbb N)
+\tag{21.5}
+$$
+
+is injective. Free anchors impose no further within-endpoint condition. The same assertion holds if the exact endpoint is replaced by either complete unmarked record of Definition 21.1. A marked starting index $n=d_{a,z}+kp_a$ or its lap number $k$ is sufficient, whereas a supplementary function only of the unmarked endpoint record cannot repair a cyclic fiber.
+
+For an arbitrary memory view $(a,M(a,w))$ without a separately supplied endpoint, exact history recovery is equivalent to both of the following: that memory determines $E$ on its actual image, and that it separates all the occurrences in (20.5). In the free regime the first condition alone suffices; in the cyclic regime it must be supplemented by the injectivity condition on the whole lap sequence.
+
+Proof. Equality of (21.4) first fixes $a$ and $z$. Equation (20.5) then lists every remaining possibility, so injectivity on that list is necessary and sufficient. In the cyclic case the list is parameterized bijectively by $k$; in the free case it has one member. Selecting $n$ permits peeling $n$ steps and reversing the names to recover $w$; selecting $k$ determines $n$ and has the same effect. A function of an unmarked endpoint record is constant on each entire list and therefore fails (21.5). Theorem 21.2 justifies replacing the endpoint by that record. Finally an injective memory determines the endpoint because it determines the history. Conversely endpoint determination reduces equal memory values to one fiber, where the second condition separates them. The reconstructed finite word constructs all indexed earlier prefix records and the oriented occurrence path. No retention interface or effective decoder is implicit in these actual-image inverses. $\square$
+
+## 22. Sharp supplementary ranges with the anchor and endpoint supplied
+
+**Proposition 22.1 (exact finite-horizon and unrestricted label requirements).** Supply an exact anchor $a$, an exact endpoint $z$, and a horizon $N\in\mathbb N$, with the promise that a finite history of length at most $N$ from $a$ ended at $z$. Count only the range of a supplementary deterministic label $Q$ accompanying those supplied inputs. For a reachable $z$ with $d_{a,z}\le N$, the sharp number of labels required on that endpoint fiber is
+
+$$
+m_N(a,z)=
+\begin{cases}
+1,&a\text{ free},\\
+1+\left\lfloor\dfrac{N-d_{a,z}}{p_a}\right\rfloor,
+ &a\text{ cyclic}.
+\end{cases}
+\tag{22.1}
+$$
+
+The fiber is empty when $z$ is unreachable or $d_{a,z}>N$. A single label alphabet reused across all endpoints for a fixed supplied anchor has sharp size $1$ for a free anchor, and $1+\lfloor N/p_a\rfloor$ for a cyclic anchor. Uniformly over all ambient anchors the sharp size is $N+1$, attained at $a=z=0^+$. If anchors are restricted to positive irrational points, it is $1+\lfloor N/2\rfloor$, attained at $a=z=\phi$. These are range cardinalities; a fixed-length binary label needs the ceiling of their base-two logarithms.
+
+Without a finite horizon, no finite supplementary range recovers all finite histories from even one fixed cyclic anchor, even with exact $a,z$ supplied. A countably infinite range suffices there, by the lap number. A free anchor needs just the single constant label for every finite history.
+
+Proof. Intersect (20.5) with $|w|\le N$. In the cyclic case its distinct words have lengths $d_{a,z}+kp_a$, so the permitted integers are exactly $0\le k\le\lfloor(N-d_{a,z})/p_a\rfloor$. The free case has just its one word. Recovery needs distinct supplementary labels on this fiber by Theorem 21.3 and the pigeonhole principle; assigning those $k$ values is sufficient. For a fixed cyclic anchor the largest fiber occurs at $z=a$, where $d_{a,a}=0$, and the same $k$ alphabet works at all other endpoints. For free anchors the unique label works everywhere. Since every $p_a\ge1$, the all-anchor maximum is at most $N+1$, with equality at the $0^+$ loop. For positive irrational cyclic anchors $p_a\ge2$, and the period-two anchor $\phi$ gives equality in that restricted maximum; free anchors do not increase it. Arbitrarily many laps at $z=a$ give an infinite fiber when the horizon is removed, excluding every fixed finite label range, while $k\in\mathbb N$ still suffices. $\square$
+
+The counting mechanism is the classical lap ambiguity and finite-range obstruction already used in [Typed residual cocycles](RECURSIVE_RELATIONAL_OBSERVATION_TYPED_RESIDUAL_COCYCLE_RECONSTRUCTION.md), §§7.2–7.5. Its parameters here are the marked anchor, its actual primitive return length and the endpoint's shortest reaching depth in the split action graph. These counts include neither the information in the exact anchor and endpoint nor computation, representation or acquisition of them. In particular a one-label supplement at a free irrational anchor does not assert that an exact irrational endpoint occupies finite apparatus memory or that its finite history can be acquired from finitely many predictive coordinates.
+
+## 23. Finite predictive coordinates cannot recognize the ambient recovery regime
+
+**Theorem 23.1 (mixed cylinders and finite adaptive non-certifiability).** For the predictive tower of Definition 16.1, every nonempty cylinder specified by finitely many exact coordinates contains both a free anchor and a cyclic anchor. Consequently no deterministic rule whose only source-dependent inputs are finitely many adaptively chosen predictive coordinates of an unknown ambient anchor can terminate with a correct certificate of either regime on any terminating branch that it claims to certify. This statement permits arbitrary coordinate indices and no common bound on the number of queries across branches, but a terminating branch has finitely many queries and computations.
+
+Here the anchor is observed through those coordinates; its exact value is not additionally supplied as an input. Under the original promise $a\in\mathscr A$, the regime predicate is instead constant: every such rational plus-anchor is free. Thus this is an ambient regime-recognition limitation, neither a counterexample to original four-view recovery nor a replacement for the original-history acquisition obstruction of Theorem 18.3.
+
+Proof. Choose a member of the nonempty cylinder, and take a stage $n$ at least all its specified indices (or $n=0$ for an unrestricted cylinder). The associated real interval of its cell $I_n$ has a nonempty positive open interior $J$ by Definition 16.1. Any thread with numerical coordinate strictly inside $J$ has that same stage coordinate, and hence all the specified earlier coordinates. Choose a positive rational $r\in J$. Its thread $r^+$ is a free anchor by Theorem 20.2. To choose a cyclic one, use density of positive rational multiples of $\sqrt2$: there is a rational $u>0$ with $u\sqrt2\in J$, since $J/\sqrt2$ is a nonempty positive open interval. This point is quadratic irrational with conjugate $-u\sqrt2<0$, hence cyclic by (20.3). The same cell therefore contains both regimes; there is no rational-side ambiguity at either chosen interior coordinate.
+
+For an adaptive rule fix one terminating branch. Its finite list of queried indices and answers specifies a nonempty cylinder. Every anchor in it produces the same queries and answers inductively: the next index, finite computation and stopping decision are determined by the previous identical answers. Both regime classes occur in this cylinder by the first part. The returned certificate is therefore false for one of them. This argument uses a single finite branch and does not presume a uniform bound on query indices or run lengths. On the promised original source all anchors are positive rational plus-points and (20.3) excludes every one from $\mathscr C$, so constant certification of freeness there is valid. It still identifies no unique original word from finite coordinates; Theorems 18.1–18.3 address that separate acquisition target. $\square$
+
+**Definition 23.2 (antecedents and remaining scope).** The ordinary mathematical increment is the anchored finite-history classification and its complete memory fibers for this particular split predictive completion, together with the split-carrier endpoint sufficiency of maximal predecessor names and the resulting mixed-cylinder regime obstruction. The recurrence of positive quadratic surds with negative conjugate is a literature-attested antecedent, with its exact parameter substitution given in (20.9). The general cancellation, cycle-lap and finite-range arguments are elementary antecedents, not newly discovered mathematics; §§7.2–7.5 of the cited residual-cocycle volume already give their finite-graph counterparts. The use of actual predictive interval interiors comes from §§11–12 and 16–18 here. These source-specific conclusions are `repo-derived` ordinary proofs, without a worldwide novelty assertion or a global classification of modular components.
+
+The following supplier statements are cited at their source-inspection scope only:
+
+| Supplier | Exact correspondence and limit |
+| --- | --- |
+| [WordNodesAreReduced](../../../D5/S3/PrimeForms/SternBrocot/WordNodesAreReduced.lean), `wordMatrix`, `unimodular_wordMatrix`; [UnimodularGeneration](../../../D5/S3/PrimeForms/SternBrocot/UnimodularGeneration.lean), `unimodular_iff_wordMatrix` | The generators are $G_L,G_R$ with `false`, `true` respectively. The chronological matrix in (20.7) is `wordMatrix` of the reversed chronological word; the incoming-name prefix in (21.2) has its displayed direct matrix order. The determinant identity and nonnegative matrix generation are supplier facts; generation is not evaluation freeness at an anchor. The fixed-point calculation and the checked literature correspondence establish the anchor distinction. |
+| [BackwardOrbitCore](../../../D5/S3/ObserverMemory/InverseLimits/BackwardOrbitCore.lean), `backward_orbit_coordinate_periodic`, `backward_orbit_eval_zero_bijective` | These require a finite carrier and one self-map. The infinite split carrier and its partial named predecessor do not meet those hypotheses. Infinite predecessor records here therefore imply no periodic-core conclusion from that supplier; $\phi+1$ already separates an eventually periodic record from membership of the anchor in a cycle. |
+| [CompletionIsomorphismCriterion](../../../D5/S3/ObserverMemory/InverseLimits/CompletionIsomorphismCriterion.lean), `completion_map_equiv_iff` | Its equivalence requires joint separation and unique actual-source realization of every compatible thread. The original rational source is separated, but its completion has the nonactual points of (16.4)–(16.5). A declared ambient anchor is not an additional original-source realization. |
+| [QuadraticImpliesPeriodic](../../../D5/S1/Depth/ContinuedFractions/QuadraticImpliesPeriodic.lean), `quadratic_irrational_eventually_periodic_of_bounded_complete_quotients` | It assumes `BoundedCompleteQuotientCertificate`. No unconditional kernel Lagrange statement or certificate for these anchors is inferred. The return used in (20.9) comes from Ponton's specific forward left-positive-path theorem, with the paper's hypotheses explicitly verified. |
+
+No fresh kernel verification of §§20–23 is asserted. The mathematical inverses, including occurrence selection and the cardinalities of supplementary ranges, preserve the common-source, action, exactness and resource contracts stated above. They do not provide a code-space topological equivalence, an acquisition interface, physical memory bounds or a metric or physical spacetime interpretation.
+
+## 追加锚（本行以下为增补区）
