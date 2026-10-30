@@ -7,7 +7,7 @@ internal sealed class LatticeSectorIntertwinerDocument : IScribeDocumentDefiniti
         "LatticeSectorIntertwiner", H("LatticeSectorIntertwiner"), Blocks(
             Paragraph(Text("Construction uses arbitrary ordinary symmetric even integral lattice data, including degenerate forms, zero charges and rank zero. Classification and universality require an explicit two-sided complex inverse Gram matrix, with no positivity or integer unimodularity.")),
             Describe.Lean(
-                DescribeId.Create("latticesectorintertwiner-chargeSpace"),
+                DescribeId.Create("latticesectorintertwiner-charge-space"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/Sectors/LatticeSectorIntertwiner.chargeSpace"),
                 H("chargeSpace"), StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
