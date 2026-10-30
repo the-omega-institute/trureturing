@@ -95,7 +95,7 @@ $$
 [\max(1,e-k),\ \min(d,L-k)]
 $$
 
-of possible starts is then nonempty because $1\le d<e\le L$. If $e-d>k$, no window contains both positions. All counted entries are $1$, proving (2.3); symmetry handles $d>e$. $\square$
+of possible starts is then nonempty because $1\le d<e\le L$. If $e-d>k$, no window contains both positions. Every contributing summand is $1$, so the count is positive, proving (2.3); symmetry handles $d>e$. $\square$
 
 ## 3. The independent-length theorem
 
