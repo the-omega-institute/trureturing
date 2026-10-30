@@ -219,7 +219,7 @@ internal sealed class PhysicalBirthDepthDocument : IScribeDocumentDefinition
             EqOf(High(e,Call("rank",n,b),Call("rank",n,a)),qtwo),
             EqOf(High(e,Ht(sa),Ht(sb)),qtwo),EqOf(High(e,Ht(sb),Ht(sa)),qthree),
             maxima,
-            Imp(LeOf(D(3),q),And(LeOf(qtwo,suffix),EqOf(Add(Add(Len(p),D(1)),suffix),horizon),
+            Imp(LeOf(D(3),q),And(LeOf(qtwo,suffix),EqOf(Add(Add(Len(p),D(1)),Par(suffix)),horizon),
                 IffOf(EqOf(bit,V("true")),Call("RootBeats",Src(Call("snapshot",z,n)),p,suffix)))),
             three,two);
         return All("d",V("Descriptor"),All("e",V("Birth"),All("A",V("Physical"),All("B",V("Physical"),
