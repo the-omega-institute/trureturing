@@ -34,4 +34,6 @@ Fresh-first works on this side because the beta-first schedule leaves room for t
 
 - Truth anchor: `D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterFirstEarJointLift.actualSource_three_negative_equal_outer_first_ear_joint_lift`
 - Dependency: [D5/S3/Combinatorics/Circle/RunFirstEarTransport](RunFirstEarTransport.md)
+- Dependency: [D5/S3/Combinatorics/Circle/ThreeBitSource](ThreeBitSource.md)
+- Dependency: [D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterJointLift](ThreeNegativeEqualOuterJointLift.md)
 - Dependency: [D5/S3/Combinatorics/Circle/ThreeNegativeEqualOuterSourceBridge](ThreeNegativeEqualOuterSourceBridge.md)
