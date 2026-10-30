@@ -39,8 +39,10 @@ private theorem cycles_perm (m : ℕ) (hm : 2 ≤ m) :
   | succ n =>
     have hf : (fun r : Fin n => (⟨r.val, by omega⟩ : Fin (n + 1))) = Fin.castSucc := by
       funext r; apply Fin.ext; rfl
-    have hl : (⟨n, by omega⟩ : Fin (n + 1)) = Fin.last n := Fin.ext rfl
-    simpa only [cycles, Nat.add_sub_cancel_right, hf, hl, List.finRange_succ_last, List.singleton_append] using
+    change (Fin.last n :: (List.finRange n).map
+      (fun r : Fin n => (⟨r.val, _⟩ : Fin (n + 1)))).Perm (List.finRange (n + 1))
+    rw [hf, List.finRange_succ_last]
+    simpa only [List.singleton_append] using
       (List.perm_append_comm : ([Fin.last n] ++ (List.finRange n).map Fin.castSucc).Perm
         ((List.finRange n).map Fin.castSucc ++ [Fin.last n]))
 
@@ -184,9 +186,11 @@ private theorem tail_first_order (d w m : ℕ) (hd : 2 ≤ d)
     apply inStrip_append ht
     simpa only [htail, zero_add] using he.2
   refine ⟨hp, hz, ?_⟩
+  change ∀ h, (((tail ++ early).take h).map f).sum ∈ Set.Icc (0 : ℤ) C
   intro h
   have hh := inStrip_prefix hs h
-  exact ⟨by simpa using hh.1, by dsimp only [C] at hDC; linarith [hh.2]⟩
+  simp only [zero_add] at hh
+  exact ⟨hh.1, hh.2.trans hDC⟩
 
 private theorem literal_ear_identity (d m : ℕ) (hm : 2 ≤ m) (alpha : List (Fin d))
     (j : ℕ) (hj : j ≤ alpha.length) :
@@ -208,16 +212,17 @@ private theorem literal_ear_identity (d m : ℕ) (hm : 2 ≤ m) (alpha : List (F
       lastLabel d m hm (finRotate (d + 1) (Fin.last d)) := by
     simp [lastLabel]
   have hlen : j ≤ (alpha.map (blockLabel d m ⟨m - 1, by omega⟩)).length := by simpa using hj
-  simp only [repeatedWord, cycles, List.flatMap_cons, List.flatMap_map, Function.comp_def]
+  simp only [repeatedWord, cycles, List.flatMap_cons, List.flatMap_map]
   simp only [earWord, List.take_append, List.drop_append,
     Nat.sub_eq_zero_of_le hlen, List.take_zero, List.drop_zero, List.append_nil,
     List.map_append, List.map_cons, List.map_nil, List.map_map, Function.comp_def,
     ← List.map_take, ← List.map_drop, hlast, hearly, hear, List.map_flatMap]
   simp only [List.append_assoc]
 
+-- The proof combines centered-source arithmetic with physical block and prefix identities.
 set_option maxHeartbeats 2000000 in
 /-- Every supplied base joint witness repeats with its identical ear cut in the last-first word. -/
-theorem periodic_repetition_joint_lift (d w m : ℕ) (hd : 2 ≤ d) (hw0 : 1 ≤ w)
+theorem periodic_repetition_joint_lift (d w m : ℕ) (hd : 2 ≤ d) (_hw0 : 1 ≤ w)
     (hw : w ≤ 2 ^ (d - 1) - 1) (hm : 2 ≤ m)
     (alpha : List (Fin d)) (j : ℕ) (hj : j ≤ d)
     (hold : OriginalOrder d w alpha)
@@ -293,7 +298,9 @@ theorem periodic_repetition_joint_lift (d w m : ℕ) (hd : 2 ≤ d) (hw0 : 1 ≤
   · change (((cycles m hm).flatMap (fun r => alpha.map (blockLabel d m r))).map f).sum = 0
     induction cycles m hm with
     | nil => simp
-    | cons r rs ih => simp only [List.flatMap_cons, List.map_append, List.sum_append, hzero, zero_add]; exact ih
+    | cons r rs ih =>
+      simp only [List.flatMap_cons, List.map_append, List.sum_append, hzero, zero_add]
+      exact ih
   · intro n
     have hs := TwoRunSource.concatenate_zero _ _ (by
       have := (TwoRunSource.modulus_positive_odd (d * m) (by positivity)).1; omega)
