@@ -126,11 +126,12 @@ internal sealed class MultipartiteEntangledMeasurementPartialTightnessDocument :
                     Paragraph(Text(
                         "To identify every separable outcome, consider a normalized vector v whose rank-one projector "
                         + "is a sum of positive product matrices Aⱼ. Positivity of these product matrices follows by "
-                        + "successive Hadamard products of pulled-back local positive matrices. For x orthogonal to v, "
-                        + "the sum of the nonnegative quadratic forms x†Aⱼx is zero, so each Aⱼx is zero. "
+                        + "successive Hadamard products of pulled-back local positive matrices. Reindex the joint basis "
+                        + "by Fintype.equivFin and apply summand_kernel from AbsolutelyEntangledAllPartitions with "
+                        + "all weights equal to one: every Aⱼ annihilates the orthogonal complement of v. "
                         + "Choose a coordinate i with v(i) nonzero and a summand with Aⱼ(i,i) nonzero. "
-                        + "Applying the kernel identity to two-coordinate test vectors and using Hermitian symmetry "
-                        + "shows that column i of Aⱼ equals z v, where z = Aⱼ(i,i)/v(i) is nonzero. "
+                        + "The same owner's supported_column gives column i as z v; transporting back to the joint "
+                        + "basis preserves this identity, and the nonzero diagonal entry forces z to be nonzero. "
                         + "That column is a product of local columns; absorbing z⁻¹ into the factor at party zero "
                         + "expresses v itself as a product vector.")),
                     Paragraph(Text(

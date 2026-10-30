@@ -7,6 +7,7 @@
    digest: Sectorwise computational/Fourier projectors attain every n-partite partial bound. -/
 
 import D5.S3.Quantum.Information.SLDSpectralEnergy
+import D5.S3.Quantum.Entanglement.Witness.AbsolutelyEntangledAllPartitions
 import D5.S3.Observer.MatrixUnitCertificate
 import D5.S3.Quantum.Recovery.PurifiedLocalPath
 import D5.S3.Quantum.Information.SeparableStateLocalUnitaryStabilizerObstruction
@@ -158,8 +159,6 @@ private theorem computational_projector_separable {n d : ℕ} [NeZero d]
     · by_cases hj : j = sectorPoint t r
       · subst i
         subst j
-        change (if sectorPoint t r = sectorPoint t r then (1 : ℂ) else 0) *
-          star (if sectorPoint t r = sectorPoint t r then (1 : ℂ) else 0) = _
         simp only [ite_true, star_one, mul_one]
         symm
         apply Finset.prod_eq_one
@@ -449,21 +448,39 @@ private theorem rankOne_separable_product (n d : ℕ) [NeZero n] [NeZero d]
     ext i k
     rw [Matrix.sum_apply]
     exact (hsum i k).symm
+  let e := Fintype.equivFin (jointIndex n d)
+  let u := v ∘ e.symm
+  let b : Fin l → Matrix (Fin (Fintype.card (jointIndex n d)))
+      (Fin (Fintype.card (jointIndex n d))) ℂ :=
+    fun j => (a j).submatrix e.symm e.symm
+  have hsumFin : ∑ j, (1 : ℝ) • b j = (1 : ℝ) •
+      D5.S3.Quantum.PureState.PureStateHandshake.rankOneDensity u := by
+    simp only [one_smul]
+    ext p q
+    rw [Matrix.sum_apply]
+    change (∑ j, a j (e.symm p) (e.symm q)) =
+      v (e.symm p) * star (v (e.symm q))
+    simpa only [Matrix.sum_apply, Matrix.vecMulVec_apply, Pi.star_apply] using
+      congrFun (congrFun hmatrix (e.symm p)) (e.symm q)
   have hker (j : Fin l) (x : jointIndex n d → ℂ) (hx : star v ⬝ᵥ x = 0) :
       a j *ᵥ x = 0 := by
-    have hzero : ∑ q, star x ⬝ᵥ a q *ᵥ x = 0 := by
-      calc
-        _ = star x ⬝ᵥ (∑ q, a q) *ᵥ x := by
-          rw [Matrix.sum_mulVec, dotProduct_sum]
-        _ = 0 := by
-          rw [hmatrix, Matrix.vecMulVec_mulVec, hx]
-          have hzero : MulOpposite.op (0 : ℂ) • v = 0 := by
-            ext k
-            exact mul_zero (v k)
-          rw [hzero, dotProduct_zero]
-    apply (hapsd j).dotProduct_mulVec_zero_iff.mp
-    exact (Finset.sum_eq_zero_iff_of_nonneg
-      (fun q _ => (hapsd q).dotProduct_mulVec_nonneg x)).mp hzero j (Finset.mem_univ j)
+    have horth : star u ⬝ᵥ (x ∘ e.symm) = 0 := by
+      change (star v ∘ e.symm) ⬝ᵥ (x ∘ e.symm) = 0
+      rw [comp_equiv_dotProduct_comp_equiv]
+      exact hx
+    have h := D5.S3.Quantum.Entanglement.Witness.AbsolutelyEntangledAllPartitions.summand_kernel
+      (fun _ => 1) b (fun _ => zero_le_one) (fun j => (hapsd j).submatrix e.symm)
+      u 1 hsumFin j zero_lt_one (x ∘ e.symm) horth
+    change (a j).submatrix e.symm e.symm *ᵥ (x ∘ e.symm) = 0 at h
+    rw [Matrix.submatrix_mulVec_equiv] at h
+    have hreindex : (x ∘ e.symm) ∘ e = x := by
+      funext k
+      exact congrArg x (e.symm_apply_apply k)
+    change ((a j *ᵥ ((x ∘ e.symm) ∘ e)) ∘ e.symm) = 0 at h
+    rw [hreindex] at h
+    funext k
+    simpa only [Function.comp_apply, Equiv.symm_apply_apply, Pi.zero_apply] using
+      congrFun h (e k)
   have hvne : v ≠ 0 := by
     intro h
     rw [h, star_zero, zero_dotProduct] at hv
@@ -477,21 +494,31 @@ private theorem rankOne_separable_product (n d : ℕ) [NeZero n] [NeZero d]
     change v i * star (v i) = ∑ j, a j i i at he
     simp only [h, Finset.sum_const_zero] at he
     exact mul_ne_zero hi (star_ne_zero.mpr hi) he
-  let z : ℂ := a j i i / v i
+  have hune : u ≠ 0 := by
+    intro hu
+    apply hvne
+    funext k
+    change v k = 0
+    have h := congrFun hu (e k)
+    change v (e.symm (e k)) = 0 at h
+    simpa only [Equiv.symm_apply_apply] using h
+  obtain ⟨z, hzfin⟩ :=
+    D5.S3.Quantum.Entanglement.Witness.AbsolutelyEntangledAllPartitions.supported_column
+      u hune (b j) ((hapsd j).isHermitian.submatrix e.symm) (by
+        intro x hx
+        change (a j).submatrix e.symm e.symm *ᵥ x = 0
+        rw [Matrix.submatrix_mulVec_equiv]
+        have horth : star v ⬝ᵥ (x ∘ e) = 0 := by
+          rw [← comp_equiv_dotProduct_comp_equiv (star v) (x ∘ e) e.symm]
+          change star u ⬝ᵥ ((x ∘ e) ∘ e.symm) = 0
+          simpa only [Function.comp_def, Equiv.apply_symm_apply] using hx
+        exact funext fun k => congrFun (hker j (x ∘ e) horth) (e.symm k)) (e i)
   have hz : (fun k => a j k i) = z • v := by
     funext k
-    have hx : star v ⬝ᵥ (Pi.single k (star (v i)) - Pi.single i (star (v k))) = 0 := by
-      simp only [dotProduct_sub, dotProduct_single, Pi.star_apply]
-      ring
-    have h := congrFun (hker j _ hx) i
-    simp only [Matrix.mulVec_sub, Matrix.mulVec_single, Pi.sub_apply, Pi.zero_apply,
-      Pi.smul_apply, MulOpposite.smul_eq_mul_unop, MulOpposite.unop_op, Matrix.col_apply] at h
-    have hstar := congrArg star h
-    simp only [star_sub, star_mul, star_star, star_zero, (hapsd j).isHermitian.apply] at hstar
-    change a j k i = a j i i / v i * v k
-    rw [div_mul_eq_mul_div]
-    apply (eq_div_iff hi).mpr
-    linear_combination hstar
+    have h := congrFun hzfin (e k)
+    change a j (e.symm (e k)) (e.symm (e i)) = z * v (e.symm (e k)) at h
+    change a j k i = z * v k
+    simpa only [Equiv.symm_apply_apply] using h
   have hz0 : z ≠ 0 := by
     intro h
     have he := congrFun hz i
