@@ -66,7 +66,7 @@ noncomputable def avg (n : ℕ) (s : Finset (Fin n)) :
     Module.End ℂ ((Fin n → Fin 2) → V) :=
   s.noncommProd (bitAvg n) (by intro i hi j hj hij; exact bitAvg_commute n i j)
 
-private lemma avg_empty (n : ℕ) : avg (V := V) n ∅ = 1 :=
+lemma avg_empty (n : ℕ) : avg (V := V) n ∅ = 1 :=
   Finset.noncommProd_empty _ _
 
 private lemma avg_insert (n : ℕ) (s : Finset (Fin n)) (k : Fin n) (hk : k ∉ s) :
@@ -118,5 +118,76 @@ lemma avg_map (n : ℕ) (s : Finset (Fin n)) (l : V →ₗ[ℂ] W)
       (2 : ℂ)⁻¹ • ∑ b : Fin 2, avg n s (fun y => l (f y)) (Function.update x k b)
     rw [map_smul, map_sum]
     simp only [ih]
+
+private def fill {n : ℕ} (s : Finset (Fin n)) (x : Fin n → Fin 2)
+    (b : {j // j ∈ s} → Fin 2) : Fin n → Fin 2 :=
+  fun j => if h : j ∈ s then b ⟨j, h⟩ else x j
+
+private lemma avg_fill (n : ℕ) (s : Finset (Fin n))
+    (f : (Fin n → Fin 2) → V) (x : Fin n → Fin 2) :
+    avg n s f x = ((2 : ℂ) ^ s.card)⁻¹ •
+      ∑ b : ({j // j ∈ s} → Fin 2), f (fill s x b) := by
+  classical
+  induction s using Finset.induction_on generalizing x with
+  | empty =>
+    rw [avg_empty]
+    have hf (b : {j : Fin n // j ∈ (∅ : Finset (Fin n))} → Fin 2) : fill ∅ x b = x := by
+      funext j
+      simp [fill]
+    simp only [hf, Finset.card_empty, pow_zero, inv_one, one_smul]
+    simp
+  | @insert k s hk ih =>
+    let e : ({j // j ∈ insert k s} → Fin 2) ≃
+        Fin 2 × ({j // j ∈ s} → Fin 2) :=
+      { toFun := fun d => (d ⟨k, Finset.mem_insert_self k s⟩,
+          fun j => d ⟨j.val, Finset.mem_insert_of_mem j.property⟩)
+        invFun := fun z j => if hj : j.val = k then z.1
+          else z.2 ⟨j.val, (Finset.mem_insert.mp j.property).resolve_left hj⟩
+        left_inv := by
+          intro d
+          funext j
+          dsimp
+          split_ifs with hj
+          · exact congrArg d (Subtype.ext hj.symm)
+          · rfl
+        right_inv := by
+          intro z
+          apply Prod.ext
+          · simp
+          · funext j
+            have hj : j.val ≠ k := fun h => hk (h ▸ j.property)
+            simp [hj] }
+    have hsum : (∑ d : ({j // j ∈ insert k s} → Fin 2), f (fill (insert k s) x d)) =
+        ∑ z : Fin 2 × ({j // j ∈ s} → Fin 2), f (fill s (Function.update x k z.1) z.2) := by
+      apply Fintype.sum_equiv e
+      intro d
+      congr 1
+      funext j
+      by_cases hj : j = k
+      · subst j
+        simp [fill, hk, e]
+      · by_cases hs : j ∈ s <;> simp [fill, hs, hj, e, Function.update_apply]
+    rw [avg_insert n s k hk]
+    change (2 : ℂ)⁻¹ • (∑ b : Fin 2, avg n s f (Function.update x k b)) = _
+    simp only [ih]
+    rw [← Finset.smul_sum, smul_smul, Finset.card_insert_of_notMem hk,
+      pow_succ, mul_inv_rev, hsum, Fintype.sum_prod_type]
+
+lemma avg_univ (n : ℕ) (f : (Fin n → Fin 2) → V) (x : Fin n → Fin 2) :
+    avg n Finset.univ f x = ((2 : ℂ) ^ n)⁻¹ • ∑ y : Fin n → Fin 2, f y := by
+  classical
+  rw [avg_fill, Finset.card_univ, Fintype.card_fin]
+  congr 1
+  let e : ({j : Fin n // j ∈ (Finset.univ : Finset (Fin n))} → Fin 2) ≃
+      (Fin n → Fin 2) :=
+    { toFun := fun b j => b ⟨j, Finset.mem_univ j⟩
+      invFun := fun b j => b j.val
+      left_inv := by intro b; funext j; rfl
+      right_inv := by intro b; rfl }
+  apply Fintype.sum_equiv e
+  intro b
+  congr 1
+  funext j
+  simp [fill, e]
 
 end D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState

@@ -478,10 +478,10 @@ private lemma local_matrix_unit (v d : Fin 4 → Fin 2) :
   · rw [if_neg (mt hmatch.mp hd)]
     simp only [if_neg hd, smul_zero, mul_zero, zero_mul]
 
-private def gauge (n : ℕ) (e : Fin 2) (x : Fin n → Fin 2) : ℂ :=
+def gauge (n : ℕ) (e : Fin 2) (x : Fin n → Fin 2) : ℂ :=
   (-1 : ℂ) ^ (e.val * ∑ j : Fin n, (x j).val * (x (site j 1)).val)
 
-private lemma site_injective (n : ℕ) (hn : 4 ≤ n) (i : Fin n) (k l : Fin 4) :
+lemma site_injective (n : ℕ) (hn : 4 ≤ n) (i : Fin n) (k l : Fin 4) :
     site i k.val = site i l.val ↔ k = l := by
   constructor
   · intro h
@@ -599,7 +599,7 @@ private lemma window_single (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
     smul_eq_mul, hri, hrj]
   simp [hsu, hsv, ite_and, mul_ite, Finset.sum_ite_irrel]
 
-private noncomputable def windowLM (n : ℕ) (i : Fin n) :
+noncomputable def windowLM (n : ℕ) (i : Fin n) :
     Module.End ℂ (Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) where
   toFun := windowChannel n i
   map_add' := by
@@ -651,7 +651,7 @@ private def middleUpdate {n : ℕ} (i : Fin n) (x : Fin n → Fin 2)
     (b c : Fin 2) : Fin n → Fin 2 :=
   Function.update (Function.update x (site i 1) b) (site i 2) c
 
-private lemma site_zero {n : ℕ} (i : Fin n) : site i 0 = i := by
+lemma site_zero {n : ℕ} (i : Fin n) : site i 0 = i := by
   apply Fin.ext
   change (i.val + 0) % n = i.val
   simp only [Nat.add_zero, Nat.mod_eq_of_lt i.isLt]
@@ -704,7 +704,7 @@ private lemma windowUpdate_middle (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
   have hz : windowBits i (0 : Fin n → Fin 2) = 0 := rfl
   simpa only [hz, add_zero] using windowUpdate_middle_add n hn i 0 x b c
 
-private def goodWindow {n : ℕ} (i : Fin n) (δ : Fin n → Fin 2) : Prop :=
+def goodWindow {n : ℕ} (i : Fin n) (δ : Fin n → Fin 2) : Prop :=
   ∀ k : Fin 4, δ (site i k.val) = δ i
 
 private lemma window_matrix_unit (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
@@ -736,14 +736,14 @@ private lemma window_matrix_unit (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
     simp only [h0]
   · exact map_zero _
 
-private def sectorGauge (n : ℕ) (δ x : Fin n → Fin 2) : ℂ :=
+def sectorGauge (n : ℕ) (δ x : Fin n → Fin 2) : ℂ :=
   (-1 : ℂ) ^ ∑ j : Fin n, (δ j).val * (x j).val * (x (site j 1)).val
 
-private def gaugedUnit (n : ℕ) (δ x : Fin n → Fin 2) :
+def gaugedUnit (n : ℕ) (δ x : Fin n → Fin 2) :
     Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ :=
   sectorGauge n δ x • Matrix.single (x + δ) x 1
 
-private lemma sectorGauge_const (n : ℕ) (e : Fin 2) (x : Fin n → Fin 2) :
+lemma sectorGauge_const (n : ℕ) (e : Fin 2) (x : Fin n → Fin 2) :
     sectorGauge n (fun _ => e) x = gauge n e x := by
   change (-1 : ℂ) ^ (∑ j, e.val * (x j).val * (x (site j 1)).val) = _
   congr 1
@@ -753,7 +753,7 @@ private lemma sign_square (k : ℕ) : (-1 : ℂ) ^ k * (-1 : ℂ) ^ k = 1 := by
   rw [← mul_pow]
   norm_num
 
-private lemma sectorGauge_mul_self (n : ℕ) (δ x : Fin n → Fin 2) :
+lemma sectorGauge_mul_self (n : ℕ) (δ x : Fin n → Fin 2) :
     sectorGauge n δ x * sectorGauge n δ x = 1 := sign_square _
 
 private lemma site_add {n : ℕ} (i : Fin n) (a b : ℕ) :
@@ -762,7 +762,7 @@ private lemma site_add {n : ℕ} (i : Fin n) (a b : ℕ) :
   change ((i.val + a) % n + b) % n = (i.val + (a + b)) % n
   rw [Nat.mod_add_mod, Nat.add_assoc]
 
-private lemma site_succ_injective (n : ℕ) :
+lemma site_succ_injective (n : ℕ) :
     Function.Injective (fun i : Fin n => site i 1) := by
   intro i j h
   have hm : Nat.ModEq n (i.val + 1) (j.val + 1) := congrArg Fin.val h
@@ -830,7 +830,7 @@ private lemma sectorGauge_phase_change (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
   congr 1
   ring
 
-private lemma gauged_window_sector (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
+lemma gauged_window_sector (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
     (δ x : Fin n → Fin 2) :
     windowChannel n i (gaugedUnit n δ x) =
       if goodWindow i δ then
@@ -868,7 +868,7 @@ private lemma gauged_window (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
   have hg : goodWindow i (fun _ => e) := fun _ => rfl
   simpa only [hg, if_pos, gaugedUnit, sectorGauge_const, middleUpdate] using h
 
-private lemma matrix_linearMap_ext_gauged (n : ℕ)
+lemma matrix_linearMap_ext_gauged (n : ℕ)
     {f g : Module.End ℂ (Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ)}
     (h : ∀ δ x, f (gaugedUnit n δ x) = g (gaugedUnit n δ x)) : f = g := by
   apply (Matrix.stdBasis ℂ (Fin n → Fin 2) (Fin n → Fin 2)).ext

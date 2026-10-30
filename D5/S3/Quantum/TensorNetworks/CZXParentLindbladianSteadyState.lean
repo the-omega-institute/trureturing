@@ -14,7 +14,7 @@ set_option backward.isDefEq.respectTransparency false
 
 namespace D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState
 
-open Matrix Filter
+open Matrix Filter Classical
 open scoped Topology ComplexConjugate
 
 private lemma window_commute (n : ℕ) (hn : Even n) (hsize : 4 ≤ n)
@@ -135,12 +135,335 @@ private lemma exponential_limit (n : ℕ) (hn : Even n) (hsize : 4 ≤ n) :
   have hp : (sites.map (windowSuperoperator n)).prod = projection n := rfl
   simpa only [hsum, hp] using finite_projection_limit (sites.map (windowSuperoperator n)) hi hc
 
+private def evenStarts (n : ℕ) : List (Fin n) :=
+  (List.finRange n).filter (fun i => i.val % 2 == 0)
+
+private lemma mem_evenStarts (n : ℕ) (i : Fin n) :
+    i ∈ evenStarts n ↔ i.val % 2 = 0 := by
+  simp [evenStarts]
+
+private lemma all_good_iff_constant (n : ℕ) (hn : 4 ≤ n) (δ : Fin n → Fin 2) :
+    (∀ i ∈ evenStarts n, goodWindow i δ) ↔ ∃ e : Fin 2, δ = fun _ => e := by
+  constructor
+  · intro h
+    have hedge (j : Fin n) (hnext : j.val + 1 < n) :
+        δ j = δ ⟨j.val + 1, hnext⟩ := by
+      by_cases he : j.val % 2 = 0
+      · have hg := h j ((mem_evenStarts n j).mpr he)
+        have hs : site j 1 = ⟨j.val + 1, hnext⟩ := by
+          apply Fin.ext
+          exact Nat.mod_eq_of_lt hnext
+        have heq : δ (site j 1) = δ j := hg 1
+        rw [hs] at heq
+        exact heq.symm
+      · let i : Fin n := ⟨j.val - 1, by omega⟩
+        have hi : i.val % 2 = 0 := by dsimp [i]; omega
+        have hg := h i ((mem_evenStarts n i).mpr hi)
+        have h1 : site i 1 = j := by
+          apply Fin.ext
+          change (j.val - 1 + 1) % n = j.val
+          rw [Nat.sub_add_cancel (by omega), Nat.mod_eq_of_lt j.isLt]
+        have h2 : site i 2 = ⟨j.val + 1, hnext⟩ := by
+          apply Fin.ext
+          change (j.val - 1 + 2) % n = j.val + 1
+          rw [show j.val - 1 + 2 = j.val + 1 by omega, Nat.mod_eq_of_lt hnext]
+        have heq1 : δ (site i 1) = δ i := hg 1
+        have heq2 : δ i = δ (site i 2) := (hg 2).symm
+        rw [h1] at heq1
+        rw [h2] at heq2
+        exact heq1.trans heq2
+    have hval (k : ℕ) (hk : k < n) : δ ⟨k, hk⟩ = δ ⟨0, by omega⟩ := by
+      induction k with
+      | zero => rfl
+      | succ k ih =>
+        exact (hedge ⟨k, by omega⟩ hk).symm.trans (ih (by omega))
+    exact ⟨δ ⟨0, by omega⟩, funext (fun j => hval j.val j.isLt)⟩
+  · rintro ⟨e, rfl⟩ i hi k
+    rfl
+
+private lemma middle_sites_cover (n : ℕ) (hn : Even n) (hsize : 4 ≤ n) :
+    (evenStarts n).toFinset.biUnion (fun i => {site i 1, site i 2}) = Finset.univ := by
+  have hnmod : n % 2 = 0 := Nat.mod_eq_zero_of_dvd hn.two_dvd
+  apply Finset.eq_univ_of_forall
+  intro j
+  by_cases hodd : j.val % 2 = 1
+  · let i : Fin n := ⟨j.val - 1, by omega⟩
+    have hi : i ∈ evenStarts n := (mem_evenStarts n i).mpr (by dsimp [i]; omega)
+    have hs : site i 1 = j := by
+      apply Fin.ext
+      change (j.val - 1 + 1) % n = j.val
+      rw [Nat.sub_add_cancel (by omega), Nat.mod_eq_of_lt j.isLt]
+    exact Finset.mem_biUnion.mpr ⟨i, List.mem_toFinset.mpr hi, by simp [hs]⟩
+  · by_cases hz : j.val = 0
+    · let i : Fin n := ⟨n - 2, by omega⟩
+      have hi : i ∈ evenStarts n := (mem_evenStarts n i).mpr (by dsimp [i]; omega)
+      have hs : site i 2 = j := by
+        apply Fin.ext
+        change (n - 2 + 2) % n = j.val
+        rw [Nat.sub_add_cancel (by omega), Nat.mod_self, hz]
+      exact Finset.mem_biUnion.mpr ⟨i, List.mem_toFinset.mpr hi, by simp [hs]⟩
+    · let i : Fin n := ⟨j.val - 2, by omega⟩
+      have hi : i ∈ evenStarts n := (mem_evenStarts n i).mpr (by dsimp [i]; omega)
+      have hs : site i 2 = j := by
+        apply Fin.ext
+        change (j.val - 2 + 2) % n = j.val
+        rw [Nat.sub_add_cancel (by omega), Nat.mod_eq_of_lt j.isLt]
+      exact Finset.mem_biUnion.mpr ⟨i, List.mem_toFinset.mpr hi, by simp [hs]⟩
+
+private lemma window_list_action (n : ℕ) (l : List (Fin n))
+    (a : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) :
+    (fun x y => ((l.map (windowSuperoperator n)).prod).mulVec (fun p => a p.1 p.2) (x, y)) =
+      ((l.map (windowLM n)).prod) a := by
+  induction l with
+  | nil =>
+    funext x y
+    simp only [List.map_nil, List.prod_nil, Matrix.one_mulVec]
+    rfl
+  | cons i l ih =>
+    have hv : ((l.map (windowSuperoperator n)).prod).mulVec (fun p => a p.1 p.2) =
+        fun p => (((l.map (windowLM n)).prod) a) p.1 p.2 := by
+      funext p
+      exact congrFun (congrFun ih p.1) p.2
+    funext x y
+    simp only [List.map_cons, List.prod_cons, ← Matrix.mulVec_mulVec, hv,
+      window_superoperator_action]
+    rfl
+
+private lemma window_word_gauged (n : ℕ) (hn : 4 ≤ n) (l : List (Fin n))
+    (δ x : Fin n → Fin 2) :
+    ((l.map (windowLM n)).prod) (gaugedUnit n δ x) =
+      if ∀ i ∈ l, goodWindow i δ then
+        avg n (l.toFinset.biUnion (fun i => {site i 1, site i 2})) (gaugedUnit n δ) x
+      else 0 := by
+  have hact (k : Fin n) (δ x : Fin n → Fin 2) :
+      windowLM n k (gaugedUnit n δ x) = if goodWindow k δ then
+        avg n {site k 1, site k 2} (gaugedUnit n δ) x else 0 := by
+    change windowChannel n k (gaugedUnit n δ x) = _
+    rw [gauged_window_sector n hn]
+    split_ifs
+    · have h12 : site k 1 ≠ site k 2 := fun h =>
+        (by decide : (1 : Fin 4) ≠ 2) ((site_injective n hn k 1 2).mp h)
+      rw [avg_pair_apply n _ _ h12]
+      rfl
+    · rfl
+  induction l with
+  | nil =>
+    simp only [List.map_nil, List.prod_nil, List.toFinset_nil, Finset.biUnion_empty]
+    rw [if_pos (by intro j hj; cases hj), avg_empty]
+    rfl
+  | cons i l ih =>
+    change windowLM n i (((l.map (windowLM n)).prod) (gaugedUnit n δ x)) = _
+    rw [ih]
+    by_cases hl : ∀ j ∈ l, goodWindow j δ
+    · simp only [if_pos hl]
+      rw [avg_map]
+      simp only [hact]
+      by_cases hi : goodWindow i δ
+      · have hc : ∀ j ∈ i :: l, goodWindow j δ := by
+          intro j hj
+          rcases List.mem_cons.mp hj with rfl | hj
+          · exact hi
+          · exact hl j hj
+        rw [if_pos hc]
+        simp only [if_pos hi, List.toFinset_cons, Finset.biUnion_insert]
+        have he := congrArg (fun a => a (gaugedUnit n δ) x)
+          (avg_mul (V := Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) n
+            (l.toFinset.biUnion (fun j => {site j 1, site j 2})) {site i 1, site i 2})
+        simpa only [Module.End.mul_apply, Finset.union_comm] using he
+      · simp only [if_neg hi, map_zero, Pi.zero_apply, List.mem_cons,
+          forall_eq_or_imp, hi, false_and, if_false]
+        exact congrFun (map_zero (avg n (l.toFinset.biUnion (fun j => {site j 1, site j 2})))) x
+    · have hc : ¬ ∀ j ∈ i :: l, goodWindow j δ := by
+        intro h
+        exact hl (fun j hj => h j (List.mem_cons_of_mem i hj))
+      simp only [if_neg hl, if_neg hc, map_zero]
+
+private lemma gauge_flip (n : ℕ) (hn : Even n) (x : Fin n → Fin 2) :
+    gauge n 1 (x + fun _ => 1) = gauge n 1 x := by
+  have hlocal (a b : Fin 2) :
+      (a + 1).val * (b + 1).val + a.val + b.val = a.val * b.val + 1 := by
+    fin_cases a <;> fin_cases b <;> norm_num
+  have hs : (∑ j : Fin n, (x (site j 1)).val) = ∑ j : Fin n, (x j).val := by
+    exact Fintype.sum_bijective (fun j : Fin n => site j 1)
+      ⟨site_succ_injective n, Finite.surjective_of_injective (site_succ_injective n)⟩ _ _ (fun _ => rfl)
+  have hq : (∑ j : Fin n, ((x j + 1).val * (x (site j 1) + 1).val)) +
+        2 * ∑ j : Fin n, (x j).val =
+      (∑ j : Fin n, (x j).val * (x (site j 1)).val) + n := by
+    have he := Finset.sum_congr (s₁ := Finset.univ) (s₂ := Finset.univ) rfl
+      (fun (j : Fin n) _ => hlocal (x j) (x (site j 1)))
+    simp only [Finset.sum_add_distrib, hs, Finset.sum_const, Finset.card_univ,
+      Fintype.card_fin, smul_eq_mul, mul_one] at he
+    omega
+  have he := congrArg (fun k : ℕ => (-1 : ℂ) ^ k) hq
+  simp only [pow_add, pow_mul, hn.neg_one_pow, mul_one] at he
+  norm_num at he
+  change (-1 : ℂ) ^ (1 * ∑ j : Fin n, (x j + 1).val * (x (site j 1) + 1).val) =
+    (-1 : ℂ) ^ (1 * ∑ j : Fin n, (x j).val * (x (site j 1)).val)
+  simpa only [one_mul] using he
+
+private lemma sum_gauged_zero (n : ℕ) :
+    (∑ x : Fin n → Fin 2, gaugedUnit n (fun _ => 0) x) =
+      (1 : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) := by
+  simp only [gaugedUnit, sectorGauge_const, gauge, Fin.val_zero, zero_mul, pow_zero,
+    one_smul, add_zero]
+  simp only [show (fun _ : Fin n => (0 : Fin 2)) = 0 from rfl, add_zero]
+  change (∑ x : Fin n → Fin 2, Matrix.single x x (1 : ℂ)) = 1
+  exact Matrix.sum_single_one
+
+private lemma sum_gauged_one (n : ℕ) (hn : Even n) :
+    (∑ x : Fin n → Fin 2, gaugedUnit n (fun _ => 1) x) = czxUnitary n := by
+  ext u v
+  change (∑ x : Fin n → Fin 2,
+    sectorGauge n (fun _ => 1) x • Matrix.single (x + fun _ => 1) x 1) u v =
+      (cz n * tensorX n) u v
+  simp only [Matrix.sum_apply, Matrix.smul_apply, smul_eq_mul, Matrix.single_apply,
+    sectorGauge_const]
+  rw [show cz n = Matrix.diagonal (fun x => gauge n 1 x) by
+    change Matrix.diagonal _ = Matrix.diagonal _
+    congr 1
+    funext z
+    change (-1 : ℂ) ^ _ = (-1 : ℂ) ^ (1 * _)
+    rw [one_mul], Matrix.diagonal_mul]
+  change _ = gauge n 1 u * (if u = v + (fun _ => 1) then 1 else 0)
+  rw [Finset.sum_eq_single v]
+  · by_cases h : u = v + fun _ => 1
+    · subst u
+      simp only [eq_self_iff_true, and_self, if_true, mul_one]
+      exact (gauge_flip n hn v).symm
+    · simp [h, eq_comm]
+  · intro x hx hxv
+    simp only [hxv, and_false, if_false, mul_zero]
+  · simp
+
+private lemma sector_eq_const (n : ℕ) (δ x : Fin n → Fin 2) (e : Fin 2) :
+    x + δ = x + (fun _ => e) ↔ δ = fun _ => e := by
+  have hbit (a b c : Fin 2) : a + b = a + c ↔ b = c := by
+    fin_cases a <;> fin_cases b <;> fin_cases c <;> decide
+  constructor
+  · intro h
+    funext j
+    exact (hbit (x j) (δ j) e).mp (congrFun h j)
+  · rintro rfl
+    rfl
+
+private lemma trace_gauged (n : ℕ) (δ x : Fin n → Fin 2) :
+    Matrix.trace (gaugedUnit n δ x) = if δ = 0 then 1 else 0 := by
+  have he : x + δ = x ↔ δ = 0 := by
+    change x + δ = x ↔ δ = (fun _ => 0)
+    simpa only [show (fun _ : Fin n => (0 : Fin 2)) = 0 from rfl, add_zero]
+      using sector_eq_const n δ x 0
+  change Matrix.trace (sectorGauge n δ x • Matrix.single (x + δ) x 1) = _
+  rw [Matrix.trace_smul]
+  by_cases h : δ = 0
+  · subst δ
+    simp only [add_zero, Matrix.trace_single_eq_same, smul_eq_mul, mul_one,
+      ite_true]
+    change (-1 : ℂ) ^ (∑ j : Fin n, (0 : Fin 2).val * (x j).val *
+      (x (site j 1)).val) = 1
+    simp only [Fin.val_zero, zero_mul, Finset.sum_const_zero, pow_zero]
+  · have hne : x + δ ≠ x := mt he.mp h
+    rw [Matrix.trace_single_eq_of_ne _ _ _ hne, smul_zero, if_neg h]
+
+private lemma trace_symmetry_gauged (n : ℕ) (hn : Even n)
+    (δ x : Fin n → Fin 2) :
+    Matrix.trace ((czxUnitary n)ᴴ * gaugedUnit n δ x) =
+      if δ = (fun _ => 1) then 1 else 0 := by
+  have hu (u v : Fin n → Fin 2) :
+      czxUnitary n u v = gauge n 1 u * (if u = v + (fun _ => 1) then 1 else 0) := by
+    change (cz n * tensorX n) u v = _
+    rw [show cz n = Matrix.diagonal (fun z => gauge n 1 z) by
+      change Matrix.diagonal _ = Matrix.diagonal _
+      congr 1
+      funext z
+      change (-1 : ℂ) ^ _ = (-1 : ℂ) ^ (1 * _)
+      rw [one_mul], Matrix.diagonal_mul]
+    rfl
+  change Matrix.trace ((czxUnitary n)ᴴ *
+    (sectorGauge n δ x • Matrix.single (x + δ) x 1)) = _
+  rw [Matrix.mul_smul, Matrix.trace_smul, Matrix.trace_mul_single]
+  simp only [MulOpposite.op_one, one_smul, Matrix.conjTranspose_apply,
+    smul_eq_mul, hu]
+  by_cases h : δ = (fun _ => 1)
+  · subst δ
+    simp only [eq_self_iff_true, if_true, mul_one, sectorGauge_const, gauge_flip n hn]
+    have hs : star (gauge n 1 x) = gauge n 1 x := by
+      change star ((-1 : ℂ) ^ _) = (-1 : ℂ) ^ _
+      simp only [star_pow, star_neg, star_one]
+    rw [hs]
+    simpa only [sectorGauge_const] using sectorGauge_mul_self n (fun _ => 1) x
+  · rw [if_neg (mt (sector_eq_const n δ x 1).mp h), if_neg h]
+    simp only [mul_zero, star_zero]
+
 private lemma projection_formula (n : ℕ) (hn : Even n) (hsize : 4 ≤ n)
     (a : Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) :
     (fun x y => (projection n).mulVec (fun p => a p.1 p.2) (x, y)) =
       ((2 : ℂ) ^ n)⁻¹ • (Matrix.trace a • (1 : Matrix _ _ ℂ) +
         Matrix.trace ((czxUnitary n)ᴴ * a) • czxUnitary n) := by
-  sorry
+  let f : Module.End ℂ (Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) :=
+    { toFun := fun b x y => (projection n).mulVec (fun p => b p.1 p.2) (x, y)
+      map_add' := by
+        intro b c
+        funext x y
+        exact congrFun (Matrix.mulVec_add (projection n)
+          (fun p => b p.1 p.2) (fun p => c p.1 p.2)) (x, y)
+      map_smul' := by
+        intro c b
+        funext x y
+        exact congrFun (Matrix.mulVec_smul (projection n) c (fun p => b p.1 p.2)) (x, y) }
+  let g : Module.End ℂ (Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ) :=
+    { toFun := fun b => ((2 : ℂ) ^ n)⁻¹ •
+        (Matrix.trace b • (1 : Matrix _ _ ℂ) + Matrix.trace ((czxUnitary n)ᴴ * b) • czxUnitary n)
+      map_add' := by
+        intro b c
+        simp only [Matrix.trace_add, Matrix.mul_add, add_smul, smul_add]
+        module
+      map_smul' := by
+        intro c b
+        simp only [Matrix.trace_smul, Matrix.mul_smul, smul_smul, smul_add,
+          RingHom.id_apply, smul_eq_mul]
+        module }
+  have heq : f = g := by
+    apply matrix_linearMap_ext_gauged n
+    intro δ x
+    change (fun u v => (projection n).mulVec (fun p => gaugedUnit n δ x p.1 p.2) (u, v)) = _
+    have hp : projection n = ((evenStarts n).map (windowSuperoperator n)).prod := rfl
+    rw [hp, window_list_action, window_word_gauged n hsize]
+    change (if ∀ i ∈ evenStarts n, goodWindow i δ then
+      avg n ((evenStarts n).toFinset.biUnion (fun i => {site i 1, site i 2})) (gaugedUnit n δ) x
+      else 0) = ((2 : ℂ) ^ n)⁻¹ •
+        (Matrix.trace (gaugedUnit n δ x) • (1 : Matrix _ _ ℂ) +
+          Matrix.trace ((czxUnitary n)ᴴ * gaugedUnit n δ x) • czxUnitary n)
+    rw [trace_gauged, trace_symmetry_gauged n hn]
+    by_cases hd : ∃ e : Fin 2, δ = fun _ => e
+    · have hg := (all_good_iff_constant n hsize δ).mpr hd
+      rw [if_pos hg, middle_sites_cover n hn hsize, avg_univ]
+      obtain ⟨e, rfl⟩ := hd
+      fin_cases e
+      · change ((2 : ℂ) ^ n)⁻¹ • (∑ y, gaugedUnit n (fun _ => 0) y) = _
+        rw [sum_gauged_zero]
+        have hne : (fun _ : Fin n => (0 : Fin 2)) ≠ fun _ => 1 := by
+          intro h
+          have he := congrFun h ⟨0, by omega⟩
+          exact (by decide : (0 : Fin 2) ≠ 1) he
+        simp [hne]
+        rfl
+      · change ((2 : ℂ) ^ n)⁻¹ • (∑ y, gaugedUnit n (fun _ => 1) y) = _
+        rw [sum_gauged_one n hn]
+        have hne : (fun _ : Fin n => (1 : Fin 2)) ≠ 0 := by
+          intro h
+          have he := congrFun h ⟨0, by omega⟩
+          exact (by decide : (1 : Fin 2) ≠ 0) he
+        change ((2 : ℂ) ^ n)⁻¹ • czxUnitary n = ((2 : ℂ) ^ n)⁻¹ •
+          ((if (fun _ : Fin n => (1 : Fin 2)) = 0 then 1 else 0) • 1 +
+            (if (fun _ : Fin n => (1 : Fin 2)) = (fun _ => 1) then 1 else 0) • czxUnitary n)
+        simp only [if_neg hne, eq_self_iff_true, if_true, zero_smul, one_smul, zero_add]
+    · have hg : ¬ ∀ i ∈ evenStarts n, goodWindow i δ :=
+        mt (all_good_iff_constant n hsize δ).mp hd
+      have h0 : δ ≠ 0 := fun h => hd ⟨0, h⟩
+      have h1 : δ ≠ (fun _ => 1) := fun h => hd ⟨1, h⟩
+      simp only [if_neg hg, if_neg h0, if_neg h1, zero_smul, add_zero, smul_zero]
+  exact congrArg (fun l => l a) heq
+
 
 private lemma flip_diagonal (n : ℕ) (hn : 0 < n) (x : Fin n → Fin 2) :
     tensorX n x x = 0 := by
