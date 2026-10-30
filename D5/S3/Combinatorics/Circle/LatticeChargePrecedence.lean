@@ -6,6 +6,7 @@
    utility: none
    digest: Saturated lattice returns bound the same physical suffix charge. -/
 import D5.S3.Combinatorics.Circle.RunFirstEarTransport
+import Batteries.Tactic.OpenPrivate
 
 /-! Necessary physical order from lattice saturation and a literal fresh insertion. -/
 set_option autoImplicit false
@@ -75,7 +76,7 @@ theorem lattice_saturation_suffix_precedence
     omega
   have hreturn : ((sigma.take p).map f).sum = H := by rw [hz0, mul_zero] at hz; omega
   have hzero : ((sigma.take (p + 1)).map f).sum = 0 := by rw [hstep, hreturn, hnu]; ring
-  have prefix (r : ℕ) :
+  have prefix_height (r : ℕ) :
       (((earWord m sigma j).take r).map g).sum =
       2 * ((sigma.take (if r ≤ j then r else r - 1)).map f).sum -
       ((sigma.take (if r ≤ j then r else r - 1)).map q).sum +
@@ -88,13 +89,13 @@ theorem lattice_saturation_suffix_precedence
   have hearly : j ≤ p := by
     by_contra hn
     have hb := (hnew (p + 1)).1
-    rw [prefix, if_pos (by omega : p + 1 ≤ j), hzero] at hb
+    simp only [prefix_height, ite_eq_left (by omega : p + 1 ≤ j), hzero] at hb
     have hnq := mapped_nonneg q hq (sigma.take p)
     rw [hstep q] at hb
     linarith
   have hbudget : ((sigma.drop p).map q).sum ≤ N - 2 * H := by
     have hb := (hnew (p + 1)).2
-    rw [prefix, if_neg (by omega : ¬ p + 1 ≤ j), Nat.add_sub_cancel, hreturn] at hb
+    simp only [prefix_height, ite_eq_right (by omega : ¬ p + 1 ≤ j), Nat.add_sub_cancel, hreturn] at hb
     have hs : ((sigma.take p).map q).sum + ((sigma.drop p).map q).sum = A := by
       rw [← List.sum_append, ← List.map_append, List.take_append_drop, hcharge]
     linarith
@@ -116,7 +117,7 @@ theorem lattice_saturation_suffix_precedence
   have hsum := Finset.sum_le_sum_of_subset_of_nonneg (f := q) hsub
     (by intro i _ _; exact hq i)
   have hnd := hperm.nodup_iff.mpr (List.nodup_finRange m)
-  rw [List.sum_toFinset q (hnd.drop p)] at hsum
+  rw [List.sum_toFinset q (hnd.drop (i := p))] at hsum
   simp only [Finset.sum_pair hne] at hsum
   linarith
 

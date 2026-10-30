@@ -35,25 +35,33 @@ private theorem arithmetic (n : ℕ) (hn : 1 ≤ n) :
     have hp := pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) (show 6 ≤ t n by dsimp [t]; omega)
     norm_num at hp
     exact hp
+  have h2t : (2 : ℤ) ^ (2 * t n) = x n ^ 2 := by
+    rw [show 2 * t n = t n * 2 by omega, pow_mul]
   have ha : (seed n : ℤ) = 4 * x n ^ 2 + 5 * x n + 1 := by
-    simp only [seed, Nat.cast_add, Nat.cast_one, Nat.cast_pow, Nat.cast_ofNat,
-      pow_add, pow_mul, x]
+    simp only [seed, Nat.cast_add, Nat.cast_one, Nat.cast_pow, Nat.cast_ofNat]
+    rw [pow_add, pow_add, h2t]
+    change 1 + x n + x n * (2 : ℤ) ^ 2 + x n ^ 2 * (2 : ℤ) ^ 2 = _
     ring
   have hN : modulus (k n) = 16 * x n ^ 2 - 1 := by
-    simp only [modulus, k, pow_add, pow_mul, x]
+    change (2 : ℤ) ^ (2 * t n + 4) - 1 = _
+    rw [pow_add, h2t]
     ring
   have hC : modulus (k n) / 2 = 8 * x n ^ 2 - 1 := by rw [hN]; omega
   have hpow : (2 : ℤ) ^ (k n - 1) = 8 * x n ^ 2 := by
-    rw [show k n - 1 = 2 * t n + 3 by dsimp [k]; omega, pow_add, pow_mul]
-    dsimp [x]; ring
+    rw [show k n - 1 = 2 * t n + 3 by omega, pow_add, h2t]
+    ring
   have hbound : seed n ≤ 2 ^ (k n - 1) - 1 := by
     have hh : (seed n : ℤ) + 1 ≤ (2 : ℤ) ^ (k n - 1) := by rw [ha, hpow]; nlinarith
     have hh' : seed n + 1 ≤ 2 ^ (k n - 1) := by exact_mod_cast hh
     omega
   have hmod : x n % 5 = 4 := by
+    have hm : (16 : ℤ) ≡ 1 [ZMOD 5] := by decide
+    have hp := hm.pow n
+    change (16 : ℤ) ^ n % 5 = 1 ^ n % 5 at hp
+    norm_num at hp
     dsimp [x, t]
-    rw [pow_add, pow_mul, Int.mul_emod, Int.pow_emod]
-    norm_num
+    rw [pow_add, pow_mul, Int.mul_emod]
+    norm_num [hp]
   let r := (x n + 1) / 5
   have hr : x n = 5 * r - 1 := by dsimp [r]; omega
   have hdA : B n ∣ (seed n : ℤ) := by
@@ -66,17 +74,18 @@ private theorem arithmetic (n : ℕ) (hn : 1 ≤ n) :
     refine ⟨2 * r - 1, ?_⟩
     dsimp [H, B]; rw [hr]; ring
   refine ⟨hx, ha, hN, hC, hbound, hdA, hdN, hdH, ?_, ?_, ?_, ?_, ?_⟩
-  all_goals dsimp [B, H]; rw [hN] <;> try rw [hC]
-  all_goals try rw [ha]
+  all_goals simp only [hC, hN, ha, B, H]
   all_goals nlinarith
 
-private theorem short_period (n i : ℕ) :
+private theorem short_period (n i : ℕ) (hn : 1 ≤ n) :
     centered (modulus (k n)) ((2 : ℤ) ^ (i + (t n + 2)) * seed n) =
       centered (modulus (k n)) ((2 : ℤ) ^ i * seed n) := by
+  obtain ⟨_, ha, hN, _⟩ := arithmetic n hn
   have hfactor : (2 : ℤ) ^ (t n + 2) * seed n =
       (seed n : ℤ) + modulus (k n) * (x n + 1) := by
-    simp only [seed, k, modulus, x, Nat.cast_add, Nat.cast_one, Nat.cast_pow,
-      Nat.cast_ofNat, pow_add, pow_mul]
+    rw [pow_add]
+    change (x n * (2 : ℤ) ^ 2) * seed n = _
+    rw [ha, hN]
     ring
   apply centered_congr
   rw [pow_add, mul_assoc, hfactor, mul_add]
@@ -104,7 +113,7 @@ private theorem first_values (n : ℕ) (hn : 1 ≤ n) :
       rw [htwo, Int.add_emod_right]
   have hgamma : actualSource (k n) (seed n) ⟨t n + 3, by dsimp [k,t]; omega⟩ = -H n := by
     change centered _ ((2 : ℤ) ^ (t n + 3) * _) = _
-    rw [show t n + 3 = 1 + (t n + 2) by omega, short_period]
+    rw [show t n + 3 = 1 + (t n + 2) by omega, short_period n 1 hn]
     exact halpha
   have hnonnegative (i : ℕ) (hi : i < t n + 2) (h1 : i ≠ 1) (hlast : i ≠ t n + 1) :
       0 ≤ centered (modulus (k n)) ((2 : ℤ) ^ i * seed n) := by
@@ -113,7 +122,8 @@ private theorem first_values (n : ℕ) (hn : 1 ≤ n) :
       have hv : centered (modulus (k n)) (seed n : ℤ) = (seed n : ℤ) := by
         apply centered_unique hpos hodd (centered_bounds hpos hodd _) ?_ (centered_mod _ _)
         rw [hC, ha]; constructor <;> nlinarith
-      simpa [hv] using (Int.natCast_nonneg (seed n))
+      simp only [pow_zero, one_mul, hv]
+      exact Int.natCast_nonneg _
     · have hi2 : 2 ≤ i := by omega
       let s := i - 2
       have hs : i = s + 2 := by dsimp [s]; omega
@@ -141,8 +151,57 @@ private theorem first_values (n : ℕ) (hn : 1 ≤ n) :
     have hh := hnonnegative (i.val - (t n + 2)) hrem (by omega) (by dsimp [k] at *; omega)
     have he : i.val = (i.val - (t n + 2)) + (t n + 2) := by omega
     unfold actualSource at hi
-    rw [he, short_period] at hi
+    rw [he, short_period n _ hn] at hi
     exact (not_lt_of_ge hh) hi
+
+private theorem complete_inventory (n : ℕ) (hn : 1 ≤ n) :
+    ∀ i : Fin (k n), actualSource (k n) (seed n) i < 0 ↔
+      i.val = 1 ∨ i.val = t n + 1 ∨ i.val = t n + 3 ∨ i.val = k n - 1 := by
+  obtain ⟨hx, ha, hN, hC, hb, _⟩ := arithmetic n hn
+  obtain ⟨hpos, hodd⟩ := TwoRunSource.modulus_positive_odd (k n) (by dsimp [k]; omega)
+  obtain ⟨halpha, hgamma, hclass⟩ := first_values n hn
+  have heven : 2 * (x n / 2) = x n := by
+    have he : x n = 2 * (2 : ℤ) ^ (t n - 1) := by
+      dsimp [x]
+      rw [show t n = (t n - 1) + 1 by omega, pow_succ]
+      ring
+    omega
+  let K := (modulus (k n) - (seed n : ℤ)) / 2
+  have hK : 2 * K = modulus (k n) - (seed n : ℤ) := by
+    dsimp [K]
+    rw [hN, ha]
+    omega
+  have hKpos : 0 < K := by rw [hN,ha] at hK; nlinarith
+  have hKbound : K ≤ modulus (k n) / 2 := by rw [hC,hN,ha] at *; nlinarith
+  have hbeta : actualSource (k n) (seed n) ⟨t n + 1, by dsimp [k,t]; omega⟩ = -K := by
+    apply centered_unique hpos hodd (centered_bounds hpos hodd _)
+      ⟨by omega, by rw [hC]; nlinarith⟩ ?_
+    rw [centered_mod]
+    have he : (2 : ℤ) ^ (t n + 1) * seed n = -K + modulus (k n) * (1 + x n / 2) := by
+      rw [pow_succ]
+      change x n * 2 * seed n = _
+      rw [hN,ha] at hK ⊢
+      nlinarith [congrArg (fun z : ℤ => z * (16 * x n ^ 2 - 1)) heven]
+    change ((2 : ℤ) ^ (t n + 1) * seed n) % _ = _
+    rw [he, Int.add_mul_emod_self_left]
+  have hdelta : actualSource (k n) (seed n) ⟨k n - 1, by dsimp [k]; omega⟩ = -K := by
+    change centered _ ((2 : ℤ) ^ (k n - 1) * _) = _
+    rw [show k n - 1 = (t n + 1) + (t n + 2) by omega, short_period n _ hn]
+    exact hbeta
+  intro i
+  refine ⟨hclass i, ?_⟩
+  intro hi
+  rcases hi with hi | hi | hi | hi
+  · have he : i = ⟨1, by dsimp [k,t]; omega⟩ := Fin.ext hi
+    rw [he,halpha]
+    dsimp [H]; nlinarith
+  · have he : i = ⟨t n + 1, by dsimp [k,t]; omega⟩ := Fin.ext hi
+    rw [he,hbeta]; omega
+  · have he : i = ⟨t n + 3, by dsimp [k,t]; omega⟩ := Fin.ext hi
+    rw [he,hgamma]
+    dsimp [H]; nlinarith
+  · have he : i = ⟨k n - 1, by dsimp [k]; omega⟩ := Fin.ext hi
+    rw [he,hdelta]; omega
 
 private theorem native_data (n : ℕ) (hn : 1 ≤ n) :
     (∀ i : Fin (k n), B n ∣ actualSource (k n) (seed n) i) ∧
@@ -177,7 +236,7 @@ private theorem native_data (n : ℕ) (hn : 1 ≤ n) :
       rw [ha]
       have heven : x n % 2 = 0 := by
         dsimp [x]
-        rw [show t n = (t n - 1) + 1 by dsimp [t]; omega, pow_succ]
+        rw [show t n = (t n - 1) + 1 by omega, pow_succ]
         omega
       omega
     omega
@@ -204,7 +263,9 @@ theorem actualSource_four_gap_lattice_precedence
     sigma.idxOf delta < sigma.idxOf alpha ∧ sigma.idxOf delta < sigma.idxOf gamma ∧
     j ≤ sigma.idxOf alpha ∧ j ≤ sigma.idxOf gamma ∧
     (∀ i : Fin k, actualSource k A i < 0 → sigma.idxOf i < sigma.idxOf delta → i.val = t + 1) ∧
-    ((sigma.take (sigma.idxOf delta)).filter (fun i => actualSource k A i < 0)).length ≤ 1 := by
+    ((sigma.take (sigma.idxOf delta)).filter (fun i => actualSource k A i < 0)).length ≤ 1 ∧
+    (∀ i : Fin k, actualSource k A i < 0 ↔
+      i.val = 1 ∨ i.val = t + 1 ∨ i.val = t + 3 ∨ i.val = k - 1) := by
   classical
   dsimp only
   obtain ⟨hx, ha, hN, hC, hb, hdA, hdN, hdH, hH, hHC, hsat, hbudget, hheavy⟩ := arithmetic n hn
@@ -216,6 +277,12 @@ theorem actualSource_four_gap_lattice_precedence
   have htotal : (sigma.map (charge (k n) (seed n))).sum = (seed n : ℤ) := by
     rw [(hold.1.map _).sum_eq, ← List.sum_toFinset _ (List.nodup_finRange _), List.toFinset_finRange]
     exact charge_sum (k n) (seed n) (by dsimp [k]; omega) hb
+  have hsumOld : (sigma.map (actualSource (k n) (seed n))).sum = 0 := by
+    rw [(hold.1.map _).sum_eq, ← List.sum_toFinset _ (List.nodup_finRange _), List.toFinset_finRange]
+    exact (ZeroSumSubsets.source_cycle (by dsimp [k]; omega : 0 < k n) (seed n)).2.1
+  have hsumNew : ((earWord (k n) sigma j).map (actualSource (k n + 1) (2 * seed n))).sum = 0 := by
+    rw [(hnew.1.map _).sum_eq, ← List.sum_toFinset _ (List.nodup_finRange _), List.toFinset_finRange]
+    exact (ZeroSumSubsets.source_cycle (by dsimp [k]; omega : 0 < k n + 1) (2 * seed n)).2.1
   have apply_at (nu : Fin (k n)) (hval : actualSource (k n) (seed n) nu = -H n)
       (hne : delta ≠ nu) : sigma.idxOf delta < sigma.idxOf nu ∧ j ≤ sigma.idxOf nu := by
     have hpositive : 0 < charge (k n) (seed n) nu := by
@@ -232,11 +299,16 @@ theorem actualSource_four_gap_lattice_precedence
       (actualSource (k n + 1) (2 * seed n)) (B n) (modulus (k n) / 2)
       (modulus (k n + 1) / 2) (seed n) (H n)
       (by dsimp [B]; omega) (by rw [ha]; nlinarith) hgrid hq htotal hpair hfresh
-      hold.2.1 hnew.2.1 hold.2.2 hnew.2.2 nu hval hH hdH hHC hsat hpositive
+      hsumOld hsumNew hold.2.2 hnew.2.2 nu hval hH hdH hHC hsat hpositive
     have hcnew : modulus (k n + 1) / 2 = modulus (k n) := by unfold modulus; rw [pow_succ]; omega
     exact ⟨hh.2.2.2.2 delta hne (by rw [hcnew, hbudget]; linarith), hh.2.2.1⟩
   have hda := apply_at alpha halpha (by intro he; have := congrArg Fin.val he; dsimp [delta,alpha,k,t] at this; omega)
-  have hdg := apply_at gamma hgamma (by intro he; have := congrArg Fin.val he; dsimp [delta,gamma,k,t] at this; omega)
+  have hdg := apply_at gamma hgamma (by
+    intro he
+    have hh : k n - 1 = t n + 3 := congrArg Fin.val he
+    have ht : 6 ≤ t n := by dsimp [t]; omega
+    change 2 * t n + 4 - 1 = t n + 3 at hh
+    omega)
   have honly (i : Fin (k n)) (hi : actualSource (k n) (seed n) i < 0)
       (hbefore : sigma.idxOf i < sigma.idxOf delta) : i.val = t n + 1 := by
     rcases hnegative i hi with he | he | he | he
@@ -247,9 +319,9 @@ theorem actualSource_four_gap_lattice_precedence
       subst i; omega
     · have : i = delta := Fin.ext he
       subst i; omega
-  refine ⟨hda.1, hdg.1, hda.2, hdg.2, honly, ?_⟩
+  refine ⟨hda.1, hdg.1, hda.2, hdg.2, honly, ?_, complete_inventory n hn⟩
   let L := (sigma.take (sigma.idxOf delta)).filter (fun i => actualSource (k n) (seed n) i < 0)
-  have hnd : L.Nodup := (hold.1.nodup_iff.mpr (List.nodup_finRange _)).take _ |>.filter _
+  have hnd : L.Nodup := ((hold.1.nodup_iff.mpr (List.nodup_finRange _)).take (i := sigma.idxOf delta)).filter _
   have hsub : L.toFinset ⊆ {⟨t n + 1, by dsimp [k,t]; omega⟩} := by
     intro i hi
     have hi' := List.mem_filter.mp (List.mem_toFinset.mp hi)
