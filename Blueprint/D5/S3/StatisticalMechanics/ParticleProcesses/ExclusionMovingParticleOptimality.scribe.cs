@@ -120,7 +120,10 @@ internal sealed class ExclusionMovingParticleOptimalityDocument : IScribeDocumen
                             + "α(1 − α) ≤ k α(1 − α) electricEnergy(c,h). "
                             + "Since α(1 − α) is positive, cancellation yields "
                             + "1 ≤ k electricEnergy(c,h) for every feasible h. The infimum argument proves the conclusion."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("chen-2017-exclusion-moving-particle-optimality"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Definition(string name, string id, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("exclusion-moving-particle-" + id),
