@@ -38,8 +38,14 @@ internal sealed class SchurBoundaryKernelDocument : IScribeDocumentDefinition
                     Eqn(Kernel(Seq(Call("pi"), Minus, T)), Seq(Minus, Kernel(T))), Sp, Land, Sp,
                     Call("cos", T), Kernel(T), Sp, Le, Sp, D(0), Sp, Land, Sp,
                     Call("UniformConvergenceOn", Call("partialSumsOfBoundaryTerms"),
-                        Call("boundaryKernel"), Call("closedParameterStrip")))))),
-                "For b in [0,1], the angle function is continuous, B_b(pi-t)=-B_b(t), and cos(t) B_b(t) is nonpositive. Partial sums converge uniformly on the full strip [0,1] times the real line. For b<1, the proof integrates the actual geometric cosine series, obtaining B_b(t)=-2b squared cos(t) times the integral from zero to one of u(1-u)(1+b squared u squared)/((1-b squared u squared) squared+4b squared u squared cos(t) squared). The integrand is nonnegative. Continuity in b extends the sign to b=1, including cos(t)=0. This does not yet give the entire-function primitive representation, mean-zero identity, sharp kernel size or the sharp error estimate.", DescribeRole.Theorem))));
+                        Call("boundaryKernel"), Call("closedParameterStrip")), Sp, Land, Sp,
+                    Call("ContinuousOn", Call("boundaryKernelOfPair"), Call("closedParameterStrip")),
+                    Sp, Land, Sp, Eqn(Call("integral", D(0), Seq(D(2), Pi), Call("boundaryKernel", B)), D(0)),
+                    Sp, Land, Sp, Call("abs", Kernel(T)), Sp, Le, Sp,
+                    Frac, Grp(D(3,0,6,7)), Grp(D(8,1,0,0)), Sp, Land, Sp,
+                    Frac, Grp(D(3,0,6,7)), Grp(D(8,1,0,0)), Sp, Lt, Sp,
+                    Frac, Grp(D(1,9)), Grp(D(5,0)))))),
+                "For b in [0,1], the angle function is continuous, B_b(pi-t)=-B_b(t), and cos(t) B_b(t) is nonpositive. Partial sums converge uniformly on the full strip [0,1] times the real line. For b<1, the proof integrates the actual geometric cosine series, obtaining B_b(t)=-2b squared cos(t) times the integral from zero to one of u(1-u)(1+b squared u squared)/((1-b squared u squared) squared+4b squared u squared cos(t) squared). The integrand is nonnegative. Continuity in b extends the sign to b=1, including cos(t)=0. The joint parameter-angle function is continuous on the full strip. Termwise cosine integration gives zero mean. The rational size estimate is |B_b(t)| <= 3067/8100 < 19/50. After y=bu the nonnegative integral is bounded by the integral of (1-y)q(y,c), c=|cos(t)|. On [0,1/3] this is at most 2y(1-y)(1-9y squared/10), whose integral is 667/8100. On [1/3,1] it is at most 3/8+y/8-3(y-1/3)(1-y)/16, whose integral is 8/27. Continuity includes b=1. This does not yet give the entire-function primitive representation or the sharp functional estimate; it does not assert the source's separate logarithm-arctangent constant C.", DescribeRole.Theorem))));
 
     private static DocumentBlock Entry(string id, string declaration, string title,
         Formula formula, string prose, DescribeRole role) =>
