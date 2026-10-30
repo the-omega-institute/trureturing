@@ -27,6 +27,18 @@ internal sealed class BinghamCaterpillarPs3FamilyDocument : IScribeDocumentDefin
                 "The tuple denotes the Fin 5 indexed function with the displayed entries, all in the positive naturals.", AssessedProvenance.FromLiterature(Source)),
             Node("beta", "The second family", "beta", FamilyFormula("beta", 4, 5),
                 "The repeated internal part is the same arbitrary positive natural j in both positions. The proof uses the fixed end blocks 5,4,3 in the stated algebraic identity.", AssessedProvenance.FromLiterature(Source)),
+            Node("spine-good", "Proper spine colors", "SpineGood", SpineGoodFormula(),
+                "Consecutive spine vertices receive distinct colors.", AssessedProvenance.FromRepo(Source)),
+            Node("leaf-sum", "The choices at one leaf", "leafSum", LeafSumFormula(),
+                "The sum ranges over every color different from the incident spine color.", AssessedProvenance.FromRepo(Source)),
+            Node("block-weight", "The weight of one block", "blockWeight", BlockWeightFormula(),
+                "A positive part m gives one spine vertex and val(m) minus one leaves. The zeroth power accounts for an empty leaf set.", AssessedProvenance.FromRepo(Source)),
+            HelperTheorem("spine-sum", "The complete finite spine sum", "ps_spine_sum", SpineSumFormula(),
+                "The coloring bijection and independent leaf choices give this identity for every positive part vector and every number of colors."),
+            HelperTheorem("sum-successor", "Expanding a finite function sum", "sum_finfun_succ", SumSuccessorFormula(),
+                "The first value and the remaining function uniquely determine a function on Fin (n+1)."),
+            HelperTheorem("leaf-sum-all", "A leaf sum over the whole color set", "leafSum_eq", LeafSumEqFormula(),
+                "The forbidden color contributes zero; every other color contributes its monomial."),
             Node("claim", "Remark 3.11, first question", "claim", Iff(F.Id("claim"), P(ClaimBody())),
                 "The domain is all positive integers, including j=1. Equality is formal polynomial equality in Z[X], with an indeterminate X. The second question, whether these are the only such pairs, is outside this statement.", AssessedProvenance.FromLiterature(Source)),
             Describe.Lean(DescribeId.Create("bingham-family-result"), DeclarationHandle.Create(Prefix + "result"),
@@ -40,6 +52,46 @@ internal sealed class BinghamCaterpillarPs3FamilyDocument : IScribeDocumentDefin
     private static DocumentBlock Node(string id, string title, string name, Formula formula, string prose, AssessedProvenance provenance) =>
         Describe.Lean(DescribeId.Create("bingham-family-" + id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(Disp(formula)), provenance, Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+
+    private static DocumentBlock HelperTheorem(string id, string title, string name, Formula formula, string prose) =>
+        Describe.Lean(DescribeId.Create("bingham-family-" + id), DeclarationHandle.Create(Prefix + name), H(title),
+            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(Source),
+            Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+    private static Formula Arrow(Formula x, Formula y) => Seq(P(x),Sp,To,Sp,P(y));
+    private static Formula SumOver(string x, Formula type, Formula body) =>
+        Seq(new Formula.Subscript(F.Sum,Seq(F.Id(x),Colon,type)),Sp,body);
+    private static Formula ProductOver(string x, Formula type, Formula body) =>
+        Seq(new Formula.Subscript(Prod,Seq(F.Id(x),Colon,type)),Sp,body);
+    private static Formula IntegerPolynomial() => Call("Polynomial",Seq(Mathbb,Grp(F.Id("Z"))));
+    private static Formula ColorBinders(Formula body) => All("k",Nat(),All("c",Call("Fin",F.Id("k")),body));
+    private static Formula AllowedColors() => Seq(OpenBrace,F.Id("d"),Colon,Call("Fin",F.Id("k")),Mid,Ne(F.Id("d"),F.Id("c")),CloseBrace);
+    private static Formula SpineGoodFormula() => All("l",Nat(),All("k",Nat(),
+        All("c",Arrow(Call("Fin",F.Id("l")),Call("Fin",F.Id("k"))),
+            Iff(Call("SpineGood",F.Id("c")),All("i",Call("Fin",F.Id("l")),All("j",Call("Fin",F.Id("l")),
+                Seq(P(Equal(PlusOf(Val(F.Id("i")),D(1)),Val(F.Id("j")))),Sp,Rightarrow,Sp,
+                    P(Ne(Call("c",F.Id("i")),Call("c",F.Id("j")))))))))));
+    private static Formula LeafSumFormula() => ColorBinders(Equal(Call("leafSum",F.Id("c")),
+        SumOver("d",AllowedColors(),new Formula.Power(Call("Polynomial.X"),Call("Fin.val",Call("Subtype.val",F.Id("d")))))));
+    private static Formula BlockWeightFormula() => All("k",Nat(),All("m",Positive(),All("c",Call("Fin",F.Id("k")),
+        Equal(Call("blockWeight",F.Id("m"),F.Id("c")),
+            new Formula.Binary(new Formula.Power(Call("Polynomial.X"),Val(F.Id("c"))),FormulaBinaryOperator.Multiply,
+                new Formula.Power(Call("leafSum",F.Id("c")),new Formula.Binary(Call("PNat.val",F.Id("m")),FormulaBinaryOperator.Subtract,D(1))))))));
+    private static Formula SpineSumFormula() => All("l",Nat(),All("k",Nat(),All("a",Call("Parts",F.Id("l")),
+        Equal(Call("ps",Call("caterpillar",F.Id("a")),F.Id("k")),
+            SumOver("c",Arrow(Call("Fin",F.Id("l")),Call("Fin",F.Id("k"))),
+                Seq(Operatorname,Grp(F.Id("if")),Sp,Call("SpineGood",F.Id("c")),Sp,Operatorname,Grp(F.Id("then")),Sp,
+                    ProductOver("i",Call("Fin",F.Id("l")),Call("blockWeight",Call("a",F.Id("i")),Call("c",F.Id("i")))),Sp,
+                    Operatorname,Grp(F.Id("else")),Sp,D(0)))))));
+    private static Formula SumSuccessorFormula() => All("A",Seq(F.Id("Type"),Star),
+        Seq(OpenBracket,Call("Fintype",F.Id("A")),CloseBracket,Sp,All("n",Nat(),
+            All("f",Arrow(Arrow(Call("Fin",PlusOf(F.Id("n"),D(1))),F.Id("A")),IntegerPolynomial()),
+                Equal(SumOver("c",Arrow(Call("Fin",PlusOf(F.Id("n"),D(1))),F.Id("A")),Call("f",F.Id("c"))),
+                    SumOver("x",F.Id("A"),SumOver("c",Arrow(Call("Fin",F.Id("n")),F.Id("A")),
+                        Call("f",Call("Fin.cons",F.Id("x"),F.Id("c"))))))))));
+    private static Formula LeafSumEqFormula() => ColorBinders(Equal(Call("leafSum",F.Id("c")),
+        SumOver("d",Call("Fin",F.Id("k")),Seq(Operatorname,Grp(F.Id("if")),Sp,P(Ne(F.Id("d"),F.Id("c"))),Sp,
+            Operatorname,Grp(F.Id("then")),Sp,new Formula.Power(Call("Polynomial.X"),Val(F.Id("d"))),Sp,
+            Operatorname,Grp(F.Id("else")),Sp,D(0)))));
 
     private static Formula P(Formula x) => Seq(Open, x, Close);
     private static Formula Qualified(string name)
