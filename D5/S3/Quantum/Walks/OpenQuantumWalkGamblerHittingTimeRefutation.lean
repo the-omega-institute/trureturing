@@ -9,7 +9,6 @@
 import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.Analysis.Complex.Basic
 import Mathlib.Data.List.Sections
-import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
 import Mathlib.Tactic.FinCases
 import Mathlib.Tactic.IntervalCases
 import Mathlib.Tactic.Linarith
