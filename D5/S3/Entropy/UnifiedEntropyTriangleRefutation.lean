@@ -127,9 +127,18 @@ private lemma witness_posSemidef : witness.PosSemidef := by
       (by norm_num : (0 : ℝ) ≤ 16)
 
 private lemma witness_trace : witness.trace = 1 := by
-  change ∑ a, witness a a = 1
-  simp only [Fintype.sum_prod_type, Fin.sum_univ_two, witness_entries]
-  norm_num
+  have he : witness = (fun a b =>
+      ( !![!![6, 1; 1, 2], !![1, 0; 0, 1];
+           !![1, 0; 0, 1], !![2, 1; 1, 6]] :
+        Matrix (Fin 2) (Fin 2) (Matrix (Fin 2) (Fin 2) ℂ)) a.1 b.1 a.2 b.2 / 16) :=
+    funext fun a => funext fun b => witness_entries a b
+  exact (congrArg Matrix.trace he).trans (by
+    change (∑ a : Fin 2 × Fin 2,
+      ( !![!![6, 1; 1, 2], !![1, 0; 0, 1];
+           !![1, 0; 0, 1], !![2, 1; 1, 6]] :
+        Matrix (Fin 2) (Fin 2) (Matrix (Fin 2) (Fin 2) ℂ)) a.1 a.1 a.2 a.2 / 16) = 1
+    simp only [Fintype.sum_prod_type, Fin.sum_univ_two]
+    norm_num)
 
 private lemma witness_purity : (witness * witness).trace.re = 11 / 32 := by
   simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, Fintype.sum_prod_type,
@@ -232,6 +241,7 @@ private lemma bloch_entries (a : ℝ) (n : EuclideanSpace ℝ (Fin 3)) :
          ((n 0 : ℂ) + (n 1 : ℂ) * Complex.I) / 2, ((a - n 2 : ℝ) : ℂ) / 2] := rfl
 
 set_option maxHeartbeats 4000000 in
+-- Four local outcome blocks expand to polynomial traces of degree eight.
 private lemma measured_purities (u v : Matrix.unitaryGroup (Fin 2) ℂ) :
     ∃ n m : EuclideanSpace ℝ (Fin 3), ‖n‖ = 1 ∧ ‖m‖ = 1 ∧
       (measureA u witness * measureA u witness).trace.re =
@@ -242,6 +252,8 @@ private lemma measured_purities (u v : Matrix.unitaryGroup (Fin 2) ℂ) :
         (1 + ((n 0)^2 + (m 0)^2) / 16 + (n 2)^2 * (m 2)^2 / 4) / 4 := by
   obtain ⟨n, hn, hn0, hn1⟩ := qubit_projectors u
   obtain ⟨m, hm, hm0, hm1⟩ := qubit_projectors v
+  have hn0 := hn0.trans (bloch_entries 1 n)
+  have hm0 := hm0.trans (bloch_entries 1 m)
   have hnz : (n 2)^2 = 1 - (n 0)^2 - (n 1)^2 := by
     have h := EuclideanSpace.real_norm_sq_eq n
     simp only [Fin.sum_univ_three, hn, one_pow] at h
@@ -253,17 +265,16 @@ private lemma measured_purities (u v : Matrix.unitaryGroup (Fin 2) ℂ) :
   obtain ⟨ha, hb, hab⟩ := measurement_expansions u v witness
   refine ⟨n, m, hn, hm, ?_, ?_, ?_⟩
   all_goals
-    simp only [ha, hb, hab, Fin.sum_univ_two, hn1, hn0, hm1, hm0,
+    first | rw [ha] | rw [hb] | rw [hab]
+    simp only [Fin.sum_univ_two, hn1, hn0, hm1, hm0,
       Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, Matrix.add_apply,
       Matrix.sub_apply, Matrix.kroneckerMap_apply, Fintype.sum_prod_type,
-      Fin.sum_univ_two, witness_entries, bloch_entries]
-    simp [Complex.mul_re, Complex.mul_im, Complex.div_re, Complex.div_im,
-      Matrix.one_apply]
+      Fin.sum_univ_two, witness_entries]
+    simp [Complex.mul_re, Complex.mul_im]
     ring_nf
     simp only [show (n 2)^4 = ((n 2)^2)^2 by ring,
-      show (n 2)^3 = n 2 * (n 2)^2 by ring,
       show (m 2)^4 = ((m 2)^2)^2 by ring,
-      show (m 2)^3 = m 2 * (m 2)^2 by ring, hnz, hmz]
+      hnz, hmz]
     ring
 
 private lemma measured_purity_bounds (u v : Matrix.unitaryGroup (Fin 2) ℂ) :
@@ -293,20 +304,19 @@ private lemma measured_purity_bounds (u v : Matrix.unitaryGroup (Fin 2) ℂ) :
       sq_nonneg (m 0), sq_nonneg (m 1), sq_nonneg (m 2),
       mul_nonneg (sq_nonneg (n 2)) (sq_nonneg (m 2))]
 
-private lemma projector_identity_entries (i a b : Fin 2) :
-    projector (1 : Matrix.unitaryGroup (Fin 2) ℂ) i a b =
-      (1 : Matrix (Fin 2) (Fin 2) ℂ) a i *
-        star ((1 : Matrix (Fin 2) (Fin 2) ℂ) b i) := rfl
-
 private lemma computational_purities :
     (measureA 1 witness * measureA 1 witness).trace.re = 21 / 64 ∧
     (measureB 1 witness * measureB 1 witness).trace.re = 21 / 64 ∧
     (measureAB 1 1 witness * measureAB 1 1 witness).trace.re = 5 / 16 := by
   obtain ⟨ha, hb, hab⟩ := measurement_expansions 1 1 witness
+  have hp (i a b : Fin 2) :
+      projector (1 : Matrix.unitaryGroup (Fin 2) ℂ) i a b =
+        (1 : Matrix (Fin 2) (Fin 2) ℂ) a i *
+          star ((1 : Matrix (Fin 2) (Fin 2) ℂ) b i) := rfl
   rw [ha, hb, hab]
   norm_num [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply, Matrix.sum_apply,
     Matrix.kroneckerMap_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
-    projector_identity_entries, Matrix.one_apply, witness_entries]
+    hp, Matrix.one_apply, witness_entries]
 
 private lemma correlations : correlationA 2 (-1) witness = 1 / 21 ∧
     correlationB 2 (-1) witness = 1 / 21 ∧ correlationAB 2 (-1) witness = 1 / 10 := by
