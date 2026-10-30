@@ -45,10 +45,27 @@ internal sealed class ConstructionReductionDocument : IScribeDocumentDefinition
             Forall, Sp, Parenthesized(Seq(F.Id("j"), Sp, Colon, Sp, Parenthesized(kappaAtI))), Comma, Sp,
             Seq(lhs, Sp, Eq, Sp, rhs));
     }
+    private static Formula SignSquareFormula()
+    {
+        Formula i = F.Id("i");
+        Formula minusOne = Parenthesized(Seq(Minus, D(1), Sp, Colon, Sp,
+            Seq(Mathbb, Grp(F.Id("C")))));
+        Formula power = new Formula.Power(minusOne, i);
+        return Seq(Forall, Sp, i, Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))), Comma, Sp,
+            power, Sp, Cdot, Sp, power, Sp, Eq, Sp, D(1));
+    }
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Public declarations of ConstructionReduction, with complete parameters and the Lean operations.",
         H("ConstructionReduction"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("cycle-sign-square"),
+                DeclarationHandle.Create("D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction.sign_square"),
+                H("Square of a complex sign"),
+                StatementSource.FromAuthor(Disp(SignSquareFormula())),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The product of two identical natural powers of complex minus one is one."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("mulvec-block"),
                 DeclarationHandle.Create("D5/S3/Quantum/Entanglement/ChoiKiemKye/ConstructionReduction.mulVec_block"),

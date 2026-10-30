@@ -5,10 +5,9 @@
    anchors: []
    utility: none
    digest: The CZX four-site window channel and gauge action. -/
-import Mathlib.Analysis.Normed.Algebra.MatrixExponential
-import Mathlib.Analysis.SpecialFunctions.Exponential
-import Mathlib.LinearAlgebra.Matrix.Permutation
+import Mathlib.Algebra.CharP.Basic
 import D5.S3.Quantum.TensorNetworks.CZXParentLindbladianAveraging
+import D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -38,26 +37,22 @@ noncomputable def mLambda : ℝ := mu
 private def block4 (l z : Fin 2) : Fin 4 := ⟨2 * l.val + z.val, by omega⟩
 private def block16 (l : Fin 2) (m : Fin 4) (z : Fin 2) : Fin 16 :=
   ⟨8 * l.val + 2 * m.val + z.val, by omega⟩
-private def sector4 (r : Fin 4) : Fin 2 := ⟨r.val / 2, by omega⟩
-private def bit4 (r : Fin 4) : Fin 2 := ⟨r.val % 2, Nat.mod_lt _ (by decide)⟩
-private def sector16 (r : Fin 16) : Fin 2 := ⟨r.val / 8, by omega⟩
-private def multiplicity16 (r : Fin 16) : Fin 4 := ⟨r.val % 8 / 2, by omega⟩
-private def bit16 (r : Fin 16) : Fin 2 := ⟨r.val % 2, Nat.mod_lt _ (by decide)⟩
 /-- Block pinching and partial trace, conjugated by the two source unitaries. -/
 noncomputable def renormS (x : Matrix (Fin 16) (Fin 16) ℂ) :
     Matrix (Fin 4) (Fin 4) ℂ :=
-  czxUᴴ * Matrix.of (fun r s => if sector4 r = sector4 s then
+  czxUᴴ * Matrix.of (fun r s => if @Fin.divNat 2 2 r = @Fin.divNat 2 2 s then
     ∑ m : Fin 4, (czxV * x * czxVᴴ)
-      (block16 (sector4 r) m (bit4 r)) (block16 (sector4 s) m (bit4 s))
+      (block16 (@Fin.divNat 2 2 r) m (@Fin.modNat 2 2 r))
+      (block16 (@Fin.divNat 2 2 s) m (@Fin.modNat 2 2 s))
     else 0) * czxU
 /-- Insertion of the normalized multiplicity state, with the source tensor order. -/
 noncomputable def renormT (y : Matrix (Fin 4) (Fin 4) ℂ) :
     Matrix (Fin 16) (Fin 16) ℂ :=
-  czxVᴴ * Matrix.of (fun r s => if sector16 r = sector16 s then
+  czxVᴴ * Matrix.of (fun r s => if @Fin.divNat 2 8 r = @Fin.divNat 2 8 s then
     ((nu / mLambda : ℝ) : ℂ) * (1 : Matrix (Fin 4) (Fin 4) ℂ)
-      (multiplicity16 r) (multiplicity16 s) *
-      (czxU * y * czxUᴴ) (block4 (sector16 r) (bit16 r))
-        (block4 (sector16 s) (bit16 s)) else 0) * czxV
+      ((@Fin.divNat 4 2 ∘ @Fin.modNat 2 8) r) ((@Fin.divNat 4 2 ∘ @Fin.modNat 2 8) s) *
+      (czxU * y * czxUᴴ) (block4 (@Fin.divNat 2 8 r) (@Fin.modNat 8 2 r))
+        (block4 (@Fin.divNat 2 8 s) (@Fin.modNat 8 2 s)) else 0) * czxV
 /-- The source four-site channel, T composed with S. -/
 noncomputable def localChannel (x : Matrix (Fin 16) (Fin 16) ℂ) :
     Matrix (Fin 16) (Fin 16) ℂ := renormT (renormS x)
@@ -121,9 +116,11 @@ def claim : Prop := ∀ n : ℕ, Even n → 4 ≤ n →
       (1 + (2 : ℂ) ^ (1 - (n / 2 : ℕ) : ℤ) • czxUnitary n)))
 private noncomputable def pinching (x : Matrix (Fin 16) (Fin 16) ℂ) :
     Matrix (Fin 16) (Fin 16) ℂ := fun r s =>
-  if sector16 r = sector16 s ∧ multiplicity16 r = multiplicity16 s then
+  if @Fin.divNat 2 8 r = @Fin.divNat 2 8 s ∧
+      (@Fin.divNat 4 2 ∘ @Fin.modNat 2 8) r = (@Fin.divNat 4 2 ∘ @Fin.modNat 2 8) s then
     (4 : ℂ)⁻¹ * ∑ m : Fin 4,
-      x (block16 (sector16 r) m (bit16 r)) (block16 (sector16 s) m (bit16 s))
+      x (block16 (@Fin.divNat 2 8 r) m (@Fin.modNat 8 2 r))
+        (block16 (@Fin.divNat 2 8 s) m (@Fin.modNat 8 2 s))
   else 0
 private lemma local_channel_formula (x : Matrix (Fin 16) (Fin 16) ℂ) :
     localChannel x = czxVᴴ * pinching (czxV * x * czxVᴴ) * czxV := by
@@ -148,11 +145,11 @@ private lemma local_channel_formula (x : Matrix (Fin 16) (Fin 16) ℂ) :
   congr 2
   ext r s
   (delta renormS pinching; simp only [hc, hr, Matrix.of_apply])
-  have hsector (l : Fin 2) (z : Fin 2) : sector4 (block4 l z) = l := by
+  have hsector (l : Fin 2) (z : Fin 2) : (@Fin.divNat 2 2) (block4 l z) = l := by
     apply Fin.ext
     change (2 * l.val + z.val) / 2 = l.val
     omega
-  have hbit (l : Fin 2) (z : Fin 2) : bit4 (block4 l z) = z := by
+  have hbit (l : Fin 2) (z : Fin 2) : (@Fin.modNat 2 2) (block4 l z) = z := by
     apply Fin.ext
     change (2 * l.val + z.val) % 2 = z.val
     omega
@@ -207,7 +204,8 @@ private lemma local_channel_idempotent (x : Matrix (Fin 16) (Fin 16) ℂ) :
   have hp (w : Matrix (Fin 16) (Fin 16) ℂ) : pinching (pinching w) = pinching w := by
     ext r s
     fin_cases r <;> fin_cases s <;>
-      (delta pinching sector16 multiplicity16 bit16 block16; norm_num [Fin.sum_univ_succ]) <;> ring
+      (delta pinching Fin.divNat Fin.modNat Function.comp block16;
+        norm_num [Fin.sum_univ_succ]) <;> ring
   calc
     localChannel (localChannel x) =
         czxVᴴ * pinching (czxV * localChannel x * czxVᴴ) * czxV :=
@@ -252,8 +250,9 @@ private lemma conjugate_matrix_unit (u v : Fin 4 → Fin 2) :
     signed_permutation_action, eq_comm, mul_ite, ite_mul, ite_and]
   split_ifs <;> simp_all
 private lemma block16_components (l : Fin 2) (m : Fin 4) (z : Fin 2) :
-    sector16 (block16 l m z) = l ∧ multiplicity16 (block16 l m z) = m ∧
-      bit16 (block16 l m z) = z := by
+    (@Fin.divNat 2 8) (block16 l m z) = l ∧
+      (@Fin.divNat 4 2 ∘ @Fin.modNat 2 8) (block16 l m z) = m ∧
+      (@Fin.modNat 8 2) (block16 l m z) = z := by
   constructor
   · apply Fin.ext
     change (8 * l.val + 2 * m.val + z.val) / 8 = l.val
@@ -269,15 +268,16 @@ private lemma block16_eq (l a : Fin 2) (m b : Fin 4) (z c : Fin 2) :
     block16 l m z = block16 a b c ↔ l = a ∧ m = b ∧ z = c := by
   constructor
   · intro h
-    have hl := congrArg sector16 h
-    have hm := congrArg multiplicity16 h
-    have hz := congrArg bit16 h
+    have hl := congrArg (@Fin.divNat 2 8) h
+    have hm := congrArg (@Fin.divNat 4 2 ∘ @Fin.modNat 2 8) h
+    have hz := congrArg (@Fin.modNat 8 2) h
     simpa only [(block16_components ..).1, (block16_components ..).2.1,
       (block16_components ..).2.2] using And.intro hl (And.intro hm hz)
   · rintro ⟨rfl, rfl, rfl⟩
     rfl
 private lemma block16_eta (p : Fin 16) :
-    block16 (sector16 p) (multiplicity16 p) (bit16 p) = p := by
+    block16 (@Fin.divNat 2 8 p) ((@Fin.divNat 4 2 ∘ @Fin.modNat 2 8) p)
+      (@Fin.modNat 8 2 p) = p := by
   apply Fin.ext
   change 8 * (p.val / 8) + 2 * (p.val % 8 / 2) + p.val % 2 = p.val
   omega
@@ -306,9 +306,11 @@ private lemma pinching_single_block (l k : Fin 2) (a b : Fin 4) (z t : Fin 2) :
       else 0 := by
   ext r s
   obtain ⟨u, v, w, hr⟩ : ∃ u v w, r = block16 u v w :=
-    ⟨sector16 r, multiplicity16 r, bit16 r, (block16_eta r).symm⟩
+    ⟨@Fin.divNat 2 8 r, (@Fin.divNat 4 2 ∘ @Fin.modNat 2 8) r,
+      @Fin.modNat 8 2 r, (block16_eta r).symm⟩
   obtain ⟨u', v', w', hs⟩ : ∃ u v w, s = block16 u v w :=
-    ⟨sector16 s, multiplicity16 s, bit16 s, (block16_eta s).symm⟩
+    ⟨@Fin.divNat 2 8 s, (@Fin.divNat 4 2 ∘ @Fin.modNat 2 8) s,
+      @Fin.modNat 8 2 s, (block16_eta s).symm⟩
   subst r s
   (delta pinching; simp only [(block16_components ..).1,
     (block16_components ..).2.1, (block16_components ..).2.2,
@@ -336,14 +338,16 @@ private lemma pinching_single_block (l k : Fin 2) (a b : Fin 4) (z t : Fin 2) :
     simp [hv, hz]
 private lemma pinching_single (p q : Fin 16) :
     pinching (Matrix.single p q 1) =
-      if sector16 p = sector16 q ∧ multiplicity16 p = multiplicity16 q then
+      if @Fin.divNat 2 8 p = @Fin.divNat 2 8 q ∧
+          (@Fin.divNat 4 2 ∘ @Fin.modNat 2 8) p = (@Fin.divNat 4 2 ∘ @Fin.modNat 2 8) q then
         (4 : ℂ)⁻¹ • ∑ m : Fin 4,
-          Matrix.single (block16 (sector16 p) m (bit16 p))
-            (block16 (sector16 q) m (bit16 q)) 1
+          Matrix.single (block16 (@Fin.divNat 2 8 p) m (@Fin.modNat 8 2 p))
+            (block16 (@Fin.divNat 2 8 q) m (@Fin.modNat 8 2 q)) 1
       else 0 := by
   simpa only [block16_eta] using
-    pinching_single_block (sector16 p) (sector16 q)
-      (multiplicity16 p) (multiplicity16 q) (bit16 p) (bit16 q)
+    pinching_single_block (@Fin.divNat 2 8 p) (@Fin.divNat 2 8 q)
+      ((@Fin.divNat 4 2 ∘ @Fin.modNat 2 8) p) ((@Fin.divNat 4 2 ∘ @Fin.modNat 2 8) q)
+      (@Fin.modNat 8 2 p) (@Fin.modNat 8 2 q)
 set_option maxHeartbeats 2400000 in
 private lemma local_matrix_unit (v d : Fin 4 → Fin 2) :
     localChannel (Matrix.single (pack (v + d)) (pack v) 1) =
@@ -392,14 +396,15 @@ private lemma local_matrix_unit (v d : Fin 4 → Fin 2) :
       rfl
   have hbit (a b e f : Fin 2) :
       (a + e) + (b + f) = a + b ↔ e = f := by
-    fin_cases a <;> fin_cases b <;> fin_cases e <;> fin_cases f <;> decide
+    rw [add_add_add_comm, add_eq_left]
+    exact (open scoped Fin.CommRing in CharTwo.add_eq_zero)
   have hmatch :
-      (sector16 (pack ![(v + d) 0 + (v + d) 3, (v + d) 0 + (v + d) 1,
+      ((@Fin.divNat 2 8) (pack ![(v + d) 0 + (v + d) 3, (v + d) 0 + (v + d) 1,
           (v + d) 0 + (v + d) 2, (v + d) 0]) =
-        sector16 (pack ![v 0 + v 3, v 0 + v 1, v 0 + v 2, v 0]) ∧
-      multiplicity16 (pack ![(v + d) 0 + (v + d) 3, (v + d) 0 + (v + d) 1,
+        (@Fin.divNat 2 8) (pack ![v 0 + v 3, v 0 + v 1, v 0 + v 2, v 0]) ∧
+      (@Fin.divNat 4 2 ∘ @Fin.modNat 2 8) (pack ![(v + d) 0 + (v + d) 3, (v + d) 0 + (v + d) 1,
           (v + d) 0 + (v + d) 2, (v + d) 0]) =
-        multiplicity16 (pack ![v 0 + v 3, v 0 + v 1, v 0 + v 2, v 0])) ↔
+        (@Fin.divNat 4 2 ∘ @Fin.modNat 2 8) (pack ![v 0 + v 3, v 0 + v 1, v 0 + v 2, v 0])) ↔
         ∀ j, d j = d 0 := by
     rw [hpack, hpack]
     simp only [(block16_components ..).1, (block16_components ..).2.1,
@@ -421,7 +426,8 @@ private lemma local_matrix_unit (v d : Fin 4 → Fin 2) :
       ⟨v 0, v 1, v 2, v 3, by funext j; fin_cases j <;> rfl⟩
     subst v
     fin_cases a₀ <;> fin_cases a₁ <;> fin_cases a₂ <;> fin_cases a₃ <;> fin_cases e <;>
-      (delta pack pathPhase sector16 multiplicity16 bit16 block16; norm_num [Fin.sum_univ_succ, Function.update_apply]) <;>
+      (delta pack pathPhase Fin.divNat Fin.modNat Function.comp block16;
+        norm_num [Fin.sum_univ_succ, Function.update_apply]) <;>
       (try simp only [← Matrix.single_neg]) <;> module
   · rw [if_neg (mt hmatch.mp hd)]
     simp only [if_neg hd, smul_zero, mul_zero, zero_mul]
@@ -579,8 +585,6 @@ private lemma window_single_insert (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
   simp only [map_sum, hs, map_smul, insertWindow_single]
 private def windowBits {n : ℕ} (i : Fin n) (x : Fin n → Fin 2) : Fin 4 → Fin 2 :=
   fun k => x (site i k.val)
-private def middleWord (v : Fin 4 → Fin 2) (b c : Fin 2) : Fin 4 → Fin 2 :=
-  Function.update (Function.update v 1 b) 2 c
 private def middleUpdate {n : ℕ} (i : Fin n) (x : Fin n → Fin 2)
     (b c : Fin 2) : Fin n → Fin 2 :=
   Function.update (Function.update x (site i 1) b) (site i 2) c
@@ -590,7 +594,9 @@ private lemma site_zero {n : ℕ} (i : Fin n) : site i 0 = i := by
   simp only [Nat.add_zero, Nat.mod_eq_of_lt i.isLt]
 private lemma windowBits_middle (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
     (x : Fin n → Fin 2) (b c : Fin 2) :
-    windowBits i (middleUpdate i x b c) = middleWord (windowBits i x) b c := by
+    windowBits i (middleUpdate i x b c) = middleUpdate (0 : Fin 4) (windowBits i x) b c := by
+  change windowBits i (middleUpdate i x b c) =
+    Function.update (Function.update (windowBits i x) 1 b) 2 c
   have h (k l : Fin 4) := site_injective n hn i k l
   have h01 : site i 0 ≠ site i 1 := fun he => (by decide : (0 : Fin 4) ≠ 1) ((h 0 1).mp he)
   have h02 : site i 0 ≠ site i 2 := fun he => (by decide : (0 : Fin 4) ≠ 2) ((h 0 2).mp he)
@@ -598,11 +604,11 @@ private lemma windowBits_middle (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
   have h31 : site i 3 ≠ site i 1 := fun he => (by decide : (3 : Fin 4) ≠ 1) ((h 3 1).mp he)
   have h32 : site i 3 ≠ site i 2 := fun he => (by decide : (3 : Fin 4) ≠ 2) ((h 3 2).mp he)
   funext k
-  fin_cases k <;> (delta windowBits middleUpdate middleWord; simp [Function.update_apply,
+  fin_cases k <;> (delta windowBits middleUpdate; simp [Function.update_apply,
     h01, h02, h12, h31, h32])
 private lemma windowUpdate_middle_add (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
     (δ x : Fin n → Fin 2) (b c : Fin 2) :
-    windowUpdate i (x + δ) (pack (middleWord (windowBits i x) b c + windowBits i δ)) =
+    windowUpdate i (x + δ) (pack (middleUpdate (0 : Fin 4) (windowBits i x) b c + windowBits i δ)) =
       middleUpdate i x b c + δ := by
   have digit_pack (v : Fin 4 → Fin 2) (k : Fin 4) :
       digit (pack v) (3 - k.val) = v k := by
@@ -615,7 +621,7 @@ private lemma windowUpdate_middle_add (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
   by_cases hj : ∃ k : Fin 4, j = site i k.val
   · obtain ⟨k, rfl⟩ := hj
     rw [window_update_site n hn, digit_pack]
-    change middleWord (windowBits i x) b c k + δ (site i k.val) = _
+    change middleUpdate (0 : Fin 4) (windowBits i x) b c k + δ (site i k.val) = _
     rw [← windowBits_middle n hn]
     rfl
   · have h (k : Fin 4) : j ≠ site i k.val := fun he => hj ⟨k, he⟩
@@ -630,7 +636,7 @@ private lemma windowUpdate_middle_add (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
     (delta windowUpdate middleUpdate; simp [Function.update_apply, h0, h1, h2, h3])
 private lemma windowUpdate_middle (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
     (x : Fin n → Fin 2) (b c : Fin 2) :
-    windowUpdate i x (pack (middleWord (windowBits i x) b c)) = middleUpdate i x b c := by
+    windowUpdate i x (pack (middleUpdate (0 : Fin 4) (windowBits i x) b c)) = middleUpdate i x b c := by
   have hz : windowBits i (0 : Fin n → Fin 2) = 0 := rfl
   simpa only [hz, add_zero] using windowUpdate_middle_add n hn i 0 x b c
 def goodWindow {n : ℕ} (i : Fin n) (δ : Fin n → Fin 2) : Prop :=
@@ -655,9 +661,9 @@ private lemma window_matrix_unit (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
   · change insertWindow n i (x + δ) x
       ((4 : ℂ)⁻¹ • ∑ b : Fin 2, ∑ c : Fin 2,
         (-1 : ℂ) ^ ((windowBits i δ 0).val *
-          (pathPhase (windowBits i x) + pathPhase (middleWord (windowBits i x) b c))) •
-          Matrix.single (pack (middleWord (windowBits i x) b c + windowBits i δ))
-            (pack (middleWord (windowBits i x) b c)) 1) = _
+          (pathPhase (windowBits i x) + pathPhase (middleUpdate (0 : Fin 4) (windowBits i x) b c))) •
+          Matrix.single (pack (middleUpdate (0 : Fin 4) (windowBits i x) b c + windowBits i δ))
+            (pack (middleUpdate (0 : Fin 4) (windowBits i x) b c)) 1) = _
     simp only [map_smul, map_sum, insertWindow_single, windowUpdate_middle_add n hn,
       windowUpdate_middle n hn, windowBits_middle n hn]
     have h0 : windowBits i δ 0 = δ i := congrArg δ (site_zero i)
@@ -673,11 +679,8 @@ lemma sectorGauge_const (n : ℕ) (e : Fin 2) (x : Fin n → Fin 2) :
   change (-1 : ℂ) ^ (∑ j, e.val * (x j).val * (x (site j 1)).val) = _
   congr 1
   simp only [Finset.mul_sum, mul_assoc]
-private lemma sign_square (k : ℕ) : (-1 : ℂ) ^ k * (-1 : ℂ) ^ k = 1 := by
-  rw [← mul_pow]
-  norm_num
 lemma sectorGauge_mul_self (n : ℕ) (δ x : Fin n → Fin 2) :
-    sectorGauge n δ x * sectorGauge n δ x = 1 := sign_square _
+    sectorGauge n δ x * sectorGauge n δ x = 1 := D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.Cycle.sign_square _
 private lemma site_add {n : ℕ} (i : Fin n) (a b : ℕ) :
     site (site i a) b = site i (a + b) := by
   apply Fin.ext
@@ -686,9 +689,11 @@ private lemma site_add {n : ℕ} (i : Fin n) (a b : ℕ) :
 lemma site_succ_injective (n : ℕ) :
     Function.Injective (fun i : Fin n => site i 1) := by
   intro i j h
-  have hm : Nat.ModEq n (i.val + 1) (j.val + 1) := congrArg Fin.val h
+  let : NeZero n := ⟨Nat.ne_of_gt (Nat.zero_lt_of_lt i.isLt)⟩
+  apply add_left_injective (1 : Fin n)
   apply Fin.ext
-  exact (hm.add_right_cancel' 1).eq_of_lt_of_lt i.isLt j.isLt
+  simpa only [site, Fin.val_add, Fin.val_one', Nat.add_mod_mod] using congrArg Fin.val h
+
 private lemma middle_edge_unchanged (n : ℕ) (i : Fin n)
     (x : Fin n → Fin 2) (b c : Fin 2) (j : Fin n)
     (hj : j ∉ ({i, site i 1, site i 2} : Finset (Fin n))) :
@@ -719,7 +724,7 @@ private lemma sectorGauge_phase_change (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
     change (-1 : ℂ) ^ _ * (-1 : ℂ) ^ ((δ j).val *
       (middleUpdate i x b c j).val * (middleUpdate i x b c (site j 1)).val) = 1
     rw [h1, h2]
-    exact sign_square _
+    exact D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.Cycle.sign_square _
   have hp : (∏ j : Fin n, f j) = ∏ j ∈ ({i, site i 1, site i 2} : Finset (Fin n)), f j := by
     symm
     exact Finset.prod_subset (Finset.subset_univ _) (fun j _ hj => hout j hj)
@@ -774,22 +779,6 @@ lemma gauged_window_sector (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
     rw [← sectorGauge_phase_change n hn i δ x b c h,
       ← mul_assoc, sectorGauge_mul_self, one_mul]
   · exact smul_zero _
-private lemma gauged_window (n : ℕ) (hn : 4 ≤ n) (i : Fin n)
-    (e : Fin 2) (x : Fin n → Fin 2) :
-    windowChannel n i
-      (gauge n e x • Matrix.single (x + fun _ => e) x 1) =
-      (4 : ℂ)⁻¹ • ∑ b : Fin 2, ∑ c : Fin 2,
-        let y := Function.update (Function.update x (site i 1) b) (site i 2) c
-        gauge n e y • Matrix.single (y + fun _ => e) y 1 := by
-  have h := gauged_window_sector n hn i (fun _ => e) x
-  have hg : goodWindow i (fun _ => e) := fun _ => rfl
-  rw [if_pos hg] at h
-  change windowChannel n i (sectorGauge n (fun _ => e) x •
-    Matrix.single (x + fun _ => e) x 1) =
-      (4 : ℂ)⁻¹ • ∑ b : Fin 2, ∑ c : Fin 2,
-        let y := Function.update (Function.update x (site i 1) b) (site i 2) c
-        sectorGauge n (fun _ => e) y • Matrix.single (y + fun _ => e) y 1 at h
-  simpa only [sectorGauge_const] using h
 lemma matrix_linearMap_ext_gauged (n : ℕ)
     {f g : Module.End ℂ (Matrix (Fin n → Fin 2) (Fin n → Fin 2) ℂ)}
     (h : ∀ δ x, f (gaugedUnit n δ x) = g (gaugedUnit n δ x)) : f = g := by
@@ -798,11 +787,8 @@ lemma matrix_linearMap_ext_gauged (n : ℕ)
   rw [Matrix.stdBasis_eq_single]
   have hv : v + (u + v) = u := by
     funext j
-    apply Fin.ext
-    change ((v j).val + ((u j).val + (v j).val) % 2) % 2 = (u j).val
-    have := (u j).isLt
-    have := (v j).isLt
-    omega
+    exact (congrArg ((v j) + ·) (add_comm (u j) (v j))).trans
+      (open scoped Fin.CommRing in CharTwo.add_cancel_left (v j) (u j))
   have hu : Matrix.single u v (1 : ℂ) = sectorGauge n (u + v) v • gaugedUnit n (u + v) v := by
     change _ = sectorGauge n (u + v) v •
       (sectorGauge n (u + v) v • Matrix.single (v + (u + v)) v 1)
@@ -816,15 +802,6 @@ lemma window_channels_commute (n : ℕ) (hn : 4 ≤ n) (i j : Fin n)
       windowLM n k (gaugedUnit n δ x) = if goodWindow k δ then
         avg n {site k 1, site k 2} (gaugedUnit n δ) x else 0 := by
     change windowChannel n k (gaugedUnit n δ x) = _
-    by_cases hd : ∃ e, δ = fun _ => e
-    · obtain ⟨e, rfl⟩ := hd
-      have h12 : site k 1 ≠ site k 2 := fun h =>
-        (by decide : (1 : Fin 4) ≠ 2) ((site_injective n hn k 1 2).mp h)
-      rw [if_pos (show goodWindow k (fun _ => e) from fun _ => rfl),
-        avg_pair_apply n _ _ h12]
-      delta gaugedUnit
-      simp only [sectorGauge_const]
-      exact gauged_window n hn k e x
     rw [gauged_window_sector n hn]
     split_ifs
     · have h12 : site k 1 ≠ site k 2 := fun h =>

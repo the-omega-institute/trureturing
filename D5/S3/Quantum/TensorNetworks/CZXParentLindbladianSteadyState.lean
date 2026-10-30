@@ -7,6 +7,8 @@
    digest: The CZX parent Lindbladian has the conjectured even-ring limit. -/
 
 import D5.S3.Quantum.TensorNetworks.CZXParentLindbladianWindowChannel
+import D5.S3.Quantum.Dynamics.BarrigaTenModeFourierEdgeRefutation
+import D5.S3.Combinatorics.Graph.CycleItalianDominationRecurrence
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -32,45 +34,21 @@ private lemma window_commute (n : ℕ) (hn : Even n) (hsize : 4 ≤ n)
 
 
 set_option backward.isDefEq.respectTransparency false in
-private lemma exponential_idempotent {k : Type*} [Fintype k] [DecidableEq k]
+private lemma exponential_idempotent {k : Type} [Fintype k] [DecidableEq k]
     (e : Matrix k k ℂ) (he : IsIdempotentElem e) (t : ℝ) :
     NormedSpace.exp ((t : ℂ) • (e - 1)) =
       (Real.exp (-t) : ℂ) • (1 : Matrix k k ℂ) +
         (1 - (Real.exp (-t) : ℂ)) • e := by
-  let f : (ℂ × ℂ) →+* Matrix k k ℂ :=
-    { toFun := fun z => z.1 • e + z.2 • (1 - e)
-      map_zero' := by simp
-      map_one' := by simp
-      map_add' := by
-        intro z w
-        simp only [Prod.fst_add, Prod.snd_add, add_smul]
-        abel
-      map_mul' := by
-        intro z w
-        simp only [Prod.fst_mul, Prod.snd_mul, add_mul, mul_add,
-          smul_mul_assoc, mul_smul_comm, smul_smul, he.eq, he.one_sub.eq,
-          he.mul_one_sub_self, he.one_sub_mul_self, smul_zero, zero_add, add_zero,
-          mul_comm] }
-  have hf : Continuous f :=
-    (continuous_fst.smul continuous_const).add (continuous_snd.smul continuous_const)
-  have hi : f ((0 : ℂ), -(t : ℂ)) = (t : ℂ) • (e - 1) := by
-    change (0 : ℂ) • e + (-(t : ℂ)) • (1 - e) = _
-    simp only [zero_smul, zero_add, smul_sub, neg_smul]
-    module
-  have h := (open scoped Matrix.Norms.Operator in
-    NormedSpace.map_exp f hf ((0 : ℂ), -(t : ℂ)))
-  rw [hi] at h
-  rw [← h]
-  change (NormedSpace.exp ((0 : ℂ), -(t : ℂ))).1 • e +
-    (NormedSpace.exp ((0 : ℂ), -(t : ℂ))).2 • (1 - e) = _
-  rw [Prod.fst_exp, Prod.snd_exp]
-  simp only [NormedSpace.exp_zero, one_smul]
+  have h := D5.S3.Quantum.Dynamics.BarrigaTenModeFourierEdgeRefutation.expIdempotent
+    (1 - e) he.one_sub.eq (-(t : ℂ))
+  have hi : (-(t : ℂ)) • (1 - e) = (t : ℂ) • (e - 1) := by module
   have hexp : NormedSpace.exp (-(t : ℂ)) = (Real.exp (-t) : ℂ) := by
     rw [← Complex.ofReal_neg, ← NormedSpace.ofReal_exp_ℝ_ℝ, ← Real.exp_eq_exp_ℝ]
-  rw [hexp]
+  rw [hi, hexp] at h
+  rw [h]
   module
 
-private lemma finite_projection_limit {k : Type*} [Fintype k] [DecidableEq k]
+private lemma finite_projection_limit {k : Type} [Fintype k] [DecidableEq k]
     (es : List (Matrix k k ℂ))
     (hi : ∀ e ∈ es, IsIdempotentElem e) (hc : es.Pairwise Commute) :
     Tendsto (fun t : ℝ => NormedSpace.exp
@@ -105,18 +83,22 @@ private lemma finite_projection_limit {k : Type*} [Fintype k] [DecidableEq k]
       exact Matrix.exp_add_of_commute _ _ (hcomm.smul_left (t : ℂ) |>.smul_right (t : ℂ))
     simpa only [heq, List.prod_cons] using hsingle.mul hlim
 
+private def evenStarts (n : ℕ) : List (Fin n) :=
+  (List.finRange n).filter (fun i => i.val % 2 == 0)
+
 private noncomputable def projection (n : ℕ) :
     Matrix ((Fin n → Fin 2) × (Fin n → Fin 2))
       ((Fin n → Fin 2) × (Fin n → Fin 2)) ℂ :=
-  (((List.finRange n).filter (fun i => i.val % 2 == 0)).map
-    (windowSuperoperator n)).prod
+  ((evenStarts n).map (windowSuperoperator n)).prod
 
 private lemma exponential_limit (n : ℕ) (hn : Even n) (hsize : 4 ≤ n) :
     Tendsto (fun t : ℝ => NormedSpace.exp ((t : ℂ) • parentLindbladian n))
       atTop (𝓝 (projection n)) := by
-  let sites := (List.finRange n).filter (fun i => i.val % 2 == 0)
+  let sites := evenStarts n
   have hsum : ((sites.map (windowSuperoperator n)).map (fun e => e - 1)).sum =
       parentLindbladian n := by
+    change (((((List.finRange n).filter (fun i => i.val % 2 == 0)).map
+      (windowSuperoperator n)).map (fun e => e - 1)).sum) = _
     rw [List.map_map, ← List.sum_toFinset _ ((List.nodup_finRange n).filter _)]
     change ∑ i ∈ ((List.finRange n).filter _).toFinset, _ = _
     simp only [List.toFinset_filter, List.toFinset_finRange, beq_iff_eq]
@@ -129,14 +111,11 @@ private lemma exponential_limit (n : ℕ) (hn : Even n) (hsize : 4 ≤ n) :
     apply List.pairwise_map.mpr
     apply List.pairwise_of_forall_mem_list
     intro i hi j hj
-    have hei : i.val % 2 = 0 := by simpa [sites] using (List.mem_filter.mp hi).2
-    have hej : j.val % 2 = 0 := by simpa [sites] using (List.mem_filter.mp hj).2
+    have hei : i.val % 2 = 0 := by simpa [sites, evenStarts] using (List.mem_filter.mp hi).2
+    have hej : j.val % 2 = 0 := by simpa [sites, evenStarts] using (List.mem_filter.mp hj).2
     exact window_commute n hn hsize i j hei hej
   have hp : (sites.map (windowSuperoperator n)).prod = projection n := rfl
   simpa only [hsum, hp] using finite_projection_limit (sites.map (windowSuperoperator n)) hi hc
-
-private def evenStarts (n : ℕ) : List (Fin n) :=
-  (List.finRange n).filter (fun i => i.val % 2 == 0)
 
 private lemma mem_evenStarts (n : ℕ) (i : Fin n) :
     i ∈ evenStarts n ↔ i.val % 2 = 0 := by
@@ -339,23 +318,12 @@ private lemma sum_gauged_one (n : ℕ) (hn : Even n) :
     simp only [hxv, and_false, if_false, mul_zero]
   · simp
 
-private lemma sector_eq_const (n : ℕ) (δ x : Fin n → Fin 2) (e : Fin 2) :
-    x + δ = x + (fun _ => e) ↔ δ = fun _ => e := by
-  have hbit (a b c : Fin 2) : a + b = a + c ↔ b = c := by
-    fin_cases a <;> fin_cases b <;> fin_cases c <;> decide
-  constructor
-  · intro h
-    funext j
-    exact (hbit (x j) (δ j) e).mp (congrFun h j)
-  · rintro rfl
-    rfl
-
 private lemma trace_gauged (n : ℕ) (δ x : Fin n → Fin 2) :
     Matrix.trace (gaugedUnit n δ x) = if δ = 0 then 1 else 0 := by
   have he : x + δ = x ↔ δ = 0 := by
     change x + δ = x ↔ δ = (fun _ => 0)
     simpa only [show (fun _ : Fin n => (0 : Fin 2)) = 0 from rfl, add_zero]
-      using sector_eq_const n δ x 0
+      using (add_right_inj x : x + δ = x + (fun _ => 0) ↔ δ = fun _ => 0)
   change Matrix.trace (sectorGauge n δ x • Matrix.single (x + δ) x 1) = _
   rw [Matrix.trace_smul]
   by_cases h : δ = 0
@@ -395,7 +363,7 @@ private lemma trace_symmetry_gauged (n : ℕ) (hn : Even n)
       simp only [star_pow, star_neg, star_one]
     rw [hs]
     simpa only [sectorGauge_const] using sectorGauge_mul_self n (fun _ => 1) x
-  · rw [if_neg (mt (sector_eq_const n δ x 1).mp h), if_neg h]
+  · rw [if_neg (mt (add_right_inj x).mp h), if_neg h]
     simp only [mul_zero, star_zero]
 
 private lemma projection_formula (n : ℕ) (hn : Even n) (hsize : 4 ≤ n)
@@ -491,15 +459,8 @@ private lemma symmetry_trace (n : ℕ) (hn : 0 < n) :
 private lemma tensor_x_unitary (n : ℕ) : tensorX n * (tensorX n)ᴴ = 1 := by
   have hf (x : Fin n → Fin 2) : (fun j => (x j + 1) + 1) = x := by
     funext j
-    apply Fin.ext
-    change (((x j).val + 1) % 2 + 1) % 2 = (x j).val
-    have := (x j).isLt
-    omega
-  let f : Equiv.Perm (Fin n → Fin 2) :=
-    { toFun := fun x j => x j + 1
-      invFun := fun x j => x j + 1
-      left_inv := hf
-      right_inv := hf }
+    exact (open scoped Fin.CommRing in CharTwo.add_cancel_right (x j) 1)
+  let f : Equiv.Perm (Fin n → Fin 2) := Equiv.addRight 1
   have hx : tensorX n = f.permMatrix ℂ := by
     ext x y
     have hi : x = f y ↔ f x = y := by
@@ -527,28 +488,30 @@ private lemma coefficient_partition (n : ℕ) :
     ∑ j : Fin n, (x j).val * (x (site j 1)).val) from rfl, Matrix.trace_diagonal]
   simp only [star_sum, star_pow, star_neg, star_one]
 
-private lemma transfer_path (h : Matrix (Fin 2) (Fin 2) ℂ) (m : ℕ) (a b : Fin 2) :
-    (h ^ (m + 1)) a b = ∑ x : Fin m → Fin 2, ∏ j : Fin (m + 1),
-      h (Fin.cons (α := fun _ => Fin 2) a x j) (Fin.snoc (α := fun _ => Fin 2) x b j) := by
-  induction m generalizing b with
-  | zero => simp <;> rfl
-  | succ m ih =>
-    rw [pow_succ, Matrix.mul_apply]
-    simp_rw [ih, Finset.sum_mul]
-    rw [← Fintype.sum_prod_type']
-    apply Fintype.sum_equiv (Fin.snocEquiv (fun _ : Fin (m + 1) => Fin 2))
-    intro p
-    change (∏ j : Fin (m + 1), h (Fin.cons (α := fun _ => Fin 2) a p.2 j) (Fin.snoc (α := fun _ => Fin 2) p.2 p.1 j)) * h p.1 b =
-      ∏ j : Fin (m + 2), h (Fin.cons (α := fun _ => Fin 2) a (Fin.snoc (α := fun _ => Fin 2) p.2 p.1) j)
-        (Fin.snoc (α := fun _ => Fin 2) (Fin.snoc (α := fun _ => Fin 2) p.2 p.1) b j)
-    conv_rhs => rw [Fin.prod_univ_castSucc]
-    simp only [Fin.cons_snoc_eq_snoc_cons, Fin.snoc_castSucc, Fin.snoc_last]
+private lemma transfer_path (h : Matrix (Fin 2) (Fin 2) ℤ) (m : ℕ) (a b : Fin 2) :
+    ((h.map (Int.castRingHom ℂ)) ^ (m + 1)) a b =
+      ∑ x : Fin m → Fin 2, ∏ j : Fin (m + 1),
+        (h.map (Int.castRingHom ℂ)) (Fin.cons (α := fun _ => Fin 2) a x j)
+          (Fin.snoc (α := fun _ => Fin 2) x b j) := by
+  rw [← Matrix.map_pow]
+  change (Int.castRingHom ℂ) ((h ^ (m + 1)) a b) = _
+  rw [← D5.S3.Combinatorics.Graph.CycleItalianDominationRecurrence.sum_pathWeight, map_sum]
+  apply Finset.sum_congr rfl
+  intro x _
+  simp only [D5.S3.Combinatorics.Graph.CycleItalianDominationRecurrence.pathWeight,
+    map_mul, map_prod, Fin.prod_univ_castSucc, Fin.cons_succ, Fin.snoc_castSucc,
+    Fin.snoc_last]
+  rfl
 
 private lemma partition_transfer (n : ℕ) (hn : 0 < n) :
     (∑ x : Fin n → Fin 2, (-1 : ℂ) ^
       ∑ j : Fin n, (x j).val * (x (site j 1)).val) =
       Matrix.trace ((!![1, 1; 1, -1] : Matrix (Fin 2) (Fin 2) ℂ) ^ n) := by
   let h : Matrix (Fin 2) (Fin 2) ℂ := !![1, 1; 1, -1]
+  let hZ : Matrix (Fin 2) (Fin 2) ℤ := !![1, 1; 1, -1]
+  have hcast : hZ.map (Int.castRingHom ℂ) = h := by
+    ext a b
+    fin_cases a <;> fin_cases b <;> norm_num [hZ, h]
   have he (a b : Fin 2) : h a b = (-1 : ℂ) ^ (a.val * b.val) := by
     fin_cases a <;> fin_cases b <;> norm_num [h]
   obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hn)
@@ -557,7 +520,7 @@ private lemma partition_transfer (n : ℕ) (hn : 0 < n) :
     Matrix.trace (h ^ (m + 1)) = ∑ a : Fin 2, ∑ x : Fin m → Fin 2,
         ∏ j : Fin (m + 1), h (Fin.cons (α := fun _ => Fin 2) a x j) (Fin.snoc (α := fun _ => Fin 2) x a j) := by
       change (∑ a, (h ^ (m + 1)) a a) = _
-      simp_rw [transfer_path]
+      simp_rw [← hcast, transfer_path]
     _ = ∑ p : Fin 2 × (Fin m → Fin 2),
         ∏ j : Fin (m + 1), h (Fin.cons (α := fun _ => Fin 2) p.1 p.2 j) (Fin.snoc (α := fun _ => Fin 2) p.2 p.1 j) := by
       rw [Fintype.sum_prod_type]

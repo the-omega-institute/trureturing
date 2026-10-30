@@ -7,6 +7,7 @@
    digest: Commuting coordinate averages on finite binary configurations. -/
 
 import Mathlib.Analysis.Complex.Basic
+import Mathlib.Data.Finset.Update
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -86,8 +87,12 @@ lemma avg_mul (n : ℕ) (s t : Finset (Fin n)) :
 
 lemma avg_commute (n : ℕ) (s t : Finset (Fin n)) :
     Commute (avg (V := V) n s) (avg n t) := by
-  change _ = _
-  rw [avg_mul, avg_mul, Finset.union_comm]
+  delta avg
+  apply Finset.noncommProd_commute
+  intro j hj
+  exact (Finset.noncommProd_commute s (bitAvg n)
+    (by intro i hi l hl hil; exact bitAvg_commute n i l)
+    (bitAvg n j) (by intro i hi; exact bitAvg_commute n j i)).symm
 
 lemma avg_pair_apply (n : ℕ) (k l : Fin n) (h : k ≠ l)
     (f : (Fin n → Fin 2) → V) (x : Fin n → Fin 2) :
@@ -113,21 +118,16 @@ lemma avg_map (n : ℕ) (s : Finset (Fin n)) (l : V →ₗ[ℂ] W)
     rw [map_smul, map_sum]
     simp only [ih]
 
-private def fill {n : ℕ} (s : Finset (Fin n)) (x : Fin n → Fin 2)
-    (b : {j // j ∈ s} → Fin 2) : Fin n → Fin 2 :=
-  fun j => if h : j ∈ s then b ⟨j, h⟩ else x j
-
 private lemma avg_fill (n : ℕ) (s : Finset (Fin n))
     (f : (Fin n → Fin 2) → V) (x : Fin n → Fin 2) :
     avg n s f x = ((2 : ℂ) ^ s.card)⁻¹ •
-      ∑ b : ({j // j ∈ s} → Fin 2), f (fill s x b) := by
+      ∑ b : ({j // j ∈ s} → Fin 2), f (Function.updateFinset x s b) := by
   classical
   induction s using Finset.induction_on generalizing x with
   | empty =>
     rw [avg_empty]
-    have hf (b : {j : Fin n // j ∈ (∅ : Finset (Fin n))} → Fin 2) : fill ∅ x b = x := by
-      funext j
-      (delta fill; simp [])
+    have hf (b : {j : Fin n // j ∈ (∅ : Finset (Fin n))} → Fin 2) :
+        Function.updateFinset x ∅ b = x := Function.updateFinset_empty
     simp only [hf, Finset.card_empty, pow_zero, inv_one, one_smul]
     simp
   | @insert k s hk ih =>
@@ -151,16 +151,18 @@ private lemma avg_fill (n : ℕ) (s : Finset (Fin n))
           · funext j
             have hj : j.val ≠ k := fun h => hk (h ▸ j.property)
             simp [hj] }
-    have hsum : (∑ d : ({j // j ∈ insert k s} → Fin 2), f (fill (insert k s) x d)) =
-        ∑ z : Fin 2 × ({j // j ∈ s} → Fin 2), f (fill s (Function.update x k z.1) z.2) := by
+    have hsum : (∑ d : ({j // j ∈ insert k s} → Fin 2), f (Function.updateFinset x (insert k s) d)) =
+        ∑ z : Fin 2 × ({j // j ∈ s} → Fin 2),
+          f (Function.updateFinset (Function.update x k z.1) s z.2) := by
       apply Fintype.sum_equiv e
       intro d
       congr 1
       funext j
       by_cases hj : j = k
       · subst j
-        (delta fill; simp [hk, e])
-      · by_cases hs : j ∈ s <;> (delta fill; simp [hs, hj, e, Function.update_apply])
+        (delta Function.updateFinset; simp [hk, e])
+      · by_cases hs : j ∈ s <;>
+          (delta Function.updateFinset; simp [hs, hj, e, Function.update_apply])
     rw [avg_insert n s k hk]
     change (2 : ℂ)⁻¹ • (∑ b : Fin 2, avg n s f (Function.update x k b)) = _
     simp only [ih]
@@ -182,6 +184,6 @@ lemma avg_univ (n : ℕ) (f : (Fin n → Fin 2) → V) (x : Fin n → Fin 2) :
   intro b
   congr 1
   funext j
-  (delta fill; simp [e])
+  (delta Function.updateFinset; simp [e])
 
 end D5.S3.Quantum.TensorNetworks.CZXParentLindbladianSteadyState
