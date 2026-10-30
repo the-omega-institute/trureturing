@@ -62,6 +62,32 @@ REMOVAL_RECORD = "worktree-removal"
 _PAYLOAD_PLAN = ContextVar("worktree_removal_payload_plan", default=None)
 
 
+def _is_declared_lake_dependency(path):
+    """Recognize one manifest-declared checkout under a Lake project."""
+    packages = path.parent
+    lake = packages.parent
+    project = lake.parent
+    if packages.name != "packages" or lake.name != ".lake" or not path.name:
+        return False
+    manifest = project / "lake-manifest.json"
+    try:
+        info = manifest.lstat()
+        if stat.S_ISLNK(info.st_mode) or not stat.S_ISREG(info.st_mode):
+            return False
+        document = json.loads(manifest.read_text(encoding="utf-8"))
+        entries = document.get("packages") if isinstance(document, dict) else None
+        if not isinstance(entries, list):
+            return False
+        names = []
+        for entry in entries:
+            if not isinstance(entry, dict) or not isinstance(entry.get("name"), str):
+                return False
+            names.append(entry["name"])
+        return names.count(path.name) == 1
+    except (OSError, UnicodeError, json.JSONDecodeError, TypeError):
+        return False
+
+
 def reject_nested_git(target):
     """Refuse owner, device and repository boundaries before payload mutation."""
     root_stat = target.lstat()
@@ -78,10 +104,13 @@ def reject_nested_git(target):
             info = child.lstat()
             if stat.S_ISDIR(info.st_mode) and info.st_dev != root_stat.st_dev:
                 raise Refused("device_boundary:" + str(child))
-        if path != target and (".git" in folders or ".git" in files):
+        lake_dependency = path != target and _is_declared_lake_dependency(path)
+        if lake_dependency:
+            folders[:] = [name for name in folders if name != ".git"]
+        if path != target and (".git" in folders or ".git" in files) and not lake_dependency:
             raise Refused("nested_git_boundary:" + str(path.relative_to(target)))
         if "HEAD" in files and git(target, "rev-parse", "--resolve-git-dir", path,
-                                   check=False).returncode == 0:
+                                   check=False).returncode == 0 and not lake_dependency:
             raise Refused("nested_git_boundary:" + str(path.relative_to(target)))
 
     for entry in git(target, "ls-files", "--stage", "-z").stdout.split(b"\0"):

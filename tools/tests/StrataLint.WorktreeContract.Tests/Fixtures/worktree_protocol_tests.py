@@ -21,7 +21,7 @@ from idle_pool_cases import IdlePoolCases
 from mirror_fixture import MirrorCases
 from cleanup_anchor_cases import CleanupAnchorCases
 from detached_recovery_cases import DetachedRecoveryCases
-from lock_recovery_cases import LockRecoveryCases
+from lock_recovery_cases import LockRecoveryCases; from lake_nested_git_cases import LakeNestedGitCases
 from scoped_dotnet_cases import ScopedDotnetCases
 from qualification_cases import QualificationCases
 from git_scope_cases import GitScopeCases
@@ -33,7 +33,7 @@ import worktree_protocol as protocol
 import worktree_preservation as preservation
 
 
-class ProtocolTests(GitScopeCases, QualificationCases, ScopedDotnetCases, IdlePoolCases, LockRecoveryCases, DetachedRecoveryCases, CleanupAnchorCases, MirrorCases, NativeFixture):
+class ProtocolTests(GitScopeCases, QualificationCases, ScopedDotnetCases, IdlePoolCases, LockRecoveryCases, LakeNestedGitCases, DetachedRecoveryCases, CleanupAnchorCases, MirrorCases, NativeFixture):
     source_root = ROOT
 
     def setUp(self):
