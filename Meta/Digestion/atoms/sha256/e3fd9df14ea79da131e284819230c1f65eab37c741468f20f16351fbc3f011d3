@@ -1,0 +1,160 @@
+**Theorem 2.1 (Finite-time variance and its nonnegative remainder).** Under Assumption 1.1, for every observation vertex $u$, every integer lag $d\geq1$, every integer $t\geq0$, and every probability-space realization of the specified joint law, the objects in Definitions 1.2–1.3 are measurable and satisfy
+
+$$
+\boxed{
+\operatorname{Var}(W_t)
+=\frac14\operatorname{Var}(C_t)
+ +\frac14\mathbb E\!\left[\sum_{e\in\mathcal E}m_e^2\right].
+}
+\tag{2.1}
+$$
+
+More precisely,
+
+$$
+\begin{aligned}
+\operatorname{Var}(W_t)
+-\frac14\sum_{i=1}^t\mathbb P(a_i\ne b_i)
+&=\frac14\operatorname{Var}(C_t)
+ +\frac14\mathbb E\!\left[\sum_{e\in\mathcal E}m_e(m_e-1)\right]\\
+&=\frac14\operatorname{Var}(C_t)
+ +\frac12\sum_{1\leq i<j\leq t}
+ \mathbb P\bigl(a_i\ne b_i,\ a_j\ne b_j,
+       \{a_i,b_i\}=\{a_j,b_j\}\bigr)
+\ \geq\ 0.
+\end{aligned}
+\tag{2.2}
+$$
+
+Consequently,
+
+$$
+\boxed{
+\operatorname{Var}(W_t)
+\ \geq\ \frac14\sum_{i=1}^t\mathbb P(a_i\ne b_i)
+\ \geq\ \frac t4(1-q^d).
+}
+\tag{2.3}
+$$
+
+Equality in the **first** inequality of (2.3) holds if and only if both of the following hold: $C_t$ is almost surely constant, and almost surely $m_e\leq1$ for every $e\in\mathcal E$. This characterizes that first inequality only, not equality in the final universal bound.
+
+The graphical histories and the treatment of four histories by their shared fair colours are inherited from [1, Sections 2 and 2.4, pp. 3–4 and 12–13]. Fair-sign character orthogonality and total variance are classical inputs; see [4, Chapter 1] for the former. The assertions proved here combine the actual finite-time source partition with its unordered-pair multiplicities, retaining both terms in (2.1) and the exact remainder in (2.2).
+
+*Proof.* We first justify the finite-time constructions on an infinite graph. For $N\geq0$, let
+
+$$
+K_N=\{v\in V:\operatorname{dist}_G(u,v)\leq N\}.
+$$
+
+The set $K_0=\{u\}$ is finite. If $K_N$ is finite, then
+
+$$
+K_{N+1}=K_N\cup\bigcup_{v\in K_N}N(v)
+$$
+
+is a finite union of finite sets. Hence every $K_N$ is finite. Connectivity gives $V=\bigcup_{N\geq0}K_N$, so $V$ is at most countable.
+
+Fix $t,d$ and put $N=t+d$. Every history starting at $(u,s)$ with $0\leq s\leq N$ remains inside $K_N$ and uses at most $N$ backward steps. All its possible sources belong to the deterministic finite set
+
+$$
+\mathcal L_N=
+\{(\mathrm{initial},v):v\in K_N\}
+\sqcup
+\{(\mathrm{fresh},n,v):1\leq n\leq N,\ v\in K_N\}.
+$$
+
+It is enough to reveal the finitely many controls and choices with $1\leq n\leq N$ and $v\in K_N$, and the finitely many opinion coins in $\mathcal L_N$. The recursion only consults choices along paths that have not yet reached time zero; at the $k$th backward step their distance from $u$ is at most $k$. Thus this finite set of coordinates determines all observations in (1.3). Each choice has a finite range, so induction on time expresses each relevant source and opinion as a finite measurable case distinction. This proves their measurability, as well as that of $C_t$ and all relevant multiplicities. The same argument with any vertex as root defines every $S_n(v)$ and $X_n(v)$. All sums over $\mathcal E$ below may therefore be taken over the fixed finite set of two-element subsets of $\mathcal L_N$; all other summands vanish.
+
+Induction in (1.1)–(1.2) gives the pathwise identities
+
+$$
+X_n(v)=B_{S_n(v)},\qquad
+2X_n(v)-1=\sigma_{S_n(v)}.
+\tag{2.4}
+$$
+
+Indeed, they hold initially. At a refresh both recursions choose the same fresh coordinate; at a copy both use the same selected neighbour in the preceding time layer. The birth time of $S_n(v)$ is at most $n$.
+
+All source labels and multiplicities are $\mathcal H$-measurable. The family of opinion signs is independent of $\mathcal H$ and consists of independent fair signs: this follows from mutual independence in Assumption 1.1, first for finite cylinders and then for the generated sigma-fields. In particular, on the given probability space, for every deterministic finite $A\subset\mathcal L$ and prescribed signs $s_\ell\in\{-1,1\}$,
+
+$$
+\mathbb P(\sigma_\ell=s_\ell\text{ for all }\ell\in A\mid\mathcal H)
+=2^{-|A|}\quad\text{almost surely}.
+\tag{2.5}
+$$
+
+This is an identity of conditional expectations, requiring no assumption that the underlying probability space itself is a canonical product space. It implies the same fair product law for any distinct labels selected measurably from the fixed finite set $\mathcal L_N$: expand over their possible labels. It does not assert independence of the observed opinions, which share a coin whenever their labels coincide.
+
+For an unordered pair $e=\{\ell,k\}\in\mathcal E$, define $\chi_e=\sigma_\ell\sigma_k$. This does not depend on its orientation. The classical character cancellation in (2.5) gives
+
+$$
+\mathbb E(\chi_e\mid\mathcal H)=0,\qquad
+\mathbb E(\chi_e\chi_f\mid\mathcal H)
+=\begin{cases}1,&e=f,\\0,&e\ne f.\end{cases}
+\tag{2.6}
+$$
+
+To check the second identity explicitly, when $e=f$ each of the two signs is squared. When $e\ne f$, their symmetric difference is nonempty: the two pairs are either disjoint, or share exactly one label. Some independent fair sign then occurs to an odd power, so averaging it gives zero. This is pairwise orthogonality, not mutual independence of all pair characters.
+
+For signs $x,y\in\{-1,1\}$, $\mathbf1\{x=y\}=(1+xy)/2$. Using (2.4) and grouping precisely the unordered pairs in (1.4), we obtain
+
+$$
+W_t=\frac t2+\frac{C_t}{2}
+       +\frac12\sum_{e\in\mathcal E}m_e\chi_e.
+\tag{2.7}
+$$
+
+The coalesced pairs contribute $1$ to their sign products, whereas a noncoalesced pair contributes its character. From (2.6), taking the $\mathcal H$-measurable multiplicities outside the conditional expectations,
+
+$$
+\mathbb E(W_t\mid\mathcal H)=\frac{t+C_t}{2},\qquad
+\operatorname{Var}(W_t\mid\mathcal H)
+=\frac14\sum_{e\in\mathcal E}m_e^2.
+\tag{2.8}
+$$
+
+For example, the second formula follows by squaring the last sum in (2.7); all mixed terms with different pairs have conditional expectation zero. Since $0\leq W_t,C_t\leq t$ and $\sum_e m_e^2\leq t^2$, all variables used here have finite second moments. The law of total variance now gives (2.1).
+
+By (1.5),
+
+$$
+\mathbb E\!\left[\sum_e m_e\right]
+=t-\mathbb E C_t
+=\sum_{i=1}^t\mathbb P(a_i\ne b_i).
+$$
+
+Subtract one quarter of this identity from (2.1) to get the first line of (2.2). For any fixed source realization, $m_e(m_e-1)/2$ counts the index pairs $i<j$ carrying the same noncoalesced unordered pair $e$. Summing this counting identity and taking expectations proves the second line of (2.2). Both terms of its first line are nonnegative, proving the first inequality of (2.3).
+
+The equality criterion follows in both directions from the same remainder. If equality holds, its two nonnegative terms vanish. Variance zero is equivalent to $C_t=\mathbb E C_t$ almost surely. Also the nonnegative integer-valued sum $\sum_e m_e(m_e-1)$ must be zero almost surely. On that probability-one event, every summand is zero and hence each $m_e$ is $0$ or $1$. Conversely, if $C_t$ is almost surely constant and all the multiplicities are at most one almost surely, both remainder terms vanish. The possible nonzero multiplicities belong to a deterministic finite set, so the simultaneous assertion over all $e$ introduces no exceptional-set problem. For $t=0$, both conditions and the equality hold automatically.
+
+It remains to prove the second inequality of (2.3). For a fixed $i\geq1$, follow the potential copy path from $(u,i+d)$ through exactly $d$ layers, whether or not a refresh is present. Define
+
+$$
+Z_0=u,\qquad
+Z_{k+1}=J_{i+d-k,Z_k}\quad(0\leq k<d),
+$$
+
+and let
+
+$$
+A_i=\bigcap_{k=0}^{d-1}\{R_{i+d-k,Z_k}=0\}.
+$$
+
+Condition on all neighbour choices. The $Z_k$ are then fixed, and the $d$ inspected controls have distinct time coordinates. They are independent of those choices and independent of one another, each being zero with probability $q$. Thus
+
+$$
+\mathbb P(A_i)=q^d.
+\tag{2.9}
+$$
+
+If $A_i$ fails, the first refresh encountered along this backward path is at a time strictly greater than $i$. By (1.2), $b_i$ is its fresh label and has birth time greater than $i$, whereas $a_i$ has birth time at most $i$. The disjoint source labels therefore give $a_i\ne b_i$. Equivalently, $\{a_i=b_i\}\subseteq A_i$, and hence
+
+$$
+\mathbb P(a_i=b_i)\leq q^d,\qquad
+\mathbb P(a_i\ne b_i)\geq1-q^d.
+\tag{2.10}
+$$
+
+Summing (2.10) proves the remaining inequality. For $t=0$ it is the empty-sum identity. All arguments take place on the original probability space and in finite time; neither stationarity nor a finite-graph replacement is used. Finally, (2.6) is conditional orthogonality of source-pair characters. The proof makes no assertion about the signs of individual unconditional temporal covariances of the $\zeta_i$. ∎
+

@@ -1,0 +1,164 @@
+**Lemma 12.3 (Uniform marginal control and retained payment).** On the
+sublevel of Lemma 12.2 define, from its one actual law,
+
+$$
+\begin{gathered}
+t_j=y_j\ (j\in D),\quad u=\sum_{j\in D}t_j,\quad
+\delta=\max_{j\in D}t_j,\quad c=\min_{i\in C}y_i,\\
+B=|T\cap D|,\quad L=|T\cap C|,\quad K=L+B,\quad
+A=\{B>0\},\quad e=\mathbb E[(K-1);A],\\
+\alpha=a(a+1)(2a+1),\quad \beta=3a^2+3a+1,\quad
+\Lambda=\frac3{\delta^2}-\frac{\max\{\alpha,\beta\}}{c^2}.
+\end{gathered}
+\tag{12.7}
+$$
+
+Uniformly on that entire sublevel, for sufficiently large $a$,
+
+$$
+\begin{aligned}
+\mathbb P(A,K\ge2)&=O_W(a^{-2}),\\
+c&\ge1-O_W(a^{-1/2}),\\
+\delta&\le\frac{1+O_W(a^{-1/4})}{\sqrt2\,a^{3/2}},\\
+\Lambda&\ge a^3.
+\end{aligned}
+\tag{12.8}
+$$
+
+**Proof.** Lemma 12.2 gives $t_j<b_0/a$, $u\le b_0h/a=O_W(a^{-1/2})$,
+and every core marginal is at least $\delta\ge u/h$. Put
+
+$$
+\begin{aligned}
+Q(l)&=(r-l)(a-l)(2a+1+l)=\alpha-\beta l+l^3,\\
+\mathcal A_a(u)&=\frac{r^2(a^2+3a+1+au)}{(a-u)^2},\\
+f_u(y)&=\frac{a^2}{y}-\frac{(2a+1)u}{y^2},\qquad
+\bar y=\frac{a-u}{r},\\
+\mathcal S_f&=\sum_{i\in C}f_u(y_i)-r f_u(\bar y),\\
+H_D&=\mathbb E\!\left[K^2\sum_{j\in T\cap D}t_j^{-2}\right].
+\end{aligned}
+\tag{12.9}
+$$
+
+The polynomial is nonnegative for every integer $0\le l\le r$. The
+algebraic certificate of Incidence Lemma 13.4, valid whenever
+$a^2\ge3h(2a+1)$, reads
+
+$$
+d\ge H_D-u\mathcal A_a(u)+\mathbb E Q(L)+\mathcal S_f.
+\tag{12.10}
+$$
+
+Its hypotheses hold uniformly in (12.1), since $h=O_W(\sqrt a)$. In fact
+$a^2\ge6h(2a+1)$ eventually, and on $u/h\le y\le1$,
+
+$$
+f_u''(y)=\frac{2(a^2y-3(2a+1)u)}{y^4}\ge a^2.
+$$
+
+The actual $r$ core marginals have sum $a-u$, so strong Jensen yields
+
+$$
+\mathcal S_f\ge\frac{a^2}{2}\sum_{i\in C}(y_i-\bar y)^2\ge0.
+\tag{12.11}
+$$
+
+Only the algebraic certificate is used from that fixed-$h$ section; no
+fixed-$h$ limiting statement is applied to growing $h$.
+
+The bound on $u$ gives $\mathcal A_a(u)=O_W(a^2)$. Thus
+
+$$
+\eta=\sqrt{\alpha-\mathcal A_a(u)}>0,\qquad
+\eta=\sqrt2\,a^{3/2}+O_W(\sqrt a).
+\tag{12.12}
+$$
+
+For a realized type in $A$ set
+
+$$
+V_T=\sum_{j\in T\cap D}t_j^{-1},\qquad
+Z_T=K^2\sum_{j\in T\cap D}t_j^{-2},\qquad
+F_T=Z_T+Q(L)-\mathcal A_a(u)B-2\eta V_T.
+\tag{12.13}
+$$
+
+For a tail singleton $T=\{j\}$ the exact identity is
+$F_T=(t_j^{-1}-\eta)^2$. There is also $\kappa>0$, independent of the law
+and parameters after a threshold depending only on $W$, such that
+
+$$
+F_T\ge\kappa a^3\qquad\text{on }A\cap\{K\ge2\}.
+\tag{12.14}
+$$
+
+Indeed, when $2\le K\le\sqrt a$, completing each square gives
+
+$$
+Z_T-2\eta V_T\ge-\frac{B\eta^2}{K^2}\ge-\frac{\eta^2}{2},
+$$
+
+and therefore
+
+$$
+F_T\ge\alpha-(\beta+\mathcal A_a(u))\sqrt a-\frac{\eta^2}{2}
+\ge\frac{a^3}{2}
+$$
+
+eventually. If $K>\sqrt a$, every reciprocal $z=t_j^{-1}$ in the type
+satisfies $z>a/b_0$. Hence $K^2z\ge a^2/b_0>4\eta$ for large $a$, so
+$K^2z^2-2\eta z\ge K^2z^2/2$. It follows that
+
+$$
+F_T\ge\frac{Ba^3}{2b_0^2}-\mathcal A_a(u)B
+\ge\frac{Ba^3}{4b_0^2},
+$$
+
+using $Q(L)\ge0$. This proves (12.14) with
+$\kappa=\min\{1/2,1/(4b_0^2)\}$. These two ranges exhaust all actual
+nonsingleton types; no relation among their incidences has been relaxed.
+
+Since $\mathbb E V_T=h$ when $V_T$ is set to zero off $A$, and
+$\mathbb E B=u$, (12.10) becomes
+
+$$
+d\ge2\eta h+\mathbb E[F_T;A]+\mathbb E[Q(L);A^c]+\mathcal S_f.
+\tag{12.15}
+$$
+
+All three terms after $2\eta h$ are nonnegative. Equations
+(12.3)–(12.4) and (12.12), with $h=O_W(\sqrt a)$, show that their sum is
+$O_W(a)$. Thus (12.14) proves the first estimate in (12.8).
+Equation (12.11) gives $\sum_{i\in C}(y_i-\bar y)^2=O_W(a^{-1})$.
+Since $\bar y=1-O_W(a^{-1})$, this proves the estimate for $c$.
+
+To control the largest tail marginal, put $q=\mathbb P(A,K\ge2)$ and
+$x_j=x_{\{j\}}$. For every $j\in D$,
+
+$$
+0\le t_j-x_j\le q=O_W(a^{-2}),\qquad
+\eta q=O_W(a^{-1/2}).
+$$
+
+If $t_j\ge1/\eta$, then $x_j\ge t_j/2$ eventually. Set $w=\eta t_j\ge1$.
+The singleton square in (12.13) and the $O_W(a)$ bound in (12.15) give
+
+$$
+\frac\eta2\frac{(w-1)^2}{w}
+\le x_j(t_j^{-1}-\eta)^2\le O_W(a),\qquad
+\frac{(w-1)^2}{w}=O_W(a^{-1/2}).
+$$
+
+For $w\ge1$ this implies $w-1=O_W(a^{-1/4})$: writing $z=w-1\ge0$,
+$z^2/(1+z)\le\epsilon$ implies $z\le\epsilon+\sqrt\epsilon$.
+If $t_j<1/\eta$ the same upper bound is automatic. Taking the maximum
+and using (12.12) proves the estimate for $\delta$. Finally,
+
+$$
+\frac3{\delta^2}\ge(6-o_W(1))a^3,\qquad
+\frac{\max\{\alpha,\beta\}}{c^2}=(2+o_W(1))a^3.
+$$
+
+Their difference is at least $a^3$ for sufficiently large $a$, uniformly
+over the whole comparison sublevel. ∎
+
