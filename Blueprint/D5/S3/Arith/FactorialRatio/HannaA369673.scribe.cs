@@ -29,14 +29,15 @@ internal sealed class HannaA369673Document : IScribeDocumentDefinition
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", ClaimBody(),
                 "All four assertions hold at every natural index. Removing the equal boundary factors gives a two-step product recurrence. At even indices its power of two determines squareness. Lifting the exponent at five and splitting factorials identify the exact five-adic orders with b.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source), new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("h369673"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("hanna-a369673-" + name),
             DeclarationHandle.Create(Prefix + name), H(name),
             StatementSource.FromAuthor(Disp(formula)), provenance,
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
