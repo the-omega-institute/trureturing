@@ -108,7 +108,7 @@ def _lake_git_directory_problem(directory):
         for entry in directory.iterdir():
             if entry.name != "exclude" or not stat.S_ISREG(entry.lstat().st_mode):
                 return "info_entry:" + entry.name
-            if any(line.strip() and not line.lstrip().startswith(b"#")
+            if any(line and not line.startswith(b"#")
                    for line in entry.read_bytes().splitlines()):
                 return "info_exclude"
     elif directory.name == "objects":

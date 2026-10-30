@@ -84,7 +84,7 @@ class LakeDependencyAllowlistCases:
         (metadata / "refs/tags").mkdir(exist_ok=True)
         self.assertEqual([], list((metadata / "refs/heads").iterdir()))
         self.assertEqual([], list((metadata / "refs/tags").iterdir()))
-        (metadata / "info/exclude").write_text("# clone exclusions\n\n   # comment\n")
+        (metadata / "info/exclude").write_text("# clone exclusions\n\n# comment\n")
         self.assertTrue(all(entry.name.endswith(".sample") for entry in (metadata / "hooks").iterdir()))
         self.assertEqual([], list((metadata / "objects/info").iterdir()))
         self.assertEqual(["HEAD"], sorted(entry.name for entry in (metadata / "logs").iterdir()))
