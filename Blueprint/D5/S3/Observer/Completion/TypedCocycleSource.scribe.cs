@@ -18,7 +18,8 @@ internal sealed class TypedCocycleSourceDocument : IScribeDocumentDefinition
             DescribeRole.Theorem))));
 
     private static Formula Call(string name, params Formula[] arguments) =>
-        new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. arguments]);
+        arguments.Length == 0 ? Seq(Operatorname, Grp(F.Id(name)))
+            : new Formula.Apply(Seq(Operatorname, Grp(F.Id(name))), [.. arguments]);
 
     private static Formula All(Formula variables, Formula type, Formula body) =>
         Seq(Forall, Sp, variables, Colon, Sp, type, Comma, Sp, body);
