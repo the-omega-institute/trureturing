@@ -70,10 +70,10 @@ private theorem deleted_law (side : Bool) : ¬ arena.Law (deleted side) := by
   · simp [deleted,rejected,realize] at hold
   · simp [deleted,rejected,realize] at hnew
 
-private def identityWord : List (Fin 6) := List.finRange 6
+private def identityWord : List (Fin 9) := List.finRange 9
 
-private theorem zero_old : OriginalOrder 6 0 identityWord := by
-  have hf : actualSource 6 0 = fun _ => (0 : ℤ) := by
+private theorem zero_old : OriginalOrder 9 0 identityWord := by
+  have hf : actualSource 9 0 = fun _ => (0 : ℤ) := by
     funext i
     fin_cases i <;> norm_num [actualSource, centered, modulus]
   refine ⟨List.Perm.refl _, ?_, ?_⟩
@@ -81,8 +81,8 @@ private theorem zero_old : OriginalOrder 6 0 identityWord := by
   · intro n
     simp [hf, modulus]
 
-private theorem zero_new : OriginalOrder 7 0 (earWord 6 identityWord 0) := by
-  have hf : actualSource 7 0 = fun _ => (0 : ℤ) := by
+private theorem zero_new : OriginalOrder 10 0 (earWord 9 identityWord 0) := by
+  have hf : actualSource 10 0 = fun _ => (0 : ℤ) := by
     funext i
     fin_cases i <;> norm_num [actualSource, centered, modulus]
   refine ⟨by decide, ?_, ?_⟩
@@ -90,12 +90,12 @@ private theorem zero_new : OriginalOrder 7 0 (earWord 6 identityWord 0) := by
   · intro n
     simp [hf, modulus]
 
-private theorem bad_old : ¬ OriginalOrder 6 2 identityWord := by
+private theorem bad_old : ¬ OriginalOrder 9 2 identityWord := by
   intro h
-  have hh := h.2.2 5
+  have hh := h.2.2 8
   norm_num [identityWord, List.finRange_succ, actualSource, centered, modulus] at hh
 
-private theorem bad_new : ¬ OriginalOrder 7 1 (earWord 6 identityWord 0) := by
+private theorem bad_new : ¬ OriginalOrder 10 1 (earWord 9 identityWord 0) := by
   intro h
   have hh := h.2.2 1
   norm_num [earWord, identityWord, List.finRange_succ, actualSource, centered, modulus] at hh
@@ -103,16 +103,16 @@ private theorem bad_new : ¬ OriginalOrder 7 1 (earWord 6 identityWord 0) := by
 private theorem actual_dependence : ObservationalDependence signature actual := by
   intro side
   cases side
-  · refine ⟨⟨2, 2, 2⟩, 0, 2, ?_⟩
+  · refine ⟨⟨3, 4, 2⟩, 0, 2, ?_⟩
     intro he
     have hp := congrFun he identityWord
-    change OriginalOrder 6 0 identityWord = OriginalOrder 6 2 identityWord at hp
+    change OriginalOrder 9 0 identityWord = OriginalOrder 9 2 identityWord at hp
     exact bad_old (hp.mp zero_old)
-  · refine ⟨⟨2, 2, 2⟩, 0, 1, ?_⟩
+  · refine ⟨⟨3, 4, 2⟩, 0, 1, ?_⟩
     intro he
-    have hp := congrFun he (earWord 6 identityWord 0)
-    change OriginalOrder 7 0 (earWord 6 identityWord 0) =
-      OriginalOrder 7 1 (earWord 6 identityWord 0) at hp
+    have hp := congrFun he (earWord 9 identityWord 0)
+    change OriginalOrder 10 0 (earWord 9 identityWord 0) =
+      OriginalOrder 10 1 (earWord 9 identityWord 0) at hp
     exact bad_new (hp.mp zero_new)
 
 def source_registration : Registration arena
