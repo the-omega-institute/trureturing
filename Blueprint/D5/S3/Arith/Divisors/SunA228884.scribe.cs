@@ -68,7 +68,10 @@ internal sealed class SunA228884Document : IScribeDocumentDefinition
                         "The proof therefore establishes the complete statement for every n ≥ 4 "
                             + "with ¬Nat.Prime n. Positivity and the separate divisibility clause "
                             + "of the OEIS entry are not asserted here."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("sun228884"),
+                    ResolutionKind.Proved)))));
 
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Z() => Seq(Mathbb, Grp(F.Id("Z")));
