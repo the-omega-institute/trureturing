@@ -47,7 +47,7 @@ private theorem inventory (a b : ℕ) (ha : 2 ≤ a) (hab : a < b) :
   let P := List.range' (b - 1) a
   let Q := List.range' (a + b) (a - 1)
   have hU : U ++ [a - 1] = List.range a := by
-    simpa only [U, show (a - 1) + 1 = a by omega] using (List.range_succ (a - 1)).symm
+    simpa only [U, show (a - 1) + 1 = a by omega] using (List.range_succ (n := a - 1)).symm
   have hV : V ++ P = List.range' a (b - 1) := by
     dsimp [V, P]
     simpa only [show a + (b - a - 1) = b - 1 by omega,
@@ -59,24 +59,24 @@ private theorem inventory (a b : ℕ) (ha : 2 ≤ a) (hab : a < b) :
     simpa only [Nat.zero_add, show a + (b - 1) = a + b - 1 by omega] using
       List.range'_append_1 (s := 0) (m := a) (n := b - 1)
   have hB : List.range (a + b - 1) ++ [a + b - 1] = List.range (a + b) := by
-    simpa only [show (a + b - 1) + 1 = a + b by omega] using (List.range_succ (a + b - 1)).symm
+    simpa only [show (a + b - 1) + 1 = a + b by omega] using (List.range_succ (n := a + b - 1)).symm
   have hQ : List.range (a + b) ++ Q = List.range (a + b + a - 1) := by
     dsimp [Q]
     simp only [List.range_eq_range']
     simpa only [Nat.zero_add, show a + b + (a - 1) = a + b + a - 1 by omega] using
       List.range'_append_1 (s := 0) (m := a + b) (n := a - 1)
   have hG : List.range (a + b + a - 1) ++ [a + b + a - 1] = List.range (a + b + a) := by
-    simpa only [show (a + b + a - 1) + 1 = a + b + a by omega] using (List.range_succ (a + b + a - 1)).symm
+    simpa only [show (a + b + a - 1) + 1 = a + b + a by omega] using (List.range_succ (n := a + b + a - 1)).symm
   have hall : (((U ++ [a - 1]) ++ (V ++ P)) ++ [a + b - 1]) ++ Q ++
       [a + b + a - 1] = List.range (a + b + a) := by
     rw [hUV, hB, hQ, hG]
   have hx : (P ++ [a + b + a - 1] ++ Q ++ [a + b - 1] ++ U ++ V ++ [a - 1]).Perm
       ((((U ++ [a - 1]) ++ (V ++ P)) ++ [a + b - 1]) ++ Q ++ [a + b + a - 1]) := by
     apply Multiset.coe_eq_coe.mp
-    simp only [List.coe_append]
+    simp only [← Multiset.coe_add]
     ac_rfl
   rw [hall] at hx
-  simpa only [P, Q, U, V, List.append_assoc, List.singleton_append] using hx
+  simpa only [P, Q, U, V, List.append_assoc, List.singleton_append, List.cons_append] using hx
 
 
 private def label (k : ℕ) (hk : 0 < k) (i : ℕ) : Fin k :=
@@ -125,7 +125,7 @@ private theorem marked_word (k cut : ℕ) (hk : 0 < k) (P R : List ℕ)
     apply List.map_congr_left
     intro i hi
     apply Fin.ext
-    simp only [label, Fin.val_castSucc, Nat.mod_eq_of_lt (hL i hi),
+    simp only [Function.comp_def, label, Fin.val_castSucc, Nat.mod_eq_of_lt (hL i hi),
       Nat.mod_eq_of_lt (show i < k + 1 from by have := hL i hi; omega)]
   have hP := hcast P (fun i hi => hb i (List.mem_append_left R hi))
   have hR := hcast R (fun i hi => hb i (List.mem_append_right P hi))
@@ -134,7 +134,7 @@ private theorem marked_word (k cut : ℕ) (hk : 0 < k) (P R : List ℕ)
     apply Fin.ext
     simp [label, Nat.mod_eq_of_lt (show k < k + 1 by omega)]
   simp only [earWord, List.map_append, ← hl, List.take_left, List.drop_left, hP, hR,
-    List.map_cons, List.map_append, hlast, List.append_assoc, List.singleton_append]
+    List.map_cons, List.map_append, hlast, List.append_assoc, List.singleton_append, List.cons_append]
 
 
 private theorem paired_chains (a b : ℕ) (ha : 2 ≤ a) (hab : a < b) :
@@ -171,7 +171,17 @@ private theorem paired_chains (a b : ℕ) (ha : 2 ≤ a) (hab : a < b) :
   let f := fun i : ℕ => centered N ((2 : ℤ) ^ i * v)
   let F := fun i : ℕ => centered M ((2 : ℤ) ^ i * v)
   let g := fun i : ℕ => centered M ((2 : ℤ) ^ i * (2 * v))
-  change (1 ≤ v ∧ v < N) ∧ (1 ≤ B ∧ B < N) ∧ (1 ≤ L ∧ L < N) ∧ _
+  change (1 ≤ v ∧ v < N) ∧ (1 ≤ B ∧ B < N) ∧ (1 ≤ L ∧ L < N) ∧
+    (∀ i < a - 1, f i = (2 : ℤ) ^ i * v ∧ g i = (2 : ℤ) ^ i * (2 * v)) ∧
+    (∀ i < b - 1, f (a + i) = (2 : ℤ) ^ i * B ∧
+      g (a + i) = (2 : ℤ) ^ i * (2 * B - 1)) ∧
+    (∀ i < a - 1, f (a + b + i) = (2 : ℤ) ^ i * L ∧
+      g (a + b + i) = (2 : ℤ) ^ i * (2 * L - s - 1)) ∧
+    f (a - 1) = -(N - B) / 2 ∧ f (a + b - 1) = -(N - L) / 2 ∧
+    f (k - 1) = -(N - v) / 2 ∧
+    g (a - 1) = -((2 * N + 1) - (2 * B - 1)) / 2 ∧
+    g (a + b - 1) = -((2 * N + 1) - (2 * L - s - 1)) / 2 ∧
+    g (k - 1) = -((2 * N + 1) - v) / 2 ∧ g k = v
   obtain ⟨hv, hB, hL, _, hU, hV, hW⟩ :=
     ThreeNegativeEqualOuterSourceBridge.actual_source_chains a b a (by omega) (by omega) ha
   change (1 ≤ v ∧ v < N) at hv
@@ -182,7 +192,7 @@ private theorem paired_chains (a b : ℕ) (ha : 2 ≤ a) (hab : a < b) :
   change ∀ e < a, f (a + b + e) = if e + 1 < a then (2 : ℤ) ^ e * L else -(N - v) / 2 at hW
   obtain ⟨_, _, _, _, hU', hV', hW'⟩ :=
     ThreeNegativeEqualOuterSourceBridge.actual_source_chains a b (a + 1) (by omega) (by omega) (by omega)
-  have hM : modulus (a + b + (a + 1)) = M := by congr 1; dsimp [k]; omega
+  have hM : modulus (a + b + (a + 1)) = M := rfl
   have hr : (2 : ℤ) ^ (a + 1) = 2 * r := by dsimp [r]; rw [pow_succ]; ring
   have hB' : 1 + (2 : ℤ) ^ (a + 1) + 2 ^ (a + 1) * 2 ^ a = 2 * B - 1 := by
     rw [hr]; change 1 + 2 * r + 2 * r * r = _; dsimp [B]; ring
@@ -197,33 +207,33 @@ private theorem paired_chains (a b : ℕ) (ha : 2 ≤ a) (hab : a < b) :
   refine ⟨hv, hB, hL, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro i hi
     constructor
-    · simpa only [if_pos (show i + 1 < a by omega)] using hU i (by omega)
+    · simpa only [ite_eq_left (show i + 1 < a by omega)] using hU i (by omega)
     · rw [hshift]
       have h := hU' (i + 1) (by omega)
-      rw [if_pos (by omega), pow_succ] at h
+      rw [ite_eq_left (by omega), pow_succ] at h
       change F (i + 1) = _ at h
       rw [h]; ring
   · intro i hi
     constructor
-    · simpa only [if_pos (show i + 1 < b by omega)] using hV i (by omega)
+    · simpa only [ite_eq_left (show i + 1 < b by omega)] using hV i (by omega)
     · rw [hshift, show a + i + 1 = (a + 1) + i by omega]
-      exact (hV' i (by omega)).trans (if_pos (by omega))
+      exact (hV' i (by omega)).trans (ite_eq_left (by omega))
   · intro i hi
     constructor
-    · simpa only [if_pos (show i + 1 < a by omega)] using hW i (by omega)
+    · simpa only [ite_eq_left (show i + 1 < a by omega)] using hW i (by omega)
     · rw [hshift, show a + b + i + 1 = (a + 1) + b + i by omega]
-      exact (hW' i (by omega)).trans (if_pos (by omega))
-  · simpa only [if_neg (by omega : ¬ a - 1 + 1 < a)] using hU (a - 1) (by omega)
+      exact (hW' i (by omega)).trans (ite_eq_left (by omega))
+  · simpa only [ite_eq_right (by omega : ¬ a - 1 + 1 < a)] using hU (a - 1) (by omega)
   · simpa only [show a + (b - 1) = a + b - 1 by omega,
-      if_neg (by omega : ¬ b - 1 + 1 < b)] using hV (b - 1) (by omega)
+      ite_eq_right (by omega : ¬ b - 1 + 1 < b)] using hV (b - 1) (by omega)
   · simpa only [show a + b + (a - 1) = k - 1 by dsimp [k]; omega,
-      if_neg (by omega : ¬ a - 1 + 1 < a)] using hW (a - 1) (by omega)
+      ite_eq_right (by omega : ¬ a - 1 + 1 < a)] using hW (a - 1) (by omega)
   · rw [hshift, show a - 1 + 1 = a by omega]
-    simpa only [if_neg (by omega : ¬ a + 1 < a + 1), hMN] using hU' a (by omega)
+    simpa only [ite_eq_right (by omega : ¬ a + 1 < a + 1), hMN] using hU' a (by omega)
   · rw [hshift, show a + b - 1 + 1 = (a + 1) + (b - 1) by omega]
-    simpa only [if_neg (by omega : ¬ b - 1 + 1 < b), hMN] using hV' (b - 1) (by omega)
+    simpa only [ite_eq_right (by omega : ¬ b - 1 + 1 < b), hMN] using hV' (b - 1) (by omega)
   · rw [hshift, show k - 1 + 1 = (a + 1) + b + (a - 1) by dsimp [k]; omega]
-    simpa only [if_neg (by omega : ¬ a - 1 + 1 < a), hMN] using hW' (a - 1) (by omega)
+    simpa only [ite_eq_right (by omega : ¬ a - 1 + 1 < a), hMN] using hW' (a - 1) (by omega)
   · have hvNat : ((1 + 2 ^ a + 2 ^ (a + b) : ℕ) : ℤ) = v := by
       push_cast; dsimp [v, r, s]; rw [pow_add]
     have hp : g k = centered M v := by
@@ -284,9 +294,9 @@ theorem actualSource_three_negative_equal_outer_joint_lift (a b : ℕ)
   have hr : 4 ≤ r := by
     simpa [r] using pow_le_pow_right₀ (by norm_num : (1 : ℤ) ≤ 2) ha
   have hq : r = 2 * q := by
-    dsimp [r, q]
-    rw [show a = (a - 1) + 1 by omega, pow_succ]
-    ring
+    calc
+      r = (2 : ℤ) ^ ((a - 1) + 1) := by dsimp [r]; congr 1; omega
+      _ = 2 * q := by rw [pow_succ]; dsimp [q]; ring
   have hq0 : 2 ≤ q := by omega
   have htau : 1 ≤ tau := by
     dsimp [tau]
@@ -388,6 +398,7 @@ theorem actualSource_three_negative_equal_outer_joint_lift (a b : ℕ)
     have hnon := mul_le_mul_of_nonneg_left htau (show 0 ≤ 3 * r + 1 by omega)
     dsimp only [Ka]
     constructor <;> omega
+  have hBdouble : 0 ≤ 2 * B - 1 := by omega
   have hPpos : ∀ i ∈ P, 0 ≤ f i ∧ 0 ≤ g i := by
     intro i hi
     have hi' := List.mem_range'.mp hi
@@ -447,9 +458,9 @@ theorem actualSource_three_negative_equal_outer_joint_lift (a b : ℕ)
       have he' : (P ++ [k - 1] ++ [k] ++ Q ++ [a + b - 1] ++ T ++ [a - 1]).Perm
           ((P ++ [k - 1] ++ Q ++ [a + b - 1] ++ T ++ [a - 1]) ++ [k]) := by
         apply Multiset.coe_eq_coe.mp
-        simp only [List.coe_append]
+        simp only [← Multiset.coe_add]
         ac_rfl
-      simpa only [plus, word, List.append_assoc, List.singleton_append] using he'
+      simpa only [plus, word, List.append_assoc, List.singleton_append, List.cons_append] using he'
 
     exact he.trans (by simpa only [List.range_succ] using hp.append_right [k])
   have hseed : ((1 + 2 ^ a + 2 ^ (a + b) : ℕ) : ℤ) = v := by
@@ -482,9 +493,9 @@ theorem actualSource_three_negative_equal_outer_joint_lift (a b : ℕ)
         plus.map (label (k + 1) (by omega)) := by
       have hpre : (P ++ [k - 1]).length = a + 1 := by simp [P]
       have hword : (P ++ [k - 1]) ++ (Q ++ (a + b - 1) :: T ++ [a - 1]) = word := by
-        simp only [word, List.append_assoc, List.singleton_append]
+        simp only [word, List.append_assoc, List.singleton_append, List.cons_append]
       have hplusword : (P ++ [k - 1]) ++ k :: (Q ++ (a + b - 1) :: T ++ [a - 1]) = plus := by
-        simp only [plus, List.append_assoc, List.singleton_append]
+        simp only [plus, List.append_assoc, List.singleton_append, List.cons_append]
       simpa only [hword, hplusword] using marked_word k (a + 1) hk
         (P ++ [k - 1]) (Q ++ (a + b - 1) :: T ++ [a - 1]) hpre (by rw [hword]; exact hp)
     rw [he]

@@ -10,6 +10,8 @@ import all D5.S3.Combinatorics.Circle.ThreeBitSource
 public import D5.S3.Combinatorics.Circle.SourceWidth
 public import D5.S3.Combinatorics.Circle.DyadicPrefix
 
+/-! Source facts consumed by the complete equal-outer marked joint lift. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
