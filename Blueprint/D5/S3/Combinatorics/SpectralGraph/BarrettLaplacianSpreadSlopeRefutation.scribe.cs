@@ -58,7 +58,8 @@ internal sealed class BarrettLaplacianSpreadSlopeRefutationDocument : IScribeDoc
                     DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
                 Node("result", "Conjecture 20 is false", Notn(ClaimBody()),
                     "A five-vertex digraph has zero-sum vectors with Rayleigh values 3408/679 and 0. Replacing each vertex by m independent vertices multiplies both values by m. The order is 5m and the spread is at least (5+13/679)m, so no fixed intercept C can give a bound 5m+C for all positive m.",
-                    DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                    DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                    new OpenProblemResolutionClaim(ProblemSlugRef.Create("bce20"), ResolutionKind.Refuted)))));
     }
 
     private static Formula AdjacencyMatrix(Formula g) => App(Q("Matrix", "map"),
@@ -76,10 +77,11 @@ internal sealed class BarrettLaplacianSpreadSlopeRefutationDocument : IScribeDoc
     private static Formula Loopless() => All("i", FinN(), Notn(App(Q("Digraph", "Adj"), V("G"), V("i"), V("i"))));
     private static Formula Graph(Formula body) => All("n", Naturals(), All("G", Call("Digraph", FinN()), body));
     private static DocumentBlock Node(string selector, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("bce20-" + (selector switch { "outDegree" => "outdegree", "inDegree" => "indegree", "Balanced" => "balanced", "quadraticValues" => "quadraticvalues", "quadraticValues_isCompact" => "compact", "rayleigh_mem" => "rayleigh", _ => selector })),
             DeclarationHandle.Create(Prefix + selector), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
     private static Formula V(string name) => F.Id(name);
     private static Formula C(string name) => Seq(Operatorname, Grp(V(name)));
     private static Formula Q(string owner, string name) => Seq(C(owner), Dot, C(name));

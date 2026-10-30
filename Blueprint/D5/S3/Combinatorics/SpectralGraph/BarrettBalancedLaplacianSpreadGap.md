@@ -22,6 +22,10 @@ $$\forall n \in \mathbb{N},\; 2 \le n \Rightarrow \left(\forall G \in \operatorn
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/BarrettBalancedLaplacianSpreadGap.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bce14` (proved) by `D5/S3/Combinatorics/SpectralGraph/BarrettBalancedLaplacianSpreadGap.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bce14","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/BarrettBalancedLaplacianSpreadGap.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Wayne Barrett; Thomas R. Cameron; Emily Evans; H. Tracy Hall; Mark Kempton (2022). *On the Laplacian spread of digraphs*. DOI: [10.48550/arXiv.2206.15410](https://doi.org/10.48550/arXiv.2206.15410). URL: <https://arxiv.org/abs/2206.15410v1>.

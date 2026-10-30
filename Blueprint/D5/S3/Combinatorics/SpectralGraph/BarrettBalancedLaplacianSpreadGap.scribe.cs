@@ -17,7 +17,8 @@ internal sealed class BarrettBalancedLaplacianSpreadGapDocument : IScribeDocumen
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Conjecture 14 is true", ClaimBody(),
                 "Projected coordinate vectors give Rayleigh values ndᵢ/(n−1). Integral degrees therefore coincide whenever the spread is at most one. The symmetric adjacency matrix has entries 0, 1, or 2. A width below one reduces it, or its complement, to an even-regular simple graph. At interior degrees the centered Frobenius estimate contradicts that width. The matching endpoint gives Rayleigh values −1 and 1, and the empty and complete endpoints have scalar restrictions and zero spread. This proves the entire quantified gap assertion.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                    new OpenProblemResolutionClaim(ProblemSlugRef.Create("bce14"), ResolutionKind.Proved)))));
 
     private static Formula ClaimBody()
     {
@@ -31,9 +32,10 @@ internal sealed class BarrettBalancedLaplacianSpreadGapDocument : IScribeDocumen
     }
 
     private static DocumentBlock Node(string selector, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(DescribeId.Create("bce14-" + selector),
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(DescribeId.Create("bce14-" + selector),
             DeclarationHandle.Create(Prefix + selector), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, openProblemResolutionClaim: resolution);
     private static Formula Shared(string name, params Formula[] args) => App(Q("BarrettLaplacianSpreadSlopeRefutation", name), args);
     private static Formula V(string name) => F.Id(name);
     private static Formula C(string name) => Seq(Operatorname, Grp(V(name)));

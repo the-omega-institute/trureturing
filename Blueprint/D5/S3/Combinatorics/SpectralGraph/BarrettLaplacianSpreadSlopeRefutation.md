@@ -146,6 +146,10 @@ $$\neg (\exists C \in \mathbb{R},\; \forall n \in \mathbb{N},\; 2 \le n \Rightar
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SpectralGraph/BarrettLaplacianSpreadSlopeRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bce20` (refuted) by `D5/S3/Combinatorics/SpectralGraph/BarrettLaplacianSpreadSlopeRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bce20","declaration_gid":"D5/S3/Combinatorics/SpectralGraph/BarrettLaplacianSpreadSlopeRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Wayne Barrett; Thomas R. Cameron; Emily Evans; H. Tracy Hall; Mark Kempton (2022). *On the Laplacian spread of digraphs*. DOI: [10.48550/arXiv.2206.15410](https://doi.org/10.48550/arXiv.2206.15410). URL: <https://arxiv.org/abs/2206.15410v1>.
