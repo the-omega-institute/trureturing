@@ -72,7 +72,7 @@ Only the additive group of F is used, and x + x = 0 for every x. Replacing f by 
 
 **Theorem 1.6 (Commuting involutions generate a 2-group).**
 
-$$\forall G \in \operatorname{Type}^{*},\; [\operatorname{Group}\left(G\right)] \forall S \in \operatorname{Set}\left(G\right),\; (\forall x \in G,\; (x \in S) \Rightarrow \left(\forall y \in G,\; (y \in S) \Rightarrow x \cdot y = y \cdot x\right)) \Rightarrow \left((\forall x \in G,\; (x \in S) \Rightarrow x \cdot x = 1) \Rightarrow \operatorname{IsPGroup}\left(2, \operatorname{SubgroupClosure}\left(S\right)\right)\right)$$
+$$\forall G \in \operatorname{Type}^{*},\; [\operatorname{Group}\left(G\right)] \forall S \in \operatorname{Set}\left(G\right),\; (\forall x \in G,\; (x \in S) \Rightarrow \left(\forall y \in G,\; (y \in S) \Rightarrow x \cdot y = y \cdot x\right)) \Rightarrow \left((\forall x \in G,\; (x \in S) \Rightarrow x \cdot x = 1) \Rightarrow \operatorname{IsPGroup}\left(2, \operatorname{Subgroup.closure}\left(S\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/CellularAutomata/YangBaxterAutomatonPeriod.isPGroup_closure_of_commuting_involutions` (`✓ std3`). ∎
 
