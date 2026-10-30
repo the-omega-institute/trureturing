@@ -79,7 +79,7 @@ private theorem equal_seams (R q d : ℤ) (p z : ℕ) (hR : 2 ≤ R) (hq : 2 ≤
   have hcharge : 4*R^2 ≥ 1+2*R+4*R^2-4*R^2 := by nlinarith
   have hz0 : 0 ≤ (z:ℤ) := Nat.cast_nonneg z
   cases last
-  · dsimp only [Bool.false_eq_true, if_false] at hbranch
+  · change 2*(4*R^2*(q-1)-(1+2*R+4*R^2)*z)+4*R^2 ≤ 4*q*R^2+R at hbranch
     dsimp [Seams,equalPlan,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
       Order.first,Order.middle,Order.last,atNegative]
     simp only [hr,ht,reduceCtorEq,ite_false,add_zero,mul_zero]
@@ -87,7 +87,7 @@ private theorem equal_seams (R q d : ℤ) (p z : ℕ) (hR : 2 ≤ R) (hq : 2 ≤
     repeat' constructor
     all_goals nlinarith only [he,hex,hz,hbranch,hz0,hR,hq,
       mul_nonneg (show 0 ≤ R-1 by omega) (show 0 ≤ 2*R*q by positivity)]
-  · dsimp only [Bool.true_eq_true, if_true] at hbranch
+  · change q=2 ∧ 4*R^2*(q-1)-(1+2*R+4*R^2)*z=4*R^2 at hbranch
     obtain ⟨rfl,hdelta⟩ := hbranch
     dsimp [Seams,equalPlan,makePlan,oldMass,newMass,oldHeight,newHeight,cap,
       Order.first,Order.middle,Order.last,atNegative]
@@ -169,7 +169,7 @@ private theorem adaptive_arithmetic (R q h : ℤ) (hR : 2 ≤ R) (hq : 2 ≤ q)
       have hd : d=1 := by omega
       rw [hd,hq2]
       dsimp [u]
-      ring_nf
+      nlinarith
     · have hq4 : 4≤q := by rcases hdyadic with h|h|h <;> omega
       have hsmall : u≤4*R*(1+2*R) := by dsimp [u]; nlinarith
       have hm := mul_le_mul_of_nonneg_right hq4
@@ -205,9 +205,6 @@ private theorem adaptive_arithmetic (R q h : ℤ) (hR : 2 ≤ R) (hq : 2 ≤ q)
       have hfhigh : 4*R^2*(q-1)<2*(2*h*u) := by
         rw [hq4,hh1]; dsimp [u]; nlinarith
       have hf1 : (4*R^2*(q-1))/(2*h*u)=1 := by
-        have hf := floor_bounds (4*R^2*(q-1)) (2*h*u) hden
-        have hmul1 : 2*h*u*1≤2*h*u*((4*R^2*(q-1))/(2*h*u)+1) := by
-          nlinarith only [hflow,hf.2]
         have hlt2 : (4*R^2*(q-1))/(2*h*u)<2 :=
           (Int.ediv_lt_iff_lt_mul hden).mpr (by nlinarith only [hfhigh])
         have hge1 : 1≤(4*R^2*(q-1))/(2*h*u) :=
@@ -218,10 +215,14 @@ private theorem adaptive_arithmetic (R q h : ℤ) (hR : 2 ≤ R) (hq : 2 ≤ q)
     · have hq8 : 8≤q := by rcases hdyadic with h|h|h <;> omega
       rcases hscale with ⟨hh1,hsmall⟩ | hs
       · rw [hh1] at hrem
-        have hbound : 4*u+4*R^2<32*R^2+R := by dsimp [u]; nlinarith
+        have hbound : 4*u+4*R^2<32*R^2+R := by
+          dsimp [u]
+          nlinarith [sq_nonneg (R-2)]
         have hm := mul_le_mul_of_nonneg_right hq8 (show 0≤4*R^2 by positivity)
         nlinarith only [hrem.2,hbound,hm]
-      · have hu21 : 16*u≤21*(4*R^2) := by dsimp [u]; nlinarith
+      · have hu21 : 16*u≤21*(4*R^2) := by
+          dsimp [u]
+          nlinarith [mul_nonneg (show 0≤R-2 by omega) (show 0≤5*R+2 by omega)]
         have hm := mul_le_mul_of_nonneg_right hu21 (show 0≤h by omega)
         have hRq : 4*R^2≤q := by
           have hm := mul_le_mul_of_nonneg_left hh hRp.le
