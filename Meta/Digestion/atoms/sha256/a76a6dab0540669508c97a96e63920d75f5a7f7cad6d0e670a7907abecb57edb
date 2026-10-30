@@ -1,0 +1,33 @@
+**命题 2.6（普通张量积给出不同闭包）。**
+
+<a id="prop-su25"></a>
+
+在 $\mathcal H=V\otimes W\simeq\mathbb C^{25}$ 上，令
+$\mathfrak h_{\rm loc}=\mathfrak{su}(V)\otimes I+I\otimes\mathfrak{su}(W)$。
+对任意 $X\in\mathfrak{su}(25)\setminus\mathfrak h_{\rm loc}$，
+
+$$
+\operatorname{Lie}_{\mathbb R}(\mathfrak h_{\rm loc},X)=\mathfrak{su}(25).
+$$
+
+**证明。**
+
+复化后有 $\mathfrak h_{\rm loc,\mathbb C}$-模分解
+
+$$
+\mathfrak{sl}(V\otimes W)
+=(\mathfrak{sl} V\otimes I)\oplus(I\otimes\mathfrak{sl} W)
+\oplus(\mathfrak{sl} V\otimes\mathfrak{sl} W).
+$$
+
+最后一项是直和 Lie 代数的不可约模，维数为 $24\cdot24=576$。
+把 $X$ 的局部部分减去后，生成子代数在此不可约模中包含非零向量。
+由于对子代数中的局部方向取括号保持生成子代数，不可约性使整个非局部模
+都包含在内。因此其复化为 $\mathfrak{sl}(25)$，实维数同为 $624$，得到结论。证毕。
+ □
+
+这说明双五模式的普通复合和双 $A_4$ 的积分关系扩张回答不同问题。
+E8 的选择来源于定理 [2.3](#thm-selection) 的条件。
+
+<a id="section-3"></a>
+
