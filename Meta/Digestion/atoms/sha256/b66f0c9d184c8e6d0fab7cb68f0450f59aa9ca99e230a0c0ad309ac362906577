@@ -1,0 +1,43 @@
+#### 定理 11.2（共享子门替换的精确谱约束）
+
+设 $P,Q$ 满足本稿的黄金投影关系，$P\ne Q$，
+$W$ 是独立有限维接口上的酉矩阵。
+定义
+
+$$
+\mathcal U_P=I+P\otimes(W-I),\qquad
+\mathcal U_Q=I+Q\otimes(W-I).
+$$
+
+它们总是酉的；但三步编织成立当且仅当
+
+<a id="eq-recursiveW"></a>
+
+$$
+(W-I)\bigl[W+x^2(W-I)^2\bigr]=0,
+\quad\text{等价于}\quad
+\operatorname{spec}(W)\subseteq\{1,\zeta,\bar\zeta\}.
+\tag{19}
+$$
+
+**证明。**
+
+$\mathcal U_P=(I-P)\otimes I+P\otimes W$ 是正交子空间上的酉直和。
+令 $D=W-I$；与 [(9)](#eq-braiddefect) 相同的三次展开给
+
+$$
+\mathcal U_P\mathcal U_Q\mathcal U_P-
+\mathcal U_Q\mathcal U_P\mathcal U_Q
+=(P-Q)\otimes\bigl(D+D^2+x^2D^3\bigr).
+$$
+
+$P-Q\ne0$，故零差等价于右侧多项式为零。
+酉 $W$ 可对角化，标量多项式的根由第 [3](#sec-braid) 节给出，得到谱条件。 ∎
+
+若把整枚原生 $K$ 原样代入 $W$，
+其谱中的 $\zeta^2$ 不属于上述集合；只要该谱扇区非零，三步编织关系便失败。
+所以“子门仍是量子门”足以保持酉性，却不够保持同一种递归重铺规则。
+项目 v18 已给出同类精确条件；这里把它放在瓦片边界相融的语义下。（[5](#ref-repov18)）
+
+<a id="statement-11-3"></a>
+
