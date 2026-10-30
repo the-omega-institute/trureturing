@@ -130,8 +130,10 @@ private theorem contracted_incidence (G : DirectedMultigraph V E) (e : E)
     by_cases hvta : G.source f.val = v.val <;>
     by_cases hbh : G.target f.val = G.target e <;>
     by_cases hbt : G.source f.val = G.target e <;>
-    simp_all [eq_comm] <;> try ring <;>
-      (intro hs; exact h (hs.trans hbh.symm))
+    simp_all [eq_comm] <;>
+      first
+      | ring
+      | exact fun hs => h (hs.trans hbh.symm)
 
 private theorem contracted_boundary (G : DirectedMultigraph V E) (e : E)
     (h : G.source e ≠ G.target e) (x : Surviving e → ℚ)
