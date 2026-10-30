@@ -8,6 +8,7 @@
 module
 import all D5.S3.Combinatorics.Circle.ThreeBitSource
 public import Batteries.Tactic.OpenPrivate
+public import Mathlib.Data.Nat.Prime.Basic
 public import D5.S3.Combinatorics.Circle.ThreeNegativeEqualOuterJointLift
 
 set_option autoImplicit false
@@ -354,16 +355,22 @@ public theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
     have hi := labelled_permutation k (c + b - 1) (c - 1) (k - 1) P T hPsub hTsub hPT
       (by dsimp [k]; omega) (by dsimp [k]; omega) hPn hTn
     change (P.toList ++ (c + b - 1) :: T.toList ++ (c - 1) :: Q.toList ++ [k - 1]).Perm _ at hi
-    apply List.Perm.trans (l₂ := P.toList ++ (c + b - 1) :: T.toList ++ (c - 1) :: Q.toList ++ [k - 1]) ?_ hi
-    apply Multiset.coe_eq_coe.mp
-    simp only [word, List.cons_append, List.singleton_append, List.nil_append,
-      ← Multiset.coe_add, Multiset.coe_cons]
-    ac_rfl
+    have he : (P.toList ++ [c + b - 1] ++ Q.toList ++ [c - 1] ++ T.toList ++ [k - 1]).Perm
+        (P.toList ++ [c + b - 1] ++ T.toList ++ [c - 1] ++ Q.toList ++ [k - 1]) := by
+      apply Multiset.coe_eq_coe.mp
+      simp only [← Multiset.coe_add]
+      ac_rfl
+    exact (by simpa only [word, List.append_assoc, List.singleton_append,
+      List.cons_append, List.nil_append] using he).trans hi
   have hplus : plus.Perm (List.range (k + 1)) := by
     have he : plus.Perm (word ++ [k]) := by
-      apply Multiset.coe_eq_coe.mp
-      simp only [plus, word, ← Multiset.coe_add, Multiset.coe_cons, Multiset.coe_singleton]
-      ac_rfl
+      have he' : (P.toList ++ [c + b - 1] ++ [k] ++ Q.toList ++ [c - 1] ++ T.toList ++ [k - 1]).Perm
+          ((P.toList ++ [c + b - 1] ++ Q.toList ++ [c - 1] ++ T.toList ++ [k - 1]) ++ [k]) := by
+        apply Multiset.coe_eq_coe.mp
+        simp only [← Multiset.coe_add]
+        ac_rfl
+      simpa only [plus, word, List.append_assoc, List.singleton_append,
+        List.cons_append, List.nil_append] using he'
     exact he.trans (by simpa only [List.range_succ] using hp.append_right [k])
   have hWbase : 0 ≤ 2 * L - s - 1 := by
     have hst : 0 ≤ s * t := by positivity
@@ -439,18 +446,24 @@ public theorem actualSource_three_negative_middle_gap_joint_lift (a b c : ℕ)
   have hslack : N - Ka - D = t * (r + 1 - 2 * s) + r * (s + 1) - s := by
     rw [hD, hdelta, hN]
     dsimp [Ka, Ha, C]; rw [hrq, htv]; ring
-  have hslack0 : 0 ≤ N - Ka - D := by
+  have hslack0 : 0 < N - Ka - D := by
     rw [hslack]
-    have hh : 0 ≤ t * (r + 1 - 2 * s) := mul_nonneg (by omega) (by omega)
+    have hh : 0 < t * (r + 1 - 2 * s) := mul_pos (by omega) (by omega)
     omega
   have hfirst : Hb ≤ x ∧ x ≤ C := by
     dsimp only [xn, Kb] at hA
     have hx : x = C - G := by dsimp [x]; omega
     constructor <;> omega
-  have hfirstn : Kb ≤ xn ∧ xn ≤ N := by dsimp [xn]; constructor <;> omega
+  have hfirstn : Kb ≤ xn ∧ xn ≤ N := by
+    have ha := hA
+    change 0 < 2 * x - Kb at ha
+    change Kb ≤ 2 * x ∧ 2 * x ≤ N
+    constructor <;> omega
   have htail : y ≤ Hg ∧ Ha + Hg - y ≤ C := by
     have hh : N - Ka = 2 * (C - Ha) := by dsimp [Ka]; omega
-    dsimp only [delta] at hdelta0
+    have hd : delta ≤ C - Ha := by omega
+    change Hg - y ≤ C - Ha at hd
+    change 0 ≤ Hg - y at hdelta0
     constructor <;> omega
   have htailn : yn ≤ Kg ∧ Ka + Kg - yn ≤ N := by dsimp only [D] at hD hslack0; constructor <;> omega
   have hseed : ((1 + 2 ^ a + 2 ^ (a + b) : ℕ) : ℤ) = u := by
