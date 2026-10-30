@@ -43,9 +43,10 @@ theorem exists_coprime_allowed_ordered_form {M n : ℕ} (hn : 1 ≤ n)
       let a := n.factorization p
       let b := n.factorization q
       let t := n / (p ^ a * q ^ b)
-      have htM : t.Coprime M := hcn.coprime_dvd_left (by
-        rw [hdecomp]
-        simpa [Nat.mul_assoc] using (dvd_mul_right t (p ^ a * q ^ b)))
+      have ht_dvd : t ∣ n := by
+        refine ⟨p ^ a * q ^ b, ?_⟩
+        simpa [t, Nat.mul_assoc] using hdecomp
+      have htM : t.Coprime M := hcn.coprime_dvd_left ht_dvd
       have hrestM : (p ^ b * q ^ a).Coprime M :=
         (hpM.pow_left b).mul_left (hqM.pow_left a)
       have hn'M : (t * p ^ b * q ^ a).Coprime M := by
