@@ -95,8 +95,10 @@ are columns \(1,\ldots,n\). For each paired endpoint, take the clockwise arc
 whose interior contains no frame token; if both choices have empty frame
 interior, take the choice selected by the word (2.2). The non-frame sites on
 that arc are the occupied columns of the corresponding row. At a frame site,
-the two incident frame ports are ordered by (2.2), so this rule also defines an
-empty interval and a repeated-endpoint interval. The result is an actual subset
+the entering port is read immediately before the frame token and the leaving port
+immediately after it; endpoint tokens at that site are inserted between these
+ports in the order (2.2). This rule also defines an empty interval and a
+repeated-endpoint interval. The result is an actual subset
 of \(P_n\), and every decoded set is interval-closed.
 
 3. For an endpoint diagram, \(\rho\) advances every endpoint token one site in the
@@ -163,6 +165,16 @@ previously scanned token is removed or inserted first; the tie order in (2.2) is
 exactly that processing order. Therefore the same check covers all repeated
 coordinates and both boundary collisions. It proves the first identity in (2.3),
 and induction proves the second.
+
+For instance, in the first word \(a_3a_2a_1b_3b_2b_1\), at a right insertion
+\(b_i+1\) the upper witness is absent: for \(i=2,3\) this is
+\(b_{i+1}<b_i+1\), and for \(i=1\) it is the boundary itself. At a left
+deletion \(a_i\), the lower witness is absent because every start in a row
+\(r\le i\) is \(>a_i\). Thus both endpoint flips occur. Replacing the missing
+witness by the adjacent frame port gives the same two implications at each of
+the four boundary ports. The other four words in (2.2) differ only by which of
+these already listed witnesses is nearest; the inequalities \(a_1>a_2>a_3\),
+\(b_1>b_2>b_3\), and the two-column separation give the identical conclusions.
 
 For the return statement, reconstruct from a decoded row interval its two
 endpoint ports unless the interval meets a frame. The only ambiguity at a frame
