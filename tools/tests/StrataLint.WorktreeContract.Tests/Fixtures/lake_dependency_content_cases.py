@@ -120,7 +120,7 @@ class LakeDependencyContentCases:
         import worktree_preservation as preservation
         boundary = self.clean_lake_clone(self.tree)
         original = preservation.git
-        for operation in ("rev-parse", "rev-list"):
+        for operation in ("cat-file", "rev-list"):
             with self.subTest(operation=operation):
                 def fail(root, *args, **kwargs):
                     if Path(root) == boundary and args[0] == operation:
@@ -134,12 +134,29 @@ class LakeDependencyContentCases:
                 self.assertTrue(self.tree.is_dir())
                 self.assertEqual(self.base, self.g(self.main, "rev-parse", self.branch).strip())
 
-    def test_lake_dependency_retains_unresolvable_manifest_revision(self):
-        boundary = self.clean_lake_clone(self.tree)
+    def set_lake_manifest_revision(self, revision):
         manifest = self.tree / "lake-manifest.json"
         document = json.loads(manifest.read_text())
-        document["packages"][0]["rev"] = "f" * 40
+        document["packages"][0]["rev"] = revision
         manifest.write_text(json.dumps(document))
+
+    def test_lake_dependency_allows_unresolvable_manifest_revision_with_remote_head(self):
+        boundary = self.clean_lake_clone(self.tree)
+        self.set_lake_manifest_revision("f" * 40)
+        self.g(boundary, "merge-base", "--is-ancestor", "HEAD", "refs/remotes/origin/dev")
+        self.remove()
+        self.assertFalse(self.tree.exists())
+
+    def test_lake_dependency_retains_local_head_with_unresolvable_manifest_revision(self):
+        boundary = self.clean_lake_clone(self.tree)
+        commit = self.local_dependency_commit(boundary)
+        self.set_lake_manifest_revision("f" * 40)
+        self.assert_lake_content_retained(boundary, "lake_dependency_local_history:")
+        self.assertEqual(commit, self.g(boundary, "rev-parse", "HEAD").strip())
+
+    def test_lake_dependency_retains_malformed_manifest_revision(self):
+        boundary = self.clean_lake_clone(self.tree)
+        self.set_lake_manifest_revision("not-a-commit")
         self.assert_lake_content_retained(boundary, "lake_dependency_check_failed:")
 
     def test_lake_dependency_retains_declared_bare_repository(self):
