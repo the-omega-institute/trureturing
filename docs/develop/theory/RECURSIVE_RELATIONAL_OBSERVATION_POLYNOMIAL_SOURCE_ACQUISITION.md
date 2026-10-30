@@ -821,252 +821,301 @@ claim is made.
 [BM]: https://arxiv.org/html/2008.08822v1
 
 ## 追加锚（本行以下为增补区）
-## 8. The source-specific witness-family boundary
+## 8. Cut-independent beta paths and paid height recovery
 
-The preceding acquisition theorem gives a polynomial envelope, but its
-height consumer still tries every rank between two earned bounds. This
-section isolates the exact interface that would remove that factor and
-checks whether the published suppliers provide it on the original
-entrance.
+**Definition 8.1 (the earned input and finite clock family).** Retain
+exactly Definition 1.1 and the resource coordinates of Definition 1.3.
+For positive $d$, use Theorem 2.1 unchanged: its small-root branch
+already returns $(P,n)$; in its deep branch Theorems 2.2 and 3.1 earn
+an explicit recurrence and index-zero aligned seed for the authentic
+core $y$. For $d=0$ use the promised zero core. No original transient
+bit is replaced by a core bit.
 
-**Definition 8.1 (an exact source-specific threshold family).** Let
-$\theta$ denote all data that a construction has actually acquired from
-the original source: this may include the aligned core, an authenticated
-finite prefix, and both integer clock coordinates. A threshold family on
-an interval $[L,U]$ is a procedure that, for each $q\in[L,U]$, produces a
-finite batch $\Gamma_\theta(q)$ of complete root literals and a Boolean
-acceptance rule. It is admissible only if the following four conditions
-hold.
+For an exact-height call at a present start $x$ of depth at most $h_0$
+from Definition 4.1, pay its presence and explore at most $\ell$ further
+levels, paying both children at every visited node and stopping at
+terminals. Use $\ell=0$ at $d=0$. At a surviving nonterminal frontier
+$p$ of depth $m$, consider the entire rectangle
 
-1. Every literal in $\Gamma_\theta(q)$ is submitted to the original root
-   by the paid presence service. A relative port, a supplied clock or a
-   predicted reply is not an observation.
-2. On the actual source, with its actual $\theta$, the acceptance rule is
-   true exactly when $n\ge q$. Thus the predicate is monotone in $q$.
-   The implication in either direction is about the same source and the
-   same physical cut; it is not an existential statement about a
-   hypothetical local model.
-3. The family compiler has a polynomial bound in $d+H$ for its local
-   arithmetic, scratch, writes and retained descriptor, including every
-   discarded candidate used while constructing the batch. Its batch size
-   is at most $\kappa(d)$, and every submitted literal has length at most
-   $H$.
-4. The construction of $\theta$ itself has an independently proved
-   soundness and inclusion statement. In particular, a local model that
-   merely passes a rank certificate is not an acquired $\theta$.
+$$
+\mathcal A_m=\{(A,B):1\le A,B<F_{2m+4}\},\qquad K=H-m.
+\tag{PSA.8.1}
+$$
 
-This definition intentionally separates the existence of a witness from
-the ability to name it. A statement of the form
-$\exists w\,[w\in S_n]$ is not a paid predicate until the finite literals
-used to decide it have been materialized and charged.
+This is a locally generated family of integer hypotheses, including
+pairs with no global source realization. ACR Theorems 27.2--27.3,
+with the hypotheses already checked in Theorem 4.2, give
+$m\le h_0+\ell=O(\log(d+2))$, $|\mathcal A_m|=O((d+1)^{16})$,
+and inclusion of the two actual first-batch indices. Every birth in
+this frontier uses $y$ at its original global index. Neither integer
+coordinate is supplied or observed. The acquired deep cone is used
+only to earn $y$; its potentially large clocks are not enumerated.
 
-**Theorem 8.2 (what the interface would buy).** Suppose an admissible
-threshold family of Definition 8.1 is available after a source-faithful
-prelude, and suppose $L\le n\le U$ with $U\le H$. Balanced binary search
-using the family, followed by the original global prefix consumer,
-returns the authentic $(P,n)$. If the prelude has coordinates
-$(Q_0,M_0,J_0,C_0,W_0,V_0)$, and the global consumer has coordinates
-$(Q_g,M_g,J_g,C_g,W_g,V_g)$, then for absolute constants depending only
-on the fixed family,
+**Theorem 8.2 (a coherent physical path from each clock hypothesis).**
+For each $(A,B)\in\mathcal A_m$, the following recursion over ordinary
+integers defines a single infinite physical word $R_{A,B}=c_1c_2\cdots$,
+independent of a proposed rank, cut or terminal tie:
 
 $$
 \begin{aligned}
- Q&\le Q_0+Q_g+\kappa(d)\bigl(1+\lceil\log_2(U-L+1)\rceil\bigr),\\
- M&\le \max\{M_0,M_g,H\},\\
- J&\le J_0+J_g+H\kappa(d)\bigl(1+\lceil\log_2(U-L+1)\rceil\bigr),\\
- C&\le C_0+C_g+\operatorname{poly}(d+H)
-       \bigl(1+\lceil\log_2(U-L+1)\rceil\bigr),\\
- W&\le W_0+W_g+\operatorname{poly}(d+H)
-       \bigl(1+\lceil\log_2(U-L+1)\rceil\bigr),\\
- V&\le \operatorname{poly}(d+H),\qquad U_{\rm source}=0.
+J_1&=A,&J_2&=B,\\
+b_k&=y_{J_k-1},&
+c_k&=\begin{cases}a,&b_k=1,\\b,&b_k=0,\end{cases}\\
+J_{k+2}&=J_{k+1}+J_k+1-b_k &&(k\ge1).
 \end{aligned}
+\tag{PSA.8.2}
 $$
 
-The polynomial terms include initialization, counter changes, candidate
-construction, overwritten buffers, failed literals and the final retained
-copy. The proof is ordinary monotone binary search: condition 2 keeps the
-actual $n$ in the surviving interval, and condition 1 makes each branch
-an actual paid observation. The final consumer is the one that restores
-the original transient and chronology; a core descriptor alone is not
-substituted for $(P,n)$. No claim about optimality or a lower bound follows
-from this conditional theorem.
+The letters are computed physical port names, not semantic-port
+observations. At the actual pair $(I_p(1),I_p(2))$, the present part
+of this word always selects the child initially labelled beta. If the
+actual frontier has rank $q\ge2$, its longest present prefix therefore
+has length $q-1$, including the final rank-two branch.
 
-The desired $Q\le\operatorname{poly}(d+1)\operatorname{polylog}(H+2)$
-would follow from this theorem with $\kappa$ polynomial in $d$, but only
-after all four conditions have been proved for the original entrance.
-The rest of this section records why the current suppliers do not yet
-supply those conditions.
-
-**Proposition 8.3 (the exact information supplied by the two-clock
-results).** ACR Theorem 27.2 applies with the actual physical cone, its
-immutable creation descriptors, and its actual exterior forest. It gives
+**Proof.** Fix any positive pair and extend $I_1=A,I_2=B$ by
+$I_{k+2}=I_{k+1}+I_k$. In the hypothetical normalized beta-root history,
+always choosing the initial-beta child makes the $k$th branch occur at
+normalized update $k$. A chosen $b$ edge skips an initial-alpha sibling;
+its beta mass immediately before branch $k$ is $F_{k-1-i}$ if that
+sibling was created at branch $i<k$. Thus ACR (ACR.115) specializes to
 
 $$
- I_p(k)=F_{e_p+k}+L_p(e_p+k-1),\qquad
- I_p(k+2)=I_p(k+1)+I_p(k),
+J_k=I_k+D_k,\qquad
+D_k=\sum_{1\le i<k}\mathbf1_{c_i=b}F_{k-1-i}.
+\tag{PSA.8.3}
 $$
 
-and, for a cone of physical depth $m$,
+In particular $D_1=D_2=0$; a newly created skipped alpha sibling
+contributes $F_0=0$, not one. The Fibonacci identity gives
+$D_{k+2}=D_{k+1}+D_k+\mathbf1_{c_k=b}$. Adding the recurrence for
+$I_k$ proves (PSA.8.2). This also proves that the recursion and the
+full skipped-sibling formula specify the same word for every pair.
+All $J_k$ are positive, so every referenced core index is nonnegative.
+
+At the included actual pair, the external-forest clock and the
+skipped-sibling sum are actual chronological indices by ACR Theorem
+27.2. Because the entire frontier is genuinely core-only, its bit at
+that index is $y_{J_k-1}$. Induction consequently identifies each
+computed letter with the actual initial-beta port, for as long as the
+path is present. The normalized coordinate is used in this proof of
+correspondence; no physical recutting or relative-root call occurs.
+
+On an actual nonterminal rank-$q$ cone, the initial-beta child has
+rank $q-1$, even when $q=2$ and both children have singleton support.
+Successive beta choices reach rank one after $q-1$ edges. No path is
+longer, since each edge drops rank at least one. Choosing beta at the
+last cherry is compatible with every longer hypothetical continuation:
+there is no cut-dependent final physical tie. Continuing the local
+recursion beyond the current leaf computes words only and does not
+update the actual source. $\square$
+
+**Theorem 8.3 (maximum measured extent is the exact frontier height).**
+For each pair in (PSA.8.1), construct the first $K$ letters of
+$R_{A,B}$ once. Using only paid complete literals at the actual root,
+find
 
 $$
- 1\le I_p(1),I_p(2)<F_{2m+4}.
+L_{A,B}=\max\{0\le t<K:
+ \operatorname{Read}(pR_{A,B}[1:t])=1\}.
+\tag{PSA.8.4}
 $$
 
-ACR Theorem 27.3 applies only after the physical-depth cutoff. With
+An empty prefix means the already present $p$. One paid endpoint test
+and at most $\lceil\log_2K\rceil$ internal bisection tests suffice.
+Every operand has length at most $H$, and
 
 $$
- \ell=\min\{r:F_{r+2}>d\},\qquad
- h_0=N(2d)-2\ (d>0),
+\operatorname{height}(p)=\max_{(A,B)\in\mathcal A_m}L_{A,B}.
+\tag{PSA.8.5}
 $$
 
-it supplies a genuine aligned core on frontiers satisfying
+No acceptance bit from a rank-dependent certificate is bisected.
+No pair is promoted to an authentic clock by this measurement.
 
-$$
- 2^\ell\le4(d+1)^2,\qquad
- m\le h_0+\ell\le4\lceil\log_2(2d+2)\rceil,\qquad
- F_{2m+4}=O((d+1)^8).
-$$
+**Proof.** The actual support is prefix-closed. Hence, for every fixed
+word, including one generated by a false or unrealizable pair,
+$t\mapsto\operatorname{Read}(pR_{A,B}[1:t])$ is monotone decreasing.
+The initial endpoint is present. A present root word has length at
+most $n-1$, since the actual alpha root has rank $n\ge2$. The earned
+bound $n\le H$ therefore makes the complete length-$H$ endpoint at
+$t=K$ absent. Pay this endpoint test as well. Maintain an actually
+present lower endpoint and an actually absent upper endpoint; query
+the midpoint until their distance is one. Balanced bisection gives
+the stated count and exactly (PSA.8.4), without any hypothetical reply
+being treated as an observation. Nonterminal frontiers have $K\ge2$.
 
-These are inclusion statements for the actual clock pair and actual
-core. They do not supply the pair numerically at entry, do not identify a
-global source word, and do not make a hypothetical pair authentic.
-Massey, Shoup and Bostan--Mori justify the finite recurrence and quotient
-ring calculations used after a genuine aligned stream is acquired; they
-supply neither the physical literals nor this missing acquisition
-interface. Bentley--Yao supplies the classical monotone comparison
-strategy once a monotone comparison is present, but does not construct one
-for this source.
+For every pair, a present suffix of length $L_{A,B}$ is an actual
+path in this very cone, so $L_{A,B}\le\operatorname{height}(p)$.
+This is soundness of measured path length, independent of authenticity
+of the model that selected the letters. Theorem 8.2 and inclusion of
+the true pair give one pair attaining $q-1=\operatorname{height}(p)$.
+Taking the maximum proves (PSA.8.5). Every pair may be processed and
+discarded after updating one retained maximum; no compound existential
+query is assigned unit cost. $\square$
 
-**Proposition 8.4 (why the published rank certificates are not a
-bisection predicate).** ACR Definition 28.1 constructs, for every
-presented core, clock pair and rank $q$, one longest and one shortest
-path and then pays their rank certificate. A passing certificate is
-sound for that one literal construction, and ACR Theorem 28.2 proves
-exactness when the actual presentation and both actual clock coordinates
-occur in the enumeration. Neither result proves that the pass bit for a
-fixed family of constructed paths is monotone in $q$.
-
-The obstruction is already visible on the authentic all-zero source.
-At rank two a longest path may be the word $a$. At rank three, the
-rank-dependent longest paths can be $ba$ or $bb$; in particular the fixed
-physical tie that chooses $a$ at rank two need not extend the rank-three
-witness. The supports are
-
-$$
- S_2=\{\varepsilon,a,b\},\qquad
- S_3=\{\varepsilon,a,b,ba,bb\}.
-$$
-
-The word $a$ remains present, but it is no longer a rank-three witness,
-while neither $ba$ nor $bb$ extends it. Thus the existing certificate
-generator has no nested witness invariant from which a bisection proof
-could be written. A negative reply to one proposed suffix also has the
-second ACR alternative: the proposed path may simply fail to be a
-maximal witness. It therefore supplies no first-disagreement bit. The
-fact that an actual rank-$q$ certificate exists is existential
-completeness, not a monotone one-word test.
-
-Consequently, replacing the $q=2,\ldots,H-m$ loop in ACR Definition 28.1
-by singleton bisection is an unproved change of predicate. Keeping the
-loop charges one trial for each candidate rank; dropping it without a new
-nested or otherwise balanced family does not establish soundness,
-completeness or termination.
-
-**Proposition 8.5 (clock authenticity and both coordinates are load
-bearing).** A passing local model cannot itself be promoted to the
-source-specific datum $\theta$ of Definition 8.1. ACR Proposition 28.5
-gives the nonreal pair $(1,1)$ at a zero-source rank-four root: the
-hypothetical model with $x=bbb$ and $y=a$ passes the local positive and
-negative tests, although consecutive nonempty global birth batches
-cannot have that clock pair. The same proposition gives two legal
-sources at the physical address $aba$ with the same exterior first
-coordinate and clock pairs
-
-$$
- (A_1,A_2)=(9,14)\quad\text{and}\quad(9,15).
-$$
-
-Their exterior sibling masses differ at the next update. Any family
-that retains only the first coordinate changes the actual local index
-map and is unsound on one of these sources. A family that keeps both
-coordinates still needs an authentic construction or an exhaustive
-search whose cost must be charged.
-
-**Proposition 8.6 (the global consumer cannot be omitted).** The
-source-specific local cone and aligned core do not determine the
-requested original output. The matched pair already recorded in PSA
-Proposition 4.3 has public $d=2$ and outputs
-
-$$
- (P,n)=(1111,11)\quad\text{and}\quad(P,n)=(0111,12).
-$$
-
-At the physical address $aa$ both sources have the same complete
-relative support, rank nine, normalized cut eight and 109 present nodes.
-A direct root literal separates them: $ba^9$ is absent in the first source
-and present in the second. Therefore a construction that discards the
-authentic global early-parent consumer after acquiring the core returns
-the same result on two different required outputs. The final global
-consumer is a necessary part of any source-faithful interface.
-
-**Theorem 8.7 (the present, honest resource boundary).** On the original
-entrance, the currently published construction establishes the following
-separate facts and no logarithmic-Read upgrade:
+**Theorem 8.4 (logarithmic-Read acquisition on the original entrance).**
+Under exactly Definition 1.1, there is one uniform deterministic
+procedure returning and retaining the original transient-inclusive
+$(P,n)$ on every admitted source and every mature finite cut. For an
+absolute constant $C_1$, with $S=d+H+2$, its every-execution bounds are
 
 $$
 \begin{aligned}
- Q_{\rm PSA}&\le C_0(d+1)^{19}(H+1),&
- M_{\rm PSA}&\le H,&
- J_{\rm PSA}&\le H Q_{\rm PSA},\\
- C_{\rm PSA},W_{\rm PSA}&\le C_0(d+H+2)^{60},&
- V_{\rm PSA}&\le C_0(d+H+2)^8,&
- U_{\rm source}&=0.
+Q_{\rm acq}&\le C_1(d+1)^{19}
+ (1+\lceil\log_2(H+2)\rceil),\\
+M_{\rm acq}&\le H,&J_{\rm acq}&\le HQ_{\rm acq},\\
+C_{\rm acq},W_{\rm acq}&\le C_1S^{60},&
+V_{\rm acq}&\le C_1S^8,&U_{\rm source}&=0.
 \end{aligned}
+\tag{PSA.8.6}
 $$
 
-The $H+1$ factor is the explicit rank loop in its height consumer. Every
-failed core presentation, clock pair, rank trial, complete physical
-literal, discarded candidate, counter update, scratch overwrite and
-retained output copy is charged by the existing accounting; the
-stationarity, grant, completed-Read and owned-backing premises remain
-physical premises rather than consequences of these counts. The bound
-$M_{\rm PSA}\le H$ is a full root-literal bound, and the displayed $J$
-is cumulative literal traffic, not a unit-cost Read count.
+There is no catalogue of source laws, period enumeration, supplied
+hidden clock, free relative port or stronger reply. All singular
+transients, nonminimal presentations, repeated core factors and
+unrestricted periods in the original promise remain in scope.
 
-For the requested target, the conditional estimates of Theorem 8.2 would
-replace only the rank-search term. They would leave the full-literal
-bound $O(H+1)$ and would require adding, coordinate by coordinate, the
-actual construction costs of the witness compiler to $C,W,V$ and every
-discarded trial to $Q,J,W$. No such compiler is supplied by ACR 27.2,
-27.3, 28.1 or 28.2. Hence the simultaneous target is **open at this
-boundary**: the existing result proves a polynomial-work acquisition
-with a linear-in-$H$ Read envelope, while the requested
-$\operatorname{poly}(d+1)\operatorname{polylog}(H+2)$ Read bound is not
-established. This is an obstruction to the current source-specific
-height route, not a theorem that every possible original-source
-procedure needs $\Omega(H)$ Reads, and it makes no pointwise Pareto,
-optimality, hardness or worldwide nonexistence claim.
+**Proof.** Use Definition 8.1's paid prelude. In the small-root branch
+nothing changes. Otherwise replace only the frontier height search of
+Definition 4.1 by Theorem 8.3. Terminals encountered during shallow
+exploration have height zero; their ranks zero and one need not be
+distinguished. Recombine the exposed actual finite tree by one plus
+the maximum of child heights. Theorems 8.2--8.3 prove all these heights
+exact, including at $d=0$ with the known zero descriptor and its
+bounded root clock family. They do not presume a supplied cut.
 
-**Finite corroboration (scope and separation).** A finite authentic
-source simulation reproduces the two all-zero supports $S_2,S_3$ above.
-A separate authentic simulation of the two PSA Proposition 4.3 sources
-finds identical $aa$ descendant supports of size 109 and the separator
-$ba^9$. The $(1,1)$ example is a hypothetical local model and is kept
-separate from those authentic runs. These checks corroborate the stated
-counterexamples only; they are not Lean proofs, physical-execution
-claims, or evidence for a lower bound.
+Now use Theorem 4.2's global consumer unchanged. Root height gives
+$n=1+\operatorname{height}(\varepsilon)$. For each $j\le2d$,
+previously recovered bits reconstruct the actual old tree at
+$\tau(j)-1$, where $\tau(j)=\min\{t\ge2:j\le F_{t+1}-1\}$.
+The actual physical ordering identifies its $j$th-birth parent.
+Maturity gives $\tau(j)\le n-1$ and child depths at most $h_0$.
+The two exact child heights are $n-\tau(j)$ and $n-\tau(j)-1$,
+with the larger at $a$ exactly when $z_j=1$. This recovers each original
+bit, including its transient, by induction. It uses actual root replies
+at these shallow parents and never substitutes aligned core bits for
+the requested prefix. Retain the auxiliary Gaussian descriptor and
+ACR Corollary 22.3's final proper-candidate verifier from Theorem 4.2;
+its at most $2d+3$ paid tests pass on the authentic answer. Its arbitrary
+passing row is still not the original first row under $\rho_d$.
 
-The exact reused source correspondence is therefore: ACR
-27.2 for the integer clock and chronological index, ACR 27.3 for the
-depth cutoff and genuine aligned core, ACR 28.1--28.2 for sound
-individual rank certificates, ACR 28.5 for clock nonuniqueness, and PSA
-Proposition 4.3 for the required global consumer. Massey, Shoup and
-Bostan--Mori remain recurrence-algebra suppliers, and Bentley--Yao
-remains a supplier for search only after a monotone physical predicate
-has been proved. No new Lean declaration, digestion action, source
-restriction, retained-input substitution, period expansion or
-installation claim is made here. Original deficient-rank firstness,
-normalization, physical bills and completed handoff remain separately
-charged by PSA Theorem 6.1.
+There are at most $4d+1$ height calls, each with $O((d+1)^2)$ shallow
+nodes and frontiers. At a frontier, every one of $O((d+1)^{16})$ pairs
+is charged at most $1+\lceil\log_2(H-m)\rceil$ Reads. Add all start,
+child and terminal tests, the paid spine acquisition, the bounded-cone
+or small-root scan and the final verifier. These give (PSA.8.6)'s
+$Q$. There is no residual rank loop. Theorem 2.1 bounds prelude
+literals by $H$; Theorem 8.3 bounds every bisection literal by $H$;
+the unchanged final verifier has the same guard. Thus $M,J$ follow
+for the full root words, not only their suffixes.
+
+Here is explicit bit accounting for all pairs, whether or not they
+attain the maximum. In (PSA.8.2), let $Z_k=J_k+1$. Then
+$Z_{k+2}=Z_{k+1}+Z_k-b_k\le Z_{k+1}+Z_k$. Fibonacci comparison
+with $Z_1=A+1,Z_2=B+1$ bounds every generated index by
+$F_{k+1}(A+B+2)$. For $k\le K+2\le H+2$ this has
+$O(H+\log(d+2))=O(S)$ bits. The hypothetical indices can be
+exponentially large numerically; none is a unit-cost integer.
+
+Generate at most $H$ letters per pair, evaluating each $y_{J_k-1}$
+from the earned recurrence and seed by binary companion powering or
+monic polynomial reduction. These operations apply over a quotient
+ring even with repeated factors; no field inversion or period word is
+needed. Bostan--Mori, §1.3, gives the classical explicit-recurrence
+term-evaluation correspondence. Recomputing powers at every letter
+costs polynomially many bit operations. Charge the two index-register
+updates, carries, exponent scans, all power scratch initialization and
+overwrites, core-bit writes, path writes and loop counters even on
+nonattaining pairs. Bisection additionally charges each midpoint
+calculation and a fresh full-root literal copy, including repeated
+prefixes. Its $O(H\log(H+2))$ copied bits per pair are polynomial;
+logarithmic Reads do not give logarithmic traffic or work.
+
+More explicitly, the sequential layout in Theorem 5.1 retains at most
+$O(S^5)$ bits in its largest prelude: $O((d+1)^4)$ delimited tree
+records of $O(S)$ bits each, matrix scratch, prefixes and counters.
+Its existing traversal, sorting and core-alignment calculation has
+$O(S^{12})$ indexed bit operations. Subsequently retain only the core,
+the shallow traversal, early-parent old trees, an $O(H)$-letter current
+ray, $O(S)$-bit clock/index operands, companion scratch, one maximum,
+bisection counters, full-literal buffers and the original output.
+One pair, including its literal copies and every counter/operand
+write, fits $O(S^6)$ indexed bit operations as in Theorem 5.1's
+path construction; the scalar index recursion only reduces its
+skipped-sibling work. No list of rays or discarded trial history is
+stored.
+
+Allow the conservative common backing cap $O(S^8)$, including scratch,
+addresses, markers and output copies. Implement each indexed access by
+sequential scans of that layout, paying head returns and represented
+address/counter maintenance. Even $O(S^2)$ work and writes per scanned
+cell gives $O(S^{10})$ sequential work and writes per indexed operation.
+There are $O((d+1)^{19})\le O(S^{19})$ ray trials in total. Their
+$O(S^6)$ indexed operations per trial therefore give at most
+$O(S^{35})$ sequential work and writes. The prelude's corresponding
+bound is $O(S^{22})$; the unchanged early-tree reconstruction, Gaussian
+solve, final path verification and retained output have smaller bounds
+than the conservative $O(S^{60})$ envelope. Source request handling
+and every actual literal write are included locally; no uniform
+service duration is inferred. Reinitializing and overwriting the same
+cells increases $W$ each time, even though it does not increase $V$.
+This proves $C,W,V$ for every execution, without favorable averaging
+or free advice. $\square$
+
+**Proposition 8.5 (the scope of the improvement).** Theorem 8.4 changes
+only the acquisition bound. Its output composes with Theorem 6.1 with
+exactly the original $K_d/\rho_d$ firstness, deficient-rank normalization,
+Fibonacci payload, physical writes and completed handoff obligations.
+It gives neither an optimality theorem nor a bound on physical service
+time or weighted total cost.
+
+**Proof.** The retained output is precisely the authentic input used by
+Theorem 6.1. Neither a maximizing trial clock nor the Gaussian
+verification row replaces $K_d(P)$. The additional acquisition work
+and writes are added to the original normalization and installation
+bills, including every failed normalization row and tested-row transfer.
+The grants, genuine binding, completed Reads, readable backing and
+stationary interval of Definition 1.1 must cover all realized local
+work and writes; installation additionally needs its actual completed
+field writes and handoff. The existing source material is separate
+from the newly used local backing. No operation count supplies these
+physical premises or a uniform latency. The broader canonical recovery
+and installation obligations therefore retain their original scope.
+$\square$
+
+**Mathematical correspondence 8.6 (suppliers and boundaries).** The new
+source-specific content is (PSA.8.2)--(PSA.8.5) and its composition with
+the already acquired aligned core and original-prefix consumer. ACR
+Theorem 27.2 supplies both bounded shallow integer clocks and the exact
+skipped-sibling index; ACR Theorem 27.3 supplies the genuine core cutoff.
+GPO Definition 27.1 supplies the actual alpha origin, simultaneous
+old-leaf dynamics and physical $a<b$ chronological actuator. GPO
+Proposition 39.2 supplies the original early-parent selection.
+Theorems 2.1--3.1 supply the paid cone and alignment; their PCR complete-
+support correspondence is applied only to an actually acquired cone.
+These suppliers have exactly Definition 1.1's source and service domain.
+
+Bentley--Yao, *An Almost Optimal Algorithm for Unbounded Searching*,
+[SLAC-PUB-1679](https://www.slac.stanford.edu/pubs/slacpubs/1500/slac-pub-1679.pdf),
+pp. 2--5, Algorithm B1, supplies classical comparison search; monotonicity
+here is proved on fixed actual physical prefixes before invoking that
+search. ACR Theorem 3.2 and Proposition 5.1 instead start with retained
+authentic $P,L$ and are not erased-input acquisition suppliers. Their
+retained-input threshold compiler is not assumed here. Massey, Shoup
+and Bostan--Mori have the explicit-symbol algebraic domains stated in
+§7: synthesis consumes acquired entries, and distant-term evaluation
+consumes an explicit recurrence and seed. Neither supplies a source
+sample or hidden clock.
+
+A wrong-clock path can have the correct measured extent; this does not
+certify its clock. Rank-two support cannot identify the last orientation;
+selecting the computed beta port merely makes the path coherent across
+cuts. Both integer coordinates are still enumerated. An acquired core
+and a local height remain different from the original transient-inclusive
+$P$ and actual $n$; Theorem 8.4 retains the global early-parent calls.
+These distinctions account for the false-model, tie and local/global
+boundaries without using them as counterexamples to the fixed-path
+construction. The stated result is an ordinary source-specific proof,
+not a new compiled Lean theorem or a claim of worldwide priority.
 
 ## 追加锚（本行以下为增补区）
