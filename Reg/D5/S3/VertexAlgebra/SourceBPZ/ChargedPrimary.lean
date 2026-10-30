@@ -30,9 +30,9 @@ namespace sourcePairing_charged_primary
 def arena : Arena where
   signature := complexSignature
   Law R := ∀ (D : LatticeData) (a : Charge D) (m : ℤ) (u v : Carrier D),
-    R.readout () () (sourcePairing D ((Y D (Finsupp.single a 1))[[m]] u) v)
+    R.readout () () (sourcePairing D (((Y D (Finsupp.single a 1))[[m]]) u) v)
       (paritySign (chargeEnergy D a) * sourcePairing D u
-        ((Y D (Finsupp.single a 1))[[2*chargeEnergy D a-m-2]] v))
+        (((Y D (Finsupp.single a 1))[[2*chargeEnergy D a-m-2]]) v))
 
 theorem sourceBridge :
     (type_of% (@D5.S3.VertexAlgebra.SourceBPZ.ChargedPrimary.sourcePairing_charged_primary)) ↔

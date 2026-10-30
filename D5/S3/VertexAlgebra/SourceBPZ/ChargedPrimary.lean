@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Charged-primary transpose of the actual original integer lattice field on all finite-charge states. -/
+   digest: Original lattice charged-primary transpose on all finite-charge states. -/
 
 import D5.S3.VertexAlgebra.SourceBPZ.SourcePairingLaws
 import D5.S3.VertexAlgebra.LatticeActualMixedLocality
@@ -26,7 +26,6 @@ The signed Wick supplier retains its original attribution and license.
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option maxRecDepth 4096
-set_option maxHeartbeats 2000000
 
 noncomputable section
 open scoped BigOperators VertexOperator
@@ -43,6 +42,7 @@ open private wick_constant_right from
 open private epsilon_neg_right from
   D5.S3.VertexAlgebra.Lattice.NormFourFixedPeirce
 
+set_option maxHeartbeats 2000000 in
 private theorem creation_constant (D : LatticeData) (a : Charge D) (t : ℤ) :
     (creationCoeff D a t).coeff 0 = if t = 0 then 1 else 0 := by
   classical
@@ -51,11 +51,11 @@ private theorem creation_constant (D : LatticeData) (a : Charge D) (t : ℤ) :
   by_cases hz : t = 0
   · subst t
     simp [creationCoeff, LatticeSugawaraConformal.exponential_constant]
-  rw [if_neg hz]
+  rw [ite_eq_right hz]
   apply ((actual_creation_coefficient_transport D a a).1 t).coeff_eq_zero
-  simp only [Finsupp.weight_zero]
-  omega
+  simpa only [map_zero] using Ne.symm hz
 
+set_option maxHeartbeats 2000000 in
 private theorem ground_coefficient (D : LatticeData) (a d g : Charge D) (k : ℤ) :
     sourcePairing D (rawCoeff D a k (Finsupp.single d 1)) (Finsupp.single g 1) =
       if g = -(a+d) then epsilon D a d * (if k = bilinear D a d then 1 else 0)
@@ -64,7 +64,7 @@ private theorem ground_coefficient (D : LatticeData) (a d g : Charge D) (k : ℤ
   have ht : translatedPolynomial D a 1 = Polynomial.monomial 0 1 := by
     simp [translatedPolynomial]
   rw [raw_single_convolution, ht, convolution_monomial]
-  simp only [Int.cast_zero, add_zero, one_mul, map_smul, LinearMap.smul_apply,
+  simp only [Nat.cast_zero, add_zero, one_mul, map_smul, LinearMap.smul_apply,
     sourcePairing_single_single, smul_eq_mul]
   have hw : integerWick D (creationCoeff D a (k-bilinear D a d)) 1 =
       if k = bilinear D a d then 1 else 0 := by
@@ -75,12 +75,14 @@ private theorem ground_coefficient (D : LatticeData) (a d g : Charge D) (k : ℤ
   rw [hw]
   split_ifs <;> simp_all
 
+set_option maxHeartbeats 2000000 in
 private theorem reflected_epsilon (D : LatticeData) (a d : Charge D) :
     epsilon D a d = paritySign (chargeEnergy D a) * epsilon D a (-(a+d)) := by
   have hs : epsilon D a a = paritySign (chargeEnergy D a) := by
     rw [epsilon, chargeEnergy_cocycle]
   rw [epsilon_neg_right, epsilon_add_right, hs, ← mul_assoc, paritySign_square, one_mul]
 
+set_option maxHeartbeats 2000000 in
 private theorem ground_transpose (D : LatticeData) (a d g : Charge D) (k : ℤ) :
     sourcePairing D (rawCoeff D a k (Finsupp.single d 1)) (Finsupp.single g 1) =
       paritySign (chargeEnergy D a) * sourcePairing D (Finsupp.single d 1)
@@ -93,15 +95,18 @@ private theorem ground_transpose (D : LatticeData) (a d g : Charge D) (k : ℤ) 
     have hk : (-k-bilinear D a a = bilinear D a g) ↔ k = bilinear D a d := by
       rw [hg, bilinear_neg_right, bilinear_add_right]
       omega
-    rw [if_pos hg, if_pos hd, hk, reflected_epsilon D a d, hg]
+    rw [ite_eq_left hg, ite_eq_left hd]
+    simp only [hk]
+    rw [reflected_epsilon D a d, hg]
     ring
   · have hd : d ≠ -(a+g) := by
       intro h
       apply hg
       rw [h]
       abel
-    rw [if_neg hg, if_neg hd, mul_zero]
+    rw [ite_eq_right hg, ite_eq_right hd, mul_zero]
 
+set_option maxHeartbeats 2000000 in
 private theorem current_raw_apply (D : LatticeData) (i : Fin D.rank) (m : ℤ)
     (a : Charge D) (k : ℤ) (u : Carrier D) :
     neutralMode D i m (rawCoeff D a k u) =
@@ -112,6 +117,7 @@ private theorem current_raw_apply (D : LatticeData) (i : Fin D.rank) (m : ℤ)
   simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.smul_apply] at h
   exact (sub_eq_iff_eq_add.mp h).trans (add_comm _ _)
 
+set_option maxHeartbeats 2000000 in
 private theorem raw_creator_apply (D : LatticeData) (i : Fin D.rank) (n : ℕ)
     (a : Charge D) (k : ℤ) (u : Carrier D) :
     rawCoeff D a k (neutralMode D i (-(n : ℤ)-1) u) =
@@ -120,6 +126,7 @@ private theorem raw_creator_apply (D : LatticeData) (i : Fin D.rank) (n : ℕ)
   rw [current_raw_apply, show k-(-(n : ℤ)-1) = k+(n : ℤ)+1 by omega,
     add_sub_cancel_right]
 
+set_option maxHeartbeats 2000000 in
 private theorem creator_single (D : LatticeData) (i : Fin D.rank) (n : ℕ)
     (d : Charge D) (p : Oscillator D) :
     neutralMode D i (-(n : ℤ)-1) (Finsupp.single d p) =
@@ -127,11 +134,13 @@ private theorem creator_single (D : LatticeData) (i : Fin D.rank) (n : ℕ)
   rw [neutralMode_single, neutralPolynomialMode_negative]
   rfl
 
+set_option maxHeartbeats 2000000 in
 private theorem positive_ground (D : LatticeData) (i : Fin D.rank) (n : ℕ)
     (d : Charge D) :
     neutralMode D i ((n : ℤ)+1) (Finsupp.single d 1) = 0 := by
   simp [neutralMode_single, neutralPolynomialMode_positive, weightedPartial]
 
+set_option maxHeartbeats 2000000 in
 private theorem pairing_current_right (D : LatticeData) (i : Fin D.rank) (m : ℤ)
     (u v : Carrier D) :
     sourcePairing D u (neutralMode D i m v) =
@@ -139,6 +148,7 @@ private theorem pairing_current_right (D : LatticeData) (i : Fin D.rank) (m : �
   have h := sourcePairing_neutralMode D i (-m) u v
   simpa only [neg_neg] using congrArg Neg.neg h.symm
 
+set_option maxHeartbeats 2000000 in
 private theorem ground_right_polynomial (D : LatticeData) (a d g : Charge D)
     (p : Oscillator D) : ∀ k : ℤ,
     sourcePairing D (rawCoeff D a k (Finsupp.single d 1)) (Finsupp.single g p) =
@@ -148,12 +158,12 @@ private theorem ground_right_polynomial (D : LatticeData) (a d g : Charge D)
   | C c =>
     intro k
     have hc : Finsupp.single g (C c) = c • (Finsupp.single g 1 : Carrier D) := by
-      simp [← Finsupp.smul_single, MvPolynomial.smul_eq_C_mul]
-    simp only [hc, map_smul, LinearMap.smul_apply, smul_eq_mul, ground_transpose]
+      simp only [MvPolynomial.C_eq_smul_one, Finsupp.smul_single]
+    simp only [hc, map_smul, smul_eq_mul, ground_transpose]
     ring
   | add p q hp hq =>
     intro k
-    simp only [Finsupp.single_add, map_add, LinearMap.add_apply, hp, hq, mul_add]
+    simp only [Finsupp.single_add, map_add, hp, hq, mul_add]
   | mul_X p x hp =>
     rcases x with ⟨i,n⟩
     intro k
@@ -183,6 +193,7 @@ private theorem ground_right_polynomial (D : LatticeData) (a d g : Charge D)
       -k-bilinear D a a+(n : ℤ)+1 by omega]
     ring
 
+set_option maxHeartbeats 2000000 in
 private theorem ground_right (D : LatticeData) (a d : Charge D) (v : Carrier D) :
     ∀ k : ℤ, sourcePairing D (rawCoeff D a k (Finsupp.single d 1)) v =
       paritySign (chargeEnergy D a) * sourcePairing D (Finsupp.single d 1)
@@ -191,9 +202,10 @@ private theorem ground_right (D : LatticeData) (a d : Charge D) (v : Carrier D) 
   | zero => intro k; simp
   | add v w hv hw =>
     intro k
-    simp only [map_add, LinearMap.add_apply, hv, hw, mul_add]
+    simp only [map_add, hv, hw, mul_add]
   | single g p => exact ground_right_polynomial D a d g p
 
+set_option maxHeartbeats 2000000 in
 private theorem polynomial_left (D : LatticeData) (a d : Charge D)
     (p : Oscillator D) : ∀ (k : ℤ) (v : Carrier D),
     sourcePairing D (rawCoeff D a k (Finsupp.single d p)) v =
@@ -203,7 +215,7 @@ private theorem polynomial_left (D : LatticeData) (a d : Charge D)
   | C c =>
     intro k v
     have hc : Finsupp.single d (C c) = c • (Finsupp.single d 1 : Carrier D) := by
-      simp [← Finsupp.smul_single, MvPolynomial.smul_eq_C_mul]
+      simp only [MvPolynomial.C_eq_smul_one, Finsupp.smul_single]
     simp only [hc, map_smul, LinearMap.smul_apply, smul_eq_mul, ground_right]
     ring
   | add p q hp hq =>
@@ -225,6 +237,7 @@ private theorem polynomial_left (D : LatticeData) (a d : Charge D)
       (-k-bilinear D a a)-((n : ℤ)+1) by omega]
     ring
 
+set_option maxHeartbeats 2000000 in
 private theorem raw_transpose (D : LatticeData) (a : Charge D) (k : ℤ)
     (u v : Carrier D) :
     sourcePairing D (rawCoeff D a k u) v = paritySign (chargeEnergy D a) *
@@ -244,12 +257,13 @@ the sign is forced by the diagonal lattice cocycle, and the reflected
 standard mode is forced by the actual quadratic charge energy.
 All private helpers are consumed by this theorem through raw_transpose.
 -/
+set_option maxHeartbeats 2000000 in
 /-- Every actual charged-primary mode has its quadratic-energy reflected transpose. -/
 theorem sourcePairing_charged_primary (D : LatticeData) (a : Charge D) (m : ℤ)
     (u v : Carrier D) :
-    sourcePairing D ((Y D (Finsupp.single a 1))[[m]] u) v =
+    sourcePairing D (((Y D (Finsupp.single a 1))[[m]]) u) v =
       paritySign (chargeEnergy D a) * sourcePairing D u
-        ((Y D (Finsupp.single a 1))[[2*chargeEnergy D a-m-2]] v) := by
+        (((Y D (Finsupp.single a 1))[[2*chargeEnergy D a-m-2]]) v) := by
   have hm : -(2*chargeEnergy D a-m-2)-1 = -(-m-1)-bilinear D a a := by
     rw [← two_chargeEnergy D a]
     omega
