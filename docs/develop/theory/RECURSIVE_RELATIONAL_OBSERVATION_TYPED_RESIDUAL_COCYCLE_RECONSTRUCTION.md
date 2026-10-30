@@ -955,3 +955,262 @@ The sourcewise joint criterion and its sharp complete-state realization are repo
 
 ## 追加锚（本行以下为增补区）
 
+## 11. General finite graphs: route rank and complete chronological supplementation
+
+**Definition 11.1 (fixed native joint contract and complete route families).** Use the actual typed deterministic source and complete response quotient of Definitions 1.1–1.2, restricted to its finite root-reachable graph as in Definition 7.1. Write $o$ for the fixed root, reserving $r\ge1$ for the number of native channels. The graph has $n\ge1$ vertices, finitely many named edges, and may have no edges. All legal finite root words, including the empty word and every stopping prefix, belong to $\mathcal P_o$. Distinct names with the same source and successor remain distinct edges. An executed continuing failure is a legal edge with its declared output; an illegal attempt is not an executed operation. Stopping is a cut, not an extra token.
+
+Fix $d:E\to\mathbb R_{>0}^r$, with every coordinate representative independent on the actual complete residual quotient. These are native data, not weights to be chosen. For $u\in\mathcal P_o$, set
+
+$$
+z(u)=o\cdot u,\qquad T(u)=\sum_{e\text{ occurring in }u}d(e),
+\qquad T(\varepsilon_o)=0.
+\tag{11.1}
+$$
+
+Each coordinate is an additive observation of this same actual execution. Fix $\epsilon>0$. The final typed endpoint is exact, and the entire possible joint observation set for $u$ is
+
+$$
+\mathcal O_\epsilon(u)=\{z(u)\}\times
+             \bigl(T(u)+[-\epsilon,\epsilon]^r\bigr).
+\tag{11.2}
+$$
+
+Every vector in this one final closed box is allowed. No component independence, probabilistic noise law, segmentwise error budget or relation between different executions is assumed. The origins, units and native calibrations are fixed.
+
+A finite static supplement $h:\mathcal P_o\to H$ is successful if $(z(u),h(u),y)$ determines $u$ for every $y\in T(u)+[-\epsilon,\epsilon]^r$. A complete finite online supplement has one finite state set $M$, one fixed initial value $m_0$, and one total map $U:M\times\mathcal A\to M$ on the typed parameterized operation names, with
+
+$$
+\mu(\varepsilon_o)=m_0,\qquad \mu(ua)=U(\mu(u),a).
+\tag{11.3}
+$$
+
+Only the full current value and the actually executed name enter $U$. A name shared across vertices is the identical token. Current vertex, route, phase and every persistent control coordinate used in an update are part of $M$. There is no input of intermediate endpoints, edge identifiers, source replies, clock values, an archive, elapsed step number, stop event or future operation. This is the joint $r\ge1$ version of Definitions 9.1 and 10.1, with a unique initialization rather than an arbitrary initial source state.
+
+An SCC is *cyclic* when it contains a nonempty directed closed walk. Call it a single directed named cycle when its internal edges are exactly one directed cycle through all its vertices, counting parallel names separately; external exits are unrestricted. Under this condition, let
+
+$$
+A_C=\sum_{e\text{ in the directed cycle of }C}d(e)
+       \in\mathbb R_{>0}^r
+\tag{11.4}
+$$
+
+be its full-lap vector. It is independent of the entry vertex, by additivity. A root condensation route is any finite directed path in the SCC condensation DAG beginning at the root component, including its length-zero path. Its *complete co-visited family* consists of $A_C$ for every cyclic component on that route, including the starting or final component when cyclic. Independence of that family always means linear independence over $\mathbb R$, with the empty family independent. It does not mean pairwise independence, absence of integer relations alone, or independence of cycles on mutually exclusive routes.
+
+**Theorem 11.2 (general native criterion, unbounded ambiguity and an achieved online bound).** Under Definition 11.1 the following are equivalent:
+
+1. A successful finite static supplement exists at the prescribed $\epsilon$.
+2. A successful complete finite names-only online supplement exists at that $\epsilon$.
+3. Every cyclic SCC is a single directed named cycle, and the complete co-visited family on every root condensation route is real-linearly independent.
+
+If condition 3 fails, then for every positive $\epsilon$ and every positive integer $Q$ there are more than $Q$ distinct legal root words with one common typed endpoint whose final boxes have a common point. Hence no alphabet of size $Q$ can supplement them, even statically. The obstruction includes fixed native laws with injective exact integer count maps.
+
+When condition 3 holds, the following finite construction achieves condition 2 on the entire legal language. Let $\mathcal S$ be the set of all simple named root paths, including the empty path; a path is simple when it repeats no vertex. Let $\mathcal C(P)$ be the ordered list of cyclic SCCs met by $P$, and $k(P)=|\mathcal C(P)|$. Put $K=\max_{P\in\mathcal S}k(P)\le r$. For $k(P)>0$, form the $r\times k(P)$ matrix $A_P$ with these full-lap vectors as columns. Choose any invertible $k(P)\times k(P)$ row submatrix $B_P$ and define
+
+$$
+\kappa_P=\max_i\sum_j |(B_P^{-1})_{ij}|,
+\qquad
+\kappa=\max_{P:k(P)>0}\kappa_P,
+\qquad
+q=\lfloor2\epsilon\kappa\rfloor+1.
+\tag{11.5}
+$$
+
+If $K=0$, set $\kappa=0$ and $q=1$. There is a single common update with exactly
+
+$$
+|M|=\sum_{P\in\mathcal S}q^{k(P)}
+       \ \le\ |\mathcal S|q^K
+\tag{11.6}
+$$
+
+reachable complete states. Its corresponding static supplement has the same finite range. This is the cardinality of one achieved construction, not a formula for the least possible static or online size. Native vectors are not changed. Existence at one positive tolerance is therefore equivalent to existence at every prescribed finite positive tolerance, with the finite register allowed to change.
+
+Proof. First reuse the closed-box form of Lemma 9.2, proved in (10.6): a label is successful exactly when
+
+$$
+u\ne v,\quad z(u)=z(v),\quad h(u)=h(v)
+\quad\Longrightarrow\quad
+\|T(u)-T(v)\|_\infty>2\epsilon.
+\tag{11.7}
+$$
+
+Two radius-$\epsilon$ boxes intersect exactly when the difference of their centers has maximum norm at most $2\epsilon$. The implication is strict because the boxes are closed. Disjointness gives the unique compatible word on the actual observation image, and rejection elsewhere. This is the static confusability principle of Transport–Memory Completion §§8.1–8.2 and 11.2, not a claim that overlap is a transitive equality relation. An online value is a static label, so $2\Rightarrow1$.
+
+Suppose a cyclic SCC is not a single directed named cycle. Every vertex has at least one internal outgoing edge. If each had exactly one, finiteness and strong connectivity would force its unique functional orbit to be a cycle through all vertices and exhaust all internal edges. Thus some vertex $v$ has two internal outgoing named edges with different names. Reuse the return-block construction of Theorems 3.1 and 9.3: follow each edge and then return within the SCC to obtain nonempty return words $L,R$ at $v$ with different first names. They form a prefix-free pair, so concatenations of these blocks are uniquely parsed. Fix a legal root prefix $p$ to $v$.
+
+For an integer $b\ge1$, the $\binom{2b}{b}$ permutations of $b$ copies of $L$ and $b$ copies of $R$ give distinct legal words after $p$. They all end at $v$ and have the identical vector
+
+$$
+T(p)+bT_v(L)+bT_v(R).
+\tag{11.8}
+$$
+
+Choose $b$ with $\binom{2b}{b}>Q$. Their boxes share this exact center even at error zero. The proof uses commutative additive totals of actual return blocks; it never makes the ordered operation words commute. It applies coordinatewise to the one native vector and does not require rational weights. Thus condition 1 implies the first part of condition 3.
+
+Assume henceforth that every cyclic SCC is a single directed named cycle. We need the finite path-schema supplier with its actual-word and prefix details. Along any legal word, the SCC sequence follows the condensation DAG and cannot revisit a component after leaving it. In a visited cyclic component with first entry $c$, all internal steps follow its unique named cycle. If its length is $\ell$, the number of internal steps before the exit or the final stopping cut is uniquely $\ell t+j$, with $t\in\mathbb N_0$ and $0\le j<\ell$. The internal word is therefore $t$ full laps $L_c$ followed by the unique proper arc $\gamma$ of length $j$. Delete those full laps in every visited cyclic SCC. The remaining named path $P$ is simple: no component is revisited, a proper cycle arc repeats no vertex, and an acyclic SCC is one loopless vertex. It has the same endpoint and the same ordered component route as the original word.
+
+Conversely, for each $P\in\mathcal S$, insert any nonnegative number $t_C$ of complete laps at the first entry to each $C\in\mathcal C(P)$. All inserted words are legal. Extraction by Euclidean division reverses this insertion, so there is a bijection
+
+$$
+\mathcal P_o\ \longleftrightarrow\
+\coprod_{P\in\mathcal S}\mathbb N_0^{k(P)},
+\qquad
+u\longleftrightarrow(P,(t_C)_{C\in\mathcal C(P)}),
+\qquad T(u)=T(P)+\sum_C t_C A_C.
+\tag{11.9}
+$$
+
+The bijection is one of named root words, not just totals or unordered counts. Determinism from the fixed root ensures that identical token words have identical traversed edges; different normal forms cannot be different edge paths with the same token word. It includes entry with zero laps, stopping before a full lap, a cyclic root, every crossing name and exit, and the empty word. For a cyclic root the empty reduced path already visits that component and has its lap coordinate. Every root condensation route admits such a simple path: choose its crossing edges and use the proper directed cycle arc between each entry and exit. Thus independence on all routes is exactly independence of $A_P$ for all $P\in\mathcal S$.
+
+This is the finite simple-path reduction already used in Theorems 7.2 and 9.3, now retaining every visited cycle coordinate. Its classical finite-language-schema counterpart is the cycle-contraction proof of Krieger–Rampersad–Shallit, [arXiv:0711.4990v1, §3.1, Theorem 5, pp.4–5](https://arxiv.org/pdf/0711.4990v1). Here all reachable vertices are accepting, since every prefix is allowed; thus accessibility and co-accessibility hold in the trimmed partial DFA. Their disjoint-cycle decomposition supplies the finite-schema mechanism. It does not supply a separation theorem for the present real native vectors.
+
+For necessity of route independence, fix a path $P$ with $k=k(P)>0$ and $s=\operatorname{rank}_{\mathbb R} A_P<k$. Its full-lap vectors are positive, so $s\ge1$. Choose a basis $b_1,\ldots,b_s$ of their span from among those vectors and write $A_P=BF$, where $B$ has those basis columns and $F\in\mathbb R^{s\times k}$. Define
+
+$$
+R_0=\max_i\sum_j|F_{ij}|>0,\qquad
+G_0=\sum_{i=1}^s\|b_i\|_\infty>0,\qquad
+h_0=\epsilon/G_0>0.
+\tag{11.10}
+$$
+
+Consider all $(N+1)^k$ count vectors $t\in\{0,\ldots,N\}^k$ in this single actual family. Every coordinate of $Ft$ lies in $[-R_0N,R_0N]$. Partition $\mathbb R^s$ into half-open cubes of side $h_0$. At most
+
+$$
+(2R_0N/h_0+3)^s
+\tag{11.11}
+$$
+
+such cubes meet this coordinate box. Since $k>s$, for any $Q$ choose $N$ with $(N+1)^k>Q(2R_0N/h_0+3)^s$. One cube contains the images of more than $Q$ distinct count vectors, counting multiplicity even if some images coincide. For any two selected vectors,
+
+$$
+\|A_P(t-t')\|_\infty
+ \le\sum_{i=1}^s\|b_i\|_\infty
+                  |(Ft-Ft')_i|
+ <G_0h_0=\epsilon<2\epsilon.
+\tag{11.12}
+$$
+
+By (11.9) they give distinct legal words with the same endpoint, and their centers are the displayed sums translated by the same $T(P)$. There is one observation common to all their boxes: in each native coordinate take the midpoint of the smallest and largest selected center coordinates. Each coordinate range is less than $\epsilon$, so every distance from that midpoint is less than $\epsilon/2$, in particular at most $\epsilon$. A $Q$-valued label identifies two of these histories and fails (11.7). The construction works for every $Q$ and every positive $\epsilon$, regardless of whether $A_P$ has a nonzero integer kernel. This proves the remaining necessity and the claimed arbitrarily large joint ambiguity.
+
+Now assume condition 3. For every $P$ with cycles, the row submatrix in (11.5) exists. Inverting it gives, for every $x\in\mathbb R^{k(P)}$,
+
+$$
+\|x\|_\infty\le\kappa_P\|A_Px\|_\infty.
+\tag{11.13}
+$$
+
+Hence every nonzero integer $j$ satisfies $\|A_Pj\|_\infty\ge1/\kappa_P\ge1/\kappa$. This is the elementary separated-lattice argument used in (10.7), in the real span of this route's complete family. It requires full real independence, not merely integer injectivity. By (11.5), $q>2\epsilon\kappa$. Give the word of (11.9) the static label
+
+$$
+h(u)=\bigl(P,(t_C\bmod q)_{C\in\mathcal C(P)}\bigr).
+\tag{11.14}
+$$
+
+For distinct words with the same label, $P$ is identical and the count difference is $qj$ for a nonzero integer vector $j$. Their native difference has maximum norm at least $q/\kappa>2\epsilon$, establishing (11.7). If $P$ visits no cycle, it represents just one word and there is no comparison. Thus $3\Rightarrow1$. Different reduced paths receive different labels; there is no assumption of separation between native sums on different routes or different entries.
+
+To prove $3\Rightarrow2$, construct the complete persistent state space itself as
+
+$$
+M=\coprod_{P\in\mathcal S}
+        \{P\}\times(\mathbb Z/q\mathbb Z)^{\mathcal C(P)}.
+\tag{11.15}
+$$
+
+The state stores the reduced path and one residue for every cyclic SCC it has visited. The current vertex is its last vertex, the current cyclic entry is the first vertex in that component on $P$, and the current proper arc is the suffix of $P$ inside that component. Thus the entire route, present vertex, entry and phase are encoded in $P$ and counted in (11.15). For the empty path the last vertex is the fixed root. The one initialization is the empty path with all its residues zero; there is a root-cycle coordinate precisely when the root is cyclic.
+
+Here is one update $U$ on this state space. Given a state and a name $a$, use the last vertex of $P$ and the known deterministic graph to find its legal edge with that name. This is a computation from the stored vertex and $a$, not acquisition of a current source endpoint or edge identifier. If no edge exists, leave the state unchanged; this defines a total update without adding a state. For an existing edge there are three cases:
+
+1. An internal cyclic edge not completing the lap from the stored entry is appended to $P$, leaving every residue unchanged.
+2. An internal edge completing that lap erases the current proper-arc suffix and returns the reduced path to that entry. Increment the residue for this component by one modulo $q$, leaving the earlier residues unchanged. On a self-loop the suffix is empty and the same rule increments the residue.
+3. An edge leaving the current SCC is appended to $P$, preserving all old residues. If the new component is cyclic, introduce its residue at zero.
+
+In the third case the target component has not previously been visited, by acyclicity of the condensation graph. A loopless singleton has no internal edge, so it also uses case 3 for every legal outgoing edge. In the first case no vertex repeats before the first return to the entry; in the second case removing the suffix keeps its entry vertex. Consequently every resulting path is simple and every resulting state belongs to (11.15). The stored reduced path also determines which of these cases applies, with no step counter or unrecorded control variable. The same name at different vertices invokes this single function $U$ on different complete state values; it is never replaced by a source-qualified token.
+
+Induction on the actually executed word now proves that the state is exactly (11.14). A proper internal step extends the proper arc; a return to the entry completes exactly one lap; an exit preserves completed laps and fixes the next entry. These are precisely the divisions and insertions in (11.9). The induction starts with the empty word and uses no stopping signal, so it holds after every legal prefix, whether the next operation is a success, a continuing failure, an exit, or whether no further operation is executed. Thus the final state supplies the successful static label at every permitted cut.
+
+Every state in (11.15) is actually reached: choose for each of its residues a nonnegative representative less than $q$ and insert those many laps into its path $P$. Equation (11.9) gives a legal word whose state is that prescribed pair. This proves the exact construction size (11.6), counting all its control and phase information, and proves sufficiency under the names-only feed.
+
+One may also describe a finite candidate decoder. If $E$ is nonempty, let $c=\min_{e\in E}d_1(e)>0$. Every word compatible with $y$ has length at most $(y_1+\epsilon)/c$, since its first native total is at most $y_1+\epsilon$ and at least $c$ times its length. If this upper bound is negative reject; otherwise enumerate the finitely many legal words up to its integer floor, retaining exactly those with the acquired endpoint, constructed label and all $r$ closed-box inequalities. Equation (11.7) leaves one word on every allowed observation and at most one elsewhere. If $E$ is empty, only the empty word is legal and is checked directly. This describes a mathematical finite search with the fixed real data; it does not supply effective comparison operations for unspecified real constants or a uniform complexity bound.
+
+All graph words used above lift to executions from the same fixed actual root representative by Definition 1.2. In particular, independently legal edges have not been assembled without the residual congruence that licenses their concatenation. The native map, menus, names, responses and root remain unchanged throughout. Neither necessity depends on the size of a positive tolerance; sufficiency chooses $q$ for any such size. The final assertion about all positive tolerances follows. $\square$
+
+The sourcewise synthesis in Theorem 11.2 is repo-derived. The normal form, bounded-error confusability and separated integer-lattice mechanisms are suppliers within its proof. The scalar $r=1$ case is exactly Theorem 9.3: positivity makes a one-vector family independent and makes every family of two positive scalars dependent. On the source of Definition 10.2 the complete family is just $(A,B)$, so the criterion specializes to Theorem 10.3, without reproving its more economical $q^2$ realization or Theorem 10.4's sharp minimum. Formula (11.6) deliberately pays a full reduced-path control state and is not asserted to attain those existing minima.
+
+**Proposition 11.3 (three co-visited loops with exact recovery but no finite positive-error completion).** There is a complete actual source with $r=3$, exactly three successive cyclic SCCs, pairwise real-independent full-lap vectors, and an injective exact integer count map, for which exact endpoint and exact native vector recover every finite legal root word without a supplement, while every finite supplement fails at every positive tolerance. The source uses the identical loop token at all three cyclic vertices and the identical crossing token at both crossings.
+
+Proof. Use one type, actual states $p_0,p_1,p_2,t$, fixed root $p_0$, and current readout $q(x)=x$. The entire operation set consists of three names $a,c,e$, with domains and successors
+
+$$
+\begin{aligned}
+D_a&=\{p_0,p_1,p_2\},& T_a(p_i)&=p_i,\\
+D_c&=\{p_0,p_1\},& T_c(p_0)&=p_1,& T_c(p_1)&=p_2,\\
+D_e&=\{p_2\},& T_e(p_2)&=t.
+\end{aligned}
+\tag{11.16}
+$$
+
+There are no other legal operations. At $p_1$ the operation $a$ is a declared continuing failure with successor $p_1$; at the other two cyclic vertices it is a success. Every one-step response retains that tag, the executed name, successor and native vector, with no archive field. The register receives only $a$ in all three cases, and only $c$ at both crossings. Distinct states have different empty responses by the identity current readout, and equal states have equal complete responses by determinism. Hence this is exactly its complete response quotient, including the continuing failure and the terminal exit.
+
+Fix the positive vectors
+
+$$
+A=(1,1,1),\qquad B=(1,2,3),\qquad
+F=\sqrt2\,A+\sqrt3\,B,\qquad J=(1,1,1).
+\tag{11.17}
+$$
+
+The native loop increments at $p_0,p_1,p_2$ are respectively $A,B,F$. Both $c$ edges and the $e$ edge have increment $J$. All three channels therefore have fixed positive increments on every actually executed edge, including the continuing failure. These vectors describe one fixed source law.
+
+The entire legal language and its native totals are
+
+| Typed endpoint | All legal root words, with nonnegative exponents | Native vector |
+| --- | --- | --- |
+| $p_0$ | $a^m$ | $mA$ |
+| $p_1$ | $a^mca^n$ | $J+mA+nB$ |
+| $p_2$ | $a^mca^nca^\ell$ | $2J+mA+nB+\ell F$ |
+| $t$ | $a^mca^nca^\ell e$ | $3J+mA+nB+\ell F$ |
+
+The table is exhaustive because only $a$ may repeat before or between the successive $c$ operations, $e$ is available only at $p_2$, and $t$ has no successor. It includes the empty word, each zero-lap crossing, stopping in each component, arbitrary continuing failures and all exits. The number and positions of the $c$ tokens distinguish the chronological segments, even though the token is the same at both crossings.
+
+The vectors $A,B$ are independent. Because the coefficients $\sqrt2,\sqrt3$ are nonzero, neither $A,F$ nor $B,F$ is a dependent pair. Yet the complete family $(A,B,F)$ has real rank two. Its integer map is injective: if
+
+$$
+jA+kB+hF=0,\qquad (j,k,h)\in\mathbb Z^3,
+$$
+
+independence of $A,B$ gives $j+h\sqrt2=0$ and $k+h\sqrt3=0$. If $h\ne0$ the first equation makes $\sqrt2$ rational, a contradiction. Thus $h=0$ and then $j=k=0$. This proves injectivity on the entire integer lattice, not just on nonnegative counts. In each endpoint row of the table, equality of exact native totals consequently forces equality of its exponents. Different rows are distinguished by the exact endpoint. Thus the exact endpoint-vector map is injective on every legal root word, with no finite supplement needed at $\epsilon=0$.
+
+For every positive $\epsilon$, apply the dependent-route argument (11.10)–(11.12) to the single family ending at $p_2$, with $k=3$ and $s=2$. For each $Q$ it gives more than $Q$ distinct actual words from that row whose full three-coordinate boxes contain one common vector. No $Q$-valued static label can separate those explanations, and every finite online register would give such a label. Appending the same executed $e$ translates all these centers by $J$ and gives terminal witnesses as well. Integer injectivity therefore does not prevent arbitrarily large positive-error ambiguity.
+
+There are exactly three cyclic SCCs, all co-visited and each one loop, so their number is at most $r=3$. The example simultaneously refutes pairwise independence, integer injectivity and the bound of at most $r$ co-visited cycles as sufficient replacements for full real independence. It also shows why Theorem 11.2 must not be used as a classification at $\epsilon=0$. It does not rely on changing the native instruments, dropping prefixes, or giving the register the differing response tags. $\square$
+
+**Proposition 11.4 (route compatibility, faithful four-view transport and resource scope).** The criterion and construction of Theorem 11.2 concern co-visited cycles of the same execution. They impose no real-independence condition on a family of cycles that cannot all occur on a common root condensation route. Let $b:V\to B$ and $s:V\to S$ be exact faithful typed endpoint representations on this same actual residual image. Keeping the native joint acquisition and the same static or online supplement, replacement of the endpoint by either $b(z(u))$ or $s(z(u))$ preserves feasibility and every attainable supplement cardinality. Under any successful supplemented observation, every fixed lossless chronological memory target $m:\mathcal P_o\to\mathcal M$ can be recovered. These augmented recovery statements do not imply pairwise invertibility of the unaugmented time, endpoint, boundary, spatial or chronological coordinates.
+
+Proof. In the sufficient construction, two histories from different reduced paths have different full labels, so no comparison mixes their route offsets or their mutually exclusive cycle families. The necessity construction uses only one realized route at a time. A global linear dependence obtained by combining cycles from incompatible routes therefore has no role in either direction. The already supplied actual source of Proposition 8.4 makes this distinction concrete without a new example: its two reachable native scalar periods $1$ and $\sqrt2$ are globally dependent over $\mathbb R$, but lie on mutually exclusive routes. Each complete co-visited family is a singleton. Theorem 9.3 supplies finite names-only supplementation for every positive tolerance there, although the unaugmented endpoint-clock pair fails at every positive tolerance. This reuses that delivered supplier and shows why neither global independence nor separation between different route rays is required for finite supplementation.
+
+For endpoint transport, injectivity of $b$ gives its inverse on $b(V)$. The maps
+
+$$
+(z,\lambda,y)\longmapsto(b(z),\lambda,y),\qquad
+(\beta,\lambda,y)\longmapsto(b^{-1}(\beta),\lambda,y)
+\tag{11.18}
+$$
+
+are inverse maps of the actual supplemented observation images. They carry each word's entire possible observation set onto that word's boundary observation set. They therefore preserve all intersections, the separation condition (11.7), and any decoder, in both directions. Static label values and all online states and updates are untouched. This proves equality of the feasible cardinality sets without claiming a formula for their minima. The same proof applies to $s$, and composition transports between the boundary and spatial augmented observations. Independently possible coordinate values are not inserted into these actual images.
+
+If either view is asserted to represent the process itself, require in addition a rooted typed named-graph isomorphism onto its actual represented image, with both directions preserving every legal menu, operation name with all parameters, successor, complete declared response and every native edge-vector coordinate. The root and the fixed native origins and calibrations correspond. Induction on the word then preserves the complete legal language, including continuing failures and terminal outcomes, and its additive totals. An endpoint injection alone proves (11.18) for observations, but does not establish this stronger process correspondence. These are the same-source transport obligations of Remark 4.2, Theorem 8.5 and Process Geometry §§39–43. In particular, the represented process may not smuggle in an archive or an intermediate source reply unavailable to the register.
+
+A successful observation first yields the ordered root word $u$, then $m(u)$. Conversely a lossless $m$ has an inverse on its actual word image. Evaluating the stipulated deterministic model from the fixed root representative gives its modeled endpoint, exact native vector and declared response sequence along that word. This evaluation supplies neither a new source query nor fields outside the fixed model. The complete residual represents future responses; a chronological target represents the chosen rooted past. ReachableBehaviorMinimality's future-behavior minimum is consequently a different optimization problem.
+
+The realized error is also different information. For a fixed recovered word every $\eta\in[-\epsilon,\epsilon]^r$ is permitted, so the word and its chronological memory do not determine the acquired $y$ or the error. If $y$ is additionally retained, the known native model gives $\eta=y-T(u)$. Thus decoding is a recovery map from augmented observations, not a bijection between a word and all its possible noisy observations. The one-loop and equal-duration acyclic examples in Theorem 8.5 already refute sufficiency of each unaugmented endpoint or time coordinate. Proposition 10.5 gives the stronger same-source failure of each individual native scalar channel even with arbitrary finite supplementation, while the pair of channels succeeds. No inference from separate marginal laws can replace that joint acquisition.
+
+The finite update constructed in Theorem 11.2 is a stable history partition, verified explicitly on every legal extension. Static coloring alone does not supply this stability. The distinction reuses Transport–Memory Completion §§16–17, `DynamicsDescent.dynamics_descends_iff` and `DynamicClosureMinimality.dynamic_closure_is_least`. `DefectGraphMinimumColoring` supplies the deterministic finite-readout coloring mechanism; its finite equality fibers are not the generally nontransitive box-overlap relation on the infinite root language. `ExactRollbackInjectivityCriterion` supplies exact inversion of a joint record, not its noisy separation. Arithmetic Refinement Memory §§1 and 3 impose a source-canonical record, whereas (11.15) is a function of rooted history and admits many states at the same residual vertex. ConfigurationPathTransport's configuration and path relations and BinarySelectorRecutFibers' explicit finite actual fibers do not supply an uncharged update interface. None changes the full-state accounting in (11.6).
+
+For a cyclic component reached by $p$ and lap $L$, the histories $pL^j$ are all legal and $T(pL^j)=T(p)+jA_C$ is unbounded in every native coordinate. Error zero is permitted inside (11.2), so the acquired clock range is unbounded too. The decoded words have unbounded length, and no fixed finite retained record by itself can encode all their lossless chronological targets. A finite register therefore bounds its own persistent control only. It does not bound source storage, clock range, readout precision or storage, decoding workspace, running time, or chronological output and retained-history storage. The candidate decoder's finite search bound grows with the observed total. If the graph is acyclic, in contrast, the whole legal language is finite and no such unbounded-lap claim applies.
+
+The criterion presupposes the finite actual graph, the faithfully acquired executed names, unique fixed initialization, exact final supplement and typed endpoint, fixed native vector law and common origin, and the one final joint error guarantee. It does not construct an acquisition device or calibrate an unknown source. The graph-and-residue update is finite once $q$ is chosen, but deciding ranks or comparisons for arbitrary unspecified real data is not thereby an effective procedure. A physical or computable-real realization must supply the necessary representations and decision accuracy. Exact invertible recoding preserves these conclusions when the complete observation sets are transported; newly imposing fixed boxes after recoding changes the noise contract, as Proposition 8.6 proves. Additional designed channels, tunable native weights, a visible archive, exponential-orbit samples or time-parameterized affine updates would likewise change the model. In particular, ArchiveClockRecovery, TwoClockKrylovClosure and TimeOrderedPrimeMemoryCocycle retain their distinct acquisition contracts. The integer $r$ and the real rank of lap vectors count channels and independent native relations, not physical spatial dimensions. $\square$
+
+The literature correspondence attached to Theorem 11.2 is limited to its actual suppliers. Krieger–Rampersad–Shallit's trim-DFA decomposition retains ordered path schemas. Anthony Widjaja To, [*Parikh Images of Regular Languages: Complexity and Applications*, arXiv:1002.1464v2, §4, Theorem 4.1, p.6](https://arxiv.org/pdf/1002.1464v2), treats an $n$-state NFA over a finite $k$-letter alphabet and expresses its Parikh image as finitely many linear sets with at most $k$ generators each. It supplies integer count representations, not chronological reconstruction after a real native map. For edge-dependent increments one may use the auxiliary alphabet of actual edges and its integer occurrence vector before applying $d$; that is a mathematical description of paths, never the operation-name feed of (11.3). Ordinary name counts alone need not determine native totals when the same name at different vertices has different increments, as in Proposition 11.3. Qureshi–Costa, [arXiv:1512.05908v2, §2, pp.3–6, Definition 2.7, p.6, and Proposition 3.1, p.7](https://arxiv.org/pdf/1512.05908v2), concern maximum-metric codes on $\mathbb Z_Q^n$, integer radii and their stated perfect-code divisibility conditions. Those finite-torus hypotheses do not classify real images of dependent native vectors or establish a minimum for (11.6). Here the row-inverse estimate and the finite-bin multiplicity argument directly prove the required separation and obstruction. General coloring, path schemas, integer count representations and lattice packing are reused; the general sourcewise criterion and its complete names-only realization are the combined mathematical result, without a literature-priority assertion.
+
+## 追加锚（本行以下为增补区）
+
