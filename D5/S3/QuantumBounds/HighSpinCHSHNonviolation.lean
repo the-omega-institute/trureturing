@@ -7,6 +7,7 @@
    digest: Local spin components satisfy the CHSH bound for every spin at least one. -/
 
 import D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment
+import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import D5.S3.QuantumBounds.LandauCommutingCollapse
 
 /-! The symmetric-qubit dilation of linear spin observables gives the CHSH bound. -/
@@ -17,7 +18,7 @@ noncomputable section
 
 open scoped BigOperators Matrix Kronecker ComplexOrder symmDiff
 open Matrix Complex
-open D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment (spinComponent)
+open D5.S3.Quantum.Contextuality.TemporalHardySpinAttainment (spinComponent raising_entry)
 open D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound (Jplus Jx Jy Jz)
 
 namespace D5.S3.QuantumBounds.HighSpinCHSHNonviolation
@@ -80,9 +81,8 @@ private lemma dicke_isometry (n : ℕ) : (dicke n)ᴴ * dicke n = 1 := by
     rw [← Finset.sum_filter]
     have hcount :
         (Finset.univ.filter (fun x : Finset (Fin n) => x.card = i.val)).card = n.choose i.val := by
-      have h := Finset.card_powersetCard (s := (Finset.univ : Finset (Fin n))) i.val
-      rw [Finset.powersetCard_eq_filter] at h
-      simpa only [Finset.powerset_univ, Finset.card_univ, Fintype.card_fin] using h
+      simpa only [Fintype.card_subtype, Fintype.card_fin] using
+        Fintype.card_finset_len (α := Fin n) i.val
     simp only [Finset.sum_const, nsmul_eq_mul, hcount, Matrix.one_apply_eq]
     have hc : (n.choose i.val : ℝ) ≠ 0 := by
       exact_mod_cast (Nat.ne_of_gt (Nat.choose_pos (by omega : i.val ≤ n)))
@@ -291,8 +291,7 @@ private lemma raising_compression (n : ℕ) (r : Fin n) :
     have hjR : (j.val : ℝ) = (i.val : ℝ) + 1 := by exact_mod_cast hij.symm
     have hJ : Jplus n i j =
         (Real.sqrt (((i.val : ℝ) + 1) * ((n : ℝ) - i.val)) : ℂ) := by
-      change (if i.val + 1 = j.val then _ else 0) = _
-      rw [ite_eq_left hij]
+      rw [raising_entry, ite_eq_left hij]
       congr 1
       rw [hjR]
       congr 1
@@ -323,9 +322,8 @@ private lemma z_compression (n : ℕ) (r : Fin n) :
     rw [Finset.sum_sub_distrib, ← Finset.mul_sum]
     have hweight :
         (Finset.univ.filter (fun x : Finset (Fin n) => x.card = k)).card = n.choose k := by
-      have h := Finset.card_powersetCard (s := (Finset.univ : Finset (Fin n))) k
-      rw [Finset.powersetCard_eq_filter] at h
-      simpa only [Finset.powerset_univ, Finset.card_univ, Fintype.card_fin] using h
+      simpa only [Fintype.card_subtype, Fintype.card_fin] using
+        Fintype.card_finset_len (α := Fin n) k
     simp only [← Finset.sum_filter, Finset.sum_const, nsmul_eq_mul, mul_one,
       absent_count, hweight]
   ext i j
@@ -344,7 +342,7 @@ private lemma z_compression (n : ℕ) (r : Fin n) :
         simp [hd, hx, hr, pow_two]
     simp_rw [he]
     rw [← Finset.mul_sum, hsum, Matrix.diagonal_apply_eq]
-    have hn : 0 < n := by have := r.isLt; omega
+    have hn : 0 < n := Fin.pos r
     have hnR : (n : ℝ) ≠ 0 := by exact_mod_cast (Nat.ne_of_gt hn)
     have hc : (n.choose i.val : ℝ) ≠ 0 := by
       exact_mod_cast (Nat.ne_of_gt (Nat.choose_pos (by omega : i.val ≤ n)))
@@ -404,7 +402,7 @@ private lemma slot_compression (n : ℕ) (r : Fin n) (u : Fin 3 → ℝ) :
     ((u 0 : ℂ) • ((1 / 2 : ℂ) • (Jplus n + (Jplus n)ᴴ)) +
       (u 1 : ℂ) • ((1 / (2 * I) : ℂ) • (Jplus n - (Jplus n)ᴴ)) + (u 2 : ℂ) • Jz n)
   have hI : (1 / (2 * I) : ℂ) = -I / 2 := by
-    apply Complex.ext <;> norm_num [Complex.div_re, Complex.div_im]
+    simp only [div_eq_mul_inv, _root_.mul_inv_rev, Complex.inv_I, one_mul]
   rw [hI]
   ext i j
   simp only [Matrix.smul_apply, Matrix.add_apply, Matrix.sub_apply, smul_eq_mul]
@@ -448,10 +446,9 @@ private lemma lifted_hermitian (n : ℕ) (hn : 2 ≤ n) (a c b d : Fin 3 → ℝ
     (liftedOperator n ⟨0, by omega⟩ ⟨1, by omega⟩ a c b d).IsHermitian := by
   rw [lifted_expansion n hn a c b d]
   have hh (r t : Fin n) (u v : Fin 3 → ℝ) :
-      (slotPauli n r u ⊗ₖ slotPauli n t v).IsHermitian := by
-    change (_ ⊗ₖ _)ᴴ = _
-    rw [conjTranspose_kronecker, (slot_hermitian n r u).eq,
-      (slot_hermitian n t v).eq]
+      (slotPauli n r u ⊗ₖ slotPauli n t v).IsHermitian :=
+    D5.S3.Quantum.Information.PartialTraceMutualInformation.isHermitian_kronecker
+      (slot_hermitian n r u) (slot_hermitian n t v)
   exact (((hh _ _ _ _).add (hh _ _ _ _)).add (hh _ _ _ _)).sub (hh _ _ _ _)
 
 private lemma lifted_square (n : ℕ) (hn : 2 ≤ n) (a c b d : Fin 3 → ℝ)
@@ -459,9 +456,8 @@ private lemma lifted_square (n : ℕ) (hn : 2 ≤ n) (a c b d : Fin 3 → ℝ)
     (liftedOperator n ⟨0, by omega⟩ ⟨1, by omega⟩ a c b d) ^ 2 = (4 : ℂ) • 1 := by
   rw [lifted_expansion n hn a c b d]
   have hfour : (4 : ℂ) • (1 : Matrix (Finset (Fin n) × Finset (Fin n))
-      (Finset (Fin n) × Finset (Fin n)) ℂ) = (4 : ℕ) • 1 := by
-    ext x y
-    by_cases h : x = y <;> simp [h]
+      (Finset (Fin n) × Finset (Fin n)) ℂ) = (4 : ℕ) • 1 :=
+    Nat.cast_smul_eq_nsmul ℂ 4 1
   rw [hfour]
   exact D5.S3.QuantumBounds.LandauCommutingCollapse.chsh_square_eq_four_of_local_pair_commutes
     (slotPauli n ⟨0, by omega⟩ a) (slotPauli n ⟨1, by omega⟩ c)
@@ -510,12 +506,7 @@ private lemma expectation_bound (n : ℕ) (hn : 2 ≤ n)
   let l := liftedOperator n ⟨0, by omega⟩ ⟨1, by omega⟩ a c b d
   have htrace : (ρ * ((dilation n)ᴴ * l * dilation n)).trace =
       ((dilation n * ρ * (dilation n)ᴴ) * l).trace := by
-    calc
-      _ = ((ρ * (dilation n)ᴴ * l) * dilation n).trace := by
-        simp only [Matrix.mul_assoc]
-      _ = (dilation n * (ρ * (dilation n)ᴴ * l)).trace :=
-        trace_mul_comm _ _
-      _ = _ := by simp only [Matrix.mul_assoc]
+    simpa only [Matrix.mul_assoc] using trace_mul_cycle (ρ * (dilation n)ᴴ) l (dilation n)
   rw [he, Matrix.mul_smul, trace_smul, norm_smul, htrace]
   have hnorm : ‖((n : ℂ) / 2) ^ 2‖ = ((n : ℝ) / 2) ^ 2 := by
     simp only [norm_pow, norm_div, Complex.norm_natCast, norm_ofNat]
