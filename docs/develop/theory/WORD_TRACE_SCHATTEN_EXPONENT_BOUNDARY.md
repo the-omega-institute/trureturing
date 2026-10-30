@@ -17,11 +17,11 @@ $\Pi_\varnothing=I_d$.  Eigenvalue multisets always include multiplicity.
 For a real $p\geq1$, define $U(p)$ to be the following statement, with all
 the displayed quantifiers retained:
 
-> for every finite $d$, every positive semidefinite quadruple
+> for every finite $d$ and every positive semidefinite quadruple
 > $A_0,A_1,B_0,B_1$ on $\mathcal H_d$ satisfying
-> $\lambda(A_i)=\lambda(B_i)$ for $i=0,1$, and every finite ordered binary
-> word $s$, the number $\operatorname{tr}\Pi_s(A)$ is real and nonnegative
-> and
+> $\lambda(A_i)=\lambda(B_i)$ for $i=0,1$, if, for every finite ordered
+> binary word $s$, the number $\operatorname{tr}\Pi_s(A)$ is real and
+> nonnegative and
 > $$
 > \operatorname{tr}\Pi_s(A)\geq\left|\operatorname{tr}\Pi_s(B)\right|,
 > $$
