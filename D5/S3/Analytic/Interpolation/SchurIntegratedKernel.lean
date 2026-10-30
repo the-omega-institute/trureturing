@@ -132,7 +132,8 @@ private theorem lowerPolynomial_integral :
     rw [integral_pow]
     simp only [one_pow, zero_pow (Nat.succ_ne_zero n), sub_zero]
     push_cast
-    rw [← inv_pow, ← mul_inv_rev]
+    simp only [one_div, inv_pow]
+    rw [← mul_inv_rev]
     congr 1
     ring
   unfold lowerPolynomial
@@ -190,7 +191,7 @@ private theorem density_mean {t : ℝ} (ht : |t| < 1) :
     (hc.smul continuousOn_const).circleIntegrable'
   have hp := (differentiable_const (1 : ℂ)).diffContOnCl.circleAverage_poissonKernel_smul hw
   have hp' : Real.circleAverage (fun z => poissonKernel 0 (t : ℂ) z • (1 : ℂ)) 0 1 = 1 := by
-    simpa only [Pi.smul_apply] using hp
+    simpa only [Pi.smul_apply'] using hp
   have hh := Complex.reCLM.circleAverage_comp_comm hi
   rw [hp'] at hh
   have havg : (2 * Real.pi)⁻¹ *
@@ -246,8 +247,10 @@ private theorem l1_pos {b x : ℝ} (hb : b ∈ Icc (0 : ℝ) 1)
   change (∫ θ in (0 : ℝ)..(2 * Real.pi), |integratedPoisson x θ - boundaryKernel b θ|) ≤
     ∫ θ in (0 : ℝ)..(2 * Real.pi), integratedPoisson x θ - boundaryKernel b θ +
       2 * (1 - x) * (3067 / 8100) at hi
-  rw [intervalIntegral.integral_add ((hA.sub hB).intervalIntegrable _ _)
-      intervalIntegrable_const,
+  rw [intervalIntegral.integral_add
+      (f := fun θ => integratedPoisson x θ - boundaryKernel b θ)
+      (g := fun _ => 2 * (1 - x) * (3067 / 8100))
+      ((hA.sub hB).intervalIntegrable _ _) intervalIntegrable_const,
     intervalIntegral.integral_sub (hA.intervalIntegrable _ _) (hB.intervalIntegrable _ _),
     integrated_mean_pos hx0 hx1, (boundary_kernel_control b 0 hb).2.2.2.2.2.1,
     intervalIntegral.integral_const] at hi
@@ -304,6 +307,8 @@ private theorem l1_periodic (b x : ℝ) (hb : b ∈ Icc (0 : ℝ) 1) :
   have hB : boundaryKernel b (θ + 2 * Real.pi) = boundaryKernel b θ := by
     have he : θ + 2 * Real.pi = (θ + Real.pi) + Real.pi := by ring
     rw [he, kernel_add_pi hb, kernel_add_pi hb, neg_neg]
+  change |integratedPoisson x (θ + 2 * Real.pi) - boundaryKernel b (θ + 2 * Real.pi)| =
+    |integratedPoisson x θ - boundaryKernel b θ|
   rw [hA, hB]
 
 /-- The actual signed boundary kernel has normalized L1 norm at most one on the full
@@ -324,7 +329,14 @@ theorem boundary_l1_control (b x : ℝ) (hb : b ∈ Icc (0 : ℝ) 1) (hx : |x| <
         -(integratedPoisson (-x) (θ + Real.pi) + boundaryKernel b θ) by ring,
         abs_neg, sub_neg_eq_add]
     simp_rw [he]
-    rw [intervalIntegral.integral_comp_add_right]
+    have hangle : (∫ θ in (0 : ℝ)..(2 * Real.pi),
+        |integratedPoisson (-x) (θ + Real.pi) - boundaryKernel b (θ + Real.pi)|) =
+        ∫ θ in Real.pi..(2 * Real.pi + Real.pi),
+          |integratedPoisson (-x) θ - boundaryKernel b θ| := by
+      simpa only [zero_add] using intervalIntegral.integral_comp_add_right
+        (fun θ => |integratedPoisson (-x) θ - boundaryKernel b θ|) Real.pi
+        (a := 0) (b := 2 * Real.pi)
+    rw [hangle]
     have hshift := (l1_periodic b (-x) hb).intervalIntegral_add_eq Real.pi 0
     simp only [zero_add, add_zero] at hshift
     rw [show 2 * Real.pi + Real.pi = Real.pi + 2 * Real.pi by ring, hshift]

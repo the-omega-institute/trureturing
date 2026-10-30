@@ -197,7 +197,8 @@ private theorem coarse_error_bound (g : ℂ → ℂ) (hg : Differentiable ℂ g)
   rw [interpolant_deriv]
   calc
     ‖deriv g x - slope g a b‖ ≤ ‖deriv g x - slope g 0 b‖ +
-        ‖slope g 0 b - slope g a b‖ := norm_sub_le _ _ _
+        ‖slope g 0 b - slope g a b‖ := by
+          simpa only [dist_eq_norm] using dist_triangle (deriv g x) (slope g 0 b) (slope g a b)
     _ ≤ R * diskNorm g + |a| * diskNorm g := by
       rw [norm_sub_rev (slope g 0 b)]
       exact add_le_add hh' htransport
