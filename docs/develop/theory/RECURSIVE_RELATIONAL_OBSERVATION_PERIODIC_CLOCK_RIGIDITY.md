@@ -568,7 +568,12 @@ the impulse, and their product annihilates the sum. The impulse cannot
 have a nonzero periodic component; the unique coprime decomposition of
 ACR Theorem 27.3 therefore gives the same aligned core $y$ for both.
 The first source has order two and the second has order three. The core
-has least period two. Original birth bits are $z_j=s_{j-1}$.
+has least period two: it is nonconstant and $E^2+1$ annihilates it,
+whereas an order-one recurrence cannot generate this alternating word.
+The impulse has least annihilator $E$. Applying the two coprime
+projections to any annihilator of their sum forces divisibility by both
+$E$ and $E^2+1$, proving the asserted least order three. Original birth
+bits are $z_j=s_{j-1}$.
 
 Direct simultaneous old-leaf replacement gives the following complete
 leaf rosters at actual cut five. The entries appear in physical order;
