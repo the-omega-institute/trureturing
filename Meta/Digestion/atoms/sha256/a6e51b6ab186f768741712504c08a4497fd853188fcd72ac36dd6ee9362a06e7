@@ -1,0 +1,366 @@
+**Theorem 2.1 (Local obstruction and global sufficiency).** For every real
+$\nu>-1$, with the actual first zero and parameters of Definition 1.2,
+
+$$
+\left[\ \forall x\in\mathbb R,\quad |x|<j
+       \ \Longrightarrow\ L_\nu(x)\le R_\nu(x)\ \right]
+\quad\Longleftrightarrow\quad J\ge T_b.
+\tag{2.1}
+$$
+
+If $J\ge T_b$, including $J=T_b$, equality holds exactly at $x=0$.
+If $J<T_b$, there exists $\varepsilon\in(0,j)$ such that
+$R_\nu(x)<L_\nu(x)$ for every real $x$ with $0<x<\varepsilon$.
+
+The quartic obstruction in this theorem is inherited from
+[Expansion and the problem's local comparison](https://github.com/the-omega-institute/trureturing/blob/0acdf52ecf2d680cff8b44345188dbb02034280d/Problems/baricz-mehrez-2018-bessel-redheffer-lower-bound.md).
+The additional inference is the converse on the entire first-zero
+interval, including the critical equality of parameters.
+
+Proof. Fix any real $b>0$ and put $\nu=b-1$.
+
+The classical zero statements in
+[DLMF §10.21(i)](https://dlmf.nist.gov/10.21#i) give infinitely many
+positive zeros of $J_\nu$ and simplicity of its nonzero zeros for these
+orders. The factor relating $F_\nu$ to $J_\nu$ is strictly positive on
+$(0,\infty)$. Also $F_\nu(0)=1$, and analyticity excludes zeros in a
+neighborhood of zero. A positive zero therefore exists, its positive
+infimum is attained by continuity, and $j>0$ is the actual smallest
+positive zero. The intermediate value theorem gives
+$F_\nu(x)>0$ for $0\le x<j$.
+
+Termwise differentiation and coefficient comparison in (1.1) give
+
+$$
+F_\nu'(x)=-\frac{x}{2b}F_{\nu+1}(x),\qquad
+F_\nu''(x)+\frac{2b-1}{x}F_\nu'(x)+F_\nu(x)=0\quad(x>0),
+\tag{2.2}
+$$
+
+and
+
+$$
+F_\nu(x)=F_{\nu+1}(x)
+ -\frac{x^2}{4b(b+1)}F_{\nu+2}(x).
+\tag{2.3}
+$$
+
+These are the shifted derivative, differential equation, and contiguous
+relation supplied by [Series](https://github.com/the-omega-institute/trureturing/blob/0acdf52ecf2d680cff8b44345188dbb02034280d/D5/S3/Analytic/BesselRedheffer/Series.lean),
+including its coefficient and proof-local entire-series identities.
+For the full range $b>0$, integration of (2.2) gives
+
+$$
+x^{2b-1}F_\nu'(x)
+ =-\int_0^x r^{2b-1}F_\nu(r)\,dr\qquad(0<x\le j).
+\tag{2.4}
+$$
+
+Indeed, the integral is finite because $2b-1>-1$, and the omitted
+boundary value is zero because
+$r^{2b-1}F_\nu'(r)=O(r^{2b})$ as $r\downarrow0$.
+The integral is strictly positive before and at $j$, hence
+$F_\nu'(x)<0$ and $F_{\nu+1}(x)>0$ on $(0,j]$.
+At zero the latter function is one. This also proves
+$F_\nu'(j)<0$, so the first zero is simple. In particular all ratios
+in (1.3) are positive on their stated domain. This argument uses the
+classical actual zeros for $b>0$; it does not extend the hypotheses of
+any restricted-order first-zero estimate.
+
+For fixed $b>0$, analytic division at zero and the positive-base binomial
+expansion give the inherited local comparison
+
+$$
+\begin{aligned}
+R_\nu(x)
+ &=1+\frac{x^2}{4b(b+1)}
+   +\frac{x^4}{8b^2(b+1)(b+2)}+O(x^6),\\
+L_\nu(x)
+ &=1+\frac{x^2}{4b(b+1)}
+   +\left(\frac{1}{32b^2(b+1)^2}
+           +\frac{1}{8b(b+1)J}\right)x^4+O(x^6),\\
+R_\nu(x)-L_\nu(x)
+ &=\frac{(3b+2)J-4b(b+1)(b+2)}
+ {32b^2(b+1)^2(b+2)J}\,x^4+O(x^6).
+\end{aligned}
+\tag{2.5}
+$$
+
+For completeness, the quotient calculation uses
+$F_\nu(x)=1-x^2/(4b)+x^4/(32b(b+1))+O(x^6)$ and the
+same formula with $b$ replaced by $b+1$ in the numerator.
+The series is analytic for each fixed positive $b$, so these remainder
+statements hold for every $b>0$; they do not assert a uniform error
+constant as $b\downarrow0$.
+The coefficient identity is the one in the private
+`coefficient_gap` and `redheffer_lower` of
+[Expansion](https://github.com/the-omega-institute/trureturing/blob/0acdf52ecf2d680cff8b44345188dbb02034280d/D5/S3/Analytic/BesselRedheffer/Expansion.lean).
+Its private `series_remainder`, `quotient_remainder`, and `ratio_remainder`
+supply explicit errors on their stated nonnegative-order ranges;
+the arbitrary-$b$ expansions just used follow directly from (1.1).
+If $J<T_b$, the last coefficient in (2.5) is negative, and the remainder
+divided by $x^4$ tends to zero. This proves strict failure at every
+sufficiently small positive $x$, and proves necessity in (2.1).
+
+We next record the classical zero sums that will be consumed in the
+sufficiency argument. Put $\lambda_n=j_{\nu,n}^2$ and
+$\sigma_m=\sum_{n\ge1}\lambda_n^{-m}$. Equations (2.2)–(2.3)
+of Baricz–Mehrez, arXiv:1701.08446v1, give, in the present normalization,
+
+$$
+\frac{F_{\nu+1}(\sqrt t)}{F_\nu(\sqrt t)}
+ =4b\sum_{n\ge1}\frac1{\lambda_n-t},\qquad 0\le t<J,
+\qquad \sigma_1=\frac1{4b}.
+\tag{2.6}
+$$
+
+Here their (2.3) is the Mittag–Leffler expansion of the ordinary
+$J_{\nu+1}/J_\nu$; multiplying by $2b/\sqrt t$ produces (2.6).
+Their (2.2) is its Rayleigh power-series expansion.
+For $|t|\le\rho<J$, the geometric expansion and all fixed-order
+coefficient comparisons are dominated by
+$(1-\rho/J)^{-1}\sum_n\lambda_n^{-1}$.
+Thus comparison with (2.5) is legitimate and gives
+
+$$
+\sigma_2=\frac1{16b^2(b+1)},\qquad
+\sigma_3=\frac1{32b^3(b+1)(b+2)}.
+\tag{2.7}
+$$
+
+These zero-sum identities and the elementary comparisons below are
+classical inputs, not independent additional conclusions.
+Since there are zeros beyond $\lambda_1=J$,
+
+$$
+\sigma_2<\frac{\sigma_1}{J},\qquad
+\sigma_3>\frac1{J^3}.
+\tag{2.8}
+$$
+
+Consequently
+
+$$
+0<\theta<1,\qquad
+J>\bigl(32b^3(b+1)(b+2)\bigr)^{1/3}.
+\tag{2.9}
+$$
+
+A useful continuous parameter comparison is
+
+$$
+\begin{aligned}
+(3b+2)^3-2(b+1)^2(b+2)^2
+ &=b\bigl(-2b^3+15b^2+28b+12\bigr)\\
+ &=b\bigl(2b^2(9-b)+b(28-3b)+12\bigr)>0
+ \qquad(0<b\le9).
+\end{aligned}
+\tag{2.10}
+$$
+
+All factors used to cube positive quantities are positive. Therefore
+(2.9)–(2.10) imply
+
+$$
+J>T_b\quad(0<b\le9).
+\tag{2.11}
+$$
+
+This will also control the critical case: $J=T_b$ forces $b>9$.
+
+Assume now $J\ge T_b$. Set $p=\theta$ and, for $0\le s<1$, define
+
+$$
+a(s)=\frac{F_\nu(\sqrt{Js})}{F_{\nu+1}(\sqrt{Js})},\qquad
+u(s)=(1-s)^p,\qquad h(s)=a(s)-u(s).
+\tag{2.12}
+$$
+
+The compositions with $\sqrt{Js}$ have analytic extensions in $s$ near
+zero because the original series are even. They satisfy
+$a(0)=u(0)=1$ and $a'(0)=u'(0)=-p$.
+Writing $f(t)=F_\nu(\sqrt t)$ and $g(t)=F_{\nu+1}(\sqrt t)$,
+(2.2)–(2.3) yield
+$f'(t)=-g(t)/(4b)$ and $g'(t)=-b(g(t)-f(t))/t$ for $t>0$.
+Thus the exact equation for $a$ is
+
+$$
+s a'(s)=b a(s)(1-a(s))-(b+1)p s.
+\tag{2.13}
+$$
+
+At $s=1$, $g(J)>0$ and $f'(J)=-g(J)/(4b)$; Taylor's formula gives
+
+$$
+a(s)=(b+1)p(1-s)+O((1-s)^2),\qquad
+\frac{a(s)}{u(s)}\longrightarrow0\quad(s\uparrow1),
+\tag{2.14}
+$$
+
+because $0<p<1$. In particular $h(s)<0$ sufficiently near one.
+
+Define the residual of the comparison function by
+
+$$
+\begin{aligned}
+E(s)&=b u(s)(1-u(s))-(b+1)p s-su'(s)\\
+ &=b\bigl((1-s)^p-(1-s)^{2p}\bigr)
+   -(b+1)p s+p s(1-s)^{p-1}.
+\end{aligned}
+\tag{2.15}
+$$
+
+We will prove that $E$ is strictly negative and then strictly positive,
+with exactly one intervening zero in $(0,1)$.
+The proof requires coefficient signs at every degree, rather than
+only the quartic comparison. For $n\ge1$ put
+
+$$
+A_n=-(-1)^n\binom pn=\frac{p(1-p)_{n-1}}{n!}>0,
+\qquad B_n=(-1)^n\binom{2p}{n}.
+\tag{2.16}
+$$
+
+The binomial series in (2.15), convergent for $|s|<1$, has zero
+constant and linear coefficients. For $n\ge2$ it has coefficient
+
+$$
+e_n=(n-b)A_n-b B_n,\qquad
+E(s)=\sum_{n\ge2}e_n s^n,\qquad
+ e_2=\frac p2\bigl(b+2-(3b+2)p\bigr)\le0.
+\tag{2.17}
+$$
+
+The coefficient $nA_n$ in the last term of (2.15) follows by
+differentiating $(1-s)^p=1-\sum_{n\ge1}A_n s^n$.
+The last inequality in (2.17) is precisely $J\ge T_b$.
+
+First suppose $1/2<p<1$. Then $B_n>0$ for all $n\ge2$.
+For $q_n=B_n/A_n$,
+
+$$
+q_{n+1}=q_n\frac{n-2p}{n-p},\qquad
+0<q_{n+1}<q_n\quad(n\ge2).
+\tag{2.18}
+$$
+
+Hence $e_n/A_n=n-b-bq_n$ is strictly increasing and is eventually
+positive. For $p=1/2$, $B_n=0$ for $n\ge2$, and the same conclusion
+holds with $q_n=0$.
+
+If instead $0<p<1/2$, put $r_n=-B_n/A_n>0$ for $n\ge2$ and
+$c_n=e_n/A_n=n-b+br_n$. Then
+
+$$
+r_{n+1}=r_n\frac{n-2p}{n-p},\qquad
+c_{n+1}-c_n=1-\frac{bp r_n}{n-p}.
+\tag{2.19}
+$$
+
+The positive sequence $r_n/(n-p)$ strictly decreases, since the ratio
+of its next term to its present term is
+$(n-2p)/(n+1-p)<1$. Thus the differences $c_{n+1}-c_n$ strictly
+increase, and $c_n\ge n-b$ is eventually positive. If $c_2<0$,
+this convex sequence can change sign only once, from negative to positive:
+a positive value after $c_2$ has a positive preceding secant slope,
+and all subsequent consecutive slopes are at least that slope.
+
+It remains to check that the case $e_2=0$ also starts with a negative
+coefficient at a later degree. This case is $J=T_b$, so (2.11) gives
+$b>9$ and
+
+$$
+p=\frac{b+2}{3b+2}\in(1/3,2/5),\qquad
+b=\frac{2(1-p)}{3p-1},\qquad
+r_2=\frac{2(1-2p)}{1-p}.
+\tag{2.20}
+$$
+
+Substitution in (2.19) gives
+
+$$
+c_2=0,\qquad
+c_3=c_3-c_2
+ =\frac{(5p-2)(p+1)}{(3p-1)(2-p)}<0.
+\tag{2.21}
+$$
+
+The same increasing-slope argument now applies starting at $c_3$.
+This proves in all cases that the coefficients of $E$ have a nonempty
+initial negative part, possibly preceded by the zero $e_2$, and then
+a positive tail, with no return to negative values.
+
+More precisely, there is an integer $m\ge2$ for which
+$e_n\le0$ for $2\le n\le m$, at least one of these inequalities
+is strict, and $e_n>0$ for every $n>m$.
+For $0<s<1$, termwise differentiation on compact subintervals gives
+
+$$
+\frac{d}{ds}\left(\frac{E(s)}{s^m}\right)
+ =\sum_{n\ge2}(n-m)e_n s^{n-m-1}>0.
+\tag{2.22}
+$$
+
+Every term is nonnegative and the positive tail is nonempty.
+The first nonzero coefficient of $E$ is negative, whereas
+$E(s)\to+\infty$ as $s\uparrow1$ by (2.15) and $p<1$.
+Continuity and strict increase in (2.22) therefore yield a unique
+$s_*\in(0,1)$ such that
+
+$$
+E(s)<0\ (0<s<s_*),\qquad E(s_*)=0,\qquad
+E(s)>0\ (s_*<s<1).
+\tag{2.23}
+$$
+
+Subtracting the equation for $u$ from (2.13) gives the exact linear
+identity along the two functions
+
+$$
+s h'(s)=b(1-a(s)-u(s))h(s)+E(s).
+\tag{2.24}
+$$
+
+Although the coefficient after division by $s$ is singular at zero,
+analyticity determines the initial sign without invoking an initial-value
+theorem there. Since $h(0)=h'(0)=0$, comparison of quadratic
+coefficients in (2.24) gives
+
+$$
+h(s)=\frac{e_2}{b+2}s^2+O(s^3)\quad(e_2<0).
+\tag{2.25}
+$$
+
+If $e_2=0$, comparison first at degree two and then at degree three gives
+
+$$
+h(s)=\frac{e_3}{b+3}s^3+O(s^4),\qquad e_3<0.
+\tag{2.26}
+$$
+
+Thus $h<0$ sufficiently near zero, also in the critical case.
+On any closed subinterval of $(0,1)$ a positive integrating factor
+for (2.24) exists: with
+$k(s)=b(1-a(s)-u(s))/s$ one may take
+$M(s)=\exp(-\int_{s_0}^s k(v)\,dv)>0$.
+It satisfies $(Mh)'=ME/s$.
+Starting at a sufficiently small positive $s_0<s_*$, (2.23) shows
+$Mh$ strictly decreases up to $s_*$; hence $h<0$ on $(0,s_*]$.
+After $s_*$ the same transformed function strictly increases on every
+compact subinterval. If $h$ were ever nonnegative there, it would
+be strictly positive at every later point, contradicting (2.14).
+Consequently $h(s)<0$ for every $0<s<1$.
+
+We have proved $0<a(s)<(1-s)^p$ for every $s\in(0,1)$.
+Taking positive reciprocals gives
+
+$$
+R_\nu(x)>\left(1-\frac{x^2}{J}\right)^{-\theta}
+ =L_\nu(x)\qquad(0<|x|<j).
+\tag{2.27}
+$$
+
+Evenness supplies all negative arguments in this statement, and both
+sides equal one at zero. Together with (2.5), this proves every assertion
+of the theorem. ∎
+
