@@ -310,7 +310,7 @@ public theorem periodic_first_ear_joint_lift (d m : ℕ) (hd : 2 ≤ d) (hm : 1 
             (actualSource k t) (charge k t) 2 (-1)
           simpa [sub_eq_add_neg] using hs
         simp only [earWord, List.map_nil, List.nil_append, List.take_succ_cons,
-          List.map_cons, List.sum_cons, List.take_map]
+          List.map_cons, List.sum_cons, List.map_take]
         rw [hrel]
         have hf := fresh_value d m hd hm
         rw [hf]
