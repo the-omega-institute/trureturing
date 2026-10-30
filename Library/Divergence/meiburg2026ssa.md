@@ -34,6 +34,13 @@ identified by those headers. The full Apache-2.0 license text is retained in
 `D5/S3/Quantum/Information/StrongSubadditivity/Physlib/ForMathlib/Misc.lean`.
 The mathematical literature cited below is citation-only; its prose is not copied.
 
+## Verified locator
+
+- Immutable source URL: https://github.com/leanprover-community/physlib/blob/2725b6f621901d4cd330869e9b77105045c1582e/QuantumInfo/Entropy/SSA.lean
+- Source repository and revision: `leanprover-community/physlib`, revision `2725b6f621901d4cd330869e9b77105045c1582e`; source file `QuantumInfo/Entropy/SSA.lean`.
+- Cited declaration: `Sᵥₙ_strong_subadditivity`, whose statement applies to finite `MState (d₁ × d₂ × d₃)` and gives the strong-subadditivity inequality on its actual marginals.
+- Preserved receiving source: `D5/S3/Quantum/Information/StrongSubadditivity/Physlib/Entropy/SSA.lean`, whose retained upstream header and declaration identify this exact source mapping. The locator covers the finite density-state supplier, including the singular-state scope recorded above; the receiving port and downstream AD-classical conditional-copy application remain repository content.
+
 ## Consumed source mapping
 
 There are 32 local supplier modules. In this table local paths are relative to
