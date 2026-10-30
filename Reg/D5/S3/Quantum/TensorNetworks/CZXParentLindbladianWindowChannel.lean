@@ -680,8 +680,8 @@ private theorem windows_distinct :
   have ha := congrArg
     (fun A => A.mulVec (fun p => gaugedUnit 5 δ 0 p.1 p.2) (δ, 0)) h
   simp only [window_superoperator_action] at ha
-  rw [gauged_window_sector 5 (by decide) 0 δ 0, if_pos hg,
-    gauged_window_sector 5 (by decide) 1 δ 0, if_neg hb] at ha
+  rw [gauged_window_sector 5 (by decide) 0 δ 0, ite_eq_left hg,
+    gauged_window_sector 5 (by decide) 1 δ 0, ite_eq_right hb] at ha
   norm_num [gaugedUnit, sectorGauge, middleUpdate, site, δ, Matrix.single_apply,
     Matrix.smul_apply, Matrix.sum_apply, Fin.sum_univ_two, Fin.sum_univ_succ,
     funext_iff, Fin.forall_fin_succ, Function.update_apply] at ha
@@ -723,7 +723,7 @@ def registration :
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body"]
+      path := #["body", "body", "body", "arg"]
       stateBinder := 2
       functionOperand := false
       stateOperand := none
