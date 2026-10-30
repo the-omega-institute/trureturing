@@ -7,12 +7,14 @@
    digest: Full strict descending physical three-gap chamber with an ear after gamma. -/
 import D5.S3.Combinatorics.Circle.ThreeNegativeMinimumTwoJointLift
 
+/-! Physical masks and asymmetric landing estimates for all descending dyadic gaps. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.Combinatorics.Circle.ThreeNegativeStrictDescendingJointLift
 open SourceWidth PeriodicShortening RunFirstEarTransport
-open private Mask Mask.u Mask.v Mask.w Negative Negative.alpha Negative.beta Negative.gamma
+open private Mask Mask.mk Mask.u Mask.v Mask.w Negative Negative.alpha Negative.beta Negative.gamma
   Order Order.agb Order.first Order.middle Order.last Ear Ear.t
   Plan Plan.p Plan.t Plan.order Plan.ear makePlan atNegative
   oldMass newMass cap oldHeight newHeight Bounded Separate Seams Certificate
@@ -35,7 +37,9 @@ private theorem near_bit (h i : ℕ) (hi : i=h ∨ i=h+1) :
     (3*2^h).testBit i = true := by
   apply Nat.mem_bitIndices.mp
   rw [Nat.mul_comm, Nat.bitIndices_two_pow_mul]
-  rcases hi with rfl | rfl <;> norm_num
+  rcases hi with rfl | rfl
+  · exact List.mem_map.mpr ⟨0, by decide, by omega⟩
+  · exact List.mem_map.mpr ⟨1, by decide, by omega⟩
 
 private theorem far_bit (h i : ℕ) (hi : i<h) :
     (3*2^h-1).testBit i = true := by
@@ -58,10 +62,11 @@ private theorem seams_certificate (R S U p e w : ℤ)
     (hsep : Disjoint e.toNat.bitIndices.toFinset (R-1-w).toNat.bitIndices.toFinset)
     (hf : First R S U p e) (hg : Second R S U w) :
     Certificate (2*R) (2*S) (2*U)
-      (makePlan 0 .agb .t ⟨U-1,p-1,e⟩ ⟨0,0,R-1-w⟩) := by
+      (makePlan 0 Order.agb Ear.t (Mask.mk (U-1) (p-1) e) (Mask.mk 0 0 (R-1-w))) := by
   obtain ⟨hz,hzupper⟩ := hf
   obtain ⟨hy,hyupper⟩ := hg
   have hdefect : 0≤(2*S+1)*e := mul_nonneg (by omega) he
+  have hRS : 0≤R*S := mul_nonneg (by omega) (by omega)
   have hdefectW : 0≤(2*S+1)*w := mul_nonneg (by omega) hw
   have hhalf (x : ℤ) : 2*x/2=x := by omega
   refine ⟨?_,?_,?_,?_⟩
@@ -75,20 +80,20 @@ private theorem seams_certificate (R S U p e w : ℤ)
   · dsimp [Seams,makePlan,oldHeight,newHeight,oldMass,newMass,cap,
       Order.first,Order.middle,Order.last,atNegative]
     simp only [hhalf, reduceCtorEq, ite_true, ite_false]
-    refine ⟨?_,?_,?_,?_,?_,?_,?_,?_⟩ <;> nlinarith only [hz,hzupper,hy,hyupper,hdefect,hdefectW,hp,hS,hw]
+    refine ⟨?_,?_,?_,?_,?_,?_,?_,?_⟩ <;> nlinarith only [hz,hzupper,hy,hyupper,hdefect,hdefectW,hp,hS,hR,hRS,hw]
 
 private theorem first_two (U D : ℤ) (hU : 2≤U) (hD : 1≤D) :
     First (4*U*D) (2*U) U 2 D := by
   have hcoef : 0≤16*U^2-12*U+1 := by nlinarith
   have hlow := mul_nonneg (by omega : 0≤D) hcoef
   have hmargin := mul_nonneg (by omega : 0≤D-1) (by omega : 0≤4*U-1)
-  constructor <;> dsimp [First] <;> nlinarith only [hlow,hmargin,hU]
+  constructor <;> nlinarith only [hlow,hmargin,hU]
 
 private theorem first_four (U D : ℤ) (hU : 2≤U) (hD : 2≤D) :
     First (4*U*D) (4*U) U 2 (2*D) := by
   have hc : 6*U+2≤8*U^2-8*U-2 := by nlinarith [mul_nonneg (by omega : 0≤U-2) (by omega : 0≤8*U+2)]
   have hm := mul_nonneg (by omega : 0≤D-2) (by nlinarith : 0≤8*U^2-8*U-2)
-  constructor <;> dsimp [First] <;> nlinarith only [hU,hD,hc,hm]
+  constructor <;> nlinarith only [hU,hD,hc,hm]
 
 private theorem first_near (U D q : ℤ) (hU : 2≤U) (hq : 2≤q)
     (hqU : q≤U) (hD : 2*q≤D) :
@@ -98,7 +103,7 @@ private theorem first_near (U D q : ℤ) (hU : 2≤U) (hq : 2≤q)
   have hm1 := mul_nonneg hd (mul_nonneg (by omega : 0≤8*U) (by omega : 0≤U-q))
   have hm2 := mul_nonneg (by omega : 0≤D-2*q) (by omega : 0≤8*U-1)
   have hm3 := mul_nonneg (by omega : 0≤q) (by omega : 0≤2*U-1)
-  constructor <;> dsimp [First] <;> nlinarith only [hl,hm1,hm2,hm3,hU,hq]
+  constructor <;> nlinarith only [hl,hm1,hm2,hm3,hU,hq]
 
 private theorem first_far (U t m : ℤ) (hU : 2≤U) (ht : 2≤t) (hm : 2≤m) :
     First (2*m*U*t) (t*U) U t m := by
@@ -108,20 +113,22 @@ private theorem first_far (U t m : ℤ) (hU : 2≤U) (ht : 2≤t) (hm : 2≤m) :
   have hut : 1≤2*U*t := by nlinarith
   have hm1 := mul_nonneg (by omega : 0≤m-2) (by omega : 0≤2*U*t-1)
   have hm2 := mul_nonneg ht0 (by omega : 0≤2*U-1)
-  constructor <;> dsimp [First] <;> nlinarith only [hlo,hm1,hm2,hU,ht,hm]
+  constructor <;> nlinarith only [hlo,hm1,hm2,hU,ht,hm]
 
 private theorem first_far_one (U t : ℤ) (hU : 2≤U) (ht : 8*U≤t) :
     First (2*U*t) (t*U) U (t-1) 2 := by
   have hcoef : 0≤4*U^2-2*U-1 := by nlinarith
   have hm := mul_nonneg (by omega : 0≤t) hcoef
-  constructor <;> dsimp [First] <;> nlinarith only [hm,hU,ht]
+  constructor <;> nlinarith only [hm,hU,ht]
 
 private theorem second_upper (U D t w : ℤ) (hU : 2≤U) (ht : 2≤t)
     (hD : t≤2*D) (hw : w≤3*D) :
     w*(1+2*t*U+4*t*U^2)+t*U+2*t*U^2-4*U*D-8*U^2*D*t≤4*U*D+8*U^2*D*t := by
   have hu : 0≤U := by omega
   have ht0 : 0≤t := by omega
-  have hc : 0≤2*U*t*(2*U-3)+8*U-3 := by positivity
+  have hc : 0≤2*U*t*(2*U-3)+8*U-3 := by
+    have hp := mul_nonneg (mul_nonneg hu ht0) (by omega : 0≤2*U-3)
+    nlinarith only [hp,hU]
   have hm1 := mul_nonneg (by omega : 0≤2*D-t) hc
   have hp0 : 4≤2*U*(t-1) := by nlinarith [mul_nonneg (by omega : 0≤U-2) (by omega : 0≤t-1)]
   have hp1 := mul_nonneg (by omega : 0≤2*U*(t-1)-4) (by omega : 0≤2*U-3)
@@ -133,28 +140,24 @@ private theorem second_upper (U D t w : ℤ) (hU : 2≤U) (ht : 2≤t)
 private theorem second_near (U D t : ℤ) (hU : 2≤U) (hD : 1≤D) (ht : 2≤t) (hDt : t≤2*D) :
     Second (4*U*D) (t*U) U (3*D) := by
   constructor
-  · dsimp [Second]
-    have hcoef : 0≤2*t*U+1-4*U := by nlinarith [mul_nonneg (by omega : 0≤t-2) (by omega : 0≤U)]
+  · have hcoef : 0≤2*t*U+1-4*U := by nlinarith [mul_nonneg (by omega : 0≤t-2) (by omega : 0≤U)]
     have hp := mul_nonneg (by omega : 0≤3*D) hcoef
     have hp1 : 1≤t*U := by nlinarith
     have hp2 := mul_nonneg (by omega : 0≤t) (sq_nonneg U)
     nlinarith only [hp,hp1,hp2]
-  · dsimp [Second]
-    convert second_upper U D t (3*D) hU ht (by omega) (by omega) using 1 <;> ring
+  · convert second_upper U D t (3*D) hU ht (by omega) (by omega) using 1 <;> ring
 
 private theorem second_far (U D t : ℤ) (hU : 2≤U) (hD : t≤2*D) (ht : 8*U≤t) :
     Second (4*U*D) (t*U) U (3*D-1) := by
   constructor
-  · dsimp [Second]
-    have hd : 4*U≤D := by omega
+  · have hd : 4*U≤D := by omega
     have hut : 4≤t*U := by nlinarith
     have hc : 0≤t*U+1-4*U := by nlinarith [mul_nonneg (by omega : 0≤t-4) (by omega : 0≤U)]
     have hp1 := mul_nonneg (by omega : 0≤3*D) hc
     have hp2 := mul_nonneg (by omega : 0≤3*(D-4*U)) (by omega : 0≤t*U)
     have hp3 := mul_nonneg (by omega : 0≤t*U) (by omega : 0≤8*U-2)
     nlinarith only [hp1,hp2,hp3,hut]
-  · dsimp [Second]
-    convert second_upper U D t (3*D-1) hU (by omega) hD (by omega) using 1 <;> ring
+  · convert second_upper U D t (3*D-1) hU (by omega) hD (by omega) using 1 <;> ring
 
 /-- The full strict descending chamber, retaining the same physical permutation and literal ear. -/
 theorem actualSource_three_negative_strict_descending_joint_lift (a b c : ℕ)
@@ -178,12 +181,12 @@ theorem actualSource_three_negative_strict_descending_joint_lift (a b c : ℕ)
   have ht : 2≤t := by
     change (2:ℤ)^1≤2^d
     exact pow_le_pow_right₀ (by norm_num) hd
-  have hm : 1≤m := by dsimp [m]; positivity
-  have hD : 1≤D := by dsimp [D]; positivity
+  have hm : 1≤m := by dsimp [m]; exact_mod_cast Nat.one_le_two_pow
+  have hD : 1≤D := by dsimp [D]; exact_mod_cast Nat.one_le_two_pow
   have hu : (2:ℤ)^c=2*U := by
     calc
       (2:ℤ)^c=2^((c-1)+1) := by congr 1; omega
-      _=2*U := by rw [pow_succ]; rfl
+      _=2*U := by rw [pow_succ]; dsimp [U]; ring
   have hs : (2:ℤ)^b=2*S := by
     calc
       (2:ℤ)^b=2^(d+(c-1)+1) := by congr 1; dsimp [d]; omega
@@ -196,7 +199,7 @@ theorem actualSource_three_negative_strict_descending_joint_lift (a b c : ℕ)
     have he : h+1=ell+d := by dsimp [h,ell,d]; omega
     calc
       2*D=(2:ℤ)^(h+1) := by dsimp [D]; rw [pow_succ]; ring
-      _=m*t := by rw [he,pow_add]; rfl
+      _=m*t := by rw [he,pow_add]
   have hDt : t≤2*D := by nlinarith [mul_nonneg (by omega : 0≤m-1) (by omega : 0≤t)]
   have hmD : m≤D := by nlinarith [mul_nonneg (by omega : 0≤m) (by omega : 0≤t-2)]
   have hRpow : R=(2:ℤ)^(a-1) := by
@@ -225,7 +228,7 @@ theorem actualSource_three_negative_strict_descending_joint_lift (a b c : ℕ)
     rw [Int.toNat_mul (by norm_num) (by positivity),Int.toNat_pow_of_nonneg (by norm_num)]
     rfl
   have farNat : (3*D-1).toNat=3*2^h-1 := by
-    rw [Int.toNat_sub,nearNat]; rfl
+    omega
   have nearSep (i : ℕ) (e : ℤ) (he : e=(2:ℤ)^i) (hi : i=h ∨ i=h+1) :
       Disjoint e.toNat.bitIndices.toFinset (R-1-3*D).toNat.bitIndices.toFinset := by
     apply sep i e (3*D) he (by omega) hRD
@@ -290,7 +293,10 @@ theorem actualSource_three_negative_strict_descending_joint_lift (a b c : ℕ)
       have hg : Second R S U (3*D-1) := second_far U D t hU hDt htu
       by_cases hell : ell=0
       · have hm1 : m=1 := by simp [m,hell]
-        have hReq : R=2*U*t := by dsimp [R]; nlinarith only [hrel,hm1]
+        have hReq : R=2*U*t := by
+          calc
+            R=2*U*(2*D) := by dsimp [R]; ring
+            _=2*U*t := by rw [hrel,hm1]; ring
         have hf : First R S U (t-1) 2 := by
           rw [hReq]
           exact first_far_one U t hU htu
@@ -302,7 +308,10 @@ theorem actualSource_three_negative_strict_descending_joint_lift (a b c : ℕ)
       · have hm2 : 2≤m := by
           change (2:ℤ)^1≤2^ell
           exact pow_le_pow_right₀ (by norm_num) (by omega)
-        have hReq : R=2*m*U*t := by dsimp [R]; nlinarith only [hrel]
+        have hReq : R=2*m*U*t := by
+          calc
+            R=2*U*(2*D) := by dsimp [R]; ring
+            _=2*m*U*t := by rw [hrel]; ring
         have hf : First R S U t m := by
           rw [hReq]
           exact first_far U t m hU ht hm2
@@ -311,7 +320,7 @@ theorem actualSource_three_negative_strict_descending_joint_lift (a b c : ℕ)
           nlinarith [mul_nonneg (by omega : 0≤t) (by omega : 0≤U-1)]
         exact go t m (3*D-1) (by omega) hpS (by omega) (by omega)
           (by omega) (by omega) (farSep ell m rfl (by dsimp [h,ell,d] at *; omega)) hf hg
-  apply ThreeNegativeMinimumTwoJointLift.realize a b c (by omega) (by omega) hc plan
+  apply realize a b c (by omega) (by omega) hc plan
   simpa only [hr,hs,hu] using hcert
 
 #print axioms actualSource_three_negative_strict_descending_joint_lift
