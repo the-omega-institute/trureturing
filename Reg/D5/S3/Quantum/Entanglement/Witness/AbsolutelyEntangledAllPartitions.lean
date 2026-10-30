@@ -142,9 +142,9 @@ abbrev arena : Arena where
   signature := signature
   Law R := ∀ {d : ℕ} {ι : Type} [Fintype ι]
     (w : ι → ℝ) (a : ι → Matrix (Fin d) (Fin d) ℂ)
-    (hw : ∀ i, 0 ≤ w i) (ha : ∀ i, (a i).PosSemidef)
-    (v : Fin d → ℂ) (t : ℝ) (hs : ∑ i, w i • a i = t • rankOneDensity v)
-    (j : ι) (hj : 0 < w j) (x : Fin d → ℂ) (hx : star v ⬝ᵥ x = 0),
+    (_hw : ∀ i, 0 ≤ w i) (_ha : ∀ i, (a i).PosSemidef)
+    (v : Fin d → ℂ) (t : ℝ) (_hs : ∑ i, w i • a i = t • rankOneDensity v)
+    (j : ι) (_hj : 0 < w j) (x : Fin d → ℂ) (_hx : star v ⬝ᵥ x = 0),
     R.readout () d (a j *ᵥ x) 0
 
 private theorem rejected_law : ¬ arena.Law rejected := by
@@ -164,9 +164,8 @@ def source_registration : Registration arena (type_of% @summand_kernel) where
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@summand_kernel) (Realization signature) Unit Unit := {
-  unitName := `D5.S3.Quantum.Entanglement.Witness.AbsolutelyEntangledAllPartitions.summand_kernel.__information_unit
-  realizationName :=
-    `Reg.D5.S3.Quantum.Entanglement.Witness.AbsolutelyEntangledAllPartitions.VectorEquality.SummandKernel.source_registration
+  unitName := .str ``summand_kernel "__information_unit"
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
@@ -206,9 +205,9 @@ namespace SupportedColumn
 /-- Retain the full support statement, observing equality with a scalar multiple. -/
 abbrev arena : Arena where
   signature := signature
-  Law R := ∀ {d : ℕ} (v : Fin d → ℂ) (hv : v ≠ 0)
-    (a : Matrix (Fin d) (Fin d) ℂ) (ha : a.IsHermitian)
-    (hker : ∀ x, star v ⬝ᵥ x = 0 → a *ᵥ x = 0) (j : Fin d),
+  Law R := ∀ {d : ℕ} (v : Fin d → ℂ) (_hv : v ≠ 0)
+    (a : Matrix (Fin d) (Fin d) ℂ) (_ha : a.IsHermitian)
+    (_hker : ∀ x, star v ⬝ᵥ x = 0 → a *ᵥ x = 0) (j : Fin d),
     ∃ z : ℂ, R.readout () d (fun k => a k j) (z • v)
 
 private theorem rejected_law : ¬ arena.Law rejected := by
@@ -231,9 +230,8 @@ def source_registration : Registration arena (type_of% @supported_column) where
 def registration :
     LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
       (@supported_column) (Realization signature) Unit Unit := {
-  unitName := `D5.S3.Quantum.Entanglement.Witness.AbsolutelyEntangledAllPartitions.supported_column.__information_unit
-  realizationName :=
-    `Reg.D5.S3.Quantum.Entanglement.Witness.AbsolutelyEntangledAllPartitions.VectorEquality.SupportedColumn.source_registration
+  unitName := .str ``supported_column "__information_unit"
+  realizationName := ``source_registration
   realizationSource := none
   generated := false
   arena := .source ⟨arena⟩
