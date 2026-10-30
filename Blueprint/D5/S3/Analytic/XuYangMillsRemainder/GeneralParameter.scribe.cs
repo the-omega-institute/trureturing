@@ -51,14 +51,15 @@ internal sealed class GeneralParameterDocument : IScribeDocumentDefinition
                 + "term vanishes at zero and only the original nth Gamma coefficient remains."),
             Proof("positive-origin-obstruction", "positive_cm_necessary",
                 "Necessary coefficient sign for the positive branch",
-                "If the original F n a is completely monotone, then u n a (a-2) <= 0. "
+                "For every n >= 2 and real a, if the original F n a is completely monotone, "
+                + "then u n a (a-2) <= 0. "
                 + "The proof consumes the zeroth derivative sign and the concrete origin limit. "
-                + "The stronger hypothesis that F is globally nonnegative alone suffices, "
+                + "The hypothesis that F is globally nonnegative alone suffices, "
                 + "as established by positive_sign_necessary. Translating this coefficient sign "
                 + "to a <= theta (n-2) still requires the general-a coefficient identity."),
             Proof("negative-origin-obstruction", "negative_cm_necessary",
                 "Origin obstruction for the negative branch",
-                "If -F n a is completely monotone, or merely globally nonnegative, "
+                "For every n >= 2 and real a, if -F n a is completely monotone, or merely globally nonnegative, "
                 + "then u n a (a-2) >= 0. This is the obstruction at the origin; "
                 + "it does not establish the required infinity obstruction u (n+1) a (a-2) >= 0 "
                 + "or the sharp negative-branch threshold theta (n-1)."),

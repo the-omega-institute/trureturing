@@ -52,7 +52,7 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.positive_c
 
 *Commentary.*
 
-If the original F n a is completely monotone, then u n a (a-2) <= 0. The proof consumes the zeroth derivative sign and the concrete origin limit. The stronger hypothesis that F is globally nonnegative alone suffices, as established by positive_sign_necessary. Translating this coefficient sign to a <= theta (n-2) still requires the general-a coefficient identity.
+For every n >= 2 and real a, if the original F n a is completely monotone, then u n a (a-2) <= 0. The proof consumes the zeroth derivative sign and the concrete origin limit. The hypothesis that F is globally nonnegative alone suffices, as established by positive_sign_necessary. Translating this coefficient sign to a <= theta (n-2) still requires the general-a coefficient identity.
 
 **Theorem 1.5 (Origin obstruction for the negative branch).**
 
@@ -64,13 +64,13 @@ Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.negative_c
 
 *Commentary.*
 
-If -F n a is completely monotone, or merely globally nonnegative, then u n a (a-2) >= 0. This is the obstruction at the origin; it does not establish the required infinity obstruction u (n+1) a (a-2) >= 0 or the sharp negative-branch threshold theta (n-1).
+For every n >= 2 and real a, if -F n a is completely monotone, or merely globally nonnegative, then u n a (a-2) >= 0. This is the obstruction at the origin; it does not establish the required infinity obstruction u (n+1) a (a-2) >= 0 or the sharp negative-branch threshold theta (n-1).
 
 **Theorem 1.6 (Strictly decreasing upper normalized remainder).**
 
-Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strictAnti`
+Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strict_anti`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strictAnti` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strict_anti` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -80,9 +80,9 @@ Write E_k(y) = (-1)^k (exp(-y) - sum_{j<k} (-y)^j/j!). For every k >= 1, E_k(y)/
 
 **Theorem 1.7 (Strictly increasing lower normalized remainder).**
 
-Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strictMono`
+Lean statement: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strict_mono`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strictMono` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strict_mono` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -93,8 +93,8 @@ For every k >= 1, E_k(y)/y^(k-1) strictly increases on y > 0. Changing variables
 ## References
 
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.F`
-- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strictAnti`
-- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strictMono`
+- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strict_anti`
+- Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.exp_remainder_ratio_strict_mono`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.negative_cm_necessary`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.positive_cm_necessary`
 - Truth anchor: `D5/S3/Analytic/XuYangMillsRemainder/GeneralParameter.regularity_and_origin`
