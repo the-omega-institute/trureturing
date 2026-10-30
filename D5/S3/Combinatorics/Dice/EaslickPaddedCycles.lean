@@ -10,6 +10,8 @@ import D5.S3.Combinatorics.Dice.EaslickCycleSeeds
 import Mathlib.Data.List.ChainOfFn
 import Mathlib.Data.List.FinRange
 
+/-! Uniform nested padding assembles all clone blocks into a single simple cycle. -/
+
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
@@ -34,7 +36,8 @@ private theorem closed_ofFn {α : Type} [Inhabited α] (R : α → α → Prop)
 /-- Reading any cyclic seed edge includes the final return to the first vertex. -/
 theorem cycle_edge_at (r k : ℕ) (c : List (List ℕ)) (hlen : c.length = k)
     (hchain : (c ++ [c.head!]).IsChain (Edge r)) (hk : 0 < k) (i : Fin k) :
-    Edge r c[i.val] c[(i.val+1)%k] := by
+    Edge r c[i.val]
+      (getElem c ((i.val+1)%k) (by simpa only [hlen] using Nat.mod_lt (i.val+1) hk)) := by
   have hi : i.val < c.length := by omega
   have hm : (i.val+1)%k < c.length := by simpa [hlen] using Nat.mod_lt (i.val+1) hk
   have h := (List.isChain_iff_getElem.mp hchain) i.val (by simp; omega)
@@ -51,11 +54,11 @@ theorem padded_cycle (r k t : ℕ) (hr : 3 ≤ r) (hk : 0 < k) (hke : k%2=0)
     HasCycle (r+2*t) (k*(t+1)) := by
   obtain ⟨c,hlen,hnd,hne,hchain⟩ := hc
   have hN : 0 < k*(t+1) := Nat.mul_pos hk (by omega)
-  let f : Fin (k*(t+1)) → List ℕ := fun a =>
-    padded r t (a.val/k) (decide (a.val%k%2=1)) c[a.val%k]
   have hmod (a : Fin (k*(t+1))) : a.val%k < c.length := by
     simpa [hlen] using Nat.mod_lt a.val hk
-  have hvalid (a : Fin (k*(t+1))) : IsDie r c[a.val%k] :=
+  let f : Fin (k*(t+1)) → List ℕ := fun a =>
+    padded r t (a.val/k) (decide (a.val%k%2=1)) (getElem c (a.val%k) (hmod a))
+  have hvalid (a : Fin (k*(t+1))) : IsDie r (getElem c (a.val%k) (hmod a)) :=
     (cycle_edge_at r k c hlen hchain hk ⟨a.val%k, Nat.mod_lt _ hk⟩).1
   have hdiv (a : Fin (k*(t+1))) : a.val/k ≤ t := by
     have : a.val/k < t+1 := (Nat.div_lt_iff_lt_mul hk).mpr
@@ -90,13 +93,15 @@ theorem padded_cycle (r k t : ℕ) (hr : 3 ≤ r) (hk : 0 < k) (hke : k%2=0)
         simp [ho,hn]
     have ha := hvalid a
     have hb := hvalid b
-    have hva := padded_isDie r r t (a.val/k) _ _ (hdiv a) ha.1 ha.2.1 ha.2.2 hcap
-    have hvb := padded_isDie r r t (b.val/k) _ _ (hdiv b) hb.1 hb.2.1 hb.2.2 hcap
+    have hva := padded_isDie r r t (a.val/k) (decide (a.val%k%2=1)) (getElem c (a.val%k) (hmod a)) (hdiv a) ha.1 ha.2.1 ha.2.2 hcap
+    have hvb := padded_isDie r r t (b.val/k) (decide (b.val%k%2=1)) (getElem c (b.val%k) (hmod b)) (hdiv b) hb.1 hb.2.1 hb.2.2 hcap
     apply (edge_iff (r+2*t) (by omega) _ _ hva hvb).mpr
-    change winCount (padded r t (a.val/k) _ _) (padded r t (b.val/k) _ _) = _
+    change winCount
+      (padded r t (a.val/k) (decide (a.val%k%2=1)) (getElem c (a.val%k) (hmod a)))
+      (padded r t (b.val/k) (decide (b.val%k%2=1)) (getElem c (b.val%k) (hmod b))) = _
     rw [hp, padded_winCount r t (a.val/k) (b.val/k) _ _ _ (hdiv a) (hdiv b) ha.2.2 hb.2.2]
     have hs := cycle_edge_at r k c hlen hchain hk ⟨a.val%k,Nat.mod_lt _ hk⟩
-    have hs' : winCount c[a.val%k] c[b.val%k] = threshold r := by
+    have hs' : winCount (getElem c (a.val%k) (hmod a)) (getElem c (b.val%k) (hmod b)) = threshold r := by
       rw [hm]
       exact (edge_iff r hr _ _ hs.1 hs.2.1).mp hs
     rw [hs',ha.1,hb.1,threshold_padding]
