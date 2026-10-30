@@ -1,0 +1,101 @@
+**Lemma 2.1 (Generalized core remainder with exact nonnegative gaps).** For an admissible law choose any least-marginal label $e$ and define
+
+$$
+\begin{gathered}
+t=y_e=\min_i y_i,\qquad C=[s]\setminus\{e\},\qquad I=I_e,\qquad L=K-I,\\
+m^2=\mathbb E[K^2\mid I=1],\qquad
+\mu=\mathbb E[K\mid I=1],\\
+\alpha=\mathbb P(T=\{e\}\mid I=1),\qquad \beta=1-\alpha,\qquad
+v=m^2-1,\qquad u=v-3\beta.
+\end{gathered}\tag{2.1}
+$$
+
+Thus $0<t\le q/s<1$, $1\le\mu\le m$, $u\ge0$, and
+
+$$
+v\ge3\beta,\qquad v\ge3(\mu-1),\qquad
+\boxed{\ \delta\ge t(r-\mu)\ }.\tag{2.2}
+$$
+
+For $i\in C$ set
+
+$$
+\begin{aligned}
+R_i&=\mathbb E[L^2I_i]-a^2y_i-(2a+1)(\theta-t),\\
+\rho_i&=(1-I_i)(2a+1)(a-L)+I_i(r-L)(r-L-1),\\
+S_i&=R_i-a(2a+1)\alpha t,\qquad
+D_i=\mathbb E[I(2L+1)I_i].
+\end{aligned}\tag{2.3}
+$$
+
+Then $R_i=\mathbb E\rho_i$, $S_i,D_i\ge0$, and
+
+$$
+\sum_{i\in C}R_i=\mathbb E Q_a(L),\qquad
+Q_a(l)=(r-l)(a-l)(2a+1+l)\ge0\quad(l\in\{0,\ldots,r\}).\tag{2.4}
+$$
+
+Let
+
+$$
+c_\alpha=(2a+1)[\theta+(a\alpha-1)t],\qquad
+f_\alpha(y)=\frac{a^2}{y}+\frac{c_\alpha}{y^2},\qquad
+\bar y=\frac{q-t}{r},\qquad
+\mathcal G_\alpha=\sum_{i\in C}f_\alpha(y_i)-r f_\alpha(\bar y).
+$$
+
+The function $f_\alpha$ is strictly convex on $[t,1]$, so $\mathcal G_\alpha\ge0$, with equality exactly when all core marginals equal $\bar y$. The following identity is exact:
+
+$$
+H-h_\theta(t)-\beta\Xi_\theta(t)
+=\frac ut+\mathcal G_\alpha+
+ \sum_{i\in C}\frac{S_i+D_i}{y_i^2}.\tag{2.5}
+$$
+
+In particular, without any lower bound on $\alpha$,
+
+$$
+\begin{aligned}
+H&\ge h_\theta(t)+\beta\Xi_\theta(t),\\
+H&\ge h_\theta(t)+\frac vt-\beta\Lambda_\theta(t)
+ \ge h_\theta(t)+v\left(\frac1t-\frac{\Lambda_\theta(t)}3\right).
+\end{aligned}\tag{2.6}
+$$
+
+**Proof.** The conditional inequalities follow from
+$k^2-1\ge3\mathbf1_{\{k\ge2\}}$ and
+$k^2-1\ge3(k-1)$ for integers $k\ge1$. On $I=0$ one has $K\le r$, hence
+$q\le r(1-t)+t\mu$, proving the capacity inequality in (2.2).
+
+Here $\mathbb E L=q-t=a+\theta-t$. Expanding the integrand of (2.3) gives
+
+$$
+\rho_i=L^2I_i-a^2I_i+(2a+1)(a-L),
+$$
+
+whose expectation is exactly $R_i$. If $I_i=0$, then $L\le a$; if $I_i=1$, the two consecutive integer factors $r-L,r-L-1$ have nonnegative product. Thus $\rho_i\ge0$, including when $L=0$. On the singleton event $T=\{e\}$ it equals $a(2a+1)$. Consequently
+
+$$
+S_i=\mathbb E[\rho_i\mathbf1_{\{T\ne\{e\}\}}]\ge0.
+$$
+
+Summing the integrands and using $\sum_{i\in C}I_i=L$ gives (2.4). The product there is nonnegative at every allowed integer, with zeros only at $l=a,r$.
+
+The hub contribution is $m^2/t$. On core incidences $K^2=L^2+I(2L+1)$, so the exact energy decomposition is
+
+$$
+H=\frac{m^2}{t}+\sum_{i\in C}f_\alpha(y_i)
+ +\sum_{i\in C}\frac{S_i+D_i}{y_i^2}.\tag{2.7}
+$$
+
+As $c_\alpha\ge-(2a+1)t$, for $y\ge t$ one has
+
+$$
+f_\alpha''(y)=\frac{2(a^2y+3c_\alpha)}{y^4}
+\ge\frac{2(a^2-6a-3)t}{y^4}>0.\tag{2.8}
+$$
+
+The finite Jensen inequality therefore gives the asserted gap and its strict equality condition. This is the usual convex-combination inequality, as in S. Boyd and L. Vandenberghe, *Convex Optimization*, §3.1.8, pp.77–78 ([author-hosted text](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf)); it is applied to the actual core marginals, without averaging laws or assuming convexity of $H$.
+
+Substitute $m^2=1+3\beta+u$ and $\alpha=1-\beta$ in (2.7). The constant terms are $h_\theta(t)$, and the coefficient of $\beta$ is $\Xi_\theta(t)$. This proves (2.5). Alternatively retain $v=m^2-1$ before replacing $\beta\le v/3$; this proves both lines of (2.6). The parent volume's Lemma 12.3 supplies the endpoint residual pattern. The present calculation uses $\mathbb E L=a+\theta-t$ explicitly and proves the moving-mean identity, rather than assuming that endpoint hypothesis. ∎
+

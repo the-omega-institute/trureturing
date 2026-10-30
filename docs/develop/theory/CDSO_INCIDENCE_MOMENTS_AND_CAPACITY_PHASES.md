@@ -3021,3 +3021,370 @@ Dividing (13.30) by two proves (13.25). The same expansion of $b_a^{-1/2}$ in (1
 Theorem 13.9 is a repo-derived consequence for every fixed integer $h\ge2$ of one actual joint array, the common-event charge, the integer core polynomial and strict scalar Jensen. Theorem 10.1 and Section 12 supply the one-tail family and the $h=1$ endpoint analysis; they are used as prior material rather than repeated claims. The threshold $A(h)$ is asserted to exist but neither specified nor minimized. No statement is made for $h$ growing with $a$, for the finite range below that threshold, or for a prescribed finite graph budget. The full text of K. Zhao and X. Zhao, DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26), has not been obtained, so possible overlap is unassessed and no literature-priority claim is made.
 
 ## 追加锚（本行以下为增补区）
+
+## 14. Uniform exact laws below the square-root threshold
+
+**Definition 14.1 (The uniform subcritical domain).** Fix a real number $0<R<\sqrt2$. For integers
+$$
+a\ge4,\qquad 1\le h\le R\sqrt a,\qquad r=a+1,\qquad s=r+h,
+$$
+let $\mathcal X(a,h)$ consist of all probability laws on nonempty subsets $T\subseteq[s]$ with $\mathbb E K=a$ and all actual marginals $y_i=\mathbb P(i\in T)>0$, where $K=|T|$. Write
+$$
+H(x)=\mathbb E\!\left[K^2\sum_{i\in T}y_i^{-2}\right],\qquad
+B_0=ar^2,\qquad d(x)=H(x)-B_0,
+$$
+and use $\Phi_{a,h}$ from (13.1), also for $h=1$. All constants in $O_R(\cdot)$ below are independent of $a,h,x$ and of label permutations. Increasing a threshold depending only on $R$ is permitted in each statement. Put
+$$
+u_0=\frac{h}{\sqrt2\,a^{3/2}}<\frac1a.
+$$
+The law of Definition 13.2, with the same formulas when $h=1$, gives the comparison
+$$
+\Phi_{a,h}(u_0)-B_0
+=2\sqrt2\,h a^{3/2}+O_R(h\sqrt a).
+\tag{14.1}
+$$
+Indeed, the first term is $h^2/u_0=\sqrt2\,h a^{3/2}$, while the other two terms minus $B_0$ equal
+$$
+\left(2a^3+O(a^2)\right)u_0+O_R(a^2u_0^2).
+$$
+Here $u_0=O_R(a^{-1})$ and $a^2u_0^2=O_R(h\sqrt a)$. This comparison uses one actual law and imposes no restriction on other laws in $\mathcal X(a,h)$.
+
+**Lemma 14.2 (Uniform separation on the comparison sublevel).** There are constants $A_R,b,c_0>0$ such that, for every $a\ge A_R$, every $1\le h\le R\sqrt a$ and every $x\in\mathcal X(a,h)$ satisfying
+$$
+H(x)\le\Phi_{a,h}(u_0),
+\tag{14.2}
+$$
+exactly $r$ marginals are at least $b/a$, and each of those marginals is at least $c_0$. The other $h$ marginals are less than $b/a$. Thus the two sets are the $r$ largest and $h$ smallest actual marginals, separated by a strict gap.
+
+**Proof.** Choose $C_0\ge1$, depending only on $R$, such that (14.1) and (14.2) imply $H\le a^3+C_0a^2$. Put
+$$
+b=4C_0,\qquad c_0=(8C_0+1)^{-1},\qquad
+\mathcal C=\{i:y_i\ge b/a\},\qquad \mathcal D=[s]\setminus\mathcal C.
+$$
+The first part of the core and tail argument in Growing Lemma 7.1, in [CDSO growing surplus hubs](CDSO_GROWING_SURPLUS_HUBS.md), does not require a positive lower bound on $h/\sqrt a$. The estimates needed here follow directly as follows. Jensen and the identity in its (7.4) give
+$$
+\mathbb E K^3\ge a^3,\qquad
+\operatorname{Var}K\le C_0a/2,\qquad
+p_*:=\mathbb P(K<a/2)\le2C_0/a.
+$$
+The nonnegative residual
+$$
+\mathcal R=H-\mathbb E K^3
+=\sum_i\mathbb E[K^2\mathbf1_{\{i\in T\}}](y_i^{-2}-1)
+\le C_0a^2
+$$
+therefore yields
+$$
+\sum_i\mathbb P(i\in T,K\ge a/2)(y_i^{-2}-1)\le4C_0.
+$$
+For $i\in\mathcal C$, $y_i-p_*\ge y_i/2$. Consequently
+$$
+\sum_{i\in\mathcal C}(y_i^{-1}-y_i)\le8C_0,\qquad
+ y_i\ge c_0\ (i\in\mathcal C),\qquad
+ \sum_{i\in\mathcal C}(1-y_i)\le4C_0.
+\tag{14.3}
+$$
+Write $m=|\mathcal C|$, $n=|\mathcal D|$, $t=\sum_{i\in\mathcal D}y_i$, and $j=m-a$. The marginal budget gives
+$$
+n=h+1-j,\qquad
+j=\sum_{i\in\mathcal C}(1-y_i)-t,\qquad t\le bn/a.
+$$
+In particular $n(1-b/a)\le h+1$, so uniformly
+$$
+n=O_R(\sqrt a),\qquad t=O_R(a^{-1/2}),\qquad
+0\le j\le4C_0.
+\tag{14.4}
+$$
+For the last lower bound, $j\ge-t>-1$ eventually and $j$ is an integer. The upper bound $j\le4C_0$ follows from (14.3) and $t\ge0$, including when $n=0$. In that branch $t=0$ and $h+1=j\le4C_0$. In particular, along any sequence on the comparison sublevel with $h\to\infty$, one has $n>0$ eventually, without any positive lower bound on $h/\sqrt a$.
+
+Put $A=\{T\cap\mathcal D\ne\varnothing\}$, $p=\mathbb P(A)$, $e=\mathbb E[K;A]$, and let $H_D$ be the energy contribution of $\mathcal D$. The small tail marginals and the same residual give, for large $a$,
+$$
+(1-b^2/a^2)H_D\le\mathcal R,\qquad
+H_D\le2C_0a^2,\qquad
+\mathbb E[K^2;A]\le \frac{b^2}{a^2}H_D\le Q_0:=2C_0b^2.
+\tag{14.5}
+$$
+If $n=0$, take $p=e=H_D=0$. Otherwise $p>0$. On $A^c$ one has $K\le m$, and hence
+$$
+mp\le j+e\le j+\sqrt{Q_0p},\qquad
+p\le\frac{2j}{m}+\frac{Q_0}{m^2}=O_R(a^{-1}),\qquad
+e=O_R(a^{-1/2}).
+\tag{14.6}
+$$
+Here $m=a+j\ge a$ by (14.4).
+
+First $j=0$ is impossible. In that case $m=a$ and $n=h+1>0$. Put $L=|T\cap\mathcal C|$ and choose a tail label $i$ with largest marginal $y_i\ge t/n$. Since $\mathbb E(a-L)=t$ and $a-L\ge0$ pointwise,
+$$
+\mathbb E[K\mathbf1_{\{i\in T\}}]
+\ge a y_i-\mathbb E[(a-L)\mathbf1_{\{i\in T\}}]
+\ge a y_i-t\ge(a-n)y_i.
+$$
+For large $a$, $a-n>0$. Cauchy on the event $\{i\in T\}$ implies
+$$
+H_D\ge\frac{\mathbb E[K^2\mathbf1_{\{i\in T\}}]}{y_i^2}
+\ge\frac{(a-n)^2}{y_i}>\frac{a(a-n)^2}{b}.
+$$
+By (14.4) this contradicts (14.5).
+
+To exclude $j\ge2$, retain the core contribution as well. For $i\in\mathcal C$, let
+$$
+r_i=\mathbb P(i\in T,A),\qquad z_i=y_i-r_i,\qquad \pi=1-p.
+$$
+By (14.3) and (14.6), $z_i\ge c_0/2$ and $\pi>0$ eventually. The actual conditional law on $A^c$ has marginals $y_i^0=z_i/\pi\ge c_0/2$, mean $q_0=(a-e)/\pi$, and deficit
+$$
+d_0=m-q_0=\frac{j+e-mp}{\pi}=O_R(1),\qquad d_0\ge0.
+$$
+Its energy $H_0$, with its own marginals, satisfies the elementary bound
+$$
+H_0\ge m^2q_0-\frac{4md_0^2}{(c_0/2)^2}=m^2q_0-O_R(a).
+\tag{14.7}
+$$
+For completeness, if $\gamma=\min_i y_i^0$, then
+$$
+\sum_i(y_i^0)^{-1}\ge m+d_0,\qquad
+\sum_i(y_i^0)^{-2}\le m+2d_0/\gamma^2.
+$$
+In the exact identity
+$$
+H_0=m^2\sum_i(y_i^0)^{-1}
+-\mathbb E_0\!\left[(m^2-K^2)\sum_{i\in T}(y_i^0)^{-2}\right],
+$$
+use $m^2-K^2\le2m(m-K)$ and the total reciprocal-square bound. This gives (14.7), as in Growing (7.16).
+
+Comparison of the original and conditional denominators gives
+$$
+0\le z_i^{-2}-y_i^{-2}\le16c_0^{-3}r_i,\qquad
+\sum_{i\in\mathcal C}r_i\le e.
+$$
+Restricting the original core energy $H_C=H-H_D$ to $A^c$ therefore yields
+$$
+\begin{aligned}
+H_C&\ge\frac{H_0}{\pi}-16c_0^{-3}m^2e\\
+&\ge\frac{m^2(a-e)}{(1-p)^2}-O_R(a^{3/2})\\
+&\ge a^3+(2j+2v)a^2-O_R(a^{3/2}),\qquad v=ap.
+\end{aligned}
+\tag{14.8}
+$$
+The last step uses bounded $j,v$, (14.6), and $(1-p)^{-2}\ge1+2p$.
+
+When $n>0$, define $U=\sum_{i\in T\cap\mathcal D}y_i^{-1}$, zero off $A$. Pointwise Cauchy gives
+$$
+U^2\le |T\cap\mathcal D|\sum_{i\in T\cap\mathcal D}y_i^{-2}
+\le K^2\sum_{i\in T\cap\mathcal D}y_i^{-2},\qquad \mathbb E U=n.
+$$
+Thus $H_D\ge n^2/p$, and (14.8) gives
+$$
+\begin{aligned}
+\frac{d(x)}{a^2}
+&\ge\frac{n^2}{av}+2v+2j-2-O_R(a^{-1/2})\\
+&\ge\frac{2\sqrt2 h}{\sqrt a}+2j-2-O_R(a^{-1/2}).
+\end{aligned}
+\tag{14.9}
+$$
+The last inequality is arithmetic--geometric mean followed by $n=h+1-j$ and boundedness of $j$. The upper bound (14.1) differs from $2\sqrt2 h/\sqrt a$ by $O_R(a^{-1})$, so (14.9) excludes $j\ge2$ uniformly whenever $n>0$.
+
+It remains to exclude $n=0$. In this branch $\mathcal C=[s]$, $m=a+h+1$, $j=h+1$, and (14.3) gives
+$$
+2\le j=h+1=\sum_{i\in\mathcal C}(1-y_i)\le4C_0.
+$$
+The original law itself has mean $a$, deficit $j$ relative to $m$, and every marginal at least $c_0$. Applying the elementary bound proved in (14.7), with $q_0=a$, $d_0=j$ and $\gamma\ge c_0$, gives
+$$
+H\ge am^2-\frac{4mj^2}{c_0^2},\qquad
+\frac{d(x)}{a^2}
+\ge2h+\frac{j^2-1}{a}-\frac{4(a+j)j^2}{c_0^2a^2}
+\ge2h-\frac{D_R}{a},
+$$
+where one may take $D_R=4(1+4C_0)(4C_0)^2/c_0^2$. On the other hand, retaining the $h$ factor in (14.1) gives a constant $E_R\ge0$, depending only on $R$, such that
+$$
+2h-\frac{D_R}{a}
+\le\frac{d(x)}{a^2}
+\le\left(\frac{2\sqrt2}{\sqrt a}+\frac{E_R}{a^{3/2}}\right)h.
+\tag{14.9a}
+$$
+Choose $a$ large enough, depending only on $R$, that $D_R/a\le1/2$ and the coefficient of $h$ on the right is at most $1$. Since $h\ge1$, (14.9a) would imply $2h-1/2\le h$, a contradiction. Thus $n=0$ is impossible as well.
+
+Only $j=1$ remains, so $m=r$ and $n=h$. All thresholds used above depend only on $R$. For large $a$, $b/a<c_0$, proving the strict separation over the entire stated range. ∎
+
+**Lemma 14.3 (A uniform cost for every nonsingleton tail event).** Under (14.2), let $C$ and $D$ be the sets of Lemma 14.2 and put
+$$
+B=|T\cap D|,\qquad L=|T\cap C|,\qquad A=\{B>0\},
+$$
+$$
+u=\sum_{j\in D}t_j,\qquad t_j=y_j,\qquad
+\delta=\max_{j\in D}t_j,\qquad c=\min_{i\in C}y_i.
+$$
+Uniformly in $1\le h\le R\sqrt a$,
+$$
+\mathbb P(A,K\ge2)=O_R(ha^{-5/2}),
+\tag{14.10}
+$$
+$$
+\delta\le\frac{1+O_R(\sqrt{h/a})}{\sqrt2\,a^{3/2}},\qquad
+c\ge1-O_R\!\left(a^{-1}+\sqrt h\,a^{-3/4}\right).
+\tag{14.11}
+$$
+Consequently every such law satisfies the strict deficit-payment condition (13.18) for all sufficiently large $a$, with one threshold depending only on $R$.
+
+**Proof.** Use the polynomial and scalar remainder from Lemma 13.4:
+$$
+Q(L)=\alpha-\beta L+L^3\ge0,\quad
+\alpha=a(a+1)(2a+1),\quad \beta=3a^2+3a+1,
+$$
+$$
+\mathcal A_a(u)=\frac{r^2(a^2+3a+1+au)}{(a-u)^2}.
+$$
+That lemma's algebraic certificate (13.5) is valid for varying $h$ whenever $a^2\ge3h(2a+1)$, which holds uniformly here. In fact $a^2\ge6h(2a+1)$ eventually, so the same proof gives
+$$
+d(x)\ge H_D-u\mathcal A_a(u)+\mathbb E Q(L)+\mathcal S_f,
+\qquad
+\mathcal S_f\ge\frac{a^2}{2}\sum_{i\in C}\left(y_i-\frac{a-u}{r}\right)^2.
+\tag{14.12}
+$$
+Indeed $y_i\ge u/h$ and
+$$
+f_u''(y)=\frac{2(a^2y-3(2a+1)u)}{y^4}\ge a^2
+\quad(u/h\le y\le1)
+$$
+under the stronger arithmetic condition. This proves the stated strong Jensen remainder without a core floor assumption.
+
+Lemma 14.2 gives $t_j<b/a$ and $u\le bh/a=O_R(a^{-1/2})$. Consequently $\mathcal A_a(u)=O_R(a^2)$. Define the positive number
+$$
+\eta=\sqrt{\alpha-\mathcal A_a(u)}
+=\sqrt2\,a^{3/2}+O_R(\sqrt a).
+\tag{14.13}
+$$
+For one realized type in $A$, put
+$$
+V=\sum_{j\in T\cap D}t_j^{-1},\qquad
+W=K^2\sum_{j\in T\cap D}t_j^{-2},\qquad
+F=W+Q(L)-\mathcal A_a(u)B-2\eta V.
+$$
+If $K=1$, then $B=1,L=0$, so for $T=\{j\}$,
+$$
+F=(t_j^{-1}-\eta)^2.
+\tag{14.14}
+$$
+There is a constant $\kappa_R>0$ such that every type in $A$ with $K\ge2$ satisfies
+$$
+F\ge\kappa_Ra^3.
+\tag{14.15}
+$$
+To prove this, first take $2\le K\le\sqrt a$. Completing each square gives
+$$
+W-2\eta V\ge-\frac{B\eta^2}{K^2}\ge-\frac{\eta^2}{2}.
+$$
+Since $B,L\le K\le\sqrt a$,
+$$
+F\ge\alpha-\beta\sqrt a-\mathcal A_a(u)\sqrt a-\eta^2/2
+\ge a^3/2
+$$
+for sufficiently large $a$. If $K>\sqrt a$, every reciprocal $z=t_j^{-1}$ is greater than $a/b$. Equation (14.13) then implies $2\eta z\le K^2z^2/2$ uniformly for large $a$. Hence
+$$
+W-2\eta V\ge\frac{K^2}{2}\sum_{j\in T\cap D}t_j^{-2}
+\ge\frac{Ba^3}{2b^2}.
+$$
+Using $Q(L)\ge0$ and $\mathcal A_a(u)=O_R(a^2)$ gives $F\ge Ba^3/(4b^2)$. Thus (14.15) holds with $\kappa_R=\min\{1/2,1/(4b^2)\}$ after increasing the threshold. This argument treats the actual $B,L,K$ together; it never chooses them independently.
+
+As $\mathbb E V=h$ and $\mathbb E B=u$, (14.12) becomes
+$$
+d(x)\ge2\eta h+\mathbb E[F;A]+\mathbb E[Q(L);A^c]+\mathcal S_f.
+\tag{14.16}
+$$
+All three terms after $2\eta h$ are nonnegative. Comparing (14.16) with (14.1), using (14.13), proves
+$$
+\mathbb E[F;A]+\mathbb E[Q(L);A^c]+\mathcal S_f
+\le C_Rh\sqrt a
+\tag{14.17}
+$$
+for a finite constant $C_R$. Equations (14.15) and (14.17) prove (14.10). Equations (14.12) and (14.17) also give
+$$
+\sum_{i\in C}\left(y_i-\frac{a-u}{r}\right)^2
+=O_R(ha^{-3/2}),
+$$
+which proves the assertion about $c$ in (14.11), since $u=O_R(a^{-1/2})$.
+
+It remains to control each tail marginal, rather than its average. Write $q=\mathbb P(A,K\ge2)$ and $x_j=x_{\{j\}}$. For each $j\in D$,
+$$
+0\le t_j-x_j\le q,\qquad \eta q=O_R(h/a)=o_R(1).
+\tag{14.18}
+$$
+If $t_j\ge1/\eta$, then (14.18) implies $x_j\ge t_j/2$ eventually. With $w=\eta t_j\ge1$, (14.14) and (14.17) yield
+$$
+\frac{\eta}{2}\frac{(w-1)^2}{w}
+\le x_j(t_j^{-1}-\eta)^2\le C_Rh\sqrt a,
+\qquad
+\frac{(w-1)^2}{w}=O_R(h/a).
+$$
+For $w\ge1$, the last inequality implies $w-1=O_R(\sqrt{h/a}+h/a)=O_R(\sqrt{h/a})$. Marginals less than $1/\eta$ already satisfy this upper bound. Equation (14.13) proves the bound on $\delta$ in (14.11).
+
+Since $h\le R\sqrt a$, these estimates imply uniformly
+$$
+\delta^2\le\frac{1+O_R(a^{-1/4})}{2a^3},\qquad
+c\ge1-O_R(a^{-1/2}).
+$$
+Finally $\max\{\alpha,\beta\}=(2+O(a^{-1}))a^3$. Therefore
+$$
+\frac3{\delta^2}\ge(6-o_R(1))a^3
+>\frac{\max\{\alpha,\beta\}}{c^2}=(2+o_R(1))a^3
+$$
+for all sufficiently large $a$, proving the strict condition. ∎
+
+**Theorem 14.4 (Uniform exact value, attainment and all equality laws).** For every fixed $0<R<\sqrt2$ there is an integer $A_R$ such that all integers $a\ge A_R$ and $1\le h\le R\sqrt a$ have the following properties. The function
+$$
+\Phi_{a,h}(u)=\frac{h^2}{u}+\frac{a^2r^2}{a-u}
++\frac{(a-1)(2a+1)r^3u}{(a-u)^2},\qquad 0<u\le1/a,
+$$
+has a unique minimizer $u_{a,h}\in(0,1/a)$, and
+$$
+M(a,h):=\inf_{x\in\mathcal X(a,h)}H(x)
+=\Phi_{a,h}(u_{a,h}).
+\tag{14.19}
+$$
+The infimum is attained. Up to label permutations, every globally minimizing law, and only those laws, is obtained by choosing $C\subseteq[s]$ of size $r$ and $D=[s]\setminus C$ and setting
+$$
+x_{\{j\}}=\frac{u_{a,h}}h\quad(j\in D),\qquad
+x_C=(a-1)u_{a,h},\qquad
+x_{C\setminus\{i\}}=\frac{1-au_{a,h}}r\quad(i\in C),
+\tag{14.20}
+$$
+with every other type mass zero. No support, marginal floor, symmetry or connectedness hypothesis is imposed on $\mathcal X(a,h)$.
+
+**Proof.** The strictly positive second derivative in Lemma 13.3 is valid for every $h\ge1$ on $(0,a)$. The derivative tends to $-\infty$ at $0$ and to $+\infty$ at $a$, and at the constrained endpoint it satisfies
+$$
+\Phi_{a,h}'(1/a)=-h^2a^2+2a^3+O(a^2)
+\ge(2-R^2)a^3+O(a^2)>0
+$$
+uniformly. Thus its unique zero $u_{a,h}$ lies in $(0,1/a)$ and is also the unique global minimizer of the same expression on $(0,a)$. The masses (14.20) sum to one, have mean cardinality $a$, and have positive marginals $u_{a,h}/h$ on $D$ and $(a-u_{a,h})/r$ on $C$, by the direct count in Definition 13.2. Their energy is $\Phi_{a,h}(u_{a,h})$.
+
+Consider any actual law $x\in\mathcal X(a,h)$. If $H(x)>\Phi_{a,h}(u_0)$, it exceeds the candidate minimum. Otherwise Lemmas 14.2 and 14.3 apply. Choose their $C,D$ and write $u=\sum_{j\in D}t_j$. The strict deficit payment of Lemma 13.7 gives
+$$
+H(x)\ge\sum_{j\in D}\frac1{t_j}
++\sum_{i\in C}\left(\frac{a^2}{y_i}
++\frac{(a-1)(2a+1)u}{y_i^2}\right).
+\tag{14.21}
+$$
+Its proof is a pointwise identity and inequality once (13.18) holds; it requires no fixed-$h$ limiting argument. Cauchy on the actual tail marginals and strict Jensen on the actual core marginals give
+$$
+H(x)\ge\frac{h^2}{u}+\frac{a^2r^2}{a-u}
++\frac{(a-1)(2a+1)r^3u}{(a-u)^2}
+=\Phi_{a,h}(u)\ge\Phi_{a,h}(u_{a,h}).
+\tag{14.22}
+$$
+Here $0<u<a$ follows from positivity and the marginal budget. The comparison on $(0,a)$ is legitimate even before proving any upper bound $u\le1/a$. This proves the unrestricted lower bound, exact value and attainment.
+
+For equality, strict convexity of $\Phi_{a,h}$ forces $u=u_{a,h}$. Tail Cauchy and core strict Jensen force $t_j=u_{a,h}/h$ and $y_i=(a-u_{a,h})/r$. The strict assertion of Lemma 13.7 excludes every positive-mass tail-containing type with $K\ge2$, so all tail mass is on the displayed singletons.
+
+For a core-only type, the exact remainder identity (13.20) and equality force every nonnegative $\rho_i$ of Lemma 13.4 to vanish. Their sum is $Q(L)$; since the type is nonempty, its only possible sizes are $L=a$ and $L=r$. Thus the remaining masses are $z=x_C$ and $b_i=x_{C\setminus\{i\}}$. Normalization and the cardinality mean give
+$$
+z+\sum_i b_i=1-u_{a,h},\qquad
+rz+a\sum_i b_i=a-u_{a,h},
+$$
+so $z=(a-1)u_{a,h}$ and $\sum_i b_i=1-au_{a,h}$. The equal core marginals give
+$$
+1-u_{a,h}-b_i=\frac{a-u_{a,h}}r,
+$$
+which forces the individual masses in (14.20). Conversely their direct evaluation attains (14.19).
+
+The estimates and thresholds above are uniform over the entire integer range $1\le h\le R\sqrt a$. They therefore include bounded $h$, diverging $h$ with $h/\sqrt a\to0$, and all positive ratios bounded above by $R$. The finite value and equality assertion is a repo-derived consequence of the common-law certificates and the pointwise estimate (14.15); the classical Cauchy and Jensen inequalities are used with the actual marginals. It resolves the subcritical portions of Growing Open problems 7.3 and 8.6(1,3). It makes no assertion at or above the square-root threshold or about prescribed finite-graph realizations. The normalization is the one cited in Growing Definition 1.1 and this volume's earlier sections. Possible overlap with the unread full texts of DOI [10.21136/CMJ.2026.0075-26](https://doi.org/10.21136/CMJ.2026.0075-26) and DOI [10.47443/dml.2026.164](https://doi.org/10.47443/dml.2026.164) remains unassessed; neither text is a premise of this theorem and no literature-priority assertion is made. ∎
+
+## 追加锚（本行以下为增补区）

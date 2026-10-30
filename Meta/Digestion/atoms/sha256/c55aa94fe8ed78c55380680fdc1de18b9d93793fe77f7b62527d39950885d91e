@@ -1,0 +1,58 @@
+**Theorem 4.2 (Interior second coefficient and root expansion).** For each fixed $0<\delta_0\le1$, uniformly for $\theta\in[0,1-\delta_0]$ as $a\to\infty$,
+
+$$
+\begin{aligned}
+D_a(1-\theta)
+&=2\sqrt2\,a^{3/2}+\sqrt2(3-2\theta)a^{1/2}
+ +O_{\delta_0}(a^{-1/2}),\\
+t_*&=\frac1{\sqrt2\,a^{3/2}}
+ \left[1-\frac{3-2\theta}{2a}+O_{\delta_0}(a^{-2})\right].
+\end{aligned}\tag{4.6}
+$$
+
+Consequently the minimum of $J_s-F_r(q)$ is
+
+$$
+\sqrt2\,a^{3/2}+\frac{3-2\theta}{\sqrt2}a^{1/2}
+ +O_{\delta_0}(a^{-1/2}).\tag{4.7}
+$$
+
+At $\theta=0$ these coefficients are those of the stronger endpoint expansion in the parent volume's Theorem 12.6.
+
+**Proof.** Let $c_1=g_\theta'(0)=M_0/q^3$. Expansion of its rational formula, uniformly on $0\le\theta\le1$, gives
+
+$$
+c_1=2a^3+(6-4\theta)a^2+O(a).\tag{4.8}
+$$
+
+For example, its exact numerator after placing it over $q^3$ is
+
+$$
+c_1=\frac{r^2}{(a+\theta)^3}
+\left[2a^4+2a^3\theta+2a^3+6a^2\theta-2a^2+4a\theta-a+\theta\right].
+$$
+
+On $0\le t\le C a^{-3/2}$, differentiation of (1.2) gives $g_\theta''(t)=O_C(a^2)$ uniformly. Therefore
+
+$$
+\begin{aligned}
+h_\theta(t)-B&=\frac1t+c_1t+O_C(a^2t^2),\\
+h_\theta'(t)&=-\frac1{t^2}+c_1+O_C(a^2t).
+\end{aligned}\tag{4.9}
+$$
+
+The function $g_\theta$ is convex, so its tangent at zero yields
+$h_\theta(t)-B\ge1/t+c_1t\ge2\sqrt{c_1}$ for every $0<t<q$. At $t=c_1^{-1/2}$, (4.9) gives the reverse bound with error $O(a^{-1})$. Hence
+
+$$
+h_\theta(t_*)-B=2\sqrt{c_1}+O(a^{-1}).\tag{4.10}
+$$
+
+Also $t_*=\Theta(a^{-3/2})$ by (4.5). The stationary equation and the second line of (4.9) give
+
+$$
+t_*=c_1^{-1/2}[1+O(a^{-5/2})].
+$$
+
+Expanding the square root and inverse square root of (4.8) proves (4.6), using Theorem 4.1 to identify the global minimum. Division by two proves (4.7). The analytic error bounds above are uniform even on $\theta\in[0,1]$; the interior restriction is needed to identify the scalar minimum with an admissible law. ∎
+

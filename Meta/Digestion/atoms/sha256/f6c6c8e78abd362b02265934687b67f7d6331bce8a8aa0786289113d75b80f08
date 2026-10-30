@@ -1,0 +1,10 @@
+**Theorem 5.2 (constructive aligned core and clock recovery).** Under
+Definition 5.1 there is a finite zero-source-update inverse returning
+$T$, the least period $p$, the aligned word $(y_0,\ldots,y_{p-1})$ and
+$(A_1\bmod p,A_2\bmod p)$, and installing those values with a local
+physical literal evaluator. All source-dependent data it uses come from
+earned complete support. Complete scanning is one sufficient supplier;
+when support is already acquired the same inverse uses no further Read.
+
+Proof. First acquire support if needed by the presence-only scan of
+ACR Proposition 8.1. At each confirmed relative node $w$, submit the

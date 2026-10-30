@@ -1,0 +1,58 @@
+**Theorem 7.2 (A feasible descent from equal marginals).** For every $a\ge7$ and $0<\delta<1/r$, there is an actual law supported on cardinalities $a,r$ with $H<H_d$. Its marginals can be chosen arbitrarily close to $\mu$. More explicitly, let $P=\{1,2\}$ and define
+
+$$
+\begin{aligned}
+x_{[s]\setminus P}&=\delta,\\
+x_{[s]\setminus\{i\}}
+ &=\frac{1+\delta}{s}-\delta-\varepsilon
+ &&(i=1,2),\\
+x_{[s]\setminus\{j\}}
+ &=\frac{1+\delta}{s}+\frac{2\varepsilon}{a}
+ &&(3\le j\le s),
+\end{aligned}\tag{7.2}
+$$
+
+with all other masses zero. For
+
+$$
+0\le\varepsilon<\frac{1-r\delta}{s},\qquad
+v:=\mu-\frac{2\varepsilon}{a}>0,\tag{7.3}
+$$
+
+this law has mean $q$, marginals $u=\mu+\varepsilon$ on $P$ and $v$ off $P$, and exact energy
+
+$$
+\mathcal H(\varepsilon)
+=\frac{2r^2}{\mu+\varepsilon}
+ +a\left[
+ \frac{r^2}{\mu-2\varepsilon/a}
+ -\frac{(2r-1)\delta}{(\mu-2\varepsilon/a)^2}
+ \right].\tag{7.4}
+$$
+
+In particular,
+
+$$
+\mathcal H(0)=H_d,\qquad
+\mathcal H'(0)=-\frac{4(2r-1)\delta}{\mu^3}<0.\tag{7.5}
+$$
+
+**Proof.** The two masses indexed by $P$ equal $(1-r\delta)/s-\varepsilon$, and all the other displayed masses are positive under (7.3). Their total at cardinality $r$ is
+
+$$
+2\left(\frac{1+\delta}{s}-\delta-\varepsilon\right)
+ +a\left(\frac{1+\delta}{s}+\frac{2\varepsilon}{a}\right)
+=1-\delta.
+$$
+
+Adding the cardinality-$a$ mass $\delta$ gives total mass one and mean $a\delta+r(1-\delta)=q$. A label in $P$ is missing from both the mass $\delta$ and its own missing-one type; hence its marginal is $u$. A label outside $P$ is missing only from its own missing-one type; hence its marginal is $v$. These are marginals of (7.2), rather than independent choices. Positive masses and total mass one also give $u,v\le1$.
+
+For $i\in P$ the cardinality-$a$ atom avoids $i$, so $w_i=r^2u$. For $j\notin P$ it contains $j$, giving
+
+$$
+w_j=r^2v-(r^2-a^2)\delta
+=r^2v-(2r-1)\delta.
+$$
+
+Summing $w_i/y_i^2$ gives precisely the sum in (7.4). At $\varepsilon=0$ all marginals equal $\mu$ and $\mathbb E K^3=Z$, proving its value in (7.5). Differentiating that rational sum proves its derivative. Both upper bounds on a sufficiently small positive $\varepsilon$ in (7.3) have positive length, so (7.5) supplies a strict descent with arbitrarily small marginal perturbations. ∎
+

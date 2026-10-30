@@ -1,0 +1,10 @@
+### 6.1 一个关系方向的 Lie 生成
+
+本节规定局部控制为 $\mathfrak h=\mathfrak{su}(5)\oplus\mathfrak{su}(5)$，
+关系方向为 $X\in\mathfrak k\setminus\mathfrak h$，并允许 $e^{tX}$ 的所有实参数 $t$。
+这里 $X$ 已属于紧 E8 代数，不是任意 $248\times248$ 反 Hermitian 矩阵。
+若项目提供的是 $U(5)$ 菜单，可以取其可实现的 $\operatorname{SU}(5)$ 子菜单；
+不能用一个未定义的全局行列式五次根，把 $U(5)$ 单值地投到 $\operatorname{SU}(5)$。
+
+<a id="statement-6-1"></a>
+

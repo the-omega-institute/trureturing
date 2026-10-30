@@ -1,0 +1,15 @@
+#### 定义 5.1（种子和带标签基底的稳定子）
+
+本节取固定单位纯种子 $\psi_0$。在 $G\le\operatorname{U} (d)$ 内定义
+
+$$
+H_{\psi_0}=\{h:h\psi_0=e^{i\alpha}\psi_0\},\qquad
+T=\{t:t\Pi_st^\dagger=\Pi_s\text{ 对全部 }s\}.
+$$
+
+满酉群中 $T$ 是对角相位群。这里标签固定，不把结果置换自动视为同一测量。
+
+<a id="statement-5-2"></a>
+
+<a id="thm-double"></a>
+

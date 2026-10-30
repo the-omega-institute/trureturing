@@ -1,0 +1,29 @@
+**定义 3.1（内部持久记录与相容目标）。**
+
+<a id="def-record"></a>
+
+在同一 von Neumann 代数 $\mathcal M$ 中固定正规态 $\omega$；
+固定单位向量的向量态即可。
+每层内部记录为有限正交投影分割
+
+$$
+\sum_{|h|=n}P_h=I,\qquad P_hP_{h'}=0\ (h\ne h'),\qquad
+P_h=\sum_oP_{ho}.
+$$
+
+令 $\mathcal D_n=\operatorname{alg}\{P_h:|h|=n\}$，
+$\mathcal D_\infty=W^*(\bigcup_n\mathcal D_n)$。
+指标 $n$ 是包含关系的深度。
+取固定目标投影 $Z$，假设 $[Z,\mathcal D_\infty]=0$。
+对 $\omega(P_h)>0$ 定义
+
+<a id="eq-qn"></a>
+
+$$
+q_n(h)=\frac{\omega(P_hZ)}{\omega(P_h)},\qquad
+q_n=\sum_{|h|=n}q_n(h)P_h.
+\tag{1}
+$$
+
+零质量块上的值任取于 $[0,1]$。
+

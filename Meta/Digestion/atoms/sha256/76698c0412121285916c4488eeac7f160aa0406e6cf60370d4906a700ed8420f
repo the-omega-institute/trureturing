@@ -1,0 +1,25 @@
+**Proposition 24.3 (the distinct physical-cut leaf domain).** If $L_t(c)$
+denotes the leaves at physical cut $e_c+t$, then $L_0(c)=H_c(0)$ and,
+for $t\ge1$,
+
+$$
+ L_t(c)=H_c(t)\;\dot\cup\;
+ \{wx:\ w\in H_c(t-1),\ \delta_x(c_{cw})=2\},\qquad
+ |L_t(c)|=F_{t+2}.
+\tag{PCR.63}
+$$
+
+The first part consists of beta leaves at their normalization origins;
+the second consists of initially alpha children just created at that cut,
+which normalize one cut later. Every leaf is one of these: a beta
+branches at the next cut, and an alpha promotes at the next cut. This
+proves the disjoint union and its count. It also identifies $H_c(t)$
+exactly as the beta leaves at that cut. It does not identify endpoint
+fibers across a shift of the cut. For the zero source at the root,
+$H_c(1)=\{b\}$ but $L_1(c)=\{a,b\}$. For $s=(10)^\infty$ at the root,
+$L_1$ has two endpoints both $(0,1)$ modulo two, whereas
+$H_c(2)=\{ab,b\}$ has endpoints $(1,0)$ and $(0,1)$. Thus even the
+equality $|L_{t-1}|=|H_c(t)|$ for $t\ge1$ transfers neither this target's
+addresses nor its conditioned fibers. The coding below uses (PCR.61)
+directly.
+

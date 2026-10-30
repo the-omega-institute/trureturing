@@ -1,0 +1,30 @@
+#### 定理 4.1（共同等距输运与滤波的区别）
+
+设 $J:H\to\widetilde H$ 为等距嵌入，即 $J^\dagger J=I_H$。即使 $J$ 不满射，也有
+
+$$
+(JV)^\dagger(JU)=V^\dagger U,\qquad
+\langle JVx,JUy\rangle=\langle Vx,Uy\rangle.
+$$
+
+若两侧使用不同的嵌入 $J_V,J_U$，剩余项为
+$V^\dagger J_V^\dagger J_UU$，一般不消失。
+
+更一般地，设线性 $L:H\to\widetilde H$ 对非零向量均不为零。它保持所有归一化射线的转移概率，当且仅当
+
+$$
+L^\dagger L=cI,\qquad c>0.
+$$
+
+**证明。**
+
+等距部分直接插入 $J^\dagger J=I$。对线性 $L$，记正定 $G=L^\dagger L$。若它保持全部射线转移概率，特别保持正交性。取 $G$ 的正交本征基 $e_i$，本征值 $\lambda_i>0$。两向量 $e_i+e_j$ 与 $e_i-e_j$ 原本正交，变换后内积为 $\lambda_i-\lambda_j$，故所有本征值相等，$G=cI$。反之公共因子 $c$ 在归一化内积的分子、分母相消。
+
+∎
+
+非满射等距属于保内积的嵌入接口，不直接是前节同一载体的群轨道作用。共同滤波 $L$ 若非标量等距，则留下关系度量 $G=L^\dagger L$；若作为成功分支，其成功概率也不能只因条件态归一化而删除。合法 Kraus 分支还要求 $L^\dagger L\le I$；即使 $G=cI$，分支发生率仍为 $c\le1$。
+
+<a id="statement-4-2"></a>
+
+<a id="thm-projection"></a>
+

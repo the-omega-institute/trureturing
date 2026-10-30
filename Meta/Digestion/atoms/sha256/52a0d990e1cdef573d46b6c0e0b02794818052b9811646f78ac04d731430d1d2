@@ -1,0 +1,22 @@
+#### 定义 5.1（未来效果的递归闭包）
+
+<a id="def:future"></a>
+
+在有限内部载体 $M_D(\mathbb{C})$ 上，给有限标签菜单 $\ell\mapsto\Phi_\ell$，
+各 $\Phi_\ell$ 为完全正迹不增分支，同一设置的分支之和保持迹。
+控制记忆若影响菜单，也须计入该载体。
+定义实自伴线性空间
+
+$$
+\mathcal{S}_0=\operatorname{span}_\mathbb{R}\{I\},\qquad
+ \mathcal{S}_{n+1}
+ =\operatorname{span}_\mathbb{R}\!\left(\mathcal{S}_n\cup\bigcup_\ell\Phi_\ell^*(\mathcal{S}_n)\right).
+ \tag{14}
+$$
+
+对词 $w=\ell_1\cdots\ell_k$，
+$E_w=\Phi_{\ell_1}^*\cdots\Phi_{\ell_k}^*(I)$，
+$p_\rho(w)=\operatorname{Tr}\rho E_w$。
+
+<a id="statement-5-2"></a>
+

@@ -1,0 +1,14 @@
+**定义 1.2（固定的有限电导向量）。** 对每个 $R_0>0$，置
+
+$$
+\begin{aligned}
+t&=\frac1{2000},& a&=2+\sqrt3,& T_0&=\frac{143}{12},\\
+r_i&=1+2t\cos\frac{\pi i}{6}+2t^2\cos\frac{\pi i}{3}
+\quad(0\le i\le11),\\
+T&=T_0-2at^2-2t^4,&
+\alpha&=\frac{12T}{R_0},& c_i&=\frac{\alpha}{r_i}.
+\end{aligned}
+$$
+
+辅助电导记为 $\widetilde c_i=1/r_i$。
+

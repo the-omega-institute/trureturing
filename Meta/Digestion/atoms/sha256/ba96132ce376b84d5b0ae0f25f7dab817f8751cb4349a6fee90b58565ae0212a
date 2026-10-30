@@ -1,0 +1,96 @@
+**定理 75.1（实际完整 TV 中的四状态障碍）。** 固定 $0<d<1$、$\sin(2\theta)\ne0$，$\mathcal D\subseteq\mathcal K_d$ 包含 (73.1) 的两个世界。若 $H\ge6$ 且
+
+$$
+\Delta_H(\mathcal D;q)\le\varepsilon
+<\frac{d(1-d)|\sin(2\theta)|}{1638400},
+\tag{75.1}
+$$
+
+则比较器至少需要四个状态。特别地，在 $\theta=\pi/4$，更强的充分条件为
+
+$$
+\varepsilon<\frac{3d(1-d)}{2867200};
+\qquad d=1/2\text{ 时为 }\varepsilon<\frac3{11468800}.
+\tag{75.2}
+$$
+
+证明。保留 (73.3) 的原始联合权重，构造完整四阶 Hankel 矩阵
+
+$$
+J=(a_{i+j})_{i,j=0}^3=
+\begin{pmatrix}
+a_0&a_1&a_2&a_3\\
+a_1&a_2&a_3&a_4\\
+a_2&a_3&a_4&a_5\\
+a_3&a_4&a_5&a_6
+\end{pmatrix},\qquad a_n=2t\,2^{-n}u_n.
+\tag{75.3}
+$$
+
+式 (73.14) 指定了它的每一个条目。代入并展开行列式，得到
+
+$$
+\det J=\frac{81t^4s_\theta^4}{65536},\qquad
+J^{-1}=\frac{M(c)}{ts_\theta},
+\tag{75.4}
+$$
+
+其中完整逆矩阵的分子为
+
+$$
+M(c)=\frac13
+\begin{pmatrix}
+2c^2+c+1&10c^2-8c-2&8c^2-16c&16-16c\\
+10c^2-8c-2&50c^2-20c-6&40c^2-48c+8&16-80c\\
+8c^2-16c&40c^2-48c+8&32(c-1)^2&64(1-c)\\
+16-16c&16-80c&64(1-c)&128
+\end{pmatrix}.
+\tag{75.5}
+$$
+
+这些是多项式恒等式：将 (73.14) 代入 $J$，在 (73.4) 的递推下相乘，得 $JM(c)=ts_\theta I_4$；行列式展开给 (75.4)。它们只要求 $s_\theta\ne0$，没有非共振常数或一般位置假设。
+
+对任意经典比较器，令
+
+$$
+y_n=f_{\rm cl}^{\mathsf T}T_0^n(p_+-p_-),\qquad
+Y=(y_{i+j})_{i,j=0}^3.
+\tag{75.6}
+$$
+
+矩阵 $Y$ 分解为四行 $f_{\rm cl}^{\mathsf T}T_0^i$ 与四列 $T_0^j(p_+-p_-)$ 的乘积，故 $\operatorname{rank}Y\le k$。式 (72.6) 的事件误差界给 $|y_n-a_n|\le2\varepsilon$，并且 $i+j\le6$，于是
+
+$$
+\|J-Y\|_2\le\|J-Y\|_{\rm F}\le8\varepsilon.
+\tag{75.7}
+$$
+
+对 $|c|\le1$，对 (75.5) 各项的系数绝对值求和，四行依次给
+
+$$
+\sum_j|M_{1j}(c)|\le80/3,\quad
+\sum_j|M_{2j}(c)|\le96,\quad
+\sum_j|M_{3j}(c)|\le376/3,\quad
+\sum_j|M_{4j}(c)|\le128.
+\tag{75.8}
+$$
+
+$M(c)$ 对称，故 $\|J^{-1}\|_1=\|J^{-1}\|_\infty$，从而
+
+$$
+\|J^{-1}\|_2\le\|J^{-1}\|_\infty
+\le\frac{128}{t|s_\theta|}.
+\tag{75.9}
+$$
+
+若 $\varepsilon<t|s_\theta|/1024$，则 $\|J^{-1}(Y-J)\|_2<1$，Neumann 逆级数使 $Y$ 可逆。因此 $k\ge4$。代入 $t=d(1-d)/1600$，恰得 (75.1)。
+
+当 $\theta=\pi/4$ 时 $c=0$、$s_\theta=1$，(75.5) 四行的实际绝对值和分别为
+
+$$
+19/3,\qquad32/3,\qquad104/3,\qquad224/3.
+\tag{75.10}
+$$
+
+于是 $\|J^{-1}\|_2\le224/(3t)$，严格条件 $8\varepsilon\cdot224/(3t)<1$ 等价于 $\varepsilon<3t/1792$，给 (75.2)。全程比较的都是实际联合事件；没有把 $a_n$ 除以 $2^{-n}$。这证明一个固定的四状态下界，并不证明在同一个正误差下随 $H$ 发散。∎
+

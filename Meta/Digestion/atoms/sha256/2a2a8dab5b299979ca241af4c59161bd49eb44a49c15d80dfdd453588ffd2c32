@@ -1,0 +1,20 @@
+**定义 1.1（Uniform independent blow-up and token adjacency）。** Let $H$ be a finite simple graph on $[m]=\{1,\ldots,m\}$, where $m\geq2$, and suppose that $H$ has an edge. Every edge has weight one. Write
+
+$$
+a=A(H),\qquad \lambda=\lambda_{\min}(a)<0.
+\tag{1.1}
+$$
+
+For an integer $s\geq1$, let $B_i=\{i\}\times[s]$, $\Omega=\bigsqcup_i B_i$ and $N=ms$. The graph $G_s=H[\overline{K_s}]$, also written $H[\mathrm{empty}_s]$, has vertex set $\Omega$; two vertices are adjacent exactly when their block indices are adjacent in $H$. Thus there are no edges inside a block. For every integer $0\leq k\leq N$, let $\mathcal H_k$ have the orthonormal basis $\{|S\rangle:S\subseteq\Omega,\ |S|=k\}$. The ordinary token adjacency $K_k$ has matrix entry one between $S,T$ exactly when $S\setminus T=\{u\}$, $T\setminus S=\{v\}$ and $\{u,v\}\in E(G_s)$, and has all other entries zero. Define
+
+$$
+E(s,k)=\lambda_{\min}(K_k)
+=\min_{0\ne w\in\mathcal H_k}
+\frac{\langle w,K_kw\rangle}{\langle w,w\rangle}.
+\tag{1.2}
+$$
+
+Inner products are conjugate-linear in the first variable. All vectors may have arbitrary complex coordinates. The endpoint spaces $\mathcal H_0,\mathcal H_N$ each have dimension one, with zero adjacency.
+
+These are the token-graph conventions of Apte–Parekh–Sud, [*Conjectured Bounds for 2-Local Hamiltonians via Token Graphs*, v2, Definition 1 and Fact 2](https://arxiv.org/html/2506.03441v2), and of the supplied [token-graph definition](../../../D5/S3/Combinatorics/Graph/TokenGraphLaplacianRadiusRefutation.lean). Here $K_k$ is adjacency itself; the shifted XY block $W(G_s)I/2-K_k$ in Fact 2 is a different operator.
+

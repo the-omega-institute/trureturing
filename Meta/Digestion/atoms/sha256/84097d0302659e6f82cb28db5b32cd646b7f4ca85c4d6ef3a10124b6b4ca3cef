@@ -1,0 +1,27 @@
+**Corollary 7.3 (Relation to the companion's implicit gap).** At the
+same canonical $\rho$ in (7.1), let $M=M(N,\rho)$ be (3.1). The
+implicit squared excess of [F], §11.4, is
+
+$$
+\Gamma_{\mathrm{imp}}(n,Z)=
+\frac{16H^2}{2M+1}(2\eta-\eta^2)
+\left((\rho_0+\eta)^2-\rho_0^2\right).
+\tag{7.12}
+$$
+
+Then $M\le B_Z$ and
+
+$$
+0<\Gamma_{\mathrm{exp}}(n,Z)\le\Gamma_{\mathrm{imp}}(n,Z).
+\tag{7.13}
+$$
+
+**Proof 7.3.** Corollary 3.2 gives $M\le B_Z$. All other factors
+in (7.4) and (7.12) are identical and positive; replacing $2M+1$
+by the no-smaller denominator $2B_Z+1$ proves (7.13). $\square$
+
+The explicit value may be weaker than the implicit value. Its content
+is a closed function of $n,Z$ and an explicit sufficient finite
+index, without evaluating a finite minimax or searching over feasible
+prefixes.
+

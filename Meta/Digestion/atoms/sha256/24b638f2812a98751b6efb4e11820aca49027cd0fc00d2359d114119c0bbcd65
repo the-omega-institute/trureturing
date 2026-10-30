@@ -1,0 +1,70 @@
+**Theorem 12.5 (Eventual exact global minimum and all equality arrays).** There exists an integer $a_0\ge7$ such that, for every integer $a\ge a_0$ and every $x\in\mathcal X_a$,
+
+$$
+H(x)\ge h_a(\epsilon_a).
+\tag{12.24}
+$$
+
+Equality holds if and only if, for some label $e$ and $C=[a+2]\setminus\{e\}$,
+
+$$
+x_{\{e\}}=\epsilon_a,\qquad
+x_C=(a-1)\epsilon_a,\qquad
+x_{C\setminus\{j\}}=\frac{1-a\epsilon_a}{a+1}\quad(j\in C),
+\qquad x_T=0\text{ otherwise}.
+\tag{12.25}
+$$
+
+Here $\epsilon_a$ is the unique positive root in Lemma 12.2. In each equality array, $e$ is the unique label of smallest marginal. Thus there is precisely one minimizing array up to relabeling, and
+
+$$
+g_a=\frac1{2\epsilon_a}
+ +\frac{r^2\epsilon_a(M_a-a\epsilon_a)}
+        {2(a-\epsilon_a)^2}.
+\tag{12.26}
+$$
+
+This determines the eventual minimum within the unrestricted array class $q=a$, $s=a+2$. It strengthens the upper-bound and scale statements of Theorem 10.1 on precisely this scope. No explicit or smallest $a_0$ is specified, and no classification for $4\le a<a_0$, other values of $q,s$, or exact finite graph budgets is asserted.
+
+**Proof.** Choose $a_0$ large enough for all the uniform conclusions of Lemma 12.4 on $\mathcal U_a$ to hold, in particular $\lambda_a(t)>0$ for every least-marginal choice. If $x\notin\mathcal U_a$, then $H(x)>h_a(\epsilon_a)+1$, so (12.24) holds strictly. If $x\in\mathcal U_a$, choose any least-marginal label and apply (12.6):
+
+$$
+H(x)\ge h_a(t)+\beta\lambda_a(t)\ge h_a(\epsilon_a).
+$$
+
+The last step uses $\beta\ge0$, $\lambda_a(t)>0$, and the scalar minimum on the whole interval $(0,a)$. Thus the bound holds for all arrays, with the single threshold $a_0$ independent of the array. The feasible family in Lemma 12.2 attains it.
+
+Suppose equality holds. The exact nonnegative difference (12.6) gives
+
+$$
+\begin{aligned}
+0={}&h_a(t)-h_a(\epsilon_a)+\beta\lambda_a(t)
+ +\frac ut+\mathcal G
+ +\sum_{i\in C}\frac{S_i+D_i}{y_i^2}.
+\end{aligned}
+$$
+
+Every summand is nonnegative. Strict scalar convexity forces $t=\epsilon_a$, and the strictly positive coefficient of $\beta$ forces $\beta=0$. The latter statement is exact: $e$ occurs only in the type $\{e\}$. Equality $\mathcal G=0$ forces $y_i=(a-t)/r$ for every core label; also every $S_i=D_i=0$.
+
+Sum (12.9) over $i\in C$. On the remaining events $I=0$, one has $L=K\ge1$, so (12.12) gives
+
+$$
+0=\mathbb E\bigl[Q_a(L)\mathbf1_{\{T\ne\{e\}\}}\bigr].
+$$
+
+For integer $1\le l\le r$, $Q_a(l)>0$ when $1\le l\le a-1$, and its only zeros are $l=a,r$. Therefore the remaining positive masses are confined to $C$ and the types $C\setminus\{j\}$. This finite support conclusion follows from zero nonnegative residuals, rather than from a limit of $\beta$.
+
+Let $z=x_C$ and $b_j=x_{C\setminus\{j\}}$. Normalization and the mean condition give
+
+$$
+z+\sum_jb_j=1-t,\qquad rz+a\sum_jb_j=a-t,
+$$
+
+hence $z=(a-1)t$ and $\sum_jb_j=1-at$. Each core marginal satisfies
+$y_i=1-t-b_i=(a-t)/r$,
+which forces $b_i=(1-at)/r$ for every $i$. This is exactly (12.25). Conversely, Lemma 12.2 shows that (12.25) attains equality.
+
+Finally $\epsilon_a<1/a<a/(a+2)$ implies
+$\epsilon_a<(a-\epsilon_a)/r$,
+so $e$ is the unique smallest-marginal label. Formula (12.26) follows from (12.4). All types, including zero masses, were admitted throughout the argument; no positive marginal was discarded. In particular the disconnected support of (12.25) is allowed by Definition 12.1. ∎
+

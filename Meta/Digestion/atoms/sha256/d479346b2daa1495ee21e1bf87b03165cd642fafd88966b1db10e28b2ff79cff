@@ -1,0 +1,20 @@
+#### 命题 3.1（串联同一仿射通道可能不断遗忘）
+
+<a id="prop:noiseiterate"></a>
+
+若 $0<c<1$，$T(p)=cp+d$、$\sum d=1-c$，
+令 $r_0=d/(1-c)$，则
+
+$$
+T^n(p)=c^np+(1-c^n)r_0,\qquad
+ \operatorname{TV}(T^n(p),T^n(q))=c^n\operatorname{TV}(p,q).
+$$
+
+**证明。**
+
+对 $n$ 归纳；相减后只余 $c^n(p-q)$。
+
+∎
+
+<a id="statement-3-2"></a>
+

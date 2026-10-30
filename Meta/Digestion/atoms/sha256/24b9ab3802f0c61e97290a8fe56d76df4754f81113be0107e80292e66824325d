@@ -1,0 +1,23 @@
+**图 1：** 同一个静态交换方块表示空间镜像的协变性。边上的矩阵相容有明确内容；不需要把方块解释为外部连续时间。
+
+**排版说明。** 上方使用 Markdown `math` 围栏中的数组、方框与带标签箭头重画原图，保留四个节点的完整内容、原来的两行两列位置和两条有向路线。字体、颜色、圆角、线型、节点尺寸与间距不复现 TikZ 样式。
+
+**原始 TikZ（逐字保留）：**
+
+```tex
+\begin{tikzpicture}[>=Stealth,node distance=12mm,
+ box/.style={draw=blue!45!black,rounded corners,align=center,text width=48mm,minimum height=13mm,font=\small}]
+\node[box] (a) {$\psi\in H$\\原生输入};
+\node[box,right=24mm of a] (b) {$S\psi$\\左右反序};
+\node[box,below=16mm of a] (c) {$K_j\psi$\\地址 $j$ 的作用};
+\node[box,below=16mm of b] (d) {$K_{6-j}S\psi$\\镜像地址的作用};
+\draw[->] (a)--node[above,font=\small]{$S\sim\Delta_K$} (b);
+\draw[->] (a)--node[left,font=\small]{$K_j$}(c);
+\draw[->] (b)--node[right,font=\small]{$K_{6-j}$}(d);
+\draw[->] (c)--node[below,font=\small]{$S\sim\Delta_K$}(d);
+\end{tikzpicture}
+```
+
+
+<a id="section-6"></a>
+

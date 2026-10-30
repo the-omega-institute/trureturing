@@ -1,0 +1,55 @@
+#### 定理 8.2（几何、生成元方差与固定约束）
+
+<a id="thm:qgt"></a>
+
+$\chi$ 是正半定 Hermitian 张量，局部相位变换不改变它。
+若 $U(\lambda)$ 是算符范数 $C^2$ 的酉族且
+$\psi_\lambda=U(\lambda)\psi_0$，
+$G_\mu=iU^*\partial_\mu U$，则
+
+$$
+\chi_{\mu\nu}
+ =\langle\psi_0,G_\mu G_\nu\psi_0\rangle
+  -\langle G_\mu\rangle\langle G_\nu\rangle.              \tag{37}
+$$
+
+因此
+
+$$
+g_{\mu\mu}=\operatorname{Var}_{\psi_0}(G_\mu),\qquad
+ \mathscr F_{\mu\nu}=-i\langle[G_\mu,G_\nu]\rangle,
+$$
+
+$$
+\boxed{
+ g_{\mu\mu}g_{\nu\nu}-g_{\mu\nu}^2
+ \ge\frac14\mathscr F_{\mu\nu}^2.
+ }                                                       \tag{38}
+$$
+
+定义实连接一形式 $\mathscr A_\mu=-i\langle\psi,\partial_\mu\psi\rangle$，
+则 $\partial_\mu\mathscr A_\nu-\partial_\nu\mathscr A_\mu=\mathscr F_{\mu\nu}$。
+
+**证明。**
+
+$\chi$ 是向量族 $\eta_\mu$ 的 Gram 矩阵，所以正半定。
+相位 $\psi'=e^{i\alpha}\psi$ 的导数中，
+$i(\partial_\mu\alpha)\psi$ 被 $I-P$ 消去，故 $\eta'_\mu=e^{i\alpha}\eta_\mu$。
+$U^*\partial_\mu U=-iG_\mu$ 给 $\partial_\mu\psi=-iUG_\mu\psi_0$，
+投影后的 Gram 式即为中心化生成元乘积，得到式 (37)。
+其虚部为交换子期望除以 $2i$。
+二阶主子式非负给式 (38)。
+最后对 $\mathscr A$ 求导，混合二阶导数相消，余下
+$-i(\langle\partial_\mu\psi,\partial_\nu\psi\rangle -\langle\partial_\nu\psi,\partial_\mu\psi\rangle)$。
+去除垂直相位分量只改变实部，因此该式恰为 $2\operatorname{Im}\chi_{\mu\nu}$。
+
+∎
+
+这是一套标准量子信息几何结构在内部相对读出中的使用；
+统计可辨识度与量子态几何的关系见 Braunstein--Caves，
+生成元方差与射影路径长度的关系见 Anandan--Aharonov。（[8](#ref-braunstein)、[10](#ref-anandan)）
+这里没有从五点关联图单独导出复数或连续微分结构；
+所证明的是一旦这些结构被内部模型供应，其度量、相位曲率与不确定性具有同一个 Gram 来源。
+
+<a id="statement-8-3"></a>
+

@@ -1,0 +1,103 @@
+**Theorem 16.1 (uniform base coercivity).** On $M_3(\mathbb C)$ retain exactly the original maps
+
+$$
+\Phi_{\lambda,q}(X)=\lambda X+(1-3q-\lambda)\operatorname{diag}(X)
+ +q\operatorname{tr}(X)I_3,
+\qquad
+S_{\lambda,q}(X)=\Phi_{\lambda,q}(X^\ast X)
+ -\Phi_{\lambda,q}(X)^\ast\Phi_{\lambda,q}(X).
+$$
+
+For every complex $X$, put $X_0=X-\operatorname{tr}(X)I_3/3$. Then
+
+$$
+S_{1/2,1/3}(X)\ \ge\ \frac{\|X_0\|_F^2}{10944}I_3.
+\tag{16.1}
+$$
+
+Equivalently, for every $v\in\mathbb C^3$,
+
+$$
+v^\ast S_{1/2,1/3}(X)v
+ \ge\frac{\|X_0\|_F^2\|v\|^2}{10944}.
+$$
+
+For a nonzero probe, equality in this scalar inequality holds exactly when $X$ is scalar; for $v=0$ it always holds. In particular the defect of a nonscalar input is positive definite. All supports of the probe are included. The scalar-shift, phase and row reductions are those of Lemma 3.1 and Theorem 3.2; the quantitative lower bound is the further inference proved here.
+
+**Proof.** Base sufficiency itself is already supplied: in the original $(\lambda,q)$ coordinates,
+
+$$
+(1/2,1/3)=\tfrac14(1,0)+\tfrac34(1/3,4/9),
+$$
+
+where Proposition 4.2, Theorem 13.2 and the convexity identity of Remark 4.4 supply the endpoints and their segment. To obtain the quantitative assertion, use Lemma 3.1 to replace $X$ by $X_0$. For a unit probe use precisely the diagonal-unitary conjugation of Theorem 3.2 to reduce it to $s=(\sqrt{t_1},\sqrt{t_2},\sqrt{t_3})^T$, $t\in\Delta_3$. These operations preserve the trace-zero Frobenius norm. Write the resulting input as $D+Y$, with $D=\operatorname{diag}(z_1,z_2,z_3)$, $z_1+z_2+z_3=0$, and $Y$ of zero diagonal. All entries remain complex.
+
+In row $i$, put $x=t_i$ and denote the other weights by $y,w$. The row blocks and couplings of Convention 2.2 at these parameters are
+
+$$
+A_i=\tfrac13,\qquad
+P_i=\begin{pmatrix}1/3-y/4&\sqrt{yw}/4\\
+\sqrt{yw}/4&1/3-w/4\end{pmatrix},\qquad
+b_i=\tfrac12\sqrt{x}(\sqrt y,\sqrt w)^T.
+$$
+
+Indeed $P_i=I_2/3-uu^T/4$ with $u=(\sqrt y,-\sqrt w)^T$. Its eigenvalues are $1/3$ and $(1+3x)/12$, including when $y$ or $w$ is zero. Thus
+
+$$
+P_i\ge I_2/12,\qquad
+\det P_i=(1+3x)/36>0,\qquad
+\|P_i^{-1}b_i\|\le12\|b_i\|
+ =6\sqrt{x(1-x)}\le3.
+\tag{16.2}
+$$
+
+Put $T=t_1t_2t_3$ and $\beta_i=P_i^{-1}b_i$. The adjugate contraction is
+
+$$
+(\sqrt y,\sqrt w)\operatorname{adj}(P_i)(\sqrt y,\sqrt w)^T
+ =(1-x)/3-yw.
+$$
+
+Consequently the original Schur coefficient is
+
+$$
+\begin{aligned}
+\kappa_i
+ &=\tfrac13-\frac{3x(1-x-3yw)}{1+3x}
+ =\frac{(1-3t_i)^2+27T}{3(1+3t_i)}\ge0.
+\end{aligned}
+\tag{16.3}
+$$
+
+For every $t\in\Delta_3$ at least two distinct coefficients are strictly greater than $1/192$. If all weights are at least $1/6$, then $T\ge1/216$ and (16.3) gives $\kappa_i\ge1/96$ for every $i$, since its denominator is at most $12$. Otherwise choose $i$ with $t_i\le1/6$ and $j$ with $t_j\ge5/12$, which is possible because the other two weights sum to at least $5/6$. Then $\kappa_i\ge1/48$, and $\kappa_j\ge1/192$ follows from $(1-3t_j)^2\ge1/16$ and $3(1+3t_j)\le12$. The last inequality is strict: simultaneous equality would require both $t_j=5/12$ and $t_j=1$.
+
+Let $Z=\sum_i|z_i|^2$. The third diagonal variable is minus the sum of the selected two, so complex Cauchy–Schwarz gives
+
+$$
+Z\le3(|z_i|^2+|z_j|^2),\qquad
+\sum_i\kappa_i|z_i|^2\ge Z/576.
+\tag{16.4}
+$$
+
+The second inequality is strict if $Z>0$, since the selected pair cannot both vanish then. With $\eta_i=(y_{ij})_{j\ne i}$ and $R=\sum_i\|\eta_i+z_i\beta_i\|^2$, completing the original row squares gives
+
+$$
+\begin{aligned}
+s^T S_{1/2,1/3}(X_0)s
+ &=\sum_i(\eta_i+z_i\beta_i)^\ast P_i(\eta_i+z_i\beta_i)
+   +\sum_i\kappa_i|z_i|^2\\
+ &\ge R/12+Z/576.
+\end{aligned}
+\tag{16.5}
+$$
+
+This uses no division by a probe coordinate. From (16.2) and $\|a-b\|^2\le2\|a\|^2+2\|b\|^2$,
+
+$$
+\|Y\|_F^2\le2R+18Z,\qquad
+\|X_0\|_F^2\le2R+19Z
+ \le10944(R/12+Z/576).
+$$
+
+This proves (16.1) on unit probes and hence, by homogeneity, on every complex probe. If $R>0$, the last comparison is strict because $10944/12>2$. If $R=0$ and $X_0\ne0$, then $Z>0$ and (16.4) makes (16.5) strict. Thus the scalar lower bound is strict whenever $X_0\ne0$ and $v\ne0$. Scalar inputs have zero defect by Lemma 3.1, proving the equality assertions. ∎
+

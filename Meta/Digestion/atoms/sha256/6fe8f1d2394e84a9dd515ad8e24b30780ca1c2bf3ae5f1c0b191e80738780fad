@@ -1,0 +1,39 @@
+**定理 4.1（相位观察核）。**
+
+<a id="thm-obskernel"></a>
+
+令
+
+$$
+D(\mathcal O)=\{j-k\in\mathbb F_5:
+P_jAP_k\ne0\text{ 对某个 }A\in\mathcal O\}.
+$$
+
+则
+
+$$
+a\sim_{\mathscr E}b
+\quad\Longleftrightarrow\quad
+(a-b)d=0\quad\text{对所有 }d\in D(\mathcal O).
+$$
+
+特别地，全为分级块对角效果时五种相位都不可见；
+有任一跨分级块时，全输入实验族区分所有不同相位。
+
+**证明。**
+
+密度态分离 Hermitian 算子，故响应对所有态相等恰等价于
+$Z^{-a}EZ^a=Z^{-b}EZ^b$。
+这一等式对效果成立当且仅当对其线性张成成立。
+而其 $(j,k)$ 块是
+
+$$
+P_jZ^{-a}AZ^aP_k=\zeta^{a(k-j)}P_jAP_k.
+$$
+
+故每个非零块都要求 $(a-b)(j-k)=0$ 于 $\mathbb F_5$。
+$5$ 是素数，任一非零 $j-k$ 已迫使 $a=b$。证毕。
+ □
+
+<a id="statement-4-2"></a>
+

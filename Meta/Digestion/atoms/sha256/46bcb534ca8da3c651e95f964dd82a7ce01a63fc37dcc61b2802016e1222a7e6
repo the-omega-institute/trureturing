@@ -1,0 +1,41 @@
+**推论 9.3（原始种子约束下的精确预算值）。** 令
+
+$$
+\mathsf P_\nu=\{\sigma_\#\nu:\sigma:U\to\mathsf S\text{ 可测}\},
+$$
+
+并对 $p\in\mathsf P_\nu$ 定义扩展实数
+
+$$
+C(p)=\sum_{s\in\mathsf S}p_sk(s),\qquad
+V_L(p)=\sum_{s\in\mathsf S}p_s\mathcal R_L(c(s)).
+\tag{RRO.40}
+$$
+
+费用和中的乘积约定 $0\cdot(+\infty)=0$；任何正质量乘以 $+\infty$ 均为 $+\infty$。
+
+则每个有限实际均值预算 $B$ 的控制器值恰为
+
+$$
+F_L^\nu(B)=\inf\{V_L(p):p\in\mathsf P_\nu, C(p)\le B\}.
+\tag{RRO.41}
+$$
+
+这里的可行类是原种子可测选择器的像；原子种子不能被替换成任意概率向量，非原子部分才允许任意切分。若原种子含可数原子 $A_i$、质量 $\alpha_i$，以及质量 $\alpha$ 的非原子余部，则恰有
+
+$$
+\mathsf P_\nu
+=\left\{\sum_i\alpha_i\delta_{s_i}+r:
+  s_i\in\mathsf S,\ r\text{ 是 }\mathsf S\text{ 上总质量 }\alpha\text{ 的有限测度}\right\}.
+\tag{RRO.42}
+$$
+
+式中 $\alpha=0$ 或无原子时按通常约定解释。
+
+对任意原子、混合或非原子原种子，(RRO.41) 的下确界在 $\mathsf P_\nu$ 中由某个 $p^\star$ 达到；若 $K_\infty=+\infty$，有限 $B$ 的最优选择自动满足 $p^\star_\infty=0$，不会把逃逸到无限端的质量免费计入。
+
+证明。全零回放给出从任意控制器到选择器的映射，定理 9.2 给同风险且不增实际均值的源内替换；反向对每个可测选择器逐片拼接其有限形状或无限等待路线。因此优化恰好在 (RRO.42) 的原始可行像上，不能扩大为先验外的混合类。
+
+每个概率空间至多有可数个正质量原子；把它们逐一取出，余部按“存在任意小正测度子集”反复二分即可得到非原子部分，并按同一切分构造任意给定的可数质量分配。这给出 (RRO.42)。把 $\mathsf S$ 赋予一点紧化拓扑：有限选择孤立，$h\to\infty$ 时两种偶形和奇形均收敛到 $\infty$。其上的风险值连续，因为 (RRO.39) 给出 $\mathcal R_L(c(s))\to w_L$；费用值在 $K_\infty<\infty$ 时连续，在 $K_\infty=\infty$ 时下半连续，因为 $K_h\uparrow K_\infty$。原子赋值空间 $\mathsf S^{\mathbb N}$ 与非原子余部的概率测度空间都是紧的，映射
+$((s_i),r)\mapsto\sum_i\alpha_i\delta_{s_i}+r$ 连续（尾部质量由 $\sum_i\alpha_i$ 控制），故 $\mathsf P_\nu$ 紧。风险在其上连续，费用下水平集 $C\le B$ 闭，遂达到最小值。费用为 $+\infty$ 的无限端不能出现在这个下水平集中，故不存在丢失或少收费的无限质量。证毕。
+

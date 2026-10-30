@@ -1,0 +1,55 @@
+**命题 76.1（本源条件增量的对应范围）。** §§74–75 的承重增量是
+原 (64.1)–(64.3) 三源载体、未知原位恢复、相位零脉冲和原完整历史终端律之间的
+(74.1)、(74.7)–(74.11)，以及原 §67 指定间隙在该读取菜单收缩下的保持。
+这些来源特定的条件综合推导为 repo-derived，不作文献新颖性或优先权断言。
+原生控制、相干源制备、复数域、Born 输出及条件组合仍是显式前提。
+
+证明。受控循环测量的标准机制归属
+[Oszmaniec–Brod–Galvão，*Measuring relational information between quantum states,
+and applications*，arXiv:2109.10006v1，Fig. 1、Appendix A](https://arxiv.org/html/2109.10006v1)：
+Fig. 1 分列实部与加入相位门的虚部读数，Appendix A 给循环置换的交换分解。
+一般单／双控制门分解归属前引 Barenco 原文；
+(74.3)–(74.6) 的实提升与矩阵共轭仅作为本实际读取字的中间工具。
+这些标准结果本身不供应原场系数、忠实节点字、实际历史律或这里的原生脉冲交织。
+
+[SequentialRegisterCircuit](../../../Blueprint/D5/S3/Quantum/Entanglement/SequentialRegisterCircuit.md)
+的 `coordinate_gram`、`rectangular_unitary_coefficients` 和
+[OccupationPhysicalPreparation](../../../Blueprint/D5/S3/Quantum/Entanglement/OccupationPhysicalPreparation.md)
+的 `fixed_register_next_step_coefficients` 分别供应其自身坐标和占据历史的对应；
+[CoherentFlagPort](../../../Blueprint/D5/S3/Quantum/Reduction/CoherentFlagPort.md)
+与 [OrthogonalCoherentEmbedding](../../../Blueprint/D5/S3/Quantum/Reduction/OrthogonalCoherentEmbedding.md)
+供应各自完整 Kraus 端口及测量相对压缩。
+本源交织使用的是 Single Reference 的实际脉冲等式；这些条件性存在结果不替代它。
+`QuquintCertificateBridge.realification` 及 `phaseForm_realification`
+处理五维证书的十维实矩阵，也不提供原寄存器中的借位门字。
+
+[CartesianControlAngleMatrixInvertible](../../../Blueprint/D5/S3/Quantum/Matrix/CartesianControlAngleMatrixInvertible.md)
+的 `result` 及其私有 `E_mul_A`、`LinvPrime_mul_K` 给有限 Cartesian 符号角度矩阵的逆，
+不指定 $J_L$、相位零脉冲或完整读出效果。
+[SourcePairingLaws](../../../Blueprint/D5/S3/VertexAlgebra/SourceBPZ/SourcePairingLaws.md)
+的 `sourcePairing_neutralMode`、`sourcePairing_grade` 与
+[NormalScalarTranspose](../../../Blueprint/D5/S3/VertexAlgebra/SourceBPZ/NormalScalarTranspose.md)
+的 `consumed_normal_product_form` 保留原格载体的复双线性配对与整数模式边界。
+其中双线性转置不是本读取模型的正密度、共轭转置或 Born 合同，
+也没有从顶点场到本原生源或仪器的映射。
+这些关系各在自己的载体内成立；只有上述显式交织才回接这里的实际操作。
+
+[原重构卷 §§4–7](AURIC_FIB_ATOM_QUANTUM_PRINCIPLES_AND_COHERENT_RECONSTRUCTION.md)
+区分共同复结构、概率表示、相干递归及张量组合；
+[V17，定义 1.1、§§8–9](AURIC_SUM_PRODUCT_LOGARITHMS_AND_QUANTUM_PYTHAGOREAN_GEOMETRY_V17.md)
+保留组合、统计与相干层各自的前提。
+[V15，§§6、8–10](AURIC_GOLDEN_GATE_NAND_UNIVERSALITY_AND_ARITHMETIC_LIMITS_V15.md)
+的固定黄金门近似闭包与精确算术边界，和本节另供连续实角度的读取菜单不同。
+本节不把这些近似结论提升为固定黄金有限字的精确 Fredkin 权限。
+
+最后，(74.7) 消费 Born 律；本卷 §§70–73 的响应刚性仍各有其初始化、
+可达性、连续性和代码协变条件，不能反过来无条件供应这里的所有终端概率。
+[EffectProbabilityExtension](../../../Blueprint/D5/S3/Quantum/Foundation/EffectProbabilityExtension.md)
+的全效果表示，以及
+[SpatiotemporalBornRuleDichotomy](../../../Blueprint/D5/S3/Quantum/Measurements/SpatiotemporalBornRuleDichotomy.md)
+的 `BornRuleExists`、私有 `born_identity` 等也保留各自的效果或顺序迹概率前提。
+新读者给的是完整破坏性终端字及其旁观参考条件态，
+不是保留三源的 Lüders 仪器或 §54 的共同拒绝仪器。
+复振幅、已制备源、Born 输出与条件组合的来源，以及动力学和物理相位参考的来源，
+均未由这次读取资源减少导出；完整量子起源仍未解决。∎
+

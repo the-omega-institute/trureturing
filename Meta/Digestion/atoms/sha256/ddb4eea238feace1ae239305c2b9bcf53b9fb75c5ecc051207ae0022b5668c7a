@@ -1,0 +1,23 @@
+#### 定理 6.2（边界误差与静态变分的精确等价）
+
+$$
+\boxed{\min_X\mathcal S_w(X)=\frac{\left\lVert V-U_w\right\rVert_F^2}{L+1}.}
+$$
+
+因此 $\frac{L+1}{d}\min_X\mathcal S_w(X)$ 恰为维数 $d$ 下的归一化全输入门误差。
+
+**证明。**
+
+置 $U_j=G_j\cdots G_1$，$Y_j=U_j^\dagger X_j$，并令
+$Y_0=I$、$Y_{L+1}=U_w^\dagger V$。酉不变性将作用量化为
+$\sum_{j=1}^{L+1}\left\lVert Y_j-Y_{j-1}\right\rVert_F^2$。
+所有增量之和固定为 $U_w^\dagger V-I$。Cauchy–Schwarz 给下界
+$\left\lVert U_w^\dagger V-I\right\rVert_F^2/(L+1)$，等号由各增量相同达到，即
+$Y_j=I+\frac j{L+1}(U_w^\dagger V-I)$。
+
+∎
+
+内部最小化矩阵一般不酉，是相容预测变量，不能当作实际量子执行中间门。若另要求内部每个矩阵都酉，本定理的可行域改变，结论不直接保留。
+
+<a id="statement-6-3"></a>
+

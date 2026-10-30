@@ -16,12 +16,12 @@ open scoped BigOperators
 
 namespace D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity
 
-private noncomputable def catalanUnit : PowerSeries ℤ :=
+noncomputable def catalanUnit : PowerSeries ℤ :=
   PowerSeries.catalanSeries.map (Nat.castRingHom ℤ)
 
 noncomputable def catalanSeries : PowerSeries ℤ := X * catalanUnit
 
-private theorem catalan_unit_zero : constantCoeff catalanUnit = 1 := by
+theorem catalan_unit_zero : constantCoeff catalanUnit = 1 := by
   rw [← coeff_zero_eq_constantCoeff]
   simp [catalanUnit]
 
@@ -343,11 +343,5 @@ theorem hanna_conjecture (n : ℕ) (hn : 1 < n) :
   rw [binary_catalan]
   simp only [Nat.succ_eq_add_one, Nat.add_right_cancel_iff]
 
-#print axioms catalan_equation
-#print axioms catalan_unique
-#print axioms generating_equation
-#print axioms generating_unique
-#print axioms binary_catalan
-#print axioms hanna_conjecture
 
 end D5.S1.Recurrence.Invariants.CatalanCompositionSquareParity

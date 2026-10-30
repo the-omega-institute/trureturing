@@ -1,0 +1,11 @@
+**Definition 7.1 (languages and DP convention).** All languages reject malformed explicit encodings. JOINT-ATTAIN takes explicit $A,T$ and a proposed full pair of state-indexed reply vectors and complete target, and asks whether one actual $u$ realizes that joint element. UNIVERSAL-TWO-STAGE takes $A,T,e_0,e_1,P,L$ and asks whether every actual source has preparation termination within $P$ and correct selected serving termination within $L$. It does not require BOTH.
+
+BOTH-PREPARER takes explicit $A,P$ and asks for an actual within-$P$ bit-zero run and an actual within-$P$ bit-one run. It imposes no universal or serving requirement. FULL-FINITE-TABLE-VALIDATION is the conjunction of UNIVERSAL-TWO-STAGE and BOTH-PREPARER, with any explicit $|K_A|\le N$ check included. Here
+
+$$
+\mathrm{DP}:=\{X\cap Y:X\in\mathrm{NP},\ Y\in\mathrm{coNP}\}.
+\tag{POC.18}
+$$
+
+This is the class of intersections of an NP language and a coNP language, not the intersection of those two complexity classes.
+

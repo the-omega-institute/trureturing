@@ -1,0 +1,9 @@
+**Proposition 11.1 (inherited promised-program obstruction).** The preceding bounds do not decide compatibility of an independently supplied acquired-term program. FCS Theorem 10.2 gives undecidability even when that program is promised total, BOTH-attained and finitely natively preparable, with one fixed eight-state serving table and $L=2$.
+
+Proof of the reused separation. Install Reads $D_1,D_2,D_3$ and whole-row Halts $H_0,\ldots,H_4$, with $o(H_j)=R_j$, and use $e_0=D_1,e_1=D_3$:
+
+| Read | Literal | alpha | beta | branch | absent |
+| --- | --- | --- | --- | --- | --- |
+| $D_1$ | $LLR$ | $H_1$ | $H_0$ | $D_2$ | $H_0$ |
+| $D_2$ | $LRR$ | $H_2$ | $H_0$ | $H_0$ | $H_0$ |
+| $D_3$ | $RLR$ | $H_3$ | $H_0$ | $H_4$ | $H_0$ |

@@ -1,0 +1,12 @@
+**约定 1.3（原始文献与所引解析命题）。** Ce Xu、Jianqiang Zhao，*Rational Approximations for Reciprocals of Multiple Zeta Values and Trivariate Cauchy Numbers*，arXiv:2609.11072v1，[HTML §1.3](https://arxiv.org/html/2609.11072v1#S1.SS3)、[PDF §1.3](https://arxiv.org/pdf/2609.11072v1)。定义 1.1–1.2 分别对应 HTML (7)–(8)、PDF (4)–(5)，包括零点常数项；它们没有指数生成函数中的额外 $n!$。原文 Conjecture 1.3 的最终符号问题是下文定理 4.1 的对象，不作为证明前提。原文 Theorems 1.1、8.2 与 Corollaries 5.2、8.4 给出对数及全一组合的相应已知情形，§9 讨论深度一、二的情形。
+
+以下解析命题均指仓内 [Polylogarithm](https://github.com/the-omega-institute/trureturing/tree/13540e54dcb7e367c6799640ec15b707fcf2bb18/D5/S3/AnalyticClosure/Polylogarithm) 的该版本，命名空间前缀统一为 `D5.S3.AnalyticClosure.Polylogarithm`。引用 `CompositionDisk`、`CompositionBoundary`、`CompositionSlit`、`CompositionZeroFreeCollar`、`CompositionBanks` 及其私有解析引理时，参数对应始终为
+
+$$
+\mathrm{head}=k_1,\qquad
+\mathrm{tail}=[k_2,\ldots,k_d],\qquad
+\mathrm{depth}(\mathrm{tail})=d,
+$$
+
+各正整数按其值视为 $\mathbb N_+$。`CompositionDisk.H tail N` 恰为 $H_{(k_2,\ldots,k_d)}(N)$，`coefficient head tail m` 恰为 $f_m$。下文系数桥接、有限割线积分与重复求和的合成推导属于本卷的 `repo-derived` 内容；上述原文中的定义和特殊情形属于所引文献结果。
+

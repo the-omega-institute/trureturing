@@ -1,0 +1,111 @@
+**Lemma 15.4 (Strict payment to a capped branch, uniformly in the
+surviving index).** On the same sublevel define
+
+$$
+e=\mathbb E[K-1;A],\quad
+\Lambda=\frac3{\delta^2}-\frac{\max\{\alpha,\beta\}}{c^2},\quad
+P_j=(-F_j'(u_j))_+.
+$$
+
+For sufficiently large $a$, $p_j=u_j$ and
+
+$$
+\Lambda-\frac mrP_j\ge a^3,\qquad H(x)\ge S_j+a^3e.
+\tag{15.19}
+$$
+
+Equality $H=S_j$ holds exactly for the cap law $x^{j,u_j}$ on this
+partition.
+
+**Proof.** Put $c_m=rd$,
+$\Delta_i=\mathbb E[(K^2-L^2)I_i]\ge0$ and
+$Z=\mathbb E[(K^2-1)\sum_{k\in T\cap D}t_k^{-2}]$.
+Equation (15.12) gives the exact identity
+
+$$
+H=\sum_{k\in D}t_k^{-1}+Z+
+\sum_{i\in C}\left\{\frac{r^2}{y_i}
+ -\frac{d(j-1+u)}{y_i^2}+\frac{R_i+\Delta_i}{y_i^2}\right\}.
+\tag{15.20}
+$$
+
+On $A$, $c_mB-\rho_i\ge0$. For $I_i=0$ this is
+$d\{r(B-1)+L\}$, and for $I_i=1$ it is
+$c_m(B-1)+r^2+dL-L^2\ge0$. Summing gives
+
+$$
+\sum_{i\in C}(c_mB-\rho_i)
+=\alpha(B-1)+\beta L-L^3
+\le\max\{\alpha,\beta\}(K-1).
+$$
+
+Off $A$ all $\rho_i\ge0$. Weighting only these signed inequalities
+by $y_i^{-2}\le c^{-2}$ yields
+$\sum_i(R_i-c_mu)/y_i^2\ge-\max\{\alpha,\beta\}e/c^2$.
+Also $Z\ge3e/\delta^2$, since on $A$,
+$B(K^2-1)\ge3(K-1)$. Thus (15.20) gives
+
+$$
+H\ge\sum_{k\in D}t_k^{-1}
+ +\sum_{i\in C}\{r^2/y_i+b_j(u)/y_i^2\}+\Lambda e
+\ge F_j(u)+\Lambda e.
+\tag{15.21}
+$$
+
+Here $b_j(u)>0$ by Lemma 15.2. Cauchy for the actual tail
+marginals, and strict Jensen for the core marginals of total $a-u$,
+prove the last inequality.
+
+On $\ell_j\le p<a$, excluding zero when $j=1$,
+
+$$
+F_j''(p)=\frac{2n^2}{p^3}+\frac{2r^2m^2}{(a-p)^3}
+ +\frac{4m^3d(m-2)}{(a-p)^3}
+ +\frac{6m^3b_j(p)}{(a-p)^4}>0.
+\tag{15.22}
+$$
+
+The exact derivative at the cap is
+
+$$
+F_j'(u_j)=-\frac{n^2r^2}{j^2}
+ +\frac{r^2\{2m r^2+2m-1\}}{(a-1)^2}.
+\tag{15.23}
+$$
+
+Its second term is $2a^3+O_R(a^2)$, whereas the first term divided
+by $a^3$ is $-z+O_R(a^{-1})$, with
+$z>5/2-O_R(a^{-1/2})$. Hence $F_j'(u_j)<0$, so strict convexity
+forces the unique constrained minimum to be $p_j=u_j$ and
+$\mu_j=S_j$. Moreover $P_j/a^3=z-2+O_R(a^{-1})$.
+
+The mean inequality (15.14) gives
+$(u-u_j)_+\le(m/r)e$. Convexity and its supporting tangent at
+$u_j$ therefore give $F_j(u)\ge S_j-P_j(u-u_j)_+$, including
+$u\le u_j$ by the constrained minimality just established.
+By (15.9), $c^{-2}=1+O_R(a^{-1/2})$ and
+$\delta^{-2}\ge\eta^2(1-O_R(a^{-1/4}))$. Consequently
+
+$$
+\frac{\Lambda-(m/r)P_j}{a^3}
+\ge3z-2-(z-2)-O_R(a^{-1/4})
+=2z-O_R(a^{-1/4})\ge1
+\tag{15.24}
+$$
+
+eventually. This proves (15.19) from (15.21).
+
+If $H=S_j$, then $e=0$, so every positive-mass type meeting $D$
+is a singleton, and $u\le u_j$. The strict scalar minimum and
+(15.21) force $u=u_j$, equal tail marginals $t_k=u_j/n$, and equal
+core marginals $y_i=(a-u_j)/m$. With only tail singletons,
+$\Delta_i=0$ and the contribution to $R_i$ on $A$ is $c_mu_j$.
+The remaining nonnegative term in (15.20) is
+$\mathbb E[\sum_i\rho_i/y_i^2;A^c]$, which must vanish.
+The only integer zeros of $Q(L)$ on a nonempty core type are
+$L=r,m$. Thus the core types are $C$ and $C\setminus\{i\}$.
+Normalization and the original mean force their total masses to be
+$1-j+(m-2)u_j$ and $j-ru_j=0$, respectively. The full-core mass is
+$(a-1)/r=1-u_j>0$. These are exactly (15.2) at the cap.
+Conversely this law has energy $S_j$, as verified below. ∎
+

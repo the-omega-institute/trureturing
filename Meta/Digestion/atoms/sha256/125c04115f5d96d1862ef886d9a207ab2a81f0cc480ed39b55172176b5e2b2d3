@@ -1,0 +1,72 @@
+### 引理 10.2（混合短字的任意正数据插值）
+
+设 $q,m\ge0$ 且 $q+m\le k-2$。给定任意
+$$
+ a_0,\ldots,a_q>0,\qquad b_0,\ldots,b_m>0,
+\tag{10.5}
+$$
+存在一个列向量 $c\in\mathbb R_{>0}^{k}$ 和行向量 $\ell\in\mathbb R_{>0}^{1\times k}$，使
+$$
+\operatorname{tr}(N^ic\ell)=a_i\quad(0\le i\le q),\qquad
+\operatorname{tr}(N^jL_0N^qc\ell)=b_j\quad(0\le j\le m).
+\tag{10.6}
+$$
+因此 $S=c\ell$ 是一个固定的、严格正的普通秩一来源。构造的伴随来源的列因子满足部分和 $\sum_{h=0}^{k-q-1}c_h=1$，这不是对实际 $R$ 的归一化。
+
+**证明。** 令 $p=k-q$，$r=m+1$，$U=\{r,r+1,\ldots,r+q\}$。由 $q+m\le k-2$，有 $r+q\le k-1$，且 $U$ 与 $\{0,\ldots,m\}$ 不交。置
+$$
+ B=2k,\qquad L=\max(1,b_0,\ldots,b_m),\qquad
+ \alpha=\min_{0\le i\le q}a_i,\qquad A=\max_{0\le i\le q}a_i,
+\tag{10.7}
+$$
+并取显式的严格正数
+$$
+ \varepsilon=\min\left\{\frac1{4B},\frac{\alpha}{4(kL+BA)}\right\}>0.
+\tag{10.8}
+$$
+定义
+$$
+ c_h=\begin{cases}1-(p-1)\varepsilon,&h=r,\\
+ \varepsilon,&h\ne r,
+ \end{cases}
+\qquad(0\le h<k).
+\tag{10.9}
+$$
+于是每个 $c_h>0$，因为 $\varepsilon(p-1)<1$，且 $\sum_{h=0}^{p-1}c_h=1$。先规定
+$$
+ \ell_j=b_j\quad(0\le j\le m),\qquad
+ \ell_j=1\quad(j\notin U\cup\{0,\ldots,m\}),
+\tag{10.10}
+$$
+只把 $y_j:=\ell_{r+j}$（$0\le j\le q$）留作未知量。
+
+对 $0\le i\le q$，把所有满足 $h+i\in U$ 的项分离出来。由于 $r+j\le k-1$，这些项的系数恰为 $c_{r+j-i}$；将 $c_t$ 在区间外延拓为零，得到精确方程组
+$$
+ My=a-\varepsilon D,\qquad
+ M_{ij}=c_{r+j-i},\qquad
+ D_i=\sum_{\substack{0\le h\le k-1-i\\h+i\notin U}}\ell_{h+i}.
+\tag{10.11}
+$$
+这里 $a=(a_0,\ldots,a_q)^{\mathsf T}$，且 $D$ 不含未知量。所有其余 $\ell$ 坐标不超过 $L$，故 $0\le D_i\le kL$。
+
+在形式上的参考点 $\varepsilon=0$，$c$ 退化为 $e_r$，所以 $M=I$。对实际的正 $\varepsilon$，写 $M=I+\varepsilon K$；则
+$$
+ K_{ii}=-(p-1),\qquad
+ K_{ij}=\begin{cases}1,&i\ne j,\ 0\le r+j-i<k,\\0,&\text{否则},\end{cases}
+\tag{10.12}
+$$
+每行至多有 $q$ 个非对角非零项，从而 $\|K\|_\infty\le(p-1)+q\le k-1< B$。若 $Mx=0$，则
+$\|x\|_\infty\le\varepsilon B\|x\|_\infty\le\frac14\|x\|_\infty$，故 $x=0$，所以 $M$ 可逆；同一不等式用于 $Mx=v$ 给出 $\|M^{-1}v\|_\infty\le2\|v\|_\infty$。这只是本证明中的有限维小范数估计。
+
+定义 $y=M^{-1}(a-\varepsilon D)$. 由 (10.11)、(10.12) 和 $\|a\|_\infty=A$，
+$$
+\|y-a\|_\infty
+ =\varepsilon\|M^{-1}(D+Ka)\|_\infty
+ \le2\varepsilon(kL+BA)\le\frac\alpha2.
+\tag{10.13}
+$$
+因此 $y_j\ge a_j-\alpha/2\ge\alpha/2>0$，未知坐标也严格正。于是 $c,\ell$ 均逐项严格正。
+
+方程组 (10.11) 正是 $\operatorname{tr}(N^ic\ell)=a_i$ 的逐项展开。又因 $\sum_{h=0}^{p-1}c_h=1$，式 (10.2) 给出
+$\operatorname{tr}(N^jL_0N^qc\ell)=\ell_j=b_j$。这证明了 (10.6)，且没有使用近似相等、一般位置或实际来源的任何秩假设。∎
+

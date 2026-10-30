@@ -1,0 +1,43 @@
+**Theorem 15.1 (three distinct minimality questions).** For a fixed
+nonzero core of least degree $r$, the unary scalar sequence
+$i\mapsto y_i$ has least linear realization dimension $r$ over
+$\mathbb F_2$. This does not prove that the nonlinear physical literal
+response system, a controller's total bits, or its number of discrete
+states is $r$. At fixed aligned core and fixed mature age, hypothetical
+clock trials have $p^2$ distinct initial local behaviours; a specified
+actually attainable clock family $\mathcal A$ has exactly the cardinality
+in (PCR.7). A deterministic boundary at that age therefore needs at
+least this many possible configurations, and at least its base-two
+logarithm in fixed-length binary capacity. This counts initial behaviours
+at one cut, not a finite carrier closed under unbounded updates. There is no assertion that all $p^2$
+trials occur as actual histories.
+
+Proof. The Hankel matrix $H_r(y)$ is nonsingular by (PCR.25)--(PCR.26).
+Any $q$-dimensional linear realization factors its Hankel matrix into
+a matrix of reachable rows times observable columns, of inner dimension
+$q$, so $q\ge r$. The companion realization achieves $r$. This is the
+classical unary instance of [Kiefer, Proposition 3.3 and the
+Hankel/minimal-realization correspondence in §§3--4][PCR-KIE], with
+$K=\mathbb F_2$, alphabet a singleton, and series $a^i\mapsto y_i$.
+Kiefer's bit-complexity convention is rational coefficients; no rational
+complexity bound is transferred here. The elementary binary-operation
+bounds were supplied separately in Theorem 12.2. Zero has linear
+dimension zero. This argument concerns a supplied scalar series, not
+acquisition or the address-driven response transformation.
+
+The state count is exactly Corollary 3.2, now represented by the
+operator pair through (PCR.28). Count the whole predictive configuration,
+including any source-dependent code or immutable advice; moving a clock
+into such advice cannot evade this distinction bound. Distinct behaviours force distinct
+retained deterministic predictive states at the common age; a carrier
+of size $K$ needs $K$ values, or at least $\lceil\log_2K\rceil$ bits
+with a fixed-length code. Variable-length codes retain their actual
+lengths and corresponding counting bound. An encoding can combine the
+two clocks into one register; two named registers are not a lower
+bound. Restriction to $\mathcal A$ gives its image size and no
+surjectivity claim. The stored pair uses $2r$ coefficient bits, and the
+whole descriptor has (PCR.33)'s upper bound; it is not claimed to be a
+bit-optimal representation. The period may be as large as $2^r-1$ in
+a primitive core, so a small description is compatible with exponentially
+many discrete states. $\square$
+

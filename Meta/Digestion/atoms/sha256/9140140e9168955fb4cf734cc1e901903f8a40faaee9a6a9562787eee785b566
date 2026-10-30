@@ -1,0 +1,97 @@
+**定理 64.3（实际三块的固定有限读者及全码对应）。** 定义 $T$ 在整个
+$\mathcal Q_D^{\otimes3}$ 上按
+$T(|x_0\rangle|x_1\rangle|x_2\rangle)=|x_1\rangle|x_2\rangle|x_0\rangle$ 作用。
+取方向 $\epsilon\in\{1,-1\}$、设置 $o\in\{0,1\}$，并置 $\phi_o=-o\pi/2$、
+$D_o=\operatorname{diag}(1,e^{i\phi_o})$。存在仅依赖 $D,\epsilon,o$ 的已知原生字
+$V_{\epsilon,o}$，在所有逻辑输入及任意未触动参考上满足
+
+$$
+\begin{aligned}
+ U_{\epsilon,o}
+ &=R_{y,c}(-\pi/4)(D_o\otimes I)
+   \bigl(|0\rangle\langle0|_c\otimes I+|1\rangle\langle1|_c\otimes T^\epsilon\bigr)
+   R_{y,c}(\pi/4),\\
+ V_{\epsilon,o}J_L&=e^{i\chi_\epsilon-i\phi_o/2}J_LU_{\epsilon,o}.
+\end{aligned}
+\tag{64.4}
+$$
+
+$\chi_\epsilon=-m\pi/4$ 是下面固定矩阵分解的整体标量相位，与 $X,n$ 和全部源语法无关。
+三块中未被实际源使用的逻辑字也在该算子等式的定义域内。物理位置数为 $6m+1$；
+不引入额外量子工作位，所有分隔位最终为零。令 $C_L=42(L-1)+5=126m+5$，则
+
+$$
+ G_{\rm read}\le212m+2+3o,\qquad
+ L_{\rm read}\le212m C_L+2+3o.
+\tag{64.5}
+$$
+
+同一原生字可用于两种编码、所有 $n$、所有 $s_0,s_1,s_2\in T_D$；不要求源互异。
+$\epsilon=1,o=0$ 是一个足以比较 §67 两种指定完成的固定装置。
+
+证明。时间顺序先交换块 $0,1$，再交换块 $1,2$，给出 $T$；倒序给 $T^{-1}$。
+每次块交换由对应位的 $m$ 个受控 SWAP 实现，所有控制都是比较位 $c$。
+因此总数是 $2m$ 个已知三位 Fredkin 门，不是对未知黑盒取得受控访问。
+以下仅把标准门分解作为本源读者的中间工具：时间顺序
+
+$$
+ \operatorname{CNOT}_{u\to v},\quad
+ \operatorname{CCNOT}_{c,v\to u},\quad
+ \operatorname{CNOT}_{u\to v}
+\tag{64.6}
+$$
+
+在 $c=0$ 时相消，在 $c=1$ 时把 $(u,v)$ 变成 $(v,u)$，是精确 Fredkin。
+取固定已知矩阵
+
+$$
+ V=\frac{1+i}{2}I+\frac{1-i}{2}X,\qquad V^2=X.
+\tag{64.7}
+$$
+
+在 (62.6) 中用此 $V$，以 $c,v$ 为两控制、$u$ 为目标，得到精确 CCNOT。
+三个单控制 $V,V^\dagger,V$ 各按 (62.5) 展开，控制上的
+$\operatorname{diag}(1,e^{i\delta})$ 一并保留。
+[Barenco 等，quant-ph/9503016v1，引理 5.1–5.2、6.1](https://arxiv.org/html/quant-ph/9503016v1)
+承担这些标准分解的归属；不是在此新增一般受控门定理。
+一个 CCNOT 至多十二个一位 $U(2)$ 门和八个 CNOT，
+(64.6) 因而至多十二个一位门和十个 CNOT，均无工作位。
+整个受控块循环至多 $24m$ 个一位门及 $20m$ 个 CNOT。
+
+逐个已知一位门选定 $U=e^{i\delta_U}\widetilde U$，
+$\widetilde U\in SU(2)$ 用至多三个 $R_x,R_y$ 实现；CNOT 用
+$\widetilde H_tCZ\widetilde H_t^\dagger$，$\widetilde H=-iH$，至多七门，
+两侧 Hadamard 的相位相消。全部控制相位先作为实际一位矩阵保留，再作这个正规化。
+于是循环的替换字为 $e^{i\chi_\epsilon}\operatorname C(T^\epsilon)$，
+$\chi_\epsilon=-\sum_U\delta_U$，门数至多 $3(24m)+7(20m)=212m$。
+这是整个码上的同一整体相位，不是控制为一那一支的相位；
+不能在 (64.7) 的受控构造中提前删去 $V$ 的相位。
+具体固定 $V_s=e^{si\pi/4}R_x(s\pi/4)$，$s=\pm1$，
+在 (62.5) 中取 $\alpha=-\pi/4,\beta=s\pi/4,\gamma=\pi/4$。
+三个目标矩阵 $A,B,C$ 已属 $SU(2)$，唯一被取出的标量来自控制相位
+$\operatorname{diag}(1,e^{si\pi/4})=e^{si\pi/8}R_z(s\pi/8)$。
+三个受控调用的符号为 $+,-,+$，故一个 CCNOT 和一个 Fredkin 的替换相位均为
+$e^{-i\pi/8}$；$2m$ 个 Fredkin 给 $\chi_\epsilon=-m\pi/4$，两个方向相同。
+这也固定了门字与 (65.5) 的相位对应。
+
+比较位先后两个 $R_y$ 各是一处原生脉冲。设置一另用
+
+$$
+ R_z(\phi_1/2)=R_x(\pi/4)R_y(\phi_1/2)R_x(-\pi/4)
+             =e^{-i\phi_1/2}D_1
+\tag{64.8}
+$$
+
+替换 $D_1$，在同一比较位恰增加三处脉冲，其中一次使用第二正交相位。
+设置零没有这一块。逐门代入 Single Reference 定理 3.1 的全码交织及 (3.2)，
+每门以 $C_L$ 为统一成本上界，比较位的直接脉冲另按实数计数，得到 (64.4)–(64.5)。
+没有利用一般可控性代替这些具体门和路径，也没有把输入块的语法交给读者。
+全码等式张量参考恒等后仍成立，整体相位在通道和终端效果中相消。
+物理码外的作用由这些实际脉冲决定，不被指定为恒等。
+
+$T$ 的使用归属 Oszmaniec–Brod–Galvão，
+[*Measuring relational information between quantum states, and applications*](https://arxiv.org/html/2109.10006v1)，
+Fig. 1 与 Appendix A。其受控循环／Fredkin 方法是已知中间工具；
+该文的并行 GHZ 辅助位并未用于这里的顺序 $2m$ 门字。
+这里对应的是实际场、节点标签、共同填充码和指定脉冲供应，不借其量子电路图免费供应原生仪器。∎
+

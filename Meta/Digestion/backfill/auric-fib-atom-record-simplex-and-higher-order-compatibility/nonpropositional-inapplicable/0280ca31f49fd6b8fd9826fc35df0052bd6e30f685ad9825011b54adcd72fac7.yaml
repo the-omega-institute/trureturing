@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:0280ca31f49fd6b8fd9826fc35df0052bd6e30f685ad9825011b54adcd72fac7
+  normalized_sha256: sha256:0280ca31f49fd6b8fd9826fc35df0052bd6e30f685ad9825011b54adcd72fac7
+cas_ref: sha256:0280ca31f49fd6b8fd9826fc35df0052bd6e30f685ad9825011b54adcd72fac7
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 本项是定理 5.1 标题、完整数学子句与证明说明的无损合集。沿用完整数学子句 26190160be2c293a974e14d29511295e8e74d5c080623e7218feff2de8e77a22 的既有纯上游结算。钉版 Mathlib 56a005855ea17e0b0958f73ec801ae140b0a1679 的 Fintype.prod_sum、Finset.prod_insert、Finset.prod_eq_zero、Finset.prod_eq_one、Finset.sum_sub_distrib、Finset.prod_pos、Finset.prod_nonneg、div_self 供应全部子集矩与精确布尔配置质量的转换及有限 Bayes 实现；本完整关系仓内无可用冻结 GID。 所有共同事件概率恢复整个二元联合律及二、三变量解释均属于该完整关系的说明。保留其三个既有子项和完整数学子句原收据，不新增 Lean 声明。适用范围是定义 1.1 与第 3 节的严格正乘积先验，任意有限 d（含 d=0）、全部子集（含空集）、同一先验及同一联合实现、任意归一的正实际结果权重（含单结果），后验坐标允许零和端点。该范围不包含先验端点扩展，也不授予原生 FIB 查询权限、资源或风险转移。
+    previous_atom_id: 62a58f98c9b4b3fadaff9d555516b2ac9cec0d822de76d3faaa6d796420b4fda
+    next_atom_id: 03f3813bc31c264b12c8e7890217d75d97d2fcacb41372c9e856084023c2824b
+  chain_atoms:
+    - e59485d7f2c188354a8a64d9fc7bbba6378f6b8bb34039ecf5cb2c44c086f5a3
+    - 26190160be2c293a974e14d29511295e8e74d5c080623e7218feff2de8e77a22
+    - 47c7ea696a5955146753a5cab7c168b8293684b11f1cc52613b03a4ce9cff667

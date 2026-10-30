@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:e94385d31f26f33bb50fadef75771553cfc35d81eb206fb6e6461d95e8875917
+  normalized_sha256: sha256:e94385d31f26f33bb50fadef75771553cfc35d81eb206fb6e6461d95e8875917
+cas_ref: sha256:e94385d31f26f33bb50fadef75771553cfc35d81eb206fb6e6461d95e8875917
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: The References section is bibliography and source-location metadata only. Its three chain atoms are bibliographic citations or pointers, with no additional mathematical proposition in the parent.
+    previous_atom_id: 057d5549c234c727028c8c6ad6a73e87e0454615bda8380141482fe136e6cd9f
+    next_atom_id: e6cafebc9ae57946ef98648d1acc7cc09d7347f1b1df95aa1f1ff266c978bcd1
+  chain_atoms:
+    - bdbc75c38f898982c3d2d0358fce723d2cd3e6d96931764ad2d42db45f120c0b
+    - 8f35eaf8795877d7cc20a9c2fafd07bddd41eeb4090efce2457450dc6cdea79c
+    - 3b8cd0a01f8f603f9ace40c490ded5accad88ff3f292ded72267fe9e46fa6e71

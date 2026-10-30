@@ -1,0 +1,56 @@
+**定义 2.1 (States and separated coordinates).** Let $n\ge11$,
+$P_n=[3]\times[n]$ with its coordinatewise order, and
+let $\mathcal C_n=\mathcal{IC}(P_n)$ be the set of all interval-closed
+subsets, including the empty set: $S\subseteq P_n$ belongs to $\mathcal C_n$
+when $u,v\in S$ and $u\le y\le v$ imply $y\in S$ for every $y\in P_n$.
+For each $x\in P_n$, define the literal convexity toggle on $\mathcal C_n$ by
+
+$$
+T_x(S)=
+\begin{cases}
+S\mathbin{\triangle}\{x\},&\text{if }S\mathbin{\triangle}\{x\}\in\mathcal C_n,\\
+S,&\text{otherwise}.
+\end{cases}
+$$
+
+A complete legal reverse extension is a sequence $e=(x_1,\ldots,x_{3n})$
+containing every point of $P_n$ exactly once, with $x_i>x_j$ implying
+$i<j$. For every such $e$ and every $I\in\mathcal C_n$, set $I_0=I$,
+$I_k=T_{x_k}(I_{k-1})$ for $1\le k\le3n$, and define
+
+$$
+R_e(I)=I_{3n}=(T_{x_{3n}}\circ\cdots\circ T_{x_1})(I).
+$$
+
+Let $\operatorname{per}_{R_e}(I)$ be its least positive return time.
+Put $L=n+4$. An integer interval $[v,w]$ is empty when $v>w$.
+
+For a state meeting every row, write its three row intervals as
+$[a_i,b_i]$, $1\le i\le3$. Define $\mathcal F_n$ to consist of those states
+with
+
+$$
+a_1>a_2>a_3,\qquad b_1>b_2>b_3,\qquad
+1\le a_i\le b_i\le n,
+$$
+
+for which the six **indexed** occurrences
+
+$$
+(z_1,z_2,z_3,z_4,z_5,z_6)
+=(a_1,a_2,a_3,b_1+2,b_2+2,b_3+2)
+$$
+
+satisfy
+
+$$
+\min\{|z_r-z_s|,L-|z_r-z_s|\}\ge8
+\quad\text{for every }1\le r<s\le6. \tag{2.1}
+$$
+
+Thus multiplicities count: equal occurrences violate (2.1). These coordinates
+lie at sites $1,\ldots,L$ on a circle, with addition interpreted modulo $L$.
+The two sites $n+3,n+4$ will be distinguished. Ordinary distances between any
+two of the six unshifted endpoints of a state in $\mathcal F_n$ are at least
+six, since shifting an endpoint changes a difference by at most two.
+

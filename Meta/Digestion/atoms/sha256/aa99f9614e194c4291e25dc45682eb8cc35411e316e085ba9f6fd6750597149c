@@ -1,0 +1,10 @@
+## 3. The elementary masses on the integer spin line
+
+In phase $\phi$, an active address $2\ell+\phi$ reads the edge
+$e=\{\ell,\ell+1\}$ with label $S_\ell\oplus S_{\ell+1}$; an address
+of the other parity reads a separator. The actual target vertex in
+this phase is $v_\phi$ from (1.3). Distinct active edges of this
+integer line either share one vertex or have disjoint vertex sets.
+There are no other incidences for two distinct edges, regardless of
+their distance, sign or order of acquisition.
+

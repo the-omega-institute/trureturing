@@ -1,0 +1,154 @@
+**Proposition 14.1 (Actual-law periodic reset normal form).** Assume Definition 4.1 and $d(P)=c_\star$, with the original $N$ hidden states, $Z=M_0$, $E=M_1$, and $C_+=\{c:Q(C_0=c)>0\}$. The finite nonempty set of probability rows
+
+$$
+\mathcal R_+=\{r_c:c\in C_+\}
+\tag{14.1}
+$$
+
+carries well-defined maps
+
+$$
+\psi_g(x)=\frac{xZ^{g-1}E}{xZ^{g-1}E\mathbf1}
+\quad(x\in\mathcal R_+,\ g\ge2).
+\tag{14.2}
+$$
+
+Every denominator is positive, $\psi_g(r_c)=r_{\tau_g(c)}$, and each set $\{r_c:c\in D\}$ for a recurrent class $D$ of Proposition 4.2 is preserved by every $\psi_g$. There is one integer $L\ge1$, common to all positive contexts, such that
+
+$$
+r_{\tau_{g+L}(c)}=r_{\tau_g(c)}
+\quad(c\in C_+,\ g\ge N+1),
+\qquad
+\psi_{g+L}=\psi_g\quad(g\ge N+1).
+\tag{14.3}
+$$
+
+Put $B=N+L$ and define, for integers $g\ge2$,
+
+$$
+\operatorname{red}(g)=
+\begin{cases}
+g,&2\le g\le N,\\
+N+1+((g-N-1)\bmod L),&g\ge N+1.
+\end{cases}
+\tag{14.4}
+$$
+
+Here the first case is empty if $N=1$. Then $2\le\operatorname{red}(g)\le B$ and $\psi_g=\psi_{\operatorname{red}(g)}$.
+
+For $x,y\in\mathcal R_+$, let $x\sim y$ mean equality of their entire actual future visible laws from an anchor, equivalently of their entire future gap laws. By the interface of Proposition 10.2 this is precisely
+
+$$
+(x-y)M_t\mathbf1=0
+\quad\text{for every binary word }t\text{ with }|t|\le N-1,
+\tag{14.5}
+$$
+
+including the empty word. All split-future equalities
+
+$$
+\psi_{l+r}(x)\sim\psi_r(\psi_l(x))
+\quad(x\in\mathcal R_+,\ l,r\ge2)
+\tag{14.6}
+$$
+
+are equivalent to the cases $x\in\mathcal R_+$ and $2\le l,r\le B$. Thus every prefix gap $2,\ldots,N$ is retained, and the finite cases still evaluate the sum gaps $l+r$, up to $2B$.
+
+Proof. Proposition 4.2 gives $f_c(g)=r_cZ^{g-1}E\mathbf1>0$ for every $c\in C_+$ and $g\ge2$. Proposition 10.1 gives
+
+$$
+r_cZ^{g-1}E=f_c(g)r_{\tau_g(c)}.
+\tag{14.7}
+$$
+
+The positive contexts are closed under every $\tau_g$, and so are their recurrent classes. Consequently (14.2) maps $\mathcal R_+$ to itself and preserves the stated class row sets. If $r_c=r_d$, the numerator and denominator in (14.2) agree for these two representatives; hence $r_{\tau_g(c)}=r_{\tau_g(d)}$. This is the quotient by equality of reset rows, without requiring equality of context labels.
+
+To obtain a simultaneous period, for $c\in C_+$ and $n\ge1$ write
+
+$$
+a_c(n)=r_cZ^nE\mathbf1>0,\qquad
+s_c(n)=\frac{r_cZ^nE}{a_c(n)}\in\mathcal R_+.
+\tag{14.8}
+$$
+
+For a fixed $u\in\mathcal R_+$ and a coordinate $1\le j\le N$, let $e_j$ be the $j$th coordinate column and consider
+
+$$
+h_{c,u,j}(n)=r_cZ^nE(e_j-u_j\mathbf1)\quad(n\ge0).
+\tag{14.9}
+$$
+
+Cayley--Hamilton makes this a real linear recurrence sequence. Equivalently, its formal generating series is rational and regular at zero:
+
+$$
+\sum_{n\ge0}h_{c,u,j}(n)z^n
+=r_c(I_N-zZ)^{-1}E(e_j-u_j\mathbf1).
+\tag{14.10}
+$$
+
+The inverse here is the formal power-series inverse of $I_N-zZ$, whose constant term is $I_N$; it requires no inverse of $Z$. The classical Skolem--Mahler--Lech theorem, as stated in Jason P. Bell, *A generalised Skolem-Mahler-Lech theorem for affine varieties*, [arXiv:math/0501309v2, Theorem 1.1 and the rational-series form Theorem 2.1](https://arxiv.org/pdf/math/0501309v2), says that the zero set of each such sequence is a finite union of arithmetic progressions and a finite exceptional set. These statements apply over any characteristic-zero field, in particular $\mathbb R$; neither algebraic entries nor invertibility of $Z$ is needed.
+
+Because $a_c(n)>0$, the set of $n\ge1$ on which $s_c(n)=u$ is exactly the intersection, over $j=1,\ldots,N$, of the zero sets in (14.9). It is therefore ultimately periodic. The distinct rows in $\mathcal R_+$ give a finite partition of the positive integers for each $c$. Taking a common multiple of all the finitely many eventual periods and a common threshold supplies integers $L\ge1$ and $K\ge1$ with
+
+$$
+s_c(n+L)=s_c(n)\quad(c\in C_+,\ n\ge K).
+\tag{14.11}
+$$
+
+The threshold can be moved back to $N$ using only a stable row space. Set $W_k=\operatorname{row}(Z^k)$ for $k\ge0$. These spaces are nested and $W_kZ=W_{k+1}$. If $W_k=W_{k+1}$, right multiplication by $Z$ makes all later spaces equal. Starting with dimension $N$, strict dimension drops cannot continue beyond $N$ steps; hence
+
+$$
+V=W_N=W_{N+1},\qquad VZ=V.
+\tag{14.12}
+$$
+
+Right multiplication $T(v)=vZ$ is a surjective endomorphism of $V$, and is therefore invertible on $V$. Also $V\ne\{0\}$, since otherwise $a_c(N)=0$. Put $d=\dim V\ge1$ and $S=T^L$. The constant coefficient $b_0$ of its characteristic polynomial
+
+$$
+\chi_S(t)=t^d+b_{d-1}t^{d-1}+\cdots+b_0
+\tag{14.13}
+$$
+
+is nonzero because $S$ is invertible.
+
+Fix $c\in C_+$ and $0\le a<L$. Equation (14.11) makes $s_c(N+a+kL)$ one fixed row $u\in\mathcal R_+$ for all sufficiently large integers $k$. Take $v=r_cZ^{N+a}\in V$ and the linear row-valued map $\phi_u(v')=v'E-(v'E\mathbf1)u$. Then
+
+$$
+y_k=\phi_u(S^k(v))
+=\phi_u(r_cZ^{N+a+kL})\quad(k\ge0)
+\tag{14.14}
+$$
+
+is eventually zero. Cayley--Hamilton on $V$ gives
+
+$$
+y_{k+d}+b_{d-1}y_{k+d-1}+\cdots+b_0y_k=0
+\quad(k\ge0).
+\tag{14.15}
+$$
+
+Since $b_0\ne0$, a zero tail propagates backward one nonnegative index at a time, down to $y_0=0$. Positivity in (14.8) then gives $s_c(N+a+kL)=u$ for every $k\ge0$. All residues $a$ and all positive contexts use the same $L$, so $s_c(n+L)=s_c(n)$ for every $n\ge N$. Substituting $n=g-1$ and using (14.7) proves (14.3). Only $S$ on $V$ was inverted in this reasoning; no negative exponent or exponent below $N$ was used.
+
+Formula (14.4) keeps every gap through $N$ and selects one representative of each tail residue. Thus (14.3) gives equality of maps $\psi_g=\psi_{\operatorname{red}(g)}$ on all of $\mathcal R_+$. For $l,r\ge2$, put $l'=\operatorname{red}(l)$ and $r'=\operatorname{red}(r)$. Since intermediate rows remain in $\mathcal R_+$,
+
+$$
+\psi_r(\psi_l(x))=\psi_{r'}(\psi_{l'}(x)).
+\tag{14.16}
+$$
+
+If both $l,r\le N$, then $l+r=l'+r'$. Otherwise both sums are at least $N+1$ and they are congruent modulo $L$. The tail periodicity therefore gives
+
+$$
+\psi_{l+r}(x)=\psi_{l'+r'}(x).
+\tag{14.17}
+$$
+
+Equations (14.16)--(14.17) reduce each split test to one with $2\le l',r'\le B$; the reverse implication follows by inclusion of the finite cases. Equation (14.5) is exactly the original observable interface (10.5)--(10.6), applied to these actual reset rows; no additional observable-space assertion is required.
+
+The period is existential: this argument supplies no effective period or computational resource bound. Periodicity is equality of reset rows, not of context labels, and does not assert a semigroup law for the maps $\psi_g$, or even (14.6). The periodic destination rows and unequal split futures in Proposition 8.2 show why periodicity alone cannot supply that implication; its producer is strictly nonattaining.
+
+In particular, the implication from attainment to the vanishing in (10.11) or (10.14) remains unproved. Proposition 7.1 forces every compatible equal-length guarded original-score difference to vanish, but no construction here turns a nonzero tensor defect into two positive compatible guarded patterns and fillings with a nonzero such difference. Such a construction must keep the inclusive sum
+$\sum_{i=A}^{B}[(x_i-q_i(x))^2-(z_i-q_i(z))^2]$, including both scored boundary anchors, and the third intact guard after $B$. Every $q_i$ must remain the full-exterior conditional mean under the same actual stationary visible marginal and its actual Palm law. Neither the periodic tail nor the nonnegative future-information deficit supplies the missing original-loss sign.
+
+All statements retain the original nonnegative $N$-state presentation: structural zeros, zero stationary hidden masses, reducibility, periodicity and redundant states are allowed. No trimming, strict matrix positivity, irreducibility assumption, inverse of the original $Z$, or strict-right context decoder is used. Null contexts impose no requirement. $\square$
+

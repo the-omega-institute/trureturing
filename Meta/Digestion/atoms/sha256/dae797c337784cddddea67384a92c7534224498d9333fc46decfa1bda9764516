@@ -1,0 +1,14 @@
+#### 定义 9.4（有限内生观察接口）
+
+在同一整体的有限区域内，指定记录子系统 $R$、待预测子系统 $S$，
+及 $R$ 上的 POVM $\{M_a\}$。
+观察者的读出是整体态 $\rho_{RS}$ 与这个内部接口的关系：
+
+$$
+\sigma_a=\operatorname{Tr}_R\!\left[(\sqrt{M_a}\otimes I)\rho_{RS}
+(\sqrt{M_a}\otimes I)\right],\quad
+p_a=\operatorname{Tr}\sigma_a,\quad \rho_{S|a}=\sigma_a/p_a\quad(p_a>0).
+$$
+
+<a id="statement-9-5"></a>
+
