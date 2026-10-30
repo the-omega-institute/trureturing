@@ -2735,3 +2735,466 @@ General acquisition, original firstness, normalization, installation and
 whole-goal completion remain separate obligations.
 
 ## 追加锚（本行以下为增补区）
+
+## 27. Original chronological queries with linear backing and represented-bit work
+
+**Definition 27.1 (full-source data and the two query domains).** Fix the
+original alpha-origin source $s\in\mathscr R_d$, physical order $a<b$,
+old-leaf replacement and one-based birth order of Definition 1.1. The
+supplied source field is exactly the authentic $(d,P)$ of Definition
+22.1: $P=s_0\cdots s_{2d-1}$, including every singular transient. Use
+[ACR, Theorems 21.2 and 21.4, (ACR.85)][ACR] to synthesize its least
+all-index monic annihilator $m$ and its original initial seed. This is
+the polynomial behavioral synthesis supplier, rather than Definition
+22.1's enumerative implementation. It computes neither the original
+$\rho_d$ first passing row nor a physical source certificate. At $d=0$
+the source is zero, $P$ is empty and $m=1$. No factorization, period,
+residue image or normalized local seed is an input to this query.
+
+There are two supplied-data tasks. In the **whole-origin-orbit** task,
+the query is a positive binary birth ordinal $j$, or a finite physical
+word $v\in\{a,b\}^*$, including the empty root. In the **already-occurred**
+task, the same input also contains the authentically acquired actual
+cut $n\ge0$, and the requested event must have occurred by $n$. The
+latter task is about the branching event of the queried parent, not just
+its creation or current presence. Neither task supplies an ordinal Read
+service or recovers $n$ from $(d,P)$.
+
+For every physical word retain the exact coordinates $(e_v,A_v,B_v)$
+of (PCR.36)--(PCR.39), using the actual bit $s_{A_v-1}$ also outside the
+core. Retain its immutable creation descriptor $(b_v,\sigma_v)$, and put
+$\tau_v=e_v+1$. Thus
+
+$$
+ (b_\varepsilon,\sigma_\varepsilon)=(0,\alpha),\qquad
+ (e_\varepsilon,A_\varepsilon,B_\varepsilon)=(1,1,2),\qquad
+ b_v=e_v-\mathbf1_{\sigma_v=\alpha}.
+\tag{PCR.69}
+$$
+
+An event query returns the literal parent and the fields
+$(j;b_v,\sigma_v,\tau_v,e_v,A_v,B_v,s_{j-1})$. A word query returns the
+same tuple with its own event ordinal. The original recovery output
+remains the transient-inclusive $(P,n)$: this tuple is an additional
+mathematical query result, not a replacement for either field. Returning $(P,n)$ additionally requires that acquired $n$ in either
+domain; a query never infers it. Copying the pair is charged to its
+actual length.
+
+**Theorem 27.2 (all-root beta layers and the exact chronological offset).**
+For every source of Definition 27.1 define
+
+$$
+ \mathcal H_s(t)=\{v:e_v=1+t\}\quad(t\in\mathbb N_0),\qquad
+ h_{s,t}(v)=\operatorname{rank}_{a<b}(v;\mathcal H_s(t)),
+\tag{PCR.70}
+$$
+
+where ranks start at zero. Then $\mathcal H_s(t)$ is exactly the set of
+beta leaves at actual cut $t+1$, has size $F_{t+1}$, and is exactly the
+parent batch branching at actual cut $t+2$. For every $v$ in that set,
+
+$$
+ \begin{aligned}
+ j_v=A_v&=F_{t+2}+h_{s,t}(v),\\
+ e_v&=t+1,\qquad \tau_v=t+2.
+ \end{aligned}
+\tag{PCR.71}
+$$
+
+Consequently, for every $j\ge1$ there is a unique $\tau(j)\ge2$ with
+$F_{\tau(j)}\le j<F_{\tau(j)+1}$. Its actual parent is the member of
+$\mathcal H_s(\tau(j)-2)$ of zero-based rank
+$j-F_{\tau(j)}$. In particular $A_{p_j}=j$ and
+$e_{p_j}=\tau(j)-1$. These statements include the actual alpha root,
+all finite singular transients and all repeated factors.
+
+For an arbitrary actual prefix $c$, define the all-source local layer
+$\mathcal H_{s,c}(t)=\{w:e_{cw}-e_c=t\}$, ordered in physical order,
+and its zero-based rank $h_{s,c,t}$. At cut $e_c+t$ it is exactly the
+beta-leaf list inside $c$, and the global event of $cw$ is
+
+$$
+ \begin{aligned}
+ j_{cw}&=I_c(t+1)+h_{s,c,t}(w),\\
+ I_c(t+1)&=F_{e_c+t+1}+L_c(e_c+t),\\
+ h_{s,e_c+t-1}(cw)&=L_c(e_c+t)+h_{s,c,t}(w).
+ \end{aligned}
+\tag{PCR.72}
+$$
+
+Here $L_c$ is precisely [ACR, (ACR.112)--(ACR.116)][ACR]'s actual
+preceding exterior forest, with its authentic integer data;
+$I_c(1)=A_c$, $I_c(2)=B_c$ and $I_c(k+2)=I_c(k+1)+I_c(k)$.
+For a safe seed of Definition 24.1, $\mathcal H_{s,c}(t)=H_c(t)$.
+Equation (PCR.72), including its exterior offset, is the resulting
+conversion from that exact local history layer to global chronology.
+
+Proof. A node with immutable descriptor $(b,\sigma)$ is a beta leaf
+at exactly the single cut $b+1$ for initial alpha and $b$ for initial
+beta; in either case that cut is $e$. At the next update it branches
+once and remains a branch. The root follows these same rules from
+$(0,\alpha)$, so its beta cut is one, not zero. This proves the
+beta-layer identities. If $U_n,V_n$ are the alpha and beta leaf counts,
+old-leaf replacement gives $(U_{n+1},V_{n+1})=(V_n,U_n+V_n)$, with
+$(U_0,V_0)=(1,0)$. Hence $V_n=F_n$, including $V_0=0$.
+Before update $\tau\ge2$ there have been
+$\sum_{q=1}^{\tau-1}F_{q-1}=F_\tau-1$ births. Physical lexicographic
+order therefore assigns indices $F_\tau,\ldots,F_{\tau+1}-1$ to
+that old beta list. This is exactly [GPO, Proposition 39.2][GPO]'s
+one-based rank formula after subtracting one from the rank.
+
+The first normalized batch of any cone $v$ consists of its own unique
+branch, so its first index $A_v$ is $j_v$. Every physical word is
+eventually created and branches: the root branches at two and each
+edge adds one or two to branch time. Thus the batches partition all
+finite physical words and all positive ordinals, proving uniqueness.
+Inside $c$, its beta-normalized origin is $e_c$ and the same count
+recurrence gives $F_{t+1}$ beta leaves at $e_c+t$. They form a contiguous
+interval of the global beta list. The preceding exterior contributes
+exactly $L_c(e_c+t)$ members. Applying ACR Theorem 27.2 to this interval
+gives (PCR.72), with no core-only assumption. For a safe seed the
+normalization-time definition is exactly (PCR.61). This neither
+identifies an exact normalization layer with all terminal leaves nor
+identifies a local rank with a global ordinal. $\square$
+
+**Definition 27.3 (two iterative supplied-data queries).** For a physical
+word, start at (PCR.69). At each proper prefix $u$, evaluate
+$c_u=s_{A_u-1}$ from the full-source recurrence and seed, and follow only
+the supplied next physical letter by (PCR.37)--(PCR.39). The child's
+initial label is beta for delay one and alpha for delay two; its
+creation time is $e_u+1$. Keep only the current coordinates and immutable
+label, not an ancestor stack. At the final word, return $j=A_v$ and
+the tuple of Definition 27.1, evaluating its event bit if not yet done.
+Denote the ordinal component by $Q_s(v)$.
+
+For an ordinal $j\ge1$, successive Fibonacci additions locate the
+unique bracket in Theorem 27.2. Put
+
+$$
+ t=\tau(j)-2,\qquad u=t,\qquad q=j-F_{\tau(j)}.
+\tag{PCR.73}
+$$
+
+Begin at the same actual root with $(F_u,F_{u+1})$ and residual rank
+$q$. When $u>0$, evaluate its actual bit $c$ and delays. The two
+first-letter block sizes are
+
+$$
+ N_x(u)=
+ \begin{cases}
+ F_{u-\delta_x(c)+1},&u\ge\delta_x(c),\\
+ 0,&u<\delta_x(c).
+ \end{cases}
+\tag{PCR.74}
+$$
+
+Select $a$ if $q<N_a(u)$; otherwise select $b$ and subtract $N_a(u)$.
+Append that one letter, update only that child's actual coordinates and
+initial label, and replace $u$ by $u-\delta_x(c)$. Update the Fibonacci
+pair by subtraction, retaining no table: a delay-one step takes
+$(F_u,F_{u+1})$ to $(F_{u+1}-F_u,F_u)$; a delay-two step with $u\ge2$
+takes it to $(2F_u-F_{u+1},F_{u+1}-F_u)$. At $u=1$ only the delay-one
+block is nonempty. Stop at $u=0$, where the residual rank must be zero,
+and return the literal and its tuple. Denote the literal by $U_s(j)$.
+
+Integers use canonical binary nonnegative representations (zero has
+one digit); an ordinal must be positive. Reject wrong signs, malformed
+integer fields, a nonbinary $P$, a prefix length different from $2d$,
+a nonphysical letter, or a source prefix with no order-at-most-$d$
+passing recurrence. The last check can use the synthesized register
+length and regenerate the prefix for comparison within (ACR.85)'s
+bound; a failed synthesis is not replaced by a guessed periodic tail.
+An authentic source always passes. A passing finite representation
+alone does not certify acquisition or physical provenance. If labels
+or coordinates are supplied as extra claimed fields, compare them with
+the recomputed tuple and reject disagreement. In the already-occurred
+task require a valid acquired $n$ and return the event tuple only if
+$\tau(j)\le n$, equivalently $e_v+1\le n$; otherwise return
+$\mathsf{not\ yet\ occurred}$. Missing $n$ is invalid for that task.
+The whole-origin-orbit task imposes no such guard and certifies no
+current occurrence.
+
+**Theorem 27.4 (both inverse laws and the current-cut restriction).**
+For every authentic $(d,P)$ and every $j\in\mathbb N_{>0}$ and
+$v\in\{a,b\}^*$, Definition 27.3 terminates and gives
+
+$$
+ Q_s(U_s(j))=j,\qquad U_s(Q_s(v))=v.
+\tag{PCR.75}
+$$
+
+Its returned descriptors, bit, branch time and normalization origin
+are those of the actual source. In particular $U_s(1)=\varepsilon$,
+with creation $(0,\alpha)$, beta origin one, branch time two and
+$(A,B)=(1,2)$. The already-occurred versions restrict these inverse
+maps exactly to
+
+$$
+ \{j:1\le j\le F_{n+1}-1\}
+ \quad\longleftrightarrow\quad
+ \{v:e_v+1\le n\}.
+\tag{PCR.76}
+$$
+
+Both sets are empty at $n=0,1$. A word can be present and have no
+occurred branching event: creation, beta normalization and branching
+are separate cuts in (PCR.69). In particular root presence at cut zero
+does not make birth ordinal one an already-occurred event.
+
+Proof. Full-source synthesis supplies the same all-index stream by
+ACR Theorems 21.2 and 21.4, including its seed and singular part.
+Theorem 17.2 then proves word descent correct at every step. It uses
+only earlier actual event bits; the strict increase $A_{ux}>A_u$
+also rules out a recursive request for its own unknown orientation.
+The returned initial label and creation time follow the actual child
+rule, not the child's possibly later beta label.
+
+For ordinal descent, the subtree rooted at a word has exactly one
+child of normalization delay one and one of delay two, even in a
+transient. Its exact remaining-time count $f(u)$ therefore satisfies
+$f(0)=f(1)=1$, $f(u)=f(u-1)+f(u-2)$ for $u\ge2$, and zero count
+at negative remaining times. Thus $f(u)=F_{u+1}$, and (PCR.74) gives
+its actual ordered first-letter block sizes. The words in an exact
+layer are prefix-incomparable, because every edge has positive delay.
+Hence the whole $a$ block precedes the whole $b$ block in physical
+order. At every selection, $0\le q<F_{u+1}$ and the selected block
+is nonempty; the new rank is in its exact range. Remaining time
+strictly decreases, so descent terminates after at most $t$ letters.
+At zero the only suffix is empty, of rank zero. Induction on remaining
+time proves that the output is precisely the required beta-layer
+member. Theorem 27.2 then proves both identities in (PCR.75), the
+root tuple and every output field. This is the all-root specialization
+of the beta-list inverse already used in [ACR, Proposition 10.2][ACR];
+no new inverse-existence claim is needed.
+
+An event in batch $\tau$ occurs precisely at update $\tau$. Summing
+batch sizes through $n$ gives $F_{n+1}-1$ for $n\ge1$, also zero at
+$n=0$. This proves (PCR.76) and the guard, including a batch at $n$
+itself. A hypothetical future event computed from supplied source data
+provides no evidence that the actual source has reached it. $\square$
+
+**Proposition 27.5 (local records and a periodic core do not determine
+these queries).** Even the complete mature local record at the same
+literal safe cone, with the same exact normalization origin and both
+integer clocks, need not determine $U_s$ or $Q_s$ on the original root.
+A periodic-core record alone is insufficient even when the core is
+zero.
+
+Proof. Reuse Proposition 23.1's sources in the common class
+$\mathscr R_3$: $s=(10)^\infty$ and $s'=001010\cdots$. Their same
+literal $aa$ has $(e,A,B)=(4,5,8)$ and identical complete normalized
+future. All the mature local records stipulated there agree. Yet the
+root consumes one in the first source and zero in the second. The
+unique parent in batch three is respectively $a$ and $b$, so
+
+$$
+ U_s(2)=a,\quad U_{s'}(2)=b,\qquad
+ Q_s(a)=2,\quad Q_{s'}(a)=3.
+\tag{PCR.77}
+$$
+
+The core has least polynomial $(X+1)^2$, so this example also retains
+the permitted repeated factor and the one-bit singular transient.
+For the second assertion compare the zero source and the impulse
+$1000\cdots$ in $\mathscr R_1$. Both have zero periodic core; their
+least all-index annihilators are respectively $1$ and $X$. The same
+root-bit calculation gives $U_0(2)=b$ and $U_{\rm impulse}(2)=a$.
+Thus replacing the actual root by a beta-normalized periodic core
+erases information necessary for the query. Complete $(d,P)$
+distinguishes both pairs, as required by the sufficient interface.
+At $d=0$ the sole admitted source is zero, not the impulse. $\square$
+
+**Theorem 27.6 (uniform represented-bit work, cumulative writes and
+linear peak backing).** Use the fixed finite sequential multitape
+model of ACR §21.4: every symbol operation and one-cell head move is
+charged, every written bit is counted cumulatively, and peak backing
+includes every visited cell. Let $I$ be the actual encoded input length,
+including all source fields, query, optional actual cut and any extra
+claimed output fields; let $L_{\rm out}$ be the actual encoded output
+length, including any requested copy of $(P,n)$. Put
+
+$$
+ D=d+1,\qquad
+ \ell_d=\lceil\log_2(64(d+2)^4)\rceil,\qquad
+ R=\begin{cases}
+ |\operatorname{bin}(j)|,&\text{ordinal input},\\
+ |v|+1,&\text{physical-word input}.
+ \end{cases}
+\tag{PCR.78}
+$$
+
+There is one uniform implementation of both queries with
+
+$$
+ \begin{aligned}
+ C,W&=O\!\left(I+D^3\ell_d^2+D^2(R+1)^2+L_{\rm out}\right),\\
+ V_{\rm peak}&=O(I+D+R+L_{\rm out}).
+ \end{aligned}
+\tag{PCR.79}
+$$
+
+The constants are independent of source, period, transient, query and
+cut. Work $C$ and writes $W$ include preparation from raw authentic
+$(d,P)$, not just access to a prepared term evaluator. On invalid
+fields the same bound uses their actual lengths (and $R$ equal to the
+query field's digit or symbol length plus one when it cannot be parsed).
+At an already-occurred query, the length of $n$ is charged in $I$;
+its numeric value adds no forward simulation. No all-previous-node,
+period or image table is expanded.
+
+Proof. First validate syntax and source length by scans of the actual
+input. A length scan may use a moving unary tally and one sequential
+conversion to binary: increment a binary accumulator at its low end
+with ripple carry, returning only across the changed carry prefix.
+Over all increments its bit visits and writes are linear, since bit
+$k$ changes $O(1+M/2^k)$ times during $M$ increments. Final reversal
+and comparison cost the represented lengths. Equivalently the unary
+tally can be counted by repeated adjacent pairing, whose sweep lengths
+form a geometric sum. This includes zero, delimiters and return scans,
+without scanning a huge declared length when the actual field is
+short. Syntax failures return immediately; recurrence failures use the
+same bounded source pass. ACR (ACR.85) supplies preparation in
+$O(D^3\ell_d^2)$ work and writes and $O(D+\ell_d)$ backing, including
+its polynomial output, coefficient convention and authentic seed.
+Regenerating and comparing the $2d$ bits has the same bound. Since
+$\ell_d=O(D)$, this is $O(D)$ peak backing beyond the retained input.
+This preparation preserves the full annihilator $m$, not only its
+unit-constant core factor.
+
+Here is a sequential implementation of each subsequent term evaluation.
+If $r=\deg m>0$, for the requested exponent $k\ge0$ compute
+$X^k\bmod m$ by left-to-right binary square-and-multiply, starting with
+one. Dot its coefficients with the original first $r$ source bits.
+The monic-quotient identity gives
+
+$$
+ s_k=\left\langle X^k\bmod m,(s_0,\ldots,s_{r-1})\right\rangle.
+\tag{PCR.80}
+$$
+
+This is Fiduccia's recurrence identity as stated by
+[Bostan--Mori, v1 §1.3, equation (3)][PCR-BM]. It requires a monic
+polynomial, not an invertible companion or a field quotient; hence it
+applies to $X^a g$, repeated factors, constants and an impulse. For
+$r=0$ return zero, after reading the requested exponent field.
+
+No indexed coefficient access is hidden in its arithmetic bound.
+Use contiguous coefficient strings of length $O(r+1)$ on a fixed
+number of tapes. To multiply two polynomials, sweep one factor and
+add a shifted copy of the other into a length-$2r+1$ accumulator.
+Each of the $O(r+1)$ shifts costs $O(r+1)$ head moves, copies and
+XOR writes, including the return scan; moving the alignment by one
+cell is charged. Mark the current alignment on a separate track.
+For reduction, sweep high coefficients downwards and, for every
+nonzero one, XOR the aligned monic divisor across at most $r+1$
+cells, then return to the next marked high position. At most $O(r+1)$
+positions are reduced, at cost $O((r+1)^2)$ including positioning.
+A marked unary sweep, delimited by the actual coefficient strings,
+controls these loops; it uses $O(r+1)$ cells and does not require a
+binary array-index operation at each coefficient. Buffer clearing,
+copying, end markers, multiplication by $X$, and the final dot product
+fit the same bound. Each exponent bit is read once while the other
+tape heads perform these scans, with $O((r+1)^2)$ work and writes per
+bit and $O(r+1)$ reused arithmetic backing. Thus a $K$-bit exponent
+costs $O(D^2(K+1))$ work and writes, using $O(D+K)$ bits if its
+explicit exponent copy is included. This is a bit and head-motion
+bound over $\mathbb F_2$, not merely a ring-operation count.
+
+Next bound every query operand. After $h$ selected edges, (PCR.39)
+gives $B_v+1\le3^{h+1}$, $1\le A_v<B_v$, and $1\le e_v\le1+2h$.
+For a word query $h\le|v|$, so all exact coordinates and evaluated
+exponents $A_v-1$ have $O(R+1)$ bits. There are at most $|v|+1$
+term evaluations, including the returned event bit. Coordinate
+addition, doubling, comparison, subtraction, label changes, end
+markers and buffer resizing take $O(R+1)$ sequential work and writes
+per step, using a constant number of reused strings. The input-word
+head only advances; there is no rescan of all earlier letters and no
+stored sibling list.
+
+For an ordinal query, $F_{2k+2}\ge2^k$ by induction, so locating
+$F_\tau\le j<F_{\tau+1}$ takes $O(R+1)$ successive additions.
+The final pair and every intermediate Fibonacci integer have
+$O(R+1)$ bits: the first one exceeding $j$ is at most $2j+1$.
+The bracket search, comparisons, its represented loop counter and
+initial two subtractions to obtain $(F_t,F_{t+1})$ therefore cost
+$O((R+1)^2)$ work and writes and $O(R+1)$ backing, with the small
+$\tau=2,3$ cases treated directly. Descent takes at most
+$t=\tau-2=O(R+1)$ edges, so the same coordinate-width bound applies.
+Its block counts, residual rank, remaining time and pair of Fibonacci
+values all have $O(R+1)$ bits. Every rank comparison/subtraction and
+pair rollback, including the zero slow block at $u=1$, takes
+$O(R+1)$ work and writes. A selected letter is appended with the
+output head kept at its end. No ancestor is retained when $u$
+decreases. There are $O(R+1)$ term evaluations, each at an exponent
+of $O(R+1)$ bits, so their total is $O(D^2(R+1)^2)$.
+
+The cut guard is one final sequential comparison of the computed
+$\tau=e+1$ with the supplied $n$, costing $O(I+R+1)$. It is not
+repeated along descent. Extra claimed fields are compared once with
+the resulting tuple in $O(I+R+L_{\rm out})$ work. Copying requested
+input fields and writing or retaining the explicit output cost their
+actual lengths. All controller state is either finite control, a
+represented counter bounded above, or one of the named strings.
+No loop traverses blank gaps beyond these contiguous buffers. At all
+times their total visited backing is
+$O(I+D+R+L_{\rm out})$, and all arithmetic, allocation, clearing,
+relocation, counter and output writes have already been included.
+This proves (PCR.79) for successes and each rejection path. $\square$
+
+**Proposition 27.7 (the resource scope and the unacquired interfaces).**
+The word and ordinal lengths in (PCR.78) are comparable on valid inverse
+pairs, up to absolute constants and an additive one. Linear peak
+backing is attained on a fixed admitted source. Nevertheless (PCR.79)
+is a supplied-data query bound and supplies no source acquisition,
+original-enumeration firstness, physical installation or finite-state
+online history machine.
+
+Proof. For $|v|=h$ the branch time lies in $[h+2,2h+2]$.
+By (PCR.71), $F_{\tau_v}\le Q_s(v)<F_{\tau_v+1}$.
+The inequalities $F_k\le2^k$ and $F_{2k+2}\ge2^k$ give
+$|\operatorname{bin}(Q_s(v))|=\Theta(h+1)$. For the all-one source,
+$v=a^h$ has $(e,A,B)=(h+1,F_{h+2},F_{h+3})$ by (PCR.39).
+Its inverse literal output has $h$ symbols and thus requires
+$\Omega(R)$ output bits. Separately materializing the current exact
+boundary at every step writes $\Theta(h^2)$ bits along this family;
+Retaining all those boundaries would require quadratic peak space. The iterative query uses only the current boundary, so
+this is consistent with its quadratic work and linear peak space.
+It is not a universal quadratic-work lower bound on all possible
+query algorithms.
+
+The preparation in (PCR.79) reuses the original authentic prefix and
+seed. It does not establish that the prefix has been earned: paid
+full-root presence-only Reads, source storage, root binding,
+stationarity throughout the service interval, grants, backing and
+synchronization retain exactly their original premises and tariffs.
+The acquired actual $n$ and the original transient-inclusive $(P,n)$
+output are preserved; law-ready hypothetical evaluation cannot replace
+them. Minimal-source synthesis also does not select $K_d(P)$ or the
+original $\rho_d$ first passing row on a deficient-rank fibre. Those
+normalization and completed physical-installation obligations remain
+the separate tasks in ACR §§21 and 26 and GPO §§34 and 39.
+
+The ordinary inverse here reuses ACR Proposition 10.2; its global birth
+calibration is GPO Proposition 39.2 and ACR Theorem 27.2, while the
+source-specific linear-backing query bound uses the exact integer
+transport of §17 and the exact-layer block counts of §24. Equation
+(PCR.79), with authentic raw preparation and growing operand widths,
+is the resource assertion in addition to those existing inverses.
+Massey's finite synthesis [MAS] and the monic-quotient identity
+(PCR.80) are reused suppliers, not new recurrence theorems or a
+literature-priority claim for this application.
+
+The distinct typed interfaces also prevent a change of source model.
+`ActualTreeReadoutAcquisition.readout` in D5 takes an explicit finite
+native labelled tree and returns alpha, beta, branch or absent;
+`ArchiveClockRecovery.archive_clock_recovery_and_finite_ambiguity`
+takes a finite partial-action system and complete visible archives.
+Neither supplies this entrance's paid presence-only full prefix,
+actual cut, or an ordinal service. The conditional exact quotient
+endpoint and native-clock acquisition of TRC23, Definition 23.1,
+also differs from these inputs, even with constant current readout.
+No such native readout or clock is an argument to (PCR.69)--(PCR.80).
+These are ordinary mathematical deductions on the original supplied
+source, without a fresh compiled Lean assertion. $\square$
+
+## 追加锚（本行以下为增补区）
