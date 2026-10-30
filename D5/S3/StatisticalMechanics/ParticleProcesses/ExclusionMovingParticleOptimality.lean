@@ -6,7 +6,7 @@
    utility: none
    digest: Effective resistance is the optimal finite-graph moving particle constant. -/
 
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
+import Mathlib.Data.Matrix.Mul
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Algebra.Order.Archimedean.Real.Basic
 import Mathlib.Tactic.FinCases
@@ -41,7 +41,7 @@ def bernoulli {v : Type} [Fintype v] (α : ℝ) (ζ : v → Fin 2) : ℝ :=
 /-- Expectation against the product Bernoulli mass. -/
 def expect {v : Type} [Fintype v] (α : ℝ) (f : (v → Fin 2) → ℝ) : ℝ := by
   classical
-  exact ∑ ζ, bernoulli α ζ * f ζ
+  exact dotProduct (bernoulli α) f
 
 /-- Exclusion Dirichlet energy; the inner half removes ordered-pair double counting. -/
 def exclusionEnergy {v : Type} [Fintype v] [DecidableEq v]
@@ -65,7 +65,7 @@ def claim : Prop :=
       1 ≤ k * effectiveConductance c x y
 
 private def linearObservable {v : Type} [Fintype v] (h : v → ℝ) (ζ : v → Fin 2) : ℝ :=
-  ∑ z, h z * (ζ z : ℝ)
+  dotProduct h (fun z => (ζ z : ℝ))
 
 private lemma linear_gradient {v : Type} [Fintype v] [DecidableEq v]
     (h : v → ℝ) (u w : v) (huw : u ≠ w) (ζ : v → Fin 2) :
@@ -166,18 +166,12 @@ private lemma bernoulli_second_moment {v : Type} [Fintype v]
 private lemma expect_zero {v : Type} [Fintype v] (α : ℝ) :
     expect α (fun _ : v → Fin 2 => 0) = 0 := by
   classical
-  change (∑ ζ : v → Fin 2, bernoulli α ζ * 0) = 0
-  simp only [mul_zero, Finset.sum_const_zero]
+  exact dotProduct_zero' (bernoulli α)
 
 private lemma expect_mul {v : Type} [Fintype v] (α a : ℝ) (f : (v → Fin 2) → ℝ) :
     expect α (fun ζ => a * f ζ) = a * expect α f := by
   classical
-  change (∑ ζ : v → Fin 2, bernoulli α ζ * (a * f ζ)) =
-    a * ∑ ζ : v → Fin 2, bernoulli α ζ * f ζ
-  rw [Finset.mul_sum]
-  apply Finset.sum_congr rfl
-  intro ζ _
-  ring
+  exact dotProduct_smul a (bernoulli α) f
 
 private lemma linear_gradient_moment {v : Type} [Fintype v] [DecidableEq v]
     (α : ℝ) (h : v → ℝ) (u w : v) :
