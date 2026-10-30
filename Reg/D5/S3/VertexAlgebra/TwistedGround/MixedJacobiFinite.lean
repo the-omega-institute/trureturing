@@ -15,6 +15,7 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 open _root_.D5.S3.VertexAlgebra
 open LatticeGeneratingFieldLocality LatticeHalfFock
 open LatticeHalfFockChargedTensorCoefficients LatticeHalfFockCorrectedField
+open LatticeHalfFockGradedTrace
 open LatticeAllStateField LatticePositiveEnergy LatticeInvolution
 open _root_.D5.S3.VertexAlgebra.TwistedGround.ActualChargedAdjoint
 open LatticeSugawaraCurrents LatticeSugawaraVirasoro
@@ -457,7 +458,7 @@ private theorem actualSensitivity : Sensitivity arena actualEqual := by
   · intro i
     refine ⟨rejectedEqual, ?_, ?_, rejectedLaw⟩
     · intro j h
-      exact (h (Subsingleton.elim _ _)).elim
+      exact (h (Subsingleton.elim (α := Unit) _ _)).elim
     · funext e
       exact nomatch e
   · intro e
