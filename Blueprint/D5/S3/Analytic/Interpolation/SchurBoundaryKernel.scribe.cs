@@ -10,6 +10,8 @@ internal sealed class SchurBoundaryKernelDocument : IScribeDocumentDefinition
     private static Formula B => F.Id("b");
     private static Formula T => F.Id("t");
     private static Formula J => F.Id("j");
+    private static Formula C => Seq(Mathbb, Grp(F.Id("C")));
+    private static Formula Functions => Seq(C, Sp, To, Sp, C);
     private static Formula R => Seq(Mathbb, Grp(F.Id("R")));
     private static Formula N => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula All(string v, Formula type, Formula body) =>
@@ -45,7 +47,19 @@ internal sealed class SchurBoundaryKernelDocument : IScribeDocumentDefinition
                     Frac, Grp(D(3,0,6,7)), Grp(D(8,1,0,0)), Sp, Land, Sp,
                     Frac, Grp(D(3,0,6,7)), Grp(D(8,1,0,0)), Sp, Lt, Sp,
                     Frac, Grp(D(1,9)), Grp(D(5,0)))))),
-                "For b in [0,1], the angle function is continuous, B_b(pi-t)=-B_b(t), and cos(t) B_b(t) is nonpositive. Partial sums converge uniformly on the full strip [0,1] times the real line. For b<1, the proof integrates the actual geometric cosine series, obtaining B_b(t)=-2b squared cos(t) times the integral from zero to one of u(1-u)(1+b squared u squared)/((1-b squared u squared) squared+4b squared u squared cos(t) squared). The integrand is nonnegative. Continuity in b extends the sign to b=1, including cos(t)=0. The joint parameter-angle function is continuous on the full strip. Termwise cosine integration gives zero mean. The rational size estimate is |B_b(t)| <= 3067/8100 < 19/50. After y=bu the nonnegative integral is bounded by the integral of (1-y)q(y,c), c=|cos(t)|. On [0,1/3] this is at most 2y(1-y)(1-9y squared/10), whose integral is 667/8100. On [1/3,1] it is at most 3/8+y/8-3(y-1/3)(1-y)/16, whose integral is 8/27. Continuity includes b=1. This does not yet give the entire-function primitive representation or the sharp functional estimate; it does not assert the source's separate logarithm-arctangent constant C.", DescribeRole.Theorem))));
+                "For b in [0,1], the angle function is continuous, B_b(pi-t)=-B_b(t), and cos(t) B_b(t) is nonpositive. Partial sums converge uniformly on the full strip [0,1] times the real line. For b<1, the proof integrates the actual geometric cosine series, obtaining B_b(t)=-2b squared cos(t) times the integral from zero to one of u(1-u)(1+b squared u squared)/((1-b squared u squared) squared+4b squared u squared cos(t) squared). The integrand is nonnegative. Continuity in b extends the sign to b=1, including cos(t)=0. The joint parameter-angle function is continuous on the full strip. Termwise cosine integration gives zero mean. The rational size estimate is |B_b(t)| <= 3067/8100 < 19/50. After y=bu the nonnegative integral is bounded by the integral of (1-y)q(y,c), c=|cos(t)|. On [0,1/3] this is at most 2y(1-y)(1-9y squared/10), whose integral is 667/8100. On [1/3,1] it is at most 3/8+y/8-3(y-1/3)(1-y)/16, whose integral is 8/27. Continuity includes b=1. The rational bound is sufficient for the integrated-kernel estimate. It does not assert the separate logarithm-arctangent constant C.", DescribeRole.Theorem),
+            Entry("primitive", "boundary_primitive_representation", "The normalized entire primitive representation",
+                Disp(All("h", Functions, All("H", Functions, All("b", R, Seq(
+                    Call("Entire", F.Id("h")), Sp, Land, Sp,
+                    Call("HasDerivativeEverywhere", F.Id("H"), F.Id("h")), Sp, Land, Sp,
+                    Eqn(Call("H", D(0)), D(0)), Sp, Land, Sp,
+                    D(0), Sp, Lt, Sp, B, Sp, Le, Sp, D(1), Sp, Implies, Sp,
+                    Eqn(Seq(Frac, Grp(D(1)), Grp(D(2), B),
+                            Call("integral", Seq(Minus, B), B, Call("H", Seq(F.Id("i"), T)))),
+                        Seq(Frac, Grp(D(1)), Grp(D(2), Pi),
+                            Call("integral", D(0), Seq(D(2), Pi),
+                                Seq(Call("h", Call("circleMap", D(0), D(1), T)), Kernel(T)))))))))),
+                "Let h be any entire complex-valued function and let H have complex derivative h everywhere and H(0)=0. Then the normalized integral of H(it) from -b to b is the circle pairing of h with the actual real Fourier kernel, for every 0<b<=1. The primitive is entire because it is complex differentiable everywhere; existence of a normalized entire primitive follows from the exact primitive theorem on the complex plane. For 0<b<1, the Cauchy mean formula gives the average of h(z)/(z-w). Applying it at w=ir and w=-ir, and conjugating only the rational kernel z/(1+r squared z squared) on the unit circle, gives its real-part pairing. Continuity and compact product integrability justify exchanging the time and angle integrals. The fundamental theorem of calculus applied to (1-t)(H(ibt)+H(-ibt)) identifies the resulting weighted integral. Real changes of variables give the displayed vertical-segment average. Joint continuity of the actual kernel and compact parameter integrals extend the identity to b=1. No conjugation identity for h or H is assumed, and all coefficients remain arbitrary complex numbers.", DescribeRole.Theorem))));
 
     private static DocumentBlock Entry(string id, string declaration, string title,
         Formula formula, string prose, DescribeRole role) =>

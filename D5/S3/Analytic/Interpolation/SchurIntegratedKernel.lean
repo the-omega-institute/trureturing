@@ -346,6 +346,70 @@ theorem boundary_l1_control (b x : ℝ) (hb : b ∈ Icc (0 : ℝ) 1) (hx : |x| <
     rw [show 2 * Real.pi + Real.pi = Real.pi + 2 * Real.pi by ring, hshift]
     exact l1_pos hb hxneg hx1
 
+private theorem rectangle_swap (F : ℝ × ℝ → ℂ) (a c : ℝ) (hac : a ≤ c)
+    (hF : ContinuousOn F (Icc a c ×ˢ Icc (0 : ℝ) (2 * Real.pi))) :
+    (∫ θ in (0 : ℝ)..(2 * Real.pi), ∫ t in a..c, F (t, θ)) =
+      ∫ t in a..c, ∫ θ in (0 : ℝ)..(2 * Real.pi), F (t, θ) := by
+  have hi := hF.integrableOn_compact (μ := volume.prod volume)
+    (isCompact_Icc.prod isCompact_Icc)
+  have hip : Integrable F ((volume.restrict (Ioc a c)).prod
+      (volume.restrict (Ioc (0 : ℝ) (2 * Real.pi)))) := by
+    rw [Measure.prod_restrict]
+    exact hi.mono_set (Set.prod_mono Ioc_subset_Icc_self Ioc_subset_Icc_self)
+  simpa only [intervalIntegral.integral_of_le hac,
+    intervalIntegral.integral_of_le Real.two_pi_pos.le] using (integral_integral_swap hip).symm
+
+private theorem oriented_swap (F : ℝ × ℝ → ℂ) (x : ℝ)
+    (hF : ContinuousOn F (uIcc (0 : ℝ) x ×ˢ Icc (0 : ℝ) (2 * Real.pi))) :
+    (∫ θ in (0 : ℝ)..(2 * Real.pi), ∫ t in (0 : ℝ)..x, F (t, θ)) =
+      ∫ t in (0 : ℝ)..x, ∫ θ in (0 : ℝ)..(2 * Real.pi), F (t, θ) := by
+  rcases le_total 0 x with hx | hx
+  · exact rectangle_swap F 0 x hx (by simpa only [uIcc_of_le hx] using hF)
+  · have he := rectangle_swap F x 0 hx (by simpa only [uIcc_of_ge hx] using hF)
+    simp_rw [intervalIntegral.integral_symm x 0, intervalIntegral.integral_neg]
+    exact congrArg Neg.neg he
+
+private theorem integrated_function_representation (h : ℂ → ℂ) (hh : Differentiable ℂ h)
+    (x : ℝ) (hx : |x| < 1) :
+    (∫ t in (0 : ℝ)..x, h (t : ℂ)) = ((2 * Real.pi)⁻¹ : ℝ) •
+      (∫ θ in (0 : ℝ)..(2 * Real.pi),
+        h (circleMap 0 1 θ) * (integratedPoisson x θ : ℂ)) := by
+  let F : ℝ × ℝ → ℂ := fun p => (poissonDensity p.1 p.2 : ℂ) * h (circleMap 0 1 p.2)
+  have ht (t : ℝ) (ht : t ∈ uIcc (0 : ℝ) x) : |t| ≤ |x| := by
+    exact abs_le.mpr (uIcc_subset_Icc
+      (show (0 : ℝ) ∈ Icc (-|x|) |x| by constructor <;> linarith [abs_nonneg x])
+      ⟨neg_abs_le x, le_abs_self x⟩ ht)
+  have hP : ContinuousOn (fun p : ℝ × ℝ => poissonDensity p.1 p.2)
+      (uIcc (0 : ℝ) x ×ˢ Icc (0 : ℝ) (2 * Real.pi)) :=
+    (density_continuousOn hx).mono (fun p hp => ⟨abs_le.mp (ht p.1 hp.1), mem_univ p.2⟩)
+  have hF : ContinuousOn F (uIcc (0 : ℝ) x ×ˢ Icc (0 : ℝ) (2 * Real.pi)) :=
+    (Complex.continuous_ofReal.comp_continuousOn hP).mul
+      (hh.continuous.comp (by fun_prop)).continuousOn
+  have hswap := oriented_swap F x hF
+  have hp (t : ℝ) (ht' : t ∈ uIcc (0 : ℝ) x) : h (t : ℂ) =
+      ((2 * Real.pi)⁻¹ : ℝ) • (∫ θ in (0 : ℝ)..(2 * Real.pi), F (t, θ)) := by
+    have hw : (t : ℂ) ∈ ball (0 : ℂ) 1 := by
+      simpa only [mem_ball, dist_zero_right, Complex.norm_real, Real.norm_eq_abs] using
+        (ht t ht').trans_lt hx
+    have he := hh.diffContOnCl.circleAverage_poissonKernel_smul hw
+    simpa only [Real.circleAverage_def, Pi.smul_apply, F, poissonDensity, Complex.real_smul] using he.symm
+  calc
+    _ = ∫ t in (0 : ℝ)..x, ((2 * Real.pi)⁻¹ : ℝ) •
+        (∫ θ in (0 : ℝ)..(2 * Real.pi), F (t, θ)) :=
+      intervalIntegral.integral_congr (fun t ht' => hp t ht')
+    _ = ((2 * Real.pi)⁻¹ : ℝ) •
+        (∫ t in (0 : ℝ)..x, ∫ θ in (0 : ℝ)..(2 * Real.pi), F (t, θ)) := by
+      rw [intervalIntegral.integral_smul]
+    _ = ((2 * Real.pi)⁻¹ : ℝ) •
+        (∫ θ in (0 : ℝ)..(2 * Real.pi), ∫ t in (0 : ℝ)..x, F (t, θ)) := by rw [hswap]
+    _ = _ := by
+      congr 1
+      apply intervalIntegral.integral_congr
+      intro θ _
+      dsimp only [F]
+      rw [intervalIntegral.integral_mul_const, intervalIntegral.integral_ofReal]
+      exact mul_comm _ _
+
 #print axioms boundary_l1_control
 
 end D5.S3.Analytic.Interpolation.SchurIntegratedKernel

@@ -872,7 +872,8 @@ private theorem kernel_pairing_closed (h : ℂ → ℂ) (hh : Differentiable ℂ
     have hprod : Continuous (fun p : (Icc (0 : ℝ) 1) × ℝ =>
         (boundaryKernel p.1.val p.2 : ℂ) * h (circleMap 0 1 p.2)) :=
       (Complex.continuous_ofReal.comp hks).mul (hh.continuous.comp (by fun_prop))
-    exact continuous_const.smul (fixed_interval_continuous
+    exact (continuous_const : Continuous (fun _ : Icc (0 : ℝ) 1 =>
+      ((2 * Real.pi)⁻¹ : ℝ))).smul (fixed_interval_continuous
       (fun b : Icc (0 : ℝ) 1 => fun θ =>
         (boundaryKernel b.val θ : ℂ) * h (circleMap 0 1 θ))
       hprod 0 (2 * Real.pi) Real.two_pi_pos.le)
@@ -880,7 +881,6 @@ private theorem kernel_pairing_closed (h : ℂ → ℂ) (hh : Differentiable ℂ
   have hR : Continuous R := by
     apply Continuous.mul (by fun_prop)
     apply fixed_interval_continuous _ _ 0 1 (by norm_num)
-    dsimp [Function.uncurry]
     fun_prop
   have he : EqOn L R (Ico (0 : ℝ) 1) := by
     intro c hc
@@ -888,7 +888,7 @@ private theorem kernel_pairing_closed (h : ℂ → ℂ) (hh : Differentiable ℂ
     · simp [L, R, hc0, boundaryKernel, boundaryTerm]
     · exact kernel_pairing_interior h hh c (lt_of_le_of_ne hc.1 (Ne.symm hc0)) hc.2
   exact he.of_subset_closure hL hR.continuousOn Ico_subset_Icc_self
-    (by rw [closure_Ico (by norm_num : (0 : ℝ) < 1)]; exact subset_rfl) hb
+    (by rw [closure_Ico (by norm_num : (0 : ℝ) ≠ 1)]; exact subset_rfl) hb
 
 private theorem primitive_vertical_average (H : ℂ → ℂ) (hH : Continuous H)
     (b : ℝ) (hb : 0 < b) :
@@ -907,7 +907,8 @@ private theorem primitive_vertical_average (H : ℂ → ℂ) (hH : Continuous H)
       (c := -b) (neg_ne_zero.mpr hb.ne')
     simp only [mul_zero, mul_one] at he
     rw [intervalIntegral.integral_symm (-b) 0] at he
-    simpa only [f, neg_mul, inv_neg, neg_smul, smul_neg, neg_neg] using he
+    simpa only [f, Complex.ofReal_neg, Complex.ofReal_mul, neg_mul, inv_neg,
+      neg_smul, smul_neg, neg_neg] using he
   have hiP : IntervalIntegrable (fun t : ℝ => H ((b * t : ℝ) * Complex.I)) volume 0 1 :=
     (hH.comp (by fun_prop)).intervalIntegrable _ _
   have hiM : IntervalIntegrable (fun t : ℝ => H (-(b * t : ℝ) * Complex.I)) volume 0 1 :=

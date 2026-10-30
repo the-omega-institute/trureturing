@@ -84,5 +84,78 @@ def audit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
   familyRecord := none
   options := #[]
 
+abbrev primitiveSignature : Signature :=
+  _root_.Reg.Support.SingleDependentReadout.signature Unit (fun _ => ℂ) (fun _ => ℂ → Prop)
+
+def primitiveActual : Realization primitiveSignature :=
+  realize primitiveSignature (fun _ _ x y => x = y) (fun e => nomatch e)
+
+def primitiveRejected : Realization primitiveSignature :=
+  realize primitiveSignature (fun _ _ _ _ => False) (fun e => nomatch e)
+
+abbrev primitiveArena : Arena where
+  signature := primitiveSignature
+  Law R := ∀ (h H : ℂ → ℂ) (_hh : Differentiable ℂ h)
+    (_hH : ∀ z : ℂ, HasDerivAt H (h z) z) (_hH0 : H 0 = 0)
+    (b : ℝ) (_hb : b ∈ Ioc (0 : ℝ) 1),
+    R.readout () ()
+      ((1 / (2 * b) : ℝ) • (∫ t in -b..b, H ((t : ℂ) * Complex.I)))
+      (((2 * Real.pi)⁻¹ : ℝ) • (∫ θ in (0 : ℝ)..(2 * Real.pi),
+        h (circleMap 0 1 θ) * (boundaryKernel b θ : ℂ)))
+
+private theorem primitiveRejectedLaw : ¬ primitiveArena.Law primitiveRejected := by
+  intro h
+  exact h (fun _ => 0) (fun _ => 0) (differentiable_const 0)
+    (fun z => hasDerivAt_const z 0) rfl 1 (by norm_num)
+
+private theorem primitiveDependence : ObservationalDependence primitiveSignature primitiveActual := by
+  intro i
+  refine ⟨(), 0, 1, ?_⟩
+  intro h
+  have hh := congrFun h 0
+  norm_num [primitiveActual, realize] at hh
+
+def primitiveFamily : Registration primitiveArena (type_of% @boundary_primitive_representation) where
+  actual := primitiveActual
+  bridge := Iff.rfl
+  variation := ⟨@boundary_primitive_representation, primitiveRejected, primitiveRejectedLaw⟩
+  sensitivity := _root_.Reg.Support.SingleDependentReadout.sensitivity
+    primitiveArena.Law primitiveActual primitiveRejected primitiveRejectedLaw
+  dependence := primitiveDependence
+
+def primitiveAudit : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+    (@boundary_primitive_representation) (Realization primitiveSignature) Unit Unit where
+  unitName := `D5.S3.Analytic.Interpolation.SchurBoundaryKernel.boundary_primitive_representation.__information_unit
+  realizationName := `Reg.D5.S3.Analytic.Interpolation.SchurBoundaryKernel.primitiveFamily
+  realizationSource := none
+  generated := false
+  arena := .source ⟨primitiveArena⟩
+  objectArena := .source ⟨primitiveArena⟩
+  catalog := Lean.Name.anonymous
+  localNames := false
+  realization := .source primitiveArena ⟨primitiveFamily⟩
+  correspondence := { stage := .evidence, objectStage := .evidence }
+  bundleNonempty := .absent
+  readout := some (realize primitiveSignature (fun _ _ x y => x = y) (fun e => nomatch e))
+  variation := .absent
+  sensitivity := .absent
+  partialSensitivity := none
+  escapeFrom := none
+  sourceSelection := some {
+    owner := `D5.S3.Analytic.Interpolation.SchurBoundaryKernel
+    definition := none
+    coordinates := #[]
+    readouts := #[{
+      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "fn"]
+      stateBinder := 0
+      functionOperand := true
+      stateOperand := none
+      booleanPredicate := false }] }
+  continuation := .unknown
+  familyRecord := none
+  options := #[]
+
+#print axioms primitiveAudit
+
 #print axioms audit
 end Reg.D5.S3.Analytic.Interpolation.SchurBoundaryKernel
