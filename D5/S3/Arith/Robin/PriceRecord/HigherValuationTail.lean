@@ -4,9 +4,11 @@
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
    utility: none
-   digest: Uniform repeated-prime Euler-tail decay at every positive-price full predecessor record. -/
+   digest: Uniform repeated-prime Euler-tail decay at every positive-price full record. -/
 
 import D5.S3.Arith.Robin.ActualPriceRecordPrimeStructure
+
+/-! The original repeated-prime tails are split at the cube root of the largest prime. -/
 
 noncomputable section
 namespace D5.S3.Arith.Robin.PriceRecord.HigherValuationTail
@@ -105,6 +107,8 @@ theorem higher_valuation_tail {m : ℕ} (hm : 2 ≤ m) {lambda : ℝ}
       (sum_filter_add_sum_filter_not S (fun p : ℕ => (p : ℝ) ≤ u) (layerTail m)).symm
   change (∑ p ∈ S, layerTail m p) ≤ _
   rw [hsplit, ← hu2]
-  linarith only [hsmall, hlarge]
+  calc
+    _ ≤ 2 / u ^ 2 + 4 / u ^ 2 := add_le_add hsmall hlarge
+    _ = 6 / u ^ 2 := by ring
 
 end D5.S3.Arith.Robin.PriceRecord.HigherValuationTail
