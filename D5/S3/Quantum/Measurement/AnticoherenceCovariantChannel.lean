@@ -130,7 +130,7 @@ private lemma channel_diagonal_entry (p : Fin 9 → ℂ) (i j : Fin 9) :
     witnessChannel (diagonal p) i j = ∑ q : Fin 5, ∑ r : Fin 9,
       p r * (witnessKraus q i r * star (witnessKraus q j r)) := by
   simp only [witnessChannel, MatrixMap.of_kraus, LinearMap.coe_sum,
-    LinearMap.coe_mk, AddHom.coe_mk, Matrix.sum_apply]
+    LinearMap.coe_mk, AddHom.coe_mk, Finset.sum_apply, Matrix.sum_apply]
   apply Finset.sum_congr rfl
   intro q _
   rw [Matrix.mul_apply]
