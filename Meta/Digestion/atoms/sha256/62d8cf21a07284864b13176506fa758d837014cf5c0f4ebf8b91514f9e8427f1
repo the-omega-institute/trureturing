@@ -1,0 +1,54 @@
+**Definition 116.1 (the public family and actual source).** For an integer $k\ge2$, let
+
+$$
+H=3^k,\qquad a=\max\{j\ge0:j\text{ is even and }2^j\le H\},\qquad
+ d=2H,\quad \ell=2H+a,\quad n=2\ell=4H+2a,
+\qquad f(X)=X^{2H}+X^H+1.
+$$
+
+In particular $a\ge2$, $2^a\le H<2^{a+2}$ and $a<H$. Lemma 116.3 proves that the public representation $\mathbb F_{2^d}=\mathbb F_2[X]/(f)$ is valid. Write $\theta=[X]$ in this representation. The family index $k$ is public and is distinct from the original hidden source depth.
+
+Set the original source parameter to $m=2$. There is one actual hidden depth $K_{\rm src}=h\ge1$ throughout seed acquisition and payload, or one fixed common prior $\mu$ on those depths with the same single $K_{\rm src}$ used throughout. Given $h$, restored fresh Reads are conditionally independent, with
+
+$$
+r_h=\Pr(\alpha\mid h)=\frac{F_{h+1}}{F_{h+3}},\qquad
+\Pr(\beta\mid h)=1-r_h,\qquad \frac13\le r_h\le\frac12.
+$$
+
+Use the actual initialized source and paid acquisition of Boundary Dynamics §§100.1–100.2 and 110.1. A paid pair $\alpha\beta$ supplies seed bit 0, a paid pair $\beta\alpha$ supplies bit 1, and equal pairs are discarded with paid retries. After $d$ acquired bits, retain the resulting actual field element $R=\rho$. All $2^d$ seeds occur with probability $2^{-d}$ before acceptance. The procedure neither conditions on $R=\theta$ nor repeats an acquired seed. No old record, hidden-depth query, growth, reset, replay, clock or new source port is supplied.
+
+The original payload parser has segments
+
+$$
+w_{j,0}=(\beta\alpha)^j\alpha,\qquad
+w_{j,1}=(\beta\alpha)^j\beta\beta,\qquad j\ge0.
+$$
+
+Only completed markers count toward $n$. All original paid Reads, restorations, returns, retries, rejected executions, unfinished parser states and infinite noncompletion remain. After a bookmark the source still executes the remaining original payload and delivers the actual $\mathrm{Stop}_{b_n}$; there is no Read after that Stop. The bookmark is not a source Stop.
+
+For a marker prefix $u$ of length $c$, the original bare fields are
+
+$$
+\begin{aligned}
+v_i&=\rho^{i-1},&v_{\ell+i}&=v_i\quad(1\le i\le\ell),&
+C_\rho&=\sum_{i=1}^{\ell}v_i,\\
+b_\rho(u)&=(c,\beta,h_u),&\beta&=|u|,&
+h_u&=C_\rho+\sum_{i=1}^c v_i u_i.
+\end{aligned}
+$$
+
+Here $|u|$ is integer Hamming weight, field addition has characteristic 2, and $0^0=1$. The correctness domain remains exactly
+
+$$
+E_\rho=\left\{R=\rho,\ Q_n=(0,\ell),\
+ C_\rho+\sum_{i=1}^n v_i b_i=0\right\},
+$$
+
+where $Q_n$ counts payload return circles and marker weight. It is a retrospective event, not a source sampler or an available acceptance bit. By the original joint-source law, every balanced zero-return marker word satisfying the field equation has joint mass with its seed
+
+$$
+2^{-d}\sum_{h\ge1}\mu(h)r_h^\ell(1-r_h)^{2\ell}>0,
+$$
+
+with the sum replaced by the corresponding fixed-depth term when the depth is fixed. The two halves and seed are not mixed under separate depth draws.
+
