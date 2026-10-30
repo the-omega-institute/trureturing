@@ -2,6 +2,8 @@ import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Analytic.OriginalHalfBinomialPeriod
 import Reg.Support.SingleDependentReadout
 
+/-! A source-bound period-value intervention for the full analytic equation. -/
+
 noncomputable section
 open _root_.D5.S3.Analytic.OriginalHalfBinomialPeriod
 open _root_.D5.S3.VertexAlgebra.LatticeHalfFockFiniteCorrection
@@ -28,7 +30,10 @@ def arena : Arena where
         (1 - 2 * z) * deriv period z - (1 / 4 : ℂ) * R.readout () () z = 0
 
 private theorem period_zero : period 0 = 1 := by
-  simp [period, halfBinomial]
+  calc
+    period 0 = (halfBinomial 0) ^ 2 * (0 : ℂ) ^ 0 :=
+      tsum_eq_single 0 (fun n hn => by simp [zero_pow hn])
+    _ = 1 := by simp [halfBinomial]
 
 private theorem rejected_fails : ¬ arena.Law rejected := by
   intro h
