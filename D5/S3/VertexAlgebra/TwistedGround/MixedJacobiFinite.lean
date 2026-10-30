@@ -234,15 +234,13 @@ private theorem lowering_triangle_to_cube (N : ℕ) (f : ℕ → ℕ → ℕ →
       apply Finset.sum_congr rfl
       intro L hL
       have hLN := Finset.mem_range.mp hL
-      symm
-      apply Finset.sum_subset (Finset.range_mono (Nat.sub_le _ _))
+      apply Finset.sum_subset (Finset.range_mono (by omega : N - i - L ≤ N))
       intro h hh outside
       apply tail
       have := Finset.mem_range.not.mp outside
       omega
     _ = _ := by
-      symm
-      apply Finset.sum_subset (Finset.range_mono (Nat.sub_le _ _))
+      apply Finset.sum_subset (Finset.range_mono (by omega : N - i ≤ N))
       intro L hL outside
       apply Finset.sum_eq_zero
       intro h hh
@@ -348,7 +346,6 @@ theorem mixed_first_input_reindexed_pairing (D : LatticeData) (hu : IsUnit D.G.d
           ∑ i ∈ Finset.range (q+1), ∑ L ∈ Finset.range (q-i+1), f p i L (q-i-L) := by
         apply Finset.sum_congr rfl
         intro p hp
-        symm
         apply Finset.sum_subset (Finset.range_mono bound)
         intro q hq outside
         apply Finset.sum_eq_zero
@@ -669,7 +666,6 @@ theorem mixed_second_input_reindexed_pairing (D : LatticeData) (hu : IsUnit D.G.
                     ((j+ell+(p-i-ell) : ℕ) : ℤ))-2) ((T D hu ^ q) u.val)))) * phases
       _ = ∑ p ∈ Finset.range N, ∑ i ∈ Finset.range (p+1),
           ∑ ell ∈ Finset.range (p-i+1), f q i ell (p-i-ell) := by
-        symm
         apply Finset.sum_subset (Finset.range_mono bound)
         intro p hp outside
         apply Finset.sum_eq_zero
@@ -1062,7 +1058,6 @@ private theorem mixed_first_input_common_cube (D : LatticeData) (hu : IsUnit D.G
       rw [first_input_common_phase]
       ring
     _ = _ := by
-      symm
       apply Finset.sum_subset (Finset.range_mono hK)
       intro p hp outside
       have zero := lowering_integer_zero_after D hu h24 K v.val hvK p
@@ -1098,7 +1093,6 @@ private theorem mixed_second_input_common_cube (D : LatticeData) (hu : IsUnit D.
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro p hp
-  symm
   apply Finset.sum_subset (Finset.range_mono hH)
   intro q hq outside
   have zero := lowering_integer_zero_after D hu h24 H u.val huH q
@@ -1264,7 +1258,6 @@ private theorem mixed_first_dual_common_cube (D : LatticeData) (hu : IsUnit D.G.
               ((T D hu ^ q) u.val))) * phase
     _ = ∑ p ∈ Finset.range N, ∑ q ∈ Finset.range (H-1),
         ∑ L ∈ Finset.range S, f p q L := by
-      symm
       apply Finset.sum_subset (Finset.range_mono hK)
       intro p hp outside
       apply Finset.sum_eq_zero
@@ -1276,7 +1269,6 @@ private theorem mixed_first_dual_common_cube (D : LatticeData) (hu : IsUnit D.G.
         ∑ L ∈ Finset.range S, f p q L := by
       apply Finset.sum_congr rfl
       intro p hp
-      symm
       apply Finset.sum_subset (Finset.range_mono hH)
       intro q hq outside
       apply Finset.sum_eq_zero
@@ -1287,7 +1279,6 @@ private theorem mixed_first_dual_common_cube (D : LatticeData) (hu : IsUnit D.G.
       intro p hp
       apply Finset.sum_congr rfl
       intro q hq
-      symm
       apply Finset.sum_subset (Finset.range_mono hS)
       intro L hL outside
       exact LZero p q L (by simpa using outside)
