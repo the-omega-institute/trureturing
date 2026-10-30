@@ -62,11 +62,11 @@ private theorem finite_rejected_law : ¬ finiteArena.Law finiteRejected := by
     rw [Nat.primeFactors_pow 2 (by norm_num), hp2]
   have hf128 : (128 : ℕ).factorization 2 = 7 := by
     change ((2 : ℕ) ^ 7).factorization 2 = 7
-    exact (by norm_num : Nat.Prime 2).factorization_pow_self
+    exact Nat.factorization_pow_self (by norm_num : Nat.Prime 2)
   have hmass : strict_inventory_third_layer_mass 128 = 5 * Real.log 2 := by
-    norm_num [strict_inventory_third_layer_mass, hp128, hf128]
-  have hlog : Real.log (4 * (2 : ℝ) ^ 2) = 4 * Real.log 2 := by
-    rw [show 4 * (2 : ℝ) ^ 2 = (2 : ℝ) ^ 4 by norm_num, Real.log_pow]
+    norm_num [strict_inventory_third_layer_mass, hp128, Finset.filter_singleton, hf128]
+  have hlog : Real.log (16 : ℝ) = 4 * Real.log 2 := by
+    rw [show (16 : ℝ) = (2 : ℝ) ^ 4 by norm_num, Real.log_pow]
     norm_num
   change strict_inventory_third_layer_mass 128 ≤
     (layerPrime 2 3 : ℝ) * Real.log (4 * (largestPrime 2 : ℝ) ^ 2) at hbad
@@ -130,7 +130,7 @@ private theorem limit_rejected_law : ¬ limitArena.Law limitRejected := by
   have hf2 : (2 : ℕ).factorization 2 = 1 :=
     (by norm_num : Nat.Prime 2).factorization_self
   change strict_inventory_third_layer_mass 2 / Real.sqrt (largestPrime 2 : ℝ) < 0 at hbad
-  norm_num [strict_inventory_third_layer_mass, hp2, hf2] at hbad
+  norm_num [strict_inventory_third_layer_mass, hp2, Finset.filter_singleton, hf2] at hbad
 
 def limitFamily : Registration limitArena (type_of% @price_record_third_layer_mass_vanishing) where
   actual := limitActual
@@ -150,7 +150,8 @@ def limitFamily : Registration limitArena (type_of% @price_record_third_layer_ma
 
 def finiteAudit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@price_record_third_layer_mass_bound) (Realization finiteSignature) Type Unit where
-  unitName := `D5.S3.Arith.Robin.PriceRecord.ActualThirdLayerMass.price_record_third_layer_mass_bound.audit
+  unitName :=
+    `D5.S3.Arith.Robin.PriceRecord.ActualThirdLayerMass.price_record_third_layer_mass_bound.audit
   realizationName := `Reg.D5.S3.Arith.Robin.PriceRecord.ActualThirdLayerMass.finiteFamily
   realizationSource := none
   generated := false
@@ -182,7 +183,8 @@ def finiteAudit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
 
 def limitAudit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     (@price_record_third_layer_mass_vanishing) (Realization limitSignature) Type Unit where
-  unitName := `D5.S3.Arith.Robin.PriceRecord.ActualThirdLayerMass.price_record_third_layer_mass_vanishing.audit
+  unitName :=
+    `D5.S3.Arith.Robin.PriceRecord.ActualThirdLayerMass.price_record_third_layer_mass_vanishing.audit
   realizationName := `Reg.D5.S3.Arith.Robin.PriceRecord.ActualThirdLayerMass.limitFamily
   realizationSource := none
   generated := false
@@ -203,12 +205,14 @@ def limitAudit : Contract.Registration.{_,_,_,0,0,0,0,0,0,0,0,0}
     definition := none
     coordinates := #[]
     readouts := #[{
-      path := #["body", "body", "arg", "body", "arg", "body", "body", "body", "body", "body", "domain", "fn", "arg"]
+      path := #["body", "body", "arg", "body", "arg", "body", "body",
+        "body", "body", "body", "domain", "fn", "arg"]
       stateBinder := 2
       functionOperand := false
       stateOperand := none
       booleanPredicate := false }, {
-      path := #["body", "body", "arg", "body", "arg", "body", "body", "body", "body", "body", "body", "arg"]
+      path := #["body", "body", "arg", "body", "arg", "body", "body",
+        "body", "body", "body", "body", "arg"]
       stateBinder := 0
       functionOperand := false
       stateOperand := none
