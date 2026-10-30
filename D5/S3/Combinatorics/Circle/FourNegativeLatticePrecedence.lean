@@ -18,10 +18,10 @@ open scoped BigOperators
 
 private abbrev t (n : ℕ) := 4 * n + 2
 private abbrev k (n : ℕ) := 2 * t n + 4
-private abbrev seed (n : ℕ) := 1 + 2 ^ t n + 2 ^ (t n + 2) + 2 ^ (2 * t n + 2)
-private abbrev x (n : ℕ) : ℤ := 2 ^ t n
-private abbrev B (n : ℕ) : ℤ := 20 * x n + 5
-private abbrev H (n : ℕ) : ℤ := 8 * x n ^ 2 - 10 * x n - 3
+private def seed (n : ℕ) := 1 + 2 ^ t n + 2 ^ (t n + 2) + 2 ^ (2 * t n + 2)
+private def x (n : ℕ) : ℤ := 2 ^ t n
+private def B (n : ℕ) : ℤ := 20 * x n + 5
+private def H (n : ℕ) : ℤ := 8 * x n ^ 2 - 10 * x n - 3
 
 private theorem arithmetic (n : ℕ) (hn : 1 ≤ n) :
     64 ≤ x n ∧ (seed n : ℤ) = 4 * x n ^ 2 + 5 * x n + 1 ∧
@@ -37,9 +37,10 @@ private theorem arithmetic (n : ℕ) (hn : 1 ≤ n) :
     exact hp
   have h2t : (2 : ℤ) ^ (2 * t n) = x n ^ 2 := by
     rw [show 2 * t n = t n * 2 by omega, pow_mul]
+    rfl
   have ha : (seed n : ℤ) = 4 * x n ^ 2 + 5 * x n + 1 := by
     simp only [seed, Nat.cast_add, Nat.cast_one, Nat.cast_pow, Nat.cast_ofNat]
-    rw [pow_add, pow_add, h2t]
+    rw [pow_add (2 : ℤ) (t n) 2, pow_add (2 : ℤ) (2 * t n) 2, h2t]
     change 1 + x n + x n * (2 : ℤ) ^ 2 + x n ^ 2 * (2 : ℤ) ^ 2 = _
     ring
   have hN : modulus (k n) = 16 * x n ^ 2 - 1 := by
@@ -48,7 +49,7 @@ private theorem arithmetic (n : ℕ) (hn : 1 ≤ n) :
     ring
   have hC : modulus (k n) / 2 = 8 * x n ^ 2 - 1 := by rw [hN]; omega
   have hpow : (2 : ℤ) ^ (k n - 1) = 8 * x n ^ 2 := by
-    rw [show k n - 1 = 2 * t n + 3 by omega, pow_add, h2t]
+    rw [show k n - 1 = 2 * t n + 3 by dsimp [k] <;> omega, pow_add (2 : ℤ) (2 * t n) 3, h2t]
     ring
   have hbound : seed n ≤ 2 ^ (k n - 1) - 1 := by
     have hh : (seed n : ℤ) + 1 ≤ (2 : ℤ) ^ (k n - 1) := by rw [ha, hpow]; nlinarith
@@ -74,7 +75,8 @@ private theorem arithmetic (n : ℕ) (hn : 1 ≤ n) :
     refine ⟨2 * r - 1, ?_⟩
     dsimp [H, B]; rw [hr]; ring
   refine ⟨hx, ha, hN, hC, hbound, hdA, hdN, hdH, ?_, ?_, ?_, ?_, ?_⟩
-  all_goals simp only [hC, hN, ha, B, H]
+  all_goals try rw [hC]
+  all_goals simp only [hN, ha, B, H]
   all_goals nlinarith
 
 private theorem short_period (n i : ℕ) (hn : 1 ≤ n) :
@@ -143,7 +145,7 @@ private theorem first_values (n : ℕ) (hn : 1 ≤ n) :
   refine ⟨halpha, hgamma, ?_⟩
   intro i hi
   by_contra hall
-  push_neg at hall
+  push Not at hall
   by_cases hilow : i.val < t n + 2
   · have hh := hnonnegative i.val hilow hall.1 hall.2.1
     exact (not_lt_of_ge hh) hi
@@ -162,8 +164,8 @@ private theorem complete_inventory (n : ℕ) (hn : 1 ≤ n) :
   obtain ⟨halpha, hgamma, hclass⟩ := first_values n hn
   have heven : 2 * (x n / 2) = x n := by
     have he : x n = 2 * (2 : ℤ) ^ (t n - 1) := by
-      dsimp [x]
-      rw [show t n = (t n - 1) + 1 by omega, pow_succ]
+      dsimp only [x]
+      conv_lhs => rw [show t n = (t n - 1) + 1 by dsimp [t] <;> omega, pow_succ]
       ring
     omega
   let K := (modulus (k n) - (seed n : ℤ)) / 2
@@ -186,7 +188,7 @@ private theorem complete_inventory (n : ℕ) (hn : 1 ≤ n) :
     rw [he, Int.add_mul_emod_self_left]
   have hdelta : actualSource (k n) (seed n) ⟨k n - 1, by dsimp [k]; omega⟩ = -K := by
     change centered _ ((2 : ℤ) ^ (k n - 1) * _) = _
-    rw [show k n - 1 = (t n + 1) + (t n + 2) by omega, short_period n _ hn]
+    rw [show k n - 1 = (t n + 1) + (t n + 2) by dsimp [k] <;> omega, short_period n _ hn]
     exact hbeta
   intro i
   refine ⟨hclass i, ?_⟩
@@ -236,7 +238,7 @@ private theorem native_data (n : ℕ) (hn : 1 ≤ n) :
       rw [ha]
       have heven : x n % 2 = 0 := by
         dsimp [x]
-        rw [show t n = (t n - 1) + 1 by omega, pow_succ]
+        rw [show t n = (t n - 1) + 1 by dsimp [t] <;> omega, pow_succ]
         omega
       omega
     omega
@@ -302,7 +304,11 @@ theorem actualSource_four_gap_lattice_precedence
       hsumOld hsumNew hold.2.2 hnew.2.2 nu hval hH hdH hHC hsat hpositive
     have hcnew : modulus (k n + 1) / 2 = modulus (k n) := by unfold modulus; rw [pow_succ]; omega
     exact ⟨hh.2.2.2.2 delta hne (by rw [hcnew, hbudget]; linarith), hh.2.2.1⟩
-  have hda := apply_at alpha halpha (by intro he; have := congrArg Fin.val he; dsimp [delta,alpha,k,t] at this; omega)
+  have hda := apply_at alpha halpha (by
+    intro he
+    have hh : k n - 1 = 1 := congrArg (fun i : Fin (k n) => i.val) he
+    dsimp only [k] at hh
+    omega)
   have hdg := apply_at gamma hgamma (by
     intro he
     have hh : k n - 1 = t n + 3 := congrArg Fin.val he

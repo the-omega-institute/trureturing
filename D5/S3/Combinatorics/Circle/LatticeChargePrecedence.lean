@@ -15,14 +15,7 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Combinatorics.Circle.LatticeChargePrecedence
 open SourceWidth RunFirstEarTransport
 open private ear_prefix from D5.S3.Combinatorics.Circle.RunFirstEarTransport
-open private sum_linear from D5.S3.Combinatorics.Circle.PeriodicShortening
-
-private theorem mapped_nonneg {m : ℕ} (q : Fin m → ℤ)
-    (hq : ∀ i, 0 ≤ q i) (l : List (Fin m)) : 0 ≤ (l.map q).sum := by
-  apply List.sum_nonneg
-  intro z hz
-  obtain ⟨i, _, rfl⟩ := List.mem_map.mp hz
-  exact hq i
+open private sum_linear prefix_nonneg_le from D5.S3.Combinatorics.Circle.PeriodicShortening
 
 /-- The return, insertion cut, suffix budget, and heavy-label precedence all refer
 to the same occurrence. Positions are zero based, so the fresh label precedes
@@ -90,7 +83,7 @@ theorem lattice_saturation_suffix_precedence
     by_contra hn
     have hb := (hnew (p + 1)).1
     simp only [prefix_height, ite_eq_left (by omega : p + 1 ≤ j), hzero] at hb
-    have hnq := mapped_nonneg q hq (sigma.take p)
+    have hnq := (prefix_nonneg_le sigma q (fun i _ => hq i) p).1
     rw [hstep q] at hb
     linarith
   have hbudget : ((sigma.drop p).map q).sum ≤ N - 2 * H := by
