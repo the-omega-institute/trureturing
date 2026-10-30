@@ -55,7 +55,7 @@ public sealed class WorktreeAdapterTransportTests
                 var result = entry == "run"
                     ? WorktreeProtocolCommand.Run(directory.Path, ["--help"], production)
                     : WorktreeProtocolCommand.RunLines(directory.Path, ["--help"], production,
-                        TimeSpan.FromSeconds(30), lines.Add);
+                        TestBudgets.ScriptProcessHangGuard, lines.Add);
                 Assert.True(result.Success, result.Error);
                 Assert.Equal(0, result.ExitCode);
                 Assert.Empty(result.Error);
@@ -80,7 +80,7 @@ public sealed class WorktreeAdapterTransportTests
         var runner = new ProductionWorktreeProcessRunner();
         var result = streaming
             ? WorktreeProtocolCommand.RunLines(directory.Path, ["unknown-action"], runner,
-                TimeSpan.FromSeconds(30), lines.Add)
+                TestBudgets.ScriptProcessHangGuard, lines.Add)
             : WorktreeProtocolCommand.Run(directory.Path, ["unknown-action"], runner);
         Assert.False(result.Success);
         Assert.Equal(2, result.ExitCode);
@@ -126,7 +126,7 @@ public sealed class WorktreeAdapterTransportTests
         });
         if (outcome == "consumer_failure")
             Assert.Throws<InvalidOperationException>(() => WorktreeProtocolCommand.RunLines(directory.Path,
-                ["--help"], runner, TimeSpan.FromSeconds(30), _ => throw new InvalidOperationException("consumer")));
+                ["--help"], runner, TestBudgets.ScriptProcessHangGuard, _ => throw new InvalidOperationException("consumer")));
         else if (outcome == "start_failure")
             Assert.Throws<IOException>(() => WorktreeProtocolCommand.Run(directory.Path, ["--help"], runner));
         else
