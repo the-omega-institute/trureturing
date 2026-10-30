@@ -557,7 +557,7 @@ $$
 \tag{6.2}
 $$
 
-This is the first-zero specialization of DLMF [§10.21(iv), (10.21.17)](https://dlmf.nist.gov/10.21#E17); the positivity and integral representation of $K_0$ used below are the classical formulas in DLMF [§10.32(ii)](https://dlmf.nist.gov/10.32#E9).
+This is the first-zero specialization of DLMF [§10.21(iv), (10.21.17)](https://dlmf.nist.gov/10.21#E17); the positivity and integral representation of $K_0$ used below are the classical formulas in DLMF [§10.32(i), (10.32.9)](https://dlmf.nist.gov/10.32#E9).
 
 **Lemma 6.2 (Every zero of $H$ is a downward crossing).** If $b>9$ and
 $H(b)=0$, then $H'(b)<0$.
