@@ -9,7 +9,6 @@
 import Mathlib.Analysis.Convex.Hull
 import Mathlib.Basic.Real.Basic
 import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.Tactic.Linarith
 
 /-! The lazy binary scenario and inequality (10) of Abbott–Wechs–Costa–Branciard,
     Genuinely Multipartite Noncausality, arXiv:1708.07663v2, Definition 2.
