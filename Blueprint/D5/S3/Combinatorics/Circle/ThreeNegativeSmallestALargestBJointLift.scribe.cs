@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.Circle;
 internal sealed class ThreeNegativeSmallestALargestBJointLiftDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A physical joint order for the unbounded cone 2<=a<c<b",
+        "A physical joint order when a is smallest and b is largest",
         H("Binary masks and the charge of one fresh physical label"),
         Blocks(
             Describe.Lean(DescribeId.Create("actual-source-three-negative-smallest-a-largest-b-joint-lift"),

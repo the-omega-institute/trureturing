@@ -2,7 +2,7 @@
 
 ## Abstract
 
-A physical joint order for the unbounded cone 2<=a<c<b
+A physical joint order when a is smallest and b is largest
 
 **Theorem 1.1 (The complete strict cone, including adjacent gaps).**
 
