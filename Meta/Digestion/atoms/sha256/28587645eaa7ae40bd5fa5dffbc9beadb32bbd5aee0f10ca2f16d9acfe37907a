@@ -1,0 +1,37 @@
+**Proposition 5.2 (conditional lattice theorem and unweighted trace).**
+The Born counterexamples of Proposition 5.1 leave the conditional
+arbitrary-lattice criterion (1.4) and the unweighted finite trace
+interpretation valid. More precisely, on the finite subspace lattice
+$\operatorname{Tr}(P_X)=\dim X$ gives a Jaccard metric with the zero-pair
+convention; on the full lattice an unrestricted substitution
+$\operatorname{Tr}(\rho P_X)$ for that trace does not preserve the
+modularity hypothesis unless $\rho=I_H/n$. Commuting event families retain
+the metric conclusion of Corollary 4.2.
+
+*Proof.* Theorem 1 of [B1] assumes strict positivity, monotonicity and
+modularity; Proposition 5.1 identifies precisely the failed hypothesis
+for a nonscalar density weight. For $c>0$ the weight is strictly positive
+on the full lattice and the supermodularity failure is literal. For
+$c=0$ strict positivity fails at zero; the interval with $R\ne0$ in
+Proposition 5.1, when $n\ge3$, also exhibits the failure inside the
+strictly positive domain of (1.4). Thus no assertion of (1.4) is
+contradicted.
+
+The identity $\operatorname{Tr}(P_X)=\dim X$ and (4.1) establish the
+unweighted claim by the positive-offset argument of Corollary 4.1.
+Multiplying a weight by a positive constant leaves its meet-over-join
+quotient unchanged, so normalized trace gives the same unshifted metric.
+For positive offsets the unweighted weight $c+\dim X$ similarly rescales
+to $c/n+\dim X/n$.
+
+The quantum-event discussion [B1, Section 7.1] groups projection trace
+with quantum probabilities obtained via Gleason representation.
+Gleason's original theorem [G1, Theorem 4.1] concerns measures additive on
+mutually orthogonal subspaces in a separable real or complex Hilbert
+space of dimension at least three, represented by a positive semidefinite
+trace-class operator. Orthogonal additivity is weaker than the arbitrary-subspace
+identity (1.3). Proposition 5.1 shows directly why the representation
+alone cannot justify the latter substitution. The two-dimensional
+calculation uses only the explicitly given density operator, independently
+of Gleason's representation hypotheses. $\square$
+
