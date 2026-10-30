@@ -34,13 +34,14 @@ internal sealed class HannaThueRothExponentialIntegralityDocument : IScribeDocum
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "All coefficients are integers", ClaimBody(),
                 "The specified rational series exists and all its coefficients are integers. For the prime 3, the inequality v₃(m)+1 ≤ m makes both weights divisible by the required power of 3. At every other prime p, b(pm)=b(m), and Euler's congruence modulo p raised to vₚ(m)+1 supplies the power difference, including p=2. The Dold exponential-integrality theorem gives the conclusion at every natural degree, including the constant term.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("hanna-a174470"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) =>
+        DescribeRole role, AssessedProvenance provenance, OpenProblemResolutionClaim? claim = null) =>
         Describe.Lean(DescribeId.Create("hannathueroth-" + name.ToLowerInvariant()),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, claim);
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Call(string name, params Formula[] args) =>

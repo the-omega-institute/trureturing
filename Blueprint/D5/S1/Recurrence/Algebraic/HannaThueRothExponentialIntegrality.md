@@ -58,6 +58,10 @@ $$(\exists A: \operatorname{PowerSeries}\left(\mathbb{Q}\right), \operatorname{I
 
 *Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Algebraic/HannaThueRothExponentialIntegrality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hanna-a174470` (proved) by `D5/S1/Recurrence/Algebraic/HannaThueRothExponentialIntegrality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hanna-a174470","declaration_gid":"D5/S1/Recurrence/Algebraic/HannaThueRothExponentialIntegrality.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Paul D. Hanna (2010). *OEIS A174470: Thue/Roth weighted exponential integrality*. URL: <https://oeis.org/A174470>.
