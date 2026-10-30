@@ -134,7 +134,7 @@ private theorem n_sub_j (d u : ℝ) (ha : A d u ≠ 0) (hb : B d u ≠ 0) :
   dsimp [n,j,r]
   rw [hN,hL]
   field_simp [ha,hb]
-  <;> ring
+  ring
 
 private theorem rank_equivalence (d u : ℝ) (ha : A d u ≠ 0) (hb : B d u ≠ 0) :
     (rPoly d).eval u = 0 ↔ r d u*(1-r d u) = width u*(j d u-width u) := by
@@ -150,7 +150,7 @@ private theorem rank_equivalence (d u : ℝ) (ha : A d u ≠ 0) (hb : B d u ≠ 
     dsimp [r,width,j]
     rw [hL]
     field_simp [ha,hb]
-    <;> ring
+    ring
   rw [identity]
   have hn : -4*(L d u)^2 ≠ 0 := mul_ne_zero (by norm_num) (pow_ne_zero _ hl)
   simp only [mul_eq_zero,hn,false_or,sub_eq_zero]
@@ -180,7 +180,7 @@ private theorem prefix_gain (d : ℝ) (W : OriginalWorld)
       dsimp [e2]
       rw [heU]
       field_simp [show 1+W.2.1 ≠ 0 by linarith [hp.2.2.1]]
-      <;> ring
+      ring
     rw [he]
     linarith
   have h4 : (originalPolynomial W).eval 4 = 3*e4 d u := by
@@ -257,7 +257,7 @@ private theorem prefix_coordinates (d : ℝ) (hd24 : d ≠ 24)
     rw [hr,hw,← hj]
     dsimp [sourceJ]
     field_simp [ne_of_gt hp.2.2.1]
-    <;> ring
+    ring
   refine ⟨hgU,hR,?_⟩
   apply Prod.ext hr
   apply Prod.ext hw
@@ -319,8 +319,7 @@ private theorem reconstruct_prefix (d u : ℝ) (hd0 : d ≠ 0)
     intro hz
     have hh := congrArg (fun q : ℝ[X] => q.eval 0) hz
     rw [hs.1] at hh
-    simp at hh
-    exact hd0 hh
+    exact hd0 (neg_eq_zero.mp (by simpa only [eval_zero] using hh))
   · intro i
     have ht := congrFun hr (Fin.castLE (by norm_num : 5 ≤ 7) i)
     fin_cases i <;> norm_num [history] at ht ⊢
@@ -328,19 +327,19 @@ private theorem reconstruct_prefix (d u : ℝ) (hd0 : d ≠ 0)
     · rw [ht,ho.1]
       dsimp [j]
       field_simp [ha,hk]
-      <;> ring
+      ring
     · rw [ht,hs.2.1]
       dsimp [e2]
       field_simp [hu1]
-      <;> ring
+      ring
     · rw [ht,ho.2.1]
       dsimp [n]
       field_simp [hb,hk]
-      <;> ring
+      ring
     · rw [ht,hs.2.2.1]
       dsimp [e4]
       field_simp [hu0]
-      <;> ring
+      ring
   · rw [reconstruct_polynomial]
     exact hs.2.2.2
 
@@ -360,7 +359,7 @@ private theorem late_equivalences (d u p v : ℝ) (hg : Guard d u) :
     dsimp [n]
     rw [hK]
     field_simp [hu0,hu1,hb]
-    <;> ring
+    ring
   have hf : (fPoly d v).eval u = 4200*(u+1)*B d u*
       (v-d-(gPoly d u).eval 6*(2*u+n d u)) := by
     rw [(odd_samples d u hg.1).2.2.2]
@@ -370,7 +369,7 @@ private theorem late_equivalences (d u p v : ℝ) (hg : Guard d u) :
     dsimp [n]
     rw [hK]
     field_simp [hu0,hu1,hb]
-    <;> ring
+    ring
   have hn2 : 2100*(u+1)*B d u ≠ 0 :=
     mul_ne_zero (mul_ne_zero (by norm_num) hu1) hb
   have hn4 : 4200*(u+1)*B d u ≠ 0 :=
@@ -389,7 +388,6 @@ private theorem child_coordinates (d p v : ℝ) (hd24 : d ≠ 24)
   have hreads := reconstructed_read d (coordinate W) hg hR
   have h5 := congrFun hreads (5 : Fin 7)
   have h6 := congrFun hreads (6 : Fin 7)
-  norm_num only [Matrix.cons_val_succ,Matrix.cons_val_zero,Fin.reduceFinMk] at h5 h6
   rw [hw] at h5 h6
   exact ⟨hg,hR,(late_equivalences d (coordinate W) p v hg).1.mp
     (h5.symm.trans hW.2.1),(late_equivalences d (coordinate W) p v hg).2.mp
@@ -401,7 +399,6 @@ private theorem reconstruct_child (d p v u : ℝ) (hd0 : d ≠ 0)
   have hreads := reconstructed_read d u hu.1 hu.2.1
   have h5 := congrFun hreads (5 : Fin 7)
   have h6 := congrFun hreads (6 : Fin 7)
-  norm_num only [Matrix.cons_val_succ,Matrix.cons_val_zero,Fin.reduceFinMk] at h5 h6
   exact ⟨hp,h5.trans ((late_equivalences d u p v hu.1).1.mpr hu.2.2.1),
     h6.trans ((late_equivalences d u p v hu.1).2.mpr hu.2.2.2)⟩
 
@@ -422,12 +419,12 @@ private theorem e_degree (d p : ℝ) : (ePoly d p).natDegree ≤ 4 := by
 private theorem r_top (d : ℝ) : (rPoly d).coeff 10 = -41006250000*d^4 := by
   unfold rPoly nPoly lPoly kPoly aPoly bPoly
   compute_degree!
-  <;> ring
+  ring
 
 private theorem e_top (d p : ℝ) : (ePoly d p).coeff 4 = 16875*d^2 := by
   unfold ePoly zPoly bPoly
   compute_degree!
-  <;> ring
+  ring
 
 private theorem prefix_bound (d : ℝ) (hd0 : d ≠ 0) (hd24 : d ≠ 24) :
     (PrefixWorlds d).Finite ∧ (PrefixWorlds d).ncard ≤ 10 := by
@@ -468,15 +465,18 @@ private theorem child_bound (d p v : ℝ) (hd0 : d ≠ 0) (hd24 : d ≠ 24) :
 /-- The exact guarded classification, its prescribed native inverse, and both
 cardinality bounds. The parameters p and v are unrestricted real numbers. -/
 theorem fixed_drift_classification (d p v : ℝ) (hd0 : d ≠ 0) (hd24 : d ≠ 24) :
-    (∃ e : S d p v ≃ ChildWorlds d p v,
+    let parents : Set OriginalWorld :=
+      {W | OriginalParent W ∧ W.2.2.1=d ∧ (originalPolynomial W).eval 7=0}
+    let children : Set OriginalWorld :=
+      {W | W ∈ parents ∧ originalRead W 5=p ∧ originalRead W 6=v}
+    (∃ e : S d p v ≃ children,
       (∀ u, (e u).1 = reconstruct d u.1) ∧
       (∀ W, (e.symm W).1 = coordinate W.1) ∧
       (∀ u : S d p v,
         originalPolynomial (e u).1 = gPoly d u.1 ∧
         sourceJ (e u).1.1 (e u).1.2.1 = j d u.1 ∧
         sourceN (e u).1.1 (e u).1.2.1 = n d u.1)) ∧
-    (PrefixWorlds d).Finite ∧ (PrefixWorlds d).ncard ≤ 10 ∧
-    (ChildWorlds d p v).Finite ∧ (ChildWorlds d p v).ncard ≤ 4 := by
+    parents.Finite ∧ parents.ncard ≤ 10 ∧ children.Finite ∧ children.ncard ≤ 4 := by
   let e : S d p v ≃ ChildWorlds d p v := {
     toFun := fun u => ⟨reconstruct d u.1,reconstruct_child d p v u.1 hd0 u.2⟩
     invFun := fun W => ⟨coordinate W.1,child_coordinates d p v hd24 W.1 W.2⟩
