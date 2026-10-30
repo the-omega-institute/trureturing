@@ -50,6 +50,9 @@ private theorem eval_linePolynomial {σ : Type*}
     · intro r
       simp [L]
     · intro i
+      rw [RingHom.comp_apply, show L (X i) =
+        Polynomial.C (x i) + Polynomial.C (v i) * Polynomial.X from
+          eval₂Hom_X' _ _ i, MvPolynomial.eval_X]
       change (Polynomial.C (x i) + Polynomial.C (v i) * Polynomial.X).eval t =
         x i + t * v i
       rw [Polynomial.eval_add, Polynomial.eval_mul, Polynomial.eval_C,
@@ -84,7 +87,7 @@ private theorem eval_line_of_translation {σ : Type*}
     apply Polynomial.eq_of_infinite_eval_eq
     apply (Set.infinite_range_of_injective (Nat.cast_injective (R := R))).mono
     rintro z ⟨n, rfl⟩
-    simpa only [Set.mem_setOf_eq, eval_linePolynomial, Polynomial.eval_C] using hn n
+    simpa only [Set.mem_ofPred_eq, eval_linePolynomial, Polynomial.eval_C] using hn n
   simpa only [eval_linePolynomial, Polynomial.eval_C] using
     congrArg (fun P : Polynomial R => P.eval t) hline
 
