@@ -640,40 +640,51 @@ abbrev signature : Signature :=
   Reg.Support.SingleDependentReadout.signature ℕ
     (fun n => Matrix ((Fin n → Fin 2) × (Fin n → Fin 2))
       ((Fin n → Fin 2) × (Fin n → Fin 2)) ℂ)
-    (fun _ => Prop)
+    (fun _ => Bool)
 
-def actual : Realization signature :=
-  realize signature (fun _ _ M => IsIdempotentElem M) (fun e => nomatch e)
+def actual : Realization signature := by
+  classical
+  exact realize signature (fun _ _ M => decide (IsIdempotentElem M)) (fun e => nomatch e)
 
 def rejected : Realization signature :=
-  realize signature (fun _ _ _ => False) (fun e => nomatch e)
+  realize signature (fun _ _ _ => false) (fun e => nomatch e)
 
 def arena : Arena where
   signature := signature
   Law R := ∀ (n : ℕ) (_hn : 4 ≤ n) (i : Fin n),
-    R.readout () n (windowSuperoperator n i)
+    R.readout () n (windowSuperoperator n i) = true
 
 private theorem rejected_law : ¬ arena.Law rejected := by
   intro h
-  exact h 4 (by decide) 0
+  have hbad := h 4 (by decide) 0
+  change false = true at hbad
+  contradiction
 
 private theorem dependence : ObservationalDependence signature actual := by
+  classical
   intro i
   refine ⟨0, 0, 2, ?_⟩
   intro he
-  have hbad : IsIdempotentElem
-      (2 : Matrix ((Fin 0 → Fin 2) × (Fin 0 → Fin 2))
-        ((Fin 0 → Fin 2) × (Fin 0 → Fin 2)) ℂ) := Eq.mp he (by
-          change (0 : Matrix _ _ ℂ) * 0 = 0
-          exact zero_mul _)
-  change (2 : Matrix _ _ ℂ) * 2 = 2 at hbad
-  have hentry := congrArg (fun A => A (0, 0) (0, 0)) hbad
-  norm_num [Matrix.mul_apply, Matrix.ofNat_apply] at hentry
+  have hzero : actual.readout i 0 0 = true := by
+    change decide (IsIdempotentElem (0 : Matrix _ _ ℂ)) = true
+    exact decide_eq_true (zero_mul _)
+  have htwo : actual.readout i 0 2 = false := by
+    change decide (IsIdempotentElem (2 : Matrix _ _ ℂ)) = false
+    apply decide_eq_false_iff_not.mpr
+    intro hbad
+    change (2 : Matrix _ _ ℂ) * 2 = 2 at hbad
+    have hentry := congrArg (fun A => A (0, 0) (0, 0)) hbad
+    norm_num [Matrix.mul_apply, Matrix.ofNat_apply] at hentry
+  rw [hzero, htwo] at he
+  contradiction
 
 def source_registration : Registration arena (type_of% @window_idempotent) where
   actual := actual
-  bridge := Iff.rfl
-  variation := ⟨@window_idempotent, rejected, rejected_law⟩
+  bridge := by
+    simp only [arena, actual, realize, decide_eq_true_eq]
+  variation := ⟨by
+    simpa only [arena, actual, realize, decide_eq_true_eq] using @window_idempotent,
+    rejected, rejected_law⟩
   sensitivity :=
     Reg.Support.SingleDependentReadout.sensitivity arena.Law actual rejected rejected_law
   dependence := dependence
@@ -692,8 +703,9 @@ def registration :
   realization := .source arena ⟨source_registration⟩
   correspondence := { stage := .evidence, objectStage := .evidence }
   bundleNonempty := .absent
-  readout := some
-    (realize signature (fun _ _ M => IsIdempotentElem M) (fun e => nomatch e))
+  readout := some (by
+    classical
+    exact realize signature (fun _ _ M => decide (IsIdempotentElem M)) (fun e => nomatch e))
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
@@ -703,11 +715,11 @@ def registration :
     definition := none
     coordinates := #[0]
     readouts := #[{
-      path := #["body", "body", "body", "fn"]
+      path := #["body", "body", "body"]
       stateBinder := 0
-      functionOperand := true
-      stateOperand := none
-      booleanPredicate := false }] }
+      functionOperand := false
+      stateOperand := some #["arg"]
+      booleanPredicate := true }] }
   continuation := .unknown
   familyRecord := none
   options := #[] }
