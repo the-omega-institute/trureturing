@@ -1,0 +1,47 @@
+**Definition 7.1 (Explicit constants below the transition).** For an
+integer $n\ge0$ and $0<Z<2/3$, retain (4.1) and set
+
+$$
+N=n+1,\qquad
+\rho_0=\sqrt{\frac Z{4H}},\qquad
+\eta=\frac{1-\rho_0}{4},\qquad
+\rho=\rho_0+2\eta=\frac{1+\rho_0}{2}.
+\tag{7.1}
+$$
+
+Define
+
+$$
+K_Z=4(n+1)+10+
+\left\lceil\log_2\left(\frac{128(3+\rho_0)}{1-\rho_0}\right)\right\rceil,
+\qquad B_Z=2^{16(n+1)K_Z+4},
+\tag{7.2}
+$$
+
+$$
+L=2B_Z+1,\qquad
+h=\frac{H(2\eta-\eta^2)}L,
+\tag{7.3}
+$$
+
+and
+
+$$
+\Gamma_{\mathrm{exp}}(n,Z)=
+\frac{16H^2}{2B_Z+1}(2\eta-\eta^2)
+\left((\rho_0+\eta)^2-\rho_0^2\right).
+\tag{7.4}
+$$
+
+These constants depend only on $n,Z$. Indeed $Z<2/3$ is equivalent
+to $Z<4H$, so $0<\rho_0<1$, $0<\eta<1/4$, and
+$\rho_0<\rho<1$. Also
+
+$$
+\frac{1+\rho}{1-\rho}=\frac{3+\rho_0}{1-\rho_0}.
+\tag{7.5}
+$$
+
+Thus $K_Z$ and $B_Z$ are exactly the constants of Theorem 1.3 at
+$(N,\rho)$, not constants for a different relative-error normalization.
+
