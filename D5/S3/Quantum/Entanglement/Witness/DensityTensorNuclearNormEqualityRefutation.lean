@@ -22,7 +22,6 @@ set_option autoImplicit false
 set_option linter.style.longLine false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
-set_option maxHeartbeats 800000
 
 /-- The Euclidean norm of a finite complex coefficient array. -/
 def tensorNorm {ι : Type*} [Fintype ι] (t : ι → ℂ) : ℝ :=
@@ -251,6 +250,7 @@ private lemma pure_idempotent {ι : Type*} [Fintype ι] (t : ι → ℂ)
     exact_mod_cast hsq
   rw [vecMulVec_mul_vecMulVec, hd, one_smul]
 
+set_option maxHeartbeats 2000000 in
 /-- A mixed density tensor attains the conjectured pure-state maximum. -/
 theorem result : ¬ claim := by
   classical
@@ -401,6 +401,7 @@ theorem result : ¬ claim := by
             x (.inr 0) (1 : Fin 2) * x (.inr 1) (3 : Fin 4)) := by
       simp only [sf, LinearMap.sum_apply, Fin.sum_univ_two, LinearMap.add_apply,
         LinearMap.proj_apply, Fintype.prod_sum_type, Fin.prod_univ_two, he0, he1]
+      norm_num only [Fin.val_zero, Fin.val_one]
       ring
     rw [he]
     simpa only [Fintype.prod_sum_type, Fin.prod_univ_two, mul_assoc] using h
