@@ -3537,3 +3537,224 @@ $$
 五个固定新等式只在已由全原生上下文归约出的 (112.2) 内充分，不构成对原来全部连续响应的有限全域认证。固定响应的连续模允许 (113.4) 的极限，却没有提供跨候选响应的共同连续模、有限样本置信界或精确有限取得。操作菜单仍无额外重置、复制、记录精确翻转、新载体、任意 POVM、CP 公设或普遍子系统局部性；相干准备和实际仪器前提的来源、其它制备的记录律、任意保留仪器和独立复合的规律仍未由这些条件定理决定。完整量子基础原则的起源不等同于此处指定残余族的闭合。
 
 ## 追加锚（本行以下为增补区）
+
+## 115. 原四时残差对近邻射线振荡的控制
+
+**定义 115.1（射线距离与共轭圆残差）。** 固定 77.1 的整个十三维复空间 $H$，置
+
+$$
+ \varphi=\frac{1+\sqrt5}{2},\qquad x=\varphi^{-1},\qquad
+ s=x^2,\qquad\zeta=e^{3\pi i/5},\qquad X=\mathbb P(H),
+ \qquad 1-s=x,\quad\frac1{1-s}=\varphi.
+ \tag{115.1}
+$$
+
+内积约定对第二变量线性。对单位代表 $a,b$，定义
+
+$$
+ d([a],[b])=\sqrt{1-|\langle a,b\rangle|^2},\qquad
+ \kappa=\frac{|1-\zeta^3|}{2}>0.
+ \tag{115.2}
+$$
+
+对实连续射线函数 $g\in C(X,\mathbb R)$，写 $g(\psi)=g([\psi])$，并定义
+
+$$
+ \begin{aligned}
+ J_\Pi&=I+(\zeta-1)\Pi,\\
+ \rho(g)&=\sup_{\substack{\Pi=\Pi^*=\Pi^2,\ \operatorname{rank}\Pi=5\\
+                         \psi\in S(H)}}
+ \left|g(J_\Pi^3\psi)+s g(J_\Pi\psi)-g(\psi)-s g(J_\Pi^2\psi)\right|.
+ \end{aligned}
+ \tag{115.3}
+$$
+
+这些投影及其共轭圆仅是数学对象。由 (90.4)–(90.6)，原响应的每个坐标满足 $\rho(P_w)\le\mathcal R(P)$：每个秩五投影都与原 $\Pi$ 酉共轭，原正向有限字的两次密度延拓分别对当前固定的连续坐标适用。这里没有共同连续模，也没有新增可执行操作。
+
+**命题 115.2（近邻射线的迭代振荡界）。** 对定义 115.1 的每个 $g$、整数 $m\ge1$ 及 $A,B\in X$，若 $d(A,B)\le\kappa s^{m-1}$，则
+
+$$
+ |g(A)-g(B)|
+ \le\rho(g)\frac{1-s^m}{1-s}+2\|g\|_\infty s^m.
+ \tag{115.4}
+$$
+
+因此，若 $g_n\in C(X,\mathbb R)$、$\sup_n\|g_n\|_\infty<\infty$、$\rho(g_n)\le1$，且 $d(A_n,B_n)\to0$，则
+
+$$
+ \limsup_{n\to\infty}|g_n(A_n)-g_n(B_n)|\le\varphi.
+ \tag{115.5}
+$$
+
+证明。先实现任意距离 $0<\delta=d(A,B)\le\kappa$ 的两个射线。取 $q\in(0,1/2]$，使
+
+$$
+ \delta^2=|1-\zeta^3|^2q(1-q).
+ \tag{115.6}
+$$
+
+这由 $q(1-q)$ 在 $[0,1/2]$ 上连续递增且值域为 $[0,1/4]$ 得到。因为
+
+$$
+ |1+q(\zeta^3-1)|^2=1-\delta^2,
+$$
+
+可调整 $A,B$ 的单位代表 $a,b$ 的相对相位，使 $\langle a,b\rangle=1+q(\zeta^3-1)$。置
+
+$$
+ v=\frac{b-a}{\zeta^3-1},\qquad u=a-v.
+ \tag{115.7}
+$$
+
+内积约定给 $\langle a,v\rangle=q$；又
+$\|b-a\|^2=2-2\operatorname{Re}\langle a,b\rangle=q|\zeta^3-1|^2$，故 $\|v\|^2=q$。于是 $u\perp v$、$\|u\|^2=1-q$，且
+
+$$
+ \psi_j=u+\zeta^jv\quad(0\le j\le3),\qquad
+ \psi_0=a,\quad\psi_3=b.
+ \tag{115.8}
+$$
+
+在 $\operatorname{span}(u,v)^\perp$ 中任选四个正交方向，令 $\Pi$ 投影到它们与 $\mathbb Cv$ 的直和。十三维空间足以容纳这些方向，所得投影秩恰为五，并满足 $J_\Pi^j a=\psi_j$。若 $\delta=0$，两个射线的函数值相同，无需此构造。
+
+对同一圆的任意 $i,j$，直接计算内积给
+
+$$
+ d([\psi_i],[\psi_j])^2=|\zeta^i-\zeta^j|^2q(1-q).
+ \tag{115.9}
+$$
+
+由 $\zeta+\zeta^{-1}=-x$ 及 $1-x=s$，有
+
+$$
+ 1+\zeta+\zeta^2=s\zeta,\qquad
+ \zeta^3-1=s\zeta(\zeta-1),\qquad
+ d([\psi_1],[\psi_2])=\frac\delta s.
+ \tag{115.10}
+$$
+
+定义 115.1 的四时残差重新排列为
+
+$$
+ |g(A)-g(B)|\le\rho(g)+s|g([\psi_1])-g([\psi_2])|.
+ \tag{115.11}
+$$
+
+对新的一对射线重复构造。第 $j$ 次替换后的距离恰为 $\delta/s^j$；若 $\delta\le\kappa s^{m-1}$，第 $0,\ldots,m-1$ 次所需距离都不超过 $\kappa$。迭代 $m$ 次，最后一对的函数差用 $2\|g\|_\infty$ 控制，得到
+
+$$
+ |g(A)-g(B)|\le\rho(g)\sum_{j=0}^{m-1}s^j
+                       +2\|g\|_\infty s^m,
+$$
+
+即 (115.4)。对 (115.5)，记 $C=\sup_n\|g_n\|_\infty$。先固定 $m$，趋零的距离保证充分大 $n$ 可用 (115.4)，故上极限不超过 $(1-s^m)/(1-s)+2Cs^m$；再令 $m\to\infty$ 即得 $\varphi$。该顺序只控制可能的小尺度振荡，不推出等度连续或二阶余项的一致紧性。∎
+
+## 116. 原完整类最优偏差的显式首项上界
+
+**定理 116.1（共同一阶聚点的外界与完整上极限）。** $\mathcal C,\mathcal R,\mathcal D,M$ 精确取 77.1、78.1、79.1、90.1、109.1：整个 $H=\mathbb C^{13}$ 使用原十三个基向量、初态 $v=e_{00100}$ 及原七门；制备、接续遍历所有有限正向字，含空字；响应保留全部 $1024$ 个原标签，每个坐标在整个单位球面上连续、相位不变、非负，全部坐标总和为一，满足同射线条件终端充分性，以及全部十三个基底射线、全部标签的精确原标定。不增加次数、秩、字长、共同连续模、Lipschitz、扩大历史、仪器或隔离前提。
+
+若 $t_n>0$、$t_n\downarrow0$、$P_n\in\mathcal C$ 且 $\mathcal R(P_n)\le t_n^2$，则命题 98.1 供应的任一共同一阶聚点 $T$ 满足
+
+$$
+ N(T)^2\le\varphi,\qquad
+ N(T)=\max_{a\in\mathcal B}\|Te_a\|.
+ \tag{116.1}
+$$
+
+对整个原类的最优偏差有
+
+$$
+ 1\le\liminf_{\varepsilon\downarrow0}\frac{M(\varepsilon)}{\sqrt\varepsilon}
+ \le\limsup_{\varepsilon\downarrow0}\frac{M(\varepsilon)}{\sqrt\varepsilon}
+ \le\sqrt\varphi.
+ \tag{116.2}
+$$
+
+证明。取命题 98.1 的同一个子列，重记为 $n$。由 (98.5)–(98.7)，对全部标签有 Hermitian 矩阵 $E_{n,w}$，且
+
+$$
+ \|P_{n,w}-q_{E_{n,w}}\|_\infty\le C_0t_n^2,\qquad
+ \frac{E_{n,a}-A_a}{t_n}\longrightarrow H_a=[T,A_a]
+ \quad\text{于算子范数},
+ \qquad q_E(\psi)=\langle\psi,E\psi\rangle.
+ \tag{116.3}
+$$
+
+固定一个合法基地址 $a$，以下 $P_{n,a}$ 表示原标签 $w_a$。在 $\mathbb Ce_a\oplus e_a^\perp$ 上写
+
+$$
+ E_{n,a}=\begin{pmatrix}d_n&v_n^*\\v_n&C_n\end{pmatrix}.
+ \tag{116.4}
+$$
+
+精确标定 $P_{n,a}(e_a)=1$ 和 (116.3) 给 $d_n=1+O(t_n^2)$。又因 $T_{aa}=0$，有 $[T,A_a]e_a=Te_a\in e_a^\perp$，故
+
+$$
+ \frac{v_n}{t_n}\longrightarrow z_a=Te_a,\qquad
+ C_n\longrightarrow0,\qquad E_{n,a}\longrightarrow A_a.
+ \tag{116.5}
+$$
+
+令 $\lambda_n$ 为 $E_{n,a}$ 的最大特征值，取单位特征向量 $u_n$。有限维 Hermitian 谱的连续性及 $A_a$ 在 $1$ 处的单特征值给 $\lambda_n\to1$、$[u_n]\to[e_a]$；具体地，$E_{n,a}u_n=\lambda_nu_n$ 与 $E_{n,a}\to A_a$ 迫使 $\|(I-A_a)u_n\|\to0$。因此充分大 $n$ 时可写 $u_n=\alpha_ne_a+y_n$，其中 $y_n\perp e_a$，并选相位使 $\alpha_n>0$。同时 $\lambda_nI-C_n$ 可逆，逆矩阵趋于 $I$。两个块特征方程给
+
+$$
+ \begin{aligned}
+ y_n&=\alpha_n(\lambda_nI-C_n)^{-1}v_n,\\
+ \lambda_n-d_n&=v_n^*(\lambda_nI-C_n)^{-1}v_n,\\
+ \frac{\lambda_n-d_n}{t_n^2}
+ &=\left(\frac{v_n}{t_n}\right)^*
+       (\lambda_nI-C_n)^{-1}\left(\frac{v_n}{t_n}\right)
+   \longrightarrow\|Te_a\|^2.
+ \end{aligned}
+ \tag{116.6}
+$$
+
+定义实连续射线函数
+
+$$
+ g_n=\frac{P_{n,a}-q_{E_{n,a}}}{t_n^2}.
+ \tag{116.7}
+$$
+
+(116.3) 给 $\|g_n\|_\infty\le C_0$。为应用命题 115.2，须核对任意 Hermitian 二次型的共轭圆残差为零。对每个 $\Pi,\psi$，写 $u=(I-\Pi)\psi$、$v=\Pi\psi$，则 $J_\Pi^j\psi=u+\zeta^jv$。所以 $q_E(J_\Pi^j\psi)$ 是 $1,\zeta^j,\zeta^{-j}$ 的线性组合，而
+
+$$
+ z^3-sz^2+sz-1=(z-1)(z-\zeta)(z-\zeta^{-1})
+$$
+
+消去这三个序列。这正是 (96.8) 的二次型消去在该圆上的应用，因而 $\rho(q_E)=0$。再由 (90.6) 和原残差预算，得到
+
+$$
+ \rho(g_n)=\frac{\rho(P_{n,a})}{t_n^2}\le1.
+ \tag{116.8}
+$$
+
+这里没有要求 $E_{n,a}$ 非负、精确标定或与其它近似矩阵共同归一。原响应本身的全状态非负性与归一化则给 $P_{n,a}(u_n)\le1$。与同一响应的精确标定合用，得到
+
+$$
+ \begin{aligned}
+ g_n(e_a)-g_n(u_n)
+ &=\frac{1-P_{n,a}(u_n)+\lambda_n-d_n}{t_n^2}\\
+ &\ge\frac{\lambda_n-d_n}{t_n^2}.
+ \end{aligned}
+ \tag{116.9}
+$$
+
+射线距离 $d([e_a],[u_n])\to0$；将 (115.5) 应用于这些 $g_n$ 和射线对，再用 (116.6)，便得 $\|Te_a\|^2\le\varphi$。对全部十三个 $a$ 最大化即得 (116.1)。全部非法标签仍在原序列和 98.1 的同一个共同子列中，其一阶极限为零；未删除任何标签，也未把最大坐标误差换成坐标和。全程不要求 $g_n$ 存在一致收敛子列，因而不需二阶紧性。
+
+最后从任意序列转到最优偏差。若 (116.2) 的上界不成立，可取固定 $\eta>0$、严格递减实数 $\varepsilon_n\downarrow0$，使
+$M(\varepsilon_n)/\sqrt{\varepsilon_n}>\sqrt\varphi+2\eta$。按 (109.1) 的上确界定义，选择实际 $P_n\in\mathcal C$，满足
+
+$$
+ \mathcal R(P_n)\le\varepsilon_n,\qquad
+ \frac{\mathcal D(P_n)}{\sqrt{\varepsilon_n}}>\sqrt\varphi+\eta.
+ \tag{116.10}
+$$
+
+这里仅需任意精度的近似极大元，不假设上确界取得。置 $t_n=\sqrt{\varepsilon_n}$，命题 98.1 给同一子列上的 $\mathcal D(P_n)/t_n\to N(T)$，而 (116.1) 给 $N(T)\le\sqrt\varphi$，与 (116.10) 矛盾。这证明对全部小实尺度的上极限界。下极限界 $1$ 直接复用 (109.7)：其对每个固定 $N(T)<1$ 的全小实尺度族给下界，随后令 $N(T)\uparrow1$；未把指定修复族的代价当作任意族的必要代价。∎
+
+(116.1) 是单位残差一阶聚点的必要外界，不刻画可达集合。(116.2) 中的 $\sqrt\varphi$ 是显式上极限界，不是确切极限、锐界或已取得的端点。与 (109.7) 合用，可保留上界 $\min\{\sqrt\varphi,12\sqrt{6C_0}\}$；因 $C_0$ 未给数值，这不宣称与旧上界之间的严格数值改进。原完整最优值的极限存在性和确切值仍待证明。近邻振荡估计只给 $\varphi$，未证其在标定射线与特征射线这些特殊对上锐；若能对任意单位残差聚点证明 $N(T)^2\le1$，则与 (109.7) 合用可得极限为 $1$，但此匹配上界尚缺。110.1 的二阶非紧性也不决定最优值是否收敛。
+
+上述源特定推导为 `repo-derived`：新增承重关系是 (115.7)–(115.11) 的近邻实现及精确距离放大、(115.4) 的迭代，以及它们与原标定和特征值超额的组合。普通有限维谱论与块消元只在证明内部使用。相关函数方程稳定性文献包括 [*Hyers-Ulam stability of Jensen functional equation on amenable semigroups*, 1406.3623，Theorem 2.1](https://arxiv.org/html/1406.3623)，其缺陷是带对合的可和半群上的 $f(xy)+f(x\sigma(y))-2f(x)$；以及 [*Hyers-Ulam-Rassias stability of functional equations with parameters*, 2508.10324v1，Theorems 2.1、3.1](https://arxiv.org/html/2508.10324v1)，其假设使用 Abel 群、正交关系和 $\beta$ 齐次 F 空间中的广义可加／二次缺陷。这些合同不供应这里的射线四时桥梁，未将其定理移作本证明前提。Galley–Masanes，[*Classification of all alternatives to the Born rule in terms of informational properties*, 1610.04859v3，Result 2](https://arxiv.org/html/1610.04859v3)，提供 90.2 已使用的调和分类背景，不提供本节的显式稳定常数。本推导的适用依据是 (90.6)、(90.16)、(96.8)、98.1 与 109.2 的原合同，不由这些有限文献对应主张全局新颖性或文献优先权。
+
+## 追加锚（本行以下为增补区）
