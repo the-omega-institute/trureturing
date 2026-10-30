@@ -5,7 +5,7 @@ import Reg.Support.SingleDependentReadout
 noncomputable section
 open _root_.D5.S3.Analytic.Interpolation.SchurConjugateSlope
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open LeanInformationAudit
+open LeanInformationAudit Set
 
 namespace Reg.D5.S3.Analytic.Interpolation.SchurConjugateSlope
 
@@ -226,7 +226,7 @@ abbrev classificationArena : Arena where
         sSup (innerValues g a b) = ‖deriv g x - deriv (interpolant g a b) x‖) ∧
     (outerValues a b).Nonempty ∧ BddAbove (outerValues a b) ∧
     ∃ g ∈ entireClass, g = (fun z => z ^ 2 / 2) ∧ diskNorm g = 1 ∧
-      slope g a b = a ∧
+      _root_.D5.S3.Analytic.Interpolation.SchurConjugateSlope.slope g a b = a ∧
       (∀ x : ℝ, ‖deriv g x - deriv (interpolant g a b) x‖ = |x - a|) ∧
       sSup (innerValues g a b) = uniformError a b ∧
       (0 ≤ a → ‖deriv g ((-1 : ℝ) : ℂ) -

@@ -6,7 +6,7 @@ noncomputable section
 open _root_.D5.S3.Analytic.Interpolation.SchurIntegratedKernel
 open _root_.D5.S3.Analytic.Interpolation.SchurBoundaryKernel
 open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
-open LeanInformationAudit Set MeasureTheory
+open LeanInformationAudit Set MeasureTheory Complex
 
 namespace Reg.D5.S3.Analytic.Interpolation.SchurIntegratedKernel
 
